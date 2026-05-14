@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d5c63" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="數學公式工具" />
+  <title>數學公式使用工具</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="styles.css?v=20260423-abs-count-layout-v4" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">Math Formula Toolkit</p>
+        <h1>數學公式使用工具</h1>
+        <p class="hero__lead">
+          以「年級章節」或「領域」快速整理國高中常用公式，搭配使用技巧、注意事項與常見錯誤，方便查詢也方便後續擴充。
+        </p>
+        <div class="hero__stats" id="heroStats"></div>
+        <div class="hero__quicklinks">
+          <a class="ghost-link" href="manage.html">開啟統整管理頁</a>
+          <a class="ghost-link" href="question-bank.html">開啟題庫練習頁</a>
+          <a class="ghost-link" href="practice-bank.html">開啟無限練習總覽</a>
+          <a class="ghost-link" href="chapter-highlights.html">開啟章節重點總覽</a>
+        </div>
+      </div>
+      <div class="hero__panel">
+        <h2>擴充方式</h2>
+        <ul>
+          <li>現在可用統整管理頁直接新增、刪除、排序、編輯</li>
+          <li>管理頁儲存後，主站會優先讀取你修改過的版本</li>
+          <li>仍可擴充成收藏、測驗、筆記、匯出功能</li>
+        </ul>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <section class="panel controls">
+          <h2>查詢條件</h2>
+          <label class="field">
+            <span>關鍵字搜尋</span>
+            <input id="searchInput" type="search" placeholder="輸入公式、章節、技巧、錯誤、內容屬性" />
+          </label>
+
+          <div class="field">
+            <span>分類方式</span>
+            <div class="segmented" id="viewMode"></div>
+          </div>
+
+          <label class="field">
+            <span>年級</span>
+            <select id="gradeFilter"></select>
+          </label>
+
+          <label class="field">
+            <span>領域</span>
+            <select id="domainFilter"></select>
+          </label>
+
+          <label class="field">
+            <span>章節</span>
+            <select id="chapterFilter"></select>
+          </label>
+
+          <label class="field">
+            <span>難度</span>
+            <select id="difficultyFilter"></select>
+          </label>
+
+          <label class="field">
+            <span>內容屬性</span>
+            <select id="contentTypeFilter"></select>
+          </label>
+
+          <label class="field">
+            <span>排序方式</span>
+            <select id="sortModeFilter">
+              <option value="modified">修改時間</option>
+              <option value="curriculum">課綱順序</option>
+              <option value="title">標題</option>
+            </select>
+          </label>
+
+          <div class="field">
+            <span>排序方向</span>
+            <button id="sortDirectionToggle" class="ghost-button search-scope-toggle" type="button">目前：新到舊</button>
+          </div>
+
+          <div class="field">
+            <span>搜尋範圍</span>
+            <button id="branchSearchToggle" class="ghost-button search-scope-toggle" type="button">目前：只搜尋主主題</button>
+          </div>
+
+          <button id="resetButton" class="ghost-button" type="button">清除篩選</button>
+        </section>
+
+        <section class="panel guide">
+          <h2>使用建議</h2>
+          <ol>
+            <li>先用分類快速定位單元，再用搜尋縮小範圍。</li>
+            <li>看公式時先讀「何時使用」，避免公式套錯情境。</li>
+            <li>考前複習可以特別看「常見錯誤」欄位。</li>
+          </ol>
+        </section>
+      </aside>
+
+      <section class="content">
+        <section class="panel summary-panel">
+          <div>
+            <p class="summary-label">目前結果</p>
+            <h2 id="resultTitle">全部公式</h2>
+          </div>
+          <p id="resultCount" class="summary-count"></p>
+        </section>
+
+        <section id="categoryBoard" class="category-board"></section>
+      </section>
+    </main>
+  </div>
+
+  <script defer src="formulas.js"></script>
+  <script defer src="data/formula-content.js?v=20260514-j62-main-topics-v1"></script>
+  <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
+  <script defer src="data/main-topic-overviews.js?v=20260514-j62-main-topics-v1"></script>
+  <script defer src="data/chapter-code-config.js"></script>
+  <script defer src="data/formula-calculators.js"></script>
+  <script defer src="data/formula-practice-assignments.js"></script>
+  <script defer src="data/formula-practice.js"></script>
+  <script defer src="formula-data.js?v=20260505-question-category-v1"></script>
+  <script defer src="chapter-overviews.js?v=20260514-j62-main-topics-v1"></script>
+  <script defer src="chapter-closings.js?v=20260514-j62-main-topics-v1"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="formula-core.js?v=20260427-theta-fix-v1"></script>
+  <script defer src="app.js?v=20260508-main-topic-panel-v1"></script>
+  <script defer src="annotation-blocks.js"></script>
+  <script defer src="pwa.js"></script>
+</body>
+</html>

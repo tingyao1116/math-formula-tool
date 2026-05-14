@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "schema": "practice-db-v1",
+    "count": 10,
+    "updatedAt": "2026-05-11T19:29:29.488190+00:00"
+  },
+  "assignments": [
+    {
+      "id": "coordinate-origin-unit-change",
+      "enabled": true,
+      "mode": "generator",
+      "practiceKey": "coordinate-origin-unit-change",
+      "title": "改變原點與單位長時坐標變化",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "prompt": "",
+      "answer": "",
+      "notes": ""
+    },
+    {
+      "id": "linear-fraction-parentheses-drill",
+      "enabled": true,
+      "mode": "generator",
+      "practiceKey": "linear-fraction-parentheses-drill",
+      "title": "有分數的去括號（一元一次）",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "prompt": "",
+      "answer": "",
+      "notes": ""
+    },
+    {
+      "id": "linear-multiply-parentheses-drill",
+      "enabled": true,
+      "mode": "generator",
+      "practiceKey": "linear-multiply-parentheses-drill",
+      "title": "有乘法的去括號（一元一次）",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "prompt": "",
+      "answer": "",
+      "notes": ""
+    },
+    {
+      "id": "linear-remove-parentheses-drill",
+      "enabled": true,
+      "mode": "generator",
+      "practiceKey": "linear-remove-parentheses-drill",
+      "title": "去括號（一元一次）",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "prompt": "",
+      "answer": "",
+      "notes": ""
+    },
+    {
+      "id": "abs-equation-leading-one-drill",
+      "enabled": true,
+      "mode": "generator",
+      "practiceKey": "abs-equation-leading-one-drill",
+      "title": "絕對值方程式（最高次係數=1）",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "prompt": "",
+      "answer": "",
+      "notes": ""
+    },
+    {
+      "id": "abs-equation-leading-not-one-drill",
+      "enabled": true,
+      "mode": "generator",
+      "practiceKey": "abs-equation-leading-not-one-drill",
+      "title": "絕對值方程式（最高次係數≠1）",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "prompt": "",
+      "answer": "",
+      "notes": ""
+    },
+    {
+      "id": "nonnegative-sum-fixed-multix-drill",
+      "enabled": true,
+      "mode": "generator",
+      "practiceKey": "nonnegative-sum-fixed-multix-drill",
+      "title": "非負整數解和固定討論多組解（只求x）",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "prompt": "",
+      "answer": "",
+      "notes": ""
+    },
+    {
+      "id": "factor-road-planting-double-drill",
+      "enabled": true,
+      "mode": "generator",
+      "practiceKey": "factor-road-planting-double-drill",
+      "title": "道路種樹（兩側）",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "prompt": "",
+      "answer": "",
+      "notes": ""
+    },
+    {
+      "id": "factor-road-planting-single-drill",
+      "enabled": true,
+      "mode": "generator",
+      "practiceKey": "factor-road-planting-single-drill",
+      "title": "道路種樹（單側）",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "prompt": "",
+      "answer": "",
+      "notes": ""
+    },
+    {
+      "id": "rationalize-denominator-binomial-junior",
+      "enabled": true,
+      "mode": "generator",
+      "practiceKey": "rationalize-denominator-binomial-junior",
+      "title": "多項有理化分母（平方差）",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "prompt": "",
+      "answer": "",
+      "notes": ""
+    }
+  ]
+}

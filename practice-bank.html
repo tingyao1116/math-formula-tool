@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d5c63" />
+  <title>無限練習總覽</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="styles.css?v=20260423-abs-count-layout-v4" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">Practice Bank</p>
+        <h1>無限練習總覽</h1>
+        <p class="hero__lead">
+          集中查看目前所有已接上的無限練習主題，可依章節與關鍵字快速篩選，並直接在這頁出題練習。
+        </p>
+        <div class="hero__quicklinks">
+          <a class="ghost-link" href="index.html">回主頁</a>
+          <a class="ghost-link" href="manage.html">開啟統整管理頁</a>
+          <a class="ghost-link" href="question-bank.html">開啟題庫練習頁</a>
+        </div>
+      </div>
+      <div class="hero__panel">
+        <h2>使用方式</h2>
+        <ul>
+          <li>先選章節，再用關鍵字縮小範圍。</li>
+          <li>每張卡都可直接按「出題」與「顯示答案」。</li>
+          <li>若某主題未出現，通常代表它沒有接上無限練習或目前被停用。</li>
+        </ul>
+      </div>
+    </header>
+
+    <main class="layout question-bank-layout">
+      <aside class="sidebar">
+        <section class="panel controls">
+          <h2>查詢條件</h2>
+          <label class="field">
+            <span>章節</span>
+            <select id="chapterFilter"></select>
+          </label>
+          <label class="field">
+            <span>關鍵字搜尋</span>
+            <input id="keywordInput" type="search" placeholder="輸入主題、章節、練習標題、標籤" />
+          </label>
+          <button id="resetButton" class="ghost-button" type="button">清除篩選</button>
+        </section>
+
+        <section class="panel guide">
+          <h2>篩選說明</h2>
+          <ol>
+            <li>章節篩選是以主題的 `chapterCode` 為準。</li>
+            <li>關鍵字會搜尋主題標題、章節、標籤與練習標題。</li>
+            <li>這頁只顯示「目前真的能出題」的無限練習。</li>
+          </ol>
+        </section>
+      </aside>
+
+      <section class="content">
+        <section class="panel summary-panel">
+          <div>
+            <p class="summary-label">目前結果</p>
+            <h2 id="resultTitle">全部無限練習</h2>
+          </div>
+          <p id="resultCount" class="summary-count"></p>
+        </section>
+
+        <section id="emptyState" class="panel" hidden></section>
+        <section id="practiceBoard" class="category-board"></section>
+      </section>
+    </main>
+  </div>
+
+  <script defer src="formulas.js"></script>
+  <script defer src="data/formula-content.js?v=20260423-abs-count-layout-v4"></script>
+  <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
+  <script defer src="data/main-topic-overviews.js?v=20260508-topic-title-clean-v1"></script>
+  <script defer src="data/chapter-code-config.js"></script>
+  <script defer src="data/formula-calculators.js"></script>
+  <script defer src="data/formula-practice-assignments.js"></script>
+  <script defer src="data/formula-practice.js"></script>
+  <script defer src="formula-data.js?v=20260505-question-category-v1"></script>
+  <script defer src="chapter-overviews.js?v=20260507-main-theme-layer-v2"></script>
+  <script defer src="chapter-closings.js?v=20260507-main-theme-layer-v2"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="formula-core.js?v=20260427-theta-fix-v1"></script>
+  <script defer src="practice-bank.js?v=20260512-practice-bank-v1"></script>
+  <script defer src="pwa.js"></script>
+</body>
+</html>

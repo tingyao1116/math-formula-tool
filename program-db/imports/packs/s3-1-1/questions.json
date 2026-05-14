@@ -1,0 +1,786 @@
+{
+  "chapter_code": "s3-1-1",
+  "chapter_title": "弧度、弧長",
+  "questions": [
+    {
+      "id": "q-s3-1-1-0001",
+      "title": "(1)將下列以弧度表示的各角以度數表之﹕①$\\frac{",
+      "question_text": "(1)將下列以弧度表示的各角以度數表之﹕①$\\frac{5\\pi}{4}$﹒ ②$\\frac{7\\pi}{12}$﹒ ③$- \\frac{13\\pi}{6}$﹒ ④4﹒\n(2)將下列以度表示的各角以弧度表之﹕①135°﹒ ②150°﹒ ③ − 210°﹒ ④70°﹒",
+      "answer_text": "(1)①$225^\\circ$；②$105^\\circ$；③$-390^\\circ$；④約$229.2^\\circ$；(2)①$\\frac{3\\pi}{4}$；②$\\frac{5\\pi}{6}$；③$-\\frac{7\\pi}{6}$；④$\\frac{7\\pi}{18}$",
+      "explanation_text": "(1)①$\\frac{5\\pi}{4} = 5 × \\frac{180{^\\circ}}{4} = 225{^\\circ}$﹒\n②$\\frac{7\\pi}{12} = 7 × \\frac{180{^\\circ}}{12} = 105{^\\circ}$﹒\n③$- \\frac{13\\pi}{6} = - \\frac{13}{6} × 180{^\\circ} = - 390{^\\circ}$﹒\n④4（弧度）≒4 × 57.3° = 229.2°﹒\n(2)①$135{^\\circ} = 135 × \\frac{\\pi}{180} = \\frac{3\\pi}{4}$﹒\n②$150{^\\circ} = 150 × \\frac{\\pi}{180} = \\frac{5\\pi}{6}$﹒\n③$- 210{^\\circ} = - 210 × \\frac{\\pi}{180} = - \\frac{7\\pi}{6}$﹒\n④$70{^\\circ} = 70 × \\frac{\\pi}{180} = \\frac{7\\pi}{18}$﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-degree-radian-conversion-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 1,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0002",
+      "title": "100弧度為第幾象限角﹖ (1)一 (2)二 (3)三",
+      "question_text": "100弧度為第幾象限角﹖ (1)一 (2)二 (3)三 (4)四 (5)y軸上﹒",
+      "answer_text": "(4)",
+      "explanation_text": "2π 弧度≒6.28弧度，∴100弧度 = 6.28 × 15 + 5.8弧度 而$\\frac{3\\pi}{2}$弧度 < 5.8弧度 < 2π 弧度\n∴100弧度為第四象限角故選(4)﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-angle-normalization-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 2,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0003",
+      "title": "若一角之弧度為$- \\frac{25\\pi}{6}$﹐其",
+      "question_text": "若一角之弧度為$- \\frac{25\\pi}{6}$﹐其最大負同界角的弧度為α﹐最小正同界角的弧度為β﹐ 則(α,β )之值為何﹖(1)$( - \\frac{11\\pi}{6},\\frac{\\pi}{6})$ (2)$( - \\frac{\\pi}{6},\\frac{11\\pi}{6})$ (3)$( - \\frac{5\\pi}{6},\\frac{7\\pi}{6})$ (4)$( - \\frac{3\\pi}{6},\\frac{9\\pi}{6})$ (5)$( - \\frac{7\\pi}{6},\\frac{5\\pi}{6})$﹒",
+      "answer_text": "(2)",
+      "explanation_text": "$- \\frac{25\\pi}{6} = - 4\\pi - \\frac{\\pi}{6}$最大負同界角α為$- \\frac{\\pi}{6}$ $- \\frac{25\\pi}{6} = - 6\\pi + \\frac{11\\pi}{6}$最小正同界角β 為$\\frac{11\\pi}{6}$\n∴$(\\alpha,\\beta) = ( - \\frac{\\pi}{6},\\frac{11\\pi}{6})$ 故選(2)﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-angle-normalization-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 3,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0004",
+      "title": "哪些不等式成立﹖ (1)sinπ > sinπ ° (2",
+      "question_text": "哪些不等式成立﹖ (1)sinπ > sinπ ° (2)cosπ > cosπ ° (3)cosπ ° > sinπ °\n(4)tanπ > tanπ ° (5)$\\sin\\frac{\\sqrt{3}}{2} < \\frac{\\sqrt{3}}{2}$﹒\n【101松山高中期中考】",
+      "answer_text": "(3)(5)",
+      "explanation_text": "(1)╳﹕sinπ = 0 < sinπ °\n(2)╳﹕cosπ = − 1 < cosπ °\n(3)○\n(4)╳﹕tanπ = 0 < tanπ °\n(5)○ 故選(3)(5)﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-periodic-conversion-rules-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 4,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0005",
+      "title": "隨堂練習：下列何者正確﹖ (1)sin2 > sin1 (2)co",
+      "question_text": "下列何者正確﹖ (1)sin2 > sin1 (2)cos2 > cos1 (3)sin1 > cos1\n(4)tan3 > cot3 (5)csc( − 1) > cot( − 1)﹒\n【92臺南一中期中考】",
+      "answer_text": "(1)(3)(4)",
+      "explanation_text": "(1)○﹕sin2≒sin114° = sin66°﹐sin1≒sin57°\n∴sin2 > sin1\n(2)╳﹕cos2≒cos114° < 0﹐cos1≒cos57° > 0\n∴cos2 < cos1\n(3)○﹕sin1≒sin57°﹐cos1≒cos57° = sin33°\n∴sin1 > cos1\n(4)○﹕tan3≒tan171° = − tan9° cot3≒cot171° = − cot9° = − tan81°\n∴tan3 > cot3\n(5)╳﹕csc( − 1) = − csc1≒ − csc57° < − 1 cot( − 1) = − cot1≒ − cot57° = − tan33° > − 1\n∴csc( − 1) < cot( − 1) 故選(1)(3)(4)﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-periodic-conversion-rules-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 5,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0006",
+      "title": "時速60公里之汽車﹐在一圓形公路上行駛20秒後﹐旋轉60",
+      "question_text": "時速60公里之汽車﹐在一圓形公路上行駛20秒後﹐旋轉60°﹐求此圓之半徑約 為 (1)640 (2)600 (3)320 (4)300 (5)180 公尺﹒（請選出最接近者）",
+      "answer_text": "(3)",
+      "explanation_text": "20秒鐘所經過的弧長$S = 60 × \\frac{20}{3600} = \\frac{1}{3}$公里 旋轉的有向角$\\theta = 60{^\\circ} = \\frac{\\pi}{3}$弳 故所求半徑$r = \\frac{S}{\\theta} = \\frac{\\frac{1}{3}}{\\frac{\\pi}{3}} = \\frac{1}{\\pi}$公里 ≈ 318公尺 故選(3)﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-arc-speed-model-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 6,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0007",
+      "title": "鐘面上，8點20分時，時針與分針的銳夾角(1)度數為 =",
+      "question_text": "鐘面上，8點20分時，時針與分針的銳夾角(1)度數為 = ＿＿＿＿。(2)換算成弧度為=＿＿＿＿ ![",
+      "answer_text": "(1)$130^\\circ$；(2)$\\frac{13\\pi}{18}$",
+      "explanation_text": "因為分針走了20分鐘，那麼時針走了20 ×$\\frac{1}{12}$分鐘， 即$\\frac{5}{3}$分鐘所以時鐘在8點20分時， 時針與分針共夾了[ ( 40 +$\\frac{5}{3}$) − 20] × 6° = 130°即130 ×$\\frac{\\pi}{180}$ =$\\frac{13}{18}$π 弧度](.\\program-db\\imports\\packs\\_inspect-3A-4\\assets/media/image2.png)",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-clock-hand-angle-model-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 7,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0008",
+      "title": "隨堂練習：一鐘面上的時針與分針的長度分別為6公分﹑10公分﹐求﹕",
+      "question_text": "一鐘面上的時針與分針的長度分別為6公分﹑10公分﹐求﹕\n(1)6:20時﹐鐘面上的時針與分針所夾的銳角是多少度﹖\n(2)從6:20經過40分鐘到7:00﹐此鐘面上之分針所掃過的扇形面積是多少平方公分﹖\n[圖:program-db/assets/question-media/s3-1-1/image3.png]",
+      "answer_text": "(1)$70^\\circ$；(2)$\\frac{200\\pi}{3}$",
+      "explanation_text": "(1)由圖﹐\n∵分針1分鐘走6°﹐時針一分鐘走0.5°\n∴θ = 30° × 2 + 20 × 0.5° = 70°﹒\n(2)從6:20～7:00分針所掃過之區域的中心角 $= 6{^\\circ} × 40 = 240{^\\circ} = \\frac{4\\pi}{3}$\n∴所求面積$= \\frac{1}{2} × 10^{2} × \\frac{4\\pi}{3} = \\frac{200\\pi}{3}$（平方公分）﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-clock-hand-angle-model-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 8,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0009",
+      "title": "隨堂練習：有一鐘面上的時針和分針的長分別為5和8﹐從9點15分到1",
+      "question_text": "有一鐘面上的時針和分針的長分別為5和8﹐從9點15分到10點﹐ 求﹕(1)分針所掃出的面積﹒(2)時針所掃出的面積﹒",
+      "answer_text": "(1)$48\\pi$；(2)$\\frac{25\\pi}{16}$",
+      "explanation_text": "(1)分針所掃過角度：$\\theta_{1} = \\frac{9}{12} × 2\\pi = \\frac{3\\pi}{2}$\n∴分針所掃過面積$= \\frac{1}{2} × 8^{2} × \\frac{3\\pi}{2} = 48\\pi$﹒\n(2)時針所掃過面積$= \\frac{1}{2} × 5^{2} × (\\frac{3\\pi}{2} × \\frac{1}{12}) = \\frac{25\\pi}{16}$﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-clock-hand-angle-model-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 9,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0010",
+      "title": "兩輪半徑分別為1公尺及3公尺，兩輪中心相距8公尺，今將一",
+      "question_text": "兩輪半徑分別為1公尺及3公尺，兩輪中心相距8公尺，今將一皮帶交叉繞此兩輪，使轉",
+      "answer_text": "$\\frac{16\\pi}{3}+8\\sqrt3$",
+      "explanation_text": "內公切線段長$\\overline{AD} = \\overline{BC} = \\sqrt{8^{2} - (1 + 3)^{2}} = 4\\sqrt{3}$， 故皮帶長 = 2 × 4$\\sqrt{3} + \\frac{2}{3}(2\\pi + 6\\pi) = \\frac{16}{3}\\pi + 8\\sqrt{3}$\n（∵ $\\overline{AE}\\text{ }：\\text{ }\\overline{ED} = 1\\text{ }：\\text{ }3$ ∴ $\\overline{AE} = \\sqrt{3}\\text{ }，\\text{ }\\overline{ED} = 3\\sqrt{3}$ ∴ ∠AO~1~E =∠DO~2~E = 60°）",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-arc-speed-model-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 10,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0011",
+      "title": "隨堂練習：二輪半徑分別為1與2，輪心距為6，今以一皮帶交叉繞此二輪",
+      "question_text": "二輪半徑分別為1與2，輪心距為6，今以一皮帶交叉繞此二輪以相反方向旋轉， 求此皮帶長 = ＿＿＿＿。\n![",
+      "answer_text": "$4\\pi+6\\sqrt3$",
+      "explanation_text": "$\\overline{OP}\\text{ }：\\text{ }\\overline{PO'} = \\overline{OT}\\text{ }：\\text{ }\\overline{OT'}$= 2：1 ∴ $\\overline{OP}\\ = 4$，$\\overline{PO'} = 2$\n∴ ∠TOP =$\\frac{\\pi}{3}$，同理∠T ′O′P =$\\frac{\\pi}{3}$\n∴ $\\overline{TT'} = \\sqrt{6^{2} - (2 + 1)^{2}} = \\sqrt{36 - 9} = 3\\sqrt{3}$\n∴ 皮帶 = 2．$\\frac{4\\pi}{3}$+ 1．$\\frac{4\\pi}{3}$+ 2．3$\\sqrt{3}$= 4π + 6$\\sqrt{3}$](.\\program-db\\imports\\packs\\_inspect-3A-4\\assets/media/image5.png)",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-arc-speed-model-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 11,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0012",
+      "title": "設圓的半徑為r﹐圓心角θ 所對之弧長為3π﹐且其所張之扇",
+      "question_text": "設圓的半徑為r﹐圓心角θ 所對之弧長為3π﹐且其所張之扇形面積為18π﹐求﹕(1)r之值﹒\n(2)θ 之值﹒",
+      "answer_text": "(1)$12$；(2)$\\frac{\\pi}{4}$",
+      "explanation_text": "(1)$A = \\frac{1}{2}rs ⇒ 18\\pi = \\frac{1}{2}r × 3\\pi ⇒ r = 12$﹒\n(2)$\\theta = \\frac{s}{r} = \\frac{3\\pi}{12} = \\frac{\\pi}{4}$﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-sector-arc-formulas-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 12,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0013",
+      "title": "隨堂練習：一扇形周長為6，當此扇形有最大面積時，其半徑為＿＿＿＿",
+      "question_text": "一扇形周長為6，當此扇形有最大面積時，其半徑為＿＿＿＿，而圓心角為＿＿＿＿弧度。",
+      "answer_text": "半徑$\\frac{3}{2}$，圓心角$2$",
+      "explanation_text": "設扇形半徑為r，圓心角為θ，則弧長為rθ ∴ 周長2r + rθ = 6，面積A =$\\frac{1}{2}$r^2^θ 由A.M.$\\geq$ G.M.知$\\frac{2r + r\\theta}{2}$\n[圖:program-db/assets/question-media/s3-1-1/image6.png] $\\sqrt{2r · r\\theta}$ $⇒$ $\\frac{6}{2}$≥$\\sqrt{2r^{2}\\theta}$ $⇒$ 3 ≥$\\sqrt{4A}$ ∴ 9 ≥ 4A $⇒$ A\n[圖:program-db/assets/question-media/s3-1-1/image7.png] $\\frac{9}{4}$ 當2r = rθ時，A =$\\frac{9}{4}$為最大面積，此時θ = 2 ∴ 2r + 2r = 6 $⇒$ r =$\\frac{6}{4}$=$\\frac{3}{2}$",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 13,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0014",
+      "title": "在所有面積為100的扇形中﹐周長最小是多少﹖這個最小周長",
+      "question_text": "在所有面積為100的扇形中﹐周長最小是多少﹖這個最小周長的扇形其半徑為多少﹖",
+      "answer_text": "最小周長$40$，半徑$10$",
+      "explanation_text": "設扇形的半徑為r﹐圓心角為 θ ﹐則面積$\\frac{1}{2}r^{2}\\theta = 100$﹐周長L = 2r + r θ﹒\n由算幾不等式﹐得$\\frac{2r + r\\theta}{2} \\geq \\sqrt{2r × r\\theta}$⇒$\\frac{L}{2} \\geq \\sqrt{400}$⇒L ≥ 40﹒\n因此﹐周長L有最小值40﹐此時${ \\begin{array}{r} 2r = r\\theta \\ 2r + r\\theta = 40 \\end{array} \\right.$⇒${ \\begin{array}{r} \\theta = 2 \\ r = 10 \\end{array} \\right.$﹒\n故最小的周長是40﹐其半徑為10﹐圓心角為2弧度﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 14,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0015",
+      "title": "已知一扇形之周長為40公分﹐今欲得最大之扇形面積﹐求﹕(",
+      "question_text": "已知一扇形之周長為40公分﹐今欲得最大之扇形面積﹐求﹕(1)此扇形之半徑為多少公分﹒\n(2)此時之面積為多少平方公分﹒(3)此時之中心角為多少弧度",
+      "answer_text": "(1)$10$；(2)$100$；(3)$2$",
+      "explanation_text": "由題意得2r + θr = 40 由算術平均數 ≥ 幾何平均數得$\\frac{2r + \\theta r}{2} \\geq \\sqrt{2\\theta r^{2}}$ $⇒ 400 \\geq 2\\theta r^{2} ⇒ 100 \\geq \\frac{1}{2}\\theta r^{2}$\n∴最大面積為100 此時2r = θr = 20 ⇒ r = 10﹐θ = 2\n∴(1)半徑為10公分﹒(2)面積最大為100平方公分﹒(3)中心角為2弧度﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 15,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0016",
+      "title": "隨堂練習：一個扇形的周長$\\mathcal{l}$固定，證明：當其",
+      "question_text": "一個扇形的周長$\\mathcal{l}$固定，證明：當其中心角θ = 2時，面積A為最大。\n![",
+      "answer_text": "見詳解",
+      "explanation_text": "弧長s = rθ，$\\mathcal{l}$ = 2r + s = 2r + rθ，A = πr^2^．$\\frac{\\theta}{2\\pi}$=$\\frac{1}{2}$r^2^θ 由算幾不等式，$\\frac{2r + r\\theta}{2} \\geq \\sqrt{2r．r\\theta}$，$\\frac{\\mathcal{l}^{2}}{4} \\geq$ 2r^2^θ = 4A\n∴ A ≤$\\frac{\\mathcal{l}^{2}}{16}$\n∴ 當2r = rθ $⇒$ θ = 2時，A =$\\frac{\\mathcal{l}^{2}}{16}$為最大值 ](.\\program-db\\imports\\packs\\_inspect-3A-4\\assets/media/image8.png)",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 16,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0017",
+      "title": "隨堂練習：設一扇形之面積恆為定值8，試求(1)扇形的最小周長。 (",
+      "question_text": "設一扇形之面積恆為定值8，試求(1)扇形的最小周長。\n(2)此時扇形的中心角θ之弧度。",
+      "answer_text": "(1)$8\\sqrt2$；(2)$2$",
+      "explanation_text": "設扇形之圓半徑為r，中心角為θ，則面積$\\frac{1}{2}$r^2^θ = 8 扇形周長p = 2r + rθ$\\geq 2\\sqrt{2r．r\\theta}$ = 2$\\sqrt{2r^{2}\\theta}$= 2$\\sqrt{2 × 16} = 8\\sqrt{2}$ 當2r = rθ時，周長p = 8$\\sqrt{2}$為最小值，此時θ = 2",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 17,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0018",
+      "title": "一扇形的周長為定值k，試求此扇形的最大面積，並求此時扇形",
+      "question_text": "一扇形的周長為定值k，試求此扇形的最大面積，並求此時扇形的半徑。",
+      "answer_text": "最大面積$\\frac{k^2}{16}$，半徑$\\frac{k}{4}$",
+      "explanation_text": "設扇形半徑為r，圓心角為θ，則k = 2r + rθ，面積a =$\\frac{1}{2}$r^2^θ 由算術平均數$\\geq$幾何平均數可得 $\\frac{2r + r\\theta}{2} \\geq \\sqrt{2r^{2}\\theta}$ $⇒$ $\\frac{k}{2} \\geq \\sqrt{2r^{2}\\theta}$ $⇒$ $\\frac{k^{2}}{4} \\geq 2 ·$<!-- -->{=html}2a = 4a ∴ $\\frac{k^{2}}{16} \\geq$ a 故當2r = rθ時，即θ = 2時，扇形有最大面積$\\frac{k^{2}}{16}$ 此時，將θ = 2代入k = 2r + rθ可解得半徑r =$\\frac{k}{4}$",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 18,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0019",
+      "title": "隨堂練習：設一扇形的面積為一定值k﹐當其圓心角θ = α﹐半徑r",
+      "question_text": "設一扇形的面積為一定值k﹐當其圓心角θ = α﹐半徑r = r~0~時﹐扇形的周長為最小﹐ 其值為l﹐試求出α﹑r~0~及l之值﹒",
+      "answer_text": "$\\alpha=2$，$r_0=\\sqrt{k}$，$l=4\\sqrt{k}$",
+      "explanation_text": "由題意得$\\frac{1}{2}r^{2}\\theta = k·s $ 扇形的周長$= 2r + r\\theta \\geq 2\\sqrt{2r × r\\theta} = 2\\sqrt{4k} = 4\\sqrt{k}$ 等號\" = \"成立⇔ 2r = rθ\n∴θ = 2代入①得r^2^ = k\n∴$r = \\sqrt{k}$即$l = 4\\sqrt{k}$﹐α = 2﹐$r_{0} = \\sqrt{k}$﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 19,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0020",
+      "title": "兩條公路k及m，如果筆直延伸將交會於C處成60°夾角，如",
+      "question_text": "兩條公路k及m，如果筆直延伸將交會於C處成60°夾角，如圖所示。為銜接此二公路， 規劃在兩公路各距C處300公尺的A，B兩點間開拓成圓弧型公路，使k，m分別在A，B與 此圓弧相切，則此圓弧長=＿＿＿＿公尺。（公尺以下四捨五入） | （$\\sqrt{3}$\n[圖:program-db/assets/question-media/s3-1-1/image9.png] 1.732，π |\n[圖:program-db/assets/question-media/s3-1-1/image9.png] 3.142） |",
+      "answer_text": "約$363$",
+      "explanation_text": "r =$\\overline{AP}$=$\\frac{300}{\\sqrt{3}}$=100$\\sqrt{3}$，∠APB = 120° =$\\frac{2\\pi}{3}$\n∴\n[圖:program-db/assets/question-media/s3-1-1/image10.png] = 100$\\sqrt{3}$．$\\frac{2\\pi}{3}$= ($\\frac{200\\sqrt{3}}{3}$)π\n[圖:program-db/assets/question-media/s3-1-1/image9.png] 363",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-degree-radian-conversion-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 20,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0021",
+      "title": "一直圓錐的底半徑為3，高為4，今沿其一斜高剖開，展成一個",
+      "question_text": "一直圓錐的底半徑為3，高為4，今沿其一斜高剖開，展成一個扇形，則此扇形的中心角 θ = ＿＿＿＿。\n![",
+      "answer_text": "$\\frac{6\\pi}{5}$",
+      "explanation_text": "直圓錐的底圓周的周長=扇形的弧長 $⇒$ 2π(3) = 2π(5)．$\\frac{\\theta}{2\\pi}$ $⇒$ θ =$\\frac{6\\pi}{5}$= 6 × 36° = 216°](.\\program-db\\imports\\packs\\_inspect-3A-4\\assets/media/image11.png)",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 21,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0022",
+      "title": "隨堂練習：有一直圓錐，底半徑為4，高為3，現沿其斜高剪成一扇形，則",
+      "question_text": "有一直圓錐，底半徑為4，高為3，現沿其斜高剪成一扇形，則此扇形中心角 為＿＿＿＿弧度。",
+      "answer_text": "$\\frac{8\\pi}{5}$",
+      "explanation_text": "",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 22,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0023",
+      "title": "隨堂練習：](.\\program-db\\imports\\packs",
+      "question_text": "[圖:program-db/assets/question-media/s3-1-1/image13.png] ](.\\program-db\\imports\\packs\\_inspect-3A-4\\assets/media/image14.wmf)",
+      "answer_text": "$\\frac{8\\pi}{5}$",
+      "explanation_text": "= 5θ = 8π \n∴ θ =$\\frac{8\\pi}{5}$",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-sector-arc-formulas-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 23,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0024",
+      "title": "如圖：一直立圓錐之底圓直徑為5，斜高$\\overline",
+      "question_text": "如圖：一直立圓錐之底圓直徑為5，斜高$\\overline{CA} = \\overline{CB} = 15$，一螞蟻從A點沿著 ![",
+      "answer_text": "$5\\sqrt7$",
+      "explanation_text": "從$\\overline{AC}$剪開，展成一扇形，AA′弧長為5π $⇒$ ∠ACP = 60° 故最短路徑為$\\overline{AP}$，由餘弦定理得$\\overline{AP} = 5\\sqrt{7}$](.\\program-db\\imports\\packs\\_inspect-3A-4\\assets/media/image16.png)",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 24,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0025",
+      "title": "隨堂練習：有一隻螞蟻由A出發(1)繞錐面一周到D。 (2)繞錐面一",
+      "question_text": "有一隻螞蟻由A出發(1)繞錐面一周到D。 (2)繞錐面一周回到A。\n試各求最短的路徑長。\n[圖:program-db/assets/question-media/s3-1-1/image18.png] ](.\\program-db\\imports\\packs\\_inspect-3A-4\\assets/media/image19.png) ![",
+      "answer_text": "(1)$2$；(2)$(\\sqrt3+1)\\sqrt{2-\\sqrt2}$",
+      "explanation_text": "底圓周的周長 = 扇形的弧度 $⇒$ 2π($\\frac{\\sqrt{3} + 1}{8}$) =\n($\\sqrt{3}$+1)θ $⇒$ θ =$\\frac{\\pi}{4}$\n(1)如圖， ${\\overline{AD}}^{2}$= ($\\sqrt{2}$)^2^ + ($\\sqrt{3}$+1)^2^ − 2$\\sqrt{2}$\n($\\sqrt{3}$+ 1)cos45° = 2 + 4 + 2$\\sqrt{3}$− 2($\\sqrt{3}$+ 1) = 4\n⇒ $\\overline{AD}$ = 2](.\\program-db\\imports\\packs\\_inspect-3A-4\\assets/media/image20.png)\n(2)如圖，所求路徑長 =$\\sqrt{(\\sqrt{3} + 1)^{2} + (\\sqrt{3} + 1)^{2} - 2(\\sqrt{3} + 1)(\\sqrt{3} + 1)\\cos 45{^\\circ}}$ = ($\\sqrt{3}$+1)$\\sqrt{2 - \\sqrt{2}}$",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 25,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0026",
+      "title": "設一扇形之半徑為9﹐中心角為$\\frac{2\\pi}{3",
+      "question_text": "設一扇形之半徑為9﹐中心角為$\\frac{2\\pi}{3}$﹐今以此扇形（邊線接齊）圍成一圓錐體﹐ 求﹕(1)側表面積﹒(2)全表面積﹒(3)體積（$= \\frac{1}{3} ×$底面積 × 高）﹒\n16\\.\n[圖:program-db/assets/question-media/s3-1-1/image21.png]\n[圖:program-db/assets/question-media/s3-1-1/image22.png]",
+      "answer_text": "(1)$27\\pi$；(2)$36\\pi$；(3)$18\\sqrt2\\pi$",
+      "explanation_text": "如圖﹐扇形之弧長 = 圓錐之底圓周長⇒$\\frac{2\\pi}{3} × 9 = 2\\pi R$（R表底圓的半徑）\n∴R = 3﹐則高$h = \\sqrt{9^{2} - 3^{2}} = 6\\sqrt{2}$\n(1)側表面積$= \\frac{1}{2}\\theta r^{2} = \\frac{1}{2} × \\frac{2\\pi}{3} × 9^{2} = 27\\pi$﹒\n(2)全表面積$= \\frac{1}{2}\\theta r^{2} + \\pi R^{2} = 27\\pi + 9\\pi = 36\\pi$﹒\n(3)體積$= \\frac{1}{3} × 9\\pi × 6\\sqrt{2} = 18\\sqrt{2}\\pi$﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 26,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例16"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0027",
+      "title": "隨堂練習：設一扇形的中心角為$\\frac{8\\pi}{5}$﹐半徑",
+      "question_text": "設一扇形的中心角為$\\frac{8\\pi}{5}$﹐半徑為5﹐則將此扇形捲成一直圓錐容器（沒有重疊部分）﹐ 求此圓錐的容積﹒（錐體體積$= \\frac{1}{3} ×$底面積 × 高）",
+      "answer_text": "$16\\pi$",
+      "explanation_text": "弧長 = 底圓周長$⇒ \\frac{8\\pi}{5} × 5 = 2\\pi R ⇒ R = 4$ 高h = 3 體積$= \\frac{1}{3} × (\\pi × 4^{2}) × 3 = 16\\pi$﹒\n[圖:program-db/assets/question-media/s3-1-1/image23.png]\n[圖:program-db/assets/question-media/s3-1-1/image24.png]",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 27,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0028",
+      "title": "隨堂練習：一圓錐之高為$\\sqrt{5}$﹐體積為$\\frac{4",
+      "question_text": "一圓錐之高為$\\sqrt{5}$﹐體積為$\\frac{4\\sqrt{5}\\pi}{3}$﹐若將此圓錐體剪開成一扇形﹐ 求此扇形之(1)半徑﹒(2)弧長﹒(3)面積﹒（錐體體積$= \\frac{1}{3} ×$ (底面積 × 高)）",
+      "answer_text": "(1)$3$；(2)$4\\pi$；(3)$6\\pi$",
+      "explanation_text": "令圓錐底之半徑為r $$\\frac{4\\sqrt{5}\\pi}{3} = \\frac{\\pi}{3}r^{2} × \\sqrt{5} $$⇒ r^2^ = 4 ⇒ r = 2\n(1)$R = \\sqrt{2^{2} + (\\sqrt{5})^{2}} = 3$﹒\n(2)S = 2π × 2 = 4π﹐$\\theta = \\frac{S}{R} = \\frac{4\\pi}{3}$﹒\n(3)$A = \\frac{1}{2}R^{2}\\theta = \\frac{1}{2} × 3^{2} × \\frac{4\\pi}{3} = 6\\pi$﹒\n[圖:program-db/assets/question-media/s3-1-1/image25.png]\n[圖:program-db/assets/question-media/s3-1-1/image26.png]",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-sector-ratio-method-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 28,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0029",
+      "title": "試求中央部分鋪色區域面積﹒",
+      "question_text": "試求中央部分鋪色區域面積﹒",
+      "answer_text": "$\\frac{(4-\\pi)a^2}{2}$",
+      "explanation_text": "如圖先將弓形\n[圖:program-db/assets/question-media/s3-1-1/image28.png] 之圓補上﹐\n[圖:program-db/assets/question-media/s3-1-1/image29.png] 則∠ATB = 180° − 135° = 45°\n⇒ ∠AOB = 90° $${⇒ {\\overline{OA}}^{2} + {\\overline{OB}}^{2} = a^{2} }{⇒ \\overline{OA} = \\frac{a}{\\sqrt{2}} }$$⇒ 扇形\n[圖:program-db/assets/question-media/s3-1-1/image30.png] $OAB = \\frac{1}{2}(\\frac{a}{\\sqrt{2}})^{2} × \\frac{\\pi}{2} = \\frac{\\pi a^{2}}{8}$ $$\\bigtriangleup OAB = \\frac{1}{2} × \\frac{a}{\\sqrt{2}} × \\frac{a}{\\sqrt{2}} = \\frac{a^{2}}{4} $$⇒ 弓形\n[圖:program-db/assets/question-media/s3-1-1/image31.png] 面積$= \\frac{\\pi a^{2}}{8} - \\frac{a^{2}}{4} = \\frac{(\\pi - 2)a^{2}}{8}$ 故所求 = a□ABCD − 4弓形\n[圖:program-db/assets/question-media/s3-1-1/image28.png] 之面積 $= a^{2} - 4 × \\frac{(\\pi - 2)a^{2}}{8} = \\frac{(4 - \\pi)}{2}a^{2}$﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-chord-arc-angle-relation-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 29,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例17"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0030",
+      "title": "如圖﹐以O為圓心﹐各作二個$\\frac{1}{4}$圓﹐",
+      "question_text": "如圖﹐以O為圓心﹐各作二個$\\frac{1}{4}$圓﹐半徑各為5公分﹑3公分﹐",
+      "answer_text": "$\\frac{25\\sqrt3}{4}-\\frac{\\pi}{6}$",
+      "explanation_text": "[圖:program-db/assets/question-media/s3-1-1/image33.png] 由圖知$\\overline{OD} = 5$﹐$\\overline{OC} = \\frac{5}{2}\\sqrt{3}$ 於△OCD中﹐$\\overline{CD} = \\sqrt{5^{2} - (\\frac{5}{2}\\sqrt{3})^{2}} = \\frac{5}{2}$ 2 ×\n[圖:program-db/assets/question-media/s3-1-1/image34.png] = 2(a△OCD − a\n[圖:program-db/assets/question-media/s3-1-1/image30.png] OEF)$= 2(\\frac{1}{2} × \\frac{5\\sqrt{3}}{2} × \\frac{5}{2} - \\frac{1}{2} × 3^{2} × \\frac{\\pi}{6}) = \\frac{25\\sqrt{3}}{4} - \\frac{3\\pi}{2}$\n[圖:program-db/assets/question-media/s3-1-1/image35.png] $= \\frac{1}{2} × 5^{2} × \\frac{\\pi}{6} - \\frac{1}{2} × 3^{2} × \\frac{\\pi}{6} = \\frac{4\\pi}{3}$ 所求$= \\frac{25\\sqrt{3}}{4} - \\frac{3\\pi}{2} + \\frac{4\\pi}{3} = \\frac{25\\sqrt{3}}{4} - \\frac{\\pi}{6}$（平方公分）﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-sector-arc-formulas-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 30,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例18"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0031",
+      "title": "隨堂練習：求鋪色部分之面積﹒（$\\overline{OA} =",
+      "question_text": "求鋪色部分之面積﹒（$\\overline{OA} = \\overline{OB} = a$）",
+      "answer_text": "$\\frac{(\\pi-2)a^2}{4}$",
+      "explanation_text": "[圖:program-db/assets/question-media/s3-1-1/image37.png] I =\n[圖:program-db/assets/question-media/s3-1-1/image38.png]\n[圖:program-db/assets/question-media/s3-1-1/image39.png] −\n[圖:program-db/assets/question-media/s3-1-1/image40.png] $= 2 × \\frac{1}{4} × (\\frac{a}{2})^{2}\\pi - (\\frac{a}{2})^{2} = \\frac{(\\pi - 2)a^{2}}{8}$ II =\n[圖:program-db/assets/question-media/s3-1-1/image41.png] −\n[圖:program-db/assets/question-media/s3-1-1/image42.png] −\n[圖:program-db/assets/question-media/s3-1-1/image43.png] −\n[圖:program-db/assets/question-media/s3-1-1/image40.png] $= \\frac{1}{4}a^{2}\\pi - 2 × \\frac{1}{4} × (\\frac{a}{2})^{2}\\pi - (\\frac{a}{2})^{2} = \\frac{(\\pi - 2)a^{2}}{8}$\n∴鋪色部分之面積為$(\\frac{\\pi - 2}{8})a^{2} + (\\frac{\\pi - 2}{8})a^{2} = (\\frac{\\pi - 2}{4})a^{2}$﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-sector-arc-formulas-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 31,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0032",
+      "title": "隨堂練習：小龍設計班上的標誌﹐如圖(1)與(2)﹐正方形ABCD的",
+      "question_text": "小龍設計班上的標誌﹐如圖(1)與(2)﹐正方形ABCD的邊長為6﹐分別以A和B為 圓心﹑6為半徑畫弧﹐兩弧交於E點﹐為計算套色成本﹐請幫小龍分別求以下鋪色區域的面 積﹒\n| (1)\n[圖:program-db/assets/question-media/s3-1-1/image44.png]\n(2)\n[圖:program-db/assets/question-media/s3-1-1/image45.png]",
+      "answer_text": "(1)$12\\pi-9\\sqrt3$；(2)$9\\sqrt3-3\\pi$",
+      "explanation_text": "連接$\\overline{AE}$﹐$\\overline{BE}$﹐∵$\\overline{AE} = \\overline{BE} = \\overline{AB}$﹐∴$\\mathrm{\\Delta}ABE$為正三角形﹒\n(1)如下圖\n[圖:program-db/assets/question-media/s3-1-1/image46.png] 故鋪色區域面積 = 2 × 扇形ABE的面積 − △ABE的面積 $2 × ( \\frac{1}{2} × 6^{2} × \\frac{\\pi}{3} ) - \\frac{\\sqrt{3}}{4} × 6^{2} = 12\\pi - 9\\sqrt{3}$﹒\n(2)如下圖﹕\n[圖:program-db/assets/question-media/s3-1-1/image47.png] 鋪色區域的面積為 扇形ADE的面積 − (扇形BAE面積 − △ABE面積) $= \\frac{1}{2} × 6^{2} × \\frac{\\pi}{6} - ( \\frac{1}{2} × 6^{2} × \\frac{\\pi}{3} - \\frac{\\sqrt{3}}{4} × 6^{2} ) = 9\\sqrt{3} - 3\\pi$﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-chord-arc-angle-relation-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 32,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0033",
+      "title": "隨堂練習：扇形如圖，∠A =$\\frac{\\pi}{4}$，$\\o",
+      "question_text": "扇形如圖，∠A =$\\frac{\\pi}{4}$，$\\overline{AB} = \\sqrt{10}$，且DEFG為內接正方形，求斜線部分面積＿＿＿＿。\n![",
+      "answer_text": "$\\frac{5\\pi}{4}-3$",
+      "explanation_text": "如圖 ∵ ∠A =$\\frac{\\pi}{4}$，□DEFG為正方形， 令$\\overline{AD} = \\overline{DE} = \\overline{DG} = x$。\n在△AFG中，因為∠AGF =$\\frac{\\pi}{2}$ 故$\\sqrt{10} = \\overline{AF} = \\sqrt{{\\overline{AG}}^{2} + {\\overline{GF}}^{2}}$=$\\sqrt{(2x)^{2} + x^{2}} = \\sqrt{5}x$\n∴ x =$\\frac{\\sqrt{10}}{\\sqrt{5}} = \\sqrt{2}$ 故所求斜線部分面積 = 扇形ABC面積 − △ADE − □DEFG =$\\frac{1}{2}\\text{ }．\\text{ }\\frac{\\pi}{4}\\text{ }．\\text{ }(\\sqrt{10})^{2} - \\frac{1}{2}\\text{ }．\\text{ }(\\sqrt{2})^{2} - (\\sqrt{2})^{2}$ =$\\frac{5\\pi}{4} - 3$](.\\program-db\\imports\\packs\\_inspect-3A-4\\assets/media/image48.png)",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-chord-arc-angle-relation-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 33,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0034",
+      "title": "隨堂練習：為半徑，在正方形內畫圓弧$\\overset{︵}{DPB",
+      "question_text": "為半徑，在正方形內畫圓弧$\\overset{︵}{DPB}$，$\\overset{︵}{AQPC}$及$\\overset{︵}{DQB}$， 則(1)兩弧$\\overset{︵}{DPB}$與$\\overset{︵}{DQB}$所夾眼形的面積為＿＿＿＿。\n| (2)兩弧$\\overset{︵}{AQP}$，\n[圖:program-db/assets/question-media/s3-1-1/image50.png] 與一邊$\\overline{AB}$所夾區域的面積為＿＿＿＿。 | ![",
+      "answer_text": "(1)$\\frac{\\pi}{2}-1$；(2)$\\frac{\\pi}{3}-\\frac{\\sqrt3}{4}$",
+      "explanation_text": "](.\\program-db\\imports\\packs\\_inspect-3A-4\\assets/media/image51.png)\n[圖:program-db/assets/question-media/s3-1-1/image52.png]",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-chord-arc-angle-relation-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 34,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0035",
+      "title": "隨堂練習：2為半徑各作一弧，則斜線部分面積為＿＿＿＿。 ](.\\p",
+      "question_text": "2為半徑各作一弧，則斜線部分面積為＿＿＿＿。\n[圖:program-db/assets/question-media/s3-1-1/image54.png] ](.\\program-db\\imports\\packs\\_inspect-3A-4\\assets/media/image55.wmf)",
+      "answer_text": "$4-\\sqrt3-\\frac{2\\pi}{3}$",
+      "explanation_text": "∠PBC = 60° $⇒$ ∠APB = 75° $⇒$ ∠APD =150°，$\\overline{AP} = \\sqrt{6} - \\sqrt{2} = \\overline{PD}$ △APD =$\\overline{AP}\\text{ }．\\text{ }\\overline{PD}$sin150° =$\\frac{1}{2}(\\sqrt{6} - \\sqrt{2})^{2} ． \\frac{1}{2}$ = 2 −$\\sqrt{3}$ 弦$\\overline{AP}$對應的弓形面積 = π (2^2^)．$\\frac{30{^\\circ}}{360{^\\circ}}$−$\\frac{1}{2}$× 2 × 2sin30° =$\\frac{\\pi}{3}$− 1 斜線部分面積 = 2 −$\\sqrt{3}$ − 2($\\frac{\\pi}{3}$−1) = 4 −$\\sqrt{3}$−$\\frac{2\\pi}{3}$",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-periodic-conversion-rules-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 35,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0036",
+      "title": "以$\\overline{AB} = 2a$為直徑畫一半圓",
+      "question_text": "以$\\overline{AB} = 2a$為直徑畫一半圓﹐二弦$\\overline{CD}$﹐$\\overline{EF}$均平行於直徑$\\overline{AB}$﹐已知$\\overline{CD} = a$﹐$\\overline{EF} = \\sqrt{2}a$﹐ 求鋪色部分的面積﹒\n[圖:program-db/assets/question-media/s3-1-1/image56.png]",
+      "answer_text": "$\\frac{(\\pi-6+3\\sqrt3)a^2}{12}$",
+      "explanation_text": "如圖\n[圖:program-db/assets/question-media/s3-1-1/image57.png] \n[圖:program-db/assets/question-media/s3-1-1/image58.png] $= \\frac{1}{2}a^{2} × \\frac{\\pi}{3} - \\frac{1}{2} × a × a\\sin\\frac{\\pi}{3} = \\frac{\\pi}{6}a^{2} - \\frac{\\sqrt{3}}{4}a^{2}$\n∴鋪色面積 =\n[圖:program-db/assets/question-media/s3-1-1/image59.png] −\n[圖:program-db/assets/question-media/s3-1-1/image60.png] −\n[圖:program-db/assets/question-media/s3-1-1/image61.png] $= \\frac{1}{2}a^{2} × \\frac{\\pi}{2} - (\\frac{\\pi}{6}a^{2} - \\frac{\\sqrt{3}}{4}a^{2}) - \\frac{1}{2} × a × a$ $= \\frac{\\pi}{12}a^{2} + \\frac{\\sqrt{3}}{4}a^{2} - \\frac{1}{2}a^{2} = \\frac{1}{12}(\\pi - 6 + 3\\sqrt{3})a^{2}$﹒\n[]{.underline}",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-periodic-conversion-rules-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 36,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例19"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0037",
+      "title": "隨堂練習：一長方形ABCD﹐$\\overline{AB} = 12",
+      "question_text": "一長方形ABCD﹐$\\overline{AB} = 12$﹐$\\overline{AD} = 12\\sqrt{3}$﹐今以$\\overline{AB}$﹐$\\overline{AD}$各邊為直徑作兩圓﹐若此二 圓區域的交集部分之面積為$a\\pi + b\\sqrt{3}$﹐a﹑b皆為整數﹐求a + b之值﹒",
+      "answer_text": "-6",
+      "explanation_text": "如圖﹐\n[圖:program-db/assets/question-media/s3-1-1/image62.png] 設N﹑M為$\\overline{AB}$﹑$\\overline{AD}$之中點﹐則 $${\\overline{AN} = \\frac{1}{2}\\overline{AB} = 6 }{\\overline{AM} = \\frac{1}{2}\\overline{AD} = 6\\sqrt{3} }{⇒ \\overline{MN} = \\sqrt{{\\overline{AN}}^{2} + {\\overline{AM}}^{2}} = \\sqrt{36 + 108} = 12 }$$故知△MNA為30° − 60° − 90°之三角形 $\\angle AME = 60{^\\circ} = \\frac{\\pi}{3}$﹐$\\angle ANE = 120{^\\circ} = \\frac{2\\pi}{3}$ 所求面積 a\n[圖:program-db/assets/question-media/s3-1-1/image63.png] MAE + a\n[圖:program-db/assets/question-media/s3-1-1/image30.png] NAE − a□ANEM $$= \\frac{1}{2} × (6\\sqrt{3})^{2} × (\\frac{\\pi}{3}) + \\frac{1}{2} × (6)^{2} × (\\frac{2\\pi}{3}) - 6 × 6\\sqrt{3} $$$= 30\\pi - 36\\sqrt{3} ⇒ a + b = 30 - 36 = - 6$﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-sector-arc-formulas-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 37,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0038",
+      "title": "隨堂練習：各向圓內部作一圓弧（如右圖）﹐ 求﹕(1)此圓弧圍成圖形",
+      "question_text": "各向圓內部作一圓弧（如右圖）﹐ 求﹕(1)此圓弧圍成圖形之面積為何﹖(2)$\\overline{EF}$長度﹒",
+      "answer_text": "(1)$\\left(1-\\sqrt3+\\frac{\\pi}{3}\\right)a^2$；(2)$(\\sqrt3-1)a$",
+      "explanation_text": "(1)4x + 4y + z = a^2^...① $2x + 3y + z = \\frac{1}{4} × \\pi × a^{2} = \\frac{\\pi}{4}a^{2}$...② $x + 2y + z = \\frac{1}{6}$圓面積 × 2 − 三角形面積(∆CDE)$= \\frac{1}{6} × \\pi × a^{2} × 2 - \\frac{1}{2} × a × \\frac{\\sqrt{3}}{2}a$...③ 解①②③得$z = (1 - \\sqrt{3} + \\frac{\\pi}{3})a^{2}$﹒\n(2)$\\overline{EF} = (E 到\\overline{DC} 之距離) + (F 到\\overline{AB} 之距離) - \\overline{AD}$ $= \\frac{\\sqrt{3}}{2}a + \\frac{\\sqrt{3}}{2}a - a = (\\sqrt{3} - 1)a$﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-sector-arc-formulas-s311",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 38,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-1-0039",
+      "title": "連線的夾角為1°﹐求﹕ (1)地球半徑約為多少公里﹒ (",
+      "question_text": "連線的夾角為1°﹐求﹕\n(1)地球半徑約為多少公里﹒\n(2)月球赤道上相距220公里之二點與月心連線的夾角為多少弧度﹖（π≈ 3.1416）",
+      "answer_text": "(1)約$6302.5$公里；(2)$\\frac{2\\pi}{45}$",
+      "explanation_text": "(1)設地球之半徑為R 因$S = R\\theta ⇒ R = \\frac{110}{1 × \\frac{\\pi}{180}} = \\frac{19800}{\\pi} \\fallingdotseq 6302.5$（公里）﹒\n(2)月球半徑$R' = \\frac{R}{4} = \\frac{19800}{4\\pi} ⇒ \\theta' = \\frac{S'}{R'} = \\frac{220}{\\frac{19800}{4\\pi}} = \\frac{2\\pi}{45}$﹒",
+      "chapter_code": "s3-1-1",
+      "formula_id": "senior-radian-chord-arc-angle-relation-s311",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-4轉.docx",
+      "source_section": "主題1：弧度、弧長與扇形面積",
+      "source_order": 39,
+      "tags": [
+        "s3-1-1",
+        "section:主題1：弧度、弧長與扇形面積",
+        "marker:範例20"
+      ]
+    }
+  ]
+}

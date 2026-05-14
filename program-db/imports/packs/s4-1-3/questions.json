@@ -1,0 +1,686 @@
+{
+  "chapter_code": "s4-1-3",
+  "chapter_title": "空間向量的內積",
+  "questions": [
+    {
+      "id": "q-s4-1-3-0001",
+      "title": "設$\\overset{⃑}{OA}$= (3，1，0)，$\\overse",
+      "question_text": "設$\\overset{⃑}{OA}$= (3，1，0)，$\\overset{⃑}{OB}$= (− 1，2，3)，若$\\overset{⃑}{OC}$⊥$\\overset{⃑}{OB}$，$\\overset{⃑}{OA}$//$\\overset{⃑}{BC}$且$\\overset{⃑}{OA}$+$\\overset{⃑}{OD}$=$\\overset{⃑}{OC}$，則$\\overset{⃑}{OD}$=？",
+      "answer_text": "$(38,15,3)$",
+      "explanation_text": "設$\\overset{⃑}{OD}$=\n(x，y，z)，則$\\overset{⃑}{OC}$=$\\overset{⃑}{OA}$+$\\overset{⃑}{OD}$=\n(3 + x，1 + y，z) ∵ $\\overset{⃑}{OC}$⊥$\\overset{⃑}{OB}$\n∴ $\\overset{⃑}{OC}$．$\\overset{⃑}{OB}$= 0 ⇒ − (3 + x) + 2(1 + y) + 3z = 0 ∴ x − 2y − 3z = − 1......① 又因$\\overset{⃑}{BC}$=$\\overset{⃑}{OC}$−$\\overset{⃑}{OB}$= (3 + x，1 + y，z) − (− 1，2，3) = (4 + x，− 1+ y，z − 3)\n∵ $\\overset{⃑}{OA}$//$\\overset{⃑}{BC}$ ∴ ∃ t ∈ R，使得$\\overset{⃑}{BC}$= t$\\overset{⃑}{OA}$ ∴ 4 + x = 3t，− 1 + y = t，z − 3 = 0\n⇒ x = 3t − 4，y = t + 1，z = 3代入①，得(− 4 + 3t) − 2(1 + t) − 3 × 3 = − 1 ⇒ t = 14\n∴ x = 3 × 14 − 4 = 38，y = 14 + 1 = 15，z = 3 ∴ $\\overset{⃑}{OD}$= (38，15，3)",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-main-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 1,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0002",
+      "title": "長方體內兩線垂直判定",
+      "question_text": "$6\\overline{CQ} = \\overline{CD}$，$6\\overline{ER} = \\overline{EF}$，求∠QPR的值。\n[圖:program-db/assets/question-media/s4-1-3/image5.png]",
+      "answer_text": "$90^\\circ$",
+      "explanation_text": "將長方體放在空間中，如圖所示。\n因為$\\overset{⃑}{PQ} = (6,0, - 2)$，$\\overset{⃑}{PR} = (1,6,3)$， 所以$\\cos\\angle QPR = \\frac{\\overset{⃑}{PQ} · \\overset{⃑}{PR}}{|\\overset{⃑}{PQ}||\\overset{⃑}{PR}|} = \\frac{6 × 1 + 0 × 6 + ( - 2) × 3}{\\sqrt{6^{2} + 0^{2} + ( - 2)^{2}}\\sqrt{1^{2} + 6^{2} + 3^{2}}} = 0$ 因此∠QPR = 90°。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-main-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 2,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0003",
+      "title": "空間中不共線三點A，B，C，滿足$\\overset{⃑}{BC} ·",
+      "question_text": "空間中不共線三點A，B，C，滿足$\\overset{⃑}{BC} · \\overset{⃑}{CA} = - 8$，$\\overset{⃑}{CA} · \\overset{⃑}{AB} = - 3$，$\\overset{⃑}{AB} · \\overset{⃑}{BC} = - 6$，求$\\overline{BC}$的長度。",
+      "answer_text": "$\\sqrt{14}$",
+      "explanation_text": "$\\overset{⃑}{AB} + \\overset{⃑}{BC} + \\overset{⃑}{CA} = \\overset{⃑}{AA} = \\overset{⃑}{0}$， 由$\\overset{⃑}{BC} · (\\overset{⃑}{AB} + \\overset{⃑}{BC} + \\overset{⃑}{CA}) = \\overset{⃑}{BC} · \\overset{⃑}{0} = 0$， 得$\\overset{⃑}{BC} · \\overset{⃑}{AB} + |\\overset{⃑}{BC}|^{2} + \\overset{⃑}{BC} · \\overset{⃑}{CA} = 0$， $⇒ - 6 + {\\overline{BC}}^{2} - 8 = 0$，∴$\\overline{BC} = \\sqrt{14}$。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-main-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 3,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0004",
+      "title": "求∠XOY在xy平面上的平分線與∠YOZ在yz平面上的平分線之夾角",
+      "question_text": "求∠XOY在xy平面上的平分線與∠YOZ在yz平面上的平分線之夾角。",
+      "answer_text": "$\\frac{\\pi}{3}$或$\\frac{2\\pi}{3}$",
+      "explanation_text": "∠XOY在xy平面上的平分線之一方向向量為$\\overset{⃑}{a}$ =\n(1,1,0) ∠YOZ在yz平面上的平分線之一方向向量為$\\overset{⃑}{b}$= (0,1,1) 設夾角為θ，則cosθ =$\\frac{\\overset{⃑}{a} · \\overset{⃑}{b}}{|\\overset{⃑}{a}||\\overset{⃑}{b}|} = \\frac{1}{\\sqrt{2}\\sqrt{2}} = \\frac{1}{2}$\n∴ θ =$\\frac{\\pi}{3}$，另一夾角為$\\frac{2\\pi}{3}$",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-angle-unification-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 4,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0005",
+      "title": "隨堂練習：對角線$\\overline{DG}$，$\\overline{EB}$交於",
+      "question_text": "對角線$\\overline{DG}$，$\\overline{EB}$交於O點，求cos∠BOG及cos∠BDG。",
+      "answer_text": "(1)$\\frac{1}{3}$；(2)$\\frac{\\sqrt{6}}{3}$",
+      "explanation_text": "(1)$\\overset{⃑}{EB}$= (1，1，− 1)，$\\overset{⃑}{DG}$=\n(1，1，1)，令∠BOG = θ，則θ為$\\overset{⃑}{EB}$，$\\overset{⃑}{DG}$的夾角∴ cosθ =$\\frac{\\overset{⃑}{DG} ． \\overset{⃑}{EB}}{|\\overset{⃑}{DG}| |\\overset{⃑}{EB}|}$=$\\frac{1 + 1 - 1}{\\sqrt{3} ． \\sqrt{3}}$=$\\frac{1}{3}$\n(2)令∠BDG = φ，則cosφ =$\\frac{\\overset{⃑}{DG} ． \\overset{⃑}{DB}}{|\\overset{⃑}{DG}| |\\overset{⃑}{DB}|}$=$\\frac{1 + 1}{\\sqrt{2} ． \\sqrt{3}}$=$\\frac{2}{\\sqrt{6}}$=$\\frac{\\sqrt{6}}{3}$",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-main-s413",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 5,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0006",
+      "title": "設X，Y，Z三點分別為在空間坐標系中x軸，y軸，z軸上的點，設$\\ove",
+      "question_text": "設X，Y，Z三點分別為在空間坐標系中x軸，y軸，z軸上的點，設$\\overset{⃑}{a}$= (2,− 1,− 2)，$\\overset{⃑}{b}$= (1,2,2)， $\\overset{⃑}{c} = \\overset{⃑}{a} + t\\overset{⃑}{b}$，(1)若$\\overset{⃑}{c}$⊥$\\overset{⃑}{a}$，則t = ＿＿＿＿。\n(2)若$\\overset{⃑}{c}$平分$\\overset{⃑}{a}$，$\\overset{⃑}{b}$的夾角時，t = ＿＿＿＿。",
+      "answer_text": "(1)$\\frac{4}{9}$；(2)$1$",
+      "explanation_text": "∵$\\overset{⃑}{a}$= (2,− 1,− 2)，$\\overset{⃑}{b}$=\n(1,2,2) ∴$\\overset{⃑}{c} = \\overset{⃑}{a} + t\\overset{⃑}{b}$= (2 + t,− 1 + 2t,− 2 + 2t)\n(1)∵$\\overset{⃑}{c}$⊥$\\overset{⃑}{a}$ ∴$\\overset{⃑}{a}$．$\\overset{⃑}{c}$= 0\n⇒ 2．(2 + t) − 1．(− 1 + 2t) − 2．(− 2 + 2t) = 0 ⇒ t =$\\frac{4}{9}$\n(2)∵ |$\\overset{⃑}{a}$| = |$\\overset{⃑}{b}$| = 3，若$\\overset{⃑}{c}$平分$\\overset{⃑}{a}$，$\\overset{⃑}{b}$的夾角，則 $\\overset{⃑}{c}$// ($\\overset{⃑}{a}$+$\\overset{⃑}{b}$)\n∴ (2 + t,− 1 + 2t,− 2 + 2t) // (3,1,0)\n⇒ $\\frac{2 + t}{3} = \\frac{- 1 + 2t}{1}$ ⇒ − 2 + 2t = 0 ⇒ t = 1",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-main-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 6,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0007",
+      "title": "隨堂練習：設$\\overset{⃑}{i}$= (1,0,0)，$\\overset",
+      "question_text": "設$\\overset{⃑}{i}$= (1,0,0)，$\\overset{⃑}{j}$= (0,1,0)，$\\overset{⃑}{k}$=\n(0,0,1)且$\\overset{⃑}{a} = 2\\overset{⃑}{i} - \\overset{⃑}{j} + 2\\overset{⃑}{k}$，$\\overset{⃑}{b} = \\overset{⃑}{i} - \\overset{⃑}{j}$，$\\overset{⃑}{c} = \\overset{⃑}{a} + t\\overset{⃑}{b}$\n（t ∈ R），(1)若$\\overset{⃑}{a}$⊥$\\overset{⃑}{c}$，則t = ＿＿＿＿。(2)若(2$\\overset{⃑}{a} - \\overset{⃑}{b}$) //$\\overset{⃑}{c}$，則t = ＿＿＿＿。\n(3)當 |$\\overset{⃑}{c}$| 有最小值時，t = ＿＿＿＿。",
+      "answer_text": "(1)$-3$；(2)$-\\frac{1}{2}$；(3)$-\\frac{3}{2}$",
+      "explanation_text": "$\\overset{⃑}{a}$= (2,− 1,2)，$\\overset{⃑}{b}$= (1,− 1,0)，$\\overset{⃑}{c} = \\overset{⃑}{a} + t\\overset{⃑}{b}$= (2 + t,− 1 − t,2)\n(1) $\\overset{⃑}{a}$⊥$\\overset{⃑}{c}$ ⇒ $\\overset{⃑}{a}$．$\\overset{⃑}{c}$= 0 ⇒ (2,− 1,2)．(2 + t,− 1 − t,2) = 0\n⇒ 2(2 + t) − (− 1 − t) + 4 = 0 ⇒ 9 + 3t = 0 ∴ t = − 3\n(2)∵2$\\overset{⃑}{a} - \\overset{⃑}{b}$= 2(2,− 1,2) − (1,− 1,0) = (4,− 2,4) − ( 1, − 1,0) = (3,− 1,4) $\\overset{⃑}{c} = \\overset{⃑}{a} + t\\overset{⃑}{b}$= (2 + t,− 1 − t,2)\n∵(2$\\overset{⃑}{a} - \\overset{⃑}{b}$) //$\\overset{⃑}{c}$ ∴ $\\frac{2 + t}{3} = \\frac{- 1 - t}{- 1} = \\frac{2}{4}\\quad ⇒ \\quad t = - \\frac{1}{2}$\n(3)∵|$\\overset{⃑}{c}$| =$\\sqrt{(2 + t)^{2} + ( - 1 - t)^{2} + 4} = \\sqrt{2t^{2} + 6t + 9}$ =$\\sqrt{2(t + \\frac{3}{2})^{2} - \\frac{9}{2} + 9} = \\sqrt{2(t + \\frac{3}{2})^{2} + \\frac{9}{2}}$\n∴ 當t = −$\\frac{3}{2}$時，|$\\overset{⃑}{c}$| =$\\sqrt{\\frac{9}{2}} = \\frac{3}{\\sqrt{2}} = \\frac{3\\sqrt{2}}{2}$為最小值",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-extreme-equality-s413",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 7,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0008",
+      "title": "在空間坐標系中，已知A(2,0, − 3)，B(0, − 2, − 2)",
+      "question_text": "在空間坐標系中，已知A(2,0, − 3)，B(0, − 2, − 2)，C(6,1, − 2)，請選出下列有關 △ABC的正確敘述\n(1)重心坐標$(\\frac{8}{3}, - \\frac{1}{3}, - \\frac{7}{3})$\n(2)∠A為銳角 (3)周長為$3(1 + \\sqrt{2} + \\sqrt{5})$\n(4)面積為$\\frac{7}{2}$ (5)外接圓直徑為$3\\sqrt{10}$。",
+      "answer_text": "(1)(3)(5)",
+      "explanation_text": "(1)○﹕$G(\\frac{2 + 0 + 6}{3},\\frac{0 - 2 + 1}{3},\\frac{- 3 - 2 - 2}{3}) ⇒ G(\\frac{8}{3}, - \\frac{1}{3}, - \\frac{7}{3})$\n(2)╳﹕$\\overset{⃑}{AB} · \\overset{⃑}{AC} = ( - 2, - 2,1) · (4,1,1) = - 8 - 2 + 1 < 0$，∴∠A為鈍角\n(3)○﹕周長$= \\overline{AB} + \\overline{BC} + \\overline{CA} = \\sqrt{9} + \\sqrt{45} + \\sqrt{18} = 3(1 + \\sqrt{5} + \\sqrt{2})$\n(4)╳﹕△ABC的面積$= \\frac{1}{2}\\sqrt{9 · 18 - ( - 9)^{2}} = \\frac{9}{2}$\n(5)○﹕△ABC的面積$= \\frac{abc}{4R} ⇒ \\frac{9}{2} = \\frac{3 · 3\\sqrt{5} · 3\\sqrt{2}}{4R} ⇒ R = \\frac{3\\sqrt{10}}{2} ⇒ 2R = 3\\sqrt{10}$ 故選(1)(3)(5)。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-main-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 8,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0009",
+      "title": "右圖中，ABCD − EFGH是一個邊長為2的正六面體，M為$\\over",
+      "question_text": "右圖中，ABCD − EFGH是一個邊長為2的正六面體，M為$\\overline{AB}$的中點，\n[圖:program-db/assets/question-media/s4-1-3/image9.png]",
+      "answer_text": "(1)$3$；(2)$\\frac{\\sqrt{5}}{5}$；(3)$3$",
+      "explanation_text": "將正立方體放在空間坐標系中，如圖所示。\n計算$\\overset{⃑}{ME} = (0, - 1,2)$，$\\overset{⃑}{MG} = ( - 2,1,2)$。\n(1)$\\overline{MG} = |\\overset{⃑}{MG}| = \\sqrt{( - 2)^{2} + 1^{2} + 2^{2}} = 3$。\n(2)$\\cos\\angle EMG = \\frac{\\overset{⃑}{ME} · \\overset{⃑}{MG}}{|\\overset{⃑}{ME}||\\overset{⃑}{MG}|}$。\n$= \\frac{0 × ( - 2) + ( - 1) × 1 + 2 × 2}{\\sqrt{0^{2} + ( - 1)^{2} + 2^{2}}\\sqrt{( - 2)^{2} + 1^{2} + 2^{2}}} = \\frac{3}{\\sqrt{5} × 3} = \\frac{1}{\\sqrt{5}} = \\frac{\\sqrt{5}}{5}$\n(3)$\\bigtriangleup EMG = \\frac{1}{2}|\\overset{⃑}{ME} × \\overset{⃑}{MG}| = \\frac{1}{2}|( - 4, - 4, - 2)| = \\frac{6}{2} = 3$。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-main-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 9,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0010",
+      "title": "設三向量$\\overset{⃑}{a}$= (1,2,λ − 1)，$",
+      "question_text": "設三向量$\\overset{⃑}{a}$= (1,2,λ − 1)，$\\overset{⃑}{b}$=\n(4,1,− λ)，$\\overset{⃑}{c}$= ( − 1,2,λ + 3)兩兩互相垂直，則實數λ之值為＿＿＿＿。",
+      "answer_text": "$\\lambda=-2$",
+      "explanation_text": "$\\overset{⃑}{a}$⊥$\\overset{⃑}{b}$ ⇒ (1,2,λ − 1)．(4,1,− λ) = 0 ⇒ λ = 3或 λ = − 2 $\\overset{⃑}{b}$⊥$\\overset{⃑}{c}$ ⇒ (4,1,− λ)．( − 1,2,λ + 3) = 0 ⇒ λ = − 1或 λ = − 2 $\\overset{⃑}{c}$⊥$\\overset{⃑}{a}$ ⇒ ( − 1,2,λ + 3)．(1,2,λ − 1) = 0 ⇒ λ = 0或 λ = − 2 由以上得 λ = − 2",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-main-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 10,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0011",
+      "title": "設△ABC三頂點的坐標為A(1,5,2)，B(4, − 1,8)，C(1",
+      "question_text": "設△ABC三頂點的坐標為A(1,5,2)，B(4, − 1,8)，C(10, − 1, − 4)，則△ABC的面積為\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "$54$",
+      "explanation_text": "$\\overset{⃑}{AB} = (3, - 6,6)$，$\\overset{⃑}{AC} = (9, - 6, - 6)$， △ABC的面積$= \\frac{1}{2}\\sqrt{|\\overset{⃑}{AB}|^{2}|\\overset{⃑}{AC}|^{2} - (\\overset{⃑}{AB} · \\overset{⃑}{AC})^{2}} = \\frac{1}{2}\\sqrt{81 · 153 - (27)^{2}} = \\frac{1}{2} · 108 = 54$",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-main-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 11,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0012",
+      "title": "△ABC中，A(4,1,3)，B(6,3,4)，C(4,5,6)，(1)",
+      "question_text": "△ABC中，A(4,1,3)，B(6,3,4)，C(4,5,6)，(1)cosA = \\_\\_\\_\\_\\_\\_\\_\\_。(2)△ABC的面積為\\_\\_\\_\\_\\_\\_\\_\\_。\n(3)設∠A的內角平分線交$\\overline{BC}$於D，求D點坐標\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n[圖:program-db/assets/question-media/s4-1-3/image10.png]",
+      "answer_text": "(1)$\\frac{11}{15}$；(2)$\\sqrt{26}$；(3)$\\left(\\frac{21}{4},\\frac{15}{4},\\frac{19}{4}\\right)$",
+      "explanation_text": "(1)$\\overset{⃑}{AB} = (2,2,1)$，$\\overset{⃑}{AC} = (0,4,3)$，\n∴$\\cos A = \\frac{\\overset{⃑}{AB} · \\overset{⃑}{AC}}{|\\overset{⃑}{AB}||\\overset{⃑}{AC}|} = \\frac{0 + 8 + 3}{3 · 5} = \\frac{11}{15}$。\n(2)由(1)得$\\sin A = \\frac{2\\sqrt{26}}{15}$， △ABC的面積$= \\frac{1}{2}|\\overset{⃑}{AB}| · |\\overset{⃑}{AC}| · \\sin A = \\frac{1}{2} · 3 · 5 · \\frac{2\\sqrt{26}}{15} = \\sqrt{26}$。\n(3)如圖，令D(x,y,z) 由內角平分線定理得 $\\frac{\\overline{BD}}{\\overline{DC}} = \\frac{\\overline{AB}}{\\overline{AC}} = \\frac{3}{5}$⇒$\\overset{⃑}{BD} = \\frac{3}{8}\\overset{⃑}{BC}$， $⇒ (x - 6,y - 3,z - 4) = \\frac{3}{8}( - 2,2,2)$ $⇒ x = \\frac{21}{4}$，$y = \\frac{15}{4}$，$z = \\frac{19}{4}$，∴$D(\\frac{21}{4},\\frac{15}{4},\\frac{19}{4})$。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-main-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 12,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0013",
+      "title": "已知空間中三點A(1,0,0)，B(1,1,1)，C(0,0,1)，求(",
+      "question_text": "已知空間中三點A(1,0,0)，B(1,1,1)，C(0,0,1)，求(1)$\\overset{⃑}{AB} · \\overset{⃑}{AC} =$\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n(2)$\\overset{⃑}{AB}$與$\\overset{⃑}{AC}$的單位公垂向量為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。(3)△ABC的面積為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n(4)$(\\overset{⃑}{AB} + t\\overset{⃑}{AC})\\bot\\overset{⃑}{BC}$，求t = \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "(1)$1$；(2)$\\pm\\left(\\frac{1}{\\sqrt{3}},-\\frac{1}{\\sqrt{3}},\\frac{1}{\\sqrt{3}}\\right)$；(3)$\\frac{\\sqrt{3}}{2}$；(4)$1$",
+      "explanation_text": "(1)$\\overset{⃑}{AB} = (0,1,1)$，$\\overset{⃑}{AC} = ( - 1,0,1)$，$\\overset{⃑}{AB} · \\overset{⃑}{AC} = 1$。\n(2)$\\overset{⃑}{AB} × \\overset{⃑}{AC} = (0,1,1) × ( - 1,0,1) = (1, - 1,1)$， 單位公垂向量$= \\pm (\\frac{1}{\\sqrt{3}}, - \\frac{1}{\\sqrt{3}},\\frac{1}{\\sqrt{3}})$。\n(3)△ABC的面積$= \\frac{1}{2}|\\overset{⃑}{AB} × \\overset{⃑}{AC}| = \\frac{\\sqrt{3}}{2}$。\n(4)$\\overset{⃑}{AB} + t\\overset{⃑}{AC} = ( - t,1,t + 1)$，$\\overset{⃑}{BC} = ( - 1, - 1,0)$， $(\\overset{⃑}{AB} + t\\overset{⃑}{AC}) · \\overset{⃑}{BC} = 0 ⇒ t = 1$。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-main-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 13,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0014",
+      "title": "隨堂練習：設空間中三點A(1,2,3)，B(2,4,1)，C(6,2,4)，試求",
+      "question_text": "設空間中三點A(1,2,3)，B(2,4,1)，C(6,2,4)，試求\n(1)若$\\overset{⃑}{v} = \\overset{⃑}{AB} + k\\overset{⃑}{AC}$，且$\\overset{⃑}{AB}\\bot\\overset{⃑}{v}$，則實數k之值為\\_\\_\\_\\_\\_\\_\\_\\_\\_。(2)△ABC的面積為\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n(3)C點到直線$\\overset{\\overleftrightarrow{}}{AB}$的最短距離為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "(1)$-3$；(2)$\\frac{15}{2}$；(3)$5$",
+      "explanation_text": "(1)$\\overset{⃑}{AB} = (1,2, - 2)$，$\\overset{⃑}{AC} = (5,0,1)$， $\\overset{⃑}{v} = (1,2, - 2) + k(5,0,1) = (1 + 5k,2, - 2 + k)$，\n∵$\\overset{⃑}{AB}\\bot\\overset{⃑}{v}$，∴$\\overset{⃑}{AB} · \\overset{⃑}{v} = 0 ⇒ 1 + 5k + 4 + 4 - 2k = 0$，∴k = − 3。\n(2)$\\overset{⃑}{AB} = (1,2, - 2)$，$\\overset{⃑}{AC} = (5,0,1)$，\n∴△ABC的面積$= \\frac{1}{2}\\sqrt{9 · 26 - (5 + 0 - 2)^{2}} = \\frac{15}{2}$。\n(3)△ABC的面積$= \\frac{1}{2} · \\overline{AB} · d(C,\\overset{\\overleftrightarrow{}}{AB}) = \\frac{15}{2}$ $⇒ 3 · d(C,\\overset{\\overleftrightarrow{}}{AB}) = 15$，∴$d(C,\\overset{\\overleftrightarrow{}}{AB}) = 5$。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-main-s413",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 14,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0015",
+      "title": "(1)$\\overline{PD} =$\\_\\_\\_\\_\\_\\_\\_\\_",
+      "question_text": "(1)$\\overline{PD} =$\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。(2)△APQ的面積為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n(3)$\\overset{\\overleftrightarrow{}}{AP}$和$\\overset{\\overleftrightarrow{}}{DQ}$的距離為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n[圖:program-db/assets/question-media/s4-1-3/image12.png]",
+      "answer_text": "(1)$6$；(2)$2\\sqrt{29}$；(3)$4$",
+      "explanation_text": "如圖，\n(1)建立坐標系﹕ 則P(4,4,2)，D(0,0,4)，Q(0,2,0)\n∴$\\overline{PD} = \\sqrt{16 + 16 + 4} = 6$。\n(2)$\\overset{⃑}{PA} = (0, - 4,2)$，$\\overset{⃑}{PQ} = ( - 4, - 2, - 2)$， △APQ的面積 $= \\frac{1}{2}\\sqrt{|\\overset{⃑}{PA}|^{2}|\\overset{⃑}{PQ}|^{2} - (\\overset{⃑}{PA} · \\overset{⃑}{PQ})^{2}} = \\frac{1}{2}\\sqrt{20 · 24 - (0 + 8 - 4)^{2}} = 2\\sqrt{29}$。\n(3)∵$\\overline{AD}\\bot\\overset{\\overleftrightarrow{}}{AP}$，$\\overline{AD}\\bot\\overset{\\overleftrightarrow{}}{DQ}$，∴所求距離為$\\overline{AD} = 4$。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-main-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 15,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0016",
+      "title": "設x，y，z ∈ R，且滿足x^2^ + y^2^ + z^2^ = 5",
+      "question_text": "設x，y，z ∈ R，且滿足x^2^ + y^2^ + z^2^ = 5，則x + 2y + 3z之最大值為＿＿＿＿。",
+      "answer_text": "$\\sqrt{70}$",
+      "explanation_text": "(x + 2y + 3z)^2^ ≤ (x^2^ + y^2^ + z^2^)(1^2^ + 2^2^ + 3^2^) = 5．14 = 70\n∴x + 2y + 3z最大值為$\\sqrt{70}$",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-extreme-equality-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 16,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0017",
+      "title": "隨堂練習：設$\\overset{⃑}{a}$= (1，0，− 2)，$\\overs",
+      "question_text": "設$\\overset{⃑}{a}$= (1，0，− 2)，$\\overset{⃑}{b}$=\n(x，y，z)，若x^2^ + y^2^ + z^2^ = 16，則$\\overset{⃑}{a}$．$\\overset{⃑}{b}$的最大值為？",
+      "answer_text": "$4\\sqrt{5}$",
+      "explanation_text": "∵$\\overset{⃑}{a}$= (1，0，− 2)，$\\overset{⃑}{b}$=\n(x，y，z) ∴ $\\overset{⃑}{a}$．$\\overset{⃑}{b}$= x − 2z 由[柯西]{.underline}不等式[1^2^ + 0^2^ + (− 2)^2^](x^2^ + y^2^ + z^2^) ≥ (x + 0 − 2z)^2^\n⇒ 5 × 16 ≥ (x − 2z)^2^ ⇒ − 4$\\sqrt{5}$≤ x − 2z ≤ 4$\\sqrt{5}$\n⇒ − 4$\\sqrt{5}$≤ $\\overset{⃑}{a}$．$\\overset{⃑}{b}$ ≤ 4$\\sqrt{5}$，故$\\overset{⃑}{a}$．$\\overset{⃑}{b}$的最大值為4$\\sqrt{5}$",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-cauchy-s413",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 17,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0018",
+      "title": "三角形內點的距離平方和最小值",
+      "question_text": "實數x，y，z滿足2x + 2y + z = 6，則x^2^ + y^2^ + z^2^之最小值為\n(1)1 (2)2 (3)3 (4)4 (5)9。",
+      "answer_text": "(4)",
+      "explanation_text": "由柯西不等式﹕(x^2^ + y^2^ + z^2^)(2^2^ + 2^2^ + 1^2^) ≥\n(2x + 2y + z)^2^\n⇒ x^2^ + y^2^ + z^2^ ≥$\\frac{6^{2}}{9} = 4$， 故選(4)。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-cauchy-s413",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 18,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0019",
+      "title": "設a，b皆為正實數，則$(a + 2b)(\\frac{1}{a} +",
+      "question_text": "設a，b皆為正實數，則$(a + 2b)(\\frac{1}{a} + \\frac{2}{b})$之最小值為\n(1)5 (2)6 (3)7 (4)8 (5)9。",
+      "answer_text": "(5)",
+      "explanation_text": "$\\lbrack(\\sqrt{a})^{2} + (\\sqrt{2b})^{2}\\rbrack\\lbrack(\\frac{1}{\\sqrt{a}})^{2} + (\\frac{\\sqrt{2}}{\\sqrt{b}})^{2}\\rbrack \\geq (1 + 2)^{2}$，∴$(a + 2b)(\\frac{1}{a} + \\frac{2}{b}) \\geq 9$，故選(5)。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-extreme-equality-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 19,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0020",
+      "title": "隨堂練習：△ABC中，$\\overline{AB}$= 4，$\\overline{",
+      "question_text": "△ABC中，$\\overline{AB}$= 4，$\\overline{BC}$= 8，$\\overline{AC}$= 6，P為△ABC內部之一點，設P到$\\overline{AB}$，$\\overline{BC}$， $\\overline{AC}$之距離分別為x，y，z，則$x^{2} + 4y^{2} + 9z^{2}$之最小值= ＿＿＿＿。",
+      "answer_text": "$15$",
+      "explanation_text": "s =$\\frac{1}{2}$ (4 + 8 + 6) = 9 △ABC面積=$\\frac{1}{2}$．4．x +$\\frac{1}{2}$．8．y +$\\frac{1}{2}$．6．z =$\\sqrt{9(9 - 4)(9 - 8)(9 - 6)}$ ⇒ 2x + 4y + 3z = 3$\\sqrt{15}$ 利用[柯西]{.underline}不等式知[$x^{2} + (2y)^{2} + (3z)^{2}$]$(2^{2} + 2^{2} + 1^{2})$ ≥ $(2x + 4y + 3z)^{2}$\n(x^2^ + 4y^2^ + 9z^2^) × 9 ≥\n(3$\\sqrt{15}$)^2^ ∴ $x^{2} + 4y^{2} + 9z^{2}$≥ 15，即最小值為15]",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-cauchy-s413",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 20,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0021",
+      "title": "隨堂練習：設x，y，z ∈ R，$2x + 2y + z + 8 = 0$，則$(",
+      "question_text": "設x，y，z ∈ R，$2x + 2y + z + 8 = 0$，則$(x - 1)^{2} + (y + 2)^{2} + (z - 3)^{2}$之最小值為＿＿＿＿。",
+      "answer_text": "$9$",
+      "explanation_text": "2x + 2y + z + 8 = 0 ⇒ 2(x − 1) + 2(y + 2) + (z − 3) = − 9 $\\lbrack 2(x - 1) + 2(y + 2) + (z - 3)\\rbrack^{2}$≤ $\\lbrack(x - 1)^{2} + (y + 2)^{2} + (z - 3)^{2}\\rbrack$．$(2^{2} + 2^{2} + 1^{2})$\n⇒$(x - 1)^{2} + (y + 2)^{2} + (z - 3)^{2}$ ≥$\\frac{( - 9)^{2}}{9}$= 9",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-extreme-equality-s413",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 21,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0022",
+      "title": "隨堂練習：設x，y，z ∈ R且$\\frac{(x - 1)^{2}}{16} +",
+      "question_text": "設x，y，z ∈ R且$\\frac{(x - 1)^{2}}{16} + \\frac{(y + 2)^{2}}{5} + \\frac{(z - 3)^{2}}{4} = 1$，求x + y + z之最大值，最小值。",
+      "answer_text": "最大值$7$，最小值$-3$",
+      "explanation_text": "∵$\\frac{(x - 1)^{2}}{16} + \\frac{(y + 2)^{2}}{5} + \\frac{(z - 3)^{2}}{4} = 1$，由[柯西]{.underline}不等式知\n[4^2^ + ($\\sqrt{5}$)^2^ + 2^2^]$\\lbrack(\\frac{x - 1}{4})^{2} + (\\frac{y + 2}{\\sqrt{5}})^{2} + (\\frac{z - 3}{2})^{2}\\rbrack$ ≥\n[$4 ． (\\frac{x - 1}{4}) + \\sqrt{5} ． (\\frac{y + 2}{\\sqrt{5}}) + 2 ． (\\frac{z - 3}{2})$]^2^\n⇒ 25 × 1 ≥ (x + y + z − 2)^2^ ⇒ 5 ≥ |x + y + z − 2| ⇒ − 5 ≤ x + y + z − 2 ≤ 5\n∴ − 3 ≤ x + y + z ≤ 7，故x + y + z之最大值為7，最小值為 − 3",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-cauchy-s413",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 22,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0023",
+      "title": "設a，b，c均為正數且a + b + c = 9，則$\\frac{4}{",
+      "question_text": "設a，b，c均為正數且a + b + c = 9，則$\\frac{4}{a} + \\frac{9}{b} + \\frac{16}{c}$之最小值為＿＿＿＿。",
+      "answer_text": "$9$",
+      "explanation_text": "($\\frac{4}{a} + \\frac{9}{b} + \\frac{16}{c}$)(a + b + c) ≥$(\\frac{2}{\\sqrt{a}} · \\sqrt{a} + \\frac{3}{\\sqrt{b}} · \\sqrt{b} + \\frac{4}{\\sqrt{c}} · \\sqrt{c})^{2}$\n⇒ ($\\frac{4}{a} + \\frac{9}{b} + \\frac{16}{c}$)．9 ≥ (2 + 3 + 4)^2^ = 81 ⇒ $\\frac{4}{a} + \\frac{9}{b} + \\frac{16}{c}$≥$\\frac{81}{9}$ = 9",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-extreme-equality-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 23,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0024",
+      "title": "隨堂練習：設空間中有二向量$\\overset{⃑}{a}$= (1，2，3)，$",
+      "question_text": "設空間中有二向量$\\overset{⃑}{a}$= (1，2，3)，$\\overset{⃑}{b}$=\n(x，y，z)，已知|$\\overset{⃑}{b}$| = 2$\\sqrt{14}$，則$\\overset{⃑}{a}$．$\\overset{⃑}{b}$的最大值為何？此時的$\\overset{⃑}{b}$為何？",
+      "answer_text": "最大值$28$；此時$\\overset{⃑}{b}=(2,4,6)$",
+      "explanation_text": "已知|$\\overset{⃑}{b}$|^2^ = x^2^ + y^2^ + z^2^ =\n(2$\\sqrt{14}$)^2^ = 56 由[柯西]{.underline}不等式知(x^2^ + y^2^ + z^2^)(1^2^ + 2^2^ + 3^2^) ≥ (x + 2y + 3z)^2^\n⇒ 56 × 14 ≥ ($\\overset{⃑}{a}$．$\\overset{⃑}{b}$)^2^ ⇒ − 28 ≤$\\overset{⃑}{a}$．$\\overset{⃑}{b}$≤ 28，得$\\overset{⃑}{a}$．$\\overset{⃑}{b}$之最大值M = 28 此時$\\frac{x}{1}$=$\\frac{y}{2}$=$\\frac{z}{3}$\n[圖:program-db/assets/question-media/s4-1-3/image14.png] t，則x = t，y = 2t，z = 3t 28 =$\\overset{⃑}{a}$．$\\overset{⃑}{b}$= x + 2y + 3z = t + 4t + 9t = 14t ⇒ t = 2 得x = 2，y = 4，z = 6，即$\\overset{⃑}{b}$= (2，4，6)",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-cauchy-s413",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 24,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0025",
+      "title": "設$\\overset{⃑}{a} = (2,1, - 2)$，$\\ove",
+      "question_text": "設$\\overset{⃑}{a} = (2,1, - 2)$，$\\overset{⃑}{b} = (x,y,z)$，若$|\\overset{⃑}{b}| = 9$，求$\\overset{⃑}{a} · \\overset{⃑}{b}$的最小值及此時$\\overset{⃑}{b}$。",
+      "answer_text": "最小值$-27$；此時$\\overset{⃑}{b}=(-6,-3,6)$",
+      "explanation_text": "利用[柯西]{.underline}不等式，得$|\\overset{⃑}{a} · \\overset{⃑}{b}| \\leq |\\overset{⃑}{a}||\\overset{⃑}{b}|$， 即| 2x + y − 2z | ≤ 3 ⋅ 9 ⇒ − 27 ≤ 2x + y − 2z ≤ 27。\n因此，$\\overset{⃑}{a} · \\overset{⃑}{b}$的最小值為 − 27。此時，$\\overset{⃑}{a}//\\overset{⃑}{b}$，即$\\frac{x}{2} = \\frac{y}{1} = \\frac{z}{- 2} = t$。\n設x = 2t，y = t，z = − 2t，t為實數。\n由$|\\overset{⃑}{b}| = 9$，得(2t)^2^ + t^2^ + ( − 2t)^2^ = 9^2^，解得t = ± 3。\n當t = − 3時，2x + y − 2z有最小值 − 27， 故此時$\\overset{⃑}{b} = ( - 6, - 3,6)$。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-cauchy-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 25,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例16"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0026",
+      "title": "設x，y，z皆為實數，求$\\frac{3x - 2y + z}{\\sqr",
+      "question_text": "設x，y，z皆為實數，求$\\frac{3x - 2y + z}{\\sqrt{x^{2} + y^{2} + z^{2}}}$的(1)最大值。(2)最小值。",
+      "answer_text": "(1)$\\sqrt{14}$；(2)$-\\sqrt{14}$",
+      "explanation_text": "由柯西不等式可知﹕\n(x^2^ + y^2^ + z^2^)[3^2^ + ( − 2)^2^ + 1^2^] ≥ (3x − 2y + z)^2^ $$⇒ \\frac{(3x - 2y + z)^{2}}{x^{2} + y^{2} + z^{2}} \\leq 14 ⇒ - \\sqrt{14} \\leq \\frac{3x - 2y + z}{\\sqrt{x^{2} + y^{2} + z^{2}}} \\leq \\sqrt{14} $$∴(1)其最大值為$\\sqrt{14}$。(2)最小值為$- \\sqrt{14}$。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-cauchy-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 26,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例17"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0027",
+      "title": "設A(12,0)，B(0,5)，O(0,0)且P為△ABO內一點，自P作",
+      "question_text": "設A(12,0)，B(0,5)，O(0,0)且P為△ABO內一點，自P作$\\overset{\\overleftrightarrow{}}{AB}$的垂線，其垂足為C，試求﹕\n(1)${\\overline{OP}}^{2} + {\\overline{PC}}^{2}$之最小值。(2)當有最小值時，此時的P點坐標為何﹖\n[圖:program-db/assets/question-media/s4-1-3/image15.png]",
+      "answer_text": "(1)$\\frac{1800}{169}$；(2)$\\left(\\frac{150}{169},\\frac{360}{169}\\right)$",
+      "explanation_text": "(1)取P(x,y)，並令$\\overline{PQ} = x$，$\\overline{PR} = y$，$\\overline{PC} = z$， 如圖所示，得${\\overline{OP}}^{2} + {\\overline{PC}}^{2} = x^{2} + y^{2} + z^{2}$， △ABO之面積 = (△POB + △POA + △PBA)之面積\n⇒ 60 = 5x + 12y + 13z， 由(x^2^ + y^2^ + z^2^)(5^2^ + 12^2^ + 13^2^) ≥ (5x + 12y + 13z)^2^ $⇒ x^{2} + y^{2} + z^{2} \\geq \\frac{3600}{338} = \\frac{1800}{169}$ $⇒ {\\overline{OP}}^{2} + {\\overline{PC}}^{2}$之最小值為$\\frac{1800}{169}$。\n(2)此時$\\frac{x}{5} = \\frac{y}{12} = \\frac{z}{13} = t ⇒ 60 = 5(5t) + 12(12t) + 13(13t) ⇒ t = \\frac{60}{338} = \\frac{30}{169}$， 得$x = \\frac{150}{169}$，$y = \\frac{360}{169}$。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-projection-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題1：向量內積與柯西不等式",
+      "source_order": 27,
+      "tags": [
+        "s4-1-3",
+        "section:主題1：向量內積與柯西不等式",
+        "marker:範例18"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0028",
+      "title": "空間中三點$A(4, - 4, 6)$，$B(2, 0, 2)$，$C(",
+      "question_text": "[圖:program-db/assets/question-media/s4-1-3/image18.png] 空間中三點$A(4, - 4, 6)$，$B(2, 0, 2)$，$C(4, - 1, 3)$，試求：\n(1)$\\overset{⃑}{AB}$在$\\overset{⃑}{AC}$上的正射影。\n(2)$\\overset{⃑}{AB}$在$\\overset{⃑}{AC}$上的正射影長。\n(3)點$B$在直線$AC$上的垂足點坐標。",
+      "answer_text": "(1)$(0,4,-4)$；(2)$4\\sqrt{2}$；(3)$(4,0,2)$",
+      "explanation_text": "(1) $\\overset{⃑}{AB} = ( - 2, 4, - 4)$，$\\overset{⃑}{AC} = (0, 3, - 3)$\n⇒ $|\\overset{⃑}{AB}| = \\sqrt{( - 2)^{2} + 4^{2} + ( - 4)^{2}} = 6$， $|\\overset{⃑}{AC}| = \\sqrt{0^{2} + 3^{2} + ( - 3)^{2}} = 3\\sqrt{2}$， $\\overset{⃑}{AB}$在$\\overset{⃑}{AC}$上的正射影為$(\\frac{\\overset{⃑}{AB} ． \\overset{⃑}{AC}}{|\\overset{⃑}{AC}|^{2}})\\overset{⃑}{AC} = \\frac{24}{(3\\sqrt{2})^{2}}(0, 3, - 3) = (0, 4, - 4)$。\n(2)$\\overset{⃑}{AB}$在$\\overset{⃑}{AC}$上的正射影長為$|\\overset{⃑}{AB}| |\\cos\\theta| = |\\frac{\\overset{⃑}{AB} ． \\overset{⃑}{AC}}{|\\overset{⃑}{AC}|}| = \\frac{24}{3\\sqrt{2}} = 4\\sqrt{2}$。\n(3)設點$B$在直線$AC$上的垂足點為$H(x, y, z)$， 則$\\overset{⃑}{AH} = (0, 4, - 4)$ ⇒ $(x - 4, y + 4, z - 6) = (0, 4, - 4)$， 得$x = 4$，$y = 0$，$z = 2$，故點$B$在直線$AC$上的垂足坐標為 $H(4, 0, 2)$。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-projection-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題2：正射影與正射影長",
+      "source_order": 28,
+      "tags": [
+        "s4-1-3",
+        "section:主題2：正射影與正射影長",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0029",
+      "title": "隨堂練習：設$\\overset{⃑}{a} = (4, - 2, 3)$，$\\ov",
+      "question_text": "設$\\overset{⃑}{a} = (4, - 2, 3)$，$\\overset{⃑}{b} = (2, - 1, 2)$，，試求：\n(1)$\\overset{⃑}{a}$在$\\overset{⃑}{b}$上的正射影。\n(2)$\\overset{⃑}{a}$在$\\overset{⃑}{b}$上的正射影長。",
+      "answer_text": "(1)$\\left(\\frac{32}{9},-\\frac{16}{9},\\frac{32}{9}\\right)$；(2)$\\frac{16}{3}$",
+      "explanation_text": "(1)$\\overset{⃑}{a}$在$\\overset{⃑}{b}$上的正射影為$(\\frac{\\overset{⃑}{a} ． \\overset{⃑}{b}}{|\\overset{⃑}{b}|^{2}})\\overset{⃑}{b} = \\frac{16}{9}(2, - 1, 2) = (\\frac{32}{9}, - \\frac{16}{9}, \\frac{32}{9})$。\n(2)$\\overset{⃑}{a}$在$\\overset{⃑}{b}$上的正射影長為$|\\frac{\\overset{⃑}{a} ． \\overset{⃑}{b}}{|\\overset{⃑}{b}|}| = \\frac{16}{3}$",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-projection-s413",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題2：正射影與正射影長",
+      "source_order": 29,
+      "tags": [
+        "s4-1-3",
+        "section:主題2：正射影與正射影長",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0030",
+      "title": "A(3, − 1,2)，B(1,2,3)，C( − 1,2,1)，求(1",
+      "question_text": "A(3, − 1,2)，B(1,2,3)，C( − 1,2,1)，求(1)$\\overset{⃑}{BA}$在$\\overset{⃑}{BC}$上的正射影。\n(2)A點在直線$\\overset{\\overleftrightarrow{}}{BC}$上的投影點的坐標。\n[圖:program-db/assets/question-media/s4-1-3/image19.png]",
+      "answer_text": "(1)$\\left(\\frac{1}{2},0,\\frac{1}{2}\\right)$；(2)$\\left(\\frac{3}{2},2,\\frac{7}{2}\\right)$",
+      "explanation_text": "$\\overset{⃑}{BA} = (2, - 3, - 1)$，$\\overset{⃑}{BC} = ( - 2,0, - 2)$，\n(1)$\\overset{⃑}{BA}$在$\\overset{⃑}{BC}$上的正射影為 $(\\frac{\\overset{⃑}{BA} · \\overset{⃑}{BC}}{|\\overset{⃑}{BC}|^{2}}) · \\overset{⃑}{BC} = \\frac{- 2}{8}( - 2,0, - 2) = (\\frac{1}{2},0,\\frac{1}{2})$。\n(2)設A在直線$\\overset{\\overleftrightarrow{}}{BC}$上之投影點為H， 則$\\overset{⃑}{OH} = \\overset{⃑}{OB} + \\overset{⃑}{BH} = (1,2,3) + (\\frac{1}{2},0,\\frac{1}{2}) = (\\frac{3}{2},2,\\frac{7}{2})$，\n∴投影點的坐標為$(\\frac{3}{2},2,\\frac{7}{2})$。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-projection-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題2：正射影與正射影長",
+      "source_order": 30,
+      "tags": [
+        "s4-1-3",
+        "section:主題2：正射影與正射影長",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0031",
+      "title": "若A(1,0,2)，B(2,2,1)，C(3,1,3)，G為△ABC之重",
+      "question_text": "若A(1,0,2)，B(2,2,1)，C(3,1,3)，G為△ABC之重心，H為△ABC之垂心(1)求$\\overline{AG}$之值。\n(2)求$\\overset{⃑}{HB}$在$\\overset{⃑}{BC}$上之正射影。\n[圖:program-db/assets/question-media/s4-1-3/image20.png]",
+      "answer_text": "(1)$\\sqrt{2}$；(2)$\\left(-\\frac{1}{2},\\frac{1}{2},-1\\right)$",
+      "explanation_text": "如圖，\n(1)$G(\\frac{1 + 2 + 3}{3},\\frac{0 + 2 + 1}{3},\\frac{2 + 1 + 3}{3}) ⇒ G(2,1,2)$，\n∴$\\overline{AG} = \\sqrt{1 + 1 + 0} = \\sqrt{2}$。\n(2)$\\overset{⃑}{HB}$在$\\overset{⃑}{BC}$之正射影，即$\\overset{⃑}{AB}$在$\\overset{⃑}{BC}$之正射影， 又$\\overset{⃑}{AB} = (1,2, - 1)$，$\\overset{⃑}{BC} = (1, - 1,2)$，\n∴所求$= \\frac{\\overset{⃑}{AB} · \\overset{⃑}{BC}}{|\\overset{⃑}{BC}|^{2}} · \\overset{⃑}{BC} = \\frac{1 - 2 - 2}{6}(1, - 1,2) = ( - \\frac{1}{2},\\frac{1}{2}, - 1)$。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-projection-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題2：正射影與正射影長",
+      "source_order": 31,
+      "tags": [
+        "s4-1-3",
+        "section:主題2：正射影與正射影長",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0032",
+      "title": "在空間坐標系中，A點坐標為( − 1 , 1 , 3)，B點坐標為(3",
+      "question_text": "在空間坐標系中，A點坐標為( − 1 , 1 , 3)，B點坐標為(3 , − 1，1)，C點坐標 為(1 , 3 , − 1)，D點坐標為(5 , k , k)，$\\overset{⃑}{AB}$在$\\overset{⃑}{AC}$的正射影為$\\overset{⃑}{AH}$，則下列敘述哪些是正確的﹖\n(1)$\\overset{⃑}{AB} · \\overset{⃑}{AC} = 12$ (2)△ABC面積為$12\\sqrt{3}$平方單位 (3)若$\\overset{⃑}{AD}$在$\\overset{⃑}{AC}$的正射影亦為$\\overset{⃑}{AH}$，則k = 7\n(4)若$\\overset{⃑}{AE} = \\overset{⃑}{AB} + \\overset{⃑}{AC}$，則$\\overset{⃑}{AE}$平分∠BAC。",
+      "answer_text": "(1)(4)",
+      "explanation_text": "$\\overset{⃑}{AB} = (4, - 2, - 2)$，$\\overset{⃑}{AC} = (2, 2, - 4) ⇒ \\overset{⃑}{AH} = \\frac{12}{24} × (2, 2, - 4) = (1, 1, - 2)$。\n(1)○﹕$\\overset{⃑}{AB} · \\overset{⃑}{AC} = 8 - 4 + 8 = 12$。\n(2)╳﹕△ABC面積$= \\frac{1}{2}\\sqrt{|\\overset{⃑}{AB}|^{2}|\\overset{⃑}{AC}|^{2} - (\\overset{⃑}{AB} · \\overset{⃑}{AC})^{2}} = \\frac{1}{2} × \\sqrt{24 × 24 - 144} = 6\\sqrt{3}$（平方單位）。\n(3)╳﹕$\\overset{⃑}{AD} = (6, k - 1, k - 3) ⇒ \\overset{⃑}{AD}$在$\\overset{⃑}{AC}$上之正射影$= \\frac{22 - 2k}{24} × (2, 2, - 4) = (1, 1, - 2)$\n⇒ 22 − 2k = 12，∴k = 5。\n(4)○﹕由$|\\overset{⃑}{AB}| = |\\overset{⃑}{AC}|$可知﹕$\\overset{⃑}{AB} + \\overset{⃑}{AC}$平分∠BAC。\n故選(1)(4)。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-projection-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題2：正射影與正射影長",
+      "source_order": 32,
+      "tags": [
+        "s4-1-3",
+        "section:主題2：正射影與正射影長",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0033",
+      "title": "設$A(\\sqrt{3},1,3\\sqrt{3})$，$B(3,\\sqr",
+      "question_text": "設$A(\\sqrt{3},1,3\\sqrt{3})$，$B(3,\\sqrt{3}, - 2)$，C(0,0,0)，試求﹕(1)△ABC之面積為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n(2)△ABC在yz平面上之正射影的面積為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "(1)$11$；(2)$\\frac{11}{2}$",
+      "explanation_text": "(1)$\\overset{⃑}{CA} = (\\sqrt{3},1,3\\sqrt{3})$，$\\overset{⃑}{CB} = (3,\\sqrt{3}, - 2)$，則△ABC之面積為 $\\frac{1}{2}\\sqrt{|\\overset{⃑}{CA}|^{2}|\\overset{⃑}{CB}|^{2} - (\\overset{⃑}{CA} · \\overset{⃑}{CB})^{2}} = \\frac{1}{2}\\sqrt{31 · 16 - (3\\sqrt{3} + \\sqrt{3} - 6\\sqrt{3})^{2}} = \\frac{1}{2}\\sqrt{496 - 12} = 11$。\n(2)點A，B在yz平面上之正射影分別為 $A'(0,1,3\\sqrt{3})$，$B'(0,\\sqrt{3}, - 2)$， $\\overset{⃑}{CA'} = (0,1,3\\sqrt{3})$，$\\overset{⃑}{CB'} = (0,\\sqrt{3}, - 2)$， 則△A′B′C之面積為 $\\frac{1}{2}\\sqrt{|\\overset{⃑}{CA'}|^{2}|\\overset{⃑}{CB'}|^{2} - (\\overset{⃑}{CA'} · \\overset{⃑}{CB'})^{2}} = \\frac{1}{2}\\sqrt{28 · 7 - ( - 5\\sqrt{3})^{2}} = \\frac{1}{2}\\sqrt{196 - 75} = \\frac{11}{2}$。]",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-projection-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題2：正射影與正射影長",
+      "source_order": 33,
+      "tags": [
+        "s4-1-3",
+        "section:主題2：正射影與正射影長",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s4-1-3-0034",
+      "title": "如圖平行六面體ABCD-EFGH，其中$\\overset{⃑}{AB}",
+      "question_text": "如圖平行六面體ABCD-EFGH，其中$\\overset{⃑}{AB} = (2, - 1,1)$，$\\overset{⃑}{AC} = (3,3,6)$， 且$\\overline{AE}\\bot\\overline{AB}$，$\\overline{AE}\\bot\\overline{AC}$，則\n(1)$\\overset{⃑}{AB} · \\overset{⃑}{AC} =$\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n(2)$\\overline{BH}$在平面ABC的正射影長為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n則(α,β,γ ) = \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "(1)$9$；(2)$\\sqrt{42}$；(3)$\\left(\\frac{1}{3},-\\frac{2}{3},-1\\right)$",
+      "explanation_text": "(1)$\\overset{⃑}{AB} · \\overset{⃑}{AC} = 6 - 3 + 6 = 9$。\n(2)(i)∵$\\overline{AE}\\bot\\overline{AB}$且$\\overline{AE}\\bot\\overline{AC}$，∴$\\overline{AE}\\bot$平面ABCD，\n∴$\\overline{BH}$在平面ABC之正射影長即為$\\overline{BD}$。\n(ii)$\\overset{⃑}{BC} = \\overset{⃑}{AC} - \\overset{⃑}{AB} = (1,4,5)$，\n∴$\\overset{⃑}{BD} = \\overset{⃑}{BA} + \\overset{⃑}{BC} = ( - 2,1, - 1) + (1,4,5) = ( - 1,5,4)$\n∴$\\overline{BD} = \\sqrt{1 + 25 + 16} = \\sqrt{42}$。\n(3)$\\overset{⃑}{GP} = \\overset{⃑}{AP} - \\overset{⃑}{AG}$ $= (\\frac{1}{3}\\overset{⃑}{AB} + \\frac{1}{3}\\overset{⃑}{AC}) - (\\overset{⃑}{AC} + \\overset{⃑}{CG}) = (\\frac{1}{3}\\overset{⃑}{AB} + \\frac{1}{3}\\overset{⃑}{AC}) - (\\overset{⃑}{AC} + \\overset{⃑}{AE})$ $= \\frac{1}{3}\\overset{⃑}{AB} - \\frac{2}{3}\\overset{⃑}{AC} - \\overset{⃑}{AE}$，\n∴$(\\alpha,\\beta,\\gamma) = (\\frac{1}{3}, - \\frac{2}{3}, - 1)$。",
+      "chapter_code": "s4-1-3",
+      "formula_id": "senior-space-dot-product-projection-s413",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-3轉.docx",
+      "source_section": "主題2：正射影與正射影長",
+      "source_order": 34,
+      "tags": [
+        "s4-1-3",
+        "section:主題2：正射影與正射影長",
+        "marker:範例6"
+      ]
+    }
+  ]
+}

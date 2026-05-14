@@ -1,0 +1,1726 @@
+{
+  "chapter_code": "s3-2-3",
+  "chapter_title": "對數函數",
+  "questions": [
+    {
+      "id": "q-s3-2-3-0001",
+      "title": "設1 < a < b，x > 0，下列敘述何者正確？ (A)",
+      "question_text": "設1 < a < b，x > 0，下列敘述何者正確？\n(A) log~a~ x < log~b~ x (B)若x > 1，則log~a~ x < log~b~ x (C)若x > 1，則log~a~ x > log~b~ x\n(D)若0 < x < 1，則log~a~ x > log~b~ x (E)若0 < x < 1，則log~a~ x < log~b~ x。",
+      "answer_text": "(C)(E)",
+      "explanation_text": "(1)當x > 1時，0 < log~x~ a < log~x~ b ⇒ $\\frac{1}{\\log_{x}a}$>$\\frac{1}{\\log_{x}b}$ ⇒ log~a~ x > log~b~ x\n(2)當0 < x < 1時，0 > log~x~ a > log~x~ b ⇒ $\\frac{1}{\\log_{x}a}$<$\\frac{1}{\\log_{x}b}$ ⇒ log~a~ x < log~b~ x\n(3)當x = 1時，log~a~ x = log~b~ x 故選(C)(E)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-comparison-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 1,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0002",
+      "title": "設g(x) = log~a~ x，a > 0，a ≠ 1，x",
+      "question_text": "設g(x) = log~a~ x，a > 0，a ≠ 1，x > 0，則下列敘述何者正確？\n(A) g(x + y) = g(x) + g(y) (B) g(xy) = g(x) + g(y) (C) g(x − y) = g(x) − g(y)\n(D) g($\\frac{x}{y}$) = g(x) − g(y) (E) g($\\frac{1}{x}$) = − g(x)。",
+      "answer_text": "(B)(D)(E)",
+      "explanation_text": "(1) g(xy) = log~a~ xy = log~a~ x + log~a~ y = g(x) + g(y)\n(2) g($\\frac{x}{y}$) = log~a~$\\frac{x}{y}$= log~a~ x − log~a~ y = g(x) − g(y)\n(3) g($\\frac{1}{x}$) = log~a~$\\frac{1}{x}$= − log~a~ x = − g(x) 故選(B)(D)(E)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-comparison-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 2,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0003",
+      "title": "下列敘述何者正確？ (A)若a > 1，則y = a^x^的",
+      "question_text": "下列敘述何者正確？\n(A)若a > 1，則y = a^x^的圖形是凹口向上 (B)若a > 1，則y = log~a~ x的圖形是凹口向上 (C)若0 < a < 1，則y = log~a~ x的圖形是遞增的 (D)若a > 1，則y = a^x^，y = log~a~ x的圖形對稱於直線x − y = 0 (E) y = log~3~ x，y = − log~3~ x的圖形對稱於x軸。",
+      "answer_text": "(A)(D)(E)",
+      "explanation_text": "(A)(D)(E)\n[圖:program-db/assets/question-media/s3-2-3/image2.png] \n(1) a > 1時，y = a^x^與y = log~a~ x圖形為圖(一)\n(2) 0 < a < 1時，y = a^x^與y = log~a~ x圖形為圖(二)\n(3) y = log~3~ x有點P (m，n) ⇔ n = log~3~ m ⇔ y = − log~3~ x有點Q(m，− n)\n∴ y = log~3~ x，y = − log~3~ x的圖形對稱於x軸\n∴ 選(A)(D)(E)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-concavity-mean-inequality-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 3,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0004",
+      "title": "求下列敘述何者正確？(A) y = 3^x^與y = 3^−",
+      "question_text": "求下列敘述何者正確？(A) y = 3^x^與y = 3^−\\ x^的圖形對稱於y軸\n(B) y = log~3~ x與y = log$\\frac{1}{3}$x的圖形對稱於x軸 (C) y = 3^x^與y = log~3~ x的圖形對稱於y軸\n(D) y = 3^−x^與y = log$\\frac{1}{3}$x的圖形對稱於x − y = 0 (E) y = 3^x^與y = log~3~x的圖形相交於一點。",
+      "answer_text": "(A)(B)(D)",
+      "explanation_text": "(A)將(x，y)用(− x，y)代入y = 3^x^，得y = 3^−\\ x^ ∴ y = 3^x^與y = 3^−x^兩圖形對稱y軸\n(B)將(x，y)用(x，− y)代入y = log~3~ x，得− y = log~3~ x ⇒ y = log~3~ x = log$\\frac{1}{3}$x\n∴ y = log~3~x與y = log$\\frac{1}{3}$x兩圖形對稱x軸\n(C) y = 3^x^與y = log~3~ x互為反函數 ⇒ 兩圖形對稱x − y = 0，但不對稱y軸\n(D) y = 3^−x^ = ($\\frac{1}{3}$)^x^與y = log$\\frac{1}{3}$x互為反函數 ⇒ 兩圖形對稱於x − y = 0\n(E)由右圖可知y = 3x與y = log~3~x不相交\n∴ (A)(B)(D)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-transformations-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 4,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0005",
+      "title": "隨堂練習：下列各敘述，何者正確？(A) a > 0，x，y$\\in$R",
+      "question_text": "下列各敘述，何者正確？(A) a > 0，x，y$\\in$R，若a ^x^ = a ^y^，則x = y\n(B) a > b > 0且a ≠ 1，b ≠ 1，x，y ∈ R，若a ^x^ = b ^y^，則x < y\n(C) a > x > y > 1，則log~a~ x > log~a~ y (D) 0 < a < x < y < 1，則log~x~ a < log~y~ a\n(E) a > 0，a$\\neq$1，x~1~ > x~2~ > 0，則log~a~$\\frac{x_{1} + x_{2}}{2}$>$\\frac{\\log_{a}x_{1} + \\log_{a}x_{2}}{2}$~。~",
+      "answer_text": "(C)(D)",
+      "explanation_text": "(A)錯誤：a = 1時，即使x ≠ y，仍有a ^x^ = a ^y\\^\n(B)錯誤：例：a = 4，b = 2；x = −$\\frac{1}{2}$，y = − 1時，a ^x^ = b ^y^ =$\\frac{1}{2}$，但x > y\n(C)正確：∵ a > 1 ∴ log~a~為增函數 ∴ 由x > y ⇒ log~a~ x > log~a~ y\n(D)正確：0 < a < 1 ∴ log~a~為減函數，由x < y < 1 ⇒ log~a~ x > log~a~ y > 0\n⇒ $\\frac{1}{\\log_{a}x}$<$\\frac{1}{\\log_{a}y}$ ⇒ log~x~a < log~y~a\n(E)錯誤：∵ $\\frac{x_{1} + x_{2}}{2}$>$\\sqrt{x_{1}\\ ．x_{2}}$（x~1~ ≠ x~2~）......①，當0 < a < 1時，log~a~為減函數\n∴ 由① ⇒ log~a~$\\frac{x_{1} + x_{2}}{2}$< log~a~$\\sqrt{x_{1}\\ ．x_{2}}$= log~a~$(x_{1}\\ ．x_{2} ⇒ )^{\\frac{1}{2}}$=$\\frac{1}{2}$ (log~a~ x~1~ + log~a~ x~2~)（不合） 故選(C)(D)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-comparison-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 5,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0006",
+      "title": "隨堂練習：若0 < a ≠ 1，則下列敘述何者正確？ (A) y =",
+      "question_text": "若0 < a ≠ 1，則下列敘述何者正確？ (A) y = log~a~ x與y = log$\\frac{1}{a}$x兩圖形對稱於y軸\n(B) y = a^x^與y =\n($\\frac{1}{a}$)^x^兩圖形對稱於x軸 (C) y = a^x^與y = log~a~ x兩圖形對稱於直線y = x\n(D) y = log~a~ x的圖形恆過點(0，1) (E) y = a^x^的圖形恆過點(0，1)。",
+      "answer_text": "(C)(E)",
+      "explanation_text": "(A) y = log$\\frac{1}{a}$x = − log~a~ x與y = log~a~ x圖形對稱於x軸。\n(B) y = ($\\frac{1}{a}$)^x^ = a^−x^與y = a^x^圖形對稱於y軸。\n(C) y = a^x^與y = log~a~ x互為反函數，兩圖形對稱於直線y = x。\n(D) y = log~a~ x圖形恆過點(1，0)。(E) y = a^x^圖形恆過點(0，1) 故選(C)(E)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-transformations-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 6,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0007",
+      "title": "隨堂練習：下面有五組函數，哪些組的兩個函數，其圖形互相對稱於y軸？ (",
+      "question_text": "下面有五組函數，哪些組的兩個函數，其圖形互相對稱於y軸？\n(A) y = ($\\frac{1}{2}$)^3x^和y = 2^3x^ (B) y = 2^3x^和y = 3^2x^ (C) y = x^2^和y = − x^2^ (D) y = log x和y = log ( − x)\n(E) y = log~3~ x和y = log$\\frac{1}{3}$x。",
+      "answer_text": "(A)(D)",
+      "explanation_text": "(1) y = f (x)有點P(m，n) ⇔ n = f (m) ⇔ y = f ( − x)有點Q( − m，n)\n∴ y = f (x)與y = f ( − x)的圖形對稱於y軸\n(2) y =\n($\\frac{1}{2}$)^3x^\n[圖:program-db/assets/question-media/s3-2-3/image3.png] y = ($\\frac{1}{2}$)^3(−x)^ = 2^3x^ ∴ y =\n($\\frac{1}{2}$)^3x^與 y = 2^3x^圖形對稱於y軸 y = log x\n[圖:program-db/assets/question-media/s3-2-3/image3.png] y = log( − x) ∴ y = log x與y = log( − x)圖形對稱於y軸\n(3)同理y = x^2^與y = − x^2^圖形對稱於x軸， y = log$\\frac{1}{3}$x = − log~3~ x與y = log~3~ x圖形對稱於x軸 故選(A)(D)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-transformations-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 7,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0008",
+      "title": "隨堂練習：設a > 0，a ≠ 1，若函數f (x) = a ^x^",
+      "question_text": "設a > 0，a ≠ 1，若函數f (x) = a ^x^，g(x) = log~a~ x之圖形分別為G~1~，G~2~，則下列何者正確？\n(A)圖形G~1~恆過點(1，0) (B)若0 < a < 1，則圖形G~1~，G~2~會交於一點(m，n)且m．n > 1\n(C)若a > 1，則圖形G~1~，G~2~對稱於直線 y = x (D) f ( g(x)) = x且g ( f (x)) = x\n(E) g(x)之值恆正。",
+      "answer_text": "(C)(D)",
+      "explanation_text": "a > 0，a ≠ 1\n(A) a^1^ = a > 0 ∴ G~1~不過點(1，0)\n(B) 0 < a < 1，則f (x) = a ^x^與g(x) = log~a~ x交於一點(m，m)（因兩函數對稱於x − y = 0） a ^x^恆過(0，1)，因其為減函數 ∴ m < 1 ⇒ m ^2^ < 1\n(C) ( y，x)代入y = a ^x^，得x = a ^y^ ⇒ y = log~a~ x ∴ G~1~，G~2~對稱於直線y = x\n(D) f (g(x)) = f (log~a~ x) = a$\\log_{a}x$ = x，g( f\n(x)) = g(a^x^) = log~a~ a ^x^ = x ∴ 二式相等\n(E)令x = a ^−1^，g(x) = − 1 < 0 故選(C)(D)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-comparison-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 8,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0009",
+      "title": "隨堂練習：y = log~b~ x與y = log~c~ x兩圖形對稱",
+      "question_text": "y = log~b~ x與y = log~c~ x兩圖形對稱於x軸，則下列何者為真？\n(A) a > b > c > d\n(B) b > a > c > d\n(C) b > a > d > c\n(D) ad = 1\n(E) abcd = 1",
+      "answer_text": "(C)(D)(E)",
+      "explanation_text": "∵ y = log~a~ x與y = log ~d~ x兩圖形對稱於x軸 ∴ 以(x，− y)代入y = log~a~ x，得 − y = log~a~ x\n⇒ y = − log~a~ x =$\\log_{\\frac{1}{a}}{}$x = log~d~ x ∴ $\\frac{1}{a}$ = d ⇒ ad = 1，同理bc = 1 ⇒ abcd = 1\n∵ y = log~a~ x與y = log~b~ x兩圖形均為增函數 ⇒ a > 1，b > 1 當x > 1時，由圖形知log~a~ x > log~b~ x ⇒ $\\frac{1}{\\log_{x}a}$>$\\frac{1}{\\log_{x}b}$ ⇒ log~x~ b > log~x~ a\n⇒ b > a......①，又ad = 1，bc = 1 ⇒ d =$\\frac{1}{a}$，c =$\\frac{1}{b}$ ⇒ 1 > d > c > 0......② 由①知，b > a > d > c，故應選(C)(D)(E)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-transformations-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 9,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0010",
+      "title": "若log~x−1~ (2x − x^2^ + 3)有意義，則",
+      "question_text": "若log~x−1~ (2x − x^2^ + 3)有意義，則x之範圍為。",
+      "answer_text": "$1<x<3,\\ x\\ne 2$",
+      "explanation_text": "① 0 < x − 1 ≠ 1 ⇒ 1 < x ≠ 2\n② 2x − x^2^ + 3 > 0 ⇒ x^2^ − 2x − 3 < 0 ⇒ − 1 < x < 3 由①②得1 < x < 3但x ≠ 2",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-domain-range-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 10,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0011",
+      "title": "隨堂練習：若log~x−2~( − x^2^ + 5x − 4)有意義",
+      "question_text": "若log~x−2~( − x^2^ + 5x − 4)有意義，求x之範圍。",
+      "answer_text": "$2<x<4,\\ x\\ne 3$",
+      "explanation_text": "log~(x−2)~( − x^2^ + 5x − 4)有意義 則${ \\begin{matrix} x - 2 > 0且x - 2 \\neq 1 \\ - x^{2} + 5x - 4 > 0 \\end{matrix} \\right.$ ⇒\n[圖:program-db/assets/question-media/s3-2-3/image5.png]\n⇒ (x − 1) (x − 4) < 0 ⇒ 1 < x < 4\n⇒ 2 < x < 4，但x ≠ 3",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-domain-range-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 11,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0012",
+      "title": "描繪下列各函數的圖形。 (1)y = log~2~x (2)",
+      "question_text": "描繪下列各函數的圖形。 (1)y = log~2~x (2)$y = \\log_{\\frac{1}{2}}x$ (3)$y = \\log_{2}\\frac{1}{x}$ (4)y = log~2~|x|。\n[圖:program-db/assets/question-media/s3-2-3/image6.png]",
+      "answer_text": "圖略",
+      "explanation_text": "(1)y = log~2~x\n[圖:program-db/assets/question-media/s3-2-3/image7.png]\n[圖:program-db/assets/question-media/s3-2-3/image8.png] ](.\\program-db\\imports\\packs\\_inspect-3A-3\\assets/media/image9.emf)\n[圖:program-db/assets/question-media/s3-2-3/image10.png]",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-transformations-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 12,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0013",
+      "title": "隨堂練習：作y = log~2~| x − 1| 之圖形",
+      "question_text": "作y = log~2~| x − 1| 之圖形。",
+      "answer_text": "圖略",
+      "explanation_text": "x > 1時，y = log~2~ (x − 1) x < 1時，y = log~2~ (1 − x)\n[圖:program-db/assets/question-media/s3-2-3/image11.png]",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-graph-properties-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 13,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0014",
+      "title": "(1)試描繪y = log~2~x 的圖形。(2)試求 |",
+      "question_text": "(1)試描繪y = log~2~x 的圖形。(2)試求 | log~2~x | = 2 − x解的個數。",
+      "answer_text": "(1)圖略；(2)2個",
+      "explanation_text": "(1)$y = |\\log_{2}x| = { \\begin{array}{r} \\log_{2}x,\\log_{2}x \\geq 0, 即x \\geq 1 \\ - \\log_{2}x,\\log_{2}x < 0, 即0 < x < 1 \\end{array} \\right.$ 因此圖形如下：\n[圖:program-db/assets/question-media/s3-2-3/image12.png] \n(2) | log~2~x | = 2 − x的解，即為${ \\begin{array}{r} y = |\\log_{2}x| \\ y = 2 - x \\end{array} \\right.$兩圖形的交點，\n∵有二個交點\n∴有2個實數解。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-intersection-root-count-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 14,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0015",
+      "title": "隨堂練習：方程式$\\log_{\\frac{1}{2}}|x| = 2^",
+      "question_text": "方程式$\\log_{\\frac{1}{2}}|x| = 2^{x}$之實數解個數。",
+      "answer_text": "2個",
+      "explanation_text": "作$y = \\log_{\\frac{1}{2}}|x|$與y = 2^x^的圖形，可以得到有2個交點 $⇒ \\log_{\\frac{1}{2}}|x| = 2^{x}$有兩個實數解。\n[圖:program-db/assets/question-media/s3-2-3/image13.png]",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-intersection-root-count-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 15,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0016",
+      "title": "隨堂練習：試問：方程式$|\\log_{2}x| = \\frac{1}{",
+      "question_text": "試問：方程式$|\\log_{2}x| = \\frac{1}{3}x$有幾個實根。\n[圖:program-db/assets/question-media/s3-2-3/image14.png]",
+      "answer_text": "3個",
+      "explanation_text": "方程式$|\\log_{2}x| = \\frac{1}{3}x$的實根個數等於y = |log~2~x|與$y = \\frac{1}{3}x$ 兩圖形的交點個數。\n如圖兩圖形有三交點， 故方程式$|\\log_{2}x| = \\frac{1}{3}x$有3實根。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-intersection-root-count-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 16,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0017",
+      "title": "隨堂練習：方程式 |log~2~ x| − 2 ^−\\ |x|^ =",
+      "question_text": "方程式 |log~2~ x| − 2 ^−\\ |x|^ = 0的實數解有多少個？\n![",
+      "answer_text": "2個",
+      "explanation_text": "(1)作出y = 2 ^−\\ |x|^ =\n($\\frac{1}{2}$)^|x|^的圖形\n∵ (x，y)用( − x，y)代入不變\n⇒ 圖形對稱於y軸，令x ≥ 0\n⇒ y = ($\\frac{1}{2}$)^x^，如上圖\n(2)作出y = |log~2~ x|的圖形，\n①當x ≥ 1時，y = log~2~ x，\n②當0 < x < 1時，y = − log~2~ x 由(1)(2)圖形知，y = 2 ^−\\ |x|^與y = |log~2~ x|恰有2個交點\n∴ |log~2~ x| − 2 ^−\\ |x|^ = 0恰有2個實根](.\\program-db\\imports\\packs\\_inspect-3A-3\\assets/media/image15.png)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-intersection-root-count-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 17,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0018",
+      "title": "隨堂練習：方程式log~2~|x| = 2^−|x|^的實數解有\\_",
+      "question_text": "方程式log~2~|x| = 2^−|x|^的實數解有\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_個。",
+      "answer_text": "2個",
+      "explanation_text": "${ \\begin{array}{r} y = \\log_{2}|x| \\ y = 2^{- |x|} \\end{array} \\right.$，∵ 有二個交點，∴ 原式有2個實數解。\n[圖:program-db/assets/question-media/s3-2-3/image16.png]",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-intersection-root-count-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 18,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0019",
+      "title": "則下列何者為真？ (1)a < 0，b > 1 (2)a >",
+      "question_text": "則下列何者為真？\n(1)a < 0，b > 1\n(2)a > 0，b > 1\n(3)a = 0，b > 1\n(4)a > 0，0 < b < 1\n(5)a < 0，0 < b < 1。",
+      "answer_text": "(5)",
+      "explanation_text": "∵遞減 ⇒ 0 < b < 1，又令x = 1代入 ⇒ y = a\n∵圖形與x = 1交點y < 0 ⇒ a < 0\n∴選(5)。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-intersection-root-count-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 19,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0020",
+      "title": "常數，則下列何者為真？ (1)a < 0，b > 1 (2)",
+      "question_text": "常數，則下列何者為真？\n(1)a < 0，b > 1\n(2)a > 0，b > 1\n(3)a = 0，b > 1\n(4)a > 0，0 < b < 1\n(5)a < 0，0 < b < 1。",
+      "answer_text": "(1)",
+      "explanation_text": "y = a − log~b~1 < 0 ⇒ a < 0 a − log~b~1 > a − log~b~2 ⇒ log~b~1 < log~b~2，\n∵1 < 2，∴b > 1 故選(1)。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-comparison-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 20,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0021",
+      "title": "且以x = − 1為漸近線，則下列何者正確？ (1)a >",
+      "question_text": "且以x = − 1為漸近線，則下列何者正確？\n(1)a > 0\n(2)b > 1\n(3)c < 0\n(4)a + b + c < 0\n(5)abc > 0。",
+      "answer_text": "(1)(5)",
+      "explanation_text": "(Ⅰ)圖形為遞減函數 ⇒ 0 < b < 1\n(Ⅱ)x = − 1 ⇒ x + 1 = 0為漸近線， 比較x + c = 0 ⇒ c = 1\n(Ⅲ)y = a + log~b~(x + 1) x = 0代入 ⇒ y = a > 0 又a + b + c > 0，abc > 0 $∴$選(1)(5)。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-comparison-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題1：對數函數及其圖形",
+      "source_order": 21,
+      "tags": [
+        "s3-2-3",
+        "section:主題1：對數函數及其圖形",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0022",
+      "title": "解下列聯立方程式${ \\begin{array}{r} 7",
+      "question_text": "解下列聯立方程式${ \\begin{array}{r} 7\\log x - 5．3^{y} = - 1 \\ {logx}^{6} + 3^{y + 1} = 21 \\end{array} \\right.$。",
+      "answer_text": "$(x,y)=(100,1)$",
+      "explanation_text": "$\\begin{matrix} \\begin{matrix} \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\end{matrix} \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\end{matrix}$\n[圖:program-db/assets/question-media/s3-2-3/image20.png] \n① × 3 + ② × 5 ⇒ 51 log x = 102 ⇒ log x = 2 ⇒ x = 10^2^ = 100 代入① 14 − 5．3^y^ = −1 ⇒ 3^y^ = 3 ⇒ y = 1",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 22,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0023",
+      "title": "解下列方程式： (1)$\\log_{2}(x - 1) -",
+      "question_text": "解下列方程式：\n(1)$\\log_{2}(x - 1) - \\log_{4}(x^{2} - x - 4) = \\frac{1}{2}$。 (2)log~x~4 − log~2~x = 1。",
+      "answer_text": "(1)$x=3$；(2)$x=\\frac14,2$",
+      "explanation_text": "(1)利用對數的性質得知 $\\log_{2}(x - 1) - \\log_{4}(x^{2} - x - 4) = \\frac{1}{2} ⇒ \\log_{4}\\frac{(x - 1)^{2}}{x^{2} - x - 4} = \\log_{4}4^{\\frac{1}{2}}$， 即$\\frac{(x - 1)^{2}}{x^{2} - x - 4} = 2$。展開得到x^2^ − 9 = 0，解得x = ± 3。\n當x = − 3時，會使得對數log~2~(x − 1)的真數小於0，故x = − 3不合。\n因此，x = 3。\n(2)利用對數的性質得知log~x~4 − log~2~x = 1 ⇒ 2log~x~2 − log~2~x = 1。\n令t = log~2~x。則方程式可改寫為$\\frac{2}{t} - t = 1$，即t^2^ + t − 2 = 0，解得t = − 2或1。\n因此，log~2~x = − 2或1。故x = 2 ^−\\ 2^或2^1^，即$x = \\frac{1}{4}$或2。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 23,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0024",
+      "title": "方程式log~3~(x^2^ − 13) − log~3~(",
+      "question_text": "方程式log~3~(x^2^ − 13) − log~3~(x − 3) = 2之解為。",
+      "answer_text": "$x=7$",
+      "explanation_text": "log~3~(x^2^ − 13) − log~3~(x − 3) = 2 ⇒\n[圖:program-db/assets/question-media/s3-2-3/image21.png]\n⇒ x >$\\sqrt{13}$ $\\frac{x^{2} - 13}{x - 3}$= 3^2^ = 9 ⇒ x^2^ − 9x + 14 = 0 ⇒ (x − 7)(x − 2) = 0 ∴ x = 7",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 24,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0025",
+      "title": "隨堂練習：解下列方程式： (1)$\\log_{3}(3^{x} + 2",
+      "question_text": "解下列方程式：\n(1)$\\log_{3}(3^{x} + 243) = \\frac{x}{2} + 2 + \\log_{3}4$。 (2)log~x~100 = 3logx + 5。",
+      "answer_text": "(1)$x=4,6$；(2)$x=\\sqrt[3]{10},\\frac{1}{100}$",
+      "explanation_text": "(1)利用對數的性質得知 $\\log_{3}(3^{x} + 243) = \\frac{x}{2} + 2 + \\log_{3}4 ⇒ \\log_{3}(3^{x} + 243) = \\log_{3}(3^{\\frac{x}{2}} · 3^{2} · 4)$， 因此$3^{x} + 243 = 36 · 3^{\\frac{x}{2}}$。\n令$t = 3^{\\frac{x}{2}}$。則方程式可改寫為t^2^ + 243 = 36t，即t^2^ − 36t + 243 = 0。\n解得t = 9或27。因此，$3^{\\frac{x}{2}} = 9$或27，解得x = 4或6。\n(2)利用對數的性質得知 $\\log_{x}100 = 3\\log x + 5 ⇒ 2\\log_{x}10 = 3\\log_{10}x + 5 ⇒ \\frac{2}{\\log_{10}x} = 3\\log_{10}x + 5$。\n令t = log~10~x，則方程式可改寫為$\\frac{2}{t} = 3t + 5$，即3t^2^ + 5t − 2 = 0，解得$t = \\frac{1}{3}$或 − 2。\n因此，$\\log_{10}x = \\frac{1}{3}$或 − 2。故$x = 10^{\\frac{1}{3}}$或10 ^−\\ 2^，即$x = \\sqrt[3]{10}$或$\\frac{1}{100}$。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 25,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0026",
+      "title": "隨堂練習：解方程式log~6~x + log~6~(x − 1) =",
+      "question_text": "解方程式log~6~x + log~6~(x − 1) = 1，得x =。",
+      "answer_text": "$x=3$",
+      "explanation_text": "log~6~x + log~6~(x − 1) = 1 ⇒ ${ \\begin{matrix} x > 0 \\ x - 1 > 0 \\end{matrix} \\right.$ ⇒ x > 1 log~6~[x(x − 1)] = log~6~6 ⇒ x^2^ − x = 6\n⇒ x^2^ − x − 6 = 0 ⇒ (x − 3)(x + 2) = 0 ⇒ x = 3或 − 2（不合）",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 26,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0027",
+      "title": "隨堂練習：求方程式$\\log_{(x - 1)^{2}}{}$ (x",
+      "question_text": "求方程式$\\log_{(x - 1)^{2}}{}$\n(x + 1) = log ~(x+1)~(x − 1)^2^之解。",
+      "answer_text": "$x=3,\\ \\frac{1+\\sqrt5}{2},\\ \\frac{1-\\sqrt5}{2}$",
+      "explanation_text": "範圍：${ \\begin{array}{r} 1 \\neq x + 1 > 0 \\ x \\neq 1 \\end{array} \\right.$ ⇒ x > − 1且x ≠ 0，1，原式⇒$\\frac{1}{2}$log~(x−1)~(x + 1) = 2log~(x+1)~(x − 1) 令log~(x−1)~(x + 1) = t，則$\\frac{1}{2}t = \\frac{2}{t}$ $⇒$ t^2^ = 4 ⇒ t =$\\pm$2\n(1) t = 2 $⇒$ log~(x−1)~(x + 1) = 2 ⇒ (x + 1) =\n(x − 1)^2^\n⇒ x^2^ − 3x = 0 ⇒ x = 3或x = 0 （不合）\n(2) t = − 2 ⇒ log~(x−1)~(x + 1) = − 2 ⇒ (x + 1) = (x − 1)^−2^ ⇒ (x + 1)(x − 1)^2^ = 1\n⇒ x^3^ − x^2^ − x = 0 ⇒ x(x^2^ − x − 1) = 0 ⇒ x = 0\n（不合）或x =$\\frac{1 \\pm \\sqrt{5}}{2}$",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 27,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0028",
+      "title": "方程式log~7~(7^x^ + 49) =$\\frac{x",
+      "question_text": "方程式log~7~(7^x^ + 49) =$\\frac{x}{2}$+ 1 + log~7~2的解為。",
+      "answer_text": "$x=2$",
+      "explanation_text": "log~7~(7^x^ + 49) =$\\frac{x}{2}$+ 1 + log~7~2 = log~7~7$\\frac{x}{2}$+ log~7~7 + log~7~2 ⇒ log~7~(7^x^ + 49) = log~7~(14．7$\\frac{x}{2}$)\n⇒ 7^x^ + 49 = 14．7$\\frac{x}{2}$ ⇒ (7$\\frac{x}{2}$)^2^ − 14．7$\\frac{x}{2}$+ 49 = 0\n⇒ (7$\\frac{x}{2}$− 7)^2^ = 0 ⇒ 7$\\frac{x}{2}$= 7 ⇒ $\\frac{x}{2}$= 1 ⇒ x = 2",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 28,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0029",
+      "title": "隨堂練習：解方程式：log~10~ (10 ^x^ + 100) =$",
+      "question_text": "解方程式：log~10~\n(10 ^x^ + 100) =$\\frac{x}{2}$+ 1 + log~10~2。",
+      "answer_text": "$x=2$",
+      "explanation_text": "由log~10~(10 ^x^ + 100) =$\\frac{x}{2}$+ 1 + log~10~2 $⇒$ log~10~(10 ^x^ + 100) =$\\log_{10}(10^{\\frac{x}{2} + 1}$．2)\n∴ 10 ^x^ + 100 = 2．$10^{\\frac{x}{2} + 1}$ $⇒$ ($10^{\\frac{x}{2}}$− 10)^2^ = 0 ⇒ $10^{\\frac{x}{2}}$= 10 ⇒ x = 2",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 29,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0030",
+      "title": "求方程式$x^{\\log_{10}x} = 10^{6}x$",
+      "question_text": "求方程式$x^{\\log_{10}x} = 10^{6}x$的解。（提示：兩邊同時以10為底數取對數）",
+      "answer_text": "$x=1000,\\ \\frac{1}{100}$",
+      "explanation_text": "將方程式$x^{\\log_{10}x} = 10^{6}x$兩邊同時以10為底數取對數得 $\\log_{10}(x^{\\log_{10}x}) = \\log_{10}(10^{6}x)$\n⇒ log~10~x × log~10~x = 6 + log~10~x ⇒ (log~10~x)^2^ − log~10~x − 6 = 0\n⇒ (log~10~x − 3)(log~10~x + 2) = 0 ⇒ log~10~x = 3或log~10~x = − 2\n⇒ x = 10^3^ = 1000或$x = 10^{- 2} = \\frac{1}{100}$。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 30,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0031",
+      "title": "隨堂練習：方程式(8x)$\\log_{2}x$= 4x^2^之解為",
+      "question_text": "方程式(8x)$\\log_{2}x$= 4x^2^之解為。",
+      "answer_text": "$x=\\frac14,2$",
+      "explanation_text": "原式取對數 ⇒ log~2~ (8x)$\\log_{2}x$= log~2~\n(4x^2^) ⇒ log~2~ x (3 + log~2~ x) = 2 + log~2~ x\n(log~2~ x)^2^ + log~2~ x − 2 = 0 ⇒ (log~2~ x + 2) ( log~2~ x −1) = 0\n⇒ log~2~ x = − 2或1，即x = 2^−\\ 2^ =$\\frac{1}{4}$或2^1^ = 2",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 31,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0032",
+      "title": "隨堂練習：若$x^{1 + \\log_{3}x}$= 27x^3^，則",
+      "question_text": "若$x^{1 + \\log_{3}x}$= 27x^3^，則x = ­­\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "$x=\\frac13,27$",
+      "explanation_text": "兩邊同取log~3~ ⇒ log~3~$x^{1 + \\log_{3}x}$= log~3~ (27x^3^) ⇒\n(1 + log~3~x) log~3~x = log~3~27 + log~3~x^3^ = 3 + 3 log~3~x， 令t = log~3~x，∴ (1 + t) t = 3 + 3t ⇒ t^2^ − 2t − 3 = 0 ⇒\n(t + 1) (t − 3) = 0 ⇒ t = −1或3\n⇒ log~3~x =−1或3，∴x =$\\frac{1}{3}$­­或27。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 32,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0033",
+      "title": "隨堂練習：若x$\\in$R，求方程式$x^{\\log_{3}4} =",
+      "question_text": "若x$\\in$R，求方程式$x^{\\log_{3}4} = \\frac{4^{\\log_{3}x} - 8}{3 - 4^{\\log_{3}x}}$之解。",
+      "answer_text": "$x=3$",
+      "explanation_text": "∵$x^{\\log_{3}4} = 4^{\\log_{3}x}$，令$x^{\\log_{3}4}$= t（t > 0） 則原式t =$\\frac{- 8 + t}{3 - t}$ ⇒ 3t − t^2^ = − 8 + t ⇒ t^2^ − 2t − 8 = 0\n⇒ (t − 4)(t + 2) = 0 ⇒ t = 4或 − 2（不合） ∴ $x^{\\log_{3}4}$= 4 兩邊取log~3~得(log~3~4)(log~3~x) = (log~3~4) ∴ log~3~x = 1 ∴x = 3（驗算，合）",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 33,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0034",
+      "title": "解$2^{\\log x} · x^{\\log 2} - \\f",
+      "question_text": "解$2^{\\log x} · x^{\\log 2} - \\frac{3}{2}(2^{\\log x} + x^{\\log 2}) + 2 = 0$",
+      "answer_text": "$x=1,10$",
+      "explanation_text": "令t = 2^logx^，∴2^logx^ = x^log2^ $∴$原式\n[圖:program-db/assets/question-media/s3-2-3/image22.png] $t^{2} - \\frac{3}{2}(2t) + 2 = 0$\n⇒ t^2^ − 3t + 2 = 0 ⇒ (t − 1)(t − 2) = 0 ⇒ t = 1或t = 2 即2^logx^ = 1或2^logx^ = 2 ⇒ logx = 0或logx = 1 ⇒ x = 1或x = 10。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 34,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0035",
+      "title": "隨堂練習：解2^logx^⋅x^log2^ − 3⋅x^log2^ −",
+      "question_text": "解2^logx^⋅x^log2^ − 3⋅x^log2^ − 2^1\\ +\\ logx^ + 4 = 0，可得x的值為何？",
+      "answer_text": "$x=1,100$",
+      "explanation_text": "令2^logx^ = t 原式 ⇒ t^2^ − 3t − 2^1^⋅t + 4 = 0 ⇒ t^2^ − 5t + 4 = 0 ⇒ (t − 1)(t − 4) = 0 ⇒ t = 1或t = 4\n(1)t = 1，即2^logx^ = 1，∴logx = 0 ⇒ x = 1\n(2)t = 4，即2^logx^ = 4，∴logx = 2 ⇒ x = 100。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 35,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0036",
+      "title": "解7^2x\\ −\\ 1^ − 3^3x\\ −\\ 2^ = 7",
+      "question_text": "解7^2x\\ −\\ 1^ − 3^3x\\ −\\ 2^ = 7^2x\\ +\\ 1^ − 3^3x\\ +\\ 2^，求x的值。",
+      "answer_text": "$x=\\log_{\\frac{49}{27}}\\frac{35}{27}$",
+      "explanation_text": "7^2x^ × 7 ^−\\ 1^ − 7^2x^ × 7^1^ = 3^3x^ × 3 ^−\\ 2^ − 3^3x^ × 3^2^\n[圖:program-db/assets/question-media/s3-2-3/image23.png] $7^{2x}(\\frac{1}{7} - 7) = 3^{3x}(\\frac{1}{9} - 9)$\n[圖:program-db/assets/question-media/s3-2-3/image24.png] $7^{2x}(\\frac{48}{7}) = 3^{3x}(\\frac{80}{9})$\n[圖:program-db/assets/question-media/s3-2-3/image25.png] $\\frac{7^{2x}}{3^{3x}} = \\frac{\\frac{80}{9}}{\\frac{48}{7}} = \\frac{35}{27}$ $⇒ (\\frac{49}{27})^{x} = \\frac{35}{27}$\n∴$x = \\log_{\\frac{49}{27}}\\frac{35}{27}$。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 36,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0037",
+      "title": "隨堂練習：利用log 3 = 0.4771，log 7 = 0.845",
+      "question_text": "利用log 3 = 0.4771，log 7 = 0.8451， 解方程式3^x^ + 3$x + 1$ + 3$x + 2$ + 3$x + 3$= 7^x^ + 7$x + 1$ + 7$x + 2$ + 7$x + 3$，則7^x^ ÷ 3^x^ =； 若取三位有效數字（第四位四捨五入），可得x =。",
+      "answer_text": "(1)$\\frac{7^x}{3^x}=\\frac{1}{10}$；(2)$x\\approx -2.72$",
+      "explanation_text": "(1) 3^x^ + 3$x + 1$ + 3$x + 2$ + 3$x + 3$= 7^x^ + 7$x + 1$ + 7$x + 2$ + 7$x + 3$\n⇒ 3^x^ + 3．3^x^ + 9．3^x^ + 27．3^x^ = 7^x^ + 7．7^x^ + 49．7^x^ + 343．7^x^\n⇒ 40．3^x^ = 400．7^x^ ⇒ 7^x^ ÷ 3^x^ =$\\frac{40}{400}$=$\\frac{1}{10}$\n(2)由$\\frac{7^{x}}{3^{x}}$=$\\frac{1}{10}$ ⇒ log$\\frac{7^{x}}{3^{x}}$= log$\\frac{1}{10}$ ⇒ x(log 7 − log 3) = −1\n⇒ x =$\\frac{- 1}{\\log 7 - \\log 3}$=$\\frac{- 1}{0.8451 - 0.4771}$=$\\frac{- 1}{0.3680}$= − 2.72",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 37,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0038",
+      "title": "二次方程式2x^2^ − 5x + 1 = 0的二根為log",
+      "question_text": "二次方程式2x^2^ − 5x + 1 = 0的二根為loga，logb，則log~a~b + log~b~a值為。",
+      "answer_text": "$\\frac{21}{2}$",
+      "explanation_text": "loga與logb為2x^2^ − 5x + 1 = 0之二根 ∴ ${ \\begin{matrix} \\log a + \\log b = \\frac{5}{2} \\ \\log a\\log b = \\frac{1}{2} \\end{matrix} \\right.$ 則log~a~b + log~b~a =$\\frac{\\log b}{\\log a}$+$\\frac{\\log a}{\\log b}$=$\\frac{(\\log a)^{2} + (\\log b)^{2}}{\\log a\\log b}$ =$\\frac{(\\log a + \\log b)^{2} - 2\\log a\\log b}{\\log a\\log b}$=$\\frac{(\\frac{5}{2})^{2} - 2 × \\frac{1}{2}}{\\frac{1}{2}}$=$\\frac{21}{2}$",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 38,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0039",
+      "title": "若α，β 為(logx)^2^ − logx^2^ − 6",
+      "question_text": "若α，β 為(logx)^2^ − logx^2^ − 6 = 0之兩根，則log~α~ β + log~β~ α 之值為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "$-\\frac{8}{3}$",
+      "explanation_text": "令t = logx，得t^2^ − 2t − 6 = 0之兩根為logα，logβ $⇒$ logα + logβ =2，(logα)(logβ ) = −6\n∴ log~α~ β + log~β~ α =$\\frac{\\log\\beta}{\\log\\alpha} + \\frac{\\log\\alpha}{\\log\\beta}$=$\\frac{(\\log\\alpha + \\log\\beta)^{2} - 2(\\log\\alpha)(\\log\\beta)}{(\\log\\alpha)(\\log\\beta)}$=$\\frac{4 - 2 × ( - 6)}{- 6} = - \\frac{8}{3}$",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 39,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0040",
+      "title": "若x^2^ + (2 log5)x + log$\\frac{",
+      "question_text": "若x^2^ + (2 log5)x + log$\\frac{5}{2}$= 0之兩根為α，β，求10^α^ + 10^β^之值。",
+      "answer_text": "$\\frac{1}{2}$",
+      "explanation_text": "原式 ⇒ x^2^ + (2 log5)x + (log5 − log2) = 0 ⇒ x^2^ + 2(1 − log2)x + (1 − 2 log2) = 0\n⇒[x + (1 − 2 log2)] [x + 1] = 0，∴ x = −1 + 2 log2或−1， 令α = −1 + 2 log2，β = −1\n⇒ 10^α^ + 10^β^ = 10^−1+2log2^ + 10^−1^ = 10^−1+log4^ + 10^−1^ = 10^−1^ × 10^log4^ +10^−1^=$\\frac{1}{10} × 4 + \\frac{1}{10} = \\frac{5}{10} = \\frac{1}{2}$。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 40,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0041",
+      "title": "隨堂練習：設方程式(log3x)(log5x) = 1之二根為α，β",
+      "question_text": "設方程式(log3x)(log5x) = 1之二根為α，β，求αβ。",
+      "answer_text": "$\\alpha\\beta=\\frac{1}{15}$",
+      "explanation_text": "(log3x)(log5x) = 1 ⇒ (logx + log3)(logx + log5) = 1\n⇒ (logx)^2^ + (log3 + log5)logx + (log3．log5 − 1) = 0其二根為logα，logβ\n∴ logα + logβ = − (log3 + log5) ⇒ logαβ = − log15 = log$\\frac{1}{15}$，故αβ =$\\frac{1}{15}$",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 41,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0042",
+      "title": "隨堂練習：設α，β 為方程式(log~3~x)^2^ − 3 ⋅ lo",
+      "question_text": "設α，β 為方程式(log~3~x)^2^ − 3 ⋅ log~3~x + 1 = 0的二根，求α × β 的值。",
+      "answer_text": "$\\alpha\\beta=27$",
+      "explanation_text": "方程式(log~3~x)^2^ − 3 × log~3~x + 1 = 0的兩根為α，β\n⇒ 表示方程式t^2^ − 3t + 1 = 0的兩根為log~3~α與log~3~β 由根與係數，兩根和為$\\log_{3}\\alpha + \\log_{3}\\beta = \\frac{3}{1} = 3$\n⇒ log~3~αβ = 3 ⇒ αβ = 3^3^ = 27。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 42,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0043",
+      "title": "x的方程式$x^{(\\log_{2}x) - a}$= 32",
+      "question_text": "x的方程式$x^{(\\log_{2}x) - a}$= 32有一根為$\\frac{1}{2}$，則(1) a = \\_\\_\\_\\_\\_\\_。 (2)此方程式的另一根為\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "(1)$a=4$；(2)$x=32$",
+      "explanation_text": "(1)∵ $\\frac{1}{2}$為$x^{(\\log_{2}x) - a}$= 32之一根 ⇒ $(\\frac{1}{2})^{(\\log_{2}\\frac{1}{2}) - a}$= 32 ⇒ $(\\frac{1}{2})$ ^−1−a^ = 2^5^\n⇒ −1 − a = −5 ⇒ a = 4\n(2)$x^{(\\log_{2}x) - 4}$= 32 ⇒ $\\log_{2}x^{(\\log_{2}x) - 4}$= log~2~ 32\n⇒ (log~2~ x − 4)(log~2~ x) = 5\n⇒ (log~2~ x)^2^ − 4log~2~ x − 5 = 0 ⇒ (log~2~ x − 5)(log~2~ x + 1) = 0 ⇒ log~2~ x = 5，−1\n⇒ x = 2^5^，2^−1^ ⇒ x =$\\frac{1}{2}$，32\n∴ 另一根為32",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 43,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0044",
+      "title": "α為log~5~x + x − 7 = 0之根，β為5^x^",
+      "question_text": "α為log~5~x + x − 7 = 0之根，β為5^x^ + x − 7 = 0之根，則α +β = \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "$\\alpha+\\beta=7$",
+      "explanation_text": "${ \\begin{array}{r} \\log_{5}x = - x + 7 \\ 5^{x} = - x + 7 \\end{array} \\right.$ ⇒ $\\log_{5}\\alpha = - \\alpha + 7 5^{\\beta} = - \\beta + 7$，\n∴ (α，−α + 7)，(β，−β + 7)分別為y = −x + 7與y = log~5~x，y = 5^x^之交點坐標， 又y = log~5~x與y = 5^x^之圖形對稱於y = x，∴ α = −β + 7，−α + 7 = β，即α + β = 7。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-intersection-root-count-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 44,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0045",
+      "title": "log~10~x + a log~x~10 = b，甲看錯a",
+      "question_text": "log~10~x + a log~x~10 = b，甲看錯a，解得兩根為100，100，乙看錯b，解得兩根為100及$\\sqrt{1000}$， 則正確之解為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "$x=10,1000$",
+      "explanation_text": "原式 ⇒ log~10~x +$\\frac{a}{\\log_{10}x}$= b ⇒ (log~10~x)^2^ − b × log~10~x + a = 0， 甲看錯a，得二根為100，100 ⇒ b正確，\n∴ log~10~100 + log~10~100 = b，∴ 2 + 2 = b ⇒ b = 4， 乙看錯b，得二根為100，$\\sqrt{1000}$ ⇒ a正確，\n∴ log~10~100 × log~10~$\\sqrt{1000}$= a，∴ 2 × $\\frac{3}{2}$= a ⇒ a = 3， 即原式為(log~10~x)^2^ − 4 log~10~x + 3 = 0 ⇒ (log~10~x − 1)\n(log~10~x − 3) = 0 ⇒ log~10~x = 1或3，\n∴ x = 10或1000。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 45,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0046",
+      "title": "比較下列各組數的大小關係：(1)log~3~2，log~3~",
+      "question_text": "比較下列各組數的大小關係：(1)log~3~2，log~3~5，log~9~8，1。(2)$\\log_{\\frac{1}{2}}3$，$\\log_{\\frac{1}{2}}\\sqrt{8}$，$\\log_{\\frac{1}{4}}4$，0。\n(3)$\\log_{\\frac{1}{2}}5$，$\\log_{\\frac{1}{3}}5$，0。",
+      "answer_text": "(1)$\\log_3 5>1>\\log_9 8>\\log_3 2$；(2)$\\log_{\\frac12}3<\\log_{\\frac12}\\sqrt8<\\log_{\\frac14}4<0$；(3)$\\log_{\\frac12}5<\\log_{\\frac13}5<0$",
+      "explanation_text": "(1)$\\log_{3}2 = \\log_{3^{2}}2^{2} = \\log_{9}4$，$\\log_{3}5 = \\log_{3^{2}}5^{2} = \\log_{9}25$，1 = log~9~9\n∵底數9 > 1，且25 > 9 > 8 > 4，\n∴log~9~25 > log~9~9 > log~9~8 > log~9~4 故log~3~5 > 1 > log~9~8 > log~3~2。\n(2)$\\log_{\\frac{1}{4}}4 = \\log_{\\frac{1}{2}}2$，$0 = \\log_{\\frac{1}{2}}1$，\n∵底數$\\frac{1}{2} < 1$，且$3 > \\sqrt{8} > 2 > 1$\n∴$\\log_{\\frac{1}{2}}3 < \\log_{\\frac{1}{2}}\\sqrt{8} < \\log_{\\frac{1}{4}}4 < 0$。\n(3)∵$\\log_{\\frac{1}{2}}5 = - \\log_{2}5$，$\\log_{\\frac{1}{3}}5 = - \\log_{3}5$\n∴$\\log_{\\frac{1}{2}}5 < \\log_{\\frac{1}{3}}5 < 0$。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 46,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0047",
+      "title": "比較下列a，b，c，d，e的大小： (1) a = (1.7",
+      "question_text": "比較下列a，b，c，d，e的大小：\n(1) a = (1.7)^3.1^，b = (1.7) ^−2^，c = 1，d = 0，e =$\\sqrt[3]{1.7}$：。\n(2) a = log~0.6~ 2，b = log~0.6~$\\sqrt{0.6}$，c = log~0.6~ 0.5，d = 0，e = 1：。",
+      "answer_text": "(1)$a>e>c>b>d$；(2)$c>e>b>d>a$",
+      "explanation_text": "(1) a = (1.7)^3.1^，b = (1.7) ^−2^，c = 1 = (1.7)^0^，d = 0，e = (1.7)$\\frac{1}{3}$\n∵ 1.7 > 1 ∴ a > e > c > b > d\n(2) a = log~0.6~ 2 < log~0.6~ 1 = 0，b = log~0.6~$\\sqrt{0.6}$=$\\frac{1}{2}$， c = log~0.6~ 0.5 > log~0.6~ 0.6 = 1，d = 0，e = 1\n∴ c > e > b > d > a",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 47,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0048",
+      "title": "比較下列各數的大小。 $\\log_{\\frac{1}{2}}",
+      "question_text": "比較下列各數的大小。 $\\log_{\\frac{1}{2}}\\frac{1}{3}$，$\\log_{\\sqrt{2}}\\sqrt[4]{7}$，$\\log_{\\frac{1}{8}}\\frac{1}{28}$。",
+      "answer_text": "$\\log_{\\frac18}\\frac{1}{28}>\\log_{\\frac12}\\frac{1}{3}>\\log_{\\sqrt2}\\sqrt[4]{7}$",
+      "explanation_text": "$\\log_{\\frac{1}{2}}\\frac{1}{3} = \\log_{2^{- 1}}3^{- 1} = \\log_{2}3$，$\\log_{\\sqrt{2}}\\sqrt[4]{7} = \\log_{2^{\\frac{1}{2}}}7^{\\frac{1}{4}} = \\log_{2}\\sqrt{7}$，$\\log_{\\frac{1}{8}}\\frac{1}{28} = \\log_{2^{- 3}}28^{- 1} = \\log_{2}\\sqrt[3]{28}$\n∵$\\sqrt[3]{28} > \\sqrt[3]{27} = 3 = \\sqrt{9} > \\sqrt{7}$\n∴$\\log_{\\frac{1}{8}}\\frac{1}{28} > \\log_{\\frac{1}{2}}\\frac{1}{3} > \\log_{\\sqrt{2}}\\sqrt[4]{7}$。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 48,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例16"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0049",
+      "title": "比較下列各數大小",
+      "question_text": "比較下列各數大小：\n[圖:program-db/assets/question-media/s3-2-3/image26.png]\n[圖:program-db/assets/question-media/s3-2-3/image27.png]",
+      "answer_text": "$d>b>a>c$",
+      "explanation_text": "，，，，因為，所以d > b > a > c。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 49,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:範例17"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0050",
+      "title": "隨堂練習：請將右式各值由小而大依次排序：a = log~7~4，$b",
+      "question_text": "請將右式各值由小而大依次排序：a = log~7~4，$b = \\frac{1}{2}\\log_{\\sqrt{2}}3$，$c = \\log_{\\frac{1}{3}}0.5$，d = log~4~7。",
+      "answer_text": "$c<a<d<b$",
+      "explanation_text": "$a = \\log_{7}4 = \\frac{\\log 4}{\\log 7}$ ⇒ 0 < a < 1 $b = \\frac{1}{2}\\log_{\\sqrt{2}}3 = \\log_{\\sqrt{2}}\\sqrt{3} = \\frac{\\log 3}{\\log 2}$\n⇒ b > 1 $c = \\log_{\\frac{1}{3}}0.5 = \\log_{\\frac{1}{3}}\\frac{1}{2} = \\frac{\\log 2}{\\log 3}$\n⇒ 0 < c < 1 $d = \\log_{4}7 = \\frac{\\log 7}{\\log 4}$ ⇒ d > 1\n∴$0 < c = \\frac{\\log 4}{\\log 9} < a = \\frac{\\log 4}{\\log 7} < 1$， $b = \\frac{\\log 9}{\\log 4} > d = \\frac{\\log 7}{\\log 4} > 1$\n⇒ c < a < d < b。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 50,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0051",
+      "title": "隨堂練習：設a = log~7~ 4，b =$\\frac{1}{2}$",
+      "question_text": "設a = log~7~ 4，b =$\\frac{1}{2}$log$\\sqrt{2}$3，c = log$\\frac{1}{3}$0.5，d = log~4~ 7，試比較a、b、c、d之大小順序為。",
+      "answer_text": "$b>d>a>c$",
+      "explanation_text": "b =$\\frac{1}{2}$log$\\sqrt{2}$3 = log~2~3 = log~4~ 9 > log~4~ 7 > 1， c = log$\\frac{1}{3}$0.5 = log\n[圖:program-db/assets/question-media/s3-2-3/image28.png] $\\frac{1}{2}$= log~3~ 2 = log~9~ 4 < log~7~ 4 < 1 故b > d > a > c",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 51,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0052",
+      "title": "隨堂練習：試比較下列三數a = log~0.2~0.3，b = log",
+      "question_text": "試比較下列三數a = log~0.2~0.3，b = log~2~3，c = log~20~30之大小。",
+      "answer_text": "$b>c>a$",
+      "explanation_text": "log~2~3 − log~20~30 =$\\frac{\\log 3}{\\log 2} - \\frac{\\log 30}{\\log 20} = \\frac{{log3}_{ } \\log 20 - \\log 2 _{ }\\log 30}{{log2}_{ } \\log 20}$ $= \\frac{\\log 3 × (1 + \\log 2) - \\log 2 × (1 + \\log 3)}{\\log 2 × (1 + \\log 2)} = \\frac{\\log 3 - \\log 2}{\\log 2(1 + \\log 2)} > 0$，∴ log~2~3 > log~20~30， 同理，log~20~30 > log~0.2~0.3 ⇒ log~2~3 > log~20~30 > log~0.2~0.3。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 52,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0053",
+      "title": "隨堂練習：設b > a > 1，試比較A = log~a~b，B =",
+      "question_text": "設b > a > 1，試比較A = log~a~b，B = log~b~a，C = log~a~ab，D =$\\log_{a}\\frac{a}{b}$之大小。",
+      "answer_text": "$C>A>B>D$",
+      "explanation_text": "∵ b > a > 1，∴ A = log~a~b > log~a~a = 1 ⇒ A > 1，B = log~b~a < log~b~b = 1 ⇒ 0 < B < 1， 又C = log~a~ab = log~a~a + log~a~b = 1 + log~a~b = 1 + A > A，D =$\\log_{a}\\frac{a}{b}$= log~a~a − log~a~b = 1 − log~a~b = 1 − A < 0 ⇒ C > A > B > D。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 53,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0054",
+      "title": "隨堂練習：下列何者為真？ (1)$\\log_{\\sqrt{3}}\\sq",
+      "question_text": "下列何者為真？ (1)$\\log_{\\sqrt{3}}\\sqrt{5} > \\log_{\\sqrt{5}}\\sqrt{3}$ (2)$\\log_{2}\\sqrt{4.9} > \\log_{2}\\sqrt{3.6}$\n(3)$\\log_{\\frac{1}{2}}10 + \\log_{\\frac{1}{2}}20 > \\log_{\\frac{1}{2}}30$ (4)若x > 0，則2^x^ > log~2~x恆成立\n(5)若x > 0，則$(\\frac{1}{2})^{x} > \\log_{\\frac{1}{2}}x$恆成立。",
+      "answer_text": "(1)(2)(4)",
+      "explanation_text": "(1)○：log~3~5 > log~5~3 ∴$\\log_{\\sqrt{3}}\\sqrt{5} > \\log_{\\sqrt{5}}\\sqrt{3}$。\n(2)○：$\\sqrt{4.9} > \\sqrt{3.6}$ ∴$\\log_{2}\\sqrt{4.9} > \\log_{2}\\sqrt{3.6}$。\n(3)╳：$\\log_{\\frac{1}{2}}10 + \\log_{\\frac{1}{2}}20 = \\log_{\\frac{1}{2}}200 < \\log_{\\frac{1}{2}}30$。\n(4)○：\n[圖:program-db/assets/question-media/s3-2-3/image29.png] \n(5)╳：x > 0，未必$(\\frac{1}{2})^{x} > \\log_{\\frac{1}{2}}x$。\n[圖:program-db/assets/question-media/s3-2-3/image30.png] $∴$選(1)(2)(4)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題2：對數方程式",
+      "source_order": 54,
+      "tags": [
+        "s3-2-3",
+        "section:主題2：對數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0055",
+      "title": "解下列不等式：(1)log~2~(3x) > log~2~(",
+      "question_text": "解下列不等式：(1)log~2~(3x) > log~2~(x + 2)。 (2)log~3~(5x) < log~3~(x + 4)。",
+      "answer_text": "(1)$x>1$；(2)$0<x<1$",
+      "explanation_text": "(1)${ \\begin{array}{r} 3x > x + 2 \\ 3x > 0 \\ x + 2 > 0 \\end{array} \\right.$，得x > 1。\n(2)$\\ { \\begin{array}{r} 5x > x + 4 \\ 5x > 0 \\ x + 4 > 0 \\end{array} \\right.$，得0 < x < 1。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 55,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0056",
+      "title": "解不等式：(1) log~2~(x − 1) < 1 + l",
+      "question_text": "解不等式：(1) log~2~(x − 1) < 1 + log~4~(x + 2)之解為。\n(2) log~3~(log$\\frac{1}{2}$x) < 1之解為。",
+      "answer_text": "(1)$1<x<7$；(2)$\\frac18<x<1$",
+      "explanation_text": "(1)∵ 原式有意義 ⇒ ${ \\begin{array}{r} x - 1 > 0 \\ x + 2 > 0 \\end{array} \\right.$ ⇒ x > 1......① 原式化為log~2~(x − 1) < log~2~2 +$\\frac{1}{2}$log~2~(x + 2)\n⇒ x − 1 < 2 (x + 2)$\\frac{1}{2}$ ⇒ (x − 1)^2^ < 4 (x + 2)\n⇒ x^2^ − 6x − 7 < 0 ⇒ (x + 1)(x − 7) < 0 ⇒ − 1 < x < 7......② 由①②得1 < x < 7\n(2)log~3~(log$\\frac{1}{2}$x) < 1 ⇒ log~3~(log$\\frac{1}{2}$x) < log~3~3 ⇒ 0 < log$\\frac{1}{2}$x < 3\n⇒ log$\\frac{1}{2}$1 < log$\\frac{1}{2}$x < log$\\frac{1}{2}$ ($\\frac{1}{2}$)^3^ ⇒ 1 > x >$\\frac{1}{8}$",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 56,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0057",
+      "title": "解下列各不等式：(1)$\\log_{\\frac{1}{2}}",
+      "question_text": "解下列各不等式：(1)$\\log_{\\frac{1}{2}}(\\log_{3}x) \\geq - 2$。 (2)$\\log_{\\frac{1}{4}}(\\log_{4}x) > 2$。",
+      "answer_text": "(1)$1<x\\le 81$；(2)$1<x<2^{1/8}$",
+      "explanation_text": "(1)$\\log_{\\frac{1}{2}}(\\log_{3}x) \\geq - 2 = \\log_{\\frac{1}{2}}(\\frac{1}{2})^{- 2}$\n⇒ 0 < log~3~x ≤ 4\n⇒ log~3~1 < log~3~x ≤ log~3~3^4^ ⇒ 1 < x ≤ 81。\n(2)$\\log_{\\frac{1}{4}}(\\log_{4}x) > 2 = \\log_{\\frac{1}{4}}(\\frac{1}{4})^{2}$ $⇒ 0 < \\log_{4}x < \\frac{1}{16}$\n[圖:program-db/assets/question-media/s3-2-3/image31.png] $\\log_{4}1 < \\log_{4}x < \\log_{4}4^{\\frac{1}{16}}$ $⇒ 1 < x < 2^{\\frac{1}{8}}$。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 57,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0058",
+      "title": "隨堂練習：解下列各不等式：(1)log~3~(x − 4) < log",
+      "question_text": "解下列各不等式：(1)log~3~(x − 4) < log~9~(x − 2)。 (2)log~0.7~(x + 3) < log~0.49~(x^2^ + 3x + 2)。",
+      "answer_text": "(1)$4<x<6$；(2)$-\\frac73<x<-2$或$x>-1$",
+      "explanation_text": "(1)由真數x − 4 > 0與x − 2 > 0 ⇒ 即x > 4...① log~3~(x − 4) = log~9~(x − 4)^2^ ⇒ log~9~(x − 4)^2^ < log~9~(x − 2) 又底數9 > 1\n⇒ (x − 4)^2^ < x − 2，可得3 < x < 6...② 由①②可知：4 < x < 6。\n(2)真數恆正：x + 3 > 0且x^2^ + 3x + 2 > 0 x > − 3且（x > − 1或x < − 2）\n⇒ − 3 < x < − 2或x > − 1...① log~0.49~(x + 3)^2^ < log~0.49~(x^2^ + 3x + 2) 又底數0.49 < 1\n⇒ (x + 3)^2^ > x^2^ + 3x + 2 ⇒ 6x + 9 > 3x + 2 $⇒ x > - \\frac{7}{3}$...② 由①②知：$- \\frac{7}{3} < x < - 2$或x > − 1。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 58,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0059",
+      "title": "隨堂練習：解下列各不等式：(1)$\\log_{2}(\\log_{\\fr",
+      "question_text": "解下列各不等式：(1)$\\log_{2}(\\log_{\\frac{1}{2}}x) > 0$ (2)$\\log_{2}(\\log_{\\frac{1}{2}}x) < 0$。",
+      "answer_text": "(1)$0<x<\\frac12$；(2)$\\frac12<x<1$",
+      "explanation_text": "(1)$\\log_{2}(\\log_{\\frac{1}{2}}x) > 0 = \\log_{2}1 \\Longrightarrow \\log_{\\frac{1}{2}}x > 1 = \\log_{\\frac{1}{2}}\\frac{1}{2} ⇒ 0 < x < \\frac{1}{2}$。\n(2)$\\log_{2}(\\log_{\\frac{1}{2}}x) < 0 = \\log_{2}1 ⇒ 0 < \\log_{\\frac{1}{2}}x < 1 \\Longrightarrow \\log_{\\frac{1}{2}}1 < \\log_{\\frac{1}{2}}x < \\log_{\\frac{1}{2}}\\frac{1}{2}$ $⇒ 1 > x > \\frac{1}{2}$即$\\frac{1}{2} < x < 1$。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 59,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0060",
+      "title": "隨堂練習：解不等式$\\log_{2}(\\log_{\\frac{1}{2",
+      "question_text": "解不等式$\\log_{2}(\\log_{\\frac{1}{2}}(\\log_{2}x)) > 1$。",
+      "answer_text": "$1<x<\\sqrt[4]{2}$",
+      "explanation_text": "$\\log_{2}(\\log_{\\frac{1}{2}}(\\log_{2}x)) > 1$ $$⇒ \\log_{2}(\\log_{\\frac{1}{2}}(\\log_{2}x)) > \\log_{2}2 $$$⇒ \\log_{\\frac{1}{2}}(\\log_{2}x) > 2 = \\log_{\\frac{1}{2}}(\\frac{1}{2})^{2} = \\log_{\\frac{1}{2}}\\frac{1}{4}$（因為底數2 > 1） $⇒ 0 < \\log_{2}x < \\frac{1}{4}$（因為底數$\\frac{1}{2} < 1$，且真數log~2~x > 0） $$⇒ \\log_{2}1 < \\log_{2}x < \\log_{2}2^{\\frac{1}{4}} = \\log_{2}\\sqrt[4]{2} $$$⇒ 1 < x < \\sqrt[4]{2}$。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 60,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0061",
+      "title": "隨堂練習：不等式log$\\frac{1}{2}$ (3x + 1) >",
+      "question_text": "不等式log$\\frac{1}{2}$ (3x + 1) > 2之解為。",
+      "answer_text": "$-\\frac13<x<-\\frac14$",
+      "explanation_text": "①原式有意義 ⇒ 3x + 1 > 0 ⇒ x > −$\\frac{1}{3}$\n② log$\\frac{1}{2}$ (3x + 1) > 2 ⇒ log$\\frac{1}{2}$ ( 3x + 1) > log$\\frac{1}{2}$ ($\\frac{1}{2}$)^2^ ⇒ 3x + 1 <$\\frac{1}{4}$ ⇒ x < −$\\frac{1}{4}$ 由①②得 −$\\frac{1}{3}$< x < −$\\frac{1}{4}$",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 61,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0062",
+      "title": "若實數x滿足不等式log~3~(3^x^ + 8) <$\\f",
+      "question_text": "若實數x滿足不等式log~3~(3^x^ + 8) <$\\frac{x}{2}$+ 1 + log~3~2，試求x的範圍。",
+      "answer_text": "$\\log_3 4<x<\\log_3 16$",
+      "explanation_text": "log~3~(3^x^ + 8) <$\\frac{x}{2}$+ 1 + log~3~2 ⇒ log~3~(3^x^ + 8) < log~3~$3^{\\frac{x}{2}}$+ log~3~3 + log~3~2 = log~3~(6．$3^{\\frac{x}{2}}$)\n⇒ 3^x^ + 8 < 6．$3^{\\frac{x}{2}}$ ⇒ ($3^{\\frac{x}{2}}$)^2^ − 6．$3^{\\frac{x}{2}}$ + 8 < 0 ⇒ ($3^{\\frac{x}{2}}$ − 2)($3^{\\frac{x}{2}}$ − 4) < 0\n⇒ 2 <$3^{\\frac{x}{2}}$< 4 ⇒ log~3~2 <$\\frac{x}{2}$< log~3~4 ⇒ 2log~3~2 < x < 2log~3~4 ⇒ log~3~4 < x < log~3~16",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 62,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0063",
+      "title": "不等式log~­x~(2x^2^ + 4x) > log~­",
+      "question_text": "不等式log~­x~(2x^2^ + 4x) > log~­x~ (2 + x) 的解為。",
+      "answer_text": "$0<x<\\frac12$或$x>1$",
+      "explanation_text": "log~x~(2x^2^ + 4x) > log~x~ (2 + x)\n①當x > 1時，2x^2^ + 4x > 2 + x ⇒ 2x^2^ + 3x − 2 > 0 ⇒ x >$\\frac{1}{2}$或x < − 2 ∴ x > 1\n②當0 < x < 1時，2x^2^ + 4x < 2 + x ⇒ − 2 < x <$\\frac{1}{2}$ ∴ 0 < x <$\\frac{1}{2}$ 由①②知0 < x <$\\frac{1}{2}$或x > 1",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 63,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0064",
+      "title": "解下列各不等式：(1)log~2~(x − 2) + log",
+      "question_text": "解下列各不等式：(1)log~2~(x − 2) + log~2~(x − 5) > 2。 (2)$\\log_{\\frac{1}{2}}(x - 1) > \\log_{\\frac{1}{4}}(3 - x)$。",
+      "answer_text": "(1)$x>6$；(2)$1<x<2$",
+      "explanation_text": "(1)(i)真數恆正：x − 2 > 0且x − 5 > 0 ⇒ x > 5。\n(ii)log~2~((x − 2)(x − 5)) > log~2~2^2^ ⇒ (x − 2)(x − 5) > 4\n⇒ x^2^ − 7x + 6 > 0 ⇒ (x − 1)(x − 6) > 0\n⇒ x > 6或x < 1 由(i)(ii)知 x > 6。\n(2)(i)真數恆正：x − 1 > 0且3 − x > 0 ⇒ 1 < x < 3。\n(ii)$\\log_{\\frac{1}{4}}(x - 1)^{2} > \\log_{\\frac{1}{4}}(3 - x)$ ⇒ (x − 1)^2^ < 3 − x\n⇒ x^2^ − x − 2 < 0 ⇒ (x − 2)(x + 1) < 0\n⇒ − 1 < x < 2 由(i)(ii)知 1 < x < 2。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 64,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0065",
+      "title": "隨堂練習：滿足0 >$\\log_{\\frac{1}{2}}{}$log",
+      "question_text": "滿足0 >$\\log_{\\frac{1}{2}}{}$log~2~ x > −2的整數x共有\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_個。",
+      "answer_text": "13個",
+      "explanation_text": "0 >$\\log_{\\frac{1}{2}}{}$ (log~2~ x) > −2 ⇒ $\\log_{\\frac{1}{2}}{}$1 >$\\log_{\\frac{1}{2}}{}$\n(log~2~ x) >$\\log_{\\frac{1}{2}}{}$ ($\\frac{1}{2}$) ^−2^ ⇒ 1 < log~2~ x < 4\n⇒ log~2~2 < log~2~ x < log~2~2^4^ ⇒ 2 < x < 16\n∴ x = 3,4,5,6,......,15共有13個整數值",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 65,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0066",
+      "title": "若f (x) = 2log (x − 1) − log (x",
+      "question_text": "若f (x) = 2log (x − 1) − log (x − 2)，x > 2，則當x = 時，f\n(x)有最小值 =。",
+      "answer_text": "當$x=3$時，最小值$=\\log 4$",
+      "explanation_text": "f (x) = 2log(x − 1) − log(x − 2)，x > 2 = log(x − 1)^2^ − log(x − 2) = log$\\frac{(x - 1)^{2}}{x - 2}$\n∵ $\\frac{(x - 1)^{2}}{x - 2}$=$\\frac{\\lbrack(x - 2) + 1\\rbrack^{2}}{x - 2}$=\n(x − 2) + 2 +$\\frac{1}{(x - 2)} \\geq$2$\\sqrt{(x - 2) ． \\frac{1}{(x - 2)}}$+ 2 = 4（∵ x > 2）∴ f (x)有最小值 = log4，又「=」成立時，x − 2 =$\\frac{1}{x - 2}$ ⇒ (x − 2)^2^ = 1\n⇒ x − 2 = ± 1 ⇒ x = 3或x = 1（不合），故當x = 3時，f\n(x)有最小值 = log4",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 66,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0067",
+      "title": "若x，y為正實數，log~2~ x + log~2~ y =",
+      "question_text": "若x，y為正實數，log~2~ x + log~2~ y = 2，則(1) log~2~ (x + y) 的最小值 =。\n(2)(log~2~ x) (log~2~ y) 的最大值 =。",
+      "answer_text": "(1)$2$；(2)$1$",
+      "explanation_text": "(1) log~2~ x + log~2~ y = 2 ⇒ log~2~ xy = 2 = log~2~4 ∴ ${ \\begin{array}{r} x＞0\\，y＞0 \\ xy＝4 \\end{array} \\right.$ ⇒ $\\frac{x + y}{2}$≥$\\sqrt{xy}$\n⇒ x + y$\\geq$4 ⇒ log~2~(x + y) ≥ log~2~4 = 2 ∴ log~2~(x + y)有最小值 = 2\n(2)(log~2~ x)(log~2~ y) = (log~2~ x)(2 − log~2~ x) = − (log~2~ x)^2^ + 2log~2~ x = − (log~2~ x − 1)^2^ + 1\n∴ 當log~2~ x = 1，即x = 2時，(log~2~ x)(log~2~ y)有最大值 = 1",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-inequality-graph-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 67,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0068",
+      "title": "設x > 1，求log~2~ x + log~x~ 16之最",
+      "question_text": "設x > 1，求log~2~ x + log~x~ 16之最小值。",
+      "answer_text": "最小值$4$",
+      "explanation_text": "∵ x > 1 ∴ log~2~ x > 0，log~x~ 16 > 0\n⇒ log~2~ x + log~x~ 16 = log~2~ x + 4 log~x~ 2 ≥ 2$\\sqrt{\\log_{2}x． 4\\log_{x}2}$= 4\n∴ log~2~ x + log~x~ 16之最小值為4",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 68,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0069",
+      "title": "隨堂練習：設$\\frac{1}{4} \\leq$x$\\leq$8，f",
+      "question_text": "設$\\frac{1}{4} \\leq$x$\\leq$8，f (x) =$x^{2 - \\log_{2}x}$之最大值為。",
+      "answer_text": "最大值$2$",
+      "explanation_text": "f (x) =$x^{2－\\log_{2}x}$ ⇒ log~2~ f (x) = log~2~\n[圖:program-db/assets/question-media/s3-2-3/image32.png] = (2 − log~2~ x) log~2~ x令log~2~ x = t ⇒ log~2~ f (x) =\n(2 − t)t = − (t − 1)^2^ + 1 ∵ $\\frac{1}{4}$≤ x ≤ 8 ⇒ − 2 ≤ log~2~ x ≤ 3\n⇒ − 2 ≤ t ≤ 3 ∴ 當t = 1時，log~2~ f (x)有最大值 = 1 ⇒ f\n(x)之最大值 = 2",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 69,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0070",
+      "title": "隨堂練習：10^2^ ≤ x ≤ 10^3^，設x ^2−log\\ x",
+      "question_text": "10^2^ ≤ x ≤ 10^3^，設x ^2−log\\ x^之最大值為M，最小值為m，則(M,m) =。\n![",
+      "answer_text": "$(M,m)=\\left(1,\\frac{1}{1000}\\right)$",
+      "explanation_text": "10^2^$\\leq$x$\\leq$10^3^ ⇒ 2$\\leq$log x$\\leq$3，令y = x ^2−log\\ x^\n∴ log y = log x ^2−logx^ = (2 − log x)log x = − (log x) ^2^ + 2log x = − (log x − 1) ^2^ + 1\n∴ − 3$\\leq$log y$\\leq$0 ⇒ 10^−3^ ≤ y ≤ 1\n⇒ $\\frac{1}{1000}$≤ x^2\\ −\\ logx^ ≤ 1](.\\program-db\\imports\\packs\\_inspect-3A-3\\assets/media/image33.png)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-inequality-graph-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 70,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0071",
+      "title": "若方程式 (log ax)(log ax^2^ ) = 4的",
+      "question_text": "若方程式 (log ax)(log ax^2^ ) = 4的解皆大於1，求a的範圍。",
+      "answer_text": "$0<a<\\frac{1}{100}$",
+      "explanation_text": "(log a + log x)(log a + log x^2^) = 4 ⇒ 2(log x)^2^ + 3(log a)(log x) + [(log a)^2^ − 4] = 0 令t = log x ⇒ 2t^2^ + 3(log a)t + [(log a)^2^ − 4] = 0\n∵ x > 1 ⇒ t > 0，即t的方程式有兩正根\n∴\n[圖:program-db/assets/question-media/s3-2-3/image34.png] \n∴ log a < − 2 ⇒ log a < log10 ^−2^ ∴ 0 < a <$\\frac{1}{100}$",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 71,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0072",
+      "title": "若x，y > 0，且x + 2y = 12，試求log~2~",
+      "question_text": "若x，y > 0，且x + 2y = 12，試求log~2~ x + log~4~ y的最大值，又此時x，y值各為多少？",
+      "answer_text": "最大值$=\\frac72$，此時$x=8,\\ y=2$",
+      "explanation_text": "log~2~ x + log~4~ y = log~2~ x +$\\frac{1}{2}$log~2~ y =$\\frac{1}{2}$ (2log~2~ x + log~2~ y)\n[圖:program-db/assets/question-media/s3-2-3/image35.png] log~2~ x^2^y\n∵ x，y > 0，x + 2y = 12 ⇒ $\\frac{x}{2}$+$\\frac{x}{2}$+ 2y = 12，由算術平均數 ≥ 幾何平均數 知$\\frac{\\frac{x}{2} + \\frac{x}{2} + 2y}{3}$≥$\\sqrt[3]{(\\frac{x}{2})(\\frac{x}{2})(2y)}$\n⇒ 4\n[圖:program-db/assets/question-media/s3-2-3/image36.png] $\\sqrt[3]{\\frac{1}{2}x^{2}y}$\n⇒ 128 ≥ x^2^y\n∴ log~2~ x + log~4~ y =$\\frac{1}{2}$log~2~ x^2^y ≤$\\frac{1}{2}$log~2~128 =$\\frac{1}{2}$log~2~2^7^\n[圖:program-db/assets/question-media/s3-2-3/image37.png] 「=」成立時 ⇒ $\\frac{x}{2}$=$\\frac{x}{2}$= 2y = 4 ⇒ x = 8，y = 2\n∴ 當x = 8，y = 2時，原式有最大值 =$\\frac{7}{2}$",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-inequality-graph-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 72,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0073",
+      "title": "隨堂練習：若x，y為正實數，log~2~ x + log~2~ y =",
+      "question_text": "若x，y為正實數，log~2~ x + log~2~ y = 2，則(1) log~2~ (x + y) 的最小值= \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n(2)(log~2~ x)(log~2~ y) 的最大值= \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "(1)$2$；(2)$1$",
+      "explanation_text": "(1)log~2~ x + log~2~ y = 2 ⇒ log~2~ xy = 2 = log~2~4\n∴ ${ \\begin{array}{r} x > 0_{ }, y > 0 \\ xy = 4 \\end{array} \\right.$ ⇒ $\\frac{x + y}{2}$≥$\\sqrt{xy}$ ⇒ x + y\n[圖:program-db/assets/question-media/s3-2-3/image36.png] 4\n⇒ log~2~(x + y) ≥ log~2~4 = 2\n∴ log~2~(x + y)有最小值 = 2\n(2)(log~2~ x)(log~2~ y) = (log~2~ x)(2 − log~2~ x) = − (log~2~ x)^2^ + 2log~2~ x = − (log~2~ x − 1)^2^ + 1\n∴ 當log~2~ x = 1，即x = 2時，(log~2~ x)(log~2~ y)有最大值 = 1",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-inequality-graph-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 73,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0074",
+      "title": "隨堂練習：設x，y為正數且x + 4y = 8，若log$\\frac{",
+      "question_text": "設x，y為正數且x + 4y = 8，若log$\\frac{1}{2}$x + log$\\frac{1}{2}$y之最小值為m，又此時x = x~0~，y = y~0~， 則(1) m = \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。 (2)\n(x~0~，y~0~) = \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "(1)$m=-2$；(2)$(x_0,y_0)=(4,1)$",
+      "explanation_text": "log$\\frac{1}{2}$x + log$\\frac{1}{2}$y = log$\\frac{1}{2}$xy ∵ x，y > 0，且x + 4y = 8 利用算幾不等式 ⇒ $\\frac{x + 4y}{2}$≥$\\sqrt{x \\rightleftharpoons \\rightleftharpoons ． \\rightleftharpoons \\rightleftharpoons 4y}$\n⇒ 4 ≥\n[圖:program-db/assets/question-media/s3-2-3/image38.png]\n⇒ xy ≤ 4 ⇒ log$\\frac{1}{2}$xy ≥ log$\\frac{1}{2}$4 = −2\n∴ log$\\frac{1}{2}$x + log$\\frac{1}{2}$y之最小值m = −2，且等號成立時，x = 4y = 4 ⇒ x = 4，y = 1\n∴ (x~0~，y~0~) = (4，1)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-inequality-graph-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 74,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0075",
+      "title": "y =$\\log_{3}\\frac{x^{2} - x +",
+      "question_text": "y =$\\log_{3}\\frac{x^{2} - x + 1}{x^{2} + x + 1}$，則y的範圍為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "$-1\\le y\\le 1$",
+      "explanation_text": "設t =$\\frac{x^{2} - x + 1}{x^{2} + x + 1}$，\n∴ tx^2^ + tx + t = x^2^ − x + 1 ⇒ (t − 1)x^2^ + (t +1)x + (t − 1) = 0，∵ x ∈ R，∴ D ≥ 0\n⇒ (t + 1)^2^ − 4(t −1) (t − 1) ≥ 0 ⇒ −3t^2^ + 10t − 3 ≥ 0 ⇒\n(3t − 1) (t − 3) ≤ 0，∴ $\\frac{1}{3}$≤ t ≤ 3\n⇒ $\\log_{3}\\frac{1}{3}$≤ log~3~t ≤ log~3~3 ⇒ −1 ≤ y ≤ 1。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 75,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0076",
+      "title": "若x，y均為大於1的實數，且2log~x~ y − 2log",
+      "question_text": "若x，y均為大於1的實數，且2log~x~ y − 2log~y~ x + 3 = 0，試求：x^2^ − 4y^2^ + 1的最小值。",
+      "answer_text": "最小值$=-3$",
+      "explanation_text": "2log~x~ y − 2log~y~ x + 3 = 0 ⇒ 2log~x~ y −\n[圖:program-db/assets/question-media/s3-2-3/image39.png] 3 = 0 ⇒ 2(log~x~ y)^2^ + 3log~x~ y − 2 = 0\n⇒ (2log~x~ y − 1)(log~x~ y + 2) = 0 ⇒ log~x~ y =$\\frac{1}{2}$或log~x~ y = − 2\n∵ x > 1，y > 1 ∴ log~x~ y > 0，故log~x~ y =$\\frac{1}{2}$，即y =$\\sqrt{x}$ 又x^2^ − 4y^2^ + 1 = x^2^ − 4x + 1 = (x − 2)^2^ − 3，x > 1\n∴ 當x = 2時，有最小值 −3",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-inequality-graph-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 76,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0077",
+      "title": "若x，y均為大於1的實數，且2log~x~ y − 2log",
+      "question_text": "若x，y均為大於1的實數，且2log~x~ y − 2log~y~ x + 3 = 0，試求：x^2^ − 4y^2^ + 1的最小值。\n14..x的二次方程式(x + log~2~a)^2^ = 16x有兩個相異實根，則實數a的範圍為。",
+      "answer_text": "$0<a<16$",
+      "explanation_text": "(1)真數a > 0\n(2)(x + log~2~a)^2^ = 16x有兩個相異實根 $⇒$ x^2^ + 2(log~2~a − 8)x + (log~2~a)^2^ = 0有兩個相異實根\n∴ D = (log~2~a − 8)^2^ − (log~2~a)^2^ > 0 ∴ − 16log~2~a + 64 > 0 log~2~a < 4 = log~2~16 ∴ a < 16\n(3)由(1)(2)得0 < a < 16",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 77,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0078",
+      "title": "試求(m − n)log a + (n −$\\mathcal",
+      "question_text": "試求(m − n)log a + (n −$\\mathcal{l}$)log b + ($\\mathcal{l}$ − m)log c之值。",
+      "answer_text": "$0$",
+      "explanation_text": "1° 設此等比數列首項為k，公比為r，則a = kr$\\mathcal{l -}1$，b = kr$m - 1$，c = kr$n - 1$ 2° (m − n)log a + (n −\n[圖:program-db/assets/question-media/s3-2-3/image40.png] )log b + ($\\mathcal{l}$ − m)log c = (m − n)log kr$\\mathcal{l -}1$ + (n −$\\mathcal{l}$)log kr$m - 1$+ ($\\mathcal{l}$ − m)log kr$n - 1$ = (m − n)log k + ($\\mathcal{l}$ −1)(m − n) log r + (n −$\\mathcal{l}$)logk + (m −1)( n −$\\mathcal{l}$)log r + ($\\mathcal{l}$ − m)log k +\n(n −1)($\\mathcal{l}$ − m)log r = [(m − n) + (n −$\\mathcal{l}$) + ($\\mathcal{l}$ − m)] log k + [($\\mathcal{l}$ −1)(m − n) + (m −1)(n −$\\mathcal{l}$) + (n −1)($\\mathcal{l}$ − m)] log r = 0．log k + ($\\mathcal{l}$m − m −$\\mathcal{l}$n + n + mn − n −$\\mathcal{l}$m +$\\mathcal{l}$ + n$\\mathcal{l}$ −$\\mathcal{l}$ −mn + m) log r = 0 + 0 = 0",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-equations-inequalities-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 78,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0079",
+      "title": "有研究機構想將世界各國依照其面積大小為等級的標準，下表所列的",
+      "question_text": "有研究機構想將世界各國依照其面積大小為等級的標準，下表所列的6個國家的面積\n（單位：千平方公里）。且以冰島為基準，用對數函數$f(x)$來計算各國的面積等級\n[圖:program-db/assets/question-media/s3-2-3/image41.png] 試問面積等級大於10的國家有\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_個",
+      "answer_text": "1個",
+      "explanation_text": "設等級為10的國家，其面積A，$10 = 5\\log(\\frac{A}{103})$，得$\\frac{A}{103} = 10^{2}$，知$A = 10300$， 因面積大於10300的國家只有俄羅斯。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-applications-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 79,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例16"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0080",
+      "title": "目前國際使用芮氏規模來表示地震強度，設E(r)為地震芮氏規模",
+      "question_text": "目前國際使用芮氏規模來表示地震強度，設E(r)為地震芮氏規模r時震央所釋放出來的能 量，r與E(r)的關係如下：logE(r) = 5.24 + 1.44r，\n(1)某次地震其芮氏規模為4，試問其震央所釋放的能量E(4)為多少？\n(2)試問芮氏規模6的地震，其震央所釋放的能量是芮氏規模4的地震震央所釋放能量的幾倍？",
+      "answer_text": "(1)$10^{11}$；(2)約$758$倍",
+      "explanation_text": "(1)logE(4) = 5.24 + 1.44 × 4 = 11 ⇒ E(4) = 10^11^。\n(2)logE(6) = 5.24 + 1.44 × 6 = 13.88 ⇒ E(6) = 10^13.88^， $\\frac{E(6)}{E(4)} = 10^{2.88} = {{(10}^{1.44})}^{2} = 27.54^{2} = 758.4516 \\approx 758$（倍）。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-applications-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 80,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例17"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0081",
+      "title": "聲音的強度是用每平方公尺多少瓦特（W/m^2^）來衡量，一般",
+      "question_text": "聲音的強度是用每平方公尺多少瓦特（W/m^2^）來衡量，一般人能感覺出聲音的最小強度為 I~0~ = 10 ^−\\ 12^（W/m^2^）當測得的聲音強度為I（W/m^2^）時，所產生的噪音分貝數d為 > $d(I) = 10 \\bullet log\\frac{I}{I_{0}}$。\n(1)一隻蚊子振動翅膀測得的聲音強度為10 ^−\\ 12^（W/m^2^），求其產生的噪音分貝數。\n(2)汽車製造廠測試發現,某新車以每小時60公里速度行駛時，測得的聲音強度為10 ^−\\ 4^（W/m^2^）， 試問此聲音強度產生的噪音為多少分貝？\n(3)棒球比賽場中，若一支瓦斯汽笛獨鳴，測得的噪音為70分貝，則百支瓦斯汽笛同時同地 合鳴，被測得的噪音大約為多少分貝？",
+      "answer_text": "(1)$0$分貝；(2)$80$分貝；(3)$90$分貝",
+      "explanation_text": "(1)$\\ d = 10 \\bullet log\\frac{10^{- 12}}{10^{- 12}} = 10 × 0 = 0$（分貝）。\n(2)$\\ d = 10 \\bullet log\\frac{10^{- 4}}{10^{- 12}} = 10 × 8 = 80$（分貝）。\n(3)因為一支瓦斯汽笛獨鳴，測得的噪音為70分貝， 所以$70 = 10 \\bullet log\\frac{I}{10^{- 12}}$，可得該瓦斯汽笛聲音強度為10 ^−\\ 5^（W/m^2^）。\n因此100支瓦斯汽笛聲音強度為100 × 10 ^−\\ 5^ = 10 ^−\\ 3^（W/m^2^）， 故100支瓦斯汽笛的分貝數為$d = 10 \\bullet log\\frac{10^{- 3}}{10^{- 12}} = 10 × 9 = 90$（分貝）。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-applications-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題3：對數不等式",
+      "source_order": 81,
+      "tags": [
+        "s3-2-3",
+        "section:主題3：對數不等式",
+        "marker:範例18"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0082",
+      "title": "下列哪一函數之圖形與y = a ^−\\ x^（a > 1）之",
+      "question_text": "下列哪一函數之圖形與y = a ^−\\ x^（a > 1）之圖形對稱於直線y = x？\n(A) y = a ^x^ (B) y = log ~a~( − x) (C) y = − log ~a~ x (D) y = log$\\frac{1}{a}$x (E) y = log ~a~$\\frac{1}{x}$。",
+      "answer_text": "(C)(D)(E)",
+      "explanation_text": "(A)\n[圖:program-db/assets/question-media/s3-2-3/image43.png]\n(B)\n[圖:program-db/assets/question-media/s3-2-3/image44.png]\n(C)\n[圖:program-db/assets/question-media/s3-2-3/image45.png] \n(D) y = − log ~a~ x同(C)，(E)同(C) $∴$選((C)(D)(E)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-reflection-map-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題4：反函數",
+      "source_order": 82,
+      "tags": [
+        "s3-2-3",
+        "section:主題4：反函數",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0083",
+      "title": "f (x) = log~3~ (x − 4)，x > 4之反",
+      "question_text": "f (x) = log~3~ (x − 4)，x > 4之反函數為。",
+      "answer_text": "$f^{-1}(x)=3^x+4$",
+      "explanation_text": "f (x) = log~3~(x − 4)，x > 4，y = log~3~(x − 4) ⇒ 3 ^y^ = x − 4 反函數圖形對稱於直線y = x ∴ 反函數為3 ^x^ = y − 4 ⇒ y = 3^x^ + 4",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-inverse-domain-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題4：反函數",
+      "source_order": 83,
+      "tags": [
+        "s3-2-3",
+        "section:主題4：反函數",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0084",
+      "title": "若f (x) = 2^x^ − 1，則f ^−\\ 1^(x)",
+      "question_text": "若f (x) = 2^x^ − 1，則f ^−\\ 1^(x) =。",
+      "answer_text": "$f^{-1}(x)=\\log_2(x+1)$",
+      "explanation_text": "令y = 2^x^ − 1 ⇒ 2^x^ = y + 1 ⇒ log~2~2^x^ = log~2~(y + 1) ⇒ x = log~2~(y + 1)\n∴ f ^−1^(x) = log~2~(x + 1)",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-reflection-map-s323",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題4：反函數",
+      "source_order": 84,
+      "tags": [
+        "s3-2-3",
+        "section:主題4：反函數",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0085",
+      "title": "隨堂練習：設f (x) = log(x +$\\sqrt{x^{2} -",
+      "question_text": "設f (x) = log(x +$\\sqrt{x^{2} - 1}$)，x > 1，則f之反函數f ^−1^(x) =。",
+      "answer_text": "$f^{-1}(x)=\\frac12(10^x+10^{-x}),\\ x>0$",
+      "explanation_text": "設f (x) = y，即$x + \\sqrt{x^{2} - 1}$= 10 ^y^，y > 0 ⇒ $\\sqrt{x^{2} - 1}$ = 10 ^y^ − x\n⇒ x^2^ − 1 = 10 ^2y^ − 2．10 ^y^．x + x^2^ ⇒ 2．10 ^y^．x = 10 ^2y^ + 1\n∴ x =$\\frac{1}{2}$ (10 ^y^ + 10^−\\ y\\ ^)，即f ^−1^(x) =$\\frac{1}{2}$ (10 ^x^ + 10 ^−x^ )，x > 0",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-inverse-domain-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題4：反函數",
+      "source_order": 85,
+      "tags": [
+        "s3-2-3",
+        "section:主題4：反函數",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-3-0086",
+      "title": "隨堂練習：若f (x) =$\\frac{3^{x} + 1}{3^{x",
+      "question_text": "若f (x) =$\\frac{3^{x} + 1}{3^{x} - 1}$，x ≠ 0，則f (x)的反函數f ^−1^(x) =。",
+      "answer_text": "$f^{-1}(x)=\\log_3\\frac{x+1}{x-1},\\ |x|>1$",
+      "explanation_text": "令y = f (x) =$\\frac{3^{x} + 1}{3^{x} - 1}$ ⇒ 3^x^ =$\\frac{y + 1}{y - 1}$ ⇒ log~3~3^x^ = log~3~$\\frac{y + 1}{y - 1}$ ⇒ x = log~3~$\\frac{y + 1}{y - 1}$\n∵ f (x) = y ⇔ f ^−1^(y) = x ∴ f ^−1^(y) = log~3~$\\frac{y + 1}{y - 1}$，| y | > 1\n⇒ f ^−1^(x) = log~3~$\\frac{x＋1}{x－1}$，| x | > 1。",
+      "chapter_code": "s3-2-3",
+      "formula_id": "senior-logarithmic-function-reflection-map-s323",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-3轉.docx",
+      "source_section": "主題4：反函數",
+      "source_order": 86,
+      "tags": [
+        "s3-2-3",
+        "section:主題4：反函數",
+        "marker:隨堂練習"
+      ]
+    }
+  ]
+}

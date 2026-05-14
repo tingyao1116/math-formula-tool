@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d5c63" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="數學公式工具" />
+  <title>章節重點總覽</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="styles.css?v=20260429-chapter-highlights-v1" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">Chapter Highlights</p>
+        <h1>章節重點總覽</h1>
+        <p class="hero__lead">
+          把所有章節的「最重要的幾句話」集中放在同一頁，方便整批巡過去，先看方向對不對，再回頭逐章微調。
+        </p>
+        <div class="hero__stats" id="highlightsStats"></div>
+        <div class="hero__quicklinks">
+          <a class="ghost-link" href="index.html">回總覽頁</a>
+          <a class="ghost-link" href="manage.html">開啟統整管理頁</a>
+        </div>
+      </div>
+      <div class="hero__panel">
+        <h2>使用方式</h2>
+        <ul>
+          <li>先用國中 / 高中切換縮小範圍。</li>
+          <li>每章只看 1、2、3、4 是否抓到真正核心。</li>
+          <li>覺得不對味的章節，再回頭單章微調。</li>
+        </ul>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <section class="panel controls">
+          <h2>巡檢條件</h2>
+
+          <label class="field">
+            <span>關鍵字搜尋</span>
+            <input id="highlightsSearchInput" type="search" placeholder="輸入章節名、主題、重點句子" />
+          </label>
+
+          <div class="field">
+            <span>冊別</span>
+            <select id="bookFilter"></select>
+          </div>
+
+          <button id="highlightsResetButton" class="ghost-button" type="button">清除篩選</button>
+        </section>
+      </aside>
+
+      <section class="content">
+        <section class="panel summary-panel">
+          <div>
+            <p class="summary-label">目前結果</p>
+            <h2 id="highlightsTitle">全部章節</h2>
+          </div>
+          <p id="highlightsCount" class="summary-count"></p>
+        </section>
+
+        <section id="highlightsBoard" class="chapter-highlights-board"></section>
+      </section>
+    </main>
+  </div>
+
+  <script defer src="formulas.js"></script>
+  <script defer src="data/formula-content.js?v=20260423-abs-count-layout-v4"></script>
+  <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
+  <script defer src="data/chapter-code-config.js"></script>
+  <script defer src="formula-data.js?v=20260505-question-category-v1"></script>
+  <script defer src="chapter-overviews.js?v=20260429-chapter-highlights-v1"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="formula-core.js?v=20260427-theta-fix-v1"></script>
+  <script defer src="chapter-highlights.js?v=20260429-chapter-highlights-v1"></script>
+  <script defer src="pwa.js"></script>
+</body>
+</html>

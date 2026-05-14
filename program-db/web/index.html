@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>數學資料庫主頁（新版）</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">Math DB Web</p>
+        <h1>數學資料庫主頁（新版）</h1>
+        <p class="hero__lead">沿用原站風格與操作邏輯，整合主題與題庫資料。</p>
+        <div id="stats" class="hero__stats"></div>
+      </div>
+      <div class="hero__panel">
+        <h2>資料來源</h2>
+        <ul>
+          <li>主題：program-db/database/formula-db.json</li>
+          <li>題庫：program-db/database/question-db.json</li>
+          <li>已支援頁面畫筆、螢光筆與橡皮擦</li>
+        </ul>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <section class="panel controls">
+          <h2>查詢條件</h2>
+          <div class="tabs">
+            <button id="tabTopics" class="tab is-active" type="button">主題</button>
+            <button id="tabQuestions" class="tab" type="button">題庫</button>
+          </div>
+
+          <label class="field">
+            <span>關鍵字</span>
+            <input id="q" type="search" placeholder="標題、章節、標籤、題目內容" />
+          </label>
+          <label class="field">
+            <span>學層</span>
+            <select id="stage"></select>
+          </label>
+          <label class="field">
+            <span>年級</span>
+            <select id="grade"></select>
+          </label>
+          <label class="field">
+            <span>章節</span>
+            <select id="chapter"></select>
+          </label>
+          <label class="field">
+            <span>難度</span>
+            <select id="difficulty"></select>
+          </label>
+          <button id="reset" class="ghost-button" type="button">清除篩選</button>
+        </section>
+      </aside>
+
+      <section class="content">
+        <section class="panel summary-panel">
+          <div>
+            <p class="summary-label">目前結果</p>
+            <h2 id="resultTitle">主題清單</h2>
+          </div>
+          <p id="resultCount" class="summary-count"></p>
+        </section>
+
+        <section class="content-grid">
+          <div class="panel list-panel">
+            <ul id="list" class="list"></ul>
+          </div>
+          <article class="panel detail-panel">
+            <h3 id="detailTitle">請先選一筆資料</h3>
+            <div id="detailMeta" class="meta"></div>
+            <div id="detailMain" class="section"></div>
+            <div id="detailUsage" class="section"></div>
+            <div id="detailExamples" class="section"></div>
+            <div id="detailTips" class="section"></div>
+            <div id="detailNotes" class="section"></div>
+            <div id="detailMistakes" class="section"></div>
+          </article>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="./app.js"></script>
+  <script defer src="../../drawing-layer.js"></script>
+</body>
+</html>

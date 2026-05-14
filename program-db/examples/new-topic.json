@@ -1,0 +1,38 @@
+{
+  "id": "custom-demo-topic",
+  "title": "自訂示範主題",
+  "stage": "國中",
+  "grade": "國一",
+  "term": "上學期",
+  "chapter": "示範章節",
+  "domain": "代數",
+  "difficulty": "基礎",
+  "chapterRole": "重要配角",
+  "parentId": "",
+  "formula": {
+    "type": "text",
+    "lines": [
+      {
+        "label": "示範",
+        "values": [
+          "a+b=b+a"
+        ]
+      }
+    ]
+  },
+  "contentTypes": [
+    "定義",
+    "公式"
+  ],
+  "tags": [
+    "示範",
+    "交換律"
+  ],
+  "usage": [
+    "示範新增資料用。"
+  ],
+  "examples": [],
+  "tips": [],
+  "notes": [],
+  "mistakes": []
+}

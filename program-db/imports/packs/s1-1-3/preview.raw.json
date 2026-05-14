@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "chapter_code": "s1-1-3",
+    "source_ref": "source/1-3轉.docx",
+    "count": 8,
+    "unassigned_formula_id_count": 8
+  },
+  "by_category": {
+    "基本": 7,
+    "重要": 1
+  },
+  "by_section": {
+    "未分類": [
+      {
+        "id": "q-s1-1-3-0001",
+        "title": "範例3：（ ）已知a + b = 4﹐a × b = 2﹐則下列",
+        "question_category": "基本",
+        "difficulty": "易"
+      },
+      {
+        "id": "q-s1-1-3-0002",
+        "title": "範例7：已知a + b = 4﹐a × b = 2﹐則下列選項何",
+        "question_category": "基本",
+        "difficulty": "易"
+      },
+      {
+        "id": "q-s1-1-3-0003",
+        "title": "範例10：化簡下列各式：(1)$\\sqrt{\\frac{1}{3}",
+        "question_category": "基本",
+        "difficulty": "易"
+      },
+      {
+        "id": "q-s1-1-3-0004",
+        "title": "隨堂練習：化簡下列各式：(1)$\\sqrt{\\frac{1}{3}",
+        "question_category": "重要",
+        "difficulty": "中"
+      },
+      {
+        "id": "q-s1-1-3-0005",
+        "title": "範例12：設$a = \\sqrt{7 + \\sqrt{47}}$﹐",
+        "question_category": "基本",
+        "difficulty": "易"
+      },
+      {
+        "id": "q-s1-1-3-0006",
+        "title": "範例1：(1)設a﹐b是正實數﹐試證：$\\frac{a + b}",
+        "question_category": "基本",
+        "difficulty": "易"
+      },
+      {
+        "id": "q-s1-1-3-0007",
+        "title": "範例2：$a$,$b$皆為正實數，(1)若$2a + 3b = ",
+        "question_category": "基本",
+        "difficulty": "易"
+      },
+      {
+        "id": "q-s1-1-3-0008",
+        "title": "範例3：用一條長度60公尺的繩子在河邊圍成一矩形菜圃﹐且河邊不圍",
+        "question_category": "基本",
+        "difficulty": "易"
+      }
+    ]
+  },
+  "summary": {
+    "count": 8,
+    "sections": {
+      "未分類": 8
+    },
+    "skipped": [],
+    "image_references": []
+  }
+}

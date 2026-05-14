@@ -1,0 +1,926 @@
+{
+  "chapter_code": "s2-2-3",
+  "chapter_title": "二項式定理",
+  "questions": [
+    {
+      "id": "q-s2-2-3-0001",
+      "title": "範例：二項式定理｜二項展開",
+      "question_text": "試求$(3x-2y)^6$的展開式。",
+      "answer_text": "$(3x-2y)^6=729x^6-2916x^5y+4860x^4y^2-4320x^3y^3+2160x^2y^4-576xy^5+64y^6$",
+      "explanation_text": "【解析】(3x − 2y)^6 =$C_{0}^{6}(3x)^{6} + C_{1}^{6}(3x)^{5}( - 2y)^{1} + C_{2}^{6}(3x)^{4}( - 2y)^{2} + C_{3}^{6}(3x)^{3}( - 2y)^{3} + C_{4}^{6}(3x)^{2}( - 2y)^{4}$ + C_{5}^{6}(3x)( - 2y)^{5} + C_{6}^{6}( - 2y)^{6} = 729x^6 − 2916x^5y + 4860x^4y^2 − 4320x^3y^3 + 2160x^2y^4 − 576xy^5 + 64y^6。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-theorem-main-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 1,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0002",
+      "title": "隨堂練習：二項式定理｜二項展開",
+      "question_text": "寫出$(x-3y)^4$的展開式。",
+      "answer_text": "$(x-3y)^4=x^4-12x^3y+54x^2y^2-108xy^3+81y^4$",
+      "explanation_text": "【解析】$(x - 3y)^{4} = C_{0}^{4} x^{4} + C_{1}^{4} x^{3}( - 3y) + C_{2}^{4} x^{2}( - 3y)^{2} + C_{3}^{4} x( - 3y)^{3} + C_{4}^{4}( - 3y)^{4}$ = x^4 − 12x^3y + 54x^2y^2 − 108xy^3 + 81y^4。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-theorem-main-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 2,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0003",
+      "title": "範例：二項式定理｜多項式展開判斷",
+      "question_text": "多項式$(x+y+z+u)^6$展開式中，下列敘述何者正確？ (1) 同類項合併後共有$84$項 (2) 與$x^3yzu$同型項有$4$項 (3) 與$xyz^2u^2$同型項有$6$項 (4) $x^3y^2z$項的係數為$60$ (5) 係數總和為$4096$。",
+      "answer_text": "(1)(2)(3)(4)(5)",
+      "explanation_text": "【解析】(1)一般項為$\\frac{6!}{p!q!r!s!}x^{p}y^{q}z^{r}u^{s}$且p + q + r + s = 6，p，q，r，s∈$\\mathbb{N}$ ∪{0}\n⇒ 共有$H_{6}^{4} = C_{6}^{4 + 6 - 1} = C_{6}^{9} = 84$個相異項。\n(2)與x^3yzu同型項 ⇒ $\\square^{3}\\square\\square\\square$，∴共有$C_{1}^{4}C_{3}^{3} = 4$項。\n(3)與xyz^2u^2同型項 ⇒ $\\square\\square\\square^{2}\\square^{2}$，∴共有$C_{2}^{4}C_{2}^{2} = 6$項。\n(4)x^3y^2z的係數 = 3個x，2個y，1個z的排列數=$\\frac{6!}{3!2!1!} = 60$。\n(5)係數總和 = (1 + 1 + 1 + 1)^6 = 4^6 = 2^12 = 4096。\n故選(1)(2)(3)(4)(5)",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-theorem-main-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 3,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0004",
+      "title": "隨堂練習：二項式定理｜等值選項判斷",
+      "question_text": "選出答案為$C_3^6$的選項： (1) 從$6$人中選出$3$人參加辯論比賽的方法數 (2) 甲乙丙三人從$4$本不同的書中，每人各選一本的方法數 (3) 將$3$枝相同筆全部分給$4$個人的方法數 (4) 在$(a+b)^7$的展開式中，$a^3b^4$的係數 (5) 方程式$x+y+z+t=3$的非負整數解之個數。",
+      "answer_text": "(1)(3)(5)",
+      "explanation_text": "【解析】(1)從6人中選出3人的方法數有$C_{3}^{6}$。\n(2)甲乙丙三人從4本不同的書中，每人各選一本，甲有4種選擇，乙有3種選擇，丙有2種選擇，因此總共有$4 × 3 × 2 = P_{3}^{4}$種選擇。\n(3)將3枝相同筆全部分給4個人的方法數為重複組合$C_{3}^{4 + 3 - 1} = C_{3}^{6}$。\n(4)根據二項式定理，在(a + b)^7的展開式中，a^3b^4的係數為$C_{4}^{7}$。\n(5)方程式x + y + z + t = 3的非負整數解之個數為$C_{3}^{4 + 3 - 1} = C_{3}^{6}$。\n故選(1)(3)(5)。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-theorem-main-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 4,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0005",
+      "title": "範例：二項式定理｜指定項係數",
+      "question_text": "試求$(1+2x+3x^2+4x^3+5x^4+6x^5+7x^6)^4$展開式中，$x^2$項的係數。",
+      "answer_text": "36",
+      "explanation_text": "【解析】欲求x^2的係數僅須考慮(1 + 2x + 3x^2)^4展開式中x^2項的係數即可，\n∵(1 + 2x + 3x^2)^4展開式的一般項為 $\\frac{4!}{p!q!r!}$1^p·(2x)^q·(3x^2)^r =$\\frac{4!}{p!q!r!}$2^q·3^r·x^q^+ 2r，其中p + q + r = 4， 令q + 2r = 2，則p，q，r非負整數解有(2，2，0)，(3，0，1)，\n∴x^2項的係數 =$\\frac{4!}{2!2!}$·2^2 +$\\frac{4!}{3!}$·3 = 24 + 12 = 36。\n【另解】 \n∴x^2項係數 = 36。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-specific-term-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 5,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0006",
+      "title": "範例4：二項式定理｜求$(x - \\frac{1}{x^",
+      "question_text": "求$(x - \\frac{1}{x^{2}})^{12}$展開式中的，(1)常數項係數。$(2)x^3$項係數。",
+      "answer_text": "(1)495；(2)$-220$",
+      "explanation_text": "【解析】$(x - \\frac{1}{x^{2}})^{12}$展開式中的一般項為$C_{r}^{12} x^{12 - r}( - \\frac{1}{x^{2}})^{r} = C_{r}^{12}( - 1)^{r}x^{12 - r} x^{- 2r} = C_{r}^{12}( - 1)^{r}x^{12 - 3r}$，\n(1)常數項 ⇒ 12 − 3r = 0 ⇒ r = 4，故係數為$C_{4}^{12}( - 1)^{4} = 495$。\n(2)x^3項 ⇒ 12 − 3r = 3 ⇒ r = 3，故係數為$C_{3}^{12}( - 1)^{3} = - 220$。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-specific-term-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 6,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0007",
+      "title": "範例5：二項式定理｜求$(x - \\frac{2}{x^",
+      "question_text": "求$(x - \\frac{2}{x^{2}})^{8}$展開式中的，$(1)x^2$項係數。$(2)x^5$項係數。",
+      "answer_text": "(1)112；(2)$-16$",
+      "explanation_text": "【解析】$(x - \\frac{2}{x^{2}})^{8}$展開式中的一般項為$C_{r}^{8} x^{8 - r}( - \\frac{2}{x^{2}})^{r} = C_{r}^{8}( - 2)^{r}x^{8 - r}x^{- 2r} = C_{r}^{8}( - 2)^{r}x^{8 - 3r}$，\n(1)x^2項 ⇒ 8 − 3r = 2 ⇒ r = 2，係數為$C_{2}^{8}( - 2)^{2} = 112$。\n(2)x^5項 ⇒ 8 − 3r = 5 ⇒ r = 1，係數為$C_{1}^{8}( - 2)^{1} = - 16$。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-specific-term-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 7,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0008",
+      "title": "隨堂練習：二項式定理｜求$(2x^{3} - \\frac{",
+      "question_text": "求$(2x^{3} - \\frac{1}{x^{2}})^{5}$展開式中的，(1)常數項係數。$(2)x^2$項係數。",
+      "answer_text": "(1)$-40$；(2)0",
+      "explanation_text": "【解析】$(2x^{3} - \\frac{1}{x^{2}})^{5}$展開式中的一般項為 $C_{r}^{5}(2x^{3})^{5 - r}( - \\frac{1}{x^{2}})^{r} = C_{r}^{5} 2^{5 - r}( - 1)^{r}x^{15 - 3r}x^{- 2r} = C_{r}^{5} 2^{5 - r}( - 1)^{r}x^{15 - 5r}$，\n(1)常數項 ⇒ 15 − 5r = 0 ⇒ r = 3，故係數為$C_{3}^{5} 2^{2}( - 1)^{3} = - 40$。\n(2)x^2項 ⇒ 15 − 5r = 2 ⇒$r = \\frac{13}{5}$（不合），故係數為0。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-specific-term-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 8,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0009",
+      "title": "隨堂練習：二項式定理｜將$(2x-\\frac{3}{4x}",
+      "question_text": "將$(2x-\\frac{3}{4x})^9$展開，則 (1) $x^3$項係數。 (2) 常數項。",
+      "answer_text": "(1)$-2268$；(2)0",
+      "explanation_text": "【解析】設一般項（第r + 1項）為$C_{r}^{9}(2x)^{9 - r}( - \\frac{3}{4x})^{r} = C_{r}^{9} 2^{9 - r}( - \\frac{3}{4})^{r}x^{9 - r}x^{- r},$\n(1)令(9 − r) + ( − r) = 3，得r = 3，\n∴x^3項的係數為$C_{3}^{9} 2^{9 - 3}( - \\frac{3}{4})^{3} = \\frac{9 × 8 × 7}{3 × 2 × 1} × 64 × ( - \\frac{27}{64}) = - 2268$。\n(2)令(9 − r) + ( − r) = 0，r無整數解，∴常數項為0。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-specific-term-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 9,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0010",
+      "title": "範例：二項式定理｜多變數係數",
+      "question_text": "求$(x^2+(y+z))^6$展開式中，$x^4y^2z^2$的係數。",
+      "answer_text": "90",
+      "explanation_text": "【解析】利用二項式定理將(x^2 + (y + z))^6展開得到，每一項皆形如 $C_{r}^{6}(x^{2})^{6 - r}(y + z)^{r} = C_{r}^{6} · x^{12 - 2r} · (y + z)^{r}$。\n當12 − 2r = 4，即r = 4時，展開式中含有x^4的項有 $C_{4}^{6} · x^{4} · (y + z)^{4} = 15x^{4}(C_{0}^{4} y^{4} + C_{1}^{4} y^{3}z + C_{2}^{4} y^{2}z^{2} + C_{3}^{4} yz^{3} + C_{4}^{4} z^{4})$。\n因此，展開式中的x^4y^2z^2項為$15x^{4} · C_{2}^{4} y^{2}z^{2} = 90x^{4}y^{2}z^{2}$， 即x^4y^2z^2的係數為90。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-specific-term-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 10,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0011",
+      "title": "範例7：二項式定理｜計算$(0.98)^4$，取到小數點",
+      "question_text": "計算$(0.98)^4$，取到小數點後第4位（第5位四捨五入）得到。",
+      "answer_text": "0.9224",
+      "explanation_text": "【解析】(0.98)^4 = (1 − 0.02)^4 =$∑_{k = 0}^{4}{C_{k}^{4}1^{4 - k}\\ ( - 0.02)^{k}}$ = 1 − 4 (0.02) + 6 (0.02)^2 − 4 (0.02)^3 + (0.02)^4 = 1 − 0.08 + 0.0024 − 0.000032 + 0.00000016 = 0.922368160.9224",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-numeric-substitution-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 11,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0012",
+      "title": "隨堂練習：二項式定理｜試計算$(1.05)^12$的近似值",
+      "question_text": "試計算$(1.05)^12$的近似值至小數點後一位（第一位四捨五入）之值為。",
+      "answer_text": "1.8",
+      "explanation_text": "【解析】(1.05)^12 = (1 + 0.05)^12 = C${}_{0}^{12}$1 + C${}_{1}^{12}$0.05 + C${}_{2}^{12}$ (0.05)^2 + C${}_{3}^{12}$ (0.05)^3 + … = 1 + 0.6 + 0.165 + 0.0275 + … = 1.7925…1.8",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-numeric-substitution-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 12,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0013",
+      "title": "隨堂練習：二項式定理｜數位判斷",
+      "question_text": "若$(102)^{10}$之千位數字為$a$，百位數字為$b$，十位數字為$c$，個位數字為$d$，則： (1) $a=3$ (2) $b=1$ (3) $c=2$ (4) $d=4$ (5) $a+b+c+d=10$。",
+      "answer_text": "(1)(3)(4)",
+      "explanation_text": "【解析】(102)^10 = (2 + 100)^10 = 2^10 +$C_{1}^{10}$× 2^9 × 100 +$C_{2}^{10}$× 2^8 × 100^2 + … ^ = 1024 + 10 × 512 × 100 + 45 × 256 × 10000 + … ^ = 1024 + 512000 + 10^4 × a，a∈$\\mathbb{N}$ ^ = 513024 + 10^4 × a，a∈$\\mathbb{N}$，\n∴a = 3，b = 0，c = 2，d = 4且a + b + c + d = 9。\n故選(1)(3)(4)。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-numeric-substitution-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 13,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0014",
+      "title": "範例：二項式定理｜位數與末位數",
+      "question_text": "將$7^{20}$乘開，(1) 為______位數（已知$\\log 7=0.8451$）。 (2) 最右邊之五位數為______。",
+      "answer_text": "(1)17位；(2)12001",
+      "explanation_text": "【解析】(1) log7^20 = 20log7 = 20 × 0.8451 = 16.902 = 16 + 0.902 ∴ 為17位數\n(2) 7^20 = (7^4)^5 = (2400 + 1)5 = 2400^5 + 5 × 2400^4 + 10 × 2400^3 + 10 × 2400^2 + 5 × 2400 + 1 = …12001\n∴ 最右邊的五位數為12001",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-numeric-substitution-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 14,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0015",
+      "title": "範例9：二項式定理｜試求$∑_{k = 0}^{10}{",
+      "question_text": "試求$∑_{k = 0}^{10}{(1 - x)^{k}}$展開式中$x^5$項的係數。",
+      "answer_text": "$-462$",
+      "explanation_text": "【解析】$∑_{k = 0}^{10}{(1 - x)^{k}}$= 1 + (1 − x) + (1 − x)^2 + (1 − x)^3 + … + (1 − x)10 =$\\frac{1 · [(1 - x)^{11} - 1]}{(1 - x) - 1}$=$\\frac{(1 - x)^{11} - 1}{- x}$=$\\frac{(x - 1)^{11} + 1}{x}$ 則原展開式中x^5項係數 = (x − 1)^11展開式中x^6之係數 = C${}_{6}^{11}$ ( − 1)^5 = − 462",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-rising-falling-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 15,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0016",
+      "title": "範例：二項式定理｜和式中的係數",
+      "question_text": "$(1+x^2)+(1+x^2)^2+(1+x^2)^3+\\cdots+(1+x^2)^{20}$的展開式中，$x^6$的係數為______。",
+      "answer_text": "5985",
+      "explanation_text": "【解析】原式 = (1 + x^2)$\\frac{(1 + x^{2})^{20} - 1}{(1 + x^{2}) - 1}$=$\\frac{(1 + x^{2})^{21} - (1 + x^{2})}{x^{2}}$ 原式x^6的係數為(1 + x^2)^21中第五項C${}_{4}^{21}$x^8的係數 ∴ C${}_{4}^{21}$= 5985",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-rising-falling-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 16,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0017",
+      "title": "隨堂練習：二項式定理｜和式係數",
+      "question_text": "求$(1+x^2)+(1+x^2)^2+(1+x^2)^3+\\cdots+(1+x^2)^8$展開式中$x^4$項的係數。",
+      "answer_text": "84",
+      "explanation_text": "【解析】(1 + x^2) + (1 + x^2)^2 + (1 + x^2)^3 + … + (1 + ^2)^8$= \\frac{(1 + x^{2})[(1 + x^{2})^{8} - 1]}{(1 + x^{2}) - 1} = \\frac{(1 + x^{2})^{9} - (1 + x^{2})}{x^{2}}$， 求展開式中的x^4項係數，故分子部分考慮(1 + x^2)^9展開式中x^6項的係數，\n(1 + x^2)^9展開式中的一般項$C_{r}^{9}(x^{2})^{r} = C_{r}^{9} x^{2r}$，取r = 3，所以係數為$C_{3}^{9} = 84$。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-rising-falling-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 17,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0018",
+      "title": "隨堂練習：二項式定理｜加權和式係數",
+      "question_text": "試求$(1+x^2)+2(1+x^2)^2+3(1+x^2)^3+\\cdots+15(1+x^2)^{15}$展開式中，$x^4$項的係數。",
+      "answer_text": "6580",
+      "explanation_text": "【解析】令S = (1 + x^2) + 2(1 + x^2)^2 + 3(1 + x^2)^3 + … + 15(1 + x^2)^15\n⇒ (1 + x^2)S = (1 + x^2)^2 + 2(1 + x^2)^3 + … + 14(1 + x^2)^15 + 15(1 + x^2)^16 兩式相減得 − x^2S = (1 + x^2) + (1 + x^2)^2 + (1 + x^2)^3 + … + (1 + x^2)^15 − 15(1 + x^2)^16 =$\\frac{(1 + x^{2})[(1 + x^{2})^{15} - 1]}{(1 + x^{2}) - 1}$ − 15(1 + x^2)^16 ⇒ S =$\\frac{(1 + x^{2}) - (1 + x^{2})^{16}}{x^{4}}$+$\\frac{15(1 + x^{2})^{16}}{x^{2}}$\n∴ S中x^4項之係數 = − C${}_{4}^{16}$+ 15C${}_{3}^{16}$= − 1820 + 8400 = 6580",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-rising-falling-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 18,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0019",
+      "title": "隨堂練習：二項式定理｜加權和式的$x^2$係數",
+      "question_text": "$(1+x^2)+2(1+x^2)^2+\\cdots+20(1+x^2)^{20}$之$x^2$係數$=$？",
+      "answer_text": "2870",
+      "explanation_text": "【解析】令S = (1 + x^2 ) + 2(1 + x^2 )^2 + … + 20(1 + x^2 )^20……① 則(1 + x^2)S = (1 + x^2)^2 + 2(1 + x^2)^3 + … + 20(1 + x^2)^21……②\n①−② $⇒$ − x^2S = (1 + x^2) + (1 + x^2)^2 + … + (1 + x^2)^20 − 20 (1 + x^2)21 $⇒$ − x^2S =$\\frac{(1 + x^{2})[ 1 - (1 + x^{2})^{20}]}{1 - (1 + x^{2})}$− 20(1 + x^2)21 $⇒$ S =$\\frac{(1 + x^{2})^{21} - (1 + x^{2})}{- x^{4}}$+ 20·$\\frac{(1 + x^{2})^{21}}{x^{2}}$ 故x^2之係數即\\[ − (1 + x^2)^21之x^6係數\\] + \\[20(1 + x^2 )^21之x^4係數\\]\n(1 + x^2)^21 =$∑_{k = 0}^{21}{C_{k}^{21}x^{2k}}$\n(1)當2k = 6時，k = 3 ∴ − (1 + x^2)^21之x^6係數 = − C${}_{3}^{21}$\n(2)當2k = 4時，k = 2 ∴ 20(1 + x^2)^21之x^4係數 = C${}_{2}^{21}$·20 故所求 = − C${}_{3}^{21}$+ 20C${}_{2}^{21}$= − 1330 + 4200 = 2870",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-rising-falling-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 19,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0020",
+      "title": "範例11：二項式定理｜求$11^18$除以1000的餘數",
+      "question_text": "求$11^18$除以1000的餘數。",
+      "answer_text": "481",
+      "explanation_text": "【解析】利用二項式定理將11^18 = (1 + 10)^18展開得到 11^18 = (1 + 10)^18 $= C_{0}^{18} · 1^{18} + C_{1}^{18} · 1^{17} · 10^{1} + C_{2}^{18} · 1^{16} · 10^{2} + C_{3}^{18} · 1^{15} · 10^{3} + ⋯ + C_{18}^{18} · 10^{18}$ $= 1 + 180 + 15300 + 1000(C_{3}^{18} + C_{4}^{18} · 10 + ⋯ + C_{18}^{18} · 10^{15})$ $= 481 + 1000(15 + C_{3}^{18} + C_{4}^{18} · 10 + ⋯ + C_{18}^{18} · 10^{15})$ 故11^18除以1000的餘數為481。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-numeric-substitution-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 20,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0021",
+      "title": "範例：餘式定理｜除以$(x-1)^2$",
+      "question_text": "求$x^{10}+1$除以$(x-1)^2$的餘式。",
+      "answer_text": "$10x-8$",
+      "explanation_text": "【解析】x^10 + 1 = (x − 1 + 1)^10 + 1 =$∑_{k = 0}^{10}{C_{k}^{10}(x - 1)^{k}\\ ·\\ 1^{10 - k} + 1}$ = C${}_{0}^{10}$ (x − 1)^0 + C${}_{1}^{10}$ (x − 1) + C${}_{2}^{10}$ (x − 1)^2 + … + C${}_{10}^{10}$ (x − 1)^10 + 1 = (x − 1)^2\\[C${}_{2}^{10}$+ C${}_{3}^{10}$ (x − 1) + … + C${}_{10}^{10}$ (x − 1)^8\\] + C${}_{0}^{10}$+ C${}_{1}^{10}$ (x − 1) + 1\n∴ 餘式為C${}_{0}^{10}$+ C${}_{1}^{10}$ (x − 1) + 1 = 1 + 10(x − 1) + 1 = 10x − 8",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-numeric-substitution-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 21,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0022",
+      "title": "隨堂練習：餘式定理｜二次餘式",
+      "question_text": "以$(x-1)^2$除$x^{11}-x+2$，其餘式為______。",
+      "answer_text": "$10x-8$",
+      "explanation_text": "【解析】x^11 − x + 2 = \\[(x − 1) + 1\\]^11 − x + 2 = C${}_{0}^{11}$ (x − 1)^11 + … + C${}_{10}^{11}$ (x − 1) + C${}_{11}^{11}$− x + 2\n∴ 餘式 = C${}_{10}^{11}$ (x − 1) + C${}_{11}^{11}$− x + 2 = 11(x − 1) + 1 − x + 2 = 10x − 8",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-numeric-substitution-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 22,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0023",
+      "title": "範例：餘式定理｜高次式餘式",
+      "question_text": "求$x^{100}+1$除以$(x-1)^2$的餘式。",
+      "answer_text": "$100x-98$",
+      "explanation_text": "【解析】利用二項式定理將x^100 = ((x − 1) + 1)^100展開得到\n((x − 1) + 1)^100 = C_{0}^{100}(x - 1)^{100} + C_{1}^{100}(x - 1)^{99} + ⋯ + C_{98}^{100}(x - 1)^{2} + C_{99}^{100}(x - 1)^{1} + C_{100}^{100} · 1^{100} = (x - 1)^{2}[ C_{0}^{100}(x - 1)^{98} + C_{1}^{100}(x - 1)^{97} + ⋯ + C_{98}^{100}] + C_{99}^{100}(x - 1) + C_{100}^{100}， 因此，x^100 + 1除以(x − 1)^2的餘式為 $C_{99}^{100}(x - 1) + C_{100}^{100} + 1 = 100(x - 1) + 1 + 1 = 100x - 98$。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-numeric-substitution-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 23,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0024",
+      "title": "範例：餘式定理｜三次除式餘式",
+      "question_text": "求以$(x-1)^3$除$(x^2-2x+2)^{10}$所得的餘式。",
+      "answer_text": "$1+10(x-1)^2$",
+      "explanation_text": "【解析】(x^2 − 2x + 2)^10 = \\[1 + (x − 1)^2\\]^10 $= C_{0}^{10} + C_{1}^{10}((x - 1)^{2})^{1} + C_{2}^{10}((x - 1)^{2})^{2} + C_{3}^{10}((x - 1)^{2})^{3} + ⋯ + C_{10}^{10}((x - 1)^{2})^{10}$ $= C_{0}^{10} + C_{1}^{10}(x - 1)^{2} + C_{2}^{10}(x - 1)^{4} + ⋯ + C_{10}^{10}(x - 1)^{20}$， 因此(x^2 − 2x + 2)^10除以(x − 1)^3的餘式為$C_{0}^{10} + C_{1}^{10}(x - 1)^{2} = 1 + 10(x - 1)^{2} = 10x^{2} - 20x + 11$。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-numeric-substitution-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 24,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0025",
+      "title": "隨堂練習：餘式定理｜三次餘式",
+      "question_text": "求$x^{10}$除以$(x-1)^3$的餘式。",
+      "answer_text": "$1+10(x-1)+45(x-1)^2$",
+      "explanation_text": "【解析】x^10 = \\[1 + (x − 1)\\]^10 $= C_{0}^{10} + C_{1}^{10}(x - 1) + C_{2}^{10}(x - 1)^{2} + C_{3}^{10}(x - 1)^{3} + ⋯ + C_{10}^{10}(x - 1)^{10}$ $= C_{0}^{10} + C_{1}^{10}(x - 1) + C_{2}^{10}(x - 1)^{2} + (x - 1)^{3}(C_{3}^{10} + ⋯ + C_{10}^{10}(x - 1)^{7})$， 所以x^10除以(x − 1)^3的餘式為 $C_{0}^{10} + C_{1}^{10}(x - 1) + C_{2}^{10}(x - 1)^{2} = 1 + 10(x - 1) + 45(x - 1)^{2} = 45x^{2} - 80x + 36$。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-numeric-substitution-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 25,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0026",
+      "title": "範例：二項式定理｜係數關係求$n$",
+      "question_text": "$(x+y)^n$的展開式中，(1) 第$10$項與第$13$項之係數相等，則$n=$______。 (2) 若有三連續項的係數比為$2:3:4$，則$n=$______。",
+      "answer_text": "(1)$n=21$；(2)$n=34$",
+      "explanation_text": "【解析】(1) C${}_{9}^{n}$= C${}_{12}^{n}$ ∴ n − 9 = 12 $⇒$ n = 21\n(2) C${}_{k - 1}^{n}$：C${}_{k}^{n}$：C${}_{k + 1}^{n}$= 2：3：4 $⇒$ ${ \\begin{matrix} 2C_{k}^{n} = 3C_{k - 1}^{n} \\ 3C_{k + 1}^{n} = 4C_{k}^{n} \\end{matrix} \\right.$ $⇒$ ${ \\begin{matrix} \\frac{2 ·n！}{k！ (n - k)！} = \\frac{3 ·n！}{(k - 1)！ (n - k + 1)\\！ } \\ \\frac{3 ·n！}{(k + 1)！ (n - k - 1)！} = \\frac{4 ·n！}{k！ (n - k)\\！\\ } \\end{matrix} \\right.$ $⇒$ ${ \\begin{matrix} 2n - 2k + 2 = 3k \\ 3n - 3k = 4k + 4 \\end{matrix} \\right.$ $⇒$ ${ \\begin{matrix} n = 34 \\ k = 14 \\end{matrix} \\right.$",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-coefficient-properties-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 26,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0027",
+      "title": "隨堂練習：二項式定理｜等差係數求$n$",
+      "question_text": "設$(1+x)^n$展開式中，$x^8,x^9,x^{10}$成等差，則$n=$______（$n\\ge 10$）。",
+      "answer_text": "$n=14$或$23$",
+      "explanation_text": "【解析】(1 + x)^n之x^8，x^9，x^10項係數分別為C${}_{8}^{n}$，C${}_{2}^{21}$，C${}_{10}^{n}$成等差 ∴ 2C${}_{9}^{n}$= C${}_{8}^{n}$+ C${}_{10}^{n}$\n⇒ 2 ×$\\frac{n(n - 1)⋯(n - 8)}{9！}$=$\\frac{n(n - 1)⋯(n - 7)}{8！}$+$\\frac{n(n - 1)⋯(n - 9)}{10！}$（同乘$\\frac{10！}{n(n - 1)⋯(n - 7)}$） $⇒$ 2 ×10 (n − 8) = 9 × 10 + (n − 8)(n − 9) $⇒$ n^2 − 37n + 322 = 0 $⇒$ (n − 14)(n − 23) = 0 $⇒$ n = 14或23",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-coefficient-properties-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 27,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0028",
+      "title": "隨堂練習：二項式定理｜設$(x$+$y)^n$展開式中依$",
+      "question_text": "設$(x$+$y)^n$展開式中依$x$降冪排列的第6項為112，第7項為7，第8項為$\\frac{1}{4}$，試求$x$，$y$及$n$之值。（但$x$﹑$y$都是正數）",
+      "answer_text": "$x=4$，$y=\\frac{1}{2}$，$n=8$",
+      "explanation_text": "【解析】$C_{5}^{n} x^{n - 5}y^{5} = 112 · · · · · · $ {C_{6}^{n} x^{n - 6}y^{6} = 7 · · · · · ·  }{C_{7}^{n} x^{n - 7}y^{7} = \\frac{1}{4} · · · · · ·  }{\\frac{}{} ⇒ \\frac{6}{n - 5} · \\frac{x}{y} = 16 · · · · · ·  }{\\frac{}{} ⇒ \\frac{7}{n - 6} · \\frac{x}{y} = 28 · · · · · ·  \\frac{}{} ⇒ \\frac{6(n - 6)}{7(n - 5)} = \\frac{16}{28}}，∴$n = 8$， 代入④ ⇒ x = 8y，由$ ⇒ C_{7}^{8}(8y)y^{7} = \\frac{1}{4} ⇒ y^{8} = (\\frac{1}{2})^{8}$，即得$y = \\pm \\frac{1}{2}$，x = ±4，\n∴x = 4，y =$\\frac{1}{2}$，n = 8（取正值）。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-coefficient-properties-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 28,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0029",
+      "title": "範例：二項式定理｜乘積式係數",
+      "question_text": "求$(2x-1)^4(x+2)^5$展開式中，$x^7$項的係數為______。",
+      "answer_text": "344",
+      "explanation_text": "【解析】(2x − 1)^4(x + 2)^5 = \\[( − 1) + 2x\\]^4\\[2 + x\\]^5\\[$∑_{\\alpha = 0}^{4}C_{\\alpha}^{4}$ ( −1)^4−α(2x)^α\\]\\[$∑_{\\beta = 0}^{5}C_{\\beta}^{5}$2^5−βx^β\\] = \\[$∑_{\\alpha = 0}^{4}{∑_{\\beta = 0}^{5}{C_{\\alpha}^{4}C_{\\beta}^{5}}}$ ( − 1)^4−α2^5+α −β\\]x^α^+β α + β = 7，(α，β) = (2，5)，(3，4)，(4，3)\n∴ C${}_{2}^{4}$C${}_{5}^{5}$ ( − 1)^22^5+2−5 + C${}_{3}^{4}$C${}_{4}^{5}$ ( − 1)^12^5+3−4 + C${}_{4}^{4}$C${}_{3}^{5}$ ( − 1)^02^5+4− 3 = 24 − 320 + 640 = 344",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-term-finding-techniques-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 29,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0030",
+      "title": "隨堂練習：二項式定理｜乘積式係數",
+      "question_text": "求$(2x-1)^4(x+3)^5$展開式中，$x^7$項之係數為______。",
+      "answer_text": "984",
+      "explanation_text": "【解析】(2x − 1)^4(x + 3)^5 = \\[(− 1) + 2x\\]^4(3 + x)^5 = \\[$∑_{\\alpha = 0}^{4}C_{\\alpha}^{4}$ (− 1)^4−α(2x)^α\\]\\[$∑_{\\beta = 0}^{5}C_{\\beta}^{5}$3^5−βx^β\\] = \\[$∑_{\\alpha = 0}^{4}{∑_{\\beta = 0}^{5}{C_{\\alpha}^{4}C_{\\beta}^{5}}}$ (− 1)^4−α2^α3^5−β\\]x^α^+β α + β = 7 ⇒ (α，β ) = (2，5)，(3，4)，(4，3)\n∴ C${}_{2}^{4}$C${}_{5}^{5}$ (− 1)^22^23^0 + C${}_{3}^{4}$C${}_{4}^{5}$ (− 1)2^33 + C${}_{4}^{4}$C${}_{3}^{5}$ (− 1)^02^43^2 = 24 − 480 + 1440 = 984",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-term-finding-techniques-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 30,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0031",
+      "title": "範例16：二項式定理｜設$∑_{n = 1}^{10}{(",
+      "question_text": "設$∑_{n = 1}^{10}{(1 + ax^{2})^{n}}$展開式中$x^4$項係數為660，試求$a$的值。",
+      "answer_text": "$a=\\pm 2$",
+      "explanation_text": "【解析】∵(1 + ax^2)^n展開式中x^4項係數為$C_{2}^{n} a^{2}$（其中n ≥ 2），\n∴$∑_{n = 1}^{10}{(1 + ax^{2})^{n}}$展開式中x^4項係數為 $∑_{n = 2}^{10}{C_{2}^{n}}a^{2} = a^{2}∑_{n = 2}^{10}{C_{2}^{n}} = a^{2}∑_{n = 2}^{10}{\\frac{n(n - 1)}{2} = \\frac{a^{2}}{2}∑_{n = 1}^{9}{n(n + 1)}} = \\frac{a^{2}}{2}∑_{n = 1}^{9}{(n^{2} + n)} = \\frac{a^{2}}{2}(∑_{n = 1}^{9}{n^{2} + ∑_{n = 1}^{9}n})$ $⇒ \\frac{a^{2}}{2}(\\frac{9 × 10 × 19}{6} + \\frac{9 × 10}{2}) = 660 ⇒ \\frac{a^{2}}{2}$ (285 + 45) = 660，故a = ±2。\n【另解】$∑_{n = 1}^{10}{(1 + ax^{2})^{n} = \\frac{(1 + ax^{2})^{11} - (1 + ax^{2})}{(1 + ax^{2}) - 1} = \\frac{(1 + ax^{2})^{11} - (1 + ax^{2})}{ax^{2}}}$\n⇒ x^4之係數為$\\frac{C_{3}^{11} · 1^{8} · (ax^{2})^{3}}{ax^{2}} = \\frac{C_{3}^{11} · a^{3}}{a} · x^{4} = 660x^{4}$\n⇒ $C_{3}^{11}$⋅ a^2 = 660，∴a = ± 2。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-term-finding-techniques-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 31,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例16"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0032",
+      "title": "範例17：二項式定理｜教室的黑板上有一九宮格，想在9格中每",
+      "question_text": "教室的黑板上有一九宮格，想在9格中每一格塗上黑色或白色，",
+      "answer_text": "512種",
+      "explanation_text": "【解析】因九宮格固定在黑板上，不能旋轉，由黑色或白色的位置決定方法數， 黑色的個數可能由0到9，得可能圖形有$C_{0}^{9} + C_{1}^{9} + ⋯ + C_{9}^{9} = 2^{9} = 512$（種）。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-numeric-substitution-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 32,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例17"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0033",
+      "title": "隨堂練習：二項式定理｜自相異的11個球中，至少取6個球，試",
+      "question_text": "自相異的11個球中，至少取6個球，試問全部的方法數。",
+      "answer_text": "1024種",
+      "explanation_text": "【解析】可能取6個，7個，8個，9個，10個，11個， C_{6}^{11} + C_{7}^{11} + C_{8}^{11} + C_{9}^{11} + C_{10}^{11} + C_{11}^{11} = \\frac{1}{2}(C_{0}^{11} + C_{1}^{11} + C_{2}^{11} + C_{3}^{11} + C_{4}^{11} + C_{5}^{11} + C_{6}^{11} + C_{7}^{11} + C_{8}^{11} + C_{9}^{11} + C_{10}^{11} + C_{11}^{11}) = \\frac{1}{2} · 2^{11} = 2^{10} = 1024。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-numeric-substitution-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 33,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0034",
+      "title": "範例：二項式定理｜組合和求$n$",
+      "question_text": "$n\\in\\mathbb{N}$且$C_1^n+2C_2^n+3C_3^n+\\cdots+nC_n^n=11264$，求$n=\\underline{\\qquad}$。",
+      "answer_text": "$n=11$",
+      "explanation_text": "【解析】令S = C${}_{1}^{n}$+ 2C${}_{2}^{n}$+ 3C${}_{3}^{n}$+ … + (n − 1)C${}_{n - 1}^{n}$+ nC${}_{n}^{n}$ 倒寫：S = nC${}_{0}^{n}$+ (n − 1)C${}_{1}^{n}$+ (n − 2)C${}_{2}^{n}$+ … + C${}_{n - 1}^{n}$ 兩式相加得S + S = n(C${}_{0}^{n}$+ C${}_{1}^{n}$+ … + C${}_{n}^{n}$) = n·2^n\n∴ S = n·2^n−1 = 11264 = 2^10·11 $⇒$ n = 11",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-sum-identities-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 34,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例18"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0035",
+      "title": "隨堂練習：二項式定理｜分式組合和求$n$",
+      "question_text": "$C_0^n+\\frac{1}{2}C_1^n+\\frac{1}{3}C_2^n+\\cdots+\\frac{1}{n+1}C_n^n=\\frac{127}{n+1}$，則自然數$n=\\underline{\\qquad}$？",
+      "answer_text": "$n=6$",
+      "explanation_text": "【解析】$\\frac{1}{k + 1}$C${}_{k}^{n}$=$\\frac{1}{k + 1}$·$\\frac{n !}{k ! (n - k) !}$=$\\frac{\\frac{1}{n + 1} · (n + 1) !}{(k + 1) ! (n - k) !}$=$\\frac{1}{n + 1}$·C${}_{k + 1}^{n + 1}$\n∴ C${}_{0}^{n}$+$\\frac{1}{2}$C${}_{1}^{n}$+$\\frac{1}{3}$C${}_{2}^{n}$+ … +$\\frac{1}{n + 1}$C${}_{n}^{n}$ =$\\frac{1}{n + 1}$ (C${}_{1}^{n + 1}$ + C${}_{2}^{n + 1}$ + … + C${}_{n + 1}^{n + 1}$) =$\\frac{1}{n + 1}$ (2^n+1 − 1)⇒ $\\frac{1}{n + 1}$ (2^n+1 − 1) =$\\frac{127}{n + 1}$\n⇒ 2^n+1 − 1 = 127∴ n + 1 = 7 ⇒ n = 6",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-sum-identities-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 35,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0036",
+      "title": "範例：二項式定理｜組合和範圍",
+      "question_text": "滿足不等式$1000<C_1^n+C_2^n+C_3^n+\\cdots+C_n^n<1200$的自然數$n$之值是多少？",
+      "answer_text": "$n=10$",
+      "explanation_text": "【解析】∵ C${}_{0}^{n}$+ C${}_{1}^{n}$+ C${}_{2}^{n}$+ … + C${}_{n}^{n}$= 2^n $⇒$ C${}_{1}^{n}$+ C${}_{2}^{n}$+ … + C${}_{n}^{n}$= 2^n − 1\n∴ 1000 < 2^n − 1 < 1200 $⇒$ 1001 < 2^n < 1201\n∵ 2^9 = 512，2^10 = 1024，2^11 = 2048，故n之值 = 10",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-sum-identities-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 36,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例19"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0037",
+      "title": "範例：二項式定理｜對數與二項式估計",
+      "question_text": "已知$\\log 2=0.3010$，$\\log 3=0.4771$，試求滿足不等式$1-\\frac{1}{3}C_1^n+(-\\frac{1}{3})^2C_2^n+(-\\frac{1}{3})^3C_3^n+\\cdots+(-\\frac{1}{3})^nC_n^n<\\frac{1}{5000}$最小正整數$n$之值為何？",
+      "answer_text": "22",
+      "explanation_text": "【解析】∵ (1 + x)^n = C${}_{0}^{n}$+ Cx + C${}_{2}^{n}$x^2 + … + C${}_{n}^{n}$x^n 令x = −$\\frac{1}{3}$得(1 −$\\frac{1}{3}$)^n = C${}_{0}^{n}$+ C( −$\\frac{1}{3}$) + C${}_{2}^{n}$ ( −$\\frac{1}{3}$)^2 + … + C${}_{n}^{n}$ ( −$\\frac{1}{3}$)^n\n⇒ ($\\frac{2}{3}$)^n = 1 −$\\frac{1}{3}$C+ ( −$\\frac{1}{3}$)^2C${}_{2}^{n}$+ ( −$\\frac{1}{3}$)^3C${}_{3}^{n}$+ … + ( −$\\frac{1}{3}$)^nC${}_{n}^{n}$\n⇒ ($\\frac{2}{3}$)^n <$\\frac{1}{5000}$ ⇒ n log$\\frac{2}{3}$< log$\\frac{1}{5000}$ ⇒ n(log2 − log3) < log2 − log10000\n⇒ n(0.301 − 0.4771) < 0.301 − 4 ⇒ n( − 0.1761) < − 3.6990\n⇒ n >$\\frac{3.699}{0.1761}$= 21.005\n⇒ n ≥ 22，故最小正整數n之值 = 22",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-sum-identities-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 37,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例20"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0038",
+      "title": "隨堂練習：二項式定理｜組合和不等式",
+      "question_text": "若$2000<C_1^n+C_2^n+C_3^n+\\cdots+C_n^n<3000$，則正整數$n$之值$=$______。",
+      "answer_text": "$n=11$",
+      "explanation_text": "【解析】∵ C${}_{0}^{n}$+ C${}_{1}^{n}$+ C${}_{2}^{n}$+ C${}_{3}^{n}$+ … + C${}_{n}^{n}$= 2^n $⇒$ 2000 < 2^n − 1 < 3000 $⇒$ 2001 < 2^n < 3001\n∵ 2^10 = 1024，2^11 = 2048，2^12 = 4096，故n = 11",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-sum-identities-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 38,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0039",
+      "title": "隨堂練習：二項式定理｜求滿足$C_{0}^{n} - \\f",
+      "question_text": "求滿足$C_{0}^{n} - \\frac{C_{1}^{n}}{2} + \\frac{C_{2}^{n}}{2^{2}} + ⋯ + ( - 1)^{n}\\frac{C_{n}^{n}}{2^{n}} < \\frac{1}{1000}$的最小正整數$n$值。",
+      "answer_text": "$n=10$",
+      "explanation_text": "【解析】$C_{0}^{n} - \\frac{C_{1}^{n}}{2} + \\frac{C_{2}^{n}}{2^{2}} + ⋯ + ( - 1)^{n}\\frac{C_{n}^{n}}{2^{n}} = (1 - \\frac{1}{2})^{n} = (\\frac{1}{2})^{n}$⇒$(\\frac{1}{2})^{n} < \\frac{1}{1000}$⇒ 2^n > 1000，故取n = 10。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-sum-identities-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 39,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0040",
+      "title": "隨堂練習：二項式定理｜設$n$為自然數，且滿足$C_{0}",
+      "question_text": "設$n$為自然數，且滿足$C_{0}^{n} + \\frac{C_{1}^{n}}{2} + \\frac{C_{2}^{n}}{3} + ⋯ + \\frac{C_{n}^{n}}{n + 1} = \\frac{31}{n + 1}$，則$n$之值為何？",
+      "answer_text": "$n=4$",
+      "explanation_text": "【解析】∵$\\frac{C_{k}^{n}}{k + 1} = \\frac{n!}{(n - k)!(k + 1) · k!} = \\frac{(n + 1)!}{(n + 1) · (n - k)!(k + 1)!} = \\frac{1}{n + 1}C_{k + 1}^{n + 1}$，\n∴左式$= ∑_{k = 0}^{n}\\frac{1}{k + 1} × C_{k}^{n} = \\frac{1}{n + 1}(C_{1}^{n + 1} + C_{2}^{n + 1} + ⋯ + C_{n + 1}^{n + 1}) = \\frac{1}{n + 1}(2^{n + 1} - 1)$，\n∴$\\frac{1}{n + 1}(2^{n + 1} - 1) = \\frac{31}{n + 1} ⇒ 2^{n + 1} - 1 = 31$，得n = 4。",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-numeric-substitution-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 40,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0041",
+      "title": "範例：二項式定理｜交錯組合和",
+      "question_text": "試求：$C_0^{50}-C_2^{50}+C_4^{50}-C_6^{50}+\\cdots+C_{48}^{50}-C_{50}^{50}$之值。",
+      "answer_text": "0",
+      "explanation_text": "【解析】∵ (1 + i)^50 = C${}_{0}^{50}$+ C${}_{1}^{50}$i + C${}_{2}^{50}$i^2 + … + C${}_{50}^{50}$i^50 = (C${}_{0}^{50}$− C${}_{2}^{50}$+ C${}_{4}^{50}$− … + C${}_{48}^{50}$− C${}_{50}^{50}$) + i(C${}_{1}^{50}$− C${}_{3}^{50}$+ C${}_{5}^{50}$− … − C${}_{47}^{50}$+ C${}_{49}^{50}$) 因(1 + i)^2 = 2i $⇒$ (1 + i)^50 = 2^25i ^25 = 2^25i 故C${}_{0}^{50}$− C${}_{2}^{50}$+ C${}_{4}^{50}$− C${}_{6}^{50}$+ … + C${}_{48}^{50}$− C${}_{50}^{50}$= 0",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-complex-substitution-cycle-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 41,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例21"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0042",
+      "title": "範例：二項式定理｜整除證明",
+      "question_text": "利用二項式定理，證明：$49^n+16n-1$（$n\\in\\mathbb{N}$）為$16$的倍數（Hint：$49=7^2=(8-1)^2$）。",
+      "answer_text": "見詳解",
+      "explanation_text": "【證明】49^n + 16n − 1 = 7^2n+ 16n − 1 = (8 − 1)^2n+ 16n − 1 = C 8^2n− C${}_{1}^{2n}$8^2n − 1 + C${}_{2}^{2n}$8^2n − 2 + … + C${}_{2n - 1}^{2n}$8(−1)^2n −1 + C${}_{2n}^{2n}$ ( − 1)^2n+ 16n − 1 = C${}_{0}^{2n}$8^2n− C${}_{1}^{2n}$8^2n −1 + … + C${}_{2n - 2}^{2n}$8^2 ( − 1) ^2n − 2 + 2n·8( − 1) + 1 + 16n − 1 = C${}_{0}^{2n}$8^2n− C${}_{1}^{2n}$8^2n − 1 + … + C${}_{2n - 2}^{2n}$8^2( −1)^2n − 2為16的倍數",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-vandermonde-identity-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 42,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例22"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0043",
+      "title": "範例：二項式定理｜組合分式恆等式",
+      "question_text": "試證：$\\frac{C_1^n}{C_0^n}+\\frac{2C_2^n}{C_1^n}+\\frac{3C_3^n}{C_2^n}+\\cdots+\\frac{nC_n^n}{C_{n-1}^n}=\\frac{n(n+1)}{2}$（$n$為正整數）。",
+      "answer_text": "$\\frac{n(n+1)}{2}$",
+      "explanation_text": "【證明】左式的第k項 =$\\frac{kC_{k}^{n}}{C_{k - 1}^{n}}$=$\\frac{k × \\frac{n\\ !}{k\\ !\\ (n - k)\\ !}}{\\frac{n\\ !}{(k - 1)\\ !\\ (n - k + 1)\\ !}}$= n − k + 1 故左式 = (n − 1 + 1) + (n − 2 + 1) + … + (n − n + 1) = n + (n − 1) + (n − 2) + … + 1 =$\\frac{n(n + 1)}{2}$= 右式",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-vandermonde-identity-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 43,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例23"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0044",
+      "title": "隨堂練習：二項式定理｜組合恆等式證明",
+      "question_text": "(1) 試證：$C_1^{n-1}+2C_2^{n-1}+3C_3^{n-1}+\\cdots+(n-1)C_{n-1}^{n-1}=(n-1)\\times 2^{n-2}$（$n\\ge 2,\\ n\\in\\mathbb{N}$）。 (2) 試證：$1^2C_1^n+2^2C_2^n+3^2C_3^n+\\cdots+n^2C_n^n=n(n+1)2^{n-2}$（$n\\ge 2,\\ n\\in\\mathbb{N}$）。",
+      "answer_text": "(1)$(n-1)2^{n-2}$；(2)$n(n+1)2^{n-2}$",
+      "explanation_text": "【證明】(1)左式一般項 = kC${}_{k}^{n - 1}$= k ×$\\frac{(n - 1)\\ !}{k\\ !\\ (n - 1 - k)\\ !}$=$\\frac{(n - 1)\\ !}{(k - 1)\\ !\\ (n - k - 1)\\ !}$ = (n − 1) ×$\\frac{(n - 2)\\ !}{(k - 1)\\ !\\ (n - k - 1)\\ !}$= (n − 1)C${}_{k - 1}^{n - 2}$ 故左式 = (n − 1)(C${}_{0}^{n - 2}$+ C${}_{1}^{n - 2}$+ … + C${}_{n - 2}^{n - 2}$) = (n − 1) × 2^n−2 = 右式\n(2)左式的一般項k^2C${}_{k}^{n}$= k^2 ×$\\frac{n\\ !}{k\\ !\\ (n - k)\\ !}$= k ×$\\frac{n\\ !}{(k - 1)\\ !\\ (n - k)\\ !}$ = nk ×$\\frac{(n - 1)\\ !}{(k - 1)\\ !\\ (n - k)\\ !}$= nkC${}_{k - 1}^{n - 1}$\n∴ 左式 = n(C${}_{0}^{n - 1}$+ 2C${}_{1}^{n - 1}$+ 3C${}_{2}^{n - 1}$+ … + nC${}_{n - 1}^{n - 1}$) = n\\[(C${}_{0}^{n - 1}$+ C${}_{1}^{n - 1}$+ C${}_{2}^{n - 1}$+ … + C${}_{n - 1}^{n - 1}$) + (C${}_{1}^{n - 1}$+ 2C${}_{2}^{n - 1}$+ … + (n − 1)C${}_{n - 1}^{n - 1}$)\\] = n\\[2^n − 1 + (n − 1) × 2^n − 2\\]（利用(1)）= n·2^n − 2 \\[2 + (n − 1)\\] = n(n + 1)2^n − 2 = 右式",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-vandermonde-identity-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 44,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0045",
+      "title": "範例：二項式定理｜平方和恆等式",
+      "question_text": "設$n$為自然數，證明：$(C_0^n)^2+(C_1^n)^2+\\cdots+(C_n^n)^2=\\frac{(2n)!}{(n!)^2}$恆成立。",
+      "answer_text": "$\\frac{(2n)!}{(n!)^2}$",
+      "explanation_text": "【證明】由二項式定理知\n(x + 1)^n = C${}_{0}^{n}$x^n+ C${}_{1}^{n}$x^n^− 1 + … + C${}_{n - 1}^{n}$x + C${}_{n}^{n}$\n(x + 1)^n = C${}_{0}^{n}$+ C${}_{1}^{n}$x + C${}_{2}^{n}$x^2 + … + C${}_{n - 1}^{n}$x ^n^− 1 + C${}_{n}^{n}$x^n 兩式相乘，左式為(x + 1)^2n，其中x^n的係數為C${}_{n}^{2n}$ 而右式中的x ^n項的係數為(C${}_{0}^{n}$)^2 + (C${}_{1}^{n}$)^2 + … + (C${}_{n}^{n}$)^2 所以，(C${}_{0}^{n}$)^2 + (C${}_{1}^{n}$)^2 + … + (C${}_{n}^{n}$)^2 = C${}_{n}^{2n}$=$\\frac{(2n)！}{n！n！\\ }$=$\\frac{(2n)!}{(n!)^{2}}$",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-vandermonde-identity-s223",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 45,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:範例24"
+      ]
+    },
+    {
+      "id": "q-s2-2-3-0046",
+      "title": "隨堂練習：二項式定理｜中央二項式估計",
+      "question_text": "設$n$為自然數且$n\\ge 2$，試證：$2^n<\\frac{(2n)!}{(n!)^2}<2^{2n}$。",
+      "answer_text": "$2^n<\\frac{(2n)!}{(n!)^2}<2^{2n}$",
+      "explanation_text": "【證明】(1) C${}_{0}^{2n}$+ C${}_{1}^{2n}$+ C${}_{2}^{2n}$+ … + C${}_{n}^{2n}$+ … + C${}_{2n}^{2n}$= 2^2n\n⇒ 2^2n> C${}_{n}^{2n}$ ⇒ 2^2n >$\\frac{(2n)\\ !}{n\\ !\\ n\\ !}$=$\\frac{(2n)\\ !}{(n\\ !)^{2}}$\n(2) (C${}_{0}^{n}$)^2 + (C${}_{1}^{n}$)^2 + … + (C${}_{n}^{n}$)^2 = C${}_{n}^{2n}$> C${}_{0}^{n}$+ C${}_{1}^{n}$+ … + C${}_{n}^{n}$= 2^n\n⇒ C${}_{n}^{2n}$> 2^n ⇒ $\\frac{(2n)\\ !}{(n\\ !)^{2}}$> 2^n 由(1)，(2)知2^n <$\\frac{(2n)\\ !}{(n\\ !)^{2}}$< 2^2n得證",
+      "chapter_code": "s2-2-3",
+      "formula_id": "senior-binomial-vandermonde-identity-s223",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-7轉.docx",
+      "source_section": "主題1：二項式定理",
+      "source_order": 46,
+      "tags": [
+        "s2-2-3",
+        "section:主題1：二項式定理",
+        "marker:隨堂練習"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "chapter_code": "s4-3-1",
+  "chapter_title": "條件機率與貝氏定理",
+  "source_files": [
+    {
+      "path": "source/4A-11轉.docx",
+      "role": "primary_docx"
+    }
+  ],
+  "extracted_files": [
+    {
+      "path": "extracted/4A-11轉.md",
+      "role": "pandoc_markdown"
+    },
+    {
+      "path": "questions.json",
+      "role": "question_pack"
+    },
+    {
+      "path": "preview.json",
+      "role": "assignment_preview"
+    },
+    {
+      "path": "review-needed.md",
+      "role": "manual_review_notes"
+    }
+  ],
+  "asset_roots": [
+    {
+      "path": "program-db/assets/question-media/s4-3-1",
+      "role": "canonical_question_media"
+    }
+  ],
+  "status": "review_ready",
+  "updated_at": "2026-05-04T20:04:26.538103+08:00"
+}

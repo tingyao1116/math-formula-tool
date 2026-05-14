@@ -1,0 +1,1528 @@
+{
+  "meta": {
+    "chapter_code": "s2-1-2",
+    "source_ref": "source/2-2轉.docx",
+    "count": 74,
+    "schema": "question-import-pack-v1-preview"
+  },
+  "summary": {
+    "count": 74,
+    "sections": {
+      "主題1：等差級數與等比級數": 52,
+      "主題2：級數和公式": 22
+    },
+    "skipped": [
+      {
+        "line": 1345,
+        "marker": "範例10",
+        "topic": "主題2：級數和公式",
+        "reason": "question_text_missing"
+      }
+    ],
+    "image_references": [
+      "program-db/assets/question-media/s2-1-2/image17.png",
+      "program-db/assets/question-media/s2-1-2/image18.png",
+      "program-db/assets/question-media/s2-1-2/image19.png",
+      "program-db/assets/question-media/s2-1-2/image20.png",
+      "program-db/assets/question-media/s2-1-2/image21.png",
+      "program-db/assets/question-media/s2-1-2/image22.png",
+      "program-db/assets/question-media/s2-1-2/image26.png",
+      "program-db/assets/question-media/s2-1-2/image27.png",
+      "program-db/assets/question-media/s2-1-2/image28.png",
+      "program-db/assets/question-media/s2-1-2/image3.png",
+      "program-db/assets/question-media/s2-1-2/image31.png",
+      "program-db/assets/question-media/s2-1-2/image32.png",
+      "program-db/assets/question-media/s2-1-2/image33.png",
+      "program-db/assets/question-media/s2-1-2/image4.png",
+      "program-db/assets/question-media/s2-1-2/image51.png",
+      "program-db/assets/question-media/s2-1-2/image53.png",
+      "program-db/assets/question-media/s2-1-2/image6.png",
+      "program-db/assets/question-media/s2-1-2/image7.png",
+      "program-db/assets/question-media/s2-1-2/image8.png",
+      "program-db/assets/question-media/s2-1-2/image30.png",
+      "program-db/assets/question-media/s2-1-2/image50.png"
+    ]
+  },
+  "questions": [
+    {
+      "id": "q-s2-1-2-0001",
+      "title": "範例1：51 項等差數列判斷",
+      "question_text": "有一個$51$項的等差數列$a_{1},a_{2},a_{3},\\dots,a_{51}$，其和為$0$，且$a_{31}=31$，則下列選項中哪些正確？ (1) $a_{1}+a_{51}=0$ (2) $a_{2}+a_{50}<0$ (3) $a_{3}+a_{49}>0$ (4) $a_{1}<0$ (5) $a_{21}=21$。",
+      "answer_text": "$(1)(4)$",
+      "explanation_text": "【南港高中期中考】 【解析】設公差為$d$。由$a_1+a_2+\\cdots+a_{51}=0$，可得$(a_1+a_{51})+(a_2+a_{50})+\\cdots+(a_{25}+a_{27})+a_{26}=0$，即$25\\cdot 2a_{26}+a_{26}=0$，所以$51a_{26}=0$，故$a_{26}=0$。又$a_{26}=a_1+25d=0$，$a_{31}=a_1+30d=31$，聯立解得$d=\\frac{31}{5}$，$a_1=-155$。因此$a_1+a_{51}=a_2+a_{50}=a_3+a_{49}=2a_{26}=0$，且$a_{21}=a_1+20d=-155+20\\cdot\\frac{31}{5}=-31$。故正確選項為$(1)(4)$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 1,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0002",
+      "title": "隨堂練習：求首項58，公差 − 3之等差數列的前13項的和",
+      "question_text": "(1)求首項58，公差 − 3之等差數列的前13項的和。 (2)求等差級數$(-1)+3+7+…+47+51$的和。 (3)求500與1000之間，所有7的倍數總和。",
+      "answer_text": "(1)$520$；(2)$350$；(3)$53179$",
+      "explanation_text": "【解析】(1)利用等差級數的和公式$S_{n}=\\frac{n(2a_{1}+(n-1)d)}{2}$， 得$S_{13}=\\frac{13(58 \\times 2+(13-1) \\times (-3))}{2}=\\frac{13 \\times 80}{2}=520$，因此其和為520。 (2)等差級數$(-1)+3+7+…+47+51$的首項$a_1=-1$，公差$d=3-(-1)=4$， 因為$51=(-1)+13$⋅$4=(-1)+(14-1)$⋅ 4，所以此級數共有14項， 其和$S_{14}=\\frac{14(a_{1}+a_{14})}{2}=\\frac{14((-1)+51)}{2}=350$。 (3)所求即為504 + 511 + 518 + … + 994，首項$a_1=504$，公差$d=7$， 因為$994=504+7$⋅$70=504+(71-1)$⋅ 7，所以此級數共有71項， 其和$S=\\frac{71(504+994)}{2}=53179$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 2,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0003",
+      "title": "範例2：已知一等差數列共有59項，滿足公差，且，選出正確的選",
+      "question_text": "已知一等差數列共有$59$項，滿足公差$d>0$，且$a_{29}+a_{30}+a_{31}=0$，選出正確的選項： (1) $a_{59}>0$ (2) $a_{1}<0$ (3) $a_{30}=0$ (4) $\\sum_{k=1}^{58} a_{k}>0$ (5) $a_{18}+a_{19}+a_{20}=0$。",
+      "answer_text": "$(1)(2)(3)$",
+      "explanation_text": "【解析】因為$a_29+a_30+a_31=(a_30-d)+a_30+(a_30+d)=3a_30=0$，所以$a_30=0$，又因為公差$d>0$，所以自第31項起，$a_n>0$，而在30項以前，$a_n<0$。因此，$(1)a_59>0$。$(2)a_1<0$。$(3)a_30=0$。$(4)\\sum_{k=1}^{58}a_{k}=\\sum_{k=1}^{59}{a_{k}-a_{59}}=\\frac{59(a_{1}+a_{59})}{2}-a_{59}=\\frac{59 \\times 2a_{30}}{2}-a_{59}=0-a_{59}=-a_{59}<0$。 (5)因為在30項以前$a_n<0$，所以$a_18+a_19+a_20<0$。 由上面的討論可知﹕正確的選項為$(1)(2)(3)$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 3,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0004",
+      "title": "範例3：51 項等差數列正數判斷",
+      "question_text": "設$\\langle a_{n} \\rangle$是一個有$51$項的等差數列，已知其和$S>0$，且$a_{41}<0$，則下列何者為正數？ (1) $a_{1}+a_{51}$ (2) $a_{11}+a_{41}$ (3) $a_{10}$ (4) $a_{26}$ (5) $d$。",
+      "answer_text": "$(1)(2)(3)(4)$",
+      "explanation_text": "【解析】前$51$項和為$S=\\frac{51(a_1+a_{51})}{2}>0$，故$a_1+a_{51}>0$。又$a_{11}+a_{41}=a_1+a_{51}>0$。已知$a_{41}<0$，因此$a_{11}>0$，可知公差$d<0$，所以$a_{10}>a_{11}>0$。另外$a_{26}=a_1+25d=\\frac{a_1+a_{51}}{2}>0$。故為正數者是$(1)(2)(3)(4)$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 4,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0005",
+      "title": "隨堂練習：設數列為等差數列，第項記為第n項，公差記為d，已知",
+      "question_text": "設$\\langle a_{n} \\rangle$為等差數列，第$n$項記為$a_{n}$，公差記為$d$，已知$a_{10}=15$，$a_{40}=5$，下列何者正確？ (1) $a_{1}=18$ (2) $d=-\\frac{1}{3}$ (3) 自第$54$項開始為負 (4) 前$n$項總和為最大時，則$n=54$或$55$ (5) 前$n$項總和為$150$時，則$n=9$。",
+      "answer_text": "$(1)(2)(4)$",
+      "explanation_text": "【97新竹高中期中考】 【解析】$a_10=a_1+9d=15$，$a_40=a_1+39d=5$⇒$a_1=18$，$d=-\\frac{1}{3}$，$a_n=18+(n-1)(-\\frac{1}{3})≤0$，$n≥55$⇒$a_55=0$。 ∴(1)正確，$a_1=18$。 (2)正確，$d=-\\frac{1}{3}$。 (3)錯，第56項開始為負。 (4)正確。 (5)錯，$\\frac{n}{2} [2a_1+(n-1)d ]=150$⇒$\\frac{n}{2} [2 \\times 18+(n-1) \\times (-\\frac{1}{3})]=150$⇒$n^2-109n+900=0$⇒$(n-100)(n-9)=0$⇒$n=100$或9 故選$(1)(2)(4)$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 5,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0006",
+      "title": "範例4：已知一等差數列數列之前兩項和為17，最後兩項和為45",
+      "question_text": "已知一等差數列$\\langle a_{n} \\rangle$之前兩項和為$17$，最後兩項和為$45$，總和$S_{n}$為$403$，求此數列的項數。",
+      "answer_text": "26項",
+      "explanation_text": "【樹林高中期中考】 【解析】設此數列共有$n$項， 由題意可知﹕$a_1+a_2=17$，$a_{n-1}+a_n=45$， 因為$a_1+a_n=a_2+a_{n-1}$，且$a_1+a_n+a_2+a_{n-1}=17+45$，所以$a_{1}+a_{n}=\\frac{17+45}{2}=31$， 由等差數列的和公式$S_n$＝$\\frac{n（a_{1}＋a_{n}）}{2}$，可得﹕$403=\\frac{31n}{2}$，解得$n=26$， 因此數列的項數為26。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 6,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0007",
+      "title": "範例5：設兩等差數列，其首項和的比為，求此兩級數第5項的比",
+      "question_text": "設兩等差數列，其首$n$項和的比為$(7n+2):(n+3)$，求此兩級數第$5$項的比。",
+      "answer_text": "$65:12$",
+      "explanation_text": "【解析】因為前9項的和為$\\frac{9(a_{1}+a_{9})}{2}=\\frac{9 \\times 2 \\times a_{5}}{2}=9a_{5}$， 所以此兩級數第5項的比為兩級數前9項和的比 即$(7 \\times 9+2)$：$(9+3)=65$：12。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 7,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0008",
+      "title": "範例6：求首項58，公差 − 3之等差數列的前13項的和",
+      "question_text": "(1)求首項58，公差 − 3之等差數列的前13項的和。 (2)求等差級數$(-1)+3+7+…+47+51$的和。 (3)求500與1000之間，所有7的倍數總和。",
+      "answer_text": "(1)$520$；(2)$350$；(3)$53179$",
+      "explanation_text": "【解析】(1)利用等差級數的和公式$S_{n}=\\frac{n(2a_{1}+(n-1)d)}{2}$， 得$S_{13}=\\frac{13(58 \\times 2+(13-1) \\times (-3))}{2}=\\frac{13 \\times 80}{2}=520$，因此其和為520。 (2)等差級數$(-1)+3+7+…+47+51$的首項$a_1=-1$，公差$d=3-(-1)=4$， 因為$51=(-1)+13$⋅$4=(-1)+(14-1)$⋅ 4，所以此級數共有14項， 其和$S_{14}=\\frac{14(a_{1}+a_{14})}{2}=\\frac{14((-1)+51)}{2}=350$。 (3)所求即為504 + 511 + 518 + … + 994，首項$a_1=504$，公差$d=7$， 因為$994=504+7$⋅$70=504+(71-1)$⋅ 7，所以此級數共有71項， 其和$S=\\frac{71(504+994)}{2}=53179$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 8,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0009",
+      "title": "範例7：為求等差數列18，…，172的總和，小虎利用等差級數",
+      "question_text": "為求等差數列18，…，172的總和，小虎利用等差級數的求和公式計算，因在求項數$n$值時，因為誤算使其值少1，而得到錯誤的總和介於1300和1400之間，求此等差數列的公差。",
+      "answer_text": "$11$",
+      "explanation_text": "【解析】$\\frac{(18+172)(n-1)}{2}=95(n-1) ⇒ 1300<95(n-1)<1400 ⇒ 13.6<n-1<14.8$， 整數$n-1=14$，即$n=15$， 設公差為$d$，則$172=18+(15-1)d=18+14d$，得$d=11$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 9,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0010",
+      "title": "隨堂練習：設數列為等差數列，第項記為第n項，公差記為d，已知",
+      "question_text": "設$\\langle a_{n} \\rangle$為等差數列，第$n$項記為$a_{n}$，公差記為$d$，已知$a_{10}=15$，$a_{40}=5$，下列何者正確？ (1) $a_{1}=18$ (2) $d=-\\frac{1}{3}$ (3) 自第$54$項開始為負。 (4) 前$n$項總和為最大時，則$n=54$或$55$ (5) 前$n$項總和為$150$時，則$n=9$。",
+      "answer_text": "$(1)(2)(4)$",
+      "explanation_text": "【97新竹高中期中考】 【解析】$a_10=a_1+9d=15$，$a_40=a_1+39d=5$⇒$a_1=18$，$d=-\\frac{1}{3}$，$a_n=18+(n-1)(-\\frac{1}{3})≤0$，$n≥55$⇒$a_55=0$。 ∴(1)正確，$a_1=18$。 (2)正確，$d=-\\frac{1}{3}$。 (3)錯，第56項開始為負。 (4)正確。 (5)錯，$\\frac{n}{2} [2a_1+(n-1)d ]=150$⇒$\\frac{n}{2} [2 \\times 18+(n-1) \\times (-\\frac{1}{3})]=150$⇒$n^2-109n+900=0$⇒$(n-100)(n-9)=0$⇒$n=100$或9 故選$(1)(2)(4)$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 10,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0011",
+      "title": "隨堂練習：一凸多邊形各內角度量成等差數列，且最小角為120°",
+      "question_text": "一凸多邊形各內角度量成等差數列，且最小角為120°，公差為5°，則邊數為$\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_$。",
+      "answer_text": "$9$",
+      "explanation_text": "【解析】設此凸多邊形有$n$個邊，則內角和為$(n-2) \\times 180$°， ∴$\\frac{n[ 240+(n-1) \\times 5]}{2}=(n-2) \\times 180$⇒$n^2-25n+144=0$⇒$n=9$或16， 但凸$n$邊形每個內角都介於0°與180°之間， ∴最大角為120°$+8 \\times 5$°$=160$°（合）或120°$+15 \\times 5$°$=195$°（不合）， ∵$n=16$不合，∴$n=9$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 11,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0012",
+      "title": "隨堂練習：介於與之間的自然數中，又是3的倍數的各數之和為",
+      "question_text": "介於$2^10$與$2^11$之間的自然數中，又是3的倍數的各數之和為$\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_$。",
+      "answer_text": "$523776$",
+      "explanation_text": "【解析】$2^10$，$2^11$除以3的餘數各為1，2， ∴$2^10$與$2^11$之間的自然數中是3的倍數的最小數為$2^10+2$，最大數為$2^11-2$， 令$2^11-2=(2^10+2)+(k-1) \\times 3$⇒$k=341$（項）， ∴所求$=\\frac{341}{2} [(2^10+2)+(2^11-2)]=523776$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 12,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0013",
+      "title": "隨堂練習：在1到199中間插入15個數，使這17個數成為一等差",
+      "question_text": "在1到199中間插入15個數，使這17個數成為一等差數列，求這17個數的總和。",
+      "answer_text": "$1700$",
+      "explanation_text": "【解析】這個等差數列的首項為1，末項為199，共有17項，故由等差級數的和公式得總和為$\\frac{17(1+199)}{2}=1700$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 13,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0014",
+      "title": "隨堂練習：若數列數列為一等差數列，且，則下列何者正確？自第24",
+      "question_text": "若數列$\\langle a_n \\rangle$為一等差數列，且$a_4=7$，$a_10=5$，則下列何者正確？$(A) a_1=8 (B) a_20=\\frac{5}{3} (C)$自第24項開始為負$(D)$前$n$項總和為最大時，$n=24 (E)$前$n$項總和為 60 時，$n=40$。",
+      "answer_text": "$(A)(B)$",
+      "explanation_text": "【解析】設首項為$a_1$，公差為$d$，則$a_1+3d=7 a_1+9d=5$解得$a_1=8$，$d=-\\frac{1}{3}$。$(B) a_{20}=8+19(-\\frac{1}{3})=\\frac{5}{3}$。$(C) a_n=8+(n-1)(-\\frac{1}{3})<0 ⇒ n>25$，所以自第 26 項開始為負。$(D) a_{25}=0$，因此前$n$項和在$S_{24}$與$S_{25}$取得最大值。$(E) S_n=\\frac{n}{2}[2a_1+(n-1)d]=\\frac{n}{2}[16-(n-1)\\frac{1}{3}]=60$，解得$n=9$或$40$。 故正確選項為$(A)(B)$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 14,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0015",
+      "title": "隨堂練習：設數列是一等差數列，且",
+      "question_text": "設$\\langle a_n \\rangle$是一等差數列，$a_2=65$且$a_8=11$。若前$n$項總和為$S_n$，當$S_n$有最大值時，$n=______$。",
+      "answer_text": "$9$",
+      "explanation_text": "【解析】設首項為$a_1$，公差為$d$，則$a_1+d=65 a_1+7d=11$解得$a_1=74$，$d=-9$。 因此$a_n=74+(n-1)(-9)$。 當$a_n\\ge 0$時，前$n$項和仍在增加；由$74-9(n-1)\\ge 0 ⇒ n\\le \\frac{83}{9}$， 可知$a_1,a_2,\\ldots,a_9>0$，而$a_{10}<0$。 所以前$n$項總和在$n=9$時最大。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 15,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0016",
+      "title": "隨堂練習：51 項等差數列判斷",
+      "question_text": "有一個$51$項的等差數列$a_{1},a_{2},a_{3},\\ldots,a_{51}$，其和為$0$，且$a_{31}=31$，則下列選項中哪些正確？ $(1)$ $a_{1}+a_{51}=0$ $(2)$ $a_{2}+a_{50}<0$ $(3)$ $a_{3}+a_{49}>0$ $(4)$ $a_{1}<0$ $(5)$ $a_{21}=21$。",
+      "answer_text": "$(1)(4)$",
+      "explanation_text": "【南港高中期中考】 【解析】設公差為$d$。由$a_1+a_2+\\cdots+a_{51}=0$，可得$(a_1+a_{51})+(a_2+a_{50})+\\cdots+(a_{25}+a_{27})+a_{26}=0$，即$25\\cdot 2a_{26}+a_{26}=0$，所以$51a_{26}=0$，故$a_{26}=0$。又$a_{26}=a_1+25d=0$，$a_{31}=a_1+30d=31$，聯立解得$d=\\frac{31}{5}$，$a_1=-155$。因此$a_1+a_{51}=a_2+a_{50}=a_3+a_{49}=2a_{26}=0$，且$a_{21}=a_1+20d=-155+20\\cdot\\frac{31}{5}=-31$。故正確選項為$(1)(4)$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 16,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0017",
+      "title": "範例8：有兩個等差數列，其第項的比為",
+      "question_text": "有兩個等差數列，其第$n$項的比為$3n+1$：$7n-11$，則其前9項和的比為。",
+      "answer_text": "$2:3$",
+      "explanation_text": "【解析】設此二等差數列各為$\\langle a_n \\rangle$，$<b_n>$，其公差各為$d$，$d$′，前$n$項和各為$S_n$，$S_n$′，則$\\frac{a_{n}}{b_{n}}=\\frac{a_{1}+(n-1)d}{b_{1}+(n-1)d'}=\\frac{3n+1}{7n-11}$∴$\\frac{S_{9}}{S_{9}'}=\\frac{\\frac{9}{2}(2a_{1}+8d)}{\\frac{9}{2}(2b_{1}+8d')}=\\frac{a_{1}+4d}{b_{1}+4d'}=\\frac{3(5)+1}{7(5)-11}=\\frac{16}{24}=\\frac{2}{3}$（令$n-1=4$）",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 17,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0018",
+      "title": "隨堂練習：有兩等差級數，其首項和之比為",
+      "question_text": "有兩等差級數，其首$n$項和之比為$(2n+3)$：$(3n+2)$，試求兩級數第11項的比為。",
+      "answer_text": "$9:13$",
+      "explanation_text": "【解析】設兩等差數列之首項分別為$a_1$，$b_1$，公差分別為$d$，$e \\frac{\\frac{n}{2}[ 2a_{1}+(n-1)d]}{\\frac{n}{2}[ 2b_{1}+(n-1)e]}=\\frac{2n+3}{3n+2}$⇒$\\frac{a_{1}+(\\frac{n-1}{2})d}{b_{1}+(\\frac{n-1}{2})e}=\\frac{2n+3}{3n+2}$① 令$n=21$代入① ⇒$\\frac{a_{1}+10d}{b_{1}+10e}=\\frac{45}{65}$，即$\\frac{a_{11}}{b_{11}}=\\frac{9}{13}$所以兩級數第11項的比為9：13",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 18,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0019",
+      "title": "範例9：設數列為一等差數列，求",
+      "question_text": "設$\\langle a_{n} \\rangle=\\langle a_{1},a_{2},70,a_{4},a_{5},a_{6},a_{7},a_{8},a_{9},-7,\\dots \\rangle$為一等差數列，求：(1) 第$30$項為______。 (2) 此等差數列前$n$項總和為$S_{n}$，則$n=$______時，$S_{n}$有最大值；又此時總和的最大值為______。",
+      "answer_text": "$(1)-227$；$(2)n=9$",
+      "explanation_text": "【解析】$a_{3}=a_{1}+2r=70 a_{10}=a_{1}+9r=-7$⇒$r=-11$，$a_1=92 (1) a_30=92-11 \\times 29=-227 (2) S_n=\\frac{n \\times [ 92+92-11 \\times (n-1)]}{2}=\\frac{-11n^{2}+195n}{2}=\\frac{-11}{2} (n-\\frac{195}{22})^2+432\\frac{9}{88}$當$n=9$時，$S_n$有最大值432",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 19,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0020",
+      "title": "隨堂練習：數列為一個等差數列，則______",
+      "question_text": "(1) $\\langle a_{n} \\rangle$為一個等差數列，$a_{10}=23$，$a_{25}=-22$，則$a_{n}=$______。 (2) 接上題，若$S_{n}=a_{1}+a_{2}+a_{3}+\\dots+a_{n}$為最大時，$n$之值為______。",
+      "answer_text": "$(1)a_n=53-3n$；$(2)n=17$",
+      "explanation_text": "【解析】(1)設公差為$d$，由$a_25-a_10=15d$∴$15d=(-22)-23$∴$d=-3$《方法1》 ∴$a_n=a_25+(n-25)d=-22+(n-25)(-3)=53-3n$《方法2》 ∵$a_10=a_1+9d=23$∴$a_1=50$∴$a_n=a_1+(n-1)d=50+(n-1)(-3)=-3n+53 (2) S_n=\\frac{n}{2} (a_1+a_n)=\\frac{n}{2} (50+53-3n)=\\frac{n}{2} (103-3n)=-\\frac{3}{2} (n-\\frac{103}{6})^2+\\frac{3}{2} (\\frac{103}{6})^2$∵$\\frac{103}{6}=17+\\frac{1}{6}$且公差$d<0$∴ 當$n=17$時，$S_n$之值為最大",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 20,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0021",
+      "title": "範例10：若數列為一個等差數列，公差為d，令，證明",
+      "question_text": "若$\\langle a_n \\rangle$為一個等差數列，公差為$d$，令$S_n=a_1+a_2+…+a_n$，證明：$S_n$，$S_2n-S_n$，$S_3n-S_2n$為一個等差數列且其公差為$n^2d$。",
+      "answer_text": "見詳解",
+      "explanation_text": "【證明】∵$S_n=(a_1)+(a_1+d)+(a_1+2d)+…+[a_1+(n-1)d] S_2n-S_n=(a_1+nd)+[a_1+(n+1)d]+[a_1+(n+2)d]+…+[a_1+(2n-1)d]=S_n+n (nd)=S_n+n^2d S_3n-S_2n=(a_1+2nd)+[a_1+(2n+1)d]+[a_1+(2n+2)d]+…+[a_1+(3n-1)d]=S_n+2n^2d$∴$S_n$，$S_2n-S_n$，$S_3n-S_2n$成$A.P.$，其公差為$n^2d$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 21,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0022",
+      "title": "範例11：有二等差數列數列，數列",
+      "question_text": "有二等差數列$\\langle a_{n} \\rangle=\\langle 3,8,13,18,\\dots,373 \\rangle$，$\\langle b_{n} \\rangle=\\langle 2,9,16,23,\\dots,373 \\rangle$。由這兩組數列的所有共同項依序排列得另一數列$\\langle c_{n} \\rangle$共有$k$項，求 (1) $c_{1}$之值。 (2) $c_{1}+c_{2}+\\dots+c_{k}$之和。",
+      "answer_text": "$(1)c_1=23$；(2)$2178$",
+      "explanation_text": "【解析】∵$\\langle a_n \\rangle=<3$，8，13，18，23，…，$373>$之首項為3，公差為$5<b_n>=<2$，9，16，23，…，$373>$之首項為2，公差為7 ∴$<c_n>=<23$，58，…，$373>$之首項為23，公差為$35 (1) c_1=23 (2)$∵$c_k=373$∴$23+(k-1)$．$35=373$⇒$35k=385$∴$k=11$故$c_1+c_2+c_3+…+c_k=\\frac{11}{2} (c_1+c_11)=\\frac{11}{2} (23+373)=2178$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 22,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0023",
+      "title": "隨堂練習：設有兩個等差數列",
+      "question_text": "設有兩個等差數列：$\\langle a_{n} \\rangle=\\langle 1,4,7,10,\\dots,1000 \\rangle$；$\\langle b_{n} \\rangle=\\langle 11,21,\\dots,1001 \\rangle$，今從$\\langle a_{n} \\rangle$與$\\langle b_{n} \\rangle$二數列中取出相同的項形成一個新數列$\\langle c_{n} \\rangle$，試求此數列的和。",
+      "answer_text": "$16863$",
+      "explanation_text": "【解析】因為$\\langle a_n \\rangle$的第$m$項$a_m=1+(m-1)$．$3=3m-2$而$<b_n>$的第$n$項$b_n=11+(n-1)$．$10=10n+1$令$\\langle a_n \\rangle$與$<b_n>$的相同項為$a_m=b_n$⇔$3m-2=10n+1$⇔$m=\\frac{10}{3}n+1$∵$m ∈ N$∴$n=3k$，$k ∈ N$，於是將$m=3k$代入$a_m$中 得$a_m=3m-2=10$．$3k+1=30k+1$，$k ∈ N$故得共同項為31，61，91，…，991共33項， 所以共同項的和為$\\frac{33}{2}$．$(31+991)=16863$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 23,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0024",
+      "title": "範例12：數列為一數列，已知，則______",
+      "question_text": "$\\langle a_{n} \\rangle$為一數列，已知$S_{n}=a_{1}+a_{2}+a_{3}+\\dots+a_{n}=n^2+3$，$\\forall n\\in N$，則$a_{n}=$______。",
+      "answer_text": "當$n=1$時，$a_n=4$；當$n\\ge2$時，$a_n=2n-1$",
+      "explanation_text": "【解析】已知$S_n=a_1+a_2+⋯+a_n=n^2+3$。 先得$a_1=S_1=4$。 當$n\\ge 2$時，$a_n=S_n-S_{n-1}=(n^2+3)-[(n-1)^2+3]=2n-1$。 因此$a_n=\\begin{cases} 4, & n=1 \\ 2n-1, & n\\ge 2 \\end{cases}$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-partial-sum-difference-method-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 24,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0025",
+      "title": "隨堂練習：設數列數列之前項和，則______",
+      "question_text": "設數列$\\langle a_{n} \\rangle$之前$n$項和$S_{n}=\\frac{n}{2n+1}$，則$a_{n}=$______。",
+      "answer_text": "$a_n=\\frac{1}{4n^2-1}$",
+      "explanation_text": "【解析】已知$S_n=\\frac{n}{2n+1}$。 先得$a_1=S_1=\\frac{1}{3}$。 當$n\\ge 2$時，$a_n=S_n-S_{n-1}=\\frac{n}{2n+1}-\\frac{n-1}{2n-1}=\\frac{1}{4n^2-1}$。 而當$n=1$時，$\\frac{1}{4n^2-1}=\\frac{1}{3}$，與$a_1$相同。 故$a_n=\\frac{1}{4n^2-1}$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-partial-sum-difference-method-s212",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 25,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0026",
+      "title": "隨堂練習：有一數列數列的前項（從第1項到第項）和為，其中是常數",
+      "question_text": "有一數列$\\langle a_n \\rangle$的前$n$項（從第1項到第$n$項）和為$n^2+6n+k$，其中$k$是常數（即$k$之值固定，不 隨$n$變化）。則下列敘述何者正確？$(A) a_1=7+k (B) a_6-a_5=-2 (C)$數列$\\langle a_n \\rangle$為等差數列的充要條件是$k=0 (D) a_n-a_{n-1}=2$，其中$n=3$，4，5，$… (E) a_10=25$",
+      "answer_text": "$(A)(C)(D)(E)$",
+      "explanation_text": "【解析】$S_n=n^2+6n+k (A) a_1=S_1=1^2+6+k=7+k (B) a_6-a_5=(S_6-S_5)-(S_5-S_4)=(6^2+6 \\times 6+k-5^2-6 \\times 5-k)-(5^2+6 \\times 5+k-4^2-6 \\times 4-k)=2 (C) a_2=S_2-S_1=2^2+6 \\times 2+k-(7+k)=9 a_3=S_3-S_2=3^2+6 \\times 3+k-(2^2+6 \\times 2+k)=11$，$a_1=7+k$∴ 當$k=0$時，數列$\\langle a_n \\rangle$為等差數列$(D) a_n-a_{n-1}=(S_n-S_{n-1})-(S_{n-1}-S_{n-2})=n^2+6n+k-(n-1)^2-6(n-1)-k-[(n-1)^2+6(n-1)+k-(n-2)^2-6(n-2)-k]=n^2+6n-n^2+2n-1-6n+6-n^2+2n-1-6n+6+n^2-4n+4+6n-12=2$∴ 當$n=3$，4，5，…時，$a_n-a_{n-1}=2 (E) a_n=S_n-S_{n-1}=n^2+6n+k-(n-1)^2-6 (n-1)-k=2n+5$，當$n=2$，3，… ∴$a_10=2 \\times 10+5=25$故選$(A)(C)(D)(E)$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-partial-sum-difference-method-s212",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 26,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0027",
+      "title": "範例13：一等比數列的首項為384，末項為3，總和為765，求",
+      "question_text": "一等比數列的首項為384，末項為3，總和為765，求此數列的項數。",
+      "answer_text": "$8$",
+      "explanation_text": "【解析】設此等比數列的公比為$r$，共有$n$項。 由題意可列得，推得。 解得，代回，解得$n=8$。 [圖:program-db/assets/question-media/s2-1-2/image3.png]",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 27,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0028",
+      "title": "範例14：求首項3，公比之等比數列的前12項的和",
+      "question_text": "(1)求首項3，公比$-\\sqrt{2}$之等比數列的前12項的和。 (2)求等比級數2 + 6 + 18 + … + 486的和。 (3)求等比級數$1-\\frac{2}{3}+\\frac{4}{9}-⋯$的前$n$項和。",
+      "answer_text": "$(1)189(1-\\sqrt{2})$；(2)$728$；$(3)\\frac{3}{5}\\left[1-\\left(-\\frac{2}{3}\\right)^n\\right]$",
+      "explanation_text": "【解析】(1)利用等比級數的和公式$S_{n}=\\frac{a_{1}(1-r^{n})}{1-r}$，得$S_{12}=\\frac{3(1-(-\\sqrt{2})^{12})}{1-(-\\sqrt{2})}=\\frac{-189}{\\sqrt{2}+1}=-189(\\sqrt{2}-1)$， 因此其和為$-189(\\sqrt{2}-1)$。 (2)等比級數2 + 6 + 18 + … + 486的首項$a_1=2$，公比$r=\\frac{6}{2}=3$， 因為$486=2 \\times 3^5=2 \\times 3^6-1$，所以此級數共有6項，其和$S_{6}=\\frac{a_{1}(1-r^{6})}{1-r}=\\frac{2(1-3^{6})}{1-3}=728$。 (3)首項為1，公比為$-\\frac{2}{3}$的等比級數，其前$n$項和$S_{n}=\\frac{1 \\times (1-(-\\frac{2}{3})^{n})}{1-(-\\frac{2}{3})}=\\frac{3}{5} \\times (1-(-\\frac{2}{3})^{n})$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 28,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0029",
+      "title": "隨堂練習：設數列是一個首項為3，公比為的等比數列，且。選出正確",
+      "question_text": "設$\\langle a_n \\rangle$是一個首項為3，公比為$\\frac{1}{2}$的等比數列，且$S_8=a_1+a_2+…+a_8$。選出正確的選項﹕$(1)3<S_8<4 (2)4<S_8<5 (3)5<S_8<6 (4)6<S_8<7$。",
+      "answer_text": "(3)",
+      "explanation_text": "【解析】因為$S_{8}=a_{1}+a_{2}+⋯+a_{8}=\\frac{3(1-(\\frac{1}{2})^{8})}{1-\\frac{1}{2}}=6(1-(\\frac{1}{2})^{8})=6-\\frac{6}{2^{8}}$， 所以$5<S_8<6$。故正確的選項為(3)。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 29,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0030",
+      "title": "隨堂練習：已知一等比級數的公比為，第8項為，則此等比級數前8項",
+      "question_text": "已知一等比級數的公比為$\\frac{1}{2}$，第8項為$\\frac{2}{3}$，則此等比級數前8項之和為$(1)85$$(2)95$$(3)170$$(4)180$$(5)190$。",
+      "answer_text": "(3)",
+      "explanation_text": "【99中山女高期中考】 【解析】$a_{8}=a_{1}(\\frac{1}{2})^{7}=\\frac{2}{3}$，$a_{1}=\\frac{2}{3} \\times 2^{7}=\\frac{256}{3} S_{8}=\\frac{\\frac{256}{3}(1-(\\frac{1}{2})^{8})}{1-\\frac{1}{2}}=\\frac{\\frac{256}{3}(1-\\frac{1}{256})}{\\frac{1}{2}}=\\frac{\\frac{255}{3}}{\\frac{1}{2}}=\\frac{85}{\\frac{1}{2}}=170$【另解】視首項為$\\frac{2}{3}$，公比為2 ∴$S_{8}=\\frac{\\frac{2}{3}(1-2^{8})}{1-2}=170$故選(3)。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 30,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0031",
+      "title": "範例15：若首項為9，公比為3的等比級數其前項和為3276，求",
+      "question_text": "若首項為9，公比為3的等比級數其前$n$項和為3276，求$n$之值。",
+      "answer_text": "$6$",
+      "explanation_text": "【解析】由題意知$a_1=9$，$r=3$，則$S_n=\\frac{9 \\times (3^{n}-1]}{3-1}=3276$⇒$9 \\times (3^n-1)=6552$⇒$3^n-1=728$⇒$3^n=729$⇒$n=6$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 31,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0032",
+      "title": "隨堂練習：一等比數列的首項為7，末項為448，總和為889，求",
+      "question_text": "一等比數列的首項為7，末項為448，總和為889，求此數列的項數。",
+      "answer_text": "$7$",
+      "explanation_text": "【解析】設此等比數列的公比為$r$，共有$n$項。 由題意可列得，推得。 解得$r=2$，代回$r^n ^-1=64$，解得$n=7$。 [圖:program-db/assets/question-media/s2-1-2/image4.png]",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-arithmetic-geometric-series",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 32,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0033",
+      "title": "範例16：有一等比數列數列，已知，則",
+      "question_text": "有一等比數列$\\langle a_n \\rangle$，已知$S_n=16$，$S_2n=20$，則$S_3n=\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_$。",
+      "answer_text": "$21$",
+      "explanation_text": "【解析】∵$S_n=a+ar+ar^2+…+ar^n ^-1=16 S_2n-S_n=ar^n+ar^n ^+1+ar^n ^+2+…+ar^2n-1=r^n(a+ar+ar^2+…+ar^n ^-1)=16r^n S_3n-S_2n=ar^2n+ar^2n+1+ar^2n+2+…+ar^3n-1=r^n$．$r^n (a+ar+ar^2+…+ar^n ^-1)=16$．$(r^n)^2$∴$S_n,S_2n-S_n,S_3n-S_2n$成等比，公比為$r^n$，即16，4，$S_3n-20$成等比 ∴$S_3n=21$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-weighted-sum-trick-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 33,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0034",
+      "title": "範例17：設是一複數等比數列，且，若複數等比數列的前6項總和為",
+      "question_text": "設$<z_n>$是一複數等比數列，$z_1=1-4i$且$z_2=5-3i$，若複數等比數列$<z_n>$的前6項總和為$a+bi$，$a$，$b ∈ R$，則$a+b$之值為。",
+      "answer_text": "$29$",
+      "explanation_text": "【解析】公比$r=\\frac{z_{2}}{z_{1}}=\\frac{5-3i}{1-4i}=1+I$，∴$S_6=\\frac{(1-4i)[(1+i)^{6}-1]}{(1+i)-1}=\\frac{(1-4i)\\{[(1+i)^{2}]^{3}-1\\}}{i}=\\frac{(1-4i)[(2i)^{3}-1]}{i}=\\frac{(1-4i)(-8i-1)}{i}=\\frac{-33-4i}{i}=-4+33i$所以$a+b=(-4)+33=29$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-weighted-sum-trick-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 34,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0035",
+      "title": "範例18：設z為複數，若z的虛部是1，的實部是，則______",
+      "question_text": "(1) 設$z$為複數，若$z$的虛部是$1$，$\\frac{1}{z}$的實部是$\\frac{1}{2}$，則$z=$______。 (2) 承(1)，則等比級數$1+z+z^2+\\dots+z^{11}$之和為______。",
+      "answer_text": "$(1)1+i$；$(2)65i$",
+      "explanation_text": "【解析】(1)設$z=a+i$（$a ∈ R$），$\\frac{1}{z}=\\frac{1}{a+i}=\\frac{a-i}{a^{2}+1}=(\\frac{a}{a^{2}+1})-(\\frac{1}{a^{2}+1})i$而$\\frac{a}{a^{2}+1}=\\frac{1}{2}$⇒$a^2-2a+1=0$⇒$(a-1)^2=0$⇒$a=1$；故$z=1+i$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-weighted-sum-trick-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 35,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0036",
+      "title": "範例19：之和",
+      "question_text": "$1+\\frac{3}{2}+\\frac{5}{2^{2}}+\\frac{7}{2^{3}}+…+\\frac{2n-1}{2^{n-1}}$之和。",
+      "answer_text": "$6-\\frac{2n+3}{2^{n-1}}$",
+      "explanation_text": "【解析】令$S=1+\\frac{3}{2}+\\frac{5}{2^{2}}+\\frac{7}{2^{3}}+…+\\frac{2n-1}{2^{n-1}}$① 則得$\\frac{1}{2}S=\\frac{1}{2}+\\frac{3}{2^{2}}+\\frac{5}{2^{3}}+…+\\frac{2n-3}{2^{n-1}}+\\frac{2n-1}{2^{n}}$② 由① − ②，可得$\\frac{1}{2}S=1+\\frac{2}{2}+\\frac{2}{2^{2}}+\\frac{2}{2^{3}}+…+\\frac{2}{2^{n-1}}-\\frac{2n-1}{2^{n}}=1+(1+\\frac{1}{2}+\\frac{1}{2^{2}}+…+\\frac{1}{2^{n-2}})-\\frac{2n-1}{2^{n}}=1+\\frac{1-(\\frac{1}{2})^{n-1}}{1-\\frac{1}{2}}-\\frac{2n-1}{2^{n}}=1+2(1-\\frac{1}{2^{n-1}})-\\frac{2n-1}{2^{n}}=3-\\frac{1}{2^{n-2}}-\\frac{2n-1}{2^{n}}$∴$S=6-\\frac{2}{2^{n-2}}-\\frac{2n-1}{2^{n-1}}=6-\\frac{2n+3}{2^{n-1}}$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-weighted-sum-trick-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 36,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0037",
+      "title": "隨堂練習：求．之和",
+      "question_text": "求$1-2x+3x^2-4x^3+…+(-1)^n-1$．$nx^n ^-1$之和$=$？（$x$≠ − 1）",
+      "answer_text": "$\\frac{1-(-x)^n}{(1+x)^2}+\\frac{(-1)^{n-1}nx^n}{1+x}$",
+      "explanation_text": "【解析】令$S=1-2x+3x^2-4x^3+…+(-1)^n-1$．$nx^n ^-1$①$xS=x-2x^2+3x^3-4x^4-…+(-1)^n-1$．$nx^n$② ① + ②得$(1+x)S=1-x+x^2-x^3+x^4-…+(-1)^n-1 x^n ^-1+(-1)^n-1nx^n$⇒$(1+x)S=\\frac{1 ． [ 1-(-x)^{n}]}{1-(-x)}+(-1)^n-1$．$n$．$x^n$⇒$S=\\frac{1-(-x)^{n}}{(1+x)^{2}}+\\frac{(-1)^{n-1} ．nx^{n}}{1+x}$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-weighted-sum-trick-s212",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 37,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0038",
+      "title": "隨堂練習：，求之和為______",
+      "question_text": "$i=\\sqrt{-1}$，求$1+2i+3i^2+4i^3+\\dots+100i^{99}$之和為______。",
+      "answer_text": "$-50(1+i)$",
+      "explanation_text": "【解析】設$S=1+2i+3i^2+4i^3+⋯+100i^{99}$。 因為$iS=i+2i^2+3i^3+⋯+100i^{100}$， 所以$(1-i)S=(1+i+i^2+⋯+i^{99})-100$。 又$i^4=1$，且$100$為$4$的倍數，因此$1+i+i^2+⋯+i^{99}=0$。 故$(1-i)S=-100$，$S=\\frac{-100}{1-i}=\\frac{-100(1+i)}{2}=-50(1+i)$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-weighted-sum-trick-s212",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 38,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0039",
+      "title": "範例20：一個球從 81 公尺自由落下，每次著地後又跳回原高度",
+      "question_text": "一個球從 81 公尺自由落下，每次著地後又跳回原高度的$\\frac{1}{3}$再落下。當它第五次著地時，共經過$______$公尺。",
+      "answer_text": "161公尺",
+      "explanation_text": "【解析】【基隆女中段考題】 球最先落下經過81公尺，因每次反彈的高度為前高度的$\\frac{1}{3}$第一次著地所經過的距離為81公尺 第二次著地所經過的距離為$2 \\times 81 \\times\\frac{1}{3}$公尺 第三次著地所經過的距離為$2 \\times 81 \\times (\\frac{1}{3})^2$公尺 第四次著地所經過的距離為$2 \\times 81 \\times (\\frac{1}{3})^3$公尺 第五次著地所經過的距離為$2 \\times 81 \\times (\\frac{1}{3})^4$公尺 所求距離和$=81+2 \\times 81 \\times\\frac{1}{3}+2 \\times 81 \\times (\\frac{1}{3})^2+2 \\times 81 \\times (\\frac{1}{3})^3+2 \\times 81 \\times (\\frac{1}{3})^4=81+162 [\\frac{1}{3}+(\\frac{1}{3})^2+(\\frac{1}{3})^3+(\\frac{1}{3})^4]=81+162 \\times\\frac{40}{81}=81+80=161$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 39,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0040",
+      "title": "範例21：如圖中各線段均為水平或鉛直線段，且，則點的坐標為",
+      "question_text": "如圖中各線段均為水平或鉛直線段，${A_{0}A_{1}}=1$，且${A_{n}A_{n+1}}=\\frac{2}{3} {A_{n-1}A_{n}}$，則點$A_6$的坐標為$____________$。 [圖:program-db/assets/question-media/s2-1-2/image6.png]",
+      "answer_text": "$\\left(\\frac{61}{81},\\frac{122}{243}\\right)$",
+      "explanation_text": "【解析】${A_{1}A_{2}}=\\frac{2}{3}{A_{0}A_{1}}=\\frac{2}{3},{A_{2}A_{3}}=\\frac{2}{3}{A_{1}A_{2}}=(\\frac{2}{3})^{2},⋯, 令A_{6}(x_{6},y_{6}), 則 x_{6}=1-(\\frac{2}{3})^{2}+(\\frac{2}{3})^{4}=\\frac{61}{81}$，$y_{6}=\\frac{2}{3}-(\\frac{2}{3})^{3}+(\\frac{2}{3})^{5}=\\frac{122}{243}$， 即$A_6$的坐標為$(\\frac{61}{81},\\frac{122}{243})$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 40,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0041",
+      "title": "隨堂練習：圖中，與x軸夾45°角，又，且，已知",
+      "question_text": "圖中$O (0 , 0)$，$A_1(1 , 0)$，${A_{1}A_{2}}$與$x$軸夾45°角，又${A_{1}A_{2}}//{A_{3}A_{4}}//{A_{5}A_{6}}//⋯$，且${OA_{1}}//{A_{2}A_{3}}//{A_{4}A_{5}}//⋯$，已知：${OA_{1}}$，${A_{1}A_{2}}$，${A_{2}A_{3}}$，…各線段長度逐段遞減為一半，則點$A_5$的坐標為$\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_$。 [圖:program-db/assets/question-media/s2-1-2/image7.png]",
+      "answer_text": "$\\left(\\frac{13+3\\sqrt{2}}{16},\\frac{3\\sqrt{2}}{16}\\right)$",
+      "explanation_text": "【解析】令$A_5(x_5 , y_5)$，則$x_{5}=1+\\frac{1}{2} \\times \\frac{\\sqrt{2}}{2}-(\\frac{1}{2})^{2}-(\\frac{1}{2})^{3} \\times \\frac{\\sqrt{2}}{2}+(\\frac{1}{2})^{4}=\\frac{13+3\\sqrt{2}}{16}$，$y_{5}=\\frac{1}{2} \\times \\frac{\\sqrt{2}}{2}-(\\frac{1}{2})^{3} \\times \\frac{\\sqrt{2}}{2}=\\frac{3\\sqrt{2}}{16}$， 則$A_5$的坐標為$(\\frac{13+3\\sqrt{2}}{16},\\frac{3\\sqrt{2}}{16})$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 41,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0042",
+      "title": "隨堂練習：一隻螞蟻在坐標平面上由原點出發，如圖所示",
+      "question_text": "一隻螞蟻在坐標平面上由原點出發，如圖所示。牠第一次向右移動$1$單位，到達點$P_{1}(1,0)$，第二次向上移動$\\frac{1}{2}$單位，到達點$P_{2}(1,\\frac{1}{2})$，而後依照先向右再向上的方式移動，而且每次移動的距離是前一次的一半，如此依序移動到點$P_{3},P_{4},P_{5},\\dots$。設正整數$n$，$P_{n}$坐標$(x_{n},y_{n})$，求點$P_{6}$的坐標為______。 [圖:program-db/assets/question-media/s2-1-2/image8.png]",
+      "answer_text": "$\\left(\\frac{21}{16},\\frac{21}{32}\\right)$",
+      "explanation_text": "【解析】$P_1(1 , 0)$，$P_2(1 ,\\frac{1}{2})$，$P_3(1+(\\frac{1}{2})^{2},\\frac{1}{2})=(1+\\frac{1}{4},\\frac{1}{2})$，$P_4(1+\\frac{1}{4},\\frac{1}{2}+(\\frac{1}{2})^{3})$，$P_5(1+(\\frac{1}{2})^{2}+(\\frac{1}{2})^{4},\\frac{1}{2}+(\\frac{1}{2})^{3})$，$P_6(1+(\\frac{1}{2})^{2}+(\\frac{1}{2})^{4},\\frac{1}{2}+(\\frac{1}{2})^{3}+(\\frac{1}{2})^{5})=(1+\\frac{1}{4}+\\frac{1}{16},\\frac{1}{2}+\\frac{1}{8}+\\frac{1}{32})=(\\frac{21}{16},\\frac{21}{32})$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 42,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0043",
+      "title": "範例22：將邊長為4的正三角形圖形，連接各邊中點得一正三角形圖",
+      "question_text": "將邊長為4的正三角形$T_1$，連接各邊中點得一正三角形$T_2$，再連接$T_2$的各邊中點，得一正三角形$T_3$， 重複此步驟得正三角形$T_4,T_5,T_6$，求所有正三角形的(1)周長總和 (2)面積總和。",
+      "answer_text": "$(1)\\frac{189}{8}$；$(2)\\frac{1365\\sqrt{3}}{256}$",
+      "explanation_text": "【解析】∵ 正三角形$T_{1}$，邊長4 由三角形兩邊中點連線性質知$T_{2}$的邊長為$4 \\times \\frac{1}{2}=2$同理$T_{3}$邊長為$2 \\times \\frac{1}{2}=1 ⇒$可知其邊長成等比且公比$\\frac{1}{2} ⇒$周長公比$\\frac{1}{2} ⇒$面積公比$\\frac{1}{4} (1)T_{1}$周長12，公比$\\frac{1}{2}$∴ 周長和$=12+6+3+\\frac{3}{2}+\\frac{3}{4}+\\frac{3}{8}=\\frac{189}{8} (2)T_{1}$面積$\\frac{\\sqrt{3}}{4} \\times 4^{2}=4\\sqrt{3}$，公比$\\frac{1}{4}$∴ 面積和$=4\\sqrt{3}+\\sqrt{3}+\\frac{\\sqrt{3}}{4}+\\frac{\\sqrt{3}}{16}+\\frac{\\sqrt{3}}{64}+\\frac{\\sqrt{3}}{256}=\\frac{4\\sqrt{3}[ 1-(\\frac{1}{4})^{6}]}{1-\\frac{1}{4}}=\\frac{1365\\sqrt{3}}{256}$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 43,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0044",
+      "title": "範例23：一正方形的邊長為 10 公分，以各邊中點為頂點依序作",
+      "question_text": "一正方形的邊長為 10 公分，以各邊中點為頂點依序作出圖中的 6 個正方形，求這 6 個正方形周長的總和。 [圖:program-db/assets/question-media/s2-1-2/image50.png]",
+      "answer_text": "$70+35\\sqrt{2}$",
+      "explanation_text": "【解析】由畢氏定理可知，以正方形各邊中點為頂點所形成的新正方形，其邊長為原來的$\\frac{\\sqrt{2}}{2}$倍，因此周長也乘上同樣的比值。 六個正方形周長形成首項 40、公比$\\frac{\\sqrt{2}}{2}$的等比級數。 故周長總和為$40\\cdot\\frac{1-(\\frac{\\sqrt{2}}{2})^6}{1-\\frac{\\sqrt{2}}{2}}=40\\cdot\\frac{1-\\frac{1}{8}}{1-\\frac{\\sqrt{2}}{2}}=\\frac{70}{2-\\sqrt{2}}=35(2+\\sqrt{2})=70+35\\sqrt{2}$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 44,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0045",
+      "title": "範例24：將邊長為4的正方形，作其內切圓圓，然後作圓的內接正方",
+      "question_text": "將邊長為4的正方形，作其內切圓$C_1$，然後作$C_1$的內接正方形，再作其內切圓$C_2$繼續此步驟共得 圓$C_1$，$C_2$，…，$C_6$，求這些圓的(1)周長和 (2)面積和。",
+      "answer_text": "$(1)\\frac{14+7\\sqrt{2}}{2}\\pi$；$(2)\\frac{63}{8}\\pi$",
+      "explanation_text": "[圖:program-db/assets/question-media/s2-1-2/image51.png] 【解析】最大圓$C_{1}$的半徑$=$最大正方形邊長$\\times \\frac{1}{2}=2$又圓$C_{1}$的內接正方形的對角線$=$圓$C_{1}$的直徑4$⇒$第二個正方形的邊長為$\\frac{4}{\\sqrt{2}}=2\\sqrt{2} ⇒$正方形邊長公比$\\frac{2\\sqrt{2}}{4}=\\frac{\\sqrt{2}}{2} ⇒$內切圓半徑公比亦為$\\frac{\\sqrt{2}}{2}$（∵圓是附屬在正方形上） (1)圓$C_{1}$周長$2 \\times \\pi \\times 2=4\\pi$，周長公比$=$半徑公比$=\\frac{\\sqrt{2}}{2}$∴ 周長和$=\\frac{4\\pi[ 1-(\\frac{\\sqrt{2}}{2})^{6}]}{1-\\frac{\\sqrt{2}}{2}}=\\frac{7\\pi}{2-\\sqrt{2}}=\\frac{14+7\\sqrt{2}}{2}\\pi (2)$圓$C_{1}$面積$=\\pi \\times 2^{2}=4\\pi$，面積公比$=($半徑公比$)2=(\\frac{\\sqrt{2}}{2})^{2}=\\frac{1}{2}$∴ 面積和$=\\frac{4\\pi[ 1-(\\frac{1}{2})^{6}]}{1-\\frac{1}{2}}=\\frac{63}{8}\\pi$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 45,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0046",
+      "title": "範例25：求前6個正方形的面積總和",
+      "question_text": "求前6個正方形的面積總和。",
+      "answer_text": "$1365$",
+      "explanation_text": "[圖:program-db/assets/question-media/s2-1-2/image53.png] 【解析】如圖所示， ∵△$ABC$為等腰直角三角形，∴$T_1$的邊長${BC}={AB}=1$， 又△$ADE$亦為等腰直角三角形，∴$T_2$的邊長${DE}={AB}+{BD}=2$⇒ 正方形$T_2$的邊長是$T_1$的2倍，同理可得$T_3$的邊長是$T_2$的2倍， 即正方形$T_1$，$T_2$，$T_3$，…的邊長為1，2，4，…的等比數列。 又∵面積比等於邊長的平方比， ∴正方形$T_1$，$T_2$，$T_3$，…的面積為1，4，16，…的等比數列， 故前6個正方形的面積總和為$S_{6}=\\frac{1(1-4^{6})}{1-4}=\\frac{-4095}{-3}=1365$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 46,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0047",
+      "title": "隨堂練習：且圓與圓外切，圓與圓外切，依此類推繼續作圓",
+      "question_text": "且圓$S_1$與圓$S_2$外切，圓$S_2$與圓$S_3$外切，依此類推繼續作圓。 已知∠$AOB=60$°，且圓$S_1$的面積為$64π$平方公分。 (1)求圓$S_2$的面積。 (2)試證$S_1$，$S_2$，$S_3$，…之面積所成數列是一等比數列。 (3)求前6個圓$S_1$，$S_2$，…，$S_6$的面積和。",
+      "answer_text": "$(1)\\frac{64\\pi}{9}$；(2)為公比$\\frac{1}{9}$的等比數列；$(3)72\\pi\\left(1-\\frac{1}{9^6}\\right)$",
+      "explanation_text": "【解析】已知圓$S_1$面積為$64\\pi$，所以半徑$r_1=8$。 (1) 設圓$S_2$半徑為$r_2$。由圖中的$30^\\circ$幾何關係可得$3r_2=r_1$，因此$r_2=\\frac{8}{3}$， 故$S_2$面積為$\\pi(\\frac{8}{3})^2=\\frac{64\\pi}{9}$。 (2) 同理可得$r_1,r_2,r_3,\\ldots$為公比$\\frac{1}{3}$的等比數列，所以面積$S_1,S_2,S_3,\\ldots$形成公比$\\frac{1}{9}$的等比數列。 (3) 前 6 個圓的面積和為$64\\pi\\cdot\\frac{1-(\\frac{1}{9})^6}{1-\\frac{1}{9}}=72\\pi(1-\\frac{1}{9^6})$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 47,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0048",
+      "title": "隨堂練習：圓圓內部有四個等圓圓彼此外切，且均與圓圓內切，圓圓內",
+      "question_text": "圓$C_{1}$內部有四個等圓$C_{2}$彼此外切，且均與圓$C_{1}$內切，圓$C_{2}$內部有四個等圓$C_{3}$彼此外切，且均與圓$C_{2}$內切，依此類推可作出$C_{4},C_{5},C_{6},\\dots$，若圓$C_{1}$之半徑為$2$，且圓$C_{k}$之面積為$a_{k}$，則 (1) $C_{2}$的半徑為$2(\\sqrt{2}-1)$ (2) $a_{2}=2a_{1}$ (3) $a_{2}=4a_{1}$ (4) $\\sum_{k=1}^{\\infty} a_{k}=(\\sqrt{2}+1)\\pi$ (5) $\\sum_{k=1}^{\\infty} a_{k}=2(\\sqrt{2}+1)\\pi$。 [圖:program-db/assets/question-media/s2-1-2/image17.png] [圖:program-db/assets/question-media/s2-1-2/image18.png] [圖:program-db/assets/question-media/s2-1-2/image19.png]",
+      "answer_text": "$(1)(5)$",
+      "explanation_text": "【解析】圖中${EF}={EA}+{AC}+{CF} [圖:program-db/assets/question-media/s2-1-2/image20.png] ⇒ 4=\\sqrt{2}(2r_{2})+2r_{2}$，得$r_{2}=2(\\sqrt{2}-1)$，$\\frac{a_{2}}{a_{1}}=(\\frac{r_{2}}{r_{1}})^{2}=[\\frac{2(\\sqrt{2}-1)}{2}]^{2}=3-2\\sqrt{2}$， 故$\\sum_{k=1}^{\\infty}{a_{k}=\\frac{2^{2}\\pi}{1-(3-2\\sqrt{2})}}=2(\\sqrt{2}+1)\\pi$。 故選$(1)(5)$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 48,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0049",
+      "title": "範例26：阿財每年年初存入銀行 10000 元，年利率 2%",
+      "question_text": "阿財每年年初存入銀行 10000 元，年利率 2%，每年計息一次。 (1) 若依單利計息，則第 10 年年底的本利和多少？ (2) 若依複利計息，則第 10 年年底的本利和多少？（近似值：$1.02^{10} \\approx 1.22$）",
+      "answer_text": "(1)$111000$；(2)$112200$",
+      "explanation_text": "【解析】$(1) 10000 \\times 10+(10000 \\times 2$％$\\times 10+10000 \\times 2$％$\\times 9+…+10000 \\times 2$％$\\times 1)=100000+10000 \\times\\frac{2}{100}\\times (10+9+8+…+1)=100000+200 \\times 55=111000 (2) 10000(1+2$％$)^10+10000(1+2$％$)^9+…+10000(1+2$％$)=\\frac{10000(1+2％) \\times (1.02^{10}-1)}{1.02-1}=\\frac{10200 \\times (1.22-1)}{0.02}=\\frac{10200 \\times 0.22}{0.02}=112200$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "易",
+      "question_category": "備用",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 49,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0050",
+      "title": "範例27：小華年初在銀行借錢185640元，年利率10%，採複",
+      "question_text": "小華年初在銀行借錢185640元，年利率10%，採複利計息，分四年還清，每年年底還一次，每次所還款項相等，則小華每年應還多少元﹖",
+      "answer_text": "58564元",
+      "explanation_text": "【97台中一中期中考】 【解析】設每年年底還款$x$元。 到第 4 年年底時，原借款累積為$185640(1.1)^4$；四次還款累積到同一時點則為$x[(1.1)^3+(1.1)^2+1.1+1]$。 所以$185640(1.1)^4=x\\cdot\\frac{(1.1)^4-1}{1.1-1}$。 代入$(1.1)^4=1.4641$，得$185640\\times1.4641=x\\times4.641$， 故$x=58564$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "易",
+      "question_category": "備用",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 50,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0051",
+      "title": "隨堂練習：某家銀行的年利率為2%，於每年年底採複利計息一次",
+      "question_text": "某家銀行的年利率為2%，於每年年底採複利計息一次。小明在第一年年初存入10000元，之後每隔兩年（即第三年，第五年，…，以此類推）的年初皆存入10000元，直到第九年年底結算後把所有的錢領出來，根據下表，小明將會領出$____________$元。（元以下四捨五入） [圖:program-db/assets/question-media/s2-1-2/image21.png]",
+      "answer_text": "55290元",
+      "explanation_text": "【解析】$10000(1+2$%$)^9+10000(1+2$%$)^7+10000(1+2$%$)^5+…+10000(1+2$%$)^1=10000(1.02+1.02^3+1.02^5+…+1.02^9)=10000 \\times\\frac{1.02 \\times (1.02^{10}-1)}{1.02^{2}-1}=10000 \\times\\frac{(1.24337-1.02)}{0.0404}=55289.6$≒55290。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "中",
+      "question_category": "備用",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 51,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0052",
+      "title": "隨堂練習：小華年初在銀行借錢185640元，年利率10%，採複",
+      "question_text": "小華年初在銀行借錢185640元，年利率10%，採複利計息，分四年還清，每年年底還一次，每次所還款項相等，則小華每年應還多少元﹖",
+      "answer_text": "58564元",
+      "explanation_text": "【解析】設每年還$x$元，$185640 \\times (1+10$%$)^4=x (1+10$%$)^3+x (1+10$%$)^2+x (1+10$%$)^1+x$⇒$185640 \\times (1.1)^4=x$⋅$\\frac{1(1.1^{4}-1)}{1.1-1} ⇒185640 \\times (1.1)^4=x$⋅$\\frac{1.1^{4}-1}{0.1}$⇒$185640 \\times 1.4641=x$⋅ 4.641 ⇒$x=58564$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-geometric-convergence-s212",
+      "difficulty": "中",
+      "question_category": "備用",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題1：等差級數與等比級數",
+      "source_order": 52,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0053",
+      "title": "範例1：設數列數列的首項且滿足遞迴關係式，為正整數，試求",
+      "question_text": "設數列$\\langle a_n \\rangle$的首項$a_1=1$且滿足遞迴關係式$a_{n+1}=a_n+n$，$n$為正整數，試求$(1) a_2$，$a_3$，$a_4$，$a_5$。 (2)一般項$a_n$（以$n$表示）。",
+      "answer_text": "$(1)a_2=2,\\ a_3=4,\\ a_4=7,\\ a_5=11$；$(2)a_n=\\frac{n^2-n+2}{2}$",
+      "explanation_text": "【龍騰自命題】 【解析】已知$a_1=1$，且$a_{n+1}=a_n+n$。 (1) 依序可得$a_2=1+1=2$，$a_3=2+2=4$，$a_4=4+3=7$，$a_5=7+4=11$。 (2) 將遞迴式逐步相加：$a_2-a_1=1 a_3-a_2=2 ⋯ a_n-a_{n-1}=n-1$相加得$a_n-a_1=1+2+⋯+(n-1)=\\frac{(n-1)n}{2}$。 因為$a_1=1$，所以$a_n=1+\\frac{(n-1)n}{2}=\\frac{n^2-n+2}{2}$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-partial-sum-difference-method-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 53,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0054",
+      "title": "範例2：數列數列滿足且，為正整數，試求",
+      "question_text": "數列$\\langle a_n \\rangle$滿足$a_1=1$且$a_{n+1}=2a_n+1$，$n$為正整數，試求$(1) a_2$，$a_3$，$a_4$，$a_5$。 (2)推測$a_n$之值（以$n$表示）。",
+      "answer_text": "$(1)a_2=3,\\ a_3=7,\\ a_4=15,\\ a_5=31$；$(2)a_n=2^n-1$",
+      "explanation_text": "【龍騰自命題】 【解析】(1) 由$a_1=1$且$a_{n+1}=2a_n+1$，可得$a_2=3$，$a_3=7$，$a_4=15$，$a_5=31$。 (2) 觀察可猜測$a_n=2^n-1$。 驗算：若$a_n=2^n-1$，則$a_{n+1}=2a_n+1=2(2^n-1)+1=2^{n+1}-1$， 與猜測一致，因此$a_n=2^n-1$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-partial-sum-difference-method-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 54,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0055",
+      "title": "範例3：設數列數列的首項且滿足遞迴關係式，為正整數， 試求",
+      "question_text": "設數列$\\langle a_n \\rangle$的首項$a_1=1$且滿足遞迴關係式$a_{n+1}=a_n+(3n+1)$，$n$為正整數， 試求$(1) a_2$，$a_3$，$a_4$，$a_5$。(2)一般項$a_n$（以$n$表示）。$(3) a_30$。",
+      "answer_text": "$(1)a_2=5,\\ a_3=12,\\ a_4=22,\\ a_5=35$；$(2)a_n=\\frac{3n^2-n}{2}$；$(3)a_{30}=1335$",
+      "explanation_text": "【解析】(1)∵$a_{n+1}=a_n+(3n+1)$且$a_1=1$， ∴$a_2=a_1+(3 \\times 1+1)=1+4=5$，$a_3=a_2+(3 \\times 2+1)=5+7=12$，$a_4=a_3+(3 \\times 3+1)=12+10=22$，$a_5=a_4+(3 \\times 4+1)=22+13=35$。 (2)∵$a_{n+1}=a_n+(3n+1)$， ∴${\\overset{\\underrightarrow{}}{a}}_{2}=a_{1}+(3 \\times 1+1) {\\overset{\\underrightarrow{}}{a}}_{3}={\\overset{\\underrightarrow{}}{a}}_{2}+(3 \\times 2+1) [圖:program-db/assets/question-media/s2-1-2/image22.png] {\\overset{\\underrightarrow{}}{a}}_{n-1}={\\overset{\\underrightarrow{}}{a}}_{n-2}+[ 3 \\times (n-2)+1]+) a_{n}={\\overset{\\underrightarrow{}}{a}}_{n-1}+[ 3 \\times (n-1)+1] { a_{n}=a_{1}+3 \\times [ 1+2+3+⋯+(n-1)]+(n-1)}=1+3 \\times \\frac{(n-1) \\cdot n}{2}+(n-1)=\\frac{3n^{2}-n}{2}$。$(3)a_{30}=\\frac{3 \\times 30^{2}-30}{2}=1335$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-partial-sum-difference-method-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 55,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0056",
+      "title": "範例4：一數列數列的遞迴關係式為，為自然數，則",
+      "question_text": "一數列$\\langle a_n \\rangle$的遞迴關係式為$a_1=1$，$a_{n+1}=a_n+(n+1)^2$，$n$為自然數，則 (1)此數列的第三項$a_3$為何？(2)此數列的一般項為何？（以$n$的式子表示）。",
+      "answer_text": "(1)$14$；$(2)a_n=\\frac{n(n+1)(2n+1)}{6}$",
+      "explanation_text": "【屏東女中期中考】 【解析】$a_1=1$，$a_{n+1}=a_n+(n+1)^2$，$(1) a_1=1$，$a_2=1+2^2=5$，$a_3=5+3^2=14$。$(2) a_{n+1}-a_n=(n+1)^2 {\\overset{\\underrightarrow{}}{a}}_{2}-a_{1}=2^{2} {\\overset{\\underrightarrow{}}{a}}_{3}-{\\overset{\\underrightarrow{}}{a}}_{2}=3^{2} [圖:program-db/assets/question-media/s2-1-2/image22.png]+)a_{n}-{\\overset{\\underrightarrow{}}{a}}_{n-1}=n^{2} { a_{n}-a_{1}=2^{2}+3^{2}+⋯+n^{2}}$， ∴$a_{n}=1+2^{2}+3^{2}+⋯+n^{2}=\\frac{n(n+1)(2n+1)}{6}$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-partial-sum-difference-method-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 56,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0057",
+      "title": "隨堂練習：數列數列中，且，為正整數，試求第n項",
+      "question_text": "數列$\\langle a_n \\rangle$中，$a_1=1$且$2a_{n+1}=a_n+2$，$n$為正整數，試求$a_n$。",
+      "answer_text": "$a_n=2-\\left(\\frac{1}{2}\\right)^{n-1}$",
+      "explanation_text": "【宜蘭高中期中考】 【解析】$a_1=1$，$2a_{n+1}=a_n+2$⇒$a_{n+1}=\\frac{1}{2}a_{n}+1$， 設$(a_{n+1}-\\alpha)=\\frac{1}{2}(a_{n}-\\alpha) ⇒ \\alpha=2$∴$a_{2}-2=\\frac{1}{2}(a_{1}-2) a_{3}-2=\\frac{1}{2}(a_{2}-2) [圖:program-db/assets/question-media/s2-1-2/image22.png] \\times)a_{n}-2=\\frac{1}{2}(a_{n-1}-2) { a_{n}-2=(\\frac{1}{2})^{n-1} \\times (-1)}$∴$a_{n}=2-(\\frac{1}{2})^{n-1}$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-partial-sum-difference-method-s212",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 57,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0058",
+      "title": "隨堂練習：已知數列數列定義為（為正整數），求",
+      "question_text": "已知數列$\\langle a_{n} \\rangle$定義為$a_{1}=3,\\ a_{n+1}=a_{n}+2n$（$n$為正整數），求$a_{100}$。",
+      "answer_text": "$9903$",
+      "explanation_text": "【龍騰自命題】 【解析】由遞迴式$a_{n+1}-a_n=2n$。 將$n=1$到$99$的式子相加，可得$a_{100}-a_1=2(1+2+⋯+99)$。 因為$a_1=3$，所以$a_{100}=3+2\\cdot\\frac{99\\cdot100}{2}=3+9900=9903$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-partial-sum-difference-method-s212",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 58,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0059",
+      "title": "隨堂練習：已知數列數列，若則",
+      "question_text": "已知數列$\\langle a_n \\rangle$，若$\\sum_{k=1}^{n} a_k=n^2+3n+1$則$a_n=______$。",
+      "answer_text": "當$n=1$時，$a_n=5$；當$n\\ge2$時，$a_n=2n+2$",
+      "explanation_text": "【解析】由題意知$S_n=\\sum_{k=1}^n a_k=n^2+3n+1$。 先得$a_1=S_1=5$。 當$n\\ge 2$時，$a_n=S_n-S_{n-1}=(n^2+3n+1)-[(n-1)^2+3(n-1)+1]=2n+2$。 因此$a_n=\\begin{cases} 5, & n=1 \\ 2n+2, & n\\ge 2 \\end{cases}$",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-partial-sum-difference-method-s212",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 59,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0060",
+      "title": "範例5：將正整數按下列規律排列，每一列比前一列多一個數，如下",
+      "question_text": "將正整數按下列規律排列，每一列比前一列多一個數，如下表所示﹕ [圖:program-db/assets/question-media/s2-1-2/image26.png] 試問第100列第3個數是多少﹖",
+      "answer_text": "$4953$",
+      "explanation_text": "【解析】因為每一列的數字依序為1個，2個，3個，…，所以第100列第3個數為$1+2+3+⋯+99+3=\\frac{(1+99) \\times 99}{2}+3=4953$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-sigma-modeling-workflow-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 60,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0061",
+      "title": "範例6：若有一個規則的數列如下",
+      "question_text": "若有一個規則的數列如下﹕$\\frac{1}{1}$，$\\frac{1}{2}$，$\\frac{2}{1}$，$\\frac{1}{3}$，$\\frac{2}{2}$，$\\frac{3}{1}$，$\\frac{1}{4}$，$\\frac{2}{3}$，$\\frac{3}{2}$，$\\frac{4}{1}$，$\\frac{1}{5}$，…， 則(1)此數列的第100項為何﹖(2)又$\\frac{17}{20}$應該是第幾項呢﹖",
+      "answer_text": "$(1)\\frac{9}{6}$；(2)第$647$項",
+      "explanation_text": "【解析】雖然此數列不是等差數列，但是其規律與等差數列有關。我們可以將此數列分成$\\frac{1}{1}$，$\\frac{1}{2}$，$\\frac{2}{1}$，$\\frac{1}{3}$，$\\frac{2}{2}$，$\\frac{3}{1}$，$\\frac{1}{4}$，$\\frac{2}{3}$，$\\frac{3}{2}$，$\\frac{4}{1}$， … 等區塊，每一區塊的項數為1，2，3，4，…。 (1)因為$1+2+3+…+13=91$，所以第100項所在的位置應在第14區塊， 且為第14區塊的第9項$\\frac{9}{6}$（不要約分）。 (2)因為$\\frac{17}{20}$滿足$17+20-1=36$，所以依規律可知$\\frac{17}{20}$在第36區塊。又前35區塊共有$1+2+3+…+35=630$項，因此$\\frac{17}{20}$為第$630+17=647$項。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-sigma-modeling-workflow-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 61,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0062",
+      "title": "隨堂練習：若有一個規則的數列如下",
+      "question_text": "若有一個規則的數列如下﹕$\\frac{1}{1}$，$\\frac{1}{3}$，$\\frac{2}{3}$，$\\frac{3}{3}$，$\\frac{1}{5}$，$\\frac{2}{5}$，$\\frac{3}{5}$，$\\frac{4}{5}$，$\\frac{5}{5}$，…， (1)求此數列的第80項。 (2)求$\\frac{6}{19}$是此數列的第幾項。",
+      "answer_text": "$(1)\\frac{16}{17}$；(2)第$87$項",
+      "explanation_text": "【解析】雖然此數列不是等差數列，但是其規律與等差數列有關。我們可以將此數列分成$\\frac{1}{1}$，$\\frac{1}{3}$，$\\frac{2}{3}$，$\\frac{3}{3}$，$\\frac{1}{5}$，$\\frac{2}{5}$，$\\frac{3}{5}$，$\\frac{4}{5}$，$\\frac{5}{5}$， … 等區塊，每一區塊的項數為1，3，5，…。 (1)因為$1+3+5+…+(2n-1)=n^2$，又$8^2=64$，所以第80項所在的位置應在第9區塊， 且為第9區塊的第16項$\\frac{16}{2 \\cdot 9-1}=\\frac{16}{17}$。 (2)因為$19=2$⋅10 − 1，所以依規律可知$\\frac{6}{19}$是第10區塊中第6個數。又前9個區塊中有$9^2=81$個數，因此$\\frac{6}{19}$是第$81+6=87$項。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-sigma-modeling-workflow-s212",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 62,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0063",
+      "title": "範例7：將所有第一象限的格子點（x，y坐標皆為正整數），依下",
+      "question_text": "將所有第一象限的格子點（$x$，$y$坐標皆為正整數），依下列規則排列﹕$($甲$)$數字和小的先排。$($乙$)$數字和相同時，$y$坐標較小的先排。得到如下的結果﹕$(1,1)$，$(2,1)$，$(1,2)$，$(3,1)$，$(2,2)$，$(1,3)$，$(4,1)$，$(3,2)$，…，求$(1)(11,20)$為第幾項﹖(2)第100項為何﹖ (3)若$m$，$n$為正整數，則$(m,n)$為第幾項﹖",
+      "answer_text": "(1)第$455$項；(2)第$100$項為$(6,9)$；$(3)\\frac{(m+n-2)(m+n-1)}{2}+n$",
+      "explanation_text": "【解析】以數對之數字和來分組，第$n$組之數字和為$n+1$，共有$n$項，$(1)(11,20)$之數字和為31，在第30組的第20項， 則$(1+2+⋯+29)+20=\\frac{29 \\times 30}{2}+20=435+20=455$。 (2)若$1+2+⋯+k=\\frac{k(k+1)}{2} \\le 100$，則$k≤13$，$100-\\frac{13 \\times 14}{2}=100-91=9 ⇒$第100項為第14組的第9項， 數字和$14+1=15$，$15-9=6$，故此項為$(6,9)$。$(3)(m,n)$之數字和為$(m+n)$，即在第$(m+n-1)$組的第$n$項， 則$1+2+…+(m+n-2)+n=\\frac{1}{2} (m+n-2)(m+n-1)+n$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-sigma-modeling-workflow-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 63,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0064",
+      "title": "範例8：在一直線上置有木樁100支，每支相隔5公尺",
+      "question_text": "在一直線上置有木樁100支，每支相隔5公尺。在第30支的地方有一人，想要木樁逐一搬運集 中該處，問至搬完，共應走多少公尺路？",
+      "answer_text": "29200公尺",
+      "explanation_text": "【解析】 [圖:program-db/assets/question-media/s2-1-2/image27.png] 如上圖所示：至搬完共應走$2(1 \\times 5+2 \\times 5+3 \\times 5+…+29 \\times 5)+2(1 \\times 5+2 \\times 5+…+70 \\times 5)=10 \\times (1+2+3+…+29)+10 \\times (1+2+3+…+70)=10 \\times\\frac{1}{2}\\times 29 \\times 30+10 \\times\\frac{1}{2}\\times 70 \\times 71=29200$（公尺）",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-common-summation-formulas",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 64,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0065",
+      "title": "範例9：將邊長為1公分之正立方體的小積木堆疊，方式如下圖所示",
+      "question_text": "將邊長為1公分之正立方體的小積木堆疊，方式如下圖所示﹕ [圖:program-db/assets/question-media/s2-1-2/image28.png] 第一層用1個積木，第二層用9個積木，第三層用25個積木，以此類推。 問﹕如果堆高10層，那麼這10層共用多少個積木﹖",
+      "answer_text": "$1330$",
+      "explanation_text": "【龍騰自命題】 【解析】第 1 層、第 2 層、第 3 層所用積木數分別為$1^2,3^2,5^2,\\ldots,(2n-1)^2$。 所以堆高 10 層時，總數為$\\sum_{k=1}^{10}(2k-1)^2=\\sum_{k=1}^{10}(4k^2-4k+1)=4\\sum_{k=1}^{10}k^2-4\\sum_{k=1}^{10}k+\\sum_{k=1}^{10}1=4\\cdot\\frac{10\\cdot11\\cdot21}{6}-4\\cdot\\frac{10\\cdot11}{2}+10=1330$。 故共用 1330 個積木。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-common-summation-formulas",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 65,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0066",
+      "title": "範例10：桃花島島主黃藥師要郭靖證明",
+      "question_text": "桃花島島主黃藥師要郭靖證明$1^2+2^2+3^2+⋯+n^2=\\frac{1}{6}n(n+1)(2n+1)$。 黃蓉偷偷遞給郭靖一張小抄，如下圖所示。請你觀察圖形後，以面積觀點證明上式正確。 [圖:program-db/assets/question-media/s2-1-2/image30.png]",
+      "answer_text": "見詳解",
+      "explanation_text": "【證明】由圖可知，左下圖空白部分面積為$2(1^2+2^2+⋯+n^2)$；而右下圖五個正方形的總面積，等於整個長方形面積減去這些空白部分，因此可得$(1+2+⋯+n)(2n+1)=3(1^2+2^2+⋯+n^2)$。 再代入$1+2+⋯+n=\\frac{n(n+1)}{2}$，得到$1^2+2^2+⋯+n^2=\\frac{1}{3}\\cdot\\frac{n(n+1)}{2}(2n+1)=\\frac{1}{6}n(n+1)(2n+1)$。 故證。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-common-summation-formulas",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 66,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0067",
+      "title": "範例11：下面三個三角形內的數，分別由1個1，2個2，3個3",
+      "question_text": "(1)下面三個三角形內的數，分別由1個1，2個2，3個3，…，10個10所排成，求 ①每個三角形內有多少個數﹖②在這三個三角形內，由上面數下來第三排第一個位置的數字和。③三個三角形內所有數的和。④$\\sum_{k=1}^{10}k^{2}$之值。 (2)試求$\\sum_{k=11}^{20}k^{2}$之值。 [圖:program-db/assets/question-media/s2-1-2/image31.png]",
+      "answer_text": "(1)①$55$；②$21$；③$1155$；④$385$；(2)$2485$",
+      "explanation_text": "【解析】(1)①$1+2+3+…+10=55$。 ②$3+10+8=21$。 ③三個三角形內各個對應位置之數的和都是21，故$55 \\times 21=1155$。 ④$(1^2+2^2+3^2+…+10^2)$每一個三角形的和$=\\frac{10 \\times 11 \\times 21}{6}=385$。$[圖:program-db/assets/question-media/s2-1-2/image32.png] (2)11^{2}+12^{2}+13^{2}+⋯+20^{2}=(1^2+2^2+3^2+…+20^2)-(1^2+2^2+3^2+…+10^2)=\\frac{20 \\cdot 21 \\cdot 41}{6}-\\frac{10 \\cdot 11 \\cdot 21}{6}=2485$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-power-sums-link-square-cube-s212",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 67,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0068",
+      "title": "範例12：由等差級數公式知，其中為正整數",
+      "question_text": "由等差級數公式知$1+2+3+\\cdots+n=\\frac{n(n+1)}{2}$，其中$n$為正整數。",
+      "answer_text": "見詳解",
+      "explanation_text": "【解析】首先，由等差級數$1+2+…+n=\\frac{n（n＋1）}{2}$觀察得知 單個自然數的級數和，其分母為1 + 1，分子為$n(n+1)$而1 ⋅ 2 + 2 ⋅ 3 + 3 ⋅$4+…+n(n+1)=\\frac{n（n＋1）（n＋2）}{3}$得知 二連續自然數乘積的和，其分母為2 + 1，分子為$n(n+1)(n+2)$故可預測1 ⋅ 2 ⋅ 3 + 2 ⋅ 3 ⋅ 4 + 3 ⋅ 4 ⋅$5+…+n(n+1)(n+2)=\\frac{n（n＋1）（n＋2）（n＋3）}{4}$。 今以數學歸納法證明如下 證明﹕ (1)當$n=1$時，左式$=1$⋅ 2 ⋅$3=6$，右式$=\\frac{1}{4}$⋅ 1 ⋅ (1 + 1) ⋅ (1 + 2) ⋅$(1+3)=6$∴左式$=$右式，故$n=1$時等式成立。 (2)設$n=k$時，原式成立，即設 1 ⋅ 2 ⋅ 3 + 2 ⋅ 3 ⋅ 4 + 3 ⋅ 4 ⋅$5+…+k(k+1)(k+2)=\\frac{1}{4}k(k+1)(k+2)(k+3)$成立 則當$n=k+1$時，因為 1 ⋅ 2 ⋅ 3 + 2 ⋅ 3 ⋅$4+…+k(k+1)(k+2)+(k+1)(k+2)(k+3)=\\frac{1}{4}k(k+1)(k+2)(k+3)+(k+1)(k+2)(k+3)=\\frac{1}{4} (k+1)(k+2)(k+3)(k+4)$∴$n=k+1$時，原式亦成立。 由(1)，(2)及數學歸納法知﹕ 對於所有自然數$n$，1 ⋅ 2 ⋅ 3 + 2 ⋅ 3 ⋅ 4 + 3 ⋅ 4 ⋅$5+…+n(n+1)(n+2)=\\frac{1}{4}n(n+1)(n+2)(n+3)$恆成立。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-induction-proofs",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 68,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0069",
+      "title": "範例13：試證",
+      "question_text": "試證：$1\\cdot 2+3\\cdot 4+5\\cdot 6+\\cdots+(2n-1)(2n)=\\frac{n(n+1)(4n-1)}{3}$。",
+      "answer_text": "見詳解",
+      "explanation_text": "【解析】(1)當$n=1$時，左式$=1$⋅$2=2$，右式$=\\frac{1 \\cdot 2 \\cdot 3}{3}=2$，左式$=$右式。 (2)設$n=k$時成立，即$1 \\cdot 2+3 \\cdot 4+⋯+(2k-1) \\cdot 2k=\\frac{k(k+1)(4k-1)}{3}$， (3)當$n=k+1$時，$1 \\cdot 2+3 \\cdot 4+⋯+(2k-1) \\cdot 2k+[ 2(k+1)-1] \\cdot 2(k+1)=\\frac{k(k+1)(4k-1)}{3}+(2k+1) \\cdot 2(k+1)=(k+1) \\cdot [\\frac{k(4k-1)}{3}+2(2k+1)]=\\frac{(k+1)(4k^{2}+11k+6)}{3}=\\frac{(k+1)(k+2)(4k+3)}{3}=\\frac{(k+1)[(k+1)+1][ 4(k+1)-1]}{3}$表示$n=k+1$時原式亦成立。 由數學歸納法原理知，對於所有的正整數$n$，原式成立。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-induction-proofs",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 69,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0070",
+      "title": "隨堂練習：證明",
+      "question_text": "證明：對於所有的正整數$n$，$1^2-2^2+3^2-4^2+\\cdots+(2n-1)^2-(2n)^2=-n(2n+1)$。",
+      "answer_text": "見詳解",
+      "explanation_text": "【解析】(1)當$n=1$時，$1^2-2^2+3^2=6=(1+1)(2$⋅1 + 1)，此式成立。 (2)設當$n=k$時，原式成立，即$1^2-2^2+3^2-4^2+…-(2k)^2+(2k+1)^2=(k+1)(2k+1)$，則 當$n=k+1$時，$1^2-2^2+3^2-4^2+…-(2k)^2+(2k+1)^2-(2k+2)^2+(2k+3)^2=(k+1)(2k+1)-(2k+2)^2+(2k+3)^2=[(k+1)+1][2(k+1)+1]$。 原式也成立。 故由數學歸納法可知，對於所有的正整數$n$，$1^2-2^2+3^2-4^2+…-(2n)^2+(2n+1)^2=(n+1)(2n+1)$恆成立。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-induction-proofs",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 70,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0071",
+      "title": "範例14：試證",
+      "question_text": "試證：$1^2-2^2+3^2-4^2+\\cdots+(2n-1)^2-(2n)^2=-n(2n+1)$。",
+      "answer_text": "見詳解",
+      "explanation_text": "【解析】用數學歸納法證明﹕ (1)當$n=1$時，左式$=(2 \\times 1-1)^2-(2 \\times 1)^2=1^2-2^2=-3$， 右式$=-1 \\times (2 \\times 1+1)=-3$，所以$n=1$時成立。 (2)假設$n=k$時，原式成立，即$1^2-2^2+3^2-4^2+…+(2k-1)^2-(2k)^2=-k(2k+1)$， 則$n=k+1$時， 左式$=1^2-2^2+3^2-4^2+…+(2k-1)^2-(2k)^2+(2k+1)^2-(2k+2)^2=-k(2k+1)+(2k+1)^2-(2k+2)^2=-2k^2-k+4k^2+4k+1-(4k^2+8k+4)=-2k^2-5k-3=-(2k^2+5k+3)=-(k+1)(2k+3)=-(k+1)[2(k+1)+1]=$右式，$^$即$n=k+1$時原式亦成立。 由數學歸納法可知，原命題成立。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-induction-proofs",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 71,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0072",
+      "title": "隨堂練習：試證",
+      "question_text": "試證：對任意正整數$n$，$1^2\\times 2^1+2^2\\times 2^2+\\cdots+n^2\\times 2^n=(n^2-2n+3)2^{n+1}-6$。",
+      "answer_text": "見詳解",
+      "explanation_text": "【解析】(1)當$n=1$時，左式$=1^2 \\times 2^1=(1^2-2 \\times 1+3) \\times 2^2-6=$右式 ∴$n=1$時成立。 (2)設$n=k$時成立， 即$1^2 \\times 2^1+2^2 \\times 2^2+3^2 \\times 2^3+…+k^2 \\times 2^k=(k^2-2k+3) \\times 2^k+1-6$成立 則當$n=k+1$時，$1^2 \\times 2^1+2^2 \\times 2^2+3^2 \\times 2^3+…+k^2 \\times 2^k+(k+1)^2 \\times 2^k+1=(k^2-2k+3) \\times 2^k+1-6+(k+1)^2 \\times 2^k+1=(2k^2+4) \\times 2^k+1-6=2(k^2+2) \\times 2^k+1-6=(k^2+2) \\times 2^k+2-6=[(k+1)^2-2(k+1)+3] \\times 2^k+2-6$∴$n=k+1$時成立。 ∴由數學歸納法可知，$1^2 \\times 2^1+2^2 \\times 2^2+3^2 \\times 2^3+…+n^2 \\times 2^n=(n^2-2n+3) \\times 2^n+1-6$對所有正整數$n$均成立。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-induction-proofs",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 72,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0073",
+      "title": "範例15：一數列數列的遞迴定義式為，求一般項第n項",
+      "question_text": "一數列$\\langle a_{n} \\rangle$的遞迴定義式為$a_{1}=1$，$a_{n+1}=a_{n}+2n+1$，求一般項$a_{n}$。",
+      "answer_text": "$(1)\\alpha=4$；$(2)a_n=4-3^n$；(3)見詳解",
+      "explanation_text": "【99師大附中期中考】 【解析】(1) 由$a_{n+1}-\\alpha=3(a_n-\\alpha)$可得$a_{n+1}=3a_n-2\\alpha$。 與原遞迴式$a_{n+1}=3a_n-8$比較，得$-2\\alpha=-8$，所以$\\alpha=4$。 (2) 因為$a_{n+1}-4=3(a_n-4)$，所以數列$\\{a_n-4\\}$為首項$a_1-4=-3$、公比$3$的等比數列。 因此$a_n-4=(-3)\\cdot3^{n-1}=-3^n$， 故$a_n=4-3^n$。 (3) 歸納證明： 當$n=1$時，$a_1=1=4-3$，成立。 假設$n=k$時成立，即$a_k=4-3^k$。 則$a_{k+1}=3a_k-8=3(4-3^k)-8=4-3^{k+1}$， 故$n=k+1$時亦成立。 因此對所有正整數$n$，皆有$a_n=4-3^n$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-induction-proofs",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 73,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    },
+    {
+      "id": "q-s2-1-2-0074",
+      "title": "範例16：有邊長1到10的10種正方形紙片，邊長1的有1張，邊",
+      "question_text": "有邊長1到10的10種正方形紙片，邊長1的有1張，邊長2的有2張，邊長3的有3張，…， 邊長10的有10張，依下列規則排列成如圖的正方形﹕$($甲$)$邊長較小的先排完。$($乙$)$每一種紙片排完時都形成正方形，若有重疊，則剪下重疊部分再補成正方形（如圖2）。 [圖:program-db/assets/question-media/s2-1-2/image33.png] 求①排完後所構成正方形的邊長。②排完後所構成的正方形面積為何。 ③求$1^3+2^3+…+10^3$之值。",
+      "answer_text": "①$55$；②$3025$；③$3025$",
+      "explanation_text": "【解析】①依題意所構成正方形的邊長即為$1+2+3+…+10=55$。 ②$55 \\times 55=3025$。 ③$1^3+2^3+…+10^3=1$⋅$1^2+2$⋅$2^2+…+10$⋅$10^2$表示為所有紙片的面積和， 故$1^3+2^3+…+10^3=3025$。",
+      "chapter_code": "s2-1-2",
+      "formula_id": "senior-series-induction-proofs",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-2轉.docx",
+      "source_section": "主題2：級數和公式",
+      "source_order": 74,
+      "tags": [
+        "s2-1-2",
+        "s2-1-2",
+        "s2-1-2"
+      ]
+    }
+  ]
+}

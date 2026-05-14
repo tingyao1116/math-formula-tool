@@ -1,0 +1,1526 @@
+{
+  "chapter_code": "s3-2-1",
+  "chapter_title": "指數函數",
+  "questions": [
+    {
+      "id": "q-s3-2-1-0001",
+      "title": "設a為正定數，f (x) = a ^x^，x$\\in$R，則",
+      "question_text": "設a為正定數，f (x) = a ^x^，x$\\in$R，則下列敘述何者正確？\n(A)若a > 1，x > 0，則f (x) > 1 (B)若a > 1，x < 0，則0 < f\n(x) < 1 (C)若0 < a < 1，x > 0，則0 < f (x) < 1 (D)若0 < a < 1，x < 0，則f (x) > 1 (E) a ^x^ ≠ 0，$\\forall x \\in R$。",
+      "answer_text": "(A)(B)(C)(D)(E)",
+      "explanation_text": "(A)∵ a > 1，由x > 0 $⇒$ a^x\\ ^> a^0^ =1，即f (x) >1\n(B)∵ a > 1，由x < 0 $⇒$ 0 < a^x\\ ^< a^0^ =1，即0 < f (x) < 1\n(C)∵ 0 < a < 1，由x > 0 $⇒$ 0 < a^x\\ ^< a^0^ = 1，即0 < f (x) < 1\n(D)∵ 0 < a < 1，由x < 0 $⇒$ a^x\\ ^> a^0^ = 1，即f (x) >1\n(E)∵ a > 0 ∴ a^x\\ ^> 0 ∴ a^x\\ ^≠ 0，$\\forall x \\in$R 故選(A)(B)(C)(D)(E)",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 1,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0002",
+      "title": "設a > 0，a ≠ 1，x為實數，指數函數f (x) =",
+      "question_text": "設a > 0，a ≠ 1，x為實數，指數函數f (x) = a^x^，下列哪些選項是正確的？\n(1)圖形必通過定點(0 , 1) (2)圖形與任一平行x軸的直線都恰有一交點\n(3)若x~2~ > x~1~，則f (x~2~) > f\n(x~1~) (4)對任意實數x，f (x) = a^x^ > 0恆成立\n(5)若x~1~ ≠ x~2~，則$\\frac{f(x_{1}) + f(x_{2})}{2} > f(\\frac{x_{1} + x_{2}}{2})$。",
+      "answer_text": "(1)(4)(5)",
+      "explanation_text": "(1)f (0) = a^0^ = 1，∴必過(0 , 1)\n(2)如：y = − 1與a^x^沒有交點\n(3)a > 1時，x~2~ > x~1~ ⇔ f (x~2~) > f (x~1~) 0 < a < 1時，x~2~ > x~1~ ⇔ f (x~2~) < f (x~1~)\n(5)$\\frac{a^{x_{1}} + a^{x_{2}}}{2} > \\sqrt{a^{x_{1}} · a^{x_{2}}}$ $⇒ \\frac{f(x_{1}) + f(x_{2})}{2} > a^{\\frac{x_{1} + x_{2}}{2}} = f(\\frac{x_{1} + x_{2}}{2})$ 故選(1)(4)(5)。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-horizontal-line-test-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 2,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0003",
+      "title": "下列敘述何者正確？(A) y = 2^x^與y ($\\fra",
+      "question_text": "下列敘述何者正確？(A) y = 2^x^與y\n($\\frac{1}{2}$)^x^的圖形對稱於y軸\n(B) y = 2^x^與y = − 2^x^的圖形對稱於x軸\n(C) y = 2^x^與y = −\n($\\frac{1}{2}$)^x^的圖形對稱於原點\n(D)$\\forall a \\in$R，a > 0，a ≠ 1，則y = a ^x^的圖形都是凹口向上\n(E)$\\forall a \\in$R，a > 0，a ≠ 1，則y = a ^x^的圖形恆過一個定點。",
+      "answer_text": "(A)(B)(C)(D)(E)",
+      "explanation_text": "(A)點(m，n)在y = 2^x^上 $⇔$ n = 2^m^ $⇔$ 點(−m，n)在y = ($\\frac{1}{2}$)^x^ = 2^−x^上\n∴ 兩圖形對稱於y軸\n(B)點(m，n)在y = 2^x^上 $⇔$ n = 2^m^ $⇔$ 點(m，−n)在y = − 2^x^上\n∴ 兩圖形對稱於x軸\n(C)點(m，n)在y = 2^x^上 $⇔$ n = 2^m^ $⇔$ 點(−m，−n)在y = −\n($\\frac{1}{2}$)^x^上\n∴ 兩圖形對稱於原點\n(D)指數函數圖形都是凹口向上\n(E)指數函數圖形恆過定點(0,1) 故選(A)(B)(C)(D)(E)",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 3,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0004",
+      "title": "如圖為函數y = a^x^ + b的部分圖形，其中a，b均為",
+      "question_text": "如圖為函數y = a^x^ + b的部分圖形，其中a，b均為常數，\n(3)a > 1，b > 0 (4)a > 1，b < 0 (5)a > 1，b < 1。",
+      "answer_text": "(1)",
+      "explanation_text": "$∵$圖形遞減 $∴$0 < a < 1，令x = 0，則y = a^0^ + b = 1 + b > 1 ⇒ b > 0， 故選(1)。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 4,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0005",
+      "title": "利用y = 2^x^的圖形作下列各函數的圖形。(1)$y =",
+      "question_text": "利用y = 2^x^的圖形作下列各函數的圖形。(1)$y = (\\frac{1}{2})^{x}$ (2)y = − 2^x^ (3)y = − 2 ^−\\ x^",
+      "answer_text": "圖略",
+      "explanation_text": "(1)將y = 2^x^的圖形，以y軸為對稱軸作鏡射即得$y = 2^{- x} = (\\frac{1}{2})^{x}$的圖形。\n[圖:program-db/assets/question-media/s3-2-1/image2.png] \n(2)將y = 2^x^的圖形，以$x$軸為對稱軸作鏡射即得y = − 2^x^的圖形。\n[圖:program-db/assets/question-media/s3-2-1/image3.png] \n(3)將y = 2^x^的圖形以原點為對稱中心，作對稱移動，即得y = − 2 ^−\\ x^的圖形。\n[圖:program-db/assets/question-media/s3-2-1/image4.png]",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 5,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0006",
+      "title": "隨堂練習：試作下列各函數的圖形。(1)y = 2^|x|^ (2)y",
+      "question_text": "試作下列各函數的圖形。(1)y = 2^|x|^ (2)y = 2 ^−\\ |x|^ (3)y = − 2^|x|^ (4)y = − 2 ^−\\ |x|^ ![",
+      "answer_text": "圖略",
+      "explanation_text": "(1)$y = 2^{|x|} = { \\begin{array}{r} 2^{x} x \\geq 0 \\ 2^{- x} x < 0 \\end{array} \\right.$](.\\program-db\\imports\\packs\\_inspect-3A-1\\assets/media/image5.emf)\n[圖:program-db/assets/question-media/s3-2-1/image6.png]\n[圖:program-db/assets/question-media/s3-2-1/image7.png]\n[圖:program-db/assets/question-media/s3-2-1/image8.png]",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 6,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0007",
+      "title": "隨堂練習：與y軸的交點，則下列敘述何者正確？ (A) a > 1 (B",
+      "question_text": "與y軸的交點，則下列敘述何者正確？\n(A) a > 1 (B)$\\overline{OP}$ = 1 (C) y = a^|x|^之圖形對稱於y軸\n(D) y = a^|x|^與y = a^−|x|^的圖形對稱於x軸\n(E) y = a^|x|^與y = a^−|x|^的圖形恰相交一點。",
+      "answer_text": "(B)(C)(E)",
+      "explanation_text": "(A)當x$\\geq$0時，y = a^|x|^ = a^x^\n∵ 其圖形是遞減的 ∴ 0 < a < 1\n(B)∵ 指數函數圖形交y軸於(0，1) ∴ P(0，1) $⇒ \\overline{OP}$ = 1\n(C)∵ 點(m，n)在y = a^|x|^上 $⇔$ 點(−m，n)在y = a^|x|^上\n∴ y = a^|x|^之圖形對稱於y軸（x = 0）\n(D)∴ 設點(m，n)在y = a^|x|^上 ∴ n = a^|m|^\n∴ 點(m，−n)不一定在y = a^−|x|^上 ∴ y = a^|x|^與y = a^−|x|^的圖形不對稱於x軸\n(E)解${ \\begin{array}{r} y = a^{|x|} \\ y = a^{- |x|} \\end{array} \\right.\\ ⇒$ a^|x|^ = a^−|x|^ $⇒$ (a^|x|^)^2^ = 1 $⇒$ a^|x|^ =1 = a^0^ $⇒$ |x| = 0 $⇒$ x = 0\n∴ 兩圖形恰相交於一點P(0，1) 故選(B)(C)(E)",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 7,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0008",
+      "title": "隨堂練習：設a > 0，函數y = − a^x^之圖形可能為下列何者？",
+      "question_text": "設a > 0，函數y = − a^x^之圖形可能為下列何者？\n| (A)\n[圖:program-db/assets/question-media/s3-2-1/image10.png]\n(B)\n[圖:program-db/assets/question-media/s3-2-1/image11.png]\n(C)\n[圖:program-db/assets/question-media/s3-2-1/image12.png]\n(D)\n[圖:program-db/assets/question-media/s3-2-1/image13.png]\n(E)\n[圖:program-db/assets/question-media/s3-2-1/image14.png]",
+      "answer_text": "(C)(D)(E)",
+      "explanation_text": "(C)(D)(E)",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 8,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0009",
+      "title": "方程式2$|x|$− 2 = x有＿＿＿＿＿＿個實根",
+      "question_text": "方程式2$|x|$− 2 = x有＿＿＿＿＿＿個實根。",
+      "answer_text": "2個",
+      "explanation_text": "2 2$|x|$− 2 = x ⇒ 2$|x|$= x + 2\n[圖:program-db/assets/question-media/s3-2-1/image15.png]",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 9,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0010",
+      "title": "隨堂練習：方程式的實根個數：(1)方程式($\\frac{1}{2}$)",
+      "question_text": "方程式的實根個數：(1)方程式($\\frac{1}{2}$)^x^ = x + 1的實根共有＿＿＿＿＿＿個。\n(2)方程式x^2^ = 2^x^的實根共有＿＿＿＿＿＿個。",
+      "answer_text": "(1)1個; (2)3個",
+      "explanation_text": "(1) 1 (2) 3\n[圖:program-db/assets/question-media/s3-2-1/image16.png]\n[圖:program-db/assets/question-media/s3-2-1/image17.png]",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 10,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0011",
+      "title": "隨堂練習：求方程式2 ^−\\ |x|^ − x^2^ = 0有多少實根",
+      "question_text": "求方程式2 ^−\\ |x|^ − x^2^ = 0有多少實根？",
+      "answer_text": "2個",
+      "explanation_text": "方程式2 ^−\\ |x|^ − x^2^ = 0的實根個數等於y = 2 ^−\\ |x|^與y = x^2^兩圖形的交點個數。\n如圖，兩圖形有2個交點，故方程式2 ^−\\ |x|^ − x^2^ = 0有2實根。\n[圖:program-db/assets/question-media/s3-2-1/image18.png]",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 11,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0012",
+      "title": "設a = 19^20^，b = 10^30^，c = 40^",
+      "question_text": "設a = 19^20^，b = 10^30^，c = 40^10^，d = 3^50^，則a，b，c，d的大小何者正確？\n(1)a > b > c > d (2)b > a > d > c (3)a > b > d > c (4)b > d > c > a (5)b > d > a > c。",
+      "answer_text": "(2)",
+      "explanation_text": "a = 19^20^ = (19^2^)^10^ = 361^10^，b = (10^3^)^10^ = 1000^10^，c = 40^10^，d = (3^5^)^10^ = 243^10^\n∴b > a > d > c，故選(2)。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 12,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0013",
+      "title": "設A = 15^20^，B = 6^30^，C = 4^40",
+      "question_text": "設A = 15^20^，B = 6^30^，C = 4^40^，D = 3^50^，試比較A，B，C，D的大小。",
+      "answer_text": "$B<A<D<C$",
+      "explanation_text": "A = (15^2^)^10^ = 225^10^，B = (6^3^)^10^ = 216^10^，C =\n(4^4^)^10^ = 256^10^，D = (3^5^)^10^ = 243^10^， 由216 < 225 < 243 < 256知B < A < D < C。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 13,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0014",
+      "title": "隨堂練習：設a = 8$\\sqrt{2}$、b = 4$\\sqrt[3",
+      "question_text": "設a = 8$\\sqrt{2}$、b = 4$\\sqrt[3]{4}$、c = $\\sqrt[3]{256\\sqrt{2}}$、d = 4$\\sqrt{3}$、e = 2^π^，則a、b、c、d、e之大小順序為（由大而小排列）＿＿＿＿＿＿。",
+      "answer_text": "$a>d>e>c>b$",
+      "explanation_text": "a = 2$\\frac{7}{2}$，b = 2$\\frac{8}{3}$，c = 2$\\frac{17}{6}$，d = 2$2\\sqrt{3}$，e = 2^π^\n∵ $\\frac{7}{2}$> 2$\\sqrt{3}$> π >$\\frac{17}{6}$>$\\frac{8}{3}$且f (x) = 2^x^為遞增函數 ∴ a > d > e > c > b",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 14,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0015",
+      "title": "隨堂練習：比較下列各數的大小關係：$a = \\frac{1}{2}$",
+      "question_text": "比較下列各數的大小關係：$a = \\frac{1}{2}$，$b = 2^{- \\sqrt{2}}$，c = 1，d = (0.5)^1.5^，e = (0.5)^0.5^。",
+      "answer_text": "$d<b<a<e<c$",
+      "explanation_text": "$a = \\frac{1}{2} = 2^{- 1}$﹔c = 1 = 2^0^﹔$d = (0.5)^{1.5} = (\\frac{1}{2})^{\\frac{3}{2}} = 2^{- \\frac{3}{2}}$﹔$e = (0.5)^{0.5} = (\\frac{1}{2})^{\\frac{1}{2}} = 2^{- \\frac{1}{2}}$\n∵$- \\frac{3}{2} < - \\sqrt{2} < - 1 < - \\frac{1}{2} < 0$且底數2 > 1 $$⇒ 2^{- \\frac{3}{2}} < 2^{- \\sqrt{2}} < 2^{- 1} < 2^{- \\frac{1}{2}} < 2^{0} $$故d < b < a < e < c。\n＿＿＿＿＿＿",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 15,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0016",
+      "title": "隨堂練習：設a = 0.3^0.4^，b = 0.4^0.3^，c =",
+      "question_text": "設a = 0.3^0.4^，b = 0.4^0.3^，c = 0.3 ^−\\ 0.4^，d = 0.4 ^−\\ 0.3^，試比較a，b，c，d之大小關係。",
+      "answer_text": "$c>d>b>a$",
+      "explanation_text": "由於底數0.3 < 0.4 < 1， 因此y = (0.3)^x^與y = (0.4)^x^為遞減函數\n∴0.3 ^−\\ 0.4^ > 0.4 ^−\\ 0.4^ > 0.4 ^−\\ 0.3^ > 1 > 0.4^0.3^ > 0.3^0.3^ > 0.3^0.4^ 故c > d > b > a。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 16,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0017",
+      "title": "隨堂練習：(1)設x，y，z為正數，且2^x^ = 3^y^ = 5^",
+      "question_text": "(1)設x，y，z為正數，且2^x^ = 3^y^ = 5^z^，試比較2x，3y，5z的大小。\n(2)若x，y，z為負數，且2^x^ = 3^y^ = 5^z^，試比較2x，3y，5z的大小。",
+      "answer_text": "(1)$5z>2x>3y$; (2)$5z<2x<3y$",
+      "explanation_text": "(1)5z > 2x > 3y (2)5z < 2x < 3y\n【詳解】(1)當x，y，z為正整數時，2^2x\\ ^= 3^2y\\ ^= 9^y^ > 8^y^ = 2^3y^ ∴ 2x > 3y 5^5z\\ ^= 2^5x\\ ^= 32^x^ > 25^x^ = 5^2x^ ∴ 5z > 2x ⇒ 5z > 2x > 3y\n(2)當x，y，z為負數時，−x，−y，−z均為正數，由(1)知 −5z > −2x > −3y ∴ 5z < 2x < 3y",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 17,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0018",
+      "title": "隨堂練習：試比較2$\\frac{1}{2}$，3$\\frac{1}{3",
+      "question_text": "試比較2$\\frac{1}{2}$，3$\\frac{1}{3}$，5$\\frac{1}{5}$之大小：＿＿＿＿＿＿。",
+      "answer_text": "$3^{1/3}>2^{1/2}>5^{1/5}$",
+      "explanation_text": "(3^2^)$\\frac{1}{6}$ > (2^3^)$\\frac{1}{6}$ ⇒ 3$\\frac{1}{3}$ > 2$\\frac{1}{2}$，又(2^5^)$\\frac{1}{10}$ >\n(5^2^)$\\frac{1}{10}$ ⇒ 2$\\frac{1}{2}$ > 5$\\frac{1}{5}$ 故3$\\frac{1}{3}$ > 2$\\frac{1}{2}$ > 5$\\frac{1}{5}$",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 18,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0019",
+      "title": "指數f ~1~(x) = a^x^，f~2~(x) = b^",
+      "question_text": "指數f ~1~(x) = a^x^，f~2~(x) = b^x^，f~3~(x) = c^x^，f~4~(x) = d^x^之圖形如右，",
+      "answer_text": "$b>a>d>c$",
+      "explanation_text": "b > a > d > c",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 19,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0020",
+      "title": "隨堂練習：(1)已知a^1.5^ > b^1.5^ > 1 > c^1",
+      "question_text": "(1)已知a^1.5^ > b^1.5^ > 1 > c^1.5^ > d^1.5^，求a，b，c，d的大小關係。\n(2)已知a ^−\\ 0.7^ > b ^−\\ 0.7^ > 1 > c ^−\\ 0.7^ > d ^−\\ 0.7^，求a，b，c，d的大小關係。",
+      "answer_text": "(1)$a>b>c>d$; (2)$d>c>b>a$",
+      "explanation_text": "(1)因為a^1.5^ > b^1.5^ > 1 > c^1.5^ > d^1.5^，所以y = a^x^，y = b^x^，y = c^x^，y = d^x^的圖形如下左圖所示，因此如下右圖可知：a > b > c > d。\n[圖:program-db/assets/question-media/s3-2-1/image20.png]\n[圖:program-db/assets/question-media/s3-2-1/image21.png] \n(2)因為a ^−\\ 0.7^ > b ^−\\ 0.7^ > 1 > c ^−\\ 0.7^ > d ^−\\ 0.7^，所以y = a^x^，y = b^x^，y = c^x^，y = d^x^的圖形如下左圖所示，因此如下右圖可知：d > c > b > a。\n[圖:program-db/assets/question-media/s3-2-1/image22.png]\n[圖:program-db/assets/question-media/s3-2-1/image23.png]",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 20,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0021",
+      "title": "二直線y = 2，y = 6分別與指數函數y = 3^x^的",
+      "question_text": "二直線y = 2，y = 6分別與指數函數y = 3^x^的圖形交於P，Q兩點，則直線PQ的斜率為＿＿＿＿＿＿。",
+      "answer_text": "4",
+      "explanation_text": "P：${ \\begin{array}{r} y = 2 \\ y = 3^{x} \\end{array} \\right.\\ ⇒ ⇒$ P(m，2)，此處3^m^ = 2， Q：${ \\begin{array}{r} y = 6 \\ y = 3^{x} \\end{array} \\right.\\ ⇒$ Q(n，6)，此處3^n^ = 6\n∴ $\\frac{3^{m}}{3^{n}}$= 3^m\\ −\\ n\\ ^=$\\frac{2}{6} = \\frac{1}{3}$= 3^−1^ ⇒ m − n = −1\n∴ PQ直線的斜率為$\\frac{2 - 6}{m - n} = \\frac{- 4}{- 1}$= 4。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 21,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0022",
+      "title": "已知x ≠ 0且f (x) =$\\frac{3^{x} +",
+      "question_text": "已知x ≠ 0且f (x) =$\\frac{3^{x} + 3^{- x}}{3^{x} - 3^{- x}}$，(1)求以f\n(x)表9^x^。 (2)若f (a) =$\\frac{5}{4}$，求a。",
+      "answer_text": "(1)$9^x=\\frac{f(x)+1}{f(x)-1}$; (2)$a=1$",
+      "explanation_text": "(1) f (x) =$\\frac{3^{x} + 3^{- x}}{3^{x} - 3^{- x}}$=$\\frac{9^{x} + 1}{9^{x} - 1}$ ⇒ (9^x^ − 1) f (x) = 9^x^ + 1 $⇒$ 9^x^．f (x) −f (x) = 9^x^ + 1 $⇒$ 9^x^．( f (x) −1) = f (x) + 1 $⇒$ 9^x^ =$\\frac{f(x) + 1}{f(x) - 1}$\n(2)利用 (1) 的結果，令x = a得9^a^ =$\\frac{f(a) + 1}{f(a) - 1}$=$\\frac{\\frac{5}{4} + 1}{\\frac{5}{4} - 1}$= 9 $⇒$ a = 1",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 22,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0023",
+      "title": "設f (x) =$\\frac{2^{x} + 2^{- x}",
+      "question_text": "設f (x) =$\\frac{2^{x} + 2^{- x}}{2^{x} - 2^{- x}}$，x$\\in$R，若f\n(a) = 4，f (b) = 3，則(1) f (2a) = ＿＿＿＿＿＿。 (2) f (a + b) = ＿＿＿＿＿＿。",
+      "answer_text": "(1)$\\frac{17}{8}$; (2)$\\frac{13}{7}$",
+      "explanation_text": "∵ f (x) =$\\frac{2^{x} + 2^{- x}}{2^{x} - 2^{- x}}$=$\\frac{2^{2x} + 1}{2^{2x} - 1}$ $⇒$ 2^2x\\ ^=$\\frac{f(x) + 1}{f(x) - 1}$\n∴ 2^2a^ =$\\frac{f(a) + 1}{f(a) - 1}$=$\\frac{4 + 1}{4 - 1}$=$\\frac{5}{3}$，2^2b\\ ^=$\\frac{f(b) + 1}{f(b) - 1}$=$\\frac{3 + 1}{3 - 1}$= 2\n∴ (1) f (2a) =$\\frac{2^{4a} + 1}{2^{4a} - 1}$=$\\frac{(\\frac{5}{3})^{2} + 1}{(\\frac{5}{3})^{2} - 1}$=$\\frac{17}{8}$，(2) f (a + b) =$\\frac{2^{2a + 2b} + 1}{2^{2a + 2b} - 1}$=$\\frac{\\frac{5}{3} × 2 + 1}{\\frac{5}{3} × 2 - 1}$=$\\frac{13}{7}$",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 23,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0024",
+      "title": "隨堂練習：設f (x) =$\\frac{a^{x} + 2a^{- x",
+      "question_text": "設f (x) =$\\frac{a^{x} + 2a^{- x}}{a^{x} - 2a^{- x}}$且f\n(α ) = 10，f (β ) = 5，則a^2α\\ ^=＿＿＿＿＿＿，f (α + β ) =＿＿＿＿＿＿。",
+      "answer_text": "$a^{2\\alpha}=\\frac{22}{9}$; $f(\\alpha+\\beta)=\\frac{7}{4}$",
+      "explanation_text": "f (x) =$\\frac{a^{2x} + 2}{a^{2x} - 2}$ ⇒ f\n(x)．a^2x\\ ^− 2f (x) = a^2x\\ ^+ 2\n⇒ ( f (x) −1)．a^2x\\ ^= 2( f (x) +1) ∴ a^2x\\ ^=$\\frac{2(f(x) + 1)}{f(x) - 1}$\n① a^2α^ =$\\frac{2(f(\\alpha) + 1)}{f(\\alpha) - 1}$=$\\frac{2(10 + 1)}{10 - 1}$=$\\frac{22}{9}$，② a^2β^ =$\\frac{2(f(\\beta) + 1)}{f(\\beta) - 1}$=$\\frac{2(5 + 1)}{5 - 1}$= 3\n∴ f (α +β ) =$\\frac{a^{2\\alpha} · a^{2\\beta} + 2}{a^{2\\alpha} · a^{2\\beta} - 2}$=$\\frac{\\frac{22}{3} + 2}{\\frac{22}{3} - 2}$=$\\frac{28}{16}$=$\\frac{7}{4}$",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 24,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0025",
+      "title": "隨堂練習：設f (x) =$\\frac{a^{x} + a^{- x}",
+      "question_text": "設f (x) =$\\frac{a^{x} + a^{- x}}{a^{x} - a^{- x}}$（a > 0，x ∈ R），已知f (α) = 10，f (β ) = 5， 試求：(1) a^2α^之值。 (2) f (α + β )。",
+      "answer_text": "(1)$a^{2\\alpha}=\\frac{11}{9}$; (2)$f(\\alpha+\\beta)=\\frac{17}{5}$",
+      "explanation_text": "(1)∵ f (x) =$\\frac{a^{x} + a^{- x}}{a^{x} - a^{- x}}$=$\\frac{a^{2x} + 1}{a^{2x} - 1}$且f\n(α) = 10\n∴ $\\frac{a^{2\\alpha} + 1}{a^{2\\alpha} - 1}$= 10 ⇒ a^2α\\ ^+ 1 = 10(a^2α\\ ^− 1) ⇒ 9．a^2α\\ ^= 11 ∴ a^2α\\ ^=$\\frac{11}{9}$\n(2)又f (β) = 5 ⇒ $\\frac{a^{2\\beta} + 1}{a^{2\\beta} - 1}$= 5 ⇒ a^2β\\ ^+ 1 = 5(a^2β\\ ^− 1) ⇒ 4a^2β\\ ^= 6\n∴ a^2β\\ ^=$\\frac{3}{2}$ ∴ f (α +β ) =$\\frac{a^{2(\\alpha + \\beta)} + 1}{a^{2(\\alpha + \\beta)} - 1}$=$\\frac{a^{2\\alpha} · a^{2\\beta} + 1}{a^{2\\alpha} · a^{2\\beta} - 1}$=$\\frac{\\frac{11}{9} · \\frac{3}{2} + 1}{\\frac{11}{9} · \\frac{3}{2} - 1}$=$\\frac{51}{15}$=$\\frac{17}{5}$",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-graph-properties-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 25,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0026",
+      "title": "假設其關係為指數函數，試問下列敘述何者為真？ (1)此指數函",
+      "question_text": "假設其關係為指數函數，試問下列敘述何者為真？\n(1)此指數函數的底數為2。\n(2)在第5個月時，布袋蓮的面積就會超過$30 m^{2}$。\n(3)布袋蓮從$4 m^{2}$蔓延到$12 m^{2}$，只需要1.5個月。\n(4)設布袋蓮蔓延到$2 m^{2}$，$3 m^{2}$，$6 m^{2}$所需的時間 分別為$t_{1}$，$t_{2}$，$t_{3}$，則$t_{1} + t_{2} = t_{3}$。\n(5)布袋蓮在第1到第3個月之間的蔓延平均速度 等於在第2到第4個月之間的蔓延平均速度。",
+      "answer_text": "(1)(2)(4)",
+      "explanation_text": "指數函數為$f(x) = 2^{x}$，$x \\geq 0$。\n(1)指數函數的底數為2。\n(2)$f(5) = 2^{5} = 32 > 30$。\n(3)$f(2) = 2^{2} = 4$，$f(3.5) = 2^{3.5} = 8\\sqrt{2} < 12$。\n(4)$f(t_{1}) = 2$，$f(t_{2}) = 3$，$f(t_{3}) = 6$，得$2^{t_{1}} = 2$，$2^{t_{2}} = 3$，$2^{t_{3}} = 6$，$2^{t_{1} + t_{2}} = 2 × 3 = 6 = 2^{t_{3}}$， 得$t_{1} + t_{2} = t_{3}$。\n(5)由$\\frac{f(3) - f(1)}{2} = \\frac{8 - 2}{2} = 3$，$\\frac{f(4) - f(2)}{2} = \\frac{16 - 4}{2} = 6$，知道蔓延平均速度不同。\n故選(1)(2)(4)。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-linearization-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題1：指數函數的圖形",
+      "source_order": 26,
+      "tags": [
+        "s3-2-1",
+        "section:主題1：指數函數的圖形",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0027",
+      "title": "解下列各方程式： (1)$(\\sqrt{27})^{x -",
+      "question_text": "解下列各方程式：\n(1)$(\\sqrt{27})^{x - 1} = 9\\sqrt{3}$。 (2)2^2x\\ +\\ 1^ − 33 × 2^x\\ −\\ 2^ + 1 = 0。 (3)9 × 6^x^ − 2^x^ − 72 × 3^x^ + 8 = 0。",
+      "answer_text": "(1)$x=\\frac{8}{3}$; (2)$x=-3,2$; (3)$x=-2,3$",
+      "explanation_text": "(1)$(\\sqrt{27})^{x - 1} = 9\\sqrt{3} ⇒ (3^{\\frac{3}{2}})^{x - 1} = 3^{2} × 3^{\\frac{1}{2}}$ $⇒ 3^{\\frac{3x - 3}{2}} = 3^{\\frac{5}{2}} ⇒ \\frac{3x - 3}{2} = \\frac{5}{2} ⇒ 3x - 3 = 5$ $⇒ x = \\frac{8}{3}$。\n(2)$2^{2x + 1} - 33 × 2^{x - 2} + 1 = 0 ⇒ 2 × (2^{x})^{2} - \\frac{33}{4} × 2^{x} + 1 = 0$\n⇒ 8 × (2^x^)^2^ − 33 × 2^x^ + 4 = 0 ⇒ (2^x^ − 4)(8 × 2^x^ − 1) = 0\n⇒ 2^x^ = 4 = 2^2^或$2^{x} = \\frac{1}{8} = 2^{- 3}$⇒ x = 2或x = − 3。\n(3)9 × 6^x^ − 2^x^ − 72 × 3^x^ + 8 = 0 ⇒ (9 × 3^x^ − 1)(2^x^ − 8) = 0 $⇒ 3^{x} = \\frac{1}{9} = 3^{- 2}$或2^x^ = 8 = 2^3^\n⇒ x = − 2或x = 3。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 27,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0028",
+      "title": "設α、β為方程式9^x^ − 5．3^x^ + 27 = 0",
+      "question_text": "設α、β為方程式9^x^ − 5．3^x^ + 27 = 0之兩根，則α + β之值為＿＿＿＿＿＿。",
+      "answer_text": "3",
+      "explanation_text": "令t = 3^x^，原式 ⇒ t^2^ − 5t + 27 = 0之二根t~1~ = 3^α^，t~2~ = 3^β\\^ t~1~．t~2~ = 27 ⇒ 3^α^．3^β^ = 27 ⇒ 3^α\\ +\\ β^ = 3^3^ ∴ α + β = 3",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 28,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0029",
+      "title": "隨堂練習：設α，β 為方程式4^x^ − 3⋅2^x\\ +\\ 2^ +",
+      "question_text": "設α，β 為方程式4^x^ − 3⋅2^x\\ +\\ 2^ + 16 = 0的二根，求α + β 的值。",
+      "answer_text": "4",
+      "explanation_text": "將方程式4^x^ − 3⋅2^x\\ +\\ 2^ + 16 = 0改寫為(2^x^)^2^ − 12⋅2^x^ + 16 = 0。\n令t = 2^x^。因此原方程式可化為t^2^ − 12t + 16 = 0。\n令t~1~ = 2^α^，t~2~ = 2^β^為方程式t^2^ − 12t + 16 = 0的兩根，則由根與係數的關係得知，t~1~⋅t~2~ = 2^α^⋅2^β^ = 16，即2^α\\ +\\ β^ = 2^4^，解得α + β = 4。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 29,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0030",
+      "title": "方程式2^x+1^ − 6．2^x−1^ + 10．2^x−",
+      "question_text": "方程式2^x+1^ − 6．2^x−1^ + 10．2^x−2^ = 12之解為＿＿＿＿＿＿。",
+      "answer_text": "$x=3$",
+      "explanation_text": "2^x+1^ − 6．2^x−1^ + 10．2^x−2^ = 12 ⇒ 2．2^x^ − 6．2^x^．2^−1^ + 10．2^x^．2^−2^ = 12\n⇒ (2 −$\\frac{6}{2}$+$\\frac{10}{4}$)．2^x^ = 12 ⇒ $\\frac{3}{2}$．2^x^ = 12 ⇒ 2^x^ = 8 ⇒ x = 3",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 30,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0031",
+      "title": "解方程式2^1−x^ − 33．2$- \\frac{x}{2",
+      "question_text": "解方程式2^1−x^ − 33．2$- \\frac{x}{2} - 2$+1 = 0。",
+      "answer_text": "$x=-4,6$",
+      "explanation_text": "2^1−x\\ ^− 33．2$- \\frac{x}{2} - 2$+ 1 = 0 ∴ $\\frac{2}{2^{x}}$− 33．$\\frac{1}{\\sqrt{2^{x}} · 4}$+ 1 = 0 乘以4(2^x^) ⇒ 8 − 33$\\sqrt{2^{x}} + 4(\\sqrt{2^{x}})^{2}$ = 0\n∴ $\\sqrt{2^{x}} = \\frac{1}{4}$或$\\sqrt{2^{x}}$= 8 ⇒ 2^x^ =$\\frac{1}{16}$ = 2^−4^或2^x^ = 2^6^ ⇒ x = − 4或x = 6",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 31,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0032",
+      "title": "隨堂練習：解方程式：(1) 4^x+1^ − 5．2^x+2^ + 1",
+      "question_text": "解方程式：(1) 4^x+1^ − 5．2^x+2^ + 16 = 0 ⇒ x =＿＿＿＿＿＿。\n(2) 6^x^ − 4．3^x^ − 3．2^x^ + 12 = 0 ⇒ x =＿＿＿＿＿＿。",
+      "answer_text": "(1)$x=0,2$; (2)$x=1,2$",
+      "explanation_text": "(1)原式 ⇒ 4．(2^x^)^2^ − 20．2^x^ + 16 = 0\n⇒ (2^x^)^2^ − 5．2^x^ + 4 = 0 ⇒ (2^x^ −1)(2^x^ − 4) = 0\n⇒ 2^x^ = 1或2^x^ = 4 ⇒ x = 0或2\n(2)原式 ⇒ 2^x^．3^x^ − 4．3^x^ − 3．2^x^ + 12 = 0\n⇒ (2^x^ − 4) (3^x^ − 3) = 0 ⇒ 2^x^ = 4或3^x^ = 3 ⇒ x = 2或1",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 32,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0033",
+      "title": "解方程組${ \\begin{array}{r} 2^{x}",
+      "question_text": "解方程組${ \\begin{array}{r} 2^{x} + 3^{y} = 17 \\ 2^{x + 1} - 3^{y - 1} = 13 \\end{array} \\right.$。",
+      "answer_text": "$(x,y)=(3,2)$",
+      "explanation_text": "${ \\begin{array}{r} 2^{x} + 3^{y} = 17 \\ 2^{x + 1} - 3^{y - 1} = 13 \\end{array} \\right.$\n[圖:program-db/assets/question-media/s3-2-1/image25.png]，由② 2．2^x^ −$\\frac{3^{y}}{3}$= 13 ⇒ 6．2^x^ − 3^y^ = 39......③\n① + ③得7．2^x^ = 56 ⇒ 2^x^ = 8 ∴ x = 3，代入① 2^3^ + 3^y^ = 17 ⇒ 3^y^ = 9 ∴ y = 2\n∴ x = 3，y = 2",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 33,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0034",
+      "title": "若x，y$\\in$R，x + y = 3，且3^x^ + 3",
+      "question_text": "若x，y$\\in$R，x + y = 3，且3^x^ + 3^y^ = z，3^x^ − 3^y^ = 6，求(x，y，z)。",
+      "answer_text": "$(x,y,z)=(2,1,12)$",
+      "explanation_text": "${ \\begin{array}{r} 3^{x} + 3^{y} = z \\ 3^{x} - 3^{y} = 6 \\end{array} \\right.$ ⇒ ${ \\begin{array}{r} 3^{x} = \\frac{1}{2}(z + 6) \\ 3^{y} = \\frac{1}{2}(z - 6) \\end{array} \\right.$ ∴ 3^x+y^ = [$\\frac{1}{2}$ (z + 6)] ×\n[$\\frac{1}{2}$ (z − 6)] =$\\frac{z^{2} - 36}{4}$\n∵ x + y = 3 ⇒ 27 =$\\frac{z^{2} - 36}{4}$ ⇒ z^2^ = 144 ⇒ z = 12\n（∵ 3^x^ + 3^y^ = z ∴ z > 0）\n∴ ${ \\begin{array}{r} 3^{x} = \\frac{1}{2}(12 + 6) = 9 = 3^{2} ⇒ x = 2 \\ 3^{y} = \\frac{1}{2}(12 - 6) = 3 = 3^{1} ⇒ y = 1 \\end{array} \\right.$",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 34,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0035",
+      "title": "隨堂練習：設$\\sqrt[x]{32}$=$\\sqrt[y]{2^{3",
+      "question_text": "設$\\sqrt[x]{32}$=$\\sqrt[y]{2^{3y - 6}}$且3$15y + 3x$= 81^xy^，則(x，y) = ＿＿＿＿＿＿。",
+      "answer_text": "$(x,y)=(5,3)$",
+      "explanation_text": "${ \\begin{array}{r} \\sqrt[x]{32} = \\sqrt[y]{2^{3y - 6}} \\ 3^{15y + 3x} = 81^{xy} \\end{array} \\right.$ ⇒ ${ \\begin{array}{r} 2^{\\frac{5}{x}} = 2^{3 - \\frac{6}{y}} \\ 3^{15y + 3x} = 3^{4xy} \\end{array} \\right.$ ⇒ ${ \\begin{array}{r} \\frac{5}{x} = 3 - \\frac{6}{y} \\ 15y + 3x = 4xy \\end{array} \\right.$\n⇒ ${ \\begin{array}{r} \\frac{5}{x} + \\frac{6}{y} = 3 \\ \\frac{15}{x} + \\frac{3}{y} = 4 \\end{array} \\right.$ ∴ (x，y) = (5，3)",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 35,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0036",
+      "title": "隨堂練習：設$\\sqrt[x]{81}$=$\\sqrt[y]{3^{2",
+      "question_text": "設$\\sqrt[x]{81}$=$\\sqrt[y]{3^{2y - 3}}$，且8^x+4y^ = 16^xy^，則數對(x,y) =\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "$(x,y)=(4,3)$",
+      "explanation_text": "$\\sqrt[x]{81}$=$\\sqrt[y]{3^{2y - 3}}$ ⇒ 3$\\frac{4}{x}$=$3^{\\frac{2y - 3}{y}}$ ⇒ $\\frac{4}{x}$=$\\frac{2y - 3}{y}$\n⇒ $\\frac{4}{x}$+$\\frac{3}{y}$= 2......① 8^x+4y^ = 16^xy^ ⇒ 2^3x+12y^ = 2^4xy^ ⇒ 3x + 12y = 4xy\n⇒ $\\frac{12}{x}$+$\\frac{3}{y}$= 4......② 由② − ①得$\\frac{8}{x}$= 2 ⇒ x = 4，代入① ∴ y = 3，故(x,y) =\n(4,3)",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 36,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0037",
+      "title": "隨堂練習：若$\\sqrt[x]{729}$=$\\sqrt[y]{3^{",
+      "question_text": "若$\\sqrt[x]{729}$=$\\sqrt[y]{3^{y + 2}}$且2^4x\\ +\\ 3y^ = 8^xy^，求序對(x，y) = ＿＿＿＿＿＿。",
+      "answer_text": "$(x,y)=(3,2)$",
+      "explanation_text": "由$\\sqrt[x]{729}$=$\\sqrt[y]{3^{y + 2}}$ ⇒ 3$\\frac{6}{x}$= 3$\\frac{y + 2}{y}$ ⇒ $\\frac{6}{x}$=$\\frac{y + 2}{y}$= 1 +$\\frac{2}{y}$......① 由2^4x\\ +\\ 3y^ = 8^xy^ ⇒ 2^4x\\ +\\ 3y^ = 2^3xy^ ⇒ 4x + 3y = 3xy ⇒ $\\frac{4}{y}$+$\\frac{3}{x}$=3......② 由① $\\frac{6}{x}$−$\\frac{2}{y}$=1 ⇒ $\\frac{12}{x}$−$\\frac{4}{y}$= 2......③\n②+ ③得$\\frac{15}{x}$= 5 ⇒ x = 3代入② $\\frac{4}{y}$+$\\frac{3}{3}$= 3 ⇒ $\\frac{4}{y}$= 2 ⇒ y = 2 故數對(x，y) = (3，2)",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 37,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0038",
+      "title": "解9$2x^{2}$= 9．3^7x^，得x =＿＿＿＿＿＿",
+      "question_text": "解9$2x^{2}$= 9．3^7x^，得x =＿＿＿＿＿＿。",
+      "answer_text": "$x=-\\frac{1}{4},2$",
+      "explanation_text": "原式$⇒$ 3$4x^{2}$= 3^7x+2^ $⇒$ 4x^2^ − 7x − 2 = 0 $⇒$ (4x + 1)(x − 2) = 0 $⇒$ x = −$\\frac{1}{4}$或2",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 38,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0039",
+      "title": "解2(4^x^ + 4^−x^) − 9(2^x^ + 2^",
+      "question_text": "解2(4^x^ + 4^−x^) − 9(2^x^ + 2^−x^) + 14 = 0，得x =＿＿＿＿＿＿。",
+      "answer_text": "$x=-1,0,1$",
+      "explanation_text": "t = 2^x^ + 2^−x\\ ^≥ 2 ∴ t^2^ = 4^x^ + 2 + 4^−x^ ⇒ 4^x^ + 4^−x^ = t^2^ − 2\n∴ 2(t^2^ − 2) − 9t + 14 = 0 ⇒ 2t^2^ − 9t + 10 = 0\n⇒ (2t − 5) (t − 2) = 0 ⇒ t =$\\frac{5}{2}$或2\n① t =$\\frac{5}{2}$時，2^x^ + 2^−x^ =$\\frac{5}{2}$ ⇒ x =±1，② t = 2時，2^x^ + 2^−x^ = 2\n⇒ x = 0，故得x = 0，± 1",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 39,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0040",
+      "title": "隨堂練習：試解方程式3(4^x^ + 4^−x^) − 2(2^x^",
+      "question_text": "試解方程式3(4^x^ + 4^−x^) − 2(2^x^ + 2^−x^) − 2 = 0。",
+      "answer_text": "$x=0$",
+      "explanation_text": "令t = 2^x^ + 2^−x^ ∵ 2^x^ + 2^−x^ = 2^x^ +$\\frac{1}{2^{x}} \\geq$2$\\sqrt{2^{x}．\\frac{1}{2^{x}}}$= 2 ⇒ t ≥ 2 又t^2^ = (2^x^ + 2^−x^)^2^ = 4^x^ + 2 + 4^−x^ $⇒$ 4^x^ + 4^−x^ = t^2^ − 2\n∴ 原式可化為3(t^2^ − 2) − 2t − 2 = 0 ⇒ 3t^2^ − 2t − 8 = 0\n⇒ (3t + 4)(t − 2) = 0 ⇒ t = 2，−$\\frac{4}{3}$（不合）\n∴ t = 2 ⇒ 2^x^ + 2^−x^ = 2 ⇒ (2^x^)^2^ − 2．2^x^ + 1 = 0\n⇒ (2^x^ − 1)^2^ = 0 ⇒ x = 0",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 40,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0041",
+      "title": "隨堂練習：解方程式4(4^x^ + 4 ^−\\ x^) − 16(2^",
+      "question_text": "解方程式4(4^x^ + 4 ^−\\ x^) − 16(2^x^ + 2 ^−\\ x^) + 23 = 0。",
+      "answer_text": "$x=-1,1$",
+      "explanation_text": "令t = 2^x^ + 2 ^−\\ x^，則4^x^ + 4 ^−\\ x^ = (2^x^ + 2 ^−\\ x^)^2^ − 2 = t^2^ − 2， 且$\\frac{2^{x} + 2^{- x}}{2} \\geq \\sqrt{2^{x} × 2^{- x}} = 1 ⇒ t \\geq 2$ 方程式可改寫成4(t^2^ − 2) − 16t + 23 = 0\n⇒ 4t^2^ − 16t + 15 = 0 ⇒ (2t − 3)(2t − 5) = 0 $⇒ t = \\frac{3}{2}$（不合）或$t = \\frac{5}{2}$ 當$t = \\frac{5}{2} ⇒ 2(2^{x})^{2} - 5 × 2^{x} + 2 = 0$\n⇒ (2^x^ − 2)(2 × 2^x^ − 1) = 0 ⇒ 2^x^ = 2或$2^{x} = \\frac{1}{2}$\n⇒ x = 1或x = − 1。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 41,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0042",
+      "title": "設t$\\in$R，2^2x^ − t．2^x+1^ − 2t",
+      "question_text": "設t$\\in$R，2^2x^ − t．2^x+1^ − 2t + 3 = 0有相異二實根，求t之範圍為＿＿＿＿＿＿。",
+      "answer_text": "$1<t<\\frac{3}{2}$",
+      "explanation_text": "(2^x^)^2^ − 2t．2^x^ − (2t − 3) = 0，令2^x^ = y ∴ y^2^ − 2ty − (2t − 3) = 0有相異二正根\n∴ 判別式△= t^2^ + (2t − 3) > 0 ⇒ (t + 3) (t − 1) > 0 ⇒ t < −3或t > 1 二根之和 = 2t > 0 ⇒ t > 0，二根之積 = − (2t − 3) > 0 ⇒ 2t − 3 < 0 ⇒ t <$\\frac{3}{2}$ 故1 < t <$\\frac{3}{2}$",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 42,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0043",
+      "title": "隨堂練習：設a為實數，方程式3^2x^ + (a − 5)⋅3^x^",
+      "question_text": "設a為實數，方程式3^2x^ +\n(a − 5)⋅3^x^ + (a + 3) = 0有兩相異實根，求a的範圍。",
+      "answer_text": "$-3<a<1$",
+      "explanation_text": "令t = 3^x^，則原方程式可變為t^2^ + (a − 5)t + (a + 3) = 0 表示新方程式有兩相異正根t~1~，t~2~\n①D > 0 ⇒ D = (a − 5)^2^ − 4⋅1⋅(a + 3) > 0\n⇒ a > 13或a < 1\n②t~1~ + t~2~ > 0 ⇒ − (a − 5) > 0 ⇒ a < 5\n③t~1~⋅t~2~ > 0 ⇒ a + 3 > 0 ⇒ a > − 3 由①②③知 − 3 < a < 1。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 43,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0044",
+      "title": "若指數方程式$2^{2x} + (m - 7)2^{x} +",
+      "question_text": "若指數方程式$2^{2x} + (m - 7)2^{x} + 9 = 0$有兩相異正根，則實數$m$的範圍為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "$-3<m<1$",
+      "explanation_text": "設$2^{2x} + (m - 7)2^{x} + 9 = 0$有兩相異正根α，β（α > 0，β > 0） 令2^x^ = t ⇒ t^2^ + (m − 7)t + 9 = 0有兩根2^α^，2^β^\n∵ α > 0，β > 0\n⇒ 2^α^ > 1，2^β^ > 1 ⇒ t^2^ + (m − 7)t + 9 = 0，兩根$t_{1}$，$t_{2}$大於1（$t_{1} > 1$，$t_{2} > 1$，$t_{1} \\neq t_{2}$）\n⇒ ${ \\begin{array}{r}\n(m - 7)^{2} - 4_{ }．_{ }9 > 0 \\ - (m - 7) > 2 \\\n(t_{1} - 1)(t_{2} - 1) > 0_{ } ⇒ \\rightleftharpoons \\rightleftharpoons \\rightleftharpoons t_{1}t_{2} - (t_{1} + t_{2}) + 1 > 0 \\rightleftharpoons \\rightleftharpoons \\rightleftharpoons ⇒ \\rightleftharpoons \\rightleftharpoons \\rightleftharpoons 9 + (m - 7) + 1 > 0 \\rightleftharpoons \\rightleftharpoons \\end{array} \\right.\\ \\rightleftharpoons$\n⇒ ${ \\begin{array}{r} m > 13_{ }或_{ }m < 1 \\ m < 5 \\ m > - \\rightleftharpoons 3 \\end{array} \\right.$ ⇒ $- 3 < m < 1$",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 44,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0045",
+      "title": "隨堂練習：設a為實數，方程式25^x^ − 6 × 5^x^ + a",
+      "question_text": "設a為實數，方程式25^x^ − 6 × 5^x^ + a = 0的兩根均為正數，求a的範圍。",
+      "answer_text": "$5<a\\le 9$",
+      "explanation_text": "令t = 5^x^，∵x > 0，∴t > 1，原方程式可改寫成t^2^ − 6t + a = 0 表示原方程式的兩根均為正數\n∴新方程式的兩根t~1~，t~2~均大於1\n(1)D ≥ 0 ⇒ D = ( − 6)^2^ − 4a ≥ 0 ⇒ a ≤ 9\n(2)(t~1~ − 1)(t~2~ − 1) > 0 ⇒ t~1~⋅t~2~ − (t~1~ + t~2~) + 1 > 0\n⇒ a − 6 + 1 > 0\n⇒ a > 5 由(1)(2)知 5 < a ≤ 9。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題2：指數方程式",
+      "source_order": 45,
+      "tags": [
+        "s3-2-1",
+        "section:主題2：指數方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0046",
+      "title": "解下列不等式：(1)$(0.5)^{x^{2} - 5x}",
+      "question_text": "解下列不等式：(1)$(0.5)^{x^{2} - 5x} < 16$。 (2)4^x^ − 17 × 2^x\\ −\\ 1^ + 4 > 0。 (3)$(\\frac{16}{25})^{x} + 2(\\frac{4}{5})^{x} - 3 \\leq 0$。",
+      "answer_text": "(1)$x<1$或$x>4$; (2)$x<-1$或$x>3$; (3)$x\\ge 0$",
+      "explanation_text": "(1)$(0.5)^{x^{2} - 5x} < 16 ⇒ (\\frac{1}{2})^{x^{2} - 5x} < (\\frac{1}{2})^{- 4}$ 又底數$\\frac{1}{2} < 1 ⇒ x^{2} - 5x > - 4 ⇒ x^{2} - 5x + 4 > 0$\n⇒ (x − 1)(x − 4) > 0 ⇒ x > 4或x < 1。\n(2)4^x^ − 17 × 2^x\\ −\\ 1^ + 4 > 0$⇒ (2^{x})^{2} - \\frac{17}{2} × 2^{x} + 4 > 0$\n⇒ 2 × (2^x^)^2^ − 17 × 2^x^ + 8 > 0 ⇒ (2^x^ − 8)(2 × 2^x^ − 1) > 0\n⇒ 2^x^ > 8或$2^{x} < \\frac{1}{2}$⇒ x > 3或x < − 1。\n(3)$(\\frac{16}{25})^{x} + 2(\\frac{4}{5})^{x} - 3 \\leq 0 ⇒ \\lbrack(\\frac{4}{5})^{x}\\rbrack^{2} + 2(\\frac{4}{5})^{x} - 3 \\leq 0 ⇒ \\lbrack(\\frac{4}{5})^{x} + 3\\rbrack\\lbrack(\\frac{4}{5})^{x} - 1\\rbrack \\leq 0$ 又$(\\frac{4}{5})^{x} + 3 > 0$，故$(\\frac{4}{5})^{x} - 1 \\leq 0 ⇒ (\\frac{4}{5})^{x} \\leq 1 = (\\frac{4}{5})^{0}$\n⇒ x ≥ 0（∵底數$\\frac{4}{5} < 1$）。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 46,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0047",
+      "title": "解下列不等式：(1)2^2x\\ +\\ 3^ − 31 ⋅ 2",
+      "question_text": "解下列不等式：(1)2^2x\\ +\\ 3^ − 31 ⋅ 2^x^ − 4 < 0。 (2)3^2x^ − 4 ⋅ 3^x\\ +\\ 1^ + 27 < 0。",
+      "answer_text": "(1)$x<2$; (2)$1<x<2$",
+      "explanation_text": "(1)8 ⋅ (2^x^)^2^ − 31 ⋅ 2^x^ − 4 < 0，(8 ⋅ 2^x^ + 1)(2^x^ − 4) < 0，得2^x^ − 4 < 0，知x < 2。\n(2)(3^x^)^2^ − 12 ⋅ 3^x^ + 27 < 0，(3^x^ − 3)(3^x^ − 9) < 0，得3 < 3^x^ < 9，知1 < x < 2。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 47,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0048",
+      "title": "設$f(x) = \\frac{(2^{x} - 128)(3",
+      "question_text": "設$f(x) = \\frac{(2^{x} - 128)(3^{x} - 1)(6^{x} + 6)}{(5^{x} - 125)(2^{- x} - 4)}$，若f(a) < 0，則a可以是下列何數？\n(1) − 3 (2)2 (3)$\\sqrt{20}$ (4)$\\sqrt{40}$ (5)$\\sqrt{50}$。",
+      "answer_text": "(1)(2)(5)",
+      "explanation_text": "(1)f( − 3) < 0\n(2)f(2) < 0\n(3)$f(\\sqrt{20}) > 0$\n(4)$f(\\sqrt{40}) > 0$\n(5)$f(\\sqrt{50}) < 0$ 故選(1)(2)(5)。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 48,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0049",
+      "title": "解不等式$(\\frac{5}{4})^{x} + (\\fra",
+      "question_text": "解不等式$(\\frac{5}{4})^{x} + (\\frac{4}{5})^{x} < \\frac{41}{20}$。",
+      "answer_text": "$-1<x<1$",
+      "explanation_text": "令$t = (\\frac{5}{4})^{x}$，化為t的不等式$t + \\frac{1}{t} < \\frac{41}{20}$，因t > 0得20t^2^ − 41t + 20 < 0， 即(5t − 4)(4t − 5) < 0，得$\\frac{4}{5} < t < \\frac{5}{4}$，即$\\frac{4}{5} < (\\frac{5}{4})^{x} < \\frac{5}{4}$，知 − 1 < x < 1。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 49,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0050",
+      "title": "隨堂練習：解不等式：(1)不等式(0.3)$x^{2} - 2x -",
+      "question_text": "解不等式：(1)不等式(0.3)$x^{2} - 2x - 1$ > 0.09之解為＿＿＿＿＿＿。\n(2)不等式27^x^ − 4．3^2x\\ −^ ^1^ + 3^x−1^ < 0之解為＿＿＿＿＿＿。",
+      "answer_text": "(1)$-1<x<3$; (2)$-1<x<0$",
+      "explanation_text": "(1)原式 ⇒ (0.3)$x^{2} - 2x - 1$> (0.3)^2^ ⇒ x^2^ − 2x − 1 < 2\n⇒ x^2^ − 2x − 3 < 0 ⇒ (x − 3)(x + 1) < 0 ⇒ − 1 < x < 3\n(2)原式 ⇒ 3^3x^ −$\\frac{4}{3}$．3^2x^ +$\\frac{1}{3}$．3^x^ < 0 ⇒ 3．3^3x^ − 4．3^2x^ + 3^x^ < 0\n⇒ 3^x^(3^x^ − 1)(3．3^x^ − 1) < 0 ⇒ $\\frac{1}{3}$< 3^x^ < 1 ⇒ − 1 < x < 0",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 50,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0051",
+      "title": "隨堂練習：不等式(0.1)$x^{2}$^−5x\\ +2^ > 100",
+      "question_text": "不等式(0.1)$x^{2}$^−5x\\ +2^ > 100的解為＿＿＿＿＿＿。",
+      "answer_text": "$1<x<4$",
+      "explanation_text": "(0.1)$x^{2} - 5x + 2$ > (0.1)^−2^$⇒$ x^2^ − 5x + 2 < − 2 $⇒$ x^2^ − 5x + 4 < 0 $⇒$ (x −1)(x − 4) < 0 $⇒$ 1 < x < 4",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 51,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0052",
+      "title": "隨堂練習：不等式(0.4)$x^{2} - 5x + 2$> (6.2",
+      "question_text": "不等式(0.4)$x^{2} - 5x + 2$>\n(6.25)^2^之解為＿＿＿＿＿＿。",
+      "answer_text": "$2<x<3$",
+      "explanation_text": "(0.4)$x^{2} - 5x + 2$>\n(6.25)^2^ ⇒ ($\\frac{2}{5}$)$x^{2} - 5x + 2$> ($\\frac{5}{2}$)^4^ =\n($\\frac{2}{5}$)^−\\ 4^\n⇒ x^2^ − 5x + 2 < − 4 ⇒ x^2^ − 5x + 6 < 0 ⇒ (x − 2)(x − 3) < 0 ⇒ 2 < x < 3",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 52,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0053",
+      "title": "隨堂練習：不等式2．6^x^ − 3^x^ − 18．2^x^ + 9",
+      "question_text": "不等式2．6^x^ − 3^x^ − 18．2^x^ + 9 <0之解為＿＿＿＿＿＿。",
+      "answer_text": "$-1<x<2$",
+      "explanation_text": "2．6^x^ − 3^x^ − 18．2^x^ + 9 < 0 ⇒ (3^x^ − 9)(2．2^x^ − 1) < 0\n⇒ (3^x^ − 9)(2^x+1^ − 2^0^) < 0 ⇒ (x − 2)(x + 1) < 0 ⇒ − 1 < x < 2",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 53,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0054",
+      "title": "若x為大於0的實數，則不等式x$2x^{3} - 3x^{2",
+      "question_text": "若x為大於0的實數，則不等式x$2x^{3} - 3x^{2}$ > x$3x - 2$的解為＿＿＿＿＿＿。\n![",
+      "answer_text": "$\\frac{1}{2}<x<1$或$x>2$",
+      "explanation_text": "1. x >1時，x$2x^{3} - 3x^{2}$> x$3x - 2$ ⇒ 2x^3^ − 3x^2^ > 3x − 2 ⇒ (x + 1)(x − 2)(2x − 1) > 0\n⇒ −1 < x <$\\frac{1}{2}$或x > 2......①，但x > 1......②，由①、②知x > 2 2.0 < x < 1時，2x^3^ − 3x^2^ < 3x − 2 ⇒ (x + 1)(x − 2)(2x − 1) < 0\n⇒ x < −1或$\\frac{1}{2}$< x < 2......③，但0 < x < 1......④，由③、④知$\\frac{1}{2}$< x < 1 3.x = 1時，顯然不合。\n由1°2°3°知此不等式之解為$\\frac{1}{2}$< x < 1或2 < x ](.\\program-db\\imports\\packs\\_inspect-3A-1\\assets/media/image26.png)",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 54,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0055",
+      "title": "隨堂練習：試求不等式x$x\\sqrt{x}$> (x$\\sqrt{x}",
+      "question_text": "試求不等式x$x\\sqrt{x}$>\n(x$\\sqrt{x}$)^x^之解。",
+      "answer_text": "$0<x<1$或$x>\\frac{9}{4}$",
+      "explanation_text": "x$x\\sqrt{x}$ >\n(x$\\sqrt{x}$)^x^ $⇒$ x$x\\sqrt{x}$>\n(x$\\frac{3}{2}$)^x^ $⇒$ x$x\\sqrt{x}$ > x$\\frac{3}{2}x$\n①當x > 1時 $⇒$ x$\\sqrt{x}$ >$\\frac{3}{2}x$ $⇒$ x($\\sqrt{x}$−$\\frac{3}{2}$) > 0\n∵ x > 1 $⇒$ $\\sqrt{x}$−$\\frac{3}{2}$> 0 $⇒$ x >$\\frac{9}{4}$\n②當x = 1時，代入得1^1^ > 1^1^（不合）\n③當0 < x < 1時 $⇒$ x$\\sqrt{x}$<$\\frac{3}{2}x$ $⇒$ x($\\sqrt{x}$−$\\frac{3}{2}$) < 0\n∵ 0 < x < 1 $⇒$ $\\sqrt{x}$−$\\frac{3}{2}$< 0 $⇒$ x <$\\frac{9}{4}$ ∴ 解為0 < x < 1 由①②③得x >$\\frac{9}{4}$或0 < x < 1",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 55,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0056",
+      "title": "不等式2^1+2x\\ ^+ 2^1\\ −\\ 2x\\ ^− 7",
+      "question_text": "不等式2^1+2x\\ ^+ 2^1\\ −\\ 2x\\ ^− 7(2^x^ + 2^−x^) + 9 < 0，則2^x^ + 2^−x^的範圍為＿＿＿＿＿＿。",
+      "answer_text": "$2\\le 2^x+2^{-x}<\\frac{5}{2}$",
+      "explanation_text": "令t = 2^x^ + 2^−x^ ∵ 2^x^ + 2^−x\\ ^≥ 2$\\sqrt{2^{x}．2^{- x}}$ $⇒$ t ≥ 2......① 又t ^2^ = 2^2x\\ ^+ 2．2^x^．2^−x\\ ^+ 2^−2x^ $⇒$ 2^2x\\ ^+ 2^−2x\\ ^= t ^2^ − 2 原式：2^1\\ +^ ^2x\\ ^+ 2^1\\ −^ ^2x\\ ^− 7(2^x^ + 2^−x^) + 9 < 0可化為 2(2^2x\\ ^+ 2^−\\ 2x^) − 7(2^x^ + 2^−x^) + 9 < 0 $⇒$ 2(t^2^ − 2) − 7t + 9 < 0 $⇒$ 2t^2^ − 7t + 5 < 0 $⇒$ (2t − 5)(t − 1) < 0 ∴ 1< t <$\\frac{5}{2}$......② 由①②知，2 ≤ t ≤$\\frac{5}{2}$，即2 ≤ 2^x^ + 2^−x\\ ^<$\\frac{5}{2}$",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 56,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0057",
+      "title": "設x為實數，且f(x) = 2(4^x^ + 4 ^−\\ x",
+      "question_text": "設x為實數，且f(x) = 2(4^x^ + 4 ^−\\ x^) + 4(2^x^ + 2 ^−\\ x^) + 8。\n(1)令t = 2^x^ + 2 ^−\\ x^，證明t ≥ 2。(2)用t表示f(x)。\n(3)求f(x)的最小值，及此時x的值。",
+      "answer_text": "(1)$t\\ge 2$; (2)$f(x)=2t^2+4t+4$; (3)最小值$20$，此時$x=0$",
+      "explanation_text": "(1)因為2^x^，2 ^−\\ x^皆為正數，所以利用算幾不等式得知， $\\frac{2^{x} + 2^{- x}}{2} \\geq \\sqrt{2^{x} · 2^{- x}} ⇒ \\frac{2^{x} + 2^{- x}}{2} \\geq 1$， 即2^x^ + 2 ^−\\ x^ ≥ 2。因而證得了t ≥ 2。\n(2)因為t^2^ = (2^x^ + 2 ^−\\ x^)^2^ = 4^x^ + 2 + 4 ^−\\ x^，所以4^x^ + 4 ^−\\ x^ = t^2^ − 2。\n因此f(x)可用t表示為2(t^2^ − 2) + 4t + 8 = 2t^2^ + 4t + 4。\n(3)因為f(x)可用t表示為2t^2^ + 4t + 4，所以利用配方可得2t^2^ + 4t + 4 = 2(t + 1)^2^ + 2。\n由(1)得知，t ≥ 2，因此當t = 2時f(x)有最小值2(2 + 1)^2^ + 2 = 20。\n此時算幾不等式的等號成立，即2^x^ = 2 ^−\\ x^ = 1，解得x = 0。\n因此當x = 0時，f(x)有最小值20。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 57,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0058",
+      "title": "設x > − 1，求f (x) = 25^x^ − 3 ×",
+      "question_text": "設x > − 1，求f (x) = 25^x^ − 3 × 5^x^的範圍。\n[圖:program-db/assets/question-media/s3-2-1/image27.png]",
+      "answer_text": "$\\left[-\\frac{9}{4},\\infty\\right)$",
+      "explanation_text": "令t = 5^x^，x > − 1$⇒ t = 5^{x} > 5^{- 1} = \\frac{1}{5}$ f (x) = 25^x^ − 3 × 5^x^改寫成t^2^ − 3t $t^{2} - 3t = (t - \\frac{3}{2})^{2} - \\frac{9}{4}$，當$t = \\frac{3}{2}$時，有最小值$- \\frac{9}{4}$ 由圖可知，$f(x) \\geq - \\frac{9}{4}$。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 58,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0059",
+      "title": "隨堂練習：設f(x) = 9^x^ − 6 × 3^x^ + 5，0",
+      "question_text": "設f(x) = 9^x^ − 6 × 3^x^ + 5，0 ≤ x ≤ 2，求f(x)的最大值與最小值。",
+      "answer_text": "最大值$32$，最小值$-4$",
+      "explanation_text": "令t = 3^x^，原式⇒ t^2^ − 6t + 5 = (t − 3)^2^ − 4\n∵0 ≤ x ≤ 2，∴1 ≤ t ≤ 9\n(1)當t = 3時，有最小值 − 4。\n(2)當t = 9時，有最大值32。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 59,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0060",
+      "title": "隨堂練習：設函數f(x) = 25^x^ − 6 × 5^x^ + 1",
+      "question_text": "設函數f(x) = 25^x^ − 6 × 5^x^ + 1， − 1 ≤ x ≤ 1，求f(x)的最大值與最小值。",
+      "answer_text": "最大值$-\\frac{4}{25}$，最小值$-8$",
+      "explanation_text": "令t = 5^x^，∵ − 1 ≤ x ≤ 1，∴$\\frac{1}{5} \\leq t \\leq 5$ 原式 = t^2^ − 6t + 1 = (t − 3)^2^ − 8\n(1)當t = 3時，有最小值 − 8。\n(2)當$t = \\frac{1}{5}$時，有最大值$- \\frac{4}{25}$。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 60,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0061",
+      "title": "隨堂練習：設−2 ≤ x ≤ 2，且當x = x~0~時，f (x)",
+      "question_text": "設−2 ≤ x ≤ 2，且當x = x~0~時，f\n(x) = 9^x^ − 3^x+1^有最大值M，則 (1) x~0~ =$\\frac{3}{2}$ (2) x~0~ = 2 (3) M =$- \\frac{9}{4}$ (4) M = 54 (5)以上皆非。",
+      "answer_text": "(2)(4)",
+      "explanation_text": "∵ −2 ≤ x ≤ 2，∴ 3^−2^ ≤ 3^x^ ≤ 3^2^，∴ $\\frac{1}{9}$ ≤ 3^x^ ≤ 9 ⇒ f (x) = (3^x^)^2^ − 3 × 3^x^ = (3^x^ −$\\frac{3}{2}$)^2^ −$\\frac{9}{4}$，\n∴當3^x^ = 9時，f (x)有最大值M = (9 −$\\frac{3}{2}$)^2^ −$\\frac{9}{4}$ = 54，此時x~0~ = 2， 故選(2)(4)。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 61,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0062",
+      "title": "隨堂練習：設− 2 ≤ x ≤ 8，若函數f (x) = 2^x^ −",
+      "question_text": "設− 2 ≤ x ≤ 8，若函數f (x) = 2^x^ − 2$\\frac{x + 4}{2}$的最大值為M，最小值為m，則\n(1)(M，m) =\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。(2)又方程式f (x) = 32的解為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "(1)$(M,m)=(192,-4)$; (2)$x=6$",
+      "explanation_text": "(1) f (x) = 2^x^ − 2$\\frac{x + 4}{2}$= 2^x^ − 2$\\frac{x}{2}$．2$\\frac{4}{2}$ = (2$\\frac{x}{2}$)^2^ − 4．2$\\frac{x}{2}$= (2$\\frac{x}{2}$− 2)^2^ − 4\n∵ −2 ≤ x ≤ 8 ⇒ $\\frac{1}{2}$≤ 2$\\frac{x}{2}$≤ 16\n∴ 當2$\\frac{x}{2}$= 16時，f (x)有最大值M = (16 − 2)^2^ − 4 = 192 當2$\\frac{x}{2}$= 2時，f (x)有最小值m = −4，即(M，m) =\n(192，−4)\n(2) f (x) = (2$\\frac{x}{2}$− 2)^2^ − 4 = 32 ⇒ (2$\\frac{x}{2}$− 2)^2^ = 36 = 6^2^\n⇒ 2$\\frac{x}{2}$− 2 = 6 ⇒ 2$\\frac{x}{2}$= 8 = 2^3^ ⇒ $\\frac{x}{2}$= 3 ⇒ x = 6",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 62,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0063",
+      "title": "隨堂練習：設f (x) = 2^2x^ + 2^x^ + 2^−x^",
+      "question_text": "設f (x) = 2^2x^ + 2^x^ + 2^−x^ + 2^−2x^ + 2，x ∈ R，求f\n(x)之最小值為＿＿＿＿＿＿。",
+      "answer_text": "$6$",
+      "explanation_text": "令t = 2^x^ + 2^−x^，則2^2x^ + 2^−2x^ = t^2^ − 2且t ≥ 2 f (x) = (2^2x^ + 2^−2x^) + (2^x^ + 2^−x^) + 2 ⇒ f (t) = (t^2^ − 2) + t + 2 = (t +$\\frac{1}{2}$)^2^ − $\\frac{1}{4}$（t ≥ 2） 當t = 2時，有最小值為(2 +$\\frac{1}{2}$)^2^ −$\\frac{1}{4}$= 6",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 63,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0064",
+      "title": "隨堂練習：x是實數，求函數f (x) = 3(9^x^ + 9 ^−x",
+      "question_text": "x是實數，求函數f\n(x) = 3(9^x^ + 9 ^−x^) −10( 3^x^ + 3 ^−x^) + 4的最小值。",
+      "answer_text": "$-10$",
+      "explanation_text": "令k = 3^x^ + 3^−x^ ∴ k ^2^ = 9^x^ + 9 ^−x\\ ^+ 2，又$\\frac{3^{x} + 3^{- x}}{2} \\geq \\sqrt{3^{x} ． 3^{- x}}$=1 ⇒ k ≥ 2\n∴ f (x) = 3(k ^2^ − 2) − 10k + 4 = 3 ( k ^2^ −$\\frac{10}{3}k$) − 2 = 3 ( k −$\\frac{5}{3}$)^2^ −$\\frac{31}{3}$\n∵ k ≥ 2 ⇒ k −$\\frac{5}{3}$≥$\\frac{1}{3}$ ⇒ (k −$\\frac{5}{3}$)^2^ ≥$\\frac{1}{9}$ ⇒ 3(k −$\\frac{5}{3}$)^2^ ≥$\\frac{1}{3}$\n∴ f (x)$\\geq \\frac{1}{3} - \\frac{31}{3}$= −10，即當k = 2時，f\n(x) = −10為最小值",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 64,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0065",
+      "title": "已知$f(x) = \\frac{2^{x} + 2^{- x",
+      "question_text": "已知$f(x) = \\frac{2^{x} + 2^{- x}}{2^{x} - 2^{- x}}$，且$f(a) = \\frac{9}{7}$，求實數a的值。",
+      "answer_text": "$a=\\frac{3}{2}$",
+      "explanation_text": "由題意知：$f(a) = \\frac{2^{a} + 2^{- a}}{2^{a} - 2^{- a}} = \\frac{9}{7}$，推得7(2^a^ + 2 ^−\\ a^) = 9(2^a^ − 2 ^−\\ a^) ⇒ 2⋅2^a^ = 16⋅2 ^−\\ a^， 即2^2a^ = 8 = 2^3^，解得$a = \\frac{3}{2}$。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 65,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0066",
+      "title": "設f (x) =$\\frac{e^{x} + e^{- x}",
+      "question_text": "設f (x) =$\\frac{e^{x} + e^{- x}}{e^{x} - e^{- x}}$，若f\n(a) = 3，f (b) = 4，求(1) f (a + b)。 (2) f (x)之值域。",
+      "answer_text": "(1)$\\frac{13}{7}$; (2)$(-\\infty,-1)\\cup(1,\\infty)$",
+      "explanation_text": "(1) f (x) =$\\frac{e^{x} + e^{- x}}{e^{x} - e^{- x}}$=$\\frac{e^{x}(e^{x} + e^{- x})}{e^{x}(e^{x} - e^{- x})}$=$\\frac{e^{2x} + 1}{e^{2x} - 1}$\n⇒ e^2x^f (x) − f (x) = e^2x\\ ^+ 1\n⇒ e^2x^ =$\\frac{f(x) + 1}{f(x) - 1}$> 0 ∴ f (x) < −1或f\n(x) > 1， 又f (a) = 3 ⇒ e^2a^ =$\\frac{3 + 1}{3 - 1}$= 2，同理e^2b^ =$\\frac{4 + 1}{4 - 1}$=$\\frac{5}{3}$\n∴ f (a + b) =$\\frac{e^{2(a + b)} + 1}{e^{2(a + b)} - 1}$=$\\frac{e^{2a}\\ ．e^{2b} + 1}{e^{2a}\\ ．e^{2b} - 1}$=$\\frac{2\\ ．\\ \\frac{5}{3} + 1}{2\\ ．\\ \\frac{5}{3} - 1}$=$\\frac{13}{7}$\n(2)由上知 { f (x) | f (x) < − 1或f (x) > 1}",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-equations-inequalities-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 66,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0067",
+      "title": "設$x$為實數，求$f(x) = \\frac{2^{x} -",
+      "question_text": "設$x$為實數，求$f(x) = \\frac{2^{x} - 2^{- x}}{2^{x} + 2^{- x}}$的範圍。",
+      "answer_text": "$-1<f(x)<1$",
+      "explanation_text": "$f(x) = \\frac{2^{x} - 2^{- x}}{2^{x} + 2^{- x}} = \\frac{2^{2x} - 1}{2^{2x} + 1}$， 令$y = \\frac{2^{2x} - 1}{2^{2x} + 1}$ ⇒ $y$．$2^{2x} + y = 2^{2x} - 1$ ⇒ $(y - 1)2^{2x} = - 1 - y$\n⇒ $2^{2x} = \\frac{- 1 - y}{y - 1} > 0$ ⇒ $( - 1 - y)(y - 1) > 0$ ⇒ $(y + 1)(y - 1) < 0$\n⇒ −1 < y < 1",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 67,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0068",
+      "title": "設x ≥ 0，y ≥ 0且x + y = 1，求4^x^ +",
+      "question_text": "設x ≥ 0，y ≥ 0且x + y = 1，求4^x^ + 4^y^的(1)最大值為\\_\\_\\_\\_\\_\\_\\_\\_。(2)最小值為\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "(1)5; (2)4",
+      "explanation_text": "(1)∵ x ≥ 0，y ≥ 0，∴ 4^x^ ≥ 4^0^ = 1，4^y^ ≥ 4^0^ = 1 ⇒ 4^x^ − 1 ≥ 0，4^y^ − 1 ≥ 0，\n∴ (4^x^ − 1)(4^y^ − 1) ≥ 0 ⇒ 4^x+y^ − 4^x^ − 4^y^ + 1 ≥ 0，\n∴ 4^x+y^ + 1 ≥ 4^x^ + 4^y^ ⇒ 4^x^ + 4^y^ ≤ 4^1^ + 1 = 5，∴最大值為5。\n(2)∵$4^{x} + 4^{y}$≥ $2\\sqrt{4^{x}4^{y}}$=$2\\sqrt{4^{x + y}}$=4，∴最小值為4",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 68,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0069",
+      "title": "隨堂練習：若a$\\geq$0，b$\\geq$0且a + b = 1，求",
+      "question_text": "若a$\\geq$0，b$\\geq$0且a + b = 1，求3^a^ + 3^b^之最大值與最小值。",
+      "answer_text": "最大值$4$，最小值$2\\sqrt{3}$",
+      "explanation_text": "∵ 3^a^ + 3^b^ ≥ 2$\\sqrt{3^{a} · 3^{b}}$=$2\\sqrt{3^{a + b}}$=$2\\sqrt{3}$ a ≥ 0 $⇒$ 3^a^ ≥ 3^0^ = 1，b ≥ 0 $⇒$ 3^b^ ≥ 3^0^ = 1\n∴ (3^a^ − 1)(3^b^ − 1) ≥ 0 $⇒$ 3^a\\ +\\ b\\ ^− ( 3^a^ + 3^b^) + 1 ≥ 0 $⇒$ 3 + 1 ≥ 3^a^ + 3^b^ $⇒$ 4 ≥ 3^a^ + 3^b^\n∴ 2$\\sqrt{3}$ ≤ 3^a^ + 3^b^ ≤ 4，最大值 = 4，最小值 = 2$\\sqrt{3}$",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-substitution-techniques-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 69,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0070",
+      "title": "某人於實驗室中發現他培養的細菌增殖量很大，已知細菌增殖數量與",
+      "question_text": "某人於實驗室中發現他培養的細菌增殖量很大，已知細菌增殖數量與時間關係為指數函數，且細菌數一天之後增為原來的a倍，根據紀錄，兩天後的細菌數約20000個，$3\\frac{1}{2}$天後的細菌數約為160000個，(1)求a值。 (2)寫出表示開始培養細菌後到第10天的細菌數之函數。\n(3)利用電算器求出開始培養細菌後，第30小時的細菌數量。",
+      "answer_text": "(1)$a=4$; (2)$f(x)=1250\\cdot 4^x,\\ 0\\le x\\le 10$; (3)約$7071$個",
+      "explanation_text": "【教冊題】\n(1)已知$f(2) = 20000$且$f(\\frac{7}{2}) = 160000$，即$ka^{2} = 20000$且$ka^{\\frac{7}{2}} = 160000$， 故$\\frac{ka^{\\frac{7}{2}}}{ka^{2}} = \\frac{160000}{20000}$，故$a^{\\frac{3}{2}} = 8$，即$(a^{\\frac{3}{2}})^{\\frac{2}{3}} = 8^{\\frac{2}{3}}$，亦即$a = 4$且$k = 1250$。\n(2)開始培養後到第x天的細菌數為$f(x) = 1250 × 4^{x}$，$0 \\leq x \\leq 10$。\n(3)開始後第30小時即第$\\frac{30}{24} = 1.25$天後， 細菌數量$f(1.25) = 1250 × 4^{1.25} \\approx 7071$，大約7071個。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-growth-decay-model-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 70,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0071",
+      "title": "牛頓冷卻定律是描述一個物體在常溫環境下溫度的變化，物體的原始",
+      "question_text": "牛頓冷卻定律是描述一個物體在常溫環境下溫度的變化，物體的原始溫度為θ ~1~，而經t分鐘冷卻後溫度為θ，滿足：θ = θ ~0~ + (θ ~1~ − θ ~0~)e ^−\\ kt^，其中θ ~0~表物體周圍的溫度， 常數k是物質的特性。今有一杯熱茶用95℃的開水沖泡，放置在31℃的環境中，測得5分鐘 後，熱茶的溫度為63℃，試問再經過30分鐘後，熱茶的溫度最接近\n(1)32℃ (2)35℃ (3)38℃ (4)41℃ (5)44℃。",
+      "answer_text": "(1)",
+      "explanation_text": "由63 = 31 + (95 − 31) ⋅ e ^−\\ 5k^，得$e^{- 5k} = \\frac{1}{2}$，知θ = 31 + (63 − 31) ⋅ e ^−\\ 30k^， 因$e^{- 30k} = (e^{- 5k})^{6} = (\\frac{1}{2})^{6} = \\frac{1}{64}$，得$\\theta = 31 + (63 - 31) · \\frac{1}{64} = 31.5$，知θ = 31.5℃。\n故選(1)。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-growth-decay-model-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 71,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0072",
+      "title": "隨堂練習：在一個培養容器中，由實驗得知細菌的數目每隔一小時會增加2倍（",
+      "question_text": "在一個培養容器中，由實驗得知細菌的數目每隔一小時會增加2倍（即變成原來 的3倍），已知一開始放入2個細菌，剛好經過一天（24小時）後，容器就充滿細菌（總數 為N個），如果一開始放入1000個細菌，問需經過多久時間，容器才會充滿細菌？\n(1)13小時以內 (2)13小時到15小時 (3)15小時到17小時\n(4)17小時到19小時 (5)19小時以上。",
+      "answer_text": "(4)",
+      "explanation_text": "N = 2 × 3^24^，設經t小時後容器充滿\n⇒ 1000 × 3^t^ ≥ N ⇒ 1000 × 3^t^ ≥ 2 × 3^24^ ⇒ 3^24\\ −\\ t^ ≤ 500 ≤ 3^6^\n∴t ≥ 18， 故選(4)。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-growth-decay-model-s321",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 72,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0073",
+      "title": "的關係圖。設其關係為指數函數y = k⋅a^x^，k是常數",
+      "question_text": "的關係圖。設其關係為指數函數y = k⋅a^x^，k是常數。\n(1)求此函數。\n(2)此病毒的濃度由每毫升有8萬個減至$\\frac{1}{2}$萬個所需要的時間 是多少個月？\n(3)若病毒的濃度小於每毫升有100個時，我們稱此疾病被治癒， 即從用藥到治癒需多少個月？",
+      "answer_text": "(1)$y=16\\cdot\\left(\\frac{1}{2}\\right)^x$; (2)4個月; (3)11個月",
+      "explanation_text": "(1)當x = 0時，y = 16，且y = k⋅a^0^ = k，因此k = 16， 又當x = 1時，y = 8，且y = 16a^1^ = 8， 因此$a = \\frac{1}{2}$，故此函數為$y = 16 · (\\frac{1}{2})^{x}$。\n(2)由圖可知：當x = 1時，y = 8，又因為函數$y = 16 · (\\frac{1}{2})^{x}$， 所以當$y = \\frac{1}{2}$時，$\\frac{1}{2} = 16 · (\\frac{1}{2})^{x}$，解得x = 5。\n因此病毒的濃度由每毫升有8萬個減至$\\frac{1}{2}$萬個所需要的時間為5 − 1 = 4個月。\n(3)當病毒的濃度小於每毫升有100個， 即病毒的濃度小於每毫升有$\\frac{1}{100}$萬個時治癒，因此$y < \\frac{1}{100}$。\n設從用藥到治癒需n個月，則$16 · (\\frac{1}{2})^{n} < \\frac{1}{100}$，即100 < 2^n\\ −\\ 4^， 因為2^7^ = 128 > 100 > 64 = 2^6^，所以n − 4 = 7，n = 11， 即11個月後，此病將會治癒。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-linearization-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 73,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0074",
+      "title": "為x°C時，可保鮮f(x) = k⋅a^x^小時，其中k，a",
+      "question_text": "為x°C時，可保鮮f(x) = k⋅a^x^小時，其中k，a是常數。\n如右圖是y = f(x)的部分圖形：\n(1)求k，a的值。\n(2)夏季時室溫常高達32°C，此時鮮奶在室溫下 的保鮮時間為幾小時？",
+      "answer_text": "(1)$k=200,\\ a=2^{-1/8}$; (2)12.5小時",
+      "explanation_text": "(1)因為函數圖形通過點(0,200)，所以f(0) = 200， 即k⋅a^0^ = 200，解得k = 200。\n又因為點(24,25)也在函數圖形上，所以200⋅a^24^ = 25, 整理得$a^{24} = \\frac{1}{8} = 2^{- 3}$，即$(a^{24})^{\\frac{1}{24}} = (2^{- 3})^{\\frac{1}{24}}$， 解得$a = 2^{- \\frac{1}{8}}$。\n即函數$f(x) = 200 · 2^{- \\frac{x}{8}}$。\n(2)將x = 32代入f(x)，得$f(32) = 200 · 2^{- \\frac{32}{8}} = 200 · 2^{- 4} = \\frac{200}{16} = 12.5$（小時）。\n即在室溫下32°C，鮮奶可保鮮12.5小時。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-linearization-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 74,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0075",
+      "title": "將魚從冷凍庫取出，放在25°C的室溫下解凍，放置x小時後魚的",
+      "question_text": "將魚從冷凍庫取出，放在25°C的室溫下解凍，放置x小時後魚的溫度為f(x) = 25 − 32⋅a^x^（°C），其中a是常數。根據經驗，魚在解凍1小時後的溫度為9°C。問：解凍3小時後，魚的溫度為攝氏幾度？",
+      "answer_text": "21°C",
+      "explanation_text": "由題意可知：f(1) = 9，即25 − 32⋅a = 9，解得$a = \\frac{1}{2}$，故$f(x) = 25 - 32 · (\\frac{1}{2})^{x}$。\n解凍3小時後，魚的溫度為攝氏f(3)度，計算$f(3) = 25 - 32 · (\\frac{1}{2})^{3} = 21$， 因此，魚的溫度為攝氏21度。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-growth-decay-model-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 75,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例16"
+      ]
+    },
+    {
+      "id": "q-s3-2-1-0076",
+      "title": "假設在實驗室中有一群果蠅，其數量為依指數成長的函數：f (t",
+      "question_text": "假設在實驗室中有一群果蠅，其數量為依指數成長的函數：f (t) = r ⋅ 5^kt^，t表時間的天數， r，k為常數。已知在第2天之後有150隻，在第4天之後有450隻。試問在開始實驗時有幾 隻果蠅？",
+      "answer_text": "50隻",
+      "explanation_text": "f (2) = r ⋅ 5^2k^ = 150，f (4) = r ⋅ 5^4k^ = 450，$\\frac{f(4)}{f(2)} = 5^{2k} = 3$，得r = 50，$5^{k} = 3^{\\frac{1}{2}}$， 知$f(t) = 50 · 3^{\\frac{t}{2}}$，得f (0) = 50（隻）。",
+      "chapter_code": "s3-2-1",
+      "formula_id": "senior-exponential-growth-decay-model-s321",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-1轉.docx",
+      "source_section": "主題3：指數不等式",
+      "source_order": 76,
+      "tags": [
+        "s3-2-1",
+        "section:主題3：指數不等式",
+        "marker:範例17"
+      ]
+    }
+  ]
+}

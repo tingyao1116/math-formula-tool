@@ -1,0 +1,446 @@
+{
+  "chapter_code": "s4-4-3",
+  "chapter_title": "變換矩陣的應用",
+  "questions": [
+    {
+      "id": "q-s4-4-3-0001",
+      "title": "範例1：變換矩陣的應用",
+      "question_text": "所謂「轉移矩陣」必須滿足下列兩個條件：(甲)該矩陣的每一個位置都是一個非 負的實數，(乙)該矩陣的每一行的數字相加都等於1，以$2 \\times 2$階矩陣為例﹐$\\begin{bmatrix} 0.2 & 0.3 \\ 0.8 & 0.7 \\end{bmatrix}$和 $\\begin{bmatrix} 0.9 & 0.6 \\ 0.1 & 0.4 \\end{bmatrix}$滿足(甲)(乙)這兩個條件﹐因此都是轉移矩陣﹒今設$A$﹐$B$是兩個$n \\times n$階的轉移矩陣﹐ 請問下列哪些敘述是正確的？ (1)$A^{2}$是轉移矩陣 (2)$AB$不滿足條件(乙)\n(3)$\\frac{1}{2}(A + B)$是轉移矩陣 (4)$\\frac{1}{4}(A^{2} + B^{2})$是轉移矩陣 (5)$A + B$是轉移矩陣。",
+      "answer_text": "(1)(3)",
+      "explanation_text": "因若$A$﹐$B$為轉移矩陣﹐則$\\frac{1}{2}(A + B)$﹐$AB$均為轉移矩陣﹒\n證明：設$A = \\lbrack\\mathcal{l}_{ij}\\rbrack_{n \\times n}$﹐$B = \\lbrack m_{ij}\\rbrack_{n \\times n}$﹐則$\\forall j$﹐$\\sum_{i = 1}^{n}\\mathcal{l}_{ij} = 1$且$\\sum_{i = 1}^{n}m_{ij} = 1$﹒\n故$\\forall j$﹐$\\sum_{i = 1}^{n}{\\frac{1}{2}(\\mathcal{l}_{ij} + m_{ij})} = \\frac{1}{2}(\\sum_{i = 1}^{n}\\mathcal{l}_{ij} + \\sum_{i = 1}^{n}m_{ij}) = \\frac{1}{2}(1 + 1) = 1$﹐ $\\forall j$﹐$\\sum_{i = 1}^{n}{(\\sum_{k = 1}^{n}{\\mathcal{l}_{ik}m_{kj})}} = \\sum_{k = 1}^{n}{(\\sum_{i = 1}^{n}{\\mathcal{l}_{ik}m_{kj})}} = \\sum_{k = 1}^{n}{(m_{kj}\\sum_{i = 1}^{n}{\\mathcal{l}_{ik})}} = \\sum_{k = 1}^{n}{(m_{kj} \\times 1)} = 1$﹒\n故選(1)(3)",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 1,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0002",
+      "title": "範例2：變換矩陣的應用",
+      "question_text": "設有A﹐B二城市﹐根據調查﹐由於工作的關係﹐每年由A市移居B市的人口﹐占A市的30％﹐由B市移居A市的人口﹐占B市的20％﹐\n(1)已知：A市人口為120萬人﹐B市人口為150萬人﹐試求三年後﹐A市的人口約為多少人？\n(2)若A﹐B二市人口維持不變﹐則A﹐B二市的人口比例為何？",
+      "answer_text": "(1)約$109.5$萬人；(2)$2:3$",
+      "explanation_text": "設n年後﹐A市人口為a~n~萬人﹐B市為b~n~萬人\n⇒$\\left\\{ \\begin{matrix} a_{n} = 0.7 \\rightleftharpoons ． \\rightleftharpoons {a_{n}}_{- 1} + 0.2 \\rightleftharpoons ． \\rightleftharpoons \\rightleftharpoons {b_{n}}_{- 1} \\ b_{n} = 0.3 \\rightleftharpoons ． \\rightleftharpoons {a_{n}}_{- 1} + 0.8 \\rightleftharpoons ． \\rightleftharpoons \\rightleftharpoons {b_{n}}_{- 1} \\end{matrix} \\right.$﹐$\\forall$n ∈$\\mathbb{N}$ ⇒$\\begin{bmatrix} a_{n} \\ b_{n} \\end{bmatrix} = \\begin{bmatrix} 0.7 & 0.2 \\ 0.3 & 0.8 \\end{bmatrix} ⥄ \\begin{bmatrix} a_{n - 1} \\ b_{n - 1} \\end{bmatrix}$﹒\n(1)已知a~0~ = 120﹐b~0~ = 150 ⇒$\\begin{bmatrix} a_{1} \\ b_{1} \\end{bmatrix} = \\begin{bmatrix} 0.7 & 0.2 \\ 0.3 & 0.8 \\end{bmatrix} ⥄ \\begin{bmatrix} 120 \\ 150 \\end{bmatrix} = \\begin{bmatrix} 114 \\ 156 \\end{bmatrix}$\n⇒$\\begin{bmatrix} a_{2} \\ b_{2} \\end{bmatrix} = \\begin{bmatrix} 0.7 & 0.2 \\ 0.3 & 0.8 \\end{bmatrix} ⥄ \\begin{bmatrix} 114 \\ 156 \\end{bmatrix} = \\begin{bmatrix} 111 \\ 159 \\end{bmatrix}$⇒$\\begin{bmatrix} a_{3} \\ b_{3} \\end{bmatrix} = \\begin{bmatrix} 0.7 & 0.2 \\ 0.3 & 0.8 \\end{bmatrix} ⥄ \\begin{bmatrix} 111 \\ 159 \\end{bmatrix} = \\begin{bmatrix} 109.5 \\ 160.5 \\end{bmatrix}$﹒\n即三年後﹐A市人口約為109.5萬人﹒\n(2)欲A﹐B二市人口維持不變⇒ a~n~ = a~n\\ ~~−\\ 1~ = a﹐b~n~ = b~n~ ~−\\ 1~ = b\n⇒$\\begin{bmatrix} a \\ b \\end{bmatrix} = \\begin{bmatrix} 0.7 & 0.2 \\ 0.3 & 0.8 \\end{bmatrix} ⥄ \\begin{bmatrix} a \\ b \\end{bmatrix} = \\begin{bmatrix} 0.7a + 0.2b \\ 0.3a + 0.8b \\end{bmatrix}$⇒ 0.3a − 0.2b = 0 ⇒ a：b = 2：3﹒\n即A﹐B二市之人口比例為2：3﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 2,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0003",
+      "title": "隨堂練習：變換矩陣的應用",
+      "question_text": "設$A = \\begin{bmatrix} 0.2 & 0.4 \\ 0.8 & 0.6 \\end{bmatrix}$和$B = \\begin{bmatrix} 0.6 & 0.6 \\ 0.4 & 0.4 \\end{bmatrix}$﹐請問下列哪些敘述是正確的﹖\n(1)AB是轉移矩陣 (2)AB有乘法反方陣 (3)$\\frac{1}{2}(A + B)$是轉移矩陣 (4)$\\frac{1}{2}(A + B)$有乘法反方陣\n(5)轉移矩陣必有乘法反方陣﹒【100新竹高中期中考】",
+      "answer_text": "(1)(3)(4)",
+      "explanation_text": "(2)det(AB) = detA⋅detB = 0。 (5)取$X = \\begin{bmatrix} 0.5 & 0.5 \\ 0.5 & 0.5 \\end{bmatrix}$ 故選(1)(3)(4)﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 3,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0004",
+      "title": "隨堂練習：變換矩陣的應用",
+      "question_text": "有$M$牌的行動電話﹐根據調查﹐每一觀察期後有70%的使用者仍使用$M$牌﹐而其 他品牌的使用者有20%轉用$M$牌﹐則當市場在穩定狀態時﹐$M$牌在市場的占有率為\\_\\_\\_\\_\\_\\_\\_\\_﹒【100新竹高中期中考】\n【基隆女中段考題】",
+      "answer_text": "$40\\%$",
+      "explanation_text": "設使用$M$牌的有$X$人﹐其他品牌的有$Y$人﹐$\\begin{bmatrix} 0.7 & 0.2 \\ 0.3 & 0.8 \\end{bmatrix}\\begin{bmatrix} X \\ Y \\end{bmatrix} = \\begin{bmatrix} X \\ Y \\end{bmatrix}$﹐ $\\left\\{ \\begin{array}{r} 0.7X + 0.2Y = X \\ 0.3X + 0.8Y = Y \\end{array} \\right.$﹐得$X:Y = 2:3$﹐因此﹐$M$牌的市場占有率為$\\frac{2}{5} = 40\\%$﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 4,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0005",
+      "title": "範例3：變換矩陣的應用",
+      "question_text": "某地區有A﹐B兩家超市﹐根據調查每年A超市保有80%的顧客﹐有20%轉向B超市﹐而B超市保有40%的顧客﹐有60%轉向A超市﹐已知目前A﹐B兩超市的占有率分別為30%及70%﹐且顧客的總人數不變﹐下列各敘述何者正確？ (1)第一年後﹐A超市的顧客占有率為66% (2)第二年後﹐B超市的顧客占有率為39.2% (3)若超市經營會趨於穩定﹐在穩定狀態下﹐A超市的顧客占有率為75% (4)若超市經營會趨於穩定﹐在穩定狀態下﹐B超市的顧客占有率為33.3% (5)在穩定狀態下﹐A超市的顧客占有率與B超市的顧客占有率之比約為3：2。\n【臺中女中段考題】",
+      "answer_text": "(1)(3)",
+      "explanation_text": "由題意得\n[圖:program-db/assets/question-media/s4-4-3/image1.png] 故轉移矩陣$P$為$\\begin{bmatrix} 0.8 & 0.6 \\ 0.2 & 0.4 \\end{bmatrix}$﹐又初始狀態$X_{0} = \\begin{bmatrix} 0.3 \\ 0.7 \\end{bmatrix}$﹐ $X_{1} = PX_{0} = \\begin{bmatrix} 0.8 & 0.6 \\ 0.2 & 0.4 \\end{bmatrix}\\begin{bmatrix} 0.3 \\ 0.7 \\end{bmatrix} = \\begin{bmatrix} 0.66 \\ 0.34 \\end{bmatrix}$﹐故一年後A超市顧客占有率為66%﹐ $X_{2} = PX_{1} = \\begin{bmatrix} 0.8 & 0.6 \\ 0.2 & 0.4 \\end{bmatrix}\\begin{bmatrix} 0.66 \\ 0.34 \\end{bmatrix} = \\begin{bmatrix} 0.732 \\ 0.268 \\end{bmatrix}$﹐故第二年後B超市顧客占有率為26.8%﹐ 設穩定狀態$X = \\begin{bmatrix} a \\ b \\end{bmatrix}$﹐則$\\begin{bmatrix} 0.8 & 0.6 \\ 0.2 & 0.4 \\end{bmatrix}\\begin{bmatrix} a \\ b \\end{bmatrix} = \\begin{bmatrix} a \\ b \\end{bmatrix} \\Rightarrow 0.8a + 0.6b = a \\Rightarrow 0.2a = 0.6b \\Rightarrow a = 3b$﹐\n∴$X = \\begin{bmatrix} \\frac{3}{4} \\ \\frac{1}{4} \\end{bmatrix} = \\begin{bmatrix} 0.75 \\ 0.25 \\end{bmatrix}$﹐即市占率比為3：1﹐故選(1)(3)﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 5,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0006",
+      "title": "範例4：變換矩陣的應用",
+      "question_text": "工廠有甲﹑乙二條生產線﹐共有140位工人﹒工作一週後﹐依轉調規定﹕甲生產線保留60% 的工人﹐另40%的工人轉調到乙生產線﹔乙生產線保留70%的工人﹐另30%的工人轉調到甲 生產線﹒雖然每週都這樣作輪調﹐但是每條生產線上的工人總數總是不變﹒求甲生產線的工 人數﹒",
+      "answer_text": "$60$位",
+      "explanation_text": "設甲生產線有x位工人﹐即乙生產線有140 − x位工人﹒\n依題意﹐得其對應的轉移矩陣為$\\begin{bmatrix} 0.6 & 0.3 \\ 0.4 & 0.7 \\end{bmatrix}$﹒\n因為每條生產線上的工人總數總是不變﹐所以$\\begin{bmatrix} 0.6 & 0.3 \\ 0.4 & 0.7 \\end{bmatrix}\\begin{bmatrix} x \\ 140 - x \\end{bmatrix} = \\begin{bmatrix} x \\ 140 - x \\end{bmatrix}$﹐ 得$\\left\\{ \\begin{array}{r} 0.6x + 0.3(140 - x) = x \\ 0.4x + 0.7(140 - x) = 140 - x \\end{array} \\right.$﹒\n解得x = 60﹐故甲生產線有60位工人﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 6,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0007",
+      "title": "範例5：變換矩陣的應用",
+      "question_text": "甲﹑乙兩家電視臺﹐在下午7時到8時的電視節目中﹐收視率各為$\\frac{1}{2}$﹒現兩電視臺分別將 這段時間內的節目革新﹐在首6個月內﹐收視率有下列的變化﹕①甲臺的原有觀眾﹐有70％ 看甲臺﹐30％改看乙臺﹒②乙臺的原有觀眾﹐有60％改看甲臺﹐40％仍看乙臺﹒\n(1)假如這種現象仍然繼續﹐問一年以後甲臺的收視率為何﹖\n(2)在一段時期後會呈現穩定狀態﹐則在穩定狀態下﹐甲臺的收視率為何﹖\n【100臺中一中期中考】",
+      "answer_text": "(1)$66.5\\%$；(2)$\\frac{2}{3}$",
+      "explanation_text": "(1)轉移矩陣為$\\overset{\\begin{matrix} 甲 & 乙 \\end{matrix}}{T = \\begin{matrix} 甲 \\ 乙 \\end{matrix}\\begin{bmatrix} 0.7 & 0.6 \\ 0.3 & 0.4 \\end{bmatrix}}$﹐初始狀態$P_{0} = \\begin{bmatrix} \\frac{1}{2} \\ \\frac{1}{2} \\end{bmatrix}$﹐一年後即P~2~﹐ $P_{1} = TP_{0} = \\begin{bmatrix} 0.7 & 0.6 \\ 0.3 & 0.4 \\end{bmatrix}\\begin{bmatrix} \\frac{1}{2} \\ \\frac{1}{2} \\end{bmatrix} = \\begin{bmatrix} 0.65 \\ 0.35 \\end{bmatrix}$﹐$P_{2} = TP_{1} = \\begin{bmatrix} 0.7 & 0.6 \\ 0.3 & 0.4 \\end{bmatrix}\\begin{bmatrix} 0.65 \\ 0.35 \\end{bmatrix} = \\begin{bmatrix} 0.665 \\ 0.335 \\end{bmatrix}$﹐ 故一年以後甲臺收視率為66.5％﹒\n(2)設穩定狀態下﹐甲臺收視率為x﹐乙臺收視率為y﹐其中x + y = 1﹐ $\\begin{bmatrix} 0.7 & 0.6 \\ 0.3 & 0.4 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} x \\ y \\end{bmatrix}$⇒$\\left\\{ \\begin{array}{r} 0.7x + 0.6y = x \\ x + y = 1 \\end{array} \\right.$⇒$\\left\\{ \\begin{array}{r} x = \\frac{2}{3} \\ y = \\frac{1}{3} \\end{array} \\right.$﹐故甲臺收視率為$\\frac{2}{3}$﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 7,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0008",
+      "title": "隨堂練習：變換矩陣的應用",
+      "question_text": "某地區有甲﹑乙二種報紙﹐市場調查結果如下﹕①今年訂閱甲報的﹐有80%明年會 繼續訂甲報﹐有20%會改訂乙報﹔②今年訂閱乙報的﹐有70%明年會繼續訂乙報﹐有30%會 改訂甲報﹒已知今年甲﹑乙二報的市場占有率分別為40%﹑60%﹐求三年後﹐甲﹑乙二報的 市場占有率各為多少﹖【100新竹高中期中考】",
+      "answer_text": "甲報$57.5\\%$，乙報$42.5\\%$",
+      "explanation_text": "依題意﹐得市場占有率的轉移矩陣為$A = \\begin{bmatrix} 0.8 & 0.3 \\ 0.2 & 0.7 \\end{bmatrix}$﹒\n因為今年甲﹑乙占有率分別為40%﹑60%﹐所以$X_{0} = \\begin{bmatrix} 0.4 \\ 0.6 \\end{bmatrix}$﹒\n於是$X_{1} = AX_{0} = \\begin{bmatrix} 0.8 & 0.3 \\ 0.2 & 0.7 \\end{bmatrix}\\begin{bmatrix} 0.4 \\ 0.6 \\end{bmatrix} = \\begin{bmatrix} 0.5 \\ 0.5 \\end{bmatrix}$﹐$X_{2} = AX_{1} = \\begin{bmatrix} 0.8 & 0.3 \\ 0.2 & 0.7 \\end{bmatrix}\\begin{bmatrix} 0.5 \\ 0.5 \\end{bmatrix} = \\begin{bmatrix} 0.55 \\ 0.45 \\end{bmatrix}$﹐ $X_{3} = AX_{2} = \\begin{bmatrix} 0.8 & 0.3 \\ 0.2 & 0.7 \\end{bmatrix}\\begin{bmatrix} 0.55 \\ 0.45 \\end{bmatrix} = \\begin{bmatrix} 0.575 \\ 0.425 \\end{bmatrix}$﹒\n故三年後﹐訂閱甲報者占57.5%﹐訂閱乙報者占42.5%﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 8,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0009",
+      "title": "隨堂練習：變換矩陣的應用",
+      "question_text": "某國近來流行一種名為ADIS的傳染病﹐於是研發一種藥物規定患ADIS 的人必須馬上服用﹐並且統計得知﹕ADIS患者有60%服藥後會康復﹐但未患ADIS的人及此 病的康復者中也有20%會被傳染﹒若不考慮其他任何因素（如細菌的抗藥性或人口增減等）﹐ 根據此統計短期（數個月內）預估﹐下列選項哪些正確﹖\n(1)若目前有40%的人患ADIS﹐則一週後﹐仍有16%的人患ADIS\n(2)若目前有40%的人患ADIS﹐則兩週後﹐會有72%的人未患ADIS\n(3)若目前有25%的人患ADIS﹐則ADIS患者比例每週皆不變\n(4)已知某人本週患ADIS﹐則此人兩週後仍患ADIS的機率為28%\n(5)若目前有10%的人患ADIS﹐依此統計預估﹐ADIS患者比例將每週逐漸遞增﹐因此此藥無 益於減緩疫情﹒【100新竹高中期中考】\n【100臺南女中期中考】",
+      "answer_text": "(3)(4)",
+      "explanation_text": "設轉移矩陣$A = \\begin{bmatrix} 0.4 & 0.2 \\ 0.6 & 0.8 \\end{bmatrix}$﹐\n(1)$\\ A\\begin{bmatrix} 0.4 \\ 0.6 \\end{bmatrix} = \\begin{bmatrix} 0.28 \\ 0.72 \\end{bmatrix}$﹐一週後有28%的人患ADIS\n(2)$\\ A^{2}\\begin{bmatrix} 0.4 \\ 0.6 \\end{bmatrix} = \\begin{bmatrix} 0.256 \\ 0.744 \\end{bmatrix}$﹐兩週後有74.4%的人未患ADIS\n(3)$\\ A\\begin{bmatrix} 0.25 \\ 0.75 \\end{bmatrix} = \\begin{bmatrix} 0.25 \\ 0.75 \\end{bmatrix}$﹐患者比例每週不變\n(4)$\\ A^{2}\\begin{bmatrix} 1 \\ 0 \\end{bmatrix} = \\begin{bmatrix} 0.28 \\ 0.72 \\end{bmatrix}$﹐此人兩週後仍患病機率為28%\n(5)$\\ A\\begin{bmatrix} 0.1 \\ 0.9 \\end{bmatrix} = \\begin{bmatrix} 0.22 \\ 0.78 \\end{bmatrix}$﹐患者比例逐漸遞增﹐若不服此藥則$\\begin{bmatrix} 1 & 0.2 \\ 0 & 0.8 \\end{bmatrix}\\begin{bmatrix} 0.1 \\ 0.9 \\end{bmatrix} = \\begin{bmatrix} 0.28 \\ 0.72 \\end{bmatrix}$﹐ 患者比例更多 故選(3)(4)﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "中",
+      "question_category": "備用",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 9,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0010",
+      "title": "範例6：變換矩陣的應用",
+      "question_text": "如果將每天天氣的狀態略分為晴﹑陰﹑雨等三種情況﹐根據統計資料知道﹐某地天氣變化的機率如下表所示：\n[圖:program-db/assets/question-media/s4-4-3/image2.png] 如果今天是晴天﹐則下列哪些是正確的？ (1)明天是晴天的機率為0.5 (2)明天是晴天或陰天的機率為0.9 (3)後天（即兩天後）是晴天的機率為0.4 (4)後天是陰天的機率超過0.5 (5)明天與後天﹐雨天的機率都不超過0.2。",
+      "answer_text": "(1)(2)(5)",
+      "explanation_text": "令矩陣M =$\\begin{bmatrix} 0.5 & 0.4 & 0.3 \\ 0.4 & 0.4 & 0.5 \\ 0.1 & 0.2 & 0.2 \\end{bmatrix}$﹐P =$\\begin{bmatrix} 1 \\ 0 \\ 0 \\end{bmatrix}$表今日是晴天﹑陰天﹑雨天的機率為1﹐0﹐0﹐ 則明天的天氣是晴天﹑陰天﹑雨天的機率為MP﹐ 後天的天氣是晴天﹑陰天﹑雨天的機率為M(MP)﹐ 而MP =$\\begin{bmatrix} 0.5 \\ 0.4 \\ 0.1 \\end{bmatrix}$﹐M(MP) =\n[圖:program-db/assets/question-media/s4-4-3/image3.png] $\\begin{bmatrix} 0.5 \\ 0.4 \\ 0.1 \\end{bmatrix}$=$\\begin{bmatrix} 0.44 \\ 0.41 \\ 0.15 \\end{bmatrix}$ 故選(1)(2)(5)﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 10,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0011",
+      "title": "範例7：變換矩陣的應用",
+      "question_text": "設甲箱內有2白球﹐乙箱內有3紅球﹐現在每次同時自各箱中隨機取出一個球交換﹐求在 長期的交換後﹐2白球在甲箱內的機率為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒\n【建國中學段考題】",
+      "answer_text": "$\\frac{1}{10}$",
+      "explanation_text": "轉移矩陣$P$\n[圖:program-db/assets/question-media/s4-4-3/image4.png]﹒若$P\\begin{bmatrix} x \\ y \\ z \\end{bmatrix} = \\begin{bmatrix} x \\ y \\ z \\end{bmatrix}$﹐其中$x + y + z = 1$﹐ 則\n[圖:program-db/assets/question-media/s4-4-3/image5.png] $\\left\\{ \\begin{matrix} x = \\frac{1}{10} \\ y = \\frac{3}{5} \\ z = \\frac{3}{10} \\end{matrix} \\right.$﹐∴長期交換後﹐2白球在甲箱機率$= \\frac{1}{10}$﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 11,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0012",
+      "title": "隨堂練習：變換矩陣的應用",
+      "question_text": "設甲箱內有1紅球1白球﹐乙箱內有1紅球2白球﹒現在每次自各箱中隨機取一個 球交換﹒試求﹕(1)在交換兩次後﹐有2紅球在甲箱內之機率﹒\n(2)在長期的交換後﹐有2紅球在甲箱內之機率﹒【100新竹高中期中考】\n【99新竹高中期中考】",
+      "answer_text": "(1)$\\frac{1}{12}$；(2)$\\frac{1}{9}$",
+      "explanation_text": "當甲箱2紅球時﹐乙箱為3白球﹕交換後甲箱必為1紅1白﹐ 當甲箱1紅球1白球時﹐乙箱為1紅球2白球﹕ 交換後﹐P(甲箱為2紅)$= \\frac{1}{2} \\times \\frac{1}{3} = \\frac{1}{6}$﹐P(甲箱為1紅1白)$= \\frac{1}{2} \\times \\frac{1}{3} + \\frac{1}{2} \\times \\frac{2}{3} = \\frac{1}{2}$﹐ P(甲箱為2白)$= \\frac{1}{2} \\times \\frac{2}{3} = \\frac{1}{3}$﹐ 當甲箱2白球時﹐乙箱為2紅球1白球﹕ 交換後﹐P(甲箱為2紅) = 0﹐P(甲箱為1紅1白)$= \\frac{2}{3}$﹐P(甲箱為2白)$= \\frac{1}{3}$﹐ 故可令轉移矩陣為$M = \\begin{matrix} 2紅 \\ \\ 1紅1白 \\ \\ 2白 \\end{matrix}\\overset{2紅 1紅1白 2白}{\\begin{bmatrix} 0 & \\frac{1}{6} & 0 \\ 1 & \\frac{1}{2} & \\frac{2}{3} \\ 0 & \\frac{1}{3} & \\frac{1}{3} \\end{bmatrix}}$﹒\n(1)令起始狀態矩陣為$A = \\begin{matrix} 2紅 \\ 1紅1白 \\ 2白 \\end{matrix}\\begin{bmatrix} 0 \\ 1 \\ 0 \\end{bmatrix}$﹐ $MA = \\begin{bmatrix} 0 & \\frac{1}{6} & 0 \\ 1 & \\frac{1}{2} & \\frac{2}{3} \\ 0 & \\frac{1}{3} & \\frac{1}{3} \\end{bmatrix}\\begin{bmatrix} 0 \\ 1 \\ 0 \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{6} \\ \\frac{1}{2} \\ \\frac{1}{3} \\end{bmatrix} \\Rightarrow M^{2}A = M(MA) = \\begin{bmatrix} 0 & \\frac{1}{6} & 0 \\ 1 & \\frac{1}{2} & \\frac{2}{3} \\ 0 & \\frac{1}{3} & \\frac{1}{3} \\end{bmatrix}\\begin{bmatrix} \\frac{1}{6} \\ \\frac{1}{2} \\ \\frac{1}{3} \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{12} \\ \\frac{23}{36} \\ \\frac{5}{18} \\end{bmatrix}$\n∴交換2次後﹐甲箱為2紅的機率$= \\frac{1}{12}$﹒\n(2)令穩定狀態為$X = \\begin{matrix} 2紅 \\ 1紅1白 \\ 2白 \\end{matrix}\\begin{bmatrix} a \\ b \\ c \\end{bmatrix}$﹐則MX = X且a + b + c = 1 $\\Rightarrow \\begin{bmatrix} 0 & \\frac{1}{6} & 0 \\ 1 & \\frac{1}{2} & \\frac{2}{3} \\ 0 & \\frac{1}{3} & \\frac{1}{3} \\end{bmatrix}\\begin{bmatrix} a \\ b \\ c \\end{bmatrix} = \\begin{bmatrix} a \\ b \\ c \\end{bmatrix} \\Rightarrow \\begin{bmatrix} \\frac{b}{6} \\ a + \\frac{b}{2} + \\frac{2c}{3} \\ \\frac{b}{3} + \\frac{c}{3} \\end{bmatrix} = \\begin{bmatrix} a \\ b \\ c \\end{bmatrix} \\Rightarrow \\left\\{ \\begin{array}{r} b = 6a \\ 6a - 3b + 4c = 0 \\ b = 2c \\end{array} \\right.$ $\\Rightarrow a： b： c = \\frac{b}{6}： b：\\frac{b}{2} = 1： 6： 3$﹐ 又a + b + c = 1\n∴長期交換後﹐甲箱為2紅的機率$= a = \\frac{1}{1 + 6 + 3} = \\frac{1}{10}$﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 12,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0013",
+      "title": "隨堂練習：變換矩陣的應用",
+      "question_text": "有一箱子內一開始裝有2個黑球﹐強全從箱子內玩抽球遊戲﹐每一次強全從箱子中 任取一球﹐取完球後再擲一骰子﹐若出現3的倍數的點數﹐則另取一個白球與所抽出的球交 換並將白球放入箱子內﹐否則另取一個黑球與所抽出的球交換並將黑球放入箱子內﹐使箱子 內仍保持2個球﹐再做下一次抽取﹐求﹕(1)轉移矩陣﹒(2)強全抽三次後﹐箱子內有2個黑球 的機率﹒(3)強全抽很多次後﹐箱子內有2個黑球的機率【100新竹高中期中考】\n【99臺中女中期中考】",
+      "answer_text": "(1)$\\begin{bmatrix}\\frac{2}{3}&\\frac{1}{3}&0\\\\\\frac{1}{3}&\\frac{1}{2}&\\frac{2}{3}\\\\0&\\frac{1}{6}&\\frac{1}{3}\\end{bmatrix}$；(2)$\\frac{1}{2}$；(3)$\\frac{4}{9}$",
+      "explanation_text": "(1)\n[圖:program-db/assets/question-media/s4-4-3/image6.png]\n∴轉移矩陣$A = \\begin{matrix} 2B\\frac{}{} \\ 1B1W\\frac{}{} \\ 2W\\frac{}{} \\end{matrix}\\overset{2B 1B1W 2W}{\\begin{bmatrix} \\frac{2}{3} & \\frac{1}{3} & 0 \\ \\frac{1}{3} & \\frac{1}{2} & \\frac{2}{3} \\ 0 & \\frac{1}{6} & \\frac{1}{3} \\end{bmatrix}}$﹒\n(2)$\\begin{bmatrix} \\frac{2}{3} & \\frac{1}{3} & 0 \\ \\frac{1}{3} & \\frac{1}{2} & \\frac{2}{3} \\ 0 & \\frac{1}{6} & \\frac{1}{3} \\end{bmatrix}\\begin{bmatrix} 1 \\ 0 \\ 0 \\end{bmatrix} = \\begin{bmatrix} \\frac{2}{3} \\ \\frac{1}{3} \\ 0 \\end{bmatrix}$﹐$\\begin{bmatrix} \\frac{2}{3} & \\frac{1}{3} & 0 \\ \\frac{1}{3} & \\frac{1}{2} & \\frac{2}{3} \\ 0 & \\frac{1}{6} & \\frac{1}{3} \\end{bmatrix}\\begin{bmatrix} \\frac{2}{3} \\ \\frac{1}{3} \\ 0 \\end{bmatrix} = \\begin{bmatrix} \\frac{5}{9} \\ \\frac{7}{18} \\ \\frac{1}{18} \\end{bmatrix}$ $\\begin{bmatrix} \\frac{2}{3} & \\frac{1}{3} & 0 \\ \\frac{1}{3} & \\frac{1}{2} & \\frac{2}{3} \\ 0 & \\frac{1}{6} & \\frac{1}{3} \\end{bmatrix}\\begin{bmatrix} \\frac{5}{9} \\ \\frac{7}{18} \\ \\frac{1}{18} \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{2} \\ \\frac{5}{12} \\ \\frac{1}{12} \\end{bmatrix}$ ∴機率$= \\frac{1}{2}$﹒\n(3)令穩定矩陣為$\\begin{bmatrix} x \\ y \\ 1 - x - y \\end{bmatrix}$\n∴$\\begin{bmatrix} \\frac{2}{3} & \\frac{1}{3} & 0 \\ \\frac{1}{3} & \\frac{1}{2} & \\frac{2}{3} \\ 0 & \\frac{1}{6} & \\frac{1}{3} \\end{bmatrix}\\begin{bmatrix} x \\ y \\ 1 - x - y \\end{bmatrix} = \\begin{bmatrix} x \\ y \\ 1 - x - y \\end{bmatrix}$ ∴$\\left\\{ \\begin{array}{r} \\frac{2}{3}x + \\frac{1}{3}y = x \\ \\frac{1}{6}y + \\frac{1}{3}(1 - x - y) = 1 - x - y \\end{array} \\right.$\n∴$x = \\frac{4}{9}$﹐$y = \\frac{4}{9}$\n⇒ 穩定矩陣$= \\begin{bmatrix} \\frac{4}{9} \\ \\frac{4}{9} \\ \\frac{1}{9} \\end{bmatrix}$ ∴所求機率為$\\frac{4}{9}$﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 13,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0014",
+      "title": "隨堂練習：變換矩陣的應用",
+      "question_text": "小明口袋裡有2個白球﹐大華口袋裡有3個紅球﹐現在兩人每次自口袋裡隨機取一 個球和對方交換﹐求：(1)在交換二次後﹐有2個紅球在小明口袋裡的機率$=$\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒\n(2)在經過長期交換後﹐小明口袋裡有2個紅球的機率趨近於何值\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒【100新竹高中期中考】\n【北一女中段考題】",
+      "answer_text": "(1)$\\frac{1}{12}$；(2)$\\frac{1}{10}$",
+      "explanation_text": "考慮小明口袋中的球得\n[圖:program-db/assets/question-media/s4-4-3/image7.png]⇒轉移矩陣為$P = \\begin{bmatrix} 0 & \\frac{1}{6} & 0 \\ 1 & \\frac{1}{2} & \\frac{2}{3} \\ 0 & \\frac{1}{3} & \\frac{1}{3} \\end{bmatrix}$﹐\n(1)$X_{1} = PX_{0} = \\begin{bmatrix} 0 & \\frac{1}{6} & 0 \\ 1 & \\frac{1}{2} & \\frac{2}{3} \\ 0 & \\frac{1}{3} & \\frac{1}{3} \\end{bmatrix}\\begin{bmatrix} 1 \\ 0 \\ 0 \\end{bmatrix} = \\begin{bmatrix} 0 \\ 1 \\ 0 \\end{bmatrix}$﹐$X_{2} = PX_{1} = \\begin{bmatrix} 0 & \\frac{1}{6} & 0 \\ 1 & \\frac{1}{2} & \\frac{2}{3} \\ 0 & \\frac{1}{3} & \\frac{1}{3} \\end{bmatrix}\\begin{bmatrix} 0 \\ 1 \\ 0 \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{6} \\ \\frac{1}{2} \\ \\frac{1}{3} \\end{bmatrix}$﹐ 故小明有兩個紅球的機率為$\\frac{1}{3}$﹒\n(2)設穩定態為$X_{n} = \\begin{bmatrix} a \\ b \\ 1 - a - b \\end{bmatrix}$﹐則$\\begin{bmatrix} 0 & \\frac{1}{6} & 0 \\ 1 & \\frac{1}{2} & \\frac{2}{3} \\ 0 & \\frac{1}{3} & \\frac{1}{3} \\end{bmatrix}\\begin{bmatrix} a \\ b \\ 1 - a - b \\end{bmatrix} = \\begin{bmatrix} a \\ b \\ 1 - a - b \\end{bmatrix}$\n⇒$\\left\\{ \\begin{array}{r} \\frac{1}{6}b = a \\ a + \\frac{b}{2} + \\frac{2}{3} - \\frac{2}{3}a - \\frac{2}{3}b = b \\end{array} \\right.\\ \\Rightarrow b = 6a$﹐∴$a + 3a + \\frac{2}{3} - \\frac{2}{3}a - 4a = 6a$\n⇒$a = \\frac{1}{10}$﹐$b = \\frac{6}{10}$﹐所求$1 - a - b = 1 - \\frac{1}{10} - \\frac{6}{10} = \\frac{3}{10} = 0.3$",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 14,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0015",
+      "title": "隨堂練習：變換矩陣的應用",
+      "question_text": "設甲﹑乙二袋中各有一白球和一紅球﹐對這二袋做以下的操作：自各袋內任取一球\n（每球被取到的機會均等）交換再放入對方袋中﹒如此甲袋內只有三種情況：狀態1.甲袋內 有兩個白球；狀態2.甲袋內有一白球和一紅球；狀態3.甲袋內有兩個紅球﹒將狀態j經過一 次操作後會變成狀態i的機率記為p~ij~﹐令轉移矩陣M =\n(p~ij~)~3×3~﹒(1)求三階矩陣M﹒\n(2)求經過4次操作後﹐甲袋中仍有一白球和一紅球的機率﹒【100新竹高中期中考】\n【中山女高段考題】",
+      "answer_text": "(1)$\\begin{bmatrix}0&\\frac{1}{4}&0\\\\1&\\frac{1}{2}&1\\\\0&\\frac{1}{4}&0\\end{bmatrix}$；(2)$\\frac{11}{16}$",
+      "explanation_text": "(1) M =$\\begin{bmatrix} 0 & \\frac{1}{4} & 0 \\ 1 & \\frac{1}{2} & 1 \\ 0 & \\frac{1}{4} & 0 \\end{bmatrix}$﹒\n(2) M^2^ =\n[圖:program-db/assets/question-media/s4-4-3/image8.png] $\\begin{bmatrix} 0 & \\frac{1}{4} & 0 \\ 1 & \\frac{1}{2} & 1 \\ 0 & \\frac{1}{4} & 0 \\end{bmatrix}$=$\\begin{bmatrix} \\frac{1}{4} & \\frac{1}{8} & \\frac{1}{4} \\ \\frac{1}{2} & \\frac{3}{4} & \\frac{1}{2} \\ \\frac{1}{4} & \\frac{1}{8} & \\frac{1}{4} \\end{bmatrix}$﹐ M^4^ =\n[圖:program-db/assets/question-media/s4-4-3/image9.png] $\\begin{bmatrix} \\frac{1}{4} & \\frac{1}{8} & \\frac{1}{4} \\ \\frac{1}{2} & \\frac{3}{4} & \\frac{1}{2} \\ \\frac{1}{4} & \\frac{1}{8} & \\frac{1}{4} \\end{bmatrix}$=$\\begin{bmatrix} \\frac{3}{16} & \\frac{5}{32} & \\frac{3}{16} \\ \\frac{5}{8} & \\frac{11}{16} & \\frac{5}{8} \\ \\frac{3}{16} & \\frac{5}{32} & \\frac{3}{16} \\end{bmatrix}$﹐所求=$\\frac{11}{16}$﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 15,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0016",
+      "title": "範例8：變換矩陣的應用",
+      "question_text": "臺灣總統大選﹐政黨輪替﹐民調報告顯示﹐下回總統大選時﹐原來支持$A$黨者﹐仍有80% 繼續支持$A$黨﹐有10%改支持$B$黨﹐有10%改支持$C$黨；原來支持$B$黨者﹐有30%改支持$A$黨﹐ 仍有50%繼續支持$B$黨﹐20%改支持$C$黨；原來支持$C$黨者﹐有20%改支持$A$黨﹐有20%改 支持$B$黨﹐仍有60%繼續支持$C$黨；設臺灣可投票人口總數不變﹐且目前支持$A$黨占20%﹐ 支持$B$黨占30%﹐支持$C$黨占50%，(1)問下一任總統大選中﹐支持$A$黨者約占\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_%﹒\n(2)長期而言﹐支持$C$黨者約占\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_%﹒\n【臺南一中段考題】",
+      "answer_text": "(1)$35\\%$；(2)約$24.1\\%$",
+      "explanation_text": "(1)$A = \\begin{bmatrix} 80\\% & 30\\% & 20\\% \\ 10\\% & 50\\% & 20\\% \\ 10\\% & 20\\% & 60\\% \\end{bmatrix}$﹐ $P_{0} = \\begin{bmatrix} 20\\% \\ 30\\% \\ 50\\% \\end{bmatrix}$﹐ $P_{1} = \\begin{bmatrix} 0.8 & 0.3 & 0.2 \\ 0.1 & 0.5 & 0.2 \\ 0.1 & 0.2 & 0.6 \\end{bmatrix}\\left\\lbrack \\begin{array}{r} 0.2 \\ 0.3 \\ 0.5 \\end{array} \\right\\rbrack = \\begin{bmatrix} 0.16 + 0.09 + 0.1 \\ 0.02 + 0.15 + 0.1 \\ 0.02 + 0.06 + 0.3 \\end{bmatrix} = \\begin{bmatrix} 0.35 \\ 0.27 \\ 0.38 \\end{bmatrix}$﹐ 下任支持$A$黨者占35%﹒\n(2)$AX = X$﹐ $X = \\begin{bmatrix} x \\ y \\ z \\end{bmatrix}$﹐$(A - I)X = O$﹐ $A - I = \\begin{bmatrix} - 0.2 & 0.3 & 0.2 \\ 0.1 & - 0.5 & 0.2 \\ 0.1 & 0.2 & - 0.4 \\end{bmatrix}$﹐\n[圖:program-db/assets/question-media/s4-4-3/image10.png]﹐ 解得$x = \\frac{8}{3}y$﹐$z = \\frac{7}{6}y$代入④﹐ 得$y = \\frac{6}{29}$﹐∴$z = \\frac{6}{29} \\times \\frac{7}{6} = \\frac{7}{29} = 0.241 = 24.1\\%$﹐即支持$C$黨者約占24.1%﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "易",
+      "question_category": "備用",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 16,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0017",
+      "title": "範例9：變換矩陣的應用",
+      "question_text": "設有A﹐B﹐C三支大瓶子﹐開始時﹐A瓶裝有a公升的甲液體﹐B瓶裝有b公 升的乙液體﹐C瓶裝有c公升的丙液體﹒每一輪操作都是先將A瓶的溶液倒出一半至B瓶﹐ 再將B瓶的溶液倒出一半至C瓶﹐然後再將C瓶的溶液倒出一半回A瓶（不考慮各液體混合 後體積的變化﹐且液體不會溢出瓶外）﹒設$n$輪操作後﹐A﹐B﹐C三瓶分別有$a_{n}$﹐$b_{n}$﹐$c_{n}$公升 的溶液﹒已知三階方陣$P = \\begin{bmatrix} p_{11} & p_{12} & p_{13} \\ p_{21} & p_{22} & p_{23} \\ p_{31} & p_{32} & p_{33} \\end{bmatrix}$滿足$\\begin{bmatrix} a_{1} \\ b_{1} \\ c_{1} \\end{bmatrix} = P\\begin{bmatrix} a \\ b \\ c \\end{bmatrix}$﹐則下列敘述哪些正確？\n(1)$\\begin{bmatrix} a_{n} \\ b_{n} \\ c_{n} \\end{bmatrix} = P^{n}\\begin{bmatrix} a \\ b \\ c \\end{bmatrix}$ (2)$P = \\begin{bmatrix} \\frac{5}{8} & \\frac{1}{4} & \\frac{1}{2} \\ \\frac{1}{4} & \\frac{1}{2} & 0 \\ \\frac{1}{8} & \\frac{1}{4} & \\frac{1}{2} \\end{bmatrix}$ (3)$P^{2}$為轉移矩陣\n(4)若序組$(a, b, c) = (2, 1, 1)$﹐則$(a_{2009}, b_{2009}, c_{2009}) = (2, 1, 1)$\n(5)若序組$(a, b, c) = (2, 1, 1)$﹐則在第二輪操作後﹐A瓶內之溶液含有$\\frac{33}{32}$公升之甲液體。\n【臺南女中段考題】",
+      "answer_text": "(1)(2)(3)(4)(5)",
+      "explanation_text": "(1)(2)$P = \\begin{bmatrix} 1 & 0 & \\frac{1}{2} \\ 0 & 1 & 0 \\ 0 & 0 & \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} \\underset{}{1} & 0 & 0 \\ 0 & \\frac{1}{2} & 0 \\ 0 & \\frac{1}{2} & 1 \\end{bmatrix}\\begin{bmatrix} \\frac{1}{2} & 0 & 0 \\ \\frac{1}{2} & 1 & 0 \\ \\overset{}{0} & 0 & 1 \\end{bmatrix} = \\begin{bmatrix} 1 & \\frac{1}{4} & \\frac{1}{2} \\ 0 & \\frac{1}{2} & 0 \\ 0 & \\frac{1}{4} & \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} \\frac{1}{2} & 0 & 0 \\ \\frac{1}{2} & 1 & 0 \\ \\overset{}{0} & 0 & 1 \\end{bmatrix} = \\begin{bmatrix} \\frac{5}{8} & \\frac{1}{4} & \\frac{1}{2} \\ \\frac{1}{4} & \\frac{1}{2} & 0 \\ \\frac{1}{8} & \\frac{1}{4} & \\frac{1}{2} \\end{bmatrix}$﹒\n(3)$P^{2} = \\begin{bmatrix} \\frac{33}{64} & \\frac{13}{32} & \\frac{9}{16} \\ \\frac{9}{32} & \\frac{5}{16} & \\frac{1}{8} \\ \\frac{13}{64} & \\frac{9}{32} & \\frac{5}{16} \\end{bmatrix}$﹒\n(4)∵$P\\begin{bmatrix} 2 \\ 1 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 2 \\ 1 \\ 1 \\end{bmatrix} \\Rightarrow \\begin{bmatrix} a_{2009} \\ b_{2009} \\ c_{2009} \\end{bmatrix} = P^{2009}\\begin{bmatrix} 2 \\ 1 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 2 \\ 1 \\ 1 \\end{bmatrix}$﹒\n(5)$\\begin{bmatrix} a_{2} \\ b_{2} \\ c_{2} \\end{bmatrix} = P^{2}\\begin{bmatrix} 2 \\ 1 \\ 1 \\end{bmatrix} = \\begin{bmatrix} \\frac{33}{32} + \\frac{13}{32} + \\frac{9}{16} \\ \\frac{9}{16} + \\frac{5}{16} + \\frac{1}{8} \\ \\frac{13}{32} + \\frac{9}{32} + \\frac{5}{16} \\end{bmatrix}$﹐∴$A$瓶中含有$\\frac{33}{32}$公升之甲溶液﹒\n故選(1)(2)(3)(4)(5)﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 17,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0018",
+      "title": "範例10：變換矩陣的應用",
+      "question_text": "某地區有甲﹑乙﹑丙三家報社﹐據調查顯示：甲報社每年保留80%的顧客﹐而轉向乙報社 與丙報社訂購的顧客﹐分別占10%與10%；乙報社則每年保留70%的顧客﹐而轉向甲報社與 丙報社訂購的顧客分別占20%與10%；丙報社每年保留60%的顧客﹐而轉向甲報社與乙報社 的顧客分別占10%與30%；若目前甲﹑乙﹑丙三報社的市場占有率分別為20%﹐30%﹐50%﹐ 且顧客總人數不變﹒(1)試求其轉移矩陣$=$\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒\n(2)已知最後報社供應市場會趨於穩定﹐試問其穩定狀態時﹐乙報社之市場占有率為\\_\\_\\_\\_\\_\\_\\_\\_﹒\n【屏東女中段考題】",
+      "answer_text": "(1)$\\begin{bmatrix}0.8&0.2&0.1\\\\0.1&0.7&0.3\\\\0.1&0.1&0.6\\end{bmatrix}$；(2)$\\frac{7}{20}$",
+      "explanation_text": "(1)$\\begin{matrix} 甲 & 乙 & 丙 \\end{matrix} \\begin{matrix} 甲 \\ 乙 \\ 丙 \\end{matrix}\\begin{bmatrix} 0.8 & 0.2 & 0.1 \\ 0.1 & 0.7 & 0.3 \\ 0.1 & 0.1 & 0.6 \\end{bmatrix}$﹒\n(2)$\\begin{bmatrix} 0.8 & 0.2 & 0.1 \\ 0.1 & 0.7 & 0.3 \\ 0.1 & 0.1 & 0.6 \\end{bmatrix}\\begin{bmatrix} x \\ y \\ z \\end{bmatrix} = \\begin{bmatrix} x \\ y \\ z \\end{bmatrix}$﹐\n∴$\\left\\{ \\begin{array}{r} - 2x + 2y + z = 0 \\ x - 3y + 3z = 0 \\ x + y - 4z = 0 \\end{array} \\right.\\ \\Rightarrow x:y:z = 9:7:4$﹐ 故$y = \\frac{7}{9 + 7 + 4} \\times 100\\% = 35\\%$﹒\n即乙報社的市占率為35%﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 18,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0019",
+      "title": "範例11：變換矩陣的應用",
+      "question_text": "捷運局調查通勤上班族每月使用交通工具的狀況如下：原來搭乘捷運者有80%會繼續搭捷 運﹐有10%改為開車﹐有10%改為騎機車；原來開車者有30%會改搭捷運﹐有50%繼續開車﹐ 有20%改為騎機車；原來騎機車者有20%會改搭捷運﹐有20%改為開車﹐有60%繼續騎機車﹒\n則：(1)請寫出其對應的轉移矩陣$A =$\\_\\_\\_\\_﹒(2)長期而言﹐搭捷運上班者占通勤族的比例為\\_\\_\\_\\_﹒\n【中山女高段考題】",
+      "answer_text": "(1)$\\begin{bmatrix}0.8&0.3&0.2\\\\0.1&0.5&0.2\\\\0.1&0.2&0.6\\end{bmatrix}$；(2)$\\frac{9}{20}$",
+      "explanation_text": "(1)由題意得[圖:program-db/assets/question-media/s4-4-3/image11.png]\n(2)設到達穩定態之百分比為搭捷運為$a$﹐開車為$b$﹐騎機車為$c$﹐ 則$\\begin{bmatrix} 0.8 & 0.3 & 0.2 \\ 0.1 & 0.5 & 0.2 \\ 0.1 & 0.2 & 0.6 \\end{bmatrix}\\begin{bmatrix} a \\ b \\ c \\end{bmatrix} = \\begin{bmatrix} a \\ b \\ c \\end{bmatrix} \\Rightarrow \\left\\{ \\begin{array}{r} 0.8a + 0.3b + 0.2c = a \\ 0.1a + 0.5b + 0.2c = b \\ 0.1a + 0.2b + 0.6c = c \\end{array} \\right.$ $\\Rightarrow \\left\\{ \\begin{array}{r} - 2a + 3b + 2c = 0 \\ a - 5b + 2c = 0 \\ a + 2b - 4c = 0 \\end{array} \\right.\\ \\Rightarrow a:b:c = \\left| \\begin{matrix} 3 & 2 \\ - 5 & 2 \\end{matrix} \\right|:\\left| \\begin{matrix} 2 & - 2 \\ 2 & 1 \\end{matrix} \\right|:\\left| \\begin{matrix} - 2 & 3 \\ 1 & - 5 \\end{matrix} \\right| = 16:6:7$﹐ 又$a + b + c = 1 \\Rightarrow a = \\frac{16}{16 + 6 + 7} = \\frac{16}{29}$﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 19,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0020",
+      "title": "隨堂練習：變換矩陣的應用",
+      "question_text": "台北市政府調查通勤上班族每月使用交通工具（只有捷運﹑開車﹑騎機車三種）的狀況如下：\n原來搭捷運者有70%會繼續搭捷運﹐有10%改為開車﹐有20%改為騎機車；原來開車者有20% 會改搭捷運﹐有50%繼續開車﹐有30%改為騎機車；原來騎機車者有10%改搭捷運﹐90%繼 續騎機車﹒\n(1)已知現在通勤上班族有40%搭捷運﹐有30%開車﹐有30%騎機車﹒問經過兩個月後﹐搭捷 運者占通勤上班族多少比例？\n(2)長期而言﹐騎機車者占通勤上班族多少比例？【100新竹高中期中考】\n【師大附中段考題】",
+      "answer_text": "(1)$34.1\\%$；(2)$\\frac{13}{19}$",
+      "explanation_text": "轉移矩陣$P = \\begin{bmatrix} 0.7 & 0.2 & 0.1 \\ 0.1 & 0.5 & 0 \\ 0.2 & 0.3 & 0.9 \\end{bmatrix}$﹐$X_{0} = \\begin{bmatrix} 0.4 \\ 0.3 \\ 0.3 \\end{bmatrix}$﹒\n(1)$X_{2} = P^{2}X_{0} = \\begin{bmatrix} 0.7 & 0.2 & 0.1 \\ 0.1 & 0.5 & 0 \\ 0.2 & 0.3 & 0.9 \\end{bmatrix}\\begin{bmatrix} 0.37 \\ 0.19 \\ 0.44 \\end{bmatrix} = \\begin{bmatrix} 0.341 \\ x \\ y \\end{bmatrix}$﹐所求$= 34.1$%﹒\n(2)令$P\\begin{bmatrix} x \\ y \\ z \\end{bmatrix} = \\begin{bmatrix} x \\ y \\ z \\end{bmatrix}$﹐其中\n[圖:program-db/assets/question-media/s4-4-3/image12.png] ﹐∴所求$= \\frac{13}{19}$﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 20,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0021",
+      "title": "隨堂練習：變換矩陣的應用",
+      "question_text": "捷運局長期調查某通勤上班族每日使用交通工具的狀況如下﹕若此人今 日搭捷運上班﹐則有80%明日會繼續搭捷運﹐有10%改為開車﹐有10%改為騎機車﹔若此人 今日開車上班﹐則有50%明日會繼續開車﹐有30%改搭捷運﹐有20%改為騎機車﹔若此人今 日騎機車上班﹐則有60%明日會繼續騎機車﹐有30%改搭捷運﹐有10%改為開車﹒某日此通 勤上班族搭捷運上班﹐且每日搭捷運﹑開車與騎機車上班所需的交通費分別為20元﹑40元 與10元﹐則下列敘述何者正確﹖\n(1)此通勤上班族二日後仍搭捷運上班的機率為0.7\n(2)此通勤上班族二日後開車上班與騎機車上班的機率相等\n(3)長期而言﹐此通勤上班族搭捷運上班的機率最大\n(4)長期而言﹐此通勤上班族開車上班的機率最小\n(5)長期而言﹐此通勤上班族每日上班所需交通費的期望值為21元﹒【100新竹高中期中考】\n【99中山女高期中考】",
+      "answer_text": "(1)(3)(4)(5)",
+      "explanation_text": "假設$A = \\begin{bmatrix} 0.8 & 0.3 & 0.3 \\ 0.1 & 0.5 & 0.1 \\ 0.1 & 0.2 & 0.6 \\end{bmatrix}$﹐則$A^{2} = \\begin{bmatrix} 0.7 & 0.45 & 0.45 \\ 0.14 & 0.3 & 0.14 \\ 0.16 & 0.25 & 0.41 \\end{bmatrix}$ 長期而言$A\\begin{bmatrix} a \\ b \\ c \\end{bmatrix} = \\begin{bmatrix} a \\ b \\ c \\end{bmatrix}$且a + b + c = 1﹐得$\\begin{bmatrix} a \\ b \\ c \\end{bmatrix} = \\begin{bmatrix} \\frac{18}{30} \\ \\frac{5}{30} \\ \\frac{7}{30} \\end{bmatrix}$\n(1)○﹒\n(2)╳﹕此通勤上班族二日後開車上班機率為0.14﹔ 此通勤上班族二日後騎機車上班機率為0.16﹐故不相等\n(3)(4)○﹕長期而言﹐此通勤上班族搭捷運上班的機率最大（$\\frac{18}{30}$） 此通勤上班族開車上班的機率最小（$\\frac{5}{30}$）\n(5)○﹕$E = \\frac{18}{30} \\times 20 + \\frac{5}{30} \\times 40 + \\frac{7}{30} \\times 10 = 21$（元） 故選(1)(3)(4)(5)﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 21,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-3-0022",
+      "title": "範例12：變換矩陣的應用",
+      "question_text": "小明家裡到上班地點之間有甲﹑乙﹑丙三條路﹐每一上班日﹐上班時間塞車機率依序為0.6﹑ 0.4﹑0.2﹐小明訂定三條路線選擇規則如下﹕如果前一個上班日不塞車﹐則這一上班日走同一 條路上班﹔如果前一個上班日上班時塞車﹐則這一上班日改選其餘兩條路線之一上班﹐且兩 條路被選中機會均等﹒設七月一日禮拜一﹐小明選甲路線上班﹐求\n(1)七月三日選甲﹑選乙及選丙路線上班之機率各為何﹖\n(2)七月四日選甲﹑選乙及選丙路線上班之機率各為何﹖\n(3)長久轉移之後﹐選甲﹑選乙及選丙路線上班之機率各為何﹖\n【100新竹高中期中考】",
+      "answer_text": "(1)七月三日：甲$\\frac{1}{4}$，乙$\\frac{33}{100}$，丙$\\frac{21}{50}$；(2)七月四日：甲$\\frac{26}{125}$，乙$\\frac{63}{200}$，丙$\\frac{477}{1000}$；(3)甲$\\frac{2}{11}$，乙$\\frac{3}{11}$，丙$\\frac{6}{11}$",
+      "explanation_text": "設轉移矩陣$A = \\begin{bmatrix} 0.4 & 0.2 & 0.1 \\ 0.3 & 0.6 & 0.1 \\ 0.3 & 0.2 & 0.8 \\end{bmatrix}$﹐\n(1)$A^{2}\\begin{bmatrix} 1 \\ 0 \\ 0 \\end{bmatrix} = \\begin{bmatrix} 0.4 & 0.2 & 0.1 \\ 0.3 & 0.6 & 0.1 \\ 0.3 & 0.2 & 0.8 \\end{bmatrix}\\begin{bmatrix} 0.4 \\ 0.3 \\ 0.3 \\end{bmatrix} = \\left\\lbrack \\begin{array}{r} 0.25 \\ 0.33 \\ 0.42 \\end{array} \\right\\rbrack$﹐ 則七月三日選甲﹑乙﹑丙路線的機率分別為0.25﹐0.33﹐0.42﹒\n(2)$A\\left\\lbrack \\begin{array}{r} 0.25 \\ 0.33 \\ 0.42 \\end{array} \\right\\rbrack = \\left\\lbrack \\begin{array}{r} 0.208 \\ 0.315 \\ 0.477 \\end{array} \\right\\rbrack$﹐ 則七月四日選甲﹑乙﹑丙路線的機率分別為0.208﹐0.315﹐0.477﹒\n(3)令$A\\left\\lbrack \\begin{array}{r} x \\ y \\ z \\end{array} \\right\\rbrack = \\left\\lbrack \\begin{array}{r} x \\ y \\ z \\end{array} \\right\\rbrack$﹐其中x + y + z = 1⇒$\\left\\{ \\begin{array}{r} 0.4x + 0.2y + 0.1z = x \\ 0.3x + 0.6y + 0.1z = y \\ 0.3x + 0.2y + 0.8z = z \\end{array} \\right.\\ \\Rightarrow \\left\\{ \\begin{array}{r} x = \\frac{2}{11} \\ y = \\frac{3}{11} \\ z = \\frac{6}{11} \\end{array} \\right.$﹐ 則長久之後選甲﹑乙﹑丙路線的機率分別為$\\frac{2}{11}$﹐$\\frac{3}{11}$﹐$\\frac{6}{11}$﹒",
+      "chapter_code": "s4-4-3",
+      "formula_id": "senior-transformation-matrix-main-s443",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-9轉.docx",
+      "source_section": "主題1：轉移矩陣",
+      "source_order": 22,
+      "tags": [
+        "s4-4-3",
+        "section:主題1：轉移矩陣",
+        "marker:範例12"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d5c63" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="數學公式工具" />
+  <title>公式分享頁</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="styles.css?v=20260423-abs-count-layout-v4" />
+</head>
+<body>
+  <div class="page-shell detail-shell">
+    <header class="hero detail-hero">
+      <div class="hero__content">
+        <p class="eyebrow">Formula Share Page</p>
+        <h1 id="detailTitle">讀取公式中...</h1>
+        <p id="detailLead" class="hero__lead">這個頁面可以單獨分享給其他人查看某一個公式。</p>
+        <div class="hero__stats" id="detailStats"></div>
+      </div>
+      <div class="hero__panel detail-actions">
+        <h2>分享與返回</h2>
+        <div class="detail-action-list">
+          <button id="copyLinkButton" class="pill-button" type="button">複製分享連結</button>
+          <a class="ghost-link" href="index.html">回總覽頁</a>
+        </div>
+        <p class="detail-note">連結格式為 <code>formula.html?id=公式id</code>，方便單獨傳給別人。</p>
+      </div>
+    </header>
+
+    <main>
+      <section id="detailContainer"></section>
+      <section id="detailBranches"></section>
+    </main>
+  </div>
+
+  <script defer src="formulas.js"></script>
+  <script defer src="data/formula-content.js?v=20260514-j62-main-topics-v1"></script>
+  <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
+  <script defer src="data/main-topic-overviews.js?v=20260514-j62-main-topics-v1"></script>
+  <script defer src="data/chapter-code-config.js"></script>
+  <script defer src="data/formula-calculators.js"></script>
+  <script defer src="data/formula-practice-assignments.js"></script>
+  <script defer src="data/formula-practice.js"></script>
+  <script defer src="formula-data.js?v=20260505-question-category-v1"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="formula-core.js?v=20260427-theta-fix-v1"></script>
+  <script defer src="formula-detail.js?v=20260508-main-topic-panel-v1"></script>
+  <script defer src="annotation-blocks.js"></script>
+  <script defer src="pwa.js"></script>
+</body>
+</html>

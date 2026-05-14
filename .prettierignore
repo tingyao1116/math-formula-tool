@@ -1,0 +1,8 @@
+﻿backups/
+exports/
+icons/
+數學資料/
+文字資料/
+
+*.min.js
+*.min.css

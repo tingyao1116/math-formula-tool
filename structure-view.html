@@ -1,0 +1,1333 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>網站結構檢視</title>
+  <style>
+    :root {
+      --bg: #f7f2e8;
+      --panel: #fffaf2;
+      --line: #e7dac6;
+      --text: #3a2c1f;
+      --muted: #726250;
+      --accent: #0d5c63;
+      --chip: #efe4d3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #fbf6ef 0%, #f3e7d6 100%);
+      padding: 16px;
+    }
+    .page { max-width: 1320px; margin: 0 auto; }
+    h1 { margin: 0 0 6px; font-size: 28px; }
+    .lead { margin: 0 0 10px; color: var(--muted); font-size: 13px; }
+
+    .topbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    button, .file-label {
+      border: 1px solid #d7c5ad;
+      background: #fff7ec;
+      border-radius: 999px;
+      padding: 6px 11px;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      color: #7b4f1f;
+      cursor: pointer;
+    }
+    .primary { background: #dceff0; border-color: #a4c9cc; color: #0d5c63; }
+    .file-label { display: inline-flex; align-items: center; }
+
+    #notice {
+      margin: 0 0 10px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(13, 92, 99, 0.08);
+      border: 1px solid rgba(13, 92, 99, 0.2);
+      color: #1f5258;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .summary { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+    .chip {
+      background: var(--chip);
+      border: 1px solid #e2d1b9;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 11px;
+      color: #6e5f4f;
+      font-weight: 700;
+    }
+    .chip.status-dirty {
+      background: #fff1ed;
+      border-color: #e6b6a6;
+      color: #9a432c;
+    }
+    .chip.status-saved {
+      background: #ecf8f8;
+      border-color: #b6dadd;
+      color: #175f66;
+    }
+
+    #treeRoot {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      align-items: start;
+    }
+
+    .stage-group {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.48);
+      padding: 8px;
+      min-width: 0;
+    }
+
+    .tree-details {
+      border: 1px solid #e9ddcc;
+      border-radius: 10px;
+      background: var(--panel);
+      margin-bottom: 8px;
+    }
+
+    .tree-details > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 6px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #4b3d2f;
+    }
+
+    .tree-details > summary::-webkit-details-marker { display: none; }
+    .tree-details > summary::before {
+      content: "▸";
+      color: #80624a;
+      margin-right: 6px;
+    }
+    .tree-details[open] > summary::before { content: "▾"; }
+
+    .chapter-head {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .chapter-code {
+      color: #7d4f21;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid #dcc1a1;
+      background: #fdf0e1;
+    }
+
+    .tree-body { padding: 0 8px 8px; }
+    .node-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+
+    .node {
+      border: 1px solid #e8dbc9;
+      background: #fffdfa;
+      border-radius: 8px;
+      padding: 4px 6px;
+      position: relative;
+    }
+
+    .node.dragging { opacity: 0.55; }
+    .node.active { border-color: #8fbec2; box-shadow: inset 0 0 0 1px #bfdadf; }
+
+    .node-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      line-height: 1.25;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .node-row strong { font-weight: 700; }
+    .node-tools { display: inline-flex; align-items: center; gap: 6px; }
+    .node-meta { color: var(--muted); font-size: 11px; display: inline-flex; align-items: center; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+    .node-flag {
+      border-radius: 999px;
+      padding: 1px 6px;
+      border: 1px solid #dccdb9;
+      background: #f6eee1;
+      color: #74624e;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .node-flag.empty {
+      border-color: #e1bbb0;
+      background: #fff1ed;
+      color: #a2482e;
+    }
+    .node-delete {
+      border: 1px solid #e1c0b4;
+      background: #fff1ed;
+      color: #9a3f27;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .node-children {
+      margin: 4px 0 0 12px;
+      border-left: 1px dashed #e2d3bf;
+      padding-left: 6px;
+    }
+
+    .drop-hint {
+      position: absolute;
+      right: 6px;
+      top: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #1f666c;
+      background: #e5f3f4;
+      border: 1px solid #b7d7da;
+      border-radius: 999px;
+      padding: 1px 6px;
+      pointer-events: none;
+      display: none;
+    }
+    .node.drop-before .drop-hint,
+    .node.drop-inside .drop-hint,
+    .node.drop-after .drop-hint { display: inline-flex; }
+    .node.drop-before .drop-hint::after { content: "放上方"; }
+    .node.drop-inside .drop-hint::after { content: "成子節點"; }
+    .node.drop-after .drop-hint::after { content: "放下方"; }
+
+    .node.drop-before { border-top: 2px solid #2f8d95; }
+    .node.drop-inside { border-color: #2f8d95; background: #f2fbfc; }
+    .node.drop-after { border-bottom: 2px solid #2f8d95; }
+
+    .node-drop-zone-group {
+      margin-top: 6px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .node-drop-zone {
+      border: 1px dashed #cdb69b;
+      background: #fff8ec;
+      color: #7a6246;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .node-drop-zone:hover {
+      border-color: #2f8d95;
+      background: #ecf8f8;
+      color: #1f666c;
+    }
+    .chapter-action-row {
+      margin: 4px 0 8px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .empty { color: #9b8b78; font-size: 11px; padding: 4px 2px; }
+
+    @media (max-width: 1100px) {
+      #treeRoot {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      #treeRoot {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>網站結構檢視</h1>
+    <p class="lead">章節固定不可拖動。可拖動主題/分支/次分支，拖到節點上方、下方或中間（成為子節點）。</p>
+
+    <div class="topbar">
+      <button id="saveButton" class="primary" type="button">寫回資料庫</button>
+      <button id="exportButton" type="button">匯出架構紀錄（給 Codex）</button>
+      <button id="exportOpsButton" type="button">匯出操作紀錄</button>
+      <button id="bridgeToggleButton" type="button">本機存檔：未連線</button>
+      <label class="file-label" for="importInput">匯入架構紀錄</label>
+      <input id="importInput" type="file" accept="application/json" hidden>
+      <button id="reloadButton" type="button">重新載入資料</button>
+    </div>
+
+    <p id="notice">結構頁已就緒。</p>
+    <div id="summary" class="summary"></div>
+    <div id="treeRoot"></div>
+  </div>
+
+  <script src="formulas.js"></script>
+  <script src="data/formula-content.js?v=20260514-j62-main-topics-v1"></script>
+  <script src="data/question-content.js?v=20260424-question-bridge-v1"></script>
+  <script src="data/formula-calculators.js"></script>
+  <script src="data/formula-practice.js"></script>
+  <script src="data/chapter-code-config.js"></script>
+  <script src="formula-data.js?v=20260505-question-category-v1"></script>
+  <script>
+    (function () {
+      const store = window.formulaDataStore;
+      const treeRoot = document.getElementById("treeRoot");
+      const summary = document.getElementById("summary");
+      const notice = document.getElementById("notice");
+      const saveButton = document.getElementById("saveButton");
+      const exportButton = document.getElementById("exportButton");
+      const exportOpsButton = document.getElementById("exportOpsButton");
+      const bridgeToggleButton = document.getElementById("bridgeToggleButton");
+      const importInput = document.getElementById("importInput");
+      const reloadButton = document.getElementById("reloadButton");
+      if (!store || !treeRoot) return;
+      const OP_LOG_KEY = "math-formula-structure-operation-log-v1";
+      const BRIDGE_URL_KEY = "math-formula-structure-bridge-url-v1";
+
+      const state = {
+        items: store.getBaseFormulas?.() || store.getCurrentFormulas(),
+        draggingId: null,
+        selectedId: null,
+        hoveredDrop: { targetId: null, mode: null },
+        baselineMap: new Map(),
+        deletedIds: [],
+        operationLog: [],
+        bridge: {
+          enabled: false,
+          url: String(window.localStorage.getItem(BRIDGE_URL_KEY) || "http://127.0.0.1:4310")
+        }
+      };
+      const chapterOptions = store.getChapterOptions?.() || [];
+      const chapterOptionByCode = new Map(chapterOptions.map((entry) => [entry.code, entry]));
+      const calculatorStore = window.formulaCalculatorStore || null;
+      const practiceStore = window.formulaPracticeStore || null;
+
+      function setNotice(text) {
+        notice.textContent = text;
+      }
+
+      function loadOperationLog() {
+        try {
+          const raw = window.localStorage.getItem(OP_LOG_KEY);
+          if (!raw) return [];
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function saveOperationLog() {
+        try {
+          window.localStorage.setItem(OP_LOG_KEY, JSON.stringify(state.operationLog));
+        } catch (error) {
+          // ignore localStorage quota errors
+        }
+      }
+
+      function appendOperation(entry) {
+        state.operationLog.push(entry);
+        if (state.operationLog.length > 5000) {
+          state.operationLog = state.operationLog.slice(-5000);
+        }
+        saveOperationLog();
+      }
+
+      async function pingBridge() {
+        const url = String(state.bridge.url || "").trim();
+        if (!url) return false;
+        try {
+          const response = await fetch(`${url}/health`, { method: "GET" });
+          if (!response.ok) return false;
+          const body = await response.json();
+          return Boolean(body?.ok);
+        } catch (error) {
+          return false;
+        }
+      }
+
+      function renderBridgeStatus() {
+        if (!bridgeToggleButton) return;
+        bridgeToggleButton.textContent = `本機存檔：${state.bridge.enabled ? "已連線" : "未連線"}`;
+        bridgeToggleButton.classList.toggle("primary", state.bridge.enabled);
+      }
+
+      function buildOperationEntry(action, payload = {}) {
+        return {
+          at: new Date().toISOString(),
+          action,
+          payload
+        };
+      }
+
+      async function syncToBridge(action, payload = {}, pendingOperation = null) {
+        if (!state.bridge.enabled) return { ok: false, skipped: true, error: "bridge-disabled" };
+        const url = String(state.bridge.url || "").trim();
+        if (!url) return { ok: false, skipped: true, error: "bridge-url-empty" };
+        try {
+          const snapshot = {
+            schema: "math-formula-structure-state-v1",
+            savedAt: new Date().toISOString(),
+            items: state.items,
+            deletedIds: state.deletedIds,
+            operationLog: pendingOperation ? state.operationLog.concat([pendingOperation]) : state.operationLog
+          };
+          const snapshotResponse = await fetch(`${url}/save`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action,
+              payload,
+              snapshot
+            })
+          });
+          if (!snapshotResponse.ok) {
+            throw new Error("snapshot-save-failed");
+          }
+          const dbResponse = await fetch(`${url}/save-db`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              source: `structure-view:${action}`,
+              items: state.items
+            })
+          });
+          const dbResult = await dbResponse.json().catch(() => ({}));
+          if (!dbResponse.ok || !dbResult?.ok) {
+            throw new Error(dbResult?.error || "db-save-failed");
+          }
+          return { ok: true, savedAt: dbResult.savedAt, count: dbResult.count };
+        } catch (error) {
+          state.bridge.enabled = false;
+          renderBridgeStatus();
+          return { ok: false, skipped: false, error: String(error?.message || error) };
+        }
+      }
+
+      function markDraftChanged(action, payload = {}) {
+        const pendingOperation = buildOperationEntry(action, payload);
+        appendOperation(pendingOperation);
+        render();
+        setNotice("已更新目前草稿；只有按「寫回資料庫」才會真正永久保存。");
+        return pendingOperation;
+      }
+
+      async function writeDraftToDatabase() {
+        if (!state.bridge.enabled) {
+          state.bridge.enabled = await pingBridge();
+          renderBridgeStatus();
+        }
+        if (!state.bridge.enabled) {
+          setNotice("本機存檔未連線，草稿尚未寫回資料庫。請先啟動 4310 橋接服務。");
+          return;
+        }
+        const pendingOperation = buildOperationEntry("manual-save", { itemCount: state.items.length });
+        const result = await syncToBridge("manual-save", { itemCount: state.items.length }, pendingOperation);
+        if (!result.ok) {
+          setNotice(`本次草稿尚未寫回資料庫：${result.error || "unknown-error"}`);
+          return;
+        }
+        appendOperation(pendingOperation);
+        state.items = store.saveManagedItems(state.items);
+        resetBaseline(state.items);
+        render();
+        setNotice(`已寫回資料庫並完成同步重建（${result.count} 筆）。`);
+      }
+
+      function formatTimestamp(iso) {
+        const value = String(iso || "").trim();
+        if (!value) return "未套用";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return value;
+        return date.toLocaleString("zh-TW", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false
+        });
+      }
+
+      function buildBaselineMap(items) {
+        const map = new Map();
+        items.forEach((item, index) => {
+          map.set(item.id, {
+            id: item.id,
+            parentId: item.parentId || "",
+            order: index + 1,
+            chapter: item.chapter || "",
+            domain: item.domain || "",
+            chapterRole: item.chapterRole || "",
+            difficulty: item.difficulty || "",
+            relatedChapters: Array.isArray(item.relatedChapters) ? item.relatedChapters.slice() : [],
+            relatedTopicIds: Array.isArray(item.relatedTopicIds) ? item.relatedTopicIds.slice() : [],
+            contentTypes: Array.isArray(item.contentTypes) ? item.contentTypes.slice() : [],
+            tags: Array.isArray(item.tags) ? item.tags.slice() : []
+          });
+        });
+        return map;
+      }
+
+      function resetBaseline(items) {
+        state.baselineMap = buildBaselineMap(items);
+        state.deletedIds = [];
+      }
+
+      function arraysEqual(a, b) {
+        if (a.length !== b.length) return false;
+        for (let i = 0; i < a.length; i += 1) {
+          if (String(a[i]) !== String(b[i])) return false;
+        }
+        return true;
+      }
+
+      function computeDatasetSignature(items) {
+        const ids = items.map((item) => String(item.id || "")).sort();
+        const content = `${ids.length}|${ids.join("|")}`;
+        let hash = 0;
+        for (let i = 0; i < content.length; i += 1) {
+          hash = ((hash << 5) - hash + content.charCodeAt(i)) | 0;
+        }
+        return `sig-${ids.length}-${Math.abs(hash)}`;
+      }
+
+      function isItemModified(item, index) {
+        const base = state.baselineMap.get(item.id);
+        if (!base) return true;
+        if ((item.parentId || "") !== base.parentId) return true;
+        if (index + 1 !== base.order) return true;
+        if ((item.chapter || "") !== base.chapter) return true;
+        if ((item.domain || "") !== base.domain) return true;
+        if ((item.chapterRole || "") !== base.chapterRole) return true;
+        if ((item.difficulty || "") !== base.difficulty) return true;
+        const relatedChapters = Array.isArray(item.relatedChapters) ? item.relatedChapters : [];
+        const relatedTopicIds = Array.isArray(item.relatedTopicIds) ? item.relatedTopicIds : [];
+        const contentTypes = Array.isArray(item.contentTypes) ? item.contentTypes : [];
+        const tags = Array.isArray(item.tags) ? item.tags : [];
+        if (!arraysEqual(relatedChapters, base.relatedChapters)) return true;
+        if (!arraysEqual(relatedTopicIds, base.relatedTopicIds)) return true;
+        if (!arraysEqual(contentTypes, base.contentTypes)) return true;
+        if (!arraysEqual(tags, base.tags)) return true;
+        return false;
+      }
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function hasMeaningfulFormula(formula) {
+        if (formula && typeof formula === "object") return true;
+        const text = String(formula || "").trim();
+        if (!text) return false;
+        return ![
+          "尚未填寫公式",
+          "尚未整理",
+          "暫存節點",
+          "後續可移動到正確主題"
+        ].some((keyword) => text.includes(keyword));
+      }
+
+      function hasBodyContent(item) {
+        if (hasMeaningfulFormula(item.formula)) return true;
+        return ["usage", "examples", "tips", "notes", "mistakes"].some((key) => Array.isArray(item[key]) && item[key].some((entry) => String(entry || "").trim()));
+      }
+
+      function getNodeFlags(item) {
+        const contentTypes = Array.isArray(item.contentTypes) ? item.contentTypes : [];
+        const hasInfinite = contentTypes.includes("無限練習") || Boolean(practiceStore?.getConfig?.(item.id));
+        const hasCalculator = contentTypes.includes("計算器") || Boolean(calculatorStore?.getConfig?.(item.id));
+        const hasContent = hasBodyContent(item);
+        const flags = [item.parentId ? "分支" : "主題"];
+        if (!hasContent) {
+          flags.push("空");
+        }
+        if (hasInfinite) flags.push("無限");
+        if (hasCalculator) flags.push("計算器");
+        return flags;
+      }
+
+      function parseCodePart(part) {
+        const text = String(part || "").trim().toLowerCase();
+        if (!text) return { n: Number.POSITIVE_INFINITY, t: "" };
+        if (text === "x") return { n: 999, t: "x" };
+        const n = Number(text);
+        if (Number.isFinite(n)) return { n, t: text };
+        const m = text.match(/^([a-z]+)(\d+)$/);
+        if (m) return { n: Number(m[2]), t: m[1] };
+        return { n: Number.POSITIVE_INFINITY, t: text };
+      }
+
+      function chapterCodeSortKey(code) {
+        const raw = String(code || "").trim();
+        if (!raw) return { bucket: 9, headNum: 999, parts: [], raw: "" };
+        const lower = raw.toLowerCase();
+        const m = lower.match(/^([a-z]+)(\d*)(?:-(.*))?$/);
+        if (!m) return { bucket: 8, headNum: 999, parts: [], raw: lower };
+        const head = m[1];
+        const headNum = m[2] ? Number(m[2]) : 0;
+        const rest = String(m[3] || "");
+        const parts = rest ? rest.split("-").map(parseCodePart) : [];
+
+        let bucket = 8;
+        if (head === "j") bucket = 0;
+        else if (head === "s" && headNum >= 1 && headNum <= 4) bucket = 1;
+        else if (head === "s" && headNum >= 5) bucket = 2;
+        else if (head === "b") bucket = 3;
+        else if (head === "s") bucket = 4;
+        else bucket = 5;
+
+        return { bucket, headNum, parts, raw: lower };
+      }
+
+      function compareChapterCode(codeA, codeB) {
+        const a = chapterCodeSortKey(codeA);
+        const b = chapterCodeSortKey(codeB);
+        if (a.bucket !== b.bucket) return a.bucket - b.bucket;
+        if (a.headNum !== b.headNum) return a.headNum - b.headNum;
+        const len = Math.max(a.parts.length, b.parts.length);
+        for (let i = 0; i < len; i += 1) {
+          const pa = a.parts[i] || { n: Number.POSITIVE_INFINITY, t: "" };
+          const pb = b.parts[i] || { n: Number.POSITIVE_INFINITY, t: "" };
+          if (pa.n !== pb.n) return pa.n - pb.n;
+          if (pa.t !== pb.t) return pa.t.localeCompare(pb.t, "zh-Hant");
+        }
+        return a.raw.localeCompare(b.raw, "zh-Hant");
+      }
+
+      function resolveChapterCode(item) {
+        return item.chapterCode || store.getChapterCode(item.stage, item.grade, item.term, item.chapter) || "";
+      }
+
+      function compareCurriculum(a, b) {
+        const codeDiff = compareChapterCode(resolveChapterCode(a), resolveChapterCode(b));
+        if (codeDiff) return codeDiff;
+        return (
+          (a.chapterOrder - b.chapterOrder) ||
+          (a.originalIndex - b.originalIndex) ||
+          String(a.title).localeCompare(String(b.title), "zh-Hant")
+        );
+      }
+
+      function groupedByChapter(items) {
+        const map = new Map();
+
+        chapterOptions.forEach((entry) => {
+          map.set(entry.code, {
+            key: entry.code,
+            stage: entry.stage,
+            grade: entry.grade,
+            term: entry.term,
+            chapterCode: entry.code,
+            chapter: entry.chapter,
+            section: entry.section || entry.chapter,
+            items: []
+          });
+        });
+
+        // Keep current manual order from state.items.
+        // Do not resort by curriculum here, otherwise drag/drop order appears "stuck".
+        items.forEach((item) => {
+          const code = item.chapterCode || store.getChapterCode(item.stage, item.grade, item.term, item.chapter) || "";
+          const key = code || `${item.stage}|${item.grade}|${item.term || ""}|${item.chapter}`;
+          const option = chapterOptionByCode.get(code) || null;
+          if (!map.has(key)) {
+            map.set(key, {
+              key,
+              stage: item.stage,
+              grade: item.grade,
+              term: item.term,
+              chapterCode: code,
+              chapter: item.chapter,
+              section: option?.section || item.section || item.chapter,
+              chapterCode: code || store.getChapterCode(item.stage, item.grade, item.term, item.chapter),
+              items: []
+            });
+          }
+          map.get(key).items.push(item);
+        });
+        return Array.from(map.values()).sort((a, b) => {
+          const codeDiff = compareChapterCode(a.chapterCode, b.chapterCode);
+          if (codeDiff) return codeDiff;
+          return String(a.chapter || "").localeCompare(String(b.chapter || ""), "zh-Hant");
+        });
+      }
+
+      function buildChildrenMap(sourceItems) {
+        const map = new Map();
+        sourceItems.forEach((item) => {
+          const key = item.parentId || "";
+          const arr = map.get(key) || [];
+          arr.push(item);
+          map.set(key, arr);
+        });
+        return map;
+      }
+
+      function getDescendants(id, childrenMap) {
+        const found = new Set();
+        const stack = [id];
+        while (stack.length) {
+          const current = stack.pop();
+          (childrenMap.get(current) || []).forEach((child) => {
+            if (!found.has(child.id)) {
+              found.add(child.id);
+              stack.push(child.id);
+            }
+          });
+        }
+        return found;
+      }
+
+      function moveArrayItem(from, to) {
+        if (from < 0 || from >= state.items.length) return;
+        if (to < 0) to = 0;
+        if (to > state.items.length) to = state.items.length;
+        if (from === to || from === to - 1) return;
+
+        const [moved] = state.items.splice(from, 1);
+        const adjustedTo = to > from ? to - 1 : to;
+        const clamped = Math.max(0, Math.min(adjustedTo, state.items.length));
+        state.items.splice(clamped, 0, moved);
+      }
+
+      function getSubtreeIds(rootId, childrenMap) {
+        const descendants = getDescendants(rootId, childrenMap);
+        return new Set([rootId, ...descendants]);
+      }
+
+      function moveSubtreeBlock(rootId, targetIndex) {
+        const childrenMap = buildChildrenMap(state.items);
+        const subtreeIds = getSubtreeIds(rootId, childrenMap);
+        const block = state.items.filter((item) => subtreeIds.has(item.id));
+        const rest = state.items.filter((item) => !subtreeIds.has(item.id));
+        const clamped = Math.max(0, Math.min(targetIndex, rest.length));
+        state.items = rest.slice(0, clamped).concat(block, rest.slice(clamped));
+      }
+
+      function detectDropMode(event, nodeElement) {
+        const rect = nodeElement.getBoundingClientRect();
+        const y = event.clientY - rect.top;
+        if (y < rect.height * 0.33) return "before";
+        if (y > rect.height * 0.67) return "after";
+        return "inside";
+      }
+
+      function syncNodeCurriculumFromTarget(source, target) {
+        source.stage = target.stage;
+        source.grade = target.grade;
+        source.term = target.term;
+        source.chapter = target.chapter;
+        source.chapterCode =
+          target.chapterCode ||
+          store.getChapterCode(target.stage, target.grade, target.term, target.chapter) ||
+          "";
+      }
+
+      function clearDropHint() {
+        treeRoot.querySelectorAll(".node.drop-before, .node.drop-inside, .node.drop-after").forEach((element) => {
+          element.classList.remove("drop-before", "drop-inside", "drop-after");
+        });
+      }
+
+      function paintDropHint(targetId, mode) {
+        clearDropHint();
+        if (!targetId || !mode) return;
+        const target = treeRoot.querySelector(`.node[data-node-id="${targetId}"]`);
+        if (!target) return;
+        if (mode === "before") target.classList.add("drop-before");
+        if (mode === "inside") target.classList.add("drop-inside");
+        if (mode === "after") target.classList.add("drop-after");
+      }
+
+      function moveNode(dragId, targetId, mode) {
+        if (!dragId || !targetId || dragId === targetId) return false;
+        const sourceIndex = state.items.findIndex((item) => item.id === dragId);
+        const targetIndex = state.items.findIndex((item) => item.id === targetId);
+        if (sourceIndex === -1 || targetIndex === -1) return false;
+
+        const source = state.items[sourceIndex];
+        const target = state.items[targetIndex];
+        const childrenMap = buildChildrenMap(state.items);
+        if (getDescendants(dragId, childrenMap).has(targetId)) {
+          setNotice("不能移到自己的子節點底下。");
+          return false;
+        }
+
+        if (mode === "inside") {
+          source.parentId = targetId;
+          syncNodeCurriculumFromTarget(source, target);
+          const refreshed = flattenRows(state.items);
+          const targetRowIndex = refreshed.findIndex((row) => row.item.id === targetId);
+          let insertIndex = targetRowIndex + 1;
+          while (insertIndex < refreshed.length && refreshed[insertIndex].depth > refreshed[targetRowIndex].depth) insertIndex += 1;
+          const anchorId = refreshed[Math.max(0, insertIndex - 1)]?.item?.id || targetId;
+          const anchorIndex = state.items.findIndex((item) => item.id === anchorId);
+          moveSubtreeBlock(dragId, anchorIndex + 1);
+        } else {
+          source.parentId = target.parentId || "";
+          syncNodeCurriculumFromTarget(source, target);
+          const targetIndexInCurrent = state.items.findIndex((item) => item.id === targetId);
+          const childrenMapNow = buildChildrenMap(state.items);
+          const targetSubtree = getSubtreeIds(targetId, childrenMapNow);
+          let to = targetIndexInCurrent;
+          if (mode === "after") {
+            let last = targetIndexInCurrent;
+            for (let i = targetIndexInCurrent + 1; i < state.items.length; i += 1) {
+              if (!targetSubtree.has(state.items[i].id)) break;
+              last = i;
+            }
+            to = last + 1;
+          }
+          moveSubtreeBlock(dragId, to);
+        }
+
+        source.modifiedAt = new Date().toISOString();
+        state.items = store.normalizeItems(state.items);
+        return true;
+      }
+
+      function moveToChapter(dragId, targetChapterCode) {
+        if (!dragId) return false;
+        const targetCode = String(targetChapterCode || "").trim();
+        const chapterRef = chapterOptionByCode.get(targetCode);
+        if (!targetCode || !chapterRef) return false;
+        const source = state.items.find((item) => item.id === dragId);
+        if (!source) return false;
+        const childrenMap = buildChildrenMap(state.items);
+        const descendants = getDescendants(dragId, childrenMap);
+        const movedIds = new Set([dragId, ...descendants]);
+
+        state.items.forEach((item) => {
+          if (!movedIds.has(item.id)) return;
+          item.stage = chapterRef.stage || item.stage;
+          item.grade = chapterRef.grade || item.grade;
+          item.term = chapterRef.term || "";
+          item.chapter = chapterRef.chapter || item.chapter;
+          item.chapterCode = targetCode || item.chapterCode || "";
+          item.modifiedAt = new Date().toISOString();
+        });
+
+        // Root becomes chapter topic; descendants keep their existing parent chain.
+        source.parentId = "";
+        // Reorder moved subtree block to the end of target chapter block so the result is visible immediately.
+        const subtreeBlock = state.items.filter((item) => movedIds.has(item.id));
+        const rest = state.items.filter((item) => !movedIds.has(item.id));
+        const targetIndexes = rest
+          .map((item, index) => ({ item, index }))
+          .filter(({ item }) => {
+            const code = item.chapterCode || store.getChapterCode(item.stage, item.grade, item.term, item.chapter) || "";
+            return code === targetCode;
+          })
+          .map(({ index }) => index);
+        const insertAt = targetIndexes.length ? Math.max(...targetIndexes) + 1 : rest.length;
+        state.items = rest.slice(0, insertAt).concat(subtreeBlock, rest.slice(insertAt));
+        state.items = store.normalizeItems(state.items);
+        return true;
+      }
+
+      function removeNodeAndDescendants(id) {
+        const childrenMap = buildChildrenMap(state.items);
+        const descendants = getDescendants(id, childrenMap);
+        descendants.add(id);
+        const removedCount = descendants.size;
+        descendants.forEach((removedId) => {
+          if (state.baselineMap.has(removedId) && !state.deletedIds.includes(removedId)) {
+            state.deletedIds.push(removedId);
+          }
+        });
+        state.items = state.items.filter((item) => !descendants.has(item.id));
+        state.items = store.normalizeItems(state.items);
+        return removedCount;
+      }
+
+      function flattenRows(items) {
+        const childrenMap = buildChildrenMap(items);
+        const visited = new Set();
+        const rows = [];
+
+        function walk(item, depth) {
+          if (visited.has(item.id)) return;
+          visited.add(item.id);
+          rows.push({ item, depth });
+          (childrenMap.get(item.id) || []).forEach((child) => walk(child, depth + 1));
+        }
+
+        (childrenMap.get("") || []).forEach((root) => walk(root, 0));
+        items.forEach((item) => { if (!visited.has(item.id)) walk(item, 0); });
+        return rows;
+      }
+
+      function exportPayload() {
+        const changedItems = state.items
+          .map((item, index) => ({ item, index }))
+          .filter(({ item, index }) => isItemModified(item, index))
+          .map(({ item, index }) => ({
+            id: item.id,
+            title: item.title,
+            parentId: item.parentId || "",
+            order: index + 1,
+            stage: item.stage,
+            grade: item.grade,
+            term: item.term,
+            chapter: item.chapter,
+            domain: item.domain,
+            chapterRole: item.chapterRole || "",
+            difficulty: item.difficulty,
+            relatedChapters: item.relatedChapters || [],
+            relatedTopicIds: item.relatedTopicIds || [],
+            contentTypes: item.contentTypes || [],
+            tags: item.tags || []
+          }));
+
+        return {
+          schema: "math-formula-structure-v1",
+          exportType: "delta",
+          strictMode: true,
+          savedAt: new Date().toISOString(),
+          itemCount: changedItems.length,
+          deletedCount: state.deletedIds.length,
+          totalItemCount: state.items.length,
+          sourceSignature: computeDatasetSignature(state.items),
+          note: "僅匯出已修改節點，可直接給 Codex 讀取並調整。",
+          deletedIds: state.deletedIds.slice(),
+          items: changedItems
+        };
+      }
+
+      function applyPayload(payload) {
+        const records = Array.isArray(payload?.items) ? payload.items : Array.isArray(payload) ? payload : null;
+        if (!records || !records.length) throw new Error("invalid");
+
+        const payloadSignature = String(payload?.sourceSignature || "");
+        const currentSignature = computeDatasetSignature(state.items);
+        if (payloadSignature && payloadSignature !== currentSignature) {
+          throw new Error("signature-mismatch");
+        }
+
+        const missingIds = records
+          .map((record) => String(record?.id || "").trim())
+          .filter((id) => id && !state.items.some((item) => item.id === id));
+        if (missingIds.length) {
+          throw new Error(`missing-ids:${missingIds.join(",")}`);
+        }
+
+        const working = state.items.map((item) => ({
+          ...item,
+          relatedChapters: Array.isArray(item.relatedChapters) ? item.relatedChapters.slice() : [],
+          relatedTopicIds: Array.isArray(item.relatedTopicIds) ? item.relatedTopicIds.slice() : [],
+          contentTypes: Array.isArray(item.contentTypes) ? item.contentTypes.slice() : [],
+          tags: Array.isArray(item.tags) ? item.tags.slice() : []
+        }));
+        const byId = new Map(working.map((item) => [item.id, item]));
+        const touched = [];
+
+        records.forEach((record, idx) => {
+          const id = String(record?.id || "").trim();
+          const item = byId.get(id);
+          if (!item) return;
+          item.parentId = String(record.parentId || "").trim();
+          if (typeof record.chapter === "string") item.chapter = record.chapter || item.chapter;
+          if (typeof record.domain === "string") item.domain = record.domain || item.domain;
+          if (typeof record.chapterRole === "string") item.chapterRole = record.chapterRole;
+          if (typeof record.difficulty === "string") item.difficulty = record.difficulty;
+          if (Array.isArray(record.relatedChapters)) item.relatedChapters = record.relatedChapters;
+          if (Array.isArray(record.relatedTopicIds)) item.relatedTopicIds = record.relatedTopicIds;
+          if (Array.isArray(record.contentTypes)) item.contentTypes = record.contentTypes;
+          if (Array.isArray(record.tags)) item.tags = record.tags;
+          item.modifiedAt = new Date().toISOString();
+          touched.push({ id, order: Number(record.order) > 0 ? Number(record.order) : idx + 1 });
+        });
+
+        const touchedSet = new Set(touched.map((x) => x.id));
+        const ordered = touched.sort((a, b) => a.order - b.order).map((x) => byId.get(x.id)).filter(Boolean);
+        const untouched = working.filter((item) => !touchedSet.has(item.id));
+        state.items = store.normalizeItems(ordered.concat(untouched));
+      }
+
+      function renderSummary() {
+        const managedInfo = typeof store.getManagedStateInfo === "function"
+          ? store.getManagedStateInfo()
+          : { hasManagedData: false, version: 0, savedAt: "", itemCount: 0 };
+        const sourceInfo = typeof store.getDataSourceInfo === "function"
+          ? store.getDataSourceInfo()
+          : { label: "Unknown", path: "" };
+        const topicCount = state.items.filter((item) => !item.parentId).length;
+        const branchCount = state.items.length - topicCount;
+        const gradeCount = new Set(state.items.map((item) => `${item.stage}|${item.grade}|${item.term || ""}`)).size;
+        const chapterCount = groupedByChapter(state.items).length;
+        const dirty = state.deletedIds.length > 0 || state.items.some((item, index) => isItemModified(item, index));
+        summary.innerHTML = [
+          `<span class="chip ${dirty ? "status-dirty" : "status-saved"}">${dirty ? "本頁有未套用變更" : "目前是已套用版本"}</span>`,
+          `<span class="chip">版本 v${managedInfo.version || 0}</span>`,
+          `<span class="chip">套用時間 ${escapeHtml(formatTimestamp(managedInfo.savedAt))}</span>`,
+          `<span class="chip">年級 ${gradeCount} 組</span>`,
+          `<span class="chip">章節 ${chapterCount} 章</span>`,
+          `<span class="chip">主題 ${topicCount} 筆</span>`,
+          `<span class="chip">分支/次分支 ${branchCount} 筆</span>`,
+          `<span class="chip">本次刪除 ${state.deletedIds.length} 筆</span>`,
+          `<span class="chip">操作紀錄 ${state.operationLog.length} 筆</span>`,
+          `<span class="chip">資料來源 ${escapeHtml(sourceInfo.label)}${sourceInfo.path ? `：${escapeHtml(sourceInfo.path)}` : ""}</span>`
+        ].join("");
+      }
+
+      function renderTreeNode(item, childrenMap) {
+        const children = (childrenMap.get(item.id) || []).slice();
+        const flags = getNodeFlags(item);
+        const nodeClass = [
+          "node",
+          state.selectedId === item.id ? "active" : "",
+          state.hoveredDrop.targetId === item.id && state.hoveredDrop.mode === "before" ? "drop-before" : "",
+          state.hoveredDrop.targetId === item.id && state.hoveredDrop.mode === "inside" ? "drop-inside" : "",
+          state.hoveredDrop.targetId === item.id && state.hoveredDrop.mode === "after" ? "drop-after" : ""
+        ].filter(Boolean).join(" ");
+
+        return `
+          <li>
+            <article class="${nodeClass}" data-node-id="${item.id}" draggable="true">
+              <span class="drop-hint"></span>
+              <div class="node-row">
+                <strong>${escapeHtml(item.title)}</strong>
+                <span class="node-tools">
+                  <button type="button" class="node-delete" data-select-id="${item.id}" style="border-color:#b7d7da;background:#ecf8f8;color:#1f666c;">選取</button>
+                  <span class="node-meta">${flags.map((flag) => `<span class="node-flag${flag === "空" ? " empty" : ""}">${escapeHtml(flag)}</span>`).join("")}</span>
+                  <button type="button" class="node-delete" data-delete-id="${item.id}">刪除</button>
+                </span>
+              </div>
+              <div class="node-drop-zone-group">
+                <button type="button" class="node-drop-zone" data-drop-id="${item.id}" data-drop-mode="before">放上方</button>
+                <button type="button" class="node-drop-zone" data-drop-id="${item.id}" data-drop-mode="inside">成為子分支</button>
+                <button type="button" class="node-drop-zone" data-drop-id="${item.id}" data-drop-mode="after">放下方</button>
+                ${item.parentId ? `<button type="button" class="node-drop-zone" data-promote-id="${item.id}">升為主題</button>` : ""}
+              </div>
+            </article>
+            ${children.length ? `<ul class="node-list node-children">${children.map((child) => renderTreeNode(child, childrenMap)).join("")}</ul>` : ""}
+          </li>
+        `;
+      }
+
+      function render() {
+        renderSummary();
+        const chapters = groupedByChapter(state.items);
+        const gradeOrder = ["國一", "國二", "國三", "高一", "高二", "高三"];
+        const gradeMap = new Map(gradeOrder.map((grade) => [grade, { grade, chapters: [] }]));
+        const extraGroups = [];
+        chapters.forEach((chapter) => {
+          if (gradeMap.has(chapter.grade)) {
+            gradeMap.get(chapter.grade).chapters.push(chapter);
+            return;
+          }
+          let fallback = extraGroups.find((group) => group.grade === chapter.grade);
+          if (!fallback) {
+            fallback = { grade: chapter.grade || "未分類", chapters: [] };
+            extraGroups.push(fallback);
+          }
+          fallback.chapters.push(chapter);
+        });
+
+        const groups = gradeOrder
+          .map((grade) => gradeMap.get(grade))
+          .concat(extraGroups)
+          .filter((group) => group && group.chapters.length);
+
+        treeRoot.innerHTML = groups.map((group) => {
+          const chapterHtml = group.chapters.map((chapter) => {
+            const chapterItems = chapter.items;
+            const childrenMap = buildChildrenMap(chapterItems);
+            const chapterIdSet = new Set(chapterItems.map((item) => item.id));
+            const roots = chapterItems.filter((item) => {
+              const parentId = String(item.parentId || "").trim();
+              return !parentId || !chapterIdSet.has(parentId);
+            });
+            const chapterAction = `
+              <div class="chapter-action-row">
+                <button
+                  type="button"
+                  class="node-drop-zone"
+                  data-chapter-put="true"
+                  data-chapter-code="${escapeHtml(chapter.chapterCode || "")}"
+                  data-stage="${escapeHtml(chapter.stage)}"
+                  data-grade="${escapeHtml(chapter.grade)}"
+                  data-term="${escapeHtml(chapter.term || "")}"
+                  data-chapter="${escapeHtml(chapter.chapter)}"
+                >
+                  放入本章（主題）
+                </button>
+              </div>
+            `;
+            const nodeHtml = roots.length
+              ? `${chapterAction}<ul class="node-list">${roots.map((rootItem) => renderTreeNode(rootItem, childrenMap)).join("")}</ul>`
+              : `${chapterAction}<div class="empty">本章目前沒有主題。</div>`;
+
+            return `
+              <details class="tree-details" open>
+                <summary>
+                  <span class="chapter-head">
+                    <span class="chapter-code">${escapeHtml(chapter.chapterCode || "未編碼")}</span>
+                    <span>${escapeHtml(chapter.section || chapter.chapter)}</span>
+                  </span>
+                  <span>${chapterItems.length} 筆</span>
+                </summary>
+                <div class="tree-body">${nodeHtml}</div>
+              </details>
+            `;
+          }).join("");
+
+          return `
+            <section class="stage-group">
+              <details class="tree-details" open>
+                <summary><span>${escapeHtml(group.grade)}</span><span>${group.chapters.length} 章</span></summary>
+                <div class="tree-body">${chapterHtml}</div>
+              </details>
+            </section>
+          `;
+        }).join("\n");
+      }
+
+      treeRoot.addEventListener("dragstart", (event) => {
+        const node = event.target.closest(".node[data-node-id]");
+        if (!node) return;
+        state.draggingId = node.dataset.nodeId;
+        state.selectedId = state.draggingId;
+        node.classList.add("dragging");
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", state.draggingId);
+      });
+
+      treeRoot.addEventListener("dragend", (event) => {
+        const node = event.target.closest(".node[data-node-id]");
+        if (node) node.classList.remove("dragging");
+        state.hoveredDrop = { targetId: null, mode: null };
+        clearDropHint();
+      });
+
+      treeRoot.addEventListener("dragover", (event) => {
+        if (!state.draggingId) return;
+        const node = event.target.closest(".node[data-node-id]");
+        if (!node) return;
+        event.preventDefault();
+        const mode = detectDropMode(event, node);
+        state.hoveredDrop = { targetId: node.dataset.nodeId, mode };
+        paintDropHint(state.hoveredDrop.targetId, state.hoveredDrop.mode);
+      });
+
+      treeRoot.addEventListener("drop", async (event) => {
+        const node = event.target.closest(".node[data-node-id]");
+        if (!node || !state.draggingId) return;
+        event.preventDefault();
+        const targetId = node.dataset.nodeId;
+        const mode = state.hoveredDrop.targetId === targetId && state.hoveredDrop.mode
+          ? state.hoveredDrop.mode
+          : detectDropMode(event, node);
+        const moved = moveNode(state.draggingId, targetId, mode);
+        const movedId = state.draggingId;
+        state.draggingId = null;
+        state.hoveredDrop = { targetId: null, mode: null };
+        clearDropHint();
+        render();
+        if (moved) {
+          markDraftChanged("move-by-drag", { movedId, targetId, mode });
+        }
+      });
+
+      treeRoot.addEventListener("click", async (event) => {
+        const nodeCard = event.target.closest(".node[data-node-id]");
+        if (nodeCard && !event.target.closest("button")) {
+          const id = nodeCard.dataset.nodeId;
+          if (state.items.some((item) => item.id === id)) {
+            state.selectedId = id;
+            render();
+            setNotice(`已選取：${id}。可直接按章節的「放入本章（主題）」。`);
+          }
+          return;
+        }
+
+        const selectButton = event.target.closest("[data-select-id]");
+        if (selectButton) {
+          const id = selectButton.dataset.selectId;
+          if (state.items.some((item) => item.id === id)) {
+            state.selectedId = id;
+            render();
+            setNotice(`已選取：${id}。可點其他節點的「放上方/成為子分支/放下方」移動。`);
+          }
+          return;
+        }
+
+        const promoteButton = event.target.closest("[data-promote-id]");
+        if (promoteButton) {
+          const id = promoteButton.dataset.promoteId;
+          const target = state.items.find((item) => item.id === id);
+          if (!target) return;
+          target.parentId = "";
+          target.modifiedAt = new Date().toISOString();
+          state.items = store.normalizeItems(state.items);
+          markDraftChanged("promote-to-topic", { id });
+          return;
+        }
+
+        const dropButton = event.target.closest("[data-drop-id][data-drop-mode]");
+        if (dropButton) {
+          const targetId = dropButton.dataset.dropId;
+          const mode = dropButton.dataset.dropMode;
+          const dragId = state.selectedId;
+          if (!dragId) {
+            setNotice("請先按「選取」要移動的節點。");
+            return;
+          }
+          const moved = moveNode(dragId, targetId, mode);
+          if (moved) {
+            markDraftChanged("move-by-button", { movedId: dragId, targetId, mode });
+          }
+          return;
+        }
+
+        const chapterPutButton = event.target.closest("[data-chapter-put='true']");
+        if (chapterPutButton) {
+          event.preventDefault();
+          event.stopPropagation();
+          const moverId = state.selectedId || "";
+          if (!moverId) {
+            setNotice("請先點一下要移動的節點（或按選取），再按「放入本章（主題）」。");
+            return;
+          }
+          const chapterCode = String(chapterPutButton.dataset.chapterCode || "").trim();
+          if (!chapterCode || !chapterOptionByCode.get(chapterCode)) {
+            setNotice("放入本章失敗：目標章節代碼無效。");
+            return;
+          }
+          const moved = moveToChapter(moverId, chapterCode);
+          if (moved) {
+            state.selectedId = moverId;
+            markDraftChanged("move-to-chapter", { movedId: moverId, chapterCode });
+          } else {
+            setNotice("放入本章失敗：請先選取有效節點，並確認目標章節可用。");
+          }
+          return;
+        }
+
+        const deleteButton = event.target.closest("[data-delete-id]");
+        if (!deleteButton) return;
+        const id = deleteButton.dataset.deleteId;
+        const target = state.items.find((item) => item.id === id);
+        if (!target) return;
+        const label = target.parentId ? "分支" : "主題";
+        const ok = window.confirm(`要刪除這個${label}嗎？其下所有子節點會一起刪除。`);
+        if (!ok) return;
+        const removedCount = removeNodeAndDescendants(id);
+        markDraftChanged("delete-node", { id, removedCount });
+      });
+
+      exportButton.addEventListener("click", () => {
+        const blob = new Blob([JSON.stringify(exportPayload(), null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "structure-workbench-export.json";
+        link.click();
+        URL.revokeObjectURL(url);
+        setNotice("已匯出架構紀錄，可直接提供給 Codex。");
+      });
+
+      exportOpsButton?.addEventListener("click", () => {
+        const payload = {
+          schema: "math-formula-operation-log-v1",
+          exportedAt: new Date().toISOString(),
+          total: state.operationLog.length,
+          operations: state.operationLog
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "structure-workbench-operation-log.json";
+        link.click();
+        URL.revokeObjectURL(url);
+        setNotice("已匯出操作紀錄（JSON），可直接提供給 Codex。");
+      });
+
+      importInput.addEventListener("change", async (event) => {
+        const file = event.target.files && event.target.files[0];
+        if (!file) return;
+        try {
+          const parsed = JSON.parse(await file.text());
+          applyPayload(parsed);
+          markDraftChanged("import-structure-payload", { fileName: file.name, itemCount: Array.isArray(parsed?.items) ? parsed.items.length : 0 });
+        } catch (error) {
+          const message = String(error?.message || "");
+          if (message === "signature-mismatch") {
+            setNotice("匯入中止：資料簽章不一致，為避免錯套已取消修改。");
+          } else if (message.startsWith("missing-ids:")) {
+            const ids = message.replace("missing-ids:", "");
+            setNotice(`匯入中止：有不存在的 id（${ids}），未套用任何修改。`);
+          } else {
+            setNotice("匯入失敗，請確認 JSON 格式。");
+          }
+        } finally {
+          event.target.value = "";
+        }
+      });
+
+      saveButton.addEventListener("click", async () => {
+        await writeDraftToDatabase();
+      });
+
+      reloadButton.addEventListener("click", () => {
+        state.items = store.getBaseFormulas?.() || store.getCurrentFormulas();
+        resetBaseline(state.items);
+        state.operationLog = [];
+        saveOperationLog();
+        render();
+        setNotice("已重新載入資料庫目前版本；尚未寫回的草稿已捨棄。");
+      });
+
+      bridgeToggleButton?.addEventListener("click", async () => {
+        const current = String(state.bridge.url || "http://127.0.0.1:4310");
+        const next = window.prompt("請輸入本機存檔服務網址", current);
+        if (next === null) return;
+        state.bridge.url = String(next || "").trim();
+        window.localStorage.setItem(BRIDGE_URL_KEY, state.bridge.url);
+        state.bridge.enabled = await pingBridge();
+        renderBridgeStatus();
+        if (state.bridge.enabled) {
+          setNotice(`本機存檔已連線：${state.bridge.url}`);
+        } else {
+          setNotice("本機存檔未連線，請先啟動 local structure bridge。");
+        }
+      });
+
+      state.operationLog = loadOperationLog();
+      (async () => {
+        state.bridge.enabled = await pingBridge();
+        renderBridgeStatus();
+      })();
+      resetBaseline(state.items);
+      render();
+      setNotice("結構頁已就緒。拖拉與刪除只會修改草稿；按「寫回資料庫」才會真正保存。");
+    })();
+  </script>
+</body>
+</html>

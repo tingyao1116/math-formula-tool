@@ -1,0 +1,1466 @@
+{
+  "chapter_code": "s3-3-1",
+  "chapter_title": "平面向量",
+  "questions": [
+    {
+      "id": "q-s3-3-1-0001",
+      "title": "由正五邊形的邊，可決定＿＿＿＿個不同的向量",
+      "question_text": "由正五邊形的邊，可決定＿＿＿＿個不同的向量",
+      "answer_text": "10個",
+      "explanation_text": "正五邊形的五個邊當中，沒有任何二邊是平行的，故每一邊均可決定二個大小相同，方向相反的向量。因其共有五個邊，故共可決定10個不同的向量",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-operations-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題1：有向線段與向量",
+      "source_order": 1,
+      "tags": [
+        "s3-3-1",
+        "section:主題1：有向線段與向量",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0002",
+      "title": "隨堂練習：(1)如果向量$\\overset{⃑}{u}$的始點與終點皆為此",
+      "question_text": "(1)如果向量$\\overset{⃑}{u}$的始點與終點皆為此正立方體的頂點，且$\\left| \\overset{⃑}{u} \\right| = \\sqrt{3}$，則此正立方體共可決定＿＿＿＿個不相等的向量$\\overset{⃑}{u}$。\n(2)若向量$\\overset{⃑}{a}$的起點與終點都是此正立方體的頂點，且$\\left| \\overset{⃑}{a} \\right| = 1$， 則共有＿＿＿＿個不相等的向量$\\overset{⃑}{a}$",
+      "answer_text": "(1)8個；(2)6個",
+      "explanation_text": "(1)所求為$\\overset{⃑}{AG}$，$\\overset{⃑}{GA}$，$\\overset{⃑}{EC}$，$\\overset{⃑}{CE}$，$\\overset{⃑}{BH}$，$\\overset{⃑}{HB}$，$\\overset{⃑}{DF}$及$\\overset{⃑}{FD}$，故共 8 個。\n(2)長度為 1 的向量可取為$\\overset{⃑}{AB}$，$\\overset{⃑}{BA}$，$\\overset{⃑}{AD}$，$\\overset{⃑}{DA}$，$\\overset{⃑}{AH}$，$\\overset{⃑}{HA}$，故共有 6 個。",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-operations-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題1：有向線段與向量",
+      "source_order": 2,
+      "tags": [
+        "s3-3-1",
+        "section:主題1：有向線段與向量",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0003",
+      "title": "隨堂練習：正五邊形ABCDE中的5個頂點，可決定＿＿＿＿個不同的向量",
+      "question_text": "正五邊形ABCDE中的5個頂點，可決定＿＿＿＿個不同的向量",
+      "answer_text": "20個",
+      "explanation_text": "於正五邊形的五個頂點A，B，C，D，E中任取二點，可構成10個線段$\\overline{AB ⥂}$，$\\overline{AC ⥂}$，$\\overline{AD ⥂}$，$\\overline{AE ⥂}$，$\\overline{BC ⥂}$，$\\overline{BD ⥂}$，$\\overline{BE ⥂}$，$\\overline{CD ⥂}$，$\\overline{CE ⥂}$，$\\overline{DE ⥂}$，而每個線段可產生二個向量， 如：$\\overset{⃑}{AB}$與$\\overset{⃑}{BA}$，故可產生20個不同的向量",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-operations-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題1：有向線段與向量",
+      "source_order": 3,
+      "tags": [
+        "s3-3-1",
+        "section:主題1：有向線段與向量",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0004",
+      "title": "如下圖，A，B，C，D，E，F共線且$\\overline{AB}",
+      "question_text": "如下圖，A，B，C，D，E，F共線且$\\overline{AB}$=$\\overline{BC}$=$\\overline{CD}$=$\\overline{DE}$=$\\overline{EF}$，則下列敘述何者正確？\n[圖:program-db/assets/question-media/s3-3-1/image5.png]\n(A)$\\overset{⃑}{AB}$=\n[圖:program-db/assets/question-media/s3-3-1/image6.png] $\\overset{⃑}{AF}$\n(B)$\\overset{⃑}{AB}$=\n[圖:program-db/assets/question-media/s3-3-1/image7.png] $\\overset{⃑}{CF}$ (C)$\\overset{⃑}{BE}$= −\n[圖:program-db/assets/question-media/s3-3-1/image8.png] $\\overset{⃑}{DB}$ (D)$\\overset{⃑}{AB}$+ 2$\\overset{⃑}{DE}$ (E) $\\overset{⃑}{BD}$−$\\overset{⃑}{CB}$=$\\frac{3}{5}\\overset{⃑}{AF}$",
+      "answer_text": "(A)(B)(C)(D)(E)",
+      "explanation_text": "(A)$\\overset{⃑}{AB}$，$\\overset{⃑}{AF}$同方向且5$\\overline{AB}$=$\\overline{AF}$ ∴$\\overset{⃑}{AB}$=\n[圖:program-db/assets/question-media/s3-3-1/image6.png] $\\overset{⃑}{AF}$\n(B)$\\overset{⃑}{AB}$，$\\overset{⃑}{CF}$同方向且3$\\overline{AB}$=$\\overline{CF}$ ∴$\\overset{⃑}{AB}$=\n[圖:program-db/assets/question-media/s3-3-1/image7.png] $\\overset{⃑}{CF}$\n(C)$\\overset{⃑}{BE}$，$\\overset{⃑}{DB}$反方向且2$\\overline{BE}$= 3$\\overline{DB}$ ∴$\\overset{⃑}{BE}$= −\n[圖:program-db/assets/question-media/s3-3-1/image8.png] $\\overset{⃑}{DB}$\n(D)$\\overset{⃑}{AB}$+ 2$\\overset{⃑}{DE}$=$\\overset{⃑}{AB}$+2$\\overset{⃑}{AB}$=3$\\overset{⃑}{AB}$=3$\\overset{⃑}{BC}$\n(E)$\\overset{⃑}{BD}$−$\\overset{⃑}{CB}$=2$\\overset{⃑}{AB}$+$\\overset{⃑}{BC}$=2$\\overset{⃑}{AB}$+$\\overset{⃑}{AB}$=3$\\overset{⃑}{AB}$=3(\n[圖:program-db/assets/question-media/s3-3-1/image6.png] $\\overset{⃑}{AF}$)=$\\frac{3}{5}\\overset{⃑}{AF}$ 故選(A)(B)(C)(D)(E",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-operations-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題1：有向線段與向量",
+      "source_order": 4,
+      "tags": [
+        "s3-3-1",
+        "section:主題1：有向線段與向量",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0005",
+      "title": "(A)$\\overset{⃑}{AB}$=$\\overset{⃑",
+      "question_text": "(A)$\\overset{⃑}{AB}$=$\\overset{⃑}{CD}$ (B) $\\left| \\overset{⃑}{AB} \\right|$=$\\left| \\overset{⃑}{CD} \\right|$\n(C) $\\overset{⃑}{AB}$+$\\overset{⃑}{AD}$=$\\overset{⃑}{AC}$ (D) $\\overset{⃑}{AB}$－$\\overset{⃑}{DC}$=$\\overset{⃑}{0}$\n(E) $\\overset{⃑}{AB}$+ $\\overset{⃑}{BC}$+$\\overset{⃑}{CD}$+$\\overset{⃑}{DA}$=$\\overset{⃑}{0}$",
+      "answer_text": "(B)(C)(E)",
+      "explanation_text": "(A)如圖，應是$\\overset{⃑}{AB}$=$\\overset{⃑}{DC}$\n(B)∵$\\overset{⃑}{AB}$=$\\overset{⃑}{DC}$ ∴$\\left| \\overset{⃑}{AB} \\right|$=$\\left| \\overset{⃑}{DC} \\right|$=$\\left| \\overset{⃑}{CD} \\right|$\n(C)$\\overset{⃑}{AB}$+$\\overset{⃑}{AD}$= $\\overset{⃑}{AB}$+$\\overset{⃑}{BC}$=$\\overset{⃑}{AC}$\n(D)$\\overset{⃑}{AB}$－$\\overset{⃑}{DC}$=$\\overset{⃑}{AB}$－$\\overset{⃑}{AB}$=$\\overset{⃑}{0}$（不得寫作0）\n(E)$\\overset{⃑}{AB}$+ $\\overset{⃑}{BC}$+$\\overset{⃑}{CD}$+$\\overset{⃑}{DA}$=$\\overset{⃑}{AA}$=$\\overset{⃑}{0}$ 故選(B)(C)(E",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-operations-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題1：有向線段與向量",
+      "source_order": 5,
+      "tags": [
+        "s3-3-1",
+        "section:主題1：有向線段與向量",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0006",
+      "title": "隨堂練習：【證明】∵□ABCD為平行四邊形 ∴$\\overset{⃑}{B",
+      "question_text": "【證明】∵□ABCD為平行四邊形\n∴$\\overset{⃑}{BA}$=$\\overset{⃑}{CD}$\n[圖:program-db/assets/question-media/s3-3-1/image10.png] $\\overset{⃑}{BP}$+$\\overset{⃑}{PA}$=$\\overset{⃑}{CP}$+$\\overset{⃑}{PD}$\n[圖:program-db/assets/question-media/s3-3-1/image11.png]$\\overset{⃑}{PA}$−$\\overset{⃑}{PB}$=$\\overset{⃑}{PD}$−$\\overset{⃑}{PC}$\n[圖:program-db/assets/question-media/s3-3-1/image10.png] $\\overset{⃑}{PA}$+$\\overset{⃑}{PC}$=$\\overset{⃑}{PB}$+$\\overset{⃑}{PD}$",
+      "answer_text": "見詳解",
+      "explanation_text": "",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-operations-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題1：有向線段與向量",
+      "source_order": 6,
+      "tags": [
+        "s3-3-1",
+        "section:主題1：有向線段與向量",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0007",
+      "title": "試以$\\overset{⃑}{a}$，$\\overset{⃑}{",
+      "question_text": "試以$\\overset{⃑}{a}$，$\\overset{⃑}{b}$，$\\overset{⃑}{c}$表示下列各向量：(1) $\\overset{⃑}{AG}$ (2) $\\overset{⃑}{BH}$ (3)$\\overset{\\rightarrow}{CE}$\n(4)$\\overset{\\rightarrow}{DF}$ (5)$\\overset{\\rightarrow}{EG}$",
+      "answer_text": "(1)$\\vec{a}+\\vec{b}+\\vec{c}$；(2)$-\\vec{a}+\\vec{b}+\\vec{c}$；(3)$-\\vec{a}-\\vec{b}+\\vec{c}$；(4)$\\vec{a}-\\vec{b}+\\vec{c}$；(5)$\\vec{a}+\\vec{b}$",
+      "explanation_text": "如圖，向量可作任意平行移動。\n已知$\\overset{⃑}{AB}=\\overset{⃑}{DC}=\\overset{⃑}{EF}=\\overset{⃑}{HG}=\\overset{⃑}{a}$，$\\overset{⃑}{AD}=\\overset{⃑}{BC}=\\overset{⃑}{EH}=\\overset{⃑}{FG}=\\overset{⃑}{b}$，$\\overset{⃑}{AE}=\\overset{⃑}{BF}=\\overset{⃑}{DH}=\\overset{⃑}{CG}=\\overset{⃑}{c}$。\n(1)$\\overset{⃑}{AG}=\\overset{⃑}{a}+\\overset{⃑}{b}+\\overset{⃑}{c}$\n(2)$\\overset{⃑}{BH}=-\\overset{⃑}{a}+\\overset{⃑}{b}+\\overset{⃑}{c}$\n(3)$\\overset{⃑}{CE}=-\\overset{⃑}{a}-\\overset{⃑}{b}+\\overset{⃑}{c}$\n(4)$\\overset{⃑}{DF}=\\overset{⃑}{a}-\\overset{⃑}{b}+\\overset{⃑}{c}$\n(5)$\\overset{⃑}{EG}=\\overset{⃑}{a}+\\overset{⃑}{b}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-operations-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題1：有向線段與向量",
+      "source_order": 7,
+      "tags": [
+        "s3-3-1",
+        "section:主題1：有向線段與向量",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0008",
+      "title": "如圖判斷各敘述何者正確",
+      "question_text": "如圖，請依各圖中的船速與水流速度判斷下列敘述何者正確：\n[圖:program-db/assets/question-media/s3-3-1/image20.png]\n[圖:program-db/assets/question-media/s3-3-1/image21.png]\n[圖:program-db/assets/question-media/s3-3-1/image22.png]\n[圖:program-db/assets/question-media/s3-3-1/image23.png]\n[圖:program-db/assets/question-media/s3-3-1/image24.png]\n[圖:program-db/assets/question-media/s3-3-1/image25.png]",
+      "answer_text": "(1)(3)(5)",
+      "explanation_text": "[圖:program-db/assets/question-media/s3-3-1/image20.png]\n[圖:program-db/assets/question-media/s3-3-1/image21.png] 加入水流速度\n(1)正確：\n[圖:program-db/assets/question-media/s3-3-1/image22.png]\n[圖:program-db/assets/question-media/s3-3-1/image23.png] 加入水流速度\n(2)錯誤：由(3)可知錯誤\n(3)正確：\n(4)錯誤：由(1)可知錯誤\n(5)正確：\n[圖:program-db/assets/question-media/s3-3-1/image24.png]\n[圖:program-db/assets/question-media/s3-3-1/image25.png] 加入水流速度",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-operations-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題1：有向線段與向量",
+      "source_order": 8,
+      "tags": [
+        "s3-3-1",
+        "section:主題1：有向線段與向量",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0009",
+      "title": "若$\\overset{⃑}{a}$之長度為6，矢角為45°，則$",
+      "question_text": "若$\\overset{⃑}{a}$之長度為6，矢角為45°，則$\\overset{⃑}{a}$= ＿＿＿＿。（以坐標表示）",
+      "answer_text": "$(3\\sqrt{2},\\,3\\sqrt{2})$",
+      "explanation_text": "$\\overset{⃑}{a}$= 6(cos45°，sin45°) = 6($\\frac{\\sqrt{2}{2}$，$\\frac{\\sqrt{2}{2}$) =\n(3$\\sqrt{2}$，3$\\sqrt{2}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-coordinate-representation-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題2：坐標向量",
+      "source_order": 9,
+      "tags": [
+        "s3-3-1",
+        "section:主題2：坐標向量",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0010",
+      "title": "隨堂練習：向量$\\overset{⃑}{v}$= (− 2sin310°",
+      "question_text": "向量$\\overset{⃑}{v}$= (− 2sin310°，− 2cos310°) 的方向角為＿＿＿＿",
+      "answer_text": "$320^\\circ$",
+      "explanation_text": "∵$\\overset{⃑}{v}$= 2 (− sin310°，− cos310°) = 2 (sin50°，− cos50°) = 2 (cos40°，− sin40°) = 2 (cos (360° − 40°)，sin (360° − 40°)) = 2 (cos320°，sin320°",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-coordinate-representation-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題2：坐標向量",
+      "source_order": 10,
+      "tags": [
+        "s3-3-1",
+        "section:主題2：坐標向量",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0011",
+      "title": "平面上三向量$\\overset{⃑}{a}$、$\\overset",
+      "question_text": "平面上三向量$\\overset{⃑}{a}$、$\\overset{⃑}{b}$、$\\overset{⃑}{c}$，長度分別為1，2，3方向角分別為60°，120°，240°，則\n(1) |$\\overset{⃑}{a}$+$\\overset{⃑}{b}$| = ＿＿＿＿。 (2) $\\overset{⃑}{a}$+$\\overset{⃑}{b}$+$\\overset{⃑}{c}$之方向角為＿＿＿＿",
+      "answer_text": "(1)$\\sqrt{7}$；(2)$180^\\circ$",
+      "explanation_text": "(1)$\\overset{⃑}{a}$= (1 × cos60°，1 × sin60°) =\n($\\frac{1}{2}$，$\\frac{\\sqrt{3}{2}$)，$\\overset{⃑}{b}$=\n(2cos120°，2sin120°) = ( − 1，$\\sqrt{3}$) $\\overset{⃑}{c}$= (3cos240°，3sin240°) =\n($\\frac{- 3}{2}$，$\\frac{- 3\\sqrt{3}{2}$)， $\\overset{⃑}{a}$+$\\overset{⃑}{b}$= ($\\frac{1}{2}$，$\\frac{\\sqrt{3}{2}$) +\n( − 1，$\\sqrt{3}$) = ($\\frac{- 1}{2}$，$\\frac{3\\sqrt{3}{2}$)\n∴ |$\\overset{⃑}{a}$+$\\overset{⃑}{b}$| =$\\sqrt{(\\frac{- 1}{2})^{2} + (\\frac{3\\sqrt{3}{2})^{2}$=$\\sqrt{7}$\n(2)$\\overset{⃑}{a}$+ $\\overset{⃑}{b}$+$\\overset{⃑}{c}$=\n($\\frac{1}{2}$，$\\frac{\\sqrt{3}{2}$) + ( − 1，$\\sqrt{3}$) +\n($\\frac{- 3}{2}$，$\\frac{- 3\\sqrt{3}{2}$) = ( − 2，0)，\n∴$\\overset{⃑}{a}$+ $\\overset{⃑}{b}$+$\\overset{⃑}{c}$之方向角為180°",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-coordinate-representation-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題2：坐標向量",
+      "source_order": 11,
+      "tags": [
+        "s3-3-1",
+        "section:主題2：坐標向量",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0012",
+      "title": "∠OAB = ∠ABC = ∠BCD =120°，試求：B，C",
+      "question_text": "∠OAB = ∠ABC = ∠BCD =120°，試求：B，C，D之坐標",
+      "answer_text": "$B(12,4\\sqrt{3})$；$C(10,6\\sqrt{3})$；$D(6,6\\sqrt{3})$",
+      "explanation_text": "(1)$\\overset{⃑}{OA}$= (8,0)，$\\overset{⃑}{AB}$= 8(cos60°,sin60°) =\n(4，4$\\sqrt{3}$)\n⇒ $\\overset{⃑}{OB}$=$\\overset{⃑}{OA}$+$\\overset{⃑}{AB}$=\n(12，4$\\sqrt{3}$) ∴B(12，4$\\sqrt{3}$)\n(2)過B作水平線$\\overline{BP}$，∠ABP = ∠OAB = 120° ⇒ ∠PBC = 120°\n∴$\\overset{⃑}{BC}$= 4 (cos120°，sin120°) = (− 2，2$\\sqrt{3}$)\n⇒ $\\overset{⃑}{OC} = \\overset{⃑}{OB} + \\overset{⃑}{BC}$=(10,6$\\sqrt{3}$)，即C(10，6$\\sqrt{3}$)\n(3)過C作水平線$\\overline{CQ}$，∠BCQ = 180° − 120° = 60° ⇒ ∠QCD = 180°\n∴$\\overset{⃑}{CD}$= 4(cos180°，sin180°) = ( − 4，0) ⇒ $\\overset{⃑}{OD}$=$\\overset{⃑}{OC}$+$\\overset{⃑}{CD}$=\n(6,6$\\sqrt{3}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-coordinate-representation-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題2：坐標向量",
+      "source_order": 12,
+      "tags": [
+        "s3-3-1",
+        "section:主題2：坐標向量",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0013",
+      "title": "若A(3,2)，B(5,− 1)，C( − 1,4)，已知2$",
+      "question_text": "若A(3,2)，B(5,− 1)，C( − 1,4)，已知2$\\overset{⃑}{AB}$=$\\overset{⃑}{CD}$，則D坐標為＿＿＿＿",
+      "answer_text": "(3,-2)",
+      "explanation_text": "設D(x,y)，則2$\\overset{⃑}{AB}$= 2(2，− 3) = (4，− 6)，$\\overset{⃑}{CD}$= (x + 1，y − 4) 2$\\overset{⃑}{AB}$=$\\overset{⃑}{CD}$ ⇒ (4，− 6) = (x + 1，y − 4) $\\left x + 1 = 4 y - 4 = - 6 $ ⇒ $\\left x = 3 y = - 2 $，即D坐標為(3,− 2",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-coordinate-representation-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題2：坐標向量",
+      "source_order": 13,
+      "tags": [
+        "s3-3-1",
+        "section:主題2：坐標向量",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0014",
+      "title": "隨堂練習：平面上三點A(− 2,1)，B(− 4,− 2)，C(3,5)",
+      "question_text": "平面上三點A(− 2,1)，B(− 4,− 2)，C(3,5)，若$\\overset{⃑}{BD}$ = 3$\\overset{⃑}{AB}$− 4$\\overset{⃑}{CD}$，試求D點之坐標",
+      "answer_text": "$\\left(\\frac{2}{5},\\frac{9}{5}\\right)$",
+      "explanation_text": "A(− 2,1)，B(− 4,− 2)，C(3,5) ⇒ $\\overset{⃑}{AB}$= (− 2,− 3) 又設D(x,y) ⇒ $\\overset{⃑}{BD}$= (x + 4,y + 2)，$\\overset{⃑}{CD}$= (x − 3,y − 5) 由$\\overset{⃑}{BD}$ = 3$\\overset{⃑}{AB}$− 4$\\overset{⃑}{CD}$ ⇒ (x + 4,y + 2) = 3(− 2,− 3) − 4(x − 3,y − 5)\n⇒ $\\left x + 4 = - 6 - 4(x - 3) \\Rightarrow 5x = 2 \\Rightarrow x = \\frac{2}{5} y + 2 = - 9 - 4(y - 5) \\Rightarrow 5y = 9 \\Rightarrow y = \\frac{9}{5} $ ∴ D之坐標為($\\frac{2}{5}$,$\\frac{9}{5}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-coordinate-representation-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題2：坐標向量",
+      "source_order": 14,
+      "tags": [
+        "s3-3-1",
+        "section:主題2：坐標向量",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0015",
+      "title": "若$\\overset{⃑}{u}$+$\\overset{⃑}{v",
+      "question_text": "若$\\overset{⃑}{u}$+$\\overset{⃑}{v}$=\n(2,3)且3$\\overset{⃑}{u}$+ 2$\\overset{⃑}{v}$=\n( − 1,− 2)，求$\\overset{⃑}{u}$與$\\overset{⃑}{v}$",
+      "answer_text": "$\\vec{u}=(-5,-8)$，$\\vec{v}=(7,11)$",
+      "explanation_text": "[圖:program-db/assets/question-media/s3-3-1/image31.png]， 由(2) −(1) × 2得$\\overset{⃑}{u}$= ( − 5,− 8)，代入(1)得$\\overset{⃑}{v}$=\n(7,11",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-coordinate-representation-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題2：坐標向量",
+      "source_order": 15,
+      "tags": [
+        "s3-3-1",
+        "section:主題2：坐標向量",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0016",
+      "title": "隨堂練習：設$\\overset{⃑}{a}$= (1,1)，$\\overs",
+      "question_text": "設$\\overset{⃑}{a}$=\n(1,1)，$\\overset{⃑}{b}$=\n(2,3)，$\\overset{⃑}{c}$= ( − 4,− 7)，存在實數r，s使得$\\overset{⃑}{c}$= r$\\overset{⃑}{a}$+ s$\\overset{⃑}{b}$， 則數對(r,s) = ＿＿＿＿",
+      "answer_text": "(2,-3)",
+      "explanation_text": "$\\overset{⃑}{c}$= r$\\overset{⃑}{a}$+ s$\\overset{⃑}{b}$ ⇒ ( − 4,− 7) = r(1,1) + s(2,3) = (r + 2s,r + 3s) $\\left r + 2s = - 4 r + 3s = - 7 $ ⇒ $\\left r = 2 s = - 3 $ ∴ (r,s) =(2, − 3",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-coordinate-representation-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題2：坐標向量",
+      "source_order": 16,
+      "tags": [
+        "s3-3-1",
+        "section:主題2：坐標向量",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0017",
+      "title": "設$\\overset{⃑}{a}$= (3,− 1)，$\\ove",
+      "question_text": "設$\\overset{⃑}{a}$= (3,− 1)，$\\overset{⃑}{b}$=\n(x,3)，若(2$\\overset{⃑}{a}$+$\\overset{⃑}{b}$) // ($\\overset{⃑}{a}$ − 2$\\overset{⃑}{b}$)，則x =＿＿＿＿",
+      "answer_text": "$\\frac{15}{13}$",
+      "explanation_text": "$\\overset{⃑}{a}$= (3,− 1)，$\\overset{⃑}{b}$=\n(x,3)，2$\\overset{⃑}{a}$+$\\overset{⃑}{b}$= 2(3,− 1) + (x,3) = (6 + x,1) $\\overset{⃑}{a}$− 2$\\overset{⃑}{b}$= (3,− 1) − 2(x,3) = (3 − 2x,− 7)\n∵ (2$\\overset{⃑}{a}$+$\\overset{⃑}{b}$) // ($\\overset{⃑}{a}$− 2$\\overset{⃑}{b}$) ∴ $\\frac{6 + x}{3 - 2x}$=$\\frac{1}{- 7}$ ⇒ 3 − 2x = − 42 − 7x ⇒ x = − 9",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-coordinate-representation-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題2：坐標向量",
+      "source_order": 17,
+      "tags": [
+        "s3-3-1",
+        "section:主題2：坐標向量",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0018",
+      "title": "隨堂練習：設A(k,5)，B( − 3,3)，C(2,k − 3)三點共線",
+      "question_text": "設A(k,5)，B( − 3,3)，C(2,k − 3)三點共線，求k之值",
+      "answer_text": "$k=-4$或$7$",
+      "explanation_text": "$\\overset{⃑}{BA}$= (k + 3,2)，$\\overset{⃑}{BC}$= (5,k − 3) ∵ A，B，C三點共線\n∴ (k + 3)：2 = 5：(k − 3) ⇒ k^2^ − 3k − 28 = 0 ⇒ k = − 4或7",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-coordinate-representation-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題2：坐標向量",
+      "source_order": 18,
+      "tags": [
+        "s3-3-1",
+        "section:主題2：坐標向量",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0019",
+      "title": "若$\\overset{⃑}{AG}$= α$\\overset{⃑",
+      "question_text": "若$\\overset{⃑}{AG}$= α$\\overset{⃑}{AB}$+$\\beta\\overset{⃑}{AF}$，則(α，β) =＿＿＿＿",
+      "answer_text": "$(\\alpha,\\beta)=\\left(2,\\frac{3}{2}\\right)$",
+      "explanation_text": "$\\overset{⃑}{AG}$=$\\overset{⃑}{AB}$+$\\overset{⃑}{BC}$+$\\overset{⃑}{CG}$=$\\overset{⃑}{AB}$+\n($\\overset{⃑}{BA}$+$\\overset{⃑}{AF}$+$\\overset{⃑}{FC}$) +\n[圖:program-db/assets/question-media/s3-3-1/image36.png] $\\overset{⃑}{CD}$ =$\\overset{⃑}{AB}$+$\\overset{⃑}{BA}$+$\\overset{⃑}{AF}$+ 2$\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image36.png] $\\overset{⃑}{AF}$= 2$\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image37.png] $\\overset{⃑}{AF}$\n∴ (α,β) = (2,$\\frac{3}{2}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-locus-constraints-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 19,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0020",
+      "title": "隨堂練習：試以向量AB、BC表示AE",
+      "question_text": "試以$\\overset{⃑}{AB}$、$\\overset{⃑}{BC}$表示$\\overset{⃑}{AE}$。",
+      "answer_text": "$-\\overset{⃑}{AB}+2\\overset{⃑}{BC}$",
+      "explanation_text": "$\\overset{⃑}{AE}$=$\\overset{⃑}{AB}$+$\\overset{⃑}{BE}$=$\\overset{⃑}{AB}$+ 2$\\overset{⃑}{BO}$=$\\overset{⃑}{AB}$+ 2($\\overset{⃑}{BA}$+$\\overset{⃑}{BC}$) = −$\\overset{⃑}{AB}$+ 2$\\overset{⃑}{BC}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 20,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0021",
+      "title": "隨堂練習：E是$\\overline{AB}$延長線上的一點，$\\overs",
+      "question_text": "E是$\\overline{AB}$延長線上的一點，$\\overset{⃑}{AE}$= 3$\\overset{⃑}{AB}$， 把$\\overset{⃑}{DE}$表成r$\\overset{⃑}{AB}$+ s$\\overset{⃑}{AC}$的形式為＿＿＿＿",
+      "answer_text": "$3\\overset{⃑}{AB}-\\frac{2}{3}\\overset{⃑}{AC}$",
+      "explanation_text": "$\\overset{⃑}{DE}=\\overset{⃑}{AE}-\\overset{⃑}{AD}$， 又$\\overset{⃑}{AE}=3\\overset{⃑}{AB}$，$\\overset{⃑}{AD}=\\frac{2}{3}\\overset{⃑}{AC}$， 故$\\overset{⃑}{DE}=3\\overset{⃑}{AB}-\\frac{2}{3}\\overset{⃑}{AC}$。",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 21,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0022",
+      "title": "設$\\overset{⃑}{u}$，$\\overset{⃑}{v",
+      "question_text": "設$\\overset{⃑}{u}$，$\\overset{⃑}{v}$不平行，若(x − y + 2) $\\overset{⃑}{u}$+ ( x + y − 4) $\\overset{⃑}{v}$=$\\overset{⃑}{0}$，則數對(x,y) =＿＿＿＿",
+      "answer_text": "(1,3)",
+      "explanation_text": "若(x − y + 2) $\\overset{⃑}{u}$+ (x + y − 4) $\\overset{⃑}{v}$=$\\overset{⃑}{0}$且$\\overset{⃑}{u}$，$\\overset{⃑}{v}$不平行\n∴ $\\left x - y + 2 = 0 x + y - 4 = 0 $ ⇒ x = 1，y = 3，故(x,y) = (1,3",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 22,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0023",
+      "title": "隨堂練習：設$\\overset{⃑}{u}$和$\\overset{⃑}{v",
+      "question_text": "設$\\overset{⃑}{u}$和$\\overset{⃑}{v}$不平行，若(3x + y − 5) $\\overset{⃑}{u}$+ (x − y + 1) $\\overset{⃑}{v}$=$\\overset{⃑}{0}$，則x + y =＿＿＿＿",
+      "answer_text": "3",
+      "explanation_text": "(3x + y − 5) $\\overset{⃑}{u}$+ (x − y + 1) $\\overset{⃑}{v}$=$\\overset{⃑}{0}$= 0$\\overset{⃑}{u}$+ 0$\\overset{⃑}{v}$ $\\left 3x + y - 5 = 0 x - y + 1 = 0 $ ⇒ $\\left x = 1 y = 2 $，得x + y = 3",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 23,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0024",
+      "title": "- 若$\\overset{⃑}{GD}$= r$\\overset",
+      "question_text": "- 若$\\overset{⃑}{GD}$= r$\\overset{⃑}{AB}$+ s$\\overset{⃑}{AC}$，r，s ∈ R， 則數對(r，s) =＿＿＿＿",
+      "answer_text": "$\\left(\\frac{2}{3},-\\frac{1}{6}\\right)$",
+      "explanation_text": "$\\overset{⃑}{GD}$=$\\frac{2}{3}\\overset{⃑}{GB} + \\frac{1}{3}\\overset{⃑}{GC}$=$\\frac{2}{3}(\\overset{⃑}{GA} + \\overset{⃑}{AB}) + \\frac{1}{3}(\\frac{1}{2}\\overset{⃑}{AC})$ =$\\frac{2}{3}( - \\overset{⃑}{AG} + \\overset{⃑}{AB}) + \\frac{1}{6}\\overset{⃑}{AC}$ =$\\frac{2}{3}\\overset{⃑}{AB} - \\frac{2}{3}$\n(\n[圖:program-db/assets/question-media/s3-3-1/image43.png] $\\overset{⃑}{AC}$) +$\\frac{1}{6}\\overset{⃑}{AC}$=$\\frac{2}{3}\\overset{⃑}{AB} - \\frac{1}{6}\\overset{⃑}{AC}$\n∴ (r,s) =\n([圖:program-db/assets/question-media/s3-3-1/image44.png",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 24,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0025",
+      "title": "- 若$\\overline{BE}$與$\\overline{CD",
+      "question_text": "- 若$\\overline{BE}$與$\\overline{CD}$相交於P， 則$\\overset{⃑}{AP}$=＿＿＿＿$\\overset{⃑}{AB}$+＿＿＿＿$\\overset{⃑}{BC}$",
+      "answer_text": "$\\frac{3}{4}\\overset{⃑}{AB}+\\frac{1}{2}\\overset{⃑}{BC}$",
+      "explanation_text": "如圖，設定坐標系：A(0,0)，B(2,0)，C(0,3)\n⇒ D(1,0)，E(0,2) $\\overset{\\leftrightarrow}{BE}$：$\\frac{x}{2}$+$\\frac{y}{2}$= 1 ⇒ x + y = 2；$\\overset{\\leftrightarrow}{CD}$：$\\frac{x}{1}$+$\\frac{y}{3}$= 1 ⇒ 3x + y = 3 解之得 x =$\\frac{1}{2}$，y =$\\frac{3}{2}$\n⇒$\\overset{⃑}{AP}$=$\\frac{1}{2}$．\n[圖:program-db/assets/question-media/s3-3-1/image46.png] $\\overset{⃑}{AB}$+$\\frac{3}{2}$．$\\frac{1}{3}\\overset{⃑}{AC}$=$\\frac{1}{4}\\overset{⃑}{AB}$+$\\frac{1}{2}\\overset{⃑}{AC}$ =$\\frac{1}{4}\\overset{⃑}{AB}$+$\\frac{1}{2}$\n($\\overset{⃑}{AB}$+$\\overset{⃑}{BC}$) =\n[圖:program-db/assets/question-media/s3-3-1/image47.png] $\\overset{⃑}{AB}$+$\\frac{1}{2}\\overset{⃑}{BC}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 25,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0026",
+      "title": "隨堂練習：且$\\overline{AF}$：$\\overline{FB}$",
+      "question_text": "且$\\overline{AF}$：$\\overline{FB}$= 3：4，$\\overline{BE}$與$\\overline{CF}$交於點P， 若$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{AC{\\_\\_\\_\\_}芰}{}$，則數對(x，y) =＿＿＿＿",
+      "answer_text": "$\\left(\\frac{9}{29},\\frac{8}{29}\\right)$",
+      "explanation_text": "$\\overset{⃑}{AP}$=α$\\overset{⃑}{AB}$+ (1 − α)$\\overset{⃑}{AE}$......①（∵ B - P - E） = α\n(\n[圖:program-db/assets/question-media/s3-3-1/image49.png] $\\overset{⃑}{AF}$) +\n(1 − α)(\n[圖:program-db/assets/question-media/s3-3-1/image50.png] $\\overset{⃑}{AC}$) =\n[圖:program-db/assets/question-media/s3-3-1/image51.png] $\\overset{AF{\\_\\_\\_\\_}芰}{}$+\n[圖:program-db/assets/question-media/s3-3-1/image52.png] $\\overset{⃑}{AC}$ 其中$\\frac{7\\alpha}{3}$+$\\frac{2(1 - \\alpha)}{5}$= 1（∵ F - P - C）\n⇒ α =$\\frac{9}{29}$代入① 則$\\overset{⃑}{AP}$=\n[圖:program-db/assets/question-media/s3-3-1/image53.png] $\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image54.png] $\\overset{⃑}{AE}$=\n[圖:program-db/assets/question-media/s3-3-1/image55.png] $\\overset{⃑}{AB}$+$\\frac{20}{29}$．(\n[圖:program-db/assets/question-media/s3-3-1/image50.png] $\\overset{⃑}{AC}$) =\n[圖:program-db/assets/question-media/s3-3-1/image56.png] $\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image57.png] $\\overset{⃑}{AC}$\n∴ 數對(x,y) = ($\\frac{9}{29}$,$\\frac{8}{29}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-locus-constraints-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 26,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0027",
+      "title": "$\\overline{CD}$與$\\overline{BE}$交",
+      "question_text": "$\\overline{CD}$與$\\overline{BE}$交於P點，\n(1)設$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AC}$，求數對(x，y) =＿＿＿＿。\n(2)求$\\overline{BP}$：$\\overline{PE}$=＿＿＿＿",
+      "answer_text": "(1)$\\left(\\frac{1}{4},\\frac{1}{2}\\right)$；(2)$3:1$",
+      "explanation_text": "(1)$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AC}$= x$\\overset{⃑}{AB}$+$\\frac{3}{2}$y$\\overset{⃑}{AE}$（∵$\\overline{AE}$：$\\overline{EC}$= 2：1）\n∵ B，P，E三點共線 ∴ x +$\\frac{3}{2}$y = 1......① $\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AC}$= 2x$\\overset{⃑}{AD}$+ y$\\overset{⃑}{AC}$（∵ $\\overline{AD}$：$\\overline{DB}$= 1：1）\n∵ D，P，C三點共線 ∴ 2x + y = 1......② 由①②得(x,y) = ($\\frac{1}{4}$,$\\frac{1}{2}$)\n(2)由(1)，$\\overset{⃑}{AP}$=\n[圖:program-db/assets/question-media/s3-3-1/image59.png] $\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image60.png] $\\overset{⃑}{AC}$ ⇒ $\\overset{⃑}{AP}$=\n[圖:program-db/assets/question-media/s3-3-1/image61.png] $\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image62.png] $\\overset{⃑}{AE}$\n⇒ ($\\overset{⃑}{BP}$−$\\overset{⃑}{BA}$) =$\\frac{1}{4}$\n(−$\\overset{⃑}{BA}$) +$\\frac{3}{4}$ ($\\overset{⃑}{BE}$ −$\\overset{⃑}{BA}$) ⇒ $\\overset{⃑}{BP}$=\n[圖:program-db/assets/question-media/s3-3-1/image62.png] $\\overset{⃑}{BE}$\n∴ $\\overline{BP}$：$\\overline{PE}$= 3：1",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-area-by-components-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 27,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0028",
+      "title": "隨堂練習：- $\\overline{AD}$交$\\overline{BE}",
+      "question_text": "- $\\overline{AD}$交$\\overline{BE}$於點P，若$\\overset{⃑}{CP}$= x$\\overset{⃑}{CA}$+ y$\\overset{⃑}{CB}$， 則數對(x,y) = ＿＿＿＿",
+      "answer_text": "$\\left(\\frac{3}{5},\\frac{1}{5}\\right)$",
+      "explanation_text": "【解1】(1)由$\\overset{⃑}{CP}$= x$\\overset{⃑}{CA}$+ y$\\overset{⃑}{CB}$= x(\n[圖:program-db/assets/question-media/s3-3-1/image64.png] $\\overset{⃑}{CE}$) + y$\\overset{⃑}{CB}$\n∵ E，P，B共線 ∴ $\\frac{4}{3}$x + y = 1\n(2)由$\\overset{⃑}{CP}$= x$\\overset{⃑}{CA}$+ y$\\overset{⃑}{CB}$= x$\\overset{⃑}{CA}$+ y (2$\\overset{⃑}{CD}$)\n∵ A，P，D共線 ∴ x + 2y = 1\n(3)由(1)，(2)得x =$\\frac{3}{5}$，y =$\\frac{1}{5}$\n【解2】(1)利用[孟氏]{.underline}（Menelaus）定理 $\\frac{\\overline{BD}{\\overline{DC}$．$\\frac{\\overline{CA}{\\overline{AE}$．$\\frac{\\overline{EP}{\\overline{PB}$= 1 ⇒ $\\frac{1}{1}$×$\\frac{4}{1}$×$\\frac{\\overline{EP}{\\overline{PE}$= 1\n⇒ $\\overline{EP}$：$\\overline{PB}$= 1：4\n(2)∴ $\\overset{⃑}{CP}$=$\\frac{4\\overset{⃑}{CE} + \\overset{⃑}{CB}{1 + 4}$=$\\frac{4}{5}$\n(\n[圖:program-db/assets/question-media/s3-3-1/image65.png] $\\overset{⃑}{CA}$) +\n[圖:program-db/assets/question-media/s3-3-1/image66.png] $\\overset{⃑}{CB}$= x$\\overset{⃑}{CA}$+ y$\\overset{⃑}{CB}$\n∵ $\\overset{⃑}{CA}$\n[圖:program-db/assets/question-media/s3-3-1/image67.png] $\\overset{⃑}{CB}$ ∴ x =$\\frac{3}{5}$，y =$\\frac{1}{5}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-ceva-menelaus-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 28,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0029",
+      "title": "延長$\\overset{\\rightarrow}{AM}$交$",
+      "question_text": "延長$\\overset{\\rightarrow}{AM}$交$\\overline{DE}$於P，則\n(1) $\\overset{⃑}{AP}$= k$\\overset{⃑}{AM}$ ⇒ k = ＿＿＿＿。\n(2) $\\overset{⃑}{AP}$= ＿＿＿＿$\\overset{⃑}{AD}$+ ＿＿＿＿$\\overset{⃑}{AE}$",
+      "answer_text": "(1)$\\frac{24}{7}$；(2)$\\frac{3}{7}\\overset{⃑}{AD}+\\frac{4}{7}\\overset{⃑}{AE}$",
+      "explanation_text": "M為$\\overline{BC}$之中點 ⇒ $\\overset{⃑}{AM} = \\frac{1}{2}\\overset{⃑}{AB} + \\frac{1}{2}\\overset{⃑}{AC}$\n（M為$\\overset{⃑}{AB}$，$\\overset{⃑}{AC}$所成平行四邊形對角線之中點） 設$\\overset{⃑}{AP} = k\\overset{⃑}{AM} = \\frac{k}{2}\\overset{⃑}{AB} + \\frac{k}{2}\\overset{⃑}{AC}$ =$\\frac{k}{2}．\\frac{1}{4}\\overset{⃑}{AD} + \\frac{k}{2}．\\frac{1}{3}\\overset{⃑}{AE}$=\n[圖:program-db/assets/question-media/s3-3-1/image69.png] $\\overset{⃑}{AD}$+\n[圖:program-db/assets/question-media/s3-3-1/image70.png] $\\overset{⃑}{AE}$\n∵ D，P，E三點共線 ∴ $\\frac{k}{8} + \\frac{k}{6} = 1 \\Rightarrow k = \\frac{24}{7}$ 隨之，$\\overset{⃑}{AP} = \\frac{1}{8}．\\frac{24}{7}\\overset{⃑}{AD} + \\frac{1}{6}．\\frac{24}{7}\\overset{⃑}{AE} = \\frac{3}{7}\\overset{⃑}{AD} + \\frac{4}{7}\\overset{⃑}{AE}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-area-by-components-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 29,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0030",
+      "title": "隨堂練習：且$\\overline{AP}$交$\\overline{BC}$",
+      "question_text": "且$\\overline{AP}$交$\\overline{BC}$於D，則$\\overline{BD}$：$\\overline{CD}$=＿＿＿＿",
+      "answer_text": "2：5",
+      "explanation_text": "$\\overset{⃑}{AD}$= k$\\overset{⃑}{AP}$（∵ A，D，P三點共線）\n⇒ $\\overset{⃑}{AD}$= (5k) $\\overset{⃑}{AB}$+ (2k) $\\overset{⃑}{AC}$......①\n∵ B，D，C三點共線\n∴ 5k + 2k = 1，即k =$\\frac{1}{7}$代入① $\\overset{⃑}{AD}$=\n[圖:program-db/assets/question-media/s3-3-1/image72.png] $\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image73.png] $\\overset{⃑}{AC}$ ⇒ ($\\overset{⃑}{BD}$−$\\overset{⃑}{BA}$) =$\\frac{5}{7}$ (−$\\overset{⃑}{BA}$) +$\\frac{2}{7}$\n($\\overset{⃑}{BC}$−$\\overset{⃑}{BA}$)\n⇒ $\\overset{⃑}{BD}$=\n[圖:program-db/assets/question-media/s3-3-1/image73.png] $\\overset{⃑}{BC}$ ∴ $\\overline{BD}$：$\\overline{CD}$= 2：5",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-area-by-components-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 30,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0031",
+      "title": "且$\\overline{CE}$：$\\overline{EA}$",
+      "question_text": "且$\\overline{CE}$：$\\overline{EA}$= 5：4，若$\\overline{BE}$交$\\overline{CD}$於P點，則\n(1)求$\\overline{CP}$：$\\overline{PD}$=＿＿＿＿。\n(2)設$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AC}$，則有序數對(x，y) =＿＿＿＿",
+      "answer_text": "(1)$25:12$；(2)$\\left(\\frac{10}{37},\\frac{12}{37}\\right)$",
+      "explanation_text": "$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AC}$= x(\n[圖:program-db/assets/question-media/s3-3-1/image75.png] $\\overset{⃑}{AD}$) + y$\\overset{⃑}{AC}$......①\n∵ D，P，C三點共線 ∴ $\\frac{5}{2}$x + y = 1......② $\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AC}$= x$\\overset{⃑}{AB}$+ y\n(\n[圖:program-db/assets/question-media/s3-3-1/image76.png] $\\overset{⃑}{AE}$)\n∵ B，P，E三點共線 ∴ x +$\\frac{9}{4}$y = 1......③ 解②，③得數對(x，y) = ($\\frac{10}{37}$,$\\frac{12}{37}$)代入①\n⇒ $\\overset{⃑}{AP}$=\n[圖:program-db/assets/question-media/s3-3-1/image77.png] $\\overset{⃑}{AD}$+\n[圖:program-db/assets/question-media/s3-3-1/image78.png] $\\overset{⃑}{AC}$ ⇒ ($\\overset{⃑}{CP}$−$\\overset{CA{\\_\\_\\_\\_}芰}{}$) =$\\frac{25}{37}$ ($\\overset{⃑}{CD}$−$\\overset{⃑}{CA}$) +$\\frac{12}{37}$\n(−$\\overset{⃑}{CA}$)\n⇒ $\\overset{⃑}{CP}$=\n[圖:program-db/assets/question-media/s3-3-1/image79.png] $\\overset{⃑}{CD}$，得$\\overline{CP}$：$\\overline{PD}$= 25：12",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-area-by-components-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 31,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0032",
+      "title": "隨堂練習：且$\\overset{⃑}{AP}$= x$\\overset{⃑",
+      "question_text": "且$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{AC{\\_\\_\\_\\_}芰}{}$，則下列何者為真？(A) $\\overset{⃑}{AP}$=\n(2x)$\\overset{⃑}{AD}$+ y$\\overset{⃑}{AC}$ (B)$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image83.png] $\\overset{⃑}{AE}$ (C) x =$\\frac{- 1}{11}$ (D) y =$\\frac{- 9}{11}$ (E) x + y > 0",
+      "answer_text": "(B)(C)(E)",
+      "explanation_text": "由$\\left \\overline{AD} = \\frac{1}{2}\\overline{|AB} \\overline{AE} = \\frac{3}{4}\\overline{AC} $，得$\\left \\overline{AD}：\\overline{AB} = 1：2 \\overline{AE}：\\overline{CE} = 3：1 $\n(A)$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AC}$= x (− 2$\\overset{⃑}{AD}$) + y$\\overset{⃑}{AC}$ ⇒$\\overset{⃑}{AP}$= (− 2x) $\\overset{⃑}{AD}$+ y$\\overset{⃑}{AC}$......①\n(B)$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AC}$= x$\\overset{AB{\\_\\_\\_\\_}芰}{}$+ y\n(\n[圖:program-db/assets/question-media/s3-3-1/image84.png] $\\overset{⃑}{AE}$) ⇒$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image85.png] $\\overset{⃑}{AE}$......②\n(C)(D) \\end{matrix} \\end{matrix}$\n[圖:program-db/assets/question-media/s3-3-1/image86.png]，得x =$\\frac{- 1}{11}$，y =$\\frac{9}{11}$\n(E) x + y =$\\frac{- 1}{11}$+$\\frac{9}{11}$=$\\frac{8}{11}$> 0 故選(B)(C)(E",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 32,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0033",
+      "title": "若$\\overline{DE}$與$\\overline{BF}$",
+      "question_text": "若$\\overline{DE}$與$\\overline{BF}$相交於點P且$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AD}$， 則數對(x,y) = ＿＿＿＿",
+      "answer_text": "$\\left(\\frac{3}{4},\\frac{1}{2}\\right)$",
+      "explanation_text": "(1)由$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AD}$\n⇒ $\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y($\\overset{⃑}{AF}$+$\\overset{⃑}{FD}$) = x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AF}$+ y(−$\\frac{1}{2}\\overset{⃑}{AB}$) = (x −$\\frac{y}{2}$)$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AF}$∵ F，P，B共線 ∴ (x −$\\frac{y}{2}$) + y = 1\n(2)由$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$ + y$\\overset{⃑}{AD}$⇒ $\\overset{⃑}{AP}$= x($\\overset{⃑}{AE}$+$\\overset{⃑}{EB}$) + y$\\overset{⃑}{AD}$= x$\\overset{⃑}{AE}$+ x(−\n[圖:program-db/assets/question-media/s3-3-1/image88.png] $\\overset{⃑}{AD}$) + y$\\overset{⃑}{AD}$ = x$\\overset{⃑}{AE}$+ ($\\frac{- 1}{3}$x + y) $\\overset{⃑}{AD}$∵ D，P，E共線 ∴ x + (−$\\frac{1}{3}$x + y) = 1\n(3)由(1)，(2)得x =$\\frac{3}{4}$，y =$\\frac{1}{2}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-area-by-components-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 33,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0034",
+      "title": "平行四邊形ABCD中，E為$\\overline{AB}$中點，F",
+      "question_text": "平行四邊形ABCD中，E為$\\overline{AB}$中點，F在$\\overline{BC}$上， 且$\\overline{BF}$：$\\overline{FC}$= 2：1，\n(1)若$\\overset{⃑}{EF}$= α$\\overset{⃑}{AB}$+ β$\\overset{⃑}{AC}$，則數對(α，β) =＿＿＿＿",
+      "answer_text": "(1)$\\left(-\\frac{1}{6},\\frac{2}{3}\\right)$；(2)$\\left(\\frac{1}{7},\\frac{5}{7}\\right)$",
+      "explanation_text": "(1)$\\overset{⃑}{EF}$=$\\overset{⃑}{EB}$+$\\overset{⃑}{BF}$=\n[圖:program-db/assets/question-media/s3-3-1/image90.png] $\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image91.png] $\\overset{⃑}{BC}$=\n[圖:program-db/assets/question-media/s3-3-1/image92.png] $\\overset{⃑}{AB}$+$\\frac{2}{3}$\n($\\overset{⃑}{AC}$−$\\overset{⃑}{AB}$) =\n[圖:program-db/assets/question-media/s3-3-1/image93.png] $\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image94.png] $\\overset{⃑}{AC}$∴ 數對(α,β) = ($\\frac{- 1}{6}$,$\\frac{2}{3}$)\n(2)$\\overset{⃑}{BP}$= x$\\overset{⃑}{BA}$+ y$\\overset{⃑}{BC}$= x\n(2$\\overset{⃑}{BE}$) + y$\\overset{⃑}{BC}$= 2x$\\overset{⃑}{BE}$+ y$\\overset{⃑}{BC}$\n∵ E，P，C三點共線 ∴ 2x + y = 1......① $\\overset{⃑}{BP}$= x$\\overset{⃑}{BA}$+ y$\\overset{⃑}{BC}$= x\n($\\overset{⃑}{BD}$+$\\overset{⃑}{DA}$) + y$\\overset{⃑}{BC}$= x($\\overset{⃑}{BD}$−$\\overset{⃑}{BC}$) + y$\\overset{⃑}{BC}$ = x$\\overset{⃑}{BD}$+ (y − x) $\\overset{⃑}{BC}$= x$\\overset{⃑}{BD}$+ (y − x)．\n[圖:program-db/assets/question-media/s3-3-1/image95.png] $\\overset{⃑}{BF}$\n∵ D，P，F三點共線 ∴ x +$\\frac{3}{2}$ (y − x) =$\\frac{- 1}{2}$x +$\\frac{3}{2}$y = 1......② 由①②得(x，y) = ($\\frac{1}{7}$，$\\frac{5}{7}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-area-by-components-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 34,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0035",
+      "title": "∠BAD = 60°，若$\\overset{⃑}{AC}$= x",
+      "question_text": "∠BAD = 60°，若$\\overset{⃑}{AC}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AD}$，試求x，y之值。\n(2)承上題，$\\overset{⃑}{BC}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AD}$，試求x，y之值",
+      "answer_text": "(1)$x=\\frac{3}{4},\\,y=1$；(2)$x=-\\frac{1}{4},\\,y=1$",
+      "explanation_text": "(1)如圖：過C作直線CE，使$\\overline{CE}$//$\\overline{DA}$交$\\overline{AB}$於E\n⇒ $\\overset{⃑}{AC}$=$\\overset{⃑}{AE}$+$\\overset{⃑}{EC}$=\n[圖:program-db/assets/question-media/s3-3-1/image97.png] $\\overset{⃑}{AB}$+$\\overset{⃑}{AD}$\n(2) $\\overset{⃑}{BC}$= $\\overset{⃑}{AC}$ −$\\overset{⃑}{AB}$=\n[圖:program-db/assets/question-media/s3-3-1/image97.png] $\\overset{⃑}{AB}$+ $\\overset{⃑}{AD}$ −$\\overset{⃑}{AB}$= −\n[圖:program-db/assets/question-media/s3-3-1/image98.png] $\\overset{⃑}{AB}$+$\\overset{⃑}{AD}$\n∴x= −$\\frac{1}{4}$，y=1",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 35,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0036",
+      "title": "隨堂練習：若$\\overline{BF}$與$\\overline{DE}$",
+      "question_text": "若$\\overline{BF}$與$\\overline{DE}$交於P點，且$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AD}$， 求(x,y) =＿＿＿＿",
+      "answer_text": "$\\left(\\frac{5}{11},\\frac{9}{11}\\right)$",
+      "explanation_text": "$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AD}$= x$\\overset{⃑}{AB}$+ ($\\overset{⃑}{AF}$+$\\overset{⃑}{FD}$)= x$\\overset{⃑}{AB}$+ y\n($\\overset{⃑}{AF}$−\n[圖:program-db/assets/question-media/s3-3-1/image102.png] $\\overset{⃑}{AB}$) = (x −$\\frac{y}{3}$)$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AF}$\n∵ B，P，F三點共線 ∴ (x −$\\frac{y}{3}$) + y = 1 ⇒ x +$\\frac{2}{3}$y = 1......① $\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AD}$= x($\\overset{⃑}{AE}$+$\\overset{⃑}{EB}$) + y$\\overset{⃑}{AD}$= x\n($\\overset{⃑}{AE}$−\n[圖:program-db/assets/question-media/s3-3-1/image103.png] $\\overset{⃑}{AD}$) + y$\\overset{⃑}{AD}$= x$\\overset{⃑}{AE}$+ (y −$\\frac{3}{5}$x)$\\overset{⃑}{AD}$\n∵ D，P，E三點共線 ∴ x + (y −$\\frac{3}{5}$x) = 1 ⇒ $\\frac{2}{5}$x + y = 1......② 解①，②得(x，y) = ($\\frac{5}{11}$,$\\frac{9}{11}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-area-by-components-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 36,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0037",
+      "title": "隨堂練習：$\\overline{AE}$與$\\overline{BD}$交",
+      "question_text": "$\\overline{AE}$與$\\overline{BD}$交於P點，若$\\overset{⃑}{AP}$= x$\\overset{⃑}{AB}$+ y$\\overset{⃑}{AD}$， 則實數對(x，y) =＿＿＿＿",
+      "answer_text": "$\\left(\\frac{3}{8},\\frac{5}{8}\\right)$",
+      "explanation_text": "由3$\\overline{CD}$= 5$\\overline{DE}$，可知$\\overline{DE}$=\n[圖:program-db/assets/question-media/s3-3-1/image105.png] $\\overline{CD}$ $\\overset{⃑}{AP}$= k$\\overset{⃑}{AE}$= k\n(\n[圖:program-db/assets/question-media/s3-3-1/image106.png] $\\overset{⃑}{AD}$+\n[圖:program-db/assets/question-media/s3-3-1/image107.png] $\\overset{⃑}{AC}$)（由分點公式）=\n[圖:program-db/assets/question-media/s3-3-1/image108.png] $\\overset{⃑}{AD}$+\n[圖:program-db/assets/question-media/s3-3-1/image109.png] $\\overset{⃑}{AC}$ =\n[圖:program-db/assets/question-media/s3-3-1/image110.png] $\\overset{⃑}{AD}$+$\\frac{3k}{5}$\n($\\overset{⃑}{AB}$+$\\overset{⃑}{AD}$) = k$\\overset{⃑}{AD}$+\n[圖:program-db/assets/question-media/s3-3-1/image109.png] $\\overset{⃑}{AB}$......①\n∵ D − P − B共線 ∴ k +$\\frac{3k}{5}$= 1，得k =$\\frac{5}{8}$代入① 則$\\overset{⃑}{AP}$=\n[圖:program-db/assets/question-media/s3-3-1/image111.png] $\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image112.png] $\\overset{⃑}{AD}$，得(x,y) = ($\\frac{3}{8}$,$\\frac{5}{8}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-area-by-components-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 37,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0038",
+      "title": "Q在$\\overline{CD}$上且$\\overline{DQ",
+      "question_text": "Q在$\\overline{CD}$上且$\\overline{DQ}$：$\\overline{CQ}$= 1：2，若$\\overset{⃑}{AC}$= x$\\overset{AP{\\_\\_\\_\\_}芰}{}$+ y$\\overset{AQ{\\_\\_\\_\\_}芰}{}$， 求x，y之值",
+      "answer_text": "$x=\\frac{8}{11},\\,y=\\frac{9}{11}$",
+      "explanation_text": "$\\overset{⃑}{AC}$=$\\overset{⃑}{AB}$+$\\overset{⃑}{AD}$=$\\overset{⃑}{AP}$+$\\overset{⃑}{PB}$+$\\overset{⃑}{AQ}$+$\\overset{⃑}{QD}$ =$\\overset{⃑}{AP}$+\n[圖:program-db/assets/question-media/s3-3-1/image114.png] $\\overset{⃑}{CP}$+$\\overset{⃑}{AQ}$+\n[圖:program-db/assets/question-media/s3-3-1/image115.png] $\\overset{⃑}{CQ}$ =$\\overset{⃑}{AP}$+$\\frac{1}{3}$ ($\\overset{⃑}{CA}$+$\\overset{⃑}{AP}$) +$\\overset{⃑}{AQ}$+$\\frac{1}{2}$ ($\\overset{⃑}{CA}$+$\\overset{⃑}{AQ}$) =\n[圖:program-db/assets/question-media/s3-3-1/image116.png] $\\overset{⃑}{AP}$+\n[圖:program-db/assets/question-media/s3-3-1/image117.png] $\\overset{⃑}{AQ}$+\n[圖:program-db/assets/question-media/s3-3-1/image118.png] $\\overset{⃑}{CA}$\n∴ $\\overset{⃑}{AC}$−\n[圖:program-db/assets/question-media/s3-3-1/image119.png] $\\overset{⃑}{CA}$=\n[圖:program-db/assets/question-media/s3-3-1/image120.png] $\\overset{⃑}{AP}$+\n[圖:program-db/assets/question-media/s3-3-1/image121.png] $\\overset{⃑}{AQ}$ ⇒\n[圖:program-db/assets/question-media/s3-3-1/image122.png] $\\overset{⃑}{AC}$=\n[圖:program-db/assets/question-media/s3-3-1/image123.png] $\\overset{⃑}{AP}$+\n[圖:program-db/assets/question-media/s3-3-1/image124.png] $\\overset{⃑}{AQ}$\n∴ $\\overset{⃑}{AC}$=\n[圖:program-db/assets/question-media/s3-3-1/image125.png] $\\overset{⃑}{AP}$+\n[圖:program-db/assets/question-media/s3-3-1/image126.png] $\\overset{⃑}{AQ}$ ∴ x =$\\frac{8}{11}$，y =$\\frac{9}{11}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 38,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0039",
+      "title": "Q在$\\overline{CD}$上，且$\\overline{D",
+      "question_text": "Q在$\\overline{CD}$上，且$\\overline{DQ}$：$\\overline{CQ}$= 2：3， 若$\\overset{⃑}{PQ}$= x$\\overset{⃑}{AD}$+ y$\\overset{⃑}{BC}$，求x，y之值",
+      "answer_text": "$x=\\frac{3}{5},\\,y=\\frac{2}{5}$",
+      "explanation_text": "$\\overset{⃑}{PQ}$=\n[圖:program-db/assets/question-media/s3-3-1/image128.png] $\\overset{⃑}{PD}$+\n[圖:program-db/assets/question-media/s3-3-1/image129.png] $\\overset{⃑}{PC}$，$\\overset{⃑}{PD}$=$\\overset{⃑}{PA}$+$\\overset{⃑}{AD}$=\n[圖:program-db/assets/question-media/s3-3-1/image130.png] $\\overset{⃑}{BA}$+$\\overset{⃑}{AD}$，$\\overset{⃑}{PC}$=$\\overset{⃑}{PB}$+$\\overset{⃑}{BC}$=\n[圖:program-db/assets/question-media/s3-3-1/image131.png] $\\overset{⃑}{AB}$+$\\overset{⃑}{BC}$\n∴ $\\overset{⃑}{PQ}$=$\\frac{3}{5}$\n(\n[圖:program-db/assets/question-media/s3-3-1/image132.png] $\\overset{⃑}{BA}$+$\\overset{⃑}{AD}$) +$\\frac{2}{5}$\n(\n[圖:program-db/assets/question-media/s3-3-1/image133.png] $\\overset{⃑}{AB}$+$\\overset{⃑}{BC}$) =$\\frac{6}{25}$ ($\\overset{⃑}{BA}$+$\\overset{⃑}{AB}$) +\n[圖:program-db/assets/question-media/s3-3-1/image134.png] $\\overset{⃑}{AD}$+\n[圖:program-db/assets/question-media/s3-3-1/image135.png] $\\overset{⃑}{BC}$=\n[圖:program-db/assets/question-media/s3-3-1/image136.png] $\\overset{⃑}{AD}$+\n[圖:program-db/assets/question-media/s3-3-1/image137.png] $\\overset{⃑}{BC}$\n∴ x =$\\frac{3}{5}$，y =$\\frac{2}{5}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 39,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0040",
+      "title": "且∠ A的角平分線$\\overline{AD}$交$\\overl",
+      "question_text": "且∠ A的角平分線$\\overline{AD}$交$\\overline{BC}$於D點， 求 |$\\overset{⃑}{AD}$| = ＿＿＿＿",
+      "answer_text": "$\\frac{3\\sqrt{6}}{5}$",
+      "explanation_text": "$\\overline{AB}$= 2，$\\overline{AC}$= 3，$\\overline{BC}$= 4，$\\overline{BD}$：$\\overline{DC}$=$\\overline{AB}$：$\\overline{AC}$= 2：3\n∴$\\overset{⃑}{AD}$=\n[圖:program-db/assets/question-media/s3-3-1/image139.png] $\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image140.png] $\\overset{⃑}{AC}$\n⇒ |$\\overset{⃑}{AD}$|^2^ =$\\frac{1}{25}$| 3$\\overset{⃑}{AB}$+ 2$\\overset{⃑}{AC}$|^2^ =$\\frac{1}{25}$ (9 |$\\overset{⃑}{AB}$|^2^ + 12$\\overset{⃑}{AB}$．$\\overset{⃑}{AC}$+ 4 |$\\overset{⃑}{AC}$|^2^) 又$\\overset{⃑}{AB}$．$\\overset{⃑}{AC}$= 2 × 3 × cosA = 6 ×$\\frac{4 + 9 - 16}{2 \\times 2 \\times 3}$= −$\\frac{3}{2}$ 故 |$\\overset{⃑}{AD}$|^2^ =$\\frac{1}{25}$ (9 × 4 + 12 ×\n(−$\\frac{3}{2}$) + 4 × 9) =$\\frac{54}{25}$，即 |$\\overset{⃑}{AD}$| =$\\frac{3\\sqrt{6}{5}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 40,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0041",
+      "title": "隨堂練習：∠A的分角線交$\\overline{BC}$於T點， 求$\\ov",
+      "question_text": "∠A的分角線交$\\overline{BC}$於T點， 求$\\overline{AT}$之長＿＿＿＿",
+      "answer_text": "$\\frac{\\sqrt{130}}{3}$",
+      "explanation_text": "$\\overline{BT}$：$\\overline{CT}$=$\\overline{AB}$：$\\overline{AC}$= 6：3 = 2：1，$\\overline{BT}$=\n[圖:program-db/assets/question-media/s3-3-1/image142.png] $\\overline{BC}$=$\\frac{8}{3}$ 於△ABT中，cosB =$\\frac{6^{2} + (\\frac{8}{3})^{2} - {\\overline{AT}^{2}{2 \\times 6 \\times \\frac{8}{3}$......① 又於△ABC中，cosB =$\\frac{6^{2} + 4^{2} - 3^{2}{2 \\times 6 \\times 4}$......②，由① =\n②得$\\overline{AT}$=$\\frac{\\sqrt{130}{3}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-area-by-components-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 41,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0042",
+      "title": "A，B，C三點，|$\\overset{⃑}{AB}$| = 2",
+      "question_text": "A，B，C三點，|$\\overset{⃑}{AB}$| = 2，|$\\overset{⃑}{AC}$| = 3，若|$\\overset{⃑}{AB}$+$\\overset{⃑}{AC}$| = 4，求△ABC的面積＿＿＿＿",
+      "answer_text": "$\\frac{3\\sqrt{15}}{4}$",
+      "explanation_text": "$\\overset{⃑}{AB}$+$\\overset{⃑}{AC}$|^2^ = |$\\overset{⃑}{AB}$|^2^ + |$\\overset{⃑}{AC}$|^2^ + 2$\\overset{⃑}{AB}$．$\\overset{⃑}{AC}$\n⇒ 4^2^ = 2^2^ + 3^2^ + 2$\\overset{⃑}{AB}$．$\\overset{AC{\\_\\_\\_\\_}芰}{}$ ⇒ $\\overset{⃑}{AB}$．$\\overset{⃑}{AC}$=$\\frac{3}{2}$ △ABC面積 =\n[圖:program-db/assets/question-media/s3-3-1/image34.png] $\\sqrt{|\\overset{⃑}{AB}|^{2}|\\overset{⃑}{AC}|^{2} - (\\overset{⃑}{AB}．\\overset{⃑}{AC})^{2}$=\n[圖:program-db/assets/question-media/s3-3-1/image143.png] $\\overset{AD{\\_\\_\\_\\_}芰}{}$=$\\frac{3\\sqrt{15}{4}$\n[]{.underline}",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-area-by-components-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 42,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0043",
+      "title": "隨堂練習：△ABC中，若$\\overset{⃑}{AB}$．$\\overs",
+      "question_text": "△ABC中，若$\\overset{⃑}{AB}$．$\\overset{⃑}{AC}$= 6，$\\overset{⃑}{BC}$．$\\overset{⃑}{CA}$= − 2，$\\overset{⃑}{CB}$．$\\overset{⃑}{BA}$= − 5，試求(1) $\\overset{⃑}{BC}$。\n(2)△ABC之面積",
+      "answer_text": "(1)$\\sqrt{7}$；(2)$\\sqrt{13}$",
+      "explanation_text": "(1)$|\\overset{⃑}{BC}|$^2^ =$\\overset{⃑}{BC}$．$\\overset{⃑}{BC}$=$\\overset{⃑}{BC}$．($\\overset{⃑}{BA}$+$\\overset{⃑}{AC}$) =$\\overset{⃑}{BC}$．$\\overset{⃑}{BA}$+$\\overset{⃑}{BC}$．$\\overset{⃑}{AC}$= 5 + 2 = 7\n∴ $|\\overset{⃑}{BC}|$=$\\sqrt{7}$\n(2)同法：$|\\overset{⃑}{BA}|$^2^ =$\\overset{⃑}{BA}$．($\\overset{⃑}{BC}$+$\\overset{⃑}{CA}$) = 5 + 6 = 11 ⇒ $|\\overset{⃑}{BA}|$=$\\sqrt{11}$\n∴ a△ABC =\n[圖:program-db/assets/question-media/s3-3-1/image144.png] $\\sqrt{|\\overset{⃑}{BA}|^{2} \\cdot |\\overset{⃑}{BC}|^{2} - (\\overset{⃑}{BA} \\cdot \\overset{⃑}{BC})^{2}$=\n[圖:program-db/assets/question-media/s3-3-1/image144.png] $\\sqrt{7 \\cdot 11 - 25}$=$\\sqrt{13}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-area-by-components-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 43,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0044",
+      "title": "隨堂練習：設 |$\\overset{⃑}{a}$| = 2，|$\\over",
+      "question_text": "設 |$\\overset{⃑}{a}$| = 2，|$\\overset{⃑}{b}$| = 3，|$\\overset{⃑}{a}$+$\\overset{⃑}{b}$| = 4，則向量$\\overset{⃑}{a}$，$\\overset{⃑}{b}$所圍平行四邊形面積 = ＿＿＿＿",
+      "answer_text": "$\\frac{3\\sqrt{15}}{2}$",
+      "explanation_text": "4^2^ =|$\\overset{⃑}{a}$+$\\overset{⃑}{b}$| ^2^ = |$\\overset{⃑}{a}$|^2^ + |$\\overset{⃑}{b}$|^2^ + 2$\\overset{⃑}{a}$．$\\overset{⃑}{b}$= 4 + 9 + 2$\\overset{⃑}{a}$．$\\overset{⃑}{b}$⇒$\\overset{⃑}{a}$．$\\overset{⃑}{b}$=$\\frac{3}{2}$ 平行四邊形面積 =$\\sqrt{4 \\times 9 - (\\frac{3}{2})^{2}$=$\\frac{3}{2}\\sqrt{15}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-area-by-components-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 44,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0045",
+      "title": "△ABC中，$\\overline{AB}$= 2，$\\overl",
+      "question_text": "△ABC中，$\\overline{AB}$= 2，$\\overline{AC}$= 1，∠CAB =$\\frac{\\pi}{3}$，滿足$\\overset{⃑}{AP}$= α$\\overset{⃑}{AB}$+ β$\\overset{⃑}{AC}$，− 1 ≤ α ≤ 2，0 ≤ β ≤ 3， 求P點所在區域面積為＿＿＿＿",
+      "answer_text": "$9\\sqrt{3}$",
+      "explanation_text": "a△ABC =$\\frac{1}{2}$．$\\overline{AB}$．$\\overline{AC}$．sin$\\frac{\\pi}{3}$=$\\frac{1}{2}$．2．1．$\\frac{\\sqrt{3}{2}$=$\\frac{\\sqrt{3}{2}$ 所求之面積 = [2 − (− 1)]．(3 − 0)．(2a△ABC) = 3 × 3 × 2 ×$\\frac{\\sqrt{3}{2}$= 9$\\sqrt{3}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-locus-constraints-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 45,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0046",
+      "title": "隨堂練習：已知△ABC面積為7，求點集合表示區域的面積",
+      "question_text": "△ABC的面積 = 7，則點集合{P |$\\overset{⃑}{AP}$= α$\\overset{⃑}{AB}$+ β$\\overset{⃑}{AC}$，− 1 ≤ α ≤ 3，− 2 ≤ β ≤ 1} 所表示區域的面積為＿＿＿＿",
+      "answer_text": "168",
+      "explanation_text": "點集合{P |$\\overset{⃑}{AP}=\\alpha\\overset{⃑}{AB}+\\beta\\overset{⃑}{AC}$，$-1\\leq\\alpha\\leq3$，$-2\\leq\\beta\\leq1$} 所表示的區域為一個平行四邊形。\n其面積為[3-(-1)][1-(-2)]\\times(2\\triangle ABC)=4\\times3\\times(2\\times7)=168。",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-locus-constraints-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題3：線性組合與分點公式",
+      "source_order": 46,
+      "tags": [
+        "s3-3-1",
+        "section:主題3：線性組合與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0047",
+      "title": "設G為△ABC之重心，$\\overline{GA}$= 2，$",
+      "question_text": "設G為△ABC之重心，$\\overline{GA}$= 2，$\\overline{GB}$= 3，$\\overline{GC}$= 3，則$\\overline{AB}$=＿＿＿＿",
+      "answer_text": "$\\sqrt{17}$",
+      "explanation_text": "∵G為△ABC之重心 ∴$\\overset{⃑}{GA} + \\overset{⃑}{GB} + \\overset{⃑}{GC} = \\overset{⃑}{0}$ ⇒\n[圖:program-db/assets/question-media/s3-3-1/image146.png] $\\overset{⃑}{GB}$\n⇒ $|\\overset{⃑}{GA} + \\overset{⃑}{GB}|^{2} = | - \\overset{⃑}{GC}|^{2}$ ⇒ ($\\overset{⃑}{GA} + \\overset{⃑}{GB}) ． (\\overset{⃑}{GA} + \\overset{⃑}{GB}) = 3^{2}$\n⇒ $|\\overset{⃑}{GA}|^{2}$+ 2$\\overset{⃑}{GA}．\\overset{⃑}{GB}$+$|\\overset{⃑}{GB}|$^2^ = 9\n⇒ 2^2^ + 2 · $|\\overset{⃑}{GA}||\\overset{⃑}{GB}|$ cosθ + 3^2^ = 9（θ 為$\\overset{⃑}{GA}$與$\\overset{⃑}{GB}$之夾角）\n⇒ 2 · 2 · 3 · cosθ = − 4 ⇒ cosθ = −$\\frac{1}{3}$ 又${\\overline{AB}^{2} = {\\overline{AG}^{2} + {\\overline{GB}^{2} - 2．\\overline{AG}\\overline{GB}$cosθ = 2^2^ + 3^2^ − 2 · 2 · 3 · (−$\\frac{1}{3}$) = 17\n∴ $\\overline{AB}$=$\\sqrt{17}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-triangle-centers-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 47,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0048",
+      "title": "△ABC中，$\\overline{AB}$= 3，$\\overl",
+      "question_text": "△ABC中，$\\overline{AB}$= 3，$\\overline{AC}$= 4，∠A = 60°，若G為△ABC之重心，則$\\overset{GA{\\_\\_\\_\\_}芨}{}$．$\\overset{GB{\\_\\_\\_\\_}芨}{}$=＿＿＿＿",
+      "answer_text": "$-\\frac{8}{9}$",
+      "explanation_text": "$\\overline{AB}$= 3，$\\overline{AC}$= 4，∠ A = 60° ⇒ $\\overset{⃑}{AB}$．$\\overset{⃑}{AC}$= 3．4．cos60° = 6 G為△ABC之重心 ⇒ $\\overset{⃑}{AG}$=\n[圖:program-db/assets/question-media/s3-3-1/image147.png] $\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s3-3-1/image147.png] $\\overset{⃑}{AC}$\n⇒ $|\\overset{⃑}{AG}|$^2^ =$\\overset{⃑}{AG}$．$\\overset{⃑}{AG}$=$\\frac{1}{9}$ ($|\\overset{⃑}{AB}|$^2^ +$\\left| \\overset{⃑}{AC} \\right|$^2^ + 2$\\overset{⃑}{AB}$．$\\overset{⃑}{AC}$) =$\\frac{37}{9}$ 隨之，$\\overset{⃑}{GA}．\\overset{⃑}{GB}$=\n(−$\\overset{⃑}{AG}$)．($\\overset{⃑}{AB}$−$\\overset{⃑}{AG}$) =$|\\overset{⃑}{AG}|$^2^ −$\\overset{⃑}{AG}$．$\\overset{⃑}{AB}$=$\\frac{37}{9}$−$\\frac{1}{3}$ (9 + 6) =$\\frac{- 8}{9}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-triangle-centers-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 48,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0049",
+      "title": "隨堂練習：若G是△ABC的重心，且$\\overline{GA}$= 3，$",
+      "question_text": "若G是△ABC的重心，且$\\overline{GA}$= 3，$\\overline{GB}$= 4，$\\overline{GC}$= 5，則$\\overset{⃑}{GB}$．$\\overset{⃑}{GC}$=＿＿＿＿",
+      "answer_text": "-16",
+      "explanation_text": "若G為△ABC之重心，則$\\overset{⃑}{GA}$+$\\overset{⃑}{GB}$+$\\overset{GC{\\_\\_\\_\\_}芰}{}$=$\\overset{⃑}{0}$ ⇒ $\\overset{⃑}{GB}$+$\\overset{⃑}{GC}$= −$\\overset{⃑}{GA}$\n⇒ |$\\overset{⃑}{GB}$+$\\overset{⃑}{GC}$|^2^ = |−$\\overset{GA{\\_\\_\\_\\_}芰}{}$|^2^ ⇒ |$\\overset{⃑}{GB}$|^2^ + |$\\overset{⃑}{GC}$|^2^ + 2$\\overset{⃑}{GB}$．$\\overset{⃑}{GC}$= |$\\overset{⃑}{GA}$|^2^\n⇒ 4^2^ + 5^2^ + 2$\\overset{⃑}{GB}$．$\\overset{⃑}{GC}$ = 3^2^ ⇒ $\\overset{⃑}{GB}$．$\\overset{⃑}{GC}$= − 16",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-triangle-centers-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 49,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0050",
+      "title": "G為△ABC之重心，則$\\overset{⃑}{AG}$= ＿＿",
+      "question_text": "G為△ABC之重心，則$\\overset{⃑}{AG}$= ＿＿＿＿$\\overset{⃑}{AB}$+ ＿＿＿＿$\\overset{⃑}{BC}$",
+      "answer_text": "$\\frac{2}{3}\\overset{⃑}{AB}+\\frac{1}{3}\\overset{⃑}{BC}$",
+      "explanation_text": "G為△ABC之重心\n⇒$\\overset{⃑}{AG}$=$\\frac{1}{3}\\overset{⃑}{AB}$+$\\frac{1}{3}\\overset{⃑}{AC}$=$\\frac{1}{3}\\overset{⃑}{AB}$+$\\frac{1}{3}$\n($\\overset{⃑}{AB}$+$\\overset{⃑}{BC}$) =$\\frac{2}{3}\\overset{⃑}{AB}$+$\\frac{1}{3}\\overset{⃑}{BC}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-triangle-centers-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 50,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0051",
+      "title": "使$\\overline{DC} = 4\\overline{BD}",
+      "question_text": "使$\\overline{DC} = 4\\overline{BD}$，$\\overline{EC} = \\overline{AE}$，$\\overline{FB} = 2\\overline{AF}$，G為△DEF的重心， $\\overset{⃑}{AG} = x\\overset{⃑}{AB} + y\\overset{⃑}{AC}$，求x，y的值",
+      "answer_text": "$x=\\frac{17}{45},\\,y=\\frac{7}{30}$",
+      "explanation_text": "∵ G為△DEF的重心\n∴ 3$\\overset{⃑}{AG} = \\overset{⃑}{AD} + \\overset{⃑}{AE} + \\overset{⃑}{AF}$=\n($\\frac{4}{5}\\overset{⃑}{AB} + \\frac{1}{5}\\overset{⃑}{AC}$) +\n($\\frac{1}{2}\\overset{⃑}{AC}$) + ($\\frac{1}{3}\\overset{⃑}{AB}$) =$\\frac{17}{15}\\overset{⃑}{AB} + \\frac{7}{10}\\overset{⃑}{AC}$\n⇒\n[圖:program-db/assets/question-media/s3-3-1/image149.png] $\\frac{17}{45}\\overset{⃑}{AB} + \\frac{7}{30}\\overset{⃑}{AC}$ ∴ x =$\\frac{17}{45}$，y =$\\frac{7}{30}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-triangle-centers-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 51,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0052",
+      "title": "$\\overline{AD} = \\overline{DB}$",
+      "question_text": "$\\overline{AD} = \\overline{DB}$，$\\overline{BC} = 4\\overline{BE}$，$\\overline{CF} = 2\\overline{AF}$且G是△DEF的重心， 若$\\overset{⃑}{AG} = x\\overset{⃑}{AB} + y\\overset{⃑}{AC}$，則(x,y) = ＿＿＿＿",
+      "answer_text": "$\\left(\\frac{5}{12},\\frac{7}{36}\\right)$",
+      "explanation_text": "∵ G為△DEF的重心 ∴$\\overset{⃑}{AG} = \\frac{1}{3}(\\overset{⃑}{AD} + \\overset{⃑}{AE} + \\overset{⃑}{AF})$ =$\\frac{1}{3}$\n($\\frac{1}{2}\\overset{⃑}{AB}$+$\\frac{3}{4}\\overset{⃑}{AB}$+$\\frac{1}{4}\\overset{⃑}{AC}$+$\\frac{1}{3}\\overset{⃑}{AC}$) =$\\frac{1}{3}$\n($\\frac{5}{4}\\overset{⃑}{AB}$+$\\frac{7}{12}\\overset{⃑}{AC}$) =$\\frac{5}{12}\\overset{⃑}{AB}$+$\\frac{7}{36}\\overset{⃑}{AC}$ ∴ (x,y) = ($\\frac{5}{12}$,$\\frac{7}{36}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-triangle-centers-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 52,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0053",
+      "title": "- ABC之三邊$\\overline{AB}$= 4，$\\ove",
+      "question_text": "- ABC之三邊$\\overline{AB}$= 4，$\\overline{BC}$= 3，$\\overline{AC}$= 2，I為△ABC之內心，O為任意點， 則$\\overset{⃑}{OI}$= ＿＿＿＿$\\overset{⃑}{AB}$+ ＿＿＿＿$\\overset{⃑}{BC}$+ ＿＿＿＿$\\overset{⃑}{OA}$",
+      "answer_text": "$\\frac{2}{3}\\overset{⃑}{AB}+\\frac{4}{9}\\overset{⃑}{BC}+\\overset{⃑}{OA}$",
+      "explanation_text": "△ABC中，a = 3，b = 2，c = 4，I為△ABC之內心，O為任意點\n⇒$\\overset{⃑}{OI}$=\n[圖:program-db/assets/question-media/s3-3-1/image151.png] $\\overset{⃑}{OA}$+\n[圖:program-db/assets/question-media/s3-3-1/image152.png] $\\overset{⃑}{OB}$+$\\frac{4}{9}\\overset{⃑}{OC}$=$\\frac{1}{3}\\overset{⃑}{OA}$+$\\frac{2}{9}$\n($\\overset{⃑}{OA}$+$\\overset{⃑}{AB}$) +$\\frac{4}{9}$\n($\\overset{⃑}{OA}$+$\\overset{⃑}{AB}$+$\\overset{⃑}{BC}$) =$\\overset{⃑}{OA}$+$\\frac{2}{3}\\overset{⃑}{AB}$+$\\frac{4}{9}\\overset{⃑}{BC}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-triangle-centers-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 53,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0054",
+      "title": "隨堂練習：$\\overset{⃑}{DC}$= 4$\\overset{⃑}",
+      "question_text": "$\\overset{⃑}{DC}$= 4$\\overset{⃑}{BD}$，$\\overset{⃑}{EC}$= 2$\\overset{⃑}{AE}$，$\\overset{⃑}{FB}$= 2$\\overset{⃑}{AF}$，若G為△DEF之重心， 且$\\overset{⃑}{OG} = x\\overset{⃑}{OA} + y\\overset{⃑}{OB} + z\\overset{⃑}{OC}$，O為任意點， 試求x，y，z之值",
+      "answer_text": "$x=\\frac{4}{9},\\,y=\\frac{17}{45},\\,z=\\frac{8}{45}$",
+      "explanation_text": "D∈$\\overline{BC}$，$\\overset{⃑}{DC}$= 4$\\overset{⃑}{BD}$ ⇒ $\\overline{BD}$：$\\overline{DC}$= 1：4 E∈$\\overline{CA}$，$\\overset{⃑}{EC}$= 2$\\overset{⃑}{AE}$ ⇒ $\\overline{CE}$：$\\overline{EA}$= 2：1 F∈$\\overline{AB}$，$\\overset{⃑}{FB}$= 2$\\overset{⃑}{AF}$ ⇒ $\\overline{AF}$：$\\overline{FB}$= 1：2 G為△DEF之重心，O為任意點\n⇒$\\overset{⃑}{OG} = \\frac{1}{3}(\\overset{⃑}{OD} + \\overset{⃑}{OE} + \\overset{⃑}{OF})$ =$\\frac{1}{3}$ ($\\frac{4}{5}\\overset{⃑}{OB}$+$\\frac{1}{5}\\overset{⃑}{OC}$) +$\\frac{1}{3}$\n($\\frac{2}{3}\\overset{⃑}{OA}$+\n[圖:program-db/assets/question-media/s3-3-1/image154.png] $\\overset{⃑}{OC}$) +$\\frac{1}{3}$\n($\\frac{2}{3}\\overset{⃑}{OA}$+\n[圖:program-db/assets/question-media/s3-3-1/image155.png] $\\overset{⃑}{OB}$) =$\\frac{4}{9}\\overset{⃑}{OA}$+$\\frac{17}{45}\\overset{⃑}{OB}$+$\\frac{8}{45}\\overset{⃑}{OC}$\n∴x =$\\frac{4}{9}$，y =$\\frac{17}{45}$，z =$\\frac{8}{45}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-triangle-centers-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 54,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0055",
+      "title": "若∠A的分角線交$\\overline{BC}$於D，則D點之坐標",
+      "question_text": "若∠A的分角線交$\\overline{BC}$於D，則D點之坐標為＿＿＿＿",
+      "answer_text": "$\\left(\\frac{13}{7},\\frac{25}{7}\\right)$",
+      "explanation_text": "$\\overline{BD}$：$\\overline{CD}$=$\\overline{AB}$：$\\overline{AC}$ =$\\sqrt{(4 - 1)^{2} + (5 - 1)^{2}$：$\\sqrt{(1 - 1)^{2} + (3 - 1)^{2}$= 5：2 由分點公式⇒$\\overset{⃑}{OD}$=\n[圖:program-db/assets/question-media/s3-3-1/image157.png] $\\overset{⃑}{OB}$+\n[圖:program-db/assets/question-media/s3-3-1/image158.png] $\\overset{⃑}{OC}$=$\\frac{2}{7}$\n(4,5) +$\\frac{5}{7}$ (1,3) = ($\\frac{13}{7}$，$\\frac{25}{7}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 55,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0056",
+      "title": "設A(− 3,5)，B(2,1)，若P在直線AB上且$\\over",
+      "question_text": "設A(− 3,5)，B(2,1)，若P在直線AB上且$\\overline{AP}$：$\\overline{PB}$= 1：3，則P的坐標為＿＿＿＿",
+      "answer_text": "$\\left(-\\frac{7}{4},4\\right)$或$\\left(-\\frac{11}{2},7\\right)$",
+      "explanation_text": "(1)內分時，\n[圖:program-db/assets/question-media/s3-3-1/image159.png] ∴P($\\frac{- 9 + 2}{1 + 3}$，$\\frac{15 + 1}{1 + 3}$) = P(−$\\frac{7}{4}$，4)\n(2)外分時，[圖:program-db/assets/question-media/s3-3-1/image160.png]\n∵$\\overline{AP}$：$\\overline{PB}$= 1：3⇒$\\overline{PA}$：$\\overline{AB}$= 1：2⇒P(−$\\frac{11}{2}$，7",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 56,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0057",
+      "title": "已知P(1，3)，Q(4，9)，若R在直線PQ上，$\\overl",
+      "question_text": "已知P(1，3)，Q(4，9)，若R在直線PQ上，$\\overline{PR}$：$\\overline{QR}$= 3：2，則R之坐標為＿＿＿＿。\n[圖:program-db/assets/question-media/s3-3-1/image161.png]\n[圖:program-db/assets/question-media/s3-3-1/image162.png]\n[圖:program-db/assets/question-media/s3-3-1/image163.png]\n[圖:program-db/assets/question-media/s3-3-1/image164.png]\n[圖:program-db/assets/question-media/s3-3-1/image165.png]\n[圖:program-db/assets/question-media/s3-3-1/image166.png]",
+      "answer_text": "$\\left(\\frac{14}{5},\\frac{33}{5}\\right)$或$(10,21)$",
+      "explanation_text": "(1)由分點公式，若 R 為內分點， $\\overset{⃑}{OR}=\\frac{2}{5}\\overset{⃑}{OP}+\\frac{3}{5}\\overset{⃑}{OQ}$， 故$(x,y)=\\frac{2}{5}(1,3)+\\frac{3}{5}(4,9)=\\left(\\frac{14}{5},\\frac{33}{5}\\right)$。\n(2)若依圖為外分情形，則$\\overline{PQ}$：$\\overline{QR}$=1：2， $\\overset{⃑}{OQ}=\\frac{2}{3}\\overset{⃑}{OP}+\\frac{1}{3}\\overset{⃑}{OR}$， 故$(4,9)=\\frac{2}{3}(1,3)+\\frac{1}{3}(x,y)$，解得$(x,y)=(10,1)$。",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 57,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0058",
+      "title": "隨堂練習：設A( − 2，5)，B(4，3)，P在直線AB上且$\\over",
+      "question_text": "設A( − 2，5)，B(4，3)，P在直線AB上且$\\overline{AP}$：$\\overline{PB}$= 1：2，則P之坐標為＿＿＿＿",
+      "answer_text": "$\\left(0,\\frac{13}{3}\\right)$或$(-8,7)$",
+      "explanation_text": "設P(x,y)。\n① 若 P 為內分點，$\\overline{AP}$：$\\overline{PB}$=1：2$，則 $x=\\frac{1\\times4+2\\times(-2)}{3}=0$，$y=\\frac{1\\times3+2\\times5}{3}=\\frac{13}{3}$。\n② 若 P 為外分點，$\\overline{AP}$：$\\overline{PB}$=1：2$，則$\\overline{AP}$：$\\overline{AB}$=1：1$， 故$-2=\\frac{4+x}{2}$，$5=\\frac{3+y}{2}$，解得$x=-8$，$y=7$。\n因此 P 點坐標為$(0,\\frac{13}{3})$或$(-8,7)$。",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 58,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0059",
+      "title": "△ABC中，$\\overline{AB}$之中點D(5，− 2)",
+      "question_text": "△ABC中，$\\overline{AB}$之中點D(5，− 2)，$\\overline{BC}$之中點E( − 2，3)，$\\overline{AC}$之中點F(6，5)， 則△ABC之重心G = ＿＿＿＿",
+      "answer_text": "(3,2)",
+      "explanation_text": "設A(x~1~，y~1~)，B(x~2~，y~2~)，C(x~3~，y~3~)，G(x，y)是△ABC之重心\n⇒ x =$\\frac{x_{1} + x_{2} + x_{3}{3}$=$\\frac{\\frac{x_{1} + x_{2}{2} + \\frac{x_{2} + x_{3}{2} + \\frac{x_{3} + x_{1}{2}{3}$=$\\frac{5 - 2 + 6}{3}$= 3 y =$\\frac{y_{1} + y_{2} + y_{3}{3}$=$\\frac{\\frac{y_{1} + y_{2}{2} + \\frac{y_{2} + y_{3}{2} + \\frac{y_{3} + y_{1}{2}{3}$=$\\frac{- 2 + 3 + 5}{3}$= 2 ∴ G(3，2",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-triangle-centers-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 59,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0060",
+      "title": "隨堂練習：分別為D(2，− 3)，E(4，− 1)，F(1，5)， 求A",
+      "question_text": "分別為D(2，− 3)，E(4，− 1)，F(1，5)， 求A，B，C的坐標",
+      "answer_text": "$A(-1,3)$，$B(5,-9)$，$C(3,7)$",
+      "explanation_text": "A = D + F − E = (2,− 3) + (1,5) − (4,− 1) ∴ A = ( − 1,3) B = D + E − F = (2,− 3) + (4,− 1) − (1,5) ∴ B = (5,− 9) C = E + F − D = (4,− 1) + (1,5) − (2,− 3) ∴ C = (7,3",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-triangle-centers-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 60,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0061",
+      "title": "在△DEF中，D($\\frac{1}{3}$,$\\frac{2}",
+      "question_text": "在△DEF中，D($\\frac{1}{3}$,$\\frac{2}{3}$)，E($\\frac{11}{3}$,$\\frac{4}{3}$)，重心G(3,3)，則F之坐標為＿＿＿＿",
+      "answer_text": "(5,7)",
+      "explanation_text": "D($\\frac{1}{3}$,$\\frac{2}{3}$)，E($\\frac{11}{3}$,$\\frac{4}{3}$)，F(x,y)，G(3,3) $\\frac{\\frac{1}{3} + \\frac{11}{3} + x}{3}$= 3且$\\frac{\\frac{2}{3} + \\frac{4}{3} + y}{3}$= 3 ⇒ F(x,y) = (5,7)\n[]{.underline}",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 61,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0062",
+      "title": "隨堂練習：(1)求△ABC的重心G之坐標為＿＿＿＿。 (2)若∠ A之平分",
+      "question_text": "(1)求△ABC的重心G之坐標為＿＿＿＿。\n(2)若∠ A之平分線交$\\overline{BC}$於D，求D坐標＿＿＿＿。\n(3)若∠ A之外角平分線交直線BC於E， 求E坐標＿＿＿＿",
+      "answer_text": "(1)$\\left(\\frac{2}{3},-5\\right)$；(2)$(2,-4)$；(3)$(18,-8)$",
+      "explanation_text": "(1)△ABC的重心G之坐標為\n($\\frac{2 - 6 + 6}{3}$,$\\frac{- 8 - 2 - 5}{3}$) = ($\\frac{2}{3}$,− 5)\n(2)$\\overline{AB}$=$\\sqrt{64 + 36}$= 10，$\\overline{AC}$=$\\sqrt{16 + 9}$= 5⇒$\\overline{BD}$：$\\overline{DC}$=$\\overline{AB}$：$\\overline{AC}$= 10：5 = 2：1 設D(x,y)⇒$\\left x = \\frac{- 6 + 2 \\cdot 6}{1 + 2} = 2 y = \\frac{- 2 + 2 \\cdot ( - 5)}{1 + 2} = - ⥂ 4 $ ∴ D(2,− 4)\n(3)$\\overline{AE}$為∠ A的外角平分線⇒$\\overline{BE}$：$\\overline{CE}$=$\\overline{AB}$：$\\overline{AC}$= 2：1 設E(x,y)⇒$\\left \\frac{x - 6}{2} = 6 \\frac{y - 2}{2} = - 5 $ ⇒ $\\left x = 18 y = - 8 $ ∴E(18,− 8",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 62,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0063",
+      "title": "L~3~：2x − y − 7 = 0，圍成△ABC，其內心坐標",
+      "question_text": "L~3~：2x − y − 7 = 0，圍成△ABC，其內心坐標為＿＿＿＿",
+      "answer_text": "$\\left(\\frac{3}{2},-\\frac{3}{2}\\right)$",
+      "explanation_text": "A：$\\left 2x + y + 1 = 0 x + 2y - 1 = 0 $ ∴ A點坐標為(− 1,1) B：$\\left x + 2y - 1 = 0 2x - y - 7 = 0 $ ∴ B點坐標為(3,− 1) C：$\\left 2x + y + 1 = 0 2x - y - 7 = 0 $ ∴ C點坐標為($\\frac{3}{2}$,− 4) a =$\\overline{BC}$=$\\sqrt{\\frac{9}{4} + 9} = \\frac{3\\sqrt{5}{2}$，b =$\\overline{AC}$=$\\sqrt{\\frac{25}{4} + 25} = \\frac{5\\sqrt{5}{2}$，c =$\\overline{AB}$=$\\sqrt{16 + 4} = 2\\sqrt{5}$\n∴a：b：c = 3：5：4 設I為△ABC之內心，O為原點⇒$\\overset{⃑}{OI}$=\n[圖:program-db/assets/question-media/s3-3-1/image172.png] $\\overset{⃑}{OA}$+\n[圖:program-db/assets/question-media/s3-3-1/image173.png] $\\overset{⃑}{OB}$+\n[圖:program-db/assets/question-media/s3-3-1/image174.png] $\\overset{⃑}{OC}$ =$\\frac{3}{12}$ (−1,1) +$\\frac{5}{12}$ (3,− 1) +$\\frac{4}{12}$\n($\\frac{3}{2}$,− 4) = ($\\frac{3}{2}$,−$\\frac{3}{2}$) ∴ I\n($\\frac{3}{2}$,−$\\frac{3}{2}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-linear-combination-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題4：向量與Δ重心、內心",
+      "source_order": 63,
+      "tags": [
+        "s3-3-1",
+        "section:主題4：向量與Δ重心、內心",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0064",
+      "title": "設有一直線L，其參數方程式為$\\left | x = 3 - 2",
+      "question_text": "設有一直線L，其參數方程式為$\\left | x = 3 - 2t y = 4 + t $，t ∈ R，下列哪些點在此直線上？\n(A) (3,4) (B) (4,3) (C) (1,5) (D) (7,2) (E)\n(3,7",
+      "answer_text": "(A)(C)(D)",
+      "explanation_text": "L：$\\left x = 3 - 2t y = 4 + t $，t ∈ R\n(A)取t = 0 ⇒ (x，y) = (3，4)，故選(A)\n(B)令3 − 2t = 4 ⇒ t = −$\\frac{1}{2}$代入y ⇒ y = 4 −$\\frac{1}{2}$=$\\frac{7}{2}$≠ 3，故不選(B)\n(C)同法，取t = 1 ⇒ (x，y) = (1，5)，故選(C)\n(D)令x = 3 − 2t = 7 ⇒ t = − 2代入y = 4 − 2 = 2，故選(D)\n(E)x = 3 ⇒ t = 0 ⇒ y = 4 ≠ 7，故不選(E) 故選(A)(C)(D",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-line-param-form-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題5：直線參數式",
+      "source_order": 64,
+      "tags": [
+        "s3-3-1",
+        "section:主題5：直線參數式",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0065",
+      "title": "隨堂練習：通過(1,2)且斜率為$\\frac{1}{3}$的直線參數式為＿",
+      "question_text": "通過(1,2)且斜率為$\\frac{1}{3}$的直線參數式為＿＿＿＿。（表示法非唯一）",
+      "answer_text": "$\\begin{cases}x=1+3t\\\\ y=2+t\\end{cases},\\ t\\in\\mathbb{R}$",
+      "explanation_text": "斜率m =$\\frac{1}{3}$，則tanα =$\\frac{1}{3}$=$\\frac{b}{a}$，其中方向向量$\\overset{⃑}{d}$= (a，b) 取a = 3，b = 1 ⇒ $\\left x = 1 + 3t y = 2 + t $，t∈R",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-line-param-form-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題5：直線參數式",
+      "source_order": 65,
+      "tags": [
+        "s3-3-1",
+        "section:主題5：直線參數式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0066",
+      "title": "設有一直線L，其參數方程式為$\\left | x = 2 + 3",
+      "question_text": "設有一直線L，其參數方程式為$\\left | x = 2 + 3t y = 1 - 4t $，t ∈ R，則L之一般方程式（ax + by + c = 0） 為＿＿＿＿",
+      "answer_text": "$4x+3y-11=0$",
+      "explanation_text": "$\\left x = 2 + 3t y = 1 - 4t $，t ∈ R，消去t，4x + 3y = 8 + 3 = 11 ⇒ 4x + 3y − 11 = 0",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-line-param-form-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題5：直線參數式",
+      "source_order": 66,
+      "tags": [
+        "s3-3-1",
+        "section:主題5：直線參數式",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0067",
+      "title": "設直線L，M的方程式分別為L：$\\left | x = 3 +",
+      "question_text": "設直線L，M的方程式分別為L：$\\left | x = 3 + 2t y = 2 - t $，t∈R，M：$\\left | x = - 1 + t y = 5 - t $，t∈R，求L與M的交點 坐標",
+      "answer_text": "(1,3)",
+      "explanation_text": "令M：$\\left x = - 1 + s y = 5 - s $，s∈R $\\left 3 + 2t = - 1 + s 2 - t = 5 - s $，解得t = 1，s = 2 ∴ x = 1，y = 3 ∴ 交點為(1,3",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-line-param-form-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題5：直線參數式",
+      "source_order": 67,
+      "tags": [
+        "s3-3-1",
+        "section:主題5：直線參數式",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0068",
+      "title": "隨堂練習：求二直線L~1~：$\\left x = 2 - t y = 1",
+      "question_text": "求二直線L~1~：$\\left x = 2 - t y = 1 + 3t $（t ∈ R），L~2~：3x − 2y − 1 = 0之交點為＿＿＿＿",
+      "answer_text": "$\\left(\\frac{5}{3},2\\right)$",
+      "explanation_text": "將L~1~：$\\left x = 2 - t y = 1 + 3t $（t ∈ R）代入L~2~，得3(2 − t) − 2(1 + 3t) −1 = 0\n⇒ t =$\\frac{1}{3}$ 故交點(x,y) = ($\\frac{5}{3}$,2",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-line-param-form-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題5：直線參數式",
+      "source_order": 68,
+      "tags": [
+        "s3-3-1",
+        "section:主題5：直線參數式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0069",
+      "title": "設A( − 3，4)，B(2，1)，P(x，y) ∈$\\over",
+      "question_text": "設A( − 3，4)，B(2，1)，P(x，y) ∈$\\overline{AB}$，求2x + 5y − 3的最大值與最小值",
+      "answer_text": "最大值11，最小值6",
+      "explanation_text": "$\\overline{AB}$：$\\left x = 2 - 5t y = 1 + 3t $，0 ≤ t ≤ 1 ∴ 2x + 5y − 3 = 2(2 − 5t) + 5(1 + 3t) − 3 = 5t + 6\n∴ 當t = 0時，2x + 5y − 3有最小值為6；當t = 1時，2x + 5y − 3有最大值為1",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-line-param-form-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題5：直線參數式",
+      "source_order": 69,
+      "tags": [
+        "s3-3-1",
+        "section:主題5：直線參數式",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0070",
+      "title": "設L為通過A(1，2)與B(3，3)兩點的直線，P(x，y)為L",
+      "question_text": "設L為通過A(1，2)與B(3，3)兩點的直線，P(x，y)為L上一點，則2x^2^ − 3y^2^的最小值為＿＿＿＿",
+      "answer_text": "$-\\frac{54}{5}$",
+      "explanation_text": "L：$\\left x = 1 + (3 - 1)t y = 2 + (3 - 2)t $ ∵ P(x，y)∈L ∴ 設P：$\\left x = 1 + 2t y = 2 + t $ 則2x^2^ − 3y^2^ = 2(1 + 2t)^2^ − 3(2 + t)^2^ = 5t^2^ − 4t − 10 = 5(t −$\\frac{2}{5}$)^2^ −$\\frac{54}{5}$\n∴ 當t =$\\frac{2}{5}$時，有最小值為−$\\frac{54}{5}$",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-line-param-form-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題5：直線參數式",
+      "source_order": 70,
+      "tags": [
+        "s3-3-1",
+        "section:主題5：直線參數式",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0071",
+      "title": "隨堂練習：設A(1，− 1)，B(4，3)，P(x，y)為直線AB上的一點",
+      "question_text": "設A(1，− 1)，B(4，3)，P(x，y)為直線AB上的一點，求x^2^ − 3y的最小值＿＿＿＿",
+      "answer_text": "3",
+      "explanation_text": "A(1,− 1)，B(4,3) ∴ m$\\overset{\\leftrightarrow}{AB}$=$\\frac{3 - ( - 1)}{4 - 1}$=$\\frac{4}{3}$ 直線$\\overset{\\leftrightarrow}{AB}$的方程式為y − (−1) =$\\frac{4}{3}$\n(x − 1)，即y =$\\frac{4}{3}$x −$\\frac{7}{3}$\n∵ P為直線$\\overset{\\leftrightarrow}{AB}$上的一點 ∴ 設P點的坐標(x,y) = (t,$\\frac{4}{3}$t −$\\frac{7}{3}$) 則x^2^ − 3y = t^2^ − 3($\\frac{4}{3}$t −$\\frac{7}{3}$) = t^2^ − 4t + 7 = (t − 2)^2^ + 3\n∴ 當t = 2時，x^2^ − 3y有最小值為3",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-line-param-form-s331",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題5：直線參數式",
+      "source_order": 71,
+      "tags": [
+        "s3-3-1",
+        "section:主題5：直線參數式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0072",
+      "title": "坐標平面上已知A(1,1)，B(3,4)，C(t + 1,t)",
+      "question_text": "坐標平面上已知A(1,1)，B(3,4)，C(t + 1,t)，當△ABC之周長有最小值時，求t =？",
+      "answer_text": "$\\frac{4}{3}$",
+      "explanation_text": "設 C 點在直線 L：x - y = 1 上，因此可寫成 C(t + 1, t)。\n求 △ABC 周長最小，只需使 CA + CB 最小。\n將 A(1,1) 對直線 L：x - y - 1 = 0 做對稱，得 A′(2,0)。\n則 CA + CB = CA′ + CB \\ge A′B。\n聯立 A′B 與 L：\n4x - y - 8 = 0 x - y - 1 = 0 得 C(7/3,4/3)=(t+1,t)，故 t=4/3。",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-line-param-form-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題5：直線參數式",
+      "source_order": 72,
+      "tags": [
+        "s3-3-1",
+        "section:主題5：直線參數式",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-3-1-0073",
+      "title": "颱風中心P在清晨0時位於A (3,− 1)，清晨1時已到B (2",
+      "question_text": "颱風中心P在清晨0時位於A (3,− 1)，清晨1時已到B (2,1)，若該颱風作等速直線行進， 則清晨6時的颱風中心P之坐標為＿＿＿＿，若暴風半徑為2單位，則甲地(− 1,5) 在清晨＿＿＿＿時＿＿＿＿分進入暴風圈，又於＿＿＿＿時＿＿＿＿分脫離暴風圈",
+      "answer_text": "$(-3,11)$；清晨2時24分進入；清晨4時0分脫離",
+      "explanation_text": "$\\frac{x - 3}{y + 1} = - \\frac{1}{2}$ ⇒ 2x + y − 5 = 0，$\\left x = 3 - t y = - 1 + 2t $（t ∈ R） 設P(3 − t,− 1 + 2t) ⇒ P(3 − 6,− 1 + 12) = P (− 3,11) 又d(甲,P) < 2 ⇒ (4 − t)^2^ + (6 − 2t)^2^ < 4 ⇒ $\\frac{12}{5}$< t < 4 P介於($\\frac{3}{5}$,$\\frac{19}{5}$)與(− 1,7)之間\n⇒甲地在清晨2時24分進入暴風圈，又於清晨4時0分脫離",
+      "chapter_code": "s3-3-1",
+      "formula_id": "senior-plane-vector-line-param-form-s331",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-8轉.docx",
+      "source_section": "主題5：直線參數式",
+      "source_order": 73,
+      "tags": [
+        "s3-3-1",
+        "section:主題5：直線參數式",
+        "marker:範例6"
+      ]
+    }
+  ]
+}

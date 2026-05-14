@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d5c63" />
+  <title>Question Bank</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="styles.css?v=20260425-qb-clean-v3" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero__content">
+        <p class="eyebrow" id="qbEyebrow">Question Bank</p>
+        <h1 id="qbTitle">Question Bank</h1>
+        <p class="hero__lead" id="qbLead">Filter by chapter and topic, then print current results to PDF.</p>
+        <div class="hero__quicklinks">
+          <a class="ghost-link" href="index.html" id="qbBackHome">Back To Home</a>
+          <a class="ghost-link" href="manage.html" id="qbBackManage">Open Manage Page</a>
+        </div>
+      </div>
+      <div class="hero__panel no-print">
+        <h2 id="qbHowTitle">How To Use</h2>
+        <ul>
+          <li id="qbHow1">Select a chapter and topic.</li>
+          <li id="qbHow2">Use keyword search to narrow down results.</li>
+          <li id="qbHow3">Click print to export current list as PDF.</li>
+        </ul>
+      </div>
+    </header>
+
+    <main class="layout question-bank-layout">
+      <aside class="sidebar no-print">
+        <section class="panel controls">
+          <h2 id="qbFilterTitle">Filters</h2>
+          <label class="field">
+            <span id="qbLabelChapter">Chapter</span>
+            <select id="chapterFilter"></select>
+          </label>
+          <label class="field">
+            <span id="qbLabelTopic">Topic</span>
+            <select id="topicFilter"></select>
+          </label>
+          <label class="field">
+            <span id="qbLabelCategory">Category</span>
+            <select id="categoryFilter"></select>
+          </label>
+          <label class="field">
+            <span id="qbLabelKeyword">Keyword</span>
+            <input id="keywordInput" type="search" placeholder="Search title, question, answer, tag" />
+          </label>
+          <div class="field">
+            <span id="qbLabelActions">Actions</span>
+            <div class="question-toolbar">
+              <button id="showAllAnswersButton" class="ghost-button" type="button">Show All Answers</button>
+              <button id="hideAllAnswersButton" class="ghost-button" type="button">Hide All Answers</button>
+              <button id="toggleAnswerButtonsButton" class="ghost-button" type="button">Show Answer Buttons</button>
+              <button id="toggleDetailsButton" class="ghost-button" type="button">Hide Details</button>
+              <button id="printButton" class="pill-button" type="button">Print Current Result</button>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <section class="content">
+        <section id="dataNotice" class="panel" hidden></section>
+        <section class="panel summary-panel">
+          <div>
+            <p class="summary-label" id="qbResultLabel">Current Result</p>
+            <h2 id="resultTitle">Question List</h2>
+          </div>
+          <p id="resultCount" class="summary-count"></p>
+        </section>
+        <section id="questionList" class="question-list"></section>
+      </section>
+    </main>
+  </div>
+
+  <script defer src="formulas.js"></script>
+  <script defer src="data/formula-content.js?v=20260425-qb-clean-v1"></script>
+  <script defer src="data/question-content.js?v=20260425-qb-clean-v3"></script>
+  <script defer src="data/chapter-code-config.js"></script>
+  <script defer src="data/formula-calculators.js"></script>
+  <script defer src="data/formula-practice-assignments.js"></script>
+  <script defer src="data/formula-practice.js"></script>
+  <script defer src="formula-data.js?v=20260505-question-category-v1"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="question-bank.js?v=20260505-question-category-v1"></script>
+  <script defer src="pwa.js?v=20260425-qb-clean-v1"></script>
+</body>
+</html>

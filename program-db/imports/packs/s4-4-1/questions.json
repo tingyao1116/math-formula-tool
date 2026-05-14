@@ -1,0 +1,1346 @@
+{
+  "chapter_code": "s4-4-1",
+  "chapter_title": "線性方程組與矩陣",
+  "questions": [
+    {
+      "id": "q-s4-4-1-0001",
+      "title": "範例1：試分別利用加減消去法及代入消去法解方程組﹒",
+      "question_text": "試分別利用加減消去法及代入消去法解方程組\n[圖:program-db/assets/question-media/s4-4-1/image1.png]﹒",
+      "answer_text": "$(2,-1,1)$",
+      "explanation_text": "【解析】(1)加減消去法：\n{ x + 3y - z = - 2…… ①； 3x + 4y + z = 3…… ②； 2x - 3y + 2z = 9…… ③ }﹐ 由①$+$②﹐①$× 2 +$③得二元一次方程組 { 4x + 7y = 1； 4x + 3y = 5 }﹐ 解得$x = 2$﹐$y = - 1$代入① ⇒ $z = 1$﹐ 故得唯一解$(2, - 1, 1)$﹒\n(2)代入消去法：\n{ x + 3y - z = - 2…… ①； 3x + 4y + z = 3…… ②； 2x - 3y + 2z = 9…… ③ }﹐ 由① ⇒ $z = x + 3y + 2$代入②③﹐ 得{ 3x + 4y + (x + 3y + 2) = 3； 2x - 3y + 2(x + 3y + 2) = 9 }﹐ 整理成{ 4x + 7y = 1； 4x + 3y = 5 }﹐ 解得$x = 2$﹐$y = - 1$代入① ⇒ $z = 1$﹐ 故得唯一解$(2, - 1, 1)$﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 1,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0002",
+      "title": "隨堂練習：試分別利用加減消去法及代入消去法解方程組﹒",
+      "question_text": "試分別利用加減消去法及代入消去法解方程組\n[圖:program-db/assets/question-media/s4-4-1/image2.png]﹒",
+      "answer_text": "$(1,1,2)$",
+      "explanation_text": "【解析】(1)加減消去法：\n{ 2x + y - 3z = - 3…… ①； x - 2y + 3z = 5…… ②； 3x - y + 2z = 6…… ③ }﹐ 由①$+$③﹐①$× 2 +$②得二元一次方程組 { 5x - z = 3； 5x - 3z = - 1 }﹐ 解得$x = 1$﹐$z = 2$代入① ⇒ $y = 1$﹐ 故得唯一解$(1, 1, 2)$﹒\n(2)代入消去法：\n{ 2x + y - 3z = - 3…… ①； x - 2y + 3z = 5…… ②； 3x - y + 2z = 6…… ③ }﹐ 由③ ⇒ $y = 3x + 2z - 6$代入①②﹐ 得{ 2x + (3x + 2z - 6) - 3z = - 3； x - 2(3x + 2z - 6) + 3z = 5 }﹐ 整理成{ 5x - z = 3； - 5x - z = - 7 }﹐ 解得$x = 1$﹐$z = 2$代入① ⇒ $y = 1$﹐ 故得唯一解$(1, 1, 2)$﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 2,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0003",
+      "title": "範例2：若{ x + 2y - 3z = - 9； ax + y + z =",
+      "question_text": "若{ x + 2y - 3z = - 9； ax + y + z = 4； 2x - y + z = 8 }與{ 2x + by - z = 1； x - 2y + 3z = 13； 2x + y - cz = 12 }均表$x$﹐$y$﹐$z$的三元一次聯立方程組﹐若兩方程組為同義方程組﹐且恰有唯一解﹐則$a + b + c$之值為何？",
+      "answer_text": "$-2$",
+      "explanation_text": "【解析】 令{ x + 2y - 3z = - 9…… ①； 2x - y + z = 8…… ②； x - 2y + 3z = 13…… ③ }﹐ 由①$+$②$× 3$﹐①$+$③得二元一次方程組{ 7x - y = 15； 2x = 4 }﹐ 解得$x = 2$﹐$y = - 1$代入① ⇒ $z = 3$﹐\n∴ 兩方程組的共同解為$(2, - 1, 3)$代入{ ax + y + z = 4； 2x + by - z = 1； 2x + y - cz = 12 } ⇒ { 2a - 1 + 3 = 4； 4 - b - 3 = 1； 4 - 1 - 3c = 12 }﹐ 得$a = 1$﹐$b = 0$﹐$c = - 3$﹐故$a + b + c = - 2$﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 3,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0004",
+      "title": "範例3：試解方程組{ x + 2y + z = 8； x - 3y - 3z",
+      "question_text": "試解方程組{ x + 2y + z = 8； x - 3y - 3z = 1； 3x + y - z = 2 }﹒",
+      "answer_text": "無解",
+      "explanation_text": "【解析】 { x + 2y + z = 8…… ①； x - 3y - 3z = 1…… ②； 3x + y - z = 2…… ③ }﹐ 由①$× 3 +$②﹐①$+$③得二元一次方程組 { 4x + 3y = 25…… ④； 4x + 3y = 10…… ⑤ }﹐ 由④$-$⑤ ⇒ $0 = 15$矛盾﹐ 故方程組無解﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 4,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0005",
+      "title": "隨堂練習：試解方程組{ 3x - 2y + z = 4； 4x - y - 2",
+      "question_text": "試解方程組{ 3x - 2y + z = 4； 4x - y - 2z = - 3； 5x - 4y + 3z = 3 }﹒",
+      "answer_text": "無解",
+      "explanation_text": "【解析】 { 3x - 2y + z = 4…… ①； 4x - y - 2z = - 3…… ②； 5x - 4y + 3z = 3…… ③ }﹐ 由①$× 2 +$②﹐①$× 3 -$③得二元一次方程組 { 10x - 5y = 5…… ④； 4x - 2y = 9…… ⑤ }﹐ 由④$× \\frac{2}{5} -$⑤ ⇒ $0 = - 7$矛盾﹐ 故方程組無解﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 5,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0006",
+      "title": "範例4：試解方程組{ x + 5y - 2z = 22； 2x + y - ",
+      "question_text": "試解方程組{ x + 5y - 2z = 22； 2x + y - z = 5； 6x - 3y - z = - 11 }﹒",
+      "answer_text": "$x=t$，$y=t+4$，$z=3t-1$",
+      "explanation_text": "【解析】 { x + 5y - 2z = 22…… ①； 2x + y - z = 5…… ②； 6x - 3y - z = - 11…… ③ }﹐ 由①$-$②$× 2$﹐①$-$③$× 2$得二元一次方程組 { - 3x + 3y = 12； - 11x + 11y = 44 } ⇒ { x - y = - 4； x - y = - 4 }﹐ 令$x = t$ ⇒ $y = t + 4$﹐代入①得 $t + 5(t + 4) - 2z = 22$ ⇒ $z = 3t - 1$﹐ 故方程組的解為{ x = t； y = t + 4； z = 3t - 1 }﹐$t$為任意實數﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-matrix-main-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 6,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0007",
+      "title": "隨堂練習：試解方程組{ x - y + 2z = - 4； 4x - y - ",
+      "question_text": "試解方程組{ x - y + 2z = - 4； 4x - y - z = - 1； 2x + y - 5z = 7 }﹒",
+      "answer_text": "$x=t$，$y=3t+2$，$z=t-1$",
+      "explanation_text": "【解析】 { x - y + 2z = - 4…… ①； 4x - y - z = - 1…… ②； 2x + y - 5z = 7…… ③ }﹐ 由①$-$②﹐①$+$③得二元一次方程組 { - 3x + 3z = - 3； 3x - 3z = 3 } ⇒ { x - z = 1； x - z = 1 }﹐ 令$x = t$ ⇒ $z = t - 1$﹐代入①得 $t - y + 2(t - 1) = - 4$ ⇒ $y = 3t + 2$﹐ 故方程組的解為{ x = t； y = 3t + 2； z = t - 1 }﹐$t$為任意實數﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-matrix-main-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 7,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0008",
+      "title": "範例5：已知方程組{ x + z = 2； y + z = 1； x + y",
+      "question_text": "已知方程組{ x + z = 2； y + z = 1； x + y + 2z = 3 }﹐試求：\n(1)方程組的解﹒\n(2)若$(x, y, z)$滿足方程組﹐則$x^{2} + y^{2} + z^{2}$的最小值為何？",
+      "answer_text": "(1)$x=t$，$y=t-1$，$z=2-t$；(2)最小值$2$",
+      "explanation_text": "【解析】\n(1){ x + z = 2…… ①； y + z = 1…… ②； x + y + 2z = 3…… ③ }﹐ 由③$-$②得$x + z = 2$與①相同﹐\n∴ 令$x = t$ ⇒ $z = - t + 2$﹐代入②得$y = t - 1$﹐ 故方程組的解為{ x = t； y = t - 1； z = - t + 2 }﹐$t$為任意實數﹒\n(2)令$x = t$﹐$y = t - 1$﹐$z = - t + 2$代入$x^{2} + y^{2} + z^{2}$得 $t^{2} + (t - 1)^{2} + ( - t + 2)^{2} = 3t^{2} - 6t + 5 = 3(t - 1)^{2} + 2$﹐ 當$t = 1$時﹐$x^{2} + y^{2} + z^{2}$有最小值2﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-matrix-main-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 8,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0009",
+      "title": "範例6：已知某一個三位數﹐其各位數字的和為10﹐個位數字與百位數字對調後所得",
+      "question_text": "已知某一個三位數﹐其各位數字的和為10﹐個位數字與百位數字對調後所得的新數比原數多297﹐百位數字與十位數字對調後所得的新數比原數少180﹐試求此三位數﹒",
+      "answer_text": "$316$",
+      "explanation_text": "【解析】設此三位數的個位數字﹑十位數字及百位數字分別為$x$﹐$y$及$z$﹐ 其中$x$﹐$y$﹐$z$為0到9的整數﹐且$z ≠ 0$﹐ 則{ x + y + z = 10； 100z + 10y + x + 297 = 100x + 10y + z； 100z + 10y + x - 180 = 100y + 10z + x }\n⇒ { x + y + z = 10； 99x - 99z = 297； 90y - 90z = - 180 }\n⇒ { x + y + z = 10…… ①； x - z = 3…… ②； y - z = - 2…… ③ }﹐\n①$-$② ⇒ $y + 2z = 7……$④﹐\n④$-$③ ⇒ $3z = 9$﹐得$z = 3$代入②③\n⇒ $x = 6$﹐$y = 1$﹐ 故此三位數為316﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-matrix-main-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 9,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0010",
+      "title": "隨堂練習：有一個三位數﹐各位數字和是18﹐交換個位數字與百位數字後﹐就比原數大",
+      "question_text": "有一個三位數﹐各位數字和是18﹐交換個位數字與百位數字後﹐就比原數大495﹐交換十位數字與百位數字後﹐就比原數大630﹐求此數﹒",
+      "answer_text": "$297$",
+      "explanation_text": "【解答】設百位﹐十位﹐個位數字分別為x﹑y﹑z﹐則依題意得 { x + y + z = 18； 100z + 10y + x = 100x + 10y + z + 495； 100y + 10x + z = 100x + 10y + z + 630 } $⇒ { x + y + z = 18…… ； x - z = - 5…… ； x - y = - 7……  }\n① − ② ⇒ y + 2z = 23......④\n② − ③ ⇒ y − z = 2......⑤\n④ − ⑤ ⇒ 3z = 21 ⇒ z = 7代入⑤得y = 9﹐代入①得x = 2﹐故此數為297﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-matrix-main-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 10,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0011",
+      "title": "範例7：已知三種合金A，B，C按重量其成分各含金、銀、銅的比為5：2：1，2",
+      "question_text": "已知三種合金A，B，C按重量其成分各含金、銀、銅的比為5：2：1，2：5：1，3：1：4，今欲以此三種合金製造另一種合金9公斤，使得金、銀、銅的含量相同，問A，B，C各需多少公斤？",
+      "answer_text": "$A=\\frac{1}{3}$公斤，$B=\\frac{11}{3}$公斤，$C=5$公斤",
+      "explanation_text": "【解析】設A，B，C各x，y，z公斤，則x + y + z = 9......① 此合金含金$\\frac{5x}{8}$+$\\frac{2y}{8}$+$\\frac{3z}{8}$公斤，含銀$\\frac{2x}{8}$+$\\frac{5y}{8}$+$\\frac{z}{8}$公斤，含銅$\\frac{x}{8}$+$\\frac{y}{8}$+$\\frac{4z}{8}$公斤 則$\\frac{5x}{8}$+$\\frac{2y}{8}$+$\\frac{3z}{8}$=$\\frac{2x}{8}$+$\\frac{5y}{8}$+$\\frac{z}{8}$=$\\frac{x}{8}$+$\\frac{y}{8}$+$\\frac{4z}{8}$\n∴ 5x + 2y + 3z = 2x + 5y + z，2x + 5y + z = x + y + 4z\n⇒ 3x − 3y + 2z = 0......②，x + 4y − 3z = 0......③\n① × 2 − ②得− x + 5y = 18......④；① × 3 + ③得4x + 7y = 27......⑤\n④ × 4 + ⑤得27y = 72 + 27 = 99 ⇒ y =$\\frac{99}{27}$=$\\frac{11}{3}$，代入④得x = 5y − 18 =$\\frac{55}{3}$− 18 =$\\frac{1}{3}$ 代入①得z = 9 − x − y = 9 −$\\frac{1}{3}$−$\\frac{11}{3}$= 5 ∴ (x,y,z) = ($\\frac{1}{3}$,$\\frac{11}{3}$,5)",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-matrix-main-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 11,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0012",
+      "title": "範例8：某一工廠有$A$﹐$B$﹐$C$三條生產線﹐已知同時啟動$A$﹐$B",
+      "question_text": "某一工廠有$A$﹐$B$﹐$C$三條生產線﹐已知同時啟動$A$﹐$B$兩條生產線工作6小時﹐可以生產4500件產品﹐同時啟動$A$﹐$C$兩條生產線工作8小時﹐可以生產3600件產品﹐同時啟動$A$﹐$B$﹐$C$三條生產線工作4小時﹐可以生產3800件產品﹒試問：若只啟動$A$生產線工作1個小時﹐可以生產產品多少件？",
+      "answer_text": "$250$件",
+      "explanation_text": "【解析】設$A$﹐$B$﹐$C$三條生產線工作1小時﹐分別可以生產$x$個﹐$y$個﹐$z$個產品﹐則 { 6(x + y) = 4500； 8(x + z) = 3600； 4(x + y + z) = 3800 } ⇒ { x + y = 750…… ①； x + z = 450…… ②； x + y + z = 950…… ③ }﹐ 由③$-$② ⇒ $y = 500$﹐代入①得$x = 250$﹐ 故$A$生產線工作1個小時可以生產250件產品﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-matrix-main-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 12,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0013",
+      "title": "隨堂練習：甲﹑乙﹑丙三人合作一工程﹐甲與乙合作﹐能在2天內完工﹐乙與丙合作能於",
+      "question_text": "甲﹑乙﹑丙三人合作一工程﹐甲與乙合作﹐能在2天內完工﹐乙與丙合作能於4天內完工﹐而甲與丙合作能於$2\\frac{2}{5}$天完工﹒甲﹑乙﹑丙三人單獨做完各幾天﹖",
+      "answer_text": "甲$3$天，乙$6$天，丙$12$天",
+      "explanation_text": "【解答】設甲獨做需x天﹐乙需y天﹐丙需z天﹐\n∴由題意可得﹐{ \\frac{2}{x} + \\frac{2}{y} = 1； \\frac{4}{y} + \\frac{4}{z} = 1； \\frac{12}{5x} + \\frac{12}{5z} = 1 } $⇒ { x = 3； y = 6； z = 12 }\n∴甲需3天﹐乙需6天﹐丙需12天﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-matrix-main-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 13,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0014",
+      "title": "隨堂練習：一水池有三水管A﹑B﹑C﹐A﹑B為入水管﹐C為出水管﹔A﹑C同開6小",
+      "question_text": "一水池有三水管A﹑B﹑C﹐A﹑B為入水管﹐C為出水管﹔A﹑C同開6小時可注滿﹐B﹑C同開則12小時可使整池水流盡﹐A﹑B同開則1小時20分可注滿﹐求(1)A﹑B各需幾小時方能注滿﹒(2)C需幾小時方能使整池水流盡﹒",
+      "answer_text": "(1)$A$管$2$小時，$B$管$4$小時；(2)$C$管$3$小時",
+      "explanation_text": "【解答】設A需x小時可注滿水池﹐B需y小時﹐C需z小時可流盡\n∴由題意可得﹐{ \\frac{6}{x} - \\frac{6}{z} = 1； \\frac{12}{y} - \\frac{12}{z} = - 1； \\frac{4}{3x} + \\frac{4}{3y} = 1 } $⇒ { x = 2； y = 4； z = 3 }\n∴A需2小時﹐B需4小時﹐而C需3小時﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-matrix-main-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 14,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0015",
+      "title": "範例9：已知xyz ≠ 0，若9x − 4y + 3z = − 7x + 2",
+      "question_text": "已知xyz ≠ 0，若9x − 4y + 3z = − 7x + 2y + 15z = 13x − 8y − z，試求$\\frac{3x^{2} - 2y^{2} - z^{2} - 5xy}{4x^{2} - 5y^{2} - 6z^{2} + 2xz}$之值。",
+      "answer_text": "$\\frac{547}{142}$",
+      "explanation_text": "【解析】由{ 9x - 4y + 3z = - 7x + 2y + 15z； - 7x + 2y + 15z = 13x - 8y - z }得{ 8x - 3y - 6z = 0； 10x - 5y - 8z = 0 } 則x：y：z =$\\left| \\begin{matrix} - 3 & - 6 \\ - 5 & - 8 \\end{matrix} \\right|$：$\\left| \\begin{matrix} - 6 & 8 \\ - 8 & 10 \\end{matrix} \\right|$：$\\left| \\begin{matrix} 8 & - 3 \\ 10 & - 5 \\end{matrix} \\right|$= 3：(− 2)：5 設x = 3k，y = − 2k，z = 5k，則$\\frac{3x^{2} - 2y^{2} - z^{2} - 5xy}{4x^{2} - 5y^{2} - 6z^{2} + 2xz}$=$\\frac{24k^{2}}{- 104k^{2}}$=$\\frac{- 3}{13}$",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-matrix-main-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 15,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0016",
+      "title": "範例10：若方程組{ a_{1}x + b_{1}y + c_{1}z = d",
+      "question_text": "若方程組{ a_{1}x + b_{1}y + c_{1}z = d_{1}； a_{2}x + b_{2}y + c_{2}z = d_{2}； a_{3}x + b_{3}y + c_{3}z = d_{3} } 有唯一解x = 2﹐y = 4﹐z = 3﹐則方程組 { d_{1}x + b_{1}y + c_{1}z = 2a_{1}； d_{2}x + b_{2}y + c_{2}z = 2a_{2}； d_{3}x + b_{3}y + c_{3}z = 2a_{3} } 的解(x,y,z) = (1)(1,4,3) (2)(4,4,3) (3)(1, − 4, − 3) (4)(1, − 2, − 3)﹒",
+      "answer_text": "$(3)$",
+      "explanation_text": "【解答】將(x,y,z) = (2,4,3)代入方程組 $⇒ { 2a_{1} + 4b_{1} + 3c_{1} = d_{1}； 2a_{2} + 4b_{2} + 3c_{2} = d_{2}； 2a_{3} + 4b_{3} + 3c_{3} = d_{3} } $⇒ { d_{1} - 4b_{1} - 3c_{1} = 2a_{1}； d_{2} - 4b_{2} - 3c_{2} = 2a_{2}； d_{3} - 4b_{3} - 3c_{3} = 2a_{3} } 與{ d_{1}x + b_{1}y + c_{1}z = 2a_{1}； d_{2}x + b_{2}y + c_{2}z = 2a_{2}； d_{3}x + b_{3}y + c_{3}z = 2a_{3} } 比較係數知(x,y,z) = (1, − 4, − 3)﹐故選(3)﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題1：三元一次方程組",
+      "source_order": 16,
+      "tags": [
+        "s4-4-1",
+        "section:主題1：三元一次方程組",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0017",
+      "title": "範例1：若方程組，除(x,y,z) = (0,0,0)外，尚有其他解，求k ",
+      "question_text": "若方程組\n[圖:program-db/assets/question-media/s4-4-1/image7.png]，除(x,y,z) =\n(0,0,0)外，尚有其他解，求k =＿＿＿＿＿＿。",
+      "answer_text": "$2$或$-\\frac{5}{3}$",
+      "explanation_text": "【解析】齊次方程組有異於(0,0,0)之解 ⇔ △ =$\\left| \\begin{matrix} 3 & - 2 & 1 \\ 2 & k - 2 & 3 \\ 1 & 2 & 2k + 1 \\end{matrix} \\right|$= 0\n⇔ 3k^2^ − k − 10 = 0 ⇔ (k − 2)(3k + 5) = 0 ⇔ k = 2或$\\frac{- 5}{3}$",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-cramer-applicability-conditions-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 17,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0018",
+      "title": "隨堂練習：若方程組{ x + ky - z = 0； 2x + ky - z ",
+      "question_text": "若方程組{ x + ky - z = 0； 2x + ky - z = y； x + 2y - z = 0 }有x = y = z = 0以外的解，則k = ＿＿＿＿＿＿；而方程組的解為＿＿＿＿＿＿。",
+      "answer_text": "$k=2$；$x=t$，$y=t$，$z=3t$",
+      "explanation_text": "【解析】(1)原式⇒{ x + ky - z = 0； 2x + (k - 1)y - z = 0； x + 2y - z = 0 }有異於(0,0,0)之解，則$\\left|{ 1 & k & - 1； 2 & k - 1 & - 1； 1 & 2 & - 1 \\end{matrix} \\right $= 0，得k = 2 (2) k = 2代入原式⇒${ \\begin{array}{r} x + 2y - z = 0； 2x + y - z = 0； x + 2y - z = 0 }表二平面重合且與另一平面交於一直線L 則L：{ x + 2y - z = 0； 2x + y - z = 0 } ⇒ L：{ x = t； y = t； z = 3t }，t∈R",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-cramer-applicability-conditions-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 18,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0019",
+      "title": "範例2：利用克拉瑪公式解方程組{ 21x + 22y + 27z = 50；",
+      "question_text": "利用克拉瑪公式解方程組{ 21x + 22y + 27z = 50； 22x + 23y + 28z = 51； 23x + 24y + 25z = 52 }，則(x，y，z) = ＿＿＿＿＿＿。",
+      "answer_text": "$(-28,29,0)$",
+      "explanation_text": "【解析】 △ =\n[圖:program-db/assets/question-media/s4-4-1/image8.png] =$\\left| \\begin{matrix} 21 & 22 & 27 \\ 1 & 1 & 1 \\ 2 & 2 & - 2 \\end{matrix} \\right|$= 4 △~x~ =\n[圖:program-db/assets/question-media/s4-4-1/image9.png] =$\\left| \\begin{matrix} 50 & 22 & 27 \\ 1 & 1 & 1 \\ 2 & 2 & - 2 \\end{matrix} \\right|$= − 112 △~y~ =$\\left| \\begin{matrix} 21 & 50 & 27 \\ 22 & 51 & 28 \\ 23 & 52 & 25 \\end{matrix} \\right|$= 116 △~z~ =\n[圖:program-db/assets/question-media/s4-4-1/image10.png] =$\\left| \\begin{matrix} 21 & 22 & 50 \\ 1 & 1 & 1 \\ 2 & 2 & 2 \\end{matrix} \\right|$= 0\n[圖:program-db/assets/question-media/s4-4-1/image11.png] ∴ (x,y,z) = ( − 28,29,0)",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-cramer-applicability-conditions-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 19,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0020",
+      "title": "範例3：設x，y，z皆為非0實數，且$\\frac{4y - 7z}{x}$=",
+      "question_text": "設x，y，z皆為非0實數，且$\\frac{4y - 7z}{x}$=$\\frac{2x - 2z}{5y}$=$\\frac{x + 2y}{z}$，則$\\frac{xy + yz + zx}{x^{2} + y^{2} + z^{2}}$之值 = ＿＿＿＿＿＿。",
+      "answer_text": "$\\frac{547}{142}$",
+      "explanation_text": "【解析】 令$\\frac{4y - 7z}{x}$=$\\frac{2x - 2z}{5y}$=$\\frac{x + 2y}{z}$= k，{ kx - 4y + 7z = 0； 2x - 5ky - 2z = 0； x + 2y - kz = 0 }齊次方程組有非(0,0,，0)之解\n⇒ $\\left|{ k & - 4 & 7； 2 & - 5k & - 2； 1 & 2 & - k \\end{matrix} \\right $= 0，(k + 1)(5k^2^ − 5k + 36) = 0， k = − 1代入原式得${ \\begin{array}{r} - x - 4y + 7z = 0； 2x + 5y - 2z = 0； x + 2y + z = 0 } x：y：z =$\\left| \\begin{matrix} - 4 & 7 \\ 5 & - 2 \\end{matrix} \\right|$：$\\left| \\begin{matrix} 7 & - 1 \\ - 2 & 2 \\end{matrix} \\right|$：$\\left| \\begin{matrix} - 1 & - 4 \\ 2 & 5 \\end{matrix} \\right|$= (− 9)：4：1 則$\\frac{xy + yz + zx}{x^{2} + y^{2} + z^{2}}$=$\\frac{( - 9) × 4 + 4 × 1 + 1 × ( - 9)}{( - 9)^{2} + 4^{2} + 1^{2}}$=$\\frac{- 41}{98}$",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-cramer-applicability-conditions-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 20,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0021",
+      "title": "範例4：設a，b∈R，若方程組{ x + 3y - z = - 4； 2x ",
+      "question_text": "設a，b∈R，若方程組{ x + 3y - z = - 4； 2x + ay + z = - 1； x + 5y - 7z = - b }為相依方程組，求數對(a，b) = ＿＿＿＿＿＿。",
+      "answer_text": "$(a,b)=(5,18)$",
+      "explanation_text": "【解析】相依方程組 ⇒ △ = △~x~ = △~y~ = △~z~ = 0 由△ =$\\left| \\begin{matrix} 1 & 3 & - 1 \\ 2 & a & 1 \\ 1 & 5 & - 7 \\end{matrix} \\right|$= 0 ⇒ 30 − 6a = 0，得a = 5 由△~y~ =$\\left| \\begin{matrix} 1 & - 4 & - 1 \\ 2 & - 1 & 1 \\ 1 & b & - 7 \\end{matrix} \\right|$= 0 ⇒ − 3b − 54 = 0，得b = − 18 故數對(a,b) = (5,− 18)",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 21,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0022",
+      "title": "範例5：設a ∈ R，E~1~：ax + y + z = a − 3，E~2",
+      "question_text": "設a ∈ R，E~1~：ax + y + z = a − 3，E~2~：x + ay + z = − 2，E~3~：x + y + az = − 2，若E~1~，E~2~，E~3~兩兩相交於一直線，而且三交線互相平行，則a =＿＿＿＿＿＿。",
+      "answer_text": "$-2$",
+      "explanation_text": "【解析】若三平面兩兩相交於一直線，且三交線互相平行 則△ = 0，且△~x~，△~y~，△~z~中至少有一個不為0 令△ =$\\left| \\begin{matrix} a & 1 & 1 \\ 1 & a & 1 \\ 1 & 1 & a \\end{matrix} \\right| = a^{3} - 3a + 2 = (a - 1)^{2}(a + 2) = 0$ ∴ a = 1或 − 2 又△~x~ =$\\left| \\begin{matrix} a - 3 & 1 & 1 \\ - 2 & a & 1 \\ - 2 & 1 & a \\end{matrix} \\right| = a^{3} - 3a^{2} + 3a - 1 = (a - 1)^{3}$ △~y~ =\n[圖:program-db/assets/question-media/s4-4-1/image12.png] △~z~ =$\\left| \\begin{matrix} a & 1 & a - 3 \\ 1 & a & - 2 \\ 1 & 1 & - 2 \\end{matrix} \\right| = - 3a^{2} + 6a - 3 = - 3(a - 1)^{2}$\n①當a = 1時，△ = 0，但△~x~ = △~y~ = △~z~ = 0，故不合\n②當a = − 2時，△ = 0且△~x~ ≠ 0，△~y~ ≠ 0，△~z~ ≠ 0，故a = − 2",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 22,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0023",
+      "title": "範例6：已知三相異平面x + 2y + 3z = kx，x + 2y + 3",
+      "question_text": "已知三相異平面x + 2y + 3z = kx，x + 2y + 3z = ky，x + 2y + 3z = kz交於一線，則k = ＿＿＿＿＿＿。",
+      "answer_text": "$6$",
+      "explanation_text": "【解析】 原式 ⇒ { (1 - k)x + 2y + 3z = 0； x + (2 - k)y + 3z = 0； x + 2y + (3 - k)z = 0 }交於一直線 ⇒\n[圖:program-db/assets/question-media/s4-4-1/image13.png] = 0\n⇒ (6 − k)$\\left| \\begin{matrix} 1 & 2 & 3 \\ 1 & 2 - k & 3 \\ 1 & 2 & 3 - k \\end{matrix} \\right|$= 0 ⇒ (6 − k)$\\left| \\begin{matrix} 1 & 2 & 3 \\ 0 & - k & 0 \\ 0 & 0 & - k \\end{matrix} \\right|$= 0 ⇒ (6 − k)k^2^ = 0 得k = 6或k = 0（不合，因k = 0時，三平面重合）",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 23,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0024",
+      "title": "隨堂練習：若三平面kx + 5y + z = 0，x − ky − z = −",
+      "question_text": "若三平面kx + 5y + z = 0，x − ky − z = − 2k，2x + ky − z = − 3相交於一直線，則k = ＿＿＿＿＿＿。",
+      "answer_text": "$1$",
+      "explanation_text": "【解析】 △ =$\\left| \\begin{matrix} k & 5 & 1 \\ 1 & - k & - 1 \\ 2 & k & - 1 \\end{matrix} \\right|$= 0 ⇒ 2k^2^ + 3k − 5 = 0 ⇒ k = 1，$\\frac{- 5}{2}$ △~x~ =$\\left| \\begin{matrix} 0 & 5 & 1 \\ - 2k & - k & - 1 \\ - 3 & k & - 1 \\end{matrix} \\right|$= 0 ⇒ 2k^2^ + 13k − 15 = 0 ⇒ k = 1，$\\frac{- 15}{2}$ 三平面相交於一直線 ⇒ △ = △~x~ = △~y~ = △~z~ = 0，故k = 1",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 24,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0025",
+      "title": "範例7：已知三平面E~1~：x + 2y + z = 3，E~2~：2x +",
+      "question_text": "已知三平面E~1~：x + 2y + z = 3，E~2~：2x + 5y − 2z = 5，E~3~：x + 4y − 7z = a，試就實數a之值，討論三平面相交情形，若相交，求三平面的交點坐標（無限多組解時，令z = t）。",
+      "answer_text": "$a=1$時，$x=5-9t$，$y=4t-1$，$z=t$；$a\\neq 1$時無解",
+      "explanation_text": "【解析】 △ =$\\left|{ 1 & 2 & 1； 2 & 5 & - 2； 1 & 4 & - 7 \\end{matrix} \\right $= 0，△~x~ =$\\left \\begin{matrix} 3 & 2 & 1； 5 & 5 & - 2； a & 4 & - 7 \\end{matrix} \\right $= 9 − 9a △~y~ =$\\left \\begin{matrix} 1 & 3 & 1； 2 & 5 & - 2； 1 & a & - 7 \\end{matrix} \\right $= − 4 + 4a，△~z~ =$\\left \\begin{matrix} 1 & 2 & 3； 2 & 5 & 5； 1 & 4 & a \\end{matrix} \\right $= a − 1 (1)當a = 1時，△ = △~x~ = △~y~ = △~z~ = 0 且${ \\begin{array}{r} E_{1} ⥂： x + 2y + z = 3； E_{2} ⥂： 2x + 5y - 2z = 5； E_{3} ⥂： x + 4y - 7z = 1 }表三相異平面相交於一直線L 則L：{ E_{1} ⥂： x + 2y + z = 3； E_{2} ⥂： 2x + 5y - 2z = 5 }，令z = t，得L：{ x = - 9t + 5； y = 4t - 1； z = t }，t∈R\n(2)當a ≠ 1時，△ = 0但△~x~，△~y~，△~z~均不為0 表三平面兩兩相交於一直線，但三交線互相平行",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 25,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0026",
+      "title": "隨堂練習：方程組{ (3 - 2a)x + (2 - a)y + z = a；",
+      "question_text": "方程組{ (3 - 2a)x + (2 - a)y + z = a； (2 - a)x + (2 - a)y + z = 1； x + y + (2 - a)z = 1 }各方程式分別表平面E~1~，E~2~，E~3~，則\n(A)當a = 2時，E~1~，E~2~，E~3~恰交於一點 (B)當a = 0時，方程組有一組解( − 1，$\\frac{4}{3}$，$\\frac{1}{3}$) (C)當a = 1時，E~1~ = E~2~ = E~3~三平面重合 (D)當a = 3時，三平面E~1~，E~2~，E~3~交於一線 (E)當a = 3時，三平面E~1~，E~2~，E~3~兩兩相交於一線，且此三線不共點。",
+      "answer_text": "(A)(B)(C)",
+      "explanation_text": "【解析】 △ =$\\left|{ 3 - 2a & 2 - a & 1； 2 - a & 2 - a & 1； 1 & 1 & 2 - a \\end{matrix} \\right = (1 - a)^{2}(3 - a)$， △~x~ =$\\left \\begin{matrix} a & 2 - a & 1； 1 & 2 - a & 1； 1 & 1 & 2 - a \\end{matrix} \\right $= (a − 1)(1 − a)(3 − a) △~y~ =$\\left \\begin{matrix} 3 - 2a & a & 1； 2 - a & 1 & 1； 1 & 1 & 2 - a \\end{matrix} \\right $= (1 − a)^2^(4 − a)， △~z~ =$\\left \\begin{matrix} 3 - 2a & 2 - a & a； 2 - a & 2 - a & 1； 1 & 1 & 1 \\end{matrix} \\right = (1 - a)^{2}$ (A)當a = 2時，△ ≠ 0 ⇒ 三平面恰交一點 (B)當a = 0時，△ ≠ 0 ⇒ 方程組恰有一組，其解為 x =$\\frac{\\bigtriangleup_{x}}{\\bigtriangleup} = \\frac{- 3}{3} = - 1$，y =$\\frac{\\bigtriangleup_{y}}{\\bigtriangleup}$=$\\frac{4}{3}$，z =$\\frac{\\bigtriangleup_{z}}{\\bigtriangleup}$=$\\frac{1}{3}$ (C)當a = 1時 ⇒ △ = 0，△~x~ = △~y~ = △~z~ = 0方程組表同一平面x + y + z = 1 即E~1~ = E~2~ = E~3~ (D)當a = 3時，方程組為${ \\begin{matrix} - 3x - y + z = 3…… E_{1}； - x - y + z = 1…… E_{2}； x + y - z = 1…… E_{3} }\n∴ E~1~\n[圖:program-db/assets/question-media/s4-4-1/image14.png] E~2~ // E~3~，即三平面中E~2~ // E~3~且與E~1~相交\n∴ (D)(E)均錯誤，故應選(A)(B)(C)",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 26,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0027",
+      "title": "範例8：試就實數k之值，討論空間三平面E~1~：kx + y + z + (",
+      "question_text": "試就實數k之值，討論空間三平面E~1~：kx + y + z + (3 − k) = 0，E~2~：x + ky + z + 2 = 0，E~3~：x + y + kz + 2 = 0相交的情形。",
+      "answer_text": "$k=1$時無限多組解，且$x+y+z=-2$；$k=-2$時無解；其餘$k$值時唯一解$\\left(\\frac{k-1}{k+2},-\\frac{3}{k+2},-\\frac{3}{k+2}\\right)$",
+      "explanation_text": "【解析】 △ =$\\left| \\begin{matrix} k & 1 & 1 \\ 1 & k & 1 \\ 1 & 1 & k \\end{matrix} \\right|$=$\\left| \\begin{matrix} k + 2 & 1 & 1 \\ k + 2 & k & 1 \\ k + 2 & 1 & k \\end{matrix} \\right| = (k + 2)\\left| \\begin{matrix} 1 & 1 & 1 \\ 1 & k & 1 \\ 1 & 1 & k \\end{matrix} \\right|$= (k + 2)(k − 1)^2^\n(1)當k ≠ − 2，1時，三平面恰交一點\n(2)當k = 1時 ⇒\n[圖:program-db/assets/question-media/s4-4-1/image15.png] ∴ 三平面重合\n(3)當k = − 2時 ⇒\n[圖:program-db/assets/question-media/s4-4-1/image16.png]\n[圖:program-db/assets/question-media/s4-4-1/image17.png]\n① − ②得 − 3x + 3y + 3 = 0......④；\n② × 2 + ③得3x − 3y + 6 = 0......⑤\n④ + ⑤得9 = 0 ⇒ 方程組無解 因為三平面均不平行 ∴ 三平面兩兩相交於一線且三線不共點。",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 27,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0028",
+      "title": "隨堂練習：試由k之值，討論三平面相交的情形，並求其解集合。 E~1~：kx −",
+      "question_text": "試由k之值，討論三平面相交的情形，並求其解集合。\nE~1~：kx − 3y − 4z = 6，E~2~：x − ky − 3z = 4，E~3~：x − y − z = k。",
+      "answer_text": "$k=2$時，$x=-t$，$y=-2t-2$，$z=t$；$k=5$時無解；其餘$k$值時唯一解$\\left(\\frac{7-4k}{k-5},\\frac{3k-2}{k-5},\\frac{-k^2-2k+9}{k-5}\\right)$",
+      "explanation_text": "【解析】△ =$\\left|{ k & - 3 & - 4； 1 & - k & - 3； 1 & - 1 & - 1 \\end{matrix} \\right $= (k − 2)(k − 5)，△~x~ =$\\left \\begin{matrix} 6 & - 3 & - 4； 4 & - k & - 3； k & - 1 & - 1 \\end{matrix} \\right $= − (k − 2)(4k − 7) △~y~ =$\\left \\begin{matrix} k & 6 & - 4； 1 & 4 & - 3； 1 & k & - 1 \\end{matrix} \\right $= (k − 2)(3k − 2)，△~z~ =$\\left \\begin{matrix} k & - 3 & 6； 1 & - k & 4； 1 & - 1 & k \\end{matrix} \\right $= − (k − 2)(k^2^ + 2k − 9) (1)當k = 2時，△ = △~x~ = △~y~ = △~z~ = 0且E~1~，E~2~，E~3~兩兩互不平行 故圖形表三相異平面交於一直線L：${ \\begin{array}{r} E_{1}： 2x - 3y - 4z = 6； E_{2}： x - 2y - 3z = 4 }，則L：{ x = - t； y = - 2t - 2； z = t }，t∈R\n(2)當k = 5時，△ = 0但△~x~，△~y~，△~z~均不為0，無解，表三平面兩兩交於一直線，但三交線互相平行\n(3)當k ≠ 2且k ≠ 5時，恰有一組解，圖形表三平面交於一點 其解為($\\frac{\\bigtriangleup_{x}}{\\bigtriangleup}$,$\\frac{\\bigtriangleup_{y}}{\\bigtriangleup}$,$\\frac{\\bigtriangleup_{z}}{\\bigtriangleup}$)\n($\\frac{- (k - 5)}{4k - 7}$,$\\frac{k - 5}{3k - 2}$,$\\frac{- (k - 5)}{k^{2} + 2k - 9}$)",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 28,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0029",
+      "title": "隨堂練習：試就實數k之值討論方程組{ x + 2y + 3z = 1 + kx",
+      "question_text": "試就實數k之值討論方程組{ x + 2y + 3z = 1 + kx； x + 2y + 3z = 1 + ky； x + 2y + 3z = 1 + kz }之解。",
+      "answer_text": "$k=0$時無限多組解；$k=6$時無解；其餘$k$值時唯一解$\\left(\\frac{1}{6-k},\\frac{1}{6-k},\\frac{1}{6-k}\\right)$",
+      "explanation_text": "【解析】 { (1 - k)x + 2y + 3z = 1； x + (2 - k)y + 3z = 1； x + 2y + (3 - k)z = 1 } ⇒ △ = k^2^(6 − k)，△~x~ = k^2^，△~y~ = k^2^，△~z~ = k^2^\n(1)當k ≠ 0且k ≠ 6時 ⇒ △ ≠ 0 ⇒ 有唯一解(x，y，z) =\n($\\frac{1}{6 - k}$，$\\frac{1}{6 - k}$，$\\frac{1}{6 - k}$)\n(2)當k = 0時 ⇒ △ =△~x~ = △~y~ = △~z~ = 0 ⇒ 無限多組解\n[圖:program-db/assets/question-media/s4-4-1/image18.png]，t，s ∈ R\n(3)當k = 6時 ⇒ △ = 0，△~x~ ≠ 0 ⇒ 無解。",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 29,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0030",
+      "title": "範例9：就a之值，討論方程組 的解",
+      "question_text": "就a之值，討論方程組\n[圖:program-db/assets/question-media/s4-4-1/image19.png] 的解。",
+      "answer_text": "$a\\neq 0,-6$時唯一解$\\left(\\frac{a-5}{a(a+6)},\\frac{2a+1}{a(a+6)},\\frac{2a+1}{a(a+6)}\\right)$；$a=0$或$-6$時無解",
+      "explanation_text": "【解析】當a ≠ 2，− 3時，方程組恰有一組解(1，$\\frac{1}{a + 3}$，$\\frac{1}{a + 3}$)。當a = 2時，方程組有無限多組解(5t，− 4t + 1，t)，t ∈ R。當a = − 3時，原方程組無解。\n【詳解】(1)△ =$\\left|{ 1 & 1 & - 1； 2 & 3 & a； 1 & a & 3 \\end{matrix} \\right = - a^{2} - a + 6 = - (a - 2)(a + 3)$ △~x~ = − (a − 2)(a + 3)，△~y~ = − (a − 2)，△~z~ = − (a − 2) (2)當△ ≠ 0時，a ≠ 2，− 3，則三平面共點，而方程組恰有一組解(1，$\\frac{1}{a + 3}$，$\\frac{1}{a + 3}$) 當a = 2時，△ = 0，△~x~ = △~y~ = △~z~ = 0，則${ \\begin{matrix} x + y - z = 1； 2x + 3y + 2z = 3； x + 2y + 3z = 2 }交於一直線L：$\\frac{x}{5} = \\frac{y - 1}{- 4} = \\frac{z}{1}$\n∴ 原方程組有無限多組解(5t，− 4t + 1，t)，t ∈ R 當a = − 3時，△ = 0，△~x~ = 0，△~y~ ≠ 0，△~z~ ≠ 0 ∴ 原方程組無解。",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 30,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0031",
+      "title": "隨堂練習：試就a值討論方程組{ (a + 2)x + y + z = 0； x",
+      "question_text": "試就a值討論方程組{ (a + 2)x + y + z = 0； x + ay + z = 0； x + y + az = 0 }的解，並說明其幾何意義。",
+      "answer_text": "$a\\neq -3,0,1$時唯一解為$(0,0,0)$；$a=-3$時$x=2t$，$y=t$，$z=t$；$a=0$時$x=-t$，$y=t$，$z=t$；$a=1$時$x=0$，$y=-t$，$z=t$",
+      "explanation_text": "【解析】{ (a + 2)x + y + z = 0； x + ay + z = 0； x + y + az = 0 }為齊次方程組 △ =$\\left|{ a + 2 & 1 & 1； 1 & a & 1； 1 & 1 & a \\end{matrix} \\right = a^{2}(a + 2) + 1 + 1 - (a + 2) - a - a$ = a^3^ + 2a^2^ − 3a = a(a − 1)(a + 3) (1) a ≠ 0，a ≠ 1，a ≠ 3 ⇔ △ ≠ 0恰有一組解(0,0,0)，三平面交於原點 (2) a = 0 ⇒ 原式${ \\begin{matrix} 2x + y + z = 0； x + z = 0； x + y = 0 } ⇒ x = − y = − z 其解為x = t，y = − t，z = − t（t ∈ R）表三平面相異且交於一線\n(3) a = 1 ⇒ 原式{ 3x + y + z = 0； x + y + z = 0； x + y + z = 0 } ⇒ { 3x + y + z = 0； x + y + z = 0 }[圖:program-db/assets/question-media/s4-4-1/image20.png]\n① − ②得2x = 0，y + z = 0，其解為x = 0，y = t，z = − t（t ∈ R） 表二，三兩平面重合且與第一平面交於一線\n(4) a = − 3 ⇒ 原式{ - x + y + z = 0； x - 3y + z = 0； x + y - 3z = 0 }[圖:program-db/assets/question-media/s4-4-1/image21.png]\n① + ②得 − 2y + 2z = 0 ⇒ y = z；① + ③得2y − 2z = 0 ⇒ y = z 令y = z = t代入①得x = 2t，其解為x = 2t，y = t，z = t（t ∈ R） 表三平面相異且交於一線。",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 31,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0032",
+      "title": "隨堂練習：若四平面E~1~：3x + 5y − z = − 1，E~2~：x ",
+      "question_text": "若四平面E~1~：3x + 5y − z = − 1，E~2~：x − y + 4z = 11，E~3~：x + 7y − 9z = − 23，E~4~：2x + 6y − 5z = a交於一線，求實數a的值及交線方程式。",
+      "answer_text": "$a=-12$；交線$L:\\ x=2+19t,\\ y=-1-13t,\\ z=2-8t$",
+      "explanation_text": "【解析】 四平面\n[圖:program-db/assets/question-media/s4-4-1/image22.png] 交於一線 先確定E~1~，E~2~，E~3~交於一線，令其交線在E~4~上，求a\n(1) E~1~，E~2~，E~3~中，△ =$\\left|{ 3 & 5 & - 1； 1 & - 1 & 4； 1 & 7 & - 9 \\end{matrix} \\right = 27 - 7 + 20 - 84 + 45 - 1 = 0$ ① − ② × 3得8y − 13z = − 34；③ − ②得8y − 13z = − 34，知①，②，③交於一線L 取y = − 1，z = 2代入①得x = 2 ⇒ 交線L上一點(2，−1，2) 由①，②得L之方向向量$\\overset{⃑}{v}$= (3,5,− 1) × (1,− 1,4) = (19,− 13,− 8) ∴ L之方程式為${ \\begin{array}{r} x = 2 + 19t； y = - 1 - 13t； z = 2 - 8t }，t∈R\n(2)將L代入④得2(2 + 19t) + 6(− 1 − 13t) − 5(2 − 8t) = a 4 + 38t − 6 − 78t − 10 + 40t = a ∴ a = − 12",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題2：利用克拉瑪公式解三元一次方程組",
+      "source_order": 32,
+      "tags": [
+        "s4-4-1",
+        "section:主題2：利用克拉瑪公式解三元一次方程組",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0033",
+      "title": "範例1：設$A = \\lbrack a_{ij}\\rbrack_{2 × 3",
+      "question_text": "設$A = \\lbrack a_{ij}\\rbrack_{2 × 3}$，其中$a_{ij} \\in \\{ 0, 2, 4\\}$，試求矩陣$A$最多有幾種？",
+      "answer_text": "$729$種",
+      "explanation_text": "【解析】 $A = \\begin{bmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\end{bmatrix}$，每個元素$a_{11}, a_{12}, a_{13}, a_{21}, a_{22}, a_{23}$， 均有3種不同選法，故可以重複的排列得$3^{6} = 729$（種）.",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 33,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0034",
+      "title": "範例2：設矩陣A的$(i, j)$元$a_{ij}$定義為$a_{ij} =",
+      "question_text": "設矩陣A的$(i, j)$元$a_{ij}$定義為$a_{ij} = 2i + j - 1$，$i = 1, 2, 3$，$j = 1, 2$，試寫出矩陣A.",
+      "answer_text": "$A=\\begin{bmatrix}2&3\\\\4&5\\\\6&7\\end{bmatrix}$",
+      "explanation_text": "【解析】$a_{11} = 2 × 1 + 1 - 1 = 2$, $a_{12} = 2 × 1 + 2 - 1 = 3$, $a_{21} = 2 × 2 + 1 - 1 = 4$, $a_{22} = 2 × 2 + 2 - 1 = 5$, $a_{31} = 2 × 3 + 1 - 1 = 6$, $a_{32} = 2 × 3 + 2 - 1 = 7$, 則$A = \\lbrack a_{ij}\\rbrack = \\begin{bmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \\ a_{31} & a_{32} \\end{bmatrix} = \\begin{bmatrix} 2 & 3 \\ 4 & 5 \\ 6 & 7 \\end{bmatrix}$",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 34,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0035",
+      "title": "隨堂練習：設$A = \\lbrack a_{ij}\\rbrack_{3 × 3",
+      "question_text": "設$A = \\lbrack a_{ij}\\rbrack_{3 × 3}$，其中$a_{ij} = { 1, ⥂ i = j； i + j + 1, i > j； j - i - 1, i < j }，試求$A$及$A$的第$(2, 3)$元.",
+      "answer_text": "$A=\\begin{bmatrix}1&0&1\\\\4&1&0\\\\5&6&1\\end{bmatrix}$，$a_{23}=0$",
+      "explanation_text": "【解析】\n(1)$A = \\begin{bmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \\end{bmatrix}$ $= \\begin{bmatrix} 1 & 2 - 1 - 1 & 3 - 1 - 1 \\ 2 + 1 + 1 & 1 & 3 - 2 - 1 \\ 3 + 1 + 1 & 3 + 2 + 1 & 1 \\end{bmatrix}$ $= \\begin{bmatrix} 1 & 0 & 1 \\ 4 & 1 & 0 \\ 5 & 6 & 1 \\end{bmatrix}$.\n(2)$A$的第$(2, 3)$元，即$a_{23} = 0$.",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 35,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0036",
+      "title": "範例3：將$1, 2, ·s, 100$等100個正整數，依下列方式排成一1",
+      "question_text": "將$1, 2, ·s, 100$等100個正整數，依下列方式排成一10階方陣﹕ $\\lbrack a_{ij}\\rbrack_{10 × 10} =$\n[圖:program-db/assets/question-media/s4-4-1/image28.png] 試求24與75的所在位置.",
+      "answer_text": "$a_{53}=24$，$a_{49}=75$",
+      "explanation_text": "【解析】依題意知， $a_{11} = 1$，$a_{21} = 2$，$a_{31} = 4$，$a_{41} = 7$，$a_{51} = 11$，$a_{61} = 16$，$a_{71} = 22$，$a_{81} = 29$，$a_{91} = 37$，$a_{10,1} = 46$, 因此，$a_{62} = 23$，$a_{53} = 24$, 又知，$a_{10,1} = 46$，$a_{10,2} = 56$，$a_{10,3} = 65$，$a_{10,4} = 73$，因此，$a_{95} = 74$，$a_{86} = 75$.",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 36,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0037",
+      "title": "隨堂練習：將$1, 2, ·s, 100$等100個正整數，依下列方式排成一個",
+      "question_text": "將$1, 2, ·s, 100$等100個正整數，依下列方式排成一個10階方陣：\n$\\begin{bmatrix} 1 & 4 & 9 & 16 & ·s & 100 \\ 2 & 3 & 8 & 15 & ·s & ·s \\ 5 & 6 & 7 & 14 & ·s & ·s \\ 10 & 11 & 12 & 13 & ·s & \\vdots \\ \\vdots & ·s & ·s & ·s & ·s & \\vdots \\ 82 & ·s & ·s & ·s & ·s & 91 \\end{bmatrix}$，試求$a_{47}$.",
+      "answer_text": "$46$",
+      "explanation_text": "【解析】由$a_{11}$，$a_{12}$，$a_{13}$，...，推得$a_{1j} = j^{2}$, 因$a_{17} = 7^{2} = 49$，推得$a_{27} = 48$，$a_{37} = 47$，$a_{47} = 46$.",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 37,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0038",
+      "title": "範例4：A = $\\lbrack a_{ij}\\rbrack_{3 × 3}",
+      "question_text": "A = $\\lbrack a_{ij}\\rbrack_{3 × 3}$滿足$a_{ij} = { 0,i = j； 2,i > j； 3,i < j }﹐則A的所有元素和為 (1)10 (2)18 (3)16 (4)15﹒",
+      "answer_text": "$(4)$",
+      "explanation_text": "【解析】 A = $\\begin{bmatrix} 0 & 3 & 3 \\ 2 & 0 & 3 \\ 2 & 2 & 0 \\end{bmatrix}$，則A之所有元素和為15﹐故選(4)﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 38,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0039",
+      "title": "隨堂練習：設$A = \\lbrack a_{ij}\\rbrack$為一個n階方",
+      "question_text": "設$A = \\lbrack a_{ij}\\rbrack$為一個n階方陣，若$a_{ij} = { i\\quad,若i ≥ j； 0\\quad,若i < j }，求矩陣A中所有的$a_{ij}$之和.",
+      "answer_text": "$\\frac{n(n+1)(2n+1)}{6}$",
+      "explanation_text": "【解析】 依題意得$A = \\begin{bmatrix} 1 & 0 & 0 & ·s & ·s & 0 \\ 2 & 2 & 0 & ·s & ·s & 0 \\ 3 & 3 & 3 & 0 & ·s & 0 \\ \\vdots & ·s & ·s & ·s & ·s & \\vdots \\ \\vdots & ·s & ·s & ·s & ·s & \\vdots \\ n & n & ·s & ·s & n & n \\end{bmatrix}$, 則$\\sum_{\\begin{array}{r} i = 1 \\ j = 1 \\end{array}}^{n}{a_{ij} = 1 + (2 + 2) + (3 + 3 + 3) + ·s + (n + ·s + n)}$ $$= 1^{2} + 2^{2} + 3^{2} + ·s + n^{2} = \\frac{n(n + 1)(2n + 1)}{6}$$",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 39,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0040",
+      "title": "範例5：寫出方程組{ 2x + 2y - z = - 1； 2x - 4y ",
+      "question_text": "寫出方程組{ 2x + 2y - z = - 1； 2x - 4y - 9z = - 5； x + 2y - z = 2 }的(1)係數矩陣﹒ (2)增廣矩陣﹒ (3)並利用矩陣求其解﹒",
+      "answer_text": "(1)$\\begin{bmatrix}2&2&-1\\\\2&-4&-9\\\\1&2&-1\\end{bmatrix}$；(2)$\\left[\\begin{array}{ccc|c}2&2&-1&-1\\\\2&-4&-9&-5\\\\1&2&-1&2\\end{array}\\right]$；(3)$(-3,2,-1)$",
+      "explanation_text": "【解析】(1)係數矩陣$\\begin{bmatrix} 2 & 2 & - 1 \\ 2 & - 4 & - 9 \\ 1 & 2 & - 1 \\end{bmatrix}$﹒\n(2)增廣矩陣\n[圖:program-db/assets/question-media/s4-4-1/image29.png]﹒\n(3)\n[圖:program-db/assets/question-media/s4-4-1/image30.png] →\n[圖:program-db/assets/question-media/s4-4-1/image31.png] →[圖:program-db/assets/question-media/s4-4-1/image32.png]\n∴{ x = - 3； 2y - z = 5； - 11z = 11 }→{ x = - 3； y = 2； z = - 1 }﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 40,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0041",
+      "title": "隨堂練習：寫出方程組{ 2x + 2y - z = - 1； 2x - 4y ",
+      "question_text": "寫出方程組{ 2x + 2y - z = - 1； 2x - 4y - 9z = - 5； x + 2y - z = 2 }的(1)係數矩陣﹒ (2)增廣矩陣﹒\n(3)並利用矩陣求其解﹒",
+      "answer_text": "(1)$\\begin{bmatrix}2&2&-1\\\\2&-4&-9\\\\1&2&-1\\end{bmatrix}$；(2)$\\left[\\begin{array}{ccc|c}2&2&-1&-1\\\\2&-4&-9&-5\\\\1&2&-1&2\\end{array}\\right]$；(3)$(-3,2,-1)$",
+      "explanation_text": "【解析】(1)係數矩陣$\\begin{bmatrix} 2 & 2 & - 1 \\ 2 & - 4 & - 9 \\ 1 & 2 & - 1 \\end{bmatrix}$﹒\n(2)增廣矩陣\n[圖:program-db/assets/question-media/s4-4-1/image33.png]﹒\n(3)\n[圖:program-db/assets/question-media/s4-4-1/image34.png] →\n[圖:program-db/assets/question-media/s4-4-1/image35.png] →[圖:program-db/assets/question-media/s4-4-1/image36.png]\n∴{ x = - 3； 2y - z = 5； - 11z = 11 }→{ x = - 3； y = 2； z = - 1 }﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 41,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0042",
+      "title": "範例6：試利用矩陣的列運算解方程組{ 3x - 2y + z = 11； 2",
+      "question_text": "試利用矩陣的列運算解方程組{ 3x - 2y + z = 11； 2x + y + 3z = - 2； 4x - 3y + 2z = 15 }﹒",
+      "answer_text": "$(2,-3,-1)$",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image37.png]\n[圖:program-db/assets/question-media/s4-4-1/image38.png]",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 42,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0043",
+      "title": "隨堂練習：試以矩陣列運算求{ x + 8y + 3z = - 14； 2x +",
+      "question_text": "試以矩陣列運算求{ x + 8y + 3z = - 14； 2x + 5y + 2z = - 5； 3x - 4y - 4z = - 6 }的解﹒\n隨堂練習.",
+      "answer_text": "$(2,-5,8)$",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image39.png]\n[圖:program-db/assets/question-media/s4-4-1/image40.png]\n[圖:program-db/assets/question-media/s4-4-1/image41.png]\n∴x = 2﹐y = − 5﹐z = 8﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 43,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0044",
+      "title": "範例7：已知矩陣 經過列運算後﹐得 ﹐求a﹐b的值﹒",
+      "question_text": "已知矩陣\n[圖:program-db/assets/question-media/s4-4-1/image42.png] 經過列運算後﹐得\n[圖:program-db/assets/question-media/s4-4-1/image43.png] ﹐求a﹐b的值﹒",
+      "answer_text": "$a=7$，$b=3$",
+      "explanation_text": "【解析】因為\n[圖:program-db/assets/question-media/s4-4-1/image44.png]\n[圖:program-db/assets/question-media/s4-4-1/image45.png]",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 44,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0045",
+      "title": "隨堂練習：設矩陣 經過矩陣列運算得 ﹐ 則a + b + c = (1)1 (",
+      "question_text": "設矩陣\n[圖:program-db/assets/question-media/s4-4-1/image46.png] 經過矩陣列運算得\n[圖:program-db/assets/question-media/s4-4-1/image47.png] ﹐ 則a + b + c = (1)1 (2)2 (3)3 (4)4 (5)5﹒",
+      "answer_text": "$(3)$",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image48.png]⇒{ x = 3； y = 2； z = 1 }﹐ 代入{ ax + 2y + z = 8； 2x + y + bz = 7； 3x - 5y + 4z = c }⇒{ a = 1； b = - 1； c = 3 }﹐得a + b + c = 3﹐故選(3)﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 45,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0046",
+      "title": "範例8：設 經列運算簡化成為，則數對(α，β，γ)為＿＿＿＿＿＿",
+      "question_text": "設\n[圖:program-db/assets/question-media/s4-4-1/image49.png] 經列運算簡化成為\n[圖:program-db/assets/question-media/s4-4-1/image50.png]，則數對(α，β，γ)為＿＿＿＿＿＿。",
+      "answer_text": "$(\\alpha,\\beta,\\gamma)=(2,-2,3)$",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image51.png]⇒ [圖:program-db/assets/question-media/s4-4-1/image52.png]\n⇒\n[圖:program-db/assets/question-media/s4-4-1/image53.png]\n⇒ [圖:program-db/assets/question-media/s4-4-1/image54.png]\n⇒\n[圖:program-db/assets/question-media/s4-4-1/image55.png]，則數對(α,β,γ) = (2,− 2,3)",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 46,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0047",
+      "title": "隨堂練習：小明使用高斯-喬登消去法，在紙上解三元一次聯立方程式如下：⇒ ⇒ .",
+      "question_text": "小明使用高斯-喬登消去法，在紙上解三元一次聯立方程式如下：⇒\n[圖:program-db/assets/question-media/s4-4-1/image56.png]\n⇒ ...\n⇒\n[圖:program-db/assets/question-media/s4-4-1/image57.png]，數字a，b，c不慎汙損，請幫他找回(a，b，c)為＿＿＿＿＿＿。",
+      "answer_text": "$(a,b,c)=(-1,25,10)$",
+      "explanation_text": "【解析】 由題意可知{ x + 2y + az = 18； - y - 5z = b； 12y + cz = 0 }\n[圖:program-db/assets/question-media/s4-4-1/image58.png] 之解為{ x = 2； y = 5； z = - 6 }......④\n④代入①，2 + 10 − 6a = 18，a = −1；④代入②，− 5 + 30 = b，b = 25\n④代入③，60 − 6c = 0，c = 10 ⇒ (a，b，c) = (−1，25，10)",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 47,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0048",
+      "title": "隨堂練習：若 經過矩陣列運算後，可簡化成矩陣， 求數對(a,b,c) = ＿＿",
+      "question_text": "若\n[圖:program-db/assets/question-media/s4-4-1/image59.png] 經過矩陣列運算後，可簡化成矩陣\n[圖:program-db/assets/question-media/s4-4-1/image60.png]， 求數對(a,b,c) = ＿＿＿＿＿＿。",
+      "answer_text": "$(a,b,c)=(5,7,-8)$",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image61.png] =\n[圖:program-db/assets/question-media/s4-4-1/image62.png] =\n[圖:program-db/assets/question-media/s4-4-1/image63.png] =\n[圖:program-db/assets/question-media/s4-4-1/image64.png] =\n[圖:program-db/assets/question-media/s4-4-1/image65.png] ∴ (a,b,c) = (5,7,− 8)",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 48,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0049",
+      "title": "隨堂練習：矩陣 經高斯消去法化簡之後為， 則(a,b,c) = ＿＿＿＿＿＿",
+      "question_text": "矩陣\n[圖:program-db/assets/question-media/s4-4-1/image66.png] 經高斯消去法化簡之後為\n[圖:program-db/assets/question-media/s4-4-1/image67.png]， 則(a,b,c) = ＿＿＿＿＿＿。",
+      "answer_text": "$(a,b,c)=(13,13,-19)$",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image68.png]⇒\n[圖:program-db/assets/question-media/s4-4-1/image69.png]\n⇒ [圖:program-db/assets/question-media/s4-4-1/image70.png]\n⇒\n[圖:program-db/assets/question-media/s4-4-1/image71.png] ∴ a = 13，b = 13，c = − 19",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 49,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0050",
+      "title": "範例9：{ 3x - 2y + 2z = 16； 2x - y + 4z =",
+      "question_text": "{ 3x - 2y + 2z = 16； 2x - y + 4z = 18； 7x - 3y + 2z = 26 }的增廣矩陣\n[圖:program-db/assets/question-media/s4-4-1/image72.png] 經列運算簡化為矩陣\n[圖:program-db/assets/question-media/s4-4-1/image73.png] ﹐ 下列何者不真﹖ (1)α = −2 (2)β = 8 (3)γ = 1 (4)方程組恰一組解 (5)方程組無解﹒",
+      "answer_text": "$(5)$",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image74.png]\n[圖:program-db/assets/question-media/s4-4-1/image75.png]\n∴α = −2﹐β = 8﹐γ = 1﹐故選(5)﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 50,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0051",
+      "title": "隨堂練習：若我們想用高斯消去法解方程組：{ x + 3y - 6z = 23；",
+      "question_text": "若我們想用高斯消去法解方程組：{ x + 3y - 6z = 23； 2x + 4y + z = 5； 3x + y - 4z = 19 }，將方程組的增廣矩陣 $[矩陣]  1 & 3 & - 6 \\\\   2 & 4 & 1 \\\\   3 & 1 & - 4  \\left| \\left. \\ \\begin{array}{r}   23 \\\\   5 \\\\   19   \\end{array} \\right.\\ \\right.$利用矩陣的列運算操作後，可以得到下面的矩陣：$[矩陣]  1 & 3 & - 6 \\\\   0 & - 2 & 13 \\\\   0 & 0 & - 38  \\left| \\left. \\ \\begin{array}{r}   23 \\\\   - 41 \\\\   k   \\end{array} \\right.\\ \\right.$， 則常數k = ＿＿＿＿＿＿。",
+      "answer_text": "$114$",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image76.png]⇒\n[圖:program-db/assets/question-media/s4-4-1/image77.png]\n⇒\n[圖:program-db/assets/question-media/s4-4-1/image78.png]",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 51,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0052",
+      "title": "範例10：方程組{ 3x - 2y = 9a； 4x + y = 5a + 3",
+      "question_text": "方程組{ 3x - 2y = 9a； 4x + y = 5a + 3； 5x + 4y = 4a }恰有一組解，則a之值=＿＿＿＿＿＿，方程組的解(x，y) =＿＿＿＿＿＿。",
+      "answer_text": "$a=2$，$(x,y)=(4,-3)$",
+      "explanation_text": "【解析】將方程組的增廣矩陣作列運算：\n$\\begin{bmatrix} 3 & - 2 & 9a \\ 4 & 1 & 5a + 3 \\ 5 & 4 & 4a \\end{bmatrix}$\n[圖:program-db/assets/question-media/s4-4-1/image79.png] $[矩陣] 3 & - 2 & 9a \\ 1 & 3 & - 4a + 3 \\ 5 & 4 & 4a$\n[圖:program-db/assets/question-media/s4-4-1/image80.png] $\\begin{bmatrix} 0 & - 11 & 21a - 9 \\ 1 & 3 & - 4a + 3 \\ 0 & - 11 & 24a - 15 \\end{bmatrix}$\n[圖:program-db/assets/question-media/s4-4-1/image81.png]$\\begin{bmatrix} 0 & - 11 & 21a - 9 \\ 1 & 0 & \\frac{19a + 6}{11} \\ 0 & 0 & 3a - 6 \\end{bmatrix}$\n∵ 方程組有解 ⇒ 3a − 6 = 0 ⇒ a = 2 此時，矩陣=$\\begin{bmatrix} 0 & - 11 & 33 \\ 1 & 0 & 4 \\ 0 & 0 & 0 \\end{bmatrix}$ ∴ x = 4，y =$\\frac{- 33}{11}$= − 3",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 52,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0053",
+      "title": "範例11：試分別利用高斯消去法及矩陣的列運算解方程組{ x + 3y - z ",
+      "question_text": "試分別利用高斯消去法及矩陣的列運算解方程組{ x + 3y - z = - 2； 3x + 4y + z = 3； 2x - 3y + 2z = 9 }﹒",
+      "answer_text": "$(2,-1,1)$",
+      "explanation_text": "【解析】(1)高斯消去法：$E$：{ x + 3y - z = - 2…… ①； 3x + 4y + z = 3…… ②； 2x - 3y + 2z = 9…… ③ }﹐ 將①乘以$( - 3)$加入②﹐①乘以$( - 2)$加入③﹐得$E_{1}$：{ x + 3y - z = - 2…… ①'； - 5y + 4z = 9…… ②'； - 9y + 4z = 13…… ③' }﹐ 將$②'$乘以$\\frac{3}{5}$加入$①'$﹐$②'$乘以$( - \\frac{9}{5})$加入$③'$﹐得$E_{2}$：{ x + \\frac{7}{5}z = \\frac{17}{5}…… ①''； - 5y + 4z = 9…… ②''； - \\frac{16}{5}z = - \\frac{16}{5}…… ③'' }﹐ 將$③''$乘以$\\frac{7}{16}$加入$①''$﹐$③''$乘以$\\frac{5}{4}$加入$②''$﹐得$E_{3}$：\n[圖:program-db/assets/question-media/s4-4-1/image82.png] ﹐ 故其解為$x = 2$﹐$y = - 1$﹐$z = 1$﹒\n【解析】(2)矩陣的列運算：\n[圖:program-db/assets/question-media/s4-4-1/image83.png]→\n[圖:program-db/assets/question-media/s4-4-1/image84.png] →\n[圖:program-db/assets/question-media/s4-4-1/image85.png]→\n[圖:program-db/assets/question-media/s4-4-1/image86.png]﹐ 故其解為$x = 2$﹐$y = - 1$﹐$z = 1$﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 53,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0054",
+      "title": "隨堂練習：試分別利用高斯消去法及矩陣的列運算解方程組{ x + 2y + 3z",
+      "question_text": "試分別利用高斯消去法及矩陣的列運算解方程組{ x + 2y + 3z = 9； 2x - y + z = 8； 3x + 5y + z = 4 }﹒",
+      "answer_text": "$\\left(\\frac{29}{19},-\\frac{35}{19},\\frac{59}{19}\\right)$",
+      "explanation_text": "【解析】(1)高斯消去法：\n$E$：{ x + 2y + 3z = 9…… ①； 2x - y + z = 8…… ②； 3x + 5y + z = 4…… ③ }﹐ 將①乘以$( - 2)$加入②﹐①乘以$( - 3)$加入③﹐得$E_{1}$：{ x + 2y + 3z = 9…… ①'； - 5y - 5z = - 10…… ②'； - y - 8z = - 23…… ③' }﹐ 將$②'$乘以$\\frac{2}{5}$加入$①'$﹐$②'$乘以$(\\frac{- 1}{5})$加入$③'$﹐得$E_{2}$：{ x + z = 5…… ①''； - 5y - 5z = - 10…… ②''； - 7z = - 21…… ③'' }﹐ 將$③''$乘以$\\frac{1}{7}$加入$①''$﹐$③''$乘以$( - \\frac{5}{7})$加入$②''$﹐得$E_{3}$：{ x = 2； - 5y = 5； - 7z = - 21 }﹐ 故其解為$x = 2$﹐$y = - 1$﹐$z = 3$﹒\n(2)矩陣的列運算：\n[圖:program-db/assets/question-media/s4-4-1/image87.png] →\n[圖:program-db/assets/question-media/s4-4-1/image88.png] →\n[圖:program-db/assets/question-media/s4-4-1/image89.png] → $\\left\\lbrack \\left. \\ \\begin{matrix} 1 & 0 & 0 \\ 0 & - 5 & 0 \\ 0 & 0 & - 7 \\end{matrix} \\right| \\begin{matrix} 2 \\ 5 \\ - 21 \\end{matrix} \\right\\rbrack$﹐ 故其解為$x = 2$﹐$y = - 1$﹐$z = 3$﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-gaussian-elimination-pivot-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 54,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0055",
+      "title": "範例12：試分別利用高斯消去法與矩陣的列運算解方程組{ x - 2y + 3z",
+      "question_text": "試分別利用高斯消去法與矩陣的列運算解方程組{ x - 2y + 3z = 4； 2x + y - 4z = 3； 3x - 4y + 5z = 3 }﹒",
+      "answer_text": "無解",
+      "explanation_text": "【解析】(1)高斯消去法：\n$E$：{ x - 2y + 3z = 4…… ①； 2x + y - 4z = 3…… ②； 3x - 4y + 5z = 3…… ③ }﹐ 將①乘以$( - 2)$加入②﹐①乘以$( - 3)$加入③﹐得$E_{1}$：{ x - 2y + 3z = 4…… ①'； 5y - 10z = - 5…… ②'； 2y - 4z = - 9…… ③' }﹐ 將$②'$乘以$\\frac{2}{5}$加入$①'$﹐$②'$乘以$( - \\frac{2}{5})$加入$③'$﹐得$E_{2}$：{ x - z = 2； 5y - 10z = - 5； 0 = - 7 （不合） }﹐ 故方程組無解﹒\n(2)矩陣的列運算：\n[圖:program-db/assets/question-media/s4-4-1/image90.png] →\n[圖:program-db/assets/question-media/s4-4-1/image91.png] → $\\left\\lbrack \\left. \\ \\begin{matrix} 1 & 0 & - 1 \\ 0 & 5 & - 10 \\ 0 & 0 & 0 \\end{matrix} \\right| \\begin{matrix} 2 \\ - 5 \\ - 7 \\end{matrix} \\right\\rbrack$（不合）﹐ 故方程組無解﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 55,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0056",
+      "title": "隨堂練習：試分別利用高斯消去法及矩陣的列運算解方程組{ x + 2y + z ",
+      "question_text": "試分別利用高斯消去法及矩陣的列運算解方程組{ x + 2y + z = 8； 2x - y - 2z = 9； 3x + y - z = 1 }﹒",
+      "answer_text": "無解",
+      "explanation_text": "【解析】1)高斯消去法：\n$E$：{ x + 2y + z = 8…… ①； 2x - y - 2z = 9…… ②； 3x + y - z = 1…… ③ }﹐ 將①乘以$( - 2)$加入②﹐①乘以$( - 3)$加入③﹐得$E_{1}$：{ x + 2y + z = 8…… ①'； - 5y - 4z = - 7…… ②'； - 5y - 4z = - 23…… ③' }﹐ 將$②'$乘以$\\frac{2}{5}$加入$①'$﹐$②'$乘以$( - 1)$加入$③'$﹐得$E_{2}$：\n[圖:program-db/assets/question-media/s4-4-1/image92.png] ﹐ 故方程組無解﹒\n(2)矩陣的列運算：\n[圖:program-db/assets/question-media/s4-4-1/image93.png] →\n[圖:program-db/assets/question-media/s4-4-1/image94.png] →\n[圖:program-db/assets/question-media/s4-4-1/image95.png]\n（不合）﹐ 故方程組無解﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 56,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0057",
+      "title": "範例13：試分別利用高斯消去法與矩陣的列運算解方程組{ x + y + z =",
+      "question_text": "試分別利用高斯消去法與矩陣的列運算解方程組{ x + y + z = 5； 2x + y - z = 6； 4x + 3y + z = 16 }﹒",
+      "answer_text": "$x=2t+1$，$y=4-3t$，$z=t$",
+      "explanation_text": "【解析】(1)高斯消去法：\n$E$：{ x + y + z = 5…… ①； 2x + y - z = 6…… ②； 4x + 3y + z = 16…… ③ }﹐ 將①乘以$( - 2)$加入②﹐①乘以$( - 4)$加入③﹐得$E_{1}$：{ x + y + z = 5…… ①'； - y - 3z = - 4…… ②'； - y - 3z = - 4…… ③' }﹐ 將$②'$乘以1加入$①'$﹐$②'$乘以$( - 1)$加入$③'$﹐得$E_{2}$：{ x - 2z = 1…… ①''； - y - 3z = - 4…… ②''； 0 = 0 }﹐ 令$z = t$代入$①''$﹐$②''$ 得$x = 2t + 1$﹐$y = 4 - 3t$﹐ 故方程組的解為$x = 2t + 1$﹐$y = 4 - 3t$﹐ $z = t$﹐其中$t$為任意實數﹒\n(2)矩陣的列運算：\n[圖:program-db/assets/question-media/s4-4-1/image96.png] →\n[圖:program-db/assets/question-media/s4-4-1/image97.png] →$\\left\\lbrack \\left. \\ \\begin{matrix} 1 & 0 & - 2 \\ 0 & - 1 & - 3 \\ 0 & 0 & 0 \\end{matrix} \\right| \\begin{matrix} 1 \\ - 4 \\ 0 \\end{matrix} \\right\\rbrack$﹐\n∴ 方程組有無限多解﹒\n令$z = t$代入第一列及第二列﹐ 得$x = 2t + 1$﹐$y = 4 - 3t$﹐ 故方程組的解為$x = 2t + 1$﹐$y = 4 - 3t$﹐$z = t$﹐其中$t$為任意實數﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-parametric-solution-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 57,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0058",
+      "title": "隨堂練習：試分別利用高斯消去法與矩陣的列運算解方程組{ x + y + 3z ",
+      "question_text": "試分別利用高斯消去法與矩陣的列運算解方程組{ x + y + 3z = 3； 2x + y + 4z = 2； 3x + y + 5z = 1 }﹒\n隨堂練習.",
+      "answer_text": "$x=-t-1$，$y=4-2t$，$z=t$",
+      "explanation_text": "【解析】(1)高斯消去法：\n$E$：{ x + y + 3z = 3…… ①； 2x + y + 4z = 2…… ②； 3x + y + 5z = 1…… ③ }﹐ 將①乘以$( - 2)$加入②﹐①乘以$( - 3)$加入③﹐得$E_{1}$：{ x + y + 3z = 3…… ①'； - y - 2z = - 4…… ②'； - 2y - 4z = - 8…… ③' }﹐ 將$②'$乘以1加入$①'$﹐$②'$乘以$( - 2)$加入$③'$﹐得$E_{2}$：{ x + z = - 1…… ①''； - y - 2z = - 4…… ②''； 0 = 0 }﹐ 令$z = t$代入$①''$﹐$②''$ 得$x = - t - 1$﹐$y = - 2t + 4$﹐ 故方程組的解為$x = - t - 1$﹐$y = - 2t + 4$﹐ $z = t$﹐其中$t$為任意實數﹒\n(2)矩陣的列運算：\n[圖:program-db/assets/question-media/s4-4-1/image98.png] →\n[圖:program-db/assets/question-media/s4-4-1/image99.png] →$\\left\\lbrack \\left. \\ \\begin{matrix} 1 & 0 & 1 \\ 0 & - 1 & - 2 \\ 0 & 0 & 0 \\end{matrix} \\right| \\begin{matrix} - 1 \\ - 4 \\ 0 \\end{matrix} \\right\\rbrack$﹐\n∴ 方程組有無限多解﹒\n令$z = t$代入第一列及第二列﹐ 得$x = - t - 1$﹐$y = - 2t + 4$﹐ 故方程組的解為$x = - t - 1$﹐$y = - 2t + 4$﹐$z = t$﹐其中$t$為任意實數﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-parametric-solution-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 58,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0059",
+      "title": "範例14：試利用矩陣的列運算解方程組{ 3x - 2y + z = 13； 2",
+      "question_text": "試利用矩陣的列運算解方程組{ 3x - 2y + z = 13； 2x + y + 3z = - 2； x - 3y - 2z = 5 }﹒",
+      "answer_text": "無解",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image100.png]\n[圖:program-db/assets/question-media/s4-4-1/image101.png] 故無解﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 59,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0060",
+      "title": "範例15：試利用矩陣的列運算解方程組{ 3x - 2y + z = 11； 2",
+      "question_text": "試利用矩陣的列運算解方程組{ 3x - 2y + z = 11； 2x + y + 3z = - 2； x - 3y - 2z = 13 }﹒",
+      "answer_text": "$x=t+5$，$y=t$，$z=-t-4$",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image102.png]\n[圖:program-db/assets/question-media/s4-4-1/image103.png] 即{ 3x - 2y + z = 11； y + z = - 4 }﹐令y = t\n⇒z = − t − 4\n⇒3x = 2y − z + 11 = 2t + t + 4 + 11 = 3t + 15 故解為{ x = t + 5； y = t； z = - t - 4 }﹐$t \\in \\mathbb{R}$﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-parametric-solution-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 60,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0061",
+      "title": "隨堂練習：試利用矩陣的列運算﹐解下列方程組{ 2x + y - z = 5； ",
+      "question_text": "試利用矩陣的列運算﹐解下列方程組{ 2x + y - z = 5； x + 2y + z = 7； 7x + 8y + z = 31 }﹒",
+      "answer_text": "$x=1+t$，$y=3-t$，$z=t$",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image104.png]\n[圖:program-db/assets/question-media/s4-4-1/image105.png] 又y + z = 3﹐∴設z = t﹐y = 3 − t代回x + 2 y + z = 7﹐ 得x = 7 − 2 y − z = 1 + t﹐\n∴解{ x = 1 + t； y = 3 - t； z = t }﹐t為實數﹐\n∴方程組有無限多解﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-parametric-solution-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 61,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0062",
+      "title": "範例16：試決定a值使聯立方程式{ x - y - z = 2； x + z ",
+      "question_text": "試決定a值使聯立方程式{ x - y - z = 2； x + z = 3； 4x - 3y - 2z = a }有解﹐則下列何者正確﹖\n(1)a > 10 (2)a < 5 (3)a > 3 (4)聯立方程式若有解﹐則必為恰有一解\n(5)聯立方程式若有解﹐則有無限多組解﹒",
+      "answer_text": "$(3)(5)",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image106.png] 若方程組有解﹐則a − 9 = 0\n∴a = 9﹐且為無限多組解﹐故選(3)(5)﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 62,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例16"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0063",
+      "title": "隨堂練習：以高斯消去法決定a值使方程組{ x - 2y - 3z = 1； 2",
+      "question_text": "以高斯消去法決定a值使方程組{ x - 2y - 3z = 1； 2x - 2z = - 2； 3x + 2y - z = a } 有解﹐並求其解﹒",
+      "answer_text": "$a=-5$；$x=t-1$，$y=-1-t$，$z=t$",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image107.png]﹐\n∴{ x - z = - 1； y + z = - 1； 0 = a + 5 }﹐方程組有解必須a + 5 = 0﹐即a = − 5﹐ 令z = t﹐則{ x = - 1 + t； y = - 1 - t } 方程組解為x = − 1 + t﹐y = − 1 − t﹐z = t﹐t為實數﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-parametric-solution-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 63,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0064",
+      "title": "隨堂練習：已知$a$為實數﹐若有一方程組（$L$）的增廣矩陣為$\\left\\l",
+      "question_text": "已知$a$為實數﹐若有一方程組（$L$）的增廣矩陣為$\\left\\lbrack \\left. \\ \\begin{matrix} 3 & 1 & 1 \\ 1 & 3 & - 3 \\ 1 & - 1 & 2 \\end{matrix} \\right| \\begin{matrix} a \\ 1 + a \\ 1 - a \\end{matrix} \\right\\rbrack$有解﹐ 試求$a$之值﹒",
+      "answer_text": "$\\frac{3}{2}$",
+      "explanation_text": "【解析】$\\left\\lbrack \\left. \\ \\begin{matrix} 3 & 1 & 1 \\ 1 & 3 & - 3 \\ 1 & - 1 & 2 \\end{matrix} \\right| \\begin{matrix} a \\ 1 + a \\ 1 - a \\end{matrix} \\right\\rbrack$ →\n[圖:program-db/assets/question-media/s4-4-1/image108.png] →$\\left\\lbrack \\left. \\ \\begin{matrix} 1 & - 1 & 2 \\ 0 & 4 & - 5 \\ 0 & 4 & - 5 \\end{matrix} \\right| \\begin{matrix} 1 - a \\ 2a \\ - 3 + 4a \\end{matrix} \\right\\rbrack$﹐\n∵ 方程組（$L$）有解﹐∴ 第二列與第三列成比例﹐ 即$\\frac{4}{4} = \\frac{- 5}{- 5} = \\frac{2a}{- 3 + 4a}$ ⇒ $2a = - 3 + 4a$﹐∴ $a = \\frac{3}{2}$﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 64,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0065",
+      "title": "範例17：已知矩陣$A = \\begin{bmatrix} 1 & 1 & 1",
+      "question_text": "已知矩陣$A = \\begin{bmatrix} 1 & 1 & 1 \\ 1 & 2 & - 1 \\ 3 & 5 & - 1 \\end{bmatrix}$﹐下列敘述何者正確﹖ (1)A為3階方陣\n(2)矩陣A中第3行第2列的元素為5 (3)A為方程組{ x + y + z = 6； x + 2y - z = 2； 3x + 5y - z = d }的係數矩陣\n(4)矩陣A可經由列運算後得到3階單位矩陣$I = \\begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \\end{bmatrix}$\n(5)只有d = 10可使方程組{ x + y + z = 6； x + 2y - z = 2； 3x + 5y - z = d }有解﹒",
+      "answer_text": "$(1)(2)(3)(5)",
+      "explanation_text": "【解析】(2)a~23~ = − 1\n(4)$\\begin{bmatrix} 1 & 1 & 1 \\ 1 & 2 & - 1 \\ 3 & 5 & - 1 \\end{bmatrix} \\rightarrow \\begin{bmatrix} 1 & 1 & 1 \\ 0 & 1 & - 2 \\ 0 & 2 & - 4 \\end{bmatrix} \\rightarrow \\begin{bmatrix} 1 & 1 & 1 \\ 0 & 1 & - 2 \\ 0 & 0 & 0 \\end{bmatrix}$\n(5)由矩陣列運算得\n[圖:program-db/assets/question-media/s4-4-1/image109.png] ﹐\n∵有解﹐∴$\\frac{1}{2} = \\frac{- 2}{- 4} = \\frac{- 4}{d - 18}$⇒ d − 18 = − 8⇒d = 10 故選(1)(3)(5)﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 65,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例17"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0066",
+      "title": "範例17：7.已知聯立方程式{ x - y - z = 3； x + y + ",
+      "question_text": "7.已知聯立方程式{ x - y - z = 3； x + y + 3z = 1； 5x + y + az = b }﹐則下列選項哪些正確﹖\n(1)若a = 7﹐則方程組有無限組多解 (2)若方程組無解﹐則b ≠ 9\n(3)若b = 9﹐則方程組恰有一解 (4)若b = 9﹐則方程組必為無限多組解\n(5)若a ≠ 7﹐則方程組恰有一解﹒",
+      "answer_text": "$(2)(5)",
+      "explanation_text": "【解析】\n[圖:program-db/assets/question-media/s4-4-1/image110.png]\n[圖:program-db/assets/question-media/s4-4-1/image111.png]\n∴若a ≠ 7﹐則恰有一組解 若a = 7﹐b = 9﹐則無限多組解 若a = 7﹐b ≠ 9﹐則無解 故選(2)(5)﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-rank-interpretation-s441",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 66,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:範例17"
+      ]
+    },
+    {
+      "id": "q-s4-4-1-0067",
+      "title": "隨堂練習：設a﹑b為實數﹐下列有關線性方程組{ x + 2y - 3z = 1",
+      "question_text": "設a﹑b為實數﹐下列有關線性方程組{ x + 2y - 3z = 1； x + 3y - 2z = 0； x + ay + bz = - 1 }的敘述哪些是正確 的﹖ (1)若此線性方程組有解﹐則必定恰有一組解 (2)若此線性方程組有解﹐則a − b = 5\n(3)存在不只一組數對(a,b)使得此線性方程組有無限多解\n(4)存在不只一組數對(a,b)使得此線性方程組無解\n(5)若此線性方程組有無限多解﹐則a^3^ + b^3^ = 63﹒",
+      "answer_text": "$(4)(5)",
+      "explanation_text": "【解析】{ x + 2y - 3z = 1； x + 3y - 2z = 0； x + ay + bz = - 1 }﹐解得{ y + z = - 1； (a - 3)y + (b + 2)z = - 1 }﹐\n(1)有解可能為無限多解或恰有一組解\n(2)若恰有一組解﹐則$\\left| \\begin{matrix} 1 & 1 \\ a - 3 & b + 2 \\end{matrix} \\right| ≠ 0 ⇒ a - b ≠ 5$\n(3)若無限多組解﹐則$\\frac{a - 3}{1} = \\frac{b + 2}{1} = \\frac{- 1}{- 1}$⇒ a = 4﹐b = − 1\n(4)若無解﹐則$\\left| \\begin{matrix} 1 & 1 \\ a - 3 & b + 2 \\end{matrix} \\right| = 0$⇒ a − b = 5﹐除a = 4﹐b = − 1外存在不只一組使得方程組無解\n(5)承(3)﹐a^3^ + b^3^ = 4^3^ + ( − 1)^3^ = 63 故選(4)(5)﹒",
+      "chapter_code": "s4-4-1",
+      "formula_id": "senior-linear-system-parametric-solution-s441",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-7轉.docx",
+      "source_section": "主題3：高斯消去法與矩陣的列運算",
+      "source_order": 67,
+      "tags": [
+        "s4-4-1",
+        "section:主題3：高斯消去法與矩陣的列運算",
+        "marker:隨堂練習"
+      ]
+    }
+  ]
+}

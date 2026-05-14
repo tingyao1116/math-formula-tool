@@ -1,0 +1,666 @@
+{
+  "chapter_code": "s3-1-4",
+  "chapter_title": "正餘弦函數的疊合",
+  "questions": [
+    {
+      "id": "q-s3-1-4-0001",
+      "title": "設x為實數，函數f (x) = 5cosax + bsinax",
+      "question_text": "設x為實數，函數f (x) = 5cosax + bsinax + c，其中a，b為正數。若f\n(x)的週期為4π，最大 值為48，最小值為8，試求常數a，b，c之值。",
+      "answer_text": "$a=\\frac{1}{2},\\ b=5\\sqrt{15},\\ c=28$",
+      "explanation_text": "因為f (x) = 5cosax + bsinax + c =$\\sqrt{25 + b^{2}}$\n($\\frac{5}{\\sqrt{25 + b^{2}}}$cosax +$\\frac{b}{\\sqrt{25 + b^{2}}}$sinax) + c =$\\sqrt{25 + b^{2}}$sin(ax + θ)，其中sinθ =$\\frac{5}{\\sqrt{25 + b^{2}}}$，cosθ =$\\frac{b}{\\sqrt{25 + b^{2}}}$ 依題意得${ \\begin{array}{r} \\sqrt{25 + b^{2}} + c = 48 \\ - \\sqrt{25 + b^{2}} + c = 8 \\end{array} \\right.$\n[圖:program-db/assets/question-media/s3-1-4/image4.png] 由① + ②解得c = 28；由① − ②解得$\\sqrt{25 + b^{2}}$= 20 ⇒ b =$\\sqrt{375}$= 5$\\sqrt{15}$ 又y = f (x)週期為4π，故得$\\frac{2\\pi}{a}$= 4π ⇒ a =$\\frac{1}{2}$",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-maxmin-parameter-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 1,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0002",
+      "title": "其中a，b，c為常數，而0 ≤ x ≤ 2π， −$\\frac{",
+      "question_text": "其中a，b，c為常數，而0 ≤ x ≤ 2π， −$\\frac{\\pi}{2}$≤ a，b，c ≤ 2π， 求三元數組(a，b，c)。",
+      "answer_text": "$(2,-\\frac{\\pi}{2},1)$或$(2,\\frac{3\\pi}{2},1)$",
+      "explanation_text": "將點(0，1)，($\\frac{\\pi}{2}$，3)及($\\frac{3\\pi}{2}$，− 1) 代入y = a cos(x + b) + c，可得方程組 ${ \\begin{array}{r} a\\cos b + c = 1\\cdots \\ - a\\sin b + c = 3 \\ a\\sin b + c = - 1 \\end{array} \\right.$[圖:program-db/assets/question-media/s3-1-4/image6.png]\n② + ③得c = 1，再將c = 1代入①及② 得${ \\begin{array}{r} a\\cos b + c = 1 \\ a\\sin b = - 2 \\end{array} \\right.$\n[圖:program-db/assets/question-media/s3-1-4/image7.png] 因為a ≠ 0且 −$\\frac{\\pi}{2}$≤ b ≤ 2π，故知cos b = 0 ∴ b = −$\\frac{\\pi}{2}$，$\\frac{3\\pi}{2}$ 再將b = −$\\frac{\\pi}{2}$及$\\frac{3\\pi}{2}$代入⑤得a = 2， 故三元數組(a，b，c) =\n(2，−$\\frac{\\pi}{2}$，1)，(2，$\\frac{3\\pi}{2}$，1)",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-maxmin-parameter-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 2,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0003",
+      "title": "若函數$f(x) = \\sqrt{3}\\sin 3x - \\co",
+      "question_text": "若函數$f(x) = \\sqrt{3}\\sin 3x - \\cos 3x + 2$﹐則下列哪些選項是正確的﹖ (1) −2 ≤ f (x) ≤ 2\n(2)f (x)在$x = \\frac{2\\pi}{9}$時有最大值 (3)f\n(x)的週期為$\\frac{\\pi}{3}$ (4)f (1) > 2\n(5)y = f (x)的圖形對稱於直線$x = \\frac{5\\pi}{9}$﹒",
+      "answer_text": "(2)(4)(5)",
+      "explanation_text": "$f(x) = \\sqrt{3}\\sin 3x - \\cos 3x + 2 = 2(\\frac{\\sqrt{3}}{2}\\sin 3x - \\frac{1}{2}\\cos 3x) + 2$ $= 2(\\sin 3x\\cos\\frac{\\pi}{6} - \\cos 3x\\sin\\frac{\\pi}{6}) + 2 = 2\\sin(3x - \\frac{\\pi}{6}) + 2$\n(1)╳﹕∵$- 1 \\leq \\sin(3x - \\frac{\\pi}{6}) \\leq 1$ ∴0 ≤ f (x) ≤ 4\n(2)○﹕當$\\sin(3x - \\frac{\\pi}{6}) = 1 = \\sin\\frac{\\pi}{2}$時﹐f\n(x)有最大值$\\Rightarrow 3x - \\frac{\\pi}{6} = \\frac{\\pi}{2} \\Rightarrow x = \\frac{2\\pi}{9}$\n(3)╳﹕週期為$\\frac{2\\pi}{3}$\n(4)○﹕∵3≒3 × 57° = 171° ∴f (1) = 2sin(3 − 30°) + 2≒2sin141° + 2 > 2\n(∵sin141° > 0)\n(5)○﹕$x = \\frac{5\\pi}{9}$代入$f(x) \\Rightarrow 3x - \\frac{\\pi}{6} = \\frac{5\\pi}{3} - \\frac{\\pi}{6} = \\frac{3\\pi}{2}$\n∵對稱軸經過波峰或波谷 故選(2)(4)(5)﹒",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-graph-reading-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 3,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0004",
+      "title": "隨堂練習：其中A為波峰﹐B為波谷且c > 0﹒請問下列何者正確﹖ (1)a",
+      "question_text": "其中A為波峰﹐B為波谷且c > 0﹒請問下列何者正確﹖\n(1)a^2^ + b^2^ = 2 (2)0 < b − a < 1 (3)c = 3\n(4)f (x) = f (x + 2π )恆成立\n(5)由y = 2sin(cx)向左平移$\\frac{\\pi}{3}$可得y = f (x)的圖形﹒",
+      "answer_text": "(2)(3)(4)",
+      "explanation_text": "f (x) = asin(cx) + bcos(cx) =$\\sqrt{a^{2} + b^{2}}\\sin(cx + \\varphi)$﹐其中﹐$\\cos\\varphi = \\frac{a}{\\sqrt{a^{2} + b^{2}}}$﹐$\\sin\\varphi = \\frac{b}{\\sqrt{a^{2} + b^{2}}}$\n(1)╳﹕由圖中資料﹐$\\sqrt{a^{2} + b^{2}} = 2 \\Rightarrow a^{2} + b^{2} = 4$\n(2)○﹕f (x) = 2sin(3x + φ)﹐令$3 \\times \\frac{\\pi}{18} + \\varphi = \\frac{\\pi}{2}$﹐得$\\varphi = \\frac{\\pi}{3}$ $\\sin\\varphi - \\cos\\varphi = \\frac{b - a}{\\sqrt{a^{2} + b^{2}}}$﹐又$0 < \\sin\\frac{\\pi}{3} - \\cos\\frac{\\pi}{3} < 1$ ∴0 < b − a < 1\n(3)○﹕週期$= 2(\\frac{7}{18}\\pi - \\frac{\\pi}{18}) = \\frac{2\\pi}{3}$ ∴c = 3\n(4)○﹕$f(x + 2\\pi) = f(x + \\frac{2\\pi}{3} \\times 3) = f(x)$\n(5)╳﹕$y = 2\\sin(3x + \\frac{\\pi}{3}) = 2\\sin(3(x + \\frac{\\pi}{9}))$ ∴須向左移$\\frac{\\pi}{9}$ 故選(2)(3)(4)﹒",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-graph-reading-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 4,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0005",
+      "title": "設0 ≤ x ≤ π，f (x) = 3 + cosx − co",
+      "question_text": "設0 ≤ x ≤ π，f (x) = 3 + cosx − cos\n($\\frac{\\pi}{3} - x$)，當x = α 時有最大值M，當x = β 時有最小值m， 則 α + β =＿＿＿＿。 M + m =＿＿＿＿。",
+      "answer_text": "$\\alpha+\\beta=\\frac{2\\pi}{3}$，$M+m=\\frac{11}{2}$",
+      "explanation_text": "(1) f (x) = 3 + cosx − cos ($\\frac{\\pi}{3}$− x) = 3 + cosx − [cos$\\frac{\\pi}{3}$cosx + sin$\\frac{\\pi}{3}$sinx] = 3 + ($\\frac{1}{2}$cosx −$\\frac{\\sqrt{3}}{2}$sinx) = 3 + cos(x +$\\frac{\\pi}{3}$) 0 ≤ x ≤ π，$\\frac{\\pi}{3}$≤ x +$\\frac{\\pi}{3}$≤$\\frac{4\\pi}{3}$ ⇒ − 1 ≤ cos(x +$\\frac{\\pi}{3}$) ≤$\\frac{1}{2}$ ${ \\begin{array}{r} \\cos(x + \\frac{\\pi}{3}) = \\frac{1}{2}， 即 x = a = 0 時，有最大值 M = \\frac{7}{2} \\ \\cos(x + \\frac{\\pi}{3}) = - 1， 即 x = \\beta = \\frac{2\\pi}{3} 時，有最小值 m = 2 \\end{array} \\right.$ ∴ ${ \\begin{array}{r} \\alpha + \\beta = \\frac{2\\pi}{3} \\ M + m = \\frac{11}{2} \\end{array} \\right.$",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-interval-extrema-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 5,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0006",
+      "title": "隨堂練習：設0 ≤ x ≤ π，若函數f (x) = 4sinx − 2$",
+      "question_text": "設0 ≤ x ≤ π，若函數f (x) = 4sinx − 2$\\sqrt{3}$sin(x −$\\frac{\\pi}{6}$)在x = x~1~時有最大值M；在x = x~2~ 時有最小值為m，則數對(x~1~，M) = ＿＿＿＿，(x~2~，m) = ＿＿＿＿。",
+      "answer_text": "$(x_1,M)=\\left(\\frac{\\pi}{6},2\\right)$，$(x_2,m)=(\\pi,-\\sqrt3)$",
+      "explanation_text": "f (x) = 4sinx − 2$\\sqrt{3}$sin(x −$\\frac{\\pi}{6}$) = 4sinx − 2$\\sqrt{3}$ (sinx cos$\\frac{\\pi}{6}$ − cosx sin$\\frac{\\pi}{6}$) = 4sinx − 2$\\sqrt{3}$ ($\\frac{\\sqrt{3}}{2}$sinx −$\\frac{1}{2}$cosx) = sinx +$\\sqrt{3}$cosx = 2($\\frac{1}{2}$sinx +$\\frac{\\sqrt{3}}{2}$cosx) = 2sin(x +$\\frac{\\pi}{3}$) 因為0 ≤ x ≤ π，所以$\\frac{\\pi}{3}$≤ x +$\\frac{\\pi}{3}$≤$\\frac{4\\pi}{3}$。因此\n①當x +$\\frac{\\pi}{3}$=$\\frac{\\pi}{2}$，即x =$\\frac{\\pi}{6}$時，f\n(x)最大值M = 2\n②當x +$\\frac{\\pi}{3}$=$\\frac{4\\pi}{3}$，即x = π時，f\n(x)最小值m = −$\\sqrt{3}$",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-maxmin-parameter-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 6,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0007",
+      "title": "隨堂練習：設f (x) = sin2x + sin($\\frac{\\pi}",
+      "question_text": "設f (x) = sin2x + sin($\\frac{\\pi}{3}$ − 2x)，下列何者正確？\n(A) f (x)之週期為π (B) f\n(x)之最大值與最小值之差為2 (C) f\n(x)之振幅為2\n(D) y = f (x)之圖形可由y = cos2x之圖形右移$\\frac{\\pi}{6}$而得\n(E) y = f (x)之圖形可由y = sin2x之圖形左移$\\frac{\\pi}{6}$而得。",
+      "answer_text": "(A)(B)(E)",
+      "explanation_text": "f (x) = sin2x + sin($\\frac{\\pi}{3}$− 2x) = sin2x + sin$\\frac{\\pi}{3}$cos2x − cos$\\frac{\\pi}{3}$sin2x = sin2x +$\\frac{\\sqrt{3}}{2}$cos2x −$\\frac{1}{2}$sin2x =$\\frac{1}{2}$sin2x +$\\frac{\\sqrt{3}}{2}$cos2x = sin2x cos$\\frac{\\pi}{3}$ + cos2x sin$\\frac{\\pi}{3}$= sin(2x +$\\frac{\\pi}{3}$) 故選(A)(B)(E)",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-graph-reading-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 7,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0008",
+      "title": "設f (x) = 2sin(30° − x) − 2cosx",
+      "question_text": "設f (x) = 2sin(30° − x) − 2cosx， − 60° ≤ x ≤ 210°，若f (x)在x = α 處有最大值M， 在x = β 處有最小值m，下列何者正確？(A) M = 2 (B) α = 210° (C) m = − 2 (D) β = 60°\n(E) M − m = 4。",
+      "answer_text": "(B)(C)(D)",
+      "explanation_text": "f (x) = 2sin(30° − x) − 2cosx = 2sin30° cosx − 2cos30° sinx − 2cosx = − cosx −$\\sqrt{3}$sinx = − 2($\\frac{\\sqrt{3}}{2}$sinx +$\\frac{1}{2}$cosx) = − 2(sinx cos$\\frac{\\pi}{6}$ + cosx sin$\\frac{\\pi}{6}$) = − 2sin(x +$\\frac{\\pi}{6}$)且 − 30° ≤ x +$\\frac{\\pi}{6}$≤ 240° 故選(B)(C)(D)",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-interval-extrema-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 8,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0009",
+      "title": "f (x) = 2cos^2^x − sinx + 1，x$\\i",
+      "question_text": "f (x) = 2cos^2^x − sinx + 1，x$\\in$R，有最大值＿＿＿＿。",
+      "answer_text": "$\\frac{25}{8}$",
+      "explanation_text": "f (x) = 2cos^2^x − sinx + 1 = 2(1 − sin^2^x) − sinx + 1 = − 2sin^2^x − sinx + 3 = − 2(sinx +$\\frac{1}{4}$)^2^ +$\\frac{25}{8}$\n∵x$\\in$R ∴$- 1 \\leq \\sin x \\leq 1$， 因此，當sinx = −$\\frac{1}{4}$時，f (x)有最大值$\\frac{25}{8}$",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-interval-extrema-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 9,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0010",
+      "title": "設0 ≤ x < 2π﹐則滿足不等式$- \\frac{1}{2}",
+      "question_text": "設0 ≤ x < 2π﹐則滿足不等式$- \\frac{1}{2} < \\cos x < \\frac{\\sqrt{3}}{2}$之x的範圍為何﹖\n（提示﹕可考慮y = cosx在0 ≤ x < 2π 之函數圖形）",
+      "answer_text": "$\\frac{\\pi}{6}<x<\\frac{2\\pi}{3}$或$\\frac{4\\pi}{3}<x<\\frac{11\\pi}{6}$",
+      "explanation_text": "描繪y = cosx圖形\n[圖:program-db/assets/question-media/s3-1-4/image9.png] 由圖知$\\frac{\\pi}{6} < x < \\frac{2\\pi}{3}$或$\\frac{4\\pi}{3} < x < \\frac{11\\pi}{6}$﹒",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-range-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 10,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0011",
+      "title": "隨堂練習：關於函數$y = \\sqrt{3}\\sin(x + \\frac{",
+      "question_text": "關於函數$y = \\sqrt{3}\\sin(x + \\frac{\\pi}{6}) - 2\\sin x$的圖形﹐選出正確的選項﹕ (1)週期為2π\n(2)振幅為2 (3)與y軸的交點為(0 , − 1) (4)與x軸有無限多個交點\n(5)對稱於直線$x = \\frac{\\pi}{3}$﹒",
+      "answer_text": "(1)(4)",
+      "explanation_text": "將函數化成正弦函數的形式﹐ 得$y = \\sqrt{3}\\sin(x + \\frac{\\pi}{6}) - 2\\sin x = \\sqrt{3}(\\sin x\\cos\\frac{\\pi}{6} + \\cos x\\sin\\frac{\\pi}{6}) - 2\\sin x$ $= \\sqrt{3}(\\frac{\\sqrt{3}}{2}\\sin x + \\frac{1}{2}\\cos x) - 2\\sin x = - \\frac{1}{2}\\sin x + \\frac{\\sqrt{3}}{2}\\cos x = - (\\sin x\\cos\\frac{\\pi}{3} - \\cos x\\sin\\frac{\\pi}{3})$ $= - \\sin(x - \\frac{\\pi}{3})$﹒\n因此﹐其圖形可由y = sinx的圖形向右平移$\\frac{\\pi}{3}$單位﹐ 再以x軸為基準線﹐上下翻轉得到﹐ 如下圖所示﹒\n[圖:program-db/assets/question-media/s3-1-4/image10.png]\n(1)週期為2π﹒\n(2)振幅為1﹒\n(3)將x = 0代入函數﹐得$y = - \\sin( - \\frac{\\pi}{3}) = - ( - \\frac{\\sqrt{3}}{2}) = \\frac{\\sqrt{3}}{2}$﹐ 因此﹐圖形與y軸的交點為$(0,\\frac{\\sqrt{3}}{2})$﹒\n(4)由圖知﹐圖形與x軸有無限多個交點﹒\n(5)因為直線$x = \\frac{\\pi}{3}$不是通過最高點或最低點的鉛直線﹐所以圖形沒有對稱此直線﹒\n故選(1)(4)﹒",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-graph-reading-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 11,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0012",
+      "title": "隨堂練習：A > 0，0 < θ <$\\frac{\\pi}{2}$。若x$",
+      "question_text": "A > 0，0 < θ <$\\frac{\\pi}{2}$。若x$\\in$R，y有最小值β； 當 −$\\frac{\\pi}{3}$≤ x ≤$\\frac{\\pi}{6}$時，y有最大值M，最小值m， 則：(A) A = 2 (B) θ = 30° (C) β = 0\n(D) M = 5 (E) m = 3。",
+      "answer_text": "(A)(B)(C)(E)",
+      "explanation_text": "(1) y = f (x) =$\\sqrt{3}$cosx − sinx + 2 = 2($\\frac{\\sqrt{3}}{2}$cosx −$\\frac{1}{2}$sinx) + 2 = 2(cosx cos$\\frac{\\pi}{6}$− sinx sin$\\frac{\\pi}{6}$) + 2 = 2cos(x +$\\frac{\\pi}{6}$) + 2 = Acos(x + θ) + 2，A > 0，0 < θ <$\\frac{\\pi}{2}$\n∴ A = 2，θ =$\\frac{\\pi}{6}$\n(2)若x$\\in$R，y有最小值0 （此時cos(x +$\\frac{\\pi}{6}$) = − 1） ⇒ β = 0\n(3)當 −$\\frac{\\pi}{3}$≤ x ≤$\\frac{\\pi}{6}$時，−$\\frac{\\pi}{6}$≤ x +$\\frac{\\pi}{6}$≤$\\frac{\\pi}{3}$\n⇒ $\\frac{1}{2} \\leq$cos(x +$\\frac{\\pi}{6}$) ≤ 1 ⇒ 1$\\leq$2cos(x +$\\frac{\\pi}{6}$) ≤ 2 ⇒ 3 ≤ y ≤ 4\n∴ M = 4，m = 3 故選(A)(B)(C)(E)\n[]{.underline}",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-interval-extrema-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 12,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0013",
+      "title": "隨堂練習：有關y = f (x) = 2sin2x − 3cos2x +",
+      "question_text": "有關y = f (x) = 2sin2x − 3cos2x + 5之圖形﹐下列敘述何者錯誤﹖\n(1)週期= π (2)振幅= 5 (3)與y軸之交點為(0,1) (4)與x軸之交點有無限多個\n(5)圖形對稱於x軸﹒\n[圖:program-db/assets/question-media/s3-1-4/image12.png]",
+      "answer_text": "(2)(3)(4)(5)",
+      "explanation_text": "$y = 2\\sin 2x - 3\\cos 2x + 5 = \\sqrt{13}(\\frac{2}{\\sqrt{13}}\\sin 2x - \\frac{3}{\\sqrt{13}}\\cos 2x) + 5$ $= \\sqrt{13}(\\sin 2x \\cdot \\cos\\theta - \\cos 2x \\cdot \\sin\\theta) + 5 = \\sqrt{13}\\sin(2x - \\theta) + 5 > 0$ $${\\cos\\theta = \\frac{2}{\\sqrt{13}} }{\\sin\\theta = \\frac{3}{\\sqrt{13}} }$$(1)○﹕週期為π\n(2)╳﹕振幅$\\sqrt{13}$\n(3)╳﹕令x = 0﹐y = 2﹐與y軸交於(0,2)\n(4)╳﹕y值恆正﹐∴與x軸不相交\n(5)╳﹕y > 0與x軸不對稱 故選(2)(3)(4)(5)﹒",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-graph-reading-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 13,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0014",
+      "title": "隨堂練習：10.已知0 ≤ x ≤ π﹐$y = 2\\cos(\\frac{",
+      "question_text": "10.已知0 ≤ x ≤ π﹐$y = 2\\cos(\\frac{\\pi}{3} - x) - 2\\cos x + 1$﹐則下列何者正確﹖\n(1)y的週期是2π (2)y的最大值 = 3 (3)y的最大值 = 2 (4)y的最小值 = 0\n(5)$x = \\frac{2\\pi}{3}$時﹐y有最大值﹒",
+      "answer_text": "(1)(2)(4)(5)",
+      "explanation_text": "$y = 2\\cos(\\frac{\\pi}{3} - x) - 2\\cos x + 1 = 2(\\cos\\frac{\\pi}{3}\\cos x + \\sin\\frac{\\pi}{3}\\sin x) - 2\\cos x + 1$ $= \\sqrt{3}\\sin x - \\cos x + 1 = 2(\\sin x\\cos\\frac{\\pi}{6} - \\cos x\\sin\\frac{\\pi}{6}) + 1 = 2\\sin(x - \\frac{\\pi}{6}) + 1$\n∴週期為2π\n∵0 ≤ x ≤ π\n⇒$- \\frac{\\pi}{6} \\leq x - \\frac{\\pi}{6} \\leq \\frac{5\\pi}{6} \\Rightarrow - \\frac{1}{2} \\leq \\sin(x - \\frac{\\pi}{6}) \\leq 1$\n∴$0 \\leq y = 2\\sin(x - \\frac{\\pi}{6}) + 1 \\leq 3$ 且當y = 3時﹐$x - \\frac{\\pi}{6} = \\frac{\\pi}{2} \\Rightarrow x = \\frac{2\\pi}{3}$ 故選(1)(2)(4)(5)﹒",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-frequency-reading-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 14,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0015",
+      "title": "設f (x) = 2sinxcosx − (sinx + cos",
+      "question_text": "設f (x) = 2sinxcosx −\n(sinx + cosx)﹐t = sinx + cosx﹐下列敘述何者正確﹖\n(1)$t = \\sqrt{2}\\sin(x + \\frac{\\pi}{4})$ (2)f\n(x) = t^2^ − t − 1 (3)f\n(x)有最小值$- \\frac{5}{4}$\n(4)$\\sin x + \\cos x = - \\sqrt{2}$時﹐f\n(x)有最小值 (5)f\n(x)有最大值$1 - \\sqrt{2}$﹒",
+      "answer_text": "(1)(2)(3)",
+      "explanation_text": "$t = \\sin x + \\cos x = \\sqrt{2}\\sin(x + \\frac{\\pi}{4})$﹐$- \\sqrt{2} \\leq t \\leq \\sqrt{2}$\n(sinx + cosx)^2^ = sin^2^x + cos^2^x + 2sinxcosx⇒ t^2^ = 1 + 2sinxcosx $$\\Rightarrow f(x) = 2\\sin x\\cos x - (\\sin x + \\cos x) = t^{2} - 1 - t = t^{2} - t - 1 = (t - \\frac{1}{2})^{2} - \\frac{5}{4} $$又$- \\sqrt{2} \\leq t \\leq \\sqrt{2}$\n∴$t = \\sin x + \\cos x = \\frac{1}{2}$時有最小值$- \\frac{5}{4}$﹐$t = \\sin x + \\cos x = - \\sqrt{2}$時有最大值$1 + \\sqrt{2}$ 故選(1)(2)(3)﹒",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-interval-extrema-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 15,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0016",
+      "title": "x$\\in$R，求y = f (x) =$\\frac{9 + 2",
+      "question_text": "x$\\in$R，求y = f (x) =$\\frac{9 + 2\\sin x}{2 + \\sin x}$之值域：＿＿＿＿。",
+      "answer_text": "$\\left[\\frac{11}{3},7\\right]$",
+      "explanation_text": "y =$\\frac{9 + 2\\sin x}{2 + \\sin x}$⇒2y + ysinx = 9 + 2sinx\n⇒(y − 2)sinx = 9 − 2y⇒sinx =$\\frac{9 - 2y}{y - 2}$\n∵ $- 1 \\leq \\sin x \\leq 1$ ∴ $- 1 \\leq \\frac{9 - 2y}{y - 2} \\leq 1$\n(1) $- 1 \\leq \\frac{9 - 2y}{y - 2}$ ⇒ $\\frac{9 - 2y}{y - 2} + 1 \\geq 0$ ⇒ $\\frac{9 - 2y + y - 2}{y - 2} \\geq 0$\n⇒ (y − 2)( − y + 7) ≥ 0，y ≠ 2 ⇒ (y − 2)(y − 7) ≤ 0，y ≠ 2 ⇒ 2 < y ≤ 7\n(2) $\\frac{9 - 2y}{y - 2} \\leq 1$ ⇒ $\\frac{9 - 2y}{y - 2} - 1 \\leq 0$ ⇒ $\\frac{9 - 2y - y + 2}{y - 2} \\leq 0$\n⇒ (y − 2)( − 3y + 11) ≤ 0，y ≠ 2 ⇒ (y − 2)(3y − 11) ≥ 0，y ≠ 2\n⇒ y$\\geq \\frac{11}{3}$或y < 2 故$\\frac{11}{3} \\leq y \\leq 7$",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-range-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 16,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0017",
+      "title": "設0 ≤ x ≤$\\frac{\\pi}{2}$，則f (x) =",
+      "question_text": "設0 ≤ x ≤$\\frac{\\pi}{2}$，則f (x) = sin^2^x + sinx cosx + 2cos^2^x最大值為＿＿＿＿，最小值為＿＿＿＿。",
+      "answer_text": "最大值$\\frac{3+\\sqrt2}{2}$，最小值$1$",
+      "explanation_text": "因為f (x) =$\\frac{1}{2}$ (1 − cos2x) +$\\frac{1}{2}$sin2x + (1 + cos2x) =$\\frac{3}{2}$+$\\frac{1}{2}$ (sin2x + cos2x) =$\\frac{3}{2}$+$\\frac{\\sqrt{2}}{2}$sin(2x +$\\frac{\\pi}{4}$)\n∵ 0 ≤ x ≤$\\frac{\\pi}{2}$ ∴ $\\frac{\\pi}{4}$≤ 2x +$\\frac{\\pi}{4}$≤$\\frac{5\\pi}{4}$，故得 −$\\frac{\\sqrt{2}}{2}$≤ sin(2x +$\\frac{\\pi}{4}$) ≤ 1 所以可得f (x)的最大值為$\\frac{3 + \\sqrt{2}}{2}$，最小值為1",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-frequency-reading-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 17,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0018",
+      "title": "$\\frac{\\pi}{12}$≤ θ ≤$\\frac{3\\pi",
+      "question_text": "$\\frac{\\pi}{12}$≤ θ ≤$\\frac{3\\pi}{4}$且3sin^2^ θ + 4$\\sqrt{3}$sinθ cosθ − cos^2^θ = 5，則θ = ＿＿＿＿。",
+      "answer_text": "$\\theta=\\frac{\\pi}{3}$",
+      "explanation_text": "3sin^2^θ + 4$\\sqrt{3}$sinθ cosθ − cos^2^θ = 5 ⇒ 3($\\frac{1 - \\cos 2\\theta}{2}$) + 2$\\sqrt{3}$sin2θ −$\\frac{1 + \\cos 2\\theta}{2}$= 5\n⇒ 2$\\sqrt{3}$sin2θ − 2cos2θ = 4 ⇒ $\\frac{\\sqrt{3}}{2}$sin2θ −$\\frac{1}{2}$cos2θ = 1 ⇒ sin(2θ −$\\frac{\\pi}{6}$) = 1\n∴ 2θ −$\\frac{\\pi}{6}$=$\\frac{\\pi}{2}$，$\\frac{5\\pi}{2}$，−$\\frac{3\\pi}{2}$，...，但$\\frac{\\pi}{12}$≤ θ ≤$\\frac{3\\pi}{4}$ ∴ θ =$\\frac{\\pi}{3}$",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-phase-quadrant-selection-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 18,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0019",
+      "title": "隨堂練習：設$\\sqrt{3}$sin2x + 2cos^2^x的最大值為",
+      "question_text": "設$\\sqrt{3}$sin2x + 2cos^2^x的最大值為M，最小值為m，則M + m = ＿＿＿＿。",
+      "answer_text": "$2$",
+      "explanation_text": "$\\sqrt{3}$sin2x + 2cos^2^x =$\\sqrt{3}$sin2x + cos2x + 1 = 2($\\frac{\\sqrt{3}}{2}$sin2x +$\\frac{1}{2}$cos2x) + 1 = 2(sin2x cos$\\frac{\\pi}{6}$ + cos2x sin$\\frac{\\pi}{6}$) + 1 = 2sin(2x +$\\frac{\\pi}{6}$) + 1\n∴ M = 3，m = − 1 ⇒ M + m = 2",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-frequency-reading-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 19,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0020",
+      "title": "隨堂練習：$\\frac{\\pi}{12}$≤ θ ≤$\\frac{3\\pi",
+      "question_text": "$\\frac{\\pi}{12}$≤ θ ≤$\\frac{3\\pi}{4}$，若f\n(θ) = 3sin^2^θ + 4$\\sqrt{3}$sinθ cosθ − cos^2^θ可化成asin(2θ − b) + c， 0 < b <$\\frac{\\pi}{2}$，且當θ = α 時，f\n(θ)有最大值β。\n則(A) a = 4 (B) b =$\\frac{\\pi}{6}$ (C) c = 1 (D) α =$\\frac{\\pi}{3}$ (E) β = 5",
+      "answer_text": "(A)(B)(C)(D)(E)",
+      "explanation_text": "f (θ) = 3sin^2^θ + 4$\\sqrt{3}$sinθ cosθ − cos^2^θ = 3($\\frac{1 - \\cos 2\\theta}{2}$) + 2$\\sqrt{3}$sin2θ −$\\frac{1 + \\cos 2\\theta}{2}$ = 2$\\sqrt{3}$sin2θ − 2cos2θ + 1 = 4($\\frac{\\sqrt{3}}{2}$sin2θ −$\\frac{1}{2}$cos2θ) + 1 = 4sin(2θ −$\\frac{\\pi}{6}$) + 1 = asin(2θ − b) + c\n(1)∴ a = 4，b =$\\frac{\\pi}{6}$，c = 1\n(2)但$\\frac{\\pi}{12}$< θ≤$\\frac{3\\pi}{4}$ ⇒ $\\frac{\\pi}{6}$< 2θ ≤$\\frac{3\\pi}{2}$ ⇒ 0 ≤ 2θ −$\\frac{\\pi}{6}$≤$\\frac{4\\pi}{3}$ 當2θ −$\\frac{\\pi}{6}$=$\\frac{\\pi}{2}$ ⇒ θ =$\\frac{\\pi}{3}$時，f\n(θ) = 5為最大值 ⇒ α =$\\frac{\\pi}{3}$，β = 5 故選(A)(B)(C)(D)(E)",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-interval-extrema-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 20,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0021",
+      "title": "設0 ≤ x ≤$\\frac{\\pi}{2}$，f (x) =",
+      "question_text": "設0 ≤ x ≤$\\frac{\\pi}{2}$，f (x) = 2 + 2(sinx + cosx) − sin2x，則sinx + cosx的範圍為＿＿＿＿。若f\n(x) 在x = x~1~時有最大值M；在x = x~2~時有最小值為m，則數對(x~1~，M) = ＿＿＿＿，(x~2~，m) = ＿＿＿＿。",
+      "answer_text": "$[1,\\sqrt2]$；$(x_1,M)=(0,4)$或$\\left(\\frac{\\pi}{2},4\\right)$；$\\left(x_2,m\\right)=\\left(\\frac{\\pi}{4},1+2\\sqrt2\\right)$",
+      "explanation_text": "(1)令t = sinx + cosx，故得 t =$\\sqrt{2}$ ($\\frac{1}{\\sqrt{2}}$sinx +$\\frac{1}{\\sqrt{2}}$cosx) =$\\sqrt{2}$ (sinx cos$\\frac{\\pi}{4}$+ cosx sin$\\frac{\\pi}{4}$) =$\\sqrt{2}$sin(x +$\\frac{\\pi}{4}$) 因為0 ≤ x ≤$\\frac{\\pi}{2}$，所以$\\frac{\\sqrt{2}}{2}$≤ sin(x +$\\frac{\\pi}{4}$) ≤ 1，故1 ≤ t ≤$\\sqrt{2}$\n(2)將t = sinx + cosx兩邊平方後整理，得sinx cosx =$\\frac{t^{2} - 1}{2}$ 因為f (x) = 2 + 2(sinx + cosx) − 2sinx cosx 故將f (x)中的sinx + cosx及sinx cosx分別用t及$\\frac{t^{2} - 1}{2}$代換後， 我們把f (x)用t所表的函數記為g (t)，則 g (t) = 2 + 2t − (t^2^ − 1) = − (t^2^ − 2t + 1) + 4 = − (t − 1)^2^ + 4，其中 −$\\sqrt{2}$≤ t ≤$\\sqrt{2}$\n①當t = 1時，此時可解出x = 0或x =$\\frac{\\pi}{2}$， 因此g (t)有最大值4；亦即f (x)有最大值4\n②當t =$\\sqrt{2}$時，此時可解出x =$\\frac{\\pi}{4}$， 因此g (t)有最小值1 + 2$\\sqrt{2}$；亦即f (x)有最小值1 + 2$\\sqrt{2}$",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-maxmin-parameter-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 21,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0022",
+      "title": "隨堂練習：已知0 ≤ x < 2π ﹐求函數f (x) = (1 − si",
+      "question_text": "已知0 ≤ x < 2π ﹐求函數f (x) = (1 − sinx)(1 − cosx)的最大值與最小值﹒",
+      "answer_text": "最大值$\\frac{3+2\\sqrt2}{2}$，最小值$0$",
+      "explanation_text": "將函數f (x)展開得到f (x) = (1 − sinx)(1 − cosx) = 1 − (sinx + cosx) + sinxcosx﹒\n令t = sinx + cosx﹐則t^2^ = (sinx + cosx)^2^ = 1 + 2sinxcosx⇒$\\sin x\\cos x = \\frac{t^{2} - 1}{2}$﹒\n因此﹐$f(x) = 1 - t + \\frac{t^{2} - 1}{2} = \\frac{1}{2}t^{2} - t + \\frac{1}{2} = \\frac{1}{2}(t - 1)^{2}$﹒\n因為$t = \\sqrt{2}\\sin(x + 45{^\\circ})$﹐所以$- \\sqrt{2} \\leq t \\leq \\sqrt{2}$﹒\n故①當t = 1時﹐f (x)有最小值0﹒\n②當$t = - \\sqrt{2}$時﹐f\n(x)有最大值$\\frac{1}{2}( - \\sqrt{2} - 1)^{2} = \\frac{3 + 2\\sqrt{2}}{2}$﹒",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-maxmin-parameter-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 22,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0023",
+      "title": "隨堂練習：f (x) = (sinx + cosx)^2^ + 4(sin",
+      "question_text": "f (x) = (sinx + cosx)^2^ + 4(sinx + cosx)，則(1) f\n(x)之最小值為＿＿＿＿。(2) f (x)之最大值為＿＿＿＿。",
+      "answer_text": "(1)$2-4\\sqrt2$；(2)$2+4\\sqrt2$",
+      "explanation_text": "f (x) = (sinx + cosx)^2^ + 4 (sinx + cosx) =\n(sinx + cosx + 2)^2^ − 4 = [$\\sqrt{2}$sin(x +$\\frac{\\pi}{4}$) + 2]^2^ − 4\n∵ − 1 ≤ sin(x +$\\frac{\\pi}{4}$) ≤ 1 ⇒ −$\\sqrt{2}$+ 2 ≤$\\sqrt{2}$sin(x +$\\frac{\\pi}{4}$) + 2 ≤$\\sqrt{2}$+ 2\n⇒ 6 − 4$\\sqrt{2}$≤ [$\\sqrt{2}$sin(x +$\\frac{\\pi}{4}$) + 2]^2^ ≤ 6 + 4$\\sqrt{2}$ ⇒ 2 − 4$\\sqrt{2}$≤ f (x) ≤ 2 + 4$\\sqrt{2}$ 故f (x)之最小值為2 − 4$\\sqrt{2}$，最大值為2 + 4$\\sqrt{2}$",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-interval-extrema-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 23,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0024",
+      "title": "f (x) =$\\frac{\\sin x}{1 - \\sin x",
+      "question_text": "f (x) =$\\frac{\\sin x}{1 - \\sin x}$，0$\\leq$x≤$\\frac{\\pi}{4}$的最大值為＿＿＿＿。",
+      "answer_text": "$\\sqrt2+1$",
+      "explanation_text": "令y =$\\frac{\\sin x}{1 - \\sin x}$ ∴ y sinx + sinx = y ⇒ sinx =$\\frac{y}{y + 1}$\n∵ 0 ≤ x ≤$\\frac{\\pi}{4}$ ⇒ 0 ≤ sinx ≤$\\frac{\\sqrt{2}}{2}$\n⇒ 0 ≤$\\frac{y}{y + 1}$≤$\\frac{\\sqrt{2}}{2}$ （∵ 1 ≥ 1 − sinx ≥ 1 −$\\frac{\\sqrt{2}}{2}$ > 0 ⇒ y + 1=$\\frac{1}{1 - \\sin x}$> 0）\n⇒ 0 ≤ y ≤$\\frac{\\sqrt{2}}{2}$ (y + 1) ⇒ 0 ≤ y ≤$\\sqrt{2}$+ 1\n∴ 最大值為$\\sqrt{2}$+ 1",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-interval-extrema-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 24,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0025",
+      "title": "隨堂練習：函數f (x) =$\\frac{2\\cos x}{3 + \\si",
+      "question_text": "函數f (x) =$\\frac{2\\cos x}{3 + \\sin x}$的最大值為＿＿＿＿，最小值為＿＿＿＿。",
+      "answer_text": "最大值$\\frac{\\sqrt2}{2}$，最小值$-\\frac{\\sqrt2}{2}$",
+      "explanation_text": "令k =$\\frac{2\\cos x}{3 + \\sin x}$ ∴ k(3 + sinx) = 2cosx $\\Rightarrow$ 3k = 2cosx − ksinx 因為x為任意實數，由重點2可知： |3k| ≤$\\sqrt{2^{2} + ( - k)^{2}}$ $\\Leftrightarrow$ 9k^2^ ≤ 4 + k^2\\^\n∴ 8k^2^ ≤ 4 ⇒ k^2^ ≤$\\frac{1}{2}$ 所以 −$\\frac{\\sqrt{2}}{2}$≤ k ≤$\\frac{\\sqrt{2}}{2}$，故最大值為$\\frac{\\sqrt{2}}{2}$，而最小值為 −$\\frac{\\sqrt{2}}{2}$",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-interval-extrema-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 25,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0026",
+      "title": "隨堂練習：設x為實數﹐試求$\\frac{2 + \\cos x}{2 +",
+      "question_text": "設x為實數﹐試求$\\frac{2 + \\cos x}{2 + \\sin x}$的最大值與最小值﹒",
+      "answer_text": "最大值$\\frac{4+\\sqrt7}{3}$，最小值$\\frac{4-\\sqrt7}{3}$",
+      "explanation_text": "令$y = \\frac{2 + \\cos x}{2 + \\sin x}$⇒ 2y + ysinx = 2 + cosx ⇒ 2y − 2 = cosx − ysinx $$- \\sqrt{1 + y^{2}} \\leq \\cos x - y\\sin x \\leq \\sqrt{1 + y^{2}} \\Rightarrow - \\sqrt{1 + y^{2}} \\leq 2y - 2 \\leq \\sqrt{1 + y^{2}} \\Rightarrow |\\frac{2y - 2}{\\sqrt{1 + y^{2}}}| \\leq 1 \\Rightarrow (2y - 2)^{2} \\leq 1 + y^{2}$$⇒ 4y^2^ − 8y + 4 ≤ 1 + y^2^ ⇒ 3y^2^ − 8y + 3 ≤ 0 $$\\Rightarrow \\frac{4 - \\sqrt{7}}{3} \\leq y \\leq \\frac{4 + \\sqrt{7}}{3} $$∴最大值為$\\frac{4 + \\sqrt{7}}{3}$﹐最小值為$\\frac{4 - \\sqrt{7}}{3}$﹒",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-maxmin-parameter-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 26,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0027",
+      "title": "隨堂練習：sinx − cosx − 1 ≠ 0，設當0$\\leq$ x",
+      "question_text": "sinx − cosx − 1 ≠ 0，設當0$\\leq$ x < 2π時，f\n(x) =$\\frac{\\sin x\\cos x}{\\sin x - \\cos x - 1}$的最大值為M， 最小值為m，則數對(M，m) = ＿＿＿＿。",
+      "answer_text": "$(M,m)=\\left(\\frac{\\sqrt2-1}{2},-\\frac{\\sqrt2+1}{2}\\right)$",
+      "explanation_text": "(1)令t = sinx − cosx ≠ 1 ⇒ t^2^ = 1 − 2sinx cosx ⇒ sinx cosx =$\\frac{1 - t^{2}}{2}$\n(2) f (x) =$\\frac{\\frac{1}{2}(1 - t^{2})}{t - 1}$= −$\\frac{1}{2}$\n(t + 1)\n(3) 0 ≤ x < 2π ⇒ −$\\sqrt{2}$≤ t ≤$\\sqrt{2}$ ⇒ 1 −$\\sqrt{2}$≤ t + 1 ≤ 1 +$\\sqrt{2}$\n⇒ $\\frac{\\sqrt{2} - 1}{2}$≥ −$\\frac{1}{2}$ (t + 1) ≥ −$\\frac{\\sqrt{2} + 1}{2}$ ⇒ −$\\frac{\\sqrt{2} + 1}{2}$≤ f (x) ≤$\\frac{\\sqrt{2} - 1}{2}$\n∴ M =$\\frac{\\sqrt{2} - 1}{2}$，m = −$\\frac{\\sqrt{2} + 1}{2}$",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-maxmin-parameter-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 27,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0028",
+      "title": "設$0 \\leq \\theta \\leq \\frac{\\pi}{",
+      "question_text": "設$0 \\leq \\theta \\leq \\frac{\\pi}{2}$﹐f\n(θ ) = sinθ (sinθ + cosθ )﹐求﹕(1)f (θ )之最大值﹐此時θ 之值﹒\n(2)f (θ )之最小值﹐此時θ 之值﹒",
+      "answer_text": "(1)最大值$\\frac{\\sqrt2+1}{2}$，此時$\\theta=\\frac{3\\pi}{8}$；(2)最小值$0$，此時$\\theta=0$",
+      "explanation_text": "$f(\\theta) = \\sin^{2}\\theta + \\sin\\theta\\cos\\theta = \\frac{1 - \\cos 2\\theta}{2} + \\frac{1}{2}\\sin 2\\theta = \\frac{1}{2}(\\sin 2\\theta - \\cos 2\\theta) + \\frac{1}{2}$ $= \\frac{1}{\\sqrt{2}}(\\frac{1}{\\sqrt{2}}\\sin 2\\theta - \\frac{1}{\\sqrt{2}}\\cos 2\\theta) + \\frac{1}{2} = \\frac{1}{\\sqrt{2}}\\sin(2\\theta - \\frac{\\pi}{4}) + \\frac{1}{2}$\n∵$0 \\leq \\theta \\leq \\frac{\\pi}{2} \\Rightarrow 0 \\leq 2\\theta \\leq \\pi \\Rightarrow - \\frac{\\pi}{4} \\leq 2\\theta - \\frac{\\pi}{4} \\leq \\frac{3\\pi}{4}$\n(1)當$2\\theta - \\frac{\\pi}{4} = \\frac{\\pi}{2}$時﹐有最大值$\\frac{\\sqrt{2} + 1}{2}$\n∴$2\\theta = \\frac{3\\pi}{4} \\Rightarrow \\theta = \\frac{3\\pi}{8}$﹒\n(2)當$2\\theta - \\frac{\\pi}{4} = - \\frac{\\pi}{4}$時﹐有最小值0﹐此時θ = 0﹒",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-maxmin-parameter-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 28,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0029",
+      "title": "隨堂練習：設$\\frac{\\pi}{4}$≤ x ≤$\\frac{3\\pi",
+      "question_text": "設$\\frac{\\pi}{4}$≤ x ≤$\\frac{3\\pi}{4}$，試求函數f (x) =$\\frac{\\sin x\\cos x}{1 + \\sin x + \\cos x}$的最大值與最小值。",
+      "answer_text": "最大值$\\frac{\\sqrt2-1}{2}$，最小值$-\\frac{1}{2}$",
+      "explanation_text": "令t = sinx + cosx =\\sqrt{2}．sin(x +$\\frac{\\pi}{4}$) ∵ $\\frac{\\pi}{4}$≤ x ≤$\\frac{3\\pi}{4}$ ∴ $\\frac{\\pi}{2}$≤ x +$\\frac{\\pi}{4}$≤ π 故0 ≤ sin(x +$\\frac{\\pi}{4}$) ≤ 1，亦即0 ≤ t ≤\\sqrt{2}，又因為t^2^ = 1 + 2sinx．cosx，所以sinx．cosx =$\\frac{t^{2} - 1}{2}$ 其次，將sinx．cosx及sinx + cosx分別用$\\frac{1}{2}$ (t^2^ − 1)及t代入f (x) 令其為g (t)，則g (t) =$\\frac{\\frac{1}{2}(t^{2} - 1)}{1 + t}$ ∴ g (t) =$\\frac{1}{2}$\n(t − 1)，其中0 ≤ t ≤\\sqrt{2}\n(1)當t = 0時，g (t)有最小值 −$\\frac{1}{2}$，亦即f (x)有最小值 −$\\frac{1}{2}$\n(2)當t =\\sqrt{2}時，g\n(t)有最大值$\\frac{\\sqrt{2} - 1}{2}$，亦即f (x)有最大值 $\\frac{\\sqrt{2} - 1}{2}$",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-maxmin-parameter-s314",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 29,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0030",
+      "title": "試求 sec 80°－$\\sqrt{3}$csc 80° 的值",
+      "question_text": "試求 sec 80°－$\\sqrt{3}$csc 80° 的值。",
+      "answer_text": "4",
+      "explanation_text": "sec80° − √3csc80° = 1/cos80° − √3/sin80° = (sin80° − √3cos80°)/(sin80°cos80°) = 2(sin80°cos60° − cos80°sin60°)/(1/2·sin160°) = 4sin20°/sin160° = 4。",
+      "chapter_code": "s3-1-4",
+      "formula_id": "s3-1-4-sine-cosine-superposition-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 30,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0031",
+      "title": "一座「T」型的木橋（如圖）， 試問此木橋總長$\\overline",
+      "question_text": "一座「T」型的木橋（如圖）， 試問此木橋總長$\\overline{AB}+\\overline{CD}$之最大值為＿＿＿＿。\n[圖:program-db/assets/question-media/s3-1-4/image17.png]",
+      "answer_text": "$100+100\\sqrt5$",
+      "explanation_text": "設 θ 為圖中的角，則 AB = 2BC = 2×(100cosθ) = 200cosθ，CD = OC + OD = 100sinθ + 100。\n因此 AB + CD = 100(2cosθ + sinθ) + 100 = 100√5·sin(θ + α) + 100， 故最大值為 100 + 100√5。\n[圖:program-db/assets/question-media/s3-1-4/image17.png]",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-wave-model-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 31,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例16"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0032",
+      "title": "若$\\overline{AB} = 3$﹐$\\overline{",
+      "question_text": "若$\\overline{AB}=3$，$\\overline{BC}=7$，且$\\overline{AB}$與$\\overline{AQ}$的夾角為 x， 則當 x 為多少弧度時，矩形 PQRS 的周長最大？\n[圖:program-db/assets/question-media/s3-1-4/image19.png]",
+      "answer_text": "$x=\\frac{\\pi}{4}$",
+      "explanation_text": "由題意可推得∠RBC = ∠ADP = ∠BAQ = x﹐於是矩形PQRS的周長為 $2(\\overline{PQ} + \\overline{QR}) = 2(7\\sin x + 3\\cos x + 3\\sin x + 7\\cos x) = 20(\\sin x + \\cos x)$ $= 20\\sqrt{2}(\\frac{1}{\\sqrt{2}}\\sin x + \\frac{1}{\\sqrt{2}}\\cos x) = 20\\sqrt{2}(\\sin x\\cos\\frac{\\pi}{4} + \\cos x\\sin\\frac{\\pi}{4})$ $= 20\\sqrt{2}\\sin(x + \\frac{\\pi}{4})$﹒\n故當$x + \\frac{\\pi}{4} = \\frac{\\pi}{2}$﹐即$x = \\frac{\\pi}{4}$時﹐矩形PQRS的周長有最大值$20\\sqrt{2}$﹒\n[圖:program-db/assets/question-media/s3-1-4/image19.png]",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-wave-model-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 32,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例17"
+      ]
+    },
+    {
+      "id": "q-s3-1-4-0033",
+      "title": "且圓心角∠AOB = 60°﹐內接矩形PQRS以∠AOB的角平分",
+      "question_text": "且圓心角∠AOB = 60°，內接矩形 PQRS 以 ∠AOB 的角平分線 $\\overline{OC}$ 為對稱軸， 若連接 $\\overline{OR}$，並令 ∠COR = θ，則下列哪些選項是正確的？\n(1)$\\overline{SR}=2\\sin\\theta$\n(2)$\\overline{PS}=\\cos\\theta-\\sqrt{3}\\sin\\theta$\n(3)矩形 PQRS 的面積為 $\\sin(2\\theta)+\\sqrt{3}\\cos(2\\theta)-\\sqrt{3}$\n(4)當 θ = 15° 時，矩形 PQRS 的面積有最大值\n(5)矩形 PQRS 的面積最大值為 $2-\\sqrt{3}$。",
+      "answer_text": "(1)(2)(3)(4)(5)",
+      "explanation_text": "∵矩形 PQRS 以 OC 為對稱軸，故 ∠COR = ∠COS = θ，且 ∠AOC = ∠BOC = 30°。\n[圖:program-db/assets/question-media/s3-1-4/image21.png]\n[圖:program-db/assets/question-media/s3-1-4/image22.png]\n(1) SR = 2sinθ。\n(2) PS = cosθ − √3sinθ。\n(3) 矩形面積 = PS·PQ = (cosθ − √3sinθ)(2sinθ) = sin2θ + √3cos2θ − √3。\n(4)(5) 又 0° < θ < 30°，當 2θ + 60° = 90°，即 θ = 15° 時，面積有最大值 2 − √3。\n故選(1)(2)(3)(4)(5)。",
+      "chapter_code": "s3-1-4",
+      "formula_id": "senior-trig-superposition-wave-model-s314",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-7轉.docx",
+      "source_section": "主題1：正餘弦函數的疊合",
+      "source_order": 33,
+      "tags": [
+        "s3-1-4",
+        "section:主題1：正餘弦函數的疊合",
+        "marker:範例17"
+      ]
+    }
+  ]
+}

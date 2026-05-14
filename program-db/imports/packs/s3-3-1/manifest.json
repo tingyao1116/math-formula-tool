@@ -1,0 +1,36 @@
+{
+  "chapter_code": "s3-3-1",
+  "chapter_title": "平面向量",
+  "source_files": [
+    {
+      "path": "source/3A-8轉.docx",
+      "role": "primary_docx"
+    }
+  ],
+  "extracted_files": [
+    {
+      "path": "extracted/3A-8轉.md",
+      "role": "pandoc_markdown"
+    },
+    {
+      "path": "questions.json",
+      "role": "question_pack_preview"
+    },
+    {
+      "path": "preview.json",
+      "role": "assignment_preview"
+    },
+    {
+      "path": "review-needed.md",
+      "role": "manual_review_notes"
+    }
+  ],
+  "asset_roots": [
+    {
+      "path": "program-db/assets/question-media/s3-3-1",
+      "role": "canonical_question_media"
+    }
+  ],
+  "status": "review_ready",
+  "updated_at": "2026-05-06T04:06:33.461659+08:00"
+}

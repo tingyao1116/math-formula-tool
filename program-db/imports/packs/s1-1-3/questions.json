@@ -1,0 +1,923 @@
+{
+  "meta": {
+    "chapter_code": "s1-1-3",
+    "source_ref": "source/1-3轉.docx",
+    "count": 43,
+    "schema": "question-import-pack-v1-preview",
+    "finalized": true,
+    "finalizedBy": "finalize_s1_1_3_pack.py"
+  },
+  "summary": {
+    "count": 43,
+    "sections": {
+      "主題1：乘法公式、分式與根式的運算": 34,
+      "主題2：算幾不等式": 9
+    },
+    "image_references": [
+      "program-db/assets/question-media/s1-1-3/image2.png",
+      "program-db/assets/question-media/s1-1-3/image3.png",
+      "program-db/assets/question-media/s1-1-3/image5.png",
+      "program-db/assets/question-media/s1-1-3/image6.png"
+    ],
+    "notes": [
+      "**單元3** 式的運算",
+      "1\\. 分配律：（*x*＋*y*）（*a*＋*b*）＝*x*×*a*＋*x*×*b*＋*y*×*a*＋*y*×*b*。",
+      "2\\. 二次乘法公式：",
+      "(1)（*a*＋*b*）^2^＝*a*^2^＋2*ab*＋*b*^2^。",
+      "(2)（*a*－*b*）^2^＝*a*^2^－2*ab*＋*b*^2^。",
+      "\\(3\\) *a*^2^－*b*^2^＝（*a*－*b*）（*a*＋*b*）。",
+      "(4)（*x*＋*a*）（*x*＋*b*）＝*x*^2^＋（*a*＋*b*）*x*＋*ab*。",
+      "(5)（*a*＋*b*＋*c*）^2^＝*a*^2^＋*b*^2^＋*c*^2^＋2（*ab*＋*bc*＋*ca*）。",
+      "※$a^{2} + b^{2} = (a - b)^{2} + 2ab = (a + b)^{2} - 2ab$",
+      "3\\. 三次乘法公式：",
+      "(1)（*a*＋*b*）^3^＝*a*^3^＋3*a*^2^*b*＋3*ab*^2^＋*b*^3^。",
+      "(2)（*a*－*b*）^3^＝*a*^3^－3*a*^2^*b*＋3*ab*^2^－*b*^3^。",
+      "\\(3\\) $a^{3} + b^{3} = (a + b)\\left( a^{2} - ab + b^{2} \\right) = (a + b)^{3} - 3ab(a + b)$。",
+      "\\(4\\) $a^{3} - b^{3} = (a - b)\\left( a^{2} + ab + b^{2} \\right) = (a - b)^{3} + 3ab(a - b)$。",
+      "(5)（*x*＋*a*）（*x*＋*b*）（*x*＋*c*）＝*x*^3^＋（*a*＋*b*＋*c*）*x*^2^＋（*ab*＋*bc*＋*ca*）*x*＋*abc*。",
+      "※$a^{3} + b^{3} + c^{3} - 3abc = (a + b + c)\\left( a^{2} + b^{2} + c^{2} - ab - bc - ca \\right)$",
+      "$= \\frac{1}{2}(a + b + c)\\left\\lbrack (a - b)^{2} + (b - c)^{2} + (c - a)^{2} \\right\\rbrack$",
+      "※$a^{4} + a^{2}b^{2} + b^{4} = \\left( a^{2} + ab + b^{2} \\right)\\left( a^{2} - ab + b^{2} \\right)$",
+      "4.分式的運算：",
+      "分式運算的基本規則如同分數的運算，當分子和分母有共同因式時可以約分，作加減運算時",
+      "要先通分。",
+      "5.方根的意義：",
+      "設*a* ≥ 0，若*x*^2^＝*a*，則*x*稱為*a*的平方根，且*x*＝±$\\sqrt{a}$。\\`",
+      "6\\. 根式的化簡：",
+      "(1)同類根號可加減合併。**例**：3$\\sqrt{5}$＋$\\sqrt{5}$＝4$\\sqrt{5}$。",
+      "(2)同次根號可乘除合併。**例**：$\\sqrt{5}$×$\\sqrt{3}$＝$\\sqrt{15}$。",
+      "※$a,b \\geq 0$，則：",
+      "①$\\sqrt{a}\\sqrt{b} = \\sqrt{ab}$，$\\frac{\\sqrt{a}}{\\sqrt{b}} = \\sqrt{\\frac{a}{b}}$ ($b \\neq 0$)",
+      "②最簡根式：任意正有理數的平方根都可以化簡成$\\frac{n\\sqrt{a}}{m}$的形式，稱$\\frac{n\\sqrt{a}}{m}$為最簡根式。",
+      "$$(m,n \\in Z,(m,n) = 1,a \\in N,a > 1)$$",
+      "(3)分母有理化，利用平方差乘法公式使分母沒有根號。",
+      "(4)雙重根號化簡：",
+      "$\\sqrt{a＋b \\pm 2\\sqrt{ab}}$＝$\\sqrt{a}$![](.\\program-db\\imports\\packs\\s1-1-3\\assets/media/image1.wmf)$\\sqrt{b}$，其中*a*$\\geq$*b* ≥ 0。",
+      "設*a*，*b* ≥ 0，則$\\frac{a＋b}{2}$≥$\\sqrt{ab}$恆成立，等號在*a*＝*b*時成立。"
+    ]
+  },
+  "questions": [
+    {
+      "id": "q-s1-1-3-0001",
+      "title": "範例1：乘法公式展開",
+      "question_text": "試展開下列各式﹕(1)(2a − 3)^{2}﹒ (2)(a − 3b + 2c)^{2}﹒ (3)(1 + 3x)(1 − 3x + 9x^{2})﹒",
+      "answer_text": "(1) $4a^{2}-12a+9$；(2) $a^{2}+9b^{2}+4c^{2}-6ab-12bc+4ac$；(3) $1+27x^{3}$",
+      "explanation_text": "【解析】(1)(2a − 3)^{2} = (2a)^{2} − 2(2a)(3) + 3^{2} = 4a^{2} − 12a + 9﹒\n(2)(a − 3b + 2c)^{2} = a^{2} + ( − 3b)^{2} + (2c)^{2} + 2a( − 3b) + 2( − 3b)(2c) + 2a(2c) = a^{2} + 9b^{2} + 4c^{2} − 6ab − 12bc + 4ac﹒\n(3)(1 + 3x)(1 − 3x + 9x^{2}) = 1^{3} + (3x)^{3} = 1 + 27x^{3}﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-multiplication-identities-expansion-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 1,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0002",
+      "title": "範例2：乘法公式展開",
+      "question_text": "試展開下列各式﹕(1)(2a + 3)^{2}(2a − 3)^{2}﹒(2)(a^{2} − a + 1)(a^{2} + a + 1)﹒(3)(x − 2)(x + 2)(x^{2} + 4)﹒",
+      "answer_text": "(1) $16a^{4}-72a^{2}+81$；(2) $a^{4}+a^{2}+1$；(3) $x^{4}-16$",
+      "explanation_text": "【解析】(1)(2a + 3)^{2}(2a − 3)^{2} = [(2a + 3)(2a − 3)]^{2} = (4a^{2} − 9)^{2} = (4a^{2})^{2} − 2(4a^{2})(9) + 9^{2} = 16a^{4} − 72a^{2} + 81﹒\n(2)(a^{2} − a + 1)(a^{2} + a + 1) = [(a^{2} + 1) − a][(a^{2} + 1) + a] = (a^{2} + 1)^{2} − a^{2} = a^{4} + a^{2} + 1﹒\n(3)(x − 2)(x + 2)(x^{2} + 4) = (x^{2} − 4)(x^{2} + 4) = (x^{2})^{2} − 4^{2} = x^{4} − 16﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-multiplication-identities-expansion-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 2,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0003",
+      "title": "隨堂練習：乘法公式展開",
+      "question_text": "試展開下列各式﹕(1)(3a + 2b)^{2}﹒(2)(a − b + c)^{2}﹒(3)(2a − b)(4a^{2} + 2ab + b^{2})﹒ (4)(a + 3b)^{3}﹒",
+      "answer_text": "(1) $9a^{2}+12ab+4b^{2}$；(2) $a^{2}+b^{2}+c^{2}-2ab-2bc+2ac$；(3) $8a^{3}-b^{3}$；(4) $a^{3}+9a^{2}b+27ab^{2}+27b^{3}$",
+      "explanation_text": "【解析】(1)(3a + 2b)^{2} = (3a)^{2} + 2(3a)(2b) + (2b)^{2} = 9a^{2} + 12ab + 4b^{2}﹒\n(2)(a − b + c)^{2} = a^{2} + ( − b)^{2} + c^{2} + 2a( − b) + 2( − b)c + 2ac = a^{2} + b^{2} + c^{2} − 2ab − 2bc + 2ac﹒\n(3)(2a − b)(4a^{2} + 2ab + b^{2}) = (2a − b)[(2a)^{2} + (2a)b + b^{2}] = (2a)^{3} − b^{3} = 8a^{3} − b^{3}﹒\n(4)(a + 3b)^{3} = a^{3} + 3a^{2}(3b) + 3a(3b)^{2} + (3b)^{3} = a^{3} + 9a^{2}b + 27ab^{2} + 27b^{3}﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-multiplication-identities-expansion-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 3,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0004",
+      "title": "範例3：代換整理與公式求值",
+      "question_text": "已知a + b = 4﹐a × b = 2﹐則下列選項何者錯誤﹖ (1)a^{2} + b^{2} = 12\n(2)a^{3} + b^{3} = 40 (3)a^{5} + b^{5} = 480 (4)$\\frac{1}{a^{2}} + \\frac{1}{b^{2}} = 3$﹒",
+      "answer_text": "選$(3)$",
+      "explanation_text": "【解析】∵a + b = 4﹐a × b = 2﹐\n∴a^{2} + b^{2} = (a + b)^{2} − 2ab = 12﹐ a^{3} + b^{3} = (a + b)^{3} − 3ab(a + b) = 40﹐ a^{5} + b^{5} = (a^{2} + b^{2})(a^{3} + b^{3}) − a^{2}b^{2}(a + b) = 464﹐ $\\frac{1}{a^{2}} + \\frac{1}{b^{2}} = \\frac{a^{2} + b^{2}}{a^{2}b^{2}} = \\frac{12}{4} = 3$﹐ 故選(3)﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-expression-substitution-evaluation",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 4,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0005",
+      "title": "範例4：倒數型冪次求值",
+      "question_text": "若$a+\\frac{1}{a}=3$，試求下列各值：\n(1)$a^{2}+\\frac{1}{a^{2}}$。\n(2)$a^{3}+\\frac{1}{a^{3}}$。",
+      "answer_text": "(1) $7$；(2) $18$",
+      "explanation_text": "【解析】(1)$a^{2} + \\frac{1}{a^{2}} = (a + \\frac{1}{a})^{2} - 2 \\cdot a \\cdot \\frac{1}{a} = 3^{2} - 2$= 7.\n(2)$a^{3} + \\frac{1}{a^{3}} = (a + \\frac{1}{a})^{3} - 3 \\cdot a \\cdot \\frac{1}{a}(a + \\frac{1}{a}) = 3^{3} - 3 \\cdot 3$ = 18.",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-reciprocal-power-identities",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 5,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0006",
+      "title": "隨堂練習：倒數型冪次求值",
+      "question_text": "設$x = \\sqrt{5} - 2$﹐求下列各式的值﹕(1)$x + \\frac{1}{x}$﹒ (2)$x^{2} + \\frac{1}{x^{2}}$﹒ (3)$x^{3} + \\frac{1}{x^{3}}$﹒",
+      "answer_text": "(1) $2\\sqrt{5}$；(2) $18$；(3) $34\\sqrt{5}$",
+      "explanation_text": "【解析】(1)$x + \\frac{1}{x} = (\\sqrt{5} - 2) + \\frac{1}{\\sqrt{5} - 2} = (\\sqrt{5} - 2) + (\\sqrt{5} + 2) = 2\\sqrt{5}$﹒\n(2)$x^{2} + \\frac{1}{x^{2}} = (x + \\frac{1}{x})^{2} - 2 = (2\\sqrt{5})^{2} - 2 = 18$﹒\n(3)$x^{3} + \\frac{1}{x^{3}} = (x + \\frac{1}{x})(x^{2} - x \\cdot \\frac{1}{x} + \\frac{1}{x^{2}}) = (2\\sqrt{5})(18 - 1) = 34\\sqrt{5}$﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-reciprocal-power-identities",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 6,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0007",
+      "title": "範例5：高次式因式分解樣式",
+      "question_text": "利用乘法公式﹐因式分解下列各式﹕(1)x^{6} − y^{6}﹒(2)9x^{4} + 5x^{2} + 1﹒.",
+      "answer_text": "(1) $(x+y)(x-y)(x^{2}-xy+y^{2})(x^{2}+xy+y^{2})$；(2) $(3x^{2}-x+1)(3x^{2}+x+1)$",
+      "explanation_text": "【解析】(1)x^{6} − y^{6} = (x^{3})^{2} − (y^{3})^{2} = (x^{3} + y^{3})(x^{3} − y^{3}) = (x + y)(x − y)(x^{2} − xy + y^{2})(x^{2} + xy + y^{2})﹒\n(2)9x^{4} + 5x^{2} + 1 = [(3x^{2})^{2} + 6x^{2} + 1] − x^{2} = (3x^{2} + 1)^{2} − x^{2} = (3x^{2} − x + 1)(3x^{2} + x + 1)﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-high-degree-factorization-patterns",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 7,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0008",
+      "title": "範例6：立方和與立方差",
+      "question_text": "利用乘法公式﹐因式分解下列各式﹕(1)x^{3} + 8﹒(2)x^{4} − 81﹒(3)a^{4} + a^{2} + 1﹒",
+      "answer_text": "(1) $(x+2)(x^{2}-2x+4)$；(2) $(x-3)(x+3)(x^{2}+9)$；(3) $(a^{2}-a+1)(a^{2}+a+1)$",
+      "explanation_text": "【解析】(1)x^{3} + 8 = x^{3} + 2^{3} = (x + 2)(x^{2} − 2x + 4)﹒\n(2)x^{4} − 81 = (x^{2})^{2} − 9^{2} = (x^{2} − 9)(x^{2} + 9) = (x − 3)(x + 3)(x^{2} + 9)﹒\n(3)a^{4} + a^{2} + 1 = [(a^{2})^{2} + 2a^{2} + 1] − a^{2} = (a^{2} + 1)^{2} − a^{2} = (a^{2} − a + 1)(a^{2} + a + 1)﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-cube-sum-difference-factorization",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 8,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0009",
+      "title": "隨堂練習：立方和與立方差",
+      "question_text": "利用乘法公式﹐因式分解下列各式﹕(1)8a^{3} + 27b^{3}﹒(2)x^{4} + 4x^{2}y^{2} + 16y^{4}﹒\n(3)4a^{4} + 7a^{2} + 4﹒",
+      "answer_text": "(1) $(2a+3b)(4a^{2}-6ab+9b^{2})$；(2) $(x^{2}+2xy+4y^{2})(x^{2}-2xy+4y^{2})$；(3) $(2a^{2}-a+2)(2a^{2}+a+2)$",
+      "explanation_text": "【解析】(1)8a^{3} + 27b^{3} = (2a)^{3} + (3b)^{3} = (2a + 3b)[(2a)^{2} − (2a)(3b) + (3b)^{2}] = (2a + 3b)(4a^{2} − 6ab + 9b^{2})﹒\n(2)x^{4} + 4x^{2}y^{2} + 16y^{4} = (x^{2} + 4y^{2})^{2} − (2xy)^{2} = (x^{2} + 2xy + 4y^{2})(x^{2} − 2xy + 4y^{2})﹒\n(3)4a^{4} + 7a^{2} + 4 = [(2a^{2})^{2} + 8a^{2} + 2^{2}] − a^{2} = (2a^{2} + 2)^{2} − a^{2} = (2a^{2} − a + 2)(2a^{2} + a + 2)﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-cube-sum-difference-factorization",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 9,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0010",
+      "title": "隨堂練習：高次式因式分解樣式",
+      "question_text": "利用乘法公式將下列各式因式分解：(1)x^{8} + x^{4} + 1. (2)(x^{2}－1)(y^{2}－1)－4xy.",
+      "answer_text": "(1) $(x^{2}+x+1)(x^{2}-x+1)(x^{4}-x^{2}+1)$；(2) $(xy+x+y-1)(xy-x-y-1)$",
+      "explanation_text": "【解析】(1)原式= x^{8} + 2x^{4} + 1－x^{4} = (x^{4} + 1)^{2}－(x^{2})^{2} =(x^{4}+ x^{2} + 1)(x^{4}－x^{2} + 1) =(x^{4} + 2x^{2} + 1－x^{2})(x^{4}－x^{2} + 1) =[(x^{2} + 1)－x^{2}]( x^{4}－x^{2} + 1) =( x^{2} + x + 1)( x^{2}－x + 1)( x^{4}－x^{2} + 1).\n(2)原式=x^{2}y^{2}－x^{2}－y^{2} + 1－4xy = (xy－1)^{2}－(x + y)^{2} =(xy + x + y－1)(xy－x－y－1)",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-high-degree-factorization-patterns",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 10,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0011",
+      "title": "範例7：代換整理與公式求值",
+      "question_text": "已知a + b = 4﹐a × b = 2﹐則下列選項何者錯誤﹖ (1)a^{2} + b^{2} = 12 (2)a^{3} + b^{3} = 40\n(3)a^{5} + b^{5} = 480 (4)$\\frac{1}{a^{2}} + \\frac{1}{b^{2}} = 3$﹒",
+      "answer_text": "選$(3)$",
+      "explanation_text": "【解析】∵a + b = 4﹐a × b = 2﹐\n∴a^{2} + b^{2} = (a + b)^{2} − 2ab = 12﹐a^{3} + b^{3} = (a + b)^{3} − 3ab(a + b) = 40﹐ a^{5} + b^{5} = (a^{2} + b^{2})(a^{3} + b^{3}) − a^{2}b^{2}(a + b) = 464﹐$\\frac{1}{a^{2}} + \\frac{1}{b^{2}} = \\frac{a^{2} + b^{2}}{a^{2}b^{2}} = \\frac{12}{4} = 3$﹐ 故選(3)﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-expression-substitution-evaluation",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 11,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0012",
+      "title": "範例8：代換整理與公式求值",
+      "question_text": "設實數x﹐y滿足x + 2y = 3﹐x^{3} + 8y^{3} = 9﹐求x^{2} + 4y^{2} = ____________﹒",
+      "answer_text": "$5$",
+      "explanation_text": "【解析】已知x^{3} + 8y^{3} = x^{3} + (2y)^{3} = (x + 2y)^{3} − 3 ⋅ x ⋅ 2y(x + 2y) ⇒ 9 = 3^{3} − 6xy ⋅ 3 ⇒ xy = 1﹐\n∴x^{2} + 4y^{2} = (x + 2y)^{2} − 2 ⋅ x ⋅ 2y = 3^{2} − 4 × 1 =",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-expression-substitution-evaluation",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 12,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0013",
+      "title": "隨堂練習：倒數型冪次求值",
+      "question_text": "已知x為實數且滿足$x^{2} - 4x + 1 = 0$﹐試求：(1)$x + \\frac{1}{x}$的值﹒ (2)$x^{2} + \\frac{1}{x^{2}}$的值﹒",
+      "answer_text": "(1) $4$；(2) $14$",
+      "explanation_text": "【解析】(1)$x^{2} - 4x + 1 = 0$同除以x（$x \\neq 0$）﹐$x - 4 + \\frac{1}{x} = 0$﹐得$x + \\frac{1}{x} = 4$﹒\n(2)$(x + \\frac{1}{x})^{2} = x^{2} + 2 \\cdot x \\cdot \\frac{1}{x} + \\frac{1}{x^{2}} = x^{2} + 2 + \\frac{1}{x^{2}}$﹐$16 = x^{2} + 2 + \\frac{1}{x^{2}}$﹐得$x^{2} + \\frac{1}{x^{2}} = 14$﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-reciprocal-power-identities",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 13,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0014",
+      "title": "範例9：分式運算與化簡",
+      "question_text": "化簡下列各式：(1)$\\frac{x－4}{3x－7}$＋$\\frac{5x－10}{3x－7}$＝。 (2)$\\frac{2}{3x＋15}$＋$\\frac{x}{x^{2}－25}$＝。",
+      "answer_text": "(1) $2$；(2) $\\frac{5(x-2)}{3(x+5)(x-5)}$",
+      "explanation_text": "【解析】(1)$\\frac{x－4}{3x－7}$＋$\\frac{5x－10}{3x－7}$＝$\\frac{6x－14}{3x－7}$＝2\n(2)$\\frac{2}{3x＋15}$＋$\\frac{x}{x^{2}－25}$＝$\\frac{2}{3（x＋5）}$＋$\\frac{x}{（x－5）（x＋5）}$ ＝$\\frac{2（x－5）＋3x}{3（x＋5）（x－ 5）}$＝$\\frac{5x－10}{3（x＋5）（x－5）}$ ＝$\\frac{5（x－2）}{3（x＋5）（x－5）}$",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-rational-expression-operations-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 14,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0015",
+      "title": "隨堂練習：分式運算與化簡",
+      "question_text": "化簡下列各式：(1)$\\frac{x＋3}{x－3}$－$\\frac{x－3}{x＋3}$＝。 (2)$\\frac{x^{3}－3x^{2}}{x＋3}$×$\\frac{x^{2}－9}{x^{2}－6x＋9}$＝。",
+      "answer_text": "(1) $\\frac{12x}{(x-3)(x+3)}$；(2) $x^{2}$",
+      "explanation_text": "【解析】(1)$\\frac{x＋3}{x－3}$－$\\frac{x－3}{x＋3}$＝$\\frac{（x＋3）^{2}－（x－3）^{2}}{（x－3）（x＋3）}$＝$\\frac{12x}{（x－3）（x＋3）}$\n(2)$\\frac{x^{3}－3x^{2}}{x＋3}$×$\\frac{x^{2}－9}{x^{2}－6x＋9}$＝$\\frac{x^{2}（x－3）}{x＋3}$×$\\frac{（x－3）（x＋3）}{（x－3）^{2}}$＝x^{2}",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-rational-expression-operations-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 15,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0016",
+      "title": "隨堂練習：分式運算與化簡",
+      "question_text": "化簡$\\frac{1}{x－1}$－$\\frac{1}{x＋1}$－$\\frac{2}{x^{2}＋1}$－$\\frac{4}{x^{4}＋1}$＝。",
+      "answer_text": "$\\frac{8}{(x^{4}-1)(x^{4}+1)}$",
+      "explanation_text": "【解析】$\\frac{1}{x－1}$－$\\frac{1}{x＋1}$－$\\frac{2}{x^{2}＋1}$－$\\frac{4}{x^{4}＋1}$＝$\\frac{2}{x^{2}－1}$－$\\frac{2}{x^{2}＋1}$－$\\frac{4}{x^{4}＋1}$ ＝$\\frac{4}{x^{4}－1}$－$\\frac{4}{x^{4}＋1}$＝$\\frac{4（x^{4}＋1）－4（x^{4}－1）}{（x^{4}－1）（x^{4}＋1）}$",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-rational-expression-operations-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 16,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0017",
+      "title": "範例10：根式運算與分母有理化",
+      "question_text": "化簡下列各式：\n(1)$\\sqrt{\\frac{1}{3}}+\\sqrt{\\frac{1}{27}}-\\sqrt{\\frac{1}{48}}=$____________。\n(2)$\\sqrt{24}-\\sqrt{3}(\\sqrt{18}+\\sqrt{6})=$____________。\n(3)$\\frac{\\sqrt{5}-\\sqrt{3}}{\\sqrt{5}+\\sqrt{3}}=$____________。\n(4)$(\\frac{\\sqrt{2}}{\\sqrt{3}+\\sqrt{6}})^{2}+(\\frac{\\sqrt{6}}{\\sqrt{2}+1})^{2}=$____________。",
+      "answer_text": "(1) $\\frac{13}{36}\\sqrt{3}$；(2) $-\\sqrt{6}-3\\sqrt{2}$；(3) $4-\\sqrt{15}$；(4) $20-\\frac{40}{3}\\sqrt{2}$",
+      "explanation_text": "【解析】(1)原式$= \\frac{1}{\\sqrt{3}} + \\frac{1}{3\\sqrt{3}} - \\frac{1}{4\\sqrt{3}} = \\frac{\\sqrt{3}}{3} + \\frac{\\sqrt{3}}{9} - \\frac{\\sqrt{3}}{12} = \\sqrt{3}(\\frac{1}{3} + \\frac{1}{9} - \\frac{1}{12}) = \\frac{13}{36}\\sqrt{3}$﹒\n(2)原式$= 2\\sqrt{6} - 3\\sqrt{6} - 3\\sqrt{2} = - \\sqrt{6} - 3\\sqrt{2}$﹒\n(3)原式$= \\frac{(\\sqrt{5} - \\sqrt{3})^{2}}{5 - 3} = \\frac{8 - 2\\sqrt{15}}{2} = 4 - \\sqrt{15}$﹒\n(4)原式$= \\frac{2}{3(1 + \\sqrt{2})^{2}} + \\frac{6}{(\\sqrt{2} + 1)^{2}} = \\frac{2 + 6 \\times 3}{3(1 + \\sqrt{2})^{2}} = \\frac{20}{3(3 + 2\\sqrt{2})} = \\frac{20(3 - 2\\sqrt{2})}{3(9 - 8)} = 20 - \\frac{40}{3}\\sqrt{2}$﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-operations-rationalization-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 17,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0018",
+      "title": "範例11：根式運算與分母有理化",
+      "question_text": "設x, y$\\in$Q且$x\\sqrt{3 + 2\\sqrt{2}} - y\\sqrt{17 - 12\\sqrt{2}} = \\sqrt{18 - 8\\sqrt{2}}$﹐則(x, y) = ____________﹒",
+      "answer_text": "$(x,y)=(1,-1)$",
+      "explanation_text": "【解析】原式 ⇒ x($\\sqrt{2} + 1$) − y($\\sqrt{9} - \\sqrt{8}$) =$\\sqrt{16} - \\sqrt{2}$\n⇒ x($\\sqrt{2} + 1$) − y($3 - 2\\sqrt{2}$) =$4 - \\sqrt{2}$\n⇒ (x − 3y) + (x + 2y)$\\sqrt{2}$=$4 - \\sqrt{2}$\n⇒ $\\left\\{ \\begin{array}{r} x - 3y = 4 x + 2y = - 1 \\end{array} \\right.$ ∴ $\\left\\{ \\begin{array}{r} x = 1 y = - 1 \\end{array} \\right.$ ⇒ (x﹐y) = (1﹐− 1)",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-operations-rationalization-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 18,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0019",
+      "title": "隨堂練習：根式運算與分母有理化",
+      "question_text": "若x﹐y ∈ Q﹐且x + y$\\sqrt{16 + \\sqrt{252}}$= x$\\sqrt{8 - \\sqrt{28}}$+ 15﹐求x^{2} + y^{2}之值﹒",
+      "answer_text": "$18$",
+      "explanation_text": "【解析】∵ x + y$\\sqrt{16 + \\sqrt{252}}$= x$\\sqrt{8 - \\sqrt{28}}$+ 15\n∴ x + y$\\sqrt{16 + 2\\sqrt{63}}$= x$\\sqrt{8 - 2\\sqrt{7}}$+ 15\n⇒ x + (3 +$\\sqrt{7}$)y = ($\\sqrt{7}$− 1)x + 15\n⇒ (x + 3y) + y$\\sqrt{7}$= ( − x + 15) + x$\\sqrt{7}$\n∵ x﹐y ∈ Q﹐$\\sqrt{7}$為無理數\n∴ $\\left\\{ \\begin{matrix} x + 3y = - x + 15 y = x \\end{matrix} \\right.$ ⇒ $\\left\\{ \\begin{matrix} x = 3 y = 3 \\end{matrix} \\right.$\n∴ x^{2} + y^{2} = 3^{2} + 3^{2} = 18",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-operations-rationalization-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 19,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0020",
+      "title": "隨堂練習：根式運算與分母有理化",
+      "question_text": "化簡下列各式：(1)$\\sqrt{\\frac{1}{3}} + \\sqrt{\\frac{1}{27}} - \\sqrt{\\frac{1}{48}} =$____________﹒ (2)$\\frac{\\sqrt{5} - \\sqrt{3}}{\\sqrt{5} + \\sqrt{3}} =$____________﹒\n(3)$\\frac{2}{\\sqrt{7} - \\sqrt{5}} - \\frac{4}{\\sqrt{7} + \\sqrt{5}} =$____________﹒ (4)$\\sqrt{\\frac{11}{7}} + \\sqrt{\\frac{7}{11}} + \\frac{\\sqrt{11} + \\sqrt{7}}{\\sqrt{11} - \\sqrt{7}} =$____________﹒",
+      "answer_text": "(1) $\\frac{13}{36}\\sqrt{3}$；(2) $4-\\sqrt{15}$；(3) $-\\sqrt{7}+3\\sqrt{5}$；(4) $\\frac{113}{154}\\sqrt{77}+\\frac{9}{2}$",
+      "explanation_text": "【解析】(1)$\\sqrt{\\frac{1}{3}} + \\sqrt{\\frac{1}{27}} - \\sqrt{\\frac{1}{48}} = \\frac{1}{\\sqrt{3}} + \\frac{1}{3\\sqrt{3}} - \\frac{1}{4\\sqrt{3}} = \\frac{\\sqrt{3}}{3} + \\frac{\\sqrt{3}}{9} - \\frac{\\sqrt{3}}{12} = (\\frac{1}{3} + \\frac{1}{9} - \\frac{1}{12})\\sqrt{3} = \\frac{13}{36}\\sqrt{3}$\n(2)$\\frac{\\sqrt{5} - \\sqrt{3}}{\\sqrt{5} + \\sqrt{3}} = \\frac{(\\sqrt{5} - \\sqrt{3})^{2}}{(\\sqrt{5} + \\sqrt{3})(\\sqrt{5} - \\sqrt{3})} = \\frac{5 - 2\\sqrt{15} + 3}{5 - 3} = 4 - \\sqrt{15}$\n(3)$\\frac{2}{\\sqrt{7} - \\sqrt{5}} - \\frac{4}{\\sqrt{7} + \\sqrt{5}} = \\frac{2(\\sqrt{7} + \\sqrt{5})}{7 - 5} - \\frac{4(\\sqrt{7} - \\sqrt{5})}{7 - 5} = \\sqrt{7} + \\sqrt{5} - 2(\\sqrt{7} - \\sqrt{5}) = -\\sqrt{7} + 3\\sqrt{5}$\n(4)$\\sqrt{\\frac{11}{7}} + \\sqrt{\\frac{7}{11}} + \\frac{\\sqrt{11} + \\sqrt{7}}{\\sqrt{11} - \\sqrt{7}} = \\frac{\\sqrt{77}}{7} + \\frac{\\sqrt{77}}{11} + \\frac{(\\sqrt{11} + \\sqrt{7})^{2}}{11 - 7} = \\frac{\\sqrt{77}}{7} + \\frac{\\sqrt{77}}{11} + \\frac{11 + 2\\sqrt{77} + 7}{4} = \\frac{113}{154}\\sqrt{77} + \\frac{9}{2}$",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-operations-rationalization-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 20,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0021",
+      "title": "範例12：根式估值與大小比較",
+      "question_text": "設$a = \\sqrt{7 + \\sqrt{47}}$﹐則a在哪兩個連續整數之間﹖\n(1)0與1 (2)1與2 (3)2與3 (4)3與4 (5)4與5﹒",
+      "answer_text": "在$3$與$4$之間（選$(4)$）",
+      "explanation_text": "【解析】$6 < \\sqrt{47} < 7 \\Rightarrow 3 < \\sqrt{13} < \\sqrt{7 + \\sqrt{47}} < \\sqrt{14} < 4$﹐所以a在3與4之間﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-estimation-comparison-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 21,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0022",
+      "title": "隨堂練習：根式估值與大小比較",
+      "question_text": "試問$\\sqrt{73 - \\sqrt{37}}$介在哪兩個連續整數之間？",
+      "answer_text": "$\\sqrt{73-\\sqrt{37}}$介在$8$與$9$之間",
+      "explanation_text": "【解析】因為$6^{2}<37<7^{2}$，所以$6<\\sqrt{37}<7$，則$73-7<73-\\sqrt{37}<73-6$，即$66<73-\\sqrt{37}<67$。\n因此$\\sqrt{66}<\\sqrt{73-\\sqrt{37}}<\\sqrt{67}$，又$8<\\sqrt{66}$且$\\sqrt{67}<9$，所以$8<\\sqrt{73-\\sqrt{37}}<9$，故$\\sqrt{73-\\sqrt{37}}$介在$8$與$9$之間。",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-estimation-comparison-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 22,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0023",
+      "title": "範例13：根式運算與分母有理化",
+      "question_text": "化簡下列根式：(1)$\\sqrt{4 - 2\\sqrt{3}}$﹒ (2)$\\sqrt{19 + 6\\sqrt{2}}$﹒",
+      "answer_text": "(1) $\\sqrt{3}-1$；(2) $3\\sqrt{2}+1$",
+      "explanation_text": "【解析】(1)$\\sqrt{4 - 2\\sqrt{3}} = \\sqrt{(\\sqrt{3})^{2} - 2\\sqrt{3} + 1} = \\sqrt{(\\sqrt{3} - 1)^{2}} = \\sqrt{3} - 1$（注意：$\\sqrt{3} - 1 > 0$）﹒(2)$\\sqrt{19 + 6\\sqrt{2}} = \\sqrt{19 + 2\\sqrt{9}\\sqrt{2}} = \\sqrt{19 + 2\\sqrt{18}}$ $= \\sqrt{(\\sqrt{18})^{2} + 2\\sqrt{18} + 1} = \\sqrt{(\\sqrt{18} + 1)^{2}} = \\sqrt{18} + 1 = 3\\sqrt{2} + 1$﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-operations-rationalization-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 23,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0024",
+      "title": "隨堂練習：根式運算與分母有理化",
+      "question_text": "試化簡下列各式：(1)$\\sqrt{17 + 12\\sqrt{2}}$. (2)$\\sqrt{5 - \\sqrt{24}}$.",
+      "answer_text": "(1) $3+2\\sqrt{2}$；(2) $\\sqrt{3}-\\sqrt{2}$",
+      "explanation_text": "【解析】(1)$\\sqrt{17 + 12\\sqrt{2}} = \\sqrt{17 + 2\\sqrt{72}} = \\sqrt{(\\sqrt{9} + \\sqrt{8})^{2}} = \\sqrt{9} + \\sqrt{8} = 3 + 2\\sqrt{2}$.\n(2)$\\sqrt{5 - \\sqrt{24}} = \\sqrt{5 - 2\\sqrt{6}} = \\sqrt{(\\sqrt{3} - \\sqrt{2})^{2}} = \\sqrt{3} - \\sqrt{2}$.",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-operations-rationalization-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 24,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0025",
+      "title": "範例14：根式運算與分母有理化",
+      "question_text": "設$\\sqrt{39 - \\sqrt{432}}$的整數部分為a﹐小數部分為b﹐則$\\frac{11}{a + b} + \\frac{11}{a - b + 4}$之值為____________﹒",
+      "answer_text": "$4$",
+      "explanation_text": "【解析】$\\sqrt{39 - \\sqrt{432}} = \\sqrt{39 - 2\\sqrt{108}} = \\sqrt{36} - \\sqrt{3} = 6 - \\sqrt{3} = 4 + (2 - \\sqrt{3})$﹐\n∴a = 4﹐$b = 2 - \\sqrt{3}$﹒\n$\\frac{11}{a + b} + \\frac{11}{a - b + 4} = \\frac{11}{6 - \\sqrt{3}} + \\frac{11}{6 + \\sqrt{3}} = \\frac{11[(6 + \\sqrt{3}) + (6 - \\sqrt{3})]}{(6 - \\sqrt{3})(6 + \\sqrt{3})} = \\frac{11 \\times 12}{33} = 4$﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-operations-rationalization-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 25,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0026",
+      "title": "隨堂練習：根式運算與分母有理化",
+      "question_text": "設$\\sqrt{21 + \\sqrt{80}}$的整數部分為$a$﹐小數部分為$b$﹐則$a + b - \\frac{4}{b} =$____________",
+      "answer_text": "$-3$",
+      "explanation_text": "【解析】$\\sqrt{21 + \\sqrt{80}} = \\sqrt{21 + 2\\sqrt{20}} = \\sqrt{20} + 1 = 5.\\cdots$\n∴$a = 5$﹐$b = \\sqrt{20} - 4$ $a + b - \\frac{4}{b} = 5 + \\sqrt{20} - 4 - \\frac{4}{\\sqrt{20} - 4} = 5 + 2\\sqrt{5} - 4 - (2\\sqrt{5} + 4) = - 3$﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-operations-rationalization-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 26,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0027",
+      "title": "範例15：根式運算與分母有理化",
+      "question_text": "$\\frac{1}{\\sqrt{4 - \\sqrt{12}}}$的純小數部分為$t$﹐則$\\frac{1}{t} - \\frac{1}{t + 1} =$____________﹒",
+      "answer_text": "$2$",
+      "explanation_text": "【解析】$\\frac{1}{\\sqrt{4 - \\sqrt{12}}} = \\frac{1}{\\sqrt{4 - 2\\sqrt{3}}} = \\frac{1}{\\sqrt{3} - 1} = \\frac{\\sqrt{3} + 1}{2}$ $\\frac{\\sqrt{3} + 1}{2} = 1.\\cdots$﹐整數$= 1$﹐$t = \\frac{\\sqrt{3} - 1}{2}$ $\\frac{1}{t} - \\frac{1}{t + 1} = \\frac{2}{\\sqrt{3} - 1} - \\frac{2}{\\sqrt{3} + 1} = (\\sqrt{3} + 1) - (\\sqrt{3} - 1) = 2$﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-operations-rationalization-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 27,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0028",
+      "title": "隨堂練習：根式運算與分母有理化",
+      "question_text": "設$\\sqrt{28}$的小數部分為k﹐將$\\sqrt{3 - k}$化為$\\sqrt{a} - b$的形式﹐若a﹐b為整數﹐則a + b = ____________﹒",
+      "answer_text": "$8$",
+      "explanation_text": "【解析】$k = \\sqrt{28} - 5 = - 5 + 2\\sqrt{7} \\Rightarrow \\sqrt{3 - k} = \\sqrt{8 - 2\\sqrt{7}} = \\sqrt{7} - 1$﹐\n∴a = 7﹐b = 1﹐a + b = 8﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-operations-rationalization-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 28,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0029",
+      "title": "範例16：根式估值與大小比較",
+      "question_text": "設x$\\in$N﹐若$\\sqrt{3}$介於$\\frac{x + 5}{x}$與$\\frac{x + 6}{x + 1}$之間﹐則x之值為____________﹒",
+      "answer_text": "$6$",
+      "explanation_text": "【解析】∵ $\\frac{x + 5}{x} = 1 + \\frac{5}{x}$﹐$\\frac{x + 6}{x + 1} = 1 + \\frac{5}{x + 1}$且x$\\in$N\n∴ $1 + \\frac{5}{x + 1} < \\sqrt{3} < 1 + \\frac{5}{x}$ ⇒ $\\frac{5}{x + 1} < \\sqrt{3} - 1 < \\frac{5}{x}$ 又$\\sqrt{3} - 1$≒1.732 − 1 = 0.732\n⇒ $\\frac{5}{x + 1}$< 0.732 <$\\frac{5}{x}$ ∴ x = 6",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-estimation-comparison-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 29,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例16"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0030",
+      "title": "範例17：根式估值與大小比較",
+      "question_text": "比較$a = \\sqrt{6} + \\sqrt{3}, b = \\sqrt{7} + \\sqrt{2}, c = \\sqrt{5} + \\sqrt{4}$之大小順序：____________﹒",
+      "answer_text": "$b<a<c$",
+      "explanation_text": "【解析】$a^{2} = 9 + 2\\sqrt{18}$﹐$b^{2} = 9 + 2\\sqrt{14}$﹐$c^{2} = 9 + 2\\sqrt{20}$﹐\n∵$\\sqrt{14} < \\sqrt{18} < \\sqrt{20}$﹐∴b^{2} < a^{2} < c^{2}﹐ 即b < a < c﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-estimation-comparison-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 30,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例17"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0031",
+      "title": "隨堂練習：根式估值與大小比較",
+      "question_text": "試比較a=$\\sqrt{5} + \\sqrt{10}$，b=$\\sqrt{6} + 3$，c=$\\sqrt{7} + 2\\sqrt{2}$之大小關係。",
+      "answer_text": "$c>b>a$",
+      "explanation_text": "【解析】$a^{2} = (\\sqrt{5} + \\sqrt{10})^{2} = 15 + 2\\sqrt{50}$，$b^{2} = (\\sqrt{6} + 3)^{2} = 15 + 2\\sqrt{54}$，$c^{2} = (\\sqrt{7} + 2\\sqrt{2})^{2} = 15 + 2\\sqrt{56}$。\n因為$\\sqrt{56} > \\sqrt{54} > \\sqrt{50}$，所以$c^{2} > b^{2} > a^{2}$，故$c > b > a$。",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-estimation-comparison-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 31,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0032",
+      "title": "範例18：根式估值與大小比較",
+      "question_text": "寫出$\\sqrt{2}$用小數表示的前三位小數﹒",
+      "answer_text": "$1.414$",
+      "explanation_text": "【解析】1.414 我們用十等分法逐步逼近如下：\n(1)首先﹐$1 < 2 < 4$﹐故$1 = \\sqrt{1} < \\sqrt{2} < \\sqrt{4} = 2$﹐即$\\sqrt{2} = 1.\\cdots$﹒\n(2)將1～2之間十等分﹐分點為$1.1, 1.2, \\cdots, 1.9$﹐分別計算這些數的平方﹐ 得$(1.4)^{2} = 1.96 < 2 < 2.25 = (1.5)^{2}$﹐故$1.4 < \\sqrt{2} < 1.5$﹐即$\\sqrt{2} = 1.4\\cdots$﹒\n(3)次將1.4～1.5之間十等分﹐又求得$(1.41)^{2} = 1.9881 < 2 < 2.0164 = (1.42)^{2}$﹐ 故$1.41 < \\sqrt{2} < 1.42$﹐即$\\sqrt{2} = 1.41\\cdots$﹒\n(4)再將1.41～1.42之間十等分﹐求得$(1.414)^{2} = 1.999396 < 2 < 2.002225 = (1.415)^{2}$﹒\n故$1.414 < \\sqrt{2} < 1.415$﹐即$\\sqrt{2} = 1.414\\cdots$﹒（以上計算可利用電算器）",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-estimation-comparison-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 32,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:範例18"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0033",
+      "title": "隨堂練習：根式估值與大小比較",
+      "question_text": "若a為正實數且a的小數部分為b﹐a^{2} + b^{2} = 40﹐則a之值為____________﹒",
+      "answer_text": "$3+\\sqrt{11}$",
+      "explanation_text": "【解析】∵ 0 ≤ b < 1 ∴ 0 ≤ b^{2} < 1﹐又a^{2} + b^{2} = 40 ∴ b^{2} = 40 − a^{2}\n⇒ 0 ≤ 40 − a^{2} < 1 ⇒ 39 ≤ a^{2} < 40 ∴ a的整數部分為6 令a = 6 + b ⇒ (6 + b)^{2} + b^{2} = 40 ⇒ b^{2} + 6b − 2 = 0\n∴ b = − 3$\\pm \\sqrt{11}$（負不合） ⇒ a = 6 + ( − 3 +$\\sqrt{11}$) = 3 +$\\sqrt{11}$",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-estimation-comparison-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 33,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0034",
+      "title": "隨堂練習：根式估值與大小比較",
+      "question_text": "設正實數a的純小數部分為b﹐已知a + b^{2} = n﹐n ∈ Z﹐求b之值﹒",
+      "answer_text": "$\\frac{-1+\\sqrt{5}}{2}$",
+      "explanation_text": "【解析】設a = m + b﹐m ∈ Z﹐m ≥ 0﹐0 < b < 1\n∵ a + b^{2} = n﹐n ∈ Z ∴ m + b + b^{2} = n ⇒ b + b^{2} = n − m ∈ Z\n∵ 0 < b < 1 ∴ 0 < b^{2} < 1 ∴ 0 < b + b^{2} < 2\n∵ b + b^{2} ∈ Z ∴ b + b^{2} = 1 ⇒ b^{2} + b − 1 = 0 ∴ b =$\\frac{- 1 \\pm \\sqrt{5}}{2}$\n∵ 0 < b < 1 ∴ b =$\\frac{- 1 + \\sqrt{5}}{2}$",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-radical-estimation-comparison-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題1：乘法公式、分式與根式的運算",
+      "source_order": 34,
+      "tags": [
+        "s1-1-3",
+        "section:主題1：乘法公式、分式與根式的運算",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0035",
+      "title": "範例1：算幾不等式與最值",
+      "question_text": "(1)設a﹐b是正實數﹐試證：$\\frac{a + b}{2} \\geq \\sqrt{ab} \\geq \\frac{2ab}{a + b}$﹒\n(2)設a，b ≥ 0且a＋2b＝8，則ab之最大值為____________，此時a＝____________，b＝____________。\n(3)設a，b＞0且ab＝25，則$\\frac{4}{a}$＋$\\frac{9}{b}$的最小值為____________，此時a＝____________，b＝____________。",
+      "answer_text": "(1) 成立；(2) 最大值為$8$，此時$a=4$，$b=2$；(3) 最小值為$\\frac{12}{5}$，此時$a=\\frac{10}{3}$，$b=\\frac{15}{2}$",
+      "explanation_text": "【解析】(1)$(\\frac{a + b}{2})^{2} - (\\sqrt{ab})^{2} = \\frac{a^{2} + 2ab + b^{2}}{4} - ab = \\frac{a^{2} - 2ab + b^{2}}{4} = \\frac{(a - b)^{2}}{4} \\geq 0$\n∴$\\frac{a + b}{2} \\geq \\sqrt{ab}$﹐又$\\frac{\\frac{1}{a} + \\frac{1}{b}}{2} \\geq \\sqrt{\\frac{1}{a} \\cdot \\frac{1}{b}}$即$\\frac{a + b}{2ab} \\geq \\sqrt{\\frac{1}{ab}}$﹐故$\\sqrt{ab} \\geq \\frac{2ab}{a + b}$ ※等號成立時a＝b\n(2)$\\frac{a＋2b}{2}$≥$\\sqrt{a \\times 2b}$ ⇨4 ≥ $\\sqrt{2ab}$\n∴16 ≥ 2ab ⇨ ab ≤ 8，當a＝2b＝4時，ab有最大值8 此時a＝4，b＝2\n(3)$\\frac{\\frac{4}{a}＋\\frac{9}{b}}{2}$≥$\\sqrt{\\frac{4}{a} \\times \\frac{9}{b}}$＝$\\sqrt{\\frac{36}{25}}$＝$\\frac{6}{5}$\n∴$\\frac{4}{a}$＋$\\frac{9}{b}$≥$\\frac{12}{5}$，當$\\frac{4}{a}$＝$\\frac{9}{b}$＝$\\frac{6}{5}$時，$\\frac{4}{a}$＋$\\frac{9}{b}$有最小值$\\frac{12}{5}$ 此時a＝$\\frac{10}{3}$，b＝$\\frac{15}{2}$",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-arithmetic-geometric-mean-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題2：算幾不等式",
+      "source_order": 35,
+      "tags": [
+        "s1-1-3",
+        "section:主題2：算幾不等式",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0036",
+      "title": "隨堂練習：算幾不等式與最值",
+      "question_text": "設$a,b \\ge 0$且$2a+3b=10$，則$ab$之最大值為____________，此時$a=$____________，$b=$____________。",
+      "answer_text": "最大值為$\\frac{25}{6}$，此時$a=\\frac{5}{2}$，$b=\\frac{5}{3}$",
+      "explanation_text": "【解析】∴25 ≥ 6ab，即ab ≤$\\frac{25}{6}$，當2a＝3b＝5時，ab有最大值$\\frac{25}{6}$ 此時a＝$\\frac{5}{2}$，b＝$\\frac{5}{3}$",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-arithmetic-geometric-mean-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題2：算幾不等式",
+      "source_order": 36,
+      "tags": [
+        "s1-1-3",
+        "section:主題2：算幾不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0037",
+      "title": "隨堂練習：算幾不等式與最值",
+      "question_text": "設a，b＞0且ab＝9，則$\\frac{1}{a}$＋$\\frac{4}{b}$的最小值為____________，此時a＝____________，b＝____________。",
+      "answer_text": "最小值為$\\frac{4}{3}$，此時$a=\\frac{3}{2}$，$b=6$",
+      "explanation_text": "【解析】$\\frac{\\frac{1}{a}＋\\frac{4}{b}}{2}$≥$\\sqrt{\\frac{1}{a} \\times \\frac{4}{b}}$＝$\\sqrt{\\frac{4}{9}}$＝$\\frac{2}{3}$\n∴$\\frac{1}{a}$＋$\\frac{4}{b}$≥$\\frac{4}{3}$，當$\\frac{1}{a}$＝$\\frac{4}{b}$＝$\\frac{2}{3}$時，$\\frac{1}{a}$＋$\\frac{4}{b}$有最小值$\\frac{4}{3}$ 此時a＝$\\frac{2}{3}$，b＝6",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-arithmetic-geometric-mean-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題2：算幾不等式",
+      "source_order": 37,
+      "tags": [
+        "s1-1-3",
+        "section:主題2：算幾不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0038",
+      "title": "範例2：算幾不等式與最值",
+      "question_text": "$a,b$皆為正實數，\n(1)若$2a+3b=6$，求$ab$之最大值$=$____________。\n(2)若$ab=6$，求$3a+2b$之最小值$=$____________。",
+      "answer_text": "(1) 最大值為$\\frac{3}{2}$；(2) 最小值為$12$",
+      "explanation_text": "【解析】(1)$\\frac{2a + 3b}{2} \\geq \\sqrt{(2a)(3b)} \\Rightarrow \\frac{6}{2} \\geq \\sqrt{6ab} \\Rightarrow 9 \\geq 6ab \\Rightarrow ab \\leq \\frac{3}{2}$，故$ab$的最大值為$\\frac{3}{2}$。\n(2)$\\frac{3a + 2b}{2} \\geq \\sqrt{(3a)(2b)} = \\sqrt{6ab} = \\sqrt{6 \\times 6} = 6 \\Rightarrow 3a + 2b \\geq 12$，故$3a + 2b$的最小值為12。",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-arithmetic-geometric-mean-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題2：算幾不等式",
+      "source_order": 38,
+      "tags": [
+        "s1-1-3",
+        "section:主題2：算幾不等式",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0039",
+      "title": "隨堂練習：算幾不等式與最值",
+      "question_text": "設$a>0$，$b>0$且$a+2b=8$，則\n(1)$ab$之最大值為____________。\n(2)此時$(a,b)=$____________。",
+      "answer_text": "(1) 最大值為$8$；(2) $(a,b)=(4,2)$",
+      "explanation_text": "【解析】由算幾不等式知：$\\frac{a + 2b}{2} \\geq \\sqrt{a \\times 2b}$ ∴ $\\frac{8}{2} \\geq \\sqrt{2ab}$\n⇒ 16$\\geq$2ab ∴ ab$\\leq$8﹐即ab之最大值為8 此時a = 2b = 4 ∴ a = 4﹐b = 2 ⇒ (a﹐b) = (4﹐2)",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-arithmetic-geometric-mean-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題2：算幾不等式",
+      "source_order": 39,
+      "tags": [
+        "s1-1-3",
+        "section:主題2：算幾不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0040",
+      "title": "隨堂練習：算幾不等式與最值",
+      "question_text": "設$a, b$都是正數﹒\n(1)已知$a + b = 50$﹐求ab的最大值﹐又此時$a, b$之值各為何？\n(2)已知$a + 2b = 12$﹐求ab的最大值﹐又此時$a, b$之值各為何？",
+      "answer_text": "(1) 最大值為$625$，此時$a=b=25$；(2) 最大值為$18$，此時$a=6$，$b=3$",
+      "explanation_text": "【解析】(1)利用$\\frac{a + b}{2} \\geq \\sqrt{ab}$得$\\frac{50}{2} \\geq \\sqrt{ab}$﹐即$\\sqrt{ab} \\leq 25$﹐ 因此ab ≤ 625﹐且當a = b = 25時﹐有最大值625﹒\n(2)a > 0﹐2b > 0時﹐$\\frac{a + 2b}{2} \\geq \\sqrt{a(2b)}$﹐即$\\frac{12}{2} \\geq \\sqrt{2ab}$﹐得2ab ≤ 36﹐ 且當a = 2b = 6時﹐ab有最大值18﹐此時a = 6﹐b = 3﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-arithmetic-geometric-mean-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題2：算幾不等式",
+      "source_order": 40,
+      "tags": [
+        "s1-1-3",
+        "section:主題2：算幾不等式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0041",
+      "title": "範例3：算幾不等式與最值",
+      "question_text": "用一條長度60公尺的繩子在河邊圍成一矩形菜圃﹐且河邊不圍繩﹐則其可圍成的面積之最大值為____________平方公尺﹒\n[圖:program-db/assets/question-media/s1-1-3/image3.png]",
+      "answer_text": "$450$平方公尺",
+      "explanation_text": "【解析】如圖 ⇒ 2x + y = 60﹐又矩形面積 = xy 由算幾不等式：$\\frac{2x + y}{2} \\geq \\sqrt{2x \\times y}$\n∴ $\\frac{60}{2} \\geq \\sqrt{2xy}$ ⇒ 900 ≥ 2xy ∴ xy$\\leq$450 即可求之最大值為450平方公尺",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-arithmetic-geometric-mean-s113",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題2：算幾不等式",
+      "source_order": 41,
+      "tags": [
+        "s1-1-3",
+        "section:主題2：算幾不等式",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s1-1-3-0042",
+      "title": "隨堂練習：算幾不等式與最值",
+      "question_text": "一農夫想用長65公尺之竹籬圍成一長方形菜圃﹐並在其中兩邊各留著寬1公尺及2公尺的出入口﹐如圖所示﹒此農夫所能圍成的最大面積為____________平方公尺﹒",
+      "answer_text": "$289$平方公尺",
+      "explanation_text": "【解析】設寬為x﹐則長為$\\frac{65 - 2x + 3}{2} = 34 - x$﹐面積= (34 − x)x = − x^{2} + 34x = − (x − 17)^{2} + 289﹐ 當x = 17時﹐有最大面積289平方公尺﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-arithmetic-geometric-mean-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題2：算幾不等式",
+      "source_order": 42,
+      "tags": [
+        "s1-1-3",
+        "section:主題2：算幾不等式",
+        "marker:隨堂練習",
+        "needs-review"
+      ],
+      "review_note": "題幹中的數字由解答反推補寫，建議再對原始 Word 校對一次。"
+    },
+    {
+      "id": "q-s1-1-3-0043",
+      "title": "隨堂練習：算幾不等式與最值",
+      "question_text": "一(1)小綠想沿著學校圍牆邊﹐用「ㄇ」字型的竹籬圍成一塊花圃（如圖）﹐若竹籬的長度是20公尺﹐試問此花圃的最大面積為____________平方公尺﹒\n(2)在半徑為4公尺的半圓中﹐開闢一個內接矩形苗圃﹐且其一邊與圓的直徑重合﹐試問此苗圃的最大面積為____________平方公尺﹒\n[圖:program-db/assets/question-media/s1-1-3/image5.png]\n[圖:program-db/assets/question-media/s1-1-3/image6.png]",
+      "answer_text": "(1) $50$平方公尺；(2) $16$平方公尺",
+      "explanation_text": "【解析】(1)設長為x公尺﹐寬為y公尺﹐則x + 2y = 20﹐ 面積 = xy = (20 − 2y)y = − 2y^{2} + 20y = − 2(y − 5)^{2} + 50 ≤ 50﹐\n∴最大面積為50平方公尺﹒\n(2)令矩形長2x﹐寬y﹐則x^{2} + y^{2} = 16﹐ 面積$= 2xy = 2\\sqrt{x^{2}y^{2}} = 2\\sqrt{x^{2}(16 - x^{2})} = 2\\sqrt{- x^{4} + 16x^{2}} = 2\\sqrt{- (x^{2} - 8)^{2} + 64} \\leq 2\\sqrt{64} = 16$﹐\n∴最大面積為16平方公尺﹒",
+      "chapter_code": "s1-1-3",
+      "formula_id": "senior-arithmetic-geometric-mean-s113",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-3轉.docx",
+      "source_section": "主題2：算幾不等式",
+      "source_order": 43,
+      "tags": [
+        "s1-1-3",
+        "section:主題2：算幾不等式",
+        "marker:隨堂練習"
+      ]
+    }
+  ]
+}

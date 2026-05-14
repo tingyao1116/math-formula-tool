@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d5c63" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="數學公式工具" />
+  <title>統整管理頁</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="styles.css?v=20260423-abs-count-layout-v4" />
+</head>
+<body>
+  <div class="page-shell manage-shell">
+    <header class="hero manage-hero">
+      <div class="hero__content">
+        <p class="eyebrow">Formula Manager</p>
+        <h1>統整管理頁</h1>
+        <p class="hero__lead">在這裡直接管理重點內容：新增、刪除、調整順序、修改欄位。儲存後，首頁與分享頁都會優先讀取你的版本。</p>
+        <div class="hero__stats" id="manageStats">
+          <div class="stat-chip">資料來源載入中…</div>
+        </div>
+      </div>
+      <div class="hero__panel manage-panel">
+        <h2>資料操作</h2>
+        <div class="manage-actions-stack">
+          <button id="addNewButton" class="pill-button" type="button">新增重點</button>
+          <button id="saveAllButton" class="ghost-button" type="button">暫存到瀏覽器（不寫資料庫）</button>
+          <button id="saveDbButton" class="ghost-button" type="button">寫回資料庫</button>
+          <button id="bridgeToggleButton" class="ghost-button" type="button">本機存檔：未連線</button>
+          <button id="resetManagedButton" class="ghost-button" type="button">還原成內建版本</button>
+          <button id="exportButton" class="ghost-button" type="button">匯出 JSON 備份</button>
+          <label class="ghost-link file-label" for="importInput">匯入 JSON 備份</label>
+          <input id="importInput" type="file" accept="application/json" hidden />
+          <a class="ghost-link" href="index.html">回總覽頁</a>
+          <a class="ghost-link" href="question-bank.html">開啟題庫練習頁</a>
+        </div>
+        <p id="manageNotice" class="detail-note">尚未操作。</p>
+      </div>
+    </header>
+
+    <main class="manage-layout">
+      <section class="panel manage-list-panel">
+        <div class="manage-section-header">
+          <div>
+            <p class="summary-label">重點清單</p>
+            <h2>目前管理內容</h2>
+          </div>
+          <p id="manageCount" class="summary-count"></p>
+        </div>
+        <div class="manage-filters">
+          <label class="field">
+            <span>年級篩選</span>
+            <select id="manageGradeFilter"></select>
+          </label>
+          <label class="field">
+            <span>章節篩選</span>
+            <select id="manageChapterFilter"></select>
+          </label>
+          <label class="field">
+            <span>難度篩選</span>
+            <select id="manageDifficultyFilter"></select>
+          </label>
+          <label class="field">
+            <span>排序方式</span>
+            <select id="manageSortFilter">
+              <option value="modified">修改時間</option>
+              <option value="curriculum">課綱順序</option>
+              <option value="title">標題</option>
+            </select>
+          </label>
+          <div class="field">
+            <span>排序方向</span>
+            <button id="manageSortDirectionToggle" class="ghost-button search-scope-toggle" type="button">目前：新到舊</button>
+          </div>
+        </div>
+        <div id="manageList" class="manage-list"></div>
+      </section>
+
+      <section class="panel manage-editor-panel">
+        <div class="manage-section-header">
+          <div>
+            <p class="summary-label">章節總表</p>
+            <h2>章節重點大綱檢視</h2>
+          </div>
+        </div>
+        <div id="manageOverviewList" class="manage-overview-list"></div>
+
+        <div class="manage-section-header">
+          <div>
+            <p class="summary-label">架構檢視</p>
+            <h2>章節 → 主題 → 分支</h2>
+          </div>
+        </div>
+        <div class="manage-structure-designer">
+          <p class="manage-structure-designer__tip">可拖動節點到上方、下方或中間。放到中間會成為子節點；存檔前會自動整理成單一章節、單一父層的結構。</p>
+          <div id="manageStructureBoard" class="manage-structure-board"></div>
+        </div>
+
+        <div class="manage-section-header">
+          <div>
+            <p class="summary-label">編輯區</p>
+            <h2 id="editorTitle">請先選一筆重點</h2>
+          </div>
+        </div>
+
+        <form id="editorForm" class="manage-form">
+          <input name="id" type="hidden" />
+          <label class="field"><span>標題</span><input name="title" type="text" /></label>
+          <div class="manage-form-grid">
+            <label class="field" hidden><span>學層 / 年級 / 學期</span><select name="levelKey" id="levelKey"></select></label>
+            <label class="field"><span>章節代號（決定年級與章節）</span><select name="chapterCode" id="chapterCode"></select></label>
+            <label class="field" hidden><span>領域</span><input name="domain" type="text" readonly /></label>
+            <label class="field">
+              <span>章節角色</span>
+              <select name="chapterRole">
+                <option value="">未指定</option>
+                <option value="主角">主角</option>
+                <option value="重要配角">重要配角</option>
+                <option value="配角">配角</option>
+                <option value="教學補充">教學補充</option>
+              </select>
+            </label>
+            <label class="field"><span>上層主題</span><select name="parentId" id="parentId"></select></label>
+            <label class="field" hidden><span>關聯章節（已停用）</span><input name="relatedChapters" type="text" /></label>
+            <label class="field" hidden><span>關聯主題 id（已停用）</span><input name="relatedTopicIds" type="text" /></label>
+            <label class="field">
+              <span>難度</span>
+              <select name="difficulty">
+                <option value="基礎">基礎</option>
+                <option value="進階">進階</option>
+                <option value="課外">課外</option>
+              </select>
+            </label>
+            <label class="field"><span>標籤（逗號分隔）</span><input name="tags" type="text" /></label>
+          </div>
+          <fieldset class="field checkbox-group">
+            <span>內容屬性</span>
+            <div class="checkbox-grid">
+              <label><input type="checkbox" name="contentTypes" value="定義" />定義</label>
+              <label><input type="checkbox" name="contentTypes" value="公式" />公式</label>
+              <label><input type="checkbox" name="contentTypes" value="題型" />題型</label>
+              <label><input type="checkbox" name="contentTypes" value="使用技巧" />使用技巧</label>
+              <label><input type="checkbox" name="contentTypes" value="注意事項" />注意事項</label>
+              <label><input type="checkbox" name="contentTypes" value="常見錯誤" />常見錯誤</label>
+              <label><input type="checkbox" name="contentTypes" value="無限練習" />無限練習</label>
+            </div>
+          </fieldset>
+          <label class="field" data-edit-group="定義,公式"><span>公式 / 概念</span><textarea name="formula" rows="3"></textarea></label>
+          <label class="field" data-edit-group="定義"><span>何時使用（每行一點）</span><textarea name="usage" rows="4"></textarea></label>
+          <label class="field" data-edit-group="題型"><span>使用範例（每行一點）</span><textarea name="examples" rows="4"></textarea></label>
+          <label class="field" data-edit-group="使用技巧"><span>使用技巧（每行一點）</span><textarea name="tips" rows="4"></textarea></label>
+          <label class="field" data-edit-group="注意事項"><span>注意事項（每行一點）</span><textarea name="notes" rows="4"></textarea></label>
+          <label class="field" data-edit-group="常見錯誤"><span>常見錯誤（每行一點）</span><textarea name="mistakes" rows="4"></textarea></label>
+          <p class="detail-note" data-edit-group="無限練習">包含「無限練習」時，首頁與單頁會顯示出題與顯示答案按鈕。</p>
+          <div class="manage-form-actions">
+            <button class="pill-button" type="submit">套用到這一筆</button>
+            <button id="deleteCurrentButton" class="ghost-button" type="button">刪除這一筆</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script defer src="formulas.js"></script>
+  <script defer src="data/formula-content.js?v=20260514-j62-main-topics-v1"></script>
+  <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
+  <script defer src="data/chapter-code-config.js"></script>
+  <script defer src="data/formula-calculators.js"></script>
+  <script defer src="data/formula-practice-assignments.js"></script>
+  <script defer src="data/formula-practice.js"></script>
+  <script defer src="formula-data.js?v=20260505-question-category-v1"></script>
+  <script defer src="chapter-overviews.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="formula-core.js?v=20260427-theta-fix-v1"></script>
+  <script defer src="manage.js"></script>
+  <script defer src="annotation-blocks.js"></script>
+  <script defer src="pwa.js"></script>
+</body>
+</html>

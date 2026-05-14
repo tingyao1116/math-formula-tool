@@ -1,0 +1,1043 @@
+{
+  "meta": {
+    "chapter_code": "s1-1-1",
+    "source_ref": "source/1-1轉.docx",
+    "count": 50,
+    "schema": "question-import-pack-v1-preview",
+    "finalized": true,
+    "finalizedBy": "finalize_s1_1_1_pack.py"
+  },
+  "summary": {
+    "count": 50,
+    "sections": {
+      "主題1：有理數的定義與性質": 12,
+      "主題2：無理數": 13,
+      "主題3實數與數線": 18,
+      "主題4：距離與分點公式": 7
+    },
+    "skipped": [],
+    "image_references": [
+      "program-db/assets/question-media/s1-1-1/image10.png",
+      "program-db/assets/question-media/s1-1-1/image11.png",
+      "program-db/assets/question-media/s1-1-1/image12.png",
+      "program-db/assets/question-media/s1-1-1/image14.png",
+      "program-db/assets/question-media/s1-1-1/image15.png",
+      "program-db/assets/question-media/s1-1-1/image16.png",
+      "program-db/assets/question-media/s1-1-1/image17.png",
+      "program-db/assets/question-media/s1-1-1/image18.png",
+      "program-db/assets/question-media/s1-1-1/image19.png",
+      "program-db/assets/question-media/s1-1-1/image20.png",
+      "program-db/assets/question-media/s1-1-1/image21.png",
+      "program-db/assets/question-media/s1-1-1/image4.png",
+      "program-db/assets/question-media/s1-1-1/image5.png",
+      "program-db/assets/question-media/s1-1-1/image6.png",
+      "program-db/assets/question-media/s1-1-1/image7.png",
+      "program-db/assets/question-media/s1-1-1/image8.png",
+      "program-db/assets/question-media/s1-1-1/image9.png"
+    ]
+  },
+  "questions": [
+    {
+      "id": "q-s1-1-1-0001",
+      "title": "範例1：有理數的稠密性",
+      "question_text": "設k為正整數，則介於$\\frac{1}{8}$與$\\frac{1}{7}$之間的有理數其形如$\\frac{k}{280}$者共有____________個。",
+      "answer_text": "4個。",
+      "explanation_text": "【解析】由$\\frac{1}{8}<\\frac{k}{280}<\\frac{1}{7}$，得$\\frac{35}{280}<\\frac{k}{280}<\\frac{40}{280}$，k為正整數，故$k=36,37,38,39$共4個。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-rational-density",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題1：有理數的定義與性質",
+      "source_order": 1,
+      "tags": [
+        "s1-1-1",
+        "section:主題1：有理數的定義與性質",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0002",
+      "title": "範例2：四捨五入反推分數",
+      "question_text": "有一最簡分數，其分子、分母之和為70，將其化為小數並四捨五入後為0.6，則此分數為____________。",
+      "answer_text": "$\\frac{27}{43}$。",
+      "explanation_text": "【解析】設此分數為$\\frac{70-x}{x}$，$x\\in N$，$70-x\\in N$且$(x,70-x)=1$。\n$0.55\\leq\\frac{70-x}{x}<0.65$\n⇒ $\\frac{11}{20}\\leq\\frac{70-x}{x}<\\frac{13}{20}$\n⇒ $11x\\leq20(70-x)$且$20(70-x)<13x$（因$x>0$）\n⇒ $\\frac{1400}{33}<x\\leq\\frac{1400}{31}$，得$x=43,44,45$\n對應分數為$\\frac{27}{43}$、$\\frac{26}{44}$、$\\frac{25}{45}$，其中後兩者不是最簡分數，故所求為$\\frac{27}{43}$。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-rounding-rational-constraints",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題1：有理數的定義與性質",
+      "source_order": 2,
+      "tags": [
+        "s1-1-1",
+        "section:主題1：有理數的定義與性質",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0003",
+      "title": "隨堂練習：四捨五入反推分數",
+      "question_text": "有一個最簡分數，其分子與分母之和為20，若將此分數化為小數，並將第三位小數四捨五入得0.54一數，則此分數為____________。",
+      "answer_text": "$\\frac{7}{13}$。",
+      "explanation_text": "【解析】設此最簡分數為$\\frac{20-p}{p}$（p為正整數，$1\\leq p<20$，且$(p,20-p)=1$）。\n$0.535\\leq\\frac{20-p}{p}<0.545$\n⇒ $0.535p\\leq20-p<0.545p$\n⇒ 左式可得$p\\leq13\\ldots$，右式可得$p>12\\ldots$\n∴ $p=13$，此分數為$\\frac{7}{13}$。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-rounding-rational-constraints",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題1：有理數的定義與性質",
+      "source_order": 3,
+      "tags": [
+        "s1-1-1",
+        "section:主題1：有理數的定義與性質",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0004",
+      "title": "範例3：有限小數的分母判斷",
+      "question_text": "已知a，b為阿拉伯數字且$\\frac{3a4b7}{180}$可化為有限小數，試求$a+b$之值。",
+      "answer_text": "$a+b=4$或13。",
+      "explanation_text": "【解析】因$180=2^{2}\\times3^{2}\\times5$，而$\\frac{3a4b7}{180}$為有限小數，\n所以約分後分母不能含有3，故分子$3a4b7$必須被9整除。\n因而$3+a+4+b+7=14+a+b$須為9的倍數。\n又$0\\leq a+b\\leq18$，所以$a+b=4$或13。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-terminating-decimal-denominator-test",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題1：有理數的定義與性質",
+      "source_order": 4,
+      "tags": [
+        "s1-1-1",
+        "section:主題1：有理數的定義與性質",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0005",
+      "title": "隨堂練習：有限小數的分母判斷",
+      "question_text": "設a2811是一個五位數﹐且$\\frac{a2811}{420}$為有限小數﹐則數字a = ____________﹒",
+      "answer_text": "6。",
+      "explanation_text": "【解析】$\\frac{a2811}{2^{2} \\times 3 \\times 5 \\times 7}$為有限小數 ⇒ a2811必為3與7的倍數\n若為3的倍數﹐則a + 2 + 8 + 1 + 1為3的倍數\n∴a可能值為3﹐6﹐9（0不合）\n又32811﹐62811﹐92811只有62811為7的倍數\n故a = 6﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-terminating-decimal-denominator-test",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題1：有理數的定義與性質",
+      "source_order": 5,
+      "tags": [
+        "s1-1-1",
+        "section:主題1：有理數的定義與性質",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0006",
+      "title": "範例4：有理數的定義與性質",
+      "question_text": "已知$\\frac{a}{b}$是最簡分數﹐a與b均為一位正整數﹐b的倒數等於$\\frac{b + 1}{9a + 2}$﹐則分數$\\frac{a}{b} =$____________﹒",
+      "answer_text": "$\\frac{6}{7}$。",
+      "explanation_text": "【解析】$\\frac{1}{b} = \\frac{b + 1}{9a + 2} \\Rightarrow 9a = b(b + 1) - 2 = (b + 2)(b - 1)\\cdots$ (＊)\n∵(b + 2) − (b − 1) = 3﹐\n∴b + 2與b − 1除以3的餘數必相同﹐\n因而b + 2與b − 1必同為3的倍數﹐（否則(b + 2)(b − 1)就不可能為9的倍數）\n∴(b − 1)可為0﹐3﹐6﹐\n∵b可為1﹐4﹐7﹐代入(＊)得a = 0（不合）﹐2﹐6﹐\n∴$\\frac{a}{b} = \\frac{2}{4}$（不合）或$\\frac{6}{7}$﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-rational-number-definition",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題1：有理數的定義與性質",
+      "source_order": 6,
+      "tags": [
+        "s1-1-1",
+        "section:主題1：有理數的定義與性質",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0007",
+      "title": "隨堂練習：循環小數化分數",
+      "question_text": "一個正數乘以$0.\\overline{3}$﹐誤為乘以0.3﹐所得相差21﹐則此數為____________﹒",
+      "answer_text": "630。",
+      "explanation_text": "【解析】設正數為x﹐則$x \\times 0.\\overline{3} - x \\times 0.3 = 21$\n$\\Rightarrow x(\\frac{1}{3} - \\frac{3}{10}) = 21$﹐x = 630﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-repeating-decimal-to-fraction",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題1：有理數的定義與性質",
+      "source_order": 7,
+      "tags": [
+        "s1-1-1",
+        "section:主題1：有理數的定義與性質",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0008",
+      "title": "範例5：循環小數化分數",
+      "question_text": "將有理數$\\frac{6}{7}$表成循環小數時﹐試問小數點後第100位的數字﹒",
+      "answer_text": "1。",
+      "explanation_text": "【解析】$\\frac{6}{7} = 0.\\overline{857142}$﹐每6位為循環節﹐因100 ÷ 6 = 16……4﹐知所求的數字為1﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-repeating-decimal-to-fraction",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題1：有理數的定義與性質",
+      "source_order": 8,
+      "tags": [
+        "s1-1-1",
+        "section:主題1：有理數的定義與性質",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0009",
+      "title": "隨堂練習：循環小數化分數",
+      "question_text": "（ ）已知99999 = 9 × 41 × 271﹐若將$\\frac{1}{41}$化為循環小數﹐則小數點下第2008位數字\n為(1)0 (2)2 (3)3 (4)4 (5)9﹒.",
+      "answer_text": "選(4)。",
+      "explanation_text": "【解析】$\\frac{1}{41} = 0.\\overline{02439}$﹐∴小數點下第2008位為4﹐故選(4)﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-repeating-decimal-to-fraction",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題1：有理數的定義與性質",
+      "source_order": 9,
+      "tags": [
+        "s1-1-1",
+        "section:主題1：有理數的定義與性質",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0010",
+      "title": "範例6：有限小數與循環小數",
+      "question_text": "（ ）下列何者正確﹖ (1)$0.\\overline{9} < 1$ (2)$0.2\\overline{32} = 0.\\overline{23}$ (3)$0.\\overline{34} > 0.343$ (4)$0.\\overline{34} < 0.344$\n(5)$0.12\\overline{3}$為有理數﹒",
+      "answer_text": "選(2)(3)(4)(5)。",
+      "explanation_text": "【解析】(1)令$x = 0.\\overline{9} \\Rightarrow 10x = 9.\\overline{9} \\Rightarrow 10x - x = 9.\\overline{9} - 0.\\overline{9} \\Rightarrow 9x = 9 \\Rightarrow x = 1$﹒\n(2)$0.2\\overline{32} = 0.23232\\cdots = 0.\\overline{23}$﹒\n(3)$0.\\overline{34} = 0.3434\\cdots > 0.343$﹒\n(4)$0.\\overline{34} = 0.3434\\cdots < 0.344$﹒\n(5)令$0.12\\overline{3} = t \\Rightarrow 10t = 1.2\\overline{3} \\Rightarrow 10t - t = 1.2\\overline{3} - 0.12\\overline{3}$\n$\\Rightarrow 9t = 1.23 - 0.12 \\Rightarrow t = \\frac{1.23 - 0.12}{9} = \\frac{123 - 12}{900} = \\frac{111}{900}$﹒\n故選(2)(3)(4)(5)",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-decimal-type-rational",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題1：有理數的定義與性質",
+      "source_order": 10,
+      "tags": [
+        "s1-1-1",
+        "section:主題1：有理數的定義與性質",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0011",
+      "title": "範例7：有限小數的分母判斷",
+      "question_text": "已知p為自然數﹐且2 ≤ p ≤ 30﹒試問﹕若$\\frac{1}{p}$可化成有限小數﹐則滿足的p值有幾個",
+      "answer_text": "8個。",
+      "explanation_text": "【解析】∵$\\frac{1}{p}$可化成有限小數 ⇒ p為質因數2或5﹒\n因此﹐滿足條件的p為2﹐4﹐5﹐8﹐10﹐16﹐20﹐25﹐共8個數﹒\n【另解】p = 2^a × 5^b﹐其中a﹐b為正整數或0﹒\n已知2 ≤ p ≤ 30﹐\n當b = 0﹐a = 1﹐2﹐3﹐4有4種可能﹐\n當b = 1﹐a = 0﹐1﹐2有3種可能﹐\n當b = 2﹐a = 0有1種可能﹒\n因此﹐總共有4 + 3 + 1 = 8個﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-terminating-decimal-denominator-test",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題1：有理數的定義與性質",
+      "source_order": 11,
+      "tags": [
+        "s1-1-1",
+        "section:主題1：有理數的定義與性質",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0012",
+      "title": "範例8：循環小數化分數",
+      "question_text": "設a，b，c為1至9的正整數，若$\\frac{699}{900}<0.a\\overline{bc}<\\frac{700}{900}$，則$(a,b,c)=$____________。",
+      "answer_text": "$(7,7,6)$。",
+      "explanation_text": "【解析】$0.a\\overline{bc}=\\frac{(100a+10b+c)-a}{990}$，所以$\\frac{699}{900}<\\frac{(100a+10b+c)-a}{990}<\\frac{700}{900}$。因此$768.9<(100a+10b+c)-a<770$，故$(100a+10b+c)-a=769$，得$a=7$，$b=7$，$c=6$。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-repeating-decimal-to-fraction",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題1：有理數的定義與性質",
+      "source_order": 12,
+      "tags": [
+        "s1-1-1",
+        "section:主題1：有理數的定義與性質",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0013",
+      "title": "範例1：無理數",
+      "question_text": "下列哪些數是無理數？(A) 3 +$\\sqrt{2}$ (B)$\\sqrt{144}$ (C)$\\sqrt{360}$ (D)$\\sqrt{500}$ (E)$\\sqrt{\\frac{5}{3}}$。",
+      "answer_text": "選(A)(C)(D)(E)。",
+      "explanation_text": "【解析】(A)令3 +$\\sqrt{2}$= r ∈ Q，則$\\sqrt{2}$= r − 3 ∈ Q與$\\sqrt{2}$為無理數矛盾\n∴ 3 +$\\sqrt{2}$為無理數，即3 +$\\sqrt{2}$∉ Q (B)$\\sqrt{144}$= 12 ∈ Q\n(C)$\\sqrt{360}$= 6$\\sqrt{10}$∉ Q為無理數（∵ $\\sqrt{10}$為無理數）\n(D)$\\sqrt{500}$= 10$\\sqrt{5}$∉ Q為無理數（∵ $\\sqrt{5}$為無理數）\n(E)$\\sqrt{\\frac{5}{3}}$=$\\frac{\\sqrt{15}}{3}$∉ Q為無理數（∵ $\\sqrt{15}$為無理數）\n故選(A)(C)(D)(E)",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-irrational-number-basics",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題2：無理數",
+      "source_order": 13,
+      "tags": [
+        "s1-1-1",
+        "section:主題2：無理數",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0014",
+      "title": "隨堂練習：無理數四則與封閉性陷阱",
+      "question_text": "若a，b均為有理數，c，d均為無理數，則下列何者正確？\n(A) a + b必為有理數 (B) c + d必為無理數 (C) a + c必為無理數 (D) ac必為無理數\n(E) cd必為無理數。",
+      "answer_text": "選(A)(C)。",
+      "explanation_text": "【解析】(A)為真。∵ 有理數之加法具有封閉性\n(B)為偽。例如c =$\\sqrt{2}$，d = −$\\sqrt{2}$均為無理數，但c + d = 0\n(C)為真\n(D)為偽。例如a = 0，c =$\\sqrt{5}$ ⇒ ac = 0\n(E)為偽。例如c =$\\sqrt{2}$，d = −$\\sqrt{2}$ ⇒ cd = − 2\n故選(A)(C)",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-irrational-operations",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題2：無理數",
+      "source_order": 14,
+      "tags": [
+        "s1-1-1",
+        "section:主題2：無理數",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0015",
+      "title": "隨堂練習：無理數四則與封閉性陷阱",
+      "question_text": "下列各敘述何者為真？\n(1) 若a為有理數，b為無理數，則$a-b$為無理數\n(2) 若$a^{3}$、$a^{8}$為有理數，則a為有理數\n(3) 若$a+c\\sqrt{2}=b+d\\sqrt{2}$，則$a=b$，$c=d$\n(4) a、b為有理數，c、d為無理數，若$a+c=b+d$則$a=b$，$c=d$\n(5) 若$a+2b$、$2b+3c$、$3c+a$為有理數，則a、b、c皆為有理數。",
+      "answer_text": "選(1)(2)(5)。",
+      "explanation_text": "【解析】\n(1) 正確。\n(2) 正確。\n(3) 錯誤。反例：$a=2$，$c=\\sqrt{2}$，$b=4$，$d=0$。\n(4) 錯誤。反例：$a=1$，$c=\\sqrt{2}$，$b=2$，$d=\\sqrt{2}-1$。$a+c=b+d$，a、b為有理數，c、d為無理數，但$a\\ne b$，$c\\ne d$。\n(5) 正確。\n故選(1)(2)(5)。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-irrational-operations",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題2：無理數",
+      "source_order": 15,
+      "tags": [
+        "s1-1-1",
+        "section:主題2：無理數",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0016",
+      "title": "隨堂練習：無理數四則與封閉性陷阱",
+      "question_text": "設a，b為有理數，c，d為無理數，且$a\\ne0$，則下列何者為真？\n(1) $a+c$為無理數 (2) $c+d$為無理數 (3) $ac$為無理數 (4) $cd$為無理數 (5) $\\frac{b}{a}$為有理數。",
+      "answer_text": "選(1)(3)(5)。",
+      "explanation_text": "【解析】\n(1) ○：例如：$2+\\sqrt{3}$。\n(2) ×：例如：$\\sqrt{2}+(1-\\sqrt{2})=1$為有理數。\n(3) ○：例如：$5\\cdot\\sqrt{3}=5\\sqrt{3}$。\n(4) ×：例如：$(\\sqrt{2}+1)(\\sqrt{2}-1)=2-1=1$為有理數。\n(5) ○：例如：$\\frac{3}{5}$。\n故選(1)(3)(5)。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-irrational-operations",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題2：無理數",
+      "source_order": 16,
+      "tags": [
+        "s1-1-1",
+        "section:主題2：無理數",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0017",
+      "title": "隨堂練習：無理數四則與封閉性陷阱",
+      "question_text": "a，b，c，d均為有理數，且abcd ≠ 0，x，y均為無理數，則下列敘述何者恆真？\n(A) a + bx為無理數 (B) xy為無理數 (C)若a + b$\\sqrt{3}$= c + d$\\sqrt{3}$，則a = c，b = d\n(D)$\\frac{x}{a}$+$\\frac{y}{b}$為無理數 (E)若a + x = b + y，則a = b，x = y。",
+      "answer_text": "選(A)(C)。",
+      "explanation_text": "【解析】(A)對。a，b為有理數且均不為零，故a + bx為無理數\n(B)錯。令x =$\\sqrt{2}$，y = 3$\\sqrt{2}$，則xy = 6為有理數\n(C)對。設b ≠ d，由a + b$\\sqrt{3}$= c + d$\\sqrt{3}$，得$\\sqrt{3}$=$\\frac{c - a}{b - d}$，矛盾，故b = d，則a = c\n(D)錯。令a = 1，b = − 1，則x = y =$\\sqrt{2}$，則$\\frac{x}{a}$+$\\frac{y}{b}$= 0為有理數\n(E)錯。令a = 1，x =$\\sqrt{3}$，b = 0，y = 1 +$\\sqrt{3}$，則a + x = b + y，但a ≠ b，x ≠ y\n故選(A)(C)",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-irrational-operations",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題2：無理數",
+      "source_order": 17,
+      "tags": [
+        "s1-1-1",
+        "section:主題2：無理數",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0018",
+      "title": "範例2：根號 2 為無理數的反證法",
+      "question_text": ".(1)證明$\\sqrt{2}$為無理數。 (2)利用(1)證明3 +$\\sqrt{2}$為無理數。",
+      "answer_text": "見詳解",
+      "explanation_text": "8.(1)證明$\\sqrt{2}$為無理數。 (2)利用(1)證明3 +$\\sqrt{2}$為無理數。\n【證明】(1)設$\\sqrt{2}$為有理數，則$\\sqrt{2}$=$\\frac{q}{p}$，p，q∈Z，(p，q) = 1 ⇒ 2 =$\\frac{q^{2}}{p^{2}}$ ⇒ 2p^2 = q^2\n∴ q^2為2的倍數 ⇒ q為2的倍數\n令q = 2k，k∈Z，則2p^2 = 4k^2 ⇒ p^2 = 2k^2為2的倍數 ⇒ p為2的倍數\n∴ (p，q) = 2與假設矛盾，故$\\sqrt{2}$不是有理數 ∴ $\\sqrt{2}$為無理數\n(2)設3 +$\\sqrt{2}$為有理數，3 +$\\sqrt{2}$= t，則$\\sqrt{2}$= t − 2∈Q\n由(1)知$\\sqrt{2}$為無理數 ∴ 矛盾 ∴ 3 +$\\sqrt{2}$為無理數",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-proof-irrational-square-root-two",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題2：無理數",
+      "source_order": 18,
+      "tags": [
+        "s1-1-1",
+        "section:主題2：無理數",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0019",
+      "title": "隨堂練習：根號 2 為無理數的反證法",
+      "question_text": "證明：(1)$\\sqrt{3}$為無理數。 (2)$\\sqrt[3]{2}$+$\\sqrt{3}$為無理數。",
+      "answer_text": "(1)$\\sqrt{3}$為無理數；(2)$\\sqrt[3]{2}+\\sqrt{3}$為無理數。",
+      "explanation_text": "【證明】(1)設$\\sqrt{3}$∈ Q ⇒ 令$\\sqrt{3}$=$\\frac{b}{a}$∈ Q，a，b ∈ Z且(a，b) = 1\n$\\sqrt{3}$a = b ⇒ 3a^2 = b^2 ⇒ 3 | b^2 ⇒ 3 | b\n令b = 3k ⇒ 3 | a^2 ⇒ 3 | a\n∵ 3 | b且3 | a與(a，b) = 1（→←） ⇒ $\\sqrt{3}$∉ Q\n(2)設$\\sqrt[3]{2}$+$\\sqrt{3}$= k ∈ Q ⇒ $\\sqrt[3]{2}$ = k −$\\sqrt{3}$ ⇒ 2 = (k −$\\sqrt{3}$)^3\n⇒ $\\sqrt{3}$=$\\frac{k^{3} + 3k - 2}{k^{2} + 3}$∈ Q（→←） ∴ $\\sqrt[3]{2}$+$\\sqrt{3}$∉ Q。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-proof-irrational-square-root-two",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題2：無理數",
+      "source_order": 19,
+      "tags": [
+        "s1-1-1",
+        "section:主題2：無理數",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0020",
+      "title": "範例4：無理數",
+      "question_text": "設x﹐y是兩有理數﹐已知$(2 + \\sqrt{3})x + (1 + \\sqrt{3})y = 7 - \\sqrt{3}$﹐求x﹐y的值﹒",
+      "answer_text": "$x = 8$，$y = -9$。",
+      "explanation_text": "【解析】經移項整理$(2x + y) + (x + y)\\sqrt{3} = 7 - \\sqrt{3}$﹐\n因為x﹐y是有理數﹐所以$(2x + y)$和$(x + y)$均為有理數﹐而$\\sqrt{3}$是無理數﹐\n必有$2x + y = 7$，$x + y = -1$，\n故得$x = 8$，$y = -9$。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-irrational-number-basics",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題2：無理數",
+      "source_order": 20,
+      "tags": [
+        "s1-1-1",
+        "section:主題2：無理數",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0021",
+      "title": "範例5：無理數",
+      "question_text": "設x, y均為有理數, 若$(3 - \\sqrt{3})x + (1 + 3\\sqrt{3})y = 7 + \\sqrt{3}$, 試求x + y的值。",
+      "answer_text": "$x + y = 3$。",
+      "explanation_text": "【解析】$(3 - \\sqrt{3})x + (1 + 3\\sqrt{3})y = 7 + \\sqrt{3} \\Rightarrow (3x + y) + (-x + 3y)\\sqrt{3} = 7 + \\sqrt{3}$，\n必有$3x + y = 7$，$-x + 3y = 1$，\n解得$x = 2$，$y = 1$，故$x + y = 3$。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-irrational-number-basics",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題2：無理數",
+      "source_order": 21,
+      "tags": [
+        "s1-1-1",
+        "section:主題2：無理數",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0022",
+      "title": "隨堂練習：無理數",
+      "question_text": "設a﹐b為二有理數﹐滿足$(2 - \\sqrt{2})a + (3 + 2\\sqrt{2})b = 8 + 3\\sqrt{2}$﹐求a﹐b之值﹒",
+      "answer_text": "$a = 1$，$b = 2$。",
+      "explanation_text": "【解析】$(2 - \\sqrt{2})a + (3 + 2\\sqrt{2})b = 8 + 3\\sqrt{2}$﹐\n$(2a + 3b - 8) + (-a + 2b - 3)\\sqrt{2} = 0$﹐\n故有$2a + 3b - 8 = 0$及$-a + 2b - 3 = 0$，\n解得$a = 1$，$b = 2$。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-irrational-number-basics",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題2：無理數",
+      "source_order": 22,
+      "tags": [
+        "s1-1-1",
+        "section:主題2：無理數",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0023",
+      "title": "隨堂練習：無理數",
+      "question_text": "設a﹐b為有理數﹐且$(4 - 2\\sqrt{2})a + (3 + 6\\sqrt{2})b = 1 - 3\\sqrt{2}$﹐求a﹐b之值﹒",
+      "answer_text": "$a = \\frac{1}{2}$，$b = -\\frac{1}{3}$。",
+      "explanation_text": "【解析】$(4 - 2\\sqrt{2})a + (3 + 6\\sqrt{2})b = 1 - 3\\sqrt{2}$﹐\n$(4a + 3b) + (-2a + 6b)\\sqrt{2} = 1 - 3\\sqrt{2}$﹐\n故有$4a + 3b = 1$及$-2a + 6b = -3$，\n解得$a = \\frac{1}{2}$，$b = -\\frac{1}{3}$。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-irrational-number-basics",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題2：無理數",
+      "source_order": 23,
+      "tags": [
+        "s1-1-1",
+        "section:主題2：無理數",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0024",
+      "title": "範例7：無理數",
+      "question_text": "設a是實數，且$a^{7}$與$a^{23}$均為有理數，試證：a是有理數。",
+      "answer_text": "a為有理數。",
+      "explanation_text": "【解析】滿足$a^{7}$為有理數、$a^{23}$為有理數的a可能為0，也可能異於0﹒\n(I) $a = 0$時，a為有理數恆真﹒\n(II) $a \\neq 0$時，$\\frac{(a^{7})^{10}}{(a^{23})^{3}}$為有理數\n⇒ $a^{70 - 69} = a$為有理數﹒\n由(I)(II)得證：a為有理數。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-irrational-number-basics",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題2：無理數",
+      "source_order": 24,
+      "tags": [
+        "s1-1-1",
+        "section:主題2：無理數",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0025",
+      "title": "隨堂練習：無理數",
+      "question_text": "設$a \\in R$，$a^{51} \\in Q$，$a^{147} \\in Q$，則$a^{4} \\in Q$。(1)真偽： 。 (2)理由： 。",
+      "answer_text": "(1)偽。",
+      "explanation_text": "【解析】(1)偽\n(2)理由：∵ $(51，147) = 3$，不整除4，∴ 令$a = \\sqrt[3]{2}$，則$a^{51} = 2^{17} \\in Q$\n且$a^{147} = 2^{49} \\in Q$，但$a^{4} = 2\\sqrt[3]{2} \\notin Q$。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-irrational-number-basics",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題2：無理數",
+      "source_order": 25,
+      "tags": [
+        "s1-1-1",
+        "section:主題2：無理數",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0026",
+      "title": "範例1：平方根與完全平方數",
+      "question_text": "已知$\\sqrt{3}$單位長，說明如何利用尺規作圖作出1單位長。",
+      "answer_text": "可作得$\\overline{AC}=1$。",
+      "explanation_text": "[圖: program-db/assets/question-media/s1-1-1/image4.png]\n【解析】(1)作60°的半角30°\n(2)取一線段$\\overline{AB}$垂直L於A點且$\\overline{AB}$ =$\\sqrt{3}$\n(3)作∠ABC = 30°，則$\\overline{AC}$ = 1",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-square-root-perfect-square",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 26,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0027",
+      "title": "隨堂練習：平方根與完全平方數",
+      "question_text": "以綠段為單位長（長度為1）﹐試作出長度為$\\sqrt{5}$的線段﹒",
+      "answer_text": "可作得$\\overline{CD} = \\sqrt{5}$。",
+      "explanation_text": "【解析】利用直尺及圓規作圖﹒首先作一線段$\\overline{AB} = 6$﹐以$\\overline{AB}$為直徑作一半圓﹐在$\\overline{AB}$上取點D﹐使$\\overline{AD} = 1$﹐過點D作$\\overline{AB}$的垂線交半圓於C﹒由於∠ACB = 90^\\circ﹐故$\\overline{CD} = \\sqrt{5}$﹒\n[圖: program-db/assets/question-media/s1-1-1/image6.png]",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-square-root-perfect-square",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 27,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0028",
+      "title": "隨堂練習：平方根與完全平方數",
+      "question_text": "以右方線段為單位長﹐試作長度為$\\sqrt{3}$的線段﹒[圖: program-db/assets/question-media/s1-1-1/image7.png]",
+      "answer_text": "可作得$\\overline{CD} = \\sqrt{3}$；或$\\overline{AD} = \\sqrt{3}$。",
+      "explanation_text": "[圖: program-db/assets/question-media/s1-1-1/image8.png]\n【解析】《方法一》\n利用直尺及圓規作圖﹐首先作$\\overline{AB} = 4$﹐以$\\overline{AB}$為直徑作一半圓﹐在$\\overline{AB}$上取點D﹐使$\\overline{AD} = 1$﹐過點D作$\\overline{AB}$的垂線交半圓於C﹐由於∠ACB = 90^\\circ﹐故$\\overline{CD} = \\sqrt{3}$﹒\n《方法二》作法：已知$\\overline{AB} = 1$﹐如圖﹐過B作$\\overline{BC}\\bot\\overline{AB}$﹐且$\\overline{BC} = 1$﹐\n再過C作$\\overline{CD}\\bot\\overline{AC}$﹐且$\\overline{CD} = 1$﹐則$\\overline{AD} = \\sqrt{3}$為所求﹒\n（因為$\\overline{AC} = \\sqrt{1^{2} + 1^{2}} = \\sqrt{2}$﹐$\\overline{AD} = \\sqrt{(\\sqrt{2})^{2} + 1^{2}} = \\sqrt{3}$）",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-square-root-perfect-square",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 28,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0029",
+      "title": "範例2：平方根與完全平方數",
+      "question_text": "已知A(1)﹐B(4)﹐C(5)為數線上三點﹐O為原點﹐長方形BCDE中$\\overline{BE} = 2\\overline{BC}$﹐並依下列步驟作圖﹕\n(1)以B為圓心﹐$\\overline{BD}$長為半徑﹐畫弧交數線於F點\n(2)以$\\overline{OF}$為直徑作半圓\n(3)過A點作$\\overline{AH}$垂直於數線﹐交半圓於H﹒\n若$\\overline{AH}$的長可以寫成$\\frac{1}{2}(\\sqrt{a} + \\sqrt{b})$﹐其中a﹐b皆為自然數﹐則a + b = ____________﹒",
+      "answer_text": "12。",
+      "explanation_text": "[圖: program-db/assets/question-media/s1-1-1/image9.png]\n【解析】∵$\\overline{BC} = 1$且$\\overline{BE} = 2\\overline{BC} = 2$﹐\n∴$\\overline{BD} = \\overline{BF} = \\sqrt{5} \\Rightarrow \\overline{OF} = 4 + \\sqrt{5}$﹐$\\overline{AF} = 3 + \\sqrt{5}$﹐\n$\\overline{AH} = \\sqrt{1 \\times (3 + \\sqrt{5})} = \\sqrt{\\frac{12 + 4\\sqrt{5}}{4}} = \\sqrt{\\frac{(\\sqrt{10} + \\sqrt{2})^{2}}{4}} = \\frac{1}{2}(\\sqrt{10} + \\sqrt{2})$﹐∴a + b = 10 + 2 = 12﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-square-root-perfect-square",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 29,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0030",
+      "title": "範例3：主題3實數與數線",
+      "question_text": "已知油畫的尺寸號碼與其面積成正比﹐令尺寸為10號的A畫大小為53公分×41公分﹐若\nB畫為65公分×50公分大小﹐則B畫應是幾號？",
+      "answer_text": "15號。",
+      "explanation_text": "【解析】設B畫為x號﹐則(53 × 41) : (65 × 50) = 10 : x﹐$x = \\frac{65 \\times 50 \\times 10}{53 \\times 41} \\approx 15$（號）﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "",
+      "difficulty": "易",
+      "question_category": "綜合",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 30,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0031",
+      "title": "隨堂練習：主題3實數與數線",
+      "question_text": "一張B4的紙對摺後剪開可得兩張B5的紙﹐且B5與B4的紙是相似形﹐已知B4\n的紙中長邊為36.4公分﹐試求B4紙短邊的長度（取整數﹐四捨五入）﹒",
+      "answer_text": "26公分。",
+      "explanation_text": "[圖: program-db/assets/question-media/s1-1-1/image10.png]\n【解析】$\\frac{x}{18.2} = \\frac{36.4}{x}$﹐得x^2 = 18.2 × 36.4 = (18.2)^2 × 2﹐\n$x = 18.2 \\times \\sqrt{2} \\approx 26$（公分）﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "",
+      "difficulty": "中",
+      "question_category": "綜合",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 31,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0032",
+      "title": "隨堂練習：主題3實數與數線",
+      "question_text": "義大利畫家達文西把一線段分成兩段不相等的線段﹐使得較長的一段與較短的一段\n之比等於全段與較長一段之比﹐而這種比值稱為黃金比例﹐常用φ表示：[圖: program-db/assets/question-media/s1-1-1/image11.png]，\n$\\phi = \\frac{\\overline{AP}}{\\overline{BP}} = \\frac{\\overline{AB}}{\\overline{AP}} = \\frac{\\sqrt{5} + 1}{2}$﹐試求$\\overline{BP} = \\alpha\\overline{AB}$時的α值﹒",
+      "answer_text": "$\\alpha = \\frac{3 - \\sqrt{5}}{2}$。",
+      "explanation_text": "【解析】$\\overline{BP} = \\frac{1}{\\phi}\\overline{AP} = (\\frac{1}{\\phi})^{2} \\cdot \\overline{AB}$﹐$\\alpha = (\\frac{1}{\\phi})^{2} = (\\frac{2}{\\sqrt{5} + 1})^{2} = (\\frac{\\sqrt{5} - 1}{2})^{2} = \\frac{3 - \\sqrt{5}}{2}$﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "",
+      "difficulty": "中",
+      "question_category": "綜合",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 32,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0033",
+      "title": "範例4：主題3實數與數線",
+      "question_text": "下圖所示：$\\overline{FG}$是一條長4公尺的鐵絲﹐C是線段FG上的一點﹐將$\\overline{CG}$圍成一個等腰直\n角三角形CDE﹐將$\\overline{CF}$圍成另一個等腰直角三角形﹐試求梯形ABDE的面積﹒\n[圖: program-db/assets/question-media/s1-1-1/image12.png]",
+      "answer_text": "$12-8\\sqrt{2}$平方公尺。",
+      "explanation_text": "【解析】令$\\overline{BC} = x$﹐$\\overline{CD} = y$﹐因$\\overline{CA} + \\overline{AB} + \\overline{BC} + \\overline{CD} + \\overline{DE} + \\overline{EC} = \\overline{FG}$﹐\n得$\\sqrt{2}x + x + x + y + y + \\sqrt{2}y = 4$﹐$(2 + \\sqrt{2})(x + y) = 4$﹐$x + y = \\frac{4}{2 + \\sqrt{2}} = 2(2 - \\sqrt{2})$﹐\n而梯形ABDE的面積為$\\frac{1}{2}(\\overline{AB} + \\overline{DE}) \\cdot \\overline{BD} = \\frac{1}{2}(x + y)^{2} = 12 - 8\\sqrt{2}$（平方公尺）﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "",
+      "difficulty": "易",
+      "question_category": "綜合",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 33,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0034",
+      "title": "範例5：主題3實數與數線",
+      "question_text": "某生使用直尺與圓規作圖﹐在線段$\\overline{AB}$上\n(2)以C為圓心﹐$\\overline{BC}$為半徑畫弧交$\\overline{AC}$於D﹒\n(3)以A為圓心﹐$\\overline{AD}$為半徑畫弧交$\\overline{AB}$於P﹒\n試問$\\overline{AP} = k\\overline{PB}$時的k值﹒",
+      "answer_text": "$k = \\frac{\\sqrt{5} + 1}{2}$。",
+      "explanation_text": "【解析】設$\\overline{BC} = 1$﹐則$\\overline{AB} = 2$﹐$\\overline{AC} = \\sqrt{5}$，\n又因$\\overline{CD} = \\overline{BC} = 1$﹐得$\\overline{AD} = \\sqrt{5} - 1$﹐即$\\overline{AP} = \\overline{AD} = \\sqrt{5} - 1$﹐\n而$\\overline{PB} = \\overline{AB} - \\overline{AP} = 2 - (\\sqrt{5} - 1) = 3 - \\sqrt{5}$﹐\n即$k = \\frac{\\overline{AP}}{\\overline{BP}} = \\frac{\\sqrt{5} - 1}{3 - \\sqrt{5}} = \\frac{\\sqrt{5} + 1}{2}$﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "",
+      "difficulty": "易",
+      "question_category": "綜合",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 34,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0035",
+      "title": "隨堂練習：主題3實數與數線",
+      "question_text": "建築美學的黃金矩形﹐是矩形ABCD（如圖）﹐而ABEF為正方形時﹐矩形ABCD\n與矩形ECDF的形狀相似﹐試求黃金矩形的長$\\overline{AD}$與寬$\\overline{AB}$的比值﹒",
+      "answer_text": "$\\frac{\\overline{AD}}{\\overline{AB}} = \\frac{1 + \\sqrt{5}}{2}$。",
+      "explanation_text": "[圖: program-db/assets/question-media/s1-1-1/image14.png]\n【解析】設$\\overline{AD}$與$\\overline{AB}$的比值為t﹐\n若$\\overline{AB} = a$﹐得$\\overline{AD} = at$﹐$\\overline{FD} = at - a$﹐\n由相似形得$\\frac{at}{a} = \\frac{a}{at - a}$﹐\n即$t = \\frac{1}{t - 1}$﹐t^2 − t − 1 = 0得$t = \\frac{1 + \\sqrt{5}}{2}$（t > 0）﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "",
+      "difficulty": "中",
+      "question_category": "綜合",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 35,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0036",
+      "title": "範例5：平方根與完全平方數",
+      "question_text": "下列各無理數中﹐何者可以尺規作圖的方法﹐在數線上標出代表它們的點﹖ (1)$\\sqrt{2 + \\sqrt{2}}$ (2)$\\sqrt{2} + \\sqrt{3}$ (3)$\\sqrt[3]{2}$ (4)$\\sqrt[4]{2 + \\sqrt{3}}$ (5)π﹒",
+      "answer_text": "選$(1)(2)(4)$。",
+      "explanation_text": "【解析】(I)只要$\\sqrt[n]{a}$（$a > 0$﹐$n = 2^{k}$﹐k是正整數）皆可以尺規作圖﹐∴(1)(2)(4)可作圖﹒\n(II)$\\sqrt[3]{2}$與π不可以尺規作圖，是古希臘三大難題之中的二個無解難題﹒\n故選(1)(2)(4)。",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-square-root-perfect-square",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 36,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0037",
+      "title": "範例6：根式大小比較方法",
+      "question_text": "設$a = 2\\sqrt{2} + \\sqrt{3}$﹐$b = \\sqrt{7} + 2$﹐$c = \\sqrt{6} + \\sqrt{5}$﹐下列何者正確﹖ (1)a > b > c (2)a < b < c (3)b > a > c (4)a < c < b (5)c > a > b﹒",
+      "answer_text": "選(2)。",
+      "explanation_text": "【解析】先求各數的平方﹕\n$a^{2} = (2\\sqrt{2} + \\sqrt{3})^{2} = 11 + 2\\sqrt{24}$﹐\n$b^{2} = (\\sqrt{7} + 2)^{2} = 11 + 2\\sqrt{28}$﹐\n$c^{2} = (\\sqrt{6} + \\sqrt{5})^{2} = 11 + 2\\sqrt{30}$﹐\n因為$\\sqrt{24} < \\sqrt{28} < \\sqrt{30}$﹐所以a^2 < b^2 < c^2﹐\n得三正數的大小為a < b < c﹒答案為(2)﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-radical-comparison-methods",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 37,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0038",
+      "title": "範例7：實數大小比較與夾值",
+      "question_text": "設a、b、c、d表實數且$a>b$，$c>d$，則下列何者恆成立？ (1)$a+c>b+d$ (2)$a-c>b-c$ (3)$a-c>b-d$ (4)$ac>bd$ (5)若$a \\ne 0$，$b \\ne 0$，則$\\frac{1}{a}<\\frac{1}{b}$",
+      "answer_text": "選(1)(2)。",
+      "explanation_text": "【解析】(1)(a + c) − (b + d) = (a − b) + (c − d) > 0﹐故a + c > b + d﹒\n(2)(a − c) − (b − c) = a − b > 0﹒\n(3)a = − 1﹐b = − 2﹐c = − 3﹐d = − 4﹒\n(4)反例﹕若a = 1﹐b = − 1﹐c = − 2﹐d = − 3﹐則ac = − 2﹐bd = 3 ⇒ bd > ac﹐\n故ac > bd未必成立﹒\n(5)a > b > 0時才成立﹒\n故選(1)(2)",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-real-number-interval-compare",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 38,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0039",
+      "title": "範例8：實數大小比較與夾值",
+      "question_text": "設a﹐b為二實數﹐滿足0 < a < 1﹐0 < b < 1﹐則下列何者為真﹖\n(1)0 < a + b < 2 (2)0 < ab < 1 (3) − 1 < b − a < 0 (4)$0 < \\frac{a}{b} < 1$ (5)|a − b| < 1﹒",
+      "answer_text": "選(1)(2)(5)。",
+      "explanation_text": "【解析】(1)○﹒\n(2)○﹒\n(3)╳﹕0 < a < 1 ⇒ − 1 < − a < 0﹐\n0 < b < 1﹐\n∴ − 1 < b − a < 1﹒\n(4)╳﹕例如﹕$a = \\frac{1}{3}$﹐$b = \\frac{1}{5}$﹐$\\frac{a}{b} = \\frac{5}{3} > 1$﹒\n(5)○﹕由(3) ⇒ − 1 < b − a < 1 ⇒ |b − a| < 1 ⇒ |a − b| < 1﹒\n故選(1)(2)(5)",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-real-number-interval-compare",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 39,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0040",
+      "title": "隨堂練習：主題3實數與數線",
+      "question_text": "義大利畫家達文西把一線段分成兩段不相等的線段﹐使得較長的一段與較短的一段\n之比等於全段與較長一段之比﹐而這種比值稱為黃金比例﹐常用φ表示：[圖: program-db/assets/question-media/s1-1-1/image11.png]，\n$\\phi = \\frac{\\overline{AP}}{\\overline{BP}} = \\frac{\\overline{AB}}{\\overline{AP}} = \\frac{\\sqrt{5} + 1}{2}$﹐試求$\\overline{BP} = \\alpha\\overline{AB}$時的α值﹒",
+      "answer_text": "$\\alpha = \\frac{3 - \\sqrt{5}}{2}$。",
+      "explanation_text": "【解析】$\\overline{BP} = \\frac{1}{\\phi}\\overline{AP} = \\left(\\frac{1}{\\phi}\\right)^{2} \\cdot \\overline{AB}$﹐\n$\\alpha = \\left(\\frac{1}{\\phi}\\right)^{2} = \\left(\\frac{2}{\\sqrt{5} + 1}\\right)^{2} = \\left(\\frac{\\sqrt{5} - 1}{2}\\right)^{2} = \\frac{3 - \\sqrt{5}}{2}$﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "",
+      "difficulty": "中",
+      "question_category": "綜合",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 40,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:隨堂練習",
+        "needs-review",
+        "broken-explanation"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0041",
+      "title": "範例9：實數大小比較與夾值",
+      "question_text": "設x、y為實數，且$2 \\le x \\le 8$，$-2 \\le y \\le 7$，求xy之範圍。",
+      "answer_text": "$-16\\le xy\\le 56$。",
+      "explanation_text": "【解析】2 ≤ x ≤ 8﹐則x可視為2﹐3﹐4﹐5﹐…﹐8中之數﹐\n− 2 ≤ y ≤ 7﹐則y可視為 − 2﹐− 1﹐0﹐…﹐7中之數﹐\n則xy最大為56﹐xy最小為 − 16﹐\n∴ − 16 ≤ xy ≤ 56﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-real-number-interval-compare",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 41,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0042",
+      "title": "隨堂練習：實數大小比較與夾值",
+      "question_text": "設x﹐y都是實數且$2\\le x\\le 4$﹐$-1\\le y\\le 3$﹐求下列各數的範圍﹕\n(1)$2x + 3y$﹒ (2)$2x - 3y$﹒ (3)$xy$﹒ (4)$x^2 + y^2$﹒",
+      "answer_text": "(1)$1\\le 2x+3y\\le 17$；(2)$-5\\le 2x-3y\\le 11$；(3)$-4\\le xy\\le 12$；(4)$4\\le x^2+y^2\\le 25$。",
+      "explanation_text": "【解析】(1)由$2\\le x\\le 4$﹐$-1\\le y\\le 3$\n⇒ $4\\le 2x\\le 8$﹐$-3\\le 3y\\le 9$ ⇒ $1\\le 2x + 3y\\le 17$﹒\n(2)$4\\le 2x\\le 8$﹐$-9\\le -3y\\le 3$ ⇒ $-5\\le 2x - 3y\\le 11$﹒\n(3)在$x = 4$﹐$y = -1$時﹐xy有最小值$-4$﹔\n在$x = 4$﹐$y = 3$時﹐xy有最大值12﹐故$-4\\le xy\\le 12$﹒\n(4)由$2\\le x\\le 4$﹐$-1\\le y\\le 3$ ⇒ $4\\le x^2\\le 16$﹐$0\\le y^2\\le 9$ ⇒ $4\\le x^2 + y^2\\le 25$﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-real-number-interval-compare",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 42,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0043",
+      "title": "範例10：主題3實數與數線",
+      "question_text": "（ ）7.已知某校老師玩過「寶可夢」的比率為r_1﹐而學生玩過的比率為r_2﹐其中r_1 ≠ r_2﹒由下列選項中的資訊﹐請選出可以判定全校師生玩過「寶可夢」的比率之選項﹒ (1)全校老師與學生比率 (2)全校老師人數 (3)全校學生人數 (4)全校師生人數 (5)全校師生玩過「寶可夢」人數﹒",
+      "answer_text": "選(1)。",
+      "explanation_text": "【解析】設全校老師人數n_1﹐學生人數n_2﹒\n因為玩過「寶可夢」的老師有n_1r_1人﹐學生有n_2r_2人﹐\n所以全校玩過「寶可夢」的比率為$\\frac{n\\_{1}r\\_{1} + n\\_{2}r\\_{2}}{n\\_{1} + n\\_{2}} = \\frac{n\\_{1}}{n\\_{1} + n\\_{2}} \\times r\\_{1} + \\frac{n\\_{2}}{n\\_{1} + n\\_{2}} \\times r\\_{2}$﹐\n其中$\\frac{n\\_{1}}{n\\_{1} + n\\_{2}}$﹐$\\frac{n\\_{2}}{n\\_{1} + n\\_{2}}$分別為全校老師與學生的比率﹒\n故選(1)﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "",
+      "difficulty": "易",
+      "question_category": "綜合",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題3實數與數線",
+      "source_order": 43,
+      "tags": [
+        "s1-1-1",
+        "section:主題3實數與數線",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0044",
+      "title": "範例1：距離與分點公式",
+      "question_text": "（ ）設r﹐s∈Q且r < s﹐若r < t < s﹐則t值可為下列何者﹖ (1)$\\frac{r + s}{7}$ (2)$\\frac{2r + 2s}{7}$ (3)$\\frac{3r + 3s}{7}$ (4)$\\frac{4r + 4s}{7}$ (5)$\\frac{5r + 2s}{7}$",
+      "answer_text": "選(5)。",
+      "explanation_text": "【解析】由分點公式知：若r < t < s﹐t為r﹐s的內分點\n則t =$\\frac{nr + ms}{m + n}$﹐故選(5)",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-distance-midpoint-section-formulas",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題4：距離與分點公式",
+      "source_order": 44,
+      "tags": [
+        "s1-1-1",
+        "section:主題4：距離與分點公式",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0045",
+      "title": "隨堂練習：距離與分點公式",
+      "question_text": "設r、s是有理數，$r < s$且$m、n$是正整數，則下列何者恆成立？ (1)$r < \\frac{r+s}{3} < s$ (2)$r < \\frac{3r+s}{4} < \\frac{r+s}{2} < \\frac{r+3s}{4} < s$ (3)$r < \\frac{2r+3s}{5} < \\frac{3r+2s}{5} < s$ (4)$r < \\frac{nr+ms}{m+n} < s$。",
+      "answer_text": "選(2)(4)。",
+      "explanation_text": "【解析】設點P在A(r)與B(s)之間，且$\\overline{AP}:\\overline{PB} = m:n$﹐\n則由分點公式得點P的坐標為$\\frac{nr + ms}{m + n}$﹐故選(2)(4)﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-distance-midpoint-section-formulas",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題4：距離與分點公式",
+      "source_order": 45,
+      "tags": [
+        "s1-1-1",
+        "section:主題4：距離與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0046",
+      "title": "範例2：距離與分點公式",
+      "question_text": "數線上有二定點A(−3)﹐B(5)﹐又P為數線上另一點﹐滿足$\\overline{PA}:\\overline{PB} = 3:2$﹐則：\n(1)當點P在A, B之間時﹐P的坐標為____________﹒\n(2)當點P不在A, B之間時﹐P的坐標為____________﹒",
+      "answer_text": "(1)$\\frac{9}{5}$；(2)21。",
+      "explanation_text": "【解析】(1)設P(x)﹐則$x = \\frac{2 \\times ( - 3) + 3 \\times 5}{3 + 2} = \\frac{9}{5}$﹒\n(2)若P不介於A﹐B之間﹐則P在B右側，$5 = \\frac{2 \\times ( - 3) + 1 \\times x}{1 + 2}$，\n即15 = −6 + x，得x = 21﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-distance-midpoint-section-formulas",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題4：距離與分點公式",
+      "source_order": 46,
+      "tags": [
+        "s1-1-1",
+        "section:主題4：距離與分點公式",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0047",
+      "title": "隨堂練習：距離與分點公式",
+      "question_text": "在數線上﹐設A(−1), B(−5)﹐點P(x)滿足$\\overline{AP}:\\overline{PB} = 2:7$﹐求x﹒",
+      "answer_text": "$x = -\\frac{17}{9}$或$\\frac{3}{5}$。",
+      "explanation_text": "【解析】(1)點P在$\\overline{AB}$上時，$x = \\frac{7( - 1) + 2( - 5)}{2 + 7} = - \\frac{17}{9}$﹒\n[圖: program-db/assets/question-media/s1-1-1/image16.png]\n(2)點P不在$\\overline{AB}$上時﹐點A在$\\overline{BP}$上﹐且$\\overline{BA}:\\overline{AP} = 5:2$，\n故$- 1 = \\frac{2( - 5) + 5x}{5 + 2}$，5x − 10 = −7，5x = 3，$x = \\frac{3}{5}$﹒\n[圖: program-db/assets/question-media/s1-1-1/image17.png]",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-distance-midpoint-section-formulas",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題4：距離與分點公式",
+      "source_order": 47,
+      "tags": [
+        "s1-1-1",
+        "section:主題4：距離與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0048",
+      "title": "隨堂練習：距離與分點公式",
+      "question_text": "在數線上﹐設P(7), O(0)﹐點Q(x)滿足$\\overline{PQ}:\\overline{QO} = 5:3$﹐求x﹒",
+      "answer_text": "$x = \\frac{21}{8}$或$-\\frac{21}{2}$。",
+      "explanation_text": "【解析】(1)若點Q在$\\overline{PO}$上時﹐如圖，由分點公式得$x = \\frac{5 \\times 0 + 3 \\times 7}{3 + 5} = \\frac{21}{8}$﹒\n[圖: program-db/assets/question-media/s1-1-1/image18.png]\n(2)若點Q不在$\\overline{PO}$上時，如圖，由分點公式得$0 = \\frac{2x + 3 \\times 7}{3 + 2}$\n即2x + 21 = 0，得$x = - \\frac{21}{2}$﹒\n[圖: program-db/assets/question-media/s1-1-1/image19.png]",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-distance-midpoint-section-formulas",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題4：距離與分點公式",
+      "source_order": 48,
+      "tags": [
+        "s1-1-1",
+        "section:主題4：距離與分點公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0049",
+      "title": "範例3：距離與分點公式",
+      "question_text": "數學兼哲學家伽利略於西元1632年出版《對話錄》一書觸怒教廷﹐之後被判終身監禁而在獄中過世﹐享年78歲；出版《對話錄》一書到過世是伽利略一生中最黑暗的10年﹒伽利略年輕時發明十倍率的望遠鏡﹐並於次年發現木星的歐羅巴衛星﹐從他發明望遠鏡到出版《對話錄》的黃金歲月剛好是他發現歐羅巴衛星時年紀的一半﹒試問伽利略於西元幾年發明望遠鏡？\n[圖: program-db/assets/question-media/s1-1-1/image20.png]",
+      "answer_text": "西元1609年。",
+      "explanation_text": "【解析】設伽利略於x歲時發明望遠鏡﹐發現衛星時為x + 1歲﹐\n由已知條件知$(78 - 10) - x = \\frac{x + 1}{2}$﹐可解得x = 45；\n故發明望遠鏡為1632 − (68 − 45) = 1632 − 23 = 1609（年）﹒",
+      "chapter_code": "s1-1-1",
+      "formula_id": "",
+      "difficulty": "易",
+      "question_category": "綜合",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題4：距離與分點公式",
+      "source_order": 49,
+      "tags": [
+        "s1-1-1",
+        "section:主題4：距離與分點公式",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s1-1-1-0050",
+      "title": "隨堂練習：距離與分點公式",
+      "question_text": "在坐標平面上﹐正方形ABCD的四個頂點坐標分別為A(0,1)﹐B(0,0)﹐C(1,0)﹐D(1,1)﹒設P為正方形ABCD內部的一點﹐若△PDA與△PBC的面積比為1：2﹐且△PAB與△PCD的面積比為2：3﹐則P點的坐標為____________﹒（化成最簡分數）﹒",
+      "answer_text": "$P\\left(\\frac{2}{5},\\frac{2}{3}\\right)$。",
+      "explanation_text": "【解析】△PAB：△PCD = 2：3﹐由分點公式知$a = \\frac{2}{5}$﹐\n△PDA：△PBC = 1：2﹐由分點公式知$b = \\frac{2}{3}$﹐故$P(\\frac{2}{5},\\frac{2}{3})$﹒\n[圖: program-db/assets/question-media/s1-1-1/image21.png]",
+      "chapter_code": "s1-1-1",
+      "formula_id": "senior-distance-midpoint-section-formulas",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/1-1轉.docx",
+      "source_section": "主題4：距離與分點公式",
+      "source_order": 50,
+      "tags": [
+        "s1-1-1",
+        "section:主題4：距離與分點公式",
+        "marker:隨堂練習"
+      ]
+    }
+  ]
+}

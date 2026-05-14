@@ -1,0 +1,44 @@
+# 用 === 分隔每一筆
+# 多值欄位用 | 分隔
+
+id: batch-demo-001
+title: 批次示範一
+stage: 國中
+grade: 國一
+term: 上學期
+chapter: 批次章節
+domain: 代數
+difficulty: 基礎
+chapterRole: 重要配角
+parentId:
+formulaType: text
+formulaLabel: 公式
+formula: a+b=b+a
+contentTypes: 定義|公式
+tags: 批次|交換律
+usage: 用於快速匯入示範
+examples: 例1
+tips:
+notes:
+mistakes:
+===
+id: batch-demo-002
+title: 批次示範二
+stage: 國中
+grade: 國一
+term: 下學期
+chapter: 批次章節
+domain: 幾何
+difficulty: 基礎
+chapterRole: 主角
+parentId:
+formulaType: text
+formulaLabel: 公式
+formula: 三角形內角和=180
+contentTypes: 定義|公式
+tags: 批次|幾何
+usage: 用於快速匯入示範
+examples: 例1|例2
+tips:
+notes:
+mistakes:

@@ -1,0 +1,1706 @@
+{
+  "chapter_code": "s3-1-3",
+  "chapter_title": "和差角公式",
+  "questions": [
+    {
+      "id": "q-s3-1-3-0001",
+      "title": "cos316°sin164°− sin224°cos344°=＿",
+      "question_text": "cos316°sin164°− sin224°cos344°=＿＿＿＿。",
+      "answer_text": "$\\frac{\\sqrt3}{2}$",
+      "explanation_text": "原式 = cos(360° − 44°) sin(180° − 16°) − sin(180° + 44°) cos(360° − 16°) = cos44° sin16° + sin44° cos16° = sin(44° + 16°) = sin60° =$\\frac{\\sqrt{3}}{2}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-sin-cos-sum-diff-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 1,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0002",
+      "title": "隨堂練習：試求sin23° ⋅ cos112° − sin292° ⋅ s",
+      "question_text": "試求sin23° ⋅ cos112° − sin292° ⋅ sin67° = \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒",
+      "answer_text": "$\\frac{\\sqrt2}{2}$",
+      "explanation_text": "原式 = sin23° ⋅ cos112° − sin(180° + 112°) ⋅ sin(90° − 23°) = sin23° ⋅ cos112° − ( − sin112°) ⋅ cos23° = sin23° ⋅ cos112° + cos23° ⋅ sin112° = sin(23° + 112°) = sin135° = sin(180° − 45°) = sin45° =$\\frac{\\sqrt{2}}{2}$﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-sin-cos-sum-diff-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 2,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0003",
+      "title": "隨堂練習：試求$\\frac{\\sin 50{^\\circ}\\cos 10{",
+      "question_text": "試求$\\frac{\\sin 50{^\\circ}\\cos 10{^\\circ} - \\cos 130{^\\circ}\\sin 10{^\\circ}}{\\cos 290{^\\circ}\\cos 10{^\\circ} - \\sin 110{^\\circ}\\sin 190{^\\circ}}$之值﹒",
+      "answer_text": "$\\sqrt3$",
+      "explanation_text": "$\\frac{\\sin 50{^\\circ}\\cos 10{^\\circ} - \\cos 130{^\\circ}\\sin 10{^\\circ}}{\\cos 290{^\\circ}\\cos 10{^\\circ} - \\sin 110{^\\circ}\\sin 190{^\\circ}}$ $$= \\frac{\\sin 50{^\\circ}\\cos 10{^\\circ} - ( - \\cos 50{^\\circ})\\sin 10{^\\circ}}{\\cos 70{^\\circ}\\cos 10{^\\circ} + \\sin 70{^\\circ}\\sin 10{^\\circ}} = \\frac{\\sin(50{^\\circ} + 10{^\\circ})}{\\cos(70{^\\circ} - 10{^\\circ})} = \\frac{\\sin 60{^\\circ}}{\\cos 60{^\\circ}} = \\sqrt{3}$$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-sin-cos-sum-diff-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 3,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0004",
+      "title": "設$\\frac{\\pi}{2}$< α < π，π < β <$",
+      "question_text": "設$\\frac{\\pi}{2}$< α < π，π < β <$\\frac{3}{2}$π，且sinα =$\\frac{3}{5}$，cosβ = −$\\frac{1}{4}$，則cos(α + β ) = ＿＿＿＿。",
+      "answer_text": "$\\frac{4+3\\sqrt{15}}{20}$",
+      "explanation_text": "設$\\frac{\\pi}{2}$< α < π，π < β <$\\frac{3}{2}$π，且sinα =$\\frac{3}{5}$，cosβ = −$\\frac{1}{4}$，則cos(α + β ) = ＿＿＿＿。∵ $\\frac{\\pi}{2}$< α < π ∴ sinα =$\\frac{3}{5}$，cosα = −$\\frac{4}{5}$\n∵ π < β <$\\frac{3}{2}$π ∴ cosβ = −$\\frac{1}{4}$，sinβ = −$\\frac{\\sqrt{15}}{4}$ cos(α + β ) = cosα cosβ − sinα sinβ =$\\frac{- 4}{5} × \\frac{- 1}{4} - \\frac{3}{5} × \\frac{- \\sqrt{15}}{4}$ =$\\frac{4 + 3\\sqrt{15}}{20}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 4,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0005",
+      "title": "隨堂練習：設sinα =$\\frac{8}{17}$，cosβ =$\\fr",
+      "question_text": "設sinα =$\\frac{8}{17}$，cosβ =$\\frac{5}{13}$，且$\\frac{\\pi}{2}$< α < π，0 < β <$\\frac{\\pi}{2}$，試求sin(α − β )及cot(α + β )的值。",
+      "answer_text": "(1)$\\frac{220}{221}$；(2)$\\frac{171}{140}$",
+      "explanation_text": "∵ sinα =$\\frac{8}{17}$，cosβ =$\\frac{5}{13}$且$\\frac{\\pi}{2}$< α < π，0 < β <$\\frac{\\pi}{2}$ ∴ cosα = −$\\frac{15}{17}$，sinβ =$\\frac{12}{13}$ $⇒$ cotα =$\\frac{\\cos\\alpha}{\\sin\\alpha} = - \\frac{15}{8}$，cotβ =$\\frac{5}{12}$\n(1) sin(α − β) = sinα cosβ − cosα sinβ =$\\frac{8}{17} ． \\frac{5}{13} - ( - \\frac{15}{17})\\frac{12}{13} = \\frac{40 + 180}{221} = \\frac{220}{221}$\n(2) cot(α + β) =$\\frac{\\cot\\beta\\cot\\alpha - 1}{\\cot\\beta + \\cot\\alpha} = \\frac{\\frac{5}{12}( - \\frac{15}{8}) - 1}{\\frac{5}{12} + ( - \\frac{15}{8})} = \\frac{\\frac{- 171}{96}}{\\frac{- 140}{96}} = \\frac{171}{140}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 5,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0006",
+      "title": "設$\\frac{\\pi}{2}$< α < π，$\\frac{",
+      "question_text": "設$\\frac{\\pi}{2}$< α < π，$\\frac{\\pi}{2}$< β < π，若sinα =$\\frac{1}{\\sqrt{5}}$，cosβ = −$\\frac{3}{\\sqrt{10}}$，試求α + β之值。",
+      "answer_text": "$\\frac{7\\pi}{4}$",
+      "explanation_text": "首先，因為$\\frac{\\pi}{2}$< α，β < π，sinα =$\\frac{1}{\\sqrt{5}}$，cos β = −$\\frac{3}{\\sqrt{10}}$，所以cosα =$\\frac{- 2}{\\sqrt{5}}$，sinβ =$\\frac{1}{\\sqrt{10}}$ 其次，又因為cos(α + β) = cosα cosβ − sinα sinβ =$\\frac{- 2}{\\sqrt{5}}\\text{ }．\\text{ }\\frac{- 3}{\\sqrt{10}} - \\frac{1}{\\sqrt{5}}\\text{ }．\\text{ }\\frac{1}{\\sqrt{10}} = \\frac{1}{\\sqrt{2}}$ 且π < α + β < 2$\\pi$，故可推得α + β =$\\frac{7\\pi}{4}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 6,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0007",
+      "title": "隨堂練習：設0 < α <$\\frac{\\pi}{2}$< β < π，c",
+      "question_text": "設0 < α <$\\frac{\\pi}{2}$< β < π，cosα =$\\frac{7}{5\\sqrt{2}}$，cosβ = −$\\frac{3}{5}$，則(1) sin(α + β) = ＿＿＿＿。 (2) α + β = ＿＿＿＿。",
+      "answer_text": "(1)$\\frac{\\sqrt2}{2}$；(2)$\\frac{3\\pi}{4}$",
+      "explanation_text": "0 < α <$\\frac{\\pi}{2}$，cosα =$\\frac{7}{5\\sqrt{2}}$⇒sinα =$\\frac{1}{5\\sqrt{2}}$；$\\frac{\\pi}{2}$< β < π，cosβ = −$\\frac{3}{5}$⇒ sinβ = $\\frac{4}{5}$\n(1) sin(α + β ) = sinα cosβ + cosα sinβ = $\\frac{1}{5\\sqrt{2}}( - \\frac{3}{5}) + \\frac{7}{5\\sqrt{2}}\\text{ } · \\text{ }\\frac{4}{5} = \\frac{1}{\\sqrt{2}}$\n(2)∵ $\\frac{\\pi}{2}$< α + β <$\\frac{3\\pi}{2}$ ∴ α + β =$\\frac{3\\pi}{4}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 7,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0008",
+      "title": "設sin92° = a，cos48° = b，以a，b表出(1)",
+      "question_text": "設sin92° = a，cos48° = b，以a，b表出(1) sin140° = ＿＿＿＿。(2) cos44° = ＿＿＿＿。",
+      "answer_text": "(1)$ab-\\sqrt{1-a^2}\\sqrt{1-b^2}$；(2)$a\\sqrt{1-b^2}-b\\sqrt{1-a^2}$",
+      "explanation_text": "sin92° = a ⇒ cos92° = −$\\sqrt{1 - a^{2}}$，cos48° = b ⇒ sin48° = $\\sqrt{1 - b^{2}}$\n(1) sin140° = sin(92° + 48°) = sin92° cos48° + cos92° sin48° = ab −$\\sqrt{1 - a^{2}}\\sqrt{1 - b^{2}}$\n(2) cos44° = cos(92° − 48°) = cos92° cos48° + sin92° sin48° = − b$\\sqrt{1 - a^{2}}$+ a$\\sqrt{1 - b^{2}}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-sin-cos-sum-diff-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 8,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0009",
+      "title": "隨堂練習：設sin84° = a，cos63° = b，若以a，b表cos",
+      "question_text": "設sin84° = a，cos63° = b，若以a，b表cos21°及sin147°，則cos21° = ＿＿＿＿，而sin147° = ＿＿＿＿。",
+      "answer_text": "$b\\sqrt{1-a^2}+a\\sqrt{1-b^2}$，$ab+\\sqrt{1-a^2}\\sqrt{1-b^2}$",
+      "explanation_text": "∵ sin84° = a，cos63° = b ∴ cos84° =$\\sqrt{1 - a^{2}}$，sin63° =$\\sqrt{1 - b^{2}}$\n(1) cos21° = cos(84° − 63°) = cos84°cos63° + sin84°sin63° =$\\sqrt{1 - a^{2}}\\text{ }．\\text{ }b + a\\sqrt{1 - b^{2}} = b\\sqrt{1 - a^{2}} + a\\sqrt{1 - b^{2}}$\n(2) sin147° = sin(84° + 63°) = sin84°cos63° + cos84°sin63° = a．b +$\\sqrt{1 - a^{2}}\\sqrt{1 - b^{2}}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-sin-cos-sum-diff-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 9,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0010",
+      "title": "設0 < α <$\\frac{\\pi}{2}$< β < π，且",
+      "question_text": "設0 < α <$\\frac{\\pi}{2}$< β < π，且sinα =$\\frac{13}{14}$，sinβ =$\\frac{11}{14}$，則(1) cos(α − β ) = ＿＿＿＿。 (2) α − β = ＿＿＿＿。",
+      "answer_text": "(1)$\\frac{1}{2}$；(2)$-\\frac{\\pi}{3}$",
+      "explanation_text": "∵ 0 < α <$\\frac{\\pi}{2}$< β < π且sinα =$\\frac{13}{14}$，sinβ =$\\frac{11}{14}$ ∴ cosα =$\\frac{3\\sqrt{3}}{14}$，cosβ = −$\\frac{5\\sqrt{3}}{14}$\n(1)故cos(α − β ) = cosα cosβ + sinα sinβ =$\\frac{3\\sqrt{3}}{14}$ ( −$\\frac{5\\sqrt{3}}{14}$) +$\\frac{13}{14}$．$\\frac{11}{14}$=$\\frac{98}{196}$=$\\frac{1}{2}$\n(2)∵ −π < − β < −$\\frac{\\pi}{2}$且0 < α <$\\frac{\\pi}{2}$ ∴ −π < α − β < 0；故α − β = −$\\frac{\\pi}{3}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 10,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0011",
+      "title": "設α，β，γ 為△ABC的三內角，若sinα =$\\frac{5",
+      "question_text": "設α，β，γ 為△ABC的三內角，若sinα =$\\frac{5}{13}$，cosβ = −$\\frac{4}{5}$，則cosγ = ＿＿＿＿，而a：b：c = ＿＿＿＿。",
+      "answer_text": "$\\frac{63}{65}$，$25:39:16$",
+      "explanation_text": "(1)∵ α，β，γ 為△ABC的三內角 ∴ α + β + γ = π $⇒$ γ = π − (α + β)\n∴ cosγ = cos[π − (α + β )] = − cos(α + β) = − (cosα cosβ − sinα sinβ)\n∵ sinα =$\\frac{5}{13}$，cosβ = −$\\frac{4}{5}$ ∴ cosα =$\\frac{12}{13}$，sinβ =$\\frac{3}{5}$ 故cosγ = −\n[$\\frac{12}{13}\\text{ }．\\text{ }( - \\frac{4}{5}) - \\frac{5}{13}\\text{ }．\\text{ }\\frac{3}{5}$] =$\\frac{48}{65} + \\frac{15}{65} = \\frac{63}{65}$\n(2)∵ cosγ =$\\frac{63}{65}$ ∴ sinγ =$\\frac{16}{65}$，又sinα =$\\frac{5}{13}$，sinβ =$\\frac{3}{5}$\n∴ 由正弦定理知 a：b：c = sinα：sinβ：sinγ =$\\frac{5}{13}\\text{ }：\\text{ }\\frac{3}{5}\\text{ }：\\text{ }\\frac{16}{65}$= 25：39：16",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-trig-triangle-tan-sum-product-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 11,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0012",
+      "title": "設sinα + sinβ + sinγ = 0，cosα + c",
+      "question_text": "設sinα + sinβ + sinγ = 0，cosα + cosβ + cosγ = 0，則cos(α − β) + cos(β − γ) + cos(γ − α)之值為＿＿＿＿。",
+      "answer_text": "$-\\frac{3}{2}$",
+      "explanation_text": "${ \\begin{array}{r} \\sin\\alpha + \\sin\\beta = - \\sin\\gamma \\ \\cos\\alpha + \\cos\\beta = - \\cos\\gamma \\end{array} \\right.$ 平方相加 $⇒$ 2 + 2(cosα cosβ + sinα sinβ) = 1 $⇒$ cos(α − β) = −$\\frac{1}{2}$ 同理cos(β − γ) = −$\\frac{1}{2}$，cos(γ − α) = −$\\frac{1}{2}$ ∴ cos(α − β) + cos(β − γ) + cos(γ − α) = −$\\frac{3}{2}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 12,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0013",
+      "title": "△ABC中，sinB cosC = cosB sinC，則△AB",
+      "question_text": "△ABC中，sinB cosC = cosB sinC，則△ABC之形狀為＿＿＿＿三角形。",
+      "answer_text": "等腰三角形",
+      "explanation_text": "原式 $⇒$ sinB cosC − cosB sinC = 0 $⇒$ sin(B − C) = 0 $⇒$ B − C = 0 $⇒$ B = C ∴ △ABC為等腰△ 8.△ABC中﹐若tanA ⋅ tanB = 1﹐則△ABC的形狀為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒\n解答 直角三角形 解析 tanA ⋅ tanB = 1 ⇒ $\\frac{\\sin A}{\\cos A} · \\frac{\\sin B}{\\cos B} = 1$ ⇒ sinA ⋅ sinB = cosA ⋅ cosB\n⇒ cosA ⋅ cosB − sinA ⋅ sinB = 0 ⇒ cos(A + B) = 0\n∴ A + B = 90°\n∴ △ABC為直角三角形﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-trig-triangle-tan-sum-product-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 13,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0014",
+      "title": "cosα − cosβ =$\\frac{1}{3}$，sinα",
+      "question_text": "cosα − cosβ =$\\frac{1}{3}$，sinα + sinβ =$\\frac{1}{2}$，求sin(α − β ) = ＿＿＿＿。",
+      "answer_text": "$-\\frac{12}{13}$",
+      "explanation_text": "(cosα − cosβ )^2^ = cos^2^α + cos^2^β − 2cosα cosβ =$\\frac{1}{9}$......①\n(sinα + sinβ )^2^ = sin^2^α + sin^2^β + 2sinα sinβ =$\\frac{1}{4}$......②\n① + ② $⇒$ 2 − 2(cosα cosβ − sinα sinβ ) =$\\frac{13}{36}$ $⇒$ 2cos(α + β ) = 2 −$\\frac{13}{36}$=$\\frac{59}{36}$ $⇒$ cos(α + β ) =$\\frac{59}{72}$\n(cosα − cosβ )(sinα + sinβ ) = cosα sinα + cosα sinβ − sinα cosβ − cosβ sinβ =$\\frac{1}{2}$sin2α −$\\frac{1}{2}$sin2β − sin(α − β ) =$\\frac{1}{2}$ (sin2α − sin2β ) − sin(α − β ) =$\\frac{1}{2}$ [2cos(α + β )sin(α − β )] − sin(α − β ) =$\\frac{1}{6}$\n⇒ $\\frac{1}{6}$=$\\frac{59}{72}$sin(α − β ) − sin(α − β ) = −$\\frac{13}{72}$sin(α − β )\n∴ sin(α − β ) = −$\\frac{12}{13}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 14,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0015",
+      "title": "隨堂練習：設0 < α < β <$\\frac{\\pi}{2}$，若sin",
+      "question_text": "設0 < α < β <$\\frac{\\pi}{2}$，若sinα，sinβ 為實係數二次方程式x^2^ + px + q = 0的二根，試以p，q 表sin(α + β )．sin(α − β )的值。",
+      "answer_text": "$p\\sqrt{p^2-4q}$",
+      "explanation_text": "(1)∵ sinα，sinβ為二次方程式x^2^ + px + q = 0的二根\n∴sinα + sinβ = − p，sinα．sinβ = q $⇒$ (sinα − sinβ)^2^ = sin^2^α + sin^2^β − 2sinα sinβ = (sinα + sinβ)^2^ − 4sinα sinβ = ( − p)^2^ − 4q = p^2^ − 4q\n∵ 0 < α < β <$\\frac{\\pi}{2}$ ∴ sinα > 0，sinβ > 0且sinα < sinβ $⇒$ sinα − sinβ < 0\n∴ sinα − sinβ = −$\\sqrt{p^{2} - 4q}$\n(2) sin(α + β)．sin(α − β) = (sinα cosβ + cosα sinβ)(sinα cosβ − cosα sinβ) = sin^2^α cos^2^β − cos^2^α sin^2^β = sin^2^α (1 − sin^2^β) − (1 − sin^2^α) sin^2^β = sin^2^α − sin^2^β = (sinα + sinβ)(sinα − sinβ) = ( − p)( −$\\sqrt{p^{2} - 4q}$) = p$\\sqrt{p^{2} - 4q}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 15,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0016",
+      "title": "隨堂練習：設sinA + cosB = a，cosA + sinB = b",
+      "question_text": "設sinA + cosB = a，cosA + sinB = b，試以a，b分別表sin(A + B)及sin(A − B)之值。",
+      "answer_text": "$\\sin(A+B)=\\frac{a^2+b^2-2}{2}$，$\\sin(A-B)=\\frac{a^2-b^2}{a^2+b^2}$",
+      "explanation_text": "(1)∵ a^2^ + b^2^ = (sinA + cosB)^2^ + (cosA + sinB)^2^ = (sin^2^A + cos^2^A) + (sin^2^B + cos^2^B) + 2(sinA cosB + cosA sinB) = 2 + 2sin(A + B)\n∴ sin(A + B) =$\\frac{1}{2}$ (a^2^ + b^2^ − 2)\n(2)∵ a^2^ − b^2^ = (sinA + cosB)^2^ − (cosA + sinB)^2^ = (sin^2^A − sin^2^B) + (cos^2^B − cos^2^A) + 2(sinA cosB − cosA sinB) = 2(sin^2^A − sin^2^B) + 2sin(A − B) = 2sin(A + B) sin(A − B) + 2sin(A − B) = 2sin(A − B)[sin(A + B) + 1] = 2sin(A − B)($\\frac{a^{2} + b^{2} - 2}{2}$+ 1) = sin(A − B)(a^2^ + b^2^)\n∴ sin(A − B) =$\\frac{a^{2} - b^{2}}{a^{2} + b^{2}}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-trig-triangle-tan-sum-product-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 16,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0017",
+      "title": "隨堂練習：設sin α + sin β + sin γ = 0﹐cos α",
+      "question_text": "設sin α + sin β + sin γ = 0﹐cos α + cos β + cos γ = 0﹐試求cos( α − β )的值﹒",
+      "answer_text": "$-\\frac{1}{2}$",
+      "explanation_text": "sin α + sin β = − sin γ ...①﹐cos α + cos β = − cos γ ...② 由①^2^ + ②^2^得\n(sin^2^ α + cos^2^ α ) + 2(sin α ⋅ sin β + cos α ⋅ cos β ) +\n(sin^2^ β + cos^2^ β ) = sin^2^ γ + cos^2^ γ\n∴ 2cos( α − β ) = − 1 ⇒ $\\cos(\\alpha - \\beta) = - \\frac{1}{2}$﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 17,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0018",
+      "title": "∠AOB = 60°。若P為圓弧$\\overset{︵}{AB}",
+      "question_text": "∠AOB = 60°。若P為圓弧$\\overset{︵}{AB}$上一點，而P至$\\overline{OA}$的距離為a，P至$\\overline{OB}$的距離為b，試將r以a，b表示之。",
+      "answer_text": "$\\frac{2}{\\sqrt3}\\sqrt{a^2+ab+b^2}$",
+      "explanation_text": "首先，連結$\\overline{OP}$，則$\\overline{OP}$ = r；再令∠AOP = θ 則∠BOP = 60° − θ。在△OPC中，a = rsinθ ......① 在△OPD中 b = rsin(60° − θ) = rsin60°cosθ − rcos60°sinθ =$\\frac{\\sqrt{3}}{2}$rcosθ −$\\frac{1}{2}$rsinθ =$\\frac{\\sqrt{3}}{2}$rcosθ −$\\frac{1}{2}$a\n∴ rcosθ =$\\frac{2}{\\sqrt{3}}(\\frac{1}{2}a + b)$......② 故將①^2^ + ②^2^相加得 r^2^(sin^2^θ + cos^2^θ) = a^2^ +$\\frac{4}{3}(\\frac{1}{4}$a^2^ + ab + b^2^) =$\\frac{4}{3}$\n(a^2^ + ab + b^2^)\n∴ r =$\\frac{2}{\\sqrt{3}}\\sqrt{a^{2} + ab + b^{2}}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 18,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0019",
+      "title": "隨堂練習：如圖所示﹒若$\\overline{OA} = 3$﹐$\\over",
+      "question_text": "如圖所示﹒若$\\overline{OA} = 3$﹐$\\overline{OC} = 4$﹐$\\overline{OP} = 5$﹐$\\overline{OR} = 12$﹐ 求sin(∠COQ)的值﹒",
+      "answer_text": "$\\frac{56}{65}$",
+      "explanation_text": "設 α =∠COB﹐ β =∠BOQ﹐則$\\sin\\alpha = \\frac{3}{5}$﹐$\\cos\\alpha = \\frac{4}{5}$﹐$\\sin\\beta = \\frac{5}{13}$﹐$\\cos\\beta = \\frac{12}{13}$﹒\n利用和角公式﹐得$\\sin(\\angle COQ) = \\sin(\\alpha + \\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta = \\frac{3}{5} × \\frac{12}{13} + \\frac{4}{5} × \\frac{5}{13} = \\frac{56}{65}$﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 19,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0020",
+      "title": "設0 < α，β < π，且tanα =$\\frac{1}{2}",
+      "question_text": "設0 < α，β < π，且tanα =$\\frac{1}{2}$，tanβ =$\\frac{1}{3}$，下列何者正確？(A) tan(α + β ) = ±1\n(B) sec(α + β ) =$\\sqrt{2}$ (C) α + β =$\\frac{\\pi}{4}$ (D) α + β =$\\frac{3\\pi}{4}$ (E) α + β 有二解",
+      "answer_text": "(B)(C)",
+      "explanation_text": "0 < α，β < π且tanα =$\\frac{1}{2}$，tanβ =$\\frac{1}{3} ⇒$<!-- -->{=html}0 < α <$\\frac{\\pi}{4}$，0 < β <$\\frac{\\pi}{4}$ ∴0 < α + β <$\\frac{\\pi}{2}$ 又tan(α + β) =$\\frac{\\tan\\alpha + \\tan\\beta}{1 - \\tan\\alpha\\tan\\beta}$=$\\frac{\\frac{1}{2} + \\frac{1}{3}}{1 - \\frac{1}{2} ． \\frac{1}{3}}$= 1，故α + β =$\\frac{\\pi}{4}$ 故選(B)(C)",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 20,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0021",
+      "title": "隨堂練習：求$\\sqrt{3}$tan80° tan20° − tan80",
+      "question_text": "求$\\sqrt{3}$tan80° tan20° − tan80° + tan20°的值為＿＿＿＿。",
+      "answer_text": "$-\\sqrt3$",
+      "explanation_text": "tan(80° − 20°) =$\\frac{\\tan 80{^\\circ} - \\tan 20{^\\circ}}{1 + \\tan 80{^\\circ}\\tan 20{^\\circ}}$ = tan60° =$\\sqrt{3}$ $⇒$ $\\sqrt{3}$ +$\\sqrt{3}$tan80° tan20° = tan80° − tan20°\n∴ $\\sqrt{3}$tan80° tan20° − tan80° + tan20° = −$\\sqrt{3}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-tan-sum-diff-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 21,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0022",
+      "title": "設π < α <$\\frac{3\\pi}{2}$，$- \\fra",
+      "question_text": "設π < α <$\\frac{3\\pi}{2}$，$- \\frac{\\pi}{2}$ < β < 0且tanα =$\\frac{1}{2}$，cotβ = − 3，則α − β = ＿＿＿＿。",
+      "answer_text": "$\\frac{5\\pi}{4}$",
+      "explanation_text": "π < α < $\\frac{3\\pi}{2}$，$- \\frac{\\pi}{2}$ < β < 0 ⇒ π < α − β < 2π tan(α − β ) = $\\frac{\\tan\\alpha - \\tan\\beta}{1 + \\tan\\alpha\\tan\\beta} = \\frac{\\frac{1}{2} - (\\frac{- 1}{3})}{1 + \\frac{1}{2}(\\frac{- 1}{3})} = 1$ ∴ α − β = $\\frac{5\\pi}{4}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 22,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0023",
+      "title": "隨堂練習：cos40°sin160° − sin220°cos340° =",
+      "question_text": "cos40°sin160° − sin220°cos340° = ＿＿＿＿，而(1 + tan35°)(1 + tan10°) = ＿＿＿＿。",
+      "answer_text": "$\\frac{\\sqrt3}{2}$，$2$",
+      "explanation_text": "利用和角公式(1) cos40°sin160° − sin220°cos340° = cos40°sin20° + sin40°cos20° = sin20°cos40° + cos20°sin40° = sin(20° + 40°) = sin60° =$\\frac{\\sqrt{3}}{2}$\n(2)∵ 35° + 10° = 45° ∴ tan(35° + 10°) = tan45° $⇒$ $\\frac{\\tan 35{^\\circ} + \\tan 10{^\\circ}}{1 - \\tan 35{^\\circ}\\tan 10{^\\circ}} = 1$ $⇒$ tan35° + tan10° = 1 − tan35°tan10° $⇒$ tan35°．tan10° + tan35° + tan10° = 1\n∴ (1 + tan35°)(1 + tan10°) = 1 + (tan35°．tan10° + tan35° + tan10°) = 1 + 1 = 2",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-sin-cos-sum-diff-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 23,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0024",
+      "title": "設tanα，tanβ 為2x^2^ − 5x + 1 = 0的二",
+      "question_text": "設tanα，tanβ 為2x^2^ − 5x + 1 = 0的二根，試求：(1) tan(α + β )。 (2) cos^2^(α + β )。\n(3) 3sin^2^(α + β ) − 5sin(α + β )cos(α + β ) + 2cos^2^(α + β )。",
+      "answer_text": "(1)$5$；(2)$\\frac{1}{26}$；(3)$2$",
+      "explanation_text": "∵ tanα，tanβ 為二次方程式2x^2^ − 5x + 1 = 0的二根\n∴ tanα + tanβ =$\\frac{5}{2}$，tanα tanβ =$\\frac{1}{2}$\n(1) tan(α + β) =$\\frac{\\tan\\alpha + \\tan\\beta}{1 - \\tan\\alpha\\tan\\beta} = \\frac{\\frac{5}{2}}{1 - \\frac{1}{2}}$= 5\n(2) cos^2^(α + β) =$\\frac{1}{\\sec^{2}(\\alpha + \\beta)} = \\frac{1}{1 + \\tan^{2}(\\alpha + \\beta)} = \\frac{1}{1 + 5^{2}} = \\frac{1}{26}$\n(3) 3sin^2^(α + β) − 5sin(α + β ) cos(α + β) + 2cos^2^(α + β) = cos^2^(α + β)[$\\frac{3\\sin^{2}(\\alpha + \\beta)}{\\cos^{2}(\\alpha + \\beta)} - 5\\frac{\\sin(\\alpha + \\beta)\\cos(\\alpha + \\beta)}{\\cos^{2}(\\alpha + \\beta)}$+ 2$\\frac{\\cos^{2}(\\alpha + \\beta)}{\\cos^{2}(\\alpha + \\beta)}$] = cos^2^(α + β)[3tan^2^(α + β) − 5tan(α + β) + 2] =$\\frac{1}{26}$ (3 × 5^2^ − 5 × 5 + 2) =$\\frac{1}{26}$ (75 − 25 + 2) =$\\frac{52}{26}$= 2",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 24,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0025",
+      "title": "隨堂練習：設tan α ﹐tan β 為方程式x^2^ + 6x + 7",
+      "question_text": "設tan α ﹐tan β 為方程式x^2^ + 6x + 7 = 0的二根﹐且tan α > tan β ﹐求tan( α − β )的值﹒",
+      "answer_text": "$\\frac{\\sqrt2}{4}$",
+      "explanation_text": "由根與係數關係得tan α + tan β = − 6﹐tan α ⋅ tan β = 7\n(tan α − tan β )^2^ = (tan α + tan β )^2^ − 4tan α ⋅ tan β = 36 − 28 = 8\n∴ $\\tan\\alpha - \\tan\\beta = \\pm \\sqrt{8}$﹐但tan α > tan β\n∴ $\\tan\\alpha - \\tan\\beta = \\sqrt{8}$ $\\tan(\\alpha - \\beta) = \\frac{\\tan\\alpha - \\tan\\beta}{1 + \\tan\\alpha · \\tan\\beta} = \\frac{\\sqrt{8}}{1 + 7} = \\frac{2\\sqrt{2}}{8} = \\frac{\\sqrt{2}}{4}$﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 25,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0026",
+      "title": "隨堂練習：設tanα與tanβ 為方程式7x^2^ − 8x + 1 =",
+      "question_text": "設tanα與tanβ 為方程式7x^2^ − 8x + 1 = 0的兩根﹐求tan($\\frac{\\alpha + \\beta}{2}$)的值﹒",
+      "answer_text": "$\\frac{1}{2}$或$-2$",
+      "explanation_text": "由根與係數關係得知﹐tanα + tanβ =$\\frac{8}{7}$﹐ tanα ⋅ tanβ =$\\frac{1}{7}$﹒\n$\\tan(\\alpha + \\beta) = \\frac{\\tan\\alpha + \\tan\\beta}{1 - \\tan\\alpha · \\tan\\beta} = \\frac{\\frac{8}{7}}{1 - \\frac{1}{7}} = \\frac{4}{3}$﹒\n設$\\tan(\\frac{\\alpha + \\beta}{2}) = k$﹐則 $\\tan(\\alpha + \\beta) = \\tan(2 · \\frac{\\alpha + \\beta}{2}) = \\frac{2k}{1 - k^{2}}$﹐ 因此$\\frac{2k}{1 - k^{2}} = \\frac{4}{3} ⇒ 2k^{2} + 3k - 2 = 0$﹐解得$k = \\frac{1}{2}$或− 2﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 26,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0027",
+      "title": "設A，B，C都是銳角，A + B + C =$\\frac{\\pi",
+      "question_text": "設A，B，C都是銳角，A + B + C =$\\frac{\\pi}{2}$，(1)試證tanA tanB + tanB tanC + tanC tanA = 1。\n(2)利用(1)求tan^2^A + tan^2^B + tan^2^C的最小值。",
+      "answer_text": "(1)見詳解；(2)$1$",
+      "explanation_text": "(1) A + B =$\\frac{\\pi}{2}$− C\n∴ tan(A + B) = tan($\\frac{\\pi}{2}$− C) $⇒ \\quad\\frac{\\tan A + \\tan B}{1 - \\tan A\\tan B} = \\frac{1}{\\tan C}$ 去分母移項即得tanA tanB + tanB tanC + tanC tanA = 1\n(2) tan^2^A + tan^2^B + tan^2^C = tan^2^A + tan^2^B + tan^2^C − tanA tanB − tanB tanC − tanC tanA + tanA tanB + tanB tanC + tanC tanA =$\\frac{1}{2}$ [(tanA − tanB)^2^ + (tanB − tanC)^2^ + (tanC − tanA)^2^] + 1$\\geq$<!-- -->{=html}1 tanA = tanB = tanC時，tan^2^A + tan^2^B + tan^2^C = 1為最小值",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-trig-triangle-tan-sum-product-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 27,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0028",
+      "title": "在邊長為100公尺之正方形廣場一角（即頂點）豎立一長為60公尺的",
+      "question_text": "在邊長為100公尺之正方形廣場一角（即頂點）豎立一長為60公尺的旗桿﹐此桿離地面10 公尺以上部分均漆上紅色顏料﹐若在廣場任一點P﹐測得紅色部分的視角為θ﹐且θ ≥ 45°﹐ 試求點P所成區域的面積﹒",
+      "answer_text": "$125\\pi$",
+      "explanation_text": "如圖﹐令$\\overline{AP}$= x﹐∠RPQ = θ﹐∠APQ = φ﹐\n[圖:program-db/assets/question-media/s3-1-3/image9.png] 則tanθ = tan[(θ + φ) − φ] =$\\frac{\\tan(\\theta + \\varphi) - \\tan\\varphi}{1 + \\tan(\\theta + \\varphi)\\tan\\varphi}$ =$\\frac{\\frac{60}{x} - \\frac{10}{x}}{1 + \\frac{60}{x} \\rightleftharpoons \\rightleftharpoons ． \\rightleftharpoons \\rightleftharpoons \\frac{10}{x}} = \\frac{50x}{x^{2} + 600} \\geq$tan45° = 1﹐ 將上式整理﹐得x^2^ − 50x + 600$\\leq$<!-- -->{=html}0\n⇔ (x − 30)(x − 20)$\\leq$ 0 ⇔ 20$\\leq x \\leq$<!-- -->{=html}30﹐ 故點P所成區域是分別以30及20為半徑的二個$\\frac{1}{4}$圓所圍成的環帶﹐ 其面積為$\\frac{1}{4}$ (30^2^ − 20^2^)π = 125π平方公尺﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 28,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0029",
+      "title": "sin^2^37.5° − sin^2^7.5° = ＿＿＿＿",
+      "question_text": "sin^2^37.5° − sin^2^7.5° = ＿＿＿＿。",
+      "answer_text": "$\\frac{\\sqrt2}{4}$",
+      "explanation_text": "sin^2^37.5° − sin^2^7.5° = sin(37.5° + 7.5°) sin(37.5° − 7.5°) = sin45° sin30° =$\\frac{\\sqrt{2}}{2}$．$\\frac{1}{2}$=$\\frac{\\sqrt{2}}{4}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-sin-cos-sum-diff-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 29,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例16"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0030",
+      "title": "隨堂練習：cos^2^$\\frac{\\pi}{24}$ − sin^2^$",
+      "question_text": "cos^2^$\\frac{\\pi}{24}$ − sin^2^$\\frac{5\\pi}{24}$ = ＿＿＿＿。",
+      "answer_text": "$\\frac{\\sqrt6}{4}$",
+      "explanation_text": "cos^2^$\\frac{\\pi}{24}$− sin^2^$\\frac{5\\pi}{24}$= cos($\\frac{\\pi}{24}$+$\\frac{5\\pi}{24}$) cos($\\frac{\\pi}{24}$−$\\frac{5\\pi}{24}$) = cos$\\frac{\\pi}{4}$cos$\\frac{\\pi}{6}$=$\\frac{\\sqrt{2}}{2} × \\frac{\\sqrt{3}}{2}$=$\\frac{\\sqrt{6}}{4}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-sin-cos-sum-diff-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 30,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0031",
+      "title": "隨堂練習：求$\\frac{\\sin^{2}37.5{^\\circ} -",
+      "question_text": "求$\\frac{\\sin^{2}37.5{^\\circ} - \\sin^{2}7.5{^\\circ}}{\\cos^{2}37.5{^\\circ} + \\cos^{2}7.5{^\\circ}}$之值。",
+      "answer_text": "$\\frac{2\\sqrt2-\\sqrt3}{5}$",
+      "explanation_text": "由正、餘弦平方差公式可得：\n$\\frac{\\sin^{2}37.5{^\\circ} - \\sin^{2}7.5{^\\circ}}{\\cos^{2}37.5{^\\circ} + \\cos^{2}7.5{^\\circ}}$ =$\\frac{\\sin(37.5{^\\circ} + 7.5{^\\circ})\\sin(37.5{^\\circ} - 7.5{^\\circ})}{\\cos^{2}37.5{^\\circ} - \\sin^{2}7.5{^\\circ} + 1}$ =$\\frac{\\sin(37.5{^\\circ} + 7.5{^\\circ})\\sin(37.5{^\\circ} - 7.5{^\\circ})}{\\cos(37.5{^\\circ} + 7.5{^\\circ})\\cos(37.5{^\\circ} - 7.5{^\\circ}) + 1}$ =$\\frac{\\sin 45{^\\circ}\\sin 30{^\\circ}}{\\cos 45{^\\circ}\\cos 30{^\\circ} + 1}$ =$\\frac{\\frac{\\sqrt{2}}{2}．\\frac{1}{2}}{\\frac{\\sqrt{2}}{2}．\\frac{\\sqrt{3}}{2} + 1} = \\frac{\\sqrt{2}}{4 + \\sqrt{6}} = \\frac{2\\sqrt{2} - \\sqrt{3}}{5}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-sin-cos-sum-diff-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 31,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0032",
+      "title": "隨堂練習：設θ是第四象限角，且cotθ = − 3，則sin(θ +$\\f",
+      "question_text": "設θ是第四象限角，且cotθ = − 3，則sin(θ +$\\frac{\\pi}{6}$)sin(θ −$\\frac{\\pi}{6}$)之值為 = ＿＿＿＿。",
+      "answer_text": "$-\\frac{3}{20}$",
+      "explanation_text": "∵ cotθ = − 3且θ是第四象限角 ∴ sinθ =$\\frac{- 1}{\\sqrt{10}}$，cosθ =$\\frac{3}{\\sqrt{10}}$ 故sin(θ +$\\frac{\\pi}{6}$)sin(θ −$\\frac{\\pi}{6}$) = (sinθ cos$\\frac{\\pi}{6}$ + cosθ sin$\\frac{\\pi}{6}$)(sinθ cos$\\frac{\\pi}{6}$ − cosθ sin$\\frac{\\pi}{6}$) = sin^2^θ cos^2^$\\frac{\\pi}{6}$ − cos^2^θ sin^2^$\\frac{\\pi}{6}$ =$( - \\frac{1}{\\sqrt{10}})^{2}(\\frac{\\sqrt{3}}{2})^{2} - (\\frac{3}{\\sqrt{10}})^{2}\\text{ }．\\text{ }(\\frac{1}{2})^{2} = \\frac{1}{10}\\text{ }．\\text{ }\\frac{3}{4} - \\frac{9}{10}\\text{ }．\\text{ }\\frac{1}{4}$ = $- \\frac{6}{40} = - \\frac{3}{20}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 32,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0033",
+      "title": "設α + β =$\\frac{\\pi}{6}$，則(sinα +",
+      "question_text": "設α + β =$\\frac{\\pi}{6}$，則(sinα + sinβ )\n(sinα − sinβ )之最小值為＿＿＿＿。",
+      "answer_text": "$-\\frac{1}{2}$",
+      "explanation_text": "−$\\frac{1}{2}$\n【詳解】(sinα + sinβ )( sinα − sinβ ) = sin^2^α − sin^2^β = sin(α + β )sin(α − β ) = sin$\\frac{\\pi}{6}$sin(α − β ) =$\\frac{1}{2}$sin(α − β )",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-angle-sum-difference-equation-strategy-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 33,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:範例17"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0034",
+      "title": "隨堂練習：設sinx + siny = 1，則cosx + cosy的最大",
+      "question_text": "設sinx + siny = 1，則cosx + cosy的最大值為＿＿＿＿。\n【詳解】令cosx + cosy = t......①，已知sinx + siny = 1......②\n①^2^ + ②^2^得 (cos^2^x + 2cosx cosy + cos^2^y) + (sin^2^x + 2sinx siny + sin^2^y) = t^2^ + 1 $⇒$ (cos^2^x + sin^2^x) + 2(cosx cosy + sinx siny) + (cos^2^y + sin^2^y) = t^2^ + 1 $⇒$ 1 + 2cos(x − y) + 1 = t^2^ + 1\n∵ cos(x − y)$\\leq$ 1 $⇒$ 2cos(x − y)$\\leq$ 2 $⇒$ t^2^ = 1 + 2cos(x − y)$\\leq$ 3 當cos(x − y) = 1時，t^2^ = 3為最大值，此時t =$\\sqrt{3}$為最大值 即cosx + cosy的最大值為$\\sqrt{3}$",
+      "answer_text": "$\\sqrt3$",
+      "explanation_text": "",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-sin-cos-sum-diff-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題1：差角與和角公式",
+      "source_order": 34,
+      "tags": [
+        "s3-1-3",
+        "section:主題1：差角與和角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0035",
+      "title": "設$\\frac{\\pi}{2} < \\theta < \\pi$",
+      "question_text": "設$\\frac{\\pi}{2} < \\theta < \\pi$，sin$\\theta = \\frac{2}{\\sqrt{5}}$，則(1) sin2$\\theta$ = ＿＿＿＿。 (2) cos2$\\theta$ = ＿＿＿＿。",
+      "answer_text": "(1)$-\\frac{4}{5}$；(2)$-\\frac{3}{5}$",
+      "explanation_text": "$\\frac{\\pi}{2} < \\theta < \\pi$，sin θ =$\\frac{2}{\\sqrt{5}}$ ⇒ cosθ =$\\frac{- 1}{\\sqrt{5}}$\n(1) sin 2θ = 2sin θ cosθ = 2．$\\frac{2}{\\sqrt{5}}$．($\\frac{- 1}{\\sqrt{5}}$) = −$\\frac{4}{5}$\n(2) cos2θ = 1 − 2sin^2^θ = 1 − 2．($\\frac{2}{\\sqrt{5}}$)^2^ = −$\\frac{3}{5}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 35,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0036",
+      "title": "設$\\frac{3\\pi}{2} < \\theta < 2\\pi",
+      "question_text": "設$\\frac{3\\pi}{2} < \\theta < 2\\pi$，sin$\\theta$ + cos$\\theta$ =$\\frac{1}{5}$，則(1) sin2$\\theta$ = ＿＿＿＿。 (2) sin$\\theta$ − cos$\\theta$ = ＿＿＿＿。",
+      "answer_text": "(1)$-\\frac{24}{25}$；(2)$-\\frac{7}{5}$",
+      "explanation_text": "(1) sinθ + cosθ =$\\frac{1}{5}$\n⇒ sin^2^θ + 2sinθ cosθ + cos^2^θ =$\\frac{1}{25}$ ⇒ 1 + sin2θ =$\\frac{1}{25}$ ⇒ sin2θ = −$\\frac{24}{25}$\n(2) (sinθ − cosθ)^2^ = sin^2^θ − 2sinθ cosθ + cos^2^θ = 1 −\n(−$\\frac{24}{25}$) =$\\frac{49}{25}$⇒ sinθ − cosθ = ±$\\frac{7}{5}$\n∵ $\\frac{3\\pi}{2}$< θ < 2π ∴ sinθ < cosθ 故sinθ − cosθ = −$\\frac{7}{5}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 36,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0037",
+      "title": "設sin$\\theta$ + cos$\\theta$ =$\\fr",
+      "question_text": "設sin$\\theta$ + cos$\\theta$ =$\\frac{1}{5}$，0 < θ < π，則(1) sin2$\\theta$ = ＿＿＿＿。 (2) cos$\\theta$ = ＿＿＿＿。",
+      "answer_text": "(1)$-\\frac{24}{25}$；(2)$-\\frac{3}{5}$",
+      "explanation_text": "(1)由sinθ + cosθ =$\\frac{1}{5}$ ⇒ sin^2^θ + 2sinθ cosθ + cos^2^θ =$\\frac{1}{25}$\n∴ 1 + sin2θ =$\\frac{1}{25}$ ⇒ sin2θ = −$\\frac{24}{25}$\n(2)∵ ${ \\begin{array}{r} \\sin\\theta + \\cos\\theta = \\frac{1}{5} \\ \\sin\\theta\\cos\\theta = - \\frac{12}{25} \\end{array} \\right.$ ⇒ cosθ =$\\frac{- 3}{5}$或$\\frac{4}{5}$ 又0 < θ < π 且sinθ cosθ = −$\\frac{12}{25}$ ∴ sinθ > 0，cosθ < 0，故cosθ = −$\\frac{3}{5}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 37,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0038",
+      "title": "隨堂練習：若$\\frac{3\\pi}{2}$< θ < 2π且sinθ +",
+      "question_text": "若$\\frac{3\\pi}{2}$< θ < 2π且sinθ + cosθ =$\\frac{1}{5}$，則cosθ =＿＿＿＿。",
+      "answer_text": "$\\frac{4}{5}$",
+      "explanation_text": "因為$\\frac{3\\pi}{2}$< θ < 2π，所以sinθ < 0，cosθ > 0 將sinθ + cosθ =$\\frac{1}{5}$平方，得1 + 2sinθ cosθ =$\\frac{1}{25}$ ∴ 2sinθ cosθ = −$\\frac{24}{25}$ 其次，因為(sinθ − cosθ )^2^ =1 − 2sinθ cosθ = 1 +$\\frac{24}{25}$=$\\frac{49}{25}$ ∴ sinθ − cosθ = ±$\\frac{7}{5}$（取負號） 將sinθ + cosθ =$\\frac{1}{5}$及sinθ − cosθ = −$\\frac{7}{5}$兩式相減，得2cosθ =$\\frac{8}{5}$ ∴ cosθ =$\\frac{4}{5}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 38,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0039",
+      "title": "設tan$\\frac{\\theta}{2}$= 3，則sin2θ",
+      "question_text": "設tan$\\frac{\\theta}{2}$= 3，則sin2θ = ＿＿＿＿。",
+      "answer_text": "$-\\frac{24}{25}$",
+      "explanation_text": "∵ tan$\\frac{\\theta}{2}$ = 3 ∴ sinθ =$\\frac{2\\tan\\frac{\\theta}{2}}{1 + \\tan^{2}\\frac{\\theta}{2}}$=$\\frac{6}{10}$=$\\frac{3}{5}$，cosθ =$\\frac{1 - \\tan^{2}\\frac{\\theta}{2}}{1 + \\tan^{2}\\frac{\\theta}{2}}$=$\\frac{- 4}{5}$ sin2θ = 2sinθ cosθ = 2．$\\frac{3}{5}$．($- \\frac{4}{5}$) =$\\frac{- 24}{25}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 39,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0040",
+      "title": "隨堂練習：設tan$\\frac{\\theta}{2}$ = t，以t表出",
+      "question_text": "設tan$\\frac{\\theta}{2}$ = t，以t表出：(1) tan$\\theta$ = ＿＿＿＿。 (2) sin2$\\theta$ = ＿＿＿＿。",
+      "answer_text": "(1)$\\frac{2t}{1-t^2}$；(2)$\\frac{4t(1-t^2)}{(1+t^2)^2}$",
+      "explanation_text": "(1) tanθ =$\\frac{2\\tan\\frac{\\theta}{2}}{1 - \\tan^{2}\\frac{\\theta}{2}}$=$\\frac{2t}{1 - t^{2}}$\n(2) sin2θ =$\\frac{2\\tan\\theta}{1 + \\tan^{2}\\theta}$=$\\frac{2 × \\frac{2t}{1 - t^{2}}}{1 + (\\frac{2t}{1 - t^{2}})^{2}}$=$\\frac{4t - 4t^{3}}{1 + 2t^{2} + t^{4}}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 40,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0041",
+      "title": "設0 ≤ x < 2π，cos2x − 5cosx + 3 =",
+      "question_text": "設0 ≤ x < 2π，cos2x − 5cosx + 3 = 0之解為＿＿＿＿。",
+      "answer_text": "$x=\\frac{\\pi}{3}$或$\\frac{5\\pi}{3}$",
+      "explanation_text": "cos2x − 5cosx + 3 = 0 ⇒ 2cos^2^x − 1 − 5cosx + 3 = 0\n⇒ 2cos^2^x − 5cosx + 2 = 0 ⇒ cosx =$\\frac{1}{2}$或2（不合）\n∴ x =$\\frac{\\pi}{3}或\\frac{5\\pi}{3}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 41,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0042",
+      "title": "設sinθ，cosθ為方程式x^2^ + px + q = 0的",
+      "question_text": "設sinθ，cosθ為方程式x^2^ + px + q = 0的二根，試以p，q表2cos^2^$\\frac{\\theta}{2}$\n(cos$\\frac{\\theta}{2}$+ sin$\\frac{\\theta}{2}$)^2^。",
+      "answer_text": "$1-p+q$",
+      "explanation_text": "∵sinθ，cosθ 為x^2^ + px + q = 0的二根 ∴ sinθ + cosθ = − p，sinθ．cosθ = q 故2cos^2^$\\frac{\\theta}{2}$ (cos$\\frac{\\theta}{2}$+ sin$\\frac{\\theta}{2}$)^2^ = (1 + cosθ)(cos^2^$\\frac{\\theta}{2}$+ 2sin$\\frac{\\theta}{2}$cos$\\frac{\\theta}{2}$+ sin^2^$\\frac{\\theta}{2}$) = (1 + cosθ)(1 + sinθ) = 1 + (sinθ + cosθ) + sinθ cosθ = 1 +\n( − p) + q = 1 − p + q",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 42,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0043",
+      "title": "求下列各值：(1) cos^2^$\\frac{\\pi}{8} +",
+      "question_text": "求下列各值：(1) cos^2^$\\frac{\\pi}{8} + \\cos^{2}\\frac{3\\pi}{8} + \\cos^{2}\\frac{5\\pi}{8} + \\cos^{2}\\frac{7\\pi}{8}$ = ＿＿＿＿。\n(2) cos20°cos40°cos80° = ＿＿＿＿。",
+      "answer_text": "(1)$2$；(2)$\\frac{1}{8}$",
+      "explanation_text": "(1)原式 =$\\frac{1 + \\cos\\frac{\\pi}{4}}{2} + \\frac{1 + \\cos\\frac{3\\pi}{4}}{2} + \\frac{1 + \\cos\\frac{5\\pi}{4}}{2} + \\frac{1 + \\cos\\frac{7\\pi}{4}}{2}$ =$\\frac{1}{2}$× 4 +$\\frac{1}{2}$ (cos$\\frac{\\pi}{4}$+ cos$\\frac{3}{4}\\pi$ + cos$\\frac{5}{4}\\pi$ + cos$\\frac{7}{4}\\pi$) = 2\n(2) cos20° cos40° cos80° =$\\frac{2\\sin 20{^\\circ}\\cos 20{^\\circ}\\cos 40{^\\circ}\\cos 80{^\\circ}}{2\\sin 20{^\\circ}}$= $\\frac{\\sin 40{^\\circ}\\cos 40{^\\circ}\\cos 80{^\\circ}}{2\\sin 20{^\\circ}} = \\frac{\\frac{1}{2}\\sin 80{^\\circ}\\cos 80{^\\circ}}{2\\sin 20{^\\circ}} = \\frac{\\frac{1}{2}\\sin 160{^\\circ}}{4\\sin 20{^\\circ}} = \\frac{\\sin 20{^\\circ}}{8\\sin 20{^\\circ}}$=$\\frac{1}{8}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 43,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0044",
+      "title": "隨堂練習：cos$\\frac{2\\pi}{7}$cos$\\frac{4\\p",
+      "question_text": "cos$\\frac{2\\pi}{7}$cos$\\frac{4\\pi}{7}$cos$\\frac{8\\pi}{7}$之值為＿＿＿＿。",
+      "answer_text": "$\\frac{1}{8}$",
+      "explanation_text": "cos$\\frac{2\\pi}{7}$cos$\\frac{4\\pi}{7}$cos$\\frac{8\\pi}{7}$=$\\frac{8\\sin\\frac{2\\pi}{7}\\text{cos}\\frac{2\\pi}{7}\\text{ cos}\\frac{4\\pi}{7}\\text{ cos}\\frac{8\\pi}{7}\\ }{\\text{8sin}\\frac{2\\pi}{7}}$=$\\frac{4(\\sin\\frac{4\\pi}{7}\\text{cos}\\frac{4\\pi}{7})\\text{ cos}\\frac{8\\pi}{7}\\ }{\\text{8sin}\\frac{2\\pi}{7}}$ =$\\frac{2\\sin\\frac{8\\pi}{7}\\text{cos}\\frac{8\\pi}{7}\\ }{\\text{8sin}\\frac{2\\pi}{7}}$=$\\frac{\\sin\\frac{16\\pi}{7}}{\\text{8sin}\\frac{2\\pi}{7}}$=$\\frac{\\sin\\frac{2\\pi}{7}}{\\text{8sin}\\frac{2\\pi}{7}}$=$\\frac{1}{8}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 44,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0045",
+      "title": "在△ABC中，若$\\frac{\\sin 2A}{\\sin B}$",
+      "question_text": "在△ABC中，若$\\frac{\\sin 2A}{\\sin B}$=$\\frac{\\cos A}{\\cos C}$，試判斷此三角形的形狀。",
+      "answer_text": "等腰或直角三角形",
+      "explanation_text": "$\\frac{\\sin 2A}{\\sin B}$=$\\frac{\\cos A}{\\cos C}$⇔sin2A cosC = cosA sinB∴2sinA cosA cosC = cosA sin(π − (A + C))\n∴2sinA cosA cosC = cosA sin(A + C)∴cosA[2sinA cosC −\n(sinA cosC + cosA sinC)] = 0\n∴cosA(sinA cosC − cosA sinC) = 0 ∴cosA sin(A − C) = 0 故當cosA = 0，則A = 90°；而當sin(A − C) = 0，則A = C，故為等腰或直角三角形",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 45,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0046",
+      "title": "試求tan9° − tan27° − tan63° + tan8",
+      "question_text": "試求tan9° − tan27° − tan63° + tan81°之值。",
+      "answer_text": "4",
+      "explanation_text": "tan9° − tan27° − tan63° + tan81° = (tan9° + tan81°) − (tan27° + tan63°) = (tan9° + cot9°) − (tan27° + cot27°) =\n($\\frac{\\sin 9{^\\circ}}{\\text{cos9}{^\\circ}} + \\frac{\\cos 9{^\\circ}}{\\sin 9{^\\circ}}$) −\n($\\frac{\\sin 27{^\\circ}}{\\text{cos27}{^\\circ}} + \\frac{\\cos 27{^\\circ}}{\\sin 27{^\\circ}}$) =$\\frac{1}{\\sin 9{^\\circ}\\cos 9{^\\circ}}$−$\\frac{1}{\\sin 27{^\\circ}\\cos 27{^\\circ}}$=$\\frac{2}{\\sin 18{^\\circ}}$−$\\frac{2}{\\sin 54{^\\circ}}$=$\\frac{2\\text{ }．\\text{ }4}{\\sqrt{5} - 1}$−$\\frac{2\\text{ }．\\text{ }4}{\\sqrt{5} + 1}$=$\\frac{8(\\sqrt{5} + 1) - 8(\\sqrt{5} - 1)}{(\\sqrt{5} - 1)\\text{ }．\\text{ }(\\sqrt{5} + 1)}$ = 4",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 46,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0047",
+      "title": "試證：tan($\\frac{\\pi}{4}$+ θ) + tan",
+      "question_text": "試證：tan($\\frac{\\pi}{4}$+ θ) + tan($\\frac{\\pi}{4}$− θ) = 2sec2θ。",
+      "answer_text": "見詳解",
+      "explanation_text": "tan($\\frac{\\pi}{4}$+ θ) + tan($\\frac{\\pi}{4}$− θ) =$\\frac{\\tan\\frac{\\pi}{4} + \\tan\\theta}{1 - \\tan\\frac{\\pi}{4}\\tan\\theta}$+$\\frac{\\tan\\frac{\\pi}{4} - \\tan\\theta}{1 + \\tan\\frac{\\pi}{4}\\tan\\theta}$ =$\\frac{1 + \\tan\\theta}{1 - \\tan\\theta} + \\frac{1 - \\tan\\theta}{1 + \\tan\\theta}$=$\\frac{(1 + \\tan\\theta)^{2} + (1 - \\tan\\theta)^{2}}{1 - \\tan^{2}\\theta}$=$\\frac{2(1 + \\tan^{2}\\theta)}{1 - \\tan^{2}\\theta}$=$\\frac{2}{\\cos 2\\theta}$= 2sec2θ",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 47,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0048",
+      "title": "利用cos3θ = 4cos^3^θ − 3cosθ，證明：si",
+      "question_text": "利用cos3θ = 4cos^3^θ − 3cosθ，證明：sin18° =$\\frac{\\sqrt{5} - 1}{4}$。",
+      "answer_text": "見詳解",
+      "explanation_text": "令θ = 18° ∴ 5θ = 90° ⇒ 3θ = 90° − 2θ\n∴ cos3θ = cos(90° − 2θ) ⇒ 4cos^3^θ − 3cosθ = sin2θ = 2sinθ cosθ\n⇒ 4cos^2^θ − 3 = 2sinθ ⇒ 4(1 − sin^2^θ) − 3 = 2sinθ\n⇒ 4sin^2^θ + 2sinθ − 1 = 0 ⇒ sinθ =$\\frac{- 2 \\pm \\sqrt{20}}{8} = \\frac{- 1 \\pm \\sqrt{5}}{4}$ 但sinθ > 0 ∴ sinθ =$\\frac{- 1 + \\sqrt{5}}{4} = \\frac{\\sqrt{5} - 1}{4}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 48,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0049",
+      "title": "利用cos3θ = 4cos^3^θ − 3cosθ，證明：si",
+      "question_text": "利用cos3θ = 4cos^3^θ − 3cosθ，證明：sin18° =$\\frac{\\sqrt{5} - 1}{4}$。",
+      "answer_text": "見詳解",
+      "explanation_text": "(1)由3(10°) = 30° ⇒ sin3(10°) = sin30° ⇒ 3sin10° − 4sin^3^10° =$\\frac{1}{2}$\n⇒ 8sin^3^10° − 6sin10° + 1 = 0 ∴ sin10°為f (x) = 8x^3^ − 6x + 1 = 0的根\n(2)而0 < sin10° < sin30° =$\\frac{1}{2}$ 利用有理根檢查定理，f (x) = 0在區間(0，$\\frac{1}{2}$)的可能有理根為$\\frac{1}{8}$，$\\frac{1}{4}$ 但f ($\\frac{1}{8}$) ≠ 0，f ($\\frac{1}{4}$) ≠ 0 ∴ f (x) = 0在0 < x <$\\frac{1}{2}$中沒有有理根\n(3)由(1)(2)知，sin10°為f (x) = 0的無理根，故sin10°是無理數.",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 49,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0050",
+      "title": "隨堂練習：利用倍角公式求cos36°的值﹒",
+      "question_text": "利用倍角公式求cos36°的值﹒",
+      "answer_text": "$\\frac{1+\\sqrt5}{4}$",
+      "explanation_text": "令 θ = 36°﹐得5θ = 180°﹐即2θ = 180° − 3θ\n⇒ cos2θ = cos(180° − 3θ ) = − cos3θ ⇒ 2cos^2^ θ − 1 = −\n(4cos^3^ θ − 3cos θ )\n⇒ 4cos^3^ θ + 2cos^2^ θ − 3cos θ − 1 = 0 ⇒ (cos θ + 1)(4cos^2^ θ − 2cos θ − 1) = 0\n⇒ cos θ = − 1﹐$\\frac{2 \\pm \\sqrt{4 + 16}}{8} = \\frac{1 \\pm \\sqrt{5}}{4}$ 又cos θ = cos36° > 0﹐故$\\cos 36{^\\circ} = \\frac{1 + \\sqrt{5}}{4}$﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 50,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0051",
+      "title": "隨堂練習：試證cos40°為無理數",
+      "question_text": "試證cos40°為無理數。",
+      "answer_text": "見詳解",
+      "explanation_text": "1° 令θ = 40° ⇒ 3θ = 120° ∴ cos3θ = cos120° ⇒ 4cos^3^θ − 3cosθ = −$\\frac{1}{2}$\n∴ 8cos^3^θ − 6cosθ + 1 = 0，故cos40°為8x^3^ − 6x + 1 = 0之一根 2° 考慮8x^3^ − 6x + 1 = 0的有理根，設為$\\frac{b}{a}$，a，b互質，則a | 8，b | 1\n∴ $\\frac{b}{a}$之可能值為 ± 1，±$\\frac{1}{2}$，±$\\frac{1}{4}$，±$\\frac{1}{8}$ 經代入方程式8x^3^ − 6x + 1 = 0均不能滿足 ∴ 8x^3^ − 6x + 1 = 0沒有有理根 但cos40°為8x^3^ − 6x + 1 = 0之根，故cos40°為無理數",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 51,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0052",
+      "title": "(1)試證：sinθ sin(60° − θ) sin(60°",
+      "question_text": "(1)試證：sinθ sin(60° − θ) sin(60° + θ) =$\\frac{1}{4}$sin3θ。\n(2)利用(1)的結果，求sin20° sin40° sin80°的值。",
+      "answer_text": "(1)見詳解；(2)$\\frac{\\sqrt3}{8}$",
+      "explanation_text": "(1) sinθ sin(60° − θ) sin(60° + θ) = sinθ (sin60°cosθ − cos60°sinθ)(sin60°cosθ + cos60°sinθ) = sinθ ($\\frac{\\sqrt{3}}{2}$cosθ −$\\frac{1}{2}$sinθ)($\\frac{\\sqrt{3}}{2}$cosθ +$\\frac{1}{2}$ sinθ) = sinθ ($\\frac{3}{4}$cos^2^θ −$\\frac{1}{4}$sin^2^θ) =$\\frac{1}{4}$ (3sinθ cos^2^θ − sin^3^θ) =$\\frac{1}{4}$ [3sinθ\n(1 − sin^2^θ) − sin^3^θ] =$\\frac{1}{4}$ (3sinθ − 4sin^3^θ) =$\\frac{1}{4}$sin3θ\n(2)利用(1) sin20°sin40°sin80° = sin20°sin(60° − 20°) sin(60° + 20°) =$\\frac{1}{4}$sin(3．20°) =$\\frac{1}{4}$sin60° =$\\frac{1}{4}$．$\\frac{\\sqrt{3}}{2}$=$\\frac{\\sqrt{3}}{8}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 52,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0053",
+      "title": "設f (x) = 4x^3^ − 3x + 3，求f (x)除以",
+      "question_text": "設f (x) = 4x^3^ − 3x + 3，求f\n(x)除以x − sin20°之餘式＿＿＿＿。",
+      "answer_text": "$3-\\frac{\\sqrt3}{2}$",
+      "explanation_text": "f (sin20°) = 4sin^3^20° − 3sin20° + 3 = − (3sin20° − 4sin^3^20°) + 3 = − sin60° + 3 = 3 −$\\frac{\\sqrt{3}}{2}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 53,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0054",
+      "title": "隨堂練習：多項式f (x) = 4x^3^ − 3x + 5除以x − s",
+      "question_text": "多項式f (x) = 4x^3^ − 3x + 5除以x − sin20°的餘式為＿＿＿＿。",
+      "answer_text": "$5-\\frac{\\sqrt3}{2}$",
+      "explanation_text": "∵ f (x)除以x − c的餘式為f (c) ∴ f (x)除以x − sin20°的餘式為 f (sin20°) = 4sin^3^20° − 3sin20° + 5 = 5 − (3sin20° − 4sin^3^20°) = 5 − sin(3 × 20°) = 5 −$\\frac{\\sqrt{3}}{2}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 54,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0055",
+      "title": "隨堂練習：以x − cos40°除f (x) = 3x − 4x^3^之餘",
+      "question_text": "以x − cos40°除f (x) = 3x − 4x^3^之餘式為＿＿＿＿。",
+      "answer_text": "$\\frac{1}{2}$",
+      "explanation_text": "由餘式定理以x − cos40°除f (x) = 3x − 4x^3^的餘式為f\n(cos40°) f (cos40°) = 3cos40° − 4cos^3^40° = − (4cos^3^40° − 3cos40°) = − cos(3×40°) = − cos120° = −( −$\\frac{1}{2}$) =$\\frac{1}{2}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 55,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0056",
+      "title": "函數f (x) = cos^2^2x + 2sin^2^x，x$",
+      "question_text": "函數f (x) = cos^2^2x + 2sin^2^x，x$\\in$R。(1) f\n(x)的最小值為＿＿＿＿。\n(2) f\n(x)的最大值為＿＿＿＿。",
+      "answer_text": "(1)$\\frac{3}{4}$；(2)$3$",
+      "explanation_text": "f (x) = cos^2^2x + 2sin^2^x = (1 − 2sin^2^x) ^2^ + 2sin^2^x = 4sin^4^x − 2sin^2^x + 1 = 4(sin^2^x −$\\frac{1}{4}$)^2^ +$\\frac{3}{4}$ ∵ −1 ≤ sinx ≤ 1 ∴ 0 ≤ sin^2^x ≤ 1 故(1) sin^2^x =$\\frac{1}{4}$時，f (x) =$\\frac{3}{4}$為最小值 (2) sin^2^x =1時，f (x) = 3為最大值",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 56,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0057",
+      "title": "隨堂練習：設0 ≤ x ≤ 2π，求函數f (x) = sin^2^2x",
+      "question_text": "設0 ≤ x ≤ 2π，求函數f (x) = sin^2^2x − 3cos^2^x的最小值，並求此時的x值。",
+      "answer_text": "最小值$-3$，此時$x=0,\\pi,2\\pi$",
+      "explanation_text": "f (x) = sin^2^2x − 3cos^2^x = (1 − cos^2^2x) −$\\frac{3}{2}$ (1 + cos2x) = − cos^2^2x −$\\frac{3}{2}$cos2x −$\\frac{1}{2}$= − (cos2x +$\\frac{3}{4}$)^2^ +$\\frac{1}{16}$ 因為0 ≤ x ≤ 2π，故得 − 1 ≤ cos2x ≤ 1，因此當cos2x = 1時，f\n(x)有最小值 − 3 此時2x = 0，2π，4π，亦即x = 0，π，2π",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 57,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0058",
+      "title": "函數f (t ) = sin^2^2t − 3cos^2^t在0",
+      "question_text": "函數f (t ) = sin^2^2t − 3cos^2^t在0 ≤ t ≤ 2π 的範圍內，其最大值為＿＿＿＿。\n【詳解】f (t ) = (1 − cos^2^ 2t) − 3．$\\frac{1 + \\cos 2t}{2}$= −\n(cos2t +$\\frac{3}{4}$)^2^ +$\\frac{1}{16}$ cos2t = −$\\frac{3}{4}$時，f (t) =$\\frac{1}{16}$為最大值，故f\n(t)之最大值為$\\frac{1}{16}$",
+      "answer_text": "$\\frac{1}{16}$",
+      "explanation_text": "",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 58,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例16"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0059",
+      "title": "隨堂練習：多設x$\\in$R，f (x) = 2 + sinx + cos",
+      "question_text": "多設x$\\in$R，f (x) = 2 + sinx + cosx − sin2x。(1)令t = sinx + cosx，請以t表示f (x) = ＿＿＿＿。\n(2)求f\n(x)之最小值為＿＿＿＿。",
+      "answer_text": "(1)$-t^2+t+3$；(2)$1-\\sqrt2$",
+      "explanation_text": "f (x) = sinx + cosx − sin2x + 2\n(1)令t = sinx + cosx，則t^2^ = 1 + 2sinx cosx = 1 + sin2x ⇒ sin2x = t^2^ − 1且−$\\sqrt{2} \\leq t \\leq \\sqrt{2}$\n∴ f (x) = t − (t^2^ − 1) + 2 = − t^2^ + t + 3，$- \\sqrt{2} \\leq t \\leq \\sqrt{2}$\n(2) f (x) = − t^2^ + t + 3 = − (t^2^ − t +$\\frac{1}{4}$) +$\\frac{13}{4}$= − (t −$\\frac{6}{10}$)^2^ +$\\frac{13}{4}$ 當t = −$\\sqrt{2}$時，f (x) = − ($- \\sqrt{2} - \\frac{1}{2}$)^2^ +$\\frac{13}{4}$ = 1 −$\\sqrt{2}$為最小值",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 59,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0060",
+      "title": "隨堂練習：設f (θ) = sinθ sin3θ，θ 為任意實數，求f (",
+      "question_text": "設f (θ) = sinθ sin3θ，θ 為任意實數，求f\n(θ)之：(1)最大值＿＿＿＿。 (2)最小值＿＿＿＿。\n![",
+      "answer_text": "(1)$\\frac{9}{16}$；(2)$-1$",
+      "explanation_text": "f (θ) = sinθ sin3θ = sinθ (3sinθ − 4sin^3^θ) = − 4sin^4^θ + 3sin^2^θ = − 4(sin^4^θ −$\\frac{3}{4}$sin^2^θ) = − 4(sin^2^θ −$\\frac{3}{8}$)^2^ + 4．$\\frac{9}{64}$= − 4(sin^2^θ −$\\frac{3}{8}$)^2^ +$\\frac{9}{16}$\n∵ $\\left| \\sin\\theta \\right| \\leq 1$ ∴ 0$\\leq \\sin^{2}\\theta \\leq 1$，令sin^2^θ = t 則y = f (θ) = − 4(t −$\\frac{3}{8}$)^2^ +$\\frac{9}{16}$ 當t =$\\frac{3}{8}$時，y有Max =$\\frac{9}{16}$， 當t = 1時，y有min = − 1](.\\program-db\\imports\\packs\\_inspect-3A-6\\assets/media/image10.png)",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 60,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0061",
+      "title": "設$\\frac{\\pi}{6} \\leq x \\leq \\fra",
+      "question_text": "設$\\frac{\\pi}{6} \\leq x \\leq \\frac{5\\pi}{12}$，求sin^4^x + cos^4^x的最大值與最小值。\n![",
+      "answer_text": "最大值$\\frac{7}{8}$，最小值$\\frac{1}{2}$",
+      "explanation_text": "](.\\program-db\\imports\\packs\\_inspect-3A-6\\assets/media/image11.png)\n[圖:program-db/assets/question-media/s3-1-3/image12.png]\n[圖:program-db/assets/question-media/s3-1-3/image13.png]\n[圖:program-db/assets/question-media/s3-1-3/image14.png]\n[圖:program-db/assets/question-media/s3-1-3/image15.png]\n(1) sin^4^x + cos^4^x = (sin^2^x + cos^2^x)^2^ − 2sin^2^x cos^2^x = 1 −$\\frac{1}{2}$ (2sinx cosx)^2^ = 1 −$\\frac{1}{2}$sin^2^2x = 1 −$\\frac{1}{2}(\\frac{1 - \\cos 4x}{2})$ = 1 −$\\frac{1}{4}$ (1 − cos4x) =$\\frac{3}{4} + \\frac{1}{4}$cos4x\n(2)$\\frac{\\pi}{6} \\leq x \\leq \\frac{5\\pi}{12}$ ⇒ ⇒ − 1cos4x\n⇒ − ⇒ $\\frac{1}{2} \\leq \\frac{1}{4}\\cos 4x + \\frac{3}{4} \\leq \\frac{7}{8}$\n∴ 最大值$\\frac{7}{8}$，最小值$\\frac{1}{2}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 61,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例17"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0062",
+      "title": "隨堂練習：求8(cos^4^θ + sin^4^θ )在[$\\frac{",
+      "question_text": "求8(cos^4^θ + sin^4^θ )在[$\\frac{\\pi}{6}$，$\\frac{15\\pi}{12}$]區間上的最大值M與最小值m。\n![",
+      "answer_text": "$M=7$，$m=4$",
+      "explanation_text": "1° 8(cos^4^θ + sin^4^θ ) = 8[(cos^2^θ + sin^2^θ )^2^ − 2sin^2^ θ cos^2^θ ] = 8(1 −$\\frac{1}{2}$sin^2^2θ ) 2° $\\frac{\\pi}{6}$≤ θ ≤$\\frac{5\\pi}{12}$ ⇒ $\\frac{\\pi}{3}$≤ 2θ ≤$\\frac{5\\pi}{6}$\n① sin2θ =$\\frac{1}{2}$時，M = 8[1 −$\\frac{1}{2}$\n($\\frac{1}{2}$)^2^] = 7最大，② sin2θ = 1時，m = 8(1 −$\\frac{1}{2}$．1) = 4最小](.\\program-db\\imports\\packs\\_inspect-3A-6\\assets/media/image16.png)",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 62,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0063",
+      "title": "隨堂練習：為$\\overline{BC}$的中點O﹐半徑為2公尺﹐$\\ov",
+      "question_text": "為$\\overline{BC}$的中點O﹐半徑為2公尺﹐$\\overline{AB}$與$\\overline{CD}$均垂直於$\\overline{BC}$﹐ 且$\\overline{AB} = \\overline{CD} = 1$公尺﹒老師要求學生在牆面上佈置一矩形畫作﹐ 試問﹕這矩形畫作的面積最大值為多少平方公尺﹖ ![",
+      "answer_text": "4",
+      "explanation_text": "設矩形畫作為矩形PQRS﹒令∠POQ = θ ﹐ 得矩形PQRS的面積 $= \\overline{PQ} × \\overline{QR} = \\overline{PQ} × (2\\overline{OQ}) = 2\\sin\\theta × (2 · 2\\cos\\theta) = 4\\sin 2\\theta$﹒\n∵ ∠AOB = 30° ⇒ 30° ≤ θ ≤ 90°\n⇒ 60° ≤ 2θ ≤ 180°﹒\n∴ 當 θ = 45°時﹐矩形PQRS的面積最大﹐為4sin90° = 4﹒\n故矩形畫作的面積最大值為4（平方公尺）﹒](.\\program-db\\imports\\packs\\_inspect-3A-6\\assets/media/image18.emf)",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 63,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0064",
+      "title": "設x∈R，f (x) =$\\frac{1 - 2\\cos x}{",
+      "question_text": "設x∈R，f (x) =$\\frac{1 - 2\\cos x}{2 + \\sin x}$之最大值為＿＿＿＿。",
+      "answer_text": "$\\frac{2+\\sqrt{13}}{3}$",
+      "explanation_text": "令t = tan$\\frac{x}{2}$，則sinx =$\\frac{2t}{1 + t^{2}}$，cosx =$\\frac{1 - t^{2}}{1 + t^{2}}$ y = f (x) =$\\frac{1 - 2\\cos x}{2 + \\sin x}$，y =$\\frac{1 - 2 ． (\\frac{1 - t^{2}}{1 + t^{2}})}{2 + (\\frac{2t}{1 + t^{2}})}$ ⇒ (2y − 3)t^2^ + 2yt + (2y + 1) = 0，t∈R 判別式D = 4y^2^ − 4(4y^2^ − 4y − 3) ≥ 0\n⇒ 3y^2^ − 4y − 3 ≤ 0 ⇒ $\\frac{2 - \\sqrt{13}}{3}$≤ y ≤$\\frac{2 + \\sqrt{13}}{3}$\n∴ 最大值為$\\frac{2 + \\sqrt{13}}{3}$\n[]{.underline}",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 64,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例18"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0065",
+      "title": "隨堂練習：設f：R→R定義為f (x) =$\\frac{2 + \\cos",
+      "question_text": "設f：R→R定義為f (x) =$\\frac{2 + \\cos x}{2 + \\sin x}$，試求f\n(x)的最大值與最小值。",
+      "answer_text": "最大值$\\frac{4+\\sqrt7}{3}$，最小值$\\frac{4-\\sqrt7}{3}$",
+      "explanation_text": "∵sinx =$\\frac{2\\tan\\frac{x}{2}}{1 + \\tan^{2}\\frac{x}{2}}$，cosx =$\\frac{1 - \\tan^{2}\\frac{x}{2}}{1 + \\tan^{2}\\frac{x}{2}}$， 令tan$\\frac{x}{2}$= t，則sinx =$\\frac{2t}{1 + t^{2}}$，cosx =$\\frac{1 - t^{2}}{1 + t^{2}}$，t$\\in$R\n∴ f (x) =$\\frac{2 + \\cos x}{2 + \\sin x}$=$\\frac{2 + \\frac{1 - t^{2}}{1 + t^{2}}}{2 + \\frac{2t}{1 + t^{2}}}$=$\\frac{2(1 + t^{2}) + 1 - t^{2}}{2(1 + t^{2}) + 2t}$=$\\frac{3 + t^{2}}{2 + 2t + 2t^{2}}$ 令y =$\\frac{3 + t^{2}}{2 + 2t + 2t^{2}}$，則2y + 2yt + 2yt^2^ = 3 + t^2^ ⇒ (2y − 1)t^2^ + 2yt + (2y − 3) = 0\n∵ t$\\in$R ∴ (2y)^2^ − 4(2y − 1)(2y − 3) ≥ 0\n⇒ y^2^ − (2y − 1)(2y − 3) ≥ 0 ⇒ y^2^ − 4y^2^ + 8y − 3 ≥ 0\n⇒ 3y^2^ − 8y + 3 ≤ 0 ⇒ 3(y −$\\frac{4 + \\sqrt{7}}{3}$)(y −$\\frac{4 - \\sqrt{7}}{3}$) ≤ 0\n∴ $\\frac{4 - \\sqrt{7}}{3}$≤ y ≤$\\frac{4 + \\sqrt{7}}{3}$，故y的最大值為$\\frac{4 + \\sqrt{7}}{3}$，最小值為$\\frac{4 - \\sqrt{7}}{3}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 65,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0066",
+      "title": "設sinα + cosβ = 1，cosα + cosβ = 0",
+      "question_text": "設sinα + cosβ = 1，cosα + cosβ = 0，則cos2α + cos2β = ＿＿＿＿，sin^4^α + cos^4^β = ＿＿＿＿。",
+      "answer_text": "$-2$或$2$，$1$",
+      "explanation_text": "∵ ${ \\begin{array}{r} \\sin\\alpha + \\cos\\beta = 1 \\ \\cos\\alpha + \\cos\\beta = 0 \\end{array} \\right.$ ⇒ ${ \\begin{array}{r} \\sin\\alpha = 1 - \\cos\\beta \\ \\cos\\alpha = - \\cos\\beta \\end{array} \\right.$\n[圖:program-db/assets/question-media/s3-1-3/image19.png] \n①^2^ + ②^2^得sin^2^α + cos^2^α = 1 − 2cosβ + cos^2^β + cos^2^β\n⇒ 1 = 1 − 2cosβ + 2cos^2^β ⇒ 2cosβ(cosβ − 1) = 0\n∴ cosβ = 0或cosβ = 1\n(1)若cosβ = 0，則sinα = 1，cosα = 0\n∴ cos2α + cos2β = (2cos^2^α − 1) + (2cos^2^β − 1) = (0 − 1) +\n(0 − 1) = − 2 sin^4^α + cos^4^β = 1 + 0 = 1\n(2)若cosβ = 1，則sinα = 0，cosα = − 1\n∴ cos2α + cos2β = (2cos^2^α − 1) + (2cos^2^β − 1) = 2( − 1)^2^ − 1 + 2．1^2^ − 1 = 2 − 1 + 2 − 1 = 2 sin^4^α + cos^4^β = 0 + 1 = 1",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 66,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例19"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0067",
+      "title": "隨堂練習：設sinα + sinβ = 1，cosα + cosβ = 0",
+      "question_text": "設sinα + sinβ = 1，cosα + cosβ = 0，則sin2α + sin2β = ＿＿＿＿。",
+      "answer_text": "0",
+      "explanation_text": "${ \\begin{matrix} \\sin\\alpha + \\sin\\beta = 1 \\ \\cos\\alpha + \\cos\\beta = 0 \\end{matrix} ⇒ { \\begin{matrix} \\sin\\alpha = 1 - \\sin\\beta \\ \\cos\\alpha = - \\cos\\beta \\end{matrix} \\right.\\ \\right.$\n⇒ 1 = 1 − 2sinβ + sin^2^β + cos^2^β ⇒ sinβ =$\\frac{1}{2}$\n∴ sinα = sinβ =$\\frac{1}{2}$且$\\cos\\alpha = \\pm \\frac{\\sqrt{3}}{2}，$ sin2α + sin2β = 2sinα cosα + 2sinβ cosβ = 2．$\\frac{1}{2}( \\pm \\frac{\\sqrt{3}}{2}) + 2\\ ．\\ \\frac{1}{2}( \\mp \\frac{\\sqrt{3}}{2})$ = 0",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 67,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0068",
+      "title": "隨堂練習：設sinx + siny = 1，cosx + cosy = 0",
+      "question_text": "設sinx + siny = 1，cosx + cosy = 0，求cos2x + cos2y之值。",
+      "answer_text": "1",
+      "explanation_text": "由已知可得${ \\begin{array}{r} \\sin y = 1 - \\sin x \\ \\cos y = - \\cos x \\end{array} \\right.$\n[圖:program-db/assets/question-media/s3-1-3/image20.png] 將①^2^ + ②^2^，得sin^2^y + cos^2^y = (1 − 2sinx + sin^2^x) + cos^2^x\n∴ sinx =$\\frac{1}{2}$，代入①得siny =$\\frac{1}{2}$ 故cos2x + cos2y = (1 − 2sin^2^x) + (1 − 2sin^2^y) = (1 −$\\frac{1}{2}$) + (1 −$\\frac{1}{2}$) = 1",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 68,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0069",
+      "title": "某人由平面上一點A測得正東方一塔仰角為θ，由A向塔底前進100公",
+      "question_text": "某人由平面上一點A測得正東方一塔仰角為θ，由A向塔底前進100公尺至B點測得塔頂之 仰角為2θ，再前進40公尺至點C測得塔頂之仰角為3θ，試求塔高。\n![",
+      "answer_text": "$25\\sqrt7$公尺",
+      "explanation_text": "如圖，∠DAE = θ，∠DBE = 2θ， ∠DCE = 3θ，故得 ∠AEB =∠BEC = θ，所以$\\overline{BE}$ =$\\overline{AB}$ = 100， 而∠BCE = π − 3θ 在△BCE中，由正弦定理得$\\frac{40}{\\sin\\theta}$=$\\frac{100}{\\sin(\\pi - 3\\theta)}$ ⇔ 2sin3θ = 5sinθ\n∴ 2(3sinθ − 4sin^3^θ) = 5 sinθ ∴ sinθ (8sin^2^θ − 1) = 0\n∵ sinθ ≠ 0 ∴ 8 sin^2^θ = 1 ∴ sinθ =$\\frac{1}{2\\sqrt{2}}$，cosθ =$\\frac{\\sqrt{7}}{2\\sqrt{2}}$ 故塔高h = 100 sin 2θ = 200sinθ cosθ = 200．$\\frac{1}{2\\sqrt{2}}$．$\\frac{\\sqrt{7}}{2\\sqrt{2}}$ = 25$\\sqrt{7}$公尺](.\\program-db\\imports\\packs\\_inspect-3A-6\\assets/media/image21.png)",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 69,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例20"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0070",
+      "title": "△ABC的三邊長為三個連續整數，且最大角為最小角的二倍，求此△A",
+      "question_text": "△ABC的三邊長為三個連續整數，且最大角為最小角的二倍，求此△ABC的三邊長。",
+      "answer_text": "4，5，6",
+      "explanation_text": "設三邊長為x，x + 1，x + 2，三內角為θ，180° − 3θ，2θ\n(1)由正弦定理：$\\frac{x}{\\sin\\theta}$=$\\frac{x + 2}{\\sin 2\\theta}$ ∵ sinθ ≠ 0 ⇒ cosθ =$\\frac{x + 2}{2x}$\n(2)再由正弦定理：$\\frac{x}{\\sin\\theta}$=$\\frac{x + 1}{\\sin(180{^\\circ} - 3\\theta)}$=$\\frac{x + 1}{\\sin 3\\theta}$\n⇒ $\\frac{x + 1}{x}$=$\\frac{\\sin 3\\theta}{\\sin\\theta}$=$\\frac{3\\sin\\theta - 4\\sin^{3}\\theta}{\\sin\\theta}$= 3 − 4sin^2^θ\n(3)由(1)(2)得$\\frac{x + 1}{x}$= 3 − 4(1 − cos^2^θ) = − 1 + 4($\\frac{x + 2}{2x}$)^2\\^\n⇒ x^2^ − 3x − 4 = 0 ⇒ x = 4或x = − 1（不合）\n∴ 三邊長為4，5，6",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 70,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例21"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0071",
+      "title": "若以$\\overline{AC}$為軸﹐將△ABC翻轉得△ADC",
+      "question_text": "若以$\\overline{AC}$為軸﹐將△ABC翻轉得△ADC﹐ 則D到$\\overline{AB}$的距離$\\overline{DH} =$\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒",
+      "answer_text": "$\\frac{96}{25}$",
+      "explanation_text": "設∠BAC = θ﹐則∠BAD = 2θ﹐直角△ABC中﹐$\\sin\\theta = \\frac{3}{5}$﹐$\\cos\\theta = \\frac{4}{5}$﹐ 得$sin2\\theta = sin\\theta\\ cos\\theta = \\frac{24}{25}$﹐$\\overline{DH} = \\overline{AD} \\bullet sin2\\theta = \\overline{AB} \\bullet sin2\\theta = \\frac{96}{25}$﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 71,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例22"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0072",
+      "title": "隨堂練習：疊放於桌上（$\\overline{AB} = \\overline",
+      "question_text": "疊放於桌上（$\\overline{AB} = \\overline{AD} = 4$﹐$\\overline{BC} = \\overline{DE} = 3$﹐$\\overline{AC} = \\overline{AE} = 5$）﹐ 則最高點到桌面的距離（即$\\overline{EF}$）為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒",
+      "answer_text": "$\\frac{24}{5}$",
+      "explanation_text": "∠EAC =∠CAB = θ﹐$\\tan\\theta = \\frac{3}{4}$﹐$\\tan 2\\theta = \\frac{2\\tan\\theta}{1 - \\tan^{2}\\theta} = \\frac{\\frac{3}{2}}{1 - \\frac{9}{16}} = \\frac{24}{7}$﹐\n∴$\\cos 2\\theta = \\frac{7}{25}$﹐$\\sin 2\\theta = \\frac{24}{25}$﹐∴$\\overline{EF} = \\overline{AE}\\sin 2\\theta = 5 × \\frac{24}{25} = \\frac{24}{5}$﹒\n[圖:program-db/assets/question-media/s3-1-3/image24.png]",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 72,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0073",
+      "title": "∠CBD = θ﹐又$\\overline{AB} = 10$﹐$",
+      "question_text": "∠CBD = θ﹐又$\\overline{AB} = 10$﹐$\\overline{BC} = 8$﹐ 求$\\overline{AD} =$\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒",
+      "answer_text": "$\\frac{13\\sqrt{10}}{5}$",
+      "explanation_text": "$\\cos 2\\theta = \\frac{\\overline{BC}}{\\overline{AB}} = \\frac{4}{5} = 1 - 2\\sin^{2}\\theta ⇒ \\sin^{2}\\theta = \\frac{1}{10} ⇒ \\sin\\theta = \\pm \\frac{1}{\\sqrt{10}}$（取正）﹐\n∴$\\overline{AD} = \\overline{AB}\\sin 3\\theta = 10 × \\lbrack 3 × \\frac{1}{\\sqrt{10}} - 4(\\frac{1}{\\sqrt{10}})^{3}\\rbrack = \\frac{26}{\\sqrt{10}} = \\frac{13\\sqrt{10}}{5}$﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 73,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例23"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0074",
+      "title": "在△ABC中﹐$\\overline{AB} = 8$﹐$\\ove",
+      "question_text": "在△ABC中﹐$\\overline{AB} = 8$﹐$\\overline{AC} = 5$﹐∠ACB = 2θ ﹐∠ABC = θ ﹐求(1)sinθ 的值﹒(2)$\\overline{BC}$﹒",
+      "answer_text": "(1)$\\frac{3}{5}$；(2)$\\frac{39}{5}$",
+      "explanation_text": "(1)利用正弦定理﹐得$\\frac{5}{\\sin\\theta} = \\frac{8}{\\sin 2\\theta}$⇒5sin2θ = 8sinθ ⇒10sinθ cosθ − 8sinθ = 0\n⇒2sinθ (5cosθ − 4) = 0⇒sinθ = 0（不合）或$\\cos\\theta = \\frac{4}{5}$﹒\n因為θ 為銳角﹐所以$\\cos\\theta = \\frac{4}{5}$﹐推得$\\sin\\theta = \\frac{3}{5}$﹒\n(2)利用正弦定理﹐得$\\frac{5}{\\sin\\theta} = \\frac{\\overline{BC}}{\\sin(180{^\\circ} - 3\\theta)}$﹐推得$\\frac{5}{\\sin\\theta} = \\frac{\\overline{BC}}{\\sin 3\\theta}$﹐ 即$\\overline{BC} = \\frac{5\\sin 3\\theta}{\\sin\\theta} = \\frac{5(3\\sin\\theta - 4\\sin^{3}\\theta)}{\\sin\\theta} = 15 - 20\\sin^{2}\\theta = 15 - 20(\\frac{3}{5})^{2} = \\frac{39}{5}$﹒\n[圖:program-db/assets/question-media/s3-1-3/image26.png]",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-double-triple-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題2：倍角公式",
+      "source_order": 74,
+      "tags": [
+        "s3-1-3",
+        "section:主題2：倍角公式",
+        "marker:範例24"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0075",
+      "title": "設sinα = −$\\frac{3}{5}$，π < α <$",
+      "question_text": "設sinα = −$\\frac{3}{5}$，π < α <$\\frac{3\\pi}{2}$，則sin$\\frac{\\alpha}{2}$ = ＿＿＿＿。",
+      "answer_text": "$\\frac{3}{\\sqrt{10}}$",
+      "explanation_text": "∵ sinα = −$\\frac{3}{5}$，π < α <$\\frac{3\\pi}{2}$ ∴ cosα = −$\\frac{4}{5}$\n∵ π < α <$\\frac{3\\pi}{2}$ ⇒ $\\frac{\\pi}{2}$<$\\frac{\\alpha}{2}$<$\\frac{3\\pi}{4}$ ∴ sin$\\frac{\\alpha}{2}$> 0且sin$\\frac{\\alpha}{2}$=$\\sqrt{\\frac{1 - \\cos\\alpha}{2}}$\n⇒ sin$\\frac{\\alpha}{2}$ =$\\sqrt{\\frac{1 - ( - \\frac{4}{5})}{2}}$=$\\sqrt{\\frac{1 + \\frac{4}{5}}{2}}$=$\\sqrt{\\frac{9}{10}}$=$\\frac{3}{\\sqrt{10}}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-half-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題3：半角公式",
+      "source_order": 75,
+      "tags": [
+        "s3-1-3",
+        "section:主題3：半角公式",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0076",
+      "title": "隨堂練習：設45° < θ < 90°且$\\sin 2\\theta =",
+      "question_text": "設45° < θ < 90°且$\\sin 2\\theta = \\frac{4}{5}$﹐則sin θ = \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒",
+      "answer_text": "$\\frac{2\\sqrt5}{5}$",
+      "explanation_text": "45° < θ < 90° ⇒ $\\frac{\\pi}{4} < \\theta < \\frac{\\pi}{2}$ ⇒ $\\frac{\\pi}{2} < 2\\theta < \\pi$ $\\sin 2\\theta = \\frac{4}{5}$ ⇒ $\\cos 2\\theta = - \\frac{3}{5}$\n∴ $\\sin\\theta = \\sqrt{\\frac{1 - \\cos 2\\theta}{2}} = \\sqrt{\\frac{1 + \\frac{3}{5}}{2}} = \\frac{2}{\\sqrt{5}} = \\frac{2\\sqrt{5}}{5}$﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-half-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題3：半角公式",
+      "source_order": 76,
+      "tags": [
+        "s3-1-3",
+        "section:主題3：半角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0077",
+      "title": "隨堂練習：設180° < θ < 270°﹐且$\\tan\\theta =",
+      "question_text": "設180° < θ < 270°﹐且$\\tan\\theta = \\frac{4}{3}$﹐則(1)$\\cos\\frac{\\theta}{2} =$\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒(2)cos2θ = \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒",
+      "answer_text": "(1)$-\\frac{1}{\\sqrt5}$；(2)$-\\frac{7}{25}$",
+      "explanation_text": "180° < θ < 270° ⇒ $\\pi < \\theta < \\frac{3}{2}\\pi$﹐$\\frac{\\pi}{2} < \\frac{\\theta}{2} < \\frac{3}{4}\\pi$﹐$\\tan\\theta = \\frac{4}{3}$ ⇒ $\\cos\\theta = - \\frac{3}{5}$\n(1)$\\cos\\frac{\\theta}{2} = - \\sqrt{\\frac{1 + \\cos\\theta}{2}} = - \\sqrt{\\frac{1 - \\frac{3}{5}}{2}} = - \\frac{1}{\\sqrt{5}}$﹒\n(2)$\\cos 2\\theta = 2\\cos^{2}\\theta - 1 = 2 · ( - \\frac{3}{5})^{2} - 1 = - \\frac{7}{25}$﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-half-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題3：半角公式",
+      "source_order": 77,
+      "tags": [
+        "s3-1-3",
+        "section:主題3：半角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0078",
+      "title": "(C) cos3θ = −$\\frac{44}{125}$ (D",
+      "question_text": "(C) cos3θ = −$\\frac{44}{125}$ (D) sin$\\frac{\\theta}{2} = \\frac{1}{\\sqrt{5}}$ (E) cos$\\frac{\\theta}{2} = - \\frac{2}{\\sqrt{5}}$。",
+      "answer_text": "(A)(B)(C)",
+      "explanation_text": "$\\frac{3\\pi}{2} < \\theta < 2\\pi ⇒ \\frac{3\\pi}{4} < \\frac{\\theta}{2} < \\pi$\n(A) cosθ =$\\frac{4}{5}$ (B) tan2θ =$\\frac{2\\tan\\theta}{1 - \\tan^{2}\\theta} = \\frac{2 ． (\\frac{- 3}{4})}{1 - ( - \\frac{3}{4})^{2}} = - \\frac{24}{7}$\n(C) cos3θ = 4cos^3^θ − 3cosθ = $4(\\frac{4}{5})^{3} - 3 ． (\\frac{4}{5}) = - \\frac{44}{125}$ (D) $\\sin^{2}\\frac{\\theta}{2} = \\frac{1 - \\frac{4}{5}}{2} = \\frac{1}{10}$\n∴ $\\sin\\frac{\\theta}{2} = \\frac{1}{\\sqrt{10}}，\\cos\\frac{\\theta}{2} = - \\frac{3}{\\sqrt{10}}$ 故選(A)(B)(C)",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-half-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題3：半角公式",
+      "source_order": 78,
+      "tags": [
+        "s3-1-3",
+        "section:主題3：半角公式",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0079",
+      "title": "設$\\frac{\\pi}{2} < \\theta < \\pi$",
+      "question_text": "設$\\frac{\\pi}{2} < \\theta < \\pi$，tan$\\theta$ = −$\\frac{4}{3}$，則(1) tan2$\\theta$ = ＿＿＿＿。 (2) tan$\\frac{\\theta}{2}$ = ＿＿＿＿。",
+      "answer_text": "(1)$\\frac{24}{7}$；(2)$2$",
+      "explanation_text": "(1) tan2θ =$\\frac{2\\tan\\theta}{1 - \\tan^{2}\\theta}$=$\\frac{2( - \\frac{4}{3})}{1 - ( - \\frac{4}{3})^{2}}$=$\\frac{24}{7}$\n(2)∵$\\frac{\\pi}{2}$< θ < π且tanθ = −$\\frac{4}{3}$∴ sinθ =$\\frac{4}{5}$，cosθ = −$\\frac{3}{5}$\n∴ tan$\\frac{\\theta}{2}$=$\\frac{\\sin\\theta}{1 + \\cos\\theta}$=$\\frac{\\frac{4}{5}}{1 - \\frac{3}{5}}$= 2",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-half-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題3：半角公式",
+      "source_order": 79,
+      "tags": [
+        "s3-1-3",
+        "section:主題3：半角公式",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0080",
+      "title": "隨堂練習：5sinθ + 12cosθ = 0，$\\frac{3\\pi}{",
+      "question_text": "5sinθ + 12cosθ = 0，$\\frac{3\\pi}{2}$< θ < 2π，求(1) tan2θ = ＿＿＿＿。(2) cos$\\frac{\\theta}{2}$= ＿＿＿＿。",
+      "answer_text": "(1)$\\frac{120}{119}$；(2)$-\\frac{3}{\\sqrt{13}}$",
+      "explanation_text": "(1) 5sinθ + 12cosθ = 0 ⇒ 5sinθ = − 12cosθ，$\\frac{\\sin\\theta}{\\cos\\theta}$= tanθ = −$\\frac{12}{5}$ tan2θ =$\\frac{2\\tan\\theta}{1 - \\tan^{2}\\theta}$=$\\frac{\\frac{- 24}{5}}{1 - \\frac{144}{25}} = \\frac{24}{5} × \\frac{25}{119} = \\frac{120}{119}$\n(2)∵ $\\frac{3}{2}\\pi$ < θ < 2π ∴ cosθ > 0 ⇒ cosθ =$\\frac{5}{13}$，$\\cos\\frac{\\theta}{2} = \\pm \\sqrt{\\frac{1 + \\cos\\theta}{2}} = \\pm \\sqrt{\\frac{1 + \\frac{5}{13}}{2}} = \\pm \\frac{3}{\\sqrt{13}}$\n∵ $\\frac{3\\pi}{4}$<$\\frac{\\theta}{2}$< π ∴ cos$\\frac{\\theta}{2}$< 0 ∴ cos$\\frac{\\theta}{2}$=$\\frac{- 3}{\\sqrt{13}}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-half-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題3：半角公式",
+      "source_order": 80,
+      "tags": [
+        "s3-1-3",
+        "section:主題3：半角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0081",
+      "title": "設0 < α <$\\frac{\\pi}{2}$，試化簡$\\sqr",
+      "question_text": "設0 < α <$\\frac{\\pi}{2}$，試化簡$\\sqrt{1 + \\sin\\alpha} - \\sqrt{1 - \\sin\\alpha}$=＿＿＿＿。",
+      "answer_text": "$2\\sin\\frac{\\alpha}{2}$",
+      "explanation_text": "$\\sqrt{1 + \\sin\\alpha} - \\sqrt{1 - \\sin\\alpha}$ =$\\sqrt{\\sin^{2}\\frac{\\alpha}{2} + \\cos^{2}\\frac{\\alpha}{2} + 2\\sin\\frac{\\alpha}{2}\\cos\\frac{\\alpha}{2}}$−$\\sqrt{\\sin^{2}\\frac{\\alpha}{2} + \\cos^{2}\\frac{\\alpha}{2} - 2\\sin\\frac{\\alpha}{2}\\cos\\frac{\\alpha}{2}}$ =$\\sqrt{(\\sin\\frac{\\alpha}{2} + \\cos\\frac{\\alpha}{2})^{2}} - \\sqrt{(\\sin\\frac{\\alpha}{2} - \\cos\\frac{\\alpha}{2})^{2}}$=$\\left| \\sin\\frac{\\alpha}{2} + \\cos\\frac{\\alpha}{2} \\right| - \\left| \\sin\\frac{\\alpha}{2} - \\cos\\frac{\\alpha}{2} \\right|$\n∵ 0 < α <$\\frac{\\pi}{2}$，0 <$\\frac{\\alpha}{2}$<$\\frac{\\pi}{4}$ ∴ sin$\\frac{\\alpha}{2}$< cos$\\frac{\\alpha}{2}$，sin$\\frac{\\alpha}{2}$> 0，cos$\\frac{\\alpha}{2}$> 0 $⇒ \\left| \\sin\\frac{\\alpha}{2} + \\cos\\frac{\\alpha}{2} \\right| - \\left| \\sin\\frac{\\alpha}{2} - \\cos\\frac{\\alpha}{2} \\right|$ = sin$\\frac{\\alpha}{2}$+ cos$\\frac{\\alpha}{2}$− (cos$\\frac{\\alpha}{2}$− sin$\\frac{\\alpha}{2}$) = 2 sin$\\frac{\\alpha}{2}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-half-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題3：半角公式",
+      "source_order": 81,
+      "tags": [
+        "s3-1-3",
+        "section:主題3：半角公式",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0082",
+      "title": "二直線2x + y + 3 = 0，4x + 12y + 5 =",
+      "question_text": "二直線2x + y + 3 = 0，4x + 12y + 5 = 0之鈍夾角θ，求tan$\\frac{\\theta}{2}$= ＿＿＿＿。",
+      "answer_text": "$1+\\sqrt2$",
+      "explanation_text": "∵ m~1~ = − 2，m~2~ = −$\\frac{1}{3}$，tanθ = −\n[圖:program-db/assets/question-media/s3-1-3/image28.png] = −$\\left| \\frac{- 2 + \\frac{1}{3}}{1 + \\frac{2}{3}} \\right|$ = − 1 tanθ =$\\frac{2\\tan\\frac{\\theta}{2}}{1 - \\tan^{2}\\frac{\\theta}{2}}$= − 1 ⇒ − 1 + tan^2^$\\frac{\\theta}{2}$= 2tan$\\frac{\\theta}{2}$\n⇒ tan^2^$\\frac{\\theta}{2}$− 2tan$\\frac{\\theta}{2}$− 1 = 0 ⇒ tan$\\frac{\\theta}{2}$=$\\frac{2 \\pm \\sqrt{4 + 4}}{2\\ ．\\ 1}$= 1$\\pm \\sqrt{2}$\n∵ $\\frac{\\pi}{2}$< θ < π ∴ $\\frac{\\pi}{4} < \\frac{\\theta}{2} < \\frac{\\pi}{2}$ ∴ tan$\\frac{\\theta}{2}$> 0，故tan$\\frac{\\theta}{2}$= 1 +$\\sqrt{2}$",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-half-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題3：半角公式",
+      "source_order": 82,
+      "tags": [
+        "s3-1-3",
+        "section:主題3：半角公式",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0083",
+      "title": "設0° ≤ x < 360°﹐且 α ﹑ β 為方程式$\\sin",
+      "question_text": "設0° ≤ x < 360°﹐且 α ﹑ β 為方程式$\\sin x - \\sqrt{3}\\cos x = 1$的二根﹐求$\\tan\\frac{\\alpha}{2} + \\tan\\frac{\\beta}{2}$的值﹒",
+      "answer_text": "$-(\\sqrt3+1)$",
+      "explanation_text": "∵ $\\sin x - \\sqrt{3}\\cos x = 1$有二根 α ﹑ β ﹐即$\\frac{2\\tan\\frac{x}{2}}{1 + \\tan^{2}\\frac{x}{2}} - \\sqrt{3} · \\frac{1 - \\tan^{2}\\frac{x}{2}}{1 + \\tan^{2}\\frac{x}{2}} = 1$ $$2\\tan\\frac{x}{2} - \\sqrt{3}(1 - \\tan^{2}\\frac{x}{2}) = 1 + \\tan^{2}\\frac{x}{2} $$$(\\sqrt{3} - 1)\\tan^{2}\\frac{x}{2} + 2\\tan\\frac{x}{2} - (\\sqrt{3} + 1) = 0$﹐有二根 α ﹑ β ﹐令$\\tan\\frac{x}{2} = t$\n∴ $(\\sqrt{3} - 1)t^{2} + 2t - (\\sqrt{3} + 1) = 0$ 有二根$\\tan\\frac{\\alpha}{2}$﹑$\\tan\\frac{\\beta}{2}$\n∴ $\\tan\\frac{\\alpha}{2} + \\tan\\frac{\\beta}{2} = \\frac{- 2}{\\sqrt{3} - 1} = - (\\sqrt{3} + 1)$﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-half-angle-formulas-s313",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題3：半角公式",
+      "source_order": 83,
+      "tags": [
+        "s3-1-3",
+        "section:主題3：半角公式",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0084",
+      "title": "隨堂練習：設sinθ 與cosθ 為方程式25x^2^ − 5x − 12",
+      "question_text": "設sinθ 與cosθ 為方程式25x^2^ − 5x − 12 = 0的兩根﹐求$2\\cos^{2}\\frac{\\theta}{2}{(sin\\frac{\\theta}{2} + cos\\frac{\\theta}{2})}^{2}$的值﹒",
+      "answer_text": "$\\frac{18}{25}$",
+      "explanation_text": "由根與係數關係得﹐ $\\sin\\theta + cos\\theta = \\frac{1}{5}$﹐$\\sin\\theta\\cos\\theta = - \\frac{12}{25}$﹒\n利用二倍角及半角公式﹐得 原式$2\\frac{1 + cos\\theta}{2}( \\sin^{2}\\frac{\\theta}{2} + 2sin\\frac{\\theta}{2}\\cos\\frac{\\theta}{2} + \\cos^{2}\\frac{\\theta}{2} ) = (1 + cos\\theta)(1 + sin\\theta) = 1 + sin\\theta + cos\\theta + sin\\theta\\cos\\theta = 1 + \\frac{1}{5} + ( - \\frac{12}{25}) = \\frac{18}{25}$﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-half-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題3：半角公式",
+      "source_order": 84,
+      "tags": [
+        "s3-1-3",
+        "section:主題3：半角公式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s3-1-3-0085",
+      "title": "隨堂練習：設sinθ 與cosθ 為方程式18x^2^ − 24x + 7",
+      "question_text": "設sinθ 與cosθ 為方程式18x^2^ − 24x + 7 = 0的兩根﹐求$2\\sin^{2}\\frac{\\theta}{2}{(cos\\frac{\\theta}{2} - sin\\frac{\\theta}{2})}^{2}$的值﹒",
+      "answer_text": "$\\frac{1}{18}$",
+      "explanation_text": "由根與係數關係得﹐ $\\sin\\theta + cos\\theta = \\frac{4}{3}$﹐$\\sin\\theta\\cos\\theta = \\frac{7}{18}$﹒\n利用二倍角及半角公式﹐得 原式$2\\frac{1 - cos\\theta}{2}( \\cos^{2}\\frac{\\theta}{2} - 2sin\\frac{\\theta}{2}\\cos\\frac{\\theta}{2} + \\sin^{2}\\frac{\\theta}{2} ) = (1 - cos\\theta)(1 - sin\\theta) = 1 - sin\\theta - cos\\theta + sin\\theta\\cos\\theta = 1 - \\frac{4}{3} + \\frac{7}{18} = \\frac{1}{18}$﹒",
+      "chapter_code": "s3-1-3",
+      "formula_id": "senior-half-angle-formulas-s313",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/3A-6轉.docx",
+      "source_section": "主題3：半角公式",
+      "source_order": 85,
+      "tags": [
+        "s3-1-3",
+        "section:主題3：半角公式",
+        "marker:隨堂練習"
+      ]
+    }
+  ]
+}

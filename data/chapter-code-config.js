@@ -1,0 +1,764 @@
+window.chapterCodeCatalog = {
+  "B-1": {
+    "chapter": "立體透視圖",
+    "section": "立體透視圖",
+    "domainMain": "立體幾何",
+    "domainSub": ""
+  },
+  "B-2": {
+    "chapter": "圓錐曲線",
+    "section": "圓錐曲線",
+    "domainMain": "解析幾何",
+    "domainSub": ""
+  },
+  "B-3": {
+    "chapter": "地球經緯度",
+    "section": "地球經緯度",
+    "domainMain": "立體幾何",
+    "domainSub": ""
+  },
+  "j1-1-1": {
+    "chapter": "正負數與數線",
+    "section": "數線與絕對值",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "j1-1-2": {
+    "chapter": "正負數與數線",
+    "section": "正負數的加減乘除",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "j1-1-3": {
+    "chapter": "正負數與數線",
+    "section": "指數律",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "j1-1-4": {
+    "chapter": "正負數與數線",
+    "section": "科學記號",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "j1-2-1": {
+    "chapter": "因數倍數",
+    "section": "質因數分解、因數、倍數",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "j1-2-2": {
+    "chapter": "因數倍數",
+    "section": "公因數、公倍數",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "j1-2-3": {
+    "chapter": "因數倍數",
+    "section": "分數的加減乘除",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "j1-3-1": {
+    "chapter": "一元一次方程式",
+    "section": "一元一次式",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j1-3-2": {
+    "chapter": "一元一次方程式",
+    "section": "一元一次方程式",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j1-3-3": {
+    "chapter": "一元一次方程式",
+    "section": "一元一次方程式應用問題",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j1-x": {
+    "chapter": "國一上補充",
+    "section": "國一上補充",
+    "domainMain": "綜合",
+    "domainSub": ""
+  },
+  "j2-1-1": {
+    "chapter": "二元一次聯立方程式",
+    "section": "二元一次方程式",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j2-1-2": {
+    "chapter": "二元一次聯立方程式",
+    "section": "二元一次聯立方程式",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j2-1-3": {
+    "chapter": "二元一次聯立方程式",
+    "section": "二元一次方程式應用問題",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j2-2-1": {
+    "chapter": "直角座標平面",
+    "section": "座標概念",
+    "domainMain": "函數與圖形",
+    "domainSub": ""
+  },
+  "j2-2-2": {
+    "chapter": "直角座標平面",
+    "section": "二元一次方程式圖形",
+    "domainMain": "函數與圖形",
+    "domainSub": ""
+  },
+  "j2-3-1": {
+    "chapter": "比例",
+    "section": "比例式",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j2-3-2": {
+    "chapter": "比例",
+    "section": "正比反比",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j2-4-1": {
+    "chapter": "一元一次不等式",
+    "section": "解一元一次不等式",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j2-4-2": {
+    "chapter": "一元一次不等式",
+    "section": "一元一次不等式應用問題",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j2-x": {
+    "chapter": "國一下補充",
+    "section": "國一下補充",
+    "domainMain": "綜合",
+    "domainSub": ""
+  },
+  "j3-1-1": {
+    "chapter": "乘法公式與多項式",
+    "section": "乘法公式",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j3-1-2": {
+    "chapter": "乘法公式與多項式",
+    "section": "多項式的加減",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j3-1-3": {
+    "chapter": "乘法公式與多項式",
+    "section": "多項式的乘除",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j3-2-1": {
+    "chapter": "二次方根與畢氏定理",
+    "section": "二次方根",
+    "domainMain": "數與量",
+    "domainSub": "代數"
+  },
+  "j3-2-2": {
+    "chapter": "二次方根與畢氏定理",
+    "section": "根式的運算",
+    "domainMain": "數與量",
+    "domainSub": "代數"
+  },
+  "j3-2-3": {
+    "chapter": "二次方根與畢氏定理",
+    "section": "畢氏定理",
+    "domainMain": "代數",
+    "domainSub": "幾何"
+  },
+  "j3-3-1": {
+    "chapter": "因式分解",
+    "section": "利用提公因式因式分解",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j3-3-2": {
+    "chapter": "因式分解",
+    "section": "利用乘法公式因式分解",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j3-3-3": {
+    "chapter": "因式分解",
+    "section": "利用十字交乘因式分解",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j3-4-1": {
+    "chapter": "一元二次方程式",
+    "section": "一元二次方程式",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j3-4-2": {
+    "chapter": "一元二次方程式",
+    "section": "配方法與公式解",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j3-4-3": {
+    "chapter": "一元二次方程式",
+    "section": "一元二次方程式應用問題",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j3-x": {
+    "chapter": "國二上補充",
+    "section": "國二上補充",
+    "domainMain": "綜合",
+    "domainSub": ""
+  },
+  "j4-1-1": {
+    "chapter": "數列與級數",
+    "section": "等差數列",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "j4-1-2": {
+    "chapter": "數列與級數",
+    "section": "等比數列",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "j4-1-3": {
+    "chapter": "數列與級數",
+    "section": "等差級數",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "j4-2": {
+    "chapter": "線型函數",
+    "section": "線型函數",
+    "domainMain": "函數與圖形",
+    "domainSub": "代數"
+  },
+  "j4-3-1": {
+    "chapter": "三角形的基本性質",
+    "section": "三角形與多邊形",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j4-3-2": {
+    "chapter": "三角形的基本性質",
+    "section": "尺規作圖",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j4-3-3": {
+    "chapter": "三角形的基本性質",
+    "section": "三角形全等",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j4-3-4": {
+    "chapter": "三角形的基本性質",
+    "section": "邊角關係",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j4-4-1": {
+    "chapter": "平行與四邊形",
+    "section": "平行",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j4-4-2": {
+    "chapter": "平行與四邊形",
+    "section": "平行四邊形",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j4-4-3": {
+    "chapter": "平行與四邊形",
+    "section": "梯形及其他四邊形關係",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j4-x": {
+    "chapter": "國二下補充",
+    "section": "國二下補充",
+    "domainMain": "綜合",
+    "domainSub": ""
+  },
+  "j5-1-1": {
+    "chapter": "相似三角形",
+    "section": "連比",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "j5-1-2": {
+    "chapter": "相似三角形",
+    "section": "平行線截比例線段",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j5-1-3": {
+    "chapter": "相似三角形",
+    "section": "縮放與相似",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j5-1-4": {
+    "chapter": "相似三角形",
+    "section": "相似三角形應用",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j5-2-1": {
+    "chapter": "圓形",
+    "section": "基本圓與長度關係",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j5-2-2": {
+    "chapter": "圓形",
+    "section": "圓的角度關係",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j5-3-1": {
+    "chapter": "證明與三心",
+    "section": "證明的基本想法",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j5-3-2": {
+    "chapter": "證明與三心",
+    "section": "幾何證明的常用工具",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j5-3-3": {
+    "chapter": "證明與三心",
+    "section": "外心、內心、重心",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j5-x": {
+    "chapter": "國三上補充",
+    "section": "國三上補充",
+    "domainMain": "綜合",
+    "domainSub": ""
+  },
+  "j6-1-1": {
+    "chapter": "二次函數",
+    "section": "二次函數的基本形式與圖形",
+    "domainMain": "函數與圖形",
+    "domainSub": "代數"
+  },
+  "j6-1-2": {
+    "chapter": "二次函數",
+    "section": "配方法、平移與最值",
+    "domainMain": "函數與圖形",
+    "domainSub": "代數"
+  },
+  "j6-1-3": {
+    "chapter": "二次函數",
+    "section": "交點、方程式與應用",
+    "domainMain": "函數與圖形",
+    "domainSub": "代數"
+  },
+  "j6-2-1": {
+    "chapter": "空間中的垂直與形體",
+    "section": "空間中的垂直與形體",
+    "domainMain": "空間與形體",
+    "domainSub": "幾何"
+  },
+  "j6-3-1": {
+    "chapter": "統計與機率",
+    "section": "統計圖表",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "j6-3-2": {
+    "chapter": "統計與機率",
+    "section": "資料的分析",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "j6-3-3": {
+    "chapter": "統計與機率",
+    "section": "機率",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "j6-x": {
+    "chapter": "國三下補充",
+    "section": "國三下補充",
+    "domainMain": "綜合",
+    "domainSub": ""
+  },
+  "s1-1-1": {
+    "chapter": "數與式",
+    "section": "實數",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "s1-1-2": {
+    "chapter": "數與式",
+    "section": "絕對值",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "s1-1-3": {
+    "chapter": "數與式",
+    "section": "式的運算",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "s1-1-4": {
+    "chapter": "數與式",
+    "section": "指數",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "s1-1-5": {
+    "chapter": "數與式",
+    "section": "對數",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "s1-2-1": {
+    "chapter": "直線與圓",
+    "section": "直線方程式",
+    "domainMain": "解析幾何",
+    "domainSub": ""
+  },
+  "s1-2-2": {
+    "chapter": "直線與圓",
+    "section": "圓的方程式",
+    "domainMain": "解析幾何",
+    "domainSub": ""
+  },
+  "s1-2-3": {
+    "chapter": "直線與圓",
+    "section": "直線與圓的關係",
+    "domainMain": "解析幾何",
+    "domainSub": ""
+  },
+  "s1-3-1": {
+    "chapter": "多項式",
+    "section": "多項式函數",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "s1-3-2": {
+    "chapter": "多項式",
+    "section": "簡單多項式函數及其圖形",
+    "domainMain": "函數圖形",
+    "domainSub": ""
+  },
+  "s1-3-3": {
+    "chapter": "多項式",
+    "section": "多項式不等式",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "s1-x": {
+    "chapter": "高一上補充",
+    "section": "高一上補充",
+    "domainMain": "綜合",
+    "domainSub": ""
+  },
+  "s2-1-1": {
+    "chapter": "數列與遞迴與級數",
+    "section": "數列與遞迴",
+    "domainMain": "數列",
+    "domainSub": ""
+  },
+  "s2-1-2": {
+    "chapter": "數列與遞迴與級數",
+    "section": "級數",
+    "domainMain": "數列",
+    "domainSub": ""
+  },
+  "s2-2-1": {
+    "chapter": "排列組合",
+    "section": "邏輯、集合與計數原理",
+    "domainMain": "邏輯與集合",
+    "domainSub": ""
+  },
+  "s2-2-2": {
+    "chapter": "排列組合",
+    "section": "排列組合",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "s2-2-3": {
+    "chapter": "排列組合",
+    "section": "二項式定理",
+    "domainMain": "排列組合",
+    "domainSub": ""
+  },
+  "s2-2-4": {
+    "chapter": "排列組合",
+    "section": "古典機率",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "s2-3-1": {
+    "chapter": "數據分析",
+    "section": "一維數據分析",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "s2-3-2": {
+    "chapter": "數據分析",
+    "section": "二維數據分析",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "s2-4-1": {
+    "chapter": "三角比",
+    "section": "三角比定義與關係",
+    "domainMain": "三角函數",
+    "domainSub": ""
+  },
+  "s2-4-2": {
+    "chapter": "三角比",
+    "section": "正弦定理與餘弦定理",
+    "domainMain": "三角函數",
+    "domainSub": ""
+  },
+  "s2-4-3": {
+    "chapter": "三角比",
+    "section": "三角測量",
+    "domainMain": "三角函數",
+    "domainSub": ""
+  },
+  "s2-x": {
+    "chapter": "高一下補充",
+    "section": "高一下補充",
+    "domainMain": "綜合",
+    "domainSub": ""
+  },
+  "s3-1-1": {
+    "chapter": "三角函數",
+    "section": "弧度、弧長",
+    "domainMain": "三角函數",
+    "domainSub": ""
+  },
+  "s3-1-2": {
+    "chapter": "三角函數",
+    "section": "三角函數的圖形",
+    "domainMain": "函數圖形",
+    "domainSub": ""
+  },
+  "s3-1-3": {
+    "chapter": "三角函數",
+    "section": "和差角公式",
+    "domainMain": "三角函數",
+    "domainSub": ""
+  },
+  "s3-1-4": {
+    "chapter": "三角函數",
+    "section": "正餘弦函數的疊合",
+    "domainMain": "三角函數",
+    "domainSub": ""
+  },
+  "s3-2-1": {
+    "chapter": "指數對數",
+    "section": "指數函數",
+    "domainMain": "函數圖形",
+    "domainSub": ""
+  },
+  "s3-2-2": {
+    "chapter": "指數對數",
+    "section": "對數",
+    "domainMain": "函數圖形",
+    "domainSub": ""
+  },
+  "s3-2-3": {
+    "chapter": "指數對數",
+    "section": "對數函數",
+    "domainMain": "函數圖形",
+    "domainSub": ""
+  },
+  "s3-3-1": {
+    "chapter": "平面向量",
+    "section": "平面向量",
+    "domainMain": "向量",
+    "domainSub": ""
+  },
+  "s3-3-2": {
+    "chapter": "平面向量的內積",
+    "section": "平面向量的內積",
+    "domainMain": "向量",
+    "domainSub": ""
+  },
+  "s3-3-3": {
+    "chapter": "面積與二階行列式",
+    "section": "面積與二階行列式",
+    "domainMain": "向量",
+    "domainSub": ""
+  },
+  "s3-x": {
+    "chapter": "高二上補充",
+    "section": "高二上補充",
+    "domainMain": "綜合",
+    "domainSub": ""
+  },
+  "s4-1-1": {
+    "chapter": "空間向量",
+    "section": "空間概念",
+    "domainMain": "空間幾何",
+    "domainSub": ""
+  },
+  "s4-1-2": {
+    "chapter": "空間向量",
+    "section": "空間向量的坐標表示法",
+    "domainMain": "空間幾何",
+    "domainSub": ""
+  },
+  "s4-1-3": {
+    "chapter": "空間向量",
+    "section": "空間向量的內積",
+    "domainMain": "空間幾何",
+    "domainSub": ""
+  },
+  "s4-1-4": {
+    "chapter": "空間向量",
+    "section": "外積、體積與行列式",
+    "domainMain": "空間幾何",
+    "domainSub": ""
+  },
+  "s4-2-1": {
+    "chapter": "空間中的平面與直線",
+    "section": "空間中的平面方程式",
+    "domainMain": "空間幾何",
+    "domainSub": ""
+  },
+  "s4-2-2": {
+    "chapter": "空間中的平面與直線",
+    "section": "空間中的直線方程式",
+    "domainMain": "空間幾何",
+    "domainSub": ""
+  },
+  "s4-3-1": {
+    "chapter": "條件機率與獨立",
+    "section": "條件機率與貝氏定理",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "s4-3-2": {
+    "chapter": "條件機率與獨立",
+    "section": "獨立事件",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "s4-4-1": {
+    "chapter": "矩陣",
+    "section": "線性方程組與矩陣",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "s4-4-2": {
+    "chapter": "矩陣",
+    "section": "矩陣的運算",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "s4-4-3": {
+    "chapter": "矩陣",
+    "section": "變換矩陣的應用",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "s4-4-4": {
+    "chapter": "矩陣",
+    "section": "平面上的線性變換與二階方陣",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "s4-x": {
+    "chapter": "高二下補充",
+    "section": "高二下補充",
+    "domainMain": "綜合",
+    "domainSub": ""
+  },
+  "s5-10": {
+    "chapter": "積分的意義",
+    "section": "積分的意義",
+    "domainMain": "微積分",
+    "domainSub": ""
+  },
+  "s5-11": {
+    "chapter": "積分的應用",
+    "section": "積分的應用",
+    "domainMain": "微積分",
+    "domainSub": ""
+  },
+  "s5-2": {
+    "chapter": "隨機變數",
+    "section": "隨機變數",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "s5-3": {
+    "chapter": "二項分布與幾何分布",
+    "section": "二項分布與幾何分布",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "s5-4": {
+    "chapter": "複數的幾何意涵",
+    "section": "複數的幾何意涵",
+    "domainMain": "代數",
+    "domainSub": ""
+  },
+  "s5-5": {
+    "chapter": "數列及其極限",
+    "section": "數列及其極限",
+    "domainMain": "微積分",
+    "domainSub": ""
+  },
+  "s5-6": {
+    "chapter": "函數的概念",
+    "section": "函數的概念",
+    "domainMain": "微積分",
+    "domainSub": ""
+  },
+  "s5-7": {
+    "chapter": "函數的極限",
+    "section": "函數的極限",
+    "domainMain": "微積分",
+    "domainSub": ""
+  },
+  "s5-8": {
+    "chapter": "微分",
+    "section": "微分",
+    "domainMain": "微積分",
+    "domainSub": ""
+  },
+  "s5-9": {
+    "chapter": "函數性質的判定",
+    "section": "函數性質的判定",
+    "domainMain": "微積分",
+    "domainSub": ""
+  },
+  "s5-x": {
+    "chapter": "高三補充",
+    "section": "高三補充",
+    "domainMain": "綜合",
+    "domainSub": ""
+  },
+  "j5-2-3": {
+    "chapter": "圓形",
+    "section": "乘冪與圓的綜合應用",
+    "domainMain": "幾何",
+    "domainSub": ""
+  }
+};

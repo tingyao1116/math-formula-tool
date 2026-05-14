@@ -1,0 +1,786 @@
+{
+  "chapter_code": "s2-3-2",
+  "chapter_title": "二維數據分析",
+  "questions": [
+    {
+      "id": "q-s2-3-2-0001",
+      "title": "隨堂練習：甲﹑乙兩位評審對5位參賽者評分結果如表，請畫出甲評審評分對乙",
+      "question_text": "甲﹑乙兩位評審對5位參賽者評分結果如表，請畫出甲評審評分對乙評審評分的 散布圖。\n\n[圖:program-db/assets/question-media/s2-3-2/image31.png]",
+      "answer_text": "圖略",
+      "explanation_text": "[圖:program-db/assets/question-media/s2-3-2/image32.png]",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-scatterplot-correlation-patterns",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題1：散佈圖與相關型態",
+      "source_order": 1,
+      "tags": [
+        "s2-3-2",
+        "section:主題1：散佈圖與相關型態",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0002",
+      "title": "隨堂練習：研究10位學生的性向測驗與成就測驗的關係。已知10位學生兩種",
+      "question_text": "研究10位學生的性向測驗與成就測驗的關係。已知10位學生兩種測驗的得分如 表，作Y對X的散布圖。\n\n[圖:program-db/assets/question-media/s2-3-2/image33.png]",
+      "answer_text": "------------------------------------------------------------------------------------------------------------ 範例4 如圖所示有5筆$(x, y)$資料. 試問：去掉哪一筆資料後, 剩下來4筆資料的相關係數最大？ (A)A (B)B (C)C (D)D (E)E. ---------------------------------",
+      "explanation_text": "[圖:program-db/assets/question-media/s2-3-2/image34.png] ------------------------------------------------------------------------------------------------------------ 範例4 如圖所示有5筆$(x, y)$資料. 試問：去掉哪一筆資料後, 剩下來4筆資料的相關係數最大？\n(A)A (B)B (C)C (D)D (E)E. \n[圖:program-db/assets/question-media/s2-3-2/image35.jpeg] ------------------------------------------------------------------------------------------------------------ 找尋一條直線有最多點靠近, 離此直線最遠的點, 則去掉, 明顯D點去掉後, 剩下來的4點其相關係數最大, 故選(D). \n[圖:program-db/assets/question-media/s2-3-2/image36.jpeg]",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-correlation-coefficient-definitions",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題1：散佈圖與相關型態",
+      "source_order": 2,
+      "tags": [
+        "s2-3-2",
+        "section:主題1：散佈圖與相關型態",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0003",
+      "title": "下列有關兩變量X與Y的20對點資料的五個散布圖中, 哪一個的",
+      "question_text": "下列有關兩變量X與Y的20對點資料的五個散布圖中, 哪一個的相關係數最接近0.25？\n\n[圖:program-db/assets/question-media/s2-3-2/image37.png]",
+      "answer_text": "又為了避免資料個數影響相關的程度，故定義r＝ $\\sum_{i＝1}^{n}{u_{i}v_{i}}$稱為標準化數據的相關係數",
+      "explanation_text": "(A)低度正相關,\n(B)中度正相關,\n(C)高度正相關,\n(D)(E)為中度負相關, 故選(A). ------------------------------------------------------------------------------------------------------------ 隨堂練習 下圖表兩組數據x, y的分布圖, 試問其相關係數r最接近下列何值？\n(A)1 (B)0.5 (C)0 (D)$- 0.5$ (E)$- 1$. \n[圖:program-db/assets/question-media/s2-3-2/image38.jpeg] ------------------------------------------------------------------------------------------------------------ $(x, y)$數對分布呈現近似對稱, 其相關係數r≒0,故選(C). +:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+ 主題2：相關係數 1.相關係數定義：用以測量兩變數間的直線相關程度大小及正負方向的量數, 以r表示。\n(1).設每一筆資料的標準化數據為（u~i~ , v~i~），若u~i~v~i~＞0，則點（u~i~ , v~i~）落在第一、三象限；若u~i~v~i~＜0，則點（u~i~ , v~i~）落在第二、四象限。\n(2).若$\\sum_{i＝1}^{n}{u_{i}v_{i}}$＞0，表示落在第一、三象限的點較多，因此散佈圖是左下右上的趨勢(正相關)；若$\\sum_{i＝1}^{n}{u_{i}v_{i}}$＜0，表示落在第二、四象限的點較多，因此散佈圖是左上右下的趨勢(負相關)。\n(3)由(2)可知，$\\sum_{i＝1}^{n}{u_{i}v_{i}}$可用來衡量資料的相關程度。又為了避免資料個數影響相關的程度，故定義r＝\n[圖:program-db/assets/question-media/s2-3-2/image39.png] $\\sum_{i＝1}^{n}{u_{i}v_{i}}$稱為標準化數據的相關係數。\n公式：r＝\n[圖:program-db/assets/question-media/s2-3-2/image39.png] $\\sum_{i＝1}^{n}{u_{i}v_{i}}$＝\n[圖:program-db/assets/question-media/s2-3-2/image39.png] $\\sum_{i＝1}^{n}{( \\frac{x_{i}－u_{i}}{\\sigma_{x}} )( \\frac{y_{i}－\\mu_{i}}{\\sigma_{y}} )}$＝\n[圖:program-db/assets/question-media/s2-3-2/image39.png] $\\sum_{i＝1}^{n}\\frac{（x_{i}－u_{i}）（y_{i}－\\mu_{i}）}{\\sigma_{x}\\sigma_{y}}$ ＝\n[圖:program-db/assets/question-media/s2-3-2/image39.png] $\\sum_{i＝1}^{n}\\frac{（x_{i}－\\mu_{x}）（y_{i}－\\mu_{y}）}{\\sqrt{\\frac{1}{n}\\sum_{i＝1}^{n}{（x_{i}－\\mu_{x}）^{2}}} × \\sqrt{\\frac{1}{n}\\sum_{i＝1}^{n}{（y_{i}－\\mu_{y}）^{2}}}}$＝$\\frac{\\sum_{i＝1}^{n}{（x_{i}－\\mu_{x}）（y_{i}－\\mu_{y}）}}{\\sqrt{\\sum_{i＝1}^{n}{（x_{i}－\\mu_{x}）^{2}}} × \\sqrt{\\sum_{i＝1}^{n}{（y_{i}－\\mu_{y}）^{2}}}}$ ＝$\\frac{\\sum_{i＝1}^{n}{x_{i}y_{i}－n\\mu_{x}\\mu_{y}}}{\\sqrt{\\sum_{i＝1}^{n}{x_{i}^{2}－n{\\mu_{x}}^{2}}} × \\sqrt{\\sum_{i＝1}^{n}{y_{i}^{2}－n{\\mu_{y}}^{2}}}}$。\n2.性質：\n(1)相關係數的範圍：－1 ≤ r ≤ 1。\n證明：由柯西不等式 $(\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})^{2}})(\\sum_{i = 1}^{n}{(y_{i} - \\mu_{y})^{2}}) \\geq \\lbrack\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})\\rbrack^{2}}$\n[圖:program-db/assets/question-media/s2-3-2/image40.png] $\\frac{\\lbrack\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})\\rbrack^{2}}}{\\lbrack\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})^{2}\\sum_{i = 1}^{n}{(y_{i} - \\mu_{y})^{2}}\\rbrack}} \\leq 1$ \n[圖:program-db/assets/question-media/s2-3-2/image40.png] $\\frac{\\left| \\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})} \\right|}{\\lbrack\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})^{2}\\sum_{i = 1}^{n}{(y_{i} - \\mu_{y})^{2}}\\rbrack}} \\leq 1$\n(2)r＞0表兩變量正相關，r＜0表負相關，r＝0表零相關。\n(3)r＝1表兩變量完全正相關，r＝－1表完全負相關。\n(4)│r│愈大表兩變量的相關程度愈強。\n(5)相關係數與單位無關。因此若兩組資料$(x,y)$、$(x',y')$彼此之間呈線性函數關係，即 $x_{i}' = a + bx_{i}$，$y_{i}' = c + dy_{i}$，$a,b,c,d \\in R$，$b > o,d > 0$則 $r'$＝$\\frac{\\sum_{i = 1}^{n}{(x_{i}' - \\mu_{x})(y_{i}' - \\mu_{y})}}{\\sqrt{\\sum_{i = 1}^{n}{(x_{i}' - \\mu_{x})^{2}\\sum_{i = 1}^{n}{(y_{i}' - \\mu_{y})^{2}}}}}$＝$\\frac{\\sum_{i = 1}^{n}{\\lbrack(a + bx_{i}) - (a + b\\mu_{x})\\rbrack\\lbrack(c + dy_{i}) - (c + d\\mu_{y})\\rbrack}}{\\sqrt{\\sum_{i = 1}^{n}{\\lbrack(a + bx_{i}) - (a + b\\mu_{x})\\rbrack^{2}\\sum_{i = 1}^{n}{\\lbrack(c + dy_{i}) - (c + d\\mu_{y})\\rbrack^{2}}}}}$ ＝$\\frac{bd\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sqrt{b^{2}d^{2}\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})^{2}\\sum_{i = 1}^{n}{(y_{i} - \\mu_{y})^{2}}}}}$＝$r$ 故單位的改變不影響相關係數的值。\n3.資料平移、伸縮與相關係數的關係：\n(1)一組二維數據（x~1~ , y~1~），（x~2~ , y~2~），......，（x~n~ , y~n~），滿足y~i~＝ax~i~＋b，其中a、b為常數。\n①若a＞0，則此二維數據的相關係數r＝1。\n②若a＜0，則此二維數據的相關係數r＝－1。\n(2)一組二維數據（x~1~ , y~1~），（x~2~ , y~2~），......，（x~n~ , y~n~），設其相關係數為r。另一組二維數據（x~1~\\' , y~1~\\'），（x~2~\\' , y~2~\\'），......，（x~n~\\' , y~n~\\'），滿足x~i~\\'＝ax~i~＋b，y~i~\\'＝cy~i~＋d，其中a，b，c，d為常數，若數據（x~i~\\' , y~i~\\'）的相關係數為r\\'，則：\n①若ac＞0，則相關係數r\\'＝r。\n②若ac＜0，則相關係數r\\'＝－r。\n證明：由題意知r＝$\\frac{\\sum_{i＝1}^{n}{（x_{i}－\\mu_{x}）（y_{i}－\\mu_{y}）}}{\\sqrt{\\sum_{i＝1}^{n}{（x_{i}－\\mu_{x}）^{2}}} × \\sqrt{\\sum_{i＝1}^{n}{（y_{i}－\\mu_{y}）^{2}}}}$ 又r\\'＝$\\frac{\\sum_{i＝1}^{n}{〔（ax_{i}＋b）－（a\\mu_{x}＋b）〕〔（cy_{i}＋d）－（c\\mu_{y}＋d）〕}}{\\sqrt{\\sum_{i＝1}^{n}{〔（ax_{i}＋b）－（a\\mu_{x}＋b）〕^{2}}} × \\sqrt{\\sum_{i＝1}^{n}{〔（cy_{i}＋d）－（c\\mu_{y}＋d）〕^{2}}}}$ ＝$\\frac{ac\\sum_{i＝1}^{n}{（x_{i}－\\mu_{x}）（y_{i}－\\mu_{y}）}}{│ac │\\sqrt{\\sum_{i＝1}^{n}{（x_{i}－\\mu_{x}）^{2}}} × \\sqrt{\\sum_{i＝1}^{n}{（y_{i}－\\mu_{y}）^{2}}}}$ ＝$\\frac{ac}{│ac │}$r\n∴(1)當ac＞0時，r\\'＝r\n(2)當ac＜0時，r\\'＝－r",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-correlation-raw-sum-shortcut-s232",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題1：散佈圖與相關型態",
+      "source_order": 3,
+      "tags": [
+        "s2-3-2",
+        "section:主題1：散佈圖與相關型態",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0004",
+      "title": "蒐集某公司30位員工的年齡與薪資數據，結果發現有「年齡愈大",
+      "question_text": "蒐集某公司30位員工的年齡與薪資數據，結果發現有「年齡愈大，薪資愈高」 的現象，請問下列各敘述何者為真？\n(1)年齡與薪資的相關係數是1 (2)年齡與薪資的相關係數至少是0.5\n(3)年齡與薪資的相關係數至少是0.3 (4)年齡與薪資的相關係數是正的\n(5)年齡與薪資的相關係數是負的。",
+      "answer_text": "(1)(2)(3)均不一定，(4)為真",
+      "explanation_text": "(1)(2)(3)均不一定，(4)為真，故選(4)。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-correlation-coefficient-definitions",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題1：散佈圖與相關型態",
+      "source_order": 4,
+      "tags": [
+        "s2-3-2",
+        "section:主題1：散佈圖與相關型態",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0005",
+      "title": "如圖，有5筆(x,y)數據，試問去掉哪一筆數據後，剩下4筆數",
+      "question_text": "如圖，有5筆(x,y)數據，試問去掉哪一筆數據後，剩下4筆數據的相關係數最大？",
+      "answer_text": "由散布圖知$\\overline{x} = \\frac{1 + 2 + 4 + 3 + 10}{5} = 4$，$\\overline{y} = \\frac{3 + 4 + 5 + 10 + 12}{5} = 6.8$， ∵過點$(\\overline{x},\\overline{y})$作水平線及鉛直線將散布圖分成四個象限， 點A，B，C，E均在第一﹑三象限，僅D點在第二象限， ∴去掉D(3,10)，剩下4筆資料的相關係數最大，故選(4)",
+      "explanation_text": "由散布圖知$\\overline{x} = \\frac{1 + 2 + 4 + 3 + 10}{5} = 4$，$\\overline{y} = \\frac{3 + 4 + 5 + 10 + 12}{5} = 6.8$， \n[圖:program-db/assets/question-media/s2-3-2/image42.png] \n∵過點$(\\overline{x},\\overline{y})$作水平線及鉛直線將散布圖分成四個象限， 點A，B，C，E均在第一﹑三象限，僅D點在第二象限，\n∴去掉D(3,10)，剩下4筆資料的相關係數最大，故選(4)。\n----------------------------------------------------------------------------------------------------------------------------------------- 隨堂練習 請由小到大排出下面選項(1)～(5)的散布圖中X，Y的相關係數的大小。\n(1)\n[圖:program-db/assets/question-media/s2-3-2/image43.png]\n(2)\n[圖:program-db/assets/question-media/s2-3-2/image44.png]\n(3)\n[圖:program-db/assets/question-media/s2-3-2/image45.png]\n(4)\n[圖:program-db/assets/question-media/s2-3-2/image46.png]\n(5)\n[圖:program-db/assets/question-media/s2-3-2/image47.png] ----------------------------------------------------------------------------------------------------------------------------------------- 由圖知，(1)為完全正相關﹔(2)為完全負相關﹔(3)為零相關﹔(4)為正相關﹔\n(5)為負相關，故(2) < (5) < (3) < (4) < (1)。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-correlation-coefficient-definitions",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題1：散佈圖與相關型態",
+      "source_order": 5,
+      "tags": [
+        "s2-3-2",
+        "section:主題1：散佈圖與相關型態",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0006",
+      "title": "甲﹑乙﹑丙﹑丁四人在四項評分的得分情形如表，則 (1)甲﹑乙",
+      "question_text": "甲﹑乙﹑丙﹑丁四人在四項評分的得分情形如表，則\n(1)甲﹑乙得分的相關係數為 − 1 (2)甲﹑丙得分的相關係數是0\n(3)乙﹑丙得分的相關係數是0 (4)丙﹑丁得分的相關係數是0\n(5)甲﹑丁得分的相關係數是0\n[圖:program-db/assets/question-media/s2-3-2/image48.png]",
+      "answer_text": "設a，b，c，d分別表甲﹑乙﹑丙﹑丁的評分，且$\\mu_{a} = \\mu_{b} = \\mu_{c} = \\mu_{d} = 2.5$， (1)○：$r = \\frac{( - 2.25) + ( - 0.25) + ( - 0.25) + ( - 2.25)}{\\sqrt{(2.25 + 0.25 + 0.25 + 2.25) × (2.25 + 0.25 + 0.25 + 2.25)}} = - 1$ (2)○ (3)○ (4)╳",
+      "explanation_text": "設a，b，c，d分別表甲﹑乙﹑丙﹑丁的評分，且$\\mu_{a} = \\mu_{b} = \\mu_{c} = \\mu_{d} = 2.5$， \n[圖:program-db/assets/question-media/s2-3-2/image49.png] \n(1)○：$r = \\frac{( - 2.25) + ( - 0.25) + ( - 0.25) + ( - 2.25)}{\\sqrt{(2.25 + 0.25 + 0.25 + 2.25) × (2.25 + 0.25 + 0.25 + 2.25)}} = - 1$\n(2)○ (3)○ (4)╳ (5)╳ 故選(1)(2)(3)。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-correlation-coefficient-definitions",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題1：散佈圖與相關型態",
+      "source_order": 6,
+      "tags": [
+        "s2-3-2",
+        "section:主題1：散佈圖與相關型態",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0007",
+      "title": "隨堂練習：下表是5位同學參加學測的國文與英文考科成績，其中X為國文考科",
+      "question_text": "下表是5位同學參加學測的國文與英文考科成績，其中X為國文考科級分，Y為 英文考科級分，\n[圖:program-db/assets/question-media/s2-3-2/image50.png] 事後發現丙同學在考英文時由於肚子痛被迫提早交卷，以致於影響成績。若將丙同學的成績 刪除，則：(1)先從散布圖上觀察，你覺得其餘4位同學國文考科與英文考科的相關係數會 變大還是變小？(2)求出這4位同學國文考科與英文考科的相關係數。",
+      "answer_text": "(1)將點(15,6)刪去，如圖， 從散布圖上觀察可知應為正相關",
+      "explanation_text": "(1)將點(15,6)刪去，如圖， \n[圖:program-db/assets/question-media/s2-3-2/image51.png] 從散布圖上觀察可知應為正相關，故相關係數會變大。\n(2)將丙同學的成績刪除，則$\\mu_{x} = 10$，$\\mu_{y} = 11$， \n[圖:program-db/assets/question-media/s2-3-2/image52.png] 相關係數$r = \\frac{\\sum_{i = 1}^{4}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sqrt{\\sum_{i = 1}^{4}{(x_{i} - \\mu_{x})^{2} · \\sum_{i = 1}^{4}{(y_{i} - \\mu_{y})^{2}}}}} = \\frac{16}{\\sqrt{20 × 20}} = 0.8$。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-correlation-raw-sum-shortcut-s232",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題1：散佈圖與相關型態",
+      "source_order": 7,
+      "tags": [
+        "s2-3-2",
+        "section:主題1：散佈圖與相關型態",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0008",
+      "title": "某肥皂廠商欲推出一種新產品，在上市以前以不同的單價$x$（單",
+      "question_text": "某肥皂廠商欲推出一種新產品，在上市以前以不同的單價$x$（單位：10元），調查市場的 需求量$y$（單位：萬盒）。調查結果如下：\n\n[圖:program-db/assets/question-media/s2-3-2/image53.png] 求單價與需求量的相關係數。",
+      "answer_text": "\\[另解\\]：本題圖解更快， 完全在y = 2x + 1上，得r = 1，故選(1)",
+      "explanation_text": "$\\mu_{x} = 10$，$\\mu_{y} = 10$， \n[圖:program-db/assets/question-media/s2-3-2/image54.png] 相關係數$r = \\frac{\\sum_{i = 1}^{5}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sqrt{\\sum_{i = 1}^{5}{(x_{i} - \\mu_{x})^{2} · \\sum_{i = 1}^{5}{(y_{i} - \\mu_{y})^{2}}}}} = \\frac{- 8}{\\sqrt{10 × 10}} = - 0.8$ ------------------------------------------------ 隨堂練習\n有一組數據如表，則x，y的相關係數 ------------------------------------------------ $$\\begin{matrix} x_{i} & x_{i} - \\mu_{x} & (x_{i} - \\mu_{x})^{2} & y_{i} & y_{i} - \\mu_{y} & (y_{i} - \\mu_{y})^{2} & (x_{i} - \\mu_{x})(y_{i} - \\mu_{y}) \\ 1 & - 1.5 & 2.25 & 3 & - 3 & 9 & 4.5 \\ 2 & - 0.5 & 0.25 & 5 & - 1 & 1 & 0.5 \\ 3 & 0.5 & 0.25 & 7 & 1 & 1 & 0.5 \\ 4 & 1.5 & 2.25 & 9 & 3 & 9 & 4.5 \\end{matrix} r = \\frac{\\sum_{i = 1}^{4}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sqrt{\\sum_{i = 1}^{4}{(x_{i} - \\mu_{x})^{2}}}\\sqrt{\\sum_{i = 1}^{4}{(y_{i} - \\mu_{y})^{2}}}} = \\frac{10}{\\sqrt{5}\\sqrt{20}} = 1$$，故選(1)。\n\\[另解\\]：本題圖解更快， \n[圖:program-db/assets/question-media/s2-3-2/image56.png] 完全在y = 2x + 1上，得r = 1，故選(1)。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-correlation-raw-sum-shortcut-s232",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題1：散佈圖與相關型態",
+      "source_order": 8,
+      "tags": [
+        "s2-3-2",
+        "section:主題1：散佈圖與相關型態",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0009",
+      "title": "隨堂練習：下表是6名相同類組的學生「在校模擬考」與「升學指定考」的成績",
+      "question_text": "下表是6名相同類組的學生「在校模擬考」與「升學指定考」的成績：\n[圖:program-db/assets/question-media/s2-3-2/image57.png] 繪出此數據的散布圖。 (2)求此6位同學X與Y的相關係數。\n\n(1)",
+      "answer_text": "(1) (2)$\\mu_{x} = 70 + \\frac{1}{6}(0 + 2 + 7 - 10 - 11 + 0) = 68$，$\\mu_{y} = 80 + \\frac{1}{6}(0 - 12 + 4 - 8 - 12 - 14) = 73$， $\\sum_{i = 1}^{6}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})} = 14 - 20 + 99 + 8 + 45 - 14 = 132$， ∴$",
+      "explanation_text": "(1)\n[圖:program-db/assets/question-media/s2-3-2/image58.png] \n(2)$\\mu_{x} = 70 + \\frac{1}{6}(0 + 2 + 7 - 10 - 11 + 0) = 68$，$\\mu_{y} = 80 + \\frac{1}{6}(0 - 12 + 4 - 8 - 12 - 14) = 73$， \n[圖:program-db/assets/question-media/s2-3-2/image59.png] $\\sum_{i = 1}^{6}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})} = 14 - 20 + 99 + 8 + 45 - 14 = 132$，\n∴$r = \\frac{\\sum_{i = 1}^{6}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sqrt{\\sum_{i = 1}^{6}{(x_{i} - \\mu_{x})^{2}} · \\sum_{i = 1}^{6}{(y_{i} - \\mu_{y})^{2}}}} = \\frac{132}{\\sqrt{250 × 270}} \\fallingdotseq 0.51$。\n------------------------------------------------------------------------ 範例5 下表為10對母女之身高，求相關係數的值。\n\n[圖:program-db/assets/question-media/s2-3-2/image60.png] ------------------------------------------------------------------------ \n[圖:program-db/assets/question-media/s2-3-2/image61.png] $\\mu_{x} = 160 + \\frac{1}{10}( - 10 - 8 - 8 - 4 - 2 + 0 + 8 + 10 + 14 + 10) = 161$， $\\mu_{y} = 155 + \\frac{1}{10}( - 7 + 5 - 5 + 7 + 1 + 7 + 1 + 7 + 15 + 9) = 159$， $r = \\frac{\\sum_{i = 1}^{10}{{x'}_{i}{y'}_{i}}}{\\sqrt{\\sum_{i = 1}^{10}{{x'}_{i}}^{2} · \\sum_{i = 1}^{10}{{y'}_{i}}^{2}}} = \\frac{378}{\\sqrt{698 × 394}}$≒0.72。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-correlation-raw-sum-shortcut-s232",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題1：散佈圖與相關型態",
+      "source_order": 9,
+      "tags": [
+        "s2-3-2",
+        "section:主題1：散佈圖與相關型態",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0010",
+      "title": "若$n = 12$，$\\sum_{i = 1}^{12}{x",
+      "question_text": "若$n = 12$，$\\sum_{i = 1}^{12}{x_{i} = 120}$，$\\sum_{i = 1}^{12}{{x_{i}}^{2} = 3700}$，$\\sum_{i = 1}^{12}{y_{i} = 240}$，$\\sum_{i = 1}^{12}{{y_{i}}^{2} = 8400}$，$\\sum_{i = 1}^{12}{x_{i}y_{i} = 3600}$，則相關係數 為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。",
+      "answer_text": "$\\mu_{x} = \\frac{120}{12} = 10$，$\\mu_{y} = \\frac{240}{12} = 20$， $$r = \\frac{\\sum_{i = 1}^{12}{x_{i}y_{i} - 12\\mu_{x} · \\mu_{y}}}{(\\sqrt{\\sum_{i = 1}^{12}{{x_{i}}^{2} - 12{\\mu_{x}}^{2}}})(\\sqrt{\\sum_{i = 1}^{12}{{y_{i}}^",
+      "explanation_text": "$\\mu_{x} = \\frac{120}{12} = 10$，$\\mu_{y} = \\frac{240}{12} = 20$， $$r = \\frac{\\sum_{i = 1}^{12}{x_{i}y_{i} - 12\\mu_{x} · \\mu_{y}}}{(\\sqrt{\\sum_{i = 1}^{12}{{x_{i}}^{2} - 12{\\mu_{x}}^{2}}})(\\sqrt{\\sum_{i = 1}^{12}{{y_{i}}^{2} - 12{\\mu_{y}}^{2}}})} $$ $= \\frac{3600 - 12 × 10 × 20}{(\\sqrt{3700 - 12 × 100})(\\sqrt{8400 - 12 × 400})} = \\frac{1200}{\\sqrt{2500} · \\sqrt{3600}} = 0.4$。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-correlation-raw-sum-shortcut-s232",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題2：相關係數公式與性質",
+      "source_order": 10,
+      "tags": [
+        "s2-3-2",
+        "section:主題2：相關係數公式與性質",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0011",
+      "title": "隨堂練習：兩變量X與Y，若$\\sum_{i = 1}^{10}{x_{",
+      "question_text": "兩變量X與Y，若$\\sum_{i = 1}^{10}{x_{i} = 1250}$，$\\sum_{i = 1}^{10}{{x_{i}}^{2} = 158500}$，$\\sum_{i = 1}^{10}{y_{i} = 800}$，$\\sum_{i = 1}^{10}{{y_{i}}^{2} = 64810}$， $\\sum_{i = 1}^{10}{x_{i}y_{i} = 101080}$，求X與Y的相關係數。",
+      "answer_text": "$\\mu_{x} = \\frac{\\sum_{i = 1}^{10}x_{i}}{10} = 125$，$\\mu_{y} = \\frac{\\sum_{i = 1}^{10}y_{i}}{10} = 80$， $$r = \\frac{\\sum_{i = 1}^{10}{x_{i}y_{i} - 10\\mu_{x}\\mu_{y}}}{\\sqrt{(\\sum_{i = 1}^{10}{{x_{i}}^{2} - 10{\\mu_{x}}^{2}",
+      "explanation_text": "$\\mu_{x} = \\frac{\\sum_{i = 1}^{10}x_{i}}{10} = 125$，$\\mu_{y} = \\frac{\\sum_{i = 1}^{10}y_{i}}{10} = 80$， $$r = \\frac{\\sum_{i = 1}^{10}{x_{i}y_{i} - 10\\mu_{x}\\mu_{y}}}{\\sqrt{(\\sum_{i = 1}^{10}{{x_{i}}^{2} - 10{\\mu_{x}}^{2}}) · (\\sum_{i = 1}^{10}{{y_{i}}^{2} - 10{\\mu_{y}}^{2}})}} = \\frac{101080 - 10 × 125 × 80}{\\sqrt{(158500 - 10 × 125^{2})(64810 - 10 × 80^{2})}} $$ $= \\frac{1080}{\\sqrt{2250 × 810}} = 0.8$。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-correlation-raw-sum-shortcut-s232",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題2：相關係數公式與性質",
+      "source_order": 11,
+      "tags": [
+        "s2-3-2",
+        "section:主題2：相關係數公式與性質",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0012",
+      "title": "隨堂練習：給定X與Y兩種抽樣數據(x~1~,y~1~)，(x~2~,y",
+      "question_text": "給定X與Y兩種抽樣數據(x~1~,y~1~)，(x~2~,y~2~)，...，(x~10,~y~10~)。已知$\\sum_{i = 1}^{10}{x_{i} = 1250}$， $\\sum_{i = 1}^{10}{{x_{i}}^{2} = 158500}$，$\\sum_{i = 1}^{10}{y_{i} = 800}$，$\\sum_{i = 1}^{10}{{y_{i}}^{2} = 64810}$，$\\sum_{i = 1}^{10}{x_{i}y_{i} = 100742}$，試求X與Y的相關係數。\n（以最簡分數作答即可）。",
+      "answer_text": "∵$\\overline{x} = \\frac{\\sum_{i = 1}^{10}x_{i}}{10} = 125$，$\\overline{y} = \\frac{\\sum_{i = 1}^{10}y_{i}}{10} = 80$ ∴$r = \\frac{\\sum_{i = 1}^{10}{x_{i}y_{i} - 10 · \\overline{x} · \\overline{y}}}{\\sqrt{(\\sum_{i = 1}^{10}{{x_",
+      "explanation_text": "∵$\\overline{x} = \\frac{\\sum_{i = 1}^{10}x_{i}}{10} = 125$，$\\overline{y} = \\frac{\\sum_{i = 1}^{10}y_{i}}{10} = 80$\n∴$r = \\frac{\\sum_{i = 1}^{10}{x_{i}y_{i} - 10 · \\overline{x} · \\overline{y}}}{\\sqrt{(\\sum_{i = 1}^{10}{{x_{i}}^{2} - 10{\\overline{x}}^{2}}) · (\\sum_{i = 1}^{10}{{y_{i}}^{2} - 10{\\overline{y}}^{2}})}} = \\frac{100742 - 10 × 125 × 80}{\\sqrt{(158500 - 10 × 125^{2}) × (64810 - 10 × 80^{2})}}$ $= \\frac{742}{\\sqrt{2250 × 810}} = \\frac{742}{1350} = \\frac{371}{675}$。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-correlation-raw-sum-shortcut-s232",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題2：相關係數公式與性質",
+      "source_order": 12,
+      "tags": [
+        "s2-3-2",
+        "section:主題2：相關係數公式與性質",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0013",
+      "title": "已知二維數據(X,Y) = (x~1~,y~1~)，(x~2",
+      "question_text": "已知二維數據(X,Y) = (x~1~,y~1~)，(x~2~,y~2~)，...，(x~8~,y~8~)，其中$\\sum_{i = 1}^{8}{x_{i} = 320}$，$\\sum_{i = 1}^{8}{y_{i} = 248}$， $\\sum_{i = 1}^{8}{(x_{i} - \\mu_{X})^{2} = 450}$，$\\sum_{i = 1}^{8}{(y_{i} - \\mu_{Y})^{2} = 208}$，$\\sum_{i = 1}^{8}{(x_{i} - \\mu_{X})(y_{i} - \\mu_{Y}) = 285}$，且X與Y的相關係數為r， 試求下列各值：(1)$r × \\frac{\\sigma_{Y}}{\\sigma_{X}}$。 (2)$\\sum_{i = 1}^{8}{y_{i}}^{2}$。",
+      "answer_text": "(5)由於2 × ( − 300) = − 600 < 0，故r~(2x\\ +\\ 5,\\ −\\ 300y\\ −\\ 2)~ = − r~(x,y)~ = − 0.8",
+      "explanation_text": "(1)$r × \\frac{\\sigma_{Y}}{\\sigma_{X}} = \\frac{\\sum_{i = 1}^{8}{(x_{i} - \\mu_{X})(y_{i} - \\mu_{Y})}}{\\sqrt{\\sum_{i = 1}^{8}{(x_{i} - \\mu_{X})^{2}}}\\sqrt{\\sum_{i = 1}^{8}{(y_{i} - \\mu_{Y})^{2}}}} × \\frac{\\sqrt{\\frac{1}{8}\\sum_{i = 1}^{8}{(y_{i} - \\mu_{Y})^{2}}}}{\\sqrt{\\frac{1}{8}\\sum_{i = 1}^{8}{(x_{i} - \\mu_{X})^{2}}}}$ $= \\frac{\\sum_{i = 1}^{8}{(x_{i} - \\mu_{X})(y_{i} - \\mu_{Y})}}{\\sum_{i = 1}^{8}{(x_{i} - \\mu_{X})^{2}}} = \\frac{285}{450} = \\frac{19}{30} \\approx 0.63$。\n(2)$\\sum_{i = 1}^{8}y_{i} = 248$，即μ~Y~ = 31，$\\sum_{i = 1}^{8}{(y_{i} - \\mu_{Y})^{2}} = \\sum_{i = 1}^{8}{({y_{i}}^{2} - 2\\mu_{Y}y_{i} + {\\mu_{Y}}^{2})} = \\sum_{i = 1}^{8}{{y_{i}}^{2} - 2\\mu_{Y}}\\sum_{i = 1}^{8}{y_{i} + 8{\\mu_{Y}}^{2}}$， 即$208 = \\sum_{i = 1}^{8}{{y_{i}}^{2} - 8 × 31^{2}}$，故$\\sum_{i = 1}^{8}{{y_{i}}^{2} =}7896$。\n----------------------------------------------------------------------------------- 範例8 有兩組變數X：x~1~，x~2~，...，x~n~，Y：y~1~，y~2~，...，y~n~，則\n(1)若y~i~ = 0.8x~i~ + 20，i = 1，2，...，n，則X與Y的相關係數r~(x,y)~ = \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n(2)若y~i~ = 6 − 2x~i~，i = 1，2，...，n，則X與Y的相關係數r~(x,y)~ = \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n(3)若y~i~ = 4，i = 1，2，...，n，則X與Y的相關係數r~(x,y)~ = \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n(4)若已知r~(x,y)~ = 0.8，則變數2X + 5與3Y − 2的相關係數為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n(5)若已知r~(x,y)~ = 0.8，則變數2X + 5與 − 300Y − 2的相關係數為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_。\n-----------------------------------------------------------------------------------\n(1)各點在一直線上，且斜率為正，故r~(x,y)~ = 1。\n(2)各點在一直線上，且斜率為負，故r~(x,y)~ = − 1。\n(3)由於點在直線y = 4上，故r~(x,y)~ = 0。\n(4)由於2 × 3 = 6 > 0，故r~(2x\\ +\\ 5,3y\\ −\\ 2)~ = r~(x,y)~ = 0.8。\n(5)由於2 × ( − 300) = − 600 < 0，故r~(2x\\ +\\ 5,\\ −\\ 300y\\ −\\ 2)~ = − r~(x,y)~ = − 0.8。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-correlation-raw-sum-shortcut-s232",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題2：相關係數公式與性質",
+      "source_order": 13,
+      "tags": [
+        "s2-3-2",
+        "section:主題2：相關係數公式與性質",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0014",
+      "title": "某班40位同學期中考數學平均成績51分，最高75分。今老師將",
+      "question_text": "某班40位同學期中考數學平均成績51分，最高75分。今老師將成績做線性 調整，把每位同學的成績先乘以$\\frac{4}{3}$倍，再減去4分，令變量x，y分別表示同學的原始成績 與調整後成績，設r表變量x與y的相關係數，則下列何者正確？ (1)0.3 < r < 0.5\n(2)0.5 < r < 0.7 (3)0.7 < r < 0.9 (4)0.9 < r < 1 (5)r = 1。",
+      "answer_text": "∵$y = \\frac{4}{3}x - 4$成線性關係，∴r = 1，故選(5)",
+      "explanation_text": "∵$y = \\frac{4}{3}x - 4$成線性關係，∴r = 1，故選(5)。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-correlation-coefficient-definitions",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題2：相關係數公式與性質",
+      "source_order": 14,
+      "tags": [
+        "s2-3-2",
+        "section:主題2：相關係數公式與性質",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0015",
+      "title": "隨堂練習：某高中的高一學生有800位，第一次期中考與第二次期中考的數學",
+      "question_text": "某高中的高一學生有800位，第一次期中考與第二次期中考的數學成績分別以x 與y表示（用0至100評分），若x與y的相關係數為0.83，則下列敘述何者正確？\n(1)由相關係數得知，x與y為正相關\n(2)此兩次段考成績的散布圖恰落在直線y = ax + b上（其中a，b為常數） \\(3\\) 2x + 5與5 − 2y的相關係數為0.83 \\(4\\) 7 + 2x與5 − 2y的相關係數為− 0.83 \\(5\\) (log x) × 50與(log y) × 50的相關係數為| log 0.83 |。",
+      "answer_text": "(1)由r = 0.83 > 0知為正相關 (2)迴歸直線在r = 0.83下，只能預測其數值在直線附近，並非一定在線上 (3)(4)平移和伸縮均不影響r，但負號會使得斜率變化，由正相關變負相關得新r為− 0.83 (5)很容易舉反例否定此關係，設x，y是低度正相關0.01， 依題意(log x) × 50與(log y) × 50相關係數即為| log0.01 | = 2， 不符合− 1 ≤ r ≤ 1之基本定義",
+      "explanation_text": "(1)由r = 0.83 > 0知為正相關\n(2)迴歸直線在r = 0.83下，只能預測其數值在直線附近，並非一定在線上\n(3)(4)平移和伸縮均不影響r，但負號會使得斜率變化，由正相關變負相關得新r為− 0.83\n(5)很容易舉反例否定此關係，設x，y是低度正相關0.01， 依題意(log x) × 50與(log y) × 50相關係數即為| log0.01 | = 2， 不符合− 1 ≤ r ≤ 1之基本定義，故此推論為誤 故選(1)(4)。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-regression-prediction-s232",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題2：相關係數公式與性質",
+      "source_order": 15,
+      "tags": [
+        "s2-3-2",
+        "section:主題2：相關係數公式與性質",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0016",
+      "title": "設有兩群數據如表，已知x的算術平均數$\\mu_{x} = 2",
+      "question_text": "設有兩群數據如表，已知x的算術平均數$\\mu_{x} = 2$，且x﹑y的相關係數為0.5，試求a﹑b 的值。\n\n[圖:program-db/assets/question-media/s2-3-2/image62.png]",
+      "answer_text": "> > \\(3\\) 將標準化數據化為原始資料計算，可得二維數據（x~i~ , y~i~）的迴歸直線方程式為 > > y－μ~y~＝r$\\frac{\\sigma_{y}}{\\sigma_{x}}$（x－μ~x~）＝$\\frac{\\sum_{i＝1}^{n}{（x_{i}－\\mu_{x}）（y_{i}－\\mu_{y}）}}{\\sum_{i＝1}^{n}{（x_{i}－\\mu_{x}）^{2}}}$（x－μ~x~）",
+      "explanation_text": "$\\mu_{x} = \\frac{1 + a + b + 2}{4} = 2$⇒a + b = 2 × 4 − (1 + 2) = 5......① $\\mu_{y} = \\frac{3 + 5 + 4 + 4}{4} = 4$， $$0.5 = \\frac{(1 - 2) × (3 - 4) + (a - 2) × 1 + 0 + 0}{\\sqrt{1 + (a - 2)^{2} + (b - 2)^{2}} × \\sqrt{2}} $$⇒$\\frac{1}{4} = \\frac{(a - 1)^{2}}{\\lbrack(a - 2)^{2} + (b - 2)^{2} + 1\\rbrack × 2}$⇒2(a − 1)^2^ = (a − 2)^2^ + (b − 2)^2^ + 1......② 由①知b − 2 = 3 − a，代入②得2(a − 1)^2^ = (a − 2)^2^ + (3 − a)^2^ + 1， 故a = 2，b = 3。\n+:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+ 主題3：最小平方法與迴歸直線 1.由散布圖若看出此兩變數間有線性的圖案時，如何找出此條件代表的直線呢？討論如下：\n給定一組資料$(x_{i},y_{i})$，$i = 1,2,3,……,n$。\n使得殘差的平方和E（a , b）＝（a＋bx~1~－y~1~）^2^＋（a＋bx~2~－y~2~）^2^＋......＋（a＋bx~n~－y~n~）^2^有最小值，則此直線y＝a＋bx即為所求。\n\n[圖:program-db/assets/question-media/s2-3-2/image63.jpeg] 當x與y兩種抽樣數據的相關係數的絕對值很大時, 這時x與y 散布圖上會有一條模糊直線, 顯示出兩者之間的線性關係。如何 把這種線性關係明顯表現出來, 使誤差值的平方和最小, 這就是 最小平方法。\n想法：設有一組資料：$(x_{1},y_{1})$、$(x_{2},y_{2})$、...、$(x_{n},y_{n})$ 設直線 $L:y = ax + b$ ($f(x) = ax + b$) 殘差$e_{i} = y_{i} - f(x_{i}) = y_{i} - (a + bx_{i})$ 殘差平方和$\\sum_{i = 1}^{n}e_{i}^{2} = \\sum_{i = 1}^{n}{\\lbrack y_{i} - (a + bx_{i})\\rbrack^{2}}$ 殘差平方和愈小時，以此直線L擬合資料的誤差愈小，估計效果愈理想。\n做法：\n(1)將$\\sum_{i = 1}^{n}{\\lbrack y_{i} - (a + bx_{i})\\rbrack^{2}}$展開，以雙變數配方法求最小值，即可解得a、b。\n※對$a,b$偏微分後令為0，,可較易處理。\n(2)方程組 ${ \\begin{array}{r}\n(\\sum_{i = 1}^{n}1 )a + (\\sum_{i = 1}^{n}x_{i})b = \\sum_{i = 1}^{n}y_{i} …………(1) \\\n(\\sum_{i = 1}^{n}x_{i})a + (\\sum_{i = 1}^{n}{x_{i}}^{2})b = \\sum_{i = 1}^{n}{x_{i}y_{i}}………(2) \\end{array} \\right.$ 可得a、b。\n結論公式：$y - \\mu_{y} = \\frac{\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x}) · (y_{i} - \\mu_{y})}}{\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})^{2}}}\\ (x - \\mu_{x})$ 2.求迴歸直線的方法：\n> \\(1\\) 最小平方法（當數據不多且數值較小時，可利用此方法）。\n> > \\(2\\) 標準化數據的迴歸直線方程式：\n> > 設（u~i~ , v~i~），i＝1，2，......，n是標準化後的數據，則迴歸直線方程式為V＝rU，其中r為相關係數。\n> > \\(3\\) 將標準化數據化為原始資料計算，可得二維數據（x~i~ , y~i~）的迴歸直線方程式為 > > y－μ~y~＝r$\\frac{\\sigma_{y}}{\\sigma_{x}}$（x－μ~x~）＝$\\frac{\\sum_{i＝1}^{n}{（x_{i}－\\mu_{x}）（y_{i}－\\mu_{y}）}}{\\sum_{i＝1}^{n}{（x_{i}－\\mu_{x}）^{2}}}$（x－μ~x~）。\n> > ※迴歸直線必過點（μ~x~ , μ~y~）。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-regression-line-least-squares",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題2：相關係數公式與性質",
+      "source_order": 16,
+      "tags": [
+        "s2-3-2",
+        "section:主題2：相關係數公式與性質",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0017",
+      "title": "1.設散佈圖上有資料（1 , 1），（2 , 1），（2 ,",
+      "question_text": "1.設散佈圖上有資料（1 , 1），（2 , 1），（2 , 2），（3 , 2），利用最小平方法可求得迴歸 直線方程式為，並推測當x＝5時，y＝。",
+      "answer_text": "(1)令迴歸直線方程式為y＝a＋bx ∴ $\\left\\lbrack (a + b) - 1 \\right\\rbrack^{2}$＋$\\left\\lbrack (a + 2b) - 1 \\right\\rbrack^{2}$＋$\\left\\lbrack (a + 2b) - 2 \\right\\rbrack^{2}$＋$\\left\\lbrack (a + 3b) - 2 \\right\\rbrack^{2}$ ＝4a^2^＋16ab＋18b^",
+      "explanation_text": "(1)令迴歸直線方程式為y＝a＋bx\n∴\n[圖:program-db/assets/question-media/s2-3-2/image65.png] $\\left\\lbrack (a + b) - 1 \\right\\rbrack^{2}$＋$\\left\\lbrack (a + 2b) - 1 \\right\\rbrack^{2}$＋$\\left\\lbrack (a + 2b) - 2 \\right\\rbrack^{2}$＋$\\left\\lbrack (a + 3b) - 2 \\right\\rbrack^{2}$ ＝4a^2^＋16ab＋18b^2^－12a－26b＋10 ＝4a^2^＋（16b－12）a＋18b^2^－26b＋10 ＝〔2a＋（4b－3）〕^2^－（4b－3）^2^＋18b^2^－26b＋10 ＝（2a＋4b－3）^2^＋2b^2^－2b＋1 ＝（2a＋4b－3）^2^＋2$( b－\\frac{1}{2} )^{2}$＋$\\frac{1}{2}$\n∴當${ \\begin{array}{r} 2a＋4b－3＝0 \\ b－\\frac{1}{2}＝0 \\end{array} \\right.$時，E（a , b）有最小值$\\frac{1}{2}$ 即a＝$\\frac{1}{2}$，b＝$\\frac{1}{2}$ ∴迴歸直線方程式為y＝$\\frac{1}{2}$＋$\\frac{1}{2}$x",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-regression-line-least-squares",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題3：迴歸直線與最小平方法",
+      "source_order": 17,
+      "tags": [
+        "s2-3-2",
+        "section:主題3：迴歸直線與最小平方法",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0018",
+      "title": "隨堂練習：散佈圖上有資料（0 , 1），（1 , 0），（2 , 2）",
+      "question_text": "散佈圖上有資料（0 , 1），（1 , 0），（2 , 2），（3 , 5），利用最小平方法可求 得迴歸直線方程式為。",
+      "answer_text": "令迴歸直線方程式為y＝a＋bx ∴$E(a,b) = (a - 1)^{2}$＋$\\left\\lbrack (a + b) - 0 \\right\\rbrack^{2}$＋$\\left\\lbrack (a + 2b) - 2 \\right\\rbrack^{2}$＋$\\left\\lbrack (a + 3b) - 5 \\right\\rbrack^{2}$ ＝4a^2^＋12ab＋14b^2^－16a－38b＋30 ＝〔4a^2^＋（12b－",
+      "explanation_text": "令迴歸直線方程式為y＝a＋bx\n∴$E(a,b) = (a - 1)^{2}$＋$\\left\\lbrack (a + b) - 0 \\right\\rbrack^{2}$＋$\\left\\lbrack (a + 2b) - 2 \\right\\rbrack^{2}$＋$\\left\\lbrack (a + 3b) - 5 \\right\\rbrack^{2}$ ＝4a^2^＋12ab＋14b^2^－16a－38b＋30 ＝〔4a^2^＋（12b－16）a〕＋14b^2^－38b＋30 ＝〔2a＋（3b－4）〕^2^－（3b－4）^2^＋14b^2^－38b＋30 ＝（2a＋3b－4）^2^＋5b^2^－14b＋14 ＝（2a＋3b－4）^2^＋5$( b－\\frac{7}{5} )^{2}$－$\\frac{49}{5}$＋14 ＝（2a＋3b－4）^2^＋5$( b－\\frac{7}{5} )^{2}$＋$\\frac{21}{5}$\n∴當${ \\begin{array}{r} 2a＋3b－4＝0 \\ b＝\\frac{7}{5} \\end{array} \\right.$時，E（a , b）有最小值$\\frac{21}{5}$ 即a＝－$\\frac{1}{10}$，b＝$\\frac{7}{5}$\n∴迴歸直線方程式為y＝－$\\frac{1}{10}$＋$\\frac{7}{5}$x",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-regression-line-least-squares",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題3：迴歸直線與最小平方法",
+      "source_order": 18,
+      "tags": [
+        "s2-3-2",
+        "section:主題3：迴歸直線與最小平方法",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0019",
+      "title": "設(x~1~,y~1~) = ( − 3,1)，(x~2~,",
+      "question_text": "設(x~1~,y~1~) = ( − 3,1)，(x~2~,y~2~) = (0, − 1)，(x~3~,y~3~) = (1,0)，(x~4~,y~4~) =\n(2,1)，試求實數a與b使 $\\sum_{k = 1}^{4}{(y_{k} - a - bx_{k})^{2}}$值為最小。",
+      "answer_text": "∵$\\sum_{k = 1}^{4}{(y_{k} - a - bx_{k})^{2}} = (1 - a + 3b)^{2} + ( - 1 - a)^{2} + (0 - a - b)^{2} + (1 - a - 2b)^{2}$ = (1 − 2a + 6b − 6ab + a^2^ + 9b^2^) + (a^2^ + 2a + 1) + (a^2^ + 2ab + b^2^) + (1 − 2a − 4b + 4ab + a",
+      "explanation_text": "∵$\\sum_{k = 1}^{4}{(y_{k} - a - bx_{k})^{2}} = (1 - a + 3b)^{2} + ( - 1 - a)^{2} + (0 - a - b)^{2} + (1 - a - 2b)^{2}$ = (1 − 2a + 6b − 6ab + a^2^ + 9b^2^) + (a^2^ + 2a + 1) +\n(a^2^ + 2ab + b^2^) + (1 − 2a − 4b + 4ab + a^2^ + 4b^2^) $$= 4a^{2} + 14b^{2} - 2a + 2b + 3 = 4(a - \\frac{1}{4})^{2} + 14(b + \\frac{1}{14})^{2} + 3 - \\frac{1}{4} - \\frac{1}{14} $$∴當$a - \\frac{1}{4} = 0$，且$b + \\frac{1}{14} = 0$時，$\\sum_{k = 1}^{4}{(y_{k} - a - bx_{k})^{2}}$有最小值，此時$a = \\frac{1}{4}$，$b = - \\frac{1}{14}$。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-correlation-coefficient-definitions",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題3：迴歸直線與最小平方法",
+      "source_order": 19,
+      "tags": [
+        "s2-3-2",
+        "section:主題3：迴歸直線與最小平方法",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0020",
+      "title": "隨堂練習：試找一直線y = a + bx使這三點到該直線的鉛直距離之平",
+      "question_text": "試找一直線y = a + bx使這三點到該直線的鉛直距離之平方和最 小，亦即求常數a，b， 使\\[3 − (a + b)\\]^2^ + \\[5 − (a + 2b)\\]^2^ + \\[4 − (a + 3b)\\]^2^之值最小。\n隨堂練習.",
+      "answer_text": "將各平方式展開，再重新配方如下： \\[3 − (a + b)\\]^2^ + \\[5 − (a + 2b)\\]^2^ + \\[4 − (a + 3b)\\]^2^ = 9 − 6(a + b) + (a + b)^2^ + 25 − 10(a + 2b) + (a + 2b)^2^ + 16 − 8(a + 3b) + (a + 3b)^2^ = a^2^ + 2ab + b^2^ − 6a − 6b + 9 + a^2^ + 4ab + ",
+      "explanation_text": "將各平方式展開，再重新配方如下：\n\\[3 − (a + b)\\]^2^ + \\[5 − (a + 2b)\\]^2^ + \\[4 − (a + 3b)\\]^2^ = 9 − 6(a + b) + (a + b)^2^ + 25 − 10(a + 2b) + (a + 2b)^2^ + 16 − 8(a + 3b) + (a + 3b)^2^ = a^2^ + 2ab + b^2^ − 6a − 6b + 9 + a^2^ + 4ab + 4b^2^ − 10a − 20b + 25 + a^2^ + 6ab + 9b^2^ − 8a − 24b + 16 = 3a^2^ + 12ab + 14b^2^ − 24a − 50b + 50 = 3a^2^ + (12b − 24)a + 14b^2^ − 50b + 50 = 3\\[a + (2b − 4)\\]^2^ + 14b^2^ − 50b + 50 − 3(2b − 4)^2^ = 3\\[a + (2b − 4)\\]^2^ + 2b^2^ − 2b + 2 $= 3(a + 2b - 4)^{2} + 2(b - \\frac{1}{2})^{2} + \\frac{3}{2} \\geq \\frac{3}{2}$， 取a，b使a + 2b − 4 = 0且$b - \\frac{1}{2} = 0$，即a = 3，$b = \\frac{1}{2}$， 則可得到最小值為$\\frac{3}{2}$，故所求直線方程式為$y = 3 + \\frac{1}{2}x$。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-regression-line-least-squares",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題3：迴歸直線與最小平方法",
+      "source_order": 20,
+      "tags": [
+        "s2-3-2",
+        "section:主題3：迴歸直線與最小平方法",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0021",
+      "title": "設(x~1~,y~1~) = (2,1)，(x~2~,y~2",
+      "question_text": "設(x~1~,y~1~) = (2,1)，(x~2~,y~2~) =\n(3,2)，(x~3~,y~3~) =\n(2,3)，試求兩實數a與b，使下列值D為最小，D = (y~1~ − a − bx~1~)^2^ + (y~2~ − a − bx~2~)^2^ + (y~3~ − a − bx~3~)^2^。",
+      "answer_text": "--------------------------------------------------------------------------------------------- 隨堂練習 利用最小平方法，求得最接近點(1,2)，(6,7)，(3，3)，(5,4)之最適合直線方程式為",
+      "explanation_text": "D = (y~1~ − a − bx~1~)^2^ + (y~2~ − a − bx~2~)^2^ + (y~3~ − a − bx~3~)^2^ = (1 − a − 2b)^2^ + (2 − a − 3b)^2^ + (3 − a − 2b)^2^， 設y = a + bx為迴歸直線時，使得D有最小值， $\\mu_{x} = \\frac{1}{3}(2 + 3 + 2) = \\frac{7}{3}$，$\\mu_{y} = \\frac{1}{3}(1 + 2 + 3) = 2$， \n[圖:program-db/assets/question-media/s2-3-2/image67.png] $\\sum_{}^{}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y}) = ( - \\frac{1}{3}) × ( - 1) + 0 + ( - \\frac{1}{3}) × 1 = 0}$， $b = \\frac{\\sigma_{xy}}{\\sigma_{xx}} = \\frac{\\sum_{}^{}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sum_{}^{}{(x_{i} - \\mu_{x})^{2}}} = 0$， y = a + bx⇒$\\mu_{y} = a + b\\mu_{x}$⇒$2 = a + 0 × \\frac{7}{3}$⇒a = 2。\n--------------------------------------------------------------------------------------------- 隨堂練習 利用最小平方法，求得最接近點(1,2)，(6,7)，(3，3)，(5,4)之最適合直線方程式為。\n---------------------------------------------------------------------------------------------\n∵$\\mu_{x}$=$\\frac{1}{4}$ (1 + 6 + 3 + 5) =$\\frac{15}{4}$，$\\overline{y} = \\frac{1}{4}$ (2 + 7 + 3 + 4) = 4\n∴ $\\sum_{i = 1}^{4}{(x_{i} - \\mu_{x})^{2}}$= (−$\\frac{11}{4}$)^2^ +\n($\\frac{9}{4}$)^2^ + ($\\frac{- 3}{4}$)^2^ + ($\\frac{5}{4}$)^2^ =$\\frac{236}{16}$=$\\frac{59}{4}$ $\\sum_{i = 1}^{4}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}$=\n(−$\\frac{11}{4}$) × (− 2) + ($\\frac{9}{4}$) × 3 + ( −$\\frac{3}{4}$) ×\n(− 1) +$\\frac{5}{4}$× 0 =$\\frac{52}{4}$= 13 設y對x之最適合直線為y = ax + b......① 即y =$\\mu_{y}$+ r．$\\frac{\\sigma_{y}}{\\sigma_{x}}$ (x −$\\mu_{x}$)∴ r =$\\frac{\\sigma_{xy}}{\\sigma_{x}\\sigma_{y}}$ ∴ y =$\\mu_{y}$+$\\frac{\\sigma_{xy}}{\\sigma_{x}^{2}}$ (x −$\\mu_{x}$)......②\n①，②同一直線 ∴ a =$\\frac{\\sigma_{xy}}{\\sigma_{x}^{2}}$=$\\frac{13}{\\frac{59}{4}}$=$\\frac{52}{59}$，b =$\\mu_{y}$−\n[圖:program-db/assets/question-media/s2-3-2/image68.png] $\\mu_{x}$= 4 −$\\frac{13}{\\frac{59}{4}} × \\frac{15}{4} = \\frac{41}{59}$ 故y =$\\frac{41}{59} + \\frac{52}{59}$x為所求",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-regression-line-least-squares",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題3：迴歸直線與最小平方法",
+      "source_order": 21,
+      "tags": [
+        "s2-3-2",
+        "section:主題3：迴歸直線與最小平方法",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0022",
+      "title": "設有10筆(x~i~,y~i~)的數據，σ ~x~ = 4",
+      "question_text": "設有10筆(x~i~,y~i~)的數據，σ ~x~ = 4， σ ~y~ = 2，且相關係數r = 0.8，則y對x做迴歸，其迴歸直 線的斜率為何？ (1)0.4 (2)0.64 (3)0.8 (4)1 (5)1.6。",
+      "answer_text": "∵迴歸直線方程式為$y = \\mu_{y} + r · \\frac{\\sigma_{y}}{\\sigma_{x}} · (x - \\mu_{x})$且σ ~x~ = 4，σ ~y~ = 2，r = 0.8， ∴斜率為$r · \\frac{\\sigma_{y}}{\\sigma_{x}} = 0.8 × \\frac{2}{4} = 0.4$，故選(1)",
+      "explanation_text": "∵迴歸直線方程式為$y = \\mu_{y} + r · \\frac{\\sigma_{y}}{\\sigma_{x}} · (x - \\mu_{x})$且σ ~x~ = 4，σ ~y~ = 2，r = 0.8，\n∴斜率為$r · \\frac{\\sigma_{y}}{\\sigma_{x}} = 0.8 × \\frac{2}{4} = 0.4$，故選(1)。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-regression-prediction-s232",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題3：迴歸直線與最小平方法",
+      "source_order": 22,
+      "tags": [
+        "s2-3-2",
+        "section:主題3：迴歸直線與最小平方法",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0023",
+      "title": "隨堂練習：設有10筆(X , Y) = (x~1~ , y~1~)，(",
+      "question_text": "設有10筆(X , Y) = (x~1~ , y~1~)，(x~2~ , y~2~)，...，(x~10~ , y~10~)的數據， μ ~x~ = 3， μ ~y~ = 5，相關係數為1，且Y對X的最適合直線過(2 , 3)，則下列敘述何者正確？\n(1)此最適合直線過(0 , 0) (2)此最適合直線為x − y − 1 = 0\n(3)此最適合直線的斜率為2 (4)X組的標準差大於Y組的標準差\n(5)此10筆數據(x~1~ , y~1~)，(x~2~ , y~2~)，...，(x~10~ , y~10~)皆在最適合直線上。",
+      "answer_text": "故選(3)(5)",
+      "explanation_text": "Y對X最適合直線必過( μ ~x~ , μ ~y~) = (3 , 5)，又過(2 , 3)，\n∴此最適合直線為$y - 5 = \\frac{5 - 3}{3 - 2}(x - 3)$ ⇒2x − y − 1 = 0。\n(1)錯誤：(0 , 0)不在2x − y − 1 = 0上。\n(2)錯誤：最適合直線為2x − y − 1 = 0。\n(3)正確：斜率為2。\n(4)錯誤：$r_{xy} · \\frac{\\sigma_{y}}{\\sigma_{x}} = 2$⇒$\\frac{\\sigma_{y}}{\\sigma_{x}} = 2$⇒ σ ~y~ = 2 σ ~x~⇒ σ ~y~ > σ ~x~。\n(5)正確：∵r~xy~ = 1，∴10筆資料皆在最適合直線上。\n故選(3)(5)。\n--------------------------------------------------------------------------------------------- 範例5 五位學生的數學成績X與英文成績Y如表，求(1)相關係數為\\_\\_\\_\\_。(2)迴歸直線為\\_\\_\\_\\_\\_。\n\n[圖:program-db/assets/question-media/s2-3-2/image69.png] --------------------------------------------------------------------------------------------- \n[圖:program-db/assets/question-media/s2-3-2/image70.png] $\\mu_{x} = \\frac{375}{5} =${=html}75，$\\mu_{y} = \\frac{400}{5} =${=html}80，\n(1) r =$\\frac{52}{\\sqrt{80 × 86}}$≒$\\frac{52}{82.95}$≒0.63。\n(2) m =$\\frac{52}{80} = \\frac{13}{20}$，則y − 80 =$\\frac{13}{20}$\n(x − 75) ⇒ y =$\\frac{13}{20}x + \\frac{125}{4}$。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-regression-line-least-squares",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題3：迴歸直線與最小平方法",
+      "source_order": 23,
+      "tags": [
+        "s2-3-2",
+        "section:主題3：迴歸直線與最小平方法",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0024",
+      "title": "抽樣多種不同份量的毒藥，對一組25隻老鼠實驗的結果，觀察如表",
+      "question_text": "抽樣多種不同份量的毒藥，對一組25隻老鼠實驗的結果，觀察如表，求\n(1)配合該數據最適當的直線方程式。(2)對服用7毫克毒藥的25隻老鼠估計其死亡數。\n$$\\begin{matrix} 分量 x （毫克） & 4 & 6 & 8 & 10 & 12 & 14 & 16 & 18 \\ 死亡數 y （隻） & 1 & 3 & 6 & 8 & 14 & 16 & 20 & 21 \\end{matrix}$$",
+      "answer_text": "(2)x = 7代入得$y = \\frac{89}{8} + \\frac{87}{56}(7 - 11) = \\frac{275}{56}$≒4.9，故約5隻",
+      "explanation_text": "(1)$\\mu_{x} = \\frac{4 + 6 + 8 + 10 + 12 + 14 + 16 + 18}{8} = 11$，$\\mu_{y} = \\frac{1 + 3 + 6 + 8 + 14 + 16 + 20 + 21}{8} = \\frac{89}{8}$， $x_{i} - \\mu_{x}$：− 7，− 5，− 3，− 1，1，3，5，7， $y_{i} - \\mu_{y}$：$- \\frac{81}{8}$，$- \\frac{65}{8}$，$- \\frac{41}{8}$，$- \\frac{25}{8}$，$\\frac{23}{8}$，$\\frac{39}{8}$，$\\frac{71}{8}$，$\\frac{79}{8}$， $\\sum_{i = 1}^{8}{(x_{i} - \\mu_{x})^{2} = 168}$，$\\sum_{i = 1}^{8}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y}) = 261}$，斜率$m = \\frac{S_{xy}}{S_{xx}} = \\frac{261}{168} = \\frac{87}{56}$， 故最佳直線方程式為$y - \\frac{89}{8} = \\frac{87}{56}(x - 11)$。\n(2)x = 7代入得$y = \\frac{89}{8} + \\frac{87}{56}(7 - 11) = \\frac{275}{56}$≒4.9，故約5隻。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-regression-prediction-s232",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題3：迴歸直線與最小平方法",
+      "source_order": 24,
+      "tags": [
+        "s2-3-2",
+        "section:主題3：迴歸直線與最小平方法",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0025",
+      "title": "有一組二維數據如下表，若已知其迴歸直線方程式為y＝$\\fra",
+      "question_text": "有一組二維數據如下表，若已知其迴歸直線方程式為y＝$\\frac{1}{2}$x＋3，則（m , n）＝ \\_\\_\\_\\_。\nx 1 m n 2 y 3 5 4 4",
+      "answer_text": "由表中數據得知μ~y~＝4，且μ~x~＝$\\frac{m＋n＋3}{4}$，∵迴歸直線必過點（μ~x~ , μ~y~） ∴4＝$\\frac{1}{2}$×$\\frac{m＋n＋3}{4}$＋3 ⇨ m＋n＝5..................①⇨ μ~x~＝2 又迴歸直線之斜率為r$\\frac{\\sigma_{y}}{\\sigma_{x}}$＝$\\frac{\\sum_{i＝1}^{4}{（x_{i}－\\mu_{x}）（y_{i}－\\m",
+      "explanation_text": "由表中數據得知μ~y~＝4，且μ~x~＝$\\frac{m＋n＋3}{4}$，∵迴歸直線必過點（μ~x~ , μ~y~）\n∴4＝$\\frac{1}{2}$×$\\frac{m＋n＋3}{4}$＋3 ⇨ m＋n＝5..................①⇨ μ~x~＝2 又迴歸直線之斜率為r$\\frac{\\sigma_{y}}{\\sigma_{x}}$＝$\\frac{\\sum_{i＝1}^{4}{（x_{i}－\\mu_{x}）（y_{i}－\\mu_{y}）}}{\\sum_{i＝1}^{4}{（x_{i}－\\mu_{x}）^{2}}}$＝$\\frac{\\sum_{i＝1}^{4}{x_{i}y_{i}－n\\mu_{x}\\mu_{y}}}{\\sum_{i＝1}^{4}{x_{i}^{2}－n{\\mu_{x}}^{2}}}$＝$\\frac{1}{2}$ ⇨$\\frac{（5m＋4n＋11）－4 × 2 × 4}{（m^{2}＋n^{2}＋5）－4 × 4}$＝$\\frac{1}{2}$⇨ m^2^＋n^2^－11＝10m＋8n－42 ............② 由①將n＝5－m代入②解得m＝2或4 ∴n＝3或1 即數對（m , n）＝（2 , 3）或（4 , 1）",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-regression-prediction-s232",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題3：迴歸直線與最小平方法",
+      "source_order": 25,
+      "tags": [
+        "s2-3-2",
+        "section:主題3：迴歸直線與最小平方法",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0026",
+      "title": "隨堂練習：某位同學在上學期的五次平時測驗中，複習功課的時數x與測驗成績",
+      "question_text": "某位同學在上學期的五次平時測驗中，複習功課的時數x與測驗成績y如下表：\n[圖:program-db/assets/question-media/s2-3-2/image71.png] 則(1)此兩組資料的相關係數為。(求至小數點後第二位，第三位四捨五入)。\n\\(2\\) y對x的迴歸直線方程式為。",
+      "answer_text": "(1) $\\overline{x}$= 5，$\\overline{y}$= 68，S~X~ =$\\sqrt{\\frac{10}{4}}$，S~Y~ =$\\sqrt{\\frac{680}{4}}$ ∴ r =$\\frac{\\sum_{i = 1}^{n}{(x_{i} - \\overline{x})(y_{i} - \\overline{y})}}{\\sqrt{\\sum_{i = 1}^{n}{(x_{i} - \\overline{x})^",
+      "explanation_text": "(1) \n[圖:program-db/assets/question-media/s2-3-2/image72.png] $\\overline{x}$= 5，$\\overline{y}$= 68，S~X~ =$\\sqrt{\\frac{10}{4}}$，S~Y~ =$\\sqrt{\\frac{680}{4}}$\n∴ r =$\\frac{\\sum_{i = 1}^{n}{(x_{i} - \\overline{x})(y_{i} - \\overline{y})}}{\\sqrt{\\sum_{i = 1}^{n}{(x_{i} - \\overline{x})^{2}}}\\sqrt{\\sum_{i = 1}^{n}{(y_{i} - \\overline{y})^{2}}}}$=$\\frac{80}{\\sqrt{10}\\sqrt{680}}$= 0.97\n(2) y對x的迴歸直線為y =$\\overline{y}$ + r$\\frac{S_{Y}}{S_{X}}$ ( x −$\\overline{x}$ ) =$\\overline{y}$+$\\frac{\\sum_{i = 1}^{5}{(x_{i} - \\overline{x})(y_{i} - \\overline{y})}}{\\sum_{i = 1}^{5}{(x_{i} - \\overline{x})^{2}}}(x - \\overline{x})$\n⇒ y =68 $\\frac{80}{10}$x \n∴ y =8x 28",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-regression-prediction-s232",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題3：迴歸直線與最小平方法",
+      "source_order": 26,
+      "tags": [
+        "s2-3-2",
+        "section:主題3：迴歸直線與最小平方法",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0027",
+      "title": "高二某班第一次期中考數學成績平均60分，標準差10分；英文成",
+      "question_text": "高二某班第一次期中考數學成績平均60分，標準差10分；英文成績平均75分，標準差 15分，且兩科成績的相關係數為0.45，則(1)哪一科成績的差異性較大？。\n(2)若將全班數學成績加6分，英文成績乘$\\frac{5}{6}$倍，則新的數學成績的標準差為， 新的英文成績的平均值為，此兩科新成績的相關係數為。",
+      "answer_text": "(1)∵ 數學成績的變異係數 =$\\frac{10}{60}$× 100％ = 16.7％ 英文成績的變異係數 =$\\frac{15}{75}$× 100％ = 20％ ∴ 英文差異性較大 (2)設數學成績為x，英文成績為y 則數學成績加5分，即x + 5，英文成績乘$\\frac{5}{6}$，即$\\frac{5}{6}$y ∴ S~X~ ~+\\ 5~ = S~X~ = 10（分） ($\\overline{\\frac{5}{6}y}$)",
+      "explanation_text": "(1)∵ 數學成績的變異係數 =$\\frac{10}{60}$× 100％ = 16.7％ 英文成績的變異係數 =$\\frac{15}{75}$× 100％ = 20％\n∴ 英文差異性較大\n(2)設數學成績為x，英文成績為y 則數學成績加5分，即x + 5，英文成績乘$\\frac{5}{6}$，即$\\frac{5}{6}$y\n∴ S~X~ ~+\\ 5~ = S~X~ = 10（分）\n($\\overline{\\frac{5}{6}y}$) =\n[圖:program-db/assets/question-media/s2-3-2/image73.png] $\\overline{y}$=$\\frac{5}{6}$× 75 = 62.5（分） 相關係數r(x + 5，$\\frac{5}{6}$y) = r(x，y) = 0.45",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-correlation-coefficient-definitions",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題4：迴歸預測與綜合應用",
+      "source_order": 27,
+      "tags": [
+        "s2-3-2",
+        "section:主題4：迴歸預測與綜合應用",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0028",
+      "title": "隨堂練習：下表為四位同學基測數學成績（X）與高一數學成績（Y）紀錄表",
+      "question_text": "下表為四位同學基測數學成績（X）與高一數學成績（Y）紀錄表。",
+      "answer_text": "(1)$\\mu_{x} = \\frac{41 + 39 + 37 + 43}{4} = 40$，$\\mu_{y} = \\frac{72 + 68 + 70 + 74}{4} = 71$， 計算各值： 相關係數$r = \\frac{\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sqrt{\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})^{2}} · \\su",
+      "explanation_text": "(1)$\\mu_{x} = \\frac{41 + 39 + 37 + 43}{4} = 40$，$\\mu_{y} = \\frac{72 + 68 + 70 + 74}{4} = 71$， 計算各值：\n\n[圖:program-db/assets/question-media/s2-3-2/image75.png] 相關係數$r = \\frac{\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sqrt{\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})^{2}} · \\sum_{i = 1}^{n}{(y_{i} - \\mu_{y})^{2}}}} = \\frac{16}{\\sqrt{20 × 20}} = 0.8$。\n(2)y對x的迴歸直線$y - \\mu_{y} = m(x - \\mu_{x})$， 其中$m = \\frac{\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sum_{i = 1}^{n}{(x_{i} - \\mu_{x})^{2}}} = \\frac{16}{20} = \\frac{4}{5}$，故迴歸直線為$y - 71 = \\frac{4}{5}(x - 40)$，即$y = \\frac{4}{5}x + 39$。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-regression-prediction-s232",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題4：迴歸預測與綜合應用",
+      "source_order": 28,
+      "tags": [
+        "s2-3-2",
+        "section:主題4：迴歸預測與綜合應用",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0029",
+      "title": "已知20個數據(x~i~ , y~i~)的資料如下：$\\su",
+      "question_text": "已知20個數據(x~i~ , y~i~)的資料如下：$\\sum_{i = 1}^{20}{x_{i} = 160}$，$\\sum_{i = 1}^{20}{y_{i} = 240}$，$\\sum_{i = 1}^{20}{{x_{i}}^{2} = 1600}$， $\\sum_{i = 1}^{20}{x_{i}y_{i} = 2080}$，又設z~i~ = 2x~i~ + 1，則下列哪些是正確的？ (1)x的標準差為4 (2)$\\sum_{i = 1}^{20}{{z_{i}}^{2} = 3201}$\n(3)z的標準差等於x的標準差 (4)x與y的相關係數等於z與y的相關係數\n(5)y對x的迴歸線斜率為$\\frac{1}{2}$。",
+      "answer_text": "答案為(1)(4)(5)",
+      "explanation_text": "$\\mu_{x} = \\frac{\\sum_{i = 1}^{20}x_{i}}{20} = \\frac{160}{20} = 8$，$\\mu_{y} = \\frac{\\sum_{i = 1}^{20}y_{i}}{20} = \\frac{240}{20} = 12$\n(1)$\\sigma_{x} = \\sqrt{\\frac{1}{n}\\sum_{i = 1}^{n}{{x_{i}}^{2} - {\\mu_{x}}^{2}}} = \\sqrt{\\frac{1}{20} × 1600 - 8^{2}} = \\sqrt{16} = 4$。\n(2)$z_{i} = 2x_{i} + 1$，$\\sum_{i = 1}^{20}{z_{i}}^{2} = \\sum_{i = 1}^{20}{(2x_{i} + 1)^{2}} = 4\\sum_{i = 1}^{20}{x_{i}}^{2} + 4\\sum_{i = 1}^{20}x_{i} + 20 = 6400 + 640 + 20 = 7060$。\n(3)z~i~ = 2x~i~ + 1， σ~z~ = 2 σ~x~。\n(4)線性變換不影響相關係數。\n(5)$m = \\frac{\\sum_{i = 1}^{n}{x_{i}y_{i} - n\\mu_{x}\\mu_{y}}}{\\sum_{i = 1}^{n}{{x_{i}}^{2} - n(\\mu_{x})^{2}}} = \\frac{2080 - 20 × 8 × 12}{1600 - 20 × 8^{2}} = \\frac{160}{320} = \\frac{1}{2}$。\n答案為(1)(4)(5)。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-correlation-raw-sum-shortcut-s232",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題4：迴歸預測與綜合應用",
+      "source_order": 29,
+      "tags": [
+        "s2-3-2",
+        "section:主題4：迴歸預測與綜合應用",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0030",
+      "title": "隨堂練習：設有20個樣本點(x~i~，y~i~)的資料，若μ~X~ =",
+      "question_text": "設有20個樣本點(x~i~，y~i~)的資料，若μ~X~ = 40，μ~Y~ = 50，變異數σ~X~^2^ = 144，σ~Y~^2^ = 81，相關係數為0.6，試求：(1)$\\sum_{i = 1}^{20}{(x_{i} - \\mu_{X})(y_{i} - \\mu_{Y})}$。 (2)y對x的最適合直線方程式。",
+      "answer_text": "(2)$y = \\mu_{Y} + r · \\frac{\\sigma_{Y}}{\\sigma_{X}}(x - \\mu_{X})$ $⇒$ $y = 50 + 0.6 × \\frac{9}{12}(x - 40)$ $⇒$ y = 0.45x + 32",
+      "explanation_text": "(1)$r = \\frac{\\sum_{i = 1}^{20}{(x_{i} - \\mu_{X})(y_{i} - \\mu_{Y})}}{n\\sigma_{X}\\sigma_{Y}}$ $⇒$ $0.6 = \\frac{\\sum_{i = 1}^{20}{(x_{i} - \\mu_{X})(y_{i} - \\mu_{Y})}}{20 × 12 × 9}$ \n[圖:program-db/assets/question-media/s2-3-2/image76.png] $\\sum_{i = 1}^{20}{(x_{i} - \\mu_{X})(y_{i} - \\mu_{Y}) = 0.6 × 20 × 12 × 9 = 1296}$。\n(2)$y = \\mu_{Y} + r · \\frac{\\sigma_{Y}}{\\sigma_{X}}(x - \\mu_{X})$ $⇒$ $y = 50 + 0.6 × \\frac{9}{12}(x - 40)$ $⇒$ y = 0.45x + 32。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-regression-prediction-s232",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題4：迴歸預測與綜合應用",
+      "source_order": 30,
+      "tags": [
+        "s2-3-2",
+        "section:主題4：迴歸預測與綜合應用",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0031",
+      "title": "兩組變量X與Y各有10個數，已知$\\sum_{i = 1}^",
+      "question_text": "兩組變量X與Y各有10個數，已知$\\sum_{i = 1}^{10}{x_{i} = 11}$，$\\sum_{i = 1}^{10}{{x_{i}}^{2} = 32.1}$，$\\sum_{i = 1}^{10}{y_{i} = 14}$，$\\sum_{i = 1}^{10}{x_{i}y_{i} = 28}$，依最 小平方法，求Y對X的迴歸直線。",
+      "answer_text": "$\\mu_{x} = 1.1$，$\\mu_{y} = 1.4$， $m = \\frac{\\sum_{i = 1}^{10}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sum_{i = 1}^{10}{(x_{i} - \\mu_{x})^{2}}} = \\frac{\\sum_{i = 1}^{10}{x_{i}y_{i} - 10\\mu_{x}\\mu_{y}}}{\\sum_{i = 1}^{10}{{x_",
+      "explanation_text": "$\\mu_{x} = 1.1$，$\\mu_{y} = 1.4$， $m = \\frac{\\sum_{i = 1}^{10}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sum_{i = 1}^{10}{(x_{i} - \\mu_{x})^{2}}} = \\frac{\\sum_{i = 1}^{10}{x_{i}y_{i} - 10\\mu_{x}\\mu_{y}}}{\\sum_{i = 1}^{10}{{x_{i}}^{2} - 10{\\mu_{x}}^{2}}} = \\frac{28 - 10 × (1.1) × (1.4)}{32.1 - 10 × (1.1)^{2}} = \\frac{12.6}{20} = 0.63$， 故y對x的迴歸直線為y − 1.4 = 0.63(x − 1.1) ⇒ y = 0.63x + 0.707。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-regression-prediction-s232",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題4：迴歸預測與綜合應用",
+      "source_order": 31,
+      "tags": [
+        "s2-3-2",
+        "section:主題4：迴歸預測與綜合應用",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0032",
+      "title": "隨堂練習：設由某公司隨機抽樣10位員工的年齡（x）與血壓（y）數據，結",
+      "question_text": "設由某公司隨機抽樣10位員工的年齡（x）與血壓（y）數據，結果算出 $\\sum_{i = 1}^{10}{x_{i} = 450}$，$\\sum_{i = 1}^{10}{y_{i} = 1300}$，$\\sum_{i = 1}^{10}{{x_{i}}^{2} = 21250}$，$\\sum_{i = 1}^{10}{{y_{i}}^{2} = 171250}$，$\\sum_{i = 1}^{10}{x_{i}y_{i} = 59100}$，\n(1)請問年齡與血壓的相關係數是多少？ (2)請寫出血壓對年齡的迴歸直線方程式。\n(3)此公司某位員工的年齡是50歲，請預測此員工的血壓多少？",
+      "answer_text": "(2)$m = \\frac{S_{xy}}{S_{xx}} = \\frac{600}{1000} = 0.6$，則所求迴歸式為y − 130 = 0.6(x − 45)⇒y = 130 + 0.6(x − 45) (3)令x = 50代入，得y − 130 = 0.6(x − 45)⇒y − 130 = 0.6 × 5 ⇒y = 133",
+      "explanation_text": "$\\overline{x} = \\frac{\\sum_{i = 1}^{10}x_{i}}{10} = \\frac{450}{10} = 45$，$\\overline{y} = \\frac{\\sum_{i = 1}^{10}y_{i}}{10} = \\frac{1300}{10} = 130$，\n∴$\\sum_{i = 1}^{10}{(x_{i} - \\overline{x})^{2} = \\sum_{i = 1}^{10}{{x_{i}}^{2} - 10(\\overline{x})^{2}}} = 21250 - 10 × 45^{2} = 1000$， $\\sum_{i = 1}^{10}{(y_{i} - \\overline{y})^{2} = \\sum_{i = 1}^{10}{{y_{i}}^{2} - 10(\\overline{y})^{2}}} = 171250 - 10 × 130^{2} = 2250$， $\\sum_{i = 1}^{10}{(x_{i} - \\overline{x})(y_{i} - \\overline{y})} = \\sum_{i = 1}^{10}{x_{i}y_{i} - 10\\overline{x}\\overline{y} = 59100 - 10 × 45 × 130 = 600}$，\n(1)$r = \\frac{\\sum_{i = 1}^{10}{(x_{i} - \\overline{x})(y_{i} - \\overline{y})}}{\\sqrt{\\sum_{i = 1}^{10}{(x_{i} - \\overline{x})^{2} · \\sum_{i = 1}^{10}{(y_{i} - \\overline{y})^{2}}}}} = \\frac{600}{\\sqrt{1000 × 2250}} = 0.4$。\n(2)$m = \\frac{S_{xy}}{S_{xx}} = \\frac{600}{1000} = 0.6$，則所求迴歸式為y − 130 = 0.6(x − 45)⇒y = 130 + 0.6(x − 45)\n(3)令x = 50代入，得y − 130 = 0.6(x − 45)⇒y − 130 = 0.6 × 5 ⇒y = 133。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-regression-prediction-s232",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題4：迴歸預測與綜合應用",
+      "source_order": 32,
+      "tags": [
+        "s2-3-2",
+        "section:主題4：迴歸預測與綜合應用",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0033",
+      "title": "隨堂練習：某一實驗測得15組樣本點(x~1~ , y~1~)，(x~2",
+      "question_text": "某一實驗測得15組樣本點(x~1~ , y~1~)，(x~2~ , y~2~)，...，(x~15~ , y~15~)，已知 $\\sum_{i = 1}^{15}{x_{i} = 165}$，$\\sum_{i = 1}^{15}{y_{i} = 315}$，$\\sum_{i = 1}^{15}{(x_{i} - \\mu_{x})^{2} = 64}$，$\\sum_{i = 1}^{15}{(y_{i} - \\mu_{y})^{2} = 144}$，及$\\sum_{i = 1}^{15}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y}) = 0}$，請問 下列敘述何者正確？ (1)x與y相關係數為0 (2)用最小平方法求得之迴歸直線斜率不為0\n(3)用最小平方法求得之迴歸直線y截距為21 (4)迴歸直線過(11 , 21)\n(5)若此組實驗數據再增加一個樣本點(100 , 21)，則滿足此16個樣本點之迴歸直線不改變。",
+      "answer_text": "(3) x = 28代入得y = 1.83 × 28 − 6.6 = 44.64（萬元）",
+      "explanation_text": "(1)○：$r = \\frac{\\sum_{i = 1}^{15}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sqrt{\\sum_{i = 1}^{15}{(x_{i} - \\mu_{x})^{2}}} · \\sqrt{\\sum_{i = 1}^{15}{(y_{i} - \\mu_{y})^{2}}}} = 0$。\n(2)╳：斜率$b = \\frac{\\sum_{i = 1}^{15}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sum_{i = 1}^{15}{(x_{i} - \\mu_{x})^{2}}} = 0$。\n(3)○：$\\mu_{y} = \\frac{315}{15} = 21$，$y - \\mu_{y} = 0$⇒y = 21。\n(4)○：$\\mu_{x} = \\frac{165}{15} = 11$，過($\\mu_{x}$,$\\mu_{y}$) = (11 , 21)。\n(5)○：增加之點(100 , 21)在迴歸直線上，∴不會改變。\n故選(1)(3)(4)(5)。\n------------------------------------------------------------------------ 範例11 蒐集臺灣地區八個地點的公告地價與市價（單位：萬元／坪）如表，則\n(1)試求市價與公告地價的相關係數。\n(2)試求市價對公告地價的迴歸方程式。\n(3)若某塊土地公告地價是每坪28萬元，試利用上面的迴歸方程式預測其市價。\n\n[圖:program-db/assets/question-media/s2-3-2/image77.png] ------------------------------------------------------------------------\n(1) \n[圖:program-db/assets/question-media/s2-3-2/image78.png] $\\mu_{x} = \\frac{160}{8} =${=html}20，$\\mu_{y} = \\frac{240}{8} =${=html}30，r =$\\frac{1496}{\\sqrt{816 × 2960}}$≒$\\frac{1496}{1554.14}$≒0.9626。\n(2) m =$\\frac{1496}{816}$≒1.83，則y − 30 = 1.83(x − 20) ⇒ y = 1.83x − 6.6。\n(3) x = 28代入得y = 1.83 × 28 − 6.6 = 44.64（萬元）。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-regression-line-least-squares",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題4：迴歸預測與綜合應用",
+      "source_order": 33,
+      "tags": [
+        "s2-3-2",
+        "section:主題4：迴歸預測與綜合應用",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0034",
+      "title": "體育專家飛磚加發明了一種球員的人氣指數，並發現調查了下列5位",
+      "question_text": "體育專家飛磚加發明了一種球員的人氣指數，並發現調查了下列5位籃球員的「人氣指 數X」與「彈跳高度Y」的數據如下表，試回答下列問題：\n\n[圖:program-db/assets/question-media/s2-3-2/image79.png]\n(1)繪出此數據的散布圖。(2)求5位球員X與Y的相關係數。\n(3)若Y對X的最適合直線方程式為y = ax + b，求數對(a , b) =？\n(4)利用最適合直線，預測某籃球員人氣指數為8時，其彈跳高度為多少？",
+      "answer_text": "(4)當x = 8時，y = 39（英吋）",
+      "explanation_text": "(1)\n[圖:program-db/assets/question-media/s2-3-2/image80.png] \n(2) μ ~x~ = 6， μ ~y~ = 36。\n\n[圖:program-db/assets/question-media/s2-3-2/image81.png] \n∴$r_{xy} = \\frac{\\sum_{i = 1}^{5}{(x_{i} - \\mu_{x})(y_{i} - \\mu_{y})}}{\\sqrt{\\sum_{i = 1}^{5}{(x_{i} - \\mu_{x})^{2} · \\sum_{i = 1}^{5}{(y_{i} - \\mu_{y})^{2}}}}} = \\frac{120}{\\sqrt{80 × 320}} = \\frac{3}{4}$。\n(3)$y - 36 = \\frac{120}{80}(x - 6)$\n⇒$y = \\frac{3}{2}x + 27$，∴$a = \\frac{3}{2}$，b = 27⇒(a , b) =$(\\frac{3}{2},27)$。\n(4)當x = 8時，y = 39（英吋）。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-regression-prediction-s232",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題4：迴歸預測與綜合應用",
+      "source_order": 34,
+      "tags": [
+        "s2-3-2",
+        "section:主題4：迴歸預測與綜合應用",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0035",
+      "title": "抽樣8個工時與利潤的數據如表，求 (1)其相關係數$r =",
+      "question_text": "抽樣8個工時與利潤的數據如表，求\n(1)其相關係數$r = \\sqrt{\\frac{q}{p}}$，p，q為互質的正整數，則數對(p , q)為何？\n\\(2\\) Y對X的迴歸直線方程式。\n(3)做(X , Y)的散布圖及迴歸直線圖。\n\n[圖:program-db/assets/question-media/s2-3-2/image82.png]",
+      "answer_text": "② y =$\\frac{7}{11}$x −$\\frac{4}{11}$，$\\begin{matrix} x & 2 & 4 \\ y & \\frac{10}{11} & \\frac{24}{11} \\end{matrix}$ 將①②的點繪入圖中，即為題目所求",
+      "explanation_text": "(1)$\\overline{x} = 10$，$\\overline{y} = 6$，$\\sum_{i = 1}^{8}{(x_{i} - \\overline{x})(y_{i} - \\overline{y})} = 84$，$\\sum_{i = 1}^{8}{(x_{i} - \\overline{x})^{2}} = 132$，$\\sum_{i = 1}^{8}{(y_{i} - \\overline{y})^{2}} = 56$，\n∴$r = \\frac{84}{\\sqrt{132 × 56}} = \\sqrt{\\frac{84 × 84}{132 × 56}} = \\sqrt{\\frac{7 × 21}{11 × 14}} = \\sqrt{\\frac{21}{11 × 2}} = \\sqrt{\\frac{21}{22}}$，故(p , q) = (22 , 21)。\n(2)設Y對X的迴歸直線方程式為y = mx + k，\n∵$\\overline{x} = 10$，$\\overline{y} = 6$，$\\sum_{i = 1}^{8}{(x_{i} - \\overline{x})(y_{i} - \\overline{y})} = 84$，$\\sum_{i = 1}^{8}{(x_{i} - \\overline{x})^{2}} = 132$，\n∴m$= \\frac{84}{132} = \\frac{7}{11}$，將$(\\overline{x},\\overline{y}) =$\n(10 , 6)代入y =$\\frac{7}{11}$x + k，得$k = - \\frac{4}{11}$， 故所求為y =$\\frac{7}{11}x - \\frac{4}{11}$。\n(3)①將(x , y) = (4 , 2)，(6 , 3)，(7 , 5)，(9 , 5)，(11 , 6)，(12 , 8)，(14 , 9)，(17 , 10)描點，所成的圖即為散布圖。\n② y =$\\frac{7}{11}$x −$\\frac{4}{11}$，$\\begin{matrix} x & 2 & 4 \\ y & \\frac{10}{11} & \\frac{24}{11} \\end{matrix}$ 將①②的點繪入圖中，即為題目所求。\n\n[圖:program-db/assets/question-media/s2-3-2/image83.png]",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-regression-prediction-s232",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題4：迴歸預測與綜合應用",
+      "source_order": 35,
+      "tags": [
+        "s2-3-2",
+        "section:主題4：迴歸預測與綜合應用",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0036",
+      "title": "隨機抽樣臺灣地區8個地點的公告地價與市價（單位：萬元／坪）如",
+      "question_text": "隨機抽樣臺灣地區8個地點的公告地價與市價（單位：萬元／坪）如表，則\n(1)試畫出市價對公告地價的散布圖。 (2)試求市價與公告地價的相關係數。\n(3)試求市價對公告地價的迴歸直線方程式。\n(4)若某塊土地公告地價是每坪28萬元，試利用上面的迴歸直線方程式預測其市價。\n$$\\begin{matrix} 公告地價（ x ） & 12 & 10 & 22 & 30 & 8 & 40 & 20 & 18 \\ 市價（ y ） & 15 & 11 & 28 & 40 & 10 & 72 & 39 & 25 \\end{matrix}$$",
+      "answer_text": "(4)x = 28代入得y = 1.83 × 28 − 6.6 = 44.64（萬元）",
+      "explanation_text": "(1)\n[圖:program-db/assets/question-media/s2-3-2/image84.png] \n(2)$\\overline{x} = \\frac{12 + 10 + 22 + 30 + 8 + 40 + 20 + 18}{8} = 20$，$\\overline{y} = \\frac{15 + 11 + 28 + 40 + 10 + 72 + 39 + 25}{8} = 30$， $x_{i} - \\overline{x}$：− 8，− 10，2，10，− 12，20，0，− 2， $y_{i} - \\overline{y}$：− 15，− 19，− 2，10，− 20，42，9，− 5， $(x_{i} - \\overline{x})(y_{i} - \\overline{y})$：120，190，− 4，100，240，840，0，10， $r = \\frac{\\sum_{i = 1}^{8}{(x_{i} - \\overline{x})(y_{i} - \\overline{y})}}{\\sqrt{\\sum_{i = 1}^{8}{(x_{i} - \\overline{x})^{2}}} · \\sqrt{\\sum_{i = 1}^{8}{(y_{i} - \\overline{y})^{2}}}} = \\frac{1496}{\\sqrt{816 × 2960}}$≒$0.96$。\n(3)$S_{xx} = \\sum_{i = 1}^{8}{(x_{i} - \\overline{x})^{2}} = 816$，$S_{xy} = \\sum_{i = 1}^{8}{(x_{i} - \\overline{x})(y_{i} - \\overline{y}) = 1496}$， 斜率$m = \\frac{S_{xy}}{S_{xx}} = \\frac{1496}{816}$≒1.83，則迴歸直線為y − 30 = 1.83(x − 20)⇒y = 1.83x − 6.6。\n(4)x = 28代入得y = 1.83 × 28 − 6.6 = 44.64（萬元）。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-regression-prediction-s232",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題4：迴歸預測與綜合應用",
+      "source_order": 36,
+      "tags": [
+        "s2-3-2",
+        "section:主題4：迴歸預測與綜合應用",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0037",
+      "title": "含有10個樣本點(x~i~,y~i~)的數據，若x的算術平均",
+      "question_text": "含有10個樣本點(x~i~,y~i~)的數據，若x的算術平均數$\\overline{x} = 50$及標準差S~x~ = 2，y的 算術平均數$\\overline{y} = 32$及標準差S~y~ = 4.5，且$\\sum_{i = 1}^{10}{x_{i}y_{i} = 16027}$。而變數x\\'與y\\'滿足x\\' = 4x − 7， y\\' = 2y + 5，則下列何者正確？ (1)x與y的相關係數r~(x,y)~ = 1 (2)x\\'與y\\'的相關係數$r_{(x',y')} = \\frac{1}{3}$\n(3)變數y對於x的最佳直線（迴歸線）方程式為y = 0.75x − 5.5\n(4)變數y\\' 對於x\\' 的最佳直線（迴歸線）方程式為y\\' = 0.75x\\' + 75.75\n(5)x與y為完全正相關。",
+      "answer_text": "(1)╳：$r = \\frac{\\sum_{i = 1}^{10}{x_{i}y_{i} - n\\overline{x}\\overline{y}}}{(n - 1)S_{x}S_{y}} = \\frac{16027 - 10 × 50 × 32}{9 × 2 × 4.5} = \\frac{27}{81} = \\frac{1}{3}$ (2)○：∵$r_{(x,y)} = \\frac{1}{3}$，∴$r_{(4x - 7,2y + 5)",
+      "explanation_text": "(1)╳：$r = \\frac{\\sum_{i = 1}^{10}{x_{i}y_{i} - n\\overline{x}\\overline{y}}}{(n - 1)S_{x}S_{y}} = \\frac{16027 - 10 × 50 × 32}{9 × 2 × 4.5} = \\frac{27}{81} = \\frac{1}{3}$\n(2)○：∵$r_{(x,y)} = \\frac{1}{3}$，∴$r_{(4x - 7,2y + 5)} = \\frac{1}{3}$\n(3)○：∵$m = r · \\frac{S_{y}}{S_{x}} = \\frac{1}{3} × \\frac{4.5}{2} = \\frac{3}{4}$，∴$y - 32 = \\frac{3}{4}(x - 50)$\n⇒y = 0.75x − 5.5\n(4)╳：∵x\\' = 4x − 7⇒$x = \\frac{x' + 7}{4}$，y\\' = 2y + 5⇒$y = \\frac{y' - 5}{2}$，\n∴$\\frac{y' - 5}{2} = \\frac{3}{4}(\\frac{x' + 7}{4}) - \\frac{11}{2}$⇒$y' = \\frac{3}{8}x' - \\frac{27}{8}$\n(5)╳：中度正相關 故選(2)(3)。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-correlation-properties-transform",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題4：迴歸預測與綜合應用",
+      "source_order": 37,
+      "tags": [
+        "s2-3-2",
+        "section:主題4：迴歸預測與綜合應用",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0038",
+      "title": "隨堂練習：設有10筆樣本點(x~i~,y~i~)的數據，$\\overl",
+      "question_text": "設有10筆樣本點(x~i~,y~i~)的數據，$\\overline{x} = 5$，$\\overline{y} = 3$，相關係數為1，且y對x 的迴歸線過(0,2)，則下列何者為真？ (1)迴歸直線方程式為$y = - \\frac{1}{5}x + 2$\n(2)迴歸直線過(10,0) (3)x組的標準差大於y組的標準差 (4)迴歸線的斜率為1\n(5)迴歸線的斜率為$\\frac{1}{5}$。",
+      "answer_text": "由$y = \\overline{y} + r · \\frac{S_{y}}{S_{x}}( x - \\overline{x} )$且$\\overline{x} = 5$，$\\overline{y} = 3$，r = 1⇒$y = 3 + \\frac{S_{y}}{S_{x}}(x - 5)$， ∵過(0,2)，∴$2 = 3 + \\frac{S_{y}}{S_{x}} × ( - 5)$ ⇒5S~y~ = S~x~， 則迴歸直線為$y ",
+      "explanation_text": "由$y = \\overline{y} + r · \\frac{S_{y}}{S_{x}}( x - \\overline{x} )$且$\\overline{x} = 5$，$\\overline{y} = 3$，r = 1⇒$y = 3 + \\frac{S_{y}}{S_{x}}(x - 5)$，\n∵過(0,2)，∴$2 = 3 + \\frac{S_{y}}{S_{x}} × ( - 5)$ ⇒5S~y~ = S~x~， 則迴歸直線為$y = 3 + \\frac{S_{y}}{5S_{y}} × (x - 5)$\n⇒$y = 3 + \\frac{1}{5}(x - 5)$ ⇒$y = \\frac{1}{5}x + 2$，\n(1)╳：y對x的迴歸直線方程式為$y = \\frac{1}{5}x + 2$\n(2)╳：迴歸直線不過(10,0)\n(3)○：∵S~x~ = 5S~y~，∴S~x~ ≥ S~y~\n(4)╳：y對x的迴歸直線的斜率為$\\frac{1}{5}$\n(5)○ 故選(3)(5)。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-bivariate-regression-prediction-s232",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題4：迴歸預測與綜合應用",
+      "source_order": 38,
+      "tags": [
+        "s2-3-2",
+        "section:主題4：迴歸預測與綜合應用",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s2-3-2-0039",
+      "title": "隨堂練習：某一實驗測得15組樣本點(x~1~,y~1~)，(x~2~,",
+      "question_text": "某一實驗測得15組樣本點(x~1~,y~1~)，(x~2~,y~2~)，...，(x~15~,y~15~)，已知$\\sum_{i = 1}^{15}{x_{i} = 165}$，$\\sum_{i = 1}^{15}{y_{i} = 315}$，$\\sum_{i = 1}^{15}{(x_{i} - \\overline{x})^{2} = 64}$，$\\sum_{i = 1}^{15}{(y_{i} - \\overline{y})^{2} = 144}$，及$\\sum_{i = 1}^{15}{(x_{i} - \\overline{x})(y_{i} - \\overline{y}) = 0}$，請問下列敘述何者 正確？ (1)x與y相關係數為0 (2)用最小平方法求得之迴歸直線斜率不為0\n(3)用最小平方法求得之迴歸直線y截距為21 (4)迴歸直線過(11,21)\n(5)若此組實驗數據再增加一個樣本點(100,21)，則滿足此16個樣本點之迴歸直線不改變。",
+      "answer_text": "(1)○：$r = \\frac{\\sum_{i = 1}^{15}{(x_{i} - \\overline{x})(y_{i} - \\overline{y})}}{\\sqrt{\\sum_{i = 1}^{15}{(x_{i} - \\overline{x})^{2}}} · \\sqrt{\\sum_{i = 1}^{15}{(y_{i} - \\overline{y})^{2}}}} = 0$ (2)╳：斜率$m = \\frac{\\sum_{i",
+      "explanation_text": "(1)○：$r = \\frac{\\sum_{i = 1}^{15}{(x_{i} - \\overline{x})(y_{i} - \\overline{y})}}{\\sqrt{\\sum_{i = 1}^{15}{(x_{i} - \\overline{x})^{2}}} · \\sqrt{\\sum_{i = 1}^{15}{(y_{i} - \\overline{y})^{2}}}} = 0$\n(2)╳：斜率$m = \\frac{\\sum_{i = 1}^{15}{(x_{i} - \\overline{x})(y_{i} - \\overline{y})}}{\\sum_{i = 1}^{15}{(x_{i} - \\overline{x})^{2}}} = 0$\n(3)○：$\\overline{y} = \\frac{315}{15} = 21$，$y - \\overline{y} = 0$⇒y = 21\n(4)○：$\\overline{x} = \\frac{165}{15} = 11$，過$(\\overline{x},\\overline{y}) = (11,21)$\n(5)○：增加之點(100,21)在迴歸直線上，故不會改變 故選(1)(3)(4)(5)。",
+      "chapter_code": "s2-3-2",
+      "formula_id": "senior-regression-line-least-squares",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/2-10轉.docx",
+      "source_section": "主題4：迴歸預測與綜合應用",
+      "source_order": 39,
+      "tags": [
+        "s2-3-2",
+        "section:主題4：迴歸預測與綜合應用",
+        "marker:隨堂練習"
+      ]
+    }
+  ]
+}

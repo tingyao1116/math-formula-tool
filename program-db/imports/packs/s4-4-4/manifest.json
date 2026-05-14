@@ -1,0 +1,36 @@
+{
+  "chapter_code": "s4-4-4",
+  "chapter_title": "平面線性變換與二階方陣",
+  "source_files": [
+    {
+      "path": "source/4A-10轉.docx",
+      "role": "primary_docx"
+    }
+  ],
+  "extracted_files": [
+    {
+      "path": "extracted/4A-10轉.md",
+      "role": "pandoc_markdown"
+    },
+    {
+      "path": "questions.json",
+      "role": "question_pack"
+    },
+    {
+      "path": "preview.json",
+      "role": "assignment_preview"
+    },
+    {
+      "path": "review-needed.md",
+      "role": "manual_review_notes"
+    }
+  ],
+  "asset_roots": [
+    {
+      "path": "program-db/assets/question-media/s4-4-4",
+      "role": "canonical_question_media"
+    }
+  ],
+  "status": "review_ready",
+  "updated_at": "2026-05-06T04:06:37.260716+08:00"
+}

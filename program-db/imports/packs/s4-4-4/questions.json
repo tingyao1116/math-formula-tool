@@ -1,0 +1,1386 @@
+{
+  "chapter_code": "s4-4-4",
+  "chapter_title": "平面線性變換與二階方陣",
+  "questions": [
+    {
+      "id": "q-s4-4-4-0001",
+      "title": "設平面上的一線性變換把A(1, − 1)與B( − 2,3)分別變換",
+      "question_text": "設平面上的一線性變換把A(1, − 1)與B( − 2,3)分別變換到P(2,1)與Q(3,4)兩點﹐試求此變換 所對應的方陣﹒",
+      "answer_text": "$\\begin{bmatrix}9&7\\\\7&6\\end{bmatrix}$",
+      "explanation_text": "設變換矩陣為$\\begin{bmatrix} a & b \\ c & d \\end{bmatrix}$﹐ 則$\\begin{bmatrix} a & b \\ c & d \\end{bmatrix}\\begin{bmatrix} 1 \\ - 1 \\end{bmatrix} = \\begin{bmatrix} 2 \\ 1 \\end{bmatrix}$﹐且$\\begin{bmatrix} a & b \\ c & d \\end{bmatrix}\\begin{bmatrix} - 2 \\ 3 \\end{bmatrix} = \\begin{bmatrix} 3 \\ 4 \\end{bmatrix}$﹐ 即\n[圖:program-db/assets/question-media/s4-4-4/image5.png] ﹐ 解得a = 9﹐b = 7﹐c = 7﹐d = 6﹐ 即$\\begin{bmatrix} 9 & 7 \\ 7 & 6 \\end{bmatrix}$為所求﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 1,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0002",
+      "title": "隨堂練習：平面上一線性變換﹐把A(1,1)﹐B( − 1﹐2)分別變換到點P(",
+      "question_text": "平面上一線性變換﹐把A(1,1)﹐B( − 1﹐2)分別變換到點P(2,1)﹐Q(3,2)﹐求此變換 所對應的方陣﹒",
+      "answer_text": "$\\begin{bmatrix}\\frac{1}{3}&\\frac{5}{3}\\\\0&1\\end{bmatrix}$",
+      "explanation_text": "$\\begin{bmatrix} 2 & 3 \\ 1 & 2 \\end{bmatrix}\\begin{bmatrix} 1 & - 1 \\ 1 & 2 \\end{bmatrix}^{- 1} = \\begin{bmatrix} 2 & 3 \\ 1 & 2 \\end{bmatrix}\\begin{bmatrix} \\frac{2}{3} & \\frac{1}{3} \\ - \\frac{1}{3} & \\frac{1}{3} \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{3} & \\frac{5}{3} \\ 0 & 1 \\end{bmatrix}$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 2,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0003",
+      "title": "隨堂練習：已知點P (1 , − 1)與Q ( − 2 , 1)經過二階方陣A",
+      "question_text": "已知點P (1 , − 1)與Q ( − 2 , 1)經過二階方陣A作線性變換後所對應的點分別為 P\\' (5 , 7)與Q\\' ( − 3 , 6)﹐求二階方陣A﹒",
+      "answer_text": "$\\begin{bmatrix}-2&-7\\\\-13&-20\\end{bmatrix}$",
+      "explanation_text": "設$A = \\begin{bmatrix} a & b \\ c & d \\end{bmatrix}$﹒依題意﹐可列得$\\begin{bmatrix} a & b \\ c & d \\end{bmatrix}\\begin{bmatrix} 1 & - 2 \\ - 1 & 1 \\end{bmatrix} = \\begin{bmatrix} 5 & - 3 \\ 7 & 6 \\end{bmatrix}$﹒\n故二階方陣A為 $\\begin{bmatrix} a & b \\ c & d \\end{bmatrix} = \\begin{bmatrix} 5 & - 3 \\ 7 & 6 \\end{bmatrix}\\begin{bmatrix} 1 & - 2 \\ - 1 & 1 \\end{bmatrix}^{- 1} = \\begin{bmatrix} 5 & - 3 \\ 7 & 6 \\end{bmatrix} \\cdot \\frac{1}{- 1}\\begin{bmatrix} 1 & 2 \\ 1 & 1 \\end{bmatrix} = \\begin{bmatrix} - 2 & - 7 \\ - 13 & - 20 \\end{bmatrix}$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 3,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0004",
+      "title": "隨堂練習：設A(1, 2)﹐B($- 2$, 3)﹐若線段$\\overline",
+      "question_text": "設A(1, 2)﹐B($- 2$, 3)﹐若線段$\\overline{AB}$經線性轉換$D = \\begin{bmatrix} 1 & 2 \\ 4 & 3 \\end{bmatrix}$之後的圖形長度﹒\n【教冊題】",
+      "answer_text": "$\\sqrt{82}$",
+      "explanation_text": "$\\begin{bmatrix} 1 & 2 \\ 4 & 3 \\end{bmatrix}\\begin{bmatrix} 1 \\ 2 \\end{bmatrix} = \\begin{bmatrix} 5 \\ 10 \\end{bmatrix}$﹐$\\begin{bmatrix} 1 & 2 \\ 4 & 3 \\end{bmatrix}\\begin{bmatrix} - 2 \\ 3 \\end{bmatrix} = \\begin{bmatrix} 4 \\ 1 \\end{bmatrix}$﹐ A﹐B變換後得$A'$ (5, 10)﹐$B'$ (4, 1)﹐線段$\\overline{A'B'}$之長$\\sqrt{(5 - 4)^{2} + (10 - 1)^{2}} = \\sqrt{82}$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 4,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0005",
+      "title": "設A =$\\begin{bmatrix} 1 & 3 \\ 2 & 7",
+      "question_text": "設A =$\\begin{bmatrix} 1 & 3 \\ 2 & 7 \\end{bmatrix}$﹐在A所定義的線性變換下﹐P(2,1)所對應的點P′及對應到P的點P~0~﹒",
+      "answer_text": "$P'(5,11)$；$P_0(11,-3)$",
+      "explanation_text": "$\\begin{bmatrix} 1 & 3 \\ 2 & 7 \\end{bmatrix}\\begin{bmatrix} 2 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 5 \\ 11 \\end{bmatrix}$﹐得P′(5,11)﹐又因A ^−\\ 1^ =$\\begin{bmatrix} 7 & - 3 \\ - 2 & 1 \\end{bmatrix}$ $\\begin{bmatrix} 7 & - 3 \\ - 2 & 1 \\end{bmatrix}\\begin{bmatrix} 2 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 11 \\ - 3 \\end{bmatrix}$﹐得P~0~(11, − 3)﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 5,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0006",
+      "title": "隨堂練習：設A為平面上的線性變換﹐試寫出滿足下列各條件的方陣A﹒ (1)若A將",
+      "question_text": "設A為平面上的線性變換﹐試寫出滿足下列各條件的方陣A﹒\n(1)若A將(1, 0)﹐(0, 1)分別映射至(3, 4)﹐(5, 6)﹒\n(2)若A將(1, 0)﹐(0, 1)分別映射至($- 1$, 2)﹐(3,$- 4$)﹒\n【教冊題】",
+      "answer_text": "(1)$\\begin{bmatrix}3&5\\\\4&6\\end{bmatrix}$；(2)$\\begin{bmatrix}-1&3\\\\2&-4\\end{bmatrix}$",
+      "explanation_text": "(1)$\\begin{bmatrix} 3 & 5 \\ 4 & 6 \\end{bmatrix}$;(2)$\\begin{bmatrix} - 1 & 3 \\ 2 & - 4 \\end{bmatrix}$\n【詳解】(1)$A\\begin{bmatrix} 1 \\ 0 \\end{bmatrix} = \\begin{bmatrix} 3 \\ 4 \\end{bmatrix}$﹐$A\\begin{bmatrix} 0 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 5 \\ 6 \\end{bmatrix}$﹐即$A = \\begin{bmatrix} 3 & 5 \\ 4 & 6 \\end{bmatrix}$﹒\n(2)$A\\begin{bmatrix} 1 \\ 0 \\end{bmatrix} = \\begin{bmatrix} - 1 \\ 2 \\end{bmatrix}$﹐$A\\begin{bmatrix} 0 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 3 \\ - 4 \\end{bmatrix}$﹐即$A = \\begin{bmatrix} - 1 & 3 \\ 2 & - 4 \\end{bmatrix}$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 6,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0007",
+      "title": "隨堂練習：設線性變換$A = \\begin{bmatrix} 1 & a",
+      "question_text": "設線性變換$A = \\begin{bmatrix} 1 & a \\ b & 2 \\end{bmatrix}$﹐將點(1, 2)映射至點($- 1$, 7)﹐點($- 2$,$- 1$)映射至點(c, d)﹐求c﹐d之值﹒\n【教冊題】",
+      "answer_text": "$c=-1$，$d=-8$",
+      "explanation_text": "$\\begin{bmatrix} 1 & a \\ b & 2 \\end{bmatrix}\\begin{bmatrix} 1 \\ 2 \\end{bmatrix} = \\begin{bmatrix} 1 + 2a \\ b + 4 \\end{bmatrix} = \\begin{bmatrix} - 1 \\ 7 \\end{bmatrix}$﹐故$a = - 1$﹐$b = 3$﹒\n$\\begin{bmatrix} 1 & - 1 \\ 3 & 2 \\end{bmatrix}\\begin{bmatrix} - 2 \\ - 1 \\end{bmatrix} = \\begin{bmatrix} - 1 \\ - 8 \\end{bmatrix}$﹐故$c = - 1$﹐$d = - 8$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 7,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0008",
+      "title": "若方陣$\\begin{bmatrix} a & 1 \\ - 1 &",
+      "question_text": "若方陣$\\begin{bmatrix} a & 1 \\ - 1 & b \\end{bmatrix}$所定義的變換將直線x + y = 2變成另一直線x − y = 2﹐求a﹐b之值﹒",
+      "answer_text": "$a=0$，$b=0$",
+      "explanation_text": "$\\begin{bmatrix} X \\ Y \\end{bmatrix} = \\begin{bmatrix} a & 1 \\ - 1 & b \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$ ⇒$\\left\\{ \\begin{array}{r} X = ax + y \\ Y = - x + by \\end{array} \\right.$\n⇒ (ax + y) − ( − x + by) = 2\n⇒ (a + 1)x + (1 − b)y = 2\n⇒$\\left\\{ \\begin{array}{r} a + 1 = 1 \\ 1 - b = 1 \\end{array} \\right.\\ \\Rightarrow a = b = 0$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 8,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0009",
+      "title": "設直線$L:x + 4y + 2 = 0$經方陣$\\begin{bm",
+      "question_text": "設直線$L:x + 4y + 2 = 0$經方陣$\\begin{bmatrix} a & - 1 \\ 0 & b \\end{bmatrix}$線性變換後成直線$L':x - 3y + 4 = 0$﹐ 求實數$a$﹐$b$的值﹒",
+      "answer_text": "$a=2$，$b=-3$",
+      "explanation_text": "在L上取( − 2,0)與(2, − 1)兩點﹒因為 $\\begin{bmatrix} a & - 1 \\ 0 & b \\end{bmatrix}\\begin{bmatrix} - 2 \\ 0 \\end{bmatrix} = \\begin{bmatrix} - 2a \\ 0 \\end{bmatrix}$﹐$\\begin{bmatrix} a & - 1 \\ 0 & b \\end{bmatrix}\\begin{bmatrix} 2 \\ - 1 \\end{bmatrix} = \\begin{bmatrix} 2a + 1 \\ - b \\end{bmatrix}$﹐ 所以( − 2a,0)與(2a + 1, − b)兩點均落在直線L′上﹒\n因此可列得$\\left\\{ \\begin{array}{r}\n( - 2a) - 3 \\times 0 + 4 = 0\n(2a + 1) - 3 \\times ( - b) + 4 = 0 \\end{array} \\right.\\ \\Rightarrow \\left\\{ \\begin{array}{r} - 2a + 4 = 0 \\ 2a + 3b + 5 = 0 \\end{array} \\right.$﹒\n解得a = 2﹐b = − 3﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 9,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0010",
+      "title": "已知直線L﹕x + 2y − 4 = 0經方陣$\\begin{bma",
+      "question_text": "已知直線L﹕x + 2y − 4 = 0經方陣$\\begin{bmatrix} 1 & - 2 \\ 2 & 3 \\end{bmatrix}$線性變換後成直線L\\'﹐求L\\'的方程式﹒",
+      "answer_text": "$x-4y+28=0$",
+      "explanation_text": "直線L的參數式為$\\left\\{ \\begin{array}{r} x = - 2t + 4 \\ y = t \\end{array} \\right.$（t是實數）﹒\n因為$\\begin{bmatrix} 1 & - 2 \\ 2 & 3 \\end{bmatrix}\\begin{bmatrix} - 2t + 4 \\ t \\end{bmatrix} = \\begin{bmatrix} - 4t + 4 \\ - t + 8 \\end{bmatrix}$﹐ 即點( − 2t + 4 , t)經線性變換後的坐標為( − 4t + 4 , − t + 8)﹐所以直線L\\' 的參數式為$\\left\\{ \\begin{array}{r} x = - 4t + 4 \\ y = - t + 8 \\end{array} \\right.$（t是實數）﹒\n故L\\' 的方程式為x − 4y = − 28﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 10,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0011",
+      "title": "隨堂練習：若a﹐b是實數﹐變換$\\begin{bmatrix} a & 1",
+      "question_text": "若a﹐b是實數﹐變換$\\begin{bmatrix} a & 1 \\ - 1 & b \\end{bmatrix}$將直線x + y = 2變換到自身﹐求a﹐b之值﹒",
+      "answer_text": "$a=2$，$b=0$",
+      "explanation_text": "$\\left\\{ \\begin{array}{r} X = ax + y \\ Y = - x + by \\end{array} \\right.$﹐\n(ax + y) + ( − x + by) = 2 ⇒ (a − 1)x + (b + 1)y = 2\n⇒$\\left\\{ \\begin{array}{r} a - 1 = 1 \\ b + 1 = 1 \\end{array} \\right.$ ⇒ a = 2﹐b = 0﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 11,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0012",
+      "title": "隨堂練習：a﹐b為實數﹐變換$\\begin{bmatrix} a & b",
+      "question_text": "a﹐b為實數﹐變換$\\begin{bmatrix} a & b \\ 0 & 1 \\end{bmatrix}$將直線6x − 5y + 1 = 0變換到直線2x + y = 1﹐求(a,b) = ﹖",
+      "answer_text": "$(a,b)=(-3,2)$",
+      "explanation_text": "$\\left\\{ \\begin{array}{r} X = ax + by \\ Y = y \\end{array} \\right.$﹐ 2(ax + by) + y = 1 ⇒ 2ax + (2b + 1)y = 1 ⇒ − 2ax −\n(2b + 1)y + 1 = 0\n⇒$\\left\\{ \\begin{array}{r} - 2a = 6 \\ - (2b + 1) = - 5 \\end{array} \\right.\\ \\Rightarrow \\left\\{ \\begin{array}{r} a = - 3 \\ b = 2 \\end{array} \\right.$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 12,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0013",
+      "title": "隨堂練習：設a與b是實數﹐若方陣$\\begin{bmatrix} a & 1",
+      "question_text": "設a與b是實數﹐若方陣$\\begin{bmatrix} a & 1 \\ - 1 & b \\end{bmatrix}$所定義的線性變換把直線L﹕2x + y = 7變換到另一 直線L′﹕9x + y = 91﹐試求a與b的值﹒",
+      "answer_text": "$a=3$，$b=4$",
+      "explanation_text": "在L上取兩點(1,5)與(2,3)﹐ 由$\\begin{bmatrix} a & 1 \\ - 1 & b \\end{bmatrix}\\begin{bmatrix} 1 \\ 5 \\end{bmatrix} = \\begin{bmatrix} a + 5 \\ - 1 + 5b \\end{bmatrix}$與$\\begin{bmatrix} a & 1 \\ - 1 & b \\end{bmatrix}\\begin{bmatrix} 2 \\ 3 \\end{bmatrix} = \\begin{bmatrix} 2a + 3 \\ - 2 + 3b \\end{bmatrix}$﹐ 知(a + 5 , − 1 + 5b)與(2a + 3 , − 2 + 3b)兩點在L′上﹐ 即$\\left\\{ \\begin{array}{r} 9(a + 5) + ( - 1 + 5b) = 91 \\ 9(2a + 3) + ( - 2 + 3b) = 91 \\end{array} \\right.$﹐ 整理得$\\left\\{ \\begin{array}{r} 9a + 5b = 47 \\ 6a + b = 22 \\end{array} \\right.$﹐ 解得a = 3﹐b = 4﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 13,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0014",
+      "title": "設A =$\\begin{bmatrix} 1 & 3 \\ 2 & 7",
+      "question_text": "設A =$\\begin{bmatrix} 1 & 3 \\ 2 & 7 \\end{bmatrix}$在A所定義的線性變換下：\n(1)L﹕2x + 7y = 5所對應的方程式﹒\n(2)圓﹕x^2^ + y^2^ = 25所對應的方程式﹒",
+      "answer_text": "(1)$y=5$；(2)$53x^2-46xy+10y^2=25$",
+      "explanation_text": "設P (x,y) → P′ (X,Y) $\\begin{bmatrix} X \\ Y \\end{bmatrix} = \\begin{bmatrix} 1 & 3 \\ 2 & 7 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$﹐得$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} 7 & - 3 \\ - 2 & 1 \\end{bmatrix}\\begin{bmatrix} X \\ Y \\end{bmatrix}$ x = 7X − 3Y﹐y = − 2X + Y分別代入\n(1)2x + 7y = 5中 2(7X − 3Y) + 7( − 2X + Y) = 5﹐得Y = 5﹐故所求為y = 5﹒\n(2)x^2^ + y^2^ = 25中 (7X − 3Y)^2^ + ( − 2X + Y)^2^ = 25 得53X^2^ − 46XY + 10Y^2^ = 25﹐故所求為53x^2^ − 46xy + 10y^2^ = 25﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 14,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0015",
+      "title": "隨堂練習：設直線L﹕x + 2y = 4在A =$\\begin{bmatrix",
+      "question_text": "設直線L﹕x + 2y = 4在A =$\\begin{bmatrix} 1 & 2 \\ - 2 & 3 \\end{bmatrix}$所定義的線性變換之下變換成另一圖形L′﹐求L′的方程式﹒",
+      "answer_text": "$x=4$",
+      "explanation_text": "設P′(X,Y)為L′上一點﹐ 則$\\begin{bmatrix} X \\ Y \\end{bmatrix} = \\begin{bmatrix} 1 & 2 \\ - 2 & 3 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$﹐ 其中P(x,y)為直線L上一點﹐ 故$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} 1 & 2 \\ - 2 & 3 \\end{bmatrix}^{- 1}\\begin{bmatrix} X \\ Y \\end{bmatrix} = \\frac{1}{7}\\begin{bmatrix} 3 & - 2 \\ 2 & 1 \\end{bmatrix}\\begin{bmatrix} X \\ Y \\end{bmatrix}$﹐ 即x =$\\frac{3}{7}X - \\frac{2}{7}Y$﹐y =$\\frac{2}{7}X + \\frac{1}{7}Y$﹒\n因此﹐($\\frac{3}{7}X - \\frac{2}{7}Y) + 2(\\frac{2}{7}X + \\frac{1}{7}Y) = 4$﹐ 整理得X = 4﹐即L′為一直線﹐其方程式為x = 4﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 15,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0016",
+      "title": "隨堂練習：設a與b是實數﹐若方陣$\\begin{bmatrix} - 1 &",
+      "question_text": "設a與b是實數﹐若方陣$\\begin{bmatrix} - 1 & a \\ b & 3 \\end{bmatrix}$所定義的線性變換把直線L﹕2x − y = 3變換到本身﹐ 試求a與b的值﹒",
+      "answer_text": "$a=1$，$b=-4$",
+      "explanation_text": "在L上取兩點(2,1)與(1, − 1)﹐ 則因$\\begin{bmatrix} - 1 & a \\ b & 3 \\end{bmatrix}\\begin{bmatrix} 2 \\ 1 \\end{bmatrix} = \\begin{bmatrix} - 2 + a \\ 2b + 3 \\end{bmatrix}$與$\\begin{bmatrix} - 1 & a \\ b & 3 \\end{bmatrix}\\begin{bmatrix} 1 \\ - 1 \\end{bmatrix} = \\begin{bmatrix} - 1 - a \\ b - 3 \\end{bmatrix}$﹐ 知( − 2 + a , 2b + 3)與( − 1 − a , b − 3)亦在L﹕2X − Y = 3上﹐ 故$\\left\\{ \\begin{array}{r} 2( - 2 + a) - (2b + 3) = 3 \\ 2( - 1 - a) - (b - 3) = 3 \\end{array} \\right.$﹐ 整理得$\\left\\{ \\begin{array}{r} a - b = 5 \\ 2a + b = - 2 \\end{array} \\right.$﹐ 解得a = 1﹐b = − 4﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 16,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0017",
+      "title": "試求曲線xy = 1經$\\begin{bmatrix} \\frac{",
+      "question_text": "試求曲線xy = 1經$\\begin{bmatrix} \\frac{1}{2} & \\frac{1}{2} \\ - \\frac{1}{2} & \\frac{1}{2} \\end{bmatrix}$變換後的圖形方程式﹒",
+      "answer_text": "$x^2-y^2=1$",
+      "explanation_text": "設P(x,y)→P′(X,Y) $\\left\\lbrack \\begin{array}{r} X \\ Y \\end{array} \\right\\rbrack = \\begin{bmatrix} \\frac{1}{2} & \\frac{1}{2} \\ - \\frac{1}{2} & \\frac{1}{2} \\end{bmatrix} = \\left\\lbrack \\begin{array}{r} x \\ y \\end{array} \\right\\rbrack$﹐得$\\left\\lbrack \\begin{array}{r} x \\ y \\end{array} \\right\\rbrack = \\begin{bmatrix} 1 & - 1 \\ 1 & 1 \\end{bmatrix}\\left\\lbrack \\begin{array}{r} X \\ Y \\end{array} \\right\\rbrack$ ⇒ x = X − Y﹐y = X + Y 代入xy = 1 ⇒ (X − Y)(X + Y) = 1 ⇒ X^2^ − Y^2^ = 1﹐故所求x^2^ − y^2^ = 1﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 17,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0018",
+      "title": "隨堂練習：設$A = \\begin{bmatrix} 1 & 3 \\ - 1",
+      "question_text": "設$A = \\begin{bmatrix} 1 & 3 \\ - 1 & 2 \\end{bmatrix}$﹐求直線L：$2x - y + 3 = 0$經A變換後圖形的方程式﹒\n【教冊題】",
+      "answer_text": "$3x-7y+15=0$",
+      "explanation_text": "P($- 1$, 1)﹐Q(2, 7)在直線L上﹐ $\\begin{bmatrix} 1 & 3 \\ - 1 & 2 \\end{bmatrix}\\begin{bmatrix} - 1 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 2 \\ 3 \\end{bmatrix}$﹐$\\begin{bmatrix} 1 & 3 \\ - 1 & 2 \\end{bmatrix}\\begin{bmatrix} 2 \\ 7 \\end{bmatrix} = \\begin{bmatrix} 23 \\ 12 \\end{bmatrix}$﹐ 過(2, 3)與(23, 12)的直線方程式為$3x - 7y + 15 = 0$﹐ 故直線L變換後圖形的方程式為$3x - 7y + 15 = 0$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 18,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0019",
+      "title": "下列各方陣所定義的線性變換﹐何者為旋轉﹖ (1)$\\frac{1}{",
+      "question_text": "下列各方陣所定義的線性變換﹐何者為旋轉﹖ (1)$\\frac{1}{\\sqrt{2}}\\begin{bmatrix} 1 & - 1 \\ 1 & 1 \\end{bmatrix}$ (2)$\\frac{1}{2}\\begin{bmatrix} \\sqrt{3} & 1 \\ 1 & \\sqrt{3} \\end{bmatrix}$\n(3)$\\begin{bmatrix} 0 & 1 \\ - 1 & 0 \\end{bmatrix}$ (4)$\\frac{1}{5}\\begin{bmatrix} 3 & - 4 \\ 4 & - 3 \\end{bmatrix}$﹒",
+      "answer_text": "$(1)(3)$",
+      "explanation_text": "(1)○﹒\n理由﹕$\\frac{1}{\\sqrt{2}}\\begin{bmatrix} 1 & - 1 \\ 1 & 1 \\end{bmatrix} = \\begin{bmatrix} \\cos\\frac{\\pi}{4} & - \\sin\\frac{\\pi}{4} \\ \\sin\\frac{\\pi}{4} & \\cos\\frac{\\pi}{4} \\end{bmatrix}$﹒\n(2)╳﹒\n理由﹕若$\\frac{1}{2}\\begin{bmatrix} \\sqrt{3} & 1 \\ 1 & \\sqrt{3} \\end{bmatrix} = \\begin{bmatrix} \\cos\\theta & - \\sin\\theta \\ \\sin\\theta & \\cos\\theta \\end{bmatrix}$﹐則$\\frac{1}{2}$= sinθ = − sinθ﹐矛盾﹒\n(3)○﹒\n理由﹕$\\begin{bmatrix} 0 & 1 \\ - 1 & 0 \\end{bmatrix} = \\begin{bmatrix} \\cos\\frac{3\\pi}{2} & - \\sin\\frac{3\\pi}{2} \\ \\sin\\frac{3\\pi}{2} & \\cos\\frac{3\\pi}{2} \\end{bmatrix}$﹒\n(4)╳﹒\n理由﹕若$\\frac{1}{5}\\begin{bmatrix} 3 & - 4 \\ 4 & - 3 \\end{bmatrix} = \\begin{bmatrix} \\cos\\theta & - \\sin\\theta \\ \\sin\\theta & \\cos\\theta \\end{bmatrix}$﹐則cosθ =$\\frac{3}{5} = - \\frac{3}{5}$﹐矛盾﹒\n故選(1)(3)﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 19,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0020",
+      "title": "設A =$\\begin{bmatrix} 1 & - 1 \\ 1 &",
+      "question_text": "設A =$\\begin{bmatrix} 1 & - 1 \\ 1 & 1 \\end{bmatrix}$﹐試求A^10^ =？",
+      "answer_text": "$\\begin{bmatrix}0&-32\\\\32&0\\end{bmatrix}$",
+      "explanation_text": "$A = \\begin{bmatrix} 1 & - 1 \\ 1 & 1 \\end{bmatrix} = \\sqrt{2}\\begin{bmatrix} \\frac{1}{\\sqrt{2}} & - \\frac{1}{\\sqrt{2}} \\ \\frac{1}{\\sqrt{2}} & \\frac{1}{\\sqrt{2}} \\end{bmatrix} = \\sqrt{2} \\rightleftharpoons \\begin{bmatrix} \\cos\\frac{\\pi}{4} & - \\text{sin}\\frac{\\pi}{4} \\ \\sin\\frac{\\pi}{4} & \\cos\\frac{\\pi}{4} \\end{bmatrix}$﹐ $A^{10} = (\\sqrt{2})^{10}\\begin{bmatrix} \\cos\\frac{10\\pi}{4} & - \\text{sin}\\frac{10\\pi}{4} \\ \\sin\\frac{10\\pi}{4} & \\cos\\frac{10\\pi}{4} \\end{bmatrix} = 32\\begin{bmatrix} \\cos\\frac{\\pi}{2} & - \\text{sin}\\frac{\\pi}{2} \\ \\sin\\frac{\\pi}{2} & \\cos\\frac{\\pi}{2} \\end{bmatrix} = 32\\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix} = \\begin{bmatrix} 0 & - 32 \\ 32 & 0 \\end{bmatrix}$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 20,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0021",
+      "title": "$A = \\begin{bmatrix} \\cos 75{^\\cir",
+      "question_text": "$A = \\begin{bmatrix} \\cos 75{^\\circ} & - \\sin 75{^\\circ} \\ \\sin 75{^\\circ} & \\cos 75{^\\circ} \\end{bmatrix}\\begin{bmatrix} \\cos 45{^\\circ} & \\sin 45{^\\circ} \\ - \\sin 45{^\\circ} & \\cos 45{^\\circ} \\end{bmatrix}$﹐I為單位矩陣﹒\n求(1)使A^n^ = I的最小正整數n = \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒(2)A ^−\\ 1^ = \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒\n【師大附中段考題】",
+      "answer_text": "(1)$12$；(2)$\\begin{bmatrix}\\frac{\\sqrt3}{2}&\\frac12\\\\-\\frac12&\\frac{\\sqrt3}{2}\\end{bmatrix}$",
+      "explanation_text": "(1)$A = \\begin{bmatrix} \\cos 75{^\\circ} & - \\sin 75{^\\circ} \\ \\sin 75{^\\circ} & \\cos 75{^\\circ} \\end{bmatrix}\\begin{bmatrix} \\cos 45{^\\circ} & \\sin 45{^\\circ} \\ - \\sin 45{^\\circ} & \\cos 45{^\\circ} \\end{bmatrix}$ $= \\begin{bmatrix} \\cos 75{^\\circ}\\cos 45{^\\circ} + \\sin 75{^\\circ}\\sin 45{^\\circ} & \\cos 75{^\\circ}\\sin 45{^\\circ} - \\sin 75{^\\circ}\\cos 45{^\\circ} \\ \\sin 75{^\\circ}\\cos 45{^\\circ} - \\cos 75{^\\circ}\\sin 45{^\\circ} & \\sin 75{^\\circ}\\sin 45{^\\circ} + \\cos 75{^\\circ}\\cos 45{^\\circ} \\end{bmatrix}$ $= \\begin{bmatrix} \\cos 30{^\\circ} & \\sin( - 30{^\\circ}) \\ \\sin 30{^\\circ} & \\cos 30{^\\circ} \\end{bmatrix} = \\begin{bmatrix} \\cos 30{^\\circ} & - \\sin 30{^\\circ} \\ \\sin 30{^\\circ} & \\cos 30{^\\circ} \\end{bmatrix}$\n⇒$A^{n} = \\begin{bmatrix} \\cos(30{^\\circ} \\times n) & - \\sin(30{^\\circ} \\times n) \\ \\sin(30{^\\circ} \\times n) & \\cos(30{^\\circ} \\times n) \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ 0 & 1 \\end{bmatrix}$﹐∴30° × n = 360° × k\n⇒n的最小值為12﹒\n(2)$A = \\begin{bmatrix} \\cos 30{^\\circ} & - \\sin 30{^\\circ} \\ \\sin 30{^\\circ} & \\cos 30{^\\circ} \\end{bmatrix}$﹐又行列式值detA = 1\n⇒$A^{- 1} = \\begin{bmatrix} \\cos 30{^\\circ} & \\sin 30{^\\circ} \\ - \\sin 30{^\\circ} & \\cos 30{^\\circ} \\end{bmatrix} = \\begin{bmatrix} \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\ - \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\end{bmatrix}$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 21,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0022",
+      "title": "設$0 \\leq \\theta \\leq \\frac{\\pi}{2}",
+      "question_text": "設$0 \\leq \\theta \\leq \\frac{\\pi}{2}$﹐且A =$\\begin{bmatrix} \\text{cos}\\theta & - \\text{sin}\\theta \\ \\text{sin}\\theta & \\text{cos}\\theta \\end{bmatrix}$﹐若A^12^ = I~2~﹐求$\\theta$之值﹒",
+      "answer_text": "$0$，$\\frac{\\pi}{6}$，$\\frac{\\pi}{3}$，$\\frac{\\pi}{2}$",
+      "explanation_text": "$A^{12} = \\begin{bmatrix} \\cos\\theta & - \\sin\\theta \\ \\sin\\theta & \\cos\\theta \\end{bmatrix}^{12} = \\begin{bmatrix} \\cos 12\\theta & - \\sin 12\\theta \\ \\sin 12\\theta & \\cos 12\\theta \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ 0 & 1 \\end{bmatrix}$﹐所以cos12θ = 1且sin12θ = 0﹐ 因0 ≤ θ ≤$\\frac{\\pi}{2}$﹐所以0 ≤ 12θ ≤ 6π﹐故12θ = 0﹐2π﹐4π﹐6π﹐即θ = 0﹐$\\frac{\\pi}{6}$﹐$\\frac{\\pi}{3}$﹐$\\frac{\\pi}{2}$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 22,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0023",
+      "title": "隨堂練習：若$A = \\begin{bmatrix} 1 & - 1 \\ 1",
+      "question_text": "若$A = \\begin{bmatrix} 1 & - 1 \\ 1 & 1 \\end{bmatrix}$﹐且$A^{10} = k \\times \\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix}$﹐則k = (1) 8 (2) −8 (3) 16 (4) −16 (5) 32﹒",
+      "answer_text": "(5)",
+      "explanation_text": "$$A = \\begin{bmatrix} 1 & - 1 \\ 1 & 1 \\end{bmatrix} = \\sqrt{2}\\begin{bmatrix} \\frac{1}{\\sqrt{2}} & - \\frac{1}{\\sqrt{2}} \\ \\frac{1}{\\sqrt{2}} & \\frac{1}{\\sqrt{2}} \\end{bmatrix} = \\sqrt{2}\\begin{bmatrix} \\cos 45{^\\circ} & - \\sin 45{^\\circ} \\ \\sin 45{^\\circ} & \\cos 45{^\\circ} \\end{bmatrix} $$⇒$A^{10} = (\\sqrt{2})^{10}\\begin{bmatrix} \\cos 450{^\\circ} & - \\sin 450{^\\circ} \\ \\sin 450{^\\circ} & \\cos 450{^\\circ} \\end{bmatrix} = 32\\begin{bmatrix} \\cos 90{^\\circ} & - \\sin 90{^\\circ} \\ \\sin 90{^\\circ} & \\cos 90{^\\circ} \\end{bmatrix} = 32\\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix}$﹐∴k = 32﹒\n故選(5)",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 23,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0024",
+      "title": "隨堂練習：設A =$\\begin{bmatrix} 0 & - 1 \\ 1 &",
+      "question_text": "設A =$\\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix}$，(1)若A^n^ = I﹐試求n的最小值﹒(2)試求A + A^2^ + A^3^ +...+ A^100^﹒",
+      "answer_text": "(1)$4$；(2)$\\begin{bmatrix}0&0\\\\0&0\\end{bmatrix}$",
+      "explanation_text": "(1)A =$\\begin{bmatrix} \\cos\\frac{\\pi}{2} & - \\sin\\frac{\\pi}{2} \\ \\sin\\frac{\\pi}{2} & \\cos\\frac{\\pi}{2} \\end{bmatrix}$ A^n^ =$\\begin{bmatrix} \\cos\\frac{n\\pi}{2} & - \\sin\\frac{n\\pi}{2} \\ \\sin\\frac{n\\pi}{2} & \\cos\\frac{n\\pi}{2} \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ 0 & 1 \\end{bmatrix}$ 滿足cos$\\frac{n\\pi}{2}$= 1﹐且sin$\\frac{n\\pi}{2}$= 0﹐得n的最小值為4﹒\n(2)A =$\\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix}$ A^2^ =$\\begin{bmatrix} - 1 & 0 \\ 0 & - 1 \\end{bmatrix}$ A^3^ =$\\begin{bmatrix} 0 & 1 \\ - 1 & 0 \\end{bmatrix}$ A^4^ =$\\begin{bmatrix} 1 & 0 \\ 0 & 1 \\end{bmatrix}$ 知A + A^2^ + A^3^ + A^4^ = O 故A + A^2^ + A^3^ + A^4^ + A^5^ + A^6^ + A^7^ + A^8^ +...+ A^100^ = (A + A^2^ + A^3^ + A^4^) + (A + A^2^ + A^3^ + A^4^) +...+ (A + A^2^ + A^3^ + A^4^) = O + O +...+O = O =$\\begin{bmatrix} 0 & 0 \\ 0 & 0 \\end{bmatrix}$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 24,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0025",
+      "title": "隨堂練習：已知A為坐標平面上代表旋轉某個角度的二階方陣﹐且$A^{6} =",
+      "question_text": "已知A為坐標平面上代表旋轉某個角度的二階方陣﹐且$A^{6} = \\begin{bmatrix} - 1 & 0 \\ 0 & - 1 \\end{bmatrix}$﹒\n選出可能是A的選項﹕ (1)$\\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix}$ (2)$\\begin{bmatrix} \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\end{bmatrix}$ (3)$\\begin{bmatrix} \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\ \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\end{bmatrix}$\n(4)$\\begin{bmatrix} \\cos 300{^\\circ} & - \\sin 300{^\\circ} \\ \\sin 300{^\\circ} & \\cos 300{^\\circ} \\end{bmatrix}$ (5)$\\begin{bmatrix} \\cos 150{^\\circ} & \\sin 150{^\\circ} \\ - \\sin 150{^\\circ} & \\cos 150{^\\circ} \\end{bmatrix}$﹒",
+      "answer_text": "$(1)(3)(5)$",
+      "explanation_text": "(1)$\\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix}^{6} = \\begin{bmatrix} \\cos 90{^\\circ} & - \\sin 90{^\\circ} \\ \\sin 90{^\\circ} & \\cos 90{^\\circ} \\end{bmatrix}^{6} = \\begin{bmatrix} \\cos 540{^\\circ} & - \\sin 540{^\\circ} \\ \\sin 540{^\\circ} & \\cos 540{^\\circ} \\end{bmatrix} = \\begin{bmatrix} - 1 & 0 \\ 0 & - 1 \\end{bmatrix}$﹒\n(2)$\\begin{bmatrix} \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\end{bmatrix}^{6} = \\begin{bmatrix} \\cos 60{^\\circ} & - \\sin 60{^\\circ} \\ \\sin 60{^\\circ} & \\cos 60{^\\circ} \\end{bmatrix}^{6} = \\begin{bmatrix} \\cos 360{^\\circ} & - \\sin 360{^\\circ} \\ \\sin 360{^\\circ} & \\cos 360{^\\circ} \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ 0 & 1 \\end{bmatrix}$﹒\n(3)$\\begin{bmatrix} \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\ \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\end{bmatrix}^{6} = \\begin{bmatrix} \\cos 30{^\\circ} & - \\sin 30{^\\circ} \\ \\sin 30{^\\circ} & \\cos 30{^\\circ} \\end{bmatrix}^{6} = \\begin{bmatrix} \\cos 180{^\\circ} & - \\sin 180{^\\circ} \\ \\sin 180{^\\circ} & \\cos 180{^\\circ} \\end{bmatrix} = \\begin{bmatrix} - 1 & 0 \\ 0 & - 1 \\end{bmatrix}$﹒\n(4)$\\begin{bmatrix} \\cos 300{^\\circ} & - \\sin 300{^\\circ} \\ \\sin 300{^\\circ} & \\cos 300{^\\circ} \\end{bmatrix}^{6} = \\begin{bmatrix} \\cos 1800{^\\circ} & - \\sin 1800{^\\circ} \\ \\sin 1800{^\\circ} & \\cos 1800{^\\circ} \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ 0 & 1 \\end{bmatrix}$﹒\n(5)$\\begin{bmatrix} \\cos 150{^\\circ} & \\sin 150{^\\circ} \\ - \\sin 150{^\\circ} & \\cos 150{^\\circ} \\end{bmatrix}^{6} = \\begin{bmatrix} \\cos( - 150{^\\circ}) & - \\sin( - 150{^\\circ}) \\ \\sin( - 150{^\\circ}) & \\cos( - 150{^\\circ}) \\end{bmatrix}^{6}$ $= \\begin{bmatrix} \\cos( - 900{^\\circ}) & - \\sin( - 900{^\\circ}) \\ \\sin( - 900{^\\circ}) & \\cos( - 900{^\\circ}) \\end{bmatrix} = \\begin{bmatrix} \\cos 180{^\\circ} & - \\sin 180{^\\circ} \\ \\sin 180{^\\circ} & \\cos 180{^\\circ} \\end{bmatrix} = \\begin{bmatrix} - 1 & 0 \\ 0 & - 1 \\end{bmatrix}$﹒\n故選(1)(3)(5)﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 25,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0026",
+      "title": "在平面上﹐若點P(1﹐2)平移$\\overset{⃑}{d} =$",
+      "question_text": "在平面上﹐若點P(1﹐2)平移$\\overset{⃑}{d} =$\n(3﹐2)後得點Q﹐Q再經過以原點為中心的旋轉30°後得R﹐ 則(1) Q的坐標為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒ (2) R的坐標為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒",
+      "answer_text": "(1)$Q(4,4)$；(2)$R(2\\sqrt3-2,2+2\\sqrt3)$",
+      "explanation_text": "(1)點P(1﹐2)經過平移$\\overset{⃑}{d} =$\n(3﹐2)的變換得Q﹐Q的坐標為(1 + 3﹐2 + 2) = (4﹐4)﹒\n(2)Q經過30°旋轉後的位置為R﹐R的坐標為(x″﹐y″)﹐ 則$\\left\\lbrack \\begin{array}{r} x'' \\ y'' \\end{array} \\right\\rbrack = \\begin{bmatrix} \\cos 30{^\\circ} & - \\sin 30{^\\circ} \\ \\sin 30{^\\circ} & \\text{cos30}{^\\circ} \\end{bmatrix}\\left\\lbrack \\begin{array}{r} 4 \\ 4 \\end{array} \\right\\rbrack = \\begin{bmatrix} \\frac{\\sqrt{3}}{2} & \\frac{- 1}{2} \\ \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\end{bmatrix}\\left\\lbrack \\begin{array}{r} 4 \\ 4 \\end{array} \\right\\rbrack = \\left\\lbrack \\begin{array}{r} 2\\sqrt{3} - 2 \\ 2 + 2\\sqrt{3} \\end{array} \\right\\rbrack$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 26,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0027",
+      "title": "設O(0﹐0)﹐A(4﹐2)為平面上兩點，(1)若△AOB為正三角形",
+      "question_text": "設O(0﹐0)﹐A(4﹐2)為平面上兩點，(1)若△AOB為正三角形且B在第一象限內﹐則B的 坐標為\\_\\_\\_\\_\\_﹒(2)若OABC為矩形﹐點C在第二象限內﹐且$\\overline{OC} = 2\\overline{OA}$﹐則頂點C的坐標為\\_\\_\\_\\_\\_﹒",
+      "answer_text": "(1)$B(2-\\sqrt3,1+2\\sqrt3)$；(2)$C(-4,8)$",
+      "explanation_text": "(1)∠AOB = 60°﹐點B為A經過60°旋轉變換後的位置﹐設B(x\\'﹐y\\')﹐則 $\\left\\lbrack \\begin{array}{r} x' \\ y' \\end{array} \\right\\rbrack = \\begin{bmatrix} \\cos 60{^\\circ} & - \\sin 60{^\\circ} \\ \\sin 60{^\\circ} & \\text{cos60}{^\\circ} \\end{bmatrix}\\left\\lbrack \\begin{array}{r} 4 \\ 2 \\end{array} \\right\\rbrack = \\begin{bmatrix} \\frac{1}{2} & \\frac{- \\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\end{bmatrix}\\left\\lbrack \\begin{array}{r} 4 \\ 2 \\end{array} \\right\\rbrack = \\left\\lbrack \\begin{array}{r} 2 - \\sqrt{3} \\ 2\\sqrt{3} + 1 \\end{array} \\right\\rbrack$﹐\n∴B(2 −$\\sqrt{3}$﹐2$\\sqrt{3}$+ 1)﹒\n(2)點A經過90°旋轉後的位置為A\\' (x﹐y)時﹐ $\\left\\lbrack \\begin{array}{r} x \\ y \\end{array} \\right\\rbrack = \\begin{bmatrix} \\cos 90{^\\circ} & - \\sin 90{^\\circ} \\ \\sin 90{^\\circ} & \\text{cos90}{^\\circ} \\end{bmatrix}\\left\\lbrack \\begin{array}{r} 4 \\ 2 \\end{array} \\right\\rbrack = \\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix}\\left\\lbrack \\begin{array}{r} 4 \\ 2 \\end{array} \\right\\rbrack = \\left\\lbrack \\begin{array}{r} - 2 \\ 4 \\end{array} \\right\\rbrack$﹐ A\\' 再經伸縮2倍的位置為C﹐則C的坐標為(− 4﹐8)﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 27,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例13"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0028",
+      "title": "題幹依附圖，請參照原圖完成作答",
+      "question_text": "題幹依附圖，請參照原圖完成作答。",
+      "answer_text": "(1)$B(2-\\sqrt3,1+2\\sqrt3)$；(2)$C(-4,8)$",
+      "explanation_text": "(1)D點是B點旋轉$90{^\\circ}$而得﹐設D(X,Y)﹐ $\\begin{bmatrix} X \\ Y \\end{bmatrix} = \\begin{bmatrix} \\cos 90{^\\circ} & - \\sin 90{^\\circ} \\ \\sin 90{^\\circ} & \\cos 90{^\\circ} \\end{bmatrix}\\begin{bmatrix} 5 \\ 2 \\end{bmatrix}$=$\\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix}\\begin{bmatrix} 5 \\ 2 \\end{bmatrix} = \\begin{bmatrix} - 2 \\ 5 \\end{bmatrix}$﹐得D( − 2,5)﹒\n(2)$\\overline{AC}$的中點即$\\overline{BD}$的中點﹐設C(a,b)﹐ $\\frac{5 - 2}{2} = \\frac{0 + a}{2}$﹐$\\frac{2 + 5}{2} = \\frac{0 + b}{2}$﹐ 得a = 3﹐b = 7﹐故C(3,7)﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 28,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例14"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0029",
+      "title": "隨堂練習：試求B﹐及H之坐標﹒",
+      "question_text": "試求B﹐及H之坐標﹒",
+      "answer_text": "$B\\left(-\\frac{\\sqrt2}{2},\\frac{7\\sqrt2}{2}\\right)$；$H\\left(\\frac{7\\sqrt2}{2},\\frac{\\sqrt2}{2}\\right)$",
+      "explanation_text": "設B(m,n)﹐H(s,t) 則$\\begin{bmatrix} \\cos 45{^\\circ} & - \\sin 45{^\\circ} \\ \\sin 45{^\\circ} & \\cos 45{^\\circ} \\end{bmatrix}\\begin{bmatrix} 3 \\ 4 \\end{bmatrix} = \\begin{bmatrix} m \\ n \\end{bmatrix} \\Rightarrow \\begin{bmatrix} m \\ n \\end{bmatrix} = \\begin{bmatrix} \\frac{3\\sqrt{2}}{2} - \\frac{4\\sqrt{2}}{2} \\ \\frac{3\\sqrt{2}}{2} + \\frac{4\\sqrt{2}}{2} \\end{bmatrix} = \\begin{bmatrix} - \\frac{\\sqrt{2}}{2} \\ \\frac{7\\sqrt{2}}{2} \\end{bmatrix}$ $\\begin{bmatrix} \\cos( - 45{^\\circ}) & - \\sin( - 45{^\\circ}) \\ \\sin( - 45{^\\circ}) & \\cos( - 45{^\\circ}) \\end{bmatrix}\\begin{bmatrix} 3 \\ 4 \\end{bmatrix} = \\begin{bmatrix} s \\ t \\end{bmatrix} \\Rightarrow \\begin{bmatrix} s \\ t \\end{bmatrix} = \\begin{bmatrix} \\frac{3\\sqrt{2}}{2} + \\frac{4\\sqrt{2}}{2} \\ - \\frac{3\\sqrt{2}}{2} + \\frac{4\\sqrt{2}}{2} \\end{bmatrix} = \\begin{bmatrix} \\frac{7\\sqrt{2}}{2} \\ \\frac{\\sqrt{2}}{2} \\end{bmatrix}$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 29,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0030",
+      "title": "直線L﹕2x − y = 0繞原點逆時針旋轉$90{^\\circ}$",
+      "question_text": "直線L﹕2x − y = 0繞原點逆時針旋轉$90{^\\circ}$後得直線L′﹐求L′的方程式﹒",
+      "answer_text": "$x+2y=0$",
+      "explanation_text": "直線L上兩點P(0,0)﹐Q(1,2)﹐ $\\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix}\\begin{bmatrix} 0 \\ 0 \\end{bmatrix} = \\begin{bmatrix} 0 \\ 0 \\end{bmatrix}$﹐$\\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix}\\begin{bmatrix} 1 \\ 2 \\end{bmatrix} = \\begin{bmatrix} - 2 \\ 1 \\end{bmatrix}$﹐ L′通過P′(0,0)﹐Q′ ( − 2,1)﹐ 得直線L′的方程式x + 2y = 0﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 30,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例15"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0031",
+      "title": "試求直線y = x經$30{^\\circ}$旋轉後再對x軸對稱所得的",
+      "question_text": "試求直線y = x經$30{^\\circ}$旋轉後再對x軸對稱所得的直線方程式﹒",
+      "answer_text": "$(1+\\sqrt3)x+(\\sqrt3-1)y=0$",
+      "explanation_text": "$\\begin{bmatrix} 1 & 0 \\ 0 & - 1 \\end{bmatrix}\\begin{bmatrix} \\cos 30{^\\circ} & - \\sin 30{^\\circ} \\ \\sin 30{^\\circ} & \\cos 30{^\\circ} \\end{bmatrix} = \\begin{bmatrix} \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\ - \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\end{bmatrix}$﹐ $\\begin{bmatrix} \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\ - \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\end{bmatrix}^{- 1} = \\frac{1}{- \\frac{3}{4} - \\frac{1}{4}}\\begin{bmatrix} - \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\ \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\end{bmatrix} = \\begin{bmatrix} \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\ - \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\end{bmatrix}$﹐\n∴$(\\frac{\\sqrt{3}}{2}X - \\frac{1}{2}Y) = ( - \\frac{1}{2}X - \\frac{\\sqrt{3}}{2}Y)$\n⇒$\\sqrt{3}X - Y = - X - \\sqrt{3}Y \\Rightarrow (\\sqrt{3} + 1)X = (1 - \\sqrt{3})Y$\n⇒$Y = \\frac{1 + \\sqrt{3}}{1 - \\sqrt{3}}X = - (2 + \\sqrt{3})X \\Rightarrow (\\sqrt{3} + 2)X + Y = 0$﹐即($\\sqrt{3}$+ 2)x + y = 0﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 31,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例16"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0032",
+      "title": "設直線L﹕$\\sqrt{3}$x + y = 4繞原點逆時針旋轉$3",
+      "question_text": "設直線L﹕$\\sqrt{3}$x + y = 4繞原點逆時針旋轉$30{^\\circ}$後變換成另一直線L′﹐求L′的方程式﹒",
+      "answer_text": "$x+\\sqrt3y=4$",
+      "explanation_text": "因這變換的方陣是$\\begin{bmatrix} \\cos 30{^\\circ} & - \\sin 30{^\\circ} \\ \\sin 30{^\\circ} & \\cos 30{^\\circ} \\end{bmatrix} = \\begin{bmatrix} \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\ \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\end{bmatrix}$﹐ 又($\\sqrt{3}$,1)與(0,4)是L上兩點﹐ 由$\\begin{bmatrix} \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\ \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\end{bmatrix}\\begin{bmatrix} \\sqrt{3} \\ 1 \\end{bmatrix} = \\begin{bmatrix} 1 \\ \\sqrt{3} \\end{bmatrix}$﹐$\\begin{bmatrix} \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\ \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\end{bmatrix}\\begin{bmatrix} 0 \\ 4 \\end{bmatrix} = \\begin{bmatrix} - 2 \\ 2\\sqrt{3} \\end{bmatrix}$﹐ 知L′通過(1 ,$\\sqrt{3}$)與( − 2 , 2$\\sqrt{3}$)兩點﹐ 故其方程式是y − 2$\\sqrt{3}$= −$\\frac{\\sqrt{3}}{3}$ (x + 2)﹐ 即x +$\\sqrt{3}$y = 4﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 32,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例17"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0033",
+      "title": "設圓C﹕x^2^ + y^2^ − 2x + 2$\\sqrt{3}$",
+      "question_text": "設圓C﹕x^2^ + y^2^ − 2x + 2$\\sqrt{3}$y 0繞原點逆時針旋轉$60{^\\circ}$後變換成另一圓C′﹐ 求C′的方程式，並表為標準式﹒",
+      "answer_text": "$(x-\\sqrt3)^2+(y+1)^2=4$",
+      "explanation_text": "因C的方程式可改寫為(x − 1)^2^ + (y +$\\sqrt{3}$)^2^ = 4﹐ 故圓心在(1, −$\\sqrt{3}$)﹐半徑是2﹒\n而旋轉$60{^\\circ}$的方陣是$\\begin{bmatrix} \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\end{bmatrix}$﹐ 由$\\begin{bmatrix} \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} 1 \\ - \\sqrt{3} \\end{bmatrix} = \\begin{bmatrix} 2 \\ 0 \\end{bmatrix}$﹐ 得C′的圓心在(2,0)﹒\n又因半徑是2﹐故圓C′ 的方程式是(x − 2)^2^ + y^2^ = 4﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題1：平面上的線性變換－平移、旋轉",
+      "source_order": 33,
+      "tags": [
+        "s4-4-4",
+        "section:主題1：平面上的線性變換－平移、旋轉",
+        "marker:範例18"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0034",
+      "title": "設L：x − 2y = 0﹐點P(4﹐− 1)對直線L鏡射後得點P",
+      "question_text": "設L：x − 2y = 0﹐點P(4﹐− 1)對直線L鏡射後得點P\\'\n(x\\'﹐y\\')﹐試求P\\' 之坐標為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒",
+      "answer_text": "$\\left(\\frac{8}{5},\\frac{19}{5}\\right)$",
+      "explanation_text": "已知直線的斜率$m = \\tan\\frac{\\theta}{2}$﹐所以$\\tan\\frac{\\theta}{2} = \\frac{1}{2}$﹐ 再由公式求$\\cos\\theta = \\frac{1 - \\tan^{2}\\frac{\\theta}{2}}{1 + \\tan^{2}\\frac{\\theta}{2}} = \\frac{1 - \\frac{1}{4}}{1 + \\frac{1}{4}} = \\frac{3}{5}$﹐$\\sin\\theta = \\frac{2\\tan\\frac{\\theta}{2}}{1 + \\tan^{2}\\frac{\\theta}{2}} = \\frac{2 ． \\frac{1}{2}}{1 + \\frac{1}{4}} = \\frac{4}{5}$﹐ 所以由鏡射變換公式知$\\begin{bmatrix} \\cos\\theta & \\sin\\theta \\ \\sin\\theta & - \\cos\\theta \\end{bmatrix}\\begin{bmatrix} 4 \\ - 1 \\end{bmatrix} = \\begin{bmatrix} \\frac{3}{5} & \\frac{4}{5} \\ \\frac{4}{5} & - \\frac{3}{5} \\end{bmatrix}\\begin{bmatrix} 4 \\ - 1 \\end{bmatrix} = \\begin{bmatrix} \\frac{8}{5} \\ \\frac{19}{5} \\end{bmatrix}$﹐ 即P\\' 之坐標為($\\frac{8}{5}$﹐$\\frac{19}{5}$)﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 34,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0035",
+      "title": "設直線L是有向角30°的終邊所在的直線﹐點A(3﹐−4)對直線L鏡射",
+      "question_text": "設直線L是有向角30°的終邊所在的直線﹐點A(3﹐−4)對直線L鏡射後的坐標為\n(1)$(\\frac{3}{2} + \\sqrt{3}, 1 + \\frac{3}{2}\\sqrt{3})$ (2)$(\\frac{3}{2} - 2\\sqrt{3}, 2 + \\frac{3}{2}\\sqrt{3})$ (3)$(3\\sqrt{3}, 1 + 2\\sqrt{3})$ (4)$(3 - \\frac{\\sqrt{3}}{2}, 2 + \\frac{3}{2}\\sqrt{3})$\n(5)$(\\frac{3}{2} - 2\\sqrt{3}, 2 - \\frac{3}{2}\\sqrt{3})$",
+      "answer_text": "(2)",
+      "explanation_text": "$m = \\tan 30{^\\circ} = \\frac{1}{\\sqrt{3}}$⇒$\\cos\\theta = \\frac{1 - m^{2}}{1 + m^{2}} = \\frac{1 - \\frac{1}{3}}{1 + \\frac{1}{3}} = \\frac{1}{2}$﹐$\\sin\\theta = \\frac{2m}{1 + m^{2}} = \\frac{\\sqrt{3}}{2}$\n⇒$\\begin{bmatrix} \\cos\\theta & \\sin\\theta \\ \\sin\\theta & - \\cos\\theta \\end{bmatrix}\\begin{bmatrix} 3 \\ - 4 \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} 3 \\ - 4 \\end{bmatrix} = \\begin{bmatrix} \\frac{3}{2} - 2\\sqrt{3} \\ 2 + \\frac{3}{2}\\sqrt{3} \\end{bmatrix}$﹐ 即所求鏡射坐標為$(\\frac{3}{2} - 2\\sqrt{3}, 2 + \\frac{3}{2}\\sqrt{3})$﹒\n故選(2)",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 35,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0036",
+      "title": "隨堂練習：坐標平面上點P(6﹐−4)﹐經直線L：$y = \\sqrt{3}x$",
+      "question_text": "坐標平面上點P(6﹐−4)﹐經直線L：$y = \\sqrt{3}x$鏡射後的點坐標為\n(1)$( - 2 - 3\\sqrt{3}, 3\\sqrt{3} - 2)$ (2)$( - 2 + 3\\sqrt{3}, 3\\sqrt{3} - 2)$ (3)$(2 - 3\\sqrt{3}, \\sqrt{3} + 2)$ (4)$( - 3 - 2\\sqrt{3}, 3\\sqrt{3} - 2)$\n(5)$(2 - 3\\sqrt{3}, 3\\sqrt{3} + 1)$",
+      "answer_text": "(4)",
+      "explanation_text": "L：$y = \\sqrt{3}x$ ⇒$m = \\tan\\frac{\\theta}{2} = \\sqrt{3}$﹐\n∴$\\cos\\theta = \\frac{1 - m^{2}}{1 + m^{2}} = \\frac{1 - 3}{1 + 3} = - \\frac{1}{2}$﹐$\\sin\\theta = \\frac{2m}{1 + m^{2}} = \\frac{2\\sqrt{3}}{1 + 3} = \\frac{\\sqrt{3}}{2}$\n⇒$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\cos\\theta & \\sin\\theta \\ \\sin\\theta & - \\cos\\theta \\end{bmatrix}\\begin{bmatrix} 6 \\ - 4 \\end{bmatrix} = \\begin{bmatrix} - \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} 6 \\ - 4 \\end{bmatrix} = \\begin{bmatrix} - 3 - 2\\sqrt{3} \\ - 2 + 3\\sqrt{3} \\end{bmatrix}$﹐ 即所求鏡射坐標為$( - 3 - 2\\sqrt{3}, - 2 + 3\\sqrt{3})$﹒\n故選(4)",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 36,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0037",
+      "title": "某點P先以O為中心旋轉80°，再對於直線$(\\sqrt{3} - 1",
+      "question_text": "某點P先以O為中心旋轉80°，再對於直線$(\\sqrt{3} - 1)x - (\\sqrt{3} + 1)y = 0$鏡射，其結果相當P點直 接對於直線y = (tanθ)x鏡射，0° < θ < 180°，求θ之值。",
+      "answer_text": "$55^\\circ$",
+      "explanation_text": "$(\\sqrt{3} - 1)x - (\\sqrt{3} + 1)y = 0$⇒$m = \\frac{\\sqrt{3} - 1}{\\sqrt{3} + 1} = 2 - \\sqrt{3} = \\tan\\varphi$﹐$\\varphi$為斜角﹐\n∴$\\cos\\theta = \\frac{1 - m^{2}}{1 + m^{2}} = \\frac{1 - (7 - 4\\sqrt{3})}{1 + (7 - 4\\sqrt{3})} = \\frac{- 6 + 4\\sqrt{3}}{8 - 4\\sqrt{3}} = \\frac{\\sqrt{3}}{2}$﹐$\\sin\\theta = \\frac{2m}{1 + m^{2}} = \\frac{4 - 2\\sqrt{3}}{1 + (7 - 4\\sqrt{3})} = \\frac{1}{2}$\n⇒鏡射矩陣$= \\begin{bmatrix} \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\ \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\end{bmatrix}$﹐又旋轉矩陣$= \\begin{bmatrix} \\cos 80{^\\circ} & - \\sin 80{^\\circ} \\ \\sin 80{^\\circ} & \\cos 80{^\\circ} \\end{bmatrix}$﹐\n∴$\\begin{bmatrix} \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\ \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\end{bmatrix}\\begin{bmatrix} \\cos 80{^\\circ} & - \\sin 80{^\\circ} \\ \\sin 80{^\\circ} & \\cos 80{^\\circ} \\end{bmatrix} = \\begin{bmatrix} \\cos 30{^\\circ} & \\sin 30{^\\circ} \\ \\sin 30{^\\circ} & - \\cos 30{^\\circ} \\end{bmatrix}\\begin{bmatrix} \\cos 80{^\\circ} & - \\sin 80{^\\circ} \\ \\sin 80{^\\circ} & \\cos 80{^\\circ} \\end{bmatrix}$ $$= \\begin{bmatrix} \\cos 80{^\\circ}\\cos 30{^\\circ} + \\sin 80{^\\circ}\\sin 30{^\\circ} & - \\sin 80{^\\circ}\\cos 30{^\\circ} + \\cos 80{^\\circ}\\sin 30{^\\circ} \\ \\sin 30{^\\circ}\\cos 80{^\\circ} - \\sin 80{^\\circ}\\cos 30{^\\circ} & - \\sin 80{^\\circ}\\sin 30{^\\circ} - \\cos 80{^\\circ}\\cos 30{^\\circ} \\end{bmatrix} = \\begin{bmatrix} \\cos 50{^\\circ} & - \\sin 50{^\\circ} \\ - \\sin 50{^\\circ} & - \\cos 50{^\\circ} \\end{bmatrix} = \\begin{bmatrix} \\cos 310{^\\circ} & \\sin 310{^\\circ} \\ \\sin 310{^\\circ} & - \\cos 310{^\\circ} \\end{bmatrix}$$﹐∴$2\\theta = 310{^\\circ}$⇒$\\theta = 155{^\\circ}$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 37,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0038",
+      "title": "下列各選項何者為正確？ (1)以原點為中心﹐點P(x﹐y)作轉角為1",
+      "question_text": "下列各選項何者為正確？\n(1)以原點為中心﹐點P(x﹐y)作轉角為120°的旋轉變換得P\\'\n(x\\'﹐y\\')﹐則$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} - \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$\n(2)點Q(x﹐y)以直線2x -- y = 0為鏡射軸的鏡射變換g得鏡像點Q\\'\n(x\\'﹐y\\')﹐則$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} - \\frac{3}{5} & \\frac{4}{5} \\ \\frac{4}{5} & \\frac{3}{5} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$\n(3)點A(x﹐y)先經以原點為中心﹐轉角為120°的旋轉變換f再經以直線2x -- y = 0為鏡射軸的 鏡射變換g得點A\\' (x\\'﹐y\\')﹐則$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{3 + 4\\sqrt{3}}{10} & \\frac{- 4 + 3\\sqrt{3}}{10} \\ \\frac{- 4 + 3\\sqrt{3}}{10} & \\frac{- 3 - 4\\sqrt{3}}{10} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$\n(4)點B(x﹐y)先經以直線2x -- y = 0為鏡射軸的鏡射變換g再經以原點為中心﹐轉角為120°的 旋轉變換f得點B\\' (x\\'﹐y\\')﹐則$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{3 - 4\\sqrt{3}}{10} & \\frac{- 4 - 3\\sqrt{3}}{10} \\ \\frac{- 4 - 3\\sqrt{3}}{10} & \\frac{- 3 + 4\\sqrt{3}}{10} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$\n(5)點C(x﹐y)先經以直線2x -- y = 0為鏡射軸的鏡射變換g再經此鏡射變換g得點C\\' (x\\'﹐y\\')﹐ 則$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ 0 & - 1 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$",
+      "answer_text": "(1)(2)(3)(4)",
+      "explanation_text": "(1)$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\cos 120{^\\circ} & - \\sin 120{^\\circ} \\ \\sin 120{^\\circ} & \\cos 120{^\\circ} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} - \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$﹐∴正確﹒\n(2) L：2x − y = 0﹐∴$m = \\tan\\frac{\\theta}{2} = 2$ ⇒$\\cos\\theta = \\frac{1 - m^{2}}{1 + m^{2}} = \\frac{1 - 4}{1 + 4} = - \\frac{3}{5}$﹐$\\sin\\theta = \\frac{2m}{1 + m^{2}} = \\frac{4}{1 + 4} = \\frac{4}{5}$\n⇒$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\cos\\theta & \\sin\\theta \\ \\sin\\theta & - \\cos\\theta \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} - \\frac{3}{5} & \\frac{4}{5} \\ \\frac{4}{5} & \\frac{3}{5} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$﹐∴正確﹒\n(3)由(1)(2) ⇒$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} - \\frac{3}{5} & \\frac{4}{5} \\ \\frac{4}{5} & \\frac{3}{5} \\end{bmatrix}\\begin{bmatrix} - \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{3 + 4\\sqrt{3}}{10} & \\frac{- 4 + 3\\sqrt{3}}{10} \\ \\frac{- 4 + 3\\sqrt{3}}{10} & \\frac{- 3 - 4\\sqrt{3}}{10} \\end{bmatrix}\\ \\begin{bmatrix} x \\ y \\end{bmatrix}$﹐∴正確﹒\n(4)由(1)(2) ⇒$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} - \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} - \\frac{3}{5} & \\frac{4}{5} \\ \\frac{4}{5} & \\frac{3}{5} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{3 - 4\\sqrt{3}}{10} & \\frac{- 4 - 3\\sqrt{3}}{10} \\ \\frac{- 4 - 3\\sqrt{3}}{10} & \\frac{- 3 + 4\\sqrt{3}}{10} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$﹐∴正確﹒\n(5)鏡射偶數次會回到原C(x﹐y)﹐即C\\' = C ⇒$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ 0 & 1 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$﹐∴不正確﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 38,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0039",
+      "title": "設O(0﹐0)﹐A(1﹐4)﹐且△OAB為等腰三角形﹐其中∠AOB",
+      "question_text": "設O(0﹐0)﹐A(1﹐4)﹐且△OAB為等腰三角形﹐其中∠AOB = 45°﹐且∠A = 90°﹐\n(1)而B在第一象限內﹐則B的坐標為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒(2)又△AOB對y軸鏡射得△A\\'OB\\'﹐而 A\\' 為A的鏡射點﹐B\\' 為B的鏡射點﹐則A\\' 的坐標為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒\n![",
+      "answer_text": "(1)$B(5,3)$；(2)$A'(-1,4)$",
+      "explanation_text": "(1)如圖﹐∠AOB = 45°﹐∠A = 90°﹐所以點B為A旋轉− 45°後再伸縮$\\sqrt{2}$倍﹐ 因此B的坐標(x﹐y)﹐ $\\left\\lbrack \\begin{array}{r} x \\ y \\end{array} \\right\\rbrack = \\begin{bmatrix} \\sqrt{2} & 0 \\ 0 & \\sqrt{2} \\end{bmatrix}\\begin{bmatrix} \\cos( - 45{^\\circ}) & - \\sin( - 45{^\\circ}) \\ \\sin( - 45{^\\circ}) & \\text{cos}( - 45{^\\circ}) \\end{bmatrix}\\left\\lbrack \\begin{array}{r} 1 \\ 4 \\end{array} \\right\\rbrack$ $= \\begin{bmatrix} \\sqrt{2} & 0 \\ 0 & \\sqrt{2} \\end{bmatrix}\\begin{bmatrix} \\frac{\\sqrt{2}}{2} & \\frac{\\sqrt{2}}{2} \\ \\frac{- \\sqrt{2}}{2} & \\frac{\\sqrt{2}}{2} \\end{bmatrix}\\left\\lbrack \\begin{array}{r} 1 \\ 4 \\end{array} \\right\\rbrack = \\begin{bmatrix} 1 & 1 \\ - 1 & 1 \\end{bmatrix}\\left\\lbrack \\begin{array}{r} 1 \\ 4 \\end{array} \\right\\rbrack = \\left\\lbrack \\begin{array}{r} 5 \\ 3 \\end{array} \\right\\rbrack$﹐B(5﹐3)﹐\n(2)以y軸為鏡射軸﹐A的鏡射點A\\'﹐A\\' 的坐標為(− 1﹐4)﹒]",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 39,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0040",
+      "title": "隨堂練習：設L~1~：x − 2y = 0﹐L~2~：x − 3y = 0﹐點",
+      "question_text": "設L~1~：x − 2y = 0﹐L~2~：x − 3y = 0﹐點P(x﹐y)對L~1~鏡射後﹐再對L~2~鏡射﹐最後得點P\\'\n(x\\'﹐y\\')﹐試以x﹐y表示x\\'﹐y\\'﹒",
+      "answer_text": "$x'=\\frac{24}{25}x+\\frac{7}{25}y$，$y'=-\\frac{7}{25}x+\\frac{24}{25}y$",
+      "explanation_text": "L~1~：x − 2y = 0\n⇒$m_{1} = \\frac{1}{2} = \\tan\\frac{\\theta_{1}}{2}$﹐L~2~：x − 3y = 0 ⇒$m_{2} = \\frac{1}{3} = \\tan\\frac{\\theta_{2}}{2}$﹐ ${\\cos\\theta}_{1} = \\frac{1 - {m_{1}}^{2}}{1 + {m_{1}}^{2}} = \\frac{1 - \\frac{1}{4}}{1 + \\frac{1}{4}} = \\frac{3}{5}$﹐${\\sin\\theta}_{1} = \\frac{2m_{1}}{1 + {m_{1}}^{2}} = \\frac{2 \\times \\frac{1}{2}}{1 + \\frac{1}{4}} = \\frac{4}{5}$﹐ ${\\cos\\theta}_{2} = \\frac{1 - {m_{2}}^{2}}{1 + {m_{2}}^{2}} = \\frac{1 - \\frac{1}{9}}{1 + \\frac{1}{9}} = \\frac{4}{5}$﹐${\\sin\\theta}_{2} = \\frac{2m_{2}}{1 + {m_{2}}^{2}} = \\frac{2 \\times \\frac{1}{3}}{1 + \\frac{1}{9}} = \\frac{3}{5}$\n⇒$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} {\\cos\\theta}_{2} & {\\sin\\theta}_{2} \\ {\\sin\\theta}_{2} & - {\\cos\\theta}_{2} \\end{bmatrix}\\begin{bmatrix} {\\cos\\theta}_{1} & {\\sin\\theta}_{1} \\ {\\sin\\theta}_{1} & - {\\cos\\theta}_{1} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{4}{5} & \\frac{3}{5} \\ \\frac{3}{5} & - \\frac{4}{5} \\end{bmatrix}\\begin{bmatrix} \\frac{3}{5} & \\frac{4}{5} \\ \\frac{4}{5} & - \\frac{3}{5} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$ $= \\begin{bmatrix} \\frac{24}{25} & \\frac{7}{25} \\ - \\frac{7}{25} & \\frac{24}{25} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{24}{25}x + \\frac{7}{25}y \\ - \\frac{7}{25}x + \\frac{24}{25}y \\end{bmatrix}$﹐\n∴$x' = \\frac{24}{25}x + \\frac{7}{25}y$﹐$y' = - \\frac{7}{25}x + \\frac{24}{25}y$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 40,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0041",
+      "title": "設L：2x − 6y + 5 = 0﹐依下列變換﹐求L\\' 的方程式",
+      "question_text": "設L：2x − 6y + 5 = 0﹐依下列變換﹐求L\\' 的方程式：(1)將L以原點為中心﹐旋轉30°得L\\'﹒\n(2)將L對x −$\\sqrt{3}$y = 0鏡射得L\\'﹒",
+      "answer_text": "(1)$(3+\\sqrt3)x+(1-3\\sqrt3)y+5=0$；(2)$(1-3\\sqrt3)x+(3+\\sqrt3)y+5=0$",
+      "explanation_text": "(1)因$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\cos 30{^\\circ} & - \\sin 30{^\\circ} \\ \\sin 30{^\\circ} & \\cos 30{^\\circ} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\ \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$﹐ 所以$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\ \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\end{bmatrix}^{- 1}\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\ - \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\end{bmatrix}\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{\\sqrt{3}x' + y'}{2} \\ \\frac{- x' + \\sqrt{3}y'}{2} \\end{bmatrix}$﹐ 將(x﹐y) =\n($\\frac{\\sqrt{3}x' + y'}{2}$﹐$\\frac{- x' + \\sqrt{3}y'}{2}$)代入L﹐ 得2($\\frac{\\sqrt{3}x' + y'}{2}$) − 6($\\frac{- x' + \\sqrt{3}y'}{2}$) + 5 = 0﹐ 即L\\' 為($\\sqrt{3}$+ 3) x + (1 − 3$\\sqrt{3}$) y + 5 = 0﹒\n(2)因x −$\\sqrt{3}$y = 0的斜率$m = \\frac{1}{\\sqrt{3}} = \\tan\\frac{\\theta}{2}$﹐θ = 60°﹐ $\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\cos 60{^\\circ} & \\sin 60{^\\circ} \\ \\sin 60{^\\circ} & - \\cos 60{^\\circ} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$﹐ 得$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\end{bmatrix}^{- 1}\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{x' + \\sqrt{3}y'}{2} \\ \\frac{\\sqrt{3}x' - y'}{2} \\end{bmatrix}$﹐ 將(x﹐y) =\n($\\frac{x' + \\sqrt{3}y'}{2}$﹐$\\frac{\\sqrt{3}x' - y'}{2}$)代入L﹐ 得2($\\frac{x' + \\sqrt{3}y'}{2}$) − 6($\\frac{\\sqrt{3}x' - y'}{2}$) + 5 = 0﹐ 即得L\\' 為(1 − 3$\\sqrt{3}$) x + ($\\sqrt{3}$+ 3) y + 5 = 0﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 41,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0042",
+      "title": "設L：3x + 5y − 4 = 0﹐依下列變換求L\\' 的方程式",
+      "question_text": "設L：3x + 5y − 4 = 0﹐依下列變換求L\\' 的方程式：\n(1)將L以O(0﹐0)為中心旋轉60°而得L\\'﹒(2)將L對x − 2y = 0鏡射而得L′﹒",
+      "answer_text": "(1)$(-3+5\\sqrt3)x-(3\\sqrt3+5)y+8=0$；(2)$29x-3y-20=0$",
+      "explanation_text": "設P(x﹐y) ∈ L﹐P\\' (x\\'﹐y\\') ∈ L\\'﹐\n(1) θ = 60° ⇒$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\cos 60{^\\circ} & - \\sin 60{^\\circ} \\ \\sin 60{^\\circ} & \\cos 60{^\\circ} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$﹐\n∴$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\end{bmatrix}^{- 1}\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\ - \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{2}x' + \\frac{\\sqrt{3}}{2}y' \\ - \\frac{\\sqrt{3}}{2}x' + \\frac{1}{2}y' \\end{bmatrix}$﹐ 代入L：3x + 5y − 4 = 0﹐∴$3(\\frac{1}{2}x' + \\frac{\\sqrt{3}}{2}y') + 5( - \\frac{\\sqrt{3}}{2}x' + \\frac{1}{2}y') - 4 = 0$﹐\n∴($\\frac{3 - 5\\sqrt{3}}{2}$)x\\' + ($\\frac{5 + 3\\sqrt{3}}{2}$)y\\' − 4 = 0﹐即L\\'：($\\frac{3 - 5\\sqrt{3}}{2}$)x +\n($\\frac{5 + 3\\sqrt{3}}{2}$)y − 4 = 0﹒\n(2) x − 2y = 0﹐∴$m = \\tan\\frac{\\theta}{2} = \\frac{1}{2}$⇒$\\cos\\theta = \\frac{1 - m^{2}}{1 + m^{2}} = \\frac{3}{5}$﹐$\\sin\\theta = \\frac{2m}{1 + m^{2}} = \\frac{4}{5}$﹐ $\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\cos\\theta & \\sin\\theta \\ \\sin\\theta & - \\cos\\theta \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{3}{5} & \\frac{4}{5} \\ \\frac{4}{5} & - \\frac{3}{5} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$﹐\n∴$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{3}{5} & \\frac{4}{5} \\ \\frac{4}{5} & - \\frac{3}{5} \\end{bmatrix}^{- 1}\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{3}{5} & \\frac{4}{5} \\ \\frac{4}{5} & - \\frac{3}{5} \\end{bmatrix}\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{3}{5}x' + \\frac{4}{5}y' \\ \\frac{4}{5}x' - \\frac{3}{5}y' \\end{bmatrix}$﹐ 代入L：3x + 5y − 4 = 0﹐∴$3(\\frac{3}{5}x' + \\frac{4}{5}y') + 5(\\frac{4}{5}x' - \\frac{3}{5}y') - 4 = 0$﹐\n∴$\\frac{29}{5}x' - \\frac{3}{5}y' - 4 = 0$﹐即L\\'：29x − 3y − 20 = 0﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 42,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0043",
+      "title": "求圓C：$x^{2} + y^{2} - 2x - 2\\sqrt{3",
+      "question_text": "求圓C：$x^{2} + y^{2} - 2x - 2\\sqrt{3}y - 5 = 0$以直線$y = \\frac{1}{\\sqrt{3}}x$為鏡射軸經鏡射後的圓方程式﹒\n【教冊題】",
+      "answer_text": "$(x-2)^2+y^2=9$",
+      "explanation_text": "圓C：$(x - 1)^{2} + (y - \\sqrt{3})^{2} = 9$﹐其圓心G(1, $\\sqrt{3}$)﹐半徑為3﹒\n鏡射軸的廣義角$\\theta = 30{^\\circ}$﹐圓心G鏡射後的位置($x'$, $y'$)﹐ 則$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\cos 60{^\\circ} & \\sin 60{^\\circ} \\ \\sin 60{^\\circ} & - \\cos 60{^\\circ} \\end{bmatrix}\\begin{bmatrix} 1 \\ \\sqrt{3} \\end{bmatrix} = \\begin{bmatrix} 2 \\ 0 \\end{bmatrix}$﹐ 因此圓C鏡射後的圓$C'$﹐其方程式為$(x - 2)^{2} + (y - 0)^{2} = 9$﹐即$x^{2} + y^{2} - 4x - 5 = 0$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 43,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0044",
+      "title": "鏡射矩陣A =$\\begin{bmatrix} \\cos\\theta",
+      "question_text": "鏡射矩陣A =$\\begin{bmatrix} \\cos\\theta & \\sin\\theta \\ \\sin\\theta & - \\cos\\theta \\end{bmatrix}$，(1)試求A^2^﹐A^3^﹐A^4^﹒(2)試求A + A^2^ + A^3^ +...+ A^100^﹒",
+      "answer_text": "(1)$A^2=I$，$A^3=A$，$A^4=I$；(2)$50(A+I)=50\\begin{bmatrix}1+\\cos\\theta&\\sin\\theta\\\\\\sin\\theta&1-\\cos\\theta\\end{bmatrix}$",
+      "explanation_text": "(1)A^2^ = AA = $\\begin{bmatrix} \\cos\\theta & \\sin\\theta \\ \\sin\\theta & - \\cos\\theta \\end{bmatrix}\\begin{bmatrix} \\cos\\theta & \\sin\\theta \\ \\sin\\theta & - \\cos\\theta \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ 0 & 1 \\end{bmatrix} = I$ A^3^ = AA^2^ = AI = A A^4^ = AA^3^ = AA = I\n(2)A + A^2^ + A^3^ + A^4^ +...+ A^100^ = A + I + A + I +...+ I = 50(A + I) = 50$\\begin{bmatrix} 1 + \\cos\\theta & \\sin\\theta \\ \\sin\\theta & 1 - \\cos\\theta \\end{bmatrix}$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 44,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0045",
+      "title": "設L﹕y = 2x﹐試求：(1)點C(4,3)對直線L的對稱點A﹒",
+      "question_text": "設L﹕y = 2x﹐試求：(1)點C(4,3)對直線L的對稱點A﹒\n(2)圓(x − 4)^2^ + (y − 3)^2^ = 9對直線L的對稱方程式﹒",
+      "answer_text": "(1)$A(0,5)$；(2)$x^2+(y-5)^2=9$",
+      "explanation_text": "(1)由鏡射矩陣$\\frac{1}{1 + m^{2}}\\begin{bmatrix} 1 - m^{2} & 2m \\ 2m & m^{2} - 1 \\end{bmatrix} = \\frac{1}{5}\\begin{bmatrix} - 3 & 4 \\ 4 & 3 \\end{bmatrix}$﹐ 設A(X,Y)﹐ $\\begin{bmatrix} X \\ Y \\end{bmatrix} = \\frac{1}{5}\\begin{bmatrix} - 3 & 4 \\ 4 & 3 \\end{bmatrix}\\begin{bmatrix} 4 \\ 3 \\end{bmatrix} = \\begin{bmatrix} 0 \\ 5 \\end{bmatrix}$﹐得對稱點A(0,5)﹒\n(2)圓(x − 4)^2^ + (y − 3)^2^ = 9的圓心C(4,3)﹐半徑r = 3﹐ 故對稱方程式的圓心A(0,5)﹐半徑r = 3﹐ 得x^2^ + (y − 5)^2^ = 9﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 45,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0046",
+      "title": "試求拋物線y^2^ = 4x對稱於下列直線的方程式；(1)x軸﹒ (",
+      "question_text": "試求拋物線y^2^ = 4x對稱於下列直線的方程式；(1)x軸﹒\n(2)y軸﹒ (3)y = x﹒",
+      "answer_text": "(1)$y^2=4x$；(2)$y^2=-4x$；(3)$x^2=4y$",
+      "explanation_text": "設P(x,y)\n(1)$\\begin{bmatrix} X \\ Y \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ 0 & - 1 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} x \\ - y \\end{bmatrix}$﹐即X = x﹐Y = − y﹐ x = X﹐y = − Y代入y^2^ = 4x﹐得新方程式Y^2^ = 4X﹐即y^2^ = 4x﹒\n(2)$\\begin{bmatrix} X \\ Y \\end{bmatrix} = \\begin{bmatrix} - 1 & 0 \\ 0 & 1 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} - x \\ y \\end{bmatrix}$﹐即X = − x﹐Y = y﹐ x = − X﹐y = Y代入y^2^ = 4x﹐得新方程式Y^2^ = − 4X﹐即y^2^ = − 4x﹒\n(3)$\\begin{bmatrix} X \\ Y \\end{bmatrix} = \\begin{bmatrix} 0 & 1 \\ 1 & 0 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} y \\ x \\end{bmatrix}$﹐即X = y﹐Y = x﹐ x = Y﹐y = X代入y^2^ = 4x﹐得新方程式X^2^ = 4Y﹐即x^2^ = 4y﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 46,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0047",
+      "title": "設拋物線Γ ﹕y = x^2^ + 2x + 3在對直線L﹕y =",
+      "question_text": "設拋物線Γ ﹕y = x^2^ + 2x + 3在對直線L﹕y = x的鏡射下變換成另一拋物線Γ ′﹐ 求Γ ′之方程式﹒",
+      "answer_text": "$x-2=(y+1)^2$",
+      "explanation_text": "設P′(X,Y)為Γ ′上任一點﹐若P′係由Γ上一點P(x,y)鏡射而得﹐ 則X = y﹐Y = x﹒\n因P之坐標(x,y)滿足y = x^2^ + 2x + 3﹐ 故P′ 之坐標(X,Y)滿足X = Y^2^ + 2Y + 3﹐ 亦即Γ ′之方程式為x = y^2^ + 2y + 3﹐ 將方程式改寫成x − 2 = (y + 1)^2^﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題2：平面上的線性變換－鏡射",
+      "source_order": 47,
+      "tags": [
+        "s4-4-4",
+        "section:主題2：平面上的線性變換－鏡射",
+        "marker:範例12"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0048",
+      "title": "求點A(1, 3)﹐B($- 2$, 4)經伸縮矩陣$\\begin{",
+      "question_text": "求點A(1, 3)﹐B($- 2$, 4)經伸縮矩陣$\\begin{bmatrix} 3 & 0 \\ 0 & \\frac{1}{2} \\end{bmatrix}$的伸縮變換後位置之坐標﹒\n【教冊題】",
+      "answer_text": "$A\\left(3,\\frac{3}{2}\\right)$；$B(-6,2)$",
+      "explanation_text": "$\\begin{bmatrix} 3 & 0 \\ 0 & \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} 1 \\ 3 \\end{bmatrix} = \\begin{bmatrix} 3 \\ \\frac{3}{2} \\end{bmatrix}$﹐$\\begin{bmatrix} 3 & 0 \\ 0 & \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} - 2 \\ 4 \\end{bmatrix} = \\begin{bmatrix} - 6 \\ 2 \\end{bmatrix}$﹐ 故A變換後的位置之坐標為(3, $\\frac{3}{2}$)﹐B變換後的位置之坐標為($- 6$, 2)﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題3：平面上的線性變換－伸縮",
+      "source_order": 48,
+      "tags": [
+        "s4-4-4",
+        "section:主題3：平面上的線性變換－伸縮",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0049",
+      "title": "設A =$\\begin{bmatrix} 3 & 0 \\ 0 & 2",
+      "question_text": "設A =$\\begin{bmatrix} 3 & 0 \\ 0 & 2 \\end{bmatrix}$﹐在A的伸縮變換下﹐試求：(1)P(2,1)所對應的點P′﹒(2)對應到Q′(9,6)的點Q﹒",
+      "answer_text": "(1)$P'(6,2)$；(2)$Q(3,3)$",
+      "explanation_text": "(1)$\\begin{bmatrix} 3 & 0 \\ 0 & 2 \\end{bmatrix}\\begin{bmatrix} 2 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 6 \\ 2 \\end{bmatrix}$﹐得P′(6,2)﹒\n(2)$\\begin{bmatrix} 3 & 0 \\ 0 & 2 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} 3x \\ 2y \\end{bmatrix}$﹐得3x = 9﹐2y = 6﹐故Q(3,3)﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題3：平面上的線性變換－伸縮",
+      "source_order": 49,
+      "tags": [
+        "s4-4-4",
+        "section:主題3：平面上的線性變換－伸縮",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0050",
+      "title": "設A =$\\begin{bmatrix} 3 & 0 \\ 0 & 2",
+      "question_text": "設A =$\\begin{bmatrix} 3 & 0 \\ 0 & 2 \\end{bmatrix}$在A的伸縮變換下：(1)L﹕x + 2y = 3所對應的直線﹒\n(2)圓x^2^ + y^2^ = 4所對應的方程式為何﹖",
+      "answer_text": "(1)$x+3y=9$；(2)$\\frac{x^2}{36}+\\frac{y^2}{16}=1$",
+      "explanation_text": "$\\begin{bmatrix} X \\ Y \\end{bmatrix} = \\begin{bmatrix} 3 & 0 \\ 0 & 2 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$ 由X = 3x﹐Y = 2y﹐得x =$\\frac{X}{3}$﹐y =$\\frac{Y}{2}$ 分別代入\n(1)x + 2y = 3得$\\frac{X}{3} + 2 \\cdot \\frac{Y}{2} = 3$\n⇒X + 3Y = 9﹐即x + 3y = 9﹒\n(2)x^2^ + y^2^ = 4得$\\frac{X^{2}}{9} + \\frac{Y^{2}}{4} = 4$\n⇒$\\frac{X^{2}}{36} + \\frac{Y^{2}}{16} = 1$﹐即$\\frac{x^{2}}{36} + \\frac{y^{2}}{16} = 1$是一橢圓﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題3：平面上的線性變換－伸縮",
+      "source_order": 50,
+      "tags": [
+        "s4-4-4",
+        "section:主題3：平面上的線性變換－伸縮",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0051",
+      "title": "設圓C：x^2^ + y^2^ = 9﹐以O為中心伸縮5倍﹐求變換後",
+      "question_text": "設圓C：x^2^ + y^2^ = 9﹐以O為中心伸縮5倍﹐求變換後的圖形方程式﹒",
+      "answer_text": "$x^2+y^2=225$",
+      "explanation_text": "設P\\' (x\\'﹐y\\')為變換後圖形上的動點\n⇒$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} 5 & 0 \\ 0 & 5 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} 5x \\ 5y \\end{bmatrix}$﹐∴$x = \\frac{1}{5}x'$﹐$y = \\frac{1}{5}y'$﹐ 代入x^2^ + y^2^ = 9﹐∴$(\\frac{1}{5}x')^{2} + (\\frac{1}{5}y')^{2} = 9$\n⇒ x\\' ^2^ + y\\' ^2^ = 25 × 9 = 225﹐即所求方程式為x^2^ + y^2^ = 225",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題3：平面上的線性變換－伸縮",
+      "source_order": 51,
+      "tags": [
+        "s4-4-4",
+        "section:主題3：平面上的線性變換－伸縮",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0052",
+      "title": "圓C﹕x^2^ + y^2^ = 1在(x,y) → (2x,y)的",
+      "question_text": "圓C﹕x^2^ + y^2^ = 1在(x,y) →\n(2x,y)的伸縮變換下成圖形Γ﹐試求：(1)Γ 的方程式﹒(2)Γ 的面積﹒",
+      "answer_text": "(1)$\\frac{x^2}{4}+y^2=1$；(2)$2\\pi$",
+      "explanation_text": "設P(X,Y)為Γ上的一點﹐ 由X = 2x﹐Y = y知x =$\\frac{X}{2}$﹐y=Y﹐ 代入x^2^ + y^2^ = 1中得$\\frac{X^{2}}{4} + \\frac{Y^{2}}{1} = 1$\n(1)Γ 的方程式$\\frac{x^{2}}{4} + \\frac{y^{2}}{1} = 1$﹒\n(2)因a = 2﹐b = 1﹐得ab = 2﹐知橢圓面積為2π﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題3：平面上的線性變換－伸縮",
+      "source_order": 52,
+      "tags": [
+        "s4-4-4",
+        "section:主題3：平面上的線性變換－伸縮",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0053",
+      "title": "設拋物線Γ ﹕y^2^ = 8x在(x,y) → (2x,3y)的伸",
+      "question_text": "設拋物線Γ ﹕y^2^ = 8x在(x,y) →\n(2x,3y)的伸縮下變換成另一圖形Γ′﹐求Γ ′ 的方程式﹒",
+      "answer_text": "$y^2=36x$",
+      "explanation_text": "設P′(X,Y)為Γ ′上任一點﹐若P′係由Γ上一點P(x,y)伸縮而得﹐則X = 2x﹐Y = 3y﹐ 故x =$\\frac{X}{2}$﹐y =$\\frac{Y}{3}$﹒\n因P之坐標(x,y)滿足y^2^ = 8x﹐ 故P′之坐標(X,Y)滿足$(\\frac{Y}{3})^{2} = 8 \\times \\frac{X}{2}$﹐即Y^2^ = 36X﹒\n因此Γ′為一拋物線﹐其方程式為y^2^ = 36x﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題3：平面上的線性變換－伸縮",
+      "source_order": 53,
+      "tags": [
+        "s4-4-4",
+        "section:主題3：平面上的線性變換－伸縮",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0054",
+      "title": "求點A(3,$- 2$)沿y軸方向推移x軸的$\\frac{2}{3}",
+      "question_text": "求點A(3,$- 2$)沿y軸方向推移x軸的$\\frac{2}{3}$倍之後位置的坐標﹒\n【教冊題】",
+      "answer_text": "$(3,0)$",
+      "explanation_text": "$\\begin{bmatrix} 1 & 0 \\ \\frac{2}{3} & 1 \\end{bmatrix}\\begin{bmatrix} 3 \\ - 2 \\end{bmatrix} = \\begin{bmatrix} 3 \\ 0 \\end{bmatrix}$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 54,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0055",
+      "title": "設直線L在方陣$\\begin{bmatrix} 1 & 2 \\ 0",
+      "question_text": "設直線L在方陣$\\begin{bmatrix} 1 & 2 \\ 0 & 1 \\end{bmatrix}$的推移變換下﹐得一新直線L\\'﹐若L之方程式為4x + 3y − 5 = 0﹐ 則L\\' 之方程式為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒",
+      "answer_text": "$4x-5y-5=0$",
+      "explanation_text": "$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} 1 & 2 \\ 0 & 1 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} x + 2y \\ y \\end{bmatrix}$⇒\n[圖:program-db/assets/question-media/s4-4-4/image16.png]\n⇒\n[圖:program-db/assets/question-media/s4-4-4/image17.png] 代入4x + 3y − 5 = 0 ⇒ 4(x\\' − 2y\\') + 3y\\' − 5 = 0 ⇒ 4x\\' − 5y\\' − 5 = 0﹐ 即L\\' 之方程式為4x − 5y − 5 = 0﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 55,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0056",
+      "title": "設矩形OABC的四頂點坐標為O(0,0)﹐A(2,0)﹐B(2,1)",
+      "question_text": "設矩形OABC的四頂點坐標為O(0,0)﹐A(2,0)﹐B(2,1)﹐C(0,1)﹒將此四個頂點分別沿y軸推 移x坐標的2倍﹐則四邊形O′A′B′C′的面積為何﹖",
+      "answer_text": "$2$",
+      "explanation_text": "在推移的矩陣表示中﹐代入A(2,0)﹐得$\\begin{bmatrix} 1 & 0 \\ 2 & 1 \\end{bmatrix}\\begin{bmatrix} 2 \\ 0 \\end{bmatrix} = \\begin{bmatrix} 2 \\ 4 \\end{bmatrix}$ 即A′(2,4)﹒同樣的方法﹐可得O′(0,0)﹐B′(2,5)﹐C′(0,1)﹐ 即O與C兩點的對應點是自己本身﹒\n因為四邊形O′A′B′C′是底為1高為2的平行四邊形﹐所以其面積為1 × 2 = 2﹒\n[圖:program-db/assets/question-media/s4-4-4/image18.png]",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 56,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0057",
+      "title": "在(x,y) → (x + 2y,y)的推移變換下：(1)點P(3,",
+      "question_text": "在(x,y) → (x + 2y,y)的推移變換下：(1)點P(3,1)所對應的新坐標﹒\n(2)直線2x + y = 5所對應的方程式﹒(3)圓C﹕x^2^ + y^2^ = 1所對應的方程式﹒",
+      "answer_text": "(1)$(5,1)$；(2)$2x-3y=5$；(3)$x^2-4xy+5y^2=1$",
+      "explanation_text": "(1)P(3,1) → P′(3 + 2,1)得P′(5,1)﹒\n(2)設新坐標為(X,Y)﹐則x + 2y = X﹐y = Y﹐ 滿足x = X − 2Y﹐y = Y﹐ 代入直線中﹐2(X − 2Y) + Y = 5得2X − 3Y = 5﹐即2x − 3y = 5﹒\n(3)代入圓C中(X − 2Y)^2^ + Y^2^ = 1得X^2^ − 4XY + 5Y^2^ = 1﹐ 即x^2^ − 4xy + 5y^2^ = 1﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 57,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0058",
+      "title": "隨堂練習：設A =$\\begin{bmatrix} 1 & 2 \\ 0 & 1",
+      "question_text": "設A =$\\begin{bmatrix} 1 & 2 \\ 0 & 1 \\end{bmatrix}$在A的推移變換下：(1)L﹕x + 3y = 4所對應的方程式﹒\n(2)圓x^2^ + y^2^ = 16所對應的方程式﹒",
+      "answer_text": "(1)$x+y=4$；(2)$x^2-4xy+5y^2=16$",
+      "explanation_text": "$\\begin{bmatrix} 1 & 2 \\ 0 & 1 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} X \\ Y \\end{bmatrix}$﹐因A^−\\ 1^ =$\\begin{bmatrix} 1 & - 2 \\ 0 & 1 \\end{bmatrix}$ $$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} 1 & - 2 \\ 0 & 1 \\end{bmatrix}\\begin{bmatrix} X \\ Y \\end{bmatrix} $$得x = X − 2Y﹐y = Y代入方程式中\n(1)x + 3y = 4﹐得(X − 2Y) + 3Y = 4\n⇒X + Y = 4﹐即x + y = 4﹒\n(2)x^2^ + y^2^ = 16﹐得(X − 2Y)^2^ + (Y)^2^ = 16\n⇒X^2^ − 4XY + 5Y^2^ = 16﹐即x^2^ − 4xy + 5y^2^ = 16﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 58,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0059",
+      "title": "隨堂練習：設圓C﹕x^2^ + y^2^ = 25在(x,y) → (x −",
+      "question_text": "設圓C﹕x^2^ + y^2^ = 25在(x,y) → (x − 2y, y)的推移下變換成另一圖形Γ﹐求Γ 的方程式﹒",
+      "answer_text": "$x^2+4xy+5y^2=25$",
+      "explanation_text": "設P′(X,Y)為Γ上任一點﹐若P′係由C上一點P(x,y)推移而得﹐ 則X = x − 2y﹐Y = y﹐故x = X + 2Y﹐y = Y﹒\n因P之坐標(x,y)滿足x^2^ + y^2^ = 25﹐ 故P′之坐標(X,Y)滿足(X + 2Y)^2^ + Y^2^ = 25﹐ 因此Γ之方程式為(x + 2y)^2^ + y^2^ = 25﹐ 亦即x^2^ + 4xy + 5y^2^ = 25﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 59,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0060",
+      "title": ".坐標平面上一點A(3﹐−4)﹐若以原點O為旋轉中心﹐先旋轉60°﹐",
+      "question_text": ".坐標平面上一點A(3﹐−4)﹐若以原點O為旋轉中心﹐先旋轉60°﹐再沿x軸方 向推移y坐標的2倍﹐則新坐標為 (1)$(\\frac{5 - 10\\sqrt{3}}{2}, \\frac{4 - 3\\sqrt{3}}{2})$ (2)$(\\frac{- 5 + 10\\sqrt{3}}{2}, \\frac{- 4 + 3\\sqrt{3}}{2})$\n(3)$(\\frac{5 + 6\\sqrt{3}}{2}, \\frac{4 + \\sqrt{3}}{2})$ (4)$(\\frac{5 - 2\\sqrt{3}}{2}, \\frac{- 4 + \\sqrt{3}}{2})$ (5)$(\\frac{- 5 + 6\\sqrt{3}}{2}, \\frac{- 4 + 3\\sqrt{3}}{2})$﹒",
+      "answer_text": "(2)",
+      "explanation_text": "設新坐標為(x﹐y)\n⇒$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} 1 & 2 \\ 0 & 1 \\end{bmatrix}\\begin{bmatrix} \\cos 60{^\\circ} & - \\sin 60{^\\circ} \\ \\sin 60{^\\circ} & \\cos 60{^\\circ} \\end{bmatrix}\\begin{bmatrix} 3 \\ - 4 \\end{bmatrix} = \\begin{bmatrix} 1 & 2 \\ 0 & 1 \\end{bmatrix}\\begin{bmatrix} \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} 3 \\ - 4 \\end{bmatrix}$ $= \\begin{bmatrix} \\frac{1 + 2\\sqrt{3}}{2} & \\frac{2 - \\sqrt{3}}{2} \\ \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} 3 \\ - 4 \\end{bmatrix} = \\begin{bmatrix} \\frac{- 5 + 10\\sqrt{3}}{2} \\ \\frac{- 4 + 3\\sqrt{3}}{2} \\end{bmatrix}$﹐ 即新坐標為$(\\frac{- 5 + 10\\sqrt{3}}{2}, \\frac{- 4 + 3\\sqrt{3}}{2})$﹒\n故選(2)",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 60,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0061",
+      "title": "隨堂練習：設P(6﹐4)﹐依下列的變換﹐求變換後P\\' 點之坐標： (1)以O",
+      "question_text": "設P(6﹐4)﹐依下列的變換﹐求變換後P\\' 點之坐標：\n(1)以O為中心旋轉135°﹒(2)以O為中心伸縮$\\frac{1}{2}$倍﹒(3)對L：($\\sqrt{3} - 1)$ x − ($\\sqrt{3} + 1)$ y = 0鏡射﹒\n(4)沿y軸推移x坐標的3倍﹒",
+      "answer_text": "(1)$(-5\\sqrt2,\\sqrt2)$；(2)$(3,2)$；(3)$(2+3\\sqrt3,3-2\\sqrt3)$；(4)$(6,22)$",
+      "explanation_text": "(1)$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\cos 135{^\\circ} & - \\sin 135{^\\circ} \\ \\sin 135{^\\circ} & \\cos 135{^\\circ} \\end{bmatrix}\\begin{bmatrix} 6 \\ 4 \\end{bmatrix} = \\begin{bmatrix} - \\frac{\\sqrt{2}}{2} & - \\frac{\\sqrt{2}}{2} \\ \\frac{\\sqrt{2}}{2} & - \\frac{\\sqrt{2}}{2} \\end{bmatrix}\\begin{bmatrix} 6 \\ 4 \\end{bmatrix} = \\begin{bmatrix} - 5\\sqrt{2} \\ \\sqrt{2} \\end{bmatrix}$﹐∴P\\' (− 5$\\sqrt{2}$﹐$\\sqrt{2}$)﹒\n(2)$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{2} & 0 \\ 0 & \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} 6 \\ 4 \\end{bmatrix} = \\begin{bmatrix} 3 \\ 2 \\end{bmatrix}$﹐∴P\\' (3﹐2)﹒\n(3)$m = \\tan\\frac{\\theta}{2} = \\frac{\\sqrt{3} - 1}{\\sqrt{3} + 1} = 2 - \\sqrt{3}$﹐\n∴$\\cos\\theta = \\frac{1 - m^{2}}{1 + m^{2}} = \\frac{1 - (2 - \\sqrt{3})^{2}}{1 + (2 - \\sqrt{3})^{2}} = \\frac{\\sqrt{3}}{2}$﹐$\\sin\\theta = \\frac{2m}{1 + m^{2}} = \\frac{4 - 2\\sqrt{3}}{1 + (2 - \\sqrt{3})^{2}} = \\frac{1}{2}$\n⇒$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{\\sqrt{3}}{2} & \\frac{1}{2} \\ \\frac{1}{2} & - \\frac{\\sqrt{3}}{2} \\end{bmatrix}\\begin{bmatrix} 6 \\ 4 \\end{bmatrix} = \\begin{bmatrix} 2 + 3\\sqrt{3} \\ 3 - 2\\sqrt{3} \\end{bmatrix}$﹐∴P\\' (2 + 3$\\sqrt{3}$﹐3 − 2$\\sqrt{3}$)﹒\n(4)$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ 3 & 1 \\end{bmatrix}\\begin{bmatrix} 6 \\ 4 \\end{bmatrix} = \\begin{bmatrix} 6 \\ 22 \\end{bmatrix}$﹐∴P\\' (6﹐22)﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 61,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0062",
+      "title": "在平面上有一定點P作下列各變換後得另一點P\\' (− 4﹐3) ﹐試",
+      "question_text": "在平面上有一定點P作下列各變換後得另一點P\\'\n(− 4﹐3) ﹐試求P點之坐標﹒\n(1)平移向量$\\overset{⃑}{v} =$\n(1﹐2)﹒(2)以原點為中心﹐旋轉45°﹒\n(2)以原點為中心﹐旋轉45°﹒\n(3)對直線x + 2y = 0鏡射﹒\n(4)以原點為中心﹐縮短為$\\frac{1}{2}$倍﹒\n5)沿y軸方向推移x坐標的$\\frac{1}{3}$倍﹒",
+      "answer_text": "(1)$(-5,1)$；(2)$\\left(-\\frac{\\sqrt2}{2},\\frac{7\\sqrt2}{2}\\right)$；(3)$\\left(-\\frac{24}{5},\\frac{7}{5}\\right)$；(4)$(-8,6)$；(5)$\\left(-4,\\frac{13}{3}\\right)$",
+      "explanation_text": "(1)$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} x \\ y \\end{bmatrix} + \\begin{bmatrix} 1 \\ 2 \\end{bmatrix}$⇒$\\begin{bmatrix} - 4 \\ 3 \\end{bmatrix} = \\begin{bmatrix} x \\ y \\end{bmatrix} + \\begin{bmatrix} 1 \\ 2 \\end{bmatrix}$⇒$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} - 4 \\ \\text{ }3 \\end{bmatrix} - \\begin{bmatrix} 1 \\ 2 \\end{bmatrix} = \\begin{bmatrix} - 5 \\ 1 \\end{bmatrix}$﹐即P(− 5﹐1)﹒\n(2)$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\cos 45{^\\circ} & - \\sin 45{^\\circ} \\ \\sin 45{^\\circ} & \\cos 45{^\\circ} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$⇒$\\begin{bmatrix} - 4 \\ 3 \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{\\sqrt{2}} & \\frac{- 1}{\\sqrt{2}} \\ \\frac{1}{\\sqrt{2}} & \\frac{1}{\\sqrt{2}} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$\n⇒$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{\\sqrt{2}} & \\frac{- 1}{\\sqrt{2}} \\ \\frac{1}{\\sqrt{2}} & \\frac{1}{\\sqrt{2}} \\end{bmatrix}^{- 1}\\begin{bmatrix} - 4 \\ 3 \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{\\sqrt{2}} & \\frac{1}{\\sqrt{2}} \\ \\frac{- 1}{\\sqrt{2}} & \\frac{1}{\\sqrt{2}} \\end{bmatrix}\\begin{bmatrix} - 4 \\ 3 \\end{bmatrix} = \\begin{bmatrix} \\frac{- 1}{\\sqrt{2}} \\ \\frac{7}{\\sqrt{2}} \\end{bmatrix}$﹐即P($\\frac{- 1}{\\sqrt{2}}$﹐$\\frac{7}{\\sqrt{2}}$)﹒\n(3) x + 2y = 0之斜率為$- \\frac{1}{2}$⇒$\\tan\\theta = - \\frac{1}{2}$﹐$90{^\\circ} < \\theta < 180{^\\circ}$\n⇒$\\cos\\theta = \\frac{- 2}{\\sqrt{5}}$﹐$\\sin\\theta = \\frac{1}{\\sqrt{5}}$⇒$\\cos 2\\theta = \\frac{3}{5}$﹐$\\sin 2\\theta = \\frac{- 4}{5}$﹐ $\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\cos 2\\theta & \\sin 2\\theta \\ \\sin 2\\theta & - \\cos 2\\theta \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$⇒$\\begin{bmatrix} - 4 \\ 3 \\end{bmatrix} = \\begin{bmatrix} \\frac{3}{5} & - \\frac{4}{5} \\ - \\frac{4}{5} & - \\frac{3}{5} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$\n⇒$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\frac{3}{5} & - \\frac{4}{5} \\ - \\frac{4}{5} & - \\frac{3}{5} \\end{bmatrix}^{- 1}\\begin{bmatrix} - 4 \\ 3 \\end{bmatrix} = \\begin{bmatrix} \\frac{3}{5} & - \\frac{4}{5} \\ - \\frac{4}{5} & - \\frac{3}{5} \\end{bmatrix}\\begin{bmatrix} - 4 \\ 3 \\end{bmatrix} = \\begin{bmatrix} \\frac{- 24}{5} \\ \\frac{7}{5} \\end{bmatrix}$﹐即P($\\frac{- 24}{5}$﹐$\\frac{7}{5}$)﹒\n(4)$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{2} & 0 \\ 0 & \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$⇒$\\begin{bmatrix} - 4 \\ 3 \\end{bmatrix} = \\begin{bmatrix} \\frac{1}{2} & 0 \\ 0 & \\frac{1}{2} \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$⇒$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} 2 & 0 \\ 0 & 2 \\end{bmatrix}\\begin{bmatrix} - 4 \\ 3 \\end{bmatrix} = \\begin{bmatrix} - 8 \\ 6 \\end{bmatrix}$﹐即P(− 8﹐6)﹒\n(5)$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ \\frac{1}{3} & 1 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$⇒$\\begin{bmatrix} - 4 \\ 3 \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ \\frac{1}{3} & 1 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$\n⇒$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ \\frac{1}{3} & 1 \\end{bmatrix}^{- 1}\\begin{bmatrix} - 4 \\ 3 \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ - \\frac{1}{3} & 1 \\end{bmatrix}\\begin{bmatrix} - 4 \\ 3 \\end{bmatrix} = \\begin{bmatrix} - 4 \\ \\frac{13}{3} \\end{bmatrix}$﹐即P(− 4﹐$\\frac{13}{3}$)﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 62,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0063",
+      "title": "下列各方陣所定義的平面變換何者正確？ (1)對直線y = 2x鏡射的",
+      "question_text": "下列各方陣所定義的平面變換何者正確？\n(1)對直線y = 2x鏡射的方陣表示為$\\begin{bmatrix} - \\frac{3}{5} & \\frac{4}{5} \\ \\frac{4}{5} & \\frac{3}{5} \\end{bmatrix}$ (2)以原點為中心旋轉90°的方陣表示為$\\begin{bmatrix} 0 & 1 \\ - 1 & 0 \\end{bmatrix}$\n(3)$\\begin{bmatrix} 1 & 0 \\ 0 & - 4 \\end{bmatrix}$表示在鉛直方向伸張4倍﹐再對x軸做鏡射\n(4)若坐標平面上有一正方形面積為a﹐則在(x﹐y) → (x + 3y﹐y)的變換下﹐此正方形變換成 平行四邊形﹐其面積仍為a\n(5)若△ABC在(x﹐y) →(2x﹐$\\frac{1}{2}$y)的變換下﹐變換成△A\\'B\\'C\\'﹐則△ABC與△A\\'B\\'C\\'的面積相等",
+      "answer_text": "$(1)(3)(4)(5)$",
+      "explanation_text": "(1) tanθ = 2 ⇒ cos2θ =$- \\frac{3}{5}$﹐sin2θ =$\\frac{4}{5}$﹐\n∴對y = 2x之鏡射方陣為$\\begin{bmatrix} \\cos 2\\theta & \\sin 2\\theta \\ \\sin 2\\theta & - \\cos 2\\theta \\end{bmatrix} = \\begin{bmatrix} \\frac{- 3}{5} & \\frac{4}{5} \\ \\frac{4}{5} & \\frac{3}{5} \\end{bmatrix}$﹐∴正確﹒\n(2)以原點為中心旋轉90°之方陣為$\\begin{bmatrix} \\cos 90{^\\circ} & - \\sin 90{^\\circ} \\ \\sin 90{^\\circ} & \\cos 90{^\\circ} \\end{bmatrix} = \\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix}$﹐∴不正確﹒\n(3)$\\begin{bmatrix} 1 & 0 \\ 0 & - 4 \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ 0 & - 1 \\end{bmatrix}\\begin{bmatrix} 1 & 0 \\ 0 & 4 \\end{bmatrix}$﹐即鉛直方向伸張4倍﹐再對x軸做鏡射﹐∴正確﹒\n(4) (x﹐y) → (x + 3y﹐y)表原圖形做水平推移3y此變換面積不變﹐∴正確﹒\n(5)令A(x~1~﹐y~1~)﹐B(x~2~﹐y~2~)﹐C(x~3~﹐y~3~)作(x﹐y) → (2x﹐$\\frac{1}{2}$y)的變換後﹐ $A'(2x_{1}, \\frac{1}{2}y_{1})$﹐$B'(2x_{2}, \\frac{1}{2}y_{2})$﹐$C'(2x_{3}, \\frac{1}{2}y_{3})$﹐ △A\\'B\\'C\\' 面積$= \\frac{1}{2}|\\left| \\begin{matrix} 2x_{2} - 2x_{1} & \\frac{1}{2}y_{2} - \\frac{1}{2}y_{1} \\ 2x_{3} - 2x_{1} & \\frac{1}{2}y_{3} - \\frac{1}{2}y_{1} \\end{matrix} \\right||$ $= \\frac{1}{2} ． 2 ． \\frac{1}{2}|\\left| \\begin{matrix} x_{2} - x_{1} & y_{2} - y_{1} \\ x_{3} - x_{1} & y_{3} - y_{1} \\end{matrix} \\right|| =$△ABC面積﹐\n∴正確﹒\n故選(1)(3)(4)(5)",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 63,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0064",
+      "title": "隨堂練習：有關二階方陣所對應的平面變換﹐下列敘述何者為真？ (1)$\\begi",
+      "question_text": "有關二階方陣所對應的平面變換﹐下列敘述何者為真？\n(1)$\\begin{bmatrix} 1 & 0 \\ 0 & - 1 \\end{bmatrix}$為對y軸鏡射的變換 (2)$\\begin{bmatrix} 0 & 1 \\ 1 & 0 \\end{bmatrix}$為對直線x = y鏡射的變換\n(3)$\\begin{bmatrix} - 1 & 0 \\ 0 & - 1 \\end{bmatrix}$為對原點作對稱的變換 (4)△ABC經$\\begin{bmatrix} 2 & 0 \\ 0 & \\frac{1}{2} \\end{bmatrix}$作伸縮變換後﹐面積保持不變\n(5)△ABC經方陣$\\begin{bmatrix} 1 & 4 \\ 0 & 1 \\end{bmatrix}$作推移變換後﹐面積保持不變\n【鳳山高中段考題】",
+      "answer_text": "$(2)(3)(4)(5)$",
+      "explanation_text": "(1)$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\ 0 & - 1 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} x \\ - y \\end{bmatrix}$⇒ P\\' (x\\'﹐y\\' ) =\n(x﹐−y)﹐∴對稱x軸⇒不正確﹒\n(2)$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} 0 & 1 \\ 1 & 0 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} y \\ x \\end{bmatrix}$⇒ P\\' (x\\'﹐y\\' ) = (y﹐x)﹐∴對稱x = y\n⇒正確﹒\n(3)$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} - 1 & 0 \\ 0 & - 1 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} - x \\ - y \\end{bmatrix}$⇒ P\\' (x\\'﹐y\\' ) = (−x﹐−y)﹐∴對稱原點⇒正確﹒\n(4)∵$|\\left| \\begin{matrix} 2 & 0 \\ 0 & \\frac{1}{2} \\end{matrix} \\right|| = 1$﹐∴面積不變⇒正確﹒\n(5)∵$|\\left| \\begin{matrix} 1 & 4 \\ 0 & 1 \\end{matrix} \\right|| = 1$﹐∴面積不變⇒正確﹒\n故選(2)(3)(4)(5)",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 64,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0065",
+      "title": "設平面上有一直線L：4x − 3y = 5﹐(1)若將直線L﹐以原點",
+      "question_text": "設平面上有一直線L：4x − 3y = 5﹐(1)若將直線L﹐以原點為中心﹐作轉角為− 30°的旋轉變 換﹐得一新直線L\\'﹐則L\\' 之方程式為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒(2)若將直線L﹐對直線2x − y = 0作鏡 射變換﹐得一新直線L\\'﹐則L\\' 之方程式為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒(3)若將直線L﹐沿x坐標方向推移 y坐標的2倍﹐沿y坐標方向推移x坐標的− 3倍﹐得一新直線L\\'﹐則L\\' 之方程式為\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_﹒",
+      "answer_text": "(1)$(4\\sqrt3-3)x-(3\\sqrt3+4)y-10=0$；(2)$24x-7y+25=0$；(3)$5x+11y+35=0$",
+      "explanation_text": "(1)設L\\' 上之動點P\\' (x\\'﹐y\\') ⇒$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\cos( - 30{^\\circ}) & - \\sin( - 30{^\\circ}) \\ \\sin( - 30{^\\circ}) & \\cos( - 30{^\\circ}) \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$\n⇒$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} \\cos( - 30{^\\circ}) & - \\sin( - 30{^\\circ}) \\ \\sin( - 30{^\\circ}) & \\cos( - 30{^\\circ}) \\end{bmatrix}^{- 1}\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{\\sqrt{3}}{2} & - \\frac{1}{2} \\ \\frac{1}{2} & \\frac{\\sqrt{3}}{2} \\end{bmatrix}\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{\\sqrt{3}x' - y'}{2} \\ \\frac{x' \\rightleftharpoons + \\sqrt{3}y'}{2} \\end{bmatrix}$﹐ 由4x − 3y = 5\n⇒$4 ． \\frac{\\sqrt{3}x' - y'}{2} - 3 ． \\frac{x' + \\sqrt{3}y'}{2} = 5$\n⇒ (4$\\sqrt{3} - 3$)x\\' − (4 + 3$\\sqrt{3}$)y\\' = 10﹐即L\\'：(4$\\sqrt{3}$− 3)x − (4 + 3$\\sqrt{3}$) y = 10﹒\n(2) θ為直線2x − y = 0之斜角⇒ tanθ = 2﹐0 < θ <$\\frac{\\pi}{2}$\n⇒ cosθ =$\\frac{1}{\\sqrt{5}}$﹐sinθ =$\\frac{2}{\\sqrt{5}}$⇒ cos2θ =$- \\frac{3}{5}$﹐sin2θ =$\\frac{4}{5}$﹐ 仿(1)$\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\cos 2\\theta & \\sin 2\\theta \\ \\sin 2\\theta & - \\cos 2\\theta \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix}$⇒$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} - \\frac{3}{5} & \\frac{4}{5} \\ \\frac{4}{5} & \\frac{3}{5} \\end{bmatrix}\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{- 3x' + 4y'}{5} \\ \\frac{4x' + 3y'}{5} \\end{bmatrix}$代入L﹐ $4 ． \\frac{- 3x' + 4y'}{5} - 3 ． \\frac{4x' + 3y'}{5} = 5$⇒ − 24x\\' + 7y\\' = 25 ⇒ 24x\\' − 7y\\' + 25 = 0﹐ 即L\\'：24x − 7y + 25 = 0﹒\n(3)按題意：矩陣A =$\\begin{bmatrix} 1 & 2 \\ - 3 & 1 \\end{bmatrix}$⇒ A^−1^ =$\\frac{1}{7}\\begin{bmatrix} 1 & - 2 \\ 3 & 1 \\end{bmatrix}$\n⇒$\\begin{bmatrix} x \\ y \\end{bmatrix} = \\frac{1}{7}\\begin{bmatrix} 1 & - 2 \\ 3 & 1 \\end{bmatrix}\\begin{bmatrix} x' \\ y' \\end{bmatrix} = \\begin{bmatrix} \\frac{x' - 2y'}{7} \\ \\frac{3x' + y'}{7} \\end{bmatrix}$代入L﹐ $4 ． \\frac{x' - 2y'}{7} - 3 ． \\frac{3x' + y'}{7} = 5$⇒ − 5x\\' − 11y\\' = 35 ⇒ 5x\\' + 11y\\' + 35 = 0﹐ 即L\\'：5x + 11y + 35 = 0﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 65,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0066",
+      "title": "如圖﹕二階方陣P變換將A﹑B﹑C﹑D映成A~1~﹑B~1~﹑C~1~",
+      "question_text": "如圖﹕二階方陣P變換將A﹑B﹑C﹑D映成A~1~﹑B~1~﹑C~1~﹑D~1~﹐再經Q變換映成 A~2~﹑B~2~﹑C~2~﹑D~2~﹐再經R變換映成A~3~﹑B~3~﹑C~3~﹑D~3~﹐且T變換表示P﹐Q﹐R三個變換的合 成﹐即T變換將A﹑B﹑C﹑D映成A~3~﹑B~3~﹑C~3~﹑D~3~﹒試問下列選項哪些正確﹖\n(1)$P = \\begin{bmatrix} 2 & 0 \\ 0 & 1 \\end{bmatrix}$ (2)$Q = \\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix}$ (3)$R = \\begin{bmatrix} \\frac{1}{\\sqrt{2}} & - \\frac{1}{\\sqrt{2}} \\ \\frac{1}{\\sqrt{2}} & \\frac{1}{\\sqrt{2}} \\end{bmatrix}$ (4)$T = \\begin{bmatrix} - \\sqrt{2} & - \\frac{1}{\\sqrt{2}} \\ \\sqrt{2} & - \\frac{1}{\\sqrt{2}} \\end{bmatrix}$\n(5)若過A﹑B﹑C﹑D的圖形方程式為x^2^ + y^2^ = 1﹐則過A~3~﹑B~3~﹑C~3~﹑D~3~的圖形方程式 為5x^2^ − 6xy + 5y^2^ = 8﹒\n[圖:program-db/assets/question-media/s4-4-4/image19.png]$\\overset{P}{\\Rightarrow}$\n[圖:program-db/assets/question-media/s4-4-4/image20.png] $\\overset{Q}{\\Rightarrow}$\n[圖:program-db/assets/question-media/s4-4-4/image21.png] $\\overset{R}{\\Rightarrow}$\n[圖:program-db/assets/question-media/s4-4-4/image22.png]﹒\n【100臺中女中期中考】",
+      "answer_text": "$(1)(2)(3)(4)$",
+      "explanation_text": "經P轉換後x軸方向伸縮2倍﹐∴$P = \\begin{bmatrix} 2 & 0 \\ 0 & 1 \\end{bmatrix}$﹔ 經Q轉換後旋轉90°﹐∴$Q = \\begin{bmatrix} \\cos 90{^\\circ} & - \\sin 90{^\\circ} \\ \\sin 90{^\\circ} & \\cos 90{^\\circ} \\end{bmatrix} = \\begin{bmatrix} 0 & - 1 \\ 1 & 0 \\end{bmatrix}$﹔ 經R轉換後旋轉− 45°﹐∴$R = \\begin{bmatrix} \\cos( - 45{^\\circ}) & - \\sin( - 45{^\\circ}) \\ \\sin( - 45{^\\circ}) & \\cos( - 45{^\\circ}) \\end{bmatrix} = \\begin{bmatrix} \\frac{\\sqrt{2}}{2} & \\frac{\\sqrt{2}}{2} \\ - \\frac{\\sqrt{2}}{2} & \\frac{\\sqrt{2}}{2} \\end{bmatrix}$﹐ 則$T = RQP = \\begin{bmatrix} \\sqrt{2} & - \\frac{\\sqrt{2}}{2} \\ \\sqrt{2} & \\frac{\\sqrt{2}}{2} \\end{bmatrix}$﹐$\\left\\lbrack \\begin{array}{r} x^{1} \\ y^{1} \\end{array} \\right\\rbrack = \\begin{bmatrix} \\sqrt{2} & - \\frac{\\sqrt{2}}{2} \\ \\sqrt{2} & \\frac{\\sqrt{2}}{2} \\end{bmatrix}\\left\\lbrack \\begin{array}{r} x \\ y \\end{array} \\right\\rbrack$﹐即$\\left\\lbrack \\begin{array}{r} x \\ y \\end{array} \\right\\rbrack = \\begin{bmatrix} \\frac{\\sqrt{2}}{4} & \\frac{\\sqrt{2}}{4} \\ - \\frac{\\sqrt{2}}{2} & \\frac{\\sqrt{2}}{2} \\end{bmatrix}\\left\\lbrack \\begin{array}{r} x^{1} \\ y^{1} \\end{array} \\right\\rbrack$﹐ $x^{2} + y^{2} = 1 \\Rightarrow (\\frac{\\sqrt{2}}{4}x + \\frac{\\sqrt{2}}{4}y)^{2} + ( - \\frac{\\sqrt{2}}{2}x + \\frac{\\sqrt{2}}{2}y)^{2} = 1$﹐整理得5x^2^ − 6xy + 5y^2^ = 8﹐故選(1)(2)(5)﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 66,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0067",
+      "title": "由下列(A)～(J)的變換矩陣中選出正確者﹐填入(1)～(5)使之符",
+      "question_text": "由下列(A)～(J)的變換矩陣中選出正確者﹐填入(1)～(5)使之符合對應的平面變換﹕\n(A)$\\begin{bmatrix} 1 & 0 \\ 0 & 1 \\end{bmatrix}$ (B)$\\begin{bmatrix} 0 & 1 \\ 1 & 0 \\end{bmatrix}$ (C)$\\begin{bmatrix} - 1 & 0 \\ 0 & - 1 \\end{bmatrix}$ (D)$\\begin{bmatrix} 0 & - 1 \\ - 1 & 0 \\end{bmatrix}$ (E)$\\begin{bmatrix} 1 & 0 \\ 0 & 2 \\end{bmatrix}$ (F)$\\begin{bmatrix} 2 & 0 \\ 0 & 1 \\end{bmatrix}$ (G)$\\begin{bmatrix} 1 & 2 \\ 0 & 1 \\end{bmatrix}$\n(H)$\\begin{bmatrix} 1 & 0 \\ 1 & 2 \\end{bmatrix}$ (I)$\\begin{bmatrix} 2 & 0 \\ 0 & 1 \\end{bmatrix}$ (J)$\\begin{bmatrix} 1 & 0 \\ 2 & 1 \\end{bmatrix}$﹒\n[圖:program-db/assets/question-media/s4-4-4/image23.png]\n【90臺中女中期中考】",
+      "answer_text": "(1)C；(2)B；(3)E；(4)G；(5)J",
+      "explanation_text": "設A =$\\begin{bmatrix} a & b \\ c & d \\end{bmatrix}$﹐則$\\begin{bmatrix} a & b \\ c & d \\end{bmatrix}\\begin{bmatrix} 1 \\ 0 \\end{bmatrix} = \\begin{bmatrix} a \\ c \\end{bmatrix}$﹐$\\begin{bmatrix} a & b \\ c & d \\end{bmatrix}\\begin{bmatrix} 0 \\ 1 \\end{bmatrix} = \\begin{bmatrix} b \\ d \\end{bmatrix}$\n∴(1)$\\rightarrow C = \\begin{bmatrix} - 1 & 0 \\ 0 & - 1 \\end{bmatrix}\\begin{bmatrix} 2 \\ 1 \\end{bmatrix} = \\begin{bmatrix} - 2 \\ - 1 \\end{bmatrix}$﹒\n(2)$\\rightarrow B = \\begin{bmatrix} 0 & 1 \\ 1 & 0 \\end{bmatrix}$﹐$\\begin{bmatrix} 0 & 1 \\ 1 & 0 \\end{bmatrix}\\begin{bmatrix} 2 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 1 \\ 2 \\end{bmatrix}$﹒\n(3)$\\rightarrow E = \\begin{bmatrix} 1 & 0 \\ 0 & 2 \\end{bmatrix}$﹐$\\begin{bmatrix} 1 & 0 \\ 0 & 2 \\end{bmatrix}\\begin{bmatrix} 2 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 2 \\ 2 \\end{bmatrix}$﹒\n(4)$\\rightarrow G = \\begin{bmatrix} 1 & 2 \\ 0 & 1 \\end{bmatrix}$﹐$\\begin{bmatrix} 1 & 2 \\ 0 & 1 \\end{bmatrix}\\begin{bmatrix} 2 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 4 \\ 1 \\end{bmatrix}$﹒\n(5)$\\rightarrow J = \\begin{bmatrix} 1 & 0 \\ 2 & 1 \\end{bmatrix}$﹐$\\begin{bmatrix} 1 & 0 \\ 2 & 1 \\end{bmatrix}\\begin{bmatrix} 2 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 2 \\ 5 \\end{bmatrix}$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 67,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0068",
+      "title": "試求旋轉矩陣A與鏡射矩陣B的反方陣﹐A =$\\begin{bmatr",
+      "question_text": "試求旋轉矩陣A與鏡射矩陣B的反方陣﹐A =$\\begin{bmatrix} \\cos\\theta & - \\sin\\theta \\ \\sin\\theta & \\cos\\theta \\end{bmatrix}$﹐B =$\\begin{bmatrix} \\cos\\theta & \\sin\\theta \\ \\sin\\theta & - \\cos\\theta \\end{bmatrix}$﹒",
+      "answer_text": "$A^{-1}=\\begin{bmatrix}\\cos\\theta&\\sin\\theta\\\\-\\sin\\theta&\\cos\\theta\\end{bmatrix}$；$B^{-1}=\\begin{bmatrix}\\cos\\theta&\\sin\\theta\\\\\\sin\\theta&-\\cos\\theta\\end{bmatrix}$",
+      "explanation_text": "det(A) = 1 故A^−\\ 1^ =$\\begin{bmatrix} \\cos\\theta & \\sin\\theta \\ - \\sin\\theta & \\cos\\theta \\end{bmatrix}$ det(B) = − 1 故B^−\\ 1^ = $\\begin{bmatrix} \\cos\\theta & \\sin\\theta \\ \\sin\\theta & - \\cos\\theta \\end{bmatrix}$﹐即B^−\\ 1^ = B﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 68,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:範例11"
+      ]
+    },
+    {
+      "id": "q-s4-4-4-0069",
+      "title": "詹姆斯‧龐德（007情報員）又有了新任務﹐這次他奉命去阻止前蘇聯的核",
+      "question_text": "詹姆斯‧龐德（007情報員）又有了新任務﹐這次他奉命去阻止前蘇聯的核子武器落入恐 怖份子的手中﹐以維護世界和平﹒根據現有的情報顯示﹐恐怖份子的秘密基地是在如圖(一) 的方形區域ABCD範圍中﹐但該地區位處邊界偏遠地帶﹐且在崇山峻嶺之中﹐交通非常不便 ﹐因此還不知道秘密基地的確切位置坐標﹒龐德先從一個可疑的對象著手調查﹐該對象正要 將重要的核武零件走私交付給恐怖份子﹐歷經千辛萬苦﹐排除萬難﹐龐德終於截獲一份重要 的文件﹐該文件中有一幅地圖﹐其中有一個平行四邊形區域MNPQ﹐如圖(二)﹐區域中有一 處標示★號的地點﹐經研判就是恐怖份子秘密基地的確切位置﹒但恐怖份子為了避免被破獲﹐ 該地圖上的所有坐標都是經過轉換後的密碼﹒還好龐德的數學還不錯﹐他解讀出了其中秘密﹕\n圖(一)中ABCD區域中的原始位置坐標﹐經過一個二階矩陣線性變換後﹐剛好對應到圖(二) 中MNPQ區域的密碼坐標﹐而且圖(一)中的A﹑B﹑C﹑D四點﹐剛好分別被轉換對應到圖(二) 中的M﹑N﹑P﹑Q四點﹐試幫龐德計算出這個將原始坐標轉換為密碼坐標的二階矩陣﹐並在\n圖(一)中求出恐怖份子秘密基地的確切位置坐標﹒\n[圖:program-db/assets/question-media/s4-4-4/image24.png]圖(一)\n[圖:program-db/assets/question-media/s4-4-4/image25.png]\n圖(二)",
+      "answer_text": "轉換矩陣$\\begin{bmatrix}2&-1\\\\1&1\\end{bmatrix}$；秘密基地座標$\\left(\\frac{7}{3},-\\frac{1}{3}\\right)$",
+      "explanation_text": "令A =$\\begin{bmatrix} a & b \\ c & d \\end{bmatrix} \\Rightarrow \\begin{bmatrix} a & b \\ c & d \\end{bmatrix}\\begin{bmatrix} 1 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 1 \\ 2 \\end{bmatrix} \\Rightarrow \\left\\{ \\begin{array}{r} a + b = 1\\cdots  \\ c + d = 2\\cdots  \\end{array} \\right.$ $$\\begin{bmatrix} a & b \\ c & d \\end{bmatrix}\\begin{bmatrix} 3 \\ 1 \\end{bmatrix} = \\begin{bmatrix} 5 \\ 4 \\end{bmatrix} \\Rightarrow \\left\\{ \\begin{array}{r} 3a + b = 5\\cdots  \\ 3c + d = 4\\cdots  \\end{array} \\right. $$由①③ ⇒ a = 2﹐b = − 1﹐由②④ ⇒ c = 1﹐d = 1﹐\n∴$\\begin{bmatrix} 2 & - 1 \\ 1 & 1 \\end{bmatrix}\\begin{bmatrix} x \\ y \\end{bmatrix} = \\begin{bmatrix} 5 \\ 2 \\end{bmatrix} \\Rightarrow \\left\\{ \\begin{array}{r} 2x - y = 5 \\ x + y = 2 \\end{array} \\right.\\ \\Rightarrow \\left\\{ \\begin{array}{r} x = \\frac{7}{3} \\ y = - \\frac{1}{3} \\end{array} \\right.$﹐坐標為$(\\frac{7}{3}, - \\frac{1}{3})$﹒",
+      "chapter_code": "s4-4-4",
+      "formula_id": "s4-4-4-linear-transform-2x2-core",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-10轉.docx",
+      "source_section": "主題4：平面上的線性變換－推移",
+      "source_order": 69,
+      "tags": [
+        "s4-4-4",
+        "section:主題4：平面上的線性變換－推移",
+        "marker:範例12"
+      ]
+    }
+  ]
+}

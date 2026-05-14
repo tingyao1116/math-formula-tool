@@ -1,0 +1,686 @@
+{
+  "chapter_code": "s4-2-1",
+  "chapter_title": "平面方程式",
+  "questions": [
+    {
+      "id": "q-s4-2-1-0001",
+      "title": "範例1：求含A(2,1,0)，B(1,0,2)，C( − 1,1,1)的",
+      "question_text": "求含A(2,1,0)，B(1,0,2)，C( − 1,1,1)的平面E之方程式＿＿＿＿＿＿。",
+      "answer_text": "$x+5y+3z-7=0$",
+      "explanation_text": "【解析】$\\overset{⃑}{AB}$= ( − 1,− 1,2)，$\\overset{⃑}{AC}$= ( − 3,0,1) $\\overset{⃑}{N} = \\overset{⃑}{AB} × \\overset{⃑}{AC}$= ( − 1,− 5,− 3) = − 1(1,5,3) 令(x − 2) + 5(y − 1) + 3z = 0 ⇒ x + 5y + 3z − 7 = 0",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-equation-three-point-form-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 1,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0002",
+      "title": "隨堂練習：空間中四點A(1,1,2)，B( -- 1,0,3)，C(2,0",
+      "question_text": "空間中四點A(1,1,2)，B( -- 1,0,3)，C(2,0,-- 1)，D(3,k,1)，\n(1)過A，B，C三點的平面方程式為＿＿＿＿＿＿。\n(2)若A，B，C，D四點共平面，則k = ＿＿＿＿＿＿。",
+      "answer_text": "(1)$4x-5y+3z-5=0$；(2)$2$",
+      "explanation_text": "【解析】(1)設平面ABC方程式為ax + by + cz + d = 0\n∵ 過A(1,1,2) ∴ a + b + 2c + d = 0......① 過B( − 1,0,3) ∴ − a + 3c + d = 0......② 過C(2,0,− 1) ∴ 2a − c + d = 0......③ 解①，②，③得a = −$\\frac{4}{5}$d，b = d，c = −$\\frac{3}{5}$d\n∴ 平面ABC方程式為4x − 5y + 3z − 5 = 0\n(2) A，B，C，D共平面 ⇒ D(3，k，1)在平面ABC上\n∴ 12 − 5k + 3 − 5 = 0 ⇒ k = 2",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-equation-three-point-form-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 2,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0003",
+      "title": "範例2：過點A( − 2,1,1)，B(1,1,3)的平面E，若與平面F",
+      "question_text": "過點A( − 2,1,1)，B(1,1,3)的平面E，若與平面F：x − 2y + 3z = 5垂直，則E的方程式為＿＿＿＿＿＿。",
+      "answer_text": "$4x-7y-6z+21=0$",
+      "explanation_text": "【解析】設平面E，F的法線向量各為$\\overset{⃑}{n_{1}},\\overset{⃑}{n_{2}}$ ∵E⊥F ⇒ $\\overset{⃑}{n_{1}}\\bot\\overset{⃑}{n_{2}}$ 又A，B ∈ E ⇒ $\\overset{⃑}{n_{1}}\\bot\\overset{⃑}{AB}$ ∴$\\overset{⃑}{n_{1}}$為$\\overset{⃑}{n_{2}}$，$\\overset{⃑}{AB}$的公垂向量 由$\\overset{⃑}{n_{2}}$= (1,− 2,3)，$\\overset{⃑}{AB}$= (3,0,2)\n⇒ $\\overset{⃑}{n_{1}}$= (4,− 7,− 6) ∴ E：4x − 7y − 6z + 21 = 0",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-equation-three-point-form-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 3,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0004",
+      "title": "範例3：設A (− 1，2，3)，B(2，6，3)，C(− 2，4，5)",
+      "question_text": "設A (− 1，2，3)，B(2，6，3)，C(− 2，4，5)為空間中的相異三點，E為△ABC所在的平面，則(1) $\\overset{⃑}{AB}$．$\\overset{⃑}{AC}$=＿＿＿＿＿＿。 (2) $\\overset{⃑}{AC}$在$\\overset{⃑}{AB}$上的正射影為＿＿＿＿＿＿。\n(3)△ABC之面積 =＿＿＿＿＿＿。 (4) E的平面方程式為＿＿＿＿＿＿。\n(5)若∠BAC之內角平分線交$\\overline{BC}$於D點，設E在$\\overset{\\overleftrightarrow{}}{AD}$上，且$\\overset{⃑}{AE}$= 4$\\overset{⃑}{AB}$+ β$\\overset{⃑}{AC}$，則β =＿＿＿＿＿＿。",
+      "answer_text": "(1)$5$；(2)$\\left(\\frac{3}{5},\\frac{4}{5},0\\right)$；(3)$5\\sqrt{2}$；(4)$4x-3y+5z-5=0$；(5)$\\frac{20}{3}$",
+      "explanation_text": "【解析】(1) $\\overset{⃑}{AB}$= (3,4,0)，$\\overset{⃑}{AC}$= (− 1,2,2)\n⇒ $\\overset{⃑}{AB}$．$\\overset{⃑}{AC}$= − 3 + 8 + 0 = 5\n(2) $\\overset{⃑}{AC}$在$\\overset{⃑}{AB}$上的正射影 =\n($\\frac{\\overset{⃑}{AB}．\\overset{⃑}{AC}}{|\\overset{⃑}{AB}|^{2}}$)$\\overset{⃑}{AB}$=\n($\\frac{5}{25}$)(3,4,0) = ($\\frac{3}{5}$,$\\frac{4}{5}$,0)\n(3)△ABC之面積 =\n[圖:program-db/assets/question-media/s4-2-1/image2.png] $\\sqrt{|\\overset{⃑}{AB}|^{2}|\\overset{⃑}{AC}|^{2} - (\\overset{⃑}{AB}．\\overset{⃑}{AC})^{2}}$=\n[圖:program-db/assets/question-media/s4-2-1/image2.png] $\\sqrt{25 × 9 - 5^{2}}$= 5$\\sqrt{2}$\n(4) P(x,y,z)為平面E上任一點，則$\\overset{⃑}{AP}$= (x + 1,y − 2,z − 3)， $\\overset{⃑}{AB}$及$\\overset{⃑}{AC}$所張之平行六面體體積 = 0 即$\\left| \\begin{matrix} x + 1 & y - 2 & z - 3 \\\\ 3 & 4 & 0 \\\\ - 1 & 2 & 2 \\end{matrix} \\right|$= 0 ⇒ E：4x − 3y + 5z − 5 = 0\n(5)$\\overline{AD}$為∠BAC之角平分線 ∴ $\\overline{BD}$：$\\overline{CD}$=$\\overline{AB}$：$\\overline{AC}$= 5：3\n⇒ $\\overset{⃑}{AD}$=\n[圖:program-db/assets/question-media/s4-2-1/image3.png] $\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s4-2-1/image4.png] $\\overset{⃑}{AC}$，$\\overset{⃑}{AE}$= k$\\overset{⃑}{AD}$=\n[圖:program-db/assets/question-media/s4-2-1/image5.png] $\\overset{⃑}{AB}$+\n[圖:program-db/assets/question-media/s4-2-1/image6.png]$\\overset{⃑}{AC}$ 又$\\overset{⃑}{AE}$= 4$\\overset{⃑}{AB}$+ β$\\overset{⃑}{AC}$ ∴ ${ \\begin{array}{r} \\frac{3k}{8} = 4 \\\\ \\frac{5k}{8} = \\beta \\end{array} \\right.$ ⇒ ${ \\begin{array}{r} k = \\frac{32}{3} \\\\ \\beta = \\frac{5}{8} × \\frac{32}{3} = \\frac{20}{3} \\end{array} \\right.$",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-equation-three-point-form-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 4,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0005",
+      "title": "隨堂練習：求過點A(1,2,2)，並與二平面E~1~：x − y + z ",
+      "question_text": "求過點A(1,2,2)，並與二平面E~1~：x − y + z = 1，E~2~：2x + y − z = 2均垂直之平面方程式。",
+      "answer_text": "$y+z-4=0$",
+      "explanation_text": "【解析】令E~1~，E~2~之法向量分別為$\\overset{⃑}{n_{1}}$= (1,− 1,1)，$\\overset{⃑}{n_{2}}$= (2,1,− 1) 設所求平面之法向量為$\\overset{⃑}{n}$= (a，b，c)\n∵ E$\\bot$E~1~，E$\\bot$E~2~ ∴ $\\overset{⃑}{n}\\bot\\overset{⃑}{n_{1}}，\\overset{⃑}{n}\\bot\\overset{⃑}{n_{2}}$ $⇒ \\quad{ \\begin{array}{r} \\overset{⃑}{n}．\\overset{⃑}{n_{1}} = 0 \\\\ \\overset{⃑}{n}．\\overset{⃑}{n_{2}} = 0 \\end{array} \\right.\\ \\quad ⇒ \\quad{ \\begin{array}{r} a - b + c = 0 \\\\ 2a + b - c = 0 \\end{array} \\right.$ 得a：b：c =$\\left| \\begin{matrix} - 1 & 1 \\\\ 1 & - 1 \\end{matrix} \\right|\\text{ }：\\text{ }\\left| \\begin{matrix} 1 & 1 \\\\ - 1 & 2 \\end{matrix} \\right|\\text{ }：\\text{ }\\left| \\begin{matrix} 1 & - 1 \\\\ 2 & 1 \\end{matrix} \\right|$= 0：3：3 = 0：1：1 取$\\overset{⃑}{n}$= (0，1，1)，又E過點A(1,2,2)\n∴ 由點向式知E的方程式為0．(x − 1) + 1．(y − 2) + 1．(z − 2) = 0， 即y + z − 4 = 0為所求",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-equation-three-point-form-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 5,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0006",
+      "title": "隨堂練習：垂直於E~1~：x − y + 2z + 3 = 0，E~2~：",
+      "question_text": "垂直於E~1~：x − y + 2z + 3 = 0，E~2~：2x + y + 3z + 5 = 0，且過點A(2，3，2)之平面方程式為＿＿＿＿＿＿。",
+      "answer_text": "$5x-y-3z-1=0$",
+      "explanation_text": "【解析】$\\overset{⃑}{n_{1}}$= (1,− 1,2)，$\\overset{⃑}{n_{2}}$=\n(2,1,3) ⇒ $\\overset{⃑}{n_{1}}$×$\\overset{⃑}{n_{2}}$= ( − 5,1,3) E：5(x − 2) − (y − 3) − 3(z − 2) = 0 ⇒ 5x − y − 3z − 1 = 0",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-equation-three-point-form-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 6,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0007",
+      "title": "範例4：如圖，依光學反射關係求鏡面平面 E 的方程式",
+      "question_text": "如圖，依光學反射關係求鏡面平面 E 的方程式。",
+      "answer_text": "$x-4y-3z+4=0$",
+      "explanation_text": "【解析】由光學原理，$\\overset{\\overleftrightarrow{}}{BC}$之延長線會經過A關於平面E的 對稱點A′，且$\\overline{A'B}$=$\\overline{AB}$= 3 $\\overset{⃑}{BC}$= (− 4,4,2)，則單位向量$\\overset{⃑}{u}$=$\\frac{\\overset{⃑}{BC}}{|\\overset{⃑}{BC}|}$=$\\frac{( - 4, 4,2)}{6}$=\n($\\frac{- 2}{3}$,$\\frac{2}{3}$,$\\frac{1}{3}$)\n⇒$\\overset{⃑}{A'B}$= 3$\\overset{⃑}{u}$= 3．($\\frac{\\overset{⃑}{BC}}{|\\overset{⃑}{BC}|}$) = 3．($\\frac{- 2}{3}$,$\\frac{2}{3}$,$\\frac{1}{3}$) = (− 2,2,1) 即(− x，1 − y，− z) = (− 2,2,1)，得A′(x,y,z) = (2,− 1,− 1) 平面E之法向量為$\\overset{⃑}{AA'}$= (1,− 4,− 3)，又過B點(0,1,0)\n∴ E：(x − 0) − 4(y − 1) − 3(z − 0) = 0，即E：x − 4y − 3z + 4 = 0",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-equation-three-point-form-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 7,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0008",
+      "title": "隨堂練習：空間中，設A(3,1,− 2)，B(2,7,0)，C(− 4,−",
+      "question_text": "空間中，設A(3,1,− 2)，B(2,7,0)，C(− 4,− 1,1)，\n(1)△ABC之重心坐標為＿＿＿＿＿＿。 (2)內積$\\overset{⃑}{AB}$．$\\overset{⃑}{AC}$= ＿＿＿＿＿＿。\n(3)外積$\\overset{⃑}{AB} × \\overset{⃑}{AC}$= ＿＿＿＿＿＿。 (4)△ABC的面積為＿＿＿＿＿＿。\n(5)線段$\\overline{AB}$的垂直平分面方程式為＿＿＿＿＿＿。\n(6)通過A，B，C三點的平面方程式為＿＿＿＿＿＿。",
+      "answer_text": "(1)$\\left(\\frac{1}{3},\\frac{7}{3},-\\frac{1}{3}\\right)$；(2)$1$；(3)$(22,-11,44)$；(4)$\\frac{11\\sqrt{21}}{2}$；(5)$2x-12y-4z+39=0$；(6)$2x-y+4z+3=0$",
+      "explanation_text": "【解析】(1)$\\overset{⃑}{OG} = \\frac{1}{3}\\overset{⃑}{OA} + \\frac{1}{3}\\overset{⃑}{OB} + \\frac{1}{3}\\overset{⃑}{OC}$=$\\frac{1}{3}$\n[(3,1,− 2) + (2,7,0) + ( − 4,− 1,1)] =$(\\frac{1}{3},\\frac{7}{3}， - \\frac{1}{3})$ 故△ABC之重心坐標為$(\\frac{1}{3},\\frac{7}{3}, - \\frac{1}{3})$\n(2) $\\overset{⃑}{AB}$= ( − 1,6,2)，$\\overset{⃑}{AC}$= (− 7,− 2,3)，$\\overset{⃑}{BC}$= (− 6,− 8,1) $\\overset{⃑}{AB}$．$\\overset{⃑}{AC}$= |$\\overset{⃑}{AB}$|．|$\\overset{⃑}{AC}$| cos∠BAC =$|\\overset{⃑}{AB}| ． |\\overset{⃑}{AC}| ． \\frac{|\\overset{⃑}{AB}|^{2} + |\\overset{⃑}{AC}|^{2} - |\\overset{⃑}{BC}|^{2}}{2|\\overset{⃑}{AB}| ． |\\overset{⃑}{AC}|}$ =$ \\frac{|\\overset{⃑}{AB}|^{2} + |\\overset{⃑}{AC}|^{2} - |\\overset{⃑}{BC}|^{2}}{2}$=$\\frac{41 + 62 - 101}{2}$= 1\n(3)$\\overset{⃑}{AB} × \\overset{⃑}{AC}$= (22,− 11,44)\n(4)△ABC =$\\frac{1}{2}\\sqrt{|\\overset{⃑}{AB}|^{2}．|\\overset{⃑}{AC}|^{2} - (\\overset{⃑}{AB}．\\overset{⃑}{AC})^{2}}$ =$\\frac{1}{2}\\sqrt{41\\text{ }．\\text{ }62 - 1} = \\frac{11\\sqrt{21}}{2}$\n(5)線段$\\overline{AB}$的垂直平分面π之法向量為$\\overset{⃑}{AB}$= ( − 1,6,2) ∴設π：− x + 6y + 2z = k $\\overline{AB}$之中點M($\\frac{5}{2}$,4,− 1)在平面π上 ⇒ k = −$\\frac{5}{2}$+ 6．4 + 2( − 1) =$\\frac{39}{2}$\n∴ π：2x − 12y − 4z + 39 = 0\n(6)通過A，B，C三點的平面$\\delta$之法向量為$\\overset{⃑}{AB} × \\overset{⃑}{AC}$=\n(22,− 11,44)\n∴ 設$\\delta$：2x − y + 4z = k B點在平面$\\delta$上 ⇒ k = 2．2 − 7 + 4．0 = − 3 ∴ $\\delta$：2x − y + 4z + 3 = 0",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-equation-three-point-form-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 8,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0009",
+      "title": "隨堂練習：設A(2,3,0)，B(0,6,0)，C( − 2,− 3,4)",
+      "question_text": "設A(2,3,0)，B(0,6,0)，C( − 2,− 3,4)，平面E：x + 2y − 2z + 5 = 0，\n(1)求$\\overline{AB}$在平面E上之正投影$\\overline{A'B'}$之長。\n(2)求△ABC在平面E上之正投影△A′B′C′之面積。",
+      "answer_text": "(1)$\\frac{\\sqrt{101}}{3}$；(2)$\\frac{10}{3}$",
+      "explanation_text": "【解析】]\n∵ A(2,3,0)，B(0,6,0)，C( − 2,− 3,4)\n∴$\\overset{⃑}{AB}$= ( − 2,3,0)，$\\overset{⃑}{AC}$ = ( − 4,− 6,4) $\\overset{⃑}{n}$= (1,2,− 2)為平面E：x + 2y − 2z + 5 = 0之法向量\n(1)設$\\overset{⃑}{AB}$= ( − 2,3,0)與$\\overset{⃑}{n}$= (1,2,− 2)之夾角為θ 則cosθ =$\\frac{\\overset{⃑}{AB}．\\overset{⃑}{n}}{|\\overset{⃑}{AB}| ．|\\overset{⃑}{n}|} = \\frac{- 2 + 6 + 0}{\\sqrt{13} × 3} = \\frac{4}{3\\sqrt{13}}$\n⇒ sinθ =$\\frac{\\sqrt{101}}{3\\sqrt{13}}$\n∴ $\\overline{A'B'} = \\overline{AC} = |\\overset{⃑}{AB}|\\sin\\theta = \\sqrt{13} × \\frac{\\sqrt{101}}{3\\sqrt{13}} = \\frac{\\sqrt{101}}{3}$\n(2) $\\overset{⃑}{AB}$= ( − 2,3,0)，$\\overset{⃑}{AC}$= ( − 4,− 6,4)\n⇒ $|\\overset{⃑}{AB}| = \\sqrt{13}\\text{ }，\\text{ }|\\overset{⃑}{AC}| = \\sqrt{68} = 2\\sqrt{17}$\n①△ABC之面積 =$\\frac{1}{2}\\sqrt{|\\overset{⃑}{AB}|^{2}．|\\overset{⃑}{AC}|^{2} - (\\overset{⃑}{AB}．\\overset{⃑}{AC})^{2}}$ =$\\frac{1}{2}\\sqrt{13 × 68 - (8 - 18 + 0)^{2}}$= 14\n②設P(x,y,z)為平面ABC上任一點，則$\\overset{⃑}{AP}$= (x − 2,y − 3,z)與$\\overset{⃑}{AB}$，$\\overset{⃑}{AC}$共平面\n∴ 平面ABC的方程式為$\\left| \\begin{matrix} x - 2 & y - 3 & z \\\\ - 2 & 3 & 0 \\\\ - 4 & - 6 & 4 \\end{matrix} \\right|$ = 0，即3x + 2y + 6z − 12 = 0\n③設θ表平面E與平面ABC之銳夾角，則cosθ =$\\left| \\frac{3 + 4 - 12}{\\sqrt{9 + 4 + 36} ．\\sqrt{1 + 4 + 4}} \\right| = \\frac{5}{21}$ 故△A′B′C ′之面積 = (△ABC之面積)．cosθ = 14$× \\frac{5}{21} = \\frac{10}{3}$\n[圖:program-db/assets/question-media/s4-2-1/image9.png]",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-equation-three-point-form-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 9,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0010",
+      "title": "範例5：D(1,− 2,− 3)，若包含$\\overline{AB}$且",
+      "question_text": "D(1,− 2,− 3)，若包含$\\overline{AB}$且平分四面體ABCD體積 之平面方程式為2x + by + cz + d = 0， 則b + c + d =＿＿＿＿＿＿。",
+      "answer_text": "$9$",
+      "explanation_text": "【解析】設E為$\\overline{CD}$之中點，則E(1,0,− 1)，則所求平面即由A，B，E三點決定之平面 $\\overset{⃑}{AB}$= (4,5,3)，$\\overset{⃑}{AE}$= (1,− 1,− 1)\n⇒ $\\overset{⃑}{AB}$×$\\overset{⃑}{AE}$= (− 2,7,− 9) 取所求平面E之法向量$\\overset{⃑}{n}$= (2,− 7,9)，且平面E過點A(0,1,0)\n∴ E：2(x − 0) − 7(y − 1) + 9(z − 0) = 0 ⇒ E：2x − 7y + 9z + 7 = 0\n⇒ b = − 7，c = 9，d = 7，得b + c + d = 9",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-equation-three-point-form-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 10,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0011",
+      "title": "範例6：設A(1,2,3)，B(1,4,2)，C(4,0, 3)，O為原",
+      "question_text": "設A(1,2,3)，B(1,4,2)，C(4,0, 3)，O為原點，(1)若ABCD為平行四邊形，則D點坐標為＿＿＿＿＿＿。(2)△ABC的面積為＿＿＿＿＿＿。(3)△ABC所在的平面方程式為＿＿＿＿＿＿。(4)四面體OABC的體積為＿＿＿＿＿＿。",
+      "answer_text": "(1)$(4,-2,4)$；(2)$\\frac{7}{2}$；(3)$2x+3y+6z-26=0$；(4)$\\frac{13}{3}$",
+      "explanation_text": "【解析】A(1,2,3)，B(1,4,2)，C(4,0,3)\n(1) ABCD為平行四邊形，設D(x,y,z) ⇒$\\overset{⃑}{AD}$=$\\overset{⃑}{BC}$\n⇒ (x − 1,y − 2,z − 3) = (3,− 4,1) ∴ (x,y,z) = (4,− 2,4)\n(2) $\\overset{⃑}{AB}$ = (0,2,− 1)，$\\overset{⃑}{AC}$= (3,− 2,0) △ABC面積 =$\\frac{1}{2}\\sqrt{|\\overset{⃑}{AB}|^{2}．|\\overset{⃑}{AC}|^{2} - (\\overset{⃑}{AB}．\\overset{⃑}{AC})^{2}}$=$\\frac{1}{2}\\sqrt{(2^{2} + 1^{2})(3^{2} + 2^{2}) - ( - 4)^{2}} = \\frac{1}{2}\\sqrt{49} = \\frac{7}{2}$\n(3)設平面法向量$\\overset{⃑}{n}$=\n(a,b,c) ⇒ $\\overset{⃑}{n}\\bot\\overset{⃑}{AB}，\\overset{⃑}{n}\\bot\\overset{⃑}{AC}$\n∴ ${ \\begin{array}{r} 2b - c = 0 \\\\ 3a - 2b = 0 \\end{array} \\right.\\ \\quad ⇒ \\quad a：b：c = \\frac{2}{3}$b：b：2b = 2：3：6\n∴ 平面方程式為2(x − 1) + 3(y − 2) + 6(z − 3) = 0，即2x + 3y + 6z − 26 = 0\n(4)$\\overset{⃑}{OA}$= (1,2,3)，$\\overset{⃑}{OB}$ =\n(1,4,2)，$\\overset{⃑}{OC}$ = (4,0,3) 四面體OABC體積 =$\\frac{1}{6}|\\left| \\begin{matrix} 1 & 2 & 3 \\\\ 1 & 4 & 2 \\\\ 4 & 0 & 3 \\end{matrix} \\right|| = \\frac{1}{6} × 2 × 13 = \\frac{13}{3}$",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-equation-three-point-form-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 11,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:範例6"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0012",
+      "title": "範例7：求平行於平面x + y − 3z + 1 = 0且x，y，z軸截",
+      "question_text": "求平行於平面x + y − 3z + 1 = 0且x，y，z軸截距和 = 10的平面方程式。",
+      "answer_text": "$x+y-3z-6=0$",
+      "explanation_text": "【解析】設所求平面x + y − 3z = k，則$\\frac{x}{k}$+$\\frac{y}{k}$+$\\frac{z}{- \\frac{k}{3}}$= 1 截距和 = k + k −$\\frac{k}{3}$= 10 ⇒ k = 10 ×$\\frac{3}{5}$= 6 ∴ x + y − 3z − 6 = 0為所求",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-intercept-form-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 12,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:範例7"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0013",
+      "title": "範例8：設一平面E平行平面2x + y + 2z − 1 = 0且與三坐",
+      "question_text": "設一平面E平行平面2x + y + 2z − 1 = 0且與三坐標平面所成四面體之體積為9，則此平面E的方程式為＿＿＿＿＿＿。",
+      "answer_text": "$2x+y+2z=\\pm 6$",
+      "explanation_text": "【解析】∵ 平面E與平面2x + y + 2z − 1 = 0平行\n∴ 令平面E的方程式為2x + y + 2z = k，則$\\frac{x}{\\frac{k}{2}} + \\frac{y}{k} + \\frac{z}{\\frac{k}{2}} = 1$\n∵ E與三坐標平面所圍成的四面體體積 V =$\\frac{1}{6}|\\frac{k}{2}$．k．$\\frac{k}{2}|\\ = \\frac{1}{24}|k^{3}|$\n∴ $\\frac{1}{24}$| k |^3^ = 9 ⇒ | k |^3^ = 6^3^ ∴ | k | = 6 ⇒ k = ± 6 故平面E的方程式為2x + y + 2z = ± 6",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-intercept-form-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 13,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:範例8"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0014",
+      "title": "範例9：若平面E過點P(2，3，1)且在卦限(+，+，+)與三坐標平面所",
+      "question_text": "若平面E過點P(2，3，1)且在卦限(+，+，+)與三坐標平面所成之四面體體積為最小，則平面E的方程式為＿＿＿＿＿＿。",
+      "answer_text": "$\\frac{x}{6}+\\frac{y}{9}+\\frac{z}{3}=1$",
+      "explanation_text": "【解析】令平面E為$\\frac{x}{a} + \\frac{y}{b} + \\frac{z}{c}$= 1，點P(2,3,1) ⇒ $\\frac{2}{a} + \\frac{3}{b} + \\frac{1}{c}$= 1\n∵ a > 0，b > 0，c > 0 ⇒ $\\frac{\\frac{2}{a} + \\frac{3}{b} + \\frac{1}{c}}{3} \\geq \\sqrt[3]{\\frac{6}{abc}}$ ⇒ $\\frac{1}{6}$abc ≥ 27 當$\\frac{2}{a} = \\frac{1}{3}\\text{ }，\\text{ }\\frac{3}{b} = \\frac{1}{3}\\text{ }，\\text{ }\\frac{1}{c} = \\frac{1}{3}$時，等號成立 ⇒ a = 6，b = 9，c = 3 ⇒ $\\frac{x}{6} + \\frac{y}{9} + \\frac{z}{3}$= 1",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-intercept-form-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 14,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:範例9"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0015",
+      "title": "範例10：平面E包含兩平面2x + y − 4 = 0及y + 2z = ",
+      "question_text": "平面E包含兩平面2x + y − 4 = 0及y + 2z = 0之交線，且垂直平面3x + 2y − 3z − 6 = 0，則E之方程式為？",
+      "answer_text": "$2x+3y+4z-4=0$",
+      "explanation_text": "【解析】設E：(2x + y − 4) + k(y + 2z) = 0......①\n⇒ E：2x + (k + 1)y + 2kz − 4 = 0，法向量$\\overset{⃑}{n}$=\n(2,k + 1,2k) 而E′：3x + 2y − 3z − 6 = 0之法向量$\\overset{⃑}{n'}$= (3,2,− 3)\n∵ E ⊥ E′ ∴ $\\overset{⃑}{n}$．$\\overset{⃑}{n'}$= 6 + 2k + 2 − 6k = 0 ⇒ k = 2代入①\n⇒ E：2x + 3y + 4z − 4 = 0",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-pencil-equation-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 15,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:範例10"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0016",
+      "title": "隨堂練習：在O- xyz空間中，有一平面E過一點(1，2，3)，若其在第一",
+      "question_text": "在O- xyz空間中，有一平面E過一點(1，2，3)，若其在第一卦限與三個坐標平面圍成的四面體的最小體積為V~0~，則(1) E之方程式為＿＿＿＿＿＿。 (2) V~0~ =＿＿＿＿＿＿。",
+      "answer_text": "(1)$\\frac{x}{3}+\\frac{y}{6}+\\frac{z}{9}=1$；(2)$27$",
+      "explanation_text": "【解析】設平面E：$\\frac{x}{a}$+$\\frac{y}{b}$+$\\frac{z}{c}$= 1\n（其中a，b，c分別為平面之x，y，z軸截距且a > 0，b > 0，c > 0）\n∵ 平面E過點P (1,2,3) ∴ $\\frac{1}{a}$+$\\frac{2}{b}$+$\\frac{3}{c}$= 1 由算幾不等式$\\frac{\\frac{1}{a} + \\frac{2}{b} + \\frac{3}{c}}{3}$≥ $\\sqrt[3]{\\frac{1}{a} ． \\frac{2}{b} ． \\frac{3}{c}}$ ⇒ ($\\frac{1}{3}$)^3^ ≥$\\frac{6}{abc}$ ⇒ abc ≥ 6 × 27\n∴V =$\\frac{1}{6}$abc ≥ 27，得最小體積V~0~ = 27，此時$\\frac{1}{a}$=$\\frac{2}{b}$=$\\frac{3}{c}$=$\\frac{1}{3}$，即a = 3，b = 6，c = 9 得平面E：$\\frac{x}{3}$+$\\frac{y}{6}$+$\\frac{z}{9}$= 1",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-intercept-form-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 16,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0017",
+      "title": "隨堂練習：過二平面E~1~：3x − y + z + 1 = 0與E~2~",
+      "question_text": "過二平面E~1~：3x − y + z + 1 = 0與E~2~：x − 2y − z + 4 = 0之交線，且過點( − 2，1，5)之平面方程式為何？",
+      "answer_text": "$14x-3y+6z+1=0$",
+      "explanation_text": "【解析】設此平面方程式為(3x − y + z + 1) + k(x − 2y − z + 4) = 0\n∵ 過( − 2,1,5) ∴( − 6 − 1 + 5 + 1) + k( − 2 − 2 − 5 + 4) = 0 ⇒ k = −$\\frac{1}{5}$\n∴ (3x − y + z + 1) −$\\frac{1}{5}$ (x − 2y − z + 4) = 0，即14x − 3y + 6z + 1 = 0",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-pencil-equation-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 17,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0018",
+      "title": "隨堂練習：二平面E~1~：3x + y − z + 1 = 0，E~2~：",
+      "question_text": "二平面E~1~：3x + y − z + 1 = 0，E~2~：x + y + z = 0之交線L，求\n(1)由點A(1，2，3)與L所決定之平面E方程式。\n(2)包含L且與平面2x − y + 3z − 1 = 0垂直的平面F方程式。",
+      "answer_text": "(1)$5x+y-3z+2=0$；(2)$5x+y-3z+2=0$",
+      "explanation_text": "【解析】(1)設E：(x + y + z) + k(3x + y − z + 1) = 0，則平面E包含L\n∵ E過A(1,2,3) ∴(1 + 2 + 3) + k(3 + 2 − 3 + 1) = 0 ⇒ k = − 2 故E：(x + y + z) − 2(3x + y − z + 1) = 0，即5x + y − 3z + 2 = 0\n(2)設F：(3x + y − z + 1) + k(x + y + z) = 0，則平面F包含L 即(3 + k)x + (1 + k)y + (− 1 + k)z + 1 = 0\n∵ 平面F與平面2x − y + 3z − 1 = 0垂直\n∴ 2(3 + k) − (1 + k) + 3(− 1 + k) = 0 ⇒ 4k + 2 = 0 ∴ k = −$\\frac{1}{2}$ 故F：(3x + y − z + 1) −$\\frac{1}{2}$ (x + y + z) = 0，即5x + y − 3z + 2 = 0",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-pencil-equation-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題1：平面方程式",
+      "source_order": 18,
+      "tags": [
+        "s4-2-1",
+        "section:主題1：平面方程式",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0019",
+      "title": "範例1：設兩平面E~1~：x − y + z + 1 = 0，E~2~：",
+      "question_text": "設兩平面E~1~：x − y + z + 1 = 0，E~2~：x + y +$\\sqrt{6}$z − 6 = 0，則兩平面E~1~，E~2~的夾角為＿＿＿＿＿＿。",
+      "answer_text": "$60^\\circ$或$120^\\circ$",
+      "explanation_text": "【解析】E~1~及E~2~之法向量分別為$\\overset{⃑}{n_{1}}$= (1,− 1,1)，$\\overset{⃑}{n_{2}}$= (1,1,$\\sqrt{6}$) 則cosθ = ±$\\frac{|\\overset{⃑}{n_{1}}．\\overset{⃑}{n_{2}}|}{|\\overset{⃑}{n_{1}}| ． |\\overset{⃑}{n_{2}}|}$= ±$\\frac{1 - 1 + \\sqrt{6}}{\\sqrt{3} ． \\sqrt{8}}$= ±$\\frac{1}{2}$ ∴ 夾角為60°或120°",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題2：兩平面的夾角",
+      "source_order": 19,
+      "tags": [
+        "s4-2-1",
+        "section:主題2：兩平面的夾角",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0020",
+      "title": "隨堂練習：若平面E：2x + y + 2z + 13 = 0與平面F：x ",
+      "question_text": "若平面E：2x + y + 2z + 13 = 0與平面F：x + y − 7 = 0之夾角為θ，則sinθ = ＿＿＿＿＿＿。",
+      "answer_text": "$\\frac{\\sqrt{2}}{2}$",
+      "explanation_text": "【解析】∵ 平面E：2x + y + 2z + 13 = 0之法向量$\\overset{⃑}{n_{1}}$= (2,1,2) 平面F：x + y − 7 = 0之法向量$\\overset{⃑}{n_{2}}$= (1,1,0)\n∴ E與F之夾角θ 就是$\\overset{⃑}{n_{1}}$與$\\overset{⃑}{n_{2}}$之夾角\n⇒ cosθ =$\\pm \\frac{|\\overset{⃑}{n_{1}}．\\overset{⃑}{n_{2}}|}{|\\overset{⃑}{n_{1}}| ． |\\overset{⃑}{n_{2}}|} = \\pm \\frac{2 + 1 + 0}{\\sqrt{4 + 1 + 4} ． \\sqrt{1 + 1 + 0}} = \\pm \\frac{3}{3\\sqrt{2}}$= ±$\\frac{1}{\\sqrt{2}}$\n∴ sinθ =$\\frac{1}{\\sqrt{2}} = \\frac{\\sqrt{2}}{2}$",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題2：兩平面的夾角",
+      "source_order": 20,
+      "tags": [
+        "s4-2-1",
+        "section:主題2：兩平面的夾角",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0021",
+      "title": "範例2：設平面E：x +$\\sqrt{2}$y +$\\sqrt{3}$z",
+      "question_text": "設平面E：x +$\\sqrt{2}$y +$\\sqrt{3}$z = 1，求平面E與xy平面之銳角的夾角為＿＿＿＿＿＿。\n.",
+      "answer_text": "$\\frac{\\pi}{4}$",
+      "explanation_text": "【解析】平面E：x +$\\sqrt{2}$y +$\\sqrt{3}$z = 1，法向量$\\overset{⃑}{n_{1}}$= (1，$\\sqrt{2}$，$\\sqrt{3}$)， xy平面之法向量$\\overset{⃑}{n_{2}}$= (0，0，1)\n∴所夾銳角cosθ =$\\frac{|\\overset{⃑}{n_{1}}．\\overset{⃑}{n_{2}}|}{|\\overset{⃑}{n_{1}}| ． |\\overset{⃑}{n_{2}}|} = \\frac{(1\\text{ ,}\\sqrt{2}\\ ,\\sqrt{3})．(0,\\ 0,\\ 1)}{\\sqrt{6}\\ ． \\sqrt{1}}$=$\\frac{\\sqrt{3}}{\\sqrt{6}} = \\frac{1}{\\sqrt{2}}$\n∴ θ =$\\frac{\\pi}{4}$",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題2：兩平面的夾角",
+      "source_order": 21,
+      "tags": [
+        "s4-2-1",
+        "section:主題2：兩平面的夾角",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0022",
+      "title": "隨堂練習：空間中三點A($\\sqrt{3}$，1，$2\\sqrt{3}$)",
+      "question_text": "空間中三點A($\\sqrt{3}$，1，$2\\sqrt{3}$)，B(3，$\\sqrt{3}$，− 2)，C(0，0，0)，求平面ABC與yz平面所夾的銳角。",
+      "answer_text": "$60^\\circ$",
+      "explanation_text": "【解析】$\\overset{⃑}{CA} = (\\sqrt{3}\\text{ }，\\text{ }1\\text{ }，\\text{ }2\\sqrt{3})$，$\\overset{⃑}{CB} = (3\\text{ }，\\text{ }\\sqrt{3}\\text{ }，\\text{ } - 2)$ 設$\\overset{⃑}{n_{1}}$=\n(a，b，c)為平面ABC之法向量，則$\\overset{⃑}{n_{1}}\\bot\\overset{⃑}{CA}， \\overset{⃑}{n_{1}}\\bot\\overset{⃑}{CB}$ $⇒ \\quad{ \\begin{array}{r} \\sqrt{3}a + b + 2\\sqrt{3}c = 0 \\\\ 3a + \\sqrt{3}b - 2c = 0 \\end{array} \\right.$\n∴ a：b：c =$\\left| \\begin{matrix} 1 & 2\\sqrt{3} \\\\ \\sqrt{3} & - 2 \\end{matrix} \\right|\\text{ }：\\text{ }\\left| \\begin{matrix} 2\\sqrt{3} & \\sqrt{3} \\\\ - 2 & 3 \\end{matrix} \\right|\\text{ }：\\text{ }\\left| \\begin{matrix} \\sqrt{3} & 1 \\\\ 3 & \\sqrt{3} \\end{matrix} \\right|$ = (− 8)：$8\\sqrt{3}$：0 = 1：( −$\\sqrt{3}$)：0\n∴ $\\overset{⃑}{n_{1}}$= (1,−$\\sqrt{3}$,0) 又yz平面之法向量$\\overset{⃑}{n_{2}}$=\n(1,0,0)，設ABC平面與yz平面之夾角θ 則cosθ =$\\frac{|\\overset{⃑}{n_{1}}．\\overset{⃑}{n_{2}}|}{|\\overset{⃑}{n_{1}}| ． |\\overset{⃑}{n_{2}}|} = \\frac{1}{\\sqrt{1 + 3} ． \\sqrt{1}} = \\frac{1}{2}$ ∴ 銳夾角θ = 60°",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題2：兩平面的夾角",
+      "source_order": 22,
+      "tags": [
+        "s4-2-1",
+        "section:主題2：兩平面的夾角",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0023",
+      "title": "隨堂練習：A(1,− 2,− 1)，B(0,0,1)，C(− 1,− 1,",
+      "question_text": "A(1,− 2,− 1)，B(0,0,1)，C(− 1,− 1,0)，E：x + y = 0，則△ABC的面積為＿＿＿＿＿＿，又平面E與平面ABC的銳夾角為＿＿＿＿＿＿。",
+      "answer_text": "$\\frac{3\\sqrt{2}}{2}$，$60^\\circ$",
+      "explanation_text": "【解析】(1)$\\overset{⃑}{AB}$= (− 1,2,2)，$\\overset{⃑}{AC}$= (− 2,1,1)，|$\\overset{⃑}{AB}$| = 3，|$\\overset{⃑}{AC}$| =$\\sqrt{6}$，$\\overset{⃑}{AB}$．$\\overset{⃑}{AC}$= 6 △ABC之面積 =$\\frac{1}{2}\\sqrt{|\\overset{⃑}{AB}|^{2}．|\\overset{⃑}{AC}|^{2} - (\\overset{⃑}{AB}．\\overset{⃑}{AC})^{2}}$=\n[圖:program-db/assets/question-media/s4-2-1/image11.png] $\\sqrt{9 × 6 - 6^{2}}$=$\\frac{\\sqrt{18}}{2}$=$\\frac{3\\sqrt{2}}{2}$\n(2) E~ABC~之法向量$\\overset{⃑}{n_{1}}$=$\\overset{⃑}{AB}$×$\\overset{⃑}{AC}$=\n(0,− 3,3)，E之法向量$\\overset{⃑}{n_{2}}$= (1,1,0) 設銳夾角為θ，則cosθ =$\\frac{|\\overset{⃑}{n_{1}}．\\overset{⃑}{n_{2}}|}{|\\overset{⃑}{n_{1}}| ． |\\overset{⃑}{n_{2}}|}$=$\\frac{3}{\\sqrt{18} ． \\sqrt{2}}$=$\\frac{3}{6}$=$\\frac{1}{2}$ ∴ 銳夾角為60°",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題2：兩平面的夾角",
+      "source_order": 23,
+      "tags": [
+        "s4-2-1",
+        "section:主題2：兩平面的夾角",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0024",
+      "title": "範例3：設過點A(1,0,0)，B(0,0,$\\frac{1}{3}$)",
+      "question_text": "設過點A(1,0,0)，B(0,0,$\\frac{1}{3}$)的平面E與平面F：x + z =$\\frac{1}{2}$的銳夾角為45°，則E的方程式為＿＿＿＿＿＿。",
+      "answer_text": "$x\\pm\\sqrt{6}y+3z=1$",
+      "explanation_text": "【解析】∵平面E過點A(1,0,0)，B(0,0,$\\frac{1}{3}$) ∴E的x截距為1，y截距為$\\frac{1}{3}$ 設E：$\\frac{x}{1} + \\frac{y}{b} + \\frac{z}{1} = 1$ ∴ E的法線向量為$\\overset{⃑}{n_{1}}$=\n(1,$\\frac{1}{b}$,3) 而F：x + z =$\\frac{1}{2}$的法線向量為$\\overset{⃑}{n_{2}}$= (1,0,1) cos45° =$\\frac{|\\overset{⃑}{n_{1}}．\\overset{⃑}{n_{2}}|}{|\\overset{⃑}{n_{1}}| ． |\\overset{⃑}{n_{2}}|}$\n⇒ $\\frac{1}{\\sqrt{2}} = \\frac{4}{\\sqrt{10 + \\frac{1}{b^{2}}} ． \\sqrt{2}}$ ⇒ b^2^ =$\\frac{1}{6}$ ⇒ b =$\\pm \\frac{1}{\\sqrt{6}}$\n∴ E：x$\\pm \\sqrt{6}$y + 3z = 1",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題2：兩平面的夾角",
+      "source_order": 24,
+      "tags": [
+        "s4-2-1",
+        "section:主題2：兩平面的夾角",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0025",
+      "title": "隨堂練習：在空間中，已知平面E通過(1，0，0)，(0，− 1，0)及正z",
+      "question_text": "在空間中，已知平面E通過(1，0，0)，(0，− 1，0)及正z軸上一點(0，0，a)，如果平面E與xy平面的夾角成45度，則a =＿＿＿＿＿＿。",
+      "answer_text": "$\\frac{1}{\\sqrt{2}}$",
+      "explanation_text": "【解析】 ${ \\begin{array}{r} E：\\frac{x}{1} + \\frac{y}{- 1} + \\frac{z}{a} = 1 \\\\ E_{xy}：z = 0 \\end{array} \\right.$之法向量分別為${ \\begin{array}{r} \\overset{⃑}{n_{1}} = (1 , - 1 , \\frac{1}{a}) \\\\ \\overset{⃑}{n_{2}} = (0 , 0 , 1) \\end{array} \\right.$ cos45° =\n[圖:program-db/assets/question-media/s4-2-1/image12.png] ⇒ $\\frac{1}{\\sqrt{2}}$=$\\frac{|\\frac{1}{a}|}{\\sqrt{2 + \\frac{1}{a^{2}}} × 1}$ ⇒ $\\sqrt{2 + \\frac{1}{a^{2}}}$=$\\sqrt{2}$．$\\frac{1}{|a|}$ 兩邊平方，2 +$\\frac{1}{a^{2}}$=$\\frac{2}{a^{2}}$ ⇒ $\\frac{1}{a^{2}}$= 2，得a =$\\frac{1}{\\sqrt{2}}$，−$\\frac{1}{\\sqrt{2}}$（不合 ∵ a > 0）",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題2：兩平面的夾角",
+      "source_order": 25,
+      "tags": [
+        "s4-2-1",
+        "section:主題2：兩平面的夾角",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0026",
+      "title": "隨堂練習：平面E通過點A(1，− 1，1)，B( − 1，3，1)，且與平",
+      "question_text": "平面E通過點A(1，− 1，1)，B( − 1，3，1)，且與平面x + y + 1 = 0的銳夾角為$\\frac{\\pi}{4}$，求平面E的方程式。",
+      "answer_text": "$2x+y+2z-3=0$或$2x+y-2z+1=0$",
+      "explanation_text": "【解析】設平面E的方程式為ax + by + cz + d = 0 ∵ E過A(1,− 1,1)，B( − 1,3,1)\n∴ ${ \\begin{array}{r} a - b + c + d = 0·s·s \\\\ - a + 3b + c + d = 0·s \\end{array} \\right.$\n[圖:program-db/assets/question-media/s4-2-1/image13.png]，① − ②得a = 2b......③ 又平面E與平面x + y + 1 = 0的銳夾角為$\\frac{\\pi}{4}$\n∴ cos$\\frac{\\pi}{4} = \\left| \\frac{1\\text{ }．a + 1\\text{ }．b + 0\\text{ }．c}{\\sqrt{1 + 1 + 0} ． \\sqrt{a^{2} + b^{2} + c^{2}}} \\right|\\quad ⇒ \\quad\\frac{\\sqrt{2}}{2} = \\left| \\frac{a + b}{\\sqrt{2} ． \\sqrt{a^{2} + b^{2} + c^{2}}} \\right|$\n⇒ a^2^ + b^2^ + c^2^ = (a + b)^2^ ⇒ c^2^ = 2ab......④，\n③代入④c^2^ = 4b^2^ ∴ c = ± 2b 若c = 2b代入①得d = − 3b 得E的方程式為2bx + by + 2bz − 3b = 0 ⇒ 2x + y + 2z − 3 = 0 若c = − 2b代入①得d = b 得E的方程式為2bx + by − 2bz + b = 0 ⇒ 2x + y − 2z + 1 = 0",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題2：兩平面的夾角",
+      "source_order": 26,
+      "tags": [
+        "s4-2-1",
+        "section:主題2：兩平面的夾角",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0027",
+      "title": "範例1：點P(3，2，4)到平面E：2x − y + 2z + 6 = ",
+      "question_text": "點P(3，2，4)到平面E：2x − y + 2z + 6 = 0之距離為＿＿＿＿＿＿。",
+      "answer_text": "$6$",
+      "explanation_text": "【解析】d(P，E) =$\\frac{|2\\text{ }．\\text{ }3 - 1\\text{ }．\\text{ }2 + 2\\text{ }．\\text{ }4 + 6|}{\\sqrt{2^{2} + ( - 1)^{2} + 2^{2}}} = \\frac{18}{3}$= 6",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題3：點到平面的距離",
+      "source_order": 27,
+      "tags": [
+        "s4-2-1",
+        "section:主題3：點到平面的距離",
+        "marker:範例1"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0028",
+      "title": "範例2：A(1,3,2)在平面E上之投影點為B(2,1,0)，則C(3,",
+      "question_text": "A(1,3,2)在平面E上之投影點為B(2,1,0)，則C(3,5,1)到平面E的距離為＿＿＿＿＿＿。",
+      "answer_text": "$3$",
+      "explanation_text": "【解析】$\\overset{⃑}{AB}$= (1，− 2，− 2)，令$\\overset{⃑}{AB} = \\overset{⃑}{N}$⇒E：(x − 2) − 2(y − 1) − 2z = 0 ⇒ x − 2y − 2z = 0 d(C，E) =$\\frac{|3 - 10 - 2|}{\\sqrt{1 + 4 + 4}}$= 3",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題3：點到平面的距離",
+      "source_order": 28,
+      "tags": [
+        "s4-2-1",
+        "section:主題3：點到平面的距離",
+        "marker:範例2"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0029",
+      "title": "範例3：設平面E與平面F：3x + 6y − 2z = 12平行且點P(",
+      "question_text": "設平面E與平面F：3x + 6y − 2z = 12平行且點P(1,− 1,− 2)到平面E的距離為2，求平面E的方程式。",
+      "answer_text": "$3x+6y-2z=-13$或$3x+6y-2z=15$",
+      "explanation_text": "【解析】設平面E的方程式為3x + 6y − 2z = d 則P(1,− 1,− 2)到平面E的距離 =$\\frac{|3 - 6 + 4 - d|}{\\sqrt{9 + 36 + 4}}$= 2\n∴ $\\frac{|1 - d|}{7}$= 2 ⇒ |1 − d | = 14 ⇒ 1 − d = ± 14 ⇒ d = − 13或15 故平面E的方程式為3x + 6y − 2z = − 13或3x + 6y − 2z = 15",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題3：點到平面的距離",
+      "source_order": 29,
+      "tags": [
+        "s4-2-1",
+        "section:主題3：點到平面的距離",
+        "marker:範例3"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0030",
+      "title": "範例4：若點P(x0，y0，z0)是平面2x − y − 4z − 1 ",
+      "question_text": "若點P(x0，y0，z0)是平面2x − y − 4z − 1 = 0上一點，則$\\sqrt{(x_{0} - 1)^{2} + (y_{0} + 2)^{2} + (x_{0} - 3)^{2}}$的最小值為＿＿＿＿＿＿。",
+      "answer_text": "$\\frac{3\\sqrt{21}}{7}$",
+      "explanation_text": "【解析】設A(1,− 2,3) ∵ P(x~0~,y~0~,z~0~) ∴ $\\overline{AP}$=$\\sqrt{(x_{0} - 1)^{2} + (y_{0} + 2)^{2} + (z_{0} - 3)^{2}}$\n∵ P為平面E：2x − y − 4z − 1 = 0上一點\n∴ $\\overline{AP}$的最小值即為A點到平面E之距離d\n∵ d =$\\frac{|2 + 2 - 12 - 1|}{\\sqrt{4 + 1 + 16}}$=$\\frac{| - 9|}{\\sqrt{21}}$=$\\frac{9}{\\sqrt{21}}$=$\\frac{3\\sqrt{21}}{7}$",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題3：點到平面的距離",
+      "source_order": 30,
+      "tags": [
+        "s4-2-1",
+        "section:主題3：點到平面的距離",
+        "marker:範例4"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0031",
+      "title": "隨堂練習：已知3x + 2y + 6z = 6，則$\\sqrt{(x - ",
+      "question_text": "已知3x + 2y + 6z = 6，則$\\sqrt{(x - 2)^{2} + (y - 2)^{2} + (z - 1)^{2}}$最小值為＿＿＿＿＿＿。",
+      "answer_text": "$\\frac{10}{7}$",
+      "explanation_text": "【解析】由[柯西]{.underline}不等式知\n[(x − 2)^2^ + (y − 2)^2^ + (z − 1)^2^](3^2^ + 2^2^ + 6^2^) ≥\n[3(x − 2) + 2(y − 2) + 6(z − 1)^2^]\n⇒ [(x − 2)^2^ + (y − 2)^2^ + (z − 1)^2^] × 49 ≥ (3x + 2y + 6z −16)^2^\n⇒ (x − 2)^2^ + (y − 2)^2^ + (z − 1)^2^ ≥$\\frac{1}{49}$× (6 − 16)^2^ =$\\frac{100}{49}$\n⇒ $\\sqrt{(x - 2)^{2} + (y - 2)^{2} + (z - 1)^{2}}$≥$\\sqrt{\\frac{100}{49}}$=$\\frac{10}{7}$ ∴ 最小值為$\\frac{10}{7}$",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題3：點到平面的距離",
+      "source_order": 31,
+      "tags": [
+        "s4-2-1",
+        "section:主題3：點到平面的距離",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0032",
+      "title": "範例5：在空間坐標系中，已知平面E：x + 3y − 2z + 11 =",
+      "question_text": "在空間坐標系中，已知平面E：x + 3y − 2z + 11 = 0及兩點A(5− 16)，B(− 13− 6)，\n(1)若A點在平面F上的投影點恰為線段AB的中點，求平面F的方程式。\n(2)設P點為平面E上的動點，當|$\\overline{PA}$−$\\overline{PB}$|為最小時，P點必在直線L上移動，若直線L的方向向量比為a：b：11，求a + b之值。",
+      "answer_text": "(1)$3x-2y+6z-4=0$；(2)$-2$",
+      "explanation_text": "【解析】(1) A點在平面F上之投影點恰為$\\overline{AB}$之中點M(2,1,0) 則平面F之法向量為$\\overset{BA{\\_\\_\\_\\_}芪}{}$= (6,− 4,12)，且F過M(2,1,0) F：6(x − 2) − 4(y − 1) + 12z = 0，得F：3x − 2y + 6z − 4 = 0\n(2) P∈E且P∈F（F為$\\overline{AB}$之中垂平面）時，|$\\overline{PA}$−$\\overline{PB}$|有最小值為0 則P必在直線L：${ \\begin{array}{r} E：x + 3y - 2z + 11 = 0 \\\\ F： 3x - 2y + 6z - 4 = 0 \\end{array} \\right.$\n⇒ 方向向量$\\overset{⃑}{d}$= (1,3,− 2) × (3,− 2,6) = (14,− 12,− 11)\n∴ 方向向量比a：b：11 = (− 14)：12：11，得a + b = (− 14) + 12 = − 2",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題3：點到平面的距離",
+      "source_order": 32,
+      "tags": [
+        "s4-2-1",
+        "section:主題3：點到平面的距離",
+        "marker:範例5"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0033",
+      "title": "隨堂練習：依解析與附圖，求題目所問的平面或最值結果",
+      "question_text": "依解析與附圖，求題目所問的平面或最值結果。",
+      "answer_text": "(1)$\\frac{4\\sqrt{2}}{3}$；(2)$\\sqrt{97}$；(3)$\\frac{18}{11}$；(4)$x+z=1$",
+      "explanation_text": "【解析】A(5,3,− 4)，B(3,4,− 2)，平面E：2x + y − 2z = 3\n(1)$\\overset{⃑}{AB}$= ( − 2,1,2)，平面E的法向量$\\overset{⃑}{n}$= (2,1,− 2) $\\overset{⃑}{AB}$與$\\overset{⃑}{n}$夾角θ ⇒ cosθ =[圖:program-db/assets/question-media/s4-2-1/image15.png]\n⇒ sinθ =$\\sqrt{1 - (\\frac{7}{9})^{2}} = \\frac{4\\sqrt{2}}{9}$\n∴ 正射影長 =$\\overline{AB}$× sinθ =$\\sqrt{9} × \\frac{4\\sqrt{2}}{9} = \\frac{4\\sqrt{2}}{3}$\n(2) A、B二點代入平面E，(10 + 3 + 8 − 3)(6 + 4 + 4 − 3) > 0， 故A、B在平面E同一側 設A對平面E的對稱點A′(x,y,z) ⇒ $\\overset{⃑}{AA'}//\\overset{⃑}{n}\\quad ⇒ \\quad\\overset{⃑}{AA'} = t\\overset{⃑}{n}$\n⇒ (x − 5,y − 3,z + 4) = t(2,1,− 2) ⇒ (x,y,z) = (5 + 2t,3 + t,− 4 − 2t) A與A′中點$(\\frac{5 + 5 + 2t}{2} , \\frac{3 + 3 + t}{2} , \\frac{- 4 - 4 - 2t}{2})$ = (5 + t,3 +$\\frac{1}{2}$t,− 4 − t)在平面E上\n⇒ 2(5 + t) + (3 +$\\frac{1}{2}$t) − 2( − 4 − t) = 3 ⇒ t = − 4 ∴ A′(− 3,− 1,4)\n∴ $\\overline{PA} + \\overline{PB}$的最小值 =$\\overline{A'B} = \\sqrt{6^{2} + 5^{2} + 6^{2}} = \\sqrt{97}$\n(3)$\\overline{PA}\\text{ }：\\text{ }\\overline{PB}$= d(A,E)：d(B,E) =$\\frac{|10 + 3 + 8 - 3|}{\\sqrt{2^{2} + 1^{2} + ( - 2)^{2}}}\\text{ }：\\text{ }\\frac{|6 + 4 + 4 - 3|}{\\sqrt{2^{2} + 1^{2} + ( - 2)^{2}}}$= 18：11 =$\\frac{18}{11}$\n(4)設此平面法向量$\\overset{⃑}{N}$=\n(a,b,c) ⇒\n[圖:program-db/assets/question-media/s4-2-1/image16.png] $\\overset{⃑}{AB}$\n∴ ${ \\begin{array}{r} 2a + b - 2c = 0 \\\\ - 2a + b + 2c = 0 \\end{array} \\right.$ ⇒ (a,b,c) = (a,0,a) = (1,0,1)\n∴ 平面方程式為(x − 5) + (z + 4) = 0，即x + z = 1",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "中",
+      "question_category": "重要",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題3：點到平面的距離",
+      "source_order": 33,
+      "tags": [
+        "s4-2-1",
+        "section:主題3：點到平面的距離",
+        "marker:隨堂練習"
+      ]
+    },
+    {
+      "id": "q-s4-2-1-0034",
+      "title": "範例5：設O- xyz空間中，兩點A(1,− 2,− 1)，B(3,1,",
+      "question_text": "設O- xyz空間中，兩點A(1,− 2,− 1)，B(3,1,0)，一平面E：x − y − z − 1 = 0，則\n(1)$\\overline{AB}$在E之正射影的長度為＿＿＿＿＿＿。\n(2)若E上一點P使${\\overline{AP}}^{2}$+${\\overline{BP}}^{2}$為最小，則P點之坐標為＿＿＿＿＿＿。",
+      "answer_text": "(1)$\\frac{\\sqrt{114}}{3}$；(2)$\\left(\\frac{4}{3},\\frac{1}{6},\\frac{1}{6}\\right)$",
+      "explanation_text": "【解析】 (1) $\\overset{⃑}{AB}$=\n(2,3,1)，平面E之法向量$\\overset{⃑}{n}$= (1，− 1，− 1) cosθ =$\\frac{\\overset{⃑}{AB}．\\overset{⃑}{n}}{|\\overset{⃑}{AB}|．|\\overset{⃑}{n}|}$=$\\frac{- 2}{\\sqrt{14} ． \\sqrt{3}}$，sinθ =$\\sqrt{1 - \\cos^{2}\\theta}$=$\\sqrt{\\frac{19}{21}}$ 所求 =$\\overline{BC}$=$\\overline{AB}$．sinθ =$\\sqrt{14}$．$\\frac{\\sqrt{19}}{\\sqrt{21}}$=$\\frac{\\sqrt{114}}{3}$\n(2)$\\overline{AB}$之中點M(2,$\\frac{- 1}{2}$,$\\frac{- 1}{2}$)，${\\overline{PA}}^{2}$+${\\overline{PB}}^{2}$= 2${\\overline{AM}}^{2}$+ 2${\\overline{PM}}^{2}$（中線定理）≥ 2${\\overline{AM}}^{2}$+ 2${\\overline{MH}}^{2}$ 而H為M在E：x − y − z − 1 = 0之投影點，設H(2 + t,$\\frac{- 1}{2}$− t,$\\frac{- 1}{2}$− t) 代入E\n⇒ (2 + t) − ($\\frac{- 1}{2}$− t) − ($\\frac{- 1}{2}$− t) − 1 = 0 ⇒ t =$\\frac{- 2}{3}$， 故所求之P點即為H($\\frac{4}{3}$,$\\frac{1}{6}$,$\\frac{1}{6}$)]",
+      "chapter_code": "s4-2-1",
+      "formula_id": "senior-plane-distance-parallel-s421",
+      "difficulty": "易",
+      "question_category": "基本",
+      "source_type": "docx_pack_markdown",
+      "source_ref": "source/4A-5轉.docx",
+      "source_section": "主題3：點到平面的距離",
+      "source_order": 34,
+      "tags": [
+        "s4-2-1",
+        "section:主題3：點到平面的距離",
+        "marker:範例5"
+      ]
+    }
+  ]
+}

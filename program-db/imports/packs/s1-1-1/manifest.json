@@ -1,0 +1,53 @@
+{
+  "chapter_code": "s1-1-1",
+  "chapter_title": "實數",
+  "source_files": [
+    {
+      "path": "source/1-1轉.docx",
+      "role": "primary_docx",
+      "note": "保留 OMath 公式的主來源，適合作為正式匯入基底。"
+    }
+  ],
+  "extracted_files": [
+    {
+      "path": "extracted/1-1轉.md",
+      "role": "pandoc_markdown"
+    },
+    {
+      "path": "questions.json",
+      "role": "question_pack_preview"
+    },
+    {
+      "path": "preview.json",
+      "role": "assignment_preview"
+    }
+  ],
+  "asset_roots": [
+    {
+      "path": "program-db/assets/question-media/s1-1-1",
+      "role": "canonical_question_media"
+    }
+  ],
+  "question_schema": {
+    "id": "string",
+    "title": "string",
+    "question_text": "string",
+    "answer_text": "string",
+    "explanation_text": "string",
+    "chapter_code": "string",
+    "formula_id": "string",
+    "difficulty": "易|中|難|超難",
+    "question_category": "基本|重要|綜合|段考|歷屆|模考",
+    "source_type": "string",
+    "source_ref": "string",
+    "source_section": "string",
+    "source_order": "number",
+    "tags": []
+  },
+  "default_mapping_rules": {
+    "範例": "基本",
+    "隨堂練習": "重要",
+    "unmatched_formula_id": "綜合"
+  },
+  "status": "review_ready"
+}
