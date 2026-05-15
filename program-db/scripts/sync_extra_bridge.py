@@ -12,12 +12,14 @@ DATA_DIR = ROOT / "data"
 
 CHAPTER_DB = DB_DIR / "chapter-code-db.json"
 OVERVIEW_DB = DB_DIR / "chapter-overview-db.json"
+OVERVIEW_BODY_DB = DB_DIR / "chapter-overview-body-db.json"
 CLOSING_DB = DB_DIR / "chapter-closing-db.json"
 MAIN_TOPIC_OVERVIEW_DB = DB_DIR / "main-topic-overview-db.json"
 FORMULA_DB = DB_DIR / "formula-db.json"
 
 CHAPTER_JS = DATA_DIR / "chapter-code-config.js"
 OVERVIEW_JS = ROOT / "chapter-overviews.js"
+OVERVIEW_BODY_JS = ROOT / "chapter-overview-bodies.js"
 CLOSING_JS = ROOT / "chapter-closings.js"
 MAIN_TOPIC_OVERVIEW_JS = DATA_DIR / "main-topic-overviews.js"
 MANAGED_JSON = DATA_DIR / "managed-structure.auto.json"
@@ -103,6 +105,7 @@ def build_store_groups(entries: dict, catalog: dict, default_title: str):
             "title": str(entry.get("title", "")).strip() or default_title,
             "updatedAt": str(entry.get("updatedAt", "")).strip(),
             "variants": entry.get("variants", []) if isinstance(entry.get("variants", []), list) else [],
+            "appendGeneratedOutline": bool(entry.get("appendGeneratedOutline")),
         }
         group_name = build_group_name(code, chapter_meta, entry.get("groupName"))
         unique_group_name = group_name
@@ -125,6 +128,21 @@ def sync_chapter_overview_js_from_db(
         "章節重點大綱",
     )
     write_js_store(OVERVIEW_JS, "chapterOverviewStore", groups, by_code)
+    return len(groups)
+
+
+def sync_chapter_overview_body_js_from_db(
+    overview_body_db_path: Path = OVERVIEW_BODY_DB,
+    chapter_db_path: Path = CHAPTER_DB,
+):
+    body_payload = read_json(overview_body_db_path, {"meta": {"count": 0}, "bodies": {}})
+    chapter_payload = read_json(chapter_db_path, {"meta": {"count": 0}, "catalog": {}})
+    groups, by_code = build_store_groups(
+        body_payload.get("bodies", {}),
+        chapter_payload.get("catalog", {}),
+        "章節正文",
+    )
+    write_js_store(OVERVIEW_BODY_JS, "chapterOverviewBodyStore", groups, by_code)
     return len(groups)
 
 
@@ -173,9 +191,14 @@ def sync_managed_json_from_topics_db(formula_db_path: Path = FORMULA_DB):
 
 def sync_extra_web_from_db():
     overview_count = sync_chapter_overview_js_from_db()
+    overview_body_count = sync_chapter_overview_body_js_from_db()
     chapter_count = sync_chapter_js_from_db()
     closing_count = sync_chapter_closing_js_from_db()
     sync_main_topic_overview_js_from_db()
     managed_count = sync_managed_json_from_topics_db()
     practice_count = sync_practice_assignment_js_from_db()
-    return overview_count, chapter_count, closing_count, managed_count, practice_count
+    return overview_count, overview_body_count, chapter_count, closing_count, managed_count, practice_count
+
+
+if __name__ == "__main__":
+    print(sync_extra_web_from_db())

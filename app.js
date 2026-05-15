@@ -2,6 +2,7 @@
   const store = window.formulaDataStore;
   const chapterOverviews = window.chapterOverviewStore?.groups || {};
   const chapterOverviewsByCode = window.chapterOverviewStore?.byCode || {};
+  const chapterOverviewBodiesByCode = window.chapterOverviewBodyStore?.byCode || {};
   const chapterClosings = window.chapterClosingStore?.groups || {};
   const chapterClosingsByCode = window.chapterClosingStore?.byCode || {};
   const mainTopicOverviewsById = window.mainTopicOverviewStore?.byId || {};
@@ -558,6 +559,16 @@
     return escapeHtml(content).replace(/\n/g, '<br>');
   }
 
+  function renderInlineRichText(text) {
+    const content = String(text || '').trim();
+    if (!content) return '';
+    const toolkit = getToolkit();
+    if (typeof toolkit.renderRichTextLine === 'function') {
+      return toolkit.renderRichTextLine(content);
+    }
+    return escapeHtml(content);
+  }
+
   function stripKnownSourceBlocks(value) {
     return String(value ?? '').replace(/【([^】]+)】/gu, (full, inner) => {
       return /出處|學測|會考|基測|統測|指考|模擬|北北基|教育會考/u.test(inner) ? '' : full;
@@ -681,6 +692,28 @@
     if (section.type === 'paragraph') {
       return `<div class="chapter-overview__paragraph">${renderRichText(section.text)}</div>`;
     }
+    if (section.type === 'bullet-list') {
+      const title = String(section.title || '').trim();
+      const items = Array.isArray(section.items) ? section.items : [];
+      return `
+        <section class="chapter-overview__bullet-list">
+          ${title ? `<h4 class="chapter-overview__bullet-title">${escapeHtml(title)}</h4>` : ''}
+          <ul class="chapter-overview__bullet-items">
+            ${items.map((item) => {
+              if (typeof item === 'string') {
+                return `<li class="chapter-overview__bullet-item">${renderRichText(item)}</li>`;
+              }
+              const label = String(item?.label || '').trim();
+              const text = String(item?.text || '').trim();
+              return `
+                <li class="chapter-overview__bullet-item">
+                  ${label ? `<p class="chapter-overview__bullet-label">${renderInlineRichText(label)}</p>` : ''}
+                  ${text ? `<div class="chapter-overview__bullet-text">${renderRichText(text)}</div>` : ''}
+                </li>`;
+            }).join('')}
+          </ul>
+        </section>`;
+    }
     if (section.type === 'table') {
       const headers = Array.isArray(section.headers) ? section.headers : [];
       const rows = Array.isArray(section.rows) ? section.rows : [];
@@ -706,6 +739,15 @@
             <a class="ghost-link" href="${encodeURI(fitSrc)}" target="_blank" rel="noopener noreferrer">在 Edge 另開（可手寫）</a>
           </div>
         </div>`;
+    }
+    if (section.type === 'image') {
+      const imageSrc = String(section.src || '').trim();
+      if (!imageSrc) return '';
+      const caption = String(section.caption || '').trim();
+      return `
+        <figure class="chapter-overview__image-wrap">
+          <img class="chapter-overview__image" src="${encodeURI(imageSrc)}" alt="${escapeHtml(caption || '章節原稿截圖')}" />
+        </figure>`;
     }
     return '';
   }
@@ -779,6 +821,18 @@
     ];
   }
 
+  function buildGeneratedOutlineTopicEntries(chapterCode, fallbackEntries = []) {
+    const chapterItemById = new Map(
+      allItems
+        .filter((item) => String(item?.chapterCode || '') === String(chapterCode || ''))
+        .map((item) => [String(item?.id || ''), item])
+    );
+    const mainThemeEntries = Object.keys(mainTopicOverviewsById)
+      .filter((id) => chapterItemById.has(id))
+      .map((id) => ({ item: chapterItemById.get(id) }));
+    return mainThemeEntries.length ? mainThemeEntries : fallbackEntries;
+  }
+
   function renderOverviewSegment(options) {
     const {
       label,
@@ -824,18 +878,73 @@
     const chapterCode =
       ref?.chapterCode || store.getChapterCode?.(ref?.stage, ref?.grade, ref?.term, ref?.chapter) || '';
     const overview = chapterOverviewsByCode[chapterCode] || chapterOverviews[groupName];
+    const panelCode = overview?.code || chapterCode || groupName;
+    const bodyEntry = chapterOverviewBodiesByCode[chapterCode] || null;
+
+    if (bodyEntry) {
+      const generatedTopicEntries = buildGeneratedOutlineTopicEntries(chapterCode, topicEntries);
+      const keyVariants = Array.isArray(overview?.variants) ? overview.variants : [];
+      const keySectionsFromDb = pickOverviewSections(keyVariants, keyVariants[0] || { sections: [] }, (section) => section?.type === 'paragraph');
+      const variants = Array.isArray(bodyEntry?.variants) ? bodyEntry.variants : [];
+      const chosenVariantId = state.overviewVariants[groupName] || variants[0]?.id;
+      const activeVariant = variants.find((variant) => variant.id === chosenVariantId) || variants[0] || { sections: [] };
+      const bodySections = pickOverviewSections(variants, activeVariant, (section) => section?.type);
+      const generatedOutlineSections = buildFallbackOutlineSections(generatedTopicEntries);
+      const keySentenceSections = keySectionsFromDb.length
+        ? keySectionsFromDb
+        : buildFallbackKeySentenceSections(ref, topicEntries);
+      return `
+        <section class="panel chapter-overview-panel">
+          <div class="chapter-overview__header">
+            <div>
+              <p class="summary-label">章節前言</p>
+              <h3>章節大綱與教學整理</h3>
+            </div>
+          </div>
+          ${variants.length
+            ? `<div class="chapter-overview__variant-tabs">
+            ${variants.map((variant) => `<button type="button" class="ghost-button ${variant.id === activeVariant.id ? 'is-active' : ''}" data-overview-group="${escapeHtml(groupName)}" data-overview-variant="${variant.id}">${variant.label}</button>`).join('')}
+          </div>`
+            : ''}
+          <div class="chapter-overview__body" data-annotatable="true" data-annotation-key="overview-${escapeHtml(panelCode)}">
+            ${renderOverviewSegment({
+              label: '最重要的幾句話',
+              title: '',
+              hint: '',
+              sections: keySentenceSections,
+              emptyText: '這個章節的前言還沒整理。'
+            })}
+            ${renderOverviewSegment({
+              label: activeVariant?.label || '章節正文',
+              title: '',
+              hint: '',
+              sections: bodySections,
+              emptyText: '這個章節的正文還沒整理。'
+            })}
+            ${bodyEntry.appendGeneratedOutline
+              ? renderOverviewSegment({
+                  label: '自動生成章節大綱',
+                  title: '',
+                  hint: '',
+                  sections: generatedOutlineSections,
+                  emptyText: '這個章節目前還沒有可生成的大綱。'
+                })
+              : ''}
+          </div>
+        </section>`;
+    }
+
     const variants = Array.isArray(overview?.variants) ? overview.variants : [];
     const chosenVariantId = state.overviewVariants[groupName] || variants[0]?.id;
     const activeVariant = variants.find((variant) => variant.id === chosenVariantId) || variants[0] || { sections: [] };
     const manualKeySentenceSections = pickOverviewSections(variants, activeVariant, (section) => section?.type === 'paragraph');
     const manualOutlineSections = pickOverviewSections(variants, activeVariant, (section) => section?.type && section.type !== 'paragraph');
-    const keySentenceSections = manualKeySentenceSections.length
+    const legacyKeySentenceSections = manualKeySentenceSections.length
       ? manualKeySentenceSections
       : buildFallbackKeySentenceSections(ref, topicEntries);
     const outlineSections = manualOutlineSections.length
       ? manualOutlineSections
       : buildFallbackOutlineSections(topicEntries);
-    const panelCode = overview?.code || chapterCode || groupName;
     return `
       <section class="panel chapter-overview-panel">
         <div class="chapter-overview__header">
@@ -854,7 +963,7 @@
             label: '最重要的幾句話',
             title: '',
             hint: '',
-            sections: keySentenceSections,
+            sections: legacyKeySentenceSections,
             emptyText: '這個章節的前言還沒整理。'
           })}
           ${renderOverviewSegment({

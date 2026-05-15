@@ -137,6 +137,36 @@ window.chapterCodeCatalog = {
     "domainMain": "代數",
     "domainSub": ""
   },
+  "j2-5-1": {
+    "chapter": "數據分析",
+    "section": "資料整理與統計圖表",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "j2-5-2": {
+    "chapter": "數據分析",
+    "section": "算術平均數、中位數與眾數",
+    "domainMain": "機率與統計",
+    "domainSub": ""
+  },
+  "j2-6-1": {
+    "chapter": "幾何圖形與三視圖",
+    "section": "簡易幾何圖形",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j2-6-2": {
+    "chapter": "幾何圖形與三視圖",
+    "section": "垂直、平分與線對稱",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "j2-6-3": {
+    "chapter": "幾何圖形與三視圖",
+    "section": "立體圖形與三視圖",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
   "j2-x": {
     "chapter": "國一下補充",
     "section": "國一下補充",
@@ -239,12 +269,6 @@ window.chapterCodeCatalog = {
     "domainMain": "數與量",
     "domainSub": ""
   },
-  "j4-2": {
-    "chapter": "線型函數",
-    "section": "線型函數",
-    "domainMain": "函數與圖形",
-    "domainSub": "代數"
-  },
   "j4-3-1": {
     "chapter": "三角形的基本性質",
     "section": "三角形與多邊形",
@@ -294,20 +318,20 @@ window.chapterCodeCatalog = {
     "domainSub": ""
   },
   "j5-1-1": {
-    "chapter": "相似三角形",
-    "section": "連比",
-    "domainMain": "代數",
+    "chapter": "幾何比例與相似形",
+    "section": "比例線段",
+    "domainMain": "幾何",
     "domainSub": ""
   },
   "j5-1-2": {
-    "chapter": "相似三角形",
-    "section": "平行線截比例線段",
+    "chapter": "幾何比例與相似形",
+    "section": "縮放與相似",
     "domainMain": "幾何",
     "domainSub": ""
   },
   "j5-1-3": {
-    "chapter": "相似三角形",
-    "section": "縮放與相似",
+    "chapter": "幾何比例與相似形",
+    "section": "相似三角形與其應用",
     "domainMain": "幾何",
     "domainSub": ""
   },
@@ -760,5 +784,17 @@ window.chapterCodeCatalog = {
     "section": "乘冪與圓的綜合應用",
     "domainMain": "幾何",
     "domainSub": ""
+  },
+  "j4-2-1": {
+    "chapter": "認識函數",
+    "section": "認識函數",
+    "domainMain": "函數與圖形",
+    "domainSub": "代數"
+  },
+  "j4-2-2": {
+    "chapter": "線型函數的圖形",
+    "section": "線型函數的圖形",
+    "domainMain": "函數與圖形",
+    "domainSub": "代數"
   }
 };

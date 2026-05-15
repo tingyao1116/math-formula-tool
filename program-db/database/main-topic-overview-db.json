@@ -1,7 +1,7 @@
 {
   "meta": {
     "count": 237,
-    "updatedAt": "2026-05-14T10:15:30+08:00",
+    "updatedAt": "2026-05-15T23:25:00+08:00",
     "source": "exports/main-theme-overviews"
   },
   "byId": {
@@ -12614,7 +12614,7 @@
     "j4-2-main-theme-function-meaning-and-correspondence": {
       "id": "j4-2-main-theme-function-meaning-and-correspondence",
       "title": "函數的意義與對應關係",
-      "updatedAt": "2026-05-13T23:09:11+08:00",
+      "updatedAt": "2026-05-15T23:25:00+08:00",
       "variants": [
         {
           "id": "editable",
@@ -12662,12 +12662,13 @@
             }
           ]
         }
-      ]
+      ],
+      "chapterCode": "j4-2-1"
     },
     "j4-2-main-theme-variables-and-domain": {
       "id": "j4-2-main-theme-variables-and-domain",
       "title": "自變數、應變數與定義域",
-      "updatedAt": "2026-05-13T23:09:11+08:00",
+      "updatedAt": "2026-05-15T23:25:00+08:00",
       "variants": [
         {
           "id": "editable",
@@ -12715,12 +12716,13 @@
             }
           ]
         }
-      ]
+      ],
+      "chapterCode": "j4-2-1"
     },
     "j4-2-main-theme-tables-relations-and-formulas": {
       "id": "j4-2-main-theme-tables-relations-and-formulas",
       "title": "用表格、對應表與關係式表示函數",
-      "updatedAt": "2026-05-13T23:09:11+08:00",
+      "updatedAt": "2026-05-15T23:25:00+08:00",
       "variants": [
         {
           "id": "editable",
@@ -12768,12 +12770,13 @@
             }
           ]
         }
-      ]
+      ],
+      "chapterCode": "j4-2-1"
     },
     "j4-2-main-theme-function-values-and-substitution": {
       "id": "j4-2-main-theme-function-values-and-substitution",
       "title": "函數值與代入計算",
-      "updatedAt": "2026-05-13T23:09:11+08:00",
+      "updatedAt": "2026-05-15T23:25:00+08:00",
       "variants": [
         {
           "id": "editable",
@@ -12821,12 +12824,13 @@
             }
           ]
         }
-      ]
+      ],
+      "chapterCode": "j4-2-1"
     },
     "j4-2-main-theme-graphs-and-coordinate-meaning": {
       "id": "j4-2-main-theme-graphs-and-coordinate-meaning",
       "title": "函數圖形與座標上的意義",
-      "updatedAt": "2026-05-13T23:09:11+08:00",
+      "updatedAt": "2026-05-15T23:25:00+08:00",
       "variants": [
         {
           "id": "editable",
@@ -12874,12 +12878,13 @@
             }
           ]
         }
-      ]
+      ],
+      "chapterCode": "j4-2-2"
     },
     "j4-2-main-theme-direct-proportion-and-y-equals-ax": {
       "id": "j4-2-main-theme-direct-proportion-and-y-equals-ax",
       "title": "正比函數與 \\(y=ax\\)",
-      "updatedAt": "2026-05-13T23:09:11+08:00",
+      "updatedAt": "2026-05-15T23:25:00+08:00",
       "variants": [
         {
           "id": "editable",
@@ -12927,12 +12932,13 @@
             }
           ]
         }
-      ]
+      ],
+      "chapterCode": "j4-2-2"
     },
     "j4-2-main-theme-linear-function-and-y-equals-ax-plus-b": {
       "id": "j4-2-main-theme-linear-function-and-y-equals-ax-plus-b",
       "title": "一次函數與 \\(y=ax+b\\)",
-      "updatedAt": "2026-05-13T23:09:11+08:00",
+      "updatedAt": "2026-05-15T23:25:00+08:00",
       "variants": [
         {
           "id": "editable",
@@ -12980,12 +12986,13 @@
             }
           ]
         }
-      ]
+      ],
+      "chapterCode": "j4-2-2"
     },
     "j4-2-main-theme-applications-and-interpretation": {
       "id": "j4-2-main-theme-applications-and-interpretation",
       "title": "函數的實際應用與判讀",
-      "updatedAt": "2026-05-13T23:09:11+08:00",
+      "updatedAt": "2026-05-15T23:25:00+08:00",
       "variants": [
         {
           "id": "editable",
@@ -13033,7 +13040,8 @@
             }
           ]
         }
-      ]
+      ],
+      "chapterCode": "j4-2-2"
     },
     "j4-4-1-main-theme-parallel-lines-transversal-and-angle-positions": {
       "id": "j4-4-1-main-theme-parallel-lines-transversal-and-angle-positions",

@@ -15,7 +15,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・正比反比": {
     "code": "j2-3-2",
@@ -32,7 +33,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・乘法公式": {
     "code": "j3-1-1",
@@ -49,7 +51,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・多項式的加減": {
     "code": "j3-1-2",
@@ -66,7 +69,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・多項式的乘除": {
     "code": "j3-1-3",
@@ -83,7 +87,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・二次方根": {
     "code": "j3-2-1",
@@ -100,7 +105,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・根式的運算": {
     "code": "j3-2-2",
@@ -117,7 +123,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・畢氏定理": {
     "code": "j3-2-3",
@@ -134,7 +141,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・等差數列": {
     "code": "j4-1-1",
@@ -151,7 +159,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・等比數列": {
     "code": "j4-1-2",
@@ -168,7 +177,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・等差級數": {
     "code": "j4-1-3",
@@ -185,7 +195,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・實數": {
     "code": "s1-1-1",
@@ -202,7 +213,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・絕對值": {
     "code": "s1-1-2",
@@ -219,7 +231,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・數列與遞迴": {
     "code": "s2-1-1",
@@ -236,7 +249,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・級數": {
     "code": "s2-1-2",
@@ -253,7 +267,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・一維數據分析": {
     "code": "s2-3-1",
@@ -270,7 +285,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・二維數據分析": {
     "code": "s2-3-2",
@@ -287,7 +303,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・邏輯、集合與計數原理": {
     "code": "s2-2-1",
@@ -304,7 +321,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・排列組合": {
     "code": "s2-2-2",
@@ -321,7 +339,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・二項式定理": {
     "code": "s2-2-3",
@@ -338,7 +357,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・古典機率": {
     "code": "s2-2-4",
@@ -355,7 +375,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・矩陣的運算": {
     "code": "s4-4-2",
@@ -372,7 +393,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "其他・立體透視圖": {
     "code": "B-1",
@@ -393,7 +415,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "其他・圓錐曲線": {
     "code": "B-2",
@@ -414,7 +437,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "其他・地球經緯度": {
     "code": "B-3",
@@ -435,7 +459,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・數線與絕對值": {
     "code": "j1-1-1",
@@ -452,7 +477,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・正負數的加減乘除": {
     "code": "j1-1-2",
@@ -469,7 +495,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・指數律": {
     "code": "j1-1-3",
@@ -486,7 +513,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・科學記號": {
     "code": "j1-1-4",
@@ -503,7 +531,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・質因數分解、因數、倍數": {
     "code": "j1-2-1",
@@ -520,7 +549,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・公因數、公倍數": {
     "code": "j1-2-2",
@@ -537,7 +567,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・分數的加減乘除": {
     "code": "j1-2-3",
@@ -554,7 +585,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・一元一次式": {
     "code": "j1-3-1",
@@ -571,7 +603,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・一元一次方程式": {
     "code": "j1-3-2",
@@ -588,7 +621,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・一元一次方程式應用問題": {
     "code": "j1-3-3",
@@ -605,7 +639,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・國一上補充": {
     "code": "j1-x",
@@ -622,7 +657,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・二元一次方程式": {
     "code": "j2-1-1",
@@ -639,7 +675,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・二元一次聯立方程式": {
     "code": "j2-1-2",
@@ -656,7 +693,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・二元一次方程式應用問題": {
     "code": "j2-1-3",
@@ -673,7 +711,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・座標概念": {
     "code": "j2-2-1",
@@ -690,7 +729,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・二元一次方程式圖形": {
     "code": "j2-2-2",
@@ -707,7 +747,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・解一元一次不等式": {
     "code": "j2-4-1",
@@ -724,7 +765,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・一元一次不等式應用問題": {
     "code": "j2-4-2",
@@ -741,7 +783,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・國一下補充": {
     "code": "j2-x",
@@ -762,7 +805,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・利用提公因式因式分解": {
     "code": "j3-3-1",
@@ -779,7 +823,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・利用乘法公式因式分解": {
     "code": "j3-3-2",
@@ -796,7 +841,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・利用十字交乘因式分解": {
     "code": "j3-3-3",
@@ -813,7 +859,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・一元二次方程式": {
     "code": "j3-4-1",
@@ -830,7 +877,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・配方法與公式解": {
     "code": "j3-4-2",
@@ -847,7 +895,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・一元二次方程式應用問題": {
     "code": "j3-4-3",
@@ -864,7 +913,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・國二上補充": {
     "code": "j3-x",
@@ -885,7 +935,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・線型函數": {
     "code": "j4-2",
@@ -902,7 +953,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・三角形與多邊形": {
     "code": "j4-3-1",
@@ -919,7 +971,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・尺規作圖": {
     "code": "j4-3-2",
@@ -936,7 +989,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・三角形全等": {
     "code": "j4-3-3",
@@ -953,7 +1007,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・邊角關係": {
     "code": "j4-3-4",
@@ -970,7 +1025,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・平行": {
     "code": "j4-4-1",
@@ -987,7 +1043,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・平行四邊形": {
     "code": "j4-4-2",
@@ -1004,7 +1061,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・梯形及其他四邊形關係": {
     "code": "j4-4-3",
@@ -1025,7 +1083,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・國二下補充": {
     "code": "j4-x",
@@ -1046,7 +1105,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・連比": {
     "code": "j5-1-1",
@@ -1067,7 +1127,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・平行線截比例線段": {
     "code": "j5-1-2",
@@ -1084,7 +1145,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・縮放與相似": {
     "code": "j5-1-3",
@@ -1101,7 +1163,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・相似三角形應用": {
     "code": "j5-1-4",
@@ -1122,7 +1185,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・基本圓與長度關係": {
     "code": "j5-2-1",
@@ -1139,7 +1203,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・圓的角度關係": {
     "code": "j5-2-2",
@@ -1156,7 +1221,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・代數證明": {
     "code": "j5-3-1",
@@ -1177,7 +1243,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・幾何證明": {
     "code": "j5-3-2",
@@ -1194,7 +1261,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・外心、內心、重心": {
     "code": "j5-3-3",
@@ -1211,7 +1279,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・國三上補充": {
     "code": "j5-x",
@@ -1232,7 +1301,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・二次函數圖形": {
     "code": "j6-1-1",
@@ -1249,7 +1319,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・二次函數配方法": {
     "code": "j6-1-2",
@@ -1266,7 +1337,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・二次函數應用問題": {
     "code": "j6-1-3",
@@ -1283,7 +1355,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・空間中的垂直與形體": {
     "code": "j6-2-1",
@@ -1300,7 +1373,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・統計圖表": {
     "code": "j6-3-1",
@@ -1317,7 +1391,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・資料的分析": {
     "code": "j6-3-2",
@@ -1334,7 +1409,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・機率": {
     "code": "j6-3-3",
@@ -1351,7 +1427,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・國三下補充": {
     "code": "j6-x",
@@ -1372,7 +1449,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・式的運算": {
     "code": "s1-1-3",
@@ -1389,7 +1467,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・指數": {
     "code": "s1-1-4",
@@ -1406,7 +1485,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・對數": {
     "code": "s1-1-5",
@@ -1423,7 +1503,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・直線方程式": {
     "code": "s1-2-1",
@@ -1440,7 +1521,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・圓的方程式": {
     "code": "s1-2-2",
@@ -1457,7 +1539,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・直線與圓的關係": {
     "code": "s1-2-3",
@@ -1474,7 +1557,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・多項式函數": {
     "code": "s1-3-1",
@@ -1491,7 +1575,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・簡單多項式函數及其圖形": {
     "code": "s1-3-2",
@@ -1508,7 +1593,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・多項式不等式": {
     "code": "s1-3-3",
@@ -1525,7 +1611,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・高一上補充": {
     "code": "s1-x",
@@ -1542,7 +1629,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・三角比定義與關係": {
     "code": "s2-4-1",
@@ -1559,7 +1647,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・正弦定理與餘弦定理": {
     "code": "s2-4-2",
@@ -1576,7 +1665,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・三角測量": {
     "code": "s2-4-3",
@@ -1593,7 +1683,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・高一下補充": {
     "code": "s2-x",
@@ -1610,7 +1701,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・弧度、弧長": {
     "code": "s3-1-1",
@@ -1627,7 +1719,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・三角函數的圖形": {
     "code": "s3-1-2",
@@ -1644,7 +1737,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・和差角公式": {
     "code": "s3-1-3",
@@ -1661,7 +1755,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・正餘弦函數的疊合": {
     "code": "s3-1-4",
@@ -1678,7 +1773,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・指數函數": {
     "code": "s3-2-1",
@@ -1695,7 +1791,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・對數": {
     "code": "s3-2-2",
@@ -1712,7 +1809,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・對數函數": {
     "code": "s3-2-3",
@@ -1729,7 +1827,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・平面向量": {
     "code": "s3-3-1",
@@ -1746,7 +1845,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・平面向量的內積": {
     "code": "s3-3-2",
@@ -1763,7 +1863,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・面積與二階行列式": {
     "code": "s3-3-3",
@@ -1780,7 +1881,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・高二上補充": {
     "code": "s3-x",
@@ -1797,7 +1899,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・空間概念": {
     "code": "s4-1-1",
@@ -1814,7 +1917,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・空間向量的坐標表示法": {
     "code": "s4-1-2",
@@ -1831,7 +1935,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・空間向量的內積": {
     "code": "s4-1-3",
@@ -1848,7 +1953,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・外積、體積與行列式": {
     "code": "s4-1-4",
@@ -1865,7 +1971,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・空間中的平面方程式": {
     "code": "s4-2-1",
@@ -1882,7 +1989,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・空間中的直線方程式": {
     "code": "s4-2-2",
@@ -1899,7 +2007,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・條件機率與貝氏定理": {
     "code": "s4-3-1",
@@ -1916,7 +2025,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・獨立事件": {
     "code": "s4-3-2",
@@ -1933,7 +2043,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・線性方程組與矩陣": {
     "code": "s4-4-1",
@@ -1950,7 +2061,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・變換矩陣的應用": {
     "code": "s4-4-3",
@@ -1967,7 +2079,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・平面上的線性變換與二階方陣": {
     "code": "s4-4-4",
@@ -1984,7 +2097,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・高二下補充": {
     "code": "s4-x",
@@ -2001,7 +2115,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・積分的意義": {
     "code": "s5-10",
@@ -2018,7 +2133,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・積分的應用": {
     "code": "s5-11",
@@ -2035,7 +2151,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・隨機變數": {
     "code": "s5-2",
@@ -2052,7 +2169,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・二項分布與幾何分布": {
     "code": "s5-3",
@@ -2069,7 +2187,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・複數的幾何意涵": {
     "code": "s5-4",
@@ -2086,7 +2205,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・數列及其極限": {
     "code": "s5-5",
@@ -2103,7 +2223,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・函數的概念": {
     "code": "s5-6",
@@ -2120,7 +2241,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・函數的極限": {
     "code": "s5-7",
@@ -2137,7 +2259,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・微分": {
     "code": "s5-8",
@@ -2154,7 +2277,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・函數性質的判定": {
     "code": "s5-9",
@@ -2171,7 +2295,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・高三補充": {
     "code": "s5-x",
@@ -2188,7 +2313,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   }
 }
 };
@@ -2210,7 +2336,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-3-2": {
     "code": "j2-3-2",
@@ -2227,7 +2354,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-1-1": {
     "code": "j3-1-1",
@@ -2244,7 +2372,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-1-2": {
     "code": "j3-1-2",
@@ -2261,7 +2390,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-1-3": {
     "code": "j3-1-3",
@@ -2278,7 +2408,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-2-1": {
     "code": "j3-2-1",
@@ -2295,7 +2426,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-2-2": {
     "code": "j3-2-2",
@@ -2312,7 +2444,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-2-3": {
     "code": "j3-2-3",
@@ -2329,7 +2462,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-1-1": {
     "code": "j4-1-1",
@@ -2346,7 +2480,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-1-2": {
     "code": "j4-1-2",
@@ -2363,7 +2498,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-1-3": {
     "code": "j4-1-3",
@@ -2380,7 +2516,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-1-1": {
     "code": "s1-1-1",
@@ -2397,7 +2534,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-1-2": {
     "code": "s1-1-2",
@@ -2414,7 +2552,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-1-1": {
     "code": "s2-1-1",
@@ -2431,7 +2570,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-1-2": {
     "code": "s2-1-2",
@@ -2448,7 +2588,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-3-1": {
     "code": "s2-3-1",
@@ -2465,7 +2606,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-3-2": {
     "code": "s2-3-2",
@@ -2482,7 +2624,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-2-1": {
     "code": "s2-2-1",
@@ -2499,7 +2642,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-2-2": {
     "code": "s2-2-2",
@@ -2516,7 +2660,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-2-3": {
     "code": "s2-2-3",
@@ -2533,7 +2678,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-2-4": {
     "code": "s2-2-4",
@@ -2550,7 +2696,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-4-2": {
     "code": "s4-4-2",
@@ -2567,7 +2714,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "B-1": {
     "code": "B-1",
@@ -2588,7 +2736,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "B-2": {
     "code": "B-2",
@@ -2609,7 +2758,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "B-3": {
     "code": "B-3",
@@ -2630,7 +2780,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-1-1": {
     "code": "j1-1-1",
@@ -2647,7 +2798,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-1-2": {
     "code": "j1-1-2",
@@ -2664,7 +2816,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-1-3": {
     "code": "j1-1-3",
@@ -2681,7 +2834,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-1-4": {
     "code": "j1-1-4",
@@ -2698,7 +2852,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-2-1": {
     "code": "j1-2-1",
@@ -2715,7 +2870,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-2-2": {
     "code": "j1-2-2",
@@ -2732,7 +2888,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-2-3": {
     "code": "j1-2-3",
@@ -2749,7 +2906,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-3-1": {
     "code": "j1-3-1",
@@ -2766,7 +2924,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-3-2": {
     "code": "j1-3-2",
@@ -2783,7 +2942,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-3-3": {
     "code": "j1-3-3",
@@ -2800,7 +2960,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-x": {
     "code": "j1-x",
@@ -2817,7 +2978,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-1-1": {
     "code": "j2-1-1",
@@ -2834,7 +2996,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-1-2": {
     "code": "j2-1-2",
@@ -2851,7 +3014,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-1-3": {
     "code": "j2-1-3",
@@ -2868,7 +3032,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-2-1": {
     "code": "j2-2-1",
@@ -2885,7 +3050,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-2-2": {
     "code": "j2-2-2",
@@ -2902,7 +3068,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-4-1": {
     "code": "j2-4-1",
@@ -2919,7 +3086,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-4-2": {
     "code": "j2-4-2",
@@ -2936,7 +3104,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-x": {
     "code": "j2-x",
@@ -2957,7 +3126,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-3-1": {
     "code": "j3-3-1",
@@ -2974,7 +3144,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-3-2": {
     "code": "j3-3-2",
@@ -2991,7 +3162,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-3-3": {
     "code": "j3-3-3",
@@ -3008,7 +3180,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-4-1": {
     "code": "j3-4-1",
@@ -3025,7 +3198,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-4-2": {
     "code": "j3-4-2",
@@ -3042,7 +3216,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-4-3": {
     "code": "j3-4-3",
@@ -3059,7 +3234,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-x": {
     "code": "j3-x",
@@ -3080,7 +3256,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-2": {
     "code": "j4-2",
@@ -3097,7 +3274,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-3-1": {
     "code": "j4-3-1",
@@ -3114,7 +3292,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-3-2": {
     "code": "j4-3-2",
@@ -3131,7 +3310,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-3-3": {
     "code": "j4-3-3",
@@ -3148,7 +3328,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-3-4": {
     "code": "j4-3-4",
@@ -3165,7 +3346,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-4-1": {
     "code": "j4-4-1",
@@ -3182,7 +3364,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-4-2": {
     "code": "j4-4-2",
@@ -3199,7 +3382,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-4-3": {
     "code": "j4-4-3",
@@ -3220,7 +3404,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-x": {
     "code": "j4-x",
@@ -3241,7 +3426,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-1-1": {
     "code": "j5-1-1",
@@ -3262,7 +3448,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-1-2": {
     "code": "j5-1-2",
@@ -3279,7 +3466,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-1-3": {
     "code": "j5-1-3",
@@ -3296,7 +3484,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-1-4": {
     "code": "j5-1-4",
@@ -3317,7 +3506,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-2-1": {
     "code": "j5-2-1",
@@ -3334,7 +3524,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-2-2": {
     "code": "j5-2-2",
@@ -3351,7 +3542,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-3-1": {
     "code": "j5-3-1",
@@ -3372,7 +3564,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-3-2": {
     "code": "j5-3-2",
@@ -3389,7 +3582,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-3-3": {
     "code": "j5-3-3",
@@ -3406,7 +3600,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-x": {
     "code": "j5-x",
@@ -3427,7 +3622,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-1-1": {
     "code": "j6-1-1",
@@ -3444,7 +3640,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-1-2": {
     "code": "j6-1-2",
@@ -3461,7 +3658,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-1-3": {
     "code": "j6-1-3",
@@ -3478,7 +3676,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-2-1": {
     "code": "j6-2-1",
@@ -3495,7 +3694,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-3-1": {
     "code": "j6-3-1",
@@ -3512,7 +3712,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-3-2": {
     "code": "j6-3-2",
@@ -3529,7 +3730,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-3-3": {
     "code": "j6-3-3",
@@ -3546,7 +3748,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-x": {
     "code": "j6-x",
@@ -3567,7 +3770,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-1-3": {
     "code": "s1-1-3",
@@ -3584,7 +3788,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-1-4": {
     "code": "s1-1-4",
@@ -3601,7 +3806,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-1-5": {
     "code": "s1-1-5",
@@ -3618,7 +3824,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-2-1": {
     "code": "s1-2-1",
@@ -3635,7 +3842,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-2-2": {
     "code": "s1-2-2",
@@ -3652,7 +3860,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-2-3": {
     "code": "s1-2-3",
@@ -3669,7 +3878,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-3-1": {
     "code": "s1-3-1",
@@ -3686,7 +3896,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-3-2": {
     "code": "s1-3-2",
@@ -3703,7 +3914,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-3-3": {
     "code": "s1-3-3",
@@ -3720,7 +3932,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-x": {
     "code": "s1-x",
@@ -3737,7 +3950,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-4-1": {
     "code": "s2-4-1",
@@ -3754,7 +3968,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-4-2": {
     "code": "s2-4-2",
@@ -3771,7 +3986,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-4-3": {
     "code": "s2-4-3",
@@ -3788,7 +4004,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-x": {
     "code": "s2-x",
@@ -3805,7 +4022,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-1-1": {
     "code": "s3-1-1",
@@ -3822,7 +4040,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-1-2": {
     "code": "s3-1-2",
@@ -3839,7 +4058,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-1-3": {
     "code": "s3-1-3",
@@ -3856,7 +4076,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-1-4": {
     "code": "s3-1-4",
@@ -3873,7 +4094,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-2-1": {
     "code": "s3-2-1",
@@ -3890,7 +4112,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-2-2": {
     "code": "s3-2-2",
@@ -3907,7 +4130,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-2-3": {
     "code": "s3-2-3",
@@ -3924,7 +4148,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-3-1": {
     "code": "s3-3-1",
@@ -3941,7 +4166,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-3-2": {
     "code": "s3-3-2",
@@ -3958,7 +4184,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-3-3": {
     "code": "s3-3-3",
@@ -3975,7 +4202,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-x": {
     "code": "s3-x",
@@ -3992,7 +4220,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-1-1": {
     "code": "s4-1-1",
@@ -4009,7 +4238,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-1-2": {
     "code": "s4-1-2",
@@ -4026,7 +4256,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-1-3": {
     "code": "s4-1-3",
@@ -4043,7 +4274,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-1-4": {
     "code": "s4-1-4",
@@ -4060,7 +4292,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-2-1": {
     "code": "s4-2-1",
@@ -4077,7 +4310,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-2-2": {
     "code": "s4-2-2",
@@ -4094,7 +4328,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-3-1": {
     "code": "s4-3-1",
@@ -4111,7 +4346,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-3-2": {
     "code": "s4-3-2",
@@ -4128,7 +4364,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-4-1": {
     "code": "s4-4-1",
@@ -4145,7 +4382,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-4-3": {
     "code": "s4-4-3",
@@ -4162,7 +4400,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-4-4": {
     "code": "s4-4-4",
@@ -4179,7 +4418,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-x": {
     "code": "s4-x",
@@ -4196,7 +4436,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-10": {
     "code": "s5-10",
@@ -4213,7 +4454,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-11": {
     "code": "s5-11",
@@ -4230,7 +4472,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-2": {
     "code": "s5-2",
@@ -4247,7 +4490,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-3": {
     "code": "s5-3",
@@ -4264,7 +4508,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-4": {
     "code": "s5-4",
@@ -4281,7 +4526,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-5": {
     "code": "s5-5",
@@ -4298,7 +4544,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-6": {
     "code": "s5-6",
@@ -4315,7 +4562,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-7": {
     "code": "s5-7",
@@ -4332,7 +4580,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-8": {
     "code": "s5-8",
@@ -4349,7 +4598,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-9": {
     "code": "s5-9",
@@ -4366,7 +4616,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-x": {
     "code": "s5-x",
@@ -4383,7 +4634,8 @@ window.chapterClosingStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   }
 };
   window.chapterClosingStore.byCode = byCode;

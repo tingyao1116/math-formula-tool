@@ -43,6 +43,7 @@ TOPIC_DB_DEFAULT = DB_DIR / "formula-db.json"
 QUESTION_DB_DEFAULT = DB_DIR / "question-db.json"
 CHAPTER_DB_DEFAULT = DB_DIR / "chapter-code-db.json"
 OVERVIEW_DB_DEFAULT = DB_DIR / "chapter-overview-db.json"
+OVERVIEW_BODY_DB_DEFAULT = DB_DIR / "chapter-overview-body-db.json"
 CHAPTER_CLOSING_DB_DEFAULT = DB_DIR / "chapter-closing-db.json"
 MAIN_TOPIC_OVERVIEW_DB_DEFAULT = DB_DIR / "main-topic-overview-db.json"
 PRACTICE_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "practice-db.json"
@@ -50,6 +51,7 @@ TOPIC_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "formula-db.json"
 QUESTION_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "question-db.json"
 CHAPTER_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "chapter-code-db.json"
 OVERVIEW_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "chapter-overview-db.json"
+OVERVIEW_BODY_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "chapter-overview-body-db.json"
 CHAPTER_CLOSING_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "chapter-closing-db.json"
 MAIN_TOPIC_OVERVIEW_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "main-topic-overview-db.json"
 
@@ -65,6 +67,8 @@ def resolve_db_path(kind: str) -> Path:
         return CHAPTER_DB_DEFAULT if CHAPTER_DB_DEFAULT.exists() else CHAPTER_DB_FALLBACK
     if kind == "overviews":
         return OVERVIEW_DB_DEFAULT if OVERVIEW_DB_DEFAULT.exists() else OVERVIEW_DB_FALLBACK
+    if kind == "overview_bodies":
+        return OVERVIEW_BODY_DB_DEFAULT if OVERVIEW_BODY_DB_DEFAULT.exists() else OVERVIEW_BODY_DB_FALLBACK
     if kind == "closings":
         return CHAPTER_CLOSING_DB_DEFAULT if CHAPTER_CLOSING_DB_DEFAULT.exists() else CHAPTER_CLOSING_DB_FALLBACK
     if kind == "main_overviews":
@@ -85,6 +89,7 @@ class DualDbGui:
         self.question_payload = {"meta": {}, "questions": []}
         self.chapter_payload = {"meta": {}, "catalog": {}}
         self.overview_payload = {"meta": {}, "overviews": {}}
+        self.overview_body_payload = {"meta": {}, "bodies": {}}
         self.closing_payload = {"meta": {}, "closings": {}}
         self.main_overview_payload = {"meta": {}, "byId": {}}
         self.practice_payload = {"meta": {}, "assignments": []}
@@ -129,7 +134,9 @@ class DualDbGui:
         self.chapter_btn = ttk.Button(filter_bar, text="章節代碼", style="Compact.TButton", command=lambda: self.switch_mode("chapter"))
         self.chapter_btn.pack(side="left", padx=(0, 4))
         self.overview_btn = ttk.Button(filter_bar, text="章節前言", style="Compact.TButton", command=lambda: self.switch_mode("overviews"))
-        self.overview_btn.pack(side="left", padx=(0, 10))
+        self.overview_btn.pack(side="left", padx=(0, 4))
+        self.overview_body_btn = ttk.Button(filter_bar, text="章節正文", style="Compact.TButton", command=lambda: self.switch_mode("overview_bodies"))
+        self.overview_body_btn.pack(side="left", padx=(0, 10))
         self.closing_btn = ttk.Button(filter_bar, text="章節後話", style="Compact.TButton", command=lambda: self.switch_mode("closings"))
         self.closing_btn.pack(side="left", padx=(0, 10))
         self.main_overview_btn = ttk.Button(filter_bar, text="主題整理", style="Compact.TButton", command=lambda: self.switch_mode("main_overviews"))
@@ -255,6 +262,8 @@ class DualDbGui:
             return self.question_payload
         if self.mode == "overviews":
             return self.overview_payload
+        if self.mode == "overview_bodies":
+            return self.overview_body_payload
         if self.mode == "main_overviews":
             return self.main_overview_payload
         if self.mode == "closings":
@@ -270,6 +279,8 @@ class DualDbGui:
             return "questions"
         if self.mode == "overviews":
             return "overviews"
+        if self.mode == "overview_bodies":
+            return "bodies"
         if self.mode == "main_overviews":
             return "byId"
         if self.mode == "closings":
@@ -304,11 +315,7 @@ class DualDbGui:
             sync_question_js_from_db(path)
         elif kind == "chapter":
             sync_extra_web_from_db()
-        elif kind == "overviews":
-            sync_extra_web_from_db()
-        elif kind == "main_overviews":
-            sync_extra_web_from_db()
-        elif kind == "closings":
+        elif kind in {"overviews", "overview_bodies", "main_overviews", "closings"}:
             sync_extra_web_from_db()
         elif kind == "practices":
             sync_practice_assignment_js_from_db(path)
@@ -317,7 +324,7 @@ class DualDbGui:
         self._write_db_payload(self.mode, self._current_payload())
 
     def load_all(self):
-        for kind in ["topics", "questions", "chapter", "overviews", "main_overviews", "closings", "practices"]:
+        for kind in ["topics", "questions", "chapter", "overviews", "overview_bodies", "main_overviews", "closings", "practices"]:
             path = resolve_db_path(kind)
             if not path.exists():
                 if kind == "topics":
@@ -326,6 +333,8 @@ class DualDbGui:
                     self.question_payload = {"meta": {"count": 0}, "questions": []}
                 elif kind == "overviews":
                     self.overview_payload = {"meta": {"count": 0}, "overviews": {}}
+                elif kind == "overview_bodies":
+                    self.overview_body_payload = {"meta": {"count": 0}, "bodies": {}}
                 elif kind == "main_overviews":
                     self.main_overview_payload = {"meta": {"count": 0}, "byId": {}}
                 elif kind == "closings":
@@ -345,6 +354,8 @@ class DualDbGui:
                 self.question_payload = payload if isinstance(payload.get("questions", []), list) else {"meta": {}, "questions": []}
             elif kind == "overviews":
                 self.overview_payload = payload if isinstance(payload.get("overviews", {}), dict) else {"meta": {}, "overviews": {}}
+            elif kind == "overview_bodies":
+                self.overview_body_payload = payload if isinstance(payload.get("bodies", {}), dict) else {"meta": {}, "bodies": {}}
             elif kind == "main_overviews":
                 self.main_overview_payload = payload if isinstance(payload.get("byId", {}), dict) else {"meta": {}, "byId": {}}
             elif kind == "closings":
@@ -360,7 +371,7 @@ class DualDbGui:
     # ----- mode / filter -----
     def switch_mode(self, mode: str):
         self.mode = mode
-        if mode in {"chapter", "overviews", "main_overviews", "closings"}:
+        if mode in {"chapter", "overviews", "overview_bodies", "main_overviews", "closings"}:
             self.keyword_var.set("")
             self.stage_var.set(ALL)
             self.grade_var.set(ALL)
@@ -370,6 +381,7 @@ class DualDbGui:
         self.question_btn.state(["!disabled"] if mode != "questions" else ["disabled"])
         self.chapter_btn.state(["!disabled"] if mode != "chapter" else ["disabled"])
         self.overview_btn.state(["!disabled"] if mode != "overviews" else ["disabled"])
+        self.overview_body_btn.state(["!disabled"] if mode != "overview_bodies" else ["disabled"])
         self.main_overview_btn.state(["!disabled"] if mode != "main_overviews" else ["disabled"])
         self.closing_btn.state(["!disabled"] if mode != "closings" else ["disabled"])
         self.practice_btn.state(["!disabled"] if mode != "practices" else ["disabled"])
@@ -378,6 +390,7 @@ class DualDbGui:
             "questions": "題庫",
             "chapter": "章節代碼",
             "overviews": "章節前言",
+            "overview_bodies": "章節正文",
             "main_overviews": "主題整理",
             "closings": "章節後話",
             "practices": "無限練習",
@@ -415,6 +428,21 @@ class DualDbGui:
                     row.setdefault("domainMain", meta.get("domainMain", ""))
                     row.setdefault("domainSub", meta.get("domainSub", ""))
                 row.setdefault("title", row.get("title") or "章節重點大綱")
+                rows.append(row)
+            return rows
+        if self.mode == "overview_bodies":
+            rows = []
+            for code, body in payload.get("bodies", {}).items():
+                row = {"id": code}
+                if isinstance(body, dict):
+                    row.update(body)
+                meta = self._chapter_catalog().get(code, {})
+                if isinstance(meta, dict):
+                    row.setdefault("chapter", row.get("chapter") or meta.get("section") or meta.get("chapter") or code)
+                    row.setdefault("section", meta.get("section", ""))
+                    row.setdefault("domainMain", meta.get("domainMain", ""))
+                    row.setdefault("domainSub", meta.get("domainSub", ""))
+                row.setdefault("title", row.get("title") or "章節正文")
                 rows.append(row)
             return rows
         if self.mode == "main_overviews":
@@ -612,7 +640,7 @@ class DualDbGui:
         return (9, 999, 999, 999, 999)
 
     def _row_sort_key(self, row: dict):
-        if self.mode in {"chapter", "overviews", "main_overviews", "closings"}:
+        if self.mode in {"chapter", "overviews", "overview_bodies", "main_overviews", "closings"}:
             code = str(row.get("chapter_code", "") or row.get("chapterCode", "") or row.get("id", "")).strip()
             return (
                 *self._chapter_code_sort_key(code),
@@ -766,6 +794,12 @@ class DualDbGui:
                         r.get("updatedAt", ""),
                         json.dumps(r.get("variants", []), ensure_ascii=False),
                     ]
+                elif self.mode == "overview_bodies":
+                    blob_parts += [
+                        r.get("groupName", ""),
+                        r.get("updatedAt", ""),
+                        json.dumps(r.get("variants", []), ensure_ascii=False),
+                    ]
                 elif self.mode == "main_overviews":
                     blob_parts += [
                         r.get("updatedAt", ""),
@@ -803,6 +837,7 @@ class DualDbGui:
             "questions": "題庫",
             "chapter": "章節代碼",
             "overviews": "章節前言",
+            "overview_bodies": "章節正文",
             "main_overviews": "主題整理",
             "closings": "章節後話",
             "practices": "無限練習",
@@ -922,6 +957,48 @@ class DualDbGui:
                     }
                 ]
             }
+        elif self.mode == "overview_bodies":
+            obj = {
+                "id": "s4-4-2",
+                "title": "章節正文",
+                "groupName": "高中・高二下・矩陣的運算",
+                "updatedAt": datetime.now().isoformat(timespec="seconds"),
+                "appendGeneratedOutline": True,
+                "variants": [
+                    {
+                        "id": "editable",
+                        "label": "可修改版",
+                        "sections": [
+                            {
+                                "type": "bullet-list",
+                                "title": "重點歸納",
+                                "items": [
+                                    {
+                                        "label": "重點 1",
+                                        "text": "先整理這一節可直接上課的正文內容。"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "original",
+                        "label": "原稿版",
+                        "sections": [
+                            {
+                                "type": "image",
+                                "src": "data/chapter-overview-originals/example.png",
+                                "caption": "先放原稿截圖"
+                            },
+                            {
+                                "type": "pdf-page",
+                                "src": "data/chapter-overview-originals/example.pdf",
+                                "note": "如有 PDF 也可一起放"
+                            }
+                        ]
+                    }
+                ]
+            }
         elif self.mode == "main_overviews":
             obj = {
                 "id": "s1-1-1-main-theme-new",
@@ -1027,6 +1104,11 @@ class DualDbGui:
             obj.setdefault("groupName", "")
             obj.setdefault("updatedAt", datetime.now().isoformat(timespec="seconds"))
             obj.setdefault("variants", [])
+        elif self.mode == "overview_bodies":
+            obj.setdefault("groupName", "")
+            obj.setdefault("updatedAt", datetime.now().isoformat(timespec="seconds"))
+            obj.setdefault("appendGeneratedOutline", True)
+            obj.setdefault("variants", [])
         elif self.mode == "main_overviews":
             obj.setdefault("updatedAt", datetime.now().isoformat(timespec="seconds"))
             obj.setdefault("variants", [])
@@ -1061,6 +1143,19 @@ class DualDbGui:
             overview_map[rid] = overview_item
             payload.setdefault("meta", {})
             payload["meta"]["count"] = len(overview_map)
+        elif self.mode == "overview_bodies":
+            body_map = payload.setdefault("bodies", {})
+            if rid not in body_map:
+                action = "已新增"
+            body_item = dict(obj)
+            body_item.pop("id", None)
+            if not isinstance(body_item.get("variants", []), list):
+                body_item["variants"] = []
+            body_item["appendGeneratedOutline"] = bool(body_item.get("appendGeneratedOutline"))
+            body_item["updatedAt"] = body_item.get("updatedAt", "") or datetime.now().isoformat(timespec="seconds")
+            body_map[rid] = body_item
+            payload.setdefault("meta", {})
+            payload["meta"]["count"] = len(body_map)
         elif self.mode == "main_overviews":
             overview_map = payload.setdefault("byId", {})
             if rid not in overview_map:
@@ -1152,6 +1247,13 @@ class DualDbGui:
             payload["overviews"] = overview_map
             payload.setdefault("meta", {})
             payload["meta"]["count"] = len(overview_map)
+        elif self.mode == "overview_bodies":
+            body_map = payload.get("bodies", {})
+            for rid in list(id_set):
+                body_map.pop(rid, None)
+            payload["bodies"] = body_map
+            payload.setdefault("meta", {})
+            payload["meta"]["count"] = len(body_map)
         elif self.mode == "main_overviews":
             overview_map = payload.get("byId", {})
             for rid in list(id_set):
@@ -1525,6 +1627,34 @@ class DualDbGui:
         section_type = str(section.get("type", "")).strip()
         if section_type == "paragraph":
             return f"<div class='chapter-overview__paragraph'>{self._render_rich_multiline(section.get('text', ''))}</div>"
+        if section_type == "bullet-list":
+            title = str(section.get("title", "")).strip()
+            items = section.get("items", []) if isinstance(section.get("items", []), list) else []
+            rendered_items = []
+            for item in items:
+                if isinstance(item, str):
+                    rendered_items.append(f"<li class='chapter-overview__bullet-item'>{self._render_rich_multiline(item)}</li>")
+                    continue
+                if not isinstance(item, dict):
+                    continue
+                label = str(item.get("label", "")).strip()
+                text = str(item.get("text", "")).strip()
+                rendered_items.append(
+                    f"""
+                    <li class="chapter-overview__bullet-item">
+                      {f"<p class='chapter-overview__bullet-label'>{self._render_rich_multiline(label)}</p>" if label else ""}
+                      {f"<div class='chapter-overview__bullet-text'>{self._render_rich_multiline(text)}</div>" if text else ""}
+                    </li>
+                    """
+                )
+            return f"""
+            <section class="chapter-overview__bullet-list">
+              {f"<h4 class='chapter-overview__bullet-title'>{escape(title)}</h4>" if title else ""}
+              <ul class="chapter-overview__bullet-items">
+                {''.join(rendered_items)}
+              </ul>
+            </section>
+            """
         if section_type == "table":
             headers = section.get("headers", []) if isinstance(section.get("headers", []), list) else []
             rows = section.get("rows", []) if isinstance(section.get("rows", []), list) else []
@@ -1554,6 +1684,16 @@ class DualDbGui:
                 <a class="ghost-link" href="{escape(pdf_src)}" target="_blank" rel="noopener noreferrer">在 Edge 另開</a>
               </div>
             </div>
+            """
+        if section_type == "image":
+            image_src = self._resolve_media_src(section.get("src", ""))
+            if not image_src:
+                return ""
+            caption = str(section.get("caption", "")).strip() or default_pdf_note
+            return f"""
+            <figure class="chapter-overview__image-wrap">
+              <img class="chapter-overview__image" src="{escape(image_src)}" alt="{escape(caption)}" />
+            </figure>
             """
         return ""
 
@@ -1621,6 +1761,61 @@ class DualDbGui:
           {self._render_preview_variant_tabs(variants, active_variant)}
           <div class="chapter-overview__body">
             {''.join(self._render_preview_overview_section(section, title) for section in sections) if sections else "<p class='empty-state chapter-overview__empty'>這個主題還沒有整理內容。</p>"}
+          </div>
+        </section>
+        """
+
+    def _build_generated_outline_sections_from_code(self, chapter_code: str):
+        chapter_code = str(chapter_code or "").strip()
+        if not chapter_code:
+            return []
+        topic_lookup = self._topic_lookup()
+        topics = [
+            topic for topic in topic_lookup.values()
+            if isinstance(topic, dict)
+            and str(topic.get("chapterCode") or topic.get("chapter_code") or "").strip() == chapter_code
+            and not str(topic.get("parentId", "")).strip()
+        ]
+        topics.sort(key=lambda item: self._row_sort_key(item))
+        if not topics:
+            return []
+        rows = []
+        for topic in topics:
+            topic_id = str(topic.get("id", "")).strip()
+            children = [
+                child for child in topic_lookup.values()
+                if isinstance(child, dict) and str(child.get("parentId", "")).strip() == topic_id
+            ]
+            child_titles = [str(child.get("title", "")).strip() for child in children if str(child.get("title", "")).strip()]
+            rows.append([
+                str(topic.get("title", "")).strip() or topic_id,
+                str(topic.get("chapterRole", "")).strip() or ("主題" if child_titles else "主題入口"),
+                "、".join(child_titles) if child_titles else "先從這個主題開始",
+            ])
+        return [{
+            "type": "table",
+            "headers": ["主題", "角色", "下一層 / 提醒"],
+            "rows": rows,
+        }]
+
+    def _build_overview_body_preview_panel_html(self, item: dict):
+        variants = item.get("variants", []) if isinstance(item.get("variants", []), list) else []
+        active_variant = self._pick_preview_variant(variants, preferred_id="editable") or {"sections": []}
+        sections = self._pick_preview_sections(variants, active_variant, lambda section: isinstance(section, dict) and section.get("type"))
+        chapter_code = str(item.get("id", "")).strip()
+        generated_sections = self._build_generated_outline_sections_from_code(chapter_code) if item.get("appendGeneratedOutline") else []
+        return f"""
+        <section class="panel chapter-overview-panel">
+          <div class="chapter-overview__header">
+            <div>
+              <p class="summary-label">章節正文</p>
+              <h3>{escape(str(item.get("title", "")).strip() or "章節正文")}</h3>
+            </div>
+          </div>
+          {self._render_preview_variant_tabs(variants, active_variant)}
+          <div class="chapter-overview__body">
+            {self._render_preview_overview_segment(str(active_variant.get("label", "")).strip() or "章節正文", sections, "這個章節的正文還沒整理。")}
+            {self._render_preview_overview_segment("自動生成章節大綱", generated_sections, "這個章節目前還沒有可生成的大綱。") if item.get("appendGeneratedOutline") else ""}
           </div>
         </section>
         """
@@ -1962,10 +2157,12 @@ class DualDbGui:
 </body>
 </html>
 """
-        elif self.mode in {"overviews", "main_overviews", "closings"}:
+        elif self.mode in {"overviews", "overview_bodies", "main_overviews", "closings"}:
             styles_uri = self._asset_uri("styles.css")
             if self.mode == "overviews":
                 body = self._build_overview_preview_panel_html(item)
+            elif self.mode == "overview_bodies":
+                body = self._build_overview_body_preview_panel_html(item)
             elif self.mode == "main_overviews":
                 body = self._build_main_topic_preview_panel_html(item)
             else:
@@ -2515,7 +2712,7 @@ class DualDbGui:
             duplicate_suffix_by_id[base_id] += 1
 
     def batch_import(self):
-        if self.mode in {"chapter", "overviews", "main_overviews", "closings", "practices"}:
+        if self.mode in {"chapter", "overviews", "overview_bodies", "main_overviews", "closings", "practices"}:
             return messagebox.showwarning("提醒", "此模式暫不支援批次匯入，請用 JSON 編輯器逐筆處理。")
         path = filedialog.askopenfilename(title="選擇批次匯入檔", filetypes=[("Import files", "*.txt *.jsonl *.json"), ("All files", "*.*")])
         if not path:

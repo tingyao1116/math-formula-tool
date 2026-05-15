@@ -608,6 +608,41 @@ select {
   color: var(--text);
 }
 
+.chapter-overview__bullet-list {
+  display: grid;
+  gap: 10px;
+}
+
+.chapter-overview__bullet-title {
+  margin: 0;
+  font-size: 1.12rem;
+  color: var(--text-strong, var(--text));
+}
+
+.chapter-overview__bullet-items {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 10px;
+}
+
+.chapter-overview__bullet-item {
+  line-height: 1.8;
+}
+
+.chapter-overview__bullet-item p {
+  margin: 0;
+}
+
+.chapter-overview__bullet-label {
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+
+.chapter-overview__bullet-text {
+  color: var(--text);
+}
+
 .chapter-overview__table-wrap {
   overflow-x: auto;
 }
@@ -651,6 +686,25 @@ select {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
+}
+
+.chapter-overview__image-wrap {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.chapter-overview__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(84, 63, 38, 0.18);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.chapter-overview__image-caption {
+  margin: 0;
 }
 
 .chapter-overview__canvas {

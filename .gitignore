@@ -6,6 +6,7 @@ logs/
 # Python cache
 **/__pycache__/
 *.pyc
+.tmp_pycache/
 
 # Temporary compare / scratch
 tmp-docx-compare/

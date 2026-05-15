@@ -45,7 +45,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・正比反比": {
     "code": "j2-3-2",
@@ -87,7 +88,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・乘法公式": {
     "code": "j3-1-1",
@@ -149,7 +151,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・多項式的加減": {
     "code": "j3-1-2",
@@ -186,7 +189,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・多項式的乘除": {
     "code": "j3-1-3",
@@ -223,7 +227,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・二次方根": {
     "code": "j3-2-1",
@@ -310,7 +315,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・根式的運算": {
     "code": "j3-2-2",
@@ -387,7 +393,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・畢氏定理": {
     "code": "j3-2-3",
@@ -454,7 +461,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・等差數列": {
     "code": "j4-1-1",
@@ -531,7 +539,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・等比數列": {
     "code": "j4-1-2",
@@ -598,7 +607,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・等差級數": {
     "code": "j4-1-3",
@@ -675,7 +685,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・實數": {
     "code": "s1-1-1",
@@ -762,7 +773,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・絕對值": {
     "code": "s1-1-2",
@@ -819,7 +831,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・數列與遞迴": {
     "code": "s2-1-1",
@@ -896,7 +909,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・級數": {
     "code": "s2-1-2",
@@ -963,7 +977,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・一維數據分析": {
     "code": "s2-3-1",
@@ -1040,7 +1055,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・二維數據分析": {
     "code": "s2-3-2",
@@ -1117,7 +1133,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・邏輯、集合與計數原理": {
     "code": "s2-2-1",
@@ -1194,7 +1211,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・排列組合": {
     "code": "s2-2-2",
@@ -1271,7 +1289,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・二項式定理": {
     "code": "s2-2-3",
@@ -1328,7 +1347,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・古典機率": {
     "code": "s2-2-4",
@@ -1405,7 +1425,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "矩陣的運算": {
     "code": "s4-4-2",
@@ -1482,7 +1503,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "其他・立體透視圖": {
     "code": "B-1",
@@ -1503,7 +1525,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "其他・圓錐曲線": {
     "code": "B-2",
@@ -1524,7 +1547,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "其他・地球經緯度": {
     "code": "B-3",
@@ -1545,300 +1569,80 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・數線與絕對值": {
     "code": "j1-1-1",
-    "title": "章節重點大綱",
-    "updatedAt": "2026-05-13T07:19:03+08:00",
+    "title": "章節前言",
+    "updatedAt": "2026-05-15T13:10:00+08:00",
     "variants": [
       {
         "id": "editable",
-        "label": "可修改版",
+        "label": "章節前言",
         "sections": [
           {
             "type": "paragraph",
-            "text": "1. 這章正式改以三個主題當主軸：正負數與數的分類、數線相反數與中點、絕對值與距離。\n2. 這章最重要的是先把數放回數線上理解，再去看相反數、中點與絕對值，不要把分類題和距離題混在一起。\n3. 看到題目時，先判斷它是在考數的分類、數線位置，還是在考絕對值與距離，方向會清楚很多。\n4. 這章的下一層提醒先直接取主題整理重點，之後若要再細拆分支，再從這些重點往下長。"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "正負數與數的分類",
-                "主題",
-                "相對的量、正數與負數、0 的角色、整數與自然數等重點"
-              ],
-              [
-                "數線、相反數與中點",
-                "主題",
-                "數線三要素、大小關係、相反數、區間表示法等重點"
-              ],
-              [
-                "絕對值與距離",
-                "主題",
-                "絕對值的意思、基本例子、相反數絕對值相同、分段定義等重點"
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "paragraph",
-            "text": "原文段落\n- 負數與數線\n\n重點歸納\n- 正數與負數\n- 0 既不是正數，也不是負數\n- 數線三要素\n- 數的大小比較\n- 正數 ＞ 0 ＞ 負數\n- 三一律\n- 遞移律\n- 相反數\n- 絕對值\n- 絕對值具有非負性，必為 0 或正數\n- 性質\n\n重要題型\n- 數線標示與坐標寫法\n- 絕對值的意義與求值\n- 整數點個數問題\n- 相反數的移動問題"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "負數與數線｜重點歸納",
-                "原文",
-                "正數與負數：生活中常用「＋」（正號）與「－」（負號）來表示性質相反的量，例如：賺賠、高低、增減。\n0 既不是正數，也不是負數。\n正號「＋」常可省略，但負號「－」絕對不能省略。\n數線三要素：原點、正向（通常向右）、單位長。\n數的大小比較：在數線上，右邊的點所表示的數恆大於左邊的點。\n正數 ＞ 0 ＞ 負數。\n三一律：任意兩數 \\(a, b\\) 必符合 \\(a > b, a < b, a = b\\) 其中之一。\n遞移律：若 \\(a > b\\) 且 \\(b > c\\)，則 \\(a > c\\)。\n相反數：在數線上分別位於原點左右兩側，且與原點距離相等的兩點，互為相反數。\n若 \\(a\\) 的相反數是 \\(-a\\)，則 \\(a + (-a) = 0\\) 6, 7。0 的相反數是 0。\n絕對值：數線上某點到原點的距離，記作 \\(|a|\\)。\n絕對值具有非負性，必為 0 或正數。\n性質：絕對值愈大的負數，其值反而愈小。"
-              ],
-              [
-                "負數與數線｜重要題型",
-                "原文",
-                "數線標示與坐標寫法：在數線上描出分數、小數或整數的位置。\n絕對值的意義與求值：求某數的絕對值，或已知 \\(|a| = k\\)，求 \\(a = \\pm k\\)。\n整數點個數問題：求符合條件（如 \\(|x| < 5\\)）的整數共有幾個。\n相反數的移動問題：數線上兩點同時向左或向右移動多少單位後，會互為相反數。"
-              ]
-            ]
+            "text": "1. 這一節要先把正負數放回數線上理解，因為後面的相反數、絕對值與整數點個數，其實都在同一條線上思考。\n2. 相反數看的是對稱位置，絕對值看的是到原點的距離，兩者都和原點有關，但意思不能混在一起。\n3. 題目只要出現數線、`|a|`、相反數或整數個數，先畫簡單數線再判斷，通常會比硬背規則更穩。"
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・正負數的加減乘除": {
     "code": "j1-1-2",
-    "title": "章節重點大綱",
-    "updatedAt": "2026-05-13T07:19:03+08:00",
+    "title": "章節前言",
+    "updatedAt": "2026-05-15T13:10:00+08:00",
     "variants": [
       {
         "id": "editable",
-        "label": "可修改版",
+        "label": "章節前言",
         "sections": [
           {
             "type": "paragraph",
-            "text": "1. 這章正式先以一個主題當主軸：正負數的四則運算。\n2. 這章最重要的是把加減乘除、去括號、分配律和數線距離一起看成整數運算的同一條主線，不要拆成很多假主題。\n3. 看到題目時，先判斷它是在考加減、乘除、括號整理，還是在考距離與中點，再往對應分支看。\n4. 章節大綱第三欄先用主題重點整理，不直接拼舊分支名。"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "正負數的四則運算",
-                "主題",
-                "同號相加、異號相加、減法改加法、乘除符號規則等重點"
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "paragraph",
-            "text": "原文段落\n- 整數的加減\n- 整數的乘除與四則運算\n\n重點歸納\n- 加法運算\n- 異號數相加\n- 減法運算\n- 運算律\n- 加法結合律\n- 去括號規則\n- 數線上兩點間的距離\n- 中點坐標公式\n- 乘除正負號判別\n- 特殊數的乘除\n- 四則運算順序\n- 乘法分配律\n\n重要題型\n- 加減混合運算\n- 距離與位置推算\n- 中點公式應用\n- 絕對值運算\n- 利用分配律簡便計算\n- 定義新運算符號\n- 正負號判定\n- 應用題"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "整數的加減｜重點歸納",
-                "原文",
-                "加法運算：同號數相加：取共同符號，絕對值相加。\n異號數相加：取絕對值較大者的符號，絕對值大減小。\n減法運算：減去一個數等於加上該數的相反數，即 \\(a - b = a + (-b)\\)。\n運算律：加法交換律：\\(a + b = b + a\\)。\n加法結合律：\\((a + b) + c = a + (b + c)\\)。\n去括號規則：括號前是「＋」，內部不變號；括號前是「－」，內部＋變－、－變＋。\n數線上兩點間的距離：\\(A(a)\\) 與 \\(B(b)\\) 的距離為 \\(AB = |a - b|\\)，即「大數減小數」。\n中點坐標公式：\\(A(a)\\) 與 \\(B(b)\\) 的中點坐標為 \\(\\frac{a+b}{2}\\)。"
-              ],
-              [
-                "整數的加減｜重要題型",
-                "原文",
-                "加減混合運算：處理帶有性質符號、運算符號及多重括號的算式。\n距離與位置推算：已知起點與移動單位（左減右加），求終點位置。\n中點公式應用：已知兩端點求中點，或已知一端點與中點求另一端點。\n絕對值運算：處理 \\(| |a| - |b| |\\) 類型的雙重絕對值求值題。"
-              ],
-              [
-                "整數的乘除與四則運算｜重點歸納",
-                "原文",
-                "乘除正負號判別：同號得正，異號得負。\n連乘積中，負號出現奇數個則結果為負，負號偶數個則結果為正。\n特殊數的乘除：任何數乘以 0 為 0；0 除以非 0 數為 0；0 不能當除數。\n四則運算順序：由左而右計算；先乘除、後加減；有括號先算括號；有乘方先算乘方。\n乘法分配律：\\(c \\times (a + b) = c \\times a + c \\times b\\)。\n\\((a + b) \\times c = a \\times c + b \\times c\\)。"
-              ],
-              [
-                "整數的乘除與四則運算｜重要題型",
-                "原文",
-                "利用分配律簡便計算：例如 \\(1002 \\times (-195)\\) 可看作 \\((1000 + 2) \\times (-195)\\)。\n定義新運算符號：如「\\(a \\odot b = a - |a-b| \\times b\\)」，依定義規則代入求值。\n正負號判定：不實際計算，僅根據負號個數判斷結果的正負。\n應用題：如盈虧計算、射飛鏢得分、溫差變化等。"
-              ]
-            ]
+            "text": "1. 這一節要把整數的加減乘除、去括號、運算順序和分配律看成同一條整數運算主線，而不是分成很多互不相干的小技巧。\n2. 遇到整數算式時，先分清楚哪些是性質符號、哪些是運算符號，再決定要不要改寫成加相反數或先去括號。\n3. 距離、中點和運算題雖然題型不同，但都很需要符號感；只要符號先判對，後面的步驟就會順很多。"
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・指數律": {
     "code": "j1-1-3",
-    "title": "章節重點大綱",
-    "updatedAt": "2026-05-13T07:19:03+08:00",
+    "title": "章節前言",
+    "updatedAt": "2026-05-15T13:10:00+08:00",
     "variants": [
       {
         "id": "editable",
-        "label": "可修改版",
+        "label": "章節前言",
         "sections": [
           {
             "type": "paragraph",
-            "text": "1. 這章正式改以五個主題當主軸：乘方與指數的意思、指數律基本規則、正負號奇偶次方與括號判別、分數底數與混合指數運算、指數比大小。\n2. 這章最重要的是先看底數、指數和括號的位置，再決定要用哪一條指數律，不要看到次方就直接套公式。\n3. 看到題目時，先判斷它是在考次方意義、規則化簡、正負號判別，還是在考比大小與綜合應用。\n4. 這章的下一層提醒全部改回主題重點，不再用舊原文摘要。"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "乘方與指數的意思",
-                "主題",
-                "連乘改寫、底數與指數、指數的意思、分數底數起點重點"
-              ],
-              [
-                "指數律基本規則",
-                "主題",
-                "同底數相乘、同底數相除、零次方、負次方等重點"
-              ],
-              [
-                "正負號、奇偶次方與括號判別",
-                "主題",
-                "偶數次方、奇數次方、括號影響、沒有括號時等重點"
-              ],
-              [
-                "分數底數與混合指數運算",
-                "主題",
-                "分數做次方、分數負次方、倒數想法、混合順序重點"
-              ],
-              [
-                "指數比大小",
-                "主題",
-                "同次冪比較、同底數比較、負指數先改寫、前面有負號等重點"
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "paragraph",
-            "text": "原文段落\n- 指數律\n\n重點歸納\n- 乘方的意義\n- 負數乘方判別\n- 注意區分\n- 特殊規定\n\n重要題型\n- 比較乘方大小\n- 指數律的逆運算\n- 末尾 0 的個數\n- 連乘/連除化簡"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "指數律｜重點歸納",
-                "原文",
-                "乘方的意義：\\(a^n\\) 表示 \\(n\\) 個 \\(a\\) 相乘，其中 \\(a\\) 為底數，\\(n\\) 為指數。\n負數乘方判別：負數的偶數次方為正，奇數次方為負。\n注意區分：\\((-2)^4 = 16\\) 而 \\(-2^4 = -16\\)。\n指数法則（\\(a, b \\neq 0\\)）：\\(a^m \\times a^n = a^{m+n}\\)\n\\(a^m \\div a^n = a^{m-n}\\)\n\\((a^m)^n = a^{m \\times n}\\)\n\\((a \\times b)^m = a^m \\times b^m\\)。\n特殊規定：\\(a^0 = 1\\)（當 \\(a \\neq 0\\)）；\\(a^{-n} = \\frac{1}{a^n}\\)。"
-              ],
-              [
-                "指數律｜重要題型",
-                "原文",
-                "比較乘方大小：化為「同底數」比較指數，或化為「同指數」比較底數。\n指數律的逆運算：例如 \\(9^{10} = (3^2)^{10} = 3^{20}\\)。\n末尾 0 的個數：利用 \\(2 \\times 5 = 10\\)，找 \\(2\\) 與 \\(5\\) 的質因數個數來判斷積末有幾個零。\n連乘/連除化簡：利用指數律將複雜的相乘除式子化簡成最簡底數形式。"
-              ]
-            ]
+            "text": "1. 這一節最重要的是先看清楚底數、指數和括號的位置，再決定要用哪一條指數律，不能看到次方就直接套公式。\n2. 負數乘方最容易在括號上出錯，所以 `(-2)^4` 和 `-2^4` 這類題一定要反覆確認誰被乘方。\n3. 如果能先把題目化成同底數、同指數或倒數形式，很多比大小與化簡題都會簡單很多。"
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・科學記號": {
     "code": "j1-1-4",
-    "title": "章節重點大綱",
-    "updatedAt": "2026-05-13T07:19:03+08:00",
+    "title": "章節前言",
+    "updatedAt": "2026-05-15T13:10:00+08:00",
     "variants": [
       {
         "id": "editable",
-        "label": "可修改版",
+        "label": "章節前言",
         "sections": [
           {
             "type": "paragraph",
-            "text": "1. 這章正式改以兩個主題當主軸：科學記號與常見單位、科學記號的運算。\n2. 這章最重要的是先把一般數和科學記號之間的轉換穩住，再處理乘除與加減，不要把單位換算和運算混成同一步。\n3. 看到題目時，先判斷它是在考記號格式、常見單位，還是在考乘除或加減運算，做法會簡單很多。\n4. 這章大綱第三欄也改回主題重點整理，跟主題頁保持一致。"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "科學記號與常見單位",
-                "主題",
-                "科學記號格式、大數與小數、常見例子、常見單位等重點"
-              ],
-              [
-                "科學記號的運算",
-                "主題",
-                "乘法、除法、加減前提、同次方加減等重點"
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "paragraph",
-            "text": "原文段落\n- 科學記號\n\n重點歸納\n- 表示法\n- 位數判讀\n- \\(n\\) 為負整數\n- 運算原則\n- 加減\n\n重要題型\n- 單位換算\n- 科學記號的大小比較\n- 複雜加減運算\n- 應用題"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "科學記號｜重點歸納",
-                "原文",
-                "表示法：形式為 \\(a \\times 10^n\\)，其中 \\(1 \\le a < 10\\) 且 \\(n\\) 為整數。\n位數判讀：\\(n\\) 為正整數：乘開後為 \\((n+1)\\) 位數。\n\\(n\\) 為負整數：乘開後，小數點後第 \\(|n|\\) 位開始出現不為 0 的數字。\n運算原則：乘除：係數 \\(a\\) 相乘除，底數 \\(10\\) 的次方相加減。\n加減：須化為相同次方（通常化為高次方）後，再利用分配律提取 \\(10^n\\) 做加減。"
-              ],
-              [
-                "科學記號｜重要題型",
-                "原文",
-                "單位換算：如公里換公分、微米換奈米、記憶體單位（GB, MB, KB）換算等。\n科學記號的大小比較：先看 \\(10^n\\) 的 \\(n\\) 值，較大者較大；若 \\(n\\) 相同則比較 \\(a\\)。\n複雜加減運算：例如 \\(2.4 \\times 10^{-8} + 3.7 \\times 10^{-9}\\)，需調整次方後計算。\n應用題：世界人口、光年距離、病毒大小比較、電腦儲存字數計算。"
-              ]
-            ]
+            "text": "1. 這一節要先把一般數和科學記號之間的轉換做穩，再去處理乘除、加減與單位換算，步驟才不會混在一起。\n2. 科學記號最核心的檢查點是係數是否落在 `1 \\le a < 10`，以及指數正負是否和小數點移動方向一致。\n3. 只要是加減題，先提醒自己「一定要先化成相同次方」，這一句往往就能避掉最大宗的錯誤。"
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "質因數分解、因數、倍數": {
     "code": "j1-2-1",
@@ -1925,7 +1729,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "公因數、公倍數": {
     "code": "j1-2-2",
@@ -2012,7 +1817,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "分數的加減乘除": {
     "code": "j1-2-3",
@@ -2079,7 +1885,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "一元一次式": {
     "code": "j1-3-1",
@@ -2166,7 +1973,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "一元一次方程式": {
     "code": "j1-3-2",
@@ -2233,7 +2041,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "一元一次方程式應用問題": {
     "code": "j1-3-3",
@@ -2290,7 +2099,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一上・國一上補充": {
     "code": "j1-x",
@@ -2347,7 +2157,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・二元一次方程式": {
     "code": "j2-1-1",
@@ -2394,7 +2205,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・二元一次聯立方程式": {
     "code": "j2-1-2",
@@ -2431,7 +2243,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・二元一次方程式應用問題": {
     "code": "j2-1-3",
@@ -2463,7 +2276,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・座標概念": {
     "code": "j2-2-1",
@@ -2510,7 +2324,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・二元一次方程式圖形": {
     "code": "j2-2-2",
@@ -2552,7 +2367,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・解一元一次不等式": {
     "code": "j2-4-1",
@@ -2609,7 +2425,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・一元一次不等式應用問題": {
     "code": "j2-4-2",
@@ -2651,7 +2468,148 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
+  },
+  "國中・國一下・資料整理與統計圖表": {
+    "code": "j2-5-1",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:45:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章先把原始資料整理成表格與統計圖，再練習讀圖與換算。看到題目時，先分清楚它是在考整理資料、圖表判讀，還是圖形換算。"
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章先把原始資料整理成表格與統計圖，再練習讀圖與換算。看到題目時，先分清楚它是在考整理資料、圖表判讀，還是圖形換算。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
+  },
+  "國中・國一下・算術平均數、中位數與眾數": {
+    "code": "j2-5-2",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:45:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章把平均數、中位數、眾數和資料調整的影響放在一起整理。看到題目時，先判斷它是在找代表值、修正資料，還是在比較哪一個統計量較合適。"
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章把平均數、中位數、眾數和資料調整的影響放在一起整理。看到題目時，先判斷它是在找代表值、修正資料，還是在比較哪一個統計量較合適。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
+  },
+  "國中・國一下・簡易幾何圖形": {
+    "code": "j2-6-1",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:58:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章先整理基本幾何元素、角的分類、多邊形對角線與圓扇形。看到題目時，先分清楚它是在考符號辨識、角度關係，還是對角線與圖形性質。"
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章先整理基本幾何元素、角的分類、多邊形對角線與圓扇形。看到題目時，先分清楚它是在考符號辨識、角度關係，還是對角線與圖形性質。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
+  },
+  "國中・國一下・垂直、平分與線對稱": {
+    "code": "j2-6-2",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:58:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章把垂直、中點、中垂線和線對稱放在一起整理。看到題目時，先判斷它是在考中垂線性質、對稱軸數量，還是在考座標對稱與摺紙推理。"
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章把垂直、中點、中垂線和線對稱放在一起整理。看到題目時，先判斷它是在考中垂線性質、對稱軸數量，還是在考座標對稱與摺紙推理。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
+  },
+  "國中・國一下・立體圖形與三視圖": {
+    "code": "j2-6-3",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:58:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章先建立三視圖和立體形體的對應，再練習從不同視圖反推立體。看到題目時，先分清楚它是在考視圖辨認、立體判讀，還是積木增減後的變化。"
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章先建立三視圖和立體形體的對應，再練習從不同視圖反推立體。看到題目時，先分清楚它是在考視圖辨認、立體判讀，還是積木增減後的變化。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國一下・國一下補充": {
     "code": "j2-x",
@@ -2672,7 +2630,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・利用提公因式因式分解": {
     "code": "j3-3-1",
@@ -2779,7 +2738,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・利用乘法公式因式分解": {
     "code": "j3-3-2",
@@ -2846,7 +2806,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・利用十字交乘因式分解": {
     "code": "j3-3-3",
@@ -2913,7 +2874,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・一元二次方程式": {
     "code": "j3-4-1",
@@ -3020,7 +2982,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・配方法與公式解": {
     "code": "j3-4-2",
@@ -3107,7 +3070,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・一元二次方程式應用問題": {
     "code": "j3-4-3",
@@ -3174,7 +3138,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二上・國二上補充": {
     "code": "j3-x",
@@ -3195,134 +3160,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
-  },
-  "國中・國二下・線型函數": {
-    "code": "j4-2",
-    "title": "章節重點大綱",
-    "updatedAt": "2026-05-13T23:10:27+08:00",
-    "variants": [
-      {
-        "id": "editable",
-        "label": "可修改版",
-        "sections": [
-          {
-            "type": "paragraph",
-            "text": "1. 這章最重要的核心，是把數、點、圖形和方程式看成同一件事的不同表示方式。\n\n2. 看到題目時，先搞清楚 x 和 y 分別代表什麼，再看它是在考點的位置、圖形的變化，還是方程式之間的關係。\n\n3. 這章可以先從 函數基本定義、定義域與值域、函數值與代入 開始學。後面不管是畫圖、讀圖、找斜率還是寫方程式，本質上都在做表示方式的轉換。\n\n4. 這章最容易錯的是象限方向看反、坐標順序寫反，或只會代公式卻不知道圖形在表達什麼。"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "函數的意義與對應關係",
-                "主題",
-                "函數的基本條件、函數是在描述對應規則、同一個輸入不能對多個輸出、先判斷誰先決定 等重點"
-              ],
-              [
-                "自變數、應變數與定義域",
-                "主題",
-                "自變數與應變數、不是每個數都能代、定義域觀念、先看能不能代，再看怎麼算 等重點"
-              ],
-              [
-                "用表格、對應表與關係式表示函數",
-                "主題",
-                "表格看對應最清楚、關係式是在寫規則、讀表格要一組一組看、由表格找關係式 等重點"
-              ],
-              [
-                "函數值與代入計算",
-                "主題",
-                "函數值的意思、先看整個式子的結構、反過來給 \\(y\\) 是在解方程式、常和表格、圖形一起出題 等重點"
-              ],
-              [
-                "函數圖形與座標上的意義",
-                "主題",
-                "圖上的點代表對應值、從表格畫圖、讀圖先看橫再看縱、同一個 \\(x\\) 對兩點就不是函數 等重點"
-              ],
-              [
-                "正比函數與 \\(y=ax\\)",
-                "主題",
-                "正比函數的形式、圖形通過原點、\\(a\\) 的正負影響方向、\\(|a|\\) 影響陡峭程度 等重點"
-              ],
-              [
-                "一次函數與 \\(y=ax+b\\)",
-                "主題",
-                "一次函數的形式、\\(a\\) 是變化率、\\(b\\) 是截距、正比是一次函數的特例 等重點"
-              ],
-              [
-                "函數的實際應用與判讀",
-                "主題",
-                "先找固定規則、基本費加單價常是一函數型、幾組資料也能先做表格、交點表示兩方案相同 等重點"
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "paragraph",
-            "text": "這一章的原稿版也依照主題主軸整理，先對照主題，再往下看分支。"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "函數的意義與對應關係",
-                "主題",
-                "函數的基本條件、函數是在描述對應規則、同一個輸入不能對多個輸出、先判斷誰先決定 等重點"
-              ],
-              [
-                "自變數、應變數與定義域",
-                "主題",
-                "自變數與應變數、不是每個數都能代、定義域觀念、先看能不能代，再看怎麼算 等重點"
-              ],
-              [
-                "用表格、對應表與關係式表示函數",
-                "主題",
-                "表格看對應最清楚、關係式是在寫規則、讀表格要一組一組看、由表格找關係式 等重點"
-              ],
-              [
-                "函數值與代入計算",
-                "主題",
-                "函數值的意思、先看整個式子的結構、反過來給 \\(y\\) 是在解方程式、常和表格、圖形一起出題 等重點"
-              ],
-              [
-                "函數圖形與座標上的意義",
-                "主題",
-                "圖上的點代表對應值、從表格畫圖、讀圖先看橫再看縱、同一個 \\(x\\) 對兩點就不是函數 等重點"
-              ],
-              [
-                "正比函數與 \\(y=ax\\)",
-                "主題",
-                "正比函數的形式、圖形通過原點、\\(a\\) 的正負影響方向、\\(|a|\\) 影響陡峭程度 等重點"
-              ],
-              [
-                "一次函數與 \\(y=ax+b\\)",
-                "主題",
-                "一次函數的形式、\\(a\\) 是變化率、\\(b\\) 是截距、正比是一次函數的特例 等重點"
-              ],
-              [
-                "函數的實際應用與判讀",
-                "主題",
-                "先找固定規則、基本費加單價常是一函數型、幾組資料也能先做表格、交點表示兩方案相同 等重點"
-              ]
-            ]
-          }
-        ]
-      }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・三角形與多邊形": {
     "code": "j4-3-1",
@@ -3409,7 +3248,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・尺規作圖": {
     "code": "j4-3-2",
@@ -3496,7 +3336,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・三角形全等": {
     "code": "j4-3-3",
@@ -3583,7 +3424,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・邊角關係": {
     "code": "j4-3-4",
@@ -3680,7 +3522,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・平行": {
     "code": "j4-4-1",
@@ -3757,7 +3600,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・平行四邊形": {
     "code": "j4-4-2",
@@ -3834,7 +3678,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・梯形及其他四邊形關係": {
     "code": "j4-4-3",
@@ -3895,7 +3740,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國二下・國二下補充": {
     "code": "j4-x",
@@ -3916,7 +3762,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・連比": {
     "code": "j5-1-1",
@@ -3977,7 +3824,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・平行線截比例線段": {
     "code": "j5-1-2",
@@ -4054,7 +3902,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・縮放與相似": {
     "code": "j5-1-3",
@@ -4151,7 +4000,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・相似三角形應用": {
     "code": "j5-1-4",
@@ -4172,7 +4022,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・基本圓與長度關係": {
     "code": "j5-2-1",
@@ -4249,7 +4100,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・圓的角度關係": {
     "code": "j5-2-2",
@@ -4326,7 +4178,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・證明的基本想法": {
     "code": "j5-3-1",
@@ -4383,7 +4236,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・幾何證明的常用工具": {
     "code": "j5-3-2",
@@ -4440,7 +4294,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・外心、內心、重心": {
     "code": "j5-3-3",
@@ -4537,7 +4392,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・國三上補充": {
     "code": "j5-x",
@@ -4558,7 +4414,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・二次函數的基本形式與圖形": {
     "code": "j6-1-1",
@@ -4635,7 +4492,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・配方法、平移與最值": {
     "code": "j6-1-2",
@@ -4712,7 +4570,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・交點、方程式與應用": {
     "code": "j6-1-3",
@@ -4809,7 +4668,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・空間中的垂直與形體": {
     "code": "j6-2-1",
@@ -4956,7 +4816,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・統計圖表": {
     "code": "j6-3-1",
@@ -5023,7 +4884,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・資料的分析": {
     "code": "j6-3-2",
@@ -5110,7 +4972,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・機率": {
     "code": "j6-3-3",
@@ -5217,7 +5080,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三下・國三下補充": {
     "code": "j6-x",
@@ -5238,7 +5102,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・式的運算": {
     "code": "s1-1-3",
@@ -5305,7 +5170,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・指數": {
     "code": "s1-1-4",
@@ -5362,7 +5228,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・對數": {
     "code": "s1-1-5",
@@ -5429,7 +5296,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・直線方程式": {
     "code": "s1-2-1",
@@ -5516,7 +5384,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・圓的方程式": {
     "code": "s1-2-2",
@@ -5573,7 +5442,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・直線與圓的關係": {
     "code": "s1-2-3",
@@ -5660,7 +5530,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・多項式函數": {
     "code": "s1-3-1",
@@ -5737,7 +5608,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・簡單多項式函數及其圖形": {
     "code": "s1-3-2",
@@ -5824,7 +5696,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・多項式不等式": {
     "code": "s1-3-3",
@@ -5901,7 +5774,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一上・高一上補充": {
     "code": "s1-x",
@@ -5933,7 +5807,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・三角比定義與關係": {
     "code": "s2-4-1",
@@ -6030,7 +5905,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・正弦定理與餘弦定理": {
     "code": "s2-4-2",
@@ -6117,7 +5993,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・三角測量": {
     "code": "s2-4-3",
@@ -6174,7 +6051,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高一下・高一下補充": {
     "code": "s2-x",
@@ -6206,7 +6084,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・弧度、弧長": {
     "code": "s3-1-1",
@@ -6243,7 +6122,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・三角函數的圖形": {
     "code": "s3-1-2",
@@ -6280,7 +6160,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・和差角公式": {
     "code": "s3-1-3",
@@ -6317,7 +6198,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・正餘弦函數的疊合": {
     "code": "s3-1-4",
@@ -6354,7 +6236,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・指數函數": {
     "code": "s3-2-1",
@@ -6431,7 +6314,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・對數": {
     "code": "s3-2-2",
@@ -6488,7 +6372,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・對數函數": {
     "code": "s3-2-3",
@@ -6575,7 +6460,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "平面向量": {
     "code": "s3-3-1",
@@ -6672,7 +6558,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "平面向量的內積": {
     "code": "s3-3-2",
@@ -6779,7 +6666,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "面積與二階行列式": {
     "code": "s3-3-3",
@@ -6856,7 +6744,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二上・高二上補充": {
     "code": "s3-x",
@@ -6888,7 +6777,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "空間概念": {
     "code": "s4-1-1",
@@ -6955,7 +6845,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "空間向量的坐標表示法": {
     "code": "s4-1-2",
@@ -7032,7 +6923,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "空間向量的內積": {
     "code": "s4-1-3",
@@ -7099,7 +6991,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "外積、體積與行列式": {
     "code": "s4-1-4",
@@ -7176,7 +7069,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "空間中的平面方程式": {
     "code": "s4-2-1",
@@ -7253,7 +7147,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "空間中的直線方程式": {
     "code": "s4-2-2",
@@ -7340,7 +7235,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "條件機率與貝氏定理": {
     "code": "s4-3-1",
@@ -7407,7 +7303,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "獨立事件": {
     "code": "s4-3-2",
@@ -7464,7 +7361,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "線性方程組與矩陣": {
     "code": "s4-4-1",
@@ -7541,7 +7439,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "變換矩陣的應用": {
     "code": "s4-4-3",
@@ -7608,7 +7507,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "平面上的線性變換與二階方陣": {
     "code": "s4-4-4",
@@ -7695,7 +7595,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高二下・高二下補充": {
     "code": "s4-x",
@@ -7727,7 +7628,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・積分的意義": {
     "code": "s5-10",
@@ -7769,7 +7671,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・積分的應用": {
     "code": "s5-11",
@@ -7811,7 +7714,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・隨機變數": {
     "code": "s5-2",
@@ -7848,7 +7752,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・二項分布與幾何分布": {
     "code": "s5-3",
@@ -7890,7 +7795,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・複數的幾何意涵": {
     "code": "s5-4",
@@ -7947,7 +7853,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・數列及其極限": {
     "code": "s5-5",
@@ -7989,7 +7896,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・函數的概念": {
     "code": "s5-6",
@@ -8026,7 +7934,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・函數的極限": {
     "code": "s5-7",
@@ -8068,7 +7977,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・微分": {
     "code": "s5-8",
@@ -8110,7 +8020,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・函數性質的判定": {
     "code": "s5-9",
@@ -8157,7 +8068,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "高中・高三・高三補充": {
     "code": "s5-x",
@@ -8189,7 +8101,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "國中・國三上・乘冪與圓的綜合應用": {
     "code": "j5-2-3",
@@ -8256,7 +8169,64 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
+  },
+  "國中・國二下・認識函數": {
+    "code": "j4-2-1",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:25:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "1. 這章先建立函數的基本觀念，重點是輸入與輸出的對應、函數記號、函數值與代入。\n\n2. 做題時要先判斷某種對應是否符合函數定義，再處理表格、關係式與函數值之間的轉換。\n\n3. 這章的核心不是畫圖，而是先弄清楚函數是什麼、怎麼表示，以及怎麼從規則算出函數值。 "
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "原稿版整理的是函數定義、表示法、函數判別與函數值的基本觀念。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
+  },
+  "國中・國二下・線型函數的圖形": {
+    "code": "j4-2-2",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:25:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "1. 這章把函數關係放到座標平面上看，重點是線型函數的分類、圖形、斜率、截距與交點。\n\n2. 做題時要能在圖形、關係式和生活情境三者之間切換，並看懂係數如何影響直線的位置與方向。\n\n3. 這章的核心是把 \\(y=ax\\)、\\(y=ax+b\\) 和圖上的直線連起來看。"
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "原稿版整理的是線型函數圖形、作圖方法、斜率影響，以及由圖反推解析式的題型。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
   }
 }
 };
@@ -8308,7 +8278,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-3-2": {
     "code": "j2-3-2",
@@ -8350,7 +8321,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-1-1": {
     "code": "j3-1-1",
@@ -8412,7 +8384,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-1-2": {
     "code": "j3-1-2",
@@ -8449,7 +8422,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-1-3": {
     "code": "j3-1-3",
@@ -8486,7 +8460,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-2-1": {
     "code": "j3-2-1",
@@ -8573,7 +8548,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-2-2": {
     "code": "j3-2-2",
@@ -8650,7 +8626,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-2-3": {
     "code": "j3-2-3",
@@ -8717,7 +8694,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-1-1": {
     "code": "j4-1-1",
@@ -8794,7 +8772,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-1-2": {
     "code": "j4-1-2",
@@ -8861,7 +8840,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-1-3": {
     "code": "j4-1-3",
@@ -8938,7 +8918,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-1-1": {
     "code": "s1-1-1",
@@ -9025,7 +9006,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-1-2": {
     "code": "s1-1-2",
@@ -9082,7 +9064,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-1-1": {
     "code": "s2-1-1",
@@ -9159,7 +9142,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-1-2": {
     "code": "s2-1-2",
@@ -9226,7 +9210,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-3-1": {
     "code": "s2-3-1",
@@ -9303,7 +9288,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-3-2": {
     "code": "s2-3-2",
@@ -9380,7 +9366,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-2-1": {
     "code": "s2-2-1",
@@ -9457,7 +9444,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-2-2": {
     "code": "s2-2-2",
@@ -9534,7 +9522,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-2-3": {
     "code": "s2-2-3",
@@ -9591,7 +9580,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-2-4": {
     "code": "s2-2-4",
@@ -9668,7 +9658,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-4-2": {
     "code": "s4-4-2",
@@ -9745,7 +9736,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "B-1": {
     "code": "B-1",
@@ -9766,7 +9758,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "B-2": {
     "code": "B-2",
@@ -9787,7 +9780,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "B-3": {
     "code": "B-3",
@@ -9808,300 +9802,80 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-1-1": {
     "code": "j1-1-1",
-    "title": "章節重點大綱",
-    "updatedAt": "2026-05-13T07:19:03+08:00",
+    "title": "章節前言",
+    "updatedAt": "2026-05-15T13:10:00+08:00",
     "variants": [
       {
         "id": "editable",
-        "label": "可修改版",
+        "label": "章節前言",
         "sections": [
           {
             "type": "paragraph",
-            "text": "1. 這章正式改以三個主題當主軸：正負數與數的分類、數線相反數與中點、絕對值與距離。\n2. 這章最重要的是先把數放回數線上理解，再去看相反數、中點與絕對值，不要把分類題和距離題混在一起。\n3. 看到題目時，先判斷它是在考數的分類、數線位置，還是在考絕對值與距離，方向會清楚很多。\n4. 這章的下一層提醒先直接取主題整理重點，之後若要再細拆分支，再從這些重點往下長。"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "正負數與數的分類",
-                "主題",
-                "相對的量、正數與負數、0 的角色、整數與自然數等重點"
-              ],
-              [
-                "數線、相反數與中點",
-                "主題",
-                "數線三要素、大小關係、相反數、區間表示法等重點"
-              ],
-              [
-                "絕對值與距離",
-                "主題",
-                "絕對值的意思、基本例子、相反數絕對值相同、分段定義等重點"
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "paragraph",
-            "text": "原文段落\n- 負數與數線\n\n重點歸納\n- 正數與負數\n- 0 既不是正數，也不是負數\n- 數線三要素\n- 數的大小比較\n- 正數 ＞ 0 ＞ 負數\n- 三一律\n- 遞移律\n- 相反數\n- 絕對值\n- 絕對值具有非負性，必為 0 或正數\n- 性質\n\n重要題型\n- 數線標示與坐標寫法\n- 絕對值的意義與求值\n- 整數點個數問題\n- 相反數的移動問題"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "負數與數線｜重點歸納",
-                "原文",
-                "正數與負數：生活中常用「＋」（正號）與「－」（負號）來表示性質相反的量，例如：賺賠、高低、增減。\n0 既不是正數，也不是負數。\n正號「＋」常可省略，但負號「－」絕對不能省略。\n數線三要素：原點、正向（通常向右）、單位長。\n數的大小比較：在數線上，右邊的點所表示的數恆大於左邊的點。\n正數 ＞ 0 ＞ 負數。\n三一律：任意兩數 \\(a, b\\) 必符合 \\(a > b, a < b, a = b\\) 其中之一。\n遞移律：若 \\(a > b\\) 且 \\(b > c\\)，則 \\(a > c\\)。\n相反數：在數線上分別位於原點左右兩側，且與原點距離相等的兩點，互為相反數。\n若 \\(a\\) 的相反數是 \\(-a\\)，則 \\(a + (-a) = 0\\) 6, 7。0 的相反數是 0。\n絕對值：數線上某點到原點的距離，記作 \\(|a|\\)。\n絕對值具有非負性，必為 0 或正數。\n性質：絕對值愈大的負數，其值反而愈小。"
-              ],
-              [
-                "負數與數線｜重要題型",
-                "原文",
-                "數線標示與坐標寫法：在數線上描出分數、小數或整數的位置。\n絕對值的意義與求值：求某數的絕對值，或已知 \\(|a| = k\\)，求 \\(a = \\pm k\\)。\n整數點個數問題：求符合條件（如 \\(|x| < 5\\)）的整數共有幾個。\n相反數的移動問題：數線上兩點同時向左或向右移動多少單位後，會互為相反數。"
-              ]
-            ]
+            "text": "1. 這一節要先把正負數放回數線上理解，因為後面的相反數、絕對值與整數點個數，其實都在同一條線上思考。\n2. 相反數看的是對稱位置，絕對值看的是到原點的距離，兩者都和原點有關，但意思不能混在一起。\n3. 題目只要出現數線、`|a|`、相反數或整數個數，先畫簡單數線再判斷，通常會比硬背規則更穩。"
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-1-2": {
     "code": "j1-1-2",
-    "title": "章節重點大綱",
-    "updatedAt": "2026-05-13T07:19:03+08:00",
+    "title": "章節前言",
+    "updatedAt": "2026-05-15T13:10:00+08:00",
     "variants": [
       {
         "id": "editable",
-        "label": "可修改版",
+        "label": "章節前言",
         "sections": [
           {
             "type": "paragraph",
-            "text": "1. 這章正式先以一個主題當主軸：正負數的四則運算。\n2. 這章最重要的是把加減乘除、去括號、分配律和數線距離一起看成整數運算的同一條主線，不要拆成很多假主題。\n3. 看到題目時，先判斷它是在考加減、乘除、括號整理，還是在考距離與中點，再往對應分支看。\n4. 章節大綱第三欄先用主題重點整理，不直接拼舊分支名。"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "正負數的四則運算",
-                "主題",
-                "同號相加、異號相加、減法改加法、乘除符號規則等重點"
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "paragraph",
-            "text": "原文段落\n- 整數的加減\n- 整數的乘除與四則運算\n\n重點歸納\n- 加法運算\n- 異號數相加\n- 減法運算\n- 運算律\n- 加法結合律\n- 去括號規則\n- 數線上兩點間的距離\n- 中點坐標公式\n- 乘除正負號判別\n- 特殊數的乘除\n- 四則運算順序\n- 乘法分配律\n\n重要題型\n- 加減混合運算\n- 距離與位置推算\n- 中點公式應用\n- 絕對值運算\n- 利用分配律簡便計算\n- 定義新運算符號\n- 正負號判定\n- 應用題"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "整數的加減｜重點歸納",
-                "原文",
-                "加法運算：同號數相加：取共同符號，絕對值相加。\n異號數相加：取絕對值較大者的符號，絕對值大減小。\n減法運算：減去一個數等於加上該數的相反數，即 \\(a - b = a + (-b)\\)。\n運算律：加法交換律：\\(a + b = b + a\\)。\n加法結合律：\\((a + b) + c = a + (b + c)\\)。\n去括號規則：括號前是「＋」，內部不變號；括號前是「－」，內部＋變－、－變＋。\n數線上兩點間的距離：\\(A(a)\\) 與 \\(B(b)\\) 的距離為 \\(AB = |a - b|\\)，即「大數減小數」。\n中點坐標公式：\\(A(a)\\) 與 \\(B(b)\\) 的中點坐標為 \\(\\frac{a+b}{2}\\)。"
-              ],
-              [
-                "整數的加減｜重要題型",
-                "原文",
-                "加減混合運算：處理帶有性質符號、運算符號及多重括號的算式。\n距離與位置推算：已知起點與移動單位（左減右加），求終點位置。\n中點公式應用：已知兩端點求中點，或已知一端點與中點求另一端點。\n絕對值運算：處理 \\(| |a| - |b| |\\) 類型的雙重絕對值求值題。"
-              ],
-              [
-                "整數的乘除與四則運算｜重點歸納",
-                "原文",
-                "乘除正負號判別：同號得正，異號得負。\n連乘積中，負號出現奇數個則結果為負，負號偶數個則結果為正。\n特殊數的乘除：任何數乘以 0 為 0；0 除以非 0 數為 0；0 不能當除數。\n四則運算順序：由左而右計算；先乘除、後加減；有括號先算括號；有乘方先算乘方。\n乘法分配律：\\(c \\times (a + b) = c \\times a + c \\times b\\)。\n\\((a + b) \\times c = a \\times c + b \\times c\\)。"
-              ],
-              [
-                "整數的乘除與四則運算｜重要題型",
-                "原文",
-                "利用分配律簡便計算：例如 \\(1002 \\times (-195)\\) 可看作 \\((1000 + 2) \\times (-195)\\)。\n定義新運算符號：如「\\(a \\odot b = a - |a-b| \\times b\\)」，依定義規則代入求值。\n正負號判定：不實際計算，僅根據負號個數判斷結果的正負。\n應用題：如盈虧計算、射飛鏢得分、溫差變化等。"
-              ]
-            ]
+            "text": "1. 這一節要把整數的加減乘除、去括號、運算順序和分配律看成同一條整數運算主線，而不是分成很多互不相干的小技巧。\n2. 遇到整數算式時，先分清楚哪些是性質符號、哪些是運算符號，再決定要不要改寫成加相反數或先去括號。\n3. 距離、中點和運算題雖然題型不同，但都很需要符號感；只要符號先判對，後面的步驟就會順很多。"
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-1-3": {
     "code": "j1-1-3",
-    "title": "章節重點大綱",
-    "updatedAt": "2026-05-13T07:19:03+08:00",
+    "title": "章節前言",
+    "updatedAt": "2026-05-15T13:10:00+08:00",
     "variants": [
       {
         "id": "editable",
-        "label": "可修改版",
+        "label": "章節前言",
         "sections": [
           {
             "type": "paragraph",
-            "text": "1. 這章正式改以五個主題當主軸：乘方與指數的意思、指數律基本規則、正負號奇偶次方與括號判別、分數底數與混合指數運算、指數比大小。\n2. 這章最重要的是先看底數、指數和括號的位置，再決定要用哪一條指數律，不要看到次方就直接套公式。\n3. 看到題目時，先判斷它是在考次方意義、規則化簡、正負號判別，還是在考比大小與綜合應用。\n4. 這章的下一層提醒全部改回主題重點，不再用舊原文摘要。"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "乘方與指數的意思",
-                "主題",
-                "連乘改寫、底數與指數、指數的意思、分數底數起點重點"
-              ],
-              [
-                "指數律基本規則",
-                "主題",
-                "同底數相乘、同底數相除、零次方、負次方等重點"
-              ],
-              [
-                "正負號、奇偶次方與括號判別",
-                "主題",
-                "偶數次方、奇數次方、括號影響、沒有括號時等重點"
-              ],
-              [
-                "分數底數與混合指數運算",
-                "主題",
-                "分數做次方、分數負次方、倒數想法、混合順序重點"
-              ],
-              [
-                "指數比大小",
-                "主題",
-                "同次冪比較、同底數比較、負指數先改寫、前面有負號等重點"
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "paragraph",
-            "text": "原文段落\n- 指數律\n\n重點歸納\n- 乘方的意義\n- 負數乘方判別\n- 注意區分\n- 特殊規定\n\n重要題型\n- 比較乘方大小\n- 指數律的逆運算\n- 末尾 0 的個數\n- 連乘/連除化簡"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "指數律｜重點歸納",
-                "原文",
-                "乘方的意義：\\(a^n\\) 表示 \\(n\\) 個 \\(a\\) 相乘，其中 \\(a\\) 為底數，\\(n\\) 為指數。\n負數乘方判別：負數的偶數次方為正，奇數次方為負。\n注意區分：\\((-2)^4 = 16\\) 而 \\(-2^4 = -16\\)。\n指数法則（\\(a, b \\neq 0\\)）：\\(a^m \\times a^n = a^{m+n}\\)\n\\(a^m \\div a^n = a^{m-n}\\)\n\\((a^m)^n = a^{m \\times n}\\)\n\\((a \\times b)^m = a^m \\times b^m\\)。\n特殊規定：\\(a^0 = 1\\)（當 \\(a \\neq 0\\)）；\\(a^{-n} = \\frac{1}{a^n}\\)。"
-              ],
-              [
-                "指數律｜重要題型",
-                "原文",
-                "比較乘方大小：化為「同底數」比較指數，或化為「同指數」比較底數。\n指數律的逆運算：例如 \\(9^{10} = (3^2)^{10} = 3^{20}\\)。\n末尾 0 的個數：利用 \\(2 \\times 5 = 10\\)，找 \\(2\\) 與 \\(5\\) 的質因數個數來判斷積末有幾個零。\n連乘/連除化簡：利用指數律將複雜的相乘除式子化簡成最簡底數形式。"
-              ]
-            ]
+            "text": "1. 這一節最重要的是先看清楚底數、指數和括號的位置，再決定要用哪一條指數律，不能看到次方就直接套公式。\n2. 負數乘方最容易在括號上出錯，所以 `(-2)^4` 和 `-2^4` 這類題一定要反覆確認誰被乘方。\n3. 如果能先把題目化成同底數、同指數或倒數形式，很多比大小與化簡題都會簡單很多。"
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-1-4": {
     "code": "j1-1-4",
-    "title": "章節重點大綱",
-    "updatedAt": "2026-05-13T07:19:03+08:00",
+    "title": "章節前言",
+    "updatedAt": "2026-05-15T13:10:00+08:00",
     "variants": [
       {
         "id": "editable",
-        "label": "可修改版",
+        "label": "章節前言",
         "sections": [
           {
             "type": "paragraph",
-            "text": "1. 這章正式改以兩個主題當主軸：科學記號與常見單位、科學記號的運算。\n2. 這章最重要的是先把一般數和科學記號之間的轉換穩住，再處理乘除與加減，不要把單位換算和運算混成同一步。\n3. 看到題目時，先判斷它是在考記號格式、常見單位，還是在考乘除或加減運算，做法會簡單很多。\n4. 這章大綱第三欄也改回主題重點整理，跟主題頁保持一致。"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "科學記號與常見單位",
-                "主題",
-                "科學記號格式、大數與小數、常見例子、常見單位等重點"
-              ],
-              [
-                "科學記號的運算",
-                "主題",
-                "乘法、除法、加減前提、同次方加減等重點"
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "paragraph",
-            "text": "原文段落\n- 科學記號\n\n重點歸納\n- 表示法\n- 位數判讀\n- \\(n\\) 為負整數\n- 運算原則\n- 加減\n\n重要題型\n- 單位換算\n- 科學記號的大小比較\n- 複雜加減運算\n- 應用題"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "科學記號｜重點歸納",
-                "原文",
-                "表示法：形式為 \\(a \\times 10^n\\)，其中 \\(1 \\le a < 10\\) 且 \\(n\\) 為整數。\n位數判讀：\\(n\\) 為正整數：乘開後為 \\((n+1)\\) 位數。\n\\(n\\) 為負整數：乘開後，小數點後第 \\(|n|\\) 位開始出現不為 0 的數字。\n運算原則：乘除：係數 \\(a\\) 相乘除，底數 \\(10\\) 的次方相加減。\n加減：須化為相同次方（通常化為高次方）後，再利用分配律提取 \\(10^n\\) 做加減。"
-              ],
-              [
-                "科學記號｜重要題型",
-                "原文",
-                "單位換算：如公里換公分、微米換奈米、記憶體單位（GB, MB, KB）換算等。\n科學記號的大小比較：先看 \\(10^n\\) 的 \\(n\\) 值，較大者較大；若 \\(n\\) 相同則比較 \\(a\\)。\n複雜加減運算：例如 \\(2.4 \\times 10^{-8} + 3.7 \\times 10^{-9}\\)，需調整次方後計算。\n應用題：世界人口、光年距離、病毒大小比較、電腦儲存字數計算。"
-              ]
-            ]
+            "text": "1. 這一節要先把一般數和科學記號之間的轉換做穩，再去處理乘除、加減與單位換算，步驟才不會混在一起。\n2. 科學記號最核心的檢查點是係數是否落在 `1 \\le a < 10`，以及指數正負是否和小數點移動方向一致。\n3. 只要是加減題，先提醒自己「一定要先化成相同次方」，這一句往往就能避掉最大宗的錯誤。"
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-2-1": {
     "code": "j1-2-1",
@@ -10188,7 +9962,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-2-2": {
     "code": "j1-2-2",
@@ -10275,7 +10050,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-2-3": {
     "code": "j1-2-3",
@@ -10342,7 +10118,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-3-1": {
     "code": "j1-3-1",
@@ -10429,7 +10206,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-3-2": {
     "code": "j1-3-2",
@@ -10496,7 +10274,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-3-3": {
     "code": "j1-3-3",
@@ -10553,7 +10332,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j1-x": {
     "code": "j1-x",
@@ -10610,7 +10390,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-1-1": {
     "code": "j2-1-1",
@@ -10657,7 +10438,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-1-2": {
     "code": "j2-1-2",
@@ -10694,7 +10476,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-1-3": {
     "code": "j2-1-3",
@@ -10726,7 +10509,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-2-1": {
     "code": "j2-2-1",
@@ -10773,7 +10557,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-2-2": {
     "code": "j2-2-2",
@@ -10815,7 +10600,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-4-1": {
     "code": "j2-4-1",
@@ -10872,7 +10658,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-4-2": {
     "code": "j2-4-2",
@@ -10914,7 +10701,148 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
+  },
+  "j2-5-1": {
+    "code": "j2-5-1",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:45:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章先把原始資料整理成表格與統計圖，再練習讀圖與換算。看到題目時，先分清楚它是在考整理資料、圖表判讀，還是圖形換算。"
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章先把原始資料整理成表格與統計圖，再練習讀圖與換算。看到題目時，先分清楚它是在考整理資料、圖表判讀，還是圖形換算。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
+  },
+  "j2-5-2": {
+    "code": "j2-5-2",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:45:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章把平均數、中位數、眾數和資料調整的影響放在一起整理。看到題目時，先判斷它是在找代表值、修正資料，還是在比較哪一個統計量較合適。"
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章把平均數、中位數、眾數和資料調整的影響放在一起整理。看到題目時，先判斷它是在找代表值、修正資料，還是在比較哪一個統計量較合適。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
+  },
+  "j2-6-1": {
+    "code": "j2-6-1",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:58:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章先整理基本幾何元素、角的分類、多邊形對角線與圓扇形。看到題目時，先分清楚它是在考符號辨識、角度關係，還是對角線與圖形性質。"
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章先整理基本幾何元素、角的分類、多邊形對角線與圓扇形。看到題目時，先分清楚它是在考符號辨識、角度關係，還是對角線與圖形性質。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
+  },
+  "j2-6-2": {
+    "code": "j2-6-2",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:58:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章把垂直、中點、中垂線和線對稱放在一起整理。看到題目時，先判斷它是在考中垂線性質、對稱軸數量，還是在考座標對稱與摺紙推理。"
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章把垂直、中點、中垂線和線對稱放在一起整理。看到題目時，先判斷它是在考中垂線性質、對稱軸數量，還是在考座標對稱與摺紙推理。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
+  },
+  "j2-6-3": {
+    "code": "j2-6-3",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:58:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章先建立三視圖和立體形體的對應，再練習從不同視圖反推立體。看到題目時，先分清楚它是在考視圖辨認、立體判讀，還是積木增減後的變化。"
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "這一章先建立三視圖和立體形體的對應，再練習從不同視圖反推立體。看到題目時，先分清楚它是在考視圖辨認、立體判讀，還是積木增減後的變化。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
   },
   "j2-x": {
     "code": "j2-x",
@@ -10935,7 +10863,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-3-1": {
     "code": "j3-3-1",
@@ -11042,7 +10971,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-3-2": {
     "code": "j3-3-2",
@@ -11109,7 +11039,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-3-3": {
     "code": "j3-3-3",
@@ -11176,7 +11107,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-4-1": {
     "code": "j3-4-1",
@@ -11283,7 +11215,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-4-2": {
     "code": "j3-4-2",
@@ -11370,7 +11303,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-4-3": {
     "code": "j3-4-3",
@@ -11437,7 +11371,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j3-x": {
     "code": "j3-x",
@@ -11458,134 +11393,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
-  },
-  "j4-2": {
-    "code": "j4-2",
-    "title": "章節重點大綱",
-    "updatedAt": "2026-05-13T23:10:27+08:00",
-    "variants": [
-      {
-        "id": "editable",
-        "label": "可修改版",
-        "sections": [
-          {
-            "type": "paragraph",
-            "text": "1. 這章最重要的核心，是把數、點、圖形和方程式看成同一件事的不同表示方式。\n\n2. 看到題目時，先搞清楚 x 和 y 分別代表什麼，再看它是在考點的位置、圖形的變化，還是方程式之間的關係。\n\n3. 這章可以先從 函數基本定義、定義域與值域、函數值與代入 開始學。後面不管是畫圖、讀圖、找斜率還是寫方程式，本質上都在做表示方式的轉換。\n\n4. 這章最容易錯的是象限方向看反、坐標順序寫反，或只會代公式卻不知道圖形在表達什麼。"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "函數的意義與對應關係",
-                "主題",
-                "函數的基本條件、函數是在描述對應規則、同一個輸入不能對多個輸出、先判斷誰先決定 等重點"
-              ],
-              [
-                "自變數、應變數與定義域",
-                "主題",
-                "自變數與應變數、不是每個數都能代、定義域觀念、先看能不能代，再看怎麼算 等重點"
-              ],
-              [
-                "用表格、對應表與關係式表示函數",
-                "主題",
-                "表格看對應最清楚、關係式是在寫規則、讀表格要一組一組看、由表格找關係式 等重點"
-              ],
-              [
-                "函數值與代入計算",
-                "主題",
-                "函數值的意思、先看整個式子的結構、反過來給 \\(y\\) 是在解方程式、常和表格、圖形一起出題 等重點"
-              ],
-              [
-                "函數圖形與座標上的意義",
-                "主題",
-                "圖上的點代表對應值、從表格畫圖、讀圖先看橫再看縱、同一個 \\(x\\) 對兩點就不是函數 等重點"
-              ],
-              [
-                "正比函數與 \\(y=ax\\)",
-                "主題",
-                "正比函數的形式、圖形通過原點、\\(a\\) 的正負影響方向、\\(|a|\\) 影響陡峭程度 等重點"
-              ],
-              [
-                "一次函數與 \\(y=ax+b\\)",
-                "主題",
-                "一次函數的形式、\\(a\\) 是變化率、\\(b\\) 是截距、正比是一次函數的特例 等重點"
-              ],
-              [
-                "函數的實際應用與判讀",
-                "主題",
-                "先找固定規則、基本費加單價常是一函數型、幾組資料也能先做表格、交點表示兩方案相同 等重點"
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "paragraph",
-            "text": "這一章的原稿版也依照主題主軸整理，先對照主題，再往下看分支。"
-          },
-          {
-            "type": "table",
-            "headers": [
-              "主題",
-              "角色",
-              "下一層 / 提醒"
-            ],
-            "rows": [
-              [
-                "函數的意義與對應關係",
-                "主題",
-                "函數的基本條件、函數是在描述對應規則、同一個輸入不能對多個輸出、先判斷誰先決定 等重點"
-              ],
-              [
-                "自變數、應變數與定義域",
-                "主題",
-                "自變數與應變數、不是每個數都能代、定義域觀念、先看能不能代，再看怎麼算 等重點"
-              ],
-              [
-                "用表格、對應表與關係式表示函數",
-                "主題",
-                "表格看對應最清楚、關係式是在寫規則、讀表格要一組一組看、由表格找關係式 等重點"
-              ],
-              [
-                "函數值與代入計算",
-                "主題",
-                "函數值的意思、先看整個式子的結構、反過來給 \\(y\\) 是在解方程式、常和表格、圖形一起出題 等重點"
-              ],
-              [
-                "函數圖形與座標上的意義",
-                "主題",
-                "圖上的點代表對應值、從表格畫圖、讀圖先看橫再看縱、同一個 \\(x\\) 對兩點就不是函數 等重點"
-              ],
-              [
-                "正比函數與 \\(y=ax\\)",
-                "主題",
-                "正比函數的形式、圖形通過原點、\\(a\\) 的正負影響方向、\\(|a|\\) 影響陡峭程度 等重點"
-              ],
-              [
-                "一次函數與 \\(y=ax+b\\)",
-                "主題",
-                "一次函數的形式、\\(a\\) 是變化率、\\(b\\) 是截距、正比是一次函數的特例 等重點"
-              ],
-              [
-                "函數的實際應用與判讀",
-                "主題",
-                "先找固定規則、基本費加單價常是一函數型、幾組資料也能先做表格、交點表示兩方案相同 等重點"
-              ]
-            ]
-          }
-        ]
-      }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-3-1": {
     "code": "j4-3-1",
@@ -11672,7 +11481,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-3-2": {
     "code": "j4-3-2",
@@ -11759,7 +11569,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-3-3": {
     "code": "j4-3-3",
@@ -11846,7 +11657,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-3-4": {
     "code": "j4-3-4",
@@ -11943,7 +11755,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-4-1": {
     "code": "j4-4-1",
@@ -12020,7 +11833,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-4-2": {
     "code": "j4-4-2",
@@ -12097,7 +11911,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-4-3": {
     "code": "j4-4-3",
@@ -12158,7 +11973,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j4-x": {
     "code": "j4-x",
@@ -12179,7 +11995,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-1-1": {
     "code": "j5-1-1",
@@ -12240,7 +12057,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-1-2": {
     "code": "j5-1-2",
@@ -12317,7 +12135,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-1-3": {
     "code": "j5-1-3",
@@ -12414,7 +12233,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-1-4": {
     "code": "j5-1-4",
@@ -12435,7 +12255,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-2-1": {
     "code": "j5-2-1",
@@ -12512,7 +12333,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-2-2": {
     "code": "j5-2-2",
@@ -12589,7 +12411,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-3-1": {
     "code": "j5-3-1",
@@ -12646,7 +12469,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-3-2": {
     "code": "j5-3-2",
@@ -12703,7 +12527,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-3-3": {
     "code": "j5-3-3",
@@ -12800,7 +12625,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-x": {
     "code": "j5-x",
@@ -12821,7 +12647,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-1-1": {
     "code": "j6-1-1",
@@ -12898,7 +12725,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-1-2": {
     "code": "j6-1-2",
@@ -12975,7 +12803,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-1-3": {
     "code": "j6-1-3",
@@ -13072,7 +12901,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-2-1": {
     "code": "j6-2-1",
@@ -13219,7 +13049,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-3-1": {
     "code": "j6-3-1",
@@ -13286,7 +13117,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-3-2": {
     "code": "j6-3-2",
@@ -13373,7 +13205,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-3-3": {
     "code": "j6-3-3",
@@ -13480,7 +13313,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j6-x": {
     "code": "j6-x",
@@ -13501,7 +13335,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-1-3": {
     "code": "s1-1-3",
@@ -13568,7 +13403,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-1-4": {
     "code": "s1-1-4",
@@ -13625,7 +13461,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-1-5": {
     "code": "s1-1-5",
@@ -13692,7 +13529,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-2-1": {
     "code": "s1-2-1",
@@ -13779,7 +13617,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-2-2": {
     "code": "s1-2-2",
@@ -13836,7 +13675,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-2-3": {
     "code": "s1-2-3",
@@ -13923,7 +13763,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-3-1": {
     "code": "s1-3-1",
@@ -14000,7 +13841,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-3-2": {
     "code": "s1-3-2",
@@ -14087,7 +13929,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-3-3": {
     "code": "s1-3-3",
@@ -14164,7 +14007,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s1-x": {
     "code": "s1-x",
@@ -14196,7 +14040,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-4-1": {
     "code": "s2-4-1",
@@ -14293,7 +14138,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-4-2": {
     "code": "s2-4-2",
@@ -14380,7 +14226,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-4-3": {
     "code": "s2-4-3",
@@ -14437,7 +14284,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s2-x": {
     "code": "s2-x",
@@ -14469,7 +14317,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-1-1": {
     "code": "s3-1-1",
@@ -14506,7 +14355,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-1-2": {
     "code": "s3-1-2",
@@ -14543,7 +14393,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-1-3": {
     "code": "s3-1-3",
@@ -14580,7 +14431,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-1-4": {
     "code": "s3-1-4",
@@ -14617,7 +14469,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-2-1": {
     "code": "s3-2-1",
@@ -14694,7 +14547,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-2-2": {
     "code": "s3-2-2",
@@ -14751,7 +14605,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-2-3": {
     "code": "s3-2-3",
@@ -14838,7 +14693,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-3-1": {
     "code": "s3-3-1",
@@ -14935,7 +14791,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-3-2": {
     "code": "s3-3-2",
@@ -15042,7 +14899,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-3-3": {
     "code": "s3-3-3",
@@ -15119,7 +14977,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s3-x": {
     "code": "s3-x",
@@ -15151,7 +15010,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-1-1": {
     "code": "s4-1-1",
@@ -15218,7 +15078,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-1-2": {
     "code": "s4-1-2",
@@ -15295,7 +15156,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-1-3": {
     "code": "s4-1-3",
@@ -15362,7 +15224,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-1-4": {
     "code": "s4-1-4",
@@ -15439,7 +15302,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-2-1": {
     "code": "s4-2-1",
@@ -15516,7 +15380,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-2-2": {
     "code": "s4-2-2",
@@ -15603,7 +15468,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-3-1": {
     "code": "s4-3-1",
@@ -15670,7 +15536,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-3-2": {
     "code": "s4-3-2",
@@ -15727,7 +15594,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-4-1": {
     "code": "s4-4-1",
@@ -15804,7 +15672,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-4-3": {
     "code": "s4-4-3",
@@ -15871,7 +15740,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-4-4": {
     "code": "s4-4-4",
@@ -15958,7 +15828,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s4-x": {
     "code": "s4-x",
@@ -15990,7 +15861,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-10": {
     "code": "s5-10",
@@ -16032,7 +15904,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-11": {
     "code": "s5-11",
@@ -16074,7 +15947,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-2": {
     "code": "s5-2",
@@ -16111,7 +15985,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-3": {
     "code": "s5-3",
@@ -16153,7 +16028,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-4": {
     "code": "s5-4",
@@ -16210,7 +16086,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-5": {
     "code": "s5-5",
@@ -16252,7 +16129,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-6": {
     "code": "s5-6",
@@ -16289,7 +16167,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-7": {
     "code": "s5-7",
@@ -16331,7 +16210,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-8": {
     "code": "s5-8",
@@ -16373,7 +16253,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-9": {
     "code": "s5-9",
@@ -16420,7 +16301,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "s5-x": {
     "code": "s5-x",
@@ -16452,7 +16334,8 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
   },
   "j5-2-3": {
     "code": "j5-2-3",
@@ -16519,7 +16402,64 @@ window.chapterOverviewStore = {
           }
         ]
       }
-    ]
+    ],
+    "appendGeneratedOutline": false
+  },
+  "j4-2-1": {
+    "code": "j4-2-1",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:25:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "1. 這章先建立函數的基本觀念，重點是輸入與輸出的對應、函數記號、函數值與代入。\n\n2. 做題時要先判斷某種對應是否符合函數定義，再處理表格、關係式與函數值之間的轉換。\n\n3. 這章的核心不是畫圖，而是先弄清楚函數是什麼、怎麼表示，以及怎麼從規則算出函數值。 "
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "原稿版整理的是函數定義、表示法、函數判別與函數值的基本觀念。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
+  },
+  "j4-2-2": {
+    "code": "j4-2-2",
+    "title": "章節重點大綱",
+    "updatedAt": "2026-05-15T23:25:00+08:00",
+    "variants": [
+      {
+        "id": "editable",
+        "label": "可修改版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "1. 這章把函數關係放到座標平面上看，重點是線型函數的分類、圖形、斜率、截距與交點。\n\n2. 做題時要能在圖形、關係式和生活情境三者之間切換，並看懂係數如何影響直線的位置與方向。\n\n3. 這章的核心是把 \\(y=ax\\)、\\(y=ax+b\\) 和圖上的直線連起來看。"
+          }
+        ]
+      },
+      {
+        "id": "original",
+        "label": "原稿版",
+        "sections": [
+          {
+            "type": "paragraph",
+            "text": "原稿版整理的是線型函數圖形、作圖方法、斜率影響，以及由圖反推解析式的題型。"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
   }
 };
   window.chapterOverviewStore.byCode = byCode;
