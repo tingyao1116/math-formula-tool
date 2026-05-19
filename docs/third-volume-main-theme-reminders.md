@@ -1,4 +1,4 @@
-# 第三冊主題整理提醒
+﻿# 第三冊主題整理提醒
 
 這份提醒只記第三冊目前已經踩過、之後很容易再踩一次的點。做 `s3-*` 時先看這裡，再開始動資料。
 
@@ -21,8 +21,8 @@
 ## PDF 命名
 
 - 命名規則：`{chapter-code}-topic-{index}-{slug}.pdf`
-- 存放位置：`exports/main-theme-overviews`
-- 第三冊對照表：`exports/main-theme-overviews/third-volume-topic-pdfs.json`
+- 存放位置：`data/main-theme-overviews`
+- 第三冊對照表：`data/main-theme-overviews/third-volume-topic-pdfs.json`
 
 ## 可修改版注意
 
@@ -125,3 +125,4 @@
   - 行列式性質、換列換號、線性拆解速算，掛 `二階行列式`
   - 聯立方程組、唯一解無解無限多解判別，掛 `克拉瑪公式`
   - 面積、共線、幾何意義、參數面積題，掛 `二階行列式的應用`
+

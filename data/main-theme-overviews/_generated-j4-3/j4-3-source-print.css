@@ -1,0 +1,21 @@
+@page { size: A4; margin: 16mm; }
+body {
+  font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans CJK TC", sans-serif;
+  color: #1f2937;
+  line-height: 1.75;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0;
+}
+h1 { color: #0f3d63; font-size: 28px; margin: 0 0 12px; padding-bottom: 8px; border-bottom: 2px solid #d7e6f3; }
+h2 { color: #155a84; font-size: 22px; margin-top: 28px; }
+h3 { color: #234; font-size: 17px; margin-top: 18px; }
+blockquote {
+  margin: 12px 0 16px;
+  padding: 10px 14px;
+  border-left: 4px solid #8fb8d8;
+  background: #f6fbff;
+}
+ul, ol { padding-left: 1.4em; }
+img { max-width: 100%; page-break-inside: avoid; }
+code { font-family: "Consolas", "Courier New", monospace; background: #f4f7fa; padding: 0 2px; }

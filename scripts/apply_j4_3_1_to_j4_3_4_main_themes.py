@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 import re
@@ -235,7 +235,7 @@ def upsert_main_topic_entry(store: dict, topic: dict, updated_at: str) -> None:
                 "sections": [
                     {
                         "type": "pdf-page",
-                        "src": f"exports/main-theme-overviews/{topic['pdfFile']}",
+                        "src": f"data/main-theme-overviews/{topic['pdfFile']}",
                         "note": topic["title"],
                     },
                 ],
@@ -861,3 +861,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

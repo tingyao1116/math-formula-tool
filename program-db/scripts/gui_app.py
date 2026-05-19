@@ -56,6 +56,8 @@ CHAPTER_CLOSING_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "chapter-
 MAIN_TOPIC_OVERVIEW_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "main-topic-overview-db.json"
 
 ALL = "全部"
+LETTER_ESCAPE_RE = re.compile(r"\\\\([A-Za-z])")
+PUNCT_ESCAPE_RE = re.compile(r"\\([=+><_.-])")
 
 
 def resolve_db_path(kind: str) -> Path:
@@ -76,6 +78,12 @@ def resolve_db_path(kind: str) -> Path:
     if kind == "practices":
         return PRACTICE_DB_DEFAULT if PRACTICE_DB_DEFAULT.exists() else PRACTICE_DB_FALLBACK
     return QUESTION_DB_DEFAULT if QUESTION_DB_DEFAULT.exists() else QUESTION_DB_FALLBACK
+
+
+def normalize_markdown_escapes(text: str) -> tuple[str, int, int]:
+    text, letter_count = LETTER_ESCAPE_RE.subn(lambda match: "\\" + match.group(1), text)
+    text, punct_count = PUNCT_ESCAPE_RE.subn(r"\1", text)
+    return text, letter_count, punct_count
 
 
 class DualDbGui:
@@ -1024,7 +1032,7 @@ class DualDbGui:
                         "sections": [
                             {
                                 "type": "pdf-page",
-                                "src": "exports/main-theme-overviews/example.pdf",
+                                "src": "data/main-theme-overviews/example.pdf",
                                 "note": "先放這個主題的原稿 PDF"
                             }
                         ]
@@ -2872,7 +2880,11 @@ class DualDbGui:
                 "   會掃描：formula-db.json、question-db.json、以及所有正式 pack 的 questions.json / preview.json / manifest.json。\n"
                 "   會檢查：可疑亂碼、替代字元、歷史壞字模式。\n"
                 "   用途：在整批匯入或同步前先確認資料是不是乾淨。\n"
-                "   注意：這一步預設只檢查，不會修改資料。"
+                "   注意：這一步預設只檢查，不會修改資料。\n\n"
+                "4. Markdown 反跳脫清理\n"
+                "   會處理：指定 .md 檔中的 \\\\A~\\\\Z、\\\\a~\\\\z 改成 \\A~\\Z、\\a~\\z，並把 \\=、\\+、\\-、\\>、\\<、\\_、\\. 的反斜線拿掉。\n"
+                "   用途：清掉從其他來源貼進 Markdown 後，多出來的跳脫符號。\n"
+                "   注意：這一步會直接覆蓋原檔，請先確認檔案是你要修改的版本。"
             ),
         )
         desc.configure(state="disabled")
@@ -2951,9 +2963,68 @@ class DualDbGui:
             except Exception as exc:
                 messagebox.showerror("錯誤", str(exc), parent=window)
 
+        def run_markdown_unescape():
+            path = filedialog.askopenfilename(
+                title="選擇要清理的 Markdown 檔",
+                filetypes=[("Markdown files", "*.md"), ("All files", "*.*")],
+                parent=window,
+            )
+            if not path:
+                return
+
+            md_path = Path(path)
+            try:
+                original = md_path.read_text(encoding="utf-8")
+            except UnicodeDecodeError:
+                messagebox.showerror("編碼錯誤", f"目前只支援 UTF-8 文字檔：\n{md_path}", parent=window)
+                return
+            except Exception as exc:
+                messagebox.showerror("讀檔失敗", str(exc), parent=window)
+                return
+
+            normalized, letter_count, punct_count = normalize_markdown_escapes(original)
+            if normalized == original:
+                write_log(
+                    (
+                        "Markdown 反跳脫清理完成\n"
+                        f"- 檔案：{md_path}\n"
+                        "- 沒有偵測到需要替換的內容"
+                    ),
+                    replace=True,
+                )
+                self.status_var.set("Markdown 清理完成：沒有需要替換的內容")
+                messagebox.showinfo("完成", f"沒有需要替換的內容：\n{md_path}", parent=window)
+                return
+
+            try:
+                md_path.write_text(normalized, encoding="utf-8")
+            except Exception as exc:
+                messagebox.showerror("寫檔失敗", str(exc), parent=window)
+                return
+
+            total = letter_count + punct_count
+            write_log(
+                (
+                    "Markdown 反跳脫清理完成\n"
+                    f"- 檔案：{md_path}\n"
+                    f"- 英文字母類替換：{letter_count}\n"
+                    f"- 符號類替換：{punct_count}\n"
+                    f"- 總替換數：{total}\n"
+                    "- 已直接覆蓋原檔"
+                ),
+                replace=True,
+            )
+            self.status_var.set(f"Markdown 清理完成：共替換 {total} 處")
+            messagebox.showinfo(
+                "完成",
+                f"已清理並覆蓋原檔：\n{md_path}\n\n英文字母類：{letter_count}\n符號類：{punct_count}\n總替換數：{total}",
+                parent=window,
+            )
+
         ttk.Button(button_bar, text="整批匯入正式 packs", style="Compact.TButton", command=run_import_all).pack(side="left")
         ttk.Button(button_bar, text="同步前端橋接檔", style="Compact.TButton", command=run_sync_all).pack(side="left", padx=(8, 0))
         ttk.Button(button_bar, text="檢查資料亂碼", style="Compact.TButton", command=run_integrity_check).pack(side="left", padx=(8, 0))
+        ttk.Button(button_bar, text="Markdown 反跳脫清理", style="Compact.TButton", command=run_markdown_unescape).pack(side="left", padx=(8, 0))
         ttk.Button(button_bar, text="講義產生器 v1", style="Compact.TButton", command=self.open_lesson_generator).pack(side="left", padx=(8, 0))
         ttk.Button(button_bar, text="關閉", style="Compact.TButton", command=window.destroy).pack(side="right")
 
@@ -2962,6 +3033,7 @@ class DualDbGui:
             "- 整批匯入正式 packs：formal packs -> question-db.json\n"
             "- 同步前端橋接檔：formula-db / question-db / practice-db -> data/*.js\n"
             "- 檢查資料亂碼：掃描資料庫與正式匯入檔，不直接修改\n"
+            "- Markdown 反跳脫清理：清掉指定 .md 檔內多餘的反斜線，直接覆蓋原檔\n"
             "- 講義產生器 v1：開啟章節講義預覽與輸出工具",
             replace=True,
         )
@@ -3439,4 +3511,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

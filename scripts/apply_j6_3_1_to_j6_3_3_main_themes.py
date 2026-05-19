@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 import re
@@ -288,7 +288,7 @@ def build_variants(theme: dict) -> list[dict]:
             "sections": [
                 {
                     "type": "pdf-page",
-                    "src": f"exports/main-theme-overviews/{theme['pdfFile']}",
+                    "src": f"data/main-theme-overviews/{theme['pdfFile']}",
                     "note": theme["title"],
                 }
             ],
@@ -603,3 +603,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

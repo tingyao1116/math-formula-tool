@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 from copy import deepcopy
@@ -519,7 +519,7 @@ def topic_overview_entry(topic: dict, updated_at: str) -> dict:
                 "sections": [
                     {
                         "type": "pdf-page",
-                        "src": f"exports/main-theme-overviews/{topic['file']}",
+                        "src": f"data/main-theme-overviews/{topic['file']}",
                         "note": topic["title"],
                     }
                 ],
@@ -681,3 +681,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

@@ -1,14 +1,14 @@
-window.mainTopicOverviewStore = {
+﻿window.mainTopicOverviewStore = {
   "meta": {
-    "count": 237,
-    "updatedAt": "2026-05-15T23:25:00+08:00",
-    "source": "exports/main-theme-overviews"
+    "count": 315,
+    "updatedAt": "2026-05-19T01:44:15+08:00",
+    "source": "data/main-theme-overviews"
   },
   "byId": {
     "s1-1-1-main-theme-rational": {
       "id": "s1-1-1-main-theme-rational",
       "title": "有理數的定義與性質",
-      "updatedAt": "2026-05-08T13:10:00+08:00",
+      "updatedAt": "2026-05-17T10:38:38+08:00",
       "variants": [
         {
           "id": "editable",
@@ -17,49 +17,25 @@ window.mainTopicOverviewStore = {
             {
               "type": "table",
               "headers": [
-                "重點",
+                "分支",
                 "整理"
               ],
               "rows": [
                 [
-                  "有理數的意義",
-                  "只要一個數能寫成 \\(\\frac{{q}}{{p}}\\)，其中 \\(p,q\\) 都是整數且 \\(p \\ne 0\\)，這個數就是有理數。"
+                  "有理數的定義與結構",
+                  "從整數比、分類與封閉性切入，先建立有理數的核心概念。"
                 ],
                 [
-                  "整數也是有理數的一部分",
-                  "正整數、0、負整數都可以寫成分數，所以都屬於有理數。"
+                  "十進位表示法",
+                  "把有限小數、循環小數、分母判斷與循環小數化分數收在同一支。"
                 ],
                 [
-                  "小數怎麼分類",
-                  "有限小數和循環小數都屬於有理數；不是有理數的實數，才是無理數。"
+                  "有理數的稠密性",
+                  "理解兩個有理數之間一定還有別的有理數，並會用平均數找中間值。"
                 ],
                 [
-                  "有理數有稠密性",
-                  "若 \\(a<b\\)，那麼 \\(a\\) 和 \\(b\\) 中間一定還能找到別的有理數，常用例子是 \\(\\frac{{a+b}}{{2}}\\)。"
-                ],
-                [
-                  "四則運算的封閉性",
-                  "兩個有理數做加、減、乘，或除以一個不為 0 的有理數，結果仍是有理數。"
-                ],
-                [
-                  "分數相等的判斷",
-                  "若 \\(\\frac{{a}}{{b}}=\\frac{{c}}{{d}}\\)，可直接用交叉相乘得到 \\(ad=bc\\)。"
-                ],
-                [
-                  "有限小數的判斷重點",
-                  "分數先約成最簡後，若分母的質因數只有 2 和 5，就能化成有限小數。"
-                ],
-                [
-                  "純循環小數化分數",
-                  "分子寫循環節，分母寫同位數個 9。例如 \\(0.\\overline{{abc}}\\) 可化成 \\(\\frac{{abc}}{{999}}\\)。"
-                ],
-                [
-                  "混循環小數化分數",
-                  "分子是整段數字減掉不循環部分，分母是循環位數個 9 後接不循環位數個 0。"
-                ],
-                [
-                  "讀題提醒",
-                  "看到最簡分數能不能變有限小數時，先檢查分母的質因數，不要急著直接除。"
+                  "近似值與估計",
+                  "利用四捨五入區間反推原分數或參數範圍。"
                 ]
               ]
             }
@@ -71,7 +47,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-1-1-topic-1-rational.pdf",
+              "src": "data/main-theme-overviews/s1-1-1-topic-1-rational.pdf",
               "note": "有理數的定義與性質"
             }
           ]
@@ -81,7 +57,7 @@ window.mainTopicOverviewStore = {
     "s1-1-1-main-theme-irrational": {
       "id": "s1-1-1-main-theme-irrational",
       "title": "無理數",
-      "updatedAt": "2026-05-08T13:10:00+08:00",
+      "updatedAt": "2026-05-17T10:38:38+08:00",
       "variants": [
         {
           "id": "editable",
@@ -90,37 +66,21 @@ window.mainTopicOverviewStore = {
             {
               "type": "table",
               "headers": [
-                "重點",
+                "分支",
                 "整理"
               ],
               "rows": [
                 [
-                  "無理數的意義",
-                  "不能寫成兩個整數比值的實數就是無理數，像 \\(\\sqrt{{5}}\\)、\\(\\sqrt[3]{{3}}\\)、\\(\\pi\\)。"
+                  "無理數的判定與證明",
+                  "整合反證法與無理數相等性質，先建立判定與證明路線。"
                 ],
                 [
-                  "完全平方根要先分清",
-                  "像 \\(\\sqrt{{144}}=12\\) 是有理數；沒有開得盡的根式才是無理數。"
+                  "根式的化簡技巧",
+                  "把同類根式、分母有理化與雙重根號化簡集中處理。"
                 ],
                 [
-                  "分數與小數外觀不能誤判",
-                  "不是只看有沒有根號，重點是能不能寫成兩整數的比。"
-                ],
-                [
-                  "根號化簡先拆完全平方數",
-                  "平方根、立方根化簡時，先找可以提出來的平方數或立方數。"
-                ],
-                [
-                  "\\(a+b\\sqrt{{e}}\\) 型比較",
-                  "若 \\(\\sqrt{{e}}\\) 是無理數，\\(a+b\\sqrt{{e}}=c+d\\sqrt{{e}}\\) 時要對應比較係數。"
-                ],
-                [
-                  "乘回去可能變有理數",
-                  "兩個無理數相乘不一定還是無理數，例如 \\(\\sqrt{{5}}\\times\\sqrt{{5}}=5\\)。"
-                ],
-                [
-                  "讀題提醒",
-                  "看到根式時先決定是在做化簡、運算，還是在判斷有理無理，不要混在一起。"
+                  "根式的數值分析",
+                  "處理平方根估值、整數部分與小數部分這類根式求值題。"
                 ]
               ]
             }
@@ -132,7 +92,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-1-1-topic-2-irrational.pdf",
+              "src": "data/main-theme-overviews/s1-1-1-topic-2-irrational.pdf",
               "note": "無理數"
             }
           ]
@@ -142,7 +102,7 @@ window.mainTopicOverviewStore = {
     "s1-1-1-main-theme-real-line": {
       "id": "s1-1-1-main-theme-real-line",
       "title": "實數與數線",
-      "updatedAt": "2026-05-08T13:10:00+08:00",
+      "updatedAt": "2026-05-17T10:38:38+08:00",
       "variants": [
         {
           "id": "editable",
@@ -151,33 +111,21 @@ window.mainTopicOverviewStore = {
             {
               "type": "table",
               "headers": [
-                "重點",
+                "分支",
                 "整理"
               ],
               "rows": [
                 [
-                  "實數與數線的對應",
-                  "每一個實數都能對應到數線上的一個點，反過來數線上的點也代表一個實數。"
+                  "實數的分類與性質",
+                  "用集合觀念整理實數、有理數、無理數與基本性質。"
                 ],
                 [
-                  "區間記號與不等式互翻",
-                  "看到區間時要能立刻轉成不等式，看到不等式也要能回寫成區間。"
+                  "數值大小比較",
+                  "整合根式比較、夾值估計與算幾不等式的極值想法。"
                 ],
                 [
-                  "絕對值先想距離",
-                  "絕對值代表數與 0 的距離，所以大小比較常可轉成距離觀點。"
-                ],
-                [
-                  "大小比較先估值",
-                  "根式或分式比大小時，可先找近似值或先平方，再判斷。"
-                ],
-                [
-                  "算術平均與幾何平均",
-                  "非負條件下，\\(\\frac{{a+b}}{{2}} \\ge \\sqrt{{ab}}\\)，常用來做最值。"
-                ],
-                [
-                  "讀題提醒",
-                  "數線題先分清是在比較大小、做區間交集，還是在用平均不等式。"
+                  "數線上的尺規作圖",
+                  "把有理點作圖與根號數作圖整理成單一分支。"
                 ]
               ]
             }
@@ -189,7 +137,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-1-1-topic-3-real-line.pdf",
+              "src": "data/main-theme-overviews/s1-1-1-topic-3-real-line.pdf",
               "note": "實數與數線"
             }
           ]
@@ -199,7 +147,7 @@ window.mainTopicOverviewStore = {
     "s1-1-1-main-theme-distance": {
       "id": "s1-1-1-main-theme-distance",
       "title": "距離與分點公式",
-      "updatedAt": "2026-05-08T13:10:00+08:00",
+      "updatedAt": "2026-05-17T10:38:38+08:00",
       "variants": [
         {
           "id": "editable",
@@ -208,37 +156,17 @@ window.mainTopicOverviewStore = {
             {
               "type": "table",
               "headers": [
-                "重點",
+                "分支",
                 "整理"
               ],
               "rows": [
                 [
-                  "絕對值就是到 0 的距離",
-                  "數 \\(a\\) 到 \\(0\\) 的距離記成 \\(|a|\\)。"
+                  "數線幾何基礎",
+                  "從距離、絕對值、中點與基本分點公式建立數線幾何基礎。"
                 ],
                 [
-                  "兩點距離公式",
-                  "數線上 \\(a\\)、\\(b\\) 兩點的距離是 \\(|a-b|\\)。"
-                ],
-                [
-                  "中點公式",
-                  "\\(A(a)\\)、\\(B(b)\\) 的中點座標是 \\(\\frac{{a+b}}{{2}}\\)。"
-                ],
-                [
-                  "內分點公式",
-                  "若 \\(AP:PB=m:n\\)，內分點 \\(P\\) 的座標是 \\(\\frac{{mb+na}}{{m+n}}\\)。"
-                ],
-                [
-                  "外分點公式",
-                  "若 \\(AP:PB=m:n\\)，外分點 \\(P\\) 的座標是 \\(\\frac{{mb-na}}{{m-n}}\\)。"
-                ],
-                [
-                  "正負號要先看位置",
-                  "分點公式不是背完就套，要先確認 \\(P\\) 在線段內還是在線段外。"
-                ],
-                [
-                  "讀題提醒",
-                  "題目若同時有數線、比例與距離，先畫出相對位置再代公式。"
+                  "分點公式的應用",
+                  "用公式結構判斷數值在數線上的相對位置與夾值範圍。"
                 ]
               ]
             }
@@ -250,7 +178,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-1-1-topic-4-distance.pdf",
+              "src": "data/main-theme-overviews/s1-1-1-topic-4-distance.pdf",
               "note": "距離與分點公式"
             }
           ]
@@ -260,7 +188,7 @@ window.mainTopicOverviewStore = {
     "s1-1-2-main-theme-absolute-value": {
       "id": "s1-1-2-main-theme-absolute-value",
       "title": "絕對值",
-      "updatedAt": "2026-05-08T13:10:00+08:00",
+      "updatedAt": "2026-05-17T22:04:31+08:00",
       "variants": [
         {
           "id": "editable",
@@ -269,33 +197,33 @@ window.mainTopicOverviewStore = {
             {
               "type": "table",
               "headers": [
-                "重點",
-                "整理"
+                "分支",
+                "學習重點"
               ],
               "rows": [
                 [
-                  "絕對值的意義",
-                  "絕對值代表一個數到 0 的距離，所以結果一定不小於 0。"
+                  "絕對值的定義與性質",
+                  "先建立絕對值就是距離的直覺，再整理非負性、平方性質、乘除性質與三角不等式。"
                 ],
                 [
-                  "距離觀點很重要",
-                  "看到 \\(|x-a|\\) 時，要先想成 \\(x\\) 到 \\(a\\) 的距離，而不是急著拆成兩種情況。"
+                  "距離觀點與反向表達",
+                  "把數線區間、中點與半徑的語言翻成絕對值不等式，反向題也從距離模型切入。"
                 ],
                 [
-                  "去絕對值先分類",
-                  "化簡或求解時，要先依照內部正負分類，再拆成分段式。"
+                  "絕對值的符號化簡",
+                  "學會先判斷絕對值內部正負，再做去絕對值與根號平方型的化簡。"
                 ],
                 [
-                  "圖形與最值",
-                  "絕對值函數的圖形常是 V 形，最小值通常出現在轉折點。"
+                  "絕對值方程式與不等式",
+                  "掌握標準型、分段討論與平方消絕對值的基本策略。"
                 ],
                 [
-                  "方程式與不等式",
-                  "等號題常轉成距離相等；不等式則要分成距離小於某值或大於某值來看。"
+                  "絕對值函數圖形與最值",
+                  "從折線圖形、折點與距離總和切入，連到最小值與有解判別。"
                 ],
                 [
-                  "參數與反向題",
-                  "如果題目要你反推範圍，先畫數線再判斷端點與長度。"
+                  "參數與反向問題",
+                  "由解集反推中心、半徑與參數，整理區間與絕對值模型的互譯。 "
                 ]
               ]
             }
@@ -307,7 +235,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-1-2-topic-1-absolute-value.pdf",
+              "src": "data/main-theme-overviews/s1-1-2-topic-1-absolute-value.pdf",
               "note": "絕對值"
             }
           ]
@@ -317,7 +245,7 @@ window.mainTopicOverviewStore = {
     "s1-1-3-main-theme-formula-radical": {
       "id": "s1-1-3-main-theme-formula-radical",
       "title": "乘法公式、分式與根式的運算",
-      "updatedAt": "2026-05-08T13:10:00+08:00",
+      "updatedAt": "2026-05-18T02:08:35+08:00",
       "variants": [
         {
           "id": "editable",
@@ -326,33 +254,29 @@ window.mainTopicOverviewStore = {
             {
               "type": "table",
               "headers": [
-                "重點",
+                "分支",
                 "整理"
               ],
               "rows": [
                 [
-                  "乘法公式先背熟",
-                  "平方差、完全平方公式要能一眼辨認，不然後面的分式與根式整理會卡住。"
+                  "基礎乘法公式",
+                  "把平方、立方與和差立方公式整理成一套基本工具。"
                 ],
                 [
-                  "分式運算先因式分解",
-                  "看到分式加減乘除時，先因式分解再約分，不要直接硬算。"
+                  "根式的運算性質",
+                  "處理根式乘除、雙重根號與分母有理化前置觀念。"
                 ],
                 [
-                  "約分前要看限制",
-                  "分式化簡前先記得原本分母不能為 \\(0\\)，限制條件不能在約分時消失。"
+                  "對稱式求值",
+                  "利用和與積推回平方和、立方和等對稱式。"
                 ],
                 [
-                  "根式運算與有理化",
-                  "根式加減要先看是否同類根式；分母有根號時再做有理化。"
+                  "倒數型變換",
+                  "由 \\(x+\frac1x\\) 往上推高次和。"
                 ],
                 [
-                  "根式估值與比較",
-                  "比較大小時可先估值、平方，或轉成同底再比。"
-                ],
-                [
-                  "公式選擇流程",
-                  "看到題目先判斷它是展開、因式分解、分式化簡還是根式整理。"
+                  "根式整數與小數運算",
+                  "先化簡與估值，再處理整數部分與小數部分。"
                 ]
               ]
             }
@@ -364,8 +288,12 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-1-3-topic-1-formula-fraction-radical.pdf",
+              "src": "data/main-theme-overviews/s1-1-3-topic-1-formula-fraction-radical.pdf",
               "note": "乘法公式、分式與根式的運算"
+            },
+            {
+              "type": "paragraph",
+              "text": "主題 1 依截圖整理為五個第一層分支，原本較細節的舊節點已收進分支內容。"
             }
           ]
         }
@@ -373,8 +301,8 @@ window.mainTopicOverviewStore = {
     },
     "s1-1-3-main-theme-am-gm": {
       "id": "s1-1-3-main-theme-am-gm",
-      "title": "算幾不等式",
-      "updatedAt": "2026-05-08T13:10:00+08:00",
+      "title": "算幾不等式（AGM）",
+      "updatedAt": "2026-05-18T02:08:35+08:00",
       "variants": [
         {
           "id": "editable",
@@ -383,29 +311,25 @@ window.mainTopicOverviewStore = {
             {
               "type": "table",
               "headers": [
-                "重點",
+                "分支",
                 "整理"
               ],
               "rows": [
                 [
-                  "適用條件",
-                  "算術平均大於等於幾何平均時，通常要先確認各項非負。"
+                  "定義",
+                  "先確認非負條件，再理解算術平均與幾何平均的關係。"
                 ],
                 [
-                  "基本公式",
-                  "\\(\\frac{{a+b}}{{2}} \\ge \\sqrt{{ab}}\\) 是最常用的形式。"
+                  "等號成立條件",
+                  "知道 \\(a=b\\) 時取等號，並連到固定和積的最值結論。"
                 ],
                 [
-                  "等號成立時機",
-                  "只有在兩項相等時才會取等號，最值題常靠這件事收尾。"
+                  "最大面積問題",
+                  "把幾何情境改寫成兩正數乘積，再套 AGM。"
                 ],
                 [
-                  "配成兩項再套",
-                  "多數題目不是原式就能套，要先整理成兩項和固定的形式。"
-                ],
-                [
-                  "最值題流程",
-                  "先找固定和或固定積，再決定用算幾不等式還是其他方法。"
+                  "最小值求法",
+                  "處理 \\(ax+\frac{b}{x}\\) 等經典最小值型。"
                 ]
               ]
             }
@@ -417,61 +341,12 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-1-3-topic-2-am-gm-inequality.pdf",
+              "src": "data/main-theme-overviews/s1-1-3-topic-2-am-gm-inequality.pdf",
               "note": "算幾不等式"
-            }
-          ]
-        }
-      ]
-    },
-    "s1-1-4-main-theme-exponent-laws": {
-      "id": "s1-1-4-main-theme-exponent-laws",
-      "title": "指數律",
-      "updatedAt": "2026-05-08T13:10:00+08:00",
-      "variants": [
-        {
-          "id": "editable",
-          "label": "可修改版",
-          "sections": [
+            },
             {
-              "type": "table",
-              "headers": [
-                "重點",
-                "整理"
-              ],
-              "rows": [
-                [
-                  "同底數乘除",
-                  "同底數相乘指數相加，相除指數相減。"
-                ],
-                [
-                  "冪的冪與積的冪",
-                  "\\((a^m)^n=a^{{mn}}\\)，\\((ab)^n=a^n b^n\\)。"
-                ],
-                [
-                  "零次方與負指數",
-                  "\\(a^0=1\\)（\\(a \\ne 0\\)），\\(a^{{-n}}=\\frac{{1}}{{a^n}}\\)。"
-                ],
-                [
-                  "分數指數",
-                  "\\(a^{{m/n}}\\) 可看成 \\(\\sqrt[n]{{a^m}}\\)，但要注意定義條件。"
-                ],
-                [
-                  "運算順序",
-                  "看到複雜式子先統一底數，再整理指數，不要同時做太多步。"
-                ]
-              ]
-            }
-          ]
-        },
-        {
-          "id": "original",
-          "label": "原稿版",
-          "sections": [
-            {
-              "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-1-4-topic-1-exponent-laws.pdf",
-              "note": "指數律"
+              "type": "paragraph",
+              "text": "主題 2 依截圖整理成四個分支，不再保留『算幾不等式』的中介包裝層。"
             }
           ]
         }
@@ -480,7 +355,7 @@ window.mainTopicOverviewStore = {
     "s1-1-5-main-theme-common-log": {
       "id": "s1-1-5-main-theme-common-log",
       "title": "常用對數",
-      "updatedAt": "2026-05-08T13:10:00+08:00",
+      "updatedAt": "2026-05-19T01:44:15+08:00",
       "variants": [
         {
           "id": "editable",
@@ -489,33 +364,25 @@ window.mainTopicOverviewStore = {
             {
               "type": "table",
               "headers": [
-                "重點",
-                "整理"
+                "分支",
+                "學習重點"
               ],
               "rows": [
                 [
-                  "對數的定義",
-                  "\\(\\log_a b\\) 的意思是 \\(a\\) 的幾次方會等於 \\(b\\)，所以先看底數、真數條件。"
+                  "對數定義、存在條件與值計算",
+                  "先把對數的定義、真數限制與基本求值看穩。"
                 ],
                 [
-                  "常用對數",
-                  "底數是 \\(10\\) 的對數最常見，沒特別寫底數時通常默認是常用對數。"
+                  "指對數互換與求值",
+                  "利用指數與對數的互逆關係做化簡與條件求值。"
                 ],
                 [
-                  "對數律",
-                  "乘法變加法、除法變減法、冪次可拉到前面。"
+                  "對數尺度模型",
+                  "把地震、分貝、pH 等情境拉回對數尺度理解。"
                 ],
                 [
-                  "換底公式",
-                  "不同底數不好算時，可先換成同一個底再處理。"
-                ],
-                [
-                  "指對互換",
-                  "\\(a^{{\\log_a b}}=b\\) 與 \\(\\log_a(a^x)=x\\) 是很常見的互換。"
-                ],
-                [
-                  "模型題與估算",
-                  "對數常用在成長、衰減、等級與尺度題，先分清題目在問哪一種量。"
+                  "成長衰減與複利模型",
+                  "把對數放回成長、衰減與複利題中做反推與判讀。"
                 ]
               ]
             }
@@ -527,7 +394,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-1-5-topic-1-common-logarithm.pdf",
+              "src": "data/main-theme-overviews/s1-1-5-topic-1-common-logarithm.pdf",
               "note": "常用對數"
             }
           ]
@@ -537,7 +404,7 @@ window.mainTopicOverviewStore = {
     "s1-1-5-main-theme-scientific-notation": {
       "id": "s1-1-5-main-theme-scientific-notation",
       "title": "科學記號",
-      "updatedAt": "2026-05-08T13:10:00+08:00",
+      "updatedAt": "2026-05-19T01:44:15+08:00",
       "variants": [
         {
           "id": "editable",
@@ -546,29 +413,17 @@ window.mainTopicOverviewStore = {
             {
               "type": "table",
               "headers": [
-                "重點",
-                "整理"
+                "分支",
+                "學習重點"
               ],
               "rows": [
                 [
-                  "科學記號格式",
-                  "一個數寫成 \\(a\\times10^n\\) 時，通常要滿足 \\(1\\le a<10\\)。"
+                  "科學記號與首尾數",
+                  "把數寫成科學記號後，連到首數、尾數與位值判讀。"
                 ],
                 [
-                  "乘除運算",
-                  "乘法先乘前面的數、再加指數；除法先除前面的數、再減指數。"
-                ],
-                [
-                  "位數估計",
-                  "看到大數小數時，可先轉成 \\(10\\) 的冪次來估位數。"
-                ],
-                [
-                  "首位數與尾數",
-                  "如果題目問首位數或有效位數，常要搭配對數一起判斷。"
-                ],
-                [
-                  "讀題提醒",
-                  "科學記號題常混著對數估算，先看題目是在做格式整理還是在做估值。"
+                  "位數與首位數估計",
+                  "利用尾數範圍與近似對數估計位數與首位數。"
                 ]
               ]
             }
@@ -580,7 +435,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-1-5-topic-2-scientific-notation.pdf",
+              "src": "data/main-theme-overviews/s1-1-5-topic-2-scientific-notation.pdf",
               "note": "科學記號"
             }
           ]
@@ -637,7 +492,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-2-1-topic-1-coordinate-system.pdf",
+              "src": "data/main-theme-overviews/s1-2-1-topic-1-coordinate-system.pdf",
               "note": "坐標系"
             }
           ]
@@ -690,7 +545,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-2-1-topic-2-slope.pdf",
+              "src": "data/main-theme-overviews/s1-2-1-topic-2-slope.pdf",
               "note": "直線斜率"
             }
           ]
@@ -747,7 +602,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-2-1-topic-3-line-equation.pdf",
+              "src": "data/main-theme-overviews/s1-2-1-topic-3-line-equation.pdf",
               "note": "直線方程式"
             }
           ]
@@ -800,7 +655,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-2-1-topic-4-linear-inequality-two-vars.pdf",
+              "src": "data/main-theme-overviews/s1-2-1-topic-4-linear-inequality-two-vars.pdf",
               "note": "二元一次不等式"
             }
           ]
@@ -857,7 +712,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-2-2-topic-1-circle-equation.pdf",
+              "src": "data/main-theme-overviews/s1-2-2-topic-1-circle-equation.pdf",
               "note": "圓的方程式"
             }
           ]
@@ -910,7 +765,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-2-3-topic-1-circle-point-relation.pdf",
+              "src": "data/main-theme-overviews/s1-2-3-topic-1-circle-point-relation.pdf",
               "note": "圓與點之關係"
             }
           ]
@@ -963,7 +818,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-2-3-topic-2-circle-line-relation.pdf",
+              "src": "data/main-theme-overviews/s1-2-3-topic-2-circle-line-relation.pdf",
               "note": "圓與直線的關係"
             }
           ]
@@ -1016,7 +871,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-2-3-topic-3-circle-tangent.pdf",
+              "src": "data/main-theme-overviews/s1-2-3-topic-3-circle-tangent.pdf",
               "note": "圓之切線"
             }
           ]
@@ -1069,7 +924,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-2-3-topic-4-circle-family.pdf",
+              "src": "data/main-theme-overviews/s1-2-3-topic-4-circle-family.pdf",
               "note": "圓系"
             }
           ]
@@ -1122,7 +977,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-3-1-topic-1-polynomial-basics.pdf",
+              "src": "data/main-theme-overviews/s1-3-1-topic-1-polynomial-basics.pdf",
               "note": "多項式基本概念"
             }
           ]
@@ -1175,7 +1030,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-3-1-topic-2-polynomial-arithmetic.pdf",
+              "src": "data/main-theme-overviews/s1-3-1-topic-2-polynomial-arithmetic.pdf",
               "note": "多項式四則運算"
             }
           ]
@@ -1228,7 +1083,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-3-1-topic-3-remainder-factor-theorems.pdf",
+              "src": "data/main-theme-overviews/s1-3-1-topic-3-remainder-factor-theorems.pdf",
               "note": "餘式定理與因式定理"
             }
           ]
@@ -1281,7 +1136,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-3-2-topic-1-linear-function.pdf",
+              "src": "data/main-theme-overviews/s1-3-2-topic-1-linear-function.pdf",
               "note": "線型函數"
             }
           ]
@@ -1334,7 +1189,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-3-2-topic-2-quadratic-function.pdf",
+              "src": "data/main-theme-overviews/s1-3-2-topic-2-quadratic-function.pdf",
               "note": "二次函數"
             }
           ]
@@ -1387,7 +1242,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-3-2-topic-3-monomial-function.pdf",
+              "src": "data/main-theme-overviews/s1-3-2-topic-3-monomial-function.pdf",
               "note": "單項函數"
             }
           ]
@@ -1440,7 +1295,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-3-2-topic-4-polynomial-function-graph.pdf",
+              "src": "data/main-theme-overviews/s1-3-2-topic-4-polynomial-function-graph.pdf",
               "note": "多項式函數圖形"
             }
           ]
@@ -1493,7 +1348,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-3-3-topic-1-linear-inequality-solving.pdf",
+              "src": "data/main-theme-overviews/s1-3-3-topic-1-linear-inequality-solving.pdf",
               "note": "一元一次不等式的解法"
             }
           ]
@@ -1546,7 +1401,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-3-3-topic-2-quadratic-inequality-solving.pdf",
+              "src": "data/main-theme-overviews/s1-3-3-topic-2-quadratic-inequality-solving.pdf",
               "note": "二次不等式的解法"
             }
           ]
@@ -1599,7 +1454,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s1-3-3-topic-3-higher-order-inequality-solving.pdf",
+              "src": "data/main-theme-overviews/s1-3-3-topic-3-higher-order-inequality-solving.pdf",
               "note": "高次不等式的解法"
             }
           ]
@@ -1688,7 +1543,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-1-1-topic-1-sequence-meaning.pdf",
+              "src": "data/main-theme-overviews/s2-1-1-topic-1-sequence-meaning.pdf",
               "note": "數列的意義"
             }
           ]
@@ -1761,7 +1616,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-1-1-topic-2-recursion.pdf",
+              "src": "data/main-theme-overviews/s2-1-1-topic-2-recursion.pdf",
               "note": "遞迴關係"
             }
           ]
@@ -1826,7 +1681,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-1-1-topic-3-math-induction.pdf",
+              "src": "data/main-theme-overviews/s2-1-1-topic-3-math-induction.pdf",
               "note": "數學歸納法"
             }
           ]
@@ -1899,7 +1754,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-1-2-topic-1-arithmetic-geometric-series.pdf",
+              "src": "data/main-theme-overviews/s2-1-2-topic-1-arithmetic-geometric-series.pdf",
               "note": "等差級數與等比級數"
             }
           ]
@@ -1956,7 +1811,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-1-2-topic-2-series-sum-formulas.pdf",
+              "src": "data/main-theme-overviews/s2-1-2-topic-2-series-sum-formulas.pdf",
               "note": "級數和公式"
             }
           ]
@@ -2017,7 +1872,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-2-1-topic-1-simple-logic.pdf",
+              "src": "data/main-theme-overviews/s2-2-1-topic-1-simple-logic.pdf",
               "note": "簡單的邏輯概念"
             }
           ]
@@ -2098,7 +1953,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-2-1-topic-2-set-basics.pdf",
+              "src": "data/main-theme-overviews/s2-2-1-topic-2-set-basics.pdf",
               "note": "集合的基本概念"
             }
           ]
@@ -2163,7 +2018,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-2-1-topic-3-counting-principles.pdf",
+              "src": "data/main-theme-overviews/s2-2-1-topic-3-counting-principles.pdf",
               "note": "計數原理"
             }
           ]
@@ -2220,7 +2075,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-2-2-topic-1-add-multiply-principles.pdf",
+              "src": "data/main-theme-overviews/s2-2-2-topic-1-add-multiply-principles.pdf",
               "note": "加法原理與乘法原理"
             }
           ]
@@ -2293,7 +2148,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-2-2-topic-2-permutation.pdf",
+              "src": "data/main-theme-overviews/s2-2-2-topic-2-permutation.pdf",
               "note": "排列"
             }
           ]
@@ -2374,7 +2229,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-2-2-topic-3-combination.pdf",
+              "src": "data/main-theme-overviews/s2-2-2-topic-3-combination.pdf",
               "note": "組合"
             }
           ]
@@ -2447,7 +2302,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-2-3-topic-1-binomial-theorem.pdf",
+              "src": "data/main-theme-overviews/s2-2-3-topic-1-binomial-theorem.pdf",
               "note": "二項式定理"
             }
           ]
@@ -2496,7 +2351,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-2-4-topic-1-sample-space.pdf",
+              "src": "data/main-theme-overviews/s2-2-4-topic-1-sample-space.pdf",
               "note": "樣本空間"
             }
           ]
@@ -2557,7 +2412,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-2-4-topic-2-events.pdf",
+              "src": "data/main-theme-overviews/s2-2-4-topic-2-events.pdf",
               "note": "事件"
             }
           ]
@@ -2630,7 +2485,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-2-4-topic-3-probability-properties.pdf",
+              "src": "data/main-theme-overviews/s2-2-4-topic-3-probability-properties.pdf",
               "note": "機率的性質"
             }
           ]
@@ -2703,7 +2558,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-3-1-topic-1-central-tendency.pdf",
+              "src": "data/main-theme-overviews/s2-3-1-topic-1-central-tendency.pdf",
               "note": "數據的集中趨勢"
             }
           ]
@@ -2772,7 +2627,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-3-1-topic-2-variance-standard-deviation.pdf",
+              "src": "data/main-theme-overviews/s2-3-1-topic-2-variance-standard-deviation.pdf",
               "note": "變異數與標準差"
             }
           ]
@@ -2841,7 +2696,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-3-1-topic-3-scaling-shifting-standardization.pdf",
+              "src": "data/main-theme-overviews/s2-3-1-topic-3-scaling-shifting-standardization.pdf",
               "note": "數據的伸縮、平移與標準化"
             }
           ]
@@ -2918,7 +2773,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-3-2-topic-1-scatterplot.pdf",
+              "src": "data/main-theme-overviews/s2-3-2-topic-1-scatterplot.pdf",
               "note": "散布圖"
             }
           ]
@@ -2995,7 +2850,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-3-2-topic-2-correlation-coefficient.pdf",
+              "src": "data/main-theme-overviews/s2-3-2-topic-2-correlation-coefficient.pdf",
               "note": "相關係數"
             }
           ]
@@ -3072,7 +2927,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-3-2-topic-3-least-squares-regression-line.pdf",
+              "src": "data/main-theme-overviews/s2-3-2-topic-3-least-squares-regression-line.pdf",
               "note": "最小平方法與迴歸直線"
             }
           ]
@@ -3133,7 +2988,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-4-1-topic-1-directed-angle.pdf",
+              "src": "data/main-theme-overviews/s2-4-1-topic-1-directed-angle.pdf",
               "note": "有向角"
             }
           ]
@@ -3198,7 +3053,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-4-1-topic-2-acute-trig-definition.pdf",
+              "src": "data/main-theme-overviews/s2-4-1-topic-2-acute-trig-definition.pdf",
               "note": "銳角三角函數的定義"
             }
           ]
@@ -3271,7 +3126,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-4-1-topic-3-general-angle-trig-definition.pdf",
+              "src": "data/main-theme-overviews/s2-4-1-topic-3-general-angle-trig-definition.pdf",
               "note": "廣義角三角函數的定義"
             }
           ]
@@ -3332,7 +3187,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-4-1-topic-4-polar-coordinate.pdf",
+              "src": "data/main-theme-overviews/s2-4-1-topic-4-polar-coordinate.pdf",
               "note": "極座標"
             }
           ]
@@ -3401,7 +3256,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-4-1-topic-5-trig-identities.pdf",
+              "src": "data/main-theme-overviews/s2-4-1-topic-5-trig-identities.pdf",
               "note": "三角關係式"
             }
           ]
@@ -3474,7 +3329,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-4-2-topic-1-triangle-area-formulas.pdf",
+              "src": "data/main-theme-overviews/s2-4-2-topic-1-triangle-area-formulas.pdf",
               "note": "三角形的面積公式"
             }
           ]
@@ -3539,7 +3394,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-4-2-topic-2-law-of-sines.pdf",
+              "src": "data/main-theme-overviews/s2-4-2-topic-2-law-of-sines.pdf",
               "note": "正弦定理"
             }
           ]
@@ -3596,7 +3451,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-4-2-topic-3-law-of-cosines.pdf",
+              "src": "data/main-theme-overviews/s2-4-2-topic-3-law-of-cosines.pdf",
               "note": "餘弦定理"
             }
           ]
@@ -3657,7 +3512,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-4-2-topic-4-triangle-side-angle-relations.pdf",
+              "src": "data/main-theme-overviews/s2-4-2-topic-4-triangle-side-angle-relations.pdf",
               "note": "三角形的邊角關係"
             }
           ]
@@ -3722,7 +3577,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s2-4-3-topic-1-triangle-measurement.pdf",
+              "src": "data/main-theme-overviews/s2-4-3-topic-1-triangle-measurement.pdf",
               "note": "三角測量"
             }
           ]
@@ -3783,7 +3638,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-2-1-topic-1-exponential-function-graph.pdf",
+              "src": "data/main-theme-overviews/s3-2-1-topic-1-exponential-function-graph.pdf",
               "note": "指數函數的圖形"
             }
           ]
@@ -3840,7 +3695,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-2-1-topic-2-exponential-equation.pdf",
+              "src": "data/main-theme-overviews/s3-2-1-topic-2-exponential-equation.pdf",
               "note": "指數方程式"
             }
           ]
@@ -3897,7 +3752,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-2-1-topic-3-exponential-inequality.pdf",
+              "src": "data/main-theme-overviews/s3-2-1-topic-3-exponential-inequality.pdf",
               "note": "指數不等式"
             }
           ]
@@ -3958,7 +3813,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-2-2-topic-1-logarithm-laws.pdf",
+              "src": "data/main-theme-overviews/s3-2-2-topic-1-logarithm-laws.pdf",
               "note": "對數律"
             }
           ]
@@ -4019,7 +3874,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-2-3-topic-1-logarithmic-function-graph.pdf",
+              "src": "data/main-theme-overviews/s3-2-3-topic-1-logarithmic-function-graph.pdf",
               "note": "對數函數及其圖形"
             }
           ]
@@ -4076,7 +3931,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-2-3-topic-2-logarithmic-equation.pdf",
+              "src": "data/main-theme-overviews/s3-2-3-topic-2-logarithmic-equation.pdf",
               "note": "對數方程式"
             }
           ]
@@ -4133,7 +3988,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-2-3-topic-3-logarithmic-inequality.pdf",
+              "src": "data/main-theme-overviews/s3-2-3-topic-3-logarithmic-inequality.pdf",
               "note": "對數不等式"
             }
           ]
@@ -4194,7 +4049,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-2-3-topic-4-inverse-function.pdf",
+              "src": "data/main-theme-overviews/s3-2-3-topic-4-inverse-function.pdf",
               "note": "反函數"
             }
           ]
@@ -4251,7 +4106,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-1-topic-1-directed-segment-vector.pdf",
+              "src": "data/main-theme-overviews/s3-3-1-topic-1-directed-segment-vector.pdf",
               "note": "有向線段與向量"
             }
           ]
@@ -4308,7 +4163,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-1-topic-2-coordinate-vector.pdf",
+              "src": "data/main-theme-overviews/s3-3-1-topic-2-coordinate-vector.pdf",
               "note": "坐標向量"
             }
           ]
@@ -4365,7 +4220,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-1-topic-3-linear-combination-division.pdf",
+              "src": "data/main-theme-overviews/s3-3-1-topic-3-linear-combination-division.pdf",
               "note": "線性組合與分點公式"
             }
           ]
@@ -4422,7 +4277,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-1-topic-4-centroid-incenter.pdf",
+              "src": "data/main-theme-overviews/s3-3-1-topic-4-centroid-incenter.pdf",
               "note": "向量與三角形重心、內心"
             }
           ]
@@ -4479,7 +4334,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-1-topic-5-line-parametric-form.pdf",
+              "src": "data/main-theme-overviews/s3-3-1-topic-5-line-parametric-form.pdf",
               "note": "直線參數式"
             }
           ]
@@ -4536,7 +4391,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-2-topic-1-vector-dot-product.pdf",
+              "src": "data/main-theme-overviews/s3-3-2-topic-1-vector-dot-product.pdf",
               "note": "向量的內積"
             }
           ]
@@ -4593,7 +4448,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-2-topic-2-circumcenter-orthocenter.pdf",
+              "src": "data/main-theme-overviews/s3-3-2-topic-2-circumcenter-orthocenter.pdf",
               "note": "三角形外心與垂心"
             }
           ]
@@ -4650,7 +4505,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-2-topic-3-angle-between-lines.pdf",
+              "src": "data/main-theme-overviews/s3-3-2-topic-3-angle-between-lines.pdf",
               "note": "兩直線的夾角"
             }
           ]
@@ -4707,7 +4562,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-2-topic-4-orthogonal-projection.pdf",
+              "src": "data/main-theme-overviews/s3-3-2-topic-4-orthogonal-projection.pdf",
               "note": "正射影"
             }
           ]
@@ -4764,7 +4619,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-2-topic-5-point-line-distance.pdf",
+              "src": "data/main-theme-overviews/s3-3-2-topic-5-point-line-distance.pdf",
               "note": "點到直線的距離"
             }
           ]
@@ -4821,7 +4676,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-2-topic-6-cauchy-inequality.pdf",
+              "src": "data/main-theme-overviews/s3-3-2-topic-6-cauchy-inequality.pdf",
               "note": "柯西不等式"
             }
           ]
@@ -4878,7 +4733,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-3-topic-1-second-order-determinant.pdf",
+              "src": "data/main-theme-overviews/s3-3-3-topic-1-second-order-determinant.pdf",
               "note": "二階行列式"
             }
           ]
@@ -4935,7 +4790,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-3-topic-2-cramer-rule.pdf",
+              "src": "data/main-theme-overviews/s3-3-3-topic-2-cramer-rule.pdf",
               "note": "克拉瑪公式"
             }
           ]
@@ -4992,7 +4847,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s3-3-3-topic-3-determinant-applications.pdf",
+              "src": "data/main-theme-overviews/s3-3-3-topic-3-determinant-applications.pdf",
               "note": "二階行列式的應用"
             }
           ]
@@ -5049,7 +4904,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-1-1-topic-1-space-concepts.pdf",
+              "src": "data/main-theme-overviews/s4-1-1-topic-1-space-concepts.pdf",
               "note": "空間概念"
             }
           ]
@@ -5106,7 +4961,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-1-1-topic-2-three-perpendicular-theorem.pdf",
+              "src": "data/main-theme-overviews/s4-1-1-topic-2-three-perpendicular-theorem.pdf",
               "note": "三垂線定理"
             }
           ]
@@ -5163,7 +5018,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-1-2-topic-1-space-coordinate.pdf",
+              "src": "data/main-theme-overviews/s4-1-2-topic-1-space-coordinate.pdf",
               "note": "空間坐標"
             }
           ]
@@ -5220,7 +5075,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-1-2-topic-2-space-vector.pdf",
+              "src": "data/main-theme-overviews/s4-1-2-topic-2-space-vector.pdf",
               "note": "空間向量"
             }
           ]
@@ -5277,7 +5132,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-1-2-topic-3-space-vector-operations.pdf",
+              "src": "data/main-theme-overviews/s4-1-2-topic-3-space-vector-operations.pdf",
               "note": "空間向量的運算"
             }
           ]
@@ -5334,7 +5189,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-1-3-topic-1-space-dot-product-cauchy.pdf",
+              "src": "data/main-theme-overviews/s4-1-3-topic-1-space-dot-product-cauchy.pdf",
               "note": "向量內積與柯西不等式"
             }
           ]
@@ -5391,7 +5246,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-1-3-topic-2-orthogonal-projection-length.pdf",
+              "src": "data/main-theme-overviews/s4-1-3-topic-2-orthogonal-projection-length.pdf",
               "note": "正射影與正射影長"
             }
           ]
@@ -5448,7 +5303,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-1-4-topic-1-cross-product-area-volume.pdf",
+              "src": "data/main-theme-overviews/s4-1-4-topic-1-cross-product-area-volume.pdf",
               "note": "外積、面積與體積"
             }
           ]
@@ -5505,7 +5360,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-1-4-topic-2-third-order-determinant.pdf",
+              "src": "data/main-theme-overviews/s4-1-4-topic-2-third-order-determinant.pdf",
               "note": "三階行列式"
             }
           ]
@@ -5562,7 +5417,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-1-4-topic-3-third-order-determinant-applications.pdf",
+              "src": "data/main-theme-overviews/s4-1-4-topic-3-third-order-determinant-applications.pdf",
               "note": "三階行列式的應用"
             }
           ]
@@ -5623,7 +5478,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-2-1-topic-1-plane-equation.pdf",
+              "src": "data/main-theme-overviews/s4-2-1-topic-1-plane-equation.pdf",
               "note": "平面方程式"
             }
           ]
@@ -5684,7 +5539,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-2-1-topic-2-angle-between-planes.pdf",
+              "src": "data/main-theme-overviews/s4-2-1-topic-2-angle-between-planes.pdf",
               "note": "兩平面的夾角"
             }
           ]
@@ -5741,7 +5596,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-2-1-topic-3-point-to-plane-distance.pdf",
+              "src": "data/main-theme-overviews/s4-2-1-topic-3-point-to-plane-distance.pdf",
               "note": "點到平面的距離"
             }
           ]
@@ -5798,7 +5653,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-2-2-topic-1-line-equation.pdf",
+              "src": "data/main-theme-overviews/s4-2-2-topic-1-line-equation.pdf",
               "note": "直線方程式"
             }
           ]
@@ -5855,7 +5710,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-2-2-topic-2-line-and-plane.pdf",
+              "src": "data/main-theme-overviews/s4-2-2-topic-2-line-and-plane.pdf",
               "note": "直線與平面"
             }
           ]
@@ -5912,7 +5767,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-2-2-topic-3-relationship-between-lines.pdf",
+              "src": "data/main-theme-overviews/s4-2-2-topic-3-relationship-between-lines.pdf",
               "note": "兩直線的關係"
             }
           ]
@@ -5969,7 +5824,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-2-2-topic-4-point-to-line-distance.pdf",
+              "src": "data/main-theme-overviews/s4-2-2-topic-4-point-to-line-distance.pdf",
               "note": "點到直線之距離"
             }
           ]
@@ -6026,7 +5881,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-3-1-topic-1-conditional-probability.pdf",
+              "src": "data/main-theme-overviews/s4-3-1-topic-1-conditional-probability.pdf",
               "note": "條件機率"
             }
           ]
@@ -6083,7 +5938,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-3-1-topic-2-total-probability-bayes.pdf",
+              "src": "data/main-theme-overviews/s4-3-1-topic-2-total-probability-bayes.pdf",
               "note": "全機率與貝氏定理"
             }
           ]
@@ -6140,7 +5995,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-3-2-topic-1-independent-events.pdf",
+              "src": "data/main-theme-overviews/s4-3-2-topic-1-independent-events.pdf",
               "note": "獨立事件"
             }
           ]
@@ -6197,7 +6052,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-4-1-topic-1-three-variable-linear-system.pdf",
+              "src": "data/main-theme-overviews/s4-4-1-topic-1-three-variable-linear-system.pdf",
               "note": "三元一次方程組"
             }
           ]
@@ -6254,7 +6109,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-4-1-topic-2-cramers-rule-3x3.pdf",
+              "src": "data/main-theme-overviews/s4-4-1-topic-2-cramers-rule-3x3.pdf",
               "note": "利用克拉瑪公式解三元一次方程組"
             }
           ]
@@ -6311,7 +6166,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-4-1-topic-3-gaussian-elimination-row-operations.pdf",
+              "src": "data/main-theme-overviews/s4-4-1-topic-3-gaussian-elimination-row-operations.pdf",
               "note": "高斯消去法與矩陣的列運算"
             }
           ]
@@ -6368,7 +6223,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-4-2-topic-1-matrix-definition.pdf",
+              "src": "data/main-theme-overviews/s4-4-2-topic-1-matrix-definition.pdf",
               "note": "矩陣的定義"
             }
           ]
@@ -6425,7 +6280,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-4-2-topic-2-matrix-addition-scalar-multiplication.pdf",
+              "src": "data/main-theme-overviews/s4-4-2-topic-2-matrix-addition-scalar-multiplication.pdf",
               "note": "矩陣的加減法與係數積"
             }
           ]
@@ -6482,7 +6337,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-4-2-topic-3-matrix-multiplication.pdf",
+              "src": "data/main-theme-overviews/s4-4-2-topic-3-matrix-multiplication.pdf",
               "note": "矩陣的乘法"
             }
           ]
@@ -6539,7 +6394,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-4-3-topic-1-transition-matrix.pdf",
+              "src": "data/main-theme-overviews/s4-4-3-topic-1-transition-matrix.pdf",
               "note": "轉移矩陣"
             }
           ]
@@ -6596,7 +6451,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-4-3-topic-2-multiplicative-inverse-matrix.pdf",
+              "src": "data/main-theme-overviews/s4-4-3-topic-2-multiplicative-inverse-matrix.pdf",
               "note": "乘法反矩陣"
             }
           ]
@@ -6653,7 +6508,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-4-4-topic-1-plane-transform-translation-rotation.pdf",
+              "src": "data/main-theme-overviews/s4-4-4-topic-1-plane-transform-translation-rotation.pdf",
               "note": "平面上的線性變換－平移、旋轉"
             }
           ]
@@ -6710,7 +6565,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-4-4-topic-2-plane-transform-reflection.pdf",
+              "src": "data/main-theme-overviews/s4-4-4-topic-2-plane-transform-reflection.pdf",
               "note": "平面上的線性變換－鏡射"
             }
           ]
@@ -6767,7 +6622,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-4-4-topic-3-plane-transform-scaling.pdf",
+              "src": "data/main-theme-overviews/s4-4-4-topic-3-plane-transform-scaling.pdf",
               "note": "平面上的線性變換－伸縮"
             }
           ]
@@ -6824,7 +6679,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/s4-4-4-topic-4-plane-transform-shear.pdf",
+              "src": "data/main-theme-overviews/s4-4-4-topic-4-plane-transform-shear.pdf",
               "note": "平面上的線性變換－推移"
             }
           ]
@@ -6885,7 +6740,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-1-1-topic-1-positive-negative-classification.pdf",
+              "src": "data/main-theme-overviews/j1-1-1-topic-1-positive-negative-classification.pdf",
               "note": "正負數與數的分類"
             }
           ]
@@ -6942,7 +6797,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-1-1-topic-2-number-line-opposite-midpoint.pdf",
+              "src": "data/main-theme-overviews/j1-1-1-topic-2-number-line-opposite-midpoint.pdf",
               "note": "數線、相反數與中點"
             }
           ]
@@ -7003,7 +6858,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-1-1-topic-3-absolute-value-distance.pdf",
+              "src": "data/main-theme-overviews/j1-1-1-topic-3-absolute-value-distance.pdf",
               "note": "絕對值與距離"
             }
           ]
@@ -7064,7 +6919,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-1-2-topic-1-signed-arithmetic.pdf",
+              "src": "data/main-theme-overviews/j1-1-2-topic-1-signed-arithmetic.pdf",
               "note": "正負數的四則運算"
             }
           ]
@@ -7113,7 +6968,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-1-3-topic-1-meaning-of-powers.pdf",
+              "src": "data/main-theme-overviews/j1-1-3-topic-1-meaning-of-powers.pdf",
               "note": "乘方與指數的意思"
             }
           ]
@@ -7170,7 +7025,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-1-3-topic-2-basic-exponent-laws.pdf",
+              "src": "data/main-theme-overviews/j1-1-3-topic-2-basic-exponent-laws.pdf",
               "note": "指數律基本規則"
             }
           ]
@@ -7227,7 +7082,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-1-3-topic-3-sign-parity-brackets.pdf",
+              "src": "data/main-theme-overviews/j1-1-3-topic-3-sign-parity-brackets.pdf",
               "note": "正負號、奇偶次方與括號判別"
             }
           ]
@@ -7276,7 +7131,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-1-3-topic-4-fraction-bases-and-mixed-exponents.pdf",
+              "src": "data/main-theme-overviews/j1-1-3-topic-4-fraction-bases-and-mixed-exponents.pdf",
               "note": "分數底數與混合指數運算"
             }
           ]
@@ -7333,7 +7188,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-1-3-topic-5-comparing-exponential-expressions.pdf",
+              "src": "data/main-theme-overviews/j1-1-3-topic-5-comparing-exponential-expressions.pdf",
               "note": "指數比大小"
             }
           ]
@@ -7390,7 +7245,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-1-4-topic-1-scientific-notation-and-units.pdf",
+              "src": "data/main-theme-overviews/j1-1-4-topic-1-scientific-notation-and-units.pdf",
               "note": "科學記號與常見單位"
             }
           ]
@@ -7443,7 +7298,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-1-4-topic-2-scientific-notation-operations.pdf",
+              "src": "data/main-theme-overviews/j1-1-4-topic-2-scientific-notation-operations.pdf",
               "note": "科學記號的運算"
             }
           ]
@@ -7496,7 +7351,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-2-1-topic-1-factor-multiple-prime-composite.pdf",
+              "src": "data/main-theme-overviews/j1-2-1-topic-1-factor-multiple-prime-composite.pdf",
               "note": "因數、倍數、質數與合數"
             }
           ]
@@ -7545,7 +7400,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-2-1-topic-2-factor-multiple-applications.pdf",
+              "src": "data/main-theme-overviews/j1-2-1-topic-2-factor-multiple-applications.pdf",
               "note": "因數與倍數的生活應用"
             }
           ]
@@ -7598,7 +7453,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-2-1-topic-3-prime-factorization-divisibility-standard-form.pdf",
+              "src": "data/main-theme-overviews/j1-2-1-topic-3-prime-factorization-divisibility-standard-form.pdf",
               "note": "質因數、整除判別與標準分解式"
             }
           ]
@@ -7647,7 +7502,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-2-1-topic-4-standard-form-divisor-count-sum.pdf",
+              "src": "data/main-theme-overviews/j1-2-1-topic-4-standard-form-divisor-count-sum.pdf",
               "note": "標準分解式的應用：正因數個數與總和"
             }
           ]
@@ -7696,7 +7551,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-2-2-topic-1-common-factors-gcd-coprime.pdf",
+              "src": "data/main-theme-overviews/j1-2-2-topic-1-common-factors-gcd-coprime.pdf",
               "note": "公因數、最大公因數與互質"
             }
           ]
@@ -7745,7 +7600,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-2-2-topic-2-gcd-methods-applications.pdf",
+              "src": "data/main-theme-overviews/j1-2-2-topic-2-gcd-methods-applications.pdf",
               "note": "最大公因數的求法與應用"
             }
           ]
@@ -7798,7 +7653,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-2-2-topic-3-common-multiples-lcm-properties.pdf",
+              "src": "data/main-theme-overviews/j1-2-2-topic-3-common-multiples-lcm-properties.pdf",
               "note": "公倍數、最小公倍數與性質"
             }
           ]
@@ -7847,7 +7702,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-2-2-topic-4-lcm-methods-applications.pdf",
+              "src": "data/main-theme-overviews/j1-2-2-topic-4-lcm-methods-applications.pdf",
               "note": "最小公倍數的求法與應用"
             }
           ]
@@ -7900,7 +7755,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-2-3-topic-1-fraction-simplify-common-denominator.pdf",
+              "src": "data/main-theme-overviews/j1-2-3-topic-1-fraction-simplify-common-denominator.pdf",
               "note": "分數的擴分、約分、最簡分數與通分"
             }
           ]
@@ -7957,7 +7812,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-2-3-topic-2-fraction-arithmetic-applications.pdf",
+              "src": "data/main-theme-overviews/j1-2-3-topic-2-fraction-arithmetic-applications.pdf",
               "note": "分數的加減乘除與應用"
             }
           ]
@@ -8010,7 +7865,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-3-1-topic-1-symbolize-quantity-expression.pdf",
+              "src": "data/main-theme-overviews/j1-3-1-topic-1-symbolize-quantity-expression.pdf",
               "note": "用符號表示數與列式"
             }
           ]
@@ -8063,7 +7918,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-3-1-topic-2-multiplication-shorthand-substitution.pdf",
+              "src": "data/main-theme-overviews/j1-3-1-topic-2-multiplication-shorthand-substitution.pdf",
               "note": "乘法簡記與代值"
             }
           ]
@@ -8116,7 +7971,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-3-1-topic-3-linear-expression-like-terms.pdf",
+              "src": "data/main-theme-overviews/j1-3-1-topic-3-linear-expression-like-terms.pdf",
               "note": "一元一次式、項與同類項"
             }
           ]
@@ -8169,7 +8024,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-3-1-topic-4-expression-operations-remove-brackets.pdf",
+              "src": "data/main-theme-overviews/j1-3-1-topic-4-expression-operations-remove-brackets.pdf",
               "note": "式子的運算與去括號"
             }
           ]
@@ -8222,7 +8077,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-3-2-topic-1-equality-axiom-transpose.pdf",
+              "src": "data/main-theme-overviews/j1-3-2-topic-1-equality-axiom-transpose.pdf",
               "note": "等量公理與移項法則"
             }
           ]
@@ -8275,7 +8130,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-3-2-topic-2-solve-linear-equation.pdf",
+              "src": "data/main-theme-overviews/j1-3-2-topic-2-solve-linear-equation.pdf",
               "note": "解一元一次方程式"
             }
           ]
@@ -8328,7 +8183,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j1-3-3-topic-1-word-problem-modeling.pdf",
+              "src": "data/main-theme-overviews/j1-3-3-topic-1-word-problem-modeling.pdf",
               "note": "應用題列式與檢查答案"
             }
           ]
@@ -8385,7 +8240,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-1-1-topic-1-two-symbols-and-modeling.pdf",
+              "src": "data/main-theme-overviews/j2-1-1-topic-1-two-symbols-and-modeling.pdf",
               "note": "用兩個符號表示數與列式"
             }
           ]
@@ -8442,7 +8297,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-1-1-topic-2-two-variable-expression-and-equation.pdf",
+              "src": "data/main-theme-overviews/j2-1-1-topic-2-two-variable-expression-and-equation.pdf",
               "note": "二元一次式與二元一次方程式"
             }
           ]
@@ -8499,7 +8354,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-1-1-topic-3-expression-operations-and-like-terms.pdf",
+              "src": "data/main-theme-overviews/j2-1-1-topic-3-expression-operations-and-like-terms.pdf",
               "note": "二元一次式的運算與同類項"
             }
           ]
@@ -8556,7 +8411,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-1-1-topic-4-solution-and-constraints.pdf",
+              "src": "data/main-theme-overviews/j2-1-1-topic-4-solution-and-constraints.pdf",
               "note": "二元一次方程式的解與限制條件"
             }
           ]
@@ -8613,7 +8468,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-1-2-topic-1-system-meaning-and-solution-cases.pdf",
+              "src": "data/main-theme-overviews/j2-1-2-topic-1-system-meaning-and-solution-cases.pdf",
               "note": "二元一次聯立方程式與解的意義"
             }
           ]
@@ -8674,7 +8529,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-1-2-topic-2-substitution-and-elimination-methods.pdf",
+              "src": "data/main-theme-overviews/j2-1-2-topic-2-substitution-and-elimination-methods.pdf",
               "note": "解聯立方程式：代入消去法與加減消去法"
             }
           ]
@@ -8731,7 +8586,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-1-3-topic-1-word-problem-modeling-and-checking.pdf",
+              "src": "data/main-theme-overviews/j2-1-3-topic-1-word-problem-modeling-and-checking.pdf",
               "note": "來源 PDF 第 7 頁同時包含解聯立與應用題列式，網站先共用這頁原稿版。"
             }
           ]
@@ -8784,7 +8639,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-2-1-topic-1-number-line-and-coordinate-system.pdf",
+              "src": "data/main-theme-overviews/j2-2-1-topic-1-number-line-and-coordinate-system.pdf",
               "note": "數線與直角座標系"
             }
           ]
@@ -8837,7 +8692,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-2-1-topic-2-coordinate-plane-and-point-coordinates.pdf",
+              "src": "data/main-theme-overviews/j2-2-1-topic-2-coordinate-plane-and-point-coordinates.pdf",
               "note": "平面座標系與點的座標"
             }
           ]
@@ -8890,7 +8745,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-2-1-topic-3-quadrants-axes-and-axis-distance.pdf",
+              "src": "data/main-theme-overviews/j2-2-1-topic-3-quadrants-axes-and-axis-distance.pdf",
               "note": "象限、座標軸與到軸距離"
             }
           ]
@@ -8943,7 +8798,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-2-1-topic-4-midpoint-and-coordinate-applications.pdf",
+              "src": "data/main-theme-overviews/j2-2-1-topic-4-midpoint-and-coordinate-applications.pdf",
               "note": "中點座標與座標應用"
             }
           ]
@@ -8996,7 +8851,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-2-2-topic-1-solutions-of-linear-equations-in-two-variables.pdf",
+              "src": "data/main-theme-overviews/j2-2-2-topic-1-solutions-of-linear-equations-in-two-variables.pdf",
               "note": "二元一次方程式的解"
             }
           ]
@@ -9049,7 +8904,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-2-2-topic-2-graph-of-linear-equation-in-two-variables.pdf",
+              "src": "data/main-theme-overviews/j2-2-2-topic-2-graph-of-linear-equation-in-two-variables.pdf",
               "note": "二元一次方程式的圖形"
             }
           ]
@@ -9106,7 +8961,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-2-2-topic-3-two-lines-and-system-graph-interpretation.pdf",
+              "src": "data/main-theme-overviews/j2-2-2-topic-3-two-lines-and-system-graph-interpretation.pdf",
               "note": "兩直線與聯立方程式的圖解"
             }
           ]
@@ -9159,7 +9014,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-3-1-topic-1-ratio-and-ratio-value.pdf",
+              "src": "data/main-theme-overviews/j2-3-1-topic-1-ratio-and-ratio-value.pdf",
               "note": "比與比值"
             }
           ]
@@ -9212,7 +9067,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-3-1-topic-2-equal-ratios-and-simplification.pdf",
+              "src": "data/main-theme-overviews/j2-3-1-topic-2-equal-ratios-and-simplification.pdf",
               "note": "相等的比與比的化簡"
             }
           ]
@@ -9265,7 +9120,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-3-1-topic-3-proportion-equations-and-solving-unknowns.pdf",
+              "src": "data/main-theme-overviews/j2-3-1-topic-3-proportion-equations-and-solving-unknowns.pdf",
               "note": "比例式與求未知數"
             }
           ]
@@ -9318,7 +9173,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-3-1-topic-4-ratio-applications-distribution-combination-speed.pdf",
+              "src": "data/main-theme-overviews/j2-3-1-topic-4-ratio-applications-distribution-combination-speed.pdf",
               "note": "比的應用：分配、合併與速度"
             }
           ]
@@ -9371,7 +9226,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-3-2-topic-1-direct-proportion.pdf",
+              "src": "data/main-theme-overviews/j2-3-2-topic-1-direct-proportion.pdf",
               "note": "正比"
             }
           ]
@@ -9424,7 +9279,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-3-2-topic-2-inverse-proportion.pdf",
+              "src": "data/main-theme-overviews/j2-3-2-topic-2-inverse-proportion.pdf",
               "note": "反比"
             }
           ]
@@ -9477,7 +9332,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-3-2-topic-3-judging-direct-and-inverse-proportion.pdf",
+              "src": "data/main-theme-overviews/j2-3-2-topic-3-judging-direct-and-inverse-proportion.pdf",
               "note": "正比與反比的綜合判斷"
             }
           ]
@@ -9530,7 +9385,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-4-1-topic-1-inequality-symbols-and-linear-inequalities.pdf",
+              "src": "data/main-theme-overviews/j2-4-1-topic-1-inequality-symbols-and-linear-inequalities.pdf",
               "note": "不等號與一元一次不等式"
             }
           ]
@@ -9583,7 +9438,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-4-1-topic-2-sign-subtraction-and-size-comparison.pdf",
+              "src": "data/main-theme-overviews/j2-4-1-topic-2-sign-subtraction-and-size-comparison.pdf",
               "note": "正負數、減法與大小比較"
             }
           ]
@@ -9636,7 +9491,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-4-1-topic-3-trichotomy-and-transitive-law.pdf",
+              "src": "data/main-theme-overviews/j2-4-1-topic-3-trichotomy-and-transitive-law.pdf",
               "note": "三一律與遞移律"
             }
           ]
@@ -9689,7 +9544,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-4-1-topic-4-number-line-representation-of-inequalities.pdf",
+              "src": "data/main-theme-overviews/j2-4-1-topic-4-number-line-representation-of-inequalities.pdf",
               "note": "不等號在數線上的表示"
             }
           ]
@@ -9742,7 +9597,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-4-1-topic-5-inequality-properties-and-transposition-rules.pdf",
+              "src": "data/main-theme-overviews/j2-4-1-topic-5-inequality-properties-and-transposition-rules.pdf",
               "note": "不等式的性質與移項規則"
             }
           ]
@@ -9795,7 +9650,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-4-1-topic-6-solving-linear-inequalities.pdf",
+              "src": "data/main-theme-overviews/j2-4-1-topic-6-solving-linear-inequalities.pdf",
               "note": "解一元一次不等式"
             }
           ]
@@ -9848,7 +9703,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-4-2-topic-3-word-problems-with-linear-inequalities.pdf",
+              "src": "data/main-theme-overviews/j2-4-2-topic-3-word-problems-with-linear-inequalities.pdf",
               "note": "不等式應用問題"
             }
           ]
@@ -9901,7 +9756,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-4-2-topic-1-compound-inequalities-and-common-range.pdf",
+              "src": "data/main-theme-overviews/j2-4-2-topic-1-compound-inequalities-and-common-range.pdf",
               "note": "複合不等式與共同範圍"
             }
           ]
@@ -9954,7 +9809,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j2-4-2-topic-2-absolute-value-inequalities.pdf",
+              "src": "data/main-theme-overviews/j2-4-2-topic-2-absolute-value-inequalities.pdf",
               "note": "絕對值不等式"
             }
           ]
@@ -10007,7 +9862,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-1-1-topic-1-laws-and-distributive-property.pdf",
+              "src": "data/main-theme-overviews/j3-1-1-topic-1-laws-and-distributive-property.pdf",
               "note": "運算律與分配律"
             }
           ]
@@ -10060,7 +9915,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-1-1-topic-2-binomial-products-and-cross-terms.pdf",
+              "src": "data/main-theme-overviews/j3-1-1-topic-2-binomial-products-and-cross-terms.pdf",
               "note": "二項式相乘與交叉項"
             }
           ]
@@ -10113,7 +9968,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-1-1-topic-3-perfect-square-formulas.pdf",
+              "src": "data/main-theme-overviews/j3-1-1-topic-3-perfect-square-formulas.pdf",
               "note": "完全平方公式"
             }
           ]
@@ -10166,7 +10021,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-1-1-topic-4-difference-of-squares-and-mental-arithmetic.pdf",
+              "src": "data/main-theme-overviews/j3-1-1-topic-4-difference-of-squares-and-mental-arithmetic.pdf",
               "note": "平方差公式與數值速算"
             }
           ]
@@ -10219,7 +10074,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-1-1-topic-5-three-term-square-and-formula-organization.pdf",
+              "src": "data/main-theme-overviews/j3-1-1-topic-5-three-term-square-and-formula-organization.pdf",
               "note": "三項完全平方與公式整理"
             }
           ]
@@ -10272,7 +10127,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-1-1-topic-6-sum-and-difference-of-cubes.pdf",
+              "src": "data/main-theme-overviews/j3-1-1-topic-6-sum-and-difference-of-cubes.pdf",
               "note": "立方和與立方差"
             }
           ]
@@ -10325,7 +10180,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-1-1-topic-7-perfect-cubes-and-pascals-triangle.pdf",
+              "src": "data/main-theme-overviews/j3-1-1-topic-7-perfect-cubes-and-pascals-triangle.pdf",
               "note": "完全立方與巴斯卡三角形"
             }
           ]
@@ -10378,7 +10233,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-1-2-topic-1-polynomial-terminology.pdf",
+              "src": "data/main-theme-overviews/j3-1-2-topic-1-polynomial-terminology.pdf",
               "note": "多項式的基本名詞"
             }
           ]
@@ -10431,7 +10286,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-1-2-topic-2-standard-form-and-like-terms.pdf",
+              "src": "data/main-theme-overviews/j3-1-2-topic-2-standard-form-and-like-terms.pdf",
               "note": "升冪、降冪與同類項合併"
             }
           ]
@@ -10484,7 +10339,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-1-3-topic-1-polynomial-multiplication.pdf",
+              "src": "data/main-theme-overviews/j3-1-3-topic-1-polynomial-multiplication.pdf",
               "note": "多項式乘法"
             }
           ]
@@ -10537,7 +10392,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-1-3-topic-2-polynomial-division-and-checking.pdf",
+              "src": "data/main-theme-overviews/j3-1-3-topic-2-polynomial-division-and-checking.pdf",
               "note": "多項式除法與驗算"
             }
           ]
@@ -10590,7 +10445,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-2-1-topic-1-square-root-meaning.pdf",
+              "src": "data/main-theme-overviews/j3-2-1-topic-1-square-root-meaning.pdf",
               "note": "平方根與根號的意義"
             }
           ]
@@ -10643,7 +10498,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-2-1-topic-2-perfect-squares-and-prime-factorization.pdf",
+              "src": "data/main-theme-overviews/j3-2-1-topic-2-perfect-squares-and-prime-factorization.pdf",
               "note": "完全平方數與質因數分解"
             }
           ]
@@ -10696,7 +10551,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-2-1-topic-3-radical-and-absolute-value.pdf",
+              "src": "data/main-theme-overviews/j3-2-1-topic-3-radical-and-absolute-value.pdf",
               "note": "根號與絕對值"
             }
           ]
@@ -10749,7 +10604,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-2-1-topic-4-root-comparison-and-approximation.pdf",
+              "src": "data/main-theme-overviews/j3-2-1-topic-4-root-comparison-and-approximation.pdf",
               "note": "根號比較大小與近似值"
             }
           ]
@@ -10802,7 +10657,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-2-2-topic-1-radical-operations-and-rationalization.pdf",
+              "src": "data/main-theme-overviews/j3-2-2-topic-1-radical-operations-and-rationalization.pdf",
               "note": "根號運算與分母有理化"
             }
           ]
@@ -10855,7 +10710,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-2-2-topic-2-simplest-radicals-and-like-radicals.pdf",
+              "src": "data/main-theme-overviews/j3-2-2-topic-2-simplest-radicals-and-like-radicals.pdf",
               "note": "最簡根式與同類根號"
             }
           ]
@@ -10908,7 +10763,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-2-2-topic-3-radical-arithmetic.pdf",
+              "src": "data/main-theme-overviews/j3-2-2-topic-3-radical-arithmetic.pdf",
               "note": "根號四則運算"
             }
           ]
@@ -10961,7 +10816,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-2-3-topic-1-pythagorean-theorem-and-radical-applications.pdf",
+              "src": "data/main-theme-overviews/j3-2-3-topic-1-pythagorean-theorem-and-radical-applications.pdf",
               "note": "畢氏定理與根號應用"
             }
           ]
@@ -11014,7 +10869,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-2-3-topic-2-coordinate-plane-distance.pdf",
+              "src": "data/main-theme-overviews/j3-2-3-topic-2-coordinate-plane-distance.pdf",
               "note": "座標平面兩點距離"
             }
           ]
@@ -11067,7 +10922,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-3-1-topic-1-meaning-of-factorization.pdf",
+              "src": "data/main-theme-overviews/j3-3-1-topic-1-meaning-of-factorization.pdf",
               "note": "因式分解的意義"
             }
           ]
@@ -11120,7 +10975,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-3-1-topic-2-factors-multiples-and-divisibility.pdf",
+              "src": "data/main-theme-overviews/j3-3-1-topic-2-factors-multiples-and-divisibility.pdf",
               "note": "因式、倍式與整除判別"
             }
           ]
@@ -11173,7 +11028,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-3-1-topic-3-factor-and-remainder-theorems.pdf",
+              "src": "data/main-theme-overviews/j3-3-1-topic-3-factor-and-remainder-theorems.pdf",
               "note": "因式定理與餘式定理"
             }
           ]
@@ -11226,7 +11081,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-3-1-topic-4-common-factor-method.pdf",
+              "src": "data/main-theme-overviews/j3-3-1-topic-4-common-factor-method.pdf",
               "note": "提公因式法"
             }
           ]
@@ -11279,7 +11134,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-3-1-topic-5-grouping-common-factor.pdf",
+              "src": "data/main-theme-overviews/j3-3-1-topic-5-grouping-common-factor.pdf",
               "note": "分組提公因式"
             }
           ]
@@ -11332,7 +11187,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-3-1-topic-6-split-and-grouping.pdf",
+              "src": "data/main-theme-overviews/j3-3-1-topic-6-split-and-grouping.pdf",
               "note": "拆項後分組"
             }
           ]
@@ -11385,7 +11240,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-3-2-topic-1-perfect-square-and-difference-of-squares-factorization.pdf",
+              "src": "data/main-theme-overviews/j3-3-2-topic-1-perfect-square-and-difference-of-squares-factorization.pdf",
               "note": "完全平方與平方差因式分解"
             }
           ]
@@ -11438,7 +11293,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-3-2-topic-2-sum-difference-of-cubes-and-higher-degree-factorization.pdf",
+              "src": "data/main-theme-overviews/j3-3-2-topic-2-sum-difference-of-cubes-and-higher-degree-factorization.pdf",
               "note": "立方和、立方差與高次式分解"
             }
           ]
@@ -11491,7 +11346,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-3-3-topic-1-cross-method-leading-one.pdf",
+              "src": "data/main-theme-overviews/j3-3-3-topic-1-cross-method-leading-one.pdf",
               "note": "十字交乘法：首項係數為 1"
             }
           ]
@@ -11544,7 +11399,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-3-3-topic-2-cross-method-general-and-substitution.pdf",
+              "src": "data/main-theme-overviews/j3-3-3-topic-2-cross-method-general-and-substitution.pdf",
               "note": "十字交乘法：一般二次式與換元"
             }
           ]
@@ -11597,7 +11452,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-4-1-topic-1-quadratic-equation-and-roots.pdf",
+              "src": "data/main-theme-overviews/j3-4-1-topic-1-quadratic-equation-and-roots.pdf",
               "note": "一元二次方程式與根"
             }
           ]
@@ -11650,7 +11505,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-4-1-topic-2-standard-form-and-coefficients.pdf",
+              "src": "data/main-theme-overviews/j3-4-1-topic-2-standard-form-and-coefficients.pdf",
               "note": "整理成標準式與係數判讀"
             }
           ]
@@ -11703,7 +11558,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-4-1-topic-3-zero-product-and-factorization.pdf",
+              "src": "data/main-theme-overviews/j3-4-1-topic-3-zero-product-and-factorization.pdf",
               "note": "零乘積法與因式分解法"
             }
           ]
@@ -11756,7 +11611,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-4-1-topic-4-special-case-c-zero.pdf",
+              "src": "data/main-theme-overviews/j3-4-1-topic-4-special-case-c-zero.pdf",
               "note": "特殊型一：c = 0 的提公因式解法"
             }
           ]
@@ -11809,7 +11664,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-4-1-topic-5-special-case-b-zero.pdf",
+              "src": "data/main-theme-overviews/j3-4-1-topic-5-special-case-b-zero.pdf",
               "note": "特殊型二：b = 0 的平方根法"
             }
           ]
@@ -11862,7 +11717,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-4-1-topic-6-cross-method-solving-general-quadratics.pdf",
+              "src": "data/main-theme-overviews/j3-4-1-topic-6-cross-method-solving-general-quadratics.pdf",
               "note": "十字交乘解一般二次式"
             }
           ]
@@ -11915,7 +11770,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-4-2-topic-1-completing-square-core.pdf",
+              "src": "data/main-theme-overviews/j3-4-2-topic-1-completing-square-core.pdf",
               "note": "配方法核心：補成完全平方式"
             }
           ]
@@ -11968,7 +11823,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-4-2-topic-2-completing-square-solving.pdf",
+              "src": "data/main-theme-overviews/j3-4-2-topic-2-completing-square-solving.pdf",
               "note": "配方法解一元二次方程式"
             }
           ]
@@ -12021,7 +11876,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-4-2-topic-3-quadratic-formula-and-discriminant.pdf",
+              "src": "data/main-theme-overviews/j3-4-2-topic-3-quadratic-formula-and-discriminant.pdf",
               "note": "公式解與判別式"
             }
           ]
@@ -12074,7 +11929,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-4-2-topic-4-roots-and-coefficients.pdf",
+              "src": "data/main-theme-overviews/j3-4-2-topic-4-roots-and-coefficients.pdf",
               "note": "根與係數、已知兩根求方程式"
             }
           ]
@@ -12127,7 +11982,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-4-3-topic-1-fractional-equations-and-extraneous-roots.pdf",
+              "src": "data/main-theme-overviews/j3-4-3-topic-1-fractional-equations-and-extraneous-roots.pdf",
               "note": "分式方程式與增根檢查"
             }
           ]
@@ -12180,7 +12035,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j3-4-3-topic-2-modeling-and-application-checking.pdf",
+              "src": "data/main-theme-overviews/j3-4-3-topic-2-modeling-and-application-checking.pdf",
               "note": "應用題建模與檢驗"
             }
           ]
@@ -12233,7 +12088,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-1-1-topic-1-pattern-and-sequence-language.pdf",
+              "src": "data/main-theme-overviews/j4-1-1-topic-1-pattern-and-sequence-language.pdf",
               "note": "規律與數列的基本語言"
             }
           ]
@@ -12286,7 +12141,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-1-1-topic-2-arithmetic-sequence-and-nth-term.pdf",
+              "src": "data/main-theme-overviews/j4-1-1-topic-2-arithmetic-sequence-and-nth-term.pdf",
               "note": "等差數列與第 \\(n\\) 項"
             }
           ]
@@ -12339,7 +12194,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-1-1-topic-3-arithmetic-mean-and-fill-blanks.pdf",
+              "src": "data/main-theme-overviews/j4-1-1-topic-3-arithmetic-mean-and-fill-blanks.pdf",
               "note": "等差中項與補空格"
             }
           ]
@@ -12392,7 +12247,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-1-2-topic-1-geometric-sequence-and-nth-term.pdf",
+              "src": "data/main-theme-overviews/j4-1-2-topic-1-geometric-sequence-and-nth-term.pdf",
               "note": "等比數列與第 \\(n\\) 項"
             }
           ]
@@ -12445,7 +12300,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-1-2-topic-2-geometric-mean-and-geometric-series.pdf",
+              "src": "data/main-theme-overviews/j4-1-2-topic-2-geometric-mean-and-geometric-series.pdf",
               "note": "等比中項與等比級數"
             }
           ]
@@ -12498,7 +12353,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-1-3-topic-1-arithmetic-series-and-sum.pdf",
+              "src": "data/main-theme-overviews/j4-1-3-topic-1-arithmetic-series-and-sum.pdf",
               "note": "等差級數與前 \\(n\\) 項和"
             }
           ]
@@ -12551,7 +12406,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-1-3-topic-2-sigma-and-an-sn-relation.pdf",
+              "src": "data/main-theme-overviews/j4-1-3-topic-2-sigma-and-an-sn-relation.pdf",
               "note": "\\(\\sum\\) 符號與 \\(a_n\\)、\\(S_n\\) 的關係"
             }
           ]
@@ -12604,7 +12459,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-1-3-topic-3-pattern-applications.pdf",
+              "src": "data/main-theme-overviews/j4-1-3-topic-3-pattern-applications.pdf",
               "note": "圖形規律與應用題"
             }
           ]
@@ -12657,7 +12512,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-2-topic-1-function-meaning-and-correspondence.pdf",
+              "src": "data/main-theme-overviews/j4-2-topic-1-function-meaning-and-correspondence.pdf",
               "note": "函數的意義與對應關係"
             }
           ]
@@ -12711,7 +12566,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-2-topic-2-variables-and-domain.pdf",
+              "src": "data/main-theme-overviews/j4-2-topic-2-variables-and-domain.pdf",
               "note": "自變數、應變數與定義域"
             }
           ]
@@ -12765,7 +12620,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-2-topic-3-tables-relations-and-formulas.pdf",
+              "src": "data/main-theme-overviews/j4-2-topic-3-tables-relations-and-formulas.pdf",
               "note": "用表格、對應表與關係式表示函數"
             }
           ]
@@ -12819,7 +12674,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-2-topic-4-function-values-and-substitution.pdf",
+              "src": "data/main-theme-overviews/j4-2-topic-4-function-values-and-substitution.pdf",
               "note": "函數值與代入計算"
             }
           ]
@@ -12873,7 +12728,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-2-topic-5-graphs-and-coordinate-meaning.pdf",
+              "src": "data/main-theme-overviews/j4-2-topic-5-graphs-and-coordinate-meaning.pdf",
               "note": "函數圖形與座標上的意義"
             }
           ]
@@ -12927,7 +12782,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-2-topic-6-direct-proportion-and-y-equals-ax.pdf",
+              "src": "data/main-theme-overviews/j4-2-topic-6-direct-proportion-and-y-equals-ax.pdf",
               "note": "正比函數與 \\(y=ax\\)"
             }
           ]
@@ -12981,7 +12836,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-2-topic-7-linear-function-and-y-equals-ax-plus-b.pdf",
+              "src": "data/main-theme-overviews/j4-2-topic-7-linear-function-and-y-equals-ax-plus-b.pdf",
               "note": "一次函數與 \\(y=ax+b\\)"
             }
           ]
@@ -13035,7 +12890,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-2-topic-8-applications-and-interpretation.pdf",
+              "src": "data/main-theme-overviews/j4-2-topic-8-applications-and-interpretation.pdf",
               "note": "函數的實際應用與判讀"
             }
           ]
@@ -13085,7 +12940,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-4-1-topic-1-parallel-lines-transversal-and-angle-positions.pdf",
+              "src": "data/main-theme-overviews/j4-4-1-topic-1-parallel-lines-transversal-and-angle-positions.pdf",
               "note": "平行線、截線與角的位置"
             }
           ]
@@ -13138,7 +12993,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-4-1-topic-2-parallel-lines-properties-and-criteria.pdf",
+              "src": "data/main-theme-overviews/j4-4-1-topic-2-parallel-lines-properties-and-criteria.pdf",
               "note": "平行線的性質與判別"
             }
           ]
@@ -13191,7 +13046,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-4-1-topic-3-parallel-lines-angle-chasing.pdf",
+              "src": "data/main-theme-overviews/j4-4-1-topic-3-parallel-lines-angle-chasing.pdf",
               "note": "平行線與角度追蹤"
             }
           ]
@@ -13240,7 +13095,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-4-2-topic-1-parallelogram-definition-and-basic-figure.pdf",
+              "src": "data/main-theme-overviews/j4-4-2-topic-1-parallelogram-definition-and-basic-figure.pdf",
               "note": "平行四邊形的定義與基本圖形"
             }
           ]
@@ -13293,7 +13148,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-4-2-topic-2-parallelogram-properties.pdf",
+              "src": "data/main-theme-overviews/j4-4-2-topic-2-parallelogram-properties.pdf",
               "note": "平行四邊形的性質"
             }
           ]
@@ -13346,7 +13201,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-4-2-topic-3-parallelogram-criteria.pdf",
+              "src": "data/main-theme-overviews/j4-4-2-topic-3-parallelogram-criteria.pdf",
               "note": "平行四邊形的判別"
             }
           ]
@@ -13399,7 +13254,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-4-3-topic-1-special-parallelograms-and-integrated-applications.pdf",
+              "src": "data/main-theme-overviews/j4-4-3-topic-1-special-parallelograms-and-integrated-applications.pdf",
               "note": "特殊平行四邊形與綜合應用"
             }
           ]
@@ -13444,7 +13299,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-1-topic-1-triangle-angles-and-exterior-angle-theorem.pdf",
+              "src": "data/main-theme-overviews/j4-3-1-topic-1-triangle-angles-and-exterior-angle-theorem.pdf",
               "note": "三角形記法、內角外角與外角定理"
             }
           ]
@@ -13489,7 +13344,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-1-topic-2-angle-chasing-parallel-eight-arrow-turning.pdf",
+              "src": "data/main-theme-overviews/j4-3-1-topic-2-angle-chasing-parallel-eight-arrow-turning.pdf",
               "note": "角度追蹤：平行線、8字型、飛鏢型、轉角"
             }
           ]
@@ -13534,7 +13389,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-1-topic-3-polygon-angle-sums-exterior-sums-and-diagonals.pdf",
+              "src": "data/main-theme-overviews/j4-3-1-topic-3-polygon-angle-sums-exterior-sums-and-diagonals.pdf",
               "note": "多邊形內角和、外角和與對角線個數"
             }
           ]
@@ -13579,7 +13434,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-1-topic-4-regular-polygons-isosceles-equilateral-and-angle-bisectors.pdf",
+              "src": "data/main-theme-overviews/j4-3-1-topic-4-regular-polygons-isosceles-equilateral-and-angle-bisectors.pdf",
               "note": "正多邊形、等腰等邊與角平分線綜合"
             }
           ]
@@ -13624,7 +13479,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-2-topic-1-tools-equal-segments-equal-angles.pdf",
+              "src": "data/main-theme-overviews/j4-3-2-topic-1-tools-equal-segments-equal-angles.pdf",
               "note": "尺規作圖的工具與等線段、等角"
             }
           ]
@@ -13669,7 +13524,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-2-topic-2-perpendicular-bisector-perpendicular-and-angle-bisector-constructions.pdf",
+              "src": "data/main-theme-overviews/j4-3-2-topic-2-perpendicular-bisector-perpendicular-and-angle-bisector-constructions.pdf",
               "note": "中垂線、垂線與角平分線作圖"
             }
           ]
@@ -13714,7 +13569,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-2-topic-3-parallel-line-construction-and-parallel-angle-reading.pdf",
+              "src": "data/main-theme-overviews/j4-3-2-topic-3-parallel-line-construction-and-parallel-angle-reading.pdf",
               "note": "平行線作圖與平行角關係"
             }
           ]
@@ -13759,7 +13614,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-2-topic-4-constructing-triangles-and-construction-checking.pdf",
+              "src": "data/main-theme-overviews/j4-3-2-topic-4-constructing-triangles-and-construction-checking.pdf",
               "note": "作三角形與作圖驗證"
             }
           ]
@@ -13804,7 +13659,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-3-topic-1-congruence-meaning-and-correspondence.pdf",
+              "src": "data/main-theme-overviews/j4-3-3-topic-1-congruence-meaning-and-correspondence.pdf",
               "note": "全等的意義與對應關係"
             }
           ]
@@ -13849,7 +13704,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-3-topic-2-valid-congruence-tests.pdf",
+              "src": "data/main-theme-overviews/j4-3-3-topic-2-valid-congruence-tests.pdf",
               "note": "可用的全等判定"
             }
           ]
@@ -13894,7 +13749,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-3-topic-3-non-congruence-cases.pdf",
+              "src": "data/main-theme-overviews/j4-3-3-topic-3-non-congruence-cases.pdf",
               "note": "不能直接判定全等的情形"
             }
           ]
@@ -13939,7 +13794,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-3-topic-4-congruence-applications-proof-and-construction-link.pdf",
+              "src": "data/main-theme-overviews/j4-3-3-topic-4-congruence-applications-proof-and-construction-link.pdf",
               "note": "全等的應用、證明與作圖連結"
             }
           ]
@@ -13984,7 +13839,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-4-topic-1-triangle-inequality-and-third-side-range.pdf",
+              "src": "data/main-theme-overviews/j4-3-4-topic-1-triangle-inequality-and-third-side-range.pdf",
               "note": "三角形成立條件與第三邊範圍"
             }
           ]
@@ -14029,7 +13884,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-4-topic-2-larger-side-larger-angle-and-converse.pdf",
+              "src": "data/main-theme-overviews/j4-3-4-topic-2-larger-side-larger-angle-and-converse.pdf",
               "note": "大邊對大角、大角對大邊"
             }
           ]
@@ -14074,7 +13929,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-4-topic-3-hinge-theorem-and-converse.pdf",
+              "src": "data/main-theme-overviews/j4-3-4-topic-3-hinge-theorem-and-converse.pdf",
               "note": "樞紐定理與逆樞紐定理"
             }
           ]
@@ -14119,7 +13974,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-4-topic-4-special-right-triangles-and-area.pdf",
+              "src": "data/main-theme-overviews/j4-3-4-topic-4-special-right-triangles-and-area.pdf",
               "note": "特殊直角三角形與面積"
             }
           ]
@@ -14164,7 +14019,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j4-3-4-topic-5-perpendicular-bisector-angle-bisector-and-shortest-path.pdf",
+              "src": "data/main-theme-overviews/j4-3-4-topic-5-perpendicular-bisector-angle-bisector-and-shortest-path.pdf",
               "note": "中垂線、角平分線與最短路徑綜合"
             }
           ]
@@ -14217,7 +14072,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-1-1-topic-1-ratio-language.pdf",
+              "src": "data/main-theme-overviews/j5-1-1-topic-1-ratio-language.pdf",
               "note": "比例線段的基本語言"
             }
           ]
@@ -14270,7 +14125,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-1-2-topic-1-parallel-intercept-theorem.pdf",
+              "src": "data/main-theme-overviews/j5-1-2-topic-1-parallel-intercept-theorem.pdf",
               "note": "平行線截比例線段性質"
             }
           ]
@@ -14323,7 +14178,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-1-2-topic-2-triangle-intercept-forward-and-converse.pdf",
+              "src": "data/main-theme-overviews/j5-1-2-topic-2-triangle-intercept-forward-and-converse.pdf",
               "note": "三角形截比例性質與反性質"
             }
           ]
@@ -14376,7 +14231,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-1-2-topic-3-solve-unknown-length.pdf",
+              "src": "data/main-theme-overviews/j5-1-2-topic-3-solve-unknown-length.pdf",
               "note": "用比例線段求未知長度"
             }
           ]
@@ -14429,7 +14284,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-1-3-topic-1-similarity-meaning-and-correspondence.pdf",
+              "src": "data/main-theme-overviews/j5-1-3-topic-1-similarity-meaning-and-correspondence.pdf",
               "note": "相似三角形的意義與對應順序"
             }
           ]
@@ -14482,7 +14337,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-1-3-topic-2-similarity-tests.pdf",
+              "src": "data/main-theme-overviews/j5-1-3-topic-2-similarity-tests.pdf",
               "note": "相似三角形的判別"
             }
           ]
@@ -14535,7 +14390,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-1-3-topic-3-parallel-line-small-large-similarity.pdf",
+              "src": "data/main-theme-overviews/j5-1-3-topic-3-parallel-line-small-large-similarity.pdf",
               "note": "平行線造成的小大三角形相似"
             }
           ]
@@ -14588,7 +14443,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-1-3-topic-4-scale-perimeter-and-area-ratios.pdf",
+              "src": "data/main-theme-overviews/j5-1-3-topic-4-scale-perimeter-and-area-ratios.pdf",
               "note": "相似比、周長比、面積比"
             }
           ]
@@ -14641,7 +14496,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-1-3-topic-5-right-triangle-similarity.pdf",
+              "src": "data/main-theme-overviews/j5-1-3-topic-5-right-triangle-similarity.pdf",
               "note": "直角三角形中的相似"
             }
           ]
@@ -14694,7 +14549,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-2-1-topic-1-point-line-circle-position.pdf",
+              "src": "data/main-theme-overviews/j5-2-1-topic-1-point-line-circle-position.pdf",
               "note": "點、直線與圓的位置關係"
             }
           ]
@@ -14747,7 +14602,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-2-1-topic-2-tangent-and-chord-center-distance.pdf",
+              "src": "data/main-theme-overviews/j5-2-1-topic-2-tangent-and-chord-center-distance.pdf",
               "note": "切線與弦心距"
             }
           ]
@@ -14800,7 +14655,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-2-1-topic-3-two-circles-position-and-common-tangent.pdf",
+              "src": "data/main-theme-overviews/j5-2-1-topic-3-two-circles-position-and-common-tangent.pdf",
               "note": "兩圓的位置關係與公切線"
             }
           ]
@@ -14853,7 +14708,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-2-2-topic-1-arc-chord-central-angle-and-arc-length.pdf",
+              "src": "data/main-theme-overviews/j5-2-2-topic-1-arc-chord-central-angle-and-arc-length.pdf",
               "note": "弧、弦、圓心角與弧長"
             }
           ]
@@ -14906,7 +14761,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-2-2-topic-2-inscribed-tangent-chord-interior-exterior-angles.pdf",
+              "src": "data/main-theme-overviews/j5-2-2-topic-2-inscribed-tangent-chord-interior-exterior-angles.pdf",
               "note": "圓周角、弦切角、圓內角與圓外角"
             }
           ]
@@ -14959,7 +14814,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-2-2-topic-3-circle-and-angle-integration.pdf",
+              "src": "data/main-theme-overviews/j5-2-2-topic-3-circle-and-angle-integration.pdf",
               "note": "圓與角的綜合判斷"
             }
           ]
@@ -15012,7 +14867,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-2-3-topic-1-power-of-a-point-and-segment-products.pdf",
+              "src": "data/main-theme-overviews/j5-2-3-topic-1-power-of-a-point-and-segment-products.pdf",
               "note": "乘冪性質與線段乘積"
             }
           ]
@@ -15065,7 +14920,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-2-3-topic-2-circle-applications.pdf",
+              "src": "data/main-theme-overviews/j5-2-3-topic-2-circle-applications.pdf",
               "note": "圓的綜合應用"
             }
           ]
@@ -15118,7 +14973,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-3-1-topic-1-geometric-reasoning-and-proof-basics.pdf",
+              "src": "data/main-theme-overviews/j5-3-1-topic-1-geometric-reasoning-and-proof-basics.pdf",
               "note": "幾何推理與證明的基本想法"
             }
           ]
@@ -15171,7 +15026,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-3-2-topic-1-proof-toolkit.pdf",
+              "src": "data/main-theme-overviews/j5-3-2-topic-1-proof-toolkit.pdf",
               "note": "證明題的常用工具"
             }
           ]
@@ -15224,7 +15079,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-3-3-topic-1-circumcenter-and-circumcircle.pdf",
+              "src": "data/main-theme-overviews/j5-3-3-topic-1-circumcenter-and-circumcircle.pdf",
               "note": "外心與外接圓"
             }
           ]
@@ -15277,7 +15132,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-3-3-topic-2-incenter-and-incircle.pdf",
+              "src": "data/main-theme-overviews/j5-3-3-topic-2-incenter-and-incircle.pdf",
               "note": "內心與內切圓"
             }
           ]
@@ -15330,7 +15185,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-3-3-topic-3-centroid-and-medians.pdf",
+              "src": "data/main-theme-overviews/j5-3-3-topic-3-centroid-and-medians.pdf",
               "note": "重心與中線"
             }
           ]
@@ -15383,7 +15238,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-3-3-topic-4-comparison-of-three-centers.pdf",
+              "src": "data/main-theme-overviews/j5-3-3-topic-4-comparison-of-three-centers.pdf",
               "note": "三心的比較"
             }
           ]
@@ -15436,7 +15291,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j5-3-3-topic-5-applications-of-three-centers.pdf",
+              "src": "data/main-theme-overviews/j5-3-3-topic-5-applications-of-three-centers.pdf",
               "note": "三心的常見應用"
             }
           ]
@@ -15489,7 +15344,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-1-1-topic-1-quadratic-basic-form.pdf",
+              "src": "data/main-theme-overviews/j6-1-1-topic-1-quadratic-basic-form.pdf",
               "note": "二次函數的基本形式"
             }
           ]
@@ -15542,7 +15397,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-1-1-topic-2-quadratic-graph-and-axis.pdf",
+              "src": "data/main-theme-overviews/j6-1-1-topic-2-quadratic-graph-and-axis.pdf",
               "note": "二次函數的圖形與對稱軸"
             }
           ]
@@ -15595,7 +15450,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-1-1-topic-3-vertex-form-and-meaning.pdf",
+              "src": "data/main-theme-overviews/j6-1-1-topic-3-vertex-form-and-meaning.pdf",
               "note": "頂點式與頂點意義"
             }
           ]
@@ -15648,7 +15503,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-1-2-topic-1-completing-square-to-vertex-form.pdf",
+              "src": "data/main-theme-overviews/j6-1-2-topic-1-completing-square-to-vertex-form.pdf",
               "note": "配方法與一般式轉頂點式"
             }
           ]
@@ -15701,7 +15556,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-1-2-topic-2-graph-translation.pdf",
+              "src": "data/main-theme-overviews/j6-1-2-topic-2-graph-translation.pdf",
               "note": "圖形平移"
             }
           ]
@@ -15754,7 +15609,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-1-2-topic-3-extremum-and-range.pdf",
+              "src": "data/main-theme-overviews/j6-1-2-topic-3-extremum-and-range.pdf",
               "note": "最大值、最小值與值域"
             }
           ]
@@ -15807,7 +15662,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-1-3-topic-1-intercepts-with-axes.pdf",
+              "src": "data/main-theme-overviews/j6-1-3-topic-1-intercepts-with-axes.pdf",
               "note": "與座標軸的交點"
             }
           ]
@@ -15860,7 +15715,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-1-3-topic-2-quadratic-function-and-equation-relation.pdf",
+              "src": "data/main-theme-overviews/j6-1-3-topic-2-quadratic-function-and-equation-relation.pdf",
               "note": "二次函數與一元二次方程式的關係"
             }
           ]
@@ -15913,7 +15768,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-1-3-topic-3-discriminant-and-intersection-cases.pdf",
+              "src": "data/main-theme-overviews/j6-1-3-topic-3-discriminant-and-intersection-cases.pdf",
               "note": "用判別式判斷交點情形"
             }
           ]
@@ -15966,7 +15821,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-1-3-topic-4-find-function-from-intercepts.pdf",
+              "src": "data/main-theme-overviews/j6-1-3-topic-4-find-function-from-intercepts.pdf",
               "note": "已知交點求函數式"
             }
           ]
@@ -16019,7 +15874,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-1-3-topic-5-graph-interpretation-and-reminders.pdf",
+              "src": "data/main-theme-overviews/j6-1-3-topic-5-graph-interpretation-and-reminders.pdf",
               "note": "圖形判讀與解題提醒"
             }
           ]
@@ -16072,7 +15927,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-3-1-topic-1-data-organization-and-statistical-charts.pdf",
+              "src": "data/main-theme-overviews/j6-3-1-topic-1-data-organization-and-statistical-charts.pdf",
               "note": "資料整理與統計圖表"
             }
           ]
@@ -16125,7 +15980,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-3-1-topic-2-mean-median-and-mode.pdf",
+              "src": "data/main-theme-overviews/j6-3-1-topic-2-mean-median-and-mode.pdf",
               "note": "平均數、中位數與眾數"
             }
           ]
@@ -16178,7 +16033,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-3-2-topic-1-grouped-data-and-estimated-mean.pdf",
+              "src": "data/main-theme-overviews/j6-3-2-topic-1-grouped-data-and-estimated-mean.pdf",
               "note": "分組資料與平均數估計"
             }
           ]
@@ -16231,7 +16086,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-3-2-topic-2-cumulative-frequency-quartiles-and-boxplot.pdf",
+              "src": "data/main-theme-overviews/j6-3-2-topic-2-cumulative-frequency-quartiles-and-boxplot.pdf",
               "note": "累積次數、四分位數與盒狀圖"
             }
           ]
@@ -16284,7 +16139,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-3-2-topic-3-center-and-spread-of-data.pdf",
+              "src": "data/main-theme-overviews/j6-3-2-topic-3-center-and-spread-of-data.pdf",
               "note": "資料的集中與分散"
             }
           ]
@@ -16337,7 +16192,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-3-2-topic-4-chart-interpretation-and-statistical-conclusions.pdf",
+              "src": "data/main-theme-overviews/j6-3-2-topic-4-chart-interpretation-and-statistical-conclusions.pdf",
               "note": "圖表判讀與統計結論"
             }
           ]
@@ -16390,7 +16245,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-3-3-topic-1-basic-concepts-of-probability.pdf",
+              "src": "data/main-theme-overviews/j6-3-3-topic-1-basic-concepts-of-probability.pdf",
               "note": "機率的基本概念"
             }
           ]
@@ -16443,7 +16298,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-3-3-topic-2-classical-probability-method.pdf",
+              "src": "data/main-theme-overviews/j6-3-3-topic-2-classical-probability-method.pdf",
               "note": "古典機率的求法"
             }
           ]
@@ -16496,7 +16351,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-3-3-topic-3-tree-diagrams-and-listing.pdf",
+              "src": "data/main-theme-overviews/j6-3-3-topic-3-tree-diagrams-and-listing.pdf",
               "note": "樹狀圖與列舉"
             }
           ]
@@ -16549,7 +16404,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-3-3-topic-4-replacement-no-replacement-and-event-dependence.pdf",
+              "src": "data/main-theme-overviews/j6-3-3-topic-4-replacement-no-replacement-and-event-dependence.pdf",
               "note": "放回、不放回與事件關聯"
             }
           ]
@@ -16602,7 +16457,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-3-3-topic-5-relative-frequency-and-experimental-probability.pdf",
+              "src": "data/main-theme-overviews/j6-3-3-topic-5-relative-frequency-and-experimental-probability.pdf",
               "note": "相對次數與實驗機率"
             }
           ]
@@ -16655,7 +16510,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-3-3-topic-6-integrated-statistics-and-probability-applications.pdf",
+              "src": "data/main-theme-overviews/j6-3-3-topic-6-integrated-statistics-and-probability-applications.pdf",
               "note": "統計與機率的綜合應用"
             }
           ]
@@ -16708,7 +16563,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-2-1-topic-1-solid-figure-identification.pdf",
+              "src": "data/main-theme-overviews/j6-2-1-topic-1-solid-figure-identification.pdf",
               "note": "立體圖形的基本辨認"
             }
           ]
@@ -16761,7 +16616,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-2-1-topic-2-orthographic-views-and-spatial-imagination.pdf",
+              "src": "data/main-theme-overviews/j6-2-1-topic-2-orthographic-views-and-spatial-imagination.pdf",
               "note": "視圖與空間想像"
             }
           ]
@@ -16814,7 +16669,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-2-1-topic-3-nets-and-folding-interpretation.pdf",
+              "src": "data/main-theme-overviews/j6-2-1-topic-3-nets-and-folding-interpretation.pdf",
               "note": "展開圖的判讀"
             }
           ]
@@ -16867,7 +16722,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-2-1-topic-4-surface-area-vs-volume.pdf",
+              "src": "data/main-theme-overviews/j6-2-1-topic-4-surface-area-vs-volume.pdf",
               "note": "表面積與體積的差別"
             }
           ]
@@ -16920,7 +16775,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-2-1-topic-5-prism-and-cylinder-volume.pdf",
+              "src": "data/main-theme-overviews/j6-2-1-topic-5-prism-and-cylinder-volume.pdf",
               "note": "角柱與圓柱的體積"
             }
           ]
@@ -16973,7 +16828,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-2-1-topic-6-pyramid-and-cone-volume.pdf",
+              "src": "data/main-theme-overviews/j6-2-1-topic-6-pyramid-and-cone-volume.pdf",
               "note": "角錐與圓錐的體積"
             }
           ]
@@ -17026,7 +16881,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-2-1-topic-7-sphere-surface-area-and-volume.pdf",
+              "src": "data/main-theme-overviews/j6-2-1-topic-7-sphere-surface-area-and-volume.pdf",
               "note": "球的表面積與體積"
             }
           ]
@@ -17079,7 +16934,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-2-1-topic-8-surface-area-calculation-of-solids.pdf",
+              "src": "data/main-theme-overviews/j6-2-1-topic-8-surface-area-calculation-of-solids.pdf",
               "note": "立體圖形的表面積計算"
             }
           ]
@@ -17132,7 +16987,7 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-2-1-topic-9-composite-solids-and-cutting.pdf",
+              "src": "data/main-theme-overviews/j6-2-1-topic-9-composite-solids-and-cutting.pdf",
               "note": "複合立體與切割問題"
             }
           ]
@@ -17185,8 +17040,256 @@ window.mainTopicOverviewStore = {
           "sections": [
             {
               "type": "pdf-page",
-              "src": "exports/main-theme-overviews/j6-2-1-topic-10-unit-conversion-and-application-reminders.pdf",
+              "src": "data/main-theme-overviews/j6-2-1-topic-10-unit-conversion-and-application-reminders.pdf",
               "note": "單位換算與應用提醒"
+            }
+          ]
+        }
+      ]
+    },
+    "s1-1-3-main-theme-advanced-transform": {
+      "id": "s1-1-3-main-theme-advanced-transform",
+      "title": "進階變形、因式分解與高階有理化",
+      "updatedAt": "2026-05-18T02:08:35+08:00",
+      "variants": [
+        {
+          "id": "editable",
+          "label": "可修改版",
+          "sections": [
+            {
+              "type": "table",
+              "headers": [
+                "分支",
+                "整理"
+              ],
+              "rows": [
+                [
+                  "特殊高階乘法公式",
+                  "整理三項立方公式與四次式公式。"
+                ],
+                [
+                  "高階根式有理化（三次根式）",
+                  "依 MD 校正三次根式有理化因子與公式。"
+                ],
+                [
+                  "進階因式分解樣式",
+                  "把補項、雙十字與巴斯卡展開收進同一分支。"
+                ],
+                [
+                  "多項式近似值（泰勒展開式）",
+                  "用連續綜合除法改寫成以 \\((x-c)\\) 為底的型式。"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "original",
+          "label": "原稿版",
+          "sections": [
+            {
+              "type": "paragraph",
+              "text": "主題 3 依截圖新增，三次根式有理化公式內容以 MD 版本為準。"
+            }
+          ]
+        }
+      ]
+    },
+    "s1-1-4-main-theme-exponent-definition-extension": {
+      "id": "s1-1-4-main-theme-exponent-definition-extension",
+      "title": "指數的定義與擴充",
+      "updatedAt": "2026-05-19T01:02:58+08:00",
+      "chapter_code": "s1-1-4",
+      "variants": [
+        {
+          "id": "editable",
+          "label": "可修改版",
+          "sections": [
+            {
+              "type": "table",
+              "headers": [
+                "重點",
+                "整理"
+              ],
+              "rows": [
+                [
+                  "整數指數的定義",
+                  "正整數指數的 \\(a^n\\) 表示 \\(n\\) 個 \\(a\\) 連乘；\\(a^0=1\\)；\\(a^{-n}=\\frac{1}{a^n}\\)。"
+                ],
+                [
+                  "有理數指數",
+                  "\\(a^{\\frac{1}{n}}=\\sqrt[n]{a}\\)，\\(a^{\\frac{m}{n}}=\\sqrt[n]{a^m}=(\\sqrt[n]{a})^m\\)。"
+                ],
+                [
+                  "實數指數與底數限制",
+                  "討論有理數或實數指數時，底數需滿足 \\(a>0\\) 才能確保運算結果唯一且為實數。"
+                ],
+                [
+                  "定義判定",
+                  "像 \\(0^{-2}\\) 無意義；處理負底數的分數指數時，要先判斷在實數系中是否有定義。"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "original",
+          "label": "原稿版",
+          "sections": [
+            {
+              "type": "pdf-page",
+              "src": "data/main-theme-overviews/s1-1-4-topic-1-exponent-definition-extension.pdf",
+              "note": "指數的定義與擴充"
+            }
+          ]
+        }
+      ]
+    },
+    "s1-1-4-main-theme-exponent-laws": {
+      "id": "s1-1-4-main-theme-exponent-laws",
+      "title": "指數律",
+      "updatedAt": "2026-05-19T01:02:58+08:00",
+      "chapter_code": "s1-1-4",
+      "variants": [
+        {
+          "id": "editable",
+          "label": "可修改版",
+          "sections": [
+            {
+              "type": "table",
+              "headers": [
+                "重點",
+                "整理"
+              ],
+              "rows": [
+                [
+                  "同底數相乘與相除",
+                  "\\(a^r\\cdot a^s=a^{r+s}\\)，\\(\\frac{a^r}{a^s}=a^{r-s}\\)。"
+                ],
+                [
+                  "次方的次方",
+                  "\\((a^r)^s=a^{rs}\\)，處理內外指數時要先看底數是否允許這樣運算。"
+                ],
+                [
+                  "乘積與分式的次方",
+                  "\\((ab)^r=a^r\\cdot b^r\\)，\\(\\left(\\frac{a}{b}\\right)^r=\\frac{a^r}{b^r}\\)。"
+                ],
+                [
+                  "條件求值",
+                  "已知 \\(a^{2x}\\) 或 \\(a^x+a^{-x}\\) 的值時，可配合指數律和乘法公式化簡。"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "original",
+          "label": "原稿版",
+          "sections": [
+            {
+              "type": "pdf-page",
+              "src": "data/main-theme-overviews/s1-1-4-topic-2-exponent-laws.pdf",
+              "note": "指數律"
+            }
+          ]
+        }
+      ]
+    },
+    "s1-1-4-main-theme-exponential-equations-inequalities": {
+      "id": "s1-1-4-main-theme-exponential-equations-inequalities",
+      "title": "指數方程式與不等式",
+      "updatedAt": "2026-05-19T01:02:58+08:00",
+      "chapter_code": "s1-1-4",
+      "variants": [
+        {
+          "id": "editable",
+          "label": "可修改版",
+          "sections": [
+            {
+              "type": "table",
+              "headers": [
+                "重點",
+                "整理"
+              ],
+              "rows": [
+                [
+                  "同底化",
+                  "若能把左右兩邊都化成相同底數，就可直接比較指數。"
+                ],
+                [
+                  "換元法",
+                  "若有 \\(a^x\\) 與 \\(a^{2x}\\) 同時出現，可設 \\(t=a^x\\) 再整理，且別忘了 \\(t>0\\)。"
+                ],
+                [
+                  "單調性判斷",
+                  "底數 \\(a>1\\) 時函數遞增；\\(0<a<1\\) 時遞減，解不等式時方向要特別注意。"
+                ],
+                [
+                  "圖形輔助",
+                  "遇到難比較的式子時，可把兩邊視為函數圖形，利用交點或單調性判讀。"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "original",
+          "label": "原稿版",
+          "sections": [
+            {
+              "type": "pdf-page",
+              "src": "data/main-theme-overviews/s1-1-4-topic-3-exponential-equations-inequalities.pdf",
+              "note": "指數方程式與不等式"
+            }
+          ]
+        }
+      ]
+    },
+    "s1-1-4-main-theme-exponent-applications": {
+      "id": "s1-1-4-main-theme-exponent-applications",
+      "title": "指數的應用",
+      "updatedAt": "2026-05-19T01:02:58+08:00",
+      "chapter_code": "s1-1-4",
+      "variants": [
+        {
+          "id": "editable",
+          "label": "可修改版",
+          "sections": [
+            {
+              "type": "table",
+              "headers": [
+                "重點",
+                "整理"
+              ],
+              "rows": [
+                [
+                  "科學記號",
+                  "很大或很小的數可寫成 \\(a\\times 10^n\\) 的形式，方便比較與估算。"
+                ],
+                [
+                  "倍增與衰減模型",
+                  "人口成長、細菌分裂、藥物代謝等，都常用指數模型描述變化。"
+                ],
+                [
+                  "讀題轉式",
+                  "先判斷是固定倍率改變，還是固定差量改變，再決定要用指數還是一次模型。"
+                ],
+                [
+                  "常見錯誤",
+                  "把指數律和對數律混用、忽略底數限制、把倍增誤看成線性成長。"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "original",
+          "label": "原稿版",
+          "sections": [
+            {
+              "type": "pdf-page",
+              "src": "data/main-theme-overviews/s1-1-4-topic-4-exponent-applications.pdf",
+              "note": "指數的應用"
             }
           ]
         }
@@ -17194,3 +17297,4 @@ window.mainTopicOverviewStore = {
     }
   }
 };
+

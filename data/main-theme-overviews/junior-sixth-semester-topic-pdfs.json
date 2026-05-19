@@ -1,0 +1,303 @@
+{
+  "sourcePdf": "國三下全重點_易讀版分頁版_Word公式版.pdf",
+  "count": 33,
+  "topics": [
+    {
+      "chapterCode": "j6-1-1",
+      "topicNumber": 1,
+      "slug": "quadratic-basic-form",
+      "title": "二次函數的基本形式",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "file": "j6-1-1-topic-1-quadratic-basic-form.pdf"
+    },
+    {
+      "chapterCode": "j6-1-1",
+      "topicNumber": 2,
+      "slug": "quadratic-graph-and-axis",
+      "title": "二次函數的圖形與對稱軸",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "file": "j6-1-1-topic-2-quadratic-graph-and-axis.pdf"
+    },
+    {
+      "chapterCode": "j6-1-1",
+      "topicNumber": 3,
+      "slug": "vertex-form-and-meaning",
+      "title": "頂點式與頂點意義",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "file": "j6-1-1-topic-3-vertex-form-and-meaning.pdf"
+    },
+    {
+      "chapterCode": "j6-1-2",
+      "topicNumber": 1,
+      "slug": "completing-square-to-vertex-form",
+      "title": "配方法與一般式轉頂點式",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "file": "j6-1-2-topic-1-completing-square-to-vertex-form.pdf"
+    },
+    {
+      "chapterCode": "j6-1-2",
+      "topicNumber": 2,
+      "slug": "graph-translation",
+      "title": "圖形平移",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "file": "j6-1-2-topic-2-graph-translation.pdf"
+    },
+    {
+      "chapterCode": "j6-1-2",
+      "topicNumber": 3,
+      "slug": "extremum-and-range",
+      "title": "最大值、最小值與值域",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "file": "j6-1-2-topic-3-extremum-and-range.pdf"
+    },
+    {
+      "chapterCode": "j6-1-3",
+      "topicNumber": 1,
+      "slug": "intercepts-with-axes",
+      "title": "與座標軸的交點",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "file": "j6-1-3-topic-1-intercepts-with-axes.pdf"
+    },
+    {
+      "chapterCode": "j6-1-3",
+      "topicNumber": 2,
+      "slug": "quadratic-function-and-equation-relation",
+      "title": "二次函數與一元二次方程式的關係",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "file": "j6-1-3-topic-2-quadratic-function-and-equation-relation.pdf"
+    },
+    {
+      "chapterCode": "j6-1-3",
+      "topicNumber": 3,
+      "slug": "discriminant-and-intersection-cases",
+      "title": "用判別式判斷交點情形",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "file": "j6-1-3-topic-3-discriminant-and-intersection-cases.pdf"
+    },
+    {
+      "chapterCode": "j6-1-3",
+      "topicNumber": 4,
+      "slug": "find-function-from-intercepts",
+      "title": "已知交點求函數式",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "file": "j6-1-3-topic-4-find-function-from-intercepts.pdf"
+    },
+    {
+      "chapterCode": "j6-1-3",
+      "topicNumber": 5,
+      "slug": "graph-interpretation-and-reminders",
+      "title": "圖形判讀與解題提醒",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "file": "j6-1-3-topic-5-graph-interpretation-and-reminders.pdf"
+    },
+    {
+      "chapterCode": "j6-2-1",
+      "topicNumber": 1,
+      "slug": "solid-figure-identification",
+      "title": "立體圖形的基本辨認",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "file": "j6-2-1-topic-1-solid-figure-identification.pdf"
+    },
+    {
+      "chapterCode": "j6-2-1",
+      "topicNumber": 2,
+      "slug": "orthographic-views-and-spatial-imagination",
+      "title": "視圖與空間想像",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "file": "j6-2-1-topic-2-orthographic-views-and-spatial-imagination.pdf"
+    },
+    {
+      "chapterCode": "j6-2-1",
+      "topicNumber": 3,
+      "slug": "nets-and-folding-interpretation",
+      "title": "展開圖的判讀",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "file": "j6-2-1-topic-3-nets-and-folding-interpretation.pdf"
+    },
+    {
+      "chapterCode": "j6-2-1",
+      "topicNumber": 4,
+      "slug": "surface-area-vs-volume",
+      "title": "表面積與體積的差別",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "file": "j6-2-1-topic-4-surface-area-vs-volume.pdf"
+    },
+    {
+      "chapterCode": "j6-2-1",
+      "topicNumber": 5,
+      "slug": "prism-and-cylinder-volume",
+      "title": "角柱與圓柱的體積",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "file": "j6-2-1-topic-5-prism-and-cylinder-volume.pdf"
+    },
+    {
+      "chapterCode": "j6-2-1",
+      "topicNumber": 6,
+      "slug": "pyramid-and-cone-volume",
+      "title": "角錐與圓錐的體積",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "file": "j6-2-1-topic-6-pyramid-and-cone-volume.pdf"
+    },
+    {
+      "chapterCode": "j6-2-1",
+      "topicNumber": 7,
+      "slug": "sphere-surface-area-and-volume",
+      "title": "球的表面積與體積",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "file": "j6-2-1-topic-7-sphere-surface-area-and-volume.pdf"
+    },
+    {
+      "chapterCode": "j6-2-1",
+      "topicNumber": 8,
+      "slug": "surface-area-calculation-of-solids",
+      "title": "立體圖形的表面積計算",
+      "pageStart": 21,
+      "pageEnd": 21,
+      "file": "j6-2-1-topic-8-surface-area-calculation-of-solids.pdf"
+    },
+    {
+      "chapterCode": "j6-2-1",
+      "topicNumber": 9,
+      "slug": "composite-solids-and-cutting",
+      "title": "複合立體與切割問題",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "file": "j6-2-1-topic-9-composite-solids-and-cutting.pdf"
+    },
+    {
+      "chapterCode": "j6-2-1",
+      "topicNumber": 10,
+      "slug": "unit-conversion-and-application-reminders",
+      "title": "單位換算與應用提醒",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "file": "j6-2-1-topic-10-unit-conversion-and-application-reminders.pdf"
+    },
+    {
+      "chapterCode": "j6-3-1",
+      "topicNumber": 1,
+      "slug": "data-organization-and-statistical-charts",
+      "title": "資料整理與統計圖表",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "file": "j6-3-1-topic-1-data-organization-and-statistical-charts.pdf"
+    },
+    {
+      "chapterCode": "j6-3-1",
+      "topicNumber": 2,
+      "slug": "mean-median-and-mode",
+      "title": "平均數、中位數與眾數",
+      "pageStart": 26,
+      "pageEnd": 26,
+      "file": "j6-3-1-topic-2-mean-median-and-mode.pdf"
+    },
+    {
+      "chapterCode": "j6-3-2",
+      "topicNumber": 1,
+      "slug": "grouped-data-and-estimated-mean",
+      "title": "分組資料與平均數估計",
+      "pageStart": 27,
+      "pageEnd": 27,
+      "file": "j6-3-2-topic-1-grouped-data-and-estimated-mean.pdf"
+    },
+    {
+      "chapterCode": "j6-3-2",
+      "topicNumber": 2,
+      "slug": "cumulative-frequency-quartiles-and-boxplot",
+      "title": "累積次數、四分位數與盒狀圖",
+      "pageStart": 28,
+      "pageEnd": 28,
+      "file": "j6-3-2-topic-2-cumulative-frequency-quartiles-and-boxplot.pdf"
+    },
+    {
+      "chapterCode": "j6-3-2",
+      "topicNumber": 3,
+      "slug": "center-and-spread-of-data",
+      "title": "資料的集中與分散",
+      "pageStart": 29,
+      "pageEnd": 29,
+      "file": "j6-3-2-topic-3-center-and-spread-of-data.pdf"
+    },
+    {
+      "chapterCode": "j6-3-2",
+      "topicNumber": 4,
+      "slug": "chart-interpretation-and-statistical-conclusions",
+      "title": "圖表判讀與統計結論",
+      "pageStart": 30,
+      "pageEnd": 30,
+      "file": "j6-3-2-topic-4-chart-interpretation-and-statistical-conclusions.pdf"
+    },
+    {
+      "chapterCode": "j6-3-3",
+      "topicNumber": 1,
+      "slug": "basic-concepts-of-probability",
+      "title": "機率的基本概念",
+      "pageStart": 31,
+      "pageEnd": 31,
+      "file": "j6-3-3-topic-1-basic-concepts-of-probability.pdf"
+    },
+    {
+      "chapterCode": "j6-3-3",
+      "topicNumber": 2,
+      "slug": "classical-probability-method",
+      "title": "古典機率的求法",
+      "pageStart": 32,
+      "pageEnd": 32,
+      "file": "j6-3-3-topic-2-classical-probability-method.pdf"
+    },
+    {
+      "chapterCode": "j6-3-3",
+      "topicNumber": 3,
+      "slug": "tree-diagrams-and-listing",
+      "title": "樹狀圖與列舉",
+      "pageStart": 33,
+      "pageEnd": 33,
+      "file": "j6-3-3-topic-3-tree-diagrams-and-listing.pdf"
+    },
+    {
+      "chapterCode": "j6-3-3",
+      "topicNumber": 4,
+      "slug": "replacement-no-replacement-and-event-dependence",
+      "title": "放回、不放回與事件關聯",
+      "pageStart": 34,
+      "pageEnd": 34,
+      "file": "j6-3-3-topic-4-replacement-no-replacement-and-event-dependence.pdf"
+    },
+    {
+      "chapterCode": "j6-3-3",
+      "topicNumber": 5,
+      "slug": "relative-frequency-and-experimental-probability",
+      "title": "相對次數與實驗機率",
+      "pageStart": 35,
+      "pageEnd": 35,
+      "file": "j6-3-3-topic-5-relative-frequency-and-experimental-probability.pdf"
+    },
+    {
+      "chapterCode": "j6-3-3",
+      "topicNumber": 6,
+      "slug": "integrated-statistics-and-probability-applications",
+      "title": "統計與機率的綜合應用",
+      "pageStart": 36,
+      "pageEnd": 36,
+      "file": "j6-3-3-topic-6-integrated-statistics-and-probability-applications.pdf"
+    }
+  ]
+}

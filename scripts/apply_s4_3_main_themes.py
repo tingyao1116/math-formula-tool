@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 from copy import deepcopy
@@ -375,7 +375,7 @@ def build_main_topic_entry(topic_id: str, title: str, rows: list[list[str]], pdf
                 "sections": [
                     {
                         "type": "pdf-page",
-                        "src": f"exports/main-theme-overviews/{pdf_file}",
+                        "src": f"data/main-theme-overviews/{pdf_file}",
                         "note": title,
                     }
                 ],
@@ -561,3 +561,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

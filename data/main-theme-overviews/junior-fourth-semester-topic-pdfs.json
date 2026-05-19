@@ -1,0 +1,421 @@
+{
+  "sourcePdf": "C:\\codex資料夾\\數學公式使用工具\\exports\\j2-second-volume-outline\\國二下全重點_易讀版分頁版_Word公式版.pdf",
+  "count": 40,
+  "topics": [
+    {
+      "chapterCode": "j4-1-1",
+      "topicNumber": 1,
+      "slug": "pattern-and-sequence-language",
+      "title": "規律與數列的基本語言",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "file": "j4-1-1-topic-1-pattern-and-sequence-language.pdf"
+    },
+    {
+      "chapterCode": "j4-1-1",
+      "topicNumber": 2,
+      "slug": "arithmetic-sequence-and-nth-term",
+      "title": "等差數列與第 \\(n\\) 項",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "file": "j4-1-1-topic-2-arithmetic-sequence-and-nth-term.pdf"
+    },
+    {
+      "chapterCode": "j4-1-1",
+      "topicNumber": 3,
+      "slug": "arithmetic-mean-and-fill-blanks",
+      "title": "等差中項與補空格",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "file": "j4-1-1-topic-3-arithmetic-mean-and-fill-blanks.pdf"
+    },
+    {
+      "chapterCode": "j4-1-2",
+      "topicNumber": 1,
+      "slug": "geometric-sequence-and-nth-term",
+      "title": "等比數列與第 \\(n\\) 項",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "file": "j4-1-2-topic-1-geometric-sequence-and-nth-term.pdf"
+    },
+    {
+      "chapterCode": "j4-1-2",
+      "topicNumber": 2,
+      "slug": "geometric-mean-and-geometric-series",
+      "title": "等比中項與等比級數",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "file": "j4-1-2-topic-2-geometric-mean-and-geometric-series.pdf"
+    },
+    {
+      "chapterCode": "j4-1-3",
+      "topicNumber": 1,
+      "slug": "arithmetic-series-and-sum",
+      "title": "等差級數與前 \\(n\\) 項和",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "file": "j4-1-3-topic-1-arithmetic-series-and-sum.pdf"
+    },
+    {
+      "chapterCode": "j4-1-3",
+      "topicNumber": 2,
+      "slug": "sigma-and-an-sn-relation",
+      "title": "\\(\\sum\\) 符號與 \\(a_n\\)、\\(S_n\\) 的關係",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "file": "j4-1-3-topic-2-sigma-and-an-sn-relation.pdf"
+    },
+    {
+      "chapterCode": "j4-1-3",
+      "topicNumber": 3,
+      "slug": "pattern-applications",
+      "title": "圖形規律與應用題",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "file": "j4-1-3-topic-3-pattern-applications.pdf"
+    },
+    {
+      "chapterCode": "j4-2",
+      "topicNumber": 1,
+      "slug": "function-meaning-and-correspondence",
+      "title": "函數的意義與對應關係",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "file": "j4-2-topic-1-function-meaning-and-correspondence.pdf"
+    },
+    {
+      "chapterCode": "j4-2",
+      "topicNumber": 2,
+      "slug": "variables-and-domain",
+      "title": "自變數、應變數與定義域",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "file": "j4-2-topic-2-variables-and-domain.pdf"
+    },
+    {
+      "chapterCode": "j4-2",
+      "topicNumber": 3,
+      "slug": "tables-relations-and-formulas",
+      "title": "用表格、對應表與關係式表示函數",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "file": "j4-2-topic-3-tables-relations-and-formulas.pdf"
+    },
+    {
+      "chapterCode": "j4-2",
+      "topicNumber": 4,
+      "slug": "function-values-and-substitution",
+      "title": "函數值與代入計算",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "file": "j4-2-topic-4-function-values-and-substitution.pdf"
+    },
+    {
+      "chapterCode": "j4-2",
+      "topicNumber": 5,
+      "slug": "graphs-and-coordinate-meaning",
+      "title": "函數圖形與座標上的意義",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "file": "j4-2-topic-5-graphs-and-coordinate-meaning.pdf"
+    },
+    {
+      "chapterCode": "j4-2",
+      "topicNumber": 6,
+      "slug": "direct-proportion-and-y-equals-ax",
+      "title": "正比函數與 \\(y=ax\\)",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "file": "j4-2-topic-6-direct-proportion-and-y-equals-ax.pdf"
+    },
+    {
+      "chapterCode": "j4-2",
+      "topicNumber": 7,
+      "slug": "linear-function-and-y-equals-ax-plus-b",
+      "title": "一次函數與 \\(y=ax+b\\)",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "file": "j4-2-topic-7-linear-function-and-y-equals-ax-plus-b.pdf"
+    },
+    {
+      "chapterCode": "j4-2",
+      "topicNumber": 8,
+      "slug": "applications-and-interpretation",
+      "title": "函數的實際應用與判讀",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "file": "j4-2-topic-8-applications-and-interpretation.pdf"
+    },
+    {
+      "chapterCode": "j4-3-1",
+      "topicNumber": 1,
+      "slug": "triangle-angles-and-exterior-angle-theorem",
+      "title": "三角形記法、內角外角與外角定理",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-1-topic-1-triangle-angles-and-exterior-angle-theorem.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下5_三角形的內角與外角_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-1-topic-1-triangle-angles-and-exterior-angle-theorem.html"
+    },
+    {
+      "chapterCode": "j4-3-1",
+      "topicNumber": 2,
+      "slug": "angle-chasing-parallel-eight-arrow-turning",
+      "title": "角度追蹤：平行線、8字型、飛鏢型、轉角",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-1-topic-2-angle-chasing-parallel-eight-arrow-turning.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下5_三角形的內角與外角_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-1-topic-2-angle-chasing-parallel-eight-arrow-turning.html"
+    },
+    {
+      "chapterCode": "j4-3-1",
+      "topicNumber": 3,
+      "slug": "polygon-angle-sums-exterior-sums-and-diagonals",
+      "title": "多邊形內角和、外角和與對角線個數",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-1-topic-3-polygon-angle-sums-exterior-sums-and-diagonals.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下5_三角形的內角與外角_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-1-topic-3-polygon-angle-sums-exterior-sums-and-diagonals.html"
+    },
+    {
+      "chapterCode": "j4-3-1",
+      "topicNumber": 4,
+      "slug": "regular-polygons-isosceles-equilateral-and-angle-bisectors",
+      "title": "正多邊形、等腰等邊與角平分線綜合",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-1-topic-4-regular-polygons-isosceles-equilateral-and-angle-bisectors.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下5_三角形的內角與外角_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-1-topic-4-regular-polygons-isosceles-equilateral-and-angle-bisectors.html"
+    },
+    {
+      "chapterCode": "j4-3-2",
+      "topicNumber": 1,
+      "slug": "tools-equal-segments-equal-angles",
+      "title": "尺規作圖的工具與等線段、等角",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-2-topic-1-tools-equal-segments-equal-angles.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下3_尺規作圖_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-2-topic-1-tools-equal-segments-equal-angles.html"
+    },
+    {
+      "chapterCode": "j4-3-2",
+      "topicNumber": 2,
+      "slug": "perpendicular-bisector-perpendicular-and-angle-bisector-constructions",
+      "title": "中垂線、垂線與角平分線作圖",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-2-topic-2-perpendicular-bisector-perpendicular-and-angle-bisector-constructions.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下3_尺規作圖_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-2-topic-2-perpendicular-bisector-perpendicular-and-angle-bisector-constructions.html"
+    },
+    {
+      "chapterCode": "j4-3-2",
+      "topicNumber": 3,
+      "slug": "parallel-line-construction-and-parallel-angle-reading",
+      "title": "平行線作圖與平行角關係",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-2-topic-3-parallel-line-construction-and-parallel-angle-reading.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下3_尺規作圖_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-2-topic-3-parallel-line-construction-and-parallel-angle-reading.html"
+    },
+    {
+      "chapterCode": "j4-3-2",
+      "topicNumber": 4,
+      "slug": "constructing-triangles-and-construction-checking",
+      "title": "作三角形與作圖驗證",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-2-topic-4-constructing-triangles-and-construction-checking.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下3_尺規作圖_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-2-topic-4-constructing-triangles-and-construction-checking.html"
+    },
+    {
+      "chapterCode": "j4-3-3",
+      "topicNumber": 1,
+      "slug": "congruence-meaning-and-correspondence",
+      "title": "全等的意義與對應關係",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-3-topic-1-congruence-meaning-and-correspondence.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下6_三角形的全等_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-3-topic-1-congruence-meaning-and-correspondence.html"
+    },
+    {
+      "chapterCode": "j4-3-3",
+      "topicNumber": 2,
+      "slug": "valid-congruence-tests",
+      "title": "可用的全等判定",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-3-topic-2-valid-congruence-tests.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下6_三角形的全等_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-3-topic-2-valid-congruence-tests.html"
+    },
+    {
+      "chapterCode": "j4-3-3",
+      "topicNumber": 3,
+      "slug": "non-congruence-cases",
+      "title": "不能直接判定全等的情形",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-3-topic-3-non-congruence-cases.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下6_三角形的全等_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-3-topic-3-non-congruence-cases.html"
+    },
+    {
+      "chapterCode": "j4-3-3",
+      "topicNumber": 4,
+      "slug": "congruence-applications-proof-and-construction-link",
+      "title": "全等的應用、證明與作圖連結",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-3-topic-4-congruence-applications-proof-and-construction-link.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下6_三角形的全等_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-3-topic-4-congruence-applications-proof-and-construction-link.html"
+    },
+    {
+      "chapterCode": "j4-3-4",
+      "topicNumber": 1,
+      "slug": "triangle-inequality-and-third-side-range",
+      "title": "三角形成立條件與第三邊範圍",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-4-topic-1-triangle-inequality-and-third-side-range.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下7_三角形的邊角關係_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-4-topic-1-triangle-inequality-and-third-side-range.html"
+    },
+    {
+      "chapterCode": "j4-3-4",
+      "topicNumber": 2,
+      "slug": "larger-side-larger-angle-and-converse",
+      "title": "大邊對大角、大角對大邊",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-4-topic-2-larger-side-larger-angle-and-converse.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下7_三角形的邊角關係_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-4-topic-2-larger-side-larger-angle-and-converse.html"
+    },
+    {
+      "chapterCode": "j4-3-4",
+      "topicNumber": 3,
+      "slug": "hinge-theorem-and-converse",
+      "title": "樞紐定理與逆樞紐定理",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-4-topic-3-hinge-theorem-and-converse.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下7_三角形的邊角關係_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-4-topic-3-hinge-theorem-and-converse.html"
+    },
+    {
+      "chapterCode": "j4-3-4",
+      "topicNumber": 4,
+      "slug": "special-right-triangles-and-area",
+      "title": "特殊直角三角形與面積",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-4-topic-4-special-right-triangles-and-area.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下7_三角形的邊角關係_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-4-topic-4-special-right-triangles-and-area.html"
+    },
+    {
+      "chapterCode": "j4-3-4",
+      "topicNumber": 5,
+      "slug": "perpendicular-bisector-angle-bisector-and-shortest-path",
+      "title": "中垂線、角平分線與最短路徑綜合",
+      "pageStart": null,
+      "pageEnd": null,
+      "file": "j4-3-4-topic-5-perpendicular-bisector-angle-bisector-and-shortest-path.pdf",
+      "sourceKind": "generated-from-markdown",
+      "sourceMd": "改國二下7_三角形的邊角關係_易讀版.md",
+      "htmlFile": "_generated-j4-3/j4-3-4-topic-5-perpendicular-bisector-angle-bisector-and-shortest-path.html"
+    },
+    {
+      "chapterCode": "j4-4-1",
+      "topicNumber": 1,
+      "slug": "parallel-lines-transversal-and-angle-positions",
+      "title": "平行線、截線與角的位置",
+      "pageStart": 28,
+      "pageEnd": 28,
+      "file": "j4-4-1-topic-1-parallel-lines-transversal-and-angle-positions.pdf"
+    },
+    {
+      "chapterCode": "j4-4-1",
+      "topicNumber": 2,
+      "slug": "parallel-lines-properties-and-criteria",
+      "title": "平行線的性質與判別",
+      "pageStart": 29,
+      "pageEnd": 29,
+      "file": "j4-4-1-topic-2-parallel-lines-properties-and-criteria.pdf"
+    },
+    {
+      "chapterCode": "j4-4-1",
+      "topicNumber": 3,
+      "slug": "parallel-lines-angle-chasing",
+      "title": "平行線與角度追蹤",
+      "pageStart": 30,
+      "pageEnd": 30,
+      "file": "j4-4-1-topic-3-parallel-lines-angle-chasing.pdf"
+    },
+    {
+      "chapterCode": "j4-4-2",
+      "topicNumber": 1,
+      "slug": "parallelogram-definition-and-basic-figure",
+      "title": "平行四邊形的定義與基本圖形",
+      "pageStart": 31,
+      "pageEnd": 31,
+      "file": "j4-4-2-topic-1-parallelogram-definition-and-basic-figure.pdf"
+    },
+    {
+      "chapterCode": "j4-4-2",
+      "topicNumber": 2,
+      "slug": "parallelogram-properties",
+      "title": "平行四邊形的性質",
+      "pageStart": 32,
+      "pageEnd": 32,
+      "file": "j4-4-2-topic-2-parallelogram-properties.pdf"
+    },
+    {
+      "chapterCode": "j4-4-2",
+      "topicNumber": 3,
+      "slug": "parallelogram-criteria",
+      "title": "平行四邊形的判別",
+      "pageStart": 33,
+      "pageEnd": 33,
+      "file": "j4-4-2-topic-3-parallelogram-criteria.pdf"
+    },
+    {
+      "chapterCode": "j4-4-3",
+      "topicNumber": 1,
+      "slug": "special-parallelograms-and-integrated-applications",
+      "title": "特殊平行四邊形與綜合應用",
+      "pageStart": 34,
+      "pageEnd": 34,
+      "file": "j4-4-3-topic-1-special-parallelograms-and-integrated-applications.pdf"
+    }
+  ],
+  "sourceNotes": [
+    "j4-3-1 到 j4-3-4 使用分章 Markdown 來源重建主題與原稿版。",
+    "因為整冊 Word公式版 PDF 只完整涵蓋尺規作圖與三角形全等，所以 j4-3 原稿版改由分章來源輸出。"
+  ]
+}

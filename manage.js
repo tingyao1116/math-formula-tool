@@ -239,16 +239,18 @@ async function saveToDatabase() {
 }
 
 function buildParentOptions(selectedId) {
-  const options = [{ value: "", label: "主主題（不放進分支）" }];
+  const options = [{ value: "", label: "主題層（不放進分支）" }];
   const selectedItem = state.items.find((item) => item.id === selectedId) || null;
   const selectedCode = selectedItem ? getItemChapterCode(selectedItem) : "";
   const descendants = selectedId ? getDescendantIds(selectedId, getChildrenMap()) : new Set();
+  const { kindMap } = buildSemanticStructureMap();
   state.items
     .filter((item) => {
       if (item.id === selectedId) return false;
       if (descendants.has(item.id)) return false;
       if (selectedCode && getItemChapterCode(item) !== selectedCode) return false;
-      return getItemDepth(item.id) < 2;
+      const kind = kindMap.get(item.id) || "theme";
+      return kind !== "chapter-root" && getSemanticDepthForKind(kind) < 2;
     })
     .forEach((item) => {
       options.push({
@@ -352,6 +354,65 @@ function getChildrenMap() {
   return map;
 }
 
+function isChapterRootLike(item, childrenMap) {
+  if (!item) return false;
+  const role = String(item.chapterRole || "").trim();
+  if (!item.parentId && ["主角", "章節", "章節根"].includes(role)) return true;
+  if (item.parentId) return false;
+  const children = childrenMap.get(item.id) || [];
+  return children.some((child) => String(child.chapterRole || "").trim() === "主題");
+}
+
+function buildSemanticStructureMap(items = state.items) {
+  const byId = new Map(items.map((item) => [item.id, item]));
+  const childrenMap = new Map();
+  items.forEach((item) => {
+    const key = item.parentId || "";
+    const group = childrenMap.get(key) || [];
+    group.push(item);
+    childrenMap.set(key, group);
+  });
+  const kindMap = new Map();
+
+  const classify = (item) => {
+    if (!item) return "theme";
+    if (kindMap.has(item.id)) return kindMap.get(item.id);
+
+    const parent = item.parentId ? byId.get(item.parentId) : null;
+    let kind = "theme";
+    if (!parent) {
+      kind = isChapterRootLike(item, childrenMap) ? "chapter-root" : "theme";
+    } else {
+      const parentKind = classify(parent);
+      kind = parentKind === "chapter-root"
+        ? "theme"
+        : parentKind === "theme"
+          ? "branch"
+          : "subbranch";
+    }
+
+    kindMap.set(item.id, kind);
+    return kind;
+  };
+
+  items.forEach((item) => classify(item));
+  return { byId, childrenMap, kindMap };
+}
+
+function getStructureKindLabel(kind) {
+  if (kind === "chapter-root") return "章節";
+  if (kind === "theme") return "主題";
+  if (kind === "branch") return "分支";
+  return "次分支";
+}
+
+function getSemanticDepthForKind(kind) {
+  if (kind === "chapter-root") return -1;
+  if (kind === "theme") return 0;
+  if (kind === "branch") return 1;
+  return 2;
+}
+
 function getDepthById(childrenMap) {
   const depthMap = new Map();
   const visit = (item, depth) => {
@@ -363,8 +424,7 @@ function getDepthById(childrenMap) {
 }
 
 function buildStructureRows() {
-  const byId = new Map(state.items.map((item) => [item.id, item]));
-  const childrenMap = getChildrenMap();
+  const { byId, childrenMap, kindMap } = buildSemanticStructureMap();
   const visited = new Set();
   const rows = [];
 
@@ -375,12 +435,27 @@ function buildStructureRows() {
     (childrenMap.get(item.id) || []).forEach((child) => visit(child, depth + 1));
   };
 
-  (childrenMap.get("") || []).forEach((root) => visit(root, 0));
+  (childrenMap.get("") || []).forEach((root) => {
+    const kind = kindMap.get(root.id) || "theme";
+    if (kind === "chapter-root") {
+      (childrenMap.get(root.id) || []).forEach((child) => visit(child, 0));
+      return;
+    }
+    visit(root, 0);
+  });
   state.items.forEach((item) => {
-    if (!visited.has(item.id)) visit(item, 0);
+    if (visited.has(item.id)) return;
+    const kind = kindMap.get(item.id) || "theme";
+    if (kind === "chapter-root") {
+      (childrenMap.get(item.id) || []).forEach((child) => {
+        if (!visited.has(child.id)) visit(child, 0);
+      });
+      return;
+    }
+    visit(item, 0);
   });
 
-  return { rows, byId, childrenMap };
+  return { rows, byId, childrenMap, kindMap };
 }
 
 function getDescendantIds(targetId, childrenMap) {
@@ -458,7 +533,7 @@ function moveStructureItem(dragId, targetId, mode) {
 
   const sourceItem = state.items[sourceIndex];
   const targetItem = state.items[targetIndex];
-  const { childrenMap } = buildStructureRows();
+  const { childrenMap, kindMap } = buildStructureRows();
   const descendants = getDescendantIds(dragId, childrenMap);
   if (descendants.has(targetId)) {
     setNotice("無法拖到自己的子節點底下。");
@@ -466,7 +541,8 @@ function moveStructureItem(dragId, targetId, mode) {
   }
 
   if (mode === "inside") {
-    if (getItemDepth(targetId) >= 2) {
+    const targetKind = kindMap.get(targetId) || "theme";
+    if (getSemanticDepthForKind(targetKind) >= 2) {
       setNotice("最多只允許：主題 → 分支 → 次分支。");
       return false;
     }
@@ -696,16 +772,24 @@ function renderManageOverviewSection(section) {
 
 function renderList() {
   const visibleItems = getVisibleItems();
+  const { kindMap } = buildSemanticStructureMap();
 
   elements.manageList.innerHTML = visibleItems
     .map(
-      (item) => `
+      (item) => {
+        const kind = kindMap.get(item.id) || "theme";
+        const kindLabel = getStructureKindLabel(kind);
+        const relationLabel =
+          kind === "branch" || kind === "subbranch"
+            ? `${kindLabel}：${getParentTitle(item)}`
+            : kindLabel;
+        return `
         <article class="manage-item ${item.id === state.selectedId ? "active" : ""}" data-id="${item.id}">
           <div class="manage-item__main">
             <h3>${item.title}</h3>
             <p>${item.stage}・${getGradeLabel(item)}・${item.chapter}</p>
             <div class="meta-row">
-              <span class="meta-chip">${item.parentId ? `分支：${getParentTitle(item)}` : "主主題"}</span>
+              <span class="meta-chip">${relationLabel}</span>
               ${item.chapterRole ? `<span class="meta-chip">章節角色：${item.chapterRole}</span>` : ""}
               ${(item.relatedChapters || []).map((chapter) => `<span class="meta-chip">關聯章節：${chapter}</span>`).join("")}
               <span class="meta-chip">${item.domain}</span>
@@ -719,7 +803,8 @@ function renderList() {
             <button type="button" class="ghost-link manage-mini-button" data-action="down" data-id="${item.id}" ${state.items.findIndex((entry) => entry.id === item.id) === state.items.length - 1 ? "disabled" : ""}>下移</button>
           </div>
         </article>
-      `
+      `;
+      }
     )
     .join("");
 
@@ -731,6 +816,7 @@ function renderList() {
 function renderStructureBoard() {
   if (!elements.manageStructureBoard) return;
   const { rows } = buildStructureRows();
+  const { kindMap } = buildSemanticStructureMap();
   if (!rows.length) {
     elements.manageStructureBoard.innerHTML = '<div class="empty-state">目前沒有可編排的節點。</div>';
     return;
@@ -739,7 +825,7 @@ function renderStructureBoard() {
   elements.manageStructureBoard.innerHTML = rows
     .map(({ item, depth }) => {
       const marginLeft = Math.min(depth, 2) * 24;
-      const branchTag = item.parentId ? "分支" : "主題";
+      const branchTag = getStructureKindLabel(kindMap.get(item.id) || "theme");
       return `
         <article class="structure-node ${state.selectedId === item.id ? "active" : ""}" data-id="${item.id}" draggable="true" style="margin-left:${marginLeft}px">
           <div class="structure-node__head">

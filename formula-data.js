@@ -2027,6 +2027,7 @@
       const parsed = loadManagedPayload();
       if (!parsed) return null;
       if (parsed.dataRevision !== DATA_REVISION) return null;
+      if (isManagedPayloadStaleAgainstDb(parsed)) return null;
       const managedItemsRaw = Array.isArray(parsed.items) ? parsed.items : [];
       const managedItems = dedupeItemsById(managedItemsRaw);
       const managedMap = new Map(managedItems.map((item) => [String(item.id), item]));
@@ -2132,6 +2133,14 @@
     }
   }
 
+  function isManagedPayloadStaleAgainstDb(payload) {
+    if (!payload || typeof payload !== "object") return false;
+    const managedSavedAt = Date.parse(String(payload.savedAt || ""));
+    const dbUpdatedAt = Date.parse(String(window.__formulaDbMeta?.updatedAt || ""));
+    if (!Number.isFinite(managedSavedAt) || !Number.isFinite(dbUpdatedAt)) return false;
+    return dbUpdatedAt > managedSavedAt;
+  }
+
   function getManagedStateInfo() {
     const payload = loadManagedPayload();
     if (!payload) {
@@ -2145,6 +2154,16 @@
       };
     }
     if (payload.dataRevision !== DATA_REVISION) {
+      return {
+        hasManagedData: false,
+        version: 0,
+        savedAt: "",
+        itemCount: 0,
+        dataRevision: DATA_REVISION,
+        source: "base"
+      };
+    }
+    if (isManagedPayloadStaleAgainstDb(payload)) {
       return {
         hasManagedData: false,
         version: 0,

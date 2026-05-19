@@ -342,14 +342,14 @@ window.chapterCodeCatalog = {
     "domainSub": ""
   },
   "j5-2-1": {
-    "chapter": "圓形",
-    "section": "基本圓與長度關係",
+    "chapter": "幾何圓形原理與性質",
+    "section": "點、直線、圓的位置關係",
     "domainMain": "幾何",
     "domainSub": ""
   },
   "j5-2-2": {
-    "chapter": "圓形",
-    "section": "圓的角度關係",
+    "chapter": "幾何圓形原理與性質",
+    "section": "圓心角、圓周角及弦切角",
     "domainMain": "幾何",
     "domainSub": ""
   },
@@ -379,31 +379,31 @@ window.chapterCodeCatalog = {
   },
   "j6-1-1": {
     "chapter": "二次函數",
-    "section": "二次函數的基本形式與圖形",
+    "section": "二次函數的圖形",
     "domainMain": "函數與圖形",
     "domainSub": "代數"
   },
   "j6-1-2": {
     "chapter": "二次函數",
-    "section": "配方法、平移與最值",
+    "section": "二次函數的最大值、最小值與平移",
     "domainMain": "函數與圖形",
     "domainSub": "代數"
   },
   "j6-1-3": {
     "chapter": "二次函數",
-    "section": "交點、方程式與應用",
+    "section": "二次函數的應用問題",
     "domainMain": "函數與圖形",
     "domainSub": "代數"
   },
   "j6-2-1": {
-    "chapter": "空間中的垂直與形體",
-    "section": "空間中的垂直與形體",
+    "chapter": "立體圖形",
+    "section": "空間中的垂直、平行與多面體性質",
     "domainMain": "空間與形體",
     "domainSub": "幾何"
   },
   "j6-3-1": {
     "chapter": "統計與機率",
-    "section": "統計圖表",
+    "section": "資料整理與統計圖表",
     "domainMain": "機率與統計",
     "domainSub": ""
   },
@@ -457,7 +457,7 @@ window.chapterCodeCatalog = {
   },
   "s1-2-1": {
     "chapter": "直線與圓",
-    "section": "直線方程式",
+    "section": "直線方程式及其圖形、二元一次不等式與線性規劃",
     "domainMain": "解析幾何",
     "domainSub": ""
   },
@@ -469,25 +469,25 @@ window.chapterCodeCatalog = {
   },
   "s1-2-3": {
     "chapter": "直線與圓",
-    "section": "直線與圓的關係",
+    "section": "圓與直線的關係",
     "domainMain": "解析幾何",
     "domainSub": ""
   },
   "s1-3-1": {
-    "chapter": "多項式",
-    "section": "多項式函數",
+    "chapter": "多項式函數",
+    "section": "多項式的運算與定理",
     "domainMain": "代數",
     "domainSub": ""
   },
   "s1-3-2": {
-    "chapter": "多項式",
-    "section": "簡單多項式函數及其圖形",
+    "chapter": "多項式函數",
+    "section": "多項式函數的圖形",
     "domainMain": "函數圖形",
     "domainSub": ""
   },
   "s1-3-3": {
-    "chapter": "多項式",
-    "section": "多項式不等式",
+    "chapter": "多項式函數",
+    "section": "多項式方程式與不等式",
     "domainMain": "代數",
     "domainSub": ""
   },
@@ -498,38 +498,38 @@ window.chapterCodeCatalog = {
     "domainSub": ""
   },
   "s2-1-1": {
-    "chapter": "數列與遞迴與級數",
-    "section": "數列與遞迴",
+    "chapter": "數列與級數",
+    "section": "數列與等差、等比數列、遞迴關係與數學歸納法",
     "domainMain": "數列",
     "domainSub": ""
   },
   "s2-1-2": {
-    "chapter": "數列與遞迴與級數",
-    "section": "級數",
+    "chapter": "數列與級數",
+    "section": "級數與 \\(\\sum\\) 運算",
     "domainMain": "數列",
     "domainSub": ""
   },
   "s2-2-1": {
-    "chapter": "排列組合",
+    "chapter": "邏輯、集合、排列組合與機率",
     "section": "邏輯、集合與計數原理",
     "domainMain": "邏輯與集合",
     "domainSub": ""
   },
   "s2-2-2": {
-    "chapter": "排列組合",
-    "section": "排列組合",
+    "chapter": "邏輯、集合、排列組合與機率",
+    "section": "各種排列",
     "domainMain": "機率與統計",
     "domainSub": ""
   },
   "s2-2-3": {
-    "chapter": "排列組合",
-    "section": "二項式定理",
+    "chapter": "邏輯、集合、排列組合與機率",
+    "section": "各種組合與二項式定理",
     "domainMain": "排列組合",
     "domainSub": ""
   },
   "s2-2-4": {
-    "chapter": "排列組合",
-    "section": "古典機率",
+    "chapter": "邏輯、集合、排列組合與機率",
+    "section": "機率",
     "domainMain": "機率與統計",
     "domainSub": ""
   },
@@ -547,7 +547,7 @@ window.chapterCodeCatalog = {
   },
   "s2-4-1": {
     "chapter": "三角比",
-    "section": "三角比定義與關係",
+    "section": "銳角三角比、廣義角與極坐標",
     "domainMain": "三角函數",
     "domainSub": ""
   },
@@ -571,19 +571,19 @@ window.chapterCodeCatalog = {
   },
   "s3-1-1": {
     "chapter": "三角函數",
-    "section": "弧度、弧長",
+    "section": "弧度量、扇形與三角比",
     "domainMain": "三角函數",
     "domainSub": ""
   },
   "s3-1-2": {
     "chapter": "三角函數",
-    "section": "三角函數的圖形",
+    "section": "和差角與倍半角公式",
     "domainMain": "函數圖形",
     "domainSub": ""
   },
   "s3-1-3": {
     "chapter": "三角函數",
-    "section": "和差角公式",
+    "section": "三角函數的圖形",
     "domainMain": "三角函數",
     "domainSub": ""
   },
@@ -594,38 +594,38 @@ window.chapterCodeCatalog = {
     "domainSub": ""
   },
   "s3-2-1": {
-    "chapter": "指數對數",
-    "section": "指數函數",
+    "chapter": "指數與對數函數",
+    "section": "指數函數及其圖形",
     "domainMain": "函數圖形",
     "domainSub": ""
   },
   "s3-2-2": {
-    "chapter": "指數對數",
-    "section": "對數",
+    "chapter": "指數與對數函數",
+    "section": "對數與對數律",
     "domainMain": "函數圖形",
     "domainSub": ""
   },
   "s3-2-3": {
-    "chapter": "指數對數",
-    "section": "對數函數",
+    "chapter": "指數與對數函數",
+    "section": "對數函數及其圖形",
     "domainMain": "函數圖形",
     "domainSub": ""
   },
   "s3-3-1": {
-    "chapter": "平面向量",
-    "section": "平面向量",
+    "chapter": "平面向量的幾何表示法",
+    "section": "平面向量的幾何表示法",
     "domainMain": "向量",
     "domainSub": ""
   },
   "s3-3-2": {
-    "chapter": "平面向量的內積",
-    "section": "平面向量的內積",
+    "chapter": "平面向量的坐標表示法",
+    "section": "平面向量的坐標表示法",
     "domainMain": "向量",
     "domainSub": ""
   },
   "s3-3-3": {
-    "chapter": "面積與二階行列式",
-    "section": "面積與二階行列式",
+    "chapter": "平面向量的內積",
+    "section": "平面向量的內積",
     "domainMain": "向量",
     "domainSub": ""
   },
@@ -661,13 +661,13 @@ window.chapterCodeCatalog = {
   },
   "s4-2-1": {
     "chapter": "空間中的平面與直線",
-    "section": "空間中的平面方程式",
+    "section": "空間中的平面",
     "domainMain": "空間幾何",
     "domainSub": ""
   },
   "s4-2-2": {
     "chapter": "空間中的平面與直線",
-    "section": "空間中的直線方程式",
+    "section": "空間中的直線",
     "domainMain": "空間幾何",
     "domainSub": ""
   },
@@ -685,7 +685,7 @@ window.chapterCodeCatalog = {
   },
   "s4-4-1": {
     "chapter": "矩陣",
-    "section": "線性方程組與矩陣",
+    "section": "三元一次聯立方程組與高斯消去法",
     "domainMain": "代數",
     "domainSub": ""
   },
@@ -697,13 +697,13 @@ window.chapterCodeCatalog = {
   },
   "s4-4-3": {
     "chapter": "矩陣",
-    "section": "變換矩陣的應用",
+    "section": "矩陣的應用：轉移矩陣與反矩陣",
     "domainMain": "機率與統計",
     "domainSub": ""
   },
   "s4-4-4": {
     "chapter": "矩陣",
-    "section": "平面上的線性變換與二階方陣",
+    "section": "平面上的線性變換",
     "domainMain": "代數",
     "domainSub": ""
   },
@@ -796,5 +796,29 @@ window.chapterCodeCatalog = {
     "section": "線型函數的圖形",
     "domainMain": "函數與圖形",
     "domainSub": "代數"
+  },
+  "j6-2-2": {
+    "chapter": "立體圖形",
+    "section": "角柱與圓柱的體積與表面積",
+    "domainMain": "空間與形體",
+    "domainSub": "幾何"
+  },
+  "j6-2-3": {
+    "chapter": "立體圖形",
+    "section": "角錐、圓錐與球體",
+    "domainMain": "空間與形體",
+    "domainSub": "幾何"
+  },
+  "s3-2-4": {
+    "chapter": "指數與對數函數",
+    "section": "指數與對數的應用",
+    "domainMain": "函數圖形",
+    "domainSub": ""
+  },
+  "s3-3-4": {
+    "chapter": "面積與二階行列式",
+    "section": "面積與二階行列式",
+    "domainMain": "向量",
+    "domainSub": ""
   }
 };

@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 from datetime import datetime, timedelta, timezone
@@ -204,7 +204,7 @@ def upsert_main_topic_entry(store: dict, topic: dict, updated_at: str, pdf_file:
                 "sections": [
                     {
                         "type": "pdf-page",
-                        "src": f"exports/main-theme-overviews/{pdf_file}",
+                        "src": f"data/main-theme-overviews/{pdf_file}",
                         "note": topic["title"],
                     }
                 ],
@@ -576,3 +576,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

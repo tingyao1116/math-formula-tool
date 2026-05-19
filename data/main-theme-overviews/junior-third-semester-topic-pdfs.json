@@ -1,0 +1,600 @@
+{
+  "sourcePdf": "國三上全重點_易讀版分頁版_Word公式版.pdf",
+  "count": 66,
+  "topics": [
+    {
+      "chapterCode": "j3-1-1",
+      "topicNumber": 1,
+      "slug": "laws-and-distributive-property",
+      "title": "運算律與分配律",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "file": "j3-1-1-topic-1-laws-and-distributive-property.pdf"
+    },
+    {
+      "chapterCode": "j3-1-1",
+      "topicNumber": 2,
+      "slug": "binomial-products-and-cross-terms",
+      "title": "二項式相乘與交叉項",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "file": "j3-1-1-topic-2-binomial-products-and-cross-terms.pdf"
+    },
+    {
+      "chapterCode": "j3-1-1",
+      "topicNumber": 3,
+      "slug": "perfect-square-formulas",
+      "title": "完全平方公式",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "file": "j3-1-1-topic-3-perfect-square-formulas.pdf"
+    },
+    {
+      "chapterCode": "j3-1-1",
+      "topicNumber": 4,
+      "slug": "difference-of-squares-and-mental-arithmetic",
+      "title": "平方差公式與數值速算",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "file": "j3-1-1-topic-4-difference-of-squares-and-mental-arithmetic.pdf"
+    },
+    {
+      "chapterCode": "j3-1-1",
+      "topicNumber": 5,
+      "slug": "three-term-square-and-formula-organization",
+      "title": "三項完全平方與公式整理",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "file": "j3-1-1-topic-5-three-term-square-and-formula-organization.pdf"
+    },
+    {
+      "chapterCode": "j3-1-1",
+      "topicNumber": 6,
+      "slug": "sum-and-difference-of-cubes",
+      "title": "立方和與立方差",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "file": "j3-1-1-topic-6-sum-and-difference-of-cubes.pdf"
+    },
+    {
+      "chapterCode": "j3-1-1",
+      "topicNumber": 7,
+      "slug": "perfect-cubes-and-pascals-triangle",
+      "title": "完全立方與巴斯卡三角形",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "file": "j3-1-1-topic-7-perfect-cubes-and-pascals-triangle.pdf"
+    },
+    {
+      "chapterCode": "j3-1-2",
+      "topicNumber": 1,
+      "slug": "polynomial-terminology",
+      "title": "多項式的基本名詞",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "file": "j3-1-2-topic-1-polynomial-terminology.pdf"
+    },
+    {
+      "chapterCode": "j3-1-2",
+      "topicNumber": 2,
+      "slug": "standard-form-and-like-terms",
+      "title": "升冪、降冪與同類項合併",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "file": "j3-1-2-topic-2-standard-form-and-like-terms.pdf"
+    },
+    {
+      "chapterCode": "j3-1-3",
+      "topicNumber": 1,
+      "slug": "polynomial-multiplication",
+      "title": "多項式乘法",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "file": "j3-1-3-topic-1-polynomial-multiplication.pdf"
+    },
+    {
+      "chapterCode": "j3-1-3",
+      "topicNumber": 2,
+      "slug": "polynomial-division-and-checking",
+      "title": "多項式除法與驗算",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "file": "j3-1-3-topic-2-polynomial-division-and-checking.pdf"
+    },
+    {
+      "chapterCode": "j3-2-1",
+      "topicNumber": 1,
+      "slug": "square-root-meaning",
+      "title": "平方根與根號的意義",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "file": "j3-2-1-topic-1-square-root-meaning.pdf"
+    },
+    {
+      "chapterCode": "j3-2-1",
+      "topicNumber": 2,
+      "slug": "perfect-squares-and-prime-factorization",
+      "title": "完全平方數與質因數分解",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "file": "j3-2-1-topic-2-perfect-squares-and-prime-factorization.pdf"
+    },
+    {
+      "chapterCode": "j3-2-1",
+      "topicNumber": 3,
+      "slug": "radical-and-absolute-value",
+      "title": "根號與絕對值",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "file": "j3-2-1-topic-3-radical-and-absolute-value.pdf"
+    },
+    {
+      "chapterCode": "j3-2-1",
+      "topicNumber": 4,
+      "slug": "root-comparison-and-approximation",
+      "title": "根號比較大小與近似值",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "file": "j3-2-1-topic-4-root-comparison-and-approximation.pdf"
+    },
+    {
+      "chapterCode": "j3-2-2",
+      "topicNumber": 1,
+      "slug": "radical-operations-and-rationalization",
+      "title": "根號運算與分母有理化",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "file": "j3-2-2-topic-1-radical-operations-and-rationalization.pdf"
+    },
+    {
+      "chapterCode": "j3-2-2",
+      "topicNumber": 2,
+      "slug": "simplest-radicals-and-like-radicals",
+      "title": "最簡根式與同類根號",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "file": "j3-2-2-topic-2-simplest-radicals-and-like-radicals.pdf"
+    },
+    {
+      "chapterCode": "j3-2-2",
+      "topicNumber": 3,
+      "slug": "radical-arithmetic",
+      "title": "根號四則運算",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "file": "j3-2-2-topic-3-radical-arithmetic.pdf"
+    },
+    {
+      "chapterCode": "j3-2-3",
+      "topicNumber": 1,
+      "slug": "pythagorean-theorem-and-radical-applications",
+      "title": "畢氏定理與根號應用",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "file": "j3-2-3-topic-1-pythagorean-theorem-and-radical-applications.pdf"
+    },
+    {
+      "chapterCode": "j3-2-3",
+      "topicNumber": 2,
+      "slug": "coordinate-plane-distance",
+      "title": "座標平面兩點距離",
+      "pageStart": 21,
+      "pageEnd": 21,
+      "file": "j3-2-3-topic-2-coordinate-plane-distance.pdf"
+    },
+    {
+      "chapterCode": "j3-3-1",
+      "topicNumber": 1,
+      "slug": "meaning-of-factorization",
+      "title": "因式分解的意義",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "file": "j3-3-1-topic-1-meaning-of-factorization.pdf"
+    },
+    {
+      "chapterCode": "j3-3-1",
+      "topicNumber": 2,
+      "slug": "factors-multiples-and-divisibility",
+      "title": "因式、倍式與整除判別",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "file": "j3-3-1-topic-2-factors-multiples-and-divisibility.pdf"
+    },
+    {
+      "chapterCode": "j3-3-1",
+      "topicNumber": 3,
+      "slug": "factor-and-remainder-theorems",
+      "title": "因式定理與餘式定理",
+      "pageStart": 26,
+      "pageEnd": 26,
+      "file": "j3-3-1-topic-3-factor-and-remainder-theorems.pdf"
+    },
+    {
+      "chapterCode": "j3-3-1",
+      "topicNumber": 4,
+      "slug": "common-factor-method",
+      "title": "提公因式法",
+      "pageStart": 27,
+      "pageEnd": 27,
+      "file": "j3-3-1-topic-4-common-factor-method.pdf"
+    },
+    {
+      "chapterCode": "j3-3-1",
+      "topicNumber": 5,
+      "slug": "grouping-common-factor",
+      "title": "分組提公因式",
+      "pageStart": 28,
+      "pageEnd": 28,
+      "file": "j3-3-1-topic-5-grouping-common-factor.pdf"
+    },
+    {
+      "chapterCode": "j3-3-1",
+      "topicNumber": 6,
+      "slug": "split-and-grouping",
+      "title": "拆項後分組",
+      "pageStart": 29,
+      "pageEnd": 29,
+      "file": "j3-3-1-topic-6-split-and-grouping.pdf"
+    },
+    {
+      "chapterCode": "j3-3-2",
+      "topicNumber": 1,
+      "slug": "perfect-square-and-difference-of-squares-factorization",
+      "title": "完全平方與平方差因式分解",
+      "pageStart": 30,
+      "pageEnd": 30,
+      "file": "j3-3-2-topic-1-perfect-square-and-difference-of-squares-factorization.pdf"
+    },
+    {
+      "chapterCode": "j3-3-2",
+      "topicNumber": 2,
+      "slug": "sum-difference-of-cubes-and-higher-degree-factorization",
+      "title": "立方和、立方差與高次式分解",
+      "pageStart": 31,
+      "pageEnd": 31,
+      "file": "j3-3-2-topic-2-sum-difference-of-cubes-and-higher-degree-factorization.pdf"
+    },
+    {
+      "chapterCode": "j3-3-3",
+      "topicNumber": 1,
+      "slug": "cross-method-leading-one",
+      "title": "十字交乘法：首項係數為 1",
+      "pageStart": 32,
+      "pageEnd": 32,
+      "file": "j3-3-3-topic-1-cross-method-leading-one.pdf"
+    },
+    {
+      "chapterCode": "j3-3-3",
+      "topicNumber": 2,
+      "slug": "cross-method-general-and-substitution",
+      "title": "十字交乘法：一般二次式與換元",
+      "pageStart": 33,
+      "pageEnd": 33,
+      "file": "j3-3-3-topic-2-cross-method-general-and-substitution.pdf"
+    },
+    {
+      "chapterCode": "j3-4-1",
+      "topicNumber": 1,
+      "slug": "quadratic-equation-and-roots",
+      "title": "一元二次方程式與根",
+      "pageStart": 35,
+      "pageEnd": 35,
+      "file": "j3-4-1-topic-1-quadratic-equation-and-roots.pdf"
+    },
+    {
+      "chapterCode": "j3-4-1",
+      "topicNumber": 2,
+      "slug": "standard-form-and-coefficients",
+      "title": "整理成標準式與係數判讀",
+      "pageStart": 36,
+      "pageEnd": 36,
+      "file": "j3-4-1-topic-2-standard-form-and-coefficients.pdf"
+    },
+    {
+      "chapterCode": "j3-4-1",
+      "topicNumber": 3,
+      "slug": "zero-product-and-factorization",
+      "title": "零乘積法與因式分解法",
+      "pageStart": 37,
+      "pageEnd": 37,
+      "file": "j3-4-1-topic-3-zero-product-and-factorization.pdf"
+    },
+    {
+      "chapterCode": "j3-4-1",
+      "topicNumber": 4,
+      "slug": "special-case-c-zero",
+      "title": "特殊型一：c = 0 的提公因式解法",
+      "pageStart": 38,
+      "pageEnd": 38,
+      "file": "j3-4-1-topic-4-special-case-c-zero.pdf"
+    },
+    {
+      "chapterCode": "j3-4-1",
+      "topicNumber": 5,
+      "slug": "special-case-b-zero",
+      "title": "特殊型二：b = 0 的平方根法",
+      "pageStart": 39,
+      "pageEnd": 39,
+      "file": "j3-4-1-topic-5-special-case-b-zero.pdf"
+    },
+    {
+      "chapterCode": "j3-4-1",
+      "topicNumber": 6,
+      "slug": "cross-method-solving-general-quadratics",
+      "title": "十字交乘解一般二次式",
+      "pageStart": 40,
+      "pageEnd": 40,
+      "file": "j3-4-1-topic-6-cross-method-solving-general-quadratics.pdf"
+    },
+    {
+      "chapterCode": "j3-4-2",
+      "topicNumber": 1,
+      "slug": "completing-square-core",
+      "title": "配方法核心：補成完全平方式",
+      "pageStart": 41,
+      "pageEnd": 41,
+      "file": "j3-4-2-topic-1-completing-square-core.pdf"
+    },
+    {
+      "chapterCode": "j3-4-2",
+      "topicNumber": 2,
+      "slug": "completing-square-solving",
+      "title": "配方法解一元二次方程式",
+      "pageStart": 42,
+      "pageEnd": 42,
+      "file": "j3-4-2-topic-2-completing-square-solving.pdf"
+    },
+    {
+      "chapterCode": "j3-4-2",
+      "topicNumber": 3,
+      "slug": "quadratic-formula-and-discriminant",
+      "title": "公式解與判別式",
+      "pageStart": 43,
+      "pageEnd": 43,
+      "file": "j3-4-2-topic-3-quadratic-formula-and-discriminant.pdf"
+    },
+    {
+      "chapterCode": "j3-4-2",
+      "topicNumber": 4,
+      "slug": "roots-and-coefficients",
+      "title": "根與係數、已知兩根求方程式",
+      "pageStart": 44,
+      "pageEnd": 44,
+      "file": "j3-4-2-topic-4-roots-and-coefficients.pdf"
+    },
+    {
+      "chapterCode": "j3-4-3",
+      "topicNumber": 1,
+      "slug": "fractional-equations-and-extraneous-roots",
+      "title": "分式方程式與增根檢查",
+      "pageStart": 45,
+      "pageEnd": 45,
+      "file": "j3-4-3-topic-1-fractional-equations-and-extraneous-roots.pdf"
+    },
+    {
+      "chapterCode": "j3-4-3",
+      "topicNumber": 2,
+      "slug": "modeling-and-application-checking",
+      "title": "應用題建模與檢驗",
+      "pageStart": 46,
+      "pageEnd": 46,
+      "file": "j3-4-3-topic-2-modeling-and-application-checking.pdf"
+    },
+    {
+      "chapterCode": "j5-1-1",
+      "topicNumber": 1,
+      "slug": "ratio-language",
+      "title": "比例線段的基本語言",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "file": "j5-1-1-topic-1-ratio-language.pdf"
+    },
+    {
+      "chapterCode": "j5-1-2",
+      "topicNumber": 1,
+      "slug": "parallel-intercept-theorem",
+      "title": "平行線截比例線段性質",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "file": "j5-1-2-topic-1-parallel-intercept-theorem.pdf"
+    },
+    {
+      "chapterCode": "j5-1-2",
+      "topicNumber": 2,
+      "slug": "triangle-intercept-forward-and-converse",
+      "title": "三角形截比例性質與反性質",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "file": "j5-1-2-topic-2-triangle-intercept-forward-and-converse.pdf"
+    },
+    {
+      "chapterCode": "j5-1-2",
+      "topicNumber": 3,
+      "slug": "solve-unknown-length",
+      "title": "用比例線段求未知長度",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "file": "j5-1-2-topic-3-solve-unknown-length.pdf"
+    },
+    {
+      "chapterCode": "j5-1-3",
+      "topicNumber": 1,
+      "slug": "similarity-meaning-and-correspondence",
+      "title": "相似三角形的意義與對應順序",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "file": "j5-1-3-topic-1-similarity-meaning-and-correspondence.pdf"
+    },
+    {
+      "chapterCode": "j5-1-3",
+      "topicNumber": 2,
+      "slug": "similarity-tests",
+      "title": "相似三角形的判別",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "file": "j5-1-3-topic-2-similarity-tests.pdf"
+    },
+    {
+      "chapterCode": "j5-1-3",
+      "topicNumber": 3,
+      "slug": "parallel-line-small-large-similarity",
+      "title": "平行線造成的小大三角形相似",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "file": "j5-1-3-topic-3-parallel-line-small-large-similarity.pdf"
+    },
+    {
+      "chapterCode": "j5-1-3",
+      "topicNumber": 4,
+      "slug": "scale-perimeter-and-area-ratios",
+      "title": "相似比、周長比、面積比",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "file": "j5-1-3-topic-4-scale-perimeter-and-area-ratios.pdf"
+    },
+    {
+      "chapterCode": "j5-1-3",
+      "topicNumber": 5,
+      "slug": "right-triangle-similarity",
+      "title": "直角三角形中的相似",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "file": "j5-1-3-topic-5-right-triangle-similarity.pdf"
+    },
+    {
+      "chapterCode": "j5-2-1",
+      "topicNumber": 1,
+      "slug": "point-line-circle-position",
+      "title": "點、直線與圓的位置關係",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "file": "j5-2-1-topic-1-point-line-circle-position.pdf"
+    },
+    {
+      "chapterCode": "j5-2-1",
+      "topicNumber": 2,
+      "slug": "tangent-and-chord-center-distance",
+      "title": "切線與弦心距",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "file": "j5-2-1-topic-2-tangent-and-chord-center-distance.pdf"
+    },
+    {
+      "chapterCode": "j5-2-1",
+      "topicNumber": 3,
+      "slug": "two-circles-position-and-common-tangent",
+      "title": "兩圓的位置關係與公切線",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "file": "j5-2-1-topic-3-two-circles-position-and-common-tangent.pdf"
+    },
+    {
+      "chapterCode": "j5-2-2",
+      "topicNumber": 1,
+      "slug": "arc-chord-central-angle-and-arc-length",
+      "title": "弧、弦、圓心角與弧長",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "file": "j5-2-2-topic-1-arc-chord-central-angle-and-arc-length.pdf"
+    },
+    {
+      "chapterCode": "j5-2-2",
+      "topicNumber": 2,
+      "slug": "inscribed-tangent-chord-interior-exterior-angles",
+      "title": "圓周角、弦切角、圓內角與圓外角",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "file": "j5-2-2-topic-2-inscribed-tangent-chord-interior-exterior-angles.pdf"
+    },
+    {
+      "chapterCode": "j5-2-2",
+      "topicNumber": 3,
+      "slug": "circle-and-angle-integration",
+      "title": "圓與角的綜合判斷",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "file": "j5-2-2-topic-3-circle-and-angle-integration.pdf"
+    },
+    {
+      "chapterCode": "j5-2-3",
+      "topicNumber": 1,
+      "slug": "power-of-a-point-and-segment-products",
+      "title": "乘冪性質與線段乘積",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "file": "j5-2-3-topic-1-power-of-a-point-and-segment-products.pdf"
+    },
+    {
+      "chapterCode": "j5-2-3",
+      "topicNumber": 2,
+      "slug": "circle-applications",
+      "title": "圓的綜合應用",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "file": "j5-2-3-topic-2-circle-applications.pdf"
+    },
+    {
+      "chapterCode": "j5-3-1",
+      "topicNumber": 1,
+      "slug": "geometric-reasoning-and-proof-basics",
+      "title": "幾何推理與證明的基本想法",
+      "pageStart": 21,
+      "pageEnd": 21,
+      "file": "j5-3-1-topic-1-geometric-reasoning-and-proof-basics.pdf"
+    },
+    {
+      "chapterCode": "j5-3-2",
+      "topicNumber": 1,
+      "slug": "proof-toolkit",
+      "title": "證明題的常用工具",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "file": "j5-3-2-topic-1-proof-toolkit.pdf"
+    },
+    {
+      "chapterCode": "j5-3-3",
+      "topicNumber": 1,
+      "slug": "circumcenter-and-circumcircle",
+      "title": "外心與外接圓",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "file": "j5-3-3-topic-1-circumcenter-and-circumcircle.pdf"
+    },
+    {
+      "chapterCode": "j5-3-3",
+      "topicNumber": 2,
+      "slug": "incenter-and-incircle",
+      "title": "內心與內切圓",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "file": "j5-3-3-topic-2-incenter-and-incircle.pdf"
+    },
+    {
+      "chapterCode": "j5-3-3",
+      "topicNumber": 3,
+      "slug": "centroid-and-medians",
+      "title": "重心與中線",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "file": "j5-3-3-topic-3-centroid-and-medians.pdf"
+    },
+    {
+      "chapterCode": "j5-3-3",
+      "topicNumber": 4,
+      "slug": "comparison-of-three-centers",
+      "title": "三心的比較",
+      "pageStart": 26,
+      "pageEnd": 26,
+      "file": "j5-3-3-topic-4-comparison-of-three-centers.pdf"
+    },
+    {
+      "chapterCode": "j5-3-3",
+      "topicNumber": 5,
+      "slug": "applications-of-three-centers",
+      "title": "三心的常見應用",
+      "pageStart": 27,
+      "pageEnd": 27,
+      "file": "j5-3-3-topic-5-applications-of-three-centers.pdf"
+    }
+  ]
+}

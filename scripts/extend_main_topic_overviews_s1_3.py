@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 from pathlib import Path
@@ -165,7 +165,7 @@ def upsert_theme_entry(by_id: dict, spec: dict) -> None:
                 "sections": [
                     {
                         "type": "pdf-page",
-                        "src": f"exports/main-theme-overviews/{spec['pdf_file']}",
+                        "src": f"data/main-theme-overviews/{spec['pdf_file']}",
                         "note": spec["title"],
                     }
                 ],
@@ -182,7 +182,7 @@ def main() -> None:
     payload.setdefault("meta", {})
     payload["meta"]["count"] = len(by_id)
     payload["meta"]["updatedAt"] = UPDATED_AT
-    payload["meta"]["source"] = "exports/main-theme-overviews/first-volume-topic-pdfs.json"
+    payload["meta"]["source"] = "data/main-theme-overviews/first-volume-topic-pdfs.json"
     save_json(DB_PATH, payload)
     JS_PATH.write_text(
         "window.mainTopicOverviewStore = " + json.dumps(payload, ensure_ascii=False, indent=2) + ";\n",
@@ -193,3 +193,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

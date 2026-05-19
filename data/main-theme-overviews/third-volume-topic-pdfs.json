@@ -1,0 +1,182 @@
+{
+  "sourcePdf": "C:\\codex資料夾\\數學公式使用工具\\exports\\s3-source\\s3-readable-paged.pdf",
+  "count": 22,
+  "topics": [
+    {
+      "chapterCode": "s3-2-1",
+      "topicNumber": 1,
+      "slug": "exponential-function-graph",
+      "title": "指數函數的圖形",
+      "page": 2,
+      "file": "s3-2-1-topic-1-exponential-function-graph.pdf"
+    },
+    {
+      "chapterCode": "s3-2-1",
+      "topicNumber": 2,
+      "slug": "exponential-equation",
+      "title": "指數方程式",
+      "page": 3,
+      "file": "s3-2-1-topic-2-exponential-equation.pdf"
+    },
+    {
+      "chapterCode": "s3-2-1",
+      "topicNumber": 3,
+      "slug": "exponential-inequality",
+      "title": "指數不等式",
+      "page": 4,
+      "file": "s3-2-1-topic-3-exponential-inequality.pdf"
+    },
+    {
+      "chapterCode": "s3-2-2",
+      "topicNumber": 1,
+      "slug": "logarithm-laws",
+      "title": "對數律",
+      "page": 6,
+      "file": "s3-2-2-topic-1-logarithm-laws.pdf"
+    },
+    {
+      "chapterCode": "s3-2-3",
+      "topicNumber": 1,
+      "slug": "logarithmic-function-graph",
+      "title": "對數函數及其圖形",
+      "page": 8,
+      "file": "s3-2-3-topic-1-logarithmic-function-graph.pdf"
+    },
+    {
+      "chapterCode": "s3-2-3",
+      "topicNumber": 2,
+      "slug": "logarithmic-equation",
+      "title": "對數方程式",
+      "page": 9,
+      "file": "s3-2-3-topic-2-logarithmic-equation.pdf"
+    },
+    {
+      "chapterCode": "s3-2-3",
+      "topicNumber": 3,
+      "slug": "logarithmic-inequality",
+      "title": "對數不等式",
+      "page": 10,
+      "file": "s3-2-3-topic-3-logarithmic-inequality.pdf"
+    },
+    {
+      "chapterCode": "s3-2-3",
+      "topicNumber": 4,
+      "slug": "inverse-function",
+      "title": "反函數",
+      "page": 11,
+      "file": "s3-2-3-topic-4-inverse-function.pdf"
+    },
+    {
+      "chapterCode": "s3-3-1",
+      "topicNumber": 1,
+      "slug": "directed-segment-vector",
+      "title": "有向線段與向量",
+      "page": 23,
+      "file": "s3-3-1-topic-1-directed-segment-vector.pdf"
+    },
+    {
+      "chapterCode": "s3-3-1",
+      "topicNumber": 2,
+      "slug": "coordinate-vector",
+      "title": "坐標向量",
+      "page": 24,
+      "file": "s3-3-1-topic-2-coordinate-vector.pdf"
+    },
+    {
+      "chapterCode": "s3-3-1",
+      "topicNumber": 3,
+      "slug": "linear-combination-division",
+      "title": "線性組合與分點公式",
+      "page": 25,
+      "file": "s3-3-1-topic-3-linear-combination-division.pdf"
+    },
+    {
+      "chapterCode": "s3-3-1",
+      "topicNumber": 4,
+      "slug": "centroid-incenter",
+      "title": "向量與三角形重心、內心",
+      "page": 26,
+      "file": "s3-3-1-topic-4-centroid-incenter.pdf"
+    },
+    {
+      "chapterCode": "s3-3-1",
+      "topicNumber": 5,
+      "slug": "line-parametric-form",
+      "title": "直線參數式",
+      "page": 27,
+      "file": "s3-3-1-topic-5-line-parametric-form.pdf"
+    },
+    {
+      "chapterCode": "s3-3-2",
+      "topicNumber": 1,
+      "slug": "vector-dot-product",
+      "title": "向量的內積",
+      "page": 29,
+      "file": "s3-3-2-topic-1-vector-dot-product.pdf"
+    },
+    {
+      "chapterCode": "s3-3-2",
+      "topicNumber": 2,
+      "slug": "circumcenter-orthocenter",
+      "title": "三角形外心與垂心",
+      "page": 30,
+      "file": "s3-3-2-topic-2-circumcenter-orthocenter.pdf"
+    },
+    {
+      "chapterCode": "s3-3-2",
+      "topicNumber": 3,
+      "slug": "angle-between-lines",
+      "title": "兩直線的夾角",
+      "page": 31,
+      "file": "s3-3-2-topic-3-angle-between-lines.pdf"
+    },
+    {
+      "chapterCode": "s3-3-2",
+      "topicNumber": 4,
+      "slug": "orthogonal-projection",
+      "title": "正射影",
+      "page": 32,
+      "file": "s3-3-2-topic-4-orthogonal-projection.pdf"
+    },
+    {
+      "chapterCode": "s3-3-2",
+      "topicNumber": 5,
+      "slug": "point-line-distance",
+      "title": "點到直線的距離",
+      "page": 33,
+      "file": "s3-3-2-topic-5-point-line-distance.pdf"
+    },
+    {
+      "chapterCode": "s3-3-2",
+      "topicNumber": 6,
+      "slug": "cauchy-inequality",
+      "title": "柯西不等式",
+      "page": 34,
+      "file": "s3-3-2-topic-6-cauchy-inequality.pdf"
+    },
+    {
+      "chapterCode": "s3-3-3",
+      "topicNumber": 1,
+      "slug": "second-order-determinant",
+      "title": "二階行列式",
+      "page": 36,
+      "file": "s3-3-3-topic-1-second-order-determinant.pdf"
+    },
+    {
+      "chapterCode": "s3-3-3",
+      "topicNumber": 2,
+      "slug": "cramer-rule",
+      "title": "克拉瑪公式",
+      "page": 37,
+      "file": "s3-3-3-topic-2-cramer-rule.pdf"
+    },
+    {
+      "chapterCode": "s3-3-3",
+      "topicNumber": 3,
+      "slug": "determinant-applications",
+      "title": "二階行列式的應用",
+      "page": 38,
+      "file": "s3-3-3-topic-3-determinant-applications.pdf"
+    }
+  ]
+}

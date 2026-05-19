@@ -1,4 +1,4 @@
-# 章節主題整理流程
+﻿# 章節主題整理流程
 
 這份流程是給「一個章節要完整整理到可上線」時使用。
 
@@ -46,7 +46,7 @@
 ### 4. 掛主題的原稿版
 
 - 每個主題要對應一個 PDF。
-- PDF 檔放在 `exports/main-theme-overviews`
+- PDF 檔放在 `data/main-theme-overviews`
 - 命名規則：
   - `{chapter-code}-topic-{index}-{slug}.pdf`
 
@@ -100,3 +100,4 @@
 4. 再逐步把重點拆成真正分支
 
 這樣速度最快，也最不容易亂掉。
+

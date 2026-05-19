@@ -1,0 +1,258 @@
+{
+  "sourcePdf": "C:\\codex資料夾\\數學公式使用工具\\exports\\junior-source\\j1-readable-paged.pdf",
+  "count": 28,
+  "topics": [
+    {
+      "chapterCode": "j1-1-1",
+      "topicNumber": 1,
+      "slug": "positive-negative-classification",
+      "title": "正負數與數的分類",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "file": "j1-1-1-topic-1-positive-negative-classification.pdf"
+    },
+    {
+      "chapterCode": "j1-1-1",
+      "topicNumber": 2,
+      "slug": "number-line-opposite-midpoint",
+      "title": "數線、相反數與中點",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "file": "j1-1-1-topic-2-number-line-opposite-midpoint.pdf"
+    },
+    {
+      "chapterCode": "j1-1-1",
+      "topicNumber": 3,
+      "slug": "absolute-value-distance",
+      "title": "絕對值與距離",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "file": "j1-1-1-topic-3-absolute-value-distance.pdf"
+    },
+    {
+      "chapterCode": "j1-1-2",
+      "topicNumber": 1,
+      "slug": "signed-arithmetic",
+      "title": "正負數的四則運算",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "file": "j1-1-2-topic-1-signed-arithmetic.pdf"
+    },
+    {
+      "chapterCode": "j1-1-3",
+      "topicNumber": 1,
+      "slug": "meaning-of-powers",
+      "title": "乘方與指數的意思",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "file": "j1-1-3-topic-1-meaning-of-powers.pdf"
+    },
+    {
+      "chapterCode": "j1-1-3",
+      "topicNumber": 2,
+      "slug": "basic-exponent-laws",
+      "title": "指數律基本規則",
+      "pageStart": 8,
+      "pageEnd": 9,
+      "file": "j1-1-3-topic-2-basic-exponent-laws.pdf"
+    },
+    {
+      "chapterCode": "j1-1-3",
+      "topicNumber": 3,
+      "slug": "sign-parity-brackets",
+      "title": "正負號、奇偶次方與括號判別",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "file": "j1-1-3-topic-3-sign-parity-brackets.pdf"
+    },
+    {
+      "chapterCode": "j1-1-3",
+      "topicNumber": 4,
+      "slug": "fraction-bases-and-mixed-exponents",
+      "title": "分數底數與混合指數運算",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "file": "j1-1-3-topic-4-fraction-bases-and-mixed-exponents.pdf"
+    },
+    {
+      "chapterCode": "j1-1-3",
+      "topicNumber": 5,
+      "slug": "comparing-exponential-expressions",
+      "title": "指數比大小",
+      "pageStart": 12,
+      "pageEnd": 13,
+      "file": "j1-1-3-topic-5-comparing-exponential-expressions.pdf"
+    },
+    {
+      "chapterCode": "j1-1-4",
+      "topicNumber": 1,
+      "slug": "scientific-notation-and-units",
+      "title": "科學記號與常見單位",
+      "pageStart": 14,
+      "pageEnd": 15,
+      "file": "j1-1-4-topic-1-scientific-notation-and-units.pdf"
+    },
+    {
+      "chapterCode": "j1-1-4",
+      "topicNumber": 2,
+      "slug": "scientific-notation-operations",
+      "title": "科學記號的運算",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "file": "j1-1-4-topic-2-scientific-notation-operations.pdf"
+    },
+    {
+      "chapterCode": "j1-2-1",
+      "topicNumber": 1,
+      "slug": "factor-multiple-prime-composite",
+      "title": "因數、倍數、質數與合數",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "file": "j1-2-1-topic-1-factor-multiple-prime-composite.pdf"
+    },
+    {
+      "chapterCode": "j1-2-1",
+      "topicNumber": 2,
+      "slug": "factor-multiple-applications",
+      "title": "因數與倍數的生活應用",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "file": "j1-2-1-topic-2-factor-multiple-applications.pdf"
+    },
+    {
+      "chapterCode": "j1-2-1",
+      "topicNumber": 3,
+      "slug": "prime-factorization-divisibility-standard-form",
+      "title": "質因數、整除判別與標準分解式",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "file": "j1-2-1-topic-3-prime-factorization-divisibility-standard-form.pdf"
+    },
+    {
+      "chapterCode": "j1-2-1",
+      "topicNumber": 4,
+      "slug": "standard-form-divisor-count-sum",
+      "title": "標準分解式的應用：正因數個數與總和",
+      "pageStart": 21,
+      "pageEnd": 21,
+      "file": "j1-2-1-topic-4-standard-form-divisor-count-sum.pdf"
+    },
+    {
+      "chapterCode": "j1-2-2",
+      "topicNumber": 1,
+      "slug": "common-factors-gcd-coprime",
+      "title": "公因數、最大公因數與互質",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "file": "j1-2-2-topic-1-common-factors-gcd-coprime.pdf"
+    },
+    {
+      "chapterCode": "j1-2-2",
+      "topicNumber": 2,
+      "slug": "gcd-methods-applications",
+      "title": "最大公因數的求法與應用",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "file": "j1-2-2-topic-2-gcd-methods-applications.pdf"
+    },
+    {
+      "chapterCode": "j1-2-2",
+      "topicNumber": 3,
+      "slug": "common-multiples-lcm-properties",
+      "title": "公倍數、最小公倍數與性質",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "file": "j1-2-2-topic-3-common-multiples-lcm-properties.pdf"
+    },
+    {
+      "chapterCode": "j1-2-2",
+      "topicNumber": 4,
+      "slug": "lcm-methods-applications",
+      "title": "最小公倍數的求法與應用",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "file": "j1-2-2-topic-4-lcm-methods-applications.pdf"
+    },
+    {
+      "chapterCode": "j1-2-3",
+      "topicNumber": 1,
+      "slug": "fraction-simplify-common-denominator",
+      "title": "分數的擴分、約分、最簡分數與通分",
+      "pageStart": 26,
+      "pageEnd": 26,
+      "file": "j1-2-3-topic-1-fraction-simplify-common-denominator.pdf"
+    },
+    {
+      "chapterCode": "j1-2-3",
+      "topicNumber": 2,
+      "slug": "fraction-arithmetic-applications",
+      "title": "分數的加減乘除與應用",
+      "pageStart": 27,
+      "pageEnd": 28,
+      "file": "j1-2-3-topic-2-fraction-arithmetic-applications.pdf"
+    },
+    {
+      "chapterCode": "j1-3-1",
+      "topicNumber": 1,
+      "slug": "symbolize-quantity-expression",
+      "title": "用符號表示數與列式",
+      "pageStart": 30,
+      "pageEnd": 30,
+      "file": "j1-3-1-topic-1-symbolize-quantity-expression.pdf"
+    },
+    {
+      "chapterCode": "j1-3-1",
+      "topicNumber": 2,
+      "slug": "multiplication-shorthand-substitution",
+      "title": "乘法簡記與代值",
+      "pageStart": 31,
+      "pageEnd": 31,
+      "file": "j1-3-1-topic-2-multiplication-shorthand-substitution.pdf"
+    },
+    {
+      "chapterCode": "j1-3-1",
+      "topicNumber": 3,
+      "slug": "linear-expression-like-terms",
+      "title": "一元一次式、項與同類項",
+      "pageStart": 32,
+      "pageEnd": 32,
+      "file": "j1-3-1-topic-3-linear-expression-like-terms.pdf"
+    },
+    {
+      "chapterCode": "j1-3-1",
+      "topicNumber": 4,
+      "slug": "expression-operations-remove-brackets",
+      "title": "式子的運算與去括號",
+      "pageStart": 33,
+      "pageEnd": 33,
+      "file": "j1-3-1-topic-4-expression-operations-remove-brackets.pdf"
+    },
+    {
+      "chapterCode": "j1-3-2",
+      "topicNumber": 1,
+      "slug": "equality-axiom-transpose",
+      "title": "等量公理與移項法則",
+      "pageStart": 34,
+      "pageEnd": 34,
+      "file": "j1-3-2-topic-1-equality-axiom-transpose.pdf"
+    },
+    {
+      "chapterCode": "j1-3-2",
+      "topicNumber": 2,
+      "slug": "solve-linear-equation",
+      "title": "解一元一次方程式",
+      "pageStart": 35,
+      "pageEnd": 35,
+      "file": "j1-3-2-topic-2-solve-linear-equation.pdf"
+    },
+    {
+      "chapterCode": "j1-3-3",
+      "topicNumber": 1,
+      "slug": "word-problem-modeling",
+      "title": "應用題列式與檢查答案",
+      "pageStart": 36,
+      "pageEnd": 36,
+      "file": "j1-3-3-topic-1-word-problem-modeling.pdf"
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 .vscode/
 .venv-word/
 logs/
+_local/
 
 # Python cache
 **/__pycache__/

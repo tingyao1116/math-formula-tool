@@ -1,4 +1,4 @@
-# 國二上主題整理提醒
+﻿# 國二上主題整理提醒
 
 這份提醒是給 `j3-*` 章節使用，目的是固定住國中前兩冊與高中四冊已經驗證過的流程，避免又回去用舊 root 直接拼大綱。
 
@@ -26,8 +26,8 @@
 
 - 來源 PDF：`exports/j2-first-volume-outline/國二上全重點_易讀版分頁版_Word公式版.pdf`
 - 命名規則：`{chapter-code}-topic-{index}-{slug}.pdf`
-- 存放位置：`exports/main-theme-overviews`
-- 對照表：`exports/main-theme-overviews/junior-third-semester-topic-pdfs.json`
+- 存放位置：`data/main-theme-overviews`
+- 對照表：`data/main-theme-overviews/junior-third-semester-topic-pdfs.json`
 
 ## j3-1-1 ~ j3-1-3 特別注意
 
@@ -103,3 +103,4 @@
   - `商式餘式驗算`
   - `乘除混合運算順序`
   - `缺項與符號錯誤防呆`
+

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>07_eight-shape-theorem</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+<h2 id="字型定理">7. 8字型定理</h2>
+<blockquote>
+<p>學習目標：兩個三角形在交點形成 8
+字形時，可以用對頂角相等消掉中間角。</p>
+</blockquote>
+<h3 id="先抓住核心">先抓住核心</h3>
+<ul>
+<li>8 字型常由兩條線交叉形成兩個三角形。</li>
+<li>兩個三角形的中間角是一組對頂角，所以相等。</li>
+<li>因為兩個三角形內角和都等於
+180°，扣掉相等的中間角後，剩下兩角和相等。</li>
+<li>常見形式：∠1 + ∠2 = ∠5 + ∠6。</li>
+<li>8 字型定理很適合處理多角總和，把遠端角換成另一組角。</li>
+</ul>
+<h3 id="解題流程">解題流程</h3>
+<ol type="1">
+<li>找出交叉形成的兩個三角形。</li>
+<li>標出中間對頂角。</li>
+<li>兩個三角形各寫內角和 180°。</li>
+<li>利用對頂角相等，得到兩端角和相等。</li>
+</ol>
+<h3 id="公式性質與判斷">公式、性質與判斷</h3>
+<ul>
+<li><strong>8字型定理</strong>：<code>一邊兩角和 = 另一邊兩角和。</code></li>
+<li><strong>理由</strong>：<code>三角形內角和 + 對頂角相等。</code></li>
+</ul>
+<h3 id="例題拆解">例題拆解</h3>
+<ul>
+<li>若 ∠A + ∠B = ∠E + ∠D，且 ∠A = 3x、∠B = x、∠D = x，則 ∠E = 3x。</li>
+<li>在多角總和題中，可用 8 字型把外側兩角換成內部兩角。</li>
+<li>若 ∠D + ∠E = ∠1 + ∠2，總角度就能被收回到一個多邊形或三角形內。</li>
+</ul>
+<h3 id="易錯提醒">易錯提醒</h3>
+<ul>
+<li>把 8 字型定理誤用成所有對應角都相等。</li>
+<li>沒有確認中間角是對頂角，就直接消掉。</li>
+</ul>
+<h3 id="小練一下">小練一下</h3>
+<ul>
+<li>8 字型定理使用了哪兩個基本事實？</li>
+<li>8 字型定理通常得到的是單角相等還是兩角和相等？</li>
+</ul>
+<h3 id="記憶鉤子">記憶鉤子</h3>
+<ul>
+<li>8 字型不要硬背圖形，抓住『兩個三角形共用對頂角』。</li>
+<li>遇到兩條線交叉，先看看能不能切出 8 字型。</li>
+</ul>
+<h3 id="圖像化理解">圖像化理解</h3>
+<figure>
+<img src="diagram_assets/07_eight_shape_theorem.png" alt="8字型定理" />
+<figcaption aria-hidden="true">8字型定理</figcaption>
+</figure>
+<p>圖解：畫出兩個交叉三角形，標示中間對頂角與兩端角和。</p>
+</body>
+</html>

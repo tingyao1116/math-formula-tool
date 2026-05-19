@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 from pathlib import Path
@@ -290,7 +290,7 @@ def build_payload() -> dict:
                     "sections": [
                         {
                             "type": "pdf-page",
-                            "src": f"exports/main-theme-overviews/{spec['pdf_file']}",
+                            "src": f"data/main-theme-overviews/{spec['pdf_file']}",
                             "note": title,
                         }
                     ],
@@ -302,7 +302,7 @@ def build_payload() -> dict:
         "meta": {
             "count": len(by_id),
             "updatedAt": UPDATED_AT,
-            "source": "exports/main-theme-overviews/first-volume-topic-pdfs.json",
+            "source": "data/main-theme-overviews/first-volume-topic-pdfs.json",
         },
         "byId": by_id,
     }
@@ -321,3 +321,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

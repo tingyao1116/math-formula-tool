@@ -1,4 +1,4 @@
-# 第四冊主題整理提醒
+﻿# 第四冊主題整理提醒
 
 這份提醒只記第四冊目前已經踩過、之後很容易再踩一次的點。做 `s4-*` 時先看這裡，再開始動資料。
 
@@ -20,8 +20,8 @@
 ## PDF 命名
 
 - 命名規則：`{chapter-code}-topic-{index}-{slug}.pdf`
-- 存放位置：`exports/main-theme-overviews`
-- 第四冊對照表：`exports/main-theme-overviews/fourth-volume-topic-pdfs.json`
+- 存放位置：`data/main-theme-overviews`
+- 第四冊對照表：`data/main-theme-overviews/fourth-volume-topic-pdfs.json`
 
 ## 可修改版注意
 
@@ -200,3 +200,4 @@
   - 坐標軸鏡射、原點鏡射、任意直線鏡射，掛 `鏡射`
   - 等比伸縮、不同比例伸縮、圓變橢圓、面積縮放、不變方向，掛 `伸縮`
   - 推移矩陣、平行四邊形效果、保面積、可逆性，掛 `推移`
+

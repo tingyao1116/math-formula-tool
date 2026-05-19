@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 import re
@@ -447,7 +447,7 @@ def upsert_main_topic_overview(payload: dict, plan: dict, rows: list[list[str]],
                 "sections": [
                     {
                         "type": "pdf-page",
-                        "src": f"exports/main-theme-overviews/{filename}",
+                        "src": f"data/main-theme-overviews/{filename}",
                         "note": plan["title"],
                     }
                 ],
@@ -464,7 +464,7 @@ def apply_main_topic_overviews(markdown_topics: dict[str, list[list[str]]], upda
     payload.setdefault("meta", {})
     payload["meta"]["count"] = len(payload.get("byId", {}))
     payload["meta"]["updatedAt"] = updated_at
-    payload["meta"]["source"] = "exports/main-theme-overviews"
+    payload["meta"]["source"] = "data/main-theme-overviews"
     save_json(MAIN_TOPIC_DB, payload)
 
 
@@ -512,3 +512,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

@@ -1,0 +1,56 @@
+﻿{
+  "s4-4-1": {
+    "sectionName": "三元一次聯立方程組與高斯消去法",
+    "groupName": "高中・高二下・三元一次聯立方程組與高斯消去法",
+    "parts": [
+      {
+        "source": "space",
+        "heading": "2-3 三元一次聯立方程組",
+        "original": "s4-4-1-original-a.png",
+        "caption": "三元一次聯立方程組原稿截圖"
+      },
+      {
+        "source": "matrix",
+        "heading": "4-1 高斯消去法與矩陣的列運算",
+        "original": "s4-4-1-original-b.png",
+        "caption": "高斯消去法與矩陣的列運算原稿截圖"
+      }
+    ]
+  },
+  "s4-4-2": {
+    "sectionName": "矩陣的運算",
+    "groupName": "高中・高二下・矩陣的運算",
+    "parts": [
+      {
+        "source": "matrix",
+        "heading": "4-2 矩陣的運算",
+        "original": "s4-4-2-original.png",
+        "caption": "矩陣的運算原稿截圖"
+      }
+    ]
+  },
+  "s4-4-3": {
+    "sectionName": "矩陣的應用：轉移矩陣與反矩陣",
+    "groupName": "高中・高二下・矩陣的應用：轉移矩陣與反矩陣",
+    "parts": [
+      {
+        "source": "matrix",
+        "heading": "4-3 矩陣的應用：轉移矩陣與反矩陣",
+        "original": "s4-4-3-original.png",
+        "caption": "矩陣的應用：轉移矩陣與反矩陣原稿截圖"
+      }
+    ]
+  },
+  "s4-4-4": {
+    "sectionName": "平面上的線性變換",
+    "groupName": "高中・高二下・平面上的線性變換",
+    "parts": [
+      {
+        "source": "matrix",
+        "heading": "4-4 平面上的線性變換",
+        "original": "s4-4-4-original.png",
+        "caption": "平面上的線性變換原稿截圖"
+      }
+    ]
+  }
+}

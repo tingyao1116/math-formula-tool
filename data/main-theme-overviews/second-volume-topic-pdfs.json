@@ -1,0 +1,254 @@
+{
+  "sourcePdf": "C:\\codex資料夾\\數學公式使用工具\\exports\\s2-source\\s2-readable-paged.pdf",
+  "count": 31,
+  "topics": [
+    {
+      "chapterCode": "s2-1-1",
+      "topicNumber": 1,
+      "slug": "sequence-meaning",
+      "title": "數列的意義",
+      "page": 2,
+      "file": "s2-1-1-topic-1-sequence-meaning.pdf"
+    },
+    {
+      "chapterCode": "s2-1-1",
+      "topicNumber": 2,
+      "slug": "recursion",
+      "title": "遞迴關係",
+      "page": 3,
+      "file": "s2-1-1-topic-2-recursion.pdf"
+    },
+    {
+      "chapterCode": "s2-1-1",
+      "topicNumber": 3,
+      "slug": "math-induction",
+      "title": "數學歸納法",
+      "page": 4,
+      "file": "s2-1-1-topic-3-math-induction.pdf"
+    },
+    {
+      "chapterCode": "s2-1-2",
+      "topicNumber": 1,
+      "slug": "arithmetic-geometric-series",
+      "title": "等差級數與等比級數",
+      "page": 6,
+      "file": "s2-1-2-topic-1-arithmetic-geometric-series.pdf"
+    },
+    {
+      "chapterCode": "s2-1-2",
+      "topicNumber": 2,
+      "slug": "series-sum-formulas",
+      "title": "級數和公式",
+      "page": 7,
+      "file": "s2-1-2-topic-2-series-sum-formulas.pdf"
+    },
+    {
+      "chapterCode": "s2-4-1",
+      "topicNumber": 1,
+      "slug": "directed-angle",
+      "title": "有向角",
+      "page": 9,
+      "file": "s2-4-1-topic-1-directed-angle.pdf"
+    },
+    {
+      "chapterCode": "s2-4-1",
+      "topicNumber": 2,
+      "slug": "acute-trig-definition",
+      "title": "銳角三角函數的定義",
+      "page": 10,
+      "file": "s2-4-1-topic-2-acute-trig-definition.pdf"
+    },
+    {
+      "chapterCode": "s2-4-1",
+      "topicNumber": 3,
+      "slug": "general-angle-trig-definition",
+      "title": "廣義角三角函數的定義",
+      "page": 11,
+      "file": "s2-4-1-topic-3-general-angle-trig-definition.pdf"
+    },
+    {
+      "chapterCode": "s2-4-1",
+      "topicNumber": 4,
+      "slug": "polar-coordinate",
+      "title": "極座標",
+      "page": 12,
+      "file": "s2-4-1-topic-4-polar-coordinate.pdf"
+    },
+    {
+      "chapterCode": "s2-4-1",
+      "topicNumber": 5,
+      "slug": "trig-identities",
+      "title": "三角關係式",
+      "page": 13,
+      "file": "s2-4-1-topic-5-trig-identities.pdf"
+    },
+    {
+      "chapterCode": "s2-4-2",
+      "topicNumber": 1,
+      "slug": "triangle-area-formulas",
+      "title": "三角形的面積公式",
+      "page": 15,
+      "file": "s2-4-2-topic-1-triangle-area-formulas.pdf"
+    },
+    {
+      "chapterCode": "s2-4-2",
+      "topicNumber": 2,
+      "slug": "law-of-sines",
+      "title": "正弦定理",
+      "page": 16,
+      "file": "s2-4-2-topic-2-law-of-sines.pdf"
+    },
+    {
+      "chapterCode": "s2-4-2",
+      "topicNumber": 3,
+      "slug": "law-of-cosines",
+      "title": "餘弦定理",
+      "page": 17,
+      "file": "s2-4-2-topic-3-law-of-cosines.pdf"
+    },
+    {
+      "chapterCode": "s2-4-2",
+      "topicNumber": 4,
+      "slug": "triangle-side-angle-relations",
+      "title": "三角形的邊角關係",
+      "page": 18,
+      "file": "s2-4-2-topic-4-triangle-side-angle-relations.pdf"
+    },
+    {
+      "chapterCode": "s2-4-3",
+      "topicNumber": 1,
+      "slug": "triangle-measurement",
+      "title": "三角測量",
+      "page": 19,
+      "file": "s2-4-3-topic-1-triangle-measurement.pdf"
+    },
+    {
+      "chapterCode": "s2-2-1",
+      "topicNumber": 1,
+      "slug": "simple-logic",
+      "title": "簡單的邏輯概念",
+      "page": 21,
+      "file": "s2-2-1-topic-1-simple-logic.pdf"
+    },
+    {
+      "chapterCode": "s2-2-1",
+      "topicNumber": 2,
+      "slug": "set-basics",
+      "title": "集合的基本概念",
+      "page": 22,
+      "file": "s2-2-1-topic-2-set-basics.pdf"
+    },
+    {
+      "chapterCode": "s2-2-1",
+      "topicNumber": 3,
+      "slug": "counting-principles",
+      "title": "計數原理",
+      "page": 23,
+      "file": "s2-2-1-topic-3-counting-principles.pdf"
+    },
+    {
+      "chapterCode": "s2-2-2",
+      "topicNumber": 1,
+      "slug": "add-multiply-principles",
+      "title": "加法原理與乘法原理",
+      "page": 25,
+      "file": "s2-2-2-topic-1-add-multiply-principles.pdf"
+    },
+    {
+      "chapterCode": "s2-2-2",
+      "topicNumber": 2,
+      "slug": "permutation",
+      "title": "排列",
+      "page": 26,
+      "file": "s2-2-2-topic-2-permutation.pdf"
+    },
+    {
+      "chapterCode": "s2-2-2",
+      "topicNumber": 3,
+      "slug": "combination",
+      "title": "組合",
+      "page": 27,
+      "file": "s2-2-2-topic-3-combination.pdf"
+    },
+    {
+      "chapterCode": "s2-2-3",
+      "topicNumber": 1,
+      "slug": "binomial-theorem",
+      "title": "二項式定理",
+      "page": 29,
+      "file": "s2-2-3-topic-1-binomial-theorem.pdf"
+    },
+    {
+      "chapterCode": "s2-2-4",
+      "topicNumber": 1,
+      "slug": "sample-space",
+      "title": "樣本空間",
+      "page": 31,
+      "file": "s2-2-4-topic-1-sample-space.pdf"
+    },
+    {
+      "chapterCode": "s2-2-4",
+      "topicNumber": 2,
+      "slug": "events",
+      "title": "事件",
+      "page": 32,
+      "file": "s2-2-4-topic-2-events.pdf"
+    },
+    {
+      "chapterCode": "s2-2-4",
+      "topicNumber": 3,
+      "slug": "probability-properties",
+      "title": "機率的性質",
+      "page": 33,
+      "file": "s2-2-4-topic-3-probability-properties.pdf"
+    },
+    {
+      "chapterCode": "s2-3-1",
+      "topicNumber": 1,
+      "slug": "central-tendency",
+      "title": "數據的集中趨勢",
+      "page": 35,
+      "file": "s2-3-1-topic-1-central-tendency.pdf"
+    },
+    {
+      "chapterCode": "s2-3-1",
+      "topicNumber": 2,
+      "slug": "variance-standard-deviation",
+      "title": "變異數與標準差",
+      "page": 36,
+      "file": "s2-3-1-topic-2-variance-standard-deviation.pdf"
+    },
+    {
+      "chapterCode": "s2-3-1",
+      "topicNumber": 3,
+      "slug": "scaling-shifting-standardization",
+      "title": "數據的伸縮、平移與標準化",
+      "page": 37,
+      "file": "s2-3-1-topic-3-scaling-shifting-standardization.pdf"
+    },
+    {
+      "chapterCode": "s2-3-2",
+      "topicNumber": 1,
+      "slug": "scatterplot",
+      "title": "散布圖",
+      "page": 39,
+      "file": "s2-3-2-topic-1-scatterplot.pdf"
+    },
+    {
+      "chapterCode": "s2-3-2",
+      "topicNumber": 2,
+      "slug": "correlation-coefficient",
+      "title": "相關係數",
+      "page": 40,
+      "file": "s2-3-2-topic-2-correlation-coefficient.pdf"
+    },
+    {
+      "chapterCode": "s2-3-2",
+      "topicNumber": 3,
+      "slug": "least-squares-regression-line",
+      "title": "最小平方法與迴歸直線",
+      "page": 41,
+      "file": "s2-3-2-topic-3-least-squares-regression-line.pdf"
+    }
+  ]
+}

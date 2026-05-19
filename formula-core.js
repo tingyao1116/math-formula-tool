@@ -567,6 +567,11 @@
     const settings = { showShareLink: true, ...options };
     const contentTypes = Array.isArray(item.contentTypes) ? item.contentTypes : [];
     const hasType = (name) => hasContentType(contentTypes, name);
+    const hasListContent = (items) => Array.isArray(items) && items.some((entry) => String(entry ?? "").trim());
+    const hasFormulaContent = (() => {
+      if (item?.formula && typeof item.formula === "object") return true;
+      return String(item?.formula || "").trim().length > 0;
+    })();
     const gradeLabel = item.gradeLabel || store?.buildGradeLabel?.(item.grade, item.term) || item.grade || "";
     const meta = [item.stage, gradeLabel, item.chapter, item.domain, item.difficulty ? `難度：${item.difficulty}` : ""]
       .filter(Boolean)
@@ -583,12 +588,12 @@
         </div>
         <div class="meta-row">${meta}</div>
         ${renderDiagram(item)}
-        ${(hasType("公式") || hasType("定義")) ? `<div class="formula-text formula-katex">${renderFormulaBlock(item.formula)}</div>` : ""}
-        ${hasType("定義") ? renderSection("何時使用", item.usage) : ""}
-        ${hasType("題型") ? renderSection("使用範例", item.examples) : ""}
-        ${hasType("使用技巧") ? renderSection("使用技巧", item.tips) : ""}
-        ${hasType("注意事項") ? renderSection("注意事項", item.notes) : ""}
-        ${hasType("常見錯誤") ? renderSection("常見錯誤", item.mistakes) : ""}
+        ${(hasFormulaContent || hasType("公式") || hasType("定義")) ? `<div class="formula-text formula-katex">${renderFormulaBlock(item.formula)}</div>` : ""}
+        ${(hasListContent(item.usage) || hasType("定義")) ? renderSection("何時使用", item.usage) : ""}
+        ${(hasListContent(item.examples) || hasType("題型")) ? renderSection("使用範例", item.examples) : ""}
+        ${(hasListContent(item.tips) || hasType("使用技巧")) ? renderSection("使用技巧", item.tips) : ""}
+        ${(hasListContent(item.notes) || hasType("注意事項")) ? renderSection("注意事項", item.notes) : ""}
+        ${(hasListContent(item.mistakes) || hasType("常見錯誤")) ? renderSection("常見錯誤", item.mistakes) : ""}
         ${renderLinkedQuestionSection(item)}
         ${hasType("公式") ? renderCalculator(item) : ""}
         ${hasType("無限練習") ? renderPractice(item) : ""}

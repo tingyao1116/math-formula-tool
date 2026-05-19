@@ -1,0 +1,262 @@
+{
+  "sourcePdf": "C:\\Users\\user\\OneDrive\\文件\\張快自製講義\\codex白話講義\\高中數學哈特利重點版\\高一上全重點_易讀版分頁版.pdf",
+  "count": 29,
+  "topics": [
+    {
+      "chapterCode": "s1-1-1",
+      "topicNumber": 1,
+      "slug": "rational",
+      "title": "有理數的定義與性質",
+      "page": 2,
+      "file": "s1-1-1-topic-1-rational.pdf"
+    },
+    {
+      "chapterCode": "s1-1-1",
+      "topicNumber": 2,
+      "slug": "irrational",
+      "title": "無理數",
+      "page": 3,
+      "file": "s1-1-1-topic-2-irrational.pdf"
+    },
+    {
+      "chapterCode": "s1-1-1",
+      "topicNumber": 3,
+      "slug": "real-line",
+      "title": "實數與數線",
+      "page": 4,
+      "file": "s1-1-1-topic-3-real-line.pdf"
+    },
+    {
+      "chapterCode": "s1-1-1",
+      "topicNumber": 4,
+      "slug": "distance",
+      "title": "距離與分點公式",
+      "page": 5,
+      "file": "s1-1-1-topic-4-distance.pdf"
+    },
+    {
+      "chapterCode": "s1-1-2",
+      "topicNumber": 1,
+      "slug": "absolute-value",
+      "title": "絕對值",
+      "page": 7,
+      "file": "s1-1-2-topic-1-absolute-value.pdf"
+    },
+    {
+      "chapterCode": "s1-1-3",
+      "topicNumber": 1,
+      "slug": "formula-fraction-radical",
+      "title": "乘法公式、分式與根式的運算",
+      "page": 9,
+      "file": "s1-1-3-topic-1-formula-fraction-radical.pdf"
+    },
+    {
+      "chapterCode": "s1-1-3",
+      "topicNumber": 2,
+      "slug": "am-gm-inequality",
+      "title": "算幾不等式",
+      "page": 10,
+      "file": "s1-1-3-topic-2-am-gm-inequality.pdf"
+    },
+    {
+      "chapterCode": "s1-1-4",
+      "topicNumber": 1,
+      "slug": "exponent-definition-extension",
+      "title": "指數的定義與擴充",
+      "page": 2,
+      "file": "s1-1-4-topic-1-exponent-definition-extension.pdf"
+    },
+    {
+      "chapterCode": "s1-1-4",
+      "topicNumber": 2,
+      "slug": "exponent-laws",
+      "title": "指數律",
+      "page": 3,
+      "file": "s1-1-4-topic-2-exponent-laws.pdf"
+    },
+    {
+      "chapterCode": "s1-1-4",
+      "topicNumber": 3,
+      "slug": "exponential-equations-inequalities",
+      "title": "指數方程式與不等式",
+      "page": 4,
+      "file": "s1-1-4-topic-3-exponential-equations-inequalities.pdf"
+    },
+    {
+      "chapterCode": "s1-1-4",
+      "topicNumber": 4,
+      "slug": "exponent-applications",
+      "title": "指數的應用",
+      "page": 5,
+      "file": "s1-1-4-topic-4-exponent-applications.pdf"
+    },
+    {
+      "chapterCode": "s1-1-5",
+      "topicNumber": 1,
+      "slug": "common-logarithm",
+      "title": "常用對數",
+      "page": 14,
+      "file": "s1-1-5-topic-1-common-logarithm.pdf"
+    },
+    {
+      "chapterCode": "s1-1-5",
+      "topicNumber": 2,
+      "slug": "scientific-notation",
+      "title": "科學記號",
+      "page": 15,
+      "file": "s1-1-5-topic-2-scientific-notation.pdf"
+    },
+    {
+      "chapterCode": "s1-2-1",
+      "topicNumber": 1,
+      "slug": "coordinate-system",
+      "title": "坐標系",
+      "page": 17,
+      "file": "s1-2-1-topic-1-coordinate-system.pdf"
+    },
+    {
+      "chapterCode": "s1-2-1",
+      "topicNumber": 2,
+      "slug": "slope",
+      "title": "直線斜率",
+      "page": 18,
+      "file": "s1-2-1-topic-2-slope.pdf"
+    },
+    {
+      "chapterCode": "s1-2-1",
+      "topicNumber": 3,
+      "slug": "line-equation",
+      "title": "直線方程式",
+      "page": 19,
+      "file": "s1-2-1-topic-3-line-equation.pdf"
+    },
+    {
+      "chapterCode": "s1-2-1",
+      "topicNumber": 4,
+      "slug": "linear-inequality-two-vars",
+      "title": "二元一次不等式",
+      "page": 20,
+      "file": "s1-2-1-topic-4-linear-inequality-two-vars.pdf"
+    },
+    {
+      "chapterCode": "s1-2-2",
+      "topicNumber": 1,
+      "slug": "circle-equation",
+      "title": "圓的方程式",
+      "page": 22,
+      "file": "s1-2-2-topic-1-circle-equation.pdf"
+    },
+    {
+      "chapterCode": "s1-2-3",
+      "topicNumber": 1,
+      "slug": "circle-point-relation",
+      "title": "圓與點之關係",
+      "page": 24,
+      "file": "s1-2-3-topic-1-circle-point-relation.pdf"
+    },
+    {
+      "chapterCode": "s1-2-3",
+      "topicNumber": 2,
+      "slug": "circle-line-relation",
+      "title": "圓與直線的關係",
+      "page": 25,
+      "file": "s1-2-3-topic-2-circle-line-relation.pdf"
+    },
+    {
+      "chapterCode": "s1-2-3",
+      "topicNumber": 3,
+      "slug": "circle-tangent",
+      "title": "圓之切線",
+      "page": 26,
+      "file": "s1-2-3-topic-3-circle-tangent.pdf"
+    },
+    {
+      "chapterCode": "s1-2-3",
+      "topicNumber": 4,
+      "slug": "circle-family",
+      "title": "圓系",
+      "page": 27,
+      "file": "s1-2-3-topic-4-circle-family.pdf"
+    },
+    {
+      "chapterCode": "s1-3-1",
+      "topicNumber": 1,
+      "slug": "polynomial-basics",
+      "title": "多項式基本概念",
+      "page": 29,
+      "file": "s1-3-1-topic-1-polynomial-basics.pdf"
+    },
+    {
+      "chapterCode": "s1-3-1",
+      "topicNumber": 2,
+      "slug": "polynomial-arithmetic",
+      "title": "多項式四則運算",
+      "page": 30,
+      "file": "s1-3-1-topic-2-polynomial-arithmetic.pdf"
+    },
+    {
+      "chapterCode": "s1-3-1",
+      "topicNumber": 3,
+      "slug": "remainder-factor-theorems",
+      "title": "餘式定理與因式定理",
+      "page": 31,
+      "file": "s1-3-1-topic-3-remainder-factor-theorems.pdf"
+    },
+    {
+      "chapterCode": "s1-3-2",
+      "topicNumber": 1,
+      "slug": "linear-function",
+      "title": "線型函數",
+      "page": 33,
+      "file": "s1-3-2-topic-1-linear-function.pdf"
+    },
+    {
+      "chapterCode": "s1-3-2",
+      "topicNumber": 2,
+      "slug": "quadratic-function",
+      "title": "二次函數",
+      "page": 34,
+      "file": "s1-3-2-topic-2-quadratic-function.pdf"
+    },
+    {
+      "chapterCode": "s1-3-2",
+      "topicNumber": 3,
+      "slug": "monomial-function",
+      "title": "單項函數",
+      "page": 35,
+      "file": "s1-3-2-topic-3-monomial-function.pdf"
+    },
+    {
+      "chapterCode": "s1-3-2",
+      "topicNumber": 4,
+      "slug": "polynomial-function-graph",
+      "title": "多項式函數的圖形",
+      "page": 36,
+      "file": "s1-3-2-topic-4-polynomial-function-graph.pdf"
+    },
+    {
+      "chapterCode": "s1-3-3",
+      "topicNumber": 1,
+      "slug": "linear-inequality-solving",
+      "title": "一元一次不等式的解法",
+      "page": 38,
+      "file": "s1-3-3-topic-1-linear-inequality-solving.pdf"
+    },
+    {
+      "chapterCode": "s1-3-3",
+      "topicNumber": 2,
+      "slug": "quadratic-inequality-solving",
+      "title": "二次不等式的解法",
+      "page": 39,
+      "file": "s1-3-3-topic-2-quadratic-inequality-solving.pdf"
+    },
+    {
+      "chapterCode": "s1-3-3",
+      "topicNumber": 3,
+      "slug": "higher-order-inequality-solving",
+      "title": "高次不等式的解法",
+      "page": 40,
+      "file": "s1-3-3-topic-3-higher-order-inequality-solving.pdf"
+    }
+  ]
+}

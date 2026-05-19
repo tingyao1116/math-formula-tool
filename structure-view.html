@@ -262,7 +262,7 @@
 <body>
   <div class="page">
     <h1>網站結構檢視</h1>
-    <p class="lead">章節固定不可拖動。可拖動主題/分支/次分支，拖到節點上方、下方或中間（成為子節點）。</p>
+    <p class="lead">章節容器固定不拖動。畫面以主題 → 分支為主，必要時才使用次分支；可把節點拖到上方、下方或中間（成為下層節點）。</p>
 
     <div class="topbar">
       <button id="saveButton" class="primary" type="button">寫回資料庫</button>
@@ -280,7 +280,7 @@
   </div>
 
   <script src="formulas.js"></script>
-  <script src="data/formula-content.js?v=20260514-j62-main-topics-v1"></script>
+  <script src="data/formula-content.js?v=20260518-s114-s115-v1"></script>
   <script src="data/question-content.js?v=20260424-question-bridge-v1"></script>
   <script src="data/formula-calculators.js"></script>
   <script src="data/formula-practice.js"></script>
@@ -557,12 +557,115 @@
         return ["usage", "examples", "tips", "notes", "mistakes"].some((key) => Array.isArray(item[key]) && item[key].some((entry) => String(entry || "").trim()));
       }
 
-      function getNodeFlags(item) {
+      function isChapterRootLike(item, childrenMap) {
+        if (!item) return false;
+        const role = String(item.chapterRole || "").trim();
+        if (!item.parentId && ["主角", "章節", "章節根"].includes(role)) return true;
+        if (item.parentId) return false;
+        const children = childrenMap.get(item.id) || [];
+        return children.some((child) => String(child.chapterRole || "").trim() === "主題");
+      }
+
+      function buildSemanticStructure(sourceItems) {
+        const byId = new Map(sourceItems.map((item) => [item.id, item]));
+        const childrenMap = buildChildrenMap(sourceItems);
+        const kindMap = new Map();
+
+        function classify(item) {
+          if (!item) return "theme";
+          if (kindMap.has(item.id)) return kindMap.get(item.id);
+
+          const parent = item.parentId ? byId.get(item.parentId) : null;
+          let kind = "theme";
+          if (!parent) {
+            kind = isChapterRootLike(item, childrenMap) ? "chapter-root" : "theme";
+          } else {
+            const parentKind = classify(parent);
+            kind = parentKind === "chapter-root"
+              ? "theme"
+              : parentKind === "theme"
+                ? "branch"
+                : "subbranch";
+          }
+
+          kindMap.set(item.id, kind);
+          return kind;
+        }
+
+        sourceItems.forEach((item) => classify(item));
+        const counts = {
+          chapterRoot: 0,
+          theme: 0,
+          branch: 0,
+          subbranch: 0
+        };
+        kindMap.forEach((kind) => {
+          if (kind === "chapter-root") counts.chapterRoot += 1;
+          else if (kind === "theme") counts.theme += 1;
+          else if (kind === "branch") counts.branch += 1;
+          else counts.subbranch += 1;
+        });
+
+        return { byId, childrenMap, kindMap, counts };
+      }
+
+      function getNodeKindLabel(kind) {
+        if (kind === "chapter-root") return "章節";
+        if (kind === "theme") return "主題";
+        if (kind === "branch") return "分支";
+        return "次分支";
+      }
+
+      function getVisibleDepth(kind) {
+        if (kind === "chapter-root") return -1;
+        if (kind === "theme") return 0;
+        if (kind === "branch") return 1;
+        return 2;
+      }
+
+      function getInsideDropLabel(kind) {
+        if (kind === "chapter-root") return "成為主題";
+        if (kind === "theme") return "成為分支";
+        if (kind === "branch") return "成為次分支";
+        return "成為下層節點";
+      }
+
+      function getDisplayRoots(sourceItems, structure) {
+        const chapterIdSet = new Set(sourceItems.map((item) => item.id));
+        const rawRoots = sourceItems.filter((item) => {
+          const parentId = String(item.parentId || "").trim();
+          return !parentId || !chapterIdSet.has(parentId);
+        });
+        const visibleRoots = [];
+        rawRoots.forEach((item) => {
+          const kind = structure.kindMap.get(item.id) || "theme";
+          if (kind === "chapter-root") {
+            (structure.childrenMap.get(item.id) || []).forEach((child) => visibleRoots.push(child));
+            return;
+          }
+          visibleRoots.push(item);
+        });
+        return visibleRoots;
+      }
+
+      function getChapterRootId(chapterCode, excludeId = "") {
+        const code = String(chapterCode || "").trim();
+        if (!code) return "";
+        const chapterItems = state.items.filter((item) => resolveChapterCode(item) === code);
+        const structure = buildSemanticStructure(chapterItems);
+        const root = chapterItems.find((item) => {
+          if (excludeId && item.id === excludeId) return false;
+          return (structure.kindMap.get(item.id) || "") === "chapter-root";
+        });
+        return root?.id || "";
+      }
+
+      function getNodeFlags(item, kindMap) {
         const contentTypes = Array.isArray(item.contentTypes) ? item.contentTypes : [];
         const hasInfinite = contentTypes.includes("無限練習") || Boolean(practiceStore?.getConfig?.(item.id));
         const hasCalculator = contentTypes.includes("計算器") || Boolean(calculatorStore?.getConfig?.(item.id));
         const hasContent = hasBodyContent(item);
-        const flags = [item.parentId ? "分支" : "主題"];
+        const flags = [getNodeKindLabel(kindMap.get(item.id) || "theme")];
         if (!hasContent) {
           flags.push("空");
         }
@@ -772,13 +875,19 @@
 
         const source = state.items[sourceIndex];
         const target = state.items[targetIndex];
-        const childrenMap = buildChildrenMap(state.items);
+        const structure = buildSemanticStructure(state.items);
+        const { childrenMap, kindMap } = structure;
         if (getDescendants(dragId, childrenMap).has(targetId)) {
           setNotice("不能移到自己的子節點底下。");
           return false;
         }
 
         if (mode === "inside") {
+          const targetDepth = getVisibleDepth(kindMap.get(targetId) || "theme");
+          if (targetDepth >= 2) {
+            setNotice("目前以主題 → 分支 → 次分支為上限。");
+            return false;
+          }
           source.parentId = targetId;
           syncNodeCurriculumFromTarget(source, target);
           const refreshed = flattenRows(state.items);
@@ -832,8 +941,8 @@
           item.modifiedAt = new Date().toISOString();
         });
 
-        // Root becomes chapter topic; descendants keep their existing parent chain.
-        source.parentId = "";
+        // Root becomes chapter topic under the chapter root when available.
+        source.parentId = getChapterRootId(targetCode, dragId) || "";
         // Reorder moved subtree block to the end of target chapter block so the result is visible immediately.
         const subtreeBlock = state.items.filter((item) => movedIds.has(item.id));
         const rest = state.items.filter((item) => !movedIds.has(item.id));
@@ -976,8 +1085,7 @@
         const sourceInfo = typeof store.getDataSourceInfo === "function"
           ? store.getDataSourceInfo()
           : { label: "Unknown", path: "" };
-        const topicCount = state.items.filter((item) => !item.parentId).length;
-        const branchCount = state.items.length - topicCount;
+        const structure = buildSemanticStructure(state.items);
         const gradeCount = new Set(state.items.map((item) => `${item.stage}|${item.grade}|${item.term || ""}`)).size;
         const chapterCount = groupedByChapter(state.items).length;
         const dirty = state.deletedIds.length > 0 || state.items.some((item, index) => isItemModified(item, index));
@@ -987,17 +1095,19 @@
           `<span class="chip">套用時間 ${escapeHtml(formatTimestamp(managedInfo.savedAt))}</span>`,
           `<span class="chip">年級 ${gradeCount} 組</span>`,
           `<span class="chip">章節 ${chapterCount} 章</span>`,
-          `<span class="chip">主題 ${topicCount} 筆</span>`,
-          `<span class="chip">分支/次分支 ${branchCount} 筆</span>`,
+          `<span class="chip">主題 ${structure.counts.theme} 筆</span>`,
+          `<span class="chip">分支 ${structure.counts.branch} 筆</span>`,
+          structure.counts.subbranch ? `<span class="chip">次分支 ${structure.counts.subbranch} 筆</span>` : "",
           `<span class="chip">本次刪除 ${state.deletedIds.length} 筆</span>`,
           `<span class="chip">操作紀錄 ${state.operationLog.length} 筆</span>`,
           `<span class="chip">資料來源 ${escapeHtml(sourceInfo.label)}${sourceInfo.path ? `：${escapeHtml(sourceInfo.path)}` : ""}</span>`
-        ].join("");
+        ].filter(Boolean).join("");
       }
 
-      function renderTreeNode(item, childrenMap) {
+      function renderTreeNode(item, childrenMap, kindMap) {
         const children = (childrenMap.get(item.id) || []).slice();
-        const flags = getNodeFlags(item);
+        const nodeKind = kindMap.get(item.id) || "theme";
+        const flags = getNodeFlags(item, kindMap);
         const nodeClass = [
           "node",
           state.selectedId === item.id ? "active" : "",
@@ -1020,12 +1130,12 @@
               </div>
               <div class="node-drop-zone-group">
                 <button type="button" class="node-drop-zone" data-drop-id="${item.id}" data-drop-mode="before">放上方</button>
-                <button type="button" class="node-drop-zone" data-drop-id="${item.id}" data-drop-mode="inside">成為子分支</button>
+                <button type="button" class="node-drop-zone" data-drop-id="${item.id}" data-drop-mode="inside">${getInsideDropLabel(nodeKind)}</button>
                 <button type="button" class="node-drop-zone" data-drop-id="${item.id}" data-drop-mode="after">放下方</button>
-                ${item.parentId ? `<button type="button" class="node-drop-zone" data-promote-id="${item.id}">升為主題</button>` : ""}
+                ${(nodeKind === "branch" || nodeKind === "subbranch") ? `<button type="button" class="node-drop-zone" data-promote-id="${item.id}">升為主題</button>` : ""}
               </div>
             </article>
-            ${children.length ? `<ul class="node-list node-children">${children.map((child) => renderTreeNode(child, childrenMap)).join("")}</ul>` : ""}
+            ${children.length ? `<ul class="node-list node-children">${children.map((child) => renderTreeNode(child, childrenMap, kindMap)).join("")}</ul>` : ""}
           </li>
         `;
       }
@@ -1057,12 +1167,14 @@
         treeRoot.innerHTML = groups.map((group) => {
           const chapterHtml = group.chapters.map((chapter) => {
             const chapterItems = chapter.items;
-            const childrenMap = buildChildrenMap(chapterItems);
-            const chapterIdSet = new Set(chapterItems.map((item) => item.id));
-            const roots = chapterItems.filter((item) => {
-              const parentId = String(item.parentId || "").trim();
-              return !parentId || !chapterIdSet.has(parentId);
-            });
+            const structure = buildSemanticStructure(chapterItems);
+            const { childrenMap, kindMap } = structure;
+            const roots = getDisplayRoots(chapterItems, structure);
+            const chapterStats = [
+              structure.counts.theme ? `${structure.counts.theme} 主題` : "",
+              structure.counts.branch ? `${structure.counts.branch} 分支` : "",
+              structure.counts.subbranch ? `${structure.counts.subbranch} 次分支` : ""
+            ].filter(Boolean).join("・") || `${chapterItems.length} 筆`;
             const chapterAction = `
               <div class="chapter-action-row">
                 <button
@@ -1080,7 +1192,7 @@
               </div>
             `;
             const nodeHtml = roots.length
-              ? `${chapterAction}<ul class="node-list">${roots.map((rootItem) => renderTreeNode(rootItem, childrenMap)).join("")}</ul>`
+              ? `${chapterAction}<ul class="node-list">${roots.map((rootItem) => renderTreeNode(rootItem, childrenMap, kindMap)).join("")}</ul>`
               : `${chapterAction}<div class="empty">本章目前沒有主題。</div>`;
 
             return `
@@ -1090,7 +1202,7 @@
                     <span class="chapter-code">${escapeHtml(chapter.chapterCode || "未編碼")}</span>
                     <span>${escapeHtml(chapter.section || chapter.chapter)}</span>
                   </span>
-                  <span>${chapterItems.length} 筆</span>
+                  <span>${chapterStats}</span>
                 </summary>
                 <div class="tree-body">${nodeHtml}</div>
               </details>
@@ -1172,7 +1284,7 @@
           if (state.items.some((item) => item.id === id)) {
             state.selectedId = id;
             render();
-            setNotice(`已選取：${id}。可點其他節點的「放上方/成為子分支/放下方」移動。`);
+            setNotice(`已選取：${id}。可點其他節點的「放上方 / 成為下層節點 / 放下方」移動。`);
           }
           return;
         }
@@ -1182,7 +1294,7 @@
           const id = promoteButton.dataset.promoteId;
           const target = state.items.find((item) => item.id === id);
           if (!target) return;
-          target.parentId = "";
+          target.parentId = getChapterRootId(resolveChapterCode(target), id) || "";
           target.modifiedAt = new Date().toISOString();
           state.items = store.normalizeItems(state.items);
           markDraftChanged("promote-to-topic", { id });

@@ -1,4 +1,4 @@
-# 國一上主題整理提醒
+﻿# 國一上主題整理提醒
 
 這份提醒只記國一上目前已經踩過、之後很容易再踩一次的點。做 `j1-*` 時先看這裡，再開始動資料。
 
@@ -13,15 +13,15 @@
 
 ## 來源檔優先順序
 
-1. `exports/junior-source/j1-readable-paged.pdf`
+1. `data/junior-source/j1-readable-paged.pdf`
 2. `國一上_易讀版分頁版.docx`
 3. 舊 `formula-db.json` 只拿來判斷既有分支，不拿來決定新主題。
 
 ## PDF 命名
 
 - 命名規則：`{chapter-code}-topic-{index}-{slug}.pdf`
-- 存放位置：`exports/main-theme-overviews`
-- 國一上對照表：`exports/main-theme-overviews/junior-first-semester-topic-pdfs.json`
+- 存放位置：`data/main-theme-overviews`
+- 國一上對照表：`data/main-theme-overviews/junior-first-semester-topic-pdfs.json`
 
 ## 國中額外注意
 
@@ -188,3 +188,4 @@
   - 去分母、整理方程式、唯一解無解無限多解、驗算，掛 `解一元一次方程式`
 - `j1-3-3`
   - 年齡題、雞兔同籠、行程、混合比例、連續數、金額收支，全部先掛 `應用題列式與檢查答案`
+
