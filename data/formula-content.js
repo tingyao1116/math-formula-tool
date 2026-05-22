@@ -112,7 +112,8 @@ window.formulaContentRecords = [
       "題型",
       "使用技巧",
       "注意事項",
-      "常見錯誤"
+      "常見錯誤",
+      "無限練習"
     ],
     "contentTypesLocked": true,
     "tags": [
@@ -125,7 +126,8 @@ window.formulaContentRecords = [
     ],
     "examples": [],
     "tips": [
-      "先看主題整理，再往下接既有分支。"
+      "先看主題整理，再往下接既有分支。",
+      "可把平均數當作基準值，練習五數平均與反求未知數。"
     ],
     "notes": [
       "來源：國一上_易讀版分頁版.docx"
@@ -559,7 +561,8 @@ window.formulaContentRecords = [
       "題型",
       "使用技巧",
       "注意事項",
-      "常見錯誤"
+      "常見錯誤",
+      "無限練習"
     ],
     "contentTypesLocked": true,
     "tags": [
@@ -572,7 +575,8 @@ window.formulaContentRecords = [
     ],
     "examples": [],
     "tips": [
-      "先看主題整理，再往下接既有分支。"
+      "先看主題整理，再往下接既有分支。",
+      "可把平均數當作基準值，練習五數平均與反求未知數。"
     ],
     "notes": [
       "來源：國一上_易讀版分頁版.docx"

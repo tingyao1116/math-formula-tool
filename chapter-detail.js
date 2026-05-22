@@ -19,6 +19,7 @@ const overviewBodyByCode = overviewBodyStore.byCode || buildOverviewByCode(overv
 const closingStore = window.chapterClosingStore || {};
 const closingByCode = closingStore.byCode || buildOverviewByCode(closingStore.groups || {});
 const mainTopicOverviewsById = window.mainTopicOverviewStore?.byId || {};
+const practiceLibraryStore = window.practiceLibraryStore || {};
 const state = {
   overviewVariantId: "",
 };
@@ -86,6 +87,43 @@ function withPdfFitWidth(src) {
 
 function normalizeChapterItems(code) {
   return formulas.filter((item) => String(item?.chapterCode || "").trim() === code);
+}
+
+function normalizeTextList(values) {
+  return Array.isArray(values) ? values.filter((value) => String(value || "").trim()) : [];
+}
+
+function buildIndependentPracticeItem(record, code) {
+  const chapterMeta = store?.getChapterOptions?.().find((entry) => String(entry?.code || "").trim() === String(code || "").trim()) || null;
+  return {
+    id: String(record?.id || "").trim(),
+    title: String(record?.title || "").trim() || "無限練習",
+    stage: String(record?.stage || "").trim(),
+    grade: String(record?.grade || "").trim(),
+    term: String(record?.term || "").trim(),
+    chapter: String(record?.chapter || "").trim() || String(chapterMeta?.label || code || ""),
+    chapterCode: String(code || "").trim(),
+    domain: String(record?.domain || "").trim() || "無限練習",
+    difficulty: String(record?.difficulty || "").trim(),
+    contentTypes: ["無限練習"],
+    tags: normalizeTextList(record?.tags),
+    usage: normalizeTextList(record?.usage),
+    examples: normalizeTextList(record?.examples),
+    tips: normalizeTextList(record?.tips),
+    notes: normalizeTextList(record?.notes),
+    mistakes: normalizeTextList(record?.mistakes),
+  };
+}
+
+function getChapterPracticeItems(code) {
+  const practiceIds = Array.isArray(practiceLibraryStore?.byChapter?.[code]) ? practiceLibraryStore.byChapter[code] : [];
+  const seen = new Set();
+  return practiceIds
+    .map((practiceId) => String(practiceId || "").trim())
+    .filter((practiceId) => practiceId && !seen.has(practiceId) && seen.add(practiceId))
+    .map((practiceId) => practiceLibraryStore?.byId?.[practiceId] || null)
+    .filter((record) => record && record.enabled !== false)
+    .map((record) => buildIndependentPracticeItem(record, code));
 }
 
 function buildChildrenByParent(items) {
@@ -351,6 +389,38 @@ function renderQuestionList(code) {
   ].filter(Boolean).join("");
 }
 
+function renderChapterPracticeList(code) {
+  const items = getChapterPracticeItems(code);
+  if (!items.length) return "";
+  const listHtml = items.map((item) => `
+    <li class="linked-question-item">
+      <div class="linked-question-text">
+        <strong>${escapeHtml(item.title)}</strong>
+        ${item.difficulty ? `<span class="meta-chip">難度：${escapeHtml(item.difficulty)}</span>` : ""}
+      </div>
+      <div class="card-actions">
+        <a class="ghost-link" href="practice-bank.html?chapter=${encodeURIComponent(code)}&practice=${encodeURIComponent(item.id)}">開始練習</a>
+      </div>
+    </li>
+  `).join("");
+
+  return `
+    <section class="panel detail-branches-panel">
+      <div class="topic-cluster__header">
+        <div>
+          <p class="summary-label">本章無限練習</p>
+          <h2>可重複使用的章節練習</h2>
+        </div>
+        <a class="ghost-link" href="practice-bank.html?chapter=${encodeURIComponent(code)}">開啟本章練習總覽</a>
+      </div>
+      <section class="content-section linked-questions-section">
+        <ol class="linked-question-list">
+          ${listHtml}
+        </ol>
+      </section>
+    </section>`;
+}
+
 function renderNestedBranchTree(items, childrenByParent, depth = 1) {
   if (!items.length || typeof toolkit.renderCard !== "function") return "";
   const layoutClass = depth <= 1 ? "branch-grid" : "branch-grid branch-grid--nested";
@@ -479,12 +549,13 @@ function init() {
           <h2>這一章的主題與分支</h2>
         </div>
       </div>
-      ${topLevelTopics.length
+    ${topLevelTopics.length
         ? renderTopicTree(topLevelTopics, childrenByParent)
         : '<div class="empty-state">目前這個章節還沒有整理出主題。</div>'}
     </section>
     ${renderClosingKeySentencePanel(closingKeySections, `${ref.chapter || chapterCode}的章節後話還沒整理。`)}
     ${renderQuestionList(chapterCode)}
+    ${renderChapterPracticeList(chapterCode)}
   `;
 
   if (typeof toolkit.bindInteractiveEvents === "function") {

@@ -6,6 +6,7 @@
   const chapterClosings = window.chapterClosingStore?.groups || {};
   const chapterClosingsByCode = window.chapterClosingStore?.byCode || {};
   const mainTopicOverviewsById = window.mainTopicOverviewStore?.byId || {};
+  const practiceLibraryStore = window.practiceLibraryStore || {};
   const BRANCH_LAYOUT_STORAGE_KEY = 'math-branch-layout-by-topic-v1';
   const CHAPTER_QUESTION_PAGE_SIZE = 10;
 
@@ -25,19 +26,34 @@
     typeof store.compareCurriculumItems === 'function'
       ? store.compareCurriculumItems
       : (a, b) => String(a.title).localeCompare(String(b.title), 'zh-Hant');
+  const topicIdSet = new Set(
+    allItems
+      .map((item) => String(item?.id || '').trim())
+      .filter(Boolean)
+  );
+  const practiceTopicSourceIds = new Set(
+    Object.values(practiceLibraryStore?.byId || {})
+      .map((row) => String(row?.generatorKey || row?.practiceKey || '').trim())
+      .filter((id) => id && topicIdSet.has(id))
+  );
 
   function getToolkit() {
     return window.formulaToolkit || {};
   }
 
+  function isHiddenPracticeBranch(item) {
+    const itemId = String(item?.id || '').trim();
+    return Boolean(itemId && practiceTopicSourceIds.has(itemId));
+  }
+
   const childCountByParent = allItems.reduce((map, item) => {
-    if (!item.parentId) return map;
+    if (!item.parentId || isHiddenPracticeBranch(item)) return map;
     map.set(item.parentId, (map.get(item.parentId) || 0) + 1);
     return map;
   }, new Map());
 
   const childTitlesByParent = allItems.reduce((map, item) => {
-    if (!item.parentId) return map;
+    if (!item.parentId || isHiddenPracticeBranch(item)) return map;
     const list = map.get(item.parentId) || [];
     list.push(String(item.title || '').trim());
     map.set(item.parentId, list);
@@ -687,6 +703,12 @@
       </section>`;
   }
 
+  function getChapterPracticeCount(chapterCode) {
+    if (!chapterCode) return 0;
+    const rows = practiceLibraryStore?.byChapter?.[chapterCode];
+    return Array.isArray(rows) ? rows.length : 0;
+  }
+
   function renderOverviewSection(section) {
     if (!section) return '';
     if (section.type === 'paragraph') {
@@ -1024,7 +1046,9 @@
   }
 
   function buildDisplayTopicEntries(topicEntries, items) {
-    const sourceItems = Array.isArray(items) ? items.filter(Boolean) : [];
+    const sourceItems = Array.isArray(items)
+      ? items.filter((item) => item && !isHiddenPracticeBranch(item))
+      : [];
     const childrenByParent = sourceItems.reduce((map, item) => {
       if (!item?.parentId) return map;
       const list = map.get(item.parentId) || [];
@@ -1216,7 +1240,7 @@
         const groupChapterCode =
           group.chapterCode || ref?.chapterCode || store.getChapterCode?.(ref?.stage, ref?.grade, ref?.term, ref?.chapter) || '';
         const fullChapterItems = groupChapterCode
-          ? allItems.filter((item) => String(item.chapterCode || '') === String(groupChapterCode))
+          ? allItems.filter((item) => String(item.chapterCode || '') === String(groupChapterCode) && !isHiddenPracticeBranch(item))
           : groupItems.map((row) => row.item);
         const displayTopicEntries = buildDisplayTopicEntries(validTopicEntries, fullChapterItems);
         const mainOutline = displayTopicEntries
@@ -1243,7 +1267,12 @@
             <div>
               <h2>${escapeHtml(group.name)}</h2>
             </div>
-            ${groupChapterCode ? `<a class="ghost-link" href="chapter.html?code=${encodeURIComponent(groupChapterCode)}">開啟個別章節頁</a>` : ''}
+            <div class="card-actions">
+              ${groupChapterCode && getChapterPracticeCount(groupChapterCode)
+                ? `<a class="ghost-link" href="practice-bank.html?chapter=${encodeURIComponent(groupChapterCode)}">本章無限練習（${getChapterPracticeCount(groupChapterCode)}）</a>`
+                : ''}
+              ${groupChapterCode ? `<a class="ghost-link" href="chapter.html?code=${encodeURIComponent(groupChapterCode)}">開啟個別章節頁</a>` : ''}
+            </div>
           </div>
           <div class="topic-cluster__header">
             <div>

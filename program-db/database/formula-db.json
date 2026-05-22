@@ -142,14 +142,14 @@
       "difficulty": "基礎",
       "chapterRole": "主題",
       "parentId": "j1-1-1-main-theme-absolute-value-distance",
-      "contentTypes": [
-        "公式",
-        "定義",
-        "題型",
-        "使用技巧",
-        "注意事項",
-        "常見錯誤"
-      ],
+        "contentTypes": [
+          "公式",
+          "定義",
+          "題型",
+          "使用技巧",
+          "注意事項",
+          "常見錯誤"
+        ],
       "contentTypesLocked": true,
       "tags": [
         "j1-1-1",
@@ -160,9 +160,9 @@
         "整理絕對值定義、分段觀念、兩點距離與含絕對值方程、不等式。"
       ],
       "examples": [],
-      "tips": [
-        "先看主題整理，再往下接既有分支。"
-      ],
+        "tips": [
+          "先看主題整理，再往下接既有分支。"
+        ],
       "notes": [
         "來源：國一上_易讀版分頁版.docx"
       ],

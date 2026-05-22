@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
-  <link rel="stylesheet" href="styles.css?v=20260423-abs-count-layout-v4" />
+  <link rel="stylesheet" href="styles.css?v=20260520-practice-catalog-v2" />
 </head>
 <body>
   <div class="page-shell">
@@ -20,7 +20,7 @@
         <p class="eyebrow">Practice Bank</p>
         <h1>無限練習總覽</h1>
         <p class="hero__lead">
-          集中查看目前所有已接上的無限練習主題，可依章節與關鍵字快速篩選，並直接在這頁出題練習。
+          集中查看目前所有已建好的無限練習項目，可依章節與關鍵字快速篩選，並直接在這頁出題練習。
         </p>
         <div class="hero__quicklinks">
           <a class="ghost-link" href="index.html">回主頁</a>
@@ -54,11 +54,21 @@
         </section>
 
         <section class="panel guide">
+          <h2>章節可練習項目</h2>
+          <div class="chapter-practice-catalog__toolbar">
+            <button id="catalogBindingModeButton" class="ghost-button is-active" type="button">掛載項目數</button>
+            <button id="catalogRecordModeButton" class="ghost-button" type="button">練習本體數</button>
+          </div>
+          <div id="chapterPracticeCatalog" class="chapter-practice-catalog"></div>
+        </section>
+
+        <section class="panel guide">
           <h2>篩選說明</h2>
           <ol>
-            <li>章節篩選是以主題的 `chapterCode` 為準。</li>
-            <li>關鍵字會搜尋主題標題、章節、標籤與練習標題。</li>
-            <li>這頁只顯示「目前真的能出題」的無限練習。</li>
+            <li>左側可切換看「掛載項目數」或「練習本體數」。</li>
+            <li>章節篩選優先看掛載章節，沒有掛載時才退回 `chapterCode`。</li>
+            <li>關鍵字會搜尋練習標題、章節、標籤與練習說明。</li>
+            <li>這頁優先讀獨立練習資料，尚未搬移的舊練習會暫時一起顯示。</li>
           </ol>
         </section>
       </aside>
@@ -91,7 +101,7 @@
   <script defer src="chapter-closings.js?v=20260507-main-theme-layer-v2"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="formula-core.js?v=20260427-theta-fix-v1"></script>
-  <script defer src="practice-bank.js?v=20260512-practice-bank-v1"></script>
+  <script defer src="practice-bank.js?v=20260520-practice-library-v6"></script>
   <script defer src="pwa.js"></script>
 </body>
 </html>

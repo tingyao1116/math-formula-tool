@@ -28,7 +28,9 @@ from practice_db_utils import (
     LEGACY_PRACTICE_JS_PATH,
     extract_legacy_practice_catalog,
     load_practice_payload,
-    normalize_practice_assignment,
+    normalize_practice_binding,
+    normalize_practice_payload,
+    normalize_practice_record,
     now_iso as practice_now_iso,
 )
 from sync_legacy_bridge import sync_legacy_js_from_db
@@ -87,6 +89,8 @@ def normalize_markdown_escapes(text: str) -> tuple[str, int, int]:
 
 
 class DualDbGui:
+    PRACTICE_MODES = {"practice_records", "practice_bindings", "practice_legacy"}
+
     def __init__(self, root: tk.Tk):
         self.root = root
         self.root.title("Formula / Question DB 管理介面")
@@ -100,7 +104,7 @@ class DualDbGui:
         self.overview_body_payload = {"meta": {}, "bodies": {}}
         self.closing_payload = {"meta": {}, "closings": {}}
         self.main_overview_payload = {"meta": {}, "byId": {}}
-        self.practice_payload = {"meta": {}, "assignments": []}
+        self.practice_payload = {"meta": {}, "assignments": [], "practices": [], "bindings": []}
         self.filtered = []
         self._legacy_practice_catalog_cache = None
 
@@ -109,6 +113,7 @@ class DualDbGui:
         self.grade_var = tk.StringVar(value=ALL)
         self.chapter_var = tk.StringVar(value=ALL)
         self.difficulty_var = tk.StringVar(value=ALL)
+        self.practice_unbound_only_var = tk.BooleanVar(value=False)
         self.import_delete_var = tk.BooleanVar(value=False)
         self.editor_wrap_var = tk.BooleanVar(value=True)
         self.preview_auto_load_var = tk.BooleanVar(value=True)
@@ -125,6 +130,18 @@ class DualDbGui:
         self._build_ui()
         self.load_all()
         self.switch_mode("topics")
+
+    def _is_practice_mode(self, mode: str | None = None):
+        current = mode if mode is not None else self.mode
+        return current in self.PRACTICE_MODES
+
+    def _practice_mode_label(self, mode: str | None = None):
+        current = mode if mode is not None else self.mode
+        return {
+            "practice_records": "練習本體",
+            "practice_bindings": "掛載關聯",
+            "practice_legacy": "舊式直連",
+        }.get(current, "無限練習")
 
     def _build_ui(self):
         style = ttk.Style()
@@ -149,8 +166,12 @@ class DualDbGui:
         self.closing_btn.pack(side="left", padx=(0, 10))
         self.main_overview_btn = ttk.Button(filter_bar, text="主題整理", style="Compact.TButton", command=lambda: self.switch_mode("main_overviews"))
         self.main_overview_btn.pack(side="left", padx=(0, 10))
-        self.practice_btn = ttk.Button(filter_bar, text="無限練習", style="Compact.TButton", command=lambda: self.switch_mode("practices"))
-        self.practice_btn.pack(side="left", padx=(0, 10))
+        self.practice_record_btn = ttk.Button(filter_bar, text="練習本體", style="Compact.TButton", command=lambda: self.switch_mode("practice_records"))
+        self.practice_record_btn.pack(side="left", padx=(0, 4))
+        self.practice_binding_btn = ttk.Button(filter_bar, text="掛載關聯", style="Compact.TButton", command=lambda: self.switch_mode("practice_bindings"))
+        self.practice_binding_btn.pack(side="left", padx=(0, 4))
+        self.practice_legacy_btn = ttk.Button(filter_bar, text="舊式直連", style="Compact.TButton", command=lambda: self.switch_mode("practice_legacy"))
+        self.practice_legacy_btn.pack(side="left", padx=(0, 10))
         self.topic_btn = ttk.Button(filter_bar, text="分支模式", style="Compact.TButton", command=lambda: self.switch_mode("topics"))
         self.topic_btn.pack(side="left", padx=(0, 10))
         self.question_btn = ttk.Button(filter_bar, text="題庫模式", style="Compact.TButton", command=lambda: self.switch_mode("questions"))
@@ -174,6 +195,13 @@ class DualDbGui:
         ttk.Label(filter_detail_bar, text="難度").pack(side="left")
         self.difficulty_combo = ttk.Combobox(filter_detail_bar, textvariable=self.difficulty_var, width=10, state="readonly")
         self.difficulty_combo.pack(side="left", padx=(4, 0))
+        self.practice_unbound_only_check = ttk.Checkbutton(
+            filter_detail_bar,
+            text="只看未掛載",
+            variable=self.practice_unbound_only_var,
+            command=self.search,
+        )
+        self.practice_unbound_only_check.pack(side="left", padx=(12, 0))
 
         ttk.Button(action_bar, text="新增範本", style="Compact.TButton", command=self.new_template).pack(side="left", padx=(0, 4))
         ttk.Button(action_bar, text="重載(讀檔)", style="Compact.TButton", command=self.load_all).pack(side="left", padx=4)
@@ -185,6 +213,7 @@ class DualDbGui:
         ttk.Button(action_bar, text="儲存（新增/更新）", style="Compact.TButton", command=self.save_item).pack(side="left", padx=4)
         ttk.Button(action_bar, text="刪除選取", style="Compact.TButton", command=self.delete_selected).pack(side="left", padx=4)
         ttk.Button(action_bar, text="匯出主題PDF", style="Compact.TButton", command=self.export_selected_topics_pdf).pack(side="left", padx=4)
+        ttk.Button(action_bar, text="批次掛載 practice", style="Compact.TButton", command=self.open_practice_binding_dialog).pack(side="left", padx=4)
 
         ttk.Button(action_bar, text="題目指派", style="Compact.TButton", command=self.open_question_assignment_dialog).pack(side="left", padx=4)
         ttk.Button(action_bar, text="改分類/難度", style="Compact.TButton", command=self.open_question_meta_edit_dialog).pack(side="left", padx=4)
@@ -276,7 +305,7 @@ class DualDbGui:
             return self.main_overview_payload
         if self.mode == "closings":
             return self.closing_payload
-        if self.mode == "practices":
+        if self._is_practice_mode():
             return self.practice_payload
         return self.chapter_payload
 
@@ -293,9 +322,14 @@ class DualDbGui:
             return "byId"
         if self.mode == "closings":
             return "closings"
-        if self.mode == "practices":
-            return "assignments"
+        if self._is_practice_mode():
+            return "practices"
         return "catalog"
+
+    def _current_db_kind(self):
+        if self._is_practice_mode():
+            return "practices"
+        return self.mode
 
     def _set_preview_pane_ratio(self, top_ratio: float):
         if not self.right_split:
@@ -311,7 +345,7 @@ class DualDbGui:
             pass
 
     def _current_db_path(self):
-        return resolve_db_path(self.mode)
+        return resolve_db_path(self._current_db_kind())
 
     def _write_db_payload(self, kind: str, payload: dict):
         path = resolve_db_path(kind)
@@ -329,7 +363,7 @@ class DualDbGui:
             sync_practice_assignment_js_from_db(path)
 
     def _write_current_db(self):
-        self._write_db_payload(self.mode, self._current_payload())
+        self._write_db_payload(self._current_db_kind(), self._current_payload())
 
     def load_all(self):
         for kind in ["topics", "questions", "chapter", "overviews", "overview_bodies", "main_overviews", "closings", "practices"]:
@@ -348,7 +382,7 @@ class DualDbGui:
                 elif kind == "closings":
                     self.closing_payload = {"meta": {"count": 0}, "closings": {}}
                 elif kind == "practices":
-                    self.practice_payload = {"meta": {"count": 0}, "assignments": []}
+                    self.practice_payload = {"meta": {"count": 0}, "assignments": [], "practices": [], "bindings": []}
                 else:
                     self.chapter_payload = {"meta": {"count": 0}, "catalog": {}}
                 continue
@@ -369,7 +403,11 @@ class DualDbGui:
             elif kind == "closings":
                 self.closing_payload = payload if isinstance(payload.get("closings", {}), dict) else {"meta": {}, "closings": {}}
             elif kind == "practices":
-                self.practice_payload = payload if isinstance(payload.get("assignments", []), list) else {"meta": {}, "assignments": []}
+                self.practice_payload = (
+                    payload
+                    if isinstance(payload.get("assignments", []), list)
+                    else {"meta": {}, "assignments": [], "practices": [], "bindings": []}
+                )
             else:
                 self.chapter_payload = payload if isinstance(payload.get("catalog", {}), dict) else {"meta": {}, "catalog": {}}
 
@@ -392,7 +430,9 @@ class DualDbGui:
         self.overview_body_btn.state(["!disabled"] if mode != "overview_bodies" else ["disabled"])
         self.main_overview_btn.state(["!disabled"] if mode != "main_overviews" else ["disabled"])
         self.closing_btn.state(["!disabled"] if mode != "closings" else ["disabled"])
-        self.practice_btn.state(["!disabled"] if mode != "practices" else ["disabled"])
+        self.practice_record_btn.state(["!disabled"] if mode != "practice_records" else ["disabled"])
+        self.practice_binding_btn.state(["!disabled"] if mode != "practice_bindings" else ["disabled"])
+        self.practice_legacy_btn.state(["!disabled"] if mode != "practice_legacy" else ["disabled"])
         mode_label = {
             "topics": "分支",
             "questions": "題庫",
@@ -401,9 +441,23 @@ class DualDbGui:
             "overview_bodies": "章節正文",
             "main_overviews": "主題整理",
             "closings": "章節後話",
-            "practices": "無限練習",
+            "practice_records": "練習本體",
+            "practice_bindings": "掛載關聯",
+            "practice_legacy": "舊式直連",
         }.get(mode, mode)
-        self.status_var.set(f"目前模式：{mode_label}")
+        if self._is_practice_mode(mode):
+            counts = self._practice_inventory_counts()
+            self.status_var.set(
+                f"目前模式：{mode_label}｜legacy 直連 {counts['legacy_direct']} 筆｜"
+                f"已轉新制 {counts['legacy_migrated_to_library']} 筆｜"
+                f"practice {counts['practice_count']} 筆｜binding {counts['binding_count']} 筆｜"
+                f"未掛載 {counts['unbound_practice_count']} 筆"
+            )
+        else:
+            self.status_var.set(f"目前模式：{mode_label}")
+        self.practice_unbound_only_check.state(
+            ["!disabled"] if mode == "practice_records" else ["disabled"]
+        )
         self.refresh_filters()
         self.search()
 
@@ -411,8 +465,12 @@ class DualDbGui:
         payload = self._current_payload()
         if self.mode in {"topics", "questions"}:
             return payload.get(self._current_key(), [])
-        if self.mode == "practices":
-            return self._practice_rows()
+        if self.mode == "practice_records":
+            return [row for row in self._practice_rows() if str(row.get("kind", "")).strip() == "practice"]
+        if self.mode == "practice_bindings":
+            return [row for row in self._practice_rows() if str(row.get("kind", "")).strip() == "binding"]
+        if self.mode == "practice_legacy":
+            return self._legacy_practice_rows()
         if self.mode == "chapter":
             rows = []
             for code, v in payload.get("catalog", {}).items():
@@ -509,57 +567,224 @@ class DualDbGui:
                 self._legacy_practice_catalog_cache = {}
         return self._legacy_practice_catalog_cache
 
-    def _practice_assignment_lookup(self):
-        rows = self.practice_payload.get("assignments", []) if isinstance(self.practice_payload, dict) else []
+    def _practice_record_lookup(self):
+        rows = self.practice_payload.get("practices", []) if isinstance(self.practice_payload, dict) else []
         lookup = {}
         for row in rows if isinstance(rows, list) else []:
             if not isinstance(row, dict):
                 continue
             rid = str(row.get("id", "")).strip()
             if rid:
-                lookup[rid] = normalize_practice_assignment(row)
+                lookup[rid] = normalize_practice_record(row)
         return lookup
 
-    def _practice_rows(self):
+    def _practice_bindings(self):
+        rows = self.practice_payload.get("bindings", []) if isinstance(self.practice_payload, dict) else []
+        normalized = []
+        for row in rows if isinstance(rows, list) else []:
+            if not isinstance(row, dict):
+                continue
+            binding = normalize_practice_binding(row)
+            if binding["practiceId"] and binding["targetType"] and binding["targetId"]:
+                normalized.append(binding)
+        return normalized
+
+    def _practice_binding_row_id(self, binding: dict):
+        return (
+            f"binding:{binding.get('practiceId', '')}:"
+            f"{binding.get('targetType', '')}:{binding.get('targetId', '')}"
+        )
+
+    def _normalize_practice_payload_state(self):
+        self.practice_payload = normalize_practice_payload(self.practice_payload)
+        return self.practice_payload
+
+    def _practice_inventory_counts(self):
         topic_lookup = self._topic_lookup()
         catalog = self._legacy_practice_catalog()
-        assignment_lookup = self._practice_assignment_lookup()
-        direct_topic_ids = {pid for pid in catalog if pid in topic_lookup}
-        all_ids = sorted(direct_topic_ids | set(assignment_lookup), key=lambda value: str(value))
+        legacy_direct_ids = {pid for pid in catalog if pid in topic_lookup}
+        practice_ids = {
+            str(row.get("id", "")).strip()
+            for row in self.practice_payload.get("practices", [])
+            if isinstance(row, dict)
+        }
+        bound_practice_ids = {
+            str(row.get("practiceId", "")).strip()
+            for row in self.practice_payload.get("bindings", [])
+            if isinstance(row, dict)
+            and bool(row.get("enabled", True))
+            and str(row.get("targetType", "")).strip().lower() == "chapter"
+            and str(row.get("practiceId", "")).strip()
+        }
+        migrated_legacy_count = sum(
+            1 for topic_id in legacy_direct_ids
+            if f"practice-{topic_id}" in practice_ids
+        )
+        return {
+            "legacy_direct": len(legacy_direct_ids),
+            "practice_count": len(self.practice_payload.get("practices", []) if isinstance(self.practice_payload, dict) else []),
+            "binding_count": len(self.practice_payload.get("bindings", []) if isinstance(self.practice_payload, dict) else []),
+            "legacy_migrated_to_library": migrated_legacy_count,
+            "bound_practice_count": len(bound_practice_ids),
+            "unbound_practice_count": len(practice_ids - bound_practice_ids),
+        }
+
+    def _build_practice_preview_item(self, source: dict):
+        if not isinstance(source, dict):
+            return {}
+        chapter_code = str(source.get("chapterCode", "") or source.get("chapter_code", "")).strip()
+        chapter_meta = self._chapter_catalog().get(chapter_code, {})
+        chapter_title = (
+            str(source.get("chapter", "")).strip()
+            or (str(chapter_meta.get("section", "")).strip() if isinstance(chapter_meta, dict) else "")
+            or chapter_code
+        )
+        return {
+            "id": str(source.get("id", "")).strip(),
+            "title": str(source.get("title", "")).strip() or "無限練習",
+            "stage": str(source.get("stage", "")).strip(),
+            "grade": str(source.get("grade", "")).strip(),
+            "term": str(source.get("term", "")).strip(),
+            "gradeLabel": "",
+            "chapter": chapter_title,
+            "chapterCode": chapter_code,
+            "domain": str(source.get("domain", "")).strip() or "無限練習",
+            "difficulty": str(source.get("difficulty", "")).strip(),
+            "contentTypes": ["無限練習"],
+            "tags": list(source.get("tags", []) or []),
+            "usage": list(source.get("usage", []) or []),
+            "examples": list(source.get("examples", []) or []),
+            "tips": list(source.get("tips", []) or []),
+            "notes": list(source.get("notes", []) or []),
+            "mistakes": list(source.get("mistakes", []) or []),
+        }
+
+    def _practice_rows(self):
+        practice_lookup = self._practice_record_lookup()
+        bindings = self._practice_bindings()
         rows = []
-        for rid in all_ids:
-            topic_meta = topic_lookup.get(rid, {})
-            legacy = catalog.get(rid, {})
-            assignment = assignment_lookup.get(rid)
-            mode = assignment.get("mode", "") if assignment else ("generator" if legacy else "")
-            practice_key = assignment.get("practiceKey", "") if assignment else rid
+        active_binding_counts = defaultdict(int)
+        for binding in bindings:
+            if not binding.get("enabled", True):
+                continue
+            if str(binding.get("targetType", "")).strip().lower() != "chapter":
+                continue
+            practice_id = str(binding.get("practiceId", "")).strip()
+            if practice_id:
+                active_binding_counts[practice_id] += 1
+
+        for rid, practice in practice_lookup.items():
+            base_chapter = str(practice.get("chapter", "") or self._chapter_label(practice.get("chapterCode", "")))
+            binding_count = int(active_binding_counts.get(rid, 0) or 0)
+            binding_summary = f"已掛載 {binding_count} 章" if binding_count else "未掛載"
+            display_title = str(practice.get("title", "") or rid)
+            if binding_count == 0:
+                display_title = f"{display_title}【未掛載】"
             row = {
                 "id": rid,
-                "title": str(topic_meta.get("title", "") or rid),
+                "kind": "practice",
+                "title": display_title,
+                "topicTitle": "",
+                "stage": str(practice.get("stage", "") or ""),
+                "grade": str(practice.get("grade", "") or ""),
+                "term": str(practice.get("term", "") or ""),
+                "chapter": base_chapter,
+                "chapter_code": str(practice.get("chapterCode", "") or ""),
+                "difficulty": str(practice.get("difficulty", "") or ""),
+                "practice_mode": str(practice.get("mode", "") or "generator"),
+                "practiceKey": str(practice.get("generatorKey", "") or ""),
+                "enabled": practice.get("enabled", True),
+                "questionCount": int(practice.get("questionCount", 0) or 0),
+                "practiceTitle": str(practice.get("title", "") or ""),
+                "bindingTarget": binding_summary,
+                "targetType": "",
+                "targetId": "",
+                "bindingCount": binding_count,
+                "bindingSummary": binding_summary,
+                "isUnbound": binding_count == 0,
+                "dbRecord": {"kind": "practice", **practice},
+                "notes": "；".join(practice.get("notes", []) or []),
+                "previewItem": self._build_practice_preview_item(practice),
+            }
+            if practice.get("mode") == "fixed-example":
+                row["prompt"] = practice.get("prompt", "")
+                row["answer"] = practice.get("answer", "")
+            rows.append(row)
+
+        for binding in bindings:
+            practice_id = str(binding.get("practiceId", "")).strip()
+            practice = practice_lookup.get(practice_id, {})
+            target_id = str(binding.get("targetId", "")).strip()
+            binding_target = self._chapter_label(target_id)
+            rows.append({
+                "id": self._practice_binding_row_id(binding),
+                "kind": "binding",
+                "title": f"掛載｜{practice.get('title', practice_id) or practice_id}",
+                "topicTitle": binding_target,
+                "stage": str(practice.get("stage", "") or ""),
+                "grade": str(practice.get("grade", "") or ""),
+                "term": str(practice.get("term", "") or ""),
+                "chapter": self._chapter_label(target_id),
+                "chapter_code": target_id,
+                "difficulty": str(practice.get("difficulty", "") or ""),
+                "practice_mode": "",
+                "practiceKey": practice_id,
+                "enabled": binding.get("enabled", True),
+                "questionCount": int(practice.get("questionCount", 0) or 0),
+                "practiceTitle": str(practice.get("title", "") or practice_id),
+                "bindingTarget": binding_target,
+                "targetType": "chapter",
+                "targetId": target_id,
+                "dbRecord": {"kind": "binding", **binding},
+                "notes": "",
+                "previewItem": self._build_practice_preview_item(practice) if practice else {},
+            })
+
+        return rows
+
+    def _legacy_practice_rows(self):
+        topic_lookup = self._topic_lookup()
+        catalog = self._legacy_practice_catalog()
+        practice_lookup = self._practice_record_lookup()
+        rows = []
+        for topic_id in sorted(pid for pid in catalog if pid in topic_lookup):
+            topic_meta = topic_lookup.get(topic_id, {})
+            legacy = catalog.get(topic_id, {})
+            practice_id = f"practice-{topic_id}"
+            rows.append({
+                "id": topic_id,
+                "kind": "legacy-direct",
+                "title": str(topic_meta.get("title", "") or legacy.get("title", "") or topic_id),
                 "topicTitle": str(topic_meta.get("title", "") or ""),
                 "stage": str(topic_meta.get("stage", "") or ""),
                 "grade": str(topic_meta.get("grade", "") or ""),
                 "term": str(topic_meta.get("term", "") or ""),
                 "chapter": str(topic_meta.get("chapter", "") or ""),
                 "chapter_code": str(topic_meta.get("chapterCode", "") or topic_meta.get("chapter_code", "") or ""),
-                "difficulty": str(
-                    assignment.get("difficulty", "") if assignment else (legacy.get("difficulty", "") or topic_meta.get("difficulty", ""))
-                ),
-                "practice_mode": mode,
-                "practiceKey": practice_key,
-                "enabled": assignment.get("enabled", True) if assignment else True,
-                "questionCount": int(
-                    assignment.get("questionCount", 0) if assignment else (legacy.get("questionCount", 0) or 0)
-                ),
-                "practiceTitle": str(assignment.get("title", "") if assignment else (legacy.get("title", "") or "")),
-                "legacyDirect": rid in direct_topic_ids,
-                "dbRecord": assignment or None,
-                "notes": str(assignment.get("notes", "") if assignment else ""),
-            }
-            if assignment and mode == "fixed-example":
-                row["prompt"] = assignment.get("prompt", "")
-                row["answer"] = assignment.get("answer", "")
-            rows.append(row)
+                "difficulty": str(legacy.get("difficulty", "") or topic_meta.get("difficulty", "")),
+                "practice_mode": "generator",
+                "practiceKey": topic_id,
+                "enabled": True,
+                "questionCount": int(legacy.get("questionCount", 0) or 0),
+                "practiceTitle": str(legacy.get("title", "") or ""),
+                "libraryPracticeId": practice_id if practice_id in practice_lookup else "",
+                "notes": "唯讀：這是舊式直連設定，來源是 data/formula-practice.js",
+                "dbRecord": {
+                    "kind": "legacy-direct",
+                    "id": topic_id,
+                    "practiceKey": topic_id,
+                    "title": legacy.get("title", "") or "",
+                    "difficulty": legacy.get("difficulty", "") or "",
+                    "questionCount": int(legacy.get("questionCount", 0) or 0),
+                    "libraryPracticeId": practice_id if practice_id in practice_lookup else "",
+                    "source": "data/formula-practice.js",
+                    "_help": [
+                        "這一頁是唯讀清單，不直接修改資料。",
+                        "若要搬成新制，請去『練習本體』與『掛載關聯』查看。"
+                    ],
+                },
+                "previewItem": topic_meta,
+            })
         return rows
 
     def _chapter_label(self, code: str, meta: dict | None = None):
@@ -599,34 +824,13 @@ class DualDbGui:
     def _chapter_matches(self, row: dict, chapter_filter: str):
         tokens = self._chapter_filter_tokens(chapter_filter)
         code = str(tokens.get("code", "")).strip()
-        names = {str(v).strip() for v in tokens.get("names", set()) if str(v).strip()}
-        row_chapter = str(row.get("chapter", "")).strip()
         row_code = str(row.get("chapter_code", "") or row.get("chapterCode", "")).strip()
-        row_id = str(row.get("id", "")).strip()
-        parent_id = str(row.get("parentId", "")).strip()
         if code:
-            meta = self._chapter_catalog().get(code, {})
-            section = str(meta.get("section", "")).strip() if isinstance(meta, dict) else ""
-            chapter_name = str(meta.get("chapter", "")).strip() if isinstance(meta, dict) else ""
-            if row_code == code or row_chapter == code:
+            if row_code == code:
                 return True
             if row_code and self._is_parent_chapter_code(code) and self._code_family(row_code) == self._code_family(code):
                 return True
-            if row_id.startswith(code) or parent_id.startswith(code):
-                return True
-            if section and row_chapter == section:
-                return True
-            if (
-                chapter_name
-                and row_chapter == chapter_name
-                and self._is_parent_chapter_code(code)
-            ):
-                return True
             return False
-        if row_chapter and row_chapter in names:
-            return True
-        if row_code and row_code in names:
-            return True
         return False
 
     def _chapter_label_sort_key(self, display: str):
@@ -647,10 +851,37 @@ class DualDbGui:
                 return (2, 999, -1, -1, -1)
         return (9, 999, 999, 999, 999)
 
+    def _search_text(self, *parts):
+        tokens: list[str] = []
+
+        def _append_part(value):
+            if value is None:
+                return
+            if isinstance(value, (list, tuple, set)):
+                for item in value:
+                    _append_part(item)
+                return
+            if isinstance(value, dict):
+                tokens.append(json.dumps(value, ensure_ascii=False))
+                return
+            tokens.append(str(value))
+
+        for part in parts:
+            _append_part(part)
+        return " ".join(token for token in tokens if token).lower()
+
     def _row_sort_key(self, row: dict):
         if self.mode in {"chapter", "overviews", "overview_bodies", "main_overviews", "closings"}:
             code = str(row.get("chapter_code", "") or row.get("chapterCode", "") or row.get("id", "")).strip()
             return (
+                *self._chapter_code_sort_key(code),
+                str(row.get("title", "")),
+                str(row.get("id", "")),
+            )
+        if self._is_practice_mode():
+            code = str(row.get("chapter_code", "") or row.get("chapterCode", "")).strip()
+            return (
+                str(row.get("kind", "")),
                 *self._chapter_code_sort_key(code),
                 str(row.get("title", "")),
                 str(row.get("id", "")),
@@ -765,6 +996,7 @@ class DualDbGui:
         grade = "" if self.grade_var.get() == ALL else self.grade_var.get().strip()
         chapter = "" if self.chapter_var.get() == ALL else self.chapter_var.get().strip()
         diff = "" if self.difficulty_var.get() == ALL else self.difficulty_var.get().strip()
+        unbound_only = bool(self.practice_unbound_only_var.get()) if self.mode == "practice_records" else False
 
         self.filtered = []
         for r in rows:
@@ -775,6 +1007,8 @@ class DualDbGui:
             if chapter and not self._chapter_matches(r, chapter):
                 continue
             if diff and r.get("difficulty") != diff:
+                continue
+            if unbound_only and not bool(r.get("isUnbound", False)):
                 continue
             if q:
                 blob_parts = [r.get("id", ""), r.get("title", ""), r.get("chapter", "")]
@@ -821,18 +1055,23 @@ class DualDbGui:
                         r.get("updatedAt", ""),
                         json.dumps(r.get("variants", []), ensure_ascii=False),
                     ]
-                elif self.mode == "practices":
+                elif self._is_practice_mode():
                     blob_parts += [
+                        r.get("kind", ""),
                         r.get("topicTitle", ""),
                         r.get("practice_mode", ""),
                         r.get("practiceKey", ""),
                         r.get("practiceTitle", ""),
+                        r.get("bindingTarget", ""),
+                        r.get("bindingSummary", ""),
+                        r.get("targetType", ""),
+                        r.get("targetId", ""),
                         r.get("questionCount", ""),
                         r.get("notes", ""),
                     ]
                 else:
                     blob_parts += [r.get("section", ""), r.get("domainMain", ""), r.get("domainSub", "")]
-                blob = " ".join(blob_parts).lower()
+                blob = self._search_text(blob_parts)
                 if q not in blob:
                     continue
             self.filtered.append(r)
@@ -848,9 +1087,19 @@ class DualDbGui:
             "overview_bodies": "章節正文",
             "main_overviews": "主題整理",
             "closings": "章節後話",
-            "practices": "無限練習",
+            "practice_records": "練習本體",
+            "practice_bindings": "掛載關聯",
+            "practice_legacy": "舊式直連",
         }.get(self.mode, self.mode)
-        self.status_var.set(f"{label} 查詢結果：{len(self.filtered)} 筆")
+        if self._is_practice_mode():
+            counts = self._practice_inventory_counts()
+            self.status_var.set(
+                f"{label} 查詢結果：{len(self.filtered)} 筆｜legacy 直連 {counts['legacy_direct']} 筆｜"
+                f"已轉新制 {counts['legacy_migrated_to_library']} 筆｜practice {counts['practice_count']} 筆｜"
+                f"binding {counts['binding_count']} 筆｜未掛載 {counts['unbound_practice_count']} 筆"
+            )
+        else:
+            self.status_var.set(f"{label} 查詢結果：{len(self.filtered)} 筆")
 
     def refresh_tree(self, preserve_selected_id: str | None = None):
         for iid in self.tree.get_children():
@@ -884,18 +1133,26 @@ class DualDbGui:
         self.last_selected_id = str(item.get("id", "")).strip()
         self.editor.delete("1.0", "end")
         editor_obj = item
-        if self.mode == "practices":
+        if self._is_practice_mode():
             editor_obj = item.get("dbRecord") or {
+                "kind": "practice",
                 "id": item.get("id", ""),
                 "enabled": item.get("enabled", True),
                 "mode": item.get("practice_mode", "") or "generator",
-                "practiceKey": item.get("practiceKey", ""),
+                "generatorKey": item.get("practiceKey", ""),
                 "title": item.get("practiceTitle", ""),
                 "difficulty": item.get("difficulty", ""),
                 "questionCount": item.get("questionCount", 0),
+                "chapterCode": item.get("chapter_code", ""),
+                "chapter": item.get("chapter", ""),
                 "prompt": item.get("prompt", ""),
                 "answer": item.get("answer", ""),
-                "notes": item.get("notes", ""),
+                "tags": [],
+                "usage": [],
+                "examples": [],
+                "tips": [],
+                "notes": [],
+                "mistakes": [],
             }
         self.editor.insert("1.0", json.dumps(editor_obj, ensure_ascii=False, indent=2))
         self.status_var.set(f"已選取：{item.get('id')}")
@@ -904,6 +1161,8 @@ class DualDbGui:
 
     # ----- actions -----
     def new_template(self):
+        if self.mode == "practice_legacy":
+            return messagebox.showwarning("提醒", "舊式直連是唯讀清單，請改到『練習本體』或『掛載關聯』。")
         if self.mode == "topics":
             obj = {
                 "id": "new-topic-id", "title": "新主題", "stage": "", "grade": "", "term": "", "chapter": "", "domain": "",
@@ -917,18 +1176,44 @@ class DualDbGui:
                 "difficulty": "", "source_type": "manual", "source_ref": "",
                 "tags": []
             }
-        elif self.mode == "practices":
+        elif self.mode == "practice_records":
             obj = {
-                "id": "topic-id",
+                "kind": "practice",
+                "id": "practice-new-id",
                 "enabled": True,
                 "mode": "generator",
-                "practiceKey": "generator-key",
-                "title": "",
+                "title": "新無限練習",
+                "generatorKey": "generator-key",
                 "difficulty": "",
-                "questionCount": 0,
+                "questionCount": 5,
+                "chapterCode": "",
+                "stage": "",
+                "grade": "",
+                "term": "",
+                "chapter": "",
+                "domain": "",
                 "prompt": "",
                 "answer": "",
-                "notes": "mode=fixed-example 時填 prompt / answer；mode=generator 時填 practiceKey。"
+                "tags": [],
+                "usage": [],
+                "examples": [],
+                "tips": [],
+                "notes": [],
+                "mistakes": [],
+                "_help": [
+                    "kind 可填 practice / binding。",
+                    "practice：管理可重複使用的無限練習本體。",
+                    "binding：把某個 practice 掛到 chapter。"
+                ]
+            }
+        elif self.mode == "practice_bindings":
+            obj = {
+                "kind": "binding",
+                "practiceId": "practice-new-id",
+                "targetType": "chapter",
+                "targetId": "j1-1-2",
+                "enabled": True,
+                "order": 1
             }
         elif self.mode == "chapter":
             obj = {
@@ -1071,6 +1356,8 @@ class DualDbGui:
         self.editor.insert("1.0", json.dumps(obj, ensure_ascii=False, indent=2))
 
     def save_item(self):
+        if self.mode == "practice_legacy":
+            return messagebox.showwarning("提醒", "舊式直連是唯讀清單，不能直接在這裡儲存。")
         text = self.editor.get("1.0", "end").strip()
         if not text:
             return messagebox.showwarning("提醒", "請先貼上或編輯 JSON")
@@ -1081,9 +1368,12 @@ class DualDbGui:
         if not isinstance(obj, dict):
             return messagebox.showerror("格式錯誤", "內容必須是 JSON 物件")
 
+        kind = str(obj.get("kind", "")).strip().lower() if self._is_practice_mode() else ""
         rid = str(obj.get("id", "")).strip()
+        if self._is_practice_mode() and kind == "binding":
+            rid = self._practice_binding_row_id(obj)
         title = str(obj.get("title", "")).strip()
-        if not rid or (self.mode != "practices" and not title):
+        if not rid or (not self._is_practice_mode() and not title):
             return messagebox.showerror("缺少必要欄位", "內容需要同時有 id 和 title")
 
         if self.mode == "topics":
@@ -1100,14 +1390,26 @@ class DualDbGui:
             obj.setdefault("target_level", "")
             obj.setdefault("target_id", "")
             obj.setdefault("target_title", "")
-        elif self.mode == "practices":
-            obj = normalize_practice_assignment(obj)
-            if not obj["id"]:
-                return messagebox.showerror("缺少必要欄位", "無限練習設定需要 id（主題 id）")
-            if obj["mode"] == "generator" and not obj["practiceKey"]:
-                return messagebox.showerror("缺少 practiceKey", "generator 模式需要 practiceKey")
-            if obj["mode"] == "fixed-example" and not (obj["prompt"] or obj["answer"]):
-                return messagebox.showerror("缺少題目內容", "fixed-example 模式至少要有 prompt 或 answer")
+        elif self._is_practice_mode():
+            kind = str(obj.get("kind", "")).strip().lower() or "practice"
+            if kind == "practice":
+                obj = normalize_practice_record(obj)
+                obj["kind"] = "practice"
+                if not obj["id"] or not obj["title"]:
+                    return messagebox.showerror("缺少必要欄位", "practice 需要 id 和 title")
+                if obj["mode"] == "generator" and not obj["generatorKey"]:
+                    return messagebox.showerror("缺少 generatorKey", "generator 模式需要 generatorKey")
+                if obj["mode"] == "fixed-example" and not (obj["prompt"] or obj["answer"]):
+                    return messagebox.showerror("缺少題目內容", "fixed-example 模式至少要有 prompt 或 answer")
+            elif kind == "binding":
+                obj = normalize_practice_binding(obj)
+                obj["kind"] = "binding"
+                if not obj["practiceId"] or not obj["targetType"] or not obj["targetId"]:
+                    return messagebox.showerror("缺少必要欄位", "binding 需要 practiceId、targetType、targetId")
+                if obj["targetType"] != "chapter":
+                    return messagebox.showerror("targetType 錯誤", "binding 的 targetType 目前只能是 chapter")
+            else:
+                return messagebox.showerror("kind 錯誤", "practice 模式目前只支援 practice、binding")
         elif self.mode == "overviews":
             obj.setdefault("groupName", "")
             obj.setdefault("updatedAt", datetime.now().isoformat(timespec="seconds"))
@@ -1188,17 +1490,41 @@ class DualDbGui:
             closing_map[rid] = closing_item
             payload.setdefault("meta", {})
             payload["meta"]["count"] = len(closing_map)
-        elif self.mode == "practices":
-            rows = payload.setdefault("assignments", [])
-            idx = next((i for i, it in enumerate(rows) if str(it.get("id", "")).strip() == rid), -1)
-            action = "已更新" if idx >= 0 else "已新增"
-            if idx >= 0:
-                rows[idx] = obj
-            else:
-                rows.append(obj)
+        elif self._is_practice_mode():
+            kind = obj.get("kind", "practice")
+            if kind == "practice":
+                rows = payload.setdefault("practices", [])
+                record_id = str(obj.get("id", "")).strip()
+                idx = next((i for i, it in enumerate(rows) if str(it.get("id", "")).strip() == record_id), -1)
+                action = "已更新" if idx >= 0 else "已新增"
+                stored = dict(obj)
+                stored.pop("kind", None)
+                if idx >= 0:
+                    rows[idx] = stored
+                else:
+                    rows.append(stored)
+                rid = record_id
+            elif kind == "binding":
+                rows = payload.setdefault("bindings", [])
+                binding_id = self._practice_binding_row_id(obj)
+                idx = next(
+                    (
+                        i for i, it in enumerate(rows)
+                        if self._practice_binding_row_id(normalize_practice_binding(it)) == binding_id
+                    ),
+                    -1,
+                )
+                action = "已更新" if idx >= 0 else "已新增"
+                stored = dict(obj)
+                stored.pop("kind", None)
+                if idx >= 0:
+                    rows[idx] = stored
+                else:
+                    rows.append(stored)
+                rid = binding_id
             payload.setdefault("meta", {})
-            payload["meta"]["count"] = len(rows)
             payload["meta"]["updatedAt"] = practice_now_iso()
+            self._normalize_practice_payload_state()
         else:
             key = self._current_key()
             rows = payload.setdefault(key, [])
@@ -1218,6 +1544,8 @@ class DualDbGui:
         self.status_var.set(f"{action}：{rid}")
         messagebox.showinfo("完成", f"{action} {rid}")
     def delete_selected(self):
+        if self.mode == "practice_legacy":
+            return messagebox.showwarning("提醒", "舊式直連是唯讀清單，不能直接在這裡刪除。")
         selected = self.tree.selection()
         if not selected:
             return messagebox.showwarning("提醒", "請先選一筆")
@@ -1276,20 +1604,28 @@ class DualDbGui:
             payload["closings"] = closing_map
             payload.setdefault("meta", {})
             payload["meta"]["count"] = len(closing_map)
-        elif self.mode == "practices":
-            rows = payload.get("assignments", [])
-            existing_ids = {str(row.get("id", "")).strip() for row in rows if isinstance(row, dict)}
-            missing = [rid for rid in ids if rid not in existing_ids]
-            if missing:
-                messagebox.showinfo(
-                    "提醒",
-                    "其中有些目前只是 legacy 直接配置，尚未建立 practice-db 覆寫。\n"
-                    "若要停用它，請先把該筆存成 enabled=false。",
+        elif self._is_practice_mode():
+            practice_rows = payload.get("practices", [])
+            binding_rows = payload.get("bindings", [])
+            deleted_practice_ids = {
+                str(item.get("dbRecord", {}).get("id", "")).strip()
+                for item in picked
+                if str(item.get("kind", "")).strip() == "practice"
+            }
+            payload["practices"] = [
+                r for r in practice_rows
+                if str(r.get("id", "")).strip() not in id_set
+            ]
+            payload["bindings"] = [
+                r for r in binding_rows
+                if (
+                    self._practice_binding_row_id(normalize_practice_binding(r)) not in id_set
+                    and str(r.get("practiceId", "")).strip() not in deleted_practice_ids
                 )
-            payload["assignments"] = [r for r in rows if str(r.get("id", "")).strip() not in id_set]
+            ]
             payload.setdefault("meta", {})
-            payload["meta"]["count"] = len(payload["assignments"])
             payload["meta"]["updatedAt"] = practice_now_iso()
+            self._normalize_practice_payload_state()
         else:
             key = self._current_key()
             rows = payload.get(key, [])
@@ -2095,10 +2431,10 @@ class DualDbGui:
 </body>
 </html>
 """
-        elif self.mode in {"topics", "practices"}:
+        elif self.mode == "topics" or self._is_practice_mode():
             topic_item = item
-            if self.mode == "practices":
-                topic_item = self._topic_lookup().get(str(item.get("id", "")).strip(), {})
+            if self._is_practice_mode():
+                topic_item = item.get("previewItem") or self._topic_lookup().get(str(item.get("id", "")).strip(), {})
             item_json = json.dumps(topic_item or {}, ensure_ascii=False)
             styles_uri = self._asset_uri("styles.css")
             formulas_uri = self._asset_uri("formulas.js")
@@ -2720,7 +3056,7 @@ class DualDbGui:
             duplicate_suffix_by_id[base_id] += 1
 
     def batch_import(self):
-        if self.mode in {"chapter", "overviews", "overview_bodies", "main_overviews", "closings", "practices"}:
+        if self.mode in {"chapter", "overviews", "overview_bodies", "main_overviews", "closings"} or self._is_practice_mode():
             return messagebox.showwarning("提醒", "此模式暫不支援批次匯入，請用 JSON 編輯器逐筆處理。")
         path = filedialog.askopenfilename(title="選擇批次匯入檔", filetypes=[("Import files", "*.txt *.jsonl *.json"), ("All files", "*.*")])
         if not path:
@@ -3065,6 +3401,46 @@ class DualDbGui:
             rows.append(question_by_id[qid])
         return rows
 
+    def _selected_practice_record_rows(self):
+        if self.mode != "practice_records":
+            return []
+        selected = self.tree.selection()
+        if not selected:
+            return []
+        practice_by_id = {
+            str(row.get("id", "")).strip(): row
+            for row in self.practice_payload.get("practices", [])
+            if isinstance(row, dict) and str(row.get("id", "")).strip()
+        }
+        rows = []
+        seen = set()
+        for item_id in selected:
+            try:
+                idx = int(item_id)
+            except ValueError:
+                continue
+            if not (0 <= idx < len(self.filtered)):
+                continue
+            pid = str(self.filtered[idx].get("id", "")).strip()
+            if not pid or pid in seen or pid not in practice_by_id:
+                continue
+            seen.add(pid)
+            rows.append(practice_by_id[pid])
+        return rows
+
+    def _practice_binding_target_options(self, target_type: str):
+        target_type = str(target_type or "").strip().lower()
+        if target_type != "chapter":
+            return []
+        return [
+            {
+                "id": code,
+                "label": self._chapter_label(code, meta),
+                "title": self._chapter_label(code, meta),
+            }
+            for code, meta in sorted(self._chapter_catalog().items(), key=lambda item: self._chapter_code_sort_key(item[0]))
+        ]
+
     def _question_category_options(self):
         existing = sorted(
             {
@@ -3370,6 +3746,258 @@ class DualDbGui:
 
         chapter_combo.bind("<<ComboboxSelected>>", refresh_targets)
         level_combo.bind("<<ComboboxSelected>>", refresh_targets)
+        refresh_targets()
+
+    def open_practice_binding_dialog(self):
+        if self.mode != "practice_records":
+            return messagebox.showwarning("提醒", "請先切到『練習本體』再做批次掛載。")
+
+        selected_rows = self._selected_practice_record_rows()
+        if not selected_rows:
+            return messagebox.showwarning("提醒", "請先在左邊選至少一筆練習本體。")
+
+        single_mode = len(selected_rows) == 1
+        dialog = tk.Toplevel(self.root)
+        dialog.title("practice 掛載管理" if single_mode else "批次掛載 practice")
+        dialog.transient(self.root)
+        dialog.grab_set()
+        dialog.geometry("860x560" if single_mode else "780x430")
+
+        frame = ttk.Frame(dialog, padding=12)
+        frame.pack(fill="both", expand=True)
+
+        title_text = (
+            f"正在管理：{str(selected_rows[0].get('title', '') or selected_rows[0].get('id', '')).strip()}"
+            if single_mode
+            else f"已選 {len(selected_rows)} 筆 practice"
+        )
+        ttk.Label(frame, text=title_text).grid(row=0, column=0, columnspan=2, sticky="w")
+
+        target_type_labels = {"chapter": "章節頁"}
+        target_type_lookup = {value: key for key, value in target_type_labels.items()}
+        target_type_var = tk.StringVar(value=target_type_labels["chapter"])
+        target_var = tk.StringVar()
+        start_order_var = tk.StringVar(value="1")
+        selected_practice_id = str(selected_rows[0].get("id", "")).strip() if single_mode else ""
+
+        preview_text = "\n".join(
+            f"- {str(row.get('title', '') or row.get('id', '')).strip()} <{str(row.get('id', '')).strip()}>"
+            for row in selected_rows[:10]
+        )
+        if len(selected_rows) > 10:
+            preview_text += f"\n... 另外還有 {len(selected_rows) - 10} 筆"
+
+        ttk.Label(frame, text="掛載到").grid(row=1, column=0, sticky="w", pady=(10, 4))
+        target_type_combo = ttk.Combobox(
+            frame,
+            textvariable=target_type_var,
+            values=[target_type_labels["chapter"]],
+            state="readonly",
+            width=20,
+        )
+        target_type_combo.grid(row=1, column=1, sticky="w", pady=(10, 4))
+
+        checkbox_vars = {}
+        option_by_id = {}
+        option_order = []
+
+        if single_mode:
+            ttk.Label(frame, text="預設掛載").grid(row=2, column=0, sticky="nw", pady=4)
+            target_box = ttk.Frame(frame)
+            target_box.grid(row=2, column=1, sticky="nsew", pady=4)
+            target_canvas = tk.Canvas(target_box, height=230, highlightthickness=0)
+            target_scrollbar = ttk.Scrollbar(target_box, orient="vertical", command=target_canvas.yview)
+            target_inner = ttk.Frame(target_canvas)
+            target_inner.bind(
+                "<Configure>",
+                lambda _event: target_canvas.configure(scrollregion=target_canvas.bbox("all"))
+            )
+            target_canvas.create_window((0, 0), window=target_inner, anchor="nw")
+            target_canvas.configure(yscrollcommand=target_scrollbar.set)
+            target_canvas.pack(side="left", fill="both", expand=True)
+            target_scrollbar.pack(side="right", fill="y")
+        else:
+            ttk.Label(frame, text="目標").grid(row=2, column=0, sticky="w", pady=4)
+            target_combo = ttk.Combobox(frame, textvariable=target_var, state="readonly", width=68)
+            target_combo.grid(row=2, column=1, sticky="ew", pady=4)
+
+        ttk.Label(frame, text="起始排序").grid(row=3, column=0, sticky="w", pady=4)
+        ttk.Entry(frame, textvariable=start_order_var, width=12).grid(row=3, column=1, sticky="w", pady=4)
+
+        ttk.Label(frame, text="目前選取").grid(row=4, column=0, sticky="nw", pady=(12, 4))
+        preview = tk.Text(frame, height=10, wrap="word")
+        preview.grid(row=4, column=1, sticky="nsew", pady=(12, 4))
+        preview.insert("1.0", preview_text)
+        preview.configure(state="disabled")
+
+        status_var = tk.StringVar(value="")
+        ttk.Label(frame, textvariable=status_var).grid(row=5, column=0, columnspan=2, sticky="w", pady=(4, 0))
+
+        frame.columnconfigure(1, weight=1)
+        frame.rowconfigure(4, weight=1)
+        if single_mode:
+            frame.rowconfigure(2, weight=1)
+
+        target_lookup = {}
+
+        def refresh_targets(*_args):
+            target_type_key = target_type_lookup.get(target_type_var.get(), "chapter")
+            options = self._practice_binding_target_options(target_type_key)
+            values = [option["label"] for option in options]
+            target_lookup.clear()
+            option_by_id.clear()
+            option_order.clear()
+            for option in options:
+                target_lookup[option["label"]] = option
+                option_id = str(option.get("id", "")).strip()
+                option_by_id[option_id] = option
+                option_order.append(option_id)
+
+            if single_mode:
+                existing_ids = {
+                    str(binding.get("targetId", "")).strip()
+                    for binding in self._practice_bindings()
+                    if str(binding.get("practiceId", "")).strip() == selected_practice_id
+                    and str(binding.get("targetType", "")).strip() == target_type_key
+                }
+                checkbox_vars.clear()
+                for child in target_inner.winfo_children():
+                    child.destroy()
+                for idx, option in enumerate(options):
+                    option_id = str(option.get("id", "")).strip()
+                    variable = tk.BooleanVar(value=option_id in existing_ids)
+                    checkbox_vars[option_id] = variable
+                    ttk.Checkbutton(
+                        target_inner,
+                        text=str(option.get("label", "")).strip(),
+                        variable=variable,
+                    ).grid(row=idx, column=0, sticky="w", pady=2)
+                status_var.set(f"{target_type_var.get()}共 {len(options)} 個目標，已掛載 {len(existing_ids)} 個")
+            else:
+                target_combo["values"] = values
+                target_var.set(values[0] if values else "")
+                status_var.set(f"{target_type_var.get()}可選 {len(values)} 個目標")
+
+        def apply_bindings():
+            target_type_key = target_type_lookup.get(target_type_var.get(), "chapter")
+
+            try:
+                start_order = int(start_order_var.get().strip() or "1")
+            except ValueError:
+                return messagebox.showerror("錯誤", "起始排序需要是整數。", parent=dialog)
+
+            payload = self._current_payload()
+            rows = payload.setdefault("bindings", [])
+            if single_mode:
+                desired_ids = [
+                    option_id
+                    for option_id in option_order
+                    if checkbox_vars.get(option_id) and checkbox_vars[option_id].get()
+                ]
+                existing_ids = {
+                    str(binding.get("targetId", "")).strip()
+                    for binding in self._practice_bindings()
+                    if str(binding.get("practiceId", "")).strip() == selected_practice_id
+                    and str(binding.get("targetType", "")).strip() == target_type_key
+                }
+                kept_rows = []
+                for row in rows:
+                    if not isinstance(row, dict):
+                        kept_rows.append(row)
+                        continue
+                    binding = normalize_practice_binding(row)
+                    same_binding_group = (
+                        str(binding.get("practiceId", "")).strip() == selected_practice_id
+                        and str(binding.get("targetType", "")).strip() == target_type_key
+                    )
+                    if not same_binding_group:
+                        kept_rows.append(row)
+                rebuilt_rows = []
+                for offset, option_id in enumerate(desired_ids):
+                    rebuilt_rows.append(normalize_practice_binding({
+                        "practiceId": selected_practice_id,
+                        "targetType": target_type_key,
+                        "targetId": option_id,
+                        "enabled": True,
+                        "order": start_order + offset,
+                    }))
+                payload["bindings"] = kept_rows + rebuilt_rows
+                added = len([value for value in desired_ids if value not in existing_ids])
+                removed = len([value for value in existing_ids if value not in desired_ids])
+                status_target = f"{selected_rows[0].get('title') or selected_practice_id}｜{target_type_var.get()}"
+            else:
+                target_option = target_lookup.get(target_var.get())
+                if not target_option:
+                    return messagebox.showerror("錯誤", "請先選擇要掛載的目標。", parent=dialog)
+
+                existing_keys = {
+                    (
+                        str(row.get("practiceId", "")).strip(),
+                        str(row.get("targetType", "")).strip().lower(),
+                        str(row.get("targetId", "")).strip(),
+                    )
+                    for row in rows
+                    if isinstance(row, dict)
+                }
+
+                added = 0
+                skipped = 0
+                for offset, practice in enumerate(selected_rows):
+                    binding = normalize_practice_binding({
+                        "practiceId": str(practice.get("id", "")).strip(),
+                        "targetType": target_type_key,
+                        "targetId": str(target_option.get("id", "")).strip(),
+                        "enabled": True,
+                        "order": start_order + offset,
+                    })
+                    binding_key = (
+                        binding["practiceId"],
+                        binding["targetType"],
+                        binding["targetId"],
+                    )
+                    if binding_key in existing_keys:
+                        skipped += 1
+                        continue
+                    rows.append(binding)
+                    existing_keys.add(binding_key)
+                    added += 1
+                removed = 0
+                status_target = target_option.get('title') or target_option.get('id')
+
+            payload.setdefault("meta", {})
+            payload["meta"]["updatedAt"] = practice_now_iso()
+            self._normalize_practice_payload_state()
+            self._write_current_db()
+            self.refresh_filters()
+            self.search()
+            if single_mode:
+                self.status_var.set(
+                    f"practice 掛載已同步：新增 {added} 筆，移除 {removed} 筆 -> {status_target}"
+                )
+            else:
+                self.status_var.set(
+                    f"practice 批次掛載完成：新增 {added} 筆，略過 {skipped} 筆 -> {status_target}"
+                )
+            dialog.destroy()
+            if single_mode:
+                messagebox.showinfo(
+                    "完成",
+                    f"已同步掛載設定。\n新增 {added} 筆，移除 {removed} 筆。\n範圍：{status_target}",
+                    parent=self.root,
+                )
+            else:
+                messagebox.showinfo(
+                    "完成",
+                    f"已新增 {added} 筆掛載，略過 {skipped} 筆重複掛載。\n目標：{status_target}",
+                    parent=self.root,
+                )
+
+        button_bar = ttk.Frame(frame)
+        button_bar.grid(row=6, column=0, columnspan=2, sticky="e", pady=(12, 0))
+        ttk.Button(button_bar, text="取消", command=dialog.destroy).pack(side="right", padx=(6, 0))
+        ttk.Button(button_bar, text="套用掛載", command=apply_bindings).pack(side="right")
+
+        target_type_combo.bind("<<ComboboxSelected>>", refresh_targets)
         refresh_targets()
 
     def open_question_meta_edit_dialog(self):
