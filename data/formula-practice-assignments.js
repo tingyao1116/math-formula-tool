@@ -7,7 +7,7 @@ window.formulaPracticeAssignmentStore = {
     "assignmentCount": 0,
     "practiceCount": 199,
     "bindingCount": 193,
-    "updatedAt": "2026-05-24T07:58:07.167788+00:00"
+    "updatedAt": "2026-05-24T13:34:35.221326+00:00"
   },
   "byId": {},
   "catalog": {}
@@ -19,7 +19,7 @@ window.practiceLibraryStore = {
     "assignmentCount": 0,
     "practiceCount": 199,
     "bindingCount": 193,
-    "updatedAt": "2026-05-24T07:58:07.167788+00:00"
+    "updatedAt": "2026-05-24T13:34:35.221326+00:00"
   },
   "byId": {
     "practice-abs-both-sides-advanced-drill": {
@@ -7050,7 +7050,7 @@ window.practiceLibraryStore = {
       "generatorKey": "j2-4-1-inequality-known-solution-range-drill",
       "difficulty": "hard",
       "questionCount": 5,
-      "subtypeCount": 1,
+      "subtypeCount": 3,
       "relatedPracticeIds": [],
       "chapterCode": "j2-4-1",
       "stage": "國中",

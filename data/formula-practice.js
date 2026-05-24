@@ -917,6 +917,7 @@
   }
 
   function formatLinearExpr(a, b) {
+    if (a === 0) return `${b}`;
     const xPart = a === 1 ? 'x' : a === -1 ? '-x' : `${a}x`;
     if (b === 0) return xPart;
     return `${xPart}${b > 0 ? '+' : ''}${b}`;
@@ -8024,7 +8025,7 @@
         const limit = randInt(12, 30);
         return {
           q: `文字轉換：$x$ 加 ${add} 未滿 ${limit}，請寫成不等式。`,
-          a: `「未滿」表示嚴格小於，所以不等式是 $x+${add}<${limit}$。`,
+          a: formatJ241Answer(`$x+${add}<${limit}$`, `「未滿」表示嚴格小於，所以不等式是 $x+${add}<${limit}$。`),
         };
       },
       () => {
@@ -8033,7 +8034,7 @@
         const limit = randInt(20, 60);
         return {
           q: `文字轉換：$x$ 的 ${times} 倍加 ${add} 大於 ${limit}，請寫成不等式。`,
-          a: `「大於」對應 $>$，所以不等式是 $${times}x+${add}>${limit}$。`,
+          a: formatJ241Answer(`$${times}x+${add}>${limit}$`, `「大於」對應 $>$，所以不等式是 $${times}x+${add}>${limit}$。`),
         };
       },
       () => {
@@ -8044,7 +8045,7 @@
         const expr = formatLinearExpr(coeff, bias);
         return {
           q: `文字轉換：$${expr}$ 不到 ${high}，且不低於 ${low}，請寫成不等式。`,
-          a: `「不到」表示 $<$，「不低於」表示 $≥$，所以要寫成 $${low}≤${expr}<${high}$。`,
+          a: formatJ241Answer(`$${low}≤${expr}<${high}$`, `「不到」表示 $<$，「不低於」表示 $≥$，所以要寫成 $${low}≤${expr}<${high}$。`),
         };
       },
       () => {
@@ -8053,7 +8054,7 @@
         const high = low + randInt(20, 60);
         return {
           q: `文字轉換：$x$ 的 ${coeff} 倍在 ${low} 以上，${high} 以下，請寫成不等式。`,
-          a: `國中題裡「以上、以下」通常包含端點，所以式子是 $${low}≤${coeff}x≤${high}$。`,
+          a: formatJ241Answer(`$${low}≤${coeff}x≤${high}$`, `國中題裡「以上、以下」通常包含端點，所以式子是 $${low}≤${coeff}x≤${high}$。`),
         };
       },
     ];
@@ -8070,7 +8071,10 @@
         const ok = compareFractions(makeFraction(left), op, makeFraction(c));
         return {
           q: `判斷：$x=${x0}$ 是否為 $${formatLinearExpr(a, b)}${displayIneqOp(op)}${c}$ 的解？`,
-          a: `把 $x=${x0}$ 代入左邊得 $${left}$。因為 $${left}${displayIneqOp(op)}${c}$ ${ok ? '成立' : '不成立'}，所以 ${ok ? '是' : '不是'}這個不等式的解。`,
+          a: formatJ241Answer(
+            ok ? '是' : '不是',
+            `把 $x=${x0}$ 代入左邊得 $${left}$。因為 $${left}${displayIneqOp(op)}${c}$ ${ok ? '成立' : '不成立'}，所以 ${ok ? '是' : '不是'}這個不等式的解。`
+          ),
         };
       },
       () => {
@@ -8085,12 +8089,13 @@
           makeFraction(randInt(-10, 10), 2),
         ]).slice(0, 4);
         const hits = candidates.filter((x) => compareFractions(evalLinearAt(a, b, x), op, makeFraction(c)));
+        const hitText = hits.map((x) => `$${fractionToLatex(x, true)}$`).join('、');
         return {
           q: `下列哪些數為 $${formatLinearExpr(a, b)}${displayIneqOp(op)}${c}$ 的解：${candidates.map((x) => `$${fractionToLatex(x, true)}$`).join('、')}？`,
           a:
             hits.length > 0
-              ? `逐一代入檢查後，可得符合不等式的數是 ${hits.map((x) => `$${fractionToLatex(x, true)}$`).join('、')}。`
-              : `逐一代入檢查後，這些數都不符合，所以沒有一個是這個不等式的解。`,
+              ? formatJ241Answer(hitText, `逐一代入檢查後，可得符合不等式的數是 ${hitText}。`)
+              : formatJ241Answer('沒有符合的數', `逐一代入檢查後，這些數都不符合，所以沒有一個是這個不等式的解。`),
         };
       },
       () => {
@@ -8100,7 +8105,7 @@
         const answer = askMax ? maxIntegerForIneq(op, bound) : minIntegerForIneq(op, bound);
         return {
           q: `若 $x${displayIneqOp(op)}${fractionToLatex(bound, true)}$，則 $x$ 的${askMax ? '最大' : '最小'}整數值為何？`,
-          a: `先看界線是 $${fractionToLatex(bound, true)}$。依題意可得答案為 $${answer}$。`,
+          a: formatJ241Answer(`$${answer}$`, `先看界線是 $${fractionToLatex(bound, true)}$。依題意可得答案為 $${answer}$。`),
         };
       },
       () => {
@@ -8113,16 +8118,18 @@
         const rightOp = includeHigh ? '≤' : '<';
         return {
           q: `滿足 $${low}${leftOp}x${rightOp}${high}$ 的整數解共有幾個？`,
-          a: `整數解會從 ${includeLow ? low : low + 1} 到 ${includeHigh ? high : high - 1}。共有 ${countInt} 個整數解。`,
+          a: formatJ241Answer(`${countInt} 個`, `整數解會從 ${includeLow ? low : low + 1} 到 ${includeHigh ? high : high - 1}。共有 ${countInt} 個整數解。`),
         };
       },
       () => {
         const low = randInt(-12, -4);
         const countInt = randInt(6, 18);
         const upper = low + countInt + 1;
+        const start = low + 1;
+        const countExpr = start < 0 ? `a-(${start})` : `a-${start}`;
         return {
           q: `已知滿足 $${low}<x<a$ 的整數解有 ${countInt} 個，求正整數 $a$。`,
-          a: `整數解會是 ${low + 1} 到 $a-1$。因此個數為 $a-${low + 1}$，令它等於 ${countInt}，解得 $a=${upper}$。`,
+          a: formatJ241Answer(`$a=${upper}$`, `整數解會是 ${start} 到 $a-1$。因此個數為 $${countExpr}$，令它等於 ${countInt}，解得 $a=${upper}$。`),
         };
       },
       () => {
@@ -8135,12 +8142,13 @@
           makeFraction(limit + 1, 2),
         ]).slice(0, 4);
         const hits = candidates.filter((x) => Math.abs(x.num / x.den) < limit);
+        const hitText = hits.map((x) => `$${fractionToLatex(x, true)}$`).join('、');
         return {
           q: `下列哪些數為 $|x|<${limit}$ 的解：${candidates.map((x) => `$${fractionToLatex(x, true)}$`).join('、')}？`,
           a:
             hits.length > 0
-              ? `因為 $|x|<${limit}$ 表示 $-${limit}<x<${limit}$，所以符合的有 ${hits.map((x) => `$${fractionToLatex(x, true)}$`).join('、')}。`
-              : `因為 $|x|<${limit}$ 等價於 $-${limit}<x<${limit}$，逐一檢查後沒有符合的數。`,
+              ? formatJ241Answer(hitText, `因為 $|x|<${limit}$ 表示 $-${limit}<x<${limit}$，所以符合的有 ${hitText}。`)
+              : formatJ241Answer('沒有符合的數', `因為 $|x|<${limit}$ 等價於 $-${limit}<x<${limit}$，逐一檢查後沒有符合的數。`),
         };
       },
     ];
@@ -8187,6 +8195,20 @@
     return `x${displayIneqOp(op)}${formatIneqBound(frac)}`;
   }
 
+  function formatPracticeShortAnswer(shortAnswer, process = '') {
+    const shortText = String(shortAnswer || '').trim();
+    const processText = String(process || '').trim();
+    return processText ? `簡答：${shortText}\n過程：${processText}` : `簡答：${shortText}`;
+  }
+
+  function formatJ241Answer(shortAnswer, process = '') {
+    return formatPracticeShortAnswer(shortAnswer, process);
+  }
+
+  function formatJ242Answer(shortAnswer, process = '') {
+    return formatPracticeShortAnswer(shortAnswer, process);
+  }
+
   function formatIneqAxRelB(coef, op, constant) {
     return `${formatTerm(coef, 'x')}${displayIneqOp(op)}${formatIneqBound(makeFraction(constant))}`;
   }
@@ -8228,9 +8250,10 @@
         const bias = randInt(-12, 12);
         const rawOp = coef > 0 ? solOp : flipInequality(solOp);
         const rhs = coef * target + bias;
+        const solution = formatIneqSolution(solOp, makeFraction(target));
         questions.push(`解不等式：$${formatLinearExpr(coef, bias)}${displayIneqOp(rawOp)}${rhs}$。`);
         answers.push(
-          `移項前其實已經是一次不等式：$${formatLinearExpr(coef, bias)}${rawOp}${rhs}$。先整理得 $${formatIneqAxRelB(coef, rawOp, rhs - bias)}$。${coef < 0 ? `兩邊同除以負數 ${coef} 時要變號，所以 ` : ''}解得 $${formatIneqSolution(solOp, makeFraction(target))}$。`
+          formatJ241Answer(`$${solution}$`, `移項前其實已經是一次不等式：$${formatLinearExpr(coef, bias)}${rawOp}${rhs}$。先整理得 $${formatIneqAxRelB(coef, rawOp, rhs - bias)}$。${coef < 0 ? `兩邊同除以負數 ${coef} 時要變號，所以 ` : ''}解得 $${solution}$。`)
         );
         continue;
       }
@@ -8242,20 +8265,25 @@
         if (leftCoef === 0) leftCoef += 1;
         const bias = randInt(-10, 10);
         const A = leftCoef - rightCoef;
+        if (A === 0) {
+          i -= 1;
+          continue;
+        }
         const rawOp = A > 0 ? solOp : flipInequality(solOp);
         const rhsConst = A * target + bias;
+        const solution = formatIneqSolution(solOp, makeFraction(target));
         questions.push(
           `解不等式：$${formatLinearExpr(leftCoef, bias)}${displayIneqOp(rawOp)}${formatLinearExpr(rightCoef, rhsConst)}$。`
         );
         answers.push(
-          `先移項整理：$${formatTerm(leftCoef, 'x')}${rightCoef > 0 ? '-' : '+'}${formatTerm(Math.abs(rightCoef), 'x')}${rawOp}${rhsConst}${bias >= 0 ? '-' : '+'}${Math.abs(bias)}$，可得 $${formatIneqAxRelB(A, rawOp, rhsConst - bias)}$。${A < 0 ? `再除以負數 ${A} 要變號，` : ''}所以解是 $${formatIneqSolution(solOp, makeFraction(target))}$。`
+          formatJ241Answer(`$${solution}$`, `先移項整理：$${formatTerm(leftCoef, 'x')}${rightCoef > 0 ? '-' : '+'}${formatTerm(Math.abs(rightCoef), 'x')}${rawOp}${rhsConst}${bias >= 0 ? '-' : '+'}${Math.abs(bias)}$，可得 $${formatIneqAxRelB(A, rawOp, rhsConst - bias)}$。${A < 0 ? `再除以負數 ${A} 要變號，` : ''}所以解是 $${solution}$。`)
         );
         continue;
       }
 
       if (variant === 2) {
         const p = randInt(2, 6);
-        const q = randInt(-4, 4);
+        const q = pickNonZero(-4, 4);
         const r = randInt(-6, 6);
         const A = p - q;
         if (A === 0) {
@@ -8264,11 +8292,12 @@
         }
         const rawOp = A > 0 ? solOp : flipInequality(solOp);
         const rhs = A * target + p * r;
+        const solution = formatIneqSolution(solOp, makeFraction(target));
         questions.push(
           `解不等式：$${p}(x${r >= 0 ? '+' : ''}${r})${displayIneqOp(rawOp)}${formatLinearExpr(q, rhs)}$。`
         );
         answers.push(
-          `先展開得 $${p}x${p * r >= 0 ? '+' : ''}${p * r}${rawOp}${formatLinearExpr(q, rhs)}$。移項整理後可得 $${formatIneqAxRelB(A, rawOp, rhs - p * r)}$。${A < 0 ? `兩邊同除以負數 ${A} 要變號，` : ''}因此 $${formatIneqSolution(solOp, makeFraction(target))}$。`
+          formatJ241Answer(`$${solution}$`, `先展開得 $${p}x${p * r >= 0 ? '+' : ''}${p * r}${rawOp}${formatLinearExpr(q, rhs)}$。移項整理後可得 $${formatIneqAxRelB(A, rawOp, rhs - p * r)}$。${A < 0 ? `兩邊同除以負數 ${A} 要變號，` : ''}因此 $${solution}$。`)
         );
         continue;
       }
@@ -8285,11 +8314,12 @@
       const rawOp = A > 0 ? solOp : flipInequality(solOp);
       const constPart = p * r - q * u;
       const rhs = A * target + constPart;
+      const solution = formatIneqSolution(solOp, makeFraction(target));
       questions.push(
         `解不等式：$${p}(x${r >= 0 ? '+' : ''}${r})-${q}(x${u >= 0 ? '+' : ''}${u})${displayIneqOp(rawOp)}${rhs}$。`
       );
       answers.push(
-        `先展開得 $${p}x${p * r >= 0 ? '+' : ''}${p * r}-${q}x${q * u >= 0 ? '-' : '+'}${Math.abs(q * u)}${rawOp}${rhs}$，整理後為 $${formatIneqAxRelB(A, rawOp, rhs - constPart)}$。${A < 0 ? `再除以負數 ${A} 時要變號，` : ''}所以解為 $${formatIneqSolution(solOp, makeFraction(target))}$。`
+        formatJ241Answer(`$${solution}$`, `先展開得 $${p}x${p * r >= 0 ? '+' : ''}${p * r}-${q}x${q * u >= 0 ? '-' : '+'}${Math.abs(q * u)}${rawOp}${rhs}$，整理後為 $${formatIneqAxRelB(A, rawOp, rhs - constPart)}$。${A < 0 ? `再除以負數 ${A} 時要變號，` : ''}所以解為 $${solution}$。`)
       );
     }
 
@@ -8318,11 +8348,12 @@
         }
         const rawOp = A > 0 ? solOp : flipInequality(solOp);
         const rhsConst = A * target + bias;
+        const solution = formatIneqSolution(solOp, makeFraction(target));
         questions.push(
           `解不等式：$${trimFixed(coef / scale)}x${bias >= 0 ? '+' : ''}${trimFixed(bias / scale)}${displayIneqOp(rawOp)}${trimFixed(rhsCoef / scale)}x${rhsConst >= 0 ? '+' : ''}${trimFixed(rhsConst / scale)}$。`
         );
         answers.push(
-          `先把各項都乘以 $${scale}$ 化成整數，得到 $${formatLinearExpr(coef, bias)}${rawOp}${formatLinearExpr(rhsCoef, rhsConst)}$。整理後可得 $${formatIneqAxRelB(A, rawOp, rhsConst - bias)}$。${A < 0 ? `再除以負數 ${A} 要變號，` : ''}所以 $${formatIneqSolution(solOp, makeFraction(target))}$。`
+          formatJ241Answer(`$${solution}$`, `先把各項都乘以 $${scale}$ 化成整數，得到 $${formatLinearExpr(coef, bias)}${rawOp}${formatLinearExpr(rhsCoef, rhsConst)}$。整理後可得 $${formatIneqAxRelB(A, rawOp, rhsConst - bias)}$。${A < 0 ? `再除以負數 ${A} 要變號，` : ''}所以 $${solution}$。`)
         );
         continue;
       }
@@ -8339,11 +8370,12 @@
         const rawOp = A > 0 ? solOp : flipInequality(solOp);
         const rhs = A * target + 10 * p * r;
         const inner = r === 0 ? 'x' : `x${r >= 0 ? '+' : ''}${r}`;
+        const solution = formatIneqSolution(solOp, makeFraction(target));
         questions.push(
           `解不等式：$${p}\\left(${inner}\\right)${displayIneqOp(rawOp)}${trimFixed(q / 10)}x${rhs >= 0 ? '+' : ''}${trimFixed(rhs / 10)}$。`
         );
         answers.push(
-          `先展開並把小數同乘以 $10$ 化成整數，可得 $${p * 10}(x${r >= 0 ? '+' : ''}${r})${rawOp}${formatLinearExpr(q, rhs)}$。整理後為 $${formatIneqAxRelB(A, rawOp, rhs - 10 * p * r)}$。${A < 0 ? `除以負數 ${A} 要變號，` : ''}所以 $${formatIneqSolution(solOp, makeFraction(target))}$。`
+          formatJ241Answer(`$${solution}$`, `先展開並把小數同乘以 $10$ 化成整數，可得 $${p * 10}(x${r >= 0 ? '+' : ''}${r})${rawOp}${formatLinearExpr(q, rhs)}$。整理後為 $${formatIneqAxRelB(A, rawOp, rhs - 10 * p * r)}$。${A < 0 ? `除以負數 ${A} 要變號，` : ''}所以 $${solution}$。`)
         );
         continue;
       }
@@ -8360,11 +8392,12 @@
       const rawOp = A > 0 ? solOp : flipInequality(solOp);
       const constPart = 10 * (p * r - q * u);
       const rhs = A * target + constPart;
+      const solution = formatIneqSolution(solOp, makeFraction(target));
       questions.push(
         `解不等式：$${trimFixed(p / 10)}(10x${r >= 0 ? '+' : ''}${10 * r})-${trimFixed(q / 10)}(10x${u >= 0 ? '+' : ''}${10 * u})${displayIneqOp(rawOp)}${trimFixed(rhs / 10)}$。`
       );
       answers.push(
-        `先展開並整理得 $${p}(10x${r >= 0 ? '+' : ''}${10 * r})-${q}(10x${u >= 0 ? '+' : ''}${10 * u})${rawOp}${rhs}$，進一步可化成 $${formatIneqAxRelB(A, rawOp, rhs - constPart)}$。${A < 0 ? `再除以負數 ${A} 要變號，` : ''}因此 $${formatIneqSolution(solOp, makeFraction(target))}$。`
+        formatJ241Answer(`$${solution}$`, `先展開並整理得 $${p}(10x${r >= 0 ? '+' : ''}${10 * r})-${q}(10x${u >= 0 ? '+' : ''}${10 * u})${rawOp}${rhs}$，進一步可化成 $${formatIneqAxRelB(A, rawOp, rhs - constPart)}$。${A < 0 ? `再除以負數 ${A} 要變號，` : ''}因此 $${solution}$。`)
       );
     }
 
@@ -8391,12 +8424,32 @@
       return Math.abs(a * b) / gcdInt(a, b);
     }
 
-    function clearAnswer(aFrac, bFrac, rawOp, solOp, target) {
-      const rhs = addFraction(mulFraction(aFrac, target), bFrac);
-      const scale = lcmInt(aFrac.den, rhs.den);
+    function appendSignedFraction(frac) {
+      const value = makeFraction(frac.num, frac.den);
+      if (value.num === 0) return '';
+      const absValue = makeFraction(Math.abs(value.num), value.den);
+      return `${value.num > 0 ? '+' : '-'}${fractionToLatex(absValue, true)}`;
+    }
+
+    function appendSignedInteger(value) {
+      if (value === 0) return '';
+      return `${value > 0 ? '+' : ''}${value}`;
+    }
+
+    function clearAnswer(aFrac, bFrac, rhsFrac, rawOp, solOp, target) {
+      const scale = lcmInt(lcmInt(aFrac.den, bFrac.den), rhsFrac.den);
       const intA = aFrac.num * (scale / aFrac.den);
-      const intR = rhs.num * (scale / rhs.den);
-      return `先去分母整理，可得 $${formatTerm(intA, 'x')}${displayIneqOp(rawOp)}${intR}$。${intA < 0 ? `兩邊同除以負數 ${intA} 時要變號，` : ''}所以解為 $${formatIneqSolution(solOp, target)}$。`;
+      const intB = bFrac.num * (scale / bFrac.den);
+      const intR = rhsFrac.num * (scale / rhsFrac.den);
+      const movedR = intR - intB;
+      const beforeMove = `${formatLinearExpr(intA, intB)}${displayIneqOp(rawOp)}${intR}`;
+      const afterMove = `${formatTerm(intA, 'x')}${displayIneqOp(rawOp)}${movedR}`;
+      const moveText = intB === 0 ? '' : `移項得 $${afterMove}$。`;
+      const solution = formatIneqSolution(solOp, target);
+      return formatJ241Answer(
+        `$${solution}$`,
+        `先去分母整理，可得 $${beforeMove}$。${moveText}${intA < 0 ? `兩邊同除以負數 ${intA} 時要變號，` : ''}所以解為 $${solution}$。`
+      );
     }
 
     for (let i = 0; i < count; i += 1) {
@@ -8422,10 +8475,11 @@
         }
         const bFrac = addFraction(makeFraction(p, d), makeFraction(c, 1));
         const rawOp = aFrac.num > 0 ? solOp : flipInequality(solOp);
+        const rhsFrac = addFraction(mulFraction(aFrac, target), bFrac);
         questions.push(
-          `解不等式：$\\dfrac{${formatLinearExpr(1, p)}}{${d}}${c >= 0 ? '+' : ''}${c}${displayIneqOp(rawOp)}\\dfrac{x}{${e}}$。`
+          `解不等式：$\\dfrac{${formatLinearExpr(1, p)}}{${d}}${appendSignedInteger(c)}${displayIneqOp(rawOp)}\\dfrac{x}{${e}}${appendSignedFraction(rhsFrac)}$。`
         );
-        answers.push(clearAnswer(aFrac, bFrac, rawOp, solOp, target));
+        answers.push(clearAnswer(aFrac, bFrac, rhsFrac, rawOp, solOp, target));
         continue;
       }
 
@@ -8443,10 +8497,11 @@
         }
         const bFrac = subFraction(makeFraction(b, den1), makeFraction(d, den2));
         const rawOp = aFrac.num > 0 ? solOp : flipInequality(solOp);
+        const rhsFrac = addFraction(mulFraction(aFrac, target), bFrac);
         questions.push(
-          `解不等式：$\\dfrac{${formatLinearExpr(a, b)}}{${den1}}-\\dfrac{${formatLinearExpr(c, d)}}{${den2}}${displayIneqOp(rawOp)}${fractionToLatex(addFraction(mulFraction(aFrac, target), bFrac), true)}$。`
+          `解不等式：$\\dfrac{${formatLinearExpr(a, b)}}{${den1}}-\\dfrac{${formatLinearExpr(c, d)}}{${den2}}${displayIneqOp(rawOp)}${fractionToLatex(rhsFrac, true)}$。`
         );
-        answers.push(clearAnswer(aFrac, bFrac, rawOp, solOp, target));
+        answers.push(clearAnswer(aFrac, bFrac, rhsFrac, rawOp, solOp, target));
         continue;
       }
 
@@ -8463,10 +8518,11 @@
           continue;
         }
         const rawOp = aFrac.num > 0 ? solOp : flipInequality(solOp);
+        const rhsFrac = addFraction(mulFraction(aFrac, target), bFrac);
         questions.push(
-          `解不等式：$\\dfrac{${formatLinearExpr(a, b)}}{${den1}}+\\dfrac{${formatLinearExpr(1, c2)}}{${den2}}${displayIneqOp(rawOp)}${fractionToLatex(addFraction(mulFraction(aFrac, target), bFrac), true)}$。`
+          `解不等式：$\\dfrac{${formatLinearExpr(a, b)}}{${den1}}+\\dfrac{${formatLinearExpr(1, c2)}}{${den2}}${displayIneqOp(rawOp)}${fractionToLatex(rhsFrac, true)}$。`
         );
-        answers.push(clearAnswer(aFrac, bFrac, rawOp, solOp, target));
+        answers.push(clearAnswer(aFrac, bFrac, rhsFrac, rawOp, solOp, target));
         continue;
       }
 
@@ -8479,12 +8535,13 @@
           i -= 1;
           continue;
         }
-        const bFrac = makeFraction(-p, den2);
+        const bFrac = makeFraction(p, den2);
         const rawOp = aFrac.num > 0 ? solOp : flipInequality(solOp);
+        const rhsFrac = addFraction(mulFraction(aFrac, target), bFrac);
         questions.push(
-          `解不等式：$\\dfrac{x}{${den1}}-\\dfrac{${formatLinearExpr(1, -p)}}{${den2}}${displayIneqOp(rawOp)}${fractionToLatex(addFraction(mulFraction(aFrac, target), bFrac), true)}$。`
+          `解不等式：$\\dfrac{x}{${den1}}-\\dfrac{${formatLinearExpr(1, -p)}}{${den2}}${displayIneqOp(rawOp)}${fractionToLatex(rhsFrac, true)}$。`
         );
-        answers.push(clearAnswer(aFrac, bFrac, rawOp, solOp, target));
+        answers.push(clearAnswer(aFrac, bFrac, rhsFrac, rawOp, solOp, target));
         continue;
       }
 
@@ -8496,10 +8553,11 @@
         const aFrac = subFraction(makeFraction(1, den1), makeFraction(-1, den2));
         const bFrac = subFraction(makeFraction(p, den1), makeFraction(q, den2));
         const rawOp = aFrac.num > 0 ? solOp : flipInequality(solOp);
+        const rhsFrac = addFraction(mulFraction(aFrac, target), bFrac);
         questions.push(
-          `解不等式：$\\dfrac{${formatLinearExpr(1, p)}}{${den1}}${displayIneqOp(rawOp)}\\dfrac{${formatLinearExpr(-1, q)}}{${den2}}$。`
+          `解不等式：$\\dfrac{${formatLinearExpr(1, p)}}{${den1}}${displayIneqOp(rawOp)}\\dfrac{${formatLinearExpr(-1, q)}}{${den2}}${appendSignedFraction(rhsFrac)}$。`
         );
-        answers.push(clearAnswer(aFrac, bFrac, rawOp, solOp, target));
+        answers.push(clearAnswer(aFrac, bFrac, rhsFrac, rawOp, solOp, target));
         continue;
       }
 
@@ -8516,10 +8574,11 @@
       }
       const bFrac = subFraction(makeFraction(b1, den1), makeFraction(b2, den2));
       const rawOp = aFrac.num > 0 ? solOp : flipInequality(solOp);
+      const rhsFrac = addFraction(mulFraction(aFrac, target), bFrac);
       questions.push(
-        `解不等式：$\\dfrac{${formatLinearExpr(a1, b1)}}{${den1}}${displayIneqOp(rawOp)}\\dfrac{${formatLinearExpr(a2, b2)}}{${den2}}$。`
+        `解不等式：$\\dfrac{${formatLinearExpr(a1, b1)}}{${den1}}${displayIneqOp(rawOp)}\\dfrac{${formatLinearExpr(a2, b2)}}{${den2}}${appendSignedFraction(rhsFrac)}$。`
       );
-      answers.push(clearAnswer(aFrac, bFrac, rawOp, solOp, target));
+      answers.push(clearAnswer(aFrac, bFrac, rhsFrac, rawOp, solOp, target));
     }
 
     return { questions, answers };
@@ -8556,14 +8615,15 @@
       const yRight = upperInc ? '≤' : '<';
       const coefText = coef.den === 1 ? `${coef.num}` : `\\dfrac{${coef.num}}{${coef.den}}`;
       const yExpr =
-        coef.num === 1
+        coef.den === 1 && coef.num === 1
           ? `x${bias >= 0 ? '+' : ''}${bias}`
-          : coef.num === -1
+          : coef.den === 1 && coef.num === -1
             ? `-x${bias >= 0 ? '+' : ''}${bias}`
             : `${coefText}x${bias >= 0 ? '+' : ''}${bias}`;
+      const rangeAnswer = `${formatIneqBound(lowerY)}${yLeft}y${yRight}${formatIneqBound(upperY)}`;
       questions.push(`已知 $${low}${xExprLeft}x${xExprRight}${high}$，求 $y=${yExpr}$ 的範圍。`);
       answers.push(
-        `因為 $y=${yExpr}$ ${increasing ? '會隨 $x$ 增加而增加' : '會隨 $x$ 增加而減少'}，所以只要代入兩個端點判斷最小與最大值。可得 $${formatIneqBound(lowerY)}${yLeft}y${yRight}${formatIneqBound(upperY)}$。`
+        formatJ241Answer(`$${rangeAnswer}$`, `因為 $y=${yExpr}$ ${increasing ? '會隨 $x$ 增加而增加' : '會隨 $x$ 增加而減少'}，所以只要代入兩個端點判斷最小與最大值。可得 $${rangeAnswer}$。`)
       );
     }
 
@@ -8574,21 +8634,31 @@
     const questions = [];
     const answers = [];
     const ops = ['>', '<', '≥', '≤'];
+    const targetChoices = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7];
+
+    function symbolMinusNumber(symbol, value) {
+      if (value === 0) return symbol;
+      return value > 0 ? `${symbol}-${value}` : `${symbol}-(${value})`;
+    }
+
+    function numberMinusSymbol(value, symbol) {
+      if (value === 0) return `-${symbol}`;
+      return `${value}-${symbol}`;
+    }
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
       const solOp = ops[randInt(0, ops.length - 1)];
-      const target = randInt(-5, 7);
+      const target = targetChoices[randInt(0, targetChoices.length - 1)];
 
       if (variant === 0) {
-        const c = randInt(-8, 8);
         const rhs = randInt(-6, 10);
-        const a = 2 * target + c - rhs;
+        const a = 2 * target - rhs;
         questions.push(
-          `若 $2x${a >= 0 ? '-' : '+'}${Math.abs(a)}${solOp}${rhs}$ 的解為 $x${solOp}${target}$，求 $a$。`
+          `若 $2x-a${displayIneqOp(solOp)}${rhs}$ 的解為 $x${displayIneqOp(solOp)}${target}$，求 $a$。`
         );
         answers.push(
-          `把 $2x-a${solOp}${rhs}$ 解成 $x${solOp}${target}$，可得 $2x${solOp}${rhs + a}$，所以界線應滿足 $\\dfrac{${rhs + a}}{2}=${target}$。解得 $a=${a}$。`
+          formatJ241Answer(`$a=${a}$`, `由 $2x-a${displayIneqOp(solOp)}${rhs}$ 可得 $2x${displayIneqOp(solOp)}${rhs}+a$。因為解的界線是 ${target}，所以 $\\dfrac{${rhs}+a}{2}=${target}$，解得 $a=${a}$。`)
         );
         continue;
       }
@@ -8603,11 +8673,12 @@
         const rawOp = solOp;
         const a = rightCoef + 1;
         const d = (a - rightCoef) * target + c;
+        const coefExpr = symbolMinusNumber('a', rightCoef);
         questions.push(
-          `若 $ax${c >= 0 ? '+' : ''}${c}${rawOp}${rightCoef}x${d >= 0 ? '+' : ''}${d}$ 的解為 $x${solOp}${target}$，求 $a$。`
+          `若 $ax${c >= 0 ? '+' : ''}${c}${displayIneqOp(rawOp)}${formatLinearExpr(rightCoef, d)}$ 的解為 $x${displayIneqOp(solOp)}${target}$，求 $a$。`
         );
         answers.push(
-          `移項後可得 $(a-${rightCoef})x${rawOp}${d - c}$。因為解是 $x${solOp}${target}$，所以 ${d - c} 除以 $(a-${rightCoef})$ 應等於 ${target}。整理可得 $a=${a}$。`
+          formatJ241Answer(`$a=${a}$`, `移項後可得 $(${coefExpr})x${displayIneqOp(rawOp)}${d - c}$。因為解是 $x${displayIneqOp(solOp)}${target}$，所以 $\\dfrac{${d - c}}{${coefExpr}}=${target}$，整理可得 $a=${a}$。`)
         );
         continue;
       }
@@ -8616,40 +8687,46 @@
         const a = pickNonZero(-9, 9);
         const rhs = a * target;
         const solText = a > 0 ? solOp : flipInequality(solOp);
-        questions.push(`若 $ax${solText}${rhs}$ 的解為 $x${solOp}${target}$，求 $a$。`);
+        questions.push(`若 $ax${displayIneqOp(solText)}${rhs}$ 的解為 $x${displayIneqOp(solOp)}${target}$，求 $a$。`);
         answers.push(
-          `因為 $ax${solText}${rhs}$ 兩邊同除以 $a$ 後要得到 $x${solOp}${target}$，所以 $a$ 的正負必須和不等號變向情形一致。配合 $${rhs}=a\\times ${target}$，可得 $a=${a}$。`
+          formatJ241Answer(`$a=${a}$`, `因為 $ax${displayIneqOp(solText)}${rhs}$ 兩邊同除以 $a$ 後要得到 $x${displayIneqOp(solOp)}${target}$，所以 $a$ 的正負必須和不等號變向情形一致。配合 $${rhs}=a\\times ${target}$，可得 $a=${a}$。`)
         );
         continue;
       }
 
       if (variant === 3) {
         const a = randInt(-20, 20);
-        const rightCoef = randInt(-5, 5);
-        if (rightCoef === 0) {
+        let rightCoef = pickNonZero(-5, 5);
+        if (rightCoef === 2) rightCoef = 3;
+        const A = 2 - rightCoef;
+        if (A === 0) {
           i -= 1;
           continue;
         }
-        const d = (2 - rightCoef) * target + a;
+        const rawOp = A > 0 ? solOp : flipInequality(solOp);
+        const d = A * target + a;
+        const coefExpr = symbolMinusNumber('2', rightCoef);
+        const rhsExpr = numberMinusSymbol(d, 'a');
         questions.push(
-          `若 $2x${a >= 0 ? '+' : ''}${a}${solOp}${rightCoef}x${d >= 0 ? '+' : ''}${d}$ 的解為 $x${solOp}${target}$，求參數。`
+          `若 $2x+a${displayIneqOp(rawOp)}${formatLinearExpr(rightCoef, d)}$ 的解為 $x${displayIneqOp(solOp)}${target}$，求 $a$。`
         );
         answers.push(
-          `移項後會得到 $(2-${rightCoef})x${solOp}${d - a}$。由於解是 $x${solOp}${target}$，所以要有 $\\dfrac{${d - a}}{${2 - rightCoef}}=${target}$。這題整理後參數已內建在係數中，等式成立。`
+          formatJ241Answer(`$a=${a}$`, `移項後會得到 $(${coefExpr})x${displayIneqOp(rawOp)}${rhsExpr}$。由於解是 $x${displayIneqOp(solOp)}${target}$，所以要有 $\\dfrac{${rhsExpr}}{${A}}=${target}$，解得 $a=${a}$。`)
         );
         continue;
       }
 
-      const m = randInt(-10, 10);
       const rhsConst = randInt(-8, 8);
-      const leftCoef = pickNonZero(-7, 7);
+      let leftCoef = pickNonZero(-7, 7);
+      if (leftCoef === 1) leftCoef = 2;
       const rightCoef = leftCoef - 1;
-      const d = (leftCoef - rightCoef) * target + m - rhsConst;
+      const m = target - rhsConst;
+      const coefDiff = leftCoef - rightCoef;
       questions.push(
-        `若 $${leftCoef}x${m >= 0 ? '-' : '+'}${Math.abs(m)}${displayIneqOp(solOp)}${rightCoef}x${rhsConst >= 0 ? '+' : ''}${rhsConst}$ 的解為 $x${displayIneqOp(solOp)}${target}$，求 $m$。`
+        `若 $${formatTerm(leftCoef, 'x')}-m${displayIneqOp(solOp)}${formatLinearExpr(rightCoef, rhsConst)}$ 的解為 $x${displayIneqOp(solOp)}${target}$，求 $m$。`
       );
       answers.push(
-        `移項後是 $( ${leftCoef}-${rightCoef} )x${displayIneqOp(solOp)}${rhsConst}+m$，而解應為 $x${displayIneqOp(solOp)}${target}$。因此需滿足 $${rhsConst}+m=${target}$，所以 $m=${target - rhsConst}$。`
+        formatJ241Answer(`$m=${m}$`, `移項後是 $${formatTerm(coefDiff, 'x')}${displayIneqOp(solOp)}${rhsConst}+m$，也就是 $x${displayIneqOp(solOp)}${rhsConst}+m$。解應為 $x${displayIneqOp(solOp)}${target}$，因此 $${rhsConst}+m=${target}$，所以 $m=${m}$。`)
       );
     }
 
@@ -8697,13 +8774,16 @@
           `已知 $x=${x0}$ 為不等式 $${leftExpr}${displayIneqOp(rawOp)}${rightExpr}$ 的解，求 $a$ 的範圍，並求滿足條件的${askText}整數。`
         );
         answers.push(
-          `把 $x=${x0}$ 代入，可得 $${x0}a${leftBias >= 0 ? '+' : ''}${leftBias}${displayIneqOp(rawOp)}${rightCoef * x0}${rightConst >= 0 ? '+' : ''}${rightConst}$。整理得 $${x0}a${displayIneqOp(rawOp)}${rightCoef * x0 + rightConst - leftBias}$。再解得 $a${displayIneqOp(solOp)}${fractionToLatex(target, true)}$。因此滿足條件的${askText}整數為 $${integerAnswer}$。`
+          formatJ241Answer(
+            `$a${displayIneqOp(solOp)}${fractionToLatex(target, true)}$，${askText}整數為 $${integerAnswer}$`,
+            `把 $x=${x0}$ 代入，可得 $${x0}a${leftBias >= 0 ? '+' : ''}${leftBias}${displayIneqOp(rawOp)}${rightCoef * x0}${rightConst >= 0 ? '+' : ''}${rightConst}$。整理得 $${x0}a${displayIneqOp(rawOp)}${rightCoef * x0 + rightConst - leftBias}$。再解得 $a${displayIneqOp(solOp)}${fractionToLatex(target, true)}$。因此滿足條件的${askText}整數為 $${integerAnswer}$。`
+          )
         );
         built = true;
       }
       if (!built) {
         questions.push('已知 $x=-4$ 為不等式 $ax-5<2x+4$ 的解，求 $a$ 的範圍，並求滿足條件的最小整數。');
-        answers.push('把 $x=-4$ 代入，可得 $-4a-5<-4$。整理得 $-4a<1$，所以 $a>-\\frac{1}{4}$。因此滿足條件的最小整數為 $0$。');
+        answers.push(formatJ241Answer('$a>-\\frac{1}{4}$，最小整數為 $0$', '把 $x=-4$ 代入，可得 $-4a-5<-4$。整理得 $-4a<1$，所以 $a>-\\frac{1}{4}$。因此滿足條件的最小整數為 $0$。'));
       }
     }
 
@@ -8715,6 +8795,11 @@
     const answers = [];
     const ops = ['>', '<', '≥', '≤'];
 
+    function symbolWithConst(symbol, constant) {
+      if (constant === 0) return symbol;
+      return `${symbol}${constant > 0 ? '+' : ''}${constant}`;
+    }
+
     for (let i = 0; i < count; i += 1) {
       const solOp = ops[randInt(0, ops.length - 1)];
       const target = randInt(-5, 7);
@@ -8722,7 +8807,7 @@
 
       if (variant === 0) {
         const p = randInt(2, 6);
-        const q = randInt(-4, 4);
+        const q = pickNonZero(-4, 4);
         const r = randInt(-5, 5);
         const A = p - q;
         if (A === 0) {
@@ -8733,7 +8818,7 @@
         const rhs1 = A * target + p * r;
 
         const s = randInt(2, 5);
-        const t = randInt(-4, 4);
+        const t = pickNonZero(-4, 4);
         const u = randInt(-5, 5);
         const B = s - t;
         if (B === 0) {
@@ -8741,14 +8826,15 @@
           continue;
         }
         const raw2 = B > 0 ? solOp : flipInequality(solOp);
-        const a = B * target - s * u + randInt(-3, 3);
-        const const2 = s * u + a;
-        const rhs2 = const2 - B * target;
+        const a = randInt(-20, 20);
+        const rhs2 = B * target + s * u - a;
+        const secondConst = rhs2 - s * u;
+        const secondRhs = symbolWithConst('a', secondConst);
         questions.push(
           `若不等式 $${p}(x${r >= 0 ? '+' : ''}${r})${displayIneqOp(raw1)}${formatLinearExpr(q, rhs1)}$ 的解與 $${s}(x${u >= 0 ? '+' : ''}${u})${displayIneqOp(raw2)}${formatLinearExpr(t, rhs2)}+a$ 的解相同，求 $a$。`
         );
         answers.push(
-          `先解第一個不等式，整理後得 $${formatIneqSolution(solOp, makeFraction(target))}$。第二個不等式展開整理後可化成 $${formatTerm(B, 'x')}${displayIneqOp(raw2)}${rhs2 - s * u - a}$。因為兩者解相同，所以它的界線也必須是 ${target}。解得 $a=${a}$。`
+          formatJ241Answer(`$a=${a}$`, `先解第一個不等式，整理後得 $${formatIneqSolution(solOp, makeFraction(target))}$。第二個不等式展開整理後可化成 $${formatTerm(B, 'x')}${displayIneqOp(raw2)}${secondRhs}$。因為兩者解相同，所以界線也必須是 ${target}，即 $${secondRhs}=${B * target}$。解得 $a=${a}$。`)
         );
         continue;
       }
@@ -8775,18 +8861,20 @@
         }
         const raw2 = B > 0 ? solOp : flipInequality(solOp);
         const m = randInt(-8, 8);
-        const a = B * target - s * m + t * u;
+        const a = B * target + s * m - t * u;
+        const secondConst = -(s * m - t * u);
+        const secondRhs = symbolWithConst('a', secondConst);
         questions.push(
           `若 $${p}(x${r >= 0 ? '+' : ''}${r})-${q}(x${u >= 0 ? '+' : ''}${u})${displayIneqOp(raw1)}${rhs1}$ 的解與 $${s}(x${m >= 0 ? '+' : ''}${m})-${t}(x${u >= 0 ? '+' : ''}${u})${displayIneqOp(raw2)}a$ 的解相同，求 $a$。`
         );
         answers.push(
-          `第一個不等式展開整理後可得 $${formatIneqSolution(solOp, makeFraction(target))}$。第二個不等式化簡後是 $${formatTerm(B, 'x')}${displayIneqOp(raw2)}a-${s * m - t * u}$。由於兩式解相同，所以界線也應是 ${target}，因此 $a=${a}$。`
+          formatJ241Answer(`$a=${a}$`, `第一個不等式展開整理後可得 $${formatIneqSolution(solOp, makeFraction(target))}$。第二個不等式化簡後是 $${formatTerm(B, 'x')}${displayIneqOp(raw2)}${secondRhs}$。由於兩式解相同，所以界線也應是 ${target}，因此 $${secondRhs}=${B * target}$，得 $a=${a}$。`)
         );
         continue;
       }
 
       const p = randInt(2, 5);
-      const q = randInt(-4, 4);
+      const q = pickNonZero(-4, 4);
       const r = randInt(-4, 4);
       const A = p - q;
       if (A === 0) {
@@ -8797,7 +8885,7 @@
       const rhs1 = A * target + p * r;
 
       const s = randInt(2, 5);
-      const t = randInt(-4, 4);
+      const t = pickNonZero(-4, 4);
       const u = randInt(-5, 5);
       const B = s - t;
       if (B === 0) {
@@ -8805,12 +8893,13 @@
         continue;
       }
       const raw2 = B > 0 ? solOp : flipInequality(solOp);
-      const a = B * target - s * u;
+      const a = B * target + s * u;
+      const secondRhs = symbolWithConst('a', -s * u);
       questions.push(
         `若不等式 $${p}(x${r >= 0 ? '+' : ''}${r})${displayIneqOp(raw1)}${formatLinearExpr(q, rhs1)}$ 的解與 $${s}(x${u >= 0 ? '+' : ''}${u})${displayIneqOp(raw2)}${t}x+a$ 的解相同，求 $a$。`
       );
       answers.push(
-        `先把第一個不等式化簡，得 $${formatIneqSolution(solOp, makeFraction(target))}$。第二個不等式整理成 $${formatTerm(B, 'x')}${raw2}-a+${-s * u}$ 的型式。要和前式解相同，就要讓它也化成 $x${solOp}${target}$。解得 $a=${a}$。`
+        formatJ241Answer(`$a=${a}$`, `先把第一個不等式化簡，得 $${formatIneqSolution(solOp, makeFraction(target))}$。第二個不等式整理成 $${formatTerm(B, 'x')}${displayIneqOp(raw2)}${secondRhs}$。要和前式解相同，就要有 $${secondRhs}=${B * target}$，解得 $a=${a}$。`)
       );
     }
 
@@ -8828,9 +8917,10 @@
         const unit = randInt(15, 28);
         const countItem = randInt(4, 7);
         const budget = unit * countItem + randInt(8, 25);
+        const bound = fractionToLatex(makeFraction(budget, countItem), true);
         questions.push(`預算購買：一枝螢光筆 $x$ 元，買 ${countItem} 枝的錢不夠付 ${budget} 元，求 $x$ 的範圍。`);
         answers.push(
-          `依題意可列不等式 $${countItem}x<${budget}$。兩邊同除以 ${countItem}，得 $x<${fractionToLatex(makeFraction(budget, countItem), true)}$。`
+          formatJ242Answer(`$x<${bound}$`, `依題意可列不等式 $${countItem}x<${budget}$。兩邊同除以 ${countItem}，得 $x<${bound}$。`)
         );
         continue;
       }
@@ -8839,7 +8929,7 @@
         const gain = randInt(4, 9);
         const limit = randInt(55, 72);
         questions.push(`體重限制：小涵現在體重 $x$ 公斤，增加 ${gain} 公斤後超過 ${limit} 公斤，求 $x$ 的範圍。`);
-        answers.push(`依題意可列 $x+${gain}>${limit}$，所以 $x>${limit - gain}$。`);
+        answers.push(formatJ242Answer(`$x>${limit - gain}$`, `依題意可列 $x+${gain}>${limit}$，所以 $x>${limit - gain}$。`));
         continue;
       }
 
@@ -8851,7 +8941,7 @@
           `考試總分：三次數學測驗分數分別為 ${a}、${b}、$x$ 分，總分達 ${target} 分以上，求 $x$ 的最小值。`
         );
         answers.push(
-          `依題意：$${a}+${b}+x≥${target}$。整理得 $x≥${target - a - b}$，所以 $x$ 的最小值是 ${target - a - b}。`
+          formatJ242Answer(`${target - a - b} 分`, `依題意：$${a}+${b}+x≥${target}$。整理得 $x≥${target - a - b}$，所以 $x$ 的最小值是 ${target - a - b}。`)
         );
         continue;
       }
@@ -8864,8 +8954,10 @@
           `存款目標：小安已經有 ${start} 元，每天存 ${daily} 元，想買 ${goal} 元的物品，至少要再存 $x$ 天才夠，求 $x$ 的範圍。`
         );
         const need = goal - start;
+        const bound = fractionToLatex(makeFraction(need, daily), true);
+        const minDays = Math.ceil(need / daily);
         answers.push(
-          `依題意可列 $${daily}x+${start}≥${goal}$，整理得 $${daily}x≥${need}$，所以 $x≥${fractionToLatex(makeFraction(need, daily), true)}$。若以天數計，至少要 ${Math.ceil(need / daily)} 天。`
+          formatJ242Answer(`至少 ${minDays} 天（$x≥${bound}$）`, `依題意可列 $${daily}x+${start}≥${goal}$，整理得 $${daily}x≥${need}$，所以 $x≥${bound}$。若以天數計，至少要 ${minDays} 天。`)
         );
         continue;
       }
@@ -8875,16 +8967,17 @@
         const each = randInt(4, 9);
         questions.push(`基礎分配：將 $x$ 顆糖果分給 ${kids} 位小朋友，每人至少得 ${each} 顆，求糖果總數的最小值。`);
         answers.push(
-          `每人至少 ${each} 顆，${kids} 人至少共要 $${kids}\\times ${each}=${kids * each}$ 顆，所以 $x≥${kids * each}$，最小值是 ${kids * each}。`
+          formatJ242Answer(`${kids * each} 顆`, `每人至少 ${each} 顆，${kids} 人至少共要 $${kids}\\times ${each}=${kids * each}$ 顆，所以 $x≥${kids * each}$，最小值是 ${kids * each}。`)
         );
         continue;
       }
 
       const length = randInt(6, 15);
       const areaLimit = length * randInt(4, 10) - randInt(1, length - 1);
+      const bound = fractionToLatex(makeFraction(areaLimit, length), true);
       questions.push(`矩形面積：長方形長是 ${length}，寬是 $x$，若面積不到 ${areaLimit} 平方公分，求 $x$ 的範圍。`);
       answers.push(
-        `依題意可列 $${length}x<${areaLimit}$，因此 $x<${fractionToLatex(makeFraction(areaLimit, length), true)}$。`
+        formatJ242Answer(`$x<${bound}$`, `依題意可列 $${length}x<${areaLimit}$，因此 $x<${bound}$。`)
       );
     }
 
@@ -8904,11 +8997,12 @@
         const pay = randInt(420, 650);
         const threshold = randInt(40, 110);
         const spendLimit = pay - threshold;
+        const bound = fractionToLatex(makeFraction(spendLimit - gift, books), true);
         questions.push(
           `購物找零：小萱買了 ${books} 本每本 $x$ 元的書與一個 ${gift} 元的飾品，付 ${pay} 元找回的錢超過 ${threshold} 元，求 $x$ 的範圍。`
         );
         answers.push(
-          `找回超過 ${threshold} 元，表示實際花費不到 ${pay - threshold} 元。可列不等式 $${books}x+${gift}<${spendLimit}$，整理得 $x<${fractionToLatex(makeFraction(spendLimit - gift, books), true)}$。`
+          formatJ242Answer(`$x<${bound}$`, `找回超過 ${threshold} 元，表示實際花費不到 ${pay - threshold} 元。可列不等式 $${books}x+${gift}<${spendLimit}$，整理得 $x<${bound}$。`)
         );
         continue;
       }
@@ -8922,8 +9016,10 @@
         );
         const rhs = totalCap - start;
         const bound = makeFraction(rhs, step);
+        const boundText = fractionToLatex(bound, true);
+        const maxValue = maxIntegerForIneq('<', bound);
         answers.push(
-          `依題意：$${step}x+${start}<${totalCap}$，所以 $${step}x<${rhs}$，得 $x<${fractionToLatex(bound, true)}$。因此 $x$ 的最大整數值是 ${maxIntegerForIneq('<', bound)}。`
+          formatJ242Answer(`${maxValue}`, `依題意：$${step}x+${start}<${totalCap}$，所以 $${step}x<${rhs}$，得 $x<${boundText}$。因此 $x$ 的最大整數值是 ${maxValue}。`)
         );
         continue;
       }
@@ -8939,8 +9035,9 @@
         );
         const coef = totalStudents;
         const rhs = targetAvg * totalStudents - girls * delta;
+        const bound = fractionToLatex(makeFraction(rhs, coef), true);
         answers.push(
-          `女生平均為 $x+${delta}$ 分，所以全班總分至少為 $${targetAvg}\\times ${totalStudents}$。可列 $${boys}x+${girls}(x+${delta})≥${targetAvg * totalStudents}$。整理得 $${coef}x≥${rhs}$，所以 $x≥${fractionToLatex(makeFraction(rhs, coef), true)}$。`
+          formatJ242Answer(`$x≥${bound}$`, `女生平均為 $x+${delta}$ 分，所以全班總分至少為 $${targetAvg}\\times ${totalStudents}$。可列 $${boys}x+${girls}(x+${delta})≥${targetAvg * totalStudents}$。整理得 $${coef}x≥${rhs}$，所以 $x≥${bound}$。`)
         );
         continue;
       }
@@ -8954,8 +9051,9 @@
         );
         const lowBound = addFraction(makeFraction(2 * low, base), makeFraction(2));
         const highBound = addFraction(makeFraction(2 * high, base), makeFraction(2));
+        const rangeText = `$x>${fractionToLatex(lowBound, true)}$ 且 $x≤${fractionToLatex(highBound, true)}$`;
         answers.push(
-          `面積為 $\\dfrac{${base}(x-2)}{2}$，依題意：$${low}<\\dfrac{${base}(x-2)}{2}≤${high}$。同乘以 $\\dfrac{2}{${base}}$ 並整理，可得 $x>${fractionToLatex(lowBound, true)}$ 且 $x≤${fractionToLatex(highBound, true)}$。`
+          formatJ242Answer(rangeText, `面積為 $\\dfrac{${base}(x-2)}{2}$，依題意：$${low}<\\dfrac{${base}(x-2)}{2}≤${high}$。同乘以 $\\dfrac{2}{${base}}$ 並整理，可得 ${rangeText}。`)
         );
         continue;
       }
@@ -8966,8 +9064,10 @@
         questions.push(
           `停車費率：某停車場每小時收費 ${rate} 元，不滿 1 小時以 1 小時計。若停了 $x$ 小時，總費用不超過 ${cap} 元，求 $x$ 的範圍。`
         );
+        const bound = fractionToLatex(makeFraction(cap, rate), true);
+        const maxHours = Math.floor(cap / rate);
         answers.push(
-          `依題意：$${rate}x≤${cap}$，所以 $x≤${fractionToLatex(makeFraction(cap, rate), true)}$。若題目限制以小時計，則最多可停 ${Math.floor(cap / rate)} 小時。`
+          formatJ242Answer(`$x≤${bound}$，最多 ${maxHours} 小時`, `依題意：$${rate}x≤${cap}$，所以 $x≤${bound}$。若題目限制以小時計，則最多可停 ${maxHours} 小時。`)
         );
         continue;
       }
@@ -8977,7 +9077,7 @@
       questions.push(
         `年齡限制：小恩今年 $x$ 歲，小岩 ${younger} 歲，兩人歲數至少相差 ${gap} 歲且小恩較大，求 $x$ 的範圍。`
       );
-      answers.push(`因為小恩較大，且年齡至少差 ${gap} 歲，所以 $x-${younger}≥${gap}$。整理得 $x≥${younger + gap}$。`);
+      answers.push(formatJ242Answer(`$x≥${younger + gap}$`, `因為小恩較大，且年齡至少差 ${gap} 歲，所以 $x-${younger}≥${gap}$。整理得 $x≥${younger + gap}$。`));
     }
 
     return { questions, answers };
@@ -8989,15 +9089,22 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 7;
+      const cycle = Math.floor(i / 7);
 
       if (variant === 0) {
-        const rooms = randInt(6, 12);
-        const students = rooms * 5 + 12;
+        const unplacedChoices = [8, 9, 10, 11, 12, 13, 14, 15, 16];
+        const unplaced = unplacedChoices[cycle % unplacedChoices.length];
+        const possibleRooms = Array.from({ length: 30 }, (_, idx) => idx + 1).filter(
+          (n) => 7 * (n - 1) < 5 * n + unplaced && 5 * n + unplaced < 7 * n
+        );
+        const roomText = possibleRooms.join('、');
+        const lowerText = fractionToLatex(makeFraction(unplaced, 2), true);
+        const upperText = fractionToLatex(makeFraction(unplaced + 7, 2), true);
         questions.push(
-          `宿舍分配：有一群學生分配宿舍，若每間住 5 人，則 ${students - rooms * 5} 人無房可住；若每間住 7 人，則有一間住不滿但非空房。求宿舍可能的間數。`
+          `宿舍分配：有一群學生分配宿舍，若每間住 5 人，則 ${unplaced} 人無房可住；若每間住 7 人，則有一間住不滿但非空房。求宿舍可能的間數。`
         );
         answers.push(
-          `設宿舍有 $x$ 間，則學生總數可寫成 $5x+${students - rooms * 5}$。若每間住 7 人，因為有一間住不滿但不是空房，所以滿足 $7(x-1)<5x+${students - rooms * 5}<7x$。代入本題可得 $7(x-1)<5x+12<7x$，整理後得到 $x<\\dfrac{19}{2}$ 且 $x>6$。因此宿舍可能的整數間數是 $7、8、9$。`
+          formatJ242Answer(`${roomText} 間`, `設宿舍有 $x$ 間，則學生總數可寫成 $5x+${unplaced}$。若每間住 7 人，因為有一間住不滿但不是空房，所以滿足 $7(x-1)<5x+${unplaced}<7x$。整理後得到 $x>${lowerText}$ 且 $x<${upperText}$。因此宿舍可能的整數間數是 ${roomText}。`)
         );
         continue;
       }
@@ -9006,84 +9113,117 @@
         const total = 25;
         const score = 4;
         const penalty = 1;
-        const bound = randInt(75, 92);
+        const boundChoices = [76, 79, 82, 85, 88, 91];
+        const bound = boundChoices[cycle % boundChoices.length];
         questions.push(
           `計分扣分制：數學測驗共 ${total} 題，對 1 題得 ${score} 分，錯 1 題倒扣 ${penalty} 分。小威全部作答，錯了 $x$ 題且得分超過 ${bound} 分，求 $x$ 的最大值。`
         );
         const rhs = score * total - bound;
         const coef = score + penalty;
         const boundFrac = makeFraction(rhs, coef);
+        const boundText = fractionToLatex(boundFrac, true);
+        const maxWrong = maxIntegerForIneq('<', boundFrac);
         answers.push(
-          `若錯 $x$ 題，則對了 $${total}-x$ 題，得分為 $${score}(${total}-x)-${penalty}x$。依題意：$${score}(${total}-x)-${penalty}x>${bound}$，整理得 $${coef}x<${score * total - bound}$，即 $x<${fractionToLatex(boundFrac, true)}$。因此 $x$ 的最大值是 ${maxIntegerForIneq('<', boundFrac)}。`
+          formatJ242Answer(`${maxWrong} 題`, `若錯 $x$ 題，則對了 $${total}-x$ 題，得分為 $${score}(${total}-x)-${penalty}x$。依題意：$${score}(${total}-x)-${penalty}x>${bound}$，整理得 $${coef}x<${score * total - bound}$，即 $x<${boundText}$。因此 $x$ 的最大值是 ${maxWrong}。`)
         );
         continue;
       }
 
       if (variant === 2) {
-        const lowFee = randInt(10, 15);
-        const highFee = lowFee + randInt(4, 7);
-        const threshold = randInt(20, 30);
+        const thresholdChoices = [20, 21, 22, 24, 25, 27, 30];
+        const lowFeeChoices = [10, 12, 14, 11, 13, 15, 16];
+        const feeGapChoices = [5, 6, 7, 4, 6, 5, 7];
+        const threshold = thresholdChoices[cycle % thresholdChoices.length];
+        const lowFee = lowFeeChoices[cycle % lowFeeChoices.length];
+        const highFee = lowFee + feeGapChoices[cycle % feeGapChoices.length];
         questions.push(
           `分段郵資：寄 $x$ 公克的限時郵件，若 ${threshold} 公克以下郵資為 ${lowFee} 元，超過 ${threshold} 公克且不超過 ${threshold + 30} 公克郵資為 ${highFee} 元。若付 ${highFee} 元郵資，求 $x$ 的範圍。`
         );
         answers.push(
-          `付 ${highFee} 元代表重量已超過 ${threshold} 公克，但沒有超過 ${threshold + 30} 公克，所以 $${threshold}<x≤${threshold + 30}$。`
+          formatJ242Answer(`$${threshold}<x≤${threshold + 30}$`, `付 ${highFee} 元代表重量已超過 ${threshold} 公克，但沒有超過 ${threshold + 30} 公克，所以 $${threshold}<x≤${threshold + 30}$。`)
         );
         continue;
       }
 
       if (variant === 3) {
-        const cup = 450;
-        const water = 300;
+        const volumeTemplates = [
+          { first: 3, extra: 2, gaps: [120, 135, 150, 165, 180] },
+          { first: 2, extra: 2, gaps: [80, 100, 120, 140, 160] },
+          { first: 4, extra: 2, gaps: [120, 144, 168, 192, 216] },
+        ];
+        const template = volumeTemplates[cycle % volumeTemplates.length];
+        const gap = template.gaps[cycle % template.gaps.length];
+        const water = (18 + ((cycle * 5 + 3) % 14)) * 10;
+        const cup = water + gap;
+        const totalBeads = template.first + template.extra;
+        const lowerBound = fractionToLatex(makeFraction(gap, totalBeads), true);
+        const upperBound = fractionToLatex(makeFraction(gap, template.first), true);
         questions.push(
-          `體積位移：${cup}cc 的杯子裡先裝 ${water}cc 的水，放入 3 顆玻璃珠後水未滿；再放 2 顆則溢出。若每顆玻璃珠體積為 $x$ cc，求 $x$ 的範圍。`
+          `體積位移：${cup}cc 的杯子裡先裝 ${water}cc 的水，放入 ${template.first} 顆玻璃珠後水未滿；再放 ${template.extra} 顆則溢出。若每顆玻璃珠體積為 $x$ cc，求 $x$ 的範圍。`
         );
         answers.push(
-          `放入 3 顆後未滿：$300+3x<450$；再放 2 顆就溢出：$300+5x>450$。整理得 $x<50$ 且 $x>30$，所以 $30<x<50$。`
+          formatJ242Answer(`$${lowerBound}<x<${upperBound}$`, `放入 ${template.first} 顆後未滿：$${water}+${template.first}x<${cup}$；再放 ${template.extra} 顆後共有 ${totalBeads} 顆且溢出：$${water}+${totalBeads}x>${cup}$。整理得 $x<${upperBound}$ 且 $x>${lowerBound}$，所以 $${lowerBound}<x<${upperBound}$。`)
         );
         continue;
       }
 
       if (variant === 4) {
-        const ticket = 200;
-        const discountPeople = 20;
-        const discountPrice = 150;
+        const ticketOptions = [160, 180, 200, 220, 240, 280, 320];
+        const discountPeopleOptions = [16, 20, 24, 28, 32];
+        const ticket = ticketOptions[cycle % ticketOptions.length];
+        const discountPeople = discountPeopleOptions[cycle % discountPeopleOptions.length];
+        const discountPrice = (ticket * 3) / 4;
+        const groupCost = discountPrice * discountPeople;
+        const minPeople = Math.floor(groupCost / ticket) + 1;
         questions.push(
           `門票團體折價：門票每張 ${ticket} 元，${discountPeople} 人以上可打 75 折。若團體人數 $x$ 人（且 $x<${discountPeople}$），直接買 ${discountPeople} 張團體票反而更便宜，求 $x$ 的最小值。`
         );
         answers.push(
-          `買 $x$ 張原價票需 $200x$ 元；直接買 20 張團體票需 $150\\times 20=3000$ 元。依題意：$3000<200x$，所以 $x>15$。又 $x$ 是整數且 $x<20$，故最小值是 $16$。`
+          formatJ242Answer(`${minPeople} 人`, `買 $x$ 張原價票需 $${ticket}x$ 元；直接買 ${discountPeople} 張團體票需 $${discountPrice}\\times ${discountPeople}=${groupCost}$ 元。依題意：$${groupCost}<${ticket}x$，所以 $x>${fractionToLatex(makeFraction(groupCost, ticket), true)}$。又 $x$ 是整數且 $x<${discountPeople}$，故最小值是 $${minPeople}$。`)
         );
         continue;
       }
 
       if (variant === 5) {
-        const totalVotes = [31, 34, 37, 40, 43][randInt(0, 4)];
+        const voteChoices = [31, 34, 37, 40, 43];
+        const totalVotes = voteChoices[cycle % voteChoices.length];
         questions.push(
           `選舉席次判定：某班要從 4 位候選人中選出得票最高的 2 人參加比賽。若有效票共 ${totalVotes} 票，阿文目前得 $x$ 票，至少要得幾票才能保證當選？`
         );
         const bound = makeFraction(totalVotes, 3);
         const minVote = Math.floor(totalVotes / 3) + 1;
         answers.push(
-          `若阿文得 $x$ 票，剩下 ${totalVotes}-$x$ 票要分給另外 3 人。要讓阿文無法保證當選，至少要有 2 個人各得 $x$ 票，因此必須滿足 $${totalVotes}-x\\ge 2x$。所以要保證當選，就要 $${totalVotes}-x<2x$，整理得 $x>${fractionToLatex(bound, true)}$。又票數是整數，所以至少要 ${minVote} 票。`
+          formatJ242Answer(`${minVote} 票`, `若阿文得 $x$ 票，剩下 ${totalVotes}-$x$ 票要分給另外 3 人。要讓阿文無法保證當選，至少要有 2 個人各得 $x$ 票，因此必須滿足 $${totalVotes}-x\\ge 2x$。所以要保證當選，就要 $${totalVotes}-x<2x$，整理得 $x>${fractionToLatex(bound, true)}$。又票數是整數，所以至少要 ${minVote} 票。`)
         );
         continue;
       }
 
-      const students = randInt(14, 24);
-      const remainderMin = 1;
-      const remainderMax = 2;
-      const pencils = randInt(3 * (students - 1) + remainderMin, 3 * (students - 1) + remainderMax);
+      const studentChoices = [14, 15, 16, 17, 18];
+      const students = studentChoices[cycle % studentChoices.length];
+      const firstLow = 3 * (students - 1) + 1;
+      const firstHigh = 3 * (students - 1) + 2;
+      const secondLow = 4 * (students - 5) + 1;
+      const secondHigh = 4 * (students - 4);
+      const pencilLow = Math.max(firstLow, secondLow);
+      const pencilHigh = Math.min(firstHigh, secondHigh);
+      if (pencilLow > pencilHigh) {
+        i -= 1;
+        continue;
+      }
+      const pencils = pencilLow + (cycle % (pencilHigh - pencilLow + 1));
+      const firstUpper = fractionToLatex(makeFraction(pencils + 2, 3), true);
+      const firstLower = fractionToLatex(makeFraction(pencils, 3), true);
+      const secondLower = fractionToLatex(makeFraction(pencils + 16, 4), true);
+      const secondUpper = fractionToLatex(makeFraction(pencils + 20, 4), true);
+      const possibleStudents = Array.from({ length: 40 }, (_, idx) => idx + 1).filter(
+        (n) => 3 * (n - 1) + 1 <= pencils && pencils < 3 * (n - 1) + 3 && 4 * (n - 5) < pencils && pencils <= 4 * (n - 4)
+      );
+      const possibleText = possibleStudents.join('、');
       questions.push(
         `餘數邏輯分配：有一堆鉛筆要分給 $x$ 位學生。若每人分 3 枝，則最後一人分到 1 枝以上但不到 3 枝；若每人分 4 枝，則有 4 人完全分不到。已知鉛筆共有 ${pencils} 枝，求學生人數 $x$ 的範圍。`
       );
       answers.push(
-        `若每人分 3 枝，最後一人有 1 枝以上但不到 3 枝，表示 $3(x-1)<${pencils}<3x$。若每人分 4 枝，還有 4 人完全分不到，表示最多只能先分給前 $x-4$ 人，因此 $4(x-4)≤${pencils}<4(x-3)$。合併可得 $${fractionToLatex(makeFraction(pencils, 3), true)}<x<${fractionToLatex(makeFraction(pencils + 16, 4), true)}$，且 $x≥${Math.ceil((pencils + 1) / 4) + 3}$。整理後可得可能的整數學生數為 ${Array.from(
-          { length: 40 },
-          (_, idx) => idx
-        )
-          .filter((n) => 3 * (n - 1) < pencils && pencils < 3 * n && 4 * (n - 4) <= pencils && pencils < 4 * (n - 3))
-          .join('、')}。`
+        formatJ242Answer(`$x=${possibleText}$`, `若每人分 3 枝，最後一人有 1 枝以上但不到 3 枝，表示 $3(x-1)+1≤${pencils}<3(x-1)+3$，可得 $${firstLower}<x≤${firstUpper}$。若每人分 4 枝，還有 4 人完全分不到，表示第 $x-4$ 人可以分到、但第 $x-3$ 人開始分不到，所以 $4(x-5)<${pencils}≤4(x-4)$，可得 $${secondLower}≤x<${secondUpper}$。合併並取整數，得 $x=${possibleText}$。`)
       );
     }
 

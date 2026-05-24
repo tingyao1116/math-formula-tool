@@ -212,7 +212,7 @@ class DualDbGui:
         ttk.Button(action_bar, text="更新預覽", style="Compact.TButton", command=self.refresh_gui_preview).pack(side="left", padx=4)
         ttk.Button(action_bar, text="儲存（新增/更新）", style="Compact.TButton", command=self.save_item).pack(side="left", padx=4)
         ttk.Button(action_bar, text="刪除選取", style="Compact.TButton", command=self.delete_selected).pack(side="left", padx=4)
-        ttk.Button(action_bar, text="匯出主題PDF", style="Compact.TButton", command=self.export_selected_topics_pdf).pack(side="left", padx=4)
+        ttk.Button(action_bar, text="匯出PDF", style="Compact.TButton", command=self.export_selected_pdf).pack(side="left", padx=4)
         ttk.Button(action_bar, text="批次掛載 practice", style="Compact.TButton", command=self.open_practice_binding_dialog).pack(side="left", padx=4)
 
         ttk.Button(action_bar, text="題目指派", style="Compact.TButton", command=self.open_question_assignment_dialog).pack(side="left", padx=4)
@@ -2829,6 +2829,390 @@ class DualDbGui:
 
         self.status_var.set(f"PDF 匯出完成：{len(picked)} 筆 -> {out_path}")
         messagebox.showinfo("完成", f"已輸出網頁版樣式 PDF：{len(picked)} 筆主題。")
+
+    def export_selected_pdf(self):
+        if self.mode == "topics":
+            return self.export_selected_topics_pdf()
+        if self.mode != "practice_records":
+            return messagebox.showwarning("提醒", "請先切換到『練習本體』模式，再選取要匯出的無限練習。")
+        return self.export_selected_practices_pdf()
+
+    def _selected_practice_records_for_pdf(self):
+        return self._selected_practice_record_rows()
+
+    def _open_practice_pdf_count_dialog(self, records: list[dict]):
+        result = {"counts": None}
+        dialog = tk.Toplevel(self.root)
+        dialog.title("設定無限練習 PDF 題數")
+        dialog.transient(self.root)
+        dialog.grab_set()
+        dialog.geometry("760x560")
+        dialog.minsize(680, 460)
+        dialog.resizable(True, True)
+
+        mode_var = tk.StringVar(value="same")
+        same_count_var = tk.StringVar(value="5")
+        entry_vars: dict[str, tk.StringVar] = {}
+
+        header = ttk.Frame(dialog, padding=12)
+        header.pack(fill="x")
+        ttk.Label(
+            header,
+            text="請選擇每個無限練習要出幾題。會輸出一份 PDF：全部題目在前，答案在後。",
+        ).pack(anchor="w")
+
+        mode_box = ttk.LabelFrame(dialog, text="題數模式", padding=12)
+        mode_box.pack(fill="x", padx=12, pady=(0, 8))
+        ttk.Radiobutton(mode_box, text="全部固定同一個數字", variable=mode_var, value="same").pack(anchor="w")
+        same_row = ttk.Frame(mode_box)
+        same_row.pack(fill="x", pady=(4, 10))
+        ttk.Label(same_row, text="固定題數").pack(side="left")
+        same_entry = ttk.Entry(same_row, textvariable=same_count_var, width=8)
+        same_entry.pack(side="left", padx=(8, 0))
+        ttk.Radiobutton(mode_box, text="每一個無限練習各自指定題數", variable=mode_var, value="custom").pack(anchor="w")
+
+        button_bar = ttk.Frame(dialog, padding=(12, 0, 12, 12))
+        button_bar.pack(side="bottom", fill="x")
+
+        list_box = ttk.LabelFrame(dialog, text="已選取的練習", padding=12)
+        list_box.pack(fill="both", expand=True, padx=12, pady=(0, 8))
+
+        canvas = tk.Canvas(list_box, highlightthickness=0)
+        scroll = ttk.Scrollbar(list_box, orient="vertical", command=canvas.yview)
+        inner = ttk.Frame(canvas)
+        inner.bind("<Configure>", lambda _e: canvas.configure(scrollregion=canvas.bbox("all")))
+        window_id = canvas.create_window((0, 0), window=inner, anchor="nw")
+        canvas.bind("<Configure>", lambda e: canvas.itemconfigure(window_id, width=e.width))
+        canvas.configure(yscrollcommand=scroll.set)
+        canvas.pack(side="left", fill="both", expand=True)
+        scroll.pack(side="right", fill="y")
+
+        for idx, record in enumerate(records, start=1):
+            rid = str(record.get("id", "")).strip()
+            title = str(record.get("title", "")).strip() or rid
+            default_count = int(record.get("questionCount", 0) or 5)
+            row = ttk.Frame(inner)
+            row.pack(fill="x", pady=3)
+            ttk.Label(row, text=f"{idx}. {title}", width=52).pack(side="left", anchor="w")
+            var = tk.StringVar(value=str(default_count))
+            entry_vars[rid] = var
+            ttk.Entry(row, textvariable=var, width=8).pack(side="left", padx=(8, 0))
+
+        def toggle_state(*_args):
+            state = "normal" if mode_var.get() == "same" else "disabled"
+            same_entry.configure(state=state)
+            custom_state = "disabled" if mode_var.get() == "same" else "normal"
+            for child in inner.winfo_children():
+                for widget in child.winfo_children():
+                    if isinstance(widget, ttk.Entry):
+                        widget.configure(state=custom_state)
+
+        mode_var.trace_add("write", toggle_state)
+        toggle_state()
+
+        def apply_counts():
+            try:
+                if mode_var.get() == "same":
+                    count = int(str(same_count_var.get()).strip() or "0")
+                    if count <= 0:
+                        raise ValueError
+                    result["counts"] = {
+                        str(record.get("id", "")).strip(): count
+                        for record in records
+                    }
+                else:
+                    counts = {}
+                    for record in records:
+                        rid = str(record.get("id", "")).strip()
+                        count = int(str(entry_vars[rid].get()).strip() or "0")
+                        if count <= 0:
+                            raise ValueError
+                        counts[rid] = count
+                    result["counts"] = counts
+            except ValueError:
+                return messagebox.showerror("題數錯誤", "題數請填正整數。", parent=dialog)
+            dialog.destroy()
+
+        ttk.Button(button_bar, text="取消", command=dialog.destroy).pack(side="right", padx=(8, 0))
+        ttk.Button(button_bar, text="確認匯出 PDF", style="Compact.TButton", command=apply_counts).pack(side="right")
+        dialog.bind("<Return>", lambda _event: apply_counts())
+        dialog.bind("<Escape>", lambda _event: dialog.destroy())
+        same_entry.focus_set()
+
+        dialog.wait_window()
+        return result["counts"]
+
+    def _build_practice_pdf_html(
+        self,
+        records: list[dict],
+        counts: dict[str, int],
+        show_answer: bool,
+        seed: str = "",
+        combined: bool = False,
+    ):
+        styles_uri = self._asset_uri("styles.css")
+        formulas_uri = self._asset_uri("formulas.js")
+        formula_content_uri = self._asset_uri("data/formula-content.js")
+        question_content_uri = self._asset_uri("data/question-content.js")
+        chapter_code_uri = self._asset_uri("data/chapter-code-config.js")
+        formula_calculators_uri = self._asset_uri("data/formula-calculators.js")
+        practice_assignment_uri = self._asset_uri("data/formula-practice-assignments.js")
+        formula_practice_uri = self._asset_uri("data/formula-practice.js")
+        formula_data_uri = self._asset_uri("formula-data.js")
+        formula_core_uri = self._asset_uri("formula-core.js")
+
+        export_items = []
+        for record in records:
+            rid = str(record.get("id", "")).strip()
+            preview = self._build_practice_preview_item(record)
+            preview["id"] = rid
+            export_items.append(
+                {
+                    "practiceId": rid,
+                    "count": int(counts.get(rid, int(record.get("questionCount", 0) or 5))),
+                    "item": preview,
+                }
+            )
+        payload_json = json.dumps(export_items, ensure_ascii=False)
+        seed_json = json.dumps(seed or "practice-pdf", ensure_ascii=False)
+        title = "無限練習題目與答案" if combined else ("無限練習答案卷" if show_answer else "無限練習題目卷")
+        show_answer_js = "true" if show_answer else "false"
+        mode_js = json.dumps("combined" if combined else ("answer" if show_answer else "question"), ensure_ascii=False)
+        return f"""<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <title>{escape(title)}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="{ROOT.resolve().as_uri()}/" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="{styles_uri}" />
+  <style>
+    @page {{ size: A4; margin: 10mm; }}
+    body {{ margin: 0; background: #f4efe5; color: #2b2b2b; }}
+    .sheet-wrap {{ padding: 14px; }}
+    .sheet-head {{ margin-bottom: 14px; padding: 10px 14px; border-radius: 10px; background: #fffdf8; border: 1px solid #e2d9c6; }}
+    .sheet-head h1 {{ margin: 0 0 6px; font-size: 24px; }}
+    .sheet-head p {{ margin: 0; color: #6f6658; font-size: 13px; }}
+    .practice-list {{ display: flex; flex-direction: column; gap: 14px; }}
+    .practice-pdf-part {{ display: flex; flex-direction: column; gap: 14px; }}
+    .practice-pdf-part + .practice-pdf-part {{ margin-top: 18px; }}
+    .practice-pdf-part.answer-part {{ break-before: page; page-break-before: always; }}
+    .practice-pdf-part-title {{ margin: 0 0 2px; padding: 10px 14px; border-radius: 10px; background: #efe4d2; font-size: 20px; }}
+    .practice-pdf-card {{ padding: 14px 16px; border-radius: 12px; background: #fffdf8; border: 1px solid #e2d9c6; break-inside: avoid; page-break-inside: avoid; }}
+    .practice-pdf-card h2 {{ margin: 0 0 8px; font-size: 18px; }}
+    .practice-pdf-card h3 {{ margin: 12px 0 8px; font-size: 16px; }}
+    .practice-pdf-card ol {{ margin: 8px 0 0; padding-left: 1.6em; }}
+    .practice-pdf-card li {{ margin: 0 0 8px; line-height: 1.7; }}
+    .practice-intro {{ margin: 0 0 8px; color: #6f6658; }}
+    .card-actions, .interactive-actions {{ display: none !important; }}
+  </style>
+</head>
+<body>
+  <div class="sheet-wrap">
+    <div class="sheet-head">
+      <h1>{escape(title)}</h1>
+      <p>依所選無限練習自動生成；本 PDF 只生成一次資料，答案對應前方同一批題目。</p>
+    </div>
+    <div id="sheet-root" class="practice-list"></div>
+  </div>
+  <script>
+    window.__practicePdfItems = {payload_json};
+    window.__practicePdfShowAnswer = {show_answer_js};
+    window.__practicePdfSeed = {seed_json};
+    window.__practicePdfMode = {mode_js};
+  </script>
+  <script defer src="{formulas_uri}"></script>
+  <script defer src="{formula_content_uri}"></script>
+  <script defer src="{question_content_uri}"></script>
+  <script defer src="{chapter_code_uri}"></script>
+  <script defer src="{formula_calculators_uri}"></script>
+  <script defer src="{practice_assignment_uri}"></script>
+  <script defer src="{formula_practice_uri}"></script>
+  <script defer src="{formula_data_uri}"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="{formula_core_uri}"></script>
+  <script>
+    function applyPracticeCountOverrides(items) {{
+      var store = window.practiceLibraryStore;
+      if (!store || !store.byId) return;
+      (items || []).forEach(function(entry) {{
+        var id = entry.practiceId;
+        var nextCount = Number(entry.count || 0);
+        if (!id || !store.byId[id] || !nextCount) return;
+        store.byId[id].questionCount = nextCount;
+      }});
+    }}
+
+    function makePracticePdfRandom(seedText) {{
+      var seed = String(seedText || 'practice-pdf');
+      var h = 2166136261 >>> 0;
+      for (var i = 0; i < seed.length; i += 1) {{
+        h ^= seed.charCodeAt(i);
+        h = Math.imul(h, 16777619) >>> 0;
+      }}
+      return function() {{
+        h = (h + 0x6D2B79F5) >>> 0;
+        var t = h;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      }};
+    }}
+
+    function withPracticePdfRandom(seedText, callback) {{
+      var originalRandom = Math.random;
+      Math.random = makePracticePdfRandom(seedText);
+      try {{
+        return callback();
+      }} finally {{
+        Math.random = originalRandom;
+      }}
+    }}
+
+    function escapePracticePdfHtml(value) {{
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }}
+
+    function renderPracticePdfLine(value) {{
+      var text = String(value == null ? '' : value);
+      if (window.formulaToolkit && typeof window.formulaToolkit.renderRichTextLine === 'function') {{
+        return window.formulaToolkit.renderRichTextLine(text);
+      }}
+      return escapePracticePdfHtml(text);
+    }}
+
+    function getPracticePdfConfig(entry) {{
+      var id = entry && (entry.practiceId || (entry.item && entry.item.id));
+      if (!id || !window.formulaPracticeStore || typeof window.formulaPracticeStore.getConfig !== 'function') return null;
+      return window.formulaPracticeStore.getConfig(id);
+    }}
+
+    function generatePracticePdfSets(items) {{
+      return (items || []).map(function(entry, index) {{
+        var item = entry.item || {{ id: entry.practiceId }};
+        var config = getPracticePdfConfig(entry) || {{}};
+        var id = entry.practiceId || item.id || String(index);
+        var title = config.title || item.title || id || '無限練習';
+        if (config.type === 'fixed-example') {{
+          return {{
+            practiceId: id,
+            title: title,
+            intro: '',
+            questions: [config.prompt || '尚未設定題目'],
+            answers: [config.answer || '尚未設定答案']
+          }};
+        }}
+        var generated = {{}};
+        if (typeof config.generate === 'function') {{
+          generated = withPracticePdfRandom(window.__practicePdfSeed + '|' + index + '|' + id, function() {{
+            return config.generate(item) || {{}};
+          }}) || {{}};
+        }}
+        return {{
+          practiceId: id,
+          title: title,
+          intro: typeof generated.intro === 'string' ? generated.intro : '',
+          questions: Array.isArray(generated.questions) ? generated.questions : [],
+          answers: Array.isArray(generated.answers) ? generated.answers : []
+        }};
+      }});
+    }}
+
+    function renderPracticePdfCard(set, showAnswer) {{
+      var list = showAnswer ? set.answers : set.questions;
+      var emptyText = showAnswer ? '目前沒有答案。' : '目前沒有產生題目。';
+      var body = list.length
+        ? '<ol>' + list.map(function(line) {{ return '<li>' + renderPracticePdfLine(line) + '</li>'; }}).join('') + '</ol>'
+        : '<p>' + emptyText + '</p>';
+      var intro = set.intro && !showAnswer ? '<p class="practice-intro">' + renderPracticePdfLine(set.intro) + '</p>' : '';
+      return '<section class="practice-pdf-card" data-practice-id="' + escapePracticePdfHtml(set.practiceId) + '">' +
+        '<h2>' + escapePracticePdfHtml(set.title) + '</h2>' +
+        intro +
+        body +
+        '</section>';
+    }}
+
+    function renderPracticePdf() {{
+      var root = document.getElementById('sheet-root');
+      if (!root) return;
+      if (!window.formulaToolkit || typeof window.formulaToolkit.renderRichTextLine !== 'function') {{
+        setTimeout(renderPracticePdf, 80);
+        return;
+      }}
+      var items = Array.isArray(window.__practicePdfItems) ? window.__practicePdfItems : [];
+      applyPracticeCountOverrides(items);
+      var generatedSets = generatePracticePdfSets(items);
+      window.__practicePdfGeneratedSets = generatedSets;
+      if (window.__practicePdfMode === 'combined') {{
+        root.innerHTML =
+          '<section class="practice-pdf-part question-part"><h2 class="practice-pdf-part-title">題目</h2>' +
+          generatedSets.map(function(set) {{ return renderPracticePdfCard(set, false); }}).join('') +
+          '</section>' +
+          '<section class="practice-pdf-part answer-part"><h2 class="practice-pdf-part-title">答案</h2>' +
+          generatedSets.map(function(set) {{ return renderPracticePdfCard(set, true); }}).join('') +
+          '</section>';
+        return;
+      }}
+      root.innerHTML = generatedSets.map(function(set) {{
+        return renderPracticePdfCard(set, Boolean(window.__practicePdfShowAnswer));
+      }}).join('');
+    }}
+    window.addEventListener('load', renderPracticePdf);
+  </script>
+</body>
+</html>
+"""
+
+    def export_selected_practices_pdf(self):
+        records = self._selected_practice_records_for_pdf()
+        if not records:
+            return messagebox.showwarning("提醒", "請先在『練習本體』模式選取至少一筆無限練習。")
+
+        counts = self._open_practice_pdf_count_dialog(records)
+        if not counts:
+            return
+
+        out_dir = filedialog.askdirectory(title="選擇無限練習 PDF 輸出資料夾")
+        if not out_dir:
+            return
+        out_dir = Path(out_dir)
+
+        if len(records) == 1:
+            base_name = self._safe_filename(str(records[0].get("title", "")).strip() or "practice")
+        else:
+            base_name = f"selected-practices-{len(records)}"
+
+        combined_pdf = out_dir / f"{base_name}_題目與答案.pdf"
+        export_seed = "practice-pdf|" + datetime.now().isoformat(timespec="microseconds")
+
+        combined_html = self._build_practice_pdf_html(
+            records,
+            counts,
+            show_answer=False,
+            seed=export_seed,
+            combined=True,
+        )
+
+        combined_result = self._print_html_to_pdf(combined_html, combined_pdf)
+
+        if combined_result["ok"]:
+            self.status_var.set(f"無限練習 PDF 匯出完成：{combined_pdf.name}")
+            return messagebox.showinfo("完成", f"已輸出：\n{combined_pdf}")
+
+        fallback_paths = []
+        if combined_result.get("html"):
+            fallback_paths.append(str(combined_result["html"]))
+        if fallback_paths:
+            self.status_var.set("找不到 Edge，已改輸出 HTML。")
+            return messagebox.showwarning("未偵測到 Edge", "目前無法直接輸出 PDF，已改輸出 HTML：\n" + "\n".join(fallback_paths))
+
+        return messagebox.showerror("輸出失敗", combined_result.get("reason", "") or "未知錯誤")
 
     def _split_pipe(self, value: str):
         text = (value or "").strip()
