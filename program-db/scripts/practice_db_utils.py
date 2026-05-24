@@ -60,6 +60,20 @@ def normalize_text_list(values) -> list[str]:
     return normalized
 
 
+def normalize_id_list(values) -> list[str]:
+    if not isinstance(values, list):
+        return []
+    normalized = []
+    seen = set()
+    for value in values:
+        text = str(value or "").strip()
+        if not text or text in seen:
+            continue
+        seen.add(text)
+        normalized.append(text)
+    return normalized
+
+
 def normalize_practice_record(record: dict) -> dict:
     row = dict(record or {})
     generator_key = str(row.get("generatorKey", "")).strip() or str(row.get("practiceKey", "")).strip()
@@ -72,6 +86,8 @@ def normalize_practice_record(record: dict) -> dict:
         "generatorKey": generator_key,
         "difficulty": str(row.get("difficulty", "")).strip(),
         "questionCount": int(row.get("questionCount", 0) or 0),
+        "subtypeCount": int(row.get("subtypeCount", 0) or 0),
+        "relatedPracticeIds": normalize_id_list(row.get("relatedPracticeIds", [])),
         "chapterCode": str(row.get("chapterCode", "") or row.get("chapter_code", "")).strip(),
         "stage": str(row.get("stage", "")).strip(),
         "grade": str(row.get("grade", "")).strip(),

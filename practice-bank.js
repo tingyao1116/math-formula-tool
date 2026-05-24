@@ -5,6 +5,7 @@
   const practiceLibrary = window.practiceLibraryStore || null;
 
   const elements = {
+    gradeFilter: document.getElementById("gradeFilter"),
     chapterFilter: document.getElementById("chapterFilter"),
     chapterPracticeCatalog: document.getElementById("chapterPracticeCatalog"),
     catalogBindingModeButton: document.getElementById("catalogBindingModeButton"),
@@ -29,19 +30,53 @@
       .filter(Boolean)
   );
   const chapterOptions = (store.getChapterOptions?.() || []).slice().sort(compareChapterCodes);
+  const chapterOptionByCode = new Map(
+    chapterOptions.map((entry) => [String(entry?.code || "").trim(), entry])
+  );
   const chapterLabelLookup = Object.fromEntries(
     chapterOptions.map((entry) => [String(entry.code || ""), String(entry.label || entry.code || "")])
   );
   const urlParams = new URLSearchParams(window.location.search);
   const initialChapterCode = urlParams.get("chapter") || "all";
   const initialPracticeId = String(urlParams.get("practice") || "").trim();
+  const initialChapterMeta = chapterOptionByCode.get(String(initialChapterCode || "").trim()) || null;
+  const gradeOptions = buildGradeOptions();
 
   const state = {
+    gradeKey: initialChapterMeta ? getGradeKey(initialChapterMeta.stage, initialChapterMeta.grade) : "all",
     chapterCode: chapterLabelLookup[initialChapterCode] ? initialChapterCode : "all",
     keyword: "",
     practiceId: initialPracticeId,
     catalogMode: "binding",
   };
+
+  function getGradeKey(stage, grade) {
+    const stageText = String(stage || "").trim();
+    const gradeText = String(grade || "").trim();
+    if (!stageText || !gradeText) return "";
+    return `${stageText}::${gradeText}`;
+  }
+
+  function getGradeLabel(stage, grade) {
+    const stageText = String(stage || "").trim();
+    const gradeText = String(grade || "").trim();
+    return [stageText, gradeText].filter(Boolean).join("・") || "未分類";
+  }
+
+  function buildGradeOptions() {
+    const rows = [];
+    const seen = new Set();
+    chapterOptions.forEach((entry) => {
+      const key = getGradeKey(entry?.stage, entry?.grade);
+      if (!key || seen.has(key)) return;
+      seen.add(key);
+      rows.push({
+        key,
+        label: getGradeLabel(entry?.stage, entry?.grade),
+      });
+    });
+    return rows;
+  }
 
   function hasInfinitePractice(item) {
     const contentTypes = Array.isArray(item?.contentTypes) ? item.contentTypes.map((value) => String(value || "").trim()) : [];
@@ -116,11 +151,19 @@
         mistakes: normalizeTextList(record.mistakes),
         practiceSource: "library",
         chapterOrderLookup,
+        subtypeCount: Number(record.subtypeCount || 0) || undefined,
+        relatedPracticeIds: normalizeTextList(record.relatedPracticeIds),
       };
     });
   }
 
   const independentItems = buildIndependentPracticeItems();
+  const relatedChildPracticeIds = new Set(
+    Object.values(practiceLibrary?.byId || {})
+      .flatMap((record) => Array.isArray(record?.relatedPracticeIds) ? record.relatedPracticeIds : [])
+      .map((value) => String(value || "").trim())
+      .filter(Boolean)
+  );
   const independentIds = new Set(independentItems.map((item) => item.id));
   const practiceSourceTopicIds = buildPracticeSourceTopicIdSet();
   const legacyItems = allItems.filter((item) => {
@@ -132,6 +175,8 @@
   function buildChapterPracticeCatalogItems() {
     const counts = new Map();
     for (const item of practiceItems) {
+      const practiceId = String(item?.id || "").trim();
+      if (practiceId && relatedChildPracticeIds.has(practiceId)) continue;
       const chapterCodes = Array.isArray(item?.chapterCodes) && item.chapterCodes.length
         ? item.chapterCodes
         : [getItemChapterCode(item)].filter(Boolean);
@@ -156,7 +201,7 @@
       .filter((row) => row.count > 0);
 
     return [
-      { code: "all", label: "全部章節", count: practiceItems.length },
+      { code: "all", label: "全部章節", count: practiceItems.filter((item) => !relatedChildPracticeIds.has(String(item?.id || "").trim())).length },
       ...chapterRows,
     ];
   }
@@ -167,6 +212,7 @@
     const chapterMap = buildPracticeChapterMap();
     for (const record of records) {
       const recordId = String(record?.id || "").trim();
+      if (recordId && relatedChildPracticeIds.has(recordId)) continue;
       const fallbackChapterCode = String(record?.chapterCode || "").trim();
       const mappedChapterCode = chapterMap[recordId]?.[0] || "";
       const chapterCode = fallbackChapterCode || mappedChapterCode;
@@ -186,13 +232,51 @@
       .filter((row) => row.count > 0);
 
     return [
-      { code: "all", label: "全部章節", count: records.length },
+      { code: "all", label: "全部章節", count: records.filter((record) => !relatedChildPracticeIds.has(String(record?.id || "").trim())).length },
       ...chapterRows,
     ];
   }
 
   const chapterPracticeCatalogItems = buildChapterPracticeCatalogItems();
   const chapterPracticeRecordCatalogItems = buildChapterPracticeRecordCatalogItems();
+
+  function matchesGradeFilterByChapterCode(code) {
+    if (state.gradeKey === "all") return true;
+    const meta = chapterOptionByCode.get(String(code || "").trim()) || null;
+    if (!meta) return false;
+    return getGradeKey(meta.stage, meta.grade) === state.gradeKey;
+  }
+
+  function getVisibleChapterOptions() {
+    return chapterOptions.filter((entry) => matchesGradeFilterByChapterCode(entry.code));
+  }
+
+  function matchesGradeFilter(item) {
+    if (state.gradeKey === "all") return true;
+    const chapterCodes = Array.isArray(item?.chapterCodes) && item.chapterCodes.length
+      ? item.chapterCodes
+      : [getItemChapterCode(item)].filter(Boolean);
+    if (chapterCodes.length) {
+      return chapterCodes.some((code) => matchesGradeFilterByChapterCode(code));
+    }
+    return getGradeKey(item?.stage, item?.grade) === state.gradeKey;
+  }
+
+  function getVisibleCatalogRows(sourceRows) {
+    const chapterRows = sourceRows.filter((row) => row.code !== "all" && matchesGradeFilterByChapterCode(row.code));
+    const activeGrade = gradeOptions.find((entry) => entry.key === state.gradeKey) || null;
+    const allCount = state.catalogMode === "record"
+      ? Object.values(practiceLibrary?.byId || {}).filter((row) => row && row.enabled !== false && !relatedChildPracticeIds.has(String(row?.id || "").trim()) && matchesGradeFilter(row)).length
+      : practiceItems.filter((item) => !relatedChildPracticeIds.has(String(item?.id || "").trim()) && matchesGradeFilter(item)).length;
+    return [
+      {
+        code: "all",
+        label: activeGrade ? `${activeGrade.label}・全部章節` : "全部章節",
+        count: allCount,
+      },
+      ...chapterRows,
+    ];
+  }
 
   function compareChapterCodes(a, b) {
     const left = String(a?.code || "");
@@ -273,10 +357,12 @@
   function getFilteredItems() {
     const keyword = state.keyword.trim().toLowerCase();
     return practiceItems.filter((item) => {
+      const itemId = String(item?.id || "").trim();
       const chapterOk = matchesChapterFilter(item);
       const keywordOk = !keyword || getPracticeKeywordText(item).includes(keyword);
-      const practiceOk = !state.practiceId || String(item?.id || "").trim() === state.practiceId;
-      return chapterOk && keywordOk && practiceOk;
+      const practiceOk = !state.practiceId || itemId === state.practiceId;
+      const relatedChildOk = state.practiceId || !relatedChildPracticeIds.has(itemId);
+      return chapterOk && keywordOk && practiceOk && relatedChildOk;
     }).slice().sort((a, b) => {
       if (state.chapterCode !== "all") {
         const leftOrder = Number(a?.chapterOrderLookup?.[state.chapterCode]);
@@ -482,7 +568,824 @@
     });
   }
 
-  populateChapterFilter();
-  bindEvents();
-  render();
+  function populateGradeFilter() {
+    if (!elements.gradeFilter) return;
+    const options = ['<option value="all">全部年級</option>'];
+    gradeOptions.forEach((entry) => {
+      options.push(`<option value="${escapeHtml(entry.key)}">${escapeHtml(entry.label)}</option>`);
+    });
+    elements.gradeFilter.innerHTML = options.join("");
+    elements.gradeFilter.value = gradeOptions.some((entry) => entry.key === state.gradeKey) ? state.gradeKey : "all";
+  }
+
+  function populateChapterFilter() {
+    if (!elements.chapterFilter) return;
+    const options = ['<option value="all">全部章節</option>'];
+    const visibleChapterOptions = getVisibleChapterOptions();
+    if (state.chapterCode !== "all" && !visibleChapterOptions.some((entry) => entry.code === state.chapterCode)) {
+      state.chapterCode = "all";
+    }
+    visibleChapterOptions.forEach((entry) => {
+      options.push(`<option value="${escapeHtml(entry.code)}">${escapeHtml(entry.label || entry.code)}</option>`);
+    });
+    elements.chapterFilter.innerHTML = options.join("");
+    elements.chapterFilter.value = state.chapterCode;
+  }
+
+  function renderChapterPracticeCatalog() {
+    if (!elements.chapterPracticeCatalog) return;
+    const sourceRows = state.catalogMode === "record"
+      ? chapterPracticeRecordCatalogItems
+      : chapterPracticeCatalogItems;
+    const visibleRows = getVisibleCatalogRows(sourceRows);
+    if (elements.catalogBindingModeButton) {
+      elements.catalogBindingModeButton.classList.toggle("is-active", state.catalogMode === "binding");
+    }
+    if (elements.catalogRecordModeButton) {
+      elements.catalogRecordModeButton.classList.toggle("is-active", state.catalogMode === "record");
+    }
+    elements.chapterPracticeCatalog.innerHTML = visibleRows
+      .map((row) => `
+        <button
+          type="button"
+          class="chapter-practice-catalog__item ${state.chapterCode === row.code ? "is-active" : ""}"
+          data-chapter-catalog-code="${escapeHtml(row.code)}"
+        >
+          <span class="chapter-practice-catalog__label">${escapeHtml(row.label)}</span>
+          <span class="chapter-practice-catalog__count">${escapeHtml(String(row.count))} 題型</span>
+        </button>
+      `)
+      .join("");
+  }
+
+  function matchesChapterFilter(item) {
+    if (state.chapterCode === "all") return true;
+    const chapterCodes = Array.isArray(item?.chapterCodes) ? item.chapterCodes : [];
+    if (chapterCodes.includes(state.chapterCode)) return true;
+    return getItemChapterCode(item) === state.chapterCode;
+  }
+
+  function getFilteredItems() {
+    const keyword = state.keyword.trim().toLowerCase();
+    return practiceItems.filter((item) => {
+      const itemId = String(item?.id || "").trim();
+      const gradeOk = matchesGradeFilter(item);
+      const chapterOk = matchesChapterFilter(item);
+      const keywordOk = !keyword || getPracticeKeywordText(item).includes(keyword);
+      const practiceOk = !state.practiceId || itemId === state.practiceId;
+      const relatedChildOk = state.practiceId || !relatedChildPracticeIds.has(itemId);
+      return gradeOk && chapterOk && keywordOk && practiceOk && relatedChildOk;
+    }).slice().sort((a, b) => {
+      if (state.chapterCode !== "all") {
+        const leftOrder = Number(a?.chapterOrderLookup?.[state.chapterCode]);
+        const rightOrder = Number(b?.chapterOrderLookup?.[state.chapterCode]);
+        const leftHas = Number.isFinite(leftOrder);
+        const rightHas = Number.isFinite(rightOrder);
+        if (leftHas && rightHas && leftOrder !== rightOrder) return leftOrder - rightOrder;
+        if (leftHas !== rightHas) return leftHas ? -1 : 1;
+      }
+      return String(a?.title || "").localeCompare(String(b?.title || ""), "zh-Hant");
+    });
+  }
+
+  function getCompositeChapterItems() {
+    if (state.chapterCode === "all" || state.practiceId) return [];
+    return getFilteredItems();
+  }
+
+  function renderCompositePracticeSection(position = "bottom") {
+    const items = getCompositeChapterItems();
+    if (!items.length) return "";
+    const chapterLabel =
+      chapterOptions.find((entry) => entry.code === state.chapterCode)?.label || state.chapterCode;
+    const isTop = position === "top";
+    const heading = isTop ? `${chapterLabel} 綜合練習（展開版）` : `${chapterLabel} 綜合練習（抽題版）`;
+    const note = isTop
+      ? "上方版本會把本章每個題型各展開一整組題目，方便老師一次檢查整章題型。"
+      : "下方版本維持原本的簡化模式，每個題型抽 1 題。";
+    return `
+      <section class="panel chapter-composite-practice" data-chapter-composite="${escapeHtml(state.chapterCode)}" data-chapter-composite-position="${escapeHtml(position)}">
+        <div class="topic-cluster__header">
+          <div>
+            <p class="summary-label">本章綜合練習</p>
+            <h3>${escapeHtml(heading)}</h3>
+            <p class="detail-note">${escapeHtml(note)}</p>
+          </div>
+        </div>
+        <div class="interactive-actions">
+          <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">產生題目</button>
+          <button type="button" class="ghost-button" data-chapter-composite-reveal="${escapeHtml(state.chapterCode)}">顯示答案</button>
+        </div>
+        <div class="interactive-output" data-chapter-composite-output>按下「產生題目」後，這裡會顯示本章綜合練習。</div>
+        <div class="interactive-output is-hidden" data-chapter-composite-answer></div>
+      </section>
+    `;
+  }
+
+  function buildCompactCompositePracticeResult(items) {
+    const questions = [];
+    const answers = [];
+
+    items.forEach((item) => {
+      const config = practiceStore.getConfig?.(item?.id) || null;
+      if (!config) return;
+      const title = String(item?.title || config?.title || item?.id || "未命名題型").trim();
+
+      if (config.type === "fixed-example") {
+        const prompt = String(config.prompt || "").trim();
+        const answer = String(config.answer || "").trim();
+        if (prompt) questions.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(prompt)}`);
+        if (answer) answers.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(answer)}`);
+        return;
+      }
+
+      if (typeof config.generate !== "function") return;
+      const result = config.generate(item) || {};
+      const question = Array.isArray(result.questions) ? String(result.questions[0] || "").trim() : "";
+      const answer = Array.isArray(result.answers) ? String(result.answers[0] || "").trim() : "";
+      if (question) questions.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(question)}`);
+      if (answer) answers.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(answer)}`);
+    });
+
+    return { questions, answers };
+  }
+
+  function buildExpandedCompositePracticeResult(items) {
+    return items.map((item) => {
+      const config = practiceStore.getConfig?.(item?.id) || null;
+      if (!config) return null;
+      const title = String(item?.title || config?.title || item?.id || "未命名題型").trim();
+
+      if (config.type === "fixed-example") {
+        const prompt = String(config.prompt || "").trim();
+        const answer = String(config.answer || "").trim();
+        return {
+          title,
+          questions: prompt ? [prompt] : [],
+          answers: answer ? [answer] : [],
+        };
+      }
+
+      if (typeof config.generate !== "function") return null;
+      const result = config.generate(item) || {};
+      const questions = Array.isArray(result.questions)
+        ? result.questions.map((entry) => String(entry || "").trim()).filter(Boolean)
+        : [];
+      const answers = Array.isArray(result.answers)
+        ? result.answers.map((entry) => String(entry || "").trim()).filter(Boolean)
+        : [];
+      if (!questions.length && !answers.length) return null;
+      return { title, questions, answers };
+    }).filter(Boolean);
+  }
+
+  function renderExpandedCompositeGroups(sections, key) {
+    return sections.map((section, index) => `
+      <section class="topic-cluster">
+        <div class="topic-cluster__header">
+          <div>
+            <p class="summary-label">第 ${index + 1} 大題</p>
+            <h3>${escapeHtml(section.title)}</h3>
+          </div>
+        </div>
+        ${section[key]?.length
+          ? `<ol>${section[key].map((entry) => `<li>${toolkit.renderRichTextLine(entry)}</li>`).join("")}</ol>`
+          : '<p class="detail-note">這個題型目前沒有可顯示的內容。</p>'}
+      </section>
+    `).join("");
+  }
+
+  function bindCompositePracticeEvents() {
+    elements.practiceBoard?.querySelectorAll("[data-chapter-composite-generate]").forEach((button) => {
+      if (button.dataset.bound === "true") return;
+      button.dataset.bound = "true";
+      button.addEventListener("click", () => {
+        const section = button.closest("[data-chapter-composite]");
+        const output = section?.querySelector("[data-chapter-composite-output]");
+        const answerBox = section?.querySelector("[data-chapter-composite-answer]");
+        const position = section?.getAttribute("data-chapter-composite-position") || "bottom";
+        const items = getCompositeChapterItems();
+
+        if (position === "top") {
+          const sections = buildExpandedCompositePracticeResult(items);
+          if (output) {
+            output.innerHTML = sections.length
+              ? renderExpandedCompositeGroups(sections, "questions")
+              : "目前沒有可生成的本章綜合練習。";
+          }
+          if (answerBox) {
+            answerBox.innerHTML = sections.length
+              ? renderExpandedCompositeGroups(sections, "answers")
+              : "目前沒有可顯示的答案。";
+            answerBox.classList.add("is-hidden");
+          }
+          return;
+        }
+
+        const result = buildCompactCompositePracticeResult(items);
+        if (output) {
+          output.innerHTML = result.questions.length
+            ? `<ol>${result.questions.map((question) => `<li>${question}</li>`).join("")}</ol>`
+            : "目前沒有可生成的本章綜合練習。";
+        }
+        if (answerBox) {
+          answerBox.innerHTML = result.answers.length
+            ? `<ol>${result.answers.map((answer) => `<li>${answer}</li>`).join("")}</ol>`
+            : "目前沒有可顯示的答案。";
+          answerBox.classList.add("is-hidden");
+        }
+      });
+    });
+
+    elements.practiceBoard?.querySelectorAll("[data-chapter-composite-reveal]").forEach((button) => {
+      if (button.dataset.bound === "true") return;
+      button.dataset.bound = "true";
+      button.addEventListener("click", () => {
+        const section = button.closest("[data-chapter-composite]");
+        const answerBox = section?.querySelector("[data-chapter-composite-answer]");
+        if (answerBox) answerBox.classList.toggle("is-hidden");
+      });
+    });
+  }
+
+  function renderBoard(items) {
+    updateSummary(items);
+    if (!items.length) {
+      renderEmptyState("?桀?瘝?蝚血?璇辣??毀蝧??柴?");
+      return;
+    }
+
+    if (elements.emptyState) {
+      elements.emptyState.hidden = true;
+      elements.emptyState.innerHTML = "";
+    }
+
+    if (elements.practiceBoard) {
+      elements.practiceBoard.innerHTML = [
+        renderCompositePracticeSection("top"),
+        items.map((item) => toolkit.renderCard(item, { showShareLink: item.practiceSource !== "library" })).join(""),
+        renderCompositePracticeSection("bottom"),
+      ].filter(Boolean).join("");
+      bindCompositePracticeEvents();
+      toolkit.bindInteractiveEvents?.(elements.practiceBoard);
+    }
+  }
+
+  function syncControls() {
+    if (elements.gradeFilter) elements.gradeFilter.value = state.gradeKey;
+    if (elements.chapterFilter) elements.chapterFilter.value = state.chapterCode;
+    if (elements.keywordInput) elements.keywordInput.value = state.keyword;
+  }
+
+  function render() {
+    populateGradeFilter();
+    populateChapterFilter();
+    syncControls();
+    renderChapterPracticeCatalog();
+    renderBoard(getFilteredItems());
+  }
+
+  function resetFilters() {
+    state.gradeKey = "all";
+    state.chapterCode = "all";
+    state.keyword = "";
+    state.practiceId = "";
+    render();
+  }
+
+  function bindEvents() {
+    elements.gradeFilter?.addEventListener("change", (event) => {
+      state.gradeKey = event.target.value || "all";
+      state.chapterCode = "all";
+      state.practiceId = "";
+      render();
+    });
+
+    elements.chapterFilter?.addEventListener("change", (event) => {
+      state.chapterCode = event.target.value;
+      state.practiceId = "";
+      render();
+    });
+
+    elements.chapterPracticeCatalog?.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-chapter-catalog-code]");
+      if (!button) return;
+      state.chapterCode = button.getAttribute("data-chapter-catalog-code") || "all";
+      state.practiceId = "";
+      render();
+    });
+
+    elements.catalogBindingModeButton?.addEventListener("click", () => {
+      state.catalogMode = "binding";
+      renderChapterPracticeCatalog();
+    });
+
+    elements.catalogRecordModeButton?.addEventListener("click", () => {
+      state.catalogMode = "record";
+      renderChapterPracticeCatalog();
+    });
+
+    elements.keywordInput?.addEventListener("input", (event) => {
+      state.keyword = event.target.value || "";
+      render();
+    });
+
+    elements.resetButton?.addEventListener("click", () => {
+      resetFilters();
+    });
+  }
+
+  function normalizeControlLabelsV2() {
+    document.title = "無限練習題庫";
+
+    const heroTitle = document.querySelector(".hero__content h1");
+    if (heroTitle) heroTitle.textContent = "無限練習題庫";
+
+    const heroLead = document.querySelector(".hero__lead");
+    if (heroLead) {
+      heroLead.textContent = "把各章可互動的練習集中整理，方便老師備課時快速挑題，也方便學生依章節自學與反覆練習。";
+    }
+
+    const quickLinks = document.querySelectorAll(".hero__quicklinks a");
+    if (quickLinks[0]) quickLinks[0].textContent = "回首頁";
+    if (quickLinks[1]) quickLinks[1].textContent = "前往管理頁";
+    if (quickLinks[2]) quickLinks[2].textContent = "前往題庫";
+
+    const heroPanelTitle = document.querySelector(".hero__panel h2");
+    if (heroPanelTitle) heroPanelTitle.textContent = "使用重點";
+    const heroPanelItems = document.querySelectorAll(".hero__panel li");
+    if (heroPanelItems[0]) heroPanelItems[0].textContent = "先選年級，再選章節，左側清單會更短、更好找。";
+    if (heroPanelItems[1]) heroPanelItems[1].textContent = "上方綜合練習主打題型變化展示，幫你快速看出這一章會怎麼出題。";
+    if (heroPanelItems[2]) heroPanelItems[2].textContent = "下方綜合練習保留原本模式，適合課堂暖身或學生做快速自我檢查。";
+
+    const controlsTitle = document.querySelector(".controls h2");
+    if (controlsTitle) controlsTitle.textContent = "查詢條件";
+    const controlLabels = document.querySelectorAll(".controls .field > span");
+    if (controlLabels[0]) controlLabels[0].textContent = "年級";
+    if (controlLabels[1]) controlLabels[1].textContent = "章節";
+    if (controlLabels[2]) controlLabels[2].textContent = "關鍵字搜尋";
+    if (elements.keywordInput) {
+      elements.keywordInput.placeholder = "輸入主題、章節、練習標題、標籤";
+    }
+    if (elements.resetButton) {
+      elements.resetButton.textContent = "清除篩選";
+    }
+
+    const guidePanels = document.querySelectorAll(".sidebar .guide");
+    if (guidePanels[0]) {
+      const heading = guidePanels[0].querySelector("h2");
+      if (heading) heading.textContent = "章節題型總覽";
+    }
+    if (guidePanels[1]) {
+      const heading = guidePanels[1].querySelector("h2");
+      if (heading) heading.textContent = "使用說明";
+      const items = guidePanels[1].querySelectorAll("li");
+      if (items[0]) items[0].textContent = "先用年級與章節縮小範圍，再查看該章有哪些可互動的練習。";
+      if (items[1]) items[1].textContent = "點左側章節清單後，頁面會直接切到該章的所有無限練習。";
+      if (items[2]) items[2].textContent = "最上方綜合練習會優先展示不同出題變化，方便老師快速掌握題型。";
+      if (items[3]) items[3].textContent = "若只想快速抽題，直接使用下方保留的原版綜合練習即可。";
+    }
+
+    if (elements.catalogBindingModeButton) elements.catalogBindingModeButton.textContent = "依章節綁定";
+    if (elements.catalogRecordModeButton) elements.catalogRecordModeButton.textContent = "依練習紀錄";
+
+    const summaryLabel = document.querySelector(".summary-panel .summary-label");
+    if (summaryLabel) summaryLabel.textContent = "目前結果";
+  }
+
+  function getGradeLabelTextV2(stage, grade) {
+    const stageText = String(stage || "").trim();
+    const gradeText = String(grade || "").trim();
+    return [stageText, gradeText].filter(Boolean).join("");
+  }
+
+  function buildGradeOptionsV2() {
+    const rows = [];
+    const seen = new Set();
+    chapterOptions.forEach((entry) => {
+      const key = getGradeKey(entry?.stage, entry?.grade);
+      if (!key || seen.has(key)) return;
+      seen.add(key);
+      rows.push({
+        key,
+        label: getGradeLabelTextV2(entry?.stage, entry?.grade),
+      });
+    });
+    return rows;
+  }
+
+  function getActiveGradeLabelV2() {
+    return buildGradeOptionsV2().find((entry) => entry.key === state.gradeKey)?.label || "";
+  }
+
+  function populateGradeFilterV2() {
+    if (!elements.gradeFilter) return;
+    const gradeRows = buildGradeOptionsV2();
+    const options = ['<option value="all">全部年級</option>'];
+    gradeRows.forEach((entry) => {
+      options.push(`<option value="${escapeHtml(entry.key)}">${escapeHtml(entry.label)}</option>`);
+    });
+    elements.gradeFilter.innerHTML = options.join("");
+    elements.gradeFilter.value = gradeRows.some((entry) => entry.key === state.gradeKey) ? state.gradeKey : "all";
+  }
+
+  function populateChapterFilterV2() {
+    if (!elements.chapterFilter) return;
+    const options = ['<option value="all">全部章節</option>'];
+    const visibleChapterOptions = getVisibleChapterOptions();
+    if (state.chapterCode !== "all" && !visibleChapterOptions.some((entry) => entry.code === state.chapterCode)) {
+      state.chapterCode = "all";
+    }
+    visibleChapterOptions.forEach((entry) => {
+      options.push(`<option value="${escapeHtml(entry.code)}">${escapeHtml(entry.label || entry.code)}</option>`);
+    });
+    elements.chapterFilter.innerHTML = options.join("");
+    elements.chapterFilter.value = state.chapterCode;
+  }
+
+  function renderChapterPracticeCatalogV2() {
+    if (!elements.chapterPracticeCatalog) return;
+    const sourceRows = state.catalogMode === "record"
+      ? chapterPracticeRecordCatalogItems
+      : chapterPracticeCatalogItems;
+    const chapterRows = sourceRows.filter((row) => row.code !== "all" && matchesGradeFilterByChapterCode(row.code));
+    const activeGradeLabel = getActiveGradeLabelV2();
+    const allCount = state.catalogMode === "record"
+      ? Object.values(practiceLibrary?.byId || {}).filter((row) => row && row.enabled !== false && !relatedChildPracticeIds.has(String(row?.id || "").trim()) && matchesGradeFilter(row)).length
+      : practiceItems.filter((item) => !relatedChildPracticeIds.has(String(item?.id || "").trim()) && matchesGradeFilter(item)).length;
+    const visibleRows = [
+      {
+        code: "all",
+        label: activeGradeLabel ? `${activeGradeLabel}全部章節` : "全部章節",
+        count: allCount,
+      },
+      ...chapterRows,
+    ];
+    if (elements.catalogBindingModeButton) {
+      elements.catalogBindingModeButton.classList.toggle("is-active", state.catalogMode === "binding");
+    }
+    if (elements.catalogRecordModeButton) {
+      elements.catalogRecordModeButton.classList.toggle("is-active", state.catalogMode === "record");
+    }
+    elements.chapterPracticeCatalog.innerHTML = visibleRows
+      .map((row) => `
+        <button
+          type="button"
+          class="chapter-practice-catalog__item ${state.chapterCode === row.code ? "is-active" : ""}"
+          data-chapter-catalog-code="${escapeHtml(row.code)}"
+        >
+          <span class="chapter-practice-catalog__label">${escapeHtml(row.label)}</span>
+          <span class="chapter-practice-catalog__count">${escapeHtml(String(row.count))} 題</span>
+        </button>
+      `)
+      .join("");
+  }
+
+  function normalizeQuestionShapeV2(text) {
+    return String(text || "")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\\(?:d?frac)\s*\{[^{}]*\}\s*\{[^{}]*\}/g, " FRAC ")
+      .replace(/\\sqrt\s*\{[^{}]*\}/g, " ROOT ")
+      .replace(/[+\-]?\d+(?:\.\d+)?/g, "#")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+  }
+
+  function collectPracticeVariationsV2(config, item, maxVariants = 6) {
+    if (!config) return [];
+    if (config.type === "fixed-example") {
+      const prompt = String(config.prompt || "").trim();
+      const answer = String(config.answer || "").trim();
+      return prompt ? [{ question: prompt, answer }] : [];
+    }
+    if (typeof config.generate !== "function") return [];
+    const desiredCount = Math.max(1, Number(item?.subtypeCount || maxVariants || 1) || 1);
+    const result = config.generate(item) || {};
+    const questions = Array.isArray(result.questions) ? result.questions : [];
+    const answers = Array.isArray(result.answers) ? result.answers : [];
+    const variants = [];
+
+    for (let index = 0; index < questions.length && variants.length < desiredCount; index += 1) {
+      const question = String(questions[index] || "").trim();
+      if (!question) continue;
+      const answer = String(answers[index] || "").trim();
+      variants.push({ question, answer });
+    }
+
+    return variants;
+  }
+
+  function buildCompactCompositePracticeResultV2(items) {
+    const questions = [];
+    const answers = [];
+
+    items.forEach((item) => {
+      const config = practiceStore.getConfig?.(item?.id) || null;
+      if (!config) return;
+      const title = String(item?.title || config?.title || item?.id || "未命名題型").trim();
+
+      if (config.type === "fixed-example") {
+        const prompt = String(config.prompt || "").trim();
+        const answer = String(config.answer || "").trim();
+        if (prompt) questions.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(prompt)}`);
+        if (answer) answers.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(answer)}`);
+        return;
+      }
+
+      if (typeof config.generate !== "function") return;
+      const result = config.generate(item) || {};
+      const question = Array.isArray(result.questions) ? String(result.questions[0] || "").trim() : "";
+      const answer = Array.isArray(result.answers) ? String(result.answers[0] || "").trim() : "";
+      if (question) questions.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(question)}`);
+      if (answer) answers.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(answer)}`);
+    });
+
+    return { questions, answers };
+  }
+
+  function buildExpandedCompositePracticeResultV2(items) {
+    return items.map((item) => {
+      const config = practiceStore.getConfig?.(item?.id) || null;
+      if (!config) return null;
+      const title = String(item?.title || config?.title || item?.id || "未命名題型").trim();
+      const maxVariants = Math.max(1, Number(item?.subtypeCount || 0) || 1);
+      const variants = collectPracticeVariationsV2(config, item, maxVariants);
+      if (!variants.length) return null;
+      return { title, variants };
+    }).filter(Boolean);
+  }
+
+  function renderExpandedCompositeGroupsV2(sections, key) {
+    return sections.map((section, index) => `
+      <section class="topic-cluster">
+        <div class="topic-cluster__header">
+          <div>
+            <p class="summary-label">題型 ${index + 1}</p>
+            <h3>${escapeHtml(section.title)}</h3>
+          </div>
+        </div>
+        ${
+          section.variants?.length
+            ? `<ol>${section.variants.map((entry) => `<li>${toolkit.renderRichTextLine(entry[key] || "未提供")}</li>`).join("")}</ol>`
+            : '<p class="detail-note">目前沒有可顯示的內容。</p>'
+        }
+      </section>
+    `).join("");
+  }
+
+  function buildPracticePageUrlV2(chapterCode, practiceId) {
+    const params = new URLSearchParams();
+    if (chapterCode) params.set("chapter", chapterCode);
+    if (practiceId) params.set("practice", practiceId);
+    return `practice-bank.html?${params.toString()}`;
+  }
+
+  function renderRelatedPracticeSectionV2(item) {
+    const relatedIds = Array.isArray(item?.relatedPracticeIds) ? item.relatedPracticeIds.map((value) => String(value || "").trim()).filter(Boolean) : [];
+    if (!relatedIds.length) return "";
+    const childCards = relatedIds
+      .map((practiceId) => practiceLibrary?.byId?.[practiceId] || null)
+      .filter(Boolean)
+      .map((record) => {
+        const childItem = practiceItems.find((entry) => String(entry?.id || "").trim() === String(record.id || "").trim()) || {
+          ...record,
+          id: String(record.id || "").trim(),
+          title: String(record.title || record.id || "").trim(),
+          chapterCode: String(record.chapterCode || item?.chapterCode || state.chapterCode || "").trim(),
+        };
+        return toolkit.renderCard(childItem, { showShareLink: childItem.practiceSource !== "library" });
+      });
+    if (!childCards.length) return "";
+    return `
+      <section class="panel">
+        <div class="topic-cluster__header">
+          <div>
+            <p class="summary-label">延伸練習</p>
+            <h3>分項練習入口</h3>
+            <p class="detail-note">先做上方綜合版，再往下切到各個細項練習，頁面會比較乾淨，也比較符合備課順序。</p>
+          </div>
+        </div>
+        <div class="branch-grid branch-grid--one">
+          ${childCards.join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderPracticeCardWithRelatedSectionV2(item) {
+    const relatedIds = Array.isArray(item?.relatedPracticeIds) ? item.relatedPracticeIds.map((value) => String(value || "").trim()).filter(Boolean) : [];
+    const chapterCode = String(item?.chapterCode || state.chapterCode || "").trim();
+    const practiceId = String(item?.id || "").trim();
+    const detailHref = relatedIds.length ? buildPracticePageUrlV2(chapterCode, practiceId) : "";
+    const topRightHtml = detailHref && !state.practiceId
+      ? `<a class="ghost-link" href="${escapeHtml(detailHref)}">開啟新頁面</a>`
+      : "";
+    return toolkit.renderCard(item, {
+      showShareLink: item.practiceSource !== "library",
+      topRightHtml,
+    });
+  }
+
+  function renderCompositePracticeSectionV2(position = "bottom") {
+    const items = getCompositeChapterItems();
+    if (!items.length) return "";
+    const chapterLabel = chapterOptions.find((entry) => entry.code === state.chapterCode)?.label || state.chapterCode;
+    const isTop = position === "top";
+    const heading = isTop ? `${chapterLabel} 題型變化總覽` : `${chapterLabel} 綜合練習`;
+    const note = isTop
+      ? "每一種題型會連續嘗試生成多次，優先保留不同變化，方便先看這一章會怎麼出題。"
+      : "保留原本模式，每個題型抽 1 題，適合快速暖身或課堂收尾檢查。";
+    return `
+      <section class="panel chapter-composite-practice" data-chapter-composite="${escapeHtml(state.chapterCode)}" data-chapter-composite-position="${escapeHtml(position)}">
+        <div class="topic-cluster__header">
+          <div>
+            <p class="summary-label">${isTop ? "上方綜合練習" : "下方綜合練習"}</p>
+            <h3>${escapeHtml(heading)}</h3>
+            <p class="detail-note">${escapeHtml(note)}</p>
+          </div>
+        </div>
+        <div class="interactive-actions">
+          <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">重新出題</button>
+          <button type="button" class="ghost-button" data-chapter-composite-reveal="${escapeHtml(state.chapterCode)}">顯示答案</button>
+        </div>
+        <div class="interactive-output" data-chapter-composite-output>按下上方按鈕後，這裡會出現本章的綜合練習。</div>
+        <div class="interactive-output is-hidden" data-chapter-composite-answer></div>
+      </section>
+    `;
+  }
+
+  function bindCompositePracticeEventsV2() {
+    elements.practiceBoard?.querySelectorAll("[data-chapter-composite-generate]").forEach((button) => {
+      if (button.dataset.boundV2 === "true") return;
+      button.dataset.boundV2 = "true";
+      button.addEventListener("click", () => {
+        const section = button.closest("[data-chapter-composite]");
+        const output = section?.querySelector("[data-chapter-composite-output]");
+        const answerBox = section?.querySelector("[data-chapter-composite-answer]");
+        const position = section?.getAttribute("data-chapter-composite-position") || "bottom";
+        const items = getCompositeChapterItems();
+
+        if (position === "top") {
+          const sections = buildExpandedCompositePracticeResultV2(items);
+          if (output) {
+            output.innerHTML = sections.length
+              ? renderExpandedCompositeGroupsV2(sections, "question")
+              : "目前沒有可顯示的題型變化。";
+          }
+          if (answerBox) {
+            answerBox.innerHTML = sections.length
+              ? renderExpandedCompositeGroupsV2(sections, "answer")
+              : "目前沒有可顯示的答案。";
+            answerBox.classList.add("is-hidden");
+          }
+          return;
+        }
+
+        const result = buildCompactCompositePracticeResultV2(items);
+        if (output) {
+          output.innerHTML = result.questions.length
+            ? `<ol>${result.questions.map((question) => `<li>${question}</li>`).join("")}</ol>`
+            : "目前沒有可顯示的題目。";
+        }
+        if (answerBox) {
+          answerBox.innerHTML = result.answers.length
+            ? `<ol>${result.answers.map((answer) => `<li>${answer}</li>`).join("")}</ol>`
+            : "目前沒有可顯示的答案。";
+          answerBox.classList.add("is-hidden");
+        }
+      });
+    });
+
+    elements.practiceBoard?.querySelectorAll("[data-chapter-composite-reveal]").forEach((button) => {
+      if (button.dataset.boundV2 === "true") return;
+      button.dataset.boundV2 = "true";
+      button.addEventListener("click", () => {
+        const section = button.closest("[data-chapter-composite]");
+        const answerBox = section?.querySelector("[data-chapter-composite-answer]");
+        if (answerBox) answerBox.classList.toggle("is-hidden");
+      });
+    });
+  }
+
+  function updateSummaryV2(items) {
+    const activeGradeLabel = getActiveGradeLabelV2();
+    const chapterLabel = state.chapterCode === "all"
+      ? (activeGradeLabel || "全部章節")
+      : chapterOptions.find((entry) => entry.code === state.chapterCode)?.label || state.chapterCode;
+
+    if (elements.resultTitle) {
+      elements.resultTitle.textContent = state.chapterCode === "all"
+        ? `${chapterLabel} 無限練習`
+        : `${chapterLabel} 題型總覽`;
+    }
+    if (elements.resultCount) {
+      elements.resultCount.textContent = `共找到 ${items.length} 筆可用練習`;
+    }
+  }
+
+  function renderEmptyStateV2(message) {
+    if (elements.emptyState) {
+      elements.emptyState.hidden = false;
+      elements.emptyState.innerHTML = `<p>${escapeHtml(message)}</p>`;
+    }
+    if (elements.practiceBoard) {
+      elements.practiceBoard.innerHTML = "";
+    }
+  }
+
+  function renderBoardV2(items) {
+    updateSummaryV2(items);
+    if (!items.length) {
+      renderEmptyStateV2("目前條件下沒有找到可用的無限練習，請改用別的年級、章節或關鍵字。");
+      return;
+    }
+
+    if (elements.emptyState) {
+      elements.emptyState.hidden = true;
+      elements.emptyState.innerHTML = "";
+    }
+
+    if (elements.practiceBoard) {
+      const relatedSection = state.practiceId && items.length === 1
+        ? renderRelatedPracticeSectionV2(items[0])
+        : "";
+      elements.practiceBoard.innerHTML = [
+        renderCompositePracticeSectionV2("top"),
+        items.map((item) => renderPracticeCardWithRelatedSectionV2(item)).join(""),
+        relatedSection,
+        renderCompositePracticeSectionV2("bottom"),
+      ].filter(Boolean).join("");
+      bindCompositePracticeEventsV2();
+      toolkit.bindInteractiveEvents?.(elements.practiceBoard);
+    }
+  }
+
+  function syncControlsV2() {
+    if (elements.gradeFilter) elements.gradeFilter.value = state.gradeKey;
+    if (elements.chapterFilter) elements.chapterFilter.value = state.chapterCode;
+    if (elements.keywordInput) elements.keywordInput.value = state.keyword;
+  }
+
+  function renderV2() {
+    normalizeControlLabelsV2();
+    populateGradeFilterV2();
+    populateChapterFilterV2();
+    syncControlsV2();
+    renderChapterPracticeCatalogV2();
+    renderBoardV2(getFilteredItems());
+  }
+
+  function resetFiltersV2() {
+    state.gradeKey = "all";
+    state.chapterCode = "all";
+    state.keyword = "";
+    state.practiceId = "";
+    renderV2();
+  }
+
+  function bindEventsV2() {
+    elements.gradeFilter?.addEventListener("change", (event) => {
+      state.gradeKey = event.target.value || "all";
+      state.chapterCode = "all";
+      state.practiceId = "";
+      renderV2();
+    });
+
+    elements.chapterFilter?.addEventListener("change", (event) => {
+      state.chapterCode = event.target.value || "all";
+      state.practiceId = "";
+      renderV2();
+    });
+
+    elements.chapterPracticeCatalog?.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-chapter-catalog-code]");
+      if (!button) return;
+      state.chapterCode = button.getAttribute("data-chapter-catalog-code") || "all";
+      state.practiceId = "";
+      renderV2();
+    });
+
+    elements.catalogBindingModeButton?.addEventListener("click", () => {
+      state.catalogMode = "binding";
+      renderChapterPracticeCatalogV2();
+    });
+
+    elements.catalogRecordModeButton?.addEventListener("click", () => {
+      state.catalogMode = "record";
+      renderChapterPracticeCatalogV2();
+    });
+
+    elements.keywordInput?.addEventListener("input", (event) => {
+      state.keyword = event.target.value || "";
+      renderV2();
+    });
+
+    elements.resetButton?.addEventListener("click", () => {
+      resetFiltersV2();
+    });
+  }
+
+  bindEventsV2();
+  renderV2();
 })();

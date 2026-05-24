@@ -578,13 +578,14 @@
       .map((value) => `<span class="meta-chip">${escapeHtml(value)}</span>`)
       .join("");
     const tags = (Array.isArray(item.tags) ? item.tags : []).map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
+    const topRightHtml = String(settings.topRightHtml || "").trim();
     const shareLink = settings.showShareLink ? `<div class="card-actions"><a class="ghost-link" href="formula.html?id=${item.id}">開啟個別公式頁</a></div>` : "";
 
     return `
       <article class="formula-card" data-annotatable="true" data-annotation-key="topic-${escapeHtml(item.id)}">
         <div class="card-top">
           <div><h3 class="card-title">${escapeHtml(item.title)}</h3></div>
-          <div>${tags}</div>
+          <div class="card-top-actions">${tags}${topRightHtml}</div>
         </div>
         <div class="meta-row">${meta}</div>
         ${renderDiagram(item)}
