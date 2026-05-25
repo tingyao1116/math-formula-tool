@@ -2538,7 +2538,7 @@
           ? ''
           : sConst.den === 1
             ? `${sConst.num > 0 ? '+' : ''}${sConst.num}`
-            : `${sConst.num > 0 ? '+' : ''}${String.raw`\frac{${sConst.num}}{${sConst.den}}`}`;
+            : `${sConst.num > 0 ? '+' : '-'}${String.raw`\frac{${Math.abs(sConst.num)}}{${sConst.den}}`}`;
 
       questions.push(`化簡：\\(${frac1} ${op} ${frac2}\\)`);
       answers.push(`\\(${frac1} ${op} ${frac2}=${coefText}${constText}\\)`);
@@ -2697,11 +2697,23 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
+      const cycle = Math.floor(i / 3);
 
       if (variant === 0) {
-        const cost = [300, 450, 600, 750, 900, 1200][randInt(0, 5)];
-        const profitRate = [20, 25, 50][randInt(0, 2)];
-        const discount = profitRate === 25 ? 8 : [8, 9][randInt(0, 1)];
+        const templates = [
+          { cost: 300, profitRate: 20, discount: 8 },
+          { cost: 450, profitRate: 25, discount: 8 },
+          { cost: 600, profitRate: 50, discount: 9 },
+          { cost: 750, profitRate: 20, discount: 8 },
+          { cost: 900, profitRate: 25, discount: 8 },
+          { cost: 1200, profitRate: 50, discount: 9 },
+          { cost: 840, profitRate: 40, discount: 10 },
+          { cost: 560, profitRate: 25, discount: 9 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const cost = pick.cost;
+        const profitRate = pick.profitRate;
+        const discount = pick.discount;
         const sold = (cost * (100 + profitRate)) / 100;
         const list = (sold * 10) / discount;
         if (!Number.isInteger(list)) {
@@ -2718,9 +2730,19 @@
       }
 
       if (variant === 1) {
-        const cost = [400, 500, 800, 1000, 1200][randInt(0, 4)];
-        const markup = [30, 50][randInt(0, 1)];
-        const discount = markup === 30 ? 9 : [8, 9][randInt(0, 1)];
+        const templates = [
+          { cost: 400, markup: 30, discount: 9 },
+          { cost: 500, markup: 50, discount: 8 },
+          { cost: 800, markup: 30, discount: 9 },
+          { cost: 1000, markup: 50, discount: 9 },
+          { cost: 1200, markup: 30, discount: 9 },
+          { cost: 900, markup: 40, discount: 10 },
+          { cost: 700, markup: 50, discount: 8 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const cost = pick.cost;
+        const markup = pick.markup;
+        const discount = pick.discount;
         const sold = (((cost * (100 + markup)) / 100) * discount) / 10;
         const profit = sold - cost;
         if (!Number.isInteger(profit) || profit <= 0) {
@@ -2736,11 +2758,21 @@
         continue;
       }
 
-      const student = [180, 240, 300, 360][randInt(0, 3)];
-      const diff = [120, 150, 180][randInt(0, 2)];
+      const templates = [
+        { student: 180, diff: 120, stuCount: 2, fullCount: 3 },
+        { student: 240, diff: 150, stuCount: 3, fullCount: 2 },
+        { student: 300, diff: 180, stuCount: 4, fullCount: 2 },
+        { student: 360, diff: 120, stuCount: 2, fullCount: 4 },
+        { student: 210, diff: 90, stuCount: 5, fullCount: 2 },
+        { student: 280, diff: 140, stuCount: 3, fullCount: 3 },
+        { student: 320, diff: 160, stuCount: 4, fullCount: 3 },
+      ];
+      const pick = templates[cycle % templates.length];
+      const student = pick.student;
+      const diff = pick.diff;
       const full = student + diff;
-      const stuCount = randInt(2, 5);
-      const fullCount = randInt(2, 4);
+      const stuCount = pick.stuCount;
+      const fullCount = pick.fullCount;
       const total = student * stuCount + full * fullCount;
       questions.push(
         `買 ${stuCount} 張學生票與 ${fullCount} 張全票共付 ${total} 元，已知全票每張比學生票貴 ${diff} 元，求學生票與全票各是多少元。`
@@ -2759,21 +2791,34 @@
     const dormTemplates = [
       { rooms: 12, peoplePerRoom1: 5, unplaced: 10, peoplePerRoom2: 8, emptyRooms: 1, students: 65 },
       { rooms: 9, peoplePerRoom1: 4, unplaced: 12, peoplePerRoom2: 6, emptyRooms: 1, students: 48 },
+      { rooms: 15, peoplePerRoom1: 6, unplaced: 8, peoplePerRoom2: 9, emptyRooms: 1, students: 92 },
+      { rooms: 14, peoplePerRoom1: 5, unplaced: 9, peoplePerRoom2: 7, emptyRooms: 1, students: 74 },
+      { rooms: 11, peoplePerRoom1: 4, unplaced: 7, peoplePerRoom2: 6, emptyRooms: 1, students: 60 },
+      { rooms: 16, peoplePerRoom1: 6, unplaced: 10, peoplePerRoom2: 10, emptyRooms: 1, students: 150 },
     ];
     const classTemplates = [
       { classes: 7, studentsPerClass1: 24, extra: 10, studentsPerClass2: 27, short: 11, total: 178 },
       { classes: 10, studentsPerClass1: 25, extra: 13, studentsPerClass2: 27, short: 7, total: 263 },
+      { classes: 8, studentsPerClass1: 26, extra: 9, studentsPerClass2: 29, short: 15, total: 217 },
+      { classes: 9, studentsPerClass1: 28, extra: 8, studentsPerClass2: 31, short: 19, total: 260 },
+      { classes: 11, studentsPerClass1: 23, extra: 12, studentsPerClass2: 26, short: 21, total: 265 },
+      { classes: 12, studentsPerClass1: 24, extra: 14, studentsPerClass2: 28, short: 34, total: 302 },
     ];
     const candyTemplates = [
       { kids: 10, give1: 8, remain: 7, give2: 10, short: 13, total: 87 },
       { kids: 9, give1: 6, remain: 12, give2: 8, short: 6, total: 66 },
+      { kids: 12, give1: 7, remain: 9, give2: 9, short: 15, total: 93 },
+      { kids: 14, give1: 5, remain: 8, give2: 6, short: 6, total: 78 },
+      { kids: 11, give1: 9, remain: 5, give2: 11, short: 17, total: 104 },
+      { kids: 13, give1: 6, remain: 11, give2: 8, short: 15, total: 89 },
     ];
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
+      const cycle = Math.floor(i / 3);
 
       if (variant === 0) {
-        const t = dormTemplates[randInt(0, dormTemplates.length - 1)];
+        const t = dormTemplates[cycle % dormTemplates.length];
         questions.push(
           `學生分配宿舍：若每房住 ${t.peoplePerRoom1} 人，則還有 ${t.unplaced} 人沒得住；若每房住 ${t.peoplePerRoom2} 人，則會空出 1 間房，求宿舍間數與學生總數。`
         );
@@ -2784,7 +2829,7 @@
       }
 
       if (variant === 1) {
-        const t = classTemplates[randInt(0, classTemplates.length - 1)];
+        const t = classTemplates[cycle % classTemplates.length];
         questions.push(
           `分班問題：班級數固定。若每班 ${t.studentsPerClass1} 人，則多出 ${t.extra} 人；若每班 ${t.studentsPerClass2} 人，則不足 ${t.short} 人，求班級數與總人數。`
         );
@@ -2794,7 +2839,7 @@
         continue;
       }
 
-      const t = candyTemplates[randInt(0, candyTemplates.length - 1)];
+      const t = candyTemplates[cycle % candyTemplates.length];
       questions.push(
         `分配問題：把一袋糖果分給小朋友，若每人分 ${t.give1} 顆則剩下 ${t.remain} 顆；若每人分 ${t.give2} 顆則不足 ${t.short} 顆，求小朋友有幾人、糖果共有幾顆。`
       );
@@ -2813,18 +2858,27 @@
       { child: 9, father: 36, afterYears: 3 },
       { child: 12, father: 36, total: 48 },
       { student: 18, teacher: 44, phrasePast: 5, phraseFuture: 65 },
+      { child: 11, father: 44, afterYears: 4 },
+      { child: 14, father: 42, total: 56 },
+      { student: 16, teacher: 40, phrasePast: 4, phraseFuture: 60 },
+      { child: 13, father: 52, afterYears: 5 },
+      { child: 15, father: 45, total: 60 },
+      { student: 20, teacher: 50, phrasePast: 6, phraseFuture: 74 },
     ];
 
     for (let i = 0; i < count; i += 1) {
-      const t = ageTemplates[i % ageTemplates.length];
-      if (i % 3 === 0) {
+      const variant = i % 3;
+      const cycle = Math.floor(i / 3);
+      const base = ageTemplates[(cycle + variant) % ageTemplates.length];
+      const t = base;
+      if (variant === 0) {
         questions.push(
           `年齡追蹤問題：父親現在年齡是兒子的 4 倍，${t.afterYears} 年後兩人的年齡和為 ${t.child + t.father + 2 * t.afterYears} 歲，求父子現在各幾歲。`
         );
         answers.push(
           `設兒子現在 $x$ 歲，父親現在 $y$ 歲。依題意可列聯立方程式 $${formatSystemLatex(`y=4x`, `(x+${t.afterYears})+(y+${t.afterYears})=${t.child + t.father + 2 * t.afterYears}`)}$。解得 $x=${t.child},\\ y=${t.father}$，所以兒子 ${t.child} 歲、父親 ${t.father} 歲。`
         );
-      } else if (i % 3 === 1) {
+      } else if (variant === 1) {
         questions.push(`年齡推算問題：已知父子年齡和為 ${t.total} 歲，且父親年齡為兒子的 3 倍，求兩人各幾歲。`);
         answers.push(
           `設兒子現在 $x$ 歲，父親現在 $y$ 歲。依題意可列聯立方程式 $${formatSystemLatex(`x+y=${t.total}`, `y=3x`)}$。解得 $x=${t.child},\\ y=${t.father}$，所以兒子 ${t.child} 歲、父親 ${t.father} 歲。`
@@ -2848,21 +2902,34 @@
     const mountainTemplates = [
       { upSpeed: 2, downSpeed: 5, totalHours: 28, distance: 40 },
       { upSpeed: 2, downSpeed: 4, totalHours: 12, distance: 16 },
+      { upSpeed: 3, downSpeed: 6, totalHours: 15, distance: 30 },
+      { upSpeed: 4, downSpeed: 8, totalHours: 18, distance: 48 },
+      { upSpeed: 5, downSpeed: 10, totalHours: 21, distance: 70 },
+      { upSpeed: 3, downSpeed: 5, totalHours: 16, distance: 30 },
     ];
     const cityVillageTemplates = [
       { totalDistance: 410, totalHours: 7, countrySpeed: 80, citySpeed: 30, countryDistance: 320 },
       { totalDistance: 400, totalHours: 6, countrySpeed: 80, citySpeed: 40, countryDistance: 320 },
+      { totalDistance: 420, totalHours: 7, countrySpeed: 90, citySpeed: 30, countryDistance: 360 },
+      { totalDistance: 450, totalHours: 8, countrySpeed: 75, citySpeed: 30, countryDistance: 300 },
+      { totalDistance: 390, totalHours: 6, countrySpeed: 70, citySpeed: 35, countryDistance: 280 },
+      { totalDistance: 360, totalHours: 6, countrySpeed: 60, citySpeed: 30, countryDistance: 240 },
     ];
     const numberLineTemplates = [
       { aStart: -25, bStart: 5, aStep: 1, bStep: 4, jumps: 4 },
       { aStart: -17, bStart: 5, aStep: 1, bStep: 3, jumps: 3 },
+      { aStart: -21, bStart: 3, aStep: 2, bStep: 5, jumps: 3 },
+      { aStart: -31, bStart: 7, aStep: 2, bStep: 6, jumps: 3 },
+      { aStart: -29, bStart: 5, aStep: 3, bStep: 8, jumps: 2 },
+      { aStart: -19, bStart: 1, aStep: 2, bStep: 7, jumps: 2 },
     ];
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
+      const cycle = Math.floor(i / 3);
 
       if (variant === 0) {
-        const t = mountainTemplates[randInt(0, mountainTemplates.length - 1)];
+        const t = mountainTemplates[cycle % mountainTemplates.length];
         questions.push(
           `某人沿相同路線上山與下山，上山時速 ${t.upSpeed} 公里，下山時速 ${t.downSpeed} 公里，共花 ${t.totalHours} 小時，求單程山路長度。`
         );
@@ -2873,7 +2940,7 @@
       }
 
       if (variant === 1) {
-        const t = cityVillageTemplates[randInt(0, cityVillageTemplates.length - 1)];
+        const t = cityVillageTemplates[cycle % cityVillageTemplates.length];
         questions.push(
           `某人騎車全程 ${t.totalDistance} 公里共花 ${t.totalHours} 小時，在鄉村時速 ${t.countrySpeed} 公里，在市區時速 ${t.citySpeed} 公里，求行經鄉村多少公里。`
         );
@@ -2883,7 +2950,7 @@
         continue;
       }
 
-      const t = numberLineTemplates[randInt(0, numberLineTemplates.length - 1)];
+      const t = numberLineTemplates[cycle % numberLineTemplates.length];
       questions.push(
         `兩點在數線上，A 在 ${t.aStart}，B 在 ${t.bStart}。若 A 每次向右跳 ${t.aStep} 單位，B 每次向右跳 ${t.bStep} 單位，跳了幾次後兩者座標互為相反數？`
       );
@@ -2947,11 +3014,18 @@
       { a: 20, b: 25, remainSoloDays: 2, togetherDays: 10, who: '甲', unit: '天', thing: '一項工程' },
       { a: 50, b: 40, togetherHours: 24, soloLeftHours: 14, who: '阿南', unit: '小時', thing: '一份文件' },
       { a: 10, b: 15, togetherHours: 6, thing: '一座空池', isFill: true },
+      { a: 24, b: 30, remainSoloDays: 3, togetherDays: 12, who: '甲', unit: '天', thing: '一段圍牆' },
+      { a: 60, b: 45, togetherHours: 18, soloLeftHours: 12, who: '阿宏', unit: '小時', thing: '一份報表' },
+      { a: 12, b: 12, togetherHours: 6, thing: '一座空池', isFill: true },
+      { a: 18, b: 24, remainSoloDays: 2, togetherDays: 8, who: '乙', unit: '天', thing: '一份設計圖' },
+      { a: 48, b: 36, togetherHours: 16, soloLeftHours: 10, who: '小芸', unit: '小時', thing: '一份稿件' },
+      { a: 15, b: 30, togetherHours: 10, thing: '一座空池', isFill: true },
     ];
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
-      const t = templates[variant];
+      const cycle = Math.floor(i / 3);
+      const t = templates[(cycle * 3 + variant) % templates.length];
 
       if (variant === 0) {
         questions.push(
@@ -3008,12 +3082,33 @@
         action1: '先買文具花 24 元',
         action2: '再用原有錢的 1/5 買點心',
       },
+      {
+        spent: 18,
+        fracNum: 1,
+        fracDen: 3,
+        finalRemain: 54,
+        original: 108,
+        thing: '零用錢',
+        action1: '先買早餐花 18 元',
+        action2: '再用原有錢的 1/3 買書套',
+      },
+      {
+        spent: 30,
+        fracNum: 1,
+        fracDen: 6,
+        finalRemain: 90,
+        original: 144,
+        thing: '零用錢',
+        action1: '先買球鞋花 30 元',
+        action2: '再用原有錢的 1/6 買飲料',
+      },
     ];
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
+      const cycle = Math.floor(i / 3);
       if (variant === 0) {
-        const t = cashTemplates[randInt(0, cashTemplates.length - 1)];
+        const t = cashTemplates[cycle % cashTemplates.length];
         questions.push(`丁丁去超商，${t.action1}，${t.action2}，最後剩 ${t.finalRemain} 元，求原有${t.thing}多少元。`);
         answers.push(
           `設原有${t.thing}為 $x$ 元。依題意可列式：$x-${t.spent}-\\frac{${t.fracNum}}{${t.fracDen}}x=${t.finalRemain}$。解得 $x=${t.original}$，所以原有${t.thing} ${t.original} 元。`
@@ -3022,8 +3117,15 @@
       }
 
       if (variant === 1) {
-        const original = 240;
-        const remain = 120;
+        const templates = [
+          { original: 240, remain: 120, a: 4, b: 5, c: 6 },
+          { original: 300, remain: 150, a: 4, b: 5, c: 6 },
+          { original: 360, remain: 180, a: 4, b: 5, c: 6 },
+          { original: 280, remain: 140, a: 4, b: 5, c: 6 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const original = pick.original;
+        const remain = pick.remain;
         questions.push(
           `大博讀一本小說，第一天看全部的 $\\frac{1}{4}$，第二天看剩下的 $\\frac{1}{5}$，第三天看剩下的 $\\frac{1}{6}$，最後剩 ${remain} 頁，求小說原有幾頁？`
         );
@@ -3033,8 +3135,15 @@
         continue;
       }
 
-      const original = 140;
-      const remain = 28;
+      const templates = [
+        { original: 140, remain: 28, a: 3, b: 10, bNum: 7 },
+        { original: 175, remain: 35, a: 3, b: 10, bNum: 7 },
+        { original: 210, remain: 42, a: 3, b: 10, bNum: 7 },
+        { original: 245, remain: 49, a: 3, b: 10, bNum: 7 },
+      ];
+      const pick = templates[cycle % templates.length];
+      const original = pick.original;
+      const remain = pick.remain;
       questions.push(
         `一桶水先倒掉 $\\frac{1}{3}$，再倒掉剩下的 $\\frac{7}{10}$，最後剩下 ${remain} 公升，求此桶水原有多少公升？`
       );
@@ -3083,6 +3192,39 @@
         noAnswer: 0,
         wording: '小華全部作答後共得 76 分，求他答對幾題？',
       },
+      {
+        total: 24,
+        answered: 22,
+        plus: 4,
+        minus: 1,
+        score: 73,
+        correct: 19,
+        wrong: 3,
+        noAnswer: 2,
+        wording: '小安作答 22 題後得 73 分，她答對幾題？',
+      },
+      {
+        total: 30,
+        answered: 30,
+        plus: 3,
+        minus: 1,
+        score: 62,
+        correct: 23,
+        wrong: 7,
+        noAnswer: 0,
+        wording: '小凱全部寫完後得 62 分，求他答錯幾題？',
+      },
+      {
+        total: 18,
+        answered: 18,
+        plus: 5,
+        minus: 2,
+        score: 54,
+        correct: 15,
+        wrong: 3,
+        noAnswer: 0,
+        wording: '小芸全部作答後共得 54 分，求她答對幾題？',
+      },
     ];
 
     for (let i = 0; i < count; i += 1) {
@@ -3118,12 +3260,17 @@
     const saltTemplates = [
       { lowP: 5, lowW: 200, highP: 8, x: 300, target: 6.8 },
       { lowP: 10, lowW: 240, highP: 25, x: 160, target: 16 },
+      { lowP: 6, lowW: 180, highP: 12, x: 220, target: 9.3 },
+      { lowP: 8, lowW: 150, highP: 20, x: 250, target: 15.5 },
+      { lowP: 4, lowW: 300, highP: 10, x: 180, target: 6.25 },
+      { lowP: 12, lowW: 200, highP: 18, x: 300, target: 15.6 },
     ];
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
+      const cycle = Math.floor(i / 3);
       if (variant === 0) {
-        const t = saltTemplates[randInt(0, saltTemplates.length - 1)];
+        const t = saltTemplates[cycle % saltTemplates.length];
         const lowDecimal = (t.lowP / 100).toString();
         const highDecimal = (t.highP / 100).toString();
         const targetDecimal = (t.target / 100).toString();
@@ -3169,40 +3316,62 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
+      const cycle = Math.floor(i / 4);
 
       if (variant === 0) {
-        const base = 50;
-        const fee = 3;
-        const freeMinutes = 47;
+        const templates = [
+          { base: 50, fee: 3, freeMinutes: 47, m1: 100, c1: 209, m2: 130, c2: 299 },
+          { base: 40, fee: 2, freeMinutes: 35, m1: 90, c1: 150, m2: 130, c2: 230 },
+          { base: 60, fee: 4, freeMinutes: 52, m1: 110, c1: 292, m2: 150, c2: 452 },
+          { base: 30, fee: 5, freeMinutes: 28, m1: 80, c1: 290, m2: 100, c2: 390 },
+        ];
+        const t = templates[cycle % templates.length];
+        const base = t.base;
+        const fee = t.fee;
+        const freeMinutes = t.freeMinutes;
         questions.push(
-          `某網咖的基本費用為 ${base} 元（可使用 $t$ 分鐘），超過 $t$ 分鐘後，超過的部分每分鐘收費 $s$ 元。已知小賢第一次上網 100 分鐘花了 209 元，第二次上網 130 分鐘花了 299 元，求 $t$ 與 $s$ 之值。`
+          `某網咖的基本費用為 ${base} 元（可使用 $t$ 分鐘），超過 $t$ 分鐘後，超過的部分每分鐘收費 $s$ 元。已知小賢第一次上網 ${t.m1} 分鐘花了 ${t.c1} 元，第二次上網 ${t.m2} 分鐘花了 ${t.c2} 元，求 $t$ 與 $s$ 之值。`
         );
         answers.push(
-          `依題意可列聯立方程式 $${formatSystemLatex(`${base}+s(100-t)=209`, `${base}+s(130-t)=299`)}$。相減得 $30s=90$，所以 $s=3$。代回得 $50+3(100-t)=209$，解得 $t=${freeMinutes}$。`
+          `依題意可列聯立方程式 $${formatSystemLatex(`${base}+s(${t.m1}-t)=${t.c1}`, `${base}+s(${t.m2}-t)=${t.c2}`)}$。相減得 ${t.m2 - t.m1}$s=${t.c2 - t.c1}，所以 $s=${fee}$。代回得 $${base}+${fee}(${t.m1}-t)=${t.c1}$，解得 $t=${freeMinutes}$。`
         );
         continue;
       }
 
       if (variant === 1) {
-        const base = 28;
-        const rate = 0.02;
+        const templates = [
+          { base: 28, rate: 0.02, sec1: 500, fee1: 32, sec2: 1200, fee2: 46, threshold: 300 },
+          { base: 20, rate: 0.03, sec1: 400, fee1: 23, sec2: 1000, fee2: 41, threshold: 300 },
+          { base: 25, rate: 0.01, sec1: 600, fee1: 28, sec2: 1600, fee2: 38, threshold: 300 },
+          { base: 30, rate: 0.02, sec1: 700, fee1: 38, sec2: 1400, fee2: 52, threshold: 300 },
+        ];
+        const t = templates[cycle % templates.length];
+        const base = t.base;
+        const rate = t.rate;
         questions.push(
-          `某電信公司的通話費計算方式為：通話時間未超過 300 秒收基本費 $b$ 元；超過 300 秒之後的費用與超過時間成線型關係。已知通話 500 秒時花費 32 元，通話 1200 秒時花費 46 元，求基本費 $b$ 是多少元。`
+          `某電信公司的通話費計算方式為：通話時間未超過 ${t.threshold} 秒收基本費 $b$ 元；超過 ${t.threshold} 秒之後的費用與超過時間成線型關係。已知通話 ${t.sec1} 秒時花費 ${t.fee1} 元，通話 ${t.sec2} 秒時花費 ${t.fee2} 元，求基本費 $b$ 是多少元。`
         );
         answers.push(
-          `設超過 300 秒後每秒加收 $k$ 元，則依題意可列聯立方程式 $${formatSystemLatex(`b+k(500-300)=32`, `b+k(1200-300)=46`)}$。相減得 $700k=14$，所以 $k=${rate}$。代回得 $b+200\\times ${rate}=32$，解得 $b=${base}$。`
+          `設超過 ${t.threshold} 秒後每秒加收 $k$ 元，則依題意可列聯立方程式 $${formatSystemLatex(`b+k(${t.sec1}-${t.threshold})=${t.fee1}`, `b+k(${t.sec2}-${t.threshold})=${t.fee2}`)}$。相減得 ${t.sec2 - t.sec1}k=${t.fee2 - t.fee1}，所以 $k=${rate}$。代回得 $b+${t.sec1 - t.threshold}\\times ${rate}=${t.fee1}$，解得 $b=${base}$。`
         );
         continue;
       }
 
       if (variant === 2) {
-        const freeKg = 18;
-        const rate = 12;
+        const templates = [
+          { freeKg: 18, rate: 12, w1: 30, f1: 144, w2: 42, f2: 288 },
+          { freeKg: 20, rate: 10, w1: 35, f1: 150, w2: 50, f2: 300 },
+          { freeKg: 15, rate: 8, w1: 28, f1: 104, w2: 40, f2: 200 },
+          { freeKg: 22, rate: 15, w1: 34, f1: 180, w2: 46, f2: 360 },
+        ];
+        const t = templates[cycle % templates.length];
+        const freeKg = t.freeKg;
+        const rate = t.rate;
         questions.push(
-          `某航空公司規定旅客行李 $a$ 公斤以下免費，超過 $a$ 公斤的部分，超重重量與託運費成線型關係。已知行李重 30 公斤時需付 144 元，重 42 公斤時需付 288 元，求免費額度 $a$ 為多少公斤？`
+          `某航空公司規定旅客行李 $a$ 公斤以下免費，超過 $a$ 公斤的部分，超重重量與託運費成線型關係。已知行李重 ${t.w1} 公斤時需付 ${t.f1} 元，重 ${t.w2} 公斤時需付 ${t.f2} 元，求免費額度 $a$ 為多少公斤？`
         );
         answers.push(
-          `設超重每公斤收 $k$ 元，則依題意可列聯立方程式 $${formatSystemLatex(`k(30-a)=144`, `k(42-a)=288`)}$。相減可得 $12k=144$，所以 $k=12$。代回得 $12(30-a)=144$，解得 $a=${freeKg}$。`
+          `設超重每公斤收 $k$ 元，則依題意可列聯立方程式 $${formatSystemLatex(`k(${t.w1}-a)=${t.f1}`, `k(${t.w2}-a)=${t.f2}`)}$。相減可得 ${t.w2 - t.w1}k=${t.f2 - t.f1}$，所以 $k=${rate}$。代回得 $${rate}(${t.w1}-a)=${t.f1}$，解得 $a=${freeKg}$。`
         );
         continue;
       }
@@ -3652,9 +3821,9 @@
       }
 
       if (variant === 1) {
-        const b = randInt(30, 50);
+        const b = 2 * randInt(15, 25);
         const a = 4 * b;
-        const c = a + b;
+        const c = (a + b) / 2;
         const total = a + b + c;
         questions.push(
           `三個人合資 ${total} 元買球，甲出錢是乙的 4 倍，丙出的錢是甲、乙出錢總和的一半，求三人各出多少元。`
@@ -4105,50 +4274,85 @@
   }
 
   function buildJ221AxisSpecialSet(count) {
-    const questions = [];
-    const answers = [];
+  const questions = [];
+  const answers = [];
 
-    for (let i = 0; i < count; i += 1) {
-      const variant = i % 3;
+  for (let i = 0; i < count; i += 1) {
+    const variant = i % 3;
+    const cycle = Math.floor(i / 3);
 
-      if (variant === 0) {
-        const candidates = [
-          { label: 'A', x: -3, y: 0 },
-          { label: 'B', x: 0, y: -1 },
-          { label: 'C', x: 1, y: 0 },
-          { label: 'D', x: 3, y: -5 },
-        ];
-        const shuffled = [...candidates].sort(() => Math.random() - 0.5);
-        questions.push(`寫出下列點中哪些在 $x$ 軸上：${shuffled.map((p) => `${p.label}(${p.x},${p.y})`).join('、')}。`);
-        const onXAxis = shuffled.filter((p) => p.y === 0).map((p) => `${p.label}(${p.x},${p.y})`);
-        answers.push(`在 $x$ 軸上的點需滿足 $y=0$，所以答案是 ${onXAxis.join('、')}。`);
-        continue;
+    if (variant === 0) {
+      const askXAxis = cycle % 2 === 0;
+      const xAxisPool = [-7, -4, -1, 2, 5, 8];
+      const yAxisPool = [-6, -3, 1, 4, 7];
+      const offAxisPool = [
+        { x: -5, y: 2 },
+        { x: 3, y: -4 },
+        { x: 6, y: 3 },
+        { x: -2, y: -5 },
+        { x: 4, y: 1 },
+      ];
+      const points = [];
+      if (askXAxis) {
+        points.push({ label: 'A', x: xAxisPool[cycle % xAxisPool.length], y: 0 });
+        points.push({ label: 'B', x: xAxisPool[(cycle + 2) % xAxisPool.length], y: 0 });
+        points.push({ label: 'C', x: 0, y: yAxisPool[cycle % yAxisPool.length] });
+        points.push({ label: 'D', ...offAxisPool[cycle % offAxisPool.length] });
+      } else {
+        points.push({ label: 'A', x: 0, y: yAxisPool[cycle % yAxisPool.length] });
+        points.push({ label: 'B', x: 0, y: yAxisPool[(cycle + 2) % yAxisPool.length] });
+        points.push({ label: 'C', x: xAxisPool[cycle % xAxisPool.length], y: 0 });
+        points.push({ label: 'D', ...offAxisPool[(cycle + 1) % offAxisPool.length] });
       }
-
-      if (variant === 1) {
-        questions.push(`已知 $A(2k-3,3k+2)$ 不屬於任何象限，求 $k$ 的可能值。`);
-        answers.push(
-          `不屬於任何象限表示點在坐標軸上，所以要嘛 $2k-3=0$，要嘛 $3k+2=0$。解得 $k=\\frac{3}{2}$ 或 $k=-\\frac{2}{3}$。`
-        );
-        continue;
-      }
-
-      const k = [-3, -2, 1, 4][randInt(0, 3)];
-      const mCoef = [2, 3, 4, 6][randInt(0, 3)];
-      const xConst = randInt(-8, 8);
-      const yConst = -mCoef * k;
+      const shuffled = [...points].sort(() => Math.random() - 0.5);
       questions.push(
-        `已知有一點 $A(${xConst},${mCoef}m${yConst >= 0 ? '+' : ''}${yConst})$ 位在 $x$ 軸上，求 $A$ 點的完整坐標。`
+        `寫出下列點中哪些在 $${askXAxis ? 'x' : 'y'}$ 軸上：${shuffled.map((p) => `${p.label}(${p.x},${p.y})`).join('、')}。`
       );
+      const target = shuffled
+        .filter((p) => (askXAxis ? p.y === 0 : p.x === 0))
+        .map((p) => `${p.label}(${p.x},${p.y})`);
       answers.push(
-        `位在 $x$ 軸上的點需滿足 $y=0$，所以 $${mCoef}m${yConst >= 0 ? '+' : ''}${yConst}=0$，解得 $m=${k}$。代回後 $y=0$，因此 $A(${xConst},0)$。`
+        `在 $${askXAxis ? 'x' : 'y'}$ 軸上的點需滿足 ${askXAxis ? '$y=0$' : '$x=0$'}，所以答案是 ${target.join('、')}。`
       );
+      continue;
     }
 
-    return { questions, answers };
+    if (variant === 1) {
+      const templates = [
+        { xCoef: 2, xConst: -3, yCoef: 3, yConst: 2 },
+        { xCoef: 3, xConst: -6, yCoef: 2, yConst: 4 },
+        { xCoef: 4, xConst: -10, yCoef: 5, yConst: 5 },
+        { xCoef: 5, xConst: -15, yCoef: 3, yConst: 6 },
+        { xCoef: 6, xConst: -9, yCoef: 4, yConst: 8 },
+        { xCoef: 7, xConst: -14, yCoef: 5, yConst: 10 },
+      ];
+      const pick = templates[cycle % templates.length];
+      const k1 = makeFraction(-pick.xConst, pick.xCoef);
+      const k2 = makeFraction(-pick.yConst, pick.yCoef);
+      questions.push(
+        `已知 $A(${pick.xCoef}k${pick.xConst >= 0 ? '+' : ''}${pick.xConst},${pick.yCoef}k${pick.yConst >= 0 ? '+' : ''}${pick.yConst})$ 不屬於任何象限，求 $k$ 的可能值。`
+      );
+      answers.push(
+        `不屬於任何象限表示點在坐標軸上，所以要嘛 ${pick.xCoef}k${pick.xConst >= 0 ? '+' : ''}${pick.xConst}=0，要嘛 ${pick.yCoef}k${pick.yConst >= 0 ? '+' : ''}${pick.yConst}=0。解得 $k=${fractionToLatex(k1, true)}$ 或 $k=${fractionToLatex(k2, true)}$。`
+      );
+      continue;
+    }
+
+    const k = [-3, -2, 1, 4][randInt(0, 3)];
+    const mCoef = [2, 3, 4, 6][randInt(0, 3)];
+    const xConst = randInt(-8, 8);
+    const yConst = -mCoef * k;
+    questions.push(
+      `已知有一點 $A(${xConst},${mCoef}m${yConst >= 0 ? '+' : ''}${yConst})$ 位在 $x$ 軸上，求 $A$ 點的完整坐標。`
+    );
+    answers.push(
+      `位在 $x$ 軸上的點需滿足 $y=0$，所以 $${mCoef}m${yConst >= 0 ? '+' : ''}${yConst}=0$，解得 $m=${k}$。代回後 $y=0$，因此 $A(${xConst},0)$。`
+    );
   }
 
-  function buildJ221MidpointSet(count) {
+  return { questions, answers };
+}
+function buildJ221MidpointSet(count) {
     const questions = [];
     const answers = [];
 
@@ -4285,94 +4489,150 @@
   }
 
   function buildJ221QuadrantReasoningSet(count) {
-    const questions = [];
-    const answers = [];
+  const questions = [];
+  const answers = [];
 
-    function qName(id) {
-      return ['第一象限', '第二象限', '第三象限', '第四象限'][id - 1];
-    }
-
-    for (let i = 0; i < count; i += 1) {
-      const variant = i % 3;
-
-      if (variant === 0) {
-        const q = randInt(1, 4);
-        const ans = q === 1 ? 1 : q === 2 ? 2 : q === 3 ? 3 : 4;
-        const result = q === 1 ? 1 : q === 2 ? 4 : q === 3 ? 1 : 4;
-        questions.push(`若點 $P(a,b)$ 在${qName(q)}，則點 $Q(a^2,ab)$ 在第幾象限？`);
-        answers.push(
-          `因為 $a^2>0$，所以 $Q$ 的 $x$ 坐標一定為正。又在${qName(q)}時，$ab$ ${q === 1 || q === 3 ? '為正' : '為負'}，所以 $Q(a^2,ab)$ 在${qName(result)}。`
-        );
-        continue;
-      }
-
-      if (variant === 1) {
-        questions.push(`已知 $ab<0$ 且 $a+b>0$，判斷點 $A(a,b^2)$ 位於第幾象限。`);
-        answers.push(
-          `由 $ab<0$ 可知 $a、b$ 異號；又 $a+b>0$，表示正的那個絕對值較大，所以必有 $a>0,b<0$。因此 $b^2>0$，點 $A(a,b^2)$ 在第一象限。`
-        );
-        continue;
-      }
-
-      const quadrant = randInt(1, 4);
-      const result = quadrant === 1 ? 2 : quadrant === 2 ? 3 : quadrant === 3 ? 4 : 1;
-      questions.push(`若點 $A(s,t)$ 在${qName(quadrant)}，則點 $B(-t,s)$ 在第幾象限？`);
-      answers.push(
-        `在${qName(quadrant)}時，$s、t$ 的正負可先判斷出來，再代入 $B(-t,s)$。整理後可知 $B$ 在${qName(result)}。`
-      );
-    }
-
-    return { questions, answers };
+  function qName(id) {
+    return ['第一象限', '第二象限', '第三象限', '第四象限'][id - 1];
   }
 
-  function buildJ221NonnegativeSet(count) {
-    const questions = [];
-    const answers = [];
+  for (let i = 0; i < count; i += 1) {
+    const variant = i % 3;
+    const cycle = Math.floor(i / 3);
 
-    for (let i = 0; i < count; i += 1) {
-      const variant = i % 3;
+    if (variant === 0) {
+      const q = randInt(1, 4);
+      const result = q === 1 ? 1 : q === 2 ? 4 : q === 3 ? 1 : 4;
+      questions.push(`若點 $P(a,b)$ 在${qName(q)}，則點 $Q(a^2,ab)$ 在第幾象限？`);
+      answers.push(
+        `因為 $a^2>0$，所以 $Q$ 的 $x$ 坐標一定為正。又在${qName(q)}時，$ab$ ${q === 1 || q === 3 ? '為正' : '為負'}，所以 $Q(a^2,ab)$ 在${qName(result)}。`
+      );
+      continue;
+    }
 
-      if (variant === 0) {
-        const x = randInt(-4, 4);
-        const y = randInt(-4, 4);
-        const c1 = 3 * x - 7 * y;
+    if (variant === 1) {
+      const conds = [
+        { ab: '<0', sum: '>0' },
+        { ab: '<0', sum: '<0' },
+        { ab: '>0', sum: '>0' },
+        { ab: '>0', sum: '<0' },
+      ];
+      const pick = conds[cycle % conds.length];
+      questions.push(`已知 $ab${pick.ab}$ 且 $a+b${pick.sum}$，判斷點 $A(a,b^2)$ 位於第幾象限。`);
+      if (pick.ab === '<0') {
+        answers.push(`由 $ab<0$ 可知 $a、b$ 異號，因此 $a$ 可能為正也可能為負；而 $b^2>0$ 一定為正，所以點 $A(a,b^2)$ 可能在第一象限或第二象限。`);
+      } else if (pick.sum === '>0') {
+        answers.push(`由 $ab>0$ 且 $a+b>0$ 可知 $a,b$ 同為正數，所以 $a>0$、$b^2>0$，點 $A(a,b^2)$ 在第一象限。`);
+      } else {
+        answers.push(`由 $ab>0$ 且 $a+b<0$ 可知 $a,b$ 同為負數，所以 $a<0$、$b^2>0$，點 $A(a,b^2)$ 在第二象限。`);
+      }
+      continue;
+    }
+
+    const quadrant = randInt(1, 4);
+    const result = quadrant === 1 ? 2 : quadrant === 2 ? 3 : quadrant === 3 ? 4 : 1;
+    questions.push(`若點 $A(s,t)$ 在${qName(quadrant)}，則點 $B(-t,s)$ 在第幾象限？`);
+    answers.push(
+      `在${qName(quadrant)}時，$s、t$ 的正負可先判斷出來，再代入 $B(-t,s)$。整理後可知 $B$ 在${qName(result)}。`
+    );
+  }
+
+  return { questions, answers };
+}
+function buildJ221NonnegativeSet(count) {
+  const questions = [];
+  const answers = [];
+
+  for (let i = 0; i < count; i += 1) {
+    const variant = i % 3;
+    const cycle = Math.floor(i / 3);
+
+    if (variant === 0) {
+      const x = randInt(-4, 4);
+      const y = randInt(-4, 4);
+      const c1 = 3 * x - 7 * y;
         const c2 = 2 * x + y;
         questions.push(`若 $|3x-7y-${c1}|+|2x+y-${c2}|=0$，求數對 $(x,y)$ 所在的象限。`);
         answers.push(
           `因為兩個絕對值和為 0，所以必須同時為 0，可列 $3x-7y=${c1}$、$2x+y=${c2}$。解得 $(x,y)=(${x},${y})$，所以數對在${x > 0 && y > 0 ? '第一象限' : x < 0 && y > 0 ? '第二象限' : x < 0 && y < 0 ? '第三象限' : x > 0 && y < 0 ? '第四象限' : x === 0 && y === 0 ? '原點' : x === 0 ? 'y 軸上' : 'x 軸上'}。`
         );
         continue;
-      }
-
-      if (variant === 1) {
-        const x = randInt(-4, 4);
-        const y = randInt(-4, 4);
-        const a = x + 2;
-        const b = 2 * x - y + 6;
-        questions.push(`已知 $(x+2)^2+(2x-y+6)^2=0$，求點 $(x,y)$ 的座標。`);
-        answers.push(
-          `平方和為 0，表示兩項都要是 0，所以可列 $x+2=0$、$2x-y+6=0$。由第一式得 $x=-2$，代入第二式得 $y=2$，所以點為 $(-2,2)$。`
-        );
-        continue;
-      }
-
-      const a = randInt(-5, 5);
-      const b = randInt(-5, 5);
-      const axisDist = Math.abs(a);
-      questions.push(`若 $|2a+b-10|+(a-b-2)^2=0$，求點 $P(a,b)$ 到 $x$ 軸的距離。`);
-      answers.push(
-        `由非負性質可知 $2a+b-10=0$ 且 $a-b-2=0$。由第二式得 $b=a-2$，代入第一式可得 $3a-2=10$，所以 $a=4,b=2$。點 $P(a,b)$ 到 $x$ 軸的距離是 $|b|=2$。`
-      );
     }
 
-    return { questions, answers };
+    if (variant === 1) {
+      const templates = [
+        { p: 1, q: 2, r: 2, s: -1, t: 6 },
+        { p: 1, q: -3, r: 3, s: 2, t: -5 },
+        { p: 2, q: -4, r: -1, s: 1, t: 1 },
+        { p: 1, q: -1, r: 2, s: 3, t: -8 },
+        { p: -1, q: 5, r: 1, s: -2, t: 3 },
+        { p: 2, q: 6, r: 1, s: -1, t: -4 },
+      ];
+      const pick = templates[cycle % templates.length];
+      const x = divFraction(makeFraction(-pick.q, 1), makeFraction(pick.p, 1));
+      const y = subFraction(mulFraction(makeFraction(pick.r, 1), x), makeFraction(-pick.t, 1));
+      const yFinal = divFraction(y, makeFraction(pick.s, 1));
+      const xText = fractionToLatex(x, true);
+      const yText = fractionToLatex(yFinal, true);
+      const term1 = `${formatTerm(pick.p, 'x')}${pick.q >= 0 ? '+' : ''}${pick.q}`;
+      const term2 = `${formatTerm(pick.r, 'x')}${pick.s >= 0 ? '+' : ''}${formatTerm(pick.s, 'y')}${pick.t >= 0 ? '+' : ''}${pick.t}`;
+      questions.push(`已知 $(${term1})^2+(${term2})^2=0$，求點 $(x,y)$ 的座標。`);
+      answers.push(
+        `平方和為 0，表示兩項都要是 0，所以可列 ${term1}=0、${term2}=0。先由第一式得 $x=${xText}$，再代入第二式得 $y=${yText}$，所以點為 $(${xText},${yText})$。`
+      );
+      continue;
+    }
+
+    const templates = [
+      { c1: 10, c2: 2, p: 2, q: 1, r: 1, s: -1 },
+      { c1: -3, c2: 4, p: 1, q: -2, r: 2, s: 1 },
+      { c1: 8, c2: -1, p: 3, q: -1, r: 1, s: 1 },
+      { c1: 6, c2: 5, p: 2, q: 3, r: 1, s: -2 },
+      { c1: -4, c2: 1, p: 1, q: 1, r: 2, s: -3 },
+      { c1: 12, c2: -2, p: 4, q: -1, r: 1, s: 2 },
+    ];
+    const pick = templates[cycle % templates.length];
+    const det = pick.p * pick.s - pick.q * pick.r;
+    if (det === 0) {
+      i -= 1;
+      continue;
+    }
+    const aVal = simplifyFraction(pick.c1 * pick.s - pick.q * pick.c2, det);
+    const bVal = simplifyFraction(pick.p * pick.c2 - pick.c1 * pick.r, det);
+    const axisDist = makeFraction(Math.abs(bVal.num), bVal.den);
+    const eq1 = `${formatTerm(pick.p, 'a')}${pick.q >= 0 ? '+' : ''}${formatTerm(pick.q, 'b')}${pick.c1 >= 0 ? '-' : '+'}${Math.abs(pick.c1)}`;
+    const eq2 = `${formatTerm(pick.r, 'a')}${pick.s >= 0 ? '+' : ''}${formatTerm(pick.s, 'b')}${pick.c2 >= 0 ? '-' : '+'}${Math.abs(pick.c2)}`;
+    questions.push(`若 $|${eq1}|+(${eq2})^2=0$，求點 $P(a,b)$ 到 $x$ 軸的距離。`);
+    answers.push(
+      `由非負性質可知 ${eq1}=0 且 ${eq2}=0。解此聯立方程式可得 $a=${fractionToLatex(aVal, true)},\\ b=${fractionToLatex(bVal, true)}$。點 $P(a,b)$ 到 $x$ 軸的距離是 $|b|=${fractionToLatex(axisDist, true)}$。`
+    );
   }
+
+  return { questions, answers };
+}
 
   function formatAxByEq(a, b, c) {
     const xTerm = a === 1 ? 'x' : a === -1 ? '-x' : `${a}x`;
     const yAbs = Math.abs(b);
     const yTerm = yAbs === 1 ? 'y' : `${yAbs}y`;
     return `${xTerm}${b >= 0 ? '+' : '-'}${yTerm}=${c}`;
+  }
+
+  function formatSlopeTerm(m, variable = 'x') {
+    if (m === 1) return variable;
+    if (m === -1) return `-${variable}`;
+    return `${m}${variable}`;
+  }
+
+  function formatLineSlopeIntercept(m, b) {
+    const slopePart = formatSlopeTerm(m, 'x');
+    if (b === 0) return `y=${slopePart}`;
+    return `y=${slopePart}${b > 0 ? '+' : ''}${b}`;
+  }
+
+  function formatSignedConstant(value) {
+    if (value === 0) return '';
+    return `${value > 0 ? '+' : ''}${value}`;
   }
 
   function formatAxByPlusConstZero(a, b, k) {
@@ -4452,10 +4712,24 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
+      const cycle = Math.floor(i / 3);
 
       if (variant === 0) {
-        const xInt = [2, 3, 4, 6][randInt(0, 3)];
-        const yInt = [3, 4, 6, 8][randInt(0, 3)];
+        const templates = [
+          { xInt: 2, yInt: 3 },
+          { xInt: 3, yInt: 4 },
+          { xInt: 4, yInt: 5 },
+          { xInt: 5, yInt: 6 },
+          { xInt: 6, yInt: 4 },
+          { xInt: 8, yInt: 3 },
+          { xInt: 9, yInt: 2 },
+          { xInt: 10, yInt: 3 },
+          { xInt: 12, yInt: 2 },
+          { xInt: 7, yInt: 4 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const xInt = pick.xInt;
+        const yInt = pick.yInt;
         const a = yInt;
         const b = xInt;
         const c = xInt * yInt;
@@ -4468,8 +4742,21 @@
       }
 
       if (variant === 1) {
-        const b = [2, 3, 4, 6][randInt(0, 3)];
-        const a = [3, 4, 6, 8][randInt(0, 3)];
+        const templates = [
+          { a: 3, b: 2 },
+          { a: 4, b: 3 },
+          { a: 5, b: 4 },
+          { a: 6, b: 2 },
+          { a: 8, b: 3 },
+          { a: 9, b: 4 },
+          { a: 10, b: 5 },
+          { a: 12, b: 3 },
+          { a: 14, b: 2 },
+          { a: 15, b: 4 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const a = pick.a;
+        const b = pick.b;
         const area = (a * b) / 2;
         questions.push(
           `若直線 $\\frac{x}{a}+\\frac{y}{${b}}=1$ 的圖形與兩軸所圍成的三角形面積為 ${area}，且直線不通過第四象限，求 $a$ 的值。`
@@ -4480,13 +4767,22 @@
         continue;
       }
 
-      const b = [3, 4, 5, 6][randInt(0, 3)];
-      const m = [1, 2, 3][randInt(0, 2)];
+      const templates = [
+        { m: 1, b: 3 },
+        { m: 1, b: 4 },
+        { m: 1, b: 5 },
+        { m: 2, b: 4 },
+        { m: 2, b: 6 },
+        { m: 3, b: 6 },
+        { m: 2, b: 8 },
+        { m: 3, b: 9 },
+        { m: 4, b: 8 },
+        { m: 5, b: 10 },
+      ];
+      const pick = templates[cycle % templates.length];
+      const m = pick.m;
+      const b = pick.b;
       const xInt = b / m;
-      if (!Number.isInteger(xInt)) {
-        i -= 1;
-        continue;
-      }
       const area = (xInt * b) / 2;
       questions.push(`方程式 $y=-${m}x+${b}$ 與兩軸交於 $P,Q$ 兩點，求 $\\triangle POQ$（$O$ 為原點）的面積。`);
       answers.push(
@@ -4598,7 +4894,7 @@
         const y2 = m * x2 + b;
         questions.push(`若直線 $y=ax+b$ 通過點 $(${x1},${y1})$ 與 $(${x2},${y2})$，求此直線方程式。`);
         answers.push(
-          `把兩點代入 $y=ax+b$，可列聯立方程式 $${formatSystemLatex(`${x1}a+b=${y1}`, `${x2}a+b=${y2}`)}$。相減可得 $a=${m}$，再代回得 $b=${b}$，所以直線方程式是 $y=${m}x${b > 0 ? '+' : ''}${b}$。`
+          `把兩點代入 $y=ax+b$，可列聯立方程式 $${formatSystemLatex(`${x1}a+b=${y1}`, `${x2}a+b=${y2}`)}$。相減可得 $a=${m}$，再代回得 $b=${b}$，所以直線方程式是 $${formatLineSlopeIntercept(m, b)}$。`
         );
         continue;
       }
@@ -4662,7 +4958,7 @@
         const y = m * x;
         questions.push(`若直線 $L$ 只通過第一、三象限且經過點 $(${x},${y})$，求其方程式。`);
         answers.push(
-          `只通過第一、三象限的直線必須通過原點，且斜率為正。又因為通過 $(${x},${y})$，斜率是 $\\frac{${y}}{${x}}=${m}$，所以直線方程式是 $y=${m}x$。`
+          `只通過第一、三象限的直線必須通過原點，且斜率為正。又因為通過 $(${x},${y})$，斜率是 $\\frac{${y}}{${x}}=${m}$，所以直線方程式是 $${formatLineSlopeIntercept(m, 0)}$。`
         );
         continue;
       }
@@ -4705,13 +5001,13 @@
       if (variant === 0) {
         const p = randInt(2, 6);
         const xNew = -2 + p;
-        const a = Math.floor((23 - 2 * xNew) / 3) - 1;
-        const yNew = 1 + a;
+        const aValue = simplifyFraction(23 - 2 * xNew - 3, 3);
+        const aText = fractionToLatex(aValue, true);
         questions.push(
           `在坐標平面上，將點 $(-2,1)$ 向右平移 ${p} 單位，再向上平移 $a$ 單位，若新點落在直線 $2x+3y=23$ 上，求 $a$。`
         );
         answers.push(
-          `平移後新點是 $(${xNew},1+a)$。代入直線方程式可得 $2\\times ${xNew}+3(1+a)=23$，整理得 $a=${a}$。`
+          `平移後新點是 $(${xNew},1+a)$。代入直線方程式可得 $2\\times ${xNew}+3(1+a)=23$，即 $2\\times ${xNew}+3+3a=23$，所以 $3a=${20 - 2 * xNew}$，解得 $a=${aText}$。`
         );
         continue;
       }
@@ -4723,10 +5019,10 @@
         const right = randInt(1, 4);
         const newB = b - down - m * right;
         questions.push(
-          `將直線 $y=${m}x${b > 0 ? '+' : ''}${b}$ 向下平移 ${down} 單位，再向右平移 ${right} 單位，求所得新直線方程式。`
+          `將直線 $${formatLineSlopeIntercept(m, b)}$ 向下平移 ${down} 單位，再向右平移 ${right} 單位，求所得新直線方程式。`
         );
         answers.push(
-          `設新直線上的點為 $(x,y)$，則在原直線上對應的點是 $(x-${right},y+${down})$。代入原式：$y+${down}=${m}(x-${right})${b > 0 ? '+' : ''}${b}$，整理得 $y=${m}x${newB > 0 ? '+' : ''}${newB}$。`
+          `設新直線上的點為 $(x,y)$，則在原直線上對應的點是 $(x-${right},y+${down})$。代入原式：$y+${down}=${formatSlopeTerm(m, `(x-${right})`)}${formatSignedConstant(b)}$，整理得 $${formatLineSlopeIntercept(m, newB)}$。`
         );
         continue;
       }
@@ -4753,10 +5049,24 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
+      const cycle = Math.floor(i / 3);
 
       if (variant === 0) {
-        const a = [1, 2, 3, 4][randInt(0, 3)];
-        const d = [2, 3, 4][randInt(0, 2)];
+        const templates = [
+          { a: 1, d: 2 },
+          { a: 1, d: 3 },
+          { a: 2, d: 2 },
+          { a: 2, d: 3 },
+          { a: 3, d: 2 },
+          { a: 3, d: 3 },
+          { a: 4, d: 2 },
+          { a: 4, d: 3 },
+          { a: 5, d: 2 },
+          { a: 2, d: 4 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const a = pick.a;
+        const d = pick.d;
         const c = a * d;
         const area = d * c;
         questions.push(`求兩直線 $${formatAxByEq(a, 1, c)}$ 與 $${formatAxByEq(a, -1, -c)}$ 和 $x$ 軸所圍成區域面積。`);
@@ -4767,10 +5077,21 @@
       }
 
       if (variant === 1) {
-        const px = [2, 3, 4][randInt(0, 2)];
-        const py = [2, 4, 6][randInt(0, 2)];
-        const y1 = py + [3, 4, 5][randInt(0, 2)];
-        const y2 = py - [2, 3, 4][randInt(0, 2)];
+        const templates = [
+          { px: 2, py: 2, up: 3, down: 2 },
+          { px: 3, py: 4, up: 4, down: 3 },
+          { px: 4, py: 6, up: 5, down: 4 },
+          { px: 3, py: 2, up: 5, down: 2 },
+          { px: 2, py: 4, up: 4, down: 2 },
+          { px: 4, py: 2, up: 6, down: 3 },
+          { px: 5, py: 4, up: 3, down: 2 },
+          { px: 3, py: 6, up: 4, down: 4 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const px = pick.px;
+        const py = pick.py;
+        const y1 = py + pick.up;
+        const y2 = py - pick.down;
         const l1 = lineThroughPointsStd(0, y1, px, py);
         const l2 = lineThroughPointsStd(0, y2, px, py);
         const area = (px * (y1 - y2)) / 2;
@@ -4783,10 +5104,21 @@
         continue;
       }
 
-      const px = [1, 2, 3][randInt(0, 2)];
-      const py = [3, 4, 6][randInt(0, 2)];
-      const x1 = px - [2, 3, 4][randInt(0, 2)];
-      const x2 = px + [2, 3, 4][randInt(0, 2)];
+      const templates = [
+        { px: 1, py: 3, left: 2, right: 3 },
+        { px: 2, py: 4, left: 3, right: 2 },
+        { px: 3, py: 6, left: 4, right: 3 },
+        { px: 2, py: 3, left: 2, right: 4 },
+        { px: 1, py: 4, left: 3, right: 4 },
+        { px: 3, py: 4, left: 3, right: 3 },
+        { px: 2, py: 6, left: 4, right: 2 },
+        { px: 4, py: 3, left: 2, right: 5 },
+      ];
+      const pick = templates[cycle % templates.length];
+      const px = pick.px;
+      const py = pick.py;
+      const x1 = px - pick.left;
+      const x2 = px + pick.right;
       const l1 = lineThroughPointsStd(px, py, x1, 0);
       const l2 = lineThroughPointsStd(px, py, x2, 0);
       const area = ((x2 - x1) * py) / 2;
@@ -5248,16 +5580,20 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
-      const xValue = randInt(-3, 6);
-      const yValue = randInt(-3, 6);
+      let xValue = randInt(-3, 6);
+      let yValue = randInt(-3, 6);
 
       if (variant === 0) {
         const k = pickNonZero(1, 4);
-        const b = randInt(-5, 5);
+        const b = xValue - k * yValue;
         const eq1 = `x=${k}y${b >= 0 ? '+' : ''}${b}`;
         const a2 = pickNonZero(1, 4);
         const b2 = pickNonZero(1, 4);
         const c2 = a2 * xValue + b2 * yValue;
+        if (a2 === k * b2) {
+          i -= 1;
+          continue;
+        }
         const eq2 = `${a2}x+${b2}y=${c2}`;
         questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
         answers.push(
@@ -5268,9 +5604,14 @@
 
       if (variant === 1) {
         const d = randInt(-5, 5);
+        yValue = xValue + d;
         const eq1 = `y=x${d >= 0 ? '+' : ''}${d}`;
         const a2 = pickNonZero(1, 4);
         const b2 = -pickNonZero(1, 4);
+        if (a2 + b2 === 0) {
+          i -= 1;
+          continue;
+        }
         const c2 = a2 * xValue + b2 * yValue;
         const eq2 = `${a2}x${b2 >= 0 ? '+' : ''}${b2}y=${c2}`;
         questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
@@ -5285,6 +5626,10 @@
       const eq1 = `${a1}x-y=${c1}`;
       const a2 = pickNonZero(1, 4);
       const b2 = pickNonZero(1, 4);
+      if (a2 + b2 * a1 === 0) {
+        i -= 1;
+        continue;
+      }
       const c2 = a2 * xValue + b2 * yValue;
       const eq2 = `${a2}x+${b2}y=${c2}`;
       questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
@@ -5414,9 +5759,9 @@
       const variant = i % 5;
 
       if (variant === 0) {
-        const a = pickNonZero(1, 5);
-        const b = pickNonZero(1, 5);
-        const c = pickNonZero(2, 12);
+        const a = pickNonZero(1, 7);
+        const b = pickNonZero(1, 7);
+        const c = pickNonZero(2, 20);
         const eq1 = `${a}x+${b}y=${c}`;
         const eq2 = `${2 * a}x+${2 * b}y=${2 * c}`;
         questions.push(`判斷聯立方程式 $${formatSystemLatex(eq1, eq2)}$ 的解的情形。`);
@@ -5427,9 +5772,9 @@
       }
 
       if (variant === 1) {
-        const a = pickNonZero(1, 5);
-        const b = pickNonZero(1, 5);
-        const c = pickNonZero(2, 12);
+        const a = pickNonZero(1, 7);
+        const b = pickNonZero(1, 7);
+        const c = pickNonZero(2, 20);
         const eq1 = `${a}x+${b}y=${c}`;
         const eq2 = `${a}x+${b}y=${c + pickNonZero(1, 6)}`;
         questions.push(`判斷聯立方程式 $${formatSystemLatex(eq1, eq2)}$ 的解的情形。`);
@@ -5438,10 +5783,10 @@
       }
 
       if (variant === 2) {
-        const a = pickNonZero(1, 5);
-        const b = pickNonZero(1, 5);
-        const c = pickNonZero(2, 12);
-        const scale = randInt(2, 4);
+        const a = pickNonZero(1, 7);
+        const b = pickNonZero(1, 7);
+        const c = pickNonZero(2, 20);
+        const scale = randInt(2, 6);
         const delta = pickNonZero(1, 6);
         const eq1 = `${a}x+${b}y=${c}`;
         const eq2 = `${a * scale}x+${b * scale}y=${c * scale + delta}`;
@@ -5453,10 +5798,10 @@
       }
 
       if (variant === 3) {
-        let a1 = pickNonZero(1, 5);
-        let b1 = pickNonZero(1, 5);
-        let a2 = pickNonZero(1, 5);
-        let b2 = pickNonZero(1, 5);
+        let a1 = pickNonZero(1, 7);
+        let b1 = pickNonZero(1, 7);
+        let a2 = pickNonZero(1, 7);
+        let b2 = pickNonZero(1, 7);
         while (a1 * b2 === a2 * b1) {
           a2 = pickNonZero(1, 5);
           b2 = pickNonZero(1, 5);
@@ -5474,15 +5819,17 @@
         continue;
       }
 
-      const a = pickNonZero(2, 6);
-      const b = pickNonZero(2, 6);
-      const c = pickNonZero(2, 12);
-      const k = 2 * b;
+      const a = pickNonZero(2, 8);
+      const b = pickNonZero(2, 8);
+      const c = pickNonZero(2, 20);
+      const ratioDen = randInt(2, 5);
+      const scale = randInt(2, 5);
+      const k = ratioDen * b;
       const eq1 = `${a}x+${b}y=${c}`;
-      const eq2 = `${2 * a}x+ky=${2 * c}`;
+      const eq2 = `${ratioDen * a}x+ky=${ratioDen * c}`;
       questions.push(`若聯立方程式 $${formatSystemLatex(eq1, eq2)}$ 有無限多組解，求 $k$。`);
       answers.push(
-        `若要有無限多組解，三組比值必須都相同。已知 $\\frac{${a}}{${2 * a}}=\\frac{1}{2}$，所以要有 $\\frac{${b}}{k}=\\frac{1}{2}$，解得 $k=${k}$。同時常數比 $\\frac{${c}}{${2 * c}}=\\frac{1}{2}$ 也一致，所以確實是無限多組解。`
+        `若要有無限多組解，三組比值必須都相同。已知 $\\frac{${a}}{${ratioDen * a}}=\\frac{1}{${ratioDen}}$，所以要有 $\\frac{${b}}{k}=\\frac{1}{${ratioDen}}$，解得 $k=${k}$。同時常數比 $\\frac{${c}}{${ratioDen * c}}=\\frac{1}{${ratioDen}}$ 也一致，所以確實是無限多組解。`
       );
     }
 
@@ -5503,6 +5850,10 @@
       const a2 = -pickNonZero(1, 4);
       const b2 = -pickNonZero(1, 4);
       const c2 = target - a2 * xValue - b2 * yValue;
+      if (a1 * b2 === a2 * b1 && a1 * c2 === a2 * c1 && b1 * c2 === b2 * c1) {
+        i -= 1;
+        continue;
+      }
       const expr1 = formatTwoVarExpr(a1, b1, c1);
       const expr2 = formatTwoVarExpr(a2, b2, c2);
       const sys1 = `${a1}x${b1 >= 0 ? '+' : ''}${b1}y=${target - c1}`;
@@ -5628,7 +5979,8 @@
 
       if (variant === 1) {
         const xValue = randInt(-3, 4);
-        const yValue = randInt(-3, 4);
+        let yValue = randInt(-3, 4);
+        while (yValue === 0) yValue = randInt(-3, 4);
         const a = pickNonZero(-4, 4);
         const b = pickNonZero(-4, 4);
         const c1 = a * xValue + b * yValue;
@@ -5637,7 +5989,7 @@
           `若 $x=${xValue},\\ y=${yValue}$ 是聯立方程式 $${formatSystemLatex(`ax+by=${c1}`, `bx-ay=${c2}`)}$ 的解，求 $|a-b|$。`
         );
         answers.push(
-          `把 $x=${xValue},\\ y=${yValue}$ 代入，可得 $${xValue}a${yValue >= 0 ? '+' : ''}${yValue}b=${c1}$ 與 $${xValue}b${-yValue >= 0 ? '+' : ''}${-yValue}a=${c2}$。解這個關於 $a,b$ 的聯立方程式，可得 $a=${a},\\ b=${b}$，所以 $|a-b|=${Math.abs(a - b)}$。`
+          `把 $x=${xValue},\\ y=${yValue}$ 代入，可得 $(${xValue})a${yValue >= 0 ? '+' : ''}(${yValue})b=${c1}$ 與 $(${xValue})b${-yValue >= 0 ? '+' : ''}(${-yValue})a=${c2}$。解這個關於 $a,b$ 的聯立方程式，可得 $a=${a},\\ b=${b}$，所以 $|a-b|=${Math.abs(a - b)}$。`
         );
         continue;
       }
@@ -5947,18 +6299,34 @@
       }
 
       if (variant === 2) {
-        const a = -2;
-        questions.push(`若聯立方程式 $${formatSystemLatex(`x+ay=10`, `5x-10y=50`)}$ 有無限多組解，求 $a$。`);
+        const template = [
+          { p: 1, q: 10, r: 5, s: 50, a: -2 },
+          { p: 2, q: 12, r: 8, s: 24, a: -4 },
+          { p: 3, q: 15, r: 9, s: 45, a: -2 },
+          { p: 4, q: 28, r: 12, s: 112, a: -3 },
+          { p: 5, q: 35, r: 10, s: 175, a: -2 },
+        ][Math.floor(i / 4) % 5];
+        const a = template.a;
+        questions.push(
+          `若聯立方程式 $${formatSystemLatex(`x+ay=${template.q}`, `${template.p}x-${template.r}y=${template.s}`)}$ 有無限多組解，求 $a$。`
+        );
         answers.push(
-          `若有無限多組解，三組比值都要相同。因為 $\\frac{1}{5}=\\frac{10}{50}=\\frac{1}{5}$，所以必須有 $\\frac{a}{-10}=\\frac{1}{5}$，解得 $a=-2$。`
+          `若有無限多組解，三組比值都要相同。由 $\\frac{1}{${template.p}}=\\frac{${template.q}}{${template.s}}$，可知也要有 $\\frac{a}{-${template.r}}=\\frac{1}{${template.p}}$，所以 $a=${a}$。`
         );
         continue;
       }
 
-      const a = -2;
-      questions.push(`若聯立方程式 $${formatSystemLatex(`x+ay=10`, `5x-10y=40`)}$ 無解，求 $a$。`);
+      const template = [
+        { p: 1, q: 10, r: 5, s: 40, a: -2 },
+        { p: 2, q: 12, r: 8, s: 40, a: -3 },
+        { p: 3, q: 15, r: 9, s: 36, a: -2 },
+        { p: 4, q: 28, r: 6, s: 48, a: -1 },
+        { p: 5, q: 35, r: 10, s: 60, a: -2 },
+      ][Math.floor(i / 4) % 5];
+      const a = template.a;
+      questions.push(`若聯立方程式 $${formatSystemLatex(`x+ay=${template.q}`, `${template.p}x-${template.r}y=${template.s}`)}$ 無解，求 $a$。`);
       answers.push(
-        `若無解，前兩組係數要成比例，但常數比不同。因為 $\\frac{1}{5}=\\frac{1}{5}$，所以要有 $\\frac{a}{-10}=\\frac{1}{5}$，解得 $a=-2$。這時常數比是 $\\frac{10}{40}=\\frac{1}{4}$，與前面的 $\\frac{1}{5}$ 不同，所以確實無解。`
+        `若無解，前兩組係數要成比例，但常數比不同。先由 $\\frac{1}{${template.p}}=\\frac{a}{-${template.r}}$ 得 $a=${a}$。此時係數比固定是 $\\frac{1}{${template.p}}$，但常數比是 $\\frac{${template.q}}{${template.s}}$，與 $\\frac{1}{${template.p}}$ 不同，因此確實無解。`
       );
     }
 
@@ -6689,7 +7057,7 @@
       );
     }
 
-    return { questions, answers };
+    return finalizeJ231Set(questions, answers);
   }
 
   function buildJ231ProportionSolveSet(count) {
@@ -6755,13 +7123,18 @@
         continue;
       }
 
-      const x = randInt(-1, 5);
-      const p = randInt(1, 4);
-      const q = randInt(2, 5);
-      const r = randInt(2, 5);
-      const s = randInt(1, 4);
-      const lhs1 = -x + p;
-      const lhs2 = 3 * x - q;
+      let x = randInt(-1, 5);
+      let p = randInt(1, 4);
+      let q = randInt(2, 5);
+      let lhs1 = -x + p;
+      let lhs2 = 3 * x - q;
+      while (lhs2 === 0 || (lhs1 === 0 && lhs2 === 0)) {
+        x = randInt(-1, 5);
+        p = randInt(1, 4);
+        q = randInt(2, 5);
+        lhs1 = -x + p;
+        lhs2 = 3 * x - q;
+      }
       const ratio = normalizeRatioInts(lhs1, lhs2);
       questions.push(
         `求比例式 $(${formatSingleVarExpr(-1, p)}):(${formatSingleVarExpr(3, -q)})=${ratio.a}:${ratio.b}$ 中的 $x$ 值。`
@@ -6771,7 +7144,7 @@
       );
     }
 
-    return { questions, answers };
+    return finalizeJ231Set(questions, answers);
   }
 
   function buildJ231RelationTransformSet(count) {
@@ -6795,9 +7168,9 @@
       }
 
       if (variant === 1) {
-        const lx = randInt(3, 6);
+        const lx = randInt(3, 7);
         const ly = -randInt(1, 4);
-        const rx = randInt(1, 3);
+        const rx = randInt(1, lx - 1);
         const ry = randInt(1, 4);
         const xCoef = lx - rx;
         const yCoef = ry - ly;
@@ -6817,8 +7190,12 @@
         const base = normalizeRatioInts(xRatio, yRatio);
         const a = randInt(1, 4);
         const b = randInt(1, 4);
-        const c = randInt(1, 4);
-        const d = randInt(1, 4);
+        let c = randInt(1, 4);
+        let d = randInt(1, 4);
+        while (a === c && b === d) {
+          c = randInt(1, 4);
+          d = randInt(1, 4);
+        }
         const result = normalizeRatioInts(a * base.a + b * base.b, c * base.a + d * base.b);
         questions.push(`已知 $x:y=${base.a}:${base.b}$，求 $(${a}x+${b}y):(${c}x+${d}y)$。`);
         answers.push(
@@ -6837,7 +7214,7 @@
       );
     }
 
-    return { questions, answers };
+    return finalizeJ231Set(questions, answers);
   }
 
   function buildJ231BasicSingleStepSet(count) {
@@ -6846,6 +7223,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
+      const cycle = Math.floor(i / 5);
 
       if (variant === 0) {
         const left = randomMixedFraction(1, 3, [2, 3, 4, 5], false);
@@ -6855,8 +7233,8 @@
           { text: '2.25', frac: makeFraction(9, 4) },
           { text: '0.6', frac: makeFraction(3, 5) },
         ];
-        const rightChoice = decimalChoices[randInt(0, decimalChoices.length - 1)];
-        if (randInt(0, 1) === 0) {
+        const rightChoice = decimalChoices[cycle % decimalChoices.length];
+        if (cycle % 2 === 0) {
           const ratio = normalizeRatioFromFractions(left, rightChoice.frac);
           const common = lcm(left.den, rightChoice.frac.den);
           questions.push(`將 $${integerOrFractionLatex(left)}:${rightChoice.text}$ 化為最簡整數比。`);
@@ -6879,8 +7257,14 @@
           { maleRatio: 7, femaleRatio: 4, mode: 'total', unit: 12, ask: 'male' },
           { maleRatio: 5, femaleRatio: 3, mode: 'total', unit: 11, ask: 'female' },
           { maleRatio: 8, femaleRatio: 5, mode: 'diff', unit: 9, ask: 'male' },
+          { maleRatio: 6, femaleRatio: 5, mode: 'total', unit: 10, ask: 'male' },
+          { maleRatio: 9, femaleRatio: 7, mode: 'diff', unit: 8, ask: 'female' },
+          { maleRatio: 4, femaleRatio: 3, mode: 'total', unit: 14, ask: 'female' },
+          { maleRatio: 10, femaleRatio: 7, mode: 'diff', unit: 6, ask: 'male' },
+          { maleRatio: 11, femaleRatio: 9, mode: 'total', unit: 5, ask: 'male' },
+          { maleRatio: 12, femaleRatio: 7, mode: 'diff', unit: 4, ask: 'female' },
         ];
-        const pick = templates[randInt(0, templates.length - 1)];
+        const pick = templates[cycle % templates.length];
         const male = pick.maleRatio * pick.unit;
         const female = pick.femaleRatio * pick.unit;
         if (pick.mode === 'diff') {
@@ -6913,13 +7297,16 @@
       }
 
       if (variant === 2) {
-        if (randInt(0, 1) === 0) {
+        if (cycle % 2 === 0) {
           const ratioChoices = [
             { a: 3, b: 2, unit: 100, target: '弟弟' },
             { a: 4, b: 3, unit: 80, target: '哥哥' },
             { a: 5, b: 4, unit: 70, target: '乙' },
+            { a: 7, b: 5, unit: 60, target: '弟弟' },
+            { a: 8, b: 3, unit: 50, target: '哥哥' },
+            { a: 9, b: 7, unit: 40, target: '乙' },
           ];
-          const pick = ratioChoices[randInt(0, ratioChoices.length - 1)];
+          const pick = ratioChoices[cycle % ratioChoices.length];
           const total = (pick.a + pick.b) * pick.unit;
           const leftMoney = pick.a * pick.unit;
           const rightMoney = pick.b * pick.unit;
@@ -6944,23 +7331,37 @@
             { scale: 50000, mapCm: 16 },
             { scale: 25000, mapCm: 12 },
             { scale: 200000, mapCm: 3.5 },
+            { scale: 100000, mapCm: 7.2 },
+            { scale: 40000, mapCm: 9.5 },
+            { scale: 80000, mapCm: 6.25 },
           ];
-          const pick = scaleChoices[randInt(0, scaleChoices.length - 1)];
+          const pick = scaleChoices[cycle % scaleChoices.length];
           const actualCm = pick.scale * pick.mapCm;
           const actualKm = actualCm / 100000;
           questions.push(
             `在比例尺 $1:${pick.scale}$ 的地圖上，甲、乙兩地距離是 ${pick.mapCm} 公分，求實際距離是多少公里？`
           );
           answers.push(
-            `比例尺 $1:${pick.scale}$ 表示地圖上 1 公分代表實際 ${pick.scale} 公分，所以實際距離是 ${pick.mapCm}\\times ${pick.scale}=${actualCm} 公分。再換成公里得 ${actualKm} 公里。`
+            `比例尺 $1:${pick.scale}$ 表示地圖上 1 公分代表實際 ${pick.scale} 公分，所以實際距離是 $${pick.mapCm}\\times ${pick.scale}=${actualCm}$ 公分。再換成公里得 ${actualKm} 公里。`
           );
         }
         continue;
       }
 
       if (variant === 3) {
-        const radiusA = randInt(2, 6);
-        const radiusB = randInt(radiusA + 1, radiusA + 5);
+        const radiusPool = [
+          { radiusA: 2, radiusB: 5 },
+          { radiusA: 3, radiusB: 7 },
+          { radiusA: 4, radiusB: 9 },
+          { radiusA: 5, radiusB: 8 },
+          { radiusA: 6, radiusB: 11 },
+          { radiusA: 7, radiusB: 10 },
+          { radiusA: 8, radiusB: 13 },
+          { radiusA: 9, radiusB: 14 },
+        ];
+        const pick = radiusPool[cycle % radiusPool.length];
+        const radiusA = pick.radiusA;
+        const radiusB = pick.radiusB;
         const ratio = normalizeRatioInts(radiusA, radiusB);
         questions.push(`已知兩個圓的半徑比為 $${radiusA}:${radiusB}$，求這兩個圓的周長比。`);
         answers.push(
@@ -6969,9 +7370,19 @@
         continue;
       }
 
-      const m = randInt(2, 6);
-      let n = randInt(2, 7);
-      while (2 * n - m <= 0) n = randInt(2, 7);
+      const ratioTemplates = [
+        { m: 2, n: 3 },
+        { m: 3, n: 5 },
+        { m: 4, n: 6 },
+        { m: 5, n: 7 },
+        { m: 6, n: 11 },
+        { m: 7, n: 9 },
+        { m: 8, n: 13 },
+        { m: 9, n: 10 },
+      ];
+      const pick = ratioTemplates[cycle % ratioTemplates.length];
+      const m = pick.m;
+      const n = pick.n;
       const ratio = normalizeRatioInts(m + n, 2 * n - m);
       questions.push(`若 $(2x-y):${m}=(x+y):${n}$，求 $x:y$ 的最簡整數比。`);
       answers.push(
@@ -6979,7 +7390,7 @@
       );
     }
 
-    return { questions, answers };
+    return finalizeJ231Set(questions, answers);
   }
 
   function buildJ231RegularTwoStepSet(count) {
@@ -6989,14 +7400,17 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = variants[i % variants.length];
+      const cycle = Math.floor(i / variants.length);
 
       if (variant === 2) {
         const templates = [
           { m: 3, n: 2, p: 2, q: 1, d: 50 },
           { m: 4, n: 3, p: 3, q: 2, d: 40 },
           { m: 5, n: 3, p: 3, q: 1, d: 60 },
+          { m: 6, n: 5, p: 5, q: 4, d: 30 },
+          { m: 7, n: 4, p: 3, q: 2, d: 56 },
         ];
-        const pick = templates[randInt(0, templates.length - 1)];
+        const pick = templates[cycle % templates.length];
         const unit = (pick.p * pick.d) / (pick.p * pick.n - pick.q * pick.m);
         const total = (pick.m + pick.n) * unit;
         questions.push(
@@ -7013,8 +7427,10 @@
           { abLeft: 2, abRight: 5, bcLeft: 3, bcRight: 5, unit: 10 },
           { abLeft: 3, abRight: 4, bcLeft: 2, bcRight: 5, unit: 12 },
           { abLeft: 2, abRight: 3, bcLeft: 4, bcRight: 5, unit: 9 },
+          { abLeft: 3, abRight: 5, bcLeft: 2, bcRight: 3, unit: 15 },
+          { abLeft: 4, abRight: 7, bcLeft: 3, bcRight: 8, unit: 8 },
         ];
-        const pick = templates[randInt(0, templates.length - 1)];
+        const pick = templates[cycle % templates.length];
         const aRatio = pick.abRight * pick.bcRight;
         const bRatio = pick.abLeft * pick.bcRight;
         const cRatio = pick.abLeft * pick.bcLeft;
@@ -7032,9 +7448,17 @@
       }
 
       if (variant === 4) {
-        const total = [72, 80, 96][randInt(0, 2)];
-        const m = [3, 4, 5][randInt(0, 2)];
-        const n = m + randInt(1, 2);
+        const geometryTemplates = [
+          { total: 72, m: 3, n: 4 },
+          { total: 80, m: 4, n: 5 },
+          { total: 96, m: 5, n: 7 },
+          { total: 84, m: 3, n: 5 },
+          { total: 90, m: 4, n: 7 },
+        ];
+        const pick = geometryTemplates[cycle % geometryTemplates.length];
+        const total = pick.total;
+        const m = pick.m;
+        const n = pick.n;
         const areaRatio = normalizeRatioInts(m * m, n * n);
         questions.push(
           `將一條 ${total} 公分的繩子按 $${m}:${n}$ 的比例剪成兩段後，各圍成一個正方形，求這兩個正方形的面積比。`
@@ -7050,14 +7474,16 @@
           { m: 5, n: 6, up1: 8, up2: 5 },
           { m: 4, n: 5, up1: 10, up2: 20 },
           { m: 3, n: 4, up1: 15, up2: 10 },
+          { m: 6, n: 7, up1: 12, up2: 6 },
+          { m: 7, n: 9, up1: 5, up2: 15 },
         ];
-        const pick = templates[randInt(0, templates.length - 1)];
+        const pick = templates[cycle % templates.length];
         const ratio = normalizeRatioInts(pick.m * (100 + pick.up1), pick.n * (100 + pick.up2));
         questions.push(
           `甲、乙兩人去年的月薪比為 $${pick.m}:${pick.n}$，今年分別調薪 ${pick.up1}% 與 ${pick.up2}% ，求調薪後兩人的月薪比。`
         );
         answers.push(
-          `設去年月薪分別為 $${pick.m}k,\ ${pick.n}k$。調薪後變成 $${pick.m}(1+${pick.up1}/100)k$ 與 $${pick.n}(1+${pick.up2}/100)k$，所以新比為 $${pick.m * (100 + pick.up1)}:${pick.n * (100 + pick.up2)}=${ratio.a}:${ratio.b}$。`
+          `設去年月薪分別為 $${pick.m}k,\ ${pick.n}k$。調薪後變成 $${pick.m}\\left(1+\\frac{${pick.up1}}{100}\\right)k$ 與 $${pick.n}\\left(1+\\frac{${pick.up2}}{100}\\right)k$，所以新比為 $${pick.m * (100 + pick.up1)}:${pick.n * (100 + pick.up2)}=${ratio.a}:${ratio.b}$。`
         );
         continue;
       }
@@ -7067,8 +7493,10 @@
           { m: 5, n: 2, years: 3, sum: 55 },
           { m: 4, n: 1, years: 4, sum: 63 },
           { m: 7, n: 3, years: 2, sum: 64 },
+          { m: 6, n: 5, years: 3, sum: 97 },
+          { m: 3, n: 2, years: 5, sum: 65 },
         ];
-        const pick = templates[randInt(0, templates.length - 1)];
+        const pick = templates[cycle % templates.length];
         const unit = (pick.sum - 2 * pick.years) / (pick.m + pick.n);
         const father = pick.m * unit;
         const son = pick.n * unit;
@@ -7086,8 +7514,10 @@
           { a: 6, b: 5, addA: 5, addB: 3, p: 5, q: 4, unit: 5, item: '唱片' },
           { a: 5, b: 4, addA: 6, addB: 2, p: 4, q: 3, unit: 10, item: '郵票' },
           { a: 7, b: 5, addA: 4, addB: 2, p: 3, q: 2, unit: 2, item: '貼紙' },
+          { a: 8, b: 7, addA: 9, addB: 2, p: 5, q: 4, unit: 3, item: '明信片' },
+          { a: 9, b: 5, addA: 5, addB: 3, p: 7, q: 4, unit: 2, item: '卡片' },
         ];
-        const pick = templates[randInt(0, templates.length - 1)];
+        const pick = templates[cycle % templates.length];
         const left = pick.a * pick.unit;
         const right = pick.b * pick.unit;
         questions.push(
@@ -7104,13 +7534,19 @@
           { firstA: 5, firstB: 4, removeA: 4, secondA: 5, secondB: 3, removeB: 14, black: 74, white: 56 },
           { firstA: 6, firstB: 5, removeA: 6, secondA: 4, secondB: 3, removeB: 12, black: 66, white: 60 },
           { firstA: 7, firstB: 6, removeA: 5, secondA: 3, secondB: 2, removeB: 15, black: 61, white: 54 },
+          { firstA: 8, firstB: 7, removeA: 4, secondA: 4, secondB: 3, removeB: 16, black: 84, white: 72 },
+          { firstA: 9, firstB: 8, removeA: 7, secondA: 5, secondB: 4, removeB: 18, black: 88, white: 80 },
         ];
-        const pick = templates[randInt(0, templates.length - 1)];
+        const pick = templates[cycle % templates.length];
+        const numerator = pick.firstA * pick.removeB;
+        const denominator = pick.secondA * pick.firstB - pick.firstA * pick.secondB;
+        const kValue = makeFraction(numerator, denominator);
+        const kText = fractionToLatex(kValue);
         questions.push(
           `原本黑羊與白羊若干隻，黑羊減少 ${pick.removeA} 隻後比變為 $${pick.firstA}:${pick.firstB}$；之後白羊再減少 ${pick.removeB} 隻，比變為 $${pick.secondA}:${pick.secondB}$，求原本黑羊、白羊各多少隻。`
         );
         answers.push(
-          `設第二次變化後黑羊、白羊分別為 $${pick.secondA}k$、$${pick.secondB}k$。回推到第一次變化後，黑羊不變、白羊多 ${pick.removeB} 隻，所以有 $${pick.secondA}k:(${pick.secondB}k+${pick.removeB})=${pick.firstA}:${pick.firstB}$。解得 $k=${pick.white / pick.secondB}$。因此第一次變化後白羊有 ${pick.white} 隻、黑羊有 ${pick.black - pick.removeA} 隻，再把黑羊補回 ${pick.removeA} 隻，可得原本黑羊 ${pick.black} 隻、白羊 ${pick.white} 隻。`
+          `設第二次變化後黑羊、白羊分別為 $${pick.secondA}k$、$${pick.secondB}k$。回推到第一次變化後，黑羊不變、白羊多 ${pick.removeB} 隻，所以有 $${pick.secondA}k:(${pick.secondB}k+${pick.removeB})=${pick.firstA}:${pick.firstB}$。解得 $k=${kText}$。因此第一次變化後白羊有 ${pick.white} 隻、黑羊有 ${pick.black - pick.removeA} 隻，再把黑羊補回 ${pick.removeA} 隻，可得原本黑羊 ${pick.black} 隻、白羊 ${pick.white} 隻。`
         );
         continue;
       }
@@ -7120,8 +7556,10 @@
           { a: 3, b: 2, spend: 150, gain: 275, p: 2, q: 3, unit: 200 },
           { a: 5, b: 3, spend: 160, gain: 260, p: 3, q: 4, unit: 140 },
           { a: 4, b: 3, spend: 180, gain: 240, p: 2, q: 3, unit: 165 },
+          { a: 7, b: 5, spend: 210, gain: 320, p: 3, q: 4, unit: 160 },
+          { a: 6, b: 5, spend: 190, gain: 350, p: 2, q: 3, unit: 180 },
         ];
-        const pick = templates[randInt(0, templates.length - 1)];
+        const pick = templates[cycle % templates.length];
         const left = pick.a * pick.unit;
         const right = pick.b * pick.unit;
         questions.push(
@@ -7138,8 +7576,10 @@
           { m: 10, f: 9, cutM: makeFraction(1, 5), cutF: makeFraction(1, 6) },
           { m: 7, f: 5, cutM: makeFraction(1, 7), cutF: makeFraction(1, 5) },
           { m: 8, f: 3, cutM: makeFraction(1, 4), cutF: makeFraction(1, 3) },
+          { m: 9, f: 7, cutM: makeFraction(1, 6), cutF: makeFraction(1, 7) },
+          { m: 6, f: 5, cutM: makeFraction(1, 3), cutF: makeFraction(1, 4) },
         ];
-        const pick = templates[randInt(0, templates.length - 1)];
+        const pick = templates[cycle % templates.length];
         const remainM = simplifyFraction(pick.m * (pick.cutM.den - pick.cutM.num), pick.cutM.den);
         const remainF = simplifyFraction(pick.f * (pick.cutF.den - pick.cutF.num), pick.cutF.den);
         const ratio = normalizeRatioInts(remainM.num * remainF.den, remainF.num * remainM.den);
@@ -7157,8 +7597,10 @@
           { a: 8, b: 7, leaveA: 3, leaveB: 5, p: 7, q: 6, unit: 17 },
           { a: 9, b: 8, leaveA: 4, leaveB: 6, p: 5, q: 4, unit: 14 },
           { a: 7, b: 6, leaveA: 2, leaveB: 4, p: 4, q: 3, unit: 10 },
+          { a: 10, b: 9, leaveA: 5, leaveB: 8, p: 3, q: 2, unit: 18 },
+          { a: 11, b: 9, leaveA: 4, leaveB: 7, p: 5, q: 4, unit: 11 },
         ];
-        const pick = templates[randInt(0, templates.length - 1)];
+        const pick = templates[cycle % templates.length];
         const male = pick.a * pick.unit;
         const female = pick.b * pick.unit;
         questions.push(
@@ -7171,21 +7613,23 @@
       }
 
       const templates = [
-        { m: 5, n: 6, up1: 8, up2: 5 },
-        { m: 4, n: 5, up1: 10, up2: 20 },
-        { m: 3, n: 4, up1: 15, up2: 10 },
+        { m: 5, n: 6, up1: 6, up2: 12 },
+        { m: 7, n: 8, up1: 9, up2: 15 },
+        { m: 4, n: 7, up1: 20, up2: 5 },
+        { m: 6, n: 5, up1: 8, up2: 16 },
+        { m: 3, n: 5, up1: 25, up2: 10 },
       ];
-      const pick = templates[randInt(0, templates.length - 1)];
+      const pick = templates[cycle % templates.length];
       const ratio = normalizeRatioInts(pick.m * (100 + pick.up1), pick.n * (100 + pick.up2));
       questions.push(
         `阿雄與小祥去年的月薪比為 $${pick.m}:${pick.n}$，今年分別調薪 ${pick.up1}% 與 ${pick.up2}% ，求調薪後兩人的月薪比。`
       );
       answers.push(
-        `設去年月薪分別為 $${pick.m}k,\ ${pick.n}k$。調薪後變成 $${pick.m}(1+${pick.up1}/100)k$ 與 $${pick.n}(1+${pick.up2}/100)k$，所以新比為 $${pick.m * (100 + pick.up1)}:${pick.n * (100 + pick.up2)}=${ratio.a}:${ratio.b}$。`
+        `設去年月薪分別為 $${pick.m}k,\ ${pick.n}k$。調薪後變成 $${pick.m}\\left(1+\\frac{${pick.up1}}{100}\\right)k$ 與 $${pick.n}\\left(1+\\frac{${pick.up2}}{100}\\right)k$，所以新比為 $${pick.m * (100 + pick.up1)}:${pick.n * (100 + pick.up2)}=${ratio.a}:${ratio.b}$。`
       );
     }
 
-    return { questions, answers };
+    return finalizeJ231Set(questions, answers);
   }
 
   function buildJ231ConcentrationReverseSet(count) {
@@ -7197,19 +7641,30 @@
         typeof value === 'number'
           ? makeFraction(Math.round(value * 1000000), 1000000)
           : makeFraction(value.num, value.den);
-      return frac.den === 1 ? `${frac.num}` : fractionToLatex(frac, true);
+      return frac.den === 1 ? `${frac.num}` : fractionToLatex(frac);
+    }
+
+    function formatAmountLatexLocal(value) {
+      const frac =
+        typeof value === 'number'
+          ? makeFraction(Math.round(value * 1000000), 1000000)
+          : makeFraction(value.num, value.den);
+      return frac.den === 1 ? `${frac.num}` : fractionToLatex(frac);
     }
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 6;
+      const cycle = Math.floor(i / 6);
 
       if (variant === 0) {
         const templates = [
           { a: 3, b: 1, c: 1, d: 1 },
           { a: 4, b: 1, c: 3, d: 2 },
           { a: 5, b: 2, c: 1, d: 1 },
+          { a: 7, b: 3, c: 4, d: 1 },
+          { a: 2, b: 1, c: 5, d: 3 },
         ];
-        const pick = templates[randInt(0, templates.length - 1)];
+        const pick = templates[cycle % templates.length];
         const s1 = makeFraction(pick.b, pick.a + pick.b);
         const s2 = makeFraction(pick.d, pick.c + pick.d);
         const avg = divFraction(addFraction(s1, s2), makeFraction(2, 1));
@@ -7217,86 +7672,147 @@
           `兩罐相同重量的酒精溶液中，甲罐水與酒精比為 $${pick.a}:${pick.b}$，乙罐水與酒精比為 $${pick.c}:${pick.d}$。若兩罐全部混合，求混合後的酒精重量百分濃度。`
         );
         answers.push(
-          `設兩罐各重 $w$ 克，則酒精分別為 $${fractionToLatex(s1)}w$ 與 $${fractionToLatex(s2)}w$。混合後酒精共重 $\\left(${fractionToLatex(s1)}+${fractionToLatex(s2)}\\right)w$，總重量是 $2w$，所以濃度為 $${fractionToLatex(avg)}=${formatPercentLatexLocal((avg.num * 100) / avg.den)}\\%$。`
+          formatJ231Answer(
+            `${formatPercentLatexLocal(simplifyFraction(avg.num * 100, avg.den))}\\%`,
+            `設兩罐各重 $w$ 克，則酒精分別為 $${fractionToLatex(s1)}w$ 與 $${fractionToLatex(s2)}w$。混合後酒精共重 $\\left(${fractionToLatex(s1)}+${fractionToLatex(s2)}\\right)w$，總重量是 $2w$，所以濃度為 $${fractionToLatex(avg)}=${formatPercentLatexLocal(simplifyFraction(avg.num * 100, avg.den))}\\%$。`
+          )
         );
         continue;
       }
 
       if (variant === 1) {
-        const total = [300, 360, 420][randInt(0, 2)];
-        const start = [10, 12, 15][randInt(0, 2)];
-        const target = [6, 8, 9][randInt(0, 2)];
-        const solute = (total * start) / 100;
-        const finalWeight = (solute * 100) / target;
-        const water = finalWeight - total;
+        const templates = [
+          { total: 300, start: 10, target: 6 },
+          { total: 360, start: 12, target: 8 },
+          { total: 420, start: 15, target: 9 },
+          { total: 400, start: 14, target: 7 },
+          { total: 280, start: 9, target: 6 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const total = pick.total;
+        const start = pick.start;
+        const target = pick.target;
+        const solute = simplifyFraction(total * start, 100);
+        const finalWeight = divFraction(mulFraction(solute, makeFraction(100, 1)), makeFraction(target, 1));
+        const water = subFraction(finalWeight, makeFraction(total, 1));
         questions.push(
           `有一杯 ${total} 公克、濃度 ${start}% 的食鹽水，若要把濃度稀釋成 ${target}% ，需要再加入多少公克的水？`
         );
         answers.push(
-          `原來食鹽量不變，為 $${total}\\times ${start}\\%=${solute}$ 公克。設加水後總重量為 $x$ 公克，則有 $${target}\\%\\times x=${solute}$，解得 $x=${finalWeight}$。所以要再加 ${water} 公克的水。`
+          formatJ231Answer(
+            `${formatAmountLatexLocal(water)} 公克`,
+            `原來食鹽量不變，為 $${total}\\times ${start}\\%=${formatAmountLatexLocal(solute)}$ 公克。設加水後總重量為 $x$ 公克，則有 $${target}\\%\\times x=${formatAmountLatexLocal(solute)}$，解得 $x=${formatAmountLatexLocal(finalWeight)}$。所以要再加 $${formatAmountLatexLocal(water)}$ 公克的水。`
+          )
         );
         continue;
       }
 
       if (variant === 2) {
-        const total = [240, 300, 360][randInt(0, 2)];
-        const start = [8, 10, 12][randInt(0, 2)];
-        const target = [20, 25, 30][randInt(0, 2)];
-        const startSolute = (total * start) / 100;
-        const add = ((target * total) / 100 - startSolute) / (1 - target / 100);
+        const templates = [
+          { total: 240, start: 8, target: 20 },
+          { total: 300, start: 10, target: 25 },
+          { total: 360, start: 12, target: 30 },
+          { total: 420, start: 10, target: 28 },
+          { total: 280, start: 12, target: 24 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const total = pick.total;
+        const start = pick.start;
+        const target = pick.target;
+        const startSolute = simplifyFraction(total * start, 100);
+        const targetSoluteBeforeAdd = simplifyFraction(target * total, 100);
+        const numerator = subFraction(targetSoluteBeforeAdd, startSolute);
+        const denominator = subFraction(makeFraction(1, 1), makeFraction(target, 100));
+        const add = divFraction(numerator, denominator);
         questions.push(
           `有一杯 ${total} 公克、濃度 ${start}% 的食鹽水，若想把濃度提高到 ${target}% ，需要再加入多少公克的食鹽？`
         );
         answers.push(
-          `原本食鹽重 $${total}\\times ${start}\\%=${startSolute}$ 公克。設加入食鹽 $x$ 公克後，總重量變成 $${total}+x$，食鹽重變成 $${startSolute}+x$。依題意有 $\\dfrac{${startSolute}+x}{${total}+x}=${target}\\%$，解得 $x=${add}$。`
+          formatJ231Answer(
+            `${formatAmountLatexLocal(add)} 公克`,
+            `原本食鹽重 $${total}\\times ${start}\\%=${formatAmountLatexLocal(startSolute)}$ 公克。設加入食鹽 $x$ 公克後，總重量變成 $${total}+x$，食鹽重變成 $${formatAmountLatexLocal(startSolute)}+x$。依題意有 $\\dfrac{${formatAmountLatexLocal(startSolute)}+x}{${total}+x}=${target}\\%$，解得 $x=${formatAmountLatexLocal(add)}$。`
+          )
         );
         continue;
       }
 
       if (variant === 3) {
-        const powder = [10, 12, 15][randInt(0, 2)];
+        const templates = [
+          { powder: 10, total: 360 },
+          { powder: 12, total: 450 },
+          { powder: 15, total: 540 },
+          { powder: 8, total: 320 },
+          { powder: 14, total: 600 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const powder = pick.powder;
         const water = powder * 9;
-        const total = [360, 450, 540][randInt(0, 2)];
+        const total = pick.total;
         const needPowder = total / 10;
         questions.push(
           `小明用 ${powder} 克咖啡粉加 ${water} 克水泡成咖啡。若想沖泡 ${total} 克相同濃度的咖啡，需要多少克咖啡粉？`
         );
         answers.push(
-          `原來咖啡粉與總重量的比是 $${powder}:${powder + water}=1:10$，所以新的一杯若總重量是 ${total} 克，咖啡粉應為 $\\frac{1}{10}\\times ${total}=${needPowder}$ 克。`
+          formatJ231Answer(
+            `${needPowder} 克`,
+            `原來咖啡粉與總重量的比是 $${powder}:${powder + water}=1:10$，所以新的一杯若總重量是 ${total} 克，咖啡粉應為 $\\frac{1}{10}\\times ${total}=${needPowder}$ 克。`
+          )
         );
         continue;
       }
 
       if (variant === 4) {
-        const waterRatio = randInt(1, 3);
-        const waterRatioB = waterRatio + randInt(1, 2);
-        const saltRatio = randInt(2, 4);
-        const saltRatioB = saltRatio + randInt(1, 3);
+        const ratioTemplates = [
+        { waterRatio: 1, waterRatioB: 2, saltRatio: 2, saltRatioB: 4 },
+        { waterRatio: 2, waterRatioB: 4, saltRatio: 3, saltRatioB: 5 },
+        { waterRatio: 3, waterRatioB: 5, saltRatio: 4, saltRatioB: 6 },
+        { waterRatio: 2, waterRatioB: 3, saltRatio: 1, saltRatioB: 2 },
+        { waterRatio: 4, waterRatioB: 7, saltRatio: 3, saltRatioB: 5 },
+      ];
+        const ratioPick = ratioTemplates[cycle % ratioTemplates.length];
+        const waterRatio = ratioPick.waterRatio;
+        const waterRatioB = ratioPick.waterRatioB;
+        const saltRatio = ratioPick.saltRatio;
+        const saltRatioB = ratioPick.saltRatioB;
         const concA = makeFraction(saltRatio, saltRatio + waterRatio);
         const concB = makeFraction(saltRatioB, saltRatioB + waterRatioB);
         questions.push(
           `甲、乙兩杯食鹽水中，水量比為 $${waterRatio}:${waterRatioB}$，含鹽量比為 $${saltRatio}:${saltRatioB}$，求兩杯食鹽水各自的重量百分濃度。`
         );
         answers.push(
-          `濃度就是 $\\dfrac{鹽}{鹽+水}$。所以甲杯濃度為 $\\dfrac{${saltRatio}}{${saltRatio}+${waterRatio}}=${fractionToLatex(concA)}$，乙杯濃度為 $\\dfrac{${saltRatioB}}{${saltRatioB}+${waterRatioB}}=${fractionToLatex(concB)}$。`
+          formatJ231Answer(
+            `甲 ${fractionToLatex(concA)}、乙 ${fractionToLatex(concB)}`,
+            `濃度就是 $\\dfrac{鹽}{鹽+水}$。所以甲杯濃度為 $\\dfrac{${saltRatio}}{${saltRatio}+${waterRatio}}=${fractionToLatex(concA)}$，乙杯濃度為 $\\dfrac{${saltRatioB}}{${saltRatioB}+${waterRatioB}}=${fractionToLatex(concB)}$。`
+          )
         );
         continue;
       }
 
-      const a = randInt(2, 5);
-      const b = randInt(2, 5);
-      const pa = [40, 50, 60][randInt(0, 2)];
-      const pb = [20, 30, 40][randInt(0, 2)];
-      const combined = (a * pa + b * pb) / (a + b);
+      const passTemplates = [
+      { a: 2, b: 3, pa: 40, pb: 30 },
+      { a: 3, b: 4, pa: 50, pb: 20 },
+      { a: 4, b: 5, pa: 60, pb: 40 },
+      { a: 5, b: 6, pa: 70, pb: 45 },
+      { a: 3, b: 5, pa: 80, pb: 50 },
+    ];
+      const passPick = passTemplates[cycle % passTemplates.length];
+      const a = passPick.a;
+      const b = passPick.b;
+      const pa = passPick.pa;
+      const pb = passPick.pb;
+      const combined = simplifyFraction(a * pa + b * pb, a + b);
       questions.push(
         `已知 A、B 兩班人數比為 $${a}:${b}$，A 班及格率 ${pa}% ，B 班及格率 ${pb}% ，求合併後的總及格率。`
       );
       answers.push(
-        `把兩班人數設為 $${a}k$ 與 $${b}k$。則及格人數分別為 $${a}k\\times ${pa}\\%$ 與 $${b}k\\times ${pb}\\%$。所以總及格率為 $\\dfrac{${a}\\times ${pa}+${b}\\times ${pb}}{${a + b}}\\%=${combined}\\%$。`
+        formatJ231Answer(
+          `${formatPercentLatexLocal(combined)}\\%`,
+          `把兩班人數設為 $${a}k$ 與 $${b}k$。則及格人數分別為 $${a}k\\times ${pa}\\%$ 與 $${b}k\\times ${pb}\\%$。所以總及格率為 $\\dfrac{${a}\\times ${pa}+${b}\\times ${pb}}{${a + b}}\\%=${formatPercentLatexLocal(combined)}\\%$。`
+        )
       );
     }
 
-    return { questions, answers };
+    return finalizeJ231Set(questions, answers);
   }
 
   function buildJ231AdvancedThreeStepSet(count) {
@@ -7305,11 +7821,25 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
+      const cycle = Math.floor(i / 3);
 
       if (variant === 0) {
-        const girlsRemoved = [3, 4, 5, 6][randInt(0, 3)];
-        const boysRemoved = [2, 3, 4, 5][randInt(0, 3)];
-        const t = 2 * girlsRemoved;
+        const templates = [
+          { girlsRemoved: 3, boysRemoved: 2, t: 6 },
+          { girlsRemoved: 4, boysRemoved: 3, t: 8 },
+          { girlsRemoved: 5, boysRemoved: 4, t: 10 },
+          { girlsRemoved: 6, boysRemoved: 5, t: 12 },
+          { girlsRemoved: 7, boysRemoved: 3, t: 14 },
+          { girlsRemoved: 8, boysRemoved: 6, t: 16 },
+          { girlsRemoved: 9, boysRemoved: 4, t: 18 },
+          { girlsRemoved: 10, boysRemoved: 7, t: 20 },
+          { girlsRemoved: 11, boysRemoved: 5, t: 22 },
+          { girlsRemoved: 12, boysRemoved: 8, t: 24 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const girlsRemoved = pick.girlsRemoved;
+        const boysRemoved = pick.boysRemoved;
+        const t = pick.t;
         const finalBoys = 4 * t;
         const finalGirls = 3 * t;
         const afterFirstGirls = finalGirls + girlsRemoved;
@@ -7318,20 +7848,26 @@
           `原本教室內男、女生若干人，先走掉 ${boysRemoved} 個男生，剩下的男、女生比為 $8:7$；之後又走掉 ${girlsRemoved} 個女生，最後比變為 $4:3$，求原本各有多少人。`
         );
         answers.push(
-          `設第二次變化後男、女生為 $4k,\ 3k$。因為再往前回推時只多出 ${girlsRemoved} 個女生，所以有 $4k:(3k+${girlsRemoved})=8:7$。解得 $k=${t}$。因此第一次變化後男、女生分別為 ${finalBoys} 人、${afterFirstGirls} 人，再把先離開的 ${boysRemoved} 個男生補回去，可得原本男生 ${originalBoys} 人、女生 ${afterFirstGirls} 人。`
+          formatJ231Answer(
+            `男生 ${originalBoys} 人、女生 ${afterFirstGirls} 人`,
+            `設第二次變化後男、女生為 $4k,\ 3k$。因為再往前回推時只多出 ${girlsRemoved} 個女生，所以有 $4k:(3k+${girlsRemoved})=8:7$。解得 $k=${t}$。因此第一次變化後男、女生分別為 ${finalBoys} 人、${afterFirstGirls} 人，再把先離開的 ${boysRemoved} 個男生補回去，可得原本男生 ${originalBoys} 人、女生 ${afterFirstGirls} 人。`
+          )
         );
         continue;
       }
 
       if (variant === 1) {
-        const a = [20, 40, 60, 80, 100][randInt(0, 4)];
+        const a = [20, 24, 30, 36, 40, 48, 60, 72, 80, 100][cycle % 10];
         const total = 45 * a;
         const remain = 36 * a;
         questions.push(
           `某校原有學生 ${total} 人，男、女生比為 $5:4$。若男、女生按 $4:5$ 的比例減少（即男生減少 $4a$ 人、女生減少 $5a$ 人），剩餘學生的男、女生比變為 $7:5$，求剩餘學生共有多少人。`
         );
         answers.push(
-          `設原本男、女生分別為 $5k,\ 4k$ 人。依題意，減少後變成 $(5k-4a):(4k-5a)=7:5$。交叉相乘得 $25k-20a=28k-35a$，所以 $15a=3k$，即 $k=5a$。因此原本總數是 $9k=45a=${total}$，剩餘學生數是 $(5k-4a)+(4k-5a)=9k-9a=36a=${remain}$。`
+          formatJ231Answer(
+            `${remain} 人`,
+            `設原本男、女生分別為 $5k,\ 4k$ 人。依題意，減少後變成 $(5k-4a):(4k-5a)=7:5$。交叉相乘得 $25k-20a=28k-35a$，所以 $15a=3k$，即 $k=5a$。因此原本總數是 $9k=45a=${total}$，剩餘學生數是 $(5k-4a)+(4k-5a)=9k-9a=36a=${remain}$。`
+          )
         );
         continue;
       }
@@ -7341,20 +7877,29 @@
         { total: 240, start: 12, target: 8 },
         { total: 360, start: 15, target: 10 },
         { total: 420, start: 8, target: 5 },
+        { total: 280, start: 9, target: 6 },
+        { total: 400, start: 14, target: 7 },
+        { total: 540, start: 10, target: 5 },
+        { total: 320, start: 12, target: 6 },
+        { total: 450, start: 16, target: 8 },
+        { total: 600, start: 15, target: 9 },
       ];
-      const pick = templates[randInt(0, templates.length - 1)];
-      const solute = (pick.total * pick.start) / 100;
-      const finalWeight = (solute * 100) / pick.target;
-      const addWater = finalWeight - pick.total;
+      const pick = templates[cycle % templates.length];
+      const solute = simplifyFraction(pick.total * pick.start, 100);
+      const finalWeight = divFraction(mulFraction(solute, makeFraction(100, 1)), makeFraction(pick.target, 1));
+      const addWater = subFraction(finalWeight, makeFraction(pick.total, 1));
       questions.push(
         `一杯 ${pick.total} 公克的食鹽水濃度為 ${pick.start}% ，若想將濃度降至 ${pick.target}% ，需要再加入多少公克的水？`
       );
       answers.push(
-        `原來的食鹽量不變，都是 $${pick.total}\\times ${pick.start}\\%=${solute}$ 公克。設加水後總重量為 $x$ 公克，則有 $${pick.target}\\%\\times x=${solute}$，所以 $x=${finalWeight}$。因此需要再加 ${finalWeight}-${pick.total}=${addWater} 公克的水。`
+        formatJ231Answer(
+          `${fractionToLatex(addWater)} 公克`,
+          `原來的食鹽量不變，都是 $${pick.total}\\times ${pick.start}\\%=${fractionToLatex(solute)}$ 公克。設加水後總重量為 $x$ 公克，則有 $${pick.target}\\%\\times x=${fractionToLatex(solute)}$，所以 $x=${fractionToLatex(finalWeight)}$。因此需要再加 $${fractionToLatex(finalWeight)}-${pick.total}=${fractionToLatex(addWater)}$ 公克的水。`
+        )
       );
     }
 
-    return { questions, answers };
+    return finalizeJ231Set(questions, answers);
   }
 
   function buildJ231KMethodSet(count) {
@@ -7363,6 +7908,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
+      const cycle = Math.floor(i / 5);
 
       if (variant === 0) {
         const m = randInt(2, 6);
@@ -7404,29 +7950,49 @@
       }
 
       if (variant === 3) {
-        const m = 5;
-        const n = 4;
-        const k = randInt(1, 5);
+        const templates = [
+          { m: 5, n: 4, a: 2, b: 5 },
+          { m: 4, n: 3, a: 3, b: 4 },
+          { m: 7, n: 5, a: 2, b: 3 },
+          { m: 3, n: 2, a: 5, b: 4 },
+          { m: 6, n: 5, a: 4, b: 3 },
+          { m: 5, n: 2, a: 1, b: 2 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const m = pick.m;
+        const n = pick.n;
+        const a = pick.a;
+        const b = pick.b;
+        const k = randInt(1, 6);
         const x = m * k;
         const y = n * k;
-        const rhs = 2 * x - 5 * y;
-        questions.push(`已知 $x:y=5:4$，且 $2x-5y=${rhs}$，求 $x,y$。`);
+        const rhs = a * x - b * y;
+        questions.push(`已知 $x:y=${m}:${n}$，且 $${a}x-${b}y=${rhs}$，求 $x,y$。`);
         answers.push(
-          `設 $x=5k,\\ y=4k$。代入 $2x-5y=${rhs}$ 得 $10k-20k=${rhs}$，所以 $-10k=${rhs}$，解得 $k=${k}$。因此 $x=${x},\\ y=${y}$。`
+          `設 $x=${m}k,\\ y=${n}k$。代入 $${a}x-${b}y=${rhs}$ 得 $${a * m}k-${b * n}k=${rhs}$，所以 $${a * m - b * n}k=${rhs}$，解得 $k=${k}$。因此 $x=${x},\\ y=${y}$。`
         );
         continue;
       }
 
-      const m = 4;
-      const n = 1;
+      const baseTemplates = [
+        { m: 4, n: 1 },
+        { m: 5, n: 3 },
+        { m: 7, n: 1 },
+        { m: 3, n: 1 },
+        { m: 8, n: 2 },
+        { m: 6, n: 2 },
+      ];
+      const basePick = baseTemplates[cycle % baseTemplates.length];
+      const m = basePick.m;
+      const n = basePick.n;
       const ratio = normalizeRatioInts(3 * m - n, m + 3 * n);
-      questions.push(`已知 $(x+y):(x-y)=4:1$，求 $(x+2y):(2x-y)$。`);
+      questions.push(`已知 $(x+y):(x-y)=${m}:${n}$，求 $(x+2y):(2x-y)$。`);
       answers.push(
-        `設 $x+y=4k,\\ x-y=1k$。兩式相加得 $2x=5k$，所以 $x=\\frac{5}{2}k$；相減得 $2y=3k$，所以 $y=\\frac{3}{2}k$。因此 $(x+2y):(2x-y)=\\left(\\frac{5}{2}k+2\\times\\frac{3}{2}k\\right):\\left(2\\times\\frac{5}{2}k-\\frac{3}{2}k\\right)=\\frac{11}{2}k:\\frac{7}{2}k=${ratio.a}:${ratio.b}$。`
+        `設 $x+y=${m}k,\\ x-y=${n}k$。兩式相加得 $2x=${m + n}k$，所以 $x=\\frac{${m + n}}{2}k$；相減得 $2y=${m - n}k$，所以 $y=\\frac{${m - n}}{2}k$。因此 $(x+2y):(2x-y)=\\left(\\frac{${m + n}}{2}k+2\\times\\frac{${m - n}}{2}k\\right):\\left(2\\times\\frac{${m + n}}{2}k-\\frac{${m - n}}{2}k\\right)=${3 * m - n}:${m + 3 * n}=${ratio.a}:${ratio.b}$。`
       );
     }
 
-    return { questions, answers };
+    return finalizeJ231Set(questions, answers);
   }
 
   function buildJ232BasicDirectInverseSet(count) {
@@ -7444,85 +8010,120 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = variants[i % variants.length];
+      const cycle = Math.floor(i / variants.length);
 
       if (variant === 0) {
-        const x0 = randInt(2, 6);
-        const k = niceFractions[randInt(0, niceFractions.length - 1)];
+        const x0 = 2 + ((cycle * 2 + 1) % 5);
+        const k = niceFractions[(cycle * 3 + 1) % niceFractions.length];
         const y0 = mulFraction(makeFraction(x0, 1), k);
         questions.push(`若 $y$ 與 $x$ 成正比，且當 $x=${x0}$ 時 $y=${fractionToLatex(y0)}$，求關係式。`);
         answers.push(
-          `因為正比可寫成 $y=kx$。由 $x=${x0},\\ y=${fractionToLatex(y0)}$ 得 $k=\\dfrac{${fractionToLatex(y0)}}{${x0}}=${fractionToLatex(k)}$，所以關係式為 $y=${fractionToLatex(k)}x$。`
+          formatJ232Answer(
+            `$y=${fractionToLatex(k)}x$`,
+            `因為正比可寫成 $y=kx$。由 $x=${x0},\\ y=${fractionToLatex(y0)}$ 得 $k=\\dfrac{${fractionToLatex(y0)}}{${x0}}=${fractionToLatex(k)}$，所以關係式為 $y=${fractionToLatex(k)}x$。`
+          )
         );
         continue;
       }
 
       if (variant === 1) {
-        const x0 = randInt(2, 6);
-        const k = [12, 18, 20, 24, 30][randInt(0, 4)];
+        const x0 = 2 + ((cycle * 3 + 2) % 5);
+        const k = [12, 18, 20, 24, 30][cycle % 5];
         const y0 = divFraction(makeFraction(k, 1), makeFraction(x0, 1));
         questions.push(`若 $y$ 與 $x$ 成反比，且當 $x=${x0}$ 時 $y=${fractionToLatex(y0)}$，求關係式。`);
         answers.push(
-          `因為反比可寫成 $xy=k$。由 $x=${x0},\\ y=${fractionToLatex(y0)}$ 得 $k=${x0}\\times ${fractionToLatex(y0)}=${k}$，所以關係式為 $xy=${k}$。`
+          formatJ232Answer(
+            `$xy=${k}$`,
+            `因為反比可寫成 $xy=k$。由 $x=${x0},\\ y=${fractionToLatex(y0)}$ 得 $k=${x0}\\times ${fractionToLatex(y0)}=${k}$，所以關係式為 $xy=${k}$。`
+          )
         );
         continue;
       }
 
       if (variant === 2) {
-        const x0 = randInt(2, 5);
-        const x1 = randInt(6, 10);
-        const k = niceFractions[randInt(0, niceFractions.length - 1)];
+        const x0 = 2 + ((cycle * 2) % 4);
+        const x1 = 6 + ((cycle * 3 + 1) % 5);
+        const k = niceFractions[(cycle * 5 + 2) % niceFractions.length];
         const y0 = mulFraction(makeFraction(x0, 1), k);
         const y1 = mulFraction(makeFraction(x1, 1), k);
         questions.push(
           `已知 $x$ 與 $y$ 成正比，當 $x=${x0}$ 時 $y=${fractionToLatex(y0)}$，求 $x=${x1}$ 時的 $y$ 值。`
         );
         answers.push(
-          `先由 $x=${x0},\\ y=${fractionToLatex(y0)}$ 求得比例常數 $k=${fractionToLatex(k)}$，所以關係式為 $y=${fractionToLatex(k)}x$。當 $x=${x1}$ 時，$y=${fractionToLatex(k)}\\times ${x1}=${fractionToLatex(y1)}$。`
+          formatJ232Answer(
+            `$y=${fractionToLatex(y1)}$`,
+            `先由 $x=${x0},\\ y=${fractionToLatex(y0)}$ 求得比例常數 $k=${fractionToLatex(k)}$，所以關係式為 $y=${fractionToLatex(k)}x$。當 $x=${x1}$ 時，$y=${fractionToLatex(k)}\\times ${x1}=${fractionToLatex(y1)}$。`
+          )
         );
         continue;
       }
 
       if (variant === 3) {
-        const x0 = randInt(2, 6);
-        const k = [12, 18, 20, 24, 30][randInt(0, 4)];
+        const x0 = 2 + ((cycle * 4 + 1) % 5);
+        const k = [12, 18, 20, 24, 30][(cycle * 2 + 1) % 5];
         const y0 = divFraction(makeFraction(k, 1), makeFraction(x0, 1));
         const y1Options = [makeFraction(1, 2), makeFraction(3, 4), makeFraction(5, 3), makeFraction(5, 2)];
-        const y1 = y1Options[randInt(0, y1Options.length - 1)];
+        const y1 = y1Options[cycle % y1Options.length];
         const x1 = divFraction(makeFraction(k, 1), y1);
         questions.push(
           `已知 $x$ 與 $y$ 成反比，當 $x=${x0}$ 時 $y=${fractionToLatex(y0)}$，求 $y=${fractionToLatex(y1)}$ 時的 $x$ 值。`
         );
         answers.push(
-          `先由 $x=${x0},\\ y=${fractionToLatex(y0)}$ 求得反比常數 $k=${k}$，所以關係式是 $xy=${k}$。當 $y=${fractionToLatex(y1)}$ 時，$x=\\dfrac{${k}}{${fractionToLatex(y1)}}=${fractionToLatex(x1)}$。`
+          formatJ232Answer(
+            `$x=${fractionToLatex(x1)}$`,
+            `先由 $x=${x0},\\ y=${fractionToLatex(y0)}$ 求得反比常數 $k=${k}$，所以關係式是 $xy=${k}$。當 $y=${fractionToLatex(y1)}$ 時，$x=\\dfrac{${k}}{${fractionToLatex(y1)}}=${fractionToLatex(x1)}$。`
+          )
         );
         continue;
       }
 
       if (variant === 4) {
-        const x0 = makeFraction(3, 4);
-        const y0 = makeFraction(9, 8);
-        const x1 = -2;
+        const templates = [
+          { x0: makeFraction(3, 4), y0: makeFraction(9, 8), x1: -2 },
+          { x0: makeFraction(2, 3), y0: makeFraction(5, 6), x1: -3 },
+          { x0: makeFraction(5, 4), y0: makeFraction(15, 8), x1: -4 },
+          { x0: makeFraction(4, 5), y0: makeFraction(6, 5), x1: -5 },
+          { x0: makeFraction(5, 6), y0: makeFraction(25, 18), x1: -6 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const x0 = pick.x0;
+        const y0 = pick.y0;
+        const x1 = pick.x1;
         const k = divFraction(y0, x0);
         const y1 = mulFraction(makeFraction(x1, 1), k);
         questions.push(
           `已知 $x$ 與 $y$ 成正比，當 $x=${fractionToLatex(x0)}$ 時 $y=${fractionToLatex(y0)}$，求 $x=${x1}$ 時的 $y$ 值。`
         );
         answers.push(
-          `由正比關係可設 $y=kx$。先求 $k=\\dfrac{${fractionToLatex(y0)}}{${fractionToLatex(x0)}}=${fractionToLatex(k)}$，所以 $y=${fractionToLatex(k)}x$。當 $x=${x1}$ 時，$y=${fractionToLatex(k)}\\times(${x1})=${fractionToLatex(y1)}$。`
+          formatJ232Answer(
+            `$y=${fractionToLatex(y1)}$`,
+            `由正比關係可設 $y=kx$。先求 $k=\\dfrac{${fractionToLatex(y0)}}{${fractionToLatex(x0)}}=${fractionToLatex(k)}$，所以 $y=${fractionToLatex(k)}x$。當 $x=${x1}$ 時，$y=${fractionToLatex(k)}\\times(${x1})=${fractionToLatex(y1)}$。`
+          )
         );
         continue;
       }
 
-      const x0 = makeFraction(14, 3);
-      const y0 = negateFraction(makeFraction(6, 7));
-      const y1 = makeFraction(1, 2);
+      const templates = [
+        { x0: makeFraction(14, 3), y0: negateFraction(makeFraction(6, 7)), y1: makeFraction(1, 2) },
+        { x0: makeFraction(10, 3), y0: negateFraction(makeFraction(9, 5)), y1: makeFraction(3, 4) },
+        { x0: makeFraction(15, 4), y0: negateFraction(makeFraction(8, 5)), y1: makeFraction(2, 3) },
+        { x0: makeFraction(9, 2), y0: negateFraction(makeFraction(4, 3)), y1: makeFraction(5, 6) },
+        { x0: makeFraction(8, 3), y0: negateFraction(makeFraction(15, 4)), y1: makeFraction(5, 4) },
+      ];
+      const pick = templates[cycle % templates.length];
+      const x0 = pick.x0;
+      const y0 = pick.y0;
+      const y1 = pick.y1;
       const k = mulFraction(x0, y0);
       const x1 = divFraction(k, y1);
       questions.push(
         `已知 $x$ 與 $y$ 成反比，當 $x=${fractionToLatex(x0)}$ 時 $y=${fractionToLatex(y0)}$，求 $y=${fractionToLatex(y1)}$ 時的 $x$ 值。`
       );
       answers.push(
-        `由反比關係可設 $xy=k$。先求 $k=${fractionToLatex(x0)}\\times ${fractionToLatex(y0)}=${fractionToLatex(k)}$。當 $y=${fractionToLatex(y1)}$ 時，$x=\\dfrac{${fractionToLatex(k)}}{${fractionToLatex(y1)}}=${fractionToLatex(x1)}$。`
+        formatJ232Answer(
+          `$x=${fractionToLatex(x1)}$`,
+          `由反比關係可設 $xy=k$。先求 $k=${fractionToLatex(x0)}\\times ${fractionToLatex(y0)}=${fractionToLatex(k)}$。當 $y=${fractionToLatex(y1)}$ 時，$x=\\dfrac{${fractionToLatex(k)}}{${fractionToLatex(y1)}}=${fractionToLatex(x1)}$。`
+        )
       );
     }
 
@@ -7536,6 +8137,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = variants[i % variants.length];
+      const cycle = Math.floor(i / variants.length);
 
       if (variant === 0) {
         let x0 = 1;
@@ -7571,73 +8173,93 @@
           `已知 $( ${formatTerm(a, 'y')}${b >= 0 ? '+' : ''}${b} )$ 與 $( ${formatTerm(c, 'x')}${d >= 0 ? '+' : ''}${d} )$ 成正比，且當 $x=${x0}$ 時 $y=${y0}$。求比例關係式，並求當 $x=${x1}$ 時的 $y$ 值。`
         );
         answers.push(
-          `成正比可寫成 $${formatTerm(a, 'y')}${b >= 0 ? '+' : ''}${b}=k(${formatTerm(c, 'x')}${d >= 0 ? '+' : ''}${d})$。由 $x=${x0},\\ y=${y0}$ 得 $k=\\dfrac{${a * y0 + b}}{${c * x0 + d}}=${fractionToLatex(k)}$。所以關係式為 $${formatTerm(a, 'y')}${b >= 0 ? '+' : ''}${b}=${fractionToLatex(k)}(${formatTerm(c, 'x')}${d >= 0 ? '+' : ''}${d})$。當 $x=${x1}$ 時，解得 $y=${fractionToLatex(y1)}$。`
+          formatJ232Answer(
+            `$${formatTerm(a, 'y')}${b >= 0 ? '+' : ''}${b}=${fractionToLatex(k)}(${formatTerm(c, 'x')}${d >= 0 ? '+' : ''}${d})$，$y=${fractionToLatex(y1)}$`,
+            `成正比可寫成 $${formatTerm(a, 'y')}${b >= 0 ? '+' : ''}${b}=k(${formatTerm(c, 'x')}${d >= 0 ? '+' : ''}${d})$。由 $x=${x0},\\ y=${y0}$ 得 $k=\\dfrac{${a * y0 + b}}{${c * x0 + d}}=${fractionToLatex(k)}$。所以關係式為 $${formatTerm(a, 'y')}${b >= 0 ? '+' : ''}${b}=${fractionToLatex(k)}(${formatTerm(c, 'x')}${d >= 0 ? '+' : ''}${d})$。當 $x=${x1}$ 時，解得 $y=${fractionToLatex(y1)}$。`
+          )
         );
         continue;
       }
 
       if (variant === 1) {
-        let a = 2;
-        let b0 = 2;
-        let b1 = 12;
-        let left = 1;
-        let right = 1;
-        let k = makeFraction(1, 1);
-        let newA = 1;
-        for (let t = 0; t < 100; t += 1) {
-          a = randInt(2, 6);
-          b0 = randInt(2, 6);
-          b1 = [9, 12, 15][randInt(0, 2)];
-          left = 3 * a + 7 * b0;
-          right = 3 * a + 13 * b0;
-          k = simplifyFraction(left, right);
-          const right1 = 3 * a + 13 * b1;
-          const left1Num = k.num * right1;
-          const left1Den = k.den;
-          if (left1Num % left1Den !== 0) continue;
-          const left1 = left1Num / left1Den;
-          if ((left1 - 7 * b1) % 3 !== 0) continue;
-          newA = (left1 - 7 * b1) / 3;
-          if (Number.isInteger(newA) && Math.abs(newA) <= 30) break;
-        }
+        const templates = [
+          { a: 2, b0: 3, b1: 12 },
+          { a: 5, b0: 2, b1: 10 },
+          { a: 4, b0: 5, b1: 15 },
+          { a: 6, b0: 4, b1: 12 },
+          { a: 3, b0: 6, b1: 18 },
+          { a: 7, b0: 5, b1: 20 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const a = pick.a;
+        const b0 = pick.b0;
+        const b1 = pick.b1;
+        const left = 3 * a + 7 * b0;
+        const right = 3 * a + 13 * b0;
+        const k = simplifyFraction(left, right);
+        const newA = (a * b1) / b0;
         questions.push(
           `已知 $(3a+7b)$ 與 $(3a+13b)$ 成正比，當 $a=${a},\\ b=${b0}$ 時比例成立。若 $b=${b1}$，求 $a$。`
         );
         answers.push(
-          `因為成正比，所以 $\\dfrac{3a+7b}{3a+13b}$ 為定值。由 $a=${a},\\ b=${b0}$ 可得此定值為 $\\dfrac{${left}}{${right}}=${fractionToLatex(k)}$。所以當 $b=${b1}$ 時，有 $\\dfrac{3a+${7 * b1}}{3a+${13 * b1}}=${fractionToLatex(k)}$，解得 $a=${newA}$。`
+          formatJ232Answer(
+            `$a=${newA}$`,
+            `因為成正比，所以 $\\dfrac{3a+7b}{3a+13b}$ 為定值。由 $a=${a},\\ b=${b0}$ 可得此定值為 $\\dfrac{${left}}{${right}}=${fractionToLatex(k)}$。所以當 $b=${b1}$ 時，有 $\\dfrac{3a+${7 * b1}}{3a+${13 * b1}}=${fractionToLatex(k)}$，解得 $a=${newA}$。`
+          )
         );
         continue;
       }
 
       if (variant === 2) {
-        const x0 = randInt(5, 8);
-        const y0 = randInt(2, 4);
-        const k = (y0 + 2) * (x0 - 3);
-        const x1 = randInt(1, 4);
-        const y1 = makeFraction(k, x1 - 3);
-        const newY = subFraction(y1, makeFraction(2, 1));
-        questions.push(`已知 $(y+2)$ 與 $(x-3)$ 成反比，當 $x=${x0}$ 時 $y=${y0}$，求 $x=${x1}$ 時的 $y$ 值。`);
+        const yShift = 2 + (cycle % 3);
+        const xShift = 1 + ((cycle * 2 + 1) % 4);
+        const x0 = 4 + ((cycle * 3 + 1) % 5);
+        const y0 = 2 + ((cycle * 2) % 4);
+        const x1Options = [1, 2, 4, 5, 7, 8];
+        const x1 = x1Options[(cycle * 3 + 2) % x1Options.length];
+        const k = (y0 + yShift) * (x0 + xShift);
+        const y1 = makeFraction(k, x1 + xShift);
+        const newY = subFraction(y1, makeFraction(yShift, 1));
+        questions.push(`已知 $(y+${yShift})$ 與 $(x+${xShift})$ 成反比，當 $x=${x0}$ 時 $y=${y0}$，求 $x=${x1}$ 時的 $y$ 值。`);
         answers.push(
-          `因為成反比，所以 $(y+2)(x-3)=k$。由 $x=${x0},\\ y=${y0}$ 得 $k=(${y0}+2)(${x0}-3)=${k}$。因此當 $x=${x1}$ 時，$y+2=\\dfrac{${k}}{${x1 - 3}}=${fractionToLatex(y1)}$，所以 $y=${fractionToLatex(newY)}$。`
+          formatJ232Answer(
+            `$y=${fractionToLatex(newY)}$`,
+            `因為成反比，所以 $(y+${yShift})(x+${xShift})=k$。由 $x=${x0},\\ y=${y0}$ 得 $k=(${y0}+${yShift})(${x0}+${xShift})=${k}$。因此當 $x=${x1}$ 時，$y+${yShift}=\\dfrac{${k}}{${x1}+${xShift}}=${fractionToLatex(y1)}$，所以 $y=${fractionToLatex(newY)}$。`
+          )
         );
         continue;
       }
 
       if (variant === 3) {
-        const a0 = -2;
-        const b0 = -5;
+        const templates = [
+          { a0: -2, b0: -5, a1: 1 },
+          { a0: -1, b0: 2, a1: 2 },
+          { a0: 3, b0: -2, a1: -1 },
+          { a0: 4, b0: 1, a1: -2 },
+          { a0: -3, b0: 3, a1: 3 },
+          { a0: 5, b0: -1, a1: 0 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const a0 = pick.a0;
+        const b0 = pick.b0;
         const k = (5 * a0 - 2) * (b0 + 4);
-        const a1 = 1;
+        const a1 = pick.a1;
         const b1 = simplifyFraction(k, 5 * a1 - 2);
         const newB = subFraction(b1, makeFraction(4, 1));
         questions.push(`已知 $(5a-2)$ 與 $(b+4)$ 成反比，且當 $a=${a0}$ 時 $b=${b0}$。求 $a=${a1}$ 時的 $b$ 值。`);
         answers.push(
-          `由反比可得 $(5a-2)(b+4)=k$。代入 $a=${a0},\\ b=${b0}$ 得 $k=(${5 * a0 - 2})(${b0 + 4})=${k}$。當 $a=${a1}$ 時，$b+4=\\dfrac{${k}}{${5 * a1 - 2}}=${fractionToLatex(b1)}$，所以 $b=${fractionToLatex(newB)}$。`
+          formatJ232Answer(
+            `$b=${fractionToLatex(newB)}$`,
+            `由反比可得 $(5a-2)(b+4)=k$。代入 $a=${a0},\\ b=${b0}$ 得 $k=(${5 * a0 - 2})(${b0 + 4})=${k}$。當 $a=${a1}$ 時，$b+4=\\dfrac{${k}}{${5 * a1 - 2}}=${fractionToLatex(b1)}$，所以 $b=${fractionToLatex(newB)}$。`
+          )
         );
         continue;
       }
 
-      const xRatio = normalizeRatioInts(randInt(2, 6), randInt(2, 6));
+      let xRatio = normalizeRatioInts(randInt(2, 6), randInt(2, 6));
+      while (5 * xRatio.a - 6 * xRatio.b === 0) {
+        xRatio = normalizeRatioInts(randInt(2, 6), randInt(2, 6));
+      }
       const leftA = randInt(2, 5);
       const leftB = randInt(1, 4);
       const rightA = randInt(3, 6);
@@ -7648,7 +8270,10 @@
         `已知 $( ${formatTerm(leftA, 'x')}${leftB === 0 ? '' : '-' + formatTerm(leftB, 'y')} ):( ${formatTerm(rightA, 'x')}${rightB >= 0 ? '+' : ''}${formatTerm(rightB, 'y')} )=${firstRatio.a}:${firstRatio.b}$，求 $x:y$，再求 $(3x+2y):(5x-6y)$。`
       );
       answers.push(
-        `設 $x:y=m:n$，則題目的比可寫成 $(${leftA}m-${formatTerm(leftB, 'n')}):(${rightA}m+${formatTerm(rightB, 'n')})$。由已知比可反推 $x:y=${xRatio.a}:${xRatio.b}$。再設 $x=${xRatio.a}k,\\ y=${xRatio.b}k$，可得 $(3x+2y):(5x-6y)=(${3 * xRatio.a + 2 * xRatio.b})k:(${5 * xRatio.a - 6 * xRatio.b})k=${secondRatio.a}:${secondRatio.b}$。`
+        formatJ232Answer(
+          `$x:y=${xRatio.a}:${xRatio.b}$，$(3x+2y):(5x-6y)=${secondRatio.a}:${secondRatio.b}$`,
+          `設 $x:y=m:n$，則題目的比可寫成 $(${leftA}m-${formatTerm(leftB, 'n')}):(${rightA}m+${formatTerm(rightB, 'n')})$。由已知比可反推 $x:y=${xRatio.a}:${xRatio.b}$。再設 $x=${xRatio.a}k,\\ y=${xRatio.b}k$，可得 $(3x+2y):(5x-6y)=(${3 * xRatio.a + 2 * xRatio.b})k:(${5 * xRatio.a - 6 * xRatio.b})k=${secondRatio.a}:${secondRatio.b}$。`
+        )
       );
     }
 
@@ -7662,79 +8287,125 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = variants[i % variants.length];
+      const cycle = Math.floor(i / variants.length);
 
       if (variant === 0) {
         const templates = [
           { x0: 15, y0: 15, y1: 5 },
           { x0: 12, y0: 12, y1: 6 },
           { x0: 3, y0: 6, y1: 10 },
+          { x0: 8, y0: 12, y1: 4 },
+          { x0: 18, y0: 18, y1: 9 },
+          { x0: 5, y0: 10, y1: 15 },
         ];
-        const pick = templates[randInt(0, templates.length - 1)];
+        const pick = templates[cycle % templates.length];
         const coeff = simplifyFraction(pick.y0 * pick.y0, 3 * pick.x0);
         const x1 = divFraction(makeFraction(pick.y1 * pick.y1, 1), mulFraction(coeff, makeFraction(3, 1)));
         questions.push(
           `已知 $y^2$ 與 $3x$ 成正比，當 $y=${pick.y0}$ 時 $x=${pick.x0}$，求 $y=${pick.y1}$ 時的 $x$ 值。`
         );
         answers.push(
-          `由正比可得 $y^2=k\\cdot 3x$。代入 $y=${pick.y0},\\ x=${pick.x0}$ 得 $k=\\dfrac{${pick.y0 * pick.y0}}{${3 * pick.x0}}=${fractionToLatex(coeff)}$。所以 $y^2=${fractionToLatex(coeff)}\\cdot 3x$。當 $y=${pick.y1}$ 時，代入得 $${pick.y1 * pick.y1}=${fractionToLatex(coeff)}\\cdot 3x$，解得 $x=${fractionToLatex(x1)}$。`
+          formatJ232Answer(
+            `$x=${fractionToLatex(x1)}$`,
+            `由正比可得 $y^2=k\\cdot 3x$。代入 $y=${pick.y0},\\ x=${pick.x0}$ 得 $k=\\dfrac{${pick.y0 * pick.y0}}{${3 * pick.x0}}=${fractionToLatex(coeff)}$。所以 $y^2=${fractionToLatex(coeff)}\\cdot 3x$。當 $y=${pick.y1}$ 時，代入得 $${pick.y1 * pick.y1}=${fractionToLatex(coeff)}\\cdot 3x$，解得 $x=${fractionToLatex(x1)}$。`
+          )
         );
         continue;
       }
 
       if (variant === 1) {
-        const x0 = 4;
-        const y0 = -1;
+        const templates = [
+          { x0: 4, y0: -1, x1: -8 },
+          { x0: 5, y0: 2, x1: -1 },
+          { x0: 6, y0: -2, x1: 10 },
+          { x0: 0, y0: 1, x1: 8 },
+          { x0: 7, y0: -1, x1: -3 },
+          { x0: 3, y0: 5, x1: 11 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const x0 = pick.x0;
+        const y0 = pick.y0;
         const k = (y0 + 3) * (x0 - 2) * (x0 - 2);
-        const x1 = -8;
+        const x1 = pick.x1;
         const y1plus3 = simplifyFraction(k, (x1 - 2) * (x1 - 2));
         const y1 = subFraction(y1plus3, makeFraction(3, 1));
         questions.push(`已知 $(y+3)$ 與 $(x-2)^2$ 成反比，若 $x=${x0}$ 時 $y=${y0}$，求 $x=${x1}$ 時的 $y$ 值。`);
         answers.push(
-          `由反比可得 $(y+3)(x-2)^2=k$。代入 $x=${x0},\\ y=${y0}$ 得 $k=(${y0}+3)\\times (${x0}-2)^2=${k}$。當 $x=${x1}$ 時，$y+3=\\dfrac{${k}}{(${x1}-2)^2}=${fractionToLatex(y1plus3)}$，所以 $y=${fractionToLatex(y1)}$。`
+          formatJ232Answer(
+            `$y=${fractionToLatex(y1)}$`,
+            `由反比可得 $(y+3)(x-2)^2=k$。代入 $x=${x0},\\ y=${y0}$ 得 $k=(${y0}+3)\\times (${x0}-2)^2=${k}$。當 $x=${x1}$ 時，$y+3=\\dfrac{${k}}{(${x1}-2)^2}=${fractionToLatex(y1plus3)}$，所以 $y=${fractionToLatex(y1)}$。`
+          )
         );
         continue;
       }
 
       if (variant === 2) {
-        const weight = 10;
-        const value = 200;
-        const parts = [5, 3, 2];
+        const templates = [
+          { parts: [5, 3, 2], unit: 1, k: 2 },
+          { parts: [6, 3, 1], unit: 1, k: 3 },
+          { parts: [4, 3, 2], unit: 1, k: 2 },
+          { parts: [7, 2, 1], unit: 1, k: 4 },
+          { parts: [5, 4, 1], unit: 1, k: 3 },
+          { parts: [8, 3, 1], unit: 1, k: 2 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const parts = pick.parts;
         const totalParts = parts.reduce((a, b) => a + b, 0);
-        const remainingWeight = (weight * (parts[1] + parts[2])) / totalParts;
-        const remainingValue = (value * (remainingWeight * remainingWeight)) / (weight * weight);
+        const weight = totalParts * pick.unit;
+        const value = pick.k * weight * weight;
+        const pieceWeights = parts.map((part) => part * pick.unit);
+        const remainingValue = pick.k * pieceWeights[0] * pieceWeights[0] + pick.k * pieceWeights[1] * pieceWeights[1];
         const loss = value - remainingValue;
         questions.push(
-          `某寶石價值與重量的平方成正比。若 10 克寶石價值 200 萬元，現把它裂成重量比 $5:3:2$ 的三塊後，最小那一塊遺失，則損失多少萬元？`
+          `某寶石價值與重量的平方成正比。若 ${weight} 克寶石價值 ${value} 萬元，現把它裂成重量比 $${parts.join(':')}$ 的三塊後，最小那一塊遺失，則損失多少萬元？`
         );
         answers.push(
-          `設價值 $V$ 與重量 $w$ 的關係為 $V=kw^2$。由 10 克價值 200 萬元得 $k=\\dfrac{200}{10^2}=2$。保留下來的兩塊共重 $10\\times\\dfrac{3+2}{5+3+2}=5$ 克，因此剩餘價值為 $2\\times 5^2=50$ 萬元，所以損失 $200-50=${loss}$ 萬元。`
+          formatJ232Answer(
+            `${loss} 萬元`,
+            `設價值 $V$ 與重量 $w$ 的關係為 $V=kw^2$。由 ${weight} 克價值 ${value} 萬元得 $k=\\dfrac{${value}}{${weight}^2}=${pick.k}$。三塊重量分別為 ${pieceWeights.join(' 克、')} 克，最小的 ${pieceWeights[2]} 克遺失，所以剩餘價值要分開算：$${pick.k}\\times ${pieceWeights[0]}^2+${pick.k}\\times ${pieceWeights[1]}^2=${remainingValue}$ 萬元。因此損失為 $${value}-${remainingValue}=${loss}$ 萬元。`
+          )
         );
         continue;
       }
 
       if (variant === 3) {
-        const side0 = [4, 6, 8][randInt(0, 2)];
+        const side0 = [4, 6, 8, 9, 12, 14][cycle % 6];
         const area0 = side0 * side0;
-        const side1 = [10, 12, 15][randInt(0, 2)];
+        const side1 = [10, 12, 15, 18, 20, 21][(cycle * 2 + 1) % 6];
         const area1 = side1 * side1;
         questions.push(
           `正方形面積 $A$ 與邊長 $s$ 的平方成正比。若邊長 ${side0} 公分時面積為 ${area0} 平方公分，求邊長 ${side1} 公分時的面積。`
         );
         answers.push(
-          `因為正方形面積本來就滿足 $A=s^2$，所以 $A$ 與 $s^2$ 的比例常數是 1。當邊長為 ${side1} 公分時，面積為 ${side1}^2=${area1} 平方公分。`
+          formatJ232Answer(
+            `${area1} 平方公分`,
+            `因為正方形面積本來就滿足 $A=s^2$，所以 $A$ 與 $s^2$ 的比例常數是 1。當邊長為 ${side1} 公分時，面積為 ${side1}^2=${area1} 平方公分。`
+          )
         );
         continue;
       }
 
-      const x0 = [3, 5, 6][randInt(0, 2)];
-      const y0 = [6, 10, 12][randInt(0, 2)];
+      const templates = [
+        { x0: 3, y0: 6, x1: 12 },
+        { x0: 5, y0: 10, x1: 9 },
+        { x0: 6, y0: 12, x1: 15 },
+        { x0: 4, y0: 8, x1: 11 },
+        { x0: 7, y0: 14, x1: 13 },
+        { x0: 8, y0: 12, x1: 10 },
+      ];
+      const pick = templates[cycle % templates.length];
+      const x0 = pick.x0;
+      const y0 = pick.y0;
       const coeff = simplifyFraction(y0 * y0, x0 * x0);
-      const x1 = [9, 12, 15][randInt(0, 2)];
-      const y1sq = mulFraction(coeff, makeFraction(x1 * x1, 1));
-      const y1 = Math.sqrt(y1sq.num / y1sq.den);
+      const x1 = pick.x1;
+      const yAbs = mulFraction(simplifyFraction(y0, x0), makeFraction(x1, 1));
+      const y1sq = mulFraction(yAbs, yAbs);
       questions.push(`已知 $y^2$ 與 $x^2$ 成正比，且當 $x=${x0}$ 時 $y=${y0}$。求 $x=${x1}$ 時的 $y$ 值。`);
       answers.push(
-        `因為 $y^2$ 與 $x^2$ 成正比，所以可寫成 $y^2=kx^2$。由 $x=${x0},\\ y=${y0}$ 得 $k=\\dfrac{${y0 * y0}}{${x0 * x0}}=${fractionToLatex(coeff)}$。當 $x=${x1}$ 時，$y^2=${fractionToLatex(coeff)}\\times ${x1}^2=${fractionToLatex(y1sq)}$，因此 $y=${y1}$。`
+        formatJ232Answer(
+          `$y=\\pm ${fractionToLatex(yAbs)}$`,
+          `因為 $y^2$ 與 $x^2$ 成正比，所以可寫成 $y^2=kx^2$。由 $x=${x0},\\ y=${y0}$ 得 $k=\\dfrac{${y0 * y0}}{${x0 * x0}}=${fractionToLatex(coeff)}$。當 $x=${x1}$ 時，$y^2=${fractionToLatex(coeff)}\\times ${x1}^2=${fractionToLatex(y1sq)}$，因此 $y=\\pm ${fractionToLatex(yAbs)}$。`
+        )
       );
     }
 
@@ -7748,12 +8419,22 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = variants[i % variants.length];
+      const cycle = Math.floor(i / variants.length);
 
       if (variant === 0) {
-        const x0 = -12;
-        const y0 = -6;
-        const z0 = 3;
-        const x1 = 8;
+        const templates = [
+          { x0: -12, y0: -6, z0: 3, x1: 8 },
+          { x0: -10, y0: -5, z0: 4, x1: 6 },
+          { x0: -15, y0: -9, z0: 2, x1: 10 },
+          { x0: -8, y0: -4, z0: 6, x1: 12 },
+          { x0: -14, y0: -7, z0: 5, x1: 4 },
+          { x0: -18, y0: -12, z0: 3, x1: 9 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const x0 = pick.x0;
+        const y0 = pick.y0;
+        const z0 = pick.z0;
+        const x1 = pick.x1;
         const ky = divFraction(makeFraction(y0, 1), makeFraction(x0, 1));
         const invConst = z0 * y0;
         const y1 = mulFraction(makeFraction(x1, 1), ky);
@@ -7762,16 +8443,28 @@
           `已知 $x$ 與 $y$ 成正比，$y$ 與 $z$ 成反比。當 $z=${z0},\\ y=${y0}$ 時 $x=${x0}$，求當 $x=${x1}$ 時的 $y$ 與 $z$ 值。`
         );
         answers.push(
-          `先由 $x$ 與 $y$ 成正比得 $y=kx$。代入 $x=${x0},\\ y=${y0}$，得 $k=${fractionToLatex(ky)}$，所以當 $x=${x1}$ 時，$y=${fractionToLatex(y1)}$。又因 $y$ 與 $z$ 成反比，所以 $yz$ 為定值。由 $y=${y0},\\ z=${z0}$ 得 $yz=${invConst}$，所以此時 $z=\\dfrac{${invConst}}{${fractionToLatex(y1)}}=${fractionToLatex(z1)}$。`
+          formatJ232Answer(
+            `$y=${fractionToLatex(y1)},\\ z=${fractionToLatex(z1)}$`,
+            `先由 $x$ 與 $y$ 成正比得 $y=kx$。代入 $x=${x0},\\ y=${y0}$，得 $k=${fractionToLatex(ky)}$，所以當 $x=${x1}$ 時，$y=${fractionToLatex(y1)}$。又因 $y$ 與 $z$ 成反比，所以 $yz$ 為定值。由 $y=${y0},\\ z=${z0}$ 得 $yz=${invConst}$，所以此時 $z=\\dfrac{${invConst}}{${fractionToLatex(y1)}}=${fractionToLatex(z1)}$。`
+          )
         );
         continue;
       }
 
       if (variant === 1) {
-        const x0 = 6;
-        const y0 = 4;
-        const z0 = 9;
-        const x1 = 15;
+        const templates = [
+          { x0: 6, y0: 4, z0: 9, x1: 15 },
+          { x0: 8, y0: 3, z0: 10, x1: 12 },
+          { x0: 9, y0: 6, z0: 8, x1: 18 },
+          { x0: 10, y0: 5, z0: 12, x1: 20 },
+          { x0: 12, y0: 8, z0: 15, x1: 24 },
+          { x0: 15, y0: 10, z0: 6, x1: 25 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const x0 = pick.x0;
+        const y0 = pick.y0;
+        const z0 = pick.z0;
+        const x1 = pick.x1;
         const c1 = x0 * y0;
         const c2 = y0 * z0;
         const y1 = divFraction(makeFraction(c1, 1), makeFraction(x1, 1));
@@ -7780,35 +8473,65 @@
           `若 $x$ 與 $y$ 成反比，$y$ 與 $z$ 也成反比。當 $(x,y,z)=(${x0},${y0},${z0})$ 時，求當 $x=${x1}$ 時的 $y$ 與 $z$。`
         );
         answers.push(
-          `由 $x$ 與 $y$ 成反比，得 $xy=${c1}$，所以當 $x=${x1}$ 時，$y=\\dfrac{${c1}}{${x1}}=${fractionToLatex(y1)}$。又因 $y$ 與 $z$ 成反比，得 $yz=${c2}$，所以 $z=\\dfrac{${c2}}{${fractionToLatex(y1)}}=${fractionToLatex(z1)}$。此外因兩次反比相接，$x$ 與 $z$ 會成正比。`
+          formatJ232Answer(
+            `$y=${fractionToLatex(y1)},\\ z=${fractionToLatex(z1)}$`,
+            `由 $x$ 與 $y$ 成反比，得 $xy=${c1}$，所以當 $x=${x1}$ 時，$y=\\dfrac{${c1}}{${x1}}=${fractionToLatex(y1)}$。又因 $y$ 與 $z$ 成反比，得 $yz=${c2}$，所以 $z=\\dfrac{${c2}}{${fractionToLatex(y1)}}=${fractionToLatex(z1)}$。此外因兩次反比相接，$x$ 與 $z$ 會成正比。`
+          )
         );
         continue;
       }
 
       if (variant === 2) {
-        const x0 = 6;
-        const y0 = makeFraction(1, 2);
-        const z0 = makeFraction(3, 4);
-        const x1 = -4;
+        const templates = [
+          { x0: 6, y0: makeFraction(1, 2), z0: makeFraction(3, 4), x1: -4 },
+          { x0: 8, y0: makeFraction(3, 4), z0: makeFraction(5, 6), x1: -2 },
+          { x0: 10, y0: makeFraction(2, 5), z0: makeFraction(7, 5), x1: -5 },
+          { x0: 12, y0: makeFraction(1, 3), z0: makeFraction(4, 3), x1: -6 },
+          { x0: 15, y0: makeFraction(2, 3), z0: makeFraction(9, 10), x1: -3 },
+          { x0: 9, y0: makeFraction(5, 6), z0: makeFraction(2, 3), x1: -1 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const x0 = pick.x0;
+        const y0 = pick.y0;
+        const z0 = pick.z0;
+        const x1 = pick.x1;
         const ky = divFraction(y0, makeFraction(x0, 1));
-        const kz = mulFraction(z0, makeFraction(x0, 1));
+        const kz = mulFraction(z0, makeFraction(x1, 1));
         const y1 = mulFraction(makeFraction(x1, 1), ky);
         const z1 = divFraction(kz, makeFraction(x1, 1));
         const t1 = subFraction(y1, z1);
+        const t1Text = t1.den === 1
+          ? `${t1.num}`
+          : `${t1.num < 0 ? '-' : ''}\\dfrac{${Math.abs(t1.num)}}{${t1.den}}`;
+        const zTermInT = kz.num < 0
+          ? `+\\dfrac{${fractionToLatex(negateFraction(kz))}}{x}`
+          : `-\\dfrac{${fractionToLatex(kz)}}{x}`;
         questions.push(
           `已知 $T=Y-Z$，其中 $Y$ 與 $x$ 成正比，$Z$ 與 $x$ 成反比。若當 $x=${x0}$ 時，$Y=${fractionToLatex(y0)}$；當 $x=${x1}$ 時，$Z=${fractionToLatex(z0)}$，求 $T$ 與 $x$ 的關係式，並求當 $x=${x1}$ 時的 $T$。`
         );
         answers.push(
-          `由 $Y$ 與 $x$ 成正比，可設 $Y=${fractionToLatex(ky)}x$。由 $Z$ 與 $x$ 成反比，且 $x=${x0}$ 時 $Z=${fractionToLatex(z0)}$，可得 $Z=\\dfrac{${fractionToLatex(kz)}}{x}$。所以 $T=Y-Z=${fractionToLatex(ky)}x-\\dfrac{${fractionToLatex(kz)}}{x}$。當 $x=${x1}$ 時，$Y=${fractionToLatex(y1)},\\ Z=${fractionToLatex(z1)}$，故 $T=${fractionToLatex(t1)}$。`
+          formatJ232Answer(
+            `$T=${t1Text}$`,
+            `由 $Y$ 與 $x$ 成正比，可設 $Y=${fractionToLatex(ky)}x$。由 $Z$ 與 $x$ 成反比，且 $x=${x1}$ 時 $Z=${fractionToLatex(z0)}$，可得 $Z=\\dfrac{${fractionToLatex(kz)}}{x}$。所以 $T=Y-Z=${fractionToLatex(ky)}x${zTermInT}$。當 $x=${x1}$ 時，$Y=${fractionToLatex(y1)},\\ Z=${fractionToLatex(z1)}$，故 $T=${t1Text}$。`
+          )
         );
         continue;
       }
 
       if (variant === 3) {
-        const x0 = 4;
-        const y0 = 10;
-        const z0 = 6;
-        const x1 = 9;
+        const templates = [
+          { x0: 4, y0: 10, z0: 6, x1: 9 },
+          { x0: 5, y0: 12, z0: 9, x1: 15 },
+          { x0: 6, y0: 14, z0: 8, x1: 18 },
+          { x0: 8, y0: 20, z0: 12, x1: 10 },
+          { x0: 10, y0: 15, z0: 5, x1: 16 },
+          { x0: 12, y0: 18, z0: 6, x1: 20 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const x0 = pick.x0;
+        const y0 = pick.y0;
+        const z0 = pick.z0;
+        const x1 = pick.x1;
         const ky = divFraction(makeFraction(y0, 1), makeFraction(x0, 1));
         const kz = divFraction(makeFraction(z0, 1), makeFraction(x0, 1));
         const y1 = mulFraction(ky, makeFraction(x1, 1));
@@ -7817,15 +8540,27 @@
           `已知 $x$ 與 $y$ 成正比，且 $x$ 與 $z$ 也成正比。若當 $x=${x0}$ 時，$y=${y0},\\ z=${z0}$，求當 $x=${x1}$ 時的 $(y+z)$。`
         );
         answers.push(
-          `由正比可設 $y=${fractionToLatex(ky)}x,\\ z=${fractionToLatex(kz)}x$。因此當 $x=${x1}$ 時，$y=${fractionToLatex(y1)},\\ z=${fractionToLatex(z1)}$，所以 $y+z=${fractionToLatex(addFraction(y1, z1))}$。`
+          formatJ232Answer(
+            `$y+z=${fractionToLatex(addFraction(y1, z1))}$`,
+            `由正比可設 $y=${fractionToLatex(ky)}x,\\ z=${fractionToLatex(kz)}x$。因此當 $x=${x1}$ 時，$y=${fractionToLatex(y1)},\\ z=${fractionToLatex(z1)}$，所以 $y+z=${fractionToLatex(addFraction(y1, z1))}$。`
+          )
         );
         continue;
       }
 
-      const x0 = 5;
-      const y0 = 8;
-      const z0 = 10;
-      const x1 = 20;
+      const templates = [
+        { x0: 5, y0: 8, z0: 10, x1: 20 },
+        { x0: 4, y0: 6, z0: 9, x1: 12 },
+        { x0: 6, y0: 9, z0: 12, x1: 18 },
+        { x0: 8, y0: 10, z0: 15, x1: 16 },
+        { x0: 10, y0: 12, z0: 18, x1: 30 },
+        { x0: 12, y0: 15, z0: 20, x1: 24 },
+      ];
+      const pick = templates[cycle % templates.length];
+      const x0 = pick.x0;
+      const y0 = pick.y0;
+      const z0 = pick.z0;
+      const x1 = pick.x1;
       const c1 = x0 * y0;
       const kz = divFraction(makeFraction(z0, 1), makeFraction(y0, 1));
       const y1 = divFraction(makeFraction(c1, 1), makeFraction(x1, 1));
@@ -7834,7 +8569,10 @@
         `若 $x$ 與 $y$ 成反比，$y$ 與 $z$ 成正比。當 $(x,y,z)=(${x0},${y0},${z0})$ 時，求當 $x=${x1}$ 時的 $z$。並判斷 $x$ 與 $z$ 的關係。`
       );
       answers.push(
-        `由 $x$ 與 $y$ 成反比得 $xy=${c1}$，所以當 $x=${x1}$ 時，$y=\\dfrac{${c1}}{${x1}}=${fractionToLatex(y1)}$。又因 $y$ 與 $z$ 成正比，且 $z:y=${z0}:${y0}=\\dfrac{${z0}}{${y0}}$，所以 $z=\\dfrac{${z0}}{${y0}}y=\\dfrac{${z0}}{${y0}}\\times ${fractionToLatex(y1)}=${fractionToLatex(z1)}$。因為一反比再接一正比，所以 $x$ 與 $z$ 仍成反比。`
+        formatJ232Answer(
+          `$z=${fractionToLatex(z1)}$，$x$ 與 $z$ 成反比`,
+          `由 $x$ 與 $y$ 成反比得 $xy=${c1}$，所以當 $x=${x1}$ 時，$y=\\dfrac{${c1}}{${x1}}=${fractionToLatex(y1)}$。又因 $y$ 與 $z$ 成正比，且 $z:y=${z0}:${y0}=\\dfrac{${z0}}{${y0}}$，所以 $z=\\dfrac{${z0}}{${y0}}y=\\dfrac{${z0}}{${y0}}\\times ${fractionToLatex(y1)}=${fractionToLatex(z1)}$。因為一反比再接一正比，所以 $x$ 與 $z$ 仍成反比。`
+        )
       );
     }
 
@@ -7848,40 +8586,85 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = variants[i % variants.length];
+      const cycle = Math.floor(i / variants.length);
 
       if (variant === 0) {
-        questions.push(`若 $y$ 與 $x$ 成反比，當 $x$ 減少 $40\\%$ 時，$y$ 變為原來的幾倍？`);
+        const drops = [40, 30, 20, 50, 60, 10];
+        const drop = drops[cycle % drops.length];
+        const keep = simplifyFraction(100 - drop, 100);
+        const mult = simplifyFraction(100, 100 - drop);
+        questions.push(`若 $y$ 與 $x$ 成反比，當 $x$ 減少 $${drop}\\%$ 時，$y$ 變為原來的幾倍？`);
         answers.push(
-          `$x$ 減少 $40\\%$ 表示變成原來的 $60\\%=\\dfrac{3}{5}$。因為 $y$ 與 $x$ 成反比，所以 $y$ 會變成原來的倒數倍數，即 $\\dfrac{1}{3/5}=\\dfrac{5}{3}$ 倍。`
+          formatJ232Answer(
+            `$${fractionToLatex(mult)}$ 倍`,
+            `$x$ 減少 $${drop}\\%$ 表示變成原來的 $${100 - drop}\\%=\\dfrac{${keep.num}}{${keep.den}}$。因為 $y$ 與 $x$ 成反比，所以 $y$ 會變成原來的倒數倍數，即 $${fractionToLatex(mult)}$ 倍。`
+          )
         );
         continue;
       }
 
       if (variant === 1) {
-        questions.push(`若 $y$ 與 $x$ 成反比，當 $x$ 增加 $25\\%$ 時，$y$ 變為原來的幾分之幾？`);
+        const ups = [25, 20, 50, 10, 40, 60];
+        const up = ups[cycle % ups.length];
+        const den = 100 + up;
+        const frac = simplifyFraction(100, den);
+        const inc = simplifyFraction(up, 100);
+        questions.push(`若 $y$ 與 $x$ 成反比，當 $x$ 增加 $${up}\\%$ 時，$y$ 變為原來的幾分之幾？`);
         answers.push(
-          `$x$ 增加 $25\\%$ 表示變成原來的 $\\dfrac{5}{4}$ 倍。因為 $y$ 與 $x$ 成反比，所以 $y$ 變為原來的 $\\dfrac{4}{5}$。`
+          formatJ232Answer(
+            `$${fractionToLatex(frac)}$`,
+            `$x$ 增加 $${up}\\%$ 表示變成原來的 $1+${fractionToLatex(inc)}=\\dfrac{${den}}{100}$ 倍。因為 $y$ 與 $x$ 成反比，所以 $y$ 變為原來的 $${fractionToLatex(frac)}$。`
+          )
         );
         continue;
       }
 
       if (variant === 2) {
-        questions.push(`若 $y$ 與 $x$ 成正比，當 $x$ 變為原來的 2 倍時，$y$ 變為原來的幾倍？`);
-        answers.push(`正比的意思是兩個量同倍數增減，所以 $x$ 變成 2 倍，$y$ 也會跟著變成 2 倍。`);
-        continue;
-      }
-
-      if (variant === 3) {
-        questions.push(`若 $y$ 與 $x$ 成正比，當 $x$ 減少 $20\\%$ 時，$y$ 會減少原來的幾分之幾？`);
+        const mults = [2, 3, 4, 5, 6, 7];
+        const m = mults[cycle % mults.length];
+        questions.push(`若 $y$ 與 $x$ 成正比，當 $x$ 變為原來的 ${m} 倍時，$y$ 變為原來的幾倍？`);
         answers.push(
-          `$x$ 減少 $20\\%$ 表示變成原來的 $80\\%=\\dfrac{4}{5}$。因為正比，所以 $y$ 也變成原來的 $\\dfrac{4}{5}$，因此是減少原來的 $\\dfrac{1}{5}$。`
+          formatJ232Answer(
+            `${m} 倍`,
+            `正比的意思是兩個量同倍數增減，所以 $x$ 變成 ${m} 倍，$y$ 也會跟著變成 ${m} 倍。`
+          )
         );
         continue;
       }
 
-      questions.push(`若 $y$ 與 $x$ 成反比，當 $x$ 先增加 $20\\%$，再減少 $25\\%$ 時，$y$ 最後變為原來的幾倍？`);
+      if (variant === 3) {
+        const drops = [20, 10, 25, 30, 40, 50];
+        const drop = drops[cycle % drops.length];
+        const dec = simplifyFraction(drop, 100);
+        questions.push(`若 $y$ 與 $x$ 成正比，當 $x$ 減少 $${drop}\\%$ 時，$y$ 會減少原來的幾分之幾？`);
+        answers.push(
+          formatJ232Answer(
+            `$${fractionToLatex(dec)}$`,
+            `$x$ 減少 $${drop}\\%$ 表示變成原來的 $${100 - drop}\\%$。因為正比，所以 $y$ 也變成相同比例，因此減少原來的 $${fractionToLatex(dec)}$。`
+          )
+        );
+        continue;
+      }
+
+      const templates = [
+        { up: 20, down: 25 },
+        { up: 25, down: 20 },
+        { up: 50, down: 20 },
+        { up: 40, down: 10 },
+        { up: 10, down: 10 },
+        { up: 30, down: 20 },
+      ];
+      const pick = templates[cycle % templates.length];
+      const xFactor = simplifyFraction(100 + pick.up, 100);
+      const downFactor = simplifyFraction(100 - pick.down, 100);
+      const finalX = mulFraction(xFactor, downFactor);
+      const finalY = divFraction(makeFraction(1, 1), finalX);
+      questions.push(`若 $y$ 與 $x$ 成反比，當 $x$ 先增加 $${pick.up}\\%$，再減少 $${pick.down}\\%$ 時，$y$ 最後變為原來的幾倍？`);
       answers.push(
-        `$x$ 先增加 $20\\%$ 變成 $\\dfrac{6}{5}$ 倍，再減少 $25\\%$ 就乘上 $\\dfrac{3}{4}$，所以最後 $x$ 變成 $\\dfrac{6}{5}\\times\\dfrac{3}{4}=\\dfrac{9}{10}$ 倍。因為 $y$ 與 $x$ 成反比，所以 $y$ 變成原來的倒數倍數，即 $\\dfrac{10}{9}$ 倍。`
+        formatJ232Answer(
+          `$${fractionToLatex(finalY)}$ 倍`,
+          `$x$ 先增加 $${pick.up}\\%$ 變成 $${fractionToLatex(xFactor)}$ 倍，再減少 $${pick.down}\\%$ 就乘上 $${fractionToLatex(downFactor)}$，所以最後 $x$ 變成 $${fractionToLatex(finalX)}$ 倍。因為 $y$ 與 $x$ 成反比，所以 $y$ 變成原來的倒數倍數，即 $${fractionToLatex(finalY)}$ 倍。`
+        )
       );
     }
 
@@ -7897,14 +8680,14 @@
         const price = [35, 40, 45, 50, 60][randInt(0, 4)];
         return {
           q: `已知漫畫書每本 ${price} 元，小妍買了 $x$ 本，共付 $y$ 元。判斷 $y$ 與 $x$ 是成正比、成反比，還是都不是。`,
-          a: `關係式是 $y=${price}x$。這符合 $y=kx$ 的形式，所以 $y$ 與 $x$ 成正比。`,
+          a: formatJ232Answer('成正比', `關係式是 $y=${price}x$。這符合 $y=kx$ 的形式，所以 $y$ 與 $x$ 成正比。`),
         };
       },
       () => {
         const speed = [60, 70, 80, 90][randInt(0, 3)];
         return {
           q: `阿成平均每小時以 ${speed} 公里的速率開車，行駛 $x$ 小時後，總路程為 $y$ 公里。判斷 $y$ 與 $x$ 的關係。`,
-          a: `關係式是 $y=${speed}x$。因為符合 $y=kx$，所以 $y$ 與 $x$ 成正比。`,
+          a: formatJ232Answer('成正比', `關係式是 $y=${speed}x$。因為符合 $y=kx$，所以 $y$ 與 $x$ 成正比。`),
         };
       },
       () => {
@@ -7912,20 +8695,20 @@
         const percent = [6, 7, 8, 9][randInt(0, 3)];
         return {
           q: `一本書定價 ${price} 元，打 $${percent}$ 折後的售價為 $y$ 元。若折數記為 $x$，判斷 $y$ 與 $x$ 的關係。`,
-          a: `折數 $x$ 表示售價是原價的 $\\dfrac{x}{10}$，所以 $y=${price}\\cdot \\dfrac{x}{10}$。這可整理成 $y=${price / 10}x$，因此 $y$ 與 $x$ 成正比。`,
+          a: formatJ232Answer('成正比', `折數 $x$ 表示售價是原價的 $\\dfrac{x}{10}$，所以 $y=${price}\\cdot \\dfrac{x}{10}$。這可整理成 $y=${price / 10}x$，因此 $y$ 與 $x$ 成正比。`),
         };
       },
       () => {
         return {
           q: `已知圓的半徑為 $x$ 公分，圓周長為 $y$ 公分。判斷 $y$ 與 $x$ 的關係。`,
-          a: `圓周長公式是 $y=2\\pi x$。因為 $2\\pi$ 是常數，符合 $y=kx$ 的形式，所以 $y$ 與 $x$ 成正比。`,
+          a: formatJ232Answer('成正比', `圓周長公式是 $y=2\\pi x$。因為 $2\\pi$ 是常數，符合 $y=kx$ 的形式，所以 $y$ 與 $x$ 成正比。`),
         };
       },
       () => {
         const unit = [12, 15, 20, 25][randInt(0, 3)];
         return {
           q: `一盒彩色筆有 ${unit} 支，買了 $x$ 盒後共有 $y$ 支彩色筆。判斷 $y$ 與 $x$ 的關係。`,
-          a: `關係式是 $y=${unit}x$，符合 $y=kx$，所以 $y$ 與 $x$ 成正比。`,
+          a: formatJ232Answer('成正比', `關係式是 $y=${unit}x$，符合 $y=kx$，所以 $y$ 與 $x$ 成正比。`),
         };
       },
     ];
@@ -7935,35 +8718,35 @@
         const total = [180, 200, 240, 300][randInt(0, 3)];
         return {
           q: `媽媽每天花 ${total} 元買水果。若蘋果單價為 $x$ 元/斤，可買 $y$ 斤。判斷 $y$ 與 $x$ 的關係。`,
-          a: `因為單價 $\\times$ 數量 $=$ 總價，所以 $xy=${total}$。這符合 $xy=k$ 的形式，因此 $y$ 與 $x$ 成反比。`,
+          a: formatJ232Answer('成反比', `因為單價 $\\times$ 數量 $=$ 總價，所以 $xy=${total}$。這符合 $xy=k$ 的形式，因此 $y$ 與 $x$ 成反比。`),
         };
       },
       () => {
         const area = [24, 30, 36, 40][randInt(0, 3)];
         return {
           q: `一個面積為 ${area} 平方公分的三角形，底邊長為 $x$ 公分，高為 $y$ 公分。判斷 $y$ 與 $x$ 的關係。`,
-          a: `三角形面積是 $\\dfrac{1}{2}xy=${area}$，整理得 $xy=${2 * area}$。這符合 $xy=k$ 的形式，所以 $y$ 與 $x$ 成反比。`,
+          a: formatJ232Answer('成反比', `三角形面積是 $\\dfrac{1}{2}xy=${area}$，整理得 $xy=${2 * area}$。這符合 $xy=k$ 的形式，所以 $y$ 與 $x$ 成反比。`),
         };
       },
       () => {
         const distance = [240, 300, 360, 420][randInt(0, 3)];
         return {
           q: `兩地相距 ${distance} 公里，開車速率為每小時 $x$ 公里，所需時間為 $y$ 小時。判斷 $y$ 與 $x$ 的關係。`,
-          a: `因為 距離 $=$ 速率 $\\times$ 時間，所以 $xy=${distance}$。這符合 $xy=k$，因此 $y$ 與 $x$ 成反比。`,
+          a: formatJ232Answer('成反比', `因為 距離 $=$ 速率 $\\times$ 時間，所以 $xy=${distance}$。這符合 $xy=k$，因此 $y$ 與 $x$ 成反比。`),
         };
       },
       () => {
         const volume = [6000, 8000, 12000][randInt(0, 2)];
         return {
           q: `將 ${volume} cc 的水倒入底面積為 $x$ 平方公分的水箱，水深為 $y$ 公分。判斷 $y$ 與 $x$ 的關係。`,
-          a: `體積 $=$ 底面積 $\\times$ 高，所以 $xy=${volume}$。符合 $xy=k$ 的形式，因此 $y$ 與 $x$ 成反比。`,
+          a: formatJ232Answer('成反比', `體積 $=$ 底面積 $\\times$ 高，所以 $xy=${volume}$。符合 $xy=k$ 的形式，因此 $y$ 與 $x$ 成反比。`),
         };
       },
       () => {
         const work = [12, 15, 18, 20][randInt(0, 3)];
         return {
           q: `完成一項固定工作需要 ${work} 工時。若有 $x$ 位工人平均分工，每位工人需工作 $y$ 小時。判斷 $y$ 與 $x$ 的關係。`,
-          a: `因為人數 $\\times$ 每人工作時間 $=$ 固定總工時，所以 $xy=${work}$。因此 $y$ 與 $x$ 成反比。`,
+          a: formatJ232Answer('成反比', `因為人數 $\\times$ 每人工作時間 $=$ 固定總工時，所以 $xy=${work}$。因此 $y$ 與 $x$ 成反比。`),
         };
       },
     ];
@@ -7972,27 +8755,27 @@
       () => {
         return {
           q: `一年甲班共有 36 人，其中男生 $x$ 人、女生 $y$ 人。判斷 $y$ 與 $x$ 的關係。`,
-          a: `關係式是 $x+y=36$，也就是 $y=36-x$。這既不是 $y=kx$，也不是 $xy=k$，所以都不是。`,
+          a: formatJ232Answer('都不是', `關係式是 $x+y=36$，也就是 $y=36-x$。這既不是 $y=kx$，也不是 $xy=k$，所以都不是。`),
         };
       },
       () => {
         const perimeter = [24, 30, 40][randInt(0, 2)];
         return {
           q: `周長為 ${perimeter} 公分的長方形，長為 $x$ 公分，寬為 $y$ 公分。判斷 $y$ 與 $x$ 的關係。`,
-          a: `由周長公式得 $2(x+y)=${perimeter}$，整理成 $y=${perimeter / 2}-x$。因為不是 $y=kx$，也不是 $xy=k$，所以都不是。`,
+          a: formatJ232Answer('都不是', `由周長公式得 $2(x+y)=${perimeter}$，整理成 $y=${perimeter / 2}-x$。因為不是 $y=kx$，也不是 $xy=k$，所以都不是。`),
         };
       },
       () => {
         const diff = [18, 24, 30, 36][randInt(0, 3)];
         return {
           q: `爸爸今年 $x$ 歲，女兒今年 $y$ 歲，兩人相差 ${diff} 歲。判斷 $y$ 與 $x$ 的關係。`,
-          a: `關係式是 $x-y=${diff}$，整理成 $y=x-${diff}$。這不是正比，也不是反比，所以都不是。`,
+          a: formatJ232Answer('都不是', `關係式是 $x-y=${diff}$，整理成 $y=x-${diff}$。這不是正比，也不是反比，所以都不是。`),
         };
       },
       () => {
         return {
           q: `已知圓的半徑為 $x$ 公分，面積為 $y$ 平方公分。判斷 $y$ 與 $x$ 的關係。`,
-          a: `圓面積公式是 $y=\\pi x^2$。這是與 $x^2$ 成正比，不是與 $x$ 本身成正比，也不是反比，所以都不是。`,
+          a: formatJ232Answer('都不是', `圓面積公式是 $y=\\pi x^2$。這是與 $x^2$ 成正比，不是與 $x$ 本身成正比，也不是反比，所以都不是。`),
         };
       },
       () => {
@@ -8000,7 +8783,7 @@
         const perMin = [2, 3, 4][randInt(0, 2)];
         return {
           q: `某電信公司的月租費為 ${base} 元，每分鐘另收 ${perMin} 元，通話 $x$ 分鐘後總費用為 $y$ 元。判斷 $y$ 與 $x$ 的關係。`,
-          a: `關係式是 $y=${perMin}x+${base}$。因為有固定常數項 ${base}，所以不是正比；乘積也不固定，所以不是反比，因此都不是。`,
+          a: formatJ232Answer('都不是', `關係式是 $y=${perMin}x+${base}$。因為有固定常數項 ${base}，所以不是正比；乘積也不固定，所以不是反比，因此都不是。`),
         };
       },
     ];
@@ -8199,6 +8982,62 @@
     const shortText = String(shortAnswer || '').trim();
     const processText = String(process || '').trim();
     return processText ? `簡答：${shortText}\n過程：${processText}` : `簡答：${shortText}`;
+  }
+
+  function inferPracticeShortAnswer(process) {
+    const text = String(process || '').trim();
+    if (!text) return '見過程';
+    const lastSentence = text
+      .split('。')
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .pop() || text;
+    const patterns = [
+      /最簡整數比(?:為)?\s*(.+)$/,
+      /(?:所以|因此|故|可得|解得)\s*(.+)$/,
+      /(?:比值|關係式|新比|濃度|答案)(?:為|是)?\s*(.+)$/,
+    ];
+    for (const pattern of patterns) {
+      const match = lastSentence.match(pattern);
+      if (match && match[1]) return cleanInferredShortAnswer(match[1]);
+    }
+    return cleanInferredShortAnswer(lastSentence.replace(/^(所以|因此|故|可得|解得)\s*/, ''));
+  }
+
+  function cleanInferredShortAnswer(value) {
+    let short = String(value || '').trim();
+    ['，因此', '，所以', '，故', '，解得', '，可得'].forEach((marker) => {
+      const index = short.lastIndexOf(marker);
+      if (index >= 0) short = short.slice(index + marker.length).trim();
+    });
+    short = short
+      .replace(/^最簡整數比(?:為)?\s*/, '')
+      .replace(/^原本/, '')
+      .trim();
+    const finalRatio = short.match(/=([+-]?\d+:[+-]?\d+)\$?$/);
+    if (finalRatio) return `$${finalRatio[1]}$`;
+    const finalEquation = short.match(/(\$[a-zA-Z]\\s*=[^$]+\$)$/);
+    if (finalEquation) return finalEquation[1];
+    return short || '見過程';
+  }
+
+  function formatJ231Answer(shortAnswer, process = '') {
+    return formatPracticeShortAnswer(shortAnswer, process);
+  }
+
+  function finalizeJ231Set(questions, answers) {
+    return {
+      questions,
+      answers: answers.map((answer) => {
+        const text = String(answer || '').trim();
+        if (text.startsWith('簡答：')) return text;
+        return formatJ231Answer(inferPracticeShortAnswer(text), text);
+      }),
+    };
+  }
+
+  function formatJ232Answer(shortAnswer, process = '') {
+    return formatPracticeShortAnswer(shortAnswer, process);
   }
 
   function formatJ241Answer(shortAnswer, process = '') {
@@ -8648,6 +9487,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
+      const cycle = Math.floor(i / 5);
       const solOp = ops[randInt(0, ops.length - 1)];
       const target = targetChoices[randInt(0, targetChoices.length - 1)];
 
@@ -8912,11 +9752,11 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 6;
+      const cycle = Math.floor(i / 6);
 
       if (variant === 0) {
-        const unit = randInt(15, 28);
-        const countItem = randInt(4, 7);
-        const budget = unit * countItem + randInt(8, 25);
+        const countItem = 4 + (cycle % 4);
+        const budget = 90 + cycle * 17 + countItem;
         const bound = fractionToLatex(makeFraction(budget, countItem), true);
         questions.push(`預算購買：一枝螢光筆 $x$ 元，買 ${countItem} 枝的錢不夠付 ${budget} 元，求 $x$ 的範圍。`);
         answers.push(
@@ -8926,17 +9766,20 @@
       }
 
       if (variant === 1) {
-        const gain = randInt(4, 9);
-        const limit = randInt(55, 72);
-        questions.push(`體重限制：小涵現在體重 $x$ 公斤，增加 ${gain} 公斤後超過 ${limit} 公斤，求 $x$ 的範圍。`);
+        const names = ['小涵', '小宇', '小晴', '小恩', '小妍', '小杰', '小蓉', '小翔'];
+        const name = names[cycle % names.length];
+        const gain = 4 + ((cycle * 5 + 1) % 8);
+        const limit = 56 + ((cycle * 11 + 3) % 31);
+        questions.push(`體重限制：${name}現在體重 $x$ 公斤，增加 ${gain} 公斤後超過 ${limit} 公斤，求 $x$ 的範圍。`);
         answers.push(formatJ242Answer(`$x>${limit - gain}$`, `依題意可列 $x+${gain}>${limit}$，所以 $x>${limit - gain}$。`));
         continue;
       }
 
       if (variant === 2) {
-        const a = randInt(70, 92);
-        const b = randInt(74, 96);
-        const target = a + b + randInt(80, 100);
+        const a = 70 + ((cycle * 7 + 3) % 23);
+        const b = 74 + ((cycle * 11 + 5) % 23);
+        const needScore = 80 + ((cycle * 13 + 7) % 21);
+        const target = a + b + needScore;
         questions.push(
           `考試總分：三次數學測驗分數分別為 ${a}、${b}、$x$ 分，總分達 ${target} 分以上，求 $x$ 的最小值。`
         );
@@ -8947,9 +9790,11 @@
       }
 
       if (variant === 3) {
-        const start = randInt(120, 420);
-        const daily = randInt(20, 90);
-        const goal = start + daily * randInt(4, 10) - randInt(5, 25);
+        const start = 120 + ((cycle * 37 + 11) % 301);
+        const daily = 20 + ((cycle * 17 + 9) % 71);
+        const plannedDays = 4 + ((cycle * 5 + 2) % 7);
+        const shortage = 5 + ((cycle * 11 + 3) % 21);
+        const goal = start + daily * plannedDays - shortage;
         questions.push(
           `存款目標：小安已經有 ${start} 元，每天存 ${daily} 元，想買 ${goal} 元的物品，至少要再存 $x$ 天才夠，求 $x$ 的範圍。`
         );
@@ -8963,8 +9808,8 @@
       }
 
       if (variant === 4) {
-        const kids = randInt(4, 8);
-        const each = randInt(4, 9);
+        const kids = 4 + ((cycle * 3 + 1) % 7);
+        const each = 4 + ((cycle * 5 + 2) % 8);
         questions.push(`基礎分配：將 $x$ 顆糖果分給 ${kids} 位小朋友，每人至少得 ${each} 顆，求糖果總數的最小值。`);
         answers.push(
           formatJ242Answer(`${kids * each} 顆`, `每人至少 ${each} 顆，${kids} 人至少共要 $${kids}\\times ${each}=${kids * each}$ 顆，所以 $x≥${kids * each}$，最小值是 ${kids * each}。`)
@@ -8972,8 +9817,9 @@
         continue;
       }
 
-      const length = randInt(6, 15);
-      const areaLimit = length * randInt(4, 10) - randInt(1, length - 1);
+      const length = 6 + ((cycle * 7 + 2) % 10);
+      const heightBase = 4 + ((cycle * 5 + 1) % 8);
+      const areaLimit = length * heightBase - (1 + ((cycle * 3) % (length - 1)));
       const bound = fractionToLatex(makeFraction(areaLimit, length), true);
       questions.push(`矩形面積：長方形長是 ${length}，寬是 $x$，若面積不到 ${areaLimit} 平方公分，求 $x$ 的範圍。`);
       answers.push(
@@ -11293,3 +12139,5 @@
     },
   };
 })();
+
+

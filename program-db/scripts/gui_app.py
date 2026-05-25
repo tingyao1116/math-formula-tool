@@ -6,6 +6,7 @@ import tkinter as tk
 from collections import defaultdict
 from datetime import datetime
 from html import escape
+from html import unescape
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from tkinter import filedialog, messagebox, simpledialog, ttk
@@ -1843,6 +1844,45 @@ class DualDbGui:
             except Exception:
                 pass
 
+    def _render_practice_html_to_markdown(self, html: str):
+        edge = self._find_edge_exe()
+        if not edge:
+            return {"ok": False, "markdown": "", "reason": "edge-not-found"}
+        with NamedTemporaryFile("w", suffix=".html", delete=False, encoding="utf-8") as tmp:
+            tmp.write(html)
+            html_path = Path(tmp.name)
+        try:
+            url = html_path.as_uri()
+            proc = subprocess.run(
+                [
+                    edge,
+                    "--headless",
+                    "--disable-gpu",
+                    "--virtual-time-budget=20000",
+                    "--allow-file-access-from-files",
+                    "--dump-dom",
+                    url,
+                ],
+                check=True,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+            )
+            dom = proc.stdout or ""
+            match = re.search(r'<pre id="practice-md-export"[^>]*>(.*?)</pre>', dom, re.S)
+            if not match:
+                return {"ok": False, "markdown": "", "reason": "md-pre-not-found"}
+            markdown = unescape(match.group(1)).replace("\r\n", "\n").strip() + "\n"
+            return {"ok": True, "markdown": markdown, "reason": ""}
+        except Exception as exc:
+            return {"ok": False, "markdown": "", "reason": str(exc)}
+        finally:
+            try:
+                html_path.unlink(missing_ok=True)
+            except Exception:
+                pass
+
     def _difficulty_rank(self, value: str):
         text = str(value or "").strip()
         mapping = {
@@ -2994,16 +3034,16 @@ class DualDbGui:
     .sheet-head {{ margin-bottom: 14px; padding: 10px 14px; border-radius: 10px; background: #fffdf8; border: 1px solid #e2d9c6; }}
     .sheet-head h1 {{ margin: 0 0 6px; font-size: 24px; }}
     .sheet-head p {{ margin: 0; color: #6f6658; font-size: 13px; }}
-    .practice-list {{ display: flex; flex-direction: column; gap: 14px; }}
-    .practice-pdf-part {{ display: flex; flex-direction: column; gap: 14px; }}
-    .practice-pdf-part + .practice-pdf-part {{ margin-top: 18px; }}
+    .practice-list {{ display: flex; flex-direction: column; gap: 18px; }}
+    .practice-pdf-part {{ display: flex; flex-direction: column; gap: 18px; }}
+    .practice-pdf-part + .practice-pdf-part {{ margin-top: 22px; }}
     .practice-pdf-part.answer-part {{ break-before: page; page-break-before: always; }}
     .practice-pdf-part-title {{ margin: 0 0 2px; padding: 10px 14px; border-radius: 10px; background: #efe4d2; font-size: 20px; }}
-    .practice-pdf-card {{ padding: 14px 16px; border-radius: 12px; background: #fffdf8; border: 1px solid #e2d9c6; break-inside: avoid; page-break-inside: avoid; }}
+    .practice-pdf-card {{ padding: 18px 18px; border-radius: 12px; background: #fffdf8; border: 1px solid #e2d9c6; break-inside: avoid; page-break-inside: avoid; }}
     .practice-pdf-card h2 {{ margin: 0 0 8px; font-size: 18px; }}
     .practice-pdf-card h3 {{ margin: 12px 0 8px; font-size: 16px; }}
-    .practice-pdf-card ol {{ margin: 8px 0 0; padding-left: 1.6em; }}
-    .practice-pdf-card li {{ margin: 0 0 8px; line-height: 1.7; }}
+    .practice-pdf-card ol {{ margin: 12px 0 0; padding-left: 1.8em; }}
+    .practice-pdf-card li {{ margin: 0 0 18px; line-height: 2.0; }}
     .practice-intro {{ margin: 0 0 8px; color: #6f6658; }}
     .card-actions, .interactive-actions {{ display: none !important; }}
   </style>
@@ -3015,6 +3055,7 @@ class DualDbGui:
       <p>依所選無限練習自動生成；本 PDF 只生成一次資料，答案對應前方同一批題目。</p>
     </div>
     <div id="sheet-root" class="practice-list"></div>
+    <pre id="practice-md-export" style="display:none;"></pre>
   </div>
   <script>
     window.__practicePdfItems = {payload_json};
@@ -3138,6 +3179,39 @@ class DualDbGui:
         '</section>';
     }}
 
+    function cleanPracticeMarkdownText(value) {{
+      return String(value == null ? '' : value).replace(/\\r\\n/g, '\\n').replace(/\\n{{3,}}/g, '\\n\\n').trim();
+    }}
+
+    function buildPracticeMarkdown(generatedSets) {{
+      var lines = [];
+      lines.push('# ' + {json.dumps(title, ensure_ascii=False)});
+      lines.push('');
+      lines.push('## 題目');
+      lines.push('');
+      generatedSets.forEach(function(set) {{
+        lines.push('### ' + set.title);
+        if (set.intro) {{
+          lines.push(cleanPracticeMarkdownText(set.intro));
+          lines.push('');
+        }}
+        (set.questions || []).forEach(function(q, idx) {{
+          lines.push((idx + 1) + '. ' + cleanPracticeMarkdownText(q));
+        }});
+        lines.push('');
+      }});
+      lines.push('## 答案');
+      lines.push('');
+      generatedSets.forEach(function(set) {{
+        lines.push('### ' + set.title);
+        (set.answers || []).forEach(function(a, idx) {{
+          lines.push((idx + 1) + '. ' + cleanPracticeMarkdownText(a));
+        }});
+        lines.push('');
+      }});
+      return lines.join('\\n').trim() + '\\n';
+    }}
+
     function renderPracticePdf() {{
       var root = document.getElementById('sheet-root');
       if (!root) return;
@@ -3149,6 +3223,8 @@ class DualDbGui:
       applyPracticeCountOverrides(items);
       var generatedSets = generatePracticePdfSets(items);
       window.__practicePdfGeneratedSets = generatedSets;
+      var mdNode = document.getElementById('practice-md-export');
+      if (mdNode) mdNode.textContent = buildPracticeMarkdown(generatedSets);
       if (window.__practicePdfMode === 'combined') {{
         root.innerHTML =
           '<section class="practice-pdf-part question-part"><h2 class="practice-pdf-part-title">題目</h2>' +
@@ -3189,6 +3265,7 @@ class DualDbGui:
             base_name = f"selected-practices-{len(records)}"
 
         combined_pdf = out_dir / f"{base_name}_題目與答案.pdf"
+        combined_md = out_dir / f"{base_name}_題目與答案.md"
         export_seed = "practice-pdf|" + datetime.now().isoformat(timespec="microseconds")
 
         combined_html = self._build_practice_pdf_html(
@@ -3202,8 +3279,13 @@ class DualDbGui:
         combined_result = self._print_html_to_pdf(combined_html, combined_pdf)
 
         if combined_result["ok"]:
-            self.status_var.set(f"無限練習 PDF 匯出完成：{combined_pdf.name}")
-            return messagebox.showinfo("完成", f"已輸出：\n{combined_pdf}")
+            md_result = self._render_practice_html_to_markdown(combined_html)
+            if md_result.get("ok"):
+                combined_md.write_text(md_result.get("markdown", ""), encoding="utf-8")
+                self.status_var.set(f"無限練習匯出完成：{combined_pdf.name}、{combined_md.name}")
+                return messagebox.showinfo("完成", f"已輸出：\n{combined_pdf}\n{combined_md}")
+            self.status_var.set(f"無限練習 PDF 匯出完成：{combined_pdf.name}（MD 失敗）")
+            return messagebox.showwarning("部分完成", f"已輸出 PDF：\n{combined_pdf}\n\n但 Markdown 匯出失敗：\n{md_result.get('reason','未知錯誤')}")
 
         fallback_paths = []
         if combined_result.get("html"):
