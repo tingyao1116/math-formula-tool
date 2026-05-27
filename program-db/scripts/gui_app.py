@@ -140,7 +140,7 @@ class DualDbGui:
         current = mode if mode is not None else self.mode
         return {
             "practice_records": "練習本體",
-            "practice_bindings": "掛載關聯",
+            "practice_bindings": "章節綁定",
             "practice_legacy": "舊式直連",
         }.get(current, "無限練習")
 
@@ -169,7 +169,7 @@ class DualDbGui:
         self.main_overview_btn.pack(side="left", padx=(0, 10))
         self.practice_record_btn = ttk.Button(filter_bar, text="練習本體", style="Compact.TButton", command=lambda: self.switch_mode("practice_records"))
         self.practice_record_btn.pack(side="left", padx=(0, 4))
-        self.practice_binding_btn = ttk.Button(filter_bar, text="掛載關聯", style="Compact.TButton", command=lambda: self.switch_mode("practice_bindings"))
+        self.practice_binding_btn = ttk.Button(filter_bar, text="章節綁定", style="Compact.TButton", command=lambda: self.switch_mode("practice_bindings"))
         self.practice_binding_btn.pack(side="left", padx=(0, 4))
         self.practice_legacy_btn = ttk.Button(filter_bar, text="舊式直連", style="Compact.TButton", command=lambda: self.switch_mode("practice_legacy"))
         self.practice_legacy_btn.pack(side="left", padx=(0, 10))
@@ -443,7 +443,7 @@ class DualDbGui:
             "main_overviews": "主題整理",
             "closings": "章節後話",
             "practice_records": "練習本體",
-            "practice_bindings": "掛載關聯",
+            "practice_bindings": "章節綁定",
             "practice_legacy": "舊式直連",
         }.get(mode, mode)
         if self._is_practice_mode(mode):
@@ -781,7 +781,7 @@ class DualDbGui:
                     "source": "data/formula-practice.js",
                     "_help": [
                         "這一頁是唯讀清單，不直接修改資料。",
-                        "若要搬成新制，請去『練習本體』與『掛載關聯』查看。"
+                        "若要搬成新制，請去『練習本體』與『章節綁定』查看。"
                     ],
                 },
                 "previewItem": topic_meta,
@@ -1089,7 +1089,7 @@ class DualDbGui:
             "main_overviews": "主題整理",
             "closings": "章節後話",
             "practice_records": "練習本體",
-            "practice_bindings": "掛載關聯",
+            "practice_bindings": "章節綁定",
             "practice_legacy": "舊式直連",
         }.get(self.mode, self.mode)
         if self._is_practice_mode():
@@ -1163,7 +1163,7 @@ class DualDbGui:
     # ----- actions -----
     def new_template(self):
         if self.mode == "practice_legacy":
-            return messagebox.showwarning("提醒", "舊式直連是唯讀清單，請改到『練習本體』或『掛載關聯』。")
+            return messagebox.showwarning("提醒", "舊式直連是唯讀清單，請改到『練習本體』或『章節綁定』。")
         if self.mode == "topics":
             obj = {
                 "id": "new-topic-id", "title": "新主題", "stage": "", "grade": "", "term": "", "chapter": "", "domain": "",
@@ -2982,6 +2982,35 @@ class DualDbGui:
         dialog.wait_window()
         return result["counts"]
 
+    def _open_practice_export_format_dialog(self):
+        result = {"format": None}
+        dialog = tk.Toplevel(self.root)
+        dialog.title("選擇匯出格式")
+        dialog.transient(self.root)
+        dialog.grab_set()
+        dialog.geometry("420x180")
+        dialog.resizable(False, False)
+
+        body = ttk.Frame(dialog, padding=14)
+        body.pack(fill="both", expand=True)
+        ttk.Label(body, text="請選擇要匯出的格式：").pack(anchor="w", pady=(0, 10))
+
+        button_row = ttk.Frame(body)
+        button_row.pack(fill="x")
+
+        def choose(fmt: str):
+            result["format"] = fmt
+            dialog.destroy()
+
+        ttk.Button(button_row, text="只匯出 PDF", command=lambda: choose("pdf")).pack(side="left")
+        ttk.Button(button_row, text="只匯出 MD", command=lambda: choose("md")).pack(side="left", padx=(8, 0))
+        ttk.Button(button_row, text="PDF + MD", style="Compact.TButton", command=lambda: choose("both")).pack(side="left", padx=(8, 0))
+        ttk.Button(body, text="取消", command=dialog.destroy).pack(anchor="e", pady=(12, 0))
+
+        dialog.bind("<Escape>", lambda _event: dialog.destroy())
+        dialog.wait_window()
+        return result["format"]
+
     def _build_practice_pdf_html(
         self,
         records: list[dict],
@@ -3254,6 +3283,10 @@ class DualDbGui:
         if not counts:
             return
 
+        export_format = self._open_practice_export_format_dialog()
+        if not export_format:
+            return
+
         out_dir = filedialog.askdirectory(title="選擇無限練習 PDF 輸出資料夾")
         if not out_dir:
             return
@@ -3276,25 +3309,35 @@ class DualDbGui:
             combined=True,
         )
 
-        combined_result = self._print_html_to_pdf(combined_html, combined_pdf)
-
-        if combined_result["ok"]:
+        if export_format == "md":
             md_result = self._render_practice_html_to_markdown(combined_html)
             if md_result.get("ok"):
                 combined_md.write_text(md_result.get("markdown", ""), encoding="utf-8")
-                self.status_var.set(f"無限練習匯出完成：{combined_pdf.name}、{combined_md.name}")
-                return messagebox.showinfo("完成", f"已輸出：\n{combined_pdf}\n{combined_md}")
-            self.status_var.set(f"無限練習 PDF 匯出完成：{combined_pdf.name}（MD 失敗）")
-            return messagebox.showwarning("部分完成", f"已輸出 PDF：\n{combined_pdf}\n\n但 Markdown 匯出失敗：\n{md_result.get('reason','未知錯誤')}")
+                self.status_var.set(f"無限練習 MD 匯出完成：{combined_md.name}")
+                return messagebox.showinfo("完成", f"已輸出：\n{combined_md}")
+            return messagebox.showerror("輸出失敗", f"Markdown 匯出失敗：\n{md_result.get('reason','未知錯誤')}")
 
-        fallback_paths = []
-        if combined_result.get("html"):
-            fallback_paths.append(str(combined_result["html"]))
-        if fallback_paths:
-            self.status_var.set("找不到 Edge，已改輸出 HTML。")
-            return messagebox.showwarning("未偵測到 Edge", "目前無法直接輸出 PDF，已改輸出 HTML：\n" + "\n".join(fallback_paths))
+        combined_result = self._print_html_to_pdf(combined_html, combined_pdf)
+        if not combined_result["ok"]:
+            fallback_paths = []
+            if combined_result.get("html"):
+                fallback_paths.append(str(combined_result["html"]))
+            if fallback_paths:
+                self.status_var.set("找不到 Edge，已改輸出 HTML。")
+                return messagebox.showwarning("未偵測到 Edge", "目前無法直接輸出 PDF，已改輸出 HTML：\n" + "\n".join(fallback_paths))
+            return messagebox.showerror("輸出失敗", combined_result.get("reason", "") or "未知錯誤")
 
-        return messagebox.showerror("輸出失敗", combined_result.get("reason", "") or "未知錯誤")
+        if export_format == "pdf":
+            self.status_var.set(f"無限練習 PDF 匯出完成：{combined_pdf.name}")
+            return messagebox.showinfo("完成", f"已輸出：\n{combined_pdf}")
+
+        md_result = self._render_practice_html_to_markdown(combined_html)
+        if md_result.get("ok"):
+            combined_md.write_text(md_result.get("markdown", ""), encoding="utf-8")
+            self.status_var.set(f"無限練習匯出完成：{combined_pdf.name}、{combined_md.name}")
+            return messagebox.showinfo("完成", f"已輸出：\n{combined_pdf}\n{combined_md}")
+        self.status_var.set(f"無限練習 PDF 匯出完成：{combined_pdf.name}（MD 失敗）")
+        return messagebox.showwarning("部分完成", f"已輸出 PDF：\n{combined_pdf}\n\n但 Markdown 匯出失敗：\n{md_result.get('reason','未知錯誤')}")
 
     def _split_pipe(self, value: str):
         text = (value or "").strip()

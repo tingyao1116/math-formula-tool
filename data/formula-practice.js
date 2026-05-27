@@ -1004,19 +1004,150 @@
     return { questions, answers };
   }
 
-  function buildSquareRootBasicSet(count) {
+  function buildJ321SqrtEstimateMixedSet(count) {
+    function pickFrom(list) {
+      return list[randInt(0, list.length - 1)];
+    }
+    function simplifySquareRoot(value) {
+      let outside = 1;
+      let inside = value;
+      for (let k = 2; k * k <= inside; k += 1) {
+        while (inside % (k * k) === 0) {
+          outside *= k;
+          inside /= (k * k);
+        }
+      }
+      return { outside, inside };
+    }
+    function buildEquivalentSqrtExprFromValue(value) {
+      const simple = simplifySquareRoot(value);
+      if (simple.outside === 1) return `\\sqrt{${value}}`;
+      const useSimplified = randInt(0, 1) === 1;
+      if (useSimplified) return `${simple.outside}\\sqrt{${simple.inside}}`;
+      return `\\sqrt{${value}}`;
+    }
+    function buildIntervalTargetExpr(minRoot, maxRoot) {
+      const n = randInt(minRoot, maxRoot);
+      const delta = randInt(1, 2 * n);
+      const value = n * n + delta;
+      return {
+        n,
+        value,
+        expr: buildEquivalentSqrtExprFromValue(value),
+      };
+    }
+
     const questions = [];
     const answers = [];
+    const templates = [
+      "nearest-integer",
+      "between-two-integers",
+      "integer-part",
+      "count-n-in-interval",
+      "find-a-from-interval",
+      "two-radicals-integer-part",
+    ];
+
     for (let i = 0; i < count; i += 1) {
-      const n = randInt(2, 20);
-      if (i % 2 === 0) {
-        questions.push(`寫出 \\(${n}\\) 的平方根。`);
-        answers.push(`\\(${n}\\) 的平方根是 \\(\\pm\\sqrt{${n}}\\)。`);
-      } else {
-        const k = randInt(1, 15);
-        questions.push(`計算主平方根：\\(\\sqrt{${k * k}}\\)。`);
-        answers.push(`\\(\\sqrt{${k * k}}=${k}\\)。`);
+      const type = templates[i % templates.length];
+
+      if (type === "nearest-integer") {
+        const { n, value, expr } = buildIntervalTargetExpr(8, 35);
+        const x = value;
+        const delta = x - n * n;
+        const nearest = delta <= n ? n : n + 1;
+        const wording = pickFrom([
+          `哪一個整數最接近 \\(${expr}\\)？`,
+          `在整數中，與 \\(${expr}\\) 距離最近的是哪一個？`,
+          `估計 \\(${expr}\\) 最接近的整數。`,
+        ]);
+        questions.push(wording);
+        answers.push(`\\(${nearest}\\)`);
+        continue;
       }
+
+      if (type === "between-two-integers") {
+        const { n, value, expr } = buildIntervalTargetExpr(8, 26);
+        const wording = pickFrom([
+          `\\(${expr}\\) 介於哪兩個連續整數之間？`,
+          `判斷：\\(${expr}\\) 落在哪一段 \\(k<${expr}<k+1\\)（寫出兩個整數）。`,
+          `請寫出滿足 \\(a<${expr}<b\\) 的連續整數 \\(a,b\\)。`,
+        ]);
+        questions.push(wording);
+        answers.push(`\\(${n}\\) 和 \\(${n + 1}\\)`);
+        continue;
+      }
+
+      if (type === "integer-part") {
+        const { n, value, expr } = buildIntervalTargetExpr(10, 30);
+        const useVarStyle = randInt(0, 1) === 1;
+        if (useVarStyle) {
+          const varName = pickFrom(["a", "b", "k"]);
+          const wordingVar = pickFrom([
+            `設 \\(${varName}\\) 為 \\(${expr}\\) 的整數部分，求 \\(${varName}\\)。`,
+            `令 \\(${varName}=\\lfloor ${expr} \\rfloor\\)，求 \\(${varName}\\)。`,
+          ]);
+          questions.push(wordingVar);
+          answers.push(`\\(${n}\\)`);
+          continue;
+        }
+        const wording = pickFrom([
+          `求 \\(${expr}\\) 的整數部分。`,
+          `\\(${expr}\\) 的整數部分是多少？`,
+          `若 \\(a<${expr}<a+1\\)，求 \\(a\\)。`,
+        ]);
+        questions.push(wording);
+        answers.push(`\\(${n}\\)`);
+        continue;
+      }
+
+      if (type === "count-n-in-interval") {
+        const a = randInt(6, 20);
+        const b = randInt(a + 2, a + 7);
+        const countN = b * b - a * a - 1;
+        questions.push(`若 \\(${a}<\\sqrt{n}<${b}\\)，且 \\(n\\) 為正整數，符合條件的 \\(n\\) 有幾個？`);
+        answers.push(`\\(${countN}\\)`);
+        continue;
+      }
+
+      if (type === "find-a-from-interval") {
+        const { n, value, expr } = buildIntervalTargetExpr(7, 28);
+        const a = n;
+        const useVarStyle = randInt(0, 1) === 1;
+        if (useVarStyle) {
+          const varName = pickFrom(["a", "m", "t"]);
+          const wordingVar = pickFrom([
+            `設 \\(${varName}\\) 為 \\(${expr}\\) 的整數部分，求 \\(${varName}\\)。`,
+            `若 \\(${varName}<${expr}<${varName}+1\\)，且 \\(${varName}\\) 為整數，求 \\(${varName}\\)。`,
+          ]);
+          questions.push(wordingVar);
+          answers.push(`\\(${a}\\)`);
+          continue;
+        }
+        const wording = pickFrom([
+          `若 \\(a<${expr}<a+1\\)，且 \\(a\\) 為正整數，求 \\(a\\)。`,
+          `已知 \\(${expr}\\) 介於兩個連續整數之間，寫出較小的那個整數 \\(a\\)。`,
+        ]);
+        questions.push(wording);
+        answers.push(`\\(${a}\\)`);
+        continue;
+      }
+
+      if (type === "two-radicals-integer-part") {
+        const left = buildIntervalTargetExpr(6, 16);
+        const right = buildIntervalTargetExpr(7, 18);
+        const leftVar = pickFrom(["a", "m"]);
+        const rightVar = leftVar === "a" ? "b" : "n";
+        const rootValue = left.n + right.n + 1;
+        const question = pickFrom([
+          `設 \\(${leftVar}\\) 為 \\(${left.expr}\\) 的整數部分，\\(${rightVar}\\) 為 \\(${right.expr}\\) 的整數部分，求 \\(\\sqrt{${leftVar}+${rightVar}+1}\\)。`,
+          `若 \\(${leftVar}=\\lfloor ${left.expr} \\rfloor\\)、\\(${rightVar}=\\lfloor ${right.expr} \\rfloor\\)，求 \\(\\sqrt{${leftVar}+${rightVar}+1}\\)。`,
+        ]);
+        questions.push(question);
+        answers.push(`\\(${Math.sqrt(rootValue)}\\)`);
+        continue;
+      }
+
     }
     return { questions, answers };
   }
@@ -2309,7 +2440,7 @@
       const useAddition = randInt(0, 1) === 1;
       const leftInner = addFraction(subFraction(addFraction(makeFraction(base, 1), a), b), subFraction(c, d));
       const rightInner = addFraction(
-        addFraction(subFraction(makeFraction(base, 1), a), b),
+        subFraction(subFraction(makeFraction(base, 1), a), b),
         subFraction(negateFraction(c), d)
       );
       const result = useAddition
@@ -2319,7 +2450,7 @@
       const rightExpr = `${base}-${fractionToLatex(a)}-${fractionToLatex(b)}-${fractionToLatex(c)}-${fractionToLatex(d)}`;
       questions.push(`計算：$\\left|${leftExpr}\\right|${useAddition ? '+' : '-'}\\left|${rightExpr}\\right|$。`);
       answers.push(
-        `先判斷兩個絕對值內都為正，可直接去絕對值：$(${leftExpr})${useAddition ? '+' : '-'}(${rightExpr})$。去絕對值後，有些同號項會合併成兩倍，有些異號項會互相抵消，整理後得 $${fractionToLatex(result, true)}$。`
+        `先各自算兩個絕對值內部，再取絕對值：$\\left|${leftExpr}\\right|=${fractionToLatex(absFraction(leftInner), true)}$、$\\left|${rightExpr}\\right|=${fractionToLatex(absFraction(rightInner), true)}$。最後依題目的 ${useAddition ? '加法' : '減法'} 合併，得 $${fractionToLatex(result, true)}$。`
       );
     }
     return { questions, answers };
@@ -2710,16 +2841,22 @@
           { cost: 840, profitRate: 40, discount: 10 },
           { cost: 560, profitRate: 25, discount: 9 },
         ];
-        const pick = templates[cycle % templates.length];
+        const validTemplates = templates.filter((item) => {
+          const soldValue = (item.cost * (100 + item.profitRate)) / 100;
+          const listValue = (soldValue * 10) / item.discount;
+          return Number.isInteger(listValue);
+        });
+        if (!validTemplates.length) {
+          questions.push('某商品的成本與折扣資料有誤，暫無可用題目。');
+          answers.push('本題資料需調整為可整數計算。');
+          continue;
+        }
+        const pick = validTemplates[cycle % validTemplates.length];
         const cost = pick.cost;
         const profitRate = pick.profitRate;
         const discount = pick.discount;
         const sold = (cost * (100 + profitRate)) / 100;
         const list = (sold * 10) / discount;
-        if (!Number.isInteger(list)) {
-          i -= 1;
-          continue;
-        }
         questions.push(
           `某商品定價 ${list} 元，若以定價的 ${discount} 折出售，可獲利 ${profitRate}% ，求此商品的成本。`
         );
@@ -2739,16 +2876,22 @@
           { cost: 900, markup: 40, discount: 10 },
           { cost: 700, markup: 50, discount: 8 },
         ];
-        const pick = templates[cycle % templates.length];
+        const validTemplates = templates.filter((item) => {
+          const soldValue = (((item.cost * (100 + item.markup)) / 100) * item.discount) / 10;
+          const profitValue = soldValue - item.cost;
+          return Number.isInteger(profitValue) && profitValue > 0;
+        });
+        if (!validTemplates.length) {
+          questions.push('某商品的加價與折扣資料有誤，暫無可用題目。');
+          answers.push('本題資料需調整為可整數計算且有正利潤。');
+          continue;
+        }
+        const pick = validTemplates[cycle % validTemplates.length];
         const cost = pick.cost;
         const markup = pick.markup;
         const discount = pick.discount;
         const sold = (((cost * (100 + markup)) / 100) * discount) / 10;
         const profit = sold - cost;
-        if (!Number.isInteger(profit) || profit <= 0) {
-          i -= 1;
-          continue;
-        }
         questions.push(
           `某商品先按成本提高 ${markup}% 做為定價，再以定價的 ${discount} 折出售，結果獲利 ${profit} 元，求成本。`
         );
@@ -2854,24 +2997,36 @@
   function buildAgeApplicationSet(count) {
     const questions = [];
     const answers = [];
-    const ageTemplates = [
+    const ratioAfterTemplates = [
       { child: 9, father: 36, afterYears: 3 },
-      { child: 12, father: 36, total: 48 },
-      { student: 18, teacher: 44, phrasePast: 5, phraseFuture: 65 },
       { child: 11, father: 44, afterYears: 4 },
-      { child: 14, father: 42, total: 56 },
-      { student: 16, teacher: 40, phrasePast: 4, phraseFuture: 60 },
       { child: 13, father: 52, afterYears: 5 },
+      { child: 8, father: 32, afterYears: 6 },
+      { child: 10, father: 40, afterYears: 2 },
+      { child: 12, father: 48, afterYears: 4 },
+    ];
+    const sumRatioTemplates = [
+      { child: 12, father: 36, total: 48 },
+      { child: 14, father: 42, total: 56 },
       { child: 15, father: 45, total: 60 },
-      { student: 20, teacher: 50, phrasePast: 6, phraseFuture: 74 },
+      { child: 16, father: 48, total: 64 },
+      { child: 18, father: 54, total: 72 },
+      { child: 20, father: 60, total: 80 },
+    ];
+    const phraseTemplates = [
+      { student: 25, teacher: 45 },
+      { student: 24, teacher: 42 },
+      { student: 28, teacher: 50 },
+      { student: 18, teacher: 30 },
+      { student: 22, teacher: 38 },
+      { student: 30, teacher: 54 },
     ];
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
       const cycle = Math.floor(i / 3);
-      const base = ageTemplates[(cycle + variant) % ageTemplates.length];
-      const t = base;
       if (variant === 0) {
+        const t = ratioAfterTemplates[cycle % ratioAfterTemplates.length];
         questions.push(
           `年齡追蹤問題：父親現在年齡是兒子的 4 倍，${t.afterYears} 年後兩人的年齡和為 ${t.child + t.father + 2 * t.afterYears} 歲，求父子現在各幾歲。`
         );
@@ -2879,16 +3034,20 @@
           `設兒子現在 $x$ 歲，父親現在 $y$ 歲。依題意可列聯立方程式 $${formatSystemLatex(`y=4x`, `(x+${t.afterYears})+(y+${t.afterYears})=${t.child + t.father + 2 * t.afterYears}`)}$。解得 $x=${t.child},\\ y=${t.father}$，所以兒子 ${t.child} 歲、父親 ${t.father} 歲。`
         );
       } else if (variant === 1) {
+        const t = sumRatioTemplates[cycle % sumRatioTemplates.length];
         questions.push(`年齡推算問題：已知父子年齡和為 ${t.total} 歲，且父親年齡為兒子的 3 倍，求兩人各幾歲。`);
         answers.push(
           `設兒子現在 $x$ 歲，父親現在 $y$ 歲。依題意可列聯立方程式 $${formatSystemLatex(`x+y=${t.total}`, `y=3x`)}$。解得 $x=${t.child},\\ y=${t.father}$，所以兒子 ${t.child} 歲、父親 ${t.father} 歲。`
         );
       } else {
+        const t = phraseTemplates[cycle % phraseTemplates.length];
+        const phrasePast = 2 * t.student - t.teacher;
+        const phraseFuture = 2 * t.teacher - t.student;
         questions.push(
-          `年齡追蹤問題：老師對學生說：「我在你這個年紀時，你只有 ${t.phrasePast} 歲；等你到我現在這個年紀時，我就 ${t.phraseFuture} 歲了。」求老師與學生現在各幾歲。`
+          `年齡追蹤問題：老師對學生說：「我在你這個年紀時，你只有 ${phrasePast} 歲；等你到我現在這個年紀時，我就 ${phraseFuture} 歲了。」求老師與學生現在各幾歲。`
         );
         answers.push(
-          `設學生現在 $x$ 歲，老師現在 $y$ 歲。依題意可列聯立方程式 $${formatSystemLatex(`y-x=${t.student - t.phrasePast}`, `x+(y-x)=${t.phraseFuture}`)}$。解得 $x=${t.student},\\ y=${t.teacher}$，所以學生 ${t.student} 歲、老師 ${t.teacher} 歲。`
+          `設學生現在 $x$ 歲，老師現在 $y$ 歲。由「我在你這個年紀時，你只有 ${phrasePast} 歲」得 $x-(y-x)=${phrasePast}$，即 $2x-y=${phrasePast}$。由「你到我現在年紀時，我就 ${phraseFuture} 歲」得 $y+(y-x)=${phraseFuture}$，即 $2y-x=${phraseFuture}$。聯立解得 $x=${t.student},\\ y=${t.teacher}$，所以學生 ${t.student} 歲、老師 ${t.teacher} 歲。`
         );
       }
     }
@@ -3010,24 +3169,37 @@
   function buildJ133WorkRateSet(count) {
     const questions = [];
     const answers = [];
-    const templates = [
+    const cooperateThenSoloTemplates = [
       { a: 20, b: 25, remainSoloDays: 2, togetherDays: 10, who: '甲', unit: '天', thing: '一項工程' },
-      { a: 50, b: 40, togetherHours: 24, soloLeftHours: 14, who: '阿南', unit: '小時', thing: '一份文件' },
-      { a: 10, b: 15, togetherHours: 6, thing: '一座空池', isFill: true },
       { a: 24, b: 30, remainSoloDays: 3, togetherDays: 12, who: '甲', unit: '天', thing: '一段圍牆' },
-      { a: 60, b: 45, togetherHours: 18, soloLeftHours: 12, who: '阿宏', unit: '小時', thing: '一份報表' },
-      { a: 12, b: 12, togetherHours: 6, thing: '一座空池', isFill: true },
       { a: 18, b: 24, remainSoloDays: 2, togetherDays: 8, who: '乙', unit: '天', thing: '一份設計圖' },
+      { a: 16, b: 20, remainSoloDays: 2, togetherDays: 6, who: '甲', unit: '天', thing: '一片農地' },
+      { a: 15, b: 18, remainSoloDays: 3, togetherDays: 5, who: '乙', unit: '天', thing: '一份企畫書' },
+      { a: 30, b: 20, remainSoloDays: 1, togetherDays: 6, who: '甲', unit: '天', thing: '一批零件' },
+    ];
+    const typingThenSoloTemplates = [
+      { a: 50, b: 40, togetherHours: 24, soloLeftHours: 14, who: '阿南', unit: '小時', thing: '一份文件' },
+      { a: 60, b: 45, togetherHours: 18, soloLeftHours: 12, who: '阿宏', unit: '小時', thing: '一份報表' },
       { a: 48, b: 36, togetherHours: 16, soloLeftHours: 10, who: '小芸', unit: '小時', thing: '一份稿件' },
+      { a: 40, b: 30, togetherHours: 15, soloLeftHours: 10, who: '小凱', unit: '小時', thing: '一份企劃案' },
+      { a: 36, b: 24, togetherHours: 12, soloLeftHours: 8, who: '小安', unit: '小時', thing: '一份測驗卷' },
+      { a: 54, b: 27, togetherHours: 16, soloLeftHours: 12, who: '小潔', unit: '小時', thing: '一份海報' },
+    ];
+    const fillPoolTemplates = [
+      { a: 10, b: 15, togetherHours: 6, thing: '一座空池' },
+      { a: 12, b: 12, togetherHours: 6, thing: '一座空池' },
       { a: 15, b: 30, togetherHours: 10, thing: '一座空池', isFill: true },
+      { a: 18, b: 9, togetherHours: 6, thing: '一個水塔' },
+      { a: 20, b: 30, togetherHours: 12, thing: '一座蓄水池' },
+      { a: 24, b: 12, togetherHours: 8, thing: '一個消防水箱' },
     ];
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
       const cycle = Math.floor(i / 3);
-      const t = templates[(cycle * 3 + variant) % templates.length];
 
       if (variant === 0) {
+        const t = cooperateThenSoloTemplates[cycle % cooperateThenSoloTemplates.length];
         questions.push(
           `${t.thing}，甲單獨做 ${t.a}${t.unit} 可完成，乙單獨做 ${t.b}${t.unit} 可完成，兩人合作若干天後，剩下的由甲單獨做 ${t.remainSoloDays}${t.unit} 完工，求兩人合作了幾天？`
         );
@@ -3038,6 +3210,7 @@
       }
 
       if (variant === 1) {
+        const t = typingThenSoloTemplates[cycle % typingThenSoloTemplates.length];
         questions.push(
           `${t.thing}，阿南單獨打字要 ${t.a}${t.unit} 完成，小蘭單獨打字要 ${t.b}${t.unit} 完成，兩人合作打了 ${t.togetherHours}${t.unit} 後小蘭離開，阿南還要幾${t.unit}才做得完？`
         );
@@ -3047,6 +3220,7 @@
         continue;
       }
 
+      const t = fillPoolTemplates[cycle % fillPoolTemplates.length];
       questions.push(
         `A 管單獨注水 ${t.a} 小時可把空池注滿，B 管單獨注水 ${t.b} 小時可把空池注滿，兩管同時開放幾小時可將空池注滿？`
       );
@@ -3158,95 +3332,59 @@
   function buildJ133ScorePenaltySet(count) {
     const questions = [];
     const answers = [];
-    const templates = [
-      {
-        total: 20,
-        answered: 18,
-        plus: 5,
-        minus: 2,
-        score: 71,
-        correct: 15,
-        wrong: 3,
-        noAnswer: 2,
-        wording: '小鈴作答 18 題後得 71 分，她答對幾題？',
-      },
-      {
-        total: 25,
-        answered: 25,
-        plus: 4,
-        minus: 1,
-        score: 67,
-        correct: 18,
-        wrong: 7,
-        noAnswer: 0,
-        wording: '小立全部寫完後得 67 分，求他答錯幾題？',
-      },
-      {
-        total: 20,
-        answered: 20,
-        plus: 5,
-        minus: 1,
-        score: 76,
-        correct: 16,
-        wrong: 4,
-        noAnswer: 0,
-        wording: '小華全部作答後共得 76 分，求他答對幾題？',
-      },
-      {
-        total: 24,
-        answered: 22,
-        plus: 4,
-        minus: 1,
-        score: 73,
-        correct: 19,
-        wrong: 3,
-        noAnswer: 2,
-        wording: '小安作答 22 題後得 73 分，她答對幾題？',
-      },
-      {
-        total: 30,
-        answered: 30,
-        plus: 3,
-        minus: 1,
-        score: 62,
-        correct: 23,
-        wrong: 7,
-        noAnswer: 0,
-        wording: '小凱全部寫完後得 62 分，求他答錯幾題？',
-      },
-      {
-        total: 18,
-        answered: 18,
-        plus: 5,
-        minus: 2,
-        score: 54,
-        correct: 15,
-        wrong: 3,
-        noAnswer: 0,
-        wording: '小芸全部作答後共得 54 分，求她答對幾題？',
-      },
+    const partialAnswerTemplates = [
+      { total: 20, answered: 18, plus: 5, minus: 2, correct: 15, name: '小鈴' },
+      { total: 24, answered: 22, plus: 4, minus: 1, correct: 19, name: '小安' },
+      { total: 30, answered: 27, plus: 3, minus: 1, correct: 21, name: '小傑' },
+      { total: 25, answered: 23, plus: 4, minus: 2, correct: 17, name: '小萱' },
+      { total: 18, answered: 16, plus: 5, minus: 2, correct: 13, name: '小晴' },
+      { total: 28, answered: 25, plus: 3, minus: 1, correct: 20, name: '小凱' },
+    ];
+    const askWrongTemplates = [
+      { total: 25, plus: 4, minus: 1, wrong: 7, name: '小立' },
+      { total: 20, plus: 5, minus: 1, wrong: 4, name: '小華' },
+      { total: 30, plus: 3, minus: 1, wrong: 7, name: '小凱' },
+      { total: 24, plus: 4, minus: 2, wrong: 5, name: '小恩' },
+      { total: 18, plus: 5, minus: 2, wrong: 3, name: '小芸' },
+      { total: 26, plus: 3, minus: 1, wrong: 6, name: '小豪' },
+    ];
+    const askCorrectTemplates = [
+      { total: 20, plus: 5, minus: 1, correct: 16, name: '小華' },
+      { total: 18, plus: 5, minus: 2, correct: 12, name: '小芸' },
+      { total: 24, plus: 4, minus: 1, correct: 19, name: '小安' },
+      { total: 25, plus: 4, minus: 2, correct: 18, name: '小軒' },
+      { total: 30, plus: 3, minus: 1, correct: 22, name: '小彤' },
+      { total: 28, plus: 5, minus: 2, correct: 20, name: '小禹' },
     ];
 
     for (let i = 0; i < count; i += 1) {
-      const t = templates[i % templates.length];
       if (i % 3 === 0) {
+        const t = partialAnswerTemplates[Math.floor(i / 3) % partialAnswerTemplates.length];
+        const wrong = t.answered - t.correct;
+        const score = t.plus * t.correct - t.minus * wrong;
         questions.push(
-          `數學競賽共 ${t.total} 題，答對 1 題得 ${t.plus} 分，答錯 1 題倒扣 ${t.minus} 分，不作答不計分。若${t.wording}`
+          `數學競賽共 ${t.total} 題，答對 1 題得 ${t.plus} 分，答錯 1 題倒扣 ${t.minus} 分，不作答不計分。${t.name} 作答 ${t.answered} 題後得 ${score} 分，求他答對幾題。`
         );
         answers.push(
-          `設答對 $x$ 題，則答錯 ${t.answered}-x 題。依題意可列式：$${t.plus}x-${t.minus}(${t.answered}-x)=${t.score}$。解得 $x=${t.correct}$，所以他答對 ${t.correct} 題。`
+          `設答對 $x$ 題，則答錯 ${t.answered}-x 題。依題意可列式：$${t.plus}x-${t.minus}(${t.answered}-x)=${score}$。解得 $x=${t.correct}$，所以他答對 ${t.correct} 題。`
         );
       } else if (i % 3 === 1) {
-        questions.push(`入學測驗共 ${t.total} 題，答對得 ${t.plus} 分，答錯扣 ${t.minus} 分。${t.wording}`);
+        const t = askWrongTemplates[Math.floor(i / 3) % askWrongTemplates.length];
+        const correct = t.total - t.wrong;
+        const score = t.plus * correct - t.minus * t.wrong;
+        questions.push(`入學測驗共 ${t.total} 題，答對得 ${t.plus} 分，答錯扣 ${t.minus} 分。${t.name} 全部作答後得 ${score} 分，求他答錯幾題。`);
         answers.push(
-          `設答錯 $x$ 題，則答對 ${t.total}-x 題。依題意可列式：$${t.plus}(${t.total}-x)-${t.minus}x=${t.score}$。解得 $x=${t.wrong}$，所以他答錯 ${t.wrong} 題。`
+          `設答錯 $x$ 題，則答對 ${t.total}-x 題。依題意可列式：$${t.plus}(${t.total}-x)-${t.minus}x=${score}$。解得 $x=${t.wrong}$，所以他答錯 ${t.wrong} 題。`
         );
       } else {
+        const t = askCorrectTemplates[Math.floor(i / 3) % askCorrectTemplates.length];
+        const wrong = t.total - t.correct;
+        const score = t.plus * t.correct - t.minus * wrong;
         questions.push(
-          `小華參加段考共 ${t.total} 題，答對得 ${t.plus} 分，答錯扣 ${t.minus} 分，全部作答後共得 ${t.score} 分，求他答對幾題？`
+          `${t.name} 參加段考共 ${t.total} 題，答對得 ${t.plus} 分，答錯扣 ${t.minus} 分，全部作答後共得 ${score} 分，求他答對幾題？`
         );
         answers.push(
-          `設答對 $x$ 題，則答錯 ${t.total}-x 題。依題意可列式：$${t.plus}x-${t.minus}(${t.total}-x)=${t.score}$。解得 $x=${t.correct}$，所以他答對 ${t.correct} 題。`
+          `設答對 $x$ 題，則答錯 ${t.total}-x 題。依題意可列式：$${t.plus}x-${t.minus}(${t.total}-x)=${score}$。解得 $x=${t.correct}$，所以他答對 ${t.correct} 題。`
         );
       }
     }
@@ -3333,7 +3471,7 @@
           `某網咖的基本費用為 ${base} 元（可使用 $t$ 分鐘），超過 $t$ 分鐘後，超過的部分每分鐘收費 $s$ 元。已知小賢第一次上網 ${t.m1} 分鐘花了 ${t.c1} 元，第二次上網 ${t.m2} 分鐘花了 ${t.c2} 元，求 $t$ 與 $s$ 之值。`
         );
         answers.push(
-          `依題意可列聯立方程式 $${formatSystemLatex(`${base}+s(${t.m1}-t)=${t.c1}`, `${base}+s(${t.m2}-t)=${t.c2}`)}$。相減得 ${t.m2 - t.m1}$s=${t.c2 - t.c1}，所以 $s=${fee}$。代回得 $${base}+${fee}(${t.m1}-t)=${t.c1}$，解得 $t=${freeMinutes}$。`
+          `依題意可列聯立方程式 $${formatSystemLatex(`${base}+s(${t.m1}-t)=${t.c1}`, `${base}+s(${t.m2}-t)=${t.c2}`)}$。相減得 $${t.m2 - t.m1}s=${t.c2 - t.c1}$，所以 $s=${fee}$。代回得 $${base}+${fee}(${t.m1}-t)=${t.c1}$，解得 $t=${freeMinutes}$。`
         );
         continue;
       }
@@ -3371,7 +3509,7 @@
           `某航空公司規定旅客行李 $a$ 公斤以下免費，超過 $a$ 公斤的部分，超重重量與託運費成線型關係。已知行李重 ${t.w1} 公斤時需付 ${t.f1} 元，重 ${t.w2} 公斤時需付 ${t.f2} 元，求免費額度 $a$ 為多少公斤？`
         );
         answers.push(
-          `設超重每公斤收 $k$ 元，則依題意可列聯立方程式 $${formatSystemLatex(`k(${t.w1}-a)=${t.f1}`, `k(${t.w2}-a)=${t.f2}`)}$。相減可得 ${t.w2 - t.w1}k=${t.f2 - t.f1}$，所以 $k=${rate}$。代回得 $${rate}(${t.w1}-a)=${t.f1}$，解得 $a=${freeKg}$。`
+          `設超重每公斤收 $k$ 元，則依題意可列聯立方程式 $${formatSystemLatex(`k(${t.w1}-a)=${t.f1}`, `k(${t.w2}-a)=${t.f2}`)}$。相減可得 $${t.w2 - t.w1}k=${t.f2 - t.f1}$，所以 $k=${rate}$。代回得 $${rate}(${t.w1}-a)=${t.f1}$，解得 $a=${freeKg}$。`
         );
         continue;
       }
@@ -3747,23 +3885,19 @@
     const answers = [];
 
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 3;
+      const variant = i % 4;
 
       if (variant === 0) {
         const turtle = [4, 5, 6, 8][randInt(0, 3)];
         const rabbit = turtle + [12, 15, 18, 20][randInt(0, 3)];
         const distance = (turtle + rabbit) * [8, 10, 12][randInt(0, 2)];
         const meetOpposite = distance / (turtle + rabbit);
-        const catchSame = distance / (rabbit - turtle);
-        if (!Number.isInteger(catchSame)) {
-          i -= 1;
-          continue;
-        }
+        const catchSame = makeFraction(distance, rabbit - turtle);
         questions.push(
-          `龜兔相距 ${distance} 公尺，相向而行 ${meetOpposite} 分鐘後相遇；若改為同向而行，則 ${catchSame} 分鐘後小兔追上小龜，求兩者分速。`
+          `龜兔相距 ${distance} 公尺，相向而行 ${meetOpposite} 分鐘後相遇；若改為同向而行，則 $${fractionToLatex(catchSame, true)}$ 分鐘後小兔追上小龜，求兩者分速。`
         );
         answers.push(
-          `設小龜分速為 $x$ 公尺，小兔分速為 $y$ 公尺。由題意可列聯立方程式 $${formatSystemLatex(`${meetOpposite}(x+y)=${distance}`, `${catchSame}(y-x)=${distance}`)}$。化簡為 $${formatSystemLatex(`x+y=${distance / meetOpposite}`, `y-x=${distance / catchSame}`)}$，解得 $x=${turtle},\\ y=${rabbit}$。`
+          `設小龜分速為 $x$ 公尺，小兔分速為 $y$ 公尺。由題意可列聯立方程式 $${formatSystemLatex(`${meetOpposite}(x+y)=${distance}`, `${fractionToLatex(catchSame, true)}(y-x)=${distance}`)}$。化簡為 $${formatSystemLatex(`x+y=${distance / meetOpposite}`, `y-x=${fractionToLatex(divFraction(makeFraction(distance, 1), catchSame), true)}`)}$，解得 $x=${turtle},\\ y=${rabbit}$。`
         );
         continue;
       }
@@ -3780,23 +3914,1226 @@
         continue;
       }
 
-      const slow = [240, 300, 360][randInt(0, 2)];
-      const fast = Math.floor(slow * 1.5);
-      const headStart = [80, 100, 120][randInt(0, 2)];
-      const exceed = [20, 30, 40][randInt(0, 2)];
-      const minutes = 1;
-      if (fast - slow !== headStart + exceed) {
+      if (variant === 2) {
+        const ratioList = [
+          { num: 3, den: 2 },
+          { num: 4, den: 3 },
+          { num: 5, den: 4 },
+          { num: 7, den: 5 },
+        ];
+        const ratio = ratioList[randInt(0, ratioList.length - 1)];
+        const unit = [60, 75, 90, 105][randInt(0, 3)];
+        const slow = ratio.den * unit;
+        const fast = ratio.num * unit;
+        const delta = fast - slow;
+        const minutes = [1, 2, 3][randInt(0, 2)];
+        const exceed = [20, 30, 40, 50, 60][randInt(0, 4)];
+        const headStart = delta * minutes - exceed;
+        if (headStart <= 0 || headStart > 240) {
+          i -= 1;
+          continue;
+        }
+        questions.push(
+          `甲、乙兩人比賽跑步，甲速率是乙的 $${ratio.num}:${ratio.den}$，且甲每分鐘比乙快 ${delta} 公尺。若乙先跑 ${headStart} 公尺，甲再開始追，${minutes} 分鐘後甲超越乙 ${exceed} 公尺，求兩人速率。`
+        );
+        answers.push(
+          `設甲的速率為 $x$ 公尺/分，乙的速率為 $y$ 公尺/分。依題意可列聯立方程式 $${formatSystemLatex(`${ratio.den}x-${ratio.num}y=0`, `${minutes}(x-y)=${headStart + exceed}`)}$。解得 $x=${fast},\\ y=${slow}$。`
+        );
+        continue;
+      }
+
+      const ratioList = [
+        { num: 3, den: 2 },
+        { num: 4, den: 3 },
+        { num: 5, den: 4 },
+      ];
+      const ratio = ratioList[randInt(0, ratioList.length - 1)];
+      const base = [90, 120, 150, 180][randInt(0, 3)];
+      const slow = base * ratio.den;
+      const fast = base * ratio.num;
+      const minutes = [1, 2][randInt(0, 1)];
+      const exceed = [20, 30, 40, 50][randInt(0, 3)];
+      const headStart = (fast - slow) * minutes - exceed;
+      if (headStart <= 0) {
         i -= 1;
         continue;
       }
       questions.push(
-        `甲、乙兩人比賽跑步，甲速率是乙的 1.5 倍。若乙先跑 ${headStart} 公尺，甲再開始追，${minutes} 分鐘後甲超越乙 ${exceed} 公尺，求兩人速率。`
+        `甲、乙兩人比賽跑步，甲速率是乙的 $${ratio.num}:${ratio.den}$。若乙先跑 ${headStart} 公尺，甲再開始追，${minutes} 分鐘後甲超越乙 ${exceed} 公尺，求兩人速率。`
       );
       answers.push(
-        `設甲的速率為 $x$ 公尺/分，乙的速率為 $y$ 公尺/分。依題意可列聯立方程式 $${formatSystemLatex(`2x-3y=0`, `x-y=${headStart + exceed}`)}$。解得 $x=${fast},\\ y=${slow}$。`
+        `設甲的速率為 $x$ 公尺/分，乙的速率為 $y$ 公尺/分。依題意可列聯立方程式 $${formatSystemLatex(`${ratio.den}x-${ratio.num}y=0`, `${minutes}(x-y)=${headStart + exceed}`)}$。解得 $x=${fast},\\ y=${slow}$。`
       );
     }
 
+    return { questions, answers };
+  }
+
+  function buildJ323TripleExpandSet(count) {
+    const questions = [];
+    const answers = [];
+    const triples = [
+      [3, 4, 5],
+      [5, 12, 13],
+      [7, 24, 25],
+      [8, 15, 17],
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 3;
+      if (type === 0) {
+        const base = triples[randInt(0, triples.length - 1)];
+        const factors = [2, 3, 4, 5, 10];
+        const k = factors[randInt(0, factors.length - 1)];
+        const a = base[0] * k;
+        const b = base[1] * k;
+        const c = base[2] * k;
+        questions.push(`已知一直角三角形兩股為 \\(${a},${b}\\)，求斜邊長。`);
+        answers.push(`\\(${c}\\)`);
+        continue;
+      }
+      if (type === 1) {
+        const insides = [2, 3, 5, 6, 7, 10];
+        const others = [1, 2, 3];
+        const inside = insides[randInt(0, insides.length - 1)];
+        const other = others[randInt(0, others.length - 1)];
+        const mode = randInt(0, 1);
+        if (mode === 0) {
+          questions.push(`直角三角形兩股為 \\(${other}\\) 與 \\(\\sqrt{${inside}}\\)，求斜邊。`);
+          answers.push(`\\(\\sqrt{${other * other + inside}}\\)`);
+        } else {
+          const c = randInt(4, 10);
+          questions.push(`直角三角形一股為 \\(${other}\\)、斜邊為 \\(${c}\\)，求另一股。`);
+          answers.push(`\\(\\sqrt{${c * c - other * other}}\\)`);
+        }
+        continue;
+      }
+      const a = randInt(3, 16);
+      const b = randInt(a + 1, a + 10);
+      const c = Math.sqrt(a * a + b * b);
+      const wording = randInt(0, 1) === 0
+        ? `兩邊長為 \\(${a}\\)、\\(${b}\\)。若 \\(${b}\\) 是斜邊，求另一邊。`
+        : `兩邊長為 \\(${a}\\)、\\(${b}\\)。若 \\(${b}\\) 不是斜邊，求斜邊。`;
+      questions.push(wording);
+      answers.push(randInt(0, 1) === 0 ? `\\(\\sqrt{${b * b - a * a}}\\)` : `\\(\\sqrt{${a * a + b * b}}\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ323HypotenuseAltitudeSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 2;
+      if (type === 0) {
+        const a = randInt(3, 15);
+        const b = randInt(4, 16);
+        const c = `\\sqrt{${a * a + b * b}}`;
+        questions.push(`直角三角形兩股為 \\(${a},${b}\\)。求斜邊上的高 \\(h\\)。`);
+        answers.push(`\\(h=\\frac{${a * b}}{${c}}\\)`);
+        continue;
+      }
+      const area = randInt(12, 80);
+      const c = randInt(5, 20);
+      questions.push(`已知直角三角形面積為 \\(${area}\\)，斜邊長 \\(${c}\\)，求斜邊上的高。`);
+      answers.push(`\\(h=\\frac{2\\times${area}}{${c}}=\\frac{${2 * area}}{${c}}\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ323CoordinateDistanceSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 3;
+      if (type === 0) {
+        const x1 = randInt(-8, 8), y1 = randInt(-8, 8);
+        const x2 = randInt(-8, 8), y2 = randInt(-8, 8);
+        questions.push(`平面上兩點 \\(A(${x1},${y1}),B(${x2},${y2})\\) 的距離為何？`);
+        answers.push(`\\(\\sqrt{(${x1}-${x2})^2+(${y1}-${y2})^2}\\)`);
+        continue;
+      }
+      if (type === 1) {
+        const x = randInt(-15, 15), y = randInt(-15, 15);
+        questions.push(`點 \\(P(${x},${y})\\) 到原點距離為何？`);
+        answers.push(`\\(\\sqrt{${x * x + y * y}}\\)`);
+        continue;
+      }
+      const y = randInt(-8, 8);
+      const d = randInt(5, 20);
+      const xAbs2 = d * d - y * y;
+      if (xAbs2 <= 0) {
+        i -= 1;
+        continue;
+      }
+      questions.push(`點 \\(A(k,${y})\\) 到原點距離為 \\(${d}\\)，求 \\(k\\) 的可能值。`);
+      answers.push(`\\(k=\\pm\\sqrt{${xAbs2}}\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ323SpatialDiagonalSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 3;
+      if (type === 0) {
+        const a = randInt(2, 12), b = randInt(2, 12), c = randInt(2, 12);
+        questions.push(`長方體長寬高為 \\(${a},${b},${c}\\)，求體對角線。`);
+        answers.push(`\\(\\sqrt{${a * a + b * b + c * c}}\\)`);
+        continue;
+      }
+      if (type === 1) {
+        const a = randInt(2, 20);
+        questions.push(`正方體邊長為 \\(${a}\\)，求體對角線。`);
+        answers.push(`\\(${a}\\sqrt{3}\\)`);
+        continue;
+      }
+      const h = randInt(4, 18), c = randInt(6, 20);
+      questions.push(`圓柱高為 \\(${h}\\)，底面周長為 \\(${c}\\)。側面展開成長方形後，最短路徑長為何？`);
+      answers.push(`\\(\\sqrt{${h * h}+\\left(\\frac{${c}}{2}\\right)^2}\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ331CommonFactorBasicSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const xPow = randInt(1, 4);
+      const common = pickNonZero(2, 6);
+      const a = pickNonZero(1, 9);
+      const b = pickNonZero(1, 9);
+      const extraPow = randInt(0, 2);
+      const leftCoef = common * a;
+      const rightCoef = common * b;
+      const termA = `${leftCoef}x^${xPow + extraPow}`;
+      const termB = `${rightCoef}x^${xPow}`;
+      questions.push(`提取公因式：\\(${termA}${b > 0 ? "+" : ""}${termB}\\)`);
+      const innerA = `${a}x^${extraPow}`;
+      const innerB = `${b}`;
+      answers.push(`\\(${termA}${b > 0 ? "+" : ""}${termB}= ${common}x^${xPow}(${innerA}${b > 0 ? "+" : ""}${innerB})\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ331PolynomialFactorSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = pickNonZero(1, 5);
+      const b = pickNonZero(1, 5);
+      const c = pickNonZero(1, 5);
+      const d = pickNonZero(1, 5);
+      const common = `${a}x${b >= 0 ? "+" : ""}${b}`;
+      const left = `${c}(${common})`;
+      const right = `${d}(${common})`;
+      const sign = randInt(0, 1) === 0 ? "+" : "-";
+      questions.push(`提取公因式：\\(${left}${sign}${right}\\)`);
+      const out = sign === "+" ? `${c + d}` : `${c - d}`;
+      answers.push(`\\(${left}${sign}${right}=(${common})(${out})\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ331SignTransformSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = pickNonZero(1, 6);
+      const b = pickNonZero(1, 6);
+      const c = pickNonZero(1, 6);
+      const mode = i % 3;
+      if (mode === 0) {
+        questions.push(`因式分解：\\(${a}(x-${b})-${c}( ${b}-x )\\)`);
+        answers.push(`\\(${a}(x-${b})-${c}( ${b}-x )=(${a + c})(x-${b})\\)`);
+        continue;
+      }
+      if (mode === 1) {
+        questions.push(`因式分解：\\((x+${a})(x-${b})-(x-${b})(${c}-x)\\)`);
+        answers.push(`\\((x+${a})(x-${b})-(x-${b})(${c}-x)=(x-${b})(2x+${a - c})\\)`);
+        continue;
+      }
+      questions.push(`因式分解：\\(${a}(m-n)-${b}(n-m)\\)`);
+      answers.push(`\\(${a}(m-n)-${b}(n-m)=(${a + b})(m-n)\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ331GroupingFactorSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const p = pickNonZero(1, 6);
+      const q = pickNonZero(1, 6);
+      const a = pickNonZero(1, 6);
+      const b = pickNonZero(1, 6);
+      const t1 = `${p}x+${q}`;
+      const t2 = `${a}x+${b}`;
+      const e1 = p * a;
+      const e2 = p * b;
+      const e3 = q * a;
+      const e4 = q * b;
+      questions.push(`分組分解：\\(${e1}x^2+${e2}x+${e3}x+${e4}\\)`);
+      answers.push(`\\(${e1}x^2+${e2}x+${e3}x+${e4}=(${t1})(${t2})\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ331ExpandThenGroupSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = pickNonZero(1, 6);
+      const b = pickNonZero(1, 6);
+      const c = pickNonZero(1, 6);
+      const d = pickNonZero(1, 6);
+      const left = `${a}(x-${b})`;
+      const right = `${c}(x-${b})`;
+      const sign = randInt(0, 1) === 0 ? "+" : "-";
+      const k = sign === "+" ? a + c : a - c;
+      questions.push(`先去括號再分組：\\(${left}${sign}(${right})\\)`);
+      answers.push(`\\(${left}${sign}(${right})=(${k})(x-${b})\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ331CoreFactoringMixedSet(count) {
+    const banks = [buildJ331CommonFactorBasicSet, buildJ331PolynomialFactorSet, buildJ331SignTransformSet];
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const fn = banks[i % banks.length];
+      const one = fn(1);
+      questions.push(one.questions[0]);
+      answers.push(one.answers[0]);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ331GroupingAdvancedMixedSet(count) {
+    const banks = [buildJ331GroupingFactorSet, buildJ331ExpandThenGroupSet];
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const fn = banks[i % banks.length];
+      const one = fn(1);
+      questions.push(one.questions[0]);
+      answers.push(one.answers[0]);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ332DiffSquaresSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = randInt(1, 10);
+      const b = randInt(1, 10);
+      const useVar = randInt(0, 1) === 1;
+      if (useVar) {
+        questions.push(`因式分解：\\(${a * a}x^2-${b * b}\\)`);
+        answers.push(`\\(${a * a}x^2-${b * b}=(${a}x+${b})(${a}x-${b})\\)`);
+      } else {
+        questions.push(`因式分解：\\(${a * a}-${b * b}y^2\\)`);
+        answers.push(`\\(${a * a}-${b * b}y^2=(${a}+${b}y)(${a}-${b}y)\\)`);
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ332PerfectSquareSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = randInt(1, 6);
+      const b = randInt(1, 9);
+      const sign = randInt(0, 1) === 0 ? "+" : "-";
+      const mid = sign === "+" ? 2 * a * b : -2 * a * b;
+      questions.push(`因式分解：\\(${a * a}x^2${mid >= 0 ? "+" : ""}${mid}x+${b * b}\\)`);
+      answers.push(`\\(${a * a}x^2${mid >= 0 ? "+" : ""}${mid}x+${b * b}=(${a}x${sign}${b})^2\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ332CompositeSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const k = pickNonZero(2, 8);
+      const a = randInt(1, 6);
+      const b = randInt(1, 8);
+      const mode = i % 2;
+      if (mode === 0) {
+        questions.push(`因式分解：\\(${k * a * a}x^2-${k * b * b}y^2\\)`);
+        answers.push(`\\(${k * a * a}x^2-${k * b * b}y^2=${k}(${a}x+${b}y)(${a}x-${b}y)\\)`);
+      } else {
+        const mid = -2 * a * b * k;
+        questions.push(`因式分解：\\(${k * a * a}x^2${mid >= 0 ? "+" : ""}${mid}x+${k * b * b}\\)`);
+        answers.push(`\\(${k * a * a}x^2${mid >= 0 ? "+" : ""}${mid}x+${k * b * b}=${k}(${a}x-${b})^2\\)`);
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ332SubstitutionSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const p = randInt(1, 5);
+      const q = randInt(1, 7);
+      const mode = i % 2;
+      if (mode === 0) {
+        questions.push(`因式分解：\\((2x+${p})^2-${q * q}\\)`);
+        answers.push(`\\((2x+${p})^2-${q * q}=(2x+${p}+${q})(2x+${p}-${q})\\)`);
+      } else {
+        questions.push(`因式分解：\\((x-${p})^2-2${q}(x-${p})+${q * q}\\)`);
+        answers.push(`\\((x-${p})^2-2${q}(x-${p})+${q * q}=(x-${p}-${q})^2\\)`);
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ332FormulaMixedSet(count) {
+    const banks = [buildJ332DiffSquaresSet, buildJ332PerfectSquareSet, buildJ332CompositeSet, buildJ332SubstitutionSet];
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const one = banks[i % banks.length](1);
+      questions.push(one.questions[0]);
+      answers.push(one.answers[0]);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ333CrossCoeffOneSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const p = pickNonZero(1, 12);
+      const q = pickNonZero(1, 12);
+      const s1 = randInt(0, 1) === 0 ? 1 : -1;
+      const s2 = randInt(0, 1) === 0 ? 1 : -1;
+      const b = s1 * p + s2 * q;
+      const c = (s1 * p) * (s2 * q);
+      questions.push(`十字交乘因式分解：\\(x^2${b >= 0 ? "+" : ""}${b}x${c >= 0 ? "+" : ""}${c}\\)`);
+      answers.push(`\\(x^2${b >= 0 ? "+" : ""}${b}x${c >= 0 ? "+" : ""}${c}=(x${s1 > 0 ? "+" : "-"}${p})(x${s2 > 0 ? "+" : "-"}${q})\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ333CrossCoeffNonOneSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a1 = randInt(2, 6);
+      const a2 = randInt(2, 6);
+      const p = randInt(1, 8);
+      const q = randInt(1, 8);
+      const s1 = randInt(0, 1) === 0 ? 1 : -1;
+      const s2 = randInt(0, 1) === 0 ? 1 : -1;
+      const A = a1 * a2;
+      const B = a1 * (s2 * q) + a2 * (s1 * p);
+      const C = (s1 * p) * (s2 * q);
+      questions.push(`十字交乘因式分解：\\(${A}x^2${B >= 0 ? "+" : ""}${B}x${C >= 0 ? "+" : ""}${C}\\)`);
+      answers.push(`\\(${A}x^2${B >= 0 ? "+" : ""}${B}x${C >= 0 ? "+" : ""}${C}=(${a1}x${s1 > 0 ? "+" : "-"}${p})(${a2}x${s2 > 0 ? "+" : "-"}${q})\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ333CrossPreprocessSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const g = randInt(2, 6);
+      const a1 = randInt(1, 4);
+      const a2 = randInt(1, 4);
+      const p = randInt(1, 7);
+      const q = randInt(1, 7);
+      const s1 = randInt(0, 1) === 0 ? 1 : -1;
+      const s2 = randInt(0, 1) === 0 ? 1 : -1;
+      const A0 = a1 * a2;
+      const B0 = a1 * (s2 * q) + a2 * (s1 * p);
+      const C0 = (s1 * p) * (s2 * q);
+      const signAll = randInt(0, 1) === 0 ? 1 : -1;
+      const A = signAll * g * A0;
+      const B = signAll * g * B0;
+      const C = signAll * g * C0;
+      const outer = signAll * g;
+      questions.push(`先預處理再十字交乘：\\(${A}x^2${B >= 0 ? "+" : ""}${B}x${C >= 0 ? "+" : ""}${C}\\)`);
+      answers.push(`\\(${A}x^2${B >= 0 ? "+" : ""}${B}x${C >= 0 ? "+" : ""}${C}=${outer}(${a1}x${s1 > 0 ? "+" : "-"}${p})(${a2}x${s2 > 0 ? "+" : "-"}${q})\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ333CrossSubstitutionSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const u = pickNonZero(1, 5);
+      const v = pickNonZero(1, 6);
+      const p = randInt(1, 8);
+      const q = randInt(1, 8);
+      const s1 = randInt(0, 1) === 0 ? 1 : -1;
+      const s2 = randInt(0, 1) === 0 ? 1 : -1;
+      const B = s1 * p + s2 * q;
+      const C = (s1 * p) * (s2 * q);
+      questions.push(`把 \\(t=${u}x+${v}\\) 視為一項，分解：\\(t^2${B >= 0 ? "+" : ""}${B}t${C >= 0 ? "+" : ""}${C}\\)。`);
+      answers.push(`\\(t^2${B >= 0 ? "+" : ""}${B}t${C >= 0 ? "+" : ""}${C}=(t${s1 > 0 ? "+" : "-"}${p})(t${s2 > 0 ? "+" : "-"}${q})\\)，代回得 \\((${u}x+${v}${s1 > 0 ? "+" : "-"}${p})(${u}x+${v}${s2 > 0 ? "+" : "-"}${q})\\)。`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ333CrossStructuredSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const m = randInt(1, 6);
+      const n = randInt(1, 6);
+      const p = randInt(1, 8);
+      const q = randInt(1, 8);
+      const s1 = randInt(0, 1) === 0 ? 1 : -1;
+      const s2 = randInt(0, 1) === 0 ? 1 : -1;
+      const U = `(x+${m})`;
+      const B = s1 * p + s2 * q;
+      const C = (s1 * p) * (s2 * q);
+      questions.push(`分解：\\((${U})^2${B >= 0 ? "+" : ""}${B}(${U})${C >= 0 ? "+" : ""}${C}\\)。`);
+      answers.push(`\\((${U})^2${B >= 0 ? "+" : ""}${B}(${U})${C >= 0 ? "+" : ""}${C}=(${U}${s1 > 0 ? "+" : "-"}${p})(${U}${s2 > 0 ? "+" : "-"}${q})\\)。`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ333CrossCoreMixedSet(count) {
+    const banks = [buildJ333CrossCoeffOneSet, buildJ333CrossCoeffNonOneSet, buildJ333CrossPreprocessSet];
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const one = banks[i % banks.length](1);
+      questions.push(one.questions[0]);
+      answers.push(one.answers[0]);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ333CrossSubMixedSet(count) {
+    const banks = [buildJ333CrossSubstitutionSet, buildJ333CrossStructuredSet];
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const one = banks[i % banks.length](1);
+      questions.push(one.questions[0]);
+      answers.push(one.answers[0]);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ313PolynomialDivisionRegularSet(count) {
+    const questions = [];
+    const answers = [];
+
+    const toFrac = (num, den = 1) => makeFraction(num, den);
+    const pickSimpleFrac = () => {
+      const den = [2, 3, 4][randInt(0, 2)];
+      const num = pickNonZero(-8, 8);
+      return makeFraction(num, den);
+    };
+    const fracIsZero = (f) => !f || Number(f.num || 0) === 0;
+    const fracTerm = (f, power) => {
+      if (fracIsZero(f)) return null;
+      const sign = Number(f.num) < 0 ? -1 : 1;
+      const abs = makeFraction(Math.abs(Number(f.num)), Number(f.den));
+      const coefText = fractionToLatex(abs);
+      if (power === 0) {
+        return sign < 0 ? `-${coefText}` : coefText;
+      }
+      const xPart = power === 1 ? 'x' : `x^${power}`;
+      const coefPart = coefText === '1' ? '' : coefText;
+      const body = `${coefPart}${xPart}`;
+      return sign < 0 ? `-${body}` : body;
+    };
+    const joinFracPoly = (terms) => {
+      const filtered = terms.filter(Boolean);
+      if (!filtered.length) return '0';
+      return filtered.map((term, index) => {
+        if (index === 0) return term;
+        return term.startsWith('-') ? `- ${term.slice(1)}` : `+ ${term}`;
+      }).join(' ');
+    };
+
+    while (questions.length < count) {
+      const variant = questions.length % 2;
+
+      if (variant === 0) {
+        const a = pickNonZero(-4, 4);
+        const b = pickNonZero(-6, 6);
+        const q2 = toFrac(pickNonZero(-5, 5), 1);
+        const q1 = pickSimpleFrac();
+        const q0 = pickSimpleFrac();
+        const r = pickSimpleFrac();
+
+        const c3 = mulFraction(toFrac(a), q2);
+        const c2 = addFraction(mulFraction(toFrac(a), q1), mulFraction(toFrac(b), q2));
+        const c1 = addFraction(mulFraction(toFrac(a), q0), mulFraction(toFrac(b), q1));
+        const c0 = addFraction(mulFraction(toFrac(b), q0), r);
+
+        const dividend = joinFracPoly([
+          fracTerm(c3, 3),
+          fracTerm(c2, 2),
+          fracTerm(c1, 1),
+          fracTerm(c0, 0),
+        ]);
+        const divisor = joinFracPoly([fracTerm(toFrac(a), 1), fracTerm(toFrac(b), 0)]);
+        const quotient = joinFracPoly([fracTerm(q2, 2), fracTerm(q1, 1), fracTerm(q0, 0)]);
+        const remainder = fractionToLatex(r);
+
+        questions.push(`計算：$(${dividend})\\div(${divisor})$。`);
+        answers.push(`簡答：商 $${quotient}$，餘 $${remainder}$。`);
+        continue;
+      }
+
+      const a = pickNonZero(-3, 3);
+      const b = pickNonZero(-5, 5);
+      const c = pickNonZero(-6, 6);
+      const p = pickSimpleFrac();
+      const q = pickSimpleFrac();
+      const r1 = pickSimpleFrac();
+      const r0 = pickSimpleFrac();
+
+      const c3 = mulFraction(toFrac(a), p);
+      const c2 = addFraction(mulFraction(toFrac(a), q), mulFraction(toFrac(b), p));
+      const c1 = addFraction(addFraction(mulFraction(toFrac(b), q), mulFraction(toFrac(c), p)), r1);
+      const c0 = addFraction(mulFraction(toFrac(c), q), r0);
+
+      const dividend = joinFracPoly([
+        fracTerm(c3, 3),
+        fracTerm(c2, 2),
+        fracTerm(c1, 1),
+        fracTerm(c0, 0),
+      ]);
+      const divisor = joinFracPoly([fracTerm(toFrac(a), 2), fracTerm(toFrac(b), 1), fracTerm(toFrac(c), 0)]);
+      const quotient = joinFracPoly([fracTerm(p, 1), fracTerm(q, 0)]);
+      const remainder = joinFracPoly([fracTerm(r1, 1), fracTerm(r0, 0)]);
+
+      questions.push(`計算：$(${dividend})\\div(${divisor})$。`);
+      answers.push(`簡答：商 $${quotient}$，餘 $${remainder}$。`);
+    }
+
+    return { questions, answers };
+  }
+
+  function addPolyCoeffs(a, b) {
+    const maxLen = Math.max(a.length, b.length);
+    const left = Array(maxLen - a.length).fill(0).concat(a);
+    const right = Array(maxLen - b.length).fill(0).concat(b);
+    return left.map((value, index) => value + right[index]);
+  }
+
+  function scalePolyCoeffs(coeffs, k) {
+    return coeffs.map((value) => value * k);
+  }
+
+  function evalPoly(coeffs, x) {
+    let result = 0;
+    const degree = coeffs.length - 1;
+    for (let i = 0; i < coeffs.length; i += 1) {
+      result += coeffs[i] * (x ** (degree - i));
+    }
+    return result;
+  }
+
+  function buildJ313ReverseDivisionSet(count) {
+    const questions = [];
+    const answers = [];
+    while (questions.length < count) {
+      const variant = questions.length % 3;
+
+      if (variant === 0) {
+        const b = pickNonZero(-6, 6);
+        const q2 = pickNonZero(-4, 4);
+        const q1 = pickNonZero(-7, 7);
+        const q0 = pickNonZero(-8, 8);
+        const r = pickNonZero(-12, 12);
+        const divisor = [1, b];
+        const quotient = [q2, q1, q0];
+        const dividend = addPolyCoeffs(multiplyPolyCoeffs(divisor, quotient), [r]);
+        questions.push(`一多項式除以 $(x${b >= 0 ? '+' : ''}${b})$，商式為 $${formatPolynomialFromCoeffs(quotient)}$，餘式為 ${r}，求此多項式。`);
+        answers.push(`簡答：$${formatPolynomialFromCoeffs(dividend)}$。`);
+        continue;
+      }
+
+      if (variant === 1) {
+        const d = pickNonZero(-5, 5);
+        const p2 = pickNonZero(-4, 4);
+        const p1 = pickNonZero(-7, 7);
+        const p0 = pickNonZero(-9, 9);
+        const poly = [p2, p1, p0];
+        const product = multiplyPolyCoeffs(poly, [2, d]);
+        questions.push(`一多項式與 $(2x${d >= 0 ? '+' : ''}${d})$ 的乘積為 $${formatPolynomialFromCoeffs(product)}$，求此多項式。`);
+        answers.push(`簡答：$${formatPolynomialFromCoeffs(poly)}$。`);
+        continue;
+      }
+
+      const p2 = pickNonZero(-4, 4);
+      const p1 = pickNonZero(-7, 7);
+      const p0 = pickNonZero(-9, 9);
+      const q1 = pickNonZero(-4, 4);
+      const q0 = pickNonZero(-7, 7);
+      const r = pickNonZero(-9, 9);
+      const divisor = [q1, q0];
+      const quotient = [p2, p1, p0];
+      const dividend = addPolyCoeffs(multiplyPolyCoeffs(divisor, quotient), [r]);
+      questions.push(`已知多項式 $A$ 除以 $${formatPolynomialFromCoeffs(divisor)}$ 的商式為 $${formatPolynomialFromCoeffs(quotient)}$，餘式為 ${r}，求多項式 $A$。`);
+      answers.push(`簡答：$A=${formatPolynomialFromCoeffs(dividend)}$。`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ313CoeffSumSet(count) {
+    const questions = [];
+    const answers = [];
+    while (questions.length < count) {
+      const variant = questions.length % 3;
+
+      if (variant === 0) {
+        const a = pickNonZero(-4, 4);
+        const b = pickNonZero(-7, 7);
+        const c = pickNonZero(-9, 9);
+        const d = randInt(-10, 10);
+        const poly = [a, b, c, d];
+        questions.push(`求多項式 $f(x)=${formatPolynomialFromCoeffs(poly)}$ 的常數項與各項係數總和。`);
+        answers.push(`簡答：常數項為 ${d}，係數總和為 $f(1)=${evalPoly(poly, 1)}$。`);
+        continue;
+      }
+
+      if (variant === 1) {
+        const p = pickNonZero(-4, 4);
+        const n = [4, 5, 6, 8][randInt(0, 3)];
+        questions.push(`若 $A=(x-1)^${n}+(${p}x+1)$，求 $A$ 展開後的各項係數總和。`);
+        answers.push(`簡答：係數總和為 $A(1)=0+(${p}+1)=${p + 1}$。`);
+        continue;
+      }
+
+      const a = pickNonZero(-4, 4);
+      const b = pickNonZero(-6, 6);
+      const c = pickNonZero(-8, 8);
+      questions.push(`已知多項式 $A=( ${a}x${b >= 0 ? '+' : ''}${b} )^2+(${c}-x)(x+1)$，求 $A$ 的各項係數總和。`);
+      const value = ((a + b) ** 2) + ((c - 1) * 2);
+      answers.push(`簡答：係數總和為 $A(1)=(${a + b})^2+(${c - 1})\\cdot 2=${value}$。`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ313RemainderTheoremSet(count) {
+    const questions = [];
+    const answers = [];
+    while (questions.length < count) {
+      const variant = questions.length % 3;
+
+      if (variant === 0) {
+        const a = pickNonZero(-4, 4);
+        const poly = [pickNonZero(-3, 3), randInt(-6, 6), randInt(-7, 7), randInt(-9, 9)];
+        questions.push(`不經除法，求 $${formatPolynomialFromCoeffs(poly)}$ 除以 $(x${a >= 0 ? '-' : '+'}${Math.abs(a)})$ 的餘數。`);
+        answers.push(`簡答：餘數為 $f(${a})=${evalPoly(poly, a)}$。`);
+        continue;
+      }
+
+      if (variant === 1) {
+        const a = pickNonZero(-5, 5);
+        const r = pickNonZero(-9, 9);
+        const m = pickNonZero(-4, 4);
+        const n = pickNonZero(-8, 8);
+        questions.push(`已知多項式 $A$ 除以 $(x${a >= 0 ? '-' : '+'}${Math.abs(a)})$ 的餘式為 ${r}，求 $( ${m}A${n >= 0 ? '+' : ''}${n} )$ 除以同一除式的餘式。`);
+        answers.push(`簡答：餘數為 ${m * r + n}。`);
+        continue;
+      }
+
+      const a = pickNonZero(-4, 4);
+      const p = pickNonZero(-5, 5);
+      const q = pickNonZero(-7, 7);
+      const c = randInt(-9, 9);
+      questions.push(`若多項式 $(${p})x^2+(${q})x+k$ 能被 $(x${a >= 0 ? '-' : '+'}${Math.abs(a)})$ 整除，求 $k$。`);
+      const k = -(p * a * a + q * a);
+      answers.push(`簡答：$k=${k}$。`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ313FactorTheoremSet(count) {
+    const questions = [];
+    const answers = [];
+    while (questions.length < count) {
+      const variant = questions.length % 3;
+
+      if (variant === 0) {
+        const a = pickNonZero(-4, 4);
+        const poly = [pickNonZero(-3, 3), randInt(-6, 6), randInt(-8, 8), randInt(-10, 10)];
+        const value = evalPoly(poly, a);
+        questions.push(`判斷 $(x${a >= 0 ? '-' : '+'}${Math.abs(a)})$ 是否為 $${formatPolynomialFromCoeffs(poly)}$ 的因式。`);
+        answers.push(`簡答：代入 $x=${a}$ 得 $f(${a})=${value}$，${value === 0 ? '是因式' : '不是因式'}。`);
+        continue;
+      }
+
+      if (variant === 1) {
+        const a = pickNonZero(-4, 4);
+        const p = pickNonZero(-4, 4);
+        const q = pickNonZero(-7, 7);
+        questions.push(`已知 $(x${a >= 0 ? '-' : '+'}${Math.abs(a)})$ 為 $${p}x^2+mx+${q}$ 的因式，求 $m$。`);
+        const m = -(p * a * a + q) / a;
+        if (!Number.isInteger(m)) continue;
+        answers.push(`簡答：$m=${m}$。`);
+        continue;
+      }
+
+      const u = pickNonZero(-3, 3);
+      const v = pickNonZero(-4, 4);
+      const p = pickNonZero(-3, 3);
+      const tail = randInt(-8, 8);
+      const fx = multiplyPolyCoeffs([1, -u], [1, -v]);
+      const cubic = multiplyPolyCoeffs([p, tail], fx);
+      const m = cubic[1];
+      const n = cubic[2];
+      questions.push(`若 $(x${u >= 0 ? '-' : '+'}${Math.abs(u)})$ 與 $(x${v >= 0 ? '-' : '+'}${Math.abs(v)})$ 皆為 $x^3+mx^2+nx+${cubic[3]}$ 的因式，求 $m,n$。`);
+      answers.push(`簡答：$m=${m},\\ n=${n}$。`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ312PolynomialAddSubSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 3;
+
+      if (variant === 0) {
+        const a1 = pickNonZero(-6, 6);
+        const b1 = pickNonZero(-8, 8);
+        const c1 = randInt(-9, 9);
+        const a2 = pickNonZero(-6, 6);
+        const b2 = pickNonZero(-8, 8);
+        const c2 = randInt(-9, 9);
+        const p1 = formatPolynomialFromCoeffs([a1, b1, c1]);
+        const p2 = formatPolynomialFromCoeffs([a2, b2, c2]);
+        const ans = formatPolynomialFromCoeffs([a1 + a2, b1 + b2, c1 + c2]);
+        questions.push(`計算：$(${p1})+(${p2})$。`);
+        answers.push(`簡答：$${ans}$。`);
+        continue;
+      }
+
+      if (variant === 1) {
+        const a1 = pickNonZero(-6, 6);
+        const b1 = pickNonZero(-8, 8);
+        const c1 = randInt(-9, 9);
+        const a2 = pickNonZero(-6, 6);
+        const b2 = pickNonZero(-8, 8);
+        const c2 = randInt(-9, 9);
+        const p1 = formatPolynomialFromCoeffs([a1, b1, c1]);
+        const p2 = formatPolynomialFromCoeffs([a2, b2, c2]);
+        const ans = formatPolynomialFromCoeffs([a1 - a2, b1 - b2, c1 - c2]);
+        questions.push(`計算：$(${p1})-(${p2})$。`);
+        answers.push(`簡答：$${ans}$。`);
+        continue;
+      }
+
+      const k1 = pickNonZero(2, 4);
+      const k2 = pickNonZero(2, 4);
+      const a1 = pickNonZero(-4, 4);
+      const b1 = pickNonZero(-6, 6);
+      const c1 = randInt(-8, 8);
+      const a2 = pickNonZero(-4, 4);
+      const b2 = pickNonZero(-6, 6);
+      const c2 = randInt(-8, 8);
+      const p1 = formatPolynomialFromCoeffs([a1, b1, c1]);
+      const p2 = formatPolynomialFromCoeffs([a2, b2, c2]);
+      const ans = formatPolynomialFromCoeffs([
+        k1 * a1 - k2 * a2,
+        k1 * b1 - k2 * b2,
+        k1 * c1 - k2 * c2,
+      ]);
+      questions.push(`化簡：$${k1}(${p1})-${k2}(${p2})$。`);
+      answers.push(`簡答：$${ans}$。`);
+    }
+
+    return { questions, answers };
+  }
+
+  function buildJ312DegreeConstraintSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 3;
+
+      if (variant === 0) {
+        const p = pickNonZero(-6, 6);
+        const q = randInt(-8, 8);
+        const r = randInt(-9, 9);
+        questions.push(`若多項式 $(a${p >= 0 ? '+' : ''}${p})x^2+(${q})x+${r}$ 是一次多項式，求 $a$。`);
+        answers.push(`簡答：$a=${-p}$。`);
+        continue;
+      }
+
+      if (variant === 1) {
+        const m = pickNonZero(-5, 5);
+        const n = randInt(-8, 8);
+        const c = randInt(-9, 9);
+        questions.push(`若多項式 $(a${m >= 0 ? '+' : ''}${m})x^3+(${n})x^2+x+${c}$ 是一次多項式，求 $a$。`);
+        answers.push(`簡答：$a=${-m}$。`);
+        continue;
+      }
+
+      const aValue = pickNonZero(-4, 4);
+      const u = -aValue;
+      const v = -2 * aValue;
+      const w = -3 * aValue;
+      questions.push(`若多項式 $(a${u >= 0 ? '+' : ''}${u})x^2+(2a${v >= 0 ? '+' : ''}${v})x+(3a${w >= 0 ? '+' : ''}${w})$ 是零多項式，求 $a$。`);
+      answers.push(`簡答：$a=${aValue}$。`);
+    }
+
+    return { questions, answers };
+  }
+
+  function buildJ312PolynomialReverseSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 3;
+
+      if (variant === 0) {
+        const a = pickNonZero(-4, 4);
+        const b = randInt(-8, 8);
+        const c = randInt(-9, 9);
+        const u = pickNonZero(-4, 4);
+        const v = randInt(-8, 8);
+        const w = randInt(-9, 9);
+        const A = formatPolynomialFromCoeffs([a, b, c]);
+        const B = formatPolynomialFromCoeffs([u, v, w]);
+        const sum = formatPolynomialFromCoeffs([a + u, b + v, c + w]);
+        questions.push(`已知多項式 $A$ 與 $${B}$ 的和為 $${sum}$，求多項式 $A$。`);
+        answers.push(`簡答：$A=${A}$。`);
+        continue;
+      }
+
+      if (variant === 1) {
+        const b2 = pickNonZero(-4, 4);
+        const b1 = randInt(-8, 8);
+        const b0 = randInt(-9, 9);
+        const c2 = pickNonZero(-4, 4);
+        const c1 = randInt(-8, 8);
+        const c0 = randInt(-9, 9);
+        const B = formatPolynomialFromCoeffs([b2, b1, b0]);
+        const C = formatPolynomialFromCoeffs([c2, c1, c0]);
+        const A = formatPolynomialFromCoeffs([b2 + c2, b1 + c1, b0 + c0]);
+        questions.push(`若 $(A)-(${B})=${C}$，求多項式 $A$。`);
+        answers.push(`簡答：$A=${A}$。`);
+        continue;
+      }
+
+      const a2 = pickNonZero(-4, 4);
+      const a1 = randInt(-8, 8);
+      const a0 = randInt(-9, 9);
+      const b2 = pickNonZero(-4, 4);
+      const b1 = randInt(-8, 8);
+      const b0 = randInt(-9, 9);
+      const A = formatPolynomialFromCoeffs([a2, a1, a0]);
+      const B = formatPolynomialFromCoeffs([b2, b1, b0]);
+      const result = formatPolynomialFromCoeffs([2 * a2 - 3 * b2, 2 * a1 - 3 * b1, 2 * a0 - 3 * b0]);
+      questions.push(`設 $A=${A}$、$B=${B}$，求 $2A-3B$。`);
+      answers.push(`簡答：$${result}$。`);
+    }
+
+    return { questions, answers };
+  }
+
+  function buildMonomialTimesMonomialQA() {
+    const c1 = pickNonZero(-6, 6);
+    const c2 = pickNonZero(-6, 6);
+    const p1 = randInt(0, 4);
+    const p2 = randInt(0, 4);
+    const monomialText = (coef, power) => {
+      if (power === 0) return `${coef}`;
+      const c = coef === 1 ? '' : coef === -1 ? '-' : `${coef}`;
+      return `${c}x${power === 1 ? '' : `^${power}`}`;
+    };
+    const left = monomialText(c1, p1);
+    const right = monomialText(c2, p2);
+    const simpleAns = p1 + p2 === 0
+      ? `${c1 * c2}`
+      : `${c1 * c2 === 1 ? '' : c1 * c2 === -1 ? '-' : c1 * c2}x${p1 + p2 === 1 ? '' : `^${p1 + p2}`}`;
+    return {
+      question: `計算：$(${left})\\times(${right})$。`,
+      answer: `簡答：$${simpleAns}$。`,
+    };
+  }
+
+  function buildMonomialTimesPolyQA(polyDegree = 1) {
+    const k = pickNonZero(-5, 5);
+    const kp = randInt(0, 2);
+    const lead = pickNonZero(-4, 4);
+    const mid = pickNonZero(-6, 6);
+    const tail = randInt(-8, 8);
+    let coeffs;
+    if (polyDegree === 1) coeffs = [lead, mid];
+    else coeffs = [lead, mid, tail];
+    const mStr = kp === 0 ? `${k}` : `${k === 1 ? '' : k === -1 ? '-' : k}x${kp === 1 ? '' : `^${kp}`}`;
+    const pStr = formatPolynomialFromCoeffs(coeffs);
+    const resultCoeffs = coeffs.map((value) => value * k);
+    const resultDegree = polyDegree + kp;
+    const full = Array(resultDegree + 1).fill(0);
+    for (let i = 0; i < resultCoeffs.length; i += 1) {
+      full[i] = resultCoeffs[i];
+    }
+    const result = formatPolynomialFromCoeffs(full);
+    return {
+      question: `化簡：$${mStr}(${pStr})$。`,
+      answer: `簡答：$${result}$。`,
+    };
+  }
+
+  function multiplyPolyCoeffs(a, b) {
+    const out = Array(a.length + b.length - 1).fill(0);
+    for (let i = 0; i < a.length; i += 1) {
+      for (let j = 0; j < b.length; j += 1) {
+        out[i + j] += a[i] * b[j];
+      }
+    }
+    return out;
+  }
+
+  function buildPolyTimesPolyQA(leftDegree, rightDegree) {
+    const mkCoeffs = (deg) => {
+      if (deg === 1) return [pickNonZero(-4, 4), randInt(-6, 6)];
+      return [pickNonZero(-3, 3), randInt(-5, 5), randInt(-6, 6)];
+    };
+    const left = mkCoeffs(leftDegree);
+    const right = mkCoeffs(rightDegree);
+    const q = `計算：$(${formatPolynomialFromCoeffs(left)})(${formatPolynomialFromCoeffs(right)})$。`;
+    const a = formatPolynomialFromCoeffs(multiplyPolyCoeffs(left, right));
+    return { question: q, answer: `簡答：$${a}$。` };
+  }
+
+  function dividePolyByMonomialWithRemainder(coeffs, divisorCoef, divisorPower) {
+    const degree = coeffs.length - 1;
+    const quotient = [];
+    const remainderTerms = [];
+    for (let i = 0; i < coeffs.length; i += 1) {
+      const power = degree - i;
+      const coef = coeffs[i];
+      if (power >= divisorPower && coef % divisorCoef === 0) {
+        quotient.push({
+          coef: coef / divisorCoef,
+          power: power - divisorPower,
+        });
+      } else if (coef !== 0) {
+        remainderTerms.push({
+          coef,
+          power,
+        });
+      }
+    }
+    const termToText = ({ coef, power }) => {
+      if (power === 0) return `${coef}`;
+      const c = coef === 1 ? '' : coef === -1 ? '-' : `${coef}`;
+      return `${c}x${power === 1 ? '' : `^${power}`}`;
+    };
+    const joinTerms = (terms) => {
+      if (!terms.length) return '0';
+      return terms
+        .map((term, idx) => {
+          const t = termToText(term);
+          if (idx === 0) return t;
+          return t.startsWith('-') ? `- ${t.slice(1)}` : `+ ${t}`;
+        })
+        .join(' ');
+    };
+    return {
+      quotient: joinTerms(quotient),
+      remainder: joinTerms(remainderTerms),
+    };
+  }
+
+  function buildPolyDivideMonomialQA(kind = 0) {
+    if (kind === 0) {
+      const c2 = pickNonZero(1, 6);
+      const c1 = c2 * pickNonZero(-8, 8);
+      const p1 = randInt(2, 6);
+      const p2 = randInt(1, p1);
+      const left = `${c1 === 1 ? '' : c1 === -1 ? '-' : c1}x^${p1}`;
+      const right = `${c2 === 1 ? '' : c2 === -1 ? '-' : c2}x${p2 === 1 ? '' : `^${p2}`}`;
+      const qCoef = c1 / c2;
+      const qPow = p1 - p2;
+      const ans = qPow === 0
+        ? `${qCoef}`
+        : `${qCoef === 1 ? '' : qCoef === -1 ? '-' : qCoef}x${qPow === 1 ? '' : `^${qPow}`}`;
+      return {
+        question: `計算：$(${left})\\div(${right})$。`,
+        answer: `簡答：$${ans}$。`,
+      };
+    }
+
+    if (kind === 1) {
+      const divisorCoef = [2, 3, 4, 5][randInt(0, 3)];
+      const coeffA = divisorCoef * pickNonZero(-6, 6);
+      const coeffB = divisorCoef * pickNonZero(-6, 6);
+      const divisor = `${divisorCoef}x`;
+      const left = formatPolynomialFromCoeffs([coeffA, coeffB, 0]);
+      const { quotient } = dividePolyByMonomialWithRemainder([coeffA, coeffB, 0], divisorCoef, 1);
+      return {
+        question: `計算：$(${left})\\div(${divisor})$。`,
+        answer: `簡答：$${quotient}$。`,
+      };
+    }
+
+    const divisorCoef = [2, 3, 4, 5][randInt(0, 3)];
+    const c2 = divisorCoef * pickNonZero(-5, 5);
+    const c1 = divisorCoef * pickNonZero(-5, 5);
+    const c0 = pickNonZero(-9, 9);
+    const left = formatPolynomialFromCoeffs([c2, c1, c0]);
+    const divisor = `${divisorCoef}x`;
+    const { quotient, remainder } = dividePolyByMonomialWithRemainder([c2, c1, c0], divisorCoef, 1);
+    return {
+      question: `計算：$(${left})\\div(${divisor})$。`,
+      answer: `簡答：商 $${quotient}$，餘 $${remainder}$。`,
+    };
+  }
+
+  function buildJ312MulEasyMonoMonoSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const qa = buildMonomialTimesMonomialQA();
+      questions.push(qa.question);
+      answers.push(qa.answer);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ312MulEasyMonoLinearSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const qa = buildMonomialTimesPolyQA(1);
+      questions.push(qa.question);
+      answers.push(qa.answer);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ312MulEasyMonoQuadraticSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const qa = buildMonomialTimesPolyQA(2);
+      questions.push(qa.question);
+      answers.push(qa.answer);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ312MulEasyMixedSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const qa = i % 3 === 0
+        ? buildMonomialTimesMonomialQA()
+        : i % 3 === 1
+          ? buildMonomialTimesPolyQA(1)
+          : buildMonomialTimesPolyQA(2);
+      questions.push(qa.question);
+      answers.push(qa.answer);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ312MulAdvLinearLinearSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const qa = buildPolyTimesPolyQA(1, 1);
+      questions.push(qa.question);
+      answers.push(qa.answer);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ312MulAdvLinearQuadraticSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const qa = buildPolyTimesPolyQA(1, 2);
+      questions.push(qa.question);
+      answers.push(qa.answer);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ312MulAdvQuadraticQuadraticSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const qa = buildPolyTimesPolyQA(2, 2);
+      questions.push(qa.question);
+      answers.push(qa.answer);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ312MulAdvMixedSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const qa = i % 3 === 0
+        ? buildPolyTimesPolyQA(1, 1)
+        : i % 3 === 1
+          ? buildPolyTimesPolyQA(1, 2)
+          : buildPolyTimesPolyQA(2, 2);
+      questions.push(qa.question);
+      answers.push(qa.answer);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ312DivMonomialByMonomialSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const qa = buildPolyDivideMonomialQA(0);
+      questions.push(qa.question);
+      answers.push(qa.answer);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ312DivBinomialByMonomialSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const qa = buildPolyDivideMonomialQA(1);
+      questions.push(qa.question);
+      answers.push(qa.answer);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ312DivTrinomialByMonomialSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const qa = buildPolyDivideMonomialQA(2);
+      questions.push(qa.question);
+      answers.push(qa.answer);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ312DivMonomialMixedSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const qa = buildPolyDivideMonomialQA(i % 3);
+      questions.push(qa.question);
+      answers.push(qa.answer);
+    }
     return { questions, answers };
   }
 
@@ -3805,52 +5142,78 @@
     const answers = [];
 
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 3;
+      const variant = i % 4;
 
       if (variant === 0) {
-        const tents = randInt(5, 10);
-        const totalStudents = 5 * (tents - 1);
+        const tents = randInt(6, 14);
+        const emptyTents = [1, 2][randInt(0, 1)];
+        const totalStudents = 5 * (tents - emptyTents);
         const noTent = totalStudents - 4 * tents;
+        if (noTent <= 0) {
+          i -= 1;
+          continue;
+        }
         questions.push(
-          `某次露營，學生分配帳篷時，若每頂住 4 人，則有 ${noTent} 人無處可住；若每頂住 5 人，則空出一頂帳篷，求帳篷數與學生人數。`
+          `某次露營，學生分配帳篷時，若每頂住 4 人，則有 ${noTent} 人無處可住；若每頂住 5 人，則空出 ${emptyTents} 頂帳篷，求帳篷數與學生人數。`
         );
         answers.push(
-          `設帳篷有 $x$ 頂，學生有 $y$ 人。依題意可列聯立方程式 $${formatSystemLatex(`y=4x+${noTent}`, `y=5(x-1)`)}$。解得 $x=${tents},\\ y=${totalStudents}$，所以有 ${tents} 頂帳篷、${totalStudents} 位學生。`
+          `設帳篷有 $x$ 頂，學生有 $y$ 人。依題意可列聯立方程式 $${formatSystemLatex(`y=4x+${noTent}`, `y=5(x-${emptyTents})`)}$。解得 $x=${tents},\\ y=${totalStudents}$，所以有 ${tents} 頂帳篷、${totalStudents} 位學生。`
         );
         continue;
       }
 
       if (variant === 1) {
-        const b = 2 * randInt(15, 25);
-        const a = 4 * b;
-        const c = (a + b) / 2;
+        const multiplier = [3, 4, 5][randInt(0, 2)];
+        const ratioChoice = [
+          { num: 1, den: 2 },
+          { num: 2, den: 3 },
+        ][randInt(0, 1)];
+        const b = ratioChoice.den === 2 ? 2 * randInt(12, 28) : 3 * randInt(10, 20);
+        const a = multiplier * b;
+        const c = ((a + b) * ratioChoice.num) / ratioChoice.den;
         const total = a + b + c;
         questions.push(
-          `三個人合資 ${total} 元買球，甲出錢是乙的 4 倍，丙出的錢是甲、乙出錢總和的一半，求三人各出多少元。`
+          `三個人合資 ${total} 元買球，甲出錢是乙的 ${multiplier} 倍，丙出的錢是甲、乙出錢總和的 $${ratioChoice.num}/${ratioChoice.den}$，求三人各出多少元。`
         );
         answers.push(
-          `設乙出 $x$ 元，甲出 $y$ 元。因為丙出的錢是甲、乙總和的一半，所以總金額可寫成 $x+y+\\frac{x+y}{2}=${total}$，整理成 $3x+3y=${2 * total}$。依題意可列聯立方程式 $${formatSystemLatex(`y=4x`, `3x+3y=${2 * total}`)}$。解得 $x=${b},\\ y=${a}$，所以丙為 ${c} 元；三人分別是乙 ${b} 元、甲 ${a} 元、丙 ${c} 元。`
+          `設乙出 $x$ 元，甲出 $y$ 元。依題意可得 $y=${multiplier}x$，且總和為 $x+y+\\frac{${ratioChoice.num}}{${ratioChoice.den}}(x+y)=${total}$。可化為 $${ratioChoice.den + ratioChoice.num}x+${ratioChoice.den + ratioChoice.num}y=${ratioChoice.den * total}$。聯立求得 $x=${b},\\ y=${a}$，所以丙為 ${c} 元；三人分別是乙 ${b} 元、甲 ${a} 元、丙 ${c} 元。`
         );
         continue;
       }
 
-      const manRate = makeFraction(1, [18, 20, 24][randInt(0, 2)]);
-      const womanRate = makeFraction(1, [24, 30, 40][randInt(0, 2)]);
-      const together = divFraction(makeFraction(1, 1), addFraction(manRate, womanRate));
-      const comboRate = addFraction(
-        mulFraction(makeFraction(2, 1), manRate),
-        mulFraction(makeFraction(3, 1), womanRate)
-      );
-      const comboDays = divFraction(makeFraction(1, 1), comboRate);
-      if (together.den !== 1 || comboDays.den !== 1) {
-        i -= 1;
+      if (variant === 2) {
+        const manRate = makeFraction(1, [18, 20, 24][randInt(0, 2)]);
+        const womanRate = makeFraction(1, [24, 30, 40][randInt(0, 2)]);
+        const together = divFraction(makeFraction(1, 1), addFraction(manRate, womanRate));
+        const comboRate = addFraction(
+          mulFraction(makeFraction(2, 1), manRate),
+          mulFraction(makeFraction(3, 1), womanRate)
+        );
+        const comboDays = divFraction(makeFraction(1, 1), comboRate);
+        questions.push(
+          `某項工程由男、女工各一人合作需 $${fractionToLatex(together, true)}$ 天完成；若男工 2 人、女工 3 人合作則需 $${fractionToLatex(comboDays, true)}$ 天，求男工、女工單做各需幾天。`
+        );
+        answers.push(
+          `設男工一天可做全部工作的 $x$，女工一天可做全部工作的 $y$。依題意可列聯立方程式 $${formatSystemLatex(`x+y=${fractionToLatex(addFraction(manRate, womanRate), true)}`, `2x+3y=${fractionToLatex(comboRate, true)}`)}$。解得 $x=${fractionToLatex(manRate)},\\ y=${fractionToLatex(womanRate)}$，所以男工單做需 ${manRate.den} 天，女工單做需 ${womanRate.den} 天。`
+        );
         continue;
       }
+
+      const groupA = [2, 3, 4][randInt(0, 2)];
+      const groupB = [3, 4, 5][randInt(0, 2)];
+      const rateA = makeFraction(1, [12, 15, 18, 20][randInt(0, 3)]);
+      const rateB = makeFraction(1, [18, 24, 30][randInt(0, 2)]);
+      const comboRate = addFraction(
+        mulFraction(makeFraction(groupA, 1), rateA),
+        mulFraction(makeFraction(groupB, 1), rateB)
+      );
+      const comboDays = divFraction(makeFraction(1, 1), comboRate);
+      const singleTogether = divFraction(makeFraction(1, 1), addFraction(rateA, rateB));
       questions.push(
-        `某項工程由男、女工各一人合作需 ${together.num} 天完成；若男工 2 人、女工 3 人合作則需 ${comboDays.num} 天，求男工、女工單做各需幾天。`
+        `某工程甲、乙各一人合作需 $${fractionToLatex(singleTogether, true)}$ 天完成；若改成甲 ${groupA} 人與乙 ${groupB} 人合作，則需 $${fractionToLatex(comboDays, true)}$ 天完成。求甲、乙單做各需幾天。`
       );
       answers.push(
-        `設男工一天可做全部工作的 $x$，女工一天可做全部工作的 $y$。依題意可列聯立方程式 $${formatSystemLatex(`x+y=\\frac{1}{${together.num}}`, `2x+3y=\\frac{1}{${comboDays.num}}`)}$。解得 $x=${fractionToLatex(manRate)},\\ y=${fractionToLatex(womanRate)}$，所以男工單做需 ${manRate.den} 天，女工單做需 ${womanRate.den} 天。`
+        `設甲一天可做全部工作的 $x$，乙一天可做全部工作的 $y$。可列 $${formatSystemLatex(`x+y=${fractionToLatex(addFraction(rateA, rateB), true)}`, `${groupA}x+${groupB}y=${fractionToLatex(comboRate, true)}`)}$。解得 $x=${fractionToLatex(rateA)},\\ y=${fractionToLatex(rateB)}$，所以甲單做需 ${rateA.den} 天，乙單做需 ${rateB.den} 天。`
       );
     }
 
@@ -5872,16 +7235,32 @@ function buildJ221NonnegativeSet(count) {
     const answers = [];
 
     for (let i = 0; i < count; i += 1) {
-      const xValue = randInt(-3, 5);
-      const yValue = xValue;
-      const a = pickNonZero(2, 6);
-      const b = pickNonZero(1, 5);
-      const total = (a + b) * xValue;
-      const eq1 = `${a}x+${b}y=${total}`;
-      const eq2 = `${b}x+${a}y=${total}`;
+      const variant = i % 2;
+      const a = pickNonZero(2, 7);
+      const b = pickNonZero(1, 6);
+
+      if (variant === 0) {
+        const xValue = randInt(-4, 6);
+        const yValue = xValue;
+        const total = (a + b) * xValue;
+        const eq1 = `${a}x+${b}y=${total}`;
+        const eq2 = `${b}x+${a}y=${total}`;
+        questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
+        answers.push(
+          `兩式相減可得 $(${a - b})x-(${a - b})y=0$，所以 $x=y$。再代回任一式，得 $${a + b}x=${total}$，因此 $x=${xValue},\ y=${yValue}$。`
+        );
+        continue;
+      }
+
+      const xValue = randInt(-4, 6);
+      const yValue = -xValue;
+      const rhs1 = (a - b) * xValue;
+      const rhs2 = (b - a) * xValue;
+      const eq1 = `${a}x+${b}y=${rhs1}`;
+      const eq2 = `${b}x+${a}y=${rhs2}`;
       questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
       answers.push(
-        `兩式相減可得 $(${a - b})x-(${a - b})y=0$，所以 $x=y$。再代回任一式，得 $${a + b}x=${total}$，因此 $x=${xValue},\ y=${yValue}$。`
+        `兩式相加得 $(${a + b})x+(${a + b})y=0$，所以 $x+y=0$，即 $y=-x$。代回第一式可得 $x=${xValue},\ y=${yValue}$。`
       );
     }
 
@@ -6299,34 +7678,29 @@ function buildJ221NonnegativeSet(count) {
       }
 
       if (variant === 2) {
-        const template = [
-          { p: 1, q: 10, r: 5, s: 50, a: -2 },
-          { p: 2, q: 12, r: 8, s: 24, a: -4 },
-          { p: 3, q: 15, r: 9, s: 45, a: -2 },
-          { p: 4, q: 28, r: 12, s: 112, a: -3 },
-          { p: 5, q: 35, r: 10, s: 175, a: -2 },
-        ][Math.floor(i / 4) % 5];
-        const a = template.a;
+        const p = randInt(2, 6);
+        const a = -randInt(1, 5);
+        const r = -p * a;
+        const q = [8, 10, 12, 15, 18, 20, 24, 30][randInt(0, 7)];
+        const s = p * q;
         questions.push(
-          `若聯立方程式 $${formatSystemLatex(`x+ay=${template.q}`, `${template.p}x-${template.r}y=${template.s}`)}$ 有無限多組解，求 $a$。`
+          `若聯立方程式 $${formatSystemLatex(`x+ay=${q}`, `${p}x-${r}y=${s}`)}$ 有無限多組解，求 $a$。`
         );
         answers.push(
-          `若有無限多組解，三組比值都要相同。由 $\\frac{1}{${template.p}}=\\frac{${template.q}}{${template.s}}$，可知也要有 $\\frac{a}{-${template.r}}=\\frac{1}{${template.p}}$，所以 $a=${a}$。`
+          `若有無限多組解，三組比值都要相同。由 $\\frac{1}{${p}}=\\frac{${q}}{${s}}$，可知也要有 $\\frac{a}{-${r}}=\\frac{1}{${p}}$，所以 $a=${a}$。`
         );
         continue;
       }
 
-      const template = [
-        { p: 1, q: 10, r: 5, s: 40, a: -2 },
-        { p: 2, q: 12, r: 8, s: 40, a: -3 },
-        { p: 3, q: 15, r: 9, s: 36, a: -2 },
-        { p: 4, q: 28, r: 6, s: 48, a: -1 },
-        { p: 5, q: 35, r: 10, s: 60, a: -2 },
-      ][Math.floor(i / 4) % 5];
-      const a = template.a;
-      questions.push(`若聯立方程式 $${formatSystemLatex(`x+ay=${template.q}`, `${template.p}x-${template.r}y=${template.s}`)}$ 無解，求 $a$。`);
+      const p = randInt(2, 6);
+      const a = -randInt(1, 5);
+      const r = -p * a;
+      const q = [8, 10, 12, 15, 18, 20, 24, 30][randInt(0, 7)];
+      const offset = [1, 2, 3, 4, 5, 6][randInt(0, 5)];
+      const s = p * q + offset;
+      questions.push(`若聯立方程式 $${formatSystemLatex(`x+ay=${q}`, `${p}x-${r}y=${s}`)}$ 無解，求 $a$。`);
       answers.push(
-        `若無解，前兩組係數要成比例，但常數比不同。先由 $\\frac{1}{${template.p}}=\\frac{a}{-${template.r}}$ 得 $a=${a}$。此時係數比固定是 $\\frac{1}{${template.p}}$，但常數比是 $\\frac{${template.q}}{${template.s}}$，與 $\\frac{1}{${template.p}}$ 不同，因此確實無解。`
+        `若無解，前兩組係數要成比例，但常數比不同。先由 $\\frac{1}{${p}}=\\frac{a}{-${r}}$ 得 $a=${a}$。此時係數比固定是 $\\frac{1}{${p}}$，但常數比是 $\\frac{${q}}{${s}}$，與 $\\frac{1}{${p}}$ 不同，因此確實無解。`
       );
     }
 
@@ -9934,8 +11308,8 @@ function buildJ221NonnegativeSet(count) {
     const answers = [];
 
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 7;
-      const cycle = Math.floor(i / 7);
+      const variant = i % 6;
+      const cycle = Math.floor(i / 6);
 
       if (variant === 0) {
         const unplacedChoices = [8, 9, 10, 11, 12, 13, 14, 15, 16];
@@ -10044,33 +11418,6 @@ function buildJ221NonnegativeSet(count) {
         continue;
       }
 
-      const studentChoices = [14, 15, 16, 17, 18];
-      const students = studentChoices[cycle % studentChoices.length];
-      const firstLow = 3 * (students - 1) + 1;
-      const firstHigh = 3 * (students - 1) + 2;
-      const secondLow = 4 * (students - 5) + 1;
-      const secondHigh = 4 * (students - 4);
-      const pencilLow = Math.max(firstLow, secondLow);
-      const pencilHigh = Math.min(firstHigh, secondHigh);
-      if (pencilLow > pencilHigh) {
-        i -= 1;
-        continue;
-      }
-      const pencils = pencilLow + (cycle % (pencilHigh - pencilLow + 1));
-      const firstUpper = fractionToLatex(makeFraction(pencils + 2, 3), true);
-      const firstLower = fractionToLatex(makeFraction(pencils, 3), true);
-      const secondLower = fractionToLatex(makeFraction(pencils + 16, 4), true);
-      const secondUpper = fractionToLatex(makeFraction(pencils + 20, 4), true);
-      const possibleStudents = Array.from({ length: 40 }, (_, idx) => idx + 1).filter(
-        (n) => 3 * (n - 1) + 1 <= pencils && pencils < 3 * (n - 1) + 3 && 4 * (n - 5) < pencils && pencils <= 4 * (n - 4)
-      );
-      const possibleText = possibleStudents.join('、');
-      questions.push(
-        `餘數邏輯分配：有一堆鉛筆要分給 $x$ 位學生。若每人分 3 枝，則最後一人分到 1 枝以上但不到 3 枝；若每人分 4 枝，則有 4 人完全分不到。已知鉛筆共有 ${pencils} 枝，求學生人數 $x$ 的範圍。`
-      );
-      answers.push(
-        formatJ242Answer(`$x=${possibleText}$`, `若每人分 3 枝，最後一人有 1 枝以上但不到 3 枝，表示 $3(x-1)+1≤${pencils}<3(x-1)+3$，可得 $${firstLower}<x≤${firstUpper}$。若每人分 4 枝，還有 4 人完全分不到，表示第 $x-4$ 人可以分到、但第 $x-3$ 人開始分不到，所以 $4(x-5)<${pencils}≤4(x-4)$，可得 $${secondLower}≤x<${secondUpper}$。合併並取整數，得 $x=${possibleText}$。`)
-      );
     }
 
     return { questions, answers };
@@ -10725,13 +12072,400 @@ function buildJ221NonnegativeSet(count) {
           return buildCubicDivideQuadraticSet(3);
         },
       },
-      'square-root-basic-junior': {
+      'j3-1-3-polynomial-division-regular-drill': {
         type: 'drill',
-        title: '平方根基本概念',
+        title: '多項式除法正常版（含分數與餘數）',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ313PolynomialDivisionRegularSet(5);
+        },
+      },
+      'j3-1-3-reverse-division-drill': {
+        type: 'drill',
+        title: '反面出題（已知商、餘）',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ313ReverseDivisionSet(5);
+        },
+      },
+      'j3-1-3-coeff-sum-drill': {
+        type: 'drill',
+        title: '係數和與常數項題型',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ313CoeffSumSet(5);
+        },
+      },
+      'j3-1-3-remainder-theorem-drill': {
+        type: 'drill',
+        title: '餘式定理應用題型',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ313RemainderTheoremSet(5);
+        },
+      },
+      'j3-1-3-factor-theorem-drill': {
+        type: 'drill',
+        title: '因式定理與未知係數判定',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ313FactorTheoremSet(5);
+        },
+      },
+      'j3-1-2-polynomial-add-subtract-drill': {
+        type: 'drill',
+        title: '多項式加減運算（樣式與直式）',
         difficulty: 'easy',
         questionCount: 5,
         generate() {
-          return buildSquareRootBasicSet(5);
+          return buildJ312PolynomialAddSubSet(5);
+        },
+      },
+      'j3-1-2-degree-constraint-drill': {
+        type: 'drill',
+        title: '根據次數性質反求參數',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ312DegreeConstraintSet(5);
+        },
+      },
+      'j3-1-2-polynomial-reverse-application-drill': {
+        type: 'drill',
+        title: '多項式逆推應用',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ312PolynomialReverseSet(5);
+        },
+      },
+      'j3-1-2-mul-easy-mixed-drill': {
+        type: 'drill',
+        title: '多項式乘法（簡易版）',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ312MulEasyMixedSet(6);
+        },
+      },
+      'j3-1-2-mul-mono-mono-drill': {
+        type: 'drill',
+        title: '單項式 × 單項式',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ312MulEasyMonoMonoSet(6);
+        },
+      },
+      'j3-1-2-mul-mono-linear-drill': {
+        type: 'drill',
+        title: '單項式 × 一次多項式',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ312MulEasyMonoLinearSet(6);
+        },
+      },
+      'j3-1-2-mul-mono-quadratic-drill': {
+        type: 'drill',
+        title: '單項式 × 二次多項式',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ312MulEasyMonoQuadraticSet(6);
+        },
+      },
+      'j3-1-2-mul-advanced-mixed-drill': {
+        type: 'drill',
+        title: '進階多項式乘法',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ312MulAdvMixedSet(6);
+        },
+      },
+      'j3-1-2-mul-linear-linear-drill': {
+        type: 'drill',
+        title: '一次式 × 一次式',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ312MulAdvLinearLinearSet(6);
+        },
+      },
+      'j3-1-2-mul-linear-quadratic-drill': {
+        type: 'drill',
+        title: '一次式 × 二次式',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ312MulAdvLinearQuadraticSet(6);
+        },
+      },
+      'j3-1-2-mul-quadratic-quadratic-drill': {
+        type: 'drill',
+        title: '二次式 × 二次式',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ312MulAdvQuadraticQuadraticSet(6);
+        },
+      },
+      'j3-1-2-div-monomial-mixed-drill': {
+        type: 'drill',
+        title: '多項式除以單項式',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ312DivMonomialMixedSet(6);
+        },
+      },
+      'j3-1-2-div-mono-by-mono-drill': {
+        type: 'drill',
+        title: '單項式 ÷ 單項式',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ312DivMonomialByMonomialSet(6);
+        },
+      },
+      'j3-1-2-div-binomial-by-mono-drill': {
+        type: 'drill',
+        title: '二項式 ÷ 單項式',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ312DivBinomialByMonomialSet(6);
+        },
+      },
+      'j3-1-2-div-trinomial-by-mono-drill': {
+        type: 'drill',
+        title: '三項式 ÷ 單項式（含餘數）',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ312DivTrinomialByMonomialSet(6);
+        },
+      },
+      'square-root-basic-junior': {
+        type: 'drill',
+        title: '平方根估算與近似（綜合）',
+        difficulty: 'easy',
+        questionCount: 8,
+        generate() {
+          return buildJ321SqrtEstimateMixedSet(8);
+        },
+      },
+      'j3-2-3-triple-expand-drill': {
+        type: 'drill',
+        title: '畢氏數擴展與倍數',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ323TripleExpandSet(6);
+        },
+      },
+      'j3-2-3-hypotenuse-altitude-drill': {
+        type: 'drill',
+        title: '斜邊高與面積性質',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ323HypotenuseAltitudeSet(6);
+        },
+      },
+      'j3-2-3-coordinate-distance-drill': {
+        type: 'drill',
+        title: '座標平面兩點距離',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ323CoordinateDistanceSet(6);
+        },
+      },
+      'j3-2-3-spatial-diagonal-drill': {
+        type: 'drill',
+        title: '立體圖形空間對角線',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ323SpatialDiagonalSet(6);
+        },
+      },
+      'j3-3-1-core-factoring-mixed': {
+        type: 'drill',
+        title: '因式分解核心綜合（公因式）',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ331CoreFactoringMixedSet(6);
+        },
+      },
+      'j3-3-1-common-factor-basic': {
+        type: 'drill',
+        title: '基礎單項提取',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ331CommonFactorBasicSet(6);
+        },
+      },
+      'j3-3-1-common-factor-polynomial': {
+        type: 'drill',
+        title: '多項式式子提取',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ331PolynomialFactorSet(6);
+        },
+      },
+      'j3-3-1-sign-transform-factoring': {
+        type: 'drill',
+        title: '變號法則應用',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ331SignTransformSet(6);
+        },
+      },
+      'j3-3-1-grouping-advanced-mixed': {
+        type: 'drill',
+        title: '分組分解進階綜合',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ331GroupingAdvancedMixedSet(6);
+        },
+      },
+      'j3-3-1-grouping-factor': {
+        type: 'drill',
+        title: '分組分解',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ331GroupingFactorSet(6);
+        },
+      },
+      'j3-3-1-expand-then-group': {
+        type: 'drill',
+        title: '先去括號再分組',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ331ExpandThenGroupSet(6);
+        },
+      },
+      'j3-3-2-formula-mixed': {
+        type: 'drill',
+        title: '公式辨識與應用綜合',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ332FormulaMixedSet(6);
+        },
+      },
+      'j3-3-2-diff-squares': {
+        type: 'drill',
+        title: '平方差公式基礎',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ332DiffSquaresSet(6);
+        },
+      },
+      'j3-3-2-perfect-square': {
+        type: 'drill',
+        title: '完全平方公式基礎',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ332PerfectSquareSet(6);
+        },
+      },
+      'j3-3-2-composite-formula': {
+        type: 'drill',
+        title: '複合運算（先提公因式）',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ332CompositeSet(6);
+        },
+      },
+      'j3-3-2-substitution-formula': {
+        type: 'drill',
+        title: '多項式換項（括號型）',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ332SubstitutionSet(6);
+        },
+      },
+      'j3-3-3-cross-core-mixed': {
+        type: 'drill',
+        title: '十字交乘核心綜合',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ333CrossCoreMixedSet(6);
+        },
+      },
+      'j3-3-3-cross-coeff-one': {
+        type: 'drill',
+        title: '係數為 1 基礎類',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ333CrossCoeffOneSet(6);
+        },
+      },
+      'j3-3-3-cross-coeff-nonone': {
+        type: 'drill',
+        title: '係數不為 1 進階類',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ333CrossCoeffNonOneSet(6);
+        },
+      },
+      'j3-3-3-cross-preprocess': {
+        type: 'drill',
+        title: '負號與公因數預處理',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ333CrossPreprocessSet(6);
+        },
+      },
+      'j3-3-3-cross-sub-mixed': {
+        type: 'drill',
+        title: '十字交乘換元綜合',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ333CrossSubMixedSet(6);
+        },
+      },
+      'j3-3-3-cross-substitution': {
+        type: 'drill',
+        title: '代換換元十字交乘',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ333CrossSubstitutionSet(6);
+        },
+      },
+      'j3-3-3-cross-structured': {
+        type: 'drill',
+        title: '括號型結構十字交乘',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ333CrossStructuredSet(6);
         },
       },
       'radical-mul-div-split-rule': {

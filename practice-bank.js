@@ -115,21 +115,31 @@
     return ids;
   }
 
-  function buildIndependentPracticeItems() {
+  function buildIndependentPracticeItems(options = {}) {
+    const includeUnboundByChapterCode = Boolean(options.includeUnboundByChapterCode);
     const chapterMap = buildPracticeChapterMap();
-    const records = Object.values(practiceLibrary?.byId || {}).filter((row) => row && row.enabled !== false);
+    const records = Object.values(practiceLibrary?.byId || {}).filter((row) => {
+      if (!row || row.enabled === false) return false;
+      const recordId = String(row.id || "").trim();
+      const mapped = Array.isArray(chapterMap[recordId]) ? chapterMap[recordId] : [];
+      if (mapped.length > 0) return true;
+      if (!includeUnboundByChapterCode) return false;
+      return Boolean(String(row?.chapterCode || "").trim());
+    });
     return records.map((record) => {
       const recordId = String(record.id || "").trim();
-      const chapterMeta = chapterMap[recordId]?.length
-        ? chapterMap[recordId]
-        : normalizeTextList([record.chapterCode]).map((value) => String(value));
+      const chapterMeta = chapterMap[recordId] || [];
       const chapterCodes = chapterMeta.map((entry) => typeof entry === "string" ? entry : entry.code);
       const chapterOrderLookup = Object.fromEntries(
         chapterMeta
           .filter((entry) => entry && typeof entry === "object")
           .map((entry) => [String(entry.code || ""), Number(entry.order || 0)])
       );
-      const chapterCode = chapterCodes[0] || "";
+      const recordChapterCode = String(record?.chapterCode || "").trim();
+      const effectiveChapterCodes = chapterCodes.length
+        ? chapterCodes
+        : (recordChapterCode ? [recordChapterCode] : []);
+      const chapterCode = effectiveChapterCodes[0] || "";
       const chapterLabel = chapterLabelLookup[chapterCode] || chapterCode;
       return {
         id: recordId,
@@ -139,7 +149,7 @@
         term: String(record.term || "").trim(),
         chapter: String(record.chapter || "").trim() || chapterLabel,
         chapterCode,
-        chapterCodes,
+        chapterCodes: effectiveChapterCodes,
         domain: String(record.domain || "").trim() || "無限練習",
         difficulty: String(record.difficulty || "").trim(),
         contentTypes: ["無限練習"],
@@ -158,25 +168,23 @@
   }
 
   const independentItems = buildIndependentPracticeItems();
+  const recordAssignedItems = buildIndependentPracticeItems({ includeUnboundByChapterCode: true });
   const relatedChildPracticeIds = new Set(
     Object.values(practiceLibrary?.byId || {})
       .flatMap((record) => Array.isArray(record?.relatedPracticeIds) ? record.relatedPracticeIds : [])
       .map((value) => String(value || "").trim())
       .filter(Boolean)
   );
-  const independentIds = new Set(independentItems.map((item) => item.id));
-  const practiceSourceTopicIds = buildPracticeSourceTopicIdSet();
-  const legacyItems = allItems.filter((item) => {
-    const topicId = String(item?.id || "").trim();
-    return hasInfinitePractice(item) && !independentIds.has(topicId) && !practiceSourceTopicIds.has(topicId);
-  });
-  const practiceItems = independentItems.concat(legacyItems);
+  const practiceItems = independentItems;
+
+  function getSourcePracticeItemsByMode() {
+    return state.catalogMode === "record" ? recordAssignedItems : practiceItems;
+  }
 
   function buildChapterPracticeCatalogItems() {
     const counts = new Map();
     for (const item of practiceItems) {
       const practiceId = String(item?.id || "").trim();
-      if (practiceId && relatedChildPracticeIds.has(practiceId)) continue;
       const chapterCodes = Array.isArray(item?.chapterCodes) && item.chapterCodes.length
         ? item.chapterCodes
         : [getItemChapterCode(item)].filter(Boolean);
@@ -201,7 +209,7 @@
       .filter((row) => row.count > 0);
 
     return [
-      { code: "all", label: "全部章節", count: practiceItems.filter((item) => !relatedChildPracticeIds.has(String(item?.id || "").trim())).length },
+      { code: "all", label: "全部章節", count: practiceItems.length },
       ...chapterRows,
     ];
   }
@@ -209,13 +217,8 @@
   function buildChapterPracticeRecordCatalogItems() {
     const counts = new Map();
     const records = Object.values(practiceLibrary?.byId || {}).filter((row) => row && row.enabled !== false);
-    const chapterMap = buildPracticeChapterMap();
     for (const record of records) {
-      const recordId = String(record?.id || "").trim();
-      if (recordId && relatedChildPracticeIds.has(recordId)) continue;
-      const fallbackChapterCode = String(record?.chapterCode || "").trim();
-      const mappedChapterCode = chapterMap[recordId]?.[0] || "";
-      const chapterCode = fallbackChapterCode || mappedChapterCode;
+      const chapterCode = String(record?.chapterCode || "").trim();
       if (!chapterCode) continue;
       counts.set(chapterCode, (counts.get(chapterCode) || 0) + 1);
     }
@@ -232,7 +235,9 @@
       .filter((row) => row.count > 0);
 
     return [
-      { code: "all", label: "全部章節", count: records.filter((record) => !relatedChildPracticeIds.has(String(record?.id || "").trim())).length },
+      { code: "all", label: "全部章節", count: records.filter((record) => {
+        return Boolean(String(record?.chapterCode || "").trim());
+      }).length },
       ...chapterRows,
     ];
   }
@@ -266,8 +271,13 @@
     const chapterRows = sourceRows.filter((row) => row.code !== "all" && matchesGradeFilterByChapterCode(row.code));
     const activeGrade = gradeOptions.find((entry) => entry.key === state.gradeKey) || null;
     const allCount = state.catalogMode === "record"
-      ? Object.values(practiceLibrary?.byId || {}).filter((row) => row && row.enabled !== false && !relatedChildPracticeIds.has(String(row?.id || "").trim()) && matchesGradeFilter(row)).length
-      : practiceItems.filter((item) => !relatedChildPracticeIds.has(String(item?.id || "").trim()) && matchesGradeFilter(item)).length;
+      ? Object.values(practiceLibrary?.byId || {}).filter((record) => {
+          if (!record || record.enabled === false) return false;
+          const chapterCode = String(record?.chapterCode || "").trim();
+          if (!chapterCode) return false;
+          return matchesGradeFilterByChapterCode(chapterCode);
+        }).length
+      : practiceItems.filter((item) => matchesGradeFilter(item)).length;
     return [
       {
         code: "all",
@@ -355,14 +365,14 @@
   }
 
   function getFilteredItems() {
+    const sourceItems = getSourcePracticeItemsByMode();
     const keyword = state.keyword.trim().toLowerCase();
-    return practiceItems.filter((item) => {
+    return sourceItems.filter((item) => {
       const itemId = String(item?.id || "").trim();
       const chapterOk = matchesChapterFilter(item);
       const keywordOk = !keyword || getPracticeKeywordText(item).includes(keyword);
       const practiceOk = !state.practiceId || itemId === state.practiceId;
-      const relatedChildOk = state.practiceId || !relatedChildPracticeIds.has(itemId);
-      return chapterOk && keywordOk && practiceOk && relatedChildOk;
+      return chapterOk && keywordOk && practiceOk;
     }).slice().sort((a, b) => {
       if (state.chapterCode !== "all") {
         const leftOrder = Number(a?.chapterOrderLookup?.[state.chapterCode]);
@@ -626,15 +636,15 @@
   }
 
   function getFilteredItems() {
+    const sourceItems = getSourcePracticeItemsByMode();
     const keyword = state.keyword.trim().toLowerCase();
-    return practiceItems.filter((item) => {
+    return sourceItems.filter((item) => {
       const itemId = String(item?.id || "").trim();
       const gradeOk = matchesGradeFilter(item);
       const chapterOk = matchesChapterFilter(item);
       const keywordOk = !keyword || getPracticeKeywordText(item).includes(keyword);
       const practiceOk = !state.practiceId || itemId === state.practiceId;
-      const relatedChildOk = state.practiceId || !relatedChildPracticeIds.has(itemId);
-      return gradeOk && chapterOk && keywordOk && practiceOk && relatedChildOk;
+      return gradeOk && chapterOk && keywordOk && practiceOk;
     }).slice().sort((a, b) => {
       if (state.chapterCode !== "all") {
         const leftOrder = Number(a?.chapterOrderLookup?.[state.chapterCode]);
@@ -947,7 +957,7 @@
     }
 
     if (elements.catalogBindingModeButton) elements.catalogBindingModeButton.textContent = "依章節綁定";
-    if (elements.catalogRecordModeButton) elements.catalogRecordModeButton.textContent = "依練習紀錄";
+    if (elements.catalogRecordModeButton) elements.catalogRecordModeButton.textContent = "依章節分配";
 
     const summaryLabel = document.querySelector(".summary-panel .summary-label");
     if (summaryLabel) summaryLabel.textContent = "目前結果";
@@ -1011,8 +1021,13 @@
     const chapterRows = sourceRows.filter((row) => row.code !== "all" && matchesGradeFilterByChapterCode(row.code));
     const activeGradeLabel = getActiveGradeLabelV2();
     const allCount = state.catalogMode === "record"
-      ? Object.values(practiceLibrary?.byId || {}).filter((row) => row && row.enabled !== false && !relatedChildPracticeIds.has(String(row?.id || "").trim()) && matchesGradeFilter(row)).length
-      : practiceItems.filter((item) => !relatedChildPracticeIds.has(String(item?.id || "").trim()) && matchesGradeFilter(item)).length;
+      ? Object.values(practiceLibrary?.byId || {}).filter((record) => {
+          if (!record || record.enabled === false) return false;
+          const chapterCode = String(record?.chapterCode || "").trim();
+          if (!chapterCode) return false;
+          return matchesGradeFilterByChapterCode(chapterCode);
+        }).length
+      : practiceItems.filter((item) => matchesGradeFilter(item)).length;
     const visibleRows = [
       {
         code: "all",
@@ -1368,12 +1383,14 @@
 
     elements.catalogBindingModeButton?.addEventListener("click", () => {
       state.catalogMode = "binding";
-      renderChapterPracticeCatalogV2();
+      state.practiceId = "";
+      renderV2();
     });
 
     elements.catalogRecordModeButton?.addEventListener("click", () => {
       state.catalogMode = "record";
-      renderChapterPracticeCatalogV2();
+      state.practiceId = "";
+      renderV2();
     });
 
     elements.keywordInput?.addEventListener("input", (event) => {
