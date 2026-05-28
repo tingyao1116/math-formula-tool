@@ -22,6 +22,69 @@
     return value < 0 ? `(${value})` : `${value}`;
   }
 
+  // Shared math display formatter helpers
+  function gcdInt(a, b) {
+    let x = Math.abs(Math.trunc(a || 0));
+    let y = Math.abs(Math.trunc(b || 0));
+    while (y !== 0) {
+      const t = x % y;
+      x = y;
+      y = t;
+    }
+    return x || 1;
+  }
+
+  function reduceFraction(numerator, denominator) {
+    if (denominator === 0) return { numerator, denominator: 0 };
+    if (numerator === 0) return { numerator: 0, denominator: 1 };
+    const sign = numerator * denominator < 0 ? -1 : 1;
+    const n = Math.abs(numerator);
+    const d = Math.abs(denominator);
+    const g = gcdInt(n, d);
+    return { numerator: sign * (n / g), denominator: d / g };
+  }
+
+  function formatFraction(numerator, denominator) {
+    const reduced = reduceFraction(numerator, denominator);
+    if (reduced.denominator === 0) return '\\text{undefined}';
+    if (reduced.denominator === 1) return `${reduced.numerator}`;
+    const sign = reduced.numerator < 0 ? '-' : '';
+    return `${sign}\\frac{${Math.abs(reduced.numerator)}}{${reduced.denominator}}`;
+  }
+
+  function simplifyRadical(n) {
+    if (n <= 0) return { outside: 0, inside: n };
+    let outside = 1;
+    let inside = n;
+    for (let k = 2; k * k <= inside; k += 1) {
+      while (inside % (k * k) === 0) {
+        outside *= k;
+        inside /= (k * k);
+      }
+    }
+    return { outside, inside };
+  }
+
+  function formatRadical(n) {
+    const r = simplifyRadical(n);
+    if (r.inside === 1) return `${r.outside}`;
+    if (r.outside === 1) return `\\sqrt{${r.inside}}`;
+    return `${r.outside}\\sqrt{${r.inside}}`;
+  }
+
+  function formatCoeffTerm(coeff, variable = 'x', power = 1) {
+    if (!Number.isFinite(coeff) || coeff === 0) return '0';
+    const sign = coeff < 0 ? '-' : '';
+    const abs = Math.abs(coeff);
+    const coeffText = abs === 1 ? '' : `${abs}`;
+    const powerText = power === 1 ? variable : `${variable}^${power}`;
+    return `${sign}${coeffText}${powerText}`;
+  }
+
+  function formatSubtraction(left, right) {
+    return right < 0 ? `${left}-(${right})` : `${left}-${right}`;
+  }
+
   function buildMidpointSet(count) {
     const questions = [];
     const answers = [];
@@ -1160,12 +1223,12 @@
       const b = randInt(2, 12);
       if (i % 2 === 0) {
         questions.push(`計算：\\(\\sqrt{${a}}\\cdot\\sqrt{${b}}\\)。`);
-        answers.push(`\\(\\sqrt{${a}}\\cdot\\sqrt{${b}}=\\sqrt{${a * b}}\\)。`);
+        answers.push(`\\(\\sqrt{${a}}\\cdot\\sqrt{${b}}=${formatRadical(a * b)}\\)。`);
       } else {
         const m = randInt(2, 12);
         const n = randInt(2, 12);
         questions.push(`計算：\\(\\frac{\\sqrt{${m * n}}}{\\sqrt{${n}}}\\)。`);
-        answers.push(`\\(\\frac{\\sqrt{${m * n}}}{\\sqrt{${n}}}=\\sqrt{${m}}\\)。`);
+        answers.push(`\\(\\frac{\\sqrt{${m * n}}}{\\sqrt{${n}}}=${formatRadical(m)}\\)。`);
       }
     }
     return { questions, answers };
@@ -3999,11 +4062,11 @@
         const mode = randInt(0, 1);
         if (mode === 0) {
           questions.push(`直角三角形兩股為 \\(${other}\\) 與 \\(\\sqrt{${inside}}\\)，求斜邊。`);
-          answers.push(`\\(\\sqrt{${other * other + inside}}\\)`);
+          answers.push(`\\(${formatRadical(other * other + inside)}\\)`);
         } else {
           const c = randInt(4, 10);
           questions.push(`直角三角形一股為 \\(${other}\\)、斜邊為 \\(${c}\\)，求另一股。`);
-          answers.push(`\\(\\sqrt{${c * c - other * other}}\\)`);
+          answers.push(`\\(${formatRadical(c * c - other * other)}\\)`);
         }
         continue;
       }
@@ -4014,7 +4077,7 @@
         ? `兩邊長為 \\(${a}\\)、\\(${b}\\)。若 \\(${b}\\) 是斜邊，求另一邊。`
         : `兩邊長為 \\(${a}\\)、\\(${b}\\)。若 \\(${b}\\) 不是斜邊，求斜邊。`;
       questions.push(wording);
-      answers.push(randInt(0, 1) === 0 ? `\\(\\sqrt{${b * b - a * a}}\\)` : `\\(\\sqrt{${a * a + b * b}}\\)`);
+      answers.push(randInt(0, 1) === 0 ? `\\(${formatRadical(b * b - a * a)}\\)` : `\\(${formatRadical(a * a + b * b)}\\)`);
     }
     return { questions, answers };
   }
@@ -4096,6 +4159,11 @@
   }
 
   function buildJ331CommonFactorBasicSet(count) {
+    function formatMonomial(coeff, power) {
+      if (power === 0) return `${coeff}`;
+      if (power === 1) return formatCoeffTerm(coeff, "x", 1);
+      return formatCoeffTerm(coeff, "x", power);
+    }
     const questions = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
@@ -4103,15 +4171,16 @@
       const common = pickNonZero(2, 6);
       const a = pickNonZero(1, 9);
       const b = pickNonZero(1, 9);
-      const extraPow = randInt(0, 2);
+      const extraPow = randInt(1, 3);
       const leftCoef = common * a;
       const rightCoef = common * b;
-      const termA = `${leftCoef}x^${xPow + extraPow}`;
-      const termB = `${rightCoef}x^${xPow}`;
+      const termA = formatMonomial(leftCoef, xPow + extraPow);
+      const termB = formatMonomial(rightCoef, xPow);
       questions.push(`提取公因式：\\(${termA}${b > 0 ? "+" : ""}${termB}\\)`);
-      const innerA = `${a}x^${extraPow}`;
+      const innerA = formatMonomial(a, extraPow);
       const innerB = `${b}`;
-      answers.push(`\\(${termA}${b > 0 ? "+" : ""}${termB}= ${common}x^${xPow}(${innerA}${b > 0 ? "+" : ""}${innerB})\\)`);
+      const outer = xPow === 1 ? `${common}x` : `${common}x^${xPow}`;
+      answers.push(`\\(${termA}${b > 0 ? "+" : ""}${termB}= ${outer}(${innerA}${b > 0 ? "+" : ""}${innerB})\\)`);
     }
     return { questions, answers };
   }
@@ -4120,17 +4189,34 @@
     const questions = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const a = pickNonZero(1, 5);
-      const b = pickNonZero(1, 5);
-      const c = pickNonZero(1, 5);
-      const d = pickNonZero(1, 5);
-      const common = `${a}x${b >= 0 ? "+" : ""}${b}`;
-      const left = `${c}(${common})`;
-      const right = `${d}(${common})`;
-      const sign = randInt(0, 1) === 0 ? "+" : "-";
-      questions.push(`提取公因式：\\(${left}${sign}${right}\\)`);
-      const out = sign === "+" ? `${c + d}` : `${c - d}`;
-      answers.push(`\\(${left}${sign}${right}=(${common})(${out})\\)`);
+      const mode = i % 5;
+      if (mode === 0) {
+        const p = randInt(2, 7);
+        questions.push(`提取公因式：\\((x+${p})(x-${p})-(x-${p})\\)`);
+        answers.push(`\\((x+${p})(x-${p})-(x-${p})=(x-${p})(x+${p}-1)\\)`);
+        continue;
+      }
+      if (mode === 1) {
+        const a = randInt(2, 5);
+        const b = randInt(1, 5);
+        questions.push(`提取公因式：\\(x(${a}x+${b})-x(x+${b})\\)`);
+        answers.push(`\\(x(${a}x+${b})-x(x+${b})=x\\big[(${a}x+${b})-(x+${b})\\big]=x(${a - 1}x)\\)`);
+        continue;
+      }
+      if (mode === 2) {
+        const p = randInt(2, 6);
+        questions.push(`提取公因式：\\(2(${p}x-1)^2+(${p}x-1)\\)`);
+        answers.push(`\\(2(${p}x-1)^2+(${p}x-1)=(${p}x-1)\\big(2(${p}x-1)+1\\big)=(${p}x-1)(${2 * p}x-1)\\)`);
+        continue;
+      }
+      if (mode === 3) {
+        const p = randInt(2, 6);
+        questions.push(`提取公因式：\\((3x-${p})^2-(3x-${p})\\)`);
+        answers.push(`\\((3x-${p})^2-(3x-${p})=(3x-${p})(3x-${p}-1)\\)`);
+        continue;
+      }
+      questions.push(`提取公因式：\\(5(2x-1)^2-3(2x-1)\\)`);
+      answers.push(`\\(5(2x-1)^2-3(2x-1)=(2x-1)(10x-8)\\)`);
     }
     return { questions, answers };
   }
@@ -4139,22 +4225,28 @@
     const questions = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const a = pickNonZero(1, 6);
-      const b = pickNonZero(1, 6);
-      const c = pickNonZero(1, 6);
       const mode = i % 3;
       if (mode === 0) {
-        questions.push(`因式分解：\\(${a}(x-${b})-${c}( ${b}-x )\\)`);
-        answers.push(`\\(${a}(x-${b})-${c}( ${b}-x )=(${a + c})(x-${b})\\)`);
+        const a = randInt(2, 6);
+        const b = randInt(2, 6);
+        const c = randInt(2, 7);
+        questions.push(`因式分解：\\(${a}(x-${b}y)-${c}(${b}y-x)\\)`);
+        answers.push(`\\(${a}(x-${b}y)-${c}(${b}y-x)=(${a}+${c})(x-${b}y)\\)`);
         continue;
       }
       if (mode === 1) {
-        questions.push(`因式分解：\\((x+${a})(x-${b})-(x-${b})(${c}-x)\\)`);
-        answers.push(`\\((x+${a})(x-${b})-(x-${b})(${c}-x)=(x-${b})(2x+${a - c})\\)`);
+        const p = randInt(2, 6);
+        const q = randInt(2, 6);
+        const r = randInt(2, 6);
+        questions.push(`因式分解：\\((x+${p})(x-${q})-(x-${r})(${q}-x)\\)`);
+        answers.push(`\\((x+${p})(x-${q})-(x-${r})(${q}-x)=(x+${p})(x-${q})+(x-${r})(x-${q})=(x-${q})(2x+${p - r})\\)`);
         continue;
       }
-      questions.push(`因式分解：\\(${a}(m-n)-${b}(n-m)\\)`);
-      answers.push(`\\(${a}(m-n)-${b}(n-m)=(${a + b})(m-n)\\)`);
+      const A = randInt(3, 7);
+      const B = randInt(2, 6);
+      const C = randInt(2, 6);
+      questions.push(`因式分解：\\(${A}b(a-b)-(${B}-a)^2+${C}(a-b)\\)`);
+      answers.push(`\\(${A}b(a-b)-(${B}-a)^2+${C}(a-b)=(${A}b+${C})(a-b)-(a-${B})^2=(a-${B})(${A}b+${C}-a+${B})\\)`);
     }
     return { questions, answers };
   }
@@ -4163,18 +4255,44 @@
     const questions = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const p = pickNonZero(1, 6);
-      const q = pickNonZero(1, 6);
-      const a = pickNonZero(1, 6);
-      const b = pickNonZero(1, 6);
-      const t1 = `${p}x+${q}`;
-      const t2 = `${a}x+${b}`;
-      const e1 = p * a;
-      const e2 = p * b;
-      const e3 = q * a;
-      const e4 = q * b;
-      questions.push(`分組分解：\\(${e1}x^2+${e2}x+${e3}x+${e4}\\)`);
-      answers.push(`\\(${e1}x^2+${e2}x+${e3}x+${e4}=(${t1})(${t2})\\)`);
+      const mode = i % 5;
+      if (mode === 0) {
+        const k = randInt(2, 8);
+        const t = randInt(2, 9);
+        questions.push(`分組分解：\\(x^2-${k}x+${t}x-${t * k}\\)`);
+        answers.push(`\\(x^2-${k}x+${t}x-${t * k}=(x-${k})(x+${t})\\)`);
+        continue;
+      }
+      if (mode === 1) {
+        const p = randInt(2, 6);
+        const q = randInt(2, 6);
+        questions.push(`分組分解：\\(${p}x^3+${p}x^2+${q}x+${q}\\)`);
+        answers.push(`\\(${p}x^3+${p}x^2+${q}x+${q}=(x+1)(${p}x^2+${q})\\)`);
+        continue;
+      }
+      if (mode === 2) {
+        const p = randInt(2, 8);
+        const q = [2, 4, 6, 8][randInt(0, 3)];
+        const qHalf = q / 2;
+        questions.push(`分組分解：\\(2xy+${p}x+${q}y+${p * qHalf}\\)`);
+        answers.push(`\\(2xy+${p}x+${q}y+${p * qHalf}=(x+${qHalf})(2y+${p})\\)`);
+        continue;
+      }
+      if (mode === 3) {
+        const a = randInt(1, 5), b = randInt(1, 5), c = randInt(1, 5);
+        const ax = formatCoeffTerm(a, "x", 1);
+        const bx = formatCoeffTerm(b, "x", 1);
+        const cx = formatCoeffTerm(c, "x", 1);
+        const ay = formatCoeffTerm(a, "y", 1);
+        const by = formatCoeffTerm(b, "y", 1);
+        const cy = formatCoeffTerm(c, "y", 1);
+        questions.push(`分組分解：\\(${ax}+${bx}+${cx}+${ay}+${by}+${cy}\\)`);
+        answers.push(`\\(${ax}+${bx}+${cx}+${ay}+${by}+${cy}=${a + b + c}(x+y)\\)`);
+        continue;
+      }
+      const k = randInt(2, 5);
+      questions.push(`分組分解：\\(${k}ax+by+${k}cx-ay-${k}bx-cy\\)`);
+      answers.push(`\\(${k}ax+by+${k}cx-ay-${k}bx-cy=(${k}x-y)(a-b+c)\\)`);
     }
     return { questions, answers };
   }
@@ -4183,16 +4301,35 @@
     const questions = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const a = pickNonZero(1, 6);
-      const b = pickNonZero(1, 6);
-      const c = pickNonZero(1, 6);
-      const d = pickNonZero(1, 6);
-      const left = `${a}(x-${b})`;
-      const right = `${c}(x-${b})`;
-      const sign = randInt(0, 1) === 0 ? "+" : "-";
-      const k = sign === "+" ? a + c : a - c;
-      questions.push(`先去括號再分組：\\(${left}${sign}(${right})\\)`);
-      answers.push(`\\(${left}${sign}(${right})=(${k})(x-${b})\\)`);
+      const mode = i % 5;
+      if (mode === 0) {
+        const p = randInt(2, 5);
+        const r = randInt(2, 6);
+        questions.push(`先去括號再分組：\\(${p}(ab-${r})-(${p * r}a-b)\\)`);
+        answers.push(`\\(${p}(ab-${r})-(${p * r}a-b)=(${p}a+1)(b-${r})\\)`);
+        continue;
+      }
+      if (mode === 1) {
+        const s = randInt(2, 6);
+        questions.push(`先去括號再分組：\\((a-${s})x-(x^2-${s}a)\\)`);
+        answers.push(`\\((a-${s})x-(x^2-${s}a)=(x+${s})(a-x)\\)`);
+        continue;
+      }
+      if (mode === 2) {
+        const t = randInt(2, 6);
+        questions.push(`先去括號再分組：\\((x-${t})a-(a^2-${t}x)\\)`);
+        answers.push(`\\((x-${t})a-(a^2-${t}x)=(x-a)(a+${t})\\)`);
+        continue;
+      }
+      if (mode === 3) {
+        const t = randInt(2, 6);
+        questions.push(`先去括號再分組：\\(x^2-( ${t}-a )x-${t}a\\)`);
+        answers.push(`\\(x^2-( ${t}-a )x-${t}a=(x-${t})(x+a)\\)`);
+        continue;
+      }
+      const z = randInt(2, 4);
+      questions.push(`先去括號再分組：\\(xy(1+${z}^2)+${z}(x^2+y^2)\\)`);
+      answers.push(`\\(xy(1+${z}^2)+${z}(x^2+y^2)=(y+${z}x)(x+${z}y)\\)`);
     }
     return { questions, answers };
   }
@@ -4230,12 +4367,15 @@
       const a = randInt(1, 10);
       const b = randInt(1, 10);
       const useVar = randInt(0, 1) === 1;
+      const ax = formatCoeffTerm(a, "x", 1);
+      const by = formatCoeffTerm(b, "y", 1);
       if (useVar) {
-        questions.push(`因式分解：\\(${a * a}x^2-${b * b}\\)`);
-        answers.push(`\\(${a * a}x^2-${b * b}=(${a}x+${b})(${a}x-${b})\\)`);
+        const lead = a * a === 1 ? "x^2" : `${a * a}x^2`;
+        questions.push(`因式分解：\\(${lead}-${b * b}\\)`);
+        answers.push(`\\(${lead}-${b * b}=(${ax}+${b})(${ax}-${b})\\)`);
       } else {
         questions.push(`因式分解：\\(${a * a}-${b * b}y^2\\)`);
-        answers.push(`\\(${a * a}-${b * b}y^2=(${a}+${b}y)(${a}-${b}y)\\)`);
+        answers.push(`\\(${a * a}-${b * b}y^2=(${a}+${by})(${a}-${by})\\)`);
       }
     }
     return { questions, answers };
@@ -4249,8 +4389,9 @@
       const b = randInt(1, 9);
       const sign = randInt(0, 1) === 0 ? "+" : "-";
       const mid = sign === "+" ? 2 * a * b : -2 * a * b;
+      const ax = formatCoeffTerm(a, "x", 1);
       questions.push(`因式分解：\\(${a * a}x^2${mid >= 0 ? "+" : ""}${mid}x+${b * b}\\)`);
-      answers.push(`\\(${a * a}x^2${mid >= 0 ? "+" : ""}${mid}x+${b * b}=(${a}x${sign}${b})^2\\)`);
+      answers.push(`\\(${a * a}x^2${mid >= 0 ? "+" : ""}${mid}x+${b * b}=(${ax}${sign}${b})^2\\)`);
     }
     return { questions, answers };
   }
@@ -4263,13 +4404,15 @@
       const a = randInt(1, 6);
       const b = randInt(1, 8);
       const mode = i % 2;
+      const ax = formatCoeffTerm(a, "x", 1);
+      const by = formatCoeffTerm(b, "y", 1);
       if (mode === 0) {
         questions.push(`因式分解：\\(${k * a * a}x^2-${k * b * b}y^2\\)`);
-        answers.push(`\\(${k * a * a}x^2-${k * b * b}y^2=${k}(${a}x+${b}y)(${a}x-${b}y)\\)`);
+        answers.push(`\\(${k * a * a}x^2-${k * b * b}y^2=${k}(${ax}+${by})(${ax}-${by})\\)`);
       } else {
         const mid = -2 * a * b * k;
         questions.push(`因式分解：\\(${k * a * a}x^2${mid >= 0 ? "+" : ""}${mid}x+${k * b * b}\\)`);
-        answers.push(`\\(${k * a * a}x^2${mid >= 0 ? "+" : ""}${mid}x+${k * b * b}=${k}(${a}x-${b})^2\\)`);
+        answers.push(`\\(${k * a * a}x^2${mid >= 0 ? "+" : ""}${mid}x+${k * b * b}=${k}(${ax}-${b})^2\\)`);
       }
     }
     return { questions, answers };
@@ -4366,6 +4509,12 @@
   }
 
   function buildJ333CrossSubstitutionSet(count) {
+    function formatLinearFactor(u, constant) {
+      if (constant === 0) return u === 1 ? "x" : `${u}x`;
+      return u === 1
+        ? `x${constant >= 0 ? "+" : ""}${constant}`
+        : `${u}x${constant >= 0 ? "+" : ""}${constant}`;
+    }
     const questions = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
@@ -4377,8 +4526,19 @@
       const s2 = randInt(0, 1) === 0 ? 1 : -1;
       const B = s1 * p + s2 * q;
       const C = (s1 * p) * (s2 * q);
-      questions.push(`把 \\(t=${u}x+${v}\\) 視為一項，分解：\\(t^2${B >= 0 ? "+" : ""}${B}t${C >= 0 ? "+" : ""}${C}\\)。`);
-      answers.push(`\\(t^2${B >= 0 ? "+" : ""}${B}t${C >= 0 ? "+" : ""}${C}=(t${s1 > 0 ? "+" : "-"}${p})(t${s2 > 0 ? "+" : "-"}${q})\\)，代回得 \\((${u}x+${v}${s1 > 0 ? "+" : "-"}${p})(${u}x+${v}${s2 > 0 ? "+" : "-"}${q})\\)。`);
+      const A2 = u * u;
+      const A1 = 2 * u * v + B * u;
+      const A0 = v * v + B * v + C;
+      const baseExpr = formatLinearFactor(u, v);
+      questions.push(`分解：\\((${baseExpr})^2${B >= 0 ? "+" : ""}${B}(${baseExpr})${C >= 0 ? "+" : ""}${C}\\)。`);
+      const c1 = v + (s1 > 0 ? p : -p);
+      const c2 = v + (s2 > 0 ? q : -q);
+      const tExpr = u === 1 ? `x+${v}` : `${u}x+${v}`;
+      answers.push(
+        `令 \\(t=${tExpr}\\)，原式可視為 \\(t^2${B >= 0 ? "+" : ""}${B}t${C >= 0 ? "+" : ""}${C}\\)。` +
+        `十字交乘得 \\((t${s1 > 0 ? "+" : "-"}${p})(t${s2 > 0 ? "+" : "-"}${q})\\)，` +
+        `代回為 \\((${formatLinearFactor(u, c1)})(${formatLinearFactor(u, c2)})\\)。`
+      );
     }
     return { questions, answers };
   }
@@ -4388,16 +4548,23 @@
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const m = randInt(1, 6);
-      const n = randInt(1, 6);
       const p = randInt(1, 8);
       const q = randInt(1, 8);
       const s1 = randInt(0, 1) === 0 ? 1 : -1;
       const s2 = randInt(0, 1) === 0 ? 1 : -1;
-      const U = `(x+${m})`;
       const B = s1 * p + s2 * q;
       const C = (s1 * p) * (s2 * q);
-      questions.push(`分解：\\((${U})^2${B >= 0 ? "+" : ""}${B}(${U})${C >= 0 ? "+" : ""}${C}\\)。`);
-      answers.push(`\\((${U})^2${B >= 0 ? "+" : ""}${B}(${U})${C >= 0 ? "+" : ""}${C}=(${U}${s1 > 0 ? "+" : "-"}${p})(${U}${s2 > 0 ? "+" : "-"}${q})\\)。`);
+      const A2 = 1;
+      const A1 = 2 * m + B;
+      const A0 = m * m + B * m + C;
+      questions.push(`分解：\\((x+${m})^2${B >= 0 ? "+" : ""}${B}(x+${m})${C >= 0 ? "+" : ""}${C}\\)。`);
+      const c1 = m + (s1 > 0 ? p : -p);
+      const c2 = m + (s2 > 0 ? q : -q);
+      answers.push(
+        `令 \\(t=x+${m}\\)，原式可視為 \\(t^2${B >= 0 ? "+" : ""}${B}t${C >= 0 ? "+" : ""}${C}\\)。` +
+        `分解為 \\((t${s1 > 0 ? "+" : "-"}${p})(t${s2 > 0 ? "+" : "-"}${q})\\)，` +
+        `代回為 \\((x${c1 === 0 ? "" : `${c1 >= 0 ? "+" : ""}${c1}`})(x${c2 === 0 ? "" : `${c2 >= 0 ? "+" : ""}${c2}`})\\)。`
+      );
     }
     return { questions, answers };
   }
@@ -4416,6 +4583,391 @@
 
   function buildJ333CrossSubMixedSet(count) {
     const banks = [buildJ333CrossSubstitutionSet, buildJ333CrossStructuredSet];
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const one = banks[i % banks.length](1);
+      questions.push(one.questions[0]);
+      answers.push(one.answers[0]);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ341FactorFormulaSolveSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+      if (mode === 0) {
+        const a = randInt(1, 6), b = pickNonZero(-10, 10);
+        const lead = a === 1 ? "x^2" : `${a}x^2`;
+        questions.push(`解方程：\\(${lead}${b >= 0 ? "+" : ""}${b}x=0\\)`);
+        answers.push(`\\(x=0\\) 或 \\(x=${formatFraction(-b, a)}\\)`);
+      } else if (mode === 1) {
+        const a = randInt(1, 6), b = randInt(1, 9);
+        const coeff = a * a;
+        const lead = coeff === 1 ? "x^2" : `${coeff}x^2`;
+        questions.push(`解方程：\\(${lead}-${b * b}=0\\)`);
+        answers.push(`\\(x=\\pm${formatFraction(b, a)}\\)`);
+      } else {
+        const a = randInt(1, 5), b = randInt(1, 9), sign = randInt(0, 1) === 0 ? "+" : "-";
+        const mid = sign === "+" ? 2 * a * b : -2 * a * b;
+        const coeff = a * a;
+        const lead = coeff === 1 ? "x^2" : `${coeff}x^2`;
+        questions.push(`解方程：\\(${lead}${mid >= 0 ? "+" : ""}${mid}x+${b * b}=0\\)`);
+        answers.push(`\\(x=${sign === "+" ? `-\\frac{${b}}{${a}}` : `\\frac{${b}}{${a}}`}\\)（重根）`);
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ341CrossSolveSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const r1n = pickNonZero(-8, 8);
+      const r2n = pickNonZero(-8, 8);
+      const a = randInt(1, 5);
+      const b = -a * (r1n + r2n);
+      const c = a * r1n * r2n;
+      const lead = a === 1 ? "x^2" : `${a}x^2`;
+      questions.push(`解方程：\\(${lead}${b >= 0 ? "+" : ""}${b}x${c >= 0 ? "+" : ""}${c}=0\\)`);
+      answers.push(`\\(x=${r1n},${r2n}\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ341StandardTransformSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 2;
+      if (mode === 0) {
+        const p = pickNonZero(1, 6);
+        const r = randInt(2, 6);
+        const q = pickNonZero(-8, 8);
+        const t = pickNonZero(-8, 8);
+        const leftFactor = formatSingleVarExpr(r, q);
+        const rightFactor = formatSingleVarExpr(1, t);
+        const x2 = formatFraction(t - q, r - 1);
+        questions.push(`解方程：\\((x-${p})(${leftFactor})=(x-${p})(${rightFactor})\\)`);
+        answers.push(
+          `移項得 \\((x-${p})\\big[(${leftFactor})-(${rightFactor})\\big]=0\\)。` +
+          `所以 \\(x-${p}=0\\) 或 \\(${r - 1}x${q - t >= 0 ? "+" : ""}${q - t}=0\\)。` +
+          `解得 \\(x=${p}\\) 或 \\(x=${x2}\\)。`
+        );
+      } else {
+        let p = 2;
+        let r = 2;
+        let u = 1;
+        let v = -3;
+        let q = 1;
+        let k = 0;
+        for (let t = 0; t < 80; t += 1) {
+          p = pickNonZero(1, 6);
+          r = randInt(1, 5);
+          u = pickNonZero(-8, 8);
+          v = pickNonZero(-8, 8);
+          q = r * (p - (u + v));
+          if (q === 0 || Math.abs(q) > 12) continue;
+          k = -r * u * v - p * q;
+          if (k === 0 || Math.abs(k) > 80) continue;
+          break;
+        }
+        const factorText = formatSingleVarExpr(r, q);
+        const stdA = r;
+        const stdB = q - r * p;
+        const stdC = -p * q - k;
+        const lead = stdA === 1 ? "x^2" : `${stdA}x^2`;
+        const root1 = formatFraction(u, 1);
+        const root2 = formatFraction(v, 1);
+        const moveText = formatSubtraction(`(x-${p})(${factorText})`, k);
+        questions.push(`解方程：\\((x-${p})(${factorText})=${k}\\)`);
+        answers.push(
+          `先移項：\\(${moveText}=0\\)。` +
+          `展開得 \\(${lead}${stdB >= 0 ? "+" : ""}${stdB}x${stdC >= 0 ? "+" : ""}${stdC}=0\\)。` +
+          `因式分解可寫成 \\((x-${u})(x${v >= 0 ? "-" : "+"}${Math.abs(v)})=0\\)，` +
+          `所以 \\(x=${root1}\\) 或 \\(x=${root2}\\)。`
+        );
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ341RootPropertyReverseSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+      if (mode === 0) {
+        const r1 = pickNonZero(-8, 8), r2 = pickNonZero(-8, 8);
+        const sum = r1 + r2, prod = r1 * r2;
+        questions.push(`已知二次方程兩根為 \\(${r1},${r2}\\)，還原其方程。`);
+        answers.push(`\\(x^2${sum >= 0 ? "-" : "+"}${Math.abs(sum)}x${prod >= 0 ? "+" : ""}${prod}=0\\)`);
+      } else if (mode === 1) {
+        const m = pickNonZero(-8, 8), n = pickNonZero(-12, 12), r1 = pickNonZero(-8, 8);
+        const r2 = n / r1;
+        questions.push(`若 \\(x^2${m >= 0 ? "+" : ""}${m}x${n >= 0 ? "+" : ""}${n}=0\\) 的一根為 \\(${r1}\\)，求另一根。`);
+        answers.push(`\\(x=${formatFraction(n, r1)}\\)`);
+      } else {
+        const r1 = pickNonZero(-6, 6), r2 = pickNonZero(-6, 6);
+        questions.push(`已知兩根和為 \\(${r1 + r2}\\)、兩根積為 \\(${r1 * r2}\\)，寫出二次方程。`);
+        answers.push(`\\(x^2${r1 + r2 >= 0 ? "-" : "+"}${Math.abs(r1 + r2)}x${r1 * r2 >= 0 ? "+" : ""}${r1 * r2}=0\\)`);
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ342SquareRootSolveSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+      if (mode === 0) {
+        const k = randInt(2, 15);
+        questions.push(`解方程：\\(x^2=${k * k}\\)`);
+        answers.push(`\\(x=\\pm${k}\\)`);
+      } else if (mode === 1) {
+        const h = pickNonZero(-8, 8), k = randInt(2, 12);
+        questions.push(`解方程：\\((x${h >= 0 ? "+" : ""}${h})^2=${k * k}\\)`);
+        answers.push(`\\(x=${-h + k}\\) 或 \\(x=${-h - k}\\)`);
+      } else {
+        const a = randInt(1, 5), h = pickNonZero(-6, 6), m = randInt(2, 15), b = randInt(-10, 10);
+        const lead = a === 1 ? "" : `${a}`;
+        questions.push(`解方程：\\(${lead}(x${h >= 0 ? "+" : ""}${h})^2${b >= 0 ? "+" : ""}${b}=${m * m}\\)`);
+        const numerator = m * m - b;
+        if (numerator > 0 && numerator % a === 0) {
+          const rootText = formatRadical(numerator / a);
+          answers.push(`\\(x=${-h}+${rootText}\\) 或 \\(x=${-h}-${rootText}\\)`);
+        } else {
+          answers.push(`\\(x=${-h}+\\sqrt{\\frac{${numerator}}{${a}}}\\) 或 \\(x=${-h}-\\sqrt{\\frac{${numerator}}{${a}}}\\)`);
+        }
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ342CompleteSquareTermSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = randInt(1, 6);
+      const b = pickNonZero(-14, 14);
+      const fillNumerator = b * b;
+      const fillDenominator = 4 * a;
+      const deltaNumerator = b;
+      const deltaDenominator = 2 * a;
+      const fillText = formatFraction(fillNumerator, fillDenominator);
+      const deltaText = formatFraction(deltaNumerator, deltaDenominator);
+      const lead = a === 1 ? "x^2" : `${a}x^2`;
+      const rhsLead = a === 1 ? "" : `${a}`;
+      questions.push(`填空使其成完全平方：\\(${lead}${b >= 0 ? "+" : ""}${b}x+\\square=${rhsLead}\\left(x+\\Delta\\right)^2\\)`);
+      answers.push(`\\(\\square=${fillText}\\)，\\(\\Delta=${deltaText}\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ342CompletingSquareSolveSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const p = pickNonZero(-8, 8);
+      const q = randInt(2, 12);
+      const mode = i % 2;
+      const b = -2 * p;
+      const c = mode === 0 ? (p * p - q) : (p * p + q);
+      const rhs = p * p - c; // = q or -q
+      questions.push(`用配方法解：\\(x^2${b >= 0 ? "+" : ""}${b}x${c >= 0 ? "+" : ""}${c}=0\\)`);
+      if (rhs > 0) {
+        const root = formatRadical(rhs);
+        answers.push(`先配方：\\((x${p >= 0 ? "-" : "+"}${Math.abs(p)})^2=${rhs}\\)。再開根號：\\(x=${p}\\pm${root}\\)。`);
+      } else if (rhs === 0) {
+        answers.push(`先配方：\\((x${p >= 0 ? "-" : "+"}${Math.abs(p)})^2=0\\)。所以 \\(x=${p}\\)（重根）。`);
+      } else {
+        answers.push(`先配方：\\((x${p >= 0 ? "-" : "+"}${Math.abs(p)})^2=${rhs}\\)。右邊為負，無實數解。`);
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ342DiscriminantSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+      if (mode < 2) {
+        const a = pickNonZero(1, 5), b = pickNonZero(-12, 12), c = pickNonZero(-12, 12);
+        const D = b * b - 4 * a * c;
+        const lead = a === 1 ? "x^2" : `${a}x^2`;
+        questions.push(`判別 \\(${lead}${b >= 0 ? "+" : ""}${b}x${c >= 0 ? "+" : ""}${c}=0\\) 的根性質。`);
+        answers.push(D > 0 ? `兩相異實根（\\(D=${D}>0\\)）` : D === 0 ? `重根（\\(D=0\\)）` : `無實根（\\(D=${D}<0\\)）`);
+      } else {
+        const a = randInt(1, 5), c = randInt(1, 20), k = randInt(1, 9);
+        const lead = a === 1 ? "x^2" : `${a}x^2`;
+        questions.push(`若 \\(${lead}-kx+${c}=0\\) 有重根，求 \\(k\\) 的值。`);
+        answers.push(`\\(k=\\pm${formatRadical(4 * a * c)}\\)`);
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ342FormulaSolveSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = pickNonZero(1, 6), b = pickNonZero(-12, 12), c = pickNonZero(-12, 12);
+      const D = b * b - 4 * a * c;
+      const lead = a === 1 ? "x^2" : `${a}x^2`;
+      questions.push(`用公式解：\\(${lead}${b >= 0 ? "+" : ""}${b}x${c >= 0 ? "+" : ""}${c}=0\\)`);
+      if (D >= 0) {
+        const sqrtD = Math.sqrt(D);
+        if (Number.isInteger(sqrtD)) {
+          const x1 = formatFraction(-b + sqrtD, 2 * a);
+          const x2 = formatFraction(-b - sqrtD, 2 * a);
+          answers.push(x1 === x2 ? `\\(x=${x1}\\)（重根）` : `\\(x=${x1}\\) 或 \\(x=${x2}\\)`);
+          continue;
+        }
+      }
+      answers.push(`\\(x=\\frac{${-b}\\pm${D >= 0 ? formatRadical(D) : `\\sqrt{${D}}`}}{${2 * a}}\\)`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ342ReverseFromSquareSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+      if (mode === 0) {
+        const p = pickNonZero(-8, 8), q = randInt(1, 20);
+        questions.push(`若 \\(x^2${2 * p >= 0 ? "+" : ""}${2 * p}x+a=0\\) 可配方成 \\((x${p >= 0 ? "+" : ""}${p})^2=${q}\\)，求 \\(a\\)。`);
+        answers.push(`\\(a=${p * p - q}\\)`);
+      } else if (mode === 1) {
+        const r1 = pickNonZero(-8, 8), r2 = pickNonZero(-8, 8);
+        questions.push(`已知一元二次方程兩根為 \\(${r1},${r2}\\)，求原方程。`);
+        answers.push(`\\(x^2${-(r1 + r2) >= 0 ? "+" : ""}${-(r1 + r2)}x${r1 * r2 >= 0 ? "+" : ""}${r1 * r2}=0\\)`);
+      } else {
+        const a = pickNonZero(1, 5), b = pickNonZero(-12, 12), c = pickNonZero(-12, 12);
+        const lead = a === 1 ? "x^2" : `${a}x^2`;
+        questions.push(`將 \\(${lead}${b >= 0 ? "+" : ""}${b}x${c >= 0 ? "+" : ""}${c}\\) 寫成 \\(A(x-h)^2+k\\) 形式，求 \\(A+h+k\\)。`);
+        answers.push(`先提出 \\(A=${a}\\) 再配方。`);
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ342RootsSumProductDirectSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = pickNonZero(1, 6), b = pickNonZero(-12, 12), c = pickNonZero(-12, 12);
+      const sumText = formatFraction(-b, a);
+      const prodText = formatFraction(c, a);
+      questions.push(`已知 \\(${a}x^2${b >= 0 ? "+" : ""}${b}x${c >= 0 ? "+" : ""}${c}=0\\)，求兩根和 \\(\\alpha+\\beta\\) 與兩根積 \\(\\alpha\\beta\\)。`);
+      answers.push(`\\(\\alpha+\\beta=${sumText}\\)，\\(\\alpha\\beta=${prodText}\\)。`);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ342ReverseEquationFromRootsSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 2;
+      if (mode === 0) {
+        const s = pickNonZero(-10, 10), p = pickNonZero(-20, 20);
+        questions.push(`若兩根和為 \\(${s}\\)、兩根積為 \\(${p}\\)，求二次方程。`);
+        answers.push(`\\(x^2${-s >= 0 ? "+" : ""}${-s}x${p >= 0 ? "+" : ""}${p}=0\\)。`);
+      } else {
+        const r1 = pickNonZero(-8, 8), r2 = pickNonZero(-8, 8);
+        questions.push(`若兩根分別為 \\(${r1}\\)、\\(${r2}\\)，還原其二次方程。`);
+        const s = r1 + r2;
+        const p = r1 * r2;
+        answers.push(`\\(x^2${-s >= 0 ? "+" : ""}${-s}x${p >= 0 ? "+" : ""}${p}=0\\)。`);
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ342ExpressionBySumProductSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = pickNonZero(1, 5), b = pickNonZero(-10, 10), c = pickNonZero(-10, 10);
+      const S = formatFraction(-b, a);
+      const P = formatFraction(c, a);
+      const mode = i % 3;
+      if (mode === 0) {
+        questions.push(`若 \\(${a}x^2${b >= 0 ? "+" : ""}${b}x${c >= 0 ? "+" : ""}${c}=0\\) 兩根為 \\(\\alpha,\\beta\\)，求 \\(\\alpha^2+\\beta^2\\)。`);
+        answers.push(`\\((\\alpha+\\beta)^2-2\\alpha\\beta=${S}^2-2\\cdot${P}\\)。`);
+      } else if (mode === 1) {
+        questions.push(`若 \\(${a}x^2${b >= 0 ? "+" : ""}${b}x${c >= 0 ? "+" : ""}${c}=0\\) 兩根為 \\(\\alpha,\\beta\\)，求 \\((\\alpha-1)(\\beta-1)\\)。`);
+        answers.push(`\\(\\alpha\\beta-(\\alpha+\\beta)+1=${P}-(${S})+1\\)。`);
+      } else {
+        questions.push(`若 \\(${a}x^2${b >= 0 ? "+" : ""}${b}x${c >= 0 ? "+" : ""}${c}=0\\) 兩根為 \\(\\alpha,\\beta\\)，求 \\((\\alpha-\\beta)^2\\)。`);
+        answers.push(`\\((\\alpha+\\beta)^2-4\\alpha\\beta=${S}^2-4\\cdot${P}\\)。`);
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ342CoefficientMistakeSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const r1 = pickNonZero(-8, 8), r2 = pickNonZero(-8, 8);
+      const sum = r1 + r2;
+      const prod = r1 * r2;
+      const wrongSum = -sum;
+      const wrongProd = -prod;
+      const mode = i % 2;
+      if (mode === 0) {
+        questions.push(`某生把一次項符號看錯，誤得兩根為 \\(${r1},${r2}\\)。求正確方程。`);
+        answers.push(`錯一次項只會改變「根和」符號，故正確根和為 \\(${wrongSum}\\)、根積不變為 \\(${prod}\\)，方程為 \\(x^2${-wrongSum >= 0 ? "+" : ""}${-wrongSum}x${prod >= 0 ? "+" : ""}${prod}=0\\)。`);
+      } else {
+        questions.push(`某生把常數項符號看錯，誤得兩根為 \\(${r1},${r2}\\)。求正確方程。`);
+        answers.push(`錯常數項只會改變「根積」符號，故正確根和為 \\(${sum}\\)、根積為 \\(${wrongProd}\\)，方程為 \\(x^2${-sum >= 0 ? "+" : ""}${-sum}x${wrongProd >= 0 ? "+" : ""}${wrongProd}=0\\)。`);
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ342SpecialRootRelationSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+      if (mode === 0) {
+        const k = pickNonZero(-8, 8);
+        questions.push(`若方程 \\(x^2+(k+2)x+(k+5)=0\\) 兩根互為相反數，求 \\(k\\)。`);
+        answers.push(`兩根和為 0，故 \\(k+2=0\\Rightarrow k=-2\\)。`);
+      } else if (mode === 1) {
+        const k = pickNonZero(-9, 9);
+        questions.push(`若方程 \\(x^2+(k+1)x+(k-3)=0\\) 有一根為 0，求 \\(k\\)。`);
+        answers.push(`有一根為 0 \\(\\Rightarrow\\) 根積為 0，故 \\(k-3=0\\Rightarrow k=3\\)。`);
+      } else {
+        const m = pickNonZero(1, 6);
+        questions.push(`若方程 \\(x^2+mx+9=0\\) 有相等兩根，求 \\(m\\)。`);
+        answers.push(`相等兩根 \\(\\Rightarrow D=0\\)：\\(m^2-36=0\\Rightarrow m=\\pm6\\)。`);
+      }
+    }
+    return { questions, answers };
+  }
+
+  function buildJ342RootsCoreMixedSet(count) {
+    const banks = [buildJ342RootsSumProductDirectSet, buildJ342ReverseEquationFromRootsSet, buildJ342ExpressionBySumProductSet];
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const one = banks[i % banks.length](1);
+      questions.push(one.questions[0]);
+      answers.push(one.answers[0]);
+    }
+    return { questions, answers };
+  }
+
+  function buildJ342RootsAppliedMixedSet(count) {
+    const banks = [buildJ342CoefficientMistakeSet, buildJ342SpecialRootRelationSet];
     const questions = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
@@ -9277,6 +9829,14 @@ function buildJ221NonnegativeSet(count) {
   }
 
   function buildJ231KMethodSet(count) {
+    const xTerm = (coef) => formatCoeffTerm(coef, "x", 1);
+    const yTerm = (coef) => formatCoeffTerm(coef, "y", 1);
+    const kTerm = (coef) => {
+      if (coef === 0) return "0";
+      if (coef === 1) return "k";
+      if (coef === -1) return "-k";
+      return `${coef}k`;
+    };
     const questions = [];
     const answers = [];
 
@@ -9293,9 +9853,9 @@ function buildJ221NonnegativeSet(count) {
         const a = randInt(1, 4);
         const b = randInt(1, 4);
         const total = a * x + b * y;
-        questions.push(`已知 $x:y=${m}:${n}$，且 $${a}x${b > 0 ? '+' : ''}${b}y=${total}$，求 $x,y$。`);
+        questions.push(`已知 $x:y=${m}:${n}$，且 $${xTerm(a)}${b > 0 ? '+' : ''}${yTerm(b)}=${total}$，求 $x,y$。`);
         answers.push(
-          `設 $x=${m}k,\\ y=${n}k$。代入 $${a}x${b > 0 ? '+' : ''}${b}y=${total}$，得 $${a * m}k+${b * n}k=${total}$，所以 $k=${k}$。因此 $x=${x},\\ y=${y}$。`
+          `設 $x=${m}k,\\ y=${n}k$。代入 $${xTerm(a)}${b > 0 ? '+' : ''}${yTerm(b)}=${total}$，得 $${kTerm(a * m)}+${kTerm(b * n)}=${total}$，所以 $k=${k}$。因此 $x=${x},\\ y=${y}$。`
         );
         continue;
       }
@@ -9341,9 +9901,9 @@ function buildJ221NonnegativeSet(count) {
         const x = m * k;
         const y = n * k;
         const rhs = a * x - b * y;
-        questions.push(`已知 $x:y=${m}:${n}$，且 $${a}x-${b}y=${rhs}$，求 $x,y$。`);
+        questions.push(`已知 $x:y=${m}:${n}$，且 $${xTerm(a)}-${yTerm(b)}=${rhs}$，求 $x,y$。`);
         answers.push(
-          `設 $x=${m}k,\\ y=${n}k$。代入 $${a}x-${b}y=${rhs}$ 得 $${a * m}k-${b * n}k=${rhs}$，所以 $${a * m - b * n}k=${rhs}$，解得 $k=${k}$。因此 $x=${x},\\ y=${y}$。`
+          `設 $x=${m}k,\\ y=${n}k$。代入 $${xTerm(a)}-${yTerm(b)}=${rhs}$ 得 $${kTerm(a * m)}-${kTerm(b * n)}=${rhs}$，所以 $${kTerm(a * m - b * n)}=${rhs}$，解得 $k=${k}$。因此 $x=${x},\\ y=${y}$。`
         );
         continue;
       }
@@ -9362,7 +9922,7 @@ function buildJ221NonnegativeSet(count) {
       const ratio = normalizeRatioInts(3 * m - n, m + 3 * n);
       questions.push(`已知 $(x+y):(x-y)=${m}:${n}$，求 $(x+2y):(2x-y)$。`);
       answers.push(
-        `設 $x+y=${m}k,\\ x-y=${n}k$。兩式相加得 $2x=${m + n}k$，所以 $x=\\frac{${m + n}}{2}k$；相減得 $2y=${m - n}k$，所以 $y=\\frac{${m - n}}{2}k$。因此 $(x+2y):(2x-y)=\\left(\\frac{${m + n}}{2}k+2\\times\\frac{${m - n}}{2}k\\right):\\left(2\\times\\frac{${m + n}}{2}k-\\frac{${m - n}}{2}k\\right)=${3 * m - n}:${m + 3 * n}=${ratio.a}:${ratio.b}$。`
+        `設 $x+y=${m}k,\\ x-y=${n}k$。兩式相加得 $2x=${m + n}k$，所以 $x=${formatFraction(m + n, 2)}k$；相減得 $2y=${m - n}k$，所以 $y=${formatFraction(m - n, 2)}k$。因此 $(x+2y):(2x-y)=\\left(${formatFraction(m + n, 2)}k+2\\times${formatFraction(m - n, 2)}k\\right):\\left(2\\times${formatFraction(m + n, 2)}k-${formatFraction(m - n, 2)}k\\right)=${3 * m - n}:${m + 3 * n}=${ratio.a}:${ratio.b}$。`
       );
     }
 
@@ -12466,6 +13026,159 @@ function buildJ221NonnegativeSet(count) {
         questionCount: 6,
         generate() {
           return buildJ333CrossStructuredSet(6);
+        },
+      },
+      'j3-4-1-factor-formula-solve': {
+        type: 'drill',
+        title: '提公因式與平方公式求解',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ341FactorFormulaSolveSet(6);
+        },
+      },
+      'j3-4-1-cross-solve': {
+        type: 'drill',
+        title: '十字交乘專項練習',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ341CrossSolveSet(6);
+        },
+      },
+      'j3-4-1-standard-transform-solve': {
+        type: 'drill',
+        title: '標準式轉化與消因式',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ341StandardTransformSet(6);
+        },
+      },
+      'j3-4-1-root-property-reverse': {
+        type: 'drill',
+        title: '根的性質與方程還原',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ341RootPropertyReverseSet(6);
+        },
+      },
+      'j3-4-2-square-root-solve': {
+        type: 'drill',
+        title: '平方根觀念求解類',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ342SquareRootSolveSet(6);
+        },
+      },
+      'j3-4-2-complete-square-term': {
+        type: 'drill',
+        title: '完全平方補項類',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ342CompleteSquareTermSet(6);
+        },
+      },
+      'j3-4-2-completing-square-solve': {
+        type: 'drill',
+        title: '配方法完整求解類',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ342CompletingSquareSolveSet(6);
+        },
+      },
+      'j3-4-2-discriminant-judge': {
+        type: 'drill',
+        title: '判別式與根性質判定類',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ342DiscriminantSet(6);
+        },
+      },
+      'j3-4-2-formula-direct-solve': {
+        type: 'drill',
+        title: '公式解直接套用類',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ342FormulaSolveSet(6);
+        },
+      },
+      'j3-4-2-reverse-from-square': {
+        type: 'drill',
+        title: '配方後形式與參數還原類',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ342ReverseFromSquareSet(6);
+        },
+      },
+      'j3-4-2-roots-core-mixed': {
+        type: 'drill',
+        title: '兩根和積核心綜合',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ342RootsCoreMixedSet(6);
+        },
+      },
+      'j3-4-2-roots-direct': {
+        type: 'drill',
+        title: '由方程式求兩根和與積',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ342RootsSumProductDirectSet(6);
+        },
+      },
+      'j3-4-2-roots-reverse': {
+        type: 'drill',
+        title: '由和積（或兩根）還原方程',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ342ReverseEquationFromRootsSet(6);
+        },
+      },
+      'j3-4-2-roots-expression': {
+        type: 'drill',
+        title: '代數式變形（和積）',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ342ExpressionBySumProductSet(6);
+        },
+      },
+      'j3-4-2-roots-applied-mixed': {
+        type: 'drill',
+        title: '兩根和積應用綜合',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ342RootsAppliedMixedSet(6);
+        },
+      },
+      'j3-4-2-roots-coefficient-mistake': {
+        type: 'drill',
+        title: '係數看錯題（和積修正）',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ342CoefficientMistakeSet(6);
+        },
+      },
+      'j3-4-2-roots-special-relation': {
+        type: 'drill',
+        title: '特殊根關係（相反數/倒數）',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ342SpecialRootRelationSet(6);
         },
       },
       'radical-mul-div-split-rule': {
