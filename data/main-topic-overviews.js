@@ -1,4 +1,4 @@
-﻿window.mainTopicOverviewStore = {
+window.mainTopicOverviewStore = {
   "meta": {
     "count": 315,
     "updatedAt": "2026-05-19T01:44:15+08:00",
@@ -17297,4 +17297,3 @@
     }
   }
 };
-

@@ -505,7 +505,7 @@ window.chapterCodeCatalog = {
   },
   "s2-1-2": {
     "chapter": "數列與級數",
-    "section": "級數與 \\(\\sum\\) 運算",
+    "section": "級數與Σ運算",
     "domainMain": "數列",
     "domainSub": ""
   },

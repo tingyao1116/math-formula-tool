@@ -3,7 +3,7 @@
     "schema": "chapter-code-db-v1",
     "source": "C:\\codex資料夾\\數學公式使用工具\\data\\chapter-code-config.js",
     "syncedAt": "2026-04-16T15:53:58.135255+00:00",
-    "count": 135,
+    "count": 137,
     "updatedAt": "2026-05-19T01:44:15+08:00"
   },
   "catalog": {
@@ -513,7 +513,7 @@
     },
     "s2-1-2": {
       "chapter": "數列與級數",
-      "section": "級數與 \\(\\sum\\) 運算",
+      "section": "級數與Σ運算",
       "domainMain": "數列",
       "domainSub": ""
     },
