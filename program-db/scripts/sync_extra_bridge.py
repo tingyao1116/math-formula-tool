@@ -110,7 +110,7 @@ def build_store_groups(entries: dict, catalog: dict, default_title: str):
         group_name = build_group_name(code, chapter_meta, entry.get("groupName"))
         unique_group_name = group_name
         if unique_group_name in groups:
-            unique_group_name = f"{group_name}｜{code}"
+            unique_group_name = f"{group_name}（{code}）"
         groups[unique_group_name] = payload
         by_code[str(code).strip()] = payload
     return groups, by_code

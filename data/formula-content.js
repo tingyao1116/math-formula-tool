@@ -112,8 +112,7 @@ window.formulaContentRecords = [
       "題型",
       "使用技巧",
       "注意事項",
-      "常見錯誤",
-      "無限練習"
+      "常見錯誤"
     ],
     "contentTypesLocked": true,
     "tags": [
@@ -126,8 +125,7 @@ window.formulaContentRecords = [
     ],
     "examples": [],
     "tips": [
-      "先看主題整理，再往下接既有分支。",
-      "可把平均數當作基準值，練習五數平均與反求未知數。"
+      "先看主題整理，再往下接既有分支。"
     ],
     "notes": [
       "來源：國一上_易讀版分頁版.docx"
@@ -561,8 +559,7 @@ window.formulaContentRecords = [
       "題型",
       "使用技巧",
       "注意事項",
-      "常見錯誤",
-      "無限練習"
+      "常見錯誤"
     ],
     "contentTypesLocked": true,
     "tags": [
@@ -575,8 +572,7 @@ window.formulaContentRecords = [
     ],
     "examples": [],
     "tips": [
-      "先看主題整理，再往下接既有分支。",
-      "可把平均數當作基準值，練習五數平均與反求未知數。"
+      "先看主題整理，再往下接既有分支。"
     ],
     "notes": [
       "來源：國一上_易讀版分頁版.docx"
@@ -95978,13 +95974,11 @@ window.formulaContentRecords = [
     "domain": "代數",
     "difficulty": "基礎",
     "chapterRole": "分支",
-    "parentId": "j5-1-1-main-core-ratio-language",
+    "parentId": "j5-1-2-main-core-ratio-language",
     "tags": [
-      "word匯入",
-      "教學核心",
       "j5-1-2",
       "比例線段",
-      "比例"
+      "比例線段的基本語言"
     ],
     "usage": [
       "先把題目中的長度整理成同一種比。",
@@ -96013,10 +96007,10 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-1",
+    "chapter_code": "j5-1-2",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-1",
-    "section": "連比",
+    "chapterCode": "j5-1-2",
+    "section": "比例線段",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -96092,7 +96086,7 @@ window.formulaContentRecords = [
     "chapter_code": "j5-1-2",
     "gradeLabel": "國三上",
     "chapterCode": "j5-1-2",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -96168,7 +96162,7 @@ window.formulaContentRecords = [
     "chapter_code": "j5-1-2",
     "gradeLabel": "國三上",
     "chapterCode": "j5-1-2",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -96244,7 +96238,7 @@ window.formulaContentRecords = [
     "chapter_code": "j5-1-2",
     "gradeLabel": "國三上",
     "chapterCode": "j5-1-2",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -96320,7 +96314,7 @@ window.formulaContentRecords = [
     "chapter_code": "j5-1-2",
     "gradeLabel": "國三上",
     "chapterCode": "j5-1-2",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -96396,7 +96390,7 @@ window.formulaContentRecords = [
     "chapter_code": "j5-1-2",
     "gradeLabel": "國三上",
     "chapterCode": "j5-1-2",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -96472,7 +96466,7 @@ window.formulaContentRecords = [
     "chapter_code": "j5-1-2",
     "gradeLabel": "國三上",
     "chapterCode": "j5-1-2",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -96548,7 +96542,7 @@ window.formulaContentRecords = [
     "chapter_code": "j5-1-2",
     "gradeLabel": "國三上",
     "chapterCode": "j5-1-2",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -96624,7 +96618,7 @@ window.formulaContentRecords = [
     "chapter_code": "j5-1-2",
     "gradeLabel": "國三上",
     "chapterCode": "j5-1-2",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -96706,7 +96700,7 @@ window.formulaContentRecords = [
     "chapter_code": "j5-1-2",
     "gradeLabel": "國三上",
     "chapterCode": "j5-1-2",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -96782,7 +96776,7 @@ window.formulaContentRecords = [
     "chapter_code": "j5-1-2",
     "gradeLabel": "國三上",
     "chapterCode": "j5-1-2",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -96858,7 +96852,7 @@ window.formulaContentRecords = [
     "chapter_code": "j5-1-2",
     "gradeLabel": "國三上",
     "chapterCode": "j5-1-2",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -97417,13 +97411,14 @@ window.formulaContentRecords = [
     "domain": "幾何",
     "difficulty": "基礎",
     "chapterRole": "分支",
-    "parentId": "j5-1-3-main-core-right-triangle-similarity",
+    "parentId": "j5-1-4-main-core-similarity-applications",
     "tags": [
       "word匯入",
       "教學核心",
-      "j5-1-3",
       "相似三角形",
-      "相似"
+      "相似",
+      "j5-1-4",
+      "相似三角形與其應用"
     ],
     "usage": [
       "實測應用題。",
@@ -97451,10 +97446,10 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-3",
+    "chapter_code": "j5-1-4",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-3",
-    "section": "縮放與相似",
+    "chapterCode": "j5-1-4",
+    "section": "相似三角形與其應用",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -97493,13 +97488,14 @@ window.formulaContentRecords = [
     "domain": "幾何",
     "difficulty": "基礎",
     "chapterRole": "分支",
-    "parentId": "j5-1-3-main-core-scale-perimeter-and-area-ratios",
+    "parentId": "j5-1-4-main-core-similarity-applications",
     "tags": [
       "word匯入",
       "教學核心",
-      "j5-1-3",
       "相似三角形",
-      "相似"
+      "相似",
+      "j5-1-4",
+      "相似三角形與其應用"
     ],
     "usage": [
       "梯形長度與比例計算。",
@@ -97527,10 +97523,10 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-3",
+    "chapter_code": "j5-1-4",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-3",
-    "section": "縮放與相似",
+    "chapterCode": "j5-1-4",
+    "section": "相似三角形與其應用",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -97569,13 +97565,14 @@ window.formulaContentRecords = [
     "domain": "幾何",
     "difficulty": "進階",
     "chapterRole": "分支",
-    "parentId": "j5-1-3-main-core-right-triangle-similarity",
+    "parentId": "j5-1-4-main-core-similarity-applications",
     "tags": [
       "word匯入",
       "教學核心",
-      "j5-1-3",
       "相似三角形",
-      "相似"
+      "相似",
+      "j5-1-4",
+      "相似三角形與其應用"
     ],
     "usage": [
       "複合幾何圖形。",
@@ -97603,10 +97600,10 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-3",
+    "chapter_code": "j5-1-4",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-3",
-    "section": "縮放與相似",
+    "chapterCode": "j5-1-4",
+    "section": "相似三角形與其應用",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -97645,13 +97642,14 @@ window.formulaContentRecords = [
     "domain": "幾何",
     "difficulty": "基礎",
     "chapterRole": "分支",
-    "parentId": "j5-1-3-main-core-scale-perimeter-and-area-ratios",
+    "parentId": "j5-1-4-main-core-similarity-applications",
     "tags": [
       "word匯入",
       "教學核心",
-      "j5-1-3",
       "相似三角形",
-      "相似"
+      "相似",
+      "j5-1-4",
+      "相似三角形與其應用"
     ],
     "usage": [
       "非邊長量的比例題。",
@@ -97679,10 +97677,10 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-3",
+    "chapter_code": "j5-1-4",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-3",
-    "section": "縮放與相似",
+    "chapterCode": "j5-1-4",
+    "section": "相似三角形與其應用",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -97721,13 +97719,14 @@ window.formulaContentRecords = [
     "domain": "幾何",
     "difficulty": "基礎",
     "chapterRole": "分支",
-    "parentId": "j5-1-3-main-core-scale-perimeter-and-area-ratios",
+    "parentId": "j5-1-4-main-core-similarity-applications",
     "tags": [
       "word匯入",
       "教學核心",
-      "j5-1-3",
       "相似三角形",
-      "相似"
+      "相似",
+      "j5-1-4",
+      "相似三角形與其應用"
     ],
     "usage": [
       "面積比例與相似比轉換。",
@@ -97755,10 +97754,10 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-3",
+    "chapter_code": "j5-1-4",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-3",
-    "section": "縮放與相似",
+    "chapterCode": "j5-1-4",
+    "section": "相似三角形與其應用",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -97797,13 +97796,14 @@ window.formulaContentRecords = [
     "domain": "幾何",
     "difficulty": "基礎",
     "chapterRole": "分支",
-    "parentId": "j5-1-3-main-core-scale-perimeter-and-area-ratios",
+    "parentId": "j5-1-4-main-core-similarity-applications",
     "tags": [
       "word匯入",
       "教學核心",
-      "j5-1-3",
       "相似三角形",
-      "相似"
+      "相似",
+      "j5-1-4",
+      "相似三角形與其應用"
     ],
     "usage": [
       "平行線與高度變化題。",
@@ -97831,10 +97831,10 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-3",
+    "chapter_code": "j5-1-4",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-3",
-    "section": "縮放與相似",
+    "chapterCode": "j5-1-4",
+    "section": "相似三角形與其應用",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -97873,13 +97873,14 @@ window.formulaContentRecords = [
     "domain": "幾何",
     "difficulty": "基礎",
     "chapterRole": "分支",
-    "parentId": "j5-1-3-main-core-right-triangle-similarity",
+    "parentId": "j5-1-4-main-core-similarity-applications",
     "tags": [
       "word匯入",
       "教學核心",
-      "j5-1-3",
       "相似三角形",
-      "相似"
+      "相似",
+      "j5-1-4",
+      "相似三角形與其應用"
     ],
     "usage": [
       "直角三角形高分割題。",
@@ -97907,10 +97908,10 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-3",
+    "chapter_code": "j5-1-4",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-3",
-    "section": "縮放與相似",
+    "chapterCode": "j5-1-4",
+    "section": "相似三角形與其應用",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -97955,13 +97956,14 @@ window.formulaContentRecords = [
     "domain": "幾何",
     "difficulty": "進階",
     "chapterRole": "分支",
-    "parentId": "j5-1-3-main-core-right-triangle-similarity",
+    "parentId": "j5-1-4-main-core-similarity-applications",
     "tags": [
       "word匯入",
       "教學核心",
-      "j5-1-3",
       "相似三角形",
-      "相似"
+      "相似",
+      "j5-1-4",
+      "相似三角形與其應用"
     ],
     "usage": [
       "快速計算斜邊高與股長。",
@@ -97989,10 +97991,10 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-3",
+    "chapter_code": "j5-1-4",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-3",
-    "section": "縮放與相似",
+    "chapterCode": "j5-1-4",
+    "section": "相似三角形與其應用",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -98031,13 +98033,14 @@ window.formulaContentRecords = [
     "domain": "幾何",
     "difficulty": "進階",
     "chapterRole": "分支",
-    "parentId": "j5-1-3-main-core-right-triangle-similarity",
+    "parentId": "j5-1-4-main-core-similarity-applications",
     "tags": [
       "word匯入",
       "教學核心",
-      "j5-1-3",
       "相似三角形",
-      "相似"
+      "相似",
+      "j5-1-4",
+      "相似三角形與其應用"
     ],
     "usage": [
       "混合已知量求未知。",
@@ -98065,10 +98068,10 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-3",
+    "chapter_code": "j5-1-4",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-3",
-    "section": "縮放與相似",
+    "chapterCode": "j5-1-4",
+    "section": "相似三角形與其應用",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -98107,13 +98110,14 @@ window.formulaContentRecords = [
     "domain": "幾何",
     "difficulty": "進階",
     "chapterRole": "分支",
-    "parentId": "j5-1-3-main-core-right-triangle-similarity",
+    "parentId": "j5-1-4-main-core-similarity-applications",
     "tags": [
       "word匯入",
       "教學核心",
-      "j5-1-3",
       "相似三角形",
-      "相似"
+      "相似",
+      "j5-1-4",
+      "相似三角形與其應用"
     ],
     "usage": [
       "生活情境測高題。",
@@ -98141,10 +98145,10 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-3",
+    "chapter_code": "j5-1-4",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-3",
-    "section": "縮放與相似",
+    "chapterCode": "j5-1-4",
+    "section": "相似三角形與其應用",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -98183,13 +98187,14 @@ window.formulaContentRecords = [
     "domain": "幾何",
     "difficulty": "進階",
     "chapterRole": "分支",
-    "parentId": "j5-1-3-main-core-right-triangle-similarity",
+    "parentId": "j5-1-4-main-core-similarity-applications",
     "tags": [
       "word匯入",
       "教學核心",
-      "j5-1-3",
       "相似三角形",
-      "相似"
+      "相似",
+      "j5-1-4",
+      "相似三角形與其應用"
     ],
     "usage": [
       "河寬、海島高度與距離估測。",
@@ -98217,10 +98222,10 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-3",
+    "chapter_code": "j5-1-4",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-3",
-    "section": "縮放與相似",
+    "chapterCode": "j5-1-4",
+    "section": "相似三角形與其應用",
     "domainSub": "",
     "isBranch": true,
     "relatedChapters": [],
@@ -127216,7 +127221,7 @@ window.formulaContentRecords = [
   },
   {
     "id": "j5-1-1-main-theme-ratio-language",
-    "title": "比例線段的基本語言",
+    "title": "連比的意義與共同倍數",
     "formula": {
       "type": "labeled-lines",
       "lines": [
@@ -127252,8 +127257,8 @@ window.formulaContentRecords = [
     ],
     "tags": [
       "j5-1-1",
-      "主題",
-      "比例線段的基本語言"
+      "連比",
+      "共同倍數"
     ],
     "usage": [
       "比例式是在比較兩組長度的對應關係、比例最重要的是順序、比例式可用跨乘改寫成方程式"
@@ -127263,7 +127268,7 @@ window.formulaContentRecords = [
       "先讀 比例線段的基本語言 的整理，再往下看原本舊分支。"
     ],
     "notes": [
-      "這層對應來源主題：比例線段的基本語言"
+      "先確認量的順序，再設共同倍數。"
     ],
     "mistakes": [],
     "contentTypesLocked": true,
@@ -127280,11 +127285,15 @@ window.formulaContentRecords = [
     "termOrder": 1,
     "chapterOrder": 2,
     "manualOrder": 1,
-    "originalIndex": 1862
+    "originalIndex": 1862,
+    "explanation": [
+      "連比用同一個倍數描述三個以上的量。",
+      "若 A:B:C=a:b:c，可設 A=ak, B=bk, C=ck。"
+    ]
   },
   {
     "id": "j5-1-1-main-core-ratio-language",
-    "title": "比例線段的基本語言",
+    "title": "用共同倍數解連比",
     "formula": {
       "type": "labeled-lines",
       "lines": [
@@ -127328,8 +127337,8 @@ window.formulaContentRecords = [
     ],
     "tags": [
       "j5-1-1",
-      "比例線段的基本語言",
-      "主題整理"
+      "連比",
+      "共同倍數"
     ],
     "usage": [
       "比例式是在比較兩組長度的對應關係、比例最重要的是順序、比例式可用跨乘改寫成方程式"
@@ -127339,7 +127348,7 @@ window.formulaContentRecords = [
       "這一層保留 比例線段的基本語言 的重點整理入口。"
     ],
     "notes": [
-      "來源：國三上全重點_易讀版分頁版.md"
+      "常見錯誤：把比的數字直接當答案，忘了求實際量。"
     ],
     "mistakes": [],
     "contentTypesLocked": true,
@@ -127356,18 +127365,21 @@ window.formulaContentRecords = [
     "termOrder": 1,
     "chapterOrder": 2,
     "manualOrder": 100,
-    "originalIndex": 1863
+    "originalIndex": 1863,
+    "explanation": [
+      "把連比各項同乘同一個 k，再由總和、差或部分和求 k。"
+    ]
   },
   {
     "id": "j5-1-2-main-root-parallel-intercept",
-    "title": "平行線截比例線段",
+    "title": "比例線段",
     "formula": {
       "type": "labeled-lines",
       "lines": [
         {
           "label": "主題",
           "values": [
-            "\\text{平行線截比例線段}"
+            "\\text{比例線段}"
           ]
         },
         {
@@ -127382,7 +127394,7 @@ window.formulaContentRecords = [
     "grade": "國三",
     "term": "上學期",
     "chapter": "相似三角形",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domain": "幾何",
     "domainSub": "",
     "difficulty": "基礎",
@@ -127396,7 +127408,7 @@ window.formulaContentRecords = [
     ],
     "tags": [
       "j5-1-2",
-      "平行線截比例線段"
+      "比例線段"
     ],
     "usage": [
       "平行線截比例線段"
@@ -127406,6 +127418,7 @@ window.formulaContentRecords = [
       "先看 平行線截比例線段 這章的主題主線，再往下展開分支。"
     ],
     "notes": [
+      "先看比例線段這章的主題主線，再往下展開平行線與未知長度分支。",
       "這層是 j5-1-2 的正式章節主軸。"
     ],
     "mistakes": [],
@@ -127449,7 +127462,7 @@ window.formulaContentRecords = [
     "grade": "國三",
     "term": "上學期",
     "chapter": "相似三角形",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domain": "幾何",
     "domainSub": "",
     "difficulty": "基礎",
@@ -127464,7 +127477,8 @@ window.formulaContentRecords = [
     "tags": [
       "j5-1-2",
       "主題",
-      "平行線截比例線段性質"
+      "平行線截比例線段性質",
+      "比例線段"
     ],
     "usage": [
       "若兩條直線被多條平行線截到，對應分段會成比例、同一層的線段要配同一層、三條平行線時最常用"
@@ -127523,7 +127537,7 @@ window.formulaContentRecords = [
     "grade": "國三",
     "term": "上學期",
     "chapter": "相似三角形",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domain": "幾何",
     "domainSub": "",
     "difficulty": "基礎",
@@ -127540,7 +127554,8 @@ window.formulaContentRecords = [
     "tags": [
       "j5-1-2",
       "平行線截比例線段性質",
-      "主題整理"
+      "主題整理",
+      "比例線段"
     ],
     "usage": [
       "若兩條直線被多條平行線截到，對應分段會成比例、同一層的線段要配同一層、三條平行線時最常用"
@@ -127593,7 +127608,7 @@ window.formulaContentRecords = [
     "grade": "國三",
     "term": "上學期",
     "chapter": "相似三角形",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domain": "幾何",
     "domainSub": "",
     "difficulty": "基礎",
@@ -127608,7 +127623,8 @@ window.formulaContentRecords = [
     "tags": [
       "j5-1-2",
       "主題",
-      "三角形截比例性質與反性質"
+      "三角形截比例性質與反性質",
+      "比例線段"
     ],
     "usage": [
       "在三角形中，若 \\(DE \\parallel BC\\)，則兩邊會被截成相同比例、同一張圖也可寫成整段比、反過來也成立"
@@ -127667,7 +127683,7 @@ window.formulaContentRecords = [
     "grade": "國三",
     "term": "上學期",
     "chapter": "相似三角形",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domain": "幾何",
     "domainSub": "",
     "difficulty": "基礎",
@@ -127684,7 +127700,8 @@ window.formulaContentRecords = [
     "tags": [
       "j5-1-2",
       "三角形截比例性質與反性質",
-      "主題整理"
+      "主題整理",
+      "比例線段"
     ],
     "usage": [
       "在三角形中，若 \\(DE \\parallel BC\\)，則兩邊會被截成相同比例、同一張圖也可寫成整段比、反過來也成立"
@@ -127737,7 +127754,7 @@ window.formulaContentRecords = [
     "grade": "國三",
     "term": "上學期",
     "chapter": "相似三角形",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domain": "幾何",
     "domainSub": "",
     "difficulty": "基礎",
@@ -127752,7 +127769,8 @@ window.formulaContentRecords = [
     "tags": [
       "j5-1-2",
       "主題",
-      "用比例線段求未知長度"
+      "用比例線段求未知長度",
+      "比例線段"
     ],
     "usage": [
       "做長度題時，先判斷要用分段比還是整段比、若題目給的是部分長度，常先用分段比、若題目給的是整體縮放，常先用整段比"
@@ -127811,7 +127829,7 @@ window.formulaContentRecords = [
     "grade": "國三",
     "term": "上學期",
     "chapter": "相似三角形",
-    "section": "平行線截比例線段",
+    "section": "比例線段",
     "domain": "幾何",
     "domainSub": "",
     "difficulty": "基礎",
@@ -127828,7 +127846,8 @@ window.formulaContentRecords = [
     "tags": [
       "j5-1-2",
       "用比例線段求未知長度",
-      "主題整理"
+      "主題整理",
+      "比例線段"
     ],
     "usage": [
       "做長度題時，先判斷要用分段比還是整段比、若題目給的是部分長度，常先用分段比、若題目給的是整體縮放，常先用整段比"
@@ -128380,12 +128399,12 @@ window.formulaContentRecords = [
     "grade": "國三",
     "term": "上學期",
     "chapter": "相似三角形",
-    "section": "縮放與相似",
+    "section": "相似三角形與其應用",
     "domain": "幾何",
     "domainSub": "",
     "difficulty": "基礎",
     "chapterRole": "主題",
-    "parentId": "j5-1-3-main-root-scale-similarity",
+    "parentId": "j5-1-4-main-core-similarity-applications",
     "contentTypes": [
       "重點整理",
       "例題",
@@ -128393,9 +128412,10 @@ window.formulaContentRecords = [
       "常見錯誤"
     ],
     "tags": [
-      "j5-1-3",
       "主題",
-      "相似比、周長比、面積比"
+      "相似比、周長比、面積比",
+      "j5-1-4",
+      "相似三角形與其應用"
     ],
     "usage": [
       "若兩個相似三角形的對應邊比為 \\(k\\)，則對應周長比也為 \\(k\\)、對應高、中線、角平分線的長度比也都是 \\(k\\)、面積比則是 \\(k^2\\)"
@@ -128411,9 +128431,9 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-3",
+    "chapter_code": "j5-1-4",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-3",
+    "chapterCode": "j5-1-4",
     "isBranch": false,
     "relatedChapters": [],
     "relatedTopicIds": [],
@@ -128454,12 +128474,12 @@ window.formulaContentRecords = [
     "grade": "國三",
     "term": "上學期",
     "chapter": "相似三角形",
-    "section": "縮放與相似",
+    "section": "相似三角形與其應用",
     "domain": "幾何",
     "domainSub": "",
     "difficulty": "基礎",
     "chapterRole": "主題",
-    "parentId": "j5-1-3-main-theme-scale-perimeter-and-area-ratios",
+    "parentId": "j5-1-4-main-core-similarity-applications",
     "contentTypes": [
       "公式",
       "重點整理",
@@ -128469,9 +128489,10 @@ window.formulaContentRecords = [
       "觀念釐清"
     ],
     "tags": [
-      "j5-1-3",
       "相似比、周長比、面積比",
-      "主題整理"
+      "主題整理",
+      "j5-1-4",
+      "相似三角形與其應用"
     ],
     "usage": [
       "若兩個相似三角形的對應邊比為 \\(k\\)，則對應周長比也為 \\(k\\)、對應高、中線、角平分線的長度比也都是 \\(k\\)、面積比則是 \\(k^2\\)"
@@ -128487,9 +128508,9 @@ window.formulaContentRecords = [
     "contentTypesLocked": true,
     "mathNotationLocked": true,
     "modifiedAt": "2026-05-14T06:03:36+08:00",
-    "chapter_code": "j5-1-3",
+    "chapter_code": "j5-1-4",
     "gradeLabel": "國三上",
-    "chapterCode": "j5-1-3",
+    "chapterCode": "j5-1-4",
     "isBranch": false,
     "relatedChapters": [],
     "relatedTopicIds": [],
@@ -137058,5 +137079,329 @@ window.formulaContentRecords = [
     "isBranch": true,
     "relatedChapters": [],
     "relatedTopicIds": []
+  },
+  {
+    "id": "j5-1-1-chain-ratio-meaning",
+    "title": "連比的基本語言",
+    "formula": {
+      "type": "labeled-lines",
+      "lines": [
+        {
+          "label": "觀念",
+          "values": [
+            "\\text{若 }A:B:C=a:b:c\\text{，則 }A=ak,B=bk,C=ck"
+          ]
+        }
+      ]
+    },
+    "explanation": [
+      "連比描述三個以上量的倍數關係。"
+    ],
+    "category": "國中・國三上",
+    "section": "連比",
+    "parentId": "j5-1-1-main-core-ratio-language",
+    "tags": [
+      "j5-1-1",
+      "連比",
+      "連比的基本語言"
+    ],
+    "related": [],
+    "examples": [],
+    "notes": [
+      "連比描述三個以上量的倍數關係。"
+    ],
+    "chapter_code": "j5-1-1",
+    "grade": "國中",
+    "book": "國三上",
+    "chapter": "比例與相似",
+    "chapterCode": "j5-1-1"
+  },
+  {
+    "id": "j5-1-1-chain-ratio-sum",
+    "title": "已知總量或差求各量",
+    "formula": {
+      "type": "labeled-lines",
+      "lines": [
+        {
+          "label": "觀念",
+          "values": [
+            "A:B:C=a:b:c,\\ A+B+C=(a+b+c)k"
+          ]
+        }
+      ]
+    },
+    "explanation": [
+      "總量、部分和、差都先化成 k 的方程式。"
+    ],
+    "category": "國中・國三上",
+    "section": "連比",
+    "parentId": "j5-1-1-main-core-ratio-language",
+    "tags": [
+      "j5-1-1",
+      "連比",
+      "已知總量或差求各量"
+    ],
+    "related": [],
+    "examples": [],
+    "notes": [
+      "總量、部分和、差都先化成 k 的方程式。"
+    ],
+    "chapter_code": "j5-1-1",
+    "grade": "國中",
+    "book": "國三上",
+    "chapter": "比例與相似",
+    "chapterCode": "j5-1-1"
+  },
+  {
+    "id": "j5-1-1-chain-ratio-merge",
+    "title": "多組比例合併成連比",
+    "formula": {
+      "type": "labeled-lines",
+      "lines": [
+        {
+          "label": "觀念",
+          "values": [
+            "A:B=m:n,\\ B:C=p:q\\Rightarrow\\text{先統一 }B"
+          ]
+        }
+      ]
+    },
+    "explanation": [
+      "共同項先調成相同，再合併三項連比。"
+    ],
+    "category": "國中・國三上",
+    "section": "連比",
+    "parentId": "j5-1-1-main-core-ratio-language",
+    "tags": [
+      "j5-1-1",
+      "連比",
+      "多組比例合併成連比"
+    ],
+    "related": [],
+    "examples": [],
+    "notes": [
+      "共同項先調成相同，再合併三項連比。"
+    ],
+    "chapter_code": "j5-1-1",
+    "grade": "國中",
+    "book": "國三上",
+    "chapter": "比例與相似",
+    "chapterCode": "j5-1-1"
+  },
+  {
+    "id": "j5-1-1-chain-ratio-simplify",
+    "title": "分數與小數連比化簡",
+    "formula": {
+      "type": "labeled-lines",
+      "lines": [
+        {
+          "label": "觀念",
+          "values": [
+            "\\text{同乘公倍數，再約成互質整數連比}"
+          ]
+        }
+      ]
+    },
+    "explanation": [
+      "分數比先清分母，小數比先放大成整數。"
+    ],
+    "category": "國中・國三上",
+    "section": "連比",
+    "parentId": "j5-1-1-main-core-ratio-language",
+    "tags": [
+      "j5-1-1",
+      "連比",
+      "分數與小數連比化簡"
+    ],
+    "related": [],
+    "examples": [],
+    "notes": [
+      "分數比先清分母，小數比先放大成整數。"
+    ],
+    "chapter_code": "j5-1-1",
+    "grade": "國中",
+    "book": "國三上",
+    "chapter": "比例與相似",
+    "chapterCode": "j5-1-1"
+  },
+  {
+    "id": "j5-1-2-main-theme-ratio-language",
+    "title": "比例線段的基本語言",
+    "formula": {
+      "type": "labeled-lines",
+      "lines": [
+        {
+          "label": "觀念",
+          "values": [
+            "\\text{同類量才能比，對應順序要一致。}"
+          ]
+        }
+      ]
+    },
+    "explanation": [
+      "比例線段先看對應，再寫比例式。"
+    ],
+    "category": "國中・國三上",
+    "section": "比例線段",
+    "parentId": "j5-1-2-main-root-parallel-intercept",
+    "tags": [
+      "j5-1-2",
+      "比例線段",
+      "比例線段的基本語言"
+    ],
+    "related": [],
+    "examples": [],
+    "notes": [
+      "比例線段先看對應，再寫比例式。"
+    ],
+    "chapter_code": "j5-1-2",
+    "grade": "國中",
+    "book": "國三上",
+    "chapter": "比例與相似",
+    "chapterCode": "j5-1-2"
+  },
+  {
+    "id": "j5-1-2-main-core-ratio-language",
+    "title": "比例線段的基本語言",
+    "formula": {
+      "type": "labeled-lines",
+      "lines": [
+        {
+          "label": "觀念",
+          "values": [
+            "a:b=c:d"
+          ]
+        }
+      ]
+    },
+    "explanation": [
+      "比例線段是四個線段長度形成的比例關係。"
+    ],
+    "category": "國中・國三上",
+    "section": "比例線段",
+    "parentId": "j5-1-2-main-theme-ratio-language",
+    "tags": [
+      "j5-1-2",
+      "比例線段",
+      "比例線段的基本語言"
+    ],
+    "related": [],
+    "examples": [],
+    "notes": [
+      "比例線段是四個線段長度形成的比例關係。"
+    ],
+    "chapter_code": "j5-1-2",
+    "grade": "國中",
+    "book": "國三上",
+    "chapter": "比例與相似",
+    "chapterCode": "j5-1-2"
+  },
+  {
+    "id": "j5-1-4-main-root-similarity-applications",
+    "title": "相似三角形與其應用",
+    "formula": {
+      "type": "labeled-lines",
+      "lines": [
+        {
+          "label": "觀念",
+          "values": [
+            "\\text{先證明相似，再用對應邊與面積比解題。}"
+          ]
+        }
+      ]
+    },
+    "explanation": [
+      "集中相似三角形判別、直角三角形母子相似與生活測量應用。"
+    ],
+    "category": "國中・國三上",
+    "section": "相似三角形與其應用",
+    "parentId": "",
+    "tags": [
+      "j5-1-4",
+      "相似三角形與其應用",
+      "相似三角形與其應用"
+    ],
+    "related": [],
+    "examples": [],
+    "notes": [
+      "集中相似三角形判別、直角三角形母子相似與生活測量應用。"
+    ],
+    "chapter_code": "j5-1-4",
+    "grade": "國中",
+    "book": "國三上",
+    "chapter": "比例與相似",
+    "chapterCode": "j5-1-4"
+  },
+  {
+    "id": "j5-1-4-main-theme-similarity-applications",
+    "title": "相似三角形的線段與面積應用",
+    "formula": {
+      "type": "labeled-lines",
+      "lines": [
+        {
+          "label": "觀念",
+          "values": [
+            "\\frac{\\text{面積比}}{}=(\\text{相似比})^2"
+          ]
+        }
+      ]
+    },
+    "explanation": [
+      "對應高、周長、中線、角平分線比等於相似比；面積比等於相似比平方。"
+    ],
+    "category": "國中・國三上",
+    "section": "相似三角形與其應用",
+    "parentId": "j5-1-4-main-root-similarity-applications",
+    "tags": [
+      "j5-1-4",
+      "相似三角形與其應用",
+      "相似三角形的線段與面積應用"
+    ],
+    "related": [],
+    "examples": [],
+    "notes": [
+      "對應高、周長、中線、角平分線比等於相似比；面積比等於相似比平方。"
+    ],
+    "chapter_code": "j5-1-4",
+    "grade": "國中",
+    "book": "國三上",
+    "chapter": "比例與相似",
+    "chapterCode": "j5-1-4"
+  },
+  {
+    "id": "j5-1-4-main-core-similarity-applications",
+    "title": "相似三角形的線段與面積應用",
+    "formula": {
+      "type": "labeled-lines",
+      "lines": [
+        {
+          "label": "觀念",
+          "values": [
+            "\\text{找相等角}\\to\\text{判斷相似}\\to\\text{寫對應比例}"
+          ]
+        }
+      ]
+    },
+    "explanation": [
+      "應用題先找相似，再計算。"
+    ],
+    "category": "國中・國三上",
+    "section": "相似三角形與其應用",
+    "parentId": "j5-1-4-main-theme-similarity-applications",
+    "tags": [
+      "j5-1-4",
+      "相似三角形與其應用",
+      "相似三角形的線段與面積應用"
+    ],
+    "related": [],
+    "examples": [],
+    "notes": [
+      "應用題先找相似，再計算。"
+    ],
+    "chapter_code": "j5-1-4",
+    "grade": "國中",
+    "book": "國三上",
+    "chapter": "比例與相似",
+    "chapterCode": "j5-1-4"
   }
 ];

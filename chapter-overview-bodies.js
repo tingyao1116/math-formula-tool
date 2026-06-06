@@ -3577,10 +3577,66 @@ window.chapterOverviewBodyStore = {
     ],
     "appendGeneratedOutline": false
   },
-  "國中・國三上・比例線段": {
+  "國中・國三上・連比": {
     "code": "j5-1-1",
     "title": "章節正文",
-    "updatedAt": "2026-05-15T16:45:00+08:00",
+    "updatedAt": "2026-06-04",
+    "variants": [
+      {
+        "sections": [
+          {
+            "type": "bullet-list",
+            "heading": "核心概念",
+            "items": [
+              {
+                "label": "連比的意義",
+                "text": "連比用來同時比較三個以上的量，例如 \\(a:b:c=2:3:5\\)，表示三個量可同時寫成 \\(2k,3k,5k\\)。"
+              },
+              {
+                "label": "順序不能交換",
+                "text": "\\(A:B:C\\) 的順序對應到題目中的三個量，換順序就代表不同的量，比例式會改變。"
+              },
+              {
+                "label": "共同倍數表示法",
+                "text": "若已知 \\(A:B:C=m:n:p\\)，通常設 \\(A=mk, B=nk, C=pk\\)，再用總和、差或題目條件求 \\(k\\)。"
+              },
+              {
+                "label": "化成最簡整數連比",
+                "text": "遇到分數或小數的比，先同乘最小公倍數或適當倍數，再約成互質整數。"
+              }
+            ]
+          },
+          {
+            "type": "bullet-list",
+            "heading": "常見題型",
+            "items": [
+              {
+                "label": "已知總量求各量",
+                "text": "先設三個量為連比各項乘上同一個 \\(k\\)，再由總和求出每一個量。"
+              },
+              {
+                "label": "已知差或部分和",
+                "text": "把差或部分和轉成 \\((m-n)k\\) 或 \\((m+n)k\\)，再求倍數 \\(k\\)。"
+              },
+              {
+                "label": "多組比例合併",
+                "text": "例如 \\(A:B=2:3\\)、\\(B:C=4:5\\)，先把共同項 \\(B\\) 調成相同，再合併成 \\(A:B:C\\)。"
+              },
+              {
+                "label": "最簡連比判斷",
+                "text": "最後要檢查三項是否仍有共同因數，並確認題目要求的是比例還是實際數量。"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
+  },
+  "國中・國三上・比例線段": {
+    "code": "j5-1-2",
+    "title": "章節正文",
+    "updatedAt": "2026-06-04",
     "variants": [
       {
         "id": "editable",
@@ -3646,8 +3702,8 @@ window.chapterOverviewBodyStore = {
         "sections": [
           {
             "type": "image",
-            "src": "data/chapter-overview-originals/j5-1-1-original.png",
-            "caption": "1-1 比例線段原稿截圖"
+            "src": "data/chapter-overview-originals/j5-1-2-original.png",
+            "caption": "比例線段原稿截圖"
           }
         ]
       }
@@ -3655,137 +3711,51 @@ window.chapterOverviewBodyStore = {
     "appendGeneratedOutline": false
   },
   "國中・國三上・縮放與相似": {
-    "code": "j5-1-2",
+    "code": "j5-1-3",
     "title": "章節正文",
-    "updatedAt": "2026-05-15T16:45:00+08:00",
+    "updatedAt": "2026-06-04",
     "variants": [
       {
-        "id": "editable",
-        "label": "可修改版",
         "sections": [
           {
             "type": "bullet-list",
-            "title": "重點歸納",
+            "heading": "核心概念",
             "items": [
               {
                 "label": "圖形的縮放",
-                "text": "將圖形按固定比例放大或縮小，縮放後的圖形與原圖形形狀相同但大小不同。縮放 \\(r\\) 倍時，對應角不變，對應邊變為 \\(r\\) 倍。"
+                "text": "縮放會讓圖形大小改變，但形狀保持一致；對應角不變，對應邊依同一倍率改變。"
               },
               {
-                "label": "相似多邊形定義",
-                "text": "兩個多邊形若滿足「對應角相等」且「對應邊成比例」，則稱這兩個多邊形相似，符號記為 \\(\\sim\\)。"
+                "label": "相似形定義",
+                "text": "兩個圖形若對應角相等且對應邊成比例，則稱為相似形。"
               },
               {
-                "label": "相似形的特性",
-                "text": "所有的正 \\(n\\) 邊形（如正三角形、正方形、正五角形等）皆互為相似形。\n所有的圓形、等腰直角三角形皆互為相似形。"
+                "label": "坐標平面縮放",
+                "text": "若以原點為中心縮放 \\(k\\) 倍，點 \\(P(x,y)\\) 會變成 \\(P'(kx,ky)\\)。"
               },
               {
-                "label": "坐標平面的縮放",
-                "text": "若以原點為中心縮放 \\(k\\) 倍，則點 \\(P(x, y)\\) 的對應點為 \\(P'(kx, ky)\\)。"
+                "label": "對應順序",
+                "text": "相似題一定要先確認頂點順序，例如 \\(\\triangle ABC\\sim\\triangle DEF\\) 代表 \\(A\\leftrightarrow D\\)、\\(B\\leftrightarrow E\\)、\\(C\\leftrightarrow F\\)。"
               }
             ]
           },
           {
             "type": "bullet-list",
-            "title": "重要題型",
+            "heading": "常見題型",
             "items": [
               {
-                "label": "圖形判別問題",
-                "text": "判斷給定的兩圖形是否相似，注意長方形對應角相等但不一定相似，菱形對應邊成比例但不一定相似。"
+                "label": "判斷是否相似",
+                "text": "檢查角是否相等、邊是否依同一比例縮放。"
               },
               {
-                "label": "縮放倍率計算",
-                "text": "已知原圖與縮放圖的邊長或周長，求其縮放倍率；面積比為縮放倍率的平方。"
+                "label": "倍率與邊長計算",
+                "text": "先求縮放倍率，再用倍率求未知邊長或周長。"
               },
               {
-                "label": "相似多邊形求值",
-                "text": "利用「對應邊成比例」建立比例式，求未知邊長或多邊形周長。"
+                "label": "周長與面積比較",
+                "text": "周長比等於相似比，面積比等於相似比的平方。"
               }
             ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "image",
-            "src": "data/chapter-overview-originals/j5-1-2-original.png",
-            "caption": "1-2 縮放與相似原稿截圖"
-          }
-        ]
-      }
-    ],
-    "appendGeneratedOutline": false
-  },
-  "國中・國三上・相似三角形與其應用": {
-    "code": "j5-1-3",
-    "title": "章節正文",
-    "updatedAt": "2026-05-15T16:45:00+08:00",
-    "variants": [
-      {
-        "id": "editable",
-        "label": "可修改版",
-        "sections": [
-          {
-            "type": "bullet-list",
-            "title": "重點歸納",
-            "items": [
-              {
-                "label": "三角形相似判斷性質",
-                "text": "AA（或 AAA）相似：兩組（或三組）對應角相等。\nSSS 相似：三組對應邊成比例。\nSAS 相似：一組對應角相等，且夾此角的兩邊成比例。"
-              },
-              {
-                "label": "相似三角形的線段比性質",
-                "text": "兩個相似三角形的對應高、對應中線、對應角平分線及周長之比，皆等於其對應邊長比。"
-              },
-              {
-                "label": "相似三角形的面積比性質",
-                "text": "兩個相似三角形的面積比等於其對應邊長的平方比。"
-              },
-              {
-                "label": "直角三角形母子相似性質",
-                "text": "直角三角形斜邊上的高，會將原三角形分成兩個與原圖相似的小直角三角形。\n\\(AB^2 = BD \\times BC\\)\n\\(AC^2 = CD \\times CB\\)\n\\(AD^2 = BD \\times DC\\)"
-              },
-              {
-                "label": "相似形的測量應用",
-                "text": "利用影長比例（身高：影長 = 樹高：樹影）或鏡面反射（入射角等於反射角構成相似三角形）原理來測量無法直接度量的高度或寬度。"
-              }
-            ]
-          },
-          {
-            "type": "bullet-list",
-            "title": "重要題型",
-            "items": [
-              {
-                "label": "相似判定與證明",
-                "text": "在複雜幾何圖中（如蝴蝶形、疊合三角形）找出相似三角形並證明之。"
-              },
-              {
-                "label": "生活應用問題",
-                "text": "利用影長測量建築物高度、路燈下影長移動計算，或利用直角三角標尺測量河寬。"
-              },
-              {
-                "label": "母子相似求值",
-                "text": "在直角三角形中利用高分割出的比例關係，求取斜邊上的段落長度。"
-              },
-              {
-                "label": "面積與邊長轉換",
-                "text": "已知兩相似三角形面積比，求其周長比或特定對應線段比（如中線比）。"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "image",
-            "src": "data/chapter-overview-originals/j5-1-3-original.png",
-            "caption": "1-3 相似三角形與其應用原稿截圖"
           }
         ]
       }
@@ -9030,6 +9000,62 @@ window.chapterOverviewBodyStore = {
       }
     ],
     "appendGeneratedOutline": false
+  },
+  "國中・國三上・相似三角形與其應用": {
+    "code": "j5-1-4",
+    "title": "章節正文",
+    "updatedAt": "2026-06-04",
+    "variants": [
+      {
+        "sections": [
+          {
+            "type": "bullet-list",
+            "heading": "核心概念",
+            "items": [
+              {
+                "label": "相似三角形判別",
+                "text": "常用 AA、SSS、SAS 判斷兩三角形相似；先找相等角或對應邊比例，再進入計算。"
+              },
+              {
+                "label": "線段比與周長比",
+                "text": "相似三角形的對應高、中線、角平分線與周長比，都等於相似比。"
+              },
+              {
+                "label": "面積比",
+                "text": "相似三角形的面積比等於相似比的平方，不能直接拿邊長比當面積比。"
+              },
+              {
+                "label": "直角三角形母子相似",
+                "text": "直角三角形作斜邊上的高後，原三角形與兩個小三角形互相相似，可推出常見乘積關係。"
+              }
+            ]
+          },
+          {
+            "type": "bullet-list",
+            "heading": "常見題型",
+            "items": [
+              {
+                "label": "相似證明",
+                "text": "在蝴蝶形、疊合圖形或平行線圖形中，先找角相等，再寫出相似順序。"
+              },
+              {
+                "label": "生活測量",
+                "text": "用影子、鏡面反射或標尺建立相似三角形，求無法直接測量的高度或距離。"
+              },
+              {
+                "label": "直角三角形求值",
+                "text": "利用斜邊高分割出的三個相似三角形，求邊長、投影段或高。"
+              },
+              {
+                "label": "面積與邊長轉換",
+                "text": "已知面積比時先開平方得到相似比，再求周長或對應線段。"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
   }
 }
 };
@@ -12616,7 +12642,63 @@ window.chapterOverviewBodyStore = {
   "j5-1-1": {
     "code": "j5-1-1",
     "title": "章節正文",
-    "updatedAt": "2026-05-15T16:45:00+08:00",
+    "updatedAt": "2026-06-04",
+    "variants": [
+      {
+        "sections": [
+          {
+            "type": "bullet-list",
+            "heading": "核心概念",
+            "items": [
+              {
+                "label": "連比的意義",
+                "text": "連比用來同時比較三個以上的量，例如 \\(a:b:c=2:3:5\\)，表示三個量可同時寫成 \\(2k,3k,5k\\)。"
+              },
+              {
+                "label": "順序不能交換",
+                "text": "\\(A:B:C\\) 的順序對應到題目中的三個量，換順序就代表不同的量，比例式會改變。"
+              },
+              {
+                "label": "共同倍數表示法",
+                "text": "若已知 \\(A:B:C=m:n:p\\)，通常設 \\(A=mk, B=nk, C=pk\\)，再用總和、差或題目條件求 \\(k\\)。"
+              },
+              {
+                "label": "化成最簡整數連比",
+                "text": "遇到分數或小數的比，先同乘最小公倍數或適當倍數，再約成互質整數。"
+              }
+            ]
+          },
+          {
+            "type": "bullet-list",
+            "heading": "常見題型",
+            "items": [
+              {
+                "label": "已知總量求各量",
+                "text": "先設三個量為連比各項乘上同一個 \\(k\\)，再由總和求出每一個量。"
+              },
+              {
+                "label": "已知差或部分和",
+                "text": "把差或部分和轉成 \\((m-n)k\\) 或 \\((m+n)k\\)，再求倍數 \\(k\\)。"
+              },
+              {
+                "label": "多組比例合併",
+                "text": "例如 \\(A:B=2:3\\)、\\(B:C=4:5\\)，先把共同項 \\(B\\) 調成相同，再合併成 \\(A:B:C\\)。"
+              },
+              {
+                "label": "最簡連比判斷",
+                "text": "最後要檢查三項是否仍有共同因數，並確認題目要求的是比例還是實際數量。"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
+  },
+  "j5-1-2": {
+    "code": "j5-1-2",
+    "title": "章節正文",
+    "updatedAt": "2026-06-04",
     "variants": [
       {
         "id": "editable",
@@ -12682,73 +12764,8 @@ window.chapterOverviewBodyStore = {
         "sections": [
           {
             "type": "image",
-            "src": "data/chapter-overview-originals/j5-1-1-original.png",
-            "caption": "1-1 比例線段原稿截圖"
-          }
-        ]
-      }
-    ],
-    "appendGeneratedOutline": false
-  },
-  "j5-1-2": {
-    "code": "j5-1-2",
-    "title": "章節正文",
-    "updatedAt": "2026-05-15T16:45:00+08:00",
-    "variants": [
-      {
-        "id": "editable",
-        "label": "可修改版",
-        "sections": [
-          {
-            "type": "bullet-list",
-            "title": "重點歸納",
-            "items": [
-              {
-                "label": "圖形的縮放",
-                "text": "將圖形按固定比例放大或縮小，縮放後的圖形與原圖形形狀相同但大小不同。縮放 \\(r\\) 倍時，對應角不變，對應邊變為 \\(r\\) 倍。"
-              },
-              {
-                "label": "相似多邊形定義",
-                "text": "兩個多邊形若滿足「對應角相等」且「對應邊成比例」，則稱這兩個多邊形相似，符號記為 \\(\\sim\\)。"
-              },
-              {
-                "label": "相似形的特性",
-                "text": "所有的正 \\(n\\) 邊形（如正三角形、正方形、正五角形等）皆互為相似形。\n所有的圓形、等腰直角三角形皆互為相似形。"
-              },
-              {
-                "label": "坐標平面的縮放",
-                "text": "若以原點為中心縮放 \\(k\\) 倍，則點 \\(P(x, y)\\) 的對應點為 \\(P'(kx, ky)\\)。"
-              }
-            ]
-          },
-          {
-            "type": "bullet-list",
-            "title": "重要題型",
-            "items": [
-              {
-                "label": "圖形判別問題",
-                "text": "判斷給定的兩圖形是否相似，注意長方形對應角相等但不一定相似，菱形對應邊成比例但不一定相似。"
-              },
-              {
-                "label": "縮放倍率計算",
-                "text": "已知原圖與縮放圖的邊長或周長，求其縮放倍率；面積比為縮放倍率的平方。"
-              },
-              {
-                "label": "相似多邊形求值",
-                "text": "利用「對應邊成比例」建立比例式，求未知邊長或多邊形周長。"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "image",
             "src": "data/chapter-overview-originals/j5-1-2-original.png",
-            "caption": "1-2 縮放與相似原稿截圖"
+            "caption": "比例線段原稿截圖"
           }
         ]
       }
@@ -12758,70 +12775,49 @@ window.chapterOverviewBodyStore = {
   "j5-1-3": {
     "code": "j5-1-3",
     "title": "章節正文",
-    "updatedAt": "2026-05-15T16:45:00+08:00",
+    "updatedAt": "2026-06-04",
     "variants": [
       {
-        "id": "editable",
-        "label": "可修改版",
         "sections": [
           {
             "type": "bullet-list",
-            "title": "重點歸納",
+            "heading": "核心概念",
             "items": [
               {
-                "label": "三角形相似判斷性質",
-                "text": "AA（或 AAA）相似：兩組（或三組）對應角相等。\nSSS 相似：三組對應邊成比例。\nSAS 相似：一組對應角相等，且夾此角的兩邊成比例。"
+                "label": "圖形的縮放",
+                "text": "縮放會讓圖形大小改變，但形狀保持一致；對應角不變，對應邊依同一倍率改變。"
               },
               {
-                "label": "相似三角形的線段比性質",
-                "text": "兩個相似三角形的對應高、對應中線、對應角平分線及周長之比，皆等於其對應邊長比。"
+                "label": "相似形定義",
+                "text": "兩個圖形若對應角相等且對應邊成比例，則稱為相似形。"
               },
               {
-                "label": "相似三角形的面積比性質",
-                "text": "兩個相似三角形的面積比等於其對應邊長的平方比。"
+                "label": "坐標平面縮放",
+                "text": "若以原點為中心縮放 \\(k\\) 倍，點 \\(P(x,y)\\) 會變成 \\(P'(kx,ky)\\)。"
               },
               {
-                "label": "直角三角形母子相似性質",
-                "text": "直角三角形斜邊上的高，會將原三角形分成兩個與原圖相似的小直角三角形。\n\\(AB^2 = BD \\times BC\\)\n\\(AC^2 = CD \\times CB\\)\n\\(AD^2 = BD \\times DC\\)"
-              },
-              {
-                "label": "相似形的測量應用",
-                "text": "利用影長比例（身高：影長 = 樹高：樹影）或鏡面反射（入射角等於反射角構成相似三角形）原理來測量無法直接度量的高度或寬度。"
+                "label": "對應順序",
+                "text": "相似題一定要先確認頂點順序，例如 \\(\\triangle ABC\\sim\\triangle DEF\\) 代表 \\(A\\leftrightarrow D\\)、\\(B\\leftrightarrow E\\)、\\(C\\leftrightarrow F\\)。"
               }
             ]
           },
           {
             "type": "bullet-list",
-            "title": "重要題型",
+            "heading": "常見題型",
             "items": [
               {
-                "label": "相似判定與證明",
-                "text": "在複雜幾何圖中（如蝴蝶形、疊合三角形）找出相似三角形並證明之。"
+                "label": "判斷是否相似",
+                "text": "檢查角是否相等、邊是否依同一比例縮放。"
               },
               {
-                "label": "生活應用問題",
-                "text": "利用影長測量建築物高度、路燈下影長移動計算，或利用直角三角標尺測量河寬。"
+                "label": "倍率與邊長計算",
+                "text": "先求縮放倍率，再用倍率求未知邊長或周長。"
               },
               {
-                "label": "母子相似求值",
-                "text": "在直角三角形中利用高分割出的比例關係，求取斜邊上的段落長度。"
-              },
-              {
-                "label": "面積與邊長轉換",
-                "text": "已知兩相似三角形面積比，求其周長比或特定對應線段比（如中線比）。"
+                "label": "周長與面積比較",
+                "text": "周長比等於相似比，面積比等於相似比的平方。"
               }
             ]
-          }
-        ]
-      },
-      {
-        "id": "original",
-        "label": "原稿版",
-        "sections": [
-          {
-            "type": "image",
-            "src": "data/chapter-overview-originals/j5-1-3-original.png",
-            "caption": "1-3 相似三角形與其應用原稿截圖"
           }
         ]
       }
@@ -18061,6 +18057,62 @@ window.chapterOverviewBodyStore = {
             "type": "image",
             "src": "data/chapter-overview-originals/s1-1-5-original.png",
             "caption": "1-5 對數原稿截圖"
+          }
+        ]
+      }
+    ],
+    "appendGeneratedOutline": false
+  },
+  "j5-1-4": {
+    "code": "j5-1-4",
+    "title": "章節正文",
+    "updatedAt": "2026-06-04",
+    "variants": [
+      {
+        "sections": [
+          {
+            "type": "bullet-list",
+            "heading": "核心概念",
+            "items": [
+              {
+                "label": "相似三角形判別",
+                "text": "常用 AA、SSS、SAS 判斷兩三角形相似；先找相等角或對應邊比例，再進入計算。"
+              },
+              {
+                "label": "線段比與周長比",
+                "text": "相似三角形的對應高、中線、角平分線與周長比，都等於相似比。"
+              },
+              {
+                "label": "面積比",
+                "text": "相似三角形的面積比等於相似比的平方，不能直接拿邊長比當面積比。"
+              },
+              {
+                "label": "直角三角形母子相似",
+                "text": "直角三角形作斜邊上的高後，原三角形與兩個小三角形互相相似，可推出常見乘積關係。"
+              }
+            ]
+          },
+          {
+            "type": "bullet-list",
+            "heading": "常見題型",
+            "items": [
+              {
+                "label": "相似證明",
+                "text": "在蝴蝶形、疊合圖形或平行線圖形中，先找角相等，再寫出相似順序。"
+              },
+              {
+                "label": "生活測量",
+                "text": "用影子、鏡面反射或標尺建立相似三角形，求無法直接測量的高度或距離。"
+              },
+              {
+                "label": "直角三角形求值",
+                "text": "利用斜邊高分割出的三個相似三角形，求邊長、投影段或高。"
+              },
+              {
+                "label": "面積與邊長轉換",
+                "text": "已知面積比時先開平方得到相似比，再求周長或對應線段。"
+              }
+            ]
           }
         ]
       }

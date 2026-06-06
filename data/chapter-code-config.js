@@ -318,26 +318,26 @@ window.chapterCodeCatalog = {
     "domainSub": ""
   },
   "j5-1-1": {
-    "chapter": "幾何比例與相似形",
-    "section": "比例線段",
+    "chapter": "比例與相似",
+    "section": "連比",
     "domainMain": "幾何",
     "domainSub": ""
   },
   "j5-1-2": {
-    "chapter": "幾何比例與相似形",
-    "section": "縮放與相似",
+    "chapter": "比例與相似",
+    "section": "比例線段",
     "domainMain": "幾何",
     "domainSub": ""
   },
   "j5-1-3": {
-    "chapter": "幾何比例與相似形",
-    "section": "相似三角形與其應用",
+    "chapter": "比例與相似",
+    "section": "縮放與相似",
     "domainMain": "幾何",
     "domainSub": ""
   },
   "j5-1-4": {
-    "chapter": "相似三角形",
-    "section": "相似三角形應用",
+    "chapter": "比例與相似",
+    "section": "相似三角形與其應用",
     "domainMain": "幾何",
     "domainSub": ""
   },

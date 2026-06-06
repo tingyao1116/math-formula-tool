@@ -20,6 +20,7 @@ const closingStore = window.chapterClosingStore || {};
 const closingByCode = closingStore.byCode || buildOverviewByCode(closingStore.groups || {});
 const mainTopicOverviewsById = window.mainTopicOverviewStore?.byId || {};
 const practiceLibraryStore = window.practiceLibraryStore || {};
+
 const state = {
   overviewVariantId: "",
 };
@@ -38,23 +39,16 @@ function escapeHtml(value) {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/\"/g, "&quot;")
+    .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 }
 
-function stripKnownSourceBlocks(value) {
-  return String(value ?? "").replace(/【([^】]+)】/gu, (full, inner) => {
-    return /出處|學測|會考|基測|統測|指考|模擬|北北基|教育會考/u.test(inner) ? "" : full;
-  });
-}
-
 function cleanQuestionBodyText(value) {
-  let source = String(value ?? "").replace(/\r\n?/g, "\n");
-  source = stripKnownSourceBlocks(source);
-  source = source.replace(/(^|\n)\s*[（(]\s*(?:\n\s*)*[）)]\s*/gu, (full, prefix) => (prefix === "\n" ? "\n" : ""));
-  source = source.replace(/\n[ \t]+/g, "\n");
-  source = source.replace(/\n{3,}/g, "\n\n");
-  return source.trim();
+  return String(value ?? "")
+    .replace(/\r\n?/g, "\n")
+    .replace(/\n[ \t]+/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
 function renderRichText(text) {
@@ -81,8 +75,7 @@ function renderInlineRichText(text) {
 function withPdfFitWidth(src) {
   const raw = String(src || "").trim();
   if (!raw) return "";
-  if (raw.includes("#")) return `${raw}&view=FitH&zoom=page-width`;
-  return `${raw}#view=FitH&zoom=page-width`;
+  return raw.includes("#") ? `${raw}&view=FitH&zoom=page-width` : `${raw}#view=FitH&zoom=page-width`;
 }
 
 function normalizeChapterItems(code) {
@@ -141,8 +134,7 @@ function pickTopLevelTopics(items) {
   const idSet = new Set(items.map((item) => String(item.id || "").trim()).filter(Boolean));
   return items.filter((item) => {
     const parentId = String(item?.parentId || "").trim();
-    if (!parentId) return true;
-    return !idSet.has(parentId);
+    return !parentId || !idSet.has(parentId);
   });
 }
 
@@ -152,11 +144,11 @@ function renderOverviewSection(section) {
     return `<div class="chapter-overview__paragraph">${renderRichText(section.text)}</div>`;
   }
   if (section.type === "bullet-list") {
-    const title = String(section.title || "").trim();
+    const heading = String(section.heading || section.title || "").trim();
     const items = Array.isArray(section.items) ? section.items : [];
     return `
       <section class="chapter-overview__bullet-list">
-        ${title ? `<h4 class="chapter-overview__bullet-title">${escapeHtml(title)}</h4>` : ""}
+        ${heading ? `<h4 class="chapter-overview__bullet-title">${escapeHtml(heading)}</h4>` : ""}
         <ul class="chapter-overview__bullet-items">
           ${items.map((item) => {
             if (typeof item === "string") {
@@ -195,7 +187,7 @@ function renderOverviewSection(section) {
         <iframe loading="lazy" class="chapter-overview__pdf" title="${escapeHtml(section.note || "章節原稿")}" src="${encodeURI(fitSrc)}"></iframe>
         <div class="chapter-overview__pdf-actions">
           ${section.note ? `<p class="detail-note">${escapeHtml(section.note)}</p>` : ""}
-          <a class="ghost-link" href="${encodeURI(fitSrc)}" target="_blank" rel="noopener noreferrer">另開原稿</a>
+          <a class="ghost-link" href="${encodeURI(fitSrc)}" target="_blank" rel="noopener noreferrer">開啟原稿</a>
         </div>
       </div>`;
   }
@@ -206,6 +198,7 @@ function renderOverviewSection(section) {
     return `
       <figure class="chapter-overview__image-wrap">
         <img class="chapter-overview__image" src="${encodeURI(imageSrc)}" alt="${escapeHtml(caption || "章節原稿截圖")}" />
+        ${caption ? `<figcaption>${escapeHtml(caption)}</figcaption>` : ""}
       </figure>`;
   }
   return "";
@@ -235,28 +228,6 @@ function pickOverviewSections(variants, activeVariant, predicate) {
   return [];
 }
 
-function buildGeneratedOutlineSections(topics) {
-  if (!topics.length) {
-    return [{
-      type: "paragraph",
-      text: "目前這個章節還沒有整理出主題，之後再補上自動生成的大綱。"
-    }];
-  }
-  return [{
-    type: "table",
-    headers: ["主題", "角色", "下一層 / 提醒"],
-    rows: topics.map((item) => {
-      const children = formulas.filter((row) => String(row?.parentId || "").trim() === String(item?.id || "").trim());
-      const childTitles = children.map((row) => String(row?.title || "").trim()).filter(Boolean);
-      return [
-        String(item?.title || "未命名主題"),
-        String(item?.chapterRole || (childTitles.length ? "主題" : "主題入口")),
-        childTitles.length ? childTitles.join("、") : "先從這個主題開始"
-      ];
-    })
-  }];
-}
-
 function buildGeneratedOutlineTopics(code, fallbackTopics = []) {
   const chapterItemById = new Map(
     formulas
@@ -269,13 +240,32 @@ function buildGeneratedOutlineTopics(code, fallbackTopics = []) {
   return mainThemes.length ? mainThemes : fallbackTopics;
 }
 
+function buildGeneratedOutlineSections(topics) {
+  if (!topics.length) {
+    return [{ type: "paragraph", text: "目前尚未建立章節主題樹，可先閱讀前言與正文。" }];
+  }
+  return [{
+    type: "table",
+    headers: ["主題", "層級", "子主題／提醒"],
+    rows: topics.map((item) => {
+      const children = formulas.filter((row) => String(row?.parentId || "").trim() === String(item?.id || "").trim());
+      const childTitles = children.map((row) => String(row?.title || "").trim()).filter(Boolean);
+      return [
+        String(item?.title || "未命名主題"),
+        String(item?.chapterRole || (childTitles.length ? "主題" : "重點")),
+        childTitles.length ? childTitles.join("、") : "可從此主題往下展開。"
+      ];
+    })
+  }];
+}
+
 function renderOverviewBlock(entry, bodyEntry, generatedOutlineSections, fallbackText) {
+  const overviewVariants = Array.isArray(entry?.variants) ? entry.variants : [];
+  const overviewActiveVariant = overviewVariants[0] || { sections: [] };
+  const keySections = pickOverviewSections(overviewVariants, overviewActiveVariant, (section) => section?.type === "paragraph");
+  const safeKeySections = keySections.length ? keySections : [{ type: "paragraph", text: fallbackText }];
+
   if (bodyEntry) {
-    const keyVariants = Array.isArray(entry?.variants) ? entry.variants : [];
-    const keySections = pickOverviewSections(keyVariants, keyVariants[0] || { sections: [] }, (section) => section?.type === "paragraph");
-    const safeKeySections = keySections.length
-      ? keySections
-      : [{ type: "paragraph", text: fallbackText }];
     const variants = Array.isArray(bodyEntry?.variants) ? bodyEntry.variants : [];
     const chosenVariantId = state.overviewVariantId || variants[0]?.id || "";
     const activeVariant = variants.find((variant) => variant.id === chosenVariantId) || variants[0] || { sections: [] };
@@ -284,92 +274,72 @@ function renderOverviewBlock(entry, bodyEntry, generatedOutlineSections, fallbac
       <section class="panel chapter-overview-panel">
         <div class="chapter-overview__header">
           <div>
-            <p class="summary-label">章節前言</p>
-            <h3>章節大綱與教學整理</h3>
+            <p class="summary-label">章節整理</p>
+            <h3>章節前言與正文</h3>
           </div>
-          ${variants.length
+          ${variants.length && variants.some((variant) => variant.id)
             ? `<div class="chapter-overview__variant-tabs">
-                ${variants.map((variant) => `<button type="button" class="ghost-button ${variant.id === activeVariant.id ? "is-active" : ""}" data-overview-variant="${escapeHtml(variant.id)}">${escapeHtml(variant.label)}</button>`).join("")}
+                ${variants.map((variant) => `<button type="button" class="ghost-button ${variant.id === activeVariant.id ? "is-active" : ""}" data-overview-variant="${escapeHtml(variant.id)}">${escapeHtml(variant.label || "版本")}</button>`).join("")}
               </div>`
             : ""}
         </div>
         <div class="chapter-overview__body">
-          ${renderOverviewSegment("最重要的幾句話", safeKeySections, "這個章節的前言還沒整理。")}
-          ${renderOverviewSegment(activeVariant?.label || "章節正文", bodySections, "這個章節的正文還沒整理。")}
+          ${renderOverviewSegment("章節前言", safeKeySections, "目前尚未建立章節前言。")}
+          ${renderOverviewSegment(activeVariant?.label || "章節正文", bodySections, "目前尚未建立章節正文。")}
           ${bodyEntry.appendGeneratedOutline
-            ? renderOverviewSegment("自動生成章節大綱", generatedOutlineSections, "這個章節目前還沒有可生成的大綱。")
+            ? renderOverviewSegment("自動主題大綱", generatedOutlineSections, "目前尚未建立主題大綱。")
             : ""}
         </div>
       </section>`;
   }
 
-  const variants = Array.isArray(entry?.variants) ? entry.variants : [];
-  const chosenVariantId = state.overviewVariantId || variants[0]?.id || "";
-  const activeVariant = variants.find((variant) => variant.id === chosenVariantId) || variants[0] || { sections: [] };
-  const keySections = pickOverviewSections(variants, activeVariant, (section) => section?.type === "paragraph");
-  const outlineSections = pickOverviewSections(variants, activeVariant, (section) => section?.type && section.type !== "paragraph");
-  const safeKeySections = keySections.length
-    ? keySections
-    : [{ type: "paragraph", text: fallbackText }];
-
+  const outlineSections = pickOverviewSections(overviewVariants, overviewActiveVariant, (section) => section?.type && section.type !== "paragraph");
   return `
     <section class="panel chapter-overview-panel">
       <div class="chapter-overview__header">
         <div>
-          <p class="summary-label">章節前言</p>
-          <h3>章節大綱與最重要的幾句話</h3>
+          <p class="summary-label">章節整理</p>
+          <h3>章節前言與重點大綱</h3>
         </div>
-        ${variants.length
-          ? `<div class="chapter-overview__variant-tabs">
-              ${variants.map((variant) => `<button type="button" class="ghost-button ${variant.id === activeVariant.id ? "is-active" : ""}" data-overview-variant="${escapeHtml(variant.id)}">${escapeHtml(variant.label)}</button>`).join("")}
-            </div>`
-          : ""}
       </div>
       <div class="chapter-overview__body">
-        ${renderOverviewSegment("最重要的幾句話", safeKeySections, "這個章節的前言還沒整理。")}
-        ${renderOverviewSegment("章節大綱", outlineSections, "這個章節的大綱還沒整理。")}
+        ${renderOverviewSegment("章節前言", safeKeySections, "目前尚未建立章節前言。")}
+        ${renderOverviewSegment("章節重點", outlineSections, "目前尚未建立章節重點。")}
       </div>
     </section>`;
 }
 
 function renderClosingKeySentencePanel(sections, fallbackText) {
-  const safeSections = sections.length
-    ? sections
-    : [{ type: "paragraph", text: fallbackText }];
+  const safeSections = sections.length ? sections : [{ type: "paragraph", text: fallbackText }];
   return `
     <section class="panel chapter-overview-panel chapter-overview-panel--closing">
       <div class="chapter-overview__body">
-        ${renderOverviewSegment("最重要的幾句話", safeSections, "這個章節的前言還沒整理。")}
+        ${renderOverviewSegment("章節後話", safeSections, "目前尚未建立章節後話。")}
       </div>
     </section>`;
 }
 
-function renderQuestionSectionList(code, category, title) {
+function renderQuestionList(code) {
   if (typeof store?.getLinkedQuestionsForTopic !== "function") return "";
-  const result = store.getLinkedQuestionsForTopic("", code, {
-    limit: 5000,
-    offset: 0,
-    questionCategory: category,
-  });
+  const result = store.getLinkedQuestionsForTopic("", code, { limit: 5000, offset: 0 });
   if (!result?.total) return "";
-
   const items = Array.isArray(result.questions) ? result.questions : [];
   return `
     <section class="panel chapter-question-panel">
       <div class="chapter-question-panel__header">
-        <div><h3>${title}，共 ${result.total} 題</h3></div>
+        <div><h3>章節題庫：共 ${result.total} 題</h3></div>
       </div>
       <div class="chapter-question-panel__body">
         <section class="content-section linked-questions-section">
           <ol class="linked-question-list">
-            ${items.map((q) => `
+            ${items.map((question) => `
               <li class="linked-question-item">
-                <div class="linked-question-text">${renderRichText(cleanQuestionBodyText(q.question_text || ""))}</div>
-                ${q.answer_text || q.explanation_text ? `
+                <div class="linked-question-text">${renderRichText(cleanQuestionBodyText(question.question_text || ""))}</div>
+                ${question.answer_text || question.explanation_text ? `
                   <details class="linked-question-detail">
-                    <summary>看答案與解析</summary>
-                    ${q.answer_text ? `<div><strong>答案：</strong>${renderRichText(cleanQuestionBodyText(q.answer_text))}</div>` : ""}
-                    ${q.explanation_text ? `<div><strong>解析：</strong>${renderRichText(cleanQuestionBodyText(q.explanation_text))}</div>` : ""}
+                    <summary>顯示答案與解析</summary>
+                    ${question.answer_text ? `<div><strong>答案：</strong>${renderRichText(cleanQuestionBodyText(question.answer_text))}</div>` : ""}
+                    ${question.explanation_text ? `<div><strong>解析：</strong>${renderRichText(cleanQuestionBodyText(question.explanation_text))}</div>` : ""}
                   </details>
                 ` : ""}
               </li>
@@ -378,15 +348,6 @@ function renderQuestionSectionList(code, category, title) {
         </section>
       </div>
     </section>`;
-}
-
-function renderQuestionList(code) {
-  return [
-    renderQuestionSectionList(code, "綜合", "綜合"),
-    renderQuestionSectionList(code, "段考", "段考"),
-    renderQuestionSectionList(code, "歷屆", "歷屆"),
-    renderQuestionSectionList(code, "模考", "模考"),
-  ].filter(Boolean).join("");
 }
 
 function renderChapterPracticeList(code) {
@@ -408,15 +369,13 @@ function renderChapterPracticeList(code) {
     <section class="panel detail-branches-panel">
       <div class="topic-cluster__header">
         <div>
-          <p class="summary-label">本章無限練習</p>
-          <h2>可重複使用的章節練習</h2>
+          <p class="summary-label">無限練習</p>
+          <h2>可搭配本章的練習</h2>
         </div>
-        <a class="ghost-link" href="practice-bank.html?chapter=${encodeURIComponent(code)}">開啟本章練習總覽</a>
+        <a class="ghost-link" href="practice-bank.html?chapter=${encodeURIComponent(code)}">開啟練習總覽</a>
       </div>
       <section class="content-section linked-questions-section">
-        <ol class="linked-question-list">
-          ${listHtml}
-        </ol>
+        <ol class="linked-question-list">${listHtml}</ol>
       </section>
     </section>`;
 }
@@ -451,9 +410,9 @@ function renderTopicTree(topics, childrenByParent) {
 function renderNotFound() {
   document.title = "找不到章節";
   elements.title.textContent = "找不到章節";
-  elements.lead.textContent = "目前沒有對應的章節資料，請回上一頁重新選擇。";
+  elements.lead.textContent = "目前沒有找到這個章節代碼的資料，請回首頁重新選擇章節。";
   elements.stats.innerHTML = '<div class="stat-chip">無章節資料</div>';
-  elements.container.innerHTML = '<div class="empty-state">目前沒有這個章節的內容，請確認章節代碼是否正確。</div>';
+  elements.container.innerHTML = '<div class="empty-state">沒有找到指定章節。請檢查網址中的章節代碼是否正確。</div>';
 }
 
 function renderStats(meta) {
@@ -463,7 +422,7 @@ function renderStats(meta) {
     meta.chapter,
     `主題 ${meta.topLevelCount} 個`,
     meta.branchCount ? `分支 ${meta.branchCount} 個` : "",
-    meta.questionCount ? `章節題目 ${meta.questionCount} 題` : "",
+    meta.questionCount ? `題庫 ${meta.questionCount} 題` : "",
   ].filter(Boolean);
   elements.stats.innerHTML = chips.map((value) => `<div class="stat-chip">${escapeHtml(value)}</div>`).join("");
 }
@@ -499,6 +458,7 @@ function init() {
     bindOverviewTabs();
     init._bound = true;
   }
+
   if (!chapterCode) {
     renderNotFound();
     return;
@@ -519,7 +479,7 @@ function init() {
     ? store.getLinkedQuestionsForTopic("", chapterCode, { limit: 1, offset: 0 })
     : { total: 0 };
   const chapterLabel = store?.formatChapterLabel?.(ref.stage, ref.grade, ref.term, ref.chapter) || ref.chapter || chapterCode;
-  const fallbackText = `${ref.chapter || chapterCode}的章節前言還沒完整整理，先從主題與分支開始。`;
+  const fallbackText = `${ref.chapter || chapterCode} 的章節資料尚未完整建立，可先閱讀本章主題與練習內容。`;
   const closingEntry = closingByCode[chapterCode] || null;
   const closingKeySections = Array.isArray(closingEntry?.variants?.[0]?.sections)
     ? closingEntry.variants[0].sections.filter((section) => section?.type === "paragraph")
@@ -527,9 +487,9 @@ function init() {
   const generatedOutlineTopics = buildGeneratedOutlineTopics(chapterCode, topLevelTopics);
   const generatedOutlineSections = buildGeneratedOutlineSections(generatedOutlineTopics);
 
-  document.title = `${chapterLabel}｜個別章節頁`;
+  document.title = `${chapterLabel}｜章節頁`;
   elements.title.textContent = chapterLabel;
-  elements.lead.textContent = `${ref.chapter || chapterCode}的章節整理、題目與主題分支都放在這裡。`;
+  elements.lead.textContent = `${ref.chapter || chapterCode} 的章節整理：包含前言、正文、主題分支、題庫與練習。`;
 
   renderStats({
     stage: ref.stage || "",
@@ -546,14 +506,14 @@ function init() {
       <div class="topic-cluster__header">
         <div>
           <p class="summary-label">章節主題</p>
-          <h2>這一章的主題與分支</h2>
+          <h2>本章主題與分支</h2>
         </div>
       </div>
-    ${topLevelTopics.length
+      ${topLevelTopics.length
         ? renderTopicTree(topLevelTopics, childrenByParent)
-        : '<div class="empty-state">目前這個章節還沒有整理出主題。</div>'}
+        : '<div class="empty-state">目前尚未建立章節主題。</div>'}
     </section>
-    ${renderClosingKeySentencePanel(closingKeySections, `${ref.chapter || chapterCode}的章節後話還沒整理。`)}
+    ${renderClosingKeySentencePanel(closingKeySections, `${ref.chapter || chapterCode} 的章節後話尚未建立。`)}
     ${renderQuestionList(chapterCode)}
     ${renderChapterPracticeList(chapterCode)}
   `;
