@@ -5,9 +5,9 @@ window.formulaPracticeAssignmentStore = {
     "schema": "practice-db-v1",
     "count": 0,
     "assignmentCount": 0,
-    "practiceCount": 1364,
-    "bindingCount": 526,
-    "updatedAt": "2026-06-04T20:16:57.642757+00:00"
+    "practiceCount": 1393,
+    "bindingCount": 530,
+    "updatedAt": "2026-06-08T00:00:00+08:00"
   },
   "byId": {},
   "catalog": {}
@@ -17,9 +17,9 @@ window.practiceLibraryStore = {
     "schema": "practice-db-v1",
     "count": 0,
     "assignmentCount": 0,
-    "practiceCount": 1364,
-    "bindingCount": 526,
-    "updatedAt": "2026-06-04T20:16:57.642757+00:00"
+    "practiceCount": 1393,
+    "bindingCount": 530,
+    "updatedAt": "2026-06-08T00:00:00+08:00"
   },
   "byId": {
     "practice-abs-both-sides-advanced-drill": {
@@ -1895,24 +1895,28 @@ window.practiceLibraryStore = {
       "tags": [
         "j1-1",
         "提出公因數",
-        "無限練習"
+        "分配律"
       ],
       "usage": [
-        "像 58×$(-24)+58$×324 這類兩項提出公因數。"
+        "像 58×(-24)+58×324 這類兩項提出公因數。"
       ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "先找每一項都共同出現的因數。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "提出公因數後，括號內的符號跟著寫錯。"
+      ]
     },
     "practice-j1-common-factor-four-terms-drill": {
       "id": "practice-j1-common-factor-four-terms-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "4項提出公因數",
+      "title": "4項提出公因數（全正數）",
       "generatorKey": "j1-common-factor-four-terms-drill",
       "difficulty": "medium",
-      "questionCount": 3,
+      "questionCount": 5,
       "subtypeCount": 1,
       "relatedPracticeIds": [],
       "chapterCode": "j1-1-2",
@@ -1927,15 +1931,20 @@ window.practiceLibraryStore = {
         "j1-1",
         "四項分組",
         "提出公因數",
-        "無限練習"
+        "分配律"
       ],
       "usage": [
-        "先兩兩分組提出，再做第二次提出。"
+        "像 123×234+123×166+477×234+477×166 這類先分組再合併的題。"
       ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "先看前兩項與後兩項能不能提出相同括號。",
+        "若兩組和能湊成整百、整十，通常會更好算。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "分組後只提出一次公因數，忘記還能再合併成同一個括號。"
+      ]
     },
     "practice-j1-distributive-law-drill": {
       "id": "practice-j1-distributive-law-drill",
@@ -1958,26 +1967,34 @@ window.practiceLibraryStore = {
       "tags": [
         "j1-1",
         "分配律",
-        "無限練習"
+        "簡算"
       ],
       "usage": [
-        "像 102×40、$(-302)$×$(-30)$ 這類快速分配計算。"
+        "像 302×(-30) 這類把數拆成附近整百再用分配律簡算。"
       ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "先把一個數拆成好算的兩部分，再做分配。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "把分配律錯寫成只乘到其中一項。"
+      ]
     },
     "practice-j1-variable-distributive-eval-drill": {
       "id": "practice-j1-variable-distributive-eval-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "利用分配律與未知數求值",
-      "generatorKey": "j1-variable-distributive-eval-drill",
+      "title": "分配律應用（大數字拆解）",
+      "generatorKey": "j1-variable-distributive-application-drill",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-j1-variable-distributive-pair-difference-drill",
+        "practice-j1-variable-distributive-offset-difference-drill",
+        "practice-j1-common-factor-then-distributive-drill"
+      ],
       "chapterCode": "j1-1-2",
       "stage": "國中",
       "grade": "國一",
@@ -1987,18 +2004,25 @@ window.practiceLibraryStore = {
       "prompt": "",
       "answer": "",
       "tags": [
+        "j1-1",
         "分配律",
-        "未知數",
-        "快速求值",
-        "無限練習"
+        "提出公因數",
+        "大數字",
+        "綜合"
       ],
       "usage": [
-        "已知一組乘積，利用分配律快速換算其他相關式值。"
+        "把大數字重組成容易心算的結構，先拆成固定型，再用分配律快速化簡。"
       ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "先看兩項能不能拆成 a(b+1)－(a+1)b 這種會互相抵消的型。",
+        "若兩項前面還有共同因數，先提出公因數，再處理括號內。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "只看到數字大就直接硬乘，沒有先找可抵消的結構。",
+        "提出公因數後，忘記括號內兩項都還要一起保留。"
+      ]
     },
     "practice-j1-variable-distributive-nearby-drill": {
       "id": "practice-j1-variable-distributive-nearby-drill",
@@ -34961,25 +34985,25 @@ window.practiceLibraryStore = {
       ],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-1",
         "連比",
         "共同項",
-        "倒數比",
-        "分式等式"
+        "等式轉連比",
+        "倒數比"
       ],
       "usage": [
-        "適合作為連比第一輪練習：先把不同格式都轉成最簡整數連比。"
+        "整合共同項合併、乘積等式、分式等式、倒數比與文字分數條件。"
       ],
       "examples": [],
       "tips": [
-        "合併連比先找共同項；乘積等式與倒數比都要先轉成同一個共同倍數。"
+        "先把每個條件改寫成同一個參數或同一個共同項，再化成最簡整數連比。"
       ],
       "notes": [],
       "mistakes": []
@@ -34996,10 +35020,10 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35008,11 +35032,11 @@ window.practiceLibraryStore = {
         "共同項"
       ],
       "usage": [
-        "練習把 x:y 與 y:z 的共同項調成相同後合併。"
+        "練習由 x:y 與 y:z 合併成 x:y:z。"
       ],
       "examples": [],
       "tips": [
-        "共同項要用最小公倍數調齊，最後再約成最簡整數比。"
+        "把共同項調成相同數值，再把左右兩個比例接起來。"
       ],
       "notes": [],
       "mistakes": []
@@ -35029,23 +35053,23 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-1",
         "連比",
-        "乘積等式"
+        "等式轉連比"
       ],
       "usage": [
-        "練習由 ax=by=cz 轉為 x:y:z。"
+        "練習由 ax=by=cz 推出 x:y:z。"
       ],
       "examples": [],
       "tips": [
-        "設共同值為 k，三個量分別是 k 除以各自係數。"
+        "設共同值為 k，各變數會是 k 除以自己的係數，所以比例常出現倒數。"
       ],
       "notes": [],
       "mistakes": []
@@ -35062,10 +35086,10 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35074,7 +35098,7 @@ window.practiceLibraryStore = {
         "分式等式"
       ],
       "usage": [
-        "練習由 x/a=y/b=z/c 直接轉出連比。"
+        "練習由 x/a=y/b=z/c 推出連比。"
       ],
       "examples": [],
       "tips": [
@@ -35095,10 +35119,10 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35107,11 +35131,11 @@ window.practiceLibraryStore = {
         "倒數比"
       ],
       "usage": [
-        "練習連比取倒數後的最簡整數比。"
+        "練習把 x:y:z 的倒數比化為最簡整數比。"
       ],
       "examples": [],
       "tips": [
-        "倒數比不是把順序倒過來，而是每一項分別取倒數後再同乘公倍數。"
+        "倒數比不是直接顛倒順序，而是各項取倒數後同乘公倍數。"
       ],
       "notes": [],
       "mistakes": []
@@ -35128,23 +35152,23 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-1",
         "連比",
-        "文字題"
+        "文字條件"
       ],
       "usage": [
-        "練習把「幾分之幾相等」翻譯成分式等式。"
+        "練習把「某數的幾分之幾相等」翻成分式等式。"
       ],
       "examples": [],
       "tips": [
-        "先翻成 x/a=y/b=z/c，再用參數法讀出連比。"
+        "先翻譯成 x/a=y/b=z/c，再用共同參數求連比。"
       ],
       "notes": [],
       "mistakes": []
@@ -35153,36 +35177,38 @@ window.practiceLibraryStore = {
       "id": "practice-j5-1-1-ratio-algebra-three-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "參數法求值與代數比例綜合",
+      "title": "參數法、式子變換與平移比例綜合",
       "generatorKey": "j5-1-1-ratio-algebra-three-subtypes",
       "difficulty": "medium",
-      "questionCount": 6,
-      "subtypeCount": 3,
+      "questionCount": 8,
+      "subtypeCount": 4,
       "relatedPracticeIds": [
         "practice-j5-1-1-parametric-linear-equation",
         "practice-j5-1-1-ratio-expression-transform",
-        "practice-j5-1-1-reverse-value-from-ratio"
+        "practice-j5-1-1-reverse-value-from-ratio",
+        "practice-j5-1-1-shifted-variable-ratio"
       ],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-1",
         "連比",
         "參數法",
-        "代數式"
+        "代數比例",
+        "平移比例"
       ],
       "usage": [
-        "適合在學生已會化連比後，練習代入 r 倍數求值與化簡。"
+        "整合連比設參數、代數式比例變換、已知總量反求各部分與平移後比例式求值。"
       ],
       "examples": [],
       "tips": [
-        "看到 x:y:z=a:b:c，先設 x=ar、y=br、z=cr，再把題目變成一個未知數。"
+        "連比題先設 x=ar、y=br、z=cr；若比例式內有 x+3 或 y-2，要先把平移量代回原變數。"
       ],
       "notes": [],
       "mistakes": []
@@ -35199,10 +35225,10 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35211,11 +35237,11 @@ window.practiceLibraryStore = {
         "參數法"
       ],
       "usage": [
-        "練習用 r 倍數代入一次方程式求三個量。"
+        "練習設 x=ar、y=br、z=cr 後代入一次式求值。"
       ],
       "examples": [],
       "tips": [
-        "所有量都含同一個 r，代入後只需要解 r。"
+        "比例只決定相對大小，必須搭配一個等式才能求出實際數值。"
       ],
       "notes": [],
       "mistakes": []
@@ -35232,10 +35258,10 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35244,11 +35270,11 @@ window.practiceLibraryStore = {
         "代數式比例"
       ],
       "usage": [
-        "練習把 x、y、z 的和、差、平方代入連比。"
+        "練習把 x、y、z 的和、差、平方式轉成新比例。"
       ],
       "examples": [],
       "tips": [
-        "代入 ar、br、cr 後，比例中的共同 r 或 r² 可一起約掉。"
+        "代入 ar、br、cr 後，通常可約去共同的 r 或 r^2。"
       ],
       "notes": [],
       "mistakes": []
@@ -35265,10 +35291,10 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35277,11 +35303,45 @@ window.practiceLibraryStore = {
         "總量分配"
       ],
       "usage": [
-        "練習由總量與連比反推出各部分數量。"
+        "練習由總量與比例反求各部分數值。"
       ],
       "examples": [],
       "tips": [
-        "先算每一份是多少，再分別乘各項比數。"
+        "每一份等於總量除以比例和，再依各項份數分配。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j5-1-1-shifted-variable-ratio": {
+      "id": "practice-j5-1-1-shifted-variable-ratio",
+      "enabled": true,
+      "mode": "generator",
+      "title": "變數平移與比例式求值",
+      "generatorKey": "j5-1-1-shifted-variable-ratio",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-1",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-1",
+        "連比",
+        "平移比例",
+        "一次式"
+      ],
+      "usage": [
+        "練習處理 (x+a):(y-b):z 這類平移後的比例式。"
+      ],
+      "examples": [],
+      "tips": [
+        "先設平移後的量為比例參數，再回推出 x、y、z，最後代入總和或指定式。"
       ],
       "notes": [],
       "mistakes": []
@@ -35302,24 +35362,25 @@ window.practiceLibraryStore = {
       ],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-1",
         "連比",
         "三角形",
-        "幾何量"
+        "邊高反比",
+        "周長面積"
       ],
       "usage": [
-        "把連比放進角度、邊高反比、周長面積體積等幾何情境。"
+        "整合三角形內角分配、同面積下邊長與對應高反比，以及周長面積體積比例。"
       ],
       "examples": [],
       "tips": [
-        "角度用 180 度分份；同一三角形中，邊長與對應高成反比。"
+        "三角形內角和為 180 度；同一三角形面積固定時，邊長與對應高成反比。"
       ],
       "notes": [],
       "mistakes": []
@@ -35336,10 +35397,10 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35348,11 +35409,11 @@ window.practiceLibraryStore = {
         "三角形內角"
       ],
       "usage": [
-        "練習三角形內角和搭配連比。"
+        "練習由三內角比求三個角度。"
       ],
       "examples": [],
       "tips": [
-        "三角形三內角總和固定為 180 度。"
+        "先用 180 度除以比例和，得到一份角度。"
       ],
       "notes": [],
       "mistakes": []
@@ -35361,7 +35422,7 @@ window.practiceLibraryStore = {
       "id": "practice-j5-1-1-triangle-side-height-ratio",
       "enabled": true,
       "mode": "generator",
-      "title": "三角形邊長與高的反比",
+      "title": "三角形邊長與對應高的換算",
       "generatorKey": "j5-1-1-triangle-side-height-ratio",
       "difficulty": "medium",
       "questionCount": 5,
@@ -35369,10 +35430,10 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35381,11 +35442,11 @@ window.practiceLibraryStore = {
         "邊高反比"
       ],
       "usage": [
-        "練習三角形三邊與對應高的反比關係。"
+        "練習固定面積下，三邊長比與對應高比互相換算。"
       ],
       "examples": [],
       "tips": [
-        "同一個三角形面積相同，底越長，對應高越短。"
+        "因為 1/2×邊×高 相同，所以邊長越大，對應高越小。"
       ],
       "notes": [],
       "mistakes": []
@@ -35402,10 +35463,10 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35416,11 +35477,11 @@ window.practiceLibraryStore = {
         "體積"
       ],
       "usage": [
-        "練習幾何量中的分份、平方比與長方體三量比例。"
+        "練習幾何量中長度、面積、體積與比例的轉換。"
       ],
       "examples": [],
       "tips": [
-        "長度用一倍、面積常用平方倍、體積常用三個方向相乘。"
+        "長度比直接用比例；面積比平方；體積比立方。"
       ],
       "notes": [],
       "mistakes": []
@@ -35429,24 +35490,27 @@ window.practiceLibraryStore = {
       "id": "practice-j5-1-1-life-ratio-five-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "生活情境中的連比分配與變化",
+      "title": "生活情境中的連比分配、反比與混合",
       "generatorKey": "j5-1-1-life-ratio-five-subtypes",
       "difficulty": "medium",
-      "questionCount": 6,
-      "subtypeCount": 5,
+      "questionCount": 8,
+      "subtypeCount": 8,
       "relatedPracticeIds": [
         "practice-j5-1-1-money-profit-sharing",
         "practice-j5-1-1-mixture-ratio",
         "practice-j5-1-1-population-ratio-change",
         "practice-j5-1-1-work-rate-speed",
-        "practice-j5-1-1-reverse-value-from-ratio"
+        "practice-j5-1-1-reverse-value-from-ratio",
+        "practice-j5-1-1-work-efficiency-applied",
+        "practice-j5-1-1-coin-denomination-ratio",
+        "practice-j5-1-1-mixture-shared-term"
       ],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35454,15 +35518,15 @@ window.practiceLibraryStore = {
         "連比",
         "生活應用",
         "分配",
-        "混合",
-        "反比"
+        "反比",
+        "混合"
       ],
       "usage": [
-        "適合做連比應用題綜合練習，涵蓋金錢、混合、人數變動與工作效率。"
+        "整合金錢分配、混合配比、人數變動、效率反比、錢幣金額與等量混合。"
       ],
       "examples": [],
       "tips": [
-        "生活題先判斷是正比分配、比例變動，還是時間與效率的反比。"
+        "生活題必須先確認固定量：總量、某部分數量、總金額或同重量；只有比例不能推出唯一答案。"
       ],
       "notes": [],
       "mistakes": []
@@ -35479,10 +35543,10 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35491,11 +35555,11 @@ window.practiceLibraryStore = {
         "金錢分配"
       ],
       "usage": [
-        "練習總金額按比例分配。"
+        "練習依比例分配總金額。"
       ],
       "examples": [],
       "tips": [
-        "金額分配的核心仍是先求每一份。"
+        "先求每一份金額，再乘上各自的份數。"
       ],
       "notes": [],
       "mistakes": []
@@ -35512,10 +35576,10 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35524,11 +35588,11 @@ window.practiceLibraryStore = {
         "混合物"
       ],
       "usage": [
-        "練習由其中一種材料反推總量。"
+        "練習由成分比例與其中一項重量求總量。"
       ],
       "examples": [],
       "tips": [
-        "已知某一材料的量，就用該材料對應的份數先求一份。"
+        "已知某成分的量時，先用該成分份數求出每一份。"
       ],
       "notes": [],
       "mistakes": []
@@ -35545,10 +35609,10 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35557,11 +35621,11 @@ window.practiceLibraryStore = {
         "人數變動"
       ],
       "usage": [
-        "練習人數轉入轉出後重新化簡連比。"
+        "練習在已知總人數下，先還原原人數，再處理轉入轉出後的新比例。"
       ],
       "examples": [],
       "tips": [
-        "先把原比例變成具體人數，再做增減，最後再約分。"
+        "此題型一定要有總量或某一組原人數；只有原比例與轉出人數，無法得到唯一答案。"
       ],
       "notes": [],
       "mistakes": []
@@ -35578,10 +35642,10 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-1-1",
       "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "連比",
-      "domain": "比例與相似",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
@@ -35591,25 +35655,175 @@ window.practiceLibraryStore = {
         "效率"
       ],
       "usage": [
-        "練習同一工作量下時間與效率的反比。"
+        "練習由時間比反求工作效率比。"
       ],
       "examples": [],
       "tips": [
-        "同一件工作，花的時間越短，效率越高。"
+        "同一工作量下，時間越短效率越高，效率比是時間比的倒數比。"
       ],
       "notes": [],
       "mistakes": []
+    },
+    "practice-j5-1-1-work-efficiency-applied": {
+      "id": "practice-j5-1-1-work-efficiency-applied",
+      "enabled": true,
+      "mode": "generator",
+      "title": "工程效率問題",
+      "generatorKey": "j5-1-1-work-efficiency-applied",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-1",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-1",
+        "連比",
+        "工程問題",
+        "反比"
+      ],
+      "usage": [
+        "練習由各自完工天數求每日工作效率比。"
+      ],
+      "examples": [],
+      "tips": [
+        "完工天數是效率的倒數；把 1/天數 同乘最小公倍數可得整數比。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j5-1-1-coin-denomination-ratio": {
+      "id": "practice-j5-1-1-coin-denomination-ratio",
+      "enabled": true,
+      "mode": "generator",
+      "title": "錢幣枚數與總金額",
+      "generatorKey": "j5-1-1-coin-denomination-ratio",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-1",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-1",
+        "連比",
+        "錢幣",
+        "總金額"
+      ],
+      "usage": [
+        "練習把枚數比與面額結合，反求某種硬幣枚數。"
+      ],
+      "examples": [],
+      "tips": [
+        "每一份的金額不是比例和，而是 面額×枚數比 的加總。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j5-1-1-mixture-shared-term": {
+      "id": "practice-j5-1-1-mixture-shared-term",
+      "enabled": true,
+      "mode": "generator",
+      "title": "混合物成分比例連鎖推導",
+      "generatorKey": "j5-1-1-mixture-shared-term",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-1",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "連比與比例分配",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-1",
+        "連比",
+        "混合物",
+        "等量混合"
+      ],
+      "usage": [
+        "練習兩種配方等重量混合後的新成分比。"
+      ],
+      "examples": [],
+      "tips": [
+        "等重量混合時，要先把兩配方總份數調成相同，再逐項相加。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j5-1-2-parallel-core-five-subtypes": {
+      "id": "practice-j5-1-2-parallel-core-five-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平行線截比例線段五小類綜合",
+      "generatorKey": "j5-1-2-parallel-core-five-subtypes",
+      "difficulty": "medium",
+      "questionCount": 10,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [
+        "practice-j5-1-2-triangle-parallel-proportional-segments",
+        "practice-j5-1-2-trapezoid-parallel-segment",
+        "practice-j5-1-2-multi-parallel-intercepts",
+        "practice-j5-1-2-midpoint-segment",
+        "practice-j5-1-2-triangle-parallel-converse"
+      ],
+      "chapterCode": "j5-1-2",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "平行線截比例線段",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-2",
+        "平行線截比例",
+        "三角形截線",
+        "梯形截線",
+        "多平行線",
+        "中點連線",
+        "逆定理"
+      ],
+      "usage": [
+        "整合截圖中的五個 j5-1-2 核心題型，全部為可換參數的線段比例練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "看到平行線先找對應線段；若是梯形分點，記得上底與下底的權重會交叉。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "逆定理判斷時，只要 AD:DB 與 AE:EC 相等，就能推出 DE∥BC；不要把相等比誤寫成不平行。",
+        "梯形分點截線若 AE:EB=m:n，公式是 EF=(n×AD+m×BC)/(m+n)，權重會交叉乘到底邊。",
+        "j5-1-2 聚焦平行截線與中點連線；相似判別、面積平方比、圓冪與測量題應放到後續章節。"
+      ]
     },
     "practice-j5-1-2-triangle-parallel-five-subtypes": {
       "id": "practice-j5-1-2-triangle-parallel-five-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "三角形平行截線五小類綜合",
+      "title": "三角形平行截線與中點連線綜合",
       "generatorKey": "j5-1-2-triangle-parallel-five-subtypes",
       "difficulty": "medium",
-      "questionCount": 6,
-      "subtypeCount": 5,
+      "questionCount": 8,
+      "subtypeCount": 6,
       "relatedPracticeIds": [
+        "practice-j5-1-2-triangle-parallel-proportional-segments",
         "practice-j5-1-2-triangle-parallel-side-ratio",
         "practice-j5-1-2-triangle-parallel-segment-length",
         "practice-j5-1-2-triangle-parallel-algebra",
@@ -35619,29 +35833,69 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-2",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
+      "term": "上學期",
       "chapter": "平行線截比例線段",
-      "domain": "幾何",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-2",
-        "平行線截比例線段",
-        "截線定理",
-        "三角形",
-        "比例式",
+        "平行線截比例",
+        "三角形截線",
+        "底邊比例",
+        "逆定理",
         "中點連線"
       ],
       "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
+        "練習三角形中 DE∥BC 時，側邊分段、全邊比例、底邊比例與中點連線的換算。"
       ],
       "examples": [],
       "tips": [
-        "先判斷用「邊段比」還是「上段比全段」，常見等式有 AD:DB=AE:EC 與 AD:AB=AE:AC=DE:BC。"
+        "常用比例：AD:DB=AE:EC，且 AD:AB=AE:AC=DE:BC。"
       ],
       "notes": [],
       "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
+        "逆定理判斷時，只要 AD:DB 與 AE:EC 相等，就能推出 DE∥BC；不要把相等比誤寫成不平行。",
+        "梯形分點截線若 AE:EB=m:n，公式是 EF=(n×AD+m×BC)/(m+n)，權重會交叉乘到底邊。",
+        "j5-1-2 聚焦平行截線與中點連線；相似判別、面積平方比、圓冪與測量題應放到後續章節。"
+      ]
+    },
+    "practice-j5-1-2-triangle-parallel-proportional-segments": {
+      "id": "practice-j5-1-2-triangle-parallel-proportional-segments",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三角形平行截線比例運算",
+      "generatorKey": "j5-1-2-triangle-parallel-proportional-segments",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-2",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "平行線截比例線段",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-2",
+        "平行線截比例",
+        "三角形截線",
+        "側邊與底邊"
+      ],
+      "usage": [
+        "練習由 DE∥BC 推出側邊分段比、全邊比與底邊比。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷題目給的是分段比 AD:DB，還是全邊比 AD:AB；兩種比例不要混用。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "逆定理判斷時，只要 AD:DB 與 AE:EC 相等，就能推出 DE∥BC；不要把相等比誤寫成不平行。",
+        "梯形分點截線若 AE:EB=m:n，公式是 EF=(n×AD+m×BC)/(m+n)，權重會交叉乘到底邊。",
+        "j5-1-2 聚焦平行截線與中點連線；相似判別、面積平方比、圓冪與測量題應放到後續章節。"
       ]
     },
     "practice-j5-1-2-triangle-parallel-side-ratio": {
@@ -35657,28 +35911,28 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-2",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
+      "term": "上學期",
       "chapter": "平行線截比例線段",
-      "domain": "幾何",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-2",
-        "平行線截比例線段",
-        "三角形",
-        "邊段比",
-        "截線定理"
+        "平行線截比例",
+        "側邊分段"
       ],
       "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
+        "練習 AD:DB=AE:EC 的基本代入。"
       ],
       "examples": [],
       "tips": [
-        "平行線切兩邊時，對應的小段比相等；不要把 AD:DB 誤看成 AD:AB。"
+        "兩邊分段比例要對應：上段比下段，不能拿 AD:AB 去比 AE:EC。"
       ],
       "notes": [],
       "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
+        "逆定理判斷時，只要 AD:DB 與 AE:EC 相等，就能推出 DE∥BC；不要把相等比誤寫成不平行。",
+        "梯形分點截線若 AE:EB=m:n，公式是 EF=(n×AD+m×BC)/(m+n)，權重會交叉乘到底邊。",
+        "j5-1-2 聚焦平行截線與中點連線；相似判別、面積平方比、圓冪與測量題應放到後續章節。"
       ]
     },
     "practice-j5-1-2-triangle-parallel-segment-length": {
@@ -35694,28 +35948,28 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-2",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
+      "term": "上學期",
       "chapter": "平行線截比例線段",
-      "domain": "幾何",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-2",
-        "平行線截比例線段",
-        "三角形",
-        "底邊比例",
-        "求長度"
+        "平行線截比例",
+        "底邊比例"
       ],
       "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
+        "練習 AD:AB=DE:BC 或 AD:AB=AE:AC 的線段求值。"
       ],
       "examples": [],
       "tips": [
-        "若要算平行截線長，可用 AD/AB=AE/AC=DE/BC，把「小三角形對大三角形」的比例對齊。"
+        "若題目出現 DE 與 BC，通常要改用全邊比 AD:AB。"
       ],
       "notes": [],
       "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
+        "逆定理判斷時，只要 AD:DB 與 AE:EC 相等，就能推出 DE∥BC；不要把相等比誤寫成不平行。",
+        "梯形分點截線若 AE:EB=m:n，公式是 EF=(n×AD+m×BC)/(m+n)，權重會交叉乘到底邊。",
+        "j5-1-2 聚焦平行截線與中點連線；相似判別、面積平方比、圓冪與測量題應放到後續章節。"
       ]
     },
     "practice-j5-1-2-triangle-parallel-algebra": {
@@ -35731,28 +35985,28 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-2",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
+      "term": "上學期",
       "chapter": "平行線截比例線段",
-      "domain": "幾何",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-2",
-        "平行線截比例線段",
-        "三角形",
-        "代數",
-        "比例式"
+        "平行線截比例",
+        "代數求值"
       ],
       "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
+        "練習把截線比例寫成含 x 的方程式。"
       ],
       "examples": [],
       "tips": [
-        "先寫出正確比例式再交叉相乘，未知數若代表長度，最後要取合乎題意的正數解。"
+        "先列比例式，再交叉相乘；最後只取符合線段長度的正值。"
       ],
       "notes": [],
       "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
+        "逆定理判斷時，只要 AD:DB 與 AE:EC 相等，就能推出 DE∥BC；不要把相等比誤寫成不平行。",
+        "梯形分點截線若 AE:EB=m:n，公式是 EF=(n×AD+m×BC)/(m+n)，權重會交叉乘到底邊。",
+        "j5-1-2 聚焦平行截線與中點連線；相似判別、面積平方比、圓冪與測量題應放到後續章節。"
       ]
     },
     "practice-j5-1-2-triangle-parallel-converse": {
@@ -35768,27 +36022,29 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-2",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
+      "term": "上學期",
       "chapter": "平行線截比例線段",
-      "domain": "幾何",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-2",
-        "平行線截比例線段",
+        "平行線截比例",
         "逆定理",
-        "平行判定"
+        "判斷平行"
       ],
       "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
+        "練習比較兩側邊分段比例，判斷 DE 是否平行 BC。"
       ],
       "examples": [],
       "tips": [
-        "比較兩邊被分割的比例是否相等；比例相等才可判定截線與底邊平行。"
+        "若 AD:DB=AE:EC，則 DE∥BC；若兩比不相等，才不能推出平行。"
       ],
       "notes": [],
       "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
+        "逆定理判斷時，只要 AD:DB 與 AE:EC 相等，就能推出 DE∥BC；不要把相等比誤寫成不平行。",
+        "梯形分點截線若 AE:EB=m:n，公式是 EF=(n×AD+m×BC)/(m+n)，權重會交叉乘到底邊。",
+        "j5-1-2 聚焦平行截線與中點連線；相似判別、面積平方比、圓冪與測量題應放到後續章節。"
       ]
     },
     "practice-j5-1-2-midpoint-segment": {
@@ -35804,37 +36060,38 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-2",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
+      "term": "上學期",
       "chapter": "平行線截比例線段",
-      "domain": "幾何",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-2",
-        "平行線截比例線段",
-        "中點連線",
-        "中點三角形"
+        "平行線截比例",
+        "中點連線"
       ],
       "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
+        "練習中點連線長度、周長與中點三角形面積。"
       ],
       "examples": [],
       "tips": [
-        "三角形兩邊中點連線平行第三邊，且長度為第三邊的一半；中點三角形周長也是原三角形的一半。"
+        "中點連線平行第三邊且等於第三邊的一半；中點三角形面積是原三角形的 1/4。"
       ],
       "notes": [],
       "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
+        "逆定理判斷時，只要 AD:DB 與 AE:EC 相等，就能推出 DE∥BC；不要把相等比誤寫成不平行。",
+        "梯形分點截線若 AE:EB=m:n，公式是 EF=(n×AD+m×BC)/(m+n)，權重會交叉乘到底邊。",
+        "j5-1-2 聚焦平行截線與中點連線；相似判別、面積平方比、圓冪與測量題應放到後續章節。"
       ]
     },
     "practice-j5-1-2-trapezoid-parallel-three-subtypes": {
       "id": "practice-j5-1-2-trapezoid-parallel-three-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "梯形與多平行線三小類綜合",
+      "title": "梯形與多平行線截比例綜合",
       "generatorKey": "j5-1-2-trapezoid-parallel-three-subtypes",
       "difficulty": "medium",
-      "questionCount": 6,
+      "questionCount": 8,
       "subtypeCount": 3,
       "relatedPracticeIds": [
         "practice-j5-1-2-trapezoid-parallel-segment",
@@ -35844,35 +36101,37 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-2",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
+      "term": "上學期",
       "chapter": "平行線截比例線段",
-      "domain": "幾何",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-2",
-        "平行線截比例線段",
-        "梯形",
-        "多平行線",
-        "截距比例"
+        "平行線截比例",
+        "梯形截線",
+        "梯形中線",
+        "多平行線"
       ],
       "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
+        "練習梯形分點截線、梯形中線與三條以上平行線截距比例。"
       ],
       "examples": [],
       "tips": [
-        "梯形內平行線可看成底邊長度的線性變化；多條平行線截兩直線時，對應截距成比例。"
+        "梯形中線是兩底平均；一般分點截線則要用加權平均，不可直接平均。"
       ],
       "notes": [],
       "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
+        "逆定理判斷時，只要 AD:DB 與 AE:EC 相等，就能推出 DE∥BC；不要把相等比誤寫成不平行。",
+        "梯形分點截線若 AE:EB=m:n，公式是 EF=(n×AD+m×BC)/(m+n)，權重會交叉乘到底邊。",
+        "j5-1-2 聚焦平行截線與中點連線；相似判別、面積平方比、圓冪與測量題應放到後續章節。"
       ]
     },
     "practice-j5-1-2-trapezoid-parallel-segment": {
       "id": "practice-j5-1-2-trapezoid-parallel-segment",
       "enabled": true,
       "mode": "generator",
-      "title": "梯形側邊分點截線",
+      "title": "梯形平行分點截線長度",
       "generatorKey": "j5-1-2-trapezoid-parallel-segment",
       "difficulty": "medium",
       "questionCount": 5,
@@ -35881,28 +36140,29 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-2",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
+      "term": "上學期",
       "chapter": "平行線截比例線段",
-      "domain": "幾何",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-2",
-        "平行線截比例線段",
-        "梯形",
-        "分點",
-        "截線長"
+        "平行線截比例",
+        "梯形截線",
+        "加權平均"
       ],
       "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
+        "練習 AE:EB=m:n 時，求 EF、反求底邊或反求 x。"
       ],
       "examples": [],
       "tips": [
-        "若 AE:EB=m:n，則中間截線 EF=(n×AD+m×BC)/(m+n)，係數要對到靠近哪一個底。"
+        "公式：EF=(n×AD+m×BC)/(m+n)，離哪個底越近，該截線越接近哪個底長。"
       ],
       "notes": [],
       "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
+        "逆定理判斷時，只要 AD:DB 與 AE:EC 相等，就能推出 DE∥BC；不要把相等比誤寫成不平行。",
+        "梯形分點截線若 AE:EB=m:n，公式是 EF=(n×AD+m×BC)/(m+n)，權重會交叉乘到底邊。",
+        "j5-1-2 聚焦平行截線與中點連線；相似判別、面積平方比、圓冪與測量題應放到後續章節。"
       ]
     },
     "practice-j5-1-2-trapezoid-midline": {
@@ -35918,33 +36178,35 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-2",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
+      "term": "上學期",
       "chapter": "平行線截比例線段",
-      "domain": "幾何",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-2",
-        "平行線截比例線段",
+        "平行線截比例",
         "梯形中線"
       ],
       "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
+        "練習兩腰中點連線長度。"
       ],
       "examples": [],
       "tips": [
-        "梯形中線等於兩底和的一半，是側邊分點公式在 1:1 時的特例。"
+        "梯形中線長等於兩底和的一半，即 EF=(AD+BC)/2。"
       ],
       "notes": [],
       "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
+        "逆定理判斷時，只要 AD:DB 與 AE:EC 相等，就能推出 DE∥BC；不要把相等比誤寫成不平行。",
+        "梯形分點截線若 AE:EB=m:n，公式是 EF=(n×AD+m×BC)/(m+n)，權重會交叉乘到底邊。",
+        "j5-1-2 聚焦平行截線與中點連線；相似判別、面積平方比、圓冪與測量題應放到後續章節。"
       ]
     },
     "practice-j5-1-2-multi-parallel-intercepts": {
       "id": "practice-j5-1-2-multi-parallel-intercepts",
       "enabled": true,
       "mode": "generator",
-      "title": "多條平行線截比例",
+      "title": "多條平行線截比例線段",
       "generatorKey": "j5-1-2-multi-parallel-intercepts",
       "difficulty": "medium",
       "questionCount": 5,
@@ -35953,289 +36215,29 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-2",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
+      "term": "上學期",
       "chapter": "平行線截比例線段",
-      "domain": "幾何",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-2",
-        "平行線截比例線段",
+        "平行線截比例",
         "多平行線",
         "截距比例"
       ],
       "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
+        "練習三條平行線截兩條斜線時，對應截距成比例。"
       ],
       "examples": [],
       "tips": [
-        "L1//L2//L3 截兩條直線時，相鄰截距比會保持一致。"
+        "只要是同一組平行線截出的相鄰段，兩條截線上的對應段比相同。"
       ],
       "notes": [],
       "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
-      ]
-    },
-    "practice-j5-1-2-area-ratio-three-subtypes": {
-      "id": "practice-j5-1-2-area-ratio-three-subtypes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "平行線截比例與面積應用",
-      "generatorKey": "j5-1-2-area-ratio-three-subtypes",
-      "difficulty": "medium",
-      "questionCount": 6,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [
-        "practice-j5-1-2-equal-height-area-ratio",
-        "practice-j5-1-2-similar-triangle-area-ratio",
-        "practice-j5-1-2-trapezoid-diagonal-area-ratio"
-      ],
-      "chapterCode": "j5-1-2",
-      "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "平行線截比例線段",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-1-2",
-        "平行線截比例線段",
-        "面積比",
-        "相似",
-        "同高三角形"
-      ],
-      "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "面積題先判斷是「等高底邊比」還是「相似邊長平方比」，不要把邊長比直接當成相似面積比。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
-      ]
-    },
-    "practice-j5-1-2-equal-height-area-ratio": {
-      "id": "practice-j5-1-2-equal-height-area-ratio",
-      "enabled": true,
-      "mode": "generator",
-      "title": "等高三角形面積比",
-      "generatorKey": "j5-1-2-equal-height-area-ratio",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-1-2",
-      "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "平行線截比例線段",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-1-2",
-        "平行線截比例線段",
-        "等高",
-        "面積比"
-      ],
-      "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "兩三角形若高相等，面積比等於底邊比。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
-      ]
-    },
-    "practice-j5-1-2-similar-triangle-area-ratio": {
-      "id": "practice-j5-1-2-similar-triangle-area-ratio",
-      "enabled": true,
-      "mode": "generator",
-      "title": "相似三角形面積比",
-      "generatorKey": "j5-1-2-similar-triangle-area-ratio",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-1-2",
-      "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "平行線截比例線段",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-1-2",
-        "平行線截比例線段",
-        "相似",
-        "面積平方比"
-      ],
-      "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "相似圖形的面積比等於對應邊長比的平方。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
-      ]
-    },
-    "practice-j5-1-2-trapezoid-diagonal-area-ratio": {
-      "id": "practice-j5-1-2-trapezoid-diagonal-area-ratio",
-      "enabled": true,
-      "mode": "generator",
-      "title": "梯形對角線面積比",
-      "generatorKey": "j5-1-2-trapezoid-diagonal-area-ratio",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-1-2",
-      "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "平行線截比例線段",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-1-2",
-        "平行線截比例線段",
-        "梯形",
-        "對角線",
-        "面積比"
-      ],
-      "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "梯形對角線交點兩側的相似三角形，面積比等於兩底平方比。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
-      ]
-    },
-    "practice-j5-1-2-measurement-two-subtypes": {
-      "id": "practice-j5-1-2-measurement-two-subtypes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "相似測量與比例尺綜合",
-      "generatorKey": "j5-1-2-measurement-two-subtypes",
-      "difficulty": "medium",
-      "questionCount": 6,
-      "subtypeCount": 2,
-      "relatedPracticeIds": [
-        "practice-j5-1-2-shadow-height",
-        "practice-j5-1-2-scale-measurement"
-      ],
-      "chapterCode": "j5-1-2",
-      "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "平行線截比例線段",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-1-2",
-        "平行線截比例線段",
-        "測量",
-        "相似",
-        "比例尺"
-      ],
-      "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "測量應用要先抓出相似三角形，再把人高、影長、實物長、圖上長對應清楚。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
-      ]
-    },
-    "practice-j5-1-2-shadow-height": {
-      "id": "practice-j5-1-2-shadow-height",
-      "enabled": true,
-      "mode": "generator",
-      "title": "影長測高",
-      "generatorKey": "j5-1-2-shadow-height",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-1-2",
-      "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "平行線截比例線段",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-1-2",
-        "平行線截比例線段",
-        "測量",
-        "影長"
-      ],
-      "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "同一時間陽光仰角相同，物高與影長成正比。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
-      ]
-    },
-    "practice-j5-1-2-scale-measurement": {
-      "id": "practice-j5-1-2-scale-measurement",
-      "enabled": true,
-      "mode": "generator",
-      "title": "比例尺長度換算",
-      "generatorKey": "j5-1-2-scale-measurement",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-1-2",
-      "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "平行線截比例線段",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-1-2",
-        "平行線截比例線段",
-        "比例尺",
-        "測量"
-      ],
-      "usage": [
-        "練習 平行線截比例線段 的固定比例、平行判定、面積比與相似測量應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "比例尺題先統一單位，再用圖上長:實際長的固定比例解題。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "最常見錯誤是把 AD:DB 與 AD:AB 混用；前者是邊段比，後者是小三角形對大三角形的全段比。"
+        "逆定理判斷時，只要 AD:DB 與 AE:EC 相等，就能推出 DE∥BC；不要把相等比誤寫成不平行。",
+        "梯形分點截線若 AE:EB=m:n，公式是 EF=(n×AD+m×BC)/(m+n)，權重會交叉乘到底邊。",
+        "j5-1-2 聚焦平行截線與中點連線；相似判別、面積平方比、圓冪與測量題應放到後續章節。"
       ]
     },
     "practice-j5-1-3-similarity-criteria-five-subtypes": {
@@ -36257,14 +36259,14 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
+        "相似形",
         "相似判別",
         "AA",
         "SSS",
@@ -36272,17 +36274,17 @@ window.practiceLibraryStore = {
         "平行線"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習 AA、SSS、SAS 判別，以及由平行線產生的相似三角形。"
       ],
       "examples": [],
       "tips": [
-        "先判斷是哪一種相似來源：AA 看兩角、SSS 看三邊同比、SAS 看夾角相等且夾角兩邊同比。"
+        "判斷相似時先確認對應角相等或對應邊成比例；SSA 不能當作相似判別條件。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-aa-criterion": {
@@ -36298,30 +36300,28 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "AA",
-        "角度",
-        "相似判別"
+        "相似形",
+        "AA"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習兩角相等判定相似。"
       ],
       "examples": [],
       "tips": [
-        "兩組對應角相等即可判定兩三角形相似；第三角會自動相等。"
+        "兩組對應角相等即可判定三角形相似。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-sss-criterion": {
@@ -36337,30 +36337,28 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "SSS",
-        "邊長比",
-        "相似判別"
+        "相似形",
+        "SSS"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習三組對應邊成比例判定相似。"
       ],
       "examples": [],
       "tips": [
-        "三組對應邊都要成同一比例，少一組或比例不同就不能判定相似。"
+        "三組邊長都要是同一倍率，不能只看兩組。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-sas-criterion": {
@@ -36376,30 +36374,28 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "SAS",
-        "夾角",
-        "邊長比"
+        "相似形",
+        "SAS"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習夾角相等且夾角兩邊成比例。"
       ],
       "examples": [],
       "tips": [
-        "SAS 相似必須是夾角相等，且夾角兩邊成比例；SSA 不是穩定的相似判別法。"
+        "SAS 相似的角必須是兩組比例邊的夾角。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-parallel-basic-length": {
@@ -36415,30 +36411,29 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
+        "相似形",
         "平行線",
-        "小大三角形",
-        "比例式"
+        "相似求長"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習 DE∥BC 造成的 △ADE∼△ABC 求邊長。"
       ],
       "examples": [],
       "tips": [
-        "若 DE ∥ BC，則 △ADE ∼ △ABC，常用比例為 DE:BC=AD:AB。"
+        "平行截線小大三角形相似，比例常用 AD:AB=DE:BC。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-butterfly-parallel-length": {
@@ -36454,37 +36449,35 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "蝴蝶形",
-        "平行線",
-        "相似"
+        "相似形",
+        "蝴蝶形"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習 AB∥CD 時 △OAB∼△ODC 的線段比例。"
       ],
       "examples": [],
       "tips": [
-        "若 AB ∥ CD 且兩斜線交於 O，則 △OAB ∼ △ODC，可用 OA:OD=AB:CD。"
+        "蝴蝶形的對應順序要固定：OA 對 OD，OB 對 OC，AB 對 CD。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-ratio-area-four-subtypes": {
       "id": "practice-j5-1-3-ratio-area-four-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "相似三角形線段、周長與面積比綜合",
+      "title": "相似比、周長與面積比綜合",
       "generatorKey": "j5-1-3-ratio-area-four-subtypes",
       "difficulty": "medium",
       "questionCount": 6,
@@ -36498,31 +36491,30 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "對應線段",
+        "相似形",
+        "相似比",
         "周長比",
-        "面積比",
-        "縮放"
+        "面積比"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習相似比 k、周長比 k、面積比 k^2 的互相轉換。"
       ],
       "examples": [],
       "tips": [
-        "相似圖形中，對應高、對應中線、對應角平分線與周長比都等於邊長比；面積比是邊長比平方。"
+        "相似圖形的對應高、中線、角平分線與周長都按邊長比；面積才要平方。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-corresponding-elements": {
@@ -36538,31 +36530,28 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "對應線段",
-        "高",
-        "中線",
-        "角平分線"
+        "相似形",
+        "對應線段"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習相似三角形中對應線段的長度比。"
       ],
       "examples": [],
       "tips": [
-        "相似三角形的對應高、對應中線、對應角平分線之比，都等於對應邊長比。"
+        "對應高、對應中線、對應角平分線的比都等於邊長比。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-area-to-side-perimeter": {
@@ -36578,30 +36567,29 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
+        "相似形",
         "面積比",
-        "周長比",
-        "平方比"
+        "周長比"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習由面積比開根號取得邊長比與周長比。"
       ],
       "examples": [],
       "tips": [
-        "若面積比為 a²:b²，邊長比與周長比就是 a:b。"
+        "若面積比為 a²:b²，則邊長比與周長比為 a:b。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-area-from-side-ratio": {
@@ -36617,36 +36605,35 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "邊長比",
+        "相似形",
         "面積比"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習由相似比求對應面積。"
       ],
       "examples": [],
       "tips": [
-        "邊長比 a:b 會推出面積比 a²:b²。"
+        "邊長比為 a:b 時，面積比為 a²:b²。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-scale-area-change": {
       "id": "practice-j5-1-3-scale-area-change",
       "enabled": true,
       "mode": "generator",
-      "title": "縮放後面積倍率",
+      "title": "底高縮放後面積倍率",
       "generatorKey": "j5-1-3-scale-area-change",
       "difficulty": "medium",
       "questionCount": 5,
@@ -36655,29 +36642,224 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
+        "相似形",
         "縮放",
         "面積倍率"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習底邊與高分別縮放後的面積比。"
       ],
       "examples": [],
       "tips": [
-        "面積倍率由兩個方向的長度倍率相乘得到；若是相似縮放 k 倍，面積倍率為 k²。"
+        "三角形面積同時受底與高影響，倍率是底倍率乘以高倍率。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
+      ]
+    },
+    "practice-j5-1-3-scaling-five-subtypes": {
+      "id": "practice-j5-1-3-scaling-five-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圖形縮放與等率運算綜合",
+      "generatorKey": "j5-1-3-scaling-five-subtypes",
+      "difficulty": "medium",
+      "questionCount": 6,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [
+        "practice-j5-1-3-figure-scale-length",
+        "practice-j5-1-3-scale-back-length",
+        "practice-j5-1-3-area-scale-factor",
+        "practice-j5-1-3-angle-invariant-scale",
+        "practice-j5-1-3-scale-area-change"
+      ],
+      "chapterCode": "j5-1-3",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-3",
+        "相似形",
+        "縮放",
+        "等比例",
+        "角度不變"
+      ],
+      "usage": [
+        "練習等比例縮放後的長度、面積倍率與角度不變性。"
+      ],
+      "examples": [],
+      "tips": [
+        "縮放只改變長度與面積，不改變對應角；面積倍率是長度倍率平方。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
+      ]
+    },
+    "practice-j5-1-3-figure-scale-length": {
+      "id": "practice-j5-1-3-figure-scale-length",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等比例縮放求邊長",
+      "generatorKey": "j5-1-3-figure-scale-length",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-3",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-3",
+        "相似形",
+        "縮放",
+        "邊長"
+      ],
+      "usage": [
+        "練習圖形等比例縮放後的邊長。"
+      ],
+      "examples": [],
+      "tips": [
+        "所有長度都乘同一倍率。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
+      ]
+    },
+    "practice-j5-1-3-scale-back-length": {
+      "id": "practice-j5-1-3-scale-back-length",
+      "enabled": true,
+      "mode": "generator",
+      "title": "縮放後反求原邊長",
+      "generatorKey": "j5-1-3-scale-back-length",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-3",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-3",
+        "相似形",
+        "縮放",
+        "反推"
+      ],
+      "usage": [
+        "練習由縮放後邊長反求原邊長。"
+      ],
+      "examples": [],
+      "tips": [
+        "縮放後長度除以倍率，即為原長度。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
+      ]
+    },
+    "practice-j5-1-3-area-scale-factor": {
+      "id": "practice-j5-1-3-area-scale-factor",
+      "enabled": true,
+      "mode": "generator",
+      "title": "縮放倍率與面積倍率",
+      "generatorKey": "j5-1-3-area-scale-factor",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-3",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-3",
+        "相似形",
+        "面積倍率"
+      ],
+      "usage": [
+        "練習長度縮放 k 倍時面積變 k² 倍。"
+      ],
+      "examples": [],
+      "tips": [
+        "長度倍率 k，面積倍率 k²。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
+      ]
+    },
+    "practice-j5-1-3-angle-invariant-scale": {
+      "id": "practice-j5-1-3-angle-invariant-scale",
+      "enabled": true,
+      "mode": "generator",
+      "title": "相似縮放角度不變",
+      "generatorKey": "j5-1-3-angle-invariant-scale",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-3",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-3",
+        "相似形",
+        "角度不變"
+      ],
+      "usage": [
+        "練習相似圖形對應角不變。"
+      ],
+      "examples": [],
+      "tips": [
+        "相似圖形角度相等，放大縮小不改變角度。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-right-altitude-three-subtypes": {
@@ -36697,30 +36879,29 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "直角三角形",
+        "相似形",
         "母子相似",
-        "斜邊高"
+        "直角三角形"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習斜邊高產生的三個相似直角三角形與投影公式。"
       ],
       "examples": [],
       "tips": [
-        "直角三角形斜邊上的高會形成三個相似三角形，核心公式是 AD²=BD×DC、AB²=BD×BC、AC²=DC×BC。"
+        "核心公式：AD²=BD×DC，AB²=BD×BC，AC²=DC×BC。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-right-altitude": {
@@ -36736,29 +36917,28 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "斜邊高",
-        "母子相似"
+        "相似形",
+        "斜邊高"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習 AD²=BD×DC。"
       ],
       "examples": [],
       "tips": [
-        "斜邊上的高滿足 AD²=BD×DC。"
+        "高是兩段投影的幾何平均。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-right-legs-from-projections": {
@@ -36774,29 +36954,28 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "股長平方",
-        "斜邊投影"
+        "相似形",
+        "股平方"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習 AB²=BD×BC、AC²=DC×BC。"
       ],
       "examples": [],
       "tips": [
-        "兩股平方公式為 AB²=BD×BC、AC²=DC×BC。"
+        "股長平方等於自己在斜邊上的投影乘以整條斜邊。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-right-projection-unknown": {
@@ -36812,187 +36991,28 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "斜邊高",
+        "相似形",
         "代數求值"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習母子相似公式中的未知數。"
       ],
       "examples": [],
       "tips": [
-        "先用 AD²=BD×DC 求出 AD，再回到題目中的一次式解未知數。"
+        "先用 AD²=BD×DC 求出 AD，再回代 x。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
-      ]
-    },
-    "practice-j5-1-3-angle-bisector-three-subtypes": {
-      "id": "practice-j5-1-3-angle-bisector-three-subtypes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "角平分線與綜合比例三小類綜合",
-      "generatorKey": "j5-1-3-angle-bisector-three-subtypes",
-      "difficulty": "medium",
-      "questionCount": 6,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [
-        "practice-j5-1-3-angle-bisector-segments",
-        "practice-j5-1-3-angle-bisector-unknown",
-        "practice-j5-1-3-bisector-parallel-composite"
-      ],
-      "chapterCode": "j5-1-3",
-      "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-1-3",
-        "相似三角形",
-        "角平分線",
-        "內分比",
-        "綜合比例"
-      ],
-      "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "三角形內角平分線會把對邊分成兩段，其比等於夾該角兩邊的長度比。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
-      ]
-    },
-    "practice-j5-1-3-angle-bisector-segments": {
-      "id": "practice-j5-1-3-angle-bisector-segments",
-      "enabled": true,
-      "mode": "generator",
-      "title": "內分比定理求分段",
-      "generatorKey": "j5-1-3-angle-bisector-segments",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-1-3",
-      "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-1-3",
-        "相似三角形",
-        "角平分線",
-        "分段長"
-      ],
-      "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "若 AD 平分 ∠A，則 BD:DC=AB:AC。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
-      ]
-    },
-    "practice-j5-1-3-angle-bisector-unknown": {
-      "id": "practice-j5-1-3-angle-bisector-unknown",
-      "enabled": true,
-      "mode": "generator",
-      "title": "內分比定理解未知數",
-      "generatorKey": "j5-1-3-angle-bisector-unknown",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-1-3",
-      "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-1-3",
-        "相似三角形",
-        "角平分線",
-        "未知數"
-      ],
-      "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "先把 AB:AC=BD:DC 寫成比例式，再交叉相乘解未知數。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
-      ]
-    },
-    "practice-j5-1-3-bisector-parallel-composite": {
-      "id": "practice-j5-1-3-bisector-parallel-composite",
-      "enabled": true,
-      "mode": "generator",
-      "title": "角平分線搭配平行線",
-      "generatorKey": "j5-1-3-bisector-parallel-composite",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-1-3",
-      "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-1-3",
-        "相似三角形",
-        "角平分線",
-        "平行線",
-        "相似綜合"
-      ],
-      "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "先用角平分線求對邊分段，再用平行線建立小大三角形相似。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-measurement-four-subtypes": {
@@ -37013,32 +37033,30 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "測量",
-        "影子法",
-        "鏡面反射",
-        "針孔成像",
-        "河寬"
+        "相似形",
+        "生活測量",
+        "投影",
+        "相似應用"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習影子法、鏡面反射、針孔成像與河寬測量。"
       ],
       "examples": [],
       "tips": [
-        "生活測量題先找出兩個相似三角形，再把物高、影長、距離或像高對應成比例式。"
+        "先找出兩個相似三角形，再把對應邊排成比例式。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-shadow-measurement": {
@@ -37054,29 +37072,28 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "影子法",
-        "測高"
+        "相似形",
+        "影子法"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習同時刻物高與影長成正比。"
       ],
       "examples": [],
       "tips": [
-        "同一時間陽光照射下，物高與影長成正比。"
+        "同一時間太陽仰角相同，所以物高:影長相等。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-mirror-measurement": {
@@ -37092,29 +37109,28 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "鏡面反射",
-        "測高"
+        "相似形",
+        "鏡面反射"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習利用入射角等於反射角建立相似三角形。"
       ],
       "examples": [],
       "tips": [
-        "平面鏡測高利用入射角等於反射角，形成兩個相似直角三角形。"
+        "物高:人眼高 = 物到鏡距:人到鏡距。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-pinhole-projection": {
@@ -37130,29 +37146,28 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "針孔成像",
-        "投影"
+        "相似形",
+        "針孔成像"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習像高與物高、距離的比例。"
       ],
       "examples": [],
       "tips": [
-        "針孔成像中，像高:物高=屏幕距離:物體距離。"
+        "像高:物高 = 屏幕距離:物體距離。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-3-river-width-measurement": {
@@ -37168,29 +37183,147 @@ window.practiceLibraryStore = {
       "chapterCode": "j5-1-3",
       "stage": "國中",
       "grade": "九年級",
-      "term": "上",
-      "chapter": "相似三角形",
-      "domain": "幾何",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-1-3",
-        "相似三角形",
-        "河寬",
-        "相似測量"
+        "相似形",
+        "河寬測量"
       ],
       "usage": [
-        "練習 相似三角形 的相似判別、比例求長、面積周長換算、母子相似與測量應用。"
+        "練習用視線共線與垂直構造相似三角形。"
       ],
       "examples": [],
       "tips": [
-        "河寬題常用岸邊垂線與共線視線建立兩個相似直角三角形。"
+        "先確認兩個直角三角形的對應邊，再列比例。"
       ],
       "notes": [],
       "mistakes": [
-        "相似判別不能只看一組邊或一組角；必須同時滿足對應角相等與對應邊成比例的條件。",
-        "面積比不是邊長比；相似圖形的面積比等於對應邊長比的平方。",
-        "比例式一定要先對準對應邊、對應高、對應中線或對應角平分線，不能只看數字大小硬配。"
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
+      ]
+    },
+    "practice-j5-1-3-butterfly-three-subtypes": {
+      "id": "practice-j5-1-3-butterfly-three-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "蝴蝶形與平行線相似比例綜合",
+      "generatorKey": "j5-1-3-butterfly-three-subtypes",
+      "difficulty": "medium",
+      "questionCount": 6,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-j5-1-3-butterfly-parallel-length",
+        "practice-j5-1-3-butterfly-area-ratio",
+        "practice-j5-1-3-butterfly-segment-ratio"
+      ],
+      "chapterCode": "j5-1-3",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-3",
+        "相似形",
+        "蝴蝶形",
+        "平行線",
+        "面積比"
+      ],
+      "usage": [
+        "練習平行線產生的蝴蝶形相似、線段比與面積比。"
+      ],
+      "examples": [],
+      "tips": [
+        "蝴蝶形先判斷兩三角形的對應頂點，再套用邊長比；面積比要平方。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
+      ]
+    },
+    "practice-j5-1-3-butterfly-area-ratio": {
+      "id": "practice-j5-1-3-butterfly-area-ratio",
+      "enabled": true,
+      "mode": "generator",
+      "title": "蝴蝶形相似面積比",
+      "generatorKey": "j5-1-3-butterfly-area-ratio",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-3",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-3",
+        "相似形",
+        "蝴蝶形",
+        "面積比"
+      ],
+      "usage": [
+        "練習由 OA:OD 推出兩蝴蝶三角形面積比。"
+      ],
+      "examples": [],
+      "tips": [
+        "相似比為 a:b，面積比為 a²:b²。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
+      ]
+    },
+    "practice-j5-1-3-butterfly-segment-ratio": {
+      "id": "practice-j5-1-3-butterfly-segment-ratio",
+      "enabled": true,
+      "mode": "generator",
+      "title": "蝴蝶形交點線段比",
+      "generatorKey": "j5-1-3-butterfly-segment-ratio",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-3",
+      "stage": "國中",
+      "grade": "九年級",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-3",
+        "相似形",
+        "蝴蝶形",
+        "線段比"
+      ],
+      "usage": [
+        "練習由 OA:OD=OB:OC 求未知線段。"
+      ],
+      "examples": [],
+      "tips": [
+        "對應線段要放同一順序：OA 對 OD，OB 對 OC。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "相似面積比要搭配邊長比平方，不能把平行截線或蝴蝶形的答案模板套到一般相似題。",
+        "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
+        "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
     "practice-j5-1-4-measurement-five-subtypes": {
@@ -43828,45 +43961,47 @@ window.practiceLibraryStore = {
       "id": "practice-j5-3-3-circumcenter-five-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "外心角度距離五小類綜合",
+      "title": "外心角度距離與外接圓七小類綜合",
       "generatorKey": "j5-3-3-circumcenter-five-subtypes",
       "difficulty": "medium",
       "questionCount": 6,
-      "subtypeCount": 5,
+      "subtypeCount": 7,
       "relatedPracticeIds": [
         "practice-j5-3-3-circumcenter-angle",
         "practice-j5-3-3-circumcenter-equal-radius",
         "practice-j5-3-3-right-circumradius",
         "practice-j5-3-3-equilateral-circumradius",
-        "practice-j5-3-3-obtuse-circumcenter-angle"
+        "practice-j5-3-3-obtuse-circumcenter-angle",
+        "practice-j5-3-3-isosceles-circumradius",
+        "practice-j5-3-3-circumcircle-area-from-radius"
       ],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "外心",
-        "外接圓",
-        "圓心角"
+        "外接圓"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "外心到三頂點等距；銳角看 2A，鈍角求較小角時用 360°-2A。"
+        "外心到三頂點等距；銳角用圓心角 = 2 倍圓周角，鈍角注意較小角是 360° - 2A。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-circumcenter-angle": {
@@ -43881,30 +44016,30 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
-        "外心角",
-        "銳角三角形"
+        "三心與幾何綜合",
+        "外心角"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "銳角三角形中，∠BOC=2∠A。"
+        "銳角三角形中，同弧圓心角是圓周角的 2 倍。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-circumcenter-equal-radius": {
@@ -43919,30 +44054,31 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "外心",
         "等距"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "外心到三頂點距離都等於外接圓半徑。"
+        "外心到三個頂點距離相等，皆為外接圓半徑。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-right-circumradius": {
@@ -43957,30 +44093,31 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "直角三角形",
-        "外接半徑"
+        "外接圓"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "直角三角形外接圓半徑是斜邊的一半。"
+        "直角三角形外心在斜邊中點，外接半徑等於斜邊一半。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-equilateral-circumradius": {
@@ -43995,30 +44132,31 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "正三角形",
         "外接半徑"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "正三角形外接半徑為高的 2/3。"
+        "正三角形外心到頂點距離為高的 2/3。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-obtuse-circumcenter-angle": {
@@ -44033,76 +44171,80 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "鈍角三角形",
         "外心角"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "鈍角時較小外心角常用 360°-2A。"
+        "鈍角題常求較小圓心角，使用 360° - 2A。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-incenter-six-subtypes": {
       "id": "practice-j5-3-3-incenter-six-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "內心角度半徑六小類綜合",
+      "title": "內心角度半徑與面積八小類綜合",
       "generatorKey": "j5-3-3-incenter-six-subtypes",
       "difficulty": "medium",
       "questionCount": 6,
-      "subtypeCount": 6,
+      "subtypeCount": 8,
       "relatedPracticeIds": [
         "practice-j5-3-3-incenter-angle",
         "practice-j5-3-3-incenter-angle-inverse",
         "practice-j5-3-3-inradius-from-area-perimeter",
         "practice-j5-3-3-right-triangle-inradius",
         "practice-j5-3-3-incenter-area-ratio",
-        "practice-j5-3-3-equilateral-inradius"
+        "practice-j5-3-3-equilateral-inradius",
+        "practice-j5-3-3-incenter-area-from-side-ratio",
+        "practice-j5-3-3-axis-triangle-incenter-area"
       ],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "內心",
         "內切圓",
         "面積"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "內心角用 90°+A/2；面積用 A=rs；直角三角形 r=(a+b-c)/2。"
+        "內心角用 90°+A/2；面積用 A=rs；直角三角形用 r=(a+b-c)/2。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-incenter-angle": {
@@ -44117,20 +44259,19 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
-        "內心角",
-        "角度"
+        "三心與幾何綜合",
+        "內心角"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
@@ -44138,9 +44279,10 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-incenter-angle-inverse": {
@@ -44155,30 +44297,31 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "內心角",
         "反推"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "由 ∠A=2(∠BIC-90°) 反推。"
+        "∠A=2(∠BIC-90°)。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-inradius-from-area-perimeter": {
@@ -44193,30 +44336,31 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "內切半徑",
         "面積"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "A=rs，其中 s 為半周長。"
+        "A=rs，其中 s 是半周長。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-right-triangle-inradius": {
@@ -44231,20 +44375,20 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "直角三角形",
         "內切半徑"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
@@ -44252,9 +44396,10 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-incenter-area-ratio": {
@@ -44269,30 +44414,31 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "內心",
         "面積比"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "內心到三邊距離相等，所以小三角形面積比等於邊長比。"
+        "內心到三邊距離相同，所以三個小三角形面積比等於對應邊長比。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-equilateral-inradius": {
@@ -44307,20 +44453,20 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "正三角形",
         "內切半徑"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
@@ -44328,55 +44474,66 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-centroid-six-subtypes": {
       "id": "practice-j5-3-3-centroid-six-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "重心長度座標面積六小類綜合",
+      "title": "重心長度座標面積十五小類綜合",
       "generatorKey": "j5-3-3-centroid-six-subtypes",
       "difficulty": "medium",
       "questionCount": 6,
-      "subtypeCount": 6,
+      "subtypeCount": 15,
       "relatedPracticeIds": [
         "practice-j5-3-3-centroid-median-length",
         "practice-j5-3-3-centroid-median-inverse",
         "practice-j5-3-3-centroid-coordinate",
         "practice-j5-3-3-missing-vertex-from-centroid",
         "practice-j5-3-3-centroid-area-sixth",
-        "practice-j5-3-3-centroid-area-third"
+        "practice-j5-3-3-centroid-area-third",
+        "practice-j5-3-3-centroid-median-equation",
+        "practice-j5-3-3-centroid-area-from-one-small",
+        "practice-j5-3-3-parallelogram-hidden-centroid-length",
+        "practice-j5-3-3-parallelogram-centroid-area",
+        "practice-j5-3-3-centroid-quadrilateral-to-total-area",
+        "practice-j5-3-3-parallelogram-two-centroids-distance",
+        "practice-j5-3-3-parallelogram-midpoint-triangle-area",
+        "practice-j5-3-3-parallelogram-centroid-segment-equation",
+        "practice-j5-3-3-isosceles-area-from-centroid-distance"
       ],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "重心",
         "中線",
         "面積"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "重心分中線 2:1，坐標是三頂點平均，三中線分六等面積。"
+        "重心分中線為 2:1；三中線分成六等面積，連三頂點分成三等面積。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-centroid-median-length": {
@@ -44391,20 +44548,20 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "重心",
         "中線"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
@@ -44412,9 +44569,10 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-centroid-median-inverse": {
@@ -44429,30 +44587,31 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "重心",
         "中線"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "若 GD 已知，AD=3GD。"
+        "若知道短段 GD，則 AD=3GD。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-centroid-coordinate": {
@@ -44467,20 +44626,19 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
-        "重心坐標",
-        "平均"
+        "三心與幾何綜合",
+        "重心坐標"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
@@ -44488,9 +44646,10 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-missing-vertex-from-centroid": {
@@ -44505,30 +44664,31 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "重心坐標",
-        "反推頂點"
+        "反推"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "用平均公式列式反推未知頂點。"
+        "把重心平均公式改寫成未知頂點坐標。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-centroid-area-sixth": {
@@ -44543,20 +44703,20 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "重心",
-        "六等面積"
+        "面積"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
@@ -44564,9 +44724,10 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-centroid-area-third": {
@@ -44581,76 +44742,81 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "重心",
-        "三等面積"
+        "面積"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "重心連三頂點形成三個等面積三角形。"
+        "重心連三頂點會分成三個等面積三角形。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-coordinate-five-subtypes": {
       "id": "practice-j5-3-3-coordinate-five-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "座標平面三心五小類綜合",
+      "title": "座標平面三心八小類綜合",
       "generatorKey": "j5-3-3-coordinate-five-subtypes",
       "difficulty": "medium",
       "questionCount": 6,
-      "subtypeCount": 5,
+      "subtypeCount": 8,
       "relatedPracticeIds": [
         "practice-j5-3-3-right-triangle-circumcenter-coordinate",
         "practice-j5-3-3-three-point-centroid-coordinate",
         "practice-j5-3-3-axis-triangle-incenter",
         "practice-j5-3-3-right-triangle-og-distance",
-        "practice-j5-3-3-circumcenter-point-check"
+        "practice-j5-3-3-circumcenter-point-check",
+        "practice-j5-3-3-circumcenter-coordinate-general",
+        "practice-j5-3-3-right-triangle-coordinate-og",
+        "practice-j5-3-3-euler-line-orthocenter-coordinate"
       ],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "坐標",
         "外心",
         "重心",
         "內心"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "座標題先辨認特殊直角三角形，再套外心、重心或內心公式。"
+        "坐標題先定位三心公式：直角外心取斜邊中點、重心取平均、內心常落在 (r,r)。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-right-triangle-circumcenter-coordinate": {
@@ -44665,20 +44831,20 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
-        "座標",
+        "三心與幾何綜合",
+        "坐標",
         "外心"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
@@ -44686,9 +44852,10 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-three-point-centroid-coordinate": {
@@ -44703,20 +44870,20 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
-        "座標",
+        "三心與幾何綜合",
+        "坐標",
         "重心"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
@@ -44724,9 +44891,10 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-axis-triangle-incenter": {
@@ -44741,30 +44909,31 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
-        "座標",
+        "三心與幾何綜合",
+        "坐標",
         "內心"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "坐標軸圍成的直角三角形內心常為 (r,r)。"
+        "坐標軸圍成的直角三角形，內心可寫成 (r,r)。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-right-triangle-og-distance": {
@@ -44779,21 +44948,21 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "外心",
         "重心",
         "距離"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
@@ -44801,9 +44970,10 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-circumcenter-point-check": {
@@ -44818,75 +44988,82 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "外接圓",
         "距離"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "三角形頂點必在外接圓上，檢查 OP 是否等於半徑。"
+        "頂點若在外接圓上，該點到圓心距離必等於半徑。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-special-five-subtypes": {
       "id": "practice-j5-3-3-special-five-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "正三角形與直角三心五小類綜合",
+      "title": "正三角形與直角三心十小類綜合",
       "generatorKey": "j5-3-3-special-five-subtypes",
       "difficulty": "medium",
       "questionCount": 6,
-      "subtypeCount": 5,
+      "subtypeCount": 10,
       "relatedPracticeIds": [
         "practice-j5-3-3-equilateral-radii-ratio",
         "practice-j5-3-3-equilateral-area-from-inradius",
+        "practice-j5-3-3-equilateral-area-from-circumradius",
         "practice-j5-3-3-right-triangle-go",
         "practice-j5-3-3-right-triangle-rr-perimeter",
-        "practice-j5-3-3-centroid-to-vertex-sum"
+        "practice-j5-3-3-centroid-to-vertex-sum",
+        "practice-j5-3-3-right-triangle-hypotenuse-from-og",
+        "practice-j5-3-3-right-triangle-perimeter-from-rr",
+        "practice-j5-3-3-equilateral-height-from-circumradius",
+        "practice-j5-3-3-equilateral-incircle-circumcircle-area-ratio"
       ],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "正三角形",
         "直角三角形",
         "三心"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "正三角形三心合一；直角三角形外心在斜邊中點。"
+        "正三角形三心合一；直角三角形外心在斜邊中點，搭配重心與內切半徑公式。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-equilateral-radii-ratio": {
@@ -44901,20 +45078,20 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "正三角形",
         "半徑比"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
@@ -44922,9 +45099,10 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-equilateral-area-from-inradius": {
@@ -44939,30 +45117,31 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "正三角形",
         "面積"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "邊長 a=2√3r，再代入面積公式。"
+        "由 a=2√3r 反推邊長再求面積。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-right-triangle-go": {
@@ -44977,20 +45156,20 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "直角三角形",
         "OG"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
@@ -44998,9 +45177,10 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-right-triangle-rr-perimeter": {
@@ -45015,20 +45195,20 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "直角三角形",
-        "內外半徑"
+        "內切半徑"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
@@ -45036,9 +45216,10 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
     "practice-j5-3-3-centroid-to-vertex-sum": {
@@ -45053,30 +45234,1056 @@ window.practiceLibraryStore = {
       "relatedPracticeIds": [],
       "chapterCode": "j5-3-3",
       "stage": "國中",
-      "grade": "九年級",
-      "term": "上",
-      "chapter": "外心、內心、重心",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
         "j5-3-3",
-        "外心、內心、重心",
+        "三心與幾何綜合",
         "重心",
         "中線"
       ],
       "usage": [
-        "練習 外心、內心、重心 的外心、內心、重心、座標三心與特殊三角形半徑面積計算。"
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
       ],
       "examples": [],
       "tips": [
-        "重心到頂點距離和為三條中線和的 2/3。"
+        "重心到頂點距離和是三條中線長度和的 2/3。"
       ],
       "notes": [],
       "mistakes": [
-        "外心看三頂點等距，內心看三邊等距，重心看中線 2:1；三心性質不要混用。",
-        "直角三角形外心在斜邊中點，正三角形三心合一，這兩種特殊情形要先辨認。",
-        "座標三心題先分清公式：重心是平均值，外心要到三點等距，內心在坐標軸直角三角形常為 (r,r)。"
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-isosceles-circumradius": {
+      "id": "practice-j5-3-3-isosceles-circumradius",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等腰三角形外接半徑",
+      "generatorKey": "j5-3-3-isosceles-circumradius",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "等腰三角形",
+        "外接半徑"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "先用底邊高拆成直角三角形，再用 R=abc/(4K)。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-circumcircle-area-from-radius": {
+      "id": "practice-j5-3-3-circumcircle-area-from-radius",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由外心半徑求外接圓面積",
+      "generatorKey": "j5-3-3-circumcircle-area-from-radius",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "外接圓面積"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "外心到頂點距離就是外接圓半徑。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-incenter-area-from-side-ratio": {
+      "id": "practice-j5-3-3-incenter-area-from-side-ratio",
+      "enabled": true,
+      "mode": "generator",
+      "title": "內心面積比反推全圖",
+      "generatorKey": "j5-3-3-incenter-area-from-side-ratio",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "內心",
+        "面積比"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "內心分割面積比等於邊長比，可用部分面積反推總面積。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-axis-triangle-incenter-area": {
+      "id": "practice-j5-3-3-axis-triangle-incenter-area",
+      "enabled": true,
+      "mode": "generator",
+      "title": "坐標軸直角三角形內心面積",
+      "generatorKey": "j5-3-3-axis-triangle-incenter-area",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "坐標",
+        "內心",
+        "面積"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "坐標軸直角三角形的內心為 (r,r)，再代入坐標面積公式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-centroid-median-equation": {
+      "id": "practice-j5-3-3-centroid-median-equation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "重心中線比例一次式",
+      "generatorKey": "j5-3-3-centroid-median-equation",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "重心",
+        "一次式"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "利用 BG:GE=2:1 建立一次方程式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-centroid-area-from-one-small": {
+      "id": "practice-j5-3-3-centroid-area-from-one-small",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由重心小三角形求全圖面積",
+      "generatorKey": "j5-3-3-centroid-area-from-one-small",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "重心",
+        "面積"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "一個六等分小三角形面積乘以 6，就是全圖面積。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-circumcenter-coordinate-general": {
+      "id": "practice-j5-3-3-circumcenter-coordinate-general",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三點共圓求外心與面積",
+      "generatorKey": "j5-3-3-circumcenter-coordinate-general",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "坐標",
+        "外心",
+        "面積"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "檢查三點到同一點距離相等，可判定外心。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-equilateral-area-from-circumradius": {
+      "id": "practice-j5-3-3-equilateral-area-from-circumradius",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由外接半徑求正三角形面積",
+      "generatorKey": "j5-3-3-equilateral-area-from-circumradius",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "正三角形",
+        "面積"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "正三角形 R=a/√3，可反推邊長與面積。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-parallelogram-hidden-centroid-length": {
+      "id": "practice-j5-3-3-parallelogram-hidden-centroid-length",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平行四邊形隱藏重心求長度",
+      "generatorKey": "j5-3-3-parallelogram-hidden-centroid-length",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "重心",
+        "平行四邊形"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "對角線中點與邊中點可讓兩條中線相交，產生隱藏重心，常用 OM=BD/6。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-parallelogram-centroid-area": {
+      "id": "practice-j5-3-3-parallelogram-centroid-area",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平行四邊形隱藏重心求面積",
+      "generatorKey": "j5-3-3-parallelogram-centroid-area",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "重心",
+        "平行四邊形",
+        "面積"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "先看出隱藏重心，再用三角形是平行四邊形一半、重心三等分面積。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-centroid-quadrilateral-to-total-area": {
+      "id": "practice-j5-3-3-centroid-quadrilateral-to-total-area",
+      "enabled": true,
+      "mode": "generator",
+      "title": "重心中點四邊形反推全圖面積",
+      "generatorKey": "j5-3-3-centroid-quadrilateral-to-total-area",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "重心",
+        "面積"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "重心與兩個邊中點形成的四邊形常佔原三角形的 1/3。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-right-triangle-coordinate-og": {
+      "id": "practice-j5-3-3-right-triangle-coordinate-og",
+      "enabled": true,
+      "mode": "generator",
+      "title": "座標直角三角形求外心重心距",
+      "generatorKey": "j5-3-3-right-triangle-coordinate-og",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "坐標",
+        "外心",
+        "重心"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "先求斜邊中點與坐標平均，也可直接用 OG=斜邊/6。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-euler-line-orthocenter-coordinate": {
+      "id": "practice-j5-3-3-euler-line-orthocenter-coordinate",
+      "enabled": true,
+      "mode": "generator",
+      "title": "尤拉線由外心重心求垂心",
+      "generatorKey": "j5-3-3-euler-line-orthocenter-coordinate",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "尤拉線",
+        "垂心",
+        "坐標"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "尤拉線上 G=(H+2O)/3，所以 H=3G-2O。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-right-triangle-hypotenuse-from-og": {
+      "id": "practice-j5-3-3-right-triangle-hypotenuse-from-og",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由外心重心距反推斜邊與外接圓",
+      "generatorKey": "j5-3-3-right-triangle-hypotenuse-from-og",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "直角三角形",
+        "OG",
+        "外接圓"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "直角三角形 OG=斜邊/6，可反推斜邊與外接半徑。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-right-triangle-perimeter-from-rr": {
+      "id": "practice-j5-3-3-right-triangle-perimeter-from-rr",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由內外半徑反推直角三角形周長",
+      "generatorKey": "j5-3-3-right-triangle-perimeter-from-rr",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "直角三角形",
+        "半徑",
+        "周長"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "直角三角形周長 P=4R+2r。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-equilateral-height-from-circumradius": {
+      "id": "practice-j5-3-3-equilateral-height-from-circumradius",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由外接半徑求正三角形高",
+      "generatorKey": "j5-3-3-equilateral-height-from-circumradius",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "正三角形",
+        "高"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "正三角形 R=2h/3，所以 h=3R/2。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-equilateral-incircle-circumcircle-area-ratio": {
+      "id": "practice-j5-3-3-equilateral-incircle-circumcircle-area-ratio",
+      "enabled": true,
+      "mode": "generator",
+      "title": "正三角形內外圓面積比",
+      "generatorKey": "j5-3-3-equilateral-incircle-circumcircle-area-ratio",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "正三角形",
+        "面積比"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "半徑比 1:2，圓面積比為 1:4。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-parallelogram-two-centroids-distance": {
+      "id": "practice-j5-3-3-parallelogram-two-centroids-distance",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平行四邊形兩重心距離",
+      "generatorKey": "j5-3-3-parallelogram-two-centroids-distance",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "重心",
+        "平行四邊形",
+        "距離"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "平行四邊形兩個相關三角形的重心距離常等於對角線的 1/3。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-parallelogram-midpoint-triangle-area": {
+      "id": "practice-j5-3-3-parallelogram-midpoint-triangle-area",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平行四邊形中點小三角形面積",
+      "generatorKey": "j5-3-3-parallelogram-midpoint-triangle-area",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "平行四邊形",
+        "面積比"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "對角線交點與邊中點形成的小三角形常佔平行四邊形面積的 1/12。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-parallelogram-centroid-segment-equation": {
+      "id": "practice-j5-3-3-parallelogram-centroid-segment-equation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平行四邊形兩重心分段一次式",
+      "generatorKey": "j5-3-3-parallelogram-centroid-segment-equation",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "重心",
+        "一次式"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "兩個相關三角形的重心可把對角線分成三段等長，用每段 = 全長/3 建方程式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j5-3-3-isosceles-area-from-centroid-distance": {
+      "id": "practice-j5-3-3-isosceles-area-from-centroid-distance",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等腰三角形由重心距求面積",
+      "generatorKey": "j5-3-3-isosceles-area-from-centroid-distance",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "三心與幾何綜合",
+        "等腰三角形",
+        "重心",
+        "面積"
+      ],
+      "usage": [
+        "用於 三心與幾何綜合 的三心性質、長度比例、面積比例與座標計算無限練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "等腰三角形頂點到底邊的高也是中線，AG=2h/3，可先求高再求面積。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把外心、內心、重心的定義混在一起；先確認題目問的是等距、角平分線還是中線比例。",
+        "重心中線比例是頂點到重心：重心到中點 = 2:1，不是 1:2。",
+        "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
+        "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
+      ]
+    },
+    "practice-j1-common-factor-four-terms-signed-drill": {
+      "id": "practice-j1-common-factor-four-terms-signed-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "4項提出公因數（含正負數）",
+      "generatorKey": "j1-common-factor-four-terms-signed-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1",
+        "四項分組",
+        "提出公因數",
+        "正負混合"
+      ],
+      "usage": [
+        "像 248×(-32)+248×12+152×(-32)+152×12 這類含正負數的分組提公因數。"
+      ],
+      "examples": [],
+      "tips": [
+        "括號內若有負數，先把和算清楚再往下提。",
+        "看到 a×m+a×n+b×m+b×n，就往 (a+b)(m+n) 想。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把負號漏掉，導致括號內的和算錯。",
+        "只提一次公因數，沒有再看能不能合成相同括號。"
+      ]
+    },
+    "practice-j1-distributive-common-factor-mixed": {
+      "id": "practice-j1-distributive-common-factor-mixed",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分配律與提出公因數綜合",
+      "generatorKey": "j1-distributive-common-factor-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 7,
+      "relatedPracticeIds": [
+        "practice-j1-distributive-law-drill",
+        "practice-j1-common-factor-drill",
+        "practice-j1-common-factor-four-terms-drill",
+        "practice-j1-common-factor-four-terms-signed-drill",
+        "practice-j1-variable-distributive-pair-difference-drill",
+        "practice-j1-variable-distributive-offset-difference-drill",
+        "practice-j1-common-factor-then-distributive-drill"
+      ],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1",
+        "分配律",
+        "提出公因數",
+        "綜合"
+      ],
+      "usage": [
+        "把分配律、提出公因數、四項分組，以及大數字拆解型題目混在同一組練習裡。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷題目是在考正向分配、反向提公因數，還是先抵消大乘積的拆解型。",
+        "若四項或兩大項內有固定結構，不要急著硬算，先重組再算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "沒有先辨認題型，就直接把大數字逐項相乘。",
+        "看見可分組或可抵消的結構時，只做了一半就停住。"
+      ]
+    },
+    "practice-j1-variable-distributive-pair-difference-drill": {
+      "id": "practice-j1-variable-distributive-pair-difference-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "二組分配律（相鄰差一型）",
+      "generatorKey": "j1-variable-distributive-pair-difference-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1",
+        "分配律",
+        "大數字",
+        "拆解"
+      ],
+      "usage": [
+        "觀察兩個乘式只差 1 的結構，把題目改寫成 a(b+1)－(a+1)b，再用分配律消去大部分乘積。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把第一項看成 a×(b+1)，第二項看成 (a+1)×b。",
+        "展開後 ab 會互相抵消，最後只剩 a－b。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看見兩項相減，沒有辨認出「一個加在前面，一個加在後面」的固定結構。",
+        "展開後把 -(a+1)b 少減了 b。"
+      ]
+    },
+    "practice-j1-variable-distributive-offset-difference-drill": {
+      "id": "practice-j1-variable-distributive-offset-difference-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "二組分配律（補差型）",
+      "generatorKey": "j1-variable-distributive-offset-difference-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1",
+        "分配律",
+        "大數字",
+        "補差"
+      ],
+      "usage": [
+        "把題目看成 (a+k)b－a(b+1) 這類型，先拆出共同的 ab，再用 kb－a 快速算出結果。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把第一項拆成 a×b + k×b。",
+        "展開第二項 a(b+1) 後，ab 會和前面的 ab 抵消。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把 (a+k)b 誤看成 a+k×b，忘記括號整體相乘。",
+        "展開 a(b+1) 時漏掉最後的 a。"
+      ]
+    },
+    "practice-j1-common-factor-then-distributive-drill": {
+      "id": "practice-j1-common-factor-then-distributive-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "先提公因數，再分配律",
+      "generatorKey": "j1-common-factor-then-distributive-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1",
+        "提出公因數",
+        "分配律",
+        "大數字"
+      ],
+      "usage": [
+        "先從兩項提出共同因數，再把括號內改寫成 (a+k)b－a(b+1) 這類型，分兩步完成化簡。"
+      ],
+      "examples": [],
+      "tips": [
+        "第一步先找兩項完全共同的因數。",
+        "第二步再看括號內能不能用 ab 抵消，把大數字變成小差值。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只做到提出公因數就停住，沒有繼續化簡括號內。",
+        "提出公因數後，括號內某一項的數字或正負號抄錯。"
       ]
     }
   },
@@ -45243,7 +46450,7 @@ window.practiceLibraryStore = {
       "order": 1
     },
     {
-      "practiceId": "practice-j5-1-2-triangle-parallel-five-subtypes",
+      "practiceId": "practice-j5-1-2-parallel-core-five-subtypes",
       "targetType": "chapter",
       "targetId": "j5-1-2",
       "enabled": true,
@@ -45635,7 +46842,7 @@ window.practiceLibraryStore = {
       "order": 2
     },
     {
-      "practiceId": "practice-j5-1-2-trapezoid-parallel-three-subtypes",
+      "practiceId": "practice-j5-1-2-triangle-parallel-five-subtypes",
       "targetType": "chapter",
       "targetId": "j5-1-2",
       "enabled": true,
@@ -46006,14 +47213,14 @@ window.practiceLibraryStore = {
       "order": 3
     },
     {
-      "practiceId": "practice-j5-1-2-area-ratio-three-subtypes",
+      "practiceId": "practice-j5-1-2-trapezoid-parallel-three-subtypes",
       "targetType": "chapter",
       "targetId": "j5-1-2",
       "enabled": true,
       "order": 3
     },
     {
-      "practiceId": "practice-j5-1-3-right-altitude-three-subtypes",
+      "practiceId": "practice-j5-1-3-scaling-five-subtypes",
       "targetType": "chapter",
       "targetId": "j5-1-3",
       "enabled": true,
@@ -46307,14 +47514,7 @@ window.practiceLibraryStore = {
       "order": 4
     },
     {
-      "practiceId": "practice-j5-1-2-measurement-two-subtypes",
-      "targetType": "chapter",
-      "targetId": "j5-1-2",
-      "enabled": true,
-      "order": 4
-    },
-    {
-      "practiceId": "practice-j5-1-3-angle-bisector-three-subtypes",
+      "practiceId": "practice-j5-1-3-right-altitude-three-subtypes",
       "targetType": "chapter",
       "targetId": "j5-1-3",
       "enabled": true,
@@ -46688,6 +47888,13 @@ window.practiceLibraryStore = {
       "practiceId": "practice-j3-1-1-formula-mixed-variable-drill",
       "targetType": "chapter",
       "targetId": "j3-1-1",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "practiceId": "practice-j5-1-3-butterfly-three-subtypes",
+      "targetType": "chapter",
+      "targetId": "j5-1-3",
       "enabled": true,
       "order": 6
     },
@@ -47623,39 +48830,67 @@ window.practiceLibraryStore = {
       "order": 105
     },
     {
-      "practiceId": "practice-j1-distributive-law-drill",
+      "practiceId": "practice-j1-distributive-common-factor-mixed",
       "targetType": "chapter",
       "targetId": "j1-1-2",
       "enabled": true,
       "order": 160
     },
     {
+      "practiceId": "practice-j1-distributive-law-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-2",
+      "enabled": false,
+      "order": 161
+    },
+    {
       "practiceId": "practice-j1-common-factor-drill",
       "targetType": "chapter",
       "targetId": "j1-1-2",
-      "enabled": true,
-      "order": 161
+      "enabled": false,
+      "order": 162
     },
     {
       "practiceId": "practice-j1-common-factor-four-terms-drill",
       "targetType": "chapter",
       "targetId": "j1-1-2",
-      "enabled": true,
-      "order": 162
+      "enabled": false,
+      "order": 163
     },
     {
-      "practiceId": "practice-j1-variable-distributive-nearby-drill",
+      "practiceId": "practice-j1-common-factor-four-terms-signed-drill",
       "targetType": "chapter",
       "targetId": "j1-1-2",
-      "enabled": true,
-      "order": 163
+      "enabled": false,
+      "order": 164
+    },
+    {
+      "practiceId": "practice-j1-common-factor-then-distributive-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-2",
+      "enabled": false,
+      "order": 165
     },
     {
       "practiceId": "practice-j1-variable-distributive-eval-drill",
       "targetType": "chapter",
       "targetId": "j1-1-2",
       "enabled": true,
-      "order": 164
+      "order": 165
+    },
+    {
+      "practiceId": "practice-j1-variable-distributive-offset-difference-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-2",
+      "enabled": false,
+      "order": 165
+    },
+    {
+      "practiceId": "practice-j1-variable-distributive-pair-difference-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-2",
+      "enabled": false,
+      "order": 165
     },
     {
       "practiceId": "practice-integer-add-subtract-four-terms-drill",
@@ -48786,10 +50021,7 @@ window.practiceLibraryStore = {
     ],
     "j1-1-2": [
       "practice-j1-1-2-average-baseline-mixed",
-      "practice-j1-distributive-law-drill",
-      "practice-j1-common-factor-drill",
-      "practice-j1-common-factor-four-terms-drill",
-      "practice-j1-variable-distributive-nearby-drill",
+      "practice-j1-distributive-common-factor-mixed",
       "practice-j1-variable-distributive-eval-drill",
       "practice-integer-add-subtract-four-terms-drill",
       "practice-three-products-add-subtract-drill",
@@ -48945,17 +50177,17 @@ window.practiceLibraryStore = {
       "practice-j5-1-1-life-ratio-five-subtypes"
     ],
     "j5-1-2": [
+      "practice-j5-1-2-parallel-core-five-subtypes",
       "practice-j5-1-2-triangle-parallel-five-subtypes",
-      "practice-j5-1-2-trapezoid-parallel-three-subtypes",
-      "practice-j5-1-2-area-ratio-three-subtypes",
-      "practice-j5-1-2-measurement-two-subtypes"
+      "practice-j5-1-2-trapezoid-parallel-three-subtypes"
     ],
     "j5-1-3": [
       "practice-j5-1-3-similarity-criteria-five-subtypes",
       "practice-j5-1-3-ratio-area-four-subtypes",
+      "practice-j5-1-3-scaling-five-subtypes",
       "practice-j5-1-3-right-altitude-three-subtypes",
-      "practice-j5-1-3-angle-bisector-three-subtypes",
-      "practice-j5-1-3-measurement-four-subtypes"
+      "practice-j5-1-3-measurement-four-subtypes",
+      "practice-j5-1-3-butterfly-three-subtypes"
     ],
     "j5-1-4": [
       "practice-j5-1-4-measurement-five-subtypes",

@@ -2881,16 +2881,20 @@ class DualDbGui:
         return self._selected_practice_record_rows()
 
     def _open_practice_pdf_count_dialog(self, records: list[dict]):
-        result = {"counts": None}
+        result = {"options": None}
         dialog = tk.Toplevel(self.root)
-        dialog.title("設定無限練習 PDF 題數")
+        dialog.title("設定無限練習匯出")
         dialog.transient(self.root)
         dialog.grab_set()
-        dialog.geometry("760x560")
-        dialog.minsize(680, 460)
+        dialog.geometry("780x650")
+        dialog.minsize(700, 540)
         dialog.resizable(True, True)
 
         mode_var = tk.StringVar(value="same")
+        export_order_var = tk.StringVar(value="separate")
+        answer_mode_var = tk.StringVar(value="detail")
+        question_spacing_var = tk.StringVar(value="18")
+        markdown_gap_var = tk.StringVar(value="0")
         same_count_var = tk.StringVar(value="5")
         entry_vars: dict[str, tk.StringVar] = {}
 
@@ -2898,7 +2902,7 @@ class DualDbGui:
         header.pack(fill="x")
         ttk.Label(
             header,
-            text="請選擇每個無限練習要出幾題。會輸出一份 PDF：全部題目在前，答案在後。",
+            text="請選擇每個無限練習要出幾題，並設定題目與答案的輸出順序。",
         ).pack(anchor="w")
 
         mode_box = ttk.LabelFrame(dialog, text="題數模式", padding=12)
@@ -2910,6 +2914,39 @@ class DualDbGui:
         same_entry = ttk.Entry(same_row, textvariable=same_count_var, width=8)
         same_entry.pack(side="left", padx=(8, 0))
         ttk.Radiobutton(mode_box, text="每一個無限練習各自指定題數", variable=mode_var, value="custom").pack(anchor="w")
+
+        order_box = ttk.LabelFrame(dialog, text="輸出順序", padding=12)
+        order_box.pack(fill="x", padx=12, pady=(0, 8))
+        ttk.Radiobutton(
+            order_box,
+            text="全部題目在前，全部答案在後",
+            variable=export_order_var,
+            value="separate",
+        ).pack(anchor="w")
+        ttk.Radiobutton(
+            order_box,
+            text="一類題目 + 一類答案，再下一類題目 + 答案",
+            variable=export_order_var,
+            value="interleaved",
+        ).pack(anchor="w", pady=(4, 0))
+
+        answer_box = ttk.LabelFrame(dialog, text="答案內容", padding=12)
+        answer_box.pack(fill="x", padx=12, pady=(0, 8))
+        ttk.Radiobutton(answer_box, text="簡答", variable=answer_mode_var, value="simple").pack(anchor="w")
+        ttk.Radiobutton(answer_box, text="詳解", variable=answer_mode_var, value="detail").pack(anchor="w", pady=(4, 0))
+
+        layout_box = ttk.LabelFrame(dialog, text="版面間距", padding=12)
+        layout_box.pack(fill="x", padx=12, pady=(0, 8))
+        spacing_row = ttk.Frame(layout_box)
+        spacing_row.pack(fill="x")
+        ttk.Label(spacing_row, text="每題下方間距").pack(side="left")
+        ttk.Entry(spacing_row, textvariable=question_spacing_var, width=8).pack(side="left", padx=(8, 4))
+        ttk.Label(spacing_row, text="px（建議 18；可填 0～80）").pack(side="left")
+        markdown_gap_row = ttk.Frame(layout_box)
+        markdown_gap_row.pack(fill="x", pady=(8, 0))
+        ttk.Label(markdown_gap_row, text="MD 題目每題後空白行").pack(side="left")
+        ttk.Entry(markdown_gap_row, textvariable=markdown_gap_var, width=8).pack(side="left", padx=(8, 4))
+        ttk.Label(markdown_gap_row, text="行（例如 2 或 3；可填 0～5）").pack(side="left")
 
         button_bar = ttk.Frame(dialog, padding=(12, 0, 12, 12))
         button_bar.pack(side="bottom", fill="x")
@@ -2956,7 +2993,7 @@ class DualDbGui:
                     count = int(str(same_count_var.get()).strip() or "0")
                     if count <= 0:
                         raise ValueError
-                    result["counts"] = {
+                    counts = {
                         str(record.get("id", "")).strip(): count
                         for record in records
                     }
@@ -2968,19 +3005,37 @@ class DualDbGui:
                         if count <= 0:
                             raise ValueError
                         counts[rid] = count
-                    result["counts"] = counts
             except ValueError:
                 return messagebox.showerror("題數錯誤", "題數請填正整數。", parent=dialog)
+            try:
+                question_spacing_px = int(str(question_spacing_var.get()).strip() or "18")
+                if question_spacing_px < 0 or question_spacing_px > 80:
+                    raise ValueError
+            except ValueError:
+                return messagebox.showerror("間距錯誤", "每題下方間距請填 0～80 的整數。", parent=dialog)
+            try:
+                markdown_gap_lines = int(str(markdown_gap_var.get()).strip() or "0")
+                if markdown_gap_lines < 0 or markdown_gap_lines > 5:
+                    raise ValueError
+            except ValueError:
+                return messagebox.showerror("MD 間距錯誤", "MD 題目每題後空白行請填 0～5 的整數。", parent=dialog)
+            result["options"] = {
+                "counts": counts,
+                "export_order": export_order_var.get() if export_order_var.get() in {"separate", "interleaved"} else "separate",
+                "answer_mode": answer_mode_var.get() if answer_mode_var.get() in {"simple", "detail"} else "detail",
+                "question_spacing_px": question_spacing_px,
+                "markdown_gap_lines": markdown_gap_lines,
+            }
             dialog.destroy()
 
         ttk.Button(button_bar, text="取消", command=dialog.destroy).pack(side="right", padx=(8, 0))
-        ttk.Button(button_bar, text="確認匯出 PDF", style="Compact.TButton", command=apply_counts).pack(side="right")
+        ttk.Button(button_bar, text="確認匯出", style="Compact.TButton", command=apply_counts).pack(side="right")
         dialog.bind("<Return>", lambda _event: apply_counts())
         dialog.bind("<Escape>", lambda _event: dialog.destroy())
         same_entry.focus_set()
 
         dialog.wait_window()
-        return result["counts"]
+        return result["options"]
 
     def _open_practice_export_format_dialog(self):
         result = {"format": None}
@@ -3018,6 +3073,10 @@ class DualDbGui:
         show_answer: bool,
         seed: str = "",
         combined: bool = False,
+        export_order: str = "separate",
+        answer_mode: str = "detail",
+        question_spacing_px: int = 18,
+        markdown_gap_lines: int = 0,
     ):
         styles_uri = self._asset_uri("styles.css")
         formulas_uri = self._asset_uri("formulas.js")
@@ -3047,6 +3106,17 @@ class DualDbGui:
         title = "無限練習題目與答案" if combined else ("無限練習答案卷" if show_answer else "無限練習題目卷")
         show_answer_js = "true" if show_answer else "false"
         mode_js = json.dumps("combined" if combined else ("answer" if show_answer else "question"), ensure_ascii=False)
+        export_order_js = json.dumps(export_order if export_order in {"separate", "interleaved"} else "separate", ensure_ascii=False)
+        answer_mode_js = json.dumps(answer_mode if answer_mode in {"simple", "detail"} else "detail", ensure_ascii=False)
+        try:
+            question_spacing_px = max(0, min(80, int(question_spacing_px)))
+        except (TypeError, ValueError):
+            question_spacing_px = 18
+        try:
+            markdown_gap_lines = max(0, min(5, int(markdown_gap_lines)))
+        except (TypeError, ValueError):
+            markdown_gap_lines = 0
+        markdown_gap_lines_js = json.dumps(markdown_gap_lines, ensure_ascii=False)
         return f"""<!doctype html>
 <html lang="zh-Hant">
 <head>
@@ -3068,11 +3138,13 @@ class DualDbGui:
     .practice-pdf-part + .practice-pdf-part {{ margin-top: 22px; }}
     .practice-pdf-part.answer-part {{ break-before: page; page-break-before: always; }}
     .practice-pdf-part-title {{ margin: 0 0 2px; padding: 10px 14px; border-radius: 10px; background: #efe4d2; font-size: 20px; }}
+    .practice-pdf-set {{ break-inside: avoid; page-break-inside: avoid; padding-bottom: 18px; }}
+    .practice-pdf-set + .practice-pdf-set {{ margin-top: 22px; }}
     .practice-pdf-card {{ padding: 18px 18px; border-radius: 12px; background: #fffdf8; border: 1px solid #e2d9c6; break-inside: avoid; page-break-inside: avoid; }}
     .practice-pdf-card h2 {{ margin: 0 0 8px; font-size: 18px; }}
     .practice-pdf-card h3 {{ margin: 12px 0 8px; font-size: 16px; }}
     .practice-pdf-card ol {{ margin: 12px 0 0; padding-left: 1.8em; }}
-    .practice-pdf-card li {{ margin: 0 0 18px; line-height: 2.0; }}
+    .practice-pdf-card li {{ margin: 0 0 {question_spacing_px}px; line-height: 2.0; }}
     .practice-intro {{ margin: 0 0 8px; color: #6f6658; }}
     .card-actions, .interactive-actions {{ display: none !important; }}
   </style>
@@ -3091,6 +3163,9 @@ class DualDbGui:
     window.__practicePdfShowAnswer = {show_answer_js};
     window.__practicePdfSeed = {seed_json};
     window.__practicePdfMode = {mode_js};
+    window.__practicePdfExportOrder = {export_order_js};
+    window.__practicePdfAnswerMode = {answer_mode_js};
+    window.__practicePdfMarkdownGapLines = {markdown_gap_lines_js};
   </script>
   <script defer src="{formulas_uri}"></script>
   <script defer src="{formula_content_uri}"></script>
@@ -3157,6 +3232,21 @@ class DualDbGui:
       return escapePracticePdfHtml(text);
     }}
 
+    function simplifyPracticeAnswer(value) {{
+      var text = String(value == null ? '' : value).trim();
+      if (!text || window.__practicePdfAnswerMode !== 'simple') return text;
+      var answerMatch = text.match(/(?:簡答|答案)[:：]\\s*([\\s\\S]*?)(?=(?:。|；|\\n)?\\s*(?:過程|解析|詳解|說明)[:：]|$)/);
+      if (answerMatch && answerMatch[1] && answerMatch[1].trim()) {{
+        return answerMatch[1].trim();
+      }}
+      var parts = text.split(/(?:。|；|\\n)?\\s*(?:過程|解析|詳解|說明)[:：]/);
+      return (parts[0] || text).trim();
+    }}
+
+    function getPracticeAnswerLines(set) {{
+      return (set.answers || []).map(simplifyPracticeAnswer);
+    }}
+
     function getPracticePdfConfig(entry) {{
       var id = entry && (entry.practiceId || (entry.item && entry.item.id));
       if (!id || !window.formulaPracticeStore || typeof window.formulaPracticeStore.getConfig !== 'function') return null;
@@ -3195,7 +3285,7 @@ class DualDbGui:
     }}
 
     function renderPracticePdfCard(set, showAnswer) {{
-      var list = showAnswer ? set.answers : set.questions;
+      var list = showAnswer ? getPracticeAnswerLines(set) : set.questions;
       var emptyText = showAnswer ? '目前沒有答案。' : '目前沒有產生題目。';
       var body = list.length
         ? '<ol>' + list.map(function(line) {{ return '<li>' + renderPracticePdfLine(line) + '</li>'; }}).join('') + '</ol>'
@@ -3212,10 +3302,41 @@ class DualDbGui:
       return String(value == null ? '' : value).replace(/\\r\\n/g, '\\n').replace(/\\n{{3,}}/g, '\\n\\n').trim();
     }}
 
+    function pushPracticeMarkdownItems(lines, values, gapOverride) {{
+      var gapLines = gapOverride == null
+        ? Math.max(0, Math.min(5, Number(window.__practicePdfMarkdownGapLines || 0)))
+        : Math.max(0, Math.min(5, Number(gapOverride || 0)));
+      (values || []).forEach(function(value, idx) {{
+        lines.push((idx + 1) + '. ' + cleanPracticeMarkdownText(value));
+        for (var gap = 0; gap < gapLines; gap += 1) {{
+          lines.push('&nbsp;');
+        }}
+      }});
+    }}
+
     function buildPracticeMarkdown(generatedSets) {{
       var lines = [];
       lines.push('# ' + {json.dumps(title, ensure_ascii=False)});
       lines.push('');
+      if (window.__practicePdfExportOrder === 'interleaved') {{
+        generatedSets.forEach(function(set) {{
+          lines.push('## ' + set.title);
+          lines.push('');
+          lines.push('### 題目');
+          lines.push('');
+          if (set.intro) {{
+            lines.push(cleanPracticeMarkdownText(set.intro));
+            lines.push('');
+          }}
+          pushPracticeMarkdownItems(lines, set.questions);
+          lines.push('');
+          lines.push('### 答案');
+          lines.push('');
+          pushPracticeMarkdownItems(lines, getPracticeAnswerLines(set), 0);
+          lines.push('');
+        }});
+        return lines.join('\\n').trim() + '\\n';
+      }}
       lines.push('## 題目');
       lines.push('');
       generatedSets.forEach(function(set) {{
@@ -3224,18 +3345,14 @@ class DualDbGui:
           lines.push(cleanPracticeMarkdownText(set.intro));
           lines.push('');
         }}
-        (set.questions || []).forEach(function(q, idx) {{
-          lines.push((idx + 1) + '. ' + cleanPracticeMarkdownText(q));
-        }});
+        pushPracticeMarkdownItems(lines, set.questions);
         lines.push('');
       }});
       lines.push('## 答案');
       lines.push('');
       generatedSets.forEach(function(set) {{
         lines.push('### ' + set.title);
-        (set.answers || []).forEach(function(a, idx) {{
-          lines.push((idx + 1) + '. ' + cleanPracticeMarkdownText(a));
-        }});
+        pushPracticeMarkdownItems(lines, getPracticeAnswerLines(set), 0);
         lines.push('');
       }});
       return lines.join('\\n').trim() + '\\n';
@@ -3255,6 +3372,16 @@ class DualDbGui:
       var mdNode = document.getElementById('practice-md-export');
       if (mdNode) mdNode.textContent = buildPracticeMarkdown(generatedSets);
       if (window.__practicePdfMode === 'combined') {{
+        if (window.__practicePdfExportOrder === 'interleaved') {{
+          root.innerHTML = generatedSets.map(function(set, idx) {{
+            return '<section class="practice-pdf-set">' +
+              '<h2 class="practice-pdf-part-title">題型 ' + (idx + 1) + '：' + escapePracticePdfHtml(set.title) + '</h2>' +
+              renderPracticePdfCard(set, false) +
+              renderPracticePdfCard(set, true) +
+              '</section>';
+          }}).join('');
+          return;
+        }}
         root.innerHTML =
           '<section class="practice-pdf-part question-part"><h2 class="practice-pdf-part-title">題目</h2>' +
           generatedSets.map(function(set) {{ return renderPracticePdfCard(set, false); }}).join('') +
@@ -3279,9 +3406,14 @@ class DualDbGui:
         if not records:
             return messagebox.showwarning("提醒", "請先在『練習本體』模式選取至少一筆無限練習。")
 
-        counts = self._open_practice_pdf_count_dialog(records)
-        if not counts:
+        export_options = self._open_practice_pdf_count_dialog(records)
+        if not export_options:
             return
+        counts = export_options.get("counts", {})
+        export_order = export_options.get("export_order", "separate")
+        answer_mode = export_options.get("answer_mode", "detail")
+        question_spacing_px = export_options.get("question_spacing_px", 18)
+        markdown_gap_lines = export_options.get("markdown_gap_lines", 0)
 
         export_format = self._open_practice_export_format_dialog()
         if not export_format:
@@ -3292,10 +3424,13 @@ class DualDbGui:
             return
         out_dir = Path(out_dir)
 
-        if len(records) == 1:
-            base_name = self._safe_filename(str(records[0].get("title", "")).strip() or "practice")
-        else:
-            base_name = f"selected-practices-{len(records)}"
+        default_base_name = (
+            self._safe_filename(str(records[0].get("title", "")).strip() or "practice")
+            if len(records) == 1
+            else f"selected-practices-{len(records)}"
+        )
+        date_prefix = datetime.now().strftime("%Y%m%d_%H%M%S")
+        base_name = self._safe_filename(f"{date_prefix}_{default_base_name}")
 
         combined_pdf = out_dir / f"{base_name}_題目與答案.pdf"
         combined_md = out_dir / f"{base_name}_題目與答案.md"
@@ -3307,6 +3442,10 @@ class DualDbGui:
             show_answer=False,
             seed=export_seed,
             combined=True,
+            export_order=export_order,
+            answer_mode=answer_mode,
+            question_spacing_px=question_spacing_px,
+            markdown_gap_lines=markdown_gap_lines,
         )
 
         if export_format == "md":
