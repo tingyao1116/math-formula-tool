@@ -14,14 +14,20 @@
     chapterFilter: document.getElementById("mobileChapterFilter"),
     keywordInput: document.getElementById("mobileKeywordInput"),
     resetButton: document.getElementById("mobileResetButton"),
+    chapterTitle: document.getElementById("mobileChapterTitle"),
+    chapterProgress: document.getElementById("mobileChapterProgress"),
+    prevChapterButton: document.getElementById("mobilePrevChapterButton"),
+    nextChapterButton: document.getElementById("mobileNextChapterButton"),
+    prevPracticeButton: document.getElementById("mobilePrevPracticeButton"),
+    nextPracticeButton: document.getElementById("mobileNextPracticeButton"),
     practiceTitle: document.getElementById("mobilePracticeTitle"),
     practiceProgress: document.getElementById("mobilePracticeProgress"),
     practiceMeta: document.getElementById("mobilePracticeMeta"),
     practiceHint: document.getElementById("mobilePracticeHint"),
     generateButton: document.getElementById("mobileGenerateButton"),
     regenerateButton: document.getElementById("mobileRegenerateButton"),
-    prevButton: document.getElementById("mobilePrevButton"),
-    nextButton: document.getElementById("mobileNextButton"),
+    prevQuestionButton: document.getElementById("mobilePrevQuestionButton"),
+    nextQuestionButton: document.getElementById("mobileNextQuestionButton"),
     summaryButton: document.getElementById("mobileSummaryButton"),
     detailButton: document.getElementById("mobileDetailButton"),
     questionOutput: document.getElementById("mobileQuestionOutput"),
@@ -34,18 +40,14 @@
 
   const chapterOptions = (store.getChapterOptions?.() || []).slice();
   const chapterOptionByCode = new Map(chapterOptions.map((entry) => [String(entry?.code || "").trim(), entry]));
-  const topicById = new Map(
-    (store.getCurrentFormulas?.() || []).map((item) => [String(item?.id || "").trim(), item])
-  );
+  const topicById = new Map((store.getCurrentFormulas?.() || []).map((item) => [String(item?.id || "").trim(), item]));
   const urlParams = new URLSearchParams(window.location.search);
-  const initialChapterCode = String(urlParams.get("chapter") || "all").trim();
-  const initialPracticeId = String(urlParams.get("practice") || "").trim();
 
   const state = {
     gradeKey: "all",
-    chapterCode: initialChapterCode || "all",
+    chapterCode: String(urlParams.get("chapter") || "all").trim() || "all",
     keyword: "",
-    selectedPracticeId: initialPracticeId,
+    selectedPracticeId: String(urlParams.get("practice") || "").trim(),
   };
 
   function escapeHtml(value) {
@@ -106,10 +108,13 @@
           grade: String(record?.grade || topic?.grade || chapterMeta?.grade || "").trim(),
           difficulty: String(record?.difficulty || practiceStore.getConfig?.(id)?.difficulty || "").trim(),
           tags: Array.isArray(record?.tags) ? record.tags.map((value) => String(value || "").trim()).filter(Boolean) : [],
-          order: chapterOrder.get(chapterCode) ?? 999,
+          chapterOrder: chapterOrder.get(chapterCode) ?? 999,
         };
       })
-      .sort((a, b) => (a.order - b.order) || a.title.localeCompare(b.title, "zh-Hant"));
+      .sort((a, b) =>
+        (a.chapterOrder - b.chapterOrder) ||
+        a.title.localeCompare(b.title, "zh-Hant")
+      );
   }
 
   const practiceItems = buildPracticeItems();
@@ -126,29 +131,48 @@
     return rows;
   }
 
-  function getVisibleItems() {
+  function getGradeFilteredItems() {
     const keyword = state.keyword.trim().toLowerCase();
     return practiceItems.filter((item) => {
       const gradeOk = state.gradeKey === "all" || getGradeKey(item.stage, item.grade) === state.gradeKey;
-      const chapterOk = state.chapterCode === "all" || item.chapterCode === state.chapterCode;
       const keywordOk = !keyword || [item.title, item.chapterLabel, item.stage, item.grade, ...item.tags]
         .join(" ")
         .toLowerCase()
         .includes(keyword);
-      return gradeOk && chapterOk && keywordOk;
+      return gradeOk && keywordOk;
     });
   }
 
+  function getVisibleChapterCodes() {
+    const seen = new Set();
+    const codes = [];
+    getGradeFilteredItems().forEach((item) => {
+      if (!item.chapterCode || seen.has(item.chapterCode)) return;
+      seen.add(item.chapterCode);
+      codes.push(item.chapterCode);
+    });
+    return codes.sort((a, b) => {
+      const orderA = chapterOptions.findIndex((entry) => String(entry?.code || "").trim() === a);
+      const orderB = chapterOptions.findIndex((entry) => String(entry?.code || "").trim() === b);
+      return orderA - orderB;
+    });
+  }
+
+  function getChapterItems() {
+    if (state.chapterCode === "all") return [];
+    return getGradeFilteredItems().filter((item) => item.chapterCode === state.chapterCode);
+  }
+
   function ensureSelectedPractice() {
-    const visibleItems = getVisibleItems();
-    if (!visibleItems.length) {
+    const chapterItems = getChapterItems();
+    if (!chapterItems.length) {
       state.selectedPracticeId = "";
       return null;
     }
-    const selected = visibleItems.find((item) => item.id === state.selectedPracticeId);
+    const selected = chapterItems.find((item) => item.id === state.selectedPracticeId);
     if (selected) return selected;
-    state.selectedPracticeId = visibleItems[0].id;
-    return visibleItems[0];
+    state.selectedPracticeId = chapterItems[0].id;
+    return chapterItems[0];
   }
 
   function getSelectedPractice() {
@@ -165,11 +189,10 @@
   }
 
   function populateChapterFilter() {
-    const visibleByGrade = practiceItems.filter((item) => state.gradeKey === "all" || getGradeKey(item.stage, item.grade) === state.gradeKey);
-    const codes = new Set(visibleByGrade.map((item) => item.chapterCode).filter(Boolean));
-    const options = ['<option value="all">全部章節</option>']
+    const visibleCodes = new Set(getVisibleChapterCodes());
+    const options = ['<option value="all">請先選章節</option>']
       .concat(chapterOptions
-        .filter((entry) => codes.has(String(entry?.code || "").trim()))
+        .filter((entry) => visibleCodes.has(String(entry?.code || "").trim()))
         .map((entry) => `<option value="${escapeHtml(String(entry.code || "").trim())}">${escapeHtml(String(entry.label || entry.code || "").trim())}</option>`));
     elements.chapterFilter.innerHTML = options.join("");
     if (![...elements.chapterFilter.options].some((option) => option.value === state.chapterCode)) {
@@ -178,39 +201,7 @@
     elements.chapterFilter.value = state.chapterCode;
   }
 
-  function renderList() {
-    const visibleItems = getVisibleItems();
-    elements.listTitle.textContent = state.chapterCode === "all"
-      ? "全部可做練習"
-      : (chapterOptionByCode.get(state.chapterCode)?.label || state.chapterCode);
-    elements.listCount.textContent = `共 ${visibleItems.length} 組`;
-    if (!visibleItems.length) {
-      elements.practiceList.innerHTML = '<p class="empty-state">目前沒有符合條件的練習。</p>';
-      return;
-    }
-    elements.practiceList.innerHTML = visibleItems.map((item) => {
-      const session = toolkit.readStoredPracticeSession?.(item.id);
-      const total = Array.isArray(session?.questions) ? session.questions.length : 0;
-      const progressText = total
-        ? `第 ${Number(session.currentIndex || 0) + 1} / ${total} 題`
-        : "尚未出題";
-      const timeText = session?.generatedAt ? `上次：${formatTimeText(session.generatedAt)}` : "未開始";
-      return `
-        <button type="button" class="practice-mobile-list__item ${item.id === state.selectedPracticeId ? "is-active" : ""}" data-mobile-practice-id="${escapeHtml(item.id)}">
-          <div class="practice-mobile-list__main">
-            <strong>${escapeHtml(item.title)}</strong>
-            <span>${escapeHtml(item.chapterLabel)}</span>
-          </div>
-          <div class="practice-mobile-list__meta">
-            <span>${escapeHtml(progressText)}</span>
-            <span>${escapeHtml(timeText)}</span>
-          </div>
-        </button>
-      `;
-    }).join("");
-  }
-
-  function setQuestionOutputs(questionHtml, summaryHtml, detailHtml) {
+  function renderQuestionOutputs(questionHtml, summaryHtml, detailHtml) {
     elements.questionOutput.innerHTML = questionHtml;
     elements.summaryOutput.innerHTML = summaryHtml;
     elements.detailOutput.innerHTML = detailHtml;
@@ -218,30 +209,121 @@
     elements.detailOutput.classList.add("is-hidden");
   }
 
+  function renderChapterNavigator() {
+    const visibleChapterCodes = getVisibleChapterCodes();
+    if (!visibleChapterCodes.length || state.chapterCode === "all") {
+      elements.chapterTitle.textContent = "請先選一個章節";
+      elements.chapterProgress.textContent = "";
+      elements.prevChapterButton.disabled = true;
+      elements.nextChapterButton.disabled = true;
+      return;
+    }
+
+    const index = visibleChapterCodes.indexOf(state.chapterCode);
+    const label = chapterOptionByCode.get(state.chapterCode)?.label || state.chapterCode;
+    elements.chapterTitle.textContent = label;
+    elements.chapterProgress.textContent = `第 ${index + 1} / ${visibleChapterCodes.length} 章`;
+    elements.prevChapterButton.disabled = index <= 0;
+    elements.nextChapterButton.disabled = index < 0 || index >= visibleChapterCodes.length - 1;
+  }
+
+  function renderPracticeList() {
+    const chapterItems = getChapterItems();
+    if (state.chapterCode === "all") {
+      elements.listTitle.textContent = "請先選一個章節";
+      elements.listCount.textContent = "";
+      elements.practiceList.innerHTML = '<p class="empty-state">先從上方章節下拉選單選一章，再進入章節頁面做題。</p>';
+      return;
+    }
+
+    const chapterLabel = chapterOptionByCode.get(state.chapterCode)?.label || state.chapterCode;
+    elements.listTitle.textContent = `${chapterLabel} 題型清單`;
+    elements.listCount.textContent = `共 ${chapterItems.length} 組`;
+
+    if (!chapterItems.length) {
+      elements.practiceList.innerHTML = '<p class="empty-state">這個章節目前沒有符合條件的題型。</p>';
+      return;
+    }
+
+    elements.practiceList.innerHTML = chapterItems.map((item, index) => {
+      const session = toolkit.readStoredPracticeSession?.(item.id);
+      const total = Array.isArray(session?.questions) ? session.questions.length : 0;
+      const progressText = total
+        ? `第 ${Number(session.currentIndex || 0) + 1} / ${total} 題`
+        : "尚未出題";
+      const timeText = session?.generatedAt ? `上次：${formatTimeText(session.generatedAt)}` : "未開始";
+      return `
+        <button
+          type="button"
+          class="practice-mobile-list__item ${item.id === state.selectedPracticeId ? "is-active" : ""}"
+          data-mobile-practice-id="${escapeHtml(item.id)}"
+        >
+          <div class="practice-mobile-list__main">
+            <strong>${index + 1}. ${escapeHtml(item.title)}</strong>
+            <span>${escapeHtml(progressText)}</span>
+          </div>
+          <div class="practice-mobile-list__meta">
+            <span>${escapeHtml(item.chapterLabel)}</span>
+            <span>${escapeHtml(timeText)}</span>
+          </div>
+        </button>
+      `;
+    }).join("");
+  }
+
+  function renderPracticeNavigator() {
+    const chapterItems = getChapterItems();
+    const selected = ensureSelectedPractice();
+    if (!selected || !chapterItems.length) {
+      elements.prevPracticeButton.disabled = true;
+      elements.nextPracticeButton.disabled = true;
+      return;
+    }
+    const index = chapterItems.findIndex((item) => item.id === selected.id);
+    elements.prevPracticeButton.disabled = index <= 0;
+    elements.nextPracticeButton.disabled = index < 0 || index >= chapterItems.length - 1;
+  }
+
   function renderPlayer() {
     const selected = ensureSelectedPractice();
-    if (!selected) {
-      elements.practiceTitle.textContent = "目前沒有可做的練習";
+    renderPracticeNavigator();
+
+    if (state.chapterCode === "all") {
+      elements.practiceTitle.textContent = "請先選一個題型";
       elements.practiceProgress.textContent = "";
       elements.practiceMeta.innerHTML = "";
-      elements.practiceHint.textContent = "請先調整篩選條件。";
-      setQuestionOutputs("目前沒有可做的練習。", "", "");
-      [elements.generateButton, elements.regenerateButton, elements.prevButton, elements.nextButton, elements.summaryButton, elements.detailButton]
+      elements.practiceHint.textContent = "先選章節，再在章節裡選題型。";
+      renderQuestionOutputs("尚未出題。先選章節與題型。", "", "");
+      [elements.generateButton, elements.regenerateButton, elements.prevQuestionButton, elements.nextQuestionButton, elements.summaryButton, elements.detailButton]
         .forEach((button) => { button.disabled = true; });
       return;
     }
 
+    if (!selected) {
+      elements.practiceTitle.textContent = "這個章節目前沒有題型";
+      elements.practiceProgress.textContent = "";
+      elements.practiceMeta.innerHTML = "";
+      elements.practiceHint.textContent = "這個章節目前沒有符合條件的練習。";
+      renderQuestionOutputs("這個章節目前沒有符合條件的練習。", "", "");
+      [elements.generateButton, elements.regenerateButton, elements.prevQuestionButton, elements.nextQuestionButton, elements.summaryButton, elements.detailButton]
+        .forEach((button) => { button.disabled = true; });
+      return;
+    }
+
+    const chapterItems = getChapterItems();
+    const practiceIndex = chapterItems.findIndex((item) => item.id === selected.id);
     const session = toolkit.readStoredPracticeSession?.(selected.id) || null;
+
     elements.practiceTitle.textContent = selected.title;
+    elements.practiceProgress.textContent = `題型 ${practiceIndex + 1} / ${chapterItems.length}`;
     elements.practiceMeta.innerHTML = renderMetaChips(selected);
     elements.generateButton.disabled = false;
     elements.regenerateButton.disabled = false;
 
     if (!session) {
-      elements.practiceProgress.textContent = "尚未出題";
-      elements.practiceHint.textContent = "按「出題」會建立這一輪題目；下次再回來時，會接著同一輪。";
-      setQuestionOutputs("尚未出題。按「出題」開始，之後再回來會接著這一輪。", "", "");
-      [elements.prevButton, elements.nextButton, elements.summaryButton, elements.detailButton]
+      elements.practiceHint.textContent = "按「出題」會建立這一輪題目；下次回來會接著同一輪。";
+      renderQuestionOutputs("尚未出題。按「出題」開始，之後回來會接著同一輪。", "", "");
+      [elements.prevQuestionButton, elements.nextQuestionButton, elements.summaryButton, elements.detailButton]
         .forEach((button) => { button.disabled = true; });
       return;
     }
@@ -249,53 +331,77 @@
     const total = session.questions.length;
     const index = Math.min(Math.max(Number(session.currentIndex) || 0, 0), Math.max(total - 1, 0));
     const progressText = `第 ${index + 1} / ${total} 題`;
-    elements.practiceProgress.textContent = progressText;
     elements.practiceHint.textContent = session.generatedAt
-      ? `這一輪建立於 ${formatTimeText(session.generatedAt)}。按「出題」會接續這一輪，按「重新出題」才會換新題。`
-      : "按「出題」會接續這一輪，按「重新出題」才會換新題。";
+      ? `這一輪建立於 ${formatTimeText(session.generatedAt)}。按「出題」會回到這一輪，按「重新出題」才會換新題。`
+      : "按「出題」會回到這一輪，按「重新出題」才會換新題。";
 
-    const question = session.questions[index] || "";
-    const summary = session.summaryAnswers[index] || "目前沒有簡答。";
-    const detail = session.answers[index] || "目前沒有詳解。";
-    setQuestionOutputs(
-      `<div class="practice-mobile-question"><div class="practice-mobile-question__index">${escapeHtml(progressText)}</div><div>${toolkit.renderRichTextLine(question)}</div></div>`,
-      toolkit.renderRichTextLine(summary),
-      toolkit.renderRichTextLine(detail)
+    renderQuestionOutputs(
+      `<div class="practice-mobile-question"><div class="practice-mobile-question__index">${escapeHtml(progressText)}</div><div>${toolkit.renderRichTextLine(session.questions[index] || "")}</div></div>`,
+      toolkit.renderRichTextLine(session.summaryAnswers[index] || "目前沒有簡答。"),
+      toolkit.renderRichTextLine(session.answers[index] || "目前沒有詳解。")
     );
 
-    elements.prevButton.disabled = index <= 0;
-    elements.nextButton.disabled = index >= total - 1;
+    elements.prevQuestionButton.disabled = index <= 0;
+    elements.nextQuestionButton.disabled = index >= total - 1;
     elements.summaryButton.disabled = false;
     elements.detailButton.disabled = false;
   }
 
   function syncUrl() {
     const params = new URLSearchParams();
-    if (state.chapterCode && state.chapterCode !== "all") params.set("chapter", state.chapterCode);
+    if (state.chapterCode !== "all") params.set("chapter", state.chapterCode);
     if (state.selectedPracticeId) params.set("practice", state.selectedPracticeId);
-    const next = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ""}`;
-    window.history.replaceState({}, "", next);
+    const url = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ""}`;
+    window.history.replaceState({}, "", url);
   }
 
   function renderAll() {
     populateGradeFilter();
     populateChapterFilter();
     ensureSelectedPractice();
-    renderList();
+    renderChapterNavigator();
+    renderPracticeList();
     renderPlayer();
     syncUrl();
+  }
+
+  function moveChapter(step) {
+    const codes = getVisibleChapterCodes();
+    if (!codes.length || state.chapterCode === "all") return;
+    const index = codes.indexOf(state.chapterCode);
+    const nextIndex = index + step;
+    if (nextIndex < 0 || nextIndex >= codes.length) return;
+    state.chapterCode = codes[nextIndex];
+    state.selectedPracticeId = "";
+    renderAll();
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }
+
+  function movePractice(step) {
+    const chapterItems = getChapterItems();
+    const selected = ensureSelectedPractice();
+    if (!selected || !chapterItems.length) return;
+    const index = chapterItems.findIndex((item) => item.id === selected.id);
+    const nextIndex = index + step;
+    if (nextIndex < 0 || nextIndex >= chapterItems.length) return;
+    state.selectedPracticeId = chapterItems[nextIndex].id;
+    renderAll();
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }
 
   function bindEvents() {
     elements.gradeFilter.addEventListener("change", (event) => {
       state.gradeKey = event.target.value || "all";
       state.chapterCode = "all";
+      state.selectedPracticeId = "";
       renderAll();
     });
 
     elements.chapterFilter.addEventListener("change", (event) => {
       state.chapterCode = event.target.value || "all";
+      state.selectedPracticeId = "";
       renderAll();
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     });
 
     elements.keywordInput.addEventListener("input", (event) => {
@@ -307,14 +413,21 @@
       state.gradeKey = "all";
       state.chapterCode = "all";
       state.keyword = "";
+      state.selectedPracticeId = "";
       renderAll();
     });
+
+    elements.prevChapterButton.addEventListener("click", () => moveChapter(-1));
+    elements.nextChapterButton.addEventListener("click", () => moveChapter(1));
+    elements.prevPracticeButton.addEventListener("click", () => movePractice(-1));
+    elements.nextPracticeButton.addEventListener("click", () => movePractice(1));
 
     elements.practiceList.addEventListener("click", (event) => {
       const button = event.target.closest("[data-mobile-practice-id]");
       if (!button) return;
       state.selectedPracticeId = String(button.getAttribute("data-mobile-practice-id") || "").trim();
       renderAll();
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     });
 
     elements.generateButton.addEventListener("click", () => {
@@ -331,7 +444,7 @@
       renderAll();
     });
 
-    elements.prevButton.addEventListener("click", () => {
+    elements.prevQuestionButton.addEventListener("click", () => {
       const item = getSelectedPractice();
       const session = item ? toolkit.readStoredPracticeSession?.(item.id) : null;
       if (!item || !session) return;
@@ -339,7 +452,7 @@
       renderAll();
     });
 
-    elements.nextButton.addEventListener("click", () => {
+    elements.nextQuestionButton.addEventListener("click", () => {
       const item = getSelectedPractice();
       const session = item ? toolkit.readStoredPracticeSession?.(item.id) : null;
       if (!item || !session) return;

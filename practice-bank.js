@@ -406,11 +406,15 @@
             <p class="detail-note">這一區會從本章每個無限練習各出 1 題，適合做章節總複習。</p>
           </div>
         </div>
-        <div class="interactive-actions">
-          <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">??</button>
-          <button type="button" class="ghost-button" data-chapter-composite-regenerate="${escapeHtml(state.chapterCode)}">????</button>
-          <button type="button" class="ghost-button" data-chapter-composite-summary-reveal="${escapeHtml(state.chapterCode)}">??</button>
-          <button type="button" class="ghost-button" data-chapter-composite-detail-reveal="${escapeHtml(state.chapterCode)}">??</button>
+        <div class="interactive-actions interactive-actions--stacked">
+          <div class="interactive-actions__row interactive-actions__row--split">
+            <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">??</button>
+            <button type="button" class="ghost-button" data-chapter-composite-regenerate="${escapeHtml(state.chapterCode)}">????</button>
+          </div>
+          <div class="interactive-actions__row interactive-actions__row--split">
+            <button type="button" class="ghost-button" data-chapter-composite-summary-reveal="${escapeHtml(state.chapterCode)}">??</button>
+            <button type="button" class="ghost-button" data-chapter-composite-detail-reveal="${escapeHtml(state.chapterCode)}">??</button>
+          </div>
         </div>
         <div class="interactive-output" data-chapter-composite-output>?????????????????????</div>
         <div class="interactive-output is-hidden" data-chapter-composite-answer></div>

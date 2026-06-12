@@ -2066,20 +2066,7 @@ select {
 
 .chapter-composite-practice .interactive-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 10px;
-}
-
-.chapter-composite-practice .interactive-actions > .ghost-button:first-child {
-  grid-column: 1 / -1;
-}
-
-.chapter-composite-practice .interactive-actions > .ghost-button:nth-child(2) {
-  justify-self: start;
-}
-
-.chapter-composite-practice .interactive-actions > .ghost-button:nth-child(3) {
-  justify-self: end;
 }
 
 .calculator-fields {

@@ -14,7 +14,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
-    <link rel="stylesheet" href="styles.css?v=20260612-practice-mobile-v1" />
+    <link rel="stylesheet" href="styles.css?v=20260612-practice-mobile-v2" />
   </head>
   <body>
     <div class="page-shell practice-mobile-page">
@@ -23,7 +23,7 @@
           <p class="eyebrow">學生練習版</p>
           <h1>手機練習版</h1>
           <p class="hero__lead">
-            這一版會記住每一個練習上次做到哪裡。按「出題」會接著上一次那一輪，按「重新出題」才會換成新的題目。
+            先進入章節，再在章節內一路往下做。按「出題」會接上次那一輪，按「重新出題」才會換成新的題目。
           </p>
           <div class="hero__quicklinks">
             <a class="ghost-link" href="practice-bank.html">回無限練習總覽</a>
@@ -34,7 +34,7 @@
 
       <main class="practice-mobile-layout">
         <section class="panel practice-mobile-filters">
-          <h2>挑選練習</h2>
+          <h2>先選章節</h2>
           <label class="field">
             <span>年級</span>
             <select id="mobileGradeFilter"></select>
@@ -50,16 +50,36 @@
           <button id="mobileResetButton" class="ghost-button" type="button">重設篩選</button>
         </section>
 
+        <section class="panel practice-mobile-nav-panel">
+          <div class="practice-mobile-nav-panel__header">
+            <div>
+              <p class="summary-label">目前章節</p>
+              <h2 id="mobileChapterTitle">請先選一個章節</h2>
+            </div>
+            <p id="mobileChapterProgress" class="summary-count"></p>
+          </div>
+          <div class="interactive-actions interactive-actions--stacked">
+            <div class="interactive-actions__row interactive-actions__row--split">
+              <button id="mobilePrevChapterButton" type="button" class="ghost-button">上一章</button>
+              <button id="mobileNextChapterButton" type="button" class="ghost-button">下一章</button>
+            </div>
+            <div class="interactive-actions__row interactive-actions__row--split">
+              <button id="mobilePrevPracticeButton" type="button" class="ghost-button">上一題型</button>
+              <button id="mobileNextPracticeButton" type="button" class="ghost-button">下一題型</button>
+            </div>
+          </div>
+        </section>
+
         <section class="panel practice-mobile-player">
           <div class="practice-mobile-player__header">
             <div>
-              <p class="summary-label">目前練習</p>
-              <h2 id="mobilePracticeTitle">請先選一個練習</h2>
+              <p class="summary-label">目前題型</p>
+              <h2 id="mobilePracticeTitle">請先選一個題型</h2>
             </div>
             <p id="mobilePracticeProgress" class="summary-count"></p>
           </div>
           <div id="mobilePracticeMeta" class="meta-row"></div>
-          <p id="mobilePracticeHint" class="detail-note">按下方練習卡後，就可以開始或繼續這一組題目。</p>
+          <p id="mobilePracticeHint" class="detail-note">先選章節，再選題型開始做題。</p>
 
           <div class="interactive-actions interactive-actions--stacked practice-mobile-player__actions">
             <div class="interactive-actions__row interactive-actions__row--split">
@@ -67,8 +87,8 @@
               <button id="mobileRegenerateButton" type="button" class="ghost-button">重新出題</button>
             </div>
             <div class="interactive-actions__row interactive-actions__row--split">
-              <button id="mobilePrevButton" type="button" class="ghost-button">上一題</button>
-              <button id="mobileNextButton" type="button" class="ghost-button">下一題</button>
+              <button id="mobilePrevQuestionButton" type="button" class="ghost-button">上一題</button>
+              <button id="mobileNextQuestionButton" type="button" class="ghost-button">下一題</button>
             </div>
             <div class="interactive-actions__row interactive-actions__row--split">
               <button id="mobileSummaryButton" type="button" class="ghost-button">簡答</button>
@@ -76,7 +96,7 @@
             </div>
           </div>
 
-          <div id="mobileQuestionOutput" class="interactive-output">尚未出題。按「出題」開始，之後再回來會接著這一輪。</div>
+          <div id="mobileQuestionOutput" class="interactive-output">尚未出題。按「出題」開始，之後回來會接著同一輪。</div>
           <div class="interactive-answer-panels">
             <div id="mobileSummaryOutput" class="interactive-output is-hidden"></div>
             <div id="mobileDetailOutput" class="interactive-output is-hidden"></div>
@@ -86,8 +106,8 @@
         <section class="panel practice-mobile-list-panel">
           <div class="practice-mobile-list-panel__header">
             <div>
-              <p class="summary-label">全部可做練習</p>
-              <h2 id="mobileListTitle">練習清單</h2>
+              <p class="summary-label">章節題型</p>
+              <h2 id="mobileListTitle">請先選一個章節</h2>
             </div>
             <p id="mobileListCount" class="summary-count"></p>
           </div>
@@ -109,7 +129,7 @@
     <script defer src="chapter-closings.js?v=20260507-main-theme-layer-v2"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
     <script defer src="formula-core.js?v=20260612-practice-session-v1"></script>
-    <script defer src="practice-mobile.js?v=20260612-practice-mobile-v1"></script>
+    <script defer src="practice-mobile.js?v=20260612-practice-mobile-v2"></script>
     <script defer src="pwa.js"></script>
   </body>
 </html>
