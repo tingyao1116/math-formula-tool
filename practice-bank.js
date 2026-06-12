@@ -408,15 +408,15 @@
         </div>
         <div class="interactive-actions interactive-actions--stacked">
           <div class="interactive-actions__row interactive-actions__row--split">
-            <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">??</button>
-            <button type="button" class="ghost-button" data-chapter-composite-regenerate="${escapeHtml(state.chapterCode)}">????</button>
+            <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">出題</button>
+            <button type="button" class="ghost-button" data-chapter-composite-regenerate="${escapeHtml(state.chapterCode)}">重新出題</button>
           </div>
           <div class="interactive-actions__row interactive-actions__row--split">
-            <button type="button" class="ghost-button" data-chapter-composite-summary-reveal="${escapeHtml(state.chapterCode)}">??</button>
-            <button type="button" class="ghost-button" data-chapter-composite-detail-reveal="${escapeHtml(state.chapterCode)}">??</button>
+            <button type="button" class="ghost-button" data-chapter-composite-summary-reveal="${escapeHtml(state.chapterCode)}">簡答</button>
+            <button type="button" class="ghost-button" data-chapter-composite-detail-reveal="${escapeHtml(state.chapterCode)}">詳解</button>
           </div>
         </div>
-        <div class="interactive-output" data-chapter-composite-output>?????????????????????</div>
+        <div class="interactive-output" data-chapter-composite-output>請先按出題；若想換新的一輪，再按重新出題。</div>
         <div class="interactive-output is-hidden" data-chapter-composite-answer></div>
       </section>
     `;
@@ -690,10 +690,10 @@
           </div>
         </div>
         <div class="interactive-actions">
-          <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">產生題目</button>
+          <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">出題</button>
           <button type="button" class="ghost-button" data-chapter-composite-reveal="${escapeHtml(state.chapterCode)}">顯示答案</button>
         </div>
-        <div class="interactive-output" data-chapter-composite-output>按下「產生題目」後，這裡會顯示本章綜合練習。</div>
+        <div class="interactive-output" data-chapter-composite-output>請先按出題；若想換新的一輪，再按重新出題。</div>
         <div class="interactive-output is-hidden" data-chapter-composite-answer></div>
       </section>
     `;
@@ -1352,11 +1352,15 @@
             <p class="detail-note">${escapeHtml(note)}</p>
           </div>
         </div>
-        <div class="interactive-actions">
-          <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">出題</button>
-          <button type="button" class="ghost-button" data-chapter-composite-regenerate="${escapeHtml(state.chapterCode)}">重新出題</button>
-          <button type="button" class="ghost-button" data-chapter-composite-summary-reveal="${escapeHtml(state.chapterCode)}">簡答</button>
-          <button type="button" class="ghost-button" data-chapter-composite-detail-reveal="${escapeHtml(state.chapterCode)}">詳解</button>
+        <div class="interactive-actions interactive-actions--stacked">
+          <div class="interactive-actions__row interactive-actions__row--split">
+            <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">出題</button>
+            <button type="button" class="ghost-button" data-chapter-composite-regenerate="${escapeHtml(state.chapterCode)}">重新出題</button>
+          </div>
+          <div class="interactive-actions__row interactive-actions__row--split">
+            <button type="button" class="ghost-button" data-chapter-composite-summary-reveal="${escapeHtml(state.chapterCode)}">簡答</button>
+            <button type="button" class="ghost-button" data-chapter-composite-detail-reveal="${escapeHtml(state.chapterCode)}">詳解</button>
+          </div>
         </div>
         <div class="interactive-output" data-chapter-composite-output>請先按出題；若想換新的一輪，再按重新出題。</div>
         <div class="interactive-answer-panels">

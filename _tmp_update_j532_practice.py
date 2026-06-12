@@ -8,7 +8,7 @@ DB = ROOT / "program-db" / "database" / "practice-db.json"
 
 CHAPTER = "j5-3-2"
 STAGE = "國中"
-GRADE = "九年級"
+GRADE = "國三"
 TERM = "上"
 CHAPTER_NAME = "幾何證明的常用工具"
 DOMAIN = "幾何"

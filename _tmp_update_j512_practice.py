@@ -9,7 +9,7 @@ ASSIGN = ROOT / 'data' / 'formula-practice-assignments.js'
 
 CHAPTER = 'j5-1-2'
 STAGE = '國中'
-GRADE = '九年級'
+GRADE = '國三'
 TERM = '上'
 CHAPTER_NAME = '平行線截比例線段'
 DOMAIN = '幾何'
