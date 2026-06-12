@@ -5,9 +5,9 @@ window.formulaPracticeAssignmentStore = {
     "schema": "practice-db-v1",
     "count": 0,
     "assignmentCount": 0,
-    "practiceCount": 1393,
-    "bindingCount": 530,
-    "updatedAt": "2026-06-08T00:00:00+08:00"
+    "practiceCount": 1420,
+    "bindingCount": 551,
+    "updatedAt": "2026-06-10T00:00:00+08:00"
   },
   "byId": {},
   "catalog": {}
@@ -17,9 +17,9 @@ window.practiceLibraryStore = {
     "schema": "practice-db-v1",
     "count": 0,
     "assignmentCount": 0,
-    "practiceCount": 1393,
-    "bindingCount": 530,
-    "updatedAt": "2026-06-08T00:00:00+08:00"
+    "practiceCount": 1420,
+    "bindingCount": 551,
+    "updatedAt": "2026-06-10T00:00:00+08:00"
   },
   "byId": {
     "practice-abs-both-sides-advanced-drill": {
@@ -1269,40 +1269,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-integer-add-subtract-four-terms-drill": {
-      "id": "practice-integer-add-subtract-four-terms-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "四正負數加減",
-      "generatorKey": "integer-add-subtract-four-terms-drill",
-      "difficulty": "easy",
-      "questionCount": 10,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-1-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "正負數與數線",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "整數",
-        "加減",
-        "練習"
-      ],
-      "usage": [
-        "用來熟悉正負數混合加減。"
-      ],
-      "examples": [],
-      "tips": [
-        "遇到減負數，先轉成加正數。",
-        "可以先把正數和負數分組。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
     "practice-j1-1-2-average-baseline-mixed": {
       "id": "practice-j1-1-2-average-baseline-mixed",
       "enabled": true,
@@ -1510,19 +1476,19 @@ window.practiceLibraryStore = {
       "questionCount": 5,
       "subtypeCount": 5,
       "relatedPracticeIds": [],
-      "chapterCode": "j1-1-3",
+      "chapterCode": "j3-3-2",
       "stage": "國中",
-      "grade": "國一",
+      "grade": "國二",
       "term": "上學期",
-      "chapter": "指數律",
+      "chapter": "因式分解",
       "domain": "代數",
       "prompt": "",
       "answer": "",
       "tags": [
+        "j3-3-2",
         "因式分解",
-        "拆項配方",
-        "平方差",
-        "無限練習"
+        "公式",
+        "拆項配方"
       ],
       "usage": [],
       "examples": [],
@@ -1540,19 +1506,19 @@ window.practiceLibraryStore = {
       "questionCount": 5,
       "subtypeCount": 5,
       "relatedPracticeIds": [],
-      "chapterCode": "j1-1-3",
+      "chapterCode": "j3-3-3",
       "stage": "國中",
-      "grade": "國一",
+      "grade": "國二",
       "term": "上學期",
-      "chapter": "指數律",
+      "chapter": "因式分解",
       "domain": "代數",
       "prompt": "",
       "answer": "",
       "tags": [
+        "j3-3-3",
         "因式分解",
-        "雙十字交乘",
-        "二元二次式",
-        "無限練習"
+        "十字交乘",
+        "雙十字"
       ],
       "usage": [],
       "examples": [],
@@ -1985,51 +1951,8 @@ window.practiceLibraryStore = {
       "id": "practice-j1-variable-distributive-eval-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "分配律應用（大數字拆解）",
-      "generatorKey": "j1-variable-distributive-application-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [
-        "practice-j1-variable-distributive-pair-difference-drill",
-        "practice-j1-variable-distributive-offset-difference-drill",
-        "practice-j1-common-factor-then-distributive-drill"
-      ],
-      "chapterCode": "j1-1-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "正負數與數線",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-1",
-        "分配律",
-        "提出公因數",
-        "大數字",
-        "綜合"
-      ],
-      "usage": [
-        "把大數字重組成容易心算的結構，先拆成固定型，再用分配律快速化簡。"
-      ],
-      "examples": [],
-      "tips": [
-        "先看兩項能不能拆成 a(b+1)－(a+1)b 這種會互相抵消的型。",
-        "若兩項前面還有共同因數，先提出公因數，再處理括號內。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "只看到數字大就直接硬乘，沒有先找可抵消的結構。",
-        "提出公因數後，忘記括號內兩項都還要一起保留。"
-      ]
-    },
-    "practice-j1-variable-distributive-nearby-drill": {
-      "id": "practice-j1-variable-distributive-nearby-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "利用未知數的分配律",
-      "generatorKey": "j1-variable-distributive-nearby-drill",
+      "title": "已知甲×a，求(甲+b)×a",
+      "generatorKey": "j1-variable-distributive-eval-drill",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 1,
@@ -2044,17 +1967,24 @@ window.practiceLibraryStore = {
       "answer": "",
       "tags": [
         "j1-1",
-        "未知數設法",
-        "近數技巧",
-        "無限練習"
+        "分配律",
+        "求值",
+        "已知乘積",
+        "補算"
       ],
       "usage": [
-        "相近兩數乘積差，設一個為 a、另一個用 a 表示；另一對設 b。"
+        "已知一個乘積後，利用分配律補出相差 1 到 4 個單位的新乘積。"
       ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "看到 (甲+b)×a，可以先拆成 甲×a + b×a。",
+        "先用已知的 甲×a，再補上 b×a。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "知道 甲×a 的值後，忘記還要再加上 b×a。",
+        "把 (甲+b)×a 誤看成 甲×(a+b)。"
+      ]
     },
     "practice-linear-cross-expand-move-solve-drill": {
       "id": "practice-linear-cross-expand-move-solve-drill",
@@ -8255,12 +8185,13 @@ window.practiceLibraryStore = {
       "generatorKey": "j3-3-2-formula-mixed",
       "difficulty": "medium",
       "questionCount": 6,
-      "subtypeCount": 4,
+      "subtypeCount": 5,
       "relatedPracticeIds": [
         "practice-j3-3-2-diff-squares",
         "practice-j3-3-2-perfect-square",
         "practice-j3-3-2-composite-formula",
-        "practice-j3-3-2-substitution-formula"
+        "practice-j3-3-2-substitution-formula",
+        "practice-j1-1-3-biquadratic-split-square-factoring"
       ],
       "chapterCode": "j3-3-2",
       "stage": "國中",
@@ -8277,7 +8208,7 @@ window.practiceLibraryStore = {
         "綜合"
       ],
       "usage": [
-        "四小類整合成一個大類練習。"
+        "把公式辨識、套用與拆項配方題一起整合成一個大類練習。"
       ],
       "examples": [],
       "tips": [],
@@ -8409,11 +8340,12 @@ window.practiceLibraryStore = {
       "generatorKey": "j3-3-3-cross-core-mixed",
       "difficulty": "medium",
       "questionCount": 6,
-      "subtypeCount": 3,
+      "subtypeCount": 4,
       "relatedPracticeIds": [
         "practice-j3-3-3-cross-coeff-one",
         "practice-j3-3-3-cross-coeff-nonone",
-        "practice-j3-3-3-cross-preprocess"
+        "practice-j3-3-3-cross-preprocess",
+        "practice-j1-1-3-binary-quadratic-cross-factoring"
       ],
       "chapterCode": "j3-3-3",
       "stage": "國中",
@@ -8430,7 +8362,7 @@ window.practiceLibraryStore = {
         "無限練習"
       ],
       "usage": [
-        "前三小類整合成一大類。"
+        "把十字交乘的核心題型與雙十字交乘法題一起整合成一大類。"
       ],
       "examples": [],
       "tips": [],
@@ -46285,6 +46217,1125 @@ window.practiceLibraryStore = {
         "只做到提出公因數就停住，沒有繼續化簡括號內。",
         "提出公因數後，括號內某一項的數字或正負號抄錯。"
       ]
+    },
+    "practice-abs-variable-basic-drill": {
+      "id": "practice-abs-variable-basic-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "含字母的去絕對值基礎題",
+      "generatorKey": "abs-variable-basic-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "絕對值",
+        "字母化簡",
+        "去絕對值",
+        "無限練習"
+      ],
+      "usage": [
+        "已知字母正負或大小關係，練習把絕對值符號正確拆開。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷絕對值內是正是負，再決定原式保留或補負號。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "知道 a<0 卻仍把 |a| 寫成 a。",
+        "看到 |a-b| 沒先判斷 a-b 的正負。"
+      ]
+    },
+    "practice-abs-short-mixed-calc-drill": {
+      "id": "practice-abs-short-mixed-calc-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "絕對值四則混合短題",
+      "generatorKey": "abs-short-mixed-calc-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "絕對值",
+        "四則混合",
+        "去絕對值",
+        "無限練習"
+      ],
+      "usage": [
+        "適合做成短練習，訓練學生先去絕對值再做整體運算。"
+      ],
+      "examples": [],
+      "tips": [
+        "絕對值先處理，再做加減，避免順序顛倒。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "去掉絕對值後忘記帶符號。"
+      ]
+    },
+    "practice-abs-context-interpretation-drill": {
+      "id": "practice-abs-context-interpretation-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "絕對值文字情境題",
+      "generatorKey": "abs-context-interpretation-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "絕對值",
+        "生活情境",
+        "距離觀念",
+        "無限練習"
+      ],
+      "usage": [
+        "把絕對值連回溫度、樓層、盈虧與海平面等生活情境。"
+      ],
+      "examples": [],
+      "tips": [
+        "絕對值常表示和基準點的距離，不是在比較大小。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把負號當成答案的一部分，沒有轉成距離概念。"
+      ]
+    },
+    "practice-number-line-equidistant-point-drill": {
+      "id": "practice-number-line-equidistant-point-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等距點問題",
+      "generatorKey": "number-line-equidistant-point-drill",
+      "difficulty": "easy",
+      "questionCount": 6,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數線",
+        "中點",
+        "等距",
+        "無限練習"
+      ],
+      "usage": [
+        "利用等距概念反推中點，是中點觀念的核心變形。"
+      ],
+      "examples": [],
+      "tips": [
+        "到兩點距離相等，就是兩點的中點。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看到等距只算距離，卻沒連到中點。"
+      ]
+    },
+    "practice-number-line-fixed-distance-point-drill": {
+      "id": "practice-number-line-fixed-distance-point-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "固定距離找點",
+      "generatorKey": "number-line-fixed-distance-point-drill",
+      "difficulty": "easy",
+      "questionCount": 6,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數線",
+        "距離",
+        "兩解",
+        "無限練習"
+      ],
+      "usage": [
+        "已知與某點距離固定，找所有可能位置。"
+      ],
+      "examples": [],
+      "tips": [
+        "離某點固定距離，通常要想左邊一個、右邊一個。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只寫出一個點，漏掉另一側的解。"
+      ]
+    },
+    "practice-number-line-midpoint-distance-reverse-mixed-drill": {
+      "id": "practice-number-line-midpoint-distance-reverse-mixed-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "中點與距離反推綜合",
+      "generatorKey": "number-line-midpoint-distance-reverse-mixed-drill",
+      "difficulty": "medium",
+      "questionCount": 6,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數線",
+        "中點",
+        "距離",
+        "反推",
+        "無限練習"
+      ],
+      "usage": [
+        "已知中點與全長，反推兩端點位置。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把總距離除以 2，得到中點到每端的距離。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把 AB 直接當成中點到端點距離。"
+      ]
+    },
+    "practice-coordinate-origin-shift-only-drill": {
+      "id": "practice-coordinate-origin-shift-only-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "只改原點",
+      "generatorKey": "coordinate-origin-shift-only-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數線",
+        "新原點",
+        "平移",
+        "無限練習"
+      ],
+      "usage": [
+        "只改原點，練習新舊坐標的平移換算。"
+      ],
+      "examples": [],
+      "tips": [
+        "新坐標 = 舊坐標 - 新原點。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把減新原點寫成加新原點。"
+      ]
+    },
+    "practice-coordinate-unit-scale-only-drill": {
+      "id": "practice-coordinate-unit-scale-only-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "只改單位長",
+      "generatorKey": "coordinate-unit-scale-only-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數線",
+        "單位長",
+        "縮放",
+        "無限練習"
+      ],
+      "usage": [
+        "原點不變，只調整單位長，練習坐標縮放。"
+      ],
+      "examples": [],
+      "tips": [
+        "新單位變大，數值通常會變小；新單位變小，數值通常會變大。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "該除以倍數時誤寫成乘倍數。"
+      ]
+    },
+    "practice-coordinate-origin-then-unit-drill": {
+      "id": "practice-coordinate-origin-then-unit-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "先改原點再改單位長",
+      "generatorKey": "coordinate-origin-then-unit-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數線",
+        "新原點",
+        "單位長",
+        "綜合",
+        "無限練習"
+      ],
+      "usage": [
+        "同時改原點與單位長，練習先平移再縮放。"
+      ],
+      "examples": [],
+      "tips": [
+        "順序固定是先改原點，再依新單位長換算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "先縮放再平移，順序顛倒。"
+      ]
+    },
+    "practice-coordinate-old-new-inverse-drill": {
+      "id": "practice-coordinate-old-new-inverse-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "新舊坐標互推",
+      "generatorKey": "coordinate-old-new-inverse-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數線",
+        "新舊坐標",
+        "反推",
+        "無限練習"
+      ],
+      "usage": [
+        "已知新坐標反推舊坐標，補足逆向思考能力。"
+      ],
+      "examples": [],
+      "tips": [
+        "反推時先把新單位換回舊單位，再加回新原點。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "乘除方向弄反，或忘了加回原點。"
+      ]
+    },
+    "practice-coordinate-new-line-distance-midpoint-drill": {
+      "id": "practice-coordinate-new-line-distance-midpoint-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "新數線下的距離與中點",
+      "generatorKey": "coordinate-new-line-distance-midpoint-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數線",
+        "新單位",
+        "距離",
+        "中點",
+        "無限練習"
+      ],
+      "usage": [
+        "換到新數線後，再求距離與中點，做觀念綜合。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把點換成新坐標，再用新數線的中點與距離公式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "原坐標和新坐標混在一起算。"
+      ]
+    },
+    "practice-j1-1-1-absolute-value-core-nine-subtypes": {
+      "id": "practice-j1-1-1-absolute-value-core-nine-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "絕對值基礎與計算九小類綜合",
+      "generatorKey": "j1-1-1-absolute-value-core-nine-subtypes",
+      "difficulty": "medium",
+      "questionCount": 8,
+      "subtypeCount": 9,
+      "relatedPracticeIds": [
+        "practice-abs-count-basic-drill",
+        "practice-abs-count-two-sided-drill",
+        "practice-abs-count-reverse-drill",
+        "practice-abs-variable-basic-drill",
+        "practice-abs-remove-and-calc-drill",
+        "practice-abs-short-mixed-calc-drill",
+        "practice-abs-two-group-calc-drill",
+        "practice-abs-four-terms-calc-drill",
+        "practice-abs-context-interpretation-drill"
+      ],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-1",
+        "數線與絕對值",
+        "絕對值",
+        "基礎計算",
+        "九小類綜合"
+      ],
+      "usage": [
+        "先把絕對值的意義、個數、化簡、計算與生活情境串起來，再做分層練習。"
+      ],
+      "examples": [],
+      "tips": [
+        "絕對值先判斷正負，再拆符號；如果題目在問距離，要把它看成和 0 或和某點的距離。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把絕對值直接去掉，沒有判斷裡面是正還是負。",
+        "只會算式題，不會把情境中的負號轉成距離觀念。"
+      ]
+    },
+    "practice-j1-1-1-midpoint-distance-nine-subtypes": {
+      "id": "practice-j1-1-1-midpoint-distance-nine-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "數線上的中點與距離九小類綜合",
+      "generatorKey": "j1-1-1-midpoint-distance-nine-subtypes",
+      "difficulty": "medium",
+      "questionCount": 8,
+      "subtypeCount": 9,
+      "relatedPracticeIds": [
+        "practice-distance-formula",
+        "practice-midpoint-formula",
+        "practice-midpoint-reverse-drill",
+        "practice-number-line-equidistant-point-drill",
+        "practice-number-line-fixed-distance-point-drill",
+        "practice-midpoint-distance-combined-drill",
+        "practice-midpoint-plus-distance-drill",
+        "practice-number-line-midpoint-distance-reverse-mixed-drill",
+        "practice-three-point-quick-distance-drill"
+      ],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-1",
+        "數線與絕對值",
+        "中點",
+        "距離",
+        "九小類綜合"
+      ],
+      "usage": [
+        "把距離、中點、等距與反推題串成同一條主線，訓練數線上的位置感。"
+      ],
+      "examples": [],
+      "tips": [
+        "距離用絕對值，中點用平均數；反推題先想中點左右各差多少。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把中點當成距離的一半，而不是位置的平均。",
+        "固定距離找點時漏掉左右兩側其中一個解。"
+      ]
+    },
+    "practice-j1-1-1-origin-unit-six-subtypes": {
+      "id": "practice-j1-1-1-origin-unit-six-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "改變原點與單位長六小類綜合",
+      "generatorKey": "j1-1-1-origin-unit-six-subtypes",
+      "difficulty": "medium",
+      "questionCount": 6,
+      "subtypeCount": 6,
+      "relatedPracticeIds": [
+        "practice-coordinate-origin-shift-only-drill",
+        "practice-coordinate-unit-scale-only-drill",
+        "practice-coordinate-origin-then-unit-drill",
+        "practice-coordinate-old-new-inverse-drill",
+        "practice-coordinate-new-line-distance-midpoint-drill",
+        "practice-coordinate-origin-unit-change"
+      ],
+      "chapterCode": "j1-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-1",
+        "數線與絕對值",
+        "新原點",
+        "單位長",
+        "六小類綜合"
+      ],
+      "usage": [
+        "先理解只改原點、只改單位長，再進入新舊坐標互推與綜合應用。"
+      ],
+      "examples": [],
+      "tips": [
+        "同時改原點與單位長時，先平移，再縮放。反推時則先還原單位，再加回原點。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把平移和縮放順序顛倒。",
+        "新舊單位換算時把乘除方向寫反。"
+      ]
+    },
+    "practice-integer-add-subtract-brackets-drill": {
+      "id": "practice-integer-add-subtract-brackets-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "四正負數加減",
+      "generatorKey": "integer-add-subtract-brackets-drill",
+      "difficulty": "easy",
+      "questionCount": 8,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-2",
+        "正負數",
+        "四項加減",
+        "整數運算"
+      ],
+      "usage": [
+        "用四個正負整數做加減混合運算，熟悉符號轉換與分組計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "遇到減負數，先轉成加正數。",
+        "可以先把正數和負數分組。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "容易把減負數直接當成減法不變號。"
+      ]
+    },
+    "practice-average-baseline-difference-drill": {
+      "id": "practice-average-baseline-difference-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平均變動與總和差",
+      "generatorKey": "average-baseline-difference-drill",
+      "difficulty": "easy",
+      "questionCount": 6,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-2",
+        "平均",
+        "基準量",
+        "總和"
+      ],
+      "usage": [
+        "先看平均每人差多少，再乘上人數，連回總和改變。"
+      ],
+      "examples": [],
+      "tips": [
+        "平均改變幾，表示每個人都一起改變幾。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看到平均差，忘記乘上總人數。"
+      ]
+    },
+    "practice-opposite-number-sum-difference-drill": {
+      "id": "practice-opposite-number-sum-difference-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "相反數與和差關係",
+      "generatorKey": "opposite-number-sum-difference-drill",
+      "difficulty": "easy",
+      "questionCount": 6,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-2",
+        "相反數",
+        "和差",
+        "關係式"
+      ],
+      "usage": [
+        "補強相反數的基本定義，並連到兩數相差的反推。"
+      ],
+      "examples": [],
+      "tips": [
+        "相反數大小相同、正負相反。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把相反數誤當成絕對值相等但同號。"
+      ]
+    },
+    "practice-weird-symbol-reverse-drill": {
+      "id": "practice-weird-symbol-reverse-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "奇怪符號反求未知數",
+      "generatorKey": "weird-symbol-reverse-drill",
+      "difficulty": "medium",
+      "questionCount": 4,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-2",
+        "自訂運算",
+        "反推",
+        "未知數"
+      ],
+      "usage": [
+        "從符號規則出發，代回方程後反求未知數。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把奇怪符號翻譯成熟悉的代數式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "知道規則後沒有真的代回去整理。"
+      ]
+    },
+    "practice-j1-1-2-distributive-factor-nine-subtypes": {
+      "id": "practice-j1-1-2-distributive-factor-nine-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分配律與提出公因數",
+      "generatorKey": "j1-1-2-distributive-factor-nine-subtypes",
+      "difficulty": "medium",
+      "questionCount": 8,
+      "subtypeCount": 8,
+      "relatedPracticeIds": [
+        "practice-j1-distributive-law-drill",
+        "practice-j1-common-factor-drill",
+        "practice-j1-common-factor-four-terms-drill",
+        "practice-j1-common-factor-four-terms-signed-drill",
+        "practice-j1-variable-distributive-eval-drill",
+        "practice-j1-variable-distributive-pair-difference-drill",
+        "practice-j1-variable-distributive-offset-difference-drill",
+        "practice-j1-common-factor-then-distributive-drill"
+      ],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-2",
+        "分配律",
+        "提出公因數",
+        "八小類綜合"
+      ],
+      "usage": [
+        "把分配律、公因數、補差與相鄰差一型題目集中在同一大類。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷是要展開，還是要反過來提出共同因數。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "題目還沒看結構就急著算。"
+      ]
+    },
+    "practice-j1-1-2-integer-mixed-three-subtypes": {
+      "id": "practice-j1-1-2-integer-mixed-three-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "正負數混合運算",
+      "generatorKey": "j1-1-2-integer-mixed-three-subtypes",
+      "difficulty": "easy",
+      "questionCount": 8,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [
+        "practice-integer-add-subtract-brackets-drill",
+        "practice-integer-canceling-brackets-drill",
+        "practice-integer-absolute-reduce-drill",
+        "practice-integer-abs-bracket-mixed-drill",
+        "practice-three-products-add-subtract-drill"
+      ],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-2",
+        "正負數",
+        "混合運算",
+        "五小類綜合"
+      ],
+      "usage": [
+        "把四正負數加減、去括號後更好算、去絕對值、絕對值與括號混合、乘法後加減收在同一組。"
+      ],
+      "examples": [],
+      "tips": [
+        "先處理符號，再做整體加減。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "正負號轉換錯誤，導致整串都算歪。"
+      ]
+    },
+    "practice-j1-1-2-baseline-average-four-subtypes": {
+      "id": "practice-j1-1-2-baseline-average-four-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "基準量與平均數",
+      "generatorKey": "j1-1-2-baseline-average-four-subtypes",
+      "difficulty": "medium",
+      "questionCount": 8,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [
+        "practice-j1-1-2-average-baseline-mixed",
+        "practice-time-baseline-basic-drill",
+        "practice-time-baseline-advanced-drill",
+        "practice-average-baseline-difference-drill"
+      ],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-2",
+        "平均",
+        "基準量",
+        "四小類綜合"
+      ],
+      "usage": [
+        "讓學生在基準值、時間基準與平均變動之間來回切換。"
+      ],
+      "examples": [],
+      "tips": [
+        "先想哪個量固定，再看變動的是誰。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把平均與總和的角色混在一起。"
+      ]
+    },
+    "practice-j1-1-2-opposite-three-subtypes": {
+      "id": "practice-j1-1-2-opposite-three-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "相反數與關係式",
+      "generatorKey": "j1-1-2-opposite-three-subtypes",
+      "difficulty": "medium",
+      "questionCount": 6,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-opposite-number-equation-drill",
+        "practice-same-shift-opposite-drill",
+        "practice-opposite-number-sum-difference-drill"
+      ],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-2",
+        "相反數",
+        "關係式",
+        "三小類綜合"
+      ],
+      "usage": [
+        "從單純相反數，帶到兩數同加同減後成相反數的題型。"
+      ],
+      "examples": [],
+      "tips": [
+        "相反數可以先翻成和為 0 或正負相反來想。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看到相反數卻沒有想到兩數和為 0。"
+      ]
+    },
+    "practice-j1-1-2-weird-symbol-three-subtypes": {
+      "id": "practice-j1-1-2-weird-symbol-three-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "奇怪的符號計算",
+      "generatorKey": "j1-1-2-weird-symbol-three-subtypes",
+      "difficulty": "medium",
+      "questionCount": 6,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-weird-symbol-calc",
+        "practice-weird-symbol-calc-three-layer",
+        "practice-weird-symbol-reverse-drill"
+      ],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-2",
+        "自訂運算",
+        "奇怪符號",
+        "三小類綜合"
+      ],
+      "usage": [
+        "把符號定義、三層運算與反求未知數整理成獨立大類。"
+      ],
+      "examples": [],
+      "tips": [
+        "先看懂規則，再依順序代入。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把自訂符號當成一般加減乘除直接算。"
+      ]
+    },
+    "practice-j1-1-3-power-concept-one-subtype": {
+      "id": "practice-j1-1-3-power-concept-one-subtype",
+      "enabled": true,
+      "mode": "generator",
+      "title": "次方基礎觀念",
+      "generatorKey": "j1-1-3-power-concept-one-subtype",
+      "difficulty": "easy",
+      "questionCount": 6,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [
+        "practice-j1-1-3-sign-brackets-power-drill"
+      ],
+      "chapterCode": "j1-1-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "指數律",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-3",
+        "次方",
+        "括號",
+        "觀念"
+      ],
+      "usage": [
+        "先釐清正負號、括號與奇偶次方的判別。"
+      ],
+      "examples": [],
+      "tips": [
+        "先分清楚是 -a^n 還是 (-a)^n。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把負號和次方一起看錯位置。"
+      ]
+    },
+    "practice-j1-1-3-exponent-law-three-subtypes": {
+      "id": "practice-j1-1-3-exponent-law-three-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "指數律與運算",
+      "generatorKey": "j1-1-3-exponent-law-three-subtypes",
+      "difficulty": "medium",
+      "questionCount": 8,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-j1-1-3-exponent-law-single-rule-drill",
+        "practice-j1-1-3-exponent-law-mixed-rule-drill",
+        "practice-j1-1-3-exponent-mixed-operations-drill"
+      ],
+      "chapterCode": "j1-1-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "指數律",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-3",
+        "指數律",
+        "運算",
+        "綜合"
+      ],
+      "usage": [
+        "整合同底數、冪的冪、零次方與負次方等運算題。"
+      ],
+      "examples": [],
+      "tips": [
+        "先辨認用了哪一條法則，再決定是否可合併。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把加法也誤用成指數相加。"
+      ]
+    },
+    "practice-j1-1-3-application-one-subtype": {
+      "id": "practice-j1-1-3-application-one-subtype",
+      "enabled": true,
+      "mode": "generator",
+      "title": "指數應用",
+      "generatorKey": "j1-1-3-application-one-subtype",
+      "difficulty": "easy",
+      "questionCount": 6,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [
+        "practice-j1-1-3-exponent-word-problem-drill"
+      ],
+      "chapterCode": "j1-1-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "指數律",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-3",
+        "指數",
+        "應用",
+        "生活情境"
+      ],
+      "usage": [
+        "把指數規律帶進生活情境與文字題。"
+      ],
+      "examples": [],
+      "tips": [
+        "先翻成倍數關係，再寫成指數式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看數字大小，沒有抓到倍增倍減結構。"
+      ]
+    },
+    "practice-integer-canceling-brackets-drill": {
+      "id": "practice-integer-canceling-brackets-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "去括號後的正負數加減",
+      "generatorKey": "integer-canceling-brackets-drill",
+      "difficulty": "easy",
+      "questionCount": 8,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-2",
+        "去括號",
+        "正負數",
+        "抵消技巧"
+      ],
+      "usage": [
+        "題目設計成去括號後比原式更容易算，鼓勵學生先展開再重組。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把第二個括號前的負號分配進去。",
+        "觀察哪兩項可以先抵消或湊成整千整百。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "去括號時只改第一項，忘記括號內後面項目的符號也會改變。"
+      ]
+    },
+    "practice-integer-absolute-reduce-drill": {
+      "id": "practice-integer-absolute-reduce-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "去絕對值後的正負數加減",
+      "generatorKey": "integer-absolute-reduce-drill",
+      "difficulty": "easy",
+      "questionCount": 8,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-2",
+        "絕對值",
+        "正負數",
+        "去絕對值"
+      ],
+      "usage": [
+        "先判斷絕對值內的正負，再去絕對值做整數加減。"
+      ],
+      "examples": [],
+      "tips": [
+        "先算括號內是多少，再決定絕對值要不要變號。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "還沒判斷正負就直接把絕對值符號拿掉。"
+      ]
+    },
+    "practice-integer-abs-bracket-mixed-drill": {
+      "id": "practice-integer-abs-bracket-mixed-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "絕對值與括號混合運算",
+      "generatorKey": "integer-abs-bracket-mixed-drill",
+      "difficulty": "easy",
+      "questionCount": 8,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "正負數與數線",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-2",
+        "絕對值",
+        "括號",
+        "混合運算"
+      ],
+      "usage": [
+        "把絕對值、括號與正負數混合在同一題中，訓練先後順序。"
+      ],
+      "examples": [],
+      "tips": [
+        "先處理括號，再看絕對值，最後做整體加減。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把去絕對值和去括號的順序弄反。"
+      ]
     }
   },
   "bindings": [
@@ -46324,6 +47375,13 @@ window.practiceLibraryStore = {
       "order": 1
     },
     {
+      "practiceId": "practice-abs-count-basic-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 1
+    },
+    {
       "practiceId": "practice-abs-equation-leading-not-one-drill",
       "targetType": "chapter",
       "targetId": "j1-3-2",
@@ -46338,9 +47396,30 @@ window.practiceLibraryStore = {
       "order": 1
     },
     {
+      "practiceId": "practice-j1-1-1-absolute-value-core-nine-subtypes",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": true,
+      "order": 1
+    },
+    {
       "practiceId": "practice-j1-1-2-average-baseline-mixed",
       "targetType": "chapter",
       "targetId": "j1-1-2",
+      "enabled": false,
+      "order": 1
+    },
+    {
+      "practiceId": "practice-j1-1-2-distributive-factor-nine-subtypes",
+      "targetType": "chapter",
+      "targetId": "j1-1-2",
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "practiceId": "practice-j1-1-3-power-concept-one-subtype",
+      "targetType": "chapter",
+      "targetId": "j1-1-3",
       "enabled": true,
       "order": 1
     },
@@ -46348,7 +47427,7 @@ window.practiceLibraryStore = {
       "practiceId": "practice-j1-1-3-sign-brackets-power-drill",
       "targetType": "chapter",
       "targetId": "j1-1-3",
-      "enabled": true,
+      "enabled": false,
       "order": 1
     },
     {
@@ -46576,13 +47655,6 @@ window.practiceLibraryStore = {
       "order": 1
     },
     {
-      "practiceId": "practice-midpoint-formula",
-      "targetType": "chapter",
-      "targetId": "j1-1-1",
-      "enabled": true,
-      "order": 1
-    },
-    {
       "practiceId": "practice-nonnegative-sum-fixed-multix-drill",
       "targetType": "chapter",
       "targetId": "j1-3-2",
@@ -46737,7 +47809,35 @@ window.practiceLibraryStore = {
       "order": 1
     },
     {
+      "practiceId": "practice-abs-count-two-sided-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 2
+    },
+    {
+      "practiceId": "practice-j1-1-1-midpoint-distance-nine-subtypes",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": true,
+      "order": 2
+    },
+    {
+      "practiceId": "practice-j1-1-2-integer-mixed-three-subtypes",
+      "targetType": "chapter",
+      "targetId": "j1-1-2",
+      "enabled": true,
+      "order": 2
+    },
+    {
       "practiceId": "practice-j1-1-3-exponent-law-single-rule-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-3",
+      "enabled": false,
+      "order": 2
+    },
+    {
+      "practiceId": "practice-j1-1-3-exponent-law-three-subtypes",
       "targetType": "chapter",
       "targetId": "j1-1-3",
       "enabled": true,
@@ -47101,10 +48201,38 @@ window.practiceLibraryStore = {
       "order": 2
     },
     {
-      "practiceId": "practice-j1-1-3-exponent-law-mixed-rule-drill",
+      "practiceId": "practice-abs-count-reverse-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 3
+    },
+    {
+      "practiceId": "practice-j1-1-1-origin-unit-six-subtypes",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": true,
+      "order": 3
+    },
+    {
+      "practiceId": "practice-j1-1-2-baseline-average-four-subtypes",
+      "targetType": "chapter",
+      "targetId": "j1-1-2",
+      "enabled": true,
+      "order": 3
+    },
+    {
+      "practiceId": "practice-j1-1-3-application-one-subtype",
       "targetType": "chapter",
       "targetId": "j1-1-3",
       "enabled": true,
+      "order": 3
+    },
+    {
+      "practiceId": "practice-j1-1-3-exponent-law-mixed-rule-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-3",
+      "enabled": false,
       "order": 3
     },
     {
@@ -47409,10 +48537,24 @@ window.practiceLibraryStore = {
       "order": 3
     },
     {
+      "practiceId": "practice-abs-variable-basic-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 4
+    },
+    {
+      "practiceId": "practice-j1-1-2-opposite-three-subtypes",
+      "targetType": "chapter",
+      "targetId": "j1-1-2",
+      "enabled": true,
+      "order": 4
+    },
+    {
       "practiceId": "practice-j1-1-3-exponent-mixed-operations-drill",
       "targetType": "chapter",
       "targetId": "j1-1-3",
-      "enabled": true,
+      "enabled": false,
       "order": 4
     },
     {
@@ -47619,10 +48761,24 @@ window.practiceLibraryStore = {
       "order": 4
     },
     {
+      "practiceId": "practice-abs-remove-and-calc-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 5
+    },
+    {
+      "practiceId": "practice-j1-1-2-weird-symbol-three-subtypes",
+      "targetType": "chapter",
+      "targetId": "j1-1-2",
+      "enabled": true,
+      "order": 5
+    },
+    {
       "practiceId": "practice-j1-1-3-exponent-word-problem-drill",
       "targetType": "chapter",
       "targetId": "j1-1-3",
-      "enabled": true,
+      "enabled": false,
       "order": 5
     },
     {
@@ -47801,10 +48957,17 @@ window.practiceLibraryStore = {
       "order": 5
     },
     {
+      "practiceId": "practice-abs-short-mixed-calc-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 6
+    },
+    {
       "practiceId": "practice-j1-1-3-biquadratic-split-square-factoring",
       "targetType": "chapter",
       "targetId": "j1-1-3",
-      "enabled": true,
+      "enabled": false,
       "order": 6
     },
     {
@@ -47913,10 +49076,17 @@ window.practiceLibraryStore = {
       "order": 6
     },
     {
+      "practiceId": "practice-abs-two-group-calc-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 7
+    },
+    {
       "practiceId": "practice-j1-1-3-binary-quadratic-cross-factoring",
       "targetType": "chapter",
       "targetId": "j1-1-3",
-      "enabled": true,
+      "enabled": false,
       "order": 7
     },
     {
@@ -48004,6 +49174,13 @@ window.practiceLibraryStore = {
       "order": 7
     },
     {
+      "practiceId": "practice-abs-four-terms-calc-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 8
+    },
+    {
       "practiceId": "practice-difference-square-variable-drill",
       "targetType": "chapter",
       "targetId": "j3-1-1",
@@ -48081,6 +49258,13 @@ window.practiceLibraryStore = {
       "order": 8
     },
     {
+      "practiceId": "practice-abs-context-interpretation-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 9
+    },
+    {
       "practiceId": "practice-j1-2-3-telescoping-gap-four-sum-drill",
       "targetType": "chapter",
       "targetId": "j1-2-3",
@@ -48121,6 +49305,13 @@ window.practiceLibraryStore = {
       "targetId": "j3-1-1",
       "enabled": true,
       "order": 9
+    },
+    {
+      "practiceId": "practice-distance-formula",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 10
     },
     {
       "practiceId": "practice-j1-3-3-tiered-fee-application-drill",
@@ -48298,6 +49489,13 @@ window.practiceLibraryStore = {
       "order": 11
     },
     {
+      "practiceId": "practice-midpoint-formula",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 11
+    },
+    {
       "practiceId": "practice-s3-3-4-cramer-parameter-three-subtypes",
       "targetType": "chapter",
       "targetId": "s3-3-4",
@@ -48403,6 +49601,13 @@ window.practiceLibraryStore = {
       "order": 12
     },
     {
+      "practiceId": "practice-midpoint-reverse-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 12
+    },
+    {
       "practiceId": "practice-s3-3-4-area-transform-three-subtypes",
       "targetType": "chapter",
       "targetId": "s3-3-4",
@@ -48494,10 +49699,38 @@ window.practiceLibraryStore = {
       "order": 12
     },
     {
+      "practiceId": "practice-number-line-equidistant-point-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-number-line-fixed-distance-point-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-midpoint-distance-combined-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 15
+    },
+    {
       "practiceId": "practice-j3-1-3-polynomial-division-regular-drill",
       "targetType": "chapter",
       "targetId": "j3-1-3",
       "enabled": true,
+      "order": 16
+    },
+    {
+      "practiceId": "practice-midpoint-plus-distance-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
       "order": 16
     },
     {
@@ -48508,6 +49741,13 @@ window.practiceLibraryStore = {
       "order": 17
     },
     {
+      "practiceId": "practice-number-line-midpoint-distance-reverse-mixed-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 17
+    },
+    {
       "practiceId": "practice-j3-1-3-coeff-sum-drill",
       "targetType": "chapter",
       "targetId": "j3-1-3",
@@ -48515,11 +49755,32 @@ window.practiceLibraryStore = {
       "order": 18
     },
     {
+      "practiceId": "practice-three-point-quick-distance-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 18
+    },
+    {
+      "practiceId": "practice-coordinate-origin-shift-only-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 19
+    },
+    {
       "practiceId": "practice-j3-1-3-remainder-theorem-drill",
       "targetType": "chapter",
       "targetId": "j3-1-3",
       "enabled": true,
       "order": 19
+    },
+    {
+      "practiceId": "practice-coordinate-unit-scale-only-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 20
     },
     {
       "practiceId": "practice-j3-1-3-factor-theorem-drill",
@@ -48543,11 +49804,39 @@ window.practiceLibraryStore = {
       "order": 20
     },
     {
+      "practiceId": "practice-coordinate-origin-then-unit-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 21
+    },
+    {
+      "practiceId": "practice-coordinate-old-new-inverse-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 22
+    },
+    {
+      "practiceId": "practice-coordinate-new-line-distance-midpoint-drill",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 23
+    },
+    {
       "practiceId": "practice-identity-value-pair-mixed-drill",
       "targetType": "chapter",
       "targetId": "j3-1-1",
       "enabled": true,
       "order": 23
+    },
+    {
+      "practiceId": "practice-coordinate-origin-unit-change",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": false,
+      "order": 24
     },
     {
       "practiceId": "practice-identity-value-pair-advanced-drill",
@@ -48690,55 +49979,6 @@ window.practiceLibraryStore = {
       "order": 62
     },
     {
-      "practiceId": "practice-coordinate-origin-unit-change",
-      "targetType": "chapter",
-      "targetId": "j1-1-1",
-      "enabled": true,
-      "order": 72
-    },
-    {
-      "practiceId": "practice-abs-four-terms-calc-drill",
-      "targetType": "chapter",
-      "targetId": "j1-1-1",
-      "enabled": true,
-      "order": 77
-    },
-    {
-      "practiceId": "practice-abs-two-group-calc-drill",
-      "targetType": "chapter",
-      "targetId": "j1-1-1",
-      "enabled": true,
-      "order": 78
-    },
-    {
-      "practiceId": "practice-abs-remove-and-calc-drill",
-      "targetType": "chapter",
-      "targetId": "j1-1-1",
-      "enabled": true,
-      "order": 79
-    },
-    {
-      "practiceId": "practice-abs-count-basic-drill",
-      "targetType": "chapter",
-      "targetId": "j1-1-1",
-      "enabled": true,
-      "order": 80
-    },
-    {
-      "practiceId": "practice-abs-count-two-sided-drill",
-      "targetType": "chapter",
-      "targetId": "j1-1-1",
-      "enabled": true,
-      "order": 81
-    },
-    {
-      "practiceId": "practice-abs-count-reverse-drill",
-      "targetType": "chapter",
-      "targetId": "j1-1-1",
-      "enabled": true,
-      "order": 82
-    },
-    {
       "practiceId": "practice-mod9-remainder-drill",
       "targetType": "chapter",
       "targetId": "j1-2-1",
@@ -48833,7 +50073,7 @@ window.practiceLibraryStore = {
       "practiceId": "practice-j1-distributive-common-factor-mixed",
       "targetType": "chapter",
       "targetId": "j1-1-2",
-      "enabled": true,
+      "enabled": false,
       "order": 160
     },
     {
@@ -48875,7 +50115,7 @@ window.practiceLibraryStore = {
       "practiceId": "practice-j1-variable-distributive-eval-drill",
       "targetType": "chapter",
       "targetId": "j1-1-2",
-      "enabled": true,
+      "enabled": false,
       "order": 165
     },
     {
@@ -48893,81 +50133,39 @@ window.practiceLibraryStore = {
       "order": 165
     },
     {
-      "practiceId": "practice-integer-add-subtract-four-terms-drill",
-      "targetType": "chapter",
-      "targetId": "j1-1-2",
-      "enabled": true,
-      "order": 166
-    },
-    {
       "practiceId": "practice-three-products-add-subtract-drill",
       "targetType": "chapter",
       "targetId": "j1-1-2",
-      "enabled": true,
+      "enabled": false,
       "order": 168
     },
     {
       "practiceId": "practice-time-baseline-basic-drill",
       "targetType": "chapter",
       "targetId": "j1-1-2",
-      "enabled": true,
+      "enabled": false,
       "order": 174
     },
     {
       "practiceId": "practice-opposite-number-equation-drill",
       "targetType": "chapter",
       "targetId": "j1-1-2",
-      "enabled": true,
+      "enabled": false,
       "order": 175
     },
     {
       "practiceId": "practice-time-baseline-advanced-drill",
       "targetType": "chapter",
       "targetId": "j1-1-2",
-      "enabled": true,
+      "enabled": false,
       "order": 176
-    },
-    {
-      "practiceId": "practice-midpoint-distance-combined-drill",
-      "targetType": "chapter",
-      "targetId": "j1-1-1",
-      "enabled": true,
-      "order": 177
-    },
-    {
-      "practiceId": "practice-distance-formula",
-      "targetType": "chapter",
-      "targetId": "j1-1-1",
-      "enabled": true,
-      "order": 178
-    },
-    {
-      "practiceId": "practice-midpoint-reverse-drill",
-      "targetType": "chapter",
-      "targetId": "j1-1-1",
-      "enabled": true,
-      "order": 179
     },
     {
       "practiceId": "practice-same-shift-opposite-drill",
       "targetType": "chapter",
       "targetId": "j1-1-2",
-      "enabled": true,
+      "enabled": false,
       "order": 180
-    },
-    {
-      "practiceId": "practice-midpoint-plus-distance-drill",
-      "targetType": "chapter",
-      "targetId": "j1-1-1",
-      "enabled": true,
-      "order": 181
-    },
-    {
-      "practiceId": "practice-three-point-quick-distance-drill",
-      "targetType": "chapter",
-      "targetId": "j1-1-1",
-      "enabled": true,
-      "order": 182
     },
     {
       "practiceId": "practice-square-root-basic-junior",
@@ -49575,14 +50773,14 @@ window.practiceLibraryStore = {
       "practiceId": "practice-weird-symbol-calc",
       "targetType": "chapter",
       "targetId": "j1-1-2",
-      "enabled": true,
+      "enabled": false,
       "order": 672
     },
     {
       "practiceId": "practice-weird-symbol-calc-three-layer",
       "targetType": "chapter",
       "targetId": "j1-1-2",
-      "enabled": true,
+      "enabled": false,
       "order": 673
     },
     {
@@ -50019,27 +51217,22 @@ window.practiceLibraryStore = {
       "practice-linear-lcm-multiply-move-solve-drill",
       "practice-linear-same-solution-drill"
     ],
+    "j1-1-1": [
+      "practice-j1-1-1-absolute-value-core-nine-subtypes",
+      "practice-j1-1-1-midpoint-distance-nine-subtypes",
+      "practice-j1-1-1-origin-unit-six-subtypes"
+    ],
     "j1-1-2": [
-      "practice-j1-1-2-average-baseline-mixed",
-      "practice-j1-distributive-common-factor-mixed",
-      "practice-j1-variable-distributive-eval-drill",
-      "practice-integer-add-subtract-four-terms-drill",
-      "practice-three-products-add-subtract-drill",
-      "practice-time-baseline-basic-drill",
-      "practice-opposite-number-equation-drill",
-      "practice-time-baseline-advanced-drill",
-      "practice-same-shift-opposite-drill",
-      "practice-weird-symbol-calc",
-      "practice-weird-symbol-calc-three-layer"
+      "practice-j1-1-2-distributive-factor-nine-subtypes",
+      "practice-j1-1-2-integer-mixed-three-subtypes",
+      "practice-j1-1-2-baseline-average-four-subtypes",
+      "practice-j1-1-2-opposite-three-subtypes",
+      "practice-j1-1-2-weird-symbol-three-subtypes"
     ],
     "j1-1-3": [
-      "practice-j1-1-3-sign-brackets-power-drill",
-      "practice-j1-1-3-exponent-law-single-rule-drill",
-      "practice-j1-1-3-exponent-law-mixed-rule-drill",
-      "practice-j1-1-3-exponent-mixed-operations-drill",
-      "practice-j1-1-3-exponent-word-problem-drill",
-      "practice-j1-1-3-biquadratic-split-square-factoring",
-      "practice-j1-1-3-binary-quadratic-cross-factoring"
+      "practice-j1-1-3-power-concept-one-subtype",
+      "practice-j1-1-3-exponent-law-three-subtypes",
+      "practice-j1-1-3-application-one-subtype"
     ],
     "j1-1-4": [
       "practice-j1-1-4-scientific-convert-drill",
@@ -50281,21 +51474,6 @@ window.practiceLibraryStore = {
       "practice-j6-3-3-probability-single-mixed",
       "practice-j6-3-3-probability-compound-mixed",
       "practice-j6-3-3-probability-game-mixed"
-    ],
-    "j1-1-1": [
-      "practice-midpoint-formula",
-      "practice-coordinate-origin-unit-change",
-      "practice-abs-four-terms-calc-drill",
-      "practice-abs-two-group-calc-drill",
-      "practice-abs-remove-and-calc-drill",
-      "practice-abs-count-basic-drill",
-      "practice-abs-count-two-sided-drill",
-      "practice-abs-count-reverse-drill",
-      "practice-midpoint-distance-combined-drill",
-      "practice-distance-formula",
-      "practice-midpoint-reverse-drill",
-      "practice-midpoint-plus-distance-drill",
-      "practice-three-point-quick-distance-drill"
     ],
     "s1-3-1": [
       "practice-s1-3-1-polynomial-five-subtypes",

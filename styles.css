@@ -2031,6 +2031,57 @@ select {
   display: none;
 }
 
+.interactive-answer-panels {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.interactive-actions--stacked {
+  display: grid;
+  gap: 10px;
+}
+
+.interactive-actions__row--single {
+  display: flex;
+}
+
+.interactive-actions__row--single .ghost-button {
+  width: 100%;
+}
+
+.interactive-actions__row--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.interactive-actions__row--split .ghost-button:first-child {
+  justify-self: start;
+}
+
+.interactive-actions__row--split .ghost-button:last-child {
+  justify-self: end;
+}
+
+.chapter-composite-practice .interactive-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.chapter-composite-practice .interactive-actions > .ghost-button:first-child {
+  grid-column: 1 / -1;
+}
+
+.chapter-composite-practice .interactive-actions > .ghost-button:nth-child(2) {
+  justify-self: start;
+}
+
+.chapter-composite-practice .interactive-actions > .ghost-button:nth-child(3) {
+  justify-self: end;
+}
+
 .calculator-fields {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -2055,6 +2106,10 @@ select {
 .chapter-practice-catalog {
   display: grid;
   gap: 10px;
+  max-height: min(56vh, 640px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 6px;
 }
 
 .chapter-practice-catalog__toolbar {

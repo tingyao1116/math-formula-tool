@@ -548,14 +548,44 @@
     return `
       <section class="content-section practice-section" data-practice-id="${escapeHtml(item.id)}">
         <h4>${escapeHtml(title)}</h4>
-        <div class="interactive-actions">
-          <button type="button" class="ghost-button" data-practice-generate="${escapeHtml(item.id)}">出題</button>
-          <button type="button" class="ghost-button" data-practice-reveal="${escapeHtml(item.id)}">顯示答案</button>
+        <div class="interactive-actions interactive-actions--stacked">
+          <div class="interactive-actions__row interactive-actions__row--single">
+            <button type="button" class="ghost-button" data-practice-generate="${escapeHtml(item.id)}">出題</button>
+          </div>
+          <div class="interactive-actions__row interactive-actions__row--split">
+            <button type="button" class="ghost-button" data-practice-summary-reveal="${escapeHtml(item.id)}">簡答</button>
+            <button type="button" class="ghost-button" data-practice-detail-reveal="${escapeHtml(item.id)}">詳解</button>
+          </div>
         </div>
         <div class="interactive-output" data-practice-output="${escapeHtml(item.id)}">請先按一次出題。</div>
-        <div class="interactive-output is-hidden" data-practice-answer-box="${escapeHtml(item.id)}"></div>
+        <div class="interactive-answer-panels">
+          <div class="interactive-output is-hidden" data-practice-summary-box="${escapeHtml(item.id)}"></div>
+          <div class="interactive-output is-hidden" data-practice-answer-box="${escapeHtml(item.id)}"></div>
+        </div>
       </section>
     `;
+  }
+
+  function normalizeGeneratedPracticeResult(result) {
+    const source = result && typeof result === "object" ? result : {};
+    const questions = Array.isArray(source.questions) ? source.questions : [];
+    const answers = Array.isArray(source.answers) ? source.answers : [];
+    let summaryAnswers = Array.isArray(source.summaryAnswers) ? source.summaryAnswers : [];
+    if (!summaryAnswers.length && answers.length) {
+      summaryAnswers = answers.map((answer) => {
+        const text = String(answer || "").trim();
+        const match = text.match(/^簡答：([\s\S]*?。)(?:\s|$)/);
+        if (match) return `簡答：${match[1]}`;
+        const firstSentence = text.match(/^[\s\S]*?。/);
+        return firstSentence ? firstSentence[0].trim() : text;
+      });
+    }
+    return {
+      ...source,
+      questions,
+      summaryAnswers,
+      answers,
+    };
   }
 
   function renderDiagram(item) {
@@ -627,9 +657,14 @@
         const id = button.dataset.practiceGenerate;
         const config = getPracticeConfig({ id });
         const output = container.querySelector(`[data-practice-output="${id}"]`);
+        const summaryBox = container.querySelector(`[data-practice-summary-box="${id}"]`);
         const answerBox = container.querySelector(`[data-practice-answer-box="${id}"]`);
         if (!config || typeof config.generate !== "function") {
           if (output) output.textContent = "這一題尚未設定練習內容。";
+          if (summaryBox) {
+            summaryBox.textContent = "";
+            summaryBox.classList.add("is-hidden");
+          }
           if (answerBox) {
             answerBox.textContent = "";
             answerBox.classList.add("is-hidden");
@@ -638,15 +673,22 @@
         }
 
         const item = formulas.find((entry) => entry.id === id) || { id };
-        const result = config.generate(item) || {};
+        const result = normalizeGeneratedPracticeResult(config.generate(item) || {});
         const intro = typeof result.intro === "string" ? result.intro : "";
         const questions = Array.isArray(result.questions) ? result.questions : [];
+        const summaryAnswers = Array.isArray(result.summaryAnswers) ? result.summaryAnswers : [];
         const answers = Array.isArray(result.answers) ? result.answers : [];
 
         if (output) {
           output.innerHTML = questions.length
             ? `${intro ? `<p class="practice-intro">${renderRichTextLine(intro)}</p>` : ""}<ol>${questions.map((question) => `<li>${renderRichTextLine(question)}</li>`).join("")}</ol>`
             : "目前沒有產生題目。";
+        }
+        if (summaryBox) {
+          summaryBox.innerHTML = summaryAnswers.length
+            ? `<ol>${summaryAnswers.map((answer) => `<li>${renderRichTextLine(answer)}</li>`).join("")}</ol>`
+            : "目前沒有簡答。";
+          summaryBox.classList.add("is-hidden");
         }
         if (answerBox) {
           answerBox.innerHTML = answers.length
@@ -657,11 +699,21 @@
       });
     });
 
-    container.querySelectorAll("[data-practice-reveal]").forEach((button) => {
+    container.querySelectorAll("[data-practice-summary-reveal]").forEach((button) => {
       if (button.dataset.bound === "true") return;
       button.dataset.bound = "true";
       button.addEventListener("click", () => {
-        const id = button.dataset.practiceReveal;
+        const id = button.dataset.practiceSummaryReveal;
+        const box = container.querySelector(`[data-practice-summary-box="${id}"]`);
+        if (box) box.classList.toggle("is-hidden");
+      });
+    });
+
+    container.querySelectorAll("[data-practice-detail-reveal]").forEach((button) => {
+      if (button.dataset.bound === "true") return;
+      button.dataset.bound = "true";
+      button.addEventListener("click", () => {
+        const id = button.dataset.practiceDetailReveal;
         const box = container.querySelector(`[data-practice-answer-box="${id}"]`);
         if (box) box.classList.toggle("is-hidden");
       });

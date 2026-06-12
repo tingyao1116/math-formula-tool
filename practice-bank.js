@@ -1067,25 +1067,49 @@
       .toLowerCase();
   }
 
+  function normalizeGeneratedPracticeResultV2(result) {
+    const source = result && typeof result === "object" ? result : {};
+    const questions = Array.isArray(source.questions) ? source.questions : [];
+    const answers = Array.isArray(source.answers) ? source.answers : [];
+    let summaryAnswers = Array.isArray(source.summaryAnswers) ? source.summaryAnswers : [];
+    if (!summaryAnswers.length && answers.length) {
+      summaryAnswers = answers.map((answer) => {
+        const text = String(answer || "").trim();
+        const match = text.match(/^簡答：([\s\S]*?。)(?:\s|$)/);
+        if (match) return `簡答：${match[1]}`;
+        const firstSentence = text.match(/^[\s\S]*?。/);
+        return firstSentence ? firstSentence[0].trim() : text;
+      });
+    }
+    return {
+      ...source,
+      questions,
+      summaryAnswers,
+      answers,
+    };
+  }
+
   function collectPracticeVariationsV2(config, item, maxVariants = 6) {
     if (!config) return [];
     if (config.type === "fixed-example") {
       const prompt = String(config.prompt || "").trim();
       const answer = String(config.answer || "").trim();
-      return prompt ? [{ question: prompt, answer }] : [];
+      return prompt ? [{ question: prompt, summaryAnswer: answer, answer }] : [];
     }
     if (typeof config.generate !== "function") return [];
     const desiredCount = Math.max(1, Number(item?.subtypeCount || maxVariants || 1) || 1);
-    const result = config.generate(item) || {};
+    const result = normalizeGeneratedPracticeResultV2(config.generate(item) || {});
     const questions = Array.isArray(result.questions) ? result.questions : [];
+    const summaryAnswers = Array.isArray(result.summaryAnswers) ? result.summaryAnswers : [];
     const answers = Array.isArray(result.answers) ? result.answers : [];
     const variants = [];
 
     for (let index = 0; index < questions.length && variants.length < desiredCount; index += 1) {
       const question = String(questions[index] || "").trim();
       if (!question) continue;
+      const summaryAnswer = String(summaryAnswers[index] || answers[index] || "").trim();
       const answer = String(answers[index] || "").trim();
-      variants.push({ question, answer });
+      variants.push({ question, summaryAnswer, answer });
     }
 
     return variants;
@@ -1093,6 +1117,7 @@
 
   function buildCompactCompositePracticeResultV2(items) {
     const questions = [];
+    const summaryAnswers = [];
     const answers = [];
 
     items.forEach((item) => {
@@ -1104,19 +1129,22 @@
         const prompt = String(config.prompt || "").trim();
         const answer = String(config.answer || "").trim();
         if (prompt) questions.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(prompt)}`);
+        if (answer) summaryAnswers.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(answer)}`);
         if (answer) answers.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(answer)}`);
         return;
       }
 
       if (typeof config.generate !== "function") return;
-      const result = config.generate(item) || {};
+      const result = normalizeGeneratedPracticeResultV2(config.generate(item) || {});
       const question = Array.isArray(result.questions) ? String(result.questions[0] || "").trim() : "";
+      const summaryAnswer = Array.isArray(result.summaryAnswers) ? String(result.summaryAnswers[0] || result.answers?.[0] || "").trim() : "";
       const answer = Array.isArray(result.answers) ? String(result.answers[0] || "").trim() : "";
       if (question) questions.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(question)}`);
+      if (summaryAnswer) summaryAnswers.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(summaryAnswer)}`);
       if (answer) answers.push(`<strong>${escapeHtml(title)}</strong>：${toolkit.renderRichTextLine(answer)}`);
     });
 
-    return { questions, answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildExpandedCompositePracticeResultV2(items) {
@@ -1222,10 +1250,14 @@
         </div>
         <div class="interactive-actions">
           <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">重新出題</button>
-          <button type="button" class="ghost-button" data-chapter-composite-reveal="${escapeHtml(state.chapterCode)}">顯示答案</button>
+          <button type="button" class="ghost-button" data-chapter-composite-summary-reveal="${escapeHtml(state.chapterCode)}">簡答</button>
+          <button type="button" class="ghost-button" data-chapter-composite-detail-reveal="${escapeHtml(state.chapterCode)}">詳解</button>
         </div>
         <div class="interactive-output" data-chapter-composite-output>按下上方按鈕後，這裡會出現本章的綜合練習。</div>
-        <div class="interactive-output is-hidden" data-chapter-composite-answer></div>
+        <div class="interactive-answer-panels">
+          <div class="interactive-output is-hidden" data-chapter-composite-summary></div>
+          <div class="interactive-output is-hidden" data-chapter-composite-answer></div>
+        </div>
       </section>
     `;
   }
@@ -1237,6 +1269,7 @@
       button.addEventListener("click", () => {
         const section = button.closest("[data-chapter-composite]");
         const output = section?.querySelector("[data-chapter-composite-output]");
+        const summaryBox = section?.querySelector("[data-chapter-composite-summary]");
         const answerBox = section?.querySelector("[data-chapter-composite-answer]");
         const position = section?.getAttribute("data-chapter-composite-position") || "bottom";
         const items = getCompositeChapterItems();
@@ -1247,6 +1280,12 @@
             output.innerHTML = sections.length
               ? renderExpandedCompositeGroupsV2(sections, "question")
               : "目前沒有可顯示的題型變化。";
+          }
+          if (summaryBox) {
+            summaryBox.innerHTML = sections.length
+              ? renderExpandedCompositeGroupsV2(sections, "summaryAnswer")
+              : "目前沒有可顯示的簡答。";
+            summaryBox.classList.add("is-hidden");
           }
           if (answerBox) {
             answerBox.innerHTML = sections.length
@@ -1263,6 +1302,12 @@
             ? `<ol>${result.questions.map((question) => `<li>${question}</li>`).join("")}</ol>`
             : "目前沒有可顯示的題目。";
         }
+        if (summaryBox) {
+          summaryBox.innerHTML = result.summaryAnswers.length
+            ? `<ol>${result.summaryAnswers.map((answer) => `<li>${answer}</li>`).join("")}</ol>`
+            : "目前沒有可顯示的簡答。";
+          summaryBox.classList.add("is-hidden");
+        }
         if (answerBox) {
           answerBox.innerHTML = result.answers.length
             ? `<ol>${result.answers.map((answer) => `<li>${answer}</li>`).join("")}</ol>`
@@ -1272,7 +1317,17 @@
       });
     });
 
-    elements.practiceBoard?.querySelectorAll("[data-chapter-composite-reveal]").forEach((button) => {
+    elements.practiceBoard?.querySelectorAll("[data-chapter-composite-summary-reveal]").forEach((button) => {
+      if (button.dataset.boundV2 === "true") return;
+      button.dataset.boundV2 = "true";
+      button.addEventListener("click", () => {
+        const section = button.closest("[data-chapter-composite]");
+        const summaryBox = section?.querySelector("[data-chapter-composite-summary]");
+        if (summaryBox) summaryBox.classList.toggle("is-hidden");
+      });
+    });
+
+    elements.practiceBoard?.querySelectorAll("[data-chapter-composite-detail-reveal]").forEach((button) => {
       if (button.dataset.boundV2 === "true") return;
       button.dataset.boundV2 = "true";
       button.addEventListener("click", () => {
@@ -1342,6 +1397,10 @@
     if (elements.keywordInput) elements.keywordInput.value = state.keyword;
   }
 
+  function scrollPageToTopV2() {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }
+
   function renderV2() {
     normalizeControlLabelsV2();
     populateGradeFilterV2();
@@ -1365,12 +1424,14 @@
       state.chapterCode = "all";
       state.practiceId = "";
       renderV2();
+      scrollPageToTopV2();
     });
 
     elements.chapterFilter?.addEventListener("change", (event) => {
       state.chapterCode = event.target.value || "all";
       state.practiceId = "";
       renderV2();
+      scrollPageToTopV2();
     });
 
     elements.chapterPracticeCatalog?.addEventListener("click", (event) => {
@@ -1379,6 +1440,7 @@
       state.chapterCode = button.getAttribute("data-chapter-catalog-code") || "all";
       state.practiceId = "";
       renderV2();
+      scrollPageToTopV2();
     });
 
     elements.catalogBindingModeButton?.addEventListener("click", () => {
