@@ -9,6 +9,51 @@
     return;
   }
 
+  const TEXT = {
+    all: "\u5168\u90e8",
+    elementary: "\u570b\u5c0f",
+    j1Up: "\u570b\u4e00\u4e0a",
+    j1Down: "\u570b\u4e00\u4e0b",
+    j2Up: "\u570b\u4e8c\u4e0a",
+    j2Down: "\u570b\u4e8c\u4e0b",
+    j3Up: "\u570b\u4e09\u4e0a",
+    j3Down: "\u570b\u4e09\u4e0b",
+    s1Up: "\u9ad8\u4e00\u4e0a",
+    s1Down: "\u9ad8\u4e00\u4e0b",
+    s2Up: "\u9ad8\u4e8c\u4e0a",
+    s2Down: "\u9ad8\u4e8c\u4e0b",
+    s3: "\u9ad8\u4e09",
+    other: "\u5176\u4ed6",
+    difficultyPrefix: "\u96e3\u5ea6\uff1a",
+    chapterUnit: "\u7ae0",
+    practiceUnit: "\u984c\u578b",
+    noMatchingChapter: "\u76ee\u524d\u6c92\u6709\u7b26\u5408\u689d\u4ef6\u7684\u7ae0\u7bc0\u3002",
+    noPracticeInChapter: "\u9019\u500b\u7ae0\u7bc0\u76ee\u524d\u6c92\u6709\u53ef\u7df4\u7fd2\u7684\u984c\u578b\u3002",
+    notGenerated: "\u5c1a\u672a\u51fa\u984c",
+    noRecord: "\u5c1a\u672a\u8a18\u9304",
+    lastGenerated: "\u4e0a\u6b21\u51fa\u984c\uff1a",
+    solvedProgressPrefix: "\u505a\u5230\u7b2c ",
+    currentQuestionPrefix: "\u7b2c ",
+    currentQuestionSuffix: " \u984c",
+    generatedRecordHint:
+      "\u76ee\u524d\u986f\u793a ",
+    generatedRecordHintSuffix:
+      " \u7684\u51fa\u984c\u7d00\u9304\uff1b\u6309\u91cd\u65b0\u51fa\u984c\u624d\u6703\u63db\u6210\u65b0\u984c\u76ee\u3002",
+    storedRecordHint:
+      "\u76ee\u524d\u986f\u793a\u5df2\u4fdd\u5b58\u7684\u51fa\u984c\u7d00\u9304\u3002",
+    clickGenerateHint:
+      "\u8acb\u5148\u6309\u51fa\u984c\uff0c\u6703\u512a\u5148\u8b80\u53d6\u4e0a\u6b21\u7684\u984c\u76ee\u7d00\u9304\u3002",
+    clickGenerate: "\u8acb\u5148\u6309\u4e00\u6b21\u51fa\u984c\u3002",
+    noSummary: "\u76ee\u524d\u6c92\u6709\u7c21\u7b54\u3002",
+    noDetail: "\u76ee\u524d\u6c92\u6709\u8a73\u89e3\u3002",
+    noPractice: "\u76ee\u524d\u6c92\u6709\u53ef\u7df4\u7fd2\u7684\u984c\u578b",
+    switchChapterHint: "\u8acb\u5148\u56de\u4e0a\u4e00\u9801\u6539\u9078\u5176\u4ed6\u7ae0\u7bc0\u3002",
+    noQuestionToShow: "\u76ee\u524d\u6c92\u6709\u984c\u76ee\u53ef\u986f\u793a\u3002",
+    chapterFallback: "\u7ae0\u7bc0",
+    chapterCountPrefix: "\u5171 ",
+    topicIndexPrefix: "\u984c\u578b ",
+  };
+
   const elements = {
     chapterSelectView: document.getElementById("mobileChapterSelectView"),
     practiceView: document.getElementById("mobilePracticeView"),
@@ -72,20 +117,20 @@
   ];
 
   const gradeLabelMap = {
-    all: "全部",
-    elementary: "國小",
-    "j1-up": "國一上",
-    "j1-down": "國一下",
-    "j2-up": "國二上",
-    "j2-down": "國二下",
-    "j3-up": "國三上",
-    "j3-down": "國三下",
-    "s1-up": "高一上",
-    "s1-down": "高一下",
-    "s2-up": "高二上",
-    "s2-down": "高二下",
-    s3: "高三",
-    other: "其他",
+    all: TEXT.all,
+    elementary: TEXT.elementary,
+    "j1-up": TEXT.j1Up,
+    "j1-down": TEXT.j1Down,
+    "j2-up": TEXT.j2Up,
+    "j2-down": TEXT.j2Down,
+    "j3-up": TEXT.j3Up,
+    "j3-down": TEXT.j3Down,
+    "s1-up": TEXT.s1Up,
+    "s1-down": TEXT.s1Down,
+    "s2-up": TEXT.s2Up,
+    "s2-down": TEXT.s2Down,
+    s3: TEXT.s3,
+    other: TEXT.other,
   };
 
   const state = {
@@ -105,36 +150,44 @@
       .replace(/'/g, "&#39;");
   }
 
+  function normalizeStage(value) {
+    return String(value || "").trim();
+  }
+
+  function normalizeGrade(value) {
+    return String(value || "").trim();
+  }
+
   function getNormalizedTermLabel(term) {
     const text = String(term || "").trim();
     if (!text) return "";
-    if (text.includes("上")) return "上";
-    if (text.includes("下")) return "下";
+    if (text.includes("\u4e0a")) return "\u4e0a";
+    if (text.includes("\u4e0b")) return "\u4e0b";
     return "";
   }
 
   function getGradeKey(stage, grade, term) {
-    const stageText = String(stage || "").trim();
-    const gradeText = String(grade || "").trim();
+    const stageText = normalizeStage(stage);
+    const gradeText = normalizeGrade(grade);
     const termText = getNormalizedTermLabel(term);
 
-    if (stageText === "國小") return "elementary";
-    if (stageText === "國中" && gradeText === "國一" && termText === "上") return "j1-up";
-    if (stageText === "國中" && gradeText === "國一" && termText === "下") return "j1-down";
-    if (stageText === "國中" && gradeText === "國二" && termText === "上") return "j2-up";
-    if (stageText === "國中" && gradeText === "國二" && termText === "下") return "j2-down";
-    if (stageText === "國中" && gradeText === "國三" && termText === "上") return "j3-up";
-    if (stageText === "國中" && gradeText === "國三" && termText === "下") return "j3-down";
-    if (stageText === "高中" && gradeText === "高一" && termText === "上") return "s1-up";
-    if (stageText === "高中" && gradeText === "高一" && termText === "下") return "s1-down";
-    if (stageText === "高中" && gradeText === "高二" && termText === "上") return "s2-up";
-    if (stageText === "高中" && gradeText === "高二" && termText === "下") return "s2-down";
-    if (stageText === "高中" && gradeText === "高三") return "s3";
+    if (stageText === "\u570b\u5c0f") return "elementary";
+    if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e00" && termText === "\u4e0a") return "j1-up";
+    if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e00" && termText === "\u4e0b") return "j1-down";
+    if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e8c" && termText === "\u4e0a") return "j2-up";
+    if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e8c" && termText === "\u4e0b") return "j2-down";
+    if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e09" && termText === "\u4e0a") return "j3-up";
+    if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e09" && termText === "\u4e0b") return "j3-down";
+    if (stageText === "\u9ad8\u4e2d" && gradeText === "\u9ad8\u4e00" && termText === "\u4e0a") return "s1-up";
+    if (stageText === "\u9ad8\u4e2d" && gradeText === "\u9ad8\u4e00" && termText === "\u4e0b") return "s1-down";
+    if (stageText === "\u9ad8\u4e2d" && gradeText === "\u9ad8\u4e8c" && termText === "\u4e0a") return "s2-up";
+    if (stageText === "\u9ad8\u4e2d" && gradeText === "\u9ad8\u4e8c" && termText === "\u4e0b") return "s2-down";
+    if (stageText === "\u9ad8\u4e2d" && gradeText === "\u9ad8\u4e09") return "s3";
     return "other";
   }
 
   function getGradeLabel(stage, grade, term) {
-    return gradeLabelMap[getGradeKey(stage, grade, term)] || "其他";
+    return gradeLabelMap[getGradeKey(stage, grade, term)] || TEXT.other;
   }
 
   function compareChapterCodes(left, right) {
@@ -150,7 +203,7 @@
   function getDifficultyLabel(value) {
     const text = String(value || "").trim();
     if (!text) return "";
-    return `難度：${text}`;
+    return `${TEXT.difficultyPrefix}${text}`;
   }
 
   function renderMetaChips(item) {
@@ -207,10 +260,7 @@
       const key = getGradeKey(item.stage, item.grade, item.term);
       if (!key || seen.has(key)) return;
       seen.add(key);
-      rows.push({
-        key,
-        label: getGradeLabel(item.stage, item.grade, item.term),
-      });
+      rows.push({ key, label: getGradeLabel(item.stage, item.grade, item.term) });
     });
 
     return rows.sort((a, b) => gradeOrder.indexOf(a.key) - gradeOrder.indexOf(b.key));
@@ -248,13 +298,11 @@
   function getVisibleChapterCodes() {
     const seen = new Set();
     const codes = [];
-
     getFilteredItems().forEach((item) => {
       if (!item.chapterCode || seen.has(item.chapterCode)) return;
       seen.add(item.chapterCode);
       codes.push(item.chapterCode);
     });
-
     return codes.sort(compareChapterCodes);
   }
 
@@ -299,11 +347,10 @@
 
   function populateGradeFilter() {
     const rows = buildGradeOptions();
-    const options = [{ key: "all", label: gradeLabelMap.all }].concat(rows);
+    const options = [{ key: "all", label: TEXT.all }].concat(rows);
     elements.gradeFilter.innerHTML = options
       .map((row) => `<option value="${escapeHtml(row.key)}">${escapeHtml(row.label)}</option>`)
       .join("");
-
     if (!options.some((row) => row.key === state.gradeKey)) {
       state.gradeKey = "all";
     }
@@ -327,10 +374,10 @@
 
   function renderChapterList() {
     const chapters = getVisibleChapters();
-    elements.chapterCount.textContent = `共 ${chapters.length} 章`;
+    elements.chapterCount.textContent = `${TEXT.chapterCountPrefix}${chapters.length} ${TEXT.chapterUnit}`;
 
     if (!chapters.length) {
-      elements.chapterList.innerHTML = '<p class="empty-state">目前沒有符合條件的章節。</p>';
+      elements.chapterList.innerHTML = `<p class="empty-state">${TEXT.noMatchingChapter}</p>`;
       return;
     }
 
@@ -344,7 +391,7 @@
       >
         <div class="practice-mobile-list__row">
           <strong class="practice-mobile-list__chapter-title">${index + 1}. ${escapeHtml(chapter.label)}</strong>
-          <span class="practice-mobile-list__chapter-count">${escapeHtml(`共 ${chapter.count} 題型`)}</span>
+          <span class="practice-mobile-list__chapter-count">${escapeHtml(`${TEXT.chapterCountPrefix}${chapter.count} ${TEXT.practiceUnit}`)}</span>
         </div>
       </button>
     `,
@@ -354,12 +401,12 @@
 
   function renderPracticeList() {
     const chapterItems = getChapterItems();
-    const chapterLabel = chapterOptionByCode.get(state.chapterCode)?.label || state.chapterCode || "章節";
+    const chapterLabel = chapterOptionByCode.get(state.chapterCode)?.label || state.chapterCode || TEXT.chapterFallback;
     elements.listTitle.textContent = chapterLabel;
-    elements.listCount.textContent = `共 ${chapterItems.length} 題型`;
+    elements.listCount.textContent = `${TEXT.chapterCountPrefix}${chapterItems.length} ${TEXT.practiceUnit}`;
 
     if (!chapterItems.length) {
-      elements.practiceList.innerHTML = '<p class="empty-state">這個章節目前沒有可練習的題型。</p>';
+      elements.practiceList.innerHTML = `<p class="empty-state">${TEXT.noPracticeInChapter}</p>`;
       return;
     }
 
@@ -368,11 +415,11 @@
         const session = toolkit.readStoredPracticeSession?.(item.id);
         const total = Array.isArray(session?.questions) ? session.questions.length : 0;
         const progressText = total
-          ? `做到第 ${Number(session.currentIndex || 0) + 1} / ${total} 題`
-          : "尚未出題";
+          ? `${TEXT.solvedProgressPrefix}${Number(session.currentIndex || 0) + 1} / ${total} ${TEXT.currentQuestionSuffix}`
+          : TEXT.notGenerated;
         const timeText = session?.generatedAt
-          ? `上次出題：${formatTimeText(session.generatedAt)}`
-          : "尚未記錄";
+          ? `${TEXT.lastGenerated}${formatTimeText(session.generatedAt)}`
+          : TEXT.noRecord;
         return `
         <button
           type="button"
@@ -415,17 +462,17 @@
 
   function renderPlayer() {
     const selected = ensureSelectedPractice();
-    const chapterLabel = chapterOptionByCode.get(state.chapterCode)?.label || state.chapterCode || "章節";
+    const chapterLabel = chapterOptionByCode.get(state.chapterCode)?.label || state.chapterCode || TEXT.chapterFallback;
     elements.chapterTitle.textContent = chapterLabel;
     renderChapterNavigator();
     renderPracticeNavigator();
 
     if (!selected) {
-      elements.practiceTitle.textContent = "目前沒有可練習的題型";
+      elements.practiceTitle.textContent = TEXT.noPractice;
       elements.practiceProgress.textContent = "";
       elements.practiceMeta.innerHTML = "";
-      elements.practiceHint.textContent = "請先回上一頁改選其他章節。";
-      renderQuestionOutputs("目前沒有題目可顯示。", "", "");
+      elements.practiceHint.textContent = TEXT.switchChapterHint;
+      renderQuestionOutputs(TEXT.noQuestionToShow, "", "");
       [
         elements.generateButton,
         elements.regenerateButton,
@@ -444,14 +491,14 @@
     const session = ensureSelectedPracticeSession();
 
     elements.practiceTitle.textContent = selected.title;
-    elements.practiceProgress.textContent = `題型 ${practiceIndex + 1} / ${chapterItems.length}`;
+    elements.practiceProgress.textContent = `${TEXT.topicIndexPrefix}${practiceIndex + 1} / ${chapterItems.length}`;
     elements.practiceMeta.innerHTML = renderMetaChips(selected);
     elements.generateButton.disabled = false;
     elements.regenerateButton.disabled = false;
 
     if (!session) {
-      elements.practiceHint.textContent = "請先按出題，會優先讀取上次的題目紀錄。";
-      renderQuestionOutputs("請先按一次出題。", "", "");
+      elements.practiceHint.textContent = TEXT.clickGenerateHint;
+      renderQuestionOutputs(TEXT.clickGenerate, "", "");
       [
         elements.prevQuestionButton,
         elements.nextQuestionButton,
@@ -465,20 +512,18 @@
 
     const total = Array.isArray(session.questions) ? session.questions.length : 0;
     const index = Math.min(Math.max(Number(session.currentIndex) || 0, 0), Math.max(total - 1, 0));
-    const progressText = `第 ${index + 1} / ${total} 題`;
+    const progressText = `${TEXT.currentQuestionPrefix}${index + 1} / ${total} ${TEXT.currentQuestionSuffix}`;
     elements.practiceHint.textContent = session.generatedAt
-      ? `目前顯示 ${formatTimeText(session.generatedAt)} 的出題紀錄；按重新出題才會換成新題目。`
-      : "目前顯示已保存的出題紀錄。";
+      ? `${TEXT.generatedRecordHint}${formatTimeText(session.generatedAt)}${TEXT.generatedRecordHintSuffix}`
+      : TEXT.storedRecordHint;
 
-    const summaryAnswer = Array.isArray(session.summaryAnswers)
-      ? session.summaryAnswers[index] || ""
-      : "";
+    const summaryAnswer = Array.isArray(session.summaryAnswers) ? session.summaryAnswers[index] || "" : "";
     const detailAnswer = Array.isArray(session.answers) ? session.answers[index] || "" : "";
 
     renderQuestionOutputs(
       `<div class="practice-mobile-question"><div class="practice-mobile-question__index">${escapeHtml(progressText)}</div><div>${toolkit.renderRichTextLine(session.questions[index] || "")}</div></div>`,
-      toolkit.renderRichTextLine(summaryAnswer || "目前沒有簡答。"),
-      toolkit.renderRichTextLine(detailAnswer || "目前沒有詳解。"),
+      toolkit.renderRichTextLine(summaryAnswer || TEXT.noSummary),
+      toolkit.renderRichTextLine(detailAnswer || TEXT.noDetail),
     );
 
     elements.prevQuestionButton.disabled = index <= 0;

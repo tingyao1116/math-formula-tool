@@ -37,13 +37,28 @@
     chapterOptions.map((entry) => [String(entry.code || ""), String(entry.label || entry.code || "")])
   );
   const urlParams = new URLSearchParams(window.location.search);
-  const initialChapterCode = urlParams.get("chapter") || "all";
+  const initialChapterCode = urlParams.get("chapter") || "j1-1-1";
   const initialPracticeId = String(urlParams.get("practice") || "").trim();
+  const gradeOrder = [
+    "\u570b\u5c0f",
+    "\u570b\u4e00\u4e0a",
+    "\u570b\u4e00\u4e0b",
+    "\u570b\u4e8c\u4e0a",
+    "\u570b\u4e8c\u4e0b",
+    "\u570b\u4e09\u4e0a",
+    "\u570b\u4e09\u4e0b",
+    "\u9ad8\u4e00\u4e0a",
+    "\u9ad8\u4e00\u4e0b",
+    "\u9ad8\u4e8c\u4e0a",
+    "\u9ad8\u4e8c\u4e0b",
+    "\u9ad8\u4e09",
+    "\u5176\u4ed6",
+  ];
   const initialChapterMeta = chapterOptionByCode.get(String(initialChapterCode || "").trim()) || null;
   const gradeOptions = buildGradeOptions();
 
   const state = {
-    gradeKey: initialChapterMeta ? getGradeKey(initialChapterMeta.stage, initialChapterMeta.grade) : "all",
+    gradeKey: initialChapterMeta ? getGradeKey(initialChapterMeta.stage, initialChapterMeta.grade, initialChapterMeta.term) : "all",
     chapterCode: chapterLabelLookup[initialChapterCode] ? initialChapterCode : "all",
     keyword: "",
     practiceId: initialPracticeId,
@@ -51,32 +66,50 @@
   };
   const COMPOSITE_SESSION_STORAGE_KEY = "math-formula-tool-composite-sessions-v1";
 
-  function getGradeKey(stage, grade) {
-    const stageText = String(stage || "").trim();
-    const gradeText = String(grade || "").trim();
-    if (!stageText || !gradeText) return "";
-    return `${stageText}::${gradeText}`;
+  function getNormalizedTermLabel(term) {
+    const text = String(term || "").trim();
+    if (!text) return "";
+    if (text.includes("\u4e0a")) return "\u4e0a";
+    if (text.includes("\u4e0b")) return "\u4e0b";
+    return "";
   }
 
-  function getGradeLabel(stage, grade) {
+  function getGradeKey(stage, grade, term) {
     const stageText = String(stage || "").trim();
     const gradeText = String(grade || "").trim();
-    return [stageText, gradeText].filter(Boolean).join("・") || "未分類";
+    const termText = getNormalizedTermLabel(term);
+    if (stageText === "\u570b\u5c0f") return "\u570b\u5c0f";
+    if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e00" && termText === "\u4e0a") return "\u570b\u4e00\u4e0a";
+    if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e00" && termText === "\u4e0b") return "\u570b\u4e00\u4e0b";
+    if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e8c" && termText === "\u4e0a") return "\u570b\u4e8c\u4e0a";
+    if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e8c" && termText === "\u4e0b") return "\u570b\u4e8c\u4e0b";
+    if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e09" && termText === "\u4e0a") return "\u570b\u4e09\u4e0a";
+    if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e09" && termText === "\u4e0b") return "\u570b\u4e09\u4e0b";
+    if (stageText === "\u9ad8\u4e2d" && gradeText === "\u9ad8\u4e00" && termText === "\u4e0a") return "\u9ad8\u4e00\u4e0a";
+    if (stageText === "\u9ad8\u4e2d" && gradeText === "\u9ad8\u4e00" && termText === "\u4e0b") return "\u9ad8\u4e00\u4e0b";
+    if (stageText === "\u9ad8\u4e2d" && gradeText === "\u9ad8\u4e8c" && termText === "\u4e0a") return "\u9ad8\u4e8c\u4e0a";
+    if (stageText === "\u9ad8\u4e2d" && gradeText === "\u9ad8\u4e8c" && termText === "\u4e0b") return "\u9ad8\u4e8c\u4e0b";
+    if (stageText === "\u9ad8\u4e2d" && gradeText === "\u9ad8\u4e09") return "\u9ad8\u4e09";
+    return "\u5176\u4ed6";
+  }
+
+  function getGradeLabel(stage, grade, term) {
+    return getGradeKey(stage, grade, term) || "\u5176\u4ed6";
   }
 
   function buildGradeOptions() {
     const rows = [];
     const seen = new Set();
     chapterOptions.forEach((entry) => {
-      const key = getGradeKey(entry?.stage, entry?.grade);
+      const key = getGradeKey(entry?.stage, entry?.grade, entry?.term);
       if (!key || seen.has(key)) return;
       seen.add(key);
       rows.push({
         key,
-        label: getGradeLabel(entry?.stage, entry?.grade),
+        label: getGradeLabel(entry?.stage, entry?.grade, entry?.term),
       });
     });
-    return rows;
+    return rows.sort((a, b) => gradeOrder.indexOf(a.key) - gradeOrder.indexOf(b.key));
   }
 
   function hasInfinitePractice(item) {
@@ -250,7 +283,7 @@
     if (state.gradeKey === "all") return true;
     const meta = chapterOptionByCode.get(String(code || "").trim()) || null;
     if (!meta) return false;
-    return getGradeKey(meta.stage, meta.grade) === state.gradeKey;
+    return getGradeKey(meta.stage, meta.grade, meta.term) === state.gradeKey;
   }
 
   function getVisibleChapterOptions() {
@@ -265,7 +298,7 @@
     if (chapterCodes.length) {
       return chapterCodes.some((code) => matchesGradeFilterByChapterCode(code));
     }
-    return getGradeKey(item?.stage, item?.grade) === state.gradeKey;
+    return getGradeKey(item?.stage, item?.grade, item?.term) === state.gradeKey;
   }
 
   function getVisibleCatalogRows(sourceRows) {
@@ -970,25 +1003,12 @@
     if (summaryLabel) summaryLabel.textContent = "目前結果";
   }
 
-  function getGradeLabelTextV2(stage, grade) {
-    const stageText = String(stage || "").trim();
-    const gradeText = String(grade || "").trim();
-    return [stageText, gradeText].filter(Boolean).join("");
+  function getGradeLabelTextV2(stage, grade, term) {
+    return getGradeLabel(stage, grade, term);
   }
 
   function buildGradeOptionsV2() {
-    const rows = [];
-    const seen = new Set();
-    chapterOptions.forEach((entry) => {
-      const key = getGradeKey(entry?.stage, entry?.grade);
-      if (!key || seen.has(key)) return;
-      seen.add(key);
-      rows.push({
-        key,
-        label: getGradeLabelTextV2(entry?.stage, entry?.grade),
-      });
-    });
-    return rows;
+    return gradeOptions.slice();
   }
 
   function getActiveGradeLabelV2() {
@@ -998,7 +1018,7 @@
   function populateGradeFilterV2() {
     if (!elements.gradeFilter) return;
     const gradeRows = buildGradeOptionsV2();
-    const options = ['<option value="all">全部年級</option>'];
+    const options = ['<option value="all">\u5168\u90e8\u5e74\u7d1a</option>'];
     gradeRows.forEach((entry) => {
       options.push(`<option value="${escapeHtml(entry.key)}">${escapeHtml(entry.label)}</option>`);
     });
@@ -1008,7 +1028,7 @@
 
   function populateChapterFilterV2() {
     if (!elements.chapterFilter) return;
-    const options = ['<option value="all">全部章節</option>'];
+    const options = ['<option value="all">\u5168\u90e8\u7ae0\u7bc0</option>'];
     const visibleChapterOptions = getVisibleChapterOptions();
     if (state.chapterCode !== "all" && !visibleChapterOptions.some((entry) => entry.code === state.chapterCode)) {
       state.chapterCode = "all";
@@ -1038,7 +1058,7 @@
     const visibleRows = [
       {
         code: "all",
-        label: activeGradeLabel ? `${activeGradeLabel}全部章節` : "全部章節",
+        label: activeGradeLabel ? `${activeGradeLabel}\u5168\u90e8\u7ae0\u7bc0` : "\u5168\u90e8\u7ae0\u7bc0",
         count: allCount,
       },
       ...chapterRows,
@@ -1057,7 +1077,7 @@
           data-chapter-catalog-code="${escapeHtml(row.code)}"
         >
           <span class="chapter-practice-catalog__label">${escapeHtml(row.label)}</span>
-          <span class="chapter-practice-catalog__count">${escapeHtml(String(row.count))} 題</span>
+          <span class="chapter-practice-catalog__count">${escapeHtml(String(row.count))} \u984c\u578b</span>
         </button>
       `)
       .join("");

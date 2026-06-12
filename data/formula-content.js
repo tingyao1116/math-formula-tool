@@ -137111,8 +137111,9 @@ window.formulaContentRecords = [
       "連比描述三個以上量的倍數關係。"
     ],
     "chapter_code": "j5-1-1",
-    "grade": "國中",
-    "book": "國三上",
+    "stage": "國中",
+    "grade": "國三",
+    "term": "上學期",
     "chapter": "比例與相似",
     "chapterCode": "j5-1-1"
   },
@@ -137147,8 +137148,9 @@ window.formulaContentRecords = [
       "總量、部分和、差都先化成 k 的方程式。"
     ],
     "chapter_code": "j5-1-1",
-    "grade": "國中",
-    "book": "國三上",
+    "stage": "國中",
+    "grade": "國三",
+    "term": "上學期",
     "chapter": "比例與相似",
     "chapterCode": "j5-1-1"
   },
@@ -137183,8 +137185,9 @@ window.formulaContentRecords = [
       "共同項先調成相同，再合併三項連比。"
     ],
     "chapter_code": "j5-1-1",
-    "grade": "國中",
-    "book": "國三上",
+    "stage": "國中",
+    "grade": "國三",
+    "term": "上學期",
     "chapter": "比例與相似",
     "chapterCode": "j5-1-1"
   },
@@ -137219,8 +137222,9 @@ window.formulaContentRecords = [
       "分數比先清分母，小數比先放大成整數。"
     ],
     "chapter_code": "j5-1-1",
-    "grade": "國中",
-    "book": "國三上",
+    "stage": "國中",
+    "grade": "國三",
+    "term": "上學期",
     "chapter": "比例與相似",
     "chapterCode": "j5-1-1"
   },
@@ -137255,8 +137259,9 @@ window.formulaContentRecords = [
       "比例線段先看對應，再寫比例式。"
     ],
     "chapter_code": "j5-1-2",
-    "grade": "國中",
-    "book": "國三上",
+    "stage": "國中",
+    "grade": "國三",
+    "term": "上學期",
     "chapter": "比例與相似",
     "chapterCode": "j5-1-2"
   },
@@ -137291,8 +137296,9 @@ window.formulaContentRecords = [
       "比例線段是四個線段長度形成的比例關係。"
     ],
     "chapter_code": "j5-1-2",
-    "grade": "國中",
-    "book": "國三上",
+    "stage": "國中",
+    "grade": "國三",
+    "term": "上學期",
     "chapter": "比例與相似",
     "chapterCode": "j5-1-2"
   },
@@ -137327,8 +137333,9 @@ window.formulaContentRecords = [
       "集中相似三角形判別、直角三角形母子相似與生活測量應用。"
     ],
     "chapter_code": "j5-1-4",
-    "grade": "國中",
-    "book": "國三上",
+    "stage": "國中",
+    "grade": "國三",
+    "term": "上學期",
     "chapter": "比例與相似",
     "chapterCode": "j5-1-4"
   },
@@ -137363,8 +137370,9 @@ window.formulaContentRecords = [
       "對應高、周長、中線、角平分線比等於相似比；面積比等於相似比平方。"
     ],
     "chapter_code": "j5-1-4",
-    "grade": "國中",
-    "book": "國三上",
+    "stage": "國中",
+    "grade": "國三",
+    "term": "上學期",
     "chapter": "比例與相似",
     "chapterCode": "j5-1-4"
   },
@@ -137399,8 +137407,9 @@ window.formulaContentRecords = [
       "應用題先找相似，再計算。"
     ],
     "chapter_code": "j5-1-4",
-    "grade": "國中",
-    "book": "國三上",
+    "stage": "國中",
+    "grade": "國三",
+    "term": "上學期",
     "chapter": "比例與相似",
     "chapterCode": "j5-1-4"
   }
