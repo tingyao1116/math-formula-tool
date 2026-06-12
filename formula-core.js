@@ -2,6 +2,7 @@
   const store = window.formulaDataStore;
   const formulas = store?.getCurrentFormulas ? store.getCurrentFormulas() : (window.formulas || []);
   const LINKED_QUESTION_SECTION_LIMIT = 5000;
+  const PRACTICE_SESSION_STORAGE_KEY = "math-formula-tool-practice-sessions-v1";
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -549,15 +550,16 @@
       <section class="content-section practice-section" data-practice-id="${escapeHtml(item.id)}">
         <h4>${escapeHtml(title)}</h4>
         <div class="interactive-actions interactive-actions--stacked">
-          <div class="interactive-actions__row interactive-actions__row--single">
+          <div class="interactive-actions__row interactive-actions__row--split">
             <button type="button" class="ghost-button" data-practice-generate="${escapeHtml(item.id)}">出題</button>
+            <button type="button" class="ghost-button" data-practice-regenerate="${escapeHtml(item.id)}">重新出題</button>
           </div>
           <div class="interactive-actions__row interactive-actions__row--split">
             <button type="button" class="ghost-button" data-practice-summary-reveal="${escapeHtml(item.id)}">簡答</button>
             <button type="button" class="ghost-button" data-practice-detail-reveal="${escapeHtml(item.id)}">詳解</button>
           </div>
         </div>
-        <div class="interactive-output" data-practice-output="${escapeHtml(item.id)}">請先按一次出題。</div>
+        <div class="interactive-output" data-practice-output="${escapeHtml(item.id)}">請先按出題；若想換新的一輪，再按重新出題。</div>
         <div class="interactive-answer-panels">
           <div class="interactive-output is-hidden" data-practice-summary-box="${escapeHtml(item.id)}"></div>
           <div class="interactive-output is-hidden" data-practice-answer-box="${escapeHtml(item.id)}"></div>
@@ -586,6 +588,118 @@
       summaryAnswers,
       answers,
     };
+  }
+
+  function loadPracticeSessionMap() {
+    try {
+      const raw = window.localStorage.getItem(PRACTICE_SESSION_STORAGE_KEY);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch (_) {
+      return {};
+    }
+  }
+
+  function savePracticeSessionMap(sessionMap) {
+    try {
+      window.localStorage.setItem(PRACTICE_SESSION_STORAGE_KEY, JSON.stringify(sessionMap || {}));
+    } catch (_) {
+      // ignore storage errors
+    }
+  }
+
+  function sanitizePracticeSession(session) {
+    if (!session || typeof session !== "object") return null;
+    const questions = Array.isArray(session.questions) ? session.questions.map((value) => String(value || "")) : [];
+    const summaryAnswers = Array.isArray(session.summaryAnswers) ? session.summaryAnswers.map((value) => String(value || "")) : [];
+    const answers = Array.isArray(session.answers) ? session.answers.map((value) => String(value || "")) : [];
+    if (!questions.length) return null;
+    const maxLen = Math.max(questions.length, summaryAnswers.length, answers.length);
+    return {
+      practiceId: String(session.practiceId || "").trim(),
+      title: String(session.title || "").trim(),
+      intro: typeof session.intro === "string" ? session.intro : "",
+      questions: Array.from({ length: maxLen }, (_, index) => String(questions[index] || "")),
+      summaryAnswers: Array.from({ length: maxLen }, (_, index) => String(summaryAnswers[index] || answers[index] || "")),
+      answers: Array.from({ length: maxLen }, (_, index) => String(answers[index] || "")),
+      currentIndex: Math.min(Math.max(Number(session.currentIndex) || 0, 0), Math.max(maxLen - 1, 0)),
+      generatedAt: String(session.generatedAt || "").trim(),
+    };
+  }
+
+  function readStoredPracticeSession(practiceId) {
+    const key = String(practiceId || "").trim();
+    if (!key) return null;
+    return sanitizePracticeSession(loadPracticeSessionMap()[key]);
+  }
+
+  function writeStoredPracticeSession(practiceId, session) {
+    const key = String(practiceId || "").trim();
+    if (!key) return null;
+    const normalized = sanitizePracticeSession({ ...session, practiceId: key });
+    if (!normalized) return null;
+    const sessionMap = loadPracticeSessionMap();
+    sessionMap[key] = normalized;
+    savePracticeSessionMap(sessionMap);
+    return normalized;
+  }
+
+  function buildFreshPracticeSession(item) {
+    const config = getPracticeConfig(item);
+    if (!config || typeof config.generate !== "function") return null;
+    const result = normalizeGeneratedPracticeResult(config.generate(item) || {});
+    return sanitizePracticeSession({
+      practiceId: String(item?.id || "").trim(),
+      title: String(config.title || item?.title || item?.id || "").trim(),
+      intro: typeof result.intro === "string" ? result.intro : "",
+      questions: Array.isArray(result.questions) ? result.questions : [],
+      summaryAnswers: Array.isArray(result.summaryAnswers) ? result.summaryAnswers : [],
+      answers: Array.isArray(result.answers) ? result.answers : [],
+      currentIndex: 0,
+      generatedAt: new Date().toISOString(),
+    });
+  }
+
+  function ensureStoredPracticeSession(item) {
+    const existing = readStoredPracticeSession(item?.id);
+    if (existing) return existing;
+    const fresh = buildFreshPracticeSession(item);
+    return fresh ? writeStoredPracticeSession(item?.id, fresh) : null;
+  }
+
+  function regenerateStoredPracticeSession(item) {
+    const fresh = buildFreshPracticeSession(item);
+    return fresh ? writeStoredPracticeSession(item?.id, fresh) : null;
+  }
+
+  function updateStoredPracticeSessionIndex(practiceId, nextIndex) {
+    const existing = readStoredPracticeSession(practiceId);
+    if (!existing) return null;
+    return writeStoredPracticeSession(practiceId, { ...existing, currentIndex: nextIndex });
+  }
+
+  function renderStoredPracticeResult(container, practiceId, session) {
+    const output = container.querySelector(`[data-practice-output="${practiceId}"]`);
+    const summaryBox = container.querySelector(`[data-practice-summary-box="${practiceId}"]`);
+    const answerBox = container.querySelector(`[data-practice-answer-box="${practiceId}"]`);
+    if (output) {
+      output.innerHTML = session?.questions?.length
+        ? `${session.intro ? `<p class="practice-intro">${renderRichTextLine(session.intro)}</p>` : ""}<ol>${session.questions.map((question) => `<li>${renderRichTextLine(question)}</li>`).join("")}</ol>`
+        : "目前沒有產生題目。";
+    }
+    if (summaryBox) {
+      summaryBox.innerHTML = session?.summaryAnswers?.length
+        ? `<ol>${session.summaryAnswers.map((answer) => `<li>${renderRichTextLine(answer)}</li>`).join("")}</ol>`
+        : "目前沒有簡答。";
+      summaryBox.classList.add("is-hidden");
+    }
+    if (answerBox) {
+      answerBox.innerHTML = session?.answers?.length
+        ? `<ol>${session.answers.map((answer) => `<li>${renderRichTextLine(answer)}</li>`).join("")}</ol>`
+        : "目前沒有答案。";
+      answerBox.classList.add("is-hidden");
+    }
   }
 
   function renderDiagram(item) {
@@ -673,29 +787,36 @@
         }
 
         const item = formulas.find((entry) => entry.id === id) || { id };
-        const result = normalizeGeneratedPracticeResult(config.generate(item) || {});
-        const intro = typeof result.intro === "string" ? result.intro : "";
-        const questions = Array.isArray(result.questions) ? result.questions : [];
-        const summaryAnswers = Array.isArray(result.summaryAnswers) ? result.summaryAnswers : [];
-        const answers = Array.isArray(result.answers) ? result.answers : [];
+        const session = ensureStoredPracticeSession(item);
+        renderStoredPracticeResult(container, id, session);
+      });
+    });
 
-        if (output) {
-          output.innerHTML = questions.length
-            ? `${intro ? `<p class="practice-intro">${renderRichTextLine(intro)}</p>` : ""}<ol>${questions.map((question) => `<li>${renderRichTextLine(question)}</li>`).join("")}</ol>`
-            : "目前沒有產生題目。";
+    container.querySelectorAll("[data-practice-regenerate]").forEach((button) => {
+      if (button.dataset.bound === "true") return;
+      button.dataset.bound = "true";
+      button.addEventListener("click", () => {
+        const id = button.dataset.practiceRegenerate;
+        const config = getPracticeConfig({ id });
+        const output = container.querySelector(`[data-practice-output="${id}"]`);
+        const summaryBox = container.querySelector(`[data-practice-summary-box="${id}"]`);
+        const answerBox = container.querySelector(`[data-practice-answer-box="${id}"]`);
+        if (!config || typeof config.generate !== "function") {
+          if (output) output.textContent = "這一題尚未設定練習內容。";
+          if (summaryBox) {
+            summaryBox.textContent = "";
+            summaryBox.classList.add("is-hidden");
+          }
+          if (answerBox) {
+            answerBox.textContent = "";
+            answerBox.classList.add("is-hidden");
+          }
+          return;
         }
-        if (summaryBox) {
-          summaryBox.innerHTML = summaryAnswers.length
-            ? `<ol>${summaryAnswers.map((answer) => `<li>${renderRichTextLine(answer)}</li>`).join("")}</ol>`
-            : "目前沒有簡答。";
-          summaryBox.classList.add("is-hidden");
-        }
-        if (answerBox) {
-          answerBox.innerHTML = answers.length
-            ? `<ol>${answers.map((answer) => `<li>${renderRichTextLine(answer)}</li>`).join("")}</ol>`
-            : "目前沒有答案。";
-          answerBox.classList.add("is-hidden");
-        }
+
+        const item = formulas.find((entry) => entry.id === id) || { id };
+        const session = regenerateStoredPracticeSession(item);
+        renderStoredPracticeResult(container, id, session);
       });
     });
 
@@ -776,6 +897,12 @@
     formatMathText: renderRichTextLine,
     renderFormulaBlock,
     renderRichTextLine,
+    normalizeGeneratedPracticeResult,
+    readStoredPracticeSession,
+    writeStoredPracticeSession,
+    ensureStoredPracticeSession,
+    regenerateStoredPracticeSession,
+    updateStoredPracticeSessionIndex,
     calculatorStore: window.formulaCalculatorStore || null,
     practiceStore: window.formulaPracticeStore || null
   };

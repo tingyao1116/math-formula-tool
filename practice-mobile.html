@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d5c63" />
+    <title>手機練習版</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    <link rel="stylesheet" href="styles.css?v=20260612-practice-mobile-v1" />
+  </head>
+  <body>
+    <div class="page-shell practice-mobile-page">
+      <header class="hero practice-mobile-hero">
+        <div class="hero__content">
+          <p class="eyebrow">學生練習版</p>
+          <h1>手機練習版</h1>
+          <p class="hero__lead">
+            這一版會記住每一個練習上次做到哪裡。按「出題」會接著上一次那一輪，按「重新出題」才會換成新的題目。
+          </p>
+          <div class="hero__quicklinks">
+            <a class="ghost-link" href="practice-bank.html">回無限練習總覽</a>
+            <a class="ghost-link" href="index.html">回首頁</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="practice-mobile-layout">
+        <section class="panel practice-mobile-filters">
+          <h2>挑選練習</h2>
+          <label class="field">
+            <span>年級</span>
+            <select id="mobileGradeFilter"></select>
+          </label>
+          <label class="field">
+            <span>章節</span>
+            <select id="mobileChapterFilter"></select>
+          </label>
+          <label class="field">
+            <span>搜尋</span>
+            <input id="mobileKeywordInput" type="search" placeholder="可搜尋章節、標題、標籤" />
+          </label>
+          <button id="mobileResetButton" class="ghost-button" type="button">重設篩選</button>
+        </section>
+
+        <section class="panel practice-mobile-player">
+          <div class="practice-mobile-player__header">
+            <div>
+              <p class="summary-label">目前練習</p>
+              <h2 id="mobilePracticeTitle">請先選一個練習</h2>
+            </div>
+            <p id="mobilePracticeProgress" class="summary-count"></p>
+          </div>
+          <div id="mobilePracticeMeta" class="meta-row"></div>
+          <p id="mobilePracticeHint" class="detail-note">按下方練習卡後，就可以開始或繼續這一組題目。</p>
+
+          <div class="interactive-actions interactive-actions--stacked practice-mobile-player__actions">
+            <div class="interactive-actions__row interactive-actions__row--split">
+              <button id="mobileGenerateButton" type="button" class="ghost-button">出題</button>
+              <button id="mobileRegenerateButton" type="button" class="ghost-button">重新出題</button>
+            </div>
+            <div class="interactive-actions__row interactive-actions__row--split">
+              <button id="mobilePrevButton" type="button" class="ghost-button">上一題</button>
+              <button id="mobileNextButton" type="button" class="ghost-button">下一題</button>
+            </div>
+            <div class="interactive-actions__row interactive-actions__row--split">
+              <button id="mobileSummaryButton" type="button" class="ghost-button">簡答</button>
+              <button id="mobileDetailButton" type="button" class="ghost-button">詳解</button>
+            </div>
+          </div>
+
+          <div id="mobileQuestionOutput" class="interactive-output">尚未出題。按「出題」開始，之後再回來會接著這一輪。</div>
+          <div class="interactive-answer-panels">
+            <div id="mobileSummaryOutput" class="interactive-output is-hidden"></div>
+            <div id="mobileDetailOutput" class="interactive-output is-hidden"></div>
+          </div>
+        </section>
+
+        <section class="panel practice-mobile-list-panel">
+          <div class="practice-mobile-list-panel__header">
+            <div>
+              <p class="summary-label">全部可做練習</p>
+              <h2 id="mobileListTitle">練習清單</h2>
+            </div>
+            <p id="mobileListCount" class="summary-count"></p>
+          </div>
+          <div id="mobilePracticeList" class="practice-mobile-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <script defer src="formulas.js"></script>
+    <script defer src="data/formula-content.js?v=20260423-abs-count-layout-v4"></script>
+    <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
+    <script defer src="data/main-topic-overviews.js?v=20260508-topic-title-clean-v1"></script>
+    <script defer src="data/chapter-code-config.js"></script>
+    <script defer src="data/formula-calculators.js"></script>
+    <script defer src="data/formula-practice-assignments.js?v=20260611-j112-abs-reduce-fix-v1"></script>
+    <script defer src="data/formula-practice.js?v=20260611-j112-abs-reduce-fix-v1"></script>
+    <script defer src="formula-data.js?v=20260505-question-category-v1"></script>
+    <script defer src="chapter-overviews.js?v=20260507-main-theme-layer-v2"></script>
+    <script defer src="chapter-closings.js?v=20260507-main-theme-layer-v2"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="formula-core.js?v=20260612-practice-session-v1"></script>
+    <script defer src="practice-mobile.js?v=20260612-practice-mobile-v1"></script>
+    <script defer src="pwa.js"></script>
+  </body>
+</html>

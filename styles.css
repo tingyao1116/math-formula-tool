@@ -2103,6 +2103,84 @@ select {
   min-width: 0;
 }
 
+.practice-mobile-layout {
+  display: grid;
+  gap: 18px;
+}
+
+.practice-mobile-page .hero {
+  margin-bottom: 18px;
+}
+
+.practice-mobile-filters,
+.practice-mobile-player,
+.practice-mobile-list-panel {
+  padding: 18px;
+}
+
+.practice-mobile-player__header,
+.practice-mobile-list-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.practice-mobile-player__actions {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.practice-mobile-list {
+  display: grid;
+  gap: 10px;
+}
+
+.practice-mobile-list__item {
+  width: 100%;
+  border: 1px solid rgba(13, 92, 99, 0.14);
+  border-radius: 14px;
+  background: rgba(255, 253, 248, 0.96);
+  padding: 14px;
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  color: var(--text);
+}
+
+.practice-mobile-list__item.is-active {
+  background: rgba(13, 92, 99, 0.12);
+  border-color: rgba(13, 92, 99, 0.4);
+}
+
+.practice-mobile-list__main {
+  display: grid;
+  gap: 4px;
+}
+
+.practice-mobile-list__main span,
+.practice-mobile-list__meta {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.practice-mobile-list__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.practice-mobile-question {
+  display: grid;
+  gap: 10px;
+}
+
+.practice-mobile-question__index {
+  color: var(--primary);
+  font-weight: 700;
+}
+
 .chapter-practice-catalog {
   display: grid;
   gap: 10px;

@@ -49,6 +49,7 @@
     practiceId: initialPracticeId,
     catalogMode: "binding",
   };
+  const COMPOSITE_SESSION_STORAGE_KEY = "math-formula-tool-composite-sessions-v1";
 
   function getGradeKey(stage, grade) {
     const stageText = String(stage || "").trim();
@@ -406,10 +407,12 @@
           </div>
         </div>
         <div class="interactive-actions">
-          <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">出題</button>
-          <button type="button" class="ghost-button" data-chapter-composite-reveal="${escapeHtml(state.chapterCode)}">顯示答案</button>
+          <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">??</button>
+          <button type="button" class="ghost-button" data-chapter-composite-regenerate="${escapeHtml(state.chapterCode)}">????</button>
+          <button type="button" class="ghost-button" data-chapter-composite-summary-reveal="${escapeHtml(state.chapterCode)}">??</button>
+          <button type="button" class="ghost-button" data-chapter-composite-detail-reveal="${escapeHtml(state.chapterCode)}">??</button>
         </div>
-        <div class="interactive-output" data-chapter-composite-output>請先按一次出題。</div>
+        <div class="interactive-output" data-chapter-composite-output>?????????????????????</div>
         <div class="interactive-output is-hidden" data-chapter-composite-answer></div>
       </section>
     `;
@@ -1159,6 +1162,103 @@
     }).filter(Boolean);
   }
 
+  function buildCompositeSessionKeyV2(position) {
+    return `${String(state.chapterCode || "all").trim()}::${String(position || "bottom").trim()}`;
+  }
+
+  function loadCompositeSessionMapV2() {
+    try {
+      const raw = window.localStorage.getItem(COMPOSITE_SESSION_STORAGE_KEY);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch (_) {
+      return {};
+    }
+  }
+
+  function saveCompositeSessionMapV2(sessionMap) {
+    try {
+      window.localStorage.setItem(COMPOSITE_SESSION_STORAGE_KEY, JSON.stringify(sessionMap || {}));
+    } catch (_) {
+      // ignore storage errors
+    }
+  }
+
+  function readCompositeSessionV2(position) {
+    const key = buildCompositeSessionKeyV2(position);
+    return loadCompositeSessionMapV2()[key] || null;
+  }
+
+  function writeCompositeSessionV2(position, payload) {
+    const key = buildCompositeSessionKeyV2(position);
+    const sessionMap = loadCompositeSessionMapV2();
+    sessionMap[key] = {
+      ...payload,
+      chapterCode: String(state.chapterCode || "all").trim(),
+      position: String(position || "bottom").trim(),
+      generatedAt: new Date().toISOString(),
+    };
+    saveCompositeSessionMapV2(sessionMap);
+    return sessionMap[key];
+  }
+
+  function ensureCompositeSessionV2(position, items) {
+    const existing = readCompositeSessionV2(position);
+    if (existing) return existing;
+    return regenerateCompositeSessionV2(position, items);
+  }
+
+  function regenerateCompositeSessionV2(position, items) {
+    if (position === "top") {
+      return writeCompositeSessionV2(position, {
+        kind: "expanded",
+        sections: buildExpandedCompositePracticeResultV2(items),
+      });
+    }
+    return writeCompositeSessionV2(position, {
+      kind: "compact",
+      result: buildCompactCompositePracticeResultV2(items),
+    });
+  }
+
+  function renderCompositeSessionV2(section, session) {
+    const output = section?.querySelector("[data-chapter-composite-output]");
+    const summaryBox = section?.querySelector("[data-chapter-composite-summary]");
+    const answerBox = section?.querySelector("[data-chapter-composite-answer]");
+    if (!section || !output || !summaryBox || !answerBox) return;
+
+    if (session?.kind === "expanded") {
+      const sections = Array.isArray(session.sections) ? session.sections : [];
+      output.innerHTML = sections.length
+        ? renderExpandedCompositeGroupsV2(sections, "question")
+        : "目前沒有可顯示的出題內容。";
+      summaryBox.innerHTML = sections.length
+        ? renderExpandedCompositeGroupsV2(sections, "summaryAnswer")
+        : "目前沒有簡答。";
+      answerBox.innerHTML = sections.length
+        ? renderExpandedCompositeGroupsV2(sections, "answer")
+        : "目前沒有詳解。";
+    } else {
+      const result = session?.result && typeof session.result === "object" ? session.result : { questions: [], summaryAnswers: [], answers: [] };
+      const questions = Array.isArray(result.questions) ? result.questions : [];
+      const summaryAnswers = Array.isArray(result.summaryAnswers) ? result.summaryAnswers : [];
+      const answers = Array.isArray(result.answers) ? result.answers : [];
+      output.innerHTML = questions.length
+        ? `<ol>${questions.map((question) => `<li>${question}</li>`).join("")}</ol>`
+        : "目前沒有可顯示的出題內容。";
+      summaryBox.innerHTML = summaryAnswers.length
+        ? `<ol>${summaryAnswers.map((answer) => `<li>${answer}</li>`).join("")}</ol>`
+        : "目前沒有簡答。";
+      answerBox.innerHTML = answers.length
+        ? `<ol>${answers.map((answer) => `<li>${answer}</li>`).join("")}</ol>`
+        : "目前沒有詳解。";
+    }
+
+    summaryBox.classList.add("is-hidden");
+    answerBox.classList.add("is-hidden");
+  }
+
   function renderExpandedCompositeGroupsV2(sections, key) {
     return sections.map((section, index) => `
       <section class="topic-cluster">
@@ -1237,23 +1337,24 @@
     const isTop = position === "top";
     const heading = isTop ? `${chapterLabel} 題型變化總覽` : `${chapterLabel} 綜合練習`;
     const note = isTop
-      ? "每一種題型會連續嘗試生成多次，優先保留不同變化，方便先看這一章會怎麼出題。"
-      : "保留原本模式，每個題型抽 1 題，適合快速暖身或課堂收尾檢查。";
+      ? "每一種題型會連續嘗試生成多次，方便先看這一章常見的出題變化。"
+      : "這裡會把各題型各抽 1 題，適合快速暖身、課堂巡查或課末檢查。";
     return `
       <section class="panel chapter-composite-practice" data-chapter-composite="${escapeHtml(state.chapterCode)}" data-chapter-composite-position="${escapeHtml(position)}">
         <div class="topic-cluster__header">
           <div>
-            <p class="summary-label">${isTop ? "上方綜合練習" : "下方綜合練習"}</p>
+            <p class="summary-label">${isTop ? "章節總覽練習" : "章節快速練習"}</p>
             <h3>${escapeHtml(heading)}</h3>
             <p class="detail-note">${escapeHtml(note)}</p>
           </div>
         </div>
         <div class="interactive-actions">
-          <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">重新出題</button>
+          <button type="button" class="ghost-button" data-chapter-composite-generate="${escapeHtml(state.chapterCode)}">出題</button>
+          <button type="button" class="ghost-button" data-chapter-composite-regenerate="${escapeHtml(state.chapterCode)}">重新出題</button>
           <button type="button" class="ghost-button" data-chapter-composite-summary-reveal="${escapeHtml(state.chapterCode)}">簡答</button>
           <button type="button" class="ghost-button" data-chapter-composite-detail-reveal="${escapeHtml(state.chapterCode)}">詳解</button>
         </div>
-        <div class="interactive-output" data-chapter-composite-output>按下上方按鈕後，這裡會出現本章的綜合練習。</div>
+        <div class="interactive-output" data-chapter-composite-output>請先按出題；若想換新的一輪，再按重新出題。</div>
         <div class="interactive-answer-panels">
           <div class="interactive-output is-hidden" data-chapter-composite-summary></div>
           <div class="interactive-output is-hidden" data-chapter-composite-answer></div>
@@ -1268,52 +1369,22 @@
       button.dataset.boundV2 = "true";
       button.addEventListener("click", () => {
         const section = button.closest("[data-chapter-composite]");
-        const output = section?.querySelector("[data-chapter-composite-output]");
-        const summaryBox = section?.querySelector("[data-chapter-composite-summary]");
-        const answerBox = section?.querySelector("[data-chapter-composite-answer]");
         const position = section?.getAttribute("data-chapter-composite-position") || "bottom";
         const items = getCompositeChapterItems();
+        const session = ensureCompositeSessionV2(position, items);
+        renderCompositeSessionV2(section, session);
+      });
+    });
 
-        if (position === "top") {
-          const sections = buildExpandedCompositePracticeResultV2(items);
-          if (output) {
-            output.innerHTML = sections.length
-              ? renderExpandedCompositeGroupsV2(sections, "question")
-              : "目前沒有可顯示的題型變化。";
-          }
-          if (summaryBox) {
-            summaryBox.innerHTML = sections.length
-              ? renderExpandedCompositeGroupsV2(sections, "summaryAnswer")
-              : "目前沒有可顯示的簡答。";
-            summaryBox.classList.add("is-hidden");
-          }
-          if (answerBox) {
-            answerBox.innerHTML = sections.length
-              ? renderExpandedCompositeGroupsV2(sections, "answer")
-              : "目前沒有可顯示的答案。";
-            answerBox.classList.add("is-hidden");
-          }
-          return;
-        }
-
-        const result = buildCompactCompositePracticeResultV2(items);
-        if (output) {
-          output.innerHTML = result.questions.length
-            ? `<ol>${result.questions.map((question) => `<li>${question}</li>`).join("")}</ol>`
-            : "目前沒有可顯示的題目。";
-        }
-        if (summaryBox) {
-          summaryBox.innerHTML = result.summaryAnswers.length
-            ? `<ol>${result.summaryAnswers.map((answer) => `<li>${answer}</li>`).join("")}</ol>`
-            : "目前沒有可顯示的簡答。";
-          summaryBox.classList.add("is-hidden");
-        }
-        if (answerBox) {
-          answerBox.innerHTML = result.answers.length
-            ? `<ol>${result.answers.map((answer) => `<li>${answer}</li>`).join("")}</ol>`
-            : "目前沒有可顯示的答案。";
-          answerBox.classList.add("is-hidden");
-        }
+    elements.practiceBoard?.querySelectorAll("[data-chapter-composite-regenerate]").forEach((button) => {
+      if (button.dataset.boundV2 === "true") return;
+      button.dataset.boundV2 = "true";
+      button.addEventListener("click", () => {
+        const section = button.closest("[data-chapter-composite]");
+        const position = section?.getAttribute("data-chapter-composite-position") || "bottom";
+        const items = getCompositeChapterItems();
+        const session = regenerateCompositeSessionV2(position, items);
+        renderCompositeSessionV2(section, session);
       });
     });
 
