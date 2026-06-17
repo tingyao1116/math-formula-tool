@@ -495,6 +495,46 @@
     return window.formulaPracticeStore?.getConfig?.(item?.id) || null;
   }
 
+  function inferPracticeBundleKey(item, record = null) {
+    const explicit = String(
+      item?.generatorBundle ||
+      item?.bundleKey ||
+      record?.generatorBundle ||
+      record?.bundleKey ||
+      "",
+    ).trim();
+    if (explicit) return explicit;
+
+    const chapterCode = String(item?.chapterCode || record?.chapterCode || "").trim();
+    if (!chapterCode) return "";
+
+    const bundles = window.practiceGeneratorBundles || {};
+    return Object.entries(bundles).find(([, bundle]) => {
+      const prefixes = Array.isArray(bundle?.chapterPrefixes) ? bundle.chapterPrefixes : [];
+      return prefixes.some((prefix) => chapterCode.startsWith(String(prefix || "")));
+    })?.[0] || "";
+  }
+
+  function hasDeferredPracticeGenerator(item) {
+    const id = String(item?.id || "").trim();
+    const record =
+      (id ? window.practiceLibraryStore?.byId?.[id] : null) ||
+      (id ? window.formulaPracticeAssignmentStore?.byId?.[id] : null) ||
+      null;
+    return Boolean(inferPracticeBundleKey(item, record));
+  }
+
+  async function ensurePracticeGenerator(item) {
+    if (getPracticeConfig(item)) return true;
+    if (!window.practiceGeneratorLoader?.ensureForPractice) return false;
+    try {
+      return await window.practiceGeneratorLoader.ensureForPractice(item);
+    } catch (error) {
+      console.warn("Unable to load practice generator", error);
+      return false;
+    }
+  }
+
   function renderCalculator(item) {
     const config = getCalculatorConfig(item);
     if (!config) return "";
@@ -528,10 +568,10 @@
 
   function renderPractice(item) {
     const config = getPracticeConfig(item);
-    if (!config) return "";
+    if (!config && !hasDeferredPracticeGenerator(item)) return "";
 
-    const mode = config.type || "drill";
-    const title = config.title || (mode === "fixed-example" ? "舉例說明" : "無限練習");
+    const mode = config?.type || "drill";
+    const title = config?.title || item?.title || (mode === "fixed-example" ? "舉例說明" : "無限練習");
 
     if (mode === "fixed-example") {
       return `
@@ -767,8 +807,9 @@
     container.querySelectorAll("[data-practice-generate]").forEach((button) => {
       if (button.dataset.bound === "true") return;
       button.dataset.bound = "true";
-      button.addEventListener("click", () => {
+      button.addEventListener("click", async () => {
         const id = button.dataset.practiceGenerate;
+        await ensurePracticeGenerator({ id });
         const config = getPracticeConfig({ id });
         const output = container.querySelector(`[data-practice-output="${id}"]`);
         const summaryBox = container.querySelector(`[data-practice-summary-box="${id}"]`);
@@ -795,8 +836,9 @@
     container.querySelectorAll("[data-practice-regenerate]").forEach((button) => {
       if (button.dataset.bound === "true") return;
       button.dataset.bound = "true";
-      button.addEventListener("click", () => {
+      button.addEventListener("click", async () => {
         const id = button.dataset.practiceRegenerate;
+        await ensurePracticeGenerator({ id });
         const config = getPracticeConfig({ id });
         const output = container.querySelector(`[data-practice-output="${id}"]`);
         const summaryBox = container.querySelector(`[data-practice-summary-box="${id}"]`);

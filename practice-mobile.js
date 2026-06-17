@@ -3,6 +3,7 @@
   const toolkit = window.formulaToolkit || null;
   const practiceStore = window.formulaPracticeStore || null;
   const practiceLibrary = window.practiceLibraryStore || null;
+  const generatorLoader = window.practiceGeneratorLoader || null;
 
   if (!store || !toolkit || !practiceStore || !practiceLibrary) {
     console.warn("practice mobile dependencies not loaded");
@@ -52,11 +53,18 @@
     chapterFallback: "\u7ae0\u7bc0",
     chapterCountPrefix: "\u5171 ",
     topicIndexPrefix: "\u984c\u578b ",
+    loadingPractice: "\u6b63\u5728\u8f09\u5165\u984c\u76ee\u2026",
+    loadingPracticeHint: "\u6b63\u5728\u6e96\u5099\u984c\u76ee\uff0c\u7a0d\u7b49\u4e00\u4e0b\u5c31\u6703\u81ea\u52d5\u986f\u793a\u3002",
+    allQuestionsPrefix: "\u672c\u56de\u5408\u5171 ",
+    allQuestionsSuffix: " \u984c",
   };
 
   const elements = {
     chapterSelectView: document.getElementById("mobileChapterSelectView"),
     practiceView: document.getElementById("mobilePracticeView"),
+    player: document.getElementById("mobilePracticePlayer"),
+    practiceListPanel: document.getElementById("mobilePracticeListPanel"),
+    layoutModeSelect: document.getElementById("mobileLayoutModeSelect"),
     gradeFilter: document.getElementById("mobileGradeFilter"),
     keywordInput: document.getElementById("mobileKeywordInput"),
     resetButton: document.getElementById("mobileResetButton"),
@@ -72,7 +80,16 @@
     practiceProgress: document.getElementById("mobilePracticeProgress"),
     practiceMeta: document.getElementById("mobilePracticeMeta"),
     practiceHint: document.getElementById("mobilePracticeHint"),
-    generateButton: document.getElementById("mobileGenerateButton"),
+    defaultTopActions: document.getElementById("mobileDefaultTopActions"),
+    defaultBottomActions: document.getElementById("mobileDefaultBottomActions"),
+    compactActions: document.getElementById("mobileCompactActions"),
+    mode2PrevChapterButton: document.getElementById("mobileMode2PrevChapterButton"),
+    mode2NextChapterButton: document.getElementById("mobileMode2NextChapterButton"),
+    mode2PrevPracticeButton: document.getElementById("mobileMode2PrevPracticeButton"),
+    mode2NextPracticeButton: document.getElementById("mobileMode2NextPracticeButton"),
+    mode2SummaryButton: document.getElementById("mobileMode2SummaryButton"),
+    mode2DetailButton: document.getElementById("mobileMode2DetailButton"),
+    mode2RegenerateButton: document.getElementById("mobileMode2RegenerateButton"),
     regenerateButton: document.getElementById("mobileRegenerateButton"),
     prevQuestionButton: document.getElementById("mobilePrevQuestionButton"),
     nextQuestionButton: document.getElementById("mobileNextQuestionButton"),
@@ -139,6 +156,8 @@
     keyword: "",
     chapterCode: String(urlParams.get("chapter") || "").trim(),
     selectedPracticeId: String(urlParams.get("practice") || "").trim(),
+    layoutMode: String(window.localStorage?.getItem("math-formula-tool-mobile-layout-mode") || urlParams.get("mode") || "default").trim() === "focus" ? "focus" : "default",
+    loadingPracticeId: "",
   };
 
   function escapeHtml(value) {
@@ -216,11 +235,25 @@
     return values.map((value) => `<span class="meta-chip">${escapeHtml(value)}</span>`).join("");
   }
 
+  function inferPracticeBundleKey(record, chapterCode = "") {
+    const explicit = String(record?.generatorBundle || record?.bundleKey || "").trim();
+    if (explicit) return explicit;
+
+    const code = String(chapterCode || record?.chapterCode || "").trim();
+    if (!code) return "";
+
+    const bundles = window.practiceGeneratorBundles || {};
+    return Object.entries(bundles).find(([, bundle]) => {
+      const prefixes = Array.isArray(bundle?.chapterPrefixes) ? bundle.chapterPrefixes : [];
+      return prefixes.some((prefix) => code.startsWith(String(prefix || "")));
+    })?.[0] || "";
+  }
+
   function buildPracticeItems() {
     const records = Object.values(practiceLibrary?.byId || {}).filter((record) => {
       const id = String(record?.id || "").trim();
       if (!id || record?.enabled === false) return false;
-      return Boolean(practiceStore.getConfig?.(id));
+      return Boolean(practiceStore.getConfig?.(id) || inferPracticeBundleKey(record));
     });
 
     return records
@@ -228,6 +261,7 @@
         const id = String(record?.id || "").trim();
         const topic = topicById.get(id) || null;
         const chapterCode = String(record?.chapterCode || topic?.chapterCode || "").trim();
+        const generatorBundle = inferPracticeBundleKey(record, chapterCode);
         const chapterMeta = chapterOptionByCode.get(chapterCode) || null;
         return {
           id,
@@ -238,6 +272,7 @@
           grade: String(record?.grade || topic?.grade || chapterMeta?.grade || "").trim(),
           term: String(record?.term || topic?.term || chapterMeta?.term || "").trim(),
           difficulty: String(record?.difficulty || practiceStore.getConfig?.(id)?.difficulty || "").trim(),
+          generatorBundle,
           tags: Array.isArray(record?.tags)
             ? record.tags.map((value) => String(value || "").trim()).filter(Boolean)
             : [],
@@ -341,8 +376,105 @@
   function ensureSelectedPracticeSession() {
     const item = getSelectedPractice();
     if (!item) return null;
+    if (!practiceStore.getConfig?.(item.id) && item.generatorBundle) {
+      return toolkit.readStoredPracticeSession?.(item.id) || null;
+    }
     toolkit.ensureStoredPracticeSession?.(item);
     return toolkit.readStoredPracticeSession?.(item.id) || null;
+  }
+
+  async function ensurePracticeGenerator(item) {
+    if (!item) return false;
+    if (practiceStore.getConfig?.(item.id)) return true;
+    if (!generatorLoader?.ensureForPractice) return false;
+    try {
+      return await generatorLoader.ensureForPractice(item);
+    } catch (error) {
+      console.warn("Unable to load practice generator", error);
+      return false;
+    }
+  }
+
+  function getIsFocusMode() {
+    return state.layoutMode === "focus";
+  }
+
+  function applyLayoutMode() {
+    const focus = getIsFocusMode();
+    elements.layoutModeSelect.value = focus ? "focus" : "default";
+    elements.player?.classList.toggle("practice-mobile-player--focus", focus);
+    elements.practiceListPanel?.classList.toggle("practice-mobile-list-panel--focus", focus);
+    elements.defaultTopActions?.classList.toggle("is-hidden", focus);
+    elements.defaultBottomActions?.classList.toggle("is-hidden", focus);
+    elements.compactActions?.classList.toggle("is-hidden", !focus);
+  }
+
+  function buildHtmlList(items, emptyText) {
+    const rows = Array.isArray(items) ? items.filter((item) => String(item || "").trim()) : [];
+    if (!rows.length) return `<div class="practice-mobile-answer-block">${escapeHtml(emptyText)}</div>`;
+    return `<div class="practice-mobile-answer-block"><ol>${rows.map((item) => `<li>${toolkit.renderRichTextLine(item)}</li>`).join("")}</ol></div>`;
+  }
+
+  function renderQuestionSession(session) {
+    const questions = Array.isArray(session?.questions) ? session.questions : [];
+    const summaries = Array.isArray(session?.summaryAnswers) ? session.summaryAnswers : [];
+    const details = Array.isArray(session?.answers) ? session.answers : [];
+    const total = questions.length;
+    const index = Math.min(Math.max(Number(session?.currentIndex) || 0, 0), Math.max(total - 1, 0));
+
+    if (!total) {
+      renderQuestionOutputs(TEXT.noQuestionToShow, "", "");
+      return { total: 0, index: 0 };
+    }
+
+    if (getIsFocusMode()) {
+      const questionHtml = `
+        <div class="practice-mobile-question practice-mobile-question--focus">
+          <div class="practice-mobile-question__index">${escapeHtml(`${TEXT.allQuestionsPrefix}${total}${TEXT.allQuestionsSuffix}`)}</div>
+          ${session.intro ? `<p class="practice-intro">${toolkit.renderRichTextLine(session.intro)}</p>` : ""}
+          <ol class="practice-mobile-question-list__items">
+            ${questions.map((question) => `<li>${toolkit.renderRichTextLine(question)}</li>`).join("")}
+          </ol>
+        </div>
+      `;
+      renderQuestionOutputs(
+        questionHtml,
+        buildHtmlList(summaries, TEXT.noSummary),
+        buildHtmlList(details, TEXT.noDetail),
+      );
+    } else {
+      const progressText = `${TEXT.currentQuestionPrefix}${index + 1} / ${total} ${TEXT.currentQuestionSuffix}`;
+      const summaryAnswer = summaries[index] || "";
+      const detailAnswer = details[index] || "";
+      renderQuestionOutputs(
+        `<div class="practice-mobile-question"><div class="practice-mobile-question__index">${escapeHtml(progressText)}</div><div>${toolkit.renderRichTextLine(questions[index] || "")}</div></div>`,
+        toolkit.renderRichTextLine(summaryAnswer || TEXT.noSummary),
+        toolkit.renderRichTextLine(detailAnswer || TEXT.noDetail),
+      );
+    }
+
+    return { total, index };
+  }
+
+  async function prepareSelectedPracticeSession() {
+    const item = getSelectedPractice();
+    if (!item) return null;
+    const existing = toolkit.readStoredPracticeSession?.(item.id);
+    if (existing?.questions?.length) {
+      return existing;
+    }
+    if (state.loadingPracticeId === item.id) {
+      return null;
+    }
+    state.loadingPracticeId = item.id;
+    renderPlayer();
+    await ensurePracticeGenerator(item);
+    const session = toolkit.ensureStoredPracticeSession?.(item) || toolkit.readStoredPracticeSession?.(item.id) || null;
+    if (state.loadingPracticeId === item.id) {
+      state.loadingPracticeId = "";
+    }
+    renderAll();
+    return session;
   }
 
   function populateGradeFilter() {
@@ -446,11 +578,15 @@
     if (!selected || !chapterItems.length) {
       elements.prevPracticeButton.disabled = true;
       elements.nextPracticeButton.disabled = true;
+      elements.mode2PrevPracticeButton.disabled = true;
+      elements.mode2NextPracticeButton.disabled = true;
       return;
     }
     const index = chapterItems.findIndex((item) => item.id === selected.id);
     elements.prevPracticeButton.disabled = index <= 0;
     elements.nextPracticeButton.disabled = index < 0 || index >= chapterItems.length - 1;
+    elements.mode2PrevPracticeButton.disabled = elements.prevPracticeButton.disabled;
+    elements.mode2NextPracticeButton.disabled = elements.nextPracticeButton.disabled;
   }
 
   function renderChapterNavigator() {
@@ -458,12 +594,15 @@
     const index = visibleCodes.indexOf(state.chapterCode);
     elements.prevChapterButton.disabled = index <= 0;
     elements.nextChapterButton.disabled = index < 0 || index >= visibleCodes.length - 1;
+    elements.mode2PrevChapterButton.disabled = elements.prevChapterButton.disabled;
+    elements.mode2NextChapterButton.disabled = elements.nextChapterButton.disabled;
   }
 
   function renderPlayer() {
     const selected = ensureSelectedPractice();
     const chapterLabel = chapterOptionByCode.get(state.chapterCode)?.label || state.chapterCode || TEXT.chapterFallback;
     elements.chapterTitle.textContent = chapterLabel;
+    applyLayoutMode();
     renderChapterNavigator();
     renderPracticeNavigator();
 
@@ -474,12 +613,14 @@
       elements.practiceHint.textContent = TEXT.switchChapterHint;
       renderQuestionOutputs(TEXT.noQuestionToShow, "", "");
       [
-        elements.generateButton,
         elements.regenerateButton,
         elements.prevQuestionButton,
         elements.nextQuestionButton,
         elements.summaryButton,
         elements.detailButton,
+        elements.mode2RegenerateButton,
+        elements.mode2SummaryButton,
+        elements.mode2DetailButton,
       ].forEach((button) => {
         button.disabled = true;
       });
@@ -493,55 +634,51 @@
     elements.practiceTitle.textContent = selected.title;
     elements.practiceProgress.textContent = `${TEXT.topicIndexPrefix}${practiceIndex + 1} / ${chapterItems.length}`;
     elements.practiceMeta.innerHTML = renderMetaChips(selected);
-    elements.generateButton.disabled = false;
     elements.regenerateButton.disabled = false;
+    elements.mode2RegenerateButton.disabled = false;
 
-    if (!session) {
-      elements.practiceHint.textContent = TEXT.clickGenerateHint;
-      renderQuestionOutputs(TEXT.clickGenerate, "", "");
+    if (!session || state.loadingPracticeId === selected.id) {
+      elements.practiceHint.textContent = TEXT.loadingPracticeHint;
+      renderQuestionOutputs(TEXT.loadingPractice, "", "");
       [
         elements.prevQuestionButton,
         elements.nextQuestionButton,
         elements.summaryButton,
         elements.detailButton,
+        elements.mode2SummaryButton,
+        elements.mode2DetailButton,
       ].forEach((button) => {
         button.disabled = true;
       });
       return;
     }
 
-    const total = Array.isArray(session.questions) ? session.questions.length : 0;
-    const index = Math.min(Math.max(Number(session.currentIndex) || 0, 0), Math.max(total - 1, 0));
-    const progressText = `${TEXT.currentQuestionPrefix}${index + 1} / ${total} ${TEXT.currentQuestionSuffix}`;
     elements.practiceHint.textContent = session.generatedAt
       ? `${TEXT.generatedRecordHint}${formatTimeText(session.generatedAt)}${TEXT.generatedRecordHintSuffix}`
       : TEXT.storedRecordHint;
 
-    const summaryAnswer = Array.isArray(session.summaryAnswers) ? session.summaryAnswers[index] || "" : "";
-    const detailAnswer = Array.isArray(session.answers) ? session.answers[index] || "" : "";
+    const { total, index } = renderQuestionSession(session);
 
-    renderQuestionOutputs(
-      `<div class="practice-mobile-question"><div class="practice-mobile-question__index">${escapeHtml(progressText)}</div><div>${toolkit.renderRichTextLine(session.questions[index] || "")}</div></div>`,
-      toolkit.renderRichTextLine(summaryAnswer || TEXT.noSummary),
-      toolkit.renderRichTextLine(detailAnswer || TEXT.noDetail),
-    );
-
-    elements.prevQuestionButton.disabled = index <= 0;
-    elements.nextQuestionButton.disabled = index >= total - 1;
+    elements.prevQuestionButton.disabled = getIsFocusMode() || index <= 0;
+    elements.nextQuestionButton.disabled = getIsFocusMode() || index >= total - 1;
     elements.summaryButton.disabled = false;
     elements.detailButton.disabled = false;
+    elements.mode2SummaryButton.disabled = false;
+    elements.mode2DetailButton.disabled = false;
   }
 
   function syncUrl() {
     const params = new URLSearchParams();
     if (state.chapterCode) params.set("chapter", state.chapterCode);
     if (state.selectedPracticeId) params.set("practice", state.selectedPracticeId);
+    if (getIsFocusMode()) params.set("mode", "focus");
     const url = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ""}`;
     window.history.replaceState({}, "", url);
   }
 
   function renderSelectView() {
     populateGradeFilter();
+    elements.layoutModeSelect.value = state.layoutMode;
     elements.keywordInput.value = state.keyword;
     renderChapterList();
   }
@@ -562,9 +699,9 @@
     state.chapterCode = chapterCode;
     state.selectedPracticeId = "";
     ensureSelectedPractice();
-    ensureSelectedPracticeSession();
     setView("chapter-practice");
     renderAll();
+    void prepareSelectedPracticeSession();
   }
 
   function moveChapter(step) {
@@ -575,8 +712,8 @@
     state.chapterCode = codes[nextIndex];
     state.selectedPracticeId = "";
     ensureSelectedPractice();
-    ensureSelectedPracticeSession();
     renderAll();
+    void prepareSelectedPracticeSession();
   }
 
   function movePractice(step) {
@@ -587,11 +724,17 @@
     const nextIndex = index + step;
     if (nextIndex < 0 || nextIndex >= chapterItems.length) return;
     state.selectedPracticeId = chapterItems[nextIndex].id;
-    ensureSelectedPracticeSession();
     renderAll();
+    void prepareSelectedPracticeSession();
   }
 
   function bindEvents() {
+    elements.layoutModeSelect.addEventListener("change", (event) => {
+      state.layoutMode = event.target.value === "focus" ? "focus" : "default";
+      window.localStorage?.setItem("math-formula-tool-mobile-layout-mode", state.layoutMode);
+      renderAll();
+    });
+
     elements.gradeFilter.addEventListener("change", (event) => {
       state.gradeKey = event.target.value || "all";
       state.chapterCode = "";
@@ -629,25 +772,30 @@
     elements.nextChapterButton.addEventListener("click", () => moveChapter(1));
     elements.prevPracticeButton.addEventListener("click", () => movePractice(-1));
     elements.nextPracticeButton.addEventListener("click", () => movePractice(1));
+    elements.mode2PrevChapterButton.addEventListener("click", () => moveChapter(-1));
+    elements.mode2NextChapterButton.addEventListener("click", () => moveChapter(1));
+    elements.mode2PrevPracticeButton.addEventListener("click", () => movePractice(-1));
+    elements.mode2NextPracticeButton.addEventListener("click", () => movePractice(1));
 
     elements.practiceList.addEventListener("click", (event) => {
       const button = event.target.closest("[data-mobile-practice-id]");
       if (!button) return;
       state.selectedPracticeId = String(button.getAttribute("data-mobile-practice-id") || "").trim();
-      ensureSelectedPracticeSession();
       renderAll();
+      void prepareSelectedPracticeSession();
     });
 
-    elements.generateButton.addEventListener("click", () => {
+    elements.regenerateButton.addEventListener("click", async () => {
       const item = getSelectedPractice();
       if (!item) return;
-      toolkit.ensureStoredPracticeSession?.(item);
+      await ensurePracticeGenerator(item);
+      toolkit.regenerateStoredPracticeSession?.(item);
       renderAll();
     });
-
-    elements.regenerateButton.addEventListener("click", () => {
+    elements.mode2RegenerateButton.addEventListener("click", async () => {
       const item = getSelectedPractice();
       if (!item) return;
+      await ensurePracticeGenerator(item);
       toolkit.regenerateStoredPracticeSession?.(item);
       renderAll();
     });
@@ -675,15 +823,20 @@
       renderAll();
     });
 
-    elements.summaryButton.addEventListener("click", () => {
-      if (elements.summaryButton.disabled) return;
+    function toggleSummary() {
+      if (elements.summaryButton.disabled && elements.mode2SummaryButton.disabled) return;
       elements.summaryOutput.classList.toggle("is-hidden");
-    });
+    }
 
-    elements.detailButton.addEventListener("click", () => {
-      if (elements.detailButton.disabled) return;
+    function toggleDetail() {
+      if (elements.detailButton.disabled && elements.mode2DetailButton.disabled) return;
       elements.detailOutput.classList.toggle("is-hidden");
-    });
+    }
+
+    elements.summaryButton.addEventListener("click", toggleSummary);
+    elements.mode2SummaryButton.addEventListener("click", toggleSummary);
+    elements.detailButton.addEventListener("click", toggleDetail);
+    elements.mode2DetailButton.addEventListener("click", toggleDetail);
   }
 
   bindEvents();
@@ -692,6 +845,7 @@
   if (state.chapterCode && getVisibleChapterCodes().includes(state.chapterCode)) {
     setView("chapter-practice");
     renderAll();
+    void prepareSelectedPracticeSession();
   } else {
     setView("chapter-select");
   }

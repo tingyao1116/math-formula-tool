@@ -3,6 +3,7 @@
   const toolkit = window.formulaToolkit || null;
   const practiceStore = window.formulaPracticeStore || null;
   const practiceLibrary = window.practiceLibraryStore || null;
+  const generatorLoader = window.practiceGeneratorLoader || null;
 
   const elements = {
     gradeFilter: document.getElementById("gradeFilter"),
@@ -196,6 +197,7 @@
         practiceSource: "library",
         chapterOrderLookup,
         subtypeCount: Number(record.subtypeCount || 0) || undefined,
+        generatorBundle: String(record.generatorBundle || "").trim(),
         relatedPracticeIds: normalizeTextList(record.relatedPracticeIds),
       };
     });
@@ -1116,6 +1118,17 @@
     };
   }
 
+  async function ensurePracticeGeneratorsForItemsV2(items) {
+    if (!generatorLoader?.ensureForPractices) return true;
+    try {
+      await generatorLoader.ensureForPractices(items);
+      return true;
+    } catch (error) {
+      console.warn("Unable to load practice generator bundle", error);
+      return false;
+    }
+  }
+
   function collectPracticeVariationsV2(config, item, maxVariants = 6) {
     if (!config) return [];
     if (config.type === "fixed-example") {
@@ -1395,10 +1408,11 @@
     elements.practiceBoard?.querySelectorAll("[data-chapter-composite-generate]").forEach((button) => {
       if (button.dataset.boundV2 === "true") return;
       button.dataset.boundV2 = "true";
-      button.addEventListener("click", () => {
+      button.addEventListener("click", async () => {
         const section = button.closest("[data-chapter-composite]");
         const position = section?.getAttribute("data-chapter-composite-position") || "bottom";
         const items = getCompositeChapterItems();
+        await ensurePracticeGeneratorsForItemsV2(items);
         const session = ensureCompositeSessionV2(position, items);
         renderCompositeSessionV2(section, session);
       });
@@ -1407,10 +1421,11 @@
     elements.practiceBoard?.querySelectorAll("[data-chapter-composite-regenerate]").forEach((button) => {
       if (button.dataset.boundV2 === "true") return;
       button.dataset.boundV2 = "true";
-      button.addEventListener("click", () => {
+      button.addEventListener("click", async () => {
         const section = button.closest("[data-chapter-composite]");
         const position = section?.getAttribute("data-chapter-composite-position") || "bottom";
         const items = getCompositeChapterItems();
+        await ensurePracticeGeneratorsForItemsV2(items);
         const session = regenerateCompositeSessionV2(position, items);
         renderCompositeSessionV2(section, session);
       });

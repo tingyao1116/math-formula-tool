@@ -1,4 +1,244 @@
 window.chapterCodeCatalog = {
+  "e4-2-1": {
+    "chapter": "多位數的乘與除",
+    "section": "多位數的乘與除",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-2-3": {
+    "chapter": "概數",
+    "section": "概數",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-2-4": {
+    "chapter": "數量規律",
+    "section": "數量規律",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-2-5": {
+    "chapter": "小數乘法",
+    "section": "小數乘法",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-2-7": {
+    "chapter": "等值分數",
+    "section": "等值分數",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-1-1": {
+    "chapter": "多位小數與加減",
+    "section": "多位小數與加減",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-1-2": {
+    "chapter": "因數與公因數",
+    "section": "因數與公因數",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-1-3": {
+    "chapter": "倍數與公倍數",
+    "section": "倍數與公倍數",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-1-4": {
+    "chapter": "擴分、約分與通分",
+    "section": "擴分、約分與通分",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-1-5": {
+    "chapter": "多邊形與扇形",
+    "section": "多邊形與扇形",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-1-6": {
+    "chapter": "異分母分數的加減",
+    "section": "異分母分數的加減",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-1-7": {
+    "chapter": "線對稱圖形",
+    "section": "線對稱圖形",
+    "domainMain": "空間與形狀",
+    "domainSub": ""
+  },
+  "e5-1-8": {
+    "chapter": "整數四則運算",
+    "section": "整數四則運算",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-1-9": {
+    "chapter": "面積",
+    "section": "面積",
+    "domainMain": "空間與形狀",
+    "domainSub": ""
+  },
+  "e5-1-10": {
+    "chapter": "柱體、錐體和球",
+    "section": "柱體、錐體和球",
+    "domainMain": "空間與形狀",
+    "domainSub": ""
+  },
+  "e5-2-1": {
+    "chapter": "體積",
+    "section": "體積",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-2-2": {
+    "chapter": "分數的計算",
+    "section": "分數的計算",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-2-3": {
+    "chapter": "容積",
+    "section": "容積",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-2-4": {
+    "chapter": "小數的乘法",
+    "section": "小數的乘法",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-2-5": {
+    "chapter": "大數與折線圖",
+    "section": "大數與折線圖",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-2-6": {
+    "chapter": "整數、小數除以整數",
+    "section": "整數、小數除以整數",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-2-7": {
+    "chapter": "表面積",
+    "section": "表面積",
+    "domainMain": "空間與形狀",
+    "domainSub": ""
+  },
+  "e5-2-8": {
+    "chapter": "比率與百分率",
+    "section": "比率與百分率",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-2-9": {
+    "chapter": "時間的乘除",
+    "section": "時間的乘除",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e5-2-10": {
+    "chapter": "生活中的大單位",
+    "section": "生活中的大單位",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e6-1-1": {
+    "chapter": "最大公因數與最小公倍數",
+    "section": "最大公因數與最小公倍數",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e6-1-2": {
+    "chapter": "分數除法",
+    "section": "分數除法",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e6-1-3": {
+    "chapter": "數量關係",
+    "section": "數量關係",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e6-1-4": {
+    "chapter": "小數除法",
+    "section": "小數除法",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e6-1-5": {
+    "chapter": "比與比值",
+    "section": "比與比值",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e6-1-6": {
+    "chapter": "圓周長與扇形周長",
+    "section": "圓周長與扇形周長",
+    "domainMain": "空間與形狀",
+    "domainSub": ""
+  },
+  "e6-1-7": {
+    "chapter": "圓面積與扇形面積",
+    "section": "圓面積與扇形面積",
+    "domainMain": "空間與形狀",
+    "domainSub": ""
+  },
+  "e6-1-8": {
+    "chapter": "認識速率",
+    "section": "認識速率",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e6-1-9": {
+    "chapter": "放大圖、縮圖與比例尺",
+    "section": "放大圖、縮圖與比例尺",
+    "domainMain": "空間與形狀",
+    "domainSub": ""
+  },
+  "e6-2-1": {
+    "chapter": "分數與小數的四則運算",
+    "section": "分數與小數的四則運算",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e6-2-2": {
+    "chapter": "速率與應用",
+    "section": "速率與應用",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e6-2-3": {
+    "chapter": "柱體體積與表面積",
+    "section": "柱體體積與表面積",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e6-2-4": {
+    "chapter": "基準量與比較量",
+    "section": "基準量與比較量",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e6-2-5": {
+    "chapter": "怎麼解題",
+    "section": "怎麼解題",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e6-2-6": {
+    "chapter": "圓形圖",
+    "section": "圓形圖",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
   "B-1": {
     "chapter": "立體透視圖",
     "section": "立體透視圖",

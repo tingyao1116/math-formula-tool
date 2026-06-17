@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0d5c63" />
-    <title>手機練習版</title>
+    <title>手機無限練習</title>
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,7 +14,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
-    <link rel="stylesheet" href="styles.css?v=20260612-practice-mobile-v3" />
+    <link rel="stylesheet" href="styles.css?v=20260617-mobile-mode2-v1" />
   </head>
   <body>
     <div class="page-shell practice-mobile-page">
@@ -22,13 +22,13 @@
         <section id="mobileChapterSelectView" class="practice-mobile-view">
           <header class="hero practice-mobile-hero">
             <div class="hero__content">
-              <p class="eyebrow">手機練習版</p>
-              <h1>選擇章節</h1>
+              <p class="eyebrow">手機無限練習</p>
+              <h1>章節練習快選</h1>
               <p class="hero__lead">
-                先選章節，再進入乾淨的題目頁面。進去後就直接做題，不需要一直看到上面的篩選區。
+                先選章節，再直接進入題型練習。手機版會優先讀取上次的出題紀錄，沒有紀錄時會自動出題，方便老師課堂切換與學生自己刷題。
               </p>
               <div class="hero__quicklinks">
-                <a class="ghost-link" href="practice-bank.html">回章節總覽</a>
+                <a class="ghost-link" href="practice-bank.html">返回練習總覽</a>
                 <a class="ghost-link" href="index.html">回首頁</a>
               </div>
             </div>
@@ -37,20 +37,27 @@
           <section class="panel practice-mobile-select-panel">
             <h2>快速篩選</h2>
             <label class="field">
-              <span>年級</span>
+              <span>顯示模式</span>
+              <select id="mobileLayoutModeSelect">
+                <option value="default">模式 1：目前版面</option>
+                <option value="focus">模式 2：題目放大</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>學習階段</span>
               <select id="mobileGradeFilter"></select>
             </label>
             <label class="field">
-              <span>關鍵字</span>
-              <input id="mobileKeywordInput" type="search" placeholder="可搜尋章節或題型名稱" />
+              <span>關鍵字搜尋</span>
+              <input id="mobileKeywordInput" type="search" placeholder="可搜章節、題型、標籤" />
             </label>
-            <button id="mobileResetButton" class="ghost-button" type="button">重設篩選</button>
+            <button id="mobileResetButton" class="ghost-button" type="button">清除篩選</button>
           </section>
 
           <section class="panel practice-mobile-chapter-panel">
             <div class="practice-mobile-list-panel__header">
               <div>
-                <p class="summary-label">章節列表</p>
+                <p class="summary-label">章節清單</p>
                 <h2>可練習章節</h2>
               </div>
               <p id="mobileChapterCount" class="summary-count"></p>
@@ -60,16 +67,26 @@
         </section>
 
         <section id="mobilePracticeView" class="practice-mobile-view is-hidden">
-          <section class="panel practice-mobile-player">
+          <section id="mobilePracticePlayer" class="panel practice-mobile-player">
             <div class="practice-mobile-player__topbar">
-              <button id="mobileBackButton" type="button" class="ghost-button">上一頁</button>
+              <button id="mobileBackButton" type="button" class="ghost-button">回上一頁</button>
               <div class="practice-mobile-player__topbar-text">
                 <p class="summary-label">目前章節</p>
                 <h2 id="mobileChapterTitle">章節</h2>
               </div>
             </div>
 
-            <div class="interactive-actions interactive-actions--stacked practice-mobile-player__actions">
+            <div id="mobileCompactActions" class="interactive-actions practice-mobile-player__compact-actions is-hidden">
+              <button id="mobileMode2PrevChapterButton" type="button" class="ghost-button" aria-label="上一章"><<</button>
+              <button id="mobileMode2PrevPracticeButton" type="button" class="ghost-button" aria-label="上一題型"><</button>
+              <button id="mobileMode2SummaryButton" type="button" class="ghost-button">簡答</button>
+              <button id="mobileMode2DetailButton" type="button" class="ghost-button">詳解</button>
+              <button id="mobileMode2RegenerateButton" type="button" class="ghost-button">重出</button>
+              <button id="mobileMode2NextPracticeButton" type="button" class="ghost-button" aria-label="下一題型">></button>
+              <button id="mobileMode2NextChapterButton" type="button" class="ghost-button" aria-label="下一章">>></button>
+            </div>
+
+            <div id="mobileDefaultTopActions" class="interactive-actions interactive-actions--stacked practice-mobile-player__actions">
               <div class="interactive-actions__row interactive-actions__row--split">
                 <button id="mobilePrevChapterButton" type="button" class="ghost-button">上一章</button>
                 <button id="mobileNextChapterButton" type="button" class="ghost-button">下一章</button>
@@ -83,37 +100,34 @@
             <div class="practice-mobile-player__header">
               <div>
                 <p class="summary-label">目前題型</p>
-                <h2 id="mobilePracticeTitle">請先選題型</h2>
+                <h2 id="mobilePracticeTitle">尚未選擇題型</h2>
               </div>
               <p id="mobilePracticeProgress" class="summary-count"></p>
             </div>
 
             <div id="mobilePracticeMeta" class="meta-row"></div>
-            <p id="mobilePracticeHint" class="detail-note practice-mobile-note">請先按出題。</p>
+            <p id="mobilePracticeHint" class="detail-note practice-mobile-note">題目會自動載入。</p>
 
-            <div class="interactive-actions interactive-actions--stacked practice-mobile-player__actions">
-              <div class="interactive-actions__row interactive-actions__row--split">
-                <button id="mobileGenerateButton" type="button" class="ghost-button">出題</button>
-                <button id="mobileRegenerateButton" type="button" class="ghost-button">重新出題</button>
-              </div>
-              <div class="interactive-actions__row interactive-actions__row--split">
+            <div id="mobileDefaultBottomActions" class="interactive-actions interactive-actions--stacked practice-mobile-player__actions">
+              <div id="mobileQuestionPagerRow" class="interactive-actions__row interactive-actions__row--split">
                 <button id="mobilePrevQuestionButton" type="button" class="ghost-button">上一題</button>
                 <button id="mobileNextQuestionButton" type="button" class="ghost-button">下一題</button>
               </div>
-              <div class="interactive-actions__row interactive-actions__row--split">
+              <div class="interactive-actions__row interactive-actions__row--triple">
                 <button id="mobileSummaryButton" type="button" class="ghost-button">簡答</button>
                 <button id="mobileDetailButton" type="button" class="ghost-button">詳解</button>
+                <button id="mobileRegenerateButton" type="button" class="ghost-button">重新出題</button>
               </div>
             </div>
 
-            <div id="mobileQuestionOutput" class="interactive-output">請先按出題。</div>
+            <div id="mobileQuestionOutput" class="interactive-output">題目載入中。</div>
             <div class="interactive-answer-panels">
               <div id="mobileSummaryOutput" class="interactive-output is-hidden"></div>
               <div id="mobileDetailOutput" class="interactive-output is-hidden"></div>
             </div>
           </section>
 
-          <section class="panel practice-mobile-list-panel">
+          <section id="mobilePracticeListPanel" class="panel practice-mobile-list-panel">
             <div class="practice-mobile-list-panel__header">
               <div>
                 <p class="summary-label">本章題型</p>
@@ -131,16 +145,18 @@
     <script defer src="data/formula-content.js?v=20260423-abs-count-layout-v4"></script>
     <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
     <script defer src="data/main-topic-overviews.js?v=20260508-topic-title-clean-v1"></script>
-    <script defer src="data/chapter-code-config.js"></script>
+    <script defer src="data/chapter-code-config.js?v=20260616-e425-split-v1"></script>
     <script defer src="data/formula-calculators.js"></script>
-    <script defer src="data/formula-practice-assignments.js?v=20260613-s324-term-revert-v7"></script>
-    <script defer src="data/formula-practice.js?v=20260611-j112-abs-reduce-fix-v1"></script>
-    <script defer src="formula-data.js?v=20260613-s324-term-revert-v3"></script>
+    <script defer src="data/formula-practice-assignments.js?v=20260617-e4-bundle-bridge-v1"></script>
+    <script defer src="data/formula-practice.js?v=20260616-e425-split-v1"></script>
+    <script defer src="data/practice-generator-bundles.js?v=20260616-e424-split-v1"></script>
+    <script defer src="data/practice-generator-loader.js?v=20260616-e424-split-v1"></script>
+    <script defer src="formula-data.js?v=20260616-e425-split-v1"></script>
     <script defer src="chapter-overviews.js?v=20260507-main-theme-layer-v2"></script>
     <script defer src="chapter-closings.js?v=20260507-main-theme-layer-v2"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-    <script defer src="formula-core.js?v=20260612-practice-session-v1"></script>
-    <script defer src="practice-mobile.js?v=20260612-practice-mobile-v4"></script>
+    <script defer src="formula-core.js?v=20260617-e4-bundle-bridge-v1"></script>
+    <script defer src="practice-mobile.js?v=20260617-mobile-mode2-v1"></script>
     <script defer src="pwa.js"></script>
   </body>
 </html>

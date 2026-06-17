@@ -77,8 +77,9 @@ def normalize_id_list(values) -> list[str]:
 def normalize_practice_record(record: dict) -> dict:
     row = dict(record or {})
     generator_key = str(row.get("generatorKey", "")).strip() or str(row.get("practiceKey", "")).strip()
+    generator_bundle = str(row.get("generatorBundle", "") or row.get("bundleKey", "")).strip()
     mode = str(row.get("mode", "")).strip() or ("fixed-example" if not generator_key else "generator")
-    return {
+    normalized = {
         "id": str(row.get("id", "")).strip(),
         "enabled": bool(row.get("enabled", True)),
         "mode": mode,
@@ -103,6 +104,9 @@ def normalize_practice_record(record: dict) -> dict:
         "notes": normalize_text_list(row.get("notes", [])),
         "mistakes": normalize_text_list(row.get("mistakes", [])),
     }
+    if generator_bundle:
+        normalized["generatorBundle"] = generator_bundle
+    return normalized
 
 
 def normalize_practice_binding(record: dict) -> dict:

@@ -2064,6 +2064,16 @@ select {
   justify-self: end;
 }
 
+.interactive-actions__row--triple {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.interactive-actions__row--triple .ghost-button {
+  min-width: 0;
+}
+
 .chapter-composite-practice .interactive-actions {
   display: grid;
   gap: 10px;
@@ -2145,6 +2155,21 @@ select {
   margin-bottom: 12px;
 }
 
+.practice-mobile-player__compact-actions {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0 0 12px;
+}
+
+.practice-mobile-player__compact-actions .ghost-button {
+  min-width: 0;
+  padding: 8px 4px;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  border-radius: 12px;
+}
+
 .practice-mobile-list {
   display: grid;
   gap: 10px;
@@ -2207,9 +2232,60 @@ select {
   gap: 10px;
 }
 
+.practice-mobile-answer-block ol,
+.practice-mobile-question-list__items {
+  margin: 0;
+  padding-left: 1.45em;
+  display: grid;
+  gap: 10px;
+}
+
+.practice-mobile-answer-block li,
+.practice-mobile-question-list__items li {
+  line-height: 1.8;
+}
+
 .practice-mobile-question__index {
   color: var(--primary);
   font-weight: 700;
+}
+
+.practice-mobile-player--focus .practice-mobile-player__topbar .ghost-button {
+  max-width: 110px;
+}
+
+.practice-mobile-player--focus .practice-mobile-player__header {
+  align-items: start;
+}
+
+.practice-mobile-player--focus .practice-mobile-note,
+.practice-mobile-player--focus .meta-chip,
+.practice-mobile-player--focus .summary-count,
+.practice-mobile-player--focus .summary-label {
+  font-size: 0.9rem;
+}
+
+.practice-mobile-player--focus .interactive-output {
+  padding: 18px 18px 20px;
+}
+
+.practice-mobile-player--focus .practice-mobile-question,
+.practice-mobile-player--focus .practice-mobile-answer-block,
+.practice-mobile-player--focus .interactive-output {
+  font-size: clamp(1.05rem, 4.4vw, 1.2rem);
+  line-height: 1.9;
+}
+
+.practice-mobile-player--focus .practice-mobile-question__index {
+  font-size: 0.92rem;
+}
+
+.practice-mobile-player--focus .practice-mobile-question-list__items {
+  gap: 14px;
+}
+
+.practice-mobile-list-panel--focus {
+  opacity: 0.92;
 }
 
 @media (max-width: 640px) {
@@ -2220,6 +2296,15 @@ select {
 
   .practice-mobile-list__row {
     align-items: flex-start;
+  }
+
+  .practice-mobile-player__compact-actions {
+    gap: 4px;
+  }
+
+  .practice-mobile-player__compact-actions .ghost-button {
+    padding: 7px 2px;
+    font-size: 0.72rem;
   }
 }
 
