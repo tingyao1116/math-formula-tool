@@ -55,8 +55,6 @@
     topicIndexPrefix: "\u984c\u578b ",
     loadingPractice: "\u6b63\u5728\u8f09\u5165\u984c\u76ee\u2026",
     loadingPracticeHint: "\u6b63\u5728\u6e96\u5099\u984c\u76ee\uff0c\u7a0d\u7b49\u4e00\u4e0b\u5c31\u6703\u81ea\u52d5\u986f\u793a\u3002",
-    allQuestionsPrefix: "\u672c\u56de\u5408\u5171 ",
-    allQuestionsSuffix: " \u984c",
   };
 
   const elements = {
@@ -82,11 +80,14 @@
     practiceHint: document.getElementById("mobilePracticeHint"),
     defaultTopActions: document.getElementById("mobileDefaultTopActions"),
     defaultBottomActions: document.getElementById("mobileDefaultBottomActions"),
+    focusBottomActions: document.getElementById("mobileFocusBottomActions"),
     compactActions: document.getElementById("mobileCompactActions"),
     mode2PrevChapterButton: document.getElementById("mobileMode2PrevChapterButton"),
     mode2NextChapterButton: document.getElementById("mobileMode2NextChapterButton"),
     mode2PrevPracticeButton: document.getElementById("mobileMode2PrevPracticeButton"),
     mode2NextPracticeButton: document.getElementById("mobileMode2NextPracticeButton"),
+    mode2PrevQuestionButton: document.getElementById("mobileMode2PrevQuestionButton"),
+    mode2NextQuestionButton: document.getElementById("mobileMode2NextQuestionButton"),
     mode2SummaryButton: document.getElementById("mobileMode2SummaryButton"),
     mode2DetailButton: document.getElementById("mobileMode2DetailButton"),
     mode2RegenerateButton: document.getElementById("mobileMode2RegenerateButton"),
@@ -406,6 +407,7 @@
     elements.practiceListPanel?.classList.toggle("practice-mobile-list-panel--focus", focus);
     elements.defaultTopActions?.classList.toggle("is-hidden", focus);
     elements.defaultBottomActions?.classList.toggle("is-hidden", focus);
+    elements.focusBottomActions?.classList.toggle("is-hidden", !focus);
     elements.compactActions?.classList.toggle("is-hidden", !focus);
   }
 
@@ -427,31 +429,18 @@
       return { total: 0, index: 0 };
     }
 
-    if (getIsFocusMode()) {
-      const questionHtml = `
-        <div class="practice-mobile-question practice-mobile-question--focus">
-          <div class="practice-mobile-question__index">${escapeHtml(`${TEXT.allQuestionsPrefix}${total}${TEXT.allQuestionsSuffix}`)}</div>
-          ${session.intro ? `<p class="practice-intro">${toolkit.renderRichTextLine(session.intro)}</p>` : ""}
-          <ol class="practice-mobile-question-list__items">
-            ${questions.map((question) => `<li>${toolkit.renderRichTextLine(question)}</li>`).join("")}
-          </ol>
-        </div>
-      `;
-      renderQuestionOutputs(
-        questionHtml,
-        buildHtmlList(summaries, TEXT.noSummary),
-        buildHtmlList(details, TEXT.noDetail),
-      );
-    } else {
-      const progressText = `${TEXT.currentQuestionPrefix}${index + 1} / ${total} ${TEXT.currentQuestionSuffix}`;
-      const summaryAnswer = summaries[index] || "";
-      const detailAnswer = details[index] || "";
-      renderQuestionOutputs(
-        `<div class="practice-mobile-question"><div class="practice-mobile-question__index">${escapeHtml(progressText)}</div><div>${toolkit.renderRichTextLine(questions[index] || "")}</div></div>`,
-        toolkit.renderRichTextLine(summaryAnswer || TEXT.noSummary),
-        toolkit.renderRichTextLine(detailAnswer || TEXT.noDetail),
-      );
-    }
+    const progressText = `${TEXT.currentQuestionPrefix}${index + 1} / ${total} ${TEXT.currentQuestionSuffix}`;
+    const summaryAnswer = summaries[index] || "";
+    const detailAnswer = details[index] || "";
+    const questionClass = getIsFocusMode()
+      ? "practice-mobile-question practice-mobile-question--focus"
+      : "practice-mobile-question";
+
+    renderQuestionOutputs(
+      `<div class="${questionClass}"><div class="practice-mobile-question__index">${escapeHtml(progressText)}</div>${session.intro ? `<p class="practice-intro">${toolkit.renderRichTextLine(session.intro)}</p>` : ""}<div>${toolkit.renderRichTextLine(questions[index] || "")}</div></div>`,
+      toolkit.renderRichTextLine(summaryAnswer || TEXT.noSummary),
+      toolkit.renderRichTextLine(detailAnswer || TEXT.noDetail),
+    );
 
     return { total, index };
   }
@@ -616,6 +605,8 @@
         elements.regenerateButton,
         elements.prevQuestionButton,
         elements.nextQuestionButton,
+        elements.mode2PrevQuestionButton,
+        elements.mode2NextQuestionButton,
         elements.summaryButton,
         elements.detailButton,
         elements.mode2RegenerateButton,
@@ -643,6 +634,8 @@
       [
         elements.prevQuestionButton,
         elements.nextQuestionButton,
+        elements.mode2PrevQuestionButton,
+        elements.mode2NextQuestionButton,
         elements.summaryButton,
         elements.detailButton,
         elements.mode2SummaryButton,
@@ -661,6 +654,8 @@
 
     elements.prevQuestionButton.disabled = getIsFocusMode() || index <= 0;
     elements.nextQuestionButton.disabled = getIsFocusMode() || index >= total - 1;
+    elements.mode2PrevQuestionButton.disabled = index <= 0;
+    elements.mode2NextQuestionButton.disabled = index >= total - 1;
     elements.summaryButton.disabled = false;
     elements.detailButton.disabled = false;
     elements.mode2SummaryButton.disabled = false;
@@ -812,6 +807,29 @@
     });
 
     elements.nextQuestionButton.addEventListener("click", () => {
+      const item = getSelectedPractice();
+      const session = item ? toolkit.readStoredPracticeSession?.(item.id) : null;
+      if (!item || !session) return;
+      const maxIndex = Math.max((session.questions?.length || 1) - 1, 0);
+      toolkit.updateStoredPracticeSessionIndex?.(
+        item.id,
+        Math.min((Number(session.currentIndex) || 0) + 1, maxIndex),
+      );
+      renderAll();
+    });
+
+    elements.mode2PrevQuestionButton.addEventListener("click", () => {
+      const item = getSelectedPractice();
+      const session = item ? toolkit.readStoredPracticeSession?.(item.id) : null;
+      if (!item || !session) return;
+      toolkit.updateStoredPracticeSessionIndex?.(
+        item.id,
+        Math.max((Number(session.currentIndex) || 0) - 1, 0),
+      );
+      renderAll();
+    });
+
+    elements.mode2NextQuestionButton.addEventListener("click", () => {
       const item = getSelectedPractice();
       const session = item ? toolkit.readStoredPracticeSession?.(item.id) : null;
       if (!item || !session) return;

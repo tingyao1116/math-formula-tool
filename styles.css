@@ -2031,6 +2031,10 @@ select {
   display: none;
 }
 
+.is-hidden {
+  display: none !important;
+}
+
 .interactive-answer-panels {
   display: grid;
   gap: 12px;
@@ -2157,7 +2161,7 @@ select {
 
 .practice-mobile-player__compact-actions {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
   margin: 0 0 12px;
 }
@@ -2168,6 +2172,18 @@ select {
   font-size: 0.78rem;
   line-height: 1.2;
   border-radius: 12px;
+}
+
+.interactive-actions__row--focus-five {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.interactive-actions__row--focus-five .ghost-button {
+  min-width: 0;
 }
 
 .practice-mobile-list {
@@ -2305,6 +2321,16 @@ select {
   .practice-mobile-player__compact-actions .ghost-button {
     padding: 7px 2px;
     font-size: 0.72rem;
+  }
+
+  .interactive-actions__row--focus-five {
+    gap: 6px;
+  }
+
+  .interactive-actions__row--focus-five .ghost-button {
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: 0.82rem;
   }
 }
 
