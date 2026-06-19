@@ -19,9 +19,13 @@
     emptyState: document.getElementById("emptyState"),
   };
 
-  if (!store || !toolkit || !practiceStore) {
+  if (!store || !toolkit) {
     console.warn("practice bank dependencies not loaded");
     return;
+  }
+
+  if (!practiceStore) {
+    console.warn("practice bank loaded without formulaPracticeStore; filters will render but practice configs may be incomplete");
   }
 
   const allItems = store.getCurrentFormulas ? store.getCurrentFormulas() : [];
