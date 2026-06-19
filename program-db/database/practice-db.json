@@ -1,4 +1,4 @@
-{
+﻿{
   "meta": {
     "schema": "practice-db-v1",
     "count": 0,
@@ -1193,6 +1193,389 @@
     {
       "enabled": true,
       "mode": "generator",
+      "chapterCode": "e4-2-2",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "四邊形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "四邊形",
+        "名稱判斷",
+        "性質",
+        "無限練習"
+      ],
+      "usage": [
+        "根據邊與角的性質描述，判斷圖形是梯形、平行四邊形、長方形、菱形或正方形。"
+      ],
+      "examples": [],
+      "tips": [
+        "先看有幾對對邊平行，再看角是不是直角、四邊是不是等長。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看到某一個性質就急著作答，沒有把平行、垂直、等長一起看完整。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-2-quadrilateral-classify-drill",
+      "title": "四邊形性質與名稱辨識",
+      "generatorKey": "e4-2-2-quadrilateral-classify-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-2",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "四邊形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "四邊形",
+        "平行",
+        "垂直",
+        "無限練習"
+      ],
+      "usage": [
+        "利用兩線與第三線的關係，或四邊形的邊關係，判斷平行、垂直與距離概念。"
+      ],
+      "examples": [],
+      "tips": [
+        "若兩線都垂直同一條直線，兩線互相平行；相鄰邊在長方形中一定互相垂直。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把『都垂直同一條線』誤判成彼此也垂直，或把距離和線段長混在一起。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-2-parallel-perpendicular-drill",
+      "title": "平行與垂直判定",
+      "generatorKey": "e4-2-2-parallel-perpendicular-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-2",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "四邊形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "四邊形",
+        "構成要素",
+        "鄰邊對邊",
+        "無限練習"
+      ],
+      "usage": [
+        "給定四邊形的頂點名稱，找出指定的鄰邊、對邊、對角、對角線，或判斷頂點邊角數量。"
+      ],
+      "examples": [],
+      "tips": [
+        "對邊是不相鄰的邊，對角是不相鄰的角；連接不相鄰頂點的線段叫對角線。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把相鄰的邊或角誤當成對邊、對角，或忘了四邊形共有 2 條對角線。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-2-structure-relations-drill",
+      "title": "構成要素與邊角關係",
+      "generatorKey": "e4-2-2-structure-relations-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-2",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "四邊形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "四邊形",
+        "對角線",
+        "全等",
+        "無限練習"
+      ],
+      "usage": [
+        "根據四邊形種類，判斷沿對角線分割後形成的兩個三角形是否全等，以及屬於哪一類三角形。"
+      ],
+      "examples": [],
+      "tips": [
+        "先確認原圖形是哪一種四邊形，再想它的對邊、角或邊長性質能不能支持兩三角形全等。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把所有四邊形都想成沿對角線後一定全等，忽略梯形這類例外。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-2-diagonal-congruence-drill",
+      "title": "對角線分割與全等判別",
+      "generatorKey": "e4-2-2-diagonal-congruence-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-2",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "四邊形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "四邊形",
+        "周長",
+        "直接計算",
+        "無限練習"
+      ],
+      "usage": [
+        "利用正方形、長方形、菱形、平行四邊形等邊長性質，直接計算周長。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷哪些邊相等，再把相同邊合併計算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "知道公式卻沒有先對應圖形性質，導致把長方形和平行四邊形的算法混在一起。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-2-perimeter-direct-drill",
+      "title": "四邊形周長直接計算",
+      "generatorKey": "e4-2-2-perimeter-direct-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-2",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "四邊形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "四邊形",
+        "周長",
+        "逆算",
+        "無限練習"
+      ],
+      "usage": [
+        "已知四邊形周長與部分邊長，利用圖形的等邊或對邊相等性質反推出未知邊長。"
+      ],
+      "examples": [],
+      "tips": [
+        "先用周長扣掉已知部分，再依圖形性質平均分配到未知邊。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "算出剩餘長度後，忘記還要依圖形性質再除以 2 或除以 4。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-2-perimeter-reverse-drill",
+      "title": "四邊形周長逆向求邊",
+      "generatorKey": "e4-2-2-perimeter-reverse-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-2",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "四邊形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "四邊形",
+        "名稱判斷",
+        "基礎",
+        "無限練習"
+      ],
+      "usage": [
+        "把四邊形名稱判斷與平行垂直判定放在一起，建立圖形性質的基本辨識能力。"
+      ],
+      "examples": [],
+      "tips": [
+        "先看平行關係，再看直角與等長條件，分類會更穩。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看到直角就想成長方形，沒有再檢查對邊平行或四邊長度。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-2-property-basic-mixed",
+      "title": "性質判斷基礎綜合",
+      "generatorKey": "e4-2-2-property-basic-mixed",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-2-2-quadrilateral-classify-drill",
+        "practice-e4-2-2-parallel-perpendicular-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-2",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "四邊形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "四邊形",
+        "構成要素",
+        "對角線",
+        "無限練習"
+      ],
+      "usage": [
+        "把邊角關係與對角線分割判別放在一起，強化四邊形結構概念。"
+      ],
+      "examples": [],
+      "tips": [
+        "先分清楚是題目在問命名元素，還是在問沿對角線切開後的結果。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "結構題和分割題混在一起時，沒有先抓清楚題目真正要問的是邊角還是三角形。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-2-structure-diagonal-mixed",
+      "title": "構成要素與對角線綜合",
+      "generatorKey": "e4-2-2-structure-diagonal-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-2-2-structure-relations-drill",
+        "practice-e4-2-2-diagonal-congruence-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-2",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "四邊形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "四邊形",
+        "周長",
+        "綜合",
+        "無限練習"
+      ],
+      "usage": [
+        "把四邊形周長直接計算與逆向求邊放在一起，練習從性質切換到計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷是正算還是逆算，再用圖形性質決定要加總還是反推。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看到周長題就直接套一種算法，沒有先分辨是求周長還是求未知邊。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-2-perimeter-mixed",
+      "title": "周長計算綜合",
+      "generatorKey": "e4-2-2-perimeter-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-2-2-perimeter-direct-drill",
+        "practice-e4-2-2-perimeter-reverse-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-2",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "四邊形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "四邊形",
+        "綜合",
+        "基本性質",
+        "無限練習"
+      ],
+      "usage": [
+        "整合四邊形名稱判斷、構成元素與周長計算，作為四邊形章節的整體複習。"
+      ],
+      "examples": [],
+      "tips": [
+        "先分辨題目是在問圖形名稱、邊角元素，還是在做邊長計算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把所有四邊形題都當成背性質，忽略有些題其實是用性質做推理或計算。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-2-quadrilateral-overview-mixed",
+      "title": "四邊形章節綜合",
+      "generatorKey": "e4-2-2-quadrilateral-overview-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-e4-2-2-quadrilateral-classify-drill",
+        "practice-e4-2-2-structure-relations-drill",
+        "practice-e4-2-2-perimeter-direct-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
       "chapterCode": "e4-2-3",
       "stage": "國小",
       "grade": "小四",
@@ -2353,6 +2736,392 @@
     {
       "enabled": true,
       "mode": "generator",
+      "chapterCode": "e4-2-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "周長與面積",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "周長",
+        "面積",
+        "公式",
+        "無限練習"
+      ],
+      "usage": [
+        "練習長方形與正方形的周長公式，建立看圖形選公式的基本能力。"
+      ],
+      "examples": [],
+      "tips": [
+        "先分清楚題目是在問周長還是面積，再決定要用加法還是乘法公式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把長方形周長誤寫成長乘寬，或把正方形周長誤算成邊長加 4。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-6-perimeter-direct-drill",
+      "title": "長方形與正方形的周長計算",
+      "generatorKey": "e4-2-6-perimeter-direct-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "周長與面積",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "周長",
+        "面積",
+        "公式",
+        "無限練習"
+      ],
+      "usage": [
+        "練習長方形與正方形的面積公式，建立面積是平面大小的概念。"
+      ],
+      "examples": [],
+      "tips": [
+        "面積單位是平方單位，要和公分、公尺這類長度單位分清楚。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "知道公式卻忘記把答案寫成平方公分或平方公尺。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-6-area-direct-drill",
+      "title": "長方形與正方形的面積計算",
+      "generatorKey": "e4-2-6-area-direct-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "周長與面積",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "周長",
+        "面積",
+        "單位換算",
+        "無限練習"
+      ],
+      "usage": [
+        "練習平方公尺與平方公分的換算與比較，建立平方單位的倍率概念。"
+      ],
+      "examples": [],
+      "tips": [
+        "1 平方公尺不是 100 平方公分，而是 10000 平方公分。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把長度單位的 100 倍，直接套到面積單位，少乘了一次 100。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-6-area-unit-conversion-drill",
+      "title": "面積單位換算與比較",
+      "generatorKey": "e4-2-6-area-unit-conversion-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "周長與面積",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "周長",
+        "面積",
+        "逆推",
+        "無限練習"
+      ],
+      "usage": [
+        "從已知周長或面積回推出未知邊長、寬或另一個量，訓練公式倒推能力。"
+      ],
+      "examples": [],
+      "tips": [
+        "逆向題先決定要先找邊長還是先找寬，再安排計算順序。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看到周長題就直接除以 4，忽略題目其實是長方形不是正方形。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-6-reverse-inference-drill",
+      "title": "由周長或面積回推未知量",
+      "generatorKey": "e4-2-6-reverse-inference-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "周長與面積",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "周長",
+        "面積",
+        "關係判斷",
+        "無限練習"
+      ],
+      "usage": [
+        "透過同周長比面積、同面積比周長等題型，建立周長與面積不一定同步變化的概念。"
+      ],
+      "examples": [],
+      "tips": [
+        "周長相同不代表面積相同；面積相同，周長也不一定相同。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把周長和面積當成會一起變大或一起變小，沒有分別計算。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-6-perimeter-area-relation-drill",
+      "title": "周長與面積的關係判斷",
+      "generatorKey": "e4-2-6-perimeter-area-relation-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "周長與面積",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "周長",
+        "面積",
+        "複合圖形",
+        "無限練習"
+      ],
+      "usage": [
+        "把複合圖形轉成長方形或正方形的加減，練習切割、拼接與填補想法。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把圖形拆成熟悉的長方形或正方形，再做面積或周長運算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看到複合圖形就急著算，沒有先整理出外框或被挖掉的部分。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-6-composite-shape-drill",
+      "title": "複合圖形的切割與拼接",
+      "generatorKey": "e4-2-6-composite-shape-drill",
+      "difficulty": "hard",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "周長與面積",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "周長",
+        "面積",
+        "公式",
+        "無限練習"
+      ],
+      "usage": [
+        "把周長公式與面積公式放在一起練習，建立最基礎的公式判斷能力。"
+      ],
+      "examples": [],
+      "tips": [
+        "同一章最先要穩住的，就是看到題目能立刻判斷該用哪一個公式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把周長和面積公式混用，或把乘 2 忘成乘 4。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-6-basic-formula-mixed",
+      "title": "周長面積公式綜合",
+      "generatorKey": "e4-2-6-basic-formula-mixed",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-2-6-perimeter-direct-drill",
+        "practice-e4-2-6-area-direct-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "周長與面積",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "周長",
+        "面積",
+        "換算",
+        "逆推",
+        "無限練習"
+      ],
+      "usage": [
+        "把面積單位換算和逆向求邊長放在一起，訓練學生在計算前先判斷策略。"
+      ],
+      "examples": [],
+      "tips": [
+        "遇到平方單位先換算，遇到未知邊長先倒推，不要兩種流程混在一起。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "沒有先換成同單位就比較，或逆推時漏掉先除以 2 這一步。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-6-unit-reverse-mixed",
+      "title": "換算與逆推綜合",
+      "generatorKey": "e4-2-6-unit-reverse-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-2-6-area-unit-conversion-drill",
+        "practice-e4-2-6-reverse-inference-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "周長與面積",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "周長",
+        "面積",
+        "關係",
+        "複合圖形",
+        "無限練習"
+      ],
+      "usage": [
+        "把關係判斷與複合圖形放在一起，練習從算式層次走向觀念層次。"
+      ],
+      "examples": [],
+      "tips": [
+        "這類題常常不是直接套一個公式，而是要先觀察再決定怎麼算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只會機械代公式，卻沒注意題目其實在考比較或拆補。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-6-relation-composite-mixed",
+      "title": "關係判斷與複合圖形綜合",
+      "generatorKey": "e4-2-6-relation-composite-mixed",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-2-6-perimeter-area-relation-drill",
+        "practice-e4-2-6-composite-shape-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "周長與面積",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "周長",
+        "面積",
+        "章節綜合",
+        "無限練習"
+      ],
+      "usage": [
+        "整合公式直算、逆向回推與周長面積關係，作為本章的整體複習。"
+      ],
+      "examples": [],
+      "tips": [
+        "做綜合題時先分類：是直算、換算、逆推，還是關係判斷。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "章節綜合題最常錯在沒有先辨認題型，就急著開始列式。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-6-perimeter-area-overview-mixed",
+      "title": "周長與面積章節綜合",
+      "generatorKey": "e4-2-6-perimeter-area-overview-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [
+        "practice-e4-2-6-perimeter-direct-drill",
+        "practice-e4-2-6-area-direct-drill",
+        "practice-e4-2-6-reverse-inference-drill",
+        "practice-e4-2-6-perimeter-area-relation-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
       "chapterCode": "e4-2-7",
       "stage": "國小",
       "grade": "小四",
@@ -2773,7 +3542,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -2810,7 +3579,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -2847,7 +3616,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -2884,7 +3653,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -2921,7 +3690,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -2958,7 +3727,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -2995,7 +3764,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -3032,7 +3801,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -3069,7 +3838,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -3106,7 +3875,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -3143,7 +3912,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -3180,7 +3949,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -3217,7 +3986,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -3258,7 +4027,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -3299,7 +4068,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -3340,7 +4109,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -3380,7 +4149,7 @@
       "mode": "generator",
       "chapterCode": "e4-1-2",
       "stage": "國小",
-      "grade": "四年級",
+      "grade": "小四",
       "term": "下學期",
       "chapter": "整數的乘法",
       "domain": "數與量",
@@ -3413,6 +4182,3362 @@
       "relatedPracticeIds": [
         "practice-e4-1-2-near-known-product-drill",
         "practice-e4-1-2-round-number-adjustment-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-1",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "一億以內的數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一億以內的數",
+        "讀寫",
+        "中文數詞",
+        "無限練習"
+      ],
+      "usage": [
+        "練習阿拉伯數字與中文讀法的互換，包含中間有 0 與末位有 0 的情形。"
+      ],
+      "examples": [],
+      "tips": [
+        "先按位值分成萬級與個級，再決定哪裡要寫 0、哪裡不用寫。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "遇到中間空位時漏寫 0，或把末尾的 0 也全部讀出來。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-1-arabic-chinese-conversion-drill",
+      "title": "阿拉伯數字與中文讀法互換",
+      "generatorKey": "e4-1-1-arabic-chinese-conversion-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-1",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "一億以內的數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一億以內的數",
+        "零",
+        "讀寫規則",
+        "無限練習"
+      ],
+      "usage": [
+        "針對中間有 0、末位有 0 的大數，練習正確讀寫與判斷零的使用。"
+      ],
+      "examples": [],
+      "tips": [
+        "只有中間空位才需要補 0，末尾連續的 0 不必全部讀出來。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把『九百萬一千二百零四』寫錯成少一個 0，或讀錯成多一個位值單位。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-1-zero-reading-writing-drill",
+      "title": "零的報讀與寫法",
+      "generatorKey": "e4-1-1-zero-reading-writing-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-1",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "一億以內的數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一億以內的數",
+        "位值",
+        "數字代表值",
+        "無限練習"
+      ],
+      "usage": [
+        "練習拆解大數的位值組成，判斷某一個數字在指定位置代表多少。"
+      ],
+      "examples": [],
+      "tips": [
+        "先找出題目指定的是哪一位，再用該位的單位值乘上數字。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看到數字本身，沒有分清楚它是在個位、萬位，還是千萬位。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-1-place-value-decomposition-drill",
+      "title": "位值表徵與數的化聚",
+      "generatorKey": "e4-1-1-place-value-decomposition-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-1",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "一億以內的數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一億以內的數",
+        "位值",
+        "十進位",
+        "無限練習"
+      ],
+      "usage": [
+        "利用十個低一級單位等於一個高一級單位的關係，做大數單位間的化聚。"
+      ],
+      "examples": [],
+      "tips": [
+        "看到『10 個某單位』就往高一級想，看到『幾個萬』則換成對應的標準數。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "知道 10 個一千是 1 萬，卻不會把同樣規則套到更高位值。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-1-unit-conversion-drill",
+      "title": "單位間的進位與化聚",
+      "generatorKey": "e4-1-1-unit-conversion-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-1",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "一億以內的數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一億以內的數",
+        "數列",
+        "規律",
+        "無限練習"
+      ],
+      "usage": [
+        "依照固定的位值增量，例如每次加 10、1000、10000 或 1000000，完成數列填空。"
+      ],
+      "examples": [],
+      "tips": [
+        "先看前後兩項差多少，再確認這個差是落在哪一個位值單位。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只憑直覺補數字，沒有先找出每一步固定增加或減少的量。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-1-sequence-pattern-drill",
+      "title": "數詞序列規律填空",
+      "generatorKey": "e4-1-1-sequence-pattern-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-1",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "一億以內的數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一億以內的數",
+        "比較",
+        "排序",
+        "無限練習"
+      ],
+      "usage": [
+        "比較大數的大小，包含比大小符號填空與多個數由大到小或由小到大排序。"
+      ],
+      "examples": [],
+      "tips": [
+        "位數不同先比位數，位數相同再從最高位開始逐位比較。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看中間幾位數字大小，沒有先從最高位判斷。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-1-number-comparison-drill",
+      "title": "數的大與小比較",
+      "generatorKey": "e4-1-1-number-comparison-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-1",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "一億以內的數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一億以內的數",
+        "不等式",
+        "填空",
+        "無限練習"
+      ],
+      "usage": [
+        "透過大小比較規則，推理空格中可填入哪些數字，讓不等式成立。"
+      ],
+      "examples": [],
+      "tips": [
+        "先找到第一個會決定大小的關鍵位，再判斷空格可填的範圍。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "每一位都想一起比，卻沒有先抓出真正決勝的那一位。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-1-inequality-digit-drill",
+      "title": "滿足不等式的數字填空",
+      "generatorKey": "e4-1-1-inequality-digit-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-1",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "一億以內的數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一億以內的數",
+        "數字調整",
+        "最大最小",
+        "無限練習"
+      ],
+      "usage": [
+        "練習重新排列數字得到最大或最小數，或把某一位改寫後判斷新數與原數的增減。"
+      ],
+      "examples": [],
+      "tips": [
+        "排最大數就把大數字往前放；判斷增減則看改動的是哪一位。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看換成的數字變大或變小，卻忽略那一位的位值大小。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-1-digit-adjustment-drill",
+      "title": "數字變換與最大最小數",
+      "generatorKey": "e4-1-1-digit-adjustment-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-1",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "一億以內的數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一億以內的數",
+        "加減",
+        "大數運算",
+        "無限練習"
+      ],
+      "usage": [
+        "練習一億以內大數的直式加減，也包含以『萬』為單位的加減計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把單位統一成同一種表示法，再從個位開始直式加減。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "有的數用『萬』、有的數寫完整數字時，沒有先統一表示法就直接算。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-1-large-add-subtract-drill",
+      "title": "大數的直式加減計算",
+      "generatorKey": "e4-1-1-large-add-subtract-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-1",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "一億以內的數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一億以內的數",
+        "讀寫",
+        "位值",
+        "無限練習"
+      ],
+      "usage": [
+        "把阿拉伯數字與中文讀法互換、零的讀寫規則、位值表徵與單位化聚放在一起。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷這題是在讀寫、拆位值，還是在做單位化聚，再選對方法。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把『讀寫規則』和『位值化聚』混成同一件事，導致答案格式錯誤。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-1-reading-place-value-mixed",
+      "title": "讀寫與位值綜合",
+      "generatorKey": "e4-1-1-reading-place-value-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [
+        "practice-e4-1-1-arabic-chinese-conversion-drill",
+        "practice-e4-1-1-zero-reading-writing-drill",
+        "practice-e4-1-1-place-value-decomposition-drill",
+        "practice-e4-1-1-unit-conversion-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-1",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "一億以內的數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一億以內的數",
+        "規律",
+        "位值",
+        "無限練習"
+      ],
+      "usage": [
+        "把位值化聚與固定增量數列放在一起，強化十進位結構與位值變化。"
+      ],
+      "examples": [],
+      "tips": [
+        "這組題都和位值變化有關，先看每一步是在換單位還是固定加某個位值。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看到數列就只算表面差值，沒有注意其實是在固定加一個位值單位。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-1-unit-sequence-mixed",
+      "title": "單位化聚與數列綜合",
+      "generatorKey": "e4-1-1-unit-sequence-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-1-unit-conversion-drill",
+        "practice-e4-1-1-sequence-pattern-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-1",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "一億以內的數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一億以內的數",
+        "比較",
+        "填空",
+        "無限練習"
+      ],
+      "usage": [
+        "把大小比較、不等式填空與數字變換效果放在一起，訓練數感與位值判斷。"
+      ],
+      "examples": [],
+      "tips": [
+        "先抓最高位的關鍵差異，再判斷空格能填什麼，或改位後是增加還是減少。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只注意被改掉的數字，沒有把它放回原本的位值去看影響。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-1-comparison-adjustment-mixed",
+      "title": "比較與數字調整綜合",
+      "generatorKey": "e4-1-1-comparison-adjustment-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-e4-1-1-number-comparison-drill",
+        "practice-e4-1-1-inequality-digit-drill",
+        "practice-e4-1-1-digit-adjustment-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-1",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "一億以內的數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一億以內的數",
+        "綜合",
+        "大數",
+        "無限練習"
+      ],
+      "usage": [
+        "整合讀寫、位值、比較與大數加減，作為一億以內的數章節總複習。"
+      ],
+      "examples": [],
+      "tips": [
+        "先辨認這題是在讀寫、拆位值、比大小，還是在做大數運算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看見大數就急著列式，沒有先分清楚題目問的是表示法、位值還是計算。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-1-large-number-overview-mixed",
+      "title": "一億以內的數綜合",
+      "generatorKey": "e4-1-1-large-number-overview-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [
+        "practice-e4-1-1-arabic-chinese-conversion-drill",
+        "practice-e4-1-1-place-value-decomposition-drill",
+        "practice-e4-1-1-number-comparison-drill",
+        "practice-e4-1-1-large-add-subtract-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "直式計算",
+        "四位數除以一位數",
+        "無限練習"
+      ],
+      "usage": [
+        "用來練習四位數除以一位數的直式除法，重點是從高位開始分、商的位置正確，並確認餘數小於除數。"
+      ],
+      "examples": [],
+      "tips": [
+        "如果某一位不夠分，商要補 0，不能直接跳過。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把餘數寫得比除數大，或在不夠分時忘了補 0。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-four-digit-divide-one-digit-drill",
+      "title": "四位數除以一位數",
+      "generatorKey": "e4-1-4-four-digit-divide-one-digit-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "估商",
+        "除數是整十整百",
+        "無限練習"
+      ],
+      "usage": [
+        "練習二、三位數除以二位數，或除數是整十、整百時的估商與調整。"
+      ],
+      "examples": [],
+      "tips": [
+        "先找接近被除數的除數倍數，再判斷商要不要調大或調小。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常只看前一位就下商，沒有回頭檢查乘回去是否過大。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-estimate-division-drill",
+      "title": "估商與調整",
+      "generatorKey": "e4-1-4-estimate-division-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "直式計算",
+        "四位數除以二位數",
+        "無限練習"
+      ],
+      "usage": [
+        "練習四位數除以二位數的進階直式，並用檢算確認答案。"
+      ],
+      "examples": [],
+      "tips": [
+        "算完可以用「除數 × 商 + 餘數 = 被除數」檢查。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "商的位置放錯，會讓後面每一步都跟著錯。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-four-digit-divide-two-digit-drill",
+      "title": "四位數除以二位數",
+      "generatorKey": "e4-1-4-four-digit-divide-two-digit-drill",
+      "difficulty": "hard",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "末尾 0",
+        "簡化計算",
+        "無限練習"
+      ],
+      "usage": [
+        "練習被除數和除數末尾都有 0 時，先同時去掉相同個數的 0 再做除法。"
+      ],
+      "examples": [],
+      "tips": [
+        "如果有餘數，最後要補回原來去掉的位值。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把 0 去掉後算對了，卻忘了把餘數補回原來的位值。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-trailing-zero-division-drill",
+      "title": "末尾 0 的簡化除法",
+      "generatorKey": "e4-1-4-trailing-zero-division-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "商加 1",
+        "至少要幾個",
+        "無限練習"
+      ],
+      "usage": [
+        "練習「最少要幾個、幾輛、幾趟」這種要判斷是否商加 1 的應用題。"
+      ],
+      "examples": [],
+      "tips": [
+        "只要還有剩，就代表還需要再多準備 1 個單位。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常直接寫商，忘了剩下的量也需要額外的一個單位。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-ceiling-division-word-drill",
+      "title": "至少要幾個的除法應用",
+      "generatorKey": "e4-1-4-ceiling-division-word-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "平分",
+        "餘數",
+        "無限練習"
+      ],
+      "usage": [
+        "練習平分、分組、裝盤這類要同時回答商和餘數的應用題。"
+      ],
+      "examples": [],
+      "tips": [
+        "看清楚題目是在問每份多少，還是可以分成幾份。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只寫出商，卻漏掉題目要求的剩餘量。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-remainder-application-drill",
+      "title": "平分與餘數應用",
+      "generatorKey": "e4-1-4-remainder-application-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "兩步驟",
+        "應用題",
+        "無限練習"
+      ],
+      "usage": [
+        "練習先加減整理總量或剩餘量，再做除法的兩步驟應用題。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把題目中的總量、剩餘量整理清楚，再決定最後要除給誰。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常一看到平均就立刻除，沒有先把前面的資訊整理成正確總量。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-two-step-word-drill",
+      "title": "先整理再除的兩步驟題",
+      "generatorKey": "e4-1-4-two-step-word-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "括號",
+        "混合運算",
+        "無限練習"
+      ],
+      "usage": [
+        "練習括號、先乘除後加減的併式除法，重點是運算順序而不是只看見除號就先除。"
+      ],
+      "examples": [],
+      "tips": [
+        "先括號、再乘除、最後加減，題目再長也先看順序。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把加減先算，或把括號外的除法提前做，導致整題順序錯掉。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-expression-division-drill",
+      "title": "括號與混合運算",
+      "generatorKey": "e4-1-4-expression-division-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "單位量",
+        "比較",
+        "無限練習"
+      ],
+      "usage": [
+        "練習先把總價、總工資等資料除成單位量，再進行比較。"
+      ],
+      "examples": [],
+      "tips": [
+        "比較前要先把資料都換成同一種單位量，例如每瓶、每個、每小時。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常直接比總價或總收入，卻沒有先除成每一單位的量。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-unit-rate-compare-drill",
+      "title": "單位量比較",
+      "generatorKey": "e4-1-4-unit-rate-compare-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "基礎直式",
+        "混合",
+        "無限練習"
+      ],
+      "usage": [
+        "把四位數除以一位數與末尾 0 簡化除法放在同一組，先建立基礎直式手感。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷題目是要直接做直式，還是可以先把末尾 0 簡化。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把可以簡化的題目硬做長直式，或在直式中忘了補 0。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-basic-column-mixed",
+      "title": "基礎直式混合",
+      "generatorKey": "e4-1-4-basic-column-mixed",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-4-four-digit-divide-one-digit-drill",
+        "practice-e4-1-4-trailing-zero-division-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "估商",
+        "混合",
+        "無限練習"
+      ],
+      "usage": [
+        "集中練習估商與調整，讓學生先熟悉二、三位數除以二位數的商感。"
+      ],
+      "examples": [],
+      "tips": [
+        "估完商後一定要乘回去檢查，確認沒有超過被除數。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只會估商，不會回頭調整，是這一類最常見的錯誤。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-estimate-adjustment-mixed",
+      "title": "估商調整混合",
+      "generatorKey": "e4-1-4-estimate-adjustment-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [
+        "practice-e4-1-4-estimate-division-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "進階直式",
+        "混合",
+        "無限練習"
+      ],
+      "usage": [
+        "把估商題與四位數除以二位數放在一起，訓練完整的進階直式除法。"
+      ],
+      "examples": [],
+      "tips": [
+        "先估商，再檢查商的位置和餘數大小，最後一定要檢算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常在中途把商寫錯位，或沒有檢查餘數是否已經小於除數。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-advanced-division-mixed",
+      "title": "進階直式混合",
+      "generatorKey": "e4-1-4-advanced-division-mixed",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-4-estimate-division-drill",
+        "practice-e4-1-4-four-digit-divide-two-digit-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "平分與進位",
+        "應用題",
+        "無限練習"
+      ],
+      "usage": [
+        "整合餘數題與商加 1 題，幫學生分辨什麼時候要保留餘數，什麼時候要再加一個單位。"
+      ],
+      "examples": [],
+      "tips": [
+        "先問自己：題目要的是剩餘量，還是要全部裝完、坐完、搬完。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把需要商加 1 的題目只寫商，或把需要寫餘數的題目錯寫成商加 1。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-share-round-up-mixed",
+      "title": "平分與進位應用混合",
+      "generatorKey": "e4-1-4-share-round-up-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-4-ceiling-division-word-drill",
+        "practice-e4-1-4-remainder-application-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-4",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數的除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數除法",
+        "兩步驟應用",
+        "綜合",
+        "無限練習"
+      ],
+      "usage": [
+        "把先整理再除與單位量比較放在一起，訓練學生在生活情境中正確抓出除法核心。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把總量整理清楚，再決定是要平均分，還是要除成單位量做比較。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "沒有先整理題意，就直接用看到的第一個數字去除，是這組題最常見的錯誤。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-4-applied-division-mixed",
+      "title": "應用綜合混合",
+      "generatorKey": "e4-1-4-applied-division-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-e4-1-4-two-step-word-drill",
+        "practice-e4-1-4-expression-division-drill",
+        "practice-e4-1-4-unit-rate-compare-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-5",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "公里",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "公里",
+        "公尺",
+        "換算",
+        "無限練習"
+      ],
+      "usage": [
+        "練習 1 公里 = 1000 公尺 的基本換算，包含公里換公尺與公尺換公里。"
+      ],
+      "examples": [],
+      "tips": [
+        "看到公里換公尺就乘 1000，看到公尺換公里就除以 1000。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把乘 1000 和除以 1000 用反，或漏掉末尾的 0。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-5-km-m-basic-conversion-drill",
+      "title": "公里與公尺基本換算",
+      "generatorKey": "e4-1-5-km-m-basic-conversion-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-5",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "公里",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "公里",
+        "公尺",
+        "複名數",
+        "無限練習"
+      ],
+      "usage": [
+        "練習幾公里幾公尺與公尺之間的互換，重點是滿 1000 公尺進 1 公里與拆解公尺。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把幾公里換成幾千公尺，再加上剩下的公尺；反過來則先除以 1000。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "公尺不足三位時沒有看成同一個位值系統，導致公里和公尺拆錯。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-5-km-m-compound-conversion-drill",
+      "title": "公里公尺複名數換算",
+      "generatorKey": "e4-1-5-km-m-compound-conversion-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-5",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "公里",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "公里",
+        "公尺",
+        "公分",
+        "無限練習"
+      ],
+      "usage": [
+        "練習公里、公尺、公分的三階單位換算，建立 1 公里 = 1000 公尺 = 100000 公分 的關係。"
+      ],
+      "examples": [],
+      "tips": [
+        "先決定要全部換成公尺還是公分，再一次做完，不要中途混用單位。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看到公分時只想到 100，而忘了題目可能還牽涉到公里。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-5-km-m-cm-conversion-drill",
+      "title": "公里公尺公分三階換算",
+      "generatorKey": "e4-1-5-km-m-cm-conversion-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-5",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "公里",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "公里",
+        "大小比較",
+        "跨單位",
+        "無限練習"
+      ],
+      "usage": [
+        "比較不同單位表示的長度大小，先統一單位後再判斷大於、小於或等於。"
+      ],
+      "examples": [],
+      "tips": [
+        "比較前先統一單位，最穩定的做法通常是全部換成公尺。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "沒有先換單位，只看數字大小就直接比較。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-5-length-compare-drill",
+      "title": "公里長度大小比較",
+      "generatorKey": "e4-1-5-length-compare-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-5",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "公里",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "公里",
+        "加減",
+        "複名數",
+        "無限練習"
+      ],
+      "usage": [
+        "練習公里與公尺的加減直式，重點是滿 1000 公尺進位 1 公里或向 1 公里退位成 1000 公尺。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把公里和公尺對齊，再看公尺部分需不需要進位或退位。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "公尺部分超過 1000 或不夠減時，忘了做進位或退位。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-5-km-m-add-subtract-drill",
+      "title": "公里公尺加減直式",
+      "generatorKey": "e4-1-5-km-m-add-subtract-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-5",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "公里",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "公里",
+        "換算",
+        "基礎",
+        "無限練習"
+      ],
+      "usage": [
+        "把基本公里公尺換算與複名數換算放在一起，建立公里單位的核心概念。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷是單名數還是複名數，再決定是直接乘除還是先拆開。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "同樣是換算題，卻沒有先分辨題目是在處理單名數還是複名數。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-5-basic-conversion-mixed",
+      "title": "基礎換算綜合",
+      "generatorKey": "e4-1-5-basic-conversion-mixed",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-5-km-m-basic-conversion-drill",
+        "practice-e4-1-5-km-m-compound-conversion-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-5",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "公里",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "公里",
+        "換算",
+        "跨單位",
+        "無限練習"
+      ],
+      "usage": [
+        "把複名數與三階換算放在一起，訓練學生在公里、公尺、公分之間穩定切換。"
+      ],
+      "examples": [],
+      "tips": [
+        "單位越多越要先決定統一成哪一種單位，再做計算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "同一題裡同時用公里、公尺、公分互算，卻沒有先固定目標單位。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-5-multi-unit-conversion-mixed",
+      "title": "跨單位換算綜合",
+      "generatorKey": "e4-1-5-multi-unit-conversion-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-5-km-m-compound-conversion-drill",
+        "practice-e4-1-5-km-m-cm-conversion-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-5",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "公里",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "公里",
+        "比較",
+        "計算",
+        "無限練習"
+      ],
+      "usage": [
+        "把跨單位大小比較與公里公尺加減直式放在一起，練習先換算再比較或計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "比較題先統一單位，計算題先處理公尺部分是否進退位。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把比較題和直式題用同一種直覺亂做，忘了先分清楚題目要求。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-5-compare-calculate-mixed",
+      "title": "比較與計算綜合",
+      "generatorKey": "e4-1-5-compare-calculate-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-5-length-compare-drill",
+        "practice-e4-1-5-km-m-add-subtract-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-5",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "公里",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "公里",
+        "綜合",
+        "單位換算",
+        "無限練習"
+      ],
+      "usage": [
+        "整合基本換算、三階換算與公里公尺加減，作為本章節的整體複習。"
+      ],
+      "examples": [],
+      "tips": [
+        "看到題目先辨認是在換算、比較，還是加減計算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只要看到公里就直接乘或除，沒有先看題目到底是換算還是運算。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-5-kilometer-mixed",
+      "title": "公里章節綜合",
+      "generatorKey": "e4-1-5-kilometer-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-e4-1-5-km-m-basic-conversion-drill",
+        "practice-e4-1-5-km-m-cm-conversion-drill",
+        "practice-e4-1-5-km-m-add-subtract-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "三角形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三角形",
+        "分類",
+        "角",
+        "無限練習"
+      ],
+      "usage": [
+        "根據三個角的大小判斷三角形是銳角三角形、直角三角形還是鈍角三角形。"
+      ],
+      "examples": [],
+      "tips": [
+        "先找最大角，再決定是小於 90°、等於 90°，還是大於 90°。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看其中一個小角就急著分類，沒有先確認最大角。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-6-angle-classify-drill",
+      "title": "以角分類三角形",
+      "generatorKey": "e4-1-6-angle-classify-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "三角形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三角形",
+        "分類",
+        "邊",
+        "無限練習"
+      ],
+      "usage": [
+        "根據三邊長度判斷三角形是正三角形、等腰三角形還是不等邊三角形。"
+      ],
+      "examples": [],
+      "tips": [
+        "先看有沒有三邊都一樣，再看是不是剛好只有兩邊一樣。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看到兩邊相同就作答，忘了三邊都相同時要判成正三角形。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-6-side-classify-drill",
+      "title": "以邊分類三角形",
+      "generatorKey": "e4-1-6-side-classify-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "三角形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三角形",
+        "分類",
+        "邊角性質",
+        "無限練習"
+      ],
+      "usage": [
+        "同時根據邊和角的條件判斷三角形類別，例如等腰直角三角形或鈍角等腰三角形。"
+      ],
+      "examples": [],
+      "tips": [
+        "這類題要分兩步想：先看角的類別，再看邊的類別。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只回答其中一種分類，漏掉另一個條件。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-6-side-angle-combined-classify-drill",
+      "title": "邊角綜合分類",
+      "generatorKey": "e4-1-6-side-angle-combined-classify-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "三角形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三角形",
+        "角度",
+        "特殊三角形",
+        "無限練習"
+      ],
+      "usage": [
+        "利用等腰三角形底角相等、正三角形每角 60°、直角三角形兩銳角和為 90° 來求角。"
+      ],
+      "examples": [],
+      "tips": [
+        "先辨認是哪一種特殊三角形，再套用對應的角度關係。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把等腰三角形的頂角和底角關係用反，或忘記直角三角形還有一個 90°。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-6-special-angle-drill",
+      "title": "特殊三角形角度計算",
+      "generatorKey": "e4-1-6-special-angle-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "三角形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三角形",
+        "周長",
+        "直接計算",
+        "無限練習"
+      ],
+      "usage": [
+        "利用正三角形三邊相等、等腰三角形兩腰相等，直接算出周長。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷哪些邊相等，再把相同邊一起算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把等腰三角形只有兩邊相等誤看成三邊都相等。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-6-perimeter-direct-drill",
+      "title": "三角形周長直接計算",
+      "generatorKey": "e4-1-6-perimeter-direct-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "三角形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三角形",
+        "周長",
+        "逆算",
+        "無限練習"
+      ],
+      "usage": [
+        "已知周長和部分邊長，反推出正三角形或等腰三角形的未知邊。"
+      ],
+      "examples": [],
+      "tips": [
+        "先用周長扣掉已知部分，再依題意平均分成兩腰或三等分。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "算出剩下長度後，忘記等腰三角形要再除以 2。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-6-perimeter-reverse-drill",
+      "title": "三角形周長逆向求邊",
+      "generatorKey": "e4-1-6-perimeter-reverse-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "三角形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三角形",
+        "全等",
+        "對應角",
+        "無限練習"
+      ],
+      "usage": [
+        "在兩個全等三角形中，根據對應頂點找出對應角並判斷角度相等。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把對應頂點配對清楚，再看角是落在哪一個頂點。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看字母順序，不先確認哪個頂點對哪個頂點。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-6-congruent-angle-drill",
+      "title": "全等三角形對應角",
+      "generatorKey": "e4-1-6-congruent-angle-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "三角形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三角形",
+        "全等",
+        "對應邊",
+        "無限練習"
+      ],
+      "usage": [
+        "在兩個全等三角形中，根據對應邊相等求邊長，或利用周長推回第三邊。"
+      ],
+      "examples": [],
+      "tips": [
+        "看清楚對應邊後，再決定是直接帶值，還是先用周長扣掉已知兩邊。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把兩個不對應的邊硬配在一起，導致整題列錯。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-6-congruent-side-drill",
+      "title": "全等三角形對應邊",
+      "generatorKey": "e4-1-6-congruent-side-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "三角形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三角形",
+        "分類",
+        "綜合",
+        "無限練習"
+      ],
+      "usage": [
+        "混合角分類、邊分類與邊角綜合分類，建立三角形分類的整體概念。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷題目給的是角、邊，還是邊角一起給，再選對規則。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "沒有先辨認題型，就把不同分類規則混在一起。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-6-classification-mixed",
+      "title": "分類判斷綜合",
+      "generatorKey": "e4-1-6-classification-mixed",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-e4-1-6-angle-classify-drill",
+        "practice-e4-1-6-side-classify-drill",
+        "practice-e4-1-6-side-angle-combined-classify-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "三角形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三角形",
+        "角度",
+        "周長",
+        "無限練習"
+      ],
+      "usage": [
+        "把特殊三角形角度、周長直接計算與周長逆算放在一起，訓練性質切換。"
+      ],
+      "examples": [],
+      "tips": [
+        "先分清楚這題是求角還是求邊，再回到對應性質。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看到等腰三角形就只想到角度，忘了有些題其實是在算周長。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-6-special-angle-perimeter-mixed",
+      "title": "特殊角與周長綜合",
+      "generatorKey": "e4-1-6-special-angle-perimeter-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-e4-1-6-special-angle-drill",
+        "practice-e4-1-6-perimeter-direct-drill",
+        "practice-e4-1-6-perimeter-reverse-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "三角形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三角形",
+        "全等",
+        "對應",
+        "無限練習"
+      ],
+      "usage": [
+        "混合全等三角形中的對應角與對應邊，強化找對應位置的能力。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把兩個三角形的對應頂點圈出來，再看題目要問角還是邊。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "題目一換順序就找錯對應，代表還沒有真正看懂對應關係。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-6-congruent-correspondence-mixed",
+      "title": "全等對應綜合",
+      "generatorKey": "e4-1-6-congruent-correspondence-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-6-congruent-angle-drill",
+        "practice-e4-1-6-congruent-side-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-6",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "三角形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三角形",
+        "性質",
+        "綜合",
+        "無限練習"
+      ],
+      "usage": [
+        "整合邊角綜合分類、特殊角度與周長逆算，做成同一章的綜合複習。"
+      ],
+      "examples": [],
+      "tips": [
+        "這組題跨度較大，先抓題目是在問分類、角度，還是未知邊。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把所有三角形題都當成同一種套路，忽略題目真正要用的性質。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-6-properties-mixed",
+      "title": "三角形性質綜合",
+      "generatorKey": "e4-1-6-properties-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-e4-1-6-side-angle-combined-classify-drill",
+        "practice-e4-1-6-special-angle-drill",
+        "practice-e4-1-6-perimeter-reverse-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "加法",
+        "直式",
+        "無限練習"
+      ],
+      "usage": [
+        "練習二位小數加法，重點是小數點對齊與進位。"
+      ],
+      "examples": [],
+      "tips": [
+        "先對齊小數點，再從最右邊開始算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把位值沒對齊就直接相加，造成十分位和百分位混在一起。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-decimal-add-drill",
+      "title": "二位小數的加法",
+      "generatorKey": "e4-1-7-decimal-add-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "加法",
+        "補 0",
+        "無限練習"
+      ],
+      "usage": [
+        "練習缺位小數加法，先補 0 再做位值對齊。"
+      ],
+      "examples": [],
+      "tips": [
+        "不夠的位數補在小數右邊，不是隨便補在左邊。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把 1.8 和 12.47 直接對齊末位，而不是先把小數點對齊。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-decimal-add-missing-place-drill",
+      "title": "缺位小數加法",
+      "generatorKey": "e4-1-7-decimal-add-missing-place-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "減法",
+        "退位",
+        "無限練習"
+      ],
+      "usage": [
+        "練習二位小數減法，重點是退位與小數點對齊。"
+      ],
+      "examples": [],
+      "tips": [
+        "如果某一位不夠減，要向左一位借 1。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把借來的 1 當成整個 1，而忘了在對應位值上是 10 個下一位。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-decimal-subtract-drill",
+      "title": "二位小數的減法",
+      "generatorKey": "e4-1-7-decimal-subtract-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "減法",
+        "整數減小數",
+        "無限練習"
+      ],
+      "usage": [
+        "練習整數或缺位小數減法，先改寫成位數一致的形式。"
+      ],
+      "examples": [],
+      "tips": [
+        "像 16 可以先看成 16.00，再和小數對齊。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把整數直接拿去減，忘了補成 16.00 這種形式。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-integer-decimal-subtract-drill",
+      "title": "整數或缺位小數的減法",
+      "generatorKey": "e4-1-7-integer-decimal-subtract-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "加法應用",
+        "總量",
+        "無限練習"
+      ],
+      "usage": [
+        "練習兩個小數量合起來的生活應用題。"
+      ],
+      "examples": [],
+      "tips": [
+        "先抓出每個量代表什麼，再用加法求總量。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把「比藍色長多少」看成差量，卻沒發現題目其實是在問另一個總量。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-decimal-sum-word-drill",
+      "title": "小數加法應用",
+      "generatorKey": "e4-1-7-decimal-sum-word-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "減法應用",
+        "剩下多少",
+        "無限練習"
+      ],
+      "usage": [
+        "練習還剩多少、少多少、相差多少的小數減法應用題。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷誰比較多，再決定誰減誰。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常只看到兩個數字就直接相減，卻沒先判斷量的關係。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-decimal-difference-word-drill",
+      "title": "小數減法應用",
+      "generatorKey": "e4-1-7-decimal-difference-word-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "比較",
+        "已知差量求另一量",
+        "無限練習"
+      ],
+      "usage": [
+        "練習已知一個量與相差量，求另一個量的應用題。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷未知量是較大還是較小，再決定用加法或減法。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常看見『比……少』就寫減法，但不知道是誰減誰。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-decimal-compare-application-drill",
+      "title": "已知差量求另一量",
+      "generatorKey": "e4-1-7-decimal-compare-application-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "兩步驟",
+        "應用題",
+        "無限練習"
+      ],
+      "usage": [
+        "練習先加後減、先減後加或三量相加的小數兩步驟應用題。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把題意整理成步驟，不要一看到數字就直接算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把重疊、剩下或再增加的條件漏掉其中一步。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-decimal-two-step-word-drill",
+      "title": "兩步驟小數應用",
+      "generatorKey": "e4-1-7-decimal-two-step-word-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "單位換算",
+        "公尺公分",
+        "無限練習"
+      ],
+      "usage": [
+        "練習公尺與公分換成同一單位後，再做小數加減或比較。"
+      ],
+      "examples": [],
+      "tips": [
+        "公分換公尺時，要除以 100。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把 128 公分誤看成 1.28 公尺以外的值，或把公分直接跟公尺相減。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-decimal-unit-conversion-drill",
+      "title": "公尺公分換算應用",
+      "generatorKey": "e4-1-7-decimal-unit-conversion-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "基礎直式",
+        "混合",
+        "無限練習"
+      ],
+      "usage": [
+        "整合最基本的小數加減直式，建立位值對齊與進退位手感。"
+      ],
+      "examples": [],
+      "tips": [
+        "先對齊小數點，再從右邊往左算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把位值對錯，後面每一步都會錯。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-basic-calculation-mixed",
+      "title": "基礎直式混合",
+      "generatorKey": "e4-1-7-basic-calculation-mixed",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-7-decimal-add-drill",
+        "practice-e4-1-7-decimal-subtract-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "位值",
+        "補 0",
+        "無限練習"
+      ],
+      "usage": [
+        "把缺位小數加法與整數減小數放在一起，集中練習補 0 與位值對齊。"
+      ],
+      "examples": [],
+      "tips": [
+        "位數不夠時先補 0，再開始直式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "補 0 的位置錯了，就不是同一個數。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-place-value-alignment-mixed",
+      "title": "位值補 0 混合",
+      "generatorKey": "e4-1-7-place-value-alignment-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-7-decimal-add-missing-place-drill",
+        "practice-e4-1-7-integer-decimal-subtract-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "生活應用",
+        "加減",
+        "無限練習"
+      ],
+      "usage": [
+        "整合求總量與求剩餘量兩種生活情境，訓練學生先判斷是加還是減。"
+      ],
+      "examples": [],
+      "tips": [
+        "題目先翻成『合起來』還是『剩下來』，再決定運算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看到小數就急著算，卻沒有先判斷題意要加還是減。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-sum-difference-application-mixed",
+      "title": "加減生活應用混合",
+      "generatorKey": "e4-1-7-sum-difference-application-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-7-decimal-sum-word-drill",
+        "practice-e4-1-7-decimal-difference-word-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "兩步驟",
+        "綜合",
+        "無限練習"
+      ],
+      "usage": [
+        "整合已知差量求另一量與兩步驟情境題，訓練題意整理能力。"
+      ],
+      "examples": [],
+      "tips": [
+        "先確定未知量是較大還是較小，再安排計算順序。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常只抓到其中一層關係，漏掉另一層加減。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-two-step-application-mixed",
+      "title": "兩步驟綜合混合",
+      "generatorKey": "e4-1-7-two-step-application-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-7-decimal-compare-application-drill",
+        "practice-e4-1-7-decimal-two-step-word-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-7",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "小數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "單位換算",
+        "混合",
+        "無限練習"
+      ],
+      "usage": [
+        "集中練習公尺與公分換算成同一單位後，再做加減與比較。"
+      ],
+      "examples": [],
+      "tips": [
+        "公分換公尺時，記得往左移兩位，也就是除以 100。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "還沒換成同一單位就直接算，是這一類最常見的錯誤。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-7-unit-conversion-mixed",
+      "title": "單位換算混合",
+      "generatorKey": "e4-1-7-unit-conversion-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [
+        "practice-e4-1-7-decimal-unit-conversion-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-8",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數四則計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數四則計算",
+        "加減",
+        "由左而右",
+        "無限練習"
+      ],
+      "usage": [
+        "練習只有加減時的同級運算順序，從左邊開始一步一步往右算。"
+      ],
+      "examples": [],
+      "tips": [
+        "沒有括號、也沒有乘除時，不用重排，照順序算就好。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把三個數先亂配對，忘了加減同級時要由左而右。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-8-add-sub-left-to-right-drill",
+      "title": "同級加減由左而右",
+      "generatorKey": "e4-1-8-add-sub-left-to-right-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-8",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數四則計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數四則計算",
+        "乘除",
+        "由左而右",
+        "無限練習"
+      ],
+      "usage": [
+        "練習只有乘除時的同級運算順序，按照由左而右的規則計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "連續乘除不要自己重組，先算最左邊那一步。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把 a ÷ b × c 誤看成 a ÷ (b × c)。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-8-mul-div-left-to-right-drill",
+      "title": "同級乘除由左而右",
+      "generatorKey": "e4-1-8-mul-div-left-to-right-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-8",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數四則計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數四則計算",
+        "先乘除後加減",
+        "混合運算",
+        "無限練習"
+      ],
+      "usage": [
+        "練習沒有括號時，乘除與加減混合出現時要先乘除後加減。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把乘法或除法算完，原式通常就會變成單純加減。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常從左邊直接開始算，忽略乘除要先做。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-8-mixed-no-bracket-drill",
+      "title": "先乘除後加減",
+      "generatorKey": "e4-1-8-mixed-no-bracket-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-8",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數四則計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數四則計算",
+        "括號",
+        "運算順序",
+        "無限練習"
+      ],
+      "usage": [
+        "練習括號先算，再處理括號外乘除或加減的整數併式。"
+      ],
+      "examples": [],
+      "tips": [
+        "看到括號先停一下，先把括號內整理乾淨。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把括號外的乘除先做，導致整題順序錯掉。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-8-bracket-order-drill",
+      "title": "含括號的運算順序",
+      "generatorKey": "e4-1-8-bracket-order-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-8",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數四則計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數四則計算",
+        "概念辨析",
+        "判斷相同不同",
+        "無限練習"
+      ],
+      "usage": [
+        "練習判斷括號或順序改變後，兩個算式的結果是否相同。"
+      ],
+      "examples": [],
+      "tips": [
+        "不要急著全算完，先想括號有沒有真的改變原本的順序。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常只看算式長得像不像，沒有真的判斷運算順序。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-8-order-judge-drill",
+      "title": "運算順序概念辨析",
+      "generatorKey": "e4-1-8-order-judge-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-8",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數四則計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數四則計算",
+        "應用題",
+        "列式",
+        "無限練習"
+      ],
+      "usage": [
+        "把生活情境整理成兩步驟或三步驟的整數四則算式，再依順序計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "先用一句話說清楚『先求什麼，再求什麼』，列式就會穩。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常看懂題意卻列錯順序，或少了括號。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-8-application-expression-drill",
+      "title": "多步驟應用列式",
+      "generatorKey": "e4-1-8-application-expression-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-8",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數四則計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數四則計算",
+        "同級運算",
+        "混合",
+        "無限練習"
+      ],
+      "usage": [
+        "把同級加減與同級乘除放在一起，建立由左而右的基本順序感。"
+      ],
+      "examples": [],
+      "tips": [
+        "同級題的核心不是快，而是每一步都按固定順序。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "以為只有加減才要由左而右，忽略乘除也一樣。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-8-same-level-order-mixed",
+      "title": "同級運算順序混合",
+      "generatorKey": "e4-1-8-same-level-order-mixed",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-8-add-sub-left-to-right-drill",
+        "practice-e4-1-8-mul-div-left-to-right-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-8",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數四則計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數四則計算",
+        "括號",
+        "混合",
+        "無限練習"
+      ],
+      "usage": [
+        "集中練習括號先算，幫學生穩定掌握括號會改變順序這件事。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把括號內變成一個數，外面的式子就簡單了。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看見乘除就先算，忘了括號的優先順序更高。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-8-bracket-order-mixed",
+      "title": "括號改變順序混合",
+      "generatorKey": "e4-1-8-bracket-order-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [
+        "practice-e4-1-8-bracket-order-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-8",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數四則計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數四則計算",
+        "先乘除後加減",
+        "混合",
+        "無限練習"
+      ],
+      "usage": [
+        "集中練習沒有括號時的四則混合，看到乘除就先處理。"
+      ],
+      "examples": [],
+      "tips": [
+        "可以先把乘除圈起來，算完再做剩下的加減。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "一題裡同時有加減和乘除時，還是照左到右直接算。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-8-precedence-mixed",
+      "title": "先乘除後加減混合",
+      "generatorKey": "e4-1-8-precedence-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [
+        "practice-e4-1-8-mixed-no-bracket-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-8",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數四則計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數四則計算",
+        "概念辨析",
+        "混合",
+        "無限練習"
+      ],
+      "usage": [
+        "用判斷相同或不同的題型，檢查學生是不是真的理解順序，而不是只會算。"
+      ],
+      "examples": [],
+      "tips": [
+        "先看哪一步被括號或重排改變，再決定答案。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看到括號就一律判不同，或看到外觀像就一律判相同。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-8-order-judge-mixed",
+      "title": "順序概念辨析混合",
+      "generatorKey": "e4-1-8-order-judge-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [
+        "practice-e4-1-8-order-judge-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-8",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "整數四則計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數四則計算",
+        "應用題",
+        "列式混合",
+        "無限練習"
+      ],
+      "usage": [
+        "把合買、剩餘、分裝、找單價等情境整理成正確併式後再計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "列式時如果想先算總量或先算每組，就用括號把意思固定下來。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只抓到數字，卻沒有把先後關係寫成正確的算式結構。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-8-application-mixed",
+      "title": "多步驟應用列式混合",
+      "generatorKey": "e4-1-8-application-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [
+        "practice-e4-1-8-application-expression-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "假分數",
+        "帶分數",
+        "無限練習"
+      ],
+      "usage": [
+        "練習假分數、帶分數與整數之間的互換，建立分數表示形式的基礎。"
+      ],
+      "examples": [],
+      "tips": [
+        "先看分子裡面有幾個完整的分母，再決定整數部分是多少。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把帶分數化成假分數時，只把分子和整數相加，忘了先用整數乘分母。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-improper-mixed-drill",
+      "title": "假分數與帶分數互換",
+      "generatorKey": "e4-1-9-improper-mixed-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "比較大小",
+        "同分母",
+        "無限練習"
+      ],
+      "usage": [
+        "練習同分母分數的大小比較，必要時先把帶分數改寫成同樣形式再比較。"
+      ],
+      "examples": [],
+      "tips": [
+        "同分母時只要比分子；如果有帶分數，要先看整數部分。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常看到帶分數和真分數放在一起時，只比分數部分，忽略整數部分。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-same-denominator-compare-drill",
+      "title": "同分母分數大小比較",
+      "generatorKey": "e4-1-9-same-denominator-compare-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "加法",
+        "同分母",
+        "無限練習"
+      ],
+      "usage": [
+        "練習同分母分數加法，包含真分數、假分數與帶分數的整理。"
+      ],
+      "examples": [],
+      "tips": [
+        "分母不變，只加分子；如果超過 1，要再整理成帶分數。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把分母也一起相加，或算出假分數後沒有整理成帶分數。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-same-denominator-add-drill",
+      "title": "同分母分數加法",
+      "generatorKey": "e4-1-9-same-denominator-add-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "減法",
+        "同分母",
+        "無限練習"
+      ],
+      "usage": [
+        "練習同分母分數減法，特別包含整數減分數與帶分數退位的情況。"
+      ],
+      "examples": [],
+      "tips": [
+        "如果分數部分不夠減，可以向整數借 1，再換成同分母分數。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常在帶分數減法裡忘了借 1，或借了 1 卻沒有換成同分母分數。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-same-denominator-subtract-drill",
+      "title": "同分母分數減法",
+      "generatorKey": "e4-1-9-same-denominator-subtract-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "乘法",
+        "整數倍",
+        "無限練習"
+      ],
+      "usage": [
+        "練習分數乘整數，建立分母不變、分子乘整數的規則感。"
+      ],
+      "examples": [],
+      "tips": [
+        "分母先保留，先把分子和整數相乘，再看要不要整理成帶分數。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把整數拿去乘分母，或算完後沒有把假分數整理好。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-fraction-times-integer-drill",
+      "title": "分數乘整數",
+      "generatorKey": "e4-1-9-fraction-times-integer-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "比較大小",
+        "應用題",
+        "無限練習"
+      ],
+      "usage": [
+        "把分數大小比較放進長度、數量情境中，訓練先判斷再比較。"
+      ],
+      "examples": [],
+      "tips": [
+        "先看題目是在比誰比較多、比較長，還是要排序。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常只抓到題目中的數字，卻忘了題目真正要比較的是哪兩個量。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-compare-application-drill",
+      "title": "分數大小比較應用",
+      "generatorKey": "e4-1-9-compare-application-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "加法應用",
+        "總量",
+        "無限練習"
+      ],
+      "usage": [
+        "練習同分母分數加法的生活應用，像求全長、總量、合起來多少。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把題目翻成『合起來是多少』，再用同分母加法。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把『多了多少』和『一共有多少』混在一起，導致該加時卻用減。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-add-application-drill",
+      "title": "同分母分數加法應用",
+      "generatorKey": "e4-1-9-add-application-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "減法應用",
+        "剩下多少",
+        "無限練習"
+      ],
+      "usage": [
+        "練習同分母分數減法的生活應用，特別是剩餘量與相差量。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷題目是在問相差量，還是剩下多少。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常只看到兩個分數就直接相減，沒有先想清楚誰減誰。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-subtract-application-drill",
+      "title": "同分母分數減法應用",
+      "generatorKey": "e4-1-9-subtract-application-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "乘法應用",
+        "整數倍",
+        "無限練習"
+      ],
+      "usage": [
+        "練習每份是分數量、共有幾份時的乘法應用題。"
+      ],
+      "examples": [],
+      "tips": [
+        "每一份一樣多、重複好幾次時，通常可以用乘法想。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把『每瓶多少』和『共幾瓶』看成要用加法，但其實是重複加法。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-times-integer-application-drill",
+      "title": "分數乘整數應用",
+      "generatorKey": "e4-1-9-times-integer-application-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "單位量",
+        "化聚",
+        "無限練習"
+      ],
+      "usage": [
+        "練習把具體數量改寫成以盒、盤、杯等單位表示的分數。"
+      ],
+      "examples": [],
+      "tips": [
+        "先抓出『幾個算 1 單位』，再看現在有幾個這樣的小部分。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常把總數和部分數顛倒，寫成錯的分數順序。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-unit-representation-drill",
+      "title": "單位量與分數表示",
+      "generatorKey": "e4-1-9-unit-representation-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "換算",
+        "比較",
+        "無限練習"
+      ],
+      "usage": [
+        "先練習分數形式的互換，再做同分母比較，建立分數基本數感。"
+      ],
+      "examples": [],
+      "tips": [
+        "比較前先把題目看成自己熟悉的形式，常常會更快。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只會套規則，不會先把分數改寫成容易比較的形式。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-conversion-compare-mixed",
+      "title": "換算與比較混合",
+      "generatorKey": "e4-1-9-conversion-compare-mixed",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-9-improper-mixed-drill",
+        "practice-e4-1-9-same-denominator-compare-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "加法",
+        "生活應用",
+        "無限練習"
+      ],
+      "usage": [
+        "把同分母加法直算與求總量應用放在一起，幫學生連結算式與題意。"
+      ],
+      "examples": [],
+      "tips": [
+        "先看題目是在算合起來多少，再決定用加法。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常會算式，但換成文字情境就不知道何時要加。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-same-denominator-add-mixed",
+      "title": "同分母加法混合",
+      "generatorKey": "e4-1-9-same-denominator-add-mixed",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-9-same-denominator-add-drill",
+        "practice-e4-1-9-add-application-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "減法",
+        "生活應用",
+        "無限練習"
+      ],
+      "usage": [
+        "把同分母減法直算與剩餘、相差情境整合在一起，練習借 1 與題意判斷。"
+      ],
+      "examples": [],
+      "tips": [
+        "分數部分不夠減時，先借 1 再算；題意也要先判斷是剩下還是相差。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "同時卡在借 1 跟題意判斷，是這組最常見的兩個失誤。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-same-denominator-subtract-mixed",
+      "title": "同分母減法混合",
+      "generatorKey": "e4-1-9-same-denominator-subtract-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-9-same-denominator-subtract-drill",
+        "practice-e4-1-9-subtract-application-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "乘法",
+        "整數倍",
+        "無限練習"
+      ],
+      "usage": [
+        "整合分數乘整數的基礎規則與生活情境，建立重複加法到乘法的連結。"
+      ],
+      "examples": [],
+      "tips": [
+        "看到同樣的分數量重複好幾次，可以直接改用乘法。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "學生常只會機械相乘，卻沒有看出題目其實是在說幾個相同分數量。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-fraction-times-integer-mixed",
+      "title": "分數乘整數混合",
+      "generatorKey": "e4-1-9-fraction-times-integer-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-9-fraction-times-integer-drill",
+        "practice-e4-1-9-times-integer-application-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-1-9",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "分數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數",
+        "應用題",
+        "單位量",
+        "無限練習"
+      ],
+      "usage": [
+        "把分數比較應用與單位量表示放在一起，強化從生活情境讀出分數意義的能力。"
+      ],
+      "examples": [],
+      "tips": [
+        "先確認 1 個完整單位是什麼，再判斷現在有幾分之幾。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看不出題目中的『整體』是什麼，分數就很容易寫反。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-1-9-application-representation-mixed",
+      "title": "應用與分數表示混合",
+      "generatorKey": "e4-1-9-application-representation-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-9-compare-application-drill",
+        "practice-e4-1-9-unit-representation-drill"
       ]
     },
     {
@@ -73525,6 +77650,505 @@
       "mistakes": [
         "知道規則後沒有真的代回去整理。"
       ]
+    },
+    {
+      "id": "practice-e4-1-3-protractor-reading-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "量角器報讀練習",
+      "generatorKey": "e4-1-3-protractor-reading-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e4-1-3",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "角度",
+      "domain": "幾何",
+      "prompt": ""
+    },
+    {
+      "id": "practice-e4-1-3-angle-classification-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "角度分類辨識",
+      "generatorKey": "e4-1-3-angle-classification-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e4-1-3",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "角度",
+      "domain": "幾何",
+      "prompt": ""
+    },
+    {
+      "id": "practice-e4-1-3-angle-composition-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "角度合成與分解",
+      "generatorKey": "e4-1-3-angle-composition-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e4-1-3",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "角度",
+      "domain": "幾何",
+      "prompt": ""
+    },
+    {
+      "id": "practice-e4-1-3-rotation-angle-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "旋轉角的運算",
+      "generatorKey": "e4-1-3-rotation-angle-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e4-1-3",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "角度",
+      "domain": "幾何",
+      "prompt": ""
+    },
+    {
+      "id": "practice-e4-1-3-clock-angle-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "鐘面上的角度報讀",
+      "generatorKey": "e4-1-3-clock-angle-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e4-1-3",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "角度",
+      "domain": "幾何",
+      "prompt": ""
+    },
+    {
+      "id": "practice-e4-1-3-basic-angle-mixed",
+      "enabled": true,
+      "mode": "generator",
+      "title": "角度判讀基礎綜合",
+      "generatorKey": "e4-1-3-basic-angle-mixed",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-3-protractor-reading-drill",
+        "practice-e4-1-3-angle-classification-drill"
+      ],
+      "chapterCode": "e4-1-3",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "角度",
+      "domain": "幾何",
+      "prompt": ""
+    },
+    {
+      "id": "practice-e4-1-3-angle-operation-mixed",
+      "enabled": true,
+      "mode": "generator",
+      "title": "角度運算綜合",
+      "generatorKey": "e4-1-3-angle-operation-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-1-3-angle-composition-drill",
+        "practice-e4-1-3-rotation-angle-drill"
+      ],
+      "chapterCode": "e4-1-3",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "角度",
+      "domain": "幾何",
+      "prompt": ""
+    },
+    {
+      "id": "practice-e4-1-3-angle-overview-mixed",
+      "enabled": true,
+      "mode": "generator",
+      "title": "角度綜合",
+      "generatorKey": "e4-1-3-angle-overview-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [
+        "practice-e4-1-3-protractor-reading-drill",
+        "practice-e4-1-3-angle-classification-drill",
+        "practice-e4-1-3-angle-composition-drill",
+        "practice-e4-1-3-rotation-angle-drill",
+        "practice-e4-1-3-clock-angle-drill"
+      ],
+      "chapterCode": "e4-1-3",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "角度",
+      "domain": "幾何",
+      "prompt": ""
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-10",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "立方公分",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "立方公分",
+        "點數",
+        "立方公分",
+        "無限練習"
+      ],
+      "usage": [
+        "建立 1 個積木 = 1 立方公分的對應關係，直接由積木個數讀出體積。"
+      ],
+      "examples": [],
+      "tips": [
+        "先確定每個白色積木都是 1 立方公分，再把個數直接轉成體積。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看到積木個數後，只回答個數，沒有寫成立方公分。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-10-direct-count-drill",
+      "title": "基礎點數與單位判讀",
+      "generatorKey": "e4-2-10-direct-count-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-10",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "立方公分",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "立方公分",
+        "分層點數",
+        "複合形體",
+        "無限練習"
+      ],
+      "usage": [
+        "練習對不規則積木形體先分層觀察，再把每層個數相加。"
+      ],
+      "examples": [],
+      "tips": [
+        "看不清全部時，先寫上層、中層、下層的個數，就不容易漏算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看到外層或最上層，忽略被遮住的積木。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-10-layered-count-drill",
+      "title": "分層點數",
+      "generatorKey": "e4-2-10-layered-count-drill",
+      "difficulty": "easy",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-10",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "立方公分",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "立方公分",
+        "一層有幾個",
+        "有幾層",
+        "無限練習"
+      ],
+      "usage": [
+        "把規則積木形體轉成「一層有幾個 × 有幾層」的快速計數。"
+      ],
+      "examples": [],
+      "tips": [
+        "先找一層的整齊排列，再乘上層數，比逐個數更快。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只乘底面一層，忘記再乘上層數。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-10-structured-count-drill",
+      "title": "結構化計數",
+      "generatorKey": "e4-2-10-structured-count-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-10",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "立方公分",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "立方公分",
+        "大小比較",
+        "排序",
+        "無限練習"
+      ],
+      "usage": [
+        "利用積木個數或已知立方公分數來比較體積大小。"
+      ],
+      "examples": [],
+      "tips": [
+        "比較前先確認都是同一個單位：積木個數或立方公分。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看外形大小就下結論，沒有回到積木總數來比較。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-10-compare-order-drill",
+      "title": "體積比較與排序",
+      "generatorKey": "e4-2-10-compare-order-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-10",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "立方公分",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "立方公分",
+        "等積異形",
+        "體積守恆",
+        "無限練習"
+      ],
+      "usage": [
+        "強化「外形改變，但積木總數不變，體積就不變」的概念。"
+      ],
+      "examples": [],
+      "tips": [
+        "先問自己「積木總數有沒有變」，再判斷體積有沒有變。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "以為造型變了，體積也一定跟著變。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-10-volume-conservation-drill",
+      "title": "等積異形與體積守恆",
+      "generatorKey": "e4-2-10-volume-conservation-drill",
+      "difficulty": "medium",
+      "questionCount": 3,
+      "subtypeCount": 1,
+      "relatedPracticeIds": []
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-10",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "立方公分",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "立方公分",
+        "點數入門",
+        "分層觀察"
+      ],
+      "usage": [
+        "先建立 1 個積木 = 1 立方公分，再把看得到與看不到的積木都納入點數。"
+      ],
+      "examples": [],
+      "tips": [
+        "先直接點數，看不清時再分層。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只會數看得到的積木，不會分層處理。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-10-counting-basic-mixed",
+      "title": "點數入門綜合",
+      "generatorKey": "e4-2-10-counting-basic-mixed",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-2-10-direct-count-drill",
+        "practice-e4-2-10-layered-count-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-10",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "立方公分",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "立方公分",
+        "結構計數",
+        "大小比較"
+      ],
+      "usage": [
+        "把規則形體轉成乘法結構，再訓練在同單位下比較體積。"
+      ],
+      "examples": [],
+      "tips": [
+        "規則形體先用乘法算總數，比較題再回到總數來排序。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "計算完後沒有統一成同一種表示再比較。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-10-structure-compare-mixed",
+      "title": "結構計數與比較綜合",
+      "generatorKey": "e4-2-10-structure-compare-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-2-10-structured-count-drill",
+        "practice-e4-2-10-compare-order-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-10",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "立方公分",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "立方公分",
+        "體積守恆",
+        "概念判斷"
+      ],
+      "usage": [
+        "同時練體積比較與等積異形觀念，避免學生只看外形下判斷。"
+      ],
+      "examples": [],
+      "tips": [
+        "每次都先問「積木總數一樣嗎」，這是判斷體積的關鍵。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "將「外形不同」誤解成「體積不同」。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-10-conservation-concept-mixed",
+      "title": "守恆觀念綜合",
+      "generatorKey": "e4-2-10-conservation-concept-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e4-2-10-compare-order-drill",
+        "practice-e4-2-10-volume-conservation-drill"
+      ]
+    },
+    {
+      "enabled": true,
+      "mode": "generator",
+      "chapterCode": "e4-2-10",
+      "stage": "國小",
+      "grade": "小四",
+      "term": "下學期",
+      "chapter": "立方公分",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "立方公分",
+        "綜合練習"
+      ],
+      "usage": [
+        "統整點數、分層、結構化計數、比較與體積守恆。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷題目是在考個數、層數、排列結構，還是守恆觀念。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "用同一種方式硬套所有題目，沒先分辨題型。"
+      ],
+      "generatorBundle": "e4",
+      "id": "practice-e4-2-10-cubic-centimeter-overview-mixed",
+      "title": "立方公分章節綜合",
+      "generatorKey": "e4-2-10-cubic-centimeter-overview-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [
+        "practice-e4-2-10-direct-count-drill",
+        "practice-e4-2-10-layered-count-drill",
+        "practice-e4-2-10-structured-count-drill",
+        "practice-e4-2-10-compare-order-drill",
+        "practice-e4-2-10-volume-conservation-drill"
+      ]
     }
   ],
   "bindings": [
@@ -73561,6 +78185,34 @@
       "targetType": "chapter",
       "targetId": "e4-2-1",
       "order": 5,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-2-2-property-basic-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-2-2",
+      "order": 1,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-2-2-structure-diagonal-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-2-2",
+      "order": 2,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-2-2-perimeter-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-2-2",
+      "order": 3,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-2-2-quadrilateral-overview-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-2-2",
+      "order": 4,
       "enabled": true
     },
     {
@@ -73669,6 +78321,34 @@
       "enabled": true
     },
     {
+      "practiceId": "practice-e4-2-6-basic-formula-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-2-6",
+      "order": 1,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-2-6-unit-reverse-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-2-6",
+      "order": 2,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-2-6-relation-composite-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-2-6",
+      "order": 3,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-2-6-perimeter-area-overview-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-2-6",
+      "order": 4,
+      "enabled": true
+    },
+    {
       "practiceId": "practice-e4-2-7-equivalent-basic-mixed",
       "targetType": "chapter",
       "targetId": "e4-2-7",
@@ -73735,6 +78415,230 @@
       "practiceId": "practice-e4-1-2-reasoning-mixed",
       "targetType": "chapter",
       "targetId": "e4-1-2",
+      "order": 5,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-1-reading-place-value-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-1",
+      "order": 1,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-1-unit-sequence-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-1",
+      "order": 2,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-1-comparison-adjustment-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-1",
+      "order": 3,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-1-large-number-overview-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-1",
+      "order": 4,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-4-basic-column-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-4",
+      "order": 1,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-4-estimate-adjustment-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-4",
+      "order": 2,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-4-advanced-division-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-4",
+      "order": 3,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-4-share-round-up-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-4",
+      "order": 4,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-4-applied-division-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-4",
+      "order": 5,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-5-basic-conversion-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-5",
+      "order": 1,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-5-multi-unit-conversion-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-5",
+      "order": 2,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-5-compare-calculate-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-5",
+      "order": 3,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-5-kilometer-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-5",
+      "order": 4,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-6-classification-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-6",
+      "order": 1,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-6-special-angle-perimeter-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-6",
+      "order": 2,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-6-congruent-correspondence-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-6",
+      "order": 3,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-6-properties-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-6",
+      "order": 4,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-7-basic-calculation-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-7",
+      "order": 1,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-7-place-value-alignment-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-7",
+      "order": 2,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-7-sum-difference-application-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-7",
+      "order": 3,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-7-two-step-application-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-7",
+      "order": 4,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-7-unit-conversion-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-7",
+      "order": 5,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-8-same-level-order-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-8",
+      "order": 1,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-8-bracket-order-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-8",
+      "order": 2,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-8-precedence-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-8",
+      "order": 3,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-8-order-judge-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-8",
+      "order": 4,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-8-application-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-8",
+      "order": 5,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-9-conversion-compare-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-9",
+      "order": 1,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-9-same-denominator-add-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-9",
+      "order": 2,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-9-same-denominator-subtract-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-9",
+      "order": 3,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-9-fraction-times-integer-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-9",
+      "order": 4,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-9-application-representation-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-9",
       "order": 5,
       "enabled": true
     },
@@ -78738,6 +83642,55 @@
       "targetId": "s4-4-4",
       "enabled": true,
       "order": 12
+    },
+    {
+      "practiceId": "practice-e4-1-3-basic-angle-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-3",
+      "order": 1,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-3-angle-operation-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-3",
+      "order": 2,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-1-3-angle-overview-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-1-3",
+      "order": 3,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-2-10-counting-basic-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-2-10",
+      "order": 1,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-2-10-structure-compare-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-2-10",
+      "order": 2,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-2-10-conservation-concept-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-2-10",
+      "order": 3,
+      "enabled": true
+    },
+    {
+      "practiceId": "practice-e4-2-10-cubic-centimeter-overview-mixed",
+      "targetType": "chapter",
+      "targetId": "e4-2-10",
+      "order": 4,
+      "enabled": true
     }
   ]
 }

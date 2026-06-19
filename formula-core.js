@@ -525,7 +525,7 @@
   }
 
   async function ensurePracticeGenerator(item) {
-    if (getPracticeConfig(item)) return true;
+    if (!hasDeferredPracticeGenerator(item) && getPracticeConfig(item)) return true;
     if (!window.practiceGeneratorLoader?.ensureForPractice) return false;
     try {
       return await window.practiceGeneratorLoader.ensureForPractice(item);
@@ -660,6 +660,7 @@
       practiceId: String(session.practiceId || "").trim(),
       title: String(session.title || "").trim(),
       intro: typeof session.intro === "string" ? session.intro : "",
+      generatorFingerprint: String(session.generatorFingerprint || "").trim(),
       questions: Array.from({ length: maxLen }, (_, index) => String(questions[index] || "")),
       summaryAnswers: Array.from({ length: maxLen }, (_, index) => String(summaryAnswers[index] || answers[index] || "")),
       answers: Array.from({ length: maxLen }, (_, index) => String(answers[index] || "")),
@@ -696,14 +697,17 @@
       questions: Array.isArray(result.questions) ? result.questions : [],
       summaryAnswers: Array.isArray(result.summaryAnswers) ? result.summaryAnswers : [],
       answers: Array.isArray(result.answers) ? result.answers : [],
+      generatorFingerprint: String(config.__generatorFingerprint || config.generatorFingerprint || "").trim(),
       currentIndex: 0,
       generatedAt: new Date().toISOString(),
     });
   }
 
   function ensureStoredPracticeSession(item) {
+    const config = getPracticeConfig(item);
     const existing = readStoredPracticeSession(item?.id);
-    if (existing) return existing;
+    const currentFingerprint = String(config?.__generatorFingerprint || config?.generatorFingerprint || "").trim();
+    if (existing && (!currentFingerprint || existing.generatorFingerprint === currentFingerprint)) return existing;
     const fresh = buildFreshPracticeSession(item);
     return fresh ? writeStoredPracticeSession(item?.id, fresh) : null;
   }

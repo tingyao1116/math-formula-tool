@@ -295,6 +295,25 @@
       return [code, { stage, grade, term, chapter: chapterParts.join("-") }];
     })
   );
+  const practiceChapterMetaByCode = (() => {
+    const rows = Object.values(window.practiceLibraryStore?.byId || {});
+    const byCode = {};
+    rows.forEach((row) => {
+      const code = String(row?.chapterCode || "").trim();
+      if (!code || byCode[code]) return;
+      const stage = String(row?.stage || "").trim();
+      const grade = String(row?.grade || "").trim();
+      const term = String(row?.term || "").trim();
+      const chapter = String(row?.chapter || "").trim();
+      if (!stage && !grade && !term && !chapter) return;
+      byCode[code] = { stage, grade, term, chapter };
+    });
+    return byCode;
+  })();
+  const mergedChapterMetaByCode = {
+    ...practiceChapterMetaByCode,
+    ...chapterMetaByCode,
+  };
   const chapterCodeAliases = {
     "j2-1": "j2-1-1",
     "j2-2": "j2-2-1",
@@ -1817,7 +1836,7 @@
   function getChapterOptions() {
     const fromCatalog = Object.entries(chapterCodeCatalog)
       .map(([code, catalog]) => {
-        const meta = chapterMetaByCode[code] || inferMetaFromCode(code);
+        const meta = mergedChapterMetaByCode[code] || inferMetaFromCode(code);
         const section = isUsableCatalogText(catalog?.section) ? catalog.section : "";
         const chapter = isUsableCatalogText(catalog?.chapter) ? catalog.chapter : section || meta.chapter || "";
         return {
@@ -1898,7 +1917,7 @@
       const requestedChapterCode = String(
         merged.chapterCode || merged.chapter_code || chapterCodeAssignmentOverrides[merged.id] || ""
       ).trim();
-      const chapterMeta = requestedChapterCode ? chapterMetaByCode[requestedChapterCode] || null : null;
+      const chapterMeta = requestedChapterCode ? mergedChapterMetaByCode[requestedChapterCode] || null : null;
       const chapterCatalogEntry = requestedChapterCode ? getCodeCatalogEntry(requestedChapterCode) : null;
       const stage = String(chapterMeta?.stage || merged.stage || "國中");
       const grade = chapterMeta?.grade || parsed.grade || String(merged.grade || "國一");

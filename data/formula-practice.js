@@ -2654,7 +2654,9 @@
 
   function buildE611PrimeCompositeJudgeSet(count) {
     const primeValues = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47];
-    const compositeValues = [4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 22, 24, 25, 26, 27, 28, 30, 32, 33, 34, 35, 36];
+    const compositeValues = [
+      4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 22, 24, 25, 26, 27, 28, 30, 32, 33, 34, 35, 36,
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
@@ -2685,7 +2687,9 @@
       const factorText = factors.join('、');
       questions.push(`找出 ${n} 的質因數有哪些？`);
       summaryAnswers.push(factorText);
-      answers.push(`簡答：${factorText}。過程：${n} 的標準分解式是 $${formatPrimeFactorization(primeFactorize(n))}$，所以質因數是 ${factorText}。`);
+      answers.push(
+        `簡答：${factorText}。過程：${n} 的標準分解式是 $${formatPrimeFactorization(primeFactorize(n))}$，所以質因數是 ${factorText}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2710,7 +2714,16 @@
     const summaryAnswers = [];
     const answers = [];
     const pairs = [
-      [30, 48], [54, 72], [70, 84], [48, 108], [81, 108], [36, 60], [56, 77], [52, 78], [24, 36], [45, 60],
+      [30, 48],
+      [54, 72],
+      [70, 84],
+      [48, 108],
+      [81, 108],
+      [36, 60],
+      [56, 77],
+      [52, 78],
+      [24, 36],
+      [45, 60],
     ];
     for (let i = 0; i < count; i += 1) {
       const [a, b] = pickFromList(pairs);
@@ -2727,7 +2740,14 @@
     const summaryAnswers = [];
     const answers = [];
     const pairs = [
-      [60, 84], [72, 108], [90, 150], [36, 54], [48, 72], [42, 70], [30, 45], [24, 90],
+      [60, 84],
+      [72, 108],
+      [90, 150],
+      [36, 54],
+      [48, 72],
+      [42, 70],
+      [30, 45],
+      [24, 90],
     ];
     for (let i = 0; i < count; i += 1) {
       const [a, b] = pickFromList(pairs);
@@ -2743,8 +2763,22 @@
   }
 
   function buildE611CoprimeJudgeSet(count) {
-    const coprimePairs = [[9, 16], [19, 68], [18, 35], [8, 27], [14, 25], [21, 32]];
-    const nonCoprimePairs = [[36, 51], [15, 25], [24, 36], [18, 42], [14, 49], [20, 30]];
+    const coprimePairs = [
+      [9, 16],
+      [19, 68],
+      [18, 35],
+      [8, 27],
+      [14, 25],
+      [21, 32],
+    ];
+    const nonCoprimePairs = [
+      [36, 51],
+      [15, 25],
+      [24, 36],
+      [18, 42],
+      [14, 49],
+      [20, 30],
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
@@ -2772,7 +2806,14 @@
       ['顆藍球', '顆紅球', '裝幾袋'],
       ['位男生', '位女生', '分幾組'],
     ];
-    const pairs = [[48, 60], [36, 24], [24, 30], [52, 78], [18, 24], [56, 77]];
+    const pairs = [
+      [48, 60],
+      [36, 24],
+      [24, 30],
+      [52, 78],
+      [18, 24],
+      [56, 77],
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
@@ -2782,13 +2823,22 @@
       const g = gcd(a, b);
       questions.push(`有 ${a}${unitA} 和 ${b}${unitB}，每一份都要一樣多，最多可以${askText}？`);
       summaryAnswers.push(`${g}`);
-      answers.push(`簡答：${g}。過程：要分成最多份，而且每份一樣多，就是求 ${a} 和 ${b} 的最大公因數，所以答案是 ${g}。`);
+      answers.push(
+        `簡答：${g}。過程：要分成最多份，而且每份一樣多，就是求 ${a} 和 ${b} 的最大公因數，所以答案是 ${g}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildE611CutSquareSet(count) {
-    const rectangles = [[84, 63], [96, 90], [24, 16], [108, 60], [40, 30], [125, 100]];
+    const rectangles = [
+      [84, 63],
+      [96, 90],
+      [24, 16],
+      [108, 60],
+      [40, 30],
+      [125, 100],
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
@@ -2803,7 +2853,15 @@
   }
 
   function buildE611LcmDirectSet(count) {
-    const pairs = [[35, 49], [25, 30], [12, 18], [48, 84], [24, 18], [15, 21], [16, 20]];
+    const pairs = [
+      [35, 49],
+      [25, 30],
+      [12, 18],
+      [48, 84],
+      [24, 18],
+      [15, 21],
+      [16, 20],
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
@@ -2818,7 +2876,14 @@
   }
 
   function buildE611LcmFactorFormSet(count) {
-    const pairs = [[16, 18], [20, 36], [18, 30], [24, 40], [12, 45], [14, 21]];
+    const pairs = [
+      [16, 18],
+      [20, 36],
+      [18, 30],
+      [24, 40],
+      [12, 45],
+      [14, 21],
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
@@ -2836,8 +2901,18 @@
   }
 
   function buildE611LcmRelationSet(count) {
-    const coprimePairs = [[5, 11], [8, 15], [16, 9], [7, 12]];
-    const multiplePairs = [[17, 51], [18, 54], [12, 60], [14, 42]];
+    const coprimePairs = [
+      [5, 11],
+      [8, 15],
+      [16, 9],
+      [7, 12],
+    ];
+    const multiplePairs = [
+      [17, 51],
+      [18, 54],
+      [12, 60],
+      [14, 42],
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
@@ -2865,7 +2940,14 @@
       ['噴水', '30 分鐘一次', '噴水', '45 分鐘一次', '下次同時噴水是多久後', '分鐘'],
       ['閃燈', '15 分鐘閃一次', '閃燈', '25 分鐘閃一次', '下次同時閃爍是多久後', '分鐘'],
     ];
-    const values = [[15, 25], [5, 3], [30, 45], [15, 25], [4, 10], [4, 6]];
+    const values = [
+      [15, 25],
+      [5, 3],
+      [30, 45],
+      [15, 25],
+      [4, 10],
+      [4, 6],
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
@@ -2876,7 +2958,9 @@
       if (i % 5 === 4) {
         questions.push(`每隔 ${a} 公尺種一棵樹，每隔 ${b} 公尺設一盞燈，起點後第一個同時有樹與燈的地方距離起點多遠？`);
         summaryAnswers.push(`${l} 公尺`);
-        answers.push(`簡答：${l} 公尺。過程：同時出現的位置要同時是 ${a} 和 ${b} 的倍數，所以找最小公倍數，答案是 ${l} 公尺。`);
+        answers.push(
+          `簡答：${l} 公尺。過程：同時出現的位置要同時是 ${a} 和 ${b} 的倍數，所以找最小公倍數，答案是 ${l} 公尺。`
+        );
       } else {
         const [nameA, textA, nameB, textB, askText, unit] = pickFromList(contexts);
         questions.push(`甲${nameA}${textA}，乙${nameB}${textB}，若現在同時開始，${askText}？`);
@@ -2888,7 +2972,14 @@
   }
 
   function buildE611AssembleSquareSet(count) {
-    const rectangles = [[50, 70], [20, 12], [24, 42], [10, 8], [15, 18], [20, 16]];
+    const rectangles = [
+      [50, 70],
+      [20, 12],
+      [24, 42],
+      [10, 8],
+      [15, 18],
+      [20, 16],
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
@@ -2897,7 +2988,9 @@
       const l = lcm(length, width);
       questions.push(`用長 ${length} 公分、寬 ${width} 公分的長方形拼成正方形，最短邊長是多少公分？`);
       summaryAnswers.push(`${l} 公分`);
-      answers.push(`簡答：${l} 公分。過程：正方形邊長要同時是長 ${length} 和寬 ${width} 的倍數，所以取最小公倍數 ${l}。`);
+      answers.push(
+        `簡答：${l} 公分。過程：正方形邊長要同時是長 ${length} 和寬 ${width} 的倍數，所以取最小公倍數 ${l}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2923,7 +3016,9 @@
       }
       questions.push(`找出 ${start} 到 ${end} 之間，${a} 和 ${b} 的所有公倍數。`);
       summaryAnswers.push(values.join('、'));
-      answers.push(`簡答：${values.join('、')}。過程：先求 ${a} 和 ${b} 的最小公倍數為 ${step}，再從範圍內依序找它的倍數，所以答案是 ${values.join('、')}。`);
+      answers.push(
+        `簡答：${values.join('、')}。過程：先求 ${a} 和 ${b} 的最小公倍數為 ${step}，再從範圍內依序找它的倍數，所以答案是 ${values.join('、')}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2942,7 +3037,10 @@
   }
 
   function buildE611FoundationMixedSet(count) {
-    return buildE611MixedSet([buildE611PrimeCompositeJudgeSet, buildE611PrimeFactorListSet, buildE611PrimeFactorizationSet], count);
+    return buildE611MixedSet(
+      [buildE611PrimeCompositeJudgeSet, buildE611PrimeFactorListSet, buildE611PrimeFactorizationSet],
+      count
+    );
   }
 
   function buildE611GcdBasicMixedSet(count) {
@@ -2997,14 +3095,23 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      [33, 88], [64, 36], [25, 10], [45, 21], [118, 48], [84, 126], [52, 78], [72, 108],
+      [33, 88],
+      [64, 36],
+      [25, 10],
+      [45, 21],
+      [118, 48],
+      [84, 126],
+      [52, 78],
+      [72, 108],
     ];
     for (let i = 0; i < count; i += 1) {
       const [num, den] = pickFromList(cases);
       const reduced = makeFraction(num, den);
       questions.push(`將 \\(${num}/${den}\\) 化為最簡分數。`);
       summaryAnswers.push(`$${fractionToLatex(reduced, true)}$`);
-      answers.push(`簡答：$${fractionToLatex(reduced, true)}$。過程：分子與分母同除以最大公因數 ${gcd(num, den)}，得到最簡分數 $${fractionToLatex(reduced, true)}$。`);
+      answers.push(
+        `簡答：$${fractionToLatex(reduced, true)}$。過程：分子與分母同除以最大公因數 ${gcd(num, den)}，得到最簡分數 $${fractionToLatex(reduced, true)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3027,7 +3134,9 @@
       const result = makeFraction(q, 1);
       questions.push(`計算：\\(${fractionToLatex(left)}\\div${fractionToLatex(right)}\\)`);
       summaryAnswers.push(`$${fractionToLatex(result)}$`);
-      answers.push(`簡答：$${fractionToLatex(result)}$。過程：同分母分數相除，可先看成分子相除：${dividendNum} ÷ ${divisorNum} = ${q}，所以結果是 $${fractionToLatex(result)}$。`);
+      answers.push(
+        `簡答：$${fractionToLatex(result)}$。過程：同分母分數相除，可先看成分子相除：${dividendNum} ÷ ${divisorNum} = ${q}，所以結果是 $${fractionToLatex(result)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3039,7 +3148,7 @@
     for (let i = 0; i < count; i += 1) {
       const divisor = e612PickSimpleFraction(false);
       const resultInt = randInt(4, 20);
-      const left = makeFraction((resultInt * divisor.num), divisor.den);
+      const left = makeFraction(resultInt * divisor.num, divisor.den);
       if (left.den !== 1) {
         i -= 1;
         continue;
@@ -3048,7 +3157,9 @@
       const result = divFraction(dividend, divisor);
       questions.push(`計算：\\(${fractionToLatex(dividend)}\\div${fractionToLatex(divisor)}\\)`);
       summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-      answers.push(`簡答：$${fractionToLatex(result, true)}$。過程：整數先看成分母是 1 的分數，再乘除數的倒數：\\(${fractionToLatex(dividend)}\\div${fractionToLatex(divisor)}=${fractionToLatex(dividend)}\\times\\frac{${divisor.den}}{${divisor.num}}=${fractionToLatex(result, true)}\\)。`);
+      answers.push(
+        `簡答：$${fractionToLatex(result, true)}$。過程：整數先看成分母是 1 的分數，再乘除數的倒數：\\(${fractionToLatex(dividend)}\\div${fractionToLatex(divisor)}=${fractionToLatex(dividend)}\\times\\frac{${divisor.den}}{${divisor.num}}=${fractionToLatex(result, true)}\\)。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3058,12 +3169,16 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const left = randInt(0, 1) === 0 ? e612PickSimpleFraction(true) : randomMixedFraction(1, 3, [2, 3, 4, 5, 6, 7, 8], false);
-      const right = randInt(0, 1) === 0 ? e612PickSimpleFraction(false) : randomMixedFraction(1, 2, [2, 3, 4, 5, 6, 8], false);
+      const left =
+        randInt(0, 1) === 0 ? e612PickSimpleFraction(true) : randomMixedFraction(1, 3, [2, 3, 4, 5, 6, 7, 8], false);
+      const right =
+        randInt(0, 1) === 0 ? e612PickSimpleFraction(false) : randomMixedFraction(1, 2, [2, 3, 4, 5, 6, 8], false);
       const result = divFraction(left, right);
       questions.push(`計算：\\(${e612FractionQuestionText(left, right)}\\)`);
       summaryAnswers.push(`$${e612AnswerMixedText(result)}$`);
-      answers.push(`簡答：$${e612AnswerMixedText(result)}$。過程：除以分數等於乘它的倒數，所以 \\(${integerOrFractionLatex(left)}\\div${integerOrFractionLatex(right)}=${integerOrFractionLatex(left)}\\times\\frac{${right.den}}{${right.num}}=${e612AnswerMixedText(result)}\\)。`);
+      answers.push(
+        `簡答：$${e612AnswerMixedText(result)}$。過程：除以分數等於乘它的倒數，所以 \\(${integerOrFractionLatex(left)}\\div${integerOrFractionLatex(right)}=${integerOrFractionLatex(left)}\\times\\frac{${right.den}}{${right.num}}=${e612AnswerMixedText(result)}\\)。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3085,9 +3200,13 @@
       const part = makeFraction(unit.unit, den);
       const result = divFraction(total, part);
       const [noun, action, resultUnit] = pickFromList(contexts);
-      questions.push(`某物有 \\(${fractionToLatex(total, true)}\\) ${noun}，每 \\(${fractionToLatex(part, true)}\\) ${action}，可以分成幾${resultUnit}？`);
+      questions.push(
+        `某物有 \\(${fractionToLatex(total, true)}\\) ${noun}，每 \\(${fractionToLatex(part, true)}\\) ${action}，可以分成幾${resultUnit}？`
+      );
       summaryAnswers.push(`$${fractionToLatex(result)}$`);
-      answers.push(`簡答：$${fractionToLatex(result)}$ ${resultUnit}。過程：總量 ÷ 每一份 = \\(${fractionToLatex(total, true)}\\div${fractionToLatex(part, true)}=${fractionToLatex(result)}\\)，所以可分成 ${fractionToLatex(result)} ${resultUnit}。`);
+      answers.push(
+        `簡答：$${fractionToLatex(result)}$ ${resultUnit}。過程：總量 ÷ 每一份 = \\(${fractionToLatex(total, true)}\\div${fractionToLatex(part, true)}=${fractionToLatex(result)}\\)，所以可分成 ${fractionToLatex(result)} ${resultUnit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3097,7 +3216,8 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const base = randInt(0, 1) === 0 ? e612PickSimpleFraction(true) : randomMixedFraction(1, 3, [2, 3, 4, 5, 6, 8], false);
+      const base =
+        randInt(0, 1) === 0 ? e612PickSimpleFraction(true) : randomMixedFraction(1, 3, [2, 3, 4, 5, 6, 8], false);
       const divisor = pickFromList([
         makeFraction(1, 2),
         makeFraction(2, 3),
@@ -3113,11 +3233,15 @@
         compareOne < 0
           ? '因為除數小於 1，商會變大'
           : compareOne > 0
-          ? '因為除數大於 1，商會變小'
-          : '因為除以自己，結果就是 1';
-      questions.push(`不先計算，判斷 \\(${integerOrFractionLatex(base)}\\div${integerOrFractionLatex(divisor)}\\) 和 \\(${integerOrFractionLatex(base)}\\) 誰比較大？`);
+            ? '因為除數大於 1，商會變小'
+            : '因為除以自己，結果就是 1';
+      questions.push(
+        `不先計算，判斷 \\(${integerOrFractionLatex(base)}\\div${integerOrFractionLatex(divisor)}\\) 和 \\(${integerOrFractionLatex(base)}\\) 誰比較大？`
+      );
       summaryAnswers.push(larger);
-      answers.push(`簡答：${larger}。過程：${reason}。本題中 \\(${integerOrFractionLatex(base)}\\div${integerOrFractionLatex(divisor)}=${integerOrFractionLatex(quotient, true)}\\)，所以判斷為「${larger}」。`);
+      answers.push(
+        `簡答：${larger}。過程：${reason}。本題中 \\(${integerOrFractionLatex(base)}\\div${integerOrFractionLatex(divisor)}=${integerOrFractionLatex(quotient, true)}\\)，所以判斷為「${larger}」。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3134,7 +3258,8 @@
     ];
     for (let i = 0; i < count; i += 1) {
       const oneValue = pickFromList([9, 12, 15, 18, 21, 24, 27, 30, 36]);
-      const quantity = randInt(0, 1) === 0 ? e612PickSimpleFraction(true) : randomMixedFraction(1, 4, [2, 3, 4, 5, 6, 8], false);
+      const quantity =
+        randInt(0, 1) === 0 ? e612PickSimpleFraction(true) : randomMixedFraction(1, 4, [2, 3, 4, 5, 6, 8], false);
       const totalCost = mulFraction(quantity, makeFraction(oneValue, 1));
       if (totalCost.den !== 1) {
         i -= 1;
@@ -3143,7 +3268,9 @@
       const [leftText, midText, unit] = pickFromList(contexts);
       questions.push(`買 \\(${integerOrFractionLatex(quantity, true)}\\) ${leftText} ${totalCost.num} ${midText}？`);
       summaryAnswers.push(`${oneValue} ${unit}`);
-      answers.push(`簡答：${oneValue} ${unit}。過程：單位量 = 總價 ÷ 數量 = \\(${totalCost.num}\\div${integerOrFractionLatex(quantity, true)}=${oneValue}\\)，所以答案是 ${oneValue} ${unit}。`);
+      answers.push(
+        `簡答：${oneValue} ${unit}。過程：單位量 = 總價 ÷ 數量 = \\(${totalCost.num}\\div${integerOrFractionLatex(quantity, true)}=${oneValue}\\)，所以答案是 ${oneValue} ${unit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3166,15 +3293,22 @@
         const perimeter = mulFraction(fracSide, makeFraction(4, 1));
         questions.push(`一個周長是 \\(${integerOrFractionLatex(perimeter, true)}\\) 公尺的正方形，邊長是多少公尺？`);
         summaryAnswers.push(`$${integerOrFractionLatex(fracSide, true)}$`);
-        answers.push(`簡答：$${integerOrFractionLatex(fracSide, true)}$ 公尺。過程：正方形邊長 = 周長 ÷ 4 = \\(${integerOrFractionLatex(perimeter, true)}\\div4=${integerOrFractionLatex(fracSide, true)}\\)。`);
+        answers.push(
+          `簡答：$${integerOrFractionLatex(fracSide, true)}$ 公尺。過程：正方形邊長 = 周長 ÷ 4 = \\(${integerOrFractionLatex(perimeter, true)}\\div4=${integerOrFractionLatex(fracSide, true)}\\)。`
+        );
       } else {
         const target = randInt(2, 6);
-        const divisor = randInt(0, 1) === 0 ? e612PickSimpleFraction(true) : randomMixedFraction(1, 4, [2, 3, 4, 5, 6, 8], false);
+        const divisor =
+          randInt(0, 1) === 0 ? e612PickSimpleFraction(true) : randomMixedFraction(1, 4, [2, 3, 4, 5, 6, 8], false);
         const total = mulFraction(makeFraction(target, 1), divisor);
         const [shape, totalName, totalUnit, knownSide, sideUnit, askSide] = pick;
-        questions.push(`${shape}${totalName}是 \\(${integerOrFractionLatex(total, true)}\\) ${totalUnit}，${knownSide}是 \\(${integerOrFractionLatex(divisor, true)}\\) ${sideUnit}，${askSide}是多少${sideUnit}？`);
+        questions.push(
+          `${shape}${totalName}是 \\(${integerOrFractionLatex(total, true)}\\) ${totalUnit}，${knownSide}是 \\(${integerOrFractionLatex(divisor, true)}\\) ${sideUnit}，${askSide}是多少${sideUnit}？`
+        );
         summaryAnswers.push(`$${target}$`);
-        answers.push(`簡答：$${target}$ ${sideUnit}。過程：要求另一邊，就是用 ${totalName} ÷ 已知一邊：\\(${integerOrFractionLatex(total, true)}\\div${integerOrFractionLatex(divisor, true)}=${target}\\)。`);
+        answers.push(
+          `簡答：$${target}$ ${sideUnit}。過程：要求另一邊，就是用 ${totalName} ÷ 已知一邊：\\(${integerOrFractionLatex(total, true)}\\div${integerOrFractionLatex(divisor, true)}=${target}\\)。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -3185,11 +3319,26 @@
     const summaryAnswers = [];
     const answers = [];
     const contexts = [
-      { unit: '頁', build: (partText, ratioText) => `看了 ${partText} 頁，占整本故事書的 ${ratioText}，整本故事書共有幾頁？` },
-      { unit: '公里', build: (partText, ratioText) => `已經鋪了 ${partText} 公里，占整條馬路的 ${ratioText}，這條馬路全長幾公里？` },
-      { unit: '人', build: (partText, ratioText) => `男學生有 ${partText} 人，占六年級學生的 ${ratioText}，六年級學生共有幾人？` },
-      { unit: '人', build: (partText, ratioText) => `六年級女生有 ${partText} 人，占全體學生的 ${ratioText}，六年級學生共有幾人？` },
-      { unit: '隻', build: (partText, ratioText) => `公羊有 ${partText} 隻，占全部綿羊的 ${ratioText}，全部共有幾隻？` },
+      {
+        unit: '頁',
+        build: (partText, ratioText) => `看了 ${partText} 頁，占整本故事書的 ${ratioText}，整本故事書共有幾頁？`,
+      },
+      {
+        unit: '公里',
+        build: (partText, ratioText) => `已經鋪了 ${partText} 公里，占整條馬路的 ${ratioText}，這條馬路全長幾公里？`,
+      },
+      {
+        unit: '人',
+        build: (partText, ratioText) => `男學生有 ${partText} 人，占六年級學生的 ${ratioText}，六年級學生共有幾人？`,
+      },
+      {
+        unit: '人',
+        build: (partText, ratioText) => `六年級女生有 ${partText} 人，占全體學生的 ${ratioText}，六年級學生共有幾人？`,
+      },
+      {
+        unit: '隻',
+        build: (partText, ratioText) => `公羊有 ${partText} 隻，占全部綿羊的 ${ratioText}，全部共有幾隻？`,
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const part = pickFromList([20, 24, 36, 48, 72, 88, 96, 120]);
@@ -3209,7 +3358,9 @@
       const ratioText = `\\(${fractionToLatex(ratio)}\\)`;
       questions.push(picked.build(part, ratioText));
       summaryAnswers.push(`${whole.num} ${picked.unit}`);
-      answers.push(`簡答：${whole.num} ${picked.unit}。過程：整體量 = 部分量 ÷ 所占分率 = \\(${part}\\div${fractionToLatex(ratio)}=${whole.num}\\)，所以答案是 ${whole.num} ${picked.unit}。`);
+      answers.push(
+        `簡答：${whole.num} ${picked.unit}。過程：整體量 = 部分量 ÷ 所占分率 = \\(${part}\\div${fractionToLatex(ratio)}=${whole.num}\\)，所以答案是 ${whole.num} ${picked.unit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3220,7 +3371,8 @@
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const mode = randInt(0, 1);
-      const quantity = randInt(0, 1) === 0 ? randomMixedFraction(1, 6, [2, 3, 4, 5, 6, 8], false) : e612PickSimpleFraction(true);
+      const quantity =
+        randInt(0, 1) === 0 ? randomMixedFraction(1, 6, [2, 3, 4, 5, 6, 8], false) : e612PickSimpleFraction(true);
       const unitValue = pickFromList([2, 3, 4, 5, 6, 8, 9, 10, 12]);
       const total = mulFraction(quantity, makeFraction(unitValue, 1));
       if (mode === 0) {
@@ -3231,9 +3383,13 @@
         ];
         const [name, timeText, amountUnit, askText, answerUnit] = pickFromList(contexts);
         const result = divFraction(quantity, total);
-        questions.push(`${name}：在 \\(${integerOrFractionLatex(quantity, true)}\\) ${timeText} \\(${integerOrFractionLatex(total, true)}\\) ${amountUnit}，${askText}？`);
+        questions.push(
+          `${name}：在 \\(${integerOrFractionLatex(quantity, true)}\\) ${timeText} \\(${integerOrFractionLatex(total, true)}\\) ${amountUnit}，${askText}？`
+        );
         summaryAnswers.push(`$${integerOrFractionLatex(result, true)}$ ${answerUnit}`);
-        answers.push(`簡答：$${integerOrFractionLatex(result, true)}$ ${answerUnit}。過程：要求每 1 ${amountUnit} 需要多少${answerUnit}，要用時間（或份數）÷ 總量：\\(${integerOrFractionLatex(quantity, true)}\\div${integerOrFractionLatex(total, true)}=${integerOrFractionLatex(result, true)}\\)。`);
+        answers.push(
+          `簡答：$${integerOrFractionLatex(result, true)}$ ${answerUnit}。過程：要求每 1 ${amountUnit} 需要多少${answerUnit}，要用時間（或份數）÷ 總量：\\(${integerOrFractionLatex(quantity, true)}\\div${integerOrFractionLatex(total, true)}=${integerOrFractionLatex(result, true)}\\)。`
+        );
       } else {
         const [name, amountUnit, answerUnit] = pickFromList([
           ['騎車距離', '公里', '公里'],
@@ -3241,9 +3397,13 @@
           ['編織速度', '公尺', '公尺'],
         ]);
         const result = divFraction(total, quantity);
-        questions.push(`${name}：在 \\(${integerOrFractionLatex(quantity, true)}\\) 小時內完成 \\(${integerOrFractionLatex(total, true)}\\) ${amountUnit}，那麼 1 小時可完成多少${amountUnit}？`);
+        questions.push(
+          `${name}：在 \\(${integerOrFractionLatex(quantity, true)}\\) 小時內完成 \\(${integerOrFractionLatex(total, true)}\\) ${amountUnit}，那麼 1 小時可完成多少${amountUnit}？`
+        );
         summaryAnswers.push(`$${integerOrFractionLatex(result, true)}$ ${answerUnit}`);
-        answers.push(`簡答：$${integerOrFractionLatex(result, true)}$ ${answerUnit}。過程：要求每 1 小時可完成多少${amountUnit}，要用總量 ÷ 時間：\\(${integerOrFractionLatex(total, true)}\\div${integerOrFractionLatex(quantity, true)}=${integerOrFractionLatex(result, true)}\\)。`);
+        answers.push(
+          `簡答：$${integerOrFractionLatex(result, true)}$ ${answerUnit}。過程：要求每 1 小時可完成多少${amountUnit}，要用總量 ÷ 時間：\\(${integerOrFractionLatex(total, true)}\\div${integerOrFractionLatex(quantity, true)}=${integerOrFractionLatex(result, true)}\\)。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -3264,7 +3424,12 @@
 
   function buildE612BasicsMixedSet(count) {
     return buildE612MixedSet(
-      [buildE612SimplifyFractionSet, buildE612SameDenominatorDivisionSet, buildE612IntegerDivideFractionSet, buildE612GeneralFractionDivisionSet],
+      [
+        buildE612SimplifyFractionSet,
+        buildE612SameDenominatorDivisionSet,
+        buildE612IntegerDivideFractionSet,
+        buildE612GeneralFractionDivisionSet,
+      ],
       count
     );
   }
@@ -3328,12 +3493,14 @@
 
     for (let i = 0; i < count; i += 1) {
       const total = pickFromList([24, 50, 72, 96, 120, 125, 180, 240, 352]);
-      const known = randInt(Math.max(3, Math.floor(total / 6)), Math.floor(total * 4 / 5));
+      const known = randInt(Math.max(3, Math.floor(total / 6)), Math.floor((total * 4) / 5));
       const result = total - known;
       const picked = pickFromList(contexts);
       questions.push(picked.build(total, known));
       summaryAnswers.push(`${result} ${picked.unit}`);
-      answers.push(`簡答：${result} ${picked.unit}。過程：這類是和不變，已知量 + 未知量 = 總量，所以未知量 = ${total} - ${known} = ${result}。`);
+      answers.push(
+        `簡答：${result} ${picked.unit}。過程：這類是和不變，已知量 + 未知量 = 總量，所以未知量 = ${total} - ${known} = ${result}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3359,9 +3526,13 @@
         const olderNow = youngerNow + diff;
         const afterYears = randInt(2, 12);
         const result = youngerNow + afterYears;
-        questions.push(`${olderName}今年 ${olderNow} 歲，${youngerName}今年 ${youngerNow} 歲。${afterYears} 年後，${youngerName}幾歲？`);
+        questions.push(
+          `${olderName}今年 ${olderNow} 歲，${youngerName}今年 ${youngerNow} 歲。${afterYears} 年後，${youngerName}幾歲？`
+        );
         summaryAnswers.push(`${result} 歲`);
-        answers.push(`簡答：${result} 歲。過程：兩人的年齡差 ${diff} 歲會保持不變，但經過 ${afterYears} 年兩人都一起增加 ${afterYears} 歲，所以 ${youngerName}是 ${youngerNow} + ${afterYears} = ${result} 歲。`);
+        answers.push(
+          `簡答：${result} 歲。過程：兩人的年齡差 ${diff} 歲會保持不變，但經過 ${afterYears} 年兩人都一起增加 ${afterYears} 歲，所以 ${youngerName}是 ${youngerNow} + ${afterYears} = ${result} 歲。`
+        );
         continue;
       }
 
@@ -3372,9 +3543,13 @@
         const diff = olderPast - youngerPast;
         const youngerFuture = youngerPast + randInt(5, 14);
         const result = youngerFuture + diff;
-        questions.push(`已知 ${olderName} ${olderPast} 歲時，${youngerName} ${youngerPast} 歲。當 ${youngerName} ${youngerFuture} 歲時，${olderName}幾歲？`);
+        questions.push(
+          `已知 ${olderName} ${olderPast} 歲時，${youngerName} ${youngerPast} 歲。當 ${youngerName} ${youngerFuture} 歲時，${olderName}幾歲？`
+        );
         summaryAnswers.push(`${result} 歲`);
-        answers.push(`簡答：${result} 歲。過程：兩人的年齡差固定是 ${olderPast} - ${youngerPast} = ${diff} 歲，所以當 ${youngerName} ${youngerFuture} 歲時，${olderName}是 ${youngerFuture} + ${diff} = ${result} 歲。`);
+        answers.push(
+          `簡答：${result} 歲。過程：兩人的年齡差固定是 ${olderPast} - ${youngerPast} = ${diff} 歲，所以當 ${youngerName} ${youngerFuture} 歲時，${olderName}是 ${youngerFuture} + ${diff} = ${result} 歲。`
+        );
         continue;
       }
 
@@ -3383,11 +3558,15 @@
       if (randInt(0, 1) === 0) {
         questions.push(`民國 ${rocYear} 年是西元幾年？`);
         summaryAnswers.push(`${civilYear} 年`);
-        answers.push(`簡答：${civilYear} 年。過程：西元年和民國年的差固定是 1911，所以西元年 = 民國年 + 1911 = ${rocYear} + 1911 = ${civilYear}。`);
+        answers.push(
+          `簡答：${civilYear} 年。過程：西元年和民國年的差固定是 1911，所以西元年 = 民國年 + 1911 = ${rocYear} + 1911 = ${civilYear}。`
+        );
       } else {
         questions.push(`西元 ${civilYear} 年是民國幾年？`);
         summaryAnswers.push(`民國 ${rocYear} 年`);
-        answers.push(`簡答：民國 ${rocYear} 年。過程：民國年和西元年的差固定是 1911，所以民國年 = 西元年 - 1911 = ${civilYear} - 1911 = ${rocYear}。`);
+        answers.push(
+          `簡答：民國 ${rocYear} 年。過程：民國年和西元年的差固定是 1911，所以民國年 = 西元年 - 1911 = ${civilYear} - 1911 = ${rocYear}。`
+        );
       }
     }
 
@@ -3435,7 +3614,9 @@
       questions.push(picked.build(unitValue, q1, total1, q2, total2));
       const resultText = picked === contexts[2] ? picked.answer(q2) : picked.answer(total2);
       summaryAnswers.push(resultText);
-      answers.push(`簡答：${resultText}。過程：這類是商不變，單價（或每日進度、兌換比）固定，所以總量 ÷ 數量 = ${unitValue}。依此可得答案。`);
+      answers.push(
+        `簡答：${resultText}。過程：這類是商不變，單價（或每日進度、兌換比）固定，所以總量 ÷ 數量 = ${unitValue}。依此可得答案。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3478,7 +3659,9 @@
       const picked = pickFromList(contexts);
       questions.push(picked.build(total, each));
       summaryAnswers.push(`${factor} ${picked.unit}`);
-      answers.push(`簡答：${factor} ${picked.unit}。過程：這類是積不變，總量 = 每份量 × 份數，所以份數 = ${total} ÷ ${each} = ${factor}。`);
+      answers.push(
+        `簡答：${factor} ${picked.unit}。過程：這類是積不變，總量 = 每份量 × 份數，所以份數 = ${total} ÷ ${each} = ${factor}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3500,9 +3683,13 @@
       const inc = randInt(picked.incMin, picked.incMax);
       const n = randInt(4, 20);
       const result = base + inc * (n - 1);
-      questions.push(`疊 ${n} ${picked.noun}時，高度（或總長）規律是「第 1 個 ${base}${picked.unit}，之後每多 1 個增加 ${inc}${picked.unit}」，求疊 ${n} 個時是多少${picked.unit}？`);
+      questions.push(
+        `疊 ${n} ${picked.noun}時，高度（或總長）規律是「第 1 個 ${base}${picked.unit}，之後每多 1 個增加 ${inc}${picked.unit}」，求疊 ${n} 個時是多少${picked.unit}？`
+      );
       summaryAnswers.push(`${result} ${picked.unit}`);
-      answers.push(`簡答：${result} ${picked.unit}。過程：規律是「第 1 個 + 增加量 × (個數 - 1)」，所以 ${base} + ${inc} × (${n} - 1) = ${result}。`);
+      answers.push(
+        `簡答：${result} ${picked.unit}。過程：規律是「第 1 個 + 增加量 × (個數 - 1)」，所以 ${base} + ${inc} × (${n} - 1) = ${result}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3521,9 +3708,13 @@
         const second = base + inc;
         const n = randInt(6, 18);
         const result = base + inc * (n - 1);
-        questions.push(`某種推車接排規律為：1 部長 ${base} 公分，2 部長 ${second} 公分。照此規律，${n} 部接排長幾公分？`);
+        questions.push(
+          `某種推車接排規律為：1 部長 ${base} 公分，2 部長 ${second} 公分。照此規律，${n} 部接排長幾公分？`
+        );
         summaryAnswers.push(`${result} 公分`);
-        answers.push(`簡答：${result} 公分。過程：每多 1 部就增加 ${second} - ${base} = ${inc} 公分，所以 ${n} 部長度是 ${base} + ${inc} × (${n} - 1) = ${result}。`);
+        answers.push(
+          `簡答：${result} 公分。過程：每多 1 部就增加 ${second} - ${base} = ${inc} 公分，所以 ${n} 部長度是 ${base} + ${inc} × (${n} - 1) = ${result}。`
+        );
         continue;
       }
 
@@ -3533,7 +3724,9 @@
       const len2 = base + inc * (n2 - 1);
       questions.push(`${n1} 部推車接排長 ${len1} 公分，${n2} 部推車接排長 ${len2} 公分，求 1 部推車長幾公分？`);
       summaryAnswers.push(`${base} 公分`);
-      answers.push(`簡答：${base} 公分。過程：每多 ${n2 - n1} 部增加 ${len2 - len1} 公分，所以每多 1 部增加 ${(len2 - len1) / (n2 - n1)} 公分。再由 ${len1} 倒推，1 部長 ${base} 公分。`);
+      answers.push(
+        `簡答：${base} 公分。過程：每多 ${n2 - n1} 部增加 ${len2 - len1} 公分，所以每多 1 部增加 ${(len2 - len1) / (n2 - n1)} 公分。再由 ${len1} 倒推，1 部長 ${base} 公分。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -3554,7 +3747,9 @@
         const result = intervals + 1;
         questions.push(`一條長 ${length} 公尺的路，每隔 ${spacing} 公尺設一盞路燈，兩端都設，共需要幾盞？`);
         summaryAnswers.push(`${result} 盞`);
-        answers.push(`簡答：${result} 盞。過程：先算間隔數 = ${length} ÷ ${spacing} = ${intervals}，兩端都設時，物體數 = 間隔數 + 1，所以是 ${intervals} + 1 = ${result}。`);
+        answers.push(
+          `簡答：${result} 盞。過程：先算間隔數 = ${length} ÷ ${spacing} = ${intervals}，兩端都設時，物體數 = 間隔數 + 1，所以是 ${intervals} + 1 = ${result}。`
+        );
         continue;
       }
 
@@ -3564,7 +3759,9 @@
         const result = intervals - 1;
         questions.push(`一段長 ${length} 公尺的道路，每隔 ${spacing} 公尺設一路燈，兩端都不設，共需要幾盞？`);
         summaryAnswers.push(`${result} 盞`);
-        answers.push(`簡答：${result} 盞。過程：間隔數 = ${length} ÷ ${spacing} = ${intervals}，兩端都不設時，物體數 = 間隔數 - 1，所以是 ${intervals} - 1 = ${result}。`);
+        answers.push(
+          `簡答：${result} 盞。過程：間隔數 = ${length} ÷ ${spacing} = ${intervals}，兩端都不設時，物體數 = 間隔數 - 1，所以是 ${intervals} - 1 = ${result}。`
+        );
         continue;
       }
 
@@ -3572,7 +3769,9 @@
       const perimeter = spacing * countOnCircle;
       questions.push(`圓形跑道周長 ${perimeter} 公尺，每隔 ${spacing} 公尺設一個標記，共設了幾個標記？`);
       summaryAnswers.push(`${countOnCircle} 個`);
-      answers.push(`簡答：${countOnCircle} 個。過程：圓形封閉時，標記數 = 間隔數，所以 ${perimeter} ÷ ${spacing} = ${countOnCircle}。`);
+      answers.push(
+        `簡答：${countOnCircle} 個。過程：圓形封閉時，標記數 = 間隔數，所以 ${perimeter} ÷ ${spacing} = ${countOnCircle}。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -3598,7 +3797,9 @@
       const spacingText = unit === '排' ? `每 1 ${unit}算 1 個間隔` : `每隔 ${spacing} ${unit}一個`;
       questions.push(`${noun}${spacingText}，第 ${start} 個到第 ${end} 個相距多少${unit === '排' ? unit : '公尺'}？`);
       summaryAnswers.push(`${result} ${unit === '排' ? unit : '公尺'}`);
-      answers.push(`簡答：${result} ${unit === '排' ? unit : '公尺'}。過程：中間有 ${end} - ${start} = ${end - start} 個間隔，所以距離是 ${end - start} × ${spacing} = ${result}。`);
+      answers.push(
+        `簡答：${result} ${unit === '排' ? unit : '公尺'}。過程：中間有 ${end} - ${start} = ${end - start} 個間隔，所以距離是 ${end - start} × ${spacing} = ${result}。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -3623,7 +3824,9 @@
       const result = pattern[remainder];
       questions.push(`依照規律「${pattern.join('、')}」重複排列，第 ${n} 個是什麼？`);
       summaryAnswers.push(`${result}`);
-      answers.push(`簡答：${result}。過程：每 ${pattern.length} 個一循環，${n} - 1 = ${n - 1}，餘 ${remainder}，所以對應到第 ${remainder + 1} 個，是 ${result}。`);
+      answers.push(
+        `簡答：${result}。過程：每 ${pattern.length} 個一循環，${n} - 1 = ${n - 1}，餘 ${remainder}，所以對應到第 ${remainder + 1} 個，是 ${result}。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -3680,7 +3883,9 @@
       const totalAttr = aCount * picked.attrA + bCount * picked.attrB;
       questions.push(picked.build(totalCount, totalAttr));
       summaryAnswers.push(`${picked.aName} ${aCount}${picked.aUnit}、${picked.bName} ${bCount}${picked.bUnit}`);
-      answers.push(`簡答：${picked.aName} ${aCount}${picked.aUnit}、${picked.bName} ${bCount}${picked.bUnit}。過程：先假設全部都是${picked.aName}，則會有 ${totalCount * picked.attrA}${picked.attrUnit}；和實際的 ${totalAttr}${picked.attrUnit} 相差 ${totalAttr - totalCount * picked.attrA}。每把 1 個${picked.aName}換成 1 個${picked.bName}，會多 ${picked.attrB - picked.attrA}${picked.attrUnit}，所以 ${picked.bName}有 ${(totalAttr - totalCount * picked.attrA) / (picked.attrB - picked.attrA)}${picked.bUnit}，再求得 ${picked.aName}有 ${aCount}${picked.aUnit}。`);
+      answers.push(
+        `簡答：${picked.aName} ${aCount}${picked.aUnit}、${picked.bName} ${bCount}${picked.bUnit}。過程：先假設全部都是${picked.aName}，則會有 ${totalCount * picked.attrA}${picked.attrUnit}；和實際的 ${totalAttr}${picked.attrUnit} 相差 ${totalAttr - totalCount * picked.attrA}。每把 1 個${picked.aName}換成 1 個${picked.bName}，會多 ${picked.attrB - picked.attrA}${picked.attrUnit}，所以 ${picked.bName}有 ${(totalAttr - totalCount * picked.attrA) / (picked.attrB - picked.attrA)}${picked.bUnit}，再求得 ${picked.aName}有 ${aCount}${picked.aUnit}。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -3799,7 +4004,9 @@
       const resultText = e614DecimalText(result);
       questions.push(`計算：$${dividend.num}\\div${divisorText}$。`);
       summaryAnswers.push(`$${resultText}$`);
-      answers.push(`簡答：$${resultText}$。過程：先把除數變成整數，可視為同乘 10 或 100。原式 $=${dividend.num}\\div${divisorText}=${resultText}$。`);
+      answers.push(
+        `簡答：$${resultText}$。過程：先把除數變成整數，可視為同乘 10 或 100。原式 $=${dividend.num}\\div${divisorText}=${resultText}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -3830,7 +4037,9 @@
       if (e614DecimalPlaces(dividendText) > 2 || e614DecimalPlaces(divisorText) > 2) continue;
       questions.push(`計算：$${dividendText}\\div${divisorText}$。`);
       summaryAnswers.push(`$${e614DecimalText(result)}$`);
-      answers.push(`簡答：$${e614DecimalText(result)}$。過程：把被除數和除數的小數點同步右移，使除數變成整數後再計算，結果是 $${e614DecimalText(result)}$。`);
+      answers.push(
+        `簡答：$${e614DecimalText(result)}$。過程：把被除數和除數的小數點同步右移，使除數變成整數後再計算，結果是 $${e614DecimalText(result)}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -3844,17 +4053,19 @@
     while (questions.length < count) {
       const divisor = e614PickPositiveDecimal({ minInt: 0, maxInt: 9, places: [1, 2], allowInteger: false });
       const digits = randInt(0, 1);
-      const result = digits === 0
-        ? makeFraction(randInt(25, 220), 10)
-        : makeFraction(randInt(12, 180), 100);
+      const result = digits === 0 ? makeFraction(randInt(25, 220), 10) : makeFraction(randInt(12, 180), 100);
       const dividend = mulFraction(divisor, result);
       const dividendText = e614DecimalText(dividend);
       const divisorText = e614DecimalText(divisor);
       if (e614DecimalPlaces(dividendText) > 2 || e614DecimalPlaces(divisorText) > 2) continue;
       const roundedText = e614RoundFractionText(divFraction(dividend, divisor), digits);
-      questions.push(`計算：$${dividendText}\\div${divisorText}$，商四捨五入到${digits === 0 ? '個位' : '小數第一位'}約是多少？`);
+      questions.push(
+        `計算：$${dividendText}\\div${divisorText}$，商四捨五入到${digits === 0 ? '個位' : '小數第一位'}約是多少？`
+      );
       summaryAnswers.push(`約 ${roundedText}`);
-      answers.push(`簡答：約 ${roundedText}。過程：先算商為 $${e614DecimalText(divFraction(dividend, divisor))}$，再四捨五入到${digits === 0 ? '個位' : '小數第一位'}，得到約 ${roundedText}。`);
+      answers.push(
+        `簡答：約 ${roundedText}。過程：先算商為 $${e614DecimalText(divFraction(dividend, divisor))}$，再四捨五入到${digits === 0 ? '個位' : '小數第一位'}，得到約 ${roundedText}。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -3873,9 +4084,13 @@
       if (randInt(0, 1) === 0) {
         questions.push(`將 $${built.dividendText}\\div${built.divisorText}$ 化成除數為整數的算式。`);
         summaryAnswers.push(`$${built.scaledDividend}\\div${built.scaledDivisor}$`);
-        answers.push(`簡答：$${built.scaledDividend}\\div${built.scaledDivisor}$。過程：把被除數與除數同時乘 $10^{${built.shift}}$，商不變，所以可化成 $${built.scaledDividend}\\div${built.scaledDivisor}$。`);
+        answers.push(
+          `簡答：$${built.scaledDividend}\\div${built.scaledDivisor}$。過程：把被除數與除數同時乘 $10^{${built.shift}}$，商不變，所以可化成 $${built.scaledDividend}\\div${built.scaledDivisor}$。`
+        );
       } else {
-        questions.push(`判斷：$${built.dividendText}\\div${built.divisorText}$ 是否等於 $${built.scaledDividend}\\div${built.scaledDivisor}$？`);
+        questions.push(
+          `判斷：$${built.dividendText}\\div${built.divisorText}$ 是否等於 $${built.scaledDividend}\\div${built.scaledDivisor}$？`
+        );
         summaryAnswers.push('是');
         answers.push(`簡答：是。過程：被除數與除數同時乘 $10^{${built.shift}}$，商不變，所以兩式相等。`);
       }
@@ -3908,11 +4123,15 @@
         e614CompareFraction(divisor, makeFraction(1, 1)) < 0
           ? '除數小於 1，商會比被除數大'
           : e614CompareFraction(divisor, makeFraction(1, 1)) > 0
-          ? '除數大於 1，商會比被除數小'
-          : '除數等於 1，商和被除數相等';
-      questions.push(`不先計算，判斷：$${e614DecimalText(dividend)}\\div${e614DecimalText(divisor)}\\square${e614DecimalText(dividend)}$，應填入 $>$、$<$ 還是 $=$？`);
+            ? '除數大於 1，商會比被除數小'
+            : '除數等於 1，商和被除數相等';
+      questions.push(
+        `不先計算，判斷：$${e614DecimalText(dividend)}\\div${e614DecimalText(divisor)}\\square${e614DecimalText(dividend)}$，應填入 $>$、$<$ 還是 $=$？`
+      );
       summaryAnswers.push(symbol);
-      answers.push(`簡答：$${symbol}$。過程：${reason}，所以 $${e614DecimalText(dividend)}\\div${e614DecimalText(divisor)} ${symbol} ${e614DecimalText(dividend)}$。`);
+      answers.push(
+        `簡答：$${symbol}$。過程：${reason}，所以 $${e614DecimalText(dividend)}\\div${e614DecimalText(divisor)} ${symbol} ${e614DecimalText(dividend)}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -3934,8 +4153,11 @@
       const right = divFraction(dividend, divisorB);
       const cmp = e614CompareFraction(left, right);
       const symbol = cmp > 0 ? '>' : '<';
-      const reason = e614CompareFraction(divisorA, divisorB) < 0 ? '左邊除數較小，所以左邊商較大' : '右邊除數較小，所以右邊商較大';
-      questions.push(`不先計算，判斷：$${e614DecimalText(dividend)}\\div${e614DecimalText(divisorA)}\\square${e614DecimalText(dividend)}\\div${e614DecimalText(divisorB)}$，應填入 $>$ 還是 $<$？`);
+      const reason =
+        e614CompareFraction(divisorA, divisorB) < 0 ? '左邊除數較小，所以左邊商較大' : '右邊除數較小，所以右邊商較大';
+      questions.push(
+        `不先計算，判斷：$${e614DecimalText(dividend)}\\div${e614DecimalText(divisorA)}\\square${e614DecimalText(dividend)}\\div${e614DecimalText(divisorB)}$，應填入 $>$ 還是 $<$？`
+      );
       summaryAnswers.push(symbol);
       answers.push(`簡答：$${symbol}$。過程：被除數相同時，除數較小，商反而較大。${reason}，所以應填 $${symbol}$。`);
     }
@@ -3961,9 +4183,13 @@
       const totalText = e614DecimalText(total);
       if (e614DecimalPlaces(totalText) > 2) continue;
       const [unitName, actionText, resultUnit] = pickFromList(contexts);
-      questions.push(`有 $${totalText}$ ${unitName}，每 $${e614DecimalText(each)}$ ${actionText}，共可裝幾${resultUnit}？`);
+      questions.push(
+        `有 $${totalText}$ ${unitName}，每 $${e614DecimalText(each)}$ ${actionText}，共可裝幾${resultUnit}？`
+      );
       summaryAnswers.push(`${pieces}${resultUnit}`);
-      answers.push(`簡答：${pieces}${resultUnit}。過程：總量 ÷ 每份量 = $${totalText}\\div${e614DecimalText(each)}=${pieces}$，所以可以裝 ${pieces}${resultUnit}。`);
+      answers.push(
+        `簡答：${pieces}${resultUnit}。過程：總量 ÷ 每份量 = $${totalText}\\div${e614DecimalText(each)}=${pieces}$，所以可以裝 ${pieces}${resultUnit}。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -3989,7 +4215,9 @@
       const [leftText, rightText, unit] = pickFromList(contexts);
       questions.push(`買 $${e614DecimalText(quantity)}$ ${leftText} $${totalText}$ ${rightText}？`);
       summaryAnswers.push(`${unitValue}${unit}`);
-      answers.push(`簡答：${unitValue}${unit}。過程：求 1 單位的量，要用總量 ÷ 數量，所以 $${totalText}\\div${e614DecimalText(quantity)}=${unitValue}$。`);
+      answers.push(
+        `簡答：${unitValue}${unit}。過程：求 1 單位的量，要用總量 ÷ 數量，所以 $${totalText}\\div${e614DecimalText(quantity)}=${unitValue}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -4012,9 +4240,13 @@
       const totalText = e614DecimalText(total);
       if (e614DecimalPlaces(totalText) > 3) continue;
       const [shape, totalName, totalUnit, knownName, sideUnit, askName] = pickFromList(contexts);
-      questions.push(`${shape}${totalName}是 $${totalText}$ ${totalUnit}，${knownName}是 $${e614DecimalText(known)}$ ${sideUnit}，${askName}是多少${sideUnit}？`);
+      questions.push(
+        `${shape}${totalName}是 $${totalText}$ ${totalUnit}，${knownName}是 $${e614DecimalText(known)}$ ${sideUnit}，${askName}是多少${sideUnit}？`
+      );
       summaryAnswers.push(`${e614DecimalText(answer)}${sideUnit}`);
-      answers.push(`簡答：${e614DecimalText(answer)}${sideUnit}。過程：要求另一邊，用 ${totalName} ÷ 已知邊長：$${totalText}\\div${e614DecimalText(known)}=${e614DecimalText(answer)}$。`);
+      answers.push(
+        `簡答：${e614DecimalText(answer)}${sideUnit}。過程：要求另一邊，用 ${totalName} ÷ 已知邊長：$${totalText}\\div${e614DecimalText(known)}=${e614DecimalText(answer)}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -4033,7 +4265,9 @@
         const rounded = trimDecimalString(String(Math.round(percent)));
         questions.push(`共投了 ${total} 球，投進 ${hit} 球，進球率約是多少\\%？（四捨五入到百分率個位）`);
         summaryAnswers.push(`約${rounded}\\%`);
-        answers.push(`簡答：約${rounded}\\%。過程：進球率 = 成功次數 ÷ 總次數 × 100\\% = ${hit} ÷ ${total} × 100\\% = ${trimDecimalString(percent.toFixed(2))}\\%，四捨五入後約為 ${rounded}\\%。`);
+        answers.push(
+          `簡答：約${rounded}\\%。過程：進球率 = 成功次數 ÷ 總次數 × 100\\% = ${hit} ÷ ${total} × 100\\% = ${trimDecimalString(percent.toFixed(2))}\\%，四捨五入後約為 ${rounded}\\%。`
+        );
       } else {
         const unitRate = e614PickPositiveDecimal({ minInt: 0, maxInt: 4, places: [1, 2], allowInteger: false });
         const area = pickFromList([5, 6, 8, 10, 12, 15, 20]);
@@ -4042,7 +4276,9 @@
         if (e614DecimalPlaces(totalText) > 3) continue;
         questions.push(`${area} 平方公尺的田地產出 $${totalText}$ 公斤稻米，1 平方公尺可產幾公斤？（取到小數第二位）`);
         summaryAnswers.push(`${e614RoundFractionText(divFraction(total, makeFraction(area, 1)), 2)}公斤`);
-        answers.push(`簡答：${e614RoundFractionText(divFraction(total, makeFraction(area, 1)), 2)}公斤。過程：單位產量 = 總產量 ÷ 面積 = $${totalText}\\div${area}=${e614DecimalText(unitRate)}$，取到小數第二位為 ${e614RoundFractionText(unitRate, 2)}。`);
+        answers.push(
+          `簡答：${e614RoundFractionText(divFraction(total, makeFraction(area, 1)), 2)}公斤。過程：單位產量 = 總產量 ÷ 面積 = $${totalText}\\div${area}=${e614DecimalText(unitRate)}$，取到小數第二位為 ${e614RoundFractionText(unitRate, 2)}。`
+        );
       }
     }
 
@@ -4073,9 +4309,13 @@
       const totalText = e614DecimalText(total);
       if (e614DecimalPlaces(totalText) > 2) continue;
       const [itemUnit, actionText, resultUnit, remainUnit] = pickFromList(contexts);
-      questions.push(`有 $${totalText}$ ${itemUnit}，每 $${eachText}$ ${actionText}，最多可分成幾${resultUnit}？剩下幾${remainUnit}？`);
+      questions.push(
+        `有 $${totalText}$ ${itemUnit}，每 $${eachText}$ ${actionText}，最多可分成幾${resultUnit}？剩下幾${remainUnit}？`
+      );
       summaryAnswers.push(`${q}${resultUnit}，餘${e614DecimalText(remainder)}${remainUnit}`);
-      answers.push(`簡答：${q}${resultUnit}，餘${e614DecimalText(remainder)}${remainUnit}。過程：$${totalText}\\div${eachText}=${q}$，剩下 $${e614DecimalText(remainder)}$ ${remainUnit}。餘數要比每一份 ${eachText} 小，且單位要和原量對齊。`);
+      answers.push(
+        `簡答：${q}${resultUnit}，餘${e614DecimalText(remainder)}${remainUnit}。過程：$${totalText}\\div${eachText}=${q}$，剩下 $${e614DecimalText(remainder)}$ ${remainUnit}。餘數要比每一份 ${eachText} 小，且單位要和原量對齊。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -4198,7 +4438,9 @@
       const value = divFraction(left, right);
       questions.push(`求比 $${e615RatioText(left, right)}$ 的比值。`);
       summaryAnswers.push(`$${e615FractionText(value)}$`);
-      answers.push(`簡答：$${e615FractionText(value)}$。過程：比值就是前項 ÷ 後項，所以 $${e615FractionText(left)}\\div${e615FractionText(right)}=${e615FractionText(value)}$。`);
+      answers.push(
+        `簡答：$${e615FractionText(value)}$。過程：比值就是前項 ÷ 後項，所以 $${e615FractionText(left)}\\div${e615FractionText(right)}=${e615FractionText(value)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4212,7 +4454,9 @@
       const [a, b] = e615ScaleRatioToIntegers(left, right);
       questions.push(`把 $${e615RatioText(left, right)}$ 化成最簡整數比。`);
       summaryAnswers.push(`$${a}:${b}$`);
-      answers.push(`簡答：$${a}:${b}$。過程：先同乘分母公倍數，把比化成整數比，再同除最大公因數，得到最簡整數比 $${a}:${b}$。`);
+      answers.push(
+        `簡答：$${a}:${b}$。過程：先同乘分母公倍數，把比化成整數比，再同除最大公因數，得到最簡整數比 $${a}:${b}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4265,7 +4509,10 @@
       summaryAnswers.push(best.brand);
       answers.push(
         `簡答：${best.brand}。過程：分別求單位量的價格：${offers
-          .map((row) => `${row.brand} 為 ${row.total.num / row.total.den}÷${e615FractionText(row.quantity)}=${row.unitPrice}`)
+          .map(
+            (row) =>
+              `${row.brand} 為 ${row.total.num / row.total.den}÷${e615FractionText(row.quantity)}=${row.unitPrice}`
+          )
           .join('，')}，單價最小的是 ${best.brand}。`
       );
     }
@@ -4288,9 +4535,13 @@
       const b = randInt(1, 6);
       const wanted = randInt(3, 12) * b;
       const answer = (wanted / b) * a;
-      questions.push(`若 $${a}$ ${s.left} 可以換 $${b}$ ${s.right}，要換到 $${wanted}$ ${s.rightUnit}${s.object}，需要多少${s.left}？`);
+      questions.push(
+        `若 $${a}$ ${s.left} 可以換 $${b}$ ${s.right}，要換到 $${wanted}$ ${s.rightUnit}${s.object}，需要多少${s.left}？`
+      );
       summaryAnswers.push(`${answer}${s.leftUnit}`);
-      answers.push(`簡答：${answer}${s.leftUnit}。過程：先看比是 $${a}:${b}$，${wanted} 是 ${b} 的 ${wanted / b} 倍，所以前項也乘上 ${wanted / b}，得到 ${answer}${s.leftUnit}。`);
+      answers.push(
+        `簡答：${answer}${s.leftUnit}。過程：先看比是 $${a}:${b}$，${wanted} 是 ${b} 的 ${wanted / b} 倍，所以前項也乘上 ${wanted / b}，得到 ${answer}${s.leftUnit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4306,9 +4557,13 @@
       const value = Math.floor((total * part) / whole);
       const itemA = pickFromList(['男生', '白米', '小說類', '草蝦', '雞蛋']);
       const itemB = pickFromList(['全班', '總重', '全部書', '池中總蝦數', '總顆數']);
-      questions.push(`已知 ${itemA} 與 ${itemB} 的比是 $${part}:${whole}$，若 ${itemB} 對應的總量是 ${total}，則 ${itemA} 對應多少？`);
+      questions.push(
+        `已知 ${itemA} 與 ${itemB} 的比是 $${part}:${whole}$，若 ${itemB} 對應的總量是 ${total}，則 ${itemA} 對應多少？`
+      );
       summaryAnswers.push(`${value}`);
-      answers.push(`簡答：${value}。過程：部分量 ÷ 全體量 = ${part}/${whole}，所以部分量 = $${total}\\times\\frac{${part}}{${whole}}=${value}$。`);
+      answers.push(
+        `簡答：${value}。過程：部分量 ÷ 全體量 = ${part}/${whole}，所以部分量 = $${total}\\times\\frac{${part}}{${whole}}=${value}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4331,9 +4586,13 @@
       const leftValue = a * totalUnits;
       const rightValue = b * totalUnits;
       const [leftName, rightName] = pickFromList(themePairs);
-      questions.push(`${leftName}與${rightName}的比是 $${a}:${b}$，總數是 ${total}，求 ${leftName} 和 ${rightName} 各是多少？`);
+      questions.push(
+        `${leftName}與${rightName}的比是 $${a}:${b}$，總數是 ${total}，求 ${leftName} 和 ${rightName} 各是多少？`
+      );
       summaryAnswers.push(`${leftName}${leftValue}，${rightName}${rightValue}`);
-      answers.push(`簡答：${leftName}${leftValue}，${rightName}${rightValue}。過程：總份數是 ${a + b} 份，每 1 份是 ${total}÷${a + b}=${totalUnits}，所以分別是 ${a}×${totalUnits}=${leftValue}、${b}×${totalUnits}=${rightValue}。`);
+      answers.push(
+        `簡答：${leftName}${leftValue}，${rightName}${rightValue}。過程：總份數是 ${a + b} 份，每 1 份是 ${total}÷${a + b}=${totalUnits}，所以分別是 ${a}×${totalUnits}=${leftValue}、${b}×${totalUnits}=${rightValue}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4356,13 +4615,21 @@
       const knownLeft = a * scale;
       const knownRight = b * scale;
       if (randInt(0, 1) === 0) {
-        questions.push(`調配時 $${theme.a}:${theme.b}=${a}:${b}$。若用了 ${knownLeft}${theme.unit}${theme.a}，要維持相同比例，${theme.b} 需要多少${theme.unit}？`);
+        questions.push(
+          `調配時 $${theme.a}:${theme.b}=${a}:${b}$。若用了 ${knownLeft}${theme.unit}${theme.a}，要維持相同比例，${theme.b} 需要多少${theme.unit}？`
+        );
         summaryAnswers.push(`${knownRight}${theme.unit}`);
-        answers.push(`簡答：${knownRight}${theme.unit}。過程：前項 ${a} 份變成 ${knownLeft}，放大倍數是 ${knownLeft / a}，所以後項也乘上同樣倍數，得到 ${knownRight}。`);
+        answers.push(
+          `簡答：${knownRight}${theme.unit}。過程：前項 ${a} 份變成 ${knownLeft}，放大倍數是 ${knownLeft / a}，所以後項也乘上同樣倍數，得到 ${knownRight}。`
+        );
       } else {
-        questions.push(`調配時 $${theme.a}:${theme.b}=${a}:${b}$。若用了 ${knownRight}${theme.unit}${theme.b}，要維持相同比例，${theme.a} 需要多少${theme.unit}？`);
+        questions.push(
+          `調配時 $${theme.a}:${theme.b}=${a}:${b}$。若用了 ${knownRight}${theme.unit}${theme.b}，要維持相同比例，${theme.a} 需要多少${theme.unit}？`
+        );
         summaryAnswers.push(`${knownLeft}${theme.unit}`);
-        answers.push(`簡答：${knownLeft}${theme.unit}。過程：後項 ${b} 份變成 ${knownRight}，放大倍數是 ${knownRight / b}，所以前項也乘上同樣倍數，得到 ${knownLeft}。`);
+        answers.push(
+          `簡答：${knownLeft}${theme.unit}。過程：後項 ${b} 份變成 ${knownRight}，放大倍數是 ${knownRight / b}，所以前項也乘上同樣倍數，得到 ${knownLeft}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -4381,7 +4648,9 @@
         const paid = (original * ratioNum) / 10;
         questions.push(`商品打 ${ratioNum} 折後售價是 ${paid} 元，原價是多少元？`);
         summaryAnswers.push(`${original}元`);
-        answers.push(`簡答：${original}元。過程：售價：原價 = ${ratioNum}:10，所以原價 = ${paid}÷${ratioNum}×10=${original}。`);
+        answers.push(
+          `簡答：${original}元。過程：售價：原價 = ${ratioNum}:10，所以原價 = ${paid}÷${ratioNum}×10=${original}。`
+        );
         continue;
       }
       if (mode === 'service') {
@@ -4394,15 +4663,13 @@
       }
       if (mode === 'markup') {
         const cost = randInt(20, 80) * 10;
-        const ratio = pickFromList([
-          makeFraction(5, 4),
-          makeFraction(13, 10),
-          makeFraction(7, 5),
-        ]);
+        const ratio = pickFromList([makeFraction(5, 4), makeFraction(13, 10), makeFraction(7, 5)]);
         const price = divFraction(mulFraction(makeFraction(cost, 1), ratio), makeFraction(1, 1));
         questions.push(`定價是成本的 $${e615FractionText(ratio, false)}$ 倍，若成本是 ${cost} 元，定價是多少元？`);
         summaryAnswers.push(`${price.num / price.den}元`);
-        answers.push(`簡答：${price.num / price.den}元。過程：定價：成本 = ${e615FractionText(ratio, false)}:1，所以定價 = ${cost}×${e615FractionText(ratio, false)}=${price.num / price.den}。`);
+        answers.push(
+          `簡答：${price.num / price.den}元。過程：定價：成本 = ${e615FractionText(ratio, false)}:1，所以定價 = ${cost}×${e615FractionText(ratio, false)}=${price.num / price.den}。`
+        );
         continue;
       }
       const salary = randInt(45, 90) * 100;
@@ -4410,7 +4677,9 @@
       const spent = salary - (salary * saveNum) / 10;
       questions.push(`把薪水的 ${saveNum} 成存起來，這個月花了 ${spent} 元，這個月薪水是多少元？`);
       summaryAnswers.push(`${salary}元`);
-      answers.push(`簡答：${salary}元。過程：花費：薪水 = ${10 - saveNum}:10，所以薪水 = ${spent}÷${10 - saveNum}×10=${salary}。`);
+      answers.push(
+        `簡答：${salary}元。過程：花費：薪水 = ${10 - saveNum}:10，所以薪水 = ${spent}÷${10 - saveNum}×10=${salary}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4428,7 +4697,9 @@
         const length = (scaleA * width) / scaleB;
         questions.push(`螢幕長：寬 = ${scaleA}:${scaleB}，若寬是 ${width} 公分，長是多少公分？`);
         summaryAnswers.push(`${length}公分`);
-        answers.push(`簡答：${length}公分。過程：長：寬 = ${scaleA}:${scaleB}，寬 ${width} 對應 ${scaleB} 份，所以每份是 ${width}÷${scaleB}，長是 ${scaleA} 份，得到 ${length}。`);
+        answers.push(
+          `簡答：${length}公分。過程：長：寬 = ${scaleA}:${scaleB}，寬 ${width} 對應 ${scaleB} 份，所以每份是 ${width}÷${scaleB}，長是 ${scaleA} 份，得到 ${length}。`
+        );
         continue;
       }
       if (mode === 1) {
@@ -4438,7 +4709,9 @@
         const actual = mapLen * ratioB;
         questions.push(`在比例尺 $1:${ratioB}$ 的地圖上，長 ${mapLen} 公分代表實際多少公分？`);
         summaryAnswers.push(`${actual}公分`);
-        answers.push(`簡答：${actual}公分。過程：圖上：實際 = 1:${ratioB}，圖上 ${mapLen} 公分就代表實際 ${mapLen}×${ratioB}=${actual} 公分。`);
+        answers.push(
+          `簡答：${actual}公分。過程：圖上：實際 = 1:${ratioB}，圖上 ${mapLen} 公分就代表實際 ${mapLen}×${ratioB}=${actual} 公分。`
+        );
         continue;
       }
       if (mode === 2) {
@@ -4446,9 +4719,13 @@
         const personShadow = randInt(60, 120);
         const objectShadow = randInt(90, 220);
         const objectHeight = makeFraction(personHeight * objectShadow, personShadow);
-        questions.push(`同一時間下，身高 ${personHeight} 公分的人影長 ${personShadow} 公分；若另一物體影長 ${objectShadow} 公分，它的高度是多少公分？`);
+        questions.push(
+          `同一時間下，身高 ${personHeight} 公分的人影長 ${personShadow} 公分；若另一物體影長 ${objectShadow} 公分，它的高度是多少公分？`
+        );
         summaryAnswers.push(`${e615FractionText(objectHeight)}公分`);
-        answers.push(`簡答：${e615FractionText(objectHeight)}公分。過程：同時測量時，高：影長比相同，所以 $${personHeight}:${personShadow}=x:${objectShadow}$，解得 $x=${e615FractionText(objectHeight)}$。`);
+        answers.push(
+          `簡答：${e615FractionText(objectHeight)}公分。過程：同時測量時，高：影長比相同，所以 $${personHeight}:${personShadow}=x:${objectShadow}$，解得 $x=${e615FractionText(objectHeight)}$。`
+        );
         continue;
       }
       const length = randInt(24, 72);
@@ -4463,7 +4740,9 @@
       const area = length * width;
       questions.push(`長方形長是 ${length} 公分，長與寬的比是 ${ratioL}:${ratioW}，面積是多少平方公分？`);
       summaryAnswers.push(`${area}平方公分`);
-      answers.push(`簡答：${area}平方公分。過程：長 ${length} 對應 ${ratioL} 份，所以 1 份是 ${scale}，寬是 ${ratioW}×${scale}=${width}，面積是 ${length}×${width}=${area}。`);
+      answers.push(
+        `簡答：${area}平方公分。過程：長 ${length} 對應 ${ratioL} 份，所以 1 份是 ${scale}，寬是 ${ratioW}×${scale}=${width}，面積是 ${length}×${width}=${area}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4478,20 +4757,26 @@
         const k = pickFromList([makeFraction(3, 2), makeFraction(5, 2), makeFraction(5, 4), makeFraction(7, 4)]);
         questions.push(`甲數是乙數的 $${e615FractionText(k, false)}$ 倍，甲對乙的比怎麼寫？比值是多少？`);
         summaryAnswers.push(`$${e615FractionText(k, false)}:1$，$${e615FractionText(k)}$`);
-        answers.push(`簡答：$${e615FractionText(k, false)}:1$，比值是 $${e615FractionText(k)}$。過程：幾倍就是前項 ÷ 後項的結果，所以甲：乙 = ${e615FractionText(k, false)}:1。`);
+        answers.push(
+          `簡答：$${e615FractionText(k, false)}:1$，比值是 $${e615FractionText(k)}$。過程：幾倍就是前項 ÷ 後項的結果，所以甲：乙 = ${e615FractionText(k, false)}:1。`
+        );
         continue;
       }
       if (mode === 1) {
         const num = pickFromList([8, 9, 12]);
         questions.push(`打 ${num} 折表示「售價：原價」的比是多少？比值是多少？`);
         summaryAnswers.push(`$${num}:10$，$${e615FractionText(makeFraction(num, 10))}$`);
-        answers.push(`簡答：$${num}:10$，比值是 $${e615FractionText(makeFraction(num, 10))}$。過程：${num} 折就是原價的 ${num}/10，所以售價：原價 = ${num}:10。`);
+        answers.push(
+          `簡答：$${num}:10$，比值是 $${e615FractionText(makeFraction(num, 10))}$。過程：${num} 折就是原價的 ${num}/10，所以售價：原價 = ${num}:10。`
+        );
         continue;
       }
       const ratio = pickFromList([makeFraction(5, 4), makeFraction(3, 2), makeFraction(8, 5)]);
       questions.push(`定價是成本的 $${e615FractionText(ratio, false)}$ 倍，定價對成本的比怎麼寫？比值是多少？`);
       summaryAnswers.push(`$${e615FractionText(ratio, false)}:1$，$${e615FractionText(ratio)}$`);
-      answers.push(`簡答：$${e615FractionText(ratio, false)}:1$，比值是 $${e615FractionText(ratio)}$。過程：若 A 是 B 的幾倍，就表示 $A:B=幾倍:1$。`);
+      answers.push(
+        `簡答：$${e615FractionText(ratio, false)}:1$，比值是 $${e615FractionText(ratio)}$。過程：若 A 是 B 的幾倍，就表示 $A:B=幾倍:1$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4580,7 +4865,9 @@
         const multiplier = pickFromList([2, 3, 4, 5]);
         questions.push(`若一個圓的直徑變成原來的 ${multiplier} 倍，圓周長會變成原來的幾倍？`);
         summaryAnswers.push(`${multiplier}倍`);
-        answers.push(`簡答：${multiplier}倍。過程：圓周長 = 直徑 × 3.14，直徑放大 ${multiplier} 倍，圓周長也跟著放大 ${multiplier} 倍。`);
+        answers.push(
+          `簡答：${multiplier}倍。過程：圓周長 = 直徑 × 3.14，直徑放大 ${multiplier} 倍，圓周長也跟著放大 ${multiplier} 倍。`
+        );
         continue;
       }
       if (mode === 3) {
@@ -4606,13 +4893,17 @@
         const circumference = e616CircumferenceByDiameter(diameter);
         questions.push(`一個直徑 ${diameter} 公分的圓，圓周長大約是多少公分？`);
         summaryAnswers.push(`${e616FormatNumber(circumference)}公分`);
-        answers.push(`簡答：${e616FormatNumber(circumference)}公分。過程：圓周長 = 直徑 × 3.14 = ${diameter} × 3.14 = ${e616FormatNumber(circumference)}。`);
+        answers.push(
+          `簡答：${e616FormatNumber(circumference)}公分。過程：圓周長 = 直徑 × 3.14 = ${diameter} × 3.14 = ${e616FormatNumber(circumference)}。`
+        );
       } else {
         const radius = pickFromList([3, 4, 5, 6, 8, 9, 10, 12, 15, 18]);
         const circumference = e616CircumferenceByRadius(radius);
         questions.push(`一個半徑 ${radius} 公分的圓，圓周長大約是多少公分？`);
         summaryAnswers.push(`${e616FormatNumber(circumference)}公分`);
-        answers.push(`簡答：${e616FormatNumber(circumference)}公分。過程：圓周長 = 半徑 × 2 × 3.14 = ${radius} × 2 × 3.14 = ${e616FormatNumber(circumference)}。`);
+        answers.push(
+          `簡答：${e616FormatNumber(circumference)}公分。過程：圓周長 = 半徑 × 2 × 3.14 = ${radius} × 2 × 3.14 = ${e616FormatNumber(circumference)}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -4628,13 +4919,17 @@
         const circumference = e616CircumferenceByDiameter(diameter);
         questions.push(`一個圓的圓周長大約是 ${e616FormatNumber(circumference)} 公分，它的直徑大約是多少公分？`);
         summaryAnswers.push(`${diameter}公分`);
-        answers.push(`簡答：${diameter}公分。過程：直徑 = 圓周長 ÷ 3.14 = ${e616FormatNumber(circumference)} ÷ 3.14 = ${diameter}。`);
+        answers.push(
+          `簡答：${diameter}公分。過程：直徑 = 圓周長 ÷ 3.14 = ${e616FormatNumber(circumference)} ÷ 3.14 = ${diameter}。`
+        );
       } else {
         const radius = pickFromList([3, 5, 6, 8, 10, 12, 15, 18, 20, 25]);
         const circumference = e616CircumferenceByRadius(radius);
         questions.push(`一個圓的圓周長大約是 ${e616FormatNumber(circumference)} 公分，它的半徑大約是多少公分？`);
         summaryAnswers.push(`${radius}公分`);
-        answers.push(`簡答：${radius}公分。過程：半徑 = 圓周長 ÷ 3.14 ÷ 2 = ${e616FormatNumber(circumference)} ÷ 3.14 ÷ 2 = ${radius}。`);
+        answers.push(
+          `簡答：${radius}公分。過程：半徑 = 圓周長 ÷ 3.14 ÷ 2 = ${e616FormatNumber(circumference)} ÷ 3.14 ÷ 2 = ${radius}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -4654,11 +4949,15 @@
       if (i % 2 === 0) {
         questions.push(`${name}半徑是 ${radius} 公分，轉了 ${rounds} 圈，大約前進了多少公分？`);
         summaryAnswers.push(`${e616FormatNumber(distance)}公分`);
-        answers.push(`簡答：${e616FormatNumber(distance)}公分。過程：一圈前進的距離就是圓周長，為 ${radius} × 2 × 3.14 = ${e616FormatNumber(circumference)}，所以前進 ${e616FormatNumber(circumference)} × ${rounds} = ${e616FormatNumber(distance)}。`);
+        answers.push(
+          `簡答：${e616FormatNumber(distance)}公分。過程：一圈前進的距離就是圓周長，為 ${radius} × 2 × 3.14 = ${e616FormatNumber(circumference)}，所以前進 ${e616FormatNumber(circumference)} × ${rounds} = ${e616FormatNumber(distance)}。`
+        );
       } else {
         questions.push(`${name}半徑是 ${radius} 公分，若前進了 ${e616FormatNumber(distance)} 公分，大約轉了幾圈？`);
         summaryAnswers.push(`${rounds}圈`);
-        answers.push(`簡答：${rounds}圈。過程：先求一圈的圓周長 ${e616FormatNumber(circumference)} 公分，再用總距離 ÷ 一圈距離 = ${e616FormatNumber(distance)} ÷ ${e616FormatNumber(circumference)} = ${rounds}。`);
+        answers.push(
+          `簡答：${rounds}圈。過程：先求一圈的圓周長 ${e616FormatNumber(circumference)} 公分，再用總距離 ÷ 一圈距離 = ${e616FormatNumber(distance)} ÷ ${e616FormatNumber(circumference)} = ${rounds}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -4680,14 +4979,22 @@
       }
       const place = pickFromList(placeNames);
       if (i % 2 === 0) {
-        questions.push(`沿著${place}繞一圈共走了 ${steps} 步，每一步長約 ${e616FormatNumber(stepLength)} 公分，這個${place}的半徑大約是多少公分？`);
+        questions.push(
+          `沿著${place}繞一圈共走了 ${steps} 步，每一步長約 ${e616FormatNumber(stepLength)} 公分，這個${place}的半徑大約是多少公分？`
+        );
         summaryAnswers.push(`${radius}公分`);
-        answers.push(`簡答：${radius}公分。過程：圓周長 = 步數 × 步長 = ${steps} × ${e616FormatNumber(stepLength)} = ${e616FormatNumber(circumference)}，半徑 = ${e616FormatNumber(circumference)} ÷ 3.14 ÷ 2 = ${radius}。`);
+        answers.push(
+          `簡答：${radius}公分。過程：圓周長 = 步數 × 步長 = ${steps} × ${e616FormatNumber(stepLength)} = ${e616FormatNumber(circumference)}，半徑 = ${e616FormatNumber(circumference)} ÷ 3.14 ÷ 2 = ${radius}。`
+        );
       } else {
         const diameter = radius * 2;
-        questions.push(`沿著${place}繞一圈共走了 ${steps} 步，每一步長約 ${e616FormatNumber(stepLength)} 公分，這個${place}的直徑大約是多少公分？`);
+        questions.push(
+          `沿著${place}繞一圈共走了 ${steps} 步，每一步長約 ${e616FormatNumber(stepLength)} 公分，這個${place}的直徑大約是多少公分？`
+        );
         summaryAnswers.push(`${diameter}公分`);
-        answers.push(`簡答：${diameter}公分。過程：圓周長 = ${steps} × ${e616FormatNumber(stepLength)} = ${e616FormatNumber(circumference)}，直徑 = ${e616FormatNumber(circumference)} ÷ 3.14 = ${diameter}。`);
+        answers.push(
+          `簡答：${diameter}公分。過程：圓周長 = ${steps} × ${e616FormatNumber(stepLength)} = ${e616FormatNumber(circumference)}，直徑 = ${e616FormatNumber(circumference)} ÷ 3.14 = ${diameter}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -4706,7 +5013,9 @@
         const perimeter = e616SectorPerimeter(radius, angle);
         questions.push(`半徑 ${radius} 公分、圓心角 ${angle}° 的扇形，周長大約是多少公分？`);
         summaryAnswers.push(`${e616FormatNumber(perimeter)}公分`);
-        answers.push(`簡答：${e616FormatNumber(perimeter)}公分。過程：弧長 = 圓周長 × ${angle}/360 = ${e616FormatNumber(arc)}，扇形周長 = 弧長 + 2 條半徑 = ${e616FormatNumber(arc)} + ${2 * radius} = ${e616FormatNumber(perimeter)}。`);
+        answers.push(
+          `簡答：${e616FormatNumber(perimeter)}公分。過程：弧長 = 圓周長 × ${angle}/360 = ${e616FormatNumber(arc)}，扇形周長 = 弧長 + 2 條半徑 = ${e616FormatNumber(arc)} + ${2 * radius} = ${e616FormatNumber(perimeter)}。`
+        );
         continue;
       }
       if (mode === 1) {
@@ -4720,9 +5029,13 @@
         const angle = (360 * partNum) / partDen;
         const arc = e616ArcLength(radius, angle);
         const perimeter = e616SectorPerimeter(radius, angle);
-        questions.push(`半徑 ${radius} 公分的圓，取其中 $\\frac{${partNum}}{${partDen}}$ 圓形成扇形，它的周長大約是多少公分？`);
+        questions.push(
+          `半徑 ${radius} 公分的圓，取其中 $\\frac{${partNum}}{${partDen}}$ 圓形成扇形，它的周長大約是多少公分？`
+        );
         summaryAnswers.push(`${e616FormatNumber(perimeter)}公分`);
-        answers.push(`簡答：${e616FormatNumber(perimeter)}公分。過程：這一段弧長是整個圓周長的 $\\frac{${partNum}}{${partDen}}$，所以弧長為 ${e616FormatNumber(arc)}，再加上兩條半徑 ${2 * radius}，周長是 ${e616FormatNumber(perimeter)}。`);
+        answers.push(
+          `簡答：${e616FormatNumber(perimeter)}公分。過程：這一段弧長是整個圓周長的 $\\frac{${partNum}}{${partDen}}$，所以弧長為 ${e616FormatNumber(arc)}，再加上兩條半徑 ${2 * radius}，周長是 ${e616FormatNumber(perimeter)}。`
+        );
         continue;
       }
       const diameter = pickFromList([10, 12, 16, 18, 20, 24, 30, 40, 50]);
@@ -4732,7 +5045,9 @@
       const perimeter = e616SectorPerimeter(radius, angle);
       questions.push(`直徑 ${diameter} 公分、圓心角 ${angle}° 的扇形，周長大約是多少公分？`);
       summaryAnswers.push(`${e616FormatNumber(perimeter)}公分`);
-      answers.push(`簡答：${e616FormatNumber(perimeter)}公分。過程：半徑是 ${radius} 公分，弧長 = 圓周長 × ${angle}/360 = ${e616FormatNumber(arc)}，再加兩條半徑 ${diameter}，所以周長是 ${e616FormatNumber(perimeter)}。`);
+      answers.push(
+        `簡答：${e616FormatNumber(perimeter)}公分。過程：半徑是 ${radius} 公分，弧長 = 圓周長 × ${angle}/360 = ${e616FormatNumber(arc)}，再加兩條半徑 ${diameter}，所以周長是 ${e616FormatNumber(perimeter)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4748,13 +5063,21 @@
       const arc = (wholeCircumference * angle) / 360;
       const perimeter = arc + 2 * radius;
       if (i % 2 === 0) {
-        questions.push(`一個圓的圓周長是 ${e616FormatNumber(wholeCircumference)} 公分，取圓心角 ${angle}° 的扇形，這個扇形的周長大約是多少公分？`);
+        questions.push(
+          `一個圓的圓周長是 ${e616FormatNumber(wholeCircumference)} 公分，取圓心角 ${angle}° 的扇形，這個扇形的周長大約是多少公分？`
+        );
         summaryAnswers.push(`${e616FormatNumber(perimeter)}公分`);
-        answers.push(`簡答：${e616FormatNumber(perimeter)}公分。過程：弧長是整個圓周長的 ${angle}/360，所以弧長 = ${e616FormatNumber(wholeCircumference)} × ${angle}/360 = ${e616FormatNumber(arc)}；半徑由整個圓周長反推得 ${radius}，扇形周長 = ${e616FormatNumber(arc)} + ${2 * radius} = ${e616FormatNumber(perimeter)}。`);
+        answers.push(
+          `簡答：${e616FormatNumber(perimeter)}公分。過程：弧長是整個圓周長的 ${angle}/360，所以弧長 = ${e616FormatNumber(wholeCircumference)} × ${angle}/360 = ${e616FormatNumber(arc)}；半徑由整個圓周長反推得 ${radius}，扇形周長 = ${e616FormatNumber(arc)} + ${2 * radius} = ${e616FormatNumber(perimeter)}。`
+        );
       } else {
-        questions.push(`一個圓的圓周長是 ${e616FormatNumber(wholeCircumference)} 公分，取圓心角 ${angle}° 的扇形，這個扇形的弧長大約是多少公分？`);
+        questions.push(
+          `一個圓的圓周長是 ${e616FormatNumber(wholeCircumference)} 公分，取圓心角 ${angle}° 的扇形，這個扇形的弧長大約是多少公分？`
+        );
         summaryAnswers.push(`${e616FormatNumber(arc)}公分`);
-        answers.push(`簡答：${e616FormatNumber(arc)}公分。過程：弧長 = 整個圓周長 × ${angle}/360 = ${e616FormatNumber(wholeCircumference)} × ${angle}/360 = ${e616FormatNumber(arc)}。`);
+        answers.push(
+          `簡答：${e616FormatNumber(arc)}公分。過程：弧長 = 整個圓周長 × ${angle}/360 = ${e616FormatNumber(wholeCircumference)} × ${angle}/360 = ${e616FormatNumber(arc)}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -4783,7 +5106,9 @@
       const diameterB = diameterA * multiplier;
       questions.push(`甲圓直徑 ${diameterA} 公分，乙圓直徑 ${diameterB} 公分，乙圓周長是甲圓周長的幾倍？`);
       summaryAnswers.push(`${multiplier}倍`);
-      answers.push(`簡答：${multiplier}倍。過程：乙圓直徑是甲圓的 ${multiplier} 倍，圓周長也跟著放大 ${multiplier} 倍。`);
+      answers.push(
+        `簡答：${multiplier}倍。過程：乙圓直徑是甲圓的 ${multiplier} 倍，圓周長也跟著放大 ${multiplier} 倍。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4805,13 +5130,21 @@
       const gap = pickFromList([2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 18, 20, 25, 30, 45, 50, 54]);
       const circumference = countObj * gap;
       if (i % 2 === 0) {
-        questions.push(`一個${place}的周長是 ${circumference} 公尺，沿周圍每隔相同距離放 1 ${unitWord}${objectName}，共放了 ${countObj} ${unitWord}，相鄰兩${unitWord}${objectName}距離幾公尺？`);
+        questions.push(
+          `一個${place}的周長是 ${circumference} 公尺，沿周圍每隔相同距離放 1 ${unitWord}${objectName}，共放了 ${countObj} ${unitWord}，相鄰兩${unitWord}${objectName}距離幾公尺？`
+        );
         summaryAnswers.push(`${gap}公尺`);
-        answers.push(`簡答：${gap}公尺。過程：圓周上首尾相接，間隔數 = 物件數，所以每段距離 = 周長 ÷ ${countObj} = ${circumference} ÷ ${countObj} = ${gap}。`);
+        answers.push(
+          `簡答：${gap}公尺。過程：圓周上首尾相接，間隔數 = 物件數，所以每段距離 = 周長 ÷ ${countObj} = ${circumference} ÷ ${countObj} = ${gap}。`
+        );
       } else {
-        questions.push(`在一個${place}周圍，每隔 ${gap} 公尺放 1 ${unitWord}${objectName}，共放了 ${countObj} ${unitWord}，這個${place}的周長是多少公尺？`);
+        questions.push(
+          `在一個${place}周圍，每隔 ${gap} 公尺放 1 ${unitWord}${objectName}，共放了 ${countObj} ${unitWord}，這個${place}的周長是多少公尺？`
+        );
         summaryAnswers.push(`${circumference}公尺`);
-        answers.push(`簡答：${circumference}公尺。過程：圓周上首尾相接，間隔數 = 物件數，所以周長 = ${gap} × ${countObj} = ${circumference}。`);
+        answers.push(
+          `簡答：${circumference}公尺。過程：圓周上首尾相接，間隔數 = 物件數，所以周長 = ${gap} × ${countObj} = ${circumference}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -4877,14 +5210,18 @@
         const area = e617CircleAreaByRadius(radius);
         questions.push(`半徑 ${radius} 公分的圓，面積大約是多少平方公分？`);
         summaryAnswers.push(`${e617FormatNumber(area)}平方公分`);
-        answers.push(`簡答：${e617FormatNumber(area)}平方公分。過程：圓面積 = 半徑 × 半徑 × 3.14 = ${radius} × ${radius} × 3.14 = ${e617FormatNumber(area)}。`);
+        answers.push(
+          `簡答：${e617FormatNumber(area)}平方公分。過程：圓面積 = 半徑 × 半徑 × 3.14 = ${radius} × ${radius} × 3.14 = ${e617FormatNumber(area)}。`
+        );
       } else {
         const diameter = pickFromList([6, 8, 10, 12, 14, 16, 20, 24, 26, 30, 40]);
         const radius = diameter / 2;
         const area = e617CircleAreaByDiameter(diameter);
         questions.push(`直徑 ${diameter} 公分的圓，面積大約是多少平方公分？`);
         summaryAnswers.push(`${e617FormatNumber(area)}平方公分`);
-        answers.push(`簡答：${e617FormatNumber(area)}平方公分。過程：半徑 = ${diameter} ÷ 2 = ${radius}，圓面積 = ${radius} × ${radius} × 3.14 = ${e617FormatNumber(area)}。`);
+        answers.push(
+          `簡答：${e617FormatNumber(area)}平方公分。過程：半徑 = ${diameter} ÷ 2 = ${radius}，圓面積 = ${radius} × ${radius} × 3.14 = ${e617FormatNumber(area)}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -4900,7 +5237,9 @@
       const area = e617CircleAreaByRadius(radius);
       questions.push(`一個圓的圓周長大約是 ${e616FormatNumber(circumference)} 公分，它的面積大約是多少平方公分？`);
       summaryAnswers.push(`${e617FormatNumber(area)}平方公分`);
-      answers.push(`簡答：${e617FormatNumber(area)}平方公分。過程：先求半徑 = 圓周長 ÷ 3.14 ÷ 2 = ${e616FormatNumber(circumference)} ÷ 3.14 ÷ 2 = ${radius}，再算面積 ${radius} × ${radius} × 3.14 = ${e617FormatNumber(area)}。`);
+      answers.push(
+        `簡答：${e617FormatNumber(area)}平方公分。過程：先求半徑 = 圓周長 ÷ 3.14 ÷ 2 = ${e616FormatNumber(circumference)} ÷ 3.14 ÷ 2 = ${radius}，再算面積 ${radius} × ${radius} × 3.14 = ${e617FormatNumber(area)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4914,13 +5253,17 @@
       if (i % 2 === 0) {
         questions.push(`甲圓半徑是乙圓半徑的 ${multiplier} 倍，甲圓面積是乙圓面積的幾倍？`);
         summaryAnswers.push(`${multiplier * multiplier}倍`);
-        answers.push(`簡答：${multiplier * multiplier}倍。過程：圓面積和半徑平方成正比，所以半徑放大 ${multiplier} 倍，面積放大 ${multiplier}^2 = ${multiplier * multiplier} 倍。`);
+        answers.push(
+          `簡答：${multiplier * multiplier}倍。過程：圓面積和半徑平方成正比，所以半徑放大 ${multiplier} 倍，面積放大 ${multiplier}^2 = ${multiplier * multiplier} 倍。`
+        );
       } else {
         const radiusA = pickFromList([3, 4, 5, 6, 8]);
         const radiusB = radiusA * multiplier;
         questions.push(`甲圓半徑 ${radiusA} 公分，乙圓半徑 ${radiusB} 公分，乙圓面積是甲圓面積的幾倍？`);
         summaryAnswers.push(`${multiplier * multiplier}倍`);
-        answers.push(`簡答：${multiplier * multiplier}倍。過程：半徑比是 ${radiusB}:${radiusA} = ${multiplier}:1，所以面積比是 ${multiplier}^2:1 = ${multiplier * multiplier}:1。`);
+        answers.push(
+          `簡答：${multiplier * multiplier}倍。過程：半徑比是 ${radiusB}:${radiusA} = ${multiplier}:1，所以面積比是 ${multiplier}^2:1 = ${multiplier * multiplier}:1。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -4937,7 +5280,9 @@
       const area = e617SectorArea(radius, angle);
       questions.push(`半徑 ${radius} 公分、圓心角 ${angle}° 的扇形，面積大約是多少平方公分？`);
       summaryAnswers.push(`${e617FormatNumber(area)}平方公分`);
-      answers.push(`簡答：${e617FormatNumber(area)}平方公分。過程：整個圓面積是 ${radius} × ${radius} × 3.14 = ${e617FormatNumber(wholeArea)}，扇形面積 = ${e617FormatNumber(wholeArea)} × ${angle}/360 = ${e617FormatNumber(area)}。`);
+      answers.push(
+        `簡答：${e617FormatNumber(area)}平方公分。過程：整個圓面積是 ${radius} × ${radius} × 3.14 = ${e617FormatNumber(wholeArea)}，扇形面積 = ${e617FormatNumber(wholeArea)} × ${angle}/360 = ${e617FormatNumber(area)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4959,7 +5304,9 @@
       const area = (wholeArea * num) / den;
       questions.push(`半徑 ${radius} 公分的圓，取其中 $\\frac{${num}}{${den}}$ 圓形成扇形，面積大約是多少平方公分？`);
       summaryAnswers.push(`${e617FormatNumber(area)}平方公分`);
-      answers.push(`簡答：${e617FormatNumber(area)}平方公分。過程：整個圓面積是 ${e617FormatNumber(wholeArea)}，這個扇形占整圓的 $\\frac{${num}}{${den}}$，所以面積 = ${e617FormatNumber(wholeArea)} × $\\frac{${num}}{${den}}$ = ${e617FormatNumber(area)}。`);
+      answers.push(
+        `簡答：${e617FormatNumber(area)}平方公分。過程：整個圓面積是 ${e617FormatNumber(wholeArea)}，這個扇形占整圓的 $\\frac{${num}}{${den}}$，所以面積 = ${e617FormatNumber(wholeArea)} × $\\frac{${num}}{${den}}$ = ${e617FormatNumber(area)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4978,7 +5325,9 @@
         const remain = squareArea - circleArea;
         questions.push(`邊長 ${side} 公分的正方形中畫一個最大圓，剩餘部分面積大約是多少平方公分？`);
         summaryAnswers.push(`${e617FormatNumber(remain)}平方公分`);
-        answers.push(`簡答：${e617FormatNumber(remain)}平方公分。過程：正方形面積是 ${side} × ${side} = ${squareArea}，最大圓半徑是 ${radius}，圓面積是 ${e617FormatNumber(circleArea)}，剩餘面積 = ${squareArea} - ${e617FormatNumber(circleArea)} = ${e617FormatNumber(remain)}。`);
+        answers.push(
+          `簡答：${e617FormatNumber(remain)}平方公分。過程：正方形面積是 ${side} × ${side} = ${squareArea}，最大圓半徑是 ${radius}，圓面積是 ${e617FormatNumber(circleArea)}，剩餘面積 = ${squareArea} - ${e617FormatNumber(circleArea)} = ${e617FormatNumber(remain)}。`
+        );
         continue;
       }
       if (mode === 1) {
@@ -4987,9 +5336,13 @@
         const squareArea = side * side;
         const quarterArea = e617CircleAreaByRadius(radius) / 4;
         const remain = squareArea - quarterArea;
-        questions.push(`邊長 ${side} 公分的正方形中，扣掉一個半徑 ${radius} 公分的 $\\frac{1}{4}$ 圓，剩餘面積大約是多少平方公分？`);
+        questions.push(
+          `邊長 ${side} 公分的正方形中，扣掉一個半徑 ${radius} 公分的 $\\frac{1}{4}$ 圓，剩餘面積大約是多少平方公分？`
+        );
         summaryAnswers.push(`${e617FormatNumber(remain)}平方公分`);
-        answers.push(`簡答：${e617FormatNumber(remain)}平方公分。過程：正方形面積是 ${squareArea}，$\\frac{1}{4}$ 圓面積是 ${e617FormatNumber(quarterArea)}，所以剩餘面積是 ${squareArea} - ${e617FormatNumber(quarterArea)} = ${e617FormatNumber(remain)}。`);
+        answers.push(
+          `簡答：${e617FormatNumber(remain)}平方公分。過程：正方形面積是 ${squareArea}，$\\frac{1}{4}$ 圓面積是 ${e617FormatNumber(quarterArea)}，所以剩餘面積是 ${squareArea} - ${e617FormatNumber(quarterArea)} = ${e617FormatNumber(remain)}。`
+        );
         continue;
       }
       if (mode === 2) {
@@ -4998,7 +5351,9 @@
         const area = e617CircleAreaByRadius(outer) - e617CircleAreaByRadius(inner);
         questions.push(`外圓半徑 ${outer} 公分、內圓半徑 ${inner} 公分的環形，面積大約是多少平方公分？`);
         summaryAnswers.push(`${e617FormatNumber(area)}平方公分`);
-        answers.push(`簡答：${e617FormatNumber(area)}平方公分。過程：環形面積 = 大圓面積 - 小圓面積 = ${e617FormatNumber(e617CircleAreaByRadius(outer))} - ${e617FormatNumber(e617CircleAreaByRadius(inner))} = ${e617FormatNumber(area)}。`);
+        answers.push(
+          `簡答：${e617FormatNumber(area)}平方公分。過程：環形面積 = 大圓面積 - 小圓面積 = ${e617FormatNumber(e617CircleAreaByRadius(outer))} - ${e617FormatNumber(e617CircleAreaByRadius(inner))} = ${e617FormatNumber(area)}。`
+        );
         continue;
       }
       const rectL = pickFromList([18, 20, 24, 28, 30, 36]);
@@ -5013,7 +5368,9 @@
       const remain = rectArea - circleArea;
       questions.push(`長 ${rectL} 公分、寬 ${rectW} 公分的長方形中畫一個最大圓，剩餘面積大約是多少平方公分？`);
       summaryAnswers.push(`${e617FormatNumber(remain)}平方公分`);
-      answers.push(`簡答：${e617FormatNumber(remain)}平方公分。過程：長方形面積是 ${rectArea}，最大圓的直徑等於短邊 ${rectW}，半徑是 ${radius}，圓面積是 ${e617FormatNumber(circleArea)}，剩餘面積是 ${rectArea} - ${e617FormatNumber(circleArea)} = ${e617FormatNumber(remain)}。`);
+      answers.push(
+        `簡答：${e617FormatNumber(remain)}平方公分。過程：長方形面積是 ${rectArea}，最大圓的直徑等於短邊 ${rectW}，半徑是 ${radius}，圓面積是 ${e617FormatNumber(circleArea)}，剩餘面積是 ${rectArea} - ${e617FormatNumber(circleArea)} = ${e617FormatNumber(remain)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5031,7 +5388,9 @@
       const area = e617CircleAreaByRadius(outerRadius) - e617CircleAreaByRadius(innerRadius);
       questions.push(`半徑 ${innerRadius} 公尺的${scene}，外圍再加寬 ${width} 公尺，新增部分面積大約是多少平方公尺？`);
       summaryAnswers.push(`${e617FormatNumber(area)}平方公尺`);
-      answers.push(`簡答：${e617FormatNumber(area)}平方公尺。過程：新增部分是環形面積 = 外圓面積 - 內圓面積 = ${e617FormatNumber(e617CircleAreaByRadius(outerRadius))} - ${e617FormatNumber(e617CircleAreaByRadius(innerRadius))} = ${e617FormatNumber(area)}。`);
+      answers.push(
+        `簡答：${e617FormatNumber(area)}平方公尺。過程：新增部分是環形面積 = 外圓面積 - 內圓面積 = ${e617FormatNumber(e617CircleAreaByRadius(outerRadius))} - ${e617FormatNumber(e617CircleAreaByRadius(innerRadius))} = ${e617FormatNumber(area)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5047,9 +5406,13 @@
         const width = length / 2;
         const rope = width;
         const area = (e617CircleAreaByRadius(rope) * 3) / 4;
-        questions.push(`長 ${length} 公尺、寬 ${width} 公尺的倉庫旁拴羊，繩長 ${rope} 公尺，活動面積大約是多少平方公尺？（視為 $\\frac{3}{4}$ 圓）`);
+        questions.push(
+          `長 ${length} 公尺、寬 ${width} 公尺的倉庫旁拴羊，繩長 ${rope} 公尺，活動面積大約是多少平方公尺？（視為 $\\frac{3}{4}$ 圓）`
+        );
         summaryAnswers.push(`${e617FormatNumber(area)}平方公尺`);
-        answers.push(`簡答：${e617FormatNumber(area)}平方公尺。過程：活動範圍視為半徑 ${rope} 的 $\\frac{3}{4}$ 圓，整圓面積是 ${e617FormatNumber(e617CircleAreaByRadius(rope))}，所以活動面積是 ${e617FormatNumber(area)}。`);
+        answers.push(
+          `簡答：${e617FormatNumber(area)}平方公尺。過程：活動範圍視為半徑 ${rope} 的 $\\frac{3}{4}$ 圓，整圓面積是 ${e617FormatNumber(e617CircleAreaByRadius(rope))}，所以活動面積是 ${e617FormatNumber(area)}。`
+        );
         continue;
       }
       if (mode === 1) {
@@ -5059,17 +5422,25 @@
         const baseArea = (e617CircleAreaByRadius(width) * 3) / 4;
         const extraArea = e617CircleAreaByRadius(quarterRadius) / 4;
         const area = baseArea + extraArea;
-        questions.push(`一頭牛拴在長方形牛舍角落，短邊 ${width} 公尺，繩長 ${rope} 公尺，活動面積大約是多少平方公尺？（視為 $\\frac{3}{4}$ 圓加 $\\frac{1}{4}$ 圓）`);
+        questions.push(
+          `一頭牛拴在長方形牛舍角落，短邊 ${width} 公尺，繩長 ${rope} 公尺，活動面積大約是多少平方公尺？（視為 $\\frac{3}{4}$ 圓加 $\\frac{1}{4}$ 圓）`
+        );
         summaryAnswers.push(`${e617FormatNumber(area)}平方公尺`);
-        answers.push(`簡答：${e617FormatNumber(area)}平方公尺。過程：先有半徑 ${width} 的 $\\frac{3}{4}$ 圓，再多出半徑 ${quarterRadius} 的 $\\frac{1}{4}$ 圓，所以總面積 = ${e617FormatNumber(baseArea)} + ${e617FormatNumber(extraArea)} = ${e617FormatNumber(area)}。`);
+        answers.push(
+          `簡答：${e617FormatNumber(area)}平方公尺。過程：先有半徑 ${width} 的 $\\frac{3}{4}$ 圓，再多出半徑 ${quarterRadius} 的 $\\frac{1}{4}$ 圓，所以總面積 = ${e617FormatNumber(baseArea)} + ${e617FormatNumber(extraArea)} = ${e617FormatNumber(area)}。`
+        );
         continue;
       }
       const wallLength = pickFromList([20, 24, 25, 30, 36]);
       const rope = pickFromList([10, 12, 15, 18]);
       const area = e617CircleAreaByRadius(rope) / 2;
-      questions.push(`把牛拴在長 ${wallLength} 公尺的牆壁中點，繩長 ${rope} 公尺，求活動面積大約是多少平方公尺。（提示：視為半圓）`);
+      questions.push(
+        `把牛拴在長 ${wallLength} 公尺的牆壁中點，繩長 ${rope} 公尺，求活動面積大約是多少平方公尺。（提示：視為半圓）`
+      );
       summaryAnswers.push(`${e617FormatNumber(area)}平方公尺`);
-      answers.push(`簡答：${e617FormatNumber(area)}平方公尺。過程：牆壁擋住一半，活動範圍視為半徑 ${rope} 的半圓，面積是 ${e617FormatNumber(e617CircleAreaByRadius(rope))} ÷ 2 = ${e617FormatNumber(area)}。`);
+      answers.push(
+        `簡答：${e617FormatNumber(area)}平方公尺。過程：牆壁擋住一半，活動範圍視為半徑 ${rope} 的半圓，面積是 ${e617FormatNumber(e617CircleAreaByRadius(rope))} ÷ 2 = ${e617FormatNumber(area)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5089,7 +5460,10 @@
   }
 
   function buildE617FoundationThreeSet(count) {
-    return buildE617MixedSet([buildE617CircleAreaDirectSet, buildE617CircleAreaFromCircumferenceSet, buildE617AreaMultiplierSet], count);
+    return buildE617MixedSet(
+      [buildE617CircleAreaDirectSet, buildE617CircleAreaFromCircumferenceSet, buildE617AreaMultiplierSet],
+      count
+    );
   }
 
   function buildE617SectorTwoSet(count) {
@@ -5137,11 +5511,7 @@
   }
 
   function e618ConvertSpeed(value, fromLength, fromTime, toLength, toTime) {
-    return e618ConvertFromMetersPerSecond(
-      e618SpeedToMetersPerSecond(value, fromLength, fromTime),
-      toLength,
-      toTime
-    );
+    return e618ConvertFromMetersPerSecond(e618SpeedToMetersPerSecond(value, fromLength, fromTime), toLength, toTime);
   }
 
   function e618PickDifferentUnitPair() {
@@ -5165,9 +5535,29 @@
     const summaryAnswers = [];
     const answers = [];
     const modes = [
-      { distanceUnit: '公里', timeUnit: '小時', lengthUnit: '公里', speeds: [40, 48, 50, 60, 72, 80, 90, 100, 120], times: [1.25, 1.5, 2, 2.5, 3, 4] },
-      { distanceUnit: '公尺', timeUnit: '分', lengthUnit: '公尺', speedUnit: '分', speeds: [45, 60, 72, 90, 120, 150, 180, 210, 240], times: [5, 6, 8, 10, 12, 15, 20] },
-      { distanceUnit: '公尺', timeUnit: '秒', lengthUnit: '公尺', speedUnit: '秒', speeds: [4, 5, 6, 8, 9, 10, 12, 15], times: [5, 8, 10, 12, 16, 20] },
+      {
+        distanceUnit: '公里',
+        timeUnit: '小時',
+        lengthUnit: '公里',
+        speeds: [40, 48, 50, 60, 72, 80, 90, 100, 120],
+        times: [1.25, 1.5, 2, 2.5, 3, 4],
+      },
+      {
+        distanceUnit: '公尺',
+        timeUnit: '分',
+        lengthUnit: '公尺',
+        speedUnit: '分',
+        speeds: [45, 60, 72, 90, 120, 150, 180, 210, 240],
+        times: [5, 6, 8, 10, 12, 15, 20],
+      },
+      {
+        distanceUnit: '公尺',
+        timeUnit: '秒',
+        lengthUnit: '公尺',
+        speedUnit: '秒',
+        speeds: [4, 5, 6, 8, 9, 10, 12, 15],
+        times: [5, 8, 10, 12, 16, 20],
+      },
     ];
     const scenes = [
       ['開車', '行駛'],
@@ -5182,9 +5572,13 @@
       const time = pickFromList(mode.times);
       const distance = speed * time;
       const [subject, verb] = pickFromList(scenes);
-      questions.push(`求速率：某人${subject} ${e618FormatNumber(distance)} ${mode.distanceUnit}，共花 ${e618FormatNumber(time)} ${mode.timeUnit}，平均每1${mode.timeUnit}${verb}多少${mode.lengthUnit}？`);
+      questions.push(
+        `求速率：某人${subject} ${e618FormatNumber(distance)} ${mode.distanceUnit}，共花 ${e618FormatNumber(time)} ${mode.timeUnit}，平均每1${mode.timeUnit}${verb}多少${mode.lengthUnit}？`
+      );
       summaryAnswers.push(`${e618FormatNumber(speed)}${e618UnitText(mode.lengthUnit, mode.timeUnit)}`);
-      answers.push(`簡答：${e618FormatNumber(speed)}${e618UnitText(mode.lengthUnit, mode.timeUnit)}。過程：速率 = 距離 ÷ 時間 = ${e618FormatNumber(distance)} ÷ ${e618FormatNumber(time)} = ${e618FormatNumber(speed)}，所以速率是 ${e618FormatNumber(speed)}${e618UnitText(mode.lengthUnit, mode.timeUnit)}。`);
+      answers.push(
+        `簡答：${e618FormatNumber(speed)}${e618UnitText(mode.lengthUnit, mode.timeUnit)}。過程：速率 = 距離 ÷ 時間 = ${e618FormatNumber(distance)} ÷ ${e618FormatNumber(time)} = ${e618FormatNumber(speed)}，所以速率是 ${e618FormatNumber(speed)}${e618UnitText(mode.lengthUnit, mode.timeUnit)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5194,8 +5588,18 @@
     const summaryAnswers = [];
     const answers = [];
     const modes = [
-      { lengthUnit: '公里', timeUnit: '小時', speeds: [12, 15, 18, 24, 30, 36, 40, 48, 60], times: [1.5, 2, 2.5, 3, 3.5, 4, 4.5] },
-      { lengthUnit: '公尺', timeUnit: '分', speeds: [36.4, 45, 60, 72, 73, 90, 120, 150], times: [4, 5, 6.5, 8, 10, 12, 15] },
+      {
+        lengthUnit: '公里',
+        timeUnit: '小時',
+        speeds: [12, 15, 18, 24, 30, 36, 40, 48, 60],
+        times: [1.5, 2, 2.5, 3, 3.5, 4, 4.5],
+      },
+      {
+        lengthUnit: '公尺',
+        timeUnit: '分',
+        speeds: [36.4, 45, 60, 72, 73, 90, 120, 150],
+        times: [4, 5, 6.5, 8, 10, 12, 15],
+      },
       { lengthUnit: '公尺', timeUnit: '秒', speeds: [0.8, 1.2, 1.3, 2, 4, 6, 8], times: [10, 12, 13, 15, 20, 25, 30] },
     ];
     for (let i = 0; i < count; i += 1) {
@@ -5203,9 +5607,13 @@
       const speed = pickFromList(mode.speeds);
       const time = pickFromList(mode.times);
       const distance = speed * time;
-      questions.push(`求距離：速率是 ${e618FormatNumber(speed)}${e618UnitText(mode.lengthUnit, mode.timeUnit)}，持續 ${e618FormatNumber(time)} ${mode.timeUnit}，一共走了多少${mode.lengthUnit}？`);
+      questions.push(
+        `求距離：速率是 ${e618FormatNumber(speed)}${e618UnitText(mode.lengthUnit, mode.timeUnit)}，持續 ${e618FormatNumber(time)} ${mode.timeUnit}，一共走了多少${mode.lengthUnit}？`
+      );
       summaryAnswers.push(`${e618FormatNumber(distance)}${mode.lengthUnit}`);
-      answers.push(`簡答：${e618FormatNumber(distance)}${mode.lengthUnit}。過程：距離 = 速率 × 時間 = ${e618FormatNumber(speed)} × ${e618FormatNumber(time)} = ${e618FormatNumber(distance)}，所以距離是 ${e618FormatNumber(distance)}${mode.lengthUnit}。`);
+      answers.push(
+        `簡答：${e618FormatNumber(distance)}${mode.lengthUnit}。過程：距離 = 速率 × 時間 = ${e618FormatNumber(speed)} × ${e618FormatNumber(time)} = ${e618FormatNumber(distance)}，所以距離是 ${e618FormatNumber(distance)}${mode.lengthUnit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5215,7 +5623,12 @@
     const summaryAnswers = [];
     const answers = [];
     const modes = [
-      { lengthUnit: '公里', timeUnit: '小時', speeds: [12, 18, 24, 31.5, 40, 48, 60, 72, 80, 90, 128], times: [1.2, 1.5, 2, 2.5, 3, 3.5, 4.5] },
+      {
+        lengthUnit: '公里',
+        timeUnit: '小時',
+        speeds: [12, 18, 24, 31.5, 40, 48, 60, 72, 80, 90, 128],
+        times: [1.2, 1.5, 2, 2.5, 3, 3.5, 4.5],
+      },
       { lengthUnit: '公尺', timeUnit: '分', speeds: [18, 24, 30, 36.4, 45, 60, 72], times: [4, 5, 6, 8, 10, 12, 15] },
       { lengthUnit: '公尺', timeUnit: '秒', speeds: [4, 5, 6, 8, 10, 12, 15, 40], times: [5, 8, 10, 12, 15, 20, 25] },
     ];
@@ -5224,9 +5637,13 @@
       const speed = pickFromList(mode.speeds);
       const time = pickFromList(mode.times);
       const distance = speed * time;
-      questions.push(`求時間：距離是 ${e618FormatNumber(distance)}${mode.lengthUnit}，速率是 ${e618FormatNumber(speed)}${e618UnitText(mode.lengthUnit, mode.timeUnit)}，需要多少${mode.timeUnit}？`);
+      questions.push(
+        `求時間：距離是 ${e618FormatNumber(distance)}${mode.lengthUnit}，速率是 ${e618FormatNumber(speed)}${e618UnitText(mode.lengthUnit, mode.timeUnit)}，需要多少${mode.timeUnit}？`
+      );
       summaryAnswers.push(`${e618FormatNumber(time)}${mode.timeUnit}`);
-      answers.push(`簡答：${e618FormatNumber(time)}${mode.timeUnit}。過程：時間 = 距離 ÷ 速率 = ${e618FormatNumber(distance)} ÷ ${e618FormatNumber(speed)} = ${e618FormatNumber(time)}，所以需要 ${e618FormatNumber(time)}${mode.timeUnit}。`);
+      answers.push(
+        `簡答：${e618FormatNumber(time)}${mode.timeUnit}。過程：時間 = 距離 ÷ 速率 = ${e618FormatNumber(distance)} ÷ ${e618FormatNumber(speed)} = ${e618FormatNumber(time)}，所以需要 ${e618FormatNumber(time)}${mode.timeUnit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5244,9 +5661,13 @@
       const mode = modes[i % modes.length];
       const value = pickFromList(mode.value);
       const converted = e618ConvertSpeed(value, mode.fromLength, mode.timeUnit, mode.toLength, mode.timeUnit);
-      questions.push(`速率換算：${e618FormatNumber(value)}${e618UnitText(mode.fromLength, mode.timeUnit)}，換成 ${e618UnitText(mode.toLength, mode.timeUnit)} 是多少？`);
+      questions.push(
+        `速率換算：${e618FormatNumber(value)}${e618UnitText(mode.fromLength, mode.timeUnit)}，換成 ${e618UnitText(mode.toLength, mode.timeUnit)} 是多少？`
+      );
       summaryAnswers.push(`${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.timeUnit)}`);
-      answers.push(`簡答：${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.timeUnit)}。過程：時間單位不變，只換長度單位。${mode.fromLength === '公里' ? '1公里 = 1000公尺' : '1公尺 = 100公分'}，所以 ${e618FormatNumber(value)}${e618UnitText(mode.fromLength, mode.timeUnit)} = ${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.timeUnit)}。`);
+      answers.push(
+        `簡答：${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.timeUnit)}。過程：時間單位不變，只換長度單位。${mode.fromLength === '公里' ? '1公里 = 1000公尺' : '1公尺 = 100公分'}，所以 ${e618FormatNumber(value)}${e618UnitText(mode.fromLength, mode.timeUnit)} = ${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.timeUnit)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5256,17 +5677,39 @@
     const summaryAnswers = [];
     const answers = [];
     const modes = [
-      { value: [60, 90, 120, 180, 240], lengthUnit: '公里', fromTime: '小時', toTime: '分', explain: '1小時 = 60分，所以要除以60' },
-      { value: [54, 60, 72, 90, 120, 150, 600], lengthUnit: '公尺', fromTime: '分', toTime: '秒', explain: '1分 = 60秒，所以要除以60' },
-      { value: [36, 72, 108, 144, 180], lengthUnit: '公里', fromTime: '小時', toTime: '秒', explain: '1小時 = 3600秒，所以要除以3600' },
+      {
+        value: [60, 90, 120, 180, 240],
+        lengthUnit: '公里',
+        fromTime: '小時',
+        toTime: '分',
+        explain: '1小時 = 60分，所以要除以60',
+      },
+      {
+        value: [54, 60, 72, 90, 120, 150, 600],
+        lengthUnit: '公尺',
+        fromTime: '分',
+        toTime: '秒',
+        explain: '1分 = 60秒，所以要除以60',
+      },
+      {
+        value: [36, 72, 108, 144, 180],
+        lengthUnit: '公里',
+        fromTime: '小時',
+        toTime: '秒',
+        explain: '1小時 = 3600秒，所以要除以3600',
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const mode = modes[i % modes.length];
       const value = pickFromList(mode.value);
       const converted = e618ConvertSpeed(value, mode.lengthUnit, mode.fromTime, mode.lengthUnit, mode.toTime);
-      questions.push(`速率換算：${e618FormatNumber(value)}${e618UnitText(mode.lengthUnit, mode.fromTime)}，換成 ${e618UnitText(mode.lengthUnit, mode.toTime)} 是多少？`);
+      questions.push(
+        `速率換算：${e618FormatNumber(value)}${e618UnitText(mode.lengthUnit, mode.fromTime)}，換成 ${e618UnitText(mode.lengthUnit, mode.toTime)} 是多少？`
+      );
       summaryAnswers.push(`${e618FormatNumber(converted)}${e618UnitText(mode.lengthUnit, mode.toTime)}`);
-      answers.push(`簡答：${e618FormatNumber(converted)}${e618UnitText(mode.lengthUnit, mode.toTime)}。過程：長度單位不變，只換時間單位。${mode.explain}，所以 ${e618FormatNumber(value)}${e618UnitText(mode.lengthUnit, mode.fromTime)} = ${e618FormatNumber(converted)}${e618UnitText(mode.lengthUnit, mode.toTime)}。`);
+      answers.push(
+        `簡答：${e618FormatNumber(converted)}${e618UnitText(mode.lengthUnit, mode.toTime)}。過程：長度單位不變，只換時間單位。${mode.explain}，所以 ${e618FormatNumber(value)}${e618UnitText(mode.lengthUnit, mode.fromTime)} = ${e618FormatNumber(converted)}${e618UnitText(mode.lengthUnit, mode.toTime)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5277,16 +5720,26 @@
     const answers = [];
     const modes = [
       { value: [54, 72, 90, 120, 288], fromLength: '公里', fromTime: '小時', toLength: '公尺', toTime: '分' },
-      { value: [36, 54, 72, 90, 108, 180, 468, 918], fromLength: '公里', fromTime: '小時', toLength: '公尺', toTime: '秒' },
+      {
+        value: [36, 54, 72, 90, 108, 180, 468, 918],
+        fromLength: '公里',
+        fromTime: '小時',
+        toLength: '公尺',
+        toTime: '秒',
+      },
       { value: [10, 12, 15, 20, 25], fromLength: '公尺', fromTime: '秒', toLength: '公里', toTime: '小時' },
     ];
     for (let i = 0; i < count; i += 1) {
       const mode = modes[i % modes.length];
       const value = pickFromList(mode.value);
       const converted = e618ConvertSpeed(value, mode.fromLength, mode.fromTime, mode.toLength, mode.toTime);
-      questions.push(`連續換算：${e618FormatNumber(value)}${e618UnitText(mode.fromLength, mode.fromTime)}，換成 ${e618UnitText(mode.toLength, mode.toTime)} 是多少？`);
+      questions.push(
+        `連續換算：${e618FormatNumber(value)}${e618UnitText(mode.fromLength, mode.fromTime)}，換成 ${e618UnitText(mode.toLength, mode.toTime)} 是多少？`
+      );
       summaryAnswers.push(`${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.toTime)}`);
-      answers.push(`簡答：${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.toTime)}。過程：先把 ${mode.fromLength} 換成 ${mode.toLength}，再把 ${mode.fromTime} 換成 ${mode.toTime}，等同乘上對應換算倍數，所以得到 ${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.toTime)}。`);
+      answers.push(
+        `簡答：${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.toTime)}。過程：先把 ${mode.fromLength} 換成 ${mode.toLength}，再把 ${mode.fromTime} 換成 ${mode.toTime}，等同乘上對應換算倍數，所以得到 ${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.toTime)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5295,8 +5748,17 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const labelsTwo = [['甲車', '乙車'], ['小明', '小華'], ['羚羊', '獵豹'], ['甲', '乙']];
-    const labelsThree = [['甲車', '乙車', '丙車'], ['小華', '小安', '小芸'], ['海豚', '旗魚', '鯨魚']];
+    const labelsTwo = [
+      ['甲車', '乙車'],
+      ['小明', '小華'],
+      ['羚羊', '獵豹'],
+      ['甲', '乙'],
+    ];
+    const labelsThree = [
+      ['甲車', '乙車', '丙車'],
+      ['小華', '小安', '小芸'],
+      ['海豚', '旗魚', '鯨魚'],
+    ];
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
         const mpsA = pickFromList([4, 5, 6, 8, 10, 12, 15, 21]);
@@ -5309,9 +5771,13 @@
         const rightValue = e618ConvertFromMetersPerSecond(mpsB, pair.right[0], pair.right[1]);
         const [leftLabel, rightLabel] = pickFromList(labelsTwo);
         const faster = mpsA > mpsB ? leftLabel : rightLabel;
-        questions.push(`哪個較快：${leftLabel}速率 ${e618FormatNumber(leftValue)}${e618UnitText(pair.left[0], pair.left[1])}，${rightLabel}速率 ${e618FormatNumber(rightValue)}${e618UnitText(pair.right[0], pair.right[1])}？`);
+        questions.push(
+          `哪個較快：${leftLabel}速率 ${e618FormatNumber(leftValue)}${e618UnitText(pair.left[0], pair.left[1])}，${rightLabel}速率 ${e618FormatNumber(rightValue)}${e618UnitText(pair.right[0], pair.right[1])}？`
+        );
         summaryAnswers.push(`${faster}較快`);
-        answers.push(`簡答：${faster}較快。過程：先統一成公尺/秒，${leftLabel}是 ${e618FormatNumber(mpsA)}公尺/秒，${rightLabel}是 ${e618FormatNumber(mpsB)}公尺/秒，比較後可知 ${faster}較快。`);
+        answers.push(
+          `簡答：${faster}較快。過程：先統一成公尺/秒，${leftLabel}是 ${e618FormatNumber(mpsA)}公尺/秒，${rightLabel}是 ${e618FormatNumber(mpsB)}公尺/秒，比較後可知 ${faster}較快。`
+        );
       } else {
         const base = [4, 5, 6, 8, 10, 12, 15];
         const mpsList = [];
@@ -5336,10 +5802,18 @@
             unitText: e618UnitText(unit[0], unit[1]),
           };
         });
-        const order = shown.slice().sort((a, b) => b.mps - a.mps).map((item) => item.label).join('＞');
-        questions.push(`由快到慢排序：${shown.map((item) => `${item.label}${e618FormatNumber(item.value)}${item.unitText}`).join('，')}。`);
+        const order = shown
+          .slice()
+          .sort((a, b) => b.mps - a.mps)
+          .map((item) => item.label)
+          .join('＞');
+        questions.push(
+          `由快到慢排序：${shown.map((item) => `${item.label}${e618FormatNumber(item.value)}${item.unitText}`).join('，')}。`
+        );
         summaryAnswers.push(order);
-        answers.push(`簡答：${order}。過程：先統一成公尺/秒，${shown.map((item) => `${item.label}=${e618FormatNumber(item.mps)}公尺/秒`).join('，')}，所以由快到慢是 ${order}。`);
+        answers.push(
+          `簡答：${order}。過程：先統一成公尺/秒，${shown.map((item) => `${item.label}=${e618FormatNumber(item.mps)}公尺/秒`).join('，')}，所以由快到慢是 ${order}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -5357,15 +5831,21 @@
         const speed = pickFromList([25, 40, 60, 80, 120]);
         questions.push(`速率固定：一輛車分速 ${speed} 公尺，時間從 1 分鐘變成 ${k} 分鐘，行駛距離會變為原來的幾倍？`);
         summaryAnswers.push(`${k}倍`);
-        answers.push(`簡答：${k}倍。過程：速率固定時，距離 = 速率 × 時間，所以時間變成 ${k} 倍，距離也跟著變成 ${k} 倍。`);
+        answers.push(
+          `簡答：${k}倍。過程：速率固定時，距離 = 速率 × 時間，所以時間變成 ${k} 倍，距離也跟著變成 ${k} 倍。`
+        );
         continue;
       }
       if (mode === 1) {
         const time = pickFromList([10, 15, 20, 30]);
         const base = pickFromList([30, 45, 60, 90]);
-        questions.push(`時間固定：都走 ${time} 分鐘，甲的速率是 ${base} 公尺/分，乙的速率是 ${base * k} 公尺/分，乙走的距離是甲的幾倍？`);
+        questions.push(
+          `時間固定：都走 ${time} 分鐘，甲的速率是 ${base} 公尺/分，乙的速率是 ${base * k} 公尺/分，乙走的距離是甲的幾倍？`
+        );
         summaryAnswers.push(`${k}倍`);
-        answers.push(`簡答：${k}倍。過程：時間固定時，距離和速率成正比。乙的速率是甲的 ${k} 倍，所以乙的距離也是甲的 ${k} 倍。`);
+        answers.push(
+          `簡答：${k}倍。過程：時間固定時，距離和速率成正比。乙的速率是甲的 ${k} 倍，所以乙的距離也是甲的 ${k} 倍。`
+        );
         continue;
       }
       if (mode === 2) {
@@ -5377,9 +5857,13 @@
       }
       const time = pickFromList([1, 2, 3, 4]);
       const slow = pickFromList([1.5, 2, 2.5, 3]);
-      questions.push(`時間固定：爸爸和爺爺都散步 ${time} 小時，爸爸速率是 ${slow * k} 公里/時，爺爺速率是 ${slow} 公里/時，爸爸散步的距離是爺爺的幾倍？`);
+      questions.push(
+        `時間固定：爸爸和爺爺都散步 ${time} 小時，爸爸速率是 ${slow * k} 公里/時，爺爺速率是 ${slow} 公里/時，爸爸散步的距離是爺爺的幾倍？`
+      );
       summaryAnswers.push(`${k}倍`);
-      answers.push(`簡答：${k}倍。過程：兩人散步時間相同，距離比就等於速率比。爸爸速率是爺爺的 ${k} 倍，所以距離也是 ${k} 倍。`);
+      answers.push(
+        `簡答：${k}倍。過程：兩人散步時間相同，距離比就等於速率比。爸爸速率是爺爺的 ${k} 倍，所以距離也是 ${k} 倍。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5403,7 +5887,10 @@
   }
 
   function buildE618ConvertThreeSet(count) {
-    return buildE618MixedSet([buildE618LengthUnitConvertSet, buildE618TimeUnitConvertSet, buildE618DoubleUnitConvertSet], count);
+    return buildE618MixedSet(
+      [buildE618LengthUnitConvertSet, buildE618TimeUnitConvertSet, buildE618DoubleUnitConvertSet],
+      count
+    );
   }
 
   function buildE618CompareOneSet(count) {
@@ -5452,7 +5939,9 @@
       const productD = denominator;
       questions.push(`計算：${e522Inline(`${integer} \\times ${e522LatexFraction(numerator, denominator)}`)}。`);
       summaryAnswers.push(`$${e522LatexFraction(productN, productD)}$`);
-      answers.push(`簡答：$${e522LatexFraction(productN, productD)}$。過程：整數乘分數 = 整數 × 分子 ÷ 分母，所以 ${integer} × ${e522LatexFraction(numerator, denominator)} = ${e522LatexFraction(productN, productD)}。`);
+      answers.push(
+        `簡答：$${e522LatexFraction(productN, productD)}$。過程：整數乘分數 = 整數 × 分子 ÷ 分母，所以 ${integer} × ${e522LatexFraction(numerator, denominator)} = ${e522LatexFraction(productN, productD)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5469,9 +5958,13 @@
       const improper = e522MixedToImproper(whole, numerator, denominator);
       const productN = integer * improper.numerator;
       const productD = improper.denominator;
-      questions.push(`計算：${e522Inline(`${integer} \\times ${whole}${e522LatexFraction(numerator, denominator)}`)}。`);
+      questions.push(
+        `計算：${e522Inline(`${integer} \\times ${whole}${e522LatexFraction(numerator, denominator)}`)}。`
+      );
       summaryAnswers.push(`$${e522LatexFraction(productN, productD)}$`);
-      answers.push(`簡答：$${e522LatexFraction(productN, productD)}$。過程：先把帶分數化成假分數，${whole}${e522LatexFraction(numerator, denominator)} = ${e522LatexFraction(improper.numerator, improper.denominator)}，再乘 ${integer}，得到 $${e522LatexFraction(productN, productD)}$。`);
+      answers.push(
+        `簡答：$${e522LatexFraction(productN, productD)}$。過程：先把帶分數化成假分數，${whole}${e522LatexFraction(numerator, denominator)} = ${e522LatexFraction(improper.numerator, improper.denominator)}，再乘 ${integer}，得到 $${e522LatexFraction(productN, productD)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5491,7 +5984,9 @@
       const productD = b * d;
       questions.push(`計算：${e522Inline(`${e522LatexFraction(a, b)} \\times ${e522LatexFraction(c, d)}`)}。`);
       summaryAnswers.push(`$${e522LatexFraction(productN, productD)}$`);
-      answers.push(`簡答：$${e522LatexFraction(productN, productD)}$。過程：分數乘分數就是分子乘分子、分母乘分母，所以 ${e522LatexFraction(a, b)} × ${e522LatexFraction(c, d)} = ${e522LatexFraction(productN, productD)}。`);
+      answers.push(
+        `簡答：$${e522LatexFraction(productN, productD)}$。過程：分數乘分數就是分子乘分子、分母乘分母，所以 ${e522LatexFraction(a, b)} × ${e522LatexFraction(c, d)} = ${e522LatexFraction(productN, productD)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5514,7 +6009,9 @@
       const productD = d1 * d2;
       questions.push(`計算：${e522Inline(`${e522LatexFraction(n1, d1)} \\times ${e522LatexFraction(n2, d2)}`)}。`);
       summaryAnswers.push(`$${e522LatexFraction(productN, productD)}$`);
-      answers.push(`簡答：$${e522LatexFraction(productN, productD)}$。過程：可先交叉約分，因為 ${n1} 和 ${d2} 都可約掉 ${common}，再相乘仍會得到 $${e522LatexFraction(productN, productD)}$。`);
+      answers.push(
+        `簡答：$${e522LatexFraction(productN, productD)}$。過程：可先交叉約分，因為 ${n1} 和 ${d2} 都可約掉 ${common}，再相乘仍會得到 $${e522LatexFraction(productN, productD)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5536,9 +6033,13 @@
       const numerator = randInt(1, denominator - 1);
       const base = denominator * pickFromList([6, 8, 10, 12, 15, 20, 24, 30, 40]);
       const answer = (base * numerator) / denominator;
-      questions.push(`${objectName}有 ${base} ${unit}，${objectName}的 ${e522Inline(e522LatexFraction(numerator, denominator))} 是幾${unit}？`);
+      questions.push(
+        `${objectName}有 ${base} ${unit}，${objectName}的 ${e522Inline(e522LatexFraction(numerator, denominator))} 是幾${unit}？`
+      );
       summaryAnswers.push(`${answer}${unit}`);
-      answers.push(`簡答：${answer}${unit}。過程：求 ${e522LatexFraction(numerator, denominator)} 倍，就是 ${base} × ${e522LatexFraction(numerator, denominator)} = ${answer}。`);
+      answers.push(
+        `簡答：${answer}${unit}。過程：求 ${e522LatexFraction(numerator, denominator)} 倍，就是 ${base} × ${e522LatexFraction(numerator, denominator)} = ${answer}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5561,17 +6062,25 @@
         const denominator = pickFromList([2, 3, 4, 5, 6, 8]);
         const numerator = randInt(1, denominator - 1);
         const answer = (base * numerator) / denominator;
-        questions.push(`操場跑道一圈 ${base} 公尺，弟弟跑了 ${e522Inline(e522LatexFraction(numerator, denominator))} 圈，是跑了幾公尺？`);
+        questions.push(
+          `操場跑道一圈 ${base} 公尺，弟弟跑了 ${e522Inline(e522LatexFraction(numerator, denominator))} 圈，是跑了幾公尺？`
+        );
         summaryAnswers.push(`${answer}公尺`);
-        answers.push(`簡答：${answer}公尺。過程：跑的距離 = ${base} × ${e522LatexFraction(numerator, denominator)} = ${answer}。`);
+        answers.push(
+          `簡答：${answer}公尺。過程：跑的距離 = ${base} × ${e522LatexFraction(numerator, denominator)} = ${answer}。`
+        );
       } else if (index === 1) {
         const base = pickFromList([2, 3, 4, 5, 6, 8, 10]);
         const denominator = pickFromList([2, 3, 4, 5, 6]);
         const numerator = randInt(1, denominator - 1);
         const answer = (base * numerator) / denominator;
-        questions.push(`一包麵粉重 ${base} 公斤，做點心用了 ${e522Inline(e522LatexFraction(numerator, denominator))} 包，是用了幾公斤？`);
+        questions.push(
+          `一包麵粉重 ${base} 公斤，做點心用了 ${e522Inline(e522LatexFraction(numerator, denominator))} 包，是用了幾公斤？`
+        );
         summaryAnswers.push(`${e522PlainFraction(base * numerator, denominator)}公斤`);
-        answers.push(`簡答：${e522PlainFraction(base * numerator, denominator)}公斤。過程：重量 = ${base} × ${e522LatexFraction(numerator, denominator)} = ${e522LatexFraction(base * numerator, denominator)}，也就是 ${e522PlainFraction(base * numerator, denominator)} 公斤。`);
+        answers.push(
+          `簡答：${e522PlainFraction(base * numerator, denominator)}公斤。過程：重量 = ${base} × ${e522LatexFraction(numerator, denominator)} = ${e522LatexFraction(base * numerator, denominator)}，也就是 ${e522PlainFraction(base * numerator, denominator)} 公斤。`
+        );
       } else if (index === 2) {
         const base = pickFromList([1, 2, 3, 4]);
         const whole = pickFromList([1, 2, 3]);
@@ -5580,9 +6089,13 @@
         const improper = e522MixedToImproper(whole, numerator, denominator);
         const answerN = base * improper.numerator;
         const answerD = improper.denominator;
-        questions.push(`一瓶可樂有 ${base} 公升，冰箱裡有 ${e522MixedInline(whole, numerator, denominator)} 瓶，是幾公升？`);
+        questions.push(
+          `一瓶可樂有 ${base} 公升，冰箱裡有 ${e522MixedInline(whole, numerator, denominator)} 瓶，是幾公升？`
+        );
         summaryAnswers.push(`${e522PlainFraction(answerN, answerD)}公升`);
-        answers.push(`簡答：${e522PlainFraction(answerN, answerD)}公升。過程：先把 ${whole}${e522LatexFraction(numerator, denominator)} 瓶化成 ${e522LatexFraction(improper.numerator, improper.denominator)} 瓶，再乘每瓶 ${base} 公升，得到 ${e522LatexFraction(answerN, answerD)} 公升。`);
+        answers.push(
+          `簡答：${e522PlainFraction(answerN, answerD)}公升。過程：先把 ${whole}${e522LatexFraction(numerator, denominator)} 瓶化成 ${e522LatexFraction(improper.numerator, improper.denominator)} 瓶，再乘每瓶 ${base} 公升，得到 ${e522LatexFraction(answerN, answerD)} 公升。`
+        );
       } else if (index === 3) {
         const base = pickFromList([20, 24, 30, 36, 40, 55, 60]);
         const whole = pickFromList([1, 2, 3]);
@@ -5591,18 +6104,26 @@
         const improper = e522MixedToImproper(whole, numerator, denominator);
         const answerN = base * improper.numerator;
         const answerD = improper.denominator;
-        questions.push(`1 公斤水果賣 ${base} 元，買了 ${e522MixedInline(whole, numerator, denominator)} 公斤，要付多少元？`);
+        questions.push(
+          `1 公斤水果賣 ${base} 元，買了 ${e522MixedInline(whole, numerator, denominator)} 公斤，要付多少元？`
+        );
         summaryAnswers.push(`${e522PlainFraction(answerN, answerD)}元`);
-        answers.push(`簡答：${e522PlainFraction(answerN, answerD)}元。過程：總價 = ${base} × ${e522LatexFraction(improper.numerator, improper.denominator)} = ${e522LatexFraction(answerN, answerD)}，也就是 ${e522PlainFraction(answerN, answerD)} 元。`);
+        answers.push(
+          `簡答：${e522PlainFraction(answerN, answerD)}元。過程：總價 = ${base} × ${e522LatexFraction(improper.numerator, improper.denominator)} = ${e522LatexFraction(answerN, answerD)}，也就是 ${e522PlainFraction(answerN, answerD)} 元。`
+        );
       } else {
         const length = pickFromList([6, 8, 9, 10, 12, 15]);
         const denominator = pickFromList([2, 3, 4, 5, 6]);
         const numerator = randInt(1, denominator - 1);
         const areaN = length * numerator;
         const areaD = denominator;
-        questions.push(`長方形花圃長 ${length} 公尺，寬是 ${e522Inline(e522LatexFraction(numerator, denominator))} 公尺，面積是多少平方公尺？`);
+        questions.push(
+          `長方形花圃長 ${length} 公尺，寬是 ${e522Inline(e522LatexFraction(numerator, denominator))} 公尺，面積是多少平方公尺？`
+        );
         summaryAnswers.push(`${e522PlainFraction(areaN, areaD)}平方公尺`);
-        answers.push(`簡答：${e522PlainFraction(areaN, areaD)}平方公尺。過程：面積 = 長 × 寬 = ${length} × ${e522LatexFraction(numerator, denominator)} = ${e522LatexFraction(areaN, areaD)}，所以是 ${e522PlainFraction(areaN, areaD)} 平方公尺。`);
+        answers.push(
+          `簡答：${e522PlainFraction(areaN, areaD)}平方公尺。過程：面積 = 長 × 寬 = ${length} × ${e522LatexFraction(numerator, denominator)} = ${e522LatexFraction(areaN, areaD)}，所以是 ${e522PlainFraction(areaN, areaD)} 平方公尺。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -5628,28 +6149,48 @@
       const prodN = n1 * n2;
       const prodD = d1 * d2;
       if (mode === 0) {
-        questions.push(`一個香瓜重 ${e522Inline(e522LatexFraction(n1, d1))} 公斤，${e522Inline(e522LatexFraction(n2, d2))} 個香瓜重多少公斤？`);
+        questions.push(
+          `一個香瓜重 ${e522Inline(e522LatexFraction(n1, d1))} 公斤，${e522Inline(e522LatexFraction(n2, d2))} 個香瓜重多少公斤？`
+        );
         summaryAnswers.push(`${e522PlainFraction(prodN, prodD)}公斤`);
-        answers.push(`簡答：${e522PlainFraction(prodN, prodD)}公斤。過程：${e522LatexFraction(n2, d2)} 個香瓜的重量 = ${e522LatexFraction(n1, d1)} × ${e522LatexFraction(n2, d2)} = ${e522LatexFraction(prodN, prodD)}。`);
+        answers.push(
+          `簡答：${e522PlainFraction(prodN, prodD)}公斤。過程：${e522LatexFraction(n2, d2)} 個香瓜的重量 = ${e522LatexFraction(n1, d1)} × ${e522LatexFraction(n2, d2)} = ${e522LatexFraction(prodN, prodD)}。`
+        );
       } else if (mode === 1) {
-        questions.push(`一瓶燕麥奶有 ${e522Inline(e522LatexFraction(n1, d1))} 公升，哥哥喝了 ${e522Inline(e522LatexFraction(n2, d2))} 瓶，是喝了幾公升？`);
+        questions.push(
+          `一瓶燕麥奶有 ${e522Inline(e522LatexFraction(n1, d1))} 公升，哥哥喝了 ${e522Inline(e522LatexFraction(n2, d2))} 瓶，是喝了幾公升？`
+        );
         summaryAnswers.push(`${e522PlainFraction(prodN, prodD)}公升`);
-        answers.push(`簡答：${e522PlainFraction(prodN, prodD)}公升。過程：容量 = ${e522LatexFraction(n1, d1)} × ${e522LatexFraction(n2, d2)} = ${e522LatexFraction(prodN, prodD)}。`);
+        answers.push(
+          `簡答：${e522PlainFraction(prodN, prodD)}公升。過程：容量 = ${e522LatexFraction(n1, d1)} × ${e522LatexFraction(n2, d2)} = ${e522LatexFraction(prodN, prodD)}。`
+        );
       } else if (mode === 2) {
-        questions.push(`一包糖重 ${e522Inline(e522LatexFraction(n1, d1))} 公斤，做點心用掉全部的 ${e522Inline(e522LatexFraction(n2, d2))}，共用掉多少公斤？`);
+        questions.push(
+          `一包糖重 ${e522Inline(e522LatexFraction(n1, d1))} 公斤，做點心用掉全部的 ${e522Inline(e522LatexFraction(n2, d2))}，共用掉多少公斤？`
+        );
         summaryAnswers.push(`${e522PlainFraction(prodN, prodD)}公斤`);
-        answers.push(`簡答：${e522PlainFraction(prodN, prodD)}公斤。過程：用掉的重量 = ${e522LatexFraction(n1, d1)} × ${e522LatexFraction(n2, d2)} = ${e522LatexFraction(prodN, prodD)}。`);
+        answers.push(
+          `簡答：${e522PlainFraction(prodN, prodD)}公斤。過程：用掉的重量 = ${e522LatexFraction(n1, d1)} × ${e522LatexFraction(n2, d2)} = ${e522LatexFraction(prodN, prodD)}。`
+        );
       } else if (mode === 3) {
-        questions.push(`一塊長方形地面積是 ${e522Inline(e522LatexFraction(n1, d1))} 平方公尺，又用了其中的 ${e522Inline(e522LatexFraction(n2, d2))}，共用了多少平方公尺？`);
+        questions.push(
+          `一塊長方形地面積是 ${e522Inline(e522LatexFraction(n1, d1))} 平方公尺，又用了其中的 ${e522Inline(e522LatexFraction(n2, d2))}，共用了多少平方公尺？`
+        );
         summaryAnswers.push(`${e522PlainFraction(prodN, prodD)}平方公尺`);
-        answers.push(`簡答：${e522PlainFraction(prodN, prodD)}平方公尺。過程：部分的部分要用乘法，所以 ${e522LatexFraction(n1, d1)} × ${e522LatexFraction(n2, d2)} = ${e522LatexFraction(prodN, prodD)}。`);
+        answers.push(
+          `簡答：${e522PlainFraction(prodN, prodD)}平方公尺。過程：部分的部分要用乘法，所以 ${e522LatexFraction(n1, d1)} × ${e522LatexFraction(n2, d2)} = ${e522LatexFraction(prodN, prodD)}。`
+        );
       } else {
         const length = pickFromList([3, 4, 5, 6, 8, 10]);
         const widthN = length * n1 * n2;
         const widthD = d1 * d2;
-        questions.push(`一個長方形花圃長 ${length} 公尺，寬是 ${e522Inline(`${e522LatexFraction(n1, d1)} \\times ${e522LatexFraction(n2, d2)}`)} 公尺，面積是多少平方公尺？`);
+        questions.push(
+          `一個長方形花圃長 ${length} 公尺，寬是 ${e522Inline(`${e522LatexFraction(n1, d1)} \\times ${e522LatexFraction(n2, d2)}`)} 公尺，面積是多少平方公尺？`
+        );
         summaryAnswers.push(`${e522PlainFraction(widthN, widthD)}平方公尺`);
-        answers.push(`簡答：${e522PlainFraction(widthN, widthD)}平方公尺。過程：面積 = ${length} × ${e522LatexFraction(n1, d1)} × ${e522LatexFraction(n2, d2)} = ${e522LatexFraction(widthN, widthD)}。`);
+        answers.push(
+          `簡答：${e522PlainFraction(widthN, widthD)}平方公尺。過程：面積 = ${length} × ${e522LatexFraction(n1, d1)} × ${e522LatexFraction(n2, d2)} = ${e522LatexFraction(widthN, widthD)}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -5664,7 +6205,9 @@
       const b = pickFromList([3, 4, 5, 6, 7, 8, 9, 11, 13]);
       questions.push(`把 ${a} ÷ ${b} 寫成分數。`);
       summaryAnswers.push(`$${e522LatexFraction(a, b)}$`);
-      answers.push(`簡答：$${e522LatexFraction(a, b)}$。過程：整數相除寫成分數時，被除數當分子、除數當分母，所以 ${a} ÷ ${b} = ${e522LatexFraction(a, b)}。`);
+      answers.push(
+        `簡答：$${e522LatexFraction(a, b)}$。過程：整數相除寫成分數時，被除數當分子、除數當分母，所以 ${a} ÷ ${b} = ${e522LatexFraction(a, b)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5680,7 +6223,9 @@
       const dividend = Number((denominator * quotient).toFixed(2));
       questions.push(`計算：${trimDecimalString(dividend.toString())} ÷ ${denominator}。`);
       summaryAnswers.push(`${trimDecimalString(quotient.toString())}`);
-      answers.push(`簡答：${trimDecimalString(quotient.toString())}。過程：直接相除，${trimDecimalString(dividend.toString())} ÷ ${denominator} = ${trimDecimalString(quotient.toString())}。`);
+      answers.push(
+        `簡答：${trimDecimalString(quotient.toString())}。過程：直接相除，${trimDecimalString(dividend.toString())} ÷ ${denominator} = ${trimDecimalString(quotient.toString())}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5718,7 +6263,9 @@
       const answer = trimDecimalString((value / divisor).toFixed(6));
       questions.push(`不必直式，直接計算：${trimDecimalString(value.toString())} ÷ ${divisor}。`);
       summaryAnswers.push(`${answer}`);
-      answers.push(`簡答：${answer}。過程：除以 ${divisor} 就是把小數點向左移 ${String(divisor).length - 1} 位，所以答案是 ${answer}。`);
+      answers.push(
+        `簡答：${answer}。過程：除以 ${divisor} 就是把小數點向左移 ${String(divisor).length - 1} 位，所以答案是 ${answer}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5733,27 +6280,39 @@
         const integer = pickFromList([12, 18, 24, 30, 40]);
         const denominator = pickFromList([2, 3, 4, 5, 6, 8, 10]);
         const numerator = randInt(1, denominator - 1);
-        questions.push(`不用計算，比較大小：${e522Inline(`${integer} \\times ${e522LatexFraction(numerator, denominator)}`)} □ ${integer}（填入 >、< 或 =）。`);
+        questions.push(
+          `不用計算，比較大小：${e522Inline(`${integer} \\times ${e522LatexFraction(numerator, denominator)}`)} □ ${integer}（填入 >、< 或 =）。`
+        );
         summaryAnswers.push(`<`);
-        answers.push(`簡答：<。過程：因為乘數 ${e522LatexFraction(numerator, denominator)} 小於 1，所以積會比被乘數 ${integer} 小。`);
+        answers.push(
+          `簡答：<。過程：因為乘數 ${e522LatexFraction(numerator, denominator)} 小於 1，所以積會比被乘數 ${integer} 小。`
+        );
         continue;
       }
       if (mode === 1) {
         const denominator = pickFromList([2, 3, 4, 5, 6, 8]);
         const numerator = denominator;
         const integer = pickFromList([6, 8, 10, 12, 15, 20]);
-        questions.push(`不用計算，比較大小：${e522Inline(`${integer} \\times ${e522LatexFraction(numerator, denominator)}`)} □ ${integer}（填入 >、< 或 =）。`);
+        questions.push(
+          `不用計算，比較大小：${e522Inline(`${integer} \\times ${e522LatexFraction(numerator, denominator)}`)} □ ${integer}（填入 >、< 或 =）。`
+        );
         summaryAnswers.push(`=`);
-        answers.push(`簡答：=。過程：因為乘數 ${e522LatexFraction(numerator, denominator)} = 1，所以積和被乘數一樣大。`);
+        answers.push(
+          `簡答：=。過程：因為乘數 ${e522LatexFraction(numerator, denominator)} = 1，所以積和被乘數一樣大。`
+        );
         continue;
       }
       const integer = pickFromList([4, 6, 8, 10, 12]);
       const whole = pickFromList([1, 2, 3]);
       const denominator = pickFromList([2, 3, 4, 5, 6]);
       const numerator = randInt(1, denominator - 1);
-      questions.push(`不用計算，比較大小：${e522Inline(`${integer} \\times ${whole}${e522LatexFraction(numerator, denominator)}`)} □ ${integer}（填入 >、< 或 =）。`);
+      questions.push(
+        `不用計算，比較大小：${e522Inline(`${integer} \\times ${whole}${e522LatexFraction(numerator, denominator)}`)} □ ${integer}（填入 >、< 或 =）。`
+      );
       summaryAnswers.push(`>`);
-      answers.push(`簡答：>。過程：${whole}${e522LatexFraction(numerator, denominator)} 大於 1，所以積會比被乘數 ${integer} 大。`);
+      answers.push(
+        `簡答：>。過程：${whole}${e522LatexFraction(numerator, denominator)} 大於 1，所以積會比被乘數 ${integer} 大。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5769,7 +6328,9 @@
       const integer = pickFromList([2, 3, 4, 5, 6, 8]);
       questions.push(`計算：${e522Inline(`${e522LatexFraction(numerator, denominator)} \\div ${integer}`)}。`);
       summaryAnswers.push(`$${e522LatexFraction(numerator, denominator * integer)}$`);
-      answers.push(`簡答：$${e522LatexFraction(numerator, denominator * integer)}$。過程：分數除以整數，就是分母乘整數，所以 ${e522LatexFraction(numerator, denominator)} ÷ ${integer} = ${e522LatexFraction(numerator, denominator * integer)}。`);
+      answers.push(
+        `簡答：$${e522LatexFraction(numerator, denominator * integer)}$。過程：分數除以整數，就是分母乘整數，所以 ${e522LatexFraction(numerator, denominator)} ÷ ${integer} = ${e522LatexFraction(numerator, denominator * integer)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5787,9 +6348,13 @@
         const pieces = denominator2 * pickFromList([2, 3, 4, 5]);
         const totalN = numerator1 * pieces;
         const totalD = denominator1 * denominator2;
-        questions.push(`一桶果汁用了 ${e522Inline(e522LatexFraction(numerator1, denominator1))} 桶，將用剩下的果汁平均分成 ${pieces} 杯，每杯是幾桶？`);
+        questions.push(
+          `一桶果汁用了 ${e522Inline(e522LatexFraction(numerator1, denominator1))} 桶，將用剩下的果汁平均分成 ${pieces} 杯，每杯是幾桶？`
+        );
         summaryAnswers.push(`${e522PlainFraction(denominator1 - numerator1, denominator1 * pieces)}桶`);
-        answers.push(`簡答：${e522PlainFraction((denominator1 - numerator1), denominator1 * pieces)}桶。過程：先算剩下 ${1}-${e522LatexFraction(numerator1, denominator1)} = ${e522LatexFraction(denominator1 - numerator1, denominator1)} 桶，再除以 ${pieces}，得到 ${e522LatexFraction(denominator1 - numerator1, denominator1 * pieces)} 桶。`);
+        answers.push(
+          `簡答：${e522PlainFraction(denominator1 - numerator1, denominator1 * pieces)}桶。過程：先算剩下 ${1}-${e522LatexFraction(numerator1, denominator1)} = ${e522LatexFraction(denominator1 - numerator1, denominator1)} 桶，再除以 ${pieces}，得到 ${e522LatexFraction(denominator1 - numerator1, denominator1 * pieces)} 桶。`
+        );
         continue;
       }
       if (mode === 1) {
@@ -5799,9 +6364,13 @@
         const split = pickFromList([2, 3, 4, 5]);
         const remainN = total * (useDen - useNum);
         const remainD = useDen;
-        questions.push(`一條長 ${total} 公尺的彩帶，先用了全長的 ${e522Inline(e522LatexFraction(useNum, useDen))}，再把剩下的平均分成 ${split} 段，每段長多少公尺？`);
+        questions.push(
+          `一條長 ${total} 公尺的彩帶，先用了全長的 ${e522Inline(e522LatexFraction(useNum, useDen))}，再把剩下的平均分成 ${split} 段，每段長多少公尺？`
+        );
         summaryAnswers.push(`${e522PlainFraction(remainN, remainD * split)}公尺`);
-        answers.push(`簡答：${e522PlainFraction(remainN, remainD * split)}公尺。過程：先剩下 ${total} × ${e522LatexFraction(useDen - useNum, useDen)} = ${e522LatexFraction(remainN, remainD)} 公尺，再除以 ${split}，得到 ${e522LatexFraction(remainN, remainD * split)} 公尺。`);
+        answers.push(
+          `簡答：${e522PlainFraction(remainN, remainD * split)}公尺。過程：先剩下 ${total} × ${e522LatexFraction(useDen - useNum, useDen)} = ${e522LatexFraction(remainN, remainD)} 公尺，再除以 ${split}，得到 ${e522LatexFraction(remainN, remainD * split)} 公尺。`
+        );
         continue;
       }
       if (mode === 2) {
@@ -5811,16 +6380,22 @@
         const walkNum = randInt(1, walkDen - 1);
         const answerN = totalKmNum * walkNum;
         const answerD = totalKmDen * walkDen;
-        questions.push(`全長 ${e522Inline(e522LatexFraction(totalKmNum, totalKmDen))} 公里的步道，走了全長的 ${e522Inline(e522LatexFraction(walkNum, walkDen))}，共走了幾公里？`);
+        questions.push(
+          `全長 ${e522Inline(e522LatexFraction(totalKmNum, totalKmDen))} 公里的步道，走了全長的 ${e522Inline(e522LatexFraction(walkNum, walkDen))}，共走了幾公里？`
+        );
         summaryAnswers.push(`${e522PlainFraction(answerN, answerD)}公里`);
-        answers.push(`簡答：${e522PlainFraction(answerN, answerD)}公里。過程：部分長度 = ${e522LatexFraction(totalKmNum, totalKmDen)} × ${e522LatexFraction(walkNum, walkDen)} = ${e522LatexFraction(answerN, answerD)} 公里。`);
+        answers.push(
+          `簡答：${e522PlainFraction(answerN, answerD)}公里。過程：部分長度 = ${e522LatexFraction(totalKmNum, totalKmDen)} × ${e522LatexFraction(walkNum, walkDen)} = ${e522LatexFraction(answerN, answerD)} 公里。`
+        );
         continue;
       }
       const minutes = pickFromList([15, 24, 30, 36, 45, 75]);
       const people = pickFromList([2, 3, 4, 5, 6, 8]);
       questions.push(`${minutes} 分鐘平均分給 ${people} 人，每人分到多少分鐘？（用分數表示）`);
       summaryAnswers.push(`${e522PlainFraction(minutes, people)}分鐘`);
-      answers.push(`簡答：${e522PlainFraction(minutes, people)}分鐘。過程：平均分就是除法，所以 ${minutes} ÷ ${people} = ${e522LatexFraction(minutes, people)} 分鐘。`);
+      answers.push(
+        `簡答：${e522PlainFraction(minutes, people)}分鐘。過程：平均分就是除法，所以 ${minutes} ÷ ${people} = ${e522LatexFraction(minutes, people)} 分鐘。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5840,42 +6415,41 @@
   }
 
   function buildE522MultiplyFourSet(count) {
-    return buildE522MixedSet([
-      buildE522IntegerFractionMultiplySet,
-      buildE522IntegerMixedMultiplySet,
-      buildE522FractionFractionMultiplySet,
-      buildE522CrossCancelMultiplySet,
-    ], count);
+    return buildE522MixedSet(
+      [
+        buildE522IntegerFractionMultiplySet,
+        buildE522IntegerMixedMultiplySet,
+        buildE522FractionFractionMultiplySet,
+        buildE522CrossCancelMultiplySet,
+      ],
+      count
+    );
   }
 
   function buildE522AmountThreeSet(count) {
-    return buildE522MixedSet([
-      buildE522DiscreteFractionOfQuantitySet,
-      buildE522ContinuousFractionApplicationSet,
-      buildE522FractionOfFractionSet,
-    ], count);
+    return buildE522MixedSet(
+      [
+        buildE522DiscreteFractionOfQuantitySet,
+        buildE522ContinuousFractionApplicationSet,
+        buildE522FractionOfFractionSet,
+      ],
+      count
+    );
   }
 
   function buildE522QuotientThreeSet(count) {
-    return buildE522MixedSet([
-      buildE522QuotientFractionSet,
-      buildE522QuotientDecimalSet,
-      buildE522QuotientEstimateSet,
-    ], count);
+    return buildE522MixedSet(
+      [buildE522QuotientFractionSet, buildE522QuotientDecimalSet, buildE522QuotientEstimateSet],
+      count
+    );
   }
 
   function buildE522CompareTwoSet(count) {
-    return buildE522MixedSet([
-      buildE522ProductCompareSet,
-      buildE522DivideByPowersSet,
-    ], count);
+    return buildE522MixedSet([buildE522ProductCompareSet, buildE522DivideByPowersSet], count);
   }
 
   function buildE522DivisionApplicationTwoSet(count) {
-    return buildE522MixedSet([
-      buildE522FractionDivideIntegerSet,
-      buildE522MultiStepApplicationSet,
-    ], count);
+    return buildE522MixedSet([buildE522FractionDivideIntegerSet, buildE522MultiStepApplicationSet], count);
   }
 
   function e526FormatNumber(value, digits = 6) {
@@ -5892,10 +6466,8 @@
 
   function e526FiniteDecimalBank() {
     return [
-      0.02, 0.03, 0.04, 0.05, 0.08, 0.09, 0.12, 0.15, 0.2, 0.24,
-      0.25, 0.3, 0.35, 0.4, 0.45, 0.48, 0.5, 0.6, 0.72, 0.75,
-      0.8, 0.84, 0.96, 1.04, 1.08, 1.09, 1.2, 1.25, 1.4, 1.5,
-      1.75, 2.08, 2.25, 2.4, 2.5, 3.15, 3.2, 3.6, 4.05, 4.8,
+      0.02, 0.03, 0.04, 0.05, 0.08, 0.09, 0.12, 0.15, 0.2, 0.24, 0.25, 0.3, 0.35, 0.4, 0.45, 0.48, 0.5, 0.6, 0.72, 0.75,
+      0.8, 0.84, 0.96, 1.04, 1.08, 1.09, 1.2, 1.25, 1.4, 1.5, 1.75, 2.08, 2.25, 2.4, 2.5, 3.15, 3.2, 3.6, 4.05, 4.8,
     ];
   }
 
@@ -5915,7 +6487,9 @@
       }
       questions.push(`計算：${dividend} ÷ ${divisor}。`);
       summaryAnswers.push(`${e526FormatNumber(quotient)}`);
-      answers.push(`簡答：${e526FormatNumber(quotient)}。過程：${dividend} ÷ ${divisor} 不能整除時，要在個位後補小數點與 0 繼續除，最後得到 ${e526FormatNumber(quotient)}。`);
+      answers.push(
+        `簡答：${e526FormatNumber(quotient)}。過程：${dividend} ÷ ${divisor} 不能整除時，要在個位後補小數點與 0 繼續除，最後得到 ${e526FormatNumber(quotient)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5935,7 +6509,9 @@
       }
       questions.push(`計算：${e526FormatNumber(dividend)} ÷ ${divisor}。`);
       summaryAnswers.push(`${e526FormatNumber(quotient)}`);
-      answers.push(`簡答：${e526FormatNumber(quotient)}。過程：把商的小數點和被除數的小數位對齊，直接做除法，可得 ${e526FormatNumber(dividend)} ÷ ${divisor} = ${e526FormatNumber(quotient)}。`);
+      answers.push(
+        `簡答：${e526FormatNumber(quotient)}。過程：把商的小數點和被除數的小數位對齊，直接做除法，可得 ${e526FormatNumber(dividend)} ÷ ${divisor} = ${e526FormatNumber(quotient)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5957,7 +6533,9 @@
       }
       questions.push(`計算：${e526FormatNumber(dividend)} ÷ ${divisor}。`);
       summaryAnswers.push(`${e526FormatNumber(quotient)}`);
-      answers.push(`簡答：${e526FormatNumber(quotient)}。過程：做除法時，如果某一位不夠除，商要補 0 佔位，再把下一位帶下來，所以答案是 ${e526FormatNumber(quotient)}。`);
+      answers.push(
+        `簡答：${e526FormatNumber(quotient)}。過程：做除法時，如果某一位不夠除，商要補 0 佔位，再把下一位帶下來，所以答案是 ${e526FormatNumber(quotient)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5977,12 +6555,15 @@
     ];
     for (let i = 0; i < count; i += 1) {
       const item = modes[i % modes.length];
-      const questionText = item.whole != null
-        ? `${e526MixedLatex(item.whole, item.numerator, item.denominator)}`
-        : `${e526FractionLatex(item.numerator, item.denominator)}`;
+      const questionText =
+        item.whole != null
+          ? `${e526MixedLatex(item.whole, item.numerator, item.denominator)}`
+          : `${e526FractionLatex(item.numerator, item.denominator)}`;
       questions.push(`把 ${questionText} 化成小數。`);
       summaryAnswers.push(`${e526FormatNumber(item.answer)}`);
-      answers.push(`簡答：${e526FormatNumber(item.answer)}。過程：分數化小數就是做除法，${item.text} = ${e526FormatNumber(item.answer)}。`);
+      answers.push(
+        `簡答：${e526FormatNumber(item.answer)}。過程：分數化小數就是做除法，${item.text} = ${e526FormatNumber(item.answer)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5999,7 +6580,9 @@
       const answer = value / divisor;
       questions.push(`不必直式，直接計算：${e526FormatNumber(value)} ÷ ${divisor}。`);
       summaryAnswers.push(`${e526FormatNumber(answer)}`);
-      answers.push(`簡答：${e526FormatNumber(answer)}。過程：除以 ${divisor} 就是把小數點向左移 ${String(divisor).length - 1} 位，所以答案是 ${e526FormatNumber(answer)}。`);
+      answers.push(
+        `簡答：${e526FormatNumber(answer)}。過程：除以 ${divisor} 就是把小數點向左移 ${String(divisor).length - 1} 位，所以答案是 ${e526FormatNumber(answer)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6022,7 +6605,9 @@
       const answer = Number((item.dividend / item.divisor).toFixed(item.digits));
       questions.push(`計算：${e526FormatNumber(item.dividend)} ÷ ${item.divisor}，取概數到${digitsText}。`);
       summaryAnswers.push(`${e526FormatNumber(answer)}`);
-      answers.push(`簡答：${e526FormatNumber(answer)}。過程：先做除法，再依題意四捨五入到${digitsText}，所以答案是 ${e526FormatNumber(answer)}。`);
+      answers.push(
+        `簡答：${e526FormatNumber(answer)}。過程：先做除法，再依題意四捨五入到${digitsText}，所以答案是 ${e526FormatNumber(answer)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6040,20 +6625,49 @@
     ];
     for (let i = 0; i < count; i += 1) {
       const item = bank[i % bank.length];
-      questions.push(`把 ${e526FormatNumber(item.total)} ${item.unit}平均分成 ${item.groups} 份，每一份是多少${item.resultUnit}？`);
+      questions.push(
+        `把 ${e526FormatNumber(item.total)} ${item.unit}平均分成 ${item.groups} 份，每一份是多少${item.resultUnit}？`
+      );
       summaryAnswers.push(`${e526FormatNumber(item.answer)}${item.resultUnit}`);
-      answers.push(`簡答：${e526FormatNumber(item.answer)}${item.resultUnit}。過程：平均分就是用總量除以份數，所以 ${e526FormatNumber(item.total)} ÷ ${item.groups} = ${e526FormatNumber(item.answer)}。`);
+      answers.push(
+        `簡答：${e526FormatNumber(item.answer)}${item.resultUnit}。過程：平均分就是用總量除以份數，所以 ${e526FormatNumber(item.total)} ÷ ${item.groups} = ${e526FormatNumber(item.answer)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildE526GeometryDimensionSet(count) {
     const bank = [
-      { question: '一個正方形花圃的周長是 25 公尺，每邊長是多少公尺？', answer: 6.25, explain: '正方形每邊長 = 周長 ÷ 4，所以 25 ÷ 4 = 6.25。', unit: '公尺' },
-      { question: '長方形面積是 15.4 平方公分，長是 4 公分，寬是多少公分？', answer: 3.85, explain: '寬 = 面積 ÷ 長，所以 15.4 ÷ 4 = 3.85。', unit: '公分' },
-      { question: '一條長 18 公尺的繩子平均分成 8 段，每段長幾公尺？', answer: 2.25, explain: '每段長 = 總長 ÷ 段數，所以 18 ÷ 8 = 2.25。', unit: '公尺' },
-      { question: '一個長方形花圃面積是 87.01 平方公尺，長是 14 公尺，寬是多少公尺？', answer: 6.215, explain: '寬 = 面積 ÷ 長，所以 87.01 ÷ 14 = 6.215。', unit: '公尺' },
-      { question: '一個長方形花園的周長是 65 公尺，若長與寬相等，邊長是多少公尺？', answer: 16.25, explain: '四條邊一樣長，所以每邊長 = 65 ÷ 4 = 16.25。', unit: '公尺' },
+      {
+        question: '一個正方形花圃的周長是 25 公尺，每邊長是多少公尺？',
+        answer: 6.25,
+        explain: '正方形每邊長 = 周長 ÷ 4，所以 25 ÷ 4 = 6.25。',
+        unit: '公尺',
+      },
+      {
+        question: '長方形面積是 15.4 平方公分，長是 4 公分，寬是多少公分？',
+        answer: 3.85,
+        explain: '寬 = 面積 ÷ 長，所以 15.4 ÷ 4 = 3.85。',
+        unit: '公分',
+      },
+      {
+        question: '一條長 18 公尺的繩子平均分成 8 段，每段長幾公尺？',
+        answer: 2.25,
+        explain: '每段長 = 總長 ÷ 段數，所以 18 ÷ 8 = 2.25。',
+        unit: '公尺',
+      },
+      {
+        question: '一個長方形花圃面積是 87.01 平方公尺，長是 14 公尺，寬是多少公尺？',
+        answer: 6.215,
+        explain: '寬 = 面積 ÷ 長，所以 87.01 ÷ 14 = 6.215。',
+        unit: '公尺',
+      },
+      {
+        question: '一個長方形花園的周長是 65 公尺，若長與寬相等，邊長是多少公尺？',
+        answer: 16.25,
+        explain: '四條邊一樣長，所以每邊長 = 65 ÷ 4 = 16.25。',
+        unit: '公尺',
+      },
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -6082,18 +6696,45 @@
       const item = bank[i % bank.length];
       questions.push(item.question);
       summaryAnswers.push(`${e526FormatNumber(item.answer)}${item.unit}`);
-      answers.push(`簡答：${e526FormatNumber(item.answer)}${item.unit}。過程：平均每 1 單位是多少，就是用總量除以總份數，所以答案是 ${e526FormatNumber(item.answer)}${item.unit}。`);
+      answers.push(
+        `簡答：${e526FormatNumber(item.answer)}${item.unit}。過程：平均每 1 單位是多少，就是用總量除以總份數，所以答案是 ${e526FormatNumber(item.answer)}${item.unit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildE526TimeUnitConvertSet(count) {
     const bank = [
-      { question: '看一部電影花了 135 分鐘，135 分鐘是幾小時？（用小數表示）', answer: 2.25, explain: '1 小時 = 60 分，所以 135 ÷ 60 = 2.25 小時。', unit: '小時' },
-      { question: '弟弟參加活動 30 小時才達成，30 小時也可以說是幾日？', answer: 1.25, explain: '1 日 = 24 小時，所以 30 ÷ 24 = 1.25 日。', unit: '日' },
-      { question: '看展走路上學花了 9 分鐘，也可以說是幾時？', answer: 0.15, explain: '1 小時 = 60 分，所以 9 ÷ 60 = 0.15 小時。', unit: '小時' },
-      { question: '15 秒鐘是多少分鐘？（用小數表示）', answer: 0.25, explain: '1 分鐘 = 60 秒，所以 15 ÷ 60 = 0.25 分鐘。', unit: '分鐘' },
-      { question: '爸爸開車環島花了 36 小時完成，也就是花了幾日？', answer: 1.5, explain: '1 日 = 24 小時，所以 36 ÷ 24 = 1.5 日。', unit: '日' },
+      {
+        question: '看一部電影花了 135 分鐘，135 分鐘是幾小時？（用小數表示）',
+        answer: 2.25,
+        explain: '1 小時 = 60 分，所以 135 ÷ 60 = 2.25 小時。',
+        unit: '小時',
+      },
+      {
+        question: '弟弟參加活動 30 小時才達成，30 小時也可以說是幾日？',
+        answer: 1.25,
+        explain: '1 日 = 24 小時，所以 30 ÷ 24 = 1.25 日。',
+        unit: '日',
+      },
+      {
+        question: '看展走路上學花了 9 分鐘，也可以說是幾時？',
+        answer: 0.15,
+        explain: '1 小時 = 60 分，所以 9 ÷ 60 = 0.15 小時。',
+        unit: '小時',
+      },
+      {
+        question: '15 秒鐘是多少分鐘？（用小數表示）',
+        answer: 0.25,
+        explain: '1 分鐘 = 60 秒，所以 15 ÷ 60 = 0.25 分鐘。',
+        unit: '分鐘',
+      },
+      {
+        question: '爸爸開車環島花了 36 小時完成，也就是花了幾日？',
+        answer: 1.5,
+        explain: '1 日 = 24 小時，所以 36 ÷ 24 = 1.5 日。',
+        unit: '日',
+      },
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -6121,38 +6762,26 @@
   }
 
   function buildE526BasicThreeSet(count) {
-    return buildE526MixedSet([
-      buildE526IntegerDivideDecimalSet,
-      buildE526DecimalDivideIntegerSet,
-      buildE526QuotientZeroGapSet,
-    ], count);
+    return buildE526MixedSet(
+      [buildE526IntegerDivideDecimalSet, buildE526DecimalDivideIntegerSet, buildE526QuotientZeroGapSet],
+      count
+    );
   }
 
   function buildE526ConvertTwoSet(count) {
-    return buildE526MixedSet([
-      buildE526FractionToDecimalSet,
-      buildE526DivideByPowersSet,
-    ], count);
+    return buildE526MixedSet([buildE526FractionToDecimalSet, buildE526DivideByPowersSet], count);
   }
 
   function buildE526RoundingOneSet(count) {
-    return buildE526MixedSet([
-      buildE526RoundingSet,
-    ], count);
+    return buildE526MixedSet([buildE526RoundingSet], count);
   }
 
   function buildE526ApplicationThreeSet(count) {
-    return buildE526MixedSet([
-      buildE526EqualSharingSet,
-      buildE526GeometryDimensionSet,
-      buildE526AverageUnitSet,
-    ], count);
+    return buildE526MixedSet([buildE526EqualSharingSet, buildE526GeometryDimensionSet, buildE526AverageUnitSet], count);
   }
 
   function buildE526TimeOneSet(count) {
-    return buildE526MixedSet([
-      buildE526TimeUnitConvertSet,
-    ], count);
+    return buildE526MixedSet([buildE526TimeUnitConvertSet], count);
   }
 
   function e527FormatNumber(value, digits = 2) {
@@ -6300,7 +6929,9 @@
       const surface = 2 * (length * width + width * height + length * height);
       const variant = i % 3;
       if (variant === 0) {
-        questions.push(`一個長方體的體積是 $${volume}$ 立方公分，長是 $${length}$ 公分、寬是 $${width}$ 公分，表面積是多少平方公分？`);
+        questions.push(
+          `一個長方體的體積是 $${volume}$ 立方公分，長是 $${length}$ 公分、寬是 $${width}$ 公分，表面積是多少平方公分？`
+        );
         summaryAnswers.push(`$${surface}$ 平方公分`);
         answers.push(
           e527Answer(
@@ -6309,7 +6940,9 @@
           )
         );
       } else if (variant === 1) {
-        questions.push(`一個長方體的體積是 $${volume}$ 立方公分，長是 $${length}$ 公分、高是 $${height}$ 公分，表面積是多少平方公分？`);
+        questions.push(
+          `一個長方體的體積是 $${volume}$ 立方公分，長是 $${length}$ 公分、高是 $${height}$ 公分，表面積是多少平方公分？`
+        );
         summaryAnswers.push(`$${surface}$ 平方公分`);
         answers.push(
           e527Answer(
@@ -6318,7 +6951,9 @@
           )
         );
       } else {
-        questions.push(`一個長方體的體積是 $${volume}$ 立方公分，寬是 $${width}$ 公分、高是 $${height}$ 公分，表面積是多少平方公分？`);
+        questions.push(
+          `一個長方體的體積是 $${volume}$ 立方公分，寬是 $${width}$ 公分、高是 $${height}$ 公分，表面積是多少平方公分？`
+        );
         summaryAnswers.push(`$${surface}$ 平方公分`);
         answers.push(
           e527Answer(
@@ -6335,12 +6970,7 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const contexts = [
-      '包裝紙盒',
-      '木箱外面塗漆',
-      '禮盒外層彩繪',
-      '石材六面磨光',
-    ];
+    const contexts = ['包裝紙盒', '木箱外面塗漆', '禮盒外層彩繪', '石材六面磨光'];
     const triples = [
       [24, 10, 8],
       [15, 12, 10],
@@ -6352,7 +6982,9 @@
       const [length, width, height] = pickFromList(triples);
       const context = contexts[i % contexts.length];
       const surface = 2 * (length * width + width * height + length * height);
-      questions.push(`一個長方體要做「${context}」，長 $${length}$ 公分、寬 $${width}$ 公分、高 $${height}$ 公分，全部外表面共需要多少平方公分？`);
+      questions.push(
+        `一個長方體要做「${context}」，長 $${length}$ 公分、寬 $${width}$ 公分、高 $${height}$ 公分，全部外表面共需要多少平方公分？`
+      );
       summaryAnswers.push(`$${surface}$ 平方公分`);
       answers.push(
         e527Answer(
@@ -6378,7 +7010,9 @@
     for (let i = 0; i < count; i += 1) {
       const [length, width, height] = pickFromList(triples);
       const lateral = 2 * (length + width) * height;
-      questions.push(`一個長方體盒子長 $${length}$ 公分、寬 $${width}$ 公分、高 $${height}$ 公分，只在側面繞一圈貼上包裝紙，包裝紙面積是多少平方公分？`);
+      questions.push(
+        `一個長方體盒子長 $${length}$ 公分、寬 $${width}$ 公分、高 $${height}$ 公分，只在側面繞一圈貼上包裝紙，包裝紙面積是多少平方公分？`
+      );
       summaryAnswers.push(`$${e527FormatNumber(lateral)}$ 平方公分`);
       answers.push(
         e527Answer(
@@ -6405,7 +7039,9 @@
     for (let i = 0; i < count; i += 1) {
       const [edge, parts] = pickFromList(items);
       const increase = 2 * (parts - 1) * edge * edge;
-      questions.push(`把一個邊長 $${edge}$ 公分的正方體平均切成 $${parts}$ 個一樣大的長方體，表面積共增加多少平方公分？`);
+      questions.push(
+        `把一個邊長 $${edge}$ 公分的正方體平均切成 $${parts}$ 個一樣大的長方體，表面積共增加多少平方公分？`
+      );
       summaryAnswers.push(`$${increase}$ 平方公分`);
       answers.push(
         e527Answer(
@@ -6431,7 +7067,9 @@
     for (let i = 0; i < count; i += 1) {
       const [cubeCount, edge] = pickFromList(items);
       const decrease = 2 * (cubeCount - 1) * edge * edge;
-      questions.push(`把 $${cubeCount}$ 個邊長 $${edge}$ 公分的正方體排成一直排黏在一起，新立體的表面積比原來共減少多少平方公分？`);
+      questions.push(
+        `把 $${cubeCount}$ 個邊長 $${edge}$ 公分的正方體排成一直排黏在一起，新立體的表面積比原來共減少多少平方公分？`
+      );
       summaryAnswers.push(`$${decrease}$ 平方公分`);
       answers.push(
         e527Answer(
@@ -6459,7 +7097,9 @@
       const [length, width, height] = pickFromList(dims);
       const cubeCount = length * width * height;
       const surface = 2 * (length * width + width * height + length * height);
-      questions.push(`用 $${cubeCount}$ 個邊長 $1$ 公分的正方體積木排成 $${length}\\times${width}\\times${height}$ 的長方體，表面積是多少平方公分？`);
+      questions.push(
+        `用 $${cubeCount}$ 個邊長 $1$ 公分的正方體積木排成 $${length}\\times${width}\\times${height}$ 的長方體，表面積是多少平方公分？`
+      );
       summaryAnswers.push(`$${surface}$ 平方公分`);
       answers.push(
         e527Answer(
@@ -6486,8 +7126,11 @@
       const { volume, a, b } = pickFromList(cases);
       const surfaceA = 2 * (a[0] * a[1] + a[1] * a[2] + a[0] * a[2]);
       const surfaceB = 2 * (b[0] * b[1] + b[1] * b[2] + b[0] * b[2]);
-      const winner = surfaceA < surfaceB ? `乙（${b[0]}\\times${b[1]}\\times${b[2]}）` : `甲（${a[0]}\\times${a[1]}\\times${a[2]}）`;
-      questions.push(`同樣用 $${volume}$ 個邊長 $1$ 公分的正方體積木排成立體。甲排成 $${a[0]}\\times${a[1]}\\times${a[2]}$，乙排成 $${b[0]}\\times${b[1]}\\times${b[2]}$，哪一個表面積較小？`);
+      const winner =
+        surfaceA < surfaceB ? `乙（${b[0]}\\times${b[1]}\\times${b[2]}）` : `甲（${a[0]}\\times${a[1]}\\times${a[2]}）`;
+      questions.push(
+        `同樣用 $${volume}$ 個邊長 $1$ 公分的正方體積木排成立體。甲排成 $${a[0]}\\times${a[1]}\\times${a[2]}$，乙排成 $${b[0]}\\times${b[1]}\\times${b[2]}$，哪一個表面積較小？`
+      );
       summaryAnswers.push(surfaceA < surfaceB ? winner : `乙（${b[0]}\\times${b[1]}\\times${b[2]}）`);
       answers.push(
         e527Answer(
@@ -6514,40 +7157,29 @@
   }
 
   function buildE527CubeThreeSet(count) {
-    return buildE527MixedSet([
-      buildE527CubeEdgeSurfaceSet,
-      buildE527CubeFaceAreaSurfaceSet,
-      buildE527CubeInverseEdgeSet,
-    ], count);
+    return buildE527MixedSet(
+      [buildE527CubeEdgeSurfaceSet, buildE527CubeFaceAreaSurfaceSet, buildE527CubeInverseEdgeSet],
+      count
+    );
   }
 
   function buildE527RectThreeSet(count) {
-    return buildE527MixedSet([
-      buildE527RectSurfaceSet,
-      buildE527SpecialRectSurfaceSet,
-      buildE527VolumeToSurfaceSet,
-    ], count);
+    return buildE527MixedSet(
+      [buildE527RectSurfaceSet, buildE527SpecialRectSurfaceSet, buildE527VolumeToSurfaceSet],
+      count
+    );
   }
 
   function buildE527LifeTwoSet(count) {
-    return buildE527MixedSet([
-      buildE527FullCoverApplicationSet,
-      buildE527LateralWrapSet,
-    ], count);
+    return buildE527MixedSet([buildE527FullCoverApplicationSet, buildE527LateralWrapSet], count);
   }
 
   function buildE527CutMergeTwoSet(count) {
-    return buildE527MixedSet([
-      buildE527CutIncreaseSet,
-      buildE527MergeDecreaseSet,
-    ], count);
+    return buildE527MixedSet([buildE527CutIncreaseSet, buildE527MergeDecreaseSet], count);
   }
 
   function buildE527BlockCompareTwoSet(count) {
-    return buildE527MixedSet([
-      buildE527UnitCubeSurfaceSet,
-      buildE527ArrangementCompareSet,
-    ], count);
+    return buildE527MixedSet([buildE527UnitCubeSurfaceSet, buildE527ArrangementCompareSet], count);
   }
 
   function e528FormatNumber(value, digits = 4) {
@@ -6565,10 +7197,28 @@
 
   function e528PickRateFraction() {
     const bank = [
-      [1, 2], [1, 4], [3, 4], [1, 5], [2, 5], [3, 5], [4, 5],
-      [1, 8], [3, 8], [5, 8], [7, 8], [3, 10], [7, 10], [9, 20],
-      [13, 20], [17, 25], [21, 25], [3, 25], [7, 25], [3, 40],
-      [11, 25], [31, 100],
+      [1, 2],
+      [1, 4],
+      [3, 4],
+      [1, 5],
+      [2, 5],
+      [3, 5],
+      [4, 5],
+      [1, 8],
+      [3, 8],
+      [5, 8],
+      [7, 8],
+      [3, 10],
+      [7, 10],
+      [9, 20],
+      [13, 20],
+      [17, 25],
+      [21, 25],
+      [3, 25],
+      [7, 25],
+      [3, 40],
+      [11, 25],
+      [31, 100],
     ];
     return pickFromList(bank);
   }
@@ -6672,9 +7322,7 @@
       const part = num * multiplier;
       const context = pickFromList(contexts);
       const rateText = e528FractionText(num, den);
-      const question = context.question
-        .replace('{whole}', whole)
-        .replace('{rate}', rateText);
+      const question = context.question.replace('{whole}', whole).replace('{rate}', rateText);
       questions.push(question);
       summaryAnswers.push(`${part}${context.unit}`);
       answers.push(
@@ -6693,10 +7341,22 @@
     const answers = [];
     const contexts = [
       { knownLabel: '出席率', unknownLabel: '缺席率', question: '五年甲班出席率是 {known}，請問缺席率是多少？' },
-      { knownLabel: '紅花的比率', unknownLabel: '紫花的比率', question: '媽媽買了花，紅花占 {known}，剩下的都是紫花，紫花占的比率是多少？' },
+      {
+        knownLabel: '紅花的比率',
+        unknownLabel: '紫花的比率',
+        question: '媽媽買了花，紅花占 {known}，剩下的都是紫花，紫花占的比率是多少？',
+      },
       { knownLabel: '及格率', unknownLabel: '不及格率', question: '數學測驗的及格率是 {known}，不及格率是多少？' },
-      { knownLabel: '肉包的比率', unknownLabel: '菜包的比率', question: '包子店賣出的包子中，肉包占 {known}，其餘皆是菜包，菜包的比率是多少？' },
-      { knownLabel: '候選人 A 得票率', unknownLabel: '另一人的得票率', question: '若某次選舉中，候選人 A 的得票率是 {known}，且只有兩位候選人，另一人的得票率是多少？' },
+      {
+        knownLabel: '肉包的比率',
+        unknownLabel: '菜包的比率',
+        question: '包子店賣出的包子中，肉包占 {known}，其餘皆是菜包，菜包的比率是多少？',
+      },
+      {
+        knownLabel: '候選人 A 得票率',
+        unknownLabel: '另一人的得票率',
+        question: '若某次選舉中，候選人 A 的得票率是 {known}，且只有兩位候選人，另一人的得票率是多少？',
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const [num, den] = e528PickRateFraction();
@@ -6721,10 +7381,26 @@
     const summaryAnswers = [];
     const answers = [];
     const contexts = [
-      { wholeLabel: '投球總數', partLabel: '投進題數', question: '籃球賽中，共投出 {whole} 球，投進 {part} 球，進球率是多少？' },
-      { wholeLabel: '參加人數', partLabel: '錄取人數', question: '田徑隊徵選有 {whole} 人參加，錄取 {part} 人，錄取率是多少？' },
-      { wholeLabel: '果汁總量', partLabel: '蘋果原汁', question: '{whole} 毫升果汁中含有 {part} 毫升蘋果原汁，蘋果汁含量百分率是多少？' },
-      { wholeLabel: '測驗題數', partLabel: '答對題數', question: '一份練習卷有 {whole} 題，皮皮答對 {part} 題，答對率是多少？' },
+      {
+        wholeLabel: '投球總數',
+        partLabel: '投進題數',
+        question: '籃球賽中，共投出 {whole} 球，投進 {part} 球，進球率是多少？',
+      },
+      {
+        wholeLabel: '參加人數',
+        partLabel: '錄取人數',
+        question: '田徑隊徵選有 {whole} 人參加，錄取 {part} 人，錄取率是多少？',
+      },
+      {
+        wholeLabel: '果汁總量',
+        partLabel: '蘋果原汁',
+        question: '{whole} 毫升果汁中含有 {part} 毫升蘋果原汁，蘋果汁含量百分率是多少？',
+      },
+      {
+        wholeLabel: '測驗題數',
+        partLabel: '答對題數',
+        question: '一份練習卷有 {whole} 題，皮皮答對 {part} 題，答對率是多少？',
+      },
       { wholeLabel: '全班人數', partLabel: '最高分人數', question: '{whole} 人中，最高分有 {part} 人，百分率是多少？' },
     ];
     for (let i = 0; i < count; i += 1) {
@@ -6845,7 +7521,9 @@
           { label: item.bLabel, rate: rateB },
           { label: item.cLabel, rate: rateC },
         ].sort((a, b) => b.rate - a.rate)[0];
-        questions.push(`比較三班近視率：一班是 ${item.partA}/${item.wholeA}，二班是 ${item.partB}/${item.wholeB}，三班是 ${item.partC}/${item.wholeC}，哪班近視率最高？`);
+        questions.push(
+          `比較三班近視率：一班是 ${item.partA}/${item.wholeA}，二班是 ${item.partB}/${item.wholeB}，三班是 ${item.partC}/${item.wholeC}，哪班近視率最高？`
+        );
         summaryAnswers.push(best.label);
         answers.push(
           e528Answer(
@@ -6857,7 +7535,9 @@
         const rateA = item.partA / item.wholeA;
         const rateB = item.partB / item.wholeB;
         const best = rateA > rateB ? item.aLabel : item.bLabel;
-        questions.push(`${item.aLabel}投了 ${item.wholeA}${item.unit}中成功 ${item.partA}${item.unit}，${item.bLabel}投了 ${item.wholeB}${item.unit}中成功 ${item.partB}${item.unit}，誰的${item.target}較高？`);
+        questions.push(
+          `${item.aLabel}投了 ${item.wholeA}${item.unit}中成功 ${item.partA}${item.unit}，${item.bLabel}投了 ${item.wholeB}${item.unit}中成功 ${item.partB}${item.unit}，誰的${item.target}較高？`
+        );
         summaryAnswers.push(best);
         answers.push(
           e528Answer(
@@ -6926,7 +7606,14 @@
 
   function buildE528FractionToPercentExpandSet(count) {
     const bank = [
-      [1, 4], [7, 10], [13, 20], [14, 25], [17, 50], [3, 5], [9, 20], [21, 25],
+      [1, 4],
+      [7, 10],
+      [13, 20],
+      [14, 25],
+      [17, 50],
+      [3, 5],
+      [9, 20],
+      [21, 25],
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -6949,7 +7636,12 @@
 
   function buildE528FractionToPercentRoundSet(count) {
     const bank = [
-      [3, 8, 1], [5, 6, 0], [1, 3, 0], [7, 24, 1], [3, 7, 0], [11, 12, 0],
+      [3, 8, 1],
+      [5, 6, 0],
+      [1, 3, 0],
+      [7, 24, 1],
+      [3, 7, 0],
+      [11, 12, 0],
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -6984,7 +7676,7 @@
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const item = bank[i % bank.length];
-      const sale = Math.round(item.price * item.fold / 100);
+      const sale = Math.round((item.price * item.fold) / 100);
       const foldText = item.fold % 10 === 0 ? `${item.fold / 10}折` : `${e528FormatNumber(item.fold / 10, 1)}折`;
       questions.push(`一個定價 ${item.price} 元的${item.item}，${item.label}${foldText}出售，售價是多少元？`);
       summaryAnswers.push(`${sale}元`);
@@ -7012,7 +7704,7 @@
     for (let i = 0; i < count; i += 1) {
       const item = bank[i % bank.length];
       const remain = 100 - item.off;
-      const sale = Math.round(item.price * remain / 100);
+      const sale = Math.round((item.price * remain) / 100);
       questions.push(`${item.item}原價 ${item.price} 元，現在全面 ${item.off}% off，售價是多少元？`);
       summaryAnswers.push(`${sale}元`);
       answers.push(
@@ -7038,8 +7730,9 @@
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const item = bank[i % bank.length];
-      const price = Math.round(item.cost * (100 + item.markup) / 100);
-      const markupText = item.markup % 10 === 0 ? `${item.markup / 10}成` : `${e528FormatNumber(item.markup / 10, 1)}成`;
+      const price = Math.round((item.cost * (100 + item.markup)) / 100);
+      const markupText =
+        item.markup % 10 === 0 ? `${item.markup / 10}成` : `${e528FormatNumber(item.markup / 10, 1)}成`;
       questions.push(`一件${item.item}成本 ${item.cost} 元，老闆加 ${markupText} 作為定價，定價是多少元？`);
       summaryAnswers.push(`${price}元`);
       answers.push(
@@ -7067,9 +7760,10 @@
       const item = bank[i % bank.length];
       if (item.step === 'service') {
         const total = Math.round(item.amount * (1 + item.rate / 100));
-        const text = item.people > 1
-          ? `一餐 ${item.amount} 元，加收一成服務費，${item.people} 人各點一份，一共要付多少元？`
-          : `點了 ${item.amount} 元的餐點，加收一成服務費，共要付多少元？`;
+        const text =
+          item.people > 1
+            ? `一餐 ${item.amount} 元，加收一成服務費，${item.people} 人各點一份，一共要付多少元？`
+            : `點了 ${item.amount} 元的餐點，加收一成服務費，共要付多少元？`;
         questions.push(text);
         summaryAnswers.push(`${total * item.people}元`);
         answers.push(
@@ -7080,7 +7774,7 @@
         );
       } else if (item.step === 'markup-discount') {
         const markupPrice = item.amount * 1.3;
-        const sale = Math.round(markupPrice * item.fold / 100);
+        const sale = Math.round((markupPrice * item.fold) / 100);
         questions.push(`運動外套成本 ${item.amount} 元，先加三成定價後再打八五折，售價是多少元？`);
         summaryAnswers.push(`${sale}元`);
         answers.push(
@@ -7104,7 +7798,7 @@
         );
       } else {
         const afterOff = item.amount * (1 - item.off / 100);
-        const sale = Math.round(afterOff * item.fold / 100);
+        const sale = Math.round((afterOff * item.fold) / 100);
         questions.push(`定價 ${item.amount} 元的背包先打 ${item.off}% off，再打九折，售價是多少元？`);
         summaryAnswers.push(`${sale}元`);
         answers.push(
@@ -7173,38 +7867,39 @@
   }
 
   function buildE528BasicThreeSet(count) {
-    return buildE528MixedSet([
-      buildE528BasicRateSet,
-      buildE528PartFromRateSet,
-      buildE528ComplementRateSet,
-    ], count);
+    return buildE528MixedSet([buildE528BasicRateSet, buildE528PartFromRateSet, buildE528ComplementRateSet], count);
   }
 
   function buildE528PercentThreeSet(count) {
-    return buildE528MixedSet([
-      buildE528PercentFromDataSet,
-      buildE528PartFromPercentSet,
-      buildE528RateCompareSet,
-    ], count);
+    return buildE528MixedSet(
+      [buildE528PercentFromDataSet, buildE528PartFromPercentSet, buildE528RateCompareSet],
+      count
+    );
   }
 
   function buildE528ConvertFourSet(count) {
-    return buildE528MixedSet([
-      buildE528ExactConvertSet,
-      buildE528PercentToFractionSet,
-      buildE528FractionToPercentExpandSet,
-      buildE528FractionToPercentRoundSet,
-    ], count);
+    return buildE528MixedSet(
+      [
+        buildE528ExactConvertSet,
+        buildE528PercentToFractionSet,
+        buildE528FractionToPercentExpandSet,
+        buildE528FractionToPercentRoundSet,
+      ],
+      count
+    );
   }
 
   function buildE528PriceFiveSet(count) {
-    return buildE528MixedSet([
-      buildE528DiscountFoldSet,
-      buildE528PercentOffSet,
-      buildE528MarkupSet,
-      buildE528ServiceMultiStepSet,
-      buildE528FindDiscountRateSet,
-    ], count);
+    return buildE528MixedSet(
+      [
+        buildE528DiscountFoldSet,
+        buildE528PercentOffSet,
+        buildE528MarkupSet,
+        buildE528ServiceMultiStepSet,
+        buildE528FindDiscountRateSet,
+      ],
+      count
+    );
   }
 
   function e529FormatDuration(totalMinutes) {
@@ -7436,24 +8131,15 @@
   }
 
   function buildE529MultiplyTwoSet(count) {
-    return buildE529MixedSet([
-      buildE529MinuteMultiplySet,
-      buildE529HourMinuteMultiplySet,
-    ], count);
+    return buildE529MixedSet([buildE529MinuteMultiplySet, buildE529HourMinuteMultiplySet], count);
   }
 
   function buildE529LifeTwoSet(count) {
-    return buildE529MixedSet([
-      buildE529ScheduleMultiplySet,
-      buildE529ScheduleDivideSet,
-    ], count);
+    return buildE529MixedSet([buildE529ScheduleMultiplySet, buildE529ScheduleDivideSet], count);
   }
 
   function buildE529DivideTwoSet(count) {
-    return buildE529MixedSet([
-      buildE529MinuteDivideSet,
-      buildE529HourMinuteDivideSet,
-    ], count);
+    return buildE529MixedSet([buildE529MinuteDivideSet, buildE529HourMinuteDivideSet], count);
   }
 
   function e529FormatMinuteSecond(totalSeconds) {
@@ -7534,12 +8220,76 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      { unit: '日', smallUnit: '小時', factor: 24, wholes: [1, 2, 3, 4, 5, 6], pieces: [0.25, 0.5, 0.75], formatter: (whole, piece) => `${whole + piece}日`, answer: (whole, piece) => `${whole}日${piece * 24}小時` },
-      { unit: '日', smallUnit: '小時', factor: 24, wholes: [1, 2, 3, 4, 5], fractions: [[1, 4], [1, 2], [3, 4], [5, 8]], formatter: (whole, frac) => `${whole}${e529FormatFractionUnit(frac[0], frac[1], '日')}`, answer: (whole, frac) => `${whole}日${(24 * frac[0]) / frac[1]}小時` },
-      { unit: '小時', smallUnit: '分', factor: 60, wholes: [1, 2, 3, 4, 5, 6], pieces: [0.2, 0.25, 0.3, 0.35, 0.4, 0.5, 0.75], formatter: (whole, piece) => `${e529FormatDecimalNumber(whole + piece)}小時`, answer: (whole, piece) => `${whole}小時${piece * 60}分` },
-      { unit: '小時', smallUnit: '分', factor: 60, wholes: [1, 2, 3, 4, 5], fractions: [[1, 4], [1, 3], [2, 5], [3, 4]], formatter: (whole, frac) => `${whole}${e529FormatFractionUnit(frac[0], frac[1], '小時')}`, answer: (whole, frac) => `${whole}小時${(60 * frac[0]) / frac[1]}分` },
-      { unit: '分', smallUnit: '秒', factor: 60, wholes: [2, 3, 4, 5, 6, 8, 10], pieces: [0.2, 0.25, 0.4, 0.5, 0.6, 0.75], formatter: (whole, piece) => `${e529FormatDecimalNumber(whole + piece)}分`, answer: (whole, piece) => `${whole}分${piece * 60}秒` },
-      { unit: '分', smallUnit: '秒', factor: 60, wholes: [2, 3, 4, 5, 6, 8], fractions: [[1, 4], [1, 3], [2, 5], [1, 2], [3, 5]], formatter: (whole, frac) => `${whole}${e529FormatFractionUnit(frac[0], frac[1], '分')}`, answer: (whole, frac) => `${whole}分${(60 * frac[0]) / frac[1]}秒` },
+      {
+        unit: '日',
+        smallUnit: '小時',
+        factor: 24,
+        wholes: [1, 2, 3, 4, 5, 6],
+        pieces: [0.25, 0.5, 0.75],
+        formatter: (whole, piece) => `${whole + piece}日`,
+        answer: (whole, piece) => `${whole}日${piece * 24}小時`,
+      },
+      {
+        unit: '日',
+        smallUnit: '小時',
+        factor: 24,
+        wholes: [1, 2, 3, 4, 5],
+        fractions: [
+          [1, 4],
+          [1, 2],
+          [3, 4],
+          [5, 8],
+        ],
+        formatter: (whole, frac) => `${whole}${e529FormatFractionUnit(frac[0], frac[1], '日')}`,
+        answer: (whole, frac) => `${whole}日${(24 * frac[0]) / frac[1]}小時`,
+      },
+      {
+        unit: '小時',
+        smallUnit: '分',
+        factor: 60,
+        wholes: [1, 2, 3, 4, 5, 6],
+        pieces: [0.2, 0.25, 0.3, 0.35, 0.4, 0.5, 0.75],
+        formatter: (whole, piece) => `${e529FormatDecimalNumber(whole + piece)}小時`,
+        answer: (whole, piece) => `${whole}小時${piece * 60}分`,
+      },
+      {
+        unit: '小時',
+        smallUnit: '分',
+        factor: 60,
+        wholes: [1, 2, 3, 4, 5],
+        fractions: [
+          [1, 4],
+          [1, 3],
+          [2, 5],
+          [3, 4],
+        ],
+        formatter: (whole, frac) => `${whole}${e529FormatFractionUnit(frac[0], frac[1], '小時')}`,
+        answer: (whole, frac) => `${whole}小時${(60 * frac[0]) / frac[1]}分`,
+      },
+      {
+        unit: '分',
+        smallUnit: '秒',
+        factor: 60,
+        wholes: [2, 3, 4, 5, 6, 8, 10],
+        pieces: [0.2, 0.25, 0.4, 0.5, 0.6, 0.75],
+        formatter: (whole, piece) => `${e529FormatDecimalNumber(whole + piece)}分`,
+        answer: (whole, piece) => `${whole}分${piece * 60}秒`,
+      },
+      {
+        unit: '分',
+        smallUnit: '秒',
+        factor: 60,
+        wholes: [2, 3, 4, 5, 6, 8],
+        fractions: [
+          [1, 4],
+          [1, 3],
+          [2, 5],
+          [1, 2],
+          [3, 5],
+        ],
+        formatter: (whole, frac) => `${whole}${e529FormatFractionUnit(frac[0], frac[1], '分')}`,
+        answer: (whole, frac) => `${whole}分${(60 * frac[0]) / frac[1]}秒`,
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const item = pickFromList(cases);
@@ -7550,7 +8300,12 @@
         const answerText = item.answer(whole, piece);
         questions.push(`${sourceText}等於幾${item.unit}${item.smallUnit}？`);
         summaryAnswers.push(answerText);
-        answers.push(e529Answer(answerText, `${item.unit}換成${item.smallUnit}要乘 ${item.factor}。所以 ${item.factor} × ${piece} = ${piece * item.factor}，因此 ${sourceText} = ${answerText}。`));
+        answers.push(
+          e529Answer(
+            answerText,
+            `${item.unit}換成${item.smallUnit}要乘 ${item.factor}。所以 ${item.factor} × ${piece} = ${piece * item.factor}，因此 ${sourceText} = ${answerText}。`
+          )
+        );
       } else {
         const whole = pickFromList(item.wholes);
         const frac = pickFromList(item.fractions);
@@ -7558,7 +8313,12 @@
         const answerText = item.answer(whole, frac);
         questions.push(`${sourceText}等於幾${item.unit}${item.smallUnit}？`);
         summaryAnswers.push(answerText);
-        answers.push(e529Answer(answerText, `${item.unit}換成${item.smallUnit}要乘 ${item.factor}。所以 ${item.factor} × ${e529FormatFractionUnit(frac[0], frac[1], '')} = ${(item.factor * frac[0]) / frac[1]}，因此 ${sourceText} = ${answerText}。`));
+        answers.push(
+          e529Answer(
+            answerText,
+            `${item.unit}換成${item.smallUnit}要乘 ${item.factor}。所以 ${item.factor} × ${e529FormatFractionUnit(frac[0], frac[1], '')} = ${(item.factor * frac[0]) / frac[1]}，因此 ${sourceText} = ${answerText}。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -7580,7 +8340,12 @@
       const answerText = `${e529FormatDecimalNumber(result)}${mode.to}`;
       questions.push(`${value}${mode.from}也可以說是幾${mode.to}？（用小數表示）`);
       summaryAnswers.push(answerText);
-      answers.push(e529Answer(answerText, `${mode.from}換成${mode.to}要除以 ${mode.divisor}，所以 ${value} ÷ ${mode.divisor} = ${e529FormatDecimalNumber(result)}，答案是 ${answerText}。`));
+      answers.push(
+        e529Answer(
+          answerText,
+          `${mode.from}換成${mode.to}要除以 ${mode.divisor}，所以 ${value} ÷ ${mode.divisor} = ${e529FormatDecimalNumber(result)}，答案是 ${answerText}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7601,7 +8366,12 @@
       const answerText = `$${formatFraction(reduced.numerator, reduced.denominator)}$${mode.to}`;
       questions.push(`${value}${mode.from}也可以說是幾${mode.to}？（用分數表示）`);
       summaryAnswers.push(answerText);
-      answers.push(e529Answer(answerText, `${mode.from}換成${mode.to}要除以 ${mode.divisor}，所以 ${value} ÷ ${mode.divisor} = ${e529FormatFractionUnit(reduced.numerator, reduced.denominator, mode.to)}。`));
+      answers.push(
+        e529Answer(
+          answerText,
+          `${mode.from}換成${mode.to}要除以 ${mode.divisor}，所以 ${value} ÷ ${mode.divisor} = ${e529FormatFractionUnit(reduced.numerator, reduced.denominator, mode.to)}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7627,7 +8397,12 @@
         const relation = leftMinutes > rightMinutes ? `${pair[0]}較久` : `${pair[1]}較久`;
         questions.push(`${pair[0]}練習了 ${leftText}，${pair[1]}練習了 ${rightText}，誰練習時間較久？`);
         summaryAnswers.push(relation);
-        answers.push(e529Answer(relation, `${leftText} = ${e529FormatHourMinute(Math.floor(leftMinutes / 60), leftMinutes % 60)}。再比較 ${leftMinutes} 分和 ${rightMinutes} 分，所以 ${relation}。`));
+        answers.push(
+          e529Answer(
+            relation,
+            `${leftText} = ${e529FormatHourMinute(Math.floor(leftMinutes / 60), leftMinutes % 60)}。再比較 ${leftMinutes} 分和 ${rightMinutes} 分，所以 ${relation}。`
+          )
+        );
       } else if (mode === 1) {
         const leftDecimal = pickFromList([1.2, 1.35, 1.5, 1.75, 2.1]);
         const leftSeconds = Math.round(leftDecimal * 60);
@@ -7637,7 +8412,12 @@
         const relation = leftSeconds > rightSeconds ? `${pair[0]}較久` : `${pair[1]}較久`;
         questions.push(`${pair[0]}花了 ${leftText}，${pair[1]}花了 ${rightText}，誰花的時間較久？`);
         summaryAnswers.push(relation);
-        answers.push(e529Answer(relation, `${leftText} = ${e529FormatMinuteSecond(leftSeconds)}。改成秒比較：${leftSeconds} 秒和 ${rightSeconds} 秒，所以 ${relation}。`));
+        answers.push(
+          e529Answer(
+            relation,
+            `${leftText} = ${e529FormatMinuteSecond(leftSeconds)}。改成秒比較：${leftSeconds} 秒和 ${rightSeconds} 秒，所以 ${relation}。`
+          )
+        );
       } else if (mode === 2) {
         const leftDays = pickFromList([2, 3, 4, 5]);
         const leftHours = pickFromList([4, 8, 12, 16, 20]);
@@ -7646,14 +8426,24 @@
         const relation = leftTotal > rightTotal ? '>' : '<';
         questions.push(`比較時間長短：${leftDays}日${leftHours}小時 ${relation === '>' ? '□' : '□'} ${rightTotal}小時`);
         summaryAnswers.push(relation);
-        answers.push(e529Answer(relation, `${leftDays}日${leftHours}小時 = ${leftDays * 24}+${leftHours} = ${leftTotal}小時。再和 ${rightTotal}小時比較，可得 ${leftTotal} ${relation} ${rightTotal}。`));
+        answers.push(
+          e529Answer(
+            relation,
+            `${leftDays}日${leftHours}小時 = ${leftDays * 24}+${leftHours} = ${leftTotal}小時。再和 ${rightTotal}小時比較，可得 ${leftTotal} ${relation} ${rightTotal}。`
+          )
+        );
       } else {
         const leftMinutes = pickFromList([240, 300, 360, 420, 480]);
         const rightHours = pickFromList([4, 5, 6, 7, 8]);
         const relation = leftMinutes > rightHours * 60 ? '>' : '<';
         questions.push(`比較時間長短：${rightHours}小時 □ ${leftMinutes}分鐘`);
         summaryAnswers.push(rightHours * 60 > leftMinutes ? '>' : '<');
-        answers.push(e529Answer(rightHours * 60 > leftMinutes ? '>' : '<', `${rightHours}小時 = ${rightHours * 60}分鐘。再和 ${leftMinutes}分鐘比較，可得 ${rightHours * 60 > leftMinutes ? '>' : '<'}。`));
+        answers.push(
+          e529Answer(
+            rightHours * 60 > leftMinutes ? '>' : '<',
+            `${rightHours}小時 = ${rightHours * 60}分鐘。再和 ${leftMinutes}分鐘比較，可得 ${rightHours * 60 > leftMinutes ? '>' : '<'}。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -7670,7 +8460,15 @@
       ['沖一杯咖啡', '杯'],
       ['做一次舞蹈練習', '次'],
     ];
-    const basePairs = [[1, 18], [1, 34], [2, 15], [3, 8], [3, 20], [4, 12], [6, 21]];
+    const basePairs = [
+      [1, 18],
+      [1, 34],
+      [2, 15],
+      [3, 8],
+      [3, 20],
+      [4, 12],
+      [6, 21],
+    ];
     const counts = [3, 4, 5, 6, 7, 8, 10, 12];
     for (let i = 0; i < count; i += 1) {
       const [minute, second] = pickFromList(basePairs);
@@ -7680,7 +8478,12 @@
       const [action, unit] = contexts[i % contexts.length];
       questions.push(`${action}要 ${minute}分${second}秒，做 ${times}${unit}共要幾分幾秒？`);
       summaryAnswers.push(answerText);
-      answers.push(e529Answer(answerText, `先把一次的時間換成秒：${minute}分${second}秒 = ${minute * 60 + second}秒。再算 ${(minute * 60 + second)} × ${times} = ${totalSeconds}秒，最後換回幾分幾秒，所以是 ${answerText}。`));
+      answers.push(
+        e529Answer(
+          answerText,
+          `先把一次的時間換成秒：${minute}分${second}秒 = ${minute * 60 + second}秒。再算 ${minute * 60 + second} × ${times} = ${totalSeconds}秒，最後換回幾分幾秒，所以是 ${answerText}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7696,7 +8499,15 @@
       ['播映一場電影', '場'],
       ['修理一輛機車', '輛'],
     ];
-    const basePairs = [[1, 10], [1, 20], [1, 35], [1, 38], [2, 20], [2, 35], [3, 15]];
+    const basePairs = [
+      [1, 10],
+      [1, 20],
+      [1, 35],
+      [1, 38],
+      [2, 20],
+      [2, 35],
+      [3, 15],
+    ];
     const counts = [2, 3, 4, 5, 6, 7];
     for (let i = 0; i < count; i += 1) {
       const [hour, minute] = pickFromList(basePairs);
@@ -7706,7 +8517,12 @@
       const [action, unit] = contexts[i % contexts.length];
       questions.push(`${action}要 ${hour}小時${minute}分，做 ${times}${unit}共要幾小時幾分？`);
       summaryAnswers.push(answerText);
-      answers.push(e529Answer(answerText, `先把一次的時間換成分鐘：${hour}小時${minute}分 = ${hour * 60 + minute}分。再算 ${(hour * 60 + minute)} × ${times} = ${totalMinutes}分，最後換回幾小時幾分，所以是 ${answerText}。`));
+      answers.push(
+        e529Answer(
+          answerText,
+          `先把一次的時間換成分鐘：${hour}小時${minute}分 = ${hour * 60 + minute}分。再算 ${hour * 60 + minute} × ${times} = ${totalMinutes}分，最後換回幾小時幾分，所以是 ${answerText}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7722,7 +8538,15 @@
       ['做一件禮服', '件'],
       ['社區停水一次', '次'],
     ];
-    const basePairs = [[1, 8], [2, 12], [3, 5], [4, 12], [6, 12], [8, 4], [29, 12]];
+    const basePairs = [
+      [1, 8],
+      [2, 12],
+      [3, 5],
+      [4, 12],
+      [6, 12],
+      [8, 4],
+      [29, 12],
+    ];
     const counts = [2, 3, 4, 5, 6, 7];
     for (let i = 0; i < count; i += 1) {
       const [day, hour] = pickFromList(basePairs);
@@ -7732,7 +8556,12 @@
       const [action, unit] = contexts[i % contexts.length];
       questions.push(`${action}要 ${day}日${hour}小時，做 ${times}${unit}共要幾日幾小時？`);
       summaryAnswers.push(answerText);
-      answers.push(e529Answer(answerText, `先把一次的時間換成小時：${day}日${hour}小時 = ${day * 24 + hour}小時。再算 ${(day * 24 + hour)} × ${times} = ${totalHours}小時，最後換回幾日幾小時，所以是 ${answerText}。`));
+      answers.push(
+        e529Answer(
+          answerText,
+          `先把一次的時間換成小時：${day}日${hour}小時 = ${day * 24 + hour}小時。再算 ${day * 24 + hour} × ${times} = ${totalHours}小時，最後換回幾日幾小時，所以是 ${answerText}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7756,21 +8585,36 @@
         const answerText = e529FormatDuration(totalMinutes);
         questions.push(`${item.intro}${hour}小時${minute}分，${item.countLabel}共累計幾小時幾分？`);
         summaryAnswers.push(answerText);
-        answers.push(e529Answer(answerText, `先把每天換成分鐘：${hour}小時${minute}分 = ${hour * 60 + minute}分。再乘上 ${item.count}，得到 ${(hour * 60 + minute)} × ${item.count} = ${totalMinutes}分，換回幾小時幾分就是 ${answerText}。`));
+        answers.push(
+          e529Answer(
+            answerText,
+            `先把每天換成分鐘：${hour}小時${minute}分 = ${hour * 60 + minute}分。再乘上 ${item.count}，得到 ${hour * 60 + minute} × ${item.count} = ${totalMinutes}分，換回幾小時幾分就是 ${answerText}。`
+          )
+        );
       } else if (item.unit === '日時') {
         const [day, hour] = item.base;
         const totalHours = (day * 24 + hour) * item.count;
         const answerText = e529FormatDayHour(totalHours);
         questions.push(`${item.intro}${day}日${hour}小時，${item.countLabel}共累計幾日幾小時？`);
         summaryAnswers.push(answerText);
-        answers.push(e529Answer(answerText, `先把每次換成小時：${day}日${hour}小時 = ${day * 24 + hour}小時。再乘上 ${item.count}，得到 ${(day * 24 + hour)} × ${item.count} = ${totalHours}小時，換回幾日幾小時就是 ${answerText}。`));
+        answers.push(
+          e529Answer(
+            answerText,
+            `先把每次換成小時：${day}日${hour}小時 = ${day * 24 + hour}小時。再乘上 ${item.count}，得到 ${day * 24 + hour} × ${item.count} = ${totalHours}小時，換回幾日幾小時就是 ${answerText}。`
+          )
+        );
       } else {
         const [, second] = item.base;
         const totalSeconds = second * item.count;
         const answerText = e529FormatMinuteSecond(totalSeconds);
         questions.push(`${item.intro}${second}秒，${item.countLabel}共快幾分幾秒？`);
         summaryAnswers.push(answerText);
-        answers.push(e529Answer(answerText, `${second}秒每天累積 ${item.count} 天，共 ${second} × ${item.count} = ${totalSeconds}秒，換回幾分幾秒就是 ${answerText}。`));
+        answers.push(
+          e529Answer(
+            answerText,
+            `${second}秒每天累積 ${item.count} 天，共 ${second} × ${item.count} = ${totalSeconds}秒，換回幾分幾秒就是 ${answerText}。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -7781,17 +8625,58 @@
     const summaryAnswers = [];
     const answers = [];
     const templates = [
-      { itemName: '歌曲', countUnit: '遍', countChoices: [3, 4, 5, 6], eachChoices: [145, 165, 185, 205], answerKind: 'ms', ask: '平均唱一遍要幾分幾秒', totalText: (total) => e529FormatMinuteSecond(total) },
-      { itemName: '圍巾', countUnit: '條', countChoices: [4, 6, 8], eachChoices: [45, 60, 72, 84, 95], answerKind: 'hm', ask: '平均編一條要幾小時幾分', totalText: (total) => e529FormatDuration(total / 60) },
-      { itemName: '積木城堡', countUnit: '座', countChoices: [2, 3, 4], eachChoices: [28, 36, 40, 52], answerKind: 'dh', ask: '平均組裝一座要幾日幾小時', totalText: (total) => e529FormatDayHour(total / 3600) },
-      { itemName: '自行車圈數', countUnit: '圈', countChoices: [4, 5, 6], eachChoices: [52, 64, 75, 84], answerKind: 'hm', ask: '平均騎一圈要幾小時幾分', totalText: (total) => e529FormatDuration(total / 60) },
-      { itemName: '沙包', countUnit: '個', countChoices: [4, 5, 6, 8], eachChoices: [65, 85, 95, 125], answerKind: 'ms', ask: '平均做一個要幾分幾秒', totalText: (total) => e529FormatMinuteSecond(total) },
+      {
+        itemName: '歌曲',
+        countUnit: '遍',
+        countChoices: [3, 4, 5, 6],
+        eachChoices: [145, 165, 185, 205],
+        answerKind: 'ms',
+        ask: '平均唱一遍要幾分幾秒',
+        totalText: (total) => e529FormatMinuteSecond(total),
+      },
+      {
+        itemName: '圍巾',
+        countUnit: '條',
+        countChoices: [4, 6, 8],
+        eachChoices: [45, 60, 72, 84, 95],
+        answerKind: 'hm',
+        ask: '平均編一條要幾小時幾分',
+        totalText: (total) => e529FormatDuration(total / 60),
+      },
+      {
+        itemName: '積木城堡',
+        countUnit: '座',
+        countChoices: [2, 3, 4],
+        eachChoices: [28, 36, 40, 52],
+        answerKind: 'dh',
+        ask: '平均組裝一座要幾日幾小時',
+        totalText: (total) => e529FormatDayHour(total / 3600),
+      },
+      {
+        itemName: '自行車圈數',
+        countUnit: '圈',
+        countChoices: [4, 5, 6],
+        eachChoices: [52, 64, 75, 84],
+        answerKind: 'hm',
+        ask: '平均騎一圈要幾小時幾分',
+        totalText: (total) => e529FormatDuration(total / 60),
+      },
+      {
+        itemName: '沙包',
+        countUnit: '個',
+        countChoices: [4, 5, 6, 8],
+        eachChoices: [65, 85, 95, 125],
+        answerKind: 'ms',
+        ask: '平均做一個要幾分幾秒',
+        totalText: (total) => e529FormatMinuteSecond(total),
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       const countValue = pickFromList(item.countChoices);
       const eachBase = pickFromList(item.eachChoices);
-      const eachSeconds = item.answerKind === 'dh' ? eachBase * 3600 : item.answerKind === 'hm' ? eachBase * 60 : eachBase;
+      const eachSeconds =
+        item.answerKind === 'dh' ? eachBase * 3600 : item.answerKind === 'hm' ? eachBase * 60 : eachBase;
       const totalSeconds = eachSeconds * countValue;
       let answerText = '';
       if (item.answerKind === 'ms') {
@@ -7801,9 +8686,16 @@
       } else {
         answerText = e529FormatDayHour(eachSeconds / 3600);
       }
-      questions.push(`共花了${item.totalText(totalSeconds)}完成 ${countValue}${item.countUnit}${item.itemName}，${item.ask}？`);
+      questions.push(
+        `共花了${item.totalText(totalSeconds)}完成 ${countValue}${item.countUnit}${item.itemName}，${item.ask}？`
+      );
       summaryAnswers.push(answerText);
-      answers.push(e529Answer(answerText, `平均每一個所用時間 = 總時間 ÷ 數量。先把總時間統一成秒，再算 ${totalSeconds} ÷ ${countValue} = ${eachSeconds} 秒，最後換回題目要的形式，所以是 ${answerText}。`));
+      answers.push(
+        e529Answer(
+          answerText,
+          `平均每一個所用時間 = 總時間 ÷ 數量。先把總時間統一成秒，再算 ${totalSeconds} ÷ ${countValue} = ${eachSeconds} 秒，最後換回題目要的形式，所以是 ${answerText}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7813,11 +8705,33 @@
     const summaryAnswers = [];
     const answers = [];
     const contexts = [
-      { thing: '摺一個紙盒', eachChoices: [3 * 60, 4 * 60, 5 * 60], countChoices: [18, 24, 30, 35], answerUnit: '個紙盒' },
+      {
+        thing: '摺一個紙盒',
+        eachChoices: [3 * 60, 4 * 60, 5 * 60],
+        countChoices: [18, 24, 30, 35],
+        answerUnit: '個紙盒',
+      },
       { thing: '播放一次影片', eachChoices: [60, 70, 80, 90], countChoices: [180, 240, 300], answerUnit: '次' },
-      { thing: '烤一個吐司', eachChoices: [4 * 60 + 10, 4 * 60 + 16, 4 * 60 + 25], countChoices: [12, 13, 14], answerUnit: '個吐司' },
-      { thing: '播放一次主題曲', eachChoices: [3 * 60 + 10, 3 * 60 + 20, 3 * 60 + 30], countChoices: [2, 3, 4], answerUnit: '遍', totalChoices: [10 * 60, 12 * 60, 15 * 60] },
-      { thing: '製作一件模型', eachChoices: [25 * 60, 30 * 60, 35 * 60], countChoices: [3, 4, 5], answerUnit: '個', fromElapsed: true },
+      {
+        thing: '烤一個吐司',
+        eachChoices: [4 * 60 + 10, 4 * 60 + 16, 4 * 60 + 25],
+        countChoices: [12, 13, 14],
+        answerUnit: '個吐司',
+      },
+      {
+        thing: '播放一次主題曲',
+        eachChoices: [3 * 60 + 10, 3 * 60 + 20, 3 * 60 + 30],
+        countChoices: [2, 3, 4],
+        answerUnit: '遍',
+        totalChoices: [10 * 60, 12 * 60, 15 * 60],
+      },
+      {
+        thing: '製作一件模型',
+        eachChoices: [25 * 60, 30 * 60, 35 * 60],
+        countChoices: [3, 4, 5],
+        answerUnit: '個',
+        fromElapsed: true,
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const item = contexts[i % contexts.length];
@@ -7844,9 +8758,16 @@
         totalText = e529BuildScaledDuration(totalSeconds, ['hour', 'minute', 'second']);
       }
       const countValue = Math.floor(totalSeconds / eachSeconds);
-      questions.push(`${item.thing}需要 ${e529BuildScaledDuration(eachSeconds, ['hour', 'minute', 'second'])}，${totalText}最多可以完成幾${item.answerUnit}？`);
+      questions.push(
+        `${item.thing}需要 ${e529BuildScaledDuration(eachSeconds, ['hour', 'minute', 'second'])}，${totalText}最多可以完成幾${item.answerUnit}？`
+      );
       summaryAnswers.push(`${countValue}${item.answerUnit}`);
-      answers.push(e529Answer(`${countValue}${item.answerUnit}`, `${detail}每${item.thing}要 ${e529BuildScaledDuration(eachSeconds, ['hour', 'minute', 'second'])}，所以能完成的次數 = ${totalSeconds} ÷ ${eachSeconds} = ${countValue}，答案是 ${countValue}${item.answerUnit}。`));
+      answers.push(
+        e529Answer(
+          `${countValue}${item.answerUnit}`,
+          `${detail}每${item.thing}要 ${e529BuildScaledDuration(eachSeconds, ['hour', 'minute', 'second'])}，所以能完成的次數 = ${totalSeconds} ÷ ${eachSeconds} = ${countValue}，答案是 ${countValue}${item.answerUnit}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7867,16 +8788,30 @@
       if (item.clock === 'second') {
         const end = item.start + item.duration;
         const answerText = e529FormatMinuteSecond(item.duration / item.unitCount);
-        questions.push(`從${e529FormatClockSecond(item.start)}到${e529FormatClockSecond(end)}共完成 ${item.unitCount} 次，${item.ask}？`);
+        questions.push(
+          `從${e529FormatClockSecond(item.start)}到${e529FormatClockSecond(end)}共完成 ${item.unitCount} 次，${item.ask}？`
+        );
         summaryAnswers.push(answerText);
-        answers.push(e529Answer(answerText, `先算經過時間：${e529FormatClockSecond(end)} - ${e529FormatClockSecond(item.start)} = ${e529FormatMinuteSecond(item.duration)}。再算 ${item.duration} ÷ ${item.unitCount} = ${item.duration / item.unitCount} 秒，所以平均是 ${answerText}。`));
+        answers.push(
+          e529Answer(
+            answerText,
+            `先算經過時間：${e529FormatClockSecond(end)} - ${e529FormatClockSecond(item.start)} = ${e529FormatMinuteSecond(item.duration)}。再算 ${item.duration} ÷ ${item.unitCount} = ${item.duration / item.unitCount} 秒，所以平均是 ${answerText}。`
+          )
+        );
       } else {
         const end = item.start + item.duration;
         const answerMinutes = item.duration / item.unitCount;
         const answerText = item.clock === 'minute-short' ? `${answerMinutes}分鐘` : e529FormatDuration(answerMinutes);
-        questions.push(`從${e529FormatClockMinute(item.start)}到${e529FormatClockMinute(end)}共完成 ${item.unitCount} 次，${item.ask}？`);
+        questions.push(
+          `從${e529FormatClockMinute(item.start)}到${e529FormatClockMinute(end)}共完成 ${item.unitCount} 次，${item.ask}？`
+        );
         summaryAnswers.push(answerText);
-        answers.push(e529Answer(answerText, `先算經過時間：${e529FormatClockMinute(end)} - ${e529FormatClockMinute(item.start)} = ${e529FormatDuration(item.duration)}。再算 ${item.duration} ÷ ${item.unitCount} = ${answerMinutes} 分，所以平均是 ${answerText}。`));
+        answers.push(
+          e529Answer(
+            answerText,
+            `先算經過時間：${e529FormatClockMinute(end)} - ${e529FormatClockMinute(item.start)} = ${e529FormatDuration(item.duration)}。再算 ${item.duration} ÷ ${item.unitCount} = ${answerMinutes} 分，所以平均是 ${answerText}。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -7889,7 +8824,11 @@
     const cases = [
       { firstChoices: [6 * 60 + 10, 7 * 60, 7 * 60 + 20], intervalChoices: [20, 25, 30], nthChoices: [5, 6, 7] },
       { firstChoices: [13 * 60 + 10, 13 * 60 + 30, 14 * 60], intervalChoices: [40, 45, 50], nthChoices: [6, 7, 8] },
-      { firstChoices: [15 * 60 + 20, 16 * 60 + 35, 17 * 60 + 10], intervalChoices: [35, 40, 50], nthChoices: [4, 5, 6] },
+      {
+        firstChoices: [15 * 60 + 20, 16 * 60 + 35, 17 * 60 + 10],
+        intervalChoices: [35, 40, 50],
+        nthChoices: [4, 5, 6],
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const item = cases[i % cases.length];
@@ -7898,9 +8837,16 @@
       const nth = pickFromList(item.nthChoices);
       const target = first + interval * (nth - 1);
       const answerText = e529FormatClockMinute(target);
-      questions.push(`第一班在${e529FormatClockMinute(first)}出發，每隔${interval}分鐘一班，第 ${nth} 班是什麼時候出發？`);
+      questions.push(
+        `第一班在${e529FormatClockMinute(first)}出發，每隔${interval}分鐘一班，第 ${nth} 班是什麼時候出發？`
+      );
       summaryAnswers.push(answerText);
-      answers.push(e529Answer(answerText, `從第1班到第${nth}班有 ${nth - 1} 個間隔，所以經過時間是 ${interval} × ${nth - 1} = ${interval * (nth - 1)} 分。再用 ${e529FormatClockMinute(first)} 往後推 ${interval * (nth - 1)} 分，就得到 ${answerText}。`));
+      answers.push(
+        e529Answer(
+          answerText,
+          `從第1班到第${nth}班有 ${nth - 1} 個間隔，所以經過時間是 ${interval} × ${nth - 1} = ${interval * (nth - 1)} 分。再用 ${e529FormatClockMinute(first)} 往後推 ${interval * (nth - 1)} 分，就得到 ${answerText}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7910,10 +8856,25 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      { minuteMode: true, firstChoices: [13 * 60 + 10, 13 * 60 + 30, 14 * 60], intervalChoices: [40, 50, 60], tripsChoices: [6, 8, 10] },
-      { minuteMode: true, firstChoices: [6 * 60 + 10, 6 * 60 + 20, 7 * 60], intervalChoices: [20, 24, 26], tripsChoices: [10, 18, 26] },
+      {
+        minuteMode: true,
+        firstChoices: [13 * 60 + 10, 13 * 60 + 30, 14 * 60],
+        intervalChoices: [40, 50, 60],
+        tripsChoices: [6, 8, 10],
+      },
+      {
+        minuteMode: true,
+        firstChoices: [6 * 60 + 10, 6 * 60 + 20, 7 * 60],
+        intervalChoices: [20, 24, 26],
+        tripsChoices: [10, 18, 26],
+      },
       { secondMode: true, intervalChoices: [30, 35, 40], groupsChoices: [7, 9, 10] },
-      { minuteMode: true, firstChoices: [7 * 60, 7 * 60 + 10, 7 * 60 + 30], intervalChoices: [15, 20, 25], tripsChoices: [4, 5, 6] },
+      {
+        minuteMode: true,
+        firstChoices: [7 * 60, 7 * 60 + 10, 7 * 60 + 30],
+        intervalChoices: [15, 20, 25],
+        tripsChoices: [4, 5, 6],
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const item = cases[i % cases.length];
@@ -7922,9 +8883,16 @@
         const groups = pickFromList(item.groupsChoices);
         const total = interval * (groups - 1);
         const answerText = e529FormatMinuteSecond(interval);
-        questions.push(`每隔固定秒數放行一組，從第1組到第${groups}組共經過${e529FormatMinuteSecond(total)}，每隔幾分幾秒放行一組？`);
+        questions.push(
+          `每隔固定秒數放行一組，從第1組到第${groups}組共經過${e529FormatMinuteSecond(total)}，每隔幾分幾秒放行一組？`
+        );
         summaryAnswers.push(answerText);
-        answers.push(e529Answer(answerText, `第1組到第${groups}組共有 ${groups - 1} 個間隔，所以每個間隔 = ${total} ÷ ${groups - 1} = ${interval} 秒，也就是 ${answerText}。`));
+        answers.push(
+          e529Answer(
+            answerText,
+            `第1組到第${groups}組共有 ${groups - 1} 個間隔，所以每個間隔 = ${total} ÷ ${groups - 1} = ${interval} 秒，也就是 ${answerText}。`
+          )
+        );
       } else {
         const first = pickFromList(item.firstChoices);
         const interval = pickFromList(item.intervalChoices);
@@ -7932,9 +8900,16 @@
         const last = first + interval * (trips - 1);
         const total = last - first;
         const answerText = `${interval}分鐘`;
-        questions.push(`第一班在${e529FormatClockMinute(first)}出發，最後一班在${e529FormatClockMinute(last)}出發，共 ${trips} 班次，間隔幾分鐘一班？`);
+        questions.push(
+          `第一班在${e529FormatClockMinute(first)}出發，最後一班在${e529FormatClockMinute(last)}出發，共 ${trips} 班次，間隔幾分鐘一班？`
+        );
         summaryAnswers.push(answerText);
-        answers.push(e529Answer(answerText, `先算首末兩班相差 ${total} 分。因為 ${trips} 班次之間共有 ${trips - 1} 個間隔，所以每個間隔 = ${total} ÷ ${trips - 1} = ${interval} 分鐘。`));
+        answers.push(
+          e529Answer(
+            answerText,
+            `先算首末兩班相差 ${total} 分。因為 ${trips} 班次之間共有 ${trips - 1} 個間隔，所以每個間隔 = ${total} ÷ ${trips - 1} = ${interval} 分鐘。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -7980,10 +8955,16 @@
       const item = cases[i % cases.length];
       const onceSeconds = item.partSeconds.reduce((sum, value) => sum + value, 0);
       const totalSeconds = onceSeconds * item.times;
-      const answerText = item.answerKind === 'ms' ? e529FormatMinuteSecond(totalSeconds) : e529FormatDuration(totalSeconds / 60);
+      const answerText =
+        item.answerKind === 'ms' ? e529FormatMinuteSecond(totalSeconds) : e529FormatDuration(totalSeconds / 60);
       questions.push(item.question);
       summaryAnswers.push(answerText);
-      answers.push(e529Answer(answerText, `先把每次的兩段時間相加：${item.partSeconds.join(' + ')} = ${onceSeconds} 秒。再算 ${onceSeconds} × ${item.times} = ${totalSeconds} 秒，最後換回題目要的形式，所以是 ${answerText}。`));
+      answers.push(
+        e529Answer(
+          answerText,
+          `先把每次的兩段時間相加：${item.partSeconds.join(' + ')} = ${onceSeconds} 秒。再算 ${onceSeconds} × ${item.times} = ${totalSeconds} 秒，最後換回題目要的形式，所以是 ${answerText}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -8006,9 +8987,16 @@
       const oldTime = item.totalWork / oldCount;
       const newTime = item.totalWork / newCount;
       const answerText = `${newTime}${item.timeUnit}`;
-      questions.push(`${oldCount}${item.unit}${oldTime}${item.timeUnit}完成，若改成${newCount}${item.unit}一起做，需要多少${item.timeUnit}？`);
+      questions.push(
+        `${oldCount}${item.unit}${oldTime}${item.timeUnit}完成，若改成${newCount}${item.unit}一起做，需要多少${item.timeUnit}？`
+      );
       summaryAnswers.push(answerText);
-      answers.push(e529Answer(answerText, `總工作量不變，所以 ${oldCount} × ${oldTime} = ${newCount} × 新時間。先算總工作量是 ${oldCount * oldTime}，再用 ${oldCount * oldTime} ÷ ${newCount} = ${newTime}，所以需要 ${answerText}。`));
+      answers.push(
+        e529Answer(
+          answerText,
+          `總工作量不變，所以 ${oldCount} × ${oldTime} = ${newCount} × 新時間。先算總工作量是 ${oldCount * oldTime}，再用 ${oldCount * oldTime} ÷ ${newCount} = ${newTime}，所以需要 ${answerText}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -8018,10 +9006,42 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      { totalSeconds: 10 * 3600 + 30 * 60, oldCount: 6, newCount: 70, context: '3D列印', unit: '個吊飾', label: '1個吊飾', answerUnit: '小時分' },
-      { totalSeconds: 4 * 3600 + 12 * 60, oldCount: 9, newCount: 42, context: '手工組裝', unit: '件', label: '1件', answerUnit: '分秒' },
-      { totalSeconds: 18 * 60 + 40, oldCount: 10, newCount: 16, context: '編織效率', unit: '個', label: '1個', answerUnit: '秒' },
-      { totalSeconds: 30 * 60 + 150, oldCount: 30, newCount: 60, context: '工廠更新', unit: '個', label: '1個', answerUnit: '秒' },
+      {
+        totalSeconds: 10 * 3600 + 30 * 60,
+        oldCount: 6,
+        newCount: 70,
+        context: '3D列印',
+        unit: '個吊飾',
+        label: '1個吊飾',
+        answerUnit: '小時分',
+      },
+      {
+        totalSeconds: 4 * 3600 + 12 * 60,
+        oldCount: 9,
+        newCount: 42,
+        context: '手工組裝',
+        unit: '件',
+        label: '1件',
+        answerUnit: '分秒',
+      },
+      {
+        totalSeconds: 18 * 60 + 40,
+        oldCount: 10,
+        newCount: 16,
+        context: '編織效率',
+        unit: '個',
+        label: '1個',
+        answerUnit: '秒',
+      },
+      {
+        totalSeconds: 30 * 60 + 150,
+        oldCount: 30,
+        newCount: 60,
+        context: '工廠更新',
+        unit: '個',
+        label: '1個',
+        answerUnit: '秒',
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const item = cases[i % cases.length];
@@ -8036,9 +9056,16 @@
       } else {
         answerText = `${diff}秒`;
       }
-      questions.push(`${item.context}：舊機器做 ${item.oldCount}${item.unit}共花 ${e529BuildScaledDuration(item.totalSeconds, ['hour', 'minute', 'second'])}，新機器同樣時間做 ${item.newCount}${item.unit}，做 ${item.label}相差多久？`);
+      questions.push(
+        `${item.context}：舊機器做 ${item.oldCount}${item.unit}共花 ${e529BuildScaledDuration(item.totalSeconds, ['hour', 'minute', 'second'])}，新機器同樣時間做 ${item.newCount}${item.unit}，做 ${item.label}相差多久？`
+      );
       summaryAnswers.push(answerText);
-      answers.push(e529Answer(answerText, `舊機器平均做 ${item.label}要 ${item.totalSeconds} ÷ ${item.oldCount} = ${oldPer} 秒，新機器平均做 ${item.label}要 ${item.totalSeconds} ÷ ${item.newCount} = ${newPer} 秒。相差 ${oldPer} - ${newPer} = ${diff} 秒，所以是 ${answerText}。`));
+      answers.push(
+        e529Answer(
+          answerText,
+          `舊機器平均做 ${item.label}要 ${item.totalSeconds} ÷ ${item.oldCount} = ${oldPer} 秒，新機器平均做 ${item.label}要 ${item.totalSeconds} ÷ ${item.newCount} = ${newPer} 秒。相差 ${oldPer} - ${newPer} = ${diff} 秒，所以是 ${answerText}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -8057,44 +9084,45 @@
   }
 
   function buildE529ConvertCompareFourSet(count) {
-    return buildE529CompositeSet([
-      buildE529LargeToCompoundSet,
-      buildE529SmallToLargeDecimalSet,
-      buildE529SmallToLargeFractionSet,
-      buildE529CompareTimeSet,
-    ], count);
+    return buildE529CompositeSet(
+      [
+        buildE529LargeToCompoundSet,
+        buildE529SmallToLargeDecimalSet,
+        buildE529SmallToLargeFractionSet,
+        buildE529CompareTimeSet,
+      ],
+      count
+    );
   }
 
   function buildE529RepeatFourSet(count) {
-    return buildE529CompositeSet([
-      buildE529MinuteSecondMultiplySet,
-      buildE529HourMinuteMultiplySetV2,
-      buildE529DayHourMultiplySet,
-      buildE529FixedPeriodAccumulateSet,
-    ], count);
+    return buildE529CompositeSet(
+      [
+        buildE529MinuteSecondMultiplySet,
+        buildE529HourMinuteMultiplySetV2,
+        buildE529DayHourMultiplySet,
+        buildE529FixedPeriodAccumulateSet,
+      ],
+      count
+    );
   }
 
   function buildE529DivisionThreeSet(count) {
-    return buildE529CompositeSet([
-      buildE529AverageDurationSet,
-      buildE529ContainedCountSet,
-      buildE529ElapsedThenAverageSet,
-    ], count);
+    return buildE529CompositeSet(
+      [buildE529AverageDurationSet, buildE529ContainedCountSet, buildE529ElapsedThenAverageSet],
+      count
+    );
   }
 
   function buildE529ScheduleTwoSet(count) {
-    return buildE529CompositeSet([
-      buildE529NthDepartureSet,
-      buildE529IntervalCountMinusOneSet,
-    ], count);
+    return buildE529CompositeSet([buildE529NthDepartureSet, buildE529IntervalCountMinusOneSet], count);
   }
 
   function buildE529ApplicationThreeSet(count) {
-    return buildE529CompositeSet([
-      buildE529AddThenMultiplySet,
-      buildE529WorkConstantSet,
-      buildE529EfficiencyGapSet,
-    ], count);
+    return buildE529CompositeSet(
+      [buildE529AddThenMultiplySet, buildE529WorkConstantSet, buildE529EfficiencyGapSet],
+      count
+    );
   }
 
   function e530Answer(shortAnswer, process) {
@@ -8161,10 +9189,7 @@
         questions.push(`${e530Trim(kilometer)}公里等於幾公尺？`);
         summaryAnswers.push(answerText);
         answers.push(
-          e530Answer(
-            answerText,
-            `1 公里 = 1000 公尺，所以 ${e530Trim(kilometer)} 公里 × 1000 = ${meter} 公尺。`
-          )
+          e530Answer(answerText, `1 公里 = 1000 公尺，所以 ${e530Trim(kilometer)} 公里 × 1000 = ${meter} 公尺。`)
         );
       }
     }
@@ -8190,10 +9215,7 @@
       questions.push(`${questionBody}，應該填入什麼單位？`);
       summaryAnswers.push(unit);
       answers.push(
-        e530Answer(
-          unit,
-          `依照生活經驗判斷，這個情境的長度量級最適合用「${unit}」表示，所以答案是 ${unit}。`
-        )
+        e530Answer(unit, `依照生活經驗判斷，這個情境的長度量級最適合用「${unit}」表示，所以答案是 ${unit}。`)
       );
     }
     return { questions, summaryAnswers, answers };
@@ -8302,10 +9324,7 @@
         questions.push(`${e530Trim(tonnes)}公噸等於幾公斤？`);
         summaryAnswers.push(answerText);
         answers.push(
-          e530Answer(
-            answerText,
-            `1 公噸 = 1000 公斤，所以 ${e530Trim(tonnes)} 公噸 × 1000 = ${kilograms} 公斤。`
-          )
+          e530Answer(answerText, `1 公噸 = 1000 公斤，所以 ${e530Trim(tonnes)} 公噸 × 1000 = ${kilograms} 公斤。`)
         );
       }
     }
@@ -8330,12 +9349,7 @@
       const [questionBody, unit] = bank[i % bank.length];
       questions.push(`${questionBody}，應該填入什麼單位？`);
       summaryAnswers.push(unit);
-      answers.push(
-        e530Answer(
-          unit,
-          `依照物體常見的重量大小判斷，這裡最適合用「${unit}」表示，所以答案是 ${unit}。`
-        )
-      );
+      answers.push(e530Answer(unit, `依照物體常見的重量大小判斷，這裡最適合用「${unit}」表示，所以答案是 ${unit}。`));
     }
     return { questions, summaryAnswers, answers };
   }
@@ -8457,10 +9471,7 @@
         questions.push(`${e530Trim(ares)}公畝等於幾公頃？`);
         summaryAnswers.push(answerText);
         answers.push(
-          e530Answer(
-            answerText,
-            `100 公畝 = 1 公頃，所以 ${e530Trim(ares)} 公畝 ÷ 100 = ${e530Trim(hectares)} 公頃。`
-          )
+          e530Answer(answerText, `100 公畝 = 1 公頃，所以 ${e530Trim(ares)} 公畝 ÷ 100 = ${e530Trim(hectares)} 公頃。`)
         );
       } else {
         const squareKm = pickFromList([1.5, 2.3, 4.6, 8, 12.06]);
@@ -8555,12 +9566,7 @@
       const [questionBody, unit] = bank[i % bank.length];
       questions.push(`${questionBody}，應該填入什麼單位？`);
       summaryAnswers.push(unit);
-      answers.push(
-        e530Answer(
-          unit,
-          `依照面積大小判斷，這個情境最適合用「${unit}」表示，所以答案是 ${unit}。`
-        )
-      );
+      answers.push(e530Answer(unit, `依照面積大小判斷，這個情境最適合用「${unit}」表示，所以答案是 ${unit}。`));
     }
     return { questions, summaryAnswers, answers };
   }
@@ -8574,16 +9580,22 @@
       { type: 'compare', leftText: '8公頃', leftValue: 80000, rightText: '80平方公尺', rightValue: 80 },
       { type: 'compare', leftText: '1.5平方公里', leftValue: 1500000, rightText: '1500公頃', rightValue: 15000000 },
       { type: 'compare', leftText: '23公畝', leftValue: 2300, rightText: '0.18公頃', rightValue: 1800 },
-      { type: 'sort', items: [
-        { text: '2.3公頃', value: 23000 },
-        { text: '230平方公尺', value: 230 },
-        { text: '23公畝', value: 2300 },
-      ] },
-      { type: 'sort', items: [
-        { text: '85公頃', value: 850000 },
-        { text: '8500平方公尺', value: 8500 },
-        { text: '850公畝', value: 85000 },
-      ] },
+      {
+        type: 'sort',
+        items: [
+          { text: '2.3公頃', value: 23000 },
+          { text: '230平方公尺', value: 230 },
+          { text: '23公畝', value: 2300 },
+        ],
+      },
+      {
+        type: 'sort',
+        items: [
+          { text: '85公頃', value: 850000 },
+          { text: '8500平方公尺', value: 8500 },
+          { text: '850公畝', value: 85000 },
+        ],
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const item = compareBank[i % compareBank.length];
@@ -8602,12 +9614,7 @@
         const answerText = sorted.map((entry) => entry.text).join(' > ');
         questions.push(`將 ${item.items.map((entry) => entry.text).join('、')} 由大到小排列。`);
         summaryAnswers.push(answerText);
-        answers.push(
-          e530Answer(
-            answerText,
-            `先統一成平方公尺比較，再由大到小排列，可得 ${answerText}。`
-          )
-        );
+        answers.push(e530Answer(answerText, `先統一成平方公尺比較，再由大到小排列，可得 ${answerText}。`));
       }
     }
     return { questions, summaryAnswers, answers };
@@ -8680,31 +9687,40 @@
   }
 
   function buildE530LengthFourSet(count) {
-    return buildE530MixedSet([
-      buildE530MeterKilometerConvertSet,
-      buildE530LengthUnitJudgmentSet,
-      buildE530LengthCompareSet,
-      buildE530LengthApplicationSet,
-    ], count);
+    return buildE530MixedSet(
+      [
+        buildE530MeterKilometerConvertSet,
+        buildE530LengthUnitJudgmentSet,
+        buildE530LengthCompareSet,
+        buildE530LengthApplicationSet,
+      ],
+      count
+    );
   }
 
   function buildE530WeightFourSet(count) {
-    return buildE530MixedSet([
-      buildE530TonneKilogramConvertSet,
-      buildE530WeightUnitJudgmentSet,
-      buildE530WeightCompareSet,
-      buildE530WeightApplicationSet,
-    ], count);
+    return buildE530MixedSet(
+      [
+        buildE530TonneKilogramConvertSet,
+        buildE530WeightUnitJudgmentSet,
+        buildE530WeightCompareSet,
+        buildE530WeightApplicationSet,
+      ],
+      count
+    );
   }
 
   function buildE530AreaFiveSet(count) {
-    return buildE530MixedSet([
-      buildE530AreaAdjacentConvertSet,
-      buildE530AreaCrossConvertSet,
-      buildE530AreaUnitJudgmentSet,
-      buildE530AreaCompareSet,
-      buildE530AreaShapeApplicationSet,
-    ], count);
+    return buildE530MixedSet(
+      [
+        buildE530AreaAdjacentConvertSet,
+        buildE530AreaCrossConvertSet,
+        buildE530AreaUnitJudgmentSet,
+        buildE530AreaCompareSet,
+        buildE530AreaShapeApplicationSet,
+      ],
+      count
+    );
   }
 
   function e525FormatInteger(value) {
@@ -8724,7 +9740,10 @@
     for (let i = 0; i < 4; i += 1) {
       const digit = Number(padded[i]);
       const unit = units[i];
-      const hasLaterNonZero = padded.slice(i + 1).split('').some((ch) => ch !== '0');
+      const hasLaterNonZero = padded
+        .slice(i + 1)
+        .split('')
+        .some((ch) => ch !== '0');
       if (digit === 0) {
         if (result && hasLaterNonZero) needZero = true;
         continue;
@@ -8769,11 +9788,25 @@
   }
 
   function e525PlaceNames() {
-    return ['個位', '十位', '百位', '千位', '萬位', '十萬位', '百萬位', '千萬位', '億位', '十億位', '百億位', '千億位', '兆位'];
+    return [
+      '個位',
+      '十位',
+      '百位',
+      '千位',
+      '萬位',
+      '十萬位',
+      '百萬位',
+      '千萬位',
+      '億位',
+      '十億位',
+      '百億位',
+      '千億位',
+      '兆位',
+    ];
   }
 
   function e525DigitAtPlace(value, placeIndex) {
-    return Math.floor(value / (10 ** placeIndex)) % 10;
+    return Math.floor(value / 10 ** placeIndex) % 10;
   }
 
   function e525MakeLargeNumber(minDigits = 8, maxDigits = 12) {
@@ -8820,7 +9853,9 @@
         const chinese = e525NumberToChinese(value);
         questions.push(`把「${chinese}」記成阿拉伯數字。`);
         summaryAnswers.push(e525FormatInteger(value));
-        answers.push(`簡答：${e525FormatInteger(value)}。過程：依照「兆、億、萬、個」每四位一組來還原，所以這個數是 ${e525FormatInteger(value)}。`);
+        answers.push(
+          `簡答：${e525FormatInteger(value)}。過程：依照「兆、億、萬、個」每四位一組來還原，所以這個數是 ${e525FormatInteger(value)}。`
+        );
       } else {
         const chinese = e525NumberToChinese(value);
         questions.push(`把 ${e525FormatInteger(value)} 用中文讀法記下來。`);
@@ -8862,10 +9897,15 @@
       const picks = units.map((unit) => ({ ...unit, count: randInt(0, unit.max) }));
       if (picks.every((item) => item.count === 0)) picks[1].count = randInt(1, 9);
       const value = picks.reduce((sum, item) => sum + item.count * item.value, 0);
-      const prompt = picks.filter((item) => item.count > 0).map((item) => `${item.count}${item.label}`).join('、');
+      const prompt = picks
+        .filter((item) => item.count > 0)
+        .map((item) => `${item.count}${item.label}`)
+        .join('、');
       questions.push(`${prompt}，合起來是多少？`);
       summaryAnswers.push(e525FormatInteger(value));
-      answers.push(`簡答：${e525FormatInteger(value)}。過程：把各單位都換成個再相加，所以答案是 ${e525FormatInteger(value)}。`);
+      answers.push(
+        `簡答：${e525FormatInteger(value)}。過程：把各單位都換成個再相加，所以答案是 ${e525FormatInteger(value)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -8930,15 +9970,21 @@
         const symbol = a > b ? '>' : '<';
         questions.push(`比較大小：${e525FormatInteger(a)} □ ${e525FormatInteger(b)}（填入 > 或 <）。`);
         summaryAnswers.push(symbol);
-        answers.push(`簡答：${symbol}。過程：先比位數，位數相同比最高位開始逐位比較，所以 ${e525FormatInteger(a)} ${symbol} ${e525FormatInteger(b)}。`);
+        answers.push(
+          `簡答：${symbol}。過程：先比位數，位數相同比最高位開始逐位比較，所以 ${e525FormatInteger(a)} ${symbol} ${e525FormatInteger(b)}。`
+        );
       } else {
         const values = [e525MakeLargeNumber(9, 12), e525MakeLargeNumber(9, 12), e525MakeLargeNumber(9, 12)];
         const labels = ['甲', '乙', '丙'];
         const items = values.map((value, index) => ({ label: labels[index], value }));
         const sorted = [...items].sort((x, y) => y.value - x.value);
-        questions.push(`將 ${items.map((item) => `${item.label}：${e525FormatInteger(item.value)}`).join('、')} 由大到小排列。`);
+        questions.push(
+          `將 ${items.map((item) => `${item.label}：${e525FormatInteger(item.value)}`).join('、')} 由大到小排列。`
+        );
         summaryAnswers.push(sorted.map((item) => item.label).join('＞'));
-        answers.push(`簡答：${sorted.map((item) => item.label).join('＞')}。過程：先比位數，位數相同再從高位往右比，所以排序如上。`);
+        answers.push(
+          `簡答：${sorted.map((item) => item.label).join('＞')}。過程：先比位數，位數相同再從高位往右比，所以排序如上。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -8956,7 +10002,9 @@
         const answer = a * b;
         questions.push(`計算：${e525FormatInteger(a)} × ${e525FormatInteger(b)}。`);
         summaryAnswers.push(e525FormatInteger(answer));
-        answers.push(`簡答：${e525FormatInteger(answer)}。過程：先算前面的 ${a / 100} × ${b / 100}，再補上 4 個 0，所以答案是 ${e525FormatInteger(answer)}。`);
+        answers.push(
+          `簡答：${e525FormatInteger(answer)}。過程：先算前面的 ${a / 100} × ${b / 100}，再補上 4 個 0，所以答案是 ${e525FormatInteger(answer)}。`
+        );
       } else if (mode === 1) {
         const a = pickFromList([24, 36, 54, 72, 96]) * 1000;
         const b = pickFromList([2, 3, 4, 6, 8]) * 100;
@@ -8970,7 +10018,9 @@
         const product = a * b;
         questions.push(`已知 ${a} × ${b} = ${product}，不計算直接寫出 ${a * 100} × ${b * 10} 的答案。`);
         summaryAnswers.push(e525FormatInteger(product * 1000));
-        answers.push(`簡答：${e525FormatInteger(product * 1000)}。過程：一個乘數放大 100 倍，另一個放大 10 倍，所以積放大 1000 倍。`);
+        answers.push(
+          `簡答：${e525FormatInteger(product * 1000)}。過程：一個乘數放大 100 倍，另一個放大 10 倍，所以積放大 1000 倍。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -9029,24 +10079,35 @@
       const mode = i % 3;
       if (mode === 0) {
         const index = randInt(0, labels.length - 1);
-        const winner = aValues[index] === bValues[index] ? '一樣多' : (aValues[index] > bValues[index] ? '甲線較多' : '乙線較多');
-        questions.push(`某雙線折線圖資料如下（單位：${unit}）。甲線：${textA}。乙線：${textB}。在${labels[index]}，哪一條線比較高？`);
+        const winner =
+          aValues[index] === bValues[index] ? '一樣多' : aValues[index] > bValues[index] ? '甲線較多' : '乙線較多';
+        questions.push(
+          `某雙線折線圖資料如下（單位：${unit}）。甲線：${textA}。乙線：${textB}。在${labels[index]}，哪一條線比較高？`
+        );
         summaryAnswers.push(winner);
-        answers.push(`簡答：${winner}。過程：${labels[index]} 時，甲線是 ${aValues[index]}${unit}，乙線是 ${bValues[index]}${unit}，直接比較即可。`);
+        answers.push(
+          `簡答：${winner}。過程：${labels[index]} 時，甲線是 ${aValues[index]}${unit}，乙線是 ${bValues[index]}${unit}，直接比較即可。`
+        );
       } else if (mode === 1) {
         const gaps = labels.map((_, index) => Math.abs(aValues[index] - bValues[index]));
         const maxGap = Math.max(...gaps);
         const label = labels[gaps.indexOf(maxGap)];
-        questions.push(`某雙線折線圖資料如下（單位：${unit}）。甲線：${textA}。乙線：${textB}。哪一個月份兩條線相差最多？`);
+        questions.push(
+          `某雙線折線圖資料如下（單位：${unit}）。甲線：${textA}。乙線：${textB}。哪一個月份兩條線相差最多？`
+        );
         summaryAnswers.push(`${label}`);
         answers.push(`簡答：${label}。過程：逐月比較差距，最大差距是 ${maxGap}${unit}，出現在${label}。`);
       } else {
         const aTotal = aValues.reduce((sum, value) => sum + value, 0);
         const bTotal = bValues.reduce((sum, value) => sum + value, 0);
-        const winner = aTotal === bTotal ? '一樣多' : (aTotal > bTotal ? '甲線總量較多' : '乙線總量較多');
-        questions.push(`某雙線折線圖資料如下（單位：${unit}）。甲線：${textA}。乙線：${textB}。全部月份合計後，哪一條線總量較多？`);
+        const winner = aTotal === bTotal ? '一樣多' : aTotal > bTotal ? '甲線總量較多' : '乙線總量較多';
+        questions.push(
+          `某雙線折線圖資料如下（單位：${unit}）。甲線：${textA}。乙線：${textB}。全部月份合計後，哪一條線總量較多？`
+        );
         summaryAnswers.push(winner);
-        answers.push(`簡答：${winner}。過程：甲線總量是 ${aTotal}${unit}，乙線總量是 ${bTotal}${unit}，直接比較總和即可。`);
+        answers.push(
+          `簡答：${winner}。過程：甲線總量是 ${aTotal}${unit}，乙線總量是 ${bTotal}${unit}，直接比較總和即可。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -9064,10 +10125,14 @@
       const mode = i % 3;
       if (mode === 0) {
         const index = randInt(0, labels.length - 2);
-        const trend = values[index + 1] > values[index] ? '上升' : (values[index + 1] < values[index] ? '下降' : '持平');
-        questions.push(`某折線圖資料如下（單位：${unit}）：${text}。從${labels[index]}到${labels[index + 1]}的變化趨勢是上升、下降還是持平？`);
+        const trend = values[index + 1] > values[index] ? '上升' : values[index + 1] < values[index] ? '下降' : '持平';
+        questions.push(
+          `某折線圖資料如下（單位：${unit}）：${text}。從${labels[index]}到${labels[index + 1]}的變化趨勢是上升、下降還是持平？`
+        );
         summaryAnswers.push(trend);
-        answers.push(`簡答：${trend}。過程：${labels[index]} 是 ${values[index]}${unit}，${labels[index + 1]} 是 ${values[index + 1]}${unit}，所以趨勢是${trend}。`);
+        answers.push(
+          `簡答：${trend}。過程：${labels[index]} 是 ${values[index]}${unit}，${labels[index + 1]} 是 ${values[index + 1]}${unit}，所以趨勢是${trend}。`
+        );
       } else if (mode === 1) {
         let bestIndex = 0;
         let bestRise = values[1] - values[0];
@@ -9080,7 +10145,9 @@
         }
         questions.push(`某折線圖資料如下（單位：${unit}）：${text}。哪一段的增加最多？`);
         summaryAnswers.push(`${labels[bestIndex]}到${labels[bestIndex + 1]}`);
-        answers.push(`簡答：${labels[bestIndex]}到${labels[bestIndex + 1]}。過程：逐段比較增加量，最大增加量出現在這一段。`);
+        answers.push(
+          `簡答：${labels[bestIndex]}到${labels[bestIndex + 1]}。過程：逐段比較增加量，最大增加量出現在這一段。`
+        );
       } else {
         const flatSegments = [];
         for (let j = 0; j < values.length - 1; j += 1) {
@@ -9088,7 +10155,9 @@
         }
         questions.push(`某折線圖資料如下（單位：${unit}）：${text}。哪些相鄰兩天的數值沒有改變？若沒有請寫「沒有」。`);
         summaryAnswers.push(flatSegments.length ? flatSegments.join('、') : '沒有');
-        answers.push(`簡答：${flatSegments.length ? flatSegments.join('、') : '沒有'}。過程：檢查相鄰兩天數值是否相同即可。`);
+        answers.push(
+          `簡答：${flatSegments.length ? flatSegments.join('、') : '沒有'}。過程：檢查相鄰兩天數值是否相同即可。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -9113,14 +10182,18 @@
         const yAxis = yAxisBanks[i % yAxisBanks.length];
         questions.push(`某折線圖的橫軸標示「${xLabels}」，縱軸標示「${yAxis}」。這張圖的橫軸主要表示什麼？`);
         summaryAnswers.push(answer);
-        answers.push(`簡答：${answer}。過程：橫軸通常用來放依序變化的時間或項目；這裡標的是「${xLabels}」，所以橫軸表示${answer}。`);
+        answers.push(
+          `簡答：${answer}。過程：橫軸通常用來放依序變化的時間或項目；這裡標的是「${xLabels}」，所以橫軸表示${answer}。`
+        );
       } else if (mode === 1) {
         const step = pickFromList([5, 10, 20, 50]);
         const grid = pickFromList([3, 4, 6, 8]);
         const unit = units[i % units.length];
         questions.push(`某折線圖的縱軸每一小格代表 ${step}${unit}，如果某一點在第 ${grid} 小格，它代表多少${unit}？`);
         summaryAnswers.push(`${step * grid}${unit}`);
-        answers.push(`簡答：${step * grid}${unit}。過程：每一小格 ${step}${unit}，第 ${grid} 小格就是 ${step} × ${grid} = ${step * grid}${unit}。`);
+        answers.push(
+          `簡答：${step * grid}${unit}。過程：每一小格 ${step}${unit}，第 ${grid} 小格就是 ${step} × ${grid} = ${step * grid}${unit}。`
+        );
       } else if (mode === 2) {
         const yAxis = yAxisBanks[i % yAxisBanks.length];
         questions.push(`折線圖把各點連起來後，最主要是方便看出什麼？（以「${yAxis}」資料為例）`);
@@ -9129,9 +10202,13 @@
       } else {
         const start = pickFromList([100, 200, 500, 1000]);
         const yAxis = yAxisBanks[i % yAxisBanks.length];
-        questions.push(`某折線圖的縱軸標示「${yAxis}」，下方有波浪線，第一個刻度從 ${start} 開始。這個波浪線通常表示什麼？`);
+        questions.push(
+          `某折線圖的縱軸標示「${yAxis}」，下方有波浪線，第一個刻度從 ${start} 開始。這個波浪線通常表示什麼？`
+        );
         summaryAnswers.push('縱軸省略了一段數值');
-        answers.push(`簡答：縱軸省略了一段數值。過程：因為刻度不是從 0 連續畫上來，而是直接從 ${start} 開始，所以中間有一段被省略了。`);
+        answers.push(
+          `簡答：縱軸省略了一段數值。過程：因為刻度不是從 0 連續畫上來，而是直接從 ${start} 開始，所以中間有一段被省略了。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -9148,9 +10225,13 @@
       const threshold = pickFromList([120, 140, 160, 180, 200]);
       const matched = labels.filter((_, index) => values[index] >= threshold);
       const text = e525SeriesText(labels, values, unit);
-      questions.push(`某折線圖資料如下（單位：${unit}）：${text}。哪些月份的數值不少於 ${threshold}${unit}？若沒有請寫「沒有」。`);
+      questions.push(
+        `某折線圖資料如下（單位：${unit}）：${text}。哪些月份的數值不少於 ${threshold}${unit}？若沒有請寫「沒有」。`
+      );
       summaryAnswers.push(matched.length ? matched.join('、') : '沒有');
-      answers.push(`簡答：${matched.length ? matched.join('、') : '沒有'}。過程：逐月檢查是否達到 ${threshold}${unit}，符合條件的月份列出即可。`);
+      answers.push(
+        `簡答：${matched.length ? matched.join('、') : '沒有'}。過程：逐月檢查是否達到 ${threshold}${unit}，符合條件的月份列出即可。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -9169,40 +10250,23 @@
   }
 
   function buildE525ReadPlaceThreeSet(count) {
-    return buildE525MixedSet([
-      buildE525ChineseConvertSet,
-      buildE525PlaceDigitSet,
-      buildE525UnitComposeSet,
-    ], count);
+    return buildE525MixedSet([buildE525ChineseConvertSet, buildE525PlaceDigitSet, buildE525UnitComposeSet], count);
   }
 
   function buildE525StructureThreeSet(count) {
-    return buildE525MixedSet([
-      buildE525ExpandedNotationSet,
-      buildE525PlaceRatioSet,
-      buildE525TrailingZeroSet,
-    ], count);
+    return buildE525MixedSet([buildE525ExpandedNotationSet, buildE525PlaceRatioSet, buildE525TrailingZeroSet], count);
   }
 
   function buildE525CompareOneSet(count) {
-    return buildE525MixedSet([
-      buildE525LargeCompareSet,
-    ], count);
+    return buildE525MixedSet([buildE525LargeCompareSet], count);
   }
 
   function buildE525LineReadCompareTwoSet(count) {
-    return buildE525MixedSet([
-      buildE525LineSingleReadSet,
-      buildE525LineDoubleCompareSet,
-    ], count);
+    return buildE525MixedSet([buildE525LineSingleReadSet, buildE525LineDoubleCompareSet], count);
   }
 
   function buildE525LineTrendStructureTwoSet(count) {
-    return buildE525MixedSet([
-      buildE525LineTrendSet,
-      buildE525LineStructureSet,
-      buildE525LineConditionSet,
-    ], count);
+    return buildE525MixedSet([buildE525LineTrendSet, buildE525LineStructureSet, buildE525LineConditionSet], count);
   }
 
   function e524FormatNumber(value, digits = 4) {
@@ -9220,15 +10284,15 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const decimals = [
-        1.2, 1.25, 1.375, 2.409, 3.701, 4.75, 5.2, 6.025, 7.56, 8.125,
-      ];
+      const decimals = [1.2, 1.25, 1.375, 2.409, 3.701, 4.75, 5.2, 6.025, 7.56, 8.125];
       const a = pickFromList(decimals);
       const b = pickFromList([3, 4, 5, 6, 7, 8, 9, 12, 16, 20, 25]);
       const product = a * b;
       questions.push(`計算：${e524FormatNumber(a)} × ${b}。`);
       summaryAnswers.push(`${e524FormatNumber(product)}`);
-      answers.push(`簡答：${e524FormatNumber(product)}。過程：先把 ${e524FormatNumber(a)} 看成整數乘法，再依小數位數點回去，所以答案是 ${e524FormatNumber(product)}。`);
+      answers.push(
+        `簡答：${e524FormatNumber(product)}。過程：先把 ${e524FormatNumber(a)} 看成整數乘法，再依小數位數點回去，所以答案是 ${e524FormatNumber(product)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -9238,15 +10302,25 @@
     const summaryAnswers = [];
     const answers = [];
     const bank = [
-      [0.8, 5.2], [1.52, 2.79], [2.4, 1.68], [3.25, 0.48], [4.16, 1.05],
-      [7.5, 3.92], [8.4, 0.75], [12.5, 0.24], [24, 1.25], [36, 0.125],
+      [0.8, 5.2],
+      [1.52, 2.79],
+      [2.4, 1.68],
+      [3.25, 0.48],
+      [4.16, 1.05],
+      [7.5, 3.92],
+      [8.4, 0.75],
+      [12.5, 0.24],
+      [24, 1.25],
+      [36, 0.125],
     ];
     for (let i = 0; i < count; i += 1) {
       const [a, b] = pickFromList(bank);
       const product = a * b;
       questions.push(`計算：${e524FormatNumber(a)} × ${e524FormatNumber(b)}。`);
       summaryAnswers.push(`${e524FormatNumber(product)}`);
-      answers.push(`簡答：${e524FormatNumber(product)}。過程：先當成整數乘法，再看 ${e524FormatNumber(a)} 和 ${e524FormatNumber(b)} 一共有 ${e524CountDecimals(a) + e524CountDecimals(b)} 位小數，把小數點點回去，得到 ${e524FormatNumber(product)}。`);
+      answers.push(
+        `簡答：${e524FormatNumber(product)}。過程：先當成整數乘法，再看 ${e524FormatNumber(a)} 和 ${e524FormatNumber(b)} 一共有 ${e524CountDecimals(a) + e524CountDecimals(b)} 位小數，把小數點點回去，得到 ${e524FormatNumber(product)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -9263,7 +10337,9 @@
       const answer = value * multiplier;
       questions.push(`不必直式，直接計算：${e524FormatNumber(value)} × ${multiplier}。`);
       summaryAnswers.push(`${e524FormatNumber(answer)}`);
-      answers.push(`簡答：${e524FormatNumber(answer)}。過程：乘以 ${multiplier} 就是把小數點向右移 ${String(multiplier).length - 1} 位，所以答案是 ${e524FormatNumber(answer)}。`);
+      answers.push(
+        `簡答：${e524FormatNumber(answer)}。過程：乘以 ${multiplier} 就是把小數點向右移 ${String(multiplier).length - 1} 位，所以答案是 ${e524FormatNumber(answer)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -9280,7 +10356,9 @@
       const answer = value * multiplier;
       questions.push(`不必直式，直接計算：${value} × ${multiplier}。`);
       summaryAnswers.push(`${e524FormatNumber(answer)}`);
-      answers.push(`簡答：${e524FormatNumber(answer)}。過程：乘以 ${multiplier} 就是把小數點向左移 ${Math.round(Math.abs(Math.log10(multiplier)))} 位，所以答案是 ${e524FormatNumber(answer)}。`);
+      answers.push(
+        `簡答：${e524FormatNumber(answer)}。過程：乘以 ${multiplier} 就是把小數點向左移 ${Math.round(Math.abs(Math.log10(multiplier)))} 位，所以答案是 ${e524FormatNumber(answer)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -9290,19 +10368,29 @@
     const summaryAnswers = [];
     const answers = [];
     const bank = [
-      [42, 215], [52, 909], [36, 22], [1475, 12], [11, 44], [83, 67], [423, 15],
+      [42, 215],
+      [52, 909],
+      [36, 22],
+      [1475, 12],
+      [11, 44],
+      [83, 67],
+      [423, 15],
     ];
     for (let i = 0; i < count; i += 1) {
       const [a, b] = bank[i % bank.length];
       const integerProduct = a * b;
       const shiftA = pickFromList([1, 2]);
       const shiftB = pickFromList([1, 2]);
-      const x = a / (10 ** shiftA);
-      const y = b / (10 ** shiftB);
+      const x = a / 10 ** shiftA;
+      const y = b / 10 ** shiftB;
       const answer = x * y;
-      questions.push(`已知 ${a} × ${b} = ${integerProduct}，求 ${e524FormatNumber(x)} × ${e524FormatNumber(y)} 的答案。`);
+      questions.push(
+        `已知 ${a} × ${b} = ${integerProduct}，求 ${e524FormatNumber(x)} × ${e524FormatNumber(y)} 的答案。`
+      );
       summaryAnswers.push(`${e524FormatNumber(answer)}`);
-      answers.push(`簡答：${e524FormatNumber(answer)}。過程：原本乘積是 ${integerProduct}，現在 ${a} 變成 ${e524FormatNumber(x)}，縮小 ${10 ** shiftA} 倍；${b} 變成 ${e524FormatNumber(y)}，縮小 ${10 ** shiftB} 倍，所以積縮小 ${10 ** (shiftA + shiftB)} 倍，答案是 ${integerProduct} ÷ ${10 ** (shiftA + shiftB)} = ${e524FormatNumber(answer)}。`);
+      answers.push(
+        `簡答：${e524FormatNumber(answer)}。過程：原本乘積是 ${integerProduct}，現在 ${a} 變成 ${e524FormatNumber(x)}，縮小 ${10 ** shiftA} 倍；${b} 變成 ${e524FormatNumber(y)}，縮小 ${10 ** shiftB} 倍，所以積縮小 ${10 ** (shiftA + shiftB)} 倍，答案是 ${integerProduct} ÷ ${10 ** (shiftA + shiftB)} = ${e524FormatNumber(answer)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -9316,10 +10404,14 @@
     for (let i = 0; i < count; i += 1) {
       const a = multiplicands[i % multiplicands.length];
       const b = multipliers[randInt(0, multipliers.length - 1)];
-      const symbol = b > 1 ? '>' : (b < 1 ? '<' : '=');
-      questions.push(`不用計算，比較大小：${e524FormatNumber(a)} × ${e524FormatNumber(b)} □ ${e524FormatNumber(a)}（填入 >、< 或 =）。`);
+      const symbol = b > 1 ? '>' : b < 1 ? '<' : '=';
+      questions.push(
+        `不用計算，比較大小：${e524FormatNumber(a)} × ${e524FormatNumber(b)} □ ${e524FormatNumber(a)}（填入 >、< 或 =）。`
+      );
       summaryAnswers.push(symbol);
-      answers.push(`簡答：${symbol}。過程：因為乘數 ${e524FormatNumber(b)} ${b > 1 ? '大於' : (b < 1 ? '小於' : '等於')} 1，所以積${b > 1 ? '大於' : (b < 1 ? '小於' : '等於')}被乘數 ${e524FormatNumber(a)}。`);
+      answers.push(
+        `簡答：${symbol}。過程：因為乘數 ${e524FormatNumber(b)} ${b > 1 ? '大於' : b < 1 ? '小於' : '等於'} 1，所以積${b > 1 ? '大於' : b < 1 ? '小於' : '等於'}被乘數 ${e524FormatNumber(a)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -9329,14 +10421,21 @@
     const summaryAnswers = [];
     const answers = [];
     const bank = [
-      [0.1, 0.201], [2.51, 20.1], [0.05, 0.09], [0.17, 0.4], [3.205, 1.02], [12.3, 0.04],
+      [0.1, 0.201],
+      [2.51, 20.1],
+      [0.05, 0.09],
+      [0.17, 0.4],
+      [3.205, 1.02],
+      [12.3, 0.04],
     ];
     for (let i = 0; i < count; i += 1) {
       const [a, b] = bank[i % bank.length];
       const places = e524CountDecimals(a) + e524CountDecimals(b);
       questions.push(`${e524FormatNumber(a)} × ${e524FormatNumber(b)} 得到的答案是幾位小數？`);
       summaryAnswers.push(`${places}位小數`);
-      answers.push(`簡答：${places}位小數。過程：${e524FormatNumber(a)} 有 ${e524CountDecimals(a)} 位小數，${e524FormatNumber(b)} 有 ${e524CountDecimals(b)} 位小數，所以積共有 ${places} 位小數。`);
+      answers.push(
+        `簡答：${places}位小數。過程：${e524FormatNumber(a)} 有 ${e524CountDecimals(a)} 位小數，${e524FormatNumber(b)} 有 ${e524CountDecimals(b)} 位小數，所以積共有 ${places} 位小數。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -9353,11 +10452,17 @@
     ];
     for (let i = 0; i < count; i += 1) {
       const item = banks[i % banks.length];
-      const values = item.multipliers.map((m, idx) => ({ name: item.names[idx], value: item.base * m, text: `${item.base} × ${m}` }));
+      const values = item.multipliers.map((m, idx) => ({
+        name: item.names[idx],
+        value: item.base * m,
+        text: `${item.base} × ${m}`,
+      }));
       const sorted = [...values].sort((x, y) => y.value - x.value);
-      questions.push(`不必直算，將 ${values.map(v => `${v.name}：${v.text}`).join('、')} 由大到小排列。`);
-      summaryAnswers.push(sorted.map(v => v.name).join('＞'));
-      answers.push(`簡答：${sorted.map(v => v.name).join('＞')}。過程：因為被乘數 ${item.base} 相同，只要比較乘數大小即可，乘數越大，積越大。`);
+      questions.push(`不必直算，將 ${values.map((v) => `${v.name}：${v.text}`).join('、')} 由大到小排列。`);
+      summaryAnswers.push(sorted.map((v) => v.name).join('＞'));
+      answers.push(
+        `簡答：${sorted.map((v) => v.name).join('＞')}。過程：因為被乘數 ${item.base} 相同，只要比較乘數大小即可，乘數越大，積越大。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -9374,35 +10479,51 @@
         const total = price * weight;
         questions.push(`單價計算：1 公斤賣 ${price} 元，買 ${e524FormatNumber(weight)} 公斤，要付多少元？`);
         summaryAnswers.push(`${e524FormatNumber(total)}元`);
-        answers.push(`簡答：${e524FormatNumber(total)}元。過程：總價 = 單價 × 重量 = ${price} × ${e524FormatNumber(weight)} = ${e524FormatNumber(total)}。`);
+        answers.push(
+          `簡答：${e524FormatNumber(total)}元。過程：總價 = 單價 × 重量 = ${price} × ${e524FormatNumber(weight)} = ${e524FormatNumber(total)}。`
+        );
       } else if (mode === 1) {
         const length = pickFromList([5.5, 7.24, 12.5, 22.8, 55]);
         const width = pickFromList([4.5, 6.4, 9.98, 1.2, 0.75]);
         const area = length * width;
-        questions.push(`面積計算：一塊長方形地長 ${e524FormatNumber(length)} 公尺、寬 ${e524FormatNumber(width)} 公尺，面積是多少平方公尺？`);
+        questions.push(
+          `面積計算：一塊長方形地長 ${e524FormatNumber(length)} 公尺、寬 ${e524FormatNumber(width)} 公尺，面積是多少平方公尺？`
+        );
         summaryAnswers.push(`${e524FormatNumber(area)}平方公尺`);
-        answers.push(`簡答：${e524FormatNumber(area)}平方公尺。過程：面積 = 長 × 寬 = ${e524FormatNumber(length)} × ${e524FormatNumber(width)} = ${e524FormatNumber(area)}。`);
+        answers.push(
+          `簡答：${e524FormatNumber(area)}平方公尺。過程：面積 = 長 × 寬 = ${e524FormatNumber(length)} × ${e524FormatNumber(width)} = ${e524FormatNumber(area)}。`
+        );
       } else if (mode === 2) {
         const unit = pickFromList([0.175, 0.454, 1.7, 2.3, 8.375]);
         const countItems = pickFromList([8, 9, 12, 15, 25]);
         const total = unit * countItems;
         questions.push(`重量計算：每份重 ${e524FormatNumber(unit)} 公斤，共有 ${countItems} 份，總共重多少公斤？`);
         summaryAnswers.push(`${e524FormatNumber(total)}公斤`);
-        answers.push(`簡答：${e524FormatNumber(total)}公斤。過程：總重量 = 每份重量 × 份數 = ${e524FormatNumber(unit)} × ${countItems} = ${e524FormatNumber(total)}。`);
+        answers.push(
+          `簡答：${e524FormatNumber(total)}公斤。過程：總重量 = 每份重量 × 份數 = ${e524FormatNumber(unit)} × ${countItems} = ${e524FormatNumber(total)}。`
+        );
       } else if (mode === 3) {
         const capacity = pickFromList([1.7, 2, 15.275, 30.04]);
         const countBottles = pickFromList([1.5, 2.25, 6.4, 9]);
         const total = capacity * countBottles;
-        questions.push(`容量計算：一瓶有 ${e524FormatNumber(capacity)} 公升，${e524FormatNumber(countBottles)} 瓶共有多少公升？`);
+        questions.push(
+          `容量計算：一瓶有 ${e524FormatNumber(capacity)} 公升，${e524FormatNumber(countBottles)} 瓶共有多少公升？`
+        );
         summaryAnswers.push(`${e524FormatNumber(total)}公升`);
-        answers.push(`簡答：${e524FormatNumber(total)}公升。過程：總容量 = 每瓶容量 × 瓶數 = ${e524FormatNumber(capacity)} × ${e524FormatNumber(countBottles)} = ${e524FormatNumber(total)}。`);
+        answers.push(
+          `簡答：${e524FormatNumber(total)}公升。過程：總容量 = 每瓶容量 × 瓶數 = ${e524FormatNumber(capacity)} × ${e524FormatNumber(countBottles)} = ${e524FormatNumber(total)}。`
+        );
       } else {
         const base = pickFromList([25.5, 40.5, 42.5, 68, 80]);
         const multiplier = pickFromList([1.02, 1.5, 1.66, 1.75, 2.4]);
         const total = base * multiplier;
-        questions.push(`倍數應用：甲數是 ${e524FormatNumber(base)}，乙數是甲數的 ${e524FormatNumber(multiplier)} 倍，乙數是多少？`);
+        questions.push(
+          `倍數應用：甲數是 ${e524FormatNumber(base)}，乙數是甲數的 ${e524FormatNumber(multiplier)} 倍，乙數是多少？`
+        );
         summaryAnswers.push(`${e524FormatNumber(total)}`);
-        answers.push(`簡答：${e524FormatNumber(total)}。過程：乙數 = 甲數 × 倍數 = ${e524FormatNumber(base)} × ${e524FormatNumber(multiplier)} = ${e524FormatNumber(total)}。`);
+        answers.push(
+          `簡答：${e524FormatNumber(total)}。過程：乙數 = 甲數 × 倍數 = ${e524FormatNumber(base)} × ${e524FormatNumber(multiplier)} = ${e524FormatNumber(total)}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -9422,38 +10543,26 @@
   }
 
   function buildE524DirectTwoSet(count) {
-    return buildE524MixedSet([
-      buildE524DecimalIntegerSet,
-      buildE524DecimalDecimalSet,
-    ], count);
+    return buildE524MixedSet([buildE524DecimalIntegerSet, buildE524DecimalDecimalSet], count);
   }
 
   function buildE524ShiftTwoSet(count) {
-    return buildE524MixedSet([
-      buildE524ShiftRightSet,
-      buildE524ShiftLeftSet,
-    ], count);
+    return buildE524MixedSet([buildE524ShiftRightSet, buildE524ShiftLeftSet], count);
   }
 
   function buildE524InferTwoSet(count) {
-    return buildE524MixedSet([
-      buildE524InferFromIntegerSet,
-      buildE524DecimalPlaceCountSet,
-    ], count);
+    return buildE524MixedSet([buildE524InferFromIntegerSet, buildE524DecimalPlaceCountSet], count);
   }
 
   function buildE524JudgeThreeSet(count) {
-    return buildE524MixedSet([
-      buildE524CompareProductSet,
-      buildE524OrderCompareSet,
-      buildE524DecimalPlaceCountSet,
-    ], count);
+    return buildE524MixedSet(
+      [buildE524CompareProductSet, buildE524OrderCompareSet, buildE524DecimalPlaceCountSet],
+      count
+    );
   }
 
   function buildE524ApplicationOneSet(count) {
-    return buildE524MixedSet([
-      buildE524ApplicationSet,
-    ], count);
+    return buildE524MixedSet([buildE524ApplicationSet], count);
   }
 
   function e523FormatNumber(value, digits = 2) {
@@ -9471,7 +10580,9 @@
         const ml = liters * 1000;
         questions.push(`${liters} 公升等於多少毫升？也等於多少立方公分？`);
         summaryAnswers.push(`${ml}毫升，${ml}立方公分`);
-        answers.push(`簡答：${ml}毫升，${ml}立方公分。過程：1 公升 = 1000 毫升 = 1000 立方公分，所以 ${liters} 公升 = ${ml} 毫升 = ${ml} 立方公分。`);
+        answers.push(
+          `簡答：${ml}毫升，${ml}立方公分。過程：1 公升 = 1000 毫升 = 1000 立方公分，所以 ${liters} 公升 = ${ml} 毫升 = ${ml} 立方公分。`
+        );
       } else if (mode === 1) {
         const cm3 = pickFromList([12000, 15000, 20000, 25000, 36000, 90000]);
         const liters = cm3 / 1000;
@@ -9484,7 +10595,9 @@
         const totalCm3 = liters * 1000 + extraMl;
         questions.push(`${liters} 公升 ${extraMl} 毫升等於多少立方公分？`);
         summaryAnswers.push(`${totalCm3}立方公分`);
-        answers.push(`簡答：${totalCm3}立方公分。過程：${liters} 公升 = ${liters * 1000} 毫升，再加上 ${extraMl} 毫升，共 ${totalCm3} 毫升，也就是 ${totalCm3} 立方公分。`);
+        answers.push(
+          `簡答：${totalCm3}立方公分。過程：${liters} 公升 = ${liters * 1000} 毫升，再加上 ${extraMl} 毫升，共 ${totalCm3} 毫升，也就是 ${totalCm3} 立方公分。`
+        );
       } else if (mode === 3) {
         const ml = pickFromList([250, 500, 650, 900, 1250]);
         questions.push(`一個容量 ${ml} 毫升的寶特瓶，也可以說它的容積是多少立方公分？`);
@@ -9496,7 +10609,9 @@
         const cc = liters * 1000 + extraMl;
         questions.push(`${liters} 公升 ${extraMl} 毫升等於多少 c.c.？`);
         summaryAnswers.push(`${cc}c.c.`);
-        answers.push(`簡答：${cc}c.c.。過程：1 公升 = 1000 c.c.，1 毫升 = 1 c.c.，所以 ${liters} 公升 ${extraMl} 毫升 = ${cc} c.c.。`);
+        answers.push(
+          `簡答：${cc}c.c.。過程：1 公升 = 1000 c.c.，1 毫升 = 1 c.c.，所以 ${liters} 公升 ${extraMl} 毫升 = ${cc} c.c.。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -9513,24 +10628,32 @@
         const liters = m3 * 1000;
         questions.push(`${e523FormatNumber(m3)} 立方公尺等於多少公升？`);
         summaryAnswers.push(`${e523FormatNumber(liters, 0)}公升`);
-        answers.push(`簡答：${e523FormatNumber(liters, 0)}公升。過程：1 立方公尺 = 1000 公升，所以 ${e523FormatNumber(m3)} × 1000 = ${e523FormatNumber(liters, 0)} 公升。`);
+        answers.push(
+          `簡答：${e523FormatNumber(liters, 0)}公升。過程：1 立方公尺 = 1000 公升，所以 ${e523FormatNumber(m3)} × 1000 = ${e523FormatNumber(liters, 0)} 公升。`
+        );
       } else if (mode === 1) {
         const liters = pickFromList([9000, 12000, 15000, 18000, 24000]);
         const m3 = liters / 1000;
         questions.push(`${liters} 公升等於多少立方公尺？`);
         summaryAnswers.push(`${e523FormatNumber(m3)}立方公尺`);
-        answers.push(`簡答：${e523FormatNumber(m3)}立方公尺。過程：1000 公升 = 1 立方公尺，所以 ${liters} ÷ 1000 = ${e523FormatNumber(m3)} 立方公尺。`);
+        answers.push(
+          `簡答：${e523FormatNumber(m3)}立方公尺。過程：1000 公升 = 1 立方公尺，所以 ${liters} ÷ 1000 = ${e523FormatNumber(m3)} 立方公尺。`
+        );
       } else if (mode === 2) {
         const degrees = pickFromList([12, 18, 24, 36, 48, 60]);
         questions.push(`某戶上個月用了 ${degrees} 度的水，請問用了多少立方公尺的水？`);
         summaryAnswers.push(`${degrees}立方公尺`);
-        answers.push(`簡答：${degrees}立方公尺。過程：1 度水 = 1 立方公尺，所以用了 ${degrees} 度水，就是 ${degrees} 立方公尺。`);
+        answers.push(
+          `簡答：${degrees}立方公尺。過程：1 度水 = 1 立方公尺，所以用了 ${degrees} 度水，就是 ${degrees} 立方公尺。`
+        );
       } else if (mode === 3) {
         const liters = pickFromList([2000, 4000, 6000, 8000, 12000]);
         const kL = liters / 1000;
         questions.push(`${liters} 公升也可以說是幾公秉（kL）？`);
         summaryAnswers.push(`${e523FormatNumber(kL)}公秉`);
-        answers.push(`簡答：${e523FormatNumber(kL)}公秉。過程：1 公秉 = 1000 公升，所以 ${liters} ÷ 1000 = ${e523FormatNumber(kL)} 公秉。`);
+        answers.push(
+          `簡答：${e523FormatNumber(kL)}公秉。過程：1 公秉 = 1000 公升，所以 ${liters} ÷ 1000 = ${e523FormatNumber(kL)} 公秉。`
+        );
       } else {
         const length = pickFromList([4, 5, 6, 8]);
         const width = pickFromList([3, 4, 5]);
@@ -9539,7 +10662,9 @@
         const liters = m3 * 1000;
         questions.push(`一個長方體水槽，裡面長 ${length} 公尺、寬 ${width} 公尺、高 ${height} 公尺，容積是多少公升？`);
         summaryAnswers.push(`${e523FormatNumber(liters, 0)}公升`);
-        answers.push(`簡答：${e523FormatNumber(liters, 0)}公升。過程：先算容積 ${length} × ${width} × ${height} = ${e523FormatNumber(m3)} 立方公尺，再乘 1000 變成 ${e523FormatNumber(liters, 0)} 公升。`);
+        answers.push(
+          `簡答：${e523FormatNumber(liters, 0)}公升。過程：先算容積 ${length} × ${width} × ${height} = ${e523FormatNumber(m3)} 立方公尺，再乘 1000 變成 ${e523FormatNumber(liters, 0)} 公升。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -9556,15 +10681,21 @@
         const volume = side ** 3;
         questions.push(`有一個正方體盒子，內部邊長是 ${side} 公分，容積是多少立方公分？`);
         summaryAnswers.push(`${volume}立方公分`);
-        answers.push(`簡答：${volume}立方公分。過程：正方體容積 = 邊長 × 邊長 × 邊長 = ${side} × ${side} × ${side} = ${volume}。`);
+        answers.push(
+          `簡答：${volume}立方公分。過程：正方體容積 = 邊長 × 邊長 × 邊長 = ${side} × ${side} × ${side} = ${volume}。`
+        );
       } else if (mode === 1) {
         const length = pickFromList([8, 10, 12, 15, 20]);
         const width = pickFromList([4, 5, 6, 8]);
         const height = pickFromList([3, 5, 7, 10]);
         const volume = length * width * height;
-        questions.push(`一個長方體容器，裡面長 ${length} 公分、寬 ${width} 公分、高 ${height} 公分，容積是多少立方公分？`);
+        questions.push(
+          `一個長方體容器，裡面長 ${length} 公分、寬 ${width} 公分、高 ${height} 公分，容積是多少立方公分？`
+        );
         summaryAnswers.push(`${volume}立方公分`);
-        answers.push(`簡答：${volume}立方公分。過程：容積 = 長 × 寬 × 高 = ${length} × ${width} × ${height} = ${volume}。`);
+        answers.push(
+          `簡答：${volume}立方公分。過程：容積 = 長 × 寬 × 高 = ${length} × ${width} × ${height} = ${volume}。`
+        );
       } else if (mode === 2) {
         const side = pickFromList([2, 3, 4, 5]);
         const m3 = side ** 3;
@@ -9576,7 +10707,9 @@
         const width = pickFromList([30, 40, 50]);
         const height = pickFromList([20, 25, 30, 40]);
         const volume = length * width * height;
-        questions.push(`一個長方體置物櫃，裡面長 ${length} 公分、寬 ${width} 公分、高 ${height} 公分，可裝滿幾立方公分的空間？`);
+        questions.push(
+          `一個長方體置物櫃，裡面長 ${length} 公分、寬 ${width} 公分、高 ${height} 公分，可裝滿幾立方公分的空間？`
+        );
         summaryAnswers.push(`${volume}立方公分`);
         answers.push(`簡答：${volume}立方公分。過程：空間大小就是容積，${length} × ${width} × ${height} = ${volume}。`);
       } else {
@@ -9585,9 +10718,13 @@
         const height = pickFromList([20, 25, 40]);
         const volume = length * width * height;
         const liters = volume / 1000;
-        questions.push(`一個長方體塑膠容器，裡面長 ${length} 公分、寬 ${width} 公分、高 ${height} 公分，容量是多少公升？`);
+        questions.push(
+          `一個長方體塑膠容器，裡面長 ${length} 公分、寬 ${width} 公分、高 ${height} 公分，容量是多少公升？`
+        );
         summaryAnswers.push(`${e523FormatNumber(liters)}公升`);
-        answers.push(`簡答：${e523FormatNumber(liters)}公升。過程：先算容積 ${length} × ${width} × ${height} = ${volume} 立方公分，再除以 1000，得到 ${e523FormatNumber(liters)} 公升。`);
+        answers.push(
+          `簡答：${e523FormatNumber(liters)}公升。過程：先算容積 ${length} × ${width} × ${height} = ${volume} 立方公分，再除以 1000，得到 ${e523FormatNumber(liters)} 公升。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -9609,9 +10746,13 @@
         const innerH = hasLid ? outerH - 2 * t : outerH - t;
         const volume = innerL * innerW * innerH;
         const title = hasLid ? '有蓋容器' : '無蓋容器';
-        questions.push(`${title}：外面長 ${outerL} 公分、寬 ${outerW} 公分、高 ${outerH} 公分，厚度 ${t} 公分，容積是多少立方公分？`);
+        questions.push(
+          `${title}：外面長 ${outerL} 公分、寬 ${outerW} 公分、高 ${outerH} 公分，厚度 ${t} 公分，容積是多少立方公分？`
+        );
         summaryAnswers.push(`${e523FormatNumber(volume)}立方公分`);
-        answers.push(`簡答：${e523FormatNumber(volume)}立方公分。過程：內部長 = ${outerL} - 2×${t} = ${e523FormatNumber(innerL)}，內部寬 = ${outerW} - 2×${t} = ${e523FormatNumber(innerW)}，內部高 = ${outerH} - ${hasLid ? `2×${t}` : `${t}`} = ${e523FormatNumber(innerH)}，所以容積 = ${e523FormatNumber(innerL)} × ${e523FormatNumber(innerW)} × ${e523FormatNumber(innerH)} = ${e523FormatNumber(volume)}。`);
+        answers.push(
+          `簡答：${e523FormatNumber(volume)}立方公分。過程：內部長 = ${outerL} - 2×${t} = ${e523FormatNumber(innerL)}，內部寬 = ${outerW} - 2×${t} = ${e523FormatNumber(innerW)}，內部高 = ${outerH} - ${hasLid ? `2×${t}` : `${t}`} = ${e523FormatNumber(innerH)}，所以容積 = ${e523FormatNumber(innerL)} × ${e523FormatNumber(innerW)} × ${e523FormatNumber(innerH)} = ${e523FormatNumber(volume)}。`
+        );
       } else if (i % 4 === 1) {
         const outerL = pickFromList([42, 52, 60]);
         const outerW = pickFromList([27, 32, 36]);
@@ -9621,11 +10762,15 @@
         const innerW = outerW - 2 * t;
         const innerH = outerH - 2 * t;
         const liters = (innerL * innerW * innerH) / 1000;
-        questions.push(`有蓋容器：外面長 ${outerL} 公分、寬 ${outerW} 公分、高 ${outerH} 公分，厚度 ${t} 公分，它的容量是多少公升幾毫升？`);
+        questions.push(
+          `有蓋容器：外面長 ${outerL} 公分、寬 ${outerW} 公分、高 ${outerH} 公分，厚度 ${t} 公分，它的容量是多少公升幾毫升？`
+        );
         const wholeL = Math.floor(liters);
-        const ml = (innerL * innerW * innerH) - wholeL * 1000;
+        const ml = innerL * innerW * innerH - wholeL * 1000;
         summaryAnswers.push(`${wholeL}公升${ml}毫升`);
-        answers.push(`簡答：${wholeL}公升${ml}毫升。過程：內部尺寸是 ${innerL} × ${innerW} × ${innerH}，容積 = ${innerL * innerW * innerH} 立方公分，也就是 ${wholeL} 公升 ${ml} 毫升。`);
+        answers.push(
+          `簡答：${wholeL}公升${ml}毫升。過程：內部尺寸是 ${innerL} × ${innerW} × ${innerH}，容積 = ${innerL * innerW * innerH} 立方公分，也就是 ${wholeL} 公升 ${ml} 毫升。`
+        );
       } else if (i % 4 === 2) {
         const outerSide = pickFromList([31, 33, 35, 42]);
         const t = pickFromList([0.5, 1, 2, 3]);
@@ -9633,7 +10778,9 @@
         const volume = innerSide ** 3;
         questions.push(`有蓋正方體盒：外面每邊長 ${outerSide} 公分，厚度 ${t} 公分，容積是多少立方公分？`);
         summaryAnswers.push(`${e523FormatNumber(volume)}立方公分`);
-        answers.push(`簡答：${e523FormatNumber(volume)}立方公分。過程：內部邊長 = ${outerSide} - 2×${t} = ${e523FormatNumber(innerSide)}，所以容積 = ${e523FormatNumber(innerSide)}^3 = ${e523FormatNumber(volume)}。`);
+        answers.push(
+          `簡答：${e523FormatNumber(volume)}立方公分。過程：內部邊長 = ${outerSide} - 2×${t} = ${e523FormatNumber(innerSide)}，所以容積 = ${e523FormatNumber(innerSide)}^3 = ${e523FormatNumber(volume)}。`
+        );
       } else {
         const outerSide = pickFromList([28, 30, 33, 36]);
         const t = pickFromList([1, 2, 3]);
@@ -9642,7 +10789,9 @@
         const volume = innerSide * innerSide * innerHeight;
         questions.push(`無蓋正方體盒：外面每邊長 ${outerSide} 公分，厚度 ${t} 公分，容積是多少立方公分？`);
         summaryAnswers.push(`${e523FormatNumber(volume)}立方公分`);
-        answers.push(`簡答：${e523FormatNumber(volume)}立方公分。過程：無蓋盒的內部長寬都減 2 倍厚度，高只扣底部厚度，所以內部尺寸是 ${e523FormatNumber(innerSide)} × ${e523FormatNumber(innerSide)} × ${e523FormatNumber(innerHeight)}，容積 = ${e523FormatNumber(volume)}。`);
+        answers.push(
+          `簡答：${e523FormatNumber(volume)}立方公分。過程：無蓋盒的內部長寬都減 2 倍厚度，高只扣底部厚度，所以內部尺寸是 ${e523FormatNumber(innerSide)} × ${e523FormatNumber(innerSide)} × ${e523FormatNumber(innerHeight)}，容積 = ${e523FormatNumber(volume)}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -9653,15 +10802,52 @@
     const summaryAnswers = [];
     const answers = [];
     const items = [
-      { leftValue: 5000, leftUnit: '毫升', rightValue: 4999, rightUnit: '立方公分', symbol: '>', reason: '5000 毫升 = 5000 立方公分' },
-      { leftValue: 400, leftUnit: '立方公分', rightValue: 0.4, rightUnit: '公升', symbol: '=', reason: '0.4 公升 = 400 毫升 = 400 立方公分' },
-      { leftValue: 720000, leftUnit: '毫升', rightValue: 72, rightUnit: '立方公尺', symbol: '<', reason: '72 立方公尺 = 72000 公升 = 72,000,000 毫升' },
-      { leftValue: 9, leftUnit: '公升', rightValue: 9000, rightUnit: '立方公分', symbol: '=', reason: '9 公升 = 9000 毫升 = 9000 立方公分' },
-      { leftValue: 20, leftUnit: '度的水', rightValue: 20, rightUnit: '立方公尺的水量', symbol: '=', reason: '1 度水 = 1 立方公尺' },
+      {
+        leftValue: 5000,
+        leftUnit: '毫升',
+        rightValue: 4999,
+        rightUnit: '立方公分',
+        symbol: '>',
+        reason: '5000 毫升 = 5000 立方公分',
+      },
+      {
+        leftValue: 400,
+        leftUnit: '立方公分',
+        rightValue: 0.4,
+        rightUnit: '公升',
+        symbol: '=',
+        reason: '0.4 公升 = 400 毫升 = 400 立方公分',
+      },
+      {
+        leftValue: 720000,
+        leftUnit: '毫升',
+        rightValue: 72,
+        rightUnit: '立方公尺',
+        symbol: '<',
+        reason: '72 立方公尺 = 72000 公升 = 72,000,000 毫升',
+      },
+      {
+        leftValue: 9,
+        leftUnit: '公升',
+        rightValue: 9000,
+        rightUnit: '立方公分',
+        symbol: '=',
+        reason: '9 公升 = 9000 毫升 = 9000 立方公分',
+      },
+      {
+        leftValue: 20,
+        leftUnit: '度的水',
+        rightValue: 20,
+        rightUnit: '立方公尺的水量',
+        symbol: '=',
+        reason: '1 度水 = 1 立方公尺',
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const item = items[i % items.length];
-      questions.push(`比較大小：${item.leftValue}${item.leftUnit} □ ${item.rightValue}${item.rightUnit}（填入 >、< 或 =）。`);
+      questions.push(
+        `比較大小：${item.leftValue}${item.leftUnit} □ ${item.rightValue}${item.rightUnit}（填入 >、< 或 =）。`
+      );
       summaryAnswers.push(item.symbol);
       answers.push(`簡答：${item.symbol}。過程：${item.reason}，所以左邊 ${item.symbol} 右邊。`);
     }
@@ -9680,13 +10866,21 @@
       const waterHeight = pickFromList([4, 6, 8, 10, 12, 15]);
       const volume = area * waterHeight;
       if (i % 2 === 0) {
-        questions.push(`有一個長方體容器，裡面長 ${length} 公分、寬 ${width} 公分、高 ${height + 10} 公分，倒入 ${volume} 毫升的水後，水深是多少公分？`);
+        questions.push(
+          `有一個長方體容器，裡面長 ${length} 公分、寬 ${width} 公分、高 ${height + 10} 公分，倒入 ${volume} 毫升的水後，水深是多少公分？`
+        );
         summaryAnswers.push(`${waterHeight}公分`);
-        answers.push(`簡答：${waterHeight}公分。過程：${volume} 毫升 = ${volume} 立方公分，水深 = 容積 ÷ 底面積 = ${volume} ÷ (${length} × ${width}) = ${waterHeight}。`);
+        answers.push(
+          `簡答：${waterHeight}公分。過程：${volume} 毫升 = ${volume} 立方公分，水深 = 容積 ÷ 底面積 = ${volume} ÷ (${length} × ${width}) = ${waterHeight}。`
+        );
       } else {
-        questions.push(`一個長 ${length} 公分、寬 ${width} 公分的長方體容器，倒入 ${volume} 毫升的水剛好裝滿，容器的高是多少公分？`);
+        questions.push(
+          `一個長 ${length} 公分、寬 ${width} 公分的長方體容器，倒入 ${volume} 毫升的水剛好裝滿，容器的高是多少公分？`
+        );
         summaryAnswers.push(`${waterHeight}公分`);
-        answers.push(`簡答：${waterHeight}公分。過程：容器高度 = 容積 ÷ 底面積 = ${volume} ÷ (${length} × ${width}) = ${waterHeight}。`);
+        answers.push(
+          `簡答：${waterHeight}公分。過程：容器高度 = 容積 ÷ 底面積 = ${volume} ÷ (${length} × ${width}) = ${waterHeight}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -9705,13 +10899,21 @@
       if (i % 2 === 0) {
         const pieces = pickFromList([2, 3, 4, 5]);
         const each = totalVolume / pieces;
-        questions.push(`長方體容器內部長 ${length} 公分、寬 ${width} 公分，放入 ${pieces} 個完全沉入水中的相同積木後，水位上升 ${delta} 公分，每個積木體積是多少立方公分？`);
+        questions.push(
+          `長方體容器內部長 ${length} 公分、寬 ${width} 公分，放入 ${pieces} 個完全沉入水中的相同積木後，水位上升 ${delta} 公分，每個積木體積是多少立方公分？`
+        );
         summaryAnswers.push(`${each}立方公分`);
-        answers.push(`簡答：${each}立方公分。過程：水位上升的體積 = 底面積 × 高度變化 = ${length} × ${width} × ${delta} = ${totalVolume}，再除以 ${pieces}，每個是 ${each}。`);
+        answers.push(
+          `簡答：${each}立方公分。過程：水位上升的體積 = 底面積 × 高度變化 = ${length} × ${width} × ${delta} = ${totalVolume}，再除以 ${pieces}，每個是 ${each}。`
+        );
       } else {
-        questions.push(`長方體水箱內部長 ${length} 公分、寬 ${width} 公分，放入石頭後水位由 ${10 + delta} 公分上升到 ${10 + 2 * delta} 公分，石頭體積是多少立方公分？`);
+        questions.push(
+          `長方體水箱內部長 ${length} 公分、寬 ${width} 公分，放入石頭後水位由 ${10 + delta} 公分上升到 ${10 + 2 * delta} 公分，石頭體積是多少立方公分？`
+        );
         summaryAnswers.push(`${totalVolume}立方公分`);
-        answers.push(`簡答：${totalVolume}立方公分。過程：水位上升 ${delta} 公分，排開的水量就是石頭體積，所以體積 = ${length} × ${width} × ${delta} = ${totalVolume}。`);
+        answers.push(
+          `簡答：${totalVolume}立方公分。過程：水位上升 ${delta} 公分，排開的水量就是石頭體積，所以體積 = ${length} × ${width} × ${delta} = ${totalVolume}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -9727,20 +10929,30 @@
         const volume = pickFromList([40, 50, 80, 120, 160, 200]);
         questions.push(`把體積 ${volume} 立方公分的鐵塊放入裝滿水的量杯，會溢出多少毫升的水？`);
         summaryAnswers.push(`${volume}毫升`);
-        answers.push(`簡答：${volume}毫升。過程：完全沉入後溢出的水量 = 物體體積，而 1 毫升 = 1 立方公分，所以會溢出 ${volume} 毫升。`);
+        answers.push(
+          `簡答：${volume}毫升。過程：完全沉入後溢出的水量 = 物體體積，而 1 毫升 = 1 立方公分，所以會溢出 ${volume} 毫升。`
+        );
       } else if (mode === 1) {
         const per = pickFromList([120, 180, 240, 280]);
         const countPieces = pickFromList([2, 3, 4, 5]);
         const total = per * countPieces;
-        questions.push(`將 ${countPieces} 顆相同的球放入裝滿水的杯子，溢出 ${total} 毫升的水，1 顆球的體積是多少立方公分？`);
+        questions.push(
+          `將 ${countPieces} 顆相同的球放入裝滿水的杯子，溢出 ${total} 毫升的水，1 顆球的體積是多少立方公分？`
+        );
         summaryAnswers.push(`${per}立方公分`);
-        answers.push(`簡答：${per}立方公分。過程：溢出的總水量就是 ${countPieces} 顆球的總體積，所以每顆球體積 = ${total} ÷ ${countPieces} = ${per} 立方公分。`);
+        answers.push(
+          `簡答：${per}立方公分。過程：溢出的總水量就是 ${countPieces} 顆球的總體積，所以每顆球體積 = ${total} ÷ ${countPieces} = ${per} 立方公分。`
+        );
       } else {
         const overflowL = pickFromList([1.2, 1.5, 2.3, 3.6]);
         const cm3 = overflowL * 1000;
-        questions.push(`裝滿水的臉盆放入一塊塑膠板後，完全沉入水中溢出 ${overflowL} 公升的水，塑膠板體積是多少立方公分？`);
+        questions.push(
+          `裝滿水的臉盆放入一塊塑膠板後，完全沉入水中溢出 ${overflowL} 公升的水，塑膠板體積是多少立方公分？`
+        );
         summaryAnswers.push(`${e523FormatNumber(cm3, 0)}立方公分`);
-        answers.push(`簡答：${e523FormatNumber(cm3, 0)}立方公分。過程：溢水量 = 物體體積，${overflowL} 公升 = ${e523FormatNumber(cm3, 0)} 立方公分，所以塑膠板體積是 ${e523FormatNumber(cm3, 0)} 立方公分。`);
+        answers.push(
+          `簡答：${e523FormatNumber(cm3, 0)}立方公分。過程：溢水量 = 物體體積，${overflowL} 公升 = ${e523FormatNumber(cm3, 0)} 立方公分，所以塑膠板體積是 ${e523FormatNumber(cm3, 0)} 立方公分。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -9759,12 +10971,16 @@
         const m3 = length * width * depth;
         questions.push(`一個內部長 ${length} 公尺、寬 ${width} 公尺、深 ${depth} 公尺的游泳池，容積是多少立方公尺？`);
         summaryAnswers.push(`${e523FormatNumber(m3)}立方公尺`);
-        answers.push(`簡答：${e523FormatNumber(m3)}立方公尺。過程：容積 = ${length} × ${width} × ${depth} = ${e523FormatNumber(m3)} 立方公尺。`);
+        answers.push(
+          `簡答：${e523FormatNumber(m3)}立方公尺。過程：容積 = ${length} × ${width} × ${depth} = ${e523FormatNumber(m3)} 立方公尺。`
+        );
       } else if (mode === 1) {
         const degrees = pickFromList([18, 24, 36, 48, 53, 60]);
         questions.push(`水費單顯示用了 ${degrees} 度水，這等於多少公升的水？`);
         summaryAnswers.push(`${degrees * 1000}公升`);
-        answers.push(`簡答：${degrees * 1000}公升。過程：1 度水 = 1 立方公尺 = 1000 公升，所以 ${degrees} 度 = ${degrees * 1000} 公升。`);
+        answers.push(
+          `簡答：${degrees * 1000}公升。過程：1 度水 = 1 立方公尺 = 1000 公升，所以 ${degrees} 度 = ${degrees * 1000} 公升。`
+        );
       } else if (mode === 2) {
         const side = pickFromList([2, 3, 4]);
         const m3 = side ** 3;
@@ -9779,7 +10995,9 @@
         const degrees = length * width * height;
         questions.push(`一個水塔裡面長 ${length} 公尺、寬 ${width} 公尺、高 ${height} 公尺，裝滿水共有幾度水？`);
         summaryAnswers.push(`${degrees}度`);
-        answers.push(`簡答：${degrees}度。過程：容積 = ${length} × ${width} × ${height} = ${degrees} 立方公尺，而 1 度水 = 1 立方公尺，所以共有 ${degrees} 度。`);
+        answers.push(
+          `簡答：${degrees}度。過程：容積 = ${length} × ${width} × ${height} = ${degrees} 立方公尺，而 1 度水 = 1 立方公尺，所以共有 ${degrees} 度。`
+        );
       } else {
         const length = 2;
         const width = 1;
@@ -9787,9 +11005,13 @@
         const daily = pickFromList([1, 2, 3, 4]);
         const total = length * width * height;
         const days = total / daily;
-        questions.push(`一個水塔裡面長 ${length} 公尺、寬 ${width} 公尺、高 ${height} 公尺，裝滿水後若每天用 ${daily} 度水，可以用幾天？`);
+        questions.push(
+          `一個水塔裡面長 ${length} 公尺、寬 ${width} 公尺、高 ${height} 公尺，裝滿水後若每天用 ${daily} 度水，可以用幾天？`
+        );
         summaryAnswers.push(`${days}天`);
-        answers.push(`簡答：${days}天。過程：水塔容積 = ${length} × ${width} × ${height} = ${total} 立方公尺 = ${total} 度水，每天用 ${daily} 度，所以可用 ${total} ÷ ${daily} = ${days} 天。`);
+        answers.push(
+          `簡答：${days}天。過程：水塔容積 = ${length} × ${width} × ${height} = ${total} 立方公尺 = ${total} 度水，每天用 ${daily} 度，所以可用 ${total} ÷ ${daily} = ${days} 天。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -9810,37 +11032,23 @@
   }
 
   function buildE523ConvertTwoSet(count) {
-    return buildE523MixedSet([
-      buildE523BasicUnitConvertSet,
-      buildE523LargeUnitConvertSet,
-    ], count);
+    return buildE523MixedSet([buildE523BasicUnitConvertSet, buildE523LargeUnitConvertSet], count);
   }
 
   function buildE523ContainerTwoSet(count) {
-    return buildE523MixedSet([
-      buildE523InnerCapacitySet,
-      buildE523ThicknessCapacitySet,
-    ], count);
+    return buildE523MixedSet([buildE523InnerCapacitySet, buildE523ThicknessCapacitySet], count);
   }
 
   function buildE523WaterTwoSet(count) {
-    return buildE523MixedSet([
-      buildE523FillWaterLevelSet,
-      buildE523DisplacementSet,
-    ], count);
+    return buildE523MixedSet([buildE523FillWaterLevelSet, buildE523DisplacementSet], count);
   }
 
   function buildE523OverflowCompareTwoSet(count) {
-    return buildE523MixedSet([
-      buildE523OverflowSet,
-      buildE523CapacityCompareSet,
-    ], count);
+    return buildE523MixedSet([buildE523OverflowSet, buildE523CapacityCompareSet], count);
   }
 
   function buildE523LargeOneSet(count) {
-    return buildE523MixedSet([
-      buildE523LargeApplicationSet,
-    ], count);
+    return buildE523MixedSet([buildE523LargeApplicationSet], count);
   }
 
   function e511Answer(shortAnswer, process) {
@@ -9874,17 +11082,20 @@
     const text = e511Fixed(value, digitsCount);
     const [integerText, decimalText] = text.split('.');
     const integerPart = e511IntegerToChinese(Number(integerText));
-    return `${integerPart}點${decimalText.split('').map((digit) => digitMap[Number(digit)]).join('')}`;
+    return `${integerPart}點${decimalText
+      .split('')
+      .map((digit) => digitMap[Number(digit)])
+      .join('')}`;
   }
 
   function e511CountUnitValue(unitText) {
     const map = {
-      '1': 1,
-      '0.1': 0.1,
-      '0.01': 0.01,
-      '0.001': 0.001,
-      '0.0001': 0.0001,
-      '0.00001': 0.00001,
+      1: 1,
+      0.1: 0.1,
+      0.01: 0.01,
+      0.001: 0.001,
+      0.0001: 0.0001,
+      0.00001: 0.00001,
     };
     return map[unitText] || 0;
   }
@@ -9976,7 +11187,9 @@
         const thousandths = randInt(1, 9);
         const value = ones + tenths * 0.1 + hundredths * 0.01 + thousandths * 0.001;
         const answerText = e511Fixed(value, 3);
-        questions.push(`${ones} 個 1、${tenths} 個 0.1、${hundredths} 個 0.01 和 ${thousandths} 個 0.001 合起來是多少？`);
+        questions.push(
+          `${ones} 個 1、${tenths} 個 0.1、${hundredths} 個 0.01 和 ${thousandths} 個 0.001 合起來是多少？`
+        );
         summaryAnswers.push(answerText);
         answers.push(
           e511Answer(
@@ -9993,10 +11206,7 @@
         questions.push(`${countValue} 個 ${unitText} 合起來是多少？`);
         summaryAnswers.push(answerText);
         answers.push(
-          e511Answer(
-            answerText,
-            `${countValue} 個 ${unitText} 就是 ${countValue} × ${unitText} = ${answerText}。`
-          )
+          e511Answer(answerText, `${countValue} 個 ${unitText} 就是 ${countValue} × ${unitText} = ${answerText}。`)
         );
       } else {
         const unitText = pickFromList(['0.001', '0.0001', '0.00001']);
@@ -10139,8 +11349,8 @@
     for (let i = 0; i < count; i += 1) {
       const digitsA = pickFromList([2, 3, 4]);
       const digitsB = pickFromList([2, 3, 4]);
-      const a = randInt(100, 9999) / (10 ** digitsA);
-      let b = randInt(100, 9999) / (10 ** digitsB);
+      const a = randInt(100, 9999) / 10 ** digitsA;
+      let b = randInt(100, 9999) / 10 ** digitsB;
       const useAdd = i % 2 === 0;
       if (!useAdd && b > a) {
         const temp = a;
@@ -10151,10 +11361,7 @@
       questions.push(`計算：${e511Trim(a, 4)} ${useAdd ? '+' : '−'} ${e511Trim(b, 4)} = （　）`);
       summaryAnswers.push(answerText);
       answers.push(
-        e511Answer(
-          answerText,
-          `先把小數點對齊，再做 ${useAdd ? '加法' : '減法'}。計算後得到 ${answerText}。`
-        )
+        e511Answer(answerText, `先把小數點對齊，再做 ${useAdd ? '加法' : '減法'}。計算後得到 ${answerText}。`)
       );
     }
     return { questions, summaryAnswers, answers };
@@ -10238,10 +11445,7 @@
         questions.push(`${cityA}距離約 ${sourceText} 公里，取概數到十分位是多少公里？`);
         summaryAnswers.push(`${rounded}公里`);
         answers.push(
-          e511Answer(
-            `${rounded}公里`,
-            `${sourceText} 公里取概數到十分位，要看百分位數字，所以答案是 ${rounded} 公里。`
-          )
+          e511Answer(`${rounded}公里`, `${sourceText} 公里取概數到十分位，要看百分位數字，所以答案是 ${rounded} 公里。`)
         );
       }
     }
@@ -10305,9 +11509,8 @@
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const digits = i % 2 === 0 ? 1 : 2;
-      const target = digits === 1
-        ? Number((randInt(10, 99) / 10).toFixed(1))
-        : Number((randInt(100, 999) / 100).toFixed(2));
+      const target =
+        digits === 1 ? Number((randInt(10, 99) / 10).toFixed(1)) : Number((randInt(100, 999) / 100).toFixed(2));
       const options = [];
       while (options.length < 5) {
         const offset = pickFromList([-0.06, -0.04, -0.01, 0, 0.01, 0.024, 0.049, 0.051, 0.08]);
@@ -10316,7 +11519,9 @@
         if (!options.includes(text)) options.push(text);
       }
       const targetText = target.toFixed(digits);
-      const winners = options.filter((text) => e511RoundText(text, digits) === targetText).sort((a, b) => Number(a) - Number(b));
+      const winners = options
+        .filter((text) => e511RoundText(text, digits) === targetText)
+        .sort((a, b) => Number(a) - Number(b));
       const placeText = digits === 1 ? '十分位' : '百分位';
       questions.push(`下面哪些數取概數到${placeText}會得到 ${targetText}？（選項：${options.join('、')}）`);
       summaryAnswers.push(winners.join('、'));
@@ -10399,40 +11604,26 @@
   }
 
   function buildE511LiteracyThreeSet(count) {
-    return buildE511MixedSet([
-      buildE511ReadWriteSet,
-      buildE511PlaceCompositionSet,
-      buildE511PlaceDigitMeaningSet,
-    ], count);
+    return buildE511MixedSet(
+      [buildE511ReadWriteSet, buildE511PlaceCompositionSet, buildE511PlaceDigitMeaningSet],
+      count
+    );
   }
 
   function buildE511CompareTwoSet(count) {
-    return buildE511MixedSet([
-      buildE511CompareFillSet,
-      buildE511TrimZeroSet,
-    ], count);
+    return buildE511MixedSet([buildE511CompareFillSet, buildE511TrimZeroSet], count);
   }
 
   function buildE511ComputeTwoSet(count) {
-    return buildE511MixedSet([
-      buildE511ColumnAddSubtractSet,
-      buildE511ApplicationSet,
-    ], count);
+    return buildE511MixedSet([buildE511ColumnAddSubtractSet, buildE511ApplicationSet], count);
   }
 
   function buildE511RoundThreeSet(count) {
-    return buildE511MixedSet([
-      buildE511RoundDirectSet,
-      buildE511RoundKeepZeroSet,
-      buildE511RoundMultiPlaceSet,
-    ], count);
+    return buildE511MixedSet([buildE511RoundDirectSet, buildE511RoundKeepZeroSet, buildE511RoundMultiPlaceSet], count);
   }
 
   function buildE511ReverseTwoSet(count) {
-    return buildE511MixedSet([
-      buildE511RoundSelectionSet,
-      buildE511RoundHiddenDigitSet,
-    ], count);
+    return buildE511MixedSet([buildE511RoundSelectionSet, buildE511RoundHiddenDigitSet], count);
   }
 
   function e512Answer(shortAnswer, process) {
@@ -10486,10 +11677,7 @@
         questions.push(`${dividend} 可以被下面哪些數整除？（選項：${e512FormatList(options)}）`);
         summaryAnswers.push(answerText);
         answers.push(
-          e512Answer(
-            answerText,
-            `能整除表示除完餘數是 0。逐一檢查後，${dividend} 可以被 ${answerText} 整除。`
-          )
+          e512Answer(answerText, `能整除表示除完餘數是 0。逐一檢查後，${dividend} 可以被 ${answerText} 整除。`)
         );
       } else {
         const divisors = shuffle(factors.filter((value) => value > 1)).slice(0, 2);
@@ -10507,12 +11695,7 @@
         const answerText = e512FormatList(winners);
         questions.push(`下面哪些算式可以整除？（選項：${e512FormatList(options)}）`);
         summaryAnswers.push(answerText);
-        answers.push(
-          e512Answer(
-            answerText,
-            `整除就是除完沒有餘數。逐一檢查後，可以整除的是 ${answerText}。`
-          )
-        );
+        answers.push(e512Answer(answerText, `整除就是除完沒有餘數。逐一檢查後，可以整除的是 ${answerText}。`));
       }
     }
     return { questions, summaryAnswers, answers };
@@ -10523,7 +11706,14 @@
     const summaryAnswers = [];
     const answers = [];
     const bank = [
-      [5, 8], [6, 9], [7, 12], [8, 15], [9, 10], [12, 14], [13, 6], [15, 16],
+      [5, 8],
+      [6, 9],
+      [7, 12],
+      [8, 15],
+      [9, 10],
+      [12, 14],
+      [13, 6],
+      [15, 16],
     ];
     for (let i = 0; i < count; i += 1) {
       const [a, b] = bank[i % bank.length];
@@ -10573,12 +11763,7 @@
       const answerText = e512FormatList(factors);
       questions.push(`寫出 ${value} 的所有因數。`);
       summaryAnswers.push(answerText);
-      answers.push(
-        e512Answer(
-          answerText,
-          `依序找出可以整除 ${value} 的整數，全部列出是 ${answerText}。`
-        )
-      );
+      answers.push(e512Answer(answerText, `依序找出可以整除 ${value} 的整數，全部列出是 ${answerText}。`));
     }
     return { questions, summaryAnswers, answers };
   }
@@ -10607,22 +11792,14 @@
         const answerText = e512FormatList(winners);
         questions.push(`在 1～10 的數字中，哪些是 ${value} 的因數？`);
         summaryAnswers.push(answerText);
-        answers.push(
-          e512Answer(
-            answerText,
-            `從 1 到 10 逐一檢查能否整除 ${value}，符合的是 ${answerText}。`
-          )
-        );
+        answers.push(e512Answer(answerText, `從 1 到 10 逐一檢查能否整除 ${value}，符合的是 ${answerText}。`));
       } else {
         const trimmedFactors = factors.slice(1, -1);
         const answerText = `${value}`;
         questions.push(`一個數的因數由小到大排是 1、${e512FormatList(trimmedFactors)}、${value}，原數是多少？`);
         summaryAnswers.push(answerText);
         answers.push(
-          e512Answer(
-            answerText,
-            `一個數的最大因數一定是它自己。題目最後一個因數是 ${value}，所以原數就是 ${value}。`
-          )
+          e512Answer(answerText, `一個數的最大因數一定是它自己。題目最後一個因數是 ${value}，所以原數就是 ${value}。`)
         );
       }
     }
@@ -10633,7 +11810,15 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const bank = [[18, 30], [24, 28], [12, 18], [15, 20], [30, 45], [42, 35], [60, 75]];
+    const bank = [
+      [18, 30],
+      [24, 28],
+      [12, 18],
+      [15, 20],
+      [30, 45],
+      [42, 35],
+      [60, 75],
+    ];
     for (let i = 0; i < count; i += 1) {
       const [a, b] = bank[i % bank.length];
       const commonFactors = e512ListFactors(e512Gcd(a, b));
@@ -10655,18 +11840,21 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const bank = [[14, 8], [16, 48], [27, 36], [28, 34], [45, 60], [63, 84], [72, 96]];
+    const bank = [
+      [14, 8],
+      [16, 48],
+      [27, 36],
+      [28, 34],
+      [45, 60],
+      [63, 84],
+      [72, 96],
+    ];
     for (let i = 0; i < count; i += 1) {
       const [a, b] = bank[i % bank.length];
       const gcd = e512Gcd(a, b);
       questions.push(`找出 ${a} 和 ${b} 的最大公因數。`);
       summaryAnswers.push(`${gcd}`);
-      answers.push(
-        e512Answer(
-          `${gcd}`,
-          `能同時整除 ${a} 和 ${b} 的最大整數是 ${gcd}，所以最大公因數是 ${gcd}。`
-        )
-      );
+      answers.push(e512Answer(`${gcd}`, `能同時整除 ${a} 和 ${b} 的最大整數是 ${gcd}，所以最大公因數是 ${gcd}。`));
     }
     return { questions, summaryAnswers, answers };
   }
@@ -10675,19 +11863,31 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const pairBank = [[24, 16, 4], [48, 18, 6], [30, 45, 15], [20, 28, 4]];
-    const coprimeBank = [[14, 19], [21, 22], [25, 28]];
-    const nonCoprimeBank = [[15, 24], [20, 28], [18, 30], [24, 36], [35, 49]];
+    const pairBank = [
+      [24, 16, 4],
+      [48, 18, 6],
+      [30, 45, 15],
+      [20, 28, 4],
+    ];
+    const coprimeBank = [
+      [14, 19],
+      [21, 22],
+      [25, 28],
+    ];
+    const nonCoprimeBank = [
+      [15, 24],
+      [20, 28],
+      [18, 30],
+      [24, 36],
+      [35, 49],
+    ];
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
         const [a, b, common] = pairBank[i % pairBank.length];
         questions.push(`已知 ${common} 是 ${a} 的因數，也是 ${b} 的因數，那麼 ${common} 是 ${a} 和 ${b} 的什麼數？`);
         summaryAnswers.push('公因數');
         answers.push(
-          e512Answer(
-            '公因數',
-            `同時是 ${a} 和 ${b} 的因數，就叫做 ${a} 和 ${b} 的公因數，所以答案是公因數。`
-          )
+          e512Answer('公因數', `同時是 ${a} 和 ${b} 的因數，就叫做 ${a} 和 ${b} 的公因數，所以答案是公因數。`)
         );
       } else {
         const winner = pickFromList(coprimeBank);
@@ -10796,33 +11996,22 @@
   }
 
   function buildE512BasicsTwoSet(count) {
-    return buildE512MixedSet([
-      buildE512DivisibleSelectionSet,
-      buildE512FactorRelationSet,
-    ], count);
+    return buildE512MixedSet([buildE512DivisibleSelectionSet, buildE512FactorRelationSet], count);
   }
 
   function buildE512SingleNumberTwoSet(count) {
-    return buildE512MixedSet([
-      buildE512FactorListSet,
-      buildE512FactorPropertySet,
-    ], count);
+    return buildE512MixedSet([buildE512FactorListSet, buildE512FactorPropertySet], count);
   }
 
   function buildE512CommonThreeSet(count) {
-    return buildE512MixedSet([
-      buildE512CommonFactorListSet,
-      buildE512GcdDirectSet,
-      buildE512CommonFactorPropertySet,
-    ], count);
+    return buildE512MixedSet(
+      [buildE512CommonFactorListSet, buildE512GcdDirectSet, buildE512CommonFactorPropertySet],
+      count
+    );
   }
 
   function buildE512ApplicationThreeSet(count) {
-    return buildE512MixedSet([
-      buildE512PackGroupSet,
-      buildE512CutIntervalSet,
-      buildE512UnitRateInferenceSet,
-    ], count);
+    return buildE512MixedSet([buildE512PackGroupSet, buildE512CutIntervalSet, buildE512UnitRateInferenceSet], count);
   }
 
   function e513Answer(shortAnswer, process) {
@@ -10885,12 +12074,7 @@
         const answerText = e513FormatList(winners);
         questions.push(`下面哪些數是 ${target} 的倍數？（選項：${e513FormatList(options)}）`);
         summaryAnswers.push(answerText);
-        answers.push(
-          e513Answer(
-            answerText,
-            `判斷 ${target} 的倍數可看個位數。符合規律的有 ${answerText}。`
-          )
-        );
+        answers.push(e513Answer(answerText, `判斷 ${target} 的倍數可看個位數。符合規律的有 ${answerText}。`));
       } else {
         const prefix = randInt(12, 98);
         const digitBank = target === 2 ? [0, 2, 4, 6, 8] : target === 5 ? [0, 5] : [0];
@@ -10955,7 +12139,14 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const bank = [[12, 15], [14, 21], [8, 20], [6, 9], [18, 27], [10, 12]];
+    const bank = [
+      [12, 15],
+      [14, 21],
+      [8, 20],
+      [6, 9],
+      [18, 27],
+      [10, 12],
+    ];
     for (let i = 0; i < count; i += 1) {
       const [a, b] = bank[i % bank.length];
       const common = lcm(a, b);
@@ -10977,23 +12168,29 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const bank = [[14, 8], [16, 24], [18, 30], [12, 16], [21, 28], [24, 36], [15, 20]];
+    const bank = [
+      [14, 8],
+      [16, 24],
+      [18, 30],
+      [12, 16],
+      [21, 28],
+      [24, 36],
+      [15, 20],
+    ];
     for (let i = 0; i < count; i += 1) {
       const [a, b] = bank[i % bank.length];
       const common = lcm(a, b);
       questions.push(`找出 ${a} 和 ${b} 的最小公倍數。`);
       summaryAnswers.push(`${common}`);
       answers.push(
-        e513Answer(
-          `${common}`,
-          `同時是 ${a} 和 ${b} 的倍數中最小的正整數是 ${common}，所以最小公倍數是 ${common}。`
-        )
+        e513Answer(`${common}`, `同時是 ${a} 和 ${b} 的倍數中最小的正整數是 ${common}，所以最小公倍數是 ${common}。`)
       );
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildE513GroupMinTotalSet(count) {
+    window.__e513LastSource = "formula-practice";
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
@@ -11007,7 +12204,7 @@
     for (let i = 0; i < count; i += 1) {
       const [questionText, a, b, unit] = bank[i % bank.length];
       const common = lcm(a, b);
-      questions.push(questionText);
+      questions.push(`${questionText}`);
       summaryAnswers.push(`${common}${unit}`);
       answers.push(
         e513Answer(
@@ -11117,7 +12314,13 @@
     const answers = [];
     const bank = [
       ['老師買原子筆和便利貼花的錢一樣多，原子筆 30 元，便利貼 12 元，最少分別花了多少元？', 30, 12, '元'],
-      ['買 35 元牛奶或 40 元果汁，各買若干杯後花的錢一樣多且不超過 300 元，買一種飲料的錢可能是多少？', 35, 40, '元', 300],
+      [
+        '買 35 元牛奶或 40 元果汁，各買若干杯後花的錢一樣多且不超過 300 元，買一種飲料的錢可能是多少？',
+        35,
+        40,
+        '元',
+        300,
+      ],
       ['檸檬派 25 元，草莓派 40 元，各買了一些且花費相同，買檸檬派至少花了多少元？', 25, 40, '元'],
       ['全部買 12 元藍筆或全部買 15 元螢光筆都剛好花完錢，最少有幾元？', 12, 15, '元'],
       ['A 巧克力 6 元，B 巧克力 9 元，各買若干個且總額相同，花的錢最少是幾元？', 6, 9, '元'],
@@ -11154,33 +12357,25 @@
   }
 
   function buildE513MultipleThreeSet(count) {
-    return buildE513MixedSet([
-      buildE513MultipleSequenceSet,
-      buildE513MultipleRuleSet,
-      buildE513RangeMultipleSet,
-    ], count);
+    return buildE513MixedSet(
+      [buildE513MultipleSequenceSet, buildE513MultipleRuleSet, buildE513RangeMultipleSet],
+      count
+    );
   }
 
   function buildE513LcmTwoSet(count) {
-    return buildE513MixedSet([
-      buildE513CommonMultipleListSet,
-      buildE513LcmDirectSet,
-    ], count);
+    return buildE513MixedSet([buildE513CommonMultipleListSet, buildE513LcmDirectSet], count);
   }
 
   function buildE513ApplicationThreeSet(count) {
-    return buildE513MixedSet([
-      buildE513GroupMinTotalSet,
-      buildE513RectangleSquareMinSideSet,
-      buildE513PeriodSyncSet,
-    ], count);
+    return buildE513MixedSet(
+      [buildE513GroupMinTotalSet, buildE513RectangleSquareMinSideSet, buildE513PeriodSyncSet],
+      count
+    );
   }
 
   function buildE513RangeSpendingTwoSet(count) {
-    return buildE513MixedSet([
-      buildE513RangeCommonMultipleSet,
-      buildE513EqualSpendingSet,
-    ], count);
+    return buildE513MixedSet([buildE513RangeCommonMultipleSet, buildE513EqualSpendingSet], count);
   }
 
   function e514Answer(shortAnswer, process) {
@@ -11229,7 +12424,9 @@
       } else if (i % 3 === 1) {
         const targetDen = pickFromList([24, 30, 36, 40, 48]);
         const denBank = [2, 3, 4, 5, 6, 8, 10, 12].filter((value) => targetDen % value === 0);
-        const chosen = shuffle(denBank).slice(0, 3).sort((a, b) => a - b);
+        const chosen = shuffle(denBank)
+          .slice(0, 3)
+          .sort((a, b) => a - b);
         const fracs = chosen.map((den) => makeFraction(randInt(1, den - 1), den));
         const expanded = fracs.map((frac) => makeFraction(frac.num * (targetDen / frac.den), targetDen));
         const answerText = e514FormatFractionList(expanded);
@@ -11278,7 +12475,9 @@
       const [n, d, g] = bank[i % bank.length];
       const reduced = makeFraction(n, d);
       if (i % 3 === 0) {
-        questions.push(`${e514Frac({ num: n, den: d })} = $\\frac{${n}÷${g}}{${d}÷${g}}$ = $\\frac{\\Box}{${reduced.den}}$，空格應填多少？`);
+        questions.push(
+          `${e514Frac({ num: n, den: d })} = $\\frac{${n}÷${g}}{${d}÷${g}}$ = $\\frac{\\Box}{${reduced.den}}$，空格應填多少？`
+        );
         summaryAnswers.push(`${reduced.num}`);
         answers.push(
           e514Answer(
@@ -11375,7 +12574,9 @@
       const a = e514MakeScaledFraction({ num: n, den: d }, scales[0]);
       const b = e514MakeScaledFraction({ num: n, den: d }, scales[1]);
       const c = e514MakeScaledFraction({ num: n, den: d }, scales[2]);
-      questions.push(`連等式填空：$\\frac{${a.num}}{${a.den}}=\\frac{\\Box}{${d}}=\\frac{${b.num}}{\\Box}=\\frac{\\Box}{${c.den}}$。`);
+      questions.push(
+        `連等式填空：$\\frac{${a.num}}{${a.den}}=\\frac{\\Box}{${d}}=\\frac{${b.num}}{\\Box}=\\frac{\\Box}{${c.den}}$。`
+      );
       summaryAnswers.push(`${n}、${b.den}、${c.num}`);
       answers.push(
         e514Answer(
@@ -11407,19 +12608,13 @@
     ].map((frac) => ({ ...frac, reducible: false }));
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
-        const options = shuffle([
-          ...shuffle(irreducible).slice(0, 3),
-          ...shuffle(reducible).slice(0, 2),
-        ]);
+        const options = shuffle([...shuffle(irreducible).slice(0, 3), ...shuffle(reducible).slice(0, 2)]);
         const winners = options.filter((item) => gcdInt(item.num, item.den) === 1).map((item) => e514Frac(item));
         const answerText = winners.join('、');
         questions.push(`下面哪些分數已經不能再約分？把它們圈出來：${options.map((item) => e514Frac(item)).join('、')}`);
         summaryAnswers.push(answerText);
         answers.push(
-          e514Answer(
-            answerText,
-            `最簡分數代表分子、分母的最大公因數是 1。逐一檢查後，不能再約分的是 ${answerText}。`
-          )
+          e514Answer(answerText, `最簡分數代表分子、分母的最大公因數是 1。逐一檢查後，不能再約分的是 ${answerText}。`)
         );
       } else {
         const winner = pickFromList(irreducible);
@@ -11449,7 +12644,9 @@
         const right = makeFraction(Math.min(target.den - 1, target.num + 2), target.den);
         const otherA = makeFraction(target.num + 1, target.den + 1);
         const otherB = makeFraction(target.num + 2, target.den + 1);
-        questions.push(`${e514Frac(target)} 是在 ${e514Frac(left)} 和 ${e514Frac(right)} 之間，還是在 ${e514Frac(otherA)} 和 ${e514Frac(otherB)} 之間？`);
+        questions.push(
+          `${e514Frac(target)} 是在 ${e514Frac(left)} 和 ${e514Frac(right)} 之間，還是在 ${e514Frac(otherA)} 和 ${e514Frac(otherB)} 之間？`
+        );
         summaryAnswers.push(`${e514Frac(left)} 和 ${e514Frac(right)} 之間`);
         answers.push(
           e514Answer(
@@ -11466,7 +12663,9 @@
           if (num / digit > right.num / right.den) winners.push(digit);
         }
         const answerText = winners.join('、');
-        questions.push(`在 $\\frac{${num}}{\\Box}$ 的分母填入 1～9 的哪幾個數字，會使 $\\frac{${num}}{\\Box}>${fractionToLatex(right)}$？`);
+        questions.push(
+          `在 $\\frac{${num}}{\\Box}$ 的分母填入 1～9 的哪幾個數字，會使 $\\frac{${num}}{\\Box}>${fractionToLatex(right)}$？`
+        );
         summaryAnswers.push(answerText);
         answers.push(
           e514Answer(
@@ -11506,7 +12705,8 @@
     ];
     for (let i = 0; i < count; i += 1) {
       const [left, right] = pairBank[i % pairBank.length];
-      const sign = left.num / left.den > right.num / right.den ? '>' : left.num / left.den < right.num / right.den ? '<' : '=';
+      const sign =
+        left.num / left.den > right.num / right.den ? '>' : left.num / left.den < right.num / right.den ? '<' : '=';
       const common = lcm(left.den, right.den);
       const leftNum = left.num * (common / left.den);
       const rightNum = right.num * (common / right.den);
@@ -11649,33 +12849,27 @@
   }
 
   function buildE514EquivalentFourSet(count) {
-    return buildE514MixedSet([
-      buildE514ExpandEquivalentSet,
-      buildE514ReduceEquivalentSet,
-      buildE514DivisionFractionConvertSet,
-      buildE514EquivalentChainSet,
-    ], count);
+    return buildE514MixedSet(
+      [
+        buildE514ExpandEquivalentSet,
+        buildE514ReduceEquivalentSet,
+        buildE514DivisionFractionConvertSet,
+        buildE514EquivalentChainSet,
+      ],
+      count
+    );
   }
 
   function buildE514JudgeTwoSet(count) {
-    return buildE514MixedSet([
-      buildE514IrreducibleJudgeSet,
-      buildE514ConditionFillSet,
-    ], count);
+    return buildE514MixedSet([buildE514IrreducibleJudgeSet, buildE514ConditionFillSet], count);
   }
 
   function buildE514CompareTwoSet(count) {
-    return buildE514MixedSet([
-      buildE514CommonDenominatorCompareSet,
-      buildE514PropertyCompareSet,
-    ], count);
+    return buildE514MixedSet([buildE514CommonDenominatorCompareSet, buildE514PropertyCompareSet], count);
   }
 
   function buildE514CalcTwoSet(count) {
-    return buildE514MixedSet([
-      buildE514UnlikeDenominatorAddSet,
-      buildE514UnlikeDenominatorSubSet,
-    ], count);
+    return buildE514MixedSet([buildE514UnlikeDenominatorAddSet, buildE514UnlikeDenominatorSubSet], count);
   }
 
   function e515Answer(shortAnswer, process) {
@@ -11729,7 +12923,9 @@
       const sides = i % 2 === 0 ? validBank[i % validBank.length] : invalidBank[i % invalidBank.length];
       const sorted = [...sides].sort((a, b) => a - b);
       const can = e515CanFormTriangle(...sides);
-      questions.push(`下面三根線段的長度分別是 ${sides[0]} 公分、${sides[1]} 公分、${sides[2]} 公分，可以圍成三角形嗎？`);
+      questions.push(
+        `下面三根線段的長度分別是 ${sides[0]} 公分、${sides[1]} 公分、${sides[2]} 公分，可以圍成三角形嗎？`
+      );
       summaryAnswers.push(can ? '可以' : '不可以');
       answers.push(
         e515Answer(
@@ -11758,15 +12954,13 @@
       const min = Math.abs(a - b) + 1;
       const max = a + b - 1;
       if (i % 2 === 0) {
-        const options = shuffle([
-          min - 1,
-          min,
-          min + 1,
-          max,
-          max + 1,
-        ]).filter((value, index, array) => value > 0 && array.indexOf(value) === index);
+        const options = shuffle([min - 1, min, min + 1, max, max + 1]).filter(
+          (value, index, array) => value > 0 && array.indexOf(value) === index
+        );
         const winners = options.filter((value) => value >= min && value <= max).sort((x, y) => x - y);
-        questions.push(`已知兩邊長分別是 ${a} 公分和 ${b} 公分，下列哪些長度可以是第三邊？（選項：${e515List(options)} 公分）`);
+        questions.push(
+          `已知兩邊長分別是 ${a} 公分和 ${b} 公分，下列哪些長度可以是第三邊？（選項：${e515List(options)} 公分）`
+        );
         summaryAnswers.push(`${e515List(winners)} 公分`);
         answers.push(
           e515Answer(
@@ -11817,14 +13011,13 @@
           )
         );
       } else {
-        const options = shuffle([
-          Math.max(1, a - 1),
-          a,
-          b,
-          b + 2,
-        ]).filter((value, index, array) => array.indexOf(value) === index);
+        const options = shuffle([Math.max(1, a - 1), a, b, b + 2]).filter(
+          (value, index, array) => array.indexOf(value) === index
+        );
         const winners = options.filter((value) => unique.includes(value)).sort((x, y) => x - y);
-        questions.push(`一個等腰三角形兩邊長分別是 ${a} 公分和 ${b} 公分，哪幾個選項可能是第三邊？（選項：${e515List(options)} 公分）`);
+        questions.push(
+          `一個等腰三角形兩邊長分別是 ${a} 公分和 ${b} 公分，哪幾個選項可能是第三邊？（選項：${e515List(options)} 公分）`
+        );
         summaryAnswers.push(`${e515List(winners)} 公分`);
         answers.push(
           e515Answer(
@@ -11857,27 +13050,29 @@
       } else if (i % 3 === 1) {
         questions.push(`一個多邊形有 ${sides} 個頂點，它是幾邊形？`);
         summaryAnswers.push(name);
-        answers.push(
-          e515Answer(
-            name,
-            `多邊形有幾個頂點，就有幾條邊，所以有 ${sides} 個頂點的是${name}。`
-          )
-        );
+        answers.push(e515Answer(name, `多邊形有幾個頂點，就有幾條邊，所以有 ${sides} 個頂點的是${name}。`));
       } else {
         const statements = shuffle([
-          { text: `一個多邊形每條邊都一樣長，就一定是正多邊形。`, ok: false, why: `正多邊形除了每條邊都相等，還要每個角都一樣大。` },
-          { text: `正${name}的每條邊都一樣長，而且每個角都一樣大。`, ok: true, why: `正多邊形的定義就是每邊等長、每角相等。` },
-          { text: `一個四個角都是直角的長方形，就一定是正多邊形。`, ok: false, why: `長方形四個角雖然相等，但邊長不一定都相等，所以不一定是正多邊形。` },
+          {
+            text: `一個多邊形每條邊都一樣長，就一定是正多邊形。`,
+            ok: false,
+            why: `正多邊形除了每條邊都相等，還要每個角都一樣大。`,
+          },
+          {
+            text: `正${name}的每條邊都一樣長，而且每個角都一樣大。`,
+            ok: true,
+            why: `正多邊形的定義就是每邊等長、每角相等。`,
+          },
+          {
+            text: `一個四個角都是直角的長方形，就一定是正多邊形。`,
+            ok: false,
+            why: `長方形四個角雖然相等，但邊長不一定都相等，所以不一定是正多邊形。`,
+          },
         ]);
         const statement = statements[0];
         questions.push(`判斷正誤：${statement.text}`);
         summaryAnswers.push(statement.ok ? '對' : '錯');
-        answers.push(
-          e515Answer(
-            statement.ok ? '對' : '錯',
-            statement.why
-          )
-        );
+        answers.push(e515Answer(statement.ok ? '對' : '錯', statement.why));
       }
     }
     return { questions, summaryAnswers, answers };
@@ -11905,10 +13100,7 @@
       }
       summaryAnswers.push(`${third}°`);
       answers.push(
-        e515Answer(
-          `${third}°`,
-          `三角形 3 個內角和是 180°，所以第三個角 = 180° - ${a}° - ${b}° = ${third}°。`
-        )
+        e515Answer(`${third}°`, `三角形 3 個內角和是 180°，所以第三個角 = 180° - ${a}° - ${b}° = ${third}°。`)
       );
     }
     return { questions, summaryAnswers, answers };
@@ -11936,20 +13128,12 @@
         questions.push(`一個等腰三角形的一個底角是 ${base}°，它的頂角是多少度？`);
         summaryAnswers.push(`${vertex}°`);
         answers.push(
-          e515Answer(
-            `${vertex}°`,
-            `等腰三角形兩個底角一樣大，所以頂角 = 180° - 2 × ${base}° = ${vertex}°。`
-          )
+          e515Answer(`${vertex}°`, `等腰三角形兩個底角一樣大，所以頂角 = 180° - 2 × ${base}° = ${vertex}°。`)
         );
       } else {
         questions.push(`正三角形的 3 條邊一樣長，它的一個角是多少度？`);
         summaryAnswers.push('60°');
-        answers.push(
-          e515Answer(
-            '60°',
-            `正三角形 3 個角都一樣大，而內角和是 180°，所以每個角都是 180° ÷ 3 = 60°。`
-          )
-        );
+        answers.push(e515Answer('60°', `正三角形 3 個角都一樣大，而內角和是 180°，所以每個角都是 180° ÷ 3 = 60°。`));
       }
     }
     return { questions, summaryAnswers, answers };
@@ -11976,10 +13160,7 @@
       }
       summaryAnswers.push(`${d}°`);
       answers.push(
-        e515Answer(
-          `${d}°`,
-          `四邊形的 4 個內角和是 360°，所以第四個角 = 360° - ${a}° - ${b}° - ${c}° = ${d}°。`
-        )
+        e515Answer(`${d}°`, `四邊形的 4 個內角和是 360°，所以第四個角 = 360° - ${a}° - ${b}° - ${c}° = ${d}°。`)
       );
     }
     return { questions, summaryAnswers, answers };
@@ -11997,20 +13178,12 @@
         questions.push(`平行四邊形 ABCD 中，已知 ∠B = ${angle}°，求 ∠C 是幾度？`);
         summaryAnswers.push(`${adjacent}°`);
         answers.push(
-          e515Answer(
-            `${adjacent}°`,
-            `平行四邊形鄰角和是 180°，所以 ∠C = 180° - ${angle}° = ${adjacent}°。`
-          )
+          e515Answer(`${adjacent}°`, `平行四邊形鄰角和是 180°，所以 ∠C = 180° - ${angle}° = ${adjacent}°。`)
         );
       } else if (i % 3 === 1) {
         questions.push(`平行四邊形 EFGH 中，已知 ∠E = ${angle}°，求 ∠G 是幾度？`);
         summaryAnswers.push(`${angle}°`);
-        answers.push(
-          e515Answer(
-            `${angle}°`,
-            `平行四邊形對角相等，所以 ∠G = ∠E = ${angle}°。`
-          )
-        );
+        answers.push(e515Answer(`${angle}°`, `平行四邊形對角相等，所以 ∠G = ∠E = ${angle}°。`));
       } else {
         questions.push(`平行四邊形中有一個角是 ${angle}°，找出其他三個角的度數。`);
         summaryAnswers.push(`${adjacent}°、${angle}°、${adjacent}°`);
@@ -12040,14 +13213,11 @@
     ];
     for (let i = 0; i < count; i += 1) {
       const [num, den] = bank[i % bank.length];
-      const angle = 360 * num / den;
+      const angle = (360 * num) / den;
       questions.push(`一個 $\\frac{${num}}{${den}}$ 圓的扇形，圓心角是多少度？`);
       summaryAnswers.push(`${angle}°`);
       answers.push(
-        e515Answer(
-          `${angle}°`,
-          `圓心角 = 360° × 幾分之幾圓，所以 = 360° × $\\frac{${num}}{${den}}$ = ${angle}°。`
-        )
+        e515Answer(`${angle}°`, `圓心角 = 360° × 幾分之幾圓，所以 = 360° × $\\frac{${num}}{${den}}$ = ${angle}°。`)
       );
     }
     return { questions, summaryAnswers, answers };
@@ -12087,12 +13257,7 @@
         questions.push(`已知一個扇形挖去 ${given}° 後，剩下部分的圓心角是多少度？`);
       }
       summaryAnswers.push(`${rest}°`);
-      answers.push(
-        e515Answer(
-          `${rest}°`,
-          `整個圓是 360°，剩下的扇形角度 = 360° - ${given}° = ${rest}°。`
-        )
-      );
+      answers.push(e515Answer(`${rest}°`, `整個圓是 360°，剩下的扇形角度 = 360° - ${given}° = ${rest}°。`));
     }
     return { questions, summaryAnswers, answers };
   }
@@ -12136,30 +13301,35 @@
   }
 
   function buildE515TriangleSideThreeSet(count) {
-    return buildE515MixedSet([
-      buildE515CanFormTriangleSet,
-      buildE515ThirdSideRangeSet,
-      buildE515IsoscelesThirdSideSet,
-    ], count);
+    return buildE515MixedSet(
+      [buildE515CanFormTriangleSet, buildE515ThirdSideRangeSet, buildE515IsoscelesThirdSideSet],
+      count
+    );
   }
 
   function buildE515PolygonAngleFiveSet(count) {
-    return buildE515MixedSet([
-      buildE515PolygonRegularBasicSet,
-      buildE515TriangleAngleSet,
-      buildE515IsoscelesEquilateralAngleSet,
-      buildE515QuadrilateralAngleSet,
-      buildE515ParallelogramAngleSet,
-    ], count);
+    return buildE515MixedSet(
+      [
+        buildE515PolygonRegularBasicSet,
+        buildE515TriangleAngleSet,
+        buildE515IsoscelesEquilateralAngleSet,
+        buildE515QuadrilateralAngleSet,
+        buildE515ParallelogramAngleSet,
+      ],
+      count
+    );
   }
 
   function buildE515SectorFourSet(count) {
-    return buildE515MixedSet([
-      buildE515SectorFractionToAngleSet,
-      buildE515SectorAngleToFractionSet,
-      buildE515SectorComplementAngleSet,
-      buildE515SectorMultiRegionSet,
-    ], count);
+    return buildE515MixedSet(
+      [
+        buildE515SectorFractionToAngleSet,
+        buildE515SectorAngleToFractionSet,
+        buildE515SectorComplementAngleSet,
+        buildE515SectorMultiRegionSet,
+      ],
+      count
+    );
   }
 
   function e516Answer(shortAnswer, process) {
@@ -12172,7 +13342,16 @@
 
   function e516PickDenominatorPair() {
     return pickFromList([
-      [2, 3], [3, 4], [3, 5], [4, 5], [4, 7], [5, 6], [5, 8], [6, 7], [7, 9], [8, 9],
+      [2, 3],
+      [3, 4],
+      [3, 5],
+      [4, 5],
+      [4, 7],
+      [5, 6],
+      [5, 8],
+      [6, 7],
+      [7, 9],
+      [8, 9],
     ]);
   }
 
@@ -12223,18 +13402,15 @@
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const [d1, d2] = e516PickDenominatorPair();
-      const left = i % 3 === 0
-        ? e516RandomImproperFraction(d1)
-        : makeMixedFraction(randInt(1, 3), randInt(1, d1 - 1), d1);
-      let right = i % 3 === 1
-        ? e516RandomImproperFraction(d2)
-        : makeMixedFraction(randInt(1, 2), randInt(1, d2 - 1), d2);
+      const left =
+        i % 3 === 0 ? e516RandomImproperFraction(d1) : makeMixedFraction(randInt(1, 3), randInt(1, d1 - 1), d1);
+      let right =
+        i % 3 === 1 ? e516RandomImproperFraction(d2) : makeMixedFraction(randInt(1, 2), randInt(1, d2 - 1), d2);
       const useAdd = i % 2 === 0;
       if (!useAdd) {
         while (left.num / left.den <= right.num / right.den) {
-          right = i % 3 === 1
-            ? e516RandomImproperFraction(d2)
-            : makeMixedFraction(randInt(1, 2), randInt(1, d2 - 1), d2);
+          right =
+            i % 3 === 1 ? e516RandomImproperFraction(d2) : makeMixedFraction(randInt(1, 2), randInt(1, d2 - 1), d2);
         }
       }
       const result = useAdd ? addFraction(left, right) : subFraction(left, right);
@@ -12317,9 +13493,8 @@
       const row = templates[i % templates.length];
       const [d1, d2] = e516PickDenominatorPair();
       const leftFrac = makeMixedFraction(randInt(1, 4), randInt(1, d1 - 1), d1);
-      const rightFrac = i % 2 === 0
-        ? makeFraction(randInt(1, d2 - 1), d2)
-        : makeMixedFraction(randInt(1, 3), randInt(1, d2 - 1), d2);
+      const rightFrac =
+        i % 2 === 0 ? makeFraction(randInt(1, d2 - 1), d2) : makeMixedFraction(randInt(1, 3), randInt(1, d2 - 1), d2);
       const result = addFraction(leftFrac, rightFrac);
       questions.push(`${row[0]}${e516Frac(leftFrac, true)}${row[1]}${e516Frac(rightFrac, true)}${row[2]}`);
       summaryAnswers.push(`${e516Frac(result, true)}${row[3]}`);
@@ -12347,14 +13522,12 @@
       const row = templates[i % templates.length];
       const [d1, d2] = e516PickDenominatorPair();
       let left = makeMixedFraction(randInt(2, 7), randInt(1, d1 - 1), d1);
-      let right = i % 2 === 0
-        ? makeFraction(randInt(1, d2 - 1), d2)
-        : makeMixedFraction(randInt(1, 5), randInt(1, d2 - 1), d2);
+      let right =
+        i % 2 === 0 ? makeFraction(randInt(1, d2 - 1), d2) : makeMixedFraction(randInt(1, 5), randInt(1, d2 - 1), d2);
       while (left.num / left.den <= right.num / right.den) {
         left = makeMixedFraction(randInt(2, 7), randInt(1, d1 - 1), d1);
-        right = i % 2 === 0
-          ? makeFraction(randInt(1, d2 - 1), d2)
-          : makeMixedFraction(randInt(1, 5), randInt(1, d2 - 1), d2);
+        right =
+          i % 2 === 0 ? makeFraction(randInt(1, d2 - 1), d2) : makeMixedFraction(randInt(1, 5), randInt(1, d2 - 1), d2);
       }
       const result = subFraction(left, right);
       questions.push(`${row[0]}${e516Frac(left, true)}${row[1]}${e516Frac(right, true)}${row[2]}`);
@@ -12383,13 +13556,11 @@
       const row = templates[i % templates.length];
       const [d1, d2] = e516PickDenominatorPair();
       const original = makeMixedFraction(randInt(2, 6), randInt(1, d1 - 1), d1);
-      let used = i % 2 === 0
-        ? makeFraction(randInt(1, d2 - 1), d2)
-        : makeMixedFraction(randInt(1, 3), randInt(1, d2 - 1), d2);
+      let used =
+        i % 2 === 0 ? makeFraction(randInt(1, d2 - 1), d2) : makeMixedFraction(randInt(1, 3), randInt(1, d2 - 1), d2);
       while (original.num / original.den <= used.num / used.den) {
-        used = i % 2 === 0
-          ? makeFraction(randInt(1, d2 - 1), d2)
-          : makeMixedFraction(randInt(1, 3), randInt(1, d2 - 1), d2);
+        used =
+          i % 2 === 0 ? makeFraction(randInt(1, d2 - 1), d2) : makeMixedFraction(randInt(1, 3), randInt(1, d2 - 1), d2);
       }
       const result = subFraction(original, used);
       questions.push(`${row[0]}${e516Frac(original, true)}${row[1]}${e516Frac(used, true)}${row[2]}`);
@@ -12417,9 +13588,8 @@
     for (let i = 0; i < count; i += 1) {
       const row = templates[i % templates.length];
       const [d1, d2] = e516PickDenominatorPair();
-      const used = i % 2 === 0
-        ? makeFraction(randInt(1, d1 - 1), d1)
-        : makeMixedFraction(randInt(1, 3), randInt(1, d1 - 1), d1);
+      const used =
+        i % 2 === 0 ? makeFraction(randInt(1, d1 - 1), d1) : makeMixedFraction(randInt(1, 3), randInt(1, d1 - 1), d1);
       const left = makeMixedFraction(randInt(1, 4), randInt(1, d2 - 1), d2);
       const result = addFraction(used, left);
       questions.push(`${row[0]}${e516Frac(used, true)}${row[1]}${e516Frac(left, true)}${row[2]}`);
@@ -12458,7 +13628,9 @@
       const larger = leftEach.num / leftEach.den >= rightEach.num / rightEach.den ? leftEach : rightEach;
       const smaller = larger === leftEach ? rightEach : leftEach;
       const result = isCompare ? subFraction(larger, smaller) : addFraction(leftEach, rightEach);
-      questions.push(`${e516Frac(leftTotal, true)}${row[3]}的${row[1]}平均分成 ${leftCount} 份，${e516Frac(rightTotal, true)}${row[3]}的${row[2]}平均分成 ${rightCount} 份，${row[4]}`);
+      questions.push(
+        `${e516Frac(leftTotal, true)}${row[3]}的${row[1]}平均分成 ${leftCount} 份，${e516Frac(rightTotal, true)}${row[3]}的${row[2]}平均分成 ${rightCount} 份，${row[4]}`
+      );
       if (isCompare) {
         summaryAnswers.push(`${e516Frac(result, true)}${row[3]}`);
         answers.push(
@@ -12494,27 +13666,24 @@
   }
 
   function buildE516BasicTwoSet(count) {
-    return buildE516MixedSet([
-      buildE516ProperAddSubSet,
-      buildE516ImproperCalcSet,
-    ], count);
+    return buildE516MixedSet([buildE516ProperAddSubSet, buildE516ImproperCalcSet], count);
   }
 
   function buildE516MixedTwoSet(count) {
-    return buildE516MixedSet([
-      buildE516MixedAddSet,
-      buildE516MixedBorrowSubSet,
-    ], count);
+    return buildE516MixedSet([buildE516MixedAddSet, buildE516MixedBorrowSubSet], count);
   }
 
   function buildE516ApplicationFiveSet(count) {
-    return buildE516MixedSet([
-      buildE516TotalApplicationSet,
-      buildE516DifferenceApplicationSet,
-      buildE516RemainingApplicationSet,
-      buildE516OriginalAmountSet,
-      buildE516DivisionIntegratedSet,
-    ], count);
+    return buildE516MixedSet(
+      [
+        buildE516TotalApplicationSet,
+        buildE516DifferenceApplicationSet,
+        buildE516RemainingApplicationSet,
+        buildE516OriginalAmountSet,
+        buildE516DivisionIntegratedSet,
+      ],
+      count
+    );
   }
 
   function e517Answer(shortAnswer, process) {
@@ -12540,10 +13709,7 @@
       questions.push(`正 ${sides} 邊形有幾條對稱軸？`);
       summaryAnswers.push(`${sides} 條`);
       answers.push(
-        e517Answer(
-          `${sides} 條`,
-          `正多邊形的對稱軸條數和邊數一樣多，所以正 ${sides} 邊形有 ${sides} 條對稱軸。`
-        )
+        e517Answer(`${sides} 條`, `正多邊形的對稱軸條數和邊數一樣多，所以正 ${sides} 邊形有 ${sides} 條對稱軸。`)
       );
     }
     return { questions, summaryAnswers, answers };
@@ -12583,7 +13749,9 @@
       const [a, b] = e517PickLetters(2);
       const axis = pickFromList(axisNames);
       const distance = randInt(2, 18);
-      questions.push(`點 ${a} 和點 ${b} 互為 ${axis} 的對稱點。若點 ${a} 到 ${axis} 的垂直距離是 ${distance} 公分，則點 ${b} 到 ${axis} 的垂直距離是多少公分？`);
+      questions.push(
+        `點 ${a} 和點 ${b} 互為 ${axis} 的對稱點。若點 ${a} 到 ${axis} 的垂直距離是 ${distance} 公分，則點 ${b} 到 ${axis} 的垂直距離是多少公分？`
+      );
       summaryAnswers.push(`${distance} 公分`);
       answers.push(
         e517Answer(
@@ -12603,20 +13771,21 @@
       if (i % 2 === 0) {
         const [a, b, c, d] = e517PickLetters(4);
         const length = randInt(4, 28);
-        questions.push(`在線對稱圖形中，線段 ${a}${b} 的對稱邊是線段 ${c}${d}。若 ${a}${b} 長 ${length} 公分，則 ${c}${d} 長多少公分？`);
+        questions.push(
+          `在線對稱圖形中，線段 ${a}${b} 的對稱邊是線段 ${c}${d}。若 ${a}${b} 長 ${length} 公分，則 ${c}${d} 長多少公分？`
+        );
         summaryAnswers.push(`${length} 公分`);
         answers.push(
-          e517Answer(
-            `${length} 公分`,
-            `對稱邊一樣長，所以 ${c}${d} 和 ${a}${b} 長度相等，都是 ${length} 公分。`
-          )
+          e517Answer(`${length} 公分`, `對稱邊一樣長，所以 ${c}${d} 和 ${a}${b} 長度相等，都是 ${length} 公分。`)
         );
       } else {
         const left1 = randInt(3, 12);
         const left2 = randInt(3, 12);
         const left3 = randInt(3, 12);
         const total = left1 + left2 + left3;
-        questions.push(`一個線對稱圖形左半邊的三條外邊長分別是 ${left1}、${left2}、${left3} 公分，則右半邊對應三條外邊的總長是多少公分？`);
+        questions.push(
+          `一個線對稱圖形左半邊的三條外邊長分別是 ${left1}、${left2}、${left3} 公分，則右半邊對應三條外邊的總長是多少公分？`
+        );
         summaryAnswers.push(`${total} 公分`);
         answers.push(
           e517Answer(
@@ -12638,12 +13807,7 @@
       const angle = randInt(35, 145);
       questions.push(`某線對稱圖形中，∠${a} 和 ∠${b} 互為對稱角。若 ∠${a} = ${angle}°，則 ∠${b} 是多少度？`);
       summaryAnswers.push(`${angle}°`);
-      answers.push(
-        e517Answer(
-          `${angle}°`,
-          `對稱角大小相等，所以 ∠${b} = ∠${a} = ${angle}°。`
-        )
-      );
+      answers.push(e517Answer(`${angle}°`, `對稱角大小相等，所以 ∠${b} = ∠${a} = ${angle}°。`));
     }
     return { questions, summaryAnswers, answers };
   }
@@ -12657,7 +13821,9 @@
         const leftSum = randInt(12, 40);
         const base = randInt(4, 20);
         const perimeter = leftSum * 2 + base;
-        questions.push(`一個線對稱五邊形，左右兩側外框互為鏡射，左半邊外框總長為 ${leftSum} 公分，底邊長為 ${base} 公分，求整個周長。`);
+        questions.push(
+          `一個線對稱五邊形，左右兩側外框互為鏡射，左半邊外框總長為 ${leftSum} 公分，底邊長為 ${base} 公分，求整個周長。`
+        );
         summaryAnswers.push(`${perimeter} 公分`);
         answers.push(
           e517Answer(
@@ -12670,7 +13836,9 @@
         const top = randInt(3, 15);
         const bottom = randInt(4, 18);
         const perimeter = leftSum * 2 + top + bottom;
-        questions.push(`一個線對稱六邊形，左右兩側外框互為鏡射，左半邊外框總長為 ${leftSum} 公分，上底長 ${top} 公分，下底長 ${bottom} 公分，求整個周長。`);
+        questions.push(
+          `一個線對稱六邊形，左右兩側外框互為鏡射，左半邊外框總長為 ${leftSum} 公分，上底長 ${top} 公分，下底長 ${bottom} 公分，求整個周長。`
+        );
         summaryAnswers.push(`${perimeter} 公分`);
         answers.push(
           e517Answer(
@@ -12697,19 +13865,14 @@
   }
 
   function buildE517AxisTwoSet(count) {
-    return buildE517MixedSet([
-      buildE517RegularAxisCountSet,
-      buildE517CommonShapeSymmetrySet,
-    ], count);
+    return buildE517MixedSet([buildE517RegularAxisCountSet, buildE517CommonShapeSymmetrySet], count);
   }
 
   function buildE517CalcFourSet(count) {
-    return buildE517MixedSet([
-      buildE517MirrorDistanceSet,
-      buildE517MirrorSegmentLengthSet,
-      buildE517MirrorAngleSet,
-      buildE517PerimeterSet,
-    ], count);
+    return buildE517MixedSet(
+      [buildE517MirrorDistanceSet, buildE517MirrorSegmentLengthSet, buildE517MirrorAngleSet, buildE517PerimeterSet],
+      count
+    );
   }
 
   function e518Answer(shortAnswer, process) {
@@ -12801,7 +13964,14 @@
     const summaryAnswers = [];
     const answers = [];
     const factorBank = [
-      [25, 4], [50, 2], [125, 8], [45, 2], [15, 4], [5, 20], [16, 5], [32, 25],
+      [25, 4],
+      [50, 2],
+      [125, 8],
+      [45, 2],
+      [15, 4],
+      [5, 20],
+      [16, 5],
+      [32, 25],
     ];
     for (let i = 0; i < count; i += 1) {
       const [b, c] = factorBank[i % factorBank.length];
@@ -12849,7 +14019,7 @@
         if (b > 100) {
           question = `${a} × ${b} = （　）`;
           const base = b >= 998 ? 1000 : 100;
-          process = `把 ${b} 拆成 ${base}${b > base ? '+' : '-'}${Math.abs(b - base)}：${a} × ${b} = ${a} × (${base}${b > base ? '+' : '-' }${Math.abs(b - base)}) = ${value}。`;
+          process = `把 ${b} 拆成 ${base}${b > base ? '+' : '-'}${Math.abs(b - base)}：${a} × ${b} = ${a} × (${base}${b > base ? '+' : '-'}${Math.abs(b - base)}) = ${value}。`;
         } else {
           question = `${a} × ${b} = （　）`;
           process = `把 ${b} 拆成 100-${100 - b}：${a} × ${b} = ${a} × (100-${100 - b}) = ${a * 100} - ${a * (100 - b)} = ${value}。`;
@@ -12881,15 +14051,27 @@
         const value = pay - (a + b - discount);
         questions.push(`購物找零：買了 ${a} 元商品和 ${b} 元商品，折價 ${discount} 元，付 ${pay} 元，應找回多少元？`);
         summaryAnswers.push(`${value} 元`);
-        answers.push(e518Answer(`${value} 元`, `先算實付金額：${a}+${b}-${discount}=${a + b - discount} 元，再用 ${pay}-${a + b - discount}=${value}，所以找回 ${value} 元。`));
+        answers.push(
+          e518Answer(
+            `${value} 元`,
+            `先算實付金額：${a}+${b}-${discount}=${a + b - discount} 元，再用 ${pay}-${a + b - discount}=${value}，所以找回 ${value} 元。`
+          )
+        );
       } else if (i % 4 === 1) {
         const total = pickFromList([96, 120, 144, 180, 210]);
         const perBox = pickFromList([6, 8, 10, 12, 15]);
         const boxesPerPack = pickFromList([2, 3, 4, 5]);
         const value = total / (perBox * boxesPerPack);
-        questions.push(`分裝問題：共有 ${total} 個物品，每 ${perBox} 個裝一盒，每 ${boxesPerPack} 盒裝一袋，共可裝成幾袋？`);
+        questions.push(
+          `分裝問題：共有 ${total} 個物品，每 ${perBox} 個裝一盒，每 ${boxesPerPack} 盒裝一袋，共可裝成幾袋？`
+        );
         summaryAnswers.push(`${value} 袋`);
-        answers.push(e518Answer(`${value} 袋`, `先算一袋有幾個：${perBox} × ${boxesPerPack} = ${perBox * boxesPerPack} 個，再算 ${total} ÷ ${perBox * boxesPerPack} = ${value} 袋。`));
+        answers.push(
+          e518Answer(
+            `${value} 袋`,
+            `先算一袋有幾個：${perBox} × ${boxesPerPack} = ${perBox * boxesPerPack} 個，再算 ${total} ÷ ${perBox * boxesPerPack} = ${value} 袋。`
+          )
+        );
       } else if (i % 4 === 2) {
         const setA = e518Number(6, 15);
         const totalA = setA * pickFromList([18, 24, 30, 36]);
@@ -12899,9 +14081,16 @@
         const unitB = totalB / setB;
         const cheaper = unitA < unitB ? 'A' : 'B';
         const diff = Math.abs(unitA - unitB);
-        questions.push(`單價比較：A 品牌 ${setA} 件賣 ${totalA} 元，B 品牌 ${setB} 件賣 ${totalB} 元，哪一個單價比較便宜？便宜幾元？`);
+        questions.push(
+          `單價比較：A 品牌 ${setA} 件賣 ${totalA} 元，B 品牌 ${setB} 件賣 ${totalB} 元，哪一個單價比較便宜？便宜幾元？`
+        );
         summaryAnswers.push(`${cheaper} 品牌，便宜 ${diff} 元`);
-        answers.push(e518Answer(`${cheaper} 品牌，便宜 ${diff} 元`, `A 的單價是 ${totalA} ÷ ${setA} = ${unitA} 元，B 的單價是 ${totalB} ÷ ${setB} = ${unitB} 元。較便宜的是 ${cheaper} 品牌，差 ${diff} 元。`));
+        answers.push(
+          e518Answer(
+            `${cheaper} 品牌，便宜 ${diff} 元`,
+            `A 的單價是 ${totalA} ÷ ${setA} = ${unitA} 元，B 的單價是 ${totalB} ÷ ${setB} = ${unitB} 元。較便宜的是 ${cheaper} 品牌，差 ${diff} 元。`
+          )
+        );
       } else {
         const length = e518Number(20, 60);
         const width = e518Number(10, 30);
@@ -12910,9 +14099,16 @@
         const square = side * side;
         const value = Math.abs(rect - square);
         const symbol = rect >= square ? '多' : '少';
-        questions.push(`面積比較：長方形長 ${length} 公尺、寬 ${width} 公尺，正方形邊長 ${side} 公尺，長方形面積比正方形面積${symbol}多少平方公尺？`);
+        questions.push(
+          `面積比較：長方形長 ${length} 公尺、寬 ${width} 公尺，正方形邊長 ${side} 公尺，長方形面積比正方形面積${symbol}多少平方公尺？`
+        );
         summaryAnswers.push(`${value} 平方公尺`);
-        answers.push(e518Answer(`${value} 平方公尺`, `長方形面積 ${length} × ${width} = ${rect}，正方形面積 ${side} × ${side} = ${square}，相差 ${value} 平方公尺。`));
+        answers.push(
+          e518Answer(
+            `${value} 平方公尺`,
+            `長方形面積 ${length} × ${width} = ${rect}，正方形面積 ${side} × ${side} = ${square}，相差 ${value} 平方公尺。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -12929,7 +14125,9 @@
         const avg = total / nums.length;
         questions.push(`平均數：${nums.join('、')} 的平均是多少？`);
         summaryAnswers.push(`${avg}`);
-        answers.push(e518Answer(`${avg}`, `先求總和 ${nums.join('+')} = ${total}，再用 ${total} ÷ ${nums.length} = ${avg}。`));
+        answers.push(
+          e518Answer(`${avg}`, `先求總和 ${nums.join('+')} = ${total}，再用 ${total} ÷ ${nums.length} = ${avg}。`)
+        );
       } else if (i % 3 === 1) {
         const items = Array.from({ length: 3 }, () => pickFromList([180, 210, 240, 270, 300, 330, 360]));
         const total = items.reduce((sum, value) => sum + value, 0);
@@ -12960,7 +14158,9 @@
       const totalNeed = targetAvg * (countDone + 1);
       const current = scores.reduce((sum, value) => sum + value, 0);
       const need = totalNeed - current;
-      questions.push(`目標平均：前 ${countDone} 次成績分別是 ${scores.join('、')}，若要讓 ${countDone + 1} 次的平均達到 ${targetAvg}，下一次至少要得到幾分？`);
+      questions.push(
+        `目標平均：前 ${countDone} 次成績分別是 ${scores.join('、')}，若要讓 ${countDone + 1} 次的平均達到 ${targetAvg}，下一次至少要得到幾分？`
+      );
       summaryAnswers.push(`${need} 分`);
       answers.push(
         e518Answer(
@@ -12984,7 +14184,9 @@
       const names = ['甲', '乙', '丙'];
       const maxIndex = pays.indexOf(maxValue);
       const give = maxValue - avg;
-      questions.push(`平攤後補差額：甲付 ${pays[0]} 元，乙付 ${pays[1]} 元，丙付 ${pays[2]} 元，平均每人應付多少元？多付的人應拿回多少元？`);
+      questions.push(
+        `平攤後補差額：甲付 ${pays[0]} 元，乙付 ${pays[1]} 元，丙付 ${pays[2]} 元，平均每人應付多少元？多付的人應拿回多少元？`
+      );
       summaryAnswers.push(`平均 ${avg} 元，${names[maxIndex]}應拿回 ${give} 元`);
       answers.push(
         e518Answer(
@@ -13010,31 +14212,19 @@
   }
 
   function buildE518BasicTwoSet(count) {
-    return buildE518MixedSet([
-      buildE518BasicMixedSet,
-      buildE518EquivalentJudgeSet,
-    ], count);
+    return buildE518MixedSet([buildE518BasicMixedSet, buildE518EquivalentJudgeSet], count);
   }
 
   function buildE518PropertyTwoSet(count) {
-    return buildE518MixedSet([
-      buildE518ChainDivisionSet,
-      buildE518DistributiveSet,
-    ], count);
+    return buildE518MixedSet([buildE518ChainDivisionSet, buildE518DistributiveSet], count);
   }
 
   function buildE518ApplicationTwoSet(count) {
-    return buildE518MixedSet([
-      buildE518ApplicationExpressionSet,
-      buildE518AverageBasicSet,
-    ], count);
+    return buildE518MixedSet([buildE518ApplicationExpressionSet, buildE518AverageBasicSet], count);
   }
 
   function buildE518AverageAdvancedTwoSet(count) {
-    return buildE518MixedSet([
-      buildE518AverageTargetSet,
-      buildE518BalancePaymentSet,
-    ], count);
+    return buildE518MixedSet([buildE518AverageTargetSet, buildE518BalancePaymentSet], count);
   }
 
   function e519Answer(shortAnswer, process) {
@@ -13051,11 +14241,20 @@
       const area = base * height;
       if (i % 2 === 0) {
         questions.push(`平行四邊形的底是 ${base} 公分，高是 ${height} 公分，面積是多少平方公分？`);
-        answers.push(e519Answer(`${area} 平方公分`, `平行四邊形面積 = 底 × 高，所以 ${base} × ${height} = ${area} 平方公分。`));
+        answers.push(
+          e519Answer(`${area} 平方公分`, `平行四邊形面積 = 底 × 高，所以 ${base} × ${height} = ${area} 平方公分。`)
+        );
       } else {
         const side = base + randInt(2, 12);
-        questions.push(`一個平行四邊形的底是 ${base} 公分，斜邊長 ${side} 公分，底邊與對邊的垂直距離是 ${height} 公分，面積是多少平方公分？`);
-        answers.push(e519Answer(`${area} 平方公分`, `面積只看底和對應的高，斜邊 ${side} 公分不是面積公式需要的量，所以面積 = ${base} × ${height} = ${area} 平方公分。`));
+        questions.push(
+          `一個平行四邊形的底是 ${base} 公分，斜邊長 ${side} 公分，底邊與對邊的垂直距離是 ${height} 公分，面積是多少平方公分？`
+        );
+        answers.push(
+          e519Answer(
+            `${area} 平方公分`,
+            `面積只看底和對應的高，斜邊 ${side} 公分不是面積公式需要的量，所以面積 = ${base} × ${height} = ${area} 平方公分。`
+          )
+        );
       }
       summaryAnswers.push(`${area} 平方公分`);
     }
@@ -13106,26 +14305,43 @@
       const height = randInt(4, 16);
       const area = base * height;
       if (i % 2 === 0) {
-        questions.push(`甲、乙兩個平行四邊形的底和高都分別相等。若甲的底是 ${base} 公分、高是 ${height} 公分，乙的形狀雖然不同，但底和高與甲相同，兩者面積是否相等？`);
+        questions.push(
+          `甲、乙兩個平行四邊形的底和高都分別相等。若甲的底是 ${base} 公分、高是 ${height} 公分，乙的形狀雖然不同，但底和高與甲相同，兩者面積是否相等？`
+        );
         summaryAnswers.push('相等');
-        answers.push(e519Answer('相等', `只要底和高分別相等，面積就相等。甲的面積是 ${base} × ${height} = ${area}，乙也一樣，所以相等。`));
+        answers.push(
+          e519Answer(
+            '相等',
+            `只要底和高分別相等，面積就相等。甲的面積是 ${base} × ${height} = ${area}，乙也一樣，所以相等。`
+          )
+        );
       } else {
         const rectArea = area;
-        questions.push(`一個長方形長 ${base} 公分、寬 ${height} 公分；另一個平行四邊形底是 ${base} 公分、高是 ${height} 公分。哪一個面積較大？`);
+        questions.push(
+          `一個長方形長 ${base} 公分、寬 ${height} 公分；另一個平行四邊形底是 ${base} 公分、高是 ${height} 公分。哪一個面積較大？`
+        );
         summaryAnswers.push('一樣大');
-        answers.push(e519Answer('一樣大', `長方形面積是 ${base} × ${height} = ${rectArea}，平行四邊形面積也是 ${base} × ${height} = ${rectArea}，所以一樣大。`));
+        answers.push(
+          e519Answer(
+            '一樣大',
+            `長方形面積是 ${base} × ${height} = ${rectArea}，平行四邊形面積也是 ${base} × ${height} = ${rectArea}，所以一樣大。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildE519ParallelogramCompositeSet(count) {
-    return buildE518MixedSet([
-      buildE519ParallelogramDirectSet,
-      buildE519ParallelogramReverseSet,
-      buildE519ParallelogramScaleSet,
-      buildE519ParallelogramEqualAreaSet,
-    ], count);
+    return buildE518MixedSet(
+      [
+        buildE519ParallelogramDirectSet,
+        buildE519ParallelogramReverseSet,
+        buildE519ParallelogramScaleSet,
+        buildE519ParallelogramEqualAreaSet,
+      ],
+      count
+    );
   }
 
   function buildE519TriangleDirectSet(count) {
@@ -13142,7 +14358,12 @@
         questions.push(`一個三角形底是 ${base} 公尺，高是 ${height} 公尺，面積是多少平方公尺？`);
       }
       summaryAnswers.push(`${area} ${i % 2 === 0 ? '平方公分' : '平方公尺'}`);
-      answers.push(e519Answer(`${area} ${i % 2 === 0 ? '平方公分' : '平方公尺'}`, `三角形面積 = 底 × 高 ÷ 2，所以 ${base} × ${height} ÷ 2 = ${area}。`));
+      answers.push(
+        e519Answer(
+          `${area} ${i % 2 === 0 ? '平方公分' : '平方公尺'}`,
+          `三角形面積 = 底 × 高 ÷ 2，所以 ${base} × ${height} ÷ 2 = ${area}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -13158,7 +14379,12 @@
       if (i % 2 === 0) {
         questions.push(`三角形面積是 ${area} 平方公分，底是 ${base} 公分，高是多少公分？`);
         summaryAnswers.push(`${height} 公分`);
-        answers.push(e519Answer(`${height} 公分`, `先用面積公式倒推：高 = 面積 × 2 ÷ 底，所以 ${area} × 2 ÷ ${base} = ${height} 公分。`));
+        answers.push(
+          e519Answer(
+            `${height} 公分`,
+            `先用面積公式倒推：高 = 面積 × 2 ÷ 底，所以 ${area} × 2 ÷ ${base} = ${height} 公分。`
+          )
+        );
       } else {
         questions.push(`三角形面積是 ${area} 平方公分，高是 ${height} 公分，底是多少公分？`);
         summaryAnswers.push(`${base} 公分`);
@@ -13178,7 +14404,9 @@
       if (i % 2 === 0) {
         questions.push(`三角形的底不變，高變成原來的 ${k} 倍，面積會變成原來的幾倍？`);
         summaryAnswers.push(`${k} 倍`);
-        answers.push(e519Answer(`${k} 倍`, `三角形面積 = 底 × 高 ÷ 2。底不變時，高變成 ${k} 倍，面積也會變成 ${k} 倍。`));
+        answers.push(
+          e519Answer(`${k} 倍`, `三角形面積 = 底 × 高 ÷ 2。底不變時，高變成 ${k} 倍，面積也會變成 ${k} 倍。`)
+        );
       } else {
         const baseA = randInt(4, 12);
         const heightA = randInt(4, 12);
@@ -13186,9 +14414,16 @@
         let baseB = randInt(4, 16);
         while (product % baseB !== 0) baseB = randInt(4, 16);
         const heightB = product / baseB;
-        questions.push(`甲三角形的底、高分別是 ${baseA} 公分和 ${heightA} 公分；乙三角形的底、高分別是 ${baseB} 公分和 ${heightB} 公分。兩個三角形的面積是否相等？`);
+        questions.push(
+          `甲三角形的底、高分別是 ${baseA} 公分和 ${heightA} 公分；乙三角形的底、高分別是 ${baseB} 公分和 ${heightB} 公分。兩個三角形的面積是否相等？`
+        );
         summaryAnswers.push('相等');
-        answers.push(e519Answer('相等', `三角形面積看底 × 高 ÷ 2。甲的底高乘積是 ${baseA} × ${heightA} = ${product}，乙的底高乘積是 ${baseB} × ${heightB} = ${product}，所以面積相等。`));
+        answers.push(
+          e519Answer(
+            '相等',
+            `三角形面積看底 × 高 ÷ 2。甲的底高乘積是 ${baseA} × ${heightA} = ${product}，乙的底高乘積是 ${baseB} × ${heightB} = ${product}，所以面積相等。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -13203,20 +14438,30 @@
       const height = randInt(4, 18);
       const rectArea = base * height;
       const triArea = rectArea / 2;
-      questions.push(`一個長方形長 ${base} 公分、寬 ${height} 公分；另一個三角形底是 ${base} 公分、高是 ${height} 公分。哪一個面積較大？差多少平方公分？`);
+      questions.push(
+        `一個長方形長 ${base} 公分、寬 ${height} 公分；另一個三角形底是 ${base} 公分、高是 ${height} 公分。哪一個面積較大？差多少平方公分？`
+      );
       summaryAnswers.push(`長方形較大，差 ${triArea} 平方公分`);
-      answers.push(e519Answer(`長方形較大，差 ${triArea} 平方公分`, `長方形面積是 ${base} × ${height} = ${rectArea}，三角形面積是 ${base} × ${height} ÷ 2 = ${triArea}，所以長方形較大，差 ${triArea} 平方公分。`));
+      answers.push(
+        e519Answer(
+          `長方形較大，差 ${triArea} 平方公分`,
+          `長方形面積是 ${base} × ${height} = ${rectArea}，三角形面積是 ${base} × ${height} ÷ 2 = ${triArea}，所以長方形較大，差 ${triArea} 平方公分。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildE519TriangleCompositeSet(count) {
-    return buildE518MixedSet([
-      buildE519TriangleDirectSet,
-      buildE519TriangleReverseSet,
-      buildE519TriangleScaleSet,
-      buildE519TriangleEqualAreaSet,
-    ], count);
+    return buildE518MixedSet(
+      [
+        buildE519TriangleDirectSet,
+        buildE519TriangleReverseSet,
+        buildE519TriangleScaleSet,
+        buildE519TriangleEqualAreaSet,
+      ],
+      count
+    );
   }
 
   function buildE519TrapezoidDirectSet(count) {
@@ -13230,7 +14475,12 @@
       const area = ((upper + lower) * height) / 2;
       questions.push(`梯形的上底是 ${upper} 公分，下底是 ${lower} 公分，高是 ${height} 公分，面積是多少平方公分？`);
       summaryAnswers.push(`${area} 平方公分`);
-      answers.push(e519Answer(`${area} 平方公分`, `梯形面積 = （上底 + 下底）× 高 ÷ 2，所以 (${upper} + ${lower}) × ${height} ÷ 2 = ${area} 平方公分。`));
+      answers.push(
+        e519Answer(
+          `${area} 平方公分`,
+          `梯形面積 = （上底 + 下底）× 高 ÷ 2，所以 (${upper} + ${lower}) × ${height} ÷ 2 = ${area} 平方公分。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -13248,9 +14498,16 @@
       const area = ((upper + lower) * height) / 2;
       const unit = pickFromList(units);
       const noun = pickFromList(nouns);
-      questions.push(`一個${noun}的上底是 ${upper}${unit}，下底是 ${lower}${unit}，高是 ${height}${unit}，面積是多少平方${unit}？`);
+      questions.push(
+        `一個${noun}的上底是 ${upper}${unit}，下底是 ${lower}${unit}，高是 ${height}${unit}，面積是多少平方${unit}？`
+      );
       summaryAnswers.push(`${area} 平方${unit}`);
-      answers.push(e519Answer(`${area} 平方${unit}`, `套用梯形面積公式：(${upper} + ${lower}) × ${height} ÷ 2 = ${area}，所以面積是 ${area} 平方${unit}。`));
+      answers.push(
+        e519Answer(
+          `${area} 平方${unit}`,
+          `套用梯形面積公式：(${upper} + ${lower}) × ${height} ÷ 2 = ${area}，所以面積是 ${area} 平方${unit}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -13263,9 +14520,16 @@
       if (i % 2 === 0) {
         const trapArea = pickFromList([24, 36, 48, 60, 72, 84, 96, 108]);
         const paraArea = trapArea * 2;
-        questions.push(`兩個全等梯形拼成一個平行四邊形後，平行四邊形面積是 ${paraArea} 平方公分。求其中一個梯形的面積。`);
+        questions.push(
+          `兩個全等梯形拼成一個平行四邊形後，平行四邊形面積是 ${paraArea} 平方公分。求其中一個梯形的面積。`
+        );
         summaryAnswers.push(`${trapArea} 平方公分`);
-        answers.push(e519Answer(`${trapArea} 平方公分`, `兩個全等梯形拼成的平行四邊形面積是兩個梯形面積總和，所以一個梯形面積 = ${paraArea} ÷ 2 = ${trapArea} 平方公分。`));
+        answers.push(
+          e519Answer(
+            `${trapArea} 平方公分`,
+            `兩個全等梯形拼成的平行四邊形面積是兩個梯形面積總和，所以一個梯形面積 = ${paraArea} ÷ 2 = ${trapArea} 平方公分。`
+          )
+        );
       } else {
         const upper = randInt(4, 12);
         const lower = randInt(upper + 4, upper + 16);
@@ -13273,9 +14537,16 @@
         const paraBase = upper + lower;
         const paraArea = paraBase * height;
         const trapArea = paraArea / 2;
-        questions.push(`兩個全等梯形可以拼成一個底是 ${paraBase} 公分、高是 ${height} 公分的平行四邊形。求其中一個梯形的面積。`);
+        questions.push(
+          `兩個全等梯形可以拼成一個底是 ${paraBase} 公分、高是 ${height} 公分的平行四邊形。求其中一個梯形的面積。`
+        );
         summaryAnswers.push(`${trapArea} 平方公分`);
-        answers.push(e519Answer(`${trapArea} 平方公分`, `先算拼成的平行四邊形面積：${paraBase} × ${height} = ${paraArea}。一個梯形是它的一半，所以面積是 ${paraArea} ÷ 2 = ${trapArea} 平方公分。`));
+        answers.push(
+          e519Answer(
+            `${trapArea} 平方公分`,
+            `先算拼成的平行四邊形面積：${paraBase} × ${height} = ${paraArea}。一個梯形是它的一半，所以面積是 ${paraArea} ÷ 2 = ${trapArea} 平方公分。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -13291,7 +14562,12 @@
       if (i % 2 === 0) {
         questions.push(`梯形的上底與下底都不變，高變成原來的 ${k} 倍，面積會變成原來的幾倍？`);
         summaryAnswers.push(`${k} 倍`);
-        answers.push(e519Answer(`${k} 倍`, `梯形面積 = （上底 + 下底）× 高 ÷ 2。當上底和下底不變時，高變成 ${k} 倍，面積也會變成 ${k} 倍。`));
+        answers.push(
+          e519Answer(
+            `${k} 倍`,
+            `梯形面積 = （上底 + 下底）× 高 ÷ 2。當上底和下底不變時，高變成 ${k} 倍，面積也會變成 ${k} 倍。`
+          )
+        );
       } else {
         const upper = randInt(5, 15);
         const lower = randInt(upper + 3, upper + 18);
@@ -13299,19 +14575,27 @@
         const area = ((upper + lower) * height) / 2;
         questions.push(`一個梯形的面積是 ${area} 平方公分，上底與下底的和是 ${upper + lower} 公分，高是多少公分？`);
         summaryAnswers.push(`${height} 公分`);
-        answers.push(e519Answer(`${height} 公分`, `由梯形面積公式可得 高 = 面積 × 2 ÷（上底 + 下底），所以 ${area} × 2 ÷ ${upper + lower} = ${height} 公分。`));
+        answers.push(
+          e519Answer(
+            `${height} 公分`,
+            `由梯形面積公式可得 高 = 面積 × 2 ÷（上底 + 下底），所以 ${area} × 2 ÷ ${upper + lower} = ${height} 公分。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildE519TrapezoidCompositeSet(count) {
-    return buildE518MixedSet([
-      buildE519TrapezoidDirectSet,
-      buildE519TrapezoidApplicationSet,
-      buildE519TrapezoidRelationSet,
-      buildE519TrapezoidScaleSet,
-    ], count);
+    return buildE518MixedSet(
+      [
+        buildE519TrapezoidDirectSet,
+        buildE519TrapezoidApplicationSet,
+        buildE519TrapezoidRelationSet,
+        buildE519TrapezoidScaleSet,
+      ],
+      count
+    );
   }
 
   function buildE519CompositeAddSet(count) {
@@ -13325,18 +14609,32 @@
         const triB = randInt(6, 18);
         const triH = randInt(4, 12);
         const area = rectL * rectW + (triB * triH) / 2;
-        questions.push(`一個圖形由一個長方形和一個三角形組成。長方形長 ${rectL} 公分、寬 ${rectW} 公分；三角形底 ${triB} 公分、高 ${triH} 公分。求總面積。`);
+        questions.push(
+          `一個圖形由一個長方形和一個三角形組成。長方形長 ${rectL} 公分、寬 ${rectW} 公分；三角形底 ${triB} 公分、高 ${triH} 公分。求總面積。`
+        );
         summaryAnswers.push(`${area} 平方公分`);
-        answers.push(e519Answer(`${area} 平方公分`, `長方形面積 ${rectL} × ${rectW} = ${rectL * rectW}，三角形面積 ${triB} × ${triH} ÷ 2 = ${(triB * triH) / 2}，相加得 ${area} 平方公分。`));
+        answers.push(
+          e519Answer(
+            `${area} 平方公分`,
+            `長方形面積 ${rectL} × ${rectW} = ${rectL * rectW}，三角形面積 ${triB} × ${triH} ÷ 2 = ${(triB * triH) / 2}，相加得 ${area} 平方公分。`
+          )
+        );
       } else {
         const pBase = randInt(8, 18);
         const pHeight = randInt(4, 12);
         const triB = randInt(6, 16);
         const triH = randInt(4, 10);
         const area = pBase * pHeight + (triB * triH) / 2;
-        questions.push(`一個圖形由一個平行四邊形和一個三角形組成。平行四邊形底 ${pBase} 公分、高 ${pHeight} 公分；三角形底 ${triB} 公分、高 ${triH} 公分。求總面積。`);
+        questions.push(
+          `一個圖形由一個平行四邊形和一個三角形組成。平行四邊形底 ${pBase} 公分、高 ${pHeight} 公分；三角形底 ${triB} 公分、高 ${triH} 公分。求總面積。`
+        );
         summaryAnswers.push(`${area} 平方公分`);
-        answers.push(e519Answer(`${area} 平方公分`, `平行四邊形面積 ${pBase} × ${pHeight} = ${pBase * pHeight}，三角形面積 ${triB} × ${triH} ÷ 2 = ${(triB * triH) / 2}，相加得 ${area} 平方公分。`));
+        answers.push(
+          e519Answer(
+            `${area} 平方公分`,
+            `平行四邊形面積 ${pBase} × ${pHeight} = ${pBase * pHeight}，三角形面積 ${triB} × ${triH} ÷ 2 = ${(triB * triH) / 2}，相加得 ${area} 平方公分。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -13353,9 +14651,16 @@
         const triB = randInt(4, rectL - 2);
         const triH = randInt(4, rectW - 1);
         const area = rectL * rectW - (triB * triH) / 2;
-        questions.push(`一個長方形面積要扣掉內部一個白色三角形。長方形長 ${rectL} 公分、寬 ${rectW} 公分；白色三角形底 ${triB} 公分、高 ${triH} 公分。求剩下的面積。`);
+        questions.push(
+          `一個長方形面積要扣掉內部一個白色三角形。長方形長 ${rectL} 公分、寬 ${rectW} 公分；白色三角形底 ${triB} 公分、高 ${triH} 公分。求剩下的面積。`
+        );
         summaryAnswers.push(`${area} 平方公分`);
-        answers.push(e519Answer(`${area} 平方公分`, `先算大長方形面積 ${rectL} × ${rectW} = ${rectL * rectW}，再減掉白色三角形面積 ${triB} × ${triH} ÷ 2 = ${(triB * triH) / 2}，得到 ${area} 平方公分。`));
+        answers.push(
+          e519Answer(
+            `${area} 平方公分`,
+            `先算大長方形面積 ${rectL} × ${rectW} = ${rectL * rectW}，再減掉白色三角形面積 ${triB} × ${triH} ÷ 2 = ${(triB * triH) / 2}，得到 ${area} 平方公分。`
+          )
+        );
       } else {
         const trapU = randInt(6, 14);
         const trapL = randInt(trapU + 4, trapU + 18);
@@ -13363,9 +14668,16 @@
         const square = randInt(2, 8);
         const trapArea = ((trapU + trapL) * trapH) / 2;
         const area = trapArea - square * square;
-        questions.push(`一個大梯形內部挖去一個小正方形。梯形上底 ${trapU} 公分、下底 ${trapL} 公分、高 ${trapH} 公分；小正方形邊長 ${square} 公分。求剩下面積。`);
+        questions.push(
+          `一個大梯形內部挖去一個小正方形。梯形上底 ${trapU} 公分、下底 ${trapL} 公分、高 ${trapH} 公分；小正方形邊長 ${square} 公分。求剩下面積。`
+        );
         summaryAnswers.push(`${area} 平方公分`);
-        answers.push(e519Answer(`${area} 平方公分`, `梯形面積是 (${trapU} + ${trapL}) × ${trapH} ÷ 2 = ${trapArea}，小正方形面積是 ${square} × ${square} = ${square * square}，相減得 ${area} 平方公分。`));
+        answers.push(
+          e519Answer(
+            `${area} 平方公分`,
+            `梯形面積是 (${trapU} + ${trapL}) × ${trapH} ÷ 2 = ${trapArea}，小正方形面積是 ${square} × ${square} = ${square * square}，相減得 ${area} 平方公分。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -13381,9 +14693,16 @@
       const roadBase = randInt(6, Math.max(8, rectL - 6));
       const roadHeight = randInt(2, Math.max(3, rectW - 4));
       const remain = rectL * rectW - roadBase * roadHeight;
-      questions.push(`一塊長方形花圃長 ${rectL} 公尺、寬 ${rectW} 公尺，中間開了一條平行四邊形道路，道路的底是 ${roadBase} 公尺、高是 ${roadHeight} 公尺。求剩下種花區域的面積。`);
+      questions.push(
+        `一塊長方形花圃長 ${rectL} 公尺、寬 ${rectW} 公尺，中間開了一條平行四邊形道路，道路的底是 ${roadBase} 公尺、高是 ${roadHeight} 公尺。求剩下種花區域的面積。`
+      );
       summaryAnswers.push(`${remain} 平方公尺`);
-      answers.push(e519Answer(`${remain} 平方公尺`, `整塊花圃面積是 ${rectL} × ${rectW} = ${rectL * rectW}，道路面積是 ${roadBase} × ${roadHeight} = ${roadBase * roadHeight}，剩下面積 = ${rectL * rectW} - ${roadBase * roadHeight} = ${remain} 平方公尺。`));
+      answers.push(
+        e519Answer(
+          `${remain} 平方公尺`,
+          `整塊花圃面積是 ${rectL} × ${rectW} = ${rectL * rectW}，道路面積是 ${roadBase} × ${roadHeight} = ${roadBase * roadHeight}，剩下面積 = ${rectL * rectW} - ${roadBase * roadHeight} = ${remain} 平方公尺。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -13400,20 +14719,30 @@
       const rectL = randInt(6, 18);
       const rectW = randInt(4, 10);
       const area = triArea * triCount + rectL * rectW;
-      questions.push(`一個規則拼組圖形由 ${triCount} 個全等三角形與 1 個長方形組成。每個三角形的底是 ${triBase} 公分、高是 ${triHeight} 公分；長方形長 ${rectL} 公分、寬 ${rectW} 公分。求整個圖形面積。`);
+      questions.push(
+        `一個規則拼組圖形由 ${triCount} 個全等三角形與 1 個長方形組成。每個三角形的底是 ${triBase} 公分、高是 ${triHeight} 公分；長方形長 ${rectL} 公分、寬 ${rectW} 公分。求整個圖形面積。`
+      );
       summaryAnswers.push(`${area} 平方公分`);
-      answers.push(e519Answer(`${area} 平方公分`, `每個三角形面積是 ${triBase} × ${triHeight} ÷ 2 = ${triArea}，${triCount} 個共 ${triArea * triCount} 平方公分；長方形面積是 ${rectL} × ${rectW} = ${rectL * rectW}，相加得 ${area} 平方公分。`));
+      answers.push(
+        e519Answer(
+          `${area} 平方公分`,
+          `每個三角形面積是 ${triBase} × ${triHeight} ÷ 2 = ${triArea}，${triCount} 個共 ${triArea * triCount} 平方公分；長方形面積是 ${rectL} × ${rectW} = ${rectL * rectW}，相加得 ${area} 平方公分。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildE519CompositeFourSet(count) {
-    return buildE518MixedSet([
-      buildE519CompositeAddSet,
-      buildE519CompositeSubtractSet,
-      buildE519CompositeTranslationSet,
-      buildE519CompositeRuleSet,
-    ], count);
+    return buildE518MixedSet(
+      [
+        buildE519CompositeAddSet,
+        buildE519CompositeSubtractSet,
+        buildE519CompositeTranslationSet,
+        buildE519CompositeRuleSet,
+      ],
+      count
+    );
   }
 
   function e510Answer(shortAnswer, process) {
@@ -13479,7 +14808,9 @@
         answers.push(e510Answer(name, `柱體依底面形狀命名，底面是${base}，所以叫作${name}。`));
       } else {
         questions.push(`一個立體有兩個互相平行且全等的${base}底面，側面都是長方形。它是什麼柱體？`);
-        answers.push(e510Answer(name, `有兩個互相平行且全等的底面，側面是長方形，這是柱體；底面是${base}，所以是${name}。`));
+        answers.push(
+          e510Answer(name, `有兩個互相平行且全等的底面，側面是長方形，這是柱體；底面是${base}，所以是${name}。`)
+        );
       }
       summaryAnswers.push(name);
     }
@@ -13499,7 +14830,12 @@
       const name = e510PrismName(sides);
       questions.push(`${name}有幾個面、幾個頂點和幾條邊？`);
       summaryAnswers.push(`${faces} 個面、${vertices} 個頂點、${edges} 條邊`);
-      answers.push(e510Answer(`${faces} 個面、${vertices} 個頂點、${edges} 條邊`, `柱體若底面有 ${sides} 條邊，則面數 = ${sides} + 2 = ${faces}，頂點數 = ${sides} × 2 = ${vertices}，邊數 = ${sides} × 3 = ${edges}。`));
+      answers.push(
+        e510Answer(
+          `${faces} 個面、${vertices} 個頂點、${edges} 條邊`,
+          `柱體若底面有 ${sides} 條邊，則面數 = ${sides} + 2 = ${faces}，頂點數 = ${sides} × 2 = ${vertices}，邊數 = ${sides} × 3 = ${edges}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -13515,11 +14851,15 @@
       if (i % 2 === 0) {
         questions.push(`${name}的兩個底面有什麼關係？`);
         summaryAnswers.push('互相平行且全等');
-        answers.push(e510Answer('互相平行且全等', `柱體的兩個底面形狀與大小相同，而且位置互相平行，所以是互相平行且全等。`));
+        answers.push(
+          e510Answer('互相平行且全等', `柱體的兩個底面形狀與大小相同，而且位置互相平行，所以是互相平行且全等。`)
+        );
       } else {
         questions.push(`${name}中，底面和側面通常是互相平行還是互相垂直？`);
         summaryAnswers.push('互相垂直');
-        answers.push(e510Answer('互相垂直', `直柱體的側面從底面邊往上延伸，底面與側面相交成直角，所以通常說底面和側面互相垂直。`));
+        answers.push(
+          e510Answer('互相垂直', `直柱體的側面從底面邊往上延伸，底面與側面相交成直角，所以通常說底面和側面互相垂直。`)
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -13537,24 +14877,32 @@
         const vertices = sides * 2;
         questions.push(`一個柱體有 ${vertices} 個頂點，它的底面是什麼形狀？這個柱體叫作什麼？`);
         summaryAnswers.push(`${e510PolygonName(sides)}，${name}`);
-        answers.push(e510Answer(`${e510PolygonName(sides)}，${name}`, `柱體頂點數 = 底面邊數 × 2，所以底面邊數 = ${vertices} ÷ 2 = ${sides}，底面是${e510PolygonName(sides)}，柱體是${name}。`));
+        answers.push(
+          e510Answer(
+            `${e510PolygonName(sides)}，${name}`,
+            `柱體頂點數 = 底面邊數 × 2，所以底面邊數 = ${vertices} ÷ 2 = ${sides}，底面是${e510PolygonName(sides)}，柱體是${name}。`
+          )
+        );
       } else {
         const edges = sides * 3;
         questions.push(`一個柱體有 ${edges} 條邊，它的底面有幾條邊？這個柱體叫作什麼？`);
         summaryAnswers.push(`${sides} 條邊，${name}`);
-        answers.push(e510Answer(`${sides} 條邊，${name}`, `柱體邊數 = 底面邊數 × 3，所以底面邊數 = ${edges} ÷ 3 = ${sides}，這個柱體是${name}。`));
+        answers.push(
+          e510Answer(
+            `${sides} 條邊，${name}`,
+            `柱體邊數 = 底面邊數 × 3，所以底面邊數 = ${edges} ÷ 3 = ${sides}，這個柱體是${name}。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildE510PrismMixedSet(count) {
-    return buildE518MixedSet([
-      buildE510PrismNamingSet,
-      buildE510PrismElementsSet,
-      buildE510PrismFaceRelationSet,
-      buildE510PrismReverseSet,
-    ], count);
+    return buildE518MixedSet(
+      [buildE510PrismNamingSet, buildE510PrismElementsSet, buildE510PrismFaceRelationSet, buildE510PrismReverseSet],
+      count
+    );
   }
 
   function buildE510PyramidNamingSet(count) {
@@ -13586,7 +14934,12 @@
       const name = e510PyramidName(sides);
       questions.push(`${name}有幾個面、幾個頂點和幾條邊？`);
       summaryAnswers.push(`${faces} 個面、${vertices} 個頂點、${edges} 條邊`);
-      answers.push(e510Answer(`${faces} 個面、${vertices} 個頂點、${edges} 條邊`, `錐體若底面有 ${sides} 條邊，則面數 = ${sides} + 1 = ${faces}，頂點數 = ${sides} + 1 = ${vertices}，邊數 = ${sides} × 2 = ${edges}。`));
+      answers.push(
+        e510Answer(
+          `${faces} 個面、${vertices} 個頂點、${edges} 條邊`,
+          `錐體若底面有 ${sides} 條邊，則面數 = ${sides} + 1 = ${faces}，頂點數 = ${sides} + 1 = ${vertices}，邊數 = ${sides} × 2 = ${edges}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -13602,7 +14955,12 @@
       if (i % 2 === 0) {
         questions.push(`${name}的側面是什麼形狀？側面有幾個？`);
         summaryAnswers.push(`三角形，${sides} 個`);
-        answers.push(e510Answer(`三角形，${sides} 個`, `錐體的每個側面都是三角形，側面個數和底面邊數相同。${name}的底面有 ${sides} 條邊，所以有 ${sides} 個三角形側面。`));
+        answers.push(
+          e510Answer(
+            `三角形，${sides} 個`,
+            `錐體的每個側面都是三角形，側面個數和底面邊數相同。${name}的底面有 ${sides} 條邊，所以有 ${sides} 個三角形側面。`
+          )
+        );
       } else {
         questions.push(`${name}有沒有兩個互相平行的底面？`);
         summaryAnswers.push('沒有');
@@ -13624,24 +14982,37 @@
         const vertices = sides + 1;
         questions.push(`一個錐體有 ${vertices} 個頂點，它的底面是什麼形狀？這個錐體叫作什麼？`);
         summaryAnswers.push(`${e510PolygonName(sides)}，${name}`);
-        answers.push(e510Answer(`${e510PolygonName(sides)}，${name}`, `錐體頂點數 = 底面邊數 + 1，所以底面邊數 = ${vertices} - 1 = ${sides}，底面是${e510PolygonName(sides)}，這個錐體是${name}。`));
+        answers.push(
+          e510Answer(
+            `${e510PolygonName(sides)}，${name}`,
+            `錐體頂點數 = 底面邊數 + 1，所以底面邊數 = ${vertices} - 1 = ${sides}，底面是${e510PolygonName(sides)}，這個錐體是${name}。`
+          )
+        );
       } else {
         const edges = sides * 2;
         questions.push(`一個錐體有 ${edges} 條邊，它有幾個側面？是什麼錐體？`);
         summaryAnswers.push(`${sides} 個側面，${name}`);
-        answers.push(e510Answer(`${sides} 個側面，${name}`, `錐體邊數 = 底面邊數 × 2，所以底面邊數 = ${edges} ÷ 2 = ${sides}。側面個數也是 ${sides} 個，因此是${name}。`));
+        answers.push(
+          e510Answer(
+            `${sides} 個側面，${name}`,
+            `錐體邊數 = 底面邊數 × 2，所以底面邊數 = ${edges} ÷ 2 = ${sides}。側面個數也是 ${sides} 個，因此是${name}。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildE510PyramidMixedSet(count) {
-    return buildE518MixedSet([
-      buildE510PyramidNamingSet,
-      buildE510PyramidElementsSet,
-      buildE510PyramidFaceRelationSet,
-      buildE510PyramidReverseSet,
-    ], count);
+    return buildE518MixedSet(
+      [
+        buildE510PyramidNamingSet,
+        buildE510PyramidElementsSet,
+        buildE510PyramidFaceRelationSet,
+        buildE510PyramidReverseSet,
+      ],
+      count
+    );
   }
 
   function buildE510CuboidFaceRelationSet(count) {
@@ -13668,10 +15039,22 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      ['長方體中，與一個指定面互相垂直的面有幾個？', '4 個', '長方體共有 6 個面。與指定面相對的 1 個面互相平行，剩下圍在四周的 4 個面都與它互相垂直。'],
-      ['長方體中，與一個指定面互相平行的面有幾個？', '1 個', '長方體每個面都有一個相對面，這個相對面和它互相平行，所以是 1 個。'],
+      [
+        '長方體中，與一個指定面互相垂直的面有幾個？',
+        '4 個',
+        '長方體共有 6 個面。與指定面相對的 1 個面互相平行，剩下圍在四周的 4 個面都與它互相垂直。',
+      ],
+      [
+        '長方體中，與一個指定面互相平行的面有幾個？',
+        '1 個',
+        '長方體每個面都有一個相對面，這個相對面和它互相平行，所以是 1 個。',
+      ],
       ['正方體中，和底面互相垂直的面有幾個？', '4 個', '正方體底面四周的 4 個側面都和底面互相垂直。'],
-      ['四角錐中，和底面互相平行的面有幾個？', '0 個', '錐體只有一個底面，其餘側面都接到尖端，沒有另一個面和底面互相平行。'],
+      [
+        '四角錐中，和底面互相平行的面有幾個？',
+        '0 個',
+        '錐體只有一個底面，其餘側面都接到尖端，沒有另一個面和底面互相平行。',
+      ],
     ];
     for (let i = 0; i < count; i += 1) {
       const item = cases[i % cases.length];
@@ -13702,11 +15085,10 @@
   }
 
   function buildE510CuboidMixedSet(count) {
-    return buildE518MixedSet([
-      buildE510CuboidFaceRelationSet,
-      buildE510CuboidCountSet,
-      buildE510CuboidEverydaySet,
-    ], count);
+    return buildE518MixedSet(
+      [buildE510CuboidFaceRelationSet, buildE510CuboidCountSet, buildE510CuboidEverydaySet],
+      count
+    );
   }
 
   function buildE510SpherePartsSet(count) {
@@ -13734,10 +15116,18 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      ['通過球心的平面切球，切面是什麼形狀？', '圓形', '球被平面切開時，切面會是圓形；若平面通過球心，得到的是最大的圓。'],
+      [
+        '通過球心的平面切球，切面是什麼形狀？',
+        '圓形',
+        '球被平面切開時，切面會是圓形；若平面通過球心，得到的是最大的圓。',
+      ],
       ['一顆球任意切開，切面可能是什麼形狀？', '圓形', '球從任何方向被平面切開，切面都是圓形，只是圓的大小可能不同。'],
       ['通過球心的切面，其直徑和球的直徑有什麼關係？', '一樣長', '通過球心的切面是最大圓，這個圓的直徑就是球的直徑。'],
-      ['沒有通過球心的切面，半徑會比球的半徑大、相等還是小？', '較小', '離球心越遠的切面越小；沒有通過球心時，切面圓的半徑比球的半徑小。'],
+      [
+        '沒有通過球心的切面，半徑會比球的半徑大、相等還是小？',
+        '較小',
+        '離球心越遠的切面越小；沒有通過球心時，切面圓的半徑比球的半徑小。',
+      ],
     ];
     for (let i = 0; i < count; i += 1) {
       const item = cases[i % cases.length];
@@ -13758,13 +15148,27 @@
       const diameter = radius * 2;
       const height = diameter * balls;
       if (i % 2 === 0) {
-        questions.push(`一個圓筒剛好裝滿 ${balls} 顆直徑 ${diameter} 公分的球，球上下排成一直線，圓筒的高度是多少公分？`);
+        questions.push(
+          `一個圓筒剛好裝滿 ${balls} 顆直徑 ${diameter} 公分的球，球上下排成一直線，圓筒的高度是多少公分？`
+        );
         summaryAnswers.push(`${height} 公分`);
-        answers.push(e510Answer(`${height} 公分`, `每顆球占一個直徑的高度，${balls} 顆共 ${diameter} × ${balls} = ${height} 公分。`));
+        answers.push(
+          e510Answer(
+            `${height} 公分`,
+            `每顆球占一個直徑的高度，${balls} 顆共 ${diameter} × ${balls} = ${height} 公分。`
+          )
+        );
       } else {
-        questions.push(`一個圓筒剛好裝滿 ${balls} 顆半徑 ${radius} 公分的球，球上下排成一直線，圓筒底面的直徑是多少公分？`);
+        questions.push(
+          `一個圓筒剛好裝滿 ${balls} 顆半徑 ${radius} 公分的球，球上下排成一直線，圓筒底面的直徑是多少公分？`
+        );
         summaryAnswers.push(`${diameter} 公分`);
-        answers.push(e510Answer(`${diameter} 公分`, `圓筒底面剛好容納球的最寬處，所以底面直徑等於球的直徑：${radius} × 2 = ${diameter} 公分。`));
+        answers.push(
+          e510Answer(
+            `${diameter} 公分`,
+            `圓筒底面剛好容納球的最寬處，所以底面直徑等於球的直徑：${radius} × 2 = ${diameter} 公分。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -13782,20 +15186,25 @@
       const length = diameter * cols;
       const width = diameter * rows;
       const height = diameter * heightLayers;
-      questions.push(`長方體盒子剛好裝滿 ${rows} 排、每排 ${cols} 顆、共 ${heightLayers} 層的球。每顆球直徑 ${diameter} 公分，盒子的長、寬、高至少各是多少公分？`);
+      questions.push(
+        `長方體盒子剛好裝滿 ${rows} 排、每排 ${cols} 顆、共 ${heightLayers} 層的球。每顆球直徑 ${diameter} 公分，盒子的長、寬、高至少各是多少公分？`
+      );
       summaryAnswers.push(`長 ${length} 公分、寬 ${width} 公分、高 ${height} 公分`);
-      answers.push(e510Answer(`長 ${length} 公分、寬 ${width} 公分、高 ${height} 公分`, `每一個方向都用球的直徑累加：長 = ${diameter} × ${cols} = ${length}，寬 = ${diameter} × ${rows} = ${width}，高 = ${diameter} × ${heightLayers} = ${height}。`));
+      answers.push(
+        e510Answer(
+          `長 ${length} 公分、寬 ${width} 公分、高 ${height} 公分`,
+          `每一個方向都用球的直徑累加：長 = ${diameter} × ${cols} = ${length}，寬 = ${diameter} × ${rows} = ${width}，高 = ${diameter} × ${heightLayers} = ${height}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildE510SphereMixedSet(count) {
-    return buildE518MixedSet([
-      buildE510SpherePartsSet,
-      buildE510SphereSectionSet,
-      buildE510SphereCylinderSet,
-      buildE510SphereBoxSet,
-    ], count);
+    return buildE518MixedSet(
+      [buildE510SpherePartsSet, buildE510SphereSectionSet, buildE510SphereCylinderSet, buildE510SphereBoxSet],
+      count
+    );
   }
 
   function buildE510NetSolidNameSet(count) {
@@ -13814,7 +15223,12 @@
       const item = cases[i % cases.length];
       questions.push(`一個展開圖由 ${item.parts.join('、')} 組成，摺起來可能是哪一種立體？`);
       summaryAnswers.push(item.answer);
-      answers.push(e510Answer(item.answer, `展開圖要看底面與側面。這組圖形的底面特徵是${item.base}，側面數量也符合${item.answer}，所以摺成${item.answer}。`));
+      answers.push(
+        e510Answer(
+          item.answer,
+          `展開圖要看底面與側面。這組圖形的底面特徵是${item.base}，側面數量也符合${item.answer}，所以摺成${item.answer}。`
+        )
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -13830,12 +15244,22 @@
         const sideFaces = sides;
         questions.push(`${e510PrismName(sides)}的展開圖中，側面應該由幾個長方形組成？`);
         summaryAnswers.push(`${sideFaces} 個`);
-        answers.push(e510Answer(`${sideFaces} 個`, `柱體的每一條底邊對應一個側面長方形，所以側面長方形個數 = 底面邊數 = ${sides} 個。`));
+        answers.push(
+          e510Answer(
+            `${sideFaces} 個`,
+            `柱體的每一條底邊對應一個側面長方形，所以側面長方形個數 = 底面邊數 = ${sides} 個。`
+          )
+        );
       } else {
         const sideFaces = sides;
         questions.push(`${e510PyramidName(sides)}的展開圖中，側面應該由幾個三角形組成？`);
         summaryAnswers.push(`${sideFaces} 個`);
-        answers.push(e510Answer(`${sideFaces} 個`, `錐體的每一條底邊對應一個側面三角形，所以側面三角形個數 = 底面邊數 = ${sides} 個。`));
+        answers.push(
+          e510Answer(
+            `${sideFaces} 個`,
+            `錐體的每一條底邊對應一個側面三角形，所以側面三角形個數 = 底面邊數 = ${sides} 個。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -13850,13 +15274,27 @@
       const baseEdge = pickFromList([3, 4, 5, 6, 8, 10, 12]);
       const perimeter = sides * baseEdge;
       if (i % 2 === 0) {
-        questions.push(`${e510PrismName(sides)}的底面每邊長 ${baseEdge} 公分。展開圖中一排側面長方形連起來的總長，應等於底面周長多少公分？`);
+        questions.push(
+          `${e510PrismName(sides)}的底面每邊長 ${baseEdge} 公分。展開圖中一排側面長方形連起來的總長，應等於底面周長多少公分？`
+        );
         summaryAnswers.push(`${perimeter} 公分`);
-        answers.push(e510Answer(`${perimeter} 公分`, `柱體側面展開後會沿著底面周長排開，所以總長 = ${baseEdge} × ${sides} = ${perimeter} 公分。`));
+        answers.push(
+          e510Answer(
+            `${perimeter} 公分`,
+            `柱體側面展開後會沿著底面周長排開，所以總長 = ${baseEdge} × ${sides} = ${perimeter} 公分。`
+          )
+        );
       } else {
-        questions.push(`${e510PyramidName(sides)}的底面每邊長 ${baseEdge} 公分。展開圖中 ${sides} 個側面三角形與底面相接的邊，合起來長多少公分？`);
+        questions.push(
+          `${e510PyramidName(sides)}的底面每邊長 ${baseEdge} 公分。展開圖中 ${sides} 個側面三角形與底面相接的邊，合起來長多少公分？`
+        );
         summaryAnswers.push(`${perimeter} 公分`);
-        answers.push(e510Answer(`${perimeter} 公分`, `每個側面三角形都有一條邊要貼到底面邊上，合起來就是底面周長：${baseEdge} × ${sides} = ${perimeter} 公分。`));
+        answers.push(
+          e510Answer(
+            `${perimeter} 公分`,
+            `每個側面三角形都有一條邊要貼到底面邊上，合起來就是底面周長：${baseEdge} × ${sides} = ${perimeter} 公分。`
+          )
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -13867,10 +15305,22 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      ['長方體展開圖中，兩個隔著一個面的長方形摺合後通常會成為什麼關係？', '互相平行', '長方體的相對面在摺合後互相平行，展開圖中被一個面隔開的兩面常對應到相對面。'],
+      [
+        '長方體展開圖中，兩個隔著一個面的長方形摺合後通常會成為什麼關係？',
+        '互相平行',
+        '長方體的相對面在摺合後互相平行，展開圖中被一個面隔開的兩面常對應到相對面。',
+      ],
       ['柱體展開圖中，兩個底面摺合後有什麼關係？', '互相平行', '柱體的兩個底面摺合後位在上下兩側，互相平行且全等。'],
-      ['五角柱展開圖中，側面和底面摺合後通常有什麼關係？', '互相垂直', '直柱體的側面摺起後立在底面邊上，所以側面和底面互相垂直。'],
-      ['圓柱展開圖中，側面長方形的長和底面圓的什麼量相等？', '圓周長', '圓柱側面展開成長方形，長方形的長剛好繞底面一圈，所以等於圓周長。'],
+      [
+        '五角柱展開圖中，側面和底面摺合後通常有什麼關係？',
+        '互相垂直',
+        '直柱體的側面摺起後立在底面邊上，所以側面和底面互相垂直。',
+      ],
+      [
+        '圓柱展開圖中，側面長方形的長和底面圓的什麼量相等？',
+        '圓周長',
+        '圓柱側面展開成長方形，長方形的長剛好繞底面一圈，所以等於圓周長。',
+      ],
     ];
     for (let i = 0; i < count; i += 1) {
       const item = cases[i % cases.length];
@@ -13882,12 +15332,10 @@
   }
 
   function buildE510NetMixedSet(count) {
-    return buildE518MixedSet([
-      buildE510NetSolidNameSet,
-      buildE510NetElementCountSet,
-      buildE510NetEdgeMatchSet,
-      buildE510NetFaceRelationSet,
-    ], count);
+    return buildE518MixedSet(
+      [buildE510NetSolidNameSet, buildE510NetElementCountSet, buildE510NetEdgeMatchSet, buildE510NetFaceRelationSet],
+      count
+    );
   }
 
   function e521FormatNumber(value, digits = 2) {
@@ -13904,15 +15352,21 @@
         const width = pickFromList([4, 5, 6, 8, 10, 12, 14, 16, 20]);
         const height = pickFromList([2, 3, 4, 5, 6, 8, 10]);
         const volume = length * width * height;
-        questions.push(`一個長方體的長是 ${length} 公分、寬是 ${width} 公分、高是 ${height} 公分，它的體積是多少立方公分？`);
+        questions.push(
+          `一個長方體的長是 ${length} 公分、寬是 ${width} 公分、高是 ${height} 公分，它的體積是多少立方公分？`
+        );
         summaryAnswers.push(`${volume}立方公分`);
-        answers.push(`簡答：${volume}立方公分。過程：長方體體積 = 長 × 寬 × 高 = ${length} × ${width} × ${height} = ${volume}。`);
+        answers.push(
+          `簡答：${volume}立方公分。過程：長方體體積 = 長 × 寬 × 高 = ${length} × ${width} × ${height} = ${volume}。`
+        );
       } else {
         const side = pickFromList([4, 5, 6, 8, 10, 12, 14]);
         const volume = side * side * side;
         questions.push(`一個正方體的邊長是 ${side} 公分，體積是多少立方公分？`);
         summaryAnswers.push(`${volume}立方公分`);
-        answers.push(`簡答：${volume}立方公分。過程：正方體體積 = 邊長 × 邊長 × 邊長 = ${side} × ${side} × ${side} = ${volume}。`);
+        answers.push(
+          `簡答：${volume}立方公分。過程：正方體體積 = 邊長 × 邊長 × 邊長 = ${side} × ${side} × ${side} = ${volume}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -13929,7 +15383,9 @@
         const width = pickFromList([3, 4, 5, 6, 7, 8]);
         const height = pickFromList([2, 3, 4, 5, 6, 8]);
         const volume = length * width * height;
-        questions.push(`一個長方體的體積是 ${volume} 立方公分，長 ${length} 公分、寬 ${width} 公分，它的高是多少公分？`);
+        questions.push(
+          `一個長方體的體積是 ${volume} 立方公分，長 ${length} 公分、寬 ${width} 公分，它的高是多少公分？`
+        );
         summaryAnswers.push(`${height}公分`);
         answers.push(`簡答：${height}公分。過程：高 = 體積 ÷ 長 ÷ 寬 = ${volume} ÷ ${length} ÷ ${width} = ${height}。`);
         continue;
@@ -13939,7 +15395,9 @@
         const volume = side * side * side;
         questions.push(`一個正方體的體積是 ${volume} 立方公分，它的邊長是多少公分？`);
         summaryAnswers.push(`${side}公分`);
-        answers.push(`簡答：${side}公分。過程：正方體的邊長立方等於體積，因為 ${side} × ${side} × ${side} = ${volume}，所以邊長是 ${side} 公分。`);
+        answers.push(
+          `簡答：${side}公分。過程：正方體的邊長立方等於體積，因為 ${side} × ${side} × ${side} = ${volume}，所以邊長是 ${side} 公分。`
+        );
         continue;
       }
       const sideA = pickFromList([6, 8, 10, 12]);
@@ -13952,9 +15410,13 @@
         continue;
       }
       const heightB = volume / (lengthB * widthB);
-      questions.push(`甲正方柱底面邊長 ${sideA} 公分、高 ${heightA} 公分；乙長方體長 ${lengthB} 公分、寬 ${widthB} 公分。若兩者體積相同，乙的高是多少公分？`);
+      questions.push(
+        `甲正方柱底面邊長 ${sideA} 公分、高 ${heightA} 公分；乙長方體長 ${lengthB} 公分、寬 ${widthB} 公分。若兩者體積相同，乙的高是多少公分？`
+      );
       summaryAnswers.push(`${heightB}公分`);
-      answers.push(`簡答：${heightB}公分。過程：甲的體積 = ${sideA} × ${sideA} × ${heightA} = ${volume}。乙的高 = ${volume} ÷ ${lengthB} ÷ ${widthB} = ${heightB}。`);
+      answers.push(
+        `簡答：${heightB}公分。過程：甲的體積 = ${sideA} × ${sideA} × ${heightA} = ${volume}。乙的高 = ${volume} ÷ ${lengthB} ÷ ${widthB} = ${heightB}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -13987,14 +15449,18 @@
         const volume = sideM * sideM * sideM;
         questions.push(`一個邊長 ${sideCm} 公分的正方體，體積是多少立方公尺？`);
         summaryAnswers.push(`${e521FormatNumber(volume)}立方公尺`);
-        answers.push(`簡答：${e521FormatNumber(volume)}立方公尺。過程：先換成公尺，邊長 = ${sideCm} ÷ 100 = ${sideM} 公尺，所以體積 = ${sideM} × ${sideM} × ${sideM} = ${e521FormatNumber(volume)}。`);
+        answers.push(
+          `簡答：${e521FormatNumber(volume)}立方公尺。過程：先換成公尺，邊長 = ${sideCm} ÷ 100 = ${sideM} 公尺，所以體積 = ${sideM} × ${sideM} × ${sideM} = ${e521FormatNumber(volume)}。`
+        );
         continue;
       }
       const sideM = pickFromList([1, 1.2, 1.5, 2, 2.5, 3]);
       const volume = sideM * sideM * sideM * 1000000;
       questions.push(`一個邊長 ${sideM} 公尺的正方體，體積是多少立方公分？`);
       summaryAnswers.push(`${e521FormatNumber(volume, 0)}立方公分`);
-      answers.push(`簡答：${e521FormatNumber(volume, 0)}立方公分。過程：先算體積 = ${sideM} × ${sideM} × ${sideM} = ${e521FormatNumber(sideM * sideM * sideM)} 立方公尺，再乘 1,000,000 變成立方公分，得到 ${e521FormatNumber(volume, 0)}。`);
+      answers.push(
+        `簡答：${e521FormatNumber(volume, 0)}立方公分。過程：先算體積 = ${sideM} × ${sideM} × ${sideM} = ${e521FormatNumber(sideM * sideM * sideM)} 立方公尺，再乘 1,000,000 變成立方公分，得到 ${e521FormatNumber(volume, 0)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14017,21 +15483,27 @@
         const m3 = liters / 1000;
         questions.push(`${liters} 公升等於多少立方公尺？`);
         summaryAnswers.push(`${e521FormatNumber(m3)}立方公尺`);
-        answers.push(`簡答：${e521FormatNumber(m3)}立方公尺。過程：1000 公升 = 1 立方公尺，所以 ${liters} ÷ 1000 = ${e521FormatNumber(m3)}。`);
+        answers.push(
+          `簡答：${e521FormatNumber(m3)}立方公尺。過程：1000 公升 = 1 立方公尺，所以 ${liters} ÷ 1000 = ${e521FormatNumber(m3)}。`
+        );
         continue;
       }
       if (mode === 2) {
         const degrees = pickFromList([12, 18, 25, 36, 53, 80]);
         questions.push(`某住家本月用了 ${degrees} 度水，這等於多少立方公尺的水？`);
         summaryAnswers.push(`${degrees}立方公尺`);
-        answers.push(`簡答：${degrees}立方公尺。過程：1 度水就是 1 立方公尺，所以 ${degrees} 度水 = ${degrees} 立方公尺。`);
+        answers.push(
+          `簡答：${degrees}立方公尺。過程：1 度水就是 1 立方公尺，所以 ${degrees} 度水 = ${degrees} 立方公尺。`
+        );
         continue;
       }
       const liters = pickFromList([3000, 6000, 9000, 15000, 24000]);
       const degrees = liters / 1000;
       questions.push(`${liters} 公升的水，也可以說是幾度水？`);
       summaryAnswers.push(`${e521FormatNumber(degrees)}度`);
-      answers.push(`簡答：${e521FormatNumber(degrees)}度。過程：1000 公升 = 1 度水，所以 ${liters} ÷ 1000 = ${e521FormatNumber(degrees)}。`);
+      answers.push(
+        `簡答：${e521FormatNumber(degrees)}度。過程：1000 公升 = 1 度水，所以 ${liters} ÷ 1000 = ${e521FormatNumber(degrees)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14048,9 +15520,13 @@
         const heightM = pickFromList([1, 1.2, 1.5, 2, 2.5]);
         const heightCm = heightM * 100;
         const volume = lengthCm * widthCm * heightCm;
-        questions.push(`一個長方體木箱，長 ${lengthCm} 公分、寬 ${widthCm} 公分、高 ${heightM} 公尺，體積是多少立方公分？`);
+        questions.push(
+          `一個長方體木箱，長 ${lengthCm} 公分、寬 ${widthCm} 公分、高 ${heightM} 公尺，體積是多少立方公分？`
+        );
         summaryAnswers.push(`${e521FormatNumber(volume, 0)}立方公分`);
-        answers.push(`簡答：${e521FormatNumber(volume, 0)}立方公分。過程：先把高換成公分，${heightM} 公尺 = ${heightCm} 公分，所以體積 = ${lengthCm} × ${widthCm} × ${heightCm} = ${e521FormatNumber(volume, 0)}。`);
+        answers.push(
+          `簡答：${e521FormatNumber(volume, 0)}立方公分。過程：先把高換成公分，${heightM} 公尺 = ${heightCm} 公分，所以體積 = ${lengthCm} × ${widthCm} × ${heightCm} = ${e521FormatNumber(volume, 0)}。`
+        );
         continue;
       }
       if (mode === 1) {
@@ -14059,9 +15535,13 @@
         const heightCm = pickFromList([80, 100, 120, 150, 200]);
         const heightM = heightCm / 100;
         const volume = lengthM * widthM * heightM;
-        questions.push(`一個長方體水池，長 ${lengthM} 公尺、寬 ${widthM} 公尺、高 ${heightCm} 公分，體積是多少立方公尺？`);
+        questions.push(
+          `一個長方體水池，長 ${lengthM} 公尺、寬 ${widthM} 公尺、高 ${heightCm} 公分，體積是多少立方公尺？`
+        );
         summaryAnswers.push(`${e521FormatNumber(volume)}立方公尺`);
-        answers.push(`簡答：${e521FormatNumber(volume)}立方公尺。過程：先把高換成公尺，${heightCm} 公分 = ${heightM} 公尺，所以體積 = ${lengthM} × ${widthM} × ${heightM} = ${e521FormatNumber(volume)}。`);
+        answers.push(
+          `簡答：${e521FormatNumber(volume)}立方公尺。過程：先把高換成公尺，${heightCm} 公分 = ${heightM} 公尺，所以體積 = ${lengthM} × ${widthM} × ${heightM} = ${e521FormatNumber(volume)}。`
+        );
         continue;
       }
       const lengthM = pickFromList([1.2, 1.5, 2, 2.5]);
@@ -14070,7 +15550,9 @@
       const volumeCm3 = lengthM * 100 * widthCm * heightCm;
       questions.push(`一個櫃子長 ${lengthM} 公尺、寬 ${widthCm} 公分、高 ${heightCm} 公分，體積是多少立方公分？`);
       summaryAnswers.push(`${e521FormatNumber(volumeCm3, 0)}立方公分`);
-      answers.push(`簡答：${e521FormatNumber(volumeCm3, 0)}立方公分。過程：先把長換成公分，${lengthM} 公尺 = ${lengthM * 100} 公分，所以體積 = ${lengthM * 100} × ${widthCm} × ${heightCm} = ${e521FormatNumber(volumeCm3, 0)}。`);
+      answers.push(
+        `簡答：${e521FormatNumber(volumeCm3, 0)}立方公分。過程：先把長換成公分，${lengthM} 公尺 = ${lengthM * 100} 公分，所以體積 = ${lengthM * 100} × ${widthCm} × ${heightCm} = ${e521FormatNumber(volumeCm3, 0)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14088,9 +15570,13 @@
         const bL = pickFromList([12, 15, 18, 20]);
         const bH = pickFromList([2, 3, 4, 5]);
         const volume = aL * commonW * aH + bL * commonW * bH;
-        questions.push(`一個 L 形體由兩個長方體組成：第一個長方體長 ${aL} 公分、寬 ${commonW} 公分、高 ${aH} 公分；第二個長方體長 ${bL} 公分、寬 ${commonW} 公分、高 ${bH} 公分，求總體積。`);
+        questions.push(
+          `一個 L 形體由兩個長方體組成：第一個長方體長 ${aL} 公分、寬 ${commonW} 公分、高 ${aH} 公分；第二個長方體長 ${bL} 公分、寬 ${commonW} 公分、高 ${bH} 公分，求總體積。`
+        );
         summaryAnswers.push(`${volume}立方公分`);
-        answers.push(`簡答：${volume}立方公分。過程：分成兩塊長方體相加，體積 = ${aL} × ${commonW} × ${aH} + ${bL} × ${commonW} × ${bH} = ${volume}。`);
+        answers.push(
+          `簡答：${volume}立方公分。過程：分成兩塊長方體相加，體積 = ${aL} × ${commonW} × ${aH} + ${bL} × ${commonW} × ${bH} = ${volume}。`
+        );
         continue;
       }
       const bottomL = pickFromList([10, 12, 15, 18]);
@@ -14100,9 +15586,13 @@
       const topW = bottomW;
       const topH = pickFromList([2, 3, 4, 5]);
       const volume = bottomL * bottomW * bottomH + topL * topW * topH;
-      questions.push(`一個階梯形體可看成上下兩個長方體：下層長 ${bottomL} 公分、寬 ${bottomW} 公分、高 ${bottomH} 公分；上層長 ${topL} 公分、寬 ${topW} 公分、高 ${topH} 公分，求體積。`);
+      questions.push(
+        `一個階梯形體可看成上下兩個長方體：下層長 ${bottomL} 公分、寬 ${bottomW} 公分、高 ${bottomH} 公分；上層長 ${topL} 公分、寬 ${topW} 公分、高 ${topH} 公分，求體積。`
+      );
       summaryAnswers.push(`${volume}立方公分`);
-      answers.push(`簡答：${volume}立方公分。過程：下層體積 ${bottomL} × ${bottomW} × ${bottomH}，上層體積 ${topL} × ${topW} × ${topH}，相加得到 ${volume}。`);
+      answers.push(
+        `簡答：${volume}立方公分。過程：下層體積 ${bottomL} × ${bottomW} × ${bottomH}，上層體積 ${topL} × ${topW} × ${topH}，相加得到 ${volume}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14123,9 +15613,13 @@
           continue;
         }
         const remain = outer * outer * outer - cutL * cutW * cutH;
-        questions.push(`一個邊長 ${outer} 公分的正方體，角落被挖掉一個長 ${cutL} 公分、寬 ${cutW} 公分、高 ${cutH} 公分的小長方體，剩下的體積是多少？`);
+        questions.push(
+          `一個邊長 ${outer} 公分的正方體，角落被挖掉一個長 ${cutL} 公分、寬 ${cutW} 公分、高 ${cutH} 公分的小長方體，剩下的體積是多少？`
+        );
         summaryAnswers.push(`${remain}立方公分`);
-        answers.push(`簡答：${remain}立方公分。過程：先算大正方體體積 ${outer} × ${outer} × ${outer} = ${outer * outer * outer}，再扣掉缺口 ${cutL} × ${cutW} × ${cutH} = ${cutL * cutW * cutH}，所以剩下 ${remain}。`);
+        answers.push(
+          `簡答：${remain}立方公分。過程：先算大正方體體積 ${outer} × ${outer} × ${outer} = ${outer * outer * outer}，再扣掉缺口 ${cutL} × ${cutW} × ${cutH} = ${cutL * cutW * cutH}，所以剩下 ${remain}。`
+        );
         continue;
       }
       const outerL = pickFromList([20, 24, 30, 36]);
@@ -14139,9 +15633,13 @@
         continue;
       }
       const remain = outerL * outerW * outerH - cutL * cutW * cutH;
-      questions.push(`一個長方體長 ${outerL} 公分、寬 ${outerW} 公分、高 ${outerH} 公分，中間挖掉一個長 ${cutL} 公分、寬 ${cutW} 公分、高 ${cutH} 公分的缺口，剩餘體積是多少？`);
+      questions.push(
+        `一個長方體長 ${outerL} 公分、寬 ${outerW} 公分、高 ${outerH} 公分，中間挖掉一個長 ${cutL} 公分、寬 ${cutW} 公分、高 ${cutH} 公分的缺口，剩餘體積是多少？`
+      );
       summaryAnswers.push(`${remain}立方公分`);
-      answers.push(`簡答：${remain}立方公分。過程：原來體積 = ${outerL} × ${outerW} × ${outerH} = ${outerL * outerW * outerH}，缺口體積 = ${cutL} × ${cutW} × ${cutH} = ${cutL * cutW * cutH}，相減得 ${remain}。`);
+      answers.push(
+        `簡答：${remain}立方公分。過程：原來體積 = ${outerL} × ${outerW} × ${outerH} = ${outerL * outerW * outerH}，缺口體積 = ${cutL} × ${cutW} × ${cutH} = ${cutL * cutW * cutH}，相減得 ${remain}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14157,9 +15655,13 @@
         const width = pickFromList([8, 10, 12, 15]);
         const rise = pickFromList([1, 2, 3, 4, 5]);
         const volume = length * width * rise;
-        questions.push(`底面長 ${length} 公分、寬 ${width} 公分的長方體容器，放入石頭後水面上升 ${rise} 公分，石頭的體積是多少立方公分？`);
+        questions.push(
+          `底面長 ${length} 公分、寬 ${width} 公分的長方體容器，放入石頭後水面上升 ${rise} 公分，石頭的體積是多少立方公分？`
+        );
         summaryAnswers.push(`${volume}立方公分`);
-        answers.push(`簡答：${volume}立方公分。過程：排開水的體積 = 底面積 × 上升高度 = (${length} × ${width}) × ${rise} = ${volume}。`);
+        answers.push(
+          `簡答：${volume}立方公分。過程：排開水的體積 = 底面積 × 上升高度 = (${length} × ${width}) × ${rise} = ${volume}。`
+        );
         continue;
       }
       if (mode === 1) {
@@ -14168,22 +15670,30 @@
         const countStone = pickFromList([2, 3, 4, 5, 6]);
         const each = side * side * rise;
         const total = each * countStone;
-        questions.push(`內部邊長 ${side} 公分的正方體容器，放入 ${countStone} 塊相同鐵塊後，水深共上升 ${rise} 公分。這 ${countStone} 塊鐵塊總體積是多少立方公分？`);
+        questions.push(
+          `內部邊長 ${side} 公分的正方體容器，放入 ${countStone} 塊相同鐵塊後，水深共上升 ${rise} 公分。這 ${countStone} 塊鐵塊總體積是多少立方公分？`
+        );
         summaryAnswers.push(`${total}立方公分`);
-        answers.push(`簡答：${total}立方公分。過程：容器底面積 = ${side} × ${side} = ${side * side}，水位上升 ${rise} 公分，所以排水體積 = ${side * side} × ${rise} = ${each}。這就是 ${countStone} 塊總體積，共 ${total} 立方公分。`);
+        answers.push(
+          `簡答：${total}立方公分。過程：容器底面積 = ${side} × ${side} = ${side * side}，水位上升 ${rise} 公分，所以排水體積 = ${side * side} × ${rise} = ${each}。這就是 ${countStone} 塊總體積，共 ${total} 立方公分。`
+        );
         continue;
       }
       const baseArea = pickFromList([12, 20, 24, 30, 36, 48]);
       const rise = pickFromList([2, 3, 4, 5, 6]);
       const pieces = pickFromList([2, 3, 4, 5]);
-      const eachVolume = baseArea * rise / pieces;
+      const eachVolume = (baseArea * rise) / pieces;
       if (!Number.isInteger(eachVolume)) {
         i -= 1;
         continue;
       }
-      questions.push(`底面積 ${baseArea} 平方公分的浴池放入 ${pieces} 個相同石塊後，水位共上升 ${rise} 公分。一個石塊的體積是多少立方公分？`);
+      questions.push(
+        `底面積 ${baseArea} 平方公分的浴池放入 ${pieces} 個相同石塊後，水位共上升 ${rise} 公分。一個石塊的體積是多少立方公分？`
+      );
       summaryAnswers.push(`${eachVolume}立方公分`);
-      answers.push(`簡答：${eachVolume}立方公分。過程：總排水體積 = ${baseArea} × ${rise} = ${baseArea * rise} 立方公分，再平均分給 ${pieces} 個石塊，所以一個石塊體積 = ${baseArea * rise} ÷ ${pieces} = ${eachVolume}。`);
+      answers.push(
+        `簡答：${eachVolume}立方公分。過程：總排水體積 = ${baseArea} × ${rise} = ${baseArea * rise} 立方公分，再平均分給 ${pieces} 個石塊，所以一個石塊體積 = ${baseArea * rise} ÷ ${pieces} = ${eachVolume}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14207,9 +15717,13 @@
         const innerW = outerW - 2 * t;
         const innerH = outerH - 2 * t;
         const volume = innerL * innerW * innerH;
-        questions.push(`一個有蓋長方體容器，外面長 ${outerL} 公分、寬 ${outerW} 公分、高 ${outerH} 公分，容器厚度都是 ${t} 公分，容積是多少立方公分？`);
+        questions.push(
+          `一個有蓋長方體容器，外面長 ${outerL} 公分、寬 ${outerW} 公分、高 ${outerH} 公分，容器厚度都是 ${t} 公分，容積是多少立方公分？`
+        );
         summaryAnswers.push(`${volume}立方公分`);
-        answers.push(`簡答：${volume}立方公分。過程：內部長寬高分別是 ${outerL} - 2×${t} = ${innerL}、${outerW} - 2×${t} = ${innerW}、${outerH} - 2×${t} = ${innerH}，所以容積 = ${innerL} × ${innerW} × ${innerH} = ${volume}。`);
+        answers.push(
+          `簡答：${volume}立方公分。過程：內部長寬高分別是 ${outerL} - 2×${t} = ${innerL}、${outerW} - 2×${t} = ${innerW}、${outerH} - 2×${t} = ${innerH}，所以容積 = ${innerL} × ${innerW} × ${innerH} = ${volume}。`
+        );
         continue;
       }
       const outerL = pickFromList([20, 24, 26, 30, 35]);
@@ -14224,9 +15738,13 @@
       const innerW = outerW - 2 * t;
       const innerH = outerH - t;
       const volume = innerL * innerW * innerH;
-      questions.push(`一個無蓋長方體收納盒，外面長 ${outerL} 公分、寬 ${outerW} 公分、高 ${outerH} 公分，盒壁與底厚都是 ${t} 公分，容積是多少立方公分？`);
+      questions.push(
+        `一個無蓋長方體收納盒，外面長 ${outerL} 公分、寬 ${outerW} 公分、高 ${outerH} 公分，盒壁與底厚都是 ${t} 公分，容積是多少立方公分？`
+      );
       summaryAnswers.push(`${volume}立方公分`);
-      answers.push(`簡答：${volume}立方公分。過程：無蓋盒的內部長寬各減 2 倍厚度，高只要扣底部厚度，所以內部尺寸是 ${innerL} × ${innerW} × ${innerH}，容積 = ${volume}。`);
+      answers.push(
+        `簡答：${volume}立方公分。過程：無蓋盒的內部長寬各減 2 倍厚度，高只要扣底部厚度，所以內部尺寸是 ${innerL} × ${innerW} × ${innerH}，容積 = ${volume}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14245,7 +15763,9 @@
         const liters = m3 * 1000;
         questions.push(`一個長 ${length} 公尺、寬 ${width} 公尺、深 ${depth} 公尺的游泳池，裝滿水大約有多少公升？`);
         summaryAnswers.push(`${e521FormatNumber(liters, 0)}公升`);
-        answers.push(`簡答：${e521FormatNumber(liters, 0)}公升。過程：先算體積 = ${length} × ${width} × ${depth} = ${e521FormatNumber(m3)} 立方公尺，再乘 1000 變成公升，得到 ${e521FormatNumber(liters, 0)} 公升。`);
+        answers.push(
+          `簡答：${e521FormatNumber(liters, 0)}公升。過程：先算體積 = ${length} × ${width} × ${depth} = ${e521FormatNumber(m3)} 立方公尺，再乘 1000 變成公升，得到 ${e521FormatNumber(liters, 0)} 公升。`
+        );
         continue;
       }
       if (mode === 1) {
@@ -14254,14 +15774,18 @@
         const liters = m3 * 1000;
         questions.push(`一個內部邊長 ${side} 公尺的正方體蓄水池，容量是多少公升？`);
         summaryAnswers.push(`${e521FormatNumber(liters, 0)}公升`);
-        answers.push(`簡答：${e521FormatNumber(liters, 0)}公升。過程：體積 = ${side} × ${side} × ${side} = ${e521FormatNumber(m3)} 立方公尺，再換成公升是 ${e521FormatNumber(liters, 0)} 公升。`);
+        answers.push(
+          `簡答：${e521FormatNumber(liters, 0)}公升。過程：體積 = ${side} × ${side} × ${side} = ${e521FormatNumber(m3)} 立方公尺，再換成公升是 ${e521FormatNumber(liters, 0)} 公升。`
+        );
         continue;
       }
       const degrees = pickFromList([8, 12, 20, 35, 53, 80]);
       const liters = degrees * 1000;
       questions.push(`水費單上顯示本月用了 ${degrees} 度水，這等於多少公升的水？`);
       summaryAnswers.push(`${liters}公升`);
-      answers.push(`簡答：${liters}公升。過程：1 度水 = 1 立方公尺 = 1000 公升，所以 ${degrees} 度 = ${degrees} × 1000 = ${liters} 公升。`);
+      answers.push(
+        `簡答：${liters}公升。過程：1 度水 = 1 立方公尺 = 1000 公升，所以 ${degrees} 度 = ${degrees} × 1000 = ${liters} 公升。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14285,7 +15809,10 @@
   }
 
   function buildE521ConvertThreeSet(count) {
-    return buildE521MixedSet([buildE521VolumeUnitConvertSet, buildE521CapacityConvertSet, buildE521MixedUnitVolumeSet], count);
+    return buildE521MixedSet(
+      [buildE521VolumeUnitConvertSet, buildE521CapacityConvertSet, buildE521MixedUnitVolumeSet],
+      count
+    );
   }
 
   function buildE521CompositeThreeSet(count) {
@@ -14353,9 +15880,13 @@
         const scale = pickFromList([2, 3, 4, 5]);
         const length = pickFromList([3, 4, 5, 6, 8]);
         const width = pickFromList([2, 3, 4, 5, 6]);
-        questions.push(`原圖長 ${length}、寬 ${width}，另一圖長 ${length * scale}、寬 ${width * scale}，另一圖是原圖的幾倍放大圖？`);
+        questions.push(
+          `原圖長 ${length}、寬 ${width}，另一圖長 ${length * scale}、寬 ${width * scale}，另一圖是原圖的幾倍放大圖？`
+        );
         summaryAnswers.push(`${scale}倍`);
-        answers.push(`簡答：${scale}倍。過程：對應邊長的倍數都是 ${length * scale} ÷ ${length} = ${scale}，所以這是 ${scale} 倍放大圖。`);
+        answers.push(
+          `簡答：${scale}倍。過程：對應邊長的倍數都是 ${length * scale} ÷ ${length} = ${scale}，所以這是 ${scale} 倍放大圖。`
+        );
         continue;
       }
       if (mode === 1) {
@@ -14363,7 +15894,9 @@
         const grid = pickFromList([4, 6, 8, 10, 12]);
         questions.push(`甲圖在方格紙上橫向占 ${grid} 格，乙圖占 ${grid / den} 格，乙圖是甲圖的幾分之幾倍縮圖？`);
         summaryAnswers.push(`${e619ScaleText(1, den)}`);
-        answers.push(`簡答：${e619ScaleText(1, den)}。過程：乙圖與甲圖的對應長度比是 ${grid / den}:${grid} = 1:${den}，所以乙圖是甲圖的 ${e619ScaleText(1, den)} 縮圖。`);
+        answers.push(
+          `簡答：${e619ScaleText(1, den)}。過程：乙圖與甲圖的對應長度比是 ${grid / den}:${grid} = 1:${den}，所以乙圖是甲圖的 ${e619ScaleText(1, den)} 縮圖。`
+        );
         continue;
       }
       if (mode === 2) {
@@ -14371,9 +15904,13 @@
         const a = pickFromList([3, 4, 5, 6]);
         const b = pickFromList([4, 5, 6, 8]);
         const c = pickFromList([5, 6, 7, 9]);
-        questions.push(`三角形三邊長為 ${a}、${b}、${c}，另一三角形對應邊為 ${a * scale}、${b * scale}、${c * scale}，後者是前者的幾倍放大圖？`);
+        questions.push(
+          `三角形三邊長為 ${a}、${b}、${c}，另一三角形對應邊為 ${a * scale}、${b * scale}、${c * scale}，後者是前者的幾倍放大圖？`
+        );
         summaryAnswers.push(`${scale}倍`);
-        answers.push(`簡答：${scale}倍。過程：任一組對應邊比都相同，例如 ${a * scale} ÷ ${a} = ${scale}，所以後者是前者的 ${scale} 倍放大圖。`);
+        answers.push(
+          `簡答：${scale}倍。過程：任一組對應邊比都相同，例如 ${a * scale} ÷ ${a} = ${scale}，所以後者是前者的 ${scale} 倍放大圖。`
+        );
         continue;
       }
       const scale = pickFromList([2, 3, 4, 5]);
@@ -14396,15 +15933,21 @@
         const side = pickFromList([3, 4, 5, 6, 8, 10]);
         questions.push(`甲圖邊長 AB 是 ${side} 公分，乙圖是甲圖的 ${scale} 倍放大圖，對應邊 DE 幾公分？`);
         summaryAnswers.push(`${side * scale}公分`);
-        answers.push(`簡答：${side * scale}公分。過程：放大 ${scale} 倍時，對應邊長也乘 ${scale}，所以 DE = ${side} × ${scale} = ${side * scale}。`);
+        answers.push(
+          `簡答：${side * scale}公分。過程：放大 ${scale} 倍時，對應邊長也乘 ${scale}，所以 DE = ${side} × ${scale} = ${side * scale}。`
+        );
         continue;
       }
       if (mode === 1) {
         const den = pickFromList([2, 3, 4, 5]);
         const side = pickFromList([6, 8, 9, 10, 12, 15, 18]);
-        questions.push(`乙圖是甲圖的 ${e619ScaleText(1, den)} 縮圖，若乙圖對應邊長是 ${side} 公分，甲圖對應邊長幾公分？`);
+        questions.push(
+          `乙圖是甲圖的 ${e619ScaleText(1, den)} 縮圖，若乙圖對應邊長是 ${side} 公分，甲圖對應邊長幾公分？`
+        );
         summaryAnswers.push(`${side * den}公分`);
-        answers.push(`簡答：${side * den}公分。過程：縮成 ${e619ScaleText(1, den)} 表示乙圖長度是甲圖的 $\\frac{1}{${den}}$，所以甲圖長度 = ${side} × ${den} = ${side * den}。`);
+        answers.push(
+          `簡答：${side * den}公分。過程：縮成 ${e619ScaleText(1, den)} 表示乙圖長度是甲圖的 $\\frac{1}{${den}}$，所以甲圖長度 = ${side} × ${den} = ${side * den}。`
+        );
         continue;
       }
       const scaleNum = pickFromList([2, 3, 4]);
@@ -14415,9 +15958,13 @@
       }
       const side = scaleDen * pickFromList([2, 3, 4, 5]);
       const mapped = (side * scaleNum) / scaleDen;
-      questions.push(`三角形 ABC 是 DEF 的 ${e619ScaleText(scaleNum, scaleDen)} 倍縮圖，若 DEF 的對應邊長是 ${side} 公分，則 ABC 的對應邊長幾公分？`);
+      questions.push(
+        `三角形 ABC 是 DEF 的 ${e619ScaleText(scaleNum, scaleDen)} 倍縮圖，若 DEF 的對應邊長是 ${side} 公分，則 ABC 的對應邊長幾公分？`
+      );
       summaryAnswers.push(`${mapped}公分`);
-      answers.push(`簡答：${mapped}公分。過程：縮放倍數是 ${e619ScaleText(scaleNum, scaleDen)}，所以對應邊長 = ${side} × ${scaleNum}/${scaleDen} = ${mapped}。`);
+      answers.push(
+        `簡答：${mapped}公分。過程：縮放倍數是 ${e619ScaleText(scaleNum, scaleDen)}，所以對應邊長 = ${side} × ${scaleNum}/${scaleDen} = ${mapped}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14451,7 +15998,9 @@
       const objectName = pickFromList(['三角形的高', '長方形的對角線', '梯形的中線', '平行四邊形的一條邊']);
       questions.push(`某圖形放大 ${scale} 倍後，${objectName}由 ${segment} 公分變成多少公分？`);
       summaryAnswers.push(`${segment * scale}公分`);
-      answers.push(`簡答：${segment * scale}公分。過程：圖內所有對應線段都按相同倍數縮放，所以 ${objectName}也乘 ${scale}，得到 ${segment * scale} 公分。`);
+      answers.push(
+        `簡答：${segment * scale}公分。過程：圖內所有對應線段都按相同倍數縮放，所以 ${objectName}也乘 ${scale}，得到 ${segment * scale} 公分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14467,14 +16016,20 @@
         const perimeter = pickFromList([20, 24, 30, 36, 40, 48, 60]);
         questions.push(`一個圖形放大成原圖的 ${scale} 倍，若原來周長是 ${perimeter} 公分，放大後周長是多少公分？`);
         summaryAnswers.push(`${perimeter * scale}公分`);
-        answers.push(`簡答：${perimeter * scale}公分。過程：周長屬於長度，會隨長度倍數等倍放大，所以 ${perimeter} × ${scale} = ${perimeter * scale}。`);
+        answers.push(
+          `簡答：${perimeter * scale}公分。過程：周長屬於長度，會隨長度倍數等倍放大，所以 ${perimeter} × ${scale} = ${perimeter * scale}。`
+        );
       } else {
         const scale = pickFromList([2, 3, 4, 5]);
         const multiple = pickFromList([5, 6, 8, 10, 12]);
         const newPerimeter = scale * multiple;
-        questions.push(`某圖形是原圖的 ${e619ScaleText(1, scale)} 縮圖，若原來周長是 ${newPerimeter} 公分，縮圖的周長是多少公分？`);
+        questions.push(
+          `某圖形是原圖的 ${e619ScaleText(1, scale)} 縮圖，若原來周長是 ${newPerimeter} 公分，縮圖的周長是多少公分？`
+        );
         summaryAnswers.push(`${multiple}公分`);
-        answers.push(`簡答：${multiple}公分。過程：周長隨長度同比例縮小，縮成 ${e619ScaleText(1, scale)} 時，周長也除以 ${scale}，所以 ${newPerimeter} ÷ ${scale} = ${multiple}。`);
+        answers.push(
+          `簡答：${multiple}公分。過程：周長隨長度同比例縮小，縮成 ${e619ScaleText(1, scale)} 時，周長也除以 ${scale}，所以 ${newPerimeter} ÷ ${scale} = ${multiple}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -14490,7 +16045,9 @@
         const scale = pickFromList([2, 3, 4, 5]);
         questions.push(`一個圖形放大成原圖的 ${scale} 倍，面積會變成原圖的幾倍？`);
         summaryAnswers.push(`${scale * scale}倍`);
-        answers.push(`簡答：${scale * scale}倍。過程：面積會隨長度倍數的平方改變，所以面積倍數是 ${scale}^2 = ${scale * scale}。`);
+        answers.push(
+          `簡答：${scale * scale}倍。過程：面積會隨長度倍數的平方改變，所以面積倍數是 ${scale}^2 = ${scale * scale}。`
+        );
         continue;
       }
       if (mode === 1) {
@@ -14499,15 +16056,21 @@
         const enlarged = area * scale * scale;
         questions.push(`一個圖形面積是 ${area} 平方公分，把邊長放大 ${scale} 倍後，面積變成多少平方公分？`);
         summaryAnswers.push(`${enlarged}平方公分`);
-        answers.push(`簡答：${enlarged}平方公分。過程：面積乘上 ${scale}^2 = ${scale * scale}，所以 ${area} × ${scale * scale} = ${enlarged}。`);
+        answers.push(
+          `簡答：${enlarged}平方公分。過程：面積乘上 ${scale}^2 = ${scale * scale}，所以 ${area} × ${scale * scale} = ${enlarged}。`
+        );
         continue;
       }
       const den = pickFromList([2, 3, 4, 5]);
       const area = den * den * pickFromList([2, 3, 4, 5]);
       const reduced = area / (den * den);
-      questions.push(`一個圖形縮成原圖的 ${e619ScaleText(1, den)}，若原來面積是 ${area} 平方公分，縮圖面積是多少平方公分？`);
+      questions.push(
+        `一個圖形縮成原圖的 ${e619ScaleText(1, den)}，若原來面積是 ${area} 平方公分，縮圖面積是多少平方公分？`
+      );
       summaryAnswers.push(`${reduced}平方公分`);
-      answers.push(`簡答：${reduced}平方公分。過程：面積要乘上縮放倍數的平方，所以縮圖面積 = ${area} × (1/${den})^2 = ${area} ÷ ${den * den} = ${reduced}。`);
+      answers.push(
+        `簡答：${reduced}平方公分。過程：面積要乘上縮放倍數的平方，所以縮圖面積 = ${area} × (1/${den})^2 = ${area} ÷ ${den * den} = ${reduced}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14521,10 +16084,12 @@
       if (mode === 0) {
         const den = pickFromList([2, 3, 4, 5]);
         const diameter = pickFromList([30, 60, 90, 120, 150]);
-        const circumference = diameter * E616_PI / den;
+        const circumference = (diameter * E616_PI) / den;
         questions.push(`直徑 ${diameter} 公分的圓，畫成 ${e619ScaleText(1, den)} 縮圖後，圓周長大約是多少公分？`);
         summaryAnswers.push(`${e619FormatNumber(circumference)}公分`);
-        answers.push(`簡答：${e619FormatNumber(circumference)}公分。過程：圓周長屬於長度，縮圖後也縮成 ${e619ScaleText(1, den)}，原圓周長是 ${diameter} × 3.14 = ${e619FormatNumber(diameter * E616_PI)}，再除以 ${den} 得 ${e619FormatNumber(circumference)}。`);
+        answers.push(
+          `簡答：${e619FormatNumber(circumference)}公分。過程：圓周長屬於長度，縮圖後也縮成 ${e619ScaleText(1, den)}，原圓周長是 ${diameter} × 3.14 = ${e619FormatNumber(diameter * E616_PI)}，再除以 ${den} 得 ${e619FormatNumber(circumference)}。`
+        );
         continue;
       }
       if (mode === 1) {
@@ -14532,7 +16097,9 @@
         const radius = pickFromList([1, 2, 3, 4, 5, 6]);
         questions.push(`方格紙中畫半徑 ${radius} 公分的圓，放大為 ${scale} 倍圖後，半徑變成幾公分？`);
         summaryAnswers.push(`${radius * scale}公分`);
-        answers.push(`簡答：${radius * scale}公分。過程：半徑是對應長度，放大 ${scale} 倍後，半徑也乘 ${scale}，得到 ${radius * scale} 公分。`);
+        answers.push(
+          `簡答：${radius * scale}公分。過程：半徑是對應長度，放大 ${scale} 倍後，半徑也乘 ${scale}，得到 ${radius * scale} 公分。`
+        );
         continue;
       }
       if (mode === 2) {
@@ -14546,7 +16113,9 @@
       const scale = pickFromList([2, 3, 4, 5]);
       questions.push(`甲扇形是乙扇形的 ${e619ScaleText(1, scale)} 倍縮圖，甲的弧長是乙的幾分之幾？`);
       summaryAnswers.push(`${e619ScaleText(1, scale)}`);
-      answers.push(`簡答：${e619ScaleText(1, scale)}。過程：弧長屬於長度，縮放後會和邊長一樣按同倍數改變，所以甲的弧長是乙的 ${e619ScaleText(1, scale)}。`);
+      answers.push(
+        `簡答：${e619ScaleText(1, scale)}。過程：弧長屬於長度，縮放後會和邊長一樣按同倍數改變，所以甲的弧長是乙的 ${e619ScaleText(1, scale)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14563,7 +16132,9 @@
       const ratio = e619SimplifyRatio(mapCm, actualCm);
       questions.push(`求比例尺：實際長 ${actualMeters} 公尺，在圖上長 ${mapCm} 公分，比例尺用「比」表示是多少？`);
       summaryAnswers.push(e619RatioText(ratio.left, ratio.right));
-      answers.push(`簡答：${e619RatioText(ratio.left, ratio.right)}。過程：先把實際長換成公分，${actualMeters} 公尺 = ${actualCm} 公分，所以比例尺 = 圖上長 : 實際長 = ${mapCm}:${actualCm} = ${e619RatioText(ratio.left, ratio.right)}。`);
+      answers.push(
+        `簡答：${e619RatioText(ratio.left, ratio.right)}。過程：先把實際長換成公分，${actualMeters} 公尺 = ${actualCm} 公分，所以比例尺 = 圖上長 : 實際長 = ${mapCm}:${actualCm} = ${e619RatioText(ratio.left, ratio.right)}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14582,11 +16153,15 @@
         const km = actualMeters / 1000;
         questions.push(`求實際長度：在比例尺 1:${scale} 的地圖上，圖上長 ${mapCm} 公分，實際長度是多少公里？`);
         summaryAnswers.push(`${e619FormatNumber(km)}公里`);
-        answers.push(`簡答：${e619FormatNumber(km)}公里。過程：實際長 = 圖上長 × 比例尺 = ${mapCm} × ${scale} = ${e619FormatNumber(actualCm)} 公分 = ${e619FormatNumber(actualMeters)} 公尺 = ${e619FormatNumber(km)} 公里。`);
+        answers.push(
+          `簡答：${e619FormatNumber(km)}公里。過程：實際長 = 圖上長 × 比例尺 = ${mapCm} × ${scale} = ${e619FormatNumber(actualCm)} 公分 = ${e619FormatNumber(actualMeters)} 公尺 = ${e619FormatNumber(km)} 公里。`
+        );
       } else {
         questions.push(`求實際長度：在比例尺 1:${scale} 的地圖上，圖上長 ${mapCm} 公分，實際長度是多少公尺？`);
         summaryAnswers.push(`${e619FormatNumber(actualMeters)}公尺`);
-        answers.push(`簡答：${e619FormatNumber(actualMeters)}公尺。過程：實際長 = 圖上長 × 比例尺 = ${mapCm} × ${scale} = ${e619FormatNumber(actualCm)} 公分 = ${e619FormatNumber(actualMeters)} 公尺。`);
+        answers.push(
+          `簡答：${e619FormatNumber(actualMeters)}公尺。過程：實際長 = 圖上長 × 比例尺 = ${mapCm} × ${scale} = ${e619FormatNumber(actualCm)} 公分 = ${e619FormatNumber(actualMeters)} 公尺。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -14610,7 +16185,9 @@
       const mapCm = actualCm / scale;
       questions.push(`求圖上長度：實際長 ${actualValue}${actualUnit}，在比例尺 1:${scale} 的圖上長幾公分？`);
       summaryAnswers.push(`${e619FormatNumber(mapCm)}公分`);
-      answers.push(`簡答：${e619FormatNumber(mapCm)}公分。過程：圖上長 = 實際長 ÷ 比例尺。先把實際長換成公分，得到 ${e619FormatNumber(actualCm)} 公分，再除以 ${scale}，所以圖上長是 ${e619FormatNumber(mapCm)} 公分。`);
+      answers.push(
+        `簡答：${e619FormatNumber(mapCm)}公分。過程：圖上長 = 實際長 ÷ 比例尺。先把實際長換成公分，得到 ${e619FormatNumber(actualCm)} 公分，再除以 ${scale}，所以圖上長是 ${e619FormatNumber(mapCm)} 公分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14628,13 +16205,17 @@
         const ratio = e619SimplifyRatio(1, perCmMeters * 100);
         questions.push(`比例尺圖示為 0-${totalMeters}公尺（整段長 ${barCm} 公分），換成比例尺「比」是多少？`);
         summaryAnswers.push(e619RatioText(ratio.left, ratio.right));
-        answers.push(`簡答：${e619RatioText(ratio.left, ratio.right)}。過程：先求 1 公分代表 ${perCmMeters} 公尺，也就是 ${perCmMeters * 100} 公分，所以比例尺是 1:${perCmMeters * 100}。`);
+        answers.push(
+          `簡答：${e619RatioText(ratio.left, ratio.right)}。過程：先求 1 公分代表 ${perCmMeters} 公尺，也就是 ${perCmMeters * 100} 公分，所以比例尺是 1:${perCmMeters * 100}。`
+        );
       } else {
         const scale = pickFromList([1000, 2000, 5000, 6000, 10000, 25000]);
         const perCmMeters = scale / 100;
         questions.push(`比例尺是 1:${scale}，畫成圖示時，圖上 1 公分代表實際幾公尺？`);
         summaryAnswers.push(`${e619FormatNumber(perCmMeters)}公尺`);
-        answers.push(`簡答：${e619FormatNumber(perCmMeters)}公尺。過程：1:${scale} 表示圖上 1 公分代表實際 ${scale} 公分，換成公尺就是 ${scale} ÷ 100 = ${e619FormatNumber(perCmMeters)} 公尺。`);
+        answers.push(
+          `簡答：${e619FormatNumber(perCmMeters)}公尺。過程：1:${scale} 表示圖上 1 公分代表實際 ${scale} 公分，換成公尺就是 ${scale} ÷ 100 = ${e619FormatNumber(perCmMeters)} 公尺。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -14651,7 +16232,9 @@
         const large = small * pickFromList([2, 3, 5]);
         questions.push(`詳細度比較：比例尺 1:${small} 和 1:${large} 的兩張地圖，哪一張看得較詳細、範圍較小？`);
         summaryAnswers.push(`1:${small}`);
-        answers.push(`簡答：1:${small}。過程：比例尺分母越小，圖上同樣 1 公分代表的實際距離越短，所以看得較詳細、表示範圍也較小。`);
+        answers.push(
+          `簡答：1:${small}。過程：比例尺分母越小，圖上同樣 1 公分代表的實際距離越短，所以看得較詳細、表示範圍也較小。`
+        );
         continue;
       }
       if (mode === 1) {
@@ -14660,9 +16243,15 @@
         const scaleB = scaleA * pickFromList([2, 3]);
         const mapA = (actualMeters * 100) / scaleA;
         const mapB = (actualMeters * 100) / scaleB;
-        questions.push(`同一段 ${actualMeters} 公尺的道路，在比例尺 1:${scaleA} 的圖上長多少公分？在比例尺 1:${scaleB} 的圖上又長多少公分？哪一張比較長？`);
-        summaryAnswers.push(`1:${scaleA} 的圖上較長，分別是 ${e619FormatNumber(mapA)}公分、${e619FormatNumber(mapB)}公分`);
-        answers.push(`簡答：1:${scaleA} 的圖上較長，分別是 ${e619FormatNumber(mapA)}公分、${e619FormatNumber(mapB)}公分。過程：圖上長 = 實際長 ÷ 比例尺。因為 ${scaleA} 比 ${scaleB} 小，所以 1:${scaleA} 會畫得較長。`);
+        questions.push(
+          `同一段 ${actualMeters} 公尺的道路，在比例尺 1:${scaleA} 的圖上長多少公分？在比例尺 1:${scaleB} 的圖上又長多少公分？哪一張比較長？`
+        );
+        summaryAnswers.push(
+          `1:${scaleA} 的圖上較長，分別是 ${e619FormatNumber(mapA)}公分、${e619FormatNumber(mapB)}公分`
+        );
+        answers.push(
+          `簡答：1:${scaleA} 的圖上較長，分別是 ${e619FormatNumber(mapA)}公分、${e619FormatNumber(mapB)}公分。過程：圖上長 = 實際長 ÷ 比例尺。因為 ${scaleA} 比 ${scaleB} 小，所以 1:${scaleA} 會畫得較長。`
+        );
         continue;
       }
       const mapCm = pickFromList([4, 5, 6, 8, 10]);
@@ -14670,9 +16259,13 @@
       const scaleB = scaleA * pickFromList([2, 3, 5]);
       const actualA = (mapCm * scaleA) / 100;
       const actualB = (mapCm * scaleB) / 100;
-      questions.push(`兩張地圖上都量到 ${mapCm} 公分，若甲圖比例尺是 1:${scaleA}，乙圖比例尺是 1:${scaleB}，哪一張代表的實際範圍較大？`);
+      questions.push(
+        `兩張地圖上都量到 ${mapCm} 公分，若甲圖比例尺是 1:${scaleA}，乙圖比例尺是 1:${scaleB}，哪一張代表的實際範圍較大？`
+      );
       summaryAnswers.push(`乙圖`);
-      answers.push(`簡答：乙圖。過程：圖上長相同時，比例尺分母越大，代表的實際距離越長。甲圖是 ${e619FormatNumber(actualA)} 公尺，乙圖是 ${e619FormatNumber(actualB)} 公尺，所以乙圖代表的實際範圍較大。`);
+      answers.push(
+        `簡答：乙圖。過程：圖上長相同時，比例尺分母越大，代表的實際距離越長。甲圖是 ${e619FormatNumber(actualA)} 公尺，乙圖是 ${e619FormatNumber(actualB)} 公尺，所以乙圖代表的實際範圍較大。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -14692,7 +16285,10 @@
   }
 
   function buildE619ScaleCoreThreeSet(count) {
-    return buildE619MixedSet([buildE619ScaleFactorSet, buildE619CorrespondingSideSet, buildE619AnglePropertySet], count);
+    return buildE619MixedSet(
+      [buildE619ScaleFactorSet, buildE619CorrespondingSideSet, buildE619AnglePropertySet],
+      count
+    );
   }
 
   function buildE619PerimeterAreaCurveThreeSet(count) {
@@ -64693,7 +66289,12 @@
     for (let i = 0; i < count; i += 1) {
       const denominator = pickFromList([2, 4, 5, 8, 10]);
       const fracTerm = makeFraction(randInt(1, denominator - 1), denominator);
-      const decTerm = e621PickTerminatingFraction({ minWhole: 0, maxWhole: 3, forceFractionPart: true, denominatorChoices: [4, 5, 8, 10] });
+      const decTerm = e621PickTerminatingFraction({
+        minWhole: 0,
+        maxWhole: 3,
+        forceFractionPart: true,
+        denominatorChoices: [4, 5, 8, 10],
+      });
       const useAdd = randInt(0, 1) === 1;
       const result = useAdd ? addFraction(decTerm, fracTerm) : subFraction(decTerm, fracTerm);
       const decimalText = e621FractionToDecimalText(decTerm);
@@ -64711,7 +66312,12 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const left = e621PickTerminatingFraction({ minWhole: 0, maxWhole: 3, forceFractionPart: true, denominatorChoices: [4, 5, 8, 10] });
+      const left = e621PickTerminatingFraction({
+        minWhole: 0,
+        maxWhole: 3,
+        forceFractionPart: true,
+        denominatorChoices: [4, 5, 8, 10],
+      });
       const right = makeFraction(randInt(1, 5), pickFromList([2, 4, 5, 8, 10]));
       const useMultiply = randInt(0, 1) === 1;
       const result = useMultiply ? mulFraction(left, right) : divFraction(left, right);
@@ -64730,8 +66336,18 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const left = e621PickTerminatingFraction({ minWhole: 1, maxWhole: 4, forceFractionPart: true, denominatorChoices: [4, 5, 8, 10] });
-      const innerA = e621PickTerminatingFraction({ minWhole: 0, maxWhole: 2, forceFractionPart: true, denominatorChoices: [4, 5, 8, 10] });
+      const left = e621PickTerminatingFraction({
+        minWhole: 1,
+        maxWhole: 4,
+        forceFractionPart: true,
+        denominatorChoices: [4, 5, 8, 10],
+      });
+      const innerA = e621PickTerminatingFraction({
+        minWhole: 0,
+        maxWhole: 2,
+        forceFractionPart: true,
+        denominatorChoices: [4, 5, 8, 10],
+      });
       const innerB = makeFraction(randInt(1, 4), pickFromList([2, 4, 5, 8, 10]));
       const op = randInt(0, 1) === 1 ? '+' : '-';
       const inner = op === '+' ? addFraction(innerA, innerB) : subFraction(innerA, innerB);
@@ -64752,10 +66368,20 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const a = e621PickTerminatingFraction({ minWhole: 1, maxWhole: 3, forceFractionPart: true, denominatorChoices: [4, 5, 10] });
+      const a = e621PickTerminatingFraction({
+        minWhole: 1,
+        maxWhole: 3,
+        forceFractionPart: true,
+        denominatorChoices: [4, 5, 10],
+      });
       const b = makeFraction(randInt(1, 4), pickFromList([2, 4, 5]));
       const c = randInt(2, 5);
-      const d = e621PickTerminatingFraction({ minWhole: 0, maxWhole: 2, forceFractionPart: true, denominatorChoices: [4, 5, 10] });
+      const d = e621PickTerminatingFraction({
+        minWhole: 0,
+        maxWhole: 2,
+        forceFractionPart: true,
+        denominatorChoices: [4, 5, 10],
+      });
       const product = mulFraction(b, makeFraction(c, 1));
       const result = subFraction(addFraction(a, product), d);
       const aText = e621FractionToDecimalText(a);
@@ -64774,8 +66400,18 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const common = e621PickTerminatingFraction({ minWhole: 0, maxWhole: 3, forceFractionPart: true, denominatorChoices: [4, 5, 10] });
-      const leftA = e621PickTerminatingFraction({ minWhole: 0, maxWhole: 2, forceFractionPart: true, denominatorChoices: [4, 5, 10] });
+      const common = e621PickTerminatingFraction({
+        minWhole: 0,
+        maxWhole: 3,
+        forceFractionPart: true,
+        denominatorChoices: [4, 5, 10],
+      });
+      const leftA = e621PickTerminatingFraction({
+        minWhole: 0,
+        maxWhole: 2,
+        forceFractionPart: true,
+        denominatorChoices: [4, 5, 10],
+      });
       const leftB = subFraction(makeFraction(randInt(1, 4), 1), leftA);
       const result = mulFraction(addFraction(leftA, leftB), common);
       const commonText = e621FractionToDecimalText(common);
@@ -64796,7 +66432,12 @@
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const targetInteger = randInt(2, 8);
-      const left = e621PickTerminatingFraction({ minWhole: 0, maxWhole: targetInteger - 1, forceFractionPart: true, denominatorChoices: [4, 5, 8, 10] });
+      const left = e621PickTerminatingFraction({
+        minWhole: 0,
+        maxWhole: targetInteger - 1,
+        forceFractionPart: true,
+        denominatorChoices: [4, 5, 8, 10],
+      });
       const complement = subFraction(makeFraction(targetInteger, 1), left);
       const middle = randomMixedFraction(1, 4, [2, 4, 5, 8, 10], false);
       const result = addFraction(addFraction(left, middle), complement);
@@ -64816,8 +66457,18 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const length = e621PickTerminatingFraction({ minWhole: 1, maxWhole: 5, forceFractionPart: true, denominatorChoices: [2, 4, 5, 10] });
-      const width = e621PickTerminatingFraction({ minWhole: 1, maxWhole: 4, forceFractionPart: true, denominatorChoices: [2, 4, 5, 10] });
+      const length = e621PickTerminatingFraction({
+        minWhole: 1,
+        maxWhole: 5,
+        forceFractionPart: true,
+        denominatorChoices: [2, 4, 5, 10],
+      });
+      const width = e621PickTerminatingFraction({
+        minWhole: 1,
+        maxWhole: 4,
+        forceFractionPart: true,
+        denominatorChoices: [2, 4, 5, 10],
+      });
       const area = mulFraction(length, width);
       const askWidth = randInt(0, 1) === 1;
       const askValue = askWidth ? width : length;
@@ -64838,7 +66489,12 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const total = e621PickTerminatingFraction({ minWhole: 2, maxWhole: 9, forceFractionPart: true, denominatorChoices: [2, 4, 5, 10] });
+      const total = e621PickTerminatingFraction({
+        minWhole: 2,
+        maxWhole: 9,
+        forceFractionPart: true,
+        denominatorChoices: [2, 4, 5, 10],
+      });
       const usedRate = pickFromList([
         makeFraction(1, 4),
         makeFraction(1, 5),
@@ -64863,7 +66519,12 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const each = e621PickTerminatingFraction({ minWhole: 0, maxWhole: 2, forceFractionPart: true, denominatorChoices: [2, 4, 5, 10] });
+      const each = e621PickTerminatingFraction({
+        minWhole: 0,
+        maxWhole: 2,
+        forceFractionPart: true,
+        denominatorChoices: [2, 4, 5, 10],
+      });
       const pieceCount = randInt(3, 12);
       const total = mulFraction(each, makeFraction(pieceCount, 1));
       questions.push(
@@ -64895,44 +66556,25 @@
 
   function buildE621ConversionMixedSet(count) {
     return buildE621MixedSet(
-      [
-        buildE621DecimalToFractionSet,
-        buildE621FractionToDecimalSet,
-        buildE621DecimalToMixedFractionSet,
-      ],
+      [buildE621DecimalToFractionSet, buildE621FractionToDecimalSet, buildE621DecimalToMixedFractionSet],
       count
     );
   }
 
   function buildE621MixedCalcSet(count) {
     return buildE621MixedSet(
-      [
-        buildE621FriendlyAddSubSet,
-        buildE621FriendlyMulDivSet,
-        buildE621BracketMixedSet,
-        buildE621CrossOperationSet,
-      ],
+      [buildE621FriendlyAddSubSet, buildE621FriendlyMulDivSet, buildE621BracketMixedSet, buildE621CrossOperationSet],
       count
     );
   }
 
   function buildE621ShortcutMixedSet(count) {
-    return buildE621MixedSet(
-      [
-        buildE621DistributiveShortcutSet,
-        buildE621AssociativeShortcutSet,
-      ],
-      count
-    );
+    return buildE621MixedSet([buildE621DistributiveShortcutSet, buildE621AssociativeShortcutSet], count);
   }
 
   function buildE621ApplicationMixedSet(count) {
     return buildE621MixedSet(
-      [
-        buildE621RectangleReverseSet,
-        buildE621RemainingQuantitySet,
-        buildE621UnitAmountSet,
-      ],
+      [buildE621RectangleReverseSet, buildE621RemainingQuantitySet, buildE621UnitAmountSet],
       count
     );
   }
@@ -64946,18 +66588,40 @@
     const summaryAnswers = [];
     const answers = [];
     const modes = [
-      { speedUnit: '公尺/秒', distanceUnit: '公尺', timeUnit: '秒', speeds: [6, 8, 10, 12, 15, 18], times: [5, 8, 10, 12, 15, 20] },
-      { speedUnit: '公尺/分', distanceUnit: '公尺', timeUnit: '分', speeds: [120, 150, 180, 200, 240, 300], times: [3, 4, 5, 6, 8, 10] },
-      { speedUnit: '公里/時', distanceUnit: '公里', timeUnit: '小時', speeds: [40, 48, 50, 60, 72, 80], times: [1.5, 2, 2.5, 3, 3.5, 4] },
+      {
+        speedUnit: '公尺/秒',
+        distanceUnit: '公尺',
+        timeUnit: '秒',
+        speeds: [6, 8, 10, 12, 15, 18],
+        times: [5, 8, 10, 12, 15, 20],
+      },
+      {
+        speedUnit: '公尺/分',
+        distanceUnit: '公尺',
+        timeUnit: '分',
+        speeds: [120, 150, 180, 200, 240, 300],
+        times: [3, 4, 5, 6, 8, 10],
+      },
+      {
+        speedUnit: '公里/時',
+        distanceUnit: '公里',
+        timeUnit: '小時',
+        speeds: [40, 48, 50, 60, 72, 80],
+        times: [1.5, 2, 2.5, 3, 3.5, 4],
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const mode = modes[i % modes.length];
       const speed = pickFromList(mode.speeds);
       const time = pickFromList(mode.times);
       const distance = speed * time;
-      questions.push(`求速率：某人移動 $${e622FormatNumber(distance)}$ ${mode.distanceUnit}，共花 $${e622FormatNumber(time)}$ ${mode.timeUnit}，速率是多少${mode.speedUnit}？`);
+      questions.push(
+        `求速率：某人移動 $${e622FormatNumber(distance)}$ ${mode.distanceUnit}，共花 $${e622FormatNumber(time)}$ ${mode.timeUnit}，速率是多少${mode.speedUnit}？`
+      );
       summaryAnswers.push(`$${e622FormatNumber(speed)}$ ${mode.speedUnit}`);
-      answers.push(`用速率公式：速率 $=\\frac{距離}{時間}=\\frac{${e622FormatNumber(distance)}}{${e622FormatNumber(time)}}=${e622FormatNumber(speed)}$，所以速率是 $${e622FormatNumber(speed)}$ ${mode.speedUnit}。`);
+      answers.push(
+        `用速率公式：速率 $=\\frac{距離}{時間}=\\frac{${e622FormatNumber(distance)}}{${e622FormatNumber(time)}}=${e622FormatNumber(speed)}$，所以速率是 $${e622FormatNumber(speed)}$ ${mode.speedUnit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -64967,18 +66631,40 @@
     const summaryAnswers = [];
     const answers = [];
     const modes = [
-      { speedUnit: '公尺/秒', distanceUnit: '公尺', timeUnit: '秒', speeds: [6, 8, 10, 12, 15, 18], times: [5, 8, 10, 12, 15, 20] },
-      { speedUnit: '公尺/分', distanceUnit: '公尺', timeUnit: '分', speeds: [120, 150, 180, 200, 240, 300], times: [3, 4, 5, 6, 8, 10] },
-      { speedUnit: '公里/時', distanceUnit: '公里', timeUnit: '小時', speeds: [40, 48, 50, 60, 72, 80], times: [1.5, 2, 2.5, 3, 3.5, 4] },
+      {
+        speedUnit: '公尺/秒',
+        distanceUnit: '公尺',
+        timeUnit: '秒',
+        speeds: [6, 8, 10, 12, 15, 18],
+        times: [5, 8, 10, 12, 15, 20],
+      },
+      {
+        speedUnit: '公尺/分',
+        distanceUnit: '公尺',
+        timeUnit: '分',
+        speeds: [120, 150, 180, 200, 240, 300],
+        times: [3, 4, 5, 6, 8, 10],
+      },
+      {
+        speedUnit: '公里/時',
+        distanceUnit: '公里',
+        timeUnit: '小時',
+        speeds: [40, 48, 50, 60, 72, 80],
+        times: [1.5, 2, 2.5, 3, 3.5, 4],
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const mode = modes[i % modes.length];
       const speed = pickFromList(mode.speeds);
       const time = pickFromList(mode.times);
       const distance = speed * time;
-      questions.push(`求距離：速率是 $${e622FormatNumber(speed)}$ ${mode.speedUnit}，移動了 $${e622FormatNumber(time)}$ ${mode.timeUnit}，共走多少 ${mode.distanceUnit}？`);
+      questions.push(
+        `求距離：速率是 $${e622FormatNumber(speed)}$ ${mode.speedUnit}，移動了 $${e622FormatNumber(time)}$ ${mode.timeUnit}，共走多少 ${mode.distanceUnit}？`
+      );
       summaryAnswers.push(`$${e622FormatNumber(distance)}$ ${mode.distanceUnit}`);
-      answers.push(`用距離公式：距離 $=速率\\times時間=${e622FormatNumber(speed)}\\times${e622FormatNumber(time)}=${e622FormatNumber(distance)}$，所以共走 $${e622FormatNumber(distance)}$ ${mode.distanceUnit}。`);
+      answers.push(
+        `用距離公式：距離 $=速率\\times時間=${e622FormatNumber(speed)}\\times${e622FormatNumber(time)}=${e622FormatNumber(distance)}$，所以共走 $${e622FormatNumber(distance)}$ ${mode.distanceUnit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -64988,18 +66674,40 @@
     const summaryAnswers = [];
     const answers = [];
     const modes = [
-      { speedUnit: '公尺/秒', distanceUnit: '公尺', timeUnit: '秒', speeds: [6, 8, 10, 12, 15], times: [5, 8, 10, 12, 15] },
-      { speedUnit: '公尺/分', distanceUnit: '公尺', timeUnit: '分', speeds: [120, 150, 180, 200, 240], times: [3, 4, 5, 6, 8] },
-      { speedUnit: '公里/時', distanceUnit: '公里', timeUnit: '小時', speeds: [40, 48, 50, 60, 72], times: [1.5, 2, 2.5, 3, 3.5] },
+      {
+        speedUnit: '公尺/秒',
+        distanceUnit: '公尺',
+        timeUnit: '秒',
+        speeds: [6, 8, 10, 12, 15],
+        times: [5, 8, 10, 12, 15],
+      },
+      {
+        speedUnit: '公尺/分',
+        distanceUnit: '公尺',
+        timeUnit: '分',
+        speeds: [120, 150, 180, 200, 240],
+        times: [3, 4, 5, 6, 8],
+      },
+      {
+        speedUnit: '公里/時',
+        distanceUnit: '公里',
+        timeUnit: '小時',
+        speeds: [40, 48, 50, 60, 72],
+        times: [1.5, 2, 2.5, 3, 3.5],
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const mode = modes[i % modes.length];
       const speed = pickFromList(mode.speeds);
       const time = pickFromList(mode.times);
       const distance = speed * time;
-      questions.push(`求時間：速率是 $${e622FormatNumber(speed)}$ ${mode.speedUnit}，共移動 $${e622FormatNumber(distance)}$ ${mode.distanceUnit}，需要多少${mode.timeUnit}？`);
+      questions.push(
+        `求時間：速率是 $${e622FormatNumber(speed)}$ ${mode.speedUnit}，共移動 $${e622FormatNumber(distance)}$ ${mode.distanceUnit}，需要多少${mode.timeUnit}？`
+      );
       summaryAnswers.push(`$${e622FormatNumber(time)}$ ${mode.timeUnit}`);
-      answers.push(`用時間公式：時間 $=\\frac{距離}{速率}=\\frac{${e622FormatNumber(distance)}}{${e622FormatNumber(speed)}}=${e622FormatNumber(time)}$，所以需要 $${e622FormatNumber(time)}$ ${mode.timeUnit}。`);
+      answers.push(
+        `用時間公式：時間 $=\\frac{距離}{速率}=\\frac{${e622FormatNumber(distance)}}{${e622FormatNumber(speed)}}=${e622FormatNumber(time)}$，所以需要 $${e622FormatNumber(time)}$ ${mode.timeUnit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65023,7 +66731,7 @@
       {
         make() {
           const kmh = pickFromList([18, 24, 30, 36, 48, 60, 72]);
-          const mpm = kmh * 1000 / 60;
+          const mpm = (kmh * 1000) / 60;
           return {
             q: `把時速 $${kmh}$ 公里換成分速。`,
             s: `$${e622FormatNumber(mpm)}$ 公尺/分`,
@@ -65034,7 +66742,7 @@
       {
         make() {
           const mpm = pickFromList([180, 240, 300, 360, 420, 600, 900, 1200]);
-          const kmh = mpm * 60 / 1000;
+          const kmh = (mpm * 60) / 1000;
           return {
             q: `把分速 $${mpm}$ 公尺換成時速。`,
             s: `$${e622FormatNumber(kmh)}$ 公里/時`,
@@ -65098,7 +66806,7 @@
         rightValue: 2000,
         rightUnit: '公尺/分',
         convert() {
-          return { left: this.leftValue * 1000 / 60, right: this.rightValue, unit: '公尺/分' };
+          return { left: (this.leftValue * 1000) / 60, right: this.rightValue, unit: '公尺/分' };
         },
       },
       {
@@ -65117,9 +66825,13 @@
       const item = variants[i % variants.length];
       const built = item.convert();
       const winner = built.left > built.right ? item.leftName : item.rightName;
-      questions.push(`${item.leftName}的速度是 $${e622FormatNumber(item.leftValue)}$ ${item.leftUnit}，${item.rightName}的速度是 $${e622FormatNumber(item.rightValue)}$ ${item.rightUnit}，誰比較快？`);
+      questions.push(
+        `${item.leftName}的速度是 $${e622FormatNumber(item.leftValue)}$ ${item.leftUnit}，${item.rightName}的速度是 $${e622FormatNumber(item.rightValue)}$ ${item.rightUnit}，誰比較快？`
+      );
       summaryAnswers.push(`${winner}`);
-      answers.push(`先換成相同單位比較。${item.leftName} 是 $${e622FormatNumber(built.left)}$ ${built.unit}，${item.rightName} 是 $${e622FormatNumber(built.right)}$ ${built.unit}。因為 $${e622FormatNumber(built.left)}${built.left > built.right ? '>' : '<'}${e622FormatNumber(built.right)}$，所以較快的是 ${winner}。`);
+      answers.push(
+        `先換成相同單位比較。${item.leftName} 是 $${e622FormatNumber(built.left)}$ ${built.unit}，${item.rightName} 是 $${e622FormatNumber(built.right)}$ ${built.unit}。因為 $${e622FormatNumber(built.left)}${built.left > built.right ? '>' : '<'}${e622FormatNumber(built.right)}$，所以較快的是 ${winner}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65140,9 +66852,13 @@
       const distance1 = speed1 * time1;
       const distance2 = speed2 * time2;
       const avg = (distance1 + distance2) / (time1 + time2);
-      questions.push(`某人先以 $${speed1}$ 公尺/分走了 $${time1}$ 分鐘，再以 $${speed2}$ 公尺/分走了 $${time2}$ 分鐘，全程平均速率是多少公尺/分？`);
+      questions.push(
+        `某人先以 $${speed1}$ 公尺/分走了 $${time1}$ 分鐘，再以 $${speed2}$ 公尺/分走了 $${time2}$ 分鐘，全程平均速率是多少公尺/分？`
+      );
       summaryAnswers.push(`$${e622FormatNumber(avg)}$ 公尺/分`);
-      answers.push(`平均速率不是把速率直接平均，而是用總距離除以總時間。總距離 $=${distance1}+${distance2}=${distance1 + distance2}$ 公尺，總時間 $=${time1}+${time2}=${time1 + time2}$ 分，所以平均速率 $=\\frac{${distance1 + distance2}}{${time1 + time2}}=${e622FormatNumber(avg)}$ 公尺/分。`);
+      answers.push(
+        `平均速率不是把速率直接平均，而是用總距離除以總時間。總距離 $=${distance1}+${distance2}=${distance1 + distance2}$ 公尺，總時間 $=${time1}+${time2}=${time1 + time2}$ 分，所以平均速率 $=\\frac{${distance1 + distance2}}{${time1 + time2}}=${e622FormatNumber(avg)}$ 公尺/分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65162,9 +66878,13 @@
       const totalTime = item.distance / item.up + item.distance / item.down;
       const totalDistance = item.distance * 2;
       const avgText = e622FormatNumber(item.avg);
-      questions.push(`${item.scene}：單程 $${item.distance}$ ${item.unit.includes('公里') ? '公里' : '公尺'}，去程速率 $${item.up}$ ${item.unit}，回程速率 $${item.down}$ ${item.unit}，來回平均速率是多少${item.unit}？`);
+      questions.push(
+        `${item.scene}：單程 $${item.distance}$ ${item.unit.includes('公里') ? '公里' : '公尺'}，去程速率 $${item.up}$ ${item.unit}，回程速率 $${item.down}$ ${item.unit}，來回平均速率是多少${item.unit}？`
+      );
       summaryAnswers.push(`$${avgText}$ ${item.unit}`);
-      answers.push(`先算總距離與總時間。總距離 $=2\\times${item.distance}=${totalDistance}$ ${item.unit.includes('公里') ? '公里' : '公尺'}，總時間 $=\\frac{${item.distance}}{${item.up}}+\\frac{${item.distance}}{${item.down}}=${e622FormatNumber(totalTime)}$。所以平均速率 $=\\frac{${totalDistance}}{${e622FormatNumber(totalTime)}}=${avgText}$ ${item.unit}。`);
+      answers.push(
+        `先算總距離與總時間。總距離 $=2\\times${item.distance}=${totalDistance}$ ${item.unit.includes('公里') ? '公里' : '公尺'}，總時間 $=\\frac{${item.distance}}{${item.up}}+\\frac{${item.distance}}{${item.down}}=${e622FormatNumber(totalTime)}$。所以平均速率 $=\\frac{${totalDistance}}{${e622FormatNumber(totalTime)}}=${avgText}$ ${item.unit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65185,9 +66905,13 @@
       const totalDistance = d1 + d2 + d3;
       const totalTime = t1 + t2 + t3;
       const avg = totalDistance / totalTime;
-      questions.push(`某人分三段移動：第一段 $${d1}$ 公尺花 $${t1}$ 分鐘，第二段 $${d2}$ 公尺花 $${t2}$ 分鐘，第三段 $${d3}$ 公尺花 $${t3}$ 分鐘，全程平均速率是多少公尺/分？`);
+      questions.push(
+        `某人分三段移動：第一段 $${d1}$ 公尺花 $${t1}$ 分鐘，第二段 $${d2}$ 公尺花 $${t2}$ 分鐘，第三段 $${d3}$ 公尺花 $${t3}$ 分鐘，全程平均速率是多少公尺/分？`
+      );
       summaryAnswers.push(`$${e622FormatNumber(avg)}$ 公尺/分`);
-      answers.push(`總距離 $=${d1}+${d2}+${d3}=${totalDistance}$ 公尺，總時間 $=${t1}+${t2}+${t3}=${totalTime}$ 分，所以平均速率 $=\\frac{${totalDistance}}{${totalTime}}=${e622FormatNumber(avg)}$ 公尺/分。`);
+      answers.push(
+        `總距離 $=${d1}+${d2}+${d3}=${totalDistance}$ 公尺，總時間 $=${t1}+${t2}+${t3}=${totalTime}$ 分，所以平均速率 $=\\frac{${totalDistance}}{${totalTime}}=${e622FormatNumber(avg)}$ 公尺/分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65201,9 +66925,13 @@
       const speedB = pickFromList([40, 45, 50, 55, 60, 70]);
       const time = pickFromList([6, 8, 10, 12, 14]);
       const distance = (speedA + speedB) * time;
-      questions.push(`甲、乙兩人相向而行，甲速率 $${speedA}$ 公尺/分，乙速率 $${speedB}$ 公尺/分，兩地相距 $${distance}$ 公尺，幾分鐘後相遇？`);
+      questions.push(
+        `甲、乙兩人相向而行，甲速率 $${speedA}$ 公尺/分，乙速率 $${speedB}$ 公尺/分，兩地相距 $${distance}$ 公尺，幾分鐘後相遇？`
+      );
       summaryAnswers.push(`$${time}$ 分鐘後`);
-      answers.push(`相向而行用速度和。依題意：時間 $=\\frac{距離}{速度和}=\\frac{${distance}}{${speedA}+${speedB}}=${time}$，所以 $${time}$ 分鐘後相遇。`);
+      answers.push(
+        `相向而行用速度和。依題意：時間 $=\\frac{距離}{速度和}=\\frac{${distance}}{${speedA}+${speedB}}=${time}$，所以 $${time}$ 分鐘後相遇。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65217,9 +66945,13 @@
       const speedB = pickFromList([60, 70, 80, 90]);
       const time = pickFromList([3, 4, 5, 6, 8]);
       const distance = (speedA + speedB) * time;
-      questions.push(`甲、乙兩人從同地反方向出發，甲速率 $${speedA}$ 公尺/分，乙速率 $${speedB}$ 公尺/分，$${time}$ 分鐘後兩人相距幾公尺？`);
+      questions.push(
+        `甲、乙兩人從同地反方向出發，甲速率 $${speedA}$ 公尺/分，乙速率 $${speedB}$ 公尺/分，$${time}$ 分鐘後兩人相距幾公尺？`
+      );
       summaryAnswers.push(`$${distance}$ 公尺`);
-      answers.push(`反方向出發後，相距速度是兩人的速度和，所以相距 $=(${speedA}+${speedB})\\times${time}=${distance}$ 公尺。`);
+      answers.push(
+        `反方向出發後，相距速度是兩人的速度和，所以相距 $=(${speedA}+${speedB})\\times${time}=${distance}$ 公尺。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65233,7 +66965,9 @@
       const fast = slow + pickFromList([20, 30, 40, 50, 60]);
       const time = pickFromList([5, 8, 10, 12, 15]);
       const gap = (fast - slow) * time;
-      questions.push(`甲、乙同地同方向出發，甲速率 $${fast}$ 公尺/分，乙速率 $${slow}$ 公尺/分，$${time}$ 分鐘後甲會在乙前面幾公尺？`);
+      questions.push(
+        `甲、乙同地同方向出發，甲速率 $${fast}$ 公尺/分，乙速率 $${slow}$ 公尺/分，$${time}$ 分鐘後甲會在乙前面幾公尺？`
+      );
       summaryAnswers.push(`$${gap}$ 公尺`);
       answers.push(`同方向的距離差來自速度差，所以前後距離 $=(${fast}-${slow})\\times${time}=${gap}$ 公尺。`);
     }
@@ -65249,9 +66983,13 @@
       const fast = slow + pickFromList([10, 15, 20, 25, 30]);
       const leadDistance = (fast - slow) * pickFromList([6, 8, 10, 12]);
       const time = leadDistance / (fast - slow);
-      questions.push(`甲在乙前方 $${leadDistance}$ 公尺，兩人同方向前進，甲速率 $${slow}$ 公尺/分，乙速率 $${fast}$ 公尺/分，乙幾分鐘後追上甲？`);
+      questions.push(
+        `甲在乙前方 $${leadDistance}$ 公尺，兩人同方向前進，甲速率 $${slow}$ 公尺/分，乙速率 $${fast}$ 公尺/分，乙幾分鐘後追上甲？`
+      );
       summaryAnswers.push(`$${e622FormatNumber(time)}$ 分鐘後`);
-      answers.push(`追趕用速度差。追上時間 $=\\frac{領先距離}{速度差}=\\frac{${leadDistance}}{${fast}-${slow}}=${e622FormatNumber(time)}$，所以 $${e622FormatNumber(time)}$ 分鐘後追上。`);
+      answers.push(
+        `追趕用速度差。追上時間 $=\\frac{領先距離}{速度差}=\\frac{${leadDistance}}{${fast}-${slow}}=${e622FormatNumber(time)}$，所以 $${e622FormatNumber(time)}$ 分鐘後追上。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65271,9 +67009,13 @@
       const { slow, fast, delay } = cases[(i + randInt(0, cases.length - 1)) % cases.length];
       const leadDistance = slow * delay;
       const chaseTime = leadDistance / (fast - slow);
-      questions.push(`甲每分鐘走 $${slow}$ 公尺，先出發 $${delay}$ 分鐘；乙每分鐘走 $${fast}$ 公尺，之後才從同地出發。乙出發後幾分鐘會追上甲？`);
+      questions.push(
+        `甲每分鐘走 $${slow}$ 公尺，先出發 $${delay}$ 分鐘；乙每分鐘走 $${fast}$ 公尺，之後才從同地出發。乙出發後幾分鐘會追上甲？`
+      );
       summaryAnswers.push(`$${e622FormatNumber(chaseTime)}$ 分鐘後`);
-      answers.push(`甲先走的領先距離是 $${slow}\\times${delay}=${leadDistance}$ 公尺。乙追趕時的速度差是 $${fast}-${slow}=${fast - slow}$ 公尺/分，所以追上時間 $=\\frac{${leadDistance}}{${fast - slow}}=${e622FormatNumber(chaseTime)}$ 分鐘。`);
+      answers.push(
+        `甲先走的領先距離是 $${slow}\\times${delay}=${leadDistance}$ 公尺。乙追趕時的速度差是 $${fast}-${slow}=${fast - slow}$ 公尺/分，所以追上時間 $=\\frac{${leadDistance}}{${fast - slow}}=${e622FormatNumber(chaseTime)}$ 分鐘。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65317,9 +67059,15 @@
     for (let i = 0; i < count; i += 1) {
       const s = scenarios[i % scenarios.length];
       const time = s.targetGap / (s.fastRate - s.slowRate);
-      questions.push(`${s.fasterName}${s.period}${s.action} $${s.fastRate}$ ${s.unit}，${s.slowerName}${s.period}${s.action} $${s.slowRate}$ ${s.unit}，多久後兩者總量會相差 $${s.targetGap}$ ${s.unit}？`);
-      summaryAnswers.push(`$${e622FormatNumber(time)}$ ${s.period === '每月' ? '個月' : s.period === '每日' ? '天' : '分鐘'}`);
-      answers.push(`這題本質也是距離差問題。每${s.period.slice(1)}的差距增加量是 $${s.fastRate}-${s.slowRate}=${s.fastRate - s.slowRate}$ ${s.unit}，所以所需時間 $=\\frac{${s.targetGap}}{${s.fastRate - s.slowRate}}=${e622FormatNumber(time)}$。`);
+      questions.push(
+        `${s.fasterName}${s.period}${s.action} $${s.fastRate}$ ${s.unit}，${s.slowerName}${s.period}${s.action} $${s.slowRate}$ ${s.unit}，多久後兩者總量會相差 $${s.targetGap}$ ${s.unit}？`
+      );
+      summaryAnswers.push(
+        `$${e622FormatNumber(time)}$ ${s.period === '每月' ? '個月' : s.period === '每日' ? '天' : '分鐘'}`
+      );
+      answers.push(
+        `這題本質也是距離差問題。每${s.period.slice(1)}的差距增加量是 $${s.fastRate}-${s.slowRate}=${s.fastRate - s.slowRate}$ ${s.unit}，所以所需時間 $=\\frac{${s.targetGap}}{${s.fastRate - s.slowRate}}=${e622FormatNumber(time)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65335,9 +67083,13 @@
       const direction = i % 2 === 0 ? '順流' : '逆流';
       const speed = direction === '順流' ? boat + water : boat - water;
       const distance = speed * hours;
-      questions.push(`船在靜水中的速度是 $${boat}$ 公里/時，水流速度是 $${water}$ 公里/時，${direction}航行 $${hours}$ 小時可走幾公里？`);
+      questions.push(
+        `船在靜水中的速度是 $${boat}$ 公里/時，水流速度是 $${water}$ 公里/時，${direction}航行 $${hours}$ 小時可走幾公里？`
+      );
       summaryAnswers.push(`$${distance}$ 公里`);
-      answers.push(`${direction}速度 ${direction === '順流' ? '=' : '='} 船速 ${direction === '順流' ? '+' : '-'} 水速 $=${boat}${direction === '順流' ? '+' : '-'}${water}=${speed}$ 公里/時，所以距離 $=${speed}\\times${hours}=${distance}$ 公里。`);
+      answers.push(
+        `${direction}速度 ${direction === '順流' ? '=' : '='} 船速 ${direction === '順流' ? '+' : '-'} 水速 $=${boat}${direction === '順流' ? '+' : '-'}${water}=${speed}$ 公里/時，所以距離 $=${speed}\\times${hours}=${distance}$ 公里。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65351,9 +67103,13 @@
       const water = pickFromList([1, 2, 3, 4]);
       const direction = i % 2 === 0 ? '順流' : '逆流';
       const speed = direction === '順流' ? boat + water : boat - water;
-      questions.push(`船在靜水中的速度是 $${boat}$ 公里/時，${direction}速度是 $${speed}$ 公里/時，水流速度是多少公里/時？`);
+      questions.push(
+        `船在靜水中的速度是 $${boat}$ 公里/時，${direction}速度是 $${speed}$ 公里/時，水流速度是多少公里/時？`
+      );
       summaryAnswers.push(`$${water}$ 公里/時`);
-      answers.push(`${direction === '順流' ? '順流速度 = 船速 + 水速' : '逆流速度 = 船速 - 水速'}。所以水速 $=${direction === '順流' ? `${speed}-${boat}` : `${boat}-${speed}`}=${water}$ 公里/時。`);
+      answers.push(
+        `${direction === '順流' ? '順流速度 = 船速 + 水速' : '逆流速度 = 船速 - 水速'}。所以水速 $=${direction === '順流' ? `${speed}-${boat}` : `${boat}-${speed}`}=${water}$ 公里/時。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65373,9 +67129,13 @@
       const { boat, water, distance } = cases[(i + randInt(0, cases.length - 1)) % cases.length];
       const downstreamTime = distance / (boat + water);
       const upstreamTime = distance / (boat - water);
-      questions.push(`船在靜水中的速度是 $${boat}$ 公里/時，水流速度是 $${water}$ 公里/時。若順流航行 $${distance}$ 公里後原路逆流返回，回程需要幾小時？`);
+      questions.push(
+        `船在靜水中的速度是 $${boat}$ 公里/時，水流速度是 $${water}$ 公里/時。若順流航行 $${distance}$ 公里後原路逆流返回，回程需要幾小時？`
+      );
       summaryAnswers.push(`$${e622FormatNumber(upstreamTime)}$ 小時`);
-      answers.push(`回程是逆流，逆流速度 $=${boat}-${water}=${boat - water}$ 公里/時，所以回程時間 $=\\frac{${distance}}{${boat - water}}=${e622FormatNumber(upstreamTime)}$ 小時。順流時間是 $${e622FormatNumber(downstreamTime)}$ 小時，但本題只問回程。`);
+      answers.push(
+        `回程是逆流，逆流速度 $=${boat}-${water}=${boat - water}$ 公里/時，所以回程時間 $=\\frac{${distance}}{${boat - water}}=${e622FormatNumber(upstreamTime)}$ 小時。順流時間是 $${e622FormatNumber(downstreamTime)}$ 小時，但本題只問回程。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65389,9 +67149,13 @@
       const person = pickFromList([30, 36, 40, 45, 48, 60]);
       const sameDirection = i % 2 === 0;
       const speed = sameDirection ? escalator + person : Math.abs(person - escalator);
-      questions.push(`電扶梯移動速度是 $${escalator}$ 公尺/分，人在平地行走速度是 $${person}$ 公尺/分。若人與電扶梯${sameDirection ? '同方向' : '反方向'}行走，每分鐘移動幾公尺？`);
+      questions.push(
+        `電扶梯移動速度是 $${escalator}$ 公尺/分，人在平地行走速度是 $${person}$ 公尺/分。若人與電扶梯${sameDirection ? '同方向' : '反方向'}行走，每分鐘移動幾公尺？`
+      );
       summaryAnswers.push(`$${speed}$ 公尺/分`);
-      answers.push(`${sameDirection ? '同方向時速率相加' : '反方向時速率相減'}，所以每分鐘移動 $=${sameDirection ? `${escalator}+${person}` : `${person}-${escalator}`}=${speed}$ 公尺。`);
+      answers.push(
+        `${sameDirection ? '同方向時速率相加' : '反方向時速率相減'}，所以每分鐘移動 $=${sameDirection ? `${escalator}+${person}` : `${person}-${escalator}`}=${speed}$ 公尺。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65413,7 +67177,9 @@
       const time = length / speed;
       questions.push(`一列火車長 $${length}$ 公尺，速率 $${speed}$ 公尺/秒，完全通過一根電線桿需要幾秒？`);
       summaryAnswers.push(`$${e622FormatNumber(time)}$ 秒`);
-      answers.push(`通過電線桿時，總距離就是火車長，所以時間 $=\\frac{${length}}{${speed}}=${e622FormatNumber(time)}$ 秒。`);
+      answers.push(
+        `通過電線桿時，總距離就是火車長，所以時間 $=\\frac{${length}}{${speed}}=${e622FormatNumber(time)}$ 秒。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65432,9 +67198,13 @@
       ];
       const { train, bridge, speed } = cases[(i + randInt(0, cases.length - 1)) % cases.length];
       const time = (train + bridge) / speed;
-      questions.push(`一列火車長 $${train}$ 公尺，速率 $${speed}$ 公尺/秒，完全通過一座長 $${bridge}$ 公尺的橋需要幾秒？`);
+      questions.push(
+        `一列火車長 $${train}$ 公尺，速率 $${speed}$ 公尺/秒，完全通過一座長 $${bridge}$ 公尺的橋需要幾秒？`
+      );
       summaryAnswers.push(`$${e622FormatNumber(time)}$ 秒`);
-      answers.push(`完全通過橋時，總距離 $=火車長+橋長=${train}+${bridge}=${train + bridge}$ 公尺，所以時間 $=\\frac{${train + bridge}}{${speed}}=${e622FormatNumber(time)}$ 秒。`);
+      answers.push(
+        `完全通過橋時，總距離 $=火車長+橋長=${train}+${bridge}=${train + bridge}$ 公尺，所以時間 $=\\frac{${train + bridge}}{${speed}}=${e622FormatNumber(time)}$ 秒。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65453,9 +67223,13 @@
       ];
       const { train, speed, time } = cases[(i + randInt(0, cases.length - 1)) % cases.length];
       const obstacle = speed * time - train;
-      questions.push(`一列火車長 $${train}$ 公尺，速率 $${speed}$ 公尺/秒，完全通過某橋共花 $${e622FormatNumber(time)}$ 秒，這座橋長幾公尺？`);
+      questions.push(
+        `一列火車長 $${train}$ 公尺，速率 $${speed}$ 公尺/秒，完全通過某橋共花 $${e622FormatNumber(time)}$ 秒，這座橋長幾公尺？`
+      );
       summaryAnswers.push(`$${obstacle}$ 公尺`);
-      answers.push(`完全通過時總距離 $=速度\\times時間=${speed}\\times${e622FormatNumber(time)}=${speed * time}$ 公尺。橋長 $=總距離-火車長=${speed * time}-${train}=${obstacle}$ 公尺。`);
+      answers.push(
+        `完全通過時總距離 $=速度\\times時間=${speed}\\times${e622FormatNumber(time)}=${speed * time}$ 公尺。橋長 $=總距離-火車長=${speed * time}-${train}=${obstacle}$ 公尺。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65472,10 +67246,14 @@
     for (let i = 0; i < count; i += 1) {
       const mode = modes[i % modes.length];
       const time = pickFromList(mode.times);
-      const distance = mode.sound * time / 2;
-      questions.push(`聲音傳播速度約為 $${e622FormatNumber(mode.sound)}$ ${mode.speedUnit}，發出聲音後經過 $${e622FormatNumber(time)}$ 秒聽到回聲，障礙物距離多遠？`);
+      const distance = (mode.sound * time) / 2;
+      questions.push(
+        `聲音傳播速度約為 $${e622FormatNumber(mode.sound)}$ ${mode.speedUnit}，發出聲音後經過 $${e622FormatNumber(time)}$ 秒聽到回聲，障礙物距離多遠？`
+      );
       summaryAnswers.push(`$${e622FormatNumber(distance)}$ ${mode.distanceUnit}`);
-      answers.push(`回聲是來回，所以單程距離 $=\\frac{聲速\\times時間}{2}=\\frac{${e622FormatNumber(mode.sound)}\\times${e622FormatNumber(time)}}{2}=${e622FormatNumber(distance)}$ ${mode.distanceUnit}。`);
+      answers.push(
+        `回聲是來回，所以單程距離 $=\\frac{聲速\\times時間}{2}=\\frac{${e622FormatNumber(mode.sound)}\\times${e622FormatNumber(time)}}{2}=${e622FormatNumber(distance)}$ ${mode.distanceUnit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65511,11 +67289,7 @@
 
   function buildE622AverageMixedSet(count) {
     return buildE622MixedSet(
-      [
-        buildE622AverageTwoStageSet,
-        buildE622AverageRoundTripSet,
-        buildE622AverageSegmentKnownSet,
-      ],
+      [buildE622AverageTwoStageSet, buildE622AverageRoundTripSet, buildE622AverageSegmentKnownSet],
       count
     );
   }
@@ -65536,24 +67310,14 @@
 
   function buildE622FlowMixedSet(count) {
     return buildE622MixedSet(
-      [
-        buildE622FlowDirectSet,
-        buildE622FlowSolveWaterSet,
-        buildE622FlowRoundTripSet,
-        buildE622EscalatorSet,
-      ],
+      [buildE622FlowDirectSet, buildE622FlowSolveWaterSet, buildE622FlowRoundTripSet, buildE622EscalatorSet],
       count
     );
   }
 
   function buildE622ThroughMixedSet(count) {
     return buildE622MixedSet(
-      [
-        buildE622PassPoleSet,
-        buildE622PassBridgeSet,
-        buildE622SolveObstacleLengthSet,
-        buildE622EchoDistanceSet,
-      ],
+      [buildE622PassPoleSet, buildE622PassBridgeSet, buildE622SolveObstacleLengthSet, buildE622EchoDistanceSet],
       count
     );
   }
@@ -65587,16 +67351,22 @@
         const volume = baseArea * prismHeight;
         questions.push(`長方柱的底面長 $${length}$ 公分、寬 $${width}$ 公分，柱高 $${prismHeight}$ 公分，求體積。`);
         summaryAnswers.push(`$${volume}$ 立方公分`);
-        answers.push(`先算底面積：$${length}\\times${width}=${baseArea}$ 平方公分，再用柱體體積 $=\\text{底面積}\\times\\text{柱高}$，所以體積 $=${baseArea}\\times${prismHeight}=${volume}$ 立方公分。`);
+        answers.push(
+          `先算底面積：$${length}\\times${width}=${baseArea}$ 平方公分，再用柱體體積 $=\\text{底面積}\\times\\text{柱高}$，所以體積 $=${baseArea}\\times${prismHeight}=${volume}$ 立方公分。`
+        );
       } else if (mode === 1) {
         const base = pickFromList([6, 8, 10, 12]);
         const baseHeight = pickFromList([3, 4, 5, 6]);
         const prismHeight = pickFromList([4, 5, 6, 8]);
         const baseArea = base * baseHeight;
         const volume = baseArea * prismHeight;
-        questions.push(`平行四邊形柱的底面底 $${base}$ 公分、高 $${baseHeight}$ 公分，柱高 $${prismHeight}$ 公分，求體積。`);
+        questions.push(
+          `平行四邊形柱的底面底 $${base}$ 公分、高 $${baseHeight}$ 公分，柱高 $${prismHeight}$ 公分，求體積。`
+        );
         summaryAnswers.push(`$${volume}$ 立方公分`);
-        answers.push(`底面積是 $${base}\\times${baseHeight}=${baseArea}$ 平方公分，所以體積 $=${baseArea}\\times${prismHeight}=${volume}$ 立方公分。`);
+        answers.push(
+          `底面積是 $${base}\\times${baseHeight}=${baseArea}$ 平方公分，所以體積 $=${baseArea}\\times${prismHeight}=${volume}$ 立方公分。`
+        );
       } else if (mode === 2) {
         const base = pickFromList([6, 8, 10, 12]);
         const triHeight = pickFromList([3, 4, 5, 6]);
@@ -65605,7 +67375,9 @@
         const volume = baseArea * prismHeight;
         questions.push(`三角柱的底面底 $${base}$ 公分、高 $${triHeight}$ 公分，柱高 $${prismHeight}$ 公分，求體積。`);
         summaryAnswers.push(`$${volume}$ 立方公分`);
-        answers.push(`三角形底面積 $=\\frac{${base}\\times${triHeight}}{2}=${baseArea}$ 平方公分，所以體積 $=${baseArea}\\times${prismHeight}=${volume}$ 立方公分。`);
+        answers.push(
+          `三角形底面積 $=\\frac{${base}\\times${triHeight}}{2}=${baseArea}$ 平方公分，所以體積 $=${baseArea}\\times${prismHeight}=${volume}$ 立方公分。`
+        );
       } else {
         const upper = pickFromList([2, 3, 4, 5]);
         const lower = pickFromList([6, 8, 10, 12]);
@@ -65613,9 +67385,13 @@
         const prismHeight = pickFromList([3, 4, 5, 6]);
         const baseArea = ((upper + lower) * trapHeight) / 2;
         const volume = baseArea * prismHeight;
-        questions.push(`梯形柱的底面上底 $${upper}$ 公分、下底 $${lower}$ 公分、高 $${trapHeight}$ 公分，柱高 $${prismHeight}$ 公分，求體積。`);
+        questions.push(
+          `梯形柱的底面上底 $${upper}$ 公分、下底 $${lower}$ 公分、高 $${trapHeight}$ 公分，柱高 $${prismHeight}$ 公分，求體積。`
+        );
         summaryAnswers.push(`$${volume}$ 立方公分`);
-        answers.push(`梯形底面積 $=\\frac{(${upper}+${lower})\\times${trapHeight}}{2}=${baseArea}$ 平方公分，所以體積 $=${baseArea}\\times${prismHeight}=${volume}$ 立方公分。`);
+        answers.push(
+          `梯形底面積 $=\\frac{(${upper}+${lower})\\times${trapHeight}}{2}=${baseArea}$ 平方公分，所以體積 $=${baseArea}\\times${prismHeight}=${volume}$ 立方公分。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -65631,7 +67407,9 @@
       const volume = e623CircleArea(radius) * height;
       questions.push(`圓柱的底面半徑是 $${radius}$ 公分，柱高是 $${height}$ 公分，求體積。（圓周率取 $3.14$）`);
       summaryAnswers.push(`約 $${e623FormatNumber(volume)}$ 立方公分`);
-      answers.push(`圓柱體積 $=\\pi r^2h=3.14\\times${radius}^2\\times${height}=3.14\\times${radius * radius}\\times${height}=${e623FormatNumber(volume)}$，所以體積約為 $${e623FormatNumber(volume)}$ 立方公分。`);
+      answers.push(
+        `圓柱體積 $=\\pi r^2h=3.14\\times${radius}^2\\times${height}=3.14\\times${radius * radius}\\times${height}=${e623FormatNumber(volume)}$，所以體積約為 $${e623FormatNumber(volume)}$ 立方公分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65650,16 +67428,22 @@
         const volume = fullVolume / 2;
         questions.push(`半圓柱的底面直徑是 $${diameter}$ 公分，柱高是 $${height}$ 公分，求體積。（圓周率取 $3.14$）`);
         summaryAnswers.push(`約 $${e623FormatNumber(volume)}$ 立方公分`);
-        answers.push(`先算整個圓柱體積：$3.14\\times${radius}^2\\times${height}=${e623FormatNumber(fullVolume)}$，半圓柱體積是它的一半，所以約為 $${e623FormatNumber(volume)}$ 立方公分。`);
+        answers.push(
+          `先算整個圓柱體積：$3.14\\times${radius}^2\\times${height}=${e623FormatNumber(fullVolume)}$，半圓柱體積是它的一半，所以約為 $${e623FormatNumber(volume)}$ 立方公分。`
+        );
       } else {
         const radius = pickFromList([3, 4, 5, 6]);
         const angle = sectorAngles[(i + randInt(0, sectorAngles.length - 1)) % sectorAngles.length];
         const height = pickFromList([5, 6, 8, 10]);
         const fullVolume = e623CircleArea(radius) * height;
-        const volume = fullVolume * angle / 360;
-        questions.push(`扇形柱的底面半徑是 $${radius}$ 公分、圓心角是 $${angle}^\\circ$，柱高是 $${height}$ 公分，求體積。（圓周率取 $3.14$）`);
+        const volume = (fullVolume * angle) / 360;
+        questions.push(
+          `扇形柱的底面半徑是 $${radius}$ 公分、圓心角是 $${angle}^\\circ$，柱高是 $${height}$ 公分，求體積。（圓周率取 $3.14$）`
+        );
         summaryAnswers.push(`約 $${e623FormatNumber(volume)}$ 立方公分`);
-        answers.push(`先算整個圓柱體積：$3.14\\times${radius}^2\\times${height}=${e623FormatNumber(fullVolume)}$，扇形柱佔整個圓柱的 $\\frac{${angle}}{360}$，所以體積約為 $${e623FormatNumber(volume)}$ 立方公分。`);
+        answers.push(
+          `先算整個圓柱體積：$3.14\\times${radius}^2\\times${height}=${e623FormatNumber(fullVolume)}$，扇形柱佔整個圓柱的 $\\frac{${angle}}{360}$，所以體積約為 $${e623FormatNumber(volume)}$ 立方公分。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -65682,9 +67466,13 @@
         const baseArea = (a * b) / 2;
         const perimeter = a + b + c;
         const surface = 2 * baseArea + perimeter * prismHeight;
-        questions.push(`直角三角柱的底面三邊長分別為 $${a}$、$${b}$、$${c}$ 公分，柱高 $${prismHeight}$ 公分，求表面積。`);
+        questions.push(
+          `直角三角柱的底面三邊長分別為 $${a}$、$${b}$、$${c}$ 公分，柱高 $${prismHeight}$ 公分，求表面積。`
+        );
         summaryAnswers.push(`$${surface}$ 平方公分`);
-        answers.push(`表面積 $=2\\times\\text{底面積}+\\text{底面周長}\\times\\text{柱高}$。底面積 $=\\frac{${a}\\times${b}}{2}=${baseArea}$，底面周長 $=${a}+${b}+${c}=${perimeter}$，所以表面積 $=2\\times${baseArea}+${perimeter}\\times${prismHeight}=${surface}$ 平方公分。`);
+        answers.push(
+          `表面積 $=2\\times\\text{底面積}+\\text{底面周長}\\times\\text{柱高}$。底面積 $=\\frac{${a}\\times${b}}{2}=${baseArea}$，底面周長 $=${a}+${b}+${c}=${perimeter}$，所以表面積 $=2\\times${baseArea}+${perimeter}\\times${prismHeight}=${surface}$ 平方公分。`
+        );
       } else if (mode === 1) {
         const length = pickFromList([6, 8, 10, 12]);
         const width = pickFromList([4, 5, 6, 7]);
@@ -65692,7 +67480,9 @@
         const surface = 2 * (length * width + length * height + width * height);
         questions.push(`長方體的長、寬、高分別為 $${length}$、$${width}$、$${height}$ 公分，求表面積。`);
         summaryAnswers.push(`$${surface}$ 平方公分`);
-        answers.push(`長方體表面積 $=2(lw+lh+wh)=2(${length}\\times${width}+${length}\\times${height}+${width}\\times${height})=${surface}$ 平方公分。`);
+        answers.push(
+          `長方體表面積 $=2(lw+lh+wh)=2(${length}\\times${width}+${length}\\times${height}+${width}\\times${height})=${surface}$ 平方公分。`
+        );
       } else {
         const base = pickFromList([8, 10, 12, 15]);
         const side = pickFromList([5, 6, 7, 8]);
@@ -65701,9 +67491,13 @@
         const baseArea = base * baseHeight;
         const perimeter = 2 * (base + side);
         const surface = 2 * baseArea + perimeter * prismHeight;
-        questions.push(`平行四邊形柱的底面底 $${base}$ 公分、鄰邊 $${side}$ 公分、底面高 $${baseHeight}$ 公分，柱高 $${prismHeight}$ 公分，求表面積。`);
+        questions.push(
+          `平行四邊形柱的底面底 $${base}$ 公分、鄰邊 $${side}$ 公分、底面高 $${baseHeight}$ 公分，柱高 $${prismHeight}$ 公分，求表面積。`
+        );
         summaryAnswers.push(`$${surface}$ 平方公分`);
-        answers.push(`底面積 $=${base}\\times${baseHeight}=${baseArea}$，底面周長 $=2\\times(${base}+${side})=${perimeter}$，所以表面積 $=2\\times${baseArea}+${perimeter}\\times${prismHeight}=${surface}$ 平方公分。`);
+        answers.push(
+          `底面積 $=${base}\\times${baseHeight}=${baseArea}$，底面周長 $=2\\times(${base}+${side})=${perimeter}$，所以表面積 $=2\\times${baseArea}+${perimeter}\\times${prismHeight}=${surface}$ 平方公分。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -65720,7 +67514,9 @@
       const surface = 2 * e623CircleArea(radius) + e623CircleCircumference(radius) * height;
       questions.push(`圓柱的底面直徑是 $${diameter}$ 公分，柱高是 $${height}$ 公分，求表面積。（圓周率取 $3.14$）`);
       summaryAnswers.push(`約 $${e623FormatNumber(surface)}$ 平方公分`);
-      answers.push(`表面積 $=2\\times\\text{底面積}+\\text{側面積}=2\\times3.14\\times${radius}^2+2\\times3.14\\times${radius}\\times${height}=${e623FormatNumber(surface)}$，所以表面積約為 $${e623FormatNumber(surface)}$ 平方公分。`);
+      answers.push(
+        `表面積 $=2\\times\\text{底面積}+\\text{側面積}=2\\times3.14\\times${radius}^2+2\\times3.14\\times${radius}\\times${height}=${e623FormatNumber(surface)}$，所以表面積約為 $${e623FormatNumber(surface)}$ 平方公分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65734,9 +67530,13 @@
       const radius = diameter / 2;
       const height = pickFromList([10, 12, 15, 18]);
       const lateralArea = e623CircleCircumference(radius) * height;
-      questions.push(`一個圓柱罐頭的直徑是 $${diameter}$ 公分，高是 $${height}$ 公分，側面貼滿標籤紙，標籤紙面積是多少？（圓周率取 $3.14$）`);
+      questions.push(
+        `一個圓柱罐頭的直徑是 $${diameter}$ 公分，高是 $${height}$ 公分，側面貼滿標籤紙，標籤紙面積是多少？（圓周率取 $3.14$）`
+      );
       summaryAnswers.push(`約 $${e623FormatNumber(lateralArea)}$ 平方公分`);
-      answers.push(`標籤紙只包側面，所以面積 $=\\text{底面圓周長}\\times\\text{高}=2\\times3.14\\times${radius}\\times${height}=${e623FormatNumber(lateralArea)}$ 平方公分。`);
+      answers.push(
+        `標籤紙只包側面，所以面積 $=\\text{底面圓周長}\\times\\text{高}=2\\times3.14\\times${radius}\\times${height}=${e623FormatNumber(lateralArea)}$ 平方公分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65751,17 +67551,25 @@
         const radius = diameter / 2;
         const height = pickFromList([8, 10, 12, 15]);
         const area = e623CircleArea(radius) + e623CircleCircumference(radius) * height;
-        questions.push(`一個無蓋圓柱形容器，底面直徑是 $${diameter}$ 公分，高是 $${height}$ 公分，求需要的材料面積。（圓周率取 $3.14$）`);
+        questions.push(
+          `一個無蓋圓柱形容器，底面直徑是 $${diameter}$ 公分，高是 $${height}$ 公分，求需要的材料面積。（圓周率取 $3.14$）`
+        );
         summaryAnswers.push(`約 $${e623FormatNumber(area)}$ 平方公分`);
-        answers.push(`無蓋表示只算一個底面和側面，所以面積 $=3.14\\times${radius}^2+2\\times3.14\\times${radius}\\times${height}=${e623FormatNumber(area)}$ 平方公分。`);
+        answers.push(
+          `無蓋表示只算一個底面和側面，所以面積 $=3.14\\times${radius}^2+2\\times3.14\\times${radius}\\times${height}=${e623FormatNumber(area)}$ 平方公分。`
+        );
       } else {
         const diameter = pickFromList([20, 30, 40]);
         const radius = diameter / 2;
         const height = pickFromList([20, 25, 30]);
         const painted = e623CircleArea(radius) + e623CircleCircumference(radius) * height;
-        questions.push(`一個圓柱形石凳直徑是 $${diameter}$ 公分，高是 $${height}$ 公分，底部不漆，求要粉刷的面積。（圓周率取 $3.14$）`);
+        questions.push(
+          `一個圓柱形石凳直徑是 $${diameter}$ 公分，高是 $${height}$ 公分，底部不漆，求要粉刷的面積。（圓周率取 $3.14$）`
+        );
         summaryAnswers.push(`約 $${e623FormatNumber(painted)}$ 平方公分`);
-        answers.push(`底部不漆，所以要算上底面和側面。面積 $=3.14\\times${radius}^2+2\\times3.14\\times${radius}\\times${height}=${e623FormatNumber(painted)}$ 平方公分。`);
+        answers.push(
+          `底部不漆，所以要算上底面和側面。面積 $=3.14\\times${radius}^2+2\\times3.14\\times${radius}\\times${height}=${e623FormatNumber(painted)}$ 平方公分。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -65791,9 +67599,13 @@
         const baseArea = pickFromList([9.42, 12.56, 18.84, 28.26]);
         const height = pickFromList([4, 5, 6, 8]);
         const volume = baseArea * height;
-        questions.push(`圓柱體體積是 $${e623FormatNumber(volume)}$ 立方公分，底面積是 $${e623FormatNumber(baseArea)}$ 平方公分，求柱高。`);
+        questions.push(
+          `圓柱體體積是 $${e623FormatNumber(volume)}$ 立方公分，底面積是 $${e623FormatNumber(baseArea)}$ 平方公分，求柱高。`
+        );
         summaryAnswers.push(`$${height}$ 公分`);
-        answers.push(`柱高 $=\\text{體積}\\div\\text{底面積}=${e623FormatNumber(volume)}\\div${e623FormatNumber(baseArea)}=${height}$ 公分。`);
+        answers.push(
+          `柱高 $=\\text{體積}\\div\\text{底面積}=${e623FormatNumber(volume)}\\div${e623FormatNumber(baseArea)}=${height}$ 公分。`
+        );
       } else {
         const baseArea = pickFromList([24, 30, 36, 40, 48]);
         const height = pickFromList([4, 5, 6, 8, 10]);
@@ -65817,7 +67629,9 @@
       const volume = length * width * height;
       questions.push(`一個長方體體積是 $${volume}$ 立方公分，長是 $${length}$ 公分，高是 $${height}$ 公分，求寬。`);
       summaryAnswers.push(`$${width}$ 公分`);
-      answers.push(`長方體體積 $=\\text{長}\\times\\text{寬}\\times\\text{高}$，所以寬 $=${volume}\\div${length}\\div${height}=${width}$ 公分。`);
+      answers.push(
+        `長方體體積 $=\\text{長}\\times\\text{寬}\\times\\text{高}$，所以寬 $=${volume}\\div${length}\\div${height}=${width}$ 公分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65833,9 +67647,13 @@
       const heightA = volume / areaA;
       const heightB = volume / areaB;
       const winner = heightA > heightB ? '甲柱' : '乙柱';
-      questions.push(`甲柱與乙柱體積都為 $${volume}$ 立方公分，甲柱底面積是 $${areaA}$ 平方公分，乙柱底面積是 $${areaB}$ 平方公分，哪一個柱高比較長？`);
+      questions.push(
+        `甲柱與乙柱體積都為 $${volume}$ 立方公分，甲柱底面積是 $${areaA}$ 平方公分，乙柱底面積是 $${areaB}$ 平方公分，哪一個柱高比較長？`
+      );
       summaryAnswers.push(`${winner}`);
-      answers.push(`柱高 $=\\text{體積}\\div\\text{底面積}$。甲柱高 $=${volume}\\div${areaA}=${e623FormatNumber(heightA)}$ 公分，乙柱高 $=${volume}\\div${areaB}=${e623FormatNumber(heightB)}$ 公分，所以較高的是 ${winner}。`);
+      answers.push(
+        `柱高 $=\\text{體積}\\div\\text{底面積}$。甲柱高 $=${volume}\\div${areaA}=${e623FormatNumber(heightA)}$ 公分，乙柱高 $=${volume}\\div${areaB}=${e623FormatNumber(heightB)}$ 公分，所以較高的是 ${winner}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65853,9 +67671,13 @@
         const prismHeight = pickFromList([4, 5, 6, 8]);
         const baseArea = rectLength * rectWidth + (triBase * triHeight) / 2;
         const volume = baseArea * prismHeight;
-        questions.push(`一個柱體的底面由長方形與三角形組成：長方形長 $${rectLength}$ 公分、寬 $${rectWidth}$ 公分，三角形底 $${triBase}$ 公分、高 $${triHeight}$ 公分，柱高 $${prismHeight}$ 公分，求體積。`);
+        questions.push(
+          `一個柱體的底面由長方形與三角形組成：長方形長 $${rectLength}$ 公分、寬 $${rectWidth}$ 公分，三角形底 $${triBase}$ 公分、高 $${triHeight}$ 公分，柱高 $${prismHeight}$ 公分，求體積。`
+        );
         summaryAnswers.push(`$${volume}$ 立方公分`);
-        answers.push(`先算複合底面積：$${rectLength}\\times${rectWidth}+\\frac{${triBase}\\times${triHeight}}{2}=${baseArea}$ 平方公分，再乘柱高 $${prismHeight}$，得到體積 $${volume}$ 立方公分。`);
+        answers.push(
+          `先算複合底面積：$${rectLength}\\times${rectWidth}+\\frac{${triBase}\\times${triHeight}}{2}=${baseArea}$ 平方公分，再乘柱高 $${prismHeight}$，得到體積 $${volume}$ 立方公分。`
+        );
       } else {
         const r1 = pickFromList([3, 4, 5]);
         const h1 = pickFromList([6, 8, 10]);
@@ -65864,9 +67686,13 @@
         const v1 = e623CircleArea(r1) * h1;
         const v2 = e623CircleArea(r2) * h2;
         const total = v1 + v2;
-        questions.push(`上下堆疊兩個圓柱：上方圓柱半徑 $${r1}$ 公分、高 $${h1}$ 公分；下方圓柱半徑 $${r2}$ 公分、高 $${h2}$ 公分，求總體積。（圓周率取 $3.14$）`);
+        questions.push(
+          `上下堆疊兩個圓柱：上方圓柱半徑 $${r1}$ 公分、高 $${h1}$ 公分；下方圓柱半徑 $${r2}$ 公分、高 $${h2}$ 公分，求總體積。（圓周率取 $3.14$）`
+        );
         summaryAnswers.push(`約 $${e623FormatNumber(total)}$ 立方公分`);
-        answers.push(`總體積是兩個圓柱體積相加：$3.14\\times${r1}^2\\times${h1}+3.14\\times${r2}^2\\times${h2}=${e623FormatNumber(total)}$，所以總體積約為 $${e623FormatNumber(total)}$ 立方公分。`);
+        answers.push(
+          `總體積是兩個圓柱體積相加：$3.14\\times${r1}^2\\times${h1}+3.14\\times${r2}^2\\times${h2}=${e623FormatNumber(total)}$，所以總體積約為 $${e623FormatNumber(total)}$ 立方公分。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -65887,9 +67713,13 @@
       const outerVolume = outerL * outerW * height;
       const innerVolume = innerL * innerW * height;
       const material = outerVolume - innerVolume;
-      questions.push(`一個空心長方柱外部底面是 $${outerL}\\times${outerW}$ 平方公分，內部空心底面是 $${innerL}\\times${innerW}$ 平方公分，高是 $${height}$ 公分，求材料體積。`);
+      questions.push(
+        `一個空心長方柱外部底面是 $${outerL}\\times${outerW}$ 平方公分，內部空心底面是 $${innerL}\\times${innerW}$ 平方公分，高是 $${height}$ 公分，求材料體積。`
+      );
       summaryAnswers.push(`$${material}$ 立方公分`);
-      answers.push(`材料體積 $=\\text{外部體積}-\\text{內部空心體積}=(${outerL}\\times${outerW}\\times${height})-(${innerL}\\times${innerW}\\times${height})=${material}$ 立方公分。`);
+      answers.push(
+        `材料體積 $=\\text{外部體積}-\\text{內部空心體積}=(${outerL}\\times${outerW}\\times${height})-(${innerL}\\times${innerW}\\times${height})=${material}$ 立方公分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65905,9 +67735,13 @@
       const outerRadius = outerDiameter / 2;
       const innerRadius = outerRadius - thickness;
       const material = (e623CircleArea(outerRadius) - e623CircleArea(innerRadius)) * height;
-      questions.push(`一個空心圓柱外徑是 $${outerDiameter}$ 公分，厚度是 $${thickness}$ 公分，高是 $${height}$ 公分，求材料體積。（圓周率取 $3.14$）`);
+      questions.push(
+        `一個空心圓柱外徑是 $${outerDiameter}$ 公分，厚度是 $${thickness}$ 公分，高是 $${height}$ 公分，求材料體積。（圓周率取 $3.14$）`
+      );
       summaryAnswers.push(`約 $${e623FormatNumber(material)}$ 立方公分`);
-      answers.push(`外半徑是 $${outerRadius}$ 公分，內半徑是 $${innerRadius}$ 公分。材料體積 $=(3.14\\times${outerRadius}^2-3.14\\times${innerRadius}^2)\\times${height}=${e623FormatNumber(material)}$，所以約為 $${e623FormatNumber(material)}$ 立方公分。`);
+      answers.push(
+        `外半徑是 $${outerRadius}$ 公分，內半徑是 $${innerRadius}$ 公分。材料體積 $=(3.14\\times${outerRadius}^2-3.14\\times${innerRadius}^2)\\times${height}=${e623FormatNumber(material)}$，所以約為 $${e623FormatNumber(material)}$ 立方公分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65923,16 +67757,24 @@
         const height = pickFromList([10, 12, 15]);
         const cutSide = pickFromList([3, 4, 5, 6]);
         const remain = length * width * height - cutSide * cutSide * height;
-        questions.push(`一個長方體長 $${length}$ 公分、寬 $${width}$ 公分、高 $${height}$ 公分，中間挖掉一個邊長 $${cutSide}$ 公分、貫穿上下的正方柱孔，求剩餘體積。`);
+        questions.push(
+          `一個長方體長 $${length}$ 公分、寬 $${width}$ 公分、高 $${height}$ 公分，中間挖掉一個邊長 $${cutSide}$ 公分、貫穿上下的正方柱孔，求剩餘體積。`
+        );
         summaryAnswers.push(`$${remain}$ 立方公分`);
-        answers.push(`剩餘體積 $=\\text{大長方體體積}-\\text{挖掉的正方柱體積}=${length}\\times${width}\\times${height}-${cutSide}^2\\times${height}=${remain}$ 立方公分。`);
+        answers.push(
+          `剩餘體積 $=\\text{大長方體體積}-\\text{挖掉的正方柱體積}=${length}\\times${width}\\times${height}-${cutSide}^2\\times${height}=${remain}$ 立方公分。`
+        );
       } else {
         const side = pickFromList([10, 12, 15, 18]);
         const radius = pickFromList([2, 3, 4, 5]);
         const remain = side * side * side - e623CircleArea(radius) * side;
-        questions.push(`一個邊長 $${side}$ 公分的正方體，中間挖掉一個半徑 $${radius}$ 公分、貫穿上下的圓柱孔，求剩餘體積。（圓周率取 $3.14$）`);
+        questions.push(
+          `一個邊長 $${side}$ 公分的正方體，中間挖掉一個半徑 $${radius}$ 公分、貫穿上下的圓柱孔，求剩餘體積。（圓周率取 $3.14$）`
+        );
         summaryAnswers.push(`約 $${e623FormatNumber(remain)}$ 立方公分`);
-        answers.push(`剩餘體積 $=\\text{正方體體積}-\\text{圓柱孔體積}=${side}^3-3.14\\times${radius}^2\\times${side}=${e623FormatNumber(remain)}$，所以約為 $${e623FormatNumber(remain)}$ 立方公分。`);
+        answers.push(
+          `剩餘體積 $=\\text{正方體體積}-\\text{圓柱孔體積}=${side}^3-3.14\\times${radius}^2\\times${side}=${e623FormatNumber(remain)}$，所以約為 $${e623FormatNumber(remain)}$ 立方公分。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -65948,17 +67790,25 @@
         const radius = diameter / 2;
         const height = pickFromList([2, 3, 4]);
         const volume = e623CircleArea(radius) * height;
-        questions.push(`一個圓柱形水塔內部直徑是 $${diameter}$ 公尺，高是 $${height}$ 公尺，最多可儲水多少立方公尺？（圓周率取 $3.14$）`);
+        questions.push(
+          `一個圓柱形水塔內部直徑是 $${diameter}$ 公尺，高是 $${height}$ 公尺，最多可儲水多少立方公尺？（圓周率取 $3.14$）`
+        );
         summaryAnswers.push(`約 $${e623FormatNumber(volume)}$ 立方公尺`);
-        answers.push(`水塔容量就是圓柱體積：$3.14\\times${radius}^2\\times${height}=${e623FormatNumber(volume)}$，所以最多可儲水約 $${e623FormatNumber(volume)}$ 立方公尺。`);
+        answers.push(
+          `水塔容量就是圓柱體積：$3.14\\times${radius}^2\\times${height}=${e623FormatNumber(volume)}$，所以最多可儲水約 $${e623FormatNumber(volume)}$ 立方公尺。`
+        );
       } else {
         const length = pickFromList([6, 8, 10]);
         const width = pickFromList([4, 5, 6]);
         const height = pickFromList([3, 4, 5]);
         const volume = length * width * height;
-        questions.push(`一個長方體水箱長 $${length}$ 公尺、寬 $${width}$ 公尺、高 $${height}$ 公尺，最多可裝水多少立方公尺？`);
+        questions.push(
+          `一個長方體水箱長 $${length}$ 公尺、寬 $${width}$ 公尺、高 $${height}$ 公尺，最多可裝水多少立方公尺？`
+        );
         summaryAnswers.push(`$${volume}$ 立方公尺`);
-        answers.push(`水箱容量就是長方體體積：$${length}\\times${width}\\times${height}=${volume}$，所以最多可裝 $${volume}$ 立方公尺的水。`);
+        answers.push(
+          `水箱容量就是長方體體積：$${length}\\times${width}\\times${height}=${volume}$，所以最多可裝 $${volume}$ 立方公尺的水。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -65973,9 +67823,13 @@
       const radius = diameter / 2;
       const height = pickFromList([10, 12, 15, 18]);
       const area = e623CircleCircumference(radius) * height;
-      questions.push(`一個圓柱禮盒的直徑是 $${diameter}$ 公分，高是 $${height}$ 公分，若只包側面，至少需要多少包裝紙？（圓周率取 $3.14$）`);
+      questions.push(
+        `一個圓柱禮盒的直徑是 $${diameter}$ 公分，高是 $${height}$ 公分，若只包側面，至少需要多少包裝紙？（圓周率取 $3.14$）`
+      );
       summaryAnswers.push(`約 $${e623FormatNumber(area)}$ 平方公分`);
-      answers.push(`只包側面，所以面積 $=\\text{底面圓周長}\\times\\text{高}=2\\times3.14\\times${radius}\\times${height}=${e623FormatNumber(area)}$ 平方公分。`);
+      answers.push(
+        `只包側面，所以面積 $=\\text{底面圓周長}\\times\\text{高}=2\\times3.14\\times${radius}\\times${height}=${e623FormatNumber(area)}$ 平方公分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -65989,9 +67843,13 @@
       const radius = diameter / 2;
       const height = pickFromList([20, 25, 30]);
       const area = e623CircleArea(radius) + e623CircleCircumference(radius) * height;
-      questions.push(`一個圓柱形石凳直徑是 $${diameter}$ 公分，高是 $${height}$ 公分，放在地面的底面不漆，求其餘部分的粉刷面積。（圓周率取 $3.14$）`);
+      questions.push(
+        `一個圓柱形石凳直徑是 $${diameter}$ 公分，高是 $${height}$ 公分，放在地面的底面不漆，求其餘部分的粉刷面積。（圓周率取 $3.14$）`
+      );
       summaryAnswers.push(`約 $${e623FormatNumber(area)}$ 平方公分`);
-      answers.push(`底面不漆，所以要算上底面和側面。面積 $=3.14\\times${radius}^2+2\\times3.14\\times${radius}\\times${height}=${e623FormatNumber(area)}$ 平方公分。`);
+      answers.push(
+        `底面不漆，所以要算上底面和側面。面積 $=3.14\\times${radius}^2+2\\times3.14\\times${radius}\\times${height}=${e623FormatNumber(area)}$ 平方公分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66006,16 +67864,24 @@
         const baseWidth = pickFromList([15, 18, 20]);
         const rise = pickFromList([2, 3, 4, 5]);
         const volume = baseLength * baseWidth * rise;
-        questions.push(`一個長方體容器底面長 $${baseLength}$ 公分、寬 $${baseWidth}$ 公分，放入物體後水面上升 $${rise}$ 公分，求物體排開的體積。`);
+        questions.push(
+          `一個長方體容器底面長 $${baseLength}$ 公分、寬 $${baseWidth}$ 公分，放入物體後水面上升 $${rise}$ 公分，求物體排開的體積。`
+        );
         summaryAnswers.push(`$${volume}$ 立方公分`);
-        answers.push(`排開的體積 $=\\text{底面積}\\times\\text{上升高度}=(${baseLength}\\times${baseWidth})\\times${rise}=${volume}$ 立方公分。`);
+        answers.push(
+          `排開的體積 $=\\text{底面積}\\times\\text{上升高度}=(${baseLength}\\times${baseWidth})\\times${rise}=${volume}$ 立方公分。`
+        );
       } else {
         const baseArea = pickFromList([200, 240, 300, 360, 400]);
         const rise = pickFromList([2, 3, 4, 5]);
         const volume = baseArea * rise;
-        questions.push(`一個柱形容器的底面積是 $${baseArea}$ 平方公分，放入石頭後水位上升 $${rise}$ 公分，求石頭體積。`);
+        questions.push(
+          `一個柱形容器的底面積是 $${baseArea}$ 平方公分，放入石頭後水位上升 $${rise}$ 公分，求石頭體積。`
+        );
         summaryAnswers.push(`$${volume}$ 立方公分`);
-        answers.push(`石頭體積等於排開的水量，所以體積 $=\\text{底面積}\\times\\text{上升高度}=${baseArea}\\times${rise}=${volume}$ 立方公分。`);
+        answers.push(
+          `石頭體積等於排開的水量，所以體積 $=\\text{底面積}\\times\\text{上升高度}=${baseArea}\\times${rise}=${volume}$ 立方公分。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -66036,9 +67902,13 @@
       const surfaceA = 2 * e623CircleArea(rA) + e623CircleCircumference(rA) * hA;
       const surfaceB = 2 * e623CircleArea(rB) + e623CircleCircumference(rB) * hB;
       const winner = surfaceA > surfaceB ? '甲盒' : '乙盒';
-      questions.push(`兩個圓柱禮盒相比較：甲盒半徑 $${rA}$ 公分、高 $${hA}$ 公分；乙盒半徑 $${rB}$ 公分、高 $${hB}$ 公分，哪一個表面積較大？（圓周率取 $3.14$）`);
+      questions.push(
+        `兩個圓柱禮盒相比較：甲盒半徑 $${rA}$ 公分、高 $${hA}$ 公分；乙盒半徑 $${rB}$ 公分、高 $${hB}$ 公分，哪一個表面積較大？（圓周率取 $3.14$）`
+      );
       summaryAnswers.push(`${winner}`);
-      answers.push(`甲盒表面積約為 $${e623FormatNumber(surfaceA)}$ 平方公分，乙盒表面積約為 $${e623FormatNumber(surfaceB)}$ 平方公分，所以表面積較大的是 ${winner}。`);
+      answers.push(
+        `甲盒表面積約為 $${e623FormatNumber(surfaceA)}$ 平方公分，乙盒表面積約為 $${e623FormatNumber(surfaceB)}$ 平方公分，所以表面積較大的是 ${winner}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66059,11 +67929,7 @@
 
   function buildE623VolumeBasicMixedSet(count) {
     return buildE623MixedSet(
-      [
-        buildE623PolygonPrismVolumeSet,
-        buildE623CylinderVolumeSet,
-        buildE623PartialCylinderVolumeSet,
-      ],
+      [buildE623PolygonPrismVolumeSet, buildE623CylinderVolumeSet, buildE623PartialCylinderVolumeSet],
       count
     );
   }
@@ -66082,12 +67948,7 @@
 
   function buildE623ReverseCompareMixedSet(count) {
     return buildE623MixedSet(
-      [
-        buildE623ReverseBaseAreaSet,
-        buildE623ReverseHeightSet,
-        buildE623ReverseWidthSet,
-        buildE623HeightCompareSet,
-      ],
+      [buildE623ReverseBaseAreaSet, buildE623ReverseHeightSet, buildE623ReverseWidthSet, buildE623HeightCompareSet],
       count
     );
   }
@@ -66163,9 +68024,13 @@
       const { base, compare } = e624BuildScaledPair(ratio, [12, 16, 20, 24, 30, 40]);
       const [baseLabel, compareLabel, unit] = contexts[i % contexts.length];
       const value = compare / base;
-      questions.push(`${baseLabel}有 $${base}$ ${unit}，${compareLabel}有 $${compare}$ ${unit}，${compareLabel}是${baseLabel}的幾倍？`);
+      questions.push(
+        `${baseLabel}有 $${base}$ ${unit}，${compareLabel}有 $${compare}$ ${unit}，${compareLabel}是${baseLabel}的幾倍？`
+      );
       summaryAnswers.push(`$${e624FormatNumber(value)}$ 倍`);
-      answers.push(`比值 $=\\text{比較量}\\div\\text{基準量}=${compare}\\div${base}=${e624FormatNumber(value)}$，所以${compareLabel}是${baseLabel}的 $${e624FormatNumber(value)}$ 倍。`);
+      answers.push(
+        `比值 $=\\text{比較量}\\div\\text{基準量}=${compare}\\div${base}=${e624FormatNumber(value)}$，所以${compareLabel}是${baseLabel}的 $${e624FormatNumber(value)}$ 倍。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66186,7 +68051,9 @@
       const [basePrefix, relation, unit, ask] = contexts[i % contexts.length];
       questions.push(`${basePrefix} $${base}$ ${unit}，${relation} $${e624RatioLatex(ratio)}$ 倍，${ask}？`);
       summaryAnswers.push(`$${compare}$ ${unit}`);
-      answers.push(`比較量 $=\\text{基準量}\\times\\text{比值}=${base}\\times${fractionToLatex(makeFraction(ratio.num, ratio.den))}=${compare}$，所以${ask.replace('多少', '')}是 $${compare}$ ${unit}。`);
+      answers.push(
+        `比較量 $=\\text{基準量}\\times\\text{比值}=${base}\\times${fractionToLatex(makeFraction(ratio.num, ratio.den))}=${compare}$，所以${ask.replace('多少', '')}是 $${compare}$ ${unit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66207,7 +68074,9 @@
       const [comparePrefix, relation, unit, ask] = contexts[i % contexts.length];
       questions.push(`${comparePrefix} $${compare}$ ${unit}，${relation} $${e624RatioLatex(ratio)}$ 倍，${ask}？`);
       summaryAnswers.push(`$${base}$ ${unit}`);
-      answers.push(`基準量 $=\\text{比較量}\\div\\text{比值}=${compare}\\div${fractionToLatex(makeFraction(ratio.num, ratio.den))}=${base}$，所以${ask.replace('多少', '')}是 $${base}$ ${unit}。`);
+      answers.push(
+        `基準量 $=\\text{比較量}\\div\\text{比值}=${compare}\\div${fractionToLatex(makeFraction(ratio.num, ratio.den))}=${base}$，所以${ask.replace('多少', '')}是 $${base}$ ${unit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66227,13 +68096,19 @@
       const ratio = ratios[i % ratios.length];
       const { base, compare } = e624BuildScaledPair(ratio, [12, 18, 24, 30, 36]);
       if (i % 2 === 0) {
-        questions.push(`一本書已讀 $${compare}$ 頁，正好是全書總頁數的 $${e624RatioLatex(ratio)}$ 倍，這本書共有幾頁？`);
+        questions.push(
+          `一本書已讀 $${compare}$ 頁，正好是全書總頁數的 $${e624RatioLatex(ratio)}$ 倍，這本書共有幾頁？`
+        );
         summaryAnswers.push(`$${base}$ 頁`);
-        answers.push(`全書頁數是基準量，所以總頁數 $=\\text{已讀頁數}\\div\\text{比值}=${compare}\\div${fractionToLatex(makeFraction(ratio.num, ratio.den))}=${base}$，所以全書共有 $${base}$ 頁。`);
+        answers.push(
+          `全書頁數是基準量，所以總頁數 $=\\text{已讀頁數}\\div\\text{比值}=${compare}\\div${fractionToLatex(makeFraction(ratio.num, ratio.den))}=${base}$，所以全書共有 $${base}$ 頁。`
+        );
       } else {
         questions.push(`弟弟身高 $${base}$ 公分，哥哥身高是弟弟的 $${e624RatioLatex(ratio)}$ 倍，哥哥身高多少公分？`);
         summaryAnswers.push(`$${compare}$ 公分`);
-        answers.push(`哥哥身高是比較量，所以 $${base}\\times${fractionToLatex(makeFraction(ratio.num, ratio.den))}=${compare}$，因此哥哥身高是 $${compare}$ 公分。`);
+        answers.push(
+          `哥哥身高是比較量，所以 $${base}\\times${fractionToLatex(makeFraction(ratio.num, ratio.den))}=${compare}$，因此哥哥身高是 $${compare}$ 公分。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -66256,9 +68131,13 @@
       const compare = ratio.num * scale;
       const total = base + compare;
       const [bigLabel, smallLabel, unit] = contexts[i % contexts.length];
-      questions.push(`${bigLabel}與${smallLabel}合起來共有 $${total}$ ${unit}，${bigLabel}是${smallLabel}的 $${e624RatioLatex(ratio)}$ 倍，求兩者各有多少${unit}？`);
+      questions.push(
+        `${bigLabel}與${smallLabel}合起來共有 $${total}$ ${unit}，${bigLabel}是${smallLabel}的 $${e624RatioLatex(ratio)}$ 倍，求兩者各有多少${unit}？`
+      );
       summaryAnswers.push(`${bigLabel} $${compare}$ ${unit}，${smallLabel} $${base}$ ${unit}`);
-      answers.push(`因為 $${bigLabel}:${smallLabel}=${ratio.num}:${ratio.den}$，總共是 $${ratio.num + ratio.den}$ 份，所以每 1 份 $=${total}\\div${ratio.num + ratio.den}=${scale}$。因此 ${bigLabel} 有 $${ratio.num}\\times${scale}=${compare}$ ${unit}，${smallLabel} 有 $${ratio.den}\\times${scale}=${base}$ ${unit}。`);
+      answers.push(
+        `因為 $${bigLabel}:${smallLabel}=${ratio.num}:${ratio.den}$，總共是 $${ratio.num + ratio.den}$ 份，所以每 1 份 $=${total}\\div${ratio.num + ratio.den}=${scale}$。因此 ${bigLabel} 有 $${ratio.num}\\times${scale}=${compare}$ ${unit}，${smallLabel} 有 $${ratio.den}\\times${scale}=${base}$ ${unit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66280,7 +68159,9 @@
       const [label, wording, unit] = contexts[i % contexts.length];
       questions.push(`${label}是 $${base}$ ${unit}，${wording} $${rate}\\%$ 後，總共是多少${unit}？`);
       summaryAnswers.push(`$${e624FormatNumber(total)}$ ${unit}`);
-      answers.push(`加成後總量 $=\\text{基準量}\\times(1+\\text{百分率})=${base}\\times(1+${rate / 100})=${e624FormatNumber(total)}$，所以結果是 $${e624FormatNumber(total)}$ ${unit}。`);
+      answers.push(
+        `加成後總量 $=\\text{基準量}\\times(1+\\text{百分率})=${base}\\times(1+${rate / 100})=${e624FormatNumber(total)}$，所以結果是 $${e624FormatNumber(total)}$ ${unit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66295,7 +68176,9 @@
       const total = principal * (1 + rate / 100);
       questions.push(`把 $${principal}$ 元存入銀行，一年利率是 $${rate}\\%$，一年後本利和共多少元？`);
       summaryAnswers.push(`$${e624FormatNumber(total)}$ 元`);
-      answers.push(`本利和 $=\\text{本金}\\times(1+\\text{利率})=${principal}\\times(1+${rate / 100})=${e624FormatNumber(total)}$，所以一年後共有 $${e624FormatNumber(total)}$ 元。`);
+      answers.push(
+        `本利和 $=\\text{本金}\\times(1+\\text{利率})=${principal}\\times(1+${rate / 100})=${e624FormatNumber(total)}$，所以一年後共有 $${e624FormatNumber(total)}$ 元。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66313,11 +68196,15 @@
     for (let i = 0; i < count; i += 1) {
       const ratio = ratios[i % ratios.length];
       const exposed = pickFromList([24, 30, 36, 40, 45, 60]);
-      const underwater = exposed * ratio.num / ratio.den;
+      const underwater = (exposed * ratio.num) / ratio.den;
       const total = exposed + underwater;
-      questions.push(`一支竹竿露出水面 $${exposed}$ 公分，水中的部分是露出部分的 $${e624RatioLatex(ratio)}$ 倍，這支竹竿全長多少公分？`);
+      questions.push(
+        `一支竹竿露出水面 $${exposed}$ 公分，水中的部分是露出部分的 $${e624RatioLatex(ratio)}$ 倍，這支竹竿全長多少公分？`
+      );
       summaryAnswers.push(`$${e624FormatNumber(total)}$ 公分`);
-      answers.push(`先算水中長度：$${exposed}\\times${fractionToLatex(makeFraction(ratio.num, ratio.den))}=${e624FormatNumber(underwater)}$ 公分。全長 $=${exposed}+${e624FormatNumber(underwater)}=${e624FormatNumber(total)}$ 公分。`);
+      answers.push(
+        `先算水中長度：$${exposed}\\times${fractionToLatex(makeFraction(ratio.num, ratio.den))}=${e624FormatNumber(underwater)}$ 公分。全長 $=${exposed}+${e624FormatNumber(underwater)}=${e624FormatNumber(total)}$ 公分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66344,9 +68231,13 @@
       const compare = ratio.num * scale;
       const diff = compare - base;
       const [bigLabel, smallLabel, unit] = contexts[i % contexts.length];
-      questions.push(`${bigLabel}是${smallLabel}的 $${e624RatioLatex(ratio)}$ 倍，兩者相差 $${diff}$ ${unit}，求兩者各是多少${unit}？`);
+      questions.push(
+        `${bigLabel}是${smallLabel}的 $${e624RatioLatex(ratio)}$ 倍，兩者相差 $${diff}$ ${unit}，求兩者各是多少${unit}？`
+      );
       summaryAnswers.push(`${bigLabel} $${compare}$ ${unit}，${smallLabel} $${base}$ ${unit}`);
-      answers.push(`因為 $${bigLabel}:${smallLabel}=${ratio.num}:${ratio.den}$，相差 $${ratio.num - ratio.den}$ 份，所以每 1 份 $=${diff}\\div${ratio.num - ratio.den}=${scale}$。因此 ${bigLabel} 有 $${ratio.num}\\times${scale}=${compare}$ ${unit}，${smallLabel} 有 $${ratio.den}\\times${scale}=${base}$ ${unit}。`);
+      answers.push(
+        `因為 $${bigLabel}:${smallLabel}=${ratio.num}:${ratio.den}$，相差 $${ratio.num - ratio.den}$ 份，所以每 1 份 $=${diff}\\div${ratio.num - ratio.den}=${scale}$。因此 ${bigLabel} 有 $${ratio.num}\\times${scale}=${compare}$ ${unit}，${smallLabel} 有 $${ratio.den}\\times${scale}=${base}$ ${unit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66358,10 +68249,12 @@
     for (let i = 0; i < count; i += 1) {
       const original = pickFromList([250, 400, 560, 800, 1200, 2500, 4500]);
       const discount = pickFromList(E624_DISCOUNT_RATES);
-      const saved = original * discount / 100;
+      const saved = (original * discount) / 100;
       questions.push(`一件商品原價是 $${original}$ 元，現在打 $${10 - discount / 10}$ 折出售，便宜了幾元？`);
       summaryAnswers.push(`$${e624FormatNumber(saved)}$ 元`);
-      answers.push(`便宜的金額就是原價的 $${discount}\\%$，所以省下 $${original}\\times${discount / 100}=${e624FormatNumber(saved)}$ 元。`);
+      answers.push(
+        `便宜的金額就是原價的 $${discount}\\%$，所以省下 $${original}\\times${discount / 100}=${e624FormatNumber(saved)}$ 元。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66379,11 +68272,13 @@
     for (let i = 0; i < count; i += 1) {
       const original = pickFromList([150, 200, 360, 450, 600, 1200, 4500]);
       const used = pickFromList([20, 25, 30, 35, 40, 46]);
-      const remain = original * (100 - used) / 100;
+      const remain = (original * (100 - used)) / 100;
       const [label, action] = contexts[i % contexts.length];
       questions.push(`${label}原有 $${original}$，${action} $${used}\\%$ 後，還剩多少？`);
       summaryAnswers.push(`$${e624FormatNumber(remain)}$`);
-      answers.push(`剩餘量 $=\\text{原量}\\times(1-\\text{用掉率})=${original}\\times(1-${used / 100})=${e624FormatNumber(remain)}$，所以還剩 $${e624FormatNumber(remain)}$。`);
+      answers.push(
+        `剩餘量 $=\\text{原量}\\times(1-\\text{用掉率})=${original}\\times(1-${used / 100})=${e624FormatNumber(remain)}$，所以還剩 $${e624FormatNumber(remain)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66400,11 +68295,13 @@
         { num: 5, den: 6 },
       ]);
       const base = pickFromList([40, 60, 80, 100, 120, 150, 200]);
-      const compare = base * ratio.num / ratio.den;
+      const compare = (base * ratio.num) / ratio.den;
       const diff = base - compare;
       questions.push(`牧場有牛 $${base}$ 隻，羊是牛的 $${e624RatioLatex(ratio)}$ 倍，牛比羊多幾隻？`);
       summaryAnswers.push(`$${e624FormatNumber(diff)}$ 隻`);
-      answers.push(`先算羊有多少隻：$${base}\\times${fractionToLatex(makeFraction(ratio.num, ratio.den))}=${e624FormatNumber(compare)}$。所以牛比羊多 $${base}-${e624FormatNumber(compare)}=${e624FormatNumber(diff)}$ 隻。`);
+      answers.push(
+        `先算羊有多少隻：$${base}\\times${fractionToLatex(makeFraction(ratio.num, ratio.den))}=${e624FormatNumber(compare)}$。所以牛比羊多 $${base}-${e624FormatNumber(compare)}=${e624FormatNumber(diff)}$ 隻。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66418,10 +68315,12 @@
       const remainFactor = 100 - used;
       const scale = pickFromList([20, 25, 30, 40, 50, 60]);
       const original = scale * 100;
-      const remain = original * remainFactor / 100;
+      const remain = (original * remainFactor) / 100;
       questions.push(`一筆數量用掉 $${used}\\%$ 後還剩 $${remain}$，原來是多少？`);
       summaryAnswers.push(`$${original}$`);
-      answers.push(`剩下的是原來的 $${remainFactor}\\%$，所以原量 $=\\text{剩餘量}\\div${remainFactor / 100}=${remain}\\div${remainFactor / 100}=${original}$。`);
+      answers.push(
+        `剩下的是原來的 $${remainFactor}\\%$，所以原量 $=\\text{剩餘量}\\div${remainFactor / 100}=${remain}\\div${remainFactor / 100}=${original}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66433,10 +68332,12 @@
     for (let i = 0; i < count; i += 1) {
       const discount = pickFromList(E624_DISCOUNT_RATES);
       const original = pickFromList([200, 250, 400, 800, 1200, 2500]);
-      const saved = original * discount / 100;
+      const saved = (original * discount) / 100;
       questions.push(`某商品打 $${10 - discount / 10}$ 折出售後，便宜了 $${saved}$ 元，原價是多少元？`);
       summaryAnswers.push(`$${original}$ 元`);
-      answers.push(`便宜的金額是原價的 $${discount}\\%$，所以原價 $=\\text{便宜金額}\\div${discount / 100}=${saved}\\div${discount / 100}=${original}$ 元。`);
+      answers.push(
+        `便宜的金額是原價的 $${discount}\\%$，所以原價 $=\\text{便宜金額}\\div${discount / 100}=${saved}\\div${discount / 100}=${original}$ 元。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66448,10 +68349,12 @@
     for (let i = 0; i < count; i += 1) {
       const rate = pickFromList([20, 25, 28, 35, 40, 60]);
       const cost = pickFromList([300, 500, 800, 1200, 1500, 3200]);
-      const price = cost * (100 + rate) / 100;
+      const price = (cost * (100 + rate)) / 100;
       questions.push(`某商品以成本加 $${rate}\\%$ 作為定價，若定價是 $${price}$ 元，成本是多少元？`);
       summaryAnswers.push(`$${e624FormatNumber(cost)}$ 元`);
-      answers.push(`定價是成本的 $${100 + rate}\\%$，所以成本 $=\\text{定價}\\div${(100 + rate) / 100}=${price}\\div${(100 + rate) / 100}=${e624FormatNumber(cost)}$ 元。`);
+      answers.push(
+        `定價是成本的 $${100 + rate}\\%$，所以成本 $=\\text{定價}\\div${(100 + rate) / 100}=${price}\\div${(100 + rate) / 100}=${e624FormatNumber(cost)}$ 元。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66464,9 +68367,13 @@
       const rate = pickFromList(E624_INTEREST_RATES);
       const principal = pickFromList([10000, 20000, 30000, 50000, 80000, 93000]);
       const finalAmount = principal * (1 + rate / 100);
-      questions.push(`銀行一年利率是 $${rate}\\%$，一年後本利和是 $${e624FormatNumber(finalAmount)}$ 元，原來存入多少元？`);
+      questions.push(
+        `銀行一年利率是 $${rate}\\%$，一年後本利和是 $${e624FormatNumber(finalAmount)}$ 元，原來存入多少元？`
+      );
       summaryAnswers.push(`$${principal}$ 元`);
-      answers.push(`本利和是本金的 $${100 + rate}\\%$，所以本金 $=\\text{本利和}\\div${1 + rate / 100}=${e624FormatNumber(finalAmount)}\\div${1 + rate / 100}=${principal}$ 元。`);
+      answers.push(
+        `本利和是本金的 $${100 + rate}\\%$，所以本金 $=\\text{本利和}\\div${1 + rate / 100}=${e624FormatNumber(finalAmount)}\\div${1 + rate / 100}=${principal}$ 元。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66476,15 +68383,26 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const bRatio = pickFromList([{ num: 2, den: 1 }, { num: 3, den: 2 }]);
-      const cRatio = pickFromList([{ num: 2, den: 3 }, { num: 3, den: 4 }, { num: 4, den: 5 }]);
+      const bRatio = pickFromList([
+        { num: 2, den: 1 },
+        { num: 3, den: 2 },
+      ]);
+      const cRatio = pickFromList([
+        { num: 2, den: 3 },
+        { num: 3, den: 4 },
+        { num: 4, den: 5 },
+      ]);
       const commonDen = lcm(bRatio.den, cRatio.den);
       const a = commonDen * pickFromList([20, 24, 30, 36, 40]);
-      const b = a * bRatio.num / bRatio.den;
-      const c = a * cRatio.num / cRatio.den;
-      questions.push(`甲袋有 $${a}$ 顆糖果，乙袋是甲袋的 $${e624RatioLatex(bRatio)}$ 倍，丙袋是甲袋的 $${e624RatioLatex(cRatio)}$ 倍，求乙袋和丙袋各有幾顆？`);
+      const b = (a * bRatio.num) / bRatio.den;
+      const c = (a * cRatio.num) / cRatio.den;
+      questions.push(
+        `甲袋有 $${a}$ 顆糖果，乙袋是甲袋的 $${e624RatioLatex(bRatio)}$ 倍，丙袋是甲袋的 $${e624RatioLatex(cRatio)}$ 倍，求乙袋和丙袋各有幾顆？`
+      );
       summaryAnswers.push(`乙 $${e624FormatNumber(b)}$ 顆，丙 $${e624FormatNumber(c)}$ 顆`);
-      answers.push(`乙袋 $=${a}\\times${fractionToLatex(makeFraction(bRatio.num, bRatio.den))}=${e624FormatNumber(b)}$ 顆；丙袋 $=${a}\\times${fractionToLatex(makeFraction(cRatio.num, cRatio.den))}=${e624FormatNumber(c)}$ 顆。`);
+      answers.push(
+        `乙袋 $=${a}\\times${fractionToLatex(makeFraction(bRatio.num, bRatio.den))}=${e624FormatNumber(b)}$ 顆；丙袋 $=${a}\\times${fractionToLatex(makeFraction(cRatio.num, cRatio.den))}=${e624FormatNumber(c)}$ 顆。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66501,7 +68419,9 @@
       const total = a + b + c;
       questions.push(`甲、乙、丙三袋積木的數量比是 $3:2:4$，三袋合起來共有 $${total}$ 個，求甲、乙、丙各有多少個？`);
       summaryAnswers.push(`甲 $${a}$ 個，乙 $${b}$ 個，丙 $${c}$ 個`);
-      answers.push(`總份數 $=3+2+4=9$ 份，所以每 1 份 $=${total}\\div9=${scale}$。因此甲有 $3\\times${scale}=${a}$ 個，乙有 $2\\times${scale}=${b}$ 個，丙有 $4\\times${scale}=${c}$ 個。`);
+      answers.push(
+        `總份數 $=3+2+4=9$ 份，所以每 1 份 $=${total}\\div9=${scale}$。因此甲有 $3\\times${scale}=${a}$ 個，乙有 $2\\times${scale}=${b}$ 個，丙有 $4\\times${scale}=${c}$ 個。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66523,9 +68443,13 @@
       const child = pickFromList(pick.childChoices);
       const elder = child * ratio;
       const sum = elder + child;
-      questions.push(`兩人的年齡和是 $${e624FormatNumber(sum)}$ 歲，長者年齡是晚輩的 $${e624FormatNumber(ratio)}$ 倍，求兩人各幾歲？`);
+      questions.push(
+        `兩人的年齡和是 $${e624FormatNumber(sum)}$ 歲，長者年齡是晚輩的 $${e624FormatNumber(ratio)}$ 倍，求兩人各幾歲？`
+      );
       summaryAnswers.push(`長者 $${e624FormatNumber(elder)}$ 歲，晚輩 $${child}$ 歲`);
-      answers.push(`把晚輩當 1 份，長者是 $${e624FormatNumber(ratio)}$ 份，所以總共是 $${e624FormatNumber(1 + ratio)}$ 份。每 1 份 $=${e624FormatNumber(sum)}\\div${e624FormatNumber(1 + ratio)}=${child}$，因此晚輩 $${child}$ 歲，長者 $${child}\\times${e624FormatNumber(ratio)}=${e624FormatNumber(elder)}$ 歲。`);
+      answers.push(
+        `把晚輩當 1 份，長者是 $${e624FormatNumber(ratio)}$ 份，所以總共是 $${e624FormatNumber(1 + ratio)}$ 份。每 1 份 $=${e624FormatNumber(sum)}\\div${e624FormatNumber(1 + ratio)}=${child}$，因此晚輩 $${child}$ 歲，長者 $${child}\\times${e624FormatNumber(ratio)}=${e624FormatNumber(elder)}$ 歲。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66540,9 +68464,13 @@
       const squarePerimeter = squareSide * 4;
       const pentPerimeter = pentSide * 5;
       const ratio = pentPerimeter / squarePerimeter;
-      questions.push(`正方形邊長是 $${squareSide}$ 公分，正五邊形邊長是 $${pentSide}$ 公分，正五邊形周長是正方形周長的幾倍？`);
+      questions.push(
+        `正方形邊長是 $${squareSide}$ 公分，正五邊形邊長是 $${pentSide}$ 公分，正五邊形周長是正方形周長的幾倍？`
+      );
       summaryAnswers.push(`$${e624FormatNumber(ratio)}$ 倍`);
-      answers.push(`正方形周長 $=4\\times${squareSide}=${squarePerimeter}$，正五邊形周長 $=5\\times${pentSide}=${pentPerimeter}$。比值 $=${pentPerimeter}\\div${squarePerimeter}=${e624FormatNumber(ratio)}$，所以是 $${e624FormatNumber(ratio)}$ 倍。`);
+      answers.push(
+        `正方形周長 $=4\\times${squareSide}=${squarePerimeter}$，正五邊形周長 $=5\\times${pentSide}=${pentPerimeter}$。比值 $=${pentPerimeter}\\div${squarePerimeter}=${e624FormatNumber(ratio)}$，所以是 $${e624FormatNumber(ratio)}$ 倍。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66565,24 +68493,14 @@
 
   function buildE624BasicMixedSet(count) {
     return buildE624MixedSet(
-      [
-        buildE624FindRatioSet,
-        buildE624FindComparedSet,
-        buildE624FindBaseSet,
-        buildE624FractionMultiplierSet,
-      ],
+      [buildE624FindRatioSet, buildE624FindComparedSet, buildE624FindBaseSet, buildE624FractionMultiplierSet],
       count
     );
   }
 
   function buildE624SumMixedSet(count) {
     return buildE624MixedSet(
-      [
-        buildE624SumPairSet,
-        buildE624MarkupTotalSet,
-        buildE624InterestTotalSet,
-        buildE624ExposedTotalSet,
-      ],
+      [buildE624SumPairSet, buildE624MarkupTotalSet, buildE624InterestTotalSet, buildE624ExposedTotalSet],
       count
     );
   }
@@ -66613,12 +68531,7 @@
 
   function buildE624ApplicationMixedSet(count) {
     return buildE624MixedSet(
-      [
-        buildE624ThreePartDirectSet,
-        buildE624ThreePartTotalSet,
-        buildE624AgeSumMultipleSet,
-        buildE624GeometryRatioSet,
-      ],
+      [buildE624ThreePartDirectSet, buildE624ThreePartTotalSet, buildE624AgeSumMultipleSet, buildE624GeometryRatioSet],
       count
     );
   }
@@ -66644,9 +68557,13 @@
       const smaller = bigger - diff;
       const sum = bigger + smaller;
       const [bigLabel, smallLabel, unit] = contexts[i % contexts.length];
-      questions.push(`${bigLabel}和${smallLabel}合起來共 $${sum}$ ${unit}，${bigLabel}比${smallLabel}多 $${diff}$ ${unit}，求兩者各是多少${unit}？`);
+      questions.push(
+        `${bigLabel}和${smallLabel}合起來共 $${sum}$ ${unit}，${bigLabel}比${smallLabel}多 $${diff}$ ${unit}，求兩者各是多少${unit}？`
+      );
       summaryAnswers.push(`${bigLabel} $${bigger}$ ${unit}，${smallLabel} $${smaller}$ ${unit}`);
-      answers.push(`較小的是 $(${sum}-${diff})\\div2=${smaller}$，較大的是 $${smaller}+${diff}=${bigger}$。所以 ${bigLabel} 是 $${bigger}$ ${unit}，${smallLabel} 是 $${smaller}$ ${unit}。`);
+      answers.push(
+        `較小的是 $(${sum}-${diff})\\div2=${smaller}$，較大的是 $${smaller}+${diff}=${bigger}$。所以 ${bigLabel} 是 $${bigger}$ ${unit}，${smallLabel} 是 $${smaller}$ ${unit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66666,9 +68583,13 @@
       const smaller = pickFromList([24, 30, 36, 40, 45, 50, 60]);
       const bigger = smaller + 2 * transfer;
       const [bigLabel, smallLabel, unit] = contexts[i % contexts.length];
-      questions.push(`${bigLabel}有 $${bigger}$ ${unit}，${smallLabel}有 $${smaller}$ ${unit}。若${bigLabel}拿出 $${transfer}$ ${unit}給${smallLabel}，兩人就一樣多。要問原來各有多少${unit}。`);
+      questions.push(
+        `${bigLabel}有 $${bigger}$ ${unit}，${smallLabel}有 $${smaller}$ ${unit}。若${bigLabel}拿出 $${transfer}$ ${unit}給${smallLabel}，兩人就一樣多。要問原來各有多少${unit}。`
+      );
       summaryAnswers.push(`${bigLabel} $${bigger}$ ${unit}，${smallLabel} $${smaller}$ ${unit}`);
-      answers.push(`拿出 $${transfer}$ ${unit}後會相等，表示原來兩者相差 $2\\times${transfer}=${2 * transfer}$ ${unit}。已知較少的是 $${smaller}$ ${unit}，所以較多的是 $${smaller}+${2 * transfer}=${bigger}$ ${unit}。`);
+      answers.push(
+        `拿出 $${transfer}$ ${unit}後會相等，表示原來兩者相差 $2\\times${transfer}=${2 * transfer}$ ${unit}。已知較少的是 $${smaller}$ ${unit}，所以較多的是 $${smaller}+${2 * transfer}=${bigger}$ ${unit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66685,7 +68606,9 @@
       const sum = perimeter / 2;
       questions.push(`一個長方形周長是 $${perimeter}$ 公分，長比寬多 $${diff}$ 公分，求長與寬各是多少公分？`);
       summaryAnswers.push(`長 $${length}$ 公分，寬 $${width}$ 公分`);
-      answers.push(`因為長加寬 $=\\frac{${perimeter}}{2}=${sum}$。又長比寬多 $${diff}$，所以寬 $=(${sum}-${diff})\\div2=${width}$，長 $=${width}+${diff}=${length}$。`);
+      answers.push(
+        `因為長加寬 $=\\frac{${perimeter}}{2}=${sum}$。又長比寬多 $${diff}$，所以寬 $=(${sum}-${diff})\\div2=${width}$，長 $=${width}+${diff}=${length}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66705,9 +68628,13 @@
       const transfer = pickFromList([4, 5, 6, 7, 8, 10]);
       const bigger = smaller + 2 * transfer;
       const [bigLabel, smallLabel, unit] = contexts[i % contexts.length];
-      questions.push(`若${bigLabel}拿出 $${transfer}$ ${unit}給${smallLabel}，兩邊就會一樣多。已知${bigLabel}原來有 $${bigger}$ ${unit}，求${smallLabel}原來有多少${unit}？`);
+      questions.push(
+        `若${bigLabel}拿出 $${transfer}$ ${unit}給${smallLabel}，兩邊就會一樣多。已知${bigLabel}原來有 $${bigger}$ ${unit}，求${smallLabel}原來有多少${unit}？`
+      );
       summaryAnswers.push(`$${smaller}$ ${unit}`);
-      answers.push(`能夠拿出 $${transfer}$ ${unit}後相等，代表原來相差 $${2 * transfer}$ ${unit}。所以${smallLabel}原有 $${bigger}-${2 * transfer}=${smaller}$ ${unit}。`);
+      answers.push(
+        `能夠拿出 $${transfer}$ ${unit}後相等，代表原來相差 $${2 * transfer}$ ${unit}。所以${smallLabel}原有 $${bigger}-${2 * transfer}=${smaller}$ ${unit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66729,7 +68656,9 @@
       }
       questions.push(`今年媽媽 $${adultNow}$ 歲，女兒 $${childNow}$ 歲，幾年後媽媽的年齡會是女兒的 $${ratio}$ 倍？`);
       summaryAnswers.push(`$${years}$ 年後`);
-      answers.push(`設 $x$ 年後媽媽年齡是女兒的 $${ratio}$ 倍，則 $${adultNow}+x=${ratio}(${childNow}+x)$。整理得 $x=${years}$，所以是 $${years}$ 年後。`);
+      answers.push(
+        `設 $x$ 年後媽媽年齡是女兒的 $${ratio}$ 倍，則 $${adultNow}+x=${ratio}(${childNow}+x)$。整理得 $x=${years}$，所以是 $${years}$ 年後。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66747,7 +68676,9 @@
       const adultNow = ratio * childPast + years;
       questions.push(`叔叔今年 $${adultNow}$ 歲，小智 $${childNow}$ 歲，幾年前叔叔的年齡是小智的 $${ratio}$ 倍？`);
       summaryAnswers.push(`$${years}$ 年前`);
-      answers.push(`往回推 $x$ 年時，兩人年齡分別是 $${adultNow}-x$、$${childNow}-x$。依題意 $${adultNow}-x=${ratio}(${childNow}-x)$，解得 $x=${years}$，所以是 $${years}$ 年前。`);
+      answers.push(
+        `往回推 $x$ 年時，兩人年齡分別是 $${adultNow}-x$、$${childNow}-x$。依題意 $${adultNow}-x=${ratio}(${childNow}-x)$，解得 $x=${years}$，所以是 $${years}$ 年前。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66765,7 +68696,9 @@
       const childNow = childFuture - years;
       questions.push(`爸爸今年 $${adultNow}$ 歲，$${years}$ 年後爸爸的年齡會是小雲的 $${ratio}$ 倍，小雲現在幾歲？`);
       summaryAnswers.push(`$${childNow}$ 歲`);
-      answers.push(`$${years}$ 年後小雲的年齡應是 $(${adultNow}+${years})\\div${ratio}=${childFuture}$ 歲，所以現在是 $${childFuture}-${years}=${childNow}$ 歲。`);
+      answers.push(
+        `$${years}$ 年後小雲的年齡應是 $(${adultNow}+${years})\\div${ratio}=${childFuture}$ 歲，所以現在是 $${childFuture}-${years}=${childNow}$ 歲。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66781,7 +68714,9 @@
       const diff = (ratio - 1) * childWhen;
       const adultNow = childWhen * ratio + pickFromList([8, 10, 12, 15]);
       const childNow = adultNow - diff;
-      questions.push(`兩人相差 $${diff}$ 歲，當大人的年齡是小孩的 $${ratio}$ 倍時，小孩是 $${childWhen}$ 歲。若大人現在 $${adultNow}$ 歲，小孩現在幾歲？`);
+      questions.push(
+        `兩人相差 $${diff}$ 歲，當大人的年齡是小孩的 $${ratio}$ 倍時，小孩是 $${childWhen}$ 歲。若大人現在 $${adultNow}$ 歲，小孩現在幾歲？`
+      );
       summaryAnswers.push(`$${childNow}$ 歲`);
       answers.push(`年齡差固定為 $${diff}$ 歲，所以現在小孩年齡 $=${adultNow}-${diff}=${childNow}$ 歲。`);
     }
@@ -66803,9 +68738,13 @@
       const bCount = pickFromList([3, 4, 5, 6, 7, 8, 9]);
       const totalCount = aCount + bCount;
       const totalFoot = aCount * aUnit + bCount * bUnit;
-      questions.push(`某處有${aLabel}和${bLabel}共 $${totalCount}$ ${itemUnit}，合起來共有 $${totalFoot}$ ${totalUnit}，求${aLabel}與${bLabel}各有幾${itemUnit}？`);
+      questions.push(
+        `某處有${aLabel}和${bLabel}共 $${totalCount}$ ${itemUnit}，合起來共有 $${totalFoot}$ ${totalUnit}，求${aLabel}與${bLabel}各有幾${itemUnit}？`
+      );
       summaryAnswers.push(`${aLabel} $${aCount}$ ${itemUnit}，${bLabel} $${bCount}$ ${itemUnit}`);
-      answers.push(`先全部假設成${aLabel}，則共有 $${totalCount}\\times${aUnit}=${totalCount * aUnit}$ ${totalUnit}。實際多出 $${totalFoot - totalCount * aUnit}$ ${totalUnit}，每把 1 ${aLabel}改成 1 ${bLabel} 會多 $${bUnit - aUnit}$ ${totalUnit}，所以 ${bLabel} 有 $(${totalFoot - totalCount * aUnit})\\div${bUnit - aUnit}=${bCount}$ ${itemUnit}，${aLabel} 有 $${totalCount}-${bCount}=${aCount}$ ${itemUnit}。`);
+      answers.push(
+        `先全部假設成${aLabel}，則共有 $${totalCount}\\times${aUnit}=${totalCount * aUnit}$ ${totalUnit}。實際多出 $${totalFoot - totalCount * aUnit}$ ${totalUnit}，每把 1 ${aLabel}改成 1 ${bLabel} 會多 $${bUnit - aUnit}$ ${totalUnit}，所以 ${bLabel} 有 $(${totalFoot - totalCount * aUnit})\\div${bUnit - aUnit}=${bCount}$ ${itemUnit}，${aLabel} 有 $${totalCount}-${bCount}=${aCount}$ ${itemUnit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66825,9 +68764,13 @@
       const bCount = pickFromList([4, 5, 6, 7, 8, 10, 12, 13]);
       const totalCount = aCount + bCount;
       const totalAmount = aCount * aValue + bCount * bValue;
-      questions.push(`${aLabel}和${bLabel}共 $${totalCount}$ ${itemUnit}，合起來是 $${totalAmount}$ ${totalUnit}，求兩種各有幾${itemUnit}？`);
+      questions.push(
+        `${aLabel}和${bLabel}共 $${totalCount}$ ${itemUnit}，合起來是 $${totalAmount}$ ${totalUnit}，求兩種各有幾${itemUnit}？`
+      );
       summaryAnswers.push(`${aLabel} $${aCount}$ ${itemUnit}，${bLabel} $${bCount}$ ${itemUnit}`);
-      answers.push(`先全部假設成${aLabel}，總金額會是 $${totalCount}\\times${aValue}=${totalCount * aValue}$ ${totalUnit}。實際多出 $${totalAmount - totalCount * aValue}$ ${totalUnit}，每把 1 ${aLabel}改成 1 ${bLabel} 會多 $${bValue - aValue}$ ${totalUnit}，所以 ${bLabel} 有 $(${totalAmount - totalCount * aValue})\\div${bValue - aValue}=${bCount}$ ${itemUnit}，${aLabel} 有 $${aCount}$ ${itemUnit}。`);
+      answers.push(
+        `先全部假設成${aLabel}，總金額會是 $${totalCount}\\times${aValue}=${totalCount * aValue}$ ${totalUnit}。實際多出 $${totalAmount - totalCount * aValue}$ ${totalUnit}，每把 1 ${aLabel}改成 1 ${bLabel} 會多 $${bValue - aValue}$ ${totalUnit}，所以 ${bLabel} 有 $(${totalAmount - totalCount * aValue})\\div${bValue - aValue}=${bCount}$ ${itemUnit}，${aLabel} 有 $${aCount}$ ${itemUnit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66847,7 +68790,9 @@
       const bCount = pickFromList([3, 4, 5, 6, 7, 8, 10, 12]);
       const totalCount = aCount + bCount;
       const totalAmount = aCount * aValue + bCount * bValue;
-      questions.push(`${aLabel}和${bLabel}共 $${totalCount}$ ${itemUnit}，合起來是 $${totalAmount}$ ${totalUnit}，求兩種各有幾${itemUnit}？`);
+      questions.push(
+        `${aLabel}和${bLabel}共 $${totalCount}$ ${itemUnit}，合起來是 $${totalAmount}$ ${totalUnit}，求兩種各有幾${itemUnit}？`
+      );
       summaryAnswers.push(`${aLabel} $${aCount}$ ${itemUnit}，${bLabel} $${bCount}$ ${itemUnit}`);
       const lowerLabel = aValue < bValue ? aLabel : bLabel;
       const higherLabel = aValue < bValue ? bLabel : aLabel;
@@ -66855,7 +68800,9 @@
       const higherValue = Math.max(aValue, bValue);
       const higherCount = aValue < bValue ? bCount : aCount;
       const lowerCount = totalCount - higherCount;
-      answers.push(`先全部假設成${lowerLabel}，總量會是 $${totalCount}\\times${lowerValue}=${totalCount * lowerValue}$ ${totalUnit}。實際多出 $${totalAmount - totalCount * lowerValue}$ ${totalUnit}，每換成 1 個${higherLabel}會多 $${higherValue - lowerValue}$ ${totalUnit}，所以 ${higherLabel} 有 $(${totalAmount - totalCount * lowerValue})\\div${higherValue - lowerValue}=${higherCount}$ ${itemUnit}，${lowerLabel} 有 $${lowerCount}$ ${itemUnit}。`);
+      answers.push(
+        `先全部假設成${lowerLabel}，總量會是 $${totalCount}\\times${lowerValue}=${totalCount * lowerValue}$ ${totalUnit}。實際多出 $${totalAmount - totalCount * lowerValue}$ ${totalUnit}，每換成 1 個${higherLabel}會多 $${higherValue - lowerValue}$ ${totalUnit}，所以 ${higherLabel} 有 $(${totalAmount - totalCount * lowerValue})\\div${higherValue - lowerValue}=${higherCount}$ ${itemUnit}，${lowerLabel} 有 $${lowerCount}$ ${itemUnit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66869,9 +68816,13 @@
       const avg = pickFromList([100, 110, 120, 130, 150]);
       const known = avg + pickFromList([-16, -8, 0, 8, 16]);
       const remainAvg = (avg * totalDays - known) / 4;
-      questions.push(`某店 $${totalDays}$ 天平均每天賣 $${avg}$ 個，已知第一天賣 $${known}$ 個，其餘 $4$ 天平均每天賣幾個？`);
+      questions.push(
+        `某店 $${totalDays}$ 天平均每天賣 $${avg}$ 個，已知第一天賣 $${known}$ 個，其餘 $4$ 天平均每天賣幾個？`
+      );
       summaryAnswers.push(`$${e625FormatNumber(remainAvg)}$ 個`);
-      answers.push(`$${totalDays}$ 天總數 $=${avg}\\times${totalDays}=${avg * totalDays}$ 個。扣掉第一天後剩 $${avg * totalDays - known}$ 個，再除以 $4$，得其餘四天平均是 $${e625FormatNumber(remainAvg)}$ 個。`);
+      answers.push(
+        `$${totalDays}$ 天總數 $=${avg}\\times${totalDays}=${avg * totalDays}$ 個。扣掉第一天後剩 $${avg * totalDays - known}$ 個，再除以 $4$，得其餘四天平均是 $${e625FormatNumber(remainAvg)}$ 個。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66885,9 +68836,13 @@
       const prevAvg = pickFromList([600, 800, 900, 1000, 1100]);
       const targetAvg = prevAvg - pickFromList([80, 100, 120, 150, 200]);
       const nextValue = targetAvg * 4 - prevAvg * prevCount;
-      questions.push(`前 $${prevCount}$ 次平均是 $${prevAvg}$，若要讓前 $4$ 次平均變成 $${targetAvg}$，第 $4$ 次需要是多少？`);
+      questions.push(
+        `前 $${prevCount}$ 次平均是 $${prevAvg}$，若要讓前 $4$ 次平均變成 $${targetAvg}$，第 $4$ 次需要是多少？`
+      );
       summaryAnswers.push(`$${nextValue}$`);
-      answers.push(`前 $4$ 次總和應為 $${targetAvg}\\times4=${targetAvg * 4}$。前 $3$ 次總和是 $${prevAvg}\\times3=${prevAvg * 3}$，所以第 $4$ 次要是 $${targetAvg * 4}-${prevAvg * 3}=${nextValue}$。`);
+      answers.push(
+        `前 $4$ 次總和應為 $${targetAvg}\\times4=${targetAvg * 4}$。前 $3$ 次總和是 $${prevAvg}\\times3=${prevAvg * 3}$，所以第 $4$ 次要是 $${targetAvg * 4}-${prevAvg * 3}=${nextValue}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66906,9 +68861,13 @@
         i -= 1;
         continue;
       }
-      questions.push(`${boys} 位男生平均成績是 $${boysAvg}$ 分，再加入 ${girls} 位女生後，全班 ${boys + girls} 人平均變成 $${totalAvg}$ 分，求女生平均幾分？`);
+      questions.push(
+        `${boys} 位男生平均成績是 $${boysAvg}$ 分，再加入 ${girls} 位女生後，全班 ${boys + girls} 人平均變成 $${totalAvg}$ 分，求女生平均幾分？`
+      );
       summaryAnswers.push(`$${girlsAvg}$ 分`);
-      answers.push(`全班總分 $=${boys + girls}\\times${totalAvg}=${(boys + girls) * totalAvg}$，男生總分 $=${boys}\\times${boysAvg}=${boys * boysAvg}$，所以女生總分是 $${(boys + girls) * totalAvg - boys * boysAvg}$，再除以 ${girls} 得女生平均 $${girlsAvg}$ 分。`);
+      answers.push(
+        `全班總分 $=${boys + girls}\\times${totalAvg}=${(boys + girls) * totalAvg}$，男生總分 $=${boys}\\times${boysAvg}=${boys * boysAvg}$，所以女生總分是 $${(boys + girls) * totalAvg - boys * boysAvg}$，再除以 ${girls} 得女生平均 $${girlsAvg}$ 分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66923,9 +68882,13 @@
       const addedSubjects = 2;
       const afterAvg = beforeAvg + pickFromList([1, 2, 3, 4]);
       const addedTotal = afterAvg * (beforeSubjects + addedSubjects) - beforeAvg * beforeSubjects;
-      questions.push(`國、數、社三科平均 $${beforeAvg}$ 分，加入兩科後五科平均變成 $${afterAvg}$ 分，後面兩科合計幾分？`);
+      questions.push(
+        `國、數、社三科平均 $${beforeAvg}$ 分，加入兩科後五科平均變成 $${afterAvg}$ 分，後面兩科合計幾分？`
+      );
       summaryAnswers.push(`$${addedTotal}$ 分`);
-      answers.push(`原本三科總分 $=${beforeSubjects}\\times${beforeAvg}=${beforeSubjects * beforeAvg}$，五科總分 $=5\\times${afterAvg}=${5 * afterAvg}$，所以新增兩科合計 $=${5 * afterAvg}-${beforeSubjects * beforeAvg}=${addedTotal}$ 分。`);
+      answers.push(
+        `原本三科總分 $=${beforeSubjects}\\times${beforeAvg}=${beforeSubjects * beforeAvg}$，五科總分 $=5\\times${afterAvg}=${5 * afterAvg}$，所以新增兩科合計 $=${5 * afterAvg}-${beforeSubjects * beforeAvg}=${addedTotal}$ 分。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66967,7 +68930,9 @@
       const total = a * b;
       questions.push(`${prefix} $${a}$ ${aText}和 $${b}$ ${bText}，${action}，共有幾種不同方式？`);
       summaryAnswers.push(`$${total}$ 種`);
-      answers.push(`這是分步搭配，第一步有 $${a}$ 種，第二步有 $${b}$ 種，所以用乘法原理：$${a}\\times${b}=${total}$ 種。`);
+      answers.push(
+        `這是分步搭配，第一步有 $${a}$ 種，第二步有 $${b}$ 種，所以用乘法原理：$${a}\\times${b}=${total}$ 種。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66980,9 +68945,13 @@
       const first = pickFromList([2, 3, 4, 5]);
       const second = pickFromList([2, 3, 4, 5]);
       const total = first * second;
-      questions.push(`從甲地到乙地有 $${first}$ 條路，從乙地到丙地有 $${second}$ 條路。若必須經過乙地，從甲到丙共有幾種走法？`);
+      questions.push(
+        `從甲地到乙地有 $${first}$ 條路，從乙地到丙地有 $${second}$ 條路。若必須經過乙地，從甲到丙共有幾種走法？`
+      );
       summaryAnswers.push(`$${total}$ 種`);
-      answers.push(`先選甲到乙的路，再選乙到丙的路，兩步彼此獨立，所以共有 $${first}\\times${second}=${total}$ 種走法。`);
+      answers.push(
+        `先選甲到乙的路，再選乙到丙的路，兩步彼此獨立，所以共有 $${first}\\times${second}=${total}$ 種走法。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -66996,7 +68965,9 @@
       const total = doors * (doors - 1);
       questions.push(`某地共有 $${doors}$ 個入口，從任一個口進入後，必須由其他出口離開，共有幾種進出方式？`);
       summaryAnswers.push(`$${total}$ 種`);
-      answers.push(`先選入口有 $${doors}$ 種，出口不能和入口相同，所以有 $${doors - 1}$ 種。依乘法原理共有 $${doors}\\times${doors - 1}=${total}$ 種。`);
+      answers.push(
+        `先選入口有 $${doors}$ 種，出口不能和入口相同，所以有 $${doors - 1}$ 種。依乘法原理共有 $${doors}\\times${doors - 1}=${total}$ 種。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -67006,10 +68977,38 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      { digits: [0, 1, 2, 3, 4, 5], repeat: true, ask: '偶數', resultFn(set) { return (set.length - 1) * 2 + (set.includes(0) ? 1 : 0); } },
-      { digits: [0, 1, 2, 3, 4], repeat: true, ask: '奇數', resultFn(set) { return (set.length - 1) * 2; } },
-      { digits: [0, 2, 3, 5], repeat: false, ask: '5 的倍數', resultFn() { return 5; } },
-      { digits: [0, 2, 3, 5], repeat: false, ask: '小於 52', resultFn() { return 7; } },
+      {
+        digits: [0, 1, 2, 3, 4, 5],
+        repeat: true,
+        ask: '偶數',
+        resultFn(set) {
+          return (set.length - 1) * 2 + (set.includes(0) ? 1 : 0);
+        },
+      },
+      {
+        digits: [0, 1, 2, 3, 4],
+        repeat: true,
+        ask: '奇數',
+        resultFn(set) {
+          return (set.length - 1) * 2;
+        },
+      },
+      {
+        digits: [0, 2, 3, 5],
+        repeat: false,
+        ask: '5 的倍數',
+        resultFn() {
+          return 5;
+        },
+      },
+      {
+        digits: [0, 2, 3, 5],
+        repeat: false,
+        ask: '小於 52',
+        resultFn() {
+          return 7;
+        },
+      },
     ];
     for (let i = 0; i < count; i += 1) {
       const item = cases[i % cases.length];
@@ -67055,12 +69054,7 @@
 
   function buildE625SumDiffMixedSet(count) {
     return buildE625MixedSet(
-      [
-        buildE625SumDiffBasicSet,
-        buildE625TransferEqualSet,
-        buildE625RectangleSumDiffSet,
-        buildE625BalanceReverseSet,
-      ],
+      [buildE625SumDiffBasicSet, buildE625TransferEqualSet, buildE625RectangleSumDiffSet, buildE625BalanceReverseSet],
       count
     );
   }
@@ -67079,23 +69073,14 @@
 
   function buildE625ChickenRabbitMixedSet(count) {
     return buildE625MixedSet(
-      [
-        buildE625ChickenRabbitLegSet,
-        buildE625ChickenRabbitMoneySet,
-        buildE625ChickenRabbitScoreSet,
-      ],
+      [buildE625ChickenRabbitLegSet, buildE625ChickenRabbitMoneySet, buildE625ChickenRabbitScoreSet],
       count
     );
   }
 
   function buildE625AverageMixedSet(count) {
     return buildE625MixedSet(
-      [
-        buildE625AverageMissingSet,
-        buildE625AverageTargetSet,
-        buildE625AverageMergeSet,
-        buildE625AverageSubjectSet,
-      ],
+      [buildE625AverageMissingSet, buildE625AverageTargetSet, buildE625AverageMergeSet, buildE625AverageSubjectSet],
       count
     );
   }
@@ -67294,7 +69279,9 @@
       const known = labels
         .map((label, index) => {
           if (index === askIndex) return null;
-          return index % 2 === 0 ? `${label} ${percents[index]}\\%` : `${label} ${(percents[index] * 360) / 100}^\\circ`;
+          return index % 2 === 0
+            ? `${label} ${percents[index]}\\%`
+            : `${label} ${(percents[index] * 360) / 100}^\\circ`;
         })
         .filter(Boolean)
         .join('、');
@@ -67302,7 +69289,9 @@
       const answerText = askAngle
         ? `${labels[askIndex]} ${(percents[askIndex] * 360) / 100}^\\circ`
         : `${labels[askIndex]} ${percents[askIndex]}\\%`;
-      questions.push(`某圓形圖共有四項，已知 ${known}，求 ${labels[askIndex]} ${askAngle ? '的圓心角' : '所占百分率'}。`);
+      questions.push(
+        `某圓形圖共有四項，已知 ${known}，求 ${labels[askIndex]} ${askAngle ? '的圓心角' : '所占百分率'}。`
+      );
       summaryAnswers.push(answerText);
       answers.push(
         `簡答：${answerText}。過程：先把已知資料都看成百分率，總百分率為 100\\%。已知三項合計為 ${100 - percents[askIndex]}\\%，所以 ${labels[askIndex]} 占 ${percents[askIndex]}\\%。${askAngle ? `再用 360^\\circ × ${percents[askIndex]}\\% = ${(percents[askIndex] * 360) / 100}^\\circ。` : ''}`
@@ -67325,7 +69314,9 @@
       const item = pickFromList(contexts);
       const askIndex = randInt(0, item.labels.length - 1);
       const part = (item.total * item.percents[askIndex]) / 100;
-      questions.push(`某資料總量是 ${item.total}${item.unit}，其中 ${item.labels[askIndex]} 占 ${item.percents[askIndex]}\\%，求 ${item.labels[askIndex]} 的數量。`);
+      questions.push(
+        `某資料總量是 ${item.total}${item.unit}，其中 ${item.labels[askIndex]} 占 ${item.percents[askIndex]}\\%，求 ${item.labels[askIndex]} 的數量。`
+      );
       summaryAnswers.push(`${part}${item.unit}`);
       answers.push(
         `簡答：${part}${item.unit}。過程：部分量 = 全部量 × 百分率 = ${item.total} × ${item.percents[askIndex]}\\% = ${part}，所以 ${item.labels[askIndex]} 是 ${part}${item.unit}。`
@@ -67349,7 +69340,9 @@
       const item = pickFromList(contexts);
       const angle = pickFromList(angles.filter((n) => (item.total * n) % 360 === 0));
       const part = (item.total * angle) / 360;
-      questions.push(`某圓形圖中，${item.label} 的圓心角是 ${angle}^\\circ，若全部量是 ${item.total}${item.unit}，求 ${item.label} 的數量。`);
+      questions.push(
+        `某圓形圖中，${item.label} 的圓心角是 ${angle}^\\circ，若全部量是 ${item.total}${item.unit}，求 ${item.label} 的數量。`
+      );
       summaryAnswers.push(`${part}${item.unit}`);
       answers.push(
         `簡答：${part}${item.unit}。過程：${item.label} 占全體的比率 = ${angle}^\\circ ÷ 360^\\circ = ${e626FormatNumber(angle / 360)}，所以數量 = ${item.total} × ${angle} ÷ 360 = ${part}。`
@@ -67374,7 +69367,9 @@
       while (b === a) b = randInt(0, item.labels.length - 1);
       const partA = (item.total * item.percents[a]) / 100;
       const partB = (item.total * item.percents[b]) / 100;
-      questions.push(`某資料總量是 ${item.total}${item.unit}，其中 ${item.labels[a]} 占 ${item.percents[a]}\\%，${item.labels[b]} 占 ${item.percents[b]}\\%，求這兩項的數量。`);
+      questions.push(
+        `某資料總量是 ${item.total}${item.unit}，其中 ${item.labels[a]} 占 ${item.percents[a]}\\%，${item.labels[b]} 占 ${item.percents[b]}\\%，求這兩項的數量。`
+      );
       summaryAnswers.push(`${item.labels[a]} ${partA}${item.unit}，${item.labels[b]} ${partB}${item.unit}`);
       answers.push(
         `簡答：${item.labels[a]} ${partA}${item.unit}，${item.labels[b]} ${partB}${item.unit}。過程：${item.labels[a]} = ${item.total} × ${item.percents[a]}\\% = ${partA}；${item.labels[b]} = ${item.total} × ${item.percents[b]}\\% = ${partB}。`
@@ -67413,7 +69408,9 @@
       const unit = units[idx];
       const [nameA, nameB, target] = labels[idx];
       const answerText = valueA === valueB ? '一樣多' : valueA > valueB ? `${nameA}較多` : `${nameB}較多`;
-      questions.push(`${nameA}為 ${totalA}${unit}、${nameB}為 ${totalB}${unit}，兩者的 ${target} 都占 ${percent}\\%，請問實際數量誰比較多？`);
+      questions.push(
+        `${nameA}為 ${totalA}${unit}、${nameB}為 ${totalB}${unit}，兩者的 ${target} 都占 ${percent}\\%，請問實際數量誰比較多？`
+      );
       summaryAnswers.push(answerText);
       answers.push(
         `簡答：${answerText}。過程：${nameA} 的 ${target} 是 ${totalA} × ${percent}\\% = ${valueA}${unit}；${nameB} 的 ${target} 是 ${totalB} × ${percent}\\% = ${valueB}${unit}。所以 ${answerText}。`
@@ -67425,8 +69422,27 @@
   function buildE626DifferentPercentCompareSet(count) {
     const contexts = [
       { aName: '甲班', aTotal: 40, aPercent: 40, bName: '乙班', bTotal: 30, bPercent: 40, label: '男生', unit: '人' },
-      { aName: '大賣場昨天', aTotal: 5000, aPercent: 16, bName: '大賣場今天', bTotal: 3000, bPercent: 15, label: '果汁', unit: '瓶' },
-      { aName: '甲箱', aTotal: 5, aPercent: 40, bName: '乙箱', bTotal: 7, bPercent: 28.571428, label: '綠球', unit: '顆', fixedB: 2 },
+      {
+        aName: '大賣場昨天',
+        aTotal: 5000,
+        aPercent: 16,
+        bName: '大賣場今天',
+        bTotal: 3000,
+        bPercent: 15,
+        label: '果汁',
+        unit: '瓶',
+      },
+      {
+        aName: '甲箱',
+        aTotal: 5,
+        aPercent: 40,
+        bName: '乙箱',
+        bTotal: 7,
+        bPercent: 28.571428,
+        label: '綠球',
+        unit: '顆',
+        fixedB: 2,
+      },
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -67436,7 +69452,9 @@
       const valueA = item.fixedA != null ? item.fixedA : (item.aTotal * item.aPercent) / 100;
       const valueB = item.fixedB != null ? item.fixedB : (item.bTotal * item.bPercent) / 100;
       const answerText = valueA === valueB ? '一樣多' : valueA > valueB ? `${item.aName}較多` : `${item.bName}較多`;
-      questions.push(`${item.aName} 的總量是 ${item.aTotal}${item.unit}，其中 ${item.label} 占 ${e626FormatNumber(item.aPercent)}\\%；${item.bName} 的總量是 ${item.bTotal}${item.unit}，其中 ${item.label} 占 ${e626FormatNumber(item.bPercent)}\\%。請問誰的 ${item.label} 實際數量較多？`);
+      questions.push(
+        `${item.aName} 的總量是 ${item.aTotal}${item.unit}，其中 ${item.label} 占 ${e626FormatNumber(item.aPercent)}\\%；${item.bName} 的總量是 ${item.bTotal}${item.unit}，其中 ${item.label} 占 ${e626FormatNumber(item.bPercent)}\\%。請問誰的 ${item.label} 實際數量較多？`
+      );
       summaryAnswers.push(answerText);
       answers.push(
         `簡答：${answerText}。過程：${item.aName} 的 ${item.label} 為 ${e626FormatNumber(valueA)}${item.unit}；${item.bName} 的 ${item.label} 為 ${e626FormatNumber(valueB)}${item.unit}。比較後可知 ${answerText}。`
@@ -67459,7 +69477,9 @@
       const aValue = (aTotal * aPercent) / 100;
       const bValue = (bTotal * bPercent) / 100;
       const answerText = aValue === bValue ? '一樣多' : aValue > bValue ? '甲較多' : '乙較多';
-      questions.push(`甲有 ${aTotal} 元，其中儲蓄 ${aPercent}\\%；乙有 ${bTotal} 元，其中儲蓄 ${bPercent}\\%。請問誰儲蓄的錢比較多？`);
+      questions.push(
+        `甲有 ${aTotal} 元，其中儲蓄 ${aPercent}\\%；乙有 ${bTotal} 元，其中儲蓄 ${bPercent}\\%。請問誰儲蓄的錢比較多？`
+      );
       summaryAnswers.push(answerText);
       answers.push(
         `簡答：${answerText}。過程：甲儲蓄 ${aTotal} × ${aPercent}\\% = ${aValue} 元；乙儲蓄 ${bTotal} × ${bPercent}\\% = ${bValue} 元。比較後可知 ${answerText}。`
@@ -67484,7 +69504,9 @@
       const [scenario, chart] = pickFromList(banks);
       questions.push(`要把「${scenario}」畫成統計圖，最適合用哪一種圖表？（長條圖、折線圖、圓形圖）`);
       summaryAnswers.push(chart);
-      answers.push(`簡答：${chart}。過程：先看資料重點。這題強調${chart === '折線圖' ? '變化趨勢' : chart === '長條圖' ? '數量比較' : '各部分占全體的比例'}，所以最適合用${chart}。`);
+      answers.push(
+        `簡答：${chart}。過程：先看資料重點。這題強調${chart === '折線圖' ? '變化趨勢' : chart === '長條圖' ? '數量比較' : '各部分占全體的比例'}，所以最適合用${chart}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -67502,7 +69524,9 @@
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const item = pickFromList(banks);
-      questions.push(`某事件中有 ${item.good} 個有利結果，全部共有 ${item.total} 個可能結果。判斷「${item.ask}」屬於哪一種情形？（很可能、很不可能、比較可能、一定、一定不能）`);
+      questions.push(
+        `某事件中有 ${item.good} 個有利結果，全部共有 ${item.total} 個可能結果。判斷「${item.ask}」屬於哪一種情形？（很可能、很不可能、比較可能、一定、一定不能）`
+      );
       summaryAnswers.push(item.result);
       answers.push(
         `簡答：${item.result}。過程：先看有利結果占全部量的比例是 ${item.good}/${item.total}。比例越接近 1 越可能，等於 1 就是一定，等於 0 就是一定不能，所以本題判為「${item.result}」。`
@@ -67528,7 +69552,9 @@
         const part = (total * percent) / 100;
         questions.push(`某項在圓形圖中的圓心角是 ${angle}^\\circ，全部量為 ${total}，求這一項的數量。`);
         summaryAnswers.push(`${part}`);
-        answers.push(`簡答：${part}。過程：先把角度換成百分率：${angle}^\\circ ÷ 360^\\circ = ${percent}\\%，再算 ${total} × ${percent}\\% = ${part}。`);
+        answers.push(
+          `簡答：${part}。過程：先把角度換成百分率：${angle}^\\circ ÷ 360^\\circ = ${percent}\\%，再算 ${total} × ${percent}\\% = ${part}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -67576,10 +69602,7 @@
   }
 
   function buildE626InterpretMixedSet(count) {
-    return buildE626MixedSet(
-      [buildE626ChartSelectionSet, buildE626PossibilitySet, buildE626MixedPieReadingSet],
-      count
-    );
+    return buildE626MixedSet([buildE626ChartSelectionSet, buildE626PossibilitySet, buildE626MixedPieReadingSet], count);
   }
 
   window.formulaPracticeStore = {
@@ -85963,8 +87986,11 @@
         };
         if (typeof base.generate === 'function') {
           merged.generate = function generateWithAssignmentCount(item) {
-            const generated =
-              runGenerateWithQuestionCount(base.generate, this.questionCount) ?? base.generate.call(this, item);
+            const shouldBypassLocalBuilder =
+              Boolean(base.__generatorFingerprint) || Boolean(base.generatorFingerprint);
+            const generated = shouldBypassLocalBuilder
+              ? base.generate.call(this, item)
+              : (runGenerateWithQuestionCount(base.generate, this.questionCount) ?? base.generate.call(this, item));
             return shuffleGeneratedSet(generated);
           };
         }
@@ -86004,5 +88030,4 @@
       return buildGeneratorConfig(direct, {});
     },
   };
-
 })();

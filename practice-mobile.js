@@ -377,7 +377,7 @@
   function ensureSelectedPracticeSession() {
     const item = getSelectedPractice();
     if (!item) return null;
-    if (!practiceStore.getConfig?.(item.id) && item.generatorBundle) {
+    if (item.generatorBundle && !window.practiceGeneratorLoader?.isBundleLoaded?.(item.generatorBundle)) {
       return toolkit.readStoredPracticeSession?.(item.id) || null;
     }
     toolkit.ensureStoredPracticeSession?.(item);
@@ -386,7 +386,7 @@
 
   async function ensurePracticeGenerator(item) {
     if (!item) return false;
-    if (practiceStore.getConfig?.(item.id)) return true;
+    if (!item.generatorBundle && practiceStore.getConfig?.(item.id)) return true;
     if (!generatorLoader?.ensureForPractice) return false;
     try {
       return await generatorLoader.ensureForPractice(item);

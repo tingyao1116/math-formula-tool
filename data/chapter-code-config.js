@@ -1,8 +1,68 @@
 window.chapterCodeCatalog = {
+  "e4-1-1": {
+    "chapter": "一億以內的數",
+    "section": "一億以內的數",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-1-2": {
+    "chapter": "整數的乘法",
+    "section": "整數的乘法",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-1-3": {
+    "chapter": "角度",
+    "section": "角度",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "e4-1-4": {
+    "chapter": "整數的除法",
+    "section": "整數的除法",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-1-5": {
+    "chapter": "公里",
+    "section": "公里",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-1-6": {
+    "chapter": "三角形",
+    "section": "三角形",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
+  "e4-1-7": {
+    "chapter": "小數",
+    "section": "小數",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-1-8": {
+    "chapter": "整數四則計算",
+    "section": "整數四則計算",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-1-9": {
+    "chapter": "分數",
+    "section": "分數",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
   "e4-2-1": {
     "chapter": "多位數的乘與除",
     "section": "多位數的乘與除",
     "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-2-2": {
+    "chapter": "四邊形",
+    "section": "四邊形",
+    "domainMain": "幾何",
     "domainSub": ""
   },
   "e4-2-3": {
@@ -23,9 +83,33 @@ window.chapterCodeCatalog = {
     "domainMain": "數與量",
     "domainSub": ""
   },
+  "e4-2-6": {
+    "chapter": "周長與面積",
+    "section": "周長與面積",
+    "domainMain": "幾何",
+    "domainSub": ""
+  },
   "e4-2-7": {
     "chapter": "等值分數",
     "section": "等值分數",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-2-8": {
+    "chapter": "簡化計算",
+    "section": "簡化計算",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-2-9": {
+    "chapter": "時間的計算",
+    "section": "時間的計算",
+    "domainMain": "數與量",
+    "domainSub": ""
+  },
+  "e4-2-10": {
+    "chapter": "立方公分",
+    "section": "立方公分",
     "domainMain": "數與量",
     "domainSub": ""
   },
