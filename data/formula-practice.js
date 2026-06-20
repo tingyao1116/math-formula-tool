@@ -133,6 +133,72 @@
     };
   }
 
+  function extractGeneratedRows(result) {
+    const normalized = ensureGeneratedSummaryAnswers(result && typeof result === "object" ? result : {});
+    const questions = Array.isArray(normalized.questions) ? normalized.questions : [];
+    const summaryAnswers = Array.isArray(normalized.summaryAnswers) ? normalized.summaryAnswers : [];
+    const answers = Array.isArray(normalized.answers) ? normalized.answers : [];
+    const maxLen = Math.max(questions.length, summaryAnswers.length, answers.length);
+    const rows = [];
+
+    for (let index = 0; index < maxLen; index += 1) {
+      const question = String(questions[index] ?? "").trim();
+      const summaryAnswer = String(summaryAnswers[index] ?? "").trim();
+      const answer = String(answers[index] ?? "").trim();
+      if (!question && !summaryAnswer && !answer) continue;
+      rows.push({ question, summaryAnswer, answer });
+    }
+
+    return {
+      intro: typeof normalized.intro === "string" ? normalized.intro : "",
+      rows,
+      base: normalized,
+    };
+  }
+
+  function rebuildGeneratedSetFromRows(base, intro, rows, desiredCount) {
+    const limit = Math.max(1, Number(desiredCount) || 1);
+    const picked = Array.isArray(rows) ? rows.slice(0, limit) : [];
+    return {
+      ...(base && typeof base === "object" ? base : {}),
+      intro: typeof intro === "string" ? intro : "",
+      questions: picked.map((row) => row.question),
+      summaryAnswers: picked.map((row) => row.summaryAnswer),
+      answers: picked.map((row) => row.answer),
+    };
+  }
+
+  function generateWithExactQuestionCount(generateFn, desiredCount, context, item, preferredResult = null) {
+    const count = Math.max(1, Number(desiredCount) || 1);
+    const attemptLimit = Math.max(3, Math.min(24, count * 4));
+    const collected = [];
+    let intro = "";
+    let lastBase = null;
+
+    function consume(result) {
+      const extracted = extractGeneratedRows(result);
+      if (!intro && extracted.intro) intro = extracted.intro;
+      if (extracted.base && typeof extracted.base === "object") lastBase = extracted.base;
+      extracted.rows.forEach((row) => {
+        if (collected.length < count) collected.push(row);
+      });
+    }
+
+    if (preferredResult) {
+      consume(preferredResult);
+    }
+
+    for (let attempt = preferredResult ? 1 : 0; attempt < attemptLimit && collected.length < count; attempt += 1) {
+      try {
+        consume(generateFn.call(context, item));
+      } catch (_error) {
+        break;
+      }
+    }
+
+    return rebuildGeneratedSetFromRows(lastBase, intro, collected, count);
+  }
+
   function buildFixedExampleConfig(source) {
     return {
       type: "fixed-example",
@@ -151,16 +217,23 @@
       type: source.mode || base.type,
       title: source.title || base.title,
       difficulty: source.difficulty || base.difficulty,
-      questionCount: Number(source.questionCount) || base.questionCount,
+      questionCount: Math.max(1, Number(source.questionCount) || Number(base.questionCount) || 5),
     };
 
     if (typeof base.generate === "function") {
       merged.generate = function generateWithAssignmentCount(item) {
         const shouldBypassLocalBuilder =
           Boolean(base.__generatorFingerprint) || Boolean(base.generatorFingerprint);
-        const generated = shouldBypassLocalBuilder
-          ? base.generate.call(this, item)
-          : (runGenerateWithQuestionCount(base.generate, this.questionCount) ?? base.generate.call(this, item));
+        const directGenerated = shouldBypassLocalBuilder
+          ? null
+          : runGenerateWithQuestionCount(base.generate, this.questionCount);
+        const generated = generateWithExactQuestionCount(
+          base.generate,
+          this.questionCount,
+          this,
+          item,
+          directGenerated,
+        );
         return shuffleGeneratedSet(ensureGeneratedSummaryAnswers(generated));
       };
     }

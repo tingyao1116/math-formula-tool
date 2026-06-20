@@ -45,7 +45,9 @@
   const initialChapterCode = urlParams.get("chapter") || "j1-1-1";
   const initialPracticeId = String(urlParams.get("practice") || "").trim();
   const gradeOrder = [
-    "\u570b\u5c0f",
+    "\u570b\u5c0f\u56db\u5e74\u7d1a",
+    "\u570b\u5c0f\u4e94\u5e74\u7d1a",
+    "\u570b\u5c0f\u516d\u5e74\u7d1a",
     "\u570b\u4e00\u4e0a",
     "\u570b\u4e00\u4e0b",
     "\u570b\u4e8c\u4e0a",
@@ -83,7 +85,9 @@
     const stageText = String(stage || "").trim();
     const gradeText = String(grade || "").trim();
     const termText = getNormalizedTermLabel(term);
-    if (stageText === "\u570b\u5c0f") return "\u570b\u5c0f";
+    if (stageText === "\u570b\u5c0f" && gradeText === "\u5c0f\u56db") return "\u570b\u5c0f\u56db\u5e74\u7d1a";
+    if (stageText === "\u570b\u5c0f" && gradeText === "\u5c0f\u4e94") return "\u570b\u5c0f\u4e94\u5e74\u7d1a";
+    if (stageText === "\u570b\u5c0f" && gradeText === "\u5c0f\u516d") return "\u570b\u5c0f\u516d\u5e74\u7d1a";
     if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e00" && termText === "\u4e0a") return "\u570b\u4e00\u4e0a";
     if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e00" && termText === "\u4e0b") return "\u570b\u4e00\u4e0b";
     if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e8c" && termText === "\u4e0a") return "\u570b\u4e8c\u4e0a";

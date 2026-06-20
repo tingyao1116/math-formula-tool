@@ -12,7 +12,9 @@
 
   const TEXT = {
     all: "\u5168\u90e8",
-    elementary: "\u570b\u5c0f",
+    elementary4: "\u570b\u5c0f\u56db\u5e74\u7d1a",
+    elementary5: "\u570b\u5c0f\u4e94\u5e74\u7d1a",
+    elementary6: "\u570b\u5c0f\u516d\u5e74\u7d1a",
     j1Up: "\u570b\u4e00\u4e0a",
     j1Down: "\u570b\u4e00\u4e0b",
     j2Up: "\u570b\u4e8c\u4e0a",
@@ -119,7 +121,9 @@
 
   const gradeOrder = [
     "all",
-    "elementary",
+    "elementary-4",
+    "elementary-5",
+    "elementary-6",
     "j1-up",
     "j1-down",
     "j2-up",
@@ -136,7 +140,9 @@
 
   const gradeLabelMap = {
     all: TEXT.all,
-    elementary: TEXT.elementary,
+    "elementary-4": TEXT.elementary4,
+    "elementary-5": TEXT.elementary5,
+    "elementary-6": TEXT.elementary6,
     "j1-up": TEXT.j1Up,
     "j1-down": TEXT.j1Down,
     "j2-up": TEXT.j2Up,
@@ -191,7 +197,9 @@
     const gradeText = normalizeGrade(grade);
     const termText = getNormalizedTermLabel(term);
 
-    if (stageText === "\u570b\u5c0f") return "elementary";
+    if (stageText === "\u570b\u5c0f" && gradeText === "\u5c0f\u56db") return "elementary-4";
+    if (stageText === "\u570b\u5c0f" && gradeText === "\u5c0f\u4e94") return "elementary-5";
+    if (stageText === "\u570b\u5c0f" && gradeText === "\u5c0f\u516d") return "elementary-6";
     if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e00" && termText === "\u4e0a") return "j1-up";
     if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e00" && termText === "\u4e0b") return "j1-down";
     if (stageText === "\u570b\u4e2d" && gradeText === "\u570b\u4e8c" && termText === "\u4e0a") return "j2-up";

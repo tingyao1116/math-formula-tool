@@ -1,6 +1,6 @@
 (() => {
   const store = window.formulaPracticeStore;
-  if (!store || typeof store.registerConfigs !== "function") return;
+  if (!store || typeof store.registerConfigs !== 'function') return;
 
   function randInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -1915,18 +1915,18 @@
 
       if (mode === 0) {
         result = countIntegersInRange(-n, n, category);
-        question = `絕對值小於或等於${n}的${category}共有幾個？`;
+        question = `絕對值小於或等於$${n}$的${category}共有幾個？`;
       } else if (mode === 1) {
         result = countIntegersInRange(-n, n, category);
-        question = `絕對值不大於${n}的${category}共有幾個？`;
+        question = `絕對值不大於$${n}$的${category}共有幾個？`;
       } else {
         result = countIntegersInRange(-n + 1, n - 1, category);
-        question = `絕對值小於${n}的${category}共有幾個？`;
+        question = `絕對值小於$${n}$的${category}共有幾個？`;
       }
 
       questions.push(question);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`${result}`);
+      answers.push(`$${result}$`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1951,7 +1951,7 @@
 
       questions.push(`符合\\(${lower}\\le |甲| ${rightSymbol} ${upper}\\)的${category}甲共有幾個？`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`${result}`);
+      answers.push(`$${result}$`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1976,9 +1976,9 @@
       const upper = t.strict ? a - 1 : a;
       const result = countIntegersInRange(lower, upper, t.category);
       const signText = t.strict ? '<' : '\\le';
-      questions.push(`$a$為整數，且滿足\\(|x| ${signText} a\\)的${t.category}有${result}個，則$a=$?`);
+      questions.push(`$a$為整數，且滿足\\(|x| ${signText} a\\)的${t.category}有$${result}$個，則$a=$?`);
       summaryAnswers.push(`$${a}$`);
-      answers.push(`${a}`);
+      answers.push(`$${a}$`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4866,1190 +4866,1190 @@
   }
 
   const nextConfigs = {
-      'midpoint-formula': {
-        type: 'drill',
-        title: '簡易無限練習',
-        difficulty: 'easy',
-        questionCount: 10,
-        generate() {
-          return buildMidpointSet(10);
-        },
-      },
-      'distance-formula': {
-        type: 'drill',
-        title: '簡易無限練習',
-        difficulty: 'easy',
-        questionCount: 10,
-        generate() {
-          return buildDistanceSet(10);
-        },
-      },
-      'three-products-add-subtract-drill': {
-        type: 'drill',
-        title: '中等無限練習',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildThreeProductSet(5);
-        },
-      },
-      'integer-add-subtract-brackets-drill': {
-        type: 'drill',
-        title: '四正負數加減',
-        difficulty: 'easy',
-        questionCount: 8,
-        generate() {
-          return buildIntegerAddSubtractBracketsSet(8);
-        },
-      },
-      'integer-canceling-brackets-drill': {
-        type: 'drill',
-        title: '去括號後的正負數加減',
-        difficulty: 'easy',
-        questionCount: 8,
-        generate() {
-          return buildCancelingBracketIntegerSet(8);
-        },
-      },
-      'integer-absolute-reduce-drill': {
-        type: 'drill',
-        title: '去絕對值後的正負數加減',
-        difficulty: 'easy',
-        questionCount: 8,
-        generate() {
-          return buildAbsoluteIntegerReduceSet(8);
-        },
-      },
-      'integer-abs-bracket-mixed-drill': {
-        type: 'drill',
-        title: '絕對值與括號混合運算',
-        difficulty: 'easy',
-        questionCount: 8,
-        generate() {
-          return buildAbsoluteBracketMixedSet(8);
-        },
-      },
-      'time-baseline-basic-drill': {
-        type: 'drill',
-        title: '時間基準問題',
-        difficulty: 'easy',
-        questionCount: 10,
-        generate() {
-          return buildTimeBaselineBasicSet(10);
-        },
-      },
-      'time-baseline-advanced-drill': {
-        type: 'drill',
-        title: '進階時間基準問題',
-        difficulty: 'medium',
-        questionCount: 10,
-        generate() {
-          return buildTimeBaselineAdvancedSet(10);
-        },
-      },
-      'nearby-average-baseline-drill': {
-        type: 'drill',
-        title: '基準值平均與反求未知數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildNearbyAverageBaselineSet(5);
-        },
-      },
-      'average-baseline-difference-drill': {
-        type: 'drill',
-        title: '平均變動與總和差',
-        difficulty: 'easy',
-        questionCount: 6,
-        generate() {
-          return buildAverageBaselineDifferenceSet(6);
-        },
-      },
-      'j1-1-3-sign-brackets-power-drill': {
-        type: 'drill',
-        title: '正負號、括號與次方判別',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildExponentSignBracketSet(5);
-        },
-      },
-      'j1-1-3-exponent-law-single-rule-drill': {
-        type: 'drill',
-        title: '指數律單一法則',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildExponentLawSingleRuleSet(5);
-        },
-      },
-      'j1-1-3-exponent-law-mixed-rule-drill': {
-        type: 'drill',
-        title: '指數律進階混合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildExponentLawMixedSet(5);
-        },
-      },
-      'j1-1-3-exponent-mixed-operations-drill': {
-        type: 'drill',
-        title: '零次方、負次方與綜合四則',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildExponentMixedOperationsSet(5);
-        },
-      },
-      'j1-1-3-exponent-word-problem-drill': {
-        type: 'drill',
-        title: '指數生活應用',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildExponentWordProblemSet(5);
-        },
-      },
-      'j1-1-3-power-concept-one-subtype': {
-        type: 'drill',
-        title: '次方基礎觀念',
-        difficulty: 'easy',
-        questionCount: 6,
-        generate() {
-          return buildJ113ConceptMixedSet(6);
-        },
-      },
-      'j1-1-3-exponent-law-three-subtypes': {
-        type: 'drill',
-        title: '指數律與運算',
-        difficulty: 'medium',
-        questionCount: 8,
-        generate() {
-          return buildJ113LawMixedSet(8);
-        },
-      },
-      'j1-1-3-application-one-subtype': {
-        type: 'drill',
-        title: '指數應用',
-        difficulty: 'easy',
-        questionCount: 6,
-        generate() {
-          return buildJ113ApplicationMixedSet(6);
-        },
-      },
-      'j1-1-3-biquadratic-split-square-factoring': {
-        type: 'drill',
-        title: '二次三項式的拆項配方因式分解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ113BiquadraticSplitSquareFactoringSet(5);
-        },
-      },
-      'j1-1-3-binary-quadratic-cross-factoring': {
-        type: 'drill',
-        title: '二元二次式的雙十字交乘法因式分解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ113BinaryQuadraticCrossFactoringSet(5);
-        },
-      },
-      'j1-1-4-scientific-convert-drill': {
-        type: 'drill',
-        title: '數值與科學記號的互換',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildScientificNotationConvertSet(5);
-        },
-      },
-      'j1-1-4-scientific-digit-reading-drill': {
-        type: 'drill',
-        title: '位數判讀與小數點後的零',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildScientificDigitReadingSet(5);
-        },
-      },
-      'j1-1-4-scientific-compare-drill': {
-        type: 'drill',
-        title: '科學記號的大小比較',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildScientificCompareSet(5);
-        },
-      },
-      'j1-1-4-scientific-mul-div-drill': {
-        type: 'drill',
-        title: '科學記號的乘除運算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildScientificMulDivSet(5);
-        },
-      },
-      'j1-1-4-scientific-add-sub-drill': {
-        type: 'drill',
-        title: '科學記號的加減運算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildScientificAddSubSet(5);
-        },
-      },
-      'j1-1-4-scientific-unit-conversion-drill': {
-        type: 'drill',
-        title: '長度與重量單位的轉換',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildScientificUnitConversionSet(5);
-        },
-      },
-      'j1-1-4-scientific-normalize-drill': {
-        type: 'drill',
-        title: '不完整科學記號化為標準形',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildScientificNormalizeSet(5);
-        },
-      },
-      'opposite-number-equation-drill': {
-        type: 'drill',
-        title: '相反數問題',
-        difficulty: 'easy',
-        questionCount: 10,
-        generate() {
-          return buildOppositeNumberSet(10);
-        },
-      },
-      'midpoint-distance-combined-drill': {
-        type: 'drill',
-        title: '中點與距離問題',
-        difficulty: 'easy',
-        questionCount: 10,
-        generate() {
-          return buildMidpointDistanceCombinedSet(10);
-        },
-      },
-      'same-shift-opposite-drill': {
-        type: 'drill',
-        title: '兩數同加或減一數成相反數',
-        difficulty: 'medium',
-        questionCount: 10,
-        generate() {
-          return buildSameShiftOppositeSet(10);
-        },
-      },
-      'opposite-number-sum-difference-drill': {
-        type: 'drill',
-        title: '相反數與和差關係',
-        difficulty: 'easy',
-        questionCount: 6,
-        generate() {
-          return buildOppositeNumberSumDifferenceSet(6);
-        },
-      },
-      'midpoint-reverse-drill': {
-        type: 'drill',
-        title: '中點反向問題',
-        difficulty: 'easy',
-        questionCount: 10,
-        generate() {
-          return buildMidpointReverseSet(10);
-        },
-      },
-      'midpoint-plus-distance-drill': {
-        type: 'drill',
-        title: '中點加距離綜合問題',
-        difficulty: 'medium',
-        questionCount: 10,
-        generate() {
-          return buildMidpointPlusDistanceSet(10);
-        },
-      },
-      'number-line-equidistant-point-drill': {
-        type: 'drill',
-        title: '等距點問題',
-        difficulty: 'easy',
-        questionCount: 6,
-        generate() {
-          return buildNumberLineEquidistantPointSet(6);
-        },
-      },
-      'number-line-fixed-distance-point-drill': {
-        type: 'drill',
-        title: '固定距離找點',
-        difficulty: 'easy',
-        questionCount: 6,
-        generate() {
-          return buildNumberLineFixedDistancePointSet(6);
-        },
-      },
-      'number-line-midpoint-distance-reverse-mixed-drill': {
-        type: 'drill',
-        title: '中點與距離反推綜合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildNumberLineMidpointDistanceReverseMixedSet(6);
-        },
-      },
-      'three-point-quick-distance-drill': {
-        type: 'drill',
-        title: '三點快速看距離練習',
-        difficulty: 'easy',
-        questionCount: 10,
-        generate() {
-          return buildThreePointQuickDistanceSet(10);
-        },
-      },
-      'coordinate-origin-unit-change': {
-        type: 'drill',
-        title: '改變原點與單位長時坐標變化',
-        difficulty: 'medium',
-        questionCount: 3,
-        generate() {
-          return buildCoordinateOriginUnitChangeSet(3);
-        },
-      },
-      'coordinate-origin-shift-only-drill': {
-        type: 'drill',
-        title: '只改原點',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildCoordinateOriginShiftOnlySet(5);
-        },
-      },
-      'coordinate-unit-scale-only-drill': {
-        type: 'drill',
-        title: '只改單位長',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildCoordinateUnitScaleOnlySet(5);
-        },
-      },
-      'coordinate-origin-then-unit-drill': {
-        type: 'drill',
-        title: '先改原點再改單位長',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildCoordinateOriginThenUnitSet(5);
-        },
-      },
-      'coordinate-old-new-inverse-drill': {
-        type: 'drill',
-        title: '新舊坐標互推',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildCoordinateOldNewInverseSet(5);
-        },
-      },
-      'coordinate-new-line-distance-midpoint-drill': {
-        type: 'drill',
-        title: '新數線下的距離與中點',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildCoordinateNewLineDistanceMidpointSet(5);
-        },
-      },
-      'abs-variable-basic-drill': {
-        type: 'drill',
-        title: '含字母的去絕對值基礎題',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildAbsVariableBasicSet(5);
-        },
-      },
-      'abs-short-mixed-calc-drill': {
-        type: 'drill',
-        title: '絕對值四則混合短題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildAbsMixedShortSet(5);
-        },
-      },
-      'abs-context-interpretation-drill': {
-        type: 'drill',
-        title: '絕對值文字情境題',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildAbsContextSet(5);
-        },
-      },
-      'j1-1-1-absolute-value-core-nine-subtypes': {
-        type: 'drill',
-        title: '絕對值基礎與計算九小類綜合',
-        difficulty: 'medium',
-        questionCount: 8,
-        generate() {
-          return buildJ111AbsoluteValueMixedSet(8);
-        },
-      },
-      'j1-1-1-midpoint-distance-nine-subtypes': {
-        type: 'drill',
-        title: '數線上的中點與距離九小類綜合',
-        difficulty: 'medium',
-        questionCount: 8,
-        generate() {
-          return buildJ111MidpointDistanceMixedSet(8);
-        },
-      },
-      'j1-1-1-origin-unit-six-subtypes': {
-        type: 'drill',
-        title: '改變原點與單位長六小類綜合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildJ111OriginUnitMixedSet(6);
-        },
-      },
-      'abs-four-terms-calc-drill': {
-        type: 'drill',
-        title: '四數含絕對值計算',
-        difficulty: 'easy',
-        questionCount: 10,
-        generate() {
-          return buildAbsFourTermsSet(10);
-        },
-      },
-      'abs-count-basic-drill': {
-        type: 'drill',
-        title: '絕對值個數問題',
-        difficulty: 'easy',
-        questionCount: 10,
-        generate() {
-          return buildAbsCountBasicSet(10);
-        },
-      },
-      'abs-count-two-sided-drill': {
-        type: 'drill',
-        title: '絕對值個數問題二邊範圍',
-        difficulty: 'medium',
-        questionCount: 10,
-        generate() {
-          return buildAbsCountTwoSidedSet(10);
-        },
-      },
-      'abs-count-reverse-drill': {
-        type: 'drill',
-        title: '絕對值個數問題反向',
-        difficulty: 'medium',
-        questionCount: 10,
-        generate() {
-          return buildAbsCountReverseSet(10);
-        },
-      },
-      'abs-equation-leading-one-drill': {
-        type: 'drill',
-        title: '絕對值方程式（最高次係數=1）',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildAbsEquationLeadingOneSet(5);
-        },
-      },
-      'abs-equation-leading-not-one-drill': {
-        type: 'drill',
-        title: '絕對值方程式（最高次係數≠1）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildAbsEquationLeadingNotOneSet(5);
-        },
-      },
-      'nonnegative-sum-zero-drill': {
-        type: 'drill',
-        title: '非負整數和=0',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildNonnegativeSumZeroSet(5);
-        },
-      },
-      'nonnegative-sum-fixed-one-drill': {
-        type: 'drill',
-        title: '非負整數和固定討論',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildNonnegativeSumFixedOneSet(5);
-        },
-      },
-      'nonnegative-sum-fixed-multix-drill': {
-        type: 'drill',
-        title: '非負整數解和固定討論多組解（只求x）',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildNonnegativeSumFixedMultiXSet(5);
-        },
-      },
-      'abs-both-sides-advanced-drill': {
-        type: 'drill',
-        title: '進階補充：兩邊都有絕對值',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildAbsoluteBothSidesAdvancedSet(5);
-        },
-      },
-      'abs-two-group-calc-drill': {
-        type: 'drill',
-        title: '二組絕對值計算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildAbsTwoGroupsSet(5);
-        },
-      },
-      'abs-remove-and-calc-drill': {
-        type: 'drill',
-        title: '去絕對值計算',
-        difficulty: 'medium',
-        questionCount: 3,
-        generate() {
-          return buildAbsRemoveAndCalcSet(3);
-        },
-      },
-      'linear-remove-parentheses-drill': {
-        type: 'drill',
-        title: '去括號（一元一次）',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildLinearRemoveParenthesesSet(5);
-        },
-      },
-      'linear-multiply-parentheses-drill': {
-        type: 'drill',
-        title: '有乘法的去括號（一元一次）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildLinearMultiplyParenthesesSet(5);
-        },
-      },
-      'linear-fraction-parentheses-drill': {
-        type: 'drill',
-        title: '有分數的去括號（一元一次）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildLinearFractionParenthesesSet(5);
-        },
-      },
-      'linear-word-expression-drill': {
-        type: 'drill',
-        title: '綜合列式文字題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildLinearWordExpressionSet(5);
-        },
-      },
-      'linear-substitution-value-drill': {
-        type: 'drill',
-        title: '綜合代入求值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildLinearSubstitutionValueSet(5);
-        },
-      },
-      'linear-move-terms-solve-drill': {
-        type: 'drill',
-        title: '移項求解',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildLinearMoveTermsSolveSet(5);
-        },
-      },
-      'linear-expand-move-solve-drill': {
-        type: 'drill',
-        title: '展開移項求解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildLinearExpandMoveSolveSet(5);
-        },
-      },
-      'linear-cross-expand-move-solve-drill': {
-        type: 'drill',
-        title: '交叉相乘後展開移項求解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildLinearCrossMultiplySolveSet(5);
-        },
-      },
-      'linear-lcm-multiply-move-solve-drill': {
-        type: 'drill',
-        title: '同乘公倍數後整理移項求解',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildLinearLcmMultiplySolveSet(5);
-        },
-      },
-      'linear-same-solution-drill': {
-        type: 'drill',
-        title: '解相同題型',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildLinearSameSolutionSet(5);
-        },
-      },
-      'j1-3-3-purchase-discount-application-drill': {
-        type: 'drill',
-        title: '錢數買賣與折扣問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildPurchaseDiscountApplicationSet(5);
-        },
-      },
-      'j1-3-3-allocation-application-drill': {
-        type: 'drill',
-        title: '分配問題（剩餘與不足）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildAllocationApplicationSet(5);
-        },
-      },
-      'j1-3-3-age-application-drill': {
-        type: 'drill',
-        title: '年齡推算問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildAgeApplicationSet(5);
-        },
-      },
-      'j1-3-3-speed-application-drill': {
-        type: 'drill',
-        title: '行程與速率問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildSpeedApplicationSet(5);
-        },
-      },
-      'j1-3-3-heads-coins-application-drill': {
-        type: 'drill',
-        title: '雞兔同籠與硬幣問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildHeadsCoinsApplicationSet(5);
-        },
-      },
-      'j1-3-3-work-rate-application-drill': {
-        type: 'drill',
-        title: '工程與工作效率問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ133WorkRateSet(5);
-        },
-      },
-      'j1-3-3-fraction-remainder-application-drill': {
-        type: 'drill',
-        title: '剩餘量的分率問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ133FractionRemainderSet(5);
-        },
-      },
-      'j1-3-3-score-penalty-application-drill': {
-        type: 'drill',
-        title: '得分倒扣問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ133ScorePenaltySet(5);
-        },
-      },
-      'j1-3-3-mixture-application-drill': {
-        type: 'drill',
-        title: '濃度與混合問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ133MixtureSet(5);
-        },
-      },
-      'j1-3-3-tiered-fee-application-drill': {
-        type: 'drill',
-        title: '基本費與超額計費問題',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ133TieredFeeSet(5);
-        },
-      },
-      'j1-3-3-clock-angle-application-drill': {
-        type: 'drill',
-        title: '時鐘與角度問題',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ133ClockAngleSet(5);
-        },
-      },
-      'j1-distributive-law-drill': {
-        type: 'drill',
-        title: '分配律',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ1DistributiveLawSet(5);
-        },
-      },
-      'j1-common-factor-drill': {
-        type: 'drill',
-        title: '提出公因數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ1CommonFactorSet(5);
-        },
-      },
-      'j1-common-factor-four-terms-drill': {
-        type: 'drill',
-        title: '4項提出公因數（全正數）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ1CommonFactorFourTermsSet(5);
-        },
-      },
-      'j1-common-factor-four-terms-signed-drill': {
-        type: 'drill',
-        title: '4項提出公因數（含正負數）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ1CommonFactorFourTermsSignedSet(5);
-        },
-      },
-      'j1-distributive-common-factor-mixed': {
-        type: 'drill',
-        title: '分配律與提出公因數綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ1DistributiveCommonFactorMixedSet(5);
-        },
-      },
-      'j1-variable-distributive-eval-drill': {
-        type: 'drill',
-        title: '已知甲×a，求(甲+b)×a',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ1VariableDistributiveEvalSet(5);
-        },
-      },
-      'j1-variable-distributive-application-drill': {
-        type: 'drill',
-        title: '分配律應用（大數字拆解）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ1VariableDistributiveApplicationSet(5);
-        },
-      },
-      'j1-variable-distributive-pair-difference-drill': {
-        type: 'drill',
-        title: '二組分配律（相鄰差一型）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ1DistributivePairDifferenceSet(5);
-        },
-      },
-      'j1-variable-distributive-offset-difference-drill': {
-        type: 'drill',
-        title: '二組分配律（補差型）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ1DistributiveOffsetDifferenceSet(5);
-        },
-      },
-      'j1-common-factor-then-distributive-drill': {
-        type: 'drill',
-        title: '先提公因數，再分配律',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ1CommonFactorThenDistributiveSet(5);
-        },
-      },
-      'weird-symbol-calc': {
-        type: 'drill',
-        title: '奇怪的符號計算',
-        difficulty: 'medium',
-        questionCount: 3,
-        generate() {
-          return buildWeirdSymbolCalcSet(3);
-        },
-      },
-      'weird-symbol-calc-three-layer': {
-        type: 'drill',
-        title: '奇怪的符號計算三層版',
-        difficulty: 'hard',
-        questionCount: 3,
-        generate() {
-          return buildWeirdSymbolCalcThreeLayerSet(3);
-        },
-      },
-      'weird-symbol-reverse-drill': {
-        type: 'drill',
-        title: '奇怪符號反求未知數',
-        difficulty: 'medium',
-        questionCount: 4,
-        generate() {
-          return buildWeirdSymbolReverseSet(4);
-        },
-      },
-      'j1-1-2-distributive-factor-nine-subtypes': {
-        type: 'drill',
-        title: '分配律與提出公因數九小類綜合',
-        difficulty: 'medium',
-        questionCount: 8,
-        generate() {
-          return buildJ112DistributiveFactorMixedSet(8);
-        },
-      },
-      'j1-1-2-integer-mixed-three-subtypes': {
-        type: 'drill',
-        title: '正負數混合運算五小類綜合',
-        difficulty: 'easy',
-        questionCount: 8,
-        generate() {
-          return buildJ112IntegerMixedSet(8);
-        },
-      },
-      'j1-1-2-baseline-average-four-subtypes': {
-        type: 'drill',
-        title: '基準量與平均數四小類綜合',
-        difficulty: 'medium',
-        questionCount: 8,
-        generate() {
-          return buildJ112BaselineMixedSet(8);
-        },
-      },
-      'j1-1-2-opposite-three-subtypes': {
-        type: 'drill',
-        title: '相反數與關係式三小類綜合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildJ112OppositeMixedSet(6);
-        },
-      },
-      'j1-1-2-weird-symbol-three-subtypes': {
-        type: 'drill',
-        title: '奇怪的符號計算三小類綜合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildJ112WeirdSymbolMixedSet(6);
-        },
-      },
-      'mod9-remainder-drill': {
-        type: 'drill',
-        title: '大數除以9餘數',
-        difficulty: 'easy',
-        questionCount: 10,
-        generate() {
-          return buildModuloRemainderSet(9, 10);
-        },
-      },
-      'mod9-unknown-multiple-drill': {
-        type: 'drill',
-        title: '反向求一大數除以9整除',
-        difficulty: 'medium',
-        questionCount: 10,
-        generate() {
-          return buildModuloUnknownMultipleSet(9, 10);
-        },
-      },
-      'mod9-unknown-remainder-drill': {
-        type: 'drill',
-        title: '反向求一大數除以9餘數',
-        difficulty: 'medium',
-        questionCount: 10,
-        generate() {
-          return buildModuloUnknownRemainderSet(9, 10);
-        },
-      },
-      'mod11-remainder-drill': {
-        type: 'drill',
-        title: '大數除以11餘數',
-        difficulty: 'easy',
-        questionCount: 10,
-        generate() {
-          return buildModuloRemainderSet(11, 10);
-        },
-      },
-      'mod11-unknown-multiple-drill': {
-        type: 'drill',
-        title: '反向求一大數除以11整除',
-        difficulty: 'medium',
-        questionCount: 10,
-        generate() {
-          return buildModuloUnknownMultipleSet(11, 10);
-        },
-      },
-      'mod11-unknown-remainder-drill': {
-        type: 'drill',
-        title: '反向求一大數除以11餘數',
-        difficulty: 'medium',
-        questionCount: 10,
-        generate() {
-          return buildModuloUnknownRemainderSet(11, 10);
-        },
-      },
-      'j1-2-1-gcd-lcm-calculation-drill': {
-        type: 'drill',
-        title: '最大公因數與最小公倍數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildGcdLcmCalculationSet(5);
-        },
-      },
-      'j1-2-1-gcd-lcm-product-relation-drill': {
-        type: 'drill',
-        title: '乘積與公因倍數關係',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildGcdLcmProductRelationSet(5);
-        },
-      },
-      'j1-2-1-remainder-shortage-mixed-drill': {
-        type: 'drill',
-        title: '餘數與不足問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildRemainderShortageMixedSet(5);
-        },
-      },
-      'j1-2-1-hanxin-advanced-drill': {
-        type: 'drill',
-        title: '韓信點兵進階',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildHanXinAdvancedSet(5);
-        },
-      },
-      'j1-2-1-prime-factor-notation-drill': {
-        type: 'drill',
-        title: '標準分解式的寫法',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildPrimeFactorNotationSet(5);
-        },
-      },
-      'j1-2-1-divisor-count-sum-mixed-drill': {
-        type: 'drill',
-        title: '正因數個數與總和',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildDivisorCountSumMixedSet(5);
-        },
-      },
-      'j1-2-1-rectangle-factor-pairs-drill': {
-        type: 'drill',
-        title: '矩形排列問題',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildRectangleFactorPairsSet(5);
-        },
-      },
-      'j1-2-3-fraction-add-sub-brackets-drill': {
-        type: 'drill',
-        title: '分數加減混合（去括號）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildFractionAddSubBracketSet(5);
-        },
-      },
-      'j1-2-3-fraction-add-sub-negative-drill': {
-        type: 'drill',
-        title: '分數加減混合（負號轉換）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildFractionAddSubNegativeSet(5);
-        },
-      },
-      'j1-2-3-fraction-add-sub-absolute-drill': {
-        type: 'drill',
-        title: '分數加減混合（絕對值對稱）',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildFractionAbsoluteSymmetrySet(5);
-        },
-      },
-      'j1-2-3-fraction-mul-div-mixed-drill': {
-        type: 'drill',
-        title: '分數乘除（帶分數與倒數）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildFractionMulDivMixedSet(5);
-        },
-      },
-      'j1-2-3-fraction-distributive-common-factor-drill': {
-        type: 'drill',
-        title: '分數乘除（分配律提公因數）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildFractionDistributiveCommonFactorSet(5);
-        },
-      },
-      'j1-2-3-fraction-distributive-regroup-drill': {
-        type: 'drill',
-        title: '分數乘除（分配律重組）',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildFractionDistributiveRegroupSet(5);
-        },
-      },
-      'j1-2-3-telescoping-gap-four-sum-drill': {
-        type: 'drill',
-        title: '分項對消（間隔四項和）',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildTelescopingGapFourSumSet(5);
-        },
-      },
-      'j1-2-3-telescoping-adjacent-sum-drill': {
-        type: 'drill',
-        title: '分項對消（相鄰連分式和）',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildTelescopingAdjacentSumSet(5);
-        },
-      },
-      'j1-2-3-telescoping-product-drill': {
-        type: 'drill',
-        title: '分項對消（連乘積）',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildTelescopingProductSet(5);
-        },
-      },
-      'factor-application-separate-grouping-drill': {
-        type: 'drill',
-        title: '男女分別分組',
-        difficulty: 'easy',
-        questionCount: 3,
-        generate() {
-          return buildSeparateGroupingSet(3);
-        },
-      },
-      'factor-application-mixed-grouping-drill': {
-        type: 'drill',
-        title: '男女混合分組',
-        difficulty: 'medium',
-        questionCount: 3,
-        generate() {
-          return buildMixedGroupingSet(3);
-        },
-      },
-      'factor-application-circular-track-drill': {
-        type: 'drill',
-        title: '環狀跑道同點重合',
-        difficulty: 'medium',
-        questionCount: 3,
-        generate() {
-          return buildCircularTrackSet(3);
-        },
-      },
-      'factor-road-planting-single-drill': {
-        type: 'drill',
-        title: '道路種樹（單側）',
-        difficulty: 'easy',
-        questionCount: 3,
-        generate() {
-          return buildRoadPlantingSingleSet(3);
-        },
-      },
-      'factor-road-planting-double-drill': {
-        type: 'drill',
-        title: '道路種樹（兩側）',
-        difficulty: 'easy',
-        questionCount: 3,
-        generate() {
-          return buildRoadPlantingDoubleSet(3);
-        },
-      },
-      'factor-road-keep-position-drill': {
-        type: 'drill',
-        title: '不需移動個數',
-        difficulty: 'medium',
-        questionCount: 3,
-        generate() {
-          return buildRoadReplantKeepSet(3);
-        },
-      },
-      'factor-rectangle-equal-square-drill': {
-        type: 'drill',
-        title: '長方形裁成相同正方形',
-        difficulty: 'easy',
-        questionCount: 3,
-        generate() {
-          return buildRectangleMaxSquarePiecesSet(3);
-        },
-      },
-      'factor-rectangle-max-square-mixed-drill': {
-        type: 'drill',
-        title: '長方形裁成數個最大正方形',
-        difficulty: 'medium',
-        questionCount: 3,
-        generate() {
-          return buildRectangleMinSquarePiecesSet(3);
-        },
-      },
+    'midpoint-formula': {
+      type: 'drill',
+      title: '簡易無限練習',
+      difficulty: 'easy',
+      questionCount: 10,
+      generate() {
+        return buildMidpointSet(10);
+      },
+    },
+    'distance-formula': {
+      type: 'drill',
+      title: '簡易無限練習',
+      difficulty: 'easy',
+      questionCount: 10,
+      generate() {
+        return buildDistanceSet(10);
+      },
+    },
+    'three-products-add-subtract-drill': {
+      type: 'drill',
+      title: '中等無限練習',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildThreeProductSet(5);
+      },
+    },
+    'integer-add-subtract-brackets-drill': {
+      type: 'drill',
+      title: '四正負數加減',
+      difficulty: 'easy',
+      questionCount: 8,
+      generate() {
+        return buildIntegerAddSubtractBracketsSet(8);
+      },
+    },
+    'integer-canceling-brackets-drill': {
+      type: 'drill',
+      title: '去括號後的正負數加減',
+      difficulty: 'easy',
+      questionCount: 8,
+      generate() {
+        return buildCancelingBracketIntegerSet(8);
+      },
+    },
+    'integer-absolute-reduce-drill': {
+      type: 'drill',
+      title: '去絕對值後的正負數加減',
+      difficulty: 'easy',
+      questionCount: 8,
+      generate() {
+        return buildAbsoluteIntegerReduceSet(8);
+      },
+    },
+    'integer-abs-bracket-mixed-drill': {
+      type: 'drill',
+      title: '絕對值與括號混合運算',
+      difficulty: 'easy',
+      questionCount: 8,
+      generate() {
+        return buildAbsoluteBracketMixedSet(8);
+      },
+    },
+    'time-baseline-basic-drill': {
+      type: 'drill',
+      title: '時間基準問題',
+      difficulty: 'easy',
+      questionCount: 10,
+      generate() {
+        return buildTimeBaselineBasicSet(10);
+      },
+    },
+    'time-baseline-advanced-drill': {
+      type: 'drill',
+      title: '進階時間基準問題',
+      difficulty: 'medium',
+      questionCount: 10,
+      generate() {
+        return buildTimeBaselineAdvancedSet(10);
+      },
+    },
+    'nearby-average-baseline-drill': {
+      type: 'drill',
+      title: '基準值平均與反求未知數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildNearbyAverageBaselineSet(5);
+      },
+    },
+    'average-baseline-difference-drill': {
+      type: 'drill',
+      title: '平均變動與總和差',
+      difficulty: 'easy',
+      questionCount: 6,
+      generate() {
+        return buildAverageBaselineDifferenceSet(6);
+      },
+    },
+    'j1-1-3-sign-brackets-power-drill': {
+      type: 'drill',
+      title: '正負號、括號與次方判別',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildExponentSignBracketSet(5);
+      },
+    },
+    'j1-1-3-exponent-law-single-rule-drill': {
+      type: 'drill',
+      title: '指數律單一法則',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildExponentLawSingleRuleSet(5);
+      },
+    },
+    'j1-1-3-exponent-law-mixed-rule-drill': {
+      type: 'drill',
+      title: '指數律進階混合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildExponentLawMixedSet(5);
+      },
+    },
+    'j1-1-3-exponent-mixed-operations-drill': {
+      type: 'drill',
+      title: '零次方、負次方與綜合四則',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildExponentMixedOperationsSet(5);
+      },
+    },
+    'j1-1-3-exponent-word-problem-drill': {
+      type: 'drill',
+      title: '指數生活應用',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildExponentWordProblemSet(5);
+      },
+    },
+    'j1-1-3-power-concept-one-subtype': {
+      type: 'drill',
+      title: '次方基礎觀念',
+      difficulty: 'easy',
+      questionCount: 6,
+      generate() {
+        return buildJ113ConceptMixedSet(6);
+      },
+    },
+    'j1-1-3-exponent-law-three-subtypes': {
+      type: 'drill',
+      title: '指數律與運算',
+      difficulty: 'medium',
+      questionCount: 8,
+      generate() {
+        return buildJ113LawMixedSet(8);
+      },
+    },
+    'j1-1-3-application-one-subtype': {
+      type: 'drill',
+      title: '指數應用',
+      difficulty: 'easy',
+      questionCount: 6,
+      generate() {
+        return buildJ113ApplicationMixedSet(6);
+      },
+    },
+    'j1-1-3-biquadratic-split-square-factoring': {
+      type: 'drill',
+      title: '二次三項式的拆項配方因式分解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ113BiquadraticSplitSquareFactoringSet(5);
+      },
+    },
+    'j1-1-3-binary-quadratic-cross-factoring': {
+      type: 'drill',
+      title: '二元二次式的雙十字交乘法因式分解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ113BinaryQuadraticCrossFactoringSet(5);
+      },
+    },
+    'j1-1-4-scientific-convert-drill': {
+      type: 'drill',
+      title: '數值與科學記號的互換',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildScientificNotationConvertSet(5);
+      },
+    },
+    'j1-1-4-scientific-digit-reading-drill': {
+      type: 'drill',
+      title: '位數判讀與小數點後的零',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildScientificDigitReadingSet(5);
+      },
+    },
+    'j1-1-4-scientific-compare-drill': {
+      type: 'drill',
+      title: '科學記號的大小比較',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildScientificCompareSet(5);
+      },
+    },
+    'j1-1-4-scientific-mul-div-drill': {
+      type: 'drill',
+      title: '科學記號的乘除運算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildScientificMulDivSet(5);
+      },
+    },
+    'j1-1-4-scientific-add-sub-drill': {
+      type: 'drill',
+      title: '科學記號的加減運算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildScientificAddSubSet(5);
+      },
+    },
+    'j1-1-4-scientific-unit-conversion-drill': {
+      type: 'drill',
+      title: '長度與重量單位的轉換',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildScientificUnitConversionSet(5);
+      },
+    },
+    'j1-1-4-scientific-normalize-drill': {
+      type: 'drill',
+      title: '不完整科學記號化為標準形',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildScientificNormalizeSet(5);
+      },
+    },
+    'opposite-number-equation-drill': {
+      type: 'drill',
+      title: '相反數問題',
+      difficulty: 'easy',
+      questionCount: 10,
+      generate() {
+        return buildOppositeNumberSet(10);
+      },
+    },
+    'midpoint-distance-combined-drill': {
+      type: 'drill',
+      title: '中點與距離問題',
+      difficulty: 'easy',
+      questionCount: 10,
+      generate() {
+        return buildMidpointDistanceCombinedSet(10);
+      },
+    },
+    'same-shift-opposite-drill': {
+      type: 'drill',
+      title: '兩數同加或減一數成相反數',
+      difficulty: 'medium',
+      questionCount: 10,
+      generate() {
+        return buildSameShiftOppositeSet(10);
+      },
+    },
+    'opposite-number-sum-difference-drill': {
+      type: 'drill',
+      title: '相反數與和差關係',
+      difficulty: 'easy',
+      questionCount: 6,
+      generate() {
+        return buildOppositeNumberSumDifferenceSet(6);
+      },
+    },
+    'midpoint-reverse-drill': {
+      type: 'drill',
+      title: '中點反向問題',
+      difficulty: 'easy',
+      questionCount: 10,
+      generate() {
+        return buildMidpointReverseSet(10);
+      },
+    },
+    'midpoint-plus-distance-drill': {
+      type: 'drill',
+      title: '中點加距離綜合問題',
+      difficulty: 'medium',
+      questionCount: 10,
+      generate() {
+        return buildMidpointPlusDistanceSet(10);
+      },
+    },
+    'number-line-equidistant-point-drill': {
+      type: 'drill',
+      title: '等距點問題',
+      difficulty: 'easy',
+      questionCount: 6,
+      generate() {
+        return buildNumberLineEquidistantPointSet(6);
+      },
+    },
+    'number-line-fixed-distance-point-drill': {
+      type: 'drill',
+      title: '固定距離找點',
+      difficulty: 'easy',
+      questionCount: 6,
+      generate() {
+        return buildNumberLineFixedDistancePointSet(6);
+      },
+    },
+    'number-line-midpoint-distance-reverse-mixed-drill': {
+      type: 'drill',
+      title: '中點與距離反推綜合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildNumberLineMidpointDistanceReverseMixedSet(6);
+      },
+    },
+    'three-point-quick-distance-drill': {
+      type: 'drill',
+      title: '三點快速看距離練習',
+      difficulty: 'easy',
+      questionCount: 10,
+      generate() {
+        return buildThreePointQuickDistanceSet(10);
+      },
+    },
+    'coordinate-origin-unit-change': {
+      type: 'drill',
+      title: '改變原點與單位長時坐標變化',
+      difficulty: 'medium',
+      questionCount: 3,
+      generate() {
+        return buildCoordinateOriginUnitChangeSet(3);
+      },
+    },
+    'coordinate-origin-shift-only-drill': {
+      type: 'drill',
+      title: '只改原點',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildCoordinateOriginShiftOnlySet(5);
+      },
+    },
+    'coordinate-unit-scale-only-drill': {
+      type: 'drill',
+      title: '只改單位長',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildCoordinateUnitScaleOnlySet(5);
+      },
+    },
+    'coordinate-origin-then-unit-drill': {
+      type: 'drill',
+      title: '先改原點再改單位長',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildCoordinateOriginThenUnitSet(5);
+      },
+    },
+    'coordinate-old-new-inverse-drill': {
+      type: 'drill',
+      title: '新舊坐標互推',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildCoordinateOldNewInverseSet(5);
+      },
+    },
+    'coordinate-new-line-distance-midpoint-drill': {
+      type: 'drill',
+      title: '新數線下的距離與中點',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildCoordinateNewLineDistanceMidpointSet(5);
+      },
+    },
+    'abs-variable-basic-drill': {
+      type: 'drill',
+      title: '含字母的去絕對值基礎題',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildAbsVariableBasicSet(5);
+      },
+    },
+    'abs-short-mixed-calc-drill': {
+      type: 'drill',
+      title: '絕對值四則混合短題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildAbsMixedShortSet(5);
+      },
+    },
+    'abs-context-interpretation-drill': {
+      type: 'drill',
+      title: '絕對值文字情境題',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildAbsContextSet(5);
+      },
+    },
+    'j1-1-1-absolute-value-core-nine-subtypes': {
+      type: 'drill',
+      title: '絕對值基礎與計算九小類綜合',
+      difficulty: 'medium',
+      questionCount: 8,
+      generate() {
+        return buildJ111AbsoluteValueMixedSet(8);
+      },
+    },
+    'j1-1-1-midpoint-distance-nine-subtypes': {
+      type: 'drill',
+      title: '數線上的中點與距離九小類綜合',
+      difficulty: 'medium',
+      questionCount: 8,
+      generate() {
+        return buildJ111MidpointDistanceMixedSet(8);
+      },
+    },
+    'j1-1-1-origin-unit-six-subtypes': {
+      type: 'drill',
+      title: '改變原點與單位長六小類綜合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildJ111OriginUnitMixedSet(6);
+      },
+    },
+    'abs-four-terms-calc-drill': {
+      type: 'drill',
+      title: '四數含絕對值計算',
+      difficulty: 'easy',
+      questionCount: 10,
+      generate() {
+        return buildAbsFourTermsSet(10);
+      },
+    },
+    'abs-count-basic-drill': {
+      type: 'drill',
+      title: '絕對值個數問題',
+      difficulty: 'easy',
+      questionCount: 10,
+      generate() {
+        return buildAbsCountBasicSet(10);
+      },
+    },
+    'abs-count-two-sided-drill': {
+      type: 'drill',
+      title: '絕對值個數問題二邊範圍',
+      difficulty: 'medium',
+      questionCount: 10,
+      generate() {
+        return buildAbsCountTwoSidedSet(10);
+      },
+    },
+    'abs-count-reverse-drill': {
+      type: 'drill',
+      title: '絕對值個數問題反向',
+      difficulty: 'medium',
+      questionCount: 10,
+      generate() {
+        return buildAbsCountReverseSet(5);
+      },
+    },
+    'abs-equation-leading-one-drill': {
+      type: 'drill',
+      title: '絕對值方程式（最高次係數=1）',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildAbsEquationLeadingOneSet(5);
+      },
+    },
+    'abs-equation-leading-not-one-drill': {
+      type: 'drill',
+      title: '絕對值方程式（最高次係數≠1）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildAbsEquationLeadingNotOneSet(5);
+      },
+    },
+    'nonnegative-sum-zero-drill': {
+      type: 'drill',
+      title: '非負整數和=0',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildNonnegativeSumZeroSet(5);
+      },
+    },
+    'nonnegative-sum-fixed-one-drill': {
+      type: 'drill',
+      title: '非負整數和固定討論',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildNonnegativeSumFixedOneSet(5);
+      },
+    },
+    'nonnegative-sum-fixed-multix-drill': {
+      type: 'drill',
+      title: '非負整數解和固定討論多組解（只求x）',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildNonnegativeSumFixedMultiXSet(5);
+      },
+    },
+    'abs-both-sides-advanced-drill': {
+      type: 'drill',
+      title: '進階補充：兩邊都有絕對值',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildAbsoluteBothSidesAdvancedSet(5);
+      },
+    },
+    'abs-two-group-calc-drill': {
+      type: 'drill',
+      title: '二組絕對值計算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildAbsTwoGroupsSet(5);
+      },
+    },
+    'abs-remove-and-calc-drill': {
+      type: 'drill',
+      title: '去絕對值計算',
+      difficulty: 'medium',
+      questionCount: 3,
+      generate() {
+        return buildAbsRemoveAndCalcSet(3);
+      },
+    },
+    'linear-remove-parentheses-drill': {
+      type: 'drill',
+      title: '去括號（一元一次）',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildLinearRemoveParenthesesSet(5);
+      },
+    },
+    'linear-multiply-parentheses-drill': {
+      type: 'drill',
+      title: '有乘法的去括號（一元一次）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildLinearMultiplyParenthesesSet(5);
+      },
+    },
+    'linear-fraction-parentheses-drill': {
+      type: 'drill',
+      title: '有分數的去括號（一元一次）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildLinearFractionParenthesesSet(5);
+      },
+    },
+    'linear-word-expression-drill': {
+      type: 'drill',
+      title: '綜合列式文字題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildLinearWordExpressionSet(5);
+      },
+    },
+    'linear-substitution-value-drill': {
+      type: 'drill',
+      title: '綜合代入求值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildLinearSubstitutionValueSet(5);
+      },
+    },
+    'linear-move-terms-solve-drill': {
+      type: 'drill',
+      title: '移項求解',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildLinearMoveTermsSolveSet(5);
+      },
+    },
+    'linear-expand-move-solve-drill': {
+      type: 'drill',
+      title: '展開移項求解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildLinearExpandMoveSolveSet(5);
+      },
+    },
+    'linear-cross-expand-move-solve-drill': {
+      type: 'drill',
+      title: '交叉相乘後展開移項求解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildLinearCrossMultiplySolveSet(5);
+      },
+    },
+    'linear-lcm-multiply-move-solve-drill': {
+      type: 'drill',
+      title: '同乘公倍數後整理移項求解',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildLinearLcmMultiplySolveSet(5);
+      },
+    },
+    'linear-same-solution-drill': {
+      type: 'drill',
+      title: '解相同題型',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildLinearSameSolutionSet(5);
+      },
+    },
+    'j1-3-3-purchase-discount-application-drill': {
+      type: 'drill',
+      title: '錢數買賣與折扣問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildPurchaseDiscountApplicationSet(5);
+      },
+    },
+    'j1-3-3-allocation-application-drill': {
+      type: 'drill',
+      title: '分配問題（剩餘與不足）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildAllocationApplicationSet(5);
+      },
+    },
+    'j1-3-3-age-application-drill': {
+      type: 'drill',
+      title: '年齡推算問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildAgeApplicationSet(5);
+      },
+    },
+    'j1-3-3-speed-application-drill': {
+      type: 'drill',
+      title: '行程與速率問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildSpeedApplicationSet(5);
+      },
+    },
+    'j1-3-3-heads-coins-application-drill': {
+      type: 'drill',
+      title: '雞兔同籠與硬幣問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildHeadsCoinsApplicationSet(5);
+      },
+    },
+    'j1-3-3-work-rate-application-drill': {
+      type: 'drill',
+      title: '工程與工作效率問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133WorkRateSet(5);
+      },
+    },
+    'j1-3-3-fraction-remainder-application-drill': {
+      type: 'drill',
+      title: '剩餘量的分率問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133FractionRemainderSet(5);
+      },
+    },
+    'j1-3-3-score-penalty-application-drill': {
+      type: 'drill',
+      title: '得分倒扣問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133ScorePenaltySet(5);
+      },
+    },
+    'j1-3-3-mixture-application-drill': {
+      type: 'drill',
+      title: '濃度與混合問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133MixtureSet(5);
+      },
+    },
+    'j1-3-3-tiered-fee-application-drill': {
+      type: 'drill',
+      title: '基本費與超額計費問題',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ133TieredFeeSet(5);
+      },
+    },
+    'j1-3-3-clock-angle-application-drill': {
+      type: 'drill',
+      title: '時鐘與角度問題',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ133ClockAngleSet(5);
+      },
+    },
+    'j1-distributive-law-drill': {
+      type: 'drill',
+      title: '分配律',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ1DistributiveLawSet(5);
+      },
+    },
+    'j1-common-factor-drill': {
+      type: 'drill',
+      title: '提出公因數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ1CommonFactorSet(5);
+      },
+    },
+    'j1-common-factor-four-terms-drill': {
+      type: 'drill',
+      title: '4項提出公因數（全正數）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ1CommonFactorFourTermsSet(5);
+      },
+    },
+    'j1-common-factor-four-terms-signed-drill': {
+      type: 'drill',
+      title: '4項提出公因數（含正負數）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ1CommonFactorFourTermsSignedSet(5);
+      },
+    },
+    'j1-distributive-common-factor-mixed': {
+      type: 'drill',
+      title: '分配律與提出公因數綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ1DistributiveCommonFactorMixedSet(5);
+      },
+    },
+    'j1-variable-distributive-eval-drill': {
+      type: 'drill',
+      title: '已知甲×a，求(甲+b)×a',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ1VariableDistributiveEvalSet(5);
+      },
+    },
+    'j1-variable-distributive-application-drill': {
+      type: 'drill',
+      title: '分配律應用（大數字拆解）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ1VariableDistributiveApplicationSet(5);
+      },
+    },
+    'j1-variable-distributive-pair-difference-drill': {
+      type: 'drill',
+      title: '二組分配律（相鄰差一型）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ1DistributivePairDifferenceSet(5);
+      },
+    },
+    'j1-variable-distributive-offset-difference-drill': {
+      type: 'drill',
+      title: '二組分配律（補差型）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ1DistributiveOffsetDifferenceSet(5);
+      },
+    },
+    'j1-common-factor-then-distributive-drill': {
+      type: 'drill',
+      title: '先提公因數，再分配律',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ1CommonFactorThenDistributiveSet(5);
+      },
+    },
+    'weird-symbol-calc': {
+      type: 'drill',
+      title: '奇怪的符號計算',
+      difficulty: 'medium',
+      questionCount: 3,
+      generate() {
+        return buildWeirdSymbolCalcSet(3);
+      },
+    },
+    'weird-symbol-calc-three-layer': {
+      type: 'drill',
+      title: '奇怪的符號計算三層版',
+      difficulty: 'hard',
+      questionCount: 3,
+      generate() {
+        return buildWeirdSymbolCalcThreeLayerSet(3);
+      },
+    },
+    'weird-symbol-reverse-drill': {
+      type: 'drill',
+      title: '奇怪符號反求未知數',
+      difficulty: 'medium',
+      questionCount: 4,
+      generate() {
+        return buildWeirdSymbolReverseSet(4);
+      },
+    },
+    'j1-1-2-distributive-factor-nine-subtypes': {
+      type: 'drill',
+      title: '分配律與提出公因數九小類綜合',
+      difficulty: 'medium',
+      questionCount: 8,
+      generate() {
+        return buildJ112DistributiveFactorMixedSet(8);
+      },
+    },
+    'j1-1-2-integer-mixed-three-subtypes': {
+      type: 'drill',
+      title: '正負數混合運算五小類綜合',
+      difficulty: 'easy',
+      questionCount: 8,
+      generate() {
+        return buildJ112IntegerMixedSet(8);
+      },
+    },
+    'j1-1-2-baseline-average-four-subtypes': {
+      type: 'drill',
+      title: '基準量與平均數四小類綜合',
+      difficulty: 'medium',
+      questionCount: 8,
+      generate() {
+        return buildJ112BaselineMixedSet(8);
+      },
+    },
+    'j1-1-2-opposite-three-subtypes': {
+      type: 'drill',
+      title: '相反數與關係式三小類綜合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildJ112OppositeMixedSet(6);
+      },
+    },
+    'j1-1-2-weird-symbol-three-subtypes': {
+      type: 'drill',
+      title: '奇怪的符號計算三小類綜合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildJ112WeirdSymbolMixedSet(6);
+      },
+    },
+    'mod9-remainder-drill': {
+      type: 'drill',
+      title: '大數除以9餘數',
+      difficulty: 'easy',
+      questionCount: 10,
+      generate() {
+        return buildModuloRemainderSet(9, 10);
+      },
+    },
+    'mod9-unknown-multiple-drill': {
+      type: 'drill',
+      title: '反向求一大數除以9整除',
+      difficulty: 'medium',
+      questionCount: 10,
+      generate() {
+        return buildModuloUnknownMultipleSet(9, 10);
+      },
+    },
+    'mod9-unknown-remainder-drill': {
+      type: 'drill',
+      title: '反向求一大數除以9餘數',
+      difficulty: 'medium',
+      questionCount: 10,
+      generate() {
+        return buildModuloUnknownRemainderSet(9, 10);
+      },
+    },
+    'mod11-remainder-drill': {
+      type: 'drill',
+      title: '大數除以11餘數',
+      difficulty: 'easy',
+      questionCount: 10,
+      generate() {
+        return buildModuloRemainderSet(11, 10);
+      },
+    },
+    'mod11-unknown-multiple-drill': {
+      type: 'drill',
+      title: '反向求一大數除以11整除',
+      difficulty: 'medium',
+      questionCount: 10,
+      generate() {
+        return buildModuloUnknownMultipleSet(11, 10);
+      },
+    },
+    'mod11-unknown-remainder-drill': {
+      type: 'drill',
+      title: '反向求一大數除以11餘數',
+      difficulty: 'medium',
+      questionCount: 10,
+      generate() {
+        return buildModuloUnknownRemainderSet(11, 10);
+      },
+    },
+    'j1-2-1-gcd-lcm-calculation-drill': {
+      type: 'drill',
+      title: '最大公因數與最小公倍數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildGcdLcmCalculationSet(5);
+      },
+    },
+    'j1-2-1-gcd-lcm-product-relation-drill': {
+      type: 'drill',
+      title: '乘積與公因倍數關係',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildGcdLcmProductRelationSet(5);
+      },
+    },
+    'j1-2-1-remainder-shortage-mixed-drill': {
+      type: 'drill',
+      title: '餘數與不足問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildRemainderShortageMixedSet(5);
+      },
+    },
+    'j1-2-1-hanxin-advanced-drill': {
+      type: 'drill',
+      title: '韓信點兵進階',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildHanXinAdvancedSet(5);
+      },
+    },
+    'j1-2-1-prime-factor-notation-drill': {
+      type: 'drill',
+      title: '標準分解式的寫法',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildPrimeFactorNotationSet(5);
+      },
+    },
+    'j1-2-1-divisor-count-sum-mixed-drill': {
+      type: 'drill',
+      title: '正因數個數與總和',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildDivisorCountSumMixedSet(5);
+      },
+    },
+    'j1-2-1-rectangle-factor-pairs-drill': {
+      type: 'drill',
+      title: '矩形排列問題',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildRectangleFactorPairsSet(5);
+      },
+    },
+    'j1-2-3-fraction-add-sub-brackets-drill': {
+      type: 'drill',
+      title: '分數加減混合（去括號）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildFractionAddSubBracketSet(5);
+      },
+    },
+    'j1-2-3-fraction-add-sub-negative-drill': {
+      type: 'drill',
+      title: '分數加減混合（負號轉換）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildFractionAddSubNegativeSet(5);
+      },
+    },
+    'j1-2-3-fraction-add-sub-absolute-drill': {
+      type: 'drill',
+      title: '分數加減混合（絕對值對稱）',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildFractionAbsoluteSymmetrySet(5);
+      },
+    },
+    'j1-2-3-fraction-mul-div-mixed-drill': {
+      type: 'drill',
+      title: '分數乘除（帶分數與倒數）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildFractionMulDivMixedSet(5);
+      },
+    },
+    'j1-2-3-fraction-distributive-common-factor-drill': {
+      type: 'drill',
+      title: '分數乘除（分配律提公因數）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildFractionDistributiveCommonFactorSet(5);
+      },
+    },
+    'j1-2-3-fraction-distributive-regroup-drill': {
+      type: 'drill',
+      title: '分數乘除（分配律重組）',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildFractionDistributiveRegroupSet(5);
+      },
+    },
+    'j1-2-3-telescoping-gap-four-sum-drill': {
+      type: 'drill',
+      title: '分項對消（間隔四項和）',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildTelescopingGapFourSumSet(5);
+      },
+    },
+    'j1-2-3-telescoping-adjacent-sum-drill': {
+      type: 'drill',
+      title: '分項對消（相鄰連分式和）',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildTelescopingAdjacentSumSet(5);
+      },
+    },
+    'j1-2-3-telescoping-product-drill': {
+      type: 'drill',
+      title: '分項對消（連乘積）',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildTelescopingProductSet(5);
+      },
+    },
+    'factor-application-separate-grouping-drill': {
+      type: 'drill',
+      title: '男女分別分組',
+      difficulty: 'easy',
+      questionCount: 3,
+      generate() {
+        return buildSeparateGroupingSet(3);
+      },
+    },
+    'factor-application-mixed-grouping-drill': {
+      type: 'drill',
+      title: '男女混合分組',
+      difficulty: 'medium',
+      questionCount: 3,
+      generate() {
+        return buildMixedGroupingSet(3);
+      },
+    },
+    'factor-application-circular-track-drill': {
+      type: 'drill',
+      title: '環狀跑道同點重合',
+      difficulty: 'medium',
+      questionCount: 3,
+      generate() {
+        return buildCircularTrackSet(3);
+      },
+    },
+    'factor-road-planting-single-drill': {
+      type: 'drill',
+      title: '道路種樹（單側）',
+      difficulty: 'easy',
+      questionCount: 3,
+      generate() {
+        return buildRoadPlantingSingleSet(3);
+      },
+    },
+    'factor-road-planting-double-drill': {
+      type: 'drill',
+      title: '道路種樹（兩側）',
+      difficulty: 'easy',
+      questionCount: 3,
+      generate() {
+        return buildRoadPlantingDoubleSet(3);
+      },
+    },
+    'factor-road-keep-position-drill': {
+      type: 'drill',
+      title: '不需移動個數',
+      difficulty: 'medium',
+      questionCount: 3,
+      generate() {
+        return buildRoadReplantKeepSet(3);
+      },
+    },
+    'factor-rectangle-equal-square-drill': {
+      type: 'drill',
+      title: '長方形裁成相同正方形',
+      difficulty: 'easy',
+      questionCount: 3,
+      generate() {
+        return buildRectangleMaxSquarePiecesSet(3);
+      },
+    },
+    'factor-rectangle-max-square-mixed-drill': {
+      type: 'drill',
+      title: '長方形裁成數個最大正方形',
+      difficulty: 'medium',
+      questionCount: 3,
+      generate() {
+        return buildRectangleMinSquarePiecesSet(3);
+      },
+    },
   };
 
-  const bundleFingerprint = "j1-bundle-v20260619-v2";
+  const bundleFingerprint = 'j1-bundle-v20260619-v2';
   Object.values(nextConfigs).forEach((config) => {
-    if (!config || typeof config !== "object") return;
+    if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;
   });
 
