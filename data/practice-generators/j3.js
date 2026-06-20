@@ -130,6 +130,7 @@
 
   function buildCubicDivideLinearSet(count) {
     const questions = [];
+    const summaryAnswers = [];
     const answers = [];
 
     while (questions.length < count) {
@@ -153,7 +154,7 @@
       answers.push(`\\((${dividend})\\div(${divisor})=${quotient}\\)`);
     }
 
-    return { questions, summaryAnswers, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildCubicDivideQuadraticSet(count) {
@@ -1775,7 +1776,7 @@
         `簡答：\\((${f1})(${f2})\\)。過程：補成 \\((${leadCoeff === 1 ? '' : leadCoeff}${variable}^2+${p})^2-(${qVarText})^2\\)，再用平方差公式分解，得 \\((${f1})(${f2})\\)。`
       );
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildJ113BinaryQuadraticCrossFactoringSet(count) {
@@ -1809,7 +1810,7 @@
         `簡答：\\((${f1})(${f2})\\)。過程：把二元二次式看成兩個一次式相乘，用雙十字交乘配 \\(x^2,xy,y^2\\) 與 \\(x,y,常數\\) 項，可得 \\((${f1})(${f2})\\)。`
       );
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildJ313PolynomialDivisionRegularSet(count) {
@@ -2584,7 +2585,7 @@
       );
     }
 
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildDifferenceOfSquaresQuestions(count) {
@@ -2600,7 +2601,7 @@
       answers.push(`利用平方差公式：$(A+B)(A-B)=A^2-B^2$，其中 $A=${ax},\\ B=${b}$，所以結果是 $${lead}-${b * b}$。`);
     }
 
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildFactorizationQuestions(count) {
@@ -2616,7 +2617,7 @@
       answers.push(`這是平方差：$${lead}-${b * b}=(${ax}+${b})(${ax}-${b})$。`);
     }
 
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildJ311FormulaMixedSet(count, kind) {
@@ -2764,7 +2765,7 @@
         );
       }
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildSumSqsumToProductSet(count) {
@@ -2779,7 +2780,7 @@
       questions.push(`已知 \\(a+b=${sum}\\)、\\(a^2+b^2=${sqsum}\\)，求 \\(ab\\)。`);
       answers.push(`\\(ab=\\frac{(a+b)^2-(a^2+b^2)}{2}=\\frac{${sum * sum}-${sqsum}}{2}=${prod}\\)。`);
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildDiffSqsumToProductSet(count) {
@@ -2794,7 +2795,7 @@
       questions.push(`已知 \\(a-b=${diff}\\)、\\(a^2+b^2=${sqsum}\\)，求 \\(ab\\)。`);
       answers.push(`\\((a-b)^2=a^2-2ab+b^2\\Rightarrow ab=\\frac{${sqsum}-${diff * diff}}{2}=${prod}\\)。`);
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildIdentitySumProductSet(count) {
@@ -2812,7 +2813,7 @@
         `\\(a^2+b^2=(a+b)^2-2ab=${sum * sum}-2(${prod})=${sqsum}\\)，\\((a-b)^2=(a+b)^2-4ab=${sum * sum}-4(${prod})=${diff2}\\)。`
       );
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildProductSqsumSet(count) {
@@ -2830,7 +2831,7 @@
         `\\((a+b)^2=${sqsum}+2(${prod})=${sqsum + 2 * prod}\\Rightarrow a+b=${sum}\\) 或 \\(${-sum}\\)；\\((a-b)^2=${sqsum}-2(${prod})=${sqsum - 2 * prod}\\Rightarrow a-b=${diff}\\) 或 \\(${-diff}\\)。`
       );
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildSquarePairSet(count) {
@@ -2846,7 +2847,7 @@
       questions.push(`已知 \\((a+b)^2=${sp}\\)、\\((a-b)^2=${sm}\\)，求 \\(a^2+b^2\\)、\\(ab\\)。`);
       answers.push(`\\(a^2+b^2=\\frac{${sp}+${sm}}{2}=${sqsum}\\)，\\(ab=\\frac{${sp}-${sm}}{4}=${prod}\\)。`);
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildIdentityPairMixedSet(count) {
@@ -2889,7 +2890,7 @@
         );
       }
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildIdentityPairAdvancedSet(count) {
@@ -2936,7 +2937,7 @@
         );
       }
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildLinearCombinationSet(count) {
@@ -2954,7 +2955,7 @@
         `\\(a^2+b^2=(a-b)^2+2ab=${diff * diff}+2(${prod})=${sqsum}\\)，所以 \\(3a^2+4ab+3b^2=3(${sqsum})+4(${prod})=${value}\\)。`
       );
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildReciprocalSet(count) {
@@ -2965,7 +2966,7 @@
       questions.push(`已知 \\(x+\\frac{1}{x}=${val}\\)，求 \\(x^2+\\frac{1}{x^2}\\)。`);
       answers.push(`\\(x^2+\\frac{1}{x^2}=\\left(x+\\frac{1}{x}\\right)^2-2=${val}^2-2=${val * val - 2}\\)。`);
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildReciprocalReverseSet(count) {
@@ -2980,7 +2981,7 @@
         `\\(\\left(x+\\frac{1}{x}\\right)^2=${plus2}\\Rightarrow x+\\frac{1}{x}=\\pm\\sqrt{${plus2}}\\)，\\(\\left(x-\\frac{1}{x}\\right)^2=${minus2}\\Rightarrow x-\\frac{1}{x}=\\pm\\sqrt{${minus2}}\\)。`
       );
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildReciprocalMixedFractionSet(count) {
@@ -2999,7 +3000,7 @@
         `\\(\\frac1a+\\frac1b=\\frac{a+b}{ab}=\\frac{${sum}}{${prod}}\\)，\\(\\frac ab+\\frac ba=\\frac{a^2+b^2}{ab}=\\frac{${sqsum}}{${prod}}\\)。`
       );
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildMixedAdvancedIdentitySet(count) {
@@ -3017,7 +3018,7 @@
       questions.push(...pick.questions);
       answers.push(...pick.answers);
     }
-    return { questions, answers };
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function formatSingleVarExpr(coef, constant) {

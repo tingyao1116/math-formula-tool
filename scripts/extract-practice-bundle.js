@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const rootDir = path.resolve(__dirname, "..");
-const sourcePath = path.join(rootDir, "data", "formula-practice.js");
+const sourcePath = path.join(rootDir, "data", "formula-practice.full.js");
 const practiceDbPath = path.join(rootDir, "program-db", "database", "practice-db.json");
 const bundleOrder = ["e5", "e6", "j1", "j2", "j3", "j4", "j5", "j6", "s1", "s2", "s3", "s4", "s5"];
 

@@ -3278,6 +3278,12 @@
     return { left: a / g, right: b / g };
   }
 
+  const E619_LENGTH_TO_CM = {
+    公分: 1,
+    公尺: 100,
+    公里: 100000,
+  };
+
   function e619ScaleText(num, den = 1) {
     if (den === 1) return `${num}倍`;
     return `${num}/${den}倍`;

@@ -157,7 +157,7 @@
     keyword: "",
     chapterCode: String(urlParams.get("chapter") || "").trim(),
     selectedPracticeId: String(urlParams.get("practice") || "").trim(),
-    layoutMode: String(window.localStorage?.getItem("math-formula-tool-mobile-layout-mode") || urlParams.get("mode") || "default").trim() === "focus" ? "focus" : "default",
+    layoutMode: String(window.localStorage?.getItem("math-formula-tool-mobile-layout-mode") || urlParams.get("mode") || "focus").trim() === "focus" ? "focus" : "default",
     loadingPracticeId: "",
   };
 
