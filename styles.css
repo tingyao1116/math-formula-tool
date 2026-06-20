@@ -2126,15 +2126,35 @@ select {
 }
 
 .practice-mobile-player__topbar {
-  display: grid;
-  grid-template-columns: minmax(110px, 140px) 1fr;
-  gap: 12px;
-  align-items: center;
   margin-bottom: 14px;
 }
 
 .practice-mobile-player__topbar .ghost-button {
   width: 100%;
+}
+
+.practice-mobile-player__nav-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(110px, 140px) minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.practice-mobile-player__nav-slot {
+  display: flex;
+  align-items: center;
+}
+
+.practice-mobile-player__nav-slot--start {
+  justify-content: flex-start;
+}
+
+.practice-mobile-player__nav-slot--end {
+  justify-content: flex-end;
+}
+
+.practice-mobile-player__nav-slot .ghost-button {
+  width: min(100%, 140px);
 }
 
 .practice-mobile-player__topbar-text {
@@ -2152,6 +2172,24 @@ select {
   align-items: end;
   gap: 12px;
   margin-bottom: 12px;
+}
+
+.practice-mobile-player__header--nav {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.3fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.practice-mobile-player__header-main {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  text-align: center;
+}
+
+.practice-mobile-player__progress-inline {
+  margin: 0;
 }
 
 .practice-mobile-player__actions {
@@ -2274,6 +2312,10 @@ select {
   align-items: start;
 }
 
+.practice-mobile-player--focus .practice-mobile-player__header--nav {
+  align-items: center;
+}
+
 .practice-mobile-player--focus .practice-mobile-note,
 .practice-mobile-player--focus .meta-chip,
 .practice-mobile-player--focus .summary-count,
@@ -2306,8 +2348,17 @@ select {
 
 @media (max-width: 640px) {
   .practice-mobile-player__topbar {
-    grid-template-columns: 1fr;
     align-items: start;
+  }
+
+  .practice-mobile-player__nav-strip {
+    grid-template-columns: minmax(0, 1fr) minmax(96px, 120px) minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .practice-mobile-player__header--nav {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr) minmax(0, 1fr);
+    gap: 8px;
   }
 
   .practice-mobile-list__row {

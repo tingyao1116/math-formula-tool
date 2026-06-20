@@ -17,6 +17,15 @@ except Exception:
     Image = None
     ImageTk = None
 
+from reportlab.lib.colors import HexColor
+from reportlab.lib.enums import TA_LEFT
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.lib.units import mm
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.platypus import KeepTogether, PageBreak, Paragraph, SimpleDocTemplate, Spacer
+
 from question_data_utils import (
     clean_question_body,
     clean_question_title,
@@ -1883,6 +1892,399 @@ class DualDbGui:
             except Exception:
                 pass
 
+    def _practice_pdf_font_name(self) -> str:
+        cached = getattr(self, "_cached_practice_pdf_font_name", "")
+        if cached:
+            return cached
+
+        candidates = [
+            ("GuiPracticePdfKai", Path(r"C:\Windows\Fonts\kaiu.ttf")),
+            ("GuiPracticePdfJhengHei", Path(r"C:\Windows\Fonts\msjh.ttc")),
+            ("GuiPracticePdfNoto", Path(r"C:\Windows\Fonts\NotoSansTC-VF.ttf")),
+        ]
+        for font_name, font_path in candidates:
+            try:
+                pdfmetrics.registerFont(TTFont(font_name, str(font_path)))
+                self._cached_practice_pdf_font_name = font_name
+                return font_name
+            except Exception:
+                continue
+
+        self._cached_practice_pdf_font_name = "Helvetica"
+        return "Helvetica"
+
+    def _practice_pdf_plain_text(self, value):
+        text = str(value or "")
+        text = re.sub(r"<br\s*/?>", "\n", text, flags=re.I)
+        text = re.sub(r"<[^>]+>", "", text)
+        text = unescape(text)
+        text = text.replace("\r\n", "\n")
+        text = text.replace(r"\(", "").replace(r"\)", "")
+        text = text.replace(r"\[", "").replace(r"\]", "")
+        text = text.replace("$", "")
+        text = text.replace(r"\times", "×")
+        text = text.replace(r"\div", "÷")
+        text = text.replace(r"\cdot", "·")
+        text = text.replace(r"\le", "≤")
+        text = text.replace(r"\ge", "≥")
+        text = text.replace(r"\neq", "≠")
+        text = text.replace(r"\pm", "±")
+        text = re.sub(r"\\frac\{([^{}]+)\}\{([^{}]+)\}", r"(\1)/(\2)", text)
+        text = re.sub(r"\\sqrt\{([^{}]+)\}", r"√(\1)", text)
+        text = re.sub(r"\n{3,}", "\n\n", text)
+        return text.strip()
+
+    def _simplify_practice_answer_text(self, value: str, answer_mode: str = "detail"):
+        text = self._practice_pdf_plain_text(value)
+        if answer_mode != "simple" or not text:
+            return text
+        match = re.search(
+            r"(?:簡答|答案)[:：]\s*([\s\S]*?)(?=(?:。|；|\n)?\s*(?:過程|解析|詳解|說明)[:：]|$)",
+            text,
+        )
+        if match and match.group(1).strip():
+            return match.group(1).strip()
+        parts = re.split(r"(?:。|；|\n)?\s*(?:過程|解析|詳解|說明)[:：]", text, maxsplit=1)
+        return (parts[0] or text).strip()
+
+    def _build_practice_markdown_from_sets(
+        self,
+        generated_sets: list[dict],
+        title: str,
+        export_order: str = "separate",
+        answer_mode: str = "detail",
+        markdown_gap_lines: int = 0,
+    ) -> str:
+        gap_lines = max(0, min(5, int(markdown_gap_lines or 0)))
+        lines = [f"# {title}", ""]
+
+        def push_items(values: list[str], simplify: bool = False):
+            for idx, raw in enumerate(values or [], 1):
+                text = (
+                    self._simplify_practice_answer_text(raw, answer_mode)
+                    if simplify
+                    else self._practice_pdf_plain_text(raw)
+                )
+                lines.append(f"{idx}. {text}")
+                for _ in range(gap_lines if not simplify else 0):
+                    lines.append("&nbsp;")
+
+        if export_order == "interleaved":
+            for practice_set in generated_sets:
+                lines.extend([f"## {practice_set.get('title', '未命名題型')}", ""])
+                if practice_set.get("intro"):
+                    lines.extend([self._practice_pdf_plain_text(practice_set.get("intro", "")), ""])
+                lines.extend(["### 題目", ""])
+                push_items(practice_set.get("questions", []), simplify=False)
+                lines.extend(["", "### 答案", ""])
+                push_items(practice_set.get("answers", []), simplify=True)
+                lines.append("")
+            return "\n".join(lines).strip() + "\n"
+
+        lines.extend(["## 題目", ""])
+        for practice_set in generated_sets:
+            lines.append(f"### {practice_set.get('title', '未命名題型')}")
+            if practice_set.get("intro"):
+                lines.extend([self._practice_pdf_plain_text(practice_set.get("intro", "")), ""])
+            push_items(practice_set.get("questions", []), simplify=False)
+            lines.append("")
+
+        lines.extend(["## 答案", ""])
+        for practice_set in generated_sets:
+            lines.append(f"### {practice_set.get('title', '未命名題型')}")
+            push_items(practice_set.get("answers", []), simplify=True)
+            lines.append("")
+
+        return "\n".join(lines).strip() + "\n"
+
+    def _generate_practice_export_sets(self, records: list[dict], counts: dict[str, int], seed: str):
+        payload = []
+        for record in records:
+            rid = str(record.get("id", "")).strip()
+            if not rid:
+                continue
+            payload.append(
+                {
+                    "practiceId": rid,
+                    "count": int(counts.get(rid, int(record.get("questionCount", 0) or 5))),
+                    "title": str(record.get("title", "")).strip(),
+                }
+            )
+        if not payload:
+            return {"ok": False, "reason": "沒有可輸出的無限練習。", "sets": []}
+
+        payload_json = json.dumps(payload, ensure_ascii=False)
+        seed_json = json.dumps(seed or "practice-pdf", ensure_ascii=False)
+        node_script = f"""
+const fs = require('fs');
+const path = require('path');
+const vm = require('vm');
+const root = process.cwd();
+const ctx = {{
+  console, Math, Date, JSON, Number, String, Boolean, Array, Object, RegExp,
+  parseInt, parseFloat, isNaN, Infinity, NaN, Set, Map, WeakMap, WeakSet, URL,
+  structuredClone: global.structuredClone,
+}};
+ctx.window = ctx;
+ctx.global = ctx;
+ctx.globalThis = ctx;
+ctx.self = ctx;
+ctx.navigator = {{ userAgent: 'gui-practice-pdf-export' }};
+ctx.document = {{}};
+vm.createContext(ctx);
+
+function load(relPath) {{
+  const full = path.join(root, relPath);
+  const code = fs.readFileSync(full, 'utf8');
+  vm.runInContext(code, ctx, {{ filename: relPath }});
+}}
+
+const items = {payload_json};
+const seedText = {seed_json};
+
+function normalizeText(value) {{
+  return String(value == null ? '' : value).trim();
+}}
+
+function makeSeededRandom(seedSource) {{
+  var seed = String(seedSource || 'practice-pdf');
+  var h = 2166136261 >>> 0;
+  for (var i = 0; i < seed.length; i += 1) {{
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }}
+  return function() {{
+    h = (h + 0x6D2B79F5) >>> 0;
+    var t = h;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  }};
+}}
+
+function withSeed(seedSource, callback) {{
+  const originalRandom = Math.random;
+  Math.random = makeSeededRandom(seedSource);
+  try {{
+    return callback();
+  }} finally {{
+    Math.random = originalRandom;
+  }}
+}}
+
+load('data/formula-practice-assignments.js');
+load('data/formula-practice.js');
+load('data/practice-generators/shared-legacy-bundle.js');
+load('data/practice-generator-bootstrap.js');
+load('data/practice-generator-bundles.js');
+for (const file of fs.readdirSync(path.join(root, 'data', 'practice-generators'))) {{
+  if (!file.endsWith('.js')) continue;
+  if (file === 'shared-legacy-bundle.js') continue;
+  load(path.join('data', 'practice-generators', file));
+}}
+
+const generatedSets = items.map((entry, index) => {{
+  const id = normalizeText(entry.practiceId);
+  const practiceRecord = ctx.practiceLibraryStore?.byId?.[id] || ctx.formulaPracticeAssignmentStore?.byId?.[id] || null;
+  if (!practiceRecord) {{
+    return {{
+      practiceId: id,
+      title: normalizeText(entry.title) || id || '未命名題型',
+      intro: '',
+      questions: ['這一題尚未設定練習內容。'],
+      summaryAnswers: ['這一題尚未設定簡答。'],
+      answers: ['這一題尚未設定答案。'],
+    }};
+  }}
+  const count = Math.max(1, Number(entry.count || practiceRecord.questionCount || 5) || 5);
+  practiceRecord.questionCount = count;
+  const config = ctx.formulaPracticeStore?.getConfig?.(id) || null;
+  if (!config) {{
+    return {{
+      practiceId: id,
+      title: normalizeText(entry.title) || normalizeText(practiceRecord.title) || id,
+      intro: '',
+      questions: ['這一題尚未設定練習內容。'],
+      summaryAnswers: ['這一題尚未設定簡答。'],
+      answers: ['這一題尚未設定答案。'],
+    }};
+  }}
+  if (config.type === 'fixed-example') {{
+    const prompt = normalizeText(config.prompt) || '尚未設定題目';
+    const answer = normalizeText(config.answer) || '尚未設定答案';
+    return {{
+      practiceId: id,
+      title: normalizeText(config.title) || normalizeText(entry.title) || normalizeText(practiceRecord.title) || id,
+      intro: '',
+      questions: [prompt],
+      summaryAnswers: [answer],
+      answers: [answer],
+    }};
+  }}
+  let generated = {{}};
+  if (typeof config.generate === 'function') {{
+    generated = withSeed(seedText + '|' + index + '|' + id, () => config.generate.call(config, practiceRecord) || {{}}) || {{}};
+  }}
+  const questions = Array.isArray(generated.questions) ? generated.questions.map((value) => normalizeText(value)).filter(Boolean) : [];
+  const summaryAnswers = Array.isArray(generated.summaryAnswers) ? generated.summaryAnswers.map((value) => normalizeText(value)) : [];
+  const answers = Array.isArray(generated.answers) ? generated.answers.map((value) => normalizeText(value)) : [];
+  return {{
+    practiceId: id,
+    title: normalizeText(config.title) || normalizeText(entry.title) || normalizeText(practiceRecord.title) || id,
+    intro: normalizeText(generated.intro),
+    questions,
+    summaryAnswers,
+    answers,
+  }};
+}});
+
+process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2));
+"""
+
+        with NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as tmp:
+            tmp.write(node_script)
+            script_path = Path(tmp.name)
+        try:
+            proc = subprocess.run(
+                ["node", str(script_path)],
+                cwd=str(ROOT),
+                check=True,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+            )
+            data = json.loads((proc.stdout or "").replace("\ufeff", ""))
+            return {"ok": True, "reason": "", "sets": data.get("sets", [])}
+        except Exception as exc:
+            return {"ok": False, "reason": str(exc), "sets": []}
+        finally:
+            try:
+                script_path.unlink(missing_ok=True)
+            except Exception:
+                pass
+
+    def _export_practice_sets_to_pdf(
+        self,
+        generated_sets: list[dict],
+        out_path: Path,
+        title: str,
+        export_order: str = "separate",
+        answer_mode: str = "detail",
+        question_spacing_px: int = 18,
+    ):
+        out_path = Path(out_path)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        font_name = self._practice_pdf_font_name()
+        spacing_pt = max(2, min(40, int(question_spacing_px or 18)))
+
+        styles = getSampleStyleSheet()
+        title_style = ParagraphStyle(
+            "PracticePdfTitle",
+            parent=styles["Heading1"],
+            fontName=font_name,
+            fontSize=20,
+            leading=24,
+            textColor=HexColor("#3d2a1a"),
+            spaceAfter=5 * mm,
+            alignment=TA_LEFT,
+        )
+        note_style = ParagraphStyle(
+            "PracticePdfNote",
+            parent=styles["BodyText"],
+            fontName=font_name,
+            fontSize=10.5,
+            leading=15,
+            textColor=HexColor("#6f6658"),
+            spaceAfter=4 * mm,
+        )
+        section_style = ParagraphStyle(
+            "PracticePdfSection",
+            parent=styles["Heading2"],
+            fontName=font_name,
+            fontSize=16,
+            leading=20,
+            textColor=HexColor("#5a4326"),
+            spaceBefore=3 * mm,
+            spaceAfter=2 * mm,
+        )
+        set_title_style = ParagraphStyle(
+            "PracticePdfSetTitle",
+            parent=styles["Heading3"],
+            fontName=font_name,
+            fontSize=13,
+            leading=16,
+            textColor=HexColor("#2b2b2b"),
+            spaceBefore=2 * mm,
+            spaceAfter=1.5 * mm,
+        )
+        body_style = ParagraphStyle(
+            "PracticePdfBody",
+            parent=styles["BodyText"],
+            fontName=font_name,
+            fontSize=11.5,
+            leading=18,
+            textColor=HexColor("#2b2b2b"),
+            spaceAfter=0,
+        )
+
+        def paragraph_text(text: str):
+            return escape(text).replace("\n", "<br/>")
+
+        def append_set(story: list, practice_set: dict, show_answer: bool):
+            story.append(Paragraph(paragraph_text(practice_set.get("title", "未命名題型")), set_title_style))
+            if practice_set.get("intro") and not show_answer:
+                story.append(Paragraph(paragraph_text(self._practice_pdf_plain_text(practice_set.get("intro", ""))), note_style))
+            values = practice_set.get("answers", []) if show_answer else practice_set.get("questions", [])
+            if show_answer:
+                values = [self._simplify_practice_answer_text(value, answer_mode) for value in values]
+            else:
+                values = [self._practice_pdf_plain_text(value) for value in values]
+            values = [value for value in values if str(value or "").strip()]
+            if not values:
+                values = ["目前沒有內容。"]
+            group = []
+            for idx, value in enumerate(values, 1):
+                group.append(Paragraph(paragraph_text(f"{idx}. {value}"), body_style))
+                group.append(Spacer(1, spacing_pt))
+            story.append(KeepTogether(group))
+            story.append(Spacer(1, 4))
+
+        story = [
+            Paragraph(paragraph_text(title), title_style),
+            Paragraph(
+                paragraph_text("依所選無限練習自動生成；本 PDF 只生成一次資料，答案對應前方同一批題目。"),
+                note_style,
+            ),
+        ]
+
+        if export_order == "interleaved":
+            for practice_set in generated_sets:
+                story.append(Paragraph("題目", section_style))
+                append_set(story, practice_set, show_answer=False)
+                story.append(Paragraph("答案", section_style))
+                append_set(story, practice_set, show_answer=True)
+                story.append(Spacer(1, 8))
+        else:
+            story.append(Paragraph("題目", section_style))
+            for practice_set in generated_sets:
+                append_set(story, practice_set, show_answer=False)
+            story.append(PageBreak())
+            story.append(Paragraph("答案", section_style))
+            for practice_set in generated_sets:
+                append_set(story, practice_set, show_answer=True)
+
+        doc = SimpleDocTemplate(
+            str(out_path),
+            pagesize=A4,
+            leftMargin=14 * mm,
+            rightMargin=14 * mm,
+            topMargin=12 * mm,
+            bottomMargin=12 * mm,
+        )
+        doc.build(story)
+        return {"ok": True, "reason": "", "pdf": out_path}
+
     def _difficulty_rank(self, value: str):
         text = str(value or "").strip()
         mapping = {
@@ -2484,6 +2886,9 @@ class DualDbGui:
             formula_calculators_uri = self._asset_uri("data/formula-calculators.js")
             practice_assignment_uri = self._asset_uri("data/formula-practice-assignments.js")
             formula_practice_uri = self._asset_uri("data/formula-practice.js")
+            practice_generator_bootstrap_uri = self._asset_uri("data/practice-generator-bootstrap.js")
+            practice_generator_bundles_uri = self._asset_uri("data/practice-generator-bundles.js")
+            practice_generator_loader_uri = self._asset_uri("data/practice-generator-loader.js")
             formula_data_uri = self._asset_uri("formula-data.js")
             formula_core_uri = self._asset_uri("formula-core.js")
             return f"""<!doctype html>
@@ -2514,11 +2919,14 @@ class DualDbGui:
   <script defer src="{formula_calculators_uri}"></script>
   <script defer src="{practice_assignment_uri}"></script>
   <script defer src="{formula_practice_uri}"></script>
+  <script defer src="{practice_generator_bootstrap_uri}"></script>
+  <script defer src="{practice_generator_bundles_uri}"></script>
+  <script defer src="{practice_generator_loader_uri}"></script>
   <script defer src="{formula_data_uri}"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="{formula_core_uri}"></script>
   <script>
-    function renderGuiPreview() {{
+    async function renderGuiPreview() {{
       var root = document.getElementById('preview-root');
       if (!root) return;
       if (!window.formulaToolkit || typeof window.formulaToolkit.renderCard !== 'function') {{
@@ -2528,6 +2936,13 @@ class DualDbGui:
       if (!window.__guiPreviewTopic || !window.__guiPreviewTopic.id) {{
         root.innerHTML = '<div class="formula-card"><p>這筆無限練習設定目前還沒有對應主題可預覽。</p></div>';
         return;
+      }}
+      if (window.practiceGeneratorLoader && typeof window.practiceGeneratorLoader.ensureForPractice === 'function') {{
+        try {{
+          await window.practiceGeneratorLoader.ensureForPractice(window.__guiPreviewTopic);
+        }} catch (_error) {{
+          // Keep preview rendering best-effort; formulaToolkit will still show fallback content.
+        }}
       }}
       root.innerHTML = window.formulaToolkit.renderCard(window.__guiPreviewTopic || {{}}, {{
         showShareLink: false
@@ -3086,6 +3501,9 @@ class DualDbGui:
         formula_calculators_uri = self._asset_uri("data/formula-calculators.js")
         practice_assignment_uri = self._asset_uri("data/formula-practice-assignments.js")
         formula_practice_uri = self._asset_uri("data/formula-practice.js")
+        practice_generator_bootstrap_uri = self._asset_uri("data/practice-generator-bootstrap.js")
+        practice_generator_bundles_uri = self._asset_uri("data/practice-generator-bundles.js")
+        practice_generator_loader_uri = self._asset_uri("data/practice-generator-loader.js")
         formula_data_uri = self._asset_uri("formula-data.js")
         formula_core_uri = self._asset_uri("formula-core.js")
 
@@ -3174,6 +3592,9 @@ class DualDbGui:
   <script defer src="{formula_calculators_uri}"></script>
   <script defer src="{practice_assignment_uri}"></script>
   <script defer src="{formula_practice_uri}"></script>
+  <script defer src="{practice_generator_bootstrap_uri}"></script>
+  <script defer src="{practice_generator_bundles_uri}"></script>
+  <script defer src="{practice_generator_loader_uri}"></script>
   <script defer src="{formula_data_uri}"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="{formula_core_uri}"></script>
@@ -3358,7 +3779,7 @@ class DualDbGui:
       return lines.join('\\n').trim() + '\\n';
     }}
 
-    function renderPracticePdf() {{
+    async function renderPracticePdf() {{
       var root = document.getElementById('sheet-root');
       if (!root) return;
       if (!window.formulaToolkit || typeof window.formulaToolkit.renderRichTextLine !== 'function') {{
@@ -3366,6 +3787,17 @@ class DualDbGui:
         return;
       }}
       var items = Array.isArray(window.__practicePdfItems) ? window.__practicePdfItems : [];
+      if (window.practiceGeneratorLoader && typeof window.practiceGeneratorLoader.ensureForPractices === 'function') {{
+        try {{
+          await window.practiceGeneratorLoader.ensureForPractices(
+            items.map(function(entry) {{
+              return entry && entry.item ? entry.item : {{ id: entry && entry.practiceId ? entry.practiceId : '' }};
+            }})
+          );
+        }} catch (_error) {{
+          // Keep export rendering best-effort so fixed-example items can still render.
+        }}
+      }}
       applyPracticeCountOverrides(items);
       var generatedSets = generatePracticePdfSets(items);
       window.__practicePdfGeneratedSets = generatedSets;
@@ -3435,48 +3867,47 @@ class DualDbGui:
         combined_pdf = out_dir / f"{base_name}_題目與答案.pdf"
         combined_md = out_dir / f"{base_name}_題目與答案.md"
         export_seed = "practice-pdf|" + datetime.now().isoformat(timespec="microseconds")
+        generated_result = self._generate_practice_export_sets(records, counts, export_seed)
+        if not generated_result.get("ok"):
+            return messagebox.showerror("輸出失敗", f"無限練習生成失敗：\n{generated_result.get('reason', '未知錯誤')}")
 
-        combined_html = self._build_practice_pdf_html(
-            records,
-            counts,
-            show_answer=False,
-            seed=export_seed,
-            combined=True,
+        generated_sets = generated_result.get("sets", [])
+        combined_title = "無限練習題目與答案"
+        markdown_text = self._build_practice_markdown_from_sets(
+            generated_sets,
+            combined_title,
             export_order=export_order,
             answer_mode=answer_mode,
-            question_spacing_px=question_spacing_px,
             markdown_gap_lines=markdown_gap_lines,
         )
 
         if export_format == "md":
-            md_result = self._render_practice_html_to_markdown(combined_html)
-            if md_result.get("ok"):
-                combined_md.write_text(md_result.get("markdown", ""), encoding="utf-8")
-                self.status_var.set(f"無限練習 MD 匯出完成：{combined_md.name}")
-                return messagebox.showinfo("完成", f"已輸出：\n{combined_md}")
-            return messagebox.showerror("輸出失敗", f"Markdown 匯出失敗：\n{md_result.get('reason','未知錯誤')}")
+            combined_md.write_text(markdown_text, encoding="utf-8")
+            self.status_var.set(f"無限練習 MD 匯出完成：{combined_md.name}")
+            return messagebox.showinfo("完成", f"已輸出：\n{combined_md}")
 
-        combined_result = self._print_html_to_pdf(combined_html, combined_pdf)
-        if not combined_result["ok"]:
-            fallback_paths = []
-            if combined_result.get("html"):
-                fallback_paths.append(str(combined_result["html"]))
-            if fallback_paths:
-                self.status_var.set("找不到 Edge，已改輸出 HTML。")
-                return messagebox.showwarning("未偵測到 Edge", "目前無法直接輸出 PDF，已改輸出 HTML：\n" + "\n".join(fallback_paths))
+        combined_result = self._export_practice_sets_to_pdf(
+            generated_sets,
+            combined_pdf,
+            combined_title,
+            export_order=export_order,
+            answer_mode=answer_mode,
+            question_spacing_px=question_spacing_px,
+        )
+        if not combined_result.get("ok"):
             return messagebox.showerror("輸出失敗", combined_result.get("reason", "") or "未知錯誤")
 
         if export_format == "pdf":
             self.status_var.set(f"無限練習 PDF 匯出完成：{combined_pdf.name}")
             return messagebox.showinfo("完成", f"已輸出：\n{combined_pdf}")
 
-        md_result = self._render_practice_html_to_markdown(combined_html)
-        if md_result.get("ok"):
-            combined_md.write_text(md_result.get("markdown", ""), encoding="utf-8")
+        try:
+            combined_md.write_text(markdown_text, encoding="utf-8")
             self.status_var.set(f"無限練習匯出完成：{combined_pdf.name}、{combined_md.name}")
             return messagebox.showinfo("完成", f"已輸出：\n{combined_pdf}\n{combined_md}")
-        self.status_var.set(f"無限練習 PDF 匯出完成：{combined_pdf.name}（MD 失敗）")
-        return messagebox.showwarning("部分完成", f"已輸出 PDF：\n{combined_pdf}\n\n但 Markdown 匯出失敗：\n{md_result.get('reason','未知錯誤')}")
+        except Exception as exc:
+            self.status_var.set(f"無限練習 PDF 匯出完成：{combined_pdf.name}（MD 失敗）")
+            return messagebox.showwarning("部分完成", f"已輸出 PDF：\n{combined_pdf}\n\n但 Markdown 匯出失敗：\n{exc}")
 
     def _split_pipe(self, value: str):
         text = (value or "").strip()

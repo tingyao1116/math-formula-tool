@@ -405,10 +405,16 @@
     elements.layoutModeSelect.value = focus ? "focus" : "default";
     elements.player?.classList.toggle("practice-mobile-player--focus", focus);
     elements.practiceListPanel?.classList.toggle("practice-mobile-list-panel--focus", focus);
-    elements.defaultTopActions?.classList.toggle("is-hidden", focus);
+    document.querySelectorAll(".practice-mobile-mode-default-only").forEach((node) => {
+      node.classList.toggle("is-hidden", focus);
+    });
+    document.querySelectorAll(".practice-mobile-mode-focus-only").forEach((node) => {
+      node.classList.toggle("is-hidden", !focus);
+    });
+    elements.defaultTopActions?.classList.add("is-hidden");
     elements.defaultBottomActions?.classList.toggle("is-hidden", focus);
     elements.focusBottomActions?.classList.toggle("is-hidden", !focus);
-    elements.compactActions?.classList.toggle("is-hidden", !focus);
+    elements.compactActions?.classList.add("is-hidden");
   }
 
   function buildHtmlList(items, emptyText) {

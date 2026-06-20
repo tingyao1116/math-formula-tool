@@ -68,52 +68,95 @@
 
         <section id="mobilePracticeView" class="practice-mobile-view is-hidden">
           <section id="mobilePracticePlayer" class="panel practice-mobile-player">
-            <div class="practice-mobile-player__topbar">
-              <button id="mobileBackButton" type="button" class="ghost-button">回上一頁</button>
-              <div class="practice-mobile-player__topbar-text">
-                <p class="summary-label">目前章節</p>
-                <h2 id="mobileChapterTitle">章節</h2>
+            <div class="practice-mobile-player__topbar practice-mobile-player__nav-strip">
+              <div class="practice-mobile-player__nav-slot practice-mobile-player__nav-slot--start">
+                <button
+                  id="mobilePrevChapterButton"
+                  type="button"
+                  class="ghost-button practice-mobile-mode-default-only"
+                >
+                  上一章
+                </button>
+                <button
+                  id="mobileMode2PrevChapterButton"
+                  type="button"
+                  class="ghost-button practice-mobile-mode-focus-only is-hidden"
+                  aria-label="上一章"
+                >
+                  上一章
+                </button>
+              </div>
+              <button id="mobileBackButton" type="button" class="ghost-button practice-mobile-player__back-button">
+                回上一頁
+              </button>
+              <div class="practice-mobile-player__nav-slot practice-mobile-player__nav-slot--end">
+                <button
+                  id="mobileNextChapterButton"
+                  type="button"
+                  class="ghost-button practice-mobile-mode-default-only"
+                >
+                  下一章
+                </button>
+                <button
+                  id="mobileMode2NextChapterButton"
+                  type="button"
+                  class="ghost-button practice-mobile-mode-focus-only is-hidden"
+                  aria-label="下一章"
+                >
+                  下一章
+                </button>
               </div>
             </div>
 
-            <div
-              id="mobileCompactActions"
-              class="interactive-actions practice-mobile-player__compact-actions is-hidden"
-            >
-              <button id="mobileMode2PrevChapterButton" type="button" class="ghost-button" aria-label="上一章">
-                上一章
-              </button>
-              <button id="mobileMode2PrevPracticeButton" type="button" class="ghost-button" aria-label="上一題型">
-                上一題型
-              </button>
-              <button id="mobileMode2NextPracticeButton" type="button" class="ghost-button" aria-label="下一題型">
-                下一題型
-              </button>
-              <button id="mobileMode2NextChapterButton" type="button" class="ghost-button" aria-label="下一章">
-                下一章
-              </button>
+            <div class="practice-mobile-player__topbar-text">
+              <p class="summary-label">目前章節</p>
+              <h2 id="mobileChapterTitle">章節</h2>
             </div>
 
-            <div
-              id="mobileDefaultTopActions"
-              class="interactive-actions interactive-actions--stacked practice-mobile-player__actions"
-            >
-              <div class="interactive-actions__row interactive-actions__row--split">
-                <button id="mobilePrevChapterButton" type="button" class="ghost-button">上一章</button>
-                <button id="mobileNextChapterButton" type="button" class="ghost-button">下一章</button>
-              </div>
-              <div class="interactive-actions__row interactive-actions__row--split">
-                <button id="mobilePrevPracticeButton" type="button" class="ghost-button">上一題型</button>
-                <button id="mobileNextPracticeButton" type="button" class="ghost-button">下一題型</button>
-              </div>
-            </div>
+            <div id="mobileCompactActions" class="is-hidden"></div>
 
-            <div class="practice-mobile-player__header">
-              <div>
+            <div id="mobileDefaultTopActions" class="is-hidden"></div>
+
+            <div class="practice-mobile-player__header practice-mobile-player__header--nav">
+              <div class="practice-mobile-player__nav-slot">
+                <button
+                  id="mobilePrevPracticeButton"
+                  type="button"
+                  class="ghost-button practice-mobile-mode-default-only"
+                >
+                  上一題型
+                </button>
+                <button
+                  id="mobileMode2PrevPracticeButton"
+                  type="button"
+                  class="ghost-button practice-mobile-mode-focus-only is-hidden"
+                  aria-label="上一題型"
+                >
+                  上一題型
+                </button>
+              </div>
+              <div class="practice-mobile-player__header-main">
                 <p class="summary-label">目前題型</p>
                 <h2 id="mobilePracticeTitle">尚未選擇題型</h2>
+                <p id="mobilePracticeProgress" class="summary-count practice-mobile-player__progress-inline"></p>
               </div>
-              <p id="mobilePracticeProgress" class="summary-count"></p>
+              <div class="practice-mobile-player__nav-slot">
+                <button
+                  id="mobileNextPracticeButton"
+                  type="button"
+                  class="ghost-button practice-mobile-mode-default-only"
+                >
+                  下一題型
+                </button>
+                <button
+                  id="mobileMode2NextPracticeButton"
+                  type="button"
+                  class="ghost-button practice-mobile-mode-focus-only is-hidden"
+                  aria-label="下一題型"
+                >
+                  下一題型
+                </button>
+              </div>
             </div>
 
             <div id="mobilePracticeMeta" class="meta-row"></div>
