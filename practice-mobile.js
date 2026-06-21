@@ -163,7 +163,7 @@
     keyword: "",
     chapterCode: String(urlParams.get("chapter") || "").trim(),
     selectedPracticeId: String(urlParams.get("practice") || "").trim(),
-    layoutMode: String(window.localStorage?.getItem("math-formula-tool-mobile-layout-mode") || urlParams.get("mode") || "focus").trim() === "focus" ? "focus" : "default",
+    layoutMode: "focus",
     loadingPracticeId: "",
   };
 
@@ -509,7 +509,7 @@
 
   function renderChapterList() {
     const chapters = getVisibleChapters();
-    elements.chapterCount.textContent = `${TEXT.chapterCountPrefix}${chapters.length} ${TEXT.chapterUnit}`;
+    elements.chapterCount.textContent = "";
 
     if (!chapters.length) {
       elements.chapterList.innerHTML = `<p class="empty-state">${TEXT.noMatchingChapter}</p>`;
@@ -526,7 +526,7 @@
       >
         <div class="practice-mobile-list__row">
           <strong class="practice-mobile-list__chapter-title">${index + 1}. ${escapeHtml(chapter.label)}</strong>
-          <span class="practice-mobile-list__chapter-count">${escapeHtml(`${TEXT.chapterCountPrefix}${chapter.count} ${TEXT.practiceUnit}`)}</span>
+          <span class="practice-mobile-list__chapter-count"></span>
         </div>
       </button>
     `,
@@ -538,7 +538,7 @@
     const chapterItems = getChapterItems();
     const chapterLabel = chapterOptionByCode.get(state.chapterCode)?.label || state.chapterCode || TEXT.chapterFallback;
     elements.listTitle.textContent = chapterLabel;
-    elements.listCount.textContent = `${TEXT.chapterCountPrefix}${chapterItems.length} ${TEXT.practiceUnit}`;
+    elements.listCount.textContent = "";
 
     if (!chapterItems.length) {
       elements.practiceList.innerHTML = `<p class="empty-state">${TEXT.noPracticeInChapter}</p>`;
@@ -551,10 +551,7 @@
         const total = Array.isArray(session?.questions) ? session.questions.length : 0;
         const progressText = total
           ? `${TEXT.solvedProgressPrefix}${Number(session.currentIndex || 0) + 1} / ${total} ${TEXT.currentQuestionSuffix}`
-          : TEXT.notGenerated;
-        const timeText = session?.generatedAt
-          ? `${TEXT.lastGenerated}${formatTimeText(session.generatedAt)}`
-          : TEXT.noRecord;
+          : "";
         return `
         <button
           type="button"
@@ -563,11 +560,7 @@
         >
           <div class="practice-mobile-list__main">
             <strong>${index + 1}. ${escapeHtml(item.title)}</strong>
-            <span>${escapeHtml(progressText)}</span>
-          </div>
-          <div class="practice-mobile-list__meta">
-            <span>${escapeHtml(item.chapterLabel)}</span>
-            <span>${escapeHtml(timeText)}</span>
+            ${progressText ? `<span>${escapeHtml(progressText)}</span>` : ""}
           </div>
         </button>
       `;
@@ -613,7 +606,7 @@
       elements.practiceTitle.textContent = TEXT.noPractice;
       elements.practiceProgress.textContent = "";
       elements.practiceMeta.innerHTML = "";
-      elements.practiceHint.textContent = TEXT.switchChapterHint;
+      elements.practiceHint.textContent = "";
       renderQuestionOutputs(TEXT.noQuestionToShow, "", "");
       [
         elements.regenerateButton,
@@ -638,7 +631,7 @@
 
     elements.practiceTitle.textContent = selected.title;
     elements.practiceProgress.textContent = `${TEXT.topicIndexPrefix}${practiceIndex + 1} / ${chapterItems.length}`;
-    elements.practiceMeta.innerHTML = renderMetaChips(selected);
+    elements.practiceMeta.innerHTML = "";
     elements.regenerateButton.disabled = false;
     elements.mode2RegenerateButton.disabled = false;
 
@@ -660,9 +653,7 @@
       return;
     }
 
-    elements.practiceHint.textContent = session.generatedAt
-      ? `${TEXT.generatedRecordHint}${formatTimeText(session.generatedAt)}${TEXT.generatedRecordHintSuffix}`
-      : TEXT.storedRecordHint;
+    elements.practiceHint.textContent = "";
 
     const { total, index } = renderQuestionSession(session);
 
@@ -738,9 +729,8 @@
   }
 
   function bindEvents() {
-    elements.layoutModeSelect.addEventListener("change", (event) => {
-      state.layoutMode = event.target.value === "focus" ? "focus" : "default";
-      window.localStorage?.setItem("math-formula-tool-mobile-layout-mode", state.layoutMode);
+    elements.layoutModeSelect.addEventListener("change", () => {
+      state.layoutMode = "focus";
       renderAll();
     });
 

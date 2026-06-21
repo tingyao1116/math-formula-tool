@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d5c63" />
+    <title>能力指標入口</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    <link rel="stylesheet" href="styles.css?v=20260621-ability-map-v2" />
+  </head>
+  <body class="ability-practice-page">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero__content">
+          <p class="eyebrow">能力指標入口</p>
+          <h1>能力指標練習</h1>
+          <p class="hero__lead">
+            這一頁不是要學生先看完整張技能地圖，而是每一階段給一個入口。先從建議入口開始，穩了再往下一步；如果需要，也可以展開查看全部能力指標。
+          </p>
+          <div class="hero__quicklinks">
+            <a class="ghost-link" href="index.html">回首頁</a>
+            <a class="ghost-link" href="practice-bank.html">原本題型總覽</a>
+            <a class="ghost-link" href="practice-mobile.html">手機版練習</a>
+          </div>
+        </div>
+        <div class="hero__panel">
+          <h2>目前架構</h2>
+          <ul id="abilityAuditList"></ul>
+        </div>
+      </header>
+
+      <main class="layout ability-practice-layout">
+        <aside class="sidebar ability-practice-sidebar">
+          <section class="panel">
+            <div class="skill-tree-toolbar">
+              <h2>學習入口</h2>
+              <button id="toggleAllStagesButton" class="ghost-button" type="button">顯示全部階段</button>
+            </div>
+            <p class="ability-map-hint">預設只顯示目前建議入口，避免學生一開始就被全部內容淹沒。</p>
+            <div id="abilityMap" class="ability-map"></div>
+          </section>
+
+          <section class="panel">
+            <h2>熟悉度說明</h2>
+            <div id="masteryLegend" class="mastery-legend"></div>
+            <p class="ability-map-hint">
+              第一版規則：答對加分、答錯扣分；若常錯在觀念，系統會優先建議退回前置能力。
+            </p>
+          </section>
+        </aside>
+
+        <section class="content ability-practice-content">
+          <section class="panel summary-panel ability-summary-panel">
+            <div>
+              <p class="summary-label">目前階段</p>
+              <h2 id="branchTitle">請先選一個階段入口</h2>
+            </div>
+            <p id="branchStatus" class="summary-count"></p>
+          </section>
+
+          <section class="panel ability-detail-panel">
+            <div class="ability-detail-panel__header">
+              <div>
+                <p id="branchMainLine" class="ability-mainline-label"></p>
+                <p id="branchSummary" class="ability-detail-text"></p>
+              </div>
+              <div class="ability-progress-card">
+                <div class="ability-progress-card__label">熟悉度</div>
+                <div id="branchMasteryLabel" class="ability-progress-card__value">未開始</div>
+                <div class="ability-progress-bar">
+                  <div id="branchMasteryBar" class="ability-progress-bar__fill"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ability-meta-grid">
+              <div class="ability-meta-box">
+                <h3>本階段技能</h3>
+                <div id="branchPracticeTags" class="ability-tag-list"></div>
+              </div>
+              <div class="ability-meta-box">
+                <h3>前一階段</h3>
+                <div id="branchPrerequisites" class="ability-tag-list"></div>
+              </div>
+              <div class="ability-meta-box">
+                <h3>下一步</h3>
+                <div id="branchNextSteps" class="ability-tag-list"></div>
+              </div>
+              <div class="ability-meta-box">
+                <h3>入口說明</h3>
+                <p id="branchAnswerMode" class="ability-detail-text"></p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel ability-session-panel">
+            <div class="ability-session-panel__header">
+              <div>
+                <h2>入口練習</h2>
+                <p id="sessionHint" class="ability-detail-text">
+                  先從目前階段入口開始。
+                </p>
+              </div>
+              <div class="ability-session-actions">
+                <button id="startPracticeButton" class="ghost-button" type="button">開始練習</button>
+                <button id="newQuestionButton" class="ghost-button" type="button" disabled>換一題</button>
+              </div>
+            </div>
+
+            <div id="sessionCard" class="ability-session-card is-empty">
+              <p>這一版先做能力指標架構：用階段入口帶學生往下走，不要求學生自己先知道完整技能樹。</p>
+            </div>
+
+            <div id="feedbackPanel" class="ability-feedback-panel" hidden></div>
+            <div id="mistakeTagPanel" class="ability-mistake-panel" hidden></div>
+            <div id="recommendationPanel" class="ability-recommendation-panel" hidden></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script defer src="formulas.js"></script>
+    <script defer src="data/formula-content.js?v=20260423-abs-count-layout-v4"></script>
+    <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
+    <script defer src="data/main-topic-overviews.js?v=20260508-topic-title-clean-v1"></script>
+    <script defer src="data/chapter-code-config.js?v=20260616-e425-split-v1"></script>
+    <script defer src="data/formula-calculators.js"></script>
+    <script defer src="data/formula-practice-assignments.js?v=20260617-e4-bundle-bridge-v1"></script>
+    <script defer src="data/formula-practice.js?v=20260620-runtime-main-v1"></script>
+    <script defer src="data/practice-generator-bundles.js?v=20260619-chapter-owned-v1"></script>
+    <script defer src="data/practice-generator-loader.js?v=20260619-e5-force-bundle-v3"></script>
+    <script defer src="data/practice-learning-architecture-v3.js?v=20260621-book2-expanded-v1"></script>
+    <script defer src="data/practice-learning-architecture-v4.js?v=20260621-book3-expanded-v1"></script>
+    <script defer src="data/practice-learning-architecture-v5.js?v=20260621-book4-expanded-v1"></script>
+    <script defer src="data/practice-learning-architecture-v6.js?v=20260621-book5-expanded-v1"></script>
+    <script defer src="data/practice-learning-architecture-v7.js?v=20260621-book6-expanded-v1"></script>
+    <script defer src="data/practice-ability-map.js?v=20260621-ability-map-v2"></script>
+    <script defer src="formula-data.js?v=20260616-e425-split-v1"></script>
+    <script defer src="chapter-overviews.js?v=20260507-main-theme-layer-v2"></script>
+    <script defer src="chapter-closings.js?v=20260507-main-theme-layer-v2"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="formula-core.js?v=20260619-e5-fingerprint-v5"></script>
+    <script defer src="ability-indicator-practice.js?v=20260621-ability-indicator-v2"></script>
+    <script defer src="pwa.js"></script>
+  </body>
+</html>

@@ -2117,6 +2117,18 @@ select {
   margin-bottom: 18px;
 }
 
+.practice-mobile-page .hero__lead,
+.practice-mobile-page .summary-label,
+.practice-mobile-page .meta-row,
+.practice-mobile-page .practice-mobile-note,
+.practice-mobile-page .practice-mobile-list__chapter-count,
+.practice-mobile-page .practice-mobile-list__meta,
+.practice-mobile-page label[for="mobileLayoutModeSelect"],
+.practice-mobile-page .field:has(#mobileLayoutModeSelect),
+.practice-mobile-page a[href="practice-bank.html"] {
+  display: none !important;
+}
+
 .practice-mobile-select-panel,
 .practice-mobile-chapter-panel,
 .practice-mobile-filters,
@@ -2184,7 +2196,7 @@ select {
 .practice-mobile-player__header-main {
   min-width: 0;
   display: grid;
-  gap: 4px;
+  gap: 2px;
   text-align: center;
 }
 
@@ -2236,7 +2248,7 @@ select {
   background: rgba(255, 253, 248, 0.96);
   padding: 14px;
   display: grid;
-  gap: 8px;
+  gap: 4px;
   text-align: left;
   color: var(--text);
 }
@@ -2266,13 +2278,22 @@ select {
 
 .practice-mobile-list__main {
   display: grid;
-  gap: 4px;
+  gap: 2px;
 }
 
 .practice-mobile-list__main span,
 .practice-mobile-list__meta {
   color: var(--muted);
   font-size: 0.92rem;
+}
+
+.practice-mobile-page .practice-mobile-select-panel .field {
+  gap: 6px;
+}
+
+.practice-mobile-page .practice-mobile-chapter-panel h2,
+.practice-mobile-page .practice-mobile-list-panel h2 {
+  margin-bottom: 4px;
 }
 
 .practice-mobile-list__meta {
@@ -2482,6 +2503,354 @@ select {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+}
+
+.ability-practice-layout {
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+}
+
+.skill-tree-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ability-map,
+.mastery-legend,
+.ability-tag-list,
+.ability-mistake-panel__tags,
+.ability-recommendation-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ability-map {
+  flex-direction: column;
+}
+
+.skill-tree-chapter {
+  border: 1px solid rgba(13, 92, 99, 0.14);
+  border-radius: 18px;
+  background: rgba(255, 253, 248, 0.96);
+  overflow: hidden;
+}
+
+.skill-tree-chapter__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border: 0;
+  background: rgba(13, 92, 99, 0.08);
+  color: var(--text);
+  padding: 14px 16px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.skill-tree-chapter__body {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.skill-tree-node {
+  border: 1px solid rgba(13, 92, 99, 0.12);
+  border-radius: 16px;
+  background: #fff;
+  padding: 12px;
+}
+
+.skill-tree-node.is-active {
+  border-color: rgba(13, 92, 99, 0.38);
+  box-shadow: 0 10px 24px rgba(13, 92, 99, 0.1);
+}
+
+.skill-tree-node__main {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  padding: 0;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.skill-tree-node__title {
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.skill-tree-node__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.skill-tree-node__count {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.skill-tree-node__practice {
+  padding: 8px 12px;
+}
+
+.ability-map-hint,
+.ability-detail-text,
+.ability-empty-text,
+.ability-main-group__header p,
+.ability-branch-card p,
+.ability-feedback-panel__body p,
+.ability-recommendation-panel p {
+  color: #335c67;
+  line-height: 1.7;
+}
+
+.ability-main-group {
+  display: grid;
+  gap: 14px;
+}
+
+.ability-main-group__header h3,
+.ability-meta-box h3,
+.ability-mistake-panel h3,
+.ability-recommendation-panel h3 {
+  margin: 0;
+}
+
+.ability-main-group__header p,
+.ability-meta-box p,
+.ability-session-card p,
+.ability-feedback-panel__body p {
+  margin: 0;
+}
+
+.ability-main-group__branches {
+  display: grid;
+  gap: 12px;
+}
+
+.ability-branch-card {
+  border: 1px solid rgba(13, 92, 99, 0.16);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(239, 248, 247, 0.96));
+  padding: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ability-branch-card:hover,
+.ability-branch-card.is-active {
+  transform: translateY(-2px);
+  border-color: rgba(13, 92, 99, 0.42);
+  box-shadow: 0 18px 40px rgba(13, 92, 99, 0.12);
+}
+
+.ability-branch-card__top,
+.ability-branch-card__meta,
+.ability-detail-panel__header,
+.ability-session-panel__header,
+.ability-meta-grid,
+.ability-session-card__meta,
+.ability-session-card__actions,
+.ability-feedback-panel,
+.ability-feedback-panel__body,
+.ability-progress-card {
+  display: flex;
+  gap: 12px;
+}
+
+.ability-branch-card__top,
+.ability-detail-panel__header,
+.ability-session-panel__header,
+.ability-feedback-panel {
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.ability-branch-card__meta {
+  flex-wrap: wrap;
+  color: #4b6970;
+  font-size: 0.92rem;
+}
+
+.ability-summary-panel {
+  align-items: center;
+}
+
+.ability-mainline-label {
+  margin: 0 0 6px;
+  font-weight: 700;
+  color: #0d5c63;
+}
+
+.ability-progress-card {
+  min-width: 180px;
+  flex-direction: column;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(236, 246, 245, 0.95);
+}
+
+.ability-progress-card__label {
+  color: #5f7b81;
+  font-size: 0.9rem;
+}
+
+.ability-progress-card__value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0d5c63;
+}
+
+.ability-progress-bar {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(13, 92, 99, 0.12);
+  overflow: hidden;
+}
+
+.ability-progress-bar__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #0d5c63, #2f8f91);
+}
+
+.ability-meta-grid {
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.skill-tree-meta-grid .ability-meta-box {
+  min-width: 180px;
+}
+
+.ability-meta-box {
+  min-width: 220px;
+  flex: 1 1 220px;
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(248, 250, 249, 0.96);
+}
+
+.ability-session-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ability-session-card {
+  display: grid;
+  gap: 16px;
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(248, 250, 249, 0.96);
+}
+
+.ability-session-card.is-empty {
+  color: #4b6970;
+}
+
+.ability-answer-field {
+  display: grid;
+  gap: 8px;
+}
+
+.ability-answer-input {
+  width: 100%;
+  border: 1px solid rgba(13, 92, 99, 0.22);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.ability-answer-input:focus {
+  outline: 2px solid rgba(13, 92, 99, 0.18);
+  border-color: rgba(13, 92, 99, 0.48);
+}
+
+.ability-feedback-panel,
+.ability-mistake-panel,
+.ability-recommendation-panel {
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(248, 250, 249, 0.96);
+}
+
+.ability-feedback-panel__badge {
+  flex: 0 0 auto;
+  min-width: 110px;
+  border-radius: 999px;
+  padding: 10px 14px;
+  text-align: center;
+  font-weight: 800;
+  color: #fff;
+}
+
+.ability-feedback-panel__badge.is-correct {
+  background: #2a9d8f;
+}
+
+.ability-feedback-panel__badge.is-wrong {
+  background: #c66b3d;
+}
+
+.ability-feedback-panel__body {
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.ability-feedback-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.ability-mistake-tag.is-active {
+  background: #0d5c63;
+  color: #fff;
+  border-color: #0d5c63;
+}
+
+.ability-practice-page .interactive-output {
+  margin: 0;
+}
+
+@media (max-width: 980px) {
+  .ability-practice-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .ability-detail-panel__header,
+  .ability-session-panel__header,
+  .ability-feedback-panel {
+    flex-direction: column;
+  }
+
+  .ability-progress-card {
+    min-width: 0;
+  }
 }
 
 @media print {

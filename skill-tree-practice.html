@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d5c63" />
+    <title>技能樹練習</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    <link rel="stylesheet" href="styles.css?v=20260621-skill-tree-v2" />
+  </head>
+  <body class="ability-practice-page">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero__content">
+          <p class="eyebrow">章節排序技能樹</p>
+          <h1>技能樹練習</h1>
+          <p class="hero__lead">這一頁保留自由選擇。學生可以自己選想熟悉的技能，老師也可以直接指定某個技能節點開始練習。</p>
+          <div class="hero__quicklinks">
+            <a class="ghost-link" href="index.html">回首頁</a>
+            <a class="ghost-link" href="practice-bank.html">題型總覽</a>
+            <a class="ghost-link" href="practice-mobile.html">手機版練習</a>
+          </div>
+        </div>
+        <div class="hero__panel">
+          <h2>目前版本</h2>
+          <ul id="skillTreeAuditList"></ul>
+        </div>
+      </header>
+
+      <main class="layout ability-practice-layout">
+        <aside class="sidebar ability-practice-sidebar">
+          <section class="panel">
+            <div class="skill-tree-toolbar">
+              <h2>技能樹</h2>
+              <button id="treeToggleButton" class="ghost-button" type="button">隱藏技能樹</button>
+            </div>
+            <div id="masteryLegend" class="mastery-legend"></div>
+            <div id="skillTreeMap" class="ability-map"></div>
+          </section>
+        </aside>
+
+        <section class="content ability-practice-content">
+          <section class="panel summary-panel ability-summary-panel">
+            <div>
+              <p class="summary-label">目前技能</p>
+              <h2 id="skillTitle">請先選一個技能</h2>
+            </div>
+            <p id="skillStatus" class="summary-count"></p>
+          </section>
+
+          <section class="panel ability-detail-panel">
+            <div class="ability-detail-panel__header">
+              <div>
+                <p id="skillChapter" class="ability-mainline-label"></p>
+                <p id="skillSummary" class="ability-detail-text"></p>
+              </div>
+              <div class="ability-progress-card">
+                <div class="ability-progress-card__label">熟悉度</div>
+                <div id="skillMasteryLabel" class="ability-progress-card__value">未開始</div>
+                <div class="ability-progress-bar">
+                  <div id="skillMasteryBar" class="ability-progress-bar__fill"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ability-meta-grid skill-tree-meta-grid">
+              <div class="ability-meta-box">
+                <h3>對應題型</h3>
+                <div id="skillPracticeTags" class="ability-tag-list"></div>
+              </div>
+              <div class="ability-meta-box">
+                <h3>前置技能</h3>
+                <div id="skillPrerequisites" class="ability-tag-list"></div>
+              </div>
+              <div class="ability-meta-box">
+                <h3>下一步</h3>
+                <div id="skillNextSteps" class="ability-tag-list"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel ability-session-panel">
+            <div class="ability-session-panel__header">
+              <div>
+                <h2>直接練習</h2>
+                <p id="sessionHint" class="ability-detail-text">選技能後就可以開始。</p>
+              </div>
+              <div class="ability-session-actions">
+                <button id="startPracticeButton" class="ghost-button" type="button">開始練習</button>
+                <button id="newQuestionButton" class="ghost-button" type="button" disabled>換一題</button>
+              </div>
+            </div>
+
+            <div id="sessionCard" class="ability-session-card is-empty">
+              <p>左邊技能樹可直接選技能，也可以按節點旁的「練習」。</p>
+            </div>
+
+            <div id="feedbackPanel" class="ability-feedback-panel" hidden></div>
+            <div id="mistakeTagPanel" class="ability-mistake-panel" hidden></div>
+            <div id="recommendationPanel" class="ability-recommendation-panel" hidden></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script defer src="formulas.js"></script>
+    <script defer src="data/formula-content.js?v=20260423-abs-count-layout-v4"></script>
+    <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
+    <script defer src="data/main-topic-overviews.js?v=20260508-topic-title-clean-v1"></script>
+    <script defer src="data/chapter-code-config.js?v=20260616-e425-split-v1"></script>
+    <script defer src="data/formula-calculators.js"></script>
+    <script defer src="data/formula-practice-assignments.js?v=20260617-e4-bundle-bridge-v1"></script>
+    <script defer src="data/formula-practice.js?v=20260620-runtime-main-v1"></script>
+    <script defer src="data/practice-generator-bundles.js?v=20260619-chapter-owned-v1"></script>
+    <script defer src="data/practice-generator-loader.js?v=20260619-e5-force-bundle-v3"></script>
+    <script defer src="data/practice-learning-architecture-v3.js?v=20260621-book2-expanded-v1"></script>
+    <script defer src="data/practice-learning-architecture-v4.js?v=20260621-book3-expanded-v1"></script>
+    <script defer src="data/practice-learning-architecture-v5.js?v=20260621-book4-expanded-v1"></script>
+    <script defer src="data/practice-learning-architecture-v6.js?v=20260621-book5-expanded-v1"></script>
+    <script defer src="data/practice-learning-architecture-v7.js?v=20260621-book6-expanded-v1"></script>
+    <script defer src="data/practice-skill-tree.js?v=20260621-skill-tree-v2"></script>
+    <script defer src="formula-data.js?v=20260616-e425-split-v1"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="formula-core.js?v=20260619-e5-fingerprint-v5"></script>
+    <script defer src="skill-tree-practice.js?v=20260621-skill-tree-v2"></script>
+    <script defer src="pwa.js"></script>
+  </body>
+</html>

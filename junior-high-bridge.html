@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d5c63" />
+    <title>國三複習與高一先修</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=20260621-bridge-page-v1" />
+    <style>
+      .bridge-page .hero {
+        gap: 1.5rem;
+      }
+
+      .bridge-shell {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .bridge-intro {
+        display: grid;
+        grid-template-columns: 1.3fr 0.9fr;
+        gap: 1.25rem;
+      }
+
+      .bridge-route {
+        display: grid;
+        gap: 0.85rem;
+      }
+
+      .bridge-route__step {
+        padding: 0.9rem 1rem;
+        border-radius: 18px;
+        background: rgba(13, 92, 99, 0.08);
+        border: 1px solid rgba(13, 92, 99, 0.14);
+      }
+
+      .bridge-route__step strong {
+        display: block;
+        margin-bottom: 0.2rem;
+        color: #0d5c63;
+      }
+
+      .bridge-section-title {
+        margin: 0 0 0.4rem;
+        font-size: 1.35rem;
+      }
+
+      .bridge-section-lead {
+        margin: 0;
+        color: #4d5b63;
+      }
+
+      .bridge-topic-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
+      }
+
+      .bridge-topic-card {
+        display: grid;
+        gap: 1rem;
+        padding: 1.2rem;
+        border-radius: 24px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(241, 248, 248, 0.96)),
+          radial-gradient(circle at top right, rgba(13, 92, 99, 0.12), transparent 55%);
+        border: 1px solid rgba(13, 92, 99, 0.12);
+        box-shadow: 0 18px 36px rgba(13, 92, 99, 0.08);
+      }
+
+      .bridge-topic-card h3 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+
+      .bridge-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        width: fit-content;
+        padding: 0.35rem 0.7rem;
+        border-radius: 999px;
+        background: rgba(13, 92, 99, 0.1);
+        color: #0d5c63;
+        font-size: 0.88rem;
+        font-weight: 700;
+      }
+
+      .bridge-card-block {
+        display: grid;
+        gap: 0.35rem;
+      }
+
+      .bridge-card-block h4 {
+        margin: 0;
+        font-size: 0.98rem;
+        color: #15363b;
+      }
+
+      .bridge-card-block p,
+      .bridge-card-block li {
+        color: #465760;
+      }
+
+      .bridge-card-block ul {
+        margin: 0;
+        padding-left: 1.1rem;
+      }
+
+      .bridge-link-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+      }
+
+      .bridge-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.68rem 0.95rem;
+        border-radius: 999px;
+        text-decoration: none;
+        color: #0d5c63;
+        background: rgba(13, 92, 99, 0.08);
+        border: 1px solid rgba(13, 92, 99, 0.15);
+        font-weight: 700;
+      }
+
+      .bridge-link:hover {
+        background: rgba(13, 92, 99, 0.14);
+      }
+
+      .bridge-summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .bridge-summary-box {
+        padding: 1rem 1.1rem;
+        border-radius: 20px;
+        background: rgba(13, 92, 99, 0.06);
+        border: 1px solid rgba(13, 92, 99, 0.1);
+      }
+
+      .bridge-summary-box h3 {
+        margin: 0 0 0.35rem;
+        color: #0d5c63;
+      }
+
+      .bridge-summary-box p {
+        margin: 0;
+        color: #4a5b61;
+      }
+
+      .bridge-topic-card code {
+        font-family: "JetBrains Mono", "Consolas", monospace;
+        font-size: 0.94em;
+      }
+
+      @media (max-width: 980px) {
+        .bridge-intro,
+        .bridge-topic-grid,
+        .bridge-summary-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body class="bridge-page">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero__content">
+          <p class="eyebrow">Junior Review / Senior Preview</p>
+          <h1>國三複習與升高一先修</h1>
+          <p class="hero__lead">
+            這一頁幫學生抓出升高一前最必要、最常卡住、也最值得反覆練的七條主線：
+            指數律、乘法公式、因式分解、一元二次方程式公式解、配方法、一次函數、二次函數。
+            老師可以把它當成暑假銜接入口，學生也可以照順序自己補齊代數主幹。
+          </p>
+          <div class="hero__quicklinks">
+            <a class="ghost-link" href="index.html">回首頁</a>
+            <a class="ghost-link" href="practice-bank.html">題型總覽</a>
+            <a class="ghost-link" href="ability-practice.html">能力指標頁</a>
+            <a class="ghost-link" href="skill-tree-practice.html">技能樹頁</a>
+          </div>
+        </div>
+
+        <div class="hero__panel">
+          <h2>建議使用法</h2>
+          <ul>
+            <li>先照頁面順序走一輪，先補會直接連動後面章節的主幹能力。</li>
+            <li>每個主題先看核心要會，再看最常犯錯，最後直接進入練習。</li>
+            <li>若學生已經會基本題，可直接從每張卡片的第二組或第三組練習開始。</li>
+          </ul>
+        </div>
+      </header>
+
+      <main class="bridge-shell">
+        <section class="panel bridge-intro">
+          <div>
+            <h2 class="bridge-section-title">先修主線排序</h2>
+            <p class="bridge-section-lead">
+              這份排序是照前面會不會直接卡住後面來排，不是照正式課本頁碼排。
+            </p>
+            <div class="bridge-route">
+              <div class="bridge-route__step">
+                <strong>第一步：指數律、乘法公式</strong>
+                先把代數運算語感暖起來，後面因式分解、配方法和二次函數才不會全部一起亂。
+              </div>
+              <div class="bridge-route__step">
+                <strong>第二步：因式分解、一元二次方程式公式解</strong>
+                這兩條是升高一後遇到多項式、方程式、判號與函數時最常回頭用到的核心工具。
+              </div>
+              <div class="bridge-route__step">
+                <strong>第三步：配方法</strong>
+                配方法是連接一元二次方程式和二次函數的橋，會配方，圖形、頂點、最值都會清楚很多。
+              </div>
+              <div class="bridge-route__step">
+                <strong>第四步：一次函數、二次函數</strong>
+                這兩條是高中函數觀念的正式入口，尤其二次函數後面會牽到圖形、方程式和最值建模。
+              </div>
+            </div>
+          </div>
+
+          <div class="bridge-summary-grid">
+            <div class="bridge-summary-box">
+              <h3>老師帶課</h3>
+              <p>可直接照七張能力卡安排七次短複習，或拆成兩週暑期銜接班進度。</p>
+            </div>
+            <div class="bridge-summary-box">
+              <h3>學生自學</h3>
+              <p>先做每張卡片第一組，再依錯誤情況決定要不要進第二組、第三組。</p>
+            </div>
+            <div class="bridge-summary-box">
+              <h3>練習節奏</h3>
+              <p>每次不要貪多，建議一次只攻一張卡，做到能穩定判斷題型再往下走。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="bridge-section-title">七條必練能力</h2>
+          <p class="bridge-section-lead">每一條都先整理要會什麼與最常錯什麼，再直接連到現有無限練習。</p>
+        </section>
+
+        <section class="bridge-topic-grid">
+          <article class="bridge-topic-card">
+            <div class="bridge-kicker">01 指數律</div>
+            <h3>先看懂次方，再用規則</h3>
+            <div class="bridge-card-block">
+              <h4>核心要會</h4>
+              <p>知道 <code>a^m a^n</code>、<code>a^m / a^n</code>、<code>(a^m)^n</code> 各在處理什麼，並分清楚同底數和不同底數不能亂套。</p>
+            </div>
+            <div class="bridge-card-block">
+              <h4>最常犯錯</h4>
+              <ul>
+                <li>把 <code>(a+b)^2</code> 當成 <code>a^2+b^2</code>。</li>
+                <li>沒看括號，像 <code>-2^4</code> 和 <code>(-2)^4</code> 混掉。</li>
+                <li>不同底數硬做指數相加減。</li>
+              </ul>
+            </div>
+            <div class="bridge-link-row">
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j1-1-3-exponent-law-three-subtypes">先練基本指數律</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j1-1-3-exponent-word-problem-drill">再練情境題</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-s1-1-4-variable-exponent-simplification">進階先修</a>
+            </div>
+          </article>
+
+          <article class="bridge-topic-card">
+            <div class="bridge-kicker">02 乘法公式</div>
+            <h3>先認結構，不要只背口訣</h3>
+            <div class="bridge-card-block">
+              <h4>核心要會</h4>
+              <p>能辨認和平方、差平方、平方差，並知道它們都是分配律整理後的結果。</p>
+            </div>
+            <div class="bridge-card-block">
+              <h4>最常犯錯</h4>
+              <ul>
+                <li>中間項漏寫成 <code>2ab</code>。</li>
+                <li>看到平方就硬套，沒有先確認型態。</li>
+                <li>反向辨認時只看首尾項，忽略中間項符號。</li>
+              </ul>
+            </div>
+            <div class="bridge-link-row">
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j3-1-1-formula-mixed-integer-drill">先練整數型</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j3-1-1-formula-mixed-variable-drill">再練文字型</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-sum-square-variable-drill">補和平方辨識</a>
+            </div>
+          </article>
+
+          <article class="bridge-topic-card">
+            <div class="bridge-kicker">03 因式分解</div>
+            <h3>先提公因式，再看公式型</h3>
+            <div class="bridge-card-block">
+              <h4>核心要會</h4>
+              <p>知道因式分解是把乘開的式子倒回去看，做題順序通常是公因式、公式、十字交乘或拆項。</p>
+            </div>
+            <div class="bridge-card-block">
+              <h4>最常犯錯</h4>
+              <ul>
+                <li>公因式沒提出乾淨，後面全錯。</li>
+                <li>負號不先提出，導致型態看錯。</li>
+                <li>公式型可以拆，卻直接亂配數。</li>
+              </ul>
+            </div>
+            <div class="bridge-link-row">
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j3-3-1-core-factoring-mixed">先練核心因式分解</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j3-3-2-formula-mixed">再練公式型</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j1-1-3-binary-quadratic-cross-factoring">補十字交乘</a>
+            </div>
+          </article>
+
+          <article class="bridge-topic-card">
+            <div class="bridge-kicker">04 一元二次方程式公式解</div>
+            <h3>先整理成標準型，再進公式</h3>
+            <div class="bridge-card-block">
+              <h4>核心要會</h4>
+              <p>能把題目整理成 <code>ax^2+bx+c=0</code>，再穩定代入公式，並知道判別式在說根的個數。</p>
+            </div>
+            <div class="bridge-card-block">
+              <h4>最常犯錯</h4>
+              <ul>
+                <li><code>-b</code> 看成 <code>b</code>。</li>
+                <li><code>2a</code> 只除到一項。</li>
+                <li>沒先移成等於 0 就直接亂代。</li>
+              </ul>
+            </div>
+            <div class="bridge-link-row">
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j3-4-2-formula-direct-solve">先練公式直解</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j3-4-2-roots-core-mixed">再練根的判讀</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j3-4-2-roots-applied-mixed">補應用題</a>
+            </div>
+          </article>
+
+          <article class="bridge-topic-card">
+            <div class="bridge-kicker">05 配方法</div>
+            <h3>配方法是方程式和函數的橋</h3>
+            <div class="bridge-card-block">
+              <h4>核心要會</h4>
+              <p>知道補成完全平方的目的不是多做一步，而是把式子改寫成更容易看懂的形式。</p>
+            </div>
+            <div class="bridge-card-block">
+              <h4>最常犯錯</h4>
+              <ul>
+                <li>忘記先把 <code>x^2</code> 前面的係數提出來。</li>
+                <li>只補一邊不補另一邊。</li>
+                <li>配完之後不會把結果讀成頂點或最值。</li>
+              </ul>
+            </div>
+            <div class="bridge-link-row">
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j3-4-2-complete-square-term">先練補完全平方</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j3-4-2-completing-square-solve">再練配方法解方程</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j6-1-2-vertex-form-extrema-three-subtypes">接二次函數</a>
+            </div>
+          </article>
+
+          <article class="bridge-topic-card">
+            <div class="bridge-kicker">06 一次函數</div>
+            <h3>把式子、表格、圖形看成同一件事</h3>
+            <div class="bridge-card-block">
+              <h4>核心要會</h4>
+              <p>能看懂 <code>y=ax+b</code> 的斜率與截距，並把兩點、變化率、圖形位置與情境題串起來。</p>
+            </div>
+            <div class="bridge-card-block">
+              <h4>最常犯錯</h4>
+              <ul>
+                <li>斜率正負和圖形方向混掉。</li>
+                <li>只會代數字，不會從圖反讀式子。</li>
+                <li>兩點求式時座標代入順序不穩。</li>
+              </ul>
+            </div>
+            <div class="bridge-link-row">
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j4-2-1-function-mixed">先練函數基本觀念</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j4-2-2-linear-function-mixed">再練一次函數</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j4-2-2-linear-equation-two-points">補兩點求式</a>
+            </div>
+          </article>
+
+          <article class="bridge-topic-card">
+            <div class="bridge-kicker">07 二次函數</div>
+            <h3>看懂拋物線，才算真的進高中</h3>
+            <div class="bridge-card-block">
+              <h4>核心要會</h4>
+              <p>先抓開口方向、對稱軸、頂點，再把配方法、一元二次方程式與最值應用接進來。</p>
+            </div>
+            <div class="bridge-card-block">
+              <h4>最常犯錯</h4>
+              <ul>
+                <li>只會算，不會從式子讀圖形。</li>
+                <li>把平移方向看反。</li>
+                <li>最大值、最小值和頂點位置沒有連在一起。</li>
+              </ul>
+            </div>
+            <div class="bridge-link-row">
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j6-1-1-parabola-ax2-four-subtypes">先練基本圖形</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j6-1-2-vertex-form-extrema-three-subtypes">再練頂點與最值</a>
+              <a class="bridge-link" href="practice-bank.html?practice=practice-j6-1-3-geometry-modeling-four-subtypes">補應用建模</a>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel">
+          <h2 class="bridge-section-title">老師可直接這樣排</h2>
+          <div class="bridge-route">
+            <div class="bridge-route__step">
+              <strong>四堂快攻版</strong>
+              第 1 堂：指數律＋乘法公式。第 2 堂：因式分解＋公式解。第 3 堂：配方法＋一次函數。第 4 堂：二次函數總整理。
+            </div>
+            <div class="bridge-route__step">
+              <strong>七堂穩定版</strong>
+              一主題一堂，每堂做一輪基本題，再補一輪易錯題，最後留 10 分鐘做口頭判型。
+            </div>
+            <div class="bridge-route__step">
+              <strong>學生自修版</strong>
+              每次只選一張能力卡，先做第一組。如果連錯兩題，就先回到卡片中的最常犯錯再做一次。
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script defer src="pwa.js"></script>
+  </body>
+</html>
