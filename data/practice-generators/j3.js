@@ -600,6 +600,231 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function buildJ321ExactSquareRootSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 4;
+      if (type === 0) {
+        const n = randInt(2, 25);
+        questions.push(`求 $\\sqrt{${n * n}}$ 的值。`);
+        answers.push(`因為 ${n * n}=${n}^2，所以 $\\sqrt{${n * n}}=${n}$。`);
+        continue;
+      }
+      if (type === 1) {
+        const n = randInt(1, 9);
+        const value = (n / 10) * (n / 10);
+        questions.push(`求 $\\sqrt{${formatDecimalValue(value)}}$ 的值。`);
+        answers.push(`因為 ${formatDecimalValue(value)}=(${n / 10})^2$，所以 $\\sqrt{${formatDecimalValue(value)}}=${n / 10}$。`);
+        continue;
+      }
+      if (type === 2) {
+        const num = randInt(1, 9);
+        const den = randInt(2, 9);
+        questions.push(`求 $\\sqrt{\\frac{${num * num}}{${den * den}}}$ 的值。`);
+        answers.push(`\\sqrt{\\frac{${num * num}}{${den * den}}}=\\frac{${num}}{${den}}$。`);
+        continue;
+      }
+      const n = randInt(2, 12);
+      questions.push(`求 $\\sqrt{(${ -n })^2}$ 的值。`);
+      answers.push(`因為算術平方根表示非負值，所以 $\\sqrt{(${ -n })^2}=|${ -n }|=${n}$。`);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ321SquareRootCompareSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 4;
+      if (type === 0) {
+        const m = randInt(3, 12);
+        const n = randInt(m * m - (m - 1), m * m + (m - 1));
+        if (n === m * m) {
+          i -= 1;
+          continue;
+        }
+        const sign = n > m * m ? '>' : '<';
+        questions.push(`比較 $\\sqrt{${n}}$ 和 ${m} 的大小。`);
+        answers.push(`因為 ${m}^2=${m * m}，且 ${n}${sign}${m * m}，所以 $\\sqrt{${n}}${sign}${m}$。`);
+        continue;
+      }
+      if (type === 1) {
+        const d = randInt(15, 90) / 10;
+        const d2 = Number((d * d).toFixed(2));
+        const n = randInt(Math.max(2, Math.floor(d2) - 3), Math.floor(d2) + 3);
+        if (n === d2) {
+          i -= 1;
+          continue;
+        }
+        const sign = n > d2 ? '>' : '<';
+        questions.push(`比較 $\\sqrt{${n}}$ 和 ${formatDecimalValue(d)} 的大小。`);
+        answers.push(`因為 ${formatDecimalValue(d)}^2=${formatDecimalValue(d2)}，且 ${n}${sign}${formatDecimalValue(d2)}，所以 $\\sqrt{${n}}${sign}${formatDecimalValue(d)}$。`);
+        continue;
+      }
+      if (type === 2) {
+        const a = pickNonSquare(2, 60);
+        let b = pickNonSquare(2, 60);
+        while (a === b) b = pickNonSquare(2, 60);
+        const sign = a > b ? '>' : '<';
+        questions.push(`比較 $\\sqrt{${a}}$ 和 $\\sqrt{${b}}$ 的大小。`);
+        answers.push(`因為被開方數 ${a}${sign}${b}，所以 $\\sqrt{${a}}${sign}\\sqrt{${b}}$。`);
+        continue;
+      }
+      const k = randInt(2, 5);
+      const a = pickNonSquare(2, 20);
+      const b = pickNonSquare(2, 20);
+      const left = a;
+      const right = k * k * b;
+      const sign = left > right ? '>' : '<';
+      questions.push(`比較 $\\sqrt{${a}}$ 和 ${k}\\sqrt{${b}}$ 的大小。`);
+      answers.push(`因為兩邊都大於 0，可比較平方：${a} ${sign} ${right}，所以 $\\sqrt{${a}}${sign}${k}\\sqrt{${b}}$。`);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ322RadicalFormulaSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 4;
+      if (type === 0) {
+        const a = pickNonSquare(5, 30);
+        let b = pickNonSquare(2, a - 1);
+        while (a === b) b = pickNonSquare(2, a - 1);
+        questions.push(`計算 $(\\sqrt{${a}}+\\sqrt{${b}})(\\sqrt{${a}}-\\sqrt{${b}})$。`);
+        answers.push(`利用平方差公式，得 $(\\sqrt{${a}}+\\sqrt{${b}})(\\sqrt{${a}}-\\sqrt{${b}})=${a}-${b}=${a - b}$。`);
+        continue;
+      }
+      if (type === 1) {
+        const a = pickNonSquare(2, 20);
+        let b = pickNonSquare(2, 20);
+        while (a === b) b = pickNonSquare(2, 20);
+        questions.push(`計算 $(\\sqrt{${a}}+\\sqrt{${b}})^2$。`);
+        answers.push(`$(\\sqrt{${a}}+\\sqrt{${b}})^2=${a}+2\\sqrt{${a * b}}+${b}=${a + b}+2${formatRadical(a * b)}$。`);
+        continue;
+      }
+      if (type === 2) {
+        const a = pickNonSquare(3, 18);
+        let b = pickNonSquare(2, 18);
+        while (a === b) b = pickNonSquare(2, 18);
+        questions.push(`計算 $(\\sqrt{${a}}-\\sqrt{${b}})^2$。`);
+        answers.push(`$(\\sqrt{${a}}-\\sqrt{${b}})^2=${a}-2\\sqrt{${a * b}}+${b}=${a + b}-2${formatRadical(a * b)}$。`);
+        continue;
+      }
+      const p = randInt(2, 5);
+      const q = randInt(2, 5);
+      const a = pickNonSquare(2, 12);
+      let b = pickNonSquare(2, 12);
+      while (a === b) b = pickNonSquare(2, 12);
+      questions.push(`計算 $(${p}\\sqrt{${a}}+${q}\\sqrt{${b}})(${p}\\sqrt{${a}}-${q}\\sqrt{${b}})$。`);
+      answers.push(`利用平方差公式，得 $(${p}\\sqrt{${a}})^2-(${q}\\sqrt{${b}})^2=${p * p * a}-${q * q * b}=${p * p * a - q * q * b}$。`);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ322RadicalMixedSimplifySet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 4;
+      if (type === 0) {
+        const k = pickNonSquare(2, 12);
+        const a = randInt(2, 5);
+        const b = randInt(2, 5);
+        const c = randInt(1, 4);
+        const left = a * a * k;
+        const right = b * b * k;
+        questions.push(`化簡 $\\sqrt{${left}}+\\sqrt{${right}}-${c}\\sqrt{${k}}$。`);
+        answers.push(`$\\sqrt{${left}}+\\sqrt{${right}}-${c}\\sqrt{${k}}=${a}\\sqrt{${k}}+${b}\\sqrt{${k}}-${c}\\sqrt{${k}}=${a + b - c}\\sqrt{${k}}$。`);
+        continue;
+      }
+      if (type === 1) {
+        const a = pickNonSquare(2, 12);
+        const b = pickNonSquare(2, 12);
+        const c = randInt(2, 5);
+        questions.push(`化簡 $\\sqrt{${a}}\\times\\sqrt{${b * c * c}}+\\sqrt{${a * b}}$。`);
+        answers.push(`$\\sqrt{${a}}\\times\\sqrt{${b * c * c}}=\\sqrt{${a * b * c * c}}=${c}${formatRadical(a * b)}$，所以原式=${c + 1}${formatRadical(a * b)}。`);
+        continue;
+      }
+      if (type === 2) {
+        const a = pickNonSquare(2, 12);
+        const b = randInt(2, 6);
+        const c = randInt(2, 5);
+        questions.push(`化簡 $\\frac{\\sqrt{${a * b}}}{\\sqrt{${b}}}+${c}\\sqrt{${a}}$。`);
+        answers.push(`$\\frac{\\sqrt{${a * b}}}{\\sqrt{${b}}}=\\sqrt{${a}}$，所以原式=$(1+${c})\\sqrt{${a}}=${c + 1}\\sqrt{${a}}$。`);
+        continue;
+      }
+      const a = pickNonSquare(2, 10);
+      let b = pickNonSquare(2, 10);
+      while (a === b) b = pickNonSquare(2, 10);
+      questions.push(`化簡 $(\\sqrt{${a}}+\\sqrt{${b}})(\\sqrt{${a}}-\\sqrt{${b}})+\\sqrt{${4 * b}}$。`);
+      answers.push(`前半部為 ${a - b}，且 $\\sqrt{${4 * b}}=2\\sqrt{${b}}$，所以原式=${a - b}+2\\sqrt{${b}}$。`);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ323PythagoreanContextSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 4;
+      if (type === 0) {
+        const a = randInt(3, 12);
+        const b = randInt(4, 15);
+        questions.push(`一個長方形的長為 ${a}，寬為 ${b}，求對角線長。`);
+        answers.push(`由畢氏定理，對角線長為 $\\sqrt{${a * a}+${b * b}}=${formatRadical(a * a + b * b)}$。`);
+        continue;
+      }
+      if (type === 1) {
+        const h = randInt(6, 15);
+        const base = randInt(3, 10);
+        const ladder = formatRadical(h * h + base * base);
+        questions.push(`一把梯子靠在牆上，梯腳離牆 ${base} 公尺，梯頂離地 ${h} 公尺，求梯長。`);
+        answers.push(`梯子、牆與地面形成直角三角形，所以梯長為 $\\sqrt{${base * base}+${h * h}}=${ladder}$。`);
+        continue;
+      }
+      if (type === 2) {
+        const side = randInt(3, 12);
+        questions.push(`一個正方形的邊長為 ${side}，求對角線長。`);
+        answers.push(`正方形對角線是直角三角形斜邊，所以長為 $\\sqrt{${side * side}+${side * side}}=${side}\\sqrt{2}$。`);
+        continue;
+      }
+      const side = randInt(4, 12);
+      questions.push(`一個正三角形的邊長為 ${side}，求高。`);
+      answers.push(`高會把底邊平分成 ${side / 2} 和 ${side / 2}$，所以高為 $\\sqrt{${side * side}-\\left(\\frac{${side}}{2}\\right)^2}=\\frac{${side}\\sqrt{3}}{2}$。`);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ323RightTriangleJudgementSet(count) {
+    const questions = [];
+    const answers = [];
+    const triples = [
+      [3, 4, 5],
+      [5, 12, 13],
+      [8, 15, 17],
+      [7, 24, 25],
+    ];
+    for (let i = 0; i < count; i += 1) {
+      if (i % 2 === 0) {
+        const base = triples[randInt(0, triples.length - 1)];
+        const k = [1, 2, 3, 4][randInt(0, 3)];
+        const [a, b, c] = base.map((v) => v * k);
+        questions.push(`判斷邊長為 ${a}、${b}、${c} 的三角形是否為直角三角形。`);
+        answers.push(`因為 ${a}^2+${b}^2=${a * a + b * b}，且 ${c}^2=${c * c}，兩者相等，所以是直角三角形。`);
+        continue;
+      }
+      const a = randInt(3, 12);
+      const b = randInt(4, 12);
+      let c = randInt(Math.max(a, b) + 1, Math.max(a, b) + 8);
+      while (a * a + b * b === c * c) c = randInt(Math.max(a, b) + 1, Math.max(a, b) + 8);
+      questions.push(`判斷邊長為 ${a}、${b}、${c} 的三角形是否為直角三角形。`);
+      answers.push(`因為 ${a}^2+${b}^2=${a * a + b * b}，但 ${c}^2=${c * c}，兩者不相等，所以不是直角三角形。`);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ331CommonFactorBasicSet(count) {
     function formatMonomial(coeff, power) {
       if (power === 0) return `${coeff}`;
@@ -804,6 +1029,40 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function buildJ331BinomialCommonFactorSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 4;
+      if (mode === 0) {
+        const p = randInt(2, 6);
+        const q = randInt(2, 9);
+        questions.push(`因式分解 \\(x^2(x-${p})-${q}(x-${p})\\)。`);
+        answers.push(`先提公因式 \\((x-${p})\\)，得 \\((x-${p})(x^2-${q})\\)。`);
+        continue;
+      }
+      if (mode === 1) {
+        const a = randInt(2, 6);
+        const b = randInt(2, 6);
+        const c = randInt(2, 6);
+        questions.push(`因式分解 \\(${a}x(x+${b})+${c}(x+${b})\\)。`);
+        answers.push(`先提公因式 \\((x+${b})\\)，得 \\((x+${b})(${a}x+${c})\\)。`);
+        continue;
+      }
+      if (mode === 2) {
+        const a = randInt(2, 7);
+        const b = randInt(1, a - 1);
+        questions.push(`因式分解 \\(a^2(x-y)-${b * b}(x-y)\\)。`);
+        answers.push(`先提公因式 \\((x-y)\\)，得 \\((x-y)(a^2-${b * b})=(x-y)(a+${b})(a-${b})\\)。`);
+        continue;
+      }
+      const p = randInt(1, 6);
+      questions.push(`因式分解 \\((x+${p})^2-4(x+${p})+4\\)。`);
+      answers.push(`視 \\((x+${p})\\) 為同一整體，得 \\((x+${p})^2-4(x+${p})+4=(x+${p}-2)^2\\)。`);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ332DiffSquaresSet(count) {
     const questions = [];
     const answers = [];
@@ -821,6 +1080,76 @@
         questions.push(`因式分解：\\(${a * a}-${b * b}y^2\\)`);
         answers.push(`\\(${a * a}-${b * b}y^2=(${a}+${by})(${a}-${by})\\)`);
       }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ332CubeFormulaSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 4;
+      if (mode === 0) {
+        const a = randInt(2, 8);
+        questions.push(`因式分解 \\(x^3-${a ** 3}\\)。`);
+        answers.push(`利用立方差公式，得 \\(x^3-${a ** 3}=(x-${a})(x^2+${a}x+${a ** 2})\\)。`);
+        continue;
+      }
+      if (mode === 1) {
+        const a = randInt(2, 8);
+        questions.push(`因式分解 \\(x^3+${a ** 3}\\)。`);
+        answers.push(`利用立方和公式，得 \\(x^3+${a ** 3}=(x+${a})(x^2-${a}x+${a ** 2})\\)。`);
+        continue;
+      }
+      if (mode === 2) {
+        const a = randInt(2, 4);
+        const b = randInt(2, 5);
+        const sign = randInt(0, 1) === 0 ? '-' : '+';
+        questions.push(`因式分解 \\(${a ** 3}x^3${sign}${b ** 3}y^3\\)。`);
+        if (sign === '-') {
+          answers.push(`\\(${a ** 3}x^3-${b ** 3}y^3=(${a}x-${b}y)(${a ** 2}x^2+${a * b}xy+${b ** 2}y^2)\\)。`);
+        } else {
+          answers.push(`\\(${a ** 3}x^3+${b ** 3}y^3=(${a}x+${b}y)(${a ** 2}x^2-${a * b}xy+${b ** 2}y^2)\\)。`);
+        }
+        continue;
+      }
+      const p = randInt(2, 6);
+      const sign = randInt(0, 1) === 0 ? '+' : '-';
+      const mid = sign === '+' ? 3 * p : -3 * p;
+      const lastMid = sign === '+' ? 3 * p * p : 3 * p * p;
+      const last = sign === '+' ? p ** 3 : -(p ** 3);
+      questions.push(`因式分解 \\(x^3${mid >= 0 ? '+' : ''}${mid}x^2+${lastMid}x${last >= 0 ? '+' : ''}${last}\\)。`);
+      answers.push(`這是完全立方公式，得 \\((x${sign}${p})^3\\)。`);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ332HigherPowerDiffSquaresSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 4;
+      if (mode === 0) {
+        const a = randInt(2, 5);
+        questions.push(`因式分解 \\(x^4-${a ** 4}\\)。`);
+        answers.push(`先用平方差，得 \\(x^4-${a ** 4}=(x^2-${a ** 2})(x^2+${a ** 2})=(x-${a})(x+${a})(x^2+${a ** 2})\\)。`);
+        continue;
+      }
+      if (mode === 1) {
+        const a = randInt(2, 4);
+        questions.push(`因式分解 \\(x^6-${a ** 6}\\)。`);
+        answers.push(`先視為平方差，得 \\((x^3-${a ** 3})(x^3+${a ** 3})=(x-${a})(x^2+${a}x+${a ** 2})(x+${a})(x^2-${a}x+${a ** 2})\\)。`);
+        continue;
+      }
+      if (mode === 2) {
+        const a = randInt(2, 5);
+        questions.push(`因式分解 \\(x^4-${a ** 2}y^4\\)。`);
+        answers.push(`先用平方差，得 \\(x^4-${a ** 2}y^4=(x^2-${a}y^2)(x^2+${a}y^2)\\)。`);
+        continue;
+      }
+      const a = randInt(2, 5);
+      questions.push(`因式分解 \\(${a ** 2}x^4-1\\)。`);
+      answers.push(`先用平方差，得 \\(${a ** 2}x^4-1=(${a}x^2-1)(${a}x^2+1)\\)。`);
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
@@ -1053,6 +1382,43 @@
       const one = banks[i % banks.length](1);
       questions.push(one.questions[0]);
       answers.push(one.answers[0]);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ333FactorParameterReverseSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 4;
+      if (mode === 0) {
+        const p = randInt(1, 6);
+        const q = randInt(1, 6);
+        questions.push(`已知 \\(x^2+ax+b=(x+${p})(x+${q})\\)，求 \\(a,b\\)。`);
+        answers.push(`展開右式得 \\((x+${p})(x+${q})=x^2+${p + q}x+${p * q}\\)，所以 \\(a=${p + q},\\ b=${p * q}\\)。`);
+        continue;
+      }
+      if (mode === 1) {
+        const p = randInt(1, 4);
+        const q = randInt(1, 5);
+        const r = randInt(1, 4);
+        const s = randInt(1, 5);
+        questions.push(`已知 \\(${p * r}x^2+mx+n=(${p}x+${q})(${r}x+${s})\\)，求 \\(m,n\\)。`);
+        answers.push(`展開右式得 \\(${p * r}x^2+${p * s + q * r}x+${q * s}\\)，所以 \\(m=${p * s + q * r},\\ n=${q * s}\\)。`);
+        continue;
+      }
+      if (mode === 2) {
+        const p = randInt(1, 5);
+        const q = randInt(1, 5);
+        questions.push(`已知 \\(x^2+kx+${p * q}\\) 可分解為 \\((x+${p})(x+m)\\)，求 \\(k,m\\)。`);
+        answers.push(`比較常數項可得 \\(m=${q}\\)，再比較一次項係數得 \\(k=${p + q}\\)。`);
+        continue;
+      }
+      const a1 = randInt(2, 4);
+      const p = randInt(1, 4);
+      const q = randInt(1, 4);
+      questions.push(`已知 \\(${a1}x^2+ax-${p * q}=(${a1}x+${p})(x-${q})\\)，求 \\(a\\)。`);
+      answers.push(`展開右式得 \\(${a1}x^2+${p - a1 * q}x-${p * q}\\)，所以 \\(a=${p - a1 * q}\\)。`);
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
@@ -1474,6 +1840,65 @@
         const m = pickNonZero(1, 6);
         questions.push(`若方程 \\(x^2+mx+9=0\\) 有相等兩根，求 \\(m\\)。`);
         answers.push(`相等兩根 \\(\\Rightarrow D=0\\)：\\(m^2-36=0\\Rightarrow m=\\pm6\\)。`);
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ342KnownRootParameterSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+      if (mode === 0) {
+        const r = pickNonZero(-6, 6);
+        const other = pickNonZero(-8, 8);
+        const c = r * other;
+        const k = -(r + other);
+        questions.push(`若 \\(x=${r}\\) 是方程式 \\(x^2+kx${c >= 0 ? '+' : ''}${c}=0\\) 的一根，求 \\(k\\)。`);
+        answers.push(`將 \\(x=${r}\\) 代入得 \\(${r * r}${r >= 0 ? '+' : ''}${r}k${c >= 0 ? '+' : ''}${c}=0\\)，整理可得 \\(k=${k}\\)。`);
+      } else if (mode === 1) {
+        const r = pickNonZero(-6, 6);
+        let other = pickNonZero(-8, 8);
+        while (other === r) other = pickNonZero(-8, 8);
+        const c = r * other;
+        const k = -(r + other);
+        questions.push(`若 \\(x=${r}\\) 是方程式 \\(x^2+kx${c >= 0 ? '+' : ''}${c}=0\\) 的一根，求 \\(k\\) 及另一根。`);
+        answers.push(`由韋達定理可得兩根和為 \\(${-k}\\)，所以 \\(k=${k}\\)，另一根為 \\(x=${other}\\)。`);
+      } else {
+        const a = randInt(2, 5);
+        const r = pickNonZero(-5, 5);
+        const other = pickNonZero(-6, 6);
+        const c = a * r * other;
+        const k = -a * (r + other);
+        questions.push(`若 \\(x=${r}\\) 是方程式 \\(${a}x^2+kx${c >= 0 ? '+' : ''}${c}=0\\) 的一根，求 \\(k\\) 及另一根。`);
+        answers.push(`代入 \\(x=${r}\\) 或用韋達定理，可得 \\(k=${k}\\)，另一根為 \\(x=${other}\\)。`);
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ342DiscriminantRangeSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+      if (mode === 0) {
+        const bAbs = randInt(2, 6) * 2;
+        const b = randInt(0, 1) === 0 ? bAbs : -bAbs;
+        const bound = Math.trunc((b * b) / 4);
+        questions.push(`若方程式 \\(x^2${b >= 0 ? '+' : ''}${b}x+k=0\\) 有兩相異實根，求 \\(k\\) 的範圍。`);
+        answers.push(`判別式 \\(D=b^2-4k>0\\)，所以 \\(${b * b}-4k>0\\Rightarrow k<${bound}\\)。`);
+      } else if (mode === 1) {
+        const bAbs = randInt(2, 6) * 2;
+        const b = randInt(0, 1) === 0 ? bAbs : -bAbs;
+        const bound = Math.trunc((b * b) / 4);
+        questions.push(`若方程式 \\(x^2${b >= 0 ? '+' : ''}${b}x+k=0\\) 有實根，求 \\(k\\) 的範圍。`);
+        answers.push(`判別式 \\(D=b^2-4k\\ge 0\\)，所以 \\(${b * b}-4k\\ge 0\\Rightarrow k\\le ${bound}\\)。`);
+      } else {
+        const b = randInt(3, 8);
+        questions.push(`若方程式 \\(x^2-${b}x+k=0\\) 沒有實根，求 \\(k\\) 的範圍。`);
+        answers.push(`判別式 \\(D=${b * b}-4k<0\\)，所以 \\(k>${formatFraction(b * b, 4)}\\)。`);
       }
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
@@ -3064,6 +3489,126 @@
     return sentence || text;
   }
 
+  function buildJ311PerfectSquareParameterSet(count) {
+    const questions = [];
+    const answers = [];
+
+    while (questions.length < count) {
+      const variant = questions.length % 3;
+
+      if (variant === 0) {
+        const n = randInt(2, 9);
+        const constant = n * n;
+        questions.push(`設多項式 $x^2+ax+${constant}$ 為完全平方式，求 $a$ 的值。`);
+        answers.push(`因為 $x^2+ax+${constant}=(x\\pm ${n})^2=x^2\\pm ${2 * n}x+${constant}$，所以 $a=${2 * n}$ 或 $a=-${2 * n}$。`);
+        continue;
+      }
+
+      if (variant === 1) {
+        const p = randInt(2, 6);
+        const q = randInt(2, 7);
+        const sign = randInt(0, 1) === 0 ? 1 : -1;
+        const linear = 2 * p * q * sign;
+        const square = sign > 0 ? `(${p}x+${q})^2` : `(${p}x-${q})^2`;
+        questions.push(`已知 $${p * p}x^2+bx+${q * q}=${square}$，求 $b$。`);
+        answers.push(`展開 $${square}=${p * p}x^2${linear >= 0 ? '+' : ''}${linear}x+${q * q}$，所以 $b=${linear}$。`);
+        continue;
+      }
+
+      const p = randInt(2, 5);
+      const q = randInt(1, 6);
+      const sign = randInt(0, 1) === 0 ? 1 : -1;
+      const linear = 2 * p * q * sign;
+      const constant = q * q;
+      const square = sign > 0 ? `(${p}x+${q})^2` : `(${p}x-${q})^2`;
+      questions.push(`若 $${p * p}x^2${linear >= 0 ? '+' : ''}${linear}x+k$ 可寫成 $${square}$，求 $k$。`);
+      answers.push(`因為 $${square}=${p * p}x^2${linear >= 0 ? '+' : ''}${linear}x+${constant}$，所以 $k=${constant}$。`);
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ312PolynomialSubstitutionSet(count) {
+    const questions = [];
+    const answers = [];
+
+    while (questions.length < count) {
+      const variant = questions.length % 3;
+
+      if (variant === 0) {
+        const a = pickNonZero(-4, 4);
+        const b = randInt(-6, 6);
+        const c = randInt(-8, 8);
+        const x = randInt(-3, 3);
+        const poly = formatPolynomialFromCoeffs([a, b, c]);
+        const value = evalPoly([a, b, c], x);
+        questions.push(`已知 $f(x)=${poly}$，求 $f(${x})$。`);
+        answers.push(`把 $x=${x}$ 代入，得 $f(${x})=${a}\\cdot(${x})^2${b >= 0 ? '+' : ''}${b}\\cdot(${x})${c >= 0 ? '+' : ''}${c}=${value}$。`);
+        continue;
+      }
+
+      if (variant === 1) {
+        const a = pickNonZero(-3, 3);
+        const b = randInt(-5, 5);
+        const c = randInt(-7, 7);
+        const d = randInt(-8, 8);
+        const x = randInt(-2, 2);
+        const poly = formatPolynomialFromCoeffs([a, b, c, d]);
+        const value = evalPoly([a, b, c, d], x);
+        questions.push(`已知 $g(x)=${poly}$，求 $g(${x})$。`);
+        answers.push(`把 $x=${x}$ 代入，得 $g(${x})=${a}\\cdot(${x})^3${b >= 0 ? '+' : ''}${b}\\cdot(${x})^2${c >= 0 ? '+' : ''}${c}\\cdot(${x})${d >= 0 ? '+' : ''}${d}=${value}$。`);
+        continue;
+      }
+
+      const a = pickNonZero(-3, 3);
+      const b = randInt(-6, 6);
+      const c = randInt(-8, 8);
+      const poly = formatPolynomialFromCoeffs([a, b, c]);
+      const left = evalPoly([a, b, c], 1);
+      const right = evalPoly([a, b, c], -1);
+      questions.push(`已知 $h(x)=${poly}$，求 $h(1)+h(-1)$。`);
+      answers.push(`先代入得 $h(1)=${left}$，$h(-1)=${right}$，所以 $h(1)+h(-1)=${left + right}$。`);
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ313SpecialProductStructureSet(count) {
+    const questions = [];
+    const answers = [];
+
+    while (questions.length < count) {
+      const variant = questions.length % 4;
+
+      if (variant === 0) {
+        const a = randInt(2, 8);
+        questions.push(`化簡 $\\left(x+${a}\\right)\\left(x^2-${a}x+${a * a}\\right)$。`);
+        answers.push(`利用立方和公式 $(u+v)(u^2-uv+v^2)=u^3+v^3$，取 $u=x,\\ v=${a}$，可得 $x^3+${a ** 3}$。`);
+        continue;
+      }
+
+      if (variant === 1) {
+        const a = randInt(2, 8);
+        questions.push(`化簡 $\\left(x-${a}\\right)\\left(x^2+${a}x+${a * a}\\right)$。`);
+        answers.push(`利用立方差公式 $(u-v)(u^2+uv+v^2)=u^3-v^3$，取 $u=x,\\ v=${a}$，可得 $x^3-${a ** 3}$。`);
+        continue;
+      }
+
+      if (variant === 2) {
+        const a = randInt(1, 6);
+        questions.push(`化簡 $\\left(x+${a}\\right)^2-\\left(x-${a}\\right)^2$。`);
+        answers.push(`設 $A=x+${a},\\ B=x-${a}$，則 $A^2-B^2=(A+B)(A-B)=(2x)\\cdot(${2 * a})=${4 * a}x$。`);
+        continue;
+      }
+
+      const a = randInt(2, 6);
+      questions.push(`化簡 $\\left(${a}x+y\\right)^2-\\left(${a}x-y\\right)^2$。`);
+      answers.push(`設 $A=${a}x+y,\\ B=${a}x-y$，則 $A^2-B^2=(A+B)(A-B)=(${2 * a}x)(2y)=${4 * a}xy$。`);
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   const nextConfigs = {
       'j1-1-3-biquadratic-split-square-factoring': {
         type: 'drill',
@@ -3117,6 +3662,15 @@
         questionCount: 4,
         generate() {
           return buildJ311VariableFormulaMixedSet(4);
+        },
+      },
+      'j3-1-1-perfect-square-parameter-drill': {
+        type: 'drill',
+        title: '完全平方公式係數判定',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ311PerfectSquareParameterSet(5);
         },
       },
       'sum-square-variable-drill': {
@@ -3335,6 +3889,15 @@
           return buildJ313FactorTheoremSet(5);
         },
       },
+      'j3-1-3-special-product-structure-drill': {
+        type: 'drill',
+        title: '特殊乘積結構化簡',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ313SpecialProductStructureSet(5);
+        },
+      },
       'j3-1-2-polynomial-add-subtract-drill': {
         type: 'drill',
         title: '多項式加減運算（樣式與直式）',
@@ -3360,6 +3923,15 @@
         questionCount: 5,
         generate() {
           return buildJ312PolynomialReverseSet(5);
+        },
+      },
+      'j3-1-2-polynomial-substitution-drill': {
+        type: 'drill',
+        title: '多項式代值計算',
+        difficulty: 'easy',
+        questionCount: 5,
+        generate() {
+          return buildJ312PolynomialSubstitutionSet(5);
         },
       },
       'j3-1-2-mul-easy-mixed-drill': {
@@ -3479,6 +4051,42 @@
           return buildJ321SqrtEstimateMixedSet(8);
         },
       },
+      'j3-2-1-exact-square-root-drill': {
+        type: 'drill',
+        title: '算術平方根直接求值',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ321ExactSquareRootSet(6);
+        },
+      },
+      'j3-2-1-square-root-compare-drill': {
+        type: 'drill',
+        title: '平方根大小比較',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ321SquareRootCompareSet(6);
+        },
+      },
+      'j3-2-2-radical-formula-drill': {
+        type: 'drill',
+        title: '根式公式運算',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ322RadicalFormulaSet(6);
+        },
+      },
+      'j3-2-2-radical-mixed-simplify-drill': {
+        type: 'drill',
+        title: '根式混合化簡',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ322RadicalMixedSimplifySet(6);
+        },
+      },
       'j3-2-3-triple-expand-drill': {
         type: 'drill',
         title: '畢氏數擴展與倍數',
@@ -3513,6 +4121,24 @@
         questionCount: 6,
         generate() {
           return buildJ323SpatialDiagonalSet(6);
+        },
+      },
+      'j3-2-3-pythagorean-context-drill': {
+        type: 'drill',
+        title: '畢氏定理生活情境',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ323PythagoreanContextSet(6);
+        },
+      },
+      'j3-2-3-right-triangle-judgement-drill': {
+        type: 'drill',
+        title: '畢氏定理直角判定',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ323RightTriangleJudgementSet(6);
         },
       },
       'j3-3-1-core-factoring-mixed': {
@@ -3578,6 +4204,15 @@
           return buildJ331ExpandThenGroupSet(6);
         },
       },
+      'j3-3-1-binomial-common-factor': {
+        type: 'drill',
+        title: '同式公因式提取',
+        difficulty: 'easy',
+        questionCount: 6,
+        generate() {
+          return buildJ331BinomialCommonFactorSet(6);
+        },
+      },
       'j3-3-2-formula-mixed': {
         type: 'drill',
         title: '公式辨識與應用綜合',
@@ -3621,6 +4256,24 @@
         questionCount: 6,
         generate() {
           return buildJ332SubstitutionSet(6);
+        },
+      },
+      'j3-3-2-cube-formula': {
+        type: 'drill',
+        title: '立方公式因式分解',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ332CubeFormulaSet(6);
+        },
+      },
+      'j3-3-2-higher-power-diff-squares': {
+        type: 'drill',
+        title: '高次平方差連續分解',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ332HigherPowerDiffSquaresSet(6);
         },
       },
       'j3-3-3-cross-core-mixed': {
@@ -3684,6 +4337,15 @@
         questionCount: 6,
         generate() {
           return buildJ333CrossStructuredSet(6);
+        },
+      },
+      'j3-3-3-factor-parameter-reverse': {
+        type: 'drill',
+        title: '十字交乘反推係數',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ333FactorParameterReverseSet(6);
         },
       },
       'j3-4-1-factor-formula-solve': {
@@ -3839,6 +4501,24 @@
           return buildJ342SpecialRootRelationSet(6);
         },
       },
+      'j3-4-2-known-root-parameter': {
+        type: 'drill',
+        title: '已知一根求參數與另一根',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ342KnownRootParameterSet(6);
+        },
+      },
+      'j3-4-2-discriminant-range': {
+        type: 'drill',
+        title: '判別式求參數範圍',
+        difficulty: 'medium',
+        questionCount: 6,
+        generate() {
+          return buildJ342DiscriminantRangeSet(6);
+        },
+      },
       'j3-4-3-number-property-word': {
         type: 'drill',
         title: '數字性質與運算問題',
@@ -3913,7 +4593,7 @@
       },
   };
 
-  const bundleFingerprint = "j3-bundle-v20260619-v2";
+  const bundleFingerprint = "j3-bundle-v20260622-j34-v1";
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== "object") return;
     config.__generatorFingerprint = bundleFingerprint;

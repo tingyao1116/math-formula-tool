@@ -15,22 +15,22 @@
       chapterPrefixes: ["e6-"],
     },
     j1: {
-      src: "data/practice-generators/j1.js?v=20260619-j1-chapter-owned-v2",
+      src: "data/practice-generators/j1.js?v=20260622-j133-file-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j1-"],
     },
     j2: {
-      src: "data/practice-generators/j2.js?v=20260619-j2-real-bundle-v1",
+      src: "data/practice-generators/j2.js?v=20260622-j25-stats-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j2-"],
     },
     j3: {
-      src: "data/practice-generators/j3.js?v=20260619-j3-chapter-owned-v2",
+      src: "data/practice-generators/j3.js?v=20260622-j34-quad-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j3-"],
     },
     j4: {
-      src: "data/practice-generators/j4.js?v=20260619-j4-real-bundle-v1",
+      src: "data/practice-generators/j4.js?v=20260622-j44-quad-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j4-"],
     },

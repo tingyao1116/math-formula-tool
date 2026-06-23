@@ -4741,6 +4741,305 @@
     return buildS224SamplingDiagnosticSet(count);
   }
 
+  function factorialInt(n) {
+    let value = 1;
+    for (let i = 2; i <= n; i += 1) value *= i;
+    return value;
+  }
+
+  function buildS221ProductRuleParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+    const scenarios = [
+      {
+        lead: '某餐廳推出套餐',
+        labels: ['主餐', '湯品', '飲料'],
+        units: ['種', '種', '種'],
+      },
+      {
+        lead: '服飾店設計穿搭',
+        labels: ['上衣', '長褲', '鞋子'],
+        units: ['件', '件', '雙'],
+      },
+      {
+        lead: '文具店組合禮盒',
+        labels: ['原子筆', '筆記本', '貼紙包'],
+        units: ['款', '款', '款'],
+      },
+      {
+        lead: '校外教學安排路線',
+        labels: ['去程方案', '午餐方案', '回程方案'],
+        units: ['種', '種', '種'],
+      },
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const scenario = scenarios[i % scenarios.length];
+      const a = randInt(2, 6);
+      const b = randInt(2, 5);
+      const c = randInt(2, 6);
+      const total = a * b * c;
+      questions.push(
+        `${scenario.lead}，共有 ${a} ${scenario.units[0]}${scenario.labels[0]}、${b} ${scenario.units[1]}${scenario.labels[1]}與 ${c} ${scenario.units[2]}${scenario.labels[2]}可供選擇。若每次各選 1 種，則共有多少種不同的搭配方式？`
+      );
+      answers.push(
+        `簡答：${total} 種。過程：依乘法原理，${scenario.labels[0]}有 ${a} 種選法，${scenario.labels[1]}有 ${b} 種選法，${scenario.labels[2]}有 ${c} 種選法，所以總數為 ${a}\\times${b}\\times${c}=${total}。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS221InclusionExclusionMultiplesSet(count) {
+    const questions = [];
+    const answers = [];
+    const pairs = [
+      [2, 3],
+      [2, 5],
+      [3, 4],
+      [3, 5],
+      [4, 5],
+      [5, 6],
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const [a, b] = pairs[i % pairs.length];
+      const scale = randInt(6, 18);
+      const totalCount = a * b * scale;
+      const countA = Math.floor(totalCount / a);
+      const countB = Math.floor(totalCount / b);
+      const countBoth = Math.floor(totalCount / lcm(a, b));
+      const union = countA + countB - countBoth;
+      const probability = simplifyFraction(union, totalCount);
+      questions.push(
+        `從 1 到 ${totalCount} 的整數中隨機任取 1 個，求此數為 ${a} 的倍數或 ${b} 的倍數的機率。`
+      );
+      answers.push(
+        `簡答：\\(${formatFraction(probability.num, probability.den)}\\)。過程：${a} 的倍數有 ${countA} 個，${b} 的倍數有 ${countB} 個，同時為兩者倍數者是 ${lcm(a, b)} 的倍數，共 ${countBoth} 個。由取捨原理，可得符合者共有 ${countA}+${countB}-${countBoth}=${union} 個，所以機率為 \\(\\frac{${union}}{${totalCount}}=${formatFraction(probability.num, probability.den)}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS222RepeatedLetterPermutationParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const repeatedCounts = shuffle([2, 2, 3, 3, 4]).slice(0, randInt(2, 3)).sort((x, y) => y - x);
+      const singleCount = randInt(1, 3);
+      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+      const parts = [];
+      let totalLetters = singleCount;
+      repeatedCounts.forEach((value, index) => {
+        totalLetters += value;
+        parts.push(`${letters[index]} 有 ${value} 個`);
+      });
+      if (singleCount > 0) {
+        const singleLetters = letters.slice(repeatedCounts.length, repeatedCounts.length + singleCount).join('、');
+        parts.push(`其餘 ${singleCount} 個字母 ${singleLetters} 各 1 個`);
+      }
+      let denominator = 1;
+      const denominatorText = repeatedCounts.map((value) => `${value}!`).join('');
+      repeatedCounts.forEach((value) => {
+        denominator *= factorialInt(value);
+      });
+      const total = factorialInt(totalLetters) / denominator;
+      questions.push(
+        `某字串共有 ${totalLetters} 個字母，其中 ${parts.join('，')}。若將這 ${totalLetters} 個字母全部重新排列，共有多少種不同的排法？`
+      );
+      answers.push(
+        `簡答：${total} 種。過程：共有 ${totalLetters} 個位置可排，若全部視為相異，排法為 ${totalLetters}!；但相同字母互換不產生新排法，所以要除以重複字母的階乘積，得 \\(\\frac{${totalLetters}!}{${denominatorText}}=${total}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS222AdjacentPairArrangementParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+    const contexts = [
+      { noun: '位同學', subject: '甲、乙兩人' },
+      { noun: '本不同的書', subject: '數學課本與英文課本' },
+      { noun: '位隊員', subject: '隊長與副隊長' },
+      { noun: '張卡片', subject: 'A 卡與 B 卡' },
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const context = contexts[i % contexts.length];
+      const n = randInt(5, 9);
+      const total = 2 * factorialInt(n - 1);
+      questions.push(
+        `將 ${n} ${context.noun}排成一列，若要求 ${context.subject}必須相鄰，則共有多少種排列方式？`
+      );
+      answers.push(
+        `簡答：${total} 種。過程：把 ${context.subject}視為一個整體，則原來 ${n} 個對象可先看成 ${n - 1} 個單位排列，有 \\((${n - 1})!\\) 種；而這兩個對象內部還可交換順序 2 種，所以總數為 \\(2\\times(${n - 1})!=${total}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS223BinomialCoefficientParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const n = randInt(4, 8);
+      const q = randInt(1, n - 1);
+      const p = n - q;
+      const a = pickNonZero(-4, 4);
+      const b = pickNonZero(-4, 4);
+      const coefficient = combinationCount(n, q) * powInt(a, p) * powInt(b, q);
+      questions.push(
+        `展開 \\((${a}x${b >= 0 ? '+' : ''}${b}y)^{${n}}\\)，求 \\(x^{${p}}y^{${q}}\\) 項的係數。`
+      );
+      answers.push(
+        `簡答：${coefficient}。過程：在 \\((${a}x${b >= 0 ? '+' : ''}${b}y)^{${n}}\\) 中，要得到 \\(x^{${p}}y^{${q}}\\)，需從 ${n} 個因式中選 ${q} 個取 \\(${b}y\\)，其餘 ${p} 個取 \\(${a}x\\)。所以係數為 \\(C(${n},${q})\\cdot(${a})^{${p}}\\cdot(${b})^{${q}}=${coefficient}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS223IdenticalDistributionParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+    const contexts = [
+      { item: '顆相同的糖果', people: '位小朋友', each: '位小朋友', variable: 'x' },
+      { item: '本相同的練習簿', people: '位學生', each: '位學生', variable: 'x' },
+      { item: '顆相同的球', people: '個不同箱子', each: '個箱子', variable: 'x' },
+      { item: '支相同的鉛筆', people: '位同學', each: '位同學', variable: 'x' },
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const context = contexts[i % contexts.length];
+      const boxes = randInt(3, 5);
+      const minEach = randInt(0, 2);
+      const totalItems = randInt(boxes * Math.max(minEach, 1) + 2, boxes * Math.max(minEach, 1) + 10);
+      const shiftedTotal = totalItems - boxes * minEach;
+      const ways = combinationCount(shiftedTotal + boxes - 1, boxes - 1);
+      const conditionText =
+        minEach === 0 ? `每${context.each}可分到 0 個或多個` : `每${context.each}至少分到 ${minEach} 個`;
+      questions.push(
+        `將 ${totalItems} ${context.item}分給 ${boxes} ${context.people}，${conditionText}，共有多少種分法？`
+      );
+      if (minEach === 0) {
+        answers.push(
+          `簡答：${ways} 種。過程：設各對象分得數量為 \\(${context.variable}_1,${context.variable}_2,\\ldots,${context.variable}_${boxes}\\)，則需滿足非負整數解 \\(${context.variable}_1+${context.variable}_2+\\cdots+${context.variable}_${boxes}=${totalItems}\\)。由插板法，解數為 \\(C(${totalItems + boxes - 1},${boxes - 1})=${ways}\\)。`
+        );
+      } else {
+        answers.push(
+          `簡答：${ways} 種。過程：設各對象分得數量為 \\(${context.variable}_1,${context.variable}_2,\\ldots,${context.variable}_${boxes}\\)，且每個都至少 ${minEach} 個。令 \\(${context.variable}_i'=${context.variable}_i-${minEach}\\)，則轉成非負整數解 \\(${context.variable}_1'+${context.variable}_2'+\\cdots+${context.variable}_${boxes}'=${shiftedTotal}\\)。由插板法，解數為 \\(C(${shiftedTotal + boxes - 1},${boxes - 1})=${ways}\\)。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS224ExactKDrawProbabilityParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+    const contexts = [
+      { good: '紅球', bad: '白球' },
+      { good: '良品', bad: '不良品' },
+      { good: '男生', bad: '女生' },
+      { good: '數學書', bad: '英文書' },
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const context = contexts[i % contexts.length];
+      const good = randInt(4, 8);
+      const bad = randInt(4, 8);
+      const draw = randInt(2, 4);
+      const k = randInt(1, Math.min(good, draw - 1));
+      const numerator = combinationCount(good, k) * combinationCount(bad, draw - k);
+      const denominator = combinationCount(good + bad, draw);
+      const probability = simplifyFraction(numerator, denominator);
+      questions.push(
+        `袋中有 ${good} 個${context.good}與 ${bad} 個${context.bad}，今一次不放回取出 ${draw} 個，求恰好取到 ${k} 個${context.good}的機率。`
+      );
+      answers.push(
+        `簡答：\\(${formatFraction(probability.num, probability.den)}\\)。過程：全部取法共有 \\(C(${good + bad},${draw})=${denominator}\\) 種；恰好取到 ${k} 個${context.good}時，要從 ${good} 個${context.good}中取 ${k} 個，再從 ${bad} 個${context.bad}中取 ${draw - k} 個，所以有 \\(C(${good},${k})C(${bad},${draw - k})=${numerator}\\) 種。故機率為 \\(\\frac{${numerator}}{${denominator}}=${formatFraction(probability.num, probability.den)}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS224EventCountRelationsParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const total = randInt(24, 60);
+      const aCount = randInt(8, Math.floor(total * 0.65));
+      const bCount = randInt(8, Math.floor(total * 0.65));
+      const minIntersection = Math.max(1, aCount + bCount - total);
+      const maxIntersection = Math.min(aCount, bCount) - 1;
+      const intersection = randInt(minIntersection, Math.max(minIntersection, maxIntersection));
+      if (i % 2 === 0) {
+        const union = aCount + bCount - intersection;
+        const probability = simplifyFraction(union, total);
+        questions.push(
+          `在一個共有 ${total} 個等可能結果的樣本空間中，已知事件 \\(A\\) 有 ${aCount} 個結果、事件 \\(B\\) 有 ${bCount} 個結果，且 \\(A\\cap B\\) 有 ${intersection} 個結果。求 \\(P(A\\cup B)\\)。`
+        );
+        answers.push(
+          `簡答：\\(${formatFraction(probability.num, probability.den)}\\)。過程：由取捨原理，\\(|A\\cup B|=|A|+|B|-|A\\cap B|=${aCount}+${bCount}-${intersection}=${union}\\)。因此 \\(P(A\\cup B)=\\frac{|A\\cup B|}{|S|}=\\frac{${union}}{${total}}=${formatFraction(probability.num, probability.den)}\\)。`
+        );
+      } else {
+        const conditional = simplifyFraction(intersection, bCount);
+        questions.push(
+          `在一個共有 ${total} 個等可能結果的樣本空間中，已知事件 \\(A\\) 有 ${aCount} 個結果、事件 \\(B\\) 有 ${bCount} 個結果，且 \\(A\\cap B\\) 有 ${intersection} 個結果。求條件機率 \\(P(A\\mid B)\\)。`
+        );
+        answers.push(
+          `簡答：\\(${formatFraction(conditional.num, conditional.den)}\\)。過程：條件機率定義為 \\(P(A\\mid B)=\\frac{P(A\\cap B)}{P(B)}=\\frac{|A\\cap B|}{|B|}=\\frac{${intersection}}{${bCount}}=${formatFraction(conditional.num, conditional.den)}\\)。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS224ExpectedValueParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      if (i % 2 === 0) {
+        const favoredFaces = randInt(2, 4);
+        const gain = randInt(8, 20);
+        const loss = randInt(2, 8);
+        const numerator = favoredFaces * gain - (6 - favoredFaces) * loss;
+        const expectation = simplifyFraction(numerator, 6);
+        questions.push(
+          `擲 1 枚公正骰子一次。若點數落在指定的 ${favoredFaces} 個得分面上，可得 ${gain} 元；其餘 ${6 - favoredFaces} 個面需付 ${loss} 元。求每玩一次的期望值。`
+        );
+        answers.push(
+          `簡答：\\(${formatFraction(expectation.num, expectation.den)}\\) 元。過程：得 ${gain} 元的機率為 \\(\\frac{${favoredFaces}}{6}\\)，付 ${loss} 元的機率為 \\(\\frac{${6 - favoredFaces}}{6}\\)。所以期望值為 \\(\\frac{${favoredFaces}}{6}\\cdot${gain}-\\frac{${6 - favoredFaces}}{6}\\cdot${loss}=\\frac{${numerator}}{6}=${formatFraction(expectation.num, expectation.den)}\\) 元。`
+        );
+      } else {
+        const red = randInt(3, 7);
+        const white = randInt(3, 7);
+        const gain = randInt(10, 30);
+        const loss = randInt(4, 12);
+        const numerator = red * gain - white * loss;
+        const expectation = simplifyFraction(numerator, red + white);
+        questions.push(
+          `袋中有 ${red} 顆紅球與 ${white} 顆白球。任取 1 球後放回；若取到紅球可得 ${gain} 元，取到白球需付 ${loss} 元。求每次遊戲的期望值。`
+        );
+        answers.push(
+          `簡答：\\(${formatFraction(expectation.num, expectation.den)}\\) 元。過程：取到紅球的機率為 \\(\\frac{${red}}{${red + white}}\\)，取到白球的機率為 \\(\\frac{${white}}{${red + white}}\\)。所以期望值為 \\(\\frac{${red}}{${red + white}}\\cdot${gain}-\\frac{${white}}{${red + white}}\\cdot${loss}=\\frac{${numerator}}{${red + white}}=${formatFraction(expectation.num, expectation.den)}\\) 元。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildS231BasicUngroupedSet(count) {
     return buildS223TemplateSet(
       [
@@ -7880,6 +8179,24 @@
           return buildS221MultipleSurveyCountingSubtypeSet(5);
         },
       },
+      's2-2-1-product-rule-parameterized': {
+        type: 'drill',
+        title: '乘法原理的參數化搭配題',
+        difficulty: 'easy',
+        questionCount: 5,
+        generate() {
+          return buildS221ProductRuleParameterizedSet(5);
+        },
+      },
+      's2-2-1-inclusion-exclusion-multiples': {
+        type: 'drill',
+        title: '倍數聯集的取捨原理',
+        difficulty: 'easy',
+        questionCount: 5,
+        generate() {
+          return buildS221InclusionExclusionMultiplesSet(5);
+        },
+      },
       's2-2-1-advanced-counting-five-subtypes': {
         type: 'drill',
         title: '展開項數因數路徑與塗色五小類綜合',
@@ -8040,6 +8357,24 @@
         questionCount: 5,
         generate() {
           return buildS222InternalOrderConstraintSubtypeSet(5);
+        },
+      },
+      's2-2-2-repeated-letter-permutation-parameterized': {
+        type: 'drill',
+        title: '重複字母排列總數',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS222RepeatedLetterPermutationParameterizedSet(5);
+        },
+      },
+      's2-2-2-adjacent-pair-arrangement-parameterized': {
+        type: 'drill',
+        title: '指定兩項相鄰的排列',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS222AdjacentPairArrangementParameterizedSet(5);
         },
       },
       's2-2-3-binomial-basics-five-subtypes': {
@@ -8267,6 +8602,24 @@
           return buildS223GroupingDistributionFiveSubtypeMixedSet(5);
         },
       },
+      's2-2-3-binomial-coefficient-parameterized': {
+        type: 'drill',
+        title: '二項式指定項係數參數題',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS223BinomialCoefficientParameterizedSet(5);
+        },
+      },
+      's2-2-3-identical-distribution-parameterized': {
+        type: 'drill',
+        title: '相同物分配與最低限制',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS223IdenticalDistributionParameterizedSet(5);
+        },
+      },
       's2-2-3-distinct-equal-named-distribution': {
         type: 'drill',
         title: '相異物平均給特定對象',
@@ -8418,6 +8771,33 @@
         questionCount: 5,
         generate() {
           return buildS224SamplingDiagnosticSubtypeSet(5);
+        },
+      },
+      's2-2-4-exact-k-draw-probability-parameterized': {
+        type: 'drill',
+        title: '不放回抽取的恰好機率',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS224ExactKDrawProbabilityParameterizedSet(5);
+        },
+      },
+      's2-2-4-event-count-relations-parameterized': {
+        type: 'drill',
+        title: '事件交並與條件機率',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS224EventCountRelationsParameterizedSet(5);
+        },
+      },
+      's2-2-4-expected-value-parameterized': {
+        type: 'drill',
+        title: '期望值與遊戲損益參數題',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS224ExpectedValueParameterizedSet(5);
         },
       },
       's2-3-1-core-stats-five-subtypes': {

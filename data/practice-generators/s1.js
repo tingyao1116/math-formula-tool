@@ -2059,6 +2059,25 @@
     return `${parts.join('')}=0`;
   }
 
+  function normalizeS121LineCoefficients(a, b, c) {
+    const divisor = gcdInt(gcdInt(a, b), c);
+    let na = a / divisor;
+    let nb = b / divisor;
+    let nc = c / divisor;
+    if (na < 0 || (na === 0 && nb < 0)) {
+      na *= -1;
+      nb *= -1;
+      nc *= -1;
+    }
+    return { a: na, b: nb, c: nc };
+  }
+
+  function formatS121BisectorEquation(a, b, c) {
+    if (b === 0) return `x=${formatFraction(-c, a)}`;
+    if (a === 0) return `y=${formatFraction(-c, b)}`;
+    return formatS121Line(a, b, c);
+  }
+
   function formatS121VectorOffset(t, a, b) {
     return `${t >= 0 ? '+' : '-'}${Math.abs(t)}(${a},${b})`;
   }
@@ -2129,6 +2148,62 @@
         `簡答：\\(${formatS121Point(foot)}\\)。過程：對稱點連線 \\(PQ\\) 會垂直對稱軸，且被對稱軸平分，所以 \\(PQ\\) 的中點就是 \\(P\\) 在 \\(L\\) 上的投影點 \\(${formatS121Point(foot)}\\)。`
       );
     }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS121PerpendicularBisectorSet(count) {
+    const questions = [];
+    const answers = [];
+    const obliqueOffsets = [
+      [1, 2],
+      [2, 1],
+      [1, -2],
+      [2, -3],
+      [3, 1],
+      [3, -2],
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const midpoint = { x: randInt(-4, 4), y: randInt(-4, 4) };
+      let ux = 0;
+      let uy = 0;
+
+      if (i % 5 === 1) {
+        ux = randInt(1, 4);
+      } else if (i % 5 === 2) {
+        uy = randInt(1, 4);
+      } else {
+        [ux, uy] = obliqueOffsets[randInt(0, obliqueOffsets.length - 1)];
+      }
+
+      const pointA = { x: midpoint.x - ux, y: midpoint.y - uy };
+      const pointB = { x: midpoint.x + ux, y: midpoint.y + uy };
+      const normalized = normalizeS121LineCoefficients(ux, uy, -(ux * midpoint.x + uy * midpoint.y));
+      const equation = formatS121BisectorEquation(normalized.a, normalized.b, normalized.c);
+
+      questions.push(`已知 \\(A${formatS121Point(pointA)}\\)、\\(B${formatS121Point(pointB)}\\)，求線段 \\(AB\\) 的垂直平分線方程式。`);
+
+      if (uy === 0) {
+        answers.push(
+          `簡答：\\(${equation}\\)。過程：線段 \\(AB\\) 的中點為 \\(M(${midpoint.x},${midpoint.y})\\)。因為 \\(AB\\) 為水平線，所以垂直平分線是過中點的鉛直線，故方程式為 \\(${equation}\\)。`
+        );
+        continue;
+      }
+
+      if (ux === 0) {
+        answers.push(
+          `簡答：\\(${equation}\\)。過程：線段 \\(AB\\) 的中點為 \\(M(${midpoint.x},${midpoint.y})\\)。因為 \\(AB\\) 為鉛直線，所以垂直平分線是過中點的水平線，故方程式為 \\(${equation}\\)。`
+        );
+        continue;
+      }
+
+      const slopeAB = formatFraction(uy, ux);
+      const perpSlope = formatFraction(-ux, uy);
+      answers.push(
+        `簡答：\\(${equation}\\)。過程：線段 \\(AB\\) 的中點為 \\(M(${midpoint.x},${midpoint.y})\\)，\\(AB\\) 的斜率為 \\(${slopeAB}\\)，所以垂直平分線的斜率為 \\(${perpSlope}\\)。再取法向量為 \\((${normalized.a},${normalized.b})\\)，設中垂線為 \\(${formatS121Term(normalized.a, 'x')}${normalized.b > 0 ? '+' : ''}${formatS121Term(normalized.b, 'y')}+c=0\\)。代入中點 \\(M\\) 可得 \\(c=${normalized.c}\\)，所以方程式為 \\(${equation}\\)。`
+      );
+    }
+
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
@@ -6546,6 +6621,15 @@
         questionCount: 5,
         generate() {
           return buildS121ProjectionSymmetrySet(5);
+        },
+      },
+      's1-2-1-perpendicular-bisector': {
+        type: 'drill',
+        title: '兩點求垂直平分線方程式',
+        difficulty: 'easy',
+        questionCount: 5,
+        generate() {
+          return buildS121PerpendicularBisectorSet(5);
         },
       },
       's1-2-1-line-cluster-fixed-point': {

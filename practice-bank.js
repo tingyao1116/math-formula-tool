@@ -71,7 +71,7 @@
     practiceId: initialPracticeId,
     catalogMode: "binding",
   };
-  const COMPOSITE_SESSION_STORAGE_KEY = "math-formula-tool-composite-sessions-v1";
+  const COMPOSITE_SESSION_STORAGE_KEY = "math-formula-tool-composite-sessions-v2";
 
   function getNormalizedTermLabel(term) {
     const text = String(term || "").trim();
@@ -1145,7 +1145,7 @@
       return prompt ? [{ question: prompt, summaryAnswer: answer, answer }] : [];
     }
     if (typeof config.generate !== "function") return [];
-    const desiredCount = Math.max(1, Number(item?.subtypeCount || maxVariants || 1) || 1);
+    const desiredCount = Math.max(1, Number(maxVariants || 1) || 1);
     const result = normalizeGeneratedPracticeResultV2(config.generate(item) || {});
     const questions = Array.isArray(result.questions) ? result.questions : [];
     const summaryAnswers = Array.isArray(result.summaryAnswers) ? result.summaryAnswers : [];
@@ -1161,6 +1161,92 @@
     }
 
     return variants;
+  }
+
+  const TOP_COMPOSITE_QUESTIONS_PER_SUBTYPE = 3;
+
+  function buildCompositeChildItemV2(record, fallbackChapterCode = "") {
+    if (!record || typeof record !== "object") return null;
+    return {
+      ...record,
+      id: String(record.id || "").trim(),
+      title: String(record.title || record.id || "").trim(),
+      chapterCode: String(record.chapterCode || fallbackChapterCode || "").trim(),
+      chapterCodes: Array.isArray(record.chapterCodes) ? record.chapterCodes : undefined,
+      subtypeCount: Number(record.subtypeCount || 0) || undefined,
+      practiceSource: record.practiceSource || "library",
+      relatedPracticeIds: normalizeTextList(record.relatedPracticeIds),
+    };
+  }
+
+  function resolveCompositeChildItemsV2(item) {
+    const relatedIds = Array.isArray(item?.relatedPracticeIds)
+      ? item.relatedPracticeIds.map((value) => String(value || "").trim()).filter(Boolean)
+      : [];
+    if (!relatedIds.length) return [];
+    return relatedIds
+      .map((practiceId) => {
+        const record = practiceLibrary?.byId?.[practiceId] || null;
+        if (!record) return null;
+        return buildCompositeChildItemV2(record, item?.chapterCode || state.chapterCode || "");
+      })
+      .filter(Boolean);
+  }
+
+  function collectQuestionsForSubtypeV2(config, item, subtypeIndex, desiredCount) {
+    const safeDesiredCount = Math.max(1, Number(desiredCount || 0) || 1);
+    const variants = [];
+    const seen = new Set();
+    const attemptLimit = Math.max(8, safeDesiredCount * 8);
+
+    for (let attempt = 0; attempt < attemptLimit && variants.length < safeDesiredCount; attempt += 1) {
+      const result = normalizeGeneratedPracticeResultV2(config.generate(item) || {});
+      const questions = Array.isArray(result.questions) ? result.questions : [];
+      const summaryAnswers = Array.isArray(result.summaryAnswers) ? result.summaryAnswers : [];
+      const answers = Array.isArray(result.answers) ? result.answers : [];
+      const question = String(questions[subtypeIndex] || "").trim();
+      if (!question) continue;
+      const signature = `${subtypeIndex}::${question}`;
+      if (seen.has(signature)) continue;
+      seen.add(signature);
+      variants.push({
+        question,
+        summaryAnswer: String(summaryAnswers[subtypeIndex] || answers[subtypeIndex] || "").trim(),
+        answer: String(answers[subtypeIndex] || "").trim(),
+      });
+    }
+
+    if (!variants.length) {
+      const fallback = collectPracticeVariationsV2(config, item, subtypeIndex + 1);
+      const chosen = fallback[subtypeIndex] || null;
+      if (chosen) variants.push(chosen);
+    }
+
+    return variants;
+  }
+
+  function buildExpandedCompositeSectionsForItemV2(item, titlePrefix = "") {
+    const config = practiceStore.getConfig?.(item?.id) || null;
+    if (!config) return [];
+
+    const itemTitle = String(item?.title || config?.title || item?.id || "未命名題型").trim();
+    const fullTitle = titlePrefix ? `${titlePrefix}｜${itemTitle}` : itemTitle;
+
+    if (config.type === "fixed-example") {
+      const prompt = String(config.prompt || "").trim();
+      const answer = String(config.answer || "").trim();
+      if (!prompt && !answer) return [];
+      return [{
+        title: fullTitle,
+        variants: [{ question: prompt, summaryAnswer: answer, answer }],
+      }];
+    }
+
+    if (typeof config.generate !== "function") return [];
+
+    const variants = collectPracticeVariationsV2(config, item, TOP_COMPOSITE_QUESTIONS_PER_SUBTYPE)
+      .slice(0, TOP_COMPOSITE_QUESTIONS_PER_SUBTYPE);
+    return variants.length ? [{ title: fullTitle, variants }] : [];
   }
 
   function buildCompactCompositePracticeResultV2(items) {
@@ -1196,14 +1282,15 @@
   }
 
   function buildExpandedCompositePracticeResultV2(items) {
-    return items.map((item) => {
-      const config = practiceStore.getConfig?.(item?.id) || null;
-      if (!config) return null;
-      const title = String(item?.title || config?.title || item?.id || "未命名題型").trim();
-      const maxVariants = Math.max(1, Number(item?.subtypeCount || 0) || 1);
-      const variants = collectPracticeVariationsV2(config, item, maxVariants);
-      if (!variants.length) return null;
-      return { title, variants };
+    return items.flatMap((item) => {
+      const childItems = resolveCompositeChildItemsV2(item);
+      if (childItems.length) {
+        const parentTitle = String(item?.title || "").trim();
+        return childItems.flatMap((childItem) =>
+          buildExpandedCompositeSectionsForItemV2(childItem, parentTitle)
+        );
+      }
+      return buildExpandedCompositeSectionsForItemV2(item);
     }).filter(Boolean);
   }
 

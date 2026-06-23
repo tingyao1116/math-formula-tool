@@ -98,6 +98,21 @@ def normalize_markdown_escapes(text: str) -> tuple[str, int, int]:
     return text, letter_count, punct_count
 
 
+def deduplicate_text_lines(text: str) -> tuple[str, int, int]:
+    lines = text.splitlines(keepends=True)
+    seen = set()
+    kept_lines = []
+    removed_count = 0
+    for line in lines:
+        normalized = line.rstrip("\r\n")
+        if normalized in seen:
+            removed_count += 1
+            continue
+        seen.add(normalized)
+        kept_lines.append(line)
+    return "".join(kept_lines), len(kept_lines), removed_count
+
+
 class DualDbGui:
     PRACTICE_MODES = {"practice_records", "practice_bindings", "practice_legacy"}
 
@@ -4299,7 +4314,11 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                 "4. Markdown 反跳脫清理\n"
                 "   會處理：指定 .md 檔中的 \\\\A~\\\\Z、\\\\a~\\\\z 改成 \\A~\\Z、\\a~\\z，並把 \\=、\\+、\\-、\\>、\\<、\\_、\\. 的反斜線拿掉。\n"
                 "   用途：清掉從其他來源貼進 Markdown 後，多出來的跳脫符號。\n"
-                "   注意：這一步會直接覆蓋原檔，請先確認檔案是你要修改的版本。"
+                "   注意：這一步會直接覆蓋原檔，請先確認檔案是你要修改的版本。\n\n"
+                "5. TXT 行去重\n"
+                "   會處理：指定 .txt 檔，把後面重複出現的整行刪掉，只保留第一次出現的位置。\n"
+                "   用途：整理題目清單、講義素材、暫存匯出結果時，快速去掉中間重複內容。\n"
+                "   注意：比對方式是『整行文字完全相同』才算重複；預設會另存新檔，不直接覆蓋原檔。"
             ),
         )
         desc.configure(state="disabled")
@@ -4436,10 +4455,114 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                 parent=window,
             )
 
+        def run_txt_deduplicate():
+            path = filedialog.askopenfilename(
+                title="選擇要去重的 TXT 檔",
+                filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
+                parent=window,
+            )
+            if not path:
+                return
+
+            txt_path = Path(path)
+            original = None
+            read_encoding = None
+            for encoding in ("utf-8-sig", "utf-8"):
+                try:
+                    original = txt_path.read_text(encoding=encoding)
+                    read_encoding = encoding
+                    break
+                except UnicodeDecodeError:
+                    continue
+                except Exception as exc:
+                    messagebox.showerror("讀檔失敗", str(exc), parent=window)
+                    return
+            if original is None:
+                messagebox.showerror("編碼錯誤", f"目前只支援 UTF-8 文字檔：\n{txt_path}", parent=window)
+                return
+
+            deduplicated, kept_count, removed_count = deduplicate_text_lines(original)
+            total_lines = len(original.splitlines())
+            retention_rate = (kept_count / total_lines) if total_lines else 0.0
+            retention_label = f"{kept_count}/{total_lines} ({retention_rate:.1%})"
+            if removed_count == 0:
+                write_log(
+                    (
+                        "TXT 行去重完成\n"
+                        f"- 檔案：{txt_path}\n"
+                        f"- 原始行數：{total_lines}\n"
+                        f"- 留存率：{retention_label}\n"
+                        "- 沒有偵測到重複行"
+                    ),
+                    replace=True,
+                )
+                self.status_var.set(f"TXT 去重完成：沒有重複行，留存率 {retention_label}")
+                messagebox.showinfo("完成", f"沒有偵測到重複行：\n{txt_path}\n\n留存率：{retention_label}", parent=window)
+                return
+
+            default_name = f"{txt_path.stem}-dedup{txt_path.suffix}"
+            save_path = filedialog.asksaveasfilename(
+                title="另存去重結果",
+                defaultextension=".txt",
+                initialdir=str(txt_path.parent),
+                initialfile=default_name,
+                filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
+                parent=window,
+            )
+            if not save_path:
+                write_log(
+                    (
+                        "TXT 行去重已取消輸出\n"
+                        f"- 檔案：{txt_path}\n"
+                        f"- 原始行數：{total_lines}\n"
+                        f"- 保留行數：{kept_count}\n"
+                        f"- 留存率：{retention_label}\n"
+                        f"- 刪除重複行：{removed_count}"
+                    ),
+                    replace=True,
+                )
+                self.status_var.set(f"TXT 去重已完成但取消存檔：留存率 {retention_label}")
+                return
+
+            out_path = Path(save_path)
+            try:
+                out_path.write_text(deduplicated, encoding=read_encoding or "utf-8")
+            except Exception as exc:
+                messagebox.showerror("寫檔失敗", str(exc), parent=window)
+                return
+
+            write_log(
+                (
+                    "TXT 行去重完成\n"
+                    f"- 來源檔案：{txt_path}\n"
+                    f"- 輸出檔案：{out_path}\n"
+                    f"- 原始行數：{total_lines}\n"
+                    f"- 保留行數：{kept_count}\n"
+                    f"- 留存率：{retention_label}\n"
+                    f"- 刪除重複行：{removed_count}\n"
+                    "- 規則：保留第一次出現，移除後續完全相同的整行"
+                ),
+                replace=True,
+            )
+            self.status_var.set(f"TXT 去重完成：刪除 {removed_count} 行，留存率 {retention_label}")
+            messagebox.showinfo(
+                "完成",
+                (
+                    f"TXT 去重完成：\n{txt_path}\n\n"
+                    f"原始行數：{total_lines}\n"
+                    f"保留行數：{kept_count}\n"
+                    f"留存率：{retention_label}\n"
+                    f"刪除重複行：{removed_count}\n\n"
+                    f"已輸出到：\n{out_path}"
+                ),
+                parent=window,
+            )
+
         ttk.Button(button_bar, text="整批匯入正式 packs", style="Compact.TButton", command=run_import_all).pack(side="left")
         ttk.Button(button_bar, text="同步前端橋接檔", style="Compact.TButton", command=run_sync_all).pack(side="left", padx=(8, 0))
         ttk.Button(button_bar, text="檢查資料亂碼", style="Compact.TButton", command=run_integrity_check).pack(side="left", padx=(8, 0))
         ttk.Button(button_bar, text="Markdown 反跳脫清理", style="Compact.TButton", command=run_markdown_unescape).pack(side="left", padx=(8, 0))
+        ttk.Button(button_bar, text="TXT 行去重", style="Compact.TButton", command=run_txt_deduplicate).pack(side="left", padx=(8, 0))
         ttk.Button(button_bar, text="講義產生器 v1", style="Compact.TButton", command=self.open_lesson_generator).pack(side="left", padx=(8, 0))
         ttk.Button(button_bar, text="關閉", style="Compact.TButton", command=window.destroy).pack(side="right")
 
@@ -4449,6 +4572,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             "- 同步前端橋接檔：formula-db / question-db / practice-db -> data/*.js\n"
             "- 檢查資料亂碼：掃描資料庫與正式匯入檔，不直接修改\n"
             "- Markdown 反跳脫清理：清掉指定 .md 檔內多餘的反斜線，直接覆蓋原檔\n"
+            "- TXT 行去重：保留第一次出現，刪掉後面重複整行，預設另存新檔\n"
             "- 講義產生器 v1：開啟章節講義預覽與輸出工具",
             replace=True,
         )
