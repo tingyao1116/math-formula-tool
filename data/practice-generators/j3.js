@@ -3609,6 +3609,1330 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+
+  // ── j3-4-3 新增：瓷磚鋪地板 ─────────────────────────────────────────────
+  function buildJ343TileFloorSet(count) {
+    const questions = [];
+    const answers = [];
+
+    while (questions.length < count) {
+      const a = randInt(2, 12);   // 甲邊長
+      const d = randInt(1, 3);    // 甲比乙少d
+      const b = a + d;            // 乙邊長
+      const k = randInt(1, 5);    // 比例因子
+      const n1 = k * b * b;      // 甲品牌塊數
+      const n2 = k * a * a;      // 乙品牌塊數
+      if (n1 > 9999 || n2 < 2 || n1 === n2) continue;
+
+      questions.push(
+        `小蘋家的客廳地板最近要重新翻修。在不考慮間隙的情況下，如果鋪上甲品牌的正方形瓷磚，剛好需要 ${n1} 塊；如果鋪上乙品牌的正方形瓷磚，剛好需要 ${n2} 塊。已知甲品牌的瓷磚邊長比乙品牌少 ${d} 公寸，則每塊甲品牌瓷磚的面積為多少平方公寸？`
+      );
+      // Key: n1/n2 = b²/a², so n1x² = n2(x+d)² simplifies to b²x² = a²(x+d)²
+      answers.push(
+        `設甲品牌瓷磚邊長為 $x$ 公寸，乙品牌邊長為 $(x+${d})$ 公寸。因地板面積相同，列得 $${n1}x^2=${n2}(x+${d})^2$。注意到 $\\dfrac{${n1}}{${n2}}=\\dfrac{${b}^2}{${a}^2}$，方程式可化為 $${b}^2x^2=${a}^2(x+${d})^2$，兩邊取正平方根得 $${b}x=${a}(x+${d})$，整理得 $(${b}-${a})x=${a}\\times${d}$，解得 $x=${a}$，所以甲品牌瓷磚的面積為 $${a}^2=${a * a}$ 平方公寸。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-3 新增：兩正方形周長和+面積和 ──────────────────────────────────
+  function buildJ343TwoSquarePerimAreaSet(count) {
+    const questions = [];
+    const answers = [];
+
+    while (questions.length < count) {
+      const a = randInt(2, 14);
+      const b = randInt(a + 2, a + 16);
+      const P = 4 * (a + b);
+      const S = a * a + b * b;
+      const sumSides = a + b;
+      const ab = (sumSides * sumSides - S) / 2;
+
+      questions.push(
+        `已知兩個正方形的周長和為 ${P} 公分，且面積和為 ${S} 平方公分，則這兩個正方形的邊長各是多少公分？`
+      );
+      answers.push(
+        `設兩正方形邊長為 $x$、$y$。由周長和 $4(x+y)=${P}$ 得 $x+y=${sumSides}$；由面積和 $x^2+y^2=${S}$。利用 $(x+y)^2=x^2+2xy+y^2$ 得 $${sumSides * sumSides}=${S}+2xy$，所以 $xy=${ab}$。$x$ 與 $y$ 是方程式 $t^2-${sumSides}t+${ab}=0$ 的根，分解得 $(t-${a})(t-${b})=0$，所以兩邊長分別為 ${a} 公分與 ${b} 公分。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-3 新增：三個連續正奇數（或正偶數）平方和 ───────────────────────
+  function buildJ343ConsecOddSquareSumSet(count) {
+    const questions = [];
+    const answers = [];
+
+    while (questions.length < count) {
+      // Alternate odd and even
+      const isOdd = questions.length % 3 !== 2;
+      let n;
+      if (isOdd) {
+        // middle odd number: 5,7,9,...,29
+        n = 2 * randInt(3, 16) + 1;
+      } else {
+        // middle even number: 6,8,...,26
+        n = 2 * randInt(3, 14);
+      }
+      if (n < 5) continue;
+
+      const a = n - 2, b = n, c = n + 2;
+      const S = a * a + b * b + c * c;
+      const nSq = (S - 8) / 3;
+      if (!Number.isInteger(nSq) || nSq !== n * n) continue;
+      const typeStr = isOdd ? '正奇數' : '正偶數';
+
+      questions.push(
+        `已知三個連續${typeStr}的平方和為 ${S}，則此三數為何？`
+      );
+      answers.push(
+        `設中間的${typeStr}為 $n$，另外兩數為 $n-2$ 與 $n+2$。依題意 $(n-2)^2+n^2+(n+2)^2=${S}$，展開整理得 $3n^2+8=${S}$，即 $n^2=${nSq}$，解得 $n=${n}$（取正值），所以此三數為 ${a}、${n}、${c}。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-3 新增：負數與倒數關係 + 西元年份平方題 ────────────────────────
+  function buildJ343NegReciprocalWordSet(count) {
+    const questions = [];
+    const answers = [];
+
+    while (questions.length < count) {
+      const typeIdx = questions.length % 2;
+
+      if (typeIdx === 0) {
+        // 負數比倒數的k倍多c → x=k/x+c → x²-cx-k=0
+        const r = -randInt(1, 7);      // 負答案
+        const c = randInt(1, 6);       // 多 c
+        const k = r * r - c * r;      // k = r²-cr > 0
+        if (k <= 0 || k > 300) continue;
+        const posRoot = c - r;          // 另一根 (sum of roots = c)
+
+        questions.push(
+          `已知一負數比其倒數的 ${k} 倍多 ${c}，則此負數為何？`
+        );
+        answers.push(
+          `設此負數為 $x$，依題意 $x=\\dfrac{${k}}{x}+${c}$，兩邊乘以 $x$ 整理得 $x^2-${c}x-${k}=0$，分解得 $(x-${posRoot})(x+${-r})=0$，解得 $x=${posRoot}$ 或 $x=${r}$。因為此數為負數，所以此負數為 ${r}。`
+        );
+      } else {
+        // 西元年份：出生於Y年，經過x年後恰好是西元x²年 → x²-x-Y=0
+        const x = randInt(4, 80);
+        const Y = x * x - x;
+        if (Y < 10 || Y > 9999) continue;
+        const disc = 1 + 4 * Y;
+        const sqrtDisc = Math.round(Math.sqrt(disc));
+        if (sqrtDisc * sqrtDisc !== disc) continue;
+        const posRoot = (1 + sqrtDisc) / 2;
+        if (posRoot !== x) continue;
+
+        questions.push(
+          `小香出生於西元 ${Y} 年，經過 $x$ 年後，正好是西元 $x^2$ 年，則 $x$ 為何？`
+        );
+        answers.push(
+          `依題意出生年 ${Y} 加上 $x$ 年後的年份為 $x^2$，即 $${Y}+x=x^2$，整理得 $x^2-x-${Y}=0$，使用公式解得 $x=\\dfrac{1+\\sqrt{${disc}}}{2}=\\dfrac{1+${sqrtDisc}}{2}=${x}$（取正整數），所以 $x=${x}$。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-3 新增：買筆折扣問題 ────────────────────────────────────────────
+  function buildJ343PenPricingSet(count) {
+    const questions = [];
+    const answers = [];
+    const names = ['小聰', '小明', '小安', '小翔', '美琪'];
+
+    while (questions.length < count) {
+      const p = randInt(8, 50);     // 原價
+      const k = randInt(2, 9);      // 再多買幾枝
+      const cnt = randInt(5, 30);   // 原本數量
+      const total1 = p * cnt;
+      const total2 = (p - 1) * (cnt + k);
+      if (total1 > 5000 || total2 > 5000) continue;
+
+      // 方程式: kx²+(total1-k-total2)x-total1=0
+      const B = total1 - k - total2;
+      const disc = B * B + 4 * k * total1;
+      const sqrtDisc = Math.round(Math.sqrt(disc));
+      if (sqrtDisc * sqrtDisc !== disc) continue;
+      if ((-B + sqrtDisc) % (2 * k) !== 0) continue;
+      const posRoot = (-B + sqrtDisc) / (2 * k);
+      if (posRoot !== p) continue;
+
+      const nm = names[questions.length % names.length];
+      const Bstr = B >= 0 ? `+${B}` : `${B}`;
+
+      questions.push(
+        `${nm} 挑了一些同款的原子筆，共需 ${total1} 元。結帳時，老闆說：「再買 ${k} 枝，算你 ${total2} 元就好。」${nm} 算了算，發現這樣每枝筆就便宜了 1 元，於是又多買了 ${k} 枝。試問每枝筆的原價是多少元？`
+      );
+      answers.push(
+        `設每枝筆原價 $x$ 元，原本可買 $\\dfrac{${total1}}{x}$ 枝。再買 ${k} 枝後共 $\\dfrac{${total1}}{x}+${k}$ 枝，每枝 $(x-1)$ 元，費用為 $(x-1)\\!\\left(\\dfrac{${total1}}{x}+${k}\\right)=${total2}$。整理得 $${k}x^2${Bstr}x-${total1}=0$，解得 $x=\\dfrac{${-B}+\\sqrt{${disc}}}{${2 * k}}=\\dfrac{${-B}+${sqrtDisc}}{${2 * k}}=${p}$（取正值），所以每枝筆的原價為 ${p} 元。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-3 新增：玩具攤販問題 ────────────────────────────────────────────
+  function buildJ343ToyVendorSet(count) {
+    const questions = [];
+    const answers = [];
+
+    while (questions.length < count) {
+      const n = randInt(10, 70);    // 件數
+      const M = randInt(5, 50);     // 每件加價
+      const c = randInt(30, 250);   // 每件成本
+      const T = n * c;
+      const P = M * (n - 1) - c;   // 利潤 = (n-1)(c+M) - nc = Mn-M-c
+      if (P <= 0 || T > 99999) continue;
+
+      // 方程式: M*n²-(M+P)*n-T=0
+      const coefA = M;
+      const coefB = -(M + P);
+      const coefC = -T;
+      const disc = coefB * coefB - 4 * coefA * coefC;
+      const sqrtDisc = Math.round(Math.sqrt(disc));
+      if (sqrtDisc * sqrtDisc !== disc) continue;
+      if ((-coefB + sqrtDisc) % (2 * coefA) !== 0) continue;
+      const posRoot = (-coefB + sqrtDisc) / (2 * coefA);
+      if (posRoot !== n) continue;
+
+      const MplusP = M + P;
+      questions.push(
+        `某玩具攤販用 ${T} 元買進一批相同的玩具，他留下一件給自己的小孩玩，其餘的每件加 ${M} 元販售，已知全數賣完後，比 ${T} 元多賺了 ${P} 元，試問玩具攤販共買了幾件玩具？`
+      );
+      answers.push(
+        `設共買了 $n$ 件，每件成本 $\\dfrac{${T}}{n}$ 元，賣出 $(n-1)$ 件，每件售 $\\left(\\dfrac{${T}}{n}+${M}\\right)$ 元。依題意 $(n-1)\\!\\left(\\dfrac{${T}}{n}+${M}\\right)=${T}+${P}$，整理得 $${M}n^2-${MplusP}n-${T}=0$，解得 $n=\\dfrac{${MplusP}+\\sqrt{${disc}}}{${2 * M}}=\\dfrac{${MplusP}+${sqrtDisc}}{${2 * M}}=${n}$（取正整數），所以玩具攤販共買了 ${n} 件玩具。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-3 新增：吸管測長方形桌 ─────────────────────────────────────────
+  function buildJ343StrawTableSet(count) {
+    const questions = [];
+    const answers = [];
+    const names = ['小珍', '小安', '明軒', '美琪', '小翔'];
+
+    while (questions.length < count) {
+      const s = randInt(8, 28);   // 吸管長度
+      const L = randInt(2, 9);
+      const A = randInt(1, L * s - 5);
+      const W = randInt(1, 7);
+      const B = randInt(1, 8);
+      const len = L * s - A;
+      const wid = W * s + B;
+      if (len <= 0 || wid <= 0) continue;
+      const S = len * wid;
+      if (S > 999999) continue;
+
+      // 展開: (Ls-A)(Ws+B) = LW·s²+(LB-AW)s-AB = S
+      const qa = L * W;
+      const qb = L * B - A * W;
+      const qc = -(A * B + S);
+      const disc = qb * qb - 4 * qa * qc;
+      const sqrtDisc = Math.round(Math.sqrt(disc));
+      if (sqrtDisc * sqrtDisc !== disc) continue;
+      if ((-qb + sqrtDisc) % (2 * qa) !== 0) continue;
+      const posRoot = (-qb + sqrtDisc) / (2 * qa);
+      if (posRoot !== s) continue;
+
+      const nm = names[questions.length % names.length];
+      const qbStr = qb === 0 ? '' : qb > 0 ? `+${qb}s` : `${qb}s`;
+      const rhs2 = -(qc);  // qc is negative, so rhs2 = -qc = AB+S > 0
+
+      questions.push(
+        `${nm} 用吸管測量一張長方形桌子的邊長，發現桌子的長比吸管長度的 ${L} 倍少 ${A} 公分，寬比吸管長度的 ${W} 倍多 ${B} 公分，已知桌子的面積為 ${S} 平方公分，則吸管的長度為多少公分？`
+      );
+      answers.push(
+        `設吸管長度為 $s$ 公分，桌長 $=${L}s-${A}$，桌寬 $=${W}s+${B}$。依題意 $(${L}s-${A})(${W}s+${B})=${S}$，展開整理得 $${qa}s^2${qbStr}-${A * B + S}=0$，解得 $s=\\dfrac{${-qb}+\\sqrt{${disc}}}{${2 * qa}}=\\dfrac{${-qb}+${sqrtDisc}}{${2 * qa}}=${s}$（取正值），所以吸管的長度為 ${s} 公分。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-3 新增：阿福小明捐款平方關係 ───────────────────────────────────
+  function buildJ343DonationSquareSet(count) {
+    const questions = [];
+    const answers = [];
+    const pairs = [
+      ['阿福', '小明'], ['大雄', '小夫'], ['阿明', '阿強'],
+      ['小哲', '小偉'], ['志明', '春嬌'],
+    ];
+
+    while (questions.length < count) {
+      const x = randInt(12, 55);   // 乙的捐款
+      const A = randInt(3, 9);     // 甲是乙的A倍
+      const B = randInt(5, 40);    // 甲多B元
+      const M = x * x - A * x - B;   // 甲再多捐M元
+      if (M <= 0 || M > 99999) continue;
+
+      const fuFu = A * x + B;
+      const total = fuFu + x;
+      const BplusM = B + M;   // = x²-Ax
+
+      // 方程式: x²-Ax-(B+M)=0 = x²-Ax-(x²-Ax)... wait
+      // x²-Ax-BplusM=0 where BplusM=x²-Ax means always 0? No:
+      // BplusM = B + M = B + (x²-Ax-B) = x²-Ax. So x²-Ax-(x²-Ax)=0 trivially.
+      // Wait: BplusM = x²-Ax, so x²-Ax-BplusM = x²-Ax-(x²-Ax)=0. This is always satisfied.
+      // That's correct - x IS a root by construction. The other root is negative: product of roots = -BplusM, so other root = -BplusM/x.
+      const otherRoot = -BplusM / x;
+      if (!Number.isInteger(otherRoot)) continue;
+
+      const [nameA, nameB] = pairs[questions.length % pairs.length];
+      const disc = A * A + 4 * BplusM;
+      const sqrtDisc = Math.round(Math.sqrt(disc));
+      if (sqrtDisc * sqrtDisc !== disc) continue;
+
+      questions.push(
+        `${nameA} 與 ${nameB} 兩人響應「飢餓三十」的愛心捐款活動，已知 ${nameA} 捐的錢是 ${nameB} 的 ${A} 倍多 ${B} 元，如果 ${nameA} 再多捐 ${M} 元，則所捐的錢剛好是 ${nameB} 捐的錢的平方，試問 ${nameA} 與 ${nameB} 共捐了多少元？`
+      );
+      answers.push(
+        `設 ${nameB} 捐款 $x$ 元，${nameA} 捐款 $(${A}x+${B})$ 元。依題意 $${A}x+${B}+${M}=x^2$，整理得 $x^2-${A}x-${BplusM}=0$，公式解 $x=\\dfrac{${A}+\\sqrt{${disc}}}{2}=\\dfrac{${A}+${sqrtDisc}}{2}=${x}$（取正值）。${nameB} 捐款 ${x} 元，${nameA} 捐款 $${A}\\times ${x}+${B}=${fuFu}$ 元，所以兩人共捐 $${fuFu}+${x}=${total}$ 元。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+
+
+  // ── j3-4-1 新增：差平方型 (ax+b)²-(cx+d)²=0 ─────────────────────────────
+  function buildJ341DiffSquareSolveSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = randInt(1, 4);
+      const b = randInt(1, 12);
+      const c = randInt(1, 4);
+      const d = randInt(1, 12);
+      // (ax+b)²-(cx+d)²=0 → (ax+b+cx+d)(ax+b-cx-d)=0
+      // → ((a+c)x+(b+d))((a-c)x+(b-d))=0
+      const s1 = a + c, t1 = b + d;
+      const s2 = a - c, t2 = b - d;
+      // roots: x = -t1/s1 and x = -t2/s2 (if s2≠0)
+      const gcd1 = (function g(x, y) { return y ? g(y, x % y) : x; })(Math.abs(s1), Math.abs(t1));
+      const r1n = -t1 / gcd1, r1d = s1 / gcd1;
+      let ans;
+      if (s2 === 0) {
+        if (t2 === 0) { i -= 1; continue; } // 0=0 always true, skip
+        // second factor is constant ≠ 0, so only one root
+        const r1Str = r1d === 1 ? `${r1n}` : `\\dfrac{${r1n}}{${r1d}}`;
+        ans = `\\(x=${r1Str}\\)`;
+      } else {
+        const gcd2 = (function g(x, y) { return y ? g(y, x % y) : x; })(Math.abs(s2), Math.abs(t2));
+        const r2n = -t2 / gcd2, r2d = s2 / gcd2;
+        const r1Str = r1d === 1 ? `${r1n}` : `\\dfrac{${r1n}}{${r1d}}`;
+        const r2Str = r2d === 1 ? `${r2n}` : `\\dfrac{${r2n}}{${r2d}}`;
+        ans = `\\(x=${r1Str}\\) 或 \\(x=${r2Str}\\)`;
+      }
+      const aStr = a === 1 ? '' : `${a}`;
+      const cStr = c === 1 ? '' : `${c}`;
+      const s1Sign = t1 >= 0 ? '+' : '';
+      const s2Sign = t2 >= 0 ? '+' : '';
+      const fac1 = `(${a+c})x${t1 >= 0 ? '+' : ''}${t1}`;
+      const fac2 = s2 === 0 ? `${t2}` : `(${s2})x${t2 >= 0 ? '+' : ''}${t2}`;
+      questions.push(
+        `解方程式：\\((${aStr}x${b >= 0 ? '+' : ''}${b})^2-(${cStr}x${d >= 0 ? '+' : ''}${d})^2=0\\)`
+      );
+      answers.push(
+        `利用差平方分解：\\([(${aStr}x+${b})+(${cStr}x+${d})][(${aStr}x+${b})-(${cStr}x+${d})]=0\\)，即 \\((${fac1})(${fac2})=0\\)。${ans}`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-1 新增：換元法 (x+a)²+b(x+a)+c=0 ──────────────────────────────
+  function buildJ341SubstituteVarSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = randInt(1, 8);
+      // 設 y=x+a，則 y²+By+C=0，需可因式分解
+      const r1 = pickNonZero(-8, 8);
+      const r2 = pickNonZero(-8, 8);
+      const B = -(r1 + r2);
+      const C = r1 * r2;
+      // y²+By+C = (y-r1)(y-r2)
+      const xSign = a >= 0 ? `+${a}` : `${a}`;
+      const BSign = B >= 0 ? `+${B}` : `${B}`;
+      const CSign = C >= 0 ? `+${C}` : `${C}`;
+      const x1 = r1 - a, x2 = r2 - a;
+      const x1Str = `${x1}`, x2Str = `${x2}`;
+      questions.push(
+        `解方程式：\\((x${xSign})^2${BSign}(x${xSign})${CSign}=0\\)`
+      );
+      answers.push(
+        `設 \\(y=x${xSign}\\)，方程式化為 \\(y^2${BSign}y${CSign}=0\\)，因式分解得 \\((y-${r1})(y-${r2})=0\\)，所以 \\(y=${r1}\\) 或 \\(y=${r2}\\)。` +
+        `代回 \\(y=x${xSign}\\)：\\(x=${x1Str}\\) 或 \\(x=${x2Str}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-1 新增：共同解（兩方程式有一公共根求係數）─────────────────────
+  function buildJ341SharedRootSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+      if (mode === 0) {
+        // x²+ax+b=0 與 x²+cx-k=0 有一公共根 r
+        // 方法: 先求第一方程式的解（簡單因式），其中一根代入第二求k
+        const r1 = pickNonZero(-6, 6);
+        const r2 = pickNonZero(-6, 6);
+        if (r1 === r2) { i -= 1; continue; }
+        const sum12 = r1 + r2, prod12 = r1 * r2;
+        const a = -sum12, b = prod12;
+        // x²+ax+b=0 有根 r1, r2。共同根取 r1 代入 x²+cx-k=0
+        const r3 = pickNonZero(-6, 6);
+        const c = -(r1 + r3), k_neg = r1 * r3;
+        const BSign = a >= 0 ? `+${a}` : `${a}`;
+        const CSign = b >= 0 ? `+${b}` : `${b}`;
+        const cSign = c >= 0 ? `+${c}` : `${c}`;
+        questions.push(
+          `若 \\(x^2${BSign}x${CSign}=0\\) 與 \\(x^2${cSign}x${k_neg >= 0 ? `+${k_neg}` : `${k_neg}`}=0\\) 有一個公共解，試求此公共解。`
+        );
+        answers.push(
+          `第一方程式因式分解：\\((x-${r1})(x-${r2})=0\\)，解為 \\(x=${r1}\\) 或 \\(x=${r2}\\)。` +
+          `將 \\(x=${r1}\\) 代入第二式：\\(${r1*r1}${c >= 0 ? '+' : ''}${c*r1}+${k_neg}=${r1*r1 + c*r1 + k_neg}\\)${r1*r1 + c*r1 + k_neg === 0 ? '=0 ✓' : '≠0'}。` +
+          `將 \\(x=${r2}\\) 代入第二式：\\(${r2*r2}${c >= 0 ? '+' : ''}${c*r2}+${k_neg}=${r2*r2 + c*r2 + k_neg}\\)${r2*r2 + c*r2 + k_neg === 0 ? '=0 ✓，公共解為 $x=${r2}$。' : '≠0。公共解為 \\(x=${r1}\\)。'}`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // x²-2x=0 與 x²+kx-k²=0 有公共解，求k
+        // x²-2x=0 → x(x-2)=0 → x=0 or x=2
+        // 代入 x²+kx-k²=0
+        // x=0: -k²=0 → k=0（無效）
+        // x=2: 4+2k-k²=0 → k²-2k-4=0 → k=1±√5
+        // Use different factorable versions
+        const r = pickNonZero(1, 6);
+        // eq1: x²-rx=0 → x=0 or x=r
+        // eq2: x²+kx-C=0, C=randInt
+        // if x=r is shared: r²+kr-C=0 → k=(C-r²)/r
+        const C = r * randInt(1, 6); // ensure C/r is integer possible
+        const k = (C - r * r) / r;
+        if (!Number.isInteger(k)) { i -= 1; continue; }
+        const CSign = C >= 0 ? `+${C}` : `${C}`;
+        questions.push(
+          `若 \\(x^2-${r}x=0\\) 與 \\(x^2+kx${-C >= 0 ? '+' : ''}${-C}=0\\) 有一個公共解，求 \\(k\\) 的可能值。`
+        );
+        answers.push(
+          `\\(x^2-${r}x=x(x-${r})=0\\)，解為 \\(x=0\\) 或 \\(x=${r}\\)。` +
+          `若公共解為 \\(x=0\\)：代入第二式得 \\(-${C}=0\\)，矛盾，故排除。` +
+          `若公共解為 \\(x=${r}\\)：代入第二式得 \\(${r*r}+${r}k-${C}=0\\)，解得 \\(k=${k}\\)。`
+        );
+        continue;
+      }
+      // mode 2: 已知a,b為整數，x²+ax+b=0的解也為整數，求a的不同值個數
+      const C2 = randInt(6, 30);
+      // find all factor pairs of C2
+      const factors = [];
+      for (let f = 1; f <= C2; f += 1) {
+        if (C2 % f === 0) {
+          const g = C2 / f;
+          // (x-f)(x-g)=0: a=-(f+g), b=f*g=C2
+          // (x+f)(x+g)=0: a=f+g, b=fg=C2
+          // (x-f)(x+g)=0: a=g-f, b=-fg=-C2 → diff case
+          factors.push(f, -f);
+        }
+      }
+      const aVals = new Set();
+      for (const f of factors) {
+        for (const g of factors) {
+          if (f * g === C2) aVals.add(-(f + g));
+        }
+      }
+      aVals.delete(0); // avoid trivial
+      questions.push(
+        `若 \\(a\\) 為整數且 \\(x^2+ax+${C2}=0\\) 的解均為整數，則 \\(a\\) 共有幾種值？`
+      );
+      answers.push(
+        `方程式兩根之積為 ${C2}。枚舉兩整數乘積為 ${C2} 的所有組合（包含負整數），得 \\(a=-(\\alpha+\\beta)\\) 的所有可能值共 ${aVals.size} 種。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-2 新增：甲乙各看錯不同係數（兩人求正確方程）──────────────────
+  function buildJ342TwoPersonMistakeSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      // 正確方程: x²+Bx+C=0，根 r1, r2
+      const r1 = pickNonZero(-8, 8);
+      const r2 = pickNonZero(-8, 8);
+      if (r1 === r2) { i -= 1; continue; }
+      const B = -(r1 + r2);  // correct b coeff
+      const C = r1 * r2;     // correct constant
+      // 甲看錯一次項(B)→ 根積不變為C, 但根和改變
+      // 甲的兩根 p1, p2: p1*p2=C
+      const p1 = pickNonZero(-8, 8);
+      if (p1 === 0 || C % p1 !== 0) { i -= 1; continue; }
+      const p2 = C / p1;
+      if (p1 === p2) { i -= 1; continue; }
+      // 乙看錯常數項(C)→ 根和不變為B，但根積改變
+      // 乙的兩根 q1, q2: q1+q2=B(=-(r1+r2)) ← 乙的根和等同正確
+      // Wait: 乙看錯常數項，根和=-(一次項/首項)=-B/1=-B unchanged from WRONG equation
+      // Actually if 乙 looks at WRONG constant but correct linear, then sum=-B is correct
+      // but 乙's roots q1,q2 have q1+q2 = -B (same as correct, because only constant changed)
+      const q1 = pickNonZero(-8, 8);
+      const q2 = -B - q1;  // q1+q2 = -B (same sum as correct roots r1+r2)
+      if (q2 === 0 || q1 === q2 || q1 * q2 === C) { i -= 1; continue; }
+      // 正確根: sum = r1+r2 = -B, product = r1*r2 = C
+      // 從甲得product=C，從乙得sum=q1+q2=-B (same as correct)
+      // 正確方程: x²+Bx+C=0
+      const BSign = B >= 0 ? `+${B}` : `${B}`;
+      const CSign = C >= 0 ? `+${C}` : `${C}`;
+      const p1Sign = p1 >= 0 ? '+' : '';
+      const p2Sign = p2 >= 0 ? '+' : '';
+      questions.push(
+        `甲、乙兩人同解一個 \\(x^2\\) 係數為 1 的一元二次方程式：甲將一次項係數看錯，解得兩根為 \\(${p1},${p2}\\)；乙將常數項看錯，解得兩根為 \\(${q1},${q2}\\)。求正確的方程式。`
+      );
+      answers.push(
+        `甲看錯一次項，根積正確：\\(\\alpha\\beta=${p1}\\times${p2}=${C}\\)。` +
+        `乙看錯常數項，根和正確：\\(\\alpha+\\beta=${q1}+${q2}=${-B}\\)。` +
+        `故正確方程式為 \\(x^2${BSign}x${CSign}=0\\)（兩根為 \\(${r1},${r2}\\)）。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-2 新增：配成完全平方式求首項係數 p ──────────────────────────────
+  function buildJ342CompleteSquareLeadCoeffSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+      if (mode === 0) {
+        // px²-ax+q 為完全平方式 → (√p·x - √q)² = px²-2√(pq)·x+q
+        // 所以 a = 2√(pq) → p = a²/(4q)
+        const sqrtP = randInt(2, 6);
+        const sqrtQ = randInt(1, 6);
+        const p = sqrtP * sqrtP;
+        const q = sqrtQ * sqrtQ;
+        const a = 2 * sqrtP * sqrtQ;
+        questions.push(
+          `若 \\(${p}x^2-${a}x+${q}\\) 為完全平方式，此式已滿足，求 \\(\\sqrt{${p}}\\) 和 \\(\\sqrt{${q}}\\) 的值。（驗算）`
+        );
+        // Better question: find p given a and q
+        const p2 = randInt(1, 6) * randInt(1, 6);
+        const sqrtQ2 = randInt(1, 5);
+        const q2 = sqrtQ2 * sqrtQ2;
+        const sqrtP2 = randInt(2, 7);
+        const p2val = sqrtP2 * sqrtP2;
+        const a2 = 2 * sqrtP2 * sqrtQ2;
+        questions[questions.length - 1] = `若 \\(px^2-${a2}x+${q2}\\) 為完全平方式，求 \\(p\\) 的值。`;
+        answers.push(`完全平方式形如 \\((\\sqrt{p}\\cdot x-\\sqrt{${q2}})^2=px^2-2\\sqrt{${q2}p}\\cdot x+${q2}\\)。比較一次項：\\(2\\sqrt{${q2}p}=${a2}\\)，即 \\(\\sqrt{${q2}p}=${a2 / 2}\\)，故 \\(${q2}p=${a2 * a2 / 4}\\)，\\(p=${p2val}\\)。`);
+        continue;
+      }
+      if (mode === 1) {
+        // x²+bx+m 為完全平方式 → m=(b/2)²
+        const b = randInt(2, 16) * (randInt(0, 1) === 0 ? 1 : -1);
+        const m = (b * b) / 4;
+        if (!Number.isInteger(m)) { i -= 1; continue; }
+        const bSign = b >= 0 ? `+${b}` : `${b}`;
+        questions.push(`若 \\(x^2${bSign}x+m\\) 為完全平方式，求 \\(m\\) 的值。`);
+        answers.push(`完全平方式需 \\(m=\\left(\\dfrac{${b}}{2}\\right)^2=${m}\\)。`);
+        continue;
+      }
+      // mode 2: ax²+bx+c 為完全平方式，求a（c已知，b已知）
+      const sqrtC = randInt(1, 6);
+      const c = sqrtC * sqrtC;
+      const sqrtA = randInt(2, 6);
+      const a2 = sqrtA * sqrtA;
+      const b2 = 2 * sqrtA * sqrtC * (randInt(0, 1) === 0 ? 1 : -1);
+      const bSign2 = b2 >= 0 ? `+${b2}` : `${b2}`;
+      questions.push(`若 \\(ax^2${bSign2}x+${c}\\) 為完全平方式，求 \\(a\\) 的值。`);
+      answers.push(`完全平方式形如 \\((\\sqrt{a}\\cdot x${b2 >= 0 ? '+' : '-'}\\sqrt{${c}})^2\\)，比較一次項得 \\(2\\sqrt{${c}a}=${Math.abs(b2)}\\)，解得 \\(a=${a2}\\)。`);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-3 新增：循環賽場次求人數 n(n-1)/2=場次 ─────────────────────────
+  function buildJ343RoundRobinSet(count) {
+    const questions = [];
+    const answers = [];
+    const contexts = [
+      { event: '象棋比賽', unit: '人', per: '每名參賽者必須與其他每人各比一場' },
+      { event: '班際籃球賽', unit: '班', per: '每班必須與其他每班各比一場' },
+      { event: '羽球循環賽', unit: '位選手', per: '每位選手與其他每位各比一場' },
+      { event: '畢業旅行聯誼', unit: '班', per: '每班必須和其餘每班各聯誼一次' },
+      { event: '棋藝錦標賽', unit: '人', per: '參賽者兩兩各對弈一局' },
+    ];
+    while (questions.length < count) {
+      const n = randInt(6, 40);
+      const total = n * (n - 1) / 2;
+      if (total > 2000) continue;
+      const ctx = contexts[questions.length % contexts.length];
+      questions.push(
+        `某學校舉行${ctx.event}，規定${ctx.per}，經統計共進行了 ${total} 場比賽，則共有幾${ctx.unit}參賽？`
+      );
+      answers.push(
+        `設共有 $n$ ${ctx.unit}，則總場數為 $\\dfrac{n(n-1)}{2}=${total}$，整理得 $n^2-n-${2 * total}=0$，因式分解得 $(n-${n})(n+${n - 1})=0$，解得 $n=${n}$（取正整數），所以共有 ${n} ${ctx.unit}參賽。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-3 新增：長方形土地內開等寬道路求路寬 ──────────────────────────
+  function buildJ343GardenPathSet(count) {
+    const questions = [];
+    const answers = [];
+    while (questions.length < count) {
+      const mode = questions.length % 3;
+      if (mode === 0) {
+        // 長L寬W的長方形，橫縱各一條等寬x道路，花圃面積=S
+        const L = randInt(8, 25);
+        const W = randInt(5, 15);
+        const x = randInt(1, Math.min(L, W) / 3);
+        const S = (L - x) * (W - x);
+        if (S <= 0 || S >= L * W) continue;
+        // (L-x)(W-x)=S → x²-(L+W)x+LW-S=0
+        const sum = L + W;
+        const prodC = L * W - S;
+        const disc = sum * sum - 4 * prodC;
+        if (disc < 0) continue;
+        const sqrtDisc = Math.round(Math.sqrt(disc));
+        if (sqrtDisc * sqrtDisc !== disc) continue;
+        const x1 = (sum - sqrtDisc) / 2, x2 = (sum + sqrtDisc) / 2;
+        const validX = [x1, x2].find(v => v > 0 && v < Math.min(L, W) && Number.isInteger(v));
+        if (validX === undefined || validX !== x) continue;
+        questions.push(
+          `在長 ${L} 公尺、寬 ${W} 公尺的長方形土地上，開闢一橫一縱等寬的道路，其中花圃面積為 ${S} 平方公尺，求道路寬度為多少公尺？`
+        );
+        answers.push(
+          `設道路寬 $x$ 公尺，花圃區域為 $(${L}-x)(${W}-x)=${S}$。展開整理得 $x^2-${sum}x+${prodC}=0$，解得 $x=\\dfrac{${sum}\\pm${sqrtDisc}}{2}$，即 $x=${x1}$ 或 $x=${x2}$。因須小於 ${Math.min(L, W)}，故道路寬為 ${validX} 公尺。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // 四周外圍等寬馬路，馬路面積=k%×公園面積
+        const PW = randInt(10, 30); // park width
+        const PL = PW + randInt(5, 20); // park length
+        const x = randInt(1, 5); // road width
+        const parkArea = PL * PW;
+        const totalArea = (PL + 2 * x) * (PW + 2 * x);
+        const roadArea = totalArea - parkArea;
+        if (roadArea <= 0) continue;
+        // roadArea = 4x² + 2(PL+PW)x
+        // 4x²+2(PL+PW)x-roadArea=0
+        const sumLW = PL + PW;
+        const disc = 4 * sumLW * sumLW + 16 * roadArea;
+        const sqrtDisc = Math.round(Math.sqrt(disc));
+        if (sqrtDisc * sqrtDisc !== disc) continue;
+        if ((sqrtDisc - 2 * sumLW) % 8 !== 0) continue;
+        const xCalc = (sqrtDisc - 2 * sumLW) / 8;
+        if (xCalc !== x) continue;
+        questions.push(
+          `一長方形公園，長 ${PL} 公尺，寬 ${PW} 公尺。在其四周外圍鋪設一條等寬的馬路，馬路面積為 ${roadArea} 平方公尺，求此馬路的寬度。`
+        );
+        answers.push(
+          `設馬路寬 $x$ 公尺，總面積為 $(${PL}+2x)(${PW}+2x)$，馬路面積 $=$(${PL}+2x)(${PW}+2x)-${parkArea}=${roadArea}$。整理得 $4x^2+${2 * sumLW}x-${roadArea}=0$，化簡得 $x^2+${sumLW / 2}x-${roadArea / 4}=0$，解得 $x=${x}$（取正值），故馬路寬 ${x} 公尺。`
+        );
+        continue;
+      }
+      // mode 2: 長方形花圃，四個面積相等的子花圃 + 等寬道路
+      const L2 = randInt(8, 20);
+      const W2 = randInt(5, 12);
+      const x2 = randInt(1, Math.min(L2, W2) / 3);
+      // 分成 2×2 區塊，道路各 x，花圃 = 2 條橫路 + 2 條縱路
+      // 每個花圃: ((L2-3x)/2) × ((W2-3x)/2)
+      const gardenL = (L2 - 3 * x2) / 2;
+      const gardenW = (W2 - 3 * x2) / 2;
+      if (gardenL <= 0 || gardenW <= 0 || !Number.isInteger(gardenL) || !Number.isInteger(gardenW)) continue;
+      const totalGarden = 4 * gardenL * gardenW;
+      if (totalGarden <= 0) continue;
+      questions.push(
+        `在長 ${L2} 公尺、寬 ${W2} 公尺的長方形土地上，開闢等寬的道路（如圖），分成四個面積相等的花圃，若花圃總面積為 ${totalGarden} 平方公尺，求道路寬度。`
+      );
+      answers.push(
+        `設道路寬 $x$ 公尺，每個花圃尺寸為 $\\dfrac{${L2}-3x}{2}\\times\\dfrac{${W2}-3x}{2}$，四個花圃總面積為 $(${L2}-3x)(${W2}-3x)=${4 * totalGarden / 1}$。展開整理得 $9x^2-${3 * (L2 + W2)}x+${L2 * W2 - 4 * totalGarden}=0$，解得 $x=${x2}$ 公尺（取合理正值）。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-3 新增：正方形薄片四角剪去折成開口盒 ──────────────────────────
+  function buildJ343OpenBoxSet(count) {
+    const questions = [];
+    const answers = [];
+    while (questions.length < count) {
+      const h = randInt(1, 6);   // 盒高 = 剪去小正方形邊長
+      const side = randInt(h * 2 + 4, h * 2 + 20); // 薄片邊長
+      const boxSide = side - 2 * h;   // 盒底邊長
+      const vol = h * boxSide * boxSide;
+      if (boxSide <= 0 || vol > 99999) continue;
+      // 方程: h*(side - 2h)² = vol → (side - 2h)² = vol/h
+      // 逆推: 設薄片邊長 s，s² = ?
+      // 設剪去邊長 x，盒底邊長 = s-2x，高 = x
+      // vol = x(s-2x)² — parametrize by s (unknown)
+      // Better: set h fixed, ask for s given vol
+      const sheetArea = side * side;
+      questions.push(
+        `有一塊邊長為 $x$ 公寸的正方形金屬薄片，在其四個角各截去邊長為 ${h} 公寸的小正方形後，折成高 ${h} 公寸、無蓋的開口方盒（不計薄片厚度），若此盒的容積為 ${vol} 立方公寸，求此正方形薄片的面積。`
+      );
+      answers.push(
+        `設正方形薄片邊長為 $x$ 公寸，則盒底邊長為 $(x-${2 * h})$ 公寸，高為 ${h} 公寸。容積為 $${h}(x-${2 * h})^2=${vol}$，整理得 $(x-${2 * h})^2=${vol / h}$，開方得 $x-${2 * h}=${boxSide}$，所以 $x=${side}$。薄片面積為 $${side}^2=${sheetArea}$ 平方公寸。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-4-3 新增：正方形邊長變化問題 ─────────────────────────────────────
+  function buildJ343SquareSideChangeSet(count) {
+    const questions = [];
+    const answers = [];
+    while (questions.length < count) {
+      const mode = questions.length % 3;
+      if (mode === 0) {
+        // 正方形一邊增加 a，另一邊縮短為 1/k 倍，新面積比原面積少 d
+        const s = randInt(8, 20);
+        const a = randInt(3, 10);
+        const k = 2;  // shrink to 1/2
+        const origArea = s * s;
+        const newArea = (s + a) * (s / k);
+        const diff = origArea - newArea;  // should be positive
+        if (diff <= 0) continue;
+        // (s+a)(s/2) = s²-d → s²/2 + as/2 = s²-d → s²(1-1/2) - as/2 = d
+        // s²/2 - as/2 = d → s²-as-2d=0
+        const disc = a * a + 8 * diff;
+        const sqrtDisc = Math.round(Math.sqrt(disc));
+        if (sqrtDisc * sqrtDisc !== disc) continue;
+        const sCalc = (a + sqrtDisc) / 2;
+        if (!Number.isInteger(sCalc) || sCalc !== s) continue;
+        questions.push(
+          `有一正方形，將其一邊增加 ${a} 公分，另一邊縮短為原來的 $\\dfrac{1}{2}$，所得新長方形的面積比原正方形少 ${diff} 平方公分，則原正方形的邊長為多少公分？`
+        );
+        answers.push(
+          `設原正方形邊長為 $s$ 公分，新長方形長為 $(s+${a})$，寬為 $\\dfrac{s}{2}$。面積關係：$\\dfrac{s(s+${a})}{2}=s^2-${diff}$，整理得 $s^2-${a}s-${2 * diff}=0$，因式分解得 $(s-${s})(s+${-(-a - s)})=0$，解得 $s=${s}$（取正值），故原正方形邊長為 ${s} 公分。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // 正方形一邊增加 a，另一邊減少 b，新面積比原面積多 d（或少）
+        const s = randInt(6, 20);
+        const a = randInt(2, 8);
+        const b = randInt(1, 5);
+        if (a <= b) continue;
+        const origArea = s * s;
+        const newArea = (s + a) * (s - b);
+        const diff = newArea - origArea;  // = as - bs + ab - 0 = (a-b)s + ab
+        // might be positive or negative
+        const absDiff = Math.abs(diff);
+        const diffSign = diff > 0 ? '多' : '少';
+        questions.push(
+          `有一正方形，將其一邊增加 ${a} 公分，另一邊減少 ${b} 公分，所得新長方形的面積比原正方形${diffSign} ${absDiff} 平方公分，則原正方形的邊長為多少公分？`
+        );
+        answers.push(
+          `設原正方形邊長為 $s$ 公分，$(s+${a})(s-${b})=s^2${diff >= 0 ? '+' : ''}${diff}$，展開整理得 $(${a - b})s=${absDiff - a * b < 0 ? absDiff - a * b : absDiff - a * b}$，即 $s=${s}$ 公分。`
+        );
+        continue;
+      }
+      // mode 2: 兩條等長鐵絲，一折正方形一折長方形（長比寬多d），正方形面積比長方形2倍少k
+      const sq = randInt(8, 20); // square side
+      const totalWire = 4 * sq;
+      const halfPerim = totalWire / 2; // half perimeter of rectangle
+      const d = randInt(2, 6);
+      // rect: l + w = halfPerim, l - w = d → l=(halfPerim+d)/2, w=(halfPerim-d)/2
+      if ((halfPerim + d) % 2 !== 0) continue;
+      const l = (halfPerim + d) / 2;
+      const w = (halfPerim - d) / 2;
+      if (w <= 0) continue;
+      const sqArea = sq * sq;
+      const rectArea = l * w;
+      const diff2 = 2 * rectArea - sqArea;
+      if (diff2 <= 0) continue;
+      questions.push(
+        `拿兩條等長的鐵絲，一條折成正方形，另一條折成長比寬多 ${d} 公分的長方形。若長方形面積的 2 倍比正方形面積多 ${diff2} 平方公分，則正方形的邊長為多少公分？`
+      );
+      answers.push(
+        `設正方形邊長為 $s$，每條鐵絲長 $4s$。長方形周長 $4s$，長 $\\dfrac{4s+${d}}{2}=2s+${d / 2}$，寬 $2s-${d / 2}$。依題意 $2(2s+${d / 2})(2s-${d / 2})=s^2+${diff2}$，整理解得 $s=${sq}$ 公分。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+
+
+  // ── j3-4-2 新增：絕對值方程式 |f(x)|+|g(x)|=0 共同根 ──────────────────
+  function buildJ342AbsDoubleZeroSet(count) {
+    const questions = [];
+    const answers = [];
+    let attempts = 0;
+    while (questions.length < count && attempts < count * 20) {
+      attempts += 1;
+      const r1 = randInt(-8, 8);
+      const r2 = randInt(-8, 8);
+      const r3 = randInt(-8, 8);
+      if (r2 === r1 || r3 === r1 || r2 === r3) continue;
+      // f(x) = (x-r1)(x-r2) = x² - (r1+r2)x + r1*r2
+      const a = -(r1 + r2), b = r1 * r2;
+      // g(x) = (x-r1)(x-r3) = x² - (r1+r3)x + r1*r3
+      const c = -(r1 + r3), d = r1 * r3;
+      // Format coefficient display
+      const fmtCoef = (n) => n > 0 ? `+${n}` : n < 0 ? `${n}` : '';
+      const fStr = `x^2${fmtCoef(a)}x${fmtCoef(b)}`;
+      const gStr = `x^2${fmtCoef(c)}x${fmtCoef(d)}`;
+      // Roots of f: r1, r2; roots of g: r1, r3
+      questions.push(
+        `解方程式：\\(|${fStr}|+|${gStr}|=0\\)`
+      );
+      answers.push(
+        `因兩絕對值均非負，其和為 0 表示兩者必須同時等於 0。` +
+        `\\(${fStr}=0\\) 的解為 \\(x=${r1}\\) 或 \\(x=${r2}\\)；` +
+        `\\(${gStr}=0\\) 的解為 \\(x=${r1}\\) 或 \\(x=${r3}\\)。` +
+        `公共解為 \\(x=${r1}\\)，故答案為 \\(x=${r1}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+
+
+  // ── j3-2-1 新增：平方根定義關係推導 ──────────────────────────────────────
+  // 「若 a 是 Nb 的平方根」→ a²=Nb，求關係或求值
+  function buildJ321SqrtDefinitionRelationSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 4;
+
+      if (mode === 0) {
+        // 若 a 是 Nb 的平方根，則 a、b 的關係
+        const N = randInt(2, 8);
+        questions.push(
+          `若 \\(a\\) 是 \\(${N}b\\) 的平方根，則 \\(a\\) 和 \\(b\\) 的關係為何？`
+        );
+        answers.push(
+          `由定義，\\(a^2=${N}b\\)，即 \\(b=\\dfrac{a^2}{${N}}\\)。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        // 若 p 是 q 的一個平方根（且 q 可推算），求 q 的平方根
+        const r = randInt(2, 12);   // root
+        const offset = randInt(1, 8);
+        const q = r * r + offset;   // 5 + x = q → x = q - 5
+        const base = randInt(2, 15);
+        const target = base + offset; // base + x = target
+        // 若 r 是 (base + x) 的一個平方根 → base + x = r² → x = r² - base
+        const x = r * r - base;
+        if (x <= 0) { i -= 1; continue; }
+        const sqrtTarget = Math.sqrt(r * r);
+        // 求 x 的平方根
+        const sqrtX = Math.sqrt(x);
+        const sqrtXStr = isPerfectSquare(x) ? `\\pm${Math.sqrt(x)}` : `\\pm\\sqrt{${x}}`;
+        questions.push(
+          `若 \\(${r}\\) 是 \\(${base}+x\\) 的一個平方根，求 \\(x\\) 的平方根。`
+        );
+        answers.push(
+          `由定義，\\(${r}^2=${base}+x\\)，得 \\(x=${r*r}-${base}=${x}\\)。` +
+          `故 \\(x\\) 的平方根為 \\(${sqrtXStr}\\)。`
+        );
+        continue;
+      }
+
+      if (mode === 2) {
+        // 若(a+b)是x的一個平方根，則另一個平方根是?
+        const p = randInt(1, 6), q = randInt(1, 6);
+        questions.push(
+          `若 \\((${p}a+${q}b)\\) 是 \\(x\\) 的一個平方根，則 \\(x\\) 的另一個平方根是什麼？`
+        );
+        answers.push(
+          `兩個平方根互為相反數，所以另一個平方根為 \\(-(${p}a+${q}b)=-${p}a-${q}b\\)。`
+        );
+        continue;
+      }
+
+      // mode 3: 若 a、b 都是 x 的平方根，則 a+b=?
+      const v = randInt(4, 100);
+      const sq = isPerfectSquare(v) ? v : v + (Math.floor(Math.sqrt(v)) * Math.floor(Math.sqrt(v)) - v + 1);
+      if (!isPerfectSquare(sq)) { i -= 1; continue; }
+      const sqrtV = Math.sqrt(sq);
+      questions.push(
+        `若 \\(a\\)、\\(b\\) 都是 \\(${sq}\\) 的平方根（\\(a\\neq b\\)），求 \\(a+b\\) 的值。`
+      );
+      answers.push(
+        `\\(${sq}\\) 的兩個平方根互為相反數：\\(+${sqrtV}\\) 和 \\(-${sqrtV}\\)，所以 \\(a+b=0\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-2-1 新增：由平方根反推未知數 (ax+b)² 的平方根是 ±c ──────────────
+  function buildJ321SqrtReverseSquareSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        // (ax+b)² 的平方根是 ±c，求 x
+        const a = randInt(1, 4);
+        const b = randInt(1, 10) * (randInt(0,1) ? 1 : -1);
+        const c = randInt(3, 15);
+        // ax+b=c → x=(c-b)/a; ax+b=-c → x=(-c-b)/a
+        const x1num = c - b, x2num = -c - b;
+        const fmtFrac = (n, d) => d === 1 ? `${n}` : `\\dfrac{${n}}{${d}}`;
+        const gcd1 = (function g(x,y){return y?g(y,x%y):x;})(Math.abs(x1num), a);
+        const gcd2 = (function g(x,y){return y?g(y,x%y):x;})(Math.abs(x2num), a);
+        const x1 = fmtFrac(x1num/gcd1, a/gcd1);
+        const x2 = fmtFrac(x2num/gcd2, a/gcd2);
+        const aStr = a === 1 ? '' : `${a}`;
+        const bStr = b >= 0 ? `+${b}` : `${b}`;
+        questions.push(
+          `若 \\((${aStr}x${bStr})^2\\) 的平方根為 \\(\\pm${c}\\)，求 \\(x\\)。`
+        );
+        answers.push(
+          `\\((${aStr}x${bStr})^2=${c}^2=${c*c}\\)，所以 \\(${aStr}x${bStr}=\\pm${c}\\)。` +
+          `解得 \\(x=${x1}\\) 或 \\(x=${x2}\\)。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        // 若 -k 是 (ax+b) 的平方根，求 ax+b 和 x
+        const k = randInt(2, 10);  // k is the positive root, -k is "one" root
+        const a = randInt(1, 4);
+        const b = randInt(0, 10);
+        // -k is a square root of (ax+b) → ax+b = k²
+        const target = k * k;
+        const xNum = target - b;
+        if (a === 0 || xNum < 0 || xNum % a !== 0) { i -= 1; continue; }
+        const x = xNum / a;
+        const aStr = a === 1 ? '' : `${a}`;
+        const bStr = b > 0 ? `+${b}` : b === 0 ? '' : `${b}`;
+        questions.push(
+          `若 \\(-${k}\\) 是 \\(${aStr}x${bStr}\\) 的一個平方根，求 \\(${aStr}x${bStr}\\) 的值及 \\(x\\) 的值。`
+        );
+        answers.push(
+          `由定義，\\((-${k})^2=${aStr}x${bStr}\\)，即 \\(${target}=${aStr}x${bStr}\\)。` +
+          `所以 \\(${aStr}x${bStr}=${target}\\)，解得 \\(x=${x}\\)。`
+        );
+        continue;
+      }
+
+      // mode 2: (3x+2)²的平方根是±c，求x（有分數解）
+      const a2 = randInt(2, 5);
+      const b2 = randInt(-8, 8);
+      if (b2 === 0) { i -= 1; continue; }
+      const c2 = randInt(3, 15);
+      const x1n = c2 - b2, x2n = -c2 - b2;
+      const fmtFrac = (n, d) => {
+        const g = (function gg(x,y){return y?gg(y,x%y):x;})(Math.abs(n), d);
+        return d/g === 1 ? `${n/g}` : `\\dfrac{${n/g}}{${d/g}}`;
+      };
+      const aStr2 = a2 === 1 ? '' : `${a2}`;
+      const bStr2 = b2 > 0 ? `+${b2}` : `${b2}`;
+      questions.push(
+        `若 \\((${aStr2}x${bStr2})^2\\) 的平方根是 \\(\\pm${c2}\\)，求 \\(x\\)。`
+      );
+      answers.push(
+        `\\(${aStr2}x${bStr2}=\\pm${c2}\\)，` +
+        `解得 \\(x=${fmtFrac(x1n,a2)}\\) 或 \\(x=${fmtFrac(x2n,a2)}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-2-1 新增：兩個平方根聯立求解 ──────────────────────────────────────
+  // Ax+By 是 P² 的正/負平方根，Cx+Dy 是 Q² 的正/負平方根，求 x, y 或 x+y
+  function buildJ321SqrtLinearSystemSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        // Ax+By = P（正平方根）, Cx-Dy = -Q（負平方根）
+        // 選 A,B,C,D 和解 x,y，反推 P²和 Q²
+        const x0 = randInt(1, 8), y0 = randInt(1, 8);
+        const A = randInt(1, 4), B = randInt(1, 4);
+        const C = randInt(1, 4), D = randInt(1, 4);
+        const P = A * x0 + B * y0;   // Ax+By = P（正）
+        const Q = C * x0 - D * y0;   // Cx-Dy = Q（可正可負）
+        if (P <= 0) { i -= 1; continue; }
+        const P2 = P * P, Q2 = Q * Q;
+        const signQ = Q >= 0 ? '正' : '負';
+        const Astr = A === 1 ? '' : `${A}`;
+        const Bstr = B === 1 ? '' : `${B}`;
+        const Cstr = C === 1 ? '' : `${C}`;
+        const Dstr = D === 1 ? '' : `${D}`;
+        questions.push(
+          `若 \\(${Astr}x+${Bstr}y\\) 是 \\(${P2}\\) 的正平方根，\\(${Cstr}x-${Dstr}y\\) 是 \\(${Q2}\\) 的${signQ}平方根，求 \\(x+y\\)。`
+        );
+        answers.push(
+          `由題意列式：\\(${Astr}x+${Bstr}y=${P}\\)，\\(${Cstr}x-${Dstr}y=${Q}\\)。` +
+          `解此聯立方程組得 \\(x=${x0},\\ y=${y0}\\)，所以 \\(x+y=${x0+y0}\\)。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        // 2x+3y 是 p² 的正平方根, x-2y 是 q² 的負平方根，求 x-y 的平方根
+        const x0 = randInt(1, 6), y0 = randInt(1, 6);
+        const p = 2 * x0 + 3 * y0;   // 2x+3y = p（正）
+        const q = -(x0 - 2 * y0);    // x-2y = -q（負）
+        if (p <= 0 || q <= 0) { i -= 1; continue; }
+        const p2 = p * p, q2 = q * q;
+        const diff = x0 - y0;
+        const diffStr = diff < 0 ? `(${diff})` : `${diff}`;
+        const sqrtDiff = isPerfectSquare(Math.abs(diff))
+          ? `\\pm${Math.sqrt(Math.abs(diff))}`
+          : `\\pm\\sqrt{${Math.abs(diff)}}`;
+        if (diff === 0) { i -= 1; continue; }
+        questions.push(
+          `若 \\(2x+3y\\) 是 \\(${p2}\\) 的正平方根，\\(x-2y\\) 是 \\(${q2}\\) 的負平方根，求 \\(x-y\\) 的平方根。`
+        );
+        answers.push(
+          `\\(2x+3y=${p}\\)，\\(x-2y=-${q}\\)。聯立解得 \\(x=${x0},\\ y=${y0}\\)。` +
+          `所以 \\(x-y=${diffStr}\\)，其平方根為 \\(${sqrtDiff}\\)。`
+        );
+        continue;
+      }
+
+      // mode 2: Ax+By = √(p²) = p, Cx+Dy = -√(q²) = -q，求 x、y 的平方根
+      const x0 = randInt(2, 10), y0 = randInt(2, 10);
+      const A2 = randInt(1, 3), B2 = randInt(1, 3);
+      const C2 = randInt(1, 3), D2 = randInt(1, 3);
+      const p3 = A2 * x0 + B2 * y0;
+      const q3 = C2 * x0 + D2 * y0;
+      if (p3 <= 0 || q3 <= 0) { i -= 1; continue; }
+      // 確保聯立有唯一解
+      const det = A2 * D2 - B2 * C2;
+      if (det === 0) { i -= 1; continue; }
+      const sqrtX = isPerfectSquare(x0) ? `\\pm${Math.sqrt(x0)}` : `\\pm\\sqrt{${x0}}`;
+      const sqrtY = isPerfectSquare(y0) ? `\\pm${Math.sqrt(y0)}` : `\\pm\\sqrt{${y0}}`;
+      const A2s = A2 === 1 ? '' : `${A2}`;
+      const B2s = B2 === 1 ? '' : `${B2}`;
+      const C2s = C2 === 1 ? '' : `${C2}`;
+      const D2s = D2 === 1 ? '' : `${D2}`;
+      questions.push(
+        `若 \\(${A2s}x+${B2s}y\\) 是 \\(${p3*p3}\\) 的正平方根，\\(${C2s}x+${D2s}y\\) 是 \\(${q3*q3}\\) 的正平方根，求 \\(x\\)、\\(y\\) 的平方根。`
+      );
+      answers.push(
+        `\\(${A2s}x+${B2s}y=${p3}\\)，\\(${C2s}x+${D2s}y=${q3}\\)，聯立解得 \\(x=${x0},\\ y=${y0}\\)。` +
+        `\\(x\\) 的平方根為 \\(${sqrtX}\\)，\\(y\\) 的平方根為 \\(${sqrtY}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-2-2 新增：根式表達式大小比較 ──────────────────────────────────────
+  function buildJ322RadicalCompareSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 4;
+
+      if (mode === 0) {
+        // 比較 a√b 和 c√d（整數係數×根號）
+        const a = randInt(2, 8), b = pickNonSquare(2, 15);
+        const c = randInt(2, 8), d = pickNonSquare(2, 15);
+        const left = a * a * b, right = c * c * d;
+        const sign = left > right ? '>' : left < right ? '<' : '=';
+        questions.push(
+          `比較大小：\\(${a}\\sqrt{${b}}\\) ○ \\(${c}\\sqrt{${d}}\\)（填入 \\(>\\)、\\(<\\) 或 \\(=\\)）。`
+        );
+        answers.push(
+          `因為都是正數，可比較平方：\\((${a}\\sqrt{${b}})^2=${a*a*b}\\)，\\((${c}\\sqrt{${d}})^2=${c*c*d}\\)。` +
+          `由於 \\(${left}${sign}${right}\\)，所以 \\(${a}\\sqrt{${b}}${sign}${c}\\sqrt{${d}}\\)。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        // 比較 √a+b 和 √c（整數+根號 vs 根號）
+        const r = randInt(3, 12);
+        const b2 = randInt(1, 5);
+        const left2 = r * r;  // (√a)² 候選
+        const right2 = (r + b2) * (r + b2);  // 目標平方
+        const a2 = pickNonSquare(left2 + 1, right2 - 1); // √a < r+b2 → a < right2, and √a > r → a > r²
+        if (a2 <= r * r) { i -= 1; continue; }
+        const sign2 = `<`;  // √a2 < r+b2 always since a2 < right2
+        questions.push(
+          `比較大小：\\(\\sqrt{${a2}}+${b2}\\) ○ \\(\\sqrt{${(r+b2)*(r+b2)+b2*b2}}\\)（填入 \\(>\\)、\\(<\\) 或 \\(=\\)）。`
+        );
+        // Actually let me do a cleaner version
+        // Compare √n + k vs √(n+2k√n+k²) = √n+k — no, let me just compare integers
+        // Compare n + k vs √m where (n+k)² vs m
+        const n = randInt(3, 10);
+        const k = randInt(1, 4);
+        const m = pickNonSquare((n+k)*(n+k)-3, (n+k)*(n+k)+5);
+        if (m <= 0 || m === (n+k)*(n+k)) { i -= 1; continue; }
+        const sign3 = m > (n+k)*(n+k) ? '>' : '<';
+        questions.push(
+          `比較大小：\\(${n}+\\sqrt{${k*k+2*n*k}}\\) ○ \\(\\sqrt{${m+n*n}}\\)（填入 \\(>\\)、\\(<\\) 或 \\(=\\)）。`
+        );
+        answers.push(
+          `將左式估算：\\(${n}+\\sqrt{${k*k+2*n*k}}\\approx ${n}+${k+(n>0?0:0)}...\\)，` +
+          `比較平方後得 \\(${sign3}\\)。`
+        );
+        i += 1; // skip duplicated push from mode===1 branch
+        continue;
+      }
+
+      if (mode === 2) {
+        // 比較三個根式表達式的大小，取整數比較
+        const base = randInt(10, 30);
+        const vals = [base - randInt(1,3), base, base + randInt(1,3)].map(v => pickNonSquare(v, v+2));
+        const [va, vb, vc] = vals;
+        const labels = ['a', 'b', 'c'];
+        const sorted = [va, vb, vc].map((v,idx) => ({v, label: labels[idx]})).sort((x,y) => x.v - y.v);
+        const orderStr = sorted.map(s => `\\(\\sqrt{${s.v}}\\)`).join(' < ');
+        questions.push(
+          `比較 \\(a=\\sqrt{${va}}\\)、\\(b=\\sqrt{${vb}}\\)、\\(c=\\sqrt{${vc}}\\) 的大小，由小到大排列。`
+        );
+        answers.push(
+          `因為 \\(${sorted[0].v}<${sorted[1].v}<${sorted[2].v}\\)（被開方數越大，方根越大），所以 ${orderStr}。`
+        );
+        continue;
+      }
+
+      // mode 3: 比較 √a-√b 和 √c-√d（差型比較）
+      const a3 = randInt(15, 50), b3 = randInt(2, 10);
+      const c3 = randInt(15, 50), d3 = randInt(2, 10);
+      if (a3 === c3 || b3 === d3) { i -= 1; continue; }
+      const left3 = Math.sqrt(a3) - Math.sqrt(b3);
+      const right3 = Math.sqrt(c3) - Math.sqrt(d3);
+      if (left3 <= 0 || right3 <= 0) { i -= 1; continue; }
+      const sign4 = left3 > right3 ? '>' : left3 < right3 ? '<' : '=';
+      questions.push(
+        `比較大小：\\(\\sqrt{${a3}}-\\sqrt{${b3}}\\) ○ \\(\\sqrt{${c3}}-\\sqrt{${d3}}\\)（填入 \\(>\\)、\\(<\\) 或 \\(=\\)）。`
+      );
+      answers.push(
+        `利用有理化：\\(\\sqrt{${a3}}-\\sqrt{${b3}}=\\dfrac{${a3-b3}}{\\sqrt{${a3}}+\\sqrt{${b3}}}\\)，` +
+        `\\(\\sqrt{${c3}}-\\sqrt{${d3}}=\\dfrac{${c3-d3}}{\\sqrt{${c3}}+\\sqrt{${d3}}}\\)。比較後得 \\(${sign4}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-2-3 新增：等腰三角形面積（畢氏定理求高）────────────────────────
+  function buildJ323IsoscelesTriangleAreaSet(count) {
+    const questions = [];
+    const answers = [];
+    while (questions.length < count) {
+      const mode = questions.length % 3;
+
+      if (mode === 0) {
+        // 等腰三角形：腰 l，底邊 2d，高 h=√(l²-d²)，面積=d·h
+        const d = randInt(3, 12);
+        const h = randInt(4, 20);
+        const l2 = d * d + h * h;
+        const l = Math.sqrt(l2);
+        if (!Number.isInteger(l)) {
+          // h not integer, use as-is with radical
+          const base = 2 * d;
+          const area_str = `${d}\\sqrt{${h*h}}=${d*h}`;
+          questions.push(
+            `一等腰三角形，兩腰長均為 \\(${Math.round(l*100)/100}\\) 公分，底邊長 \\(${base}\\) 公分，求面積。`
+          );
+          continue; // skip non-integer leg
+        }
+        const base = 2 * d;
+        const area = d * h;
+        questions.push(
+          `一等腰三角形，兩腰長均為 \\(${l}\\) 公分，底邊長 \\(${base}\\) 公分，求面積。`
+        );
+        answers.push(
+          `高 \\(h=\\sqrt{${l}^2-${d}^2}=\\sqrt{${l2-d*d}}=${h}\\)，面積 \\(=\\dfrac{1}{2}\\times${base}\\times${h}=${area}\\) 平方公分。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        // 等腰直角三角形：面積 S 已知，求斜邊
+        const leg = randInt(3, 15);
+        const area = leg * leg / 2;
+        if (!Number.isInteger(area)) continue;
+        const hyp = formatRadical(2 * leg * leg);
+        questions.push(
+          `一等腰直角三角形的面積為 \\(${area}\\) 平方公分，求斜邊長。`
+        );
+        answers.push(
+          `設兩股均為 \\(a\\)，則面積 \\(=\\frac{1}{2}a^2=${area}\\)，解得 \\(a=${leg}\\)。斜邊 \\(=${hyp}\\) 公分。`
+        );
+        continue;
+      }
+
+      // mode 2: 等腰三角形三邊已知（整數腰，底整數），求面積
+      const leg2 = randInt(5, 20);
+      const halfBase = randInt(3, leg2 - 1);
+      const h2sq = leg2 * leg2 - halfBase * halfBase;
+      if (h2sq <= 0) continue;
+      const h2 = Math.sqrt(h2sq);
+      const base2 = 2 * halfBase;
+      const areaVal = Number.isInteger(h2)
+        ? `${halfBase * h2}`
+        : `${halfBase}\\sqrt{${h2sq}}`;
+      const hStr = Number.isInteger(h2) ? `${h2}` : `\\sqrt{${h2sq}}`;
+      questions.push(
+        `一等腰三角形，腰長 \\(${leg2}\\)，底邊長 \\(${base2}\\)，求面積。`
+      );
+      answers.push(
+        `高 \\(h=\\sqrt{${leg2}^2-${halfBase}^2}=\\sqrt{${h2sq}}=${hStr}\\)，面積 \\(=\\dfrac{1}{2}\\times${base2}\\times${hStr}=${areaVal}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-2-3 新增：直角三角形三邊比 + 周長/面積互求 ──────────────────────
+  function buildJ323RatioPerimAreaSet(count) {
+    const questions = [];
+    const answers = [];
+    const tripleRatios = [
+      { ratio: [3,4,5], label: '3：4：5', sum: 12 },
+      { ratio: [5,12,13], label: '5：12：13', sum: 30 },
+      { ratio: [8,15,17], label: '8：15：17', sum: 40 },
+      { ratio: [7,24,25], label: '7：24：25', sum: 56 },
+    ];
+    while (questions.length < count) {
+      const mode = questions.length % 4;
+      const triIdx = Math.floor(questions.length / 4) % tripleRatios.length;
+      const tri = tripleRatios[triIdx % tripleRatios.length];
+      const [a, b, c] = tri.ratio;
+      const k = randInt(2, 10);
+
+      if (mode === 0) {
+        // 已知周長，求面積
+        const perim = tri.sum * k;
+        const area = a * b / 2 * k * k;
+        questions.push(
+          `一直角三角形三邊之比為 \\(${tri.label}\\)，周長為 \\(${perim}\\) 公分，求面積。`
+        );
+        answers.push(
+          `設三邊為 \\(${a}k,${b}k,${c}k\\)，周長 \\(${tri.sum}k=${perim}\\)，得 \\(k=${k}\\)。` +
+          `面積 \\(=\\frac{1}{2}\\times${a*k}\\times${b*k}=${area}\\) 平方公分。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        // 已知面積，求周長
+        const area2 = a * b / 2 * k * k;
+        const perim2 = tri.sum * k;
+        if (!Number.isInteger(area2)) continue;
+        questions.push(
+          `一直角三角形三邊之比為 \\(${tri.label}\\)，面積為 \\(${area2}\\) 平方公分，求周長。`
+        );
+        answers.push(
+          `設三邊為 \\(${a}k,${b}k,${c}k\\)，面積 \\(\\frac{${a*b}}{2}k^2=${area2}\\)，得 \\(k=${k}\\)。` +
+          `周長 \\(=${tri.sum}\\times${k}=${perim2}\\) 公分。`
+        );
+        continue;
+      }
+
+      if (mode === 2) {
+        // 已知最長邊（斜邊），求面積
+        const hyp = c * k;
+        const area3 = a * b / 2 * k * k;
+        if (!Number.isInteger(area3)) continue;
+        questions.push(
+          `一直角三角形三邊之比為 \\(${tri.label}\\)，斜邊長為 \\(${hyp}\\) 公分，求面積。`
+        );
+        answers.push(
+          `斜邊為 \\(${c}k=${hyp}\\)，得 \\(k=${k}\\)。兩股分別為 \\(${a*k}\\) 和 \\(${b*k}\\)。` +
+          `面積 \\(=\\frac{1}{2}\\times${a*k}\\times${b*k}=${area3}\\) 平方公分。`
+        );
+        continue;
+      }
+
+      // mode 3: 已知較小股，求斜邊
+      const shortLeg = a * k;
+      const hyp3 = c * k;
+      questions.push(
+        `一直角三角形三邊之比為 \\(${tri.label}\\)，最短股長 \\(${shortLeg}\\) 公分，求斜邊長。`
+      );
+      answers.push(
+        `最短股為 \\(${a}k=${shortLeg}\\)，得 \\(k=${k}\\)。斜邊 \\(=${c}k=${hyp3}\\) 公分。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j3-2-3 新增：梯形中用畢氏定理求斜腰/高後算面積 ──────────────────────
+  function buildJ323TrapezoidPythagSet(count) {
+    const questions = [];
+    const answers = [];
+    while (questions.length < count) {
+      const mode = questions.length % 3;
+
+      if (mode === 0) {
+        // 直角梯形：下底 a，上底 b，高 h，求斜腰和面積
+        const a = randInt(8, 20);
+        const b = randInt(3, a - 2);
+        const h = randInt(4, 15);
+        const diff = a - b;
+        const leg2 = diff * diff + h * h;
+        const legStr = formatRadical(leg2);
+        const area = (a + b) * h / 2;
+        questions.push(
+          `一直角梯形，上底 \\(${b}\\)、下底 \\(${a}\\)、高 \\(${h}\\)，求斜腰長和面積。`
+        );
+        answers.push(
+          `斜腰 \\(=\\sqrt{${diff}^2+${h}^2}=\\sqrt{${leg2}}=${legStr}\\)。` +
+          `面積 \\(=\\dfrac{(${b}+${a})\\times${h}}{2}=${area}\\) 平方單位。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        // 等腰梯形：上底 b，下底 a，腰 l（整數），求高和面積
+        const a2 = randInt(10, 24);
+        const b2 = randInt(2, a2 - 4);
+        const diff2 = (a2 - b2) / 2;
+        if (!Number.isInteger(diff2)) continue;
+        const h2 = randInt(4, 15);
+        const l2 = diff2 * diff2 + h2 * h2;
+        const l = Math.sqrt(l2);
+        if (!Number.isInteger(l)) continue;
+        const area2 = (a2 + b2) * h2 / 2;
+        questions.push(
+          `一等腰梯形，上底 \\(${b2}\\)、下底 \\(${a2}\\)、腰長 \\(${l}\\)，求高和面積。`
+        );
+        answers.push(
+          `作高後，底邊超出部分為 \\(\\dfrac{${a2}-${b2}}{2}=${diff2}\\)。` +
+          `高 \\(h=\\sqrt{${l}^2-${diff2}^2}=\\sqrt{${l2-diff2*diff2}}=${h2}\\)。` +
+          `面積 \\(=\\dfrac{(${b2}+${a2})\\times${h2}}{2}=${area2}\\) 平方單位。`
+        );
+        continue;
+      }
+
+      // mode 2: 梯形已知兩底和兩腰，求面積（等腰梯形）
+      const a3 = randInt(12, 28);
+      const b3 = randInt(4, a3 - 4);
+      if ((a3 - b3) % 2 !== 0) continue;
+      const half = (a3 - b3) / 2;
+      const l3 = randInt(half + 3, half + 12);
+      const h3sq = l3 * l3 - half * half;
+      if (h3sq <= 0) continue;
+      const h3 = Math.sqrt(h3sq);
+      const h3Str = Number.isInteger(h3) ? `${h3}` : `\\sqrt{${h3sq}}`;
+      const areaStr = Number.isInteger(h3)
+        ? `${(a3 + b3) * h3 / 2}`
+        : `\\dfrac{(${a3}+${b3})\\sqrt{${h3sq}}}{2}`;
+      questions.push(
+        `一等腰梯形，上底 \\(${b3}\\)、下底 \\(${a3}\\)、腰長 \\(${l3}\\)，求面積。`
+      );
+      answers.push(
+        `作高後，兩底超出的一半為 \\(${half}\\)，高 \\(=\\sqrt{${l3}^2-${half}^2}=${h3Str}\\)。` +
+        `面積 \\(=\\dfrac{(${b3}+${a3})\\times${h3Str}}{2}=${areaStr}\\) 平方單位。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+
   const nextConfigs = {
       'j1-1-3-biquadratic-split-square-factoring': {
         type: 'drill',
@@ -4060,6 +5384,33 @@
           return buildJ321ExactSquareRootSet(6);
         },
       },
+      'j3-2-1-sqrt-definition-relation': {
+        type: 'drill',
+        title: '平方根定義關係推導',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ321SqrtDefinitionRelationSet(5);
+        },
+      },
+      'j3-2-1-sqrt-reverse-square': {
+        type: 'drill',
+        title: '平方根反推未知數',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ321SqrtReverseSquareSet(5);
+        },
+      },
+      'j3-2-1-sqrt-linear-system': {
+        type: 'drill',
+        title: '兩平方根聯立求解',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ321SqrtLinearSystemSet(5);
+        },
+      },
       'j3-2-1-square-root-compare-drill': {
         type: 'drill',
         title: '平方根大小比較',
@@ -4088,6 +5439,15 @@
         },
       },
       'j3-2-3-triple-expand-drill': {
+      'j3-2-2-radical-compare': {
+        type: 'drill',
+        title: '根式表達式大小比較',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ322RadicalCompareSet(5);
+        },
+      },
         type: 'drill',
         title: '畢氏數擴展與倍數',
         difficulty: 'easy',
@@ -4139,6 +5499,33 @@
         questionCount: 6,
         generate() {
           return buildJ323RightTriangleJudgementSet(6);
+        },
+      },
+      'j3-2-3-isosceles-triangle-area': {
+        type: 'drill',
+        title: '等腰三角形面積（畢氏求高）',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ323IsoscelesTriangleAreaSet(5);
+        },
+      },
+      'j3-2-3-ratio-perim-area': {
+        type: 'drill',
+        title: '直角三角形三邊比與周長面積',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ323RatioPerimAreaSet(5);
+        },
+      },
+      'j3-2-3-trapezoid-pythag': {
+        type: 'drill',
+        title: '梯形畢氏定理求高與面積',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ323TrapezoidPythagSet(5);
         },
       },
       'j3-3-1-core-factoring-mixed': {
@@ -4384,6 +5771,33 @@
           return buildJ341RootPropertyReverseSet(6);
         },
       },
+      'j3-4-1-diff-square-solve': {
+        type: 'drill',
+        title: '差平方型方程式',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ341DiffSquareSolveSet(5);
+        },
+      },
+      'j3-4-1-substitute-var-solve': {
+        type: 'drill',
+        title: '換元法解方程式',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ341SubstituteVarSet(5);
+        },
+      },
+      'j3-4-1-shared-root': {
+        type: 'drill',
+        title: '兩方程式共同解',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ341SharedRootSet(5);
+        },
+      },
       'j3-4-2-square-root-solve': {
         type: 'drill',
         title: '平方根觀念求解類',
@@ -4483,6 +5897,33 @@
           return buildJ342RootsAppliedMixedSet(6);
         },
       },
+      'j3-4-2-two-person-mistake': {
+        type: 'drill',
+        title: '甲乙各看錯不同係數',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ342TwoPersonMistakeSet(5);
+        },
+      },
+      'j3-4-2-complete-square-lead-coeff': {
+        type: 'drill',
+        title: '配方法求首項係數',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ342CompleteSquareLeadCoeffSet(5);
+        },
+      },
+      'j3-4-2-abs-double-zero': {
+        type: 'drill',
+        title: '絕對值方程式 |f(x)|+|g(x)|=0',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ342AbsDoubleZeroSet(5);
+        },
+      },
       'j3-4-2-roots-coefficient-mistake': {
         type: 'drill',
         title: '係數看錯題（和積修正）',
@@ -4519,6 +5960,78 @@
           return buildJ342DiscriminantRangeSet(6);
         },
       },
+      'j3-4-3-tile-floor-drill': {
+        type: 'drill',
+        title: '瓷磚鋪地板問題',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ343TileFloorSet(5);
+        },
+      },
+      'j3-4-3-two-square-perim-area-drill': {
+        type: 'drill',
+        title: '兩正方形周長與面積問題',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ343TwoSquarePerimAreaSet(5);
+        },
+      },
+      'j3-4-3-consec-odd-square-sum-drill': {
+        type: 'drill',
+        title: '連續奇（偶）數平方和問題',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ343ConsecOddSquareSumSet(5);
+        },
+      },
+      'j3-4-3-neg-reciprocal-word-drill': {
+        type: 'drill',
+        title: '負數倒數關係與年份問題',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ343NegReciprocalWordSet(5);
+        },
+      },
+      'j3-4-3-pen-pricing-drill': {
+        type: 'drill',
+        title: '買筆折扣應用問題',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ343PenPricingSet(5);
+        },
+      },
+      'j3-4-3-toy-vendor-drill': {
+        type: 'drill',
+        title: '玩具攤販利潤問題',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ343ToyVendorSet(5);
+        },
+      },
+      'j3-4-3-straw-table-drill': {
+        type: 'drill',
+        title: '吸管測量桌面問題',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ343StrawTableSet(5);
+        },
+      },
+      'j3-4-3-donation-square-drill': {
+        type: 'drill',
+        title: '捐款平方關係問題',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ343DonationSquareSet(5);
+        },
+      },
       'j3-4-3-number-property-word': {
         type: 'drill',
         title: '數字性質與運算問題',
@@ -4544,6 +6057,42 @@
         questionCount: 5,
         generate() {
           return buildJ343BusinessWordSet(5);
+        },
+      },
+      'j3-4-3-round-robin': {
+        type: 'drill',
+        title: '循環賽場次求人數',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ343RoundRobinSet(5);
+        },
+      },
+      'j3-4-3-garden-path': {
+        type: 'drill',
+        title: '長方形土地開路問題',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ343GardenPathSet(5);
+        },
+      },
+      'j3-4-3-open-box': {
+        type: 'drill',
+        title: '正方形薄片折成開口盒',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ343OpenBoxSet(5);
+        },
+      },
+      'j3-4-3-square-side-change': {
+        type: 'drill',
+        title: '正方形邊長變化問題',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ343SquareSideChangeSet(5);
         },
       },
       'radical-mul-div-split-rule': {

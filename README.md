@@ -103,6 +103,7 @@
 - `formula-detail.js`：單一公式頁邏輯
 - `manage.js`：統整管理頁邏輯
 - `chapter-overviews.js`：章節重點大綱（原稿版 / 可修改版）
+- `docs/README.md`：目前正式文件入口
 - `docs/current-architecture.md`：目前資料分層與修改原則
 - `docs/codex-operating-rules.md`：Codex 固定作業規則（每次修改前必讀）
 - `manifest.webmanifest`：PWA 安裝設定

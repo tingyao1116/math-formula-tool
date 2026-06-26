@@ -2837,8 +2837,279 @@ select {
   margin: 0;
 }
 
+.playlist-layout {
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+}
+
+.playlist-filter-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-top: 18px;
+}
+
+.playlist-table-wrap {
+  margin-top: 18px;
+  overflow-x: auto;
+}
+
+.playlist-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.playlist-col--check {
+  width: 68px;
+}
+
+.playlist-col--title {
+  width: 24%;
+}
+
+.playlist-col--chapter {
+  width: 110px;
+}
+
+.playlist-col--difficulty {
+  width: 110px;
+}
+
+.playlist-col--sample {
+  width: 44%;
+}
+
+.playlist-table th,
+.playlist-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(13, 92, 99, 0.12);
+  vertical-align: top;
+  text-align: left;
+}
+
+.playlist-table th {
+  color: #0d5c63;
+  font-size: 0.95rem;
+}
+
+.playlist-title-cell strong {
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.playlist-title-cell .detail-note {
+  font-size: 0.78rem;
+}
+
+.playlist-sample-cell {
+  display: grid;
+  gap: 8px;
+}
+
+.playlist-sample-cell__text {
+  color: #31474d;
+  font-size: 1rem;
+  line-height: 1.75;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.playlist-saved-list,
+.playlist-player-list,
+.playlist-selected-list {
+  display: grid;
+  gap: 12px;
+}
+
+.playlist-saved-card,
+.playlist-player-card {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(248, 250, 249, 0.96);
+}
+
+.playlist-saved-card {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+}
+
+.playlist-player-card {
+  text-align: left;
+  border: 1px solid rgba(13, 92, 99, 0.08);
+}
+
+.playlist-player-card.is-active {
+  outline: 2px solid rgba(13, 92, 99, 0.18);
+  background: rgba(236, 246, 245, 0.95);
+}
+
+.playlist-saved-card.is-active {
+  outline: 2px solid rgba(13, 92, 99, 0.2);
+}
+
+.playlist-saved-card__body {
+  display: grid;
+  gap: 6px;
+}
+
+.playlist-saved-card__body p,
+.playlist-player-card p {
+  margin: 0;
+  color: #4b6970;
+}
+
+.playlist-saved-card__meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: #5f7b81;
+  font-size: 0.9rem;
+}
+
+.playlist-selected-card {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(248, 250, 249, 0.96);
+}
+
+.playlist-selected-card__body {
+  display: grid;
+  gap: 4px;
+}
+
+.playlist-selected-card__title-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
+.playlist-selected-card__title-row strong {
+  display: block;
+  flex: 1 1 auto;
+  max-width: none;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playlist-selected-card__body strong {
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.playlist-selected-card__body .detail-note {
+  font-size: 0.76rem;
+}
+
+.playlist-selected-card__actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.playlist-selected-card__title-row .ghost-button,
+.playlist-selected-card__body .meta-chip {
+  font-size: 0.66rem;
+}
+
+.playlist-selected-card__title-row .ghost-button {
+  flex: none;
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 5px;
+  line-height: 1;
+  border-radius: 999px;
+}
+
+.playlist-mini-button {
+  min-width: 18px;
+  font-weight: 700;
+}
+
+.playlist-upload-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 980px) {
+  .playlist-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.quest-practice-layout {
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+}
+
+.quest-hero {
+  background:
+    radial-gradient(circle at top right, rgba(255, 214, 102, 0.18), transparent 28%),
+    linear-gradient(135deg, rgba(13, 92, 99, 0.95), rgba(23, 49, 83, 0.95));
+  color: #f3fbfa;
+}
+
+.quest-hero .hero__lead,
+.quest-hero .eyebrow,
+.quest-hero .ghost-link,
+.quest-hero .hero__panel li {
+  color: rgba(243, 251, 250, 0.92);
+}
+
+.quest-hero .hero__panel {
+  background: rgba(7, 20, 36, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.quest-panel,
+.quest-stage-panel,
+.quest-session-panel {
+  border: 1px solid rgba(13, 92, 99, 0.08);
+}
+
+.quest-list {
+  display: grid;
+  gap: 14px;
+}
+
+.quest-card {
+  text-align: left;
+}
+
+.quest-card__meta {
+  justify-content: space-between;
+}
+
+.quest-story-hook {
+  margin: 0 0 10px;
+  color: #0d5c63;
+  font-weight: 700;
+}
+
+.quest-meta-grid .ability-meta-box {
+  min-width: 180px;
+}
+
+.quest-session-panel .ability-feedback-panel__badge {
+  min-width: 120px;
+}
+
 @media (max-width: 980px) {
   .ability-practice-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .quest-practice-layout {
     grid-template-columns: 1fr;
   }
 

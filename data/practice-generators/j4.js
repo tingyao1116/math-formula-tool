@@ -483,6 +483,367 @@
     return start + offset;
   }
 
+
+  // === 新增 j4-1-1 generators ===
+
+  function buildJ411RightTriangleAPSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // 已知面積求三邊（三邊 3k:4k:5k，面積=6k²）
+        const kVals = [2, 3, 4, 5, 6, 7, 8];
+        const k = kVals[randInt(0, kVals.length - 1)];
+        const area = 6 * k * k;
+        const s3 = 3 * k, s4 = 4 * k, s5 = 5 * k;
+        questions.push(
+          `一個直角三角形的三邊長成等差數列，面積為 ${area}，求此三角形的三邊長。`
+        );
+        answers.push(
+          `簡答：三邊為 ${s3}、${s4}、${s5}。過程：設三邊成等差，公差為 \\(k\\)，則三邊可設為 \\(3k, 4k, 5k\\)（其中 \\(5k\\) 為斜邊，\\((3k)^2+(4k)^2=(5k)^2\\) 成立）。面積 \\(\\frac{1}{2}\\cdot 3k\\cdot 4k=6k^2=${area}\\)，所以 \\(k^2=${k * k}\\Rightarrow k=${k}\\)，三邊為 ${s3}、${s4}、${s5}。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // 已知周長求面積
+        const kVals = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+        const k = kVals[randInt(0, kVals.length - 1)];
+        const peri = 12 * k;
+        const area = 6 * k * k;
+        questions.push(
+          `一個直角三角形的三邊長成等差數列，周長為 ${peri}，求此三角形的面積。`
+        );
+        answers.push(
+          `簡答：面積為 ${area}。過程：設三邊為 \\(3k, 4k, 5k\\)，周長 \\(=12k=${peri}\\Rightarrow k=${k}\\)，面積 \\(=\\frac{1}{2}\\cdot${3 * k}\\cdot${4 * k}=${area}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // 已知斜邊求面積與周長
+        const kVals = [2, 3, 4, 5, 6, 7];
+        const k = kVals[randInt(0, kVals.length - 1)];
+        const hyp = 5 * k;
+        const area = 6 * k * k;
+        const peri = 12 * k;
+        questions.push(
+          `一個直角三角形的三邊長成等差數列，斜邊長為 ${hyp}，求此三角形的面積與周長。`
+        );
+        answers.push(
+          `簡答：面積 ${area}，周長 ${peri}。過程：設三邊為 \\(3k,4k,5k\\)，斜邊 \\(5k=${hyp}\\Rightarrow k=${k}\\)，面積 \\(=6k^2=${area}\\)，周長 \\(=12k=${peri}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // 已知公差求面積與周長
+        const kVals = [2, 3, 4, 5, 6, 7, 8];
+        const k = kVals[randInt(0, kVals.length - 1)];
+        const d = k;
+        const area = 6 * k * k;
+        const peri = 12 * k;
+        const s3 = 3 * k, s4 = 4 * k, s5 = 5 * k;
+        questions.push(
+          `一個直角三角形三邊長成等差數列，公差為 ${d}，求此三角形的面積與周長。`
+        );
+        answers.push(
+          `簡答：面積 ${area}，周長 ${peri}。過程：三邊設為 \\(3k,4k,5k\\)，公差 \\(=k=${d}\\Rightarrow k=${k}\\)，三邊為 ${s3}、${s4}、${s5}，面積 \\(=6k^2=${area}\\)，周長 \\(=12k=${peri}\\)。`
+        );
+        continue;
+      }
+      // mode 4: 已知最短邊求斜邊與面積
+      const kVals = [2, 3, 4, 5, 6, 7, 8];
+      const k = kVals[randInt(0, kVals.length - 1)];
+      const shortest = 3 * k;
+      const hyp = 5 * k;
+      const area = 6 * k * k;
+      questions.push(
+        `一個直角三角形的三邊長成等差數列，最短邊為 ${shortest}，求斜邊長與面積。`
+      );
+      answers.push(
+        `簡答：斜邊 ${hyp}，面積 ${area}。過程：設三邊為 \\(3k,4k,5k\\)，最短邊 \\(3k=${shortest}\\Rightarrow k=${k}\\)，斜邊 \\(=5k=${hyp}\\)，面積 \\(=6k^2=${area}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ411PolygonAPSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // n邊形邊長成等差，已知最短邊、公差、邊數，求周長
+        const n = randInt(4, 8);
+        const a1 = randInt(2, 10);
+        const d = randInt(1, 4);
+        const an = a1 + (n - 1) * d;
+        const peri = (n * (a1 + an)) / 2;
+        questions.push(
+          `一個 ${n} 邊形，各邊長成等差數列，最短邊為 ${a1}，公差為 ${d}，求此多邊形的周長。`
+        );
+        answers.push(
+          `簡答：周長為 ${peri}。過程：最長邊 \\(=${a1}+${n - 1}\\times${d}=${an}\\)，周長為各邊之和 \\(=\\frac{${n}(${a1}+${an})}{2}=${peri}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // 已知最短邊、最長邊、公差，求邊數和周長
+        const d = randInt(2, 5);
+        const a1 = randInt(3, 10);
+        const n = randInt(4, 8);
+        const an = a1 + (n - 1) * d;
+        const peri = (n * (a1 + an)) / 2;
+        questions.push(
+          `一個多邊形，各邊長成等差數列，最短邊為 ${a1}，最長邊為 ${an}，公差為 ${d}，求此多邊形的邊數與周長。`
+        );
+        answers.push(
+          `簡答：邊數為 ${n}，周長為 ${peri}。過程：由公差 \\(d=${d}\\) 得邊數 \\(n=\\frac{${an}-${a1}}{${d}}+1=${n}\\)，周長 \\(=\\frac{${n}(${a1}+${an})}{2}=${peri}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // n邊形各內角成等差，已知最小內角、公差，求各內角
+        // Build valid cases by fixing n and D, computing A1
+        const configs = [
+          {n:4, D:10, A1:75},
+          {n:4, D:15, A1:67},
+          {n:5, D:12, A1:84},
+          {n:5, D:8,  A1:92},
+          {n:6, D:6,  A1:90},
+          {n:6, D:10, A1:85},
+        ];
+        const cfg = configs[i % configs.length];
+        const { n, D, A1 } = cfg;
+        const angles = [];
+        for (let j = 0; j < n; j++) angles.push(A1 + j * D);
+        const totalAngle = (n - 2) * 180;
+        questions.push(
+          `一個 ${n} 邊形的各內角成等差數列，最小內角為 ${A1}°，公差為 ${D}°，求各內角的大小並驗算內角和。`
+        );
+        answers.push(
+          `簡答：各內角為 ${angles.map(a => a + '°').join('、')}。過程：最大內角 \\(=${A1}+${n - 1}\\times${D}=${angles[n-1]}°\\)，各內角和 \\(=\\frac{${n}(${A1}+${angles[n-1]})}{2}=${totalAngle}°=(${n}-2)\\times180°\\)，符合 ${n} 邊形內角和。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // 已知最大內角、公差，求邊數（n邊形內角和=(n-2)*180）
+        const configs = [
+          {n:4, D:10, A1:75},
+          {n:4, D:20, A1:60},
+          {n:5, D:12, A1:84},
+          {n:5, D:16, A1:80},
+          {n:6, D:8,  A1:86},
+          {n:6, D:6,  A1:90},
+        ];
+        const cfg = configs[i % configs.length];
+        const { n, D, A1 } = cfg;
+        const An = A1 + (n - 1) * D;
+        const totalAngle = (n - 2) * 180;
+        questions.push(
+          `一個凸多邊形各內角成等差數列，最大內角為 ${An}°，公差為 ${D}°，求該多邊形的邊數。`
+        );
+        answers.push(
+          `簡答：${n} 邊形。過程：設邊數為 \\(n\\)，最小內角 \\(=${An}-(n-1)\\times${D}\\)，內角和 \\(=\\frac{n(最小角+${An})}{2}=(n-2)\\times180°\\)，代入解方程得 \\(n=${n}\\)，最小內角為 ${A1}°。`
+        );
+        continue;
+      }
+      // mode 4: 已知周長、最長邊、公差，求邊數
+      const d = randInt(2, 4);
+      const n = randInt(4, 7);
+      const a1 = randInt(3, 8);
+      const an = a1 + (n - 1) * d;
+      const peri = (n * (a1 + an)) / 2;
+      questions.push(
+        `一個多邊形各邊長成等差數列，最長邊為 ${an}，公差為 ${d}，周長為 ${peri}，求邊數。`
+      );
+      answers.push(
+        `簡答：${n} 邊形。過程：設最短邊為 \\(a_1\\)，邊數為 \\(n\\)，最長邊 \\(=a_1+(n-1)\\times${d}=${an}\\Rightarrow a_1=${an}-(n-1)\\times${d}\\)，代入周長公式 \\(\\frac{n(a_1+${an})}{2}=${peri}\\) 解得 \\(n=${n}\\)，\\(a_1=${a1}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ411FirstPositiveTermSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // a1<0, d>0，求第一個正項的項次
+        const d = randInt(2, 8);
+        const k = randInt(4, 12);
+        const ak_minus_1_neg = randInt(1, d - 1);
+        const a1 = -(k - 2) * d - ak_minus_1_neg;
+        const ak = a1 + (k - 1) * d;
+        const threshold = (-a1 / d + 1);
+        questions.push(
+          `等差數列的首項 \\(a_1=${a1}\\)，公差 \\(d=${d}\\)，求此數列第一個正項是第幾項？`
+        );
+        answers.push(
+          `簡答：第 ${k} 項。過程：\\(a_n=${a1}+(n-1)\\times${d}\\)。解 \\(a_n>0\\Rightarrow${a1}+(n-1)\\times${d}>0\\Rightarrow n-1>\\frac{${-a1}}{${d}}\\approx${((-a1)/d).toFixed(2)}\\)，故 \\(n\\geq${k}\\)，第一個正項是第 ${k} 項，值為 ${ak}。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // a1>0, d<0，求第一個負項的項次
+        const dAbs = randInt(2, 8);
+        const d = -dAbs;
+        const k = randInt(4, 12);
+        const ak_minus_1_pos = randInt(1, dAbs - 1);
+        const a1 = (k - 2) * dAbs + ak_minus_1_pos;
+        const ak = a1 + (k - 1) * d;
+        questions.push(
+          `等差數列的首項 \\(a_1=${a1}\\)，公差 \\(d=${d}\\)，求此數列第一個負項是第幾項？`
+        );
+        answers.push(
+          `簡答：第 ${k} 項。過程：\\(a_n=${a1}+(n-1)\\times(${d})\\)。解 \\(a_n<0\\Rightarrow${a1}+(n-1)\\times(${d})<0\\Rightarrow n-1>\\frac{${a1}}{${dAbs}}\\approx${(a1/dAbs).toFixed(2)}\\)，故 \\(n\\geq${k}\\)，第一個負項是第 ${k} 項，值為 ${ak}。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // a1<0, d>0，已知第k項是第一個正項，求整數a1的範圍
+        const d = randInt(2, 6);
+        const k = randInt(4, 10);
+        const lower = -(k - 1) * d;
+        const upper = -(k - 2) * d;
+        questions.push(
+          `等差數列的公差為 ${d}，若第 ${k} 項是此數列中第一個正項，求整數首項 \\(a_1\\) 的範圍。`
+        );
+        answers.push(
+          `簡答：\\(${lower}<a_1\\leq${upper}\\)（\\(a_1\\) 為整數，可取 \\(${lower+1}\\) 到 \\(${upper}\\)）。過程：要求 \\(a_{${k-1}}\\leq0\\) 且 \\(a_{${k}}>0\\)，即 \\(a_1+(${k-2})\\times${d}\\leq0\\) 且 \\(a_1+(${k-1})\\times${d}>0\\)，解得 \\(${lower}<a_1\\leq${upper}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // a1>0, d<0，求從第幾項起所有項均為負數
+        const dAbs = randInt(2, 7);
+        const d = -dAbs;
+        const k = randInt(4, 12);
+        const ak_minus_1_nonneg = randInt(0, dAbs - 1);
+        const a1 = (k - 2) * dAbs + ak_minus_1_nonneg;
+        const ak = a1 + (k - 1) * d;
+        questions.push(
+          `等差數列首項 \\(a_1=${a1}\\)，公差 \\(d=${d}\\)，求從第幾項起，之後各項均為負數？`
+        );
+        answers.push(
+          `簡答：從第 ${k} 項起均為負數。過程：\\(a_n=${a1}+(n-1)\\times(${d})\\)，解 \\(a_n<0\\Rightarrow n-1>\\frac{${a1}}{${dAbs}}\\approx${(a1/dAbs).toFixed(2)}\\Rightarrow n\\geq${k}\\)。因公差為負，第 ${k} 項起持續遞減，故第 ${k} 項（值為 ${ak}）起均為負數。`
+        );
+        continue;
+      }
+      // mode 4: 由兩項反推a1和d，再求第一個正項
+      const d = randInt(2, 6);
+      const firstPosK = randInt(5, 12);
+      const ak_minus_1_neg = randInt(1, d - 1);
+      const a1 = -(firstPosK - 2) * d - ak_minus_1_neg;
+      const giveK = 2;
+      const giveM = firstPosK + randInt(2, 5);
+      const a_giveK = a1 + (giveK - 1) * d;
+      const a_giveM = a1 + (giveM - 1) * d;
+      const firstPosVal = a1 + (firstPosK - 1) * d;
+      questions.push(
+        `等差數列中，\\(a_{${giveK}}=${a_giveK}\\)，\\(a_{${giveM}}=${a_giveM}\\)，求此數列第一個正項是第幾項？`
+      );
+      answers.push(
+        `簡答：第 ${firstPosK} 項。過程：公差 \\(d=\\frac{a_{${giveM}}-a_{${giveK}}}{${giveM}-${giveK}}=\\frac{${a_giveM}-${a_giveK}}{${giveM-giveK}}=${d}\\)，\\(a_1=a_{${giveK}}-(${giveK-1})d=${a_giveK}-${(giveK-1)*d}=${a1}\\)。解 \\(a_n>0\\Rightarrow n\\geq${firstPosK}\\)，第一個正項是第 ${firstPosK} 項，值為 ${firstPosVal}。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ411CoordinateMoveSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // 已知起點和每次移動量，求第n次後的座標
+        const x0 = randInt(-8, 8);
+        const y0 = randInt(-8, 8);
+        const dx = pickNonZero(-5, 5);
+        const dy = pickNonZero(-5, 5);
+        const n = randInt(4, 10);
+        const xn = x0 + n * dx;
+        const yn = y0 + n * dy;
+        const quadrant = xn > 0 && yn > 0 ? '第一象限' : xn < 0 && yn > 0 ? '第二象限' : xn < 0 && yn < 0 ? '第三象限' : xn > 0 && yn < 0 ? '第四象限' : '座標軸上';
+        questions.push(
+          `點 \\(P\\) 從 \\((${x0},${y0})\\) 出發，每次 \\(x\\) 增加 ${dx}、\\(y\\) 增加 ${dy}，移動 ${n} 次後，\\(P\\) 的座標為何？在第幾象限？`
+        );
+        answers.push(
+          `簡答：\\((${xn},${yn})\\)，${quadrant}。過程：\\(x\\) 座標以公差 ${dx} 遞變，移動 ${n} 次後 \\(x=${x0}+${n}\\times(${dx})=${xn}\\)；\\(y\\) 座標以公差 ${dy} 遞變，\\(y=${y0}+${n}\\times(${dy})=${yn}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // 已知起點、終點（固定步數），求每次移動量
+        const dx = pickNonZero(-4, 4);
+        const dy = pickNonZero(-4, 4);
+        const n = randInt(3, 8);
+        const x0 = randInt(-5, 5);
+        const y0 = randInt(-5, 5);
+        const xn = x0 + n * dx;
+        const yn = y0 + n * dy;
+        questions.push(
+          `點 \\(A=(${x0},${y0})\\) 每次移動固定量 \\((p,q)\\)，移動 ${n} 次後到達 \\(B=(${xn},${yn})\\)，求每次的移動量 \\((p,q)\\)。`
+        );
+        answers.push(
+          `簡答：\\((p,q)=(${dx},${dy})\\)。過程：\\(p=\\frac{${xn}-${x0}}{${n}}=\\frac{${xn-x0}}{${n}}=${dx}\\)，\\(q=\\frac{${yn}-${y0}}{${n}}=\\frac{${yn-y0}}{${n}}=${dy}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // x和y各自成等差，求第n項座標
+        const x0 = randInt(-6, 6);
+        const y0 = randInt(-6, 6);
+        const dx = pickNonZero(-4, 4);
+        const dy = pickNonZero(-4, 4);
+        const n = randInt(5, 12);
+        const xn = x0 + (n - 1) * dx;
+        const yn = y0 + (n - 1) * dy;
+        questions.push(
+          `一動點的 \\(x\\) 座標成等差數列，首項為 ${x0}、公差為 ${dx}；\\(y\\) 座標成等差數列，首項為 ${y0}、公差為 ${dy}。求第 ${n} 項時動點的座標。`
+        );
+        answers.push(
+          `簡答：\\((${xn},${yn})\\)。過程：第 \\(n\\) 項 \\(x=${x0}+(${n}-1)\\times(${dx})=${xn}\\)，\\(y=${y0}+(${n}-1)\\times(${dy})=${yn}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // 求第幾次後x+y等於某個目標值
+        const x0 = randInt(-4, 4);
+        const y0 = randInt(-4, 4);
+        const dx = pickNonZero(-3, 3);
+        const dy = pickNonZero(-3, 3);
+        const n = randInt(4, 10);
+        const xn = x0 + (n - 1) * dx;
+        const yn = y0 + (n - 1) * dy;
+        const target = xn + yn;
+        const sumD = dx + dy;
+        questions.push(
+          `一動點第 1 次位於 \\((${x0},${y0})\\)，之後每次 \\(x\\) 增加 ${dx}、\\(y\\) 增加 ${dy}。求第幾次時 \\(x+y=${target}\\)？`
+        );
+        answers.push(
+          `簡答：第 ${n} 次。過程：第 \\(k\\) 次時 \\(x+y=(${x0}+(k-1)\\times${dx})+(${y0}+(k-1)\\times${dy})=(${x0+y0})+(k-1)\\times(${sumD})=${target}\\)，解得 \\(k=${n}\\)。`
+        );
+        continue;
+      }
+      // mode 4: 從負座標出發，求何時第一次進入第一象限
+      const x0 = -randInt(4, 12);
+      const y0 = -randInt(4, 12);
+      const dx = randInt(2, 5);
+      const dy = randInt(2, 5);
+      const nx = Math.ceil(-x0 / dx);
+      const ny = Math.ceil(-y0 / dy);
+      const nFirst = Math.max(nx, ny);
+      questions.push(
+        `點 \\(P\\) 從 \\((${x0},${y0})\\) 出發，每次 \\(x\\) 增加 ${dx}、\\(y\\) 增加 ${dy}，求移動幾次後 \\(P\\) 第一次進入第一象限？`
+      );
+      answers.push(
+        `簡答：移動 ${nFirst} 次後。過程：第 \\(n\\) 次後 \\(P=(${x0}+${dx}n,\\ ${y0}+${dy}n)\\)。須 \\(${x0}+${dx}n>0\\Rightarrow n>\\frac{${-x0}}{${dx}}=${(-x0/dx).toFixed(2)}\\ldots\\) 且 \\(${y0}+${dy}n>0\\Rightarrow n>\\frac{${-y0}}{${dy}}=${(-y0/dy).toFixed(2)}\\ldots\\)，故 \\(n\\geq${nFirst}\\)，此時 \\(P=(${x0+nFirst*dx},${y0+nFirst*dy})\\) 在第一象限。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ413SeriesFormulaCoreSet(count) {
     const questions = [];
     const answers = [];
@@ -920,6 +1281,178 @@
         );
         answers.push(`前 ${2 * half} 項和就是奇數項和加偶數項和，所以 \\(S_${2 * half}=${oddSum}+${evenSum}=${total}\\)。`);
       }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+
+  // === 新增 j4-1-3 generators ===
+
+  function buildJ413PolygonSumSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // 已知n邊形、最短邊、公差，求周長
+        const n = randInt(4, 8);
+        const a1 = randInt(3, 12);
+        const d = randInt(1, 4);
+        const an = a1 + (n - 1) * d;
+        const peri = (n * (a1 + an)) / 2;
+        questions.push(
+          `一個 ${n} 邊形各邊長成等差數列，最短邊為 ${a1} 公分，公差為 ${d} 公分，求周長。`
+        );
+        answers.push(
+          `簡答：周長為 ${peri} 公分。過程：最長邊 \\(=${a1}+${n-1}\\times${d}=${an}\\)，周長 \\(=\\frac{${n}(${a1}+${an})}{2}=${peri}\\) 公分。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // 已知最長邊、最短邊、公差，求n和周長
+        const d = randInt(2, 5);
+        const a1 = randInt(4, 12);
+        const n = randInt(4, 8);
+        const an = a1 + (n - 1) * d;
+        const peri = (n * (a1 + an)) / 2;
+        questions.push(
+          `一個多邊形各邊長成等差數列，最短邊為 ${a1} 公分，最長邊為 ${an} 公分，公差為 ${d} 公分，求邊數與周長。`
+        );
+        answers.push(
+          `簡答：共 ${n} 邊，周長 ${peri} 公分。過程：邊數 \\(=\\frac{${an}-${a1}}{${d}}+1=${n}\\)，周長 \\(=\\frac{${n}(${a1}+${an})}{2}=${peri}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // 已知周長、邊數、公差，求最短邊
+        const n = randInt(4, 7);
+        const d = randInt(2, 5);
+        const a1 = randInt(3, 10);
+        const an = a1 + (n - 1) * d;
+        const peri = (n * (a1 + an)) / 2;
+        questions.push(
+          `一個 ${n} 邊形各邊長成等差數列，公差為 ${d} 公分，周長為 ${peri} 公分，求最短邊的長度。`
+        );
+        answers.push(
+          `簡答：最短邊為 ${a1} 公分。過程：設最短邊為 \\(a_1\\)，最長邊 \\(=a_1+${(n-1)*d}\\)，周長 \\(=\\frac{${n}(2a_1+${(n-1)*d})}{2}=${n}a_1+${n*(n-1)*d/2}=${peri}\\Rightarrow a_1=${a1}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // 已知周長、最長邊、公差，求邊數
+        const d = randInt(2, 4);
+        const n = randInt(4, 7);
+        const a1 = randInt(3, 8);
+        const an = a1 + (n - 1) * d;
+        const peri = (n * (a1 + an)) / 2;
+        questions.push(
+          `一個多邊形各邊長成等差數列，最長邊為 ${an} 公分，公差為 ${d} 公分，周長為 ${peri} 公分，求邊數。`
+        );
+        answers.push(
+          `簡答：共 ${n} 邊。過程：設最短邊 \\(a_1=${an}-(n-1)\\times${d}\\)，代入周長 \\(\\frac{n(a_1+${an})}{2}=${peri}\\)，整理得 \\(n(${an+an}-(n-1)\\times${d})=2\\times${peri}\\)，試代入 \\(n=${n}\\) 驗算正確，最短邊為 ${a1} 公分。`
+        );
+        continue;
+      }
+      // mode 4: 磚塊/座位等差排列求總數（等差級數應用）
+      const layers = randInt(4, 9);
+      const a1 = randInt(5, 18);
+      const d = randInt(2, 6);
+      const an = a1 + (layers - 1) * d;
+      const total = (layers * (a1 + an)) / 2;
+      questions.push(
+        `某劇場共 ${layers} 排座位，第一排有 ${a1} 個座位，之後每排比前一排多 ${d} 個，求全場座位總數。`
+      );
+      answers.push(
+        `簡答：共 ${total} 個座位。過程：各排座位成等差，首排 ${a1}、末排 ${an}，總座位 \\(=\\frac{${layers}(${a1}+${an})}{2}=${total}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ413CatchUpRaceSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // 甲每圈時間遞增（a1+(k-1)*d），乙固定b，求第幾圈甲第一次比乙慢
+        const a1 = randInt(50, 80);
+        const d = randInt(2, 6);
+        const ahead = randInt(3, 8);
+        const b = a1 + ahead * d + randInt(1, d - 1);
+        const k = Math.floor((b - a1) / d) + 2;
+        const ak = a1 + (k - 1) * d;
+        questions.push(
+          `甲跑步，第一圈用時 ${a1} 秒，此後每圈比前一圈多用 ${d} 秒；乙每圈固定用 ${b} 秒。問甲從第幾圈開始比乙慢？`
+        );
+        answers.push(
+          `簡答：第 ${k} 圈。過程：甲第 \\(n\\) 圈時間 \\(=${a1}+(n-1)\\times${d}\\)。解 \\(${a1}+(n-1)\\times${d}>${b}\\Rightarrow n-1>\\frac{${b-a1}}{${d}}\\approx${((b-a1)/d).toFixed(2)}\\)，故 \\(n\\geq${k}\\)，第 ${k} 圈甲用時 ${ak} 秒，第一次比乙慢。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // 求n圈後甲乙總時間差
+        const a1 = randInt(55, 80);
+        const d = randInt(3, 7);
+        const b = a1 + randInt(2, 5) * d;
+        const nAsk = randInt(8, 15);
+        const sumA = nAsk * a1 + (nAsk * (nAsk - 1) / 2) * d;
+        const sumB = nAsk * b;
+        const diff = Math.abs(sumA - sumB);
+        const faster = sumA > sumB ? '甲比乙多用' : '乙比甲多用';
+        questions.push(
+          `甲第一圈用時 ${a1} 秒，之後每圈多用 ${d} 秒；乙每圈固定 ${b} 秒。跑完 ${nAsk} 圈後，${faster.slice(0, 1) === '甲' ? '甲' : '乙'}比${faster.slice(0, 1) === '甲' ? '乙' : '甲'}共多用多少秒？`
+        );
+        answers.push(
+          `簡答：${faster} ${diff} 秒。過程：甲前 ${nAsk} 圈總時間 \\(=\\frac{${nAsk}(${2*a1}+(${nAsk-1})\\times${d})}{2}=${sumA}\\) 秒；乙 \\(=${nAsk}\\times${b}=${sumB}\\) 秒；差值 \\(=|${sumA}-${sumB}|=${diff}\\) 秒。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // 累計總時間差超過某目標
+        const a1 = randInt(50, 75);
+        const d = randInt(3, 7);
+        const b = a1 + randInt(1, 3) * d;
+        const nCross = Math.floor(2 * (b - a1) / d) + 2;
+        const sumAN = nCross * a1 + (nCross * (nCross - 1) / 2) * d;
+        const sumBN = nCross * b;
+        questions.push(
+          `甲第一圈用時 ${a1} 秒，之後每圈多用 ${d} 秒；乙每圈固定 ${b} 秒。問跑幾圈後甲的累計時間第一次超過乙的累計時間？`
+        );
+        answers.push(
+          `簡答：第 ${nCross} 圈後。過程：甲前 \\(n\\) 圈總時間 \\(=na_1+\\frac{n(n-1)}{2}d\\)，乙 \\(=nb\\)。甲超過乙需 \\(n(a_1-b)+\\frac{n(n-1)}{2}d>0\\Rightarrow\\frac{n-1}{2}d>b-a_1\\Rightarrow n>${(2*(b-a1)/d+1).toFixed(2)}\\)，故 \\(n\\geq${nCross}\\)，此時甲 ${sumAN} 秒，乙 ${sumBN} 秒。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // 存款/支出成等差，求幾個月後累計超過目標
+        const a1 = randInt(500, 1500);
+        const d = randInt(100, 300);
+        const nTarget = randInt(8, 14);
+        const target = nTarget * a1 + (nTarget * (nTarget - 1) / 2) * d - randInt(50, 200);
+        let n = 1;
+        while (n * a1 + (n * (n - 1) / 2) * d < target) n++;
+        const sn = n * a1 + (n * (n - 1) / 2) * d;
+        questions.push(
+          `小明第一個月儲蓄 ${a1} 元，之後每個月比前一個月多存 ${d} 元，問至少幾個月後累計儲蓄超過 ${target} 元？`
+        );
+        answers.push(
+          `簡答：第 ${n} 個月後。過程：前 \\(n\\) 個月累計 \\(S_n=n\\times${a1}+\\frac{n(n-1)}{2}\\times${d}\\)。解 \\(S_n>${target}\\)，代入 \\(n=${n}\\) 得 \\(S_{${n}}=${sn}>${target}\\)，\\(n=${n-1}\\) 時 \\(S_{${n-1}}=${(n-1)*a1+((n-1)*(n-2)/2)*d}<${target}\\)，故至少需 ${n} 個月。`
+        );
+        continue;
+      }
+      // mode 4: 讀書計畫（求某天和前n天總量）
+      const a1 = randInt(20, 50);
+      const d = randInt(5, 15);
+      const n = randInt(8, 15);
+      const an = a1 + (n - 1) * d;
+      const sn = (n * (a1 + an)) / 2;
+      questions.push(
+        `小明第一天讀書 ${a1} 分鐘，之後每天比前一天多讀 ${d} 分鐘，求：(1) 第 ${n} 天讀了多少分鐘？(2) 前 ${n} 天共讀了多少分鐘？`
+      );
+      answers.push(
+        `簡答：(1) 第 ${n} 天讀 ${an} 分鐘；(2) 前 ${n} 天共讀 ${sn} 分鐘。過程：(1) \\(a_{${n}}=${a1}+(${n}-1)\\times${d}=${an}\\)；(2) \\(S_{${n}}=\\frac{${n}(${a1}+${an})}{2}=${sn}\\)。`
+      );
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
@@ -2183,6 +2716,311 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+
+  // === j4-2-1: 一次函數係數條件 ===
+  function buildJ421LinearDegreeConditionSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // (a-k)x² + px + c 為一次函數 → a=k → f(n)=pn+c
+        const k = randInt(1, 6);
+        const p = pickNonZero(-5, 5);
+        const c = randInt(-8, 8);
+        const n = randInt(-4, 5);
+        const fn = p * n + c;
+        const xsqTerm = k === 1 ? '(a-1)x^2' : `(a-${k})x^2`;
+        questions.push(
+          `已知函數 \\(f(x)=${xsqTerm}${p >= 0 ? '+' : ''}${p}x${formatSignedAdd(c)}\\) 是 \\(x\\) 的一次函數，求 \\(f(${n})\\)。`
+        );
+        answers.push(
+          `簡答：\\(f(${n})=${fn}\\)。過程：一次函數要求 \\(x^2\\) 的係數為零，所以 \\(a-${k}=0\\)，即 \\(a=${k}\\)；函數化簡為 \\(f(x)=${formatFunctionLinear(p, c)}\\)。代入 \\(x=${n}\\) 得 \\(f(${n})=${formatProductForSubstitution(p, n)}${formatSignedAdd(c)}=${fn}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // f(n+1) - f(n) = slope
+        const a = pickNonZero(-6, 6);
+        const b = randInt(-10, 10);
+        const n = randInt(-4, 4);
+        const v1 = a * (n + 1) + b;
+        const v0 = a * n + b;
+        questions.push(
+          `已知 \\(f(x)=${formatFunctionLinear(a, b)}\\)，求 \\(f(${n + 1})-f(${n})\\) 的值。`
+        );
+        answers.push(
+          `簡答：${a}。過程：\\(f(${n + 1})=${v1}\\)，\\(f(${n})=${v0}\\)，差值為 \\(${v1}${formatSignedAdd(-v0)}=${a}\\)。線型函數相鄰整數差等於斜率。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // f(am+b) = f(cm+d), injective linear → am+b = cm+d
+        const slope = pickNonZero(-5, 5);
+        const intercept = randInt(-8, 8);
+        const diff = randInt(1, 4);
+        const cCoeff = randInt(1, 4);
+        const aCoeff = cCoeff + diff;
+        const mVal = randInt(-4, 4);
+        const bCoeff = randInt(-5, 5);
+        const dCoeff = bCoeff + mVal * diff;
+        const lhsStr = `${aCoeff}m${formatSignedAdd(bCoeff)}`;
+        const rhsStr = `${cCoeff}m${formatSignedAdd(dCoeff)}`;
+        questions.push(
+          `已知 \\(f(x)=${formatFunctionLinear(slope, intercept)}\\) 為一次函數，且 \\(f(${lhsStr})=f(${rhsStr})\\)，求 \\(m\\)。`
+        );
+        answers.push(
+          `簡答：\\(m=${mVal}\\)。過程：一次函數是一對一函數，相同函數值必對應相同輸入，因此 \\(${lhsStr}=${rhsStr}\\)；整理得 \\(${formatTerm(diff, 'm')}=${dCoeff - bCoeff}\\)，解得 \\(m=${mVal}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // f(k) + f(-k) = 2b
+        const a = pickNonZero(-5, 5);
+        const b = randInt(-10, 10);
+        const k = randInt(1, 7);
+        const vk = a * k + b;
+        const vnk = -a * k + b;
+        const sumVal = 2 * b;
+        questions.push(
+          `已知 \\(f(x)=${formatFunctionLinear(a, b)}\\)，求 \\(f(${k})+f(-${k})\\) 的值。`
+        );
+        answers.push(
+          `簡答：${sumVal}。過程：\\(f(${k})=${vk}\\)，\\(f(-${k})=${vnk}\\)，相加得 \\(${vk}${formatSignedAdd(vnk)}=${sumVal}\\)。規律：\\(f(k)+f(-k)=(ak+b)+(-ak+b)=2b\\)。`
+        );
+        continue;
+      }
+      // mode 4: f(0) - f(-k) = ak
+      const a = pickNonZero(-5, 5);
+      const b = randInt(-8, 8);
+      const k = randInt(2, 7);
+      const f0 = b;
+      const fnk = -a * k + b;
+      const diff4 = f0 - fnk; // = ak
+      questions.push(
+        `已知 \\(f(x)=${formatFunctionLinear(a, b)}\\)，求 \\(f(0)-f(-${k})\\) 的值。`
+      );
+      answers.push(
+        `簡答：${diff4}。過程：\\(f(0)=${f0}\\)，\\(f(-${k})=${fnk}\\)，差值為 \\(${f0}${formatSignedAdd(-fnk)}=${diff4}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // === j4-2-1: 跨函數移位代換 ===
+  function buildJ421CrossFunctionSubstitutionSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // g(ax+b) = f(cx+d), f(x)=px+q known; find g(T) where T=ax0+b
+        const p = pickNonZero(-4, 4);
+        const q = randInt(-8, 8);
+        const a = randInt(2, 4);
+        const bShift = randInt(-5, 5);
+        const c = pickNonZero(-3, 3);
+        const d = randInt(-5, 5);
+        const x0 = randInt(-3, 4);
+        const T = a * x0 + bShift;
+        const gT = p * (c * x0 + d) + q;
+        const innerStr = c === 1 ? `x${formatSignedAdd(d)}` : c === -1 ? `-x${formatSignedAdd(d)}` : `${c}x${formatSignedAdd(d)}`;
+        questions.push(
+          `已知 \\(f(x)=${formatFunctionLinear(p, q)}\\)，且 \\(g(${a}x${formatSignedAdd(bShift)})=f(${innerStr})\\)，求 \\(g(${T})\\)。`
+        );
+        answers.push(
+          `簡答：\\(g(${T})=${gT}\\)。過程：令 \\(${a}x${formatSignedAdd(bShift)}=${T}\\)，解得 \\(x=${x0}\\)；代入右側得 \\(f(${c * x0 + d})=${p}\\cdot(${c * x0 + d})${formatSignedAdd(q)}=${gT}\\)，所以 \\(g(${T})=${gT}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // f(am+b) = f(cm+d), injective → solve for m (with f explicitly stated)
+        const slope = pickNonZero(-5, 5);
+        const intercept = randInt(-8, 8);
+        const diff = randInt(1, 3);
+        const cCoeff = randInt(1, 3);
+        const aCoeff = cCoeff + diff;
+        const mVal = pickNonZero(-4, 4);
+        const bCoeff = randInt(-4, 4);
+        const dCoeff = bCoeff + mVal * diff;
+        const lhs = `${aCoeff}m${formatSignedAdd(bCoeff)}`;
+        const rhs = `${cCoeff}m${formatSignedAdd(dCoeff)}`;
+        questions.push(
+          `設 \\(f(x)=${formatFunctionLinear(slope, intercept)}\\)，若 \\(f(${lhs})=f(${rhs})\\)，求 \\(m\\) 的值。`
+        );
+        answers.push(
+          `簡答：\\(m=${mVal}\\)。過程：線型函數一對一，所以 \\(${lhs}=${rhs}\\)，整理得 \\(${formatTerm(diff, 'm')}=${dCoeff - bCoeff}\\)，解得 \\(m=${mVal}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // g(ax+b) = kx+c → find g(x)
+        // Let t = ax+b → x = (t-b)/a
+        // g(t) = k*(t-b)/a + c = (k/a)*t - kb/a + c
+        // Need a|k for integer slope of g
+        const a = [2, 3, 4][randInt(0, 2)];
+        const kMult = pickNonZero(-3, 3);
+        const k = kMult * a; // so k/a = kMult
+        const bShift = randInt(-5, 5);
+        const cConst = randInt(-8, 8);
+        // g(t) = kMult*t + (-kMult*bShift + cConst)
+        const gSlope = kMult;
+        const gIntercept = -kMult * bShift + cConst;
+        const kDisp = k === 1 ? '' : k === -1 ? '-' : `${k}`;
+        questions.push(
+          `若 \\(g(${a}x${formatSignedAdd(bShift)})=${kDisp}x${formatSignedAdd(cConst)}\\)，求 \\(g(x)\\) 的函數式。`
+        );
+        answers.push(
+          `簡答：\\(g(x)=${formatFunctionLinear(gSlope, gIntercept)}\\)。過程：令 \\(t=${a}x${formatSignedAdd(bShift)}\\)，則 \\(x=\\frac{t${formatSignedAdd(-bShift)}}{${a}}\\)；代入右側：\\(g(t)=${kDisp}\\cdot\\frac{t${formatSignedAdd(-bShift)}}{${a}}${formatSignedAdd(cConst)}=${formatFunctionLinear(gSlope, gIntercept)}\\)（以 \\(x\\) 代 \\(t\\)）。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // f(x+k)=f(x)+m recursive: given f(a), find f(b)
+        // f(a + nk) = f(a) + n*m
+        const m = pickNonZero(-6, 6);
+        const k = randInt(2, 5);
+        const fa = randInt(-15, 15);
+        const n = randInt(2, 5);
+        const aBase = randInt(-5, 5);
+        const bTarget = aBase + n * k;
+        const fb = fa + n * m;
+        questions.push(
+          `已知函數 \\(f(x)\\) 滿足 \\(f(x+${k})=f(x)${formatSignedAdd(m)}\\)，且 \\(f(${aBase})=${fa}\\)，求 \\(f(${bTarget})\\)。`
+        );
+        answers.push(
+          `簡答：\\(f(${bTarget})=${fb}\\)。過程：從 \\(x=${aBase}\\) 開始，每次加 \\(${k}\\) 函數值就加 \\(${m}\\)；共遞增 \\(${n}\\) 次，所以 \\(f(${bTarget})=${fa}${formatSignedAdd(n)}\\cdot(${m})=${fb}\\)。`
+        );
+        continue;
+      }
+      // mode 4: g(ax+b) = cx+d → find g(x), then find g(target)
+      const a = [2, 3][randInt(0, 1)];
+      const kMult4 = pickNonZero(-3, 3);
+      const k4 = kMult4 * a;
+      const bShift4 = randInt(-5, 5);
+      const cConst4 = randInt(-6, 6);
+      const gSlope4 = kMult4;
+      const gIntercept4 = -kMult4 * bShift4 + cConst4;
+      const target4 = randInt(-6, 8);
+      const gTarget4 = gSlope4 * target4 + gIntercept4;
+      const k4Disp = k4 === 1 ? '' : k4 === -1 ? '-' : `${k4}`;
+      questions.push(
+        `若 \\(g(${a}x${formatSignedAdd(bShift4)})=${k4Disp}x${formatSignedAdd(cConst4)}\\)，求 \\(g(${target4})\\) 的值。`
+      );
+      answers.push(
+        `簡答：\\(g(${target4})=${gTarget4}\\)。過程：先求 \\(g(x)\\) 的函數式：令 \\(t=${a}x${formatSignedAdd(bShift4)}\\)，\\(x=\\frac{t${formatSignedAdd(-bShift4)}}{${a}}\\)，所以 \\(g(t)=${formatFunctionLinear(gSlope4, gIntercept4)}\\)。代入 \\(t=${target4}\\)，得 \\(g(${target4})=${gTarget4}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // === j4-2-2: 兩點線型函數應用文字題 ===
+  function buildJ422WordModelTwoPointSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // Score adjustment forward: (p1,q1),(p2,q2) → find adjusted for p3
+        const slope = randInt(1, 3);
+        const intercept = randInt(5, 25);
+        const p1 = randInt(20, 45);
+        const p2 = p1 + randInt(10, 20);
+        const q1 = slope * p1 + intercept;
+        const q2 = slope * p2 + intercept;
+        const p3 = p1 + randInt(5, p2 - p1 - 1);
+        const q3 = slope * p3 + intercept;
+        questions.push(
+          `某次考試後老師以線型函數調整成績：原來 ${p1} 分調整為 ${q1} 分，原來 ${p2} 分調整為 ${q2} 分。求原來 ${p3} 分調整後的成績。`
+        );
+        answers.push(
+          `簡答：${q3} 分。過程：設調整函數 \\(f(x)=ax+b\\)，由兩點求得 \\(a=\\frac{${q2}-${q1}}{${p2}-${p1}}=${slope}\\)，代入得 \\(b=${intercept}\\)；所以 \\(f(x)=${formatFunctionLinear(slope, intercept)}\\)。代入 \\(x=${p3}\\)，調整後成績為 \\(f(${p3})=${q3}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // Score adjustment reverse: find original for given adjusted score
+        const slope = randInt(1, 3);
+        const intercept = randInt(5, 25);
+        const p1 = randInt(20, 45);
+        const p2 = p1 + randInt(10, 20);
+        const q1 = slope * p1 + intercept;
+        const q2 = slope * p2 + intercept;
+        const p3 = p1 + randInt(5, p2 - p1 - 1);
+        const q3 = slope * p3 + intercept;
+        questions.push(
+          `某次考試後老師以線型函數調整成績：原來 ${p1} 分調整為 ${q1} 分，原來 ${p2} 分調整為 ${q2} 分。若小明調整後得 ${q3} 分，求小明的原始成績。`
+        );
+        answers.push(
+          `簡答：原始成績 ${p3} 分。過程：調整函數 \\(f(x)=${formatFunctionLinear(slope, intercept)}\\)（由兩點求得），令 \\(f(x)=${q3}\\)，即 \\(${formatFunctionLinear(slope, intercept)}=${q3}\\)，解得 \\(x=${p3}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // Temperature vs. measurement: two (temp,reading) pairs → find linear, then compute
+        // E.g. water-mercury: at T1°C reading R1 cm; at T2°C reading R2 cm
+        const T1 = randInt(10, 25);
+        const T2 = T1 + randInt(5, 15);
+        const slopeMult = randInt(1, 3); // reading increases slopeMult cm per °C (as fraction: 1/2 or 1 or 2)
+        // Use integer slope for simplicity
+        const R1 = T1 * slopeMult + randInt(2, 10);
+        const R2 = T2 * slopeMult + (R1 - T1 * slopeMult);
+        const intercept = R1 - T1 * slopeMult;
+        // Ask: given R3, find T3
+        const R3 = R1 + randInt(1, slopeMult * 5);
+        const T3_times_slope = R3 - intercept;
+        if (T3_times_slope % slopeMult !== 0) { i -= 1; continue; }
+        const T3 = T3_times_slope / slopeMult;
+        questions.push(
+          `一溫度計在 ${T1}℃ 時讀數為 ${R1} 公分，在 ${T2}℃ 時讀數為 ${R2} 公分，且溫度與讀數成線型函數關係。當讀數為 ${R3} 公分時，溫度為多少℃？`
+        );
+        answers.push(
+          `簡答：${T3}℃。過程：設溫度 \\(T\\) 與讀數 \\(R\\) 的關係為 \\(R=aT+b\\)，由兩點 \\((${T1},${R1})\\)、\\((${T2},${R2})\\) 求得 \\(a=${slopeMult}\\)、\\(b=${intercept}\\)；所以 \\(R=${formatFunctionLinear(slopeMult, intercept)}\\)。令 \\(R=${R3}\\)，得 \\(T=${T3}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // Business: staff vs revenue (万元): two points, predict at new staff count
+        const ratePerPerson = randInt(50, 150); // 萬元 per extra person
+        const base = randInt(100, 400);
+        const n1 = randInt(4, 8);
+        const n2 = n1 + randInt(2, 5);
+        const rev1 = ratePerPerson * n1 + base;
+        const rev2 = ratePerPerson * n2 + base;
+        const n3 = n2 + randInt(1, 5);
+        const rev3 = ratePerPerson * n3 + base;
+        questions.push(
+          `某公司投入 ${n1} 位業務員時每月營業額為 ${rev1} 萬元，投入 ${n2} 位業務員時每月營業額為 ${rev2} 萬元。若業務員人數與營業額成線型函數，則投入 ${n3} 位業務員時，預期每月營業額為多少萬元？`
+        );
+        answers.push(
+          `簡答：${rev3} 萬元。過程：設業務員 \\(x\\) 人時營業額為 \\(f(x)=ax+b\\) 萬元，由 \\((${n1},${rev1})\\)、\\((${n2},${rev2})\\) 得 \\(a=${ratePerPerson}\\)、\\(b=${base}\\)；所以 \\(f(x)=${formatFunctionLinear(ratePerPerson, base)}\\)。代入 \\(x=${n3}\\)，得 \\(f(${n3})=${rev3}\\) 萬元。`
+        );
+        continue;
+      }
+      // mode 4: Luggage fee: f(x)=k(x-a), given two (weight, fee) pairs → find k and a
+      // f(w1) = k(w1-a) = fee1, f(w2) = k(w2-a) = fee2
+      // fee2/fee1 = (w2-a)/(w1-a)
+      // Choose k, a, then pick w1=a+m1, w2=a+m2 for integers m1,m2
+      const k_rate = randInt(2, 6);
+      const freeQuota = randInt(10, 25);
+      const excess1 = randInt(5, 15);
+      const excess2 = excess1 + randInt(5, 10);
+      const w1 = freeQuota + excess1;
+      const w2 = freeQuota + excess2;
+      const fee1 = k_rate * excess1;
+      const fee2 = k_rate * excess2;
+      const w3 = w2 + randInt(5, 15);
+      const fee3 = k_rate * (w3 - freeQuota);
+      questions.push(
+        `某航空公司行李費用超過免費配額後按公斤計費，且費用與重量成線型函數。已知託運 ${w1} 公斤需付 ${fee1} 元，託運 ${w2} 公斤需付 ${fee2} 元，請問：(1) 免費配額為幾公斤？(2) 每公斤收費多少元？(3) 託運 ${w3} 公斤需付多少元？`
+      );
+      answers.push(
+        `簡答：(1) ${freeQuota} 公斤；(2) ${k_rate} 元/公斤；(3) ${fee3} 元。過程：設費用 \\(f(x)=k(x-a)\\)（\\(x\\) 為總重量，\\(a\\) 為免費配額），由兩組數據列方程組：\\(k(${w1}-a)=${fee1}\\)、\\(k(${w2}-a)=${fee2}\\)；相除得 \\(\\frac{${w2}-a}{${w1}-a}=\\frac{${fee2}}{${fee1}}\\)，解得 \\(a=${freeQuota}\\)，再求 \\(k=${k_rate}\\)。代入 \\(f(${w3})=${k_rate}\\cdot(${w3}-${freeQuota})=${fee3}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ431TriangleInteriorAngleSet(count, startOffset = 0) {
     const questions = [];
     const answers = [];
@@ -2642,6 +3480,87 @@
     return value === 1 ? count : null;
   }
 
+
+  function buildJ431IsoscelesAngleSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // 已知頂角，求底角及底角的外角
+        const apex = [20, 30, 40, 50, 60, 70, 80, 100, 120][randInt(0, 8)];
+        const base = (180 - apex) / 2;
+        const extBase = 180 - base;
+        questions.push(
+          `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，頂角 \\(\\angle A=${apex}°\\)，求底角 \\(\\angle B\\) 及底角的外角。`
+        );
+        answers.push(
+          `簡答：底角 \\(\\angle B=${base}°\\)，底角外角 ${extBase}°。過程：兩底角相等，\\(\\angle B=\\angle C=\\frac{180°-${apex}°}{2}=${base}°\\)；底角的外角 \\(=180°-${base}°=${extBase}°\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // 已知底角，求頂角及頂角的外角
+        const base = [25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80][randInt(0, 11)];
+        const apex = 180 - 2 * base;
+        if (apex <= 0) { i -= 1; continue; }
+        const extApex = 180 - apex;
+        questions.push(
+          `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，底角 \\(\\angle B=${base}°\\)，求頂角 \\(\\angle A\\) 及頂角的外角。`
+        );
+        answers.push(
+          `簡答：頂角 \\(\\angle A=${apex}°\\)，頂角外角 ${extApex}°。過程：\\(\\angle A=180°-2\\times${base}°=${apex}°\\)；頂角外角 \\(=180°-${apex}°=${extApex}°\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // 已知底角的外角，求頂角
+        const extBase = [100, 105, 110, 115, 120, 125, 130, 135, 140, 150][randInt(0, 9)];
+        const base = 180 - extBase;
+        const apex = 180 - 2 * base;
+        if (apex <= 0) { i -= 1; continue; }
+        questions.push(
+          `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，已知底角的外角為 ${extBase}°，求頂角 \\(\\angle A\\)。`
+        );
+        answers.push(
+          `簡答：頂角 \\(\\angle A=${apex}°\\)。過程：底角外角為 ${extBase}°，所以底角 \\(=180°-${extBase}°=${base}°\\)，頂角 \\(\\angle A=180°-2\\times${base}°=${apex}°\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // 已知頂角的外角，求底角
+        const extApex = [60, 80, 100, 120, 140, 150, 160][randInt(0, 6)];
+        const apex = 180 - extApex;
+        if (apex <= 0 || apex >= 180) { i -= 1; continue; }
+        const base = (180 - apex) / 2;
+        if (!Number.isInteger(base)) { i -= 1; continue; }
+        questions.push(
+          `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，頂角 \\(\\angle A\\) 的外角為 ${extApex}°，求底角 \\(\\angle B\\)。`
+        );
+        answers.push(
+          `簡答：\\(\\angle B=${base}°\\)。過程：頂角外角 ${extApex}°，所以 \\(\\angle A=180°-${extApex}°=${apex}°\\)，底角 \\(\\angle B=\\frac{180°-${apex}°}{2}=${base}°\\)。`
+        );
+        continue;
+      }
+      // mode 4: 已知底角比頂角多k度，求各角
+      const diffOptions = [6, 12, 18, 24, 30, 36, 42, 48, 54];
+      let k, base, apex;
+      do {
+        k = diffOptions[randInt(0, diffOptions.length - 1)];
+        // base = apex + k, base + base + apex = 180 → 3apex + 2k = 180 → apex = (180-2k)/3
+        apex = (180 - 2 * k) / 3;
+        base = apex + k;
+      } while (!Number.isInteger(apex) || apex <= 0 || base >= 180);
+      questions.push(
+        `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，底角比頂角大 ${k}°，求各角度數。`
+      );
+      answers.push(
+        `簡答：頂角 \\(${apex}°\\)，底角 \\(${base}°\\)。過程：設頂角 \\(\\angle A=x°\\)，底角 \\(\\angle B=\\angle C=(x+${k})°\\)。由 \\(x+2(x+${k})=180\\) 解得 \\(x=${apex}\\)，底角為 ${base}°。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ432ConstructionBisectionSet(count) {
     const questions = [];
     const answers = [];
@@ -3004,6 +3923,86 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+
+  function buildJ432TriangleBisectorIntersectionSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // ∠B和∠C的角平分線交於I，已知∠A，求∠BIC = 90 + ∠A/2
+        const angleA = [40, 44, 50, 52, 60, 64, 70, 72, 80, 84][randInt(0, 9)];
+        const bic = 90 + angleA / 2;
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，\\(\\angle B\\) 和 \\(\\angle C\\) 的角平分線交於點 \\(I\\)，已知 \\(\\angle A=${angleA}°\\)，求 \\(\\angle BIC\\)。`
+        );
+        answers.push(
+          `簡答：\\(\\angle BIC=${bic}°\\)。過程：設 \\(\\angle B\\) 的半角為 \\(\\frac{B}{2}\\)，\\(\\angle C\\) 的半角為 \\(\\frac{C}{2}\\)。在 \\(\\triangle BIC\\) 中，\\(\\angle BIC=180°-\\frac{B}{2}-\\frac{C}{2}=180°-\\frac{B+C}{2}=180°-\\frac{180°-${angleA}°}{2}=${bic}°\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // 已知∠BIC，反推∠A
+        const angleA = [40, 50, 60, 70, 80, 90, 100][randInt(0, 6)];
+        const bic = 90 + angleA / 2;
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，\\(\\angle B\\) 和 \\(\\angle C\\) 的角平分線交於點 \\(I\\)，已知 \\(\\angle BIC=${bic}°\\)，求 \\(\\angle A\\)。`
+        );
+        answers.push(
+          `簡答：\\(\\angle A=${angleA}°\\)。過程：由 \\(\\angle BIC=90°+\\frac{\\angle A}{2}=${bic}°\\)，解得 \\(\\frac{\\angle A}{2}=${bic - 90}°\\)，所以 \\(\\angle A=${angleA}°\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // 已知∠B和∠C的半角（即∠IBC和∠ICB），求∠BIC
+        const halfB = randInt(15, 45);
+        const halfC = randInt(15, 45);
+        const bic = 180 - halfB - halfC;
+        if (bic <= 0 || bic >= 180) { i -= 1; continue; }
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，\\(BI\\) 平分 \\(\\angle ABC\\)，\\(CI\\) 平分 \\(\\angle ACB\\)，且 \\(\\angle IBC=${halfB}°\\)、\\(\\angle ICB=${halfC}°\\)，求 \\(\\angle BIC\\)。`
+        );
+        answers.push(
+          `簡答：\\(\\angle BIC=${bic}°\\)。過程：在 \\(\\triangle BIC\\) 中，三角形內角和為 180°，所以 \\(\\angle BIC=180°-${halfB}°-${halfC}°=${bic}°\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // 已知∠A和∠B，求∠BIC（and also verify using the formula）
+        const angleA = [40, 50, 60, 70, 80][randInt(0, 4)];
+        const angleB = randInt(30, 130 - angleA);
+        const angleC = 180 - angleA - angleB;
+        if (angleC <= 0) { i -= 1; continue; }
+        const bic = 90 + angleA / 2;
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，\\(\\angle A=${angleA}°\\)、\\(\\angle B=${angleB}°\\)，\\(\\angle B\\) 和 \\(\\angle C\\) 的角平分線交於點 \\(I\\)，求 \\(\\angle BIC\\)。`
+        );
+        answers.push(
+          `簡答：\\(\\angle BIC=${bic}°\\)。過程：\\(\\angle C=180°-${angleA}°-${angleB}°=${angleC}°\\)；\\(\\angle BIC=180°-\\frac{${angleB}°}{2}-\\frac{${angleC}°}{2}=180°-\\frac{${angleB + angleC}°}{2}=${bic}°\\)。`
+        );
+        continue;
+      }
+      // mode 4: 外角平分線版本 — ∠B的外角平分線和∠C的角平分線交於E，∠BEC = ?
+      // Formula: ∠BEC = |∠B/2 - ∠C/2| = ∠A/2 (外角平分線與內角平分線交點)
+      // Actually: ∠ABD (外角) = ∠B外 = 180-∠B, bisector of exterior gives ∠DBX = (180-∠B)/2 = 90-∠B/2
+      // In △BEC (E is intersection): ∠EBC = 90 - ∠B/2, ∠ECB = ∠C/2
+      // ∠BEC = 180 - (90-∠B/2) - ∠C/2 = 90 + ∠B/2 - ∠C/2
+      // This gets complicated. Let me just do another ∠BIC variation.
+      // Mode 4: 等腰三角形中，已知底角，求∠BIC
+      const base = [35, 40, 45, 50, 55, 60, 65][randInt(0, 6)];
+      const apex = 180 - 2 * base;
+      if (apex <= 0) { i -= 1; continue; }
+      const bic = 90 + apex / 2;
+      questions.push(
+        `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，底角 \\(\\angle B=\\angle C=${base}°\\)，設 \\(\\angle B\\) 和 \\(\\angle C\\) 的角平分線交於點 \\(I\\)，求 \\(\\angle BIC\\)。`
+      );
+      answers.push(
+        `簡答：\\(\\angle BIC=${bic}°\\)。過程：頂角 \\(\\angle A=180°-2\\times${base}°=${apex}°\\)，所以 \\(\\angle BIC=90°+\\frac{${apex}°}{2}=${bic}°\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ432ConstructionMixedSet(count) {
     const banks = [buildJ432ConstructionBisectionSet, buildJ432MidpointPerpendicularSet, buildJ432AngleBisectorMeasureSet];
     const questions = [];
@@ -3127,6 +4126,106 @@
       questions.push(`若 \\(\\triangle ABC\\) 中 \\(AB=AC\\)，且 \\(AD\\) 平分 \\(\\angle BAC\\)。若 \\(BC=${bc}\\)，求 \\(BD:BC\\)。`);
       answers.push(
         `簡答：\\(1:2\\)。過程：等腰三角形頂角平分線也是底邊中線，所以 \\(BD=\\frac{BC}{2}\\)，故 \\(BD:BC=1:2\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+
+  function buildJ433CongruenceAlgebraSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // △ABC ≅ △DEF，AB = mx+b = DE (known), solve for x
+        const de = randInt(8, 20);
+        const m = [2, 3, 4][randInt(0, 2)];
+        const b = randInt(-5, 8);
+        const x = (de - b) / m;
+        if (!Number.isInteger(x) || x <= 0) { i -= 1; continue; }
+        questions.push(
+          `已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，且 \\(AB=${m}x${b >= 0 ? '+' : ''}${b}\\)、\\(DE=${de}\\)，求 \\(x\\) 的值。`
+        );
+        answers.push(
+          `簡答：\\(x=${x}\\)。過程：全等三角形對應邊相等，\\(AB=DE\\)，即 \\(${m}x${b >= 0 ? '+' : ''}${b}=${de}\\)，解得 \\(x=${x}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // △ABC ≅ △DEF，∠A = mx+b = ∠D (known), solve for x
+        const angD = [40, 50, 55, 60, 65, 70, 75, 80][randInt(0, 7)];
+        const m = [2, 3, 4, 5][randInt(0, 3)];
+        const b = randInt(-10, 15);
+        const x = (angD - b) / m;
+        if (!Number.isInteger(x) || x <= 0) { i -= 1; continue; }
+        questions.push(
+          `已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，且 \\(\\angle A=(${m}x${b >= 0 ? '+' : ''}${b})°\\)、\\(\\angle D=${angD}°\\)，求 \\(x\\)。`
+        );
+        answers.push(
+          `簡答：\\(x=${x}\\)。過程：全等三角形對應角相等，\\(\\angle A=\\angle D\\)，即 \\(${m}x${b >= 0 ? '+' : ''}${b}=${angD}\\)，解得 \\(x=${x}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // Two sides both as expressions, e.g., AB = 2x+1 = DE = 3y-2, BC = 4x-1 = EF = 2y+5
+        const x = randInt(2, 8);
+        const y = randInt(2, 8);
+        const m1 = [2, 3][randInt(0, 1)];
+        const b1 = randInt(1, 6);
+        const de = m1 * x + b1;
+        const p1 = [2, 3][randInt(0, 1)];
+        const q1 = randInt(1, 6);
+        const ef = p1 * y + q1;
+        // BC = 3y+2 (needs to = EF after solving y), but we need two equations
+        // Better: set AB = 2x+1, DE = known; BC = 3y-2, EF = known
+        // Use specific values
+        const ab = 2 * x + b1;
+        const p2 = 3, q2 = randInt(-3, 5);
+        const ef2 = p2 * y + q2;
+        if (ab <= 0 || ef2 <= 0) { i -= 1; continue; }
+        questions.push(
+          `已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，\\(AB=2x+${b1}\\)、\\(DE=${ab}\\)、\\(BC=${p2}y${q2 >= 0 ? '+' : ''}${q2}\\)、\\(EF=${ef2}\\)，求 \\(x+y\\)。`
+        );
+        answers.push(
+          `簡答：\\(x+y=${x + y}\\)。過程：對應邊相等：\\(AB=DE\\Rightarrow 2x+${b1}=${ab}\\Rightarrow x=${x}\\)；\\(BC=EF\\Rightarrow ${p2}y${q2 >= 0 ? '+' : ''}${q2}=${ef2}\\Rightarrow y=${y}\\)。故 \\(x+y=${x + y}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // Given △ABC ≅ △DEF, one side expressed algebraically, find perimeter
+        const ab = randInt(5, 12);
+        const bc = randInt(6, 14);
+        const ca = randInt(7, 15);
+        const m = [2, 3][randInt(0, 1)];
+        const b = randInt(-3, 5);
+        const x = (ab - b) / m;
+        if (!Number.isInteger(x) || x <= 0) { i -= 1; continue; }
+        const peri = ab + bc + ca;
+        questions.push(
+          `已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，\\(AB=${m}x${b >= 0 ? '+' : ''}${b}\\)、\\(BC=${bc}\\)、\\(CA=${ca}\\)，且 \\(DE=${ab}\\)，求 \\(\\triangle DEF\\) 的周長。`
+        );
+        answers.push(
+          `簡答：周長為 ${peri}。過程：\\(AB=DE\\Rightarrow ${m}x${b >= 0 ? '+' : ''}${b}=${ab}\\Rightarrow x=${x}\\Rightarrow AB=${ab}\\)；全等三角形周長相等，為 \\(${ab}+${bc}+${ca}=${peri}\\)。`
+        );
+        continue;
+      }
+      // mode 4: one angle and one side both expressed as expressions
+      const angA = [40, 50, 60, 70, 80][randInt(0, 4)];
+      const ma = [2, 4, 5][randInt(0, 2)];
+      const ba = randInt(-5, 15);
+      const x = (angA - ba) / ma;
+      if (!Number.isInteger(x) || x <= 0) { i -= 1; continue; }
+      const ab = randInt(8, 15);
+      const mb = [3, 4][randInt(0, 1)];
+      const bb = randInt(-3, 6);
+      const y = (ab - bb) / mb;
+      if (!Number.isInteger(y) || y <= 0) { i -= 1; continue; }
+      questions.push(
+        `已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，\\(\\angle A=(${ma}x${ba >= 0 ? '+' : ''}${ba})°\\)、\\(\\angle D=${angA}°\\)，且 \\(AB=${mb}y${bb >= 0 ? '+' : ''}${bb}\\)、\\(DE=${ab}\\)，求 \\(x+y\\)。`
+      );
+      answers.push(
+        `簡答：\\(x+y=${x + y}\\)。過程：對應角相等 \\(\\angle A=\\angle D\\Rightarrow ${ma}x${ba >= 0 ? '+' : ''}${ba}=${angA}\\Rightarrow x=${x}\\)；對應邊相等 \\(AB=DE\\Rightarrow ${mb}y${bb >= 0 ? '+' : ''}${bb}=${ab}\\Rightarrow y=${y}\\)。故 \\(x+y=${x + y}\\)。`
       );
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
@@ -3328,6 +4427,201 @@
       const right = c * c;
       answers.push(
         `簡答：${classify(a, b, c)}。過程：\\(${a}^2+${b}^2=${left}\\)，\\(${c}^2=${right}\\)。因為 ${left === right ? '兩者相等' : left > right ? '左邊較大' : '右邊較大'}，所以是${classify(a, b, c)}。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+
+  function buildJ434ExteriorAngleSideComparisonSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // 已知∠A的外角和∠B，推∠A和∠C，再比較三邊
+        const extA = randInt(100, 160);
+        const angleA = 180 - extA;
+        const angleB = randInt(20, 180 - angleA - 10);
+        const angleC = 180 - angleA - angleB;
+        if (angleC <= 0) { i -= 1; continue; }
+        const sorted = [{a: 'BC', opp: angleA}, {a: 'AC', opp: angleB}, {a: 'AB', opp: angleC}]
+          .sort((x, y) => y.opp - x.opp);
+        const order = sorted.map(s => s.a).join('>');
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，\\(\\angle A\\) 的外角為 ${extA}°，\\(\\angle B=${angleB}°\\)，求三邊 \\(BC\\)、\\(AC\\)、\\(AB\\) 的大小關係。`
+        );
+        answers.push(
+          `簡答：\\(${order}\\)。過程：\\(\\angle A=180°-${extA}°=${angleA}°\\)，\\(\\angle C=180°-${angleA}°-${angleB}°=${angleC}°\\)。最大角 \\(${sorted[0].opp}°\\) 對最長邊 \\(${sorted[0].a}\\)，最小角 \\(${sorted[2].opp}°\\) 對最短邊 \\(${sorted[2].a}\\)，故 \\(${order}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // 已知∠B的外角和∠C，推所有角，比較三邊
+        const extB = randInt(95, 160);
+        const angleB = 180 - extB;
+        const angleC = randInt(20, 180 - angleB - 10);
+        const angleA = 180 - angleB - angleC;
+        if (angleA <= 0) { i -= 1; continue; }
+        const sorted = [{a: 'BC', opp: angleA}, {a: 'AC', opp: angleB}, {a: 'AB', opp: angleC}]
+          .sort((x, y) => y.opp - x.opp);
+        const order = sorted.map(s => s.a).join('>');
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，\\(\\angle B\\) 的外角為 ${extB}°，\\(\\angle C=${angleC}°\\)，求三邊的大小順序。`
+        );
+        answers.push(
+          `簡答：\\(${order}\\)。過程：\\(\\angle B=180°-${extB}°=${angleB}°\\)，\\(\\angle A=180°-${angleB}°-${angleC}°=${angleA}°\\)。各角對應邊：最大角 ${sorted[0].opp}° 對應 ${sorted[0].a}，故 \\(${order}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // 已知外角A和∠A，∠B的外角和∠B，求∠C，比較三邊
+        const extA = randInt(100, 150);
+        const angleA = 180 - extA;
+        const extB = randInt(95, 180 - angleA - 5 + 95); // ensure valid
+        const angleB = 180 - extB;
+        const angleC = 180 - angleA - angleB;
+        if (angleC <= 0 || angleC >= 180) { i -= 1; continue; }
+        const sorted = [{a: 'BC', opp: angleA}, {a: 'AC', opp: angleB}, {a: 'AB', opp: angleC}]
+          .sort((x, y) => y.opp - x.opp);
+        const order = sorted.map(s => s.a).join('>');
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，\\(\\angle A\\) 的外角為 ${extA}°，\\(\\angle B\\) 的外角為 ${extB}°，求 \\(\\angle C\\) 及三邊大小關係。`
+        );
+        answers.push(
+          `簡答：\\(\\angle C=${angleC}°\\)，\\(${order}\\)。過程：\\(\\angle A=${angleA}°\\)，\\(\\angle B=${angleB}°\\)，\\(\\angle C=180°-${angleA}°-${angleB}°=${angleC}°\\)；最大角對應最長邊，故 \\(${order}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // 已知∠A:∠B:∠C = p:q:r，求三邊順序
+        const ratioSets = [[1,2,3],[2,3,4],[1,3,5],[2,5,8],[3,4,8],[1,4,5]];
+        const ratio = ratioSets[randInt(0, ratioSets.length - 1)];
+        const total = ratio.reduce((s,v) => s+v, 0);
+        const unit = 180 / total;
+        if (!Number.isInteger(unit)) { i -= 1; continue; }
+        const angles = ratio.map(r => r * unit);
+        const sorted = [{a: 'BC', opp: angles[0]}, {a: 'AC', opp: angles[1]}, {a: 'AB', opp: angles[2]}]
+          .sort((x, y) => y.opp - x.opp);
+        const order = sorted.map(s => s.a).join('>');
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，\\(\\angle A:\\angle B:\\angle C=${ratio[0]}:${ratio[1]}:${ratio[2]}\\)，求三邊長的大小關係。`
+        );
+        answers.push(
+          `簡答：\\(${order}\\)。過程：各角按比例分 180°，單位 \\(${unit}°\\)，所以 \\(\\angle A=${angles[0]}°\\)、\\(\\angle B=${angles[1]}°\\)、\\(\\angle C=${angles[2]}°\\)。最大角 ${sorted[0].opp}° 對最長邊 ${sorted[0].a}，故 \\(${order}\\)。`
+        );
+        continue;
+      }
+      // mode 4: 外角定理+邊大小 — 給外角等於某個角，推出兩角關係，再比邊
+      const extA = randInt(95, 155);
+      const angleA = 180 - extA;
+      const angleB = randInt(20, 180 - angleA - 20);
+      const angleC = 180 - angleA - angleB;
+      if (angleC <= 0) { i -= 1; continue; }
+      // extA = angleB + angleC (exterior angle theorem)
+      const verifyExt = angleB + angleC;
+      const sorted = [{a: 'BC', opp: angleA}, {a: 'AC', opp: angleB}, {a: 'AB', opp: angleC}]
+        .sort((x, y) => y.opp - x.opp);
+      const order = sorted.map(s => s.a).join('>');
+      questions.push(
+        `在 \\(\\triangle ABC\\) 中，\\(\\angle A\\) 的外角為 ${extA}°（即 \\(\\angle B+\\angle C=${verifyExt}°\\)），且 \\(\\angle B=${angleB}°\\)，求三邊的大小關係。`
+      );
+      answers.push(
+        `簡答：\\(${order}\\)。過程：由外角定理 \\(\\angle A=180°-${extA}°=${angleA}°\\)，\\(\\angle C=${extA}°-${angleB}°=${angleC}°\\)。角度大小：${sorted.map(s => `${s.opp}°→${s.a}`).join('，')}，故 \\(${order}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ434HingeTheoremSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // 鉸鏈定理基本型：兩邊相等，較大夾角對較長第三邊
+        const angleB = randInt(40, 80);
+        const angleE = randInt(20, angleB - 5);
+        const ab = randInt(5, 12);
+        const bc = randInt(5, 12);
+        questions.push(
+          `在 \\(\\triangle ABC\\) 和 \\(\\triangle DEF\\) 中，\\(AB=DE=${ab}\\)、\\(BC=EF=${bc}\\)，且 \\(\\angle B=${angleB}°\\)、\\(\\angle E=${angleE}°\\)，則 \\(AC\\) 和 \\(DF\\) 哪個較長？`
+        );
+        answers.push(
+          `簡答：\\(AC>DF\\)。過程：由鉸鏈定理，兩組對應邊分別相等時，夾角較大者所對的第三邊較長。因 \\(\\angle B=${angleB}°>\\angle E=${angleE}°\\)，所以 \\(AC>DF\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // 逆鉸鏈：已知第三邊比較，推角度比較
+        const ab = randInt(5, 12);
+        const bc = randInt(5, 12);
+        questions.push(
+          `在 \\(\\triangle ABC\\) 和 \\(\\triangle DEF\\) 中，\\(AB=DE=${ab}\\)、\\(BC=EF=${bc}\\)，且已知 \\(AC<DF\\)，則 \\(\\angle B\\) 和 \\(\\angle E\\) 哪個較大？`
+        );
+        answers.push(
+          `簡答：\\(\\angle B<\\angle E\\)。過程：由鉸鏈定理的逆定理，兩組對應邊相等時，第三邊較短者所對的夾角也較小。因 \\(AC<DF\\)，所以 \\(\\angle B<\\angle E\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // 在同一三角形中比較：從頂點連到底邊不同位置的線段
+        const ab = randInt(6, 10);
+        const ac = ab + randInt(1, 4);
+        // AB < AC → ∠ACB < ∠ABC (smaller side → smaller opposite angle)
+        // D on BC, AD splits the triangle: AD < max(AB, AC) = AC
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，\\(AB=${ab}\\)、\\(AC=${ac}\\)，\\(D\\) 是 \\(BC\\) 上一點（不與端點重合），比較 \\(AD\\) 與 \\(AB\\) 的大小。`
+        );
+        answers.push(
+          `簡答：\\(AD<AB\\) 不一定成立，但 \\(AD<AC\\)（因為三角形內的線段短於從同頂點出發的較長邊）實際上也不一定。正確結論：\\(|AB-AC|<AD\\) 不對。直接由三角形不等式：\\(AD\\) 在 \\(\\triangle ABD\\) 中 \\(AD<AB+BD\\)，在 \\(\\triangle ACD\\) 中 \\(AD<AC+DC\\)。僅能確定 \\(AD<\\)（較大值未必）。過程：利用三角形不等式，在 \\(\\triangle ABD\\) 中 \\(AD<AB=${ab}\\Rightarrow\\) 當 \\(\\angle ADB\\) 為鈍角時 \\(AD<AB\\)；一般情況下無法比大小，需要更多條件。`
+        );
+        // This mode is too conceptual. Let me replace with a cleaner hinge problem.
+        // Replace mode 2 with: in △ABC, AB=8, BC=10, ∠B=60°; in △DEF, DE=8, EF=10, ∠E=80°. Compare AC and DF.
+        questions.pop(); answers.pop();
+        const ab2 = randInt(5, 10);
+        const bc2 = randInt(5, 10);
+        const angleB2 = [50, 60, 70, 80][randInt(0, 3)];
+        const angleE2 = angleB2 + randInt(10, 30);
+        if (angleE2 >= 180) { i -= 1; continue; }
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，\\(AB=${ab2}\\)、\\(BC=${bc2}\\)、\\(\\angle B=${angleB2}°\\)；在 \\(\\triangle DEF\\) 中，\\(DE=${ab2}\\)、\\(EF=${bc2}\\)、\\(\\angle E=${angleE2}°\\)，比較 \\(AC\\) 與 \\(DF\\) 的大小。`
+        );
+        answers.push(
+          `簡答：\\(AC<DF\\)。過程：兩組對應邊分別相等（\\(AB=DE=${ab2}\\)，\\(BC=EF=${bc2}\\)），\\(\\angle B=${angleB2}°<\\angle E=${angleE2}°\\)，由鉸鏈定理，夾角較大者對應的第三邊較長，所以 \\(AC<DF\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // 等腰三角形：AB=AC，D在BC上，比較AD與AB
+        const apex = [40, 50, 60, 70, 80, 90][randInt(0, 5)];
+        const base = (180 - apex) / 2;
+        // ∠BAD > or < ∠ADB?
+        // In △ABD: ∠ABD = base (full base angle if D not B,C), but D is on BC
+        // If D is midpoint: ∠ADB = 90° (isosceles property)
+        // AB vs AD: in △ABD, largest angle is ∠ADB if ∠ADB > base
+        // Actually: when D is midpoint of BC in isosceles (AB=AC), AD⊥BC so ∠ADB=90°
+        // Then AB (hypotenuse of △ABD) > AD. So AB > AD.
+        // This is a specific geometric result.
+        questions.push(
+          `在等腰 \\(\\triangle ABC\\) 中，\\(AB=AC\\)，頂角 \\(\\angle A=${apex}°\\)，\\(D\\) 為 \\(BC\\) 的中點，比較 \\(AD\\) 與 \\(AB\\) 的大小。`
+        );
+        answers.push(
+          `簡答：\\(AD<AB\\)。過程：等腰三角形頂角平分線也是底邊中線（同時是高），所以 \\(AD\\perp BC\\)，在直角 \\(\\triangle ABD\\) 中，斜邊 \\(AB\\) 是最長邊，故 \\(AB>AD\\)。`
+        );
+        continue;
+      }
+      // mode 4: 數值比較版本 -- 已知兩邊和夾角，判斷哪個三角形的第三邊較長
+      const sharedSide1 = randInt(5, 10);
+      const sharedSide2 = randInt(5, 10);
+      const ang1 = randInt(50, 90);
+      const ang2 = ang1 + randInt(15, 40);
+      if (ang2 >= 180) { i -= 1; continue; }
+      questions.push(
+        `小明的三角形：兩邊長 ${sharedSide1} 和 ${sharedSide2}，夾角 ${ang1}°；小華的三角形：兩邊長同為 ${sharedSide1} 和 ${sharedSide2}，夾角 ${ang2}°。哪個三角形的第三邊較長？`
+      );
+      answers.push(
+        `簡答：小華的三角形第三邊較長。過程：兩個三角形的兩組對應邊分別相等，小華的夾角 ${ang2}°大於小明的 ${ang1}°，由鉸鏈定理，夾角較大的三角形，其第三邊也較長。`
       );
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
@@ -3550,6 +4844,86 @@
       );
       answers.push(
         `簡答：${supplement}°。過程：先算原角為 \\(${a}\\times${x}+${b}=${angle}°\\)。同側內角與它互補，所以為 \\(180°-${angle}°=${supplement}°\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+
+  function buildJ441BentLineParallelSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const alphas = [20, 25, 30, 35, 40, 45, 50];
+        const alpha = alphas[randInt(0, alphas.length - 1)];
+        const beta = alphas[randInt(0, alphas.length - 1)];
+        const abc = alpha + beta;
+        questions.push(
+          `已知 \\(L \\parallel M\\)，\\(A\\) 在 \\(L\\) 上，\\(C\\) 在 \\(M\\) 上，點 \\(B\\) 在兩平行線之間。若 \\(\\angle BAL=${alpha}°\\)、\\(\\angle BCM=${beta}°\\)，求 \\(\\angle ABC\\)。`
+        );
+        answers.push(
+          `簡答：\\(${abc}°\\)。過程：過 \\(B\\) 作 \\(BD \\parallel L \\parallel M\\)。由內錯角相等，\\(\\angle ABD=\\angle BAL=${alpha}°\\)，\\(\\angle DBC=\\angle BCM=${beta}°\\)，所以 \\(\\angle ABC=${alpha}°+${beta}°=${abc}°\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const alpha = [20, 25, 30, 35, 40][randInt(0, 4)];
+        const beta = [25, 30, 35, 40, 45][randInt(0, 4)];
+        const abc = alpha + beta;
+        questions.push(
+          `已知 \\(L \\parallel M\\)，\\(A\\) 在 \\(L\\) 上，\\(C\\) 在 \\(M\\) 上，\\(B\\) 在兩線之間。若 \\(\\angle ABC=${abc}°\\)、\\(\\angle BAL=${alpha}°\\)，求 \\(\\angle BCM\\)。`
+        );
+        answers.push(
+          `簡答：\\(${beta}°\\)。過程：過 \\(B\\) 作輔助線 \\(BD \\parallel L\\)，則 \\(\\angle ABD=\\angle BAL=${alpha}°\\)（內錯角）。由 \\(\\angle ABC=\\angle ABD+\\angle DBC\\)，得 \\(\\angle BCM=\\angle DBC=${abc}°-${alpha}°=${beta}°\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const abcList = [60, 75, 80, 90, 100];
+        const abc = abcList[randInt(0, abcList.length - 1)];
+        const ratios = [];
+        for (let m = 1; m <= 4; m += 1) {
+          for (let n = 1; n <= 4; n += 1) {
+            if (m !== n && abc % (m + n) === 0) ratios.push([m, n]);
+          }
+        }
+        if (ratios.length === 0) { i -= 1; continue; }
+        const [m, n] = ratios[randInt(0, ratios.length - 1)];
+        const alpha = abc * m / (m + n);
+        const beta = abc * n / (m + n);
+        questions.push(
+          `已知 \\(L \\parallel M\\)，\\(B\\) 在兩平行線之間，折線 \\(ABC\\) 的彎折角 \\(\\angle ABC=${abc}°\\)。若 \\(\\angle BAL : \\angle BCM = ${m}:${n}\\)，求 \\(\\angle BAL\\) 與 \\(\\angle BCM\\)。`
+        );
+        answers.push(
+          `簡答：\\(\\angle BAL=${alpha}°\\)，\\(\\angle BCM=${beta}°\\)。過程：設 \\(\\angle BAL=${m}k°\\)，\\(\\angle BCM=${n}k°\\)。由折線角公式 \\(\\angle ABC=\\angle BAL+\\angle BCM\\)，得 \\(${m + n}k=${abc}\\)，\\(k=${abc / (m + n)}\\)，所以 \\(\\angle BAL=${alpha}°\\)，\\(\\angle BCM=${beta}°\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const x = randInt(5, 12);
+        const a = randInt(2, 3);
+        const b = randInt(5, 15);
+        const c = randInt(1, 2);
+        const d = randInt(5, 15);
+        const abc = a * x + b + c * x + d;
+        questions.push(
+          `已知 \\(L \\parallel M\\)，\\(B\\) 在兩線之間，\\(\\angle BAL=(${a}x+${b})°\\)，\\(\\angle BCM=(${c}x+${d})°\\)，若 \\(x=${x}\\)，求 \\(\\angle ABC\\)。`
+        );
+        answers.push(
+          `簡答：\\(${abc}°\\)。過程：代入 \\(x=${x}\\)，\\(\\angle BAL=${a * x + b}°\\)，\\(\\angle BCM=${c * x + d}°\\)。由兩平行線間折線定理：\\(\\angle ABC=${a * x + b}°+${c * x + d}°=${abc}°\\)。`
+        );
+        continue;
+      }
+      const alphaW = [30, 35, 40, 45, 50][randInt(0, 4)];
+      const betaW = [25, 30, 35, 40][randInt(0, 3)];
+      const abcW = alphaW + betaW;
+      questions.push(
+        `兩條平行公路 \\(L \\parallel M\\)，一條小路從 \\(L\\) 上的 \\(A\\) 點出發，以與 \\(L\\) 夾角 \\(${alphaW}°\\) 斜向行進，到達兩路之間的 \\(B\\) 點後轉彎，再以與 \\(M\\) 夾角 \\(${betaW}°\\) 繼續行進到 \\(M\\) 上的 \\(C\\) 點。求轉彎角 \\(\\angle ABC\\) 的度數。`
+      );
+      answers.push(
+        `簡答：\\(${abcW}°\\)。過程：過 \\(B\\) 作 \\(BD \\parallel L \\parallel M\\)，由內錯角得 \\(\\angle ABD=${alphaW}°\\)，\\(\\angle DBC=${betaW}°\\)，所以 \\(\\angle ABC=${alphaW}°+${betaW}°=${abcW}°\\)。`
       );
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
@@ -3880,6 +5254,139 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+
+  function buildJ442AngleBisectorParallelogramSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const alpha = [60, 70, 80][randInt(0, 2)];
+        const angleB = 180 - alpha;
+        const angleABE = angleB / 2;
+        const aeb = 90 - alpha / 2;
+        questions.push(
+          `平行四邊形 \\(ABCD\\) 中，\\(\\angle A=${alpha}°\\)。\\(BE\\) 平分 \\(\\angle ABC\\)，\\(E\\) 在 \\(AD\\) 上，求 \\(\\angle AEB\\)。`
+        );
+        answers.push(
+          `簡答：\\(${aeb}°\\)。過程：\\(\\angle B=180°-${alpha}°=${angleB}°\\)。\\(BE\\) 平分 \\(\\angle B\\)，故 \\(\\angle ABE=${angleABE}°\\)。在 \\(\\triangle ABE\\) 中，\\(\\angle AEB=180°-${alpha}°-${angleABE}°=${aeb}°\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const alpha = [60, 70, 80, 100, 110, 120][randInt(0, 5)];
+        const aeb = alpha / 2;
+        const angleB = 180 - alpha;
+        questions.push(
+          `平行四邊形 \\(ABCD\\) 中，\\(\\angle A=${alpha}°\\)。\\(AE\\) 平分 \\(\\angle DAB\\)，\\(E\\) 在 \\(BC\\) 上，求 \\(\\angle AEB\\)。`
+        );
+        answers.push(
+          `簡答：\\(${aeb}°\\)。過程：\\(\\angle DAE=\\angle BAE=${alpha / 2}°\\)。\\(\\angle ABE=\\angle B=180°-${alpha}°=${angleB}°\\)。在 \\(\\triangle ABE\\) 中，\\(\\angle AEB=180°-${alpha / 2}°-${angleB}°=${aeb}°\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const beta = [100, 110, 120, 130][randInt(0, 3)];
+        const aeb = beta / 2;
+        const angleA = 180 - beta;
+        questions.push(
+          `平行四邊形 \\(ABCD\\) 中，\\(\\angle B=${beta}°\\)。\\(BE\\) 平分 \\(\\angle ABC\\)，\\(E\\) 在 \\(AD\\) 上，求 \\(\\angle AEB\\)。`
+        );
+        answers.push(
+          `簡答：\\(${aeb}°\\)。過程：\\(\\angle ABE=${beta / 2}°\\)，\\(\\angle A=180°-${beta}°=${angleA}°\\)。在 \\(\\triangle ABE\\) 中，\\(\\angle AEB=180°-${angleA}°-${beta / 2}°=${aeb}°\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const alpha = [60, 70, 80][randInt(0, 2)];
+        const abd = (180 - alpha) / 2;
+        questions.push(
+          `菱形 \\(ABCD\\) 中，\\(\\angle A=${alpha}°\\)。對角線 \\(BD\\) 平分 \\(\\angle ABC\\)，求 \\(\\angle ABD\\)。`
+        );
+        answers.push(
+          `簡答：\\(${abd}°\\)。過程：菱形對角線平分各頂角，\\(\\angle ABC=180°-${alpha}°=${180 - alpha}°\\)，故 \\(\\angle ABD=\\frac{${180 - alpha}°}{2}=${abd}°\\)。`
+        );
+        continue;
+      }
+      const ratioSets = [[2, 1], [1, 2], [2, 3], [3, 2]];
+      const [m, n] = ratioSets[randInt(0, ratioSets.length - 1)];
+      const angleA4 = 180 * m / (m + n);
+      const angleB4 = 180 * n / (m + n);
+      const aeb4 = angleB4 / 2;
+      questions.push(
+        `平行四邊形 \\(ABCD\\) 中，\\(\\angle A:\\angle B=${m}:${n}\\)。\\(BE\\) 平分 \\(\\angle ABC\\)，\\(E\\) 在 \\(AD\\) 上，求 \\(\\angle AEB\\)。`
+      );
+      answers.push(
+        `簡答：\\(${aeb4}°\\)。過程：\\(\\angle A+\\angle B=180°\\)，故 \\(\\angle A=${angleA4}°\\)，\\(\\angle B=${angleB4}°\\)。\\(BE\\) 平分 \\(\\angle B\\)，\\(\\angle ABE=${aeb4}°\\)。在 \\(\\triangle ABE\\) 中，\\(\\angle AEB=180°-${angleA4}°-${aeb4}°=${aeb4}°\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ442CoordinateParallelogramSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      const ax = randInt(-5, 3);
+      const ay = randInt(-4, 4);
+      const p = randInt(2, 6);
+      const q = randInt(-3, 3);
+      const r = randInt(-4, -1);
+      const s = randInt(2, 6);
+      const Ax = ax, Ay = ay;
+      const Bx = ax + p, By = ay + q;
+      const Cx = ax + p + r, Cy = ay + q + s;
+      const Dx = ax + r, Dy = ay + s;
+      const D2x = Ax + Bx - Cx, D2y = Ay + By - Cy;
+      const D3x = Bx + Cx - Ax, D3y = By + Cy - Ay;
+      if (mode === 0) {
+        questions.push(
+          `在平行四邊形 \\(ABCD\\) 中，已知 \\(A(${Ax},\\,${Ay})\\)，\\(B(${Bx},\\,${By})\\)，\\(C(${Cx},\\,${Cy})\\)，求頂點 \\(D\\) 的坐標。`
+        );
+        answers.push(
+          `簡答：\\(D(${Dx},\\,${Dy})\\)。過程：平行四邊形對角線互相平分，\\(D=A+C-B=(${Ax}+${Cx}-${Bx},\\;${Ay}+${Cy}-${By})=(${Dx},\\,${Dy})\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        questions.push(
+          `在平行四邊形 \\(ABCD\\) 中，已知 \\(A(${Ax},\\,${Ay})\\)，\\(B(${Bx},\\,${By})\\)，\\(D(${Dx},\\,${Dy})\\)，求頂點 \\(C\\) 的坐標。`
+        );
+        answers.push(
+          `簡答：\\(C(${Cx},\\,${Cy})\\)。過程：\\(\\overrightarrow{AB}=\\overrightarrow{DC}\\)，所以 \\(C=B+D-A=(${Bx}+${Dx}-${Ax},\\;${By}+${Dy}-${Ay})=(${Cx},\\,${Cy})\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        questions.push(
+          `平面上三點 \\(A(${Ax},\\,${Ay})\\)、\\(B(${Bx},\\,${By})\\)、\\(C(${Cx},\\,${Cy})\\)。以這三點為三個頂點可組成三種平行四邊形，求第四頂點的所有可能坐標。`
+        );
+        answers.push(
+          `簡答：\\((${Dx},\\,${Dy})\\)、\\((${D2x},\\,${D2y})\\)、\\((${D3x},\\,${D3y})\\)。過程：三種配對方式：\\(A+C-B=(${Dx},\\,${Dy})\\)（\\(AC\\) 為對角線），\\(A+B-C=(${D2x},\\,${D2y})\\)（\\(AB\\) 為對角線），\\(B+C-A=(${D3x},\\,${D3y})\\)（\\(BC\\) 為對角線），共三種。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const wrongDx = Dx + 1, wrongDy = Dy + 1;
+        questions.push(
+          `平行四邊形中已知三頂點 \\(A(${Ax},\\,${Ay})\\)、\\(B(${Bx},\\,${By})\\)、\\(C(${Cx},\\,${Cy})\\)，下列哪個坐標不可能是第四頂點？(A) \\((${Dx},\\,${Dy})\\) (B) \\((${D2x},\\,${D2y})\\) (C) \\((${D3x},\\,${D3y})\\) (D) \\((${wrongDx},\\,${wrongDy})\\)`
+        );
+        answers.push(
+          `簡答：(D) \\((${wrongDx},\\,${wrongDy})\\)。過程：三個合法第四頂點為 \\(A+C-B=(${Dx},\\,${Dy})\\)，\\(A+B-C=(${D2x},\\,${D2y})\\)，\\(B+C-A=(${D3x},\\,${D3y})\\)。\\((${wrongDx},\\,${wrongDy})\\) 不符合任何一式，故不可能。`
+        );
+        continue;
+      }
+      questions.push(
+        `在平行四邊形 \\(ABCD\\) 中，已知 \\(B(${Bx},\\,${By})\\)，\\(C(${Cx},\\,${Cy})\\)，\\(D(${Dx},\\,${Dy})\\)，求頂點 \\(A\\) 的坐標。`
+      );
+      answers.push(
+        `簡答：\\(A(${Ax},\\,${Ay})\\)。過程：\\(A=B+D-C=(${Bx}+${Dx}-${Cx},\\;${By}+${Dy}-${Cy})=(${Ax},\\,${Ay})\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ443TrapezoidMidlineBasicSet(count) {
     const questions = [];
     const answers = [];
@@ -4183,6 +5690,152 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+
+  function buildJ443KitePropertySet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const d1 = randInt(4, 12) * 2;
+        const d2 = randInt(4, 12) * 2;
+        const area = d1 * d2 / 2;
+        questions.push(
+          `鳶形 \\(ABCD\\) 的兩條對角線長分別為 \\(${d1}\\) 與 \\(${d2}\\)，求此鳶形的面積。`
+        );
+        answers.push(
+          `簡答：\\(${area}\\)。過程：鳶形（箏形）面積為兩對角線乘積的一半：面積 \\(=\\dfrac{${d1}\\times${d2}}{2}=${area}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const d1 = randInt(4, 12) * 2;
+        const d2 = randInt(4, 12) * 2;
+        const area = d1 * d2 / 2;
+        questions.push(
+          `鳶形的面積為 \\(${area}\\)，其中一條對角線長為 \\(${d1}\\)，求另一條對角線的長度。`
+        );
+        answers.push(
+          `簡答：\\(${d2}\\)。過程：由面積公式 \\(\\dfrac{${d1}\\times d}{2}=${area}\\)，解得 \\(d=\\dfrac{${area * 2}}{${d1}}=${d2}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const angleAList = [40, 60, 80, 100, 120];
+        const angleCList = [60, 80, 100, 120, 140];
+        const angleA = angleAList[randInt(0, angleAList.length - 1)];
+        const angleC = angleCList[randInt(0, angleCList.length - 1)];
+        const rem = 360 - angleA - angleC;
+        if (rem <= 0 || rem % 2 !== 0) { i -= 1; continue; }
+        const angleB = rem / 2;
+        if (angleB <= 0 || angleB >= 180) { i -= 1; continue; }
+        questions.push(
+          `鳶形 \\(ABCD\\) 中，\\(AB=AD\\)，\\(CB=CD\\)，\\(\\angle BAD=${angleA}°\\)，\\(\\angle BCD=${angleC}°\\)，求 \\(\\angle ABC\\)（即 \\(\\angle ADC\\)）。`
+        );
+        answers.push(
+          `簡答：\\(${angleB}°\\)。過程：鳶形中 \\(\\angle ABC=\\angle ADC\\)（兩腰對稱），四內角和 \\(360°\\)：\\(\\angle BAD+\\angle BCD+2\\angle ABC=360°\\)，故 \\(\\angle ABC=\\dfrac{360°-${angleA}°-${angleC}°}{2}=${angleB}°\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const angleAList = [40, 60, 80, 100];
+        const angleBList = [80, 90, 100, 110, 120];
+        const angleA = angleAList[randInt(0, angleAList.length - 1)];
+        const angleB = angleBList[randInt(0, angleBList.length - 1)];
+        const angleC = 360 - angleA - 2 * angleB;
+        if (angleC <= 0 || angleC >= 360) { i -= 1; continue; }
+        questions.push(
+          `鳶形 \\(ABCD\\) 中，\\(AB=AD\\)，\\(CB=CD\\)，\\(\\angle ABC=\\angle ADC=${angleB}°\\)，\\(\\angle BAD=${angleA}°\\)，求 \\(\\angle BCD\\)。`
+        );
+        answers.push(
+          `簡答：\\(${angleC}°\\)。過程：四內角和 \\(360°\\)：\\(\\angle BCD=360°-${angleA}°-2\\times${angleB}°=${angleC}°\\)。`
+        );
+        continue;
+      }
+      const angleBList4 = [80, 90, 100];
+      const angleB4 = angleBList4[randInt(0, angleBList4.length - 1)];
+      const remaining4 = 360 - 2 * angleB4;
+      const ratioOpts = [];
+      for (let m = 1; m <= 4; m += 1) {
+        for (let n = 1; n <= 4; n += 1) {
+          if (m !== n && remaining4 % (m + n) === 0) {
+            const a = remaining4 * m / (m + n);
+            const c = remaining4 * n / (m + n);
+            if (a > 0 && c > 0) ratioOpts.push([m, n, a, c]);
+          }
+        }
+      }
+      if (ratioOpts.length === 0) { i -= 1; continue; }
+      const [m4, n4, aA, aC] = ratioOpts[randInt(0, ratioOpts.length - 1)];
+      questions.push(
+        `鳶形 \\(ABCD\\) 中，\\(\\angle ABC=\\angle ADC=${angleB4}°\\)，且 \\(\\angle BAD:\\angle BCD=${m4}:${n4}\\)，求 \\(\\angle BAD\\) 與 \\(\\angle BCD\\)。`
+      );
+      answers.push(
+        `簡答：\\(\\angle BAD=${aA}°\\)，\\(\\angle BCD=${aC}°\\)。過程：\\(\\angle BAD+\\angle BCD=360°-2\\times${angleB4}°=${remaining4}°\\)。依比例 \\(${m4}:${n4}\\)，\\(\\angle BAD=${remaining4}\\times\\dfrac{${m4}}{${m4 + n4}}=${aA}°\\)，\\(\\angle BCD=${remaining4}\\times\\dfrac{${n4}}{${m4 + n4}}=${aC}°\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ443RightTrapezoidSet(count) {
+    const questions = [];
+    const answers = [];
+    const triples = [
+      [3, 4, 5], [4, 3, 5], [5, 12, 13], [12, 5, 13],
+      [8, 15, 17], [6, 8, 10], [8, 6, 10],
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      const [h, diff, leg] = triples[randInt(0, triples.length - 1)];
+      const top = randInt(2, 8);
+      const bottom = top + diff;
+      if (mode === 0) {
+        questions.push(
+          `直角梯形 \\(ABCD\\) 中，\\(AD\\parallel BC\\)，\\(\\angle A=90°\\)，\\(BC=${top}\\)（上底），\\(AD=${bottom}\\)（下底），\\(AB=${h}\\)（高），求斜腰 \\(CD\\)。`
+        );
+        answers.push(
+          `簡答：\\(${leg}\\)。過程：作輔助線 \\(CE\\perp AD\\)，\\(CE=AB=${h}\\)，\\(DE=AD-BC=${diff}\\)。在直角 \\(\\triangle CED\\) 中，\\(CD=\\sqrt{${h}^2+${diff}^2}=\\sqrt{${h*h+diff*diff}}=${leg}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        questions.push(
+          `直角梯形 \\(ABCD\\) 中，\\(AD\\parallel BC\\)，\\(\\angle A=90°\\)，\\(BC=${top}\\)，\\(AD=${bottom}\\)，斜腰 \\(CD=${leg}\\)，求高 \\(AB\\)。`
+        );
+        answers.push(
+          `簡答：\\(${h}\\)。過程：\\(DE=AD-BC=${diff}\\)。在直角 \\(\\triangle CED\\) 中，\\(CE=\\sqrt{${leg}^2-${diff}^2}=\\sqrt{${leg*leg-diff*diff}}=${h}\\)，故高 \\(AB=CE=${h}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        questions.push(
+          `直角梯形 \\(ABCD\\) 中，\\(AD\\parallel BC\\)，\\(\\angle A=90°\\)，\\(BC=${top}\\)，\\(AB=${h}\\)（高），斜腰 \\(CD=${leg}\\)，求下底 \\(AD\\)。`
+        );
+        answers.push(
+          `簡答：\\(${bottom}\\)。過程：\\(DE=\\sqrt{CD^2-AB^2}=\\sqrt{${leg*leg}-${h*h}}=\\sqrt{${diff*diff}}=${diff}\\)，所以 \\(AD=BC+DE=${top}+${diff}=${bottom}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        questions.push(
+          `直角梯形中，高為 \\(${h}\\)，斜腰長為 \\(${leg}\\)，求兩底之差（下底減上底）。`
+        );
+        answers.push(
+          `簡答：\\(${diff}\\)。過程：兩底之差等於斜腰在底邊上的水平投影長，\\(\\Delta b=\\sqrt{${leg}^2-${h}^2}=\\sqrt{${leg*leg}-${h*h}}=\\sqrt{${diff*diff}}=${diff}\\)。`
+        );
+        continue;
+      }
+      const perimeter = top + bottom + h + leg;
+      questions.push(
+        `直角梯形 \\(ABCD\\) 中，\\(AD\\parallel BC\\)，\\(\\angle A=90°\\)，\\(BC=${top}\\)，\\(AD=${bottom}\\)，\\(AB=${h}\\)，\\(CD=${leg}\\)，求此梯形的周長。`
+      );
+      answers.push(
+        `簡答：\\(${perimeter}\\)。過程：周長 \\(=BC+CD+AD+AB=${top}+${leg}+${bottom}+${h}=${perimeter}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function deriveSummaryAnswerFromDetail(detail) {
     const text = String(detail || '')
       .replace(/<br\s*\/?>/gi, ' ')
@@ -4299,6 +5952,42 @@
         questionCount: 5,
         generate() {
           return buildJ411PairSumReverseSet(5);
+        },
+      },
+      'j4-1-1-right-triangle-ap': {
+        type: 'drill',
+        title: '直角三角形三邊成等差',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ411RightTriangleAPSet(5);
+        },
+      },
+      'j4-1-1-polygon-ap': {
+        type: 'drill',
+        title: '多邊形邊長與內角成等差',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ411PolygonAPSet(5);
+        },
+      },
+      'j4-1-1-first-positive-term': {
+        type: 'drill',
+        title: '第幾項起為正／負數',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ411FirstPositiveTermSet(5);
+        },
+      },
+      'j4-1-1-coordinate-move': {
+        type: 'drill',
+        title: '座標點等差移動',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ411CoordinateMoveSet(5);
         },
       },
       'j4-1-2-geometric-mixed': {
@@ -4427,6 +6116,24 @@
           return buildJ413OddEvenSumRelationSet(5);
         },
       },
+      'j4-1-3-polygon-sum': {
+        type: 'drill',
+        title: '多邊形邊長成等差求周長',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ413PolygonSumSet(5);
+        },
+      },
+      'j4-1-3-catch-up-race': {
+        type: 'drill',
+        title: '等差遞增應用：競速與累計',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ413CatchUpRaceSet(5);
+        },
+      },
       'j4-2-1-function-mixed': {
         type: 'drill',
         title: '函數五大題型綜合',
@@ -4553,6 +6260,33 @@
           return buildJ422QuadrantSlopeRangeSet(5);
         },
       },
+      'j4-2-1-linear-degree-condition': {
+        type: 'drill',
+        title: '一次函數係數條件',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ421LinearDegreeConditionSet(5);
+        },
+      },
+      'j4-2-1-cross-function-substitution': {
+        type: 'drill',
+        title: '跨函數移位代換',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ421CrossFunctionSubstitutionSet(5);
+        },
+      },
+      'j4-2-2-word-model-two-point': {
+        type: 'drill',
+        title: '兩點線型函數應用',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ422WordModelTwoPointSet(5);
+        },
+      },
       'j4-3-1-polygon-angle-mixed': {
         type: 'drill',
         title: '三角形與多邊形角度綜合',
@@ -4587,6 +6321,15 @@
         questionCount: 5,
         generate() {
           return buildJ431ComplementarySupplementaryAngleSet(5);
+        },
+      },
+      'j4-3-1-isosceles-angle': {
+        type: 'drill',
+        title: '等腰三角形角度計算',
+        difficulty: 'easy',
+        questionCount: 5,
+        generate() {
+          return buildJ431IsoscelesAngleSet(5);
         },
       },
       'j4-3-2-construction-bisection-count': {
@@ -4625,6 +6368,15 @@
           return buildJ432AngleBisectorMeasureSet(5);
         },
       },
+      'j4-3-2-triangle-bisector-intersection': {
+        type: 'drill',
+        title: '角平分線交點角度',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ432TriangleBisectorIntersectionSet(5);
+        },
+      },
       'j4-3-3-congruence-mixed': {
         type: 'drill',
         title: '三角形全等三類綜合',
@@ -4659,6 +6411,15 @@
         questionCount: 5,
         generate() {
           return buildJ433IsoscelesMedianPropertySet(5);
+        },
+      },
+      'j4-3-3-congruence-algebra': {
+        type: 'drill',
+        title: '全等三角形代數求解',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ433CongruenceAlgebraSet(5);
         },
       },
       'j4-3-4-triangle-side-angle-mixed': {
@@ -4697,6 +6458,24 @@
           return buildJ434PythagoreanClassificationSet(5);
         },
       },
+      'j4-3-4-exterior-angle-side-comparison': {
+        type: 'drill',
+        title: '外角推算邊大小順序',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ434ExteriorAngleSideComparisonSet(5);
+        },
+      },
+      'j4-3-4-hinge-theorem': {
+        type: 'drill',
+        title: '鉸鏈定理：兩三角形邊角比較',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ434HingeTheoremSet(5);
+        },
+      },
       'j4-4-1-parallel-perpendicular-angles': {
         type: 'drill',
         title: '平行垂直角度六型綜合',
@@ -4722,6 +6501,15 @@
         questionCount: 5,
         generate() {
           return buildJ441TransversalFindAngleSet(5);
+        },
+      },
+      'j4-4-1-bent-line-parallel': {
+        type: 'drill',
+        title: '兩平行線間折線角度',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ441BentLineParallelSet(5);
         },
       },
       'j4-4-2-quadrilateral-mixed': {
@@ -4778,6 +6566,24 @@
           return buildJ442RhombusDiagonalSet(5);
         },
       },
+      'j4-4-2-angle-bisector-parallelogram': {
+        type: 'drill',
+        title: '平行四邊形角平分線',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ442AngleBisectorParallelogramSet(5);
+        },
+      },
+      'j4-4-2-coordinate-parallelogram': {
+        type: 'drill',
+        title: '座標系中的平行四邊形',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ442CoordinateParallelogramSet(5);
+        },
+      },
       'j4-4-3-trapezoid-core-mixed': {
         type: 'drill',
         title: '梯形核心四類綜合',
@@ -4821,6 +6627,24 @@
         questionCount: 5,
         generate() {
           return buildJ443IsoscelesTrapezoidSet(5);
+        },
+      },
+      'j4-4-3-kite-property': {
+        type: 'drill',
+        title: '鳶形性質計算',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ443KitePropertySet(5);
+        },
+      },
+      'j4-4-3-right-trapezoid': {
+        type: 'drill',
+        title: '直角梯形邊長計算',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ443RightTrapezoidSet(5);
         },
       },
   };

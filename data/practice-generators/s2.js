@@ -2216,6 +2216,285 @@
     return buildS212AlgebraicVariantsSigmaSet(count);
   }
 
+  function buildS211DifferenceMethodNonlinearSet(count) {
+    const questions = [];
+    const answers = [];
+    const aTerm = (idx) => latexSub('a', idx);
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+
+      if (mode === 0) {
+        // a_{n+1} = a_n + n^2 -> a_n = a_1 + sum_{k=1}^{n-1} k^2 = a_1 + (n-1)n(2n-1)/6
+        const a1 = randInt(1, 5);
+        const n = randInt(4, 8);
+        const sumVal = (n - 1) * n * (2 * n - 1) / 6;
+        const an = a1 + sumVal;
+        questions.push(
+          `差分法求一般項。設 \\(${aTerm(1)}=${a1}\\)，\\(a_{n+1}=a_n+n^2\\ (n\\geq1)\\)，求一般項 \\(a_n\\) 並計算 \\(${aTerm(n)}\\)。`
+        );
+        answers.push(
+          `簡答：\\(${aTerm(n)}=${an}\\)。過程：逐步相減得 \\(a_n=a_1+\\sum_{k=1}^{n-1}k^2\\)。代入公式 \\(\\sum_{k=1}^{m}k^2=\\dfrac{m(m+1)(2m+1)}{6}\\)，得 \\(a_n=${a1}+\\dfrac{(n-1)n(2n-1)}{6}\\)。代入 \\(n=${n}\\)：\\(${aTerm(n)}=${a1}+${sumVal}=${an}\\)。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        // a_{n+1} = a_n + n(n+1) -> a_n = a_1 + (n-1)n(n+1)/3
+        const a1 = randInt(1, 4);
+        const n = randInt(4, 7);
+        const sumVal = (n - 1) * n * (n + 1) / 3;
+        const an = a1 + sumVal;
+        questions.push(
+          `差分法求一般項。設 \\(${aTerm(1)}=${a1}\\)，\\(a_{n+1}=a_n+n(n+1)\\ (n\\geq1)\\)，求一般項公式並計算 \\(${aTerm(n)}\\)。`
+        );
+        answers.push(
+          `簡答：\\(${aTerm(n)}=${an}\\)。過程：\\(a_n=a_1+\\sum_{k=1}^{n-1}k(k+1)\\)。利用 \\(\\sum_{k=1}^{m}k(k+1)=\\dfrac{m(m+1)(m+2)}{3}\\)，代入 \\(m=n-1\\) 得 \\(a_n=${a1}+\\dfrac{(n-1)n(n+1)}{3}\\)。代入 \\(n=${n}\\)：\\(${aTerm(n)}=${a1}+${sumVal}=${an}\\)。`
+        );
+        continue;
+      }
+
+      if (mode === 2) {
+        // a_{n+1} = a_n + 1/(n(n+1)) -> a_n = a_1 + (n-1)/n (telescoping)
+        const a1 = randInt(1, 3);
+        const n = randInt(5, 10);
+        // a_n = a_1 + (n-1)/n = (a1*n + n - 1)/n
+        const numVal = a1 * n + n - 1;
+        const ansStr = formatFraction(numVal, n);
+        questions.push(
+          `差分法（部分分式疊加）。設 \\(${aTerm(1)}=${a1}\\)，\\(a_{n+1}=a_n+\\dfrac{1}{n(n+1)}\\ (n\\geq1)\\)，求 \\(${aTerm(n)}\\)。`
+        );
+        answers.push(
+          `簡答：\\(${aTerm(n)}=${ansStr}\\)。過程：由 \\(\\dfrac{1}{k(k+1)}=\\dfrac{1}{k}-\\dfrac{1}{k+1}\\)，逐步疊加得 \\(a_n=a_1+\\sum_{k=1}^{n-1}\\!\\left(\\dfrac{1}{k}-\\dfrac{1}{k+1}\\right)=${a1}+1-\\dfrac{1}{n}=${a1}+\\dfrac{n-1}{n}\\)。代入 \\(n=${n}\\) 得 \\(${aTerm(n)}=${ansStr}\\)。`
+        );
+        continue;
+      }
+
+      if (mode === 3) {
+        // a_{n+1} = a_n + 1/((2n-1)(2n+1)) -> Sigma = (n-1)/(2n-1); a_n = a1 + (n-1)/(2n-1)
+        const a1 = randInt(0, 2);
+        const n = randInt(4, 8);
+        // a_n = a1 + (n-1)/(2n-1) = (a1*(2n-1) + n-1)/(2n-1)
+        const totalNum = a1 * (2 * n - 1) + (n - 1);
+        const totalDen = 2 * n - 1;
+        const ansStr = formatFraction(totalNum, totalDen);
+        const a1Str = `${a1}`;
+        questions.push(
+          `差分法（奇數乘積部分分式）。設 \\(${aTerm(1)}=${a1Str}\\)，\\(a_{n+1}=a_n+\\dfrac{1}{(2n-1)(2n+1)}\\ (n\\geq1)\\)，求 \\(${aTerm(n)}\\)。`
+        );
+        answers.push(
+          `簡答：\\(${aTerm(n)}=${ansStr}\\)。過程：\\(\\dfrac{1}{(2k-1)(2k+1)}=\\dfrac{1}{2}\\!\\left(\\dfrac{1}{2k-1}-\\dfrac{1}{2k+1}\\right)\\)。疊加後 \\(\\sum_{k=1}^{n-1}\\dfrac{1}{(2k-1)(2k+1)}=\\dfrac{1}{2}\\!\\left(1-\\dfrac{1}{2n-1}\\right)=\\dfrac{n-1}{2n-1}\\)，故 \\(${aTerm(n)}=${a1Str}+\\dfrac{n-1}{2n-1}\\Big|_{n=${n}}=${ansStr}\\)。`
+        );
+        continue;
+      }
+
+      // mode === 4: a_{n+1} = a_n + r^n -> a_n = a_1 + r(r^{n-1}-1)/(r-1)
+      const r = [2, 3][randInt(0, 1)];
+      const a1 = randInt(1, 3);
+      const n = randInt(4, 6);
+      // sum_{k=1}^{n-1} r^k = r(r^{n-1}-1)/(r-1)
+      const sumVal = r * (powInt(r, n - 1) - 1) / (r - 1);
+      const an = a1 + sumVal;
+      const rExpr = r === 2 ? '2^n' : '3^n';
+      questions.push(
+        `差分法（指數型）。設 \\(${aTerm(1)}=${a1}\\)，\\(a_{n+1}=a_n+${rExpr}\\ (n\\geq1)\\)，求 \\(${aTerm(n)}\\)。`
+      );
+      answers.push(
+        `簡答：\\(${aTerm(n)}=${an}\\)。過程：逐步相減得 \\(a_n=a_1+\\sum_{k=1}^{n-1}${r}^k\\)。等比級數求和：\\(\\sum_{k=1}^{n-1}${r}^k=\\dfrac{${r}(${r}^{n-1}-1)}{${r}-1}\\)。代入 \\(n=${n}\\)，\\(\\sum_{k=1}^{${n - 1}}${r}^k=${sumVal}\\)，故 \\(${aTerm(n)}=${a1}+${sumVal}=${an}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS212ReverseNFromSumSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+
+      if (mode === 0) {
+        // AP S_n = n(2a1+(n-1)d)/2 = C, find n
+        const a1 = randInt(1, 5);
+        const d = [2, 3, 4][randInt(0, 2)];
+        const n0 = [8, 10, 12, 14, 15][randInt(0, 4)];
+        const C = n0 * (2 * a1 + (n0 - 1) * d) / 2;
+        // quadratic: d*n^2 + (2a1-d)*n - 2C = 0
+        const coefB = 2 * a1 - d;
+        const discr = coefB * coefB + 8 * d * C;
+        const sqrtD = Math.round(Math.sqrt(discr));
+        const bSign = coefB > 0 ? `+${coefB}` : coefB < 0 ? `${coefB}` : '';
+        const eqStr = `${d}n^2${bSign}n-${2 * C}=0`;
+        const negB = -coefB;
+        const negBStr = negB >= 0 ? `${negB}` : `(${negB})`;
+        questions.push(
+          `反求項數。等差數列首項 \\(a_1=${a1}\\)，公差 \\(d=${d}\\)，若前 \\(n\\) 項和 \\(S_n=${C}\\)，求 \\(n\\)。`
+        );
+        answers.push(
+          `簡答：\\(n=${n0}\\)。過程：代入等差級數公式 \\(S_n=\\dfrac{n[2\\cdot${a1}+(n-1)\\cdot${d}]}{2}\\)，展開整理得 \\(${eqStr}\\)。判別式 \\(\\Delta=${discr}\\)，取正根 \\(n=\\dfrac{${negBStr}+${sqrtD}}{${2 * d}}=${n0}\\)。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        // sum_{k=1}^{n}(ak+b) = a*n(n+1)/2 + b*n = C, find n
+        const a = [2, 3, 4][randInt(0, 2)];
+        const b = randInt(1, 4);
+        const n0 = [8, 9, 10, 11, 12][randInt(0, 4)];
+        const C = a * n0 * (n0 + 1) / 2 + b * n0;
+        // a*n^2 + (a+2b)*n - 2C = 0 (after *2)
+        const coefA = a;
+        const coefB = a + 2 * b;
+        const discr = coefB * coefB + 4 * coefA * 2 * C;
+        const sqrtD = Math.round(Math.sqrt(discr));
+        const aStr = a === 1 ? 'k' : `${a}k`;
+        const bPart = `+${b}`;
+        questions.push(
+          `反求項數。若 \\(\\sum_{k=1}^{n}(${aStr}${bPart})=${C}\\)，求 \\(n\\)。`
+        );
+        answers.push(
+          `簡答：\\(n=${n0}\\)。過程：\\(\\sum_{k=1}^{n}(${aStr}${bPart})=${a}\\cdot\\dfrac{n(n+1)}{2}+${b}n\\)，整理（兩邊乘 2）得 \\(${coefA}n^2+${coefB}n-${2 * C}=0\\)。判別式 \\(\\Delta=${discr}\\)，取正根 \\(n=\\dfrac{-${coefB}+${sqrtD}}{${2 * coefA}}=${n0}\\)。`
+        );
+        continue;
+      }
+
+      if (mode === 2) {
+        // sum_{k=1}^{n}(2k-1) = n^2 = C, find n = sqrt(C)
+        const n0 = [9, 10, 12, 13, 15, 16, 20][randInt(0, 6)];
+        const C = n0 * n0;
+        questions.push(
+          `反求項數（奇數求和）。奇數數列 \\(1+3+5+\\cdots+(2n-1)=${C}\\)，求 \\(n\\)。`
+        );
+        answers.push(
+          `簡答：\\(n=${n0}\\)。過程：前 \\(n\\) 個奇數之和公式為 \\(\\sum_{k=1}^{n}(2k-1)=n^2\\)，所以 \\(n^2=${C}\\)，解得 \\(n=${n0}\\)。`
+        );
+        continue;
+      }
+
+      if (mode === 3) {
+        // sum_{k=1}^{n}k = n(n+1)/2 = C, find n
+        const n0 = [9, 10, 12, 14, 15, 20][randInt(0, 5)];
+        const C = n0 * (n0 + 1) / 2;
+        const discr = 1 + 8 * C;
+        const sqrtD = Math.round(Math.sqrt(discr));
+        questions.push(
+          `反求項數（自然數求和）。若 \\(1+2+3+\\cdots+n=${C}\\)，求 \\(n\\)。`
+        );
+        answers.push(
+          `簡答：\\(n=${n0}\\)。過程：\\(\\dfrac{n(n+1)}{2}=${C}\\)，整理得 \\(n^2+n-${2 * C}=0\\)。判別式 \\(\\Delta=1+${8 * C}=${discr}\\)，取正根 \\(n=\\dfrac{-1+${sqrtD}}{2}=${n0}\\)。`
+        );
+        continue;
+      }
+
+      // mode === 4: GP sum: 1+r+r^2+...+r^{n-1} = (r^n-1)/(r-1) = C, find n
+      const r = [2, 3][randInt(0, 1)];
+      const n0 = [5, 6, 7][randInt(0, 2)];
+      const C = (powInt(r, n0) - 1) / (r - 1);
+      const rN0 = powInt(r, n0);
+      questions.push(
+        `反求項數（等比級數）。若 \\(1+${r}+${r}^2+\\cdots+${r}^{n-1}=${C}\\)，求 \\(n\\)。`
+      );
+      answers.push(
+        `簡答：\\(n=${n0}\\)。過程：等比級數和 \\(\\dfrac{${r}^n-1}{${r}-1}=${C}\\)，所以 \\(${r}^n-1=${C * (r - 1)}\\)，得 \\(${r}^n=${rN0}\\)。由此可得 \\(n=${n0}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS212NonStandardSigmaLimitsSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+
+      if (mode === 0) {
+        // sum_{k=0}^{n} r^k = (r^{n+1}-1)/(r-1), lower bound is 0
+        const r = [2, 3][randInt(0, 1)];
+        const n = randInt(5, 8);
+        const total = (powInt(r, n + 1) - 1) / (r - 1);
+        questions.push(
+          `非標準下界的 Sigma。計算 \\(\\sum_{k=0}^{${n}}${r}^k\\)。`
+        );
+        answers.push(
+          `簡答：${total}。過程：下界從 \\(k=0\\) 開始，包含 \\(${r}^0=1\\) 這一項，共有 ${n + 1} 項。等比級數公式：\\(\\sum_{k=0}^{n}r^k=\\dfrac{r^{n+1}-1}{r-1}\\)，代入 \\(r=${r},n=${n}\\)，得 \\(\\dfrac{${r}^{${n + 1}}-1}{${r - 1}}=${total}\\)。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        // sum_{k=m}^{n}(ak+b) with m >= 2
+        const a = [2, 3][randInt(0, 1)];
+        const b = randInt(1, 3);
+        const m = [2, 3][randInt(0, 1)];
+        const n = [10, 12, 15][randInt(0, 2)];
+        // full sum: a*n(n+1)/2 + b*n
+        const fullSum = a * n * (n + 1) / 2 + b * n;
+        // prefix sum from 1 to m-1: a*(m-1)*m/2 + b*(m-1)
+        const partSum = a * (m - 1) * m / 2 + b * (m - 1);
+        const result = fullSum - partSum;
+        const aStr = a === 1 ? 'k' : `${a}k`;
+        const bPart = `+${b}`;
+        questions.push(
+          `非標準下界的 Sigma。計算 \\(\\sum_{k=${m}}^{${n}}(${aStr}${bPart})\\)。`
+        );
+        answers.push(
+          `簡答：${result}。過程：拆分為 \\(\\sum_{k=1}^{${n}}(${aStr}${bPart})-\\sum_{k=1}^{${m - 1}}(${aStr}${bPart})\\)。前者 \\(=${fullSum}\\)，後者 \\(=${partSum}\\)，差為 \\(${result}\\)。`
+        );
+        continue;
+      }
+
+      if (mode === 2) {
+        // sum_{k=n+1}^{2n} k = n(3n+1)/2
+        const n = [5, 8, 10, 12][randInt(0, 3)];
+        const result = n * (3 * n + 1) / 2;
+        questions.push(
+          `非標準上下界的 Sigma。計算 \\(\\sum_{k=${n + 1}}^{${2 * n}}k=${n + 1}+${n + 2}+\\cdots+${2 * n}\\)。`
+        );
+        answers.push(
+          `簡答：${result}。過程：\\(\\sum_{k=n+1}^{2n}k=\\sum_{k=1}^{2n}k-\\sum_{k=1}^{n}k=\\dfrac{2n(2n+1)}{2}-\\dfrac{n(n+1)}{2}=\\dfrac{n(3n+1)}{2}\\)。代入 \\(n=${n}\\) 得 ${result}。`
+        );
+        continue;
+      }
+
+      if (mode === 3) {
+        // sum_{k=m+1}^{n}(3k-1) using formula g(n) = n(3n+1)/2
+        const m = [3, 4, 5][randInt(0, 2)];
+        const n = [12, 15, 20][randInt(0, 2)];
+        // g(n) = sum_{k=1}^{n}(3k-1) = 3n(n+1)/2 - n = n(3n+1)/2
+        const gn = n * (3 * n + 1) / 2;
+        const gm = m * (3 * m + 1) / 2;
+        const result = gn - gm;
+        questions.push(
+          `應用已知公式求部分和。已知 \\(\\sum_{k=1}^{n}(3k-1)=\\dfrac{n(3n+1)}{2}\\)，求 \\(\\sum_{k=${m + 1}}^{${n}}(3k-1)\\)。`
+        );
+        answers.push(
+          `簡答：${result}。過程：\\(\\sum_{k=${m + 1}}^{${n}}(3k-1)=\\sum_{k=1}^{${n}}(3k-1)-\\sum_{k=1}^{${m}}(3k-1)\\)。代入公式得 \\(\\dfrac{${n}\\cdot${3 * n + 1}}{2}-\\dfrac{${m}\\cdot${3 * m + 1}}{2}=${gn}-${gm}=${result}\\)。`
+        );
+        continue;
+      }
+
+      // mode === 4: sum_{k=0}^{n-1}(ak+b) = a*(n-1)*n/2 + b*n (index from 0)
+      const a = [2, 3, 4][randInt(0, 2)];
+      const b = randInt(0, 3);
+      const n = [8, 10, 12, 15][randInt(0, 3)];
+      // sum_{k=0}^{n-1}(ak+b) = a*(n-1)*n/2 + b*n
+      const result = a * (n - 1) * n / 2 + b * n;
+      const aStr = a === 1 ? 'k' : `${a}k`;
+      const bPart = b === 0 ? '' : `+${b}`;
+      questions.push(
+        `指標從 0 開始的 Sigma。計算 \\(\\sum_{k=0}^{${n - 1}}(${aStr}${bPart})\\)。`
+      );
+      answers.push(
+        `簡答：${result}。過程：令 \\(j=k+1\\)，則 \\(\\sum_{k=0}^{n-1}(ak+b)=\\sum_{j=1}^{n}(a(j-1)+b)=a\\cdot\\dfrac{(n-1)n}{2}+bn\\)。代入 \\(a=${a},b=${b},n=${n}\\)，得 \\(${a}\\cdot${(n - 1) * n / 2}+${b}\\cdot${n}=${result}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function combinationCount(n, r) {
     if (r < 0 || r > n) return 0;
     const m = Math.min(r, n - r);
@@ -3133,35 +3412,66 @@
   }
 
   function buildS222IdenticalItemsPermutationSet(count) {
-    const templates = [
-      {
-        q: '將「SUCCESS」一字中的所有字母重新排列，共有多少種不同的排法？',
-        a: '簡答：1260 種。過程：「SUCCESS」共有 7 個字母，其中 S 有 3 個、C 有 2 個，其餘 U、E 各 1 個，所以排法為 \\(\\frac{7!}{3!2!}=1260\\)。',
-      },
-      {
-        q: '將「AABBCC」六個字母排成一列，規定相同字母均不相鄰，共有幾種排法？',
-        a: '簡答：30 種。過程：先不管相鄰，總排法 \\(\\frac{6!}{2!2!2!}=90\\)。扣除至少一組相鄰可用容斥計算；或直接分類排列三對相同字母，得到相同字母均不相鄰的排法為 30 種。',
-      },
-      {
-        q: '從「TENNESSEE」的 9 個字母中，任取 4 個字母排列，共有多少種排法？',
-        a: '簡答：163 種。過程：字母數量為 E4 個、N2 個、S2 個、T1 個。可用生成函數整理為 \\(4!\\) 乘上 \\((1+x+\\frac{x^2}{2!}+\\frac{x^3}{3!}+\\frac{x^4}{4!})(1+x+\\frac{x^2}{2!})^2(1+x)\\) 中 \\(x^4\\) 的係數，計算得 163 種。',
-      },
-      {
-        q: '將「MISSISSIPPI」中的字母全部重排，共有多少種不同的排法？',
-        a: '簡答：34650 種。過程：共有 11 個字母，其中 I 有 4 個、S 有 4 個、P 有 2 個、M 有 1 個，所以不同排法為 \\(\\frac{11!}{4!4!2!}=34650\\)。',
-      },
-      {
-        q: '有藍旗 3 面、白旗 2 面、紅旗 1 面，全升上旗竿可組成多少種不同信號？',
-        a: '簡答：60 種。過程：共 6 面旗，其中藍旗 3 面相同、白旗 2 面相同、紅旗 1 面，所以不同排列為 \\(\\frac{6!}{3!2!1!}=60\\)。',
-      },
-    ];
     const questions = [];
     const answers = [];
+
+    const wordBank = [
+      { word: 'SUCCESS', n: 7, repMap: [['S', 3], ['C', 2]] },
+      { word: 'MISSISSIPPI', n: 11, repMap: [['I', 4], ['S', 4], ['P', 2]] },
+      { word: 'COMMITTEE', n: 9, repMap: [['M', 2], ['T', 2], ['E', 2]] },
+      { word: 'STATISTICS', n: 10, repMap: [['S', 3], ['T', 3], ['I', 2]] },
+      { word: 'BANANA', n: 6, repMap: [['A', 3], ['N', 2]] },
+      { word: 'ARRANGEMENT', n: 11, repMap: [['A', 2], ['R', 2], ['N', 2], ['E', 2]] },
+      { word: 'TENNESSEE', n: 9, repMap: [['E', 4], ['N', 2], ['S', 2]] },
+      { word: 'ENGINEERING', n: 11, repMap: [['E', 3], ['N', 3], ['G', 2], ['I', 2]] },
+    ];
+    const colorOptions = [
+      ['紅', '藍', '白'],
+      ['藍', '白', '黃'],
+      ['紅', '綠', '白'],
+      ['紅', '藍', '白', '黃'],
+    ];
+
     for (let i = 0; i < count; i += 1) {
-      const item = templates[i % templates.length];
-      questions.push(item.q);
-      answers.push(item.a);
+      const mode = i % 3;
+      if (mode !== 2) {
+        // Word full permutation
+        const idx = randInt(0, wordBank.length - 1);
+        const { word, n, repMap } = wordBank[idx];
+        let denom = 1;
+        repMap.forEach(([, k]) => { denom *= factorialInt(k); });
+        const total = factorialInt(n) / denom;
+        const denomStr = repMap.map(([, k]) => `${k}!`).join('\\cdot');
+        const repDesc = repMap.map(([l, k]) => `${l} 有 ${k} 個`).join('、');
+        questions.push(
+          mode === 0
+            ? `將「${word}」這個單字的所有 ${n} 個字母全部重新排列，共有多少種不同的排法？`
+            : `單字「${word}」共 ${n} 個字母，其中${repDesc}，其餘各 1 個。這 ${n} 個字母全部重排後有多少種不同的排列？`
+        );
+        answers.push(
+          `簡答：${total} 種。過程：「${word}」共 ${n} 個字母，其中${repDesc}，其餘各 1 個。相同字母互換不增加新排列，所以排法為 \\(\\frac{${n}!}{${denomStr}}=${total}\\)。`
+        );
+      } else {
+        // Flag signal problem
+        const colors = colorOptions[randInt(0, colorOptions.length - 1)];
+        const counts = colors.map(() => randInt(1, 3));
+        counts[0] = Math.max(counts[0], 2);
+        counts[1] = Math.max(counts[1], 2);
+        const totalFlags = counts.reduce((s, c) => s + c, 0);
+        let denom = 1;
+        counts.forEach(k => { denom *= factorialInt(k); });
+        const total = factorialInt(totalFlags) / denom;
+        const denomStr = counts.map(k => `${k}!`).join('\\cdot');
+        const colorDesc = colors.map((c, j) => `${c}旗 ${counts[j]} 面`).join('、');
+        questions.push(
+          `有${colorDesc}，共 ${totalFlags} 面，將這些旗子全部升上旗竿，可組成多少種不同的信號？`
+        );
+        answers.push(
+          `簡答：${total} 種。過程：共 ${totalFlags} 面旗，${colorDesc}。相同顏色旗互換不增加新信號，排法為 \\(\\frac{${totalFlags}!}{${denomStr}}=${total}\\)。`
+        );
+      }
     }
+
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
@@ -3331,38 +3641,72 @@
   }
 
   function buildS222NumberFormationSet(count) {
-    const templates = [
-      {
-        q: '用 0、1、2、3、4、5 六個數字組成數字不重複的三位數，其中 4 的倍數共有多少個？',
-        a: '簡答：24 個。過程：4 的倍數由末兩位決定。從可用數字中列出末兩位為 4 的倍數且不重複者，再選百位且不可為 0、不與末兩位重複，逐一加總得 24 個。',
-      },
-      {
-        q: '用 1、2、3、4、5 五個數字排成五位數，數字可以重複，則大於 23104 的數有多少個？',
-        a: '簡答：2250 個。過程：依位數比較。萬位大於 2 有 \\(3\\cdot5^4=1875\\) 個；萬位為 2 且千位大於 3 有 \\(2\\cdot5^3=250\\) 個；前兩位為 23 且百位大於 1 有 \\(4\\cdot5^2=100\\) 個；前三位為 231 時，十位一定大於 0，有 \\(5^2=25\\) 個。合計 \\(1875+250+100+25=2250\\) 個。',
-      },
-      {
-        q: '利用 1、2、3、4 組成數字不重複的四位數，求所有排出的四位數之總和。',
-        a: '簡答：66660。過程：每個數字在千、百、十、個位各出現 \\(3!=6\\) 次，所以總和為 \\((1+2+3+4)\\cdot6\\cdot(1000+100+10+1)=66660\\)。',
-      },
-      {
-        q: '用 1、2、3、4、5 五個數字組成數字不重複的五位數奇數，共有多少個？',
-        a: '簡答：72 個。過程：個位需為 1、3、5，有 3 種；其餘四位排列剩下 4 個數字，有 \\(4!\\) 種，所以共有 \\(3\\cdot4!=72\\) 個。',
-      },
-      {
-        q: '用 0、1、2、3、4、5 不重複組成三位數，求所有作成三位數的總和。',
-        a: '簡答：32640。過程：百位不能為 0。分位值計算：百位每個 1 到 5 各出現 \\(5\\cdot4=20\\) 次；十位與個位需分別扣除百位限制後計算，總和為 32640。',
-      },
-    ];
     const questions = [];
     const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const item = templates[i % templates.length];
-      questions.push(item.q);
-      answers.push(item.a);
+
+    // P(n, k) = n*(n-1)*...*(n-k+1)
+    function P(n, k) {
+      if (k === 0) return 1;
+      let r = 1;
+      for (let j = 0; j < k; j += 1) r *= (n - j);
+      return r;
     }
+    // 111...1 (k ones)
+    function repunit(k) {
+      let s = 0;
+      for (let j = 0; j < k; j += 1) s = s * 10 + 1;
+      return s;
+    }
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        // From {1..n}, k-digit numbers, count ODD
+        const n = randInt(4, 7);
+        const k = randInt(2, Math.min(n, 4));
+        const odds = Math.ceil(n / 2); // odd digits in {1..n}
+        const permsRest = P(n - 1, k - 1);
+        const total = odds * permsRest;
+        const maxOdd = 2 * odds - 1;
+        questions.push(
+          `從 1 到 ${n} 的數字中每個各取至多一次，組成 ${k} 位數，其中奇數共有多少個？`
+        );
+        answers.push(
+          `簡答：${total} 個。過程：個位必須是奇數（1、3、...、${maxOdd}），共有 ${odds} 種選法；其餘 ${k - 1} 個位置從剩下 ${n - 1} 個數字中依序排列，有 \\(P(${n - 1},${k - 1})=${permsRest}\\) 種。故共有 \\(${odds}\\times${permsRest}=${total}\\) 個。`
+        );
+      } else if (mode === 1) {
+        // From {0,1,...,n} (no leading zero), count k-digit numbers
+        const n = randInt(3, 6);
+        const k = randInt(2, Math.min(n, 3));
+        const firstChoices = n; // non-zero: 1..n
+        const restPerms = P(n, k - 1); // from remaining n digits
+        const total = firstChoices * restPerms;
+        questions.push(
+          `從 0, 1, 2, ..., ${n} 共 ${n + 1} 個數字中，每個各取至多一次，組成 ${k} 位整數（首位不為 0），共有多少個？`
+        );
+        answers.push(
+          `簡答：${total} 個。過程：首位不能為 0，可從 1 到 ${n} 選擇，有 ${n} 種；其餘 ${k - 1} 位從剩下 ${n} 個數字依序排，有 \\(P(${n},${k - 1})=${restPerms}\\) 種。故共有 \\(${n}\\times${restPerms}=${total}\\) 個。`
+        );
+      } else {
+        // From {1..n}, k-digit, find sum of all arrangements
+        const n = randInt(3, 5);
+        const k = randInt(2, Math.min(n, 4));
+        const permsEach = P(n - 1, k - 1); // times each digit appears per position
+        const digitSum = n * (n + 1) / 2;
+        const ru = repunit(k); // 111...1
+        const total = digitSum * permsEach * ru;
+        questions.push(
+          `用 1 到 ${n} 的數字，每個各取至多一次，組成所有可能的 ${k} 位數，求這些數的總和。`
+        );
+        answers.push(
+          `簡答：${total}。過程：每個數字 1 到 ${n} 在每個位置各出現 \\(P(${n - 1},${k - 1})=${permsEach}\\) 次。1 到 ${n} 的數字和為 ${digitSum}，各位之和為 \\(${digitSum}\\times${permsEach}\\)。再乘位值因子 ${ru}（即 ${k} 個 1）得總和 \\(${digitSum}\\times${permsEach}\\times${ru}=${total}\\)。`
+        );
+      }
+    }
+
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
-
   function buildS222SignalsRunsSet(count) {
     const templates = [
       {
@@ -5040,60 +5384,513 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  // ── NEW s2-2-2 / s2-2-4 PARAMETERIZED BUILDERS ────────────────────────────
+
+  function buildS222SameGroupTogetherArrangementParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+
+    const subjectPairs = [
+      { labels: ['數學', '英文'], units: ['本', '本'] },
+      { labels: ['數學', '英文', '國文'], units: ['本', '本', '本'] },
+      { labels: ['物理', '化學'], units: ['本', '本'] },
+      { labels: ['數學', '英文', '物理'], units: ['本', '本', '本'] },
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const subjectIdx = i % subjectPairs.length;
+      const { labels, units } = subjectPairs[subjectIdx];
+      const numGroups = labels.length;
+      // Randomly pick 2-4 books per subject
+      const groupSizes = labels.map(() => randInt(2, 4));
+      const totalBooks = groupSizes.reduce((s, c) => s + c, 0);
+      // Ways: treat each group as block → numGroups! × product(groupSize!)
+      let withinWays = 1;
+      groupSizes.forEach(k => { withinWays *= factorialInt(k); });
+      const total = factorialInt(numGroups) * withinWays;
+      const bookDesc = labels.map((l, j) => `${groupSizes[j]} 本${l}書`).join('、');
+      const withinStr = groupSizes.map(k => `${k}!`).join('\\times');
+      questions.push(
+        `將${bookDesc}共 ${totalBooks} 本排成一列，要求相同科目的書必須排在一起，共有多少種排法？`
+      );
+      answers.push(
+        `簡答：${total} 種。過程：把每科書視為一個整體，共 ${numGroups} 個整體，排列有 \\(${numGroups}!=${factorialInt(numGroups)}\\) 種；每科書內部各自全排列，共有 \\(${withinStr}=${withinWays}\\) 種。故總排法為 \\(${factorialInt(numGroups)}\\times${withinWays}=${total}\\) 種。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS222GenderNonAdjacentParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+
+    const contexts = [
+      { maleName: '男生', femaleName: '女生', lineType: '一列' },
+      { maleName: '男隊員', femaleName: '女隊員', lineType: '一排' },
+      { maleName: '男同學', femaleName: '女同學', lineType: '一列' },
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const ctx = contexts[i % contexts.length];
+      const f = randInt(3, 5); // females
+      const m = randInt(2, f);  // males ≤ females (ensures non-adjacent is possible)
+      // Females arranged: f! ways
+      // Insert m males into f+1 gaps (choose m gaps, arrange m males): P(f+1, m)
+      const femaleWays = factorialInt(f);
+      const gapChoices = combinationCount(f + 1, m) * factorialInt(m); // P(f+1, m)
+      const total = femaleWays * gapChoices;
+      questions.push(
+        `將 ${m} 位${ctx.maleName}和 ${f} 位${ctx.femaleName}排成${ctx.lineType}，若規定任意兩位${ctx.maleName}不相鄰，共有多少種排法？`
+      );
+      answers.push(
+        `簡答：${total} 種。過程：先將 ${f} 位${ctx.femaleName}排成${ctx.lineType}，有 \\(${f}!=${femaleWays}\\) 種。再將 ${m} 位${ctx.maleName}插入 ${f} 位${ctx.femaleName}之間及兩端共 ${f + 1} 個空位，從中選 ${m} 個並安排，有 \\(P(${f + 1},${m})=${gapChoices}\\) 種。故共有 \\(${femaleWays}\\times${gapChoices}=${total}\\) 種。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS224ThreeSetInclusionExclusionParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      if (i % 2 === 0) {
+        // Integer count version (class/survey)
+        const total = randInt(40, 80);
+        const a = randInt(10, 25);
+        const b = randInt(10, 25);
+        const c = randInt(10, 25);
+        const ab = randInt(3, Math.min(Math.floor(a / 2), Math.floor(b / 2)));
+        const bc = randInt(3, Math.min(Math.floor(b / 2), Math.floor(c / 2)));
+        const ac = randInt(3, Math.min(Math.floor(a / 2), Math.floor(c / 2)));
+        const abc = randInt(1, Math.min(ab, bc, ac) - 1 || 1);
+        const unionCount = a + b + c - ab - bc - ac + abc;
+        // Verify union ≤ total
+        if (unionCount > total || unionCount <= 0) {
+          // fallback to fixed values
+          const fa = 18; const fb = 20; const fc = 22;
+          const fab = 7; const fbc = 8; const fac = 6; const fabc = 3;
+          const fu = fa + fb + fc - fab - fbc - fac + fabc;
+          const ft = 60;
+          questions.push(`某班 ${ft} 人，喜歡科目 A 的有 ${fa} 人、B 有 ${fb} 人、C 有 ${fc} 人，A 和 B 都喜歡有 ${fab} 人，B 和 C 都喜歡有 ${fbc} 人，A 和 C 都喜歡有 ${fac} 人，三科都喜歡有 ${fabc} 人。求至少喜歡一科的人數。`);
+          answers.push(`簡答：${fu} 人。過程：由三集合取捨原理，至少一科 ＝ ${fa}+${fb}+${fc}-${fab}-${fbc}-${fac}+${fabc}=${fu} 人。`);
+          continue;
+        }
+        questions.push(
+          `某班 ${total} 人，喜歡 A 科的有 ${a} 人、喜歡 B 科的有 ${b} 人、喜歡 C 科的有 ${c} 人；A 和 B 都喜歡有 ${ab} 人、B 和 C 都喜歡有 ${bc} 人、A 和 C 都喜歡有 ${ac} 人；三科都喜歡有 ${abc} 人。求至少喜歡一科的人數。`
+        );
+        answers.push(
+          `簡答：${unionCount} 人。過程：由三集合取捨原理 \\(|A\\cup B\\cup C|=|A|+|B|+|C|-|A\\cap B|-|B\\cap C|-|A\\cap C|+|A\\cap B\\cap C|\\)，代入得 \\(${a}+${b}+${c}-${ab}-${bc}-${ac}+${abc}=${unionCount}\\) 人。`
+        );
+      } else {
+        // Probability version
+        const pa = randInt(2, 5);
+        const pb = randInt(2, 5);
+        const pc = randInt(2, 5);
+        const pab = randInt(1, Math.min(pa, pb) - 1 || 1);
+        const pbc = randInt(1, Math.min(pb, pc) - 1 || 1);
+        const pac = randInt(1, Math.min(pa, pc) - 1 || 1);
+        const pabc = 1;
+        const den = 10;
+        // P(A∪B∪C) = pa/den + pb/den + pc/den - pab/den - pbc/den - pac/den + pabc/den
+        const unionNum = pa + pb + pc - pab - pbc - pac + pabc;
+        if (unionNum <= 0 || unionNum > den) {
+          // fallback
+          questions.push(`設 \\(P(A)=0.4\\)，\\(P(B)=0.5\\)，\\(P(C)=0.3\\)，\\(P(A\\cap B)=0.2\\)，\\(P(B\\cap C)=0.2\\)，\\(P(A\\cap C)=0.1\\)，\\(P(A\\cap B\\cap C)=0.05\\)。求 \\(P(A\\cup B\\cup C)\\)。`);
+          answers.push(`簡答：\\(0.75\\)。過程：\\(P(A\\cup B\\cup C)=0.4+0.5+0.3-0.2-0.2-0.1+0.05=0.75\\)。`);
+          continue;
+        }
+        const { num: sNum, den: sDen } = simplifyFraction(unionNum, den);
+        questions.push(
+          `設三個事件 \\(A,B,C\\)，已知 \\(P(A)=${pa}/${den}\\)，\\(P(B)=${pb}/${den}\\)，\\(P(C)=${pc}/${den}\\)，\\(P(A\\cap B)=${pab}/${den}\\)，\\(P(B\\cap C)=${pbc}/${den}\\)，\\(P(A\\cap C)=${pac}/${den}\\)，\\(P(A\\cap B\\cap C)=${pabc}/${den}\\)。求 \\(P(A\\cup B\\cup C)\\)。`
+        );
+        answers.push(
+          `簡答：\\(${formatFraction(sNum, sDen)}\\)。過程：由三集合取捨公式，\\(P(A\\cup B\\cup C)=\\frac{${pa}+${pb}+${pc}-${pab}-${pbc}-${pac}+${pabc}}{${den}}=\\frac{${unionNum}}{${den}}=${formatFraction(sNum, sDen)}\\)。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS224ComplementIndependentParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+
+    // Simple fraction pairs (pa_num/den, pb_num/den) for clean arithmetic
+    const fracPool = [
+      [1, 3], [2, 3], [1, 4], [3, 4], [1, 5], [2, 5], [3, 5], [4, 5],
+      [1, 6], [5, 6], [1, 2],
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+      const [an, ad] = fracPool[randInt(0, fracPool.length - 1)];
+      const [bn, bd] = fracPool[randInt(0, fracPool.length - 1)];
+
+      if (mode === 0) {
+        // Independent A,B. Given P(A), P(B). Find P(A^c ∩ B) = (1-P(A))×P(B)
+        const commonDen = ad * bd;
+        const anCommon = an * bd;
+        const acn = commonDen - anCommon; // (1-P(A)) numerator in commonDen
+        const resNum = acn * bn; // P(A^c)×P(B) = (acn/commonDen)×(bn/bd) = acn*bn / (commonDen*bd)
+        const resDen = commonDen * bd;
+        const { num: sn, den: sd } = simplifyFraction(resNum, resDen);
+        questions.push(
+          `設 \\(A\\)、\\(B\\) 為兩個獨立事件，\\(P(A)=\\frac{${an}}{${ad}}\\)，\\(P(B)=\\frac{${bn}}{${bd}}\\)。求 \\(P(A^c\\cap B)\\)。`
+        );
+        answers.push(
+          `簡答：\\(${formatFraction(sn, sd)}\\)。過程：因為 \\(A\\) 與 \\(B\\) 獨立，\\(A^c\\) 與 \\(B\\) 也獨立。所以 \\(P(A^c\\cap B)=P(A^c)\\cdot P(B)=(1-\\frac{${an}}{${ad}})\\cdot\\frac{${bn}}{${bd}}=\\frac{${ad - an}}{${ad}}\\cdot\\frac{${bn}}{${bd}}=${formatFraction(sn, sd)}\\)。`
+        );
+      } else if (mode === 1) {
+        // Independent A,B. Given P(A) and P(A∪B). Find P(B).
+        // P(A∪B) = P(A)+P(B)-P(A)P(B) → P(B)(1-P(A)) = P(A∪B)-P(A)
+        // Choose P(A∪B) > P(A) and compute P(B) = (P(AUB)-P(A)) / (1-P(A))
+        // Use an/ad for P(A); construct P(A∪B) = (an*k + some) / (ad*k) to get nice P(B)
+        // Simpler: pick P(B) first, then compute P(A∪B)
+        const [pbn, pbd] = fracPool[randInt(0, fracPool.length - 1)];
+        // P(A∪B) = an/ad + pbn/pbd - an*pbn/(ad*pbd)
+        const unionDen = ad * pbd;
+        const unionNum = an * pbd + pbn * ad - an * pbn;
+        const { num: unum, den: uden } = simplifyFraction(unionNum, unionDen);
+        // P(B) to find: pbn/pbd
+        const { num: bnum, den: bden } = simplifyFraction(pbn, pbd);
+        questions.push(
+          `設 \\(A\\)、\\(B\\) 為兩個獨立事件，\\(P(A)=\\frac{${an}}{${ad}}\\)，\\(P(A\\cup B)=${formatFraction(unum, uden)}\\)。求 \\(P(B)\\)。`
+        );
+        answers.push(
+          `簡答：\\(${formatFraction(bnum, bden)}\\)。過程：由獨立事件公式 \\(P(A\\cup B)=P(A)+P(B)-P(A)P(B)=P(A)+P(B)(1-P(A))\\)。代入得 \\(${formatFraction(unum, uden)}=\\frac{${an}}{${ad}}+P(B)\\cdot\\frac{${ad - an}}{${ad}}\\)，解得 \\(P(B)=${formatFraction(bnum, bden)}\\)。`
+        );
+      } else {
+        // Independent A,B. Find P(A^c ∪ B^c) = 1 - P(A∩B) = 1 - P(A)P(B)
+        const commonDen = ad * bd;
+        const prodNum = an * bn;
+        const resNum = commonDen - prodNum;
+        const { num: sn, den: sd } = simplifyFraction(resNum, commonDen);
+        questions.push(
+          `設 \\(A\\)、\\(B\\) 為兩個獨立事件，\\(P(A)=\\frac{${an}}{${ad}}\\)，\\(P(B)=\\frac{${bn}}{${bd}}\\)。求 \\(P(A^c\\cup B^c)\\)。`
+        );
+        answers.push(
+          `簡答：\\(${formatFraction(sn, sd)}\\)。過程：由笛摩根定律，\\(A^c\\cup B^c=(A\\cap B)^c\\)，所以 \\(P(A^c\\cup B^c)=1-P(A\\cap B)\\)。又因為 \\(A\\)、\\(B\\) 獨立，\\(P(A\\cap B)=P(A)\\cdot P(B)=\\frac{${an}}{${ad}}\\cdot\\frac{${bn}}{${bd}}=\\frac{${prodNum}}{${commonDen}}\\)。故 \\(P(A^c\\cup B^c)=1-\\frac{${prodNum}}{${commonDen}}=\\frac{${resNum}}{${commonDen}}=${formatFraction(sn, sd)}\\)。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS224BiasedBinomialAtLeastParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+
+    // Simple probability fractions and their complements
+    const pOptions = [
+      { n: 1, d: 2, label: '\\frac{1}{2}', qLabel: '\\frac{1}{2}' },
+      { n: 1, d: 3, label: '\\frac{1}{3}', qLabel: '\\frac{2}{3}' },
+      { n: 2, d: 3, label: '\\frac{2}{3}', qLabel: '\\frac{1}{3}' },
+      { n: 1, d: 4, label: '\\frac{1}{4}', qLabel: '\\frac{3}{4}' },
+      { n: 3, d: 4, label: '\\frac{3}{4}', qLabel: '\\frac{1}{4}' },
+      { n: 2, d: 5, label: '\\frac{2}{5}', qLabel: '\\frac{3}{5}' },
+    ];
+    const contexts = [
+      { trial: '擲一枚不公正的硬幣', success: '正面' },
+      { trial: '射擊一次', success: '命中目標' },
+      { trial: '投籃一次', success: '進球' },
+      { trial: '做一次實驗', success: '成功' },
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const pOpt = pOptions[randInt(0, pOptions.length - 1)];
+      const ctx = contexts[i % contexts.length];
+      const n = randInt(3, 6);
+      const mode = i % 2;
+
+      if (mode === 0) {
+        // P(X≥1) = 1-(1-p)^n
+        // (1-p)^n = (q)^n where q = 1 - p
+        const qn = pOpt.d - pOpt.n; // q numerator
+        const qd = pOpt.d;          // q denominator
+        // q^n = qn^n / qd^n
+        const qpowN = powInt(qn, n);
+        const qpowD = powInt(qd, n);
+        const resNum = qpowD - qpowN;
+        const resDen = qpowD;
+        const { num: sn, den: sd } = simplifyFraction(resNum, resDen);
+        questions.push(
+          `${ctx.trial}${ctx.success}的機率為 \\(${pOpt.label}\\)。今${ctx.trial.replace('一次', '')} ${n} 次，求至少${ctx.success}一次的機率。`
+        );
+        answers.push(
+          `簡答：\\(${formatFraction(sn, sd)}\\)。過程：設 \\(X\\) 為${ctx.success}次數，則 \\(X\\sim B(${n},${pOpt.label})\\)。用對立事件：\\(P(X\\geq 1)=1-P(X=0)=1-(1-${pOpt.label})^{${n}}=1-(\\frac{${qn}}{${qd}})^{${n}}=1-\\frac{${qpowN}}{${qpowD}}=\\frac{${resNum}}{${qpowD}}=${formatFraction(sn, sd)}\\)。`
+        );
+      } else {
+        // P(X≥2) = 1 - P(X=0) - P(X=1)
+        // P(X=0) = q^n, P(X=1) = n*p*q^(n-1)
+        const pn = pOpt.n; const pd = pOpt.d;
+        const qn = pd - pn; const qd = pd;
+        const qpowN = powInt(qn, n);
+        const qpowD = powInt(qd, n);
+        const qpowNm1 = powInt(qn, n - 1);
+        const qpowDm1 = powInt(qd, n - 1);
+        // P(X=0) = qn^n / qd^n
+        // P(X=1) = n * pn/pd * qn^(n-1)/qd^(n-1) = n*pn*qn^(n-1) / (pd*qd^(n-1)) = n*pn*qn^(n-1)/qd^n
+        const px0Num = qpowN;
+        const px0Den = qpowD;
+        const px1Num = n * pn * qpowNm1;
+        const px1Den = qpowD;
+        const pAtLeast2Num = qpowD - qpowN - n * pn * qpowNm1;
+        const pAtLeast2Den = qpowD;
+        const { num: sn, den: sd } = simplifyFraction(pAtLeast2Num, pAtLeast2Den);
+        if (pAtLeast2Num <= 0) {
+          // Fallback to P(X≥1)
+          const qpn2 = powInt(qn, n); const qpd2 = powInt(qd, n);
+          const rn2 = qpd2 - qpn2; const { num: sn2, den: sd2 } = simplifyFraction(rn2, qpd2);
+          questions.push(`${ctx.trial}${ctx.success}的機率為 \\(${pOpt.label}\\)。今重複 ${n} 次，求至少一次${ctx.success}的機率。`);
+          answers.push(`簡答：\\(${formatFraction(sn2, sd2)}\\)。過程：\\(P(X\\geq 1)=1-P(X=0)=1-(\\frac{${qn}}{${qd}})^{${n}}=${formatFraction(sn2, sd2)}\\)。`);
+          continue;
+        }
+        questions.push(
+          `${ctx.trial}${ctx.success}的機率為 \\(${pOpt.label}\\)。今重複 ${n} 次，求至少${ctx.success}兩次的機率。`
+        );
+        answers.push(
+          `簡答：\\(${formatFraction(sn, sd)}\\)。過程：\\(X\\sim B(${n},${pOpt.label})\\)。用對立事件：\\(P(X\\geq 2)=1-P(X=0)-P(X=1)=1-(\\frac{${qn}}{${qd}})^{${n}}-${n}\\cdot\\frac{${pn}}{${pd}}\\cdot(\\frac{${qn}}{${qd}})^{${n - 1}}=1-\\frac{${px0Num}}{${px0Den}}-\\frac{${px1Num}}{${px1Den}}=\\frac{${pAtLeast2Num}}{${pAtLeast2Den}}=${formatFraction(sn, sd)}\\)。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS224TotalProbabilityParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+
+    const contexts = [
+      { aName: '甲工廠', bName: '乙工廠', item: '零件', goodName: '良品' },
+      { aName: 'A 班', bName: 'B 班', item: '選手', goodName: '勝出' },
+      { aName: '機器甲', bName: '機器乙', item: '產品', goodName: '合格品' },
+      { aName: '晴天', bName: '非晴天', item: '情況', goodName: '訂位達成' },
+    ];
+
+    // Use fractions with denominator 10 or 20 for clean arithmetic
+    const paFracs = [[3,10],[4,10],[6,10],[7,10],[2,5],[3,5]];
+    const condFracs = [[8,10],[9,10],[7,10],[6,10],[4,5],[3,4]];
+
+    for (let i = 0; i < count; i += 1) {
+      const ctx = contexts[i % contexts.length];
+      const [pan, pad] = paFracs[randInt(0, paFracs.length - 1)];
+      const [pba_n, pba_d] = condFracs[randInt(0, condFracs.length - 1)];
+      const [pbac_n, pbac_d] = condFracs[randInt(0, condFracs.length - 1)];
+      // P(A) = pan/pad, P(A^c) = 1 - pan/pad = (pad-pan)/pad
+      // P(B|A) = pba_n/pba_d, P(B|A^c) = pbac_n/pbac_d
+      // P(B) = P(A)*P(B|A) + P(A^c)*P(B|A^c)
+      //      = pan/pad * pba_n/pba_d + (pad-pan)/pad * pbac_n/pbac_d
+      const commonDen = pad * pba_d * pbac_d;
+      const term1 = pan * pba_n * pbac_d;
+      const term2 = (pad - pan) * pbac_n * pba_d;
+      const pbNum = term1 + term2;
+      const pbDen = commonDen;
+      const { num: sn, den: sd } = simplifyFraction(pbNum, pbDen);
+      questions.push(
+        `已知 \\(P(A)=\\frac{${pan}}{${pad}}\\)，\\(P(B\\mid A)=\\frac{${pba_n}}{${pba_d}}\\)，\\(P(B\\mid A^c)=\\frac{${pbac_n}}{${pbac_d}}\\)。利用全機率公式求 \\(P(B)\\)。`
+      );
+      answers.push(
+        `簡答：\\(${formatFraction(sn, sd)}\\)。過程：由全機率公式，\\(P(B)=P(A)\\cdot P(B\\mid A)+P(A^c)\\cdot P(B\\mid A^c)=\\frac{${pan}}{${pad}}\\cdot\\frac{${pba_n}}{${pba_d}}+\\frac{${pad - pan}}{${pad}}\\cdot\\frac{${pbac_n}}{${pbac_d}}=\\frac{${term1}+${term2}}{${commonDen}}=\\frac{${pbNum}}{${pbDen}}=${formatFraction(sn, sd)}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS224HypergeometricExpectedValueParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+
+    const contexts = [
+      { red: '紅球', white: '白球', bag: '袋中' },
+      { red: '良品', white: '不良品', bag: '箱中' },
+      { red: '男生', white: '女生', bag: '班上' },
+      { red: '中獎彩券', white: '未中獎彩券', bag: '盒中' },
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const ctx = contexts[i % contexts.length];
+      const R = randInt(3, 8); // red items
+      const W = randInt(3, 8); // white items
+      const N = R + W;
+      const n = randInt(2, Math.min(5, N - 1)); // draw count
+      // E(X) = n * R / N (exact via linearity / indicator variables)
+      const { num: eNum, den: eDen } = simplifyFraction(n * R, N);
+      questions.push(
+        `${ctx.bag}有 ${R} 個${ctx.red}和 ${W} 個${ctx.white}，今一次不放回地取出 ${n} 個，設 \\(X\\) 為取出的${ctx.red}個數，求 \\(E(X)\\)。`
+      );
+      answers.push(
+        `簡答：\\(E(X)=${formatFraction(eNum, eDen)}\\)。過程：設 \\(X_j\\) 為第 \\(j\\) 個取出的球是${ctx.red}的指示隨機變數（\\(j=1,2,\\ldots,${n}\\)），則每個 \\(P(X_j=1)=\\frac{${R}}{${N}}\\)（對稱性）。由期望值線性性，\\(E(X)=\\sum_{j=1}^{${n}} E(X_j)=${n}\\cdot\\frac{${R}}{${N}}=\\frac{${n * R}}{${N}}=${formatFraction(eNum, eDen)}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildS231BasicUngroupedSet(count) {
-    return buildS223TemplateSet(
-      [
-        {
-          q: '給定資料 \\(\\{2,4,8,8,32\\}\\)，求其算術平均數、中位數與母體標準差。',
-          a: '簡答：平均數 \\(\\mu=\\frac{54}{5}\\)，中位數 8，標準差 \\(\\sigma=\\frac{8\\sqrt{46}}{5}\\)。過程：總和為 54，所以 \\(\\mu=54/5\\)。排序後中位數為第 3 個 8。平方和為 \\(2^2+4^2+8^2+8^2+32^2=1172\\)，故 \\(\\sigma^2=\\frac{1172}{5}-(\\frac{54}{5})^2=\\frac{2944}{25}\\)，所以 \\(\\sigma=\\frac{8\\sqrt{46}}{5}\\)。',
-        },
-        {
-          q: '一組資料為 \\(\\{120,116,108,104,102\\}\\)，求平均數 \\(\\mu\\)、離差平方和 \\(S_{xx}\\) 與標準差 \\(\\sigma\\)。',
-          a: '簡答：\\(\\mu=110\\)，\\(S_{xx}=240\\)，\\(\\sigma=4\\sqrt3\\)。過程：總和 550，平均為 110。離差為 10、6、-2、-6、-8，平方和為 \\(100+36+4+36+64=240\\)。母體變異數為 \\(240/5=48\\)，所以 \\(\\sigma=4\\sqrt3\\)。',
-        },
-        {
-          q: '資料為 \\(\\{90,85,85,80,70\\}\\)，求其算術平均數與標準差。',
-          a: '簡答：平均數 82，標準差 \\(\\sqrt{46}\\)。過程：總和為 410，所以平均數為 82。平方和為 33850，變異數為 \\(33850/5-82^2=46\\)，故標準差為 \\(\\sqrt{46}\\)。',
-        },
-        {
-          q: '計算資料 \\(\\{14,10,8,6,2\\}\\) 的算術平均數與母體標準差。',
-          a: '簡答：平均數 8，標準差 \\(4\\)。過程：總和為 40，平均數為 8。離差為 6、2、0、-2、-6，平方和為 80，母體變異數為 \\(80/5=16\\)，所以標準差為 4。',
-        },
-        {
-          q: '給定 40 筆數據，已知 \\(\\sum x_i=1000\\)、\\(\\sum x_i^2=29000\\)，求平均數與母體標準差。',
-          a: '簡答：平均數 25，標準差 \\(10\\)。過程：\\(\\mu=1000/40=25\\)。又 \\(\\sigma^2=\\frac{29000}{40}-25^2=725-625=100\\)，所以 \\(\\sigma=10\\)。',
-        },
-      ],
-      count
-    );
+    const questions = [];
+    const answers = [];
+    const nOpts = [5, 8, 10, 12, 15, 20];
+    const muOpts = [10, 20, 25, 30, 40, 50, 60, 70, 80];
+    const sigOpts = [2, 3, 4, 5, 6, 8, 10];
+    for (let i = 0; i < count; i++) {
+      const mode = i % 3;
+      if (mode === 0) {
+        // Mode 0: Given Σx and Σx², find mean and std dev
+        const n   = nOpts[randInt(0, nOpts.length - 1)];
+        const mu  = muOpts[randInt(0, muOpts.length - 1)];
+        const sig = sigOpts[randInt(0, sigOpts.length - 1)];
+        const S   = n * mu;
+        const Q   = n * (sig * sig + mu * mu);
+        questions.push(
+          `設 \\(x_1, x_2, \\dots, x_{${n}}\\) 為 ${n} 個數據，` +
+          `且 \\(\\displaystyle\\sum_{i=1}^{${n}} x_i = ${S}\\)，` +
+          `\\(\\displaystyle\\sum_{i=1}^{${n}} x_i^2 = ${Q}\\)。` +
+          `求此 ${n} 個數據的平均數與母體標準差。`
+        );
+        answers.push(
+          `簡答：平均數 \\(${mu}\\)，標準差 \\(${sig}\\)。` +
+          `過程：\\(\\mu = \\dfrac{${S}}{${n}} = ${mu}\\)；` +
+          `\\(\\sigma^2 = \\dfrac{${Q}}{${n}} - ${mu}^2 = ${sig*sig + mu*mu} - ${mu*mu} = ${sig*sig}\\)，` +
+          `故 \\(\\sigma = ${sig}\\)。`
+        );
+      } else if (mode === 1) {
+        // Mode 1: n values with known mean; add one new value → find new mean
+        const n     = [5, 8, 10, 12][randInt(0, 3)];
+        const mu    = muOpts[randInt(0, muOpts.length - 1)];
+        const delta = [-20, -15, -10, -5, 5, 10, 15, 20][randInt(0, 7)];
+        const newV  = mu + delta;
+        const oldSum = n * mu;
+        const newSum = oldSum + newV;
+        const newN   = n + 1;
+        // Check clean division
+        const isClean = (newSum % newN === 0);
+        const newMuDisplay = isClean
+          ? String(newSum / newN)
+          : `\\dfrac{${newSum}}{${newN}}`;
+        questions.push(
+          `一組 ${n} 個數據的平均數為 ${mu}。` +
+          `若新增數值 ${newV}，求新的 ${newN} 個數據的平均數。`
+        );
+        answers.push(
+          `簡答：\\(${newMuDisplay}\\)。` +
+          `過程：原總和為 \\(${n} \\times ${mu} = ${oldSum}\\)，加入 ${newV} 後總和為 \\(${newSum}\\)。` +
+          `新平均數為 \\(\\dfrac{${newSum}}{${newN}} = ${newMuDisplay}\\)。`
+        );
+      } else {
+        // Mode 2: n values missing one; find missing given mean
+        const n       = [5, 6, 7][randInt(0, 2)];
+        const mu      = muOpts[randInt(0, muOpts.length - 1)];
+        const totalS  = n * mu;
+        // Build n-1 values with controlled offsets
+        const devSets = [
+          [-10, -5, 0, 5],      // sum_dev = -10, x_dev = +10
+          [-8, -2, 4, 6],       // sum_dev =  0, x_dev =  0 (use only for n=5 with different pattern)
+          [-6, 0, 2, 8],        // sum_dev =  4, x_dev = -4
+          [-15, -5, 0, 5, 10],  // sum_dev = -5, x_dev = +5
+          [-12, -4, 2, 8, 14],  // sum_dev =  8, x_dev = -8
+          [-10, -2, 4, 6, 12],  // sum_dev = 10, x_dev = -10
+        ];
+        const setIdx  = n === 5 ? randInt(0, 2) : randInt(3, 5);
+        const devs    = devSets[setIdx];
+        const knownVals = devs.map(d => mu + d);
+        const knownSum  = knownVals.reduce((a, b) => a + b, 0);
+        const missing   = totalS - knownSum;
+        const listStr   = knownVals.join(', ');
+        questions.push(
+          `已知 ${n} 個數據的平均數為 ${mu}，其中 ${n - 1} 個數據為 \\(${listStr}\\)，求第 ${n} 個數據 \\(x\\)。`
+        );
+        answers.push(
+          `簡答：\\(x = ${missing}\\)。` +
+          `過程：${n} 個數據的總和為 \\(${n} \\times ${mu} = ${totalS}\\)。` +
+          `已知 ${n - 1} 個數的和為 \\(${knownSum}\\)，` +
+          `故 \\(x = ${totalS} - ${knownSum} = ${missing}\\)。`
+        );
+      }
+    }
+    return {
+      questions,
+      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
+      answers,
+    };
   }
 
   function buildS231LinearTransformSet(count) {
-    return buildS223TemplateSet(
-      [
-        {
-          q: '已知一組數據 \\(x\\) 的平均數為 10、標準差為 3。若新數據 \\(y=4x+3\\)，求新平均數與新標準差。',
-          a: '簡答：新平均數 43，新標準差 12。過程：線性變換 \\(y=ax+b\\) 下，\\(\\mu_y=a\\mu_x+b\\)、\\(\\sigma_y=|a|\\sigma_x\\)。所以 \\(\\mu_y=4\\cdot10+3=43\\)，\\(\\sigma_y=4\\cdot3=12\\)。',
-        },
-        {
-          q: '測量長度 9 次，得到平均數 2.45、標準差 0.02。若將數據均乘以 100 再減去 240，求新數據的平均數與標準差。',
-          a: '簡答：平均數 5，標準差 2。過程：新數據 \\(y=100x-240\\)。故 \\(\\mu_y=100\\cdot2.45-240=5\\)，\\(\\sigma_y=100\\cdot0.02=2\\)。',
-        },
-        {
-          q: '某次考試原始成績 \\(x\\) 的標準差為 10，老師將成績調整為 \\(y=0.8x+20\\)。求調整後標準差。',
-          a: '簡答：8。過程：加上常數不影響標準差，乘以 0.8 會讓標準差乘以 \\(|0.8|\\)。所以新標準差為 \\(0.8\\cdot10=8\\)。',
-        },
-        {
-          q: '設數據 \\(z_i=3x_i+5\\)，且已知 \\(\\mu_x=10\\)、\\(\\sigma_x=4\\)，求 \\(\\mu_z\\) 與 \\(\\sigma_z\\)。',
-          a: '簡答：\\(\\mu_z=35\\)，\\(\\sigma_z=12\\)。過程：\\(\\mu_z=3\\mu_x+5=35\\)，\\(\\sigma_z=|3|\\sigma_x=12\\)。',
-        },
-        {
-          q: '已知原始數據平均值為 40，標準差為 10。若將數據變更為原本的 110%，求新的平均值與標準差。',
-          a: '簡答：平均值 44，標準差 11。過程：新數據 \\(y=1.1x\\)，因此平均與標準差都乘以 1.1，得到 \\(44\\) 與 \\(11\\)。',
-        },
-      ],
-      count
-    );
+    const questions = [];
+    const answers = [];
+    const aOpts    = [2, 3, 4, 5, 10, 0.5, 1.5, 0.2];
+    const bOpts    = [3, 5, 10, 20, -10, -5, 0, 100];
+    const muOpts   = [10, 20, 30, 40, 50, 60];
+    const sigOpts  = [2, 3, 4, 5, 6, 8, 10];
+    for (let i = 0; i < count; i++) {
+      const mode = i % 3;
+      if (mode === 0) {
+        // Mode 0: given mu_x, sigma_x, a, b → find mu_y, sigma_y
+        const a   = aOpts[randInt(0, aOpts.length - 1)];
+        const b   = bOpts[randInt(0, bOpts.length - 1)];
+        const mu  = muOpts[randInt(0, muOpts.length - 1)];
+        const sig = sigOpts[randInt(0, sigOpts.length - 1)];
+        const muY  = a * mu + b;
+        const sigY = Math.abs(a) * sig;
+        const aStr  = Number.isInteger(a)  ? String(a)  : String(a);
+        const muYStr = Number.isInteger(muY)  ? String(muY)  : `${muY}`;
+        const sigYStr = Number.isInteger(sigY) ? String(sigY) : `${sigY}`;
+        const bStr  = b >= 0 ? `+${b}` : `${b}`;
+        questions.push(
+          `已知一組數據 \\(x\\) 的平均數為 \\(${mu}\\)、標準差為 \\(${sig}\\)。` +
+          `若新數據 \\(y = ${aStr}x ${bStr}\\)，求 \\(y\\) 的平均數與標準差。`
+        );
+        answers.push(
+          `簡答：平均數 \\(${muYStr}\\)，標準差 \\(${sigYStr}\\)。` +
+          `過程：線性變換 \\(y = ax + b\\) 下，\\(\\mu_y = a\\mu_x + b = ${aStr} \\times ${mu} ${bStr} = ${muYStr}\\)；` +
+          `\\(\\sigma_y = |a|\\sigma_x = ${aStr} \\times ${sig} = ${sigYStr}\\)。`
+        );
+      } else if (mode === 1) {
+        // Mode 1: given mu_x, sigma_x, a, mu_y → find b
+        const a   = [2, 3, 4, 5][randInt(0, 3)];
+        const mu  = muOpts[randInt(0, muOpts.length - 1)];
+        const sig = sigOpts[randInt(0, sigOpts.length - 1)];
+        const bChoices = [-10, -5, 0, 5, 10, 15, 20];
+        const b   = bChoices[randInt(0, bChoices.length - 1)];
+        const muY = a * mu + b;
+        questions.push(
+          `已知 \\(x\\) 的平均數為 \\(${mu}\\)，標準差為 \\(${sig}\\)。` +
+          `若 \\(y = ${a}x + b\\) 的平均數為 \\(${muY}\\)，求常數 \\(b\\)。`
+        );
+        answers.push(
+          `簡答：\\(b = ${b}\\)。` +
+          `過程：\\(\\mu_y = a\\mu_x + b\\)，即 \\(${muY} = ${a} \\times ${mu} + b\\)，` +
+          `解得 \\(b = ${muY} - ${a * mu} = ${b}\\)。`
+        );
+      } else {
+        // Mode 2: given sigma_x and sigma_y → find |a|
+        const a   = [2, 3, 4, 5][randInt(0, 3)];
+        const sig = sigOpts[randInt(0, sigOpts.length - 1)];
+        const sigY = a * sig;
+        const mu  = muOpts[randInt(0, muOpts.length - 1)];
+        const b   = bOpts[randInt(0, bOpts.length - 1)];
+        const bStr = b >= 0 ? `+${b}` : `${b}`;
+        questions.push(
+          `已知 \\(x\\) 的標準差為 \\(${sig}\\)，且 \\(y = ax ${bStr}\\)（\\(a > 0\\)）的標準差為 \\(${sigY}\\)，求 \\(a\\)。`
+        );
+        answers.push(
+          `簡答：\\(a = ${a}\\)。` +
+          `過程：\\(\\sigma_y = |a| \\cdot \\sigma_x\\)，即 \\(${sigY} = a \\times ${sig}\\)，` +
+          `解得 \\(a = \\dfrac{${sigY}}{${sig}} = ${a}\\)。`
+        );
+      }
+    }
+    return {
+      questions,
+      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
+      answers,
+    };
   }
 
   function buildS231WeightedMeanSet(count) {
@@ -5125,31 +5922,63 @@
   }
 
   function buildS231ZScoreSet(count) {
-    return buildS223TemplateSet(
-      [
-        {
-          q: '已知某生數學成績 80 分，班級平均 70 分，標準差 10 分，求其 Z 分數。',
-          a: '簡答：1。過程：Z 分數為 \\(z=\\frac{x-\\mu}{\\sigma}=\\frac{80-70}{10}=1\\)。',
-        },
-        {
-          q: '給定資料 \\(\\{2,6,4,8,10\\}\\)，將其中第一個數據 2 進行標準化，求其 Z 分數。',
-          a: '簡答：\\(-\\sqrt2\\)。過程：平均數為 6，離差平方和為 40，母體標準差為 \\(\\sqrt{40/5}=2\\sqrt2\\)。所以 \\(z=\\frac{2-6}{2\\sqrt2}=-\\sqrt2\\)。',
-        },
-        {
-          q: '若兩科成績 \\(X\\) 與 \\(Y\\) 分別標準化為 \\(X^{\\prime}\\) 與 \\(Y^{\\prime}\\)，說明 \\(\\mu_{X^{\\prime}}\\) 與 \\(\\sigma_{X^{\\prime}}\\) 的值。',
-          a: '簡答：\\(\\mu_{X^{\\prime}}=0\\)，\\(\\sigma_{X^{\\prime}}=1\\)。過程：標準化定義為 \\(X^{\\prime}=\\frac{X-\mu_X}{\\sigma_X}\\)，減去平均後平均變 0，再除以標準差後標準差變 1。',
-        },
-        {
-          q: '某生在兩次段考中的成績分別為 75 與 82。若兩次考試平均與標準差不同，應用什麼量判斷哪一次表現較佳？',
-          a: '簡答：應比較兩次的 Z 分數。過程：原始分數不能直接比較，因為不同考試的平均與離散程度不同。將兩次成績都轉成 \\(z=\\frac{x-\mu}{\\sigma}\\)，Z 分數較大者表示相對表現較佳。',
-        },
-        {
-          q: '若一組數據的 Z 分數為 1.5，且已知該組平均數 60、標準差 8，求該筆原始數據之值。',
-          a: '簡答：72。過程：由 \\(z=\\frac{x-\mu}{\\sigma}\\)，得 \\(1.5=\\frac{x-60}{8}\\)，所以 \\(x=60+12=72\\)。',
-        },
-      ],
-      count
-    );
+    const questions = [];
+    const answers = [];
+    const muOpts  = [60, 65, 70, 72, 75, 80];
+    const sigOpts = [4, 5, 6, 8, 10, 12];
+    for (let i = 0; i < count; i++) {
+      const mode = i % 3;
+      const mu   = muOpts[randInt(0, muOpts.length - 1)];
+      const sig  = sigOpts[randInt(0, sigOpts.length - 1)];
+      if (mode === 0) {
+        // Mode 0: given x, mu, sigma → find z
+        const zNums = [-2, -1, 0, 1, 2];
+        const z     = zNums[randInt(0, zNums.length - 1)];
+        const x     = mu + z * sig;
+        questions.push(
+          `某次考試全班平均分數為 \\(${mu}\\) 分，標準差為 \\(${sig}\\) 分。` +
+          `若小明的分數為 \\(${x}\\) 分，求其標準分數（Z 分數）。`
+        );
+        answers.push(
+          `簡答：Z 分數為 \\(${z}\\)。` +
+          `過程：\\(z = \\dfrac{x - \\mu}{\\sigma} = \\dfrac{${x} - ${mu}}{${sig}} = \\dfrac{${x - mu}}{${sig}} = ${z}\\)。`
+        );
+      } else if (mode === 1) {
+        // Mode 1: given z, mu, sigma → find x
+        const zVals = [-2, -1.5, -1, -0.5, 0.5, 1, 1.5, 2];
+        const z     = zVals[randInt(0, zVals.length - 1)];
+        const xRaw  = mu + z * sig;
+        const isClean = Number.isInteger(xRaw);
+        const xStr  = isClean ? String(xRaw) : `${xRaw}`;
+        questions.push(
+          `已知某組數據平均數為 \\(${mu}\\)，標準差為 \\(${sig}\\)。` +
+          `若某筆資料的 Z 分數為 \\(${z}\\)，求其原始數值。`
+        );
+        answers.push(
+          `簡答：原始數值為 \\(${xStr}\\)。` +
+          `過程：由 \\(z = \\dfrac{x - \\mu}{\\sigma}\\)，` +
+          `得 \\(x = \\mu + z \\cdot \\sigma = ${mu} + (${z}) \\times ${sig} = ${xStr}\\)。`
+        );
+      } else {
+        // Mode 2: given x, z → find mu (sigma known)
+        const zNums2 = [-2, -1, 1, 2];
+        const z      = zNums2[randInt(0, zNums2.length - 1)];
+        const x      = mu + z * sig;
+        questions.push(
+          `已知某組數據標準差為 \\(${sig}\\)，且某筆原始數值為 \\(${x}\\)，其 Z 分數為 \\(${z}\\)，求此組數據的平均數 \\(\\mu\\)。`
+        );
+        answers.push(
+          `簡答：\\(\\mu = ${mu}\\)。` +
+          `過程：由 \\(z = \\dfrac{x - \\mu}{\\sigma}\\)，得 \\(${z} = \\dfrac{${x} - \\mu}{${sig}}\\)，` +
+          `解得 \\(\\mu = ${x} - ${z} \\times ${sig} = ${x} - ${z * sig} = ${mu}\\)。`
+        );
+      }
+    }
+    return {
+      questions,
+      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
+      answers,
+    };
   }
 
   function buildS231BinaryDataSet(count) {
@@ -5460,6 +6289,301 @@
     );
   }
 
+  // ===== NEW PARAMETRIZED GENERATORS =====
+
+  function buildS231QuartilesIQRParameterizedSet(count) {
+    // 四分位數與四分位距：給定 7~11 個有序整數，求 Q1, Q2, Q3, IQR
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i++) {
+      const mode = i % 2;
+      if (mode === 0) {
+        // Odd n (7 or 9): Q2 = middle, Q1 = median of lower half, Q3 = median of upper half
+        const n      = [7, 9][randInt(0, 1)];
+        const base   = [40, 50, 60, 70][randInt(0, 3)];
+        const step   = [2, 3, 4, 5][randInt(0, 3)];
+        // Generate arithmetic-ish sequence with small noise
+        const vals = [];
+        for (let k = 0; k < n; k++) {
+          vals.push(base + k * step + randInt(0, 1) * randInt(-1, 1));
+        }
+        vals.sort((a, b) => a - b);
+        // Remove duplicates for cleanliness
+        const mid = Math.floor(n / 2);
+        const q2  = vals[mid];
+        // Lower half: vals[0..mid-1], Q1 = median of those
+        const lowerHalf = vals.slice(0, mid);
+        const upperHalf = vals.slice(mid + 1);
+        const q1 = lowerHalf[Math.floor(lowerHalf.length / 2)];
+        const q3 = upperHalf[Math.floor(upperHalf.length / 2)];
+        const iqr = q3 - q1;
+        const valsStr = vals.join(', ');
+        questions.push(
+          `給定已排序的數據：\\(${valsStr}\\)。` +
+          `求第一四分位數 \\(Q_1\\)、中位數 \\(Q_2\\)、第三四分位數 \\(Q_3\\) 與四分位距 \\(IQR\\)。`
+        );
+        answers.push(
+          `簡答：\\(Q_1=${q1}\\)，\\(Q_2=${q2}\\)，\\(Q_3=${q3}\\)，\\(IQR=${iqr}\\)。` +
+          `過程：共 ${n} 筆，\\(Q_2\\)（中位數）= 第 ${mid+1} 個 = \\(${q2}\\)。` +
+          `下半部 \\(${lowerHalf.join(', ')}\\) 的中位數為 \\(Q_1=${q1}\\)；` +
+          `上半部 \\(${upperHalf.join(', ')}\\) 的中位數為 \\(Q_3=${q3}\\)。` +
+          `\\(IQR = Q_3 - Q_1 = ${q3} - ${q1} = ${iqr}\\)。`
+        );
+      } else {
+        // Mode 1: even n (8 or 10)
+        const n      = [8, 10][randInt(0, 1)];
+        const base   = [40, 50, 60][randInt(0, 2)];
+        const step   = [3, 4, 5][randInt(0, 2)];
+        const vals = [];
+        for (let k = 0; k < n; k++) vals.push(base + k * step);
+        // Q2 = average of n/2 and n/2+1 (0-indexed: n/2-1 and n/2)
+        const mid1 = n / 2 - 1, mid2 = n / 2;
+        const q2Num = vals[mid1] + vals[mid2];
+        const q2Str = (q2Num % 2 === 0) ? String(q2Num / 2) : `${q2Num / 2}`;
+        // Q1 = median of lower half (n/2 elements, which is even if n divisible by 4, odd otherwise)
+        const lH = vals.slice(0, n / 2);
+        const uH = vals.slice(n / 2);
+        const lHmid = lH.length / 2;
+        const q1Num  = lH[lHmid - 1] + lH[lHmid];
+        const q1Str  = (q1Num % 2 === 0) ? String(q1Num / 2) : `${q1Num / 2}`;
+        const q3Num  = uH[lHmid - 1] + uH[lHmid];
+        const q3Str  = (q3Num % 2 === 0) ? String(q3Num / 2) : `${q3Num / 2}`;
+        const iqrNum = q3Num - q1Num;
+        const iqrStr = (iqrNum % 2 === 0) ? String(iqrNum / 2) : `${iqrNum / 2}`;
+        const valsStr = vals.join(', ');
+        questions.push(
+          `給定已排序的 ${n} 筆數據：\\(${valsStr}\\)。` +
+          `求 \\(Q_1\\)、\\(Q_2\\)、\\(Q_3\\) 與四分位距 \\(IQR\\)。`
+        );
+        answers.push(
+          `簡答：\\(Q_1=${q1Str}\\)，\\(Q_2=${q2Str}\\)，\\(Q_3=${q3Str}\\)，\\(IQR=${iqrStr}\\)。` +
+          `過程：共 ${n} 筆，\\(Q_2 = \\dfrac{${vals[mid1]}+${vals[mid2]}}{2} = ${q2Str}\\)。` +
+          `下半部 \\(${lH.join(', ')}\\)：\\(Q_1 = \\dfrac{${lH[lHmid-1]}+${lH[lHmid]}}{2} = ${q1Str}\\)；` +
+          `上半部 \\(${uH.join(', ')}\\)：\\(Q_3 = \\dfrac{${uH[lHmid-1]}+${uH[lHmid]}}{2} = ${q3Str}\\)。` +
+          `\\(IQR = ${q3Str} - ${q1Str} = ${iqrStr}\\)。`
+        );
+      }
+    }
+    return {
+      questions,
+      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
+      answers,
+    };
+  }
+
+  function buildS231GroupedMeanParameterizedSet(count) {
+    // 分組資料：給定組中點與次數，估計加權平均數；或求缺少的次數
+    const questions = [];
+    const answers = [];
+    const midpointSets = [
+      [25, 35, 45, 55],
+      [30, 40, 50, 60],
+      [55, 65, 75, 85],
+      [10, 20, 30, 40],
+    ];
+    for (let i = 0; i < count; i++) {
+      const mode  = i % 2;
+      const mpSet = midpointSets[randInt(0, midpointSets.length - 1)];
+      const freqs = [randInt(3,8), randInt(5,12), randInt(8,15), randInt(3,7)];
+      const n = freqs.reduce((a, b) => a + b, 0);
+      const sumFM = mpSet.reduce((s, m, k) => s + m * freqs[k], 0);
+      const mu = sumFM / n;
+      const isClean = Number.isInteger(mu);
+      const muStr = isClean ? String(mu) : `\\dfrac{${sumFM}}{${n}}`;
+      if (mode === 0) {
+        // Given midpoints and frequencies → estimate weighted mean
+        const tableRows = mpSet.map((m, k) =>
+          `\\(${mpSet[k-1]??mpSet[k]-5}\\sim${m+5}\\) & \\(${m}\\) & \\(${freqs[k]}\\)`
+        ).join(' \\\\ ');
+        questions.push(
+          `某班考試成績分組如下：組距各為 10，組中點依序為 \\(${mpSet.join(', ')}\\)，` +
+          `各組人數依序為 \\(${freqs.join(', ')}\\)，共 ${n} 人。` +
+          `試估計平均成績。`
+        );
+        const prodStr = mpSet.map((m, k) => `${m}\\times${freqs[k]}`).join(' + ');
+        answers.push(
+          `簡答：\\(\\bar{x} \\approx ${muStr}\\)。` +
+          `過程：加權平均 \\(= \\dfrac{\\sum f_i m_i}{\\sum f_i} = \\dfrac{${prodStr}}{${n}} = \\dfrac{${sumFM}}{${n}} = ${muStr}\\)。`
+        );
+      } else {
+        // Mode 1: given 3 frequencies and total mean → find missing frequency
+        const missingIdx = randInt(0, 3);
+        const knownFreqs = freqs.slice();
+        const missingF   = knownFreqs[missingIdx];
+        knownFreqs[missingIdx] = null;
+        // Total: n = sumKnownFreqs + missingF
+        const knownN = freqs.reduce((s, f, k) => k === missingIdx ? s : s + f, 0);
+        const knownSumFM = mpSet.reduce((s, m, k) => k === missingIdx ? s : s + m * freqs[k], 0);
+        // muStr is clean? Use the clean version for the question
+        const cleanMu = Math.round(mu * 10) / 10;
+        const freqsDisplay = knownFreqs.map((f, k) => f === null ? `x` : String(f)).join(', ');
+        questions.push(
+          `某班考試分組，組中點依序為 \\(${mpSet.join(', ')}\\)，` +
+          `各組人數依序為 \\(${freqsDisplay}\\)，已知平均成績為 \\(${muStr}\\)。` +
+          `求未知次數 \\(x\\)。`
+        );
+        answers.push(
+          `簡答：\\(x = ${missingF}\\)。` +
+          `過程：設總人數 \\(N = ${knownN} + x\\)。` +
+          `由 \\(\\dfrac{${knownSumFM} + ${mpSet[missingIdx]}x}{${knownN} + x} = ${muStr}\\)，` +
+          `解得 \\(x = ${missingF}\\)。`
+        );
+      }
+    }
+    return {
+      questions,
+      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
+      answers,
+    };
+  }
+
+  function buildS232CorrelationFromSumsParameterizedSet(count) {
+    // 給定 Sxx, Syy, Sxy 或 Σ → 計算相關係數 r
+    const questions = [];
+    const answers = [];
+    // Pre-designed datasets giving clean r fractions
+    const datasets = [
+      { label: 'Sxx=100, Syy=400, Sxy=120', sxx:100, syy:400, sxy:120, rNum:3, rDen:5 },
+      { label: 'Sxx=50, Syy=200, Sxy=60',   sxx:50,  syy:200, sxy:60,  rNum:3, rDen:5 },
+      { label: 'Sxx=25, Syy=100, Sxy=20',   sxx:25,  syy:100, sxy:20,  rNum:2, rDen:5 },
+      { label: 'Sxx=36, Syy=100, Sxy=54',   sxx:36,  syy:100, sxy:54,  rNum:9, rDen:10 },
+      { label: 'Sxx=100, Syy=64, Sxy=64',   sxx:100, syy:64,  sxy:64,  rNum:4, rDen:5 },
+      { label: 'Sxx=100, Syy=25, Sxy=-40',  sxx:100, syy:25,  sxy:-40, rNum:-4, rDen:5 },
+      { label: 'Sxx=400, Syy=100, Sxy=120', sxx:400, syy:100, sxy:120, rNum:3, rDen:5 },
+      { label: 'Sxx=16, Syy=100, Sxy=-32',  sxx:16,  syy:100, sxy:-32, rNum:-4, rDen:5 },
+    ];
+    for (let i = 0; i < count; i++) {
+      const mode = i % 2;
+      const ds   = datasets[randInt(0, datasets.length - 1)];
+      const gcd  = (a, b) => b ? gcd(b, a % b) : a;
+      const g    = gcd(Math.abs(ds.rNum), ds.rDen);
+      const rNs  = ds.rNum / g, rDs = ds.rDen / g;
+      const rStr = rDs === 1 ? String(rNs) : `\\dfrac{${rNs}}{${rDs}}`;
+      if (mode === 0) {
+        // Direct: given Sxx, Syy, Sxy
+        questions.push(
+          `已知兩組變數的離差平方和與離差乘積和為：` +
+          `\\(S_{xx} = ${ds.sxx}\\)，\\(S_{yy} = ${ds.syy}\\)，\\(S_{xy} = ${ds.sxy}\\)。` +
+          `求 \\(x\\) 與 \\(y\\) 的相關係數 \\(r\\)。`
+        );
+        const prodStr = `\\sqrt{${ds.sxx} \\times ${ds.syy}} = \\sqrt{${ds.sxx * ds.syy}}`;
+        answers.push(
+          `簡答：\\(r = ${rStr}\\)。` +
+          `過程：\\(r = \\dfrac{S_{xy}}{\\sqrt{S_{xx} \\cdot S_{yy}}} = \\dfrac{${ds.sxy}}{${prodStr}} = \\dfrac{${ds.sxy}}{${Math.sqrt(ds.sxx * ds.syy)}} = ${rStr}\\)。`
+        );
+      } else {
+        // Mode 1: Scale up to Σ form
+        const n = [5, 8, 10][randInt(0, 2)];
+        const muX = [10, 20, 30][randInt(0, 2)];
+        const muY = [15, 25, 35][randInt(0, 2)];
+        const sumX = n * muX, sumY = n * muY;
+        // Σx² = Sxx + (Σx)²/n = Sxx + n*muX²
+        const sumX2 = ds.sxx + n * muX * muX;
+        const sumY2 = ds.syy + n * muY * muY;
+        const sumXY = ds.sxy + n * muX * muY;
+        questions.push(
+          `已知 \\(n = ${n}\\)，\\(\\sum x_i = ${sumX}\\)，\\(\\sum y_i = ${sumY}\\)，` +
+          `\\(\\sum x_i^2 = ${sumX2}\\)，\\(\\sum y_i^2 = ${sumY2}\\)，\\(\\sum x_i y_i = ${sumXY}\\)。` +
+          `求 \\(x\\) 與 \\(y\\) 的相關係數。`
+        );
+        answers.push(
+          `簡答：\\(r = ${rStr}\\)。` +
+          `過程：\\(S_{xx} = ${sumX2} - \\dfrac{${sumX}^2}{${n}} = ${ds.sxx}\\)，` +
+          `\\(S_{yy} = ${sumY2} - \\dfrac{${sumY}^2}{${n}} = ${ds.syy}\\)，` +
+          `\\(S_{xy} = ${sumXY} - \\dfrac{${sumX} \\times ${sumY}}{${n}} = ${ds.sxy}\\)。` +
+          `\\(r = \\dfrac{${ds.sxy}}{\\sqrt{${ds.sxx} \\times ${ds.syy}}} = ${rStr}\\)。`
+        );
+      }
+    }
+    return {
+      questions,
+      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
+      answers,
+    };
+  }
+
+  function buildS232LeastSquaresSmallDataParameterizedSet(count) {
+    // 給定 3 個數據點（x=[1,2,3]），用最小平方法求迴歸直線 y=bx+a
+    // b = (y3-y1)/2, ȳ = (y1+y2+y3)/3, a = ȳ - 2b
+    const questions = [];
+    const answers = [];
+    const gcd = (a, b) => b ? gcd(b, a % b) : a;
+    const kOpts = [1, 2, 3, 4, 5];       // underlying slope
+    const cOpts = [5, 10, 15, 20, 30];   // intercept offset
+    const qOpts = [-6, -3, 0, 3, 6];     // noise on y2 (divisible by 3 → clean ȳ)
+    for (let i = 0; i < count; i++) {
+      const mode = i % 2;
+      const k = kOpts[randInt(0, kOpts.length - 1)];
+      const c = cOpts[randInt(0, cOpts.length - 1)];
+      const q = qOpts[randInt(0, qOpts.length - 1)];
+      // x=[1,2,3], y=[2k+c, 3k+q+c, 4k+c]
+      const y1 = 2*k + c, y2 = 3*k + q + c, y3 = 4*k + c;
+      const b = k;  // (y3-y1)/2 = (4k-2k)/2 = k
+      const ybar = (y1 + y2 + y3) / 3;  // = (9k+q+3c)/3 = 3k+q/3+c
+      const a = ybar - 2 * b;            // = k + q/3 + c
+      const aIsClean = Number.isInteger(a);
+      if (!aIsClean && mode === 1) {
+        // Re-generate with q=0 to guarantee clean a
+        const qSafe = 0;
+        const y1s = 2*k+c, y2s = 3*k+c, y3s = 4*k+c;
+        const ybars = (y1s+y2s+y3s)/3;
+        const as = ybars - 2*k;
+        if (mode === 1) {
+          // predict at x=5
+          const x0 = 5, y0 = k*5 + as;
+          questions.push(
+            `已知數據 \\((1,${y1s}),(2,${y2s}),(3,${y3s})\\)，` +
+            `利用最小平方法求迴歸直線 \\(y = bx + a\\)，並預測 \\(x=5\\) 時 \\(y\\) 的值。`
+          );
+          answers.push(
+            `簡答：迴歸線 \\(y = ${k}x + ${as}\\)，\\(x=5\\) 時 \\(y=${y0}\\)。` +
+            `過程：\\(\\bar x = 2\\)，\\(\\bar y = ${ybars}\\)；` +
+            `\\(S_{xx} = 2\\)，\\(S_{xy} = (1-2)(${y1s}-${ybars})+(3-2)(${y3s}-${ybars}) = ${y3s-y1s}\\)；` +
+            `\\(b = \\dfrac{${y3s-y1s}}{2} = ${k}\\)，\\(a = ${ybars} - ${k} \\times 2 = ${as}\\)。` +
+            `預測：\\(y = ${k} \\times 5 + ${as} = ${y0}\\)。`
+          );
+          questions[questions.length-1] && answers.push && null; // no-op
+        }
+        continue;
+      }
+      const aStr  = Number.isInteger(a) ? String(a) : `\\dfrac{${a*3}}{3}`;
+      const aDisplay = Number.isInteger(a) ? String(a) : `${a}`;
+      if (mode === 0) {
+        // Just find the regression line
+        const sxy = y3 - y1;  // = 2k
+        questions.push(
+          `利用最小平方法，求通過數據 \\((1,${y1}),(2,${y2}),(3,${y3})\\) 的迴歸直線 \\(y = bx + a\\)。`
+        );
+        answers.push(
+          `簡答：\\(y = ${b}x + ${aDisplay}\\)。` +
+          `過程：\\(\\bar x = 2\\)，\\(\\bar y = \\dfrac{${y1}+${y2}+${y3}}{3} = ${ybar}\\)。` +
+          `\\(S_{xx} = (1-2)^2+(2-2)^2+(3-2)^2 = 2\\)。` +
+          `\\(S_{xy} = (1-2)(${y1}-${ybar})+(2-2)(${y2}-${ybar})+(3-2)(${y3}-${ybar}) = ${sxy}\\)。` +
+          `\\(b = \\dfrac{${sxy}}{2} = ${b}\\)，\\(a = ${ybar} - ${b} \\times 2 = ${aDisplay}\\)。`
+        );
+      } else {
+        // Predict at x=4 or x=5
+        const x0 = [4, 5][randInt(0, 1)];
+        const y0 = b * x0 + a;
+        const y0Str = Number.isInteger(y0) ? String(y0) : `${y0}`;
+        questions.push(
+          `已知最小平方法求得迴歸直線通過數據 \\((1,${y1}),(2,${y2}),(3,${y3})\\)。` +
+          `求迴歸直線，並預測 \\(x = ${x0}\\) 時 \\(y\\) 的估計值。`
+        );
+        answers.push(
+          `簡答：\\(y = ${b}x + ${aDisplay}\\)，\\(x=${x0}\\) 時 \\(y=${y0Str}\\)。` +
+          `過程：\\(b = \\dfrac{${y3}-${y1}}{2} = ${b}\\)，\\(\\bar y = ${ybar}\\)，\\(a = ${ybar} - ${b} \\times 2 = ${aDisplay}\\)。` +
+          `預測：\\(y = ${b} \\times ${x0} + ${aDisplay} = ${y0Str}\\)。`
+        );
+      }
+    }
+    return {
+      questions,
+      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
+      answers,
+    };
+  }
+
   function buildS231CoreStatsFiveSubtypeMixedSet(count) {
     return buildS223MixedSet(
       [
@@ -5700,59 +6824,169 @@
   }
 
   function buildS232RegressionLineSet(count) {
-    return buildS223TemplateSet(
-      [
-        {
-          q: '已知 \\(\\mu_x=60,\\mu_y=70,\\sigma_x=10,\\sigma_y=6,r=\\frac34\\)，求 \\(y\\) 對 \\(x\\) 的迴歸直線方程式。',
-          a: '簡答：\\(y-70=\\frac9{20}(x-60)\\)。過程：斜率為 \\(r\\frac{\\sigma_y}{\\sigma_x}=\\frac34\\cdot\\frac6{10}=\\frac9{20}\\)。迴歸線通過 \\((60,70)\\)，故 \\(y-70=\\frac9{20}(x-60)\\)。',
-        },
-        {
-          q: '已知 \\(\\mu_x=60,\\mu_y=70,\\sigma_x=10,\\sigma_y=6,r=\\frac34\\)。若 \\(x=80\\)，利用迴歸直線預測 \\(y\\)。',
-          a: '簡答：79。過程：由迴歸線 \\(y-70=\\frac9{20}(x-60)\\)，代入 \\(x=80\\)，得 \\(y=70+\\frac9{20}\\cdot20=79\\)。',
-        },
-        {
-          q: '給定數據 \\((3,1),(5,3),(1,t)\\)，若其迴歸直線為 \\(y=\\frac14x+\\frac54\\)，求 \\(t\\) 之值。',
-          a: '簡答：2。過程：迴歸直線必通過平均點。\\(\\mu_x=(3+5+1)/3=3\\)，直線在 \\(x=3\\) 時 \\(y=2\\)，所以 \\(\\mu_y=(1+3+t)/3=2\\)，得 \\(t=2\\)。',
-        },
-        {
-          q: '某商店統計廣告費 \\(x\\) 與銷售額 \\(y\\) 的迴歸直線為 \\(y=7.164+0.124x\\)。問廣告費增加 1 單位時，銷售額預估增加多少？',
-          a: '簡答：0.124 單位。過程：迴歸線斜率 0.124 表示 \\(x\\) 每增加 1 單位，預測的 \\(y\\) 平均增加 0.124 單位。',
-        },
-        {
-          q: '設 \\(y\\) 對 \\(x\\) 的迴歸方程式為 \\(y=2x+10\\)，已知 \\(\\mu_x=5\\)，求 \\(\\mu_y\\)。',
-          a: '簡答：20。過程：迴歸線必通過平均點 \\((\\mu_x,\mu_y)\\)。代入 \\(x=5\\)，得 \\(\\mu_y=2\\cdot5+10=20\\)。',
-        },
-      ],
-      count
-    );
+    const questions = [];
+    const answers = [];
+    // r values as fractions [num, den]
+    const rFracs = [[1,2],[2,3],[3,4],[3,5],[4,5],[-1,2],[-2,3],[-3,4]];
+    const muXOpts = [40, 50, 60, 70, 80];
+    const muYOpts = [50, 60, 70, 75, 80];
+    const sigXOpts = [5, 8, 10, 12];
+    const sigYOpts = [4, 6, 8, 10];
+    for (let i = 0; i < count; i++) {
+      const mode  = i % 3;
+      const rFrac = rFracs[randInt(0, rFracs.length - 1)];
+      const rNum  = rFrac[0], rDen = rFrac[1];
+      const muX   = muXOpts[randInt(0, muXOpts.length - 1)];
+      const muY   = muYOpts[randInt(0, muYOpts.length - 1)];
+      const sigX  = sigXOpts[randInt(0, sigXOpts.length - 1)];
+      const sigY  = sigYOpts[randInt(0, sigYOpts.length - 1)];
+      // slope b = r * sigY / sigX (as fraction: rNum*sigY / rDen*sigX)
+      const bNum  = rNum * sigY;
+      const bDen  = rDen * sigX;
+      const gcd = (a, b) => b ? gcd(b, a % b) : a;
+      const g     = gcd(Math.abs(bNum), bDen);
+      const bNs   = bNum / g, bDs = bDen / g;
+      const bStr  = bDs === 1 ? String(bNs) : `\\dfrac{${bNs}}{${bDs}}`;
+      const rStr  = rDen === 1 ? String(rNum) : `\\dfrac{${rNum}}{${rDen}}`;
+      if (mode === 0) {
+        // Write equation + predict for x0
+        const xStep  = sigX * [1, 2, 3][randInt(0, 2)];
+        const x0     = muX + xStep;
+        // y0 = muY + bNum/bDen * xStep = muY + rNum*sigY*xStep / (rDen*sigX)
+        const y0Num  = muY * bDen + bNs * xStep;
+        const y0     = y0Num / bDs;
+        const isClean = Number.isInteger(y0);
+        const y0Str  = isClean ? String(y0) : `\\dfrac{${y0Num}}{${bDs}}`;
+        questions.push(
+          `已知 \\(\\mu_x = ${muX}\\)，\\(\\mu_y = ${muY}\\)，` +
+          `\\(\\sigma_x = ${sigX}\\)，\\(\\sigma_y = ${sigY}\\)，相關係數 \\(r = ${rStr}\\)。` +
+          `求 \\(y\\) 對 \\(x\\) 的迴歸直線方程式，並預測 \\(x = ${x0}\\) 時 \\(y\\) 的值。`
+        );
+        answers.push(
+          `簡答：迴歸線為 \\(y - ${muY} = ${bStr}(x - ${muX})\\)，預測值 \\(y = ${y0Str}\\)。` +
+          `過程：斜率 \\(b = r \\cdot \\dfrac{\\sigma_y}{\\sigma_x} = ${rStr} \\times \\dfrac{${sigY}}{${sigX}} = ${bStr}\\)。` +
+          `迴歸線過均值點 \\((${muX}, ${muY})\\)，故方程式為 \\(y - ${muY} = ${bStr}(x - ${muX})\\)。` +
+          `代入 \\(x = ${x0}\\)：\\(y = ${muY} + ${bStr} \\times ${xStep} = ${y0Str}\\)。`
+        );
+      } else if (mode === 1) {
+        // Given equation and muX → find muY
+        // Use equation y = bStr * x + c where c = muY - bNum/bDen * muX
+        const cNum  = muY * bDen - bNs * muX;
+        const cg    = gcd(Math.abs(cNum), bDs);
+        const cNs   = cNum / cg, cDs = bDs / cg;
+        const cStr  = cDs === 1 ? String(cNs) : `\\dfrac{${cNs}}{${cDs}}`;
+        const cSign = cNs >= 0 ? `+${cStr}` : `${cStr}`;
+        questions.push(
+          `已知迴歸直線方程式為 \\(y = ${bStr}x ${cSign}\\)，且 \\(\\mu_x = ${muX}\\)，求 \\(\\mu_y\\)。`
+        );
+        answers.push(
+          `簡答：\\(\\mu_y = ${muY}\\)。` +
+          `過程：迴歸線必通過均值點 \\((\\mu_x, \\mu_y)\\)，代入 \\(x = ${muX}\\)：` +
+          `\\(\\mu_y = ${bStr} \\times ${muX} ${cSign} = ${muY}\\)。`
+        );
+      } else {
+        // Given equation passes through mean + another point → find equation
+        const xOther = muX - sigX;
+        const yOtherNum = muY * bDen + bNs * (-sigX);
+        const yOther = yOtherNum / bDs;
+        const isOtherClean = Number.isInteger(yOther);
+        if (!isOtherClean) {
+          // Fall back to mode 0 style
+          questions.push(
+            `已知 \\(\\mu_x = ${muX}\\)，\\(\\mu_y = ${muY}\\)，斜率 \\(b = ${bStr}\\)，寫出迴歸直線方程式。`
+          );
+          answers.push(
+            `簡答：\\(y - ${muY} = ${bStr}(x - ${muX})\\)。` +
+            `過程：迴歸線斜率為 \\(${bStr}\\)，且必過均值點 \\((${muX}, ${muY})\\)。`
+          );
+        } else {
+          questions.push(
+            `某迴歸直線通過均值點 \\((${muX}, ${muY})\\) 及另一點 \\((${xOther}, ${yOther})\\)，求迴歸直線方程式。`
+          );
+          answers.push(
+            `簡答：\\(y - ${muY} = ${bStr}(x - ${muX})\\)。` +
+            `過程：斜率 \\(= \\dfrac{${muY} - ${yOther}}{${muX} - ${xOther}} = \\dfrac{${muY - yOther}}{${muX - xOther}} = ${bStr}\\)。` +
+            `通過均值點故方程式為 \\(y - ${muY} = ${bStr}(x - ${muX})\\)。`
+          );
+        }
+      }
+    }
+    return {
+      questions,
+      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
+      answers,
+    };
   }
 
   function buildS232ReciprocalSlopesSet(count) {
-    return buildS223TemplateSet(
-      [
-        {
-          q: '已知 \\(y\\) 對 \\(x\\) 的迴歸線斜率為 0.8，\\(x\\) 對 \\(y\\) 的迴歸線斜率為 0.2，求相關係數 \\(r\\) 的絕對值。',
-          a: '簡答：\\(|r|=\\frac25\\)。過程：兩迴歸斜率乘積為 \\(r^2\\)，所以 \\(r^2=0.8\\cdot0.2=0.16\\)，故 \\(|r|=0.4=\\frac25\\)。',
-        },
-        {
-          q: '設 \\(y\\) 對 \\(x\\) 的迴歸線為 \\(y=0.5x+1\\)，\\(x\\) 對 \\(y\\) 的迴歸線為 \\(x=0.5y+2\\)，求其相關係數 \\(r\\)。',
-          a: '簡答：\\(r=\\frac12\\)。過程：兩斜率皆為正，故 \\(r>0\\)。又 \\(r^2=0.5\\cdot0.5=0.25\\)，所以 \\(r=0.5=\\frac12\\)。',
-        },
-        {
-          q: '若兩變數相關係數 \\(r=0.6\\)，且 \\(y\\) 對 \\(x\\) 的迴歸線斜率為 0.4，求 \\(x\\) 對 \\(y\\) 的迴歸線斜率。',
-          a: '簡答：\\(0.9\\)。過程：設另一斜率為 \\(m\\)，則 \\(0.4m=r^2=0.36\\)，所以 \\(m=0.9\\)。',
-        },
-        {
-          q: '已知 \\(r=-0.8\\)，且 \\(y\\) 對 \\(x\\) 的迴歸線斜率為 -1.6，求 \\(x\\) 對 \\(y\\) 的迴歸線斜率。',
-          a: '簡答：\\(-0.4\\)。過程：兩斜率乘積為 \\(r^2=0.64\\)。設另一斜率為 \\(m\\)，則 \\((-1.6)m=0.64\\)，故 \\(m=-0.4\\)。',
-        },
-        {
-          q: '判斷：若 \\(y\\) 對 \\(x\\) 與 \\(x\\) 對 \\(y\\) 的迴歸直線斜率互為倒數，則相關係數 \\(r\\) 必為 1 或 -1。',
-          a: '簡答：正確。過程：斜率互為倒數表示乘積為 1，而兩迴歸斜率乘積等於 \\(r^2\\)，所以 \\(r^2=1\\)，故 \\(r=1\\) 或 \\(-1\\)。',
-        },
-      ],
-      count
-    );
+    const questions = [];
+    const answers = [];
+    // r as simple fractions [num, den], positive only (sign determined separately)
+    const rFracs = [[1,2],[2,5],[3,5],[3,4],[4,5]];
+    const sigXOpts = [4, 5, 8, 10];
+    const sigYOpts = [2, 5, 8, 10];
+    const gcd = (a, b) => b ? gcd(b, a % b) : a;
+    for (let i = 0; i < count; i++) {
+      const mode  = i % 3;
+      const rFrac = rFracs[randInt(0, rFracs.length - 1)];
+      const rNum  = rFrac[0], rDen = rFrac[1]; // |r| = rNum/rDen
+      const sigX  = sigXOpts[randInt(0, sigXOpts.length - 1)];
+      const sigY  = sigYOpts[randInt(0, sigYOpts.length - 1)];
+      // b1 = r*sigY/sigX  →  b1 = rNum*sigY / rDen*sigX
+      // b2 = r*sigX/sigY  →  b2 = rNum*sigX / rDen*sigY
+      const b1Num = rNum * sigY, b1Den = rDen * sigX;
+      const b2Num = rNum * sigX, b2Den = rDen * sigY;
+      const g1 = gcd(b1Num, b1Den), g2 = gcd(b2Num, b2Den);
+      const b1Ns = b1Num/g1, b1Ds = b1Den/g1;
+      const b2Ns = b2Num/g2, b2Ds = b2Den/g2;
+      const b1Str = b1Ds === 1 ? String(b1Ns) : `\\dfrac{${b1Ns}}{${b1Ds}}`;
+      const b2Str = b2Ds === 1 ? String(b2Ns) : `\\dfrac{${b2Ns}}{${b2Ds}}`;
+      const rStr  = rDen === 1 ? String(rNum) : `\\dfrac{${rNum}}{${rDen}}`;
+      const r2Num = rNum * rNum, r2Den = rDen * rDen;
+      const gR2 = gcd(r2Num, r2Den);
+      const r2Str = (r2Den/gR2 === 1) ? String(r2Num/gR2) : `\\dfrac{${r2Num/gR2}}{${r2Den/gR2}}`;
+      if (mode === 0) {
+        // Given b1, b2 → find |r|
+        questions.push(
+          `已知 \\(y\\) 對 \\(x\\) 的迴歸線斜率為 \\(${b1Str}\\)，` +
+          `\\(x\\) 對 \\(y\\) 的迴歸線斜率為 \\(${b2Str}\\)，` +
+          `求相關係數 \\(r\\) 的絕對值。`
+        );
+        answers.push(
+          `簡答：\\(|r| = ${rStr}\\)。` +
+          `過程：兩迴歸線斜率之乘積等於 \\(r^2\\)，即 ` +
+          `\\(r^2 = ${b1Str} \\times ${b2Str} = ${r2Str}\\)，` +
+          `故 \\(|r| = ${rStr}\\)。`
+        );
+      } else if (mode === 1) {
+        // Given r and b1 → find b2
+        questions.push(
+          `已知相關係數 \\(r = ${rStr}\\)，且 \\(y\\) 對 \\(x\\) 的迴歸線斜率為 \\(${b1Str}\\)，` +
+          `求 \\(x\\) 對 \\(y\\) 的迴歸線斜率。`
+        );
+        answers.push(
+          `簡答：\\(${b2Str}\\)。` +
+          `過程：設斜率為 \\(m\\)，由 \\(m \\times ${b1Str} = r^2 = ${r2Str}\\)，` +
+          `解得 \\(m = ${b2Str}\\)。`
+        );
+      } else {
+        // Given r, sigX, sigY → find both slopes
+        questions.push(
+          `已知 \\(\\sigma_x = ${sigX}\\)，\\(\\sigma_y = ${sigY}\\)，相關係數 \\(r = ${rStr}\\)。` +
+          `求 \\(y\\) 對 \\(x\\) 與 \\(x\\) 對 \\(y\\) 兩條迴歸線的斜率。`
+        );
+        answers.push(
+          `簡答：\\(y\\) 對 \\(x\\) 斜率為 \\(${b1Str}\\)，\\(x\\) 對 \\(y\\) 斜率為 \\(${b2Str}\\)。` +
+          `過程：\\(b_1 = r \\cdot \\dfrac{\\sigma_y}{\\sigma_x} = ${rStr} \\times \\dfrac{${sigY}}{${sigX}} = ${b1Str}\\)；` +
+          `\\(b_2 = r \\cdot \\dfrac{\\sigma_x}{\\sigma_y} = ${rStr} \\times \\dfrac{${sigX}}{${sigY}} = ${b2Str}\\)。`
+        );
+      }
+    }
+    return {
+      questions,
+      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
+      answers,
+    };
   }
 
   function buildS232MeanPointSet(count) {
@@ -8125,6 +9359,33 @@
           return buildS212AlgebraicVariantsSigmaSubtypeSet(5);
         },
       },
+      's2-1-1-difference-method-nonlinear': {
+        type: 'drill',
+        title: '差分法（非線性型）',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS211DifferenceMethodNonlinearSet(5);
+        },
+      },
+      's2-1-2-reverse-n-from-sum': {
+        type: 'drill',
+        title: '已知級數和反求項數 n',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS212ReverseNFromSumSet(5);
+        },
+      },
+      's2-1-2-non-standard-sigma-limits': {
+        type: 'drill',
+        title: '非標準下界的 Sigma 求和',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS212NonStandardSigmaLimitsSet(5);
+        },
+      },
       's2-2-1-counting-applications-five-subtypes': {
         type: 'drill',
         title: '取捨計數與排列組合五小類綜合',
@@ -8800,6 +10061,105 @@
           return buildS224ExpectedValueParameterizedSet(5);
         },
       },
+      's2-2-2-same-group-together-parameterized': {
+        type: 'drill',
+        title: '同科目書排在一起（分組排列）',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS222SameGroupTogetherArrangementParameterizedSet(5);
+        },
+      },
+      's2-2-2-gender-non-adjacent-parameterized': {
+        type: 'drill',
+        title: '男女不相鄰排列',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS222GenderNonAdjacentParameterizedSet(5);
+        },
+      },
+      's2-2-4-three-set-union-parameterized': {
+        type: 'drill',
+        title: '三集合取捨原理與機率',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS224ThreeSetInclusionExclusionParameterizedSet(5);
+        },
+      },
+      's2-2-4-complement-independent-parameterized': {
+        type: 'drill',
+        title: '補集事件與獨立事件',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS224ComplementIndependentParameterizedSet(5);
+        },
+      },
+      's2-2-4-biased-binomial-at-least-parameterized': {
+        type: 'drill',
+        title: '二項分佈至少 k 次',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS224BiasedBinomialAtLeastParameterizedSet(5);
+        },
+      },
+      's2-2-4-total-probability-parameterized': {
+        type: 'drill',
+        title: '全機率公式',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS224TotalProbabilityParameterizedSet(5);
+        },
+      },
+      's2-2-4-hypergeometric-expected-value-parameterized': {
+        type: 'drill',
+        title: '超幾何分佈期望值',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS224HypergeometricExpectedValueParameterizedSet(5);
+        },
+      },
+      's2-3-1-quartiles-iqr-parameterized': {
+        type: 'drill',
+        title: '四分位數與四分位距',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS231QuartilesIQRParameterizedSet(5);
+        },
+      },
+      's2-3-1-grouped-mean-parameterized': {
+        type: 'drill',
+        title: '分組資料加權平均數估計',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS231GroupedMeanParameterizedSet(5);
+        },
+      },
+      's2-3-2-correlation-from-sums-parameterized': {
+        type: 'drill',
+        title: '由離差積和計算相關係數',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS232CorrelationFromSumsParameterizedSet(5);
+        },
+      },
+      's2-3-2-least-squares-small-data-parameterized': {
+        type: 'drill',
+        title: '三點最小平方法迴歸直線',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS232LeastSquaresSmallDataParameterizedSet(5);
+        },
+      },
       's2-3-1-core-stats-five-subtypes': {
         type: 'drill',
         title: '基本統計量與資料變換五小類綜合',
@@ -9178,15 +10538,6 @@
           return buildS241TrigExtremaIdentitySubtypeSet(5);
         },
       },
-      's2-4-1-triangle-identity-five-subtypes': {
-        type: 'drill',
-        title: '三角形比例比較與恆等式五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241TriangleIdentityFiveSubtypeMixedSet(5);
-        },
-      },
       's2-4-1-side-altitude-sine-ratio': {
         type: 'drill',
         title: '邊長高與三角比的比例轉化',
@@ -9232,6 +10583,15 @@
           return buildS241TriangleAngleIdentitySubtypeSet(5);
         },
       },
+      's2-4-1-triangle-identity-five-subtypes': {
+        type: 'drill',
+        title: '三角形比例比較與恆等式五小類綜合',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS241TriangleIdentityFiveSubtypeMixedSet(5);
+        },
+      },
       's2-4-2-sine-law-five-subtypes': {
         type: 'drill',
         title: '正弦定理與邊角比例五小類綜合',
@@ -9239,6 +10599,33 @@
         questionCount: 5,
         generate() {
           return buildS242SineLawFiveSubtypeMixedSet(5);
+        },
+      },
+      's2-4-2-cosine-law-five-subtypes': {
+        type: 'drill',
+        title: '餘弦定理與三角形判定五小類綜合',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS242CosineLawFiveSubtypeMixedSet(5);
+        },
+      },
+      's2-4-2-area-radius-five-subtypes': {
+        type: 'drill',
+        title: '面積公式與內外接圓五小類綜合',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS242AreaRadiusFiveSubtypeMixedSet(5);
+        },
+      },
+      's2-4-2-special-segment-five-subtypes': {
+        type: 'drill',
+        title: '特殊線段與四邊形幾何五小類綜合',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS242SpecialSegmentFiveSubtypeMixedSet(5);
         },
       },
       's2-4-2-sine-side-ratio': {
@@ -9286,15 +10673,6 @@
           return buildS242AltitudeSineRatioSubtypeSet(5);
         },
       },
-      's2-4-2-cosine-law-five-subtypes': {
-        type: 'drill',
-        title: '餘弦定理與三角形判定五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242CosineLawFiveSubtypeMixedSet(5);
-        },
-      },
       's2-4-2-cosine-sas': {
         type: 'drill',
         title: '已知兩邊一夾角求第三邊',
@@ -9338,15 +10716,6 @@
         questionCount: 5,
         generate() {
           return buildS242CyclicQuadrilateralDiagonalSubtypeSet(5);
-        },
-      },
-      's2-4-2-area-radius-five-subtypes': {
-        type: 'drill',
-        title: '面積公式與內外接圓五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242AreaRadiusFiveSubtypeMixedSet(5);
         },
       },
       's2-4-2-two-side-angle-area': {
@@ -9394,15 +10763,6 @@
           return buildS242DiagonalAreaExtremaSubtypeSet(5);
         },
       },
-      's2-4-2-special-segment-five-subtypes': {
-        type: 'drill',
-        title: '特殊線段與四邊形幾何五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242SpecialSegmentFiveSubtypeMixedSet(5);
-        },
-      },
       's2-4-2-median-length': {
         type: 'drill',
         title: '中線定理與中線長度計算',
@@ -9448,6 +10808,24 @@
           return buildS242TrapezoidAreaSubtypeSet(5);
         },
       },
+      's2-4-3-elevation-spatial-five-subtypes': {
+        type: 'drill',
+        title: '立體仰俯角與空間測量五小類綜合',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS243ElevationSpatialFiveSubtypeMixedSet(5);
+        },
+      },
+      's2-4-3-navigation-motion-five-subtypes': {
+        type: 'drill',
+        title: '航行方位與動態追蹤五小類綜合',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS243NavigationMotionFiveSubtypeMixedSet(5);
+        },
+      },
       's2-4-3-plane-survey-five-subtypes': {
         type: 'drill',
         title: '平面測量與跨越障礙五小類綜合',
@@ -9455,6 +10833,15 @@
         questionCount: 5,
         generate() {
           return buildS243PlaneSurveyFiveSubtypeMixedSet(5);
+        },
+      },
+      's2-4-3-special-measurement-five-subtypes': {
+        type: 'drill',
+        title: '特殊線段與測量模型五小類綜合',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS243SpecialMeasurementFiveSubtypeMixedSet(5);
         },
       },
       's2-4-3-asa-cross-distance': {
@@ -9502,15 +10889,6 @@
           return buildS243ArbitraryDivisionLineSubtypeSet(5);
         },
       },
-      's2-4-3-elevation-spatial-five-subtypes': {
-        type: 'drill',
-        title: '立體仰俯角與空間測量五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243ElevationSpatialFiveSubtypeMixedSet(5);
-        },
-      },
       's2-4-3-common-elevation-circumradius': {
         type: 'drill',
         title: '立體測量：共仰角求高度',
@@ -9554,15 +10932,6 @@
         questionCount: 5,
         generate() {
           return buildS243SpatialMotionTrackingSubtypeSet(5);
-        },
-      },
-      's2-4-3-navigation-motion-five-subtypes': {
-        type: 'drill',
-        title: '航行方位與動態追蹤五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243NavigationMotionFiveSubtypeMixedSet(5);
         },
       },
       's2-4-3-bearing-navigation': {
@@ -9610,15 +10979,6 @@
           return buildS243DynamicShortestDistanceSubtypeSet(5);
         },
       },
-      's2-4-3-special-measurement-five-subtypes': {
-        type: 'drill',
-        title: '特殊線段與測量模型五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243SpecialMeasurementFiveSubtypeMixedSet(5);
-        },
-      },
       's2-4-3-angle-bisector-measurement': {
         type: 'drill',
         title: '角平分線測量題型',
@@ -9639,7 +10999,7 @@
       },
       's2-4-3-displacement-segment': {
         type: 'drill',
-        title: '動態運動產生的位移分線',
+        title: '動態運動產生的位移線段',
         difficulty: 'medium',
         questionCount: 5,
         generate() {
@@ -9657,20 +11017,17 @@
       },
       's2-4-3-bearing-target-distance': {
         type: 'drill',
-        title: '方位與目標距離綜合測量',
+        title: '方位角與目標距離計算',
         difficulty: 'medium',
         questionCount: 5,
         generate() {
           return buildS243BearingTargetDistanceSubtypeSet(5);
         },
       },
-  };
+    };
 
-  const bundleFingerprint = "s2-bundle-v20260619-v1";
-  Object.values(nextConfigs).forEach((config) => {
-    if (!config || typeof config !== "object") return;
-    config.__generatorFingerprint = bundleFingerprint;
-  });
-
-  store.registerConfigs(nextConfigs);
+  const fingerprint = 's2-bundle-v20260624-v3';
+  if (window.__s2BundleFingerprint === fingerprint) return;
+  window.__s2BundleFingerprint = fingerprint;
+  window.formulaPracticeStore.registerConfigs(nextConfigs);
 })();

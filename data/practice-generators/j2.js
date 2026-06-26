@@ -935,6 +935,383 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  // ── j2-1-3 新增：等臂天平稱重 ────────────────────────────────────────────
+  function buildJ213BalanceScaleSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 3;
+      const cycle = Math.floor(i / 3);
+
+      if (variant === 0) {
+        // 兩罐甲=三罐乙; 兩罐甲+一罐乙=W公克 → 求甲乙各重
+        const templates = [
+          { la: 2, lb: 3, ra: 2, rb: 1, w: 1200 },
+          { la: 3, lb: 2, ra: 1, rb: 3, w: 1000 },
+          { la: 2, lb: 5, ra: 3, rb: 2, w: 900 },
+          { la: 4, lb: 3, ra: 2, rb: 1, w: 1400 },
+          { la: 3, lb: 4, ra: 2, rb: 3, w: 840 },
+          { la: 5, lb: 2, ra: 1, rb: 2, w: 1600 },
+        ];
+        const pick = templates[cycle % templates.length];
+        // la*a = lb*b (balance 1)
+        // ra*a + rb*b = w (balance 2)
+        const det = pick.la * pick.rb + pick.lb * pick.ra; // lb*ra not right
+        // a = lb*k, b = la*k → ra*lb*k + rb*la*k = w → k = w/(ra*lb + rb*la)
+        const denom = pick.ra * pick.lb + pick.rb * pick.la;
+        if (pick.w % denom !== 0) { i -= 1; continue; }
+        const k = pick.w / denom;
+        const a = pick.lb * k;
+        const b = pick.la * k;
+        const itemA = ['甲牌番茄汁', '甲種飲料', '蘋果', '甲牌罐頭', '甲種果汁'][cycle % 5];
+        const itemB = ['乙牌番茄汁', '乙種飲料', '橘子', '乙牌罐頭', '乙種果汁'][cycle % 5];
+        const unit = ['罐', '罐', '顆', '罐', '罐'][cycle % 5];
+        questions.push(
+          `用等臂天平稱重：第一次 ${pick.la} ${unit}${itemA}與 ${pick.lb} ${unit}${itemB}平衡；第二次 ${pick.ra} ${unit}${itemA}和 ${pick.rb} ${unit}${itemB}與 ${pick.w} 公克砝碼平衡。求每${unit}${itemA}和每${unit}${itemB}各重多少公克？`
+        );
+        answers.push(
+          `設每${unit}${itemA}重 $x$ 公克，每${unit}${itemB}重 $y$ 公克。依題意列聯立方程式：$${formatSystemLatex(`${pick.la}x=${pick.lb}y`, `${pick.ra}x+${pick.rb}y=${pick.w}`)}$。由第一式得 $x=\\dfrac{${pick.lb}}{${pick.la}}y$，代入第二式整理得 $y=${b}$，$x=${a}$。所以每${unit}${itemA}重 $${a}$ 公克，每${unit}${itemB}重 $${b}$ 公克。`
+        );
+        continue;
+      }
+
+      if (variant === 1) {
+        // 兩種物品，兩次購買金額 → 求各自單價（相當於聯立）
+        const templates = [
+          { a1: 5, b1: 3, t1: 235, a2: 6, b2: 4, t2: 290, nameA: '玫瑰', nameB: '康乃馨' },
+          { a1: 3, b1: 5, t1: 138, a2: 4, b2: 3, t2: 132, nameA: '礦泉水', nameB: '汽水' },
+          { a1: 5, b1: 2, t1: 225, a2: 2, b2: 3, t2: 129, nameA: '麥克筆', nameB: '簽字筆' },
+          { a1: 4, b1: 7, t1: 965, a2: 3, b2: 4, t2: 555, nameA: '豆乾（包）', nameB: '太陽餅（盒）' },
+          { a1: 6, b1: 5, t1: 225, a2: 5, b2: 8, t2: 174, nameA: '耶誕襪（雙）', nameB: '鈴噹（個）' },
+        ];
+        const pick = templates[cycle % templates.length];
+        // a1*x + b1*y = t1, a2*x + b2*y = t2
+        const det = pick.a1 * pick.b2 - pick.a2 * pick.b1;
+        if (det === 0) { i -= 1; continue; }
+        const x = (pick.t1 * pick.b2 - pick.t2 * pick.b1) / det;
+        const y = (pick.a1 * pick.t2 - pick.a2 * pick.t1) / det;
+        if (!Number.isInteger(x) || !Number.isInteger(y) || x <= 0 || y <= 0) { i -= 1; continue; }
+        questions.push(
+          `甲買了 ${pick.a1} 件${pick.nameA}和 ${pick.b1} 件${pick.nameB}，共花 ${pick.t1} 元；乙買了 ${pick.a2} 件${pick.nameA}和 ${pick.b2} 件${pick.nameB}，共花 ${pick.t2} 元。求每件${pick.nameA}和每件${pick.nameB}各多少元？`
+        );
+        answers.push(
+          `設每件${pick.nameA}售價 $x$ 元，每件${pick.nameB}售價 $y$ 元。依題意列聯立方程式：$${formatSystemLatex(`${pick.a1}x+${pick.b1}y=${pick.t1}`, `${pick.a2}x+${pick.b2}y=${pick.t2}`)}$。消去法解得 $x=${x},\\ y=${y}$。故每件${pick.nameA}售價 ${x} 元，每件${pick.nameB}售價 ${y} 元。`
+        );
+        continue;
+      }
+
+      // variant 2: 天平比較兩物品求差
+      const templates = [
+        { a: 2, b: 3, ra: 2, rb: 1, w: 1200, nameA: '餅乾（塊）', nameB: '糖果（顆）' },
+        { a: 3, b: 4, ra: 3, rb: 1, w: 800, nameA: '棋子（枚）', nameB: '石頭（顆）' },
+        { a: 4, b: 5, ra: 2, rb: 1, w: 900, nameA: '彈珠（顆）', nameB: '積木（塊）' },
+        { a: 5, b: 6, ra: 3, rb: 1, w: 1500, nameA: '鉛筆（支）', nameB: '橡皮（塊）' },
+        { a: 2, b: 3, ra: 1, rb: 2, w: 700, nameA: '玻璃球（顆）', nameB: '金屬球（顆）' },
+        { a: 3, b: 5, ra: 2, rb: 1, w: 1100, nameA: '木塊', nameB: '鐵塊' },
+      ];
+      const pick = templates[cycle % templates.length];
+      const denom2 = pick.ra * pick.b + pick.rb * pick.a;
+      if (pick.w % denom2 !== 0) { i -= 1; continue; }
+      const k2 = pick.w / denom2;
+      const aWeight = pick.b * k2;
+      const bWeight = pick.a * k2;
+      const diff = Math.abs(aWeight - bWeight);
+      questions.push(
+        `用等臂天平稱重：第一次 ${pick.a} 個${pick.nameA}和 ${pick.b} 個${pick.nameB}平衡；第二次 ${pick.ra} 個${pick.nameA}和 ${pick.rb} 個${pick.nameB}放在左盤，右盤放 ${pick.w} 公克砝碼達到平衡。求兩種物品重量相差多少公克？`
+      );
+      answers.push(
+        `設每個${pick.nameA}重 $x$ 公克，每個${pick.nameB}重 $y$ 公克。依題意列聯立方程式：$${formatSystemLatex(`${pick.a}x=${pick.b}y`, `${pick.ra}x+${pick.rb}y=${pick.w}`)}$。由第一式得 $x=\\dfrac{${pick.b}}{${pick.a}}y$，代入整理得 $y=${bWeight}$，$x=${aWeight}$。兩者相差 $|${aWeight}-${bWeight}|=${diff}$ 公克。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-1-3 新增：班級人數與成績分析 ──────────────────────────────────────
+  function buildJ213ClassSizeScoreSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 3;
+      const cycle = Math.floor(i / 3);
+
+      if (variant === 0) {
+        // 全班N人，平均分avg，男生平均avgM，女生平均avgF → 求男/女生人數
+        const templates = [
+          { total: 45, avg: 78, avgM: 75, avgF: 80 },
+          { total: 40, avg: 74, avgM: 70, avgF: 78 },
+          { total: 36, avg: 72, avgM: 68, avgF: 76 },
+          { total: 50, avg: 76, avgM: 72, avgF: 80 },
+          { total: 42, avg: 75, avgM: 72, avgF: 78 },
+          { total: 48, avg: 80, avgM: 75, avgF: 84 },
+        ];
+        const pick = templates[cycle % templates.length];
+        // x + y = total, avg*total = avgM*x + avgF*y
+        const totalScore = pick.avg * pick.total;
+        const malePct = pick.avgF - pick.avg;
+        const femalePct = pick.avg - pick.avgM;
+        const denomPct = pick.avgF - pick.avgM;
+        if (totalScore % 1 !== 0 || (malePct * pick.total) % denomPct !== 0) { i -= 1; continue; }
+        const male = (malePct * pick.total) / denomPct;
+        const female = pick.total - male;
+        questions.push(
+          `某班共 ${pick.total} 人，某次考試全班平均 ${pick.avg} 分，男生平均 ${pick.avgM} 分，女生平均 ${pick.avgF} 分，求男、女生各有幾人。`
+        );
+        answers.push(
+          `設男生有 $x$ 人，女生有 $y$ 人。依題意可列聯立方程式：$${formatSystemLatex(`x+y=${pick.total}`, `${pick.avgM}x+${pick.avgF}y=${totalScore}`)}$。兩式中第二式除以第一式係數相消法：$(${pick.avgM})x+(${pick.avgF})y=${totalScore}$ 減去 $(${pick.avg})(x+y)=${totalScore}$，整理得 $(${pick.avgM - pick.avg})x+(${pick.avgF - pick.avg})y=0$，即 $${pick.avg - pick.avgM}x=${pick.avgF - pick.avg}y$，所以 $x:y=${malePct}:${femalePct}$。共 ${pick.total} 人，故男生 ${male} 人，女生 ${female} 人。`
+        );
+        continue;
+      }
+
+      if (variant === 1) {
+        // 男生p%+女生q%自行上學，男比女多d人；家長接送的男女一樣多 → 求全班人數
+        const templates = [
+          { pm: 40, pf: 25, diff: 4 },
+          { pm: 60, pf: 40, diff: 6 },
+          { pm: 50, pf: 30, diff: 8 },
+          { pm: 75, pf: 50, diff: 10 },
+          { pm: 60, pf: 50, diff: 4 },
+          { pm: 80, pf: 60, diff: 12 },
+        ];
+        const pick = templates[cycle % templates.length];
+        // x = male, y = female
+        // pm/100*x - pf/100*y = diff
+        // (1-pm/100)*x = (1-pf/100)*y
+        const qm = 100 - pick.pm;
+        const qf = 100 - pick.pf;
+        // qf*x = qm*y → y = qf/qm * x
+        // pm/100*x - pf/100*(qf/qm)*x = diff → x(pm*qm - pf*qf)/(100*qm) = diff
+        const num = pick.pm * qm - pick.pf * qf;
+        if (num <= 0 || (pick.diff * 100 * qm) % num !== 0) { i -= 1; continue; }
+        const male = (pick.diff * 100 * qm) / num;
+        const female = (qf * male) / qm;
+        if (!Number.isInteger(female) || female <= 0) { i -= 1; continue; }
+        const total = male + female;
+        questions.push(
+          `某班男生有 ${pick.pm}%、女生有 ${pick.pf}% 自行上學，其餘由家長接送。已知自行上學的男生比女生多 ${pick.diff} 人，且由家長接送的男女生人數相同，求全班共有幾人。`
+        );
+        answers.push(
+          `設男生有 $x$ 人，女生有 $y$ 人。自行上學人數：男生 $${pick.pm}\\%x$，女生 $${pick.pf}\\%y$。家長接送：男生 $${qm}\\%x$，女生 $${qf}\\%y$。依題意列聯立方程式：$${formatSystemLatex(`${pick.pm}x-${pick.pf}y=${pick.diff * 100}`, `${qm}x=${qf}y`)}$（乘以 100 消分）。由第二式得 $x=\\dfrac{${qf}}{${qm}}y$，代回得 $y=${female}$，$x=${male}$。全班共 ${total} 人。`
+        );
+        continue;
+      }
+
+      // variant 2: 全班N人，不及格占1/p，及格未到80占1/q多r人，80以上有s人 → 求不及格人數
+      const templates = [
+        { inv_p: 3, inv_q: 2, r: 3, s: 3 },
+        { inv_p: 4, inv_q: 3, r: 2, s: 4 },
+        { inv_p: 5, inv_q: 4, r: 1, s: 5 },
+        { inv_p: 3, inv_q: 2, r: 5, s: 5 },
+        { inv_p: 4, inv_q: 3, r: 4, s: 6 },
+      ];
+      const pick = templates[cycle % templates.length];
+      // fail = N/p, pass_low = N/q + r, pass_high = s
+      // N = N/p + N/q + r + s
+      // N(1 - 1/p - 1/q) = r + s
+      // N * (p*q - q - p) / (p*q) = r + s
+      const p = pick.inv_p;
+      const q = pick.inv_q;
+      const rs = pick.r + pick.s;
+      const numer = p * q;
+      const denom3 = numer - q - p;
+      if (denom3 <= 0 || (rs * numer) % denom3 !== 0) { i -= 1; continue; }
+      const N = (rs * numer) / denom3;
+      const fail = N / p;
+      const pass_low = N / q + pick.r;
+      questions.push(
+        `某次段考，不及格人數占全班的 $\\dfrac{1}{${p}}$，及格但未到 80 分的人數占全班的 $\\dfrac{1}{${q}}$ 又多 ${pick.r} 人，80 分以上只有 ${pick.s} 人，求全班人數及不及格人數各為幾人。`
+      );
+      answers.push(
+        `設全班 $x$ 人，不及格 $\\dfrac{x}{${p}}$ 人，及格未達 80 分 $\\dfrac{x}{${q}}+${pick.r}$ 人，80 以上 ${pick.s} 人。因此 $\\dfrac{x}{${p}}+\\dfrac{x}{${q}}+${pick.r}+${pick.s}=x$，整理得 $x\\left(1-\\dfrac{1}{${p}}-\\dfrac{1}{${q}}\\right)=${rs}$，解得 $x=${N}$。不及格人數為 $\\dfrac{${N}}{${p}}=${fail}$ 人。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-1-3 新增：多人成對和（任意兩人／三人年齡和）──────────────────────
+  function buildJ213PairwiseSumSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 3;
+      const cycle = Math.floor(i / 3);
+
+      if (variant === 0) {
+        // 三人任意兩人年齡和為s1,s2,s3 → 求各人或最大
+        const templates = [
+          { people: ['甲', '乙', '丙'], ages: [46, 43, 58] },
+          { people: ['甲', '乙', '丙'], ages: [35, 42, 47] },
+          { people: ['甲', '乙', '丙'], ages: [28, 36, 45] },
+          { people: ['阿明', '阿華', '阿強'], ages: [33, 41, 52] },
+          { people: ['甲', '乙', '丙'], ages: [50, 58, 62] },
+          { people: ['小英', '小芳', '小玲'], ages: [25, 30, 37] },
+        ];
+        const pick = templates[cycle % templates.length];
+        const [a, b, c] = pick.ages;
+        const s1 = a + b; const s2 = a + c; const s3 = b + c;
+        const total = a + b + c;
+        const sorted = [...pick.ages].sort((x, y) => y - x);
+        questions.push(
+          `${pick.people[0]}、${pick.people[1]}、${pick.people[2]} 三人任意兩人年齡和分別為 ${Math.min(s1, s2, s3)}、${s1 + s2 + s3 - Math.min(s1, s2, s3) - Math.max(s1, s2, s3)}、${Math.max(s1, s2, s3)} 歲，求年齡最大的人幾歲。`
+        );
+        answers.push(
+          `三人任意兩人和之總和為三人年齡和的兩倍，即 $${Math.min(s1,s2,s3)}+${s1+s2+s3-Math.min(s1,s2,s3)-Math.max(s1,s2,s3)}+${Math.max(s1,s2,s3)}=${2*total}$，所以三人年齡和為 $${total}$。年齡最大的人 $=${total}-${Math.min(s2,s3)-(sorted[0]-sorted[1]>0?0:0)}$...\n設三人為 $x,y,z$。已知 $x+y=${s1}$，$x+z=${s2}$，$y+z=${s3}$。三式相加得 $2(x+y+z)=${2*total}$，所以 $x+y+z=${total}$。年齡最大的人（${sorted[0]} 歲）為 $${total}-${s3}=${sorted[0]}$ 歲。`
+        );
+        continue;
+      }
+
+      if (variant === 1) {
+        // 三人並坐一排，任意兩人年齡和 → 求各人年齡
+        const templates = [
+          { people: ['甲', '乙', '丙'], ages: [40, 37, 52] },
+          { people: ['甲', '乙', '丙'], ages: [31, 28, 45] },
+          { people: ['阿仁', '阿義', '阿智'], ages: [36, 42, 58] },
+          { people: ['甲', '乙', '丙'], ages: [27, 34, 46] },
+          { people: ['小明', '小華', '小強'], ages: [22, 30, 41] },
+          { people: ['甲', '乙', '丙'], ages: [44, 51, 63] },
+        ];
+        const pick = templates[cycle % templates.length];
+        const [a, b, c] = pick.ages;
+        const sAB = a + b; const sAC = a + c; const sBC = b + c;
+        const sums = [sAB, sAC, sBC].sort((x, y) => x - y);
+        const total = a + b + c;
+        questions.push(
+          `${pick.people[0]}、${pick.people[1]}、${pick.people[2]} 三人，任意兩人年齡和分別為 ${sums[0]}、${sums[1]}、${sums[2]} 歲，求三人各幾歲。`
+        );
+        answers.push(
+          `設三人年齡分別為 $x,y,z$。已知任意兩人和，三式相加得 $2(x+y+z)=${sums[0]+sums[1]+sums[2]}$，故 $x+y+z=${total}$。再依序減去各兩人和可得三人年齡：最大的和為 $${sums[2]}$，對應最小的人年齡為 $${total}-${sums[2]}=${total-sums[2]}$；次大的和 $${sums[1]}$ 對應 $${total-sums[1]}$；最小的和 $${sums[0]}$ 對應 $${total-sums[0]}$。故三人年齡分別為 ${total-sums[2]}、${total-sums[1]}、${total-sums[0]} 歲。`
+        );
+        continue;
+      }
+
+      // variant 2: 四人任意三人年齡和 → 求最大
+      const templates = [
+        { people: ['甲', '乙', '丙', '丁'], ages: [45, 52, 58, 67] },
+        { people: ['甲', '乙', '丙', '丁'], ages: [38, 44, 51, 62] },
+        { people: ['甲', '乙', '丙', '丁'], ages: [31, 40, 47, 55] },
+        { people: ['甲', '乙', '丙', '丁'], ages: [42, 50, 57, 63] },
+        { people: ['甲', '乙', '丙', '丁'], ages: [29, 36, 48, 59] },
+        { people: ['甲', '乙', '丙', '丁'], ages: [41, 48, 55, 68] },
+      ];
+      const pick = templates[cycle % templates.length];
+      const [a, b, c, d] = pick.ages;
+      const total = a + b + c + d;
+      // Four triple sums: total-a, total-b, total-c, total-d
+      const tripleSums = [total-a, total-b, total-c, total-d].sort((x, y) => x - y);
+      const maxAge = Math.max(...pick.ages);
+      questions.push(
+        `${pick.people[0]}、${pick.people[1]}、${pick.people[2]}、${pick.people[3]} 四人，任意三人年齡和分別為 ${tripleSums[0]}、${tripleSums[1]}、${tripleSums[2]}、${tripleSums[3]} 歲，求年齡最大的人幾歲。`
+      );
+      answers.push(
+        `四個三人和加總等於 $3(${pick.people[0]}+${pick.people[1]}+${pick.people[2]}+${pick.people[3]})$，即 $${tripleSums[0]}+${tripleSums[1]}+${tripleSums[2]}+${tripleSums[3]}=${tripleSums.reduce((s,v)=>s+v,0)}=3\\times(四人和)$，所以四人年齡和為 $${total}$。年齡最大者對應最小的三人和（${tripleSums[0]}），其年齡為 $${total}-${tripleSums[0]}=${maxAge}$ 歲。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-1-3 新增：分箱問題（磁磚/糖果/水果分大小箱條件）────────────────────
+  function buildJ213BoxDistributionSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 3;
+      const cycle = Math.floor(i / 3);
+
+      if (variant === 0) {
+        // 三次條件：帶不同大小箱組合，每次目標量相同，一次剩r1，一次剩r2，一次剛好
+        const templates = [
+          { bigA: 3, smallA: 3, rA: 144, bigB: 2, smallB: 6, rB: 72, bigC: 2, smallC: 4, item: '磁磚' },
+          { bigA: 4, smallA: 2, rA: 12, bigB: 3, smallB: 4, rB: 9, bigC: 2, smallC: 5, item: '糖果' },
+          { bigA: 3, smallA: 4, rA: 8, bigB: 2, smallB: 6, rB: 4, bigC: 1, smallC: 8, item: '石頭' },
+          { bigA: 5, smallA: 2, rA: 60, bigB: 3, smallB: 6, rB: 30, bigC: 4, smallC: 3, item: '零件' },
+        ];
+        const pick = templates[cycle % templates.length];
+        // bigA*x + smallA*y - rA = bigC*x + smallC*y (target)
+        // bigB*x + smallB*y - rB = target
+        // (bigA - bigC)*x + (smallA - smallC)*y = rA
+        // (bigB - bigC)*x + (smallB - smallC)*y = rB
+        const da1 = pick.bigA - pick.bigC;
+        const db1 = pick.smallA - pick.smallC;
+        const da2 = pick.bigB - pick.bigC;
+        const db2 = pick.smallB - pick.smallC;
+        const det = da1 * db2 - da2 * db1;
+        if (det === 0) { i -= 1; continue; }
+        const x = (pick.rA * db2 - pick.rB * db1) / det;
+        const y = (da1 * pick.rB - da2 * pick.rA) / det;
+        if (!Number.isInteger(x) || !Number.isInteger(y) || x <= 0 || y <= 0) { i -= 1; continue; }
+        const target = pick.bigC * x + pick.smallC * y;
+        questions.push(
+          `三個工地鋪設${pick.item}的量均相同。帶 ${pick.bigA} 大箱和 ${pick.smallA} 小箱去甲工地，剩 ${pick.rA} 片；帶 ${pick.bigB} 大箱和 ${pick.smallB} 小箱去乙工地，剩 ${pick.rB} 片；帶 ${pick.bigC} 大箱和 ${pick.smallC} 小箱去丙工地，剛好鋪完。求每大箱和每小箱各有多少片${pick.item}。`
+        );
+        answers.push(
+          `設每大箱有 $x$ 片，每小箱有 $y$ 片。三工地需求量相同，設為 $T$。由甲工地得 $${pick.bigA}x+${pick.smallA}y-${pick.rA}=T$，乙工地得 $${pick.bigB}x+${pick.smallB}y-${pick.rB}=T$，丙工地得 $${pick.bigC}x+${pick.smallC}y=T$。代入丙工地消去 $T$，整理得聯立方程式 $${formatSystemLatex(`${da1}x+${db1}y=${pick.rA}`, `${da2}x+${db2}y=${pick.rB}`)}$。消去解得 $x=${x},\\ y=${y}$。`
+        );
+        continue;
+      }
+
+      if (variant === 1) {
+        // 分配問題：每組分m個多出r，每組分n個不夠s → 求組數和總量
+        const templates = [
+          { m: 30, r: 8, n: 28, d: 12, item: '康乃馨' },
+          { m: 5, r: 15, n: 4, d: 2, item: '糖果' },
+          { m: 4, r: 3, n: 5, d: 2, item: '橘子' },
+          { m: 6, r: 10, n: 5, d: 5, item: '蘋果' },
+          { m: 8, r: 6, n: 7, d: 4, item: '餅乾' },
+          { m: 10, r: 2, n: 9, d: 8, item: '飲料' },
+        ];
+        const pick = templates[cycle % templates.length];
+        // 設組數為 g，總量為 t
+        // t = m*g - r (每組m個，多出r)
+        // t = n*g + d (每組n個，少d個)
+        // m*g - r = n*g + d → g = (r+d)/(m-n)
+        if ((pick.m - pick.n) === 0) { i -= 1; continue; }
+        if ((pick.r + pick.d) % (pick.m - pick.n) !== 0) { i -= 1; continue; }
+        const g = (pick.r + pick.d) / (pick.m - pick.n);
+        const total = pick.m * g - pick.r;
+        questions.push(
+          `分配${pick.item}時，若每組分 ${pick.m} 個，則多出 ${pick.r} 個；若每組分 ${pick.n} 個，則不夠 ${pick.d} 個。設組數為 $x$，${pick.item}總數為 $y$，求組數和總數。`
+        );
+        answers.push(
+          `設組數為 $x$，${pick.item}總數為 $y$。依題意可列聯立方程式：$${formatSystemLatex(`y=${pick.m}x-${pick.r}`, `y=${pick.n}x+${pick.d}`)}$。兩式相減得 $0=${pick.m - pick.n}x-${pick.r + pick.d}$，解得 $x=${g}$。代回得 $y=${total}$。故有 ${g} 組，共 ${total} 個${pick.item}。`
+        );
+        continue;
+      }
+
+      // variant 3: 大小箱混裝問題 → 求個數
+      const templates = [
+        { bigCnt: 7, bigSize: 7, smallSize: 5, total: 260, unit: '顆水蜜桃' },
+        { bigCnt: 5, bigSize: 8, smallSize: 5, total: 220, unit: '顆蘋果' },
+        { bigCnt: 6, bigSize: 6, smallSize: 4, total: 180, unit: '個橘子' },
+        { bigCnt: 8, bigSize: 5, smallSize: 3, total: 190, unit: '個柳丁' },
+        { bigCnt: 4, bigSize: 9, smallSize: 6, total: 210, unit: '顆番茄' },
+        { bigCnt: 6, bigSize: 7, smallSize: 4, total: 230, unit: '個奇異果' },
+      ];
+      const pick = templates[cycle % templates.length];
+      // big boxes: bigCnt, small boxes: totalBoxes - bigCnt
+      // 每大箱放bigSize，每小箱放smallSize
+      // 找 totalBoxes 使得 bigCnt*bigSize + (totalBoxes-bigCnt)*smallSize = total
+      const remainder = pick.total - pick.bigCnt * (pick.bigSize - pick.smallSize);
+      if (remainder % pick.smallSize !== 0) { i -= 1; continue; }
+      const totalBoxes = remainder / pick.smallSize;
+      const smallBoxes = totalBoxes - pick.bigCnt;
+      if (smallBoxes <= 0) { i -= 1; continue; }
+      questions.push(
+        `有大、小共 ${totalBoxes} 個盒子，大盒每個裝 ${pick.bigSize} ${pick.unit}，小盒每個裝 ${pick.smallSize} ${pick.unit}，共裝 ${pick.total} ${pick.unit}。求大盒和小盒各有幾個。`
+      );
+      answers.push(
+        `設大盒有 $x$ 個，小盒有 $y$ 個。依題意可列聯立方程式：$${formatSystemLatex(`x+y=${totalBoxes}`, `${pick.bigSize}x+${pick.smallSize}y=${pick.total}`)}$。消去法：第二式減第一式乘以 ${pick.smallSize}，得 $(${pick.bigSize - pick.smallSize})x=${pick.total - pick.smallSize * totalBoxes}$，解得 $x=${pick.bigCnt}$。代回得 $y=${smallBoxes}$。故大盒 ${pick.bigCnt} 個，小盒 ${smallBoxes} 個。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ221AxisDistanceSet(count) {
     const questions = [];
     const answers = [];
@@ -3443,6 +3820,81 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  // ── j2-1-2 新增：兩組解求單方程係數 ──────────────────────────────────────
+  function buildJ212TwoSolutionOneEqSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 4;
+      const cycle = Math.floor(i / 4);
+
+      // 生成兩組解 (x1,y1), (x2,y2) 並決定係數 a, b
+      // 策略: 先挑 a, b, C，再算出第二個解點
+      const aOptions = [2, 3, 1, 4, 2, 3, 1, 2];
+      const bOptions = [3, 2, 4, 1, 5, 1, 3, 4];
+      const COptions = [12, 18, 20, 16, 25, 15, 22, 24];
+      const idx = cycle % aOptions.length;
+      const a = aOptions[idx];
+      const b = bOptions[idx];
+      const C = COptions[idx];
+
+      // 選兩個整數解: ax + by = C
+      // 找 x1, y1 使得 a*x1 + b*y1 = C
+      // 方法: 選 x1 = cycle%3, 確保 C - a*x1 可被 b 整除
+      let x1 = (cycle % 3) + 1;
+      while ((C - a * x1) % b !== 0) { x1 += 1; if (x1 > 10) break; }
+      const y1 = (C - a * x1) / b;
+      // x2 = x1 + b, y2 = y1 - a (shifting by one period)
+      let x2 = x1 + b;
+      const y2 = y1 - a;
+
+      if (!Number.isInteger(y1) || !Number.isInteger(y2) || y1 === y2) { i -= 1; continue; }
+
+      // 構成問題: 方程式 ax + by = C 中 a, b 未知（以 m, n 命名），給兩組解求 m+n 或 m-n
+      // 重新設計: 方程式 mx + ny = C，給 (x1,y1) 和 (x2,y2) 兩組解，求 m, n 後計算 m+n
+
+      // 換做更自然的版本：方程式 mx + ny = 20（未知係數），兩解已知
+      // 需保證 det != 0
+      const mTemplates = [
+        { x1: 2, y1: 3, x2: 4, y2: 1, C: 17, ask: 'm+n' },
+        { x1: 1, y1: 4, x2: 3, y2: 2, C: 18, ask: 'm-n' },
+        { x1: 3, y1: 1, x2: 1, y2: 5, C: 22, ask: '2m+n' },
+        { x1: 2, y1: 5, x2: 4, y2: 3, C: 26, ask: 'm+2n' },
+        { x1: 5, y1: 1, x2: 1, y2: 3, C: 23, ask: 'm+n' },
+        { x1: 3, y1: 2, x2: 1, y2: 4, C: 19, ask: 'm-n' },
+        { x1: 2, y1: 4, x2: 6, y2: 2, C: 22, ask: '3m+n' },
+        { x1: 4, y1: 2, x2: 2, y2: 6, C: 28, ask: 'm+3n' },
+      ];
+      const pick = mTemplates[(variant * 2 + cycle) % mTemplates.length];
+      const det2 = pick.x1 * pick.y2 - pick.x2 * pick.y1;
+      if (det2 === 0) { i -= 1; continue; }
+      const m = (pick.C * pick.y2 - pick.C * pick.y1) / det2;
+      const n = (pick.x1 * pick.C - pick.x2 * pick.C) / det2;
+      if (!Number.isInteger(m) || !Number.isInteger(n)) { i -= 1; continue; }
+      // calc ask
+      let askVal;
+      if (pick.ask === 'm+n') askVal = m + n;
+      else if (pick.ask === 'm-n') askVal = m - n;
+      else if (pick.ask === '2m+n') askVal = 2 * m + n;
+      else if (pick.ask === 'm+2n') askVal = m + 2 * n;
+      else if (pick.ask === '3m+n') askVal = 3 * m + n;
+      else if (pick.ask === 'm+3n') askVal = m + 3 * n;
+      else askVal = m + n;
+
+      const askLatex = pick.ask.replace('m', 'm').replace('n', 'n');
+
+      questions.push(
+        `已知方程式 $mx+ny=${pick.C}$ 有兩組解 $(x,y)=(${pick.x1},\\ ${pick.y1})$ 和 $(x,y)=(${pick.x2},\\ ${pick.y2})$，求 $${askLatex}$ 的值。`
+      );
+      answers.push(
+        `將兩組解代入方程式 $mx+ny=${pick.C}$，可得聯立方程式：$${formatSystemLatex(`${pick.x1}m+${pick.y1}n=${pick.C}`, `${pick.x2}m+${pick.y2}n=${pick.C}`)}$。消去法解得 $m=${m},\\ n=${n}$。所以 $${askLatex}=${askVal}$。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function lcm(a, b) {
     return Math.abs(a * b) / gcd(a, b);
   }
@@ -5530,6 +5982,499 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  // ── j2-3-2 新增：彈簧秤（胡克定律）────────────────────────────────────────
+  function buildJ232SpringScaleSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 4;
+      const cycle = Math.floor(i / 4);
+
+      if (variant === 0) {
+        // 已知砝碼重→伸長量，求另一砝碼重對應的伸長量
+        const templates = [
+          { w1: 6, ext1: 12, w2: 8 },
+          { w1: 4, ext1: 6, w2: 10 },
+          { w1: 5, ext1: 15, w2: 6 },
+          { w1: 10, ext1: 8, w2: 15 },
+          { w1: 8, ext1: 20, w2: 12 },
+          { w1: 3, ext1: 9, w2: 7 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const ext2 = simplifyFraction(pick.w2 * pick.ext1, pick.w1);
+        questions.push(
+          `彈性限度內，彈簧伸長量與所掛物體重量成正比。已知掛上 ${pick.w1} 公克的砝碼時，彈簧伸長 ${pick.ext1} 公分，則掛上 ${pick.w2} 公克時，彈簧伸長幾公分？`
+        );
+        answers.push(
+          formatJ232Answer(
+            `${fractionToLatex(ext2)} 公分`,
+            `設伸長量為 $e$，重量為 $w$，則 $e=kw$。由 $w=${pick.w1},\\ e=${pick.ext1}$ 得 $k=\\dfrac{${pick.ext1}}{${pick.w1}}${fractionToLatex(simplifyFraction(pick.ext1, pick.w1)) !== String(pick.ext1 / pick.w1) ? `=${fractionToLatex(simplifyFraction(pick.ext1, pick.w1))}` : ''}$。當 $w=${pick.w2}$ 時，$e=${fractionToLatex(simplifyFraction(pick.ext1, pick.w1))}\\times ${pick.w2}=${fractionToLatex(ext2)}$ 公分。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 1) {
+        // 已知砝碼重→伸長量，從伸長量反推重量
+        const templates = [
+          { w1: 6, ext1: 12, ext2: 16 },
+          { w1: 4, ext1: 10, ext2: 25 },
+          { w1: 5, ext1: 8, ext2: 24 },
+          { w1: 8, ext1: 6, ext2: 21 },
+          { w1: 9, ext1: 6, ext2: 14 },
+          { w1: 10, ext1: 4, ext2: 18 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const w2 = simplifyFraction(pick.w1 * pick.ext2, pick.ext1);
+        questions.push(
+          `彈性限度內，彈簧伸長量與所掛物體重量成正比。已知掛上 ${pick.w1} 公克時彈簧伸長 ${pick.ext1} 公分，若現在彈簧伸長了 ${pick.ext2} 公分，則掛了多少公克的物體？`
+        );
+        answers.push(
+          formatJ232Answer(
+            `${fractionToLatex(w2)} 公克`,
+            `因為伸長量與重量成正比，所以 $\\dfrac{${pick.ext2}}{w_2}=\\dfrac{${pick.ext1}}{${pick.w1}}$。解得 $w_2=\\dfrac{${pick.w1}\\times ${pick.ext2}}{${pick.ext1}}=${fractionToLatex(w2)}$ 公克。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 2) {
+        // 已知原長 + 掛重→全長，求另一重量的全長
+        const templates = [
+          { orig: 16, w1: 32, totalLen1: 20, w2: 64 },
+          { orig: 15, w1: 20, totalLen1: 27, w2: 42 },
+          { orig: 12, w1: 10, totalLen1: 17, w2: 30 },
+          { orig: 20, w1: 12, totalLen1: 24, w2: 9 },
+          { orig: 10, w1: 8, totalLen1: 16, w2: 20 },
+          { orig: 18, w1: 15, totalLen1: 24, w2: 25 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const ext1 = pick.totalLen1 - pick.orig;
+        const ext2 = simplifyFraction(ext1 * pick.w2, pick.w1);
+        const total2 = addFraction(makeFraction(pick.orig, 1), ext2);
+        questions.push(
+          `一彈簧原長 ${pick.orig} 公分，掛上 ${pick.w1} 公克重的物體後，彈簧全長變為 ${pick.totalLen1} 公分（彈性限度內）。請問掛上 ${pick.w2} 公克時，彈簧全長為幾公分？`
+        );
+        answers.push(
+          formatJ232Answer(
+            `${fractionToLatex(total2)} 公分`,
+            `掛 ${pick.w1} 公克時伸長量為 $${pick.totalLen1}-${pick.orig}=${ext1}$ 公分。因為伸長量與重量成正比，掛 ${pick.w2} 公克時伸長量為 $${fractionToLatex(simplifyFraction(ext1, pick.w1))}\\times ${pick.w2}=${fractionToLatex(ext2)}$ 公分。因此全長為 $${pick.orig}+${fractionToLatex(ext2)}=${fractionToLatex(total2)}$ 公分。`
+          )
+        );
+        continue;
+      }
+
+      // variant 3: 減輕負荷後彈簧彈回量
+      const templates = [
+        { maxW: 20, ext_max: 24, w2: 9 },
+        { maxW: 15, ext_max: 18, w2: 6 },
+        { maxW: 25, ext_max: 20, w2: 5 },
+        { maxW: 30, ext_max: 15, w2: 12 },
+        { maxW: 24, ext_max: 16, w2: 8 },
+        { maxW: 18, ext_max: 12, w2: 6 },
+      ];
+      const pick = templates[cycle % templates.length];
+      const ext2 = simplifyFraction(pick.w2 * pick.ext_max, pick.maxW);
+      const bounce = subFraction(makeFraction(pick.ext_max, 1), ext2);
+      questions.push(
+        `一彈簧秤在彈性限度內最多可稱重 ${pick.maxW} 公斤，已知稱 ${pick.maxW} 公斤時彈簧被拉長 ${pick.ext_max} 公分。若改稱 ${pick.w2} 公斤的物體，彈簧會比最大伸長量縮短幾公分？`
+      );
+      answers.push(
+        formatJ232Answer(
+          `${fractionToLatex(bounce)} 公分`,
+          `稱 ${pick.w2} 公斤時的伸長量為 $\\dfrac{${pick.w2}}{${pick.maxW}}\\times ${pick.ext_max}=${fractionToLatex(ext2)}$ 公分。最大伸長量為 ${pick.ext_max} 公分，所以縮短了 $${pick.ext_max}-${fractionToLatex(ext2)}=${fractionToLatex(bounce)}$ 公分。`
+        )
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-3-2 新增：工程人力反比問題 ─────────────────────────────────────────
+  function buildJ232WorkManpowerSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 4;
+      const cycle = Math.floor(i / 4);
+
+      if (variant === 0) {
+        // 換人數求完工天數
+        const templates = [
+          { w1: 6, d1: 20, w2: 8 },
+          { w1: 10, d1: 15, w2: 6 },
+          { w1: 4, d1: 30, w2: 12 },
+          { w1: 8, d1: 12, w2: 16 },
+          { w1: 5, d1: 24, w2: 15 },
+          { w1: 9, d1: 10, w2: 6 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const d2 = simplifyFraction(pick.w1 * pick.d1, pick.w2);
+        questions.push(
+          `有一工程，${pick.w1} 人合作需 ${pick.d1} 天完工（每人每天工作量相同）。若改由 ${pick.w2} 人合作，需要幾天才能完工？`
+        );
+        answers.push(
+          formatJ232Answer(
+            `${fractionToLatex(d2)} 天`,
+            `人數與天數成反比，乘積固定：$${pick.w1}\\times ${pick.d1}=${pick.w1 * pick.d1}$。設 ${pick.w2} 人需要 $d$ 天，則 $${pick.w2}\\times d=${pick.w1 * pick.d1}$，解得 $d=${fractionToLatex(d2)}$ 天。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 1) {
+        // 提前完工需增加幾人
+        const templates = [
+          { w1: 6, d1: 20, d2: 15 },
+          { w1: 10, d1: 18, d2: 12 },
+          { w1: 5, d1: 24, d2: 20 },
+          { w1: 8, d1: 15, d2: 10 },
+          { w1: 6, d1: 10, d2: 8 },
+          { w1: 4, d1: 30, d2: 24 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const w2 = simplifyFraction(pick.w1 * pick.d1, pick.d2);
+        const extra = subFraction(w2, makeFraction(pick.w1, 1));
+        questions.push(
+          `有一工程，${pick.w1} 人合作需 ${pick.d1} 天完工。若想提前至 ${pick.d2} 天完工，需要增加幾人？`
+        );
+        answers.push(
+          formatJ232Answer(
+            `${fractionToLatex(extra)} 人`,
+            `原本總工量為 $${pick.w1}\\times ${pick.d1}=${pick.w1 * pick.d1}$ 人天。若要 ${pick.d2} 天完工，需要 $\\dfrac{${pick.w1 * pick.d1}}{${pick.d2}}=${fractionToLatex(w2)}$ 人。因此需增加 $${fractionToLatex(w2)}-${pick.w1}=${fractionToLatex(extra)}$ 人。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 2) {
+        // 多組條件計算（n人喝m瓶需t分鐘，求另一情境）
+        const templates = [
+          { p1: 5, b1: 5, t1: 5, p2: 10, b2: 15 },
+          { p1: 3, b1: 6, t1: 4, p2: 6, b2: 9 },
+          { p1: 4, b1: 8, t1: 6, p2: 8, b2: 12 },
+          { p1: 6, b1: 12, t1: 3, p2: 9, b2: 18 },
+          { p1: 2, b1: 4, t1: 8, p2: 4, b2: 10 },
+          { p1: 5, b1: 10, t1: 4, p2: 10, b2: 20 },
+        ];
+        const pick = templates[cycle % templates.length];
+        // 每人每分鐘喝 b1/(p1*t1) 瓶
+        // 新情境: p2人喝b2瓶需時 = b2 / (p2 * b1/(p1*t1)) = b2*p1*t1/(p2*b1)
+        const t2 = simplifyFraction(pick.b2 * pick.p1 * pick.t1, pick.p2 * pick.b1);
+        questions.push(
+          `${pick.p1} 個學生合作喝 ${pick.b1} 瓶飲料（每瓶等量）需 ${pick.t1} 分鐘，假設每人喝的速率相同。若改成 ${pick.p2} 個學生喝 ${pick.b2} 瓶，需要幾分鐘？`
+        );
+        answers.push(
+          formatJ232Answer(
+            `${fractionToLatex(t2)} 分鐘`,
+            `每人每分鐘喝的量為 $\\dfrac{${pick.b1}}{${pick.p1}\\times ${pick.t1}}=\\dfrac{${pick.b1}}{${pick.p1 * pick.t1}}$ 瓶。${pick.p2} 人每分鐘共喝 $${pick.p2}\\times\\dfrac{${pick.b1}}{${pick.p1 * pick.t1}}$ 瓶，喝完 ${pick.b2} 瓶需要 $\\dfrac{${pick.b2}}{${pick.p2}\\times\\dfrac{${pick.b1}}{${pick.p1 * pick.t1}}}=\\dfrac{${pick.b2}\\times ${pick.p1 * pick.t1}}{${pick.p2}\\times ${pick.b1}}=${fractionToLatex(t2)}$ 分鐘。`
+          )
+        );
+        continue;
+      }
+
+      // variant 3: 男工女工換算工程量
+      const templates = [
+        { maleEq: 4, femaleEq: 5, totalFemale: 30, femDays: 60, targetDays: 20 },
+        { maleEq: 3, femaleEq: 4, totalFemale: 24, femDays: 40, targetDays: 15 },
+        { maleEq: 5, femaleEq: 6, totalFemale: 18, femDays: 48, targetDays: 16 },
+        { maleEq: 2, femaleEq: 3, totalFemale: 30, femDays: 45, targetDays: 18 },
+        { maleEq: 4, femaleEq: 5, totalFemale: 20, femDays: 50, targetDays: 25 },
+        { maleEq: 3, femaleEq: 5, totalFemale: 25, femDays: 60, targetDays: 20 },
+      ];
+      const pick = templates[cycle % templates.length];
+      // 1 male = femaleEq/maleEq females in work rate
+      // Total work = totalFemale * femDays (in female-day units)
+      // Want to finish in targetDays with extra males
+      const totalWork = pick.totalFemale * pick.femDays;
+      // work done by existing female workers in targetDays
+      const existingWork = pick.totalFemale * pick.targetDays;
+      // remaining work to be done by extra males
+      const remainWork = totalWork - existingWork;
+      // each male = femaleEq/maleEq female work rate
+      // extra males × targetDays × (femaleEq/maleEq) = remainWork
+      const extraMale = simplifyFraction(remainWork * pick.maleEq, pick.targetDays * pick.femaleEq);
+      questions.push(
+        `設男工 ${pick.maleEq} 人的工作量等於女工 ${pick.femaleEq} 人的工作量。有一工程，原由女工 ${pick.totalFemale} 人做需 ${pick.femDays} 日完工。若想於 ${pick.targetDays} 日完工，應再增加男工幾人？`
+      );
+      answers.push(
+        formatJ232Answer(
+          `${fractionToLatex(extraMale)} 人`,
+          `先以「女工人天」計算總工量：$${pick.totalFemale}\\times ${pick.femDays}=${totalWork}$ 女工人天。${pick.totalFemale} 名女工做 ${pick.targetDays} 天，已完成 $${totalWork - totalWork + existingWork}$ 女工人天，還剩 $${remainWork}$ 女工人天。每名男工的效率是女工的 $\\dfrac{${pick.femaleEq}}{${pick.maleEq}}$ 倍，設需增加 $m$ 名男工，則 $m\\times ${pick.targetDays}\\times\\dfrac{${pick.femaleEq}}{${pick.maleEq}}=${remainWork}$，解得 $m=${fractionToLatex(extraMale)}$ 人。`
+        )
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-3-2 新增：速率比賽跑落後問題 ──────────────────────────────────────
+  function buildJ232SpeedRaceSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 4;
+      const cycle = Math.floor(i / 4);
+
+      if (variant === 0) {
+        // 甲到終點時乙落後多少（速率比 → 時間反比 → 同時間乙的距離）
+        const templates = [
+          { dist: 600, va: 6, vb: 5, name: ['東東', '名名'] },
+          { dist: 400, va: 8, vb: 7, name: ['甲', '乙'] },
+          { dist: 3000, va: 6, vb: 5, name: ['甲', '乙'] },
+          { dist: 100, va: 5, vb: 4, name: ['小明', '小華'] },
+          { dist: 800, va: 4, vb: 3, name: ['甲', '乙'] },
+          { dist: 1000, va: 5, vb: 4, name: ['甲', '乙'] },
+        ];
+        const pick = templates[cycle % templates.length];
+        // 甲到終點時乙走了 dist * vb/va
+        const bDist = simplifyFraction(pick.dist * pick.vb, pick.va);
+        const behind = subFraction(makeFraction(pick.dist, 1), bDist);
+        questions.push(
+          `${pick.name[0]}與${pick.name[1]}兩人同時出發跑 ${pick.dist} 公尺，兩人速率比為 $${pick.va}:${pick.vb}$，皆以固定速率跑完全程。當${pick.name[0]}到達終點時，${pick.name[1]}距終點還有多少公尺？`
+        );
+        answers.push(
+          formatJ232Answer(
+            `${fractionToLatex(behind)} 公尺`,
+            `${pick.name[0]}跑完 ${pick.dist} 公尺的時間，${pick.name[1]}跑了 $${pick.dist}\\times\\dfrac{${pick.vb}}{${pick.va}}=${fractionToLatex(bDist)}$ 公尺，距終點還有 $${pick.dist}-${fractionToLatex(bDist)}=${fractionToLatex(behind)}$ 公尺。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 1) {
+        // 追趕問題：乙比甲晚x分出發，y分後追上，求速率比
+        const templates = [
+          { late: 5, catchUp: 20, name: ['甲', '乙'] },
+          { late: 10, catchUp: 30, name: ['甲', '乙'] },
+          { late: 8, catchUp: 40, name: ['甲', '乙'] },
+          { late: 6, catchUp: 24, name: ['甲', '乙'] },
+          { late: 4, catchUp: 16, name: ['甲', '乙'] },
+          { late: 3, catchUp: 15, name: ['甲', '乙'] },
+        ];
+        const pick = templates[cycle % templates.length];
+        // 甲出發了 late+catchUp 分鐘，乙出發了 catchUp 分鐘，距離相同
+        // va * (late+catchUp) = vb * catchUp
+        const va = pick.catchUp;
+        const vb = pick.late + pick.catchUp;
+        const ratio = normalizeRatioInts(va, vb);
+        questions.push(
+          `${pick.name[0]}、${pick.name[1]}兩人各以一定速率騎車從 A 鎮到 B 鎮。${pick.name[1]}比${pick.name[0]}慢 ${pick.late} 分鐘出發，${pick.name[1]}出發後 ${pick.catchUp} 分鐘追上${pick.name[0]}，求兩人的速率比（${pick.name[0]}：${pick.name[1]}）。`
+        );
+        answers.push(
+          formatJ232Answer(
+            `$${ratio.a}:${ratio.b}$`,
+            `${pick.name[1]}追上時，${pick.name[0]}共走了 $${pick.late}+${pick.catchUp}=${pick.late + pick.catchUp}$ 分鐘，${pick.name[1]}走了 ${pick.catchUp} 分鐘，兩人路程相同，所以速率比等於時間的反比：${pick.name[0]}：${pick.name[1]} $=${pick.catchUp}:${pick.late + pick.catchUp}=${ratio.a}:${ratio.b}$。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 2) {
+        // 讓跑問題：兩人速率比，要讓慢者先出發或先跑幾公尺使同時到達
+        const templates = [
+          { dist: 100, tFast: 15, tSlow: 18, name: ['東東', '名名'] },
+          { dist: 200, tFast: 20, tSlow: 24, name: ['甲', '乙'] },
+          { dist: 100, tFast: 12, tSlow: 15, name: ['小明', '小華'] },
+          { dist: 400, tFast: 40, tSlow: 50, name: ['甲', '乙'] },
+          { dist: 100, tFast: 18, tSlow: 20, name: ['甲', '乙'] },
+          { dist: 200, tFast: 25, tSlow: 30, name: ['甲', '乙'] },
+        ];
+        const pick = templates[cycle % templates.length];
+        // 速率比 va:vb = 1/tFast : 1/tSlow = tSlow:tFast
+        // 快者讓慢者先出發 handicap 公尺，使同時到達
+        // va/vb = tSlow/tFast
+        // 若慢者先跑 h 公尺：快者跑 dist，慢者跑 dist-h，時間相同
+        // dist/va = (dist-h)/vb → h = dist*(1 - vb/va) = dist*(1 - tFast/tSlow)
+        const h = simplifyFraction(pick.dist * (pick.tSlow - pick.tFast), pick.tSlow);
+        questions.push(
+          `${pick.name[0]}跑 ${pick.dist} 公尺費時 ${pick.tFast} 秒，${pick.name[1]}跑 ${pick.dist} 公尺費時 ${pick.tSlow} 秒。若兩人同時出發且要同時到達終點，則${pick.name[0]}應從出發點退後多少公尺起跑？`
+        );
+        answers.push(
+          formatJ232Answer(
+            `${fractionToLatex(h)} 公尺`,
+            `兩人速率比為 ${pick.name[0]}：${pick.name[1]} $=\\dfrac{1}{${pick.tFast}}:\\dfrac{1}{${pick.tSlow}}=${pick.tSlow}:${pick.tFast}$。設${pick.name[0]}退後 $h$ 公尺，則${pick.name[0]}跑 $${pick.dist}+h$ 公尺，${pick.name[1]}跑 ${pick.dist} 公尺，時間相同可得 $\\dfrac{${pick.dist}+h}{${pick.tSlow}}=\\dfrac{${pick.dist}}{${pick.tFast}}$，解得 $h=${fractionToLatex(h)}$ 公尺。`
+          )
+        );
+        continue;
+      }
+
+      // variant 3: 圓形操場同方向跑步，速率比已知，求相同距離下A到達B距終點多少
+      const templates = [
+        { dist: 200, va: 6, vb: 5, name: ['甲', '乙'] },
+        { dist: 400, va: 7, vb: 6, name: ['甲', '乙'] },
+        { dist: 600, va: 5, vb: 4, name: ['甲', '乙'] },
+        { dist: 300, va: 4, vb: 3, name: ['甲', '乙'] },
+        { dist: 500, va: 8, vb: 7, name: ['甲', '乙'] },
+        { dist: 800, va: 3, vb: 2, name: ['甲', '乙'] },
+      ];
+      const pick = templates[cycle % templates.length];
+      const bDist = simplifyFraction(pick.dist * pick.vb, pick.va);
+      const behind = subFraction(makeFraction(pick.dist, 1), bDist);
+      questions.push(
+        `${pick.name[0]}、${pick.name[1]}兩人同時從同一地點出發，${pick.name[0]}的速率是${pick.name[1]}的 $\\dfrac{${pick.va}}{${pick.vb}}$ 倍，當${pick.name[0]}跑了 ${pick.dist} 公尺到達終點時，${pick.name[1]}距終點還有多少公尺？`
+      );
+      answers.push(
+        formatJ232Answer(
+          `${fractionToLatex(behind)} 公尺`,
+          `速率比為 $${pick.name[0]}:${pick.name[1]}=${pick.va}:${pick.vb}$，同時間內路程比也是 $${pick.va}:${pick.vb}$。${pick.name[0]}跑 ${pick.dist} 公尺時，${pick.name[1]}跑了 $${pick.dist}\\times\\dfrac{${pick.vb}}{${pick.va}}=${fractionToLatex(bDist)}$ 公尺，距終點還有 $${fractionToLatex(behind)}$ 公尺。`
+        )
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-3-2 新增：犬兔步距速率問題 ─────────────────────────────────────────
+  function buildJ232DogRabbitSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 4;
+      const cycle = Math.floor(i / 4);
+
+      if (variant === 0) {
+        // 求速率比：犬跑a步距=兔跳b步距，犬跑c步時=兔跳d步時
+        const templates = [
+          { a: 3, b: 4, c: 4, d: 5 },
+          { a: 2, b: 3, c: 3, d: 4 },
+          { a: 3, b: 5, c: 4, d: 5 },
+          { a: 4, b: 5, c: 3, d: 4 },
+          { a: 5, b: 6, c: 4, d: 5 },
+          { a: 3, b: 4, c: 5, d: 6 },
+        ];
+        const pick = templates[cycle % templates.length];
+        // 犬步距/兔步距 = b/a（犬a步 = 兔b步距離）
+        // 犬步頻/兔步頻（相同時間內）= d/c（犬c步時間 = 兔d步）→ 同時間犬:兔步數 = d:c
+        // 速率比 = (b/a) * (d/c) : 1 = b*d : a*c
+        const dogSpeed = pick.b * pick.d;
+        const rabbitSpeed = pick.a * pick.c;
+        const ratio = normalizeRatioInts(dogSpeed, rabbitSpeed);
+        questions.push(
+          `設犬跑 ${pick.a} 步的距離等於兔跳 ${pick.b} 步的距離，且犬跑 ${pick.c} 步的時間等於兔跳 ${pick.d} 步的時間，求犬與兔的速率比。`
+        );
+        answers.push(
+          formatJ232Answer(
+            `$${ratio.a}:${ratio.b}$`,
+            `每步距離比：犬步距 $=\\dfrac{${pick.b}}{${pick.a}}$ 兔步距。同一時間內步數比：犬跑 ${pick.d} 步：兔跳 ${pick.c} 步。速率比 $=$ 每步距離比 $\\times$ 步頻比 $=\\dfrac{${pick.b}}{${pick.a}}\\times\\dfrac{${pick.d}}{${pick.c}}=\\dfrac{${pick.b * pick.d}}{${pick.a * pick.c}}$，即犬：兔 $=${ratio.a}:${ratio.b}$。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 1) {
+        // 兔先跑x公尺，犬需追多少公尺才追上
+        const templates = [
+          { a: 3, b: 4, c: 4, d: 5, head: 100 },
+          { a: 2, b: 3, c: 3, d: 4, head: 120 },
+          { a: 3, b: 5, c: 4, d: 5, head: 150 },
+          { a: 4, b: 5, c: 3, d: 4, head: 200 },
+          { a: 5, b: 6, c: 4, d: 5, head: 100 },
+          { a: 3, b: 4, c: 5, d: 6, head: 80 },
+        ];
+        const pick = templates[cycle % templates.length];
+        const dogSpeed = pick.b * pick.d;
+        const rabbitSpeed = pick.a * pick.c;
+        const ratio = normalizeRatioInts(dogSpeed, rabbitSpeed);
+        // 速差比 = dogSpeed - rabbitSpeed（未化簡）
+        // 設犬追上時犬跑 D，兔跑 D - head（兔有先跑優勢）
+        // D/rabbitSpeed = (D - head)/rabbitSpeed → D * dogSpeed = (D - head 無解)
+        // 正確：D/dog = (D - head)/rabbit (time same)
+        // D * rabbit = (D - head) * dog
+        // D * (rabbit - dog) = -head * dog  → D = head*dog/(dog-rabbit)
+        const dogVal = pick.b * pick.d;
+        const rabbitVal = pick.a * pick.c;
+        const D = simplifyFraction(pick.head * dogVal, dogVal - rabbitVal);
+        questions.push(
+          `設犬跑 ${pick.a} 步的距離等於兔跳 ${pick.b} 步的距離，且犬跑 ${pick.c} 步的時間等於兔跳 ${pick.d} 步的時間（兩者均在同一直線上）。若兔先跑 ${pick.head} 公尺，則犬需跑多少公尺才能追上兔？`
+        );
+        answers.push(
+          formatJ232Answer(
+            `${fractionToLatex(D)} 公尺`,
+            `由前題知犬：兔的速率比為 $${ratio.a}:${ratio.b}$。設犬追上時跑了 $D$ 公尺，兔跑了 $D-${pick.head}$ 公尺，兩者時間相同：$\\dfrac{D}{${ratio.a}}=\\dfrac{D-${pick.head}}{${ratio.b}}$。解得 $D=${fractionToLatex(D)}$ 公尺。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 2) {
+        // 兔先跑x步，犬需追幾步
+        const templates = [
+          { a: 3, b: 4, c: 4, d: 5, headSteps: 100 },
+          { a: 2, b: 3, c: 3, d: 4, headSteps: 90 },
+          { a: 3, b: 5, c: 4, d: 5, headSteps: 100 },
+          { a: 4, b: 5, c: 3, d: 4, headSteps: 120 },
+          { a: 5, b: 6, c: 4, d: 5, headSteps: 80 },
+          { a: 3, b: 4, c: 5, d: 6, headSteps: 60 },
+        ];
+        const pick = templates[cycle % templates.length];
+        // 兔先跑 headSteps 步，距離 = headSteps * (a/b) 犬步 （犬步距 = b/a 兔步距）
+        // 兔的headSteps步 = headSteps * (a/b) 犬步長的距離
+        // 設犬需跑 X 犬步追上
+        // 速率比: 同時間犬跑 (d/c) 步 vs 兔跑1步 → dogFreq/rabbitFreq = d/c
+        // But we need steps (not distance)
+        // 犬跑X步 vs 兔跑Y步，dist相同：X * (b/a) = headSteps * (a/b)... wait
+        // Let me simplify:
+        // 犬每步距离 = b/a 兔每步距离 （because犬a步=兔b步）
+        // 犬X步 = 兔的 X*(b/a) 步等效距离
+        // 兔先跑了 headSteps 步的距离
+        // 追上时：犬X步距离 = 兔先跑headSteps步 + 兔追逃的距离
+        // 时间：犬X步时间 = 犬(c/d)步/step * X... 
+        // 实际上，这类题目通常是：兔先跑headSteps步对应的距离
+        // 设犬步长为 b 个单位（兔步长为 a 个单位）
+        // 速率：犬每单位时间走 b*d/(c) 个单位，兔每单位时间走 a 个单位
+        // 兔先走 headSteps*a 个距离单位
+        // 追上时：b*d/c * t = headSteps*a + a * t → t = headSteps*a*c / (b*d - a*c)
+        // 犬步数 = t * d/c = headSteps*a*c/(b*d - a*c) * d/c = headSteps*a*d/(b*d - a*c)
+        const numSteps = simplifyFraction(pick.headSteps * pick.a * pick.d, pick.b * pick.d - pick.a * pick.c);
+        questions.push(
+          `設犬跑 ${pick.a} 步的距離等於兔跳 ${pick.b} 步的距離，且犬跑 ${pick.c} 步的時間等於兔跳 ${pick.d} 步的時間。若兔先跑 ${pick.headSteps} 步，則犬需跑幾步才能追上兔？`
+        );
+        answers.push(
+          formatJ232Answer(
+            `${fractionToLatex(numSteps)} 步`,
+            `以「單位距離」計，設兔步長為 $${pick.a}$，則犬步長為 $${pick.b}$。兔先跑 ${pick.headSteps} 步，領先距離為 $${pick.headSteps}\\times ${pick.a}=${pick.headSteps * pick.a}$ 個單位。同一時間內，犬跑 ${pick.d} 步（距離 $${pick.b * pick.d}$），兔跑 ${pick.c} 步（距離 $${pick.a * pick.c}$），速率差為 $${pick.b * pick.d - pick.a * pick.c}$ 個單位。追上所需時間（以犬的 ${pick.c} 步為計時單位）$=\\dfrac{${pick.headSteps * pick.a}}{${pick.b * pick.d - pick.a * pick.c}}$ 個時間單位。犬的步數 $=\\dfrac{${pick.headSteps * pick.a}}{${pick.b * pick.d - pick.a * pick.c}}\\times ${pick.d}=${fractionToLatex(numSteps)}$ 步。`
+          )
+        );
+        continue;
+      }
+
+      // variant 3: 兔先跑x分鐘，犬需追幾分鐘
+      const templates = [
+        { a: 3, b: 4, c: 4, d: 5, headMin: 100 },
+        { a: 2, b: 3, c: 3, d: 4, headMin: 80 },
+        { a: 3, b: 5, c: 4, d: 5, headMin: 150 },
+        { a: 4, b: 5, c: 3, d: 4, headMin: 200 },
+        { a: 5, b: 6, c: 4, d: 5, headMin: 120 },
+        { a: 3, b: 4, c: 5, d: 6, headMin: 90 },
+      ];
+      const pick = templates[cycle % templates.length];
+      const dogSpeed = pick.b * pick.d;
+      const rabbitSpeed = pick.a * pick.c;
+      // 兔先跑 headMin 分鐘，犬追上需要 T 分鐘
+      // dogSpeed * T = rabbitSpeed * (headMin + T)
+      // T * (dogSpeed - rabbitSpeed) = rabbitSpeed * headMin
+      const T = simplifyFraction(pick.headMin * rabbitSpeed, dogSpeed - rabbitSpeed);
+      const ratio = normalizeRatioInts(dogSpeed, rabbitSpeed);
+      questions.push(
+        `設犬跑 ${pick.a} 步的距離等於兔跳 ${pick.b} 步的距離，且犬跑 ${pick.c} 步的時間等於兔跳 ${pick.d} 步的時間。若兔先跑 ${pick.headMin} 分鐘，則犬需追幾分鐘才能追上兔？`
+      );
+      answers.push(
+        formatJ232Answer(
+          `${fractionToLatex(T)} 分鐘`,
+          `速率比為犬：兔 $=${ratio.a}:${ratio.b}$。設犬追 $T$ 分鐘追上，此時犬走了 ${ratio.a} 份，兔走了 ${ratio.b} 份（犬走的時間也是 $T$，兔總共走了 $T+${pick.headMin}$ 分鐘）：$${ratio.a}\\cdot T=${ratio.b}\\cdot(T+${pick.headMin})$，解得 $T=${fractionToLatex(T)}$ 分鐘。`
+        )
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+
   function buildJ241InequalityLanguageSet(count) {
     const questions = [];
     const answers = [];
@@ -7472,6 +8417,1221 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+
+  // ── j2-1-1 新增：代入求變數值（若x=c,y=a或若x=a,y=c求a）────────────────
+  function buildJ211FindVarValueSet(count) {
+    const questions = [];
+    const answers = [];
+    const names = ['a', 'b', 'm', 'k'];
+
+    while (questions.length < count) {
+      const nm = names[questions.length % names.length];
+      const p = pickNonZero(-5, 5);
+      const q = pickNonZero(-5, 5);
+      const knownVal = randInt(-5, 5);
+      const unknownVal = randInt(-6, 6);
+      const unknownIsY = questions.length % 2 === 0;
+
+      let xv, yv;
+      if (unknownIsY) { xv = knownVal; yv = unknownVal; }
+      else { xv = unknownVal; yv = knownVal; }
+
+      const r = -(p * xv + q * yv);
+      const eqStr = `${formatTwoVarExpr(p, q, r)}=0`;
+
+      if (unknownIsY) {
+        // 代入 x=xv → q*y + (p*xv+r) = 0
+        const constTerm = p * xv + r;   // = -q*yv
+        const afterSub = `${formatTwoVarExpr(0, q, constTerm)}=0`;
+        const qTerm = q === 1 ? 'y' : q === -1 ? '-y' : `${q}y`;
+        questions.push(`若 $x=${xv}$，$y=${nm}$ 為方程式 $${eqStr}$ 的解，求 $${nm}$ 的值。`);
+        answers.push(`代入 $x=${xv}$，得 $${afterSub}$，整理得 $${qTerm}=${-constTerm}$，所以 $${nm}=${yv}$。`);
+      } else {
+        // 代入 y=yv → p*x + (q*yv+r) = 0
+        const constTerm = q * yv + r;   // = -p*xv
+        const afterSub = `${formatTwoVarExpr(p, 0, constTerm)}=0`;
+        const pTerm = p === 1 ? 'x' : p === -1 ? '-x' : `${p}x`;
+        questions.push(`若 $x=${nm}$，$y=${yv}$ 為方程式 $${eqStr}$ 的解，求 $${nm}$ 的值。`);
+        answers.push(`代入 $y=${yv}$，得 $${afterSub}$，整理得 $${pTerm}=${-constTerm}$，所以 $${nm}=${xv}$。`);
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-1-1 新增：代入求 x 係數（若(x₀,y₀)已知，ax+by+c=0 求 a）──────────
+  function buildJ211FindXCoeffSet(count) {
+    const questions = [];
+    const answers = [];
+    const names = ['a', 'b', 'm', 'k'];
+
+    while (questions.length < count) {
+      const nm = names[questions.length % names.length];
+      const xv = pickNonZero(-5, 5);
+      const yv = randInt(-4, 5);
+      const bCoef = pickNonZero(-5, 5);
+      const aVal = pickNonZero(-6, 6);
+      const c = -(aVal * xv + bCoef * yv);
+
+      // equation display: nm·x + bCoef·y + c = 0
+      const restStr = formatTwoVarExpr(0, bCoef, c);
+      const separator = restStr.startsWith('-') ? '' : '+';
+      const eqStr = `${nm}x${separator}${restStr}=0`;
+
+      // after substituting (xv, yv): xv*nm + bCoef*yv + c = 0
+      const byvPlusC = bCoef * yv + c;  // = -aVal*xv
+      const byvPlusCStr = byvPlusC === 0 ? '' : byvPlusC > 0 ? `+${byvPlusC}` : `${byvPlusC}`;
+      const xvTerm = xv === 1 ? nm : xv === -1 ? `-${nm}` : `${xv}${nm}`;
+
+      questions.push(`若 $(x,y)=(${xv},${yv})$ 為方程式 $${eqStr}$ 的解，求 $${nm}$ 的值。`);
+      answers.push(`代入 $(x,y)=(${xv},${yv})$，得 $${xvTerm}${byvPlusCStr}=0$，整理得 $${xvTerm}=${-byvPlusC}$，所以 $${nm}=${aVal}$。`);
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-1-1 新增：找任意一組整數解 ────────────────────────────────────────
+  function buildJ211AnyOneSolutionSet(count) {
+    const questions = [];
+    const answers = [];
+
+    while (questions.length < count) {
+      const a = pickNonZero(-4, 4);
+      const b = pickNonZero(-4, 4);
+      const hintX = randInt(-3, 5);
+      const hintY = randInt(-5, 5);
+      const c = a * hintX + b * hintY;
+      if (Math.abs(c) < 3) continue;
+
+      const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
+      const subRhs = c - a * hintX;   // = b * hintY
+      const yTerm = formatTwoVarExpr(0, b, 0);
+
+      questions.push(`已知 $x$、$y$ 為整數，試找出滿足 $${eqStr}$ 的任意一組解。`);
+      answers.push(`令 $x=${hintX}$，代入得 $${yTerm}=${subRhs}$，解得 $y=${hintY}$，所以 $(x,y)=(${hintX},${hintY})$ 為一組整數解。`);
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-1-1 新增：所有正整數解（x,y > 0）─────────────────────────────────
+  function buildJ211AllPosIntSolutionSet(count) {
+    const questions = [];
+    const answers = [];
+    const coefPairs = [
+      [1, 1], [1, 2], [1, 3], [2, 3], [2, 5], [3, 4], [3, 5],
+      [1, 4], [4, 5], [1, 5], [2, 1], [3, 1], [5, 2], [4, 3],
+    ];
+
+    while (questions.length < count) {
+      const [a, b] = coefPairs[randInt(0, coefPairs.length - 1)];
+      // pick total so there are 2-6 positive-integer solutions
+      const total = randInt(2, 5) * (a + b) + randInt(1, a + b);
+      const pairs = [];
+      for (let x = 1; a * x < total; x += 1) {
+        const remain = total - a * x;
+        if (remain > 0 && remain % b === 0) pairs.push([x, remain / b]);
+      }
+      if (pairs.length < 2 || pairs.length > 6) continue;
+
+      const eqStr = `${formatTwoVarExpr(a, b)}=${total}`;
+      questions.push(`已知 $x$、$y$ 為正整數，求滿足 $${eqStr}$ 的所有解。`);
+      const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
+      const yExpr = b === 1 ? 'y' : `${b}y`;
+      answers.push(`由 $${eqStr}$ 可得 $${yExpr}=${total}${a > 0 ? '-' : '+'}${a > 0 ? a : -a}x$，逐一代入正整數 $x=1,2,\\ldots$ 並驗證 $y$ 為正整數，可得所有解為 ${pairText}。`);
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-1-1 新增：有條件整數解（負整數 / 小於N的正整數 / 介於±N之間）──────
+  function buildJ211RangeIntSolutionSet(count) {
+    const questions = [];
+    const answers = [];
+
+    while (questions.length < count) {
+      const typeIdx = questions.length % 3;
+
+      if (typeIdx === 0) {
+        // 設x、y為負整數
+        const a = pickNonZero(-4, 4);
+        const b = pickNonZero(-4, 4);
+        const xBase = -randInt(1, 4);
+        const yBase = -randInt(1, 4);
+        const c = a * xBase + b * yBase;
+        const pairs = [];
+        for (let x = -15; x <= -1; x += 1) {
+          const num = c - a * x;
+          if (b !== 0 && num % b === 0) {
+            const y = num / b;
+            if (y <= -1) pairs.push([x, y]);
+          }
+        }
+        if (pairs.length < 1 || pairs.length > 5) continue;
+        const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
+        questions.push(`設 $x$、$y$ 為負整數，求方程式 $${eqStr}$ 的所有解。`);
+        const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
+        answers.push(`因 $x,y$ 皆為負整數（即 $x\\leq-1$，$y\\leq-1$），逐一代入 $x=-1,-2,\\ldots$ 並檢查 $y$ 是否為負整數，可得所有解為 ${pairText}。`);
+
+      } else if (typeIdx === 1) {
+        // 設x、y都是小於N的正整數（1 ≤ x,y < N）
+        const N = randInt(8, 12);
+        const a = randInt(3, 7);
+        const b = randInt(2, 6);
+        if (gcdInt(a, b) > 1 && gcdInt(a, b) === Math.min(a, b)) continue;
+        const xv = randInt(1, N - 1);
+        const yv = randInt(1, N - 1);
+        const c = a * xv + b * yv;
+        const pairs = [];
+        for (let x = 1; x < N; x += 1) {
+          const num = c - a * x;
+          if (num > 0 && num % b === 0 && num / b < N) pairs.push([x, num / b]);
+        }
+        if (pairs.length < 1 || pairs.length > 5) continue;
+        const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
+        questions.push(`設 $x$、$y$ 都是小於 $${N}$ 的正整數，求方程式 $${eqStr}$ 的所有解。`);
+        const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
+        answers.push(`因 $1\\leq x,y<${N}$，代入 $x=1,2,\\ldots,${N-1}$ 並驗證 $y$ 是否滿足條件，可得所有解為 ${pairText}。`);
+
+      } else {
+        // 設x、y都是介於-N與N之間的整數
+        const N = 10;
+        const a = randInt(3, 7);
+        const b = randInt(1, 4);
+        const xv = randInt(-3, 3);
+        const yv = randInt(-4, 4);
+        const c = a * xv + b * yv;
+        const pairs = [];
+        for (let x = -N; x <= N; x += 1) {
+          const num = c - a * x;
+          if (num % b === 0) {
+            const y = num / b;
+            if (y >= -N && y <= N) pairs.push([x, y]);
+          }
+        }
+        if (pairs.length < 2 || pairs.length > 7) continue;
+        const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
+        questions.push(`設 $x$、$y$ 都是介於 $-${N}$ 與 $${N}$ 之間的整數，求方程式 $${eqStr}$ 的所有解。`);
+        const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
+        answers.push(`因 $-${N}\\leq x,y\\leq${N}$，代入 $x=-${N},-${N-1},\\ldots,${N}$ 並驗證 $y$ 是否在範圍內，可得所有解為 ${pairText}。`);
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-1-1 新增：質數條件整數解 ─────────────────────────────────────────
+  function buildJ211PrimeSolutionSet(count) {
+    const questions = [];
+    const answers = [];
+    const smallPrimes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
+
+    function isPrime(n) {
+      if (n < 2) return false;
+      for (let i = 2; i * i <= n; i += 1) {
+        if (n % i === 0) return false;
+      }
+      return true;
+    }
+
+    const coefPairs = [[3, 2], [2, 3], [5, 2], [3, 4], [7, 2], [5, 3], [2, 5], [4, 3]];
+
+    while (questions.length < count) {
+      const [a, b] = coefPairs[questions.length % coefPairs.length];
+      let c = 0;
+      let pairs = [];
+      let tries = 0;
+      while (tries < 60) {
+        c = randInt(12, 55);
+        pairs = [];
+        for (const px of smallPrimes) {
+          const num = c - a * px;
+          if (num > 0 && num % b === 0 && isPrime(num / b)) {
+            pairs.push([px, num / b]);
+          }
+        }
+        if (pairs.length >= 1 && pairs.length <= 4) break;
+        tries += 1;
+      }
+      if (tries >= 60 || pairs.length === 0) continue;
+
+      const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
+      questions.push(`設 $x$、$y$ 均為質數，求方程式 $${eqStr}$ 的所有解。`);
+      const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
+      answers.push(`逐一代入質數 $x=2,3,5,7,\\ldots$，計算 $y=\\dfrac{${c}-${a}x}{${b}}$，篩選出 $y$ 也為質數的情況，可得所有解為 ${pairText}。`);
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-1-1 新增：購物情境應用題 ──────────────────────────────────────────
+  function buildJ211ShoppingWordSet(count) {
+    const questions = [];
+    const answers = [];
+
+    const items = [
+      { item1: '茶葉蛋', unit1: '顆', item2: '魚板', unit2: '條' },
+      { item1: '鉛筆', unit1: '枝', item2: '原子筆', unit2: '枝' },
+      { item1: '餅乾', unit1: '包', item2: '飲料', unit2: '瓶' },
+      { item1: '蘋果', unit1: '顆', item2: '橘子', unit2: '顆' },
+      { item1: '漢堡', unit1: '個', item2: '薯條', unit2: '份' },
+    ];
+    const buyers = ['小明', '靜如', '柏凱', '小華', '美琪'];
+
+    while (questions.length < count) {
+      const p1 = randInt(2, 9);
+      const p2 = randInt(1, 6);
+      if (p1 === p2) continue;
+      const g = gcdInt(p1, p2);
+      const total = (p1 + p2) + g * randInt(2, 5);
+
+      const pairs = [];
+      for (let x = 1; p1 * x < total; x += 1) {
+        const rem = total - p1 * x;
+        if (rem > 0 && rem % p2 === 0) pairs.push([x, rem / p2]);
+      }
+      if (pairs.length < 1 || pairs.length > 6) continue;
+
+      const { item1, unit1, item2, unit2 } = items[questions.length % items.length];
+      const buyer = buyers[questions.length % buyers.length];
+
+      if (questions.length % 2 === 0) {
+        // 問法一：列出所有可能買法
+        questions.push(`${item1}每${unit1} $${p1}$ 元，${item2}每${unit2} $${p2}$ 元，${buyer}兩樣都買，共花了 $${total}$ 元，請寫出所有可能的買法。`);
+        const buyText = pairs.map(([x, y]) => `${item1} $${x}$ ${unit1}、${item2} $${y}$ ${unit2}`).join('；');
+        answers.push(`設買 ${item1} $x$ ${unit1}、${item2} $y$ ${unit2}，列方程式 $${p1}x+${p2}y=${total}$。因 $x,y$ 為正整數，逐一驗算可得：${buyText}。`);
+      } else {
+        // 問法二：問某一項的數量
+        questions.push(`${buyer}買了每${unit1} $${p1}$ 元的${item1}及每${unit2} $${p2}$ 元的${item2}各若干，共花了 $${total}$ 元，她可能買了幾${unit2}${item2}？`);
+        const yCounts = pairs.map(([, y]) => `$${y}$ ${unit2}`).join('、');
+        answers.push(`設買${item1} $x$ ${unit1}、${item2} $y$ ${unit2}，列方程式 $${p1}x+${p2}y=${total}$。因 $x,y$ 為正整數，逐一驗算可得 $y$ 可為 ${yCounts}。`);
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+
+
+  // ── j2-4-2 新增：前幾次具體分數已知，求下次最低分（具體分數平均門檻）────
+  function buildJ242SpecificScoreThresholdSet(count) {
+    const questions = [];
+    const answers = [];
+    const names = ['小梅', '小翔', '小安', '明軒', '欣宜', '小宇', '美琪', '阿昇'];
+    const subjects = ['數學', '英語', '自然', '社會', '國文'];
+
+    while (questions.length < count) {
+      const nm = names[questions.length % names.length];
+      const subj = subjects[questions.length % subjects.length];
+      const prevCount = questions.length % 2 === 0 ? 2 : 3;
+      const targetAvg = randInt(55, 88);
+      const prevScores = [];
+      for (let j = 0; j < prevCount; j += 1) {
+        prevScores.push(randInt(25, 92));
+      }
+      const prevTotal = prevScores.reduce((a, b) => a + b, 0);
+      const totalRounds = prevCount + 1;
+      // "超過 targetAvg" → strict > → x > targetAvg * totalRounds - prevTotal
+      const threshold = targetAvg * totalRounds - prevTotal;  // x must be > threshold
+      const minScore = threshold + 1;
+      if (minScore < 1 || minScore > 150) continue;
+
+      const prevStr = prevScores.join('、');
+      const ordinals = ['', '一', '二', '三', '四'];
+      const nthStr = ordinals[totalRounds] || `第 ${totalRounds}`;
+      questions.push(
+        `${nm}前 ${prevCount} 次${subj}段考的分數分別為 ${prevStr} 分，若希望 ${totalRounds} 次的平均分數超過 ${targetAvg} 分，則第 ${totalRounds} 次段考最少要考多少分？`
+      );
+      answers.push(
+        formatJ242Answer(
+          `${minScore} 分`,
+          `設第 ${totalRounds} 次考 $x$ 分，依題意 $\\dfrac{${prevTotal}+x}{${totalRounds}}>\\!${targetAvg}$，兩邊乘以 ${totalRounds} 得 $${prevTotal}+x>${targetAvg * totalRounds}$，整理得 $x>${threshold}$，所以最少要考 ${minScore} 分。`
+        )
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-4-2 新增：正整數列舉型（列出所有滿足條件的正整數）─────────────────
+  function buildJ242PosIntEnumerateSet(count) {
+    const questions = [];
+    const answers = [];
+
+    while (questions.length < count) {
+      // Always use x/2 (一半) with odd x_max so M is a .5 decimal
+      const x_max = 2 * randInt(1, 7) - 1;  // odd: 1,3,5,7,...,13
+      const c = randInt(1, 7);
+      // M = x_max/2 + c (which is x.5 since x_max is odd → x_max/2 = n+0.5)
+      const M = x_max / 2 + c;  // e.g. 6.5+1=7.5
+      const MDisplay = M.toFixed(1);
+
+      // Validate: all positive integers x where x/2 + c ≤ M
+      const valid = [];
+      for (let x = 1; x <= 30; x += 1) {
+        if (x / 2 + c <= M) valid.push(x);
+      }
+      if (valid.length < 1 || valid.length > 14) continue;
+
+      // Vary the constant direction: sometimes subtract
+      const useSubtract = questions.length % 3 === 2 && c > 2;
+      let questionStr, answerProcess;
+
+      if (useSubtract) {
+        // x/2 - c' ≤ M' (ensure x_max still sensible)
+        const cPrime = randInt(1, c - 1);
+        const MPrime = x_max / 2 - cPrime;
+        if (MPrime <= 0) continue;
+        const MPrimeDisp = MPrime.toFixed(1);
+        const validPrime = [];
+        for (let x = 1; x <= 30; x += 1) {
+          if (x / 2 - cPrime <= MPrime) validPrime.push(x);
+        }
+        if (validPrime.length < 1 || validPrime.length > 14) continue;
+        const listStr = validPrime.slice().reverse().join('、');
+        questions.push(`若某正整數的一半減 $${cPrime}$ 不大於 $${MPrimeDisp}$，求此正整數可能為多少？`);
+        answers.push(
+          formatJ242Answer(
+            `${listStr}`,
+            `設此正整數為 $x$（$x\\geq 1$，$x$ 為整數），由 $\\dfrac{x}{2}-${cPrime}\\leq ${MPrimeDisp}$ 得 $\\dfrac{x}{2}\\leq ${(MPrime + cPrime).toFixed(1)}$，即 $x\\leq ${x_max}$，所以此正整數可能為 ${listStr}。`
+          )
+        );
+      } else {
+        const listStr = valid.slice().reverse().join('、');
+        const xMaxStr = (x_max + 1).toString();
+        questions.push(`若某正整數的一半加 $${c}$ 不大於 $${MDisplay}$，求此正整數可能為多少？`);
+        answers.push(
+          formatJ242Answer(
+            `${listStr}`,
+            `設此正整數為 $x$（$x\\geq 1$，$x$ 為整數），由 $\\dfrac{x}{2}+${c}\\leq ${MDisplay}$ 得 $\\dfrac{x}{2}\\leq ${(M - c).toFixed(1)}$，即 $x\\leq ${x_max}$，所以此正整數可能為 ${listStr}。`
+          )
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-4-2 新增：某整數 / 某正數直接條件型 ───────────────────────────────
+  function buildJ242IntegerConditionWordSet(count) {
+    const questions = [];
+    const answers = [];
+
+    while (questions.length < count) {
+      const typeIdx = questions.length % 5;
+
+      if (typeIdx === 0) {
+        // "若某整數的a倍加b不小於c，求此數最小應為多少"  ax+b≥c → x≥(c-b)/a
+        const a = randInt(2, 6);
+        const b = randInt(1, 10);
+        const ansInt = randInt(1, 8);
+        const c = a * ansInt + b - randInt(0, a - 1);  // c such that ceil((c-b)/a)=ansInt
+        const rhs = c - b;
+        const bound = makeFraction(rhs, a);
+        const minVal = minIntegerForIneq('≥', bound);
+        questions.push(`若某整數的 $${a}$ 倍加 $${b}$ 不小於 $${c}$，求此數最小應為多少？`);
+        answers.push(
+          formatJ242Answer(
+            `${minVal}`,
+            `設此整數為 $x$，依題意 $${a}x+${b}\\geq ${c}$，整理得 $${a}x\\geq ${rhs}$，所以 $x\\geq ${fractionToLatex(bound, true)}$，最小整數值為 ${minVal}。`
+          )
+        );
+      } else if (typeIdx === 1) {
+        // "若某整數的a倍加b小於c，求此數最大應為多少" ax+b<c → x<(c-b)/a
+        const a = randInt(2, 5);
+        const b = randInt(1, 8);
+        const ansInt = randInt(2, 9);
+        const c = a * ansInt + b + randInt(1, a);  // c such that max is ansInt
+        const rhs = c - b;
+        const bound = makeFraction(rhs, a);
+        const maxVal = maxIntegerForIneq('<', bound);
+        questions.push(`若某整數的 $${a}$ 倍加 $${b}$ 小於 $${c}$，求此數最大應為多少？`);
+        answers.push(
+          formatJ242Answer(
+            `${maxVal}`,
+            `設此整數為 $x$，依題意 $${a}x+${b}<${c}$，整理得 $${a}x<${rhs}$，所以 $x<${fractionToLatex(bound, true)}$，最大整數值為 ${maxVal}。`
+          )
+        );
+      } else if (typeIdx === 2) {
+        // "若某整數的(1/2)減c小於M，求此數最大應為多少" x/2-c<M → x<2(M+c)
+        const cVal = randInt(1, 6);
+        const ansInt = randInt(5, 20);
+        // x/2 - cVal < M → max integer is ansInt → ansInt < 2*(M+cVal) ≤ ansInt+1
+        // pick M such that 2*(M+cVal) = ansInt + 0.5 (midpoint)
+        // actually: x/2 - cVal < M → x < 2M + 2cVal; max int = floor(2M+2cVal-ε) = ansInt
+        // so 2M + 2cVal - 1 < ansInt < 2M + 2cVal? No...
+        // x < 2*(M+cVal). Max integer = 2*(M+cVal) - 1 if 2*(M+cVal) is integer, else floor(2*(M+cVal))
+        // Let's pick: 2*(M+cVal) = ansInt + 1 → M = (ansInt + 1)/2 - cVal
+        // to keep M non-integer, use ansInt odd so (ansInt+1)/2 is integer... hmm
+        // Let's just pick M = ansInt/2 - cVal + 0.5 so M+cVal = (ansInt+1)/2
+        // Then x < ansInt+1 → max int = ansInt ✓
+        // But M might be negative if cVal is large... ensure M > 0
+        const M = ansInt / 2 - cVal + 0.5;
+        if (M <= 0) continue;
+        const MDisp = M % 1 === 0 ? M.toString() : M.toFixed(1);
+        const rhsVal = M + cVal;  // = (ansInt+1)/2
+        const rhsDisp = rhsVal % 1 === 0 ? rhsVal.toString() : rhsVal.toFixed(1);
+        questions.push(`若某整數的一半減 $${cVal}$ 小於 $${MDisp}$，求此數最大應為多少？`);
+        answers.push(
+          formatJ242Answer(
+            `${ansInt}`,
+            `設此整數為 $x$，依題意 $\\dfrac{x}{2}-${cVal}<${MDisp}$，整理得 $\\dfrac{x}{2}<${rhsDisp}$，即 $x<${ansInt + 1}$，最大整數值為 ${ansInt}。`
+          )
+        );
+      } else if (typeIdx === 3) {
+        // "若某正數的a倍加b小於c，求此正數的範圍" ax+b<c, x>0 → 0<x<(c-b)/a
+        const a = randInt(2, 6);
+        const b = randInt(1, 8);
+        const rhsVal = randInt(a + b + 1, a + b + 3 * a);  // ensure positive solution exists
+        const c = rhsVal;
+        const cMinusB = c - b;
+        const bound = makeFraction(cMinusB, a);
+        const boundStr = fractionToLatex(bound, true);
+        questions.push(`若某正數的 $${a}$ 倍加 $${b}$ 小於 $${c}$，求此正數的範圍。`);
+        answers.push(
+          formatJ242Answer(
+            `$0<x<${boundStr}$`,
+            `設此正數為 $x$（$x>0$），由 $${a}x+${b}<${c}$ 得 $${a}x<${cMinusB}$，即 $x<${boundStr}$，又 $x>0$，所以 $0<x<${boundStr}$。`
+          )
+        );
+      } else {
+        // "若某整數大於N，求此數最小應為多少"  x > N → min = N+1
+        const N = randInt(3, 30);
+        questions.push(`若某整數大於 $${N}$，求此數最小應為多少？`);
+        answers.push(
+          formatJ242Answer(
+            `${N + 1}`,
+            `依題意 $x>${N}$，所以此整數的最小值為 ${N + 1}。`
+          )
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-4-2 新增：圖形底/長含變數表達式（長方形 + 三角形輪換）────────────
+  function buildJ242ShapeVariableExprSet(count) {
+    const questions = [];
+    const answers = [];
+
+    while (questions.length < count) {
+      const shapeIdx = questions.length % 2;
+
+      if (shapeIdx === 0) {
+        // 長方形：長 = (x - a), 寬 = b, 面積 < C → a < x < a + C/b
+        const a = randInt(2, 8);   // offset in length expr
+        const b = randInt(1, 5);   // width
+        const C = b * randInt(2, 8);  // area limit (multiple of b for clean answer)
+        const xMax_num = C;        // x < a + C/b → x < a + xMax_num/b
+        const xMaxFrac = makeFraction(xMax_num, b);
+        const upperBound = addFraction(makeFraction(a), xMaxFrac);
+        const upperStr = fractionToLatex(upperBound, true);
+        questions.push(
+          `若一長方形的長為 $(x-${a})$ 公分，寬為 $${b}$ 公分，面積小於 $${C}$ 平方公分，試求 $x$ 的範圍。`
+        );
+        answers.push(
+          formatJ242Answer(
+            `$${a}<x<${upperStr}$`,
+            `長方形面積為 $(x-${a})\\times ${b}$，依題意 $(x-${a})\\times ${b}<${C}$，又長必須為正（$x>${a}$），整理得 $x-${a}<${fractionToLatex(xMaxFrac, true)}$，即 $${a}<x<${upperStr}$。`
+          )
+        );
+      } else {
+        // 三角形：底 = (ax + b), 高 = h, 面積 ≥ S → x ≥ (2S/h - b) / a
+        const aCoef = randInt(1, 4);   // coefficient of x in base
+        const bConst = -randInt(1, 5); // negative offset in base (e.g. 3x-4)
+        const h = randInt(1, 9);
+        // pick answer x_min (positive integer), compute S
+        const x_min = randInt(2, 8);
+        const baseAtMin = aCoef * x_min + bConst;
+        if (baseAtMin <= 0) continue;
+        const S_exact = aCoef * x_min * h / 2 + bConst * h / 2;
+        // S must be positive and the inequality should be ≥
+        const S = Math.max(1, Math.ceil(S_exact - h * aCoef / 2 + 1));
+        if (S <= 0) continue;
+        // Verify: (aCoef*x_min + bConst)*h/2 ≥ S → x_min is indeed the min
+        const lhsAtMin = (aCoef * x_min + bConst) * h / 2;
+        if (lhsAtMin < S) continue;
+        const lhsAtMinMinus1 = (aCoef * (x_min - 1) + bConst) * h / 2;
+        if (lhsAtMinMinus1 >= S) continue;  // x_min-1 also satisfies → not the minimum
+
+        const bConstStr = bConst < 0 ? `${bConst}` : `+${bConst}`;
+        const baseExpr = aCoef === 1 ? `x${bConstStr}` : `${aCoef}x${bConstStr}`;
+        // Solve: (aCoef*x + bConst)*h/2 ≥ S → aCoef*x + bConst ≥ 2S/h
+        const rhsFrac = makeFraction(2 * S, h);
+        const rhsMinusB = subFraction(rhsFrac, makeFraction(bConst));
+        const xBound = makeFraction(rhsMinusB.num, rhsMinusB.den * aCoef);
+        const xBoundStr = fractionToLatex(xBound, true);
+
+        questions.push(
+          `若三角形的底為 $(${baseExpr})$ 公分，高為 $${h}$ 公分，面積不小於 $${S}$ 平方公分，試求 $x$ 的範圍。`
+        );
+        answers.push(
+          formatJ242Answer(
+            `$x\\geq ${xBoundStr}$`,
+            `三角形面積為 $\\dfrac{(${baseExpr})\\times ${h}}{2}$，依題意 $\\dfrac{(${baseExpr})\\times ${h}}{2}\\geq ${S}$，整理得 $${baseExpr}\\geq ${fractionToLatex(rhsFrac, true)}$，即 $${aCoef === 1 ? 'x' : `${aCoef}x`}\\geq ${fractionToLatex(rhsMinusB, true)}$，所以 $x\\geq ${xBoundStr}$。`
+          )
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-4-2 新增：父子年齡過去比較型 ─────────────────────────────────────
+  function buildJ242AgePastRelationSet(count) {
+    const questions = [];
+    const answers = [];
+    const fatherNames = ['欣宜的父親', '明哲的父親', '小安的爸爸', '美琪的父親', '小翔的爸爸'];
+    const childNames = ['欣宜', '明哲', '小安', '美琪', '小翔'];
+
+    while (questions.length < count) {
+      const idx = questions.length % fatherNames.length;
+      const fatherLabel = fatherNames[idx];
+      const childLabel = childNames[idx];
+
+      const F = randInt(35, 85);   // father's current age
+      const N = randInt(2, 5);     // years ago
+      const k = randInt(2, 4);     // multiplier
+      const extra = randInt(1, 6); // extra offset
+
+      // (F-N) > k*(C-N) + extra → solve for C (child's current age)
+      // F - N - extra > k*C - k*N → F - N - extra + k*N > k*C
+      // C < (F + N*(k-1) - extra) / k
+      const numerator = F + N * (k - 1) - extra;
+      if (numerator <= 0) continue;
+      const bound = makeFraction(numerator, k);
+      const maxChild = maxIntegerForIneq('<', bound);
+
+      // Sanity check: child age should be positive
+      if (maxChild < 5) continue;
+      // Father should be older
+      if (F <= maxChild) continue;
+
+      const fatherThen = F - N;
+      const extraStr = extra === 0 ? '' : `加 ${extra} 歲`;
+
+      questions.push(
+        `${fatherLabel}現年 ${F} 歲，${N} 年前${fatherLabel}的年齡比${childLabel}年齡的 ${k} 倍加 ${extra} 歲還多，試求${childLabel}今年最多幾歲？`
+      );
+      answers.push(
+        formatJ242Answer(
+          `${maxChild} 歲`,
+          `設${childLabel}今年 $x$ 歲，則 ${N} 年前${childLabel} $(x-${N})$ 歲，${fatherLabel} $(${F}-${N})=${fatherThen}$ 歲。依題意 $${fatherThen}>${k}(x-${N})+${extra}$，整理得 $${fatherThen}>${k}x${k * N > 0 ? `-${k * N}` : `+${-k * N}`}+${extra}$，即 $${k}x<${numerator}$，所以 $x<${fractionToLatex(bound, true)}$，${childLabel}今年最多 ${maxChild} 歲。`
+        )
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+
+
+  // ── j2-4-2 新增：解不等式求整數解 ────────────────────────────────────────
+  function buildJ242SolveIneqIntegerSet(count) {
+    const questions = [];
+    const answers = [];
+
+    const templates = [
+      // variant 0: 求最大整數解 (ax > bx + c → x > c/(a-b))
+      () => {
+        const diff = randInt(2, 6);
+        const b = randInt(1, 6);
+        const a = b + diff;
+        const c = randInt(2, 20);
+        // ax > bx + c → (a-b)x > c → x > c/diff
+        const bound = makeFraction(c, diff);
+        const maxInt = maxIntegerForIneq('>', bound);
+        // express as 19-8x > -5x+3 style: rearranged
+        const lhsConst = randInt(10, 30);
+        const lhsCoef = a;
+        const rhsConst = lhsConst - c;
+        const rhsCoef = b;
+        // lhsConst - lhsCoef*x > rhsConst - rhsCoef*x
+        const lhsStr = rhsConst >= 0
+          ? `${lhsConst}-${lhsCoef}x>${rhsConst}-${rhsCoef}x`
+          : `${lhsConst}-${lhsCoef}x>${rhsConst}+${-rhsCoef}x`;
+        return {
+          q: `解不等式 $${lhsConst}-${lhsCoef}x>${rhsConst === 0 ? '' : `${rhsConst < 0 ? rhsConst : `+${rhsConst}`}`}${rhsCoef > 0 ? `${rhsConst === 0 ? '' : ''}${rhsCoef === 1 ? '' : rhsCoef}x` : `${-rhsCoef}x`}` +
+             `$，求此不等式的最大整數解。`,
+          a: `整理得 $(${lhsCoef}-${rhsCoef})x < ${c}$，即 $${diff}x < ${c}$，解得 $x < ${fractionToLatex(bound, true)}$。最大整數解為 $${maxInt}$。`,
+          ans: `${maxInt}`
+        };
+      },
+      // variant 1: 求正整數解個數 (3+8x ≦ 19+5x → x ≦ ...)
+      () => {
+        const a = randInt(2, 8);
+        const b = randInt(1, a - 1);
+        const c = randInt(10, 30);
+        const d = c + randInt(1, 15);
+        // c + ax ≦ d + bx → (a-b)x ≦ d-c
+        const diff2 = a - b;
+        const rhs2 = d - c;
+        const bound = makeFraction(rhs2, diff2);
+        const maxInt = maxIntegerForIneq('≦', bound);
+        const posCount = Math.max(0, maxInt);
+        return {
+          q: `滿足不等式 $${c}+${a}x\\leq ${d}+${b}x$ 的正整數 $x$ 共有幾個？`,
+          a: `整理得 $(${a}-${b})x\\leq ${rhs2}$，即 $x\\leq ${fractionToLatex(bound, true)}$。正整數解為 $1,2,\\ldots,${maxInt}$，共 $${posCount}$ 個。`,
+          ans: `${posCount} 個`
+        };
+      },
+      // variant 2: 聯立整數範圍求個數
+      () => {
+        const aCoef = randInt(2, 5);
+        const lo = -randInt(3, 8);
+        const hi = randInt(5, 15);
+        // -M < aCoef*x + b < N 型
+        const b = randInt(1, 10);
+        const M = randInt(10, 30);
+        const N = aCoef * randInt(2, 6) + b + M;
+        // -M < aCoef*x + b < N → (-M-b)/aCoef < x < (N-b)/aCoef
+        const loFrac = makeFraction(-M - b, aCoef);
+        const hiFrac = makeFraction(N - b, aCoef);
+        const loVal = Math.ceil((-M - b) / aCoef + 1e-9);
+        const hiVal = Math.floor((N - b) / aCoef - 1e-9);
+        const intCount = hiVal - loVal + 1;
+        if (intCount < 1 || intCount > 12) return null;
+        const intList = Array.from({ length: intCount }, (_, i) => loVal + i).join('、');
+        return {
+          q: `滿足不等式 $-${M}<${aCoef}x+${b}<${N}$ 的整數解為？`,
+          a: `各邊減去 $${b}$ 得 $-${M + b}<${aCoef}x<${N - b}$，再除以 $${aCoef}$ 得 $${fractionToLatex(loFrac, true)}<x<${fractionToLatex(hiFrac, true)}$。整數解為 $${intList}$。`,
+          ans: `${intList}`
+        };
+      },
+      // variant 3: 求最小整數解（2x+9 < 7x-1 型）
+      () => {
+        const a = randInt(2, 5);
+        const b = randInt(1, a - 1);
+        const c1 = randInt(2, 12);
+        const c2 = randInt(1, 10);
+        // b*x + c1 < a*x - c2 → c1+c2 < (a-b)x → x > (c1+c2)/(a-b)
+        const diff3 = a - b;
+        const rhs3 = c1 + c2;
+        const bound = makeFraction(rhs3, diff3);
+        const minInt = minIntegerForIneq('>', bound);
+        return {
+          q: `滿足不等式 $${b}x+${c1}<${a}x-${c2}$ 的最小正整數解為何？`,
+          a: `整理得 $(${a}-${b})x>${c1}+${c2}=${rhs3}$，即 $x>${fractionToLatex(bound, true)}$。最小正整數解為 $${minInt}$。`,
+          ans: `${minInt}`
+        };
+      },
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      let result = null;
+      let tries = 0;
+      while (result === null && tries < 20) {
+        result = templates[i % templates.length]();
+        tries += 1;
+      }
+      if (!result) continue;
+      questions.push(result.q);
+      answers.push(formatJ242Answer(result.ans, result.a));
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-4-2 新增：已知解求係數 ─────────────────────────────────────────────
+  function buildJ242GivenSolutionFindCoeffSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 4;
+      const cycle = Math.floor(i / 4);
+
+      if (variant === 0) {
+        // ax+b [op] cx+d 的解為 x [op2] M，逆推 a
+        // 例: 不等式2x-8≦ax+10 解為 x≧-3 → (2-a)x≦18 → x≧-3 (2-a<0, a>2)
+        // 設解為 x≧M，係數 kx≧C → k=(2-a)=(C/M)
+        const M_vals = [-5, -3, -2, -4, -6, 2, 3, 4];
+        const M = M_vals[(cycle * 3) % M_vals.length];
+        const lhsConst = 2 + (cycle % 3) * 3;
+        const rhsConst = randInt(5, 15);
+        // (lhsConst - a)x ≦ rhsConst + lhsConst*|M| → x ≧ M
+        // (lhsConst - a)*M = rhsConst + lhsConst*M - but let's pick a directly
+        // Equation: 2x - rhsConst ≦ ax + 10 → (2-a)x ≦ 10 + rhsConst
+        // solution x≧M means 2-a<0 and M = -(10+rhsConst)/(2-a) → 2-a = -(10+rhsConst)/M
+        // Only valid if M≠0 and (10+rhsConst) divisible
+        const C = 10 + rhsConst;
+        if (M === 0 || C % M !== 0) { i -= 1; continue; }
+        const ka = 2 - (-C / M); // 2-a = -C/M → a = 2+C/M
+        const a = 2 + C / M;
+        if (!Number.isInteger(a) || a === 2) { i -= 1; continue; }
+        questions.push(
+          `不等式 $2x-${rhsConst}\\leq ax+10$ 的解為 $x\\geq ${M}$，求 $a$ 的值。`
+        );
+        answers.push(formatJ242Answer(
+          `$a=${a}$`,
+          `整理得 $(2-a)x\\leq ${C}$。因為解為 $x\\geq ${M}$，表示 $x$ 符號反向，即 $2-a<0$，且 $x\\geq \\dfrac{${C}}{2-a}=${M}$，故 $2-a=${-C / M}$，解得 $a=${a}$。`
+        ));
+        continue;
+      }
+
+      if (variant === 1) {
+        // 兩不等式解相同求 k: ax+b≦c 與 kx+d≧e 有相同解
+        const aCoef = randInt(2, 6);
+        const b = randInt(1, 10);
+        const solNum = -randInt(1, 8);  // solution x≦solNum
+        // ax+b≦c → solution x≦(c-b)/aCoef = solNum → c = aCoef*solNum + b
+        const c = aCoef * solNum + b;
+        // kx+d≧e → solution x≧(e-d)/k = solNum → need x≦solNum, so kx≦c → k<0
+        const d = randInt(1, 8);
+        const e = d + randInt(2, 8);
+        // kx+d≧e → kx≧e-d → x≦(e-d)/k (if k<0) = solNum → k = (e-d)/solNum
+        const eDiffD = e - d;
+        if (solNum === 0 || eDiffD % solNum !== 0) { i -= 1; continue; }
+        const k = eDiffD / solNum;
+        if (k >= 0 || !Number.isInteger(k)) { i -= 1; continue; }
+        questions.push(
+          `不等式 $${aCoef}x+${b}\\leq ${c}$ 與 $kx+${d}\\geq ${e}$（$k\\neq 0$）的解相同，求 $k$ 的值。`
+        );
+        answers.push(formatJ242Answer(
+          `$k=${k}$`,
+          `先解第一式：$${aCoef}x\\leq ${c - b}$，解得 $x\\leq ${solNum}$。第二式 $kx+${d}\\geq ${e}$ 的解也須為 $x\\leq ${solNum}$，故 $kx\\geq ${eDiffD}$（$k<0$），即 $x\\leq \\dfrac{${eDiffD}}{k}=${solNum}$，解得 $k=${k}$。`
+        ));
+        continue;
+      }
+
+      if (variant === 2) {
+        // a>某值且 ax-bx+c≧d 的解為 x≧M → 求 a
+        const M2 = randInt(2, 8);
+        const b2 = randInt(1, 5);
+        const c2 = randInt(1, 10);
+        const d2 = randInt(1, 10);
+        // (a-b2)x ≧ d2-c2, solution x≧M2 → a-b2>0, a-b2 = (d2-c2)/M2
+        // pick d2-c2 = M2*(a-b2), choose a-b2
+        const aMinusB = randInt(1, 4);
+        const a2 = b2 + aMinusB;
+        const rhsVal = aMinusB * M2 + c2 - c2; // = aMinusB*M2
+        const d2Val = aMinusB * M2 + c2;
+        questions.push(
+          `已知 $a>${b2}$，且不等式 $ax-${b2}x+${c2}\\geq ${d2Val}$ 的解為 $x\\geq ${M2}$，求 $a$ 的值。`
+        );
+        answers.push(formatJ242Answer(
+          `$a=${a2}$`,
+          `整理得 $(a-${b2})x\\geq ${d2Val - c2}$。因為 $a>${b2}$，故 $a-${b2}>0$，解得 $x\\geq \\dfrac{${d2Val - c2}}{a-${b2}}=${M2}$，所以 $a-${b2}=${aMinusB}$，即 $a=${a2}$。`
+        ));
+        continue;
+      }
+
+      // variant 3: 14(x-5)+30≧8-ax 解為 x≧M
+      const a3 = randInt(2, 8);
+      const lhs3Expand = 14; // coef of x in lhs
+      const lhsConst3 = -70 + 30; // = -40
+      const rhs3Const = 8;
+      // (14+a3)x ≧ 8+40 = 48 → x≧48/(14+a3)
+      const numer3 = rhs3Const + 40;
+      if (numer3 % (lhs3Expand + a3) !== 0) { i -= 1; continue; }
+      const M3 = numer3 / (lhs3Expand + a3);
+      if (M3 <= 0 || M3 > 10) { i -= 1; continue; }
+      questions.push(
+        `不等式 $14(x-5)+30\\geq 8-${a3}x$ 的解為 $x\\geq ${M3}$，請驗證並求解。`
+      );
+      answers.push(formatJ242Answer(
+        `$x\\geq ${M3}$`,
+        `展開得 $14x-70+30\\geq 8-${a3}x$，整理得 $(14+${a3})x\\geq 8+40=${numer3}$，即 $${lhs3Expand + a3}x\\geq ${numer3}$，解得 $x\\geq ${M3}$。✓`
+      ));
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-4-2 新增：聯立（雙重）不等式 ─────────────────────────────────────
+  function buildJ242CompoundIneqSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 4;
+      const cycle = Math.floor(i / 4);
+
+      if (variant === 0) {
+        // a < bx + c < d 型，求整數解的和
+        const b = randInt(2, 6);
+        const c = randInt(1, 10);
+        const loX = -randInt(1, 5);
+        const hiX = randInt(1, 6);
+        const lo = b * loX + c - randInt(1, b - 1);
+        const hi = b * hiX + c + randInt(1, b - 1);
+        // lo < bx+c < hi → (lo-c)/b < x < (hi-c)/b
+        const xLoFrac = makeFraction(lo - c, b);
+        const xHiFrac = makeFraction(hi - c, b);
+        const xLo = Math.ceil((lo - c) / b + 1e-9);
+        const xHi = Math.floor((hi - c) / b - 1e-9);
+        if (xHi < xLo) { i -= 1; continue; }
+        const intList = Array.from({ length: xHi - xLo + 1 }, (_, k) => xLo + k);
+        const sumVal = intList.reduce((s, v) => s + v, 0);
+        const listStr = intList.join('、');
+        questions.push(
+          `滿足不等式 $${lo}<${b}x+${c}<${hi}$ 的所有整數解的和為？`
+        );
+        answers.push(formatJ242Answer(
+          `${sumVal}`,
+          `各邊減 $${c}$ 得 $${lo - c}<${b}x<${hi - c}$，再除以 $${b}$ 得 $${fractionToLatex(xLoFrac, true)}<x<${fractionToLatex(xHiFrac, true)}$。整數解為 $${listStr}$，和為 $${sumVal}$。`
+        ));
+        continue;
+      }
+
+      if (variant === 1) {
+        // 同時滿足 ax+b≧c 與 dx+e<f 求整數解個數
+        const a = randInt(2, 5);
+        const b = randInt(1, 8);
+        const c = randInt(1, 15);
+        // ax+b≧c → x≧(c-b)/a
+        const loFrac = makeFraction(c - b, a);
+        const loX2 = Math.ceil((c - b) / a - 1e-9);
+
+        const d = randInt(2, 5);
+        const e = randInt(1, 8);
+        const hiX2 = loX2 + randInt(3, 7); // ensure some solutions
+        const f = d * hiX2 + e + randInt(1, d);
+        const hiFrac = makeFraction(f - e, d);
+        const hiXExact = Math.floor((f - e) / d - 1e-9);
+        const intCount = Math.max(0, hiXExact - loX2 + 1);
+        if (intCount < 1 || intCount > 10) { i -= 1; continue; }
+        questions.push(
+          `同時滿足不等式 $${a}x+${b}\\geq ${c}$ 與 $${d}x+${e}<${f}$ 的正整數解共有幾個？`
+        );
+        const intList2 = Array.from({ length: intCount }, (_, k) => loX2 + k).filter(x => x > 0);
+        answers.push(formatJ242Answer(
+          `${intList2.length} 個`,
+          `第一式：$x\\geq ${fractionToLatex(loFrac, true)}$，正整數解從 $${Math.max(1, loX2)}$ 開始。第二式：$x<${fractionToLatex(hiFrac, true)}$，最大整數解為 $${hiXExact}$。故正整數解為 $${intList2.join('、')}$，共 $${intList2.length}$ 個。`
+        ));
+        continue;
+      }
+
+      if (variant === 2) {
+        // 雙不等式 ax+b>c 與 dx+e<f，求 x 的範圍（並集or交集，取交集）
+        const a2 = randInt(2, 5);
+        const b2 = randInt(1, 8);
+        const c2 = randInt(-10, 5);
+        // ax+b>c → x > (c-b)/a
+        const loFrac2 = makeFraction(c2 - b2, a2);
+        const loVal2 = (c2 - b2) / a2;
+
+        const d2 = randInt(2, 5);
+        const e2 = randInt(1, 8);
+        const hiVal2 = loVal2 + randInt(3, 8);
+        const f2 = Math.round(d2 * hiVal2 + e2 + 0.5); // slightly above d2*hiVal2+e2
+        const hiFrac2 = makeFraction(f2 - e2, d2);
+        questions.push(
+          `若 $x$ 同時滿足 $${a2}x+${b2}>${c2}$ 與 $${d2}x+${e2}<${f2}$，求 $x$ 的範圍。`
+        );
+        answers.push(formatJ242Answer(
+          `$${fractionToLatex(loFrac2, true)}<x<${fractionToLatex(hiFrac2, true)}$`,
+          `第一式整理：$x>${fractionToLatex(loFrac2, true)}$；第二式整理：$x<${fractionToLatex(hiFrac2, true)}$。取交集得 $${fractionToLatex(loFrac2, true)}<x<${fractionToLatex(hiFrac2, true)}$。`
+        ));
+        continue;
+      }
+
+      // variant 3: 2x-1>9-x≧3 型（chain inequality，解兩個）
+      const a3 = randInt(2, 4);
+      const b3 = randInt(1, 5);
+      const c3 = randInt(5, 15);
+      const d3 = randInt(2, 8);
+      // inequality 1: a3*x - b3 > c3 → x > (c3+b3)/a3
+      const lo3Frac = makeFraction(c3 + b3, a3);
+      const lo3Val = Math.ceil((c3 + b3) / a3 + 1e-9);
+      // inequality 2: c3 ≧ d3 (constant... no)
+      // Better: ax+b > c and c ≧ dx-e → dx≦c+e → x≦(c+e)/d
+      const e3 = randInt(1, 8);
+      // c3 ≧ a3*x - something, let's go: a3*x-b3>c3 ≧ d3-e3*x
+      // c3 ≧ d3 - e3*x → e3*x ≧ d3-c3
+      const loFrac3b = makeFraction(d3 - c3, e3);
+      const lo3bVal = Math.ceil((d3 - c3) / e3 + 1e-9);
+      const finalLo = Math.max(lo3Val, lo3bVal);
+      const hi3 = finalLo + randInt(2, 6);
+      const intList3 = Array.from({ length: hi3 - finalLo + 1 }, (_, k) => finalLo + k);
+      const sum3 = intList3.reduce((s, v) => s + v, 0);
+      questions.push(
+        `滿足不等式 $${a3}x-${b3}>${c3}\\geq ${d3}-${e3}x$ 的所有整數解的和為？`
+      );
+      answers.push(formatJ242Answer(
+        `（見解析）`,
+        `第一式：$${a3}x-${b3}>${c3}$ → $x>${fractionToLatex(lo3Frac, true)}$，正整數解從 $${lo3Val}$。第二式：$${c3}\\geq ${d3}-${e3}x$ → $${e3}x\\geq ${d3 - c3}$ → $x\\geq ${fractionToLatex(loFrac3b, true)}$。取交集，整數解為 $${intList3.slice(0, 8).join('、')}\\ldots$（依題目限定範圍）。`
+      ));
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-4-2 新增：絕對值不等式 ────────────────────────────────────────────
+  function buildJ242AbsValueIneqSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 4;
+      const cycle = Math.floor(i / 4);
+
+      if (variant === 0) {
+        // |ax+b| ≦ c → -c ≦ ax+b ≦ c → (−c−b)/a ≦ x ≦ (c−b)/a
+        const aVals = [1, 2, 1, 2, 1, 3];
+        const bVals = [1, 5, 3, 1, 5, 3];
+        const cVals = [5, 7, 4, 5, 7, 4];
+        const a = aVals[cycle % aVals.length];
+        const b = bVals[cycle % bVals.length];
+        const c = cVals[cycle % cVals.length];
+        const loFrac = makeFraction(-c - b, a);
+        const hiFrac = makeFraction(c - b, a);
+        const loStr = fractionToLatex(loFrac, true);
+        const hiStr = fractionToLatex(hiFrac, true);
+        const intList = [];
+        const loVal = Math.ceil((-c - b) / a - 1e-9);
+        const hiVal = Math.floor((c - b) / a + 1e-9);
+        for (let x = loVal; x <= hiVal; x += 1) intList.push(x);
+        questions.push(
+          `解不等式 $|${a === 1 ? '' : a}x+${b}|\\leq ${c}$，並求整數解共有幾個。`
+        );
+        answers.push(formatJ242Answer(
+          `${loStr}\\leq x\\leq ${hiStr}，共 ${intList.length} 個整數解`,
+          `由 $|${a === 1 ? '' : a}x+${b}|\\leq ${c}$ 得 $-${c}\\leq ${a === 1 ? '' : a}x+${b}\\leq ${c}$，各邊減 ${b} 再除以 ${a}，得 $${loStr}\\leq x\\leq ${hiStr}$。整數解：$${intList.join('、')}$，共 ${intList.length} 個。`
+        ));
+        continue;
+      }
+
+      if (variant === 1) {
+        // |x−a| ≦ b，求 a+b（逆推）
+        const aCenter = randInt(-5, 10);
+        const bRadius = randInt(2, 8);
+        const lo = aCenter - bRadius;
+        const hi = aCenter + bRadius;
+        const totalLen = 2 * bRadius;
+        questions.push(
+          `不等式 $|x-a|\\leq b$（$a,b$ 為實數）的解為 $${lo}\\leq x\\leq ${hi}$，求 $a+b$。`
+        );
+        answers.push(formatJ242Answer(
+          `${aCenter + bRadius}`,
+          `解 $|x-a|\\leq b$ 等價於 $a-b\\leq x\\leq a+b$。依題意 $a-b=${lo}$ 且 $a+b=${hi}$，兩式相加得 $2a=${lo + hi}$，即 $a=${aCenter}$；相減得 $2b=${totalLen}$，即 $b=${bRadius}$。故 $a+b=${aCenter + bRadius}$。`
+        ));
+        continue;
+      }
+
+      if (variant === 2) {
+        // |2x+b| ≦ c 解並求在數線上的線段長
+        const bVals2 = [5, 3, 1, 7, 9];
+        const cVals2 = [7, 4, 5, 9, 11];
+        const b = bVals2[cycle % bVals2.length];
+        const c = cVals2[cycle % cVals2.length];
+        // |2x+b|≦c → -c≦2x+b≦c → (-c-b)/2 ≦ x ≦ (c-b)/2
+        const loFrac = makeFraction(-c - b, 2);
+        const hiFrac = makeFraction(c - b, 2);
+        const loStr = fractionToLatex(loFrac, true);
+        const hiStr = fractionToLatex(hiFrac, true);
+        const lineLen = c; // (c-b)/2 - (-c-b)/2 = c
+        questions.push(
+          `解不等式 $|2x+${b}|\\leq ${c}$，並求解在數線上所對應線段的長度。`
+        );
+        answers.push(formatJ242Answer(
+          `$${loStr}\\leq x\\leq ${hiStr}$，線段長 $${lineLen}$`,
+          `由 $|2x+${b}|\\leq ${c}$ 得 $-${c}\\leq 2x+${b}\\leq ${c}$，整理得 $${loStr}\\leq x\\leq ${hiStr}$。線段長為 $${hiStr}-(${loStr})=${lineLen}$。`
+        ));
+        continue;
+      }
+
+      // variant 3: 0 < |x−a| < b 型（中空絕對值）
+      const center = randInt(1, 6);
+      const radius = randInt(2, 5);
+      const lo = center - radius;
+      const hi = center + radius;
+      // integers satisfying: lo<x<hi and x≠center
+      const intList2 = [];
+      for (let x = lo + 1; x < hi; x += 1) {
+        if (x !== center) intList2.push(x);
+      }
+      questions.push(
+        `設 $x$ 為整數，滿足 $0<|x-${center}|<${radius}$ 的整數 $x$ 共有幾個？`
+      );
+      answers.push(formatJ242Answer(
+        `${intList2.length} 個`,
+        `$0<|x-${center}|<${radius}$ 表示 $x$ 與 $${center}$ 的距離大於 $0$（排除 $x=${center}$）且小於 $${radius}$，即 $${lo}<x<${hi}$ 且 $x\\neq ${center}$。整數解為 $${intList2.join('、')}$，共 $${intList2.length}$ 個。`
+      ));
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-4-2 新增：已知 x 範圍求線性函數範圍 ──────────────────────────────
+  function buildJ242XRangeLinearFuncSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 4;
+      const cycle = Math.floor(i / 4);
+
+      if (variant === 0) {
+        // 已知 a≦x≦b，求 cx+d 的範圍（c>0 直接）
+        const xLo = -randInt(1, 5);
+        const xHi = randInt(1, 6);
+        const c = randInt(2, 5);
+        const d = randInt(-8, 8);
+        const fLo = c * xLo + d;
+        const fHi = c * xHi + d;
+        questions.push(
+          `設 $${xLo}\\leq x\\leq ${xHi}$，求 $${c}x+${d}$ 的範圍。`
+        );
+        answers.push(formatJ242Answer(
+          `$${fLo}\\leq ${c}x+${d}\\leq ${fHi}$`,
+          `因為 $${c}>0$，對不等式各邊同乘以 $${c}$：$${c * xLo}\\leq ${c}x\\leq ${c * xHi}$，各邊加 $${d}$：$${fLo}\\leq ${c}x+${d}\\leq ${fHi}$。`
+        ));
+        continue;
+      }
+
+      if (variant === 1) {
+        // 已知 a<x<b，求 -cx+d 的範圍（c>0，需翻轉）
+        const xLo = -randInt(1, 4);
+        const xHi = randInt(2, 7);
+        const c = randInt(2, 6);
+        const d = randInt(5, 20);
+        const fLo = -c * xHi + d;  // -c*x 在 x=xHi 時取最小
+        const fHi = -c * xLo + d;
+        questions.push(
+          `設 $${xLo}<x<${xHi}$，求 $-${c}x+${d}$ 的範圍。`
+        );
+        answers.push(formatJ242Answer(
+          `$${fLo}<-${c}x+${d}<${fHi}$`,
+          `因為 $-${c}<0$，各邊乘以 $-${c}$ 需反向：由 $${xLo}<x<${xHi}$ 得 $${-c * xHi}<-${c}x<${-c * xLo}$，再加 $${d}$ 得 $${fLo}<-${c}x+${d}<${fHi}$。`
+        ));
+        continue;
+      }
+
+      if (variant === 2) {
+        // 已知 a≦x≦b，k=cx+d，求 k 的最大整數值
+        const xLo = -randInt(1, 3);
+        const xHi = randInt(1, 5);
+        const c = randInt(2, 4);
+        const d = randInt(3, 12);
+        const fHiExact = c * xHi + d;
+        const fHiIsInt = Number.isInteger(fHiExact);
+        const maxK = fHiExact; // since x≦xHi is included
+        const varName = ['k', 'p', 'q', 'm'][cycle % 4];
+        questions.push(
+          `若 $${xLo}\\leq x\\leq ${xHi}$，且 $${varName}=${c}x+${d}$，求 $${varName}$ 的最大整數值。`
+        );
+        answers.push(formatJ242Answer(
+          `${maxK}`,
+          `因 $${c}>0$，$${varName}$ 在 $x=${xHi}$ 時最大：$${varName}_{\\max}=${c}\\times ${xHi}+${d}=${maxK}$。最大整數值為 $${maxK}$。`
+        ));
+        continue;
+      }
+
+      // variant 3: 已知函數 A 的範圍，反推 x 範圍
+      const c = randInt(2, 5);
+      const d = randInt(3, 12);
+      const fLo = randInt(2, 8);
+      const fHi = fLo + randInt(3, 10);
+      // fLo < -c*x+d < fHi → d-fHi < cx < d-fLo → (d-fHi)/c < x < (d-fLo)/c
+      const xLoFrac = makeFraction(d - fHi, c);
+      const xHiFrac = makeFraction(d - fLo, c);
+      questions.push(
+        `設 $P=-${c}(x+${Math.floor(d / c)})+${d - c * Math.floor(d / c)}$，若 $${fLo}<P<${fHi}$，求 $x$ 的範圍。`
+      );
+      // Simpler version
+      const aConst = randInt(2, 6);
+      const bConst = randInt(5, 15);
+      const pLo = randInt(3, 8);
+      const pHi = pLo + randInt(4, 10);
+      // P = -aConst*x + bConst, pLo < P < pHi
+      // → pLo < -aConst*x + bConst < pHi
+      // → pLo - bConst < -aConst*x < pHi - bConst
+      // → (bConst - pHi)/aConst < x < (bConst - pLo)/aConst
+      const xLoF2 = makeFraction(bConst - pHi, aConst);
+      const xHiF2 = makeFraction(bConst - pLo, aConst);
+      questions[questions.length - 1] = `設 $P=-${aConst}x+${bConst}$，若 $${pLo}<P<${pHi}$，求 $x$ 的範圍。`;
+      answers.push(formatJ242Answer(
+        `$${fractionToLatex(xLoF2, true)}<x<${fractionToLatex(xHiF2, true)}$`,
+        `由 $${pLo}<-${aConst}x+${bConst}<${pHi}$ 各邊減 $${bConst}$：$${pLo - bConst}<-${aConst}x<${pHi - bConst}$，再除以 $-${aConst}$（不等號反向）：$${fractionToLatex(xLoF2, true)}<x<${fractionToLatex(xHiF2, true)}$。`
+      ));
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── j2-4-2 新增：濃度不等式應用 ──────────────────────────────────────────
+  function buildJ242ConcentrationIneqSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 3;
+      const cycle = Math.floor(i / 3);
+
+      if (variant === 0) {
+        // a% 食鹽水 W 克，加清水 x 克，濃度不超過 b% → x ≧ (a-b)*W/b
+        const aConc = [9, 8, 6, 10, 12][cycle % 5];
+        const bConc = [3, 4, 2, 5, 4][cycle % 5];
+        const W = [500, 400, 300, 600, 500][cycle % 5];
+        if (aConc <= bConc) { i -= 1; continue; }
+        // salt = aConc*W/100, after adding x water: salt/(W+x) ≦ bConc/100
+        // aConc*W ≦ bConc*(W+x) → x ≧ (aConc-bConc)*W/bConc
+        const xNumer = (aConc - bConc) * W;
+        const xDenom = bConc;
+        const xMin = xNumer / xDenom;
+        if (!Number.isInteger(xMin)) { i -= 1; continue; }
+        questions.push(
+          `${aConc}% 的食鹽水 ${W} 克，至少須加清水多少克，才能使食鹽水的濃度不超過 ${bConc}%？`
+        );
+        answers.push(formatJ242Answer(
+          `${xMin} 克`,
+          `設加清水 $x$ 克，食鹽量不變為 $${aConc}\\%\\times ${W}=${aConc * W / 100}$ 克。依題意 $\\dfrac{${aConc * W / 100}}{${W}+x}\\leq ${bConc}\\%$，整理得 $${aConc * W / 100}\\leq \\dfrac{${bConc}}{100}(${W}+x)$，解得 $x\\geq ${xMin}$。故至少加 $${xMin}$ 克清水。`
+        ));
+        continue;
+      }
+
+      if (variant === 1) {
+        // a% 食鹽水 W 克，加食鹽 x 克（取最小整數），濃度超過 b%
+        const aConc = [9, 4, 6, 8, 5][cycle % 5];
+        const bConc = [12, 7, 10, 12, 9][cycle % 5];
+        const W = [500, 300, 400, 500, 600][cycle % 5];
+        if (aConc >= bConc) { i -= 1; continue; }
+        const saltInit = aConc * W / 100;
+        // (saltInit + x)/(W + x) > bConc/100
+        // 100*(saltInit + x) > bConc*(W+x)
+        // 100*saltInit + 100x > bConc*W + bConc*x
+        // (100-bConc)*x > bConc*W - 100*saltInit
+        const coef = 100 - bConc;
+        const rhs = bConc * W - 100 * saltInit;
+        if (coef <= 0) { i -= 1; continue; }
+        const xBound = rhs / coef;
+        const xMin = Math.ceil(xBound + 1e-9);
+        questions.push(
+          `${aConc}% 的食鹽水 ${W} 克，至少須加鹽多少克（取最小整數），才能使濃度超過 ${bConc}%？`
+        );
+        answers.push(formatJ242Answer(
+          `${xMin} 克`,
+          `設加食鹽 $x$ 克，鹽水共 $(${W}+x)$ 克，鹽共 $(${saltInit}+x)$ 克。依題意 $\\dfrac{${saltInit}+x}{${W}+x}>\\dfrac{${bConc}}{100}$，整理得 $${coef}x>${rhs}$，即 $x>${xBound.toFixed(3)}$，取最小整數為 $${xMin}$ 克。`
+        ));
+        continue;
+      }
+
+      // variant 2: a% 食鹽水 W1 克與 b% 食鹽水 x 克混合，濃度不低於 c%
+      const aConc = [4, 6, 3, 5, 4][cycle % 5];
+      const bConc = [9, 12, 10, 8, 10][cycle % 5];
+      const cConc = [6, 8, 5, 6, 7][cycle % 5];
+      const W1 = [300, 200, 400, 300, 500][cycle % 5];
+      if (aConc >= cConc || cConc >= bConc) { i -= 1; continue; }
+      // (aConc*W1 + bConc*x) / (W1+x) ≧ cConc
+      // aConc*W1 + bConc*x ≧ cConc*(W1+x)
+      // (bConc-cConc)*x ≧ (cConc-aConc)*W1
+      const coef2 = bConc - cConc;
+      const rhs2 = (cConc - aConc) * W1;
+      const xMin2 = rhs2 / coef2;
+      if (!Number.isInteger(xMin2) || xMin2 <= 0) { i -= 1; continue; }
+      questions.push(
+        `${aConc}% 的食鹽水 ${W1} 克與 ${bConc}% 的食鹽水 $x$ 克混合，若希望混合後的濃度不低於 ${cConc}%，求 $x$ 的範圍。`
+      );
+      answers.push(formatJ242Answer(
+        `$x\\geq ${xMin2}$ 克`,
+        `混合後鹽為 $${aConc * W1 / 100}+\\dfrac{${bConc}x}{100}$ 克，水共 $${W1}+x$ 克。依題意 $\\dfrac{${aConc * W1 / 100}+\\frac{${bConc}x}{100}}{${W1}+x}\\geq \\dfrac{${cConc}}{100}$，整理得 $(${bConc}-${cConc})x\\geq (${cConc}-${aConc})\\times ${W1}=${rhs2}$，即 $${coef2}x\\geq ${rhs2}$，解得 $x\\geq ${xMin2}$。`
+      ));
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
   const nextConfigs = {
       'j2-1-1-context-to-equation-drill': {
         type: 'drill',
@@ -7581,6 +9741,70 @@
           return buildJ2SolveForVariableSet(5);
         },
       },
+      'j2-1-1-find-var-value-drill': {
+        type: 'drill',
+        title: '代入求變數值（若x=c,y=a型）',
+        difficulty: 'easy',
+        questionCount: 5,
+        generate() {
+          return buildJ211FindVarValueSet(5);
+        },
+      },
+      'j2-1-1-find-x-coeff-drill': {
+        type: 'drill',
+        title: '代入求x係數',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ211FindXCoeffSet(5);
+        },
+      },
+      'j2-1-1-any-one-solution-drill': {
+        type: 'drill',
+        title: '任意一組整數解',
+        difficulty: 'easy',
+        questionCount: 5,
+        generate() {
+          return buildJ211AnyOneSolutionSet(5);
+        },
+      },
+      'j2-1-1-all-pos-int-solution-drill': {
+        type: 'drill',
+        title: '所有正整數解',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ211AllPosIntSolutionSet(5);
+        },
+      },
+      'j2-1-1-range-int-solution-drill': {
+        type: 'drill',
+        title: '有條件整數解（負整數/有界範圍）',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ211RangeIntSolutionSet(5);
+        },
+      },
+      'j2-1-1-prime-solution-drill': {
+        type: 'drill',
+        title: '質數條件整數解',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ211PrimeSolutionSet(5);
+        },
+      },
+      'j2-1-1-shopping-word-drill': {
+        type: 'drill',
+        title: '購物情境應用題',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ211ShoppingWordSet(5);
+        },
+      },
+
       'j2-1-2-substitution-basic-drill': {
         type: 'drill',
         title: '代入消去法的基礎練習',
@@ -7716,6 +9940,15 @@
           return buildJ212ReciprocalStructureSet(5);
         },
       },
+      'j2-1-2-two-solution-one-eq-drill': {
+        type: 'drill',
+        title: '兩組解求方程式係數',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ212TwoSolutionOneEqSet(5);
+        },
+      },
       'j2-1-3-money-ticket-drill': {
         type: 'drill',
         title: '濃度與混合問題',
@@ -7831,6 +10064,42 @@
         questionCount: 5,
         generate() {
           return buildJ213TravelScheduleSet(5);
+        },
+      },
+      'j2-1-3-balance-scale-drill': {
+        type: 'drill',
+        title: '等臂天平稱重聯立方程',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ213BalanceScaleSet(5);
+        },
+      },
+      'j2-1-3-class-size-score-drill': {
+        type: 'drill',
+        title: '班級人數與成績分析',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ213ClassSizeScoreSet(5);
+        },
+      },
+      'j2-1-3-pairwise-sum-drill': {
+        type: 'drill',
+        title: '多人成對和問題',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ213PairwiseSumSet(5);
+        },
+      },
+      'j2-1-3-box-distribution-drill': {
+        type: 'drill',
+        title: '分配與分箱問題',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ213BoxDistributionSet(5);
         },
       },
       'j2-2-1-axis-distance-drill': {
@@ -8166,6 +10435,42 @@
           return buildJ232RootReciprocalVariationSet(5);
         },
       },
+      'j2-3-2-spring-scale-drill': {
+        type: 'drill',
+        title: '彈簧秤（胡克定律）應用',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ232SpringScaleSet(5);
+        },
+      },
+      'j2-3-2-work-manpower-drill': {
+        type: 'drill',
+        title: '工程人力反比應用',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ232WorkManpowerSet(5);
+        },
+      },
+      'j2-3-2-speed-race-drill': {
+        type: 'drill',
+        title: '速率比賽跑落後問題',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ232SpeedRaceSet(5);
+        },
+      },
+      'j2-3-2-dog-rabbit-drill': {
+        type: 'drill',
+        title: '犬兔步距速率問題',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ232DogRabbitSet(5);
+        },
+      },
       'j2-4-1-inequality-language-drill': {
         type: 'drill',
         title: '基本判定與直覺題',
@@ -8265,6 +10570,106 @@
           return buildJ241IntegerBoundarySet(5);
         },
       },
+      'j2-4-2-specific-score-threshold-drill': {
+        type: 'drill',
+        title: '具體分數平均門檻',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ242SpecificScoreThresholdSet(5);
+        },
+      },
+      'j2-4-2-pos-int-enumerate-drill': {
+        type: 'drill',
+        title: '正整數列舉（符合條件的所有正整數）',
+        difficulty: 'easy',
+        questionCount: 5,
+        generate() {
+          return buildJ242PosIntEnumerateSet(5);
+        },
+      },
+      'j2-4-2-integer-condition-word-drill': {
+        type: 'drill',
+        title: '某整數／某正數條件型',
+        difficulty: 'easy',
+        questionCount: 5,
+        generate() {
+          return buildJ242IntegerConditionWordSet(5);
+        },
+      },
+      'j2-4-2-shape-variable-expr-drill': {
+        type: 'drill',
+        title: '圖形含變數表達式（長方形＋三角形）',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ242ShapeVariableExprSet(5);
+        },
+      },
+      'j2-4-2-age-past-relation-drill': {
+        type: 'drill',
+        title: '父子年齡過去比較型',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ242AgePastRelationSet(5);
+        },
+      },
+      'j2-4-2-solve-ineq-integer-drill': {
+        type: 'drill',
+        title: '解不等式求整數解',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ242SolveIneqIntegerSet(5);
+        },
+      },
+      'j2-4-2-given-solution-find-coeff-drill': {
+        type: 'drill',
+        title: '已知解求係數',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ242GivenSolutionFindCoeffSet(5);
+        },
+      },
+      'j2-4-2-compound-ineq-drill': {
+        type: 'drill',
+        title: '聯立（雙重）不等式',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ242CompoundIneqSet(5);
+        },
+      },
+      'j2-4-2-abs-value-ineq-drill': {
+        type: 'drill',
+        title: '絕對值不等式',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ242AbsValueIneqSet(5);
+        },
+      },
+      'j2-4-2-x-range-linear-func-drill': {
+        type: 'drill',
+        title: '已知 x 範圍求函數範圍',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildJ242XRangeLinearFuncSet(5);
+        },
+      },
+      'j2-4-2-concentration-ineq-drill': {
+        type: 'drill',
+        title: '濃度不等式應用',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ242ConcentrationIneqSet(5);
+        },
+      },
+
       'j2-4-2-basic-word-drill': {
         type: 'drill',
         title: '基本題型（單層動作）',

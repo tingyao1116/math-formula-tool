@@ -60,7 +60,7 @@
       chapterPrefixes: ["s3-"],
     },
     s4: {
-      src: "data/practice-generators/s4.js?v=20260619-s4-real-bundle-v1",
+      src: "data/practice-generators/s4.js?v=20260624-s4-44new-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["s4-"],
     },

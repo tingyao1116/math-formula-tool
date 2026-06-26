@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d5c63" />
+    <title>無限練習清單編輯器</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    <link rel="stylesheet" href="styles.css?v=20260627-playlist-v1" />
+  </head>
+  <body class="playlist-page">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero__content">
+          <p class="eyebrow">Practice Playlist Builder</p>
+          <h1>無限練習清單編輯器</h1>
+          <p class="hero__lead">
+            從現有無限練習題型中挑出你要的題型，組成一份可以讀取、修改、匯出給學生使用的練習清單。
+          </p>
+          <div class="hero__quicklinks">
+            <a class="ghost-link" href="index.html">首頁</a>
+            <a class="ghost-link" href="practice-playlist-player.html">學生播放頁</a>
+            <a class="ghost-link" href="practice-mobile.html">手機版練習</a>
+          </div>
+        </div>
+        <div class="hero__panel">
+          <h2>使用方式</h2>
+          <ul>
+            <li>先篩選題型，再勾選要加入 playlist 的題型。</li>
+            <li>可先看範例題，再決定要不要納入。</li>
+            <li>儲存後可在學生播放頁直接讀取。</li>
+          </ul>
+        </div>
+      </header>
+
+      <main class="layout playlist-layout">
+        <aside class="sidebar">
+          <section class="panel">
+            <h2>清單資訊</h2>
+            <label class="field">
+              <span>清單名稱</span>
+              <input id="playlistTitleInput" type="text" placeholder="例如：國三複習第一輪" />
+            </label>
+            <label class="field">
+              <span>說明</span>
+              <textarea id="playlistDescriptionInput" rows="4" placeholder="例如：乘法公式、因式分解、公式解先修"></textarea>
+            </label>
+            <label class="field">
+              <span>每個題型預設題數</span>
+              <input id="playlistQuestionCountInput" type="number" min="1" max="20" value="5" />
+            </label>
+            <label class="field field--inline">
+              <input id="playlistShuffleInput" type="checkbox" />
+              <span>學生頁隨機抽題型</span>
+            </label>
+          </section>
+
+          <section class="panel">
+            <h2>清單操作</h2>
+            <div class="interactive-actions interactive-actions--stacked">
+              <button id="savePlaylistButton" class="ghost-button" type="button">儲存到瀏覽器</button>
+              <button id="newPlaylistButton" class="ghost-button" type="button">建立新清單</button>
+              <button id="exportPlaylistButton" class="ghost-button" type="button">匯出 JSON</button>
+              <label class="ghost-button playlist-upload-button">
+                匯入 JSON
+                <input id="importPlaylistInput" type="file" accept="application/json" hidden />
+              </label>
+            </div>
+            <p id="playlistBuilderStatus" class="detail-note">尚未儲存。</p>
+          </section>
+
+          <section class="panel">
+            <div class="skill-tree-toolbar">
+              <h2>已存清單</h2>
+              <span id="storedPlaylistCount" class="meta-chip"></span>
+            </div>
+            <div id="storedPlaylistList" class="playlist-saved-list"></div>
+          </section>
+
+          <section class="panel">
+            <div class="skill-tree-toolbar">
+              <h2>已選題型順序</h2>
+              <span id="selectedPracticeCount" class="meta-chip"></span>
+            </div>
+            <div id="selectedPracticeList" class="playlist-selected-list"></div>
+          </section>
+        </aside>
+
+        <section class="content">
+          <section class="panel">
+            <div class="summary-panel">
+              <div>
+                <p class="summary-label">題型清單</p>
+                <h2>勾選你要附掛的無限練習題型</h2>
+              </div>
+              <p id="playlistSelectionSummary" class="summary-count"></p>
+            </div>
+
+            <div class="playlist-filter-grid">
+              <label class="field">
+                <span>關鍵字</span>
+                <input id="playlistKeywordInput" type="search" placeholder="搜尋標題、id、章節" />
+              </label>
+              <label class="field">
+                <span>章節</span>
+                <select id="playlistChapterFilter"></select>
+              </label>
+              <label class="field">
+                <span>難度</span>
+                <select id="playlistDifficultyFilter"></select>
+              </label>
+              <div class="interactive-actions">
+                <button id="playlistSelectVisibleButton" class="ghost-button" type="button">全選目前篩選</button>
+                <button id="playlistClearVisibleButton" class="ghost-button" type="button">取消目前篩選</button>
+              </div>
+            </div>
+
+            <div class="playlist-table-wrap">
+              <table class="playlist-table">
+                <colgroup>
+                  <col class="playlist-col playlist-col--check" />
+                  <col class="playlist-col playlist-col--title" />
+                  <col class="playlist-col playlist-col--chapter" />
+                  <col class="playlist-col playlist-col--difficulty" />
+                  <col class="playlist-col playlist-col--sample" />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>選取</th>
+                    <th>標題</th>
+                    <th>章節</th>
+                    <th>難度</th>
+                    <th>生成題範例</th>
+                  </tr>
+                </thead>
+                <tbody id="playlistPracticeTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script defer src="formulas.js"></script>
+    <script defer src="data/formula-content.js?v=20260423-abs-count-layout-v4"></script>
+    <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
+    <script defer src="data/main-topic-overviews.js?v=20260508-topic-title-clean-v1"></script>
+    <script defer src="data/chapter-code-config.js?v=20260616-e425-split-v1"></script>
+    <script defer src="data/formula-calculators.js"></script>
+    <script defer src="data/formula-practice-assignments.js?v=20260622-j44-quad-v1"></script>
+    <script defer src="data/formula-practice.js?v=20260620-runtime-main-v1"></script>
+    <script defer src="data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"></script>
+    <script defer src="data/practice-generator-bootstrap.js?v=20260619-e5-cutover-v1"></script>
+    <script defer src="data/practice-generator-bundles.js?v=20260624-nullfix-v1"></script>
+    <script defer src="data/practice-generator-loader.js?v=20260619-e5-force-bundle-v3"></script>
+    <script defer src="data/practice-generators/e5.js?v=20260619-e5-fingerprint-v5"></script>
+    <script defer src="data/practice-generators/e6.js?v=20260619-e6-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/j1.js?v=20260619-j1-chapter-owned-v2"></script>
+    <script defer src="data/practice-generators/j2.js?v=20260619-j2-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/j3.js?v=20260619-j3-chapter-owned-v2"></script>
+    <script defer src="data/practice-generators/j4.js?v=20260619-j4-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/j5.js?v=20260619-j5-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/j6.js?v=20260619-j6-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/s1.js?v=20260619-s1-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/s2.js?v=20260619-s2-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/s3.js?v=20260619-s3-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/s4.js?v=20260624-s4-trycatch-v1"></script>
+    <script defer src="formula-data.js?v=20260616-e425-split-v1"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="formula-core.js?v=20260619-e5-fingerprint-v5"></script>
+    <script defer src="practice-playlist/practice-playlist-store.js?v=20260627-playlist-v1"></script>
+    <script defer src="practice-playlist/practice-playlist-builder.js?v=20260627-playlist-v1"></script>
+    <script defer src="pwa.js"></script>
+  </body>
+</html>

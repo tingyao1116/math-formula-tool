@@ -1,6 +1,6 @@
 (() => {
   const store = window.formulaPracticeStore;
-  if (!store || typeof store.registerConfigs !== "function") return;
+  if (!store || typeof store.registerConfigs !== 'function') return;
 
   function randInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -1504,6 +1504,159 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  // ── s1-1-3 新增：三因式展開 ──────────────────────────────────────
+  function buildS113TripleFactorExpansionSet(count) {
+    const questions = [];
+    const answers = [];
+
+    function termStr(c, power) {
+      if (c === 0) return '';
+      const sign = c > 0 ? '+' : '-';
+      const abs = Math.abs(c);
+      const numPart = abs === 1 && power > 0 ? '' : `${abs}`;
+      const varPart = power === 0 ? '' : power === 1 ? 'x' : `x^{${power}}`;
+      return `${sign}${numPart}${varPart}`;
+    }
+
+    function poly3(c2, c1, c0) {
+      return `x^3${termStr(c2, 2)}${termStr(c1, 1)}${termStr(c0, 0)}`;
+    }
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // (x+a)(x+b)(x+c)，全為正根
+        const a = randInt(1, 4);
+        const b = randInt(1, 4);
+        const c = randInt(1, 4);
+        const C2 = a + b + c;
+        const C1 = a * b + b * c + c * a;
+        const C0 = a * b * c;
+        questions.push(`展開 \\((x+${a})(x+${b})(x+${c})\\)。`);
+        answers.push(
+          `簡答：\\(${poly3(C2, C1, C0)}\\)。過程：先展開 \\((x+${a})(x+${b})=x^2+${a + b}x+${a * b}\\)，再乘以 \\((x+${c})\\)，整理得 \\(${poly3(C2, C1, C0)}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // (x-a)(x-b)(x-c)，全為負根
+        const a = randInt(1, 4);
+        const b = randInt(1, 4);
+        const c = randInt(1, 4);
+        const C2 = -(a + b + c);
+        const C1 = a * b + b * c + c * a;
+        const C0 = -(a * b * c);
+        questions.push(`展開 \\((x-${a})(x-${b})(x-${c})\\)。`);
+        answers.push(
+          `簡答：\\(${poly3(C2, C1, C0)}\\)。過程：先展開 \\((x-${a})(x-${b})=x^2-${a + b}x+${a * b}\\)，再乘以 \\((x-${c})\\)，整理得 \\(${poly3(C2, C1, C0)}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // (x+a)(x-a)(x+b)，先用平方差公式
+        const a = randInt(1, 4);
+        const b = randInt(1, 5);
+        const a2 = a * a;
+        const C2 = b;
+        const C1 = -a2;
+        const C0 = -(a2 * b);
+        questions.push(`展開 \\((x+${a})(x-${a})(x+${b})\\)。`);
+        answers.push(
+          `簡答：\\(${poly3(C2, C1, C0)}\\)。過程：利用平方差公式 \\((x+${a})(x-${a})=x^2-${a2}\\)，再乘以 \\((x+${b})\\)，得 \\(${poly3(C2, C1, C0)}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // (x+a)(x+b)(x-c)，混合正負
+        const a = randInt(1, 3);
+        const b = randInt(1, 3);
+        let c = randInt(1, 4);
+        while (a + b === c) c = randInt(1, 4);
+        const C2 = a + b - c;
+        const C1 = a * b - c * (a + b);
+        const C0 = -(a * b * c);
+        questions.push(`展開 \\((x+${a})(x+${b})(x-${c})\\)。`);
+        answers.push(
+          `簡答：\\(${poly3(C2, C1, C0)}\\)。過程：先展開 \\((x+${a})(x+${b})=x^2+${a + b}x+${a * b}\\)，再乘以 \\((x-${c})\\)，整理得 \\(${poly3(C2, C1, C0)}\\)。`
+        );
+        continue;
+      }
+      // mode === 4: (x+a)(x-b)(x-c)，兩個負根
+      const a = randInt(1, 4);
+      const b = randInt(1, 3);
+      const c = randInt(1, 3);
+      const C2 = a - b - c;
+      const C1 = b * c - a * (b + c);
+      const C0 = a * b * c;
+      questions.push(`展開 \\((x+${a})(x-${b})(x-${c})\\)。`);
+      answers.push(
+        `簡答：\\(${poly3(C2, C1, C0)}\\)。過程：先展開 \\((x-${b})(x-${c})=x^2-${b + c}x+${b * c}\\)，再乘以 \\((x+${a})\\)，整理得 \\(${poly3(C2, C1, C0)}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── s1-1-3 新增：因式分解（乘法公式）────────────────────────────
+  function buildS113PolynomialFactorizationSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // x³ - a³ = (x-a)(x²+ax+a²)
+        const a = randInt(2, 5);
+        const ax = a === 1 ? '' : `${a}`;
+        questions.push(`因式分解 \\(x^3-${a * a * a}\\)。`);
+        answers.push(
+          `簡答：\\((x-${a})(x^2+${ax}x+${a * a})\\)。過程：套用立方差公式 \\(A^3-B^3=(A-B)(A^2+AB+B^2)\\)，令 \\(A=x,B=${a}\\)，得 \\((x-${a})(x^2+${ax}x+${a * a})\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // x³ + a³ = (x+a)(x²-ax+a²)
+        const a = randInt(2, 5);
+        const ax = a === 1 ? '' : `${a}`;
+        questions.push(`因式分解 \\(x^3+${a * a * a}\\)。`);
+        answers.push(
+          `簡答：\\((x+${a})(x^2-${ax}x+${a * a})\\)。過程：套用立方和公式 \\(A^3+B^3=(A+B)(A^2-AB+B^2)\\)，令 \\(A=x,B=${a}\\)，得 \\((x+${a})(x^2-${ax}x+${a * a})\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // x⁴ - a⁴ = (x²+a²)(x+a)(x-a)
+        const a = randInt(1, 4);
+        questions.push(`因式分解 \\(x^4-${a * a * a * a}\\)。`);
+        answers.push(
+          `簡答：\\((x^2+${a * a})(x+${a})(x-${a})\\)。過程：先用平方差 \\(x^4-${a * a * a * a}=(x^2+${a * a})(x^2-${a * a})\\)，再分解 \\(x^2-${a * a}=(x+${a})(x-${a})\\)，得 \\((x^2+${a * a})(x+${a})(x-${a})\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // Sophie Germain：x⁴+4a⁴ = (x²+2ax+2a²)(x²-2ax+2a²)
+        const a = randInt(1, 3);
+        const val = 4 * a * a * a * a;
+        const a2 = 2 * a;
+        const a22 = 2 * a * a;
+        questions.push(`因式分解 \\(x^4+${val}\\)。`);
+        answers.push(
+          `簡答：\\((x^2+${a2}x+${a22})(x^2-${a2}x+${a22})\\)。過程：\\(x^4+${val}=(x^2+${a22})^2-(${a2}x)^2=(x^2+${a2}x+${a22})(x^2-${a2}x+${a22})\\)。`
+        );
+        continue;
+      }
+      // mode === 4: x⁴+a²x²+a⁴ = (x²+ax+a²)(x²-ax+a²)
+      const a = randInt(1, 3);
+      const a2 = a * a;
+      const a4 = a2 * a2;
+      const xterm = a === 1 ? 'x' : `${a}x`;
+      const x2term = a2 === 1 ? 'x^2' : `${a2}x^2`;
+      questions.push(`因式分解 \\(x^4+${x2term}+${a4}\\)。`);
+      answers.push(
+        `簡答：\\((x^2+${xterm}+${a2})(x^2-${xterm}+${a2})\\)。過程：\\(x^4+${x2term}+${a4}=(x^2+${a2})^2-${xterm}^2=(x^2+${xterm}+${a2})(x^2-${xterm}+${a2})\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function formatS114Exponent(num, den = 1) {
     const frac = reduceFraction(num, den);
     if (frac.denominator === 1) return `${frac.numerator}`;
@@ -1704,6 +1857,232 @@
       questions.push(`解不等式 \\((\\frac14)^x+(\\frac12)^x-2<0\\)。`);
       answers.push(
         `簡答：\\(x>0\\)。過程：令 \\(t=(\\frac12)^x>0\\)，則 \\((\\frac14)^x=t^2\\)，不等式為 \\(t^2+t-2<0\\)，得 \\(0<t<1\\)，所以 \\(x>0\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── s1-1-4 新增：換底比大小 ─────────────────────────────────────
+  function buildS114ExponentCompareSet(count) {
+    const questions = [];
+    const answers = [];
+
+    function lcm2(x, y) {
+      return (x * y) / gcdInt(x, y);
+    }
+
+    function rootTeX(base, order) {
+      return order === 2 ? `\\sqrt{${base}}` : `\\sqrt[${order}]{${base}}`;
+    }
+
+    // 每組 [a, m, b, n]：比較 a^(1/m) vs b^(1/n)
+    const pairs = [
+      [2, 2, 3, 3], // √2 vs ∛3 → 8 vs 9 → ∛3 較大
+      [2, 3, 3, 4], // ∛2 vs ⁴√3 → 16 vs 27 → ⁴√3 較大
+      [3, 2, 7, 4], // √3 vs ⁴√7 → 9 vs 7 → √3 較大
+      [5, 3, 3, 2], // ∛5 vs √3 → 25 vs 27 → √3 較大
+      [2, 2, 5, 4], // √2 vs ⁴√5 → 4 vs 5 → ⁴√5 較大
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const [a, m, b, n] = pairs[i % pairs.length];
+      const L = lcm2(m, n);
+      const Lm = L / m;
+      const Ln = L / n;
+      const aL = a ** Lm;
+      const bL = b ** Ln;
+      const aTeX = rootTeX(a, m);
+      const bTeX = rootTeX(b, n);
+      const aLTeX = Lm === 1 ? `${a}` : `${a}^{${Lm}}`;
+      const bLTeX = Ln === 1 ? `${b}` : `${b}^{${Ln}}`;
+      const symbol = aL > bL ? '>' : '<';
+      const bigger = aL > bL ? aTeX : bTeX;
+      questions.push(`比較 \\(${aTeX}\\) 與 \\(${bTeX}\\) 的大小。`);
+      answers.push(
+        `簡答：\\(${aTeX}${symbol}${bTeX}\\)。過程：化為同次根式，取公分母指數 ${L}：\\(${aTeX}=${a}^{${Lm}/${L}}=\\sqrt[${L}]{${aLTeX}}=\\sqrt[${L}]{${aL}}\\)，\\(${bTeX}=${b}^{${Ln}/${L}}=\\sqrt[${L}]{${bLTeX}}=\\sqrt[${L}]{${bL}}\\)。因為 \\(${aL}${aL > bL ? '>' : '<'}${bL}\\)，所以 \\(${bigger}\\) 較大。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── s1-1-4 新增：已知 a^x 求 a^(mx) ────────────────────────────
+  function buildS114KnownPowerSet(count) {
+    const questions = [];
+    const answers = [];
+    const kVals = [2, 3, 4, 5, 6];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      const k = kVals[randInt(0, kVals.length - 1)];
+      if (mode === 0) {
+        // 已知 2^x = k，求 4^x = (2^x)^2 = k^2
+        questions.push(`已知 \\(2^x=${k}\\)，求 \\(4^x\\) 之值。`);
+        answers.push(`簡答：${k * k}。過程：\\(4^x=(2^2)^x=(2^x)^2=${k}^2=${k * k}\\)。`);
+        continue;
+      }
+      if (mode === 1) {
+        // 已知 2^x = k，求 8^x = (2^x)^3 = k^3
+        questions.push(`已知 \\(2^x=${k}\\)，求 \\(8^x\\) 之值。`);
+        answers.push(`簡答：${k * k * k}。過程：\\(8^x=(2^3)^x=(2^x)^3=${k}^3=${k * k * k}\\)。`);
+        continue;
+      }
+      if (mode === 2) {
+        // 已知 2^x = k，求 (1/2)^x = 1/k
+        questions.push(`已知 \\(2^x=${k}\\)，求 \\(\\left(\\tfrac{1}{2}\\right)^x\\) 之值。`);
+        answers.push(
+          `簡答：\\(\\tfrac{1}{${k}}\\)。過程：\\(\\left(\\tfrac{1}{2}\\right)^x=2^{-x}=\\tfrac{1}{2^x}=\\tfrac{1}{${k}}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // 已知 3^x = k，求 9^x = (3^x)^2 = k^2
+        questions.push(`已知 \\(3^x=${k}\\)，求 \\(9^x\\) 之值。`);
+        answers.push(`簡答：${k * k}。過程：\\(9^x=(3^2)^x=(3^x)^2=${k}^2=${k * k}\\)。`);
+        continue;
+      }
+      // mode === 4：已知 2^x = k，求 4^(x+1) = 4·(2^x)^2 = 4k^2
+      questions.push(`已知 \\(2^x=${k}\\)，求 \\(4^{x+1}\\) 之值。`);
+      answers.push(`簡答：${4 * k * k}。過程：\\(4^{x+1}=4\\cdot4^x=4\\cdot(2^x)^2=4\\cdot${k}^2=${4 * k * k}\\)。`);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── s1-1-4 新增：指數換元（混合底，4^x 與 2^x 型）────────────────
+  function buildS114SubstitutionEquationSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // 4^x - (2^r-k)·2^x - k·2^r = 0 → t=2^x，(t-2^r)(t+k)=0，x=r
+        const r = randInt(1, 3);
+        const k = randInt(1, 4);
+        const tr = 2 ** r;
+        const pCoeff = tr - k; // 2^x 的係數（正表示減）
+        const C = k * tr;
+        const sign2x =
+          pCoeff > 0
+            ? `-${Math.abs(pCoeff) === 1 ? '' : Math.abs(pCoeff) + '\\cdot'}`
+            : `+${Math.abs(pCoeff) === 1 ? '' : Math.abs(pCoeff) + '\\cdot'}`;
+        const signT =
+          pCoeff > 0
+            ? `-${Math.abs(pCoeff) === 1 ? '' : Math.abs(pCoeff)}`
+            : `+${Math.abs(pCoeff) === 1 ? '' : Math.abs(pCoeff)}`;
+        questions.push(`解方程式 \\(4^x${sign2x}2^x-${C}=0\\)。`);
+        answers.push(
+          `簡答：\\(x=${r}\\)。過程：令 \\(t=2^x>0\\)，\\(4^x=t^2\\)，方程變為 \\(t^2${signT}t-${C}=0\\)，即 \\((t-${tr})(t+${k})=0\\)，得 \\(t=${tr}\\)（\\(t=-${k}\\) 捨），所以 \\(2^x=${tr}=2^${r}\\)，\\(x=${r}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // 9^x - (3^r1+3^r2)·3^x + 3^(r1+r2) = 0 → 兩正根 x=r1 or x=r2
+        const r1 = randInt(0, 1);
+        const r2 = r1 + randInt(1, 2);
+        const t1 = 3 ** r1;
+        const t2 = 3 ** r2;
+        const S = t1 + t2;
+        const P = t1 * t2;
+        questions.push(`解方程式 \\(9^x-${S}\\cdot3^x+${P}=0\\)。`);
+        answers.push(
+          `簡答：\\(x=${r1}\\) 或 \\(x=${r2}\\)。過程：令 \\(t=3^x>0\\)，\\(9^x=t^2\\)，方程變為 \\(t^2-${S}t+${P}=0\\)，即 \\((t-${t1})(t-${t2})=0\\)，得 \\(t=${t1}\\) 或 \\(t=${t2}\\)，所以 \\(x=${r1}\\) 或 \\(x=${r2}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // 4^x + 2^(x+1) - C = 0 → t=2^x，t^2+2t-C=0，C=4^n+2^(n+1)，x=n
+        const n = randInt(1, 3);
+        const tn = 2 ** n;
+        const C = tn * tn + 2 * tn;
+        questions.push(`解方程式 \\(4^x+2^{x+1}-${C}=0\\)。`);
+        answers.push(
+          `簡答：\\(x=${n}\\)。過程：令 \\(t=2^x>0\\)，\\(4^x=t^2\\)，\\(2^{x+1}=2t\\)，方程變為 \\(t^2+2t-${C}=0\\)，解得 \\(t=${tn}\\)（另一根為負捨去），所以 \\(2^x=${tn}=2^${n}\\)，\\(x=${n}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // 4^x - (2^r1+2^r2)·2^x + 2^(r1+r2) = 0 → 兩正根 x=r1 or x=r2（用 4^x 符號凸顯換底步驟）
+        const r1 = randInt(0, 1);
+        const r2 = r1 + randInt(1, 2);
+        const t1 = 2 ** r1;
+        const t2 = 2 ** r2;
+        const S = t1 + t2;
+        const P = t1 * t2;
+        questions.push(`解方程式 \\(4^x-${S}\\cdot2^x+${P}=0\\)。`);
+        answers.push(
+          `簡答：\\(x=${r1}\\) 或 \\(x=${r2}\\)。過程：令 \\(t=2^x>0\\)，注意 \\(4^x=(2^2)^x=(2^x)^2=t^2\\)，方程變為 \\(t^2-${S}t+${P}=0\\)，即 \\((t-${t1})(t-${t2})=0\\)，得 \\(t=${t1}\\) 或 \\(t=${t2}\\)，所以 \\(x=${r1}\\) 或 \\(x=${r2}\\)。`
+        );
+        continue;
+      }
+      // mode === 4：(3^x - 3^n)^2 = 0 → 9^x - 2·3^n·3^x + 9^n = 0
+      const n = randInt(1, 3);
+      const tn = 3 ** n;
+      const Sn = 2 * tn;
+      const Pn = tn * tn;
+      questions.push(`解方程式 \\(9^x-${Sn}\\cdot3^x+${Pn}=0\\)。`);
+      answers.push(
+        `簡答：\\(x=${n}\\)。過程：令 \\(t=3^x>0\\)，\\(9^x=t^2\\)，方程變為 \\(t^2-${Sn}t+${Pn}=0\\)，即 \\((t-${tn})^2=0\\)，唯一正根 \\(t=${tn}=3^${n}\\)，所以 \\(x=${n}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── s1-1-4 新增：提公因數指數方程 ──────────────────────────────
+  function buildS114ExtractFactorEquationSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // 2^(x+r) - 2^x = k：提出 2^x，2^x(2^r-1) = k
+        const r = randInt(1, 3);
+        const n = randInt(1, 3);
+        const factor = 2 ** r - 1;
+        const k = factor * 2 ** n;
+        questions.push(`解方程式 \\(2^{x+${r}}-2^x=${k}\\)。`);
+        answers.push(
+          `簡答：\\(x=${n}\\)。過程：提出公因式 \\(2^x\\)，得 \\(2^x(2^${r}-1)=${k}\\)，即 \\(${factor}\\cdot2^x=${k}\\)，所以 \\(2^x=${2 ** n}=2^${n}\\)，\\(x=${n}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // 3^(x+1) + 3^(x-1) = k：提出 3^(x-1)，10·3^(x-1) = k
+        const m = randInt(0, 2);
+        const k = 10 * 3 ** m;
+        const x = m + 1;
+        questions.push(`解方程式 \\(3^{x+1}+3^{x-1}=${k}\\)。`);
+        answers.push(
+          `簡答：\\(x=${x}\\)。過程：提出 \\(3^{x-1}\\)，得 \\(3^{x-1}(3^2+1)=${k}\\)，即 \\(10\\cdot3^{x-1}=${k}\\)，所以 \\(3^{x-1}=${3 ** m}\\)，\\(x-1=${m}\\)，\\(x=${x}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        // 2^(x+1) + 2^(x-1) = k：提出 2^(x-1)，5·2^(x-1) = k
+        const m = randInt(1, 3);
+        const k = 5 * 2 ** m;
+        const x = m + 1;
+        questions.push(`解方程式 \\(2^{x+1}+2^{x-1}=${k}\\)。`);
+        answers.push(
+          `簡答：\\(x=${x}\\)。過程：提出 \\(2^{x-1}\\)，得 \\(2^{x-1}(2^2+1)=${k}\\)，即 \\(5\\cdot2^{x-1}=${k}\\)，所以 \\(2^{x-1}=${2 ** m}=2^${m}\\)，\\(x-1=${m}\\)，\\(x=${x}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // 5^(x+2) - 5^x = k：提出 5^x，24·5^x = k
+        const n = randInt(1, 2);
+        const k = 24 * 5 ** n;
+        questions.push(`解方程式 \\(5^{x+2}-5^x=${k}\\)。`);
+        answers.push(
+          `簡答：\\(x=${n}\\)。過程：提出 \\(5^x\\)，得 \\(5^x(5^2-1)=${k}\\)，即 \\(24\\cdot5^x=${k}\\)，所以 \\(5^x=${5 ** n}=5^${n}\\)，\\(x=${n}\\)。`
+        );
+        continue;
+      }
+      // mode === 4：2^(x+r) + 2^x = k：提出 2^x，(2^r+1)·2^x = k
+      const r = randInt(1, 3);
+      const n = randInt(1, 3);
+      const factor = 2 ** r + 1;
+      const k = factor * 2 ** n;
+      questions.push(`解方程式 \\(2^{x+${r}}+2^x=${k}\\)。`);
+      answers.push(
+        `簡答：\\(x=${n}\\)。過程：提出公因式 \\(2^x\\)，得 \\(2^x(2^${r}+1)=${k}\\)，即 \\(${factor}\\cdot2^x=${k}\\)，所以 \\(2^x=${2 ** n}=2^${n}\\)，\\(x=${n}\\)。`
       );
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
@@ -2040,6 +2419,104 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  // ── s1-1-5 新增：對數直接計算 ────────────────────────────────────
+  function buildS115BasicLogCalculationSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        // log₁₀(10^n) + log₁₀(10^m)，n>0, m<0
+        const n = randInt(1, 4);
+        const m = -randInt(1, 3);
+        const val1 = 10 ** n;
+        const val2Labels = { '-1': '0.1', '-2': '0.01', '-3': '0.001' };
+        const val2 = val2Labels[String(m)] || `10^{${m}}`;
+        const total = n + m;
+        const sumStr = total >= 0 ? `${total}` : `${total}`;
+        questions.push(`計算 \\(\\log_{10}${val1}+\\log_{10}${val2}\\)。`);
+        answers.push(
+          `簡答：${sumStr}。過程：\\(\\log_{10}${val1}=\\log_{10}10^${n}=${n}\\)，\\(\\log_{10}${val2}=\\log_{10}10^{${m}}=${m}\\)，兩者相加得 \\(${n}+(${m})=${sumStr}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        // log₂(2^n)，n 可為負
+        const n = randInt(-3, 4);
+        const absN = Math.abs(n);
+        const valDisp = n >= 0 ? `${2 ** n}` : `\\dfrac{1}{${2 ** absN}}`;
+        questions.push(`計算 \\(\\log_2 ${valDisp}\\)。`);
+        answers.push(`簡答：${n}。過程：\\(${valDisp}=2^{${n}}\\)，所以 \\(\\log_2 ${valDisp}=${n}\\)。`);
+        continue;
+      }
+      if (mode === 2) {
+        // log_a(a^m) + log_b(b^n)，不同底
+        const bases = [2, 3, 5, 10];
+        let a = bases[randInt(0, 3)];
+        let b = bases[randInt(0, 3)];
+        while (b === a) b = bases[randInt(0, 3)];
+        const m = randInt(2, 4);
+        const nNeg = -randInt(1, 3);
+        const valA = a ** m;
+        const valBAbsPow = b ** Math.abs(nNeg);
+        const valBDisp = `\\dfrac{1}{${valBAbsPow}}`;
+        questions.push(`計算 \\(\\log_{${a}}${valA}+\\log_{${b}}${valBDisp}\\)。`);
+        answers.push(
+          `簡答：${m + nNeg}。過程：\\(\\log_{${a}}${valA}=\\log_{${a}}${a}^${m}=${m}\\)，\\(\\log_{${b}}${valBDisp}=\\log_{${b}}${b}^{${nNeg}}=${nNeg}\\)，兩者相加得 \\(${m}+(${nNeg})=${m + nNeg}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        // 固定題組：具體數值加減
+        const combos = [
+          {
+            q: '\\log_{10}100+\\log_2\\dfrac{1}{8}',
+            ans: -1,
+            proc: '\\(\\log_{10}100=2\\)，\\(\\log_2\\dfrac{1}{8}=-3\\)，合計 \\(2+(-3)=-1\\)',
+          },
+          {
+            q: '\\log_{10}1000+\\log_3\\dfrac{1}{9}',
+            ans: 1,
+            proc: '\\(\\log_{10}1000=3\\)，\\(\\log_3\\dfrac{1}{9}=-2\\)，合計 \\(3+(-2)=1\\)',
+          },
+          {
+            q: '\\log_2 32+\\log_{10}0.01',
+            ans: 3,
+            proc: '\\(\\log_2 32=5\\)，\\(\\log_{10}0.01=-2\\)，合計 \\(5+(-2)=3\\)',
+          },
+          {
+            q: '\\log_3 27+\\log_2\\dfrac{1}{4}',
+            ans: 1,
+            proc: '\\(\\log_3 27=3\\)，\\(\\log_2\\dfrac{1}{4}=-2\\)，合計 \\(3+(-2)=1\\)',
+          },
+          {
+            q: '\\log_5 125+\\log_{10}0.001',
+            ans: 0,
+            proc: '\\(\\log_5 125=3\\)，\\(\\log_{10}0.001=-3\\)，合計 \\(3+(-3)=0\\)',
+          },
+        ];
+        const c = combos[randInt(0, combos.length - 1)];
+        questions.push(`計算 \\(${c.q}\\)。`);
+        answers.push(`簡答：${c.ans}。過程：${c.proc}。`);
+        continue;
+      }
+      // mode === 4：log_{a^k}(a^n) = n/k（換底到 a）
+      const baseArr = [2, 3, 5];
+      const a = baseArr[randInt(0, 2)];
+      const k = randInt(2, 3);
+      const mul = randInt(1, 3);
+      const n = k * mul; // 確保 n/k 為整數
+      const base = a ** k;
+      const val = a ** n;
+      const result = mul;
+      questions.push(`計算 \\(\\log_{${base}}${val}\\)。`);
+      answers.push(
+        `簡答：${result}。過程：\\(\\log_{${base}}${val}=\\log_{${a}^${k}}${a}^{${n}}=\\dfrac{${n}}{${k}}=${result}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function formatS121Point(p) {
     return `(${p.x},${p.y})`;
   }
@@ -2181,7 +2658,9 @@
       const normalized = normalizeS121LineCoefficients(ux, uy, -(ux * midpoint.x + uy * midpoint.y));
       const equation = formatS121BisectorEquation(normalized.a, normalized.b, normalized.c);
 
-      questions.push(`已知 \\(A${formatS121Point(pointA)}\\)、\\(B${formatS121Point(pointB)}\\)，求線段 \\(AB\\) 的垂直平分線方程式。`);
+      questions.push(
+        `已知 \\(A${formatS121Point(pointA)}\\)、\\(B${formatS121Point(pointB)}\\)，求線段 \\(AB\\) 的垂直平分線方程式。`
+      );
 
       if (uy === 0) {
         answers.push(
@@ -3812,6 +4291,272 @@
 
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
+  // ── s1-2-1 新增：兩直線角平分線方程式 ──────────────────────────────
+  function buildS121AngleBisectorLinesSet(count) {
+    const questions = [];
+    const answers = [];
+
+    function fmtL(a, b, c) {
+      const xp = a === 1 ? 'x' : a === -1 ? '-x' : `${a}x`;
+      const yp = b === 0 ? '' : b === 1 ? '+y' : b === -1 ? '-y' : b > 0 ? `+${b}y` : `${b}y`;
+      return `${xp}${yp}=${c}`;
+    }
+    function sm(v) { return v >= 0 ? `-${v}` : `+${-v}`; }
+
+    const modes = [
+      {
+        a1:3,b1:4,a2:4,b2:-3,norm:5,
+        getBis(d1,d2){ return [`x-7y=${d2-d1}`, `7x+y=${d1+d2}`]; },
+        getProc(d1,d2){
+          return `法向量 \\((3,4)\\) 與 \\((4,-3)\\) 模均為 5。`+
+            `由 \\(3x+4y${sm(d1)}=\\pm(4x-3y${sm(d2)})\\)，`+
+            `取正號得 \\(x-7y=${d2-d1}\\)；取負號得 \\(7x+y=${d1+d2}\\)。`;
+        }
+      },
+      {
+        a1:4,b1:3,a2:3,b2:-4,norm:5,
+        getBis(d1,d2){ return [`x+7y=${d1-d2}`, `7x-y=${d1+d2}`]; },
+        getProc(d1,d2){
+          return `法向量 \\((4,3)\\) 與 \\((3,-4)\\) 模均為 5。`+
+            `由 \\(4x+3y${sm(d1)}=\\pm(3x-4y${sm(d2)})\\)，`+
+            `取正號得 \\(x+7y=${d1-d2}\\)；取負號得 \\(7x-y=${d1+d2}\\)。`;
+        }
+      },
+      {
+        a1:5,b1:12,a2:12,b2:-5,norm:13,
+        getBis(d1,d2){ return [`7x-17y=${d2-d1}`, `17x+7y=${d1+d2}`]; },
+        getProc(d1,d2){
+          return `法向量 \\((5,12)\\) 與 \\((12,-5)\\) 模均為 13。`+
+            `由 \\(5x+12y${sm(d1)}=\\pm(12x-5y${sm(d2)})\\)，`+
+            `取正號得 \\(7x-17y=${d2-d1}\\)；取負號得 \\(17x+7y=${d1+d2}\\)。`;
+        }
+      },
+      {
+        a1:3,b1:4,a2:-4,b2:3,norm:5,
+        getBis(d1,d2){ return [`7x+y=${d1-d2}`, `x-7y=${-(d1+d2)}`]; },
+        getProc(d1,d2){
+          return `法向量 \\((3,4)\\) 與 \\((-4,3)\\) 模均為 5。`+
+            `由 \\(3x+4y${sm(d1)}=\\pm(-4x+3y${sm(d2)})\\)，`+
+            `取正號得 \\(7x+y=${d1-d2}\\)；取負號得 \\(x-7y=${-(d1+d2)}\\)。`;
+        }
+      },
+      {
+        a1:8,b1:15,a2:15,b2:-8,norm:17,
+        getBis(d1,d2){ return [`7x-23y=${d2-d1}`, `23x+7y=${d1+d2}`]; },
+        getProc(d1,d2){
+          return `法向量 \\((8,15)\\) 與 \\((15,-8)\\) 模均為 17。`+
+            `由 \\(8x+15y${sm(d1)}=\\pm(15x-8y${sm(d2)})\\)，`+
+            `取正號得 \\(7x-23y=${d2-d1}\\)；取負號得 \\(23x+7y=${d1+d2}\\)。`;
+        }
+      },
+    ];
+
+    const dVals = [-10, -5, 5, 10, 15, 20];
+
+    for (let i = 0; i < count; i += 1) {
+      const m = modes[i % 5];
+      const d1 = dVals[randInt(0, dVals.length - 1)];
+      let d2 = dVals[randInt(0, dVals.length - 1)];
+      while (d2 === d1) d2 = dVals[randInt(0, dVals.length - 1)];
+      const L1 = fmtL(m.a1, m.b1, d1);
+      const L2 = fmtL(m.a2, m.b2, d2);
+      const [B1, B2] = m.getBis(d1, d2);
+      questions.push(`求直線 \\(${L1}\\) 與直線 \\(${L2}\\) 夾角的兩條角平分線方程式。`);
+      answers.push(`簡答：\\(${B1}\\) 及 \\(${B2}\\)。過程：${m.getProc(d1, d2)}`);
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── s1-2-2 新增：點與圓的位置關係及切線長 ──────────────────────────
+  function buildS122PointCircleRelationSet(count) {
+    const questions = [];
+    const answers = [];
+
+    const off5  = [[3,4],[4,3],[-3,4],[4,-3],[3,-4],[-4,3]];
+    const off13 = [[5,12],[12,5],[-5,12],[12,-5],[5,-12],[-12,5]];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      const h = randInt(-4, 4);
+      const k = randInt(-4, 4);
+
+      if (mode === 0) {
+        // 圓外 d=5 r=3 切線=4
+        const [dx, dy] = off5[randInt(0, off5.length - 1)];
+        const px = h + dx, py = k + dy;
+        const circ = formatS122CircleStandard(h, k, 9);
+        questions.push(`判斷點 \\(P(${px},\\,${py})\\) 與圓 \\(${circ}\\) 的位置關係，若在圓外則求切線長。`);
+        answers.push(
+          `簡答：\\(P\\) 在圓外，切線長為 4。` +
+          `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=3\\)。` +
+          `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx*dx+dy*dy}\\)，` +
+          `\\(d=5>3\\)，故 \\(P\\) 在圓外。切線長 \\(=\\sqrt{25-9}=4\\)。`
+        );
+      } else if (mode === 1) {
+        // 圓外 d=5 r=4 切線=3
+        const [dx, dy] = off5[randInt(0, off5.length - 1)];
+        const px = h + dx, py = k + dy;
+        const circ = formatS122CircleStandard(h, k, 16);
+        questions.push(`判斷點 \\(P(${px},\\,${py})\\) 與圓 \\(${circ}\\) 的位置關係，若在圓外則求切線長。`);
+        answers.push(
+          `簡答：\\(P\\) 在圓外，切線長為 3。` +
+          `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=4\\)。` +
+          `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx*dx+dy*dy}\\)，` +
+          `\\(d=5>4\\)，故 \\(P\\) 在圓外。切線長 \\(=\\sqrt{25-16}=3\\)。`
+        );
+      } else if (mode === 2) {
+        // 圓外 d=13 r=5 切線=12
+        const [dx, dy] = off13[randInt(0, off13.length - 1)];
+        const px = h + dx, py = k + dy;
+        const circ = formatS122CircleStandard(h, k, 25);
+        questions.push(`判斷點 \\(P(${px},\\,${py})\\) 與圓 \\(${circ}\\) 的位置關係，若在圓外則求切線長。`);
+        answers.push(
+          `簡答：\\(P\\) 在圓外，切線長為 12。` +
+          `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=5\\)。` +
+          `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx*dx+dy*dy}\\)，` +
+          `\\(d=13>5\\)，故 \\(P\\) 在圓外。切線長 \\(=\\sqrt{169-25}=12\\)。`
+        );
+      } else if (mode === 3) {
+        // 在圓上 d=r=5
+        const [dx, dy] = off5[randInt(0, off5.length - 1)];
+        const px = h + dx, py = k + dy;
+        const circ = formatS122CircleStandard(h, k, 25);
+        questions.push(`判斷點 \\(P(${px},\\,${py})\\) 與圓 \\(${circ}\\) 的位置關係。`);
+        answers.push(
+          `簡答：\\(P\\) 在圓上。` +
+          `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=5\\)。` +
+          `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx*dx+dy*dy}=25=r^2\\)，故 \\(P\\) 在圓上。`
+        );
+      } else {
+        // 在圓內 d<5
+        const smalls = [[3,0],[0,3],[4,0],[0,4],[2,2],[1,3],[3,1]];
+        const [ax, ay] = smalls[randInt(0, smalls.length - 1)];
+        const sx = randInt(0,1)===0?1:-1, sy = randInt(0,1)===0?1:-1;
+        const dx = ax*sx, dy = ay*sy;
+        const d2 = dx*dx+dy*dy;
+        const px = h + dx, py = k + dy;
+        const circ = formatS122CircleStandard(h, k, 25);
+        questions.push(`判斷點 \\(P(${px},\\,${py})\\) 與圓 \\(${circ}\\) 的位置關係。`);
+        answers.push(
+          `簡答：\\(P\\) 在圓內。` +
+          `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=5\\)。` +
+          `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${d2}<25=r^2\\)，故 \\(P\\) 在圓內，無切線。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── s1-2-3 新增：直線與圓的交點坐標 ────────────────────────────────
+  function buildS123LineCirIntersectionSet(count) {
+    const questions = [];
+    const answers = [];
+
+    function signC(c) { return c >= 0 ? `+${c}` : `${c}`; }
+    function xSqTerm(h) {
+      if (h === 0) return 'x^2';
+      return h > 0 ? `(x-${h})^2` : `(x+${-h})^2`;
+    }
+    function xSolveTerm(h) {
+      if (h === 0) return 'x';
+      return h > 0 ? `x-${h}` : `x+${-h}`;
+    }
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+
+      if (mode === 0) {
+        // 水平線 y=k 與 x^2+y^2=r^2
+        const cases = [{r:5,k:3,xv:4},{r:5,k:4,xv:3},{r:13,k:5,xv:12},{r:13,k:12,xv:5},{r:10,k:6,xv:8}];
+        const {r,k,xv} = cases[randInt(0,cases.length-1)];
+        const kv = (randInt(0,1)===0?1:-1)*k;
+        questions.push(`求直線 \\(y=${kv}\\) 與圓 \\(x^2+y^2=${r*r}\\) 的交點坐標。`);
+        answers.push(
+          `簡答：\\((${xv},${kv})\\) 與 \\((-${xv},${kv})\\)。` +
+          `過程：代入 \\(y=${kv}\\) 得 \\(x^2+${kv*kv}=${r*r}\\)，` +
+          `\\(x^2=${r*r-kv*kv}\\)，\\(x=\\pm${xv}\\)。`
+        );
+      } else if (mode === 1) {
+        // 垂直線 x=h 與 x^2+y^2=r^2
+        const cases = [{r:5,h:3,yv:4},{r:5,h:4,yv:3},{r:13,h:5,yv:12},{r:13,h:12,yv:5}];
+        const {r,h,yv} = cases[randInt(0,cases.length-1)];
+        const hv = (randInt(0,1)===0?1:-1)*h;
+        questions.push(`求直線 \\(x=${hv}\\) 與圓 \\(x^2+y^2=${r*r}\\) 的交點坐標。`);
+        answers.push(
+          `簡答：\\((${hv},${yv})\\) 與 \\((${hv},-${yv})\\)。` +
+          `過程：代入 \\(x=${hv}\\) 得 \\(${hv*hv}+y^2=${r*r}\\)，` +
+          `\\(y^2=${r*r-hv*hv}\\)，\\(y=\\pm${yv}\\)。`
+        );
+      } else if (mode === 2) {
+        // y=x+c 與 x^2+y^2=25，2x^2+2cx+(c^2-25)=0
+        const cases = [
+          {c:1,  P:{x:3,y:4},  Q:{x:-4,y:-3}},
+          {c:-1, P:{x:4,y:3},  Q:{x:-3,y:-4}},
+          {c:7,  P:{x:-3,y:4}, Q:{x:-4,y:3}},
+          {c:-7, P:{x:3,y:-4}, Q:{x:4,y:-3}},
+        ];
+        const cas = cases[randInt(0,cases.length-1)];
+        const cStr = cas.c === 0 ? 'x' : cas.c > 0 ? `x+${cas.c}` : `x${cas.c}`;
+        const P = cas.P, Q = cas.Q;
+        const coefX = 2*cas.c, constT = cas.c*cas.c - 25;
+        questions.push(`求直線 \\(y=${cStr}\\) 與圓 \\(x^2+y^2=25\\) 的交點坐標。`);
+        answers.push(
+          `簡答：\\((${P.x},${P.y})\\) 與 \\((${Q.x},${Q.y})\\)。` +
+          `過程：代入得 \\(2x^2${signC(coefX)}x${signC(constT)}=0\\)，` +
+          `化簡解得 \\(x=${P.x}\\) 或 \\(x=${Q.x}\\)，` +
+          `對應 y 值由 \\(y=x+${cas.c}\\) 求出，交點為 \\((${P.x},${P.y})\\) 與 \\((${Q.x},${Q.y})\\)。`
+        );
+      } else if (mode === 3) {
+        // y=-x+c 與 x^2+y^2=25，2x^2-2cx+(c^2-25)=0
+        const cases = [
+          {c:1,  P:{x:4,y:-3}, Q:{x:-3,y:4}},
+          {c:-1, P:{x:-4,y:3}, Q:{x:3,y:-4}},
+          {c:5,  P:{x:0,y:5},  Q:{x:5,y:0}},
+          {c:7,  P:{x:3,y:4},  Q:{x:4,y:3}},
+          {c:-7, P:{x:-3,y:-4},Q:{x:-4,y:-3}},
+        ];
+        const cas = cases[randInt(0,cases.length-1)];
+        const cStr = cas.c === 0 ? '-x' : cas.c > 0 ? `-x+${cas.c}` : `-x${cas.c}`;
+        const P = cas.P, Q = cas.Q;
+        const coefX = -2*cas.c, constT = cas.c*cas.c - 25;
+        questions.push(`求直線 \\(y=${cStr}\\) 與圓 \\(x^2+y^2=25\\) 的交點坐標。`);
+        answers.push(
+          `簡答：\\((${P.x},${P.y})\\) 與 \\((${Q.x},${Q.y})\\)。` +
+          `過程：代入得 \\(2x^2${signC(coefX)}x${signC(constT)}=0\\)，` +
+          `化簡解得 \\(x=${P.x}\\) 或 \\(x=${Q.x}\\)，交點為 \\((${P.x},${P.y})\\) 與 \\((${Q.x},${Q.y})\\)。`
+        );
+      } else {
+        // 水平線 y=k 與移心圓 (x-h0)^2+(y-k0)^2=25
+        const h0 = randInt(-3, 3);
+        const k0 = randInt(-3, 3);
+        const deltaCases = [[3,4],[4,3],[0,5]];
+        const [dk, xHalf] = deltaCases[randInt(0, deltaCases.length - 1)];
+        const signDk = randInt(0,1)===0?1:-1;
+        const k = k0 + signDk * dk;
+        const diff = 25 - dk*dk;
+        const x1 = h0 + xHalf, x2 = h0 - xHalf;
+        const circEq = formatS122CircleStandard(h0, k0, 25);
+        const xsolve = xSolveTerm(h0);
+        questions.push(`求直線 \\(y=${k}\\) 與圓 \\(${circEq}\\) 的交點坐標。`);
+        if (xHalf === 0) {
+          questions[questions.length-1] = `求直線 \\(y=${k}\\) 與圓 \\(${circEq}\\) 的切點坐標（若為切線）。`;
+          answers.push(`簡答：切點 \\((${h0},${k})\\)。過程：代入得 \\(${xSqTerm(h0)}=0\\)，\\(x=${h0}\\)。`);
+        } else {
+          answers.push(
+            `簡答：\\((${x1},${k})\\) 與 \\((${x2},${k})\\)。` +
+            `過程：代入 \\(y=${k}\\) 得 \\(${xSqTerm(h0)}+${dk*dk}=25\\)，` +
+            `\\(${xSqTerm(h0)}=${diff}\\)，\\(${xsolve}=\\pm${xHalf}\\)，` +
+            `交點為 \\((${x1},${k})\\) 與 \\((${x2},${k})\\)。`
+          );
+        }
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
 
   function buildS131CoefficientSumParitySet(count) {
     const questions = [];
@@ -5893,6 +6638,345 @@
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
+  // ── s1-3-2 新增：分段函數代值計算 ───────────────────────────────────
+  function buildS132PiecewiseFunctionEvalSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+
+      if (mode === 0) {
+        // f(x) = { ax+b  x≥0; cx+d  x<0 }
+        const a = randInt(1,4), b = randInt(-3,3);
+        const c = randInt(1,4), d = randInt(-3,3);
+        const p = randInt(1,4), q = randInt(-4,-1);
+        const fp = a*p+b, fq = c*q+d;
+        const bStr = b >= 0 ? `+${b}` : `${b}`;
+        const dStr = d >= 0 ? `+${d}` : `${d}`;
+        questions.push(
+          `設 \\(f(x)=\\begin{cases}${a}x${bStr}, & x\\ge0\\\\ ${c}x${dStr}, & x<0\\end{cases}\\)，求 \\(f(${p})\\) 與 \\(f(${q})\\)。`
+        );
+        answers.push(
+          `簡答：\\(f(${p})=${fp}\\)，\\(f(${q})=${fq}\\)。` +
+          `過程：\\(${p}\\ge0\\) 用第一段，\\(f(${p})=${a}\\cdot${wrapIfNegative(p)}${bStr}=${fp}\\)；` +
+          `\\(${q}<0\\) 用第二段，\\(f(${q})=${c}\\cdot${wrapIfNegative(q)}${dStr}=${fq}\\)。`
+        );
+      } else if (mode === 1) {
+        // f(x) = { x^2+a  x≥1; bx+c  x<1 }
+        const a = randInt(0,5), b = randInt(1,4), c = randInt(-5,5);
+        const p = randInt(1,4), q = randInt(-3,0);
+        const fp = p*p+a, fq = b*q+c;
+        const aStr = a >= 0 ? `+${a}` : `${a}`;
+        const cStr = c >= 0 ? `+${c}` : `${c}`;
+        questions.push(
+          `設 \\(f(x)=\\begin{cases}x^2${aStr}, & x\\ge1\\\\ ${b}x${cStr}, & x<1\\end{cases}\\)，求 \\(f(${p})\\) 與 \\(f(${q})\\)。`
+        );
+        answers.push(
+          `簡答：\\(f(${p})=${fp}\\)，\\(f(${q})=${fq}\\)。` +
+          `過程：\\(${p}\\ge1\\) 用第一段，\\(f(${p})=${p}^2${aStr}=${fp}\\)；` +
+          `\\(${q}<1\\) 用第二段，\\(f(${q})=${b}\\cdot${wrapIfNegative(q)}${cStr}=${fq}\\)。`
+        );
+      } else if (mode === 2) {
+        // f(x) = { x+a  x>k; bx+c  x≤k }
+        const a = randInt(1,5), b = randInt(2,4), c = randInt(-5,5);
+        const k = randInt(-2,2);
+        const m = randInt(1,3);
+        const p = k+m, q = k;
+        const fp = p+a, fq = b*k+c;
+        const aStr = a >= 0 ? `+${a}` : `${a}`;
+        const cStr = c >= 0 ? `+${c}` : `${c}`;
+        questions.push(
+          `設 \\(f(x)=\\begin{cases}x${aStr}, & x>${k}\\\\ ${b}x${cStr}, & x\\le${k}\\end{cases}\\)，求 \\(f(${p})\\) 與 \\(f(${q})\\)。`
+        );
+        answers.push(
+          `簡答：\\(f(${p})=${fp}\\)，\\(f(${q})=${fq}\\)。` +
+          `過程：\\(${p}>${k}\\) 用第一段，\\(f(${p})=${p}${aStr}=${fp}\\)；` +
+          `\\(${q}\\le${k}\\) 用第二段，\\(f(${q})=${b}\\cdot${wrapIfNegative(q)}${cStr}=${fq}\\)。`
+        );
+      } else if (mode === 3) {
+        // f(x) = { x^2  x≥0; 2x+a  x<0 }，求 f(p) 和 f(q)
+        const a = randInt(-5,5);
+        const p = randInt(1,4), q = randInt(-4,-1);
+        const fp = p*p, fq = 2*q+a;
+        const aStr = a >= 0 ? `+${a}` : `${a}`;
+        questions.push(
+          `設 \\(f(x)=\\begin{cases}x^2, & x\\ge0\\\\ 2x${aStr}, & x<0\\end{cases}\\)，求 \\(f(${p})\\) 與 \\(f(${q})\\)。`
+        );
+        answers.push(
+          `簡答：\\(f(${p})=${fp}\\)，\\(f(${q})=${fq}\\)。` +
+          `過程：\\(${p}\\ge0\\) 用第一段，\\(f(${p})=${p}^2=${fp}\\)；` +
+          `\\(${q}<0\\) 用第二段，\\(f(${q})=2\\cdot${wrapIfNegative(q)}${aStr}=${fq}\\)。`
+        );
+      } else {
+        // 三段函數 f(x) = { a  x>k2; bx+c  k1<x≤k2; d  x≤k1 }
+        const a = randInt(5,10), d = randInt(-5,0);
+        const b = randInt(1,3), c = randInt(-3,3);
+        const k1 = randInt(-3,-1), k2 = randInt(1,3);
+        const p = k2+1, q0 = k1+Math.floor((k2-k1)/2), r0 = k1-1;
+        const fk2p1 = a, fmid = b*q0+c, fk1m1 = d;
+        const cStr = c >= 0 ? `+${c}` : `${c}`;
+        questions.push(
+          `設 \\(f(x)=\\begin{cases}${a}, & x>${k2}\\\\ ${b}x${cStr}, & ${k1}<x\\le${k2}\\\\ ${d}, & x\\le${k1}\\end{cases}\\)，` +
+          `求 \\(f(${p})\\)、\\(f(${q0})\\) 與 \\(f(${r0})\\)。`
+        );
+        answers.push(
+          `簡答：\\(f(${p})=${fk2p1}\\)，\\(f(${q0})=${fmid}\\)，\\(f(${r0})=${fk1m1}\\)。` +
+          `過程：\\(${p}>${k2}\\) 得 \\(f(${p})=${a}\\)；` +
+          `\\(${k1}<${q0}\\le${k2}\\) 得 \\(f(${q0})=${b}\\cdot${wrapIfNegative(q0)}${cStr}=${fmid}\\)；` +
+          `\\(${r0}\\le${k1}\\) 得 \\(f(${r0})=${d}\\)。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── s1-3-2 新增：合成函數計算與反推 ────────────────────────────────
+  function buildS132CompositeFunctionSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+
+      if (mode === 0) {
+        // 給 f(x)=ax+b, g(x)=x^2+c，求 f(g(m))
+        const a = randInt(1,3), b = randInt(-3,3), c = randInt(-3,3), m = randInt(-3,3);
+        const gm = m*m+c, fgm = a*gm+b;
+        const bStr = b >= 0 ? `+${b}` : `${b}`;
+        const cStr = c >= 0 ? `+${c}` : `${c}`;
+        questions.push(
+          `設 \\(f(x)=${a}x${bStr}\\)，\\(g(x)=x^2${cStr}\\)，求 \\(f(g(${m}))\\)。`
+        );
+        answers.push(
+          `簡答：\\(${fgm}\\)。` +
+          `過程：\\(g(${m})=${m}^2${cStr}=${gm}\\)，` +
+          `\\(f(g(${m}))=f(${gm})=${a}\\cdot${wrapIfNegative(gm)}${bStr}=${fgm}\\)。`
+        );
+      } else if (mode === 1) {
+        // 給 f(x)=ax+b，求 f(f(n))
+        const a = randInt(2,4), b = randInt(-3,3), n = randInt(-2,2);
+        const fn = a*n+b, ffn = a*fn+b;
+        const bStr = b >= 0 ? `+${b}` : `${b}`;
+        questions.push(`設 \\(f(x)=${a}x${bStr}\\)，求 \\(f(f(${n}))\\)。`);
+        answers.push(
+          `簡答：\\(${ffn}\\)。` +
+          `過程：\\(f(${n})=${a}\\cdot${wrapIfNegative(n)}${bStr}=${fn}\\)，` +
+          `\\(f(f(${n}))=f(${fn})=${a}\\cdot${wrapIfNegative(fn)}${bStr}=${ffn}\\)。`
+        );
+      } else if (mode === 2) {
+        // 已知 f(g(x))=ax+b 且 g(x)=x-k，求 f(x)
+        // f(x) = ax+(b+ak)
+        const a = randInt(1,4), k = randInt(1,3);
+        const b = randInt(-4,4);
+        const q = b + a*k;
+        const bStr = b >= 0 ? `+${b}` : `${b}`;
+        const qStr = q >= 0 ? `+${q}` : `${q}`;
+        const compStr = b === 0 ? `${a}x` : `${a}x${bStr}`;
+        questions.push(
+          `已知 \\(f(g(x))=${a}x${bStr}\\) 且 \\(g(x)=x-${k}\\)，求 \\(f(x)\\)。`
+        );
+        answers.push(
+          `簡答：\\(f(x)=${a}x${qStr}\\)。` +
+          `過程：設 \\(f(x)=px+q\\)。因 \\(f(g(x))=f(x-${k})=p(x-${k})+q=px${-k*1>=0?'+':''}${-k}p+q\\)，` +
+          `比較係數得 \\(p=${a}\\)，\\(-${k}p+q=${b}\\)，解得 \\(q=${q}\\)。`
+        );
+      } else if (mode === 3) {
+        // 已知 g(f(x))=ax+b 且 f(x)=x+k，求 g(x)
+        // g(x) = ax+(b-ak)
+        const a = randInt(1,4), k = randInt(1,3);
+        const b = randInt(-4,4);
+        const r = b - a*k;
+        const bStr = b >= 0 ? `+${b}` : `${b}`;
+        const rStr = r >= 0 ? `+${r}` : `${r}`;
+        questions.push(
+          `已知 \\(g(f(x))=${a}x${bStr}\\) 且 \\(f(x)=x+${k}\\)，求 \\(g(x)\\)。`
+        );
+        answers.push(
+          `簡答：\\(g(x)=${a}x${rStr}\\)。` +
+          `過程：設 \\(g(x)=px+q\\)。因 \\(g(f(x))=g(x+${k})=p(x+${k})+q=px+${k}p+q\\)，` +
+          `比較係數得 \\(p=${a}\\)，\\(${k}p+q=${b}\\)，解得 \\(q=${r}\\)。`
+        );
+      } else {
+        // 已知 f 為一次函數且 f(f(x))=a^2x+(a+1)b，求 f(x)=ax+b
+        // f(f(x))=a^2*x+a*b+b=a^2*x+b(a+1)
+        const a = randInt(2,4), b = randInt(1,4);
+        const a2 = a*a, comp_const = b*(a+1);
+        const a2Str = a2 === 1 ? 'x' : `${a2}x`;
+        const bStr = b >= 0 ? `+${b}` : `${b}`;
+        questions.push(
+          `設 \\(f(x)\\) 為一次函數且 \\(f(f(x))=${a2}x+${comp_const}\\)，求 \\(f(x)\\)。`
+        );
+        answers.push(
+          `簡答：\\(f(x)=${a}x${bStr}\\)。` +
+          `過程：設 \\(f(x)=px+q\\)，則 \\(f(f(x))=p^2x+pq+q=p^2x+q(p+1)\\)。` +
+          `比較得 \\(p^2=${a2}\\Rightarrow p=${a}\\)（取正），\\(q(p+1)=${comp_const}\\Rightarrow q=${b}\\)。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── s1-3-3 新增：絕對值不等式 ───────────────────────────────────────
+  function buildS133AbsoluteValueInequalitySet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+
+      if (mode === 0) {
+        // |x+a| < b → -b-a < x < b-a
+        const a = randInt(-3,3), b = randInt(2,6);
+        const lo = -b-a, hi = b-a;
+        const aStr = a >= 0 ? `+${a}` : `${a}`;
+        questions.push(`解不等式 \\(|x${aStr}|<${b}\\)。`);
+        answers.push(
+          `簡答：\\(${lo}<x<${hi}\\)。` +
+          `過程：\\(|x${aStr}|<${b}\\) 等價於 \\(-${b}<x${aStr}<${b}\\)，` +
+          `各減 \\(${a}\\) 得 \\(${lo}<x<${hi}\\)。`
+        );
+      } else if (mode === 1) {
+        // |x-a| > b → x < a-b 或 x > a+b
+        const a = randInt(-3,3), b = randInt(1,5);
+        const lo = a-b, hi = a+b;
+        const aStr = a >= 0 ? `-${a}` : `+${-a}`;
+        questions.push(`解不等式 \\(|x${aStr}|>${b}\\)。`);
+        answers.push(
+          `簡答：\\(x<${lo}\\) 或 \\(x>${hi}\\)。` +
+          `過程：\\(|x${aStr}|>${b}\\) 等價於 \\(x${aStr}<-${b}\\) 或 \\(x${aStr}>${b}\\)，` +
+          `移項得 \\(x<${lo}\\) 或 \\(x>${hi}\\)。`
+        );
+      } else if (mode === 2) {
+        // |2x+a| ≤ b → (-b-a)/2 ≤ x ≤ (b-a)/2，取 a,b 使結果為整數
+        const a = randInt(-3,3)*2, b = randInt(2,5)*2;
+        const lo = (-b-a)/2, hi = (b-a)/2;
+        const aStr = a >= 0 ? `+${a}` : `${a}`;
+        questions.push(`解不等式 \\(|2x${aStr}|\\le${b}\\)。`);
+        answers.push(
+          `簡答：\\(${lo}\\le x\\le${hi}\\)。` +
+          `過程：\\(-${b}\\le2x${aStr}\\le${b}\\)，` +
+          `減 \\(${a}\\) 得 \\(${-b-a}\\le2x\\le${b-a}\\)，` +
+          `除以 2 得 \\(${lo}\\le x\\le${hi}\\)。`
+        );
+      } else if (mode === 3) {
+        // |2x-a| ≥ b → x ≤ (a-b)/2 或 x ≥ (a+b)/2，同樣取偶數
+        const a = randInt(-2,4)*2, b = randInt(1,4)*2;
+        const lo = (a-b)/2, hi = (a+b)/2;
+        const aStr = a >= 0 ? `-${a}` : `+${-a}`;
+        questions.push(`解不等式 \\(|2x${aStr}|\\ge${b}\\)。`);
+        answers.push(
+          `簡答：\\(x\\le${lo}\\) 或 \\(x\\ge${hi}\\)。` +
+          `過程：\\(2x${aStr}\\le-${b}\\) 或 \\(2x${aStr}\\ge${b}\\)，` +
+          `移項除以 2 得 \\(x\\le${lo}\\) 或 \\(x\\ge${hi}\\)。`
+        );
+      } else {
+        // |x+a| ≤ |x-b|，a,b≥0，a+b>0 → x ≤ (b-a)/2
+        const a = randInt(0,3)*2, b = randInt(1,4)*2;
+        const mid = (b-a)/2;
+        const aStr = a === 0 ? 'x' : `x+${a}`;
+        const bStr = b === 0 ? 'x' : `x-${b}`;
+        questions.push(`解不等式 \\(|${aStr}|\\le|${bStr}|\\)。`);
+        answers.push(
+          `簡答：\\(x\\le${mid}\\)。` +
+          `過程：兩邊平方（均非負），\\((x+${a})^2\\le(x-${b})^2\\)，` +
+          `展開得 \\(x^2+${2*a}x+${a*a}\\le x^2-${2*b}x+${b*b}\\)，` +
+          `化簡得 \\(${2*(a+b)}x\\le${b*b-a*a}\\)，故 \\(x\\le${mid}\\)。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ── s1-3-3 新增：兩絕對值不等式 ────────────────────────────────────
+  function buildS133DoubleAbsoluteInequalitySet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+
+      if (mode === 0) {
+        // |x-a|+|x-b| ≤ c，a<b，c>b-a，解為 [(a+b-c)/2, (a+b+c)/2]
+        const a = randInt(0,2);
+        const b = a + 2*randInt(1,3);
+        const extra = 2*randInt(1,3);
+        const c = (b-a)+extra;
+        const lo = (a+b-c)/2, hi = (a+b+c)/2;
+        questions.push(`解不等式 \\(|x-${a}|+|x-${b}|\\le${c}\\)。`);
+        answers.push(
+          `簡答：\\(${lo}\\le x\\le${hi}\\)。` +
+          `過程：分三段討論。\\(x\\le${a}\\) 時，左式 \\(=${a}-x+${b}-x=${a+b}-2x\\le${c}\\)，得 \\(x\\ge${lo}\\)；` +
+          `\\(${a}\\le x\\le${b}\\) 時，左式 \\(=x-${a}+${b}-x=${b-a}\\le${c}\\) 恆成立；` +
+          `\\(x\\ge${b}\\) 時，左式 \\(=x-${a}+x-${b}=2x-${a+b}\\le${c}\\)，得 \\(x\\le${hi}\\)。` +
+          `綜合得 \\(${lo}\\le x\\le${hi}\\)。`
+        );
+      } else if (mode === 1) {
+        // |x-a|+|x-b| ≥ c，a<b，c>b-a，解為 x≤(a+b-c)/2 或 x≥(a+b+c)/2
+        const a = randInt(0,2);
+        const b = a + 2*randInt(1,3);
+        const extra = 2*randInt(1,3);
+        const c = (b-a)+extra;
+        const lo = (a+b-c)/2, hi = (a+b+c)/2;
+        questions.push(`解不等式 \\(|x-${a}|+|x-${b}|\\ge${c}\\)。`);
+        answers.push(
+          `簡答：\\(x\\le${lo}\\) 或 \\(x\\ge${hi}\\)。` +
+          `過程：分段討論。\\(x\\ge${b}\\) 時，\\(2x-${a+b}\\ge${c}\\) 得 \\(x\\ge${hi}\\)；` +
+          `\\(${a}\\le x\\le${b}\\) 時，\\(${b-a}\\ge${c}\\) 不成立（因 \\(${b-a}<${c}\\)）；` +
+          `\\(x\\le${a}\\) 時，\\(${a+b}-2x\\ge${c}\\) 得 \\(x\\le${lo}\\)。`
+        );
+      } else if (mode === 2) {
+        // |x-a| < |x-b|，a<b → x < (a+b)/2（點比較靠近 a）
+        const a = randInt(0,3);
+        const diff = 2*randInt(1,4);
+        const b = a + diff;
+        const mid = (a+b)/2;
+        questions.push(`解不等式 \\(|x-${a}|<|x-${b}|\\)。`);
+        answers.push(
+          `簡答：\\(x<${mid}\\)。` +
+          `過程：兩邊平方，\\((x-${a})^2<(x-${b})^2\\)，` +
+          `展開得 \\(-${2*a}x+${a*a}<-${2*b}x+${b*b}\\)，` +
+          `整理得 \\(${2*(b-a)}x<${b*b-a*a}=${(b-a)*(b+a)}\\)，` +
+          `故 \\(x<${mid}\\)。（幾何意義：\\(x\\) 到 \\(${a}\\) 的距離小於到 \\(${b}\\) 的距離，即 \\(x\\) 位於 \\(${a}\\) 與 \\(${b}\\) 的中點 \\(${mid}\\) 左側。）`
+        );
+      } else if (mode === 3) {
+        // |x-a| > |x-b|，a<b → x > (a+b)/2（點比較靠近 b）
+        const a = randInt(0,3);
+        const diff = 2*randInt(1,4);
+        const b = a + diff;
+        const mid = (a+b)/2;
+        questions.push(`解不等式 \\(|x-${a}|>|x-${b}|\\)。`);
+        answers.push(
+          `簡答：\\(x>${mid}\\)。` +
+          `過程：兩邊平方，\\((x-${a})^2>(x-${b})^2\\)，` +
+          `整理得 \\(${2*(b-a)}x>${b*b-a*a}\\)，故 \\(x>${mid}\\)。` +
+          `（幾何意義：\\(x\\) 位於中點 \\(${mid}\\) 右側。）`
+        );
+      } else {
+        // |x+a|+|x-b| ≤ c，a>0，b>0，解為 [(b-a-c)/2, (b-a+c)/2]
+        const a = randInt(1,3);
+        const b = randInt(1,3);
+        const extra = 2*randInt(1,3);
+        const c = (a+b)+extra;
+        const lo = (b-a-c)/2, hi = (b-a+c)/2;
+        const aStr = `x+${a}`;
+        const bStr = `x-${b}`;
+        questions.push(`解不等式 \\(|${aStr}|+|${bStr}|\\le${c}\\)。`);
+        answers.push(
+          `簡答：\\(${lo}\\le x\\le${hi}\\)。` +
+          `過程：改寫為 \\(|x-(-${a})|+|x-${b}|\\le${c}\\)，` +
+          `兩定點為 \\(-${a}\\) 與 \\(${b}\\)，距離為 \\(${a+b}\\)，\\(c=${c}>${a+b}\\)，有解。` +
+          `利用公式，解為 \\(\\frac{-${a}+${b}-${c}}{2}\\le x\\le\\frac{-${a}+${b}+${c}}{2}\\)，即 \\(${lo}\\le x\\le${hi}\\)。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
 
   function buildS133QuadraticDiscriminantSolveSet(count) {
     const templates = [
@@ -6343,1299 +7427,1801 @@
     return sentence || text;
   }
 
+
+  // ── s1-3 新增生成器 ────────────────────────────────────────────────────────
+
+  // s1-3-2: 由函數值決定一次函數 (5 modes)
+  function buildS132LinearFunctionFromPointsSet(count) {
+    function sn(k) { return formatS122SignedNumber(k); }
+    function fmtL(m, k) {
+      const mp = m === 1 ? 'x' : m === -1 ? '-x' : m + 'x';
+      return k === 0 ? mp : mp + sn(k);
+    }
+    const modes = [
+      // Mode 0: 給兩個非零x處的函數值，求f(x)
+      () => {
+        const mVals = [1, 2, 3, -1, -2, -3];
+        const m = mVals[randInt(0, 5)];
+        const k = randInt(-5, 5);
+        const x1 = randInt(-3, -1);
+        const x2 = randInt(1, 3);
+        const y1 = m * x1 + k;
+        const y2 = m * x2 + k;
+        return {
+          q: `已知一次函數 \\(f(x)\\)，且 \\(f(${x1})=${y1}\\)，\\(f(${x2})=${y2}\\)，求 \\(f(x)\\)。`,
+          a: `簡答：\\(f(x)=${fmtL(m, k)}\\)。過程：斜率 \\(m=\\dfrac{${y2 - y1}}{${x2 - x1}}=${m}\\)。代入 \\(f(${x1})=${y1}\\)：\\(${m}\\cdot(${x1})+k=${y1}\\)，得 \\(k=${k}\\)。所以 \\(f(x)=${fmtL(m, k)}\\)。`,
+        };
+      },
+      // Mode 1: 給f(0)和f(x2)，求f(x3)
+      () => {
+        const m = [1, 2, -1, -2, 3, -3][randInt(0, 5)];
+        const k = randInt(-4, 4);
+        const x2 = randInt(1, 3);
+        const x3 = randInt(4, 7);
+        const y2 = m * x2 + k;
+        const y3 = m * x3 + k;
+        return {
+          q: `已知一次函數 \\(f(x)\\)，且 \\(f(0)=${k}\\)，\\(f(${x2})=${y2}\\)，求 \\(f(${x3})\\) 的值。`,
+          a: `簡答：\\(f(${x3})=${y3}\\)。過程：\\(f(0)=${k}\\) 代表截距 \\(k=${k}\\)。由 \\(f(${x2})=${y2}\\)：\\(m\\cdot${x2}${sn(k)}=${y2}\\)，得 \\(m=${m}\\)。所以 \\(f(x)=${fmtL(m, k)}\\)，\\(f(${x3})=${m}\\cdot${x3}${sn(k)}=${y3}\\)。`,
+        };
+      },
+      // Mode 2: 給兩函數值，求f(x)>0的x範圍
+      () => {
+        const m = [1, 2, 3][randInt(0, 2)];
+        const x0 = randInt(1, 5);
+        const k = -m * x0;
+        const x1 = randInt(-3, -1);
+        const x2 = randInt(x0 + 1, x0 + 3);
+        const y1 = m * x1 + k;
+        const y2 = m * x2 + k;
+        return {
+          q: `已知一次函數 \\(f(x)\\)，且 \\(f(${x1})=${y1}\\)，\\(f(${x2})=${y2}\\)，求使 \\(f(x)>0\\) 的 \\(x\\) 範圍。`,
+          a: `簡答：\\(x>${x0}\\)。過程：斜率 \\(m=\\dfrac{${y2 - y1}}{${x2 - x1}}=${m}\\)，截距 \\(k=${k}\\)。\\(f(x)=${fmtL(m, k)}>0\\) 解得 \\(x>${x0}\\)。`,
+        };
+      },
+      // Mode 3: 給f(f(0))和f(f(1))，求f(x)=ax+b
+      () => {
+        const a = [2, 3, -2, -3][randInt(0, 3)];
+        const b = randInt(-3, 3);
+        const ff0 = a * b + b;         // f(b) = ab+b
+        const ff1 = a * (a + b) + b;   // f(a+b) = a(a+b)+b
+        return {
+          q: `設 \\(f(x)=ax+b\\)，已知 \\(f(f(0))=${ff0}\\)，\\(f(f(1))=${ff1}\\)，求 \\(a\\) 與 \\(b\\)。`,
+          a: `簡答：\\(a=${a}\\)，\\(b=${b}\\)。過程：\\(f(0)=b\\)，\\(f(f(0))=f(b)=ab+b=b(a+1)=${ff0}\\)。\\(f(1)=a+b\\)，\\(f(f(1))=a(a+b)+b=a^2+ab+b=${ff1}\\)。兩式相減得 \\(a^2=${ff1 - ff0}\\)，故 \\(a=${a}\\)，代回得 \\(b=${b}\\)。`,
+        };
+      },
+      // Mode 4: 已知f(2x+1)=px+q，求f(x)
+      () => {
+        const a = [1, 2, 3][randInt(0, 2)];
+        const b = randInt(-4, 4);
+        const coeffX = 2 * a;
+        const constTerm = a + b;
+        const constStr = constTerm === 0 ? '' : (constTerm > 0 ? '+' + constTerm : '' + constTerm);
+        return {
+          q: `設 \\(f(x)\\) 為一次函數，已知 \\(f(2x+1)=${coeffX}x${constStr}\\)，求 \\(f(x)\\)。`,
+          a: `簡答：\\(f(x)=${fmtL(a, b)}\\)。過程：令 \\(t=2x+1\\)，則 \\(x=\\dfrac{t-1}{2}\\)。\\(f(t)=${coeffX}\\cdot\\dfrac{t-1}{2}${constStr}=${a}t${sn(b)}\\)。所以 \\(f(x)=${fmtL(a, b)}\\)。`,
+        };
+      },
+    ];
+    const questions = [], answers = [];
+    for (let i = 0; i < count; i++) {
+      const { q, a } = modes[i % modes.length]();
+      questions.push(q);
+      answers.push(a);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // s1-3-2: 由三點求二次函數係數 (5 modes)
+  function buildS132QuadraticThreePointsSet(count) {
+    function sn(k) { return formatS122SignedNumber(k); }
+    function fmtQ(a, b, c) {
+      // format ax²+bx+c
+      const aTerm = a === 1 ? 'x^2' : a === -1 ? '-x^2' : a + 'x^2';
+      const bTerm = b === 0 ? '' : (b === 1 ? '+x' : b === -1 ? '-x' : (b > 0 ? '+' + b + 'x' : b + 'x'));
+      const cTerm = c === 0 ? '' : sn(c);
+      return aTerm + bTerm + cTerm;
+    }
+    const modes = [
+      // Mode 0: x=0,1,-1 三點 (最簡單的線性方程組)
+      () => {
+        const a = [1, 2, -1, -2][randInt(0, 3)];
+        const b = randInt(-4, 4);
+        const c = randInt(-5, 5);
+        const f0 = c;
+        const f1 = a + b + c;
+        const fm1 = a - b + c;
+        return {
+          q: `已知二次函數 \\(f(x)=ax^2+bx+c\\)，且 \\(f(0)=${f0}\\)，\\(f(1)=${f1}\\)，\\(f(-1)=${fm1}\\)，求 \\(a\\)、\\(b\\)、\\(c\\) 的值。`,
+          a: `簡答：\\(a=${a}\\)，\\(b=${b}\\)，\\(c=${c}\\)。過程：由 \\(f(0)=${f0}\\) 得 \\(c=${c}\\)。由 \\(f(1)+f(-1)=${f1 + fm1}=2a+2c\\) 得 \\(a=${a}\\)。由 \\(f(1)-f(-1)=${f1 - fm1}=2b\\) 得 \\(b=${b}\\)。`,
+        };
+      },
+      // Mode 1: x=0,1,2 三點
+      () => {
+        const a = [1, 2, -1, -2][randInt(0, 3)];
+        const b = randInt(-4, 4);
+        const c = randInt(-5, 5);
+        const f0 = c;
+        const f1 = a + b + c;
+        const f2 = 4 * a + 2 * b + c;
+        return {
+          q: `已知二次函數 \\(f(x)=ax^2+bx+c\\)，且 \\(f(0)=${f0}\\)，\\(f(1)=${f1}\\)，\\(f(2)=${f2}\\)，求 \\(a\\)、\\(b\\)、\\(c\\) 的值。`,
+          a: `簡答：\\(a=${a}\\)，\\(b=${b}\\)，\\(c=${c}\\)。過程：由 \\(f(0)=${f0}\\) 得 \\(c=${c}\\)。設 \\(u=f(1)-c=${f1 - c}\\)，\\(v=f(2)-c=${f2 - c}\\)，則 \\(v-2u=${f2 - c - 2 * (f1 - c)}=2a\\)，得 \\(a=${a}\\)，\\(b=${b}\\)。`,
+        };
+      },
+      // Mode 2: 頂點式 — 給頂點(h,k)和一點(0,y0)
+      () => {
+        const a = [1, 2, -1, -2][randInt(0, 3)];
+        const h = randInt(1, 4);
+        const kv = randInt(-5, 5);
+        const y0 = a * h * h + kv; // f(0) = a*h^2 + kv
+        // vertex form: f(x) = a(x-h)^2 + kv
+        // expand: a*x^2 - 2ah*x + ah^2+kv
+        const bCoef = -2 * a * h;
+        const cCoef = a * h * h + kv;
+        const kvStr = kv === 0 ? '' : sn(kv);
+        const hStr = h > 0 ? '-' + h : '+' + Math.abs(h);
+        return {
+          q: `已知二次函數的頂點為 \\((${h},${kv})\\)，且圖形通過點 \\((0,${y0})\\)，求此二次函數。`,
+          a: `簡答：\\(f(x)=${fmtQ(a, bCoef, cCoef)}\\)。過程：設 \\(f(x)=a(x${hStr})^2${kvStr}\\)。代入 \\((0,${y0})\\)：\\(a\\cdot${h * h}${kvStr}=${y0}\\)，得 \\(a=${a}\\)。展開得 \\(f(x)=${fmtQ(a, bCoef, cCoef)}\\)。`,
+        };
+      },
+      // Mode 3: 給兩根和y軸截距
+      () => {
+        const a = [1, -1, 2, -2][randInt(0, 3)];
+        const r1 = randInt(-3, 0);
+        const r2 = randInt(1, 4);
+        // f(x) = a(x-r1)(x-r2), f(0) = a*(-r1)*(-r2) = a*r1*r2 (sign: r1≤0,r2>0 → r1*r2≤0)
+        const yint = a * r1 * r2;
+        const bCoef = -a * (r1 + r2);
+        const cCoef = a * r1 * r2;
+        const r1Str = r1 > 0 ? '-' + r1 : '+' + Math.abs(r1);
+        const r2Str = r2 > 0 ? '-' + r2 : '+' + Math.abs(r2);
+        return {
+          q: `已知二次函數圖形與 \\(x\\) 軸交於 \\((${r1},0)\\) 和 \\((${r2},0)\\)，且 \\(y\\) 軸截距為 \\(${yint}\\)，求此函數。`,
+          a: `簡答：\\(f(x)=${fmtQ(a, bCoef, cCoef)}\\)。過程：設 \\(f(x)=a(x${r1Str})(x${r2Str})\\)。代入 \\(x=0\\)：\\(f(0)=a\\cdot(${-r1})\\cdot(${-r2})=${yint}\\)，得 \\(a=${a}\\)。展開得 \\(f(x)=${fmtQ(a, bCoef, cCoef)}\\)。`,
+        };
+      },
+      // Mode 4: 給兩點求f(x)=x²+ax+b，再求f(p)
+      () => {
+        const a = randInt(-4, 4);
+        const b = randInt(-5, 5);
+        const x1 = randInt(1, 3);
+        const x2 = x1 + randInt(1, 2);
+        const p = x2 + randInt(1, 3);
+        const y1 = x1 * x1 + a * x1 + b;
+        const y2 = x2 * x2 + a * x2 + b;
+        const yp = p * p + a * p + b;
+        return {
+          q: `設 \\(f(x)=x^2+ax+b\\)，已知 \\(f(${x1})=${y1}\\) 且 \\(f(${x2})=${y2}\\)，求 \\(f(${p})\\)。`,
+          a: `簡答：\\(f(${p})=${yp}\\)。過程：由 \\(f(${x1})=${y1}\\)：\\(${x1 * x1}+${x1}a+b=${y1}\\)；由 \\(f(${x2})=${y2}\\)：\\(${x2 * x2}+${x2}a+b=${y2}\\)。兩式相減：\\(${x2 - x1}a=${y2 - y1 - (x2 * x2 - x1 * x1)}\\)，得 \\(a=${a}\\)，\\(b=${b}\\)。\\(f(${p})=${yp}\\)。`,
+        };
+      },
+    ];
+    const questions = [], answers = [];
+    for (let i = 0; i < count; i++) {
+      const { q, a } = modes[i % modes.length]();
+      questions.push(q);
+      answers.push(a);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // s1-3-3: 含根號的不等式 (5 modes, 全為整數解)
+  function buildS133SquareRootInequalitySet(count) {
+    const modes = [
+      // Mode 0: √(x+a) < b (b>0 整數) → -a ≤ x < b²-a
+      () => {
+        const a = randInt(1, 6);
+        const b = randInt(2, 5);
+        const upper = b * b - a;
+        const upperStr = upper >= 0 ? upper : '(' + upper + ')';
+        return {
+          q: `解不等式 \\(\\sqrt{x${formatS122SignedNumber(a)}} < ${b}\\)。`,
+          a: `簡答：\\(${-a}\\leq x<${upper}\\)。過程：需 \\(x${formatS122SignedNumber(a)}\\geq0\\) 且 \\(x${formatS122SignedNumber(a)}<${b}^2=${b * b}\\)，解得 \\(${-a}\\leq x<${upper}\\)。`,
+        };
+      },
+      // Mode 1: √(x-a) ≥ b → x ≥ a+b²
+      () => {
+        const a = randInt(0, 4);
+        const b = randInt(1, 3);
+        const lower = a + b * b;
+        const aStr = a > 0 ? '-' + a : a === 0 ? '' : '+' + Math.abs(a);
+        return {
+          q: `解不等式 \\(\\sqrt{x${a > 0 ? '-' + a : a === 0 ? '' : '+' + Math.abs(a)}} \\geq ${b}\\)。`,
+          a: `簡答：\\(x\\geq${lower}\\)。過程：需 \\(x\\geq${a}\\) 且 \\(x${a > 0 ? '-' + a : ''}\\geq${b}^2=${b * b}\\)，即 \\(x\\geq${lower}\\)。`,
+        };
+      },
+      // Mode 2: √(x+a) ≤ x (a=k(k+1), solution x≥k+1)
+      // a∈{2,6,12,20,30}: k=1,2,3,4,5
+      () => {
+        const k = randInt(1, 4);
+        const a = k * (k + 1);
+        const sol = k + 1;
+        return {
+          q: `解不等式 \\(\\sqrt{x+${a}}\\leq x\\)。`,
+          a: `簡答：\\(x\\geq${sol}\\)。過程：需 \\(x\\geq0\\) 且 \\(x\\geq0\\)（RHS須非負），平方得 \\(x+${a}\\leq x^2\\)，即 \\(x^2-x-${a}\\geq0\\)，\\((x-${sol})(x+${k})\\geq0\\)，解得 \\(x\\leq-${k}\\) 或 \\(x\\geq${sol}\\)。結合 \\(x\\geq0\\) 得 \\(x\\geq${sol}\\)。`,
+        };
+      },
+      // Mode 3: √(a-x) > x-b, clean triples: (a,b,c): solution x<c
+      // (a=5,b=3,c=4),(a=10,b=4,c=6),(a=4,b=2,c=3),(a=11,b=5,c=7),(a=3,b=1,c=2)
+      () => {
+        const triples = [[5,3,4],[10,4,6],[4,2,3],[11,5,7],[3,1,2]];
+        const [a, b, c] = triples[randInt(0, 4)];
+        return {
+          q: `解不等式 \\(\\sqrt{${a}-x}>x-${b}\\)。`,
+          a: `簡答：\\(x<${c}\\)（且 \\(x\\leq${a}\\)）。過程：定義域 \\(x\\leq${a}\\)。當 \\(x<${b}\\) 時，右側為負，左側非負，不等式自動成立。當 \\(x\\geq${b}\\) 時，兩側非負，平方得 \\(${a}-x>(x-${b})^2\\)，整理得 \\((x-${b})(x-${c})<0\\)（或類似），解得 \\(${b}\\leq x<${c}\\)。合併：\\(x<${c}\\)。`,
+        };
+      },
+      // Mode 4: √(x+a) ≥ x+b, solution -a ≤ x ≤ ... clean pairs
+      // 4a-4b+1=k²: (a=5,b=3,sol=[-5,-1]), (a=3,b=1,sol=[-3,1]), (a=2,b=0,sol=[-2,2]), (a=5,b=-1,sol=[-5,4])
+      () => {
+        const cases = [
+          { a: 5, b: 3, lo: -5, hi: -1 },
+          { a: 3, b: 1, lo: -3, hi: 1 },
+          { a: 2, b: 0, lo: -2, hi: 2 },
+          { a: 7, b: 3, lo: -7, hi: 1 }, // 4*7-12+1=17 not square... let me check
+        ];
+        // Use only verified cases:
+        const verified = [
+          { a: 5, b: 3, lo: -5, hi: -1 },
+          { a: 3, b: 1, lo: -3, hi: 1 },
+          { a: 2, b: 0, lo: -2, hi: 2 },
+        ];
+        const { a, b, lo, hi } = verified[randInt(0, 2)];
+        const bStr = b === 0 ? '' : formatS122SignedNumber(b);
+        return {
+          q: `解不等式 \\(\\sqrt{x+${a}}\\geq x${bStr}\\)。`,
+          a: `簡答：\\(${lo}\\leq x\\leq${hi}\\)。過程：定義域 \\(x\\geq${-a}\\)。當 \\(x${bStr}<0\\) 時，不等式自動成立。當 \\(x${bStr}\\geq0\\) 時，平方得 \\(x+${a}\\geq(x${bStr})^2\\)，整理得二次不等式，解得 \\(${lo}\\leq x\\leq${hi}\\)。`,
+        };
+      },
+    ];
+    const questions = [], answers = [];
+    for (let i = 0; i < count; i++) {
+      const { q, a } = modes[i % modes.length]();
+      questions.push(q);
+      answers.push(a);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // s1-3-3: 絕對值最小值/最大值問題 (5 modes)
+  function buildS133AbsoluteValueMinimumSet(count) {
+    // 格式化 |x-n|：n=0→|x|，n>0→|x-n|，n<0→|x+|n||
+    function fmtAbsTerm(n) {
+      if (n === 0) return '|x|';
+      if (n > 0) return `|x-${n}|`;
+      return `|x+${-n}|`;
+    }
+    const modes = [
+      // Mode 0: min of |x-a|+|x-b|, a<b → min=b-a at a≤x≤b
+      () => {
+        const a = randInt(-3, 1);
+        const b = a + randInt(2, 6);
+        const minVal = b - a;
+        const fa = fmtAbsTerm(a), fb = fmtAbsTerm(b);
+        return {
+          q: `求 \\(f(x)=${fa}+${fb}\\) 的最小值。`,
+          a: `簡答：最小值為 \\(${minVal}\\)。過程：由三角不等式，\\(${fa}+${fb}\\geq${minVal}\\)。當 \\(${a}\\leq x\\leq${b}\\) 時等號成立，最小值為 \\(${minVal}\\)。`,
+        };
+      },
+      // Mode 1: min of |x-a|+|x-b|+|x-c|, a<b<c → min=c-a at x=b
+      () => {
+        const a = randInt(-4, -1);
+        const b = randInt(0, 2);
+        const c = b + randInt(2, 5);
+        const minVal = c - a;
+        const fa = fmtAbsTerm(a), fb = fmtAbsTerm(b), fc = fmtAbsTerm(c);
+        return {
+          q: `求 \\(f(x)=${fa}+${fb}+${fc}\\) 的最小值。`,
+          a: `簡答：最小值為 \\(${minVal}\\)，在 \\(x=${b}\\) 時取得。過程：\\(${fa}+${fc}\\geq${c - a}\\)（等號在 \\(${a}\\leq x\\leq${c}\\) 成立），\\(${fb}\\geq0\\)（等號在 \\(x=${b}\\) 成立）。兩者同時在 \\(x=${b}\\) 取到等號，最小值為 \\(${minVal}\\)。`,
+        };
+      },
+      // Mode 2: min of |x-a|+|x-b|+|x-c|+|x-d|, a<b<c<d → min=(d-a)+(c-b) at x∈[b,c]
+      () => {
+        const a = randInt(-5, -2);
+        const b = randInt(-1, 1);
+        const c = b + randInt(1, 3);
+        const d = c + randInt(2, 4);
+        const minVal = (d - a) + (c - b);
+        const fa = fmtAbsTerm(a), fb = fmtAbsTerm(b), fc = fmtAbsTerm(c), fd = fmtAbsTerm(d);
+        return {
+          q: `求 \\(f(x)=${fa}+${fb}+${fc}+${fd}\\) 的最小值。`,
+          a: `簡答：最小值為 \\(${minVal}\\)，在 \\(${b}\\leq x\\leq${c}\\) 時取得。過程：\\(${fa}+${fd}\\geq${d - a}\\)，\\(${fb}+${fc}\\geq${c - b}\\)，合計最小值 \\(${minVal}\\)，在 \\(x\\in[${b},${c}]\\) 時同時等號成立。`,
+        };
+      },
+      // Mode 3: max of |x+a|-|x-b| (a,b>0) → max=a+b
+      () => {
+        const a = randInt(1, 5);
+        const b = randInt(1, 5);
+        const maxVal = a + b;
+        return {
+          q: `求 \\(f(x)=|x+${a}|-|x-${b}|\\) 的最大值。`,
+          a: `簡答：最大值為 \\(${maxVal}\\)。過程：由三角不等式的推論，\\(|x+${a}|-|x-${b}|\\leq|(x+${a})-(x-${b})|=${a + b}\\)。當 \\(x\\geq${b}\\) 時，\\(|x+${a}|-|x-${b}|=(x+${a})-(x-${b})=${a + b}\\) 為常數，等號成立，最大值為 \\(${maxVal}\\)。`,
+        };
+      },
+      // Mode 4: min of p|x-a|+q|x-b| (q>p>0) → slope in (a,b) is p-q<0, min at x=b
+      () => {
+        const p = randInt(2, 4);
+        const q = p + randInt(1, 2);
+        const a = randInt(-3, 0);
+        const b = a + randInt(2, 5);
+        const minVal = p * (b - a); // f(b) = p(b-a)
+        const slopeMid = p - q;     // slope in (a,b): p-q < 0
+        const fa = fmtAbsTerm(a), fb = fmtAbsTerm(b);
+        return {
+          q: `求 \\(f(x)=${p}${fa}+${q}${fb}\\) 的最小值。`,
+          a: `簡答：最小值為 \\(${minVal}\\)，在 \\(x=${b}\\) 時取得。過程：\\(f(x)\\) 的斜率：\\(x<${a}\\) 時為 \\(-(${p}+${q})\\)（遞減），\\(${a}<x<${b}\\) 時為 \\(${p}-${q}=${slopeMid}\\)（仍遞減），\\(x>${b}\\) 時為 \\(${p}+${q}\\)（遞增）。最小值在斜率由負轉正的 \\(x=${b}\\) 處：\\(f(${b})=${p}\\cdot${b - a}+0=${minVal}\\)。`,
+        };
+      },
+    ];
+    const questions = [], answers = [];
+    for (let i = 0; i < count; i++) {
+      const { q, a } = modes[i % modes.length]();
+      questions.push(q);
+      answers.push(a);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   const nextConfigs = {
-      's1-1-1-repeating-decimal-fraction': {
-        type: 'drill',
-        title: '循環小數化成分數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS111RepeatingDecimalFractionSet(5);
-        },
-      },
-      's1-1-1-nested-radical-simplify': {
-        type: 'drill',
-        title: '雙重根號的化簡',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS111NestedRadicalSimplifySet(5);
-        },
-      },
-      's1-1-1-radical-integer-fractional-part': {
-        type: 'drill',
-        title: '根式數值的整數與小數部分',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS111RadicalIntegerFractionalPartSet(5);
-        },
-      },
-      's1-1-1-rational-irrational-true-false': {
-        type: 'drill',
-        title: '有理數與無理數的性質判定',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildS111RationalIrrationalTrueFalseSet(6);
-        },
-      },
-      's1-1-1-irrational-equality-solve': {
-        type: 'drill',
-        title: '無理數相等的性質',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS111IrrationalEqualitySolveSet(5);
-        },
-      },
-      's1-1-1-number-line-section': {
-        type: 'drill',
-        title: '數線上的分點公式坐標計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS111NumberLineSectionSet(5);
-        },
-      },
-      's1-1-1-amgm-extrema': {
-        type: 'drill',
-        title: '算幾不等式的極值應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS111AmgmExtremaSet(5);
-        },
-      },
-      's1-1-1-radical-integer-range': {
-        type: 'drill',
-        title: '根式的整數範圍與連續整數估計',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS111RadicalIntegerRangeSet(5);
-        },
-      },
-      's1-1-1-telescoping-rationalization': {
-        type: 'drill',
-        title: '連鎖型有理化',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS111TelescopingRationalizationSet(5);
-        },
-      },
-      's1-1-2-abs-inequality-basic': {
-        type: 'drill',
-        title: '絕對值不等式的基本運算與圖示',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS112AbsInequalityBasicSet(5);
-        },
-      },
-      's1-1-2-abs-reverse-parameter': {
-        type: 'drill',
-        title: '反推係數題型',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS112AbsReverseParameterSet(5);
-        },
-      },
-      's1-1-2-abs-sum-minimum': {
-        type: 'drill',
-        title: '多個絕對值的和與最小值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS112AbsSumMinimumSet(5);
-        },
-      },
-      's1-1-2-abs-number-line-range': {
-        type: 'drill',
-        title: '數線上多個絕對值的極值與解的範圍',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS112AbsNumberLineRangeSet(5);
-        },
-      },
-      's1-1-2-abs-range-simplification': {
-        type: 'drill',
-        title: '特定範圍下的代數式化簡',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS112AbsRangeSimplificationSet(5);
-        },
-      },
-      's1-1-2-abs-quadratic-mixed': {
-        type: 'drill',
-        title: '絕對值與根號、二次項的混合運算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS112AbsQuadraticMixedSet(5);
-        },
-      },
-      's1-1-3-binomial-cube-expansion': {
-        type: 'drill',
-        title: '雙係數展開練習',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS113BinomialCubeExpansionSet(5);
-        },
-      },
-      's1-1-3-cube-sum-difference': {
-        type: 'drill',
-        title: '給定和差與積的求值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS113CubeSumDifferenceSet(5);
-        },
-      },
-      's1-1-3-reciprocal-cube': {
-        type: 'drill',
-        title: '倒數和立方應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS113ReciprocalCubeSet(5);
-        },
-      },
-      's1-1-3-ternary-square': {
-        type: 'drill',
-        title: '三項和平方展開與變換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS113TernarySquareSet(5);
-        },
-      },
-      's1-1-3-ternary-cubic-special': {
-        type: 'drill',
-        title: '三項立方和特殊公式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS113TernaryCubicSpecialSet(5);
-        },
-      },
-      's1-1-3-radical-ternary-operation': {
-        type: 'drill',
-        title: '含根式的三項運算練習',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS113RadicalTernaryOperationSet(5);
-        },
-      },
-      's1-1-4-numeric-rational-exponent': {
-        type: 'drill',
-        title: '數值運算（含分數、負數及小數指數）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS114NumericRationalExponentSet(5);
-        },
-      },
-      's1-1-4-variable-exponent-simplification': {
-        type: 'drill',
-        title: '含有變數的指數式化簡',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS114VariableExponentSimplificationSet(5);
-        },
-      },
-      's1-1-4-exponential-symmetric-value': {
-        type: 'drill',
-        title: '指數對稱式求值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS114ExponentialSymmetricValueSet(5);
-        },
-      },
-      's1-1-4-exponential-equation-inequality': {
-        type: 'drill',
-        title: '指數方程式與不等式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS114ExponentialEquationInequalitySet(5);
-        },
-      },
-      's1-1-5-large-number-digit-count': {
-        type: 'drill',
-        title: '大數的位數判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS115LargeNumberDigitCountSet(5);
-        },
-      },
-      's1-1-5-first-nonzero-decimal-place': {
-        type: 'drill',
-        title: '純小數的首位非零項位置',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS115FirstNonzeroDecimalPlaceSet(5);
-        },
-      },
-      's1-1-5-leading-digit': {
-        type: 'drill',
-        title: '判定最高位數字',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS115LeadingDigitSet(5);
-        },
-      },
-      's1-1-5-characteristic-mantissa-algebra': {
-        type: 'drill',
-        title: '首數與尾數的代數性質',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS115CharacteristicMantissaAlgebraSet(5);
-        },
-      },
-      's1-1-5-log-operation-scientific-notation': {
-        type: 'drill',
-        title: '常用對數運算與科學記號轉換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS115LogOperationScientificNotationSet(5);
-        },
-      },
-      's1-2-1-projection-symmetry': {
-        type: 'drill',
-        title: '點對直線的投影與對稱',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121ProjectionSymmetrySet(5);
-        },
-      },
-      's1-2-1-perpendicular-bisector': {
-        type: 'drill',
-        title: '兩點求垂直平分線方程式',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS121PerpendicularBisectorSet(5);
-        },
-      },
-      's1-2-1-line-cluster-fixed-point': {
-        type: 'drill',
-        title: '直線族與恆過定點',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121LineClusterFixedPointSet(5);
-        },
-      },
-      's1-2-1-triangle-nonexistence': {
-        type: 'drill',
-        title: '三線不能圍成三角形的參數判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121TriangleNonexistenceSet(5);
-        },
-      },
-      's1-2-1-inverse-distance': {
-        type: 'drill',
-        title: '點到線與平行線距離逆向應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121InverseDistanceSet(5);
-        },
-      },
-      's1-2-1-geometric-optimization': {
-        type: 'drill',
-        title: '數線幾何與距離極值問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121GeometricOptimizationSet(5);
-        },
-      },
-      's1-2-1-triangle-centers': {
-        type: 'drill',
-        title: '三角形四心的解析坐標',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121TriangleCentersSet(5);
-        },
-      },
-      's1-2-1-intercept-constraints': {
-        type: 'drill',
-        title: '給定截距特定關係的直線',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121InterceptConstraintsSet(5);
-        },
-      },
-      's1-2-1-angles-between-lines': {
-        type: 'drill',
-        title: '兩直線交角與正切公式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121AnglesBetweenLinesSet(5);
-        },
-      },
-      's1-2-1-light-reflection-path': {
-        type: 'drill',
-        title: '光線反射與路徑坐標',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121LightReflectionPathSet(5);
-        },
-      },
-      's1-2-1-area-partitioning': {
-        type: 'drill',
-        title: '平分多邊形面積的直線',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121AreaPartitioningSet(5);
-        },
-      },
-      's1-2-1-line-segment-slope-range': {
-        type: 'drill',
-        title: '直線與線段相交的斜率範圍',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121LineSegmentSlopeRangeSet(5);
-        },
-      },
-      's1-2-1-point-line-side': {
-        type: 'drill',
-        title: '點對直線的相對位置',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121PointLineSideSet(5);
-        },
-      },
-      's1-2-1-lattice-point-counting': {
-        type: 'drill',
-        title: '線性不等式區域內的格子點計數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121LatticePointCountingSet(5);
-        },
-      },
-      's1-2-1-absolute-inequality-area': {
-        type: 'drill',
-        title: '含絕對值的二元一次不等式圍成面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS121AbsoluteInequalityAreaSet(5);
-        },
-      },
-      's1-2-2-general-to-standard': {
-        type: 'drill',
-        title: '一般式轉換為標準式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS122GeneralToStandardSet(5);
-        },
-      },
-      's1-2-2-circle-discriminant-parameter': {
-        type: 'drill',
-        title: '圓的判定與參數範圍',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS122CircleDiscriminantParameterSet(5);
-        },
-      },
-      's1-2-2-circle-from-conditions': {
-        type: 'drill',
-        title: '給定幾何條件求圓方程式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS122CircleFromConditionsSet(5);
-        },
-      },
-      's1-2-2-apollonius-circle': {
-        type: 'drill',
-        title: '阿波羅尼斯圓',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS122ApolloniusCircleSet(5);
-        },
-      },
-      's1-2-2-radical-axis': {
-        type: 'drill',
-        title: '圓系方程與公共弦應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS122RadicalAxisSet(5);
-        },
-      },
-      's1-2-2-point-circle-distance-extrema': {
-        type: 'drill',
-        title: '點到圓的距離極值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS122PointCircleDistanceExtremaSet(5);
-        },
-      },
-      's1-2-2-axis-tangent-circle': {
-        type: 'drill',
-        title: '與兩坐標軸相切的圓',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS122AxisTangentCircleSet(5);
-        },
-      },
-      's1-2-2-parametric-standard-circle': {
-        type: 'drill',
-        title: '圓的參數式與標準式互換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS122ParametricStandardSet(5);
-        },
-      },
-      's1-2-2-circle-point-algebra-extrema': {
-        type: 'drill',
-        title: '圓上動點的代數式極值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS122CirclePointAlgebraExtremaSet(5);
-        },
-      },
-      's1-2-2-triangle-circum-incircle': {
-        type: 'drill',
-        title: '三角形之外接圓與內切圓',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS122TriangleCircumInCircleSet(5);
-        },
-      },
-      's1-2-3-given-slope-tangent': {
-        type: 'drill',
-        title: '給定斜率的切線方程式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123GivenSlopeTangentSet(5);
-        },
-      },
-      's1-2-3-external-point-tangent': {
-        type: 'drill',
-        title: '過圓外一點的切線與切線長',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123ExternalPointTangentSet(5);
-        },
-      },
-      's1-2-3-chord-length': {
-        type: 'drill',
-        title: '圓的弦長與幾何性質應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123ChordLengthSet(5);
-        },
-      },
-      's1-2-3-chord-midpoint-locus': {
-        type: 'drill',
-        title: '弦中點的軌跡方程式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123ChordMidpointLocusSet(5);
-        },
-      },
-      's1-2-3-perpendicular-tangents-locus': {
-        type: 'drill',
-        title: '互相垂直切線的交點軌跡',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123PerpendicularTangentsLocusSet(5);
-        },
-      },
-      's1-2-3-radical-axis-circle-family': {
-        type: 'drill',
-        title: '兩圓根軸、公共弦與圓系方程式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123RadicalAxisCircleFamilySet(5);
-        },
-      },
-      's1-2-3-polar-line': {
-        type: 'drill',
-        title: '極線與切點弦方程式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123PolarLineSet(5);
-        },
-      },
-      's1-2-3-light-shadow-projection': {
-        type: 'drill',
-        title: '光源投影與陰影長度計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123LightShadowProjectionSet(5);
-        },
-      },
-      's1-2-3-line-circle-parameter-relation': {
-        type: 'drill',
-        title: '圓與直線相交情形參數判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123LineCircleParameterRelationSet(5);
-        },
-      },
-      's1-2-3-point-power-tangent-chord': {
-        type: 'drill',
-        title: '點對圓的冪與切線長應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123PointPowerTangentChordSet(5);
-        },
-      },
-      's1-2-3-vertical-tangent-trap': {
-        type: 'drill',
-        title: '切線斜率的鉛垂線陷阱',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123VerticalTangentTrapSet(5);
-        },
-      },
-      's1-2-3-integer-distance-counting': {
-        type: 'drill',
-        title: '圓上動點與定點的整數距離計數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123IntegerDistanceCountingSet(5);
-        },
-      },
-      's1-2-3-common-chord-diameter-circle': {
-        type: 'drill',
-        title: '以公弦為直徑的圓',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123CommonChordDiameterCircleSet(5);
-        },
-      },
-      's1-2-3-circle-area-extrema': {
-        type: 'drill',
-        title: '圓內接或外切圖形的面積極值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS123CircleAreaExtremaSet(5);
-        },
-      },
-      's1-3-1-polynomial-five-subtypes': {
-        type: 'drill',
-        title: '多項式進階技巧五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131PolynomialFiveSubtypeMixedSet(5);
-        },
-      },
-      's1-3-1-coefficient-sum-parity': {
-        type: 'drill',
-        title: '多項式係數總和與奇偶項係數和',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131CoefficientSumParitySet(5);
-        },
-      },
-      's1-3-1-difference-reverse-polynomial': {
-        type: 'drill',
-        title: '由差分反推原多項式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131DifferenceReversePolynomialSet(5);
-        },
-      },
-      's1-3-1-polynomial-identity-parameters': {
-        type: 'drill',
-        title: '多項式相等與恆等式參數求解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131PolynomialIdentityParameterSet(5);
-        },
-      },
-      's1-3-1-degree-after-operations': {
-        type: 'drill',
-        title: '運算後的多項式次數判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131DegreeAfterOperationsSet(5);
-        },
-      },
-      's1-3-1-specific-coefficient': {
-        type: 'drill',
-        title: '多項式變形與特定項係數組合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131SpecificCoefficientSet(5);
-        },
-      },
-      's1-3-1-division-remainder-five-subtypes': {
-        type: 'drill',
-        title: '多項式除法與餘式五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131DivisionRemainderFiveSubtypeMixedSet(5);
-        },
-      },
-      's1-3-1-ax-minus-b-division': {
-        type: 'drill',
-        title: '除式為 ax-b 型的綜合除法',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131AxMinusBDivisionSet(5);
-        },
-      },
-      's1-3-1-successive-division-taylor': {
-        type: 'drill',
-        title: '連續綜合除法與降冪排列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131SuccessiveDivisionTaylorSet(5);
-        },
-      },
-      's1-3-1-product-specific-coefficient': {
-        type: 'drill',
-        title: '多項式乘法展開的特定項係數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131ProductSpecificCoefficientSet(5);
-        },
-      },
-      's1-3-1-remainder-transformation': {
-        type: 'drill',
-        title: '變形多項式的餘式推導',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131RemainderTransformationSet(5);
-        },
-      },
-      's1-3-1-high-power-remainder': {
-        type: 'drill',
-        title: '高次方項除法的特殊降次法',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131HighPowerRemainderSet(5);
-        },
-      },
-      's1-3-1-advanced-remainder-five-subtypes': {
-        type: 'drill',
-        title: '高次餘式與除式變形五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131AdvancedRemainderFiveSubtypeMixedSet(5);
-        },
-      },
-      's1-3-1-complex-root-remainder': {
-        type: 'drill',
-        title: '利用複數根求解高次項餘式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131ComplexRootRemainderSet(5);
-        },
-      },
-      's1-3-1-composition-remainder': {
-        type: 'drill',
-        title: '多項式函數合成的餘式問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131CompositionRemainderSet(5);
-        },
-      },
-      's1-3-1-square-divisor-remainder': {
-        type: 'drill',
-        title: '完全平方除式的餘式判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131SquareDivisorRemainderSet(5);
-        },
-      },
-      's1-3-1-stepwise-remainder-construction': {
-        type: 'drill',
-        title: '階梯式餘式推導與建立',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131StepwiseRemainderConstructionSet(5);
-        },
-      },
-      's1-3-1-coefficient-transform-remainder': {
-        type: 'drill',
-        title: '除法原理的係數變換與商式推導',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131CoefficientTransformRemainderSet(5);
-        },
-      },
-      's1-3-1-remainder-applications-five-subtypes': {
-        type: 'drill',
-        title: '餘式運算與特殊降次五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131RemainderApplicationsFiveSubtypeMixedSet(5);
-        },
-      },
-      's1-3-1-remainder-operations': {
-        type: 'drill',
-        title: '多項式四則運算後的餘式判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131RemainderOperationsSet(5);
-        },
-      },
-      's1-3-1-low-to-high-remainder': {
-        type: 'drill',
-        title: '給定低次餘式求高次乘積項餘式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131LowToHighRemainderSet(5);
-        },
-      },
-      's1-3-1-transformed-dividend-remainder': {
-        type: 'drill',
-        title: '被除式變形後的餘式推導',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131TransformedDividendRemainderSet(5);
-        },
-      },
-      's1-3-1-square-divisor-calculation': {
-        type: 'drill',
-        title: '完全平方除式與高次餘式計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131SquareDivisorCalculationSet(5);
-        },
-      },
-      's1-3-1-special-xn-remainder': {
-        type: 'drill',
-        title: '特殊 x^n 正負一的降次代換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131SpecialXnRemainderSet(5);
-        },
-      },
-      's1-3-1-division-principle-reverse-two-subtypes': {
-        type: 'drill',
-        title: '除法原理反推與整除判定綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131DivisionPrincipleReverseTwoSubtypeMixedSet(5);
-        },
-      },
-      's1-3-1-recover-dividend-from-quotient': {
-        type: 'drill',
-        title: '給定商式與餘式反求被除式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131RecoverDividendFromQuotientSet(5);
-        },
-      },
-      's1-3-1-divisibility-unknown-coefficients': {
-        type: 'drill',
-        title: '利用整除性質求未知係數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131DivisibilityUnknownCoefficientSet(5);
-        },
-      },
-      's1-3-1-interpolation-polynomial-five-subtypes': {
-        type: 'drill',
-        title: '插值多項式五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131InterpolationPolynomialFiveSubtypeMixedSet(5);
-        },
-      },
-      's1-3-1-interpolation-from-points': {
-        type: 'drill',
-        title: '給定點坐標求最低次插值多項式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131InterpolationPolynomialFromPointsSet(5);
-        },
-      },
-      's1-3-1-interpolation-value-only': {
-        type: 'drill',
-        title: '插值多項式的特定數值求值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131InterpolationValueOnlySet(5);
-        },
-      },
-      's1-3-1-interpolation-structural-remainder': {
-        type: 'drill',
-        title: '插值結構化設定與餘式定理結合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131InterpolationStructuralRemainderSet(5);
-        },
-      },
-      's1-3-1-interpolation-finite-difference': {
-        type: 'drill',
-        title: '等差坐標的階差速解法',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131InterpolationFiniteDifferenceSet(5);
-        },
-      },
-      's1-3-1-interpolation-lagrange-special': {
-        type: 'drill',
-        title: '拉格朗日列式的恆等式與特殊性質',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS131InterpolationLagrangeSpecialSet(5);
-        },
-      },
-      's1-3-2-quadratic-form-graph-three-subtypes': {
-        type: 'drill',
-        title: '二次函數式與圖形判讀三小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132QuadraticFormGraphThreeSubtypeMixedSet(5);
-        },
-      },
-      's1-3-2-general-vertex-conversion': {
-        type: 'drill',
-        title: '二次函數一般式與頂點式的轉換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132GeneralVertexConversionSet(5);
-        },
-      },
-      's1-3-2-quadratic-from-conditions': {
-        type: 'drill',
-        title: '給定幾何條件反求二次函數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132QuadraticFromConditionsSet(5);
-        },
-      },
-      's1-3-2-restricted-range-extrema': {
-        type: 'drill',
-        title: '有範圍限制的二次函數極值判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132RestrictedRangeExtremaSet(5);
-        },
-      },
-      's1-3-2-quadratic-inequality-extrema-application-three-subtypes': {
-        type: 'drill',
-        title: '二次函數判別式極值與應用三小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132QuadraticInequalityExtremaApplicationThreeSubtypeMixedSet(5);
-        },
-      },
-      's1-3-2-discriminant-sign': {
-        type: 'drill',
-        title: '二次函數值的恆正與恆負判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132QuadraticDiscriminantSignSet(5);
-        },
-      },
-      's1-3-2-least-squares-minimum': {
-        type: 'drill',
-        title: '最小平方法的代數模型',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132LeastSquaresMinimumSet(5);
-        },
-      },
-      's1-3-2-quadratic-model-applications': {
-        type: 'drill',
-        title: '生活情境建模與二次函數極值應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132QuadraticModelApplicationsSet(5);
-        },
-      },
-      's1-3-2-quadratic-advanced-graph-extrema-five-subtypes': {
-        type: 'drill',
-        title: '圖形變換與進階極值五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132QuadraticAdvancedGraphExtremaFiveSubtypeMixedSet(5);
-        },
-      },
-      's1-3-2-quadratic-transformations': {
-        type: 'drill',
-        title: '函數圖形的平移與對稱變換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132QuadraticTransformationsSet(5);
-        },
-      },
-      's1-3-2-quadratic-relative-position': {
-        type: 'drill',
-        title: '圖形間的相對位置與參數範圍',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132QuadraticRelativePositionSet(5);
-        },
-      },
-      's1-3-2-parabola-geometric-areas': {
-        type: 'drill',
-        title: '拋物線與坐標軸圍成的幾何特徵',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132ParabolaGeometricAreasSet(5);
-        },
-      },
-      's1-3-2-absolute-value-quadratic': {
-        type: 'drill',
-        title: '含絕對值的二次函數圖形性質',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132AbsoluteValueQuadraticSet(5);
-        },
-      },
-      's1-3-2-algebraic-extrema': {
-        type: 'drill',
-        title: '二元二次代數式極值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132AlgebraicExtremaSet(5);
-        },
-      },
-      's1-3-2-quadratic-symmetry-modeling-compound-five-subtypes': {
-        type: 'drill',
-        title: '對稱建模與複合極值五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132QuadraticSymmetryModelingCompoundFiveSubtypeMixedSet(5);
-        },
-      },
-      's1-3-2-quadratic-symmetry-functional-relations': {
-        type: 'drill',
-        title: '二次函數對稱性的代數應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132QuadraticSymmetryFunctionalRelationsSet(5);
-        },
-      },
-      's1-3-2-parabola-intercept-distance': {
-        type: 'drill',
-        title: '拋物線兩根距離的反求與變換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132ParabolaInterceptDistanceSet(5);
-        },
-      },
-      's1-3-2-quadratic-structural-modeling': {
-        type: 'drill',
-        title: '物理與幾何結構的建模判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132QuadraticStructuralModelingSet(5);
-        },
-      },
-      's1-3-2-monomial-function-features': {
-        type: 'drill',
-        title: '單項函數的特徵判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132MonomialFunctionFeaturesSet(5);
-        },
-      },
-      's1-3-2-compound-regions-extrema': {
-        type: 'drill',
-        title: '跨區域與圖形疊加的極值判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132CompoundRegionsExtremaSet(5);
-        },
-      },
-      's1-3-2-cubic-functions-seven-subtypes': {
-        type: 'drill',
-        title: '三次函數七小類綜合',
-        difficulty: 'medium',
-        questionCount: 7,
-        generate() {
-          return buildS132CubicFunctionsSevenSubtypeMixedSet(7);
-        },
-      },
-      's1-3-2-cubic-transform-center': {
-        type: 'drill',
-        title: '三次單項函數的平移與對稱中心',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132CubicTransformCenterSet(5);
-        },
-      },
-      's1-3-2-cubic-local-linear-approximation': {
-        type: 'drill',
-        title: '特定點附近的一次近似',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132CubicLocalLinearApproximationSet(5);
-        },
-      },
-      's1-3-2-cubic-roots-center-relation': {
-        type: 'drill',
-        title: '三次函數的根與對稱中心關係',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132CubicRootsCenterRelationSet(5);
-        },
-      },
-      's1-3-2-cubic-symmetry-evaluation': {
-        type: 'drill',
-        title: '利用點對稱性的函數值總和計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132CubicSymmetryEvaluationSet(5);
-        },
-      },
-      's1-3-2-cubic-monomial-overlap': {
-        type: 'drill',
-        title: '判定函數能否完全重合於單項函數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132CubicMonomialOverlapSet(5);
-        },
-      },
-      's1-3-2-cubic-inflection-tangent': {
-        type: 'drill',
-        title: '對稱中心上的特殊切線性質',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132CubicInflectionTangentSet(5);
-        },
-      },
-      's1-3-2-cubic-chord-midpoint': {
-        type: 'drill',
-        title: '點對稱下的割線中點與座標幾何',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS132CubicChordMidpointSet(5);
-        },
-      },
-      's1-3-3-quadratic-inequality-core-five-subtypes': {
-        type: 'drill',
-        title: '二次不等式核心五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS133QuadraticInequalityCoreFiveSubtypeMixedSet(5);
-        },
-      },
-      's1-3-3-quadratic-discriminant-solve': {
-        type: 'drill',
-        title: '不同判別式下的基本求解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS133QuadraticDiscriminantSolveSet(5);
-        },
-      },
-      's1-3-3-quadratic-always-sign-parameter': {
-        type: 'drill',
-        title: '函數值恆正與恆負的參數範圍',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS133QuadraticAlwaysSignParameterSet(5);
-        },
-      },
-      's1-3-3-quadratic-inverse-coefficient': {
-        type: 'drill',
-        title: '給定解區間反求二次多項式係數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS133QuadraticInverseCoefficientSet(5);
-        },
-      },
-      's1-3-3-quadratic-substitution-solution': {
-        type: 'drill',
-        title: '二次函數代數變換後的解判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS133QuadraticSubstitutionSolutionSet(5);
-        },
-      },
-      's1-3-3-quadratic-applied-substitution': {
-        type: 'drill',
-        title: '跨單元應用：指數代換與幾何建模',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS133QuadraticAppliedSubstitutionSet(5);
-        },
-      },
-      's1-3-3-advanced-inequality-five-subtypes': {
-        type: 'drill',
-        title: '高次分式與應用不等式六小類綜合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildS133AdvancedInequalitySixSubtypeMixedSet(6);
-        },
-      },
-      's1-3-3-high-degree-sign-inequality': {
-        type: 'drill',
-        title: '高次不等式的標點與正負號判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS133HighDegreeSignInequalitySet(5);
-        },
-      },
-      's1-3-3-rational-inequality': {
-        type: 'drill',
-        title: '分式不等式的轉化與解法',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS133RationalInequalitySet(5);
-        },
-      },
-      's1-3-3-advanced-always-sign': {
-        type: 'drill',
-        title: '多項式值的恆正與恆負判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS133AdvancedAlwaysSignSet(5);
-        },
-      },
-      's1-3-3-advanced-inverse-problem': {
-        type: 'drill',
-        title: '給定解區間反求多項式係數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS133AdvancedInverseProblemSet(5);
-        },
-      },
-      's1-3-3-geometric-applied-inequality': {
-        type: 'drill',
-        title: '幾何約束與生活應用建模',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS133GeometricAppliedInequalitySet(5);
-        },
-      },
-      's1-3-3-cubic-inequality': {
-        type: 'drill',
-        title: '高次不等式的幾何解法',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS133CubicInequalitySet(5);
-        },
-      },
+    's1-1-1-repeating-decimal-fraction': {
+      type: 'drill',
+      title: '循環小數化成分數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS111RepeatingDecimalFractionSet(5);
+      },
+    },
+    's1-1-1-nested-radical-simplify': {
+      type: 'drill',
+      title: '雙重根號的化簡',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS111NestedRadicalSimplifySet(5);
+      },
+    },
+    's1-1-1-radical-integer-fractional-part': {
+      type: 'drill',
+      title: '根式數值的整數與小數部分',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS111RadicalIntegerFractionalPartSet(5);
+      },
+    },
+    's1-1-1-rational-irrational-true-false': {
+      type: 'drill',
+      title: '有理數與無理數的性質判定',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildS111RationalIrrationalTrueFalseSet(6);
+      },
+    },
+    's1-1-1-irrational-equality-solve': {
+      type: 'drill',
+      title: '無理數相等的性質',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS111IrrationalEqualitySolveSet(5);
+      },
+    },
+    's1-1-1-number-line-section': {
+      type: 'drill',
+      title: '數線上的分點公式坐標計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS111NumberLineSectionSet(5);
+      },
+    },
+    's1-1-1-amgm-extrema': {
+      type: 'drill',
+      title: '算幾不等式的極值應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS111AmgmExtremaSet(5);
+      },
+    },
+    's1-1-1-radical-integer-range': {
+      type: 'drill',
+      title: '根式的整數範圍與連續整數估計',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS111RadicalIntegerRangeSet(5);
+      },
+    },
+    's1-1-1-telescoping-rationalization': {
+      type: 'drill',
+      title: '連鎖型有理化',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS111TelescopingRationalizationSet(5);
+      },
+    },
+    's1-1-2-abs-inequality-basic': {
+      type: 'drill',
+      title: '絕對值不等式的基本運算與圖示',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS112AbsInequalityBasicSet(5);
+      },
+    },
+    's1-1-2-abs-reverse-parameter': {
+      type: 'drill',
+      title: '反推係數題型',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS112AbsReverseParameterSet(5);
+      },
+    },
+    's1-1-2-abs-sum-minimum': {
+      type: 'drill',
+      title: '多個絕對值的和與最小值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS112AbsSumMinimumSet(5);
+      },
+    },
+    's1-1-2-abs-number-line-range': {
+      type: 'drill',
+      title: '數線上多個絕對值的極值與解的範圍',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS112AbsNumberLineRangeSet(5);
+      },
+    },
+    's1-1-2-abs-range-simplification': {
+      type: 'drill',
+      title: '特定範圍下的代數式化簡',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS112AbsRangeSimplificationSet(5);
+      },
+    },
+    's1-1-2-abs-quadratic-mixed': {
+      type: 'drill',
+      title: '絕對值與根號、二次項的混合運算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS112AbsQuadraticMixedSet(5);
+      },
+    },
+    's1-1-3-binomial-cube-expansion': {
+      type: 'drill',
+      title: '雙係數展開練習',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS113BinomialCubeExpansionSet(5);
+      },
+    },
+    's1-1-3-cube-sum-difference': {
+      type: 'drill',
+      title: '給定和差與積的求值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS113CubeSumDifferenceSet(5);
+      },
+    },
+    's1-1-3-reciprocal-cube': {
+      type: 'drill',
+      title: '倒數和立方應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS113ReciprocalCubeSet(5);
+      },
+    },
+    's1-1-3-ternary-square': {
+      type: 'drill',
+      title: '三項和平方展開與變換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS113TernarySquareSet(5);
+      },
+    },
+    's1-1-3-ternary-cubic-special': {
+      type: 'drill',
+      title: '三項立方和特殊公式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS113TernaryCubicSpecialSet(5);
+      },
+    },
+    's1-1-3-radical-ternary-operation': {
+      type: 'drill',
+      title: '含根式的三項運算練習',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS113RadicalTernaryOperationSet(5);
+      },
+    },
+    's1-1-3-triple-factor-expansion': {
+      type: 'drill',
+      title: '三因式展開練習',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS113TripleFactorExpansionSet(5);
+      },
+    },
+    's1-1-3-polynomial-factorization': {
+      type: 'drill',
+      title: '因式分解（立方和差、高次型）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS113PolynomialFactorizationSet(5);
+      },
+    },
+    's1-1-4-numeric-rational-exponent': {
+      type: 'drill',
+      title: '數值運算（含分數、負數及小數指數）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS114NumericRationalExponentSet(5);
+      },
+    },
+    's1-1-4-variable-exponent-simplification': {
+      type: 'drill',
+      title: '含有變數的指數式化簡',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS114VariableExponentSimplificationSet(5);
+      },
+    },
+    's1-1-4-exponential-symmetric-value': {
+      type: 'drill',
+      title: '指數對稱式求值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS114ExponentialSymmetricValueSet(5);
+      },
+    },
+    's1-1-4-exponential-equation-inequality': {
+      type: 'drill',
+      title: '指數方程式與不等式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS114ExponentialEquationInequalitySet(5);
+      },
+    },
+    's1-1-4-exponent-compare': {
+      type: 'drill',
+      title: '換底比較指數大小',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS114ExponentCompareSet(5);
+      },
+    },
+    's1-1-4-known-power': {
+      type: 'drill',
+      title: '已知 a^x 求 a^(mx)',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS114KnownPowerSet(5);
+      },
+    },
+    's1-1-4-substitution-equation': {
+      type: 'drill',
+      title: '指數換元方程式（混合底）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS114SubstitutionEquationSet(5);
+      },
+    },
+    's1-1-4-extract-factor-equation': {
+      type: 'drill',
+      title: '提公因數指數方程式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS114ExtractFactorEquationSet(5);
+      },
+    },
+    's1-1-5-large-number-digit-count': {
+      type: 'drill',
+      title: '大數的位數判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS115LargeNumberDigitCountSet(5);
+      },
+    },
+    's1-1-5-first-nonzero-decimal-place': {
+      type: 'drill',
+      title: '純小數的首位非零項位置',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS115FirstNonzeroDecimalPlaceSet(5);
+      },
+    },
+    's1-1-5-leading-digit': {
+      type: 'drill',
+      title: '判定最高位數字',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS115LeadingDigitSet(5);
+      },
+    },
+    's1-1-5-characteristic-mantissa-algebra': {
+      type: 'drill',
+      title: '首數與尾數的代數性質',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS115CharacteristicMantissaAlgebraSet(5);
+      },
+    },
+    's1-1-5-log-operation-scientific-notation': {
+      type: 'drill',
+      title: '常用對數運算與科學記號轉換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS115LogOperationScientificNotationSet(5);
+      },
+    },
+    's1-1-5-basic-log-calculation': {
+      type: 'drill',
+      title: '對數直接計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS115BasicLogCalculationSet(5);
+      },
+    },
+    's1-2-1-projection-symmetry': {
+      type: 'drill',
+      title: '點對直線的投影與對稱',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121ProjectionSymmetrySet(5);
+      },
+    },
+    's1-2-1-perpendicular-bisector': {
+      type: 'drill',
+      title: '兩點求垂直平分線方程式',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS121PerpendicularBisectorSet(5);
+      },
+    },
+    's1-2-1-line-cluster-fixed-point': {
+      type: 'drill',
+      title: '直線族與恆過定點',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121LineClusterFixedPointSet(5);
+      },
+    },
+    's1-2-1-triangle-nonexistence': {
+      type: 'drill',
+      title: '三線不能圍成三角形的參數判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121TriangleNonexistenceSet(5);
+      },
+    },
+    's1-2-1-inverse-distance': {
+      type: 'drill',
+      title: '點到線與平行線距離逆向應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121InverseDistanceSet(5);
+      },
+    },
+    's1-2-1-geometric-optimization': {
+      type: 'drill',
+      title: '數線幾何與距離極值問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121GeometricOptimizationSet(5);
+      },
+    },
+    's1-2-1-triangle-centers': {
+      type: 'drill',
+      title: '三角形四心的解析坐標',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121TriangleCentersSet(5);
+      },
+    },
+    's1-2-1-intercept-constraints': {
+      type: 'drill',
+      title: '給定截距特定關係的直線',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121InterceptConstraintsSet(5);
+      },
+    },
+    's1-2-1-angles-between-lines': {
+      type: 'drill',
+      title: '兩直線交角與正切公式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121AnglesBetweenLinesSet(5);
+      },
+    },
+    's1-2-1-light-reflection-path': {
+      type: 'drill',
+      title: '光線反射與路徑坐標',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121LightReflectionPathSet(5);
+      },
+    },
+    's1-2-1-area-partitioning': {
+      type: 'drill',
+      title: '平分多邊形面積的直線',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121AreaPartitioningSet(5);
+      },
+    },
+    's1-2-1-line-segment-slope-range': {
+      type: 'drill',
+      title: '直線與線段相交的斜率範圍',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121LineSegmentSlopeRangeSet(5);
+      },
+    },
+    's1-2-1-point-line-side': {
+      type: 'drill',
+      title: '點對直線的相對位置',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121PointLineSideSet(5);
+      },
+    },
+    's1-2-1-lattice-point-counting': {
+      type: 'drill',
+      title: '線性不等式區域內的格子點計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121LatticePointCountingSet(5);
+      },
+    },
+    's1-2-1-absolute-inequality-area': {
+      type: 'drill',
+      title: '含絕對值的二元一次不等式圍成面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121AbsoluteInequalityAreaSet(5);
+      },
+    },
+    's1-2-2-general-to-standard': {
+      type: 'drill',
+      title: '一般式轉換為標準式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS122GeneralToStandardSet(5);
+      },
+    },
+    's1-2-2-circle-discriminant-parameter': {
+      type: 'drill',
+      title: '圓的判定與參數範圍',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS122CircleDiscriminantParameterSet(5);
+      },
+    },
+    's1-2-2-circle-from-conditions': {
+      type: 'drill',
+      title: '給定幾何條件求圓方程式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS122CircleFromConditionsSet(5);
+      },
+    },
+    's1-2-2-apollonius-circle': {
+      type: 'drill',
+      title: '阿波羅尼斯圓',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS122ApolloniusCircleSet(5);
+      },
+    },
+    's1-2-2-radical-axis': {
+      type: 'drill',
+      title: '圓系方程與公共弦應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS122RadicalAxisSet(5);
+      },
+    },
+    's1-2-2-point-circle-distance-extrema': {
+      type: 'drill',
+      title: '點到圓的距離極值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS122PointCircleDistanceExtremaSet(5);
+      },
+    },
+    's1-2-2-axis-tangent-circle': {
+      type: 'drill',
+      title: '與兩坐標軸相切的圓',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS122AxisTangentCircleSet(5);
+      },
+    },
+    's1-2-2-parametric-standard-circle': {
+      type: 'drill',
+      title: '圓的參數式與標準式互換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS122ParametricStandardSet(5);
+      },
+    },
+    's1-2-2-circle-point-algebra-extrema': {
+      type: 'drill',
+      title: '圓上動點的代數式極值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS122CirclePointAlgebraExtremaSet(5);
+      },
+    },
+    's1-2-2-triangle-circum-incircle': {
+      type: 'drill',
+      title: '三角形之外接圓與內切圓',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS122TriangleCircumInCircleSet(5);
+      },
+    },
+    's1-2-3-given-slope-tangent': {
+      type: 'drill',
+      title: '給定斜率的切線方程式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123GivenSlopeTangentSet(5);
+      },
+    },
+    's1-2-3-external-point-tangent': {
+      type: 'drill',
+      title: '過圓外一點的切線與切線長',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123ExternalPointTangentSet(5);
+      },
+    },
+    's1-2-3-chord-length': {
+      type: 'drill',
+      title: '圓的弦長與幾何性質應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123ChordLengthSet(5);
+      },
+    },
+    's1-2-3-chord-midpoint-locus': {
+      type: 'drill',
+      title: '弦中點的軌跡方程式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123ChordMidpointLocusSet(5);
+      },
+    },
+    's1-2-3-perpendicular-tangents-locus': {
+      type: 'drill',
+      title: '互相垂直切線的交點軌跡',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123PerpendicularTangentsLocusSet(5);
+      },
+    },
+    's1-2-3-radical-axis-circle-family': {
+      type: 'drill',
+      title: '兩圓根軸、公共弦與圓系方程式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123RadicalAxisCircleFamilySet(5);
+      },
+    },
+    's1-2-3-polar-line': {
+      type: 'drill',
+      title: '極線與切點弦方程式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123PolarLineSet(5);
+      },
+    },
+    's1-2-3-light-shadow-projection': {
+      type: 'drill',
+      title: '光源投影與陰影長度計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123LightShadowProjectionSet(5);
+      },
+    },
+    's1-2-3-line-circle-parameter-relation': {
+      type: 'drill',
+      title: '圓與直線相交情形參數判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123LineCircleParameterRelationSet(5);
+      },
+    },
+    's1-2-3-point-power-tangent-chord': {
+      type: 'drill',
+      title: '點對圓的冪與切線長應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123PointPowerTangentChordSet(5);
+      },
+    },
+    's1-2-3-vertical-tangent-trap': {
+      type: 'drill',
+      title: '切線斜率的鉛垂線陷阱',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123VerticalTangentTrapSet(5);
+      },
+    },
+    's1-2-3-integer-distance-counting': {
+      type: 'drill',
+      title: '圓上動點與定點的整數距離計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123IntegerDistanceCountingSet(5);
+      },
+    },
+    's1-2-3-common-chord-diameter-circle': {
+      type: 'drill',
+      title: '以公弦為直徑的圓',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123CommonChordDiameterCircleSet(5);
+      },
+    },
+    's1-2-3-circle-area-extrema': {
+      type: 'drill',
+      title: '圓內接或外切圖形的面積極值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123CircleAreaExtremaSet(5);
+      },
+    },
+
+    's1-2-1-angle-bisector-lines': {
+      type: 'drill',
+      title: '兩直線夾角的角平分線方程式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121AngleBisectorLinesSet(5);
+      },
+    },
+    's1-2-2-point-circle-relation': {
+      type: 'drill',
+      title: '點與圓的位置關係及切線長',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS122PointCircleRelationSet(5);
+      },
+    },
+    's1-2-3-line-circle-intersection': {
+      type: 'drill',
+      title: '直線與圓的交點坐標',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123LineCirIntersectionSet(5);
+      },
+    },
+    's1-3-1-polynomial-five-subtypes': {
+      type: 'drill',
+      title: '多項式進階技巧五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131PolynomialFiveSubtypeMixedSet(5);
+      },
+    },
+    's1-3-1-coefficient-sum-parity': {
+      type: 'drill',
+      title: '多項式係數總和與奇偶項係數和',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131CoefficientSumParitySet(5);
+      },
+    },
+    's1-3-1-difference-reverse-polynomial': {
+      type: 'drill',
+      title: '由差分反推原多項式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131DifferenceReversePolynomialSet(5);
+      },
+    },
+    's1-3-1-polynomial-identity-parameters': {
+      type: 'drill',
+      title: '多項式相等與恆等式參數求解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131PolynomialIdentityParameterSet(5);
+      },
+    },
+    's1-3-1-degree-after-operations': {
+      type: 'drill',
+      title: '運算後的多項式次數判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131DegreeAfterOperationsSet(5);
+      },
+    },
+    's1-3-1-specific-coefficient': {
+      type: 'drill',
+      title: '多項式變形與特定項係數組合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131SpecificCoefficientSet(5);
+      },
+    },
+    's1-3-1-division-remainder-five-subtypes': {
+      type: 'drill',
+      title: '多項式除法與餘式五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131DivisionRemainderFiveSubtypeMixedSet(5);
+      },
+    },
+    's1-3-1-ax-minus-b-division': {
+      type: 'drill',
+      title: '除式為 ax-b 型的綜合除法',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131AxMinusBDivisionSet(5);
+      },
+    },
+    's1-3-1-successive-division-taylor': {
+      type: 'drill',
+      title: '連續綜合除法與降冪排列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131SuccessiveDivisionTaylorSet(5);
+      },
+    },
+    's1-3-1-product-specific-coefficient': {
+      type: 'drill',
+      title: '多項式乘法展開的特定項係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131ProductSpecificCoefficientSet(5);
+      },
+    },
+    's1-3-1-remainder-transformation': {
+      type: 'drill',
+      title: '變形多項式的餘式推導',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131RemainderTransformationSet(5);
+      },
+    },
+    's1-3-1-high-power-remainder': {
+      type: 'drill',
+      title: '高次方項除法的特殊降次法',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131HighPowerRemainderSet(5);
+      },
+    },
+    's1-3-1-advanced-remainder-five-subtypes': {
+      type: 'drill',
+      title: '高次餘式與除式變形五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131AdvancedRemainderFiveSubtypeMixedSet(5);
+      },
+    },
+    's1-3-1-complex-root-remainder': {
+      type: 'drill',
+      title: '利用複數根求解高次項餘式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131ComplexRootRemainderSet(5);
+      },
+    },
+    's1-3-1-composition-remainder': {
+      type: 'drill',
+      title: '多項式函數合成的餘式問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131CompositionRemainderSet(5);
+      },
+    },
+    's1-3-1-square-divisor-remainder': {
+      type: 'drill',
+      title: '完全平方除式的餘式判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131SquareDivisorRemainderSet(5);
+      },
+    },
+    's1-3-1-stepwise-remainder-construction': {
+      type: 'drill',
+      title: '階梯式餘式推導與建立',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131StepwiseRemainderConstructionSet(5);
+      },
+    },
+    's1-3-1-coefficient-transform-remainder': {
+      type: 'drill',
+      title: '除法原理的係數變換與商式推導',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131CoefficientTransformRemainderSet(5);
+      },
+    },
+    's1-3-1-remainder-applications-five-subtypes': {
+      type: 'drill',
+      title: '餘式運算與特殊降次五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131RemainderApplicationsFiveSubtypeMixedSet(5);
+      },
+    },
+    's1-3-1-remainder-operations': {
+      type: 'drill',
+      title: '多項式四則運算後的餘式判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131RemainderOperationsSet(5);
+      },
+    },
+    's1-3-1-low-to-high-remainder': {
+      type: 'drill',
+      title: '給定低次餘式求高次乘積項餘式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131LowToHighRemainderSet(5);
+      },
+    },
+    's1-3-1-transformed-dividend-remainder': {
+      type: 'drill',
+      title: '被除式變形後的餘式推導',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131TransformedDividendRemainderSet(5);
+      },
+    },
+    's1-3-1-square-divisor-calculation': {
+      type: 'drill',
+      title: '完全平方除式與高次餘式計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131SquareDivisorCalculationSet(5);
+      },
+    },
+    's1-3-1-special-xn-remainder': {
+      type: 'drill',
+      title: '特殊 x^n 正負一的降次代換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131SpecialXnRemainderSet(5);
+      },
+    },
+    's1-3-1-division-principle-reverse-two-subtypes': {
+      type: 'drill',
+      title: '除法原理反推與整除判定綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131DivisionPrincipleReverseTwoSubtypeMixedSet(5);
+      },
+    },
+    's1-3-1-recover-dividend-from-quotient': {
+      type: 'drill',
+      title: '給定商式與餘式反求被除式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131RecoverDividendFromQuotientSet(5);
+      },
+    },
+    's1-3-1-divisibility-unknown-coefficients': {
+      type: 'drill',
+      title: '利用整除性質求未知係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131DivisibilityUnknownCoefficientSet(5);
+      },
+    },
+    's1-3-1-interpolation-polynomial-five-subtypes': {
+      type: 'drill',
+      title: '插值多項式五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131InterpolationPolynomialFiveSubtypeMixedSet(5);
+      },
+    },
+    's1-3-1-interpolation-from-points': {
+      type: 'drill',
+      title: '給定點坐標求最低次插值多項式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131InterpolationPolynomialFromPointsSet(5);
+      },
+    },
+    's1-3-1-interpolation-value-only': {
+      type: 'drill',
+      title: '插值多項式的特定數值求值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131InterpolationValueOnlySet(5);
+      },
+    },
+    's1-3-1-interpolation-structural-remainder': {
+      type: 'drill',
+      title: '插值結構化設定與餘式定理結合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131InterpolationStructuralRemainderSet(5);
+      },
+    },
+    's1-3-1-interpolation-finite-difference': {
+      type: 'drill',
+      title: '等差坐標的階差速解法',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131InterpolationFiniteDifferenceSet(5);
+      },
+    },
+    's1-3-1-interpolation-lagrange-special': {
+      type: 'drill',
+      title: '拉格朗日列式的恆等式與特殊性質',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131InterpolationLagrangeSpecialSet(5);
+      },
+    },
+    's1-3-2-quadratic-form-graph-three-subtypes': {
+      type: 'drill',
+      title: '二次函數式與圖形判讀三小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132QuadraticFormGraphThreeSubtypeMixedSet(5);
+      },
+    },
+    's1-3-2-general-vertex-conversion': {
+      type: 'drill',
+      title: '二次函數一般式與頂點式的轉換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132GeneralVertexConversionSet(5);
+      },
+    },
+    's1-3-2-quadratic-from-conditions': {
+      type: 'drill',
+      title: '給定幾何條件反求二次函數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132QuadraticFromConditionsSet(5);
+      },
+    },
+    's1-3-2-restricted-range-extrema': {
+      type: 'drill',
+      title: '有範圍限制的二次函數極值判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132RestrictedRangeExtremaSet(5);
+      },
+    },
+    's1-3-2-quadratic-inequality-extrema-application-three-subtypes': {
+      type: 'drill',
+      title: '二次函數判別式極值與應用三小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132QuadraticInequalityExtremaApplicationThreeSubtypeMixedSet(5);
+      },
+    },
+    's1-3-2-discriminant-sign': {
+      type: 'drill',
+      title: '二次函數值的恆正與恆負判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132QuadraticDiscriminantSignSet(5);
+      },
+    },
+    's1-3-2-least-squares-minimum': {
+      type: 'drill',
+      title: '最小平方法的代數模型',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132LeastSquaresMinimumSet(5);
+      },
+    },
+    's1-3-2-quadratic-model-applications': {
+      type: 'drill',
+      title: '生活情境建模與二次函數極值應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132QuadraticModelApplicationsSet(5);
+      },
+    },
+    's1-3-2-quadratic-advanced-graph-extrema-five-subtypes': {
+      type: 'drill',
+      title: '圖形變換與進階極值五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132QuadraticAdvancedGraphExtremaFiveSubtypeMixedSet(5);
+      },
+    },
+    's1-3-2-quadratic-transformations': {
+      type: 'drill',
+      title: '函數圖形的平移與對稱變換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132QuadraticTransformationsSet(5);
+      },
+    },
+    's1-3-2-quadratic-relative-position': {
+      type: 'drill',
+      title: '圖形間的相對位置與參數範圍',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132QuadraticRelativePositionSet(5);
+      },
+    },
+    's1-3-2-parabola-geometric-areas': {
+      type: 'drill',
+      title: '拋物線與坐標軸圍成的幾何特徵',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132ParabolaGeometricAreasSet(5);
+      },
+    },
+    's1-3-2-absolute-value-quadratic': {
+      type: 'drill',
+      title: '含絕對值的二次函數圖形性質',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132AbsoluteValueQuadraticSet(5);
+      },
+    },
+    's1-3-2-algebraic-extrema': {
+      type: 'drill',
+      title: '二元二次代數式極值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132AlgebraicExtremaSet(5);
+      },
+    },
+    's1-3-2-quadratic-symmetry-modeling-compound-five-subtypes': {
+      type: 'drill',
+      title: '對稱建模與複合極值五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132QuadraticSymmetryModelingCompoundFiveSubtypeMixedSet(5);
+      },
+    },
+    's1-3-2-quadratic-symmetry-functional-relations': {
+      type: 'drill',
+      title: '二次函數對稱性的代數應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132QuadraticSymmetryFunctionalRelationsSet(5);
+      },
+    },
+    's1-3-2-parabola-intercept-distance': {
+      type: 'drill',
+      title: '拋物線兩根距離的反求與變換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132ParabolaInterceptDistanceSet(5);
+      },
+    },
+    's1-3-2-quadratic-structural-modeling': {
+      type: 'drill',
+      title: '物理與幾何結構的建模判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132QuadraticStructuralModelingSet(5);
+      },
+    },
+    's1-3-2-monomial-function-features': {
+      type: 'drill',
+      title: '單項函數的特徵判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132MonomialFunctionFeaturesSet(5);
+      },
+    },
+    's1-3-2-compound-regions-extrema': {
+      type: 'drill',
+      title: '跨區域與圖形疊加的極值判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132CompoundRegionsExtremaSet(5);
+      },
+    },
+    's1-3-2-cubic-functions-seven-subtypes': {
+      type: 'drill',
+      title: '三次函數七小類綜合',
+      difficulty: 'medium',
+      questionCount: 7,
+      generate() {
+        return buildS132CubicFunctionsSevenSubtypeMixedSet(7);
+      },
+    },
+    's1-3-2-cubic-transform-center': {
+      type: 'drill',
+      title: '三次單項函數的平移與對稱中心',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132CubicTransformCenterSet(5);
+      },
+    },
+    's1-3-2-cubic-local-linear-approximation': {
+      type: 'drill',
+      title: '特定點附近的一次近似',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132CubicLocalLinearApproximationSet(5);
+      },
+    },
+    's1-3-2-cubic-roots-center-relation': {
+      type: 'drill',
+      title: '三次函數的根與對稱中心關係',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132CubicRootsCenterRelationSet(5);
+      },
+    },
+    's1-3-2-cubic-symmetry-evaluation': {
+      type: 'drill',
+      title: '利用點對稱性的函數值總和計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132CubicSymmetryEvaluationSet(5);
+      },
+    },
+    's1-3-2-cubic-monomial-overlap': {
+      type: 'drill',
+      title: '判定函數能否完全重合於單項函數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132CubicMonomialOverlapSet(5);
+      },
+    },
+    's1-3-2-cubic-inflection-tangent': {
+      type: 'drill',
+      title: '對稱中心上的特殊切線性質',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132CubicInflectionTangentSet(5);
+      },
+    },
+    's1-3-2-cubic-chord-midpoint': {
+      type: 'drill',
+      title: '點對稱下的割線中點與座標幾何',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132CubicChordMidpointSet(5);
+      },
+    },
+
+    's1-3-2-piecewise-function-eval': {
+      type: 'drill',
+      title: '分段函數的代值計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132PiecewiseFunctionEvalSet(5);
+      },
+    },
+    's1-3-2-composite-function': {
+      type: 'drill',
+      title: '合成函數的計算與反推',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132CompositeFunctionSet(5);
+      },
+    },
+    's1-3-3-quadratic-inequality-core-five-subtypes': {
+      type: 'drill',
+      title: '二次不等式核心五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133QuadraticInequalityCoreFiveSubtypeMixedSet(5);
+      },
+    },
+    's1-3-3-quadratic-discriminant-solve': {
+      type: 'drill',
+      title: '不同判別式下的基本求解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133QuadraticDiscriminantSolveSet(5);
+      },
+    },
+    's1-3-3-quadratic-always-sign-parameter': {
+      type: 'drill',
+      title: '函數值恆正與恆負的參數範圍',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133QuadraticAlwaysSignParameterSet(5);
+      },
+    },
+    's1-3-3-quadratic-inverse-coefficient': {
+      type: 'drill',
+      title: '給定解區間反求二次多項式係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133QuadraticInverseCoefficientSet(5);
+      },
+    },
+    's1-3-3-quadratic-substitution-solution': {
+      type: 'drill',
+      title: '二次函數代數變換後的解判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133QuadraticSubstitutionSolutionSet(5);
+      },
+    },
+    's1-3-3-quadratic-applied-substitution': {
+      type: 'drill',
+      title: '跨單元應用：指數代換與幾何建模',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133QuadraticAppliedSubstitutionSet(5);
+      },
+    },
+    's1-3-3-advanced-inequality-five-subtypes': {
+      type: 'drill',
+      title: '高次分式與應用不等式六小類綜合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildS133AdvancedInequalitySixSubtypeMixedSet(6);
+      },
+    },
+    's1-3-3-high-degree-sign-inequality': {
+      type: 'drill',
+      title: '高次不等式的標點與正負號判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133HighDegreeSignInequalitySet(5);
+      },
+    },
+    's1-3-3-rational-inequality': {
+      type: 'drill',
+      title: '分式不等式的轉化與解法',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133RationalInequalitySet(5);
+      },
+    },
+    's1-3-3-advanced-always-sign': {
+      type: 'drill',
+      title: '多項式值的恆正與恆負判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133AdvancedAlwaysSignSet(5);
+      },
+    },
+    's1-3-3-advanced-inverse-problem': {
+      type: 'drill',
+      title: '給定解區間反求多項式係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133AdvancedInverseProblemSet(5);
+      },
+    },
+    's1-3-3-geometric-applied-inequality': {
+      type: 'drill',
+      title: '幾何約束與生活應用建模',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133GeometricAppliedInequalitySet(5);
+      },
+    },
+    's1-3-3-cubic-inequality': {
+      type: 'drill',
+      title: '高次不等式的幾何解法',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133CubicInequalitySet(5);
+      },
+    },
+
+    's1-3-3-absolute-value-inequality': {
+      type: 'drill',
+      title: '絕對值不等式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133AbsoluteValueInequalitySet(5);
+      },
+    },
+    's1-3-3-double-absolute-inequality': {
+      type: 'drill',
+      title: '兩絕對值和差不等式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133DoubleAbsoluteInequalitySet(5);
+      },
+    },
+    's1-3-2-linear-function-from-points': {
+      type: 'drill',
+      title: '由函數值決定一次函數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132LinearFunctionFromPointsSet(5);
+      },
+    },
+    's1-3-2-quadratic-three-points': {
+      type: 'drill',
+      title: '由三點條件求二次函數係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132QuadraticThreePointsSet(5);
+      },
+    },
+    's1-3-3-square-root-inequality': {
+      type: 'drill',
+      title: '含根號的不等式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133SquareRootInequalitySet(5);
+      },
+    },
+    's1-3-3-absolute-value-minimum': {
+      type: 'drill',
+      title: '絕對值函數的最值問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133AbsoluteValueMinimumSet(5);
+      },
+    },
   };
 
-  const bundleFingerprint = "s1-bundle-v20260619-v1";
+  const bundleFingerprint = 's1-bundle-v20260623-v3';
   Object.values(nextConfigs).forEach((config) => {
-    if (!config || typeof config !== "object") return;
+    if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;
   });
 

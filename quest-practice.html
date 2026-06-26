@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d5c63" />
+    <title>解謎任務練習</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    <link rel="stylesheet" href="styles.css?v=20260626-quest-practice-v1" />
+  </head>
+  <body class="ability-practice-page quest-practice-page">
+    <div class="page-shell">
+      <header class="hero quest-hero">
+        <div class="hero__content">
+          <p class="eyebrow">Quest Practice</p>
+          <h1>解謎任務練習</h1>
+          <p class="hero__lead">
+            把無限練習包成闖關地圖。主線任務帶學生一步一步往前走，支線任務負責補前置技巧與局部加強。
+          </p>
+          <div class="hero__quicklinks">
+            <a class="ghost-link" href="index.html">首頁</a>
+            <a class="ghost-link" href="practice-mobile.html">手機版練習</a>
+            <a class="ghost-link" href="ability-practice.html">能力入口</a>
+            <a class="ghost-link" href="skill-tree-practice.html">技能樹</a>
+          </div>
+        </div>
+        <div class="hero__panel">
+          <h2>闖關規則</h2>
+          <ul>
+            <li>主線任務優先走，支線任務用來補前置能力或局部加強。</li>
+            <li>答對後直接進下一題，維持連續練習節奏。</li>
+            <li>若系統判錯但你確認正確，可手動改判為答對。</li>
+          </ul>
+        </div>
+      </header>
+
+      <main class="layout ability-practice-layout quest-practice-layout">
+        <aside class="sidebar ability-practice-sidebar quest-sidebar">
+          <section class="panel quest-panel">
+            <div class="skill-tree-toolbar">
+              <h2>主線任務</h2>
+              <span id="mainQuestProgress" class="meta-chip"></span>
+            </div>
+            <div id="mainQuestList" class="quest-list"></div>
+          </section>
+
+          <section class="panel quest-panel">
+            <div class="skill-tree-toolbar">
+              <h2>支線任務</h2>
+              <span id="sideQuestProgress" class="meta-chip"></span>
+            </div>
+            <div id="sideQuestList" class="quest-list"></div>
+          </section>
+        </aside>
+
+        <section class="content ability-practice-content">
+          <section class="panel summary-panel ability-summary-panel">
+            <div>
+              <p class="summary-label">目前任務</p>
+              <h2 id="questTitle">請先選擇任務</h2>
+            </div>
+            <p id="questStatus" class="summary-count"></p>
+          </section>
+
+          <section class="panel ability-detail-panel quest-stage-panel">
+            <div class="ability-detail-panel__header">
+              <div>
+                <p id="questMapLabel" class="ability-mainline-label"></p>
+                <p id="questStoryHook" class="quest-story-hook"></p>
+                <p id="questSummary" class="ability-detail-text"></p>
+              </div>
+              <div class="ability-progress-card">
+                <div class="ability-progress-card__label">熟悉度</div>
+                <div id="questMasteryLabel" class="ability-progress-card__value">未開始</div>
+                <div class="ability-progress-bar">
+                  <div id="questMasteryBar" class="ability-progress-bar__fill"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ability-meta-grid quest-meta-grid">
+              <div class="ability-meta-box">
+                <h3>技能焦點</h3>
+                <div id="questSkillTags" class="ability-tag-list"></div>
+              </div>
+              <div class="ability-meta-box">
+                <h3>前置任務</h3>
+                <div id="questPrerequisites" class="ability-tag-list"></div>
+              </div>
+              <div class="ability-meta-box">
+                <h3>完成獎勵</h3>
+                <p id="questRewardText" class="ability-detail-text"></p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel ability-session-panel quest-session-panel">
+            <div class="ability-session-panel__header">
+              <div>
+                <h2>任務解謎</h2>
+                <p id="questSessionHint" class="ability-detail-text">
+                  先選一個任務，再開始練習。答對後會直接進下一題。
+                </p>
+              </div>
+              <div class="ability-session-actions">
+                <button id="questStartButton" class="ghost-button" type="button">開始任務</button>
+                <button id="questNextPuzzleButton" class="ghost-button" type="button" disabled>換一題</button>
+              </div>
+            </div>
+
+            <div id="questSessionCard" class="ability-session-card is-empty">
+              <p>這裡會出現本任務對應的無限練習題。先開始任務，系統會從目前已接上的題型中抽題。</p>
+            </div>
+
+            <div id="questFeedbackPanel" class="ability-feedback-panel" hidden></div>
+            <div id="questMistakePanel" class="ability-mistake-panel" hidden></div>
+            <div id="questRecommendationPanel" class="ability-recommendation-panel" hidden></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script defer src="formulas.js"></script>
+    <script defer src="data/formula-content.js?v=20260423-abs-count-layout-v4"></script>
+    <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
+    <script defer src="data/main-topic-overviews.js?v=20260508-topic-title-clean-v1"></script>
+    <script defer src="data/chapter-code-config.js?v=20260616-e425-split-v1"></script>
+    <script defer src="data/formula-calculators.js"></script>
+    <script defer src="data/formula-practice-assignments.js?v=20260622-j44-quad-v1"></script>
+    <script defer src="data/formula-practice.js?v=20260620-runtime-main-v1"></script>
+    <script defer src="data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"></script>
+    <script defer src="data/practice-generator-bootstrap.js?v=20260619-e5-cutover-v1"></script>
+    <script defer src="data/practice-generator-bundles.js?v=20260624-nullfix-v1"></script>
+    <script defer src="data/practice-generator-loader.js?v=20260619-e5-force-bundle-v3"></script>
+    <script defer src="data/practice-generators/e5.js?v=20260619-e5-fingerprint-v5"></script>
+    <script defer src="data/practice-generators/e6.js?v=20260619-e6-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/j1.js?v=20260619-j1-chapter-owned-v2"></script>
+    <script defer src="data/practice-generators/j2.js?v=20260619-j2-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/j3.js?v=20260619-j3-chapter-owned-v2"></script>
+    <script defer src="data/practice-generators/j4.js?v=20260619-j4-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/j5.js?v=20260619-j5-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/j6.js?v=20260619-j6-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/s1.js?v=20260619-s1-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/s2.js?v=20260619-s2-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/s3.js?v=20260619-s3-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/s4.js?v=20260624-s4-trycatch-v1"></script>
+    <script defer src="data/practice-learning/practice-learning-architecture-v3.js?v=20260621-book2-expanded-v1"></script>
+    <script defer src="data/practice-learning/practice-learning-architecture-v4.js?v=20260621-book3-expanded-v1"></script>
+    <script defer src="data/practice-learning/practice-learning-architecture-v5.js?v=20260621-book4-expanded-v1"></script>
+    <script defer src="data/practice-learning/practice-learning-architecture-v6.js?v=20260621-book5-expanded-v1"></script>
+    <script defer src="data/practice-learning/practice-learning-architecture-v7.js?v=20260621-book6-expanded-v1"></script>
+    <script defer src="data/practice-learning/practice-ability-map.js?v=20260621-ability-map-v2"></script>
+    <script defer src="data/practice-learning/practice-quest-campaign.js?v=20260626-quest-practice-v1"></script>
+    <script defer src="formula-data.js?v=20260616-e425-split-v1"></script>
+    <script defer src="chapter-overviews.js?v=20260507-main-theme-layer-v2"></script>
+    <script defer src="chapter-closings.js?v=20260507-main-theme-layer-v2"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="formula-core.js?v=20260619-e5-fingerprint-v5"></script>
+    <script defer src="quest-practice/quest-practice.js?v=20260626-quest-practice-v1"></script>
+    <script defer src="pwa.js"></script>
+  </body>
+</html>

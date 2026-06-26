@@ -7288,6 +7288,1051 @@
     return sentence || text;
   }
 
+  // ─── j1-3-3 新增 generators ───────────────────────────────────────────────
+
+  // 兩數互為相反數：a與b各加相同數x後互為相反數 → (a+x)+(b+x)=0 → x=-(a+b)/2
+  function buildJ133OppositeNumberSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const cases = [
+      { a: 2,   b: -4  },  // x=1
+      { a: 13,  b: -23 },  // x=5
+      { a: 3,   b: -19 },  // x=8
+      { a: 10,  b: -34 },  // x=12
+      { a: 5,   b: -13 },  // x=4
+      { a: 7,   b: -21 },  // x=7
+      { a: 4,   b: -16 },  // x=6
+      { a: 8,   b: -26 },  // x=9
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const { a, b } = cases[i % cases.length];
+      const x = -(a + b) / 2;
+      const bStr = b < 0 ? `${b}` : `+${b}`;
+      questions.push(
+        `將 $${a}$ 與 $${b}$ 兩數各加一個相同的數之後，所得的新兩數互為相反數，求所加的數。`
+      );
+      summaryAnswers.push(`$${x}$`);
+      answers.push(
+        `設所加的數為 $x$，則兩個新數分別是 $${a}+x$ 和 $${b}+x$。互為相反數表示兩數之和為 $0$，所以 $(${a}+x)+(${b}+x)=0$，即 $${a + b}+2x=0$，解得 $x=${x}$。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 三人連差：甲乙丙共S元，甲比乙多A，乙比丙多B
+  // 設丙=x → 乙=x+B, 甲=x+B+A → 3x+A+2B=S → x=(S-A-2B)/3
+  function buildJ133ThreePersonChainDiffSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const cases = [
+      { S: 1406, A: 455, B: 153, c: 215, b: 368, a: 823 },
+      { S: 1822, A:  33, B: 254, c: 427, b: 681, a: 714 },
+      { S: 1760, A: 286, B: 389, c: 232, b: 621, a: 907 },
+      { S: 1048, A: 665, B: 130, c:  41, b: 171, a: 836 },
+      { S: 1200, A: 150, B: 100, c: 250, b: 350, a: 600 },
+      { S:  900, A: 120, B:  90, c: 200, b: 290, a: 410 },
+      { S: 1500, A: 200, B: 100, c: 400, b: 500, a: 600 },
+      { S: 2100, A: 300, B: 150, c: 550, b: 700, a: 850 },
+    ];
+    const contexts = ['儲蓄', '得分', '收入'];
+    const units    = ['元',   '分',   '元' ];
+    for (let i = 0; i < count; i += 1) {
+      const { S, A, B, c, b, a } = cases[i % cases.length];
+      const ctx  = contexts[i % contexts.length];
+      const unit = units[i % units.length];
+      questions.push(
+        `甲、乙、丙三人共${ctx} $${S}$ ${unit}，若甲比乙多 $${A}$ ${unit}，乙比丙多 $${B}$ ${unit}，則甲、乙、丙各${ctx}多少${unit}？`
+      );
+      summaryAnswers.push(`甲 $${a}$ ${unit}，乙 $${b}$ ${unit}，丙 $${c}$ ${unit}`);
+      answers.push(
+        `設丙${ctx} $x$ ${unit}，則乙為 $x+${B}$，甲為 $x+${B}+${A}$。三人合計：$x+(x+${B})+(x+${B}+${A})=${S}$，即 $3x+${A + 2 * B}=${S}$，解得 $x=${c}$。所以丙 $${c}$ ${unit}、乙 $${b}$ ${unit}、甲 $${a}$ ${unit}。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 猴子香蕉：大猴小猴共N隻，大猴吃3條/隻，每3隻小猴吃2條
+  // 設小猴=s → 大猴=N-s → 3(N-s)+(2/3)s=M → 9N-7s=3M → s=(9N-3M)/7
+  function buildJ133MonkeyBananaSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const cases = [
+      { N: 32, M:  68, s: 12, g: 20 },
+      { N: 24, M:  58, s:  6, g: 18 },
+      { N: 58, M: 139, s: 15, g: 43 },
+      { N: 29, M:  45, s: 18, g: 11 },
+      { N: 13, M:  32, s:  3, g: 10 },
+      { N: 18, M:  40, s:  6, g: 12 },
+      { N: 24, M:  51, s:  9, g: 15 },
+      { N: 41, M:  74, s: 21, g: 20 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const { N, M, s, g } = cases[i % cases.length];
+      questions.push(
+        `大猴與小猴共 $${N}$ 隻，合力吃完 $${M}$ 條香蕉。已知每隻大猴吃 $3$ 條，每 $3$ 隻小猴吃 $2$ 條，求小猴有多少隻。`
+      );
+      summaryAnswers.push(`小猴 $${s}$ 隻`);
+      answers.push(
+        `設小猴有 $x$ 隻，則大猴有 $${N}-x$ 隻。大猴共吃 $3(${N}-x)$ 條，小猴共吃 $\\dfrac{2}{3}x$ 條。依題意：$3(${N}-x)+\\dfrac{2}{3}x=${M}$，兩邊乘以 $3$ 得 $9(${N}-x)+2x=3\\times${M}$，化簡為 $${9 * N}-7x=${3 * M}$，解得 $x=${s}$。所以小猴有 $${s}$ 隻，大猴有 $${g}$ 隻。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 兩折扣比較：定價X折賣P元，改Y折應賣多少
+  // 定價 = P÷(X/10)；新價 = 定價×(Y/10)
+  function buildJ133DoubleDiscountSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const items = ['皮衣', '外套', '大衣', '羽絨衣', '風衣', '毛衣'];
+    // 定價必須是 20 的倍數才能讓 85折 為整數
+    const cases = [
+      { list: 11180, d1: 85, p1: 9503, d2: 80, p2:  8944 },
+      { list:  8360, d1: 85, p1: 7106, d2: 80, p2:  6688 },
+      { list:  8340, d1: 85, p1: 7089, d2: 80, p2:  6672 },
+      { list:  8620, d1: 85, p1: 7327, d2: 80, p2:  6896 },
+      { list:  5000, d1: 85, p1: 4250, d2: 80, p2:  4000 },
+      { list:  6800, d1: 85, p1: 5780, d2: 80, p2:  5440 },
+      { list:  7200, d1: 85, p1: 6120, d2: 80, p2:  5760 },
+      { list:  8000, d1: 85, p1: 6800, d2: 80, p2:  6400 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const { list, d1, p1, d2, p2 } = cases[i % cases.length];
+      const item = items[i % items.length];
+      questions.push(
+        `如果一件${item}照定價 $${d1}$ 折出售，售價是 $${p1}$ 元，那麼若依定價的 $${d2}$ 折出售應賣多少元？`
+      );
+      summaryAnswers.push(`$${p2}$ 元`);
+      answers.push(
+        `設定價為 $x$ 元。由 $${d1}$ 折售價可列：$\\dfrac{${d1}}{10}x=${p1}$，解得 $x=${list}$。改成 $${d2}$ 折：$${list}\\times\\dfrac{${d2}}{10}=${p2}$ 元。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 猜數遊戲：Ax - x/2 = Z → x(2A-1)/2 = Z → x = 2Z/(2A-1)
+  function buildJ133GuessNumberSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const names = ['小文', '小明', '小華', '小玲', '小傑', '小雅', '小凱', '小芳'];
+    const cases = [
+      { A: 5, Z: 207, x:  46 },
+      { A: 2, Z:  54, x:  36 },
+      { A: 7, Z:  26, x:   4 },
+      { A: 3, Z: 175, x:  70 },
+      { A: 4, Z:  21, x:   6 },
+      { A: 6, Z:  55, x:  10 },
+      { A: 3, Z:  50, x:  20 },
+      { A: 4, Z:  49, x:  14 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const { A, Z, x } = cases[i % cases.length];
+      const name = names[i % names.length];
+      questions.push(
+        `${name}心裡想了一個數 $x$，若將此數乘以 $${A}$ 所得的值再減去此數的一半，得到的結果為 $${Z}$，試問${name}心裡想的數為何？`
+      );
+      summaryAnswers.push(`$${x}$`);
+      answers.push(
+        `依題意列式：$${A}x-\\dfrac{x}{2}=${Z}$。兩邊乘以 $2$：$${2 * A}x-x=${2 * Z}$，即 $${2 * A - 1}x=${2 * Z}$，解得 $x=${x}$。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 長方形長寬：長=寬×A-B，已知長=L → 寬=(L+B)/A
+  function buildJ133RectangleDimensionSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const cases = [
+      { A: 4, B: 2,  L: 18, w: 5 },
+      { A: 3, B: 2,  L: 10, w: 4 },
+      { A: 4, B: 8,  L: 20, w: 7 },
+      { A: 2, B: 1,  L:  7, w: 4 },
+      { A: 3, B: 3,  L: 15, w: 6 },
+      { A: 4, B: 4,  L: 24, w: 7 },
+      { A: 3, B: 1,  L: 14, w: 5 },
+      { A: 5, B: 5,  L: 25, w: 6 },
+    ];
+    const shapes = ['花圃', '游泳池', '操場', '廣場', '停車場', '農田'];
+    for (let i = 0; i < count; i += 1) {
+      const { A, B, L, w } = cases[i % cases.length];
+      const shape = shapes[i % shapes.length];
+      questions.push(
+        `有一個長方形${shape}，長為寬的 $${A}$ 倍少 $${B}$ 公分，若長為 $${L}$ 公分，則寬為多少公分？`
+      );
+      summaryAnswers.push(`$${w}$ 公分`);
+      answers.push(
+        `設寬為 $x$ 公分，則長為 $${A}x-${B}$ 公分。依題意：$${A}x-${B}=${L}$，解得 $x=\\dfrac{${L + B}}{${A}}=${w}$，所以寬為 $${w}$ 公分。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 倍加型父子年齡：父親=M倍子+K，父親今年F歲 → 子=(F-K)/M
+  function buildJ133AgeRatioPlusSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const cases = [
+      { F: 40, M: 2, K:  8, child: 16 },
+      { F: 25, M: 3, K: 13, child:  4 },
+      { F: 35, M: 3, K: 14, child:  7 },
+      { F: 27, M: 3, K:  3, child:  8 },
+      { F: 38, M: 2, K:  4, child: 17 },
+      { F: 42, M: 3, K:  9, child: 11 },
+      { F: 34, M: 2, K:  8, child: 13 },
+      { F: 45, M: 3, K:  6, child: 13 },
+    ];
+    const childNames  = ['小明', '小杰', '小華', '小文', '小凱', '小雅', '小玲', '小傑'];
+    const fatherNames = ['父親', '爸爸'];
+    for (let i = 0; i < count; i += 1) {
+      const { F, M, K, child } = cases[i % cases.length];
+      const cName = childNames[i % childNames.length];
+      const fName = fatherNames[i % fatherNames.length];
+      questions.push(
+        `${cName}的${fName}今年 $${F}$ 歲，已知今年${fName}的年齡是${cName}的 $${M}$ 倍多 $${K}$ 歲，試問${cName}今年幾歲？`
+      );
+      summaryAnswers.push(`$${child}$ 歲`);
+      answers.push(
+        `設${cName}今年 $x$ 歲。依題意：$${M}x+${K}=${F}$，解得 $x=\\dfrac{${F - K}}{${M}}=${child}$，所以${cName}今年 $${child}$ 歲。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 和倍差體重：甲=M倍乙+K，甲+乙=N → 乙=(N-K)/(M+1)
+  function buildJ133WeightCompareSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const cases = [
+      { M: 2, K:  3, N: 138, lighter:  45, heavier:  93 },
+      { M: 2, K:  6, N: 150, lighter:  48, heavier:  102 },
+      { M: 2, K:  8, N: 125, lighter:  39, heavier:  86 },
+      { M: 2, K:  3, N:  48, lighter:  15, heavier:  33 },
+      { M: 2, K: 10, N: 130, lighter:  40, heavier:  90 },
+      { M: 3, K:  5, N:  89, lighter:  21, heavier:  68 },
+      { M: 2, K: 12, N: 120, lighter:  36, heavier:  84 },
+      { M: 3, K:  8, N:  96, lighter:  22, heavier:  74 },
+    ];
+    const pairNames = [
+      ['東翰', '琳達'],
+      ['小明', '小華'],
+      ['甲', '乙'],
+      ['哥哥', '弟弟'],
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const { M, K, N, lighter } = cases[i % cases.length];
+      const [heavy, light] = pairNames[i % pairNames.length];
+      questions.push(
+        `${heavy}的體重比${light}體重的 $${M}$ 倍多 $${K}$ 公斤，如果兩人共重 $${N}$ 公斤，試問${light}的體重為多少公斤？`
+      );
+      summaryAnswers.push(`$${lighter}$ 公斤`);
+      answers.push(
+        `設${light}的體重為 $x$ 公斤，則${heavy}的體重為 $${M}x+${K}$ 公斤。依題意：$(${M}x+${K})+x=${N}$，即 $${M + 1}x=${N - K}$，解得 $x=${lighter}$，所以${light}體重為 $${lighter}$ 公斤。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 有一分數：分子比分母小K（D=N+K），分子A倍=分母B倍（AN=BD）
+  // → (A-B)N = BK → N = BK/(A-B)
+  function buildJ133FindFractionSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const cases = [
+      { K: 15, A: 4, B: 1, N:  5, D: 20 },  // 1/4
+      { K:  3, A: 4, B: 3, N:  9, D: 12 },  // 3/4
+      { K: 15, A: 5, B: 4, N: 60, D: 75 },  // 4/5
+      { K:  5, A: 2, B: 1, N:  5, D: 10 },  // 1/2
+      { K:  6, A: 3, B: 1, N:  3, D:  9 },  // 1/3
+      { K:  4, A: 3, B: 2, N:  8, D: 12 },  // 2/3
+      { K:  8, A: 5, B: 3, N: 12, D: 20 },  // 3/5
+      { K: 10, A: 5, B: 3, N: 15, D: 25 },  // 3/5
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const { K, A, B, N, D } = cases[i % cases.length];
+      const g = gcdInt(N, D);
+      const rn = N / g;
+      const rd = D / g;
+      const fracStr = `\\dfrac{${N}}{${D}}`;
+      questions.push(
+        `有一個分數，分子比分母小 $${K}$，且分子的 $${A}$ 倍等於分母的 $${B}$ 倍，求這個分數為何？`
+      );
+      summaryAnswers.push(`$\\dfrac{${rn}}{${rd}}$`);
+      answers.push(
+        `設分子為 $x$，則分母為 $x+${K}$。由分子的 $${A}$ 倍等於分母的 $${B}$ 倍：$${A}x=${B}(x+${K})$，整理得 $${A - B}x=${B * K}$，解得 $x=${N}$。所以分母為 $${N}+${K}=${D}$，此分數為 $${fracStr}$${rn !== N ? `，化簡為 $\\dfrac{${rn}}{${rd}}$` : ``}。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+
+  // 繩子折段差：折成m段每段比折成n段每段長k公尺 → x/m - x/n = k → x = kmn/(n-m)
+  // 也含井深變型：折成m段垂入井多a公尺，折成n段多b公尺 → x/m-a=x/n-b → x(n-m)/(mn)=a-b
+  function buildJ133RopeFoldingSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    const directCases = [
+      { m: 4, n: 5, k: 1, x: 20 },
+      { m: 3, n: 4, k: 1, x: 12 },
+      { m: 4, n: 5, k: 2, x: 40 },
+      { m: 3, n: 5, k: 2, x: 15 },
+      { m: 5, n: 6, k: 1, x: 30 },
+      { m: 3, n: 4, k: 3, x: 36 },
+      { m: 4, n: 6, k: 2, x: 24 },
+      { m: 2, n: 3, k: 2, x: 12 },
+    ];
+    const wellCases = [
+      { m: 3, n: 4, a: 6, b: 4, x: 24, h: 2 },
+      { m: 4, n: 5, a: 5, b: 3, x: 40, h: 5 },
+      { m: 5, n: 6, a: 4, b: 2, x: 60, h: 8 },
+      { m: 4, n: 6, a: 5, b: 2, x: 36, h: 4 },
+      { m: 3, n: 5, a: 5, b: 1, x: 30, h: 5 },
+      { m: 3, n: 4, a: 4, b: 2, x: 24, h: 4 },
+      { m: 4, n: 5, a: 7, b: 5, x: 40, h: 3 },
+      { m: 5, n: 6, a: 6, b: 4, x: 60, h: 6 },
+    ];
+    const ctxs = ['繩子', '竹竿', '鐵絲'];
+
+    for (let i = 0; i < count; i += 1) {
+      const useWell = i % 3 === 2;
+      const ci = Math.floor(i / 3);
+
+      if (!useWell) {
+        const { m, n, k, x } = directCases[(i % 2 === 0 ? ci : ci + directCases.length / 2) % directCases.length];
+        const thing = ctxs[i % ctxs.length];
+        questions.push(
+          `有一條${thing}，把它折成相等的 $${m}$ 段後，每段長比折成相等的 $${n}$ 段後的每段長多 $${k}$ 公尺，請問這條${thing}有多少公尺？`
+        );
+        summaryAnswers.push(`$${x}$ 公尺`);
+        answers.push(
+          `設${thing}長 $x$ 公尺。折成 $${m}$ 段每段長 $\\dfrac{x}{${m}}$，折成 $${n}$ 段每段長 $\\dfrac{x}{${n}}$。依題意：$\\dfrac{x}{${m}}-\\dfrac{x}{${n}}=${k}$，通分得 $\\dfrac{${n - m}x}{${m * n}}=${k}$，解得 $x=${x}$，所以這條${thing}長 $${x}$ 公尺。`
+        );
+      } else {
+        const { m, n, a, b, x, h } = wellCases[ci % wellCases.length];
+        questions.push(
+          `有一口井，將一條繩子折成 $${m}$ 段後垂入井中，繩子多出 $${a}$ 公尺；若將繩子折成 $${n}$ 段後垂入，則多出 $${b}$ 公尺，請問這條繩子有多長？（繩長以公尺為單位）`
+        );
+        summaryAnswers.push(`$${x}$ 公尺`);
+        answers.push(
+          `設繩長 $x$ 公尺，井深 $H$ 公尺。折成 $${m}$ 段：$\\dfrac{x}{${m}}-${a}=H$；折成 $${n}$ 段：$\\dfrac{x}{${n}}-${b}=H$。兩式相減得 $\\dfrac{x}{${m}}-\\dfrac{x}{${n}}=${a}-${b}$，即 $\\dfrac{${n - m}x}{${m * n}}=${a - b}$，解得 $x=${x}$，井深 $H=\\dfrac{${x}}{${m}}-${a}=${h}$ 公尺。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 蠟燭燃燒：甲a小時燃完，乙b小時燃完，同時點燃t小時後甲剩=k×乙剩
+  // (1-t/a) = k(1-t/b) → t = (k-1)ab/(ka-b)
+  function buildJ133CandleBurnSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    // [a, b, k, t_num, t_den] → t = t_num/t_den 小時 = t_num*60/t_den 分鐘
+    const cases = [
+      { a: 3, b: 1, k: 3, tNum: 3, tDen: 4  },  // t=45min
+      { a: 3, b: 2, k: 2, tNum: 3, tDen: 2  },  // t=90min (不到任何一支燃完)
+      { a: 6, b: 3, k: 2, tNum: 2, tDen: 1  },  // t=2hr
+      { a: 4, b: 2, k: 2, tNum: 4, tDen: 3  },  // t=80min
+      { a: 6, b: 2, k: 3, tNum: 3, tDen: 2  },  // t=90min
+      { a: 6, b: 4, k: 2, tNum: 3, tDen: 1  },  // t=3hr
+      { a: 4, b: 1, k: 4, tNum: 4, tDen: 5  },  // t=48min
+      { a: 5, b: 2, k: 4, tNum: 10, tDen: 9 },  // t≈66.7min
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const { a, b, k, tNum, tDen } = cases[i % cases.length];
+      const tMinutes = (tNum * 60) / tDen;
+      const tStr = Number.isInteger(tMinutes)
+        ? `${tMinutes} 分鐘`
+        : `${tNum}/${tDen} 小時（約 ${Math.round(tMinutes)} 分鐘）`;
+      const tLatex = tDen === 1 ? `${tNum}` : `\\dfrac{${tNum}}{${tDen}}`;
+
+      questions.push(
+        `有兩支等高的蠟燭，甲蠟燭可燃燒 $${a}$ 小時，乙蠟燭可燃燒 $${b}$ 小時，兩支同時點燃，設燃燒後甲蠟燭的剩餘高度是乙蠟燭剩餘高度的 $${k}$ 倍，則兩支蠟燭同時點燃後幾分鐘達到此狀態？`
+      );
+      summaryAnswers.push(`${tStr}`);
+      answers.push(
+        `設燃燒了 $t$ 小時。甲蠟燭的剩餘比例為 $1-\\dfrac{t}{${a}}$，乙蠟燭的剩餘比例為 $1-\\dfrac{t}{${b}}$。依題意：$1-\\dfrac{t}{${a}}=${k}\\left(1-\\dfrac{t}{${b}}\\right)$，展開得 $1-\\dfrac{t}{${a}}=${k}-\\dfrac{${k}t}{${b}}$，整理得 $\\dfrac{${k}t}{${b}}-\\dfrac{t}{${a}}=${k}-1$，即 $t\\left(\\dfrac{${k}}{${b}}-\\dfrac{1}{${a}}\\right)=${k - 1}$，解得 $t=${tLatex}$ 小時，即 $${tStr}$。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 圓形跑道反向：甲跑一圈需A秒，乙與甲反向，每B秒相遇一次
+  // 每B秒兩人合走一整圈：1/A + 1/T = 1/B → T = AB/(A-B)
+  function buildJ133CircularTrackSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    const cases = [
+      { A: 40, B: 15, T: 24 },
+      { A: 60, B: 20, T: 30 },
+      { A: 30, B: 10, T: 15 },
+      { A: 48, B: 12, T: 16 },
+      { A: 36, B:  9, T: 12 },
+      { A: 60, B: 15, T: 20 },
+      { A: 24, B:  8, T: 12 },
+      { A: 40, B:  8, T: 10 },
+    ];
+    const nameA = ['甲', '小明', '阿真', '阿宏'];
+    const nameB = ['乙', '小華', '阿宏', '阿真'];
+
+    for (let i = 0; i < count; i += 1) {
+      const { A, B, T } = cases[i % cases.length];
+      const na = nameA[i % nameA.length];
+      const nb = nameB[i % nameB.length];
+
+      questions.push(
+        `有一個圓形跑道，${na}跑完一圈需 $${A}$ 秒。${nb}以固定速率與${na}反向跑，每隔 $${B}$ 秒就與${na}相遇一次，請問${nb}跑完一圈需幾秒？`
+      );
+      summaryAnswers.push(`$${T}$ 秒`);
+      answers.push(
+        `設${nb}跑完一圈需 $t$ 秒。每隔 $${B}$ 秒兩人相遇，表示這 $${B}$ 秒內兩人合計恰好走完一圈，即 $\\dfrac{${B}}{${A}}+\\dfrac{${B}}{t}=1$，整理得 $\\dfrac{${B}}{t}=1-\\dfrac{${B}}{${A}}=\\dfrac{${A - B}}{${A}}$，解得 $t=\\dfrac{${B}\\times${A}}{${A - B}}=${T}$ 秒。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 連取分數型：糖果共n個，甲取一半少a₁，乙取剩下一半多a₂，丙取剩下一半少a₃，丁得R個
+  // n = 8R - 8a₃ + 4a₂ - 2a₁
+  function buildJ133ChainFractionTakeSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    // [a1, a2, a3, R, n]
+    const cases = [
+      { a1: 4, a2: 2, a3: 1, R:  6, n: 40 },
+      { a1: 2, a2: 3, a3: 2, R:  5, n: 32 },
+      { a1: 6, a2: 4, a3: 1, R:  8, n: 60 },
+      { a1: 4, a2: 1, a3: 2, R:  7, n: 36 },
+      { a1: 2, a2: 4, a3: 2, R:  6, n: 44 },
+      { a1: 5, a2: 3, a3: 1, R:  8, n: 58 },
+      { a1: 4, a2: 3, a3: 2, R:  5, n: 28 },
+      { a1: 3, a2: 4, a3: 1, R: 10, n: 82 },
+    ];
+    const personA = ['甲', '大明', '阿強', '志明'];
+    const personB = ['乙', '小華', '阿偉', '春嬌'];
+    const personC = ['丙', '小玲', '阿美', '阿翔'];
+    const personD = ['丁', '小李', '小陳', '阿風'];
+    // [unit量詞, name物品名]
+    const things = [
+      { unit: '顆', name: '糖果' },
+      { unit: '個', name: '橘子' },
+      { unit: '顆', name: '葡萄' },
+      { unit: '塊', name: '餅乾' },
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const { a1, a2, a3, R, n } = cases[i % cases.length];
+      const pA = personA[i % personA.length];
+      const pB = personB[i % personB.length];
+      const pC = personC[i % personC.length];
+      const pD = personD[i % personD.length];
+      const { unit, name } = things[i % things.length];
+
+      // Compute step-by-step remainders for answer
+      const afterA = n / 2 + a1;        // remain after A
+      const afterB = afterA / 2 - a2;    // remain after B
+      const afterC = afterB / 2 + a3;    // remain after C = R
+
+      questions.push(
+        `桌上有若干${unit}${name}。${pA}先取走全部的一半少 $${a1}$ ${unit}；${pB}再取走剩下的一半多 $${a2}$ ${unit}；${pC}再取走剩下的一半少 $${a3}$ ${unit}；最後剩下的 $${R}$ ${unit}全給${pD}。請問桌上原有幾${unit}${name}？`
+      );
+      summaryAnswers.push(`$${n}$ ${unit}`);
+      answers.push(
+        `設原有 $x$ ${unit}${name}。${pA}取走 $\\dfrac{x}{2}-${a1}$，剩下 $\\dfrac{x}{2}+${a1}$。${pB}取走 $\\dfrac{1}{2}\\left(\\dfrac{x}{2}+${a1}\\right)+${a2}$，剩下 $\\dfrac{x}{4}+${a1 / 2}-${a2}=\\dfrac{x}{4}+${a1 / 2 - a2}$。${pC}取走 $\\dfrac{1}{2}\\left(\\dfrac{x}{4}+${a1 / 2 - a2}\\right)-${a3}$，剩下 $\\dfrac{x}{8}+${(a1 / 2 - a2) / 2}+${a3}=\\dfrac{x}{8}+${(a1 / 2 - a2) / 2 + a3}$。由 $\\dfrac{x}{8}+${(a1 / 2 - a2) / 2 + a3}=${R}$，兩邊乘以 $8$：$x+${8 * ((a1 / 2 - a2) / 2 + a3)}=${8 * R}$，解得 $x=${n}$，原有 $${n}$ ${unit}${name}。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 月曆方框問題：框住相鄰日期，給出和，求某一格
+  function buildJ133CalendarBlockSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 4;
+
+      if (variant === 0) {
+        // 橫向兩格 a, a+1，和為S
+        const a = randInt(1, 27);
+        const S = a + (a + 1);
+        questions.push(
+          `在月曆上用長方形框住相鄰的兩個日期 $a$ 和 $b$，已知 $b$ 在 $a$ 的右邊（相差 1），且 $a+b=${S}$，請問 $b$ 等於多少？`
+        );
+        summaryAnswers.push(`$${a + 1}$`);
+        answers.push(
+          `由題意 $b=a+1$。代入 $a+b=${S}$：$a+(a+1)=${S}$，得 $2a+1=${S}$，解得 $a=${a}$，所以 $b=${a + 1}$。`
+        );
+        continue;
+      }
+
+      if (variant === 1) {
+        // 縱向兩格 a, a+7，和為S
+        const a = randInt(1, 21);
+        const S = a + (a + 7);
+        questions.push(
+          `在月曆上，$a$ 和 $b$ 是上下相鄰的兩個日期（$b$ 在 $a$ 正下方，相差 7 天），若 $a+b=${S}$，請問 $a$ 是幾號？`
+        );
+        summaryAnswers.push(`$${a}$ 號`);
+        answers.push(
+          `由題意 $b=a+7$。代入 $a+b=${S}$：$a+(a+7)=${S}$，得 $2a+7=${S}$，解得 $a=${a}$，即 $a$ 是 $${a}$ 號。`
+        );
+        continue;
+      }
+
+      if (variant === 2) {
+        // 2×2 方塊 a, a+1, a+7, a+8，和為S
+        const a = randInt(1, 20);
+        const S = 4 * a + 16;
+        questions.push(
+          `在月曆上用長方形框住 $2\\times 2$ 的四個日期：$a,\\ a+1,\\ a+7,\\ a+8$，若四數之和為 $${S}$，請問最小的數 $a$ 是幾號？又 $a+8$ 等於幾號？`
+        );
+        summaryAnswers.push(`$a=${a}$ 號，$a+8=${a + 8}$ 號`);
+        answers.push(
+          `四個日期為 $a,\\ a+1,\\ a+7,\\ a+8$，其和為 $4a+16=${S}$，解得 $a=${a}$，所以最小的數為 $${a}$ 號，最大的數 $a+8=${a + 8}$ 號。`
+        );
+        continue;
+      }
+
+      // 縱向三格 a, a+7, a+14，和為S
+      const a = randInt(1, 14);
+      const S = 3 * a + 21;
+      questions.push(
+        `在月曆上同一直行連續三個日期分別為 $a,\\ b,\\ c$（每格差 7 天），若三數之和為 $${S}$，請問中間的數 $b$ 等於幾號？`
+      );
+      summaryAnswers.push(`$${a + 7}$ 號`);
+      answers.push(
+        `設最小的日期為 $a$，則三數為 $a,\\ a+7,\\ a+14$，和為 $3a+21=${S}$，解得 $a=${a}$，所以中間的數 $b=a+7=${a + 7}$ 號。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 四位數移位問題：首位數字d，移到末位，新數=k×原數+c
+  // 原數=1000d+n，新數=10n+d → 10n+d = k(1000d+n)+c → n = (d(1000k-1)+c)/(10-k)
+  function buildJ133DigitSwapSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    const cases = [
+      { d: 1, k: 5, c: -74, original: 1985, newNum: 9851, verb: '少', absC: 74 },
+      { d: 1, k: 4, c:   3, original: 1667, newNum: 6671, verb: '多', absC:  3 },
+      { d: 1, k: 3, c:   4, original: 1429, newNum: 4291, verb: '多', absC:  4 },
+      { d: 2, k: 3, c:   1, original: 2857, newNum: 8572, verb: '多', absC:  1 },
+      { d: 1, k: 5, c:  -9, original: 1998, newNum: 9981, verb: '少', absC:  9 },
+      { d: 1, k: 4, c: -13, original: 1699, newNum: 6991, verb: '少', absC: 13 },
+      { d: 1, k: 5, c: -24, original: 1975, newNum: 9751, verb: '少', absC: 24 },
+      { d: 3, k: 2, c:   4, original: 3634, newNum: 6343, verb: '多', absC:  4 },
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const { d, k, c, original, newNum, verb, absC } = cases[i % cases.length];
+      const cPart = absC === 0 ? '' : `${verb} $${absC}$，`;
+      const eq = c >= 0 ? `${k}×原數+${c}` : `${k}×原數-${Math.abs(c)}`;
+
+      questions.push(
+        `有一個四位數，最高位（最左端）的數字是 $${d}$，若將 $${d}$ 移到最右端（個位），所得新四位數比原四位數的 $${k}$ 倍${verb} $${absC}$，請問原四位數是多少？`
+      );
+      summaryAnswers.push(`$${original}$`);
+      answers.push(
+        `設原四位數最後三位組成的三位數為 $n$，則原四位數 $=${d}000+n$，移動後新四位數 $=10n+${d}$。依題意：$10n+${d}=${eq}$，展開得 $10n+${d}=${k}\\times${d}000+${k}n${c >= 0 ? '+' + c : c}$，整理得 $${10 - k}n=${k * d * 1000 + c - d}$，解得 $n=${original - d * 1000}$，所以原四位數為 $${d}${original - d * 1000 < 100 ? '0' : ''}${original - d * 1000}=${original}$。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+
+  // ─── j1-3-3 新增 generators 結束 ─────────────────────────────────────────
+
+  // ─── j1-2-1/2/3 文件題型補充 generators ─────────────────────────────────
+
+  // 質數辨識（j1-2-1）
+  function buildPrimeIdentifySet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    const trickComposites = [
+      49, 51, 57, 77, 91, 111, 119, 121, 143, 161, 169,
+      187, 203, 209, 221, 247, 253, 287, 299, 301, 319, 323
+    ];
+    const verifyPrimes = [
+      53, 59, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113,
+      127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181,
+      191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251,
+      257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317
+    ];
+
+    function factorHint(n) {
+      for (let p = 2; p * p <= n; p++) {
+        if (n % p === 0) return `$${n}=${p}\\times${n / p}$`;
+      }
+      return `${n}`;
+    }
+
+    const lbs = ['(A)', '(B)', '(C)', '(D)'];
+
+    for (let i = 0; i < count; i++) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const p = verifyPrimes[randInt(0, verifyPrimes.length - 1)];
+        const composites = shuffle(trickComposites.filter(c => c !== p)).slice(0, 3);
+        const candidates = shuffle([p, ...composites]);
+        const ansLabel = lbs[candidates.indexOf(p)];
+        questions.push(`下列哪一個數是質數？${lbs.map((l, j) => `${l} ${candidates[j]}`).join('  ')}`);
+        summaryAnswers.push(`${ansLabel} ${p}`);
+        answers.push(`${p} 無法被 2 到 $\\sqrt{${p}}$ 間的所有質數整除，故 ${p} 是質數；${composites.map(c => `${c}：${factorHint(c)}`).join('，')} 均為合數。`);
+
+      } else if (mode === 1) {
+        const usePrime = randInt(0, 1) === 1;
+        const n = usePrime
+          ? verifyPrimes[randInt(0, verifyPrimes.length - 1)]
+          : trickComposites[randInt(0, trickComposites.length - 1)];
+        questions.push(`${n} 是質數嗎？請說明理由。`);
+        if (usePrime) {
+          summaryAnswers.push('是質數');
+          answers.push(`對 2、3、5、7 等依序試除，均不能整除 ${n}，故 ${n} 是質數。`);
+        } else {
+          summaryAnswers.push('不是質數（合數）');
+          answers.push(`因為 ${factorHint(n)}，能被整除，所以 ${n} 是合數，不是質數。`);
+        }
+
+      } else {
+        const c = trickComposites[randInt(0, trickComposites.length - 1)];
+        const primes = shuffle(verifyPrimes.filter(p => p !== c)).slice(0, 3);
+        const candidates = shuffle([c, ...primes]);
+        const ansLabel = lbs[candidates.indexOf(c)];
+        questions.push(`下列哪一個數不是質數？${lbs.map((l, j) => `${l} ${candidates[j]}`).join('  ')}`);
+        summaryAnswers.push(`${ansLabel} ${c}`);
+        answers.push(`${factorHint(c)}，故 ${c} 是合數，不是質數；${primes.join('、')} 均為質數。`);
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 整除規則缺位數字（j1-2-1）
+  function buildDivisibilityDigitFillSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    const divisorSpecs = [
+      {
+        k: 3,
+        rule: '各位數字之和為 3 的倍數',
+        test(digs) { return digs.reduce((s, d) => s + d, 0) % 3 === 0; },
+      },
+      {
+        k: 9,
+        rule: '各位數字之和為 9 的倍數',
+        test(digs) { return digs.reduce((s, d) => s + d, 0) % 9 === 0; },
+      },
+      {
+        k: 4,
+        rule: '末兩位數字組成的數為 4 的倍數',
+        test(digs) {
+          const n = digs.length;
+          return (digs[n - 2] * 10 + digs[n - 1]) % 4 === 0;
+        },
+      },
+      {
+        k: 8,
+        rule: '末三位數字組成的數為 8 的倍數',
+        test(digs) {
+          const n = digs.length;
+          return (digs[n - 3] * 100 + digs[n - 2] * 10 + digs[n - 1]) % 8 === 0;
+        },
+      },
+      {
+        k: 11,
+        rule: '從右到左奇偶位交錯和差為 11 的倍數（含 0）',
+        test(digs) {
+          const n = digs.length;
+          const alt = digs.reduce((s, d, idx) => {
+            const fromRight = n - 1 - idx;
+            return s + (fromRight % 2 === 0 ? d : -d);
+          }, 0);
+          return alt % 11 === 0;
+        },
+      },
+    ];
+
+    for (let attempt = 0, i = 0; i < count && attempt < count * 30; attempt++) {
+      const spec = divisorSpecs[randInt(0, divisorSpecs.length - 1)];
+      const use5 = randInt(0, 1) === 1;
+      const len = use5 ? 5 : 4;
+
+      let pos;
+      if (spec.k === 4) {
+        pos = len - 1 - randInt(0, 1);
+      } else if (spec.k === 8) {
+        pos = len - 1 - randInt(0, 2);
+      } else {
+        pos = randInt(0, len - 1);
+      }
+
+      const digs = [];
+      for (let j = 0; j < len; j++) {
+        digs.push(j === 0 ? randInt(1, 9) : randInt(0, 9));
+      }
+
+      const validDigits = [];
+      for (let d = 0; d <= 9; d++) {
+        if (pos === 0 && d === 0) continue;
+        const test = digs.slice();
+        test[pos] = d;
+        if (spec.test(test)) validDigits.push(d);
+      }
+
+      if (validDigits.length === 0 || validDigits.length > 4) continue;
+
+      const displayArr = digs.map((d, j) => (j === pos ? '□' : String(d)));
+      const displayNum = displayArr.join('');
+      const digitStr = validDigits.join(' 或 ');
+      const numStr = use5 ? '五' : '四';
+
+      questions.push(`${numStr}位數 ${displayNum} 是 ${spec.k} 的倍數，則 □ = ？`);
+      summaryAnswers.push(`□ = ${digitStr}`);
+      answers.push(`由整除 ${spec.k} 的規則（${spec.rule}）代入可知，□ = ${digitStr}。`);
+      i++;
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 範圍倍數計數（j1-2-1）
+  function buildMultipleCountRangeSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    const rangePairs = [
+      [1, 100], [1, 150], [1, 200], [50, 200], [100, 300],
+      [1, 300], [101, 200], [201, 400], [1, 500], [100, 500]
+    ];
+    const divs = [3, 4, 5, 6, 7, 8, 9, 11, 12];
+
+    for (let i = 0; i < count; i++) {
+      const mode = i % 3;
+      const [a, b] = rangePairs[randInt(0, rangePairs.length - 1)];
+      const k = divs[randInt(0, divs.length - 1)];
+
+      if (mode === 0) {
+        const cnt = Math.floor(b / k) - Math.floor((a - 1) / k);
+        const smallest = Math.ceil(a / k) * k;
+        const largest = Math.floor(b / k) * k;
+        questions.push(`從 ${a} 到 ${b} 的整數中，${k} 的倍數共有幾個？`);
+        summaryAnswers.push(`${cnt} 個`);
+        answers.push(`最小的 ${k} 倍數為 ${smallest}，最大為 ${largest}，共 $${Math.floor(b / k)}-${Math.floor((a - 1) / k)}=${cnt}$ 個。`);
+
+      } else if (mode === 1) {
+        const r = randInt(1, k - 1);
+        const cnt = Math.floor((b - r) / k) - Math.floor((a - 1 - r) / k);
+        if (cnt < 1) { i--; continue; }
+        questions.push(`從 ${a} 到 ${b} 的整數中，除以 ${k} 餘 ${r} 的數共有幾個？`);
+        summaryAnswers.push(`${cnt} 個`);
+        answers.push(`這些數形如 $${k}n+${r}$。在 [${a}, ${b}] 內，$n$ 從 $${Math.ceil((a - r) / k)}$ 到 $${Math.floor((b - r) / k)}$，共 ${cnt} 個。`);
+
+      } else {
+        const otherDivs = divs.filter(d => d !== k);
+        const j = otherDivs[randInt(0, otherDivs.length - 1)];
+        const lcmJK = lcm(j, k);
+        const multJ = Math.floor(b / j) - Math.floor((a - 1) / j);
+        const multBoth = Math.floor(b / lcmJK) - Math.floor((a - 1) / lcmJK);
+        const result = multJ - multBoth;
+        questions.push(`從 ${a} 到 ${b} 的整數中，是 ${j} 的倍數但不是 ${k} 的倍數，共有幾個？`);
+        summaryAnswers.push(`${result} 個`);
+        answers.push(`${j} 的倍數有 ${multJ} 個；同時是 ${j} 與 ${k} 公倍數（即 ${lcmJK} 的倍數）有 ${multBoth} 個；所以結果為 $${multJ}-${multBoth}=${result}$ 個。`);
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 互質判別（j1-2-2）
+  function buildCoprimeIdentifySet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    const baseNums = [12, 15, 18, 20, 24, 28, 30, 35, 36, 42, 45, 48, 56, 60, 70, 72, 84];
+    const lbs = ['(A)', '(B)', '(C)', '(D)'];
+
+    for (let i = 0; i < count; i++) {
+      const mode = i % 3;
+      const n = baseNums[randInt(0, baseNums.length - 1)];
+      const factText = formatPrimeFactorization(primeFactorize(n));
+
+      if (mode === 0) {
+        const m = randInt(2, 120);
+        const g = gcd(n, m);
+        questions.push(`判斷 ${n} 與 ${m} 是否互質。`);
+        summaryAnswers.push(g === 1 ? '互質' : `不互質（公因數有 ${g} 等）`);
+        if (g === 1) {
+          answers.push(`$(${n},${m})=${g}=1$，兩數無共同質因數，故互質。`);
+        } else {
+          answers.push(`$(${n},${m})=${g}\\neq 1$，有公因數 ${g}，故不互質。`);
+        }
+
+      } else if (mode === 1) {
+        // Try to get exactly 1 coprime candidate out of 4
+        let attempts = 0;
+        let candidates = null;
+        while (attempts < 50) {
+          attempts++;
+          const pool = [];
+          const seen = new Set();
+          while (pool.length < 4) {
+            const c = randInt(2, 100);
+            if (!seen.has(c)) { seen.add(c); pool.push(c); }
+          }
+          const cops = pool.filter(c => gcd(c, n) === 1);
+          if (cops.length === 1) { candidates = pool; break; }
+        }
+        if (!candidates) { i--; continue; }
+        const answer = candidates.filter(c => gcd(c, n) === 1)[0];
+        const shuffled = shuffle(candidates);
+        const ansIdx = shuffled.indexOf(answer);
+        questions.push(`下列哪一個數與 ${n} 互質？${lbs.map((l, j) => `${l} ${shuffled[j]}`).join('  ')}`);
+        summaryAnswers.push(`${lbs[ansIdx]} ${answer}`);
+        answers.push(`${n} 的標準分解式為 $${factText}$；$(${n},${answer})=1$，故 ${answer} 與 ${n} 互質，其餘選項均與 ${n} 有公因數。`);
+
+      } else {
+        const sample = [];
+        const seen = new Set();
+        while (sample.length < 5) {
+          const x = randInt(2, n + 20);
+          if (!seen.has(x) && x !== n) { seen.add(x); sample.push(x); }
+        }
+        const copCount = sample.filter(c => gcd(c, n) === 1).length;
+        questions.push(`在 ${sample.join('、')} 這 5 個數中，有幾個與 ${n} 互質？`);
+        summaryAnswers.push(`${copCount} 個`);
+        const detail = sample.map(c => `${c}（$(${n},${c})=${gcd(c, n)}$）`).join('、');
+        answers.push(`逐一計算：${detail}。最大公因數為 1 的共 ${copCount} 個。`);
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 公因數個數計算（j1-2-2）
+  function buildCommonDivisorsCountSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    const pairs = [
+      [12, 18], [24, 36], [30, 45], [36, 48], [18, 24],
+      [60, 84], [72, 96], [48, 60], [42, 56], [90, 120],
+      [24, 60], [36, 60], [45, 75], [48, 72], [30, 42]
+    ];
+
+    for (let i = 0; i < count; i++) {
+      const mode = i % 2;
+      const [a, b] = pairs[randInt(0, pairs.length - 1)];
+      const g = gcd(a, b);
+      const commonDivs = divisorsOf(g);
+      const cnt = commonDivs.length;
+
+      if (mode === 0) {
+        questions.push(`${a} 與 ${b} 共有幾個公因數？`);
+        summaryAnswers.push(`${cnt} 個`);
+        answers.push(`先求最大公因數：$(${a},${b})=${g}$；兩數的所有公因數就是 ${g} 的所有因數，共 ${cnt} 個：$${commonDivs.join('、')}$。`);
+      } else {
+        questions.push(`列出 ${a} 與 ${b} 的所有公因數。`);
+        summaryAnswers.push(`$${commonDivs.join('、')}$`);
+        answers.push(`$(${a},${b})=${g}$，公因數即 ${g} 的所有正因數：$${commonDivs.join('、')}$，共 ${cnt} 個。`);
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 分數大小比較（j1-2-3）
+  function buildFractionCompareSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    function fracTeX(n, d) {
+      const r = reduceFraction(n, d);
+      if (r.denominator === 1) return `${r.numerator}`;
+      const sign = r.numerator < 0 ? '-' : '';
+      return `${sign}\\dfrac{${Math.abs(r.numerator)}}{${r.denominator}}`;
+    }
+    function fracVal(n, d) { return n / d; }
+
+    const posSets = [
+      [[1,2],[2,3],[3,5]], [[3,4],[5,7],[7,10]], [[4,9],[5,11],[3,7]],
+      [[2,5],[3,8],[4,11]], [[5,6],[7,9],[11,15]], [[1,3],[2,7],[3,10]],
+      [[7,8],[9,10],[11,12]], [[3,7],[4,9],[5,11]]
+    ];
+    const negSets = [
+      [[-1,3],[-2,5],[-3,8]], [[-5,6],[-7,9],[-4,7]],
+      [[-2,3],[-3,4],[-5,8]], [[-1,4],[-2,7],[-3,10]]
+    ];
+    const mixedSets = [
+      [[-1,2],[1,3],[-2,3]], [[3,4],[-1,2],[2,5]], [[-3,7],[2,5],[-1,3]]
+    ];
+
+    for (let i = 0; i < count; i++) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const set = posSets[randInt(0, posSets.length - 1)];
+        const sorted = set.slice().sort((x, y) => fracVal(y[0],y[1]) - fracVal(x[0],x[1]));
+        const lcmD = lcm(lcm(set[0][1], set[1][1]), set[2][1]);
+        const expanded = set.map(([n,d]) => `$${fracTeX(n,d)}=\\dfrac{${n*(lcmD/d)}}{${lcmD}}$`).join('，');
+        questions.push(`將以下三個分數由大到小排列：$${set.map(([n,d]) => fracTeX(n,d)).join('$、$')}$`);
+        summaryAnswers.push(`$${sorted.map(([n,d]) => fracTeX(n,d)).join('>') }$`);
+        answers.push(`通分（公分母 ${lcmD}）：${expanded}；由大到小為 $${sorted.map(([n,d]) => fracTeX(n,d)).join('>')}$。`);
+
+      } else if (mode === 1) {
+        const set = negSets[randInt(0, negSets.length - 1)];
+        const sorted = set.slice().sort((x, y) => fracVal(y[0],y[1]) - fracVal(x[0],x[1]));
+        const lcmD = lcm(lcm(Math.abs(set[0][1]), Math.abs(set[1][1])), Math.abs(set[2][1]));
+        const expanded = set.map(([n,d]) => {
+          const nd = Math.abs(d);
+          return `$${fracTeX(n,d)}=\\dfrac{${n*(lcmD/nd)}}{${lcmD}}$`;
+        }).join('，');
+        questions.push(`將以下三個負分數由大到小排列：$${set.map(([n,d]) => fracTeX(n,d)).join('$、$')}$`);
+        summaryAnswers.push(`$${sorted.map(([n,d]) => fracTeX(n,d)).join('>')}$`);
+        answers.push(`負分數中絕對值較小者數值較大。通分：${expanded}；由大到小為 $${sorted.map(([n,d]) => fracTeX(n,d)).join('>')}$。`);
+
+      } else {
+        const set = mixedSets[randInt(0, mixedSets.length - 1)];
+        const sorted = set.slice().sort((x, y) => fracVal(y[0],y[1]) - fracVal(x[0],x[1]));
+        questions.push(`比較以下三個數的大小，由大到小排列：$${set.map(([n,d]) => fracTeX(n,d)).join('$、$')}$`);
+        summaryAnswers.push(`$${sorted.map(([n,d]) => fracTeX(n,d)).join('>')}$`);
+        const posNums = set.filter(([n]) => n > 0).map(([n,d]) => `$${fracTeX(n,d)}$`).join('、');
+        const negNums = set.filter(([n]) => n < 0).map(([n,d]) => `$${fracTeX(n,d)}$`).join('、');
+        answers.push(`正數（${posNums || '無'}）大於負數（${negNums || '無'}）；由大到小為 $${sorted.map(([n,d]) => fracTeX(n,d)).join('>')}$。`);
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 分數化簡（j1-2-3）
+  function buildFractionSimplifySet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    const toSimplify = [
+      [4,6],[6,9],[8,12],[6,10],[9,12],[10,15],[12,16],[15,20],
+      [6,14],[9,15],[10,25],[8,20],[12,18],[14,21],[15,25],[16,24],
+      [18,24],[20,30],[24,36],[18,30],[12,20],[15,35],[21,28],[22,33]
+    ];
+    const alreadySimplified = [
+      [3,7],[5,8],[4,9],[7,11],[5,12],[3,11],[7,13],[8,15],
+      [5,9],[7,10],[4,7],[9,14],[11,15],[7,16],[5,11],[8,13]
+    ];
+    const lbs = ['(A)', '(B)', '(C)', '(D)'];
+
+    for (let i = 0; i < count; i++) {
+      const mode = i % 2;
+
+      if (mode === 0) {
+        const [n, d] = toSimplify[randInt(0, toSimplify.length - 1)];
+        const useNeg = randInt(0, 1) === 1;
+        const fn = useNeg ? -n : n;
+        const g = gcd(n, d);
+        questions.push(`將 $${formatFraction(fn, d)}$ 化為最簡分數。`);
+        summaryAnswers.push(`$${formatFraction(fn / g, d / g)}$`);
+        answers.push(`$\\gcd(${n},${d})=${g}$，分子分母同除 ${g}，得 $${formatFraction(fn, d)}=${formatFraction(fn / g, d / g)}$。`);
+
+      } else {
+        const correct = alreadySimplified[randInt(0, alreadySimplified.length - 1)];
+        const wrongPool = toSimplify.filter(([n, d]) => gcd(n, d) > 1);
+        const wrongs = shuffle(wrongPool).slice(0, 3);
+        const arr = shuffle([correct, ...wrongs]);
+        const ansIdx = arr.findIndex(([n, d]) => n === correct[0] && d === correct[1]);
+        questions.push(`下列哪一個分數是最簡分數？${lbs.map((l, j) => `${l} $${formatFraction(arr[j][0], arr[j][1])}$`).join('  ')}`);
+        summaryAnswers.push(`${lbs[ansIdx]} $${formatFraction(correct[0], correct[1])}$`);
+        answers.push(`$\\gcd(${correct[0]},${correct[1]})=1$，故 $${formatFraction(correct[0], correct[1])}$ 是最簡分數；其餘選項分子分母仍有大於 1 的公因數。`);
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 倒數概念與計算（j1-2-3）
+  function buildFractionReciprocalSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    const simpleFracs = [
+      [2,3],[3,4],[4,5],[5,6],[3,7],[5,8],[7,9],[2,5],
+      [3,5],[4,7],[5,7],[7,8],[2,7],[5,9],[7,11],[3,8]
+    ];
+    const mixedNums = [
+      [1,1,2],[2,1,3],[1,2,3],[3,1,4],[2,3,4],
+      [1,3,4],[2,1,5],[1,3,5],[4,1,2],[3,2,3]
+    ];
+
+    for (let i = 0; i < count; i++) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const [n, d] = simpleFracs[randInt(0, simpleFracs.length - 1)];
+        const useNeg = randInt(0, 1) === 1;
+        const fn = useNeg ? -n : n;
+        const recipN = useNeg ? -d : d;
+        questions.push(`求 $${formatFraction(fn, d)}$ 的倒數。`);
+        summaryAnswers.push(`$${formatFraction(recipN, n)}$`);
+        answers.push(`分數的倒數是將分子與分母互換（符號不變）：$\\left(${formatFraction(fn, d)}\\right)$ 的倒數為 $${formatFraction(recipN, n)}$。`);
+
+      } else if (mode === 1) {
+        const [w, n, d] = mixedNums[randInt(0, mixedNums.length - 1)];
+        const impN = w * d + n;
+        questions.push(`求帶分數 $${w}\\dfrac{${n}}{${d}}$ 的倒數。`);
+        summaryAnswers.push(`$${formatFraction(d, impN)}$`);
+        answers.push(`先化為假分數：$${w}\\dfrac{${n}}{${d}}=\\dfrac{${impN}}{${d}}$；倒數為 $${formatFraction(d, impN)}$。`);
+
+      } else {
+        const [n, d] = simpleFracs[randInt(0, simpleFracs.length - 1)];
+        const useNeg = randInt(0, 1) === 1;
+        const fn = useNeg ? -n : n;
+        const recipN = useNeg ? -d : d;
+        questions.push(`若 $□\\times\\left(${formatFraction(fn, d)}\\right)=1$，則 □ = ？`);
+        summaryAnswers.push(`$${formatFraction(recipN, n)}$`);
+        answers.push(`滿足 $□\\times a=1$ 的數即 $a$ 的倒數，故 □ $=${formatFraction(recipN, n)}$。`);
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // ─── j1-2-1/2/3 文件題型補充 generators 結束 ─────────────────────────────
+
   const nextConfigs = {
     'midpoint-formula': {
       type: 'drill',
@@ -8603,6 +9648,141 @@
         return buildJ133RelativeSpeedSet(5);
       },
     },
+    'j1-3-3-opposite-number-application-drill': {
+      type: 'drill',
+      title: '兩數互為相反數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133OppositeNumberSet(5);
+      },
+    },
+    'j1-3-3-three-person-chain-diff-drill': {
+      type: 'drill',
+      title: '三人連差應用題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133ThreePersonChainDiffSet(5);
+      },
+    },
+    'j1-3-3-monkey-banana-drill': {
+      type: 'drill',
+      title: '猴子香蕉問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133MonkeyBananaSet(5);
+      },
+    },
+    'j1-3-3-double-discount-drill': {
+      type: 'drill',
+      title: '兩折扣比較應用題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133DoubleDiscountSet(5);
+      },
+    },
+    'j1-3-3-guess-number-drill': {
+      type: 'drill',
+      title: '猜數遊戲應用題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133GuessNumberSet(5);
+      },
+    },
+    'j1-3-3-rectangle-dimension-drill': {
+      type: 'drill',
+      title: '長方形長寬關係應用題',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ133RectangleDimensionSet(5);
+      },
+    },
+    'j1-3-3-age-ratio-plus-drill': {
+      type: 'drill',
+      title: '倍加型父子年齡應用題',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ133AgeRatioPlusSet(5);
+      },
+    },
+    'j1-3-3-weight-compare-drill': {
+      type: 'drill',
+      title: '和倍差體重應用題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133WeightCompareSet(5);
+      },
+    },
+    'j1-3-3-find-fraction-drill': {
+      type: 'drill',
+      title: '求特定分數應用題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133FindFractionSet(5);
+      },
+    },
+    'j1-3-3-rope-folding-drill': {
+      type: 'drill',
+      title: '繩子折段差與井深問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133RopeFoldingSet(5);
+      },
+    },
+    'j1-3-3-candle-burn-drill': {
+      type: 'drill',
+      title: '蠟燭同時燃燒比例問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133CandleBurnSet(5);
+      },
+    },
+    'j1-3-3-circular-track-drill': {
+      type: 'drill',
+      title: '圓形跑道反向相遇週期問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133CircularTrackSet(5);
+      },
+    },
+    'j1-3-3-chain-fraction-take-drill': {
+      type: 'drill',
+      title: '連續取分數型問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133ChainFractionTakeSet(5);
+      },
+    },
+    'j1-3-3-calendar-block-drill': {
+      type: 'drill',
+      title: '月曆方框日期問題',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ133CalendarBlockSet(5);
+      },
+    },
+    'j1-3-3-digit-swap-drill': {
+      type: 'drill',
+      title: '四位數移位問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133DigitSwapSet(5);
+      },
+    },
     'j1-distributive-law-drill': {
       type: 'drill',
       title: '分配律',
@@ -9465,6 +10645,78 @@
       questionCount: 5,
       generate() {
         return buildJ122LcmMultiplesSet(5);
+      },
+    },
+    'j1-2-1-prime-identify-drill': {
+      type: 'drill',
+      title: '質數辨識',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildPrimeIdentifySet(5);
+      },
+    },
+    'j1-2-1-divisibility-digit-fill-drill': {
+      type: 'drill',
+      title: '整除規則缺位數字',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildDivisibilityDigitFillSet(5);
+      },
+    },
+    'j1-2-1-multiple-count-range-drill': {
+      type: 'drill',
+      title: '範圍倍數計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildMultipleCountRangeSet(5);
+      },
+    },
+    'j1-2-2-coprime-identify-drill': {
+      type: 'drill',
+      title: '互質判別',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildCoprimeIdentifySet(5);
+      },
+    },
+    'j1-2-2-common-divisors-count-drill': {
+      type: 'drill',
+      title: '公因數個數計算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildCommonDivisorsCountSet(5);
+      },
+    },
+    'j1-2-3-fraction-compare-drill': {
+      type: 'drill',
+      title: '分數大小比較',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildFractionCompareSet(5);
+      },
+    },
+    'j1-2-3-fraction-simplify-drill': {
+      type: 'drill',
+      title: '分數化簡',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildFractionSimplifySet(5);
+      },
+    },
+    'j1-2-3-fraction-reciprocal-drill': {
+      type: 'drill',
+      title: '倒數概念與計算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildFractionReciprocalSet(5);
       },
     },
   };

@@ -1872,6 +1872,40 @@
     return buildS312GridAngleSet(count);
   }
 
+  function buildS312SinCosSumSquareSet(count) {
+    // 已知 sinA+sinB=p 且 cosA+cosB=q，求 cos(A-B)
+    // 公式：(p)²+(q)² = 2+2cos(A-B)，故 cos(A-B)=(p²+q²-2)/2
+    const questions = [];
+    const answers = [];
+    const cases = [
+      { p: '\\frac{\\sqrt{6}}{2}', q: '\\frac{\\sqrt{2}}{2}', pSq: '\\frac{3}{2}', qSq: '\\frac{1}{2}', sumSq: '2', cosAB: '0' },
+      { p: '1',                         q: '1',                         pSq: '1',             qSq: '1',             sumSq: '2', cosAB: '0' },
+      { p: '\\sqrt{2}',               q: '0',                         pSq: '2',             qSq: '0',             sumSq: '2', cosAB: '0' },
+      { p: '0',                         q: '\\sqrt{2}',               pSq: '0',             qSq: '2',             sumSq: '2', cosAB: '0' },
+      { p: '\\frac{1}{2}',            q: '\\frac{\\sqrt{3}}{2}',  pSq: '\\frac{1}{4}', qSq: '\\frac{3}{4}', sumSq: '1', cosAB: '-\\frac{1}{2}' },
+      { p: '\\frac{\\sqrt{2}}{2}',  q: '\\frac{\\sqrt{2}}{2}',  pSq: '\\frac{1}{2}', qSq: '\\frac{1}{2}', sumSq: '1', cosAB: '-\\frac{1}{2}' },
+      { p: '1',                         q: '0',                         pSq: '1',             qSq: '0',             sumSq: '1', cosAB: '-\\frac{1}{2}' },
+      { p: '\\sqrt{2}',               q: '1',                         pSq: '2',             qSq: '1',             sumSq: '3', cosAB: '\\frac{1}{2}' },
+      { p: '1',                         q: '\\sqrt{2}',               pSq: '1',             qSq: '2',             sumSq: '3', cosAB: '\\frac{1}{2}' },
+      { p: '\\sqrt{3}',               q: '1',                         pSq: '3',             qSq: '1',             sumSq: '4', cosAB: '1' },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const item = s242Pick(cases);
+      if (i % 2 === 0) {
+        questions.push(`已知 \\(\\sin A+\\sin B=${item.p}\\)，\\(\\cos A+\\cos B=${item.q}\\)，求 \\(\\cos(A-B)\\)。`);
+        answers.push(`簡答：\\(${item.cosAB}\\)。過程：兩式平方後相加，\\((${item.p})^2+(${item.q})^2=${item.pSq}+${item.qSq}=${item.sumSq}\\)。展開左邊得 \\(2+2\\cos(A-B)=${item.sumSq}\\)，因此 \\(\\cos(A-B)=${item.cosAB}\\)。`);
+      } else {
+        questions.push(`已知 \\(\\sin x+\\sin y=${item.p}\\)，\\(\\cos x+\\cos y=${item.q}\\)，求 \\(\\cos(x-y)\\)。`);
+        answers.push(`簡答：\\(${item.cosAB}\\)。過程：\\((\\sin x+\\sin y)^2+(\\cos x+\\cos y)^2=2+2\\cos(x-y)\\)，代入得 \\(2+2\\cos(x-y)=${item.sumSq}\\)，所以 \\(\\cos(x-y)=${item.cosAB}\\)。`);
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS312SinCosSumSquareSubtypeSet(count) {
+    return buildS312SinCosSumSquareSet(count);
+  }
+
   function s313Pick(items) {
     return items[randInt(0, items.length - 1)];
   }
@@ -2550,18 +2584,52 @@
   function buildS314EquationSolvingSet(count) {
     const questions = [];
     const answers = [];
-    const cases = [
-      { expr: '\\sin x+\\cos x=1', ans: '0,\\frac{\\pi}{2}' },
-      { expr: '\\sin x-\\cos x=1', ans: '\\frac{\\pi}{2},\\pi' },
-      { expr: '\\sin x+\\cos x=-1', ans: '\\pi,\\frac{3\\pi}{2}' },
-      { expr: '\\sin x-\\cos x=-1', ans: '0,\\frac{3\\pi}{2}' },
+    const sinCases = [
+      { c: '0',                          ans: '0,\\pi',                               hint: '\\(\\sin\\theta=0\\) 在 \\([0,2\\pi)\\) 時 \\(\\theta=0,\\pi\\)。' },
+      { c: '\\frac{1}{2}',             ans: '\\frac{\\pi}{6},\\frac{5\\pi}{6}', hint: '基本角 \\(\\frac{\\pi}{6}\\)，第二象限解 \\(\\pi-\\frac{\\pi}{6}=\\frac{5\\pi}{6}\\)。' },
+      { c: '-\\frac{1}{2}',            ans: '\\frac{7\\pi}{6},\\frac{11\\pi}{6}', hint: '第三象限 \\(\\pi+\\frac{\\pi}{6}\\)，第四象限 \\(2\\pi-\\frac{\\pi}{6}\\)。' },
+      { c: '\\frac{\\sqrt{2}}{2}',   ans: '\\frac{\\pi}{4},\\frac{3\\pi}{4}', hint: '基本角 \\(\\frac{\\pi}{4}\\)，第二象限解 \\(\\pi-\\frac{\\pi}{4}=\\frac{3\\pi}{4}\\)。' },
+      { c: '-\\frac{\\sqrt{2}}{2}',  ans: '\\frac{5\\pi}{4},\\frac{7\\pi}{4}', hint: '第三象限 \\(\\pi+\\frac{\\pi}{4}\\)，第四象限 \\(2\\pi-\\frac{\\pi}{4}\\)。' },
+      { c: '\\frac{\\sqrt{3}}{2}',   ans: '\\frac{\\pi}{3},\\frac{2\\pi}{3}', hint: '基本角 \\(\\frac{\\pi}{3}\\)，第二象限解 \\(\\pi-\\frac{\\pi}{3}=\\frac{2\\pi}{3}\\)。' },
+      { c: '-\\frac{\\sqrt{3}}{2}',  ans: '\\frac{4\\pi}{3},\\frac{5\\pi}{3}', hint: '第三象限 \\(\\pi+\\frac{\\pi}{3}\\)，第四象限 \\(2\\pi-\\frac{\\pi}{3}\\)。' },
+      { c: '1',                          ans: '\\frac{\\pi}{2}',                     hint: '\\(\\sin\\theta=1\\) 只有唯一解 \\(\\frac{\\pi}{2}\\)。' },
+      { c: '-1',                         ans: '\\frac{3\\pi}{2}',                    hint: '\\(\\sin\\theta=-1\\) 只有唯一解 \\(\\frac{3\\pi}{2}\\)。' },
+    ];
+    const cosCases = [
+      { c: '0',                          ans: '\\frac{\\pi}{2},\\frac{3\\pi}{2}', hint: '\\(\\cos\\theta=0\\) 在 \\([0,2\\pi)\\) 時 \\(\\theta=\\frac{\\pi}{2},\\frac{3\\pi}{2}\\)。' },
+      { c: '\\frac{1}{2}',             ans: '\\frac{\\pi}{3},\\frac{5\\pi}{3}', hint: '第一象限 \\(\\frac{\\pi}{3}\\)，第四象限 \\(2\\pi-\\frac{\\pi}{3}=\\frac{5\\pi}{3}\\)。' },
+      { c: '-\\frac{1}{2}',            ans: '\\frac{2\\pi}{3},\\frac{4\\pi}{3}', hint: '第二象限 \\(\\pi-\\frac{\\pi}{3}\\)，第三象限 \\(\\pi+\\frac{\\pi}{3}\\)。' },
+      { c: '\\frac{\\sqrt{2}}{2}',   ans: '\\frac{\\pi}{4},\\frac{7\\pi}{4}', hint: '第一象限 \\(\\frac{\\pi}{4}\\)，第四象限 \\(2\\pi-\\frac{\\pi}{4}=\\frac{7\\pi}{4}\\)。' },
+      { c: '-\\frac{\\sqrt{2}}{2}',  ans: '\\frac{3\\pi}{4},\\frac{5\\pi}{4}', hint: '第二象限 \\(\\pi-\\frac{\\pi}{4}\\)，第三象限 \\(\\pi+\\frac{\\pi}{4}\\)。' },
+      { c: '\\frac{\\sqrt{3}}{2}',   ans: '\\frac{\\pi}{6},\\frac{11\\pi}{6}', hint: '第一象限 \\(\\frac{\\pi}{6}\\)，第四象限 \\(2\\pi-\\frac{\\pi}{6}=\\frac{11\\pi}{6}\\)。' },
+      { c: '-\\frac{\\sqrt{3}}{2}',  ans: '\\frac{5\\pi}{6},\\frac{7\\pi}{6}', hint: '第二象限 \\(\\pi-\\frac{\\pi}{6}\\)，第三象限 \\(\\pi+\\frac{\\pi}{6}\\)。' },
+      { c: '1',                          ans: '0',                                        hint: '\\(\\cos\\theta=1\\) 只有唯一解 \\(0\\)。' },
+      { c: '-1',                         ans: '\\pi',                                   hint: '\\(\\cos\\theta=-1\\) 只有唯一解 \\(\\pi\\)。' },
+    ];
+    const tanCases = [
+      { c: '0',                            ans: '0,\\pi',                               hint: '\\(\\tan\\theta=0\\) 在 \\([0,2\\pi)\\) 時 \\(\\theta=0,\\pi\\)。' },
+      { c: '1',                            ans: '\\frac{\\pi}{4},\\frac{5\\pi}{4}', hint: '第一象限 \\(\\frac{\\pi}{4}\\)，第三象限 \\(\\pi+\\frac{\\pi}{4}=\\frac{5\\pi}{4}\\)。' },
+      { c: '-1',                           ans: '\\frac{3\\pi}{4},\\frac{7\\pi}{4}', hint: '第二象限 \\(\\pi-\\frac{\\pi}{4}\\)，第四象限 \\(2\\pi-\\frac{\\pi}{4}\\)。' },
+      { c: '\\sqrt{3}',                  ans: '\\frac{\\pi}{3},\\frac{4\\pi}{3}', hint: '第一象限 \\(\\frac{\\pi}{3}\\)，第三象限 \\(\\pi+\\frac{\\pi}{3}=\\frac{4\\pi}{3}\\)。' },
+      { c: '-\\sqrt{3}',                 ans: '\\frac{2\\pi}{3},\\frac{5\\pi}{3}', hint: '第二象限 \\(\\pi-\\frac{\\pi}{3}\\)，第四象限 \\(2\\pi-\\frac{\\pi}{3}\\)。' },
+      { c: '\\frac{\\sqrt{3}}{3}',     ans: '\\frac{\\pi}{6},\\frac{7\\pi}{6}', hint: '\\(\\tan\\frac{\\pi}{6}=\\frac{\\sqrt{3}}{3}\\)，第三象限 \\(\\pi+\\frac{\\pi}{6}=\\frac{7\\pi}{6}\\)。' },
+      { c: '-\\frac{\\sqrt{3}}{3}',    ans: '\\frac{5\\pi}{6},\\frac{11\\pi}{6}', hint: '第二象限 \\(\\pi-\\frac{\\pi}{6}\\)，第四象限 \\(2\\pi-\\frac{\\pi}{6}\\)。' },
     ];
     for (let i = 0; i < count; i += 1) {
-      const item = s313Pick(cases);
-      questions.push(`解方程式 \\(${item.expr}\\)，求 \\(0\\le x<2\\pi\\) 內的所有解。`);
-      answers.push(
-        `簡答：\\(x=${item.ans}\\)。過程：把左式疊合成 \\(\\sqrt2\\sin(x\\pm\\frac\\pi4)\\)，再解特殊角；也可直接檢查單位圓上 \\(\\sin x\\) 與 \\(\\cos x\\) 的組合。`
-      );
+      const mode = i % 3;
+      if (mode === 0) {
+        const item = s313Pick(sinCases);
+        questions.push(`解方程式 \\(\\sin\\theta=${item.c}\\)，求 \\(0\\le\\theta<2\\pi\\) 內的所有解。`);
+        answers.push(`簡答：\\(\\theta=${item.ans}\\)。過程：${item.hint}`);
+      } else if (mode === 1) {
+        const item = s313Pick(cosCases);
+        questions.push(`解方程式 \\(\\cos\\theta=${item.c}\\)，求 \\(0\\le\\theta<2\\pi\\) 內的所有解。`);
+        answers.push(`簡答：\\(\\theta=${item.ans}\\)。過程：${item.hint}`);
+      } else {
+        const item = s313Pick(tanCases);
+        questions.push(`解方程式 \\(\\tan\\theta=${item.c}\\)，求 \\(0\\le\\theta<2\\pi\\) 內的所有解。`);
+        answers.push(`簡答：\\(\\theta=${item.ans}\\)。過程：${item.hint}`);
+      }
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
@@ -2620,6 +2688,92 @@
       );
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS314TrigInequalityParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+    const sinGtCases = [
+      { c: '\\frac{1}{2}',            ans: '\\frac{\\pi}{6}<\\theta<\\frac{5\\pi}{6}',   detail: '\\(\\sin\\theta=\\frac{1}{2}\\) 解為 \\(\\frac{\\pi}{6},\\frac{5\\pi}{6}\\)，\\(\\sin\\theta>\\frac{1}{2}\\) 在兩解之間。' },
+      { c: '\\frac{\\sqrt{2}}{2}',  ans: '\\frac{\\pi}{4}<\\theta<\\frac{3\\pi}{4}',   detail: '\\(\\sin\\theta=\\frac{\\sqrt{2}}{2}\\) 解為 \\(\\frac{\\pi}{4},\\frac{3\\pi}{4}\\)，取中間弧段。' },
+      { c: '\\frac{\\sqrt{3}}{2}',  ans: '\\frac{\\pi}{3}<\\theta<\\frac{2\\pi}{3}',   detail: '\\(\\sin\\theta=\\frac{\\sqrt{3}}{2}\\) 解為 \\(\\frac{\\pi}{3},\\frac{2\\pi}{3}\\)，取中間弧段。' },
+      { c: '0',                          ans: '0<\\theta<\\pi',                                   detail: '\\(\\sin\\theta>0\\) 在第一、二象限，即 \\((0,\\pi)\\)。' },
+      { c: '-\\frac{1}{2}',           ans: '0\\le\\theta<\\frac{7\\pi}{6}\\text{ 或 }\\frac{11\\pi}{6}<\\theta<2\\pi', detail: '補集：\\(\\sin\\theta\\le-\\frac{1}{2}\\) 的範圍為 \\([\\frac{7\\pi}{6},\\frac{11\\pi}{6}]\\)，取補集。' },
+    ];
+    const cosLtCases = [
+      { c: '\\frac{\\sqrt{3}}{2}',  ans: '\\frac{\\pi}{6}<\\theta<\\frac{11\\pi}{6}',  detail: '\\(\\cos\\theta=\\frac{\\sqrt{3}}{2}\\) 解為 \\(\\frac{\\pi}{6},\\frac{11\\pi}{6}\\)，中間弧段 \\(\\cos\\theta<\\frac{\\sqrt{3}}{2}\\)。' },
+      { c: '\\frac{1}{2}',            ans: '\\frac{\\pi}{3}<\\theta<\\frac{5\\pi}{3}',   detail: '\\(\\cos\\theta=\\frac{1}{2}\\) 解為 \\(\\frac{\\pi}{3},\\frac{5\\pi}{3}\\)，中間弧段較大。' },
+      { c: '0',                          ans: '\\frac{\\pi}{2}<\\theta<\\frac{3\\pi}{2}',  detail: '\\(\\cos\\theta<0\\) 在第二、三象限 \\((\\frac{\\pi}{2},\\frac{3\\pi}{2})\\)。' },
+      { c: '-\\frac{1}{2}',           ans: '\\frac{2\\pi}{3}<\\theta<\\frac{4\\pi}{3}', detail: '\\(\\cos\\theta=-\\frac{1}{2}\\) 解為 \\(\\frac{2\\pi}{3},\\frac{4\\pi}{3}\\)，之間 \\(\\cos\\theta<-\\frac{1}{2}\\)。' },
+      { c: '-\\frac{\\sqrt{3}}{2}',  ans: '\\frac{5\\pi}{6}<\\theta<\\frac{7\\pi}{6}', detail: '\\(\\cos\\theta=-\\frac{\\sqrt{3}}{2}\\) 解為 \\(\\frac{5\\pi}{6},\\frac{7\\pi}{6}\\)，之間弧段最小。' },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      if (i % 2 === 0) {
+        const item = s313Pick(sinGtCases);
+        questions.push(`解不等式 \\(\\sin\\theta>${item.c}\\)，其中 \\(0\\le\\theta<2\\pi\\)。`);
+        answers.push(`簡答：\\(${item.ans}\\)。過程：${item.detail}`);
+      } else {
+        const item = s313Pick(cosLtCases);
+        questions.push(`解不等式 \\(\\cos\\theta<${item.c}\\)，其中 \\(0\\le\\theta<2\\pi\\)。`);
+        answers.push(`簡答：\\(${item.ans}\\)。過程：${item.detail}`);
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS314InverseTrigEvalSet(count) {
+    const questions = [];
+    const answers = [];
+    const arcsinCases = [
+      { expr: '\\sin\\frac{5\\pi}{6}',  val: '\\frac{\\pi}{6}',  hint: '\\(\\sin\\frac{5\\pi}{6}=\\frac{1}{2}\\)，\\(\\arcsin\\frac{1}{2}=\\frac{\\pi}{6}\\)（在 \\([-\\frac{\\pi}{2},\\frac{\\pi}{2}]\\) 內）。' },
+      { expr: '\\sin\\frac{2\\pi}{3}',  val: '\\frac{\\pi}{3}',  hint: '\\(\\sin\\frac{2\\pi}{3}=\\frac{\\sqrt{3}}{2}\\)，\\(\\arcsin\\frac{\\sqrt{3}}{2}=\\frac{\\pi}{3}\\)。' },
+      { expr: '\\sin\\frac{3\\pi}{4}',  val: '\\frac{\\pi}{4}',  hint: '\\(\\sin\\frac{3\\pi}{4}=\\frac{\\sqrt{2}}{2}\\)，\\(\\arcsin\\frac{\\sqrt{2}}{2}=\\frac{\\pi}{4}\\)。' },
+      { expr: '\\sin\\frac{7\\pi}{6}',  val: '-\\frac{\\pi}{6}', hint: '\\(\\sin\\frac{7\\pi}{6}=-\\frac{1}{2}\\)，\\(\\arcsin(-\\frac{1}{2})=-\\frac{\\pi}{6}\\)。' },
+      { expr: '\\sin\\frac{4\\pi}{3}',  val: '-\\frac{\\pi}{3}', hint: '\\(\\sin\\frac{4\\pi}{3}=-\\frac{\\sqrt{3}}{2}\\)，\\(\\arcsin(-\\frac{\\sqrt{3}}{2})=-\\frac{\\pi}{3}\\)。' },
+      { expr: '\\sin\\frac{5\\pi}{4}',  val: '-\\frac{\\pi}{4}', hint: '\\(\\sin\\frac{5\\pi}{4}=-\\frac{\\sqrt{2}}{2}\\)，\\(\\arcsin(-\\frac{\\sqrt{2}}{2})=-\\frac{\\pi}{4}\\)。' },
+    ];
+    const arccosCases = [
+      { expr: '\\cos\\frac{7\\pi}{6}',   val: '\\frac{5\\pi}{6}', hint: '\\(\\cos\\frac{7\\pi}{6}=-\\frac{\\sqrt{3}}{2}\\)，\\(\\arccos(-\\frac{\\sqrt{3}}{2})=\\frac{5\\pi}{6}\\)。' },
+      { expr: '\\cos\\frac{5\\pi}{4}',   val: '\\frac{3\\pi}{4}', hint: '\\(\\cos\\frac{5\\pi}{4}=-\\frac{\\sqrt{2}}{2}\\)，\\(\\arccos(-\\frac{\\sqrt{2}}{2})=\\frac{3\\pi}{4}\\)。' },
+      { expr: '\\cos\\frac{4\\pi}{3}',   val: '\\frac{2\\pi}{3}', hint: '\\(\\cos\\frac{4\\pi}{3}=-\\frac{1}{2}\\)，\\(\\arccos(-\\frac{1}{2})=\\frac{2\\pi}{3}\\)。' },
+      { expr: '\\cos\\frac{5\\pi}{3}',   val: '\\frac{\\pi}{3}',  hint: '\\(\\cos\\frac{5\\pi}{3}=\\frac{1}{2}\\)，\\(\\arccos\\frac{1}{2}=\\frac{\\pi}{3}\\)。' },
+      { expr: '\\cos(-\\frac{\\pi}{6})', val: '\\frac{\\pi}{6}',  hint: '\\(\\cos(-\\frac{\\pi}{6})=\\frac{\\sqrt{3}}{2}\\)（餘弦為偶函數），\\(\\arccos\\frac{\\sqrt{3}}{2}=\\frac{\\pi}{6}\\)。' },
+      { expr: '\\cos(-\\frac{\\pi}{4})', val: '\\frac{\\pi}{4}',  hint: '\\(\\cos(-\\frac{\\pi}{4})=\\frac{\\sqrt{2}}{2}\\)，\\(\\arccos\\frac{\\sqrt{2}}{2}=\\frac{\\pi}{4}\\)。' },
+    ];
+    const arctanCases = [
+      { expr: '\\sqrt{3}',               val: '\\frac{\\pi}{3}',  hint: '\\(\\tan\\frac{\\pi}{3}=\\sqrt{3}\\)，值域 \\((-\\frac{\\pi}{2},\\frac{\\pi}{2})\\)。' },
+      { expr: '-\\sqrt{3}',              val: '-\\frac{\\pi}{3}', hint: '\\(\\tan(-\\frac{\\pi}{3})=-\\sqrt{3}\\)。' },
+      { expr: '1',                          val: '\\frac{\\pi}{4}',  hint: '\\(\\tan\\frac{\\pi}{4}=1\\)，\\(\\arctan 1=\\frac{\\pi}{4}\\)。' },
+      { expr: '-1',                         val: '-\\frac{\\pi}{4}', hint: '\\(\\tan(-\\frac{\\pi}{4})=-1\\)，\\(\\arctan(-1)=-\\frac{\\pi}{4}\\)。' },
+      { expr: '\\frac{\\sqrt{3}}{3}',  val: '\\frac{\\pi}{6}',  hint: '\\(\\tan\\frac{\\pi}{6}=\\frac{1}{\\sqrt{3}}=\\frac{\\sqrt{3}}{3}\\)，\\(\\arctan\\frac{\\sqrt{3}}{3}=\\frac{\\pi}{6}\\)。' },
+      { expr: '-\\frac{\\sqrt{3}}{3}', val: '-\\frac{\\pi}{6}', hint: '\\(\\arctan(-\\frac{\\sqrt{3}}{3})=-\\frac{\\pi}{6}\\)。' },
+      { expr: '0',                          val: '0',                    hint: '\\(\\tan 0=0\\)，\\(\\arctan 0=0\\)。' },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+      if (mode === 0) {
+        const item = s313Pick(arcsinCases);
+        questions.push(`求 \\(\\arcsin(${item.expr})\\) 的值。`);
+        answers.push(`簡答：\\(${item.val}\\)。過程：${item.hint}`);
+      } else if (mode === 1) {
+        const item = s313Pick(arccosCases);
+        questions.push(`求 \\(\\arccos(${item.expr})\\) 的值。`);
+        answers.push(`簡答：\\(${item.val}\\)。過程：${item.hint}`);
+      } else {
+        const item = s313Pick(arctanCases);
+        questions.push(`求 \\(\\arctan(${item.expr})\\) 的值。`);
+        answers.push(`簡答：\\(${item.val}\\)。過程：${item.hint}`);
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS314TrigInequalityParameterizedSubtypeSet(count) {
+    return buildS314TrigInequalityParameterizedSet(count);
+  }
+
+  function buildS314InverseTrigEvalSubtypeSet(count) {
+    return buildS314InverseTrigEvalSet(count);
   }
 
   function buildS314ComboExtremaFiveSubtypeMixedSet(count) {
@@ -3472,6 +3626,73 @@
     return buildS321ParameterFromGraphSet(count);
   }
 
+
+  // ── NEW: 不同底數指數方程 (s3-2-1) ──────────────────────────
+  function buildS321DiffBaseExpEquationSet(count) {
+    const caseMakers = [
+      () => {
+        // a^x = b^(x+k)  →  x = k·lg(b)/(lg(a)-lg(b))
+        const pairs = [[5,3],[4,3],[3,2],[6,2],[5,2]];
+        const [a, b] = pairs[randInt(0, pairs.length-1)];
+        const k = s321Pick([1,2,3]);
+        return {
+          q: `解方程式 \\\\(${a}^x=${b}^{x+${k}}\\\\)。`,
+          a: `簡答：\\\\(x=\\\\dfrac{${k}\\\\lg ${b}}{\\\\lg ${a}-\\\\lg ${b}}\\\\)。過程：兩邊取常用對數，\\\\(x\\\\lg ${a}=(x+${k})\\\\lg ${b}\\\\)，整理得 \\\\(x(\\\\lg ${a}-\\\\lg ${b})=${k}\\\\lg ${b}\\\\)。`
+        };
+      },
+      () => {
+        // a^(x+k) = b^x  →  x = k·lg(a)/(lg(b)-lg(a))
+        const pairs = [[2,3],[2,5],[3,5],[4,7],[3,7]];
+        const [a, b] = pairs[randInt(0, pairs.length-1)];
+        const k = s321Pick([1,2]);
+        return {
+          q: `解方程式 \\\\(${a}^{x+${k}}=${b}^x\\\\)。`,
+          a: `簡答：\\\\(x=\\\\dfrac{${k}\\\\lg ${a}}{\\\\lg ${b}-\\\\lg ${a}}\\\\)。過程：兩邊取常用對數，\\\\((x+${k})\\\\lg ${a}=x\\\\lg ${b}\\\\)，整理得 \\\\(x(\\\\lg ${b}-\\\\lg ${a})=${k}\\\\lg ${a}\\\\)。`
+        };
+      },
+      () => {
+        // p^(2x-k) = q^x  →  x = k·lg(p)/(2·lg(p)-lg(q))
+        const pairs = [[3,5],[3,7],[2,5],[5,7]];
+        const [p, q] = pairs[randInt(0, pairs.length-1)];
+        const k = s321Pick([1,2]);
+        return {
+          q: `解方程式 \\\\(${p}^{2x-${k}}=${q}^x\\\\)。`,
+          a: `簡答：\\\\(x=\\\\dfrac{${k}\\\\lg ${p}}{2\\\\lg ${p}-\\\\lg ${q}}\\\\)。過程：兩邊取常用對數，\\\\((2x-${k})\\\\lg ${p}=x\\\\lg ${q}\\\\)，整理得 \\\\(x(2\\\\lg ${p}-\\\\lg ${q})=${k}\\\\lg ${p}\\\\)。`
+        };
+      },
+      () => {
+        // b^x = 10^(x-k)  →  x·lg(b) = x-k  →  x = k/(1-lg(b))
+        const b = s321Pick([2,3,4,5,6]);
+        const k = s321Pick([1,2,3]);
+        return {
+          q: `解方程式 \\\\(${b}^x=10^{x-${k}}\\\\)。`,
+          a: `簡答：\\\\(x=\\\\dfrac{${k}}{1-\\\\lg ${b}}\\\\)。過程：兩邊取常用對數，\\\\(x\\\\lg ${b}=x-${k}\\\\)，整理得 \\\\(x(1-\\\\lg ${b})=${k}\\\\)，故 \\\\(x=${k}/(1-\\\\lg ${b})\\\\)。`
+        };
+      },
+      () => {
+        // 4^x = 3^(x+k)  →  2x·lg2 = (x+k)·lg3  →  x(2lg2-lg3) = k·lg3
+        const pairs = [[4,3],[4,5],[9,5],[9,2]];
+        const [a2, b2] = pairs[randInt(0, pairs.length-1)];
+        const la = a2 === 4 ? '2\\\\lg 2' : (a2===9 ? '2\\\\lg 3' : `\\\\lg ${a2}`);
+        const k2 = s321Pick([1,2,3]);
+        return {
+          q: `解方程式 \\\\(${a2}^x=${b2}^{x+${k2}}\\\\)。`,
+          a: `簡答：\\\\(x=\\\\dfrac{${k2}\\\\lg ${b2}}{${la}-\\\\lg ${b2}}\\\\)。過程：兩邊取常用對數，\\\\(x\\\\lg ${a2}=(x+${k2})\\\\lg ${b2}\\\\)，整理後除以係數得解。`
+        };
+      },
+    ];
+    const questions = [], answers = [];
+    for (let i = 0; i < count; i++) {
+      const { q, a } = caseMakers[i % caseMakers.length]();
+      questions.push(q);
+      answers.push(a);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+  function buildS321DiffBaseExpEquationSubtypeSet(count) {
+    return buildS321DiffBaseExpEquationSet(count);
+  }
+
   function s322Pick(items) {
     return items[randInt(0, items.length - 1)];
   }
@@ -4281,6 +4502,228 @@
     return buildS322RadicalBaseSet(count);
   }
 
+
+  // ── NEW: 換底多基對數方程 (s3-2-2) ───────────────────────────
+  function buildS322ChangeBaseLogEquationSet(count = 5) {
+    const builders = [
+      () => {
+        // log_2(x)+log_4(x)+log_8(x) = k  →  (11/6)log_2(x)=k  →  x=2^(6k/11)
+        const k = s322Pick([11,22,33]);
+        const pw = (6*k/11);
+        return s322Item(
+          '解方程式 ' + s322M('\\\\log_2 x+\\\\log_4 x+\\\\log_8 x='+k) + '。',
+          s322M('x=2^{'+pw+'}'),
+          '統一換成以 2 為底：\\\\frac{11}{6}\\\\log_2 x='+k+'，得 \\\\log_2 x='+pw+'。'
+        );
+      },
+      () => {
+        // log_2(x)+log_4(x) = k  →  (3/2)log_2(x)=k  →  x=2^(2k/3)
+        const k = s322Pick([3,6,9,12]);
+        const pw = (2*k/3);
+        return s322Item(
+          '解方程式 ' + s322M('\\\\log_2 x+\\\\log_4 x='+k) + '。',
+          s322M('x=2^{'+pw+'}'),
+          '換底：\\\\log_4 x=\\\\tfrac12\\\\log_2 x，代入得 \\\\tfrac32\\\\log_2 x='+k+'，解得 \\\\log_2 x='+pw+'。'
+        );
+      },
+      () => {
+        // log_3(x)+log_9(x) = k  →  (4/3)log_3(x)=k  →  x=3^(3k/4)
+        const k = s322Pick([4,8,12]);
+        const pw = (3*k/4);
+        return s322Item(
+          '解方程式 ' + s322M('\\\\log_3 x+\\\\log_9 x='+k) + '。',
+          s322M('x=3^{'+pw+'}'),
+          '換底：\\\\log_9 x=\\\\tfrac12\\\\log_3 x，代入得 \\\\tfrac32 \\\\cdot \\\\tfrac{2}{3}\\\\cdot 2\\\\log_3 x='+k+'；整理得 \\\\tfrac{4}{3}\\\\log_3 x='+k+'，x=3^{'+pw+'}。'
+        );
+      },
+      () => {
+        // log_2(x+h) = log_4(x+C) where C=h^2+4h+2 and answer is x=2
+        const h = s322Pick([1,2,3]);
+        const C = h*h + 4*h + 2;
+        return s322Item(
+          '解方程式 ' + s322M('\\\\log_2(x+'+h+')=\\\\log_4(x+'+C+')') + '。',
+          s322M('x=2'),
+          '將右邊換底：\\\\log_4(x+'+C+')=\\\\tfrac12\\\\log_2(x+'+C+')，兩邊乘 2 後得 (x+'+h+')^2=x+'+C+'，展開整理後僅 x=2 滿足真數條件。'
+        );
+      },
+      () => {
+        // log_2(x)+log_4(x)+log_16(x) = k  →  (7/4)log_2(x)=k  →  x=2^(4k/7)
+        const k = s322Pick([7,14,21]);
+        const pw = (4*k/7);
+        return s322Item(
+          '解方程式 ' + s322M('\\\\log_2 x+\\\\log_4 x+\\\\log_{16} x='+k) + '。',
+          s322M('x=2^{'+pw+'}'),
+          '換底為以 2 為底：\\\\tfrac{7}{4}\\\\log_2 x='+k+'，得 \\\\log_2 x='+pw+'。'
+        );
+      },
+    ];
+    return s322MakeSet(count, builders);
+  }
+  function buildS322ChangeBaseLogEquationSubtypeSet(count = 5) {
+    return buildS322ChangeBaseLogEquationSet(count);
+  }
+
+  // ── NEW: 對數二次方程與變底方程 (s3-2-2) ─────────────────────
+  function buildS322SpecialLogEquationSet(count = 5) {
+    const builders = [
+      () => {
+        // log_b(x^2-c) = 1  →  x^2-c=b  →  x=±√(b+c)
+        const pairs = [[5,4],[3,6],[7,2],[2,14],[5,20]];
+        const [b, c] = pairs[randInt(0, pairs.length-1)];
+        const ans = Math.sqrt(b+c);
+        const ansStr = Number.isInteger(ans) ? String(ans) : '\\\\sqrt{'+(b+c)+'}';
+        return s322Item(
+          '解方程式 ' + s322M('\\\\log_'+b+'(x^2-'+c+')=1') + '。',
+          s322M('x=\\\\pm '+ansStr),
+          'x^2-'+c+'='+b+'，得 x^2='+(b+c)+'，因真數需正故 |x|>\\\\sqrt{'+c+'}，兩根均符合。'
+        );
+      },
+      () => {
+        // log_b(x^2+c) = 2  →  x^2+c=b^2  →  x=±√(b^2-c)
+        const cases = [[2,3],[3,5],[4,7],[3,8],[5,16]];
+        const [b, c] = cases[randInt(0, cases.length-1)];
+        const val = b*b - c;
+        const ansStr = Number.isInteger(Math.sqrt(val)) ? String(Math.sqrt(val)) : '\\\\sqrt{'+val+'}';
+        return s322Item(
+          '解方程式 ' + s322M('\\\\log_'+b+'(x^2+'+c+')=2') + '。',
+          s322M('x=\\\\pm '+ansStr),
+          '真數 x^2+'+c+'='+b+'^2='+(b*b)+'，得 x^2='+(b*b-c)+'，兩根均使真數為正。'
+        );
+      },
+      () => {
+        // log_x(2x+3) = 2  →  x^2-2x-3=0  →  x=3 (domain: x>0,x≠1)
+        const cases = [
+          {a:2, b:3, ans:3, eq:'x^2-2x-3=0，(x-3)(x+1)=0', roots:'x=3 或 x=-1'},
+          {a:1, b:12, ans:4, eq:'x^2-x-12=0，(x-4)(x+3)=0', roots:'x=4 或 x=-3'},
+          {a:4, b:12, ans:6, eq:'x^2-4x-12=0，(x-6)(x+2)=0', roots:'x=6 或 x=-2'},
+        ];
+        const c = cases[randInt(0, cases.length-1)];
+        const expr = c.a===1 ? `x+${c.b}` : `${c.a}x+${c.b}`;
+        return s322Item(
+          '解方程式 ' + s322M('\\\\log_x('+expr+')=2') + '。',
+          s322M('x='+c.ans),
+          'x^2='+expr+'，整理得 '+c.eq+'；取 x>0 且 x\\\\ne1 的根，得 x='+c.ans+'。'
+        );
+      },
+      () => {
+        // log_5(x^2-4) = 1  →  x^2=9  →  x=±3
+        const cases = [
+          {b:5,c:4,val:9,ans:'\\\\pm3'},
+          {b:3,c:1,val:4,ans:'\\\\pm2'},
+          {b:4,c:3,val:7,ans:'\\\\pm\\\\sqrt7'},
+          {b:2,c:1,val:3,ans:'\\\\pm\\\\sqrt3'},
+        ];
+        const cas = cases[randInt(0, cases.length-1)];
+        return s322Item(
+          '解方程式 ' + s322M('\\\\log_'+cas.b+'(x^2-'+cas.c+')=1') + '。',
+          s322M('x='+cas.ans),
+          '真數 x^2-'+cas.c+'='+cas.b+'，得 x^2='+(cas.b+cas.c)+'='+ cas.val +'，確認兩根均使 x^2>'+cas.c+'。'
+        );
+      },
+      () => {
+        // log_x(5x-6) = 2  →  x^2-5x+6=0  →  x=2 or 3
+        return s322Item(
+          '解方程式 ' + s322M('\\\\log_x(5x-6)=2') + '。',
+          s322M('x=2 或 x=3'),
+          'x^2=5x-6，整理得 x^2-5x+6=0，(x-2)(x-3)=0；兩根均滿足 x>0,x\\\\ne1 且 5x-6>0。'
+        );
+      },
+    ];
+    return s322MakeSet(count, builders);
+  }
+  function buildS322SpecialLogEquationSubtypeSet(count = 5) {
+    return buildS322SpecialLogEquationSet(count);
+  }
+
+  // ── NEW: 不同底數與倒數對數不等式 (s3-2-2) ──────────────────
+  function buildS322DiffBaseLogInequalitySet(count = 5) {
+    const builders = [
+      () => {
+        // log_2(x) > log_4(ax-c)  →  x^2>ax-c (with specific roots r,s)
+        // Using r=1,s=2: a=3,c=2. Domain: x>2/3. Answer: (2/3,1)∪(2,∞)
+        const cases = [
+          {r:1,s:2,a:3,c:2,dom:'x>\\\\tfrac23',ans:'\\\\tfrac23<x<1 或 x>2'},
+          {r:1,s:3,a:4,c:3,dom:'x>\\\\tfrac34',ans:'\\\\tfrac34<x<1 或 x>3'},
+          {r:2,s:3,a:5,c:6,dom:'x>\\\\tfrac65',ans:'\\\\tfrac65<x<2 或 x>3'},
+        ];
+        const c = cases[randInt(0, cases.length-1)];
+        return s322Item(
+          '解不等式 ' + s322M('\\\\log_2 x>\\\\log_4('+c.a+'x-'+c.c+')') + '。',
+          s322M(c.ans),
+          '換底：\\\\log_4('+c.a+'x-'+c.c+')=\\\\tfrac12\\\\log_2('+c.a+'x-'+c.c+')，不等式化為 x^2>'+c.a+'x-'+c.c+'；定義域 '+c.dom+'，解 (x-'+c.r+')(x-'+c.s+')>0 後取交集。'
+        );
+      },
+      () => {
+        // 1/log_b(x) > k  →  1<x<b^(1/k)
+        const cases = [
+          {b:5,k:2,ans:'1<x<\\\\sqrt5'},
+          {b:3,k:2,ans:'1<x<\\\\sqrt3'},
+          {b:2,k:3,ans:'1<x<\\\\sqrt[3]{2}'},
+          {b:4,k:2,ans:'1<x<2'},
+          {b:5,k:1,ans:'1<x<5'},
+        ];
+        const c = cases[randInt(0, cases.length-1)];
+        return s322Item(
+          '解不等式 ' + s322M('\\\\dfrac{1}{\\\\log_'+c.b+' x}>'+c.k) + '。',
+          s322M(c.ans),
+          '需 \\\\log_'+c.b+' x\\\\ne0。當 x>1 時 \\\\log_'+c.b+' x>0，不等式等價於 \\\\log_'+c.b+' x<\\\\tfrac{1}{'+c.k+'}，即 x<'+c.b+'^{1/'+c.k+'}；當 0<x<1 時左側為負，不滿足。'
+        );
+      },
+      () => {
+        // 1/log_b(x) < -1  →  1/b < x < 1
+        const b = s322Pick([2,3,4,5]);
+        return s322Item(
+          '解不等式 ' + s322M('\\\\dfrac{1}{\\\\log_'+b+' x}<-1') + '。',
+          s322M('\\\\tfrac{1}{'+b+'}<x<1'),
+          '當 0<x<1 時 \\\\log_'+b+' x<0，乘以 \\\\log_'+b+' x（負值）方向反向：1>-\\\\log_'+b+' x，即 \\\\log_'+b+' x>-1，得 x>\\\\tfrac{1}{'+b+'}；當 x>1 時左側為正，不符合。'
+        );
+      },
+      () => {
+        // log_2(x+c) > log_4(bx+d)  →  (x+c)^2 > bx+d with roots
+        // Choose c=1,b=2,d=1: (x+1)^2>2x+1 → x^2+2x+1>2x+1 → x^2>0 → x≠0; domain x>-1, domain 2x+1>0 → x>-1/2
+        // Answer: x>-1/2 but x≠0. Hmm, messy.
+        // Better: (x+1)^2 > x+3 → x^2+2x+1>x+3 → x^2+x-2>0 → (x+2)(x-1)>0 → x<-2 or x>1
+        // b=1,d=3: log_2(x+1) > log_4(x+3): (x+1)^2 > x+3, domain x>-1 AND x>-3, so x>-1
+        // x^2+x-2>0 AND x>-1: x<-2 or x>1, intersect with x>-1 gives x>1
+        const h = s322Pick([1,2,3]);
+        const bv = 1; const dv = h*h+2*h-1+1; // (x+h)^2 > x+dv where (x-1) is root
+        // (1+h)^2 = 1+dv → dv = (1+h)^2-1 = h^2+2h
+        // roots of x^2+(2h-1)x+(h^2-dv)=0: x^2+(2h-1)x-1=0... let me just use fixed nice cases
+        const niceCases = [
+          {h:1,d:4,rootSmall:-2,rootLarge:1,domLow:-1},
+          {h:2,d:7,rootSmall:-3,rootLarge:1,domLow:-2},
+          {h:3,d:12,rootSmall:-4,rootLarge:1,domLow:-3},
+        ];
+        const cas = niceCases[randInt(0, niceCases.length-1)];
+        // (x+h)^2 > x+d: x^2+(2h-1)x+h^2-d > 0
+        // For h=1,d=4: x^2+x-3>0... hmm let me verify
+        // h=1,d=4: (x+1)^2>x+4 → x^2+2x+1>x+4 → x^2+x-3>0. Roots: (-1±√13)/2. Not clean.
+        // Let me just use specific clean cases instead.
+        return s322Item(
+          '解不等式 ' + s322M('\\\\log_2(x+1)>\\\\log_4(x+3)') + '。',
+          s322M('x>1'),
+          '換底：\\\\log_4(x+3)=\\\\tfrac12\\\\log_2(x+3)，不等式化為 2\\\\log_2(x+1)>\\\\log_2(x+3)，即 (x+1)^2>x+3；定義域 x>-1，解 x^2+x-2>0 得 x>1 或 x<-2，取交集得 x>1。'
+        );
+      },
+      () => {
+        // log_3(x) > log_9(4x-3)  →  (x)^2 > 4x-3 → (x-1)(x-3)>0  domain x>3/4
+        // answer: (3/4,1)∪(3,∞)... wait actually log_9(4x-3)=(1/2)log_3(4x-3)
+        // 2log_3(x) > log_3(4x-3) → x^2>4x-3 → x^2-4x+3>0 → (x-1)(x-3)>0
+        // domain: x>0 AND 4x-3>0 → x>3/4
+        // combined: (3/4,1)∪(3,∞)
+        return s322Item(
+          '解不等式 ' + s322M('\\\\log_3 x>\\\\log_9(4x-3)') + '。',
+          s322M('\\\\tfrac34<x<1 或 x>3'),
+          '換底：\\\\log_9(4x-3)=\\\\tfrac12\\\\log_3(4x-3)，不等式化為 x^2>4x-3；定義域 x>\\\\tfrac34，解 (x-1)(x-3)>0 後取交集得 \\\\tfrac34<x<1 或 x>3。'
+        );
+      },
+    ];
+    return s322MakeSet(count, builders);
+  }
+  function buildS322DiffBaseLogInequalitySubtypeSet(count = 5) {
+    return buildS322DiffBaseLogInequalitySet(count);
+  }
+
   function s323Pick(items) {
     return items[randInt(0, items.length - 1)];
   }
@@ -5033,6 +5476,108 @@
 
   function buildS323DigitApplicationReviewSubtypeSet(count) {
     return buildS323DigitScientificSet(count);
+  }
+
+
+  // ── NEW: 對數函數奇偶性與值域 (s3-2-3) ─────────────────────
+  function buildS323LogParityRangeSet(count) {
+    const builders = [
+      () => buildS323QA(
+        '已知 ' + s323M('f(x)=\\\\log_2(x+\\\\sqrt{x^2+1})') + '，判斷 ' + s323M('f(x)') + ' 的奇偶性並說明理由。',
+        '奇函數',
+        '定義域對稱於原點。計算 f(-x)=\\\\log_2(-x+\\\\sqrt{x^2+1})；注意 (-x+\\\\sqrt{x^2+1})(x+\\\\sqrt{x^2+1})=1，故 f(-x)=\\\\log_2(1/(x+\\\\sqrt{x^2+1}))=-f(x)。'
+      ),
+      () => {
+        const b = s323Pick([2,3,5]);
+        const h = s323Pick([1,2,3]);
+        const k = s323Pick([1,2,4]);
+        const minVal = b===2&&k===4 ? 2 : (b===3&&k===3 ? 1 : (b===2&&k===1 ? 0 : `\\\\log_${b} ${k}`));
+        const minStr = (k===1) ? '0' : (k===b ? '1' : (k===b*b ? '2' : `\\\\log_{${b}} ${k}`));
+        return buildS323QA(
+          '求函數 ' + s323M('y=\\\\log_'+b+'((x-'+h+')^2+'+k+')') + ' 的值域。',
+          s323M('['+minStr+',+\\\\infty)'),
+          '(x-'+h+')^2+'+k+' \\\\ge '+k+'，故 y\\\\ge\\\\log_{'+b+'} '+k+'='+minStr+'；當 x='+h+' 時取等，值域為 ['+minStr+',+\\\\infty)。'
+        );
+      },
+      () => buildS323QA(
+        '已知 ' + s323M('f(x)=\\\\log_3(x^2+1)') + '，判斷 ' + s323M('f(x)') + ' 的奇偶性。',
+        '偶函數',
+        '定義域 \\\\mathbb{R} 對稱於原點。f(-x)=\\\\log_3((-x)^2+1)=\\\\log_3(x^2+1)=f(x)，故為偶函數。'
+      ),
+      () => {
+        const b = s323Pick([2,3]);
+        const h = s323Pick([1,2]);
+        const minK = 1; // (x+h)^2 + 1 >= 1
+        return buildS323QA(
+          '求函數 ' + s323M('y=\\\\log_'+b+'(x^2+'+2*h+'x+'+(h*h+1)+')') + ' 的值域。',
+          s323M('[0,+\\\\infty)'),
+          '配方得 (x+'+h+')^2+1\\\\ge1，故 y=\\\\log_'+b+'((x+'+h+')^2+1)\\\\ge\\\\log_'+b+' 1=0。值域為 [0,+\\\\infty)。'
+        );
+      },
+      () => buildS323QA(
+        '已知 ' + s323M('g(x)=\\\\log(x^2-x+1)+\\\\log(x^2+x+1)') + '，判斷 ' + s323M('g(x)') + ' 的奇偶性。',
+        '偶函數',
+        '化簡：g(x)=\\\\log((x^2+1)^2-x^2)=\\\\log(x^4+x^2+1)；因 x^4+x^2+1 僅含偶次項，g(-x)=g(x)，故為偶函數。'
+      ),
+    ];
+    return s323MakeSet(count, builders);
+  }
+  function buildS323LogParityRangeSubtypeSet(count) {
+    return buildS323LogParityRangeSet(count);
+  }
+
+  // ── NEW: 冪對數方程 x^(log x) 型 (s3-2-3) ──────────────────
+  function buildS323PowerLogEquationSet(count) {
+    const builders = [
+      () => {
+        // x^(log x) = 10^m · x^n  →  (log x)^2 = m + n·log x  →  t^2-n·t-m=0
+        // m=2,n=1: t^2-t-2=0, t=2 or t=-1, x=100 or x=0.1
+        return buildS323QA(
+          '解方程式 ' + s323M('x^{\\\\log x}=100x') + '（\\\\(x>0\\\\)）。',
+          s323M('x=100 或 x=0.1'),
+          '兩邊取常用對數得 (\\\\log x)^2=\\\\log(100x)=2+\\\\log x；令 t=\\\\log x，則 t^2-t-2=0，(t-2)(t+1)=0，t=2 或 t=-1，故 x=10^2=100 或 x=10^{-1}=0.1。'
+        );
+      },
+      () => {
+        // m=3,n=2: t^2-2t-3=0, t=3 or t=-1, x=1000 or 0.1
+        return buildS323QA(
+          '解方程式 ' + s323M('x^{\\\\log x}=1000x^2') + '（\\\\(x>0\\\\)）。',
+          s323M('x=1000 或 x=0.1'),
+          '取對數：(\\\\log x)^2=3+2\\\\log x；令 t=\\\\log x，t^2-2t-3=0，(t-3)(t+1)=0，t=3 或 t=-1，x=10^3 或 10^{-1}。'
+        );
+      },
+      () => {
+        // m=6,n=1: t^2-t-6=0, t=3 or t=-2, x=1000 or 0.01
+        return buildS323QA(
+          '解方程式 ' + s323M('x^{\\\\log x}=10^6 x') + '（\\\\(x>0\\\\)）。',
+          s323M('x=10^3 或 x=10^{-2}'),
+          '取對數：(\\\\log x)^2=6+\\\\log x；令 t=\\\\log x，t^2-t-6=0，(t-3)(t+2)=0，t=3 或 t=-2。'
+        );
+      },
+      () => {
+        // x^(log_2 x) = 8x^2  →  (log_2 x)^2 = 3 + 2·log_2 x  →  t^2-2t-3=0, t=3 or -1, x=8 or 1/2
+        return buildS323QA(
+          '解方程式 ' + s323M('x^{\\\\log_2 x}=8x^2') + '（\\\\(x>0\\\\)）。',
+          s323M('x=8 或 x=\\\\tfrac12'),
+          '兩邊取 \\\\log_2：(\\\\log_2 x)^2=\\\\log_2(8x^2)=3+2\\\\log_2 x；令 t=\\\\log_2 x，t^2-2t-3=0，t=3 或 t=-1，x=2^3=8 或 x=2^{-1}=\\\\tfrac12。'
+        );
+      },
+      () => {
+        // x^(log_3 x) = 27x^3  →  (log_3 x)^2 = 3+3·log_3 x  →  t^2-3t-... wait
+        // Actually (log_3 x)^2 = log_3(27x^3) = 3+3·log_3 x  →  t^2-3t-3=0 (not clean)
+        // Better: x^(log_3 x) = 9·x^4  →  (log_3 x)^2 = log_3(9x^4) = 2+4·log_3 x
+        // t^2-4t-... hmm. Let me try: x^(log_3 x) = 9x  → t^2=2+t → t^2-t-2=0 → t=2 or t=-1 → x=9 or 1/3
+        return buildS323QA(
+          '解方程式 ' + s323M('x^{\\\\log_3 x}=9x') + '（\\\\(x>0\\\\)）。',
+          s323M('x=9 或 x=\\\\tfrac13'),
+          '兩邊取 \\\\log_3：(\\\\log_3 x)^2=\\\\log_3(9x)=2+\\\\log_3 x；令 t=\\\\log_3 x，t^2-t-2=0，(t-2)(t+1)=0，t=2 或 t=-1，x=9 或 \\\\tfrac13。'
+        );
+      },
+    ];
+    return s323MakeSet(count, builders);
+  }
+  function buildS323PowerLogEquationSubtypeSet(count) {
+    return buildS323PowerLogEquationSet(count);
   }
 
   function s324Pick(items) {
@@ -9158,6 +9703,68 @@
     return s331MakeSet(count, builders);
   }
 
+  function buildS332LineDirectionNormalSet(count) {
+    const pairPool = [
+      { A: [1, 3], B: [5, 6] },
+      { A: [2, 1], B: [5, 5] },
+      { A: [0, 2], B: [4, -1] },
+      { A: [-1, 2], B: [3, 5] },
+      { A: [2, -1], B: [5, 3] },
+      { A: [1, 0], B: [4, 4] },
+    ];
+    const builders = [
+      () => {
+        const { A, B } = s324Pick(pairPool);
+        const dx = B[0] - A[0];
+        const dy = B[1] - A[1];
+        return s331QA(
+          '已知 ' + s332PointTex('A', A) + '、' + s332PointTex('B', B) +
+            '，求直線 ' + s331M('AB') + ' 的一組方向向量與法向量。',
+          s331MJ('方向向量：', s331Vec(dx, dy), '，法向量：', s331Vec(-dy, dx)),
+          '方向向量取 ' + s331MJ('\\overrightarrow{AB}=', s331Vec(dx, dy)) +
+            '；法向量與方向向量垂直，旋轉 ' + s331M('90^\\circ') +
+            ' 得 ' + s331MJ(s331Vec(-dy, dx)) + '。'
+        );
+      },
+      () => {
+        const { A, B } = s324Pick(pairPool);
+        const dx = B[0] - A[0];
+        const dy = B[1] - A[1];
+        const P = [randInt(-2, 3), randInt(-2, 3)];
+        const na = -dy;
+        const nb = dx;
+        const c = -(na * P[0] + nb * P[1]);
+        return s331QA(
+          '已知 ' + s332PointTex('A', A) + '、' + s332PointTex('B', B) +
+            '，求過點 ' + s332PointTex('P', P) + ' 且與直線 ' + s331M('AB') +
+            ' 平行的直線方程式。',
+          s331MJ(s333LineTex(na, nb, c)),
+          '平行直線與 ' + s331M('AB') + ' 同法向量 ' + s331MJ(s331Vec(na, nb)) +
+            '，代入點 ' + s332PointTex('P', P) + ' 即得方程式。'
+        );
+      },
+      () => {
+        const { A, B } = s324Pick(pairPool);
+        const dx = B[0] - A[0];
+        const dy = B[1] - A[1];
+        const P = [randInt(-2, 3), randInt(-2, 3)];
+        const na = dx;
+        const nb = dy;
+        const c = -(na * P[0] + nb * P[1]);
+        return s331QA(
+          '已知 ' + s332PointTex('A', A) + '、' + s332PointTex('B', B) +
+            '，求過點 ' + s332PointTex('P', P) + ' 且與直線 ' + s331M('AB') +
+            ' 垂直的直線方程式。',
+          s331MJ(s333LineTex(na, nb, c)),
+          '垂直直線的法向量即 ' + s331M('AB') + ' 的方向向量 ' +
+            s331MJ(s331Vec(dx, dy)) + '，代入點 ' + s332PointTex('P', P) +
+            ' 即得方程式。'
+        );
+      },
+    ];
+    return s331MakeSet(count, builders);
+  }
+
   function buildS332CoordinateVectorsMixedSet(count) {
     return buildS223MixedSet(
       [
@@ -9173,6 +9780,197 @@
       ],
       count
     );
+  }
+
+  function buildS333TriangleAngleCosineSet(count) {
+    const angleAtATemplates = [
+      { dB: [3, 0], dC: [0, 4],  cosStr: '0' },
+      { dB: [4, 3], dC: [-3, 4], cosStr: '0' },
+      { dB: [3, 4], dC: [4, 0],  cosStr: '\\dfrac{3}{5}' },
+      { dB: [4, 3], dC: [0, 4],  cosStr: '\\dfrac{3}{5}' },
+      { dB: [4, 3], dC: [4, 0],  cosStr: '\\dfrac{4}{5}' },
+      { dB: [3, 4], dC: [0, 3],  cosStr: '\\dfrac{4}{5}' },
+    ];
+    const angleAtBTemplates = [
+      { dA: [-3, 0], dC: [0, 4],  cosStr: '0' },
+      { dA: [-4, -3], dC: [-3, 4], cosStr: '0' },
+      { dA: [-3, -4], dC: [0, 4], cosStr: '-\\dfrac{3}{5}' },
+      { dA: [-4, -3], dC: [0, 4], cosStr: '-\\dfrac{3}{5}' },
+      { dA: [-3, -4], dC: [0, 3], cosStr: '-\\dfrac{4}{5}' },
+    ];
+    const classifyTemplates = [
+      { dB: [3, 0], dC: [0, 4],  typeStr: '直角三角形' },
+      { dB: [4, 3], dC: [-3, 4], typeStr: '直角三角形' },
+      { dB: [3, 4], dC: [4, 3],  typeStr: '銳角三角形' },
+      { dB: [4, 2], dC: [2, 4],  typeStr: '銳角三角形' },
+      { dB: [4, 0], dC: [1, 3],  typeStr: '銳角三角形' },
+    ];
+    const builders = [
+      () => {
+        const tmpl = s324Pick(angleAtATemplates);
+        const A = [randInt(-2, 3), randInt(-2, 3)];
+        const B = [A[0] + tmpl.dB[0], A[1] + tmpl.dB[1]];
+        const C = [A[0] + tmpl.dC[0], A[1] + tmpl.dC[1]];
+        const AB = [B[0] - A[0], B[1] - A[1]];
+        const AC = [C[0] - A[0], C[1] - A[1]];
+        const dotVal = s333Dot(AB, AC);
+        return s331QA(
+          '已知 ' + s332PointTex('A', A) + '、' + s332PointTex('B', B) + '、' +
+            s332PointTex('C', C) + '，求 ' + s331M('\\angle BAC') + ' 的餘弦值。',
+          s331MJ('\\cos\\angle BAC=', tmpl.cosStr),
+          s331MJ('\\overrightarrow{AB}=', s331Vec(AB[0], AB[1])) + '，' +
+            s331MJ('\\overrightarrow{AC}=', s331Vec(AC[0], AC[1])) + '；' +
+            '內積 ' + s331M('\\overrightarrow{AB}\\cdot\\overrightarrow{AC}=' + dotVal) +
+            '，由 ' + s331M('\\cos\\theta=\\dfrac{\\overrightarrow{AB}\\cdot\\overrightarrow{AC}}{|\\overrightarrow{AB}||\\overrightarrow{AC}|}') +
+            ' 代入得 ' + s331MJ(tmpl.cosStr) + '。'
+        );
+      },
+      () => {
+        const tmpl = s324Pick(angleAtBTemplates);
+        const B = [randInt(-2, 3), randInt(-2, 3)];
+        const A = [B[0] + tmpl.dA[0], B[1] + tmpl.dA[1]];
+        const C = [B[0] + tmpl.dC[0], B[1] + tmpl.dC[1]];
+        const BA = [A[0] - B[0], A[1] - B[1]];
+        const BC = [C[0] - B[0], C[1] - B[1]];
+        const dotVal = s333Dot(BA, BC);
+        return s331QA(
+          '已知 ' + s332PointTex('A', A) + '、' + s332PointTex('B', B) + '、' +
+            s332PointTex('C', C) + '，求 ' + s331M('\\angle ABC') + ' 的餘弦值。',
+          s331MJ('\\cos\\angle ABC=', tmpl.cosStr),
+          s331MJ('\\overrightarrow{BA}=', s331Vec(BA[0], BA[1])) + '，' +
+            s331MJ('\\overrightarrow{BC}=', s331Vec(BC[0], BC[1])) + '；' +
+            '內積 ' + s331M('\\overrightarrow{BA}\\cdot\\overrightarrow{BC}=' + dotVal) +
+            '，由公式代入得 ' + s331MJ(tmpl.cosStr) + '。'
+        );
+      },
+      () => {
+        const tmpl = s324Pick(classifyTemplates);
+        const A = [randInt(-2, 3), randInt(-2, 3)];
+        const B = [A[0] + tmpl.dB[0], A[1] + tmpl.dB[1]];
+        const C = [A[0] + tmpl.dC[0], A[1] + tmpl.dC[1]];
+        const AB = [B[0]-A[0], B[1]-A[1]];
+        const AC = [C[0]-A[0], C[1]-A[1]];
+        const BC = [C[0]-B[0], C[1]-B[1]];
+        const BA = [-AB[0], -AB[1]];
+        const CA = [-AC[0], -AC[1]];
+        const CB = [-BC[0], -BC[1]];
+        const dA = s333Dot(AB, AC);
+        const dB = s333Dot(BA, BC);
+        const dC = s333Dot(CA, CB);
+        return s331QA(
+          '已知 ' + s332PointTex('A', A) + '、' + s332PointTex('B', B) + '、' +
+            s332PointTex('C', C) + '，利用向量內積判斷 ' + s331M('\\triangle ABC') +
+            ' 是銳角、直角或鈍角三角形。',
+          tmpl.typeStr,
+          '內積 ' + s331M('\\overrightarrow{AB}\\cdot\\overrightarrow{AC}=' + dA) +
+            '，' + s331M('\\overrightarrow{BA}\\cdot\\overrightarrow{BC}=' + dB) +
+            '，' + s331M('\\overrightarrow{CA}\\cdot\\overrightarrow{CB}=' + dC) +
+            '；三者均正則銳角，有零則直角，有負則鈍角。本題為' + tmpl.typeStr + '。'
+        );
+      },
+    ];
+    return s331MakeSet(count, builders);
+  }
+
+  function buildS333VectorFromDotConstraintsSet(count) {
+    const validCases = [
+      { a:[1,2], b:[2,-1], p:5, q:0, x:1, y:2 },
+      { a:[1,2], b:[2,-1], p:4, q:3, x:2, y:1 },
+      { a:[1,2], b:[2,-1], p:7, q:-1, x:1, y:3 },
+      { a:[1,1], b:[1,-1], p:5, q:1, x:3, y:2 },
+      { a:[1,1], b:[1,-1], p:4, q:-2, x:1, y:3 },
+      { a:[1,1], b:[1,-1], p:6, q:2, x:4, y:2 },
+      { a:[2,1], b:[1,2], p:5, q:4, x:2, y:1 },
+      { a:[2,1], b:[1,2], p:5, q:7, x:1, y:3 },
+      { a:[2,1], b:[1,2], p:8, q:7, x:3, y:2 },
+    ];
+    const builders = [
+      () => {
+        const cs = s324Pick(validCases);
+        return s331QA(
+          '已知 ' + s331MJ('\\vec{a}=', s331Vec(cs.a[0], cs.a[1])) + '，' +
+            s331MJ('\\vec{b}=', s331Vec(cs.b[0], cs.b[1])) + '。' +
+            '求滿足 ' + s331MJ('\\vec{c}\\cdot\\vec{a}=', cs.p) + ' 且 ' +
+            s331MJ('\\vec{c}\\cdot\\vec{b}=', cs.q) + ' 的向量 ' + s331M('\\vec{c}=(x,y)') + '。',
+          s331MJ('\\vec{c}=', s331Vec(cs.x, cs.y)),
+          '設 ' + s331M('\\vec{c}=(x,y)') + '，內積條件為：' +
+            s331MJ(cs.a[0], 'x+', cs.a[1], 'y=', cs.p) + '，' +
+            s331MJ(cs.b[0], 'x+', cs.b[1], 'y=', cs.q) +
+            '。解聯立方程式得 ' + s331MJ('x=', cs.x, ',\\ y=', cs.y) + '。'
+        );
+      },
+    ];
+    return s331MakeSet(count, builders);
+  }
+
+  function buildS333NormRelationConditionSet(count) {
+    const builders = [
+      () => {
+        return s331QA(
+          '設 ' + s331M('\\vec{a}') + ' 與 ' + s331M('\\vec{b}') +
+            ' 為兩非零向量，若 ' + s331MJ('|\\vec{a}+\\vec{b}|=|\\vec{a}-\\vec{b}|') +
+            '，求 ' + s331M('\\vec{a}') + ' 與 ' + s331M('\\vec{b}') + ' 的夾角。',
+          s331M('90^\\circ'),
+          '兩邊平方：' + s331M('|\\vec{a}|^2+2\\vec{a}\\cdot\\vec{b}+|\\vec{b}|^2=|\\vec{a}|^2-2\\vec{a}\\cdot\\vec{b}+|\\vec{b}|^2') +
+            '，化簡得 ' + s331M('4\\vec{a}\\cdot\\vec{b}=0') + '，即 ' +
+            s331M('\\vec{a}\\perp\\vec{b}') + '，夾角為 ' + s331M('90^\\circ') + '。'
+        );
+      },
+      () => {
+        return s331QA(
+          '設 ' + s331M('\\vec{a}') + ' 與 ' + s331M('\\vec{b}') +
+            ' 為兩單位向量，且 ' + s331MJ('|\\vec{a}-\\vec{b}|=\\sqrt{2}') +
+            '，求夾角 ' + s331M('\\theta') + '（0^\\circ\\le\\theta\\le180^\\circ）。',
+          s331M('90^\\circ'),
+          '兩邊平方：' + s331M('|\\vec{a}|^2-2\\vec{a}\\cdot\\vec{b}+|\\vec{b}|^2=2') +
+            '，即 ' + s331M('1-2\\vec{a}\\cdot\\vec{b}+1=2') +
+            '，所以 ' + s331M('\\vec{a}\\cdot\\vec{b}=0') + '，夾角 ' + s331M('90^\\circ') + '。'
+        );
+      },
+      () => {
+        return s331QA(
+          '設 ' + s331M('\\vec{a}') + ' 與 ' + s331M('\\vec{b}') +
+            ' 為兩單位向量，且 ' + s331MJ('|\\vec{a}+\\vec{b}|=\\sqrt{3}') +
+            '，求夾角 ' + s331M('\\theta') + '（0^\\circ\\le\\theta\\le180^\\circ）。',
+          s331M('60^\\circ'),
+          '兩邊平方：' + s331M('1+2\\vec{a}\\cdot\\vec{b}+1=3') +
+            '，所以 ' + s331M('\\vec{a}\\cdot\\vec{b}=\\dfrac{1}{2}') + '，夾角 ' + s331M('60^\\circ') + '。'
+        );
+      },
+      () => {
+        return s331QA(
+          '設 ' + s331M('\\vec{a}') + ' 與 ' + s331M('\\vec{b}') +
+            ' 為兩單位向量，且 ' + s331MJ('|\\vec{a}+\\vec{b}|=1') +
+            '，求夾角 ' + s331M('\\theta') + '（0^\\circ\\le\\theta\\le180^\\circ）。',
+          s331M('120^\\circ'),
+          '兩邊平方：' + s331M('1+2\\vec{a}\\cdot\\vec{b}+1=1') +
+            '，所以 ' + s331M('\\vec{a}\\cdot\\vec{b}=-\\dfrac{1}{2}') + '，夾角 ' + s331M('120^\\circ') + '。'
+        );
+      },
+      () => {
+        const lenA = s324Pick([2, 3, 4]);
+        const lenB = s324Pick([3, 4, 5]);
+        const angle = s324Pick([
+          { d: 60, ab: lenA * lenB / 2 },
+          { d: 120, ab: -lenA * lenB / 2 },
+        ]);
+        const normSq = lenA * lenA + lenB * lenB + 2 * angle.ab;
+        const sqrtVal = Math.round(Math.sqrt(normSq));
+        const normStr = sqrtVal * sqrtVal === normSq ? String(sqrtVal) : '\\sqrt{' + normSq + '}';
+        return s331QA(
+          '已知 ' + s331MJ('|\\vec{a}|=', lenA, ',\\ |\\vec{b}|=', lenB) +
+            '，且 ' + s331M('\\vec{a}') + ' 與 ' + s331M('\\vec{b}') + ' 夾角為 ' +
+            s331M(angle.d + '^\\circ') +
+            '，求 ' + s331M('|\\vec{a}+\\vec{b}|') + '。',
+          s331MJ(normStr),
+          s331M('|\\vec{a}+\\vec{b}|^2=|\\vec{a}|^2+2\\vec{a}\\cdot\\vec{b}+|\\vec{b}|^2') +
+            '；其中 ' + s331MJ('\\vec{a}\\cdot\\vec{b}=', lenA, '\\cdot', lenB, '\\cos', angle.d, '^\\circ=', angle.ab) +
+            '，代入得 ' + s331MJ('|\\vec{a}+\\vec{b}|^2=', normSq) +
+            '，所以 ' + s331MJ('|\\vec{a}+\\vec{b}|=', normStr) + '。'
+        );
+      },
+    ];
+    return s331MakeSet(count, builders);
   }
 
   function s333Dot(u, v) {
@@ -10921,6 +11719,15 @@
           return buildS312ProductValuesSubtypeSet(5);
         },
       },
+      's3-1-2-sin-cos-sum-square': {
+        type: 'drill',
+        title: '正弦餘弦和平方求差角餘弦',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS312SinCosSumSquareSubtypeSet(5);
+        },
+      },
       's3-1-3-period-transform-five-subtypes': {
         type: 'drill',
         title: '三角函數週期、變換與對稱五小類',
@@ -11205,6 +12012,24 @@
           return buildS314GeometryModelSubtypeSet(5);
         },
       },
+      's3-1-4-trig-inequality-parameterized': {
+        type: 'drill',
+        title: '三角不等式在[0,2π)的解集',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS314TrigInequalityParameterizedSubtypeSet(5);
+        },
+      },
+      's3-1-4-inverse-trig-eval': {
+        type: 'drill',
+        title: '反三角函數值計算',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS314InverseTrigEvalSubtypeSet(5);
+        },
+      },
       's3-2-1-exponent-laws-equations-five-subtypes': {
         type: 'drill',
         title: '指數律、方程與應用五小類',
@@ -11386,6 +12211,15 @@
         questionCount: 5,
         generate() {
           return buildS321ParameterFromGraphSubtypeSet(5);
+        },
+      },
+      's3-2-1-diff-base-exp-equation': {
+        type: 'drill',
+        title: '不同底數指數方程取對數求解',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS321DiffBaseExpEquationSubtypeSet(5);
         },
       },
       's3-2-2-log-definition-laws-five-subtypes': {
@@ -11571,6 +12405,33 @@
           return buildS322RadicalBaseSubtypeSet(5);
         },
       },
+      's3-2-2-change-base-log-equation': {
+        type: 'drill',
+        title: '換底多基對數方程求解',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS322ChangeBaseLogEquationSubtypeSet(5);
+        },
+      },
+      's3-2-2-special-log-equation': {
+        type: 'drill',
+        title: '對數二次方程與變底方程',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS322SpecialLogEquationSubtypeSet(5);
+        },
+      },
+      's3-2-2-diff-base-log-inequality': {
+        type: 'drill',
+        title: '不同底數與倒數對數不等式',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS322DiffBaseLogInequalitySubtypeSet(5);
+        },
+      },
       's3-2-3-log-operations-applications-five-subtypes': {
         type: 'drill',
         title: '對數連鎖、次方位置與位數應用五小類',
@@ -11752,6 +12613,24 @@
         questionCount: 5,
         generate() {
           return buildS323DigitApplicationReviewSubtypeSet(5);
+        },
+      },
+      's3-2-3-log-parity-range': {
+        type: 'drill',
+        title: '對數函數奇偶性與值域分析',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS323LogParityRangeSubtypeSet(5);
+        },
+      },
+      's3-2-3-power-log-equation': {
+        type: 'drill',
+        title: '冪對數方程 x^(log x) 型求解',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildS323PowerLogEquationSubtypeSet(5);
         },
       },
       's3-2-4-growth-decay-models-five-subtypes': {
@@ -12261,6 +13140,15 @@
           return buildS332ProjectionExtremaLatticeSet(5);
         },
       },
+      's3-3-2-line-direction-normal': {
+        type: 'drill',
+        title: '直線方向向量、法向量與平行垂直方程式',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS332LineDirectionNormalSet(5);
+        },
+      },
       's3-3-3-inner-product-projection-applications-ten-subtypes': {
         type: 'drill',
         title: '內積、投影與應用十小類',
@@ -12370,6 +13258,33 @@
         questionCount: 5,
         generate() {
           return buildS333WorkAreaApplicationSet(5);
+        },
+      },
+      's3-3-3-triangle-angle-cosine': {
+        type: 'drill',
+        title: '三角形頂角餘弦與三角形類型判定',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS333TriangleAngleCosineSet(5);
+        },
+      },
+      's3-3-3-vector-from-dot-constraints': {
+        type: 'drill',
+        title: '由兩個內積條件解向量',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS333VectorFromDotConstraintsSet(5);
+        },
+      },
+      's3-3-3-norm-relation-condition': {
+        type: 'drill',
+        title: '向量和差長度條件推夾角關係',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate() {
+          return buildS333NormRelationConditionSet(5);
         },
       },
       's3-3-4-basic-determinant-three-subtypes': {
