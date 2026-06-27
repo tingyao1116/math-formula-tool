@@ -1,11 +1,12 @@
 (() => {
   const store = window.formulaDataStore || null;
+  const toolkit = window.formulaToolkit || null;
   const practiceStore = window.formulaPracticeStore || null;
   const practiceLibrary = window.practiceLibraryStore || null;
   const generatorLoader = window.practiceGeneratorLoader || null;
   const playlistStore = window.practicePlaylistStore || null;
 
-  if (!store || !practiceStore || !practiceLibrary || !playlistStore) {
+  if (!store || !toolkit || !practiceStore || !practiceLibrary || !playlistStore) {
     console.warn("playlist builder dependencies not loaded");
     return;
   }
@@ -67,6 +68,10 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
+  }
+
+  function renderMathText(value) {
+    return toolkit.renderRichTextLine(String(value ?? ""));
   }
 
   function getSelectedPracticeIds() {
@@ -228,15 +233,23 @@
                 <td>${escapeHtml(practice.difficulty)}</td>
                 <td>
                   <div class="playlist-sample-cell">
-                    <div class="playlist-sample-cell__text">${escapeHtml(sample)}</div>
-                    <button class="ghost-button" type="button" data-sample-practice="${escapeHtml(practice.id)}">更新範例</button>
+                    <div class="playlist-sample-cell__text">${renderMathText(sample)}</div>
                   </div>
+                </td>
+                <td>
+                  <button
+                    class="ghost-button playlist-refresh-button"
+                    type="button"
+                    data-sample-practice="${escapeHtml(practice.id)}"
+                    aria-label="更新範例"
+                    title="更新範例"
+                  >⟳</button>
                 </td>
               </tr>
             `;
           })
           .join("")
-      : `<tr><td colspan="5">目前沒有符合條件的題型。</td></tr>`;
+      : `<tr><td colspan="6">目前沒有符合條件的題型。</td></tr>`;
 
     elements.playlistPracticeTableBody.querySelectorAll("[data-practice-id]").forEach((checkbox) => {
       checkbox.addEventListener("change", () => {

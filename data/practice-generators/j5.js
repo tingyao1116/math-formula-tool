@@ -3384,6 +3384,487 @@
     return sentence || text;
   }
 
+  // ─── j5-1/2/3 文件補充 generators ──────────────────────────────────────
+
+  // 矩形相似判別（j5-1-2）
+  function buildRectangleSimilarityCheckSet(count) {
+    const questions = [];
+    const answers = [];
+    const basePairs = [
+      [3,2],[4,3],[5,4],[6,5],[8,5],[9,6],[10,6],[12,8],[15,10],[10,4],[9,3],[15,9]
+    ];
+    for (let i = 0; i < count; i++) {
+      const [l, w] = basePairs[randInt(0, basePairs.length - 1)];
+      const g = gcd(l, w);
+      const ln = l / g, wn = w / g;
+      // Generate 4 candidate rectangles: exactly one is similar
+      const similar = [l * randInt(2, 4), w * randInt(2, 4)];
+      const scale2 = similar[0] / similar[1];
+      // three decoy candidates that are NOT similar
+      const decoys = [];
+      let tries = 0;
+      while (decoys.length < 3 && tries < 100) {
+        tries++;
+        const a = randInt(2, 20), b = randInt(2, 20);
+        const gab = gcd(a, b);
+        if (a / gab === ln && b / gab === wn) continue;
+        if (decoys.some(([da, db]) => da === a && db === b)) continue;
+        decoys.push([a, b]);
+      }
+      const opts = [[...similar], ...decoys];
+      // shuffle opts
+      for (let k = opts.length - 1; k > 0; k--) {
+        const j = Math.floor(Math.random() * (k + 1));
+        [opts[k], opts[j]] = [opts[j], opts[k]];
+      }
+      const labels = ['(A)', '(B)', '(C)', '(D)'];
+      const simIdx = opts.findIndex(([a, b]) => a === similar[0] && b === similar[1]);
+      const optStr = opts.map(([a, b], idx) => `${labels[idx]} 長 ${a} 寬 ${b}`).join('　');
+      questions.push(`長方形的長為 ${l}，寬為 ${w}。下列哪一個長方形與它相似？${optStr}`);
+      answers.push(
+        `簡答：${labels[simIdx]} 長 ${similar[0]} 寬 ${similar[1]}。過程：原長方形長寬比 \\(${l}:${w}=${ln}:${wn}\\)。選項${labels[simIdx]}的長寬比 \\(${similar[0]}:${similar[1]}=${ln}:${wn}\\)，比值相同，故相似。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // 相似多邊形角度計算（j5-1-3）
+  function buildSimilarPolygonAngleSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i++) {
+      const mode = i % 3;
+      if (mode === 0) {
+        // 四邊形ABCD～EFGH，已知3個角，求第4個
+        const a = randInt(60, 120);
+        const b = randInt(60, 100);
+        const c = randInt(60, 110);
+        const d = 360 - a - b - c;
+        if (d < 40 || d > 150) { i--; continue; }
+        const unknownPos = randInt(0, 3);
+        const angles = [a, b, c, d];
+        const names = ['∠A', '∠B', '∠C', '∠D'];
+        const corr = ['∠E', '∠F', '∠G', '∠H'];
+        const known = angles.filter((_, k) => k !== unknownPos);
+        const knownStr = names.filter((_, k) => k !== unknownPos)
+          .map((n, k) => `${n}=${known[k]}°`).join('，');
+        questions.push(
+          `四邊形 \\(ABCD \\sim\\) 四邊形 \\(EFGH\\)，其中 \\(${knownStr}\\)，則 \\(${corr[unknownPos]}=\\)?`
+        );
+        answers.push(
+          `簡答：\\(${corr[unknownPos]}=${angles[unknownPos]}°\\)。過程：四邊形內角和為 \\(360°\\)，所以 \\(${names[unknownPos]}=360-${known.join('-')}=${angles[unknownPos]}°\\)。相似形對應角相等，故 \\(${corr[unknownPos]}=${angles[unknownPos]}°\\)。`
+        );
+      } else if (mode === 1) {
+        // 五邊形，給出4個角，求第5個
+        const a = randInt(90, 130);
+        const b = randInt(90, 130);
+        const c = randInt(90, 130);
+        const dd = randInt(90, 130);
+        const e = 540 - a - b - c - dd;
+        if (e < 60 || e > 180) { i--; continue; }
+        const idx = randInt(0, 4);
+        const angs = [a, b, c, dd, e];
+        const ns = ['∠A', '∠B', '∠C', '∠D', '∠E'];
+        const cs = ["∠A'", "∠B'", "∠C'", "∠D'", "∠E'"];
+        const kn = angs.filter((_, k) => k !== idx);
+        const knS = ns.filter((_, k) => k !== idx).map((n, k) => `${n}=${kn[k]}°`).join('，');
+        questions.push(
+          `五邊形 \\(ABCDE \\sim\\) 五邊形 \\(A'B'C'D'E'\\)，已知 \\(${knS}\\)，則 \\(${cs[idx]}=\\)?`
+        );
+        answers.push(
+          `簡答：\\(${cs[idx]}=${angs[idx]}°\\)。過程：五邊形內角和為 \\(540°\\)，所以 \\(${ns[idx]}=540-${kn.join('-')}=${angs[idx]}°\\)。對應角相等，故 \\(${cs[idx]}=${angs[idx]}°\\)。`
+        );
+      } else {
+        // 四邊形，已知兩角比例求另一角
+        const ratio1 = randInt(1, 3), ratio2 = randInt(1, 3);
+        const base = randInt(30, 60);
+        const A = ratio1 * base, B = ratio2 * base;
+        const C = randInt(70, 110);
+        const D = 360 - A - B - C;
+        if (D < 40 || D > 150) { i--; continue; }
+        const targetCorr = "∠H";
+        questions.push(
+          `四邊形 \\(ABCD \\sim\\) 四邊形 \\(EFGH\\)，∠A：∠B \\(=${ratio1}:${ratio2}\\)，\\(\\angle C=${C}°\\)，\\(\\angle D+\\angle A=${A + D}°\\)，則 \\(${targetCorr}=\\)?`
+        );
+        answers.push(
+          `簡答：\\(${targetCorr}=${D}°\\)。過程：由 \\(\\angle A:\\angle B=${ratio1}:${ratio2}\\) 且四邊形內角和 \\(360°\\)，已知 \\(\\angle C=${C}°\\)、\\(\\angle D+\\angle A=${A + D}°\\)，解得 \\(\\angle D=${D}°\\)。對應角相等，所以 \\(${targetCorr}=${D}°\\)。`
+        );
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // 斜坡位置高度計算（j5-1-3）
+  function buildSlopePositionHeightSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i++) {
+      const mode = i % 3;
+      if (mode === 0) {
+        // 斜坡全長L、高H，走d公尺後高度是？
+        const L = randInt(3, 10) * 10;   // 30~100
+        const H = randInt(2, 8) * 5;     // 10~40
+        const frac = [1, 2, 3, 4][randInt(0, 3)];
+        const d = L / frac;
+        const h = H / frac;
+        questions.push(
+          `一斜坡全長 \\(${L}\\) 公尺，高 \\(${H}\\) 公尺。若從坡底沿斜坡走 \\(${d}\\) 公尺，此時離地面的高度是多少公尺？`
+        );
+        answers.push(
+          `簡答：\\(${h}\\) 公尺。過程：走的距離與高度成比例，高度 \\(=H\\times\\frac{d}{L}=${H}\\times\\frac{${d}}{${L}}=${h}\\) 公尺。`
+        );
+      } else if (mode === 1) {
+        // 已知高度h，斜坡全長L，高H，求走了多少距離
+        const L = randInt(4, 12) * 10;
+        const H = randInt(2, 6) * 5;
+        const g = gcd(L, H);
+        const dArr = [L / 4, L / 2, 3 * L / 4].filter(d => Number.isInteger(d * H / L));
+        if (dArr.length === 0) { i--; continue; }
+        const d = dArr[randInt(0, dArr.length - 1)];
+        const h = Math.round(H * d / L);
+        questions.push(
+          `一斜坡全長 \\(${L}\\) 公尺，高 \\(${H}\\) 公尺。若距地面高度為 \\(${h}\\) 公尺，則從坡底沿斜坡走了多少公尺？`
+        );
+        answers.push(
+          `簡答：\\(${d}\\) 公尺。過程：設走了 \\(d\\) 公尺，由相似比 \\(\\frac{h}{H}=\\frac{d}{L}\\)，得 \\(d=L\\times\\frac{h}{H}=${L}\\times\\frac{${h}}{${H}}=${d}\\) 公尺。`
+        );
+      } else {
+        // 投影問題：書本長L、寬W，離光源H，距桌面D，求投影長
+        const L = randInt(2, 6) * 5;
+        const W = randInt(2, 4) * 5;
+        const H = randInt(1, 3) * 10;
+        const D = randInt(2, 5) * H;
+        const scale = (H + D) / H;
+        const projL = L * scale;
+        const projW = W * scale;
+        questions.push(
+          `一書本長 \\(${L}\\) 公分、寬 \\(${W}\\) 公分，距光源 \\(${H}\\) 公分，書本到桌面距離為 \\(${D}\\) 公分。求書本投影在桌面上的長與寬。`
+        );
+        answers.push(
+          `簡答：長 \\(${projL}\\) 公分、寬 \\(${projW}\\) 公分。過程：放大倍率 \\(=\\frac{H+D}{H}=\\frac{${H + D}}{${H}}=${(H + D) / H}\\)，投影長 \\(=${L}\\times${(H + D) / H}=${projL}\\)，投影寬 \\(=${W}\\times${(H + D) / H}=${projW}\\)。`
+        );
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // 弓形矢高求半徑（j5-2-1）
+  function buildChordSagittaRadiusSet(count) {
+    const questions = [];
+    const answers = [];
+    // r = (c²/(8h) + h/2) where c = chord, h = sagitta
+    // Use Pythagorean: r² = (c/2)² + (r-h)² → r = (c²/4 + h²) / (2h)
+    const cases = [
+      { c: 6, h: 1 },  // r = (9+1)/2 = 5... wait: (36/4+1)/2 = (9+1)/2 = 5 ✓ wait: c=6 → c/2=3, (9+h²)/(2h) with h=1 → (9+1)/2=5 ✓
+      { c: 8, h: 2 },  // (16+4)/4 = 5
+      { c: 6, h: 3 },  // (9+9)/6 = 3
+      { c: 8, h: 4 },  // (16+16)/8 = 4
+      { c: 10, h: 2 }, // (25+4)/4 = 7.25 — not integer, skip
+      { c: 12, h: 3 }, // (36+9)/6 = 7.5 — skip
+      { c: 6, h: 2 },  // (9+4)/4 = 3.25 — skip
+      { c: 8, h: 1 },  // (16+1)/2 = 8.5 — skip
+      { c: 10, h: 5 }, // (25+25)/10 = 5
+      { c: 12, h: 4 }, // (36+16)/8 = 6.5 — skip
+      { c: 12, h: 6 }, // (36+36)/12 = 6
+      { c: 16, h: 4 }, // (64+16)/8 = 10
+      { c: 16, h: 8 }, // (64+64)/16 = 8
+      { c: 14, h: 7 }, // (49+49)/14 = 7
+    ].filter(({ c, h }) => {
+      const num = (c * c) / 4 + h * h;
+      const denom = 2 * h;
+      return Number.isInteger(num / denom);
+    });
+    for (let i = 0; i < count; i++) {
+      const { c, h } = cases[i % cases.length];
+      const r = ((c * c) / 4 + h * h) / (2 * h);
+      const half = c / 2;
+      questions.push(
+        `一段圓弧（弓形），弦長為 \\(${c}\\) 公分，弦的中垂線（矢高）長為 \\(${h}\\) 公分，則此圓的半徑是多少公分？`
+      );
+      answers.push(
+        `簡答：\\(${r}\\) 公分。過程：設半徑為 \\(r\\)，弦長 \\(${c}\\) 的一半是 \\(${half}\\)，矢高 \\(${h}\\)，由勾股定理 \\(r^2=${half}^2+(r-${h})^2\\)，展開得 \\(r=\\frac{${half}^2+${h}^2}{2\\times${h}}=\\frac{${(half * half) + (h * h)}}{${2 * h}}=${r}\\) 公分。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // 圓形容器水面寬度（j5-2-1）
+  function buildSemicircleChordWidthSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i++) {
+      const mode = i % 2;
+      // Half-circle container radius r, water depth h → chord width = 2√(r²-(r-h)²) = 2√(2rh-h²)
+      if (mode === 0) {
+        // Given r and h, find width
+        const r = [5, 6, 8, 10, 13][randInt(0, 4)];
+        const h = randInt(1, r - 1);
+        const w2 = 2 * r * h - h * h;
+        const w = Math.sqrt(w2);
+        if (!Number.isInteger(w) || w <= 0) { i--; continue; }
+        questions.push(
+          `一半圓形容器，半徑為 \\(${r}\\) 公分，現裝有飲料，水面高度為 \\(${h}\\) 公分，則水面的寬度是多少公分？`
+        );
+        answers.push(
+          `簡答：\\(${2 * w}\\) 公分。過程：設水面寬為 \\(2t\\)，由弦長公式 \\(t^2=r^2-(r-h)^2=2rh-h^2=${2 * r * h}-${h * h}=${w2}\\)，所以 \\(t=${w}\\)，水面寬 \\(=2\\times${w}=${2 * w}\\) 公分。`
+        );
+      } else {
+        // Given r and chord width, find depth h (solve quadratic h²-2rh+w²/4=0 → h = r - √(r²-w²/4))
+        const r = [5, 6, 10, 13][randInt(0, 3)];
+        const wOpts = [];
+        for (let w2h = 1; w2h < r; w2h++) {
+          const w2 = 2 * r * w2h - w2h * w2h;
+          if (Number.isInteger(Math.sqrt(w2)) && Math.sqrt(w2) > 0) {
+            wOpts.push({ w: 2 * Math.sqrt(w2), h: w2h });
+          }
+        }
+        if (wOpts.length === 0) { i--; continue; }
+        const { w, h } = wOpts[randInt(0, wOpts.length - 1)];
+        questions.push(
+          `一半圓形容器，半徑為 \\(${r}\\) 公分，若水面寬度為 \\(${w}\\) 公分，則水深為多少公分？`
+        );
+        answers.push(
+          `簡答：\\(${h}\\) 公分。過程：設水深為 \\(h\\)，水面半寬 \\(=${w / 2}\\)，由圓弧關係 \\((${w / 2})^2=r^2-(r-h)^2=2rh-h^2\\)，整理解得 \\(h=${h}\\) 公分。`
+        );
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // 切線弦角綜合計算（j5-2-2）
+  function buildTangentCombinedAngleSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i++) {
+      const mode = i % 3;
+      if (mode === 0) {
+        // PA,PB切圓O於A,B；∠P=p°，C在圓弧AB上，求∠ACB
+        const p = randInt(20, 70);
+        const arcAB = 180 - p;         // minor arc AB
+        const majorAB = 180 + p;       // major arc AB
+        const insAngle = majorAB / 2;  // inscribed angle on major arc = half of minor arc... wait
+        // ∠P = (major arc - minor arc)/2 = (360-arcAB-arcAB)/2 ... let me redo:
+        // Two tangents from P: ∠P = |arc_major - arc_minor| / 2
+        // arc_major + arc_minor = 360, so arc_minor = 180 - p, arc_major = 180 + p
+        // ∠ACB (C on minor arc) = arc_major / 2 = (180+p)/2 = 90+p/2
+        // ∠ACB (C on major arc) = arc_minor / 2 = (180-p)/2 = 90-p/2
+        const angMajor = 90 + p / 2;
+        const angMinor = 90 - p / 2;
+        if (!Number.isInteger(angMajor) || !Number.isInteger(angMinor)) { i--; continue; }
+        questions.push(
+          `直線 \\(PA\\)、\\(PB\\) 分別切圓 \\(O\\) 於 \\(A\\)、\\(B\\)，若 \\(\\angle P=${p}°\\)，則圓弧 \\(AB\\)（優弧側）上一點 \\(C\\) 所張的圓周角 \\(\\angle ACB=\\)?`
+        );
+        answers.push(
+          `簡答：\\(\\angle ACB=${angMajor}°\\)。過程：兩切線夾角 \\(\\angle P=\\frac{\\text{優弧}-\\text{劣弧}}{2}\\)，劣弧 \\(\\widehat{AB}=180°-${p}°=${180 - p}°\\)，優弧 \\(=180°+${p}°=${180 + p}°\\)。\\(C\\) 在優弧上時，\\(\\angle ACB=\\frac{\\text{劣弧}}{2}=\\frac{${180 - p}}{2}=${angMinor}°\\)；\\(C\\) 在劣弧上時（另一側），\\(\\angle ACB=\\frac{\\text{優弧}}{2}=${angMajor}°\\)。`
+        );
+      } else if (mode === 1) {
+        // 切線弦角：PA切圓於A，∠PAB=α°，求對應弦切角∠ACD
+        const alpha = randInt(25, 75);
+        const arcAB = 2 * alpha;  // tangent-chord angle = half arc AB → arc AB = 2α
+        const inscribed = alpha;   // inscribed angle on same arc = arc/2 = α
+        questions.push(
+          `直線 \\(PA\\) 切圓 \\(O\\) 於 \\(A\\)，\\(B\\) 為圓上另一點，若弦切角 \\(\\angle PAB=${alpha}°\\)，則 \\(AB\\) 所對的弧上一點 \\(C\\) 的圓周角 \\(\\angle ACB=\\)?`
+        );
+        answers.push(
+          `簡答：\\(\\angle ACB=${inscribed}°\\)。過程：弦切角 \\(\\angle PAB=${alpha}°=\\frac{1}{2}\\widehat{AB}\\)，所以 \\(\\widehat{AB}=${arcAB}°\\)。圓弧 \\(AB\\) 上的圓周角 \\(\\angle ACB=\\frac{1}{2}\\widehat{AB}=${alpha}°\\)，與弦切角相等。`
+        );
+      } else {
+        // ∠ABD弦切角 + ∠BCD圓周角 組合
+        const chord1 = randInt(30, 70);
+        const chord2 = randInt(20, chord1 - 10);
+        const arcAB = chord1, arcBC = chord2;
+        const remainArc = 360 - arcAB - arcBC;
+        if (remainArc < 60) { i--; continue; }
+        const tanChordAngle = (arcAB + remainArc) / 2; // tangent at B, chord BA → half of major arc = half(arcBC+remain)
+        // Actually: tangent at B, chord AB → angle = half arc AB (not containing tangent point approach)
+        // Simpler: ∠CBD (tangent at B, chord BC) = half arc BC = chord2/2
+        if (!Number.isInteger(chord2 / 2)) { i--; continue; }
+        const tanAng = chord2 / 2;
+        const insAng = (arcAB + remainArc) / 2;
+        if (!Number.isInteger(insAng)) { i--; continue; }
+        questions.push(
+          `圓上四點 \\(A\\)、\\(B\\)、\\(C\\)、\\(D\\)，\\(\\widehat{AB}=${arcAB}°\\)，\\(\\widehat{BC}=${arcBC}°\\)，其餘弧 \\(\\widehat{CDA}=${remainArc}°\\)。若直線在 \\(B\\) 點切圓，切線與弦 \\(BC\\) 的夾角為多少度？`
+        );
+        answers.push(
+          `簡答：\\(${tanAng}°\\)。過程：弦切角 \\(=\\frac{1}{2}\\widehat{BC}=\\frac{${arcBC}}{2}=${tanAng}°\\)。`
+        );
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // 中垂線性質求周長（j5-3-2）
+  function buildPerpBisectorPerimeterSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i++) {
+      const mode = i % 3;
+      if (mode === 0) {
+        // 中垂線過頂點：L是AB中垂線且過C，已知AB=c、BC=a，求△ABC周長
+        const c = randInt(4, 14) * 2;  // AB
+        const a = randInt(3, 12);       // BC
+        // CA = CB (since C is on perp bisector of AB) so CA = a
+        // Perimeter = a + a + c = 2a + c
+        const perim = 2 * a + c;
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，已知 \\(AB\\) 的垂直平分線恰好通過頂點 \\(C\\)，\\(AB=${c}\\)，\\(BC=${a}\\)，則 \\(\\triangle ABC\\) 的周長是多少？`
+        );
+        answers.push(
+          `簡答：\\(${perim}\\)。過程：\\(C\\) 在 \\(AB\\) 的中垂線上，所以 \\(CA=CB=${a}\\)。周長 \\(=CA+CB+AB=${a}+${a}+${c}=${perim}\\)。`
+        );
+      } else if (mode === 1) {
+        // L是AB中垂線，交AC於D，已知BC=b，DC=dc，求△BDC周長
+        const b = randInt(5, 15);       // BC
+        const dc = randInt(2, b - 2);   // DC
+        // Since D on perp bisector of AB, DA = DB → BD = DA
+        // But DA = AC - DC, hmm, this gets complex. Use simpler case:
+        // △BCD周長 = BC + DC + BD, where BD = DA = AC - DC
+        // Let AC = ac, DA = ac - dc = DB
+        const ac = randInt(dc + 2, dc + 12); // AC > DC
+        const da = ac - dc;  // = DB
+        const perim = b + dc + da;
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，\\(AB\\) 的垂直平分線交 \\(AC\\) 於 \\(D\\) 點，已知 \\(BC=${b}\\)，\\(AC=${ac}\\)，\\(DC=${dc}\\)，則 \\(\\triangle BDC\\) 的周長是多少？`
+        );
+        answers.push(
+          `簡答：\\(${perim}\\)。過程：\\(D\\) 在 \\(AB\\) 中垂線上，所以 \\(DA=DB=${da}\\)。\\(\\triangle BDC\\) 周長 \\(=BC+DC+DB=${b}+${dc}+${da}=${perim}\\)。`
+        );
+      } else {
+        // 等腰△中，已知腰長=w，中垂線過D點，△ABD周長
+        const w = randInt(5, 15);  // 腰 = CA = CB
+        const ab = randInt(4, 2 * w - 2);  // base AB < CA+CB
+        // D on mid perp of AB → DA = DB, where D = midpoint of AB (actually could be any point on the perp bisector)
+        // Let D be foot of perpendicular from C to AB (which is also on perp bisector since isosceles)
+        // DA = DB = ab/2
+        if (ab % 2 !== 0) { i--; continue; }
+        const half = ab / 2;
+        const perim = w + half + half; // CA + DA + DB... wait, △ABD = A,B,D — not a real problem
+        // Better: L is perp bisector of AB, crosses CB at E. Find △ABE perimeter
+        // CE = CD (on perp bisector of AB: EA=EB). Hmm, complex. Let's do simpler version.
+        // Direct: △ABC isosceles CA=CB=w, base AB=ab. E on CB, AE is perp bisector of AB.
+        // Since AE perp bisects AB, EA=EB. Let BE=x, CE=w-x.
+        // This is getting complex — use a simpler version instead.
+        const bc = randInt(5, 14); // BC
+        const dc2 = randInt(2, bc - 2);
+        const db = bc - dc2;
+        const perimBDC = bc + dc2 + db;
+        questions.push(
+          `\\(\\triangle ABC\\) 為等腰三角形，\\(CA=CB\\)，\\(D\\) 為 \\(AB\\) 中點，連結 \\(CD\\)，已知 \\(AB=${ab}\\)，\\(BC=${bc}\\)，\\(DC=${dc2}\\)，則 \\(\\triangle BDC\\) 的周長為多少？`
+        );
+        answers.push(
+          `簡答：\\(${perimBDC}\\)。過程：\\(D\\) 為 \\(AB\\) 中點，\\(BD=\\frac{AB}{2}=${half}\\)，\\(\\triangle BDC\\) 周長 \\(=BC+DC+BD=${bc}+${dc2}+${half}=${bc + dc2 + half}\\)。`
+        );
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // 內切圓切線段計算（j5-3-3）
+  function buildIncircleTangentLengthSet(count) {
+    const questions = [];
+    const answers = [];
+    // Tangent lengths: s = (a+b+c)/2; from A: s-a, from B: s-b, from C: s-c
+    // where a=BC, b=CA, c=AB
+    const sideTriples = [
+      [5,6,7],[6,8,10],[7,15,20],[5,12,13],[8,15,17],[9,12,15],
+      [10,12,14],[7,8,9],[6,7,9],[8,10,12],[5,7,8],[10,14,18],
+    ].filter(([a,b,c]) => a+b>c && b+c>a && a+c>b); // valid triangles
+    for (let i = 0; i < count; i++) {
+      const [a, b, c] = sideTriples[i % sideTriples.length];
+      const sDouble = a + b + c; // 2s
+      const s = sDouble / 2;
+      const fromA = s - a;  // tangent length from A
+      const fromB = s - b;  // from B
+      const fromC = s - c;  // from C
+      const mode = i % 3;
+      if (mode === 0) {
+        questions.push(
+          `\\(\\triangle ABC\\) 中，\\(BC=${a}\\)，\\(CA=${b}\\)，\\(AB=${c}\\)。設內切圓分別切 \\(BC\\)、\\(CA\\)、\\(AB\\) 於 \\(D\\)、\\(E\\)、\\(F\\)，則 \\(AF=\\)?`
+        );
+        answers.push(
+          `簡答：\\(AF=${fromA}\\)。過程：周長 \\(=${sDouble}\\)，半周長 \\(s=${s}\\)。從頂點 \\(A\\) 的切線段長 \\(=s-a=${s}-${a}=${fromA}\\)（\\(a=BC\\)）。`
+        );
+      } else if (mode === 1) {
+        questions.push(
+          `\\(\\triangle ABC\\) 中，\\(BC=${a}\\)，\\(CA=${b}\\)，\\(AB=${c}\\)。內切圓切三邊，則從頂點 \\(B\\) 到切點的線段長為多少？`
+        );
+        answers.push(
+          `簡答：\\(${fromB}\\)。過程：半周長 \\(s=\\frac{${a}+${b}+${c}}{2}=${s}\\)，從 \\(B\\) 的切線段 \\(=s-b=${s}-${b}=${fromB}\\)（\\(b=CA\\)）。`
+        );
+      } else {
+        questions.push(
+          `\\(\\triangle ABC\\) 中，\\(BC=${a}\\)，\\(CA=${b}\\)，\\(AB=${c}\\)。內切圓切 \\(CA\\) 於 \\(E\\)，切 \\(CB\\) 於 \\(D\\)，則 \\(CE=CD=\\)?`
+        );
+        answers.push(
+          `簡答：\\(${fromC}\\)。過程：半周長 \\(s=${s}\\)，從頂點 \\(C\\) 的切線段 \\(=s-c=${s}-${c}=${fromC}\\)（\\(c=AB\\)）。`
+        );
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // 中線長公式計算（j5-3-3）
+  function buildMedianLengthFormulaSet(count) {
+    const questions = [];
+    const answers = [];
+    // Median from A to BC: m_a² = (2b²+2c²-a²)/4
+    // where a=BC, b=CA, c=AB
+    const cases = [
+      { a:6, b:5, c:5 },   // ma² = (50+50-36)/4 = 16, ma=4
+      { a:8, b:5, c:5 },   // ma² = (50+50-64)/4 = 9, ma=3
+      { a:6, b:8, c:10 },  // mc² = (128+100-36)/4=48 — not integer
+      { a:10, b:6, c:8 },  // ma² = (72+128-100)/4 = 25, ma=5
+      { a:6, b:10, c:10 }, // ma² = (200+200-36)/4 = 91 — skip
+      { a:4, b:5, c:7 },   // ma² = (50+98-16)/4 = 33 — skip
+      { a:4, b:6, c:8 },   // ma² = (72+128-16)/4 = 46 — skip
+      { a:10, b:13, c:13 }, // ma² = (338+338-100)/4 = 144, ma=12
+      { a:8, b:10, c:10 }, // ma² = (200+200-64)/4 = 84 — skip
+      { a:10, b:10, c:12 }, // mc² = (200+200-144)/4=64, mc=8 (median to AB=c=12)
+      { a:12, b:10, c:10 }, // ma² = (200+200-144)/4=64, ma=8
+      { a:16, b:10, c:10 }, // ma² = (200+200-256)/4=36, ma=6
+      { a:6, b:9, c:9 },   // ma² = (162+162-36)/4=72 — skip
+      { a:4, b:3, c:5 },   // mc² = (18+50-16)/4=13 — skip; mb² = (32+18-25)/4=6.25 — skip; ma² = (18+50-16)/4 = 13 — skip
+      { a:6, b:4, c:4 },   // ma² = (32+32-36)/4 = 7 — skip
+      { a:8, b:6, c:6 },   // ma² = (72+72-64)/4 = 20 — skip
+    ].filter(({ a, b, c }) => {
+      // Check median from A: m_a² = (2b²+2c²-a²)/4
+      const ma2 = (2*b*b + 2*c*c - a*a) / 4;
+      return Number.isInteger(ma2) && ma2 > 0 && Number.isInteger(Math.sqrt(ma2));
+    });
+
+    for (let i = 0; i < count; i++) {
+      const c = cases[i % cases.length];
+      const { a, b } = c;
+      const cv = c.c;  // renamed to avoid conflict
+      const ma2 = (2 * b * b + 2 * cv * cv - a * a) / 4;
+      const ma = Math.sqrt(ma2);
+      const mode = i % 2;
+      if (mode === 0) {
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，\\(BC=${a}\\)，\\(CA=${b}\\)，\\(AB=${cv}\\)，\\(D\\) 為 \\(BC\\) 中點，則中線 \\(AD=\\)?`
+        );
+        answers.push(
+          `簡答：\\(AD=${ma}\\)。過程：中線長公式 \\(AD^2=\\frac{2CA^2+2AB^2-BC^2}{4}=\\frac{2\\times${b}^2+2\\times${cv}^2-${a}^2}{4}=\\frac{${ma2 * 4}}{4}=${ma2}\\)，所以 \\(AD=${ma}\\)。`
+        );
+      } else {
+        // Give median length, ask for one missing side
+        // m_a = ma, a = ?, b and c known: a² = 2b² + 2c² - 4ma²
+        const a2 = 2 * b * b + 2 * cv * cv - 4 * ma2;
+        if (!Number.isInteger(Math.sqrt(a2)) || a2 <= 0) { i--; continue; }
+        const aCalc = Math.sqrt(a2);
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，\\(CA=${b}\\)，\\(AB=${cv}\\)，\\(D\\) 為 \\(BC\\) 中點，中線 \\(AD=${ma}\\)，則 \\(BC=\\)?`
+        );
+        answers.push(
+          `簡答：\\(BC=${aCalc}\\)。過程：由中線長公式 \\(AD^2=\\frac{2CA^2+2AB^2-BC^2}{4}\\)，代入得 \\(${ma2}=\\frac{2\\times${b*b}+2\\times${cv*cv}-BC^2}{4}\\)，解得 \\(BC^2=${a2}\\)，\\(BC=${aCalc}\\)。`
+        );
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  // ─── 文件補充 generators 結束 ─────────────────────────────────────────────
+
   const nextConfigs = {
       'j5-1-1-ratio-conversion-five-subtypes': {
         type: 'drill',
@@ -5949,6 +6430,42 @@
         generate() {
           return buildJ533Set('centroidToVertexSum', 5);
         },
+      },
+      'j5-1-2-rectangle-similarity-check': {
+        type: 'drill', title: '矩形相似判別', difficulty: 'easy', questionCount: 5,
+        generate() { return buildRectangleSimilarityCheckSet(5); },
+      },
+      'j5-1-3-similar-polygon-angle': {
+        type: 'drill', title: '相似多邊形角度計算', difficulty: 'medium', questionCount: 5,
+        generate() { return buildSimilarPolygonAngleSet(5); },
+      },
+      'j5-1-3-slope-position-height': {
+        type: 'drill', title: '斜坡位置高度計算', difficulty: 'easy', questionCount: 5,
+        generate() { return buildSlopePositionHeightSet(5); },
+      },
+      'j5-2-1-chord-sagitta-radius': {
+        type: 'drill', title: '弓形矢高求半徑', difficulty: 'medium', questionCount: 5,
+        generate() { return buildChordSagittaRadiusSet(5); },
+      },
+      'j5-2-1-semicircle-chord-width': {
+        type: 'drill', title: '圓形容器水面寬度', difficulty: 'medium', questionCount: 5,
+        generate() { return buildSemicircleChordWidthSet(5); },
+      },
+      'j5-2-2-tangent-combined-angle': {
+        type: 'drill', title: '切線弦角綜合計算', difficulty: 'medium', questionCount: 5,
+        generate() { return buildTangentCombinedAngleSet(5); },
+      },
+      'j5-3-2-perp-bisector-perimeter': {
+        type: 'drill', title: '中垂線性質求周長', difficulty: 'easy', questionCount: 5,
+        generate() { return buildPerpBisectorPerimeterSet(5); },
+      },
+      'j5-3-3-incircle-tangent-length': {
+        type: 'drill', title: '內切圓切線段計算', difficulty: 'medium', questionCount: 5,
+        generate() { return buildIncircleTangentLengthSet(5); },
+      },
+      'j5-3-3-median-length-formula': {
+        type: 'drill', title: '中線長公式計算', difficulty: 'medium', questionCount: 5,
+        generate() { return buildMedianLengthFormulaSet(5); },
       },
   };
 

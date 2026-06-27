@@ -1070,7 +1070,9 @@
         const scientific = plainToScientificParts(`${radiusM}`);
         questions.push(`將地球半徑約 ${radiusKm} 公里用科學記號表示，單位改成公尺。`);
         summaryAnswers.push(`$${scientific.text}$ 公尺`);
-        answers.push(`先把公里換成公尺：${radiusKm} 公里 = ${radiusM} 公尺，再寫成科學記號為 $${scientific.text}$ 公尺。`);
+        answers.push(
+          `先把公里換成公尺：${radiusKm} 公里 = ${radiusM} 公尺，再寫成科學記號為 $${scientific.text}$ 公尺。`
+        );
         continue;
       }
 
@@ -1080,7 +1082,9 @@
         const coeffText = trimDecimalString(`${coeff}`);
         questions.push(`將地球的質量約 $${coeffText} \\times 10^{${exponent}}$ 公斤，以中文數量級描述。`);
         summaryAnswers.push(`約 ${scientificToPlainString(coeffText, exponent)} 公斤`);
-        answers.push(`把 $10^{${exponent}}$ 還原成一般數字，可得約 ${scientificToPlainString(coeffText, exponent)} 公斤。`);
+        answers.push(
+          `把 $10^{${exponent}}$ 還原成一般數字，可得約 ${scientificToPlainString(coeffText, exponent)} 公斤。`
+        );
         continue;
       }
 
@@ -1090,9 +1094,13 @@
         const coefficient = [1, 2, 4, 5][randInt(0, 3)];
         const rawCoeff = coefficient;
         const result = plainToScientificParts(scientificToPlainString(`${rawCoeff}`, totalMassExp - grainCountExp));
-        questions.push(`已知一粒沙的總量是 $10^{${grainCountExp}}$ 粒共重 $${coefficient} \\times 10^{${totalMassExp}}$ 公克，求一粒沙的質量（以科學記號表示）。`);
+        questions.push(
+          `已知一粒沙的總量是 $10^{${grainCountExp}}$ 粒共重 $${coefficient} \\times 10^{${totalMassExp}}$ 公克，求一粒沙的質量（以科學記號表示）。`
+        );
         summaryAnswers.push(`$${result.text}$ 公克`);
-        answers.push(`一粒沙的質量 = $(${coefficient} \\times 10^{${totalMassExp}}) \\div 10^{${grainCountExp}} = ${coefficient} \\times 10^{${totalMassExp - grainCountExp}}$，整理後為 $${result.text}$ 公克。`);
+        answers.push(
+          `一粒沙的質量 = $(${coefficient} \\times 10^{${totalMassExp}}) \\div 10^{${grainCountExp}} = ${coefficient} \\times 10^{${totalMassExp - grainCountExp}}$，整理後為 $${result.text}$ 公克。`
+        );
         continue;
       }
 
@@ -1102,12 +1110,18 @@
       const timeExp = 4;
       const rawCoeff = speedCoeff * timeCoeff;
       const rawExp = speedExp + timeExp;
-      const result = plainToScientificParts(scientificToPlainString(trimDecimalString(`${Number(rawCoeff.toFixed(6))}`), rawExp));
+      const result = plainToScientificParts(
+        scientificToPlainString(trimDecimalString(`${Number(rawCoeff.toFixed(6))}`), rawExp)
+      );
       const speedText = trimDecimalString(`${speedCoeff}`);
       const timeText = trimDecimalString(`${timeCoeff}`);
-      questions.push(`已知某光速為 $${speedText} \\times 10^{${speedExp}}$ 公尺/秒，計算其在 $${timeText} \\times 10^{${timeExp}}$ 秒內移動的距離，並用科學記號表示。`);
+      questions.push(
+        `已知某光速為 $${speedText} \\times 10^{${speedExp}}$ 公尺/秒，計算其在 $${timeText} \\times 10^{${timeExp}}$ 秒內移動的距離，並用科學記號表示。`
+      );
       summaryAnswers.push(`$${result.text}$ 公尺`);
-      answers.push(`距離 = 速度 × 時間，所以先算 $${speedText}\\times ${timeText} = ${trimDecimalString(`${Number(rawCoeff.toFixed(6))}`)}$，指數相加得 ${speedExp}+${timeExp}=${rawExp}$，整理後為 $${result.text}$ 公尺。`);
+      answers.push(
+        `距離 = 速度 × 時間，所以先算 $${speedText}\\times ${timeText} = ${trimDecimalString(`${Number(rawCoeff.toFixed(6))}`)}$，指數相加得 ${speedExp}+${timeExp}=${rawExp}$，整理後為 $${result.text}$ 公尺。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -1269,7 +1283,7 @@
       questions.push(`計算：$((-${base})^{${a}})^{${b}}$。`);
       summaryAnswers.push(`$${value}$`);
       answers.push(
-        `先用次方的次方：$((-${base})^{${a}})^{${b}}=(-${base})^{${a * b}}$；因為 ${a * b} ${a * b % 2 === 0 ? '是偶數' : '是奇數'}，所以結果是 $${value}$。`
+        `先用次方的次方：$((-${base})^{${a}})^{${b}}=(-${base})^{${a * b}}$；因為 ${a * b} ${(a * b) % 2 === 0 ? '是偶數' : '是奇數'}，所以結果是 $${value}$。`
       );
     }
 
@@ -1307,7 +1321,9 @@
       const value = -Math.pow(base, a * b);
       questions.push(`計算：$-(${base}^{${a}})^{${b}}$。`);
       summaryAnswers.push(`$${value}$`);
-      answers.push(`先算括號內：$(${base}^{${a}})^{${b}}=${base}^{${a * b}}=${Math.pow(base, a * b)}$；前面還有一個負號，所以結果是 $${value}$。`);
+      answers.push(
+        `先算括號內：$(${base}^{${a}})^{${b}}=${base}^{${a * b}}=${Math.pow(base, a * b)}$；前面還有一個負號，所以結果是 $${value}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -1324,7 +1340,9 @@
       const exponent = randInt(2, 4);
       questions.push(`計算：$${base}^{-${exponent}}$。`);
       summaryAnswers.push(`$${formatFraction(1, Math.pow(base, exponent))}$`);
-      answers.push(`負指數表示倒數，所以 $${base}^{-${exponent}}=\\dfrac{1}{${base}^{${exponent}}}=\\dfrac{1}{${Math.pow(base, exponent)}}$。`);
+      answers.push(
+        `負指數表示倒數，所以 $${base}^{-${exponent}}=\\dfrac{1}{${base}^{${exponent}}}=\\dfrac{1}{${Math.pow(base, exponent)}}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -1386,7 +1404,9 @@
       const exp = a - b;
       questions.push(`計算：$10^{${a}}\\times 10^{-${b}}$，並以科學記號表示。`);
       summaryAnswers.push(`$1\\times 10^{${exp}}$`);
-      answers.push(`同底數相乘，指數相加：$10^{${a}}\\times 10^{-${b}}=10^{${a - b}}$，寫成科學記號就是 $1\\times 10^{${exp}}$。`);
+      answers.push(
+        `同底數相乘，指數相加：$10^{${a}}\\times 10^{-${b}}=10^{${a - b}}$，寫成科學記號就是 $1\\times 10^{${exp}}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -1402,7 +1422,9 @@
       const sumText = formatFraction(a * a + 1, a);
       questions.push(`已知 $a$ 與 $b$ 互為倒數，且 $a=${a}$，求 $a+b$ 的值。`);
       summaryAnswers.push(`$${sumText}$`);
-      answers.push(`因為 $a$ 與 $b$ 互為倒數，所以 $b=\\dfrac{1}{${a}}$；因此 $a+b=${a}+\\dfrac{1}{${a}}=${sumText}$。`);
+      answers.push(
+        `因為 $a$ 與 $b$ 互為倒數，所以 $b=\\dfrac{1}{${a}}$；因此 $a+b=${a}+\\dfrac{1}{${a}}=${sumText}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -1420,7 +1442,9 @@
       const value = evenCoeff - oddCoeff;
       questions.push(`計算：$${evenCoeff}(-1)^{2n}+${oddCoeff}(-1)^{2n+1}$，其中 $n=${n}$。`);
       summaryAnswers.push(`$${value}$`);
-      answers.push(`因為 $(-1)^{2n}=1$，$(-1)^{2n+1}=-1$，所以原式 $=${evenCoeff}\\times 1+${oddCoeff}\\times (-1)=${value}$。`);
+      answers.push(
+        `因為 $(-1)^{2n}=1$，$(-1)^{2n+1}=-1$，所以原式 $=${evenCoeff}\\times 1+${oddCoeff}\\times (-1)=${value}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -1486,7 +1510,9 @@
       const isPositive = exponent % 2 === 0;
       questions.push(`判斷 $(-1)^{${exponent}}$ 的正負性。`);
       summaryAnswers.push(isPositive ? '正數' : '負數');
-      answers.push(`因為 ${exponent} ${isPositive ? '是偶數' : '是奇數'}，所以 $(-1)^{${exponent}}=${isPositive ? '1' : '-1'}$，因此是${isPositive ? '正數' : '負數'}。`);
+      answers.push(
+        `因為 ${exponent} ${isPositive ? '是偶數' : '是奇數'}，所以 $(-1)^{${exponent}}=${isPositive ? '1' : '-1'}$，因此是${isPositive ? '正數' : '負數'}。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -1509,7 +1535,9 @@
       const rightText = `${rightBase}^{${rightExp}}`;
       questions.push(`比較 $${leftText}$ 和 $${rightText}$ 的大小。`);
       summaryAnswers.push(`$${leftText} ${relation} ${rightText}$`);
-      answers.push(`先算出數值：$${leftText}=${leftValue}$，$${rightText}=${rightValue}$，所以 $${leftText} ${relation} ${rightText}$。`);
+      answers.push(
+        `先算出數值：$${leftText}=${leftValue}$，$${rightText}=${rightValue}$，所以 $${leftText} ${relation} ${rightText}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -1604,7 +1632,9 @@
       const rightValue = Math.pow(-oddBase, oddExp);
       questions.push(`比較 $${leftText}$ 和 $${rightText}$ 的大小。`);
       summaryAnswers.push(`$${leftText}>${rightText}$`);
-      answers.push(`左邊是偶次方，所以 $${leftText}=${leftValue}$ 為正；右邊是奇次方，所以 $${rightText}=${rightValue}$ 為負，因此一定有 $${leftText}>${rightText}$。`);
+      answers.push(
+        `左邊是偶次方，所以 $${leftText}=${leftValue}$ 為正；右邊是奇次方，所以 $${rightText}=${rightValue}$ 為負，因此一定有 $${leftText}>${rightText}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -1635,7 +1665,9 @@
         const oppositeText = formatFraction(-numerator, denominator);
         questions.push(`如果 $${variableName}$ 與 $${valueText}$ 互為相反數，那麼 $${variableName}$ 是多少？`);
         summaryAnswers.push(`$${oppositeText}$`);
-        answers.push(`互為相反數代表相加等於 $0$，所以 $${variableName}=-\\left(${valueText}\\right)=${oppositeText}$。`);
+        answers.push(
+          `互為相反數代表相加等於 $0$，所以 $${variableName}=-\\left(${valueText}\\right)=${oppositeText}$。`
+        );
         continue;
       }
 
@@ -1661,7 +1693,9 @@
       const relation = leftValue > rightValue ? '>' : leftValue < rightValue ? '<' : '=';
       questions.push(`比較 $${leftExpr}$ 和 $${rightExpr}$ 的大小。`);
       summaryAnswers.push(`$${leftExpr} ${relation} ${rightExpr}$`);
-      answers.push(`因為 $${leftExpr}=${leftValue}$，而 $${rightExpr}=${rightValue}$，所以 $${leftExpr} ${relation} ${rightExpr}$。`);
+      answers.push(
+        `因為 $${leftExpr}=${leftValue}$，而 $${rightExpr}=${rightValue}$，所以 $${leftExpr} ${relation} ${rightExpr}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -1680,7 +1714,9 @@
       const side = opposite > 0 ? '原點右側' : '原點左側';
       questions.push(`已知 $${variableName}$ 是 $${value}$ 的相反數，判斷 $${variableName}$ 在數線原點的哪一側。`);
       summaryAnswers.push(side);
-      answers.push(`$${value}$ 的相反數是 $${opposite}$。因為 $${opposite}${opposite > 0 ? '>' : '<'}0$，所以 $${variableName}$ 在數線的${side}。`);
+      answers.push(
+        `$${value}$ 的相反數是 $${opposite}$。因為 $${opposite}${opposite > 0 ? '>' : '<'}0$，所以 $${variableName}$ 在數線的${side}。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -1696,9 +1732,9 @@
       while (b === a) b = randInt(-20, 20);
       const midpoint = (a + b) / 2;
       const distance = Math.abs(a - b);
-      questions.push(`數線上有A(${a})和B(${b})兩點，求A、B兩點的中點座標和距離？`);
-      summaryAnswers.push(`中點 $${formatFraction(a + b, 2)}$，距離 $${distance}$`);
-      answers.push(`中點=${midpoint}，距離=${distance}`);
+      questions.push(`數線上有$A(${a})$和$B(${b})$兩點，求$A$、$B$兩點的中點座標和距離？`);
+      summaryAnswers.push(`$${formatFraction(a + b, 2)}$，$${distance}$`);
+      answers.push(`中點=$${midpoint}$，距離=$${distance}$`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2046,7 +2082,9 @@
       const result = -(a + b);
       questions.push(`如果甲數的絕對值是 $${a}$，乙數的絕對值是 $${b}$，求甲數與乙數差的最小值。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`甲數減乙數要最小，就讓甲數取最小的 $-${a}$，乙數取最大的 $${b}$。所以最小值是 $-${a}-${b}=${result}$。`);
+      answers.push(
+        `甲數減乙數要最小，就讓甲數取最小的 $-${a}$，乙數取最大的 $${b}$。所以最小值是 $-${a}-${b}=${result}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -2063,7 +2101,9 @@
       const result = a + b;
       questions.push(`如果甲數的絕對值是 $${a}$，乙數的絕對值是 $${b}$，求甲數與乙數差的最大值。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`甲數減乙數要最大，就讓甲數取最大的 $${a}$，乙數取最小的 $-${b}$。所以最大值是 $${a}-(-${b})=${result}$。`);
+      answers.push(
+        `甲數減乙數要最大，就讓甲數取最大的 $${a}$，乙數取最小的 $-${b}$。所以最大值是 $${a}-(-${b})=${result}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -2174,13 +2214,10 @@
       while (c === a && c === b) c = randInt(-20, 20);
       const d = (a + b) / 2;
       const dist = Math.abs(c - d);
-      if (i === 0) {
-        questions.push(`A(${a})、B(${b})、C(${c})為數線上三點，若D為AB中點，則CD距離多少？`);
-      } else {
-        questions.push(`A(${a})、B(${b})、C(${c})，若D為AB中點，求CD。`);
-      }
+
+      questions.push(`$A(${a})、B(${b})、C(${c})$為數線上三點，若$D$為$\\overline{AB}$中點，求$\\overline{CD}$？`);
       summaryAnswers.push(`$${formatFraction(Math.abs(2 * c - a - b), 2)}$`);
-      answers.push(`${dist}`);
+      answers.push(`$${dist}$`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2198,13 +2235,10 @@
       const ab = Math.abs(a - b);
       const bc = Math.abs(b - c);
       const ca = Math.abs(c - a);
-      if (i === 0) {
-        questions.push(`A(${a})、B(${b})、C(${c})為數線上三點，求AB、BC、CA？`);
-      } else {
-        questions.push(`A(${a})、B(${b})、C(${c})，求AB、BC、CA？`);
-      }
-      summaryAnswers.push(`$AB=${ab},\\ BC=${bc},\\ CA=${ca}$`);
-      answers.push(`AB=${ab}，BC=${bc}，CA=${ca}`);
+
+      questions.push(`$A(${a})、B(${b})、C(${c})$為數線上三點，求$\\overline{AB}、\\overline{BC}、\\overline{CA}？$`);
+      summaryAnswers.push(`$\\overline{AB}=${ab},\\ \\overline{BC}=${bc},\\ \\overline{CA}=${ca}$`);
+      answers.push(`$\\overline{AB}=${ab}，\\overline{BC}=${bc}，\\overline{CA}=${ca}$`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2260,7 +2294,9 @@
         const negativeText = formatFraction(-numerator, denominator);
         questions.push(`如果 $|${variableName}|=${valueText}$，則 $${variableName}$ 可能的值有哪些？`);
         summaryAnswers.push(`$${negativeText}$、$${valueText}$`);
-        answers.push(`絕對值表示到原點的距離，所以 $${variableName}$ 會在 $0$ 的左右各一個位置，即 $${negativeText}$ 或 $${valueText}$。`);
+        answers.push(
+          `絕對值表示到原點的距離，所以 $${variableName}$ 會在 $0$ 的左右各一個位置，即 $${negativeText}$ 或 $${valueText}$。`
+        );
         continue;
       }
 
@@ -2500,10 +2536,12 @@
       const left = midpoint - half;
       const right = midpoint + half;
       const distance = half * 2;
-      questions.push(`數線上 $A$、$B$ 兩點的中點是 $${midpoint}$，且 $AB=${distance}$，求 $A$、$B$ 兩點的坐標。`);
+      questions.push(
+        `數線上 $A$、$B$ 兩點的中點是 $${midpoint}$，且 $\\overline{AB}=${distance}$，求 $A$、$B$ 兩點的坐標。`
+      );
       summaryAnswers.push(`$${left}$、$${right}$`);
       answers.push(
-        `簡答：$${left}$、$${right}$。中點左右距離相等，而 $AB=${distance}$，所以每邊各是 $${half}$。因此兩點坐標是 $${midpoint}-${half}=${left}$、$${midpoint}+${half}=${right}$。`
+        `簡答：$${left}$、$${right}$。中點左右距離相等，而 $\\overline{AB}=${distance}$，所以每邊各是 $${half}$。因此兩點坐標是 $${midpoint}-${half}=${left}$、$${midpoint}+${half}=${right}$。`
       );
     }
 
@@ -2774,11 +2812,12 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const m = 50;
     for (let i = 0; i < count; i += 1) {
-      const a = randInt(-12, 12),
-        b = randInt(-12, 12);
-      const c = randInt(-12, 12),
-        d = randInt(-12, 12);
+      const a = randInt(-m, m),
+        b = randInt(-m, m);
+      const c = randInt(-m, m),
+        d = randInt(-m, m);
       const op = i % 2 === 0 ? '+' : '-';
       const left = Math.abs(a + b);
       const right = Math.abs(c + d);
@@ -2871,7 +2910,9 @@
       const start = includeLeft ? left : left + 1;
       const end = includeRight ? right : right - 1;
       const values = start <= end ? listIntegersInRange(start, end, '整數') : [];
-      questions.push(`求滿足 $${formatIntervalCondition(left, includeLeft, variableName, includeRight, right)}$ 的所有整數 $${variableName}$ 的個數。`);
+      questions.push(
+        `求滿足 $${formatIntervalCondition(left, includeLeft, variableName, includeRight, right)}$ 的所有整數 $${variableName}$ 的個數。`
+      );
       summaryAnswers.push(`$${values.length}$`);
       answers.push(`符合條件的整數有 ${formatIntegerList(values)}，所以個數是 $${values.length}$。`);
     }
@@ -2895,7 +2936,9 @@
       const end = includeRight ? right : right - 1;
       const values = start <= end ? listIntegersInRange(start, end, '整數') : [];
       const result = sumIntegerList(values);
-      questions.push(`求滿足 $${formatIntervalCondition(left, includeLeft, variableName, includeRight, right)}$ 的所有整數 $${variableName}$ 的總和。`);
+      questions.push(
+        `求滿足 $${formatIntervalCondition(left, includeLeft, variableName, includeRight, right)}$ 的所有整數 $${variableName}$ 的總和。`
+      );
       summaryAnswers.push(`$${result}$`);
       answers.push(`符合條件的整數有 ${formatIntegerList(values)}，所以總和是 $${result}$。`);
     }
@@ -2920,9 +2963,13 @@
       const values = listIntegersInRange(left, right, '整數');
       const result = sumIntegerList(values);
       const symbol = includeBoundary ? '\\le' : '<';
-      questions.push(`已知 $${variableName}$ 為整數，且 $|${shiftedText}|${symbol}${radius}$，求所有可能的 $${variableName}$ 值總和。`);
+      questions.push(
+        `已知 $${variableName}$ 為整數，且 $|${shiftedText}|${symbol}${radius}$，求所有可能的 $${variableName}$ 值總和。`
+      );
       summaryAnswers.push(`$${result}$`);
-      answers.push(`由 $|${shiftedText}|${symbol}${radius}$ 可得整數解為 ${formatIntegerList(values)}，所以總和是 $${result}$。`);
+      answers.push(
+        `由 $|${shiftedText}|${symbol}${radius}$ 可得整數解為 ${formatIntegerList(values)}，所以總和是 $${result}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -4058,7 +4105,9 @@
       for (let x = base; x < 100; x += base) values.push(x);
       questions.push(`找同時為 ${p} 和 ${q} 的倍數中，且數值小於 100 的整數有哪些？`);
       summaryAnswers.push(values.join('、'));
-      answers.push(`先找最小公倍數：$\\mathrm{lcm}(${p},${q})=${base}$，所以小於 100 的共同倍數有 ${values.join('、')}。`);
+      answers.push(
+        `先找最小公倍數：$\\mathrm{lcm}(${p},${q})=${base}$，所以小於 100 的共同倍數有 ${values.join('、')}。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -4752,9 +4801,13 @@
       }
       const coefTenths = leftCoefTenths - rightCoefTenths;
       const constantTenths = rightConstTenths - leftConstTenths;
-      questions.push(`解方程式：$${formatDecimalLinearExpr(leftCoefTenths, leftConstTenths)}=${formatDecimalLinearExpr(rightCoefTenths, rightConstTenths)}$`);
+      questions.push(
+        `解方程式：$${formatDecimalLinearExpr(leftCoefTenths, leftConstTenths)}=${formatDecimalLinearExpr(rightCoefTenths, rightConstTenths)}$`
+      );
       summaryAnswers.push(`$x=${xValue}$`);
-      answers.push(`移項得 $${formatDecimalLinearExpr(coefTenths, 0)}=${formatDecimalTenths(constantTenths)}$，所以 $x=${xValue}$。`);
+      answers.push(
+        `移項得 $${formatDecimalLinearExpr(coefTenths, 0)}=${formatDecimalTenths(constantTenths)}$，所以 $x=${xValue}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4769,10 +4822,12 @@
 
       if (variant === 0) {
         const middle = randInt(7, 35);
-        const sum = (middle - 2) + middle + (middle + 2);
+        const sum = middle - 2 + middle + (middle + 2);
         questions.push(`連續三個奇數的和為 ${sum}，求最大的奇數。`);
         summaryAnswers.push(`$${middle + 2}$`);
-        answers.push(`設中間的奇數為 $x$，則三數為 $x-2,\\ x,\\ x+2$。由 $(x-2)+x+(x+2)=${sum}$ 得 $3x=${sum}$，所以 $x=${middle}$，最大的奇數是 $${middle + 2}$。`);
+        answers.push(
+          `設中間的奇數為 $x$，則三數為 $x-2,\\ x,\\ x+2$。由 $(x-2)+x+(x+2)=${sum}$ 得 $3x=${sum}$，所以 $x=${middle}$，最大的奇數是 $${middle + 2}$。`
+        );
         continue;
       }
 
@@ -4781,7 +4836,9 @@
         const sum = first + (first + 1) + (first + 2);
         questions.push(`連續三個整數的和為 ${sum}，求中間的整數。`);
         summaryAnswers.push(`$${first + 1}$`);
-        answers.push(`設最小的整數為 $x$，則三數為 $x,\\ x+1,\\ x+2$。由 $x+(x+1)+(x+2)=${sum}$ 得 $3x+3=${sum}$，解得 $x=${first}$，所以中間的整數是 $${first + 1}$。`);
+        answers.push(
+          `設最小的整數為 $x$，則三數為 $x,\\ x+1,\\ x+2$。由 $x+(x+1)+(x+2)=${sum}$ 得 $3x+3=${sum}$，解得 $x=${first}$，所以中間的整數是 $${first + 1}$。`
+        );
         continue;
       }
 
@@ -4789,7 +4846,9 @@
       const sum = firstEven + (firstEven + 2) + (firstEven + 4) + (firstEven + 6);
       questions.push(`連續四個偶數的和為 ${sum}，求最小的偶數。`);
       summaryAnswers.push(`$${firstEven}$`);
-      answers.push(`設最小的偶數為 $x$，則四數為 $x,\\ x+2,\\ x+4,\\ x+6$。由 $x+(x+2)+(x+4)+(x+6)=${sum}$ 得 $4x+12=${sum}$，解得 $x=${firstEven}$。`);
+      answers.push(
+        `設最小的偶數為 $x$，則四數為 $x,\\ x+2,\\ x+4,\\ x+6$。由 $x+(x+2)+(x+4)+(x+6)=${sum}$ 得 $4x+12=${sum}$，解得 $x=${firstEven}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -4814,9 +4873,13 @@
         const total = xValue + yValue + zValue;
         const ask = pickFromList(['x', 'y', 'z']);
         const answerValue = ask === 'x' ? xValue : ask === 'y' ? yValue : zValue;
-        questions.push(`若 $\\dfrac{x}{${a}}=\\dfrac{y}{${b}}=\\dfrac{z}{${c}}$，且 $x+y+z=${total}$，求 $${ask}$ 的值。`);
+        questions.push(
+          `若 $\\dfrac{x}{${a}}=\\dfrac{y}{${b}}=\\dfrac{z}{${c}}$，且 $x+y+z=${total}$，求 $${ask}$ 的值。`
+        );
         summaryAnswers.push(`$${answerValue}$`);
-        answers.push(`設共同的比值為 $k$，則 $x=${a}k,\\ y=${b}k,\\ z=${c}k$。所以 $${a}k+${b}k+${c}k=${total}$，即 $${a + b + c}k=${total}$，得 $k=${unit}$。因此 $${ask}=${answerValue}$。`);
+        answers.push(
+          `設共同的比值為 $k$，則 $x=${a}k,\\ y=${b}k,\\ z=${c}k$。所以 $${a}k+${b}k+${c}k=${total}$，即 $${a + b + c}k=${total}$，得 $k=${unit}$。因此 $${ask}=${answerValue}$。`
+        );
         continue;
       }
 
@@ -4841,8 +4904,10 @@
       const total = aValue + bValue + cValue;
       questions.push(`將 ${total} 分成甲、乙、丙三數，已知甲：乙 = ${m}:${n}，乙：丙 = ${p}:${q}，求乙數。`);
       summaryAnswers.push(`$${bValue}$`);
-      answers.push(`先設乙數為共同連接量。因為甲：乙 = ${m}:${n}$，所以甲 $=\\dfrac{${m}}{${n}}\\times$ 乙；又因乙：丙 = ${p}:${q}$，所以丙 $=\\dfrac{${q}}{${p}}\\times$ 乙。代入總和得 $\\dfrac{${m}}{${n}}x+x+\\dfrac{${q}}{${p}}x=${total}$，解得乙數 $x=${bValue}$。`);
-      }
+      answers.push(
+        `先設乙數為共同連接量。因為甲：乙 = ${m}:${n}$，所以甲 $=\\dfrac{${m}}{${n}}\\times$ 乙；又因乙：丙 = ${p}:${q}$，所以丙 $=\\dfrac{${q}}{${p}}\\times$ 乙。代入總和得 $\\dfrac{${m}}{${n}}x+x+\\dfrac{${q}}{${p}}x=${total}$，解得乙數 $x=${bValue}$。`
+      );
+    }
 
     return { questions, summaryAnswers, answers };
   }
@@ -4871,9 +4936,13 @@
         continue;
       }
       const overall = totalScore / totalCount;
-      questions.push(`某班共有 ${totalCount} 人，全班平均 ${overall} 分，其中${groupA}平均 ${avgA} 分，${groupB}平均 ${avgB} 分，求${groupA}有多少人。`);
+      questions.push(
+        `某班共有 ${totalCount} 人，全班平均 ${overall} 分，其中${groupA}平均 ${avgA} 分，${groupB}平均 ${avgB} 分，求${groupA}有多少人。`
+      );
       summaryAnswers.push(`$${countA}$`);
-      answers.push(`設${groupA}有 $x$ 人，則${groupB}有 ${totalCount}-x 人。由總分相加得 ${avgA}x+${avgB}(${totalCount}-x)=${overall}\\times ${totalCount}$，解得 $x=${countA}$。`);
+      answers.push(
+        `設${groupA}有 $x$ 人，則${groupB}有 ${totalCount}-x 人。由總分相加得 ${avgA}x+${avgB}(${totalCount}-x)=${overall}\\times ${totalCount}$，解得 $x=${countA}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -4896,9 +4965,13 @@
       const countB = randInt(2, 8);
       const totalCount = countA + countB;
       const totalCost = countA * priceA + countB * priceB;
-      questions.push(`小明買了 $x$ 個${itemA}和 $y$ 個${itemB}，${itemA}每個 ${priceA} 元，${itemB}每個 ${priceB} 元，共花了 ${totalCost} 元。已知 $x+y=${totalCount}$，求 $x$ 和 $y$。`);
+      questions.push(
+        `小明買了 $x$ 個${itemA}和 $y$ 個${itemB}，${itemA}每個 ${priceA} 元，${itemB}每個 ${priceB} 元，共花了 ${totalCost} 元。已知 $x+y=${totalCount}$，求 $x$ 和 $y$。`
+      );
       summaryAnswers.push(`$x=${countA},\\ y=${countB}$`);
-      answers.push(`由 $x+y=${totalCount}$ 可得 $y=${totalCount}-x$。代入總價方程 $${priceA}x+${priceB}y=${totalCost}$，得 $${priceA}x+${priceB}(${totalCount}-x)=${totalCost}$，解得 $x=${countA}$，所以 $y=${countB}$。`);
+      answers.push(
+        `由 $x+y=${totalCount}$ 可得 $y=${totalCount}-x$。代入總價方程 $${priceA}x+${priceB}y=${totalCost}$，得 $${priceA}x+${priceB}(${totalCount}-x)=${totalCost}$，解得 $x=${countA}$，所以 $y=${countB}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -4921,7 +4994,9 @@
         const aValue = bValue + diff;
         questions.push(`甲有 $x$ 元，乙有 ${bValue} 元。若甲給乙 ${transfer} 元後，兩人的錢數相等，求甲原有多少元。`);
         summaryAnswers.push(`$${aValue}$`);
-        answers.push(`甲給乙 ${transfer} 元後，甲剩 $x-${transfer}$，乙變成 ${bValue}+${transfer}$。由兩人相等可列 $x-${transfer}=${bValue}+${transfer}$，解得 $x=${aValue}$。`);
+        answers.push(
+          `甲給乙 ${transfer} 元後，甲剩 $x-${transfer}$，乙變成 ${bValue}+${transfer}$。由兩人相等可列 $x-${transfer}=${bValue}+${transfer}$，解得 $x=${aValue}$。`
+        );
         continue;
       }
 
@@ -4929,9 +5004,13 @@
       const ratio = pickFromList([2, 3]);
       const transfer = randInt(10, 30);
       const aValue = ratio * (bValue + transfer) + transfer;
-      questions.push(`甲有 $x$ 元，乙原有 ${bValue} 元。若甲給乙 ${transfer} 元後，甲的錢是乙的 ${ratio} 倍，求甲原有多少元。`);
+      questions.push(
+        `甲有 $x$ 元，乙原有 ${bValue} 元。若甲給乙 ${transfer} 元後，甲的錢是乙的 ${ratio} 倍，求甲原有多少元。`
+      );
       summaryAnswers.push(`$${aValue}$`);
-      answers.push(`甲給乙 ${transfer} 元後，甲剩 $x-${transfer}$，乙變成 ${bValue}+${transfer}$。依題意可列 $x-${transfer}=${ratio}(${bValue}+${transfer})$，解得 $x=${aValue}$。`);
+      answers.push(
+        `甲給乙 ${transfer} 元後，甲剩 $x-${transfer}$，乙變成 ${bValue}+${transfer}$。依題意可列 $x-${transfer}=${ratio}(${bValue}+${transfer})$，解得 $x=${aValue}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -4957,9 +5036,13 @@
       }
       const hours = randInt(2, 5);
       const distance = (fastSpeed + slowSpeed) * hours;
-      questions.push(`已知甲的速度是乙的 ${num / den} 倍，兩人同時同地反向而行，${hours} 小時後相距 ${distance} 公里，求乙的速度。`);
+      questions.push(
+        `已知甲的速度是乙的 ${num / den} 倍，兩人同時同地反向而行，${hours} 小時後相距 ${distance} 公里，求乙的速度。`
+      );
       summaryAnswers.push(`$${slowSpeed}$ 公里/小時`);
-      answers.push(`設乙的速度為 $x$ 公里/小時，則甲的速度為 ${num / den}x。反向而行 ${hours} 小時後相距 ${distance} 公里，所以可列 $(${num / den}x+x)\\times ${hours}=${distance}$，解得 $x=${slowSpeed}$。`);
+      answers.push(
+        `設乙的速度為 $x$ 公里/小時，則甲的速度為 ${num / den}x。反向而行 ${hours} 小時後相距 ${distance} 公里，所以可列 $(${num / den}x+x)\\times ${hours}=${distance}$，解得 $x=${slowSpeed}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -6347,9 +6430,13 @@
         const left = addFraction(a, b);
         const right = subFraction(c, d);
         const result = divFraction(left, right);
-        questions.push(`計算：$\\left(${fractionToLatex(a)}+${fractionToLatex(b)}\\right)\\div\\left(${fractionToLatex(c)}-${fractionToLatex(d)}\\right)$。`);
+        questions.push(
+          `計算：$\\left(${fractionToLatex(a)}+${fractionToLatex(b)}\\right)\\div\\left(${fractionToLatex(c)}-${fractionToLatex(d)}\\right)$。`
+        );
         summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-        answers.push(`先算括號內：$${fractionToLatex(a)}+${fractionToLatex(b)}=${fractionToLatex(left)}$，$${fractionToLatex(c)}-${fractionToLatex(d)}=${fractionToLatex(right)}$；再做除法，得 $${fractionToLatex(result, true)}$。`);
+        answers.push(
+          `先算括號內：$${fractionToLatex(a)}+${fractionToLatex(b)}=${fractionToLatex(left)}$，$${fractionToLatex(c)}-${fractionToLatex(d)}=${fractionToLatex(right)}$；再做除法，得 $${fractionToLatex(result, true)}$。`
+        );
         continue;
       }
 
@@ -6360,9 +6447,13 @@
         const left = addFraction(makeFraction(1, 1), a);
         const right = subFraction(makeFraction(1, 1), b);
         const result = mulFraction(left, divFraction(right, c));
-        questions.push(`計算：$\\left(1+${fractionToLatex(a)}\\right)\\times\\left(1-${fractionToLatex(b)}\\right)\\div ${fractionToLatex(c)}$。`);
+        questions.push(
+          `計算：$\\left(1+${fractionToLatex(a)}\\right)\\times\\left(1-${fractionToLatex(b)}\\right)\\div ${fractionToLatex(c)}$。`
+        );
         summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-        answers.push(`先算括號：$1+${fractionToLatex(a)}=${fractionToLatex(left, true)}$，$1-${fractionToLatex(b)}=${fractionToLatex(right, true)}$；再依序乘除，結果是 $${fractionToLatex(result, true)}$。`);
+        answers.push(
+          `先算括號：$1+${fractionToLatex(a)}=${fractionToLatex(left, true)}$，$1-${fractionToLatex(b)}=${fractionToLatex(right, true)}$；再依序乘除，結果是 $${fractionToLatex(result, true)}$。`
+        );
         continue;
       }
 
@@ -6372,9 +6463,13 @@
         const c = randomProperFraction([2, 3, 4, 5, 6, 8]);
         const left = addFraction(a, b);
         const result = mulFraction(left, c);
-        questions.push(`計算：$\\left(${integerOrFractionLatex(a)}+${integerOrFractionLatex(b)}\\right)\\times ${fractionToLatex(c)}$。`);
+        questions.push(
+          `計算：$\\left(${integerOrFractionLatex(a)}+${integerOrFractionLatex(b)}\\right)\\times ${fractionToLatex(c)}$。`
+        );
         summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-        answers.push(`先把帶分數化成假分數並合併括號：$${integerOrFractionLatex(a)}+${integerOrFractionLatex(b)}=${fractionToLatex(left, true)}$；再乘上 ${fractionToLatex(c)}，得 $${fractionToLatex(result, true)}$。`);
+        answers.push(
+          `先把帶分數化成假分數並合併括號：$${integerOrFractionLatex(a)}+${integerOrFractionLatex(b)}=${fractionToLatex(left, true)}$；再乘上 ${fractionToLatex(c)}，得 $${fractionToLatex(result, true)}$。`
+        );
         continue;
       }
 
@@ -6384,9 +6479,13 @@
         const c = randomProperFraction([2, 3, 4, 5, 6, 8]);
         const left = addFraction(a, b);
         const result = divFraction(left, c);
-        questions.push(`計算：$\\left(${fractionToLatex(a)}+${fractionToLatex(b)}\\right)\\div ${fractionToLatex(c)}$。`);
+        questions.push(
+          `計算：$\\left(${fractionToLatex(a)}+${fractionToLatex(b)}\\right)\\div ${fractionToLatex(c)}$。`
+        );
         summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-        answers.push(`先算括號內：$${fractionToLatex(a)}+${fractionToLatex(b)}=${fractionToLatex(left)}$；再把除以 ${fractionToLatex(c)} 改成乘倒數，結果是 $${fractionToLatex(result, true)}$。`);
+        answers.push(
+          `先算括號內：$${fractionToLatex(a)}+${fractionToLatex(b)}=${fractionToLatex(left)}$；再把除以 ${fractionToLatex(c)} 改成乘倒數，結果是 $${fractionToLatex(result, true)}$。`
+        );
         continue;
       }
 
@@ -6397,9 +6496,13 @@
       const left = subFraction(a, b);
       const right = addFraction(c, d);
       const result = mulFraction(left, right);
-      questions.push(`計算：$\\left(${fractionToLatex(a)}-${fractionToLatex(b)}\\right)\\times\\left(${fractionToLatex(c)}+${fractionToLatex(d)}\\right)$。`);
+      questions.push(
+        `計算：$\\left(${fractionToLatex(a)}-${fractionToLatex(b)}\\right)\\times\\left(${fractionToLatex(c)}+${fractionToLatex(d)}\\right)$。`
+      );
       summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-      answers.push(`先算兩個括號：$${fractionToLatex(a)}-${fractionToLatex(b)}=${fractionToLatex(left)}$，$${fractionToLatex(c)}+${fractionToLatex(d)}=${fractionToLatex(right)}$；再相乘得 $${fractionToLatex(result, true)}$。`);
+      answers.push(
+        `先算兩個括號：$${fractionToLatex(a)}-${fractionToLatex(b)}=${fractionToLatex(left)}$，$${fractionToLatex(c)}+${fractionToLatex(d)}=${fractionToLatex(right)}$；再相乘得 $${fractionToLatex(result, true)}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -6499,9 +6602,10 @@
       const b = randomMixedFraction(3, 10, [2, 3, 4, 5, 6, 8], false);
       const c = randomMixedFraction(2, 9, [2, 3, 4, 5, 6, 8], false);
       const result = i % 2 === 0 ? addFraction(subFraction(a, b), c) : subFraction(addFraction(a, b), c);
-      const expr = i % 2 === 0
-        ? `${integerOrFractionLatex(a)}-${integerOrFractionLatex(b)}+${integerOrFractionLatex(c)}`
-        : `${integerOrFractionLatex(a)}+${integerOrFractionLatex(b)}-${integerOrFractionLatex(c)}`;
+      const expr =
+        i % 2 === 0
+          ? `${integerOrFractionLatex(a)}-${integerOrFractionLatex(b)}+${integerOrFractionLatex(c)}`
+          : `${integerOrFractionLatex(a)}+${integerOrFractionLatex(b)}-${integerOrFractionLatex(c)}`;
       questions.push(`計算：$${expr}$ 的值。`);
       summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
       answers.push(`先把帶分數化成假分數，再依序通分計算，可得 $${fractionToLatex(result, true)}$。`);
@@ -6521,7 +6625,9 @@
       const c = randomMixedFraction(2, 9, [2, 3, 4, 5, 6, 8], false);
       const d = randomMixedFraction(1, 8, [2, 3, 4, 5, 6, 8], false);
       const result = subFraction(addFraction(a, b), addFraction(c, d));
-      questions.push(`計算：$${integerOrFractionLatex(a)}+${integerOrFractionLatex(b)}-${integerOrFractionLatex(c)}-${integerOrFractionLatex(d)}$ 的值。`);
+      questions.push(
+        `計算：$${integerOrFractionLatex(a)}+${integerOrFractionLatex(b)}-${integerOrFractionLatex(c)}-${integerOrFractionLatex(d)}$ 的值。`
+      );
       summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
       answers.push(`整數部分與分數部分一起化成假分數後，再通分計算，結果是 $${fractionToLatex(result, true)}$。`);
     }
@@ -6545,7 +6651,9 @@
         const total = mulFraction(perBag, makeFraction(bags, 1));
         questions.push(`重量分配：將 $${fractionToLatex(total, true)}$ 公斤的麵粉平均分成 ${bags} 袋，每袋幾公斤？`);
         summaryAnswers.push(`$${fractionToLatex(perBag, true)}$ 公斤`);
-        answers.push(`每袋重量 = 總重量 ÷ 袋數，所以 $${fractionToLatex(total, true)}\\div ${bags}=${fractionToLatex(perBag, true)}$ 公斤。`);
+        answers.push(
+          `每袋重量 = 總重量 ÷ 袋數，所以 $${fractionToLatex(total, true)}\\div ${bags}=${fractionToLatex(perBag, true)}$ 公斤。`
+        );
         continue;
       }
 
@@ -6557,7 +6665,9 @@
         const remain = mulFraction(makeFraction(whole, 1), subFraction(makeFraction(1, 1), used));
         questions.push(`剩餘量計算：一條繩子長 ${whole} 公尺，剪掉 ${fractionToLatex(used)} 後，還剩多少公尺？`);
         summaryAnswers.push(`$${fractionToLatex(remain, true)}$ 公尺`);
-        answers.push(`剩下的是全長的 $1-${fractionToLatex(used)}=${fractionToLatex(subFraction(makeFraction(1,1), used))}$，所以剩餘長度是 $${fractionToLatex(remain, true)}$ 公尺。`);
+        answers.push(
+          `剩下的是全長的 $1-${fractionToLatex(used)}=${fractionToLatex(subFraction(makeFraction(1, 1), used))}$，所以剩餘長度是 $${fractionToLatex(remain, true)}$ 公尺。`
+        );
         continue;
       }
 
@@ -6567,9 +6677,13 @@
         const num = randInt(1, den - 1);
         const used = mulFraction(makeFraction(money, 1), makeFraction(num, den));
         const remain = subFraction(makeFraction(money, 1), used);
-        questions.push(`金錢花費：小明有 ${money} 元，用了 ${fractionToLatex(makeFraction(num, den))} 買玩具，還剩多少元？`);
+        questions.push(
+          `金錢花費：小明有 ${money} 元，用了 ${fractionToLatex(makeFraction(num, den))} 買玩具，還剩多少元？`
+        );
         summaryAnswers.push(`$${fractionToLatex(remain, true)}$ 元`);
-        answers.push(`先算用掉的錢：$${money}\\times ${fractionToLatex(makeFraction(num, den))}=${fractionToLatex(used, true)}$，再用總金額相減，剩下 $${fractionToLatex(remain, true)}$ 元。`);
+        answers.push(
+          `先算用掉的錢：$${money}\\times ${fractionToLatex(makeFraction(num, den))}=${fractionToLatex(used, true)}$，再用總金額相減，剩下 $${fractionToLatex(remain, true)}$ 元。`
+        );
         continue;
       }
 
@@ -6577,7 +6691,9 @@
         const total = randomMixedFraction(3, 6, [2, 3, 4, 5], false);
         const used = randomMixedFraction(1, 2, [2, 3, 4, 5], false);
         const remain = subFraction(total, used);
-        questions.push(`工程與液量：一罐油漆重 $${fractionToLatex(total, true)}$ 公斤，用掉 $${fractionToLatex(used, true)}$ 公斤後還剩多少公斤？`);
+        questions.push(
+          `工程與液量：一罐油漆重 $${fractionToLatex(total, true)}$ 公斤，用掉 $${fractionToLatex(used, true)}$ 公斤後還剩多少公斤？`
+        );
         summaryAnswers.push(`$${fractionToLatex(remain, true)}$ 公斤`);
         answers.push(`把兩個帶分數化成假分數後相減，可得剩餘重量是 $${fractionToLatex(remain, true)}$ 公斤。`);
         continue;
@@ -6586,7 +6702,9 @@
       const total = makeFraction(randInt(2, 5) * 2 + 1, 2);
       const drink = makeFraction(randInt(1, 3), 2);
       const remain = subFraction(total, drink);
-      questions.push(`液體測量：一瓶果汁有 $${fractionToLatex(total, true)}$ 公升，喝掉 $${fractionToLatex(drink)}$ 公升後還剩多少公升？`);
+      questions.push(
+        `液體測量：一瓶果汁有 $${fractionToLatex(total, true)}$ 公升，喝掉 $${fractionToLatex(drink)}$ 公升後還剩多少公升？`
+      );
       summaryAnswers.push(`$${fractionToLatex(remain, true)}$ 公升`);
       answers.push(`剩餘量 = 原有量 $-${fractionToLatex(drink)}$，所以還剩 $${fractionToLatex(remain, true)}$ 公升。`);
     }
@@ -6654,7 +6772,9 @@
       const result = a * a + b - c * c * c;
       questions.push(`若 $a=${a},\\ b=${b},\\ c=${c}$，求 $a^2+b-c^3$ 的值。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先算次方：$(${a})^2=${a * a}$，$(${c})^3=${c * c * c}$，所以 $a^2+b-c^3=${a * a}${b >= 0 ? '+' : ''}${b}-(${c * c * c})=${result}$。`);
+      answers.push(
+        `先算次方：$(${a})^2=${a * a}$，$(${c})^3=${c * c * c}$，所以 $a^2+b-c^3=${a * a}${b >= 0 ? '+' : ''}${b}-(${c * c * c})=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6685,7 +6805,9 @@
       const result = a * a * a - b * b;
       questions.push(`若 $a=${a},\\ b=${b}$，求 $a^3-b^2$ 的值。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先算次方：$(${a})^3=${a * a * a}$，$(${b})^2=${b * b}$，所以 $a^3-b^2=${a * a * a}-${b * b}=${result}$。`);
+      answers.push(
+        `先算次方：$(${a})^3=${a * a * a}$，$(${b})^2=${b * b}$，所以 $a^3-b^2=${a * a * a}-${b * b}=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6701,9 +6823,13 @@
       const quotient = pickNonZero(-6, 6);
       const dividend = divisor * quotient;
       const result = a * b + quotient;
-      questions.push(`計算：$${a}\\times ${wrapIfNegative(b)}+${wrapIfNegative(dividend)}\\div ${wrapIfNegative(divisor)}$。`);
+      questions.push(
+        `計算：$${a}\\times ${wrapIfNegative(b)}+${wrapIfNegative(dividend)}\\div ${wrapIfNegative(divisor)}$。`
+      );
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先乘除後加減：$${a}\\times ${wrapIfNegative(b)}=${a * b}$，$${dividend}\\div ${wrapIfNegative(divisor)}=${quotient}$，所以原式 $=${a * b}${quotient >= 0 ? '+' : ''}${quotient}=${result}$。`);
+      answers.push(
+        `先乘除後加減：$${a}\\times ${wrapIfNegative(b)}=${a * b}$，$${dividend}\\div ${wrapIfNegative(divisor)}=${quotient}$，所以原式 $=${a * b}${quotient >= 0 ? '+' : ''}${quotient}=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6718,9 +6844,13 @@
       const inside = divisor * quotient;
       const a = randInt(-10, 10);
       const b = inside - a;
-      questions.push(`計算：$\\left[${wrapIfNegative(a)}+${wrapIfNegative(b)}\\right]\\div ${wrapIfNegative(divisor)}$。`);
+      questions.push(
+        `計算：$\\left[${wrapIfNegative(a)}+${wrapIfNegative(b)}\\right]\\div ${wrapIfNegative(divisor)}$。`
+      );
       summaryAnswers.push(`$${quotient}$`);
-      answers.push(`先算中括號：$${a}${b >= 0 ? '+' : ''}${b}=${inside}$，再除以 ${divisor}，得到 $${inside}\\div ${wrapIfNegative(divisor)}=${quotient}$。`);
+      answers.push(
+        `先算中括號：$${a}${b >= 0 ? '+' : ''}${b}=${inside}$，再除以 ${divisor}，得到 $${inside}\\div ${wrapIfNegative(divisor)}=${quotient}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6737,7 +6867,9 @@
       const result = a * inside;
       questions.push(`計算：$${wrapIfNegative(a)}\\times \\left[${wrapIfNegative(b)}+${wrapIfNegative(c)}\\right]$。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先算括號：$${b}${c >= 0 ? '+' : ''}${c}=${inside}$，再乘上 ${a}，得 $${a}\\times ${wrapIfNegative(inside)}=${result}$。`);
+      answers.push(
+        `先算括號：$${b}${c >= 0 ? '+' : ''}${c}=${inside}$，再乘上 ${a}，得 $${a}\\times ${wrapIfNegative(inside)}=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6755,9 +6887,13 @@
       const dividend = divisor * quotient;
       const left = a * (b + c);
       const result = left - quotient;
-      questions.push(`計算：$${a}\\times \\left[${wrapIfNegative(b)}+${wrapIfNegative(c)}\\right]-${wrapIfNegative(dividend)}\\div ${wrapIfNegative(divisor)}$。`);
+      questions.push(
+        `計算：$${a}\\times \\left[${wrapIfNegative(b)}+${wrapIfNegative(c)}\\right]-${wrapIfNegative(dividend)}\\div ${wrapIfNegative(divisor)}$。`
+      );
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先算括號與乘除：$${b}${c >= 0 ? '+' : ''}${c}=${b + c}$，所以左邊是 $${a}\\times ${wrapIfNegative(b + c)}=${left}$；右邊是 $${dividend}\\div ${wrapIfNegative(divisor)}=${quotient}$。最後 $${left}-${wrapIfNegative(quotient)}=${result}$。`);
+      answers.push(
+        `先算括號與乘除：$${b}${c >= 0 ? '+' : ''}${c}=${b + c}$，所以左邊是 $${a}\\times ${wrapIfNegative(b + c)}=${left}$；右邊是 $${dividend}\\div ${wrapIfNegative(divisor)}=${quotient}$。最後 $${left}-${wrapIfNegative(quotient)}=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6774,9 +6910,13 @@
       const c = pickNonZero(-6, 6);
       const inside = quotient + c;
       const result = a * inside;
-      questions.push(`計算：$${a}\\times \\left[${dividend}\\div ${wrapIfNegative(divisor)}+${wrapIfNegative(c)}\\right]$。`);
+      questions.push(
+        `計算：$${a}\\times \\left[${dividend}\\div ${wrapIfNegative(divisor)}+${wrapIfNegative(c)}\\right]$。`
+      );
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先算中括號內的除法：$${dividend}\\div ${wrapIfNegative(divisor)}=${quotient}$，所以括號內變成 $${quotient}${c >= 0 ? '+' : ''}${c}=${inside}$。再算 $${a}\\times ${wrapIfNegative(inside)}=${result}$。`);
+      answers.push(
+        `先算中括號內的除法：$${dividend}\\div ${wrapIfNegative(divisor)}=${quotient}$，所以括號內變成 $${quotient}${c >= 0 ? '+' : ''}${c}=${inside}$。再算 $${a}\\times ${wrapIfNegative(inside)}=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6795,7 +6935,9 @@
       const result = powerValue + product;
       questions.push(`計算：$(-${a})^{${exponent}}+${b}\\times ${wrapIfNegative(c)}$。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先算次方與乘法：$(-${a})^{${exponent}}=${powerValue}$，$${b}\\times ${wrapIfNegative(c)}=${product}$，所以原式 $=${powerValue}${product >= 0 ? '+' : ''}${product}=${result}$。`);
+      answers.push(
+        `先算次方與乘法：$(-${a})^{${exponent}}=${powerValue}$，$${b}\\times ${wrapIfNegative(c)}=${product}$，所以原式 $=${powerValue}${product >= 0 ? '+' : ''}${product}=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6814,7 +6956,9 @@
       const result = left - middle + d;
       questions.push(`計算：$(-${a})^4-${b}\\times (-${c})^2${d >= 0 ? '+' : ''}${d}$。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先算次方：$(-${a})^4=${left}$，$(-${c})^2=${Math.pow(-c, 2)}$，再算乘法得 $${b}\\times ${Math.pow(-c, 2)}=${middle}$。所以原式 $=${left}-${middle}${d >= 0 ? '+' : ''}${d}=${result}$。`);
+      answers.push(
+        `先算次方：$(-${a})^4=${left}$，$(-${c})^2=${Math.pow(-c, 2)}$，再算乘法得 $${b}\\times ${Math.pow(-c, 2)}=${middle}$。所以原式 $=${left}-${middle}${d >= 0 ? '+' : ''}${d}=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6836,7 +6980,9 @@
       const result = powerPart + product;
       questions.push(`計算：$(-${b})^3\\div ${divisor}+${c}\\times (${d})^5$。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先算次方：$(-${b})^3=${Math.pow(-b, 3)}$，$(${d})^5=${Math.pow(d, 5)}$。再算乘除：$${Math.pow(-b, 3)}\\div ${divisor}=${powerPart}$，$${c}\\times ${Math.pow(d, 5)}=${product}$。最後得 $${powerPart}${product >= 0 ? '+' : ''}${product}=${result}$。`);
+      answers.push(
+        `先算次方：$(-${b})^3=${Math.pow(-b, 3)}$，$(${d})^5=${Math.pow(d, 5)}$。再算乘除：$${Math.pow(-b, 3)}\\div ${divisor}=${powerPart}$，$${c}\\times ${Math.pow(d, 5)}=${product}$。最後得 $${powerPart}${product >= 0 ? '+' : ''}${product}=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6853,7 +6999,9 @@
       const result = b * inside;
       questions.push(`計算：$${b}\\times \\left[(-${a})^3${c >= 0 ? '+' : ''}${c}\\right]$。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先算括號內次方：$(-${a})^3=${Math.pow(-a, 3)}$，所以括號內是 $${Math.pow(-a, 3)}${c >= 0 ? '+' : ''}${c}=${inside}$。再乘上 ${b}，得 $${b}\\times ${wrapIfNegative(inside)}=${result}$。`);
+      answers.push(
+        `先算括號內次方：$(-${a})^3=${Math.pow(-a, 3)}$，所以括號內是 $${Math.pow(-a, 3)}${c >= 0 ? '+' : ''}${c}=${inside}$。再乘上 ${b}，得 $${b}\\times ${wrapIfNegative(inside)}=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6869,9 +7017,13 @@
       const d = pickNonZero(-8, 8);
       const absValue = Math.abs(a + b);
       const result = absValue * c + d;
-      questions.push(`計算：$|${wrapIfNegative(a)}+${wrapIfNegative(b)}|\\times ${wrapIfNegative(c)}${d >= 0 ? '+' : ''}${d}$。`);
+      questions.push(
+        `計算：$|${wrapIfNegative(a)}+${wrapIfNegative(b)}|\\times ${wrapIfNegative(c)}${d >= 0 ? '+' : ''}${d}$。`
+      );
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先算絕對值內：$${a}${b >= 0 ? '+' : ''}${b}=${a + b}$，所以 $|${wrapIfNegative(a)}+${wrapIfNegative(b)}|=${absValue}$。再算 $${absValue}\\times ${wrapIfNegative(c)}${d >= 0 ? '+' : ''}${d}=${result}$。`);
+      answers.push(
+        `先算絕對值內：$${a}${b >= 0 ? '+' : ''}${b}=${a + b}$，所以 $|${wrapIfNegative(a)}+${wrapIfNegative(b)}|=${absValue}$。再算 $${absValue}\\times ${wrapIfNegative(c)}${d >= 0 ? '+' : ''}${d}=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6890,7 +7042,9 @@
       const result = valueA + valueB * c - Math.abs(d);
       questions.push(`計算：$|${a}|+|${b}|\\times ${wrapIfNegative(c)}-|${d}|$。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先去絕對值：$|${a}|=${valueA}$，$|${b}|=${valueB}$，$|${d}|=${Math.abs(d)}$。再先乘後加減，得 $${valueA}+${valueB}\\times ${wrapIfNegative(c)}-${Math.abs(d)}=${result}$。`);
+      answers.push(
+        `先去絕對值：$|${a}|=${valueA}$，$|${b}|=${valueB}$，$|${d}|=${Math.abs(d)}$。再先乘後加減，得 $${valueA}+${valueB}\\times ${wrapIfNegative(c)}-${Math.abs(d)}=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6909,7 +7063,9 @@
       const result = b * square - c * absValue;
       questions.push(`計算：$${b}\\times (${a})^2-${c}\\times |${d}|$。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先算次方與絕對值：$(${a})^2=${square}$，$|${d}|=${absValue}$。再算乘法：$${b}\\times ${square}=${b * square}$，$${c}\\times ${absValue}=${c * absValue}$，所以結果是 $${result}$。`);
+      answers.push(
+        `先算次方與絕對值：$(${a})^2=${square}$，$|${d}|=${absValue}$。再算乘法：$${b}\\times ${square}=${b * square}$，$${c}\\times ${absValue}=${c * absValue}$，所以結果是 $${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6928,7 +7084,9 @@
       const result = first + second;
       questions.push(`計算：$|${a}-${wrapIfNegative(b)}|+|${c}-${wrapIfNegative(d)}|$。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`先各自算距離：$|${a}-${wrapIfNegative(b)}|=${first}$，$|${c}-${wrapIfNegative(d)}|=${second}$，所以原式 $=${first}+${second}=${result}$。`);
+      answers.push(
+        `先各自算距離：$|${a}-${wrapIfNegative(b)}|=${first}$，$|${c}-${wrapIfNegative(d)}|=${second}$，所以原式 $=${first}+${second}=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6944,7 +7102,9 @@
       const result = subFraction(subFraction(makeFraction(whole, 1), a), b);
       questions.push(`計算：$${whole}-${fractionToLatex(a)}-${fractionToLatex(b)}$。`);
       summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-      answers.push(`先通分再相減，可得 $${whole}-${fractionToLatex(a)}-${fractionToLatex(b)}=${fractionToLatex(result, true)}$。`);
+      answers.push(
+        `先通分再相減，可得 $${whole}-${fractionToLatex(a)}-${fractionToLatex(b)}=${fractionToLatex(result, true)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6960,7 +7120,9 @@
       const result = addFraction(subFraction(a, b), c);
       questions.push(`計算：$${fractionToLatex(a)}-${fractionToLatex(b)}+${fractionToLatex(c)}$。`);
       summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-      answers.push(`依序通分整理，$${fractionToLatex(a)}-${fractionToLatex(b)}+${fractionToLatex(c)}=${fractionToLatex(result, true)}$。`);
+      answers.push(
+        `依序通分整理，$${fractionToLatex(a)}-${fractionToLatex(b)}+${fractionToLatex(c)}=${fractionToLatex(result, true)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6979,7 +7141,9 @@
       const result = makeFraction(numerator, denominator);
       questions.push(`計算：$\\frac{(-${a})^2\\times ${b}-${c}}{(-${d})^2}$。`);
       summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-      answers.push(`先算次方：$(-${a})^2=${Math.pow(-a, 2)}$，$(-${d})^2=${denominator}$。所以原式 $=\\frac{${Math.pow(-a, 2)}\\times ${b}-${c}}{${denominator}}=\\frac{${numerator}}{${denominator}}=${fractionToLatex(result, true)}$。`);
+      answers.push(
+        `先算次方：$(-${a})^2=${Math.pow(-a, 2)}$，$(-${d})^2=${denominator}$。所以原式 $=\\frac{${Math.pow(-a, 2)}\\times ${b}-${c}}{${denominator}}=\\frac{${numerator}}{${denominator}}=${fractionToLatex(result, true)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6998,7 +7162,9 @@
       const result = makeFraction(numerator, denominator);
       questions.push(`計算：$\\frac{(-${a})^3\\times ${b}${c >= 0 ? '+' : ''}${c}}{(-1)^{${odd}}}$。`);
       summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-      answers.push(`先算次方：$(-${a})^3=${Math.pow(-a, 3)}$，$(-1)^{${odd}}=-1$。所以原式 $=\\frac{${Math.pow(-a, 3)}\\times ${b}+${c}}{-1}=\\frac{${numerator}}{-1}=${fractionToLatex(result, true)}$。`);
+      answers.push(
+        `先算次方：$(-${a})^3=${Math.pow(-a, 3)}$，$(-1)^{${odd}}=-1$。所以原式 $=\\frac{${Math.pow(-a, 3)}\\times ${b}+${c}}{-1}=\\frac{${numerator}}{-1}=${fractionToLatex(result, true)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7014,7 +7180,9 @@
       const result = coeffA * Math.pow(-1, 2 * n) + coeffB * Math.pow(-1, 2 * n + 1);
       questions.push(`計算：$${coeffA}(-1)^{2n}+${coeffB}(-1)^{2n+1}$，其中 $n=${n}$。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`因為 $(-1)^{2n}=1$，$(-1)^{2n+1}=-1$，所以原式 $=${coeffA}\\times 1+${coeffB}\\times (-1)=${result}$。`);
+      answers.push(
+        `因為 $(-1)^{2n}=1$，$(-1)^{2n+1}=-1$，所以原式 $=${coeffA}\\times 1+${coeffB}\\times (-1)=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7045,7 +7213,9 @@
       const factors = randInt(6, 20);
       const end = start + factors;
       const result = factors % 2 === 0 ? 1 : -1;
-      questions.push(`計算：$(${start}-${start + 1})\\times (${start + 1}-${start + 2})\\times \\cdots \\times (${end - 1}-${end})$。`);
+      questions.push(
+        `計算：$(${start}-${start + 1})\\times (${start + 1}-${start + 2})\\times \\cdots \\times (${end - 1}-${end})$。`
+      );
       summaryAnswers.push(`$${result}$`);
       answers.push(`每一個括號都是 $-1$，一共有 ${factors} 個，所以原式就是 $(-1)^{${factors}}=${result}$。`);
     }
@@ -7062,7 +7232,9 @@
       const result = terms * (terms + 1);
       questions.push(`計算：$2+4+6+\\cdots+${last}$。`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`這是首項 $2$、末項 $${last}$、共有 ${terms} 項的等差數列，所以和是 $\\frac{${terms}(2+${last})}{2}=${result}$。`);
+      answers.push(
+        `這是首項 $2$、末項 $${last}$、共有 ${terms} 項的等差數列，所以和是 $\\frac{${terms}(2+${last})}{2}=${result}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7078,7 +7250,9 @@
       for (let k = 2; k <= end; k += 1) terms.push(`\\left(1+\\frac{1}{${k}}\\right)`);
       questions.push(`計算：$${terms.join('\\times ')}$。`);
       summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-      answers.push(`把每一項改寫成 $\\frac{k+1}{k}$，原式就會變成 $\\frac{3}{2}\\times\\frac{4}{3}\\times\\cdots\\times\\frac{${end + 1}}{${end}}$，前後對消後得到 $${fractionToLatex(result, true)}$。`);
+      answers.push(
+        `把每一項改寫成 $\\frac{k+1}{k}$，原式就會變成 $\\frac{3}{2}\\times\\frac{4}{3}\\times\\cdots\\times\\frac{${end + 1}}{${end}}$，前後對消後得到 $${fractionToLatex(result, true)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7111,24 +7285,14 @@
 
   function buildJ112PowerMixedSet(count) {
     return buildJ112MixedSet(
-      [
-        buildPowerMixedAddProductSet,
-        buildPowerMixedSubtractSet,
-        buildPowerMixedMulDivSet,
-        buildPowerMixedBracketSet,
-      ],
+      [buildPowerMixedAddProductSet, buildPowerMixedSubtractSet, buildPowerMixedMulDivSet, buildPowerMixedBracketSet],
       count
     );
   }
 
   function buildJ112AbsoluteMixedSet(count) {
     return buildJ112MixedSet(
-      [
-        buildAbsoluteMulAddSet,
-        buildAbsoluteTwoStageMulSet,
-        buildAbsolutePowerProductSet,
-        buildAbsoluteDistanceSumSet,
-      ],
+      [buildAbsoluteMulAddSet, buildAbsoluteTwoStageMulSet, buildAbsolutePowerProductSet, buildAbsoluteDistanceSumSet],
       count
     );
   }
@@ -7296,22 +7460,20 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      { a: 2,   b: -4  },  // x=1
-      { a: 13,  b: -23 },  // x=5
-      { a: 3,   b: -19 },  // x=8
-      { a: 10,  b: -34 },  // x=12
-      { a: 5,   b: -13 },  // x=4
-      { a: 7,   b: -21 },  // x=7
-      { a: 4,   b: -16 },  // x=6
-      { a: 8,   b: -26 },  // x=9
+      { a: 2, b: -4 }, // x=1
+      { a: 13, b: -23 }, // x=5
+      { a: 3, b: -19 }, // x=8
+      { a: 10, b: -34 }, // x=12
+      { a: 5, b: -13 }, // x=4
+      { a: 7, b: -21 }, // x=7
+      { a: 4, b: -16 }, // x=6
+      { a: 8, b: -26 }, // x=9
     ];
     for (let i = 0; i < count; i += 1) {
       const { a, b } = cases[i % cases.length];
       const x = -(a + b) / 2;
       const bStr = b < 0 ? `${b}` : `+${b}`;
-      questions.push(
-        `將 $${a}$ 與 $${b}$ 兩數各加一個相同的數之後，所得的新兩數互為相反數，求所加的數。`
-      );
+      questions.push(`將 $${a}$ 與 $${b}$ 兩數各加一個相同的數之後，所得的新兩數互為相反數，求所加的數。`);
       summaryAnswers.push(`$${x}$`);
       answers.push(
         `設所加的數為 $x$，則兩個新數分別是 $${a}+x$ 和 $${b}+x$。互為相反數表示兩數之和為 $0$，所以 $(${a}+x)+(${b}+x)=0$，即 $${a + b}+2x=0$，解得 $x=${x}$。`
@@ -7328,19 +7490,19 @@
     const answers = [];
     const cases = [
       { S: 1406, A: 455, B: 153, c: 215, b: 368, a: 823 },
-      { S: 1822, A:  33, B: 254, c: 427, b: 681, a: 714 },
+      { S: 1822, A: 33, B: 254, c: 427, b: 681, a: 714 },
       { S: 1760, A: 286, B: 389, c: 232, b: 621, a: 907 },
-      { S: 1048, A: 665, B: 130, c:  41, b: 171, a: 836 },
+      { S: 1048, A: 665, B: 130, c: 41, b: 171, a: 836 },
       { S: 1200, A: 150, B: 100, c: 250, b: 350, a: 600 },
-      { S:  900, A: 120, B:  90, c: 200, b: 290, a: 410 },
+      { S: 900, A: 120, B: 90, c: 200, b: 290, a: 410 },
       { S: 1500, A: 200, B: 100, c: 400, b: 500, a: 600 },
       { S: 2100, A: 300, B: 150, c: 550, b: 700, a: 850 },
     ];
     const contexts = ['儲蓄', '得分', '收入'];
-    const units    = ['元',   '分',   '元' ];
+    const units = ['元', '分', '元'];
     for (let i = 0; i < count; i += 1) {
       const { S, A, B, c, b, a } = cases[i % cases.length];
-      const ctx  = contexts[i % contexts.length];
+      const ctx = contexts[i % contexts.length];
       const unit = units[i % units.length];
       questions.push(
         `甲、乙、丙三人共${ctx} $${S}$ ${unit}，若甲比乙多 $${A}$ ${unit}，乙比丙多 $${B}$ ${unit}，則甲、乙、丙各${ctx}多少${unit}？`
@@ -7360,14 +7522,14 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      { N: 32, M:  68, s: 12, g: 20 },
-      { N: 24, M:  58, s:  6, g: 18 },
+      { N: 32, M: 68, s: 12, g: 20 },
+      { N: 24, M: 58, s: 6, g: 18 },
       { N: 58, M: 139, s: 15, g: 43 },
-      { N: 29, M:  45, s: 18, g: 11 },
-      { N: 13, M:  32, s:  3, g: 10 },
-      { N: 18, M:  40, s:  6, g: 12 },
-      { N: 24, M:  51, s:  9, g: 15 },
-      { N: 41, M:  74, s: 21, g: 20 },
+      { N: 29, M: 45, s: 18, g: 11 },
+      { N: 13, M: 32, s: 3, g: 10 },
+      { N: 18, M: 40, s: 6, g: 12 },
+      { N: 24, M: 51, s: 9, g: 15 },
+      { N: 41, M: 74, s: 21, g: 20 },
     ];
     for (let i = 0; i < count; i += 1) {
       const { N, M, s, g } = cases[i % cases.length];
@@ -7391,14 +7553,14 @@
     const items = ['皮衣', '外套', '大衣', '羽絨衣', '風衣', '毛衣'];
     // 定價必須是 20 的倍數才能讓 85折 為整數
     const cases = [
-      { list: 11180, d1: 85, p1: 9503, d2: 80, p2:  8944 },
-      { list:  8360, d1: 85, p1: 7106, d2: 80, p2:  6688 },
-      { list:  8340, d1: 85, p1: 7089, d2: 80, p2:  6672 },
-      { list:  8620, d1: 85, p1: 7327, d2: 80, p2:  6896 },
-      { list:  5000, d1: 85, p1: 4250, d2: 80, p2:  4000 },
-      { list:  6800, d1: 85, p1: 5780, d2: 80, p2:  5440 },
-      { list:  7200, d1: 85, p1: 6120, d2: 80, p2:  5760 },
-      { list:  8000, d1: 85, p1: 6800, d2: 80, p2:  6400 },
+      { list: 11180, d1: 85, p1: 9503, d2: 80, p2: 8944 },
+      { list: 8360, d1: 85, p1: 7106, d2: 80, p2: 6688 },
+      { list: 8340, d1: 85, p1: 7089, d2: 80, p2: 6672 },
+      { list: 8620, d1: 85, p1: 7327, d2: 80, p2: 6896 },
+      { list: 5000, d1: 85, p1: 4250, d2: 80, p2: 4000 },
+      { list: 6800, d1: 85, p1: 5780, d2: 80, p2: 5440 },
+      { list: 7200, d1: 85, p1: 6120, d2: 80, p2: 5760 },
+      { list: 8000, d1: 85, p1: 6800, d2: 80, p2: 6400 },
     ];
     for (let i = 0; i < count; i += 1) {
       const { list, d1, p1, d2, p2 } = cases[i % cases.length];
@@ -7421,14 +7583,14 @@
     const answers = [];
     const names = ['小文', '小明', '小華', '小玲', '小傑', '小雅', '小凱', '小芳'];
     const cases = [
-      { A: 5, Z: 207, x:  46 },
-      { A: 2, Z:  54, x:  36 },
-      { A: 7, Z:  26, x:   4 },
-      { A: 3, Z: 175, x:  70 },
-      { A: 4, Z:  21, x:   6 },
-      { A: 6, Z:  55, x:  10 },
-      { A: 3, Z:  50, x:  20 },
-      { A: 4, Z:  49, x:  14 },
+      { A: 5, Z: 207, x: 46 },
+      { A: 2, Z: 54, x: 36 },
+      { A: 7, Z: 26, x: 4 },
+      { A: 3, Z: 175, x: 70 },
+      { A: 4, Z: 21, x: 6 },
+      { A: 6, Z: 55, x: 10 },
+      { A: 3, Z: 50, x: 20 },
+      { A: 4, Z: 49, x: 14 },
     ];
     for (let i = 0; i < count; i += 1) {
       const { A, Z, x } = cases[i % cases.length];
@@ -7450,22 +7612,20 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      { A: 4, B: 2,  L: 18, w: 5 },
-      { A: 3, B: 2,  L: 10, w: 4 },
-      { A: 4, B: 8,  L: 20, w: 7 },
-      { A: 2, B: 1,  L:  7, w: 4 },
-      { A: 3, B: 3,  L: 15, w: 6 },
-      { A: 4, B: 4,  L: 24, w: 7 },
-      { A: 3, B: 1,  L: 14, w: 5 },
-      { A: 5, B: 5,  L: 25, w: 6 },
+      { A: 4, B: 2, L: 18, w: 5 },
+      { A: 3, B: 2, L: 10, w: 4 },
+      { A: 4, B: 8, L: 20, w: 7 },
+      { A: 2, B: 1, L: 7, w: 4 },
+      { A: 3, B: 3, L: 15, w: 6 },
+      { A: 4, B: 4, L: 24, w: 7 },
+      { A: 3, B: 1, L: 14, w: 5 },
+      { A: 5, B: 5, L: 25, w: 6 },
     ];
     const shapes = ['花圃', '游泳池', '操場', '廣場', '停車場', '農田'];
     for (let i = 0; i < count; i += 1) {
       const { A, B, L, w } = cases[i % cases.length];
       const shape = shapes[i % shapes.length];
-      questions.push(
-        `有一個長方形${shape}，長為寬的 $${A}$ 倍少 $${B}$ 公分，若長為 $${L}$ 公分，則寬為多少公分？`
-      );
+      questions.push(`有一個長方形${shape}，長為寬的 $${A}$ 倍少 $${B}$ 公分，若長為 $${L}$ 公分，則寬為多少公分？`);
       summaryAnswers.push(`$${w}$ 公分`);
       answers.push(
         `設寬為 $x$ 公分，則長為 $${A}x-${B}$ 公分。依題意：$${A}x-${B}=${L}$，解得 $x=\\dfrac{${L + B}}{${A}}=${w}$，所以寬為 $${w}$ 公分。`
@@ -7480,16 +7640,16 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      { F: 40, M: 2, K:  8, child: 16 },
-      { F: 25, M: 3, K: 13, child:  4 },
-      { F: 35, M: 3, K: 14, child:  7 },
-      { F: 27, M: 3, K:  3, child:  8 },
-      { F: 38, M: 2, K:  4, child: 17 },
-      { F: 42, M: 3, K:  9, child: 11 },
-      { F: 34, M: 2, K:  8, child: 13 },
-      { F: 45, M: 3, K:  6, child: 13 },
+      { F: 40, M: 2, K: 8, child: 16 },
+      { F: 25, M: 3, K: 13, child: 4 },
+      { F: 35, M: 3, K: 14, child: 7 },
+      { F: 27, M: 3, K: 3, child: 8 },
+      { F: 38, M: 2, K: 4, child: 17 },
+      { F: 42, M: 3, K: 9, child: 11 },
+      { F: 34, M: 2, K: 8, child: 13 },
+      { F: 45, M: 3, K: 6, child: 13 },
     ];
-    const childNames  = ['小明', '小杰', '小華', '小文', '小凱', '小雅', '小玲', '小傑'];
+    const childNames = ['小明', '小杰', '小華', '小文', '小凱', '小雅', '小玲', '小傑'];
     const fatherNames = ['父親', '爸爸'];
     for (let i = 0; i < count; i += 1) {
       const { F, M, K, child } = cases[i % cases.length];
@@ -7512,14 +7672,14 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      { M: 2, K:  3, N: 138, lighter:  45, heavier:  93 },
-      { M: 2, K:  6, N: 150, lighter:  48, heavier:  102 },
-      { M: 2, K:  8, N: 125, lighter:  39, heavier:  86 },
-      { M: 2, K:  3, N:  48, lighter:  15, heavier:  33 },
-      { M: 2, K: 10, N: 130, lighter:  40, heavier:  90 },
-      { M: 3, K:  5, N:  89, lighter:  21, heavier:  68 },
-      { M: 2, K: 12, N: 120, lighter:  36, heavier:  84 },
-      { M: 3, K:  8, N:  96, lighter:  22, heavier:  74 },
+      { M: 2, K: 3, N: 138, lighter: 45, heavier: 93 },
+      { M: 2, K: 6, N: 150, lighter: 48, heavier: 102 },
+      { M: 2, K: 8, N: 125, lighter: 39, heavier: 86 },
+      { M: 2, K: 3, N: 48, lighter: 15, heavier: 33 },
+      { M: 2, K: 10, N: 130, lighter: 40, heavier: 90 },
+      { M: 3, K: 5, N: 89, lighter: 21, heavier: 68 },
+      { M: 2, K: 12, N: 120, lighter: 36, heavier: 84 },
+      { M: 3, K: 8, N: 96, lighter: 22, heavier: 74 },
     ];
     const pairNames = [
       ['東翰', '琳達'],
@@ -7548,14 +7708,14 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      { K: 15, A: 4, B: 1, N:  5, D: 20 },  // 1/4
-      { K:  3, A: 4, B: 3, N:  9, D: 12 },  // 3/4
-      { K: 15, A: 5, B: 4, N: 60, D: 75 },  // 4/5
-      { K:  5, A: 2, B: 1, N:  5, D: 10 },  // 1/2
-      { K:  6, A: 3, B: 1, N:  3, D:  9 },  // 1/3
-      { K:  4, A: 3, B: 2, N:  8, D: 12 },  // 2/3
-      { K:  8, A: 5, B: 3, N: 12, D: 20 },  // 3/5
-      { K: 10, A: 5, B: 3, N: 15, D: 25 },  // 3/5
+      { K: 15, A: 4, B: 1, N: 5, D: 20 }, // 1/4
+      { K: 3, A: 4, B: 3, N: 9, D: 12 }, // 3/4
+      { K: 15, A: 5, B: 4, N: 60, D: 75 }, // 4/5
+      { K: 5, A: 2, B: 1, N: 5, D: 10 }, // 1/2
+      { K: 6, A: 3, B: 1, N: 3, D: 9 }, // 1/3
+      { K: 4, A: 3, B: 2, N: 8, D: 12 }, // 2/3
+      { K: 8, A: 5, B: 3, N: 12, D: 20 }, // 3/5
+      { K: 10, A: 5, B: 3, N: 15, D: 25 }, // 3/5
     ];
     for (let i = 0; i < count; i += 1) {
       const { K, A, B, N, D } = cases[i % cases.length];
@@ -7563,9 +7723,7 @@
       const rn = N / g;
       const rd = D / g;
       const fracStr = `\\dfrac{${N}}{${D}}`;
-      questions.push(
-        `有一個分數，分子比分母小 $${K}$，且分子的 $${A}$ 倍等於分母的 $${B}$ 倍，求這個分數為何？`
-      );
+      questions.push(`有一個分數，分子比分母小 $${K}$，且分子的 $${A}$ 倍等於分母的 $${B}$ 倍，求這個分數為何？`);
       summaryAnswers.push(`$\\dfrac{${rn}}{${rd}}$`);
       answers.push(
         `設分子為 $x$，則分母為 $x+${K}$。由分子的 $${A}$ 倍等於分母的 $${B}$ 倍：$${A}x=${B}(x+${K})$，整理得 $${A - B}x=${B * K}$，解得 $x=${N}$。所以分母為 $${N}+${K}=${D}$，此分數為 $${fracStr}$${rn !== N ? `，化簡為 $\\dfrac{${rn}}{${rd}}$` : ``}。`
@@ -7573,7 +7731,6 @@
     }
     return { questions, summaryAnswers, answers };
   }
-
 
   // 繩子折段差：折成m段每段比折成n段每段長k公尺 → x/m - x/n = k → x = kmn/(n-m)
   // 也含井深變型：折成m段垂入井多a公尺，折成n段多b公尺 → x/m-a=x/n-b → x(n-m)/(mn)=a-b
@@ -7642,14 +7799,14 @@
 
     // [a, b, k, t_num, t_den] → t = t_num/t_den 小時 = t_num*60/t_den 分鐘
     const cases = [
-      { a: 3, b: 1, k: 3, tNum: 3, tDen: 4  },  // t=45min
-      { a: 3, b: 2, k: 2, tNum: 3, tDen: 2  },  // t=90min (不到任何一支燃完)
-      { a: 6, b: 3, k: 2, tNum: 2, tDen: 1  },  // t=2hr
-      { a: 4, b: 2, k: 2, tNum: 4, tDen: 3  },  // t=80min
-      { a: 6, b: 2, k: 3, tNum: 3, tDen: 2  },  // t=90min
-      { a: 6, b: 4, k: 2, tNum: 3, tDen: 1  },  // t=3hr
-      { a: 4, b: 1, k: 4, tNum: 4, tDen: 5  },  // t=48min
-      { a: 5, b: 2, k: 4, tNum: 10, tDen: 9 },  // t≈66.7min
+      { a: 3, b: 1, k: 3, tNum: 3, tDen: 4 }, // t=45min
+      { a: 3, b: 2, k: 2, tNum: 3, tDen: 2 }, // t=90min (不到任何一支燃完)
+      { a: 6, b: 3, k: 2, tNum: 2, tDen: 1 }, // t=2hr
+      { a: 4, b: 2, k: 2, tNum: 4, tDen: 3 }, // t=80min
+      { a: 6, b: 2, k: 3, tNum: 3, tDen: 2 }, // t=90min
+      { a: 6, b: 4, k: 2, tNum: 3, tDen: 1 }, // t=3hr
+      { a: 4, b: 1, k: 4, tNum: 4, tDen: 5 }, // t=48min
+      { a: 5, b: 2, k: 4, tNum: 10, tDen: 9 }, // t≈66.7min
     ];
 
     for (let i = 0; i < count; i += 1) {
@@ -7684,10 +7841,10 @@
       { A: 60, B: 20, T: 30 },
       { A: 30, B: 10, T: 15 },
       { A: 48, B: 12, T: 16 },
-      { A: 36, B:  9, T: 12 },
+      { A: 36, B: 9, T: 12 },
       { A: 60, B: 15, T: 20 },
-      { A: 24, B:  8, T: 12 },
-      { A: 40, B:  8, T: 10 },
+      { A: 24, B: 8, T: 12 },
+      { A: 40, B: 8, T: 10 },
     ];
     const nameA = ['甲', '小明', '阿真', '阿宏'];
     const nameB = ['乙', '小華', '阿宏', '阿真'];
@@ -7718,13 +7875,13 @@
 
     // [a1, a2, a3, R, n]
     const cases = [
-      { a1: 4, a2: 2, a3: 1, R:  6, n: 40 },
-      { a1: 2, a2: 3, a3: 2, R:  5, n: 32 },
-      { a1: 6, a2: 4, a3: 1, R:  8, n: 60 },
-      { a1: 4, a2: 1, a3: 2, R:  7, n: 36 },
-      { a1: 2, a2: 4, a3: 2, R:  6, n: 44 },
-      { a1: 5, a2: 3, a3: 1, R:  8, n: 58 },
-      { a1: 4, a2: 3, a3: 2, R:  5, n: 28 },
+      { a1: 4, a2: 2, a3: 1, R: 6, n: 40 },
+      { a1: 2, a2: 3, a3: 2, R: 5, n: 32 },
+      { a1: 6, a2: 4, a3: 1, R: 8, n: 60 },
+      { a1: 4, a2: 1, a3: 2, R: 7, n: 36 },
+      { a1: 2, a2: 4, a3: 2, R: 6, n: 44 },
+      { a1: 5, a2: 3, a3: 1, R: 8, n: 58 },
+      { a1: 4, a2: 3, a3: 2, R: 5, n: 28 },
       { a1: 3, a2: 4, a3: 1, R: 10, n: 82 },
     ];
     const personA = ['甲', '大明', '阿強', '志明'];
@@ -7748,9 +7905,9 @@
       const { unit, name } = things[i % things.length];
 
       // Compute step-by-step remainders for answer
-      const afterA = n / 2 + a1;        // remain after A
-      const afterB = afterA / 2 - a2;    // remain after B
-      const afterC = afterB / 2 + a3;    // remain after C = R
+      const afterA = n / 2 + a1; // remain after A
+      const afterB = afterA / 2 - a2; // remain after B
+      const afterC = afterB / 2 + a3; // remain after C = R
 
       questions.push(
         `桌上有若干${unit}${name}。${pA}先取走全部的一半少 $${a1}$ ${unit}；${pB}再取走剩下的一半多 $${a2}$ ${unit}；${pC}再取走剩下的一半少 $${a3}$ ${unit}；最後剩下的 $${R}$ ${unit}全給${pD}。請問桌上原有幾${unit}${name}？`
@@ -7839,13 +7996,13 @@
 
     const cases = [
       { d: 1, k: 5, c: -74, original: 1985, newNum: 9851, verb: '少', absC: 74 },
-      { d: 1, k: 4, c:   3, original: 1667, newNum: 6671, verb: '多', absC:  3 },
-      { d: 1, k: 3, c:   4, original: 1429, newNum: 4291, verb: '多', absC:  4 },
-      { d: 2, k: 3, c:   1, original: 2857, newNum: 8572, verb: '多', absC:  1 },
-      { d: 1, k: 5, c:  -9, original: 1998, newNum: 9981, verb: '少', absC:  9 },
+      { d: 1, k: 4, c: 3, original: 1667, newNum: 6671, verb: '多', absC: 3 },
+      { d: 1, k: 3, c: 4, original: 1429, newNum: 4291, verb: '多', absC: 4 },
+      { d: 2, k: 3, c: 1, original: 2857, newNum: 8572, verb: '多', absC: 1 },
+      { d: 1, k: 5, c: -9, original: 1998, newNum: 9981, verb: '少', absC: 9 },
       { d: 1, k: 4, c: -13, original: 1699, newNum: 6991, verb: '少', absC: 13 },
       { d: 1, k: 5, c: -24, original: 1975, newNum: 9751, verb: '少', absC: 24 },
-      { d: 3, k: 2, c:   4, original: 3634, newNum: 6343, verb: '多', absC:  4 },
+      { d: 3, k: 2, c: 4, original: 3634, newNum: 6343, verb: '多', absC: 4 },
     ];
 
     for (let i = 0; i < count; i += 1) {
@@ -7865,7 +8022,6 @@
     return { questions, summaryAnswers, answers };
   }
 
-
   // ─── j1-3-3 新增 generators 結束 ─────────────────────────────────────────
 
   // ─── j1-2-1/2/3 文件題型補充 generators ─────────────────────────────────
@@ -7877,14 +8033,12 @@
     const answers = [];
 
     const trickComposites = [
-      49, 51, 57, 77, 91, 111, 119, 121, 143, 161, 169,
-      187, 203, 209, 221, 247, 253, 287, 299, 301, 319, 323
+      49, 51, 57, 77, 91, 111, 119, 121, 143, 161, 169, 187, 203, 209, 221, 247, 253, 287, 299, 301, 319, 323,
     ];
     const verifyPrimes = [
-      53, 59, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113,
-      127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181,
-      191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251,
-      257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317
+      53, 59, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173,
+      179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307,
+      311, 313, 317,
     ];
 
     function factorHint(n) {
@@ -7901,13 +8055,14 @@
 
       if (mode === 0) {
         const p = verifyPrimes[randInt(0, verifyPrimes.length - 1)];
-        const composites = shuffle(trickComposites.filter(c => c !== p)).slice(0, 3);
+        const composites = shuffle(trickComposites.filter((c) => c !== p)).slice(0, 3);
         const candidates = shuffle([p, ...composites]);
         const ansLabel = lbs[candidates.indexOf(p)];
         questions.push(`下列哪一個數是質數？${lbs.map((l, j) => `${l} ${candidates[j]}`).join('  ')}`);
         summaryAnswers.push(`${ansLabel} ${p}`);
-        answers.push(`${p} 無法被 2 到 $\\sqrt{${p}}$ 間的所有質數整除，故 ${p} 是質數；${composites.map(c => `${c}：${factorHint(c)}`).join('，')} 均為合數。`);
-
+        answers.push(
+          `${p} 無法被 2 到 $\\sqrt{${p}}$ 間的所有質數整除，故 ${p} 是質數；${composites.map((c) => `${c}：${factorHint(c)}`).join('，')} 均為合數。`
+        );
       } else if (mode === 1) {
         const usePrime = randInt(0, 1) === 1;
         const n = usePrime
@@ -7921,10 +8076,9 @@
           summaryAnswers.push('不是質數（合數）');
           answers.push(`因為 ${factorHint(n)}，能被整除，所以 ${n} 是合數，不是質數。`);
         }
-
       } else {
         const c = trickComposites[randInt(0, trickComposites.length - 1)];
-        const primes = shuffle(verifyPrimes.filter(p => p !== c)).slice(0, 3);
+        const primes = shuffle(verifyPrimes.filter((p) => p !== c)).slice(0, 3);
         const candidates = shuffle([c, ...primes]);
         const ansLabel = lbs[candidates.indexOf(c)];
         questions.push(`下列哪一個數不是質數？${lbs.map((l, j) => `${l} ${candidates[j]}`).join('  ')}`);
@@ -7946,12 +8100,16 @@
       {
         k: 3,
         rule: '各位數字之和為 3 的倍數',
-        test(digs) { return digs.reduce((s, d) => s + d, 0) % 3 === 0; },
+        test(digs) {
+          return digs.reduce((s, d) => s + d, 0) % 3 === 0;
+        },
       },
       {
         k: 9,
         rule: '各位數字之和為 9 的倍數',
-        test(digs) { return digs.reduce((s, d) => s + d, 0) % 9 === 0; },
+        test(digs) {
+          return digs.reduce((s, d) => s + d, 0) % 9 === 0;
+        },
       },
       {
         k: 4,
@@ -8033,8 +8191,16 @@
     const answers = [];
 
     const rangePairs = [
-      [1, 100], [1, 150], [1, 200], [50, 200], [100, 300],
-      [1, 300], [101, 200], [201, 400], [1, 500], [100, 500]
+      [1, 100],
+      [1, 150],
+      [1, 200],
+      [50, 200],
+      [100, 300],
+      [1, 300],
+      [101, 200],
+      [201, 400],
+      [1, 500],
+      [100, 500],
     ];
     const divs = [3, 4, 5, 6, 7, 8, 9, 11, 12];
 
@@ -8049,18 +8215,23 @@
         const largest = Math.floor(b / k) * k;
         questions.push(`從 ${a} 到 ${b} 的整數中，${k} 的倍數共有幾個？`);
         summaryAnswers.push(`${cnt} 個`);
-        answers.push(`最小的 ${k} 倍數為 ${smallest}，最大為 ${largest}，共 $${Math.floor(b / k)}-${Math.floor((a - 1) / k)}=${cnt}$ 個。`);
-
+        answers.push(
+          `最小的 ${k} 倍數為 ${smallest}，最大為 ${largest}，共 $${Math.floor(b / k)}-${Math.floor((a - 1) / k)}=${cnt}$ 個。`
+        );
       } else if (mode === 1) {
         const r = randInt(1, k - 1);
         const cnt = Math.floor((b - r) / k) - Math.floor((a - 1 - r) / k);
-        if (cnt < 1) { i--; continue; }
+        if (cnt < 1) {
+          i--;
+          continue;
+        }
         questions.push(`從 ${a} 到 ${b} 的整數中，除以 ${k} 餘 ${r} 的數共有幾個？`);
         summaryAnswers.push(`${cnt} 個`);
-        answers.push(`這些數形如 $${k}n+${r}$。在 [${a}, ${b}] 內，$n$ 從 $${Math.ceil((a - r) / k)}$ 到 $${Math.floor((b - r) / k)}$，共 ${cnt} 個。`);
-
+        answers.push(
+          `這些數形如 $${k}n+${r}$。在 [${a}, ${b}] 內，$n$ 從 $${Math.ceil((a - r) / k)}$ 到 $${Math.floor((b - r) / k)}$，共 ${cnt} 個。`
+        );
       } else {
-        const otherDivs = divs.filter(d => d !== k);
+        const otherDivs = divs.filter((d) => d !== k);
         const j = otherDivs[randInt(0, otherDivs.length - 1)];
         const lcmJK = lcm(j, k);
         const multJ = Math.floor(b / j) - Math.floor((a - 1) / j);
@@ -8068,7 +8239,9 @@
         const result = multJ - multBoth;
         questions.push(`從 ${a} 到 ${b} 的整數中，是 ${j} 的倍數但不是 ${k} 的倍數，共有幾個？`);
         summaryAnswers.push(`${result} 個`);
-        answers.push(`${j} 的倍數有 ${multJ} 個；同時是 ${j} 與 ${k} 公倍數（即 ${lcmJK} 的倍數）有 ${multBoth} 個；所以結果為 $${multJ}-${multBoth}=${result}$ 個。`);
+        answers.push(
+          `${j} 的倍數有 ${multJ} 個；同時是 ${j} 與 ${k} 公倍數（即 ${lcmJK} 的倍數）有 ${multBoth} 個；所以結果為 $${multJ}-${multBoth}=${result}$ 個。`
+        );
       }
     }
 
@@ -8099,7 +8272,6 @@
         } else {
           answers.push(`$(${n},${m})=${g}\\neq 1$，有公因數 ${g}，故不互質。`);
         }
-
       } else if (mode === 1) {
         // Try to get exactly 1 coprime candidate out of 4
         let attempts = 0;
@@ -8110,30 +8282,43 @@
           const seen = new Set();
           while (pool.length < 4) {
             const c = randInt(2, 100);
-            if (!seen.has(c)) { seen.add(c); pool.push(c); }
+            if (!seen.has(c)) {
+              seen.add(c);
+              pool.push(c);
+            }
           }
-          const cops = pool.filter(c => gcd(c, n) === 1);
-          if (cops.length === 1) { candidates = pool; break; }
+          const cops = pool.filter((c) => gcd(c, n) === 1);
+          if (cops.length === 1) {
+            candidates = pool;
+            break;
+          }
         }
-        if (!candidates) { i--; continue; }
-        const answer = candidates.filter(c => gcd(c, n) === 1)[0];
+        if (!candidates) {
+          i--;
+          continue;
+        }
+        const answer = candidates.filter((c) => gcd(c, n) === 1)[0];
         const shuffled = shuffle(candidates);
         const ansIdx = shuffled.indexOf(answer);
         questions.push(`下列哪一個數與 ${n} 互質？${lbs.map((l, j) => `${l} ${shuffled[j]}`).join('  ')}`);
         summaryAnswers.push(`${lbs[ansIdx]} ${answer}`);
-        answers.push(`${n} 的標準分解式為 $${factText}$；$(${n},${answer})=1$，故 ${answer} 與 ${n} 互質，其餘選項均與 ${n} 有公因數。`);
-
+        answers.push(
+          `${n} 的標準分解式為 $${factText}$；$(${n},${answer})=1$，故 ${answer} 與 ${n} 互質，其餘選項均與 ${n} 有公因數。`
+        );
       } else {
         const sample = [];
         const seen = new Set();
         while (sample.length < 5) {
           const x = randInt(2, n + 20);
-          if (!seen.has(x) && x !== n) { seen.add(x); sample.push(x); }
+          if (!seen.has(x) && x !== n) {
+            seen.add(x);
+            sample.push(x);
+          }
         }
-        const copCount = sample.filter(c => gcd(c, n) === 1).length;
+        const copCount = sample.filter((c) => gcd(c, n) === 1).length;
         questions.push(`在 ${sample.join('、')} 這 5 個數中，有幾個與 ${n} 互質？`);
         summaryAnswers.push(`${copCount} 個`);
-        const detail = sample.map(c => `${c}（$(${n},${c})=${gcd(c, n)}$）`).join('、');
+        const detail = sample.map((c) => `${c}（$(${n},${c})=${gcd(c, n)}$）`).join('、');
         answers.push(`逐一計算：${detail}。最大公因數為 1 的共 ${copCount} 個。`);
       }
     }
@@ -8148,9 +8333,21 @@
     const answers = [];
 
     const pairs = [
-      [12, 18], [24, 36], [30, 45], [36, 48], [18, 24],
-      [60, 84], [72, 96], [48, 60], [42, 56], [90, 120],
-      [24, 60], [36, 60], [45, 75], [48, 72], [30, 42]
+      [12, 18],
+      [24, 36],
+      [30, 45],
+      [36, 48],
+      [18, 24],
+      [60, 84],
+      [72, 96],
+      [48, 60],
+      [42, 56],
+      [90, 120],
+      [24, 60],
+      [36, 60],
+      [45, 75],
+      [48, 72],
+      [30, 42],
     ];
 
     for (let i = 0; i < count; i++) {
@@ -8163,7 +8360,9 @@
       if (mode === 0) {
         questions.push(`${a} 與 ${b} 共有幾個公因數？`);
         summaryAnswers.push(`${cnt} 個`);
-        answers.push(`先求最大公因數：$(${a},${b})=${g}$；兩數的所有公因數就是 ${g} 的所有因數，共 ${cnt} 個：$${commonDivs.join('、')}$。`);
+        answers.push(
+          `先求最大公因數：$(${a},${b})=${g}$；兩數的所有公因數就是 ${g} 的所有因數，共 ${cnt} 個：$${commonDivs.join('、')}$。`
+        );
       } else {
         questions.push(`列出 ${a} 與 ${b} 的所有公因數。`);
         summaryAnswers.push(`$${commonDivs.join('、')}$`);
@@ -8186,19 +8385,90 @@
       const sign = r.numerator < 0 ? '-' : '';
       return `${sign}\\dfrac{${Math.abs(r.numerator)}}{${r.denominator}}`;
     }
-    function fracVal(n, d) { return n / d; }
+    function fracVal(n, d) {
+      return n / d;
+    }
 
     const posSets = [
-      [[1,2],[2,3],[3,5]], [[3,4],[5,7],[7,10]], [[4,9],[5,11],[3,7]],
-      [[2,5],[3,8],[4,11]], [[5,6],[7,9],[11,15]], [[1,3],[2,7],[3,10]],
-      [[7,8],[9,10],[11,12]], [[3,7],[4,9],[5,11]]
+      [
+        [1, 2],
+        [2, 3],
+        [3, 5],
+      ],
+      [
+        [3, 4],
+        [5, 7],
+        [7, 10],
+      ],
+      [
+        [4, 9],
+        [5, 11],
+        [3, 7],
+      ],
+      [
+        [2, 5],
+        [3, 8],
+        [4, 11],
+      ],
+      [
+        [5, 6],
+        [7, 9],
+        [11, 15],
+      ],
+      [
+        [1, 3],
+        [2, 7],
+        [3, 10],
+      ],
+      [
+        [7, 8],
+        [9, 10],
+        [11, 12],
+      ],
+      [
+        [3, 7],
+        [4, 9],
+        [5, 11],
+      ],
     ];
     const negSets = [
-      [[-1,3],[-2,5],[-3,8]], [[-5,6],[-7,9],[-4,7]],
-      [[-2,3],[-3,4],[-5,8]], [[-1,4],[-2,7],[-3,10]]
+      [
+        [-1, 3],
+        [-2, 5],
+        [-3, 8],
+      ],
+      [
+        [-5, 6],
+        [-7, 9],
+        [-4, 7],
+      ],
+      [
+        [-2, 3],
+        [-3, 4],
+        [-5, 8],
+      ],
+      [
+        [-1, 4],
+        [-2, 7],
+        [-3, 10],
+      ],
     ];
     const mixedSets = [
-      [[-1,2],[1,3],[-2,3]], [[3,4],[-1,2],[2,5]], [[-3,7],[2,5],[-1,3]]
+      [
+        [-1, 2],
+        [1, 3],
+        [-2, 3],
+      ],
+      [
+        [3, 4],
+        [-1, 2],
+        [2, 5],
+      ],
+      [
+        [-3, 7],
+        [2, 5],
+        [-1, 3],
+      ],
     ];
 
     for (let i = 0; i < count; i++) {
@@ -8206,33 +8476,45 @@
 
       if (mode === 0) {
         const set = posSets[randInt(0, posSets.length - 1)];
-        const sorted = set.slice().sort((x, y) => fracVal(y[0],y[1]) - fracVal(x[0],x[1]));
+        const sorted = set.slice().sort((x, y) => fracVal(y[0], y[1]) - fracVal(x[0], x[1]));
         const lcmD = lcm(lcm(set[0][1], set[1][1]), set[2][1]);
-        const expanded = set.map(([n,d]) => `$${fracTeX(n,d)}=\\dfrac{${n*(lcmD/d)}}{${lcmD}}$`).join('，');
-        questions.push(`將以下三個分數由大到小排列：$${set.map(([n,d]) => fracTeX(n,d)).join('$、$')}$`);
-        summaryAnswers.push(`$${sorted.map(([n,d]) => fracTeX(n,d)).join('>') }$`);
-        answers.push(`通分（公分母 ${lcmD}）：${expanded}；由大到小為 $${sorted.map(([n,d]) => fracTeX(n,d)).join('>')}$。`);
-
+        const expanded = set.map(([n, d]) => `$${fracTeX(n, d)}=\\dfrac{${n * (lcmD / d)}}{${lcmD}}$`).join('，');
+        questions.push(`將以下三個分數由大到小排列：$${set.map(([n, d]) => fracTeX(n, d)).join('$、$')}$`);
+        summaryAnswers.push(`$${sorted.map(([n, d]) => fracTeX(n, d)).join('>')}$`);
+        answers.push(
+          `通分（公分母 ${lcmD}）：${expanded}；由大到小為 $${sorted.map(([n, d]) => fracTeX(n, d)).join('>')}$。`
+        );
       } else if (mode === 1) {
         const set = negSets[randInt(0, negSets.length - 1)];
-        const sorted = set.slice().sort((x, y) => fracVal(y[0],y[1]) - fracVal(x[0],x[1]));
+        const sorted = set.slice().sort((x, y) => fracVal(y[0], y[1]) - fracVal(x[0], x[1]));
         const lcmD = lcm(lcm(Math.abs(set[0][1]), Math.abs(set[1][1])), Math.abs(set[2][1]));
-        const expanded = set.map(([n,d]) => {
-          const nd = Math.abs(d);
-          return `$${fracTeX(n,d)}=\\dfrac{${n*(lcmD/nd)}}{${lcmD}}$`;
-        }).join('，');
-        questions.push(`將以下三個負分數由大到小排列：$${set.map(([n,d]) => fracTeX(n,d)).join('$、$')}$`);
-        summaryAnswers.push(`$${sorted.map(([n,d]) => fracTeX(n,d)).join('>')}$`);
-        answers.push(`負分數中絕對值較小者數值較大。通分：${expanded}；由大到小為 $${sorted.map(([n,d]) => fracTeX(n,d)).join('>')}$。`);
-
+        const expanded = set
+          .map(([n, d]) => {
+            const nd = Math.abs(d);
+            return `$${fracTeX(n, d)}=\\dfrac{${n * (lcmD / nd)}}{${lcmD}}$`;
+          })
+          .join('，');
+        questions.push(`將以下三個負分數由大到小排列：$${set.map(([n, d]) => fracTeX(n, d)).join('$、$')}$`);
+        summaryAnswers.push(`$${sorted.map(([n, d]) => fracTeX(n, d)).join('>')}$`);
+        answers.push(
+          `負分數中絕對值較小者數值較大。通分：${expanded}；由大到小為 $${sorted.map(([n, d]) => fracTeX(n, d)).join('>')}$。`
+        );
       } else {
         const set = mixedSets[randInt(0, mixedSets.length - 1)];
-        const sorted = set.slice().sort((x, y) => fracVal(y[0],y[1]) - fracVal(x[0],x[1]));
-        questions.push(`比較以下三個數的大小，由大到小排列：$${set.map(([n,d]) => fracTeX(n,d)).join('$、$')}$`);
-        summaryAnswers.push(`$${sorted.map(([n,d]) => fracTeX(n,d)).join('>')}$`);
-        const posNums = set.filter(([n]) => n > 0).map(([n,d]) => `$${fracTeX(n,d)}$`).join('、');
-        const negNums = set.filter(([n]) => n < 0).map(([n,d]) => `$${fracTeX(n,d)}$`).join('、');
-        answers.push(`正數（${posNums || '無'}）大於負數（${negNums || '無'}）；由大到小為 $${sorted.map(([n,d]) => fracTeX(n,d)).join('>')}$。`);
+        const sorted = set.slice().sort((x, y) => fracVal(y[0], y[1]) - fracVal(x[0], x[1]));
+        questions.push(`比較以下三個數的大小，由大到小排列：$${set.map(([n, d]) => fracTeX(n, d)).join('$、$')}$`);
+        summaryAnswers.push(`$${sorted.map(([n, d]) => fracTeX(n, d)).join('>')}$`);
+        const posNums = set
+          .filter(([n]) => n > 0)
+          .map(([n, d]) => `$${fracTeX(n, d)}$`)
+          .join('、');
+        const negNums = set
+          .filter(([n]) => n < 0)
+          .map(([n, d]) => `$${fracTeX(n, d)}$`)
+          .join('、');
+        answers.push(
+          `正數（${posNums || '無'}）大於負數（${negNums || '無'}）；由大到小為 $${sorted.map(([n, d]) => fracTeX(n, d)).join('>')}$。`
+        );
       }
     }
 
@@ -8246,13 +8528,48 @@
     const answers = [];
 
     const toSimplify = [
-      [4,6],[6,9],[8,12],[6,10],[9,12],[10,15],[12,16],[15,20],
-      [6,14],[9,15],[10,25],[8,20],[12,18],[14,21],[15,25],[16,24],
-      [18,24],[20,30],[24,36],[18,30],[12,20],[15,35],[21,28],[22,33]
+      [4, 6],
+      [6, 9],
+      [8, 12],
+      [6, 10],
+      [9, 12],
+      [10, 15],
+      [12, 16],
+      [15, 20],
+      [6, 14],
+      [9, 15],
+      [10, 25],
+      [8, 20],
+      [12, 18],
+      [14, 21],
+      [15, 25],
+      [16, 24],
+      [18, 24],
+      [20, 30],
+      [24, 36],
+      [18, 30],
+      [12, 20],
+      [15, 35],
+      [21, 28],
+      [22, 33],
     ];
     const alreadySimplified = [
-      [3,7],[5,8],[4,9],[7,11],[5,12],[3,11],[7,13],[8,15],
-      [5,9],[7,10],[4,7],[9,14],[11,15],[7,16],[5,11],[8,13]
+      [3, 7],
+      [5, 8],
+      [4, 9],
+      [7, 11],
+      [5, 12],
+      [3, 11],
+      [7, 13],
+      [8, 15],
+      [5, 9],
+      [7, 10],
+      [4, 7],
+      [9, 14],
+      [11, 15],
+      [7, 16],
+      [5, 11],
+      [8, 13],
     ];
     const lbs = ['(A)', '(B)', '(C)', '(D)'];
 
@@ -8266,17 +8583,22 @@
         const g = gcd(n, d);
         questions.push(`將 $${formatFraction(fn, d)}$ 化為最簡分數。`);
         summaryAnswers.push(`$${formatFraction(fn / g, d / g)}$`);
-        answers.push(`$\\gcd(${n},${d})=${g}$，分子分母同除 ${g}，得 $${formatFraction(fn, d)}=${formatFraction(fn / g, d / g)}$。`);
-
+        answers.push(
+          `$\\gcd(${n},${d})=${g}$，分子分母同除 ${g}，得 $${formatFraction(fn, d)}=${formatFraction(fn / g, d / g)}$。`
+        );
       } else {
         const correct = alreadySimplified[randInt(0, alreadySimplified.length - 1)];
         const wrongPool = toSimplify.filter(([n, d]) => gcd(n, d) > 1);
         const wrongs = shuffle(wrongPool).slice(0, 3);
         const arr = shuffle([correct, ...wrongs]);
         const ansIdx = arr.findIndex(([n, d]) => n === correct[0] && d === correct[1]);
-        questions.push(`下列哪一個分數是最簡分數？${lbs.map((l, j) => `${l} $${formatFraction(arr[j][0], arr[j][1])}$`).join('  ')}`);
+        questions.push(
+          `下列哪一個分數是最簡分數？${lbs.map((l, j) => `${l} $${formatFraction(arr[j][0], arr[j][1])}$`).join('  ')}`
+        );
         summaryAnswers.push(`${lbs[ansIdx]} $${formatFraction(correct[0], correct[1])}$`);
-        answers.push(`$\\gcd(${correct[0]},${correct[1]})=1$，故 $${formatFraction(correct[0], correct[1])}$ 是最簡分數；其餘選項分子分母仍有大於 1 的公因數。`);
+        answers.push(
+          `$\\gcd(${correct[0]},${correct[1]})=1$，故 $${formatFraction(correct[0], correct[1])}$ 是最簡分數；其餘選項分子分母仍有大於 1 的公因數。`
+        );
       }
     }
 
@@ -8290,12 +8612,34 @@
     const answers = [];
 
     const simpleFracs = [
-      [2,3],[3,4],[4,5],[5,6],[3,7],[5,8],[7,9],[2,5],
-      [3,5],[4,7],[5,7],[7,8],[2,7],[5,9],[7,11],[3,8]
+      [2, 3],
+      [3, 4],
+      [4, 5],
+      [5, 6],
+      [3, 7],
+      [5, 8],
+      [7, 9],
+      [2, 5],
+      [3, 5],
+      [4, 7],
+      [5, 7],
+      [7, 8],
+      [2, 7],
+      [5, 9],
+      [7, 11],
+      [3, 8],
     ];
     const mixedNums = [
-      [1,1,2],[2,1,3],[1,2,3],[3,1,4],[2,3,4],
-      [1,3,4],[2,1,5],[1,3,5],[4,1,2],[3,2,3]
+      [1, 1, 2],
+      [2, 1, 3],
+      [1, 2, 3],
+      [3, 1, 4],
+      [2, 3, 4],
+      [1, 3, 4],
+      [2, 1, 5],
+      [1, 3, 5],
+      [4, 1, 2],
+      [3, 2, 3],
     ];
 
     for (let i = 0; i < count; i++) {
@@ -8308,15 +8652,17 @@
         const recipN = useNeg ? -d : d;
         questions.push(`求 $${formatFraction(fn, d)}$ 的倒數。`);
         summaryAnswers.push(`$${formatFraction(recipN, n)}$`);
-        answers.push(`分數的倒數是將分子與分母互換（符號不變）：$\\left(${formatFraction(fn, d)}\\right)$ 的倒數為 $${formatFraction(recipN, n)}$。`);
-
+        answers.push(
+          `分數的倒數是將分子與分母互換（符號不變）：$\\left(${formatFraction(fn, d)}\\right)$ 的倒數為 $${formatFraction(recipN, n)}$。`
+        );
       } else if (mode === 1) {
         const [w, n, d] = mixedNums[randInt(0, mixedNums.length - 1)];
         const impN = w * d + n;
         questions.push(`求帶分數 $${w}\\dfrac{${n}}{${d}}$ 的倒數。`);
         summaryAnswers.push(`$${formatFraction(d, impN)}$`);
-        answers.push(`先化為假分數：$${w}\\dfrac{${n}}{${d}}=\\dfrac{${impN}}{${d}}$；倒數為 $${formatFraction(d, impN)}$。`);
-
+        answers.push(
+          `先化為假分數：$${w}\\dfrac{${n}}{${d}}=\\dfrac{${impN}}{${d}}$；倒數為 $${formatFraction(d, impN)}$。`
+        );
       } else {
         const [n, d] = simpleFracs[randInt(0, simpleFracs.length - 1)];
         const useNeg = randInt(0, 1) === 1;

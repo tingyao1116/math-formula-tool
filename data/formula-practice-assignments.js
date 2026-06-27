@@ -5,7 +5,7 @@ window.formulaPracticeAssignmentStore = {
     "schema": "practice-db-v1",
     "count": 0,
     "assignmentCount": 0,
-    "practiceCount": 2655,
+    "practiceCount": 2664,
     "bindingCount": 1227,
     "updatedAt": "2026-06-21T18:16:53.283064+00:00",
     "totalPractices": 2600,
@@ -19,7 +19,7 @@ window.practiceLibraryStore = {
     "schema": "practice-db-v1",
     "count": 0,
     "assignmentCount": 0,
-    "practiceCount": 2655,
+    "practiceCount": 2664,
     "bindingCount": 1227,
     "updatedAt": "2026-06-21T18:16:53.283064+00:00",
     "totalPractices": 2600,
@@ -91569,6 +91569,323 @@ window.practiceLibraryStore = {
       "mistakes": [
         "帶分數直接對整數部分和分數部分分別取倒數，而非先化為假分數。"
       ]
+    },
+    "practice-j5-1-2-rectangle-similarity-check": {
+      "id": "practice-j5-1-2-rectangle-similarity-check",
+      "enabled": true,
+      "mode": "generator",
+      "title": "矩形相似判別",
+      "generatorKey": "j5-1-2-rectangle-similarity-check",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-2",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上學期",
+      "chapter": "平行線截比例線段",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-2",
+        "相似形",
+        "矩形",
+        "判別"
+      ],
+      "usage": [
+        "給定一個矩形，判別哪個長方形與它相似（長寬比相同）。"
+      ],
+      "examples": [],
+      "tips": [
+        "相似矩形的長寬比（化簡後）必須相等。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j5-1-3-similar-polygon-angle": {
+      "id": "practice-j5-1-3-similar-polygon-angle",
+      "enabled": true,
+      "mode": "generator",
+      "title": "相似多邊形角度計算",
+      "generatorKey": "j5-1-3-similar-polygon-angle",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-3",
+        "相似形",
+        "多邊形",
+        "角度",
+        "內角和"
+      ],
+      "usage": [
+        "兩個相似多邊形，利用內角和求未知角。"
+      ],
+      "examples": [],
+      "tips": [
+        "四邊形內角和360°，五邊形內角和540°，對應角相等。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j5-1-3-slope-position-height": {
+      "id": "practice-j5-1-3-slope-position-height",
+      "enabled": true,
+      "mode": "generator",
+      "title": "斜坡位置高度計算",
+      "generatorKey": "j5-1-3-slope-position-height",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-3",
+        "相似形",
+        "斜坡",
+        "比例",
+        "高度"
+      ],
+      "usage": [
+        "斜坡全長與高度已知，利用相似比求特定位置的高度。"
+      ],
+      "examples": [],
+      "tips": [
+        "高度與沿坡距離成正比：h = H × d / L。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j5-2-1-chord-sagitta-radius": {
+      "id": "practice-j5-2-1-chord-sagitta-radius",
+      "enabled": true,
+      "mode": "generator",
+      "title": "弓形矢高求半徑",
+      "generatorKey": "j5-2-1-chord-sagitta-radius",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-2-1",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上",
+      "chapter": "圓的基本性質與長度計算",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-2-1",
+        "圓",
+        "弦",
+        "矢高",
+        "半徑",
+        "弓形"
+      ],
+      "usage": [
+        "已知弦長與矢高（弓形高），用勾股定理求圓半徑。"
+      ],
+      "examples": [],
+      "tips": [
+        "r = (半弦² + 矢高²) / (2 × 矢高)。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j5-2-1-semicircle-chord-width": {
+      "id": "practice-j5-2-1-semicircle-chord-width",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圓形容器水面寬度",
+      "generatorKey": "j5-2-1-semicircle-chord-width",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-2-1",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上",
+      "chapter": "圓的基本性質與長度計算",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-2-1",
+        "圓",
+        "弦",
+        "水面寬",
+        "半圓",
+        "容器"
+      ],
+      "usage": [
+        "圓形容器裝水，已知半徑與水深，求水面寬度（弦長）。"
+      ],
+      "examples": [],
+      "tips": [
+        "弦長² = 4(r² - (r-h)²) = 4(2rh - h²)。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j5-2-2-tangent-combined-angle": {
+      "id": "practice-j5-2-2-tangent-combined-angle",
+      "enabled": true,
+      "mode": "generator",
+      "title": "切線弦角綜合計算",
+      "generatorKey": "j5-2-2-tangent-combined-angle",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-2-2",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上",
+      "chapter": "圓心角、圓周角及弦切角",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-2-2",
+        "圓",
+        "切線",
+        "弦切角",
+        "圓周角",
+        "兩切線夾角"
+      ],
+      "usage": [
+        "結合兩切線夾角、弦切角與圓周角的綜合計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "兩切線夾角 = (優弧 - 劣弧) / 2；弦切角 = 對應弧 / 2。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j5-3-2-perp-bisector-perimeter": {
+      "id": "practice-j5-3-2-perp-bisector-perimeter",
+      "enabled": true,
+      "mode": "generator",
+      "title": "中垂線性質求周長",
+      "generatorKey": "j5-3-2-perp-bisector-perimeter",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-2",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上",
+      "chapter": "幾何證明的常用工具",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-2",
+        "中垂線",
+        "周長",
+        "等距離",
+        "垂直平分線"
+      ],
+      "usage": [
+        "利用中垂線上的點到兩端等距的性質，化簡周長計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "點在AB中垂線上 ⟺ 點到A、B的距離相等。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j5-3-3-incircle-tangent-length": {
+      "id": "practice-j5-3-3-incircle-tangent-length",
+      "enabled": true,
+      "mode": "generator",
+      "title": "內切圓切線段計算",
+      "generatorKey": "j5-3-3-incircle-tangent-length",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "內切圓",
+        "切線段",
+        "半周長",
+        "三角形"
+      ],
+      "usage": [
+        "已知三角形三邊，利用半周長公式求各頂點到切點的距離。"
+      ],
+      "examples": [],
+      "tips": [
+        "從頂點A的切線段長 = s - a，其中 s 為半周長，a 為對邊長。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j5-3-3-median-length-formula": {
+      "id": "practice-j5-3-3-median-length-formula",
+      "enabled": true,
+      "mode": "generator",
+      "title": "中線長公式計算",
+      "generatorKey": "j5-3-3-median-length-formula",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "中線",
+        "中線長公式",
+        "三角形",
+        "重心"
+      ],
+      "usage": [
+        "已知三角形三邊長，利用中線長公式求中線長度。"
+      ],
+      "examples": [],
+      "tips": [
+        "中線長公式：m_a² = (2b² + 2c² - a²) / 4。"
+      ],
+      "notes": [],
+      "mistakes": []
     }
   },
   "bindings": [

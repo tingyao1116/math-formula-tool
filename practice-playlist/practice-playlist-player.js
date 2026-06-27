@@ -153,15 +153,15 @@
       : `<p class="detail-note">這份 playlist 目前沒有選到任何題型。</p>`;
 
     elements.playlistPlayerPracticeList.querySelectorAll("[data-playlist-practice]").forEach((button) => {
-      button.addEventListener("click", () => {
+      button.addEventListener("click", async () => {
         const nextPracticeId = String(button.getAttribute("data-playlist-practice") || "").trim();
         if (!nextPracticeId) return;
         state.practiceId = nextPracticeId;
         state.generated = null;
         state.answerVisible = false;
         state.detailVisible = false;
-        elements.playlistPlayerHint.textContent = "已切換題型，按出題即可開始。";
         render();
+        await generateCurrentPractice();
       });
     });
   }
@@ -264,7 +264,7 @@
     renderPlayerCard();
   }
 
-  function movePractice(step) {
+  async function movePractice(step) {
     const practiceIds = getActivePracticeIds();
     const currentIndex = practiceIds.indexOf(state.practiceId);
     if (currentIndex < 0) return;
@@ -274,8 +274,8 @@
     state.generated = null;
     state.answerVisible = false;
     state.detailVisible = false;
-    elements.playlistPlayerHint.textContent = "已切換題型，按出題即可開始。";
     render();
+    await generateCurrentPractice();
   }
 
   function render() {
@@ -294,12 +294,12 @@
     render();
   });
 
-  elements.playlistPrevPracticeButton?.addEventListener("click", () => {
-    movePractice(-1);
+  elements.playlistPrevPracticeButton?.addEventListener("click", async () => {
+    await movePractice(-1);
   });
 
-  elements.playlistNextPracticeButton?.addEventListener("click", () => {
-    movePractice(1);
+  elements.playlistNextPracticeButton?.addEventListener("click", async () => {
+    await movePractice(1);
   });
 
   elements.playlistGenerateButton?.addEventListener("click", async () => {

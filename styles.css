@@ -2868,15 +2868,19 @@ select {
 }
 
 .playlist-col--chapter {
-  width: 110px;
+  width: 78px;
 }
 
 .playlist-col--difficulty {
-  width: 110px;
+  width: 72px;
 }
 
 .playlist-col--sample {
-  width: 44%;
+  width: auto;
+}
+
+.playlist-col--refresh {
+  width: 44px;
 }
 
 .playlist-table th,
@@ -2903,7 +2907,6 @@ select {
 
 .playlist-sample-cell {
   display: grid;
-  gap: 8px;
 }
 
 .playlist-sample-cell__text {
@@ -2943,6 +2946,20 @@ select {
 .playlist-player-card.is-active {
   outline: 2px solid rgba(13, 92, 99, 0.18);
   background: rgba(236, 246, 245, 0.95);
+}
+
+.playlist-player-toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.playlist-player-toolbar .ghost-button {
+  width: auto;
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  white-space: nowrap;
 }
 
 .playlist-saved-card.is-active {
@@ -3033,6 +3050,14 @@ select {
 .playlist-mini-button {
   min-width: 18px;
   font-weight: 700;
+}
+
+.playlist-refresh-button {
+  width: auto;
+  min-width: 26px;
+  padding: 3px 6px;
+  line-height: 1;
+  border-radius: 999px;
 }
 
 .playlist-upload-button {
