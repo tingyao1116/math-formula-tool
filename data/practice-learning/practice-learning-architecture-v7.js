@@ -248,8 +248,10 @@
       shortLabel: "統計圖表",
       summary: "先從資料整理、組距、次數、相對次數與圓形圖百分比入手，建立統計的閱讀和製表能力。",
       practiceIds: [
-        "practice-j6-3-1-frequency-distribution-six-subtypes",
+        "practice-j6-3-1-frequency-distribution-eight-subtypes",
         "practice-j6-3-1-pie-chart-five-subtypes",
+        "practice-j6-3-1-chart-trend-reading",
+        "practice-j6-3-1-sampling-estimated-total",
         "practice-j6-3-1-data-sorting-count",
       ],
       prerequisiteSkillIds: ["cone-pyramid-sphere"],
@@ -266,7 +268,8 @@
       summary: "把平均數、中位數、眾數、四分位數、百分等級和盒狀圖放在同一層，適合做資料解讀與修正題。",
       practiceIds: [
         "practice-j6-3-2-central-tendency-six-subtypes",
-        "practice-j6-3-2-quartile-boxplot-six-subtypes",
+        "practice-j6-3-2-quartile-boxplot-seven-subtypes",
+        "practice-j6-3-2-sorted-data-percentile",
         "practice-j6-3-2-data-correction-effect",
       ],
       prerequisiteSkillIds: ["data-distribution-graphs"],
@@ -284,6 +287,7 @@
       practiceIds: [
         "practice-j6-3-3-probability-single-mixed",
         "practice-j6-3-3-probability-compound-mixed",
+        "practice-j6-3-3-complement-probability",
         "practice-j6-3-3-probability-game-mixed",
       ],
       prerequisiteSkillIds: ["data-distribution-graphs", "central-tendency-quartiles"],

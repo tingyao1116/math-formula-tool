@@ -3,11 +3,11 @@
     "schema": "practice-db-v1",
     "count": 0,
     "assignmentCount": 0,
-    "practiceCount": 2459,
-    "bindingCount": 1013,
-    "updatedAt": "2026-06-21T18:16:53.283064+00:00",
-    "totalPractices": 2600,
-    "totalBindings": 1172
+    "practiceCount": 2671,
+    "bindingCount": 1227,
+    "updatedAt": "2026-06-29T16:28:38.395334+00:00",
+    "totalPractices": 2671,
+    "totalBindings": 1227
   },
   "assignments": [],
   "practices": [
@@ -44998,7 +44998,10 @@
         "j3-4-3",
         "二次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j3-4-3-tile-floor-drill",
+      "chapterCode": "j3-4-3",
+      "enabled": true
     },
     {
       "id": "practice-j3-4-3-two-square-perim-area-drill",
@@ -45012,7 +45015,10 @@
         "j3-4-3",
         "二次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j3-4-3-two-square-perim-area-drill",
+      "chapterCode": "j3-4-3",
+      "enabled": true
     },
     {
       "id": "practice-j3-4-3-consec-odd-square-sum-drill",
@@ -45026,7 +45032,10 @@
         "j3-4-3",
         "二次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j3-4-3-consec-odd-square-sum-drill",
+      "chapterCode": "j3-4-3",
+      "enabled": true
     },
     {
       "id": "practice-j3-4-3-neg-reciprocal-word-drill",
@@ -45040,7 +45049,10 @@
         "j3-4-3",
         "二次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j3-4-3-neg-reciprocal-word-drill",
+      "chapterCode": "j3-4-3",
+      "enabled": true
     },
     {
       "id": "practice-j3-4-3-pen-pricing-drill",
@@ -45054,7 +45066,10 @@
         "j3-4-3",
         "二次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j3-4-3-pen-pricing-drill",
+      "chapterCode": "j3-4-3",
+      "enabled": true
     },
     {
       "id": "practice-j3-4-3-toy-vendor-drill",
@@ -45068,7 +45083,10 @@
         "j3-4-3",
         "二次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j3-4-3-toy-vendor-drill",
+      "chapterCode": "j3-4-3",
+      "enabled": true
     },
     {
       "id": "practice-j3-4-3-straw-table-drill",
@@ -45082,7 +45100,10 @@
         "j3-4-3",
         "二次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j3-4-3-straw-table-drill",
+      "chapterCode": "j3-4-3",
+      "enabled": true
     },
     {
       "id": "practice-j3-4-3-donation-square-drill",
@@ -45096,7 +45117,10 @@
         "j3-4-3",
         "二次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j3-4-3-donation-square-drill",
+      "chapterCode": "j3-4-3",
+      "enabled": true
     },
     {
       "id": "practice-j3-4-3-business-sales-word",
@@ -59125,6 +59149,43 @@
       "mistakes": []
     },
     {
+      "id": "practice-j6-1-2-extreme-parameter-from-condition",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由極值條件反求參數",
+      "generatorKey": "j6-1-2-extreme-parameter-from-condition",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-1-2",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "二次函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-1-2",
+        "二次函數",
+        "頂點",
+        "最大值",
+        "最小值",
+        "參數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "知道極值發生在某個 \\(x\\) 時，先用頂點的 \\(x\\) 坐標關係；知道極值是多少時，再把該 \\(x\\) 代回函數。"
+      ],
+      "notes": [
+        "對應題庫中「已知最小值求 k」或「已知最高點求係數」的固定模型，保留為可換參數題。"
+      ],
+      "mistakes": []
+    },
+    {
       "id": "practice-j6-1-2-point-after-translation",
       "enabled": true,
       "mode": "generator",
@@ -59276,15 +59337,16 @@
       "id": "practice-j6-1-2-vertex-form-extrema-three-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "頂點式、配方法與極值判定綜合",
+      "title": "頂點式、配方法與極值條件綜合",
       "generatorKey": "j6-1-2-vertex-form-extrema-three-subtypes",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 3,
+      "subtypeCount": 4,
       "relatedPracticeIds": [
         "practice-j6-1-2-vertex-form-read",
         "practice-j6-1-2-completing-square-extreme",
-        "practice-j6-1-2-function-from-vertex-point"
+        "practice-j6-1-2-function-from-vertex-point",
+        "practice-j6-1-2-extreme-parameter-from-condition"
       ],
       "chapterCode": "j6-1-2",
       "stage": "國中",
@@ -59311,7 +59373,7 @@
         "頂點式 \\(y=a(x-h)^2+k\\) 可直接讀出頂點 \\((h,k)\\) 與對稱軸 \\(x=h\\)；\\(a>0\\) 有最小值 \\(k\\)，\\(a<0\\) 有最大值 \\(k\\)。"
       ],
       "notes": [
-        "截圖中的「頂點式讀取」與「配方法求極值」保留為小類；反求函數式補成完整可參數化題型。"
+        "截圖中的「頂點式讀取」與「配方法求極值」保留為小類；反求函數式與由極值反求參數補成完整可參數化題型。"
       ],
       "mistakes": []
     },
@@ -59465,15 +59527,16 @@
       "id": "practice-j6-1-3-algebra-extrema-three-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "代數限制與距離平方極值綜合",
+      "title": "代數限制、距離平方與區間極值綜合",
       "generatorKey": "j6-1-3-algebra-extrema-three-subtypes",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 3,
+      "subtypeCount": 4,
       "relatedPracticeIds": [
         "practice-j6-1-3-number-sum-square-extrema",
         "practice-j6-1-3-line-distance-square",
-        "practice-j6-1-3-linear-constraint-extrema"
+        "practice-j6-1-3-linear-constraint-extrema",
+        "practice-j6-1-3-interval-extrema"
       ],
       "chapterCode": "j6-1-3",
       "stage": "國中",
@@ -59490,6 +59553,7 @@
         "平方和",
         "數線",
         "代數約束",
+        "限制區間",
         "無限練習"
       ],
       "usage": [
@@ -59500,7 +59564,7 @@
         "解應用題時先設變數，將目標量寫成二次函數，再用頂點或配方判斷最大值、最小值。"
       ],
       "notes": [
-        "截圖中的數字極值、數線距離平方和、代數約束題合併為同一大類；只保留可完整換參數的題型。"
+        "截圖中的數字極值、數線距離平方和、代數約束與限制區間最大最小題合併為同一大類；只保留可完整換參數的題型。"
       ],
       "mistakes": []
     },
@@ -59551,13 +59615,14 @@
       "id": "practice-j6-1-3-geometry-modeling-four-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "幾何面積、通行限制與拋物線建模綜合",
+      "title": "幾何面積、圍籬變形與拋物線建模綜合",
       "generatorKey": "j6-1-3-geometry-modeling-four-subtypes",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 4,
+      "subtypeCount": 5,
       "relatedPracticeIds": [
         "practice-j6-1-3-rectangle-perimeter-area",
+        "practice-j6-1-3-fencing-variations",
         "practice-j6-1-3-split-squares-minimum",
         "practice-j6-1-3-parabola-clearance",
         "practice-j6-1-3-water-channel-width"
@@ -59576,6 +59641,7 @@
         "極值",
         "面積",
         "周長",
+        "圍籬",
         "拋物線建模",
         "通行高度",
         "無限練習"
@@ -59585,10 +59651,10 @@
       ],
       "examples": [],
       "tips": [
-        "固定周長求最大面積通常落在「越接近正方形越大」；拋物線通行題要先建立坐標系，再代入指定寬度或高度。"
+        "固定周長求最大面積通常落在「越接近正方形越大」；圍籬變形要先把實際需要圍的邊數列清楚；拋物線通行題要先建立坐標系，再代入指定寬度或高度。"
       ],
       "notes": [
-        "截圖中靠圖才懂的題目已改成文字完整描述；河道、隧道、鐵絲分段都改成可參數化的完整題型。"
+        "截圖中靠圖才懂的題目已改成文字完整描述；河道、隧道、鐵絲分段、河邊圍籬與出入口題都改成可參數化的完整題型。"
       ],
       "mistakes": []
     },
@@ -59659,6 +59725,43 @@
         "先用限制式把其中一個變數表示成另一個變數，再把目標式化成一元二次函數。"
       ],
       "notes": [],
+      "mistakes": []
+    },
+    {
+      "id": "practice-j6-1-3-interval-extrema",
+      "enabled": true,
+      "mode": "generator",
+      "title": "限制區間內的最大值與最小值",
+      "generatorKey": "j6-1-3-interval-extrema",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-1-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "二次函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-1-3",
+        "二次函數應用",
+        "極值",
+        "限制區間",
+        "端點",
+        "頂點",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "在限制區間內找最大、最小值時，比較區間兩端點與區間內頂點；學生常漏掉端點。"
+      ],
+      "notes": [
+        "對應題庫中 \\(0\\le x\\le 3\\) 下求最大值、最小值的固定題型。"
+      ],
       "mistakes": []
     },
     {
@@ -59831,6 +59934,44 @@
         "周長固定時，矩形面積在長寬相等時最大。"
       ],
       "notes": [],
+      "mistakes": []
+    },
+    {
+      "id": "practice-j6-1-3-fencing-variations",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圍籬、河邊與出入口面積最大化",
+      "generatorKey": "j6-1-3-fencing-variations",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-1-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "二次函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-1-3",
+        "二次函數應用",
+        "極值",
+        "圍籬",
+        "河邊",
+        "出入口",
+        "矩形面積",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "圍籬題先畫出需要圍的邊：靠河邊少一邊、並排隔間多一道、出入口少圍一段。列式正確後才找最大面積。"
+      ],
+      "notes": [
+        "對應題庫中河邊菜園、兩格養雞場與停車場出入口題；全部改成文字完整且可換參數的模型。"
+      ],
       "mistakes": []
     },
     {
@@ -61631,21 +61772,23 @@
       "mistakes": []
     },
     {
-      "id": "practice-j6-3-1-frequency-distribution-six-subtypes",
+      "id": "practice-j6-3-1-frequency-distribution-eight-subtypes",
       "enabled": true,
       "mode": "generator",
-      "title": "次數分配、累積次數與分組判讀綜合",
-      "generatorKey": "j6-3-1-frequency-distribution-six-subtypes",
+      "title": "次數分配、統計圖表與抽樣估計綜合",
+      "generatorKey": "j6-3-1-frequency-distribution-eight-subtypes",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 6,
+      "subtypeCount": 8,
       "relatedPracticeIds": [
         "practice-j6-3-1-relative-frequency",
         "practice-j6-3-1-cumulative-frequency",
         "practice-j6-3-1-class-interval-rule",
         "practice-j6-3-1-mark-recapture-estimation",
         "practice-j6-3-1-data-sorting-count",
-        "practice-j6-3-1-missing-frequency"
+        "practice-j6-3-1-missing-frequency",
+        "practice-j6-3-1-chart-trend-reading",
+        "practice-j6-3-1-sampling-estimated-total"
       ],
       "chapterCode": "j6-3-1",
       "stage": "國中",
@@ -61659,22 +61802,24 @@
         "j6-3-1",
         "資料的整理與統計圖表",
         "次數分配",
-        "圓餅圖",
+        "折線圖",
+        "統計表",
+        "抽樣估計",
         "無限練習",
         "相對次數",
         "累積次數",
-        "組距",
-        "抽樣估計"
+        "組距"
       ],
       "usage": [
-        "適合練習從表格、文字資料或簡短數列中讀出次數、相對次數與累積次數。"
+        "適合練習從表格、文字資料或簡短數列中讀出次數、相對次數、累積次數、折線圖變化與抽樣估計。"
       ],
       "examples": [],
       "tips": [
-        "相對次數 = 該組次數 ÷ 總次數；累積次數要由小到大逐組相加。"
+        "相對次數 = 該組次數 / 總次數；累積次數要由小到大逐組相加；抽樣估計要先找樣本比例再乘回母體總量。"
       ],
       "notes": [
-        "截圖中只有大方向、未給足數值或需讀圖才能唯一判斷的題目沒有直接使用；改保留可由文字條件完整計算的題型。"
+        "右圖題若缺少圖形或數值無法唯一判斷，未直接收錄；已改成文字表格條件完整、可重複換參數的題型。",
+        "6.32 抽樣可參數化題量較少，併入統計圖表大類，不另外獨立成大類。"
       ],
       "mistakes": []
     },
@@ -61749,6 +61894,85 @@
       ],
       "notes": [],
       "mistakes": []
+    },
+    {
+      "id": "practice-j6-3-1-chart-trend-reading",
+      "enabled": true,
+      "mode": "generator",
+      "title": "折線圖與統計表增減判讀",
+      "generatorKey": "j6-3-1-chart-trend-reading",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-3-1",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "資料的整理與統計圖表",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-3-1",
+        "統計圖表",
+        "折線圖",
+        "變化量",
+        "成長率",
+        "無限練習"
+      ],
+      "usage": [
+        "把右圖折線圖題改成文字表格資料，可練習相鄰變化、最大變化幅度與成長率。"
+      ],
+      "examples": [],
+      "tips": [
+        "看折線圖先讀縱軸數值，再比較後一期減前一期；成長率要除以前一期。"
+      ],
+      "notes": [
+        "純粹要求看右圖但圖形缺失或數值不足的題目未收錄。"
+      ],
+      "mistakes": [
+        "把變化量直接當百分率，忘記除以原來數值。"
+      ]
+    },
+    {
+      "id": "practice-j6-3-1-sampling-estimated-total",
+      "enabled": true,
+      "mode": "generator",
+      "title": "抽樣比例估計總量",
+      "generatorKey": "j6-3-1-sampling-estimated-total",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-3-1",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "資料的整理與統計圖表",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-3-1",
+        "抽樣",
+        "樣本比例",
+        "母體估計",
+        "無限練習"
+      ],
+      "usage": [
+        "對應抽樣文件中的抽樣檢查、估計整批瑕疵數或總量題。"
+      ],
+      "examples": [],
+      "tips": [
+        "先用樣本算比例，再乘回母體總數；若題目給完好比例，瑕疵比例要用 1 減掉。"
+      ],
+      "notes": [
+        "抽樣文件中只有概念或缺少表格數值的題目未收錄。"
+      ],
+      "mistakes": [
+        "把樣本中的瑕疵數直接當整批瑕疵數，沒有乘回總量。"
+      ]
     },
     {
       "id": "practice-j6-3-1-pie-angle-percent",
@@ -62369,21 +62593,61 @@
       "mistakes": []
     },
     {
-      "id": "practice-j6-3-2-quartile-boxplot-six-subtypes",
+      "id": "practice-j6-3-2-sorted-data-percentile",
+      "enabled": true,
+      "mode": "generator",
+      "title": "排序資料中的百分位定位",
+      "generatorKey": "j6-3-2-sorted-data-percentile",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-3-2",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "資料分析與統計量",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-3-2",
+        "百分位數",
+        "百分等級",
+        "排序資料",
+        "無限練習"
+      ],
+      "usage": [
+        "練習從已排序資料找百分位位置，或由資料位置估計百分等級。"
+      ],
+      "examples": [],
+      "tips": [
+        "百分位數不是原始名次，要先把百分比換成第幾筆資料。"
+      ],
+      "notes": [
+        "與既有 PR 反推名次題合併觀念，但保留排序資料定位的計算小類。"
+      ],
+      "mistakes": [
+        "把第 80 百分位數誤解成第 80 名。"
+      ]
+    },
+    {
+      "id": "practice-j6-3-2-quartile-boxplot-seven-subtypes",
       "enabled": true,
       "mode": "generator",
       "title": "四分位數、盒狀圖與百分位數綜合",
-      "generatorKey": "j6-3-2-quartile-boxplot-six-subtypes",
+      "generatorKey": "j6-3-2-quartile-boxplot-seven-subtypes",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 6,
+      "subtypeCount": 7,
       "relatedPracticeIds": [
         "practice-j6-3-2-five-number-range-iqr",
         "practice-j6-3-2-raw-quartile-calculation",
         "practice-j6-3-2-frequency-quartile-position",
         "practice-j6-3-2-boxplot-five-number-summary",
         "practice-j6-3-2-boxplot-comparison",
-        "practice-j6-3-2-percentile-rank-conversion"
+        "practice-j6-3-2-percentile-rank-conversion",
+        "practice-j6-3-2-sorted-data-percentile"
       ],
       "chapterCode": "j6-3-2",
       "stage": "國中",
@@ -62400,17 +62664,19 @@
         "無限練習",
         "四分位數",
         "盒狀圖",
-        "百分位數"
+        "百分位數",
+        "排序資料"
       ],
       "usage": [
-        "適合練習四分位數定位、五數摘要、盒狀圖判讀與百分位數逆推。"
+        "適合練習四分位數定位、五數摘要、盒狀圖判讀、百分位數與排序資料的位置換算。"
       ],
       "examples": [],
       "tips": [
-        "五數為最小值、Q1、Q2、Q3、最大值；全距 = 最大值 − 最小值，四分位距 = Q3 − Q1。"
+        "百分位數題先確認總筆數，再把百分比換成第幾筆資料；五數摘要則比較 Q1、Q2、Q3 與最大最小值。"
       ],
       "notes": [
-        "需要實際盒狀圖圖片才能判讀的題目未直接使用，已改成五數摘要或文字條件完整的題型。"
+        "需要實際盒狀圖圖片才能判讀的題目未直接使用，已改成五數摘要或文字條件完整的題型。",
+        "平均數、中位數、眾數類題型與既有集中趨勢大類重複，未新增重複小類。"
       ],
       "mistakes": []
     },
@@ -62557,6 +62823,46 @@
       "mistakes": []
     },
     {
+      "id": "practice-j6-3-3-complement-probability",
+      "enabled": true,
+      "mode": "generator",
+      "title": "互補事件與至少一次機率",
+      "generatorKey": "j6-3-3-complement-probability",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "機率的基本計算",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-3-3",
+        "機率",
+        "互補事件",
+        "至少一次",
+        "獨立事件",
+        "無限練習"
+      ],
+      "usage": [
+        "補強機率文件中至少一次、不中全部再相減的計算題。"
+      ],
+      "examples": [],
+      "tips": [
+        "至少一次通常比直接列舉更適合用互補事件：1 減掉一次都沒有發生的機率。"
+      ],
+      "notes": [
+        "純遊戲規則描述但沒有明確等可能樣本空間的題目未收錄。"
+      ],
+      "mistakes": [
+        "把「至少一次」誤當成「恰好一次」。"
+      ]
+    },
+    {
       "id": "practice-j6-3-3-coin-tree-probability",
       "enabled": true,
       "mode": "generator",
@@ -62677,15 +62983,16 @@
       "id": "practice-j6-3-3-probability-compound-mixed",
       "enabled": true,
       "mode": "generator",
-      "title": "兩步試驗與抽樣機率綜合",
+      "title": "兩步試驗、抽樣與互補事件綜合",
       "generatorKey": "j6-3-3-probability-compound-mixed",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 3,
+      "subtypeCount": 4,
       "relatedPracticeIds": [
         "practice-j6-3-3-sampling-with-without-replacement",
         "practice-j6-3-3-two-bag-combination",
-        "practice-j6-3-3-algebra-condition-probability"
+        "practice-j6-3-3-algebra-condition-probability",
+        "practice-j6-3-3-complement-probability"
       ],
       "chapterCode": "j6-3-3",
       "stage": "國中",
@@ -62704,17 +63011,18 @@
         "放回",
         "不放回",
         "兩袋抽取",
-        "代數條件"
+        "互補事件",
+        "至少一次"
       ],
       "usage": [
-        "適合在學生已會單一事件後，用來區分獨立與相依情況。"
+        "適合在學生已會單一事件後，用來區分獨立、相依與互補事件的計算。"
       ],
       "examples": [],
       "tips": [
-        "複合試驗先判斷是否放回；放回通常分母不變，不放回第二次的總數會減少。"
+        "複合試驗先判斷是否放回；至少一次常用互補事件，先算一次都沒有發生。"
       ],
       "notes": [
-        "依照截圖整理為可重生的文字題；只有大方向、缺少明確條件或需要額外圖形才能判讀的題目未直接收錄。",
+        "依照文件整理為可重生的文字題；只有大方向、缺少明確條件或需要額外圖形才能判讀的題目未直接收錄。",
         "重複題型已合併：單次抽取、硬幣樹狀圖、骰子表格、放回與不放回抽樣各自集中成小類。"
       ],
       "mistakes": []
@@ -86507,7 +86815,10 @@
         "行列式",
         "性質"
       ],
-      "questionCount": 5
+      "questionCount": 5,
+      "generatorKey": "s4-4-2-det-properties",
+      "chapterCode": "s4-4-2",
+      "enabled": true
     },
     {
       "id": "practice-s4-4-2-similar-matrix",
@@ -86521,7 +86832,10 @@
         "相似矩陣",
         "跡數"
       ],
-      "questionCount": 5
+      "questionCount": 5,
+      "generatorKey": "s4-4-2-similar-matrix",
+      "chapterCode": "s4-4-2",
+      "enabled": true
     },
     {
       "id": "practice-s4-4-4-line-transform",
@@ -86535,7 +86849,10 @@
         "直線",
         "像"
       ],
-      "questionCount": 5
+      "questionCount": 5,
+      "generatorKey": "s4-4-4-line-transform",
+      "chapterCode": "s4-4-4",
+      "enabled": true
     },
     {
       "id": "practice-e6-2-6-average-from-data-drill",
@@ -86916,7 +87233,8 @@
         "圓柱",
         "體積",
         "最大圓柱"
-      ]
+      ],
+      "enabled": true
     },
     {
       "id": "practice-e6-2-3-dim-change-volume-drill",
@@ -86936,7 +87254,8 @@
         "體積",
         "維度變化",
         "圓柱"
-      ]
+      ],
+      "enabled": true
     },
     {
       "id": "practice-e6-2-2-two-seg-distance-drill",
@@ -86955,7 +87274,8 @@
         "速率",
         "路程",
         "分段"
-      ]
+      ],
+      "enabled": true
     },
     {
       "id": "practice-e6-2-2-circular-chase-drill",
@@ -86974,7 +87294,8 @@
         "速率",
         "追及",
         "圓形跑道"
-      ]
+      ],
+      "enabled": true
     },
     {
       "id": "practice-e6-2-2-partial-remain-drill",
@@ -86994,7 +87315,8 @@
         "路程",
         "剩餘",
         "休息"
-      ]
+      ],
+      "enabled": true
     },
     {
       "id": "practice-e6-1-5-chain-ratio-drill",
@@ -87667,112 +87989,160 @@
       "title": "甲比乙多/少幾%",
       "chapterId": "e5-2-8",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-8-relative-compare-drill",
+      "chapterCode": "e5-2-8",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-8-percent-change-drill",
       "title": "增減後是原來的幾%",
       "chapterId": "e5-2-8",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-8-percent-change-drill",
+      "chapterCode": "e5-2-8",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-8-find-original-drill",
       "title": "已知折扣後價格逆推原價",
       "chapterId": "e5-2-8",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-8-find-original-drill",
+      "chapterCode": "e5-2-8",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-8-compare-change-three-subtypes",
       "title": "相對比較、增減百分率與逆推原價三小類",
       "chapterId": "e5-2-8",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-8-compare-change-three-subtypes",
+      "chapterCode": "e5-2-8",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-9-speed-distance-drill",
       "title": "速度×時間=距離（含單位換算）",
       "chapterId": "e5-2-9",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-9-speed-distance-drill",
+      "chapterCode": "e5-2-9",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-9-match-with-break-drill",
       "title": "比賽節數與休息時間計算",
       "chapterId": "e5-2-9",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-9-match-with-break-drill",
+      "chapterCode": "e5-2-9",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-9-time-ratio-drill",
       "title": "時間倍數比較",
       "chapterId": "e5-2-9",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-9-time-ratio-drill",
+      "chapterCode": "e5-2-9",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-9-speed-match-three-subtypes",
       "title": "速度距離、比賽時間與時間倍數三小類",
       "chapterId": "e5-2-9",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-9-speed-match-three-subtypes",
+      "chapterCode": "e5-2-9",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-5-pie-complement-drill",
       "title": "圓形圖百分比補集",
       "chapterId": "e5-2-5",
       "difficulty": "easy",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-5-pie-complement-drill",
+      "chapterCode": "e5-2-5",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-5-pie-angle-count-drill",
       "title": "圓形圖角度↔百分比↔數量",
       "chapterId": "e5-2-5",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-5-pie-angle-count-drill",
+      "chapterCode": "e5-2-5",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-5-pie-inverse-drill",
       "title": "由部分逆推圓形圖全體",
       "chapterId": "e5-2-5",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-5-pie-inverse-drill",
+      "chapterCode": "e5-2-5",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-5-pie-three-subtypes",
       "title": "圓形圖三小類綜合",
       "chapterId": "e5-2-5",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-5-pie-three-subtypes",
+      "chapterCode": "e5-2-5",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-3-rock-water-level-drill",
       "title": "水中放石頭後的水位高度",
       "chapterId": "e5-2-3",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-3-rock-water-level-drill",
+      "chapterCode": "e5-2-3",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-3-cup-pour-drill",
-      "title": "幾個杯子與等量倒水",
+      "title": "幾個杯子與正方體倒水",
       "chapterId": "e5-2-3",
       "difficulty": "easy",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-3-cup-pour-drill",
+      "chapterCode": "e5-2-3",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-3-fraction-base-area-drill",
       "title": "幾分之幾的水量與底面積逆推",
       "chapterId": "e5-2-3",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-3-fraction-base-area-drill",
+      "chapterCode": "e5-2-3",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-3-rock-cup-three-subtypes",
       "title": "水位石頭、杯子倒水與分數水量三小類",
       "chapterId": "e5-2-3",
       "difficulty": "medium",
-      "type": "drill"
+      "type": "drill",
+      "generatorKey": "e5-2-3-rock-cup-three-subtypes",
+      "chapterCode": "e5-2-3",
+      "enabled": true
     },
     {
       "id": "practice-e5-2-2-mixed-mixed-multiply-drill",
@@ -88525,7 +88895,10 @@
         "j1-3-3",
         "一元一次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j1-3-3-rope-folding-drill",
+      "chapterCode": "j1-3-3",
+      "enabled": true
     },
     {
       "id": "practice-j1-3-3-candle-burn-drill",
@@ -88539,7 +88912,10 @@
         "j1-3-3",
         "一元一次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j1-3-3-candle-burn-drill",
+      "chapterCode": "j1-3-3",
+      "enabled": true
     },
     {
       "id": "practice-j1-3-3-circular-track-drill",
@@ -88553,7 +88929,10 @@
         "j1-3-3",
         "一元一次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j1-3-3-circular-track-drill",
+      "chapterCode": "j1-3-3",
+      "enabled": true
     },
     {
       "id": "practice-j1-3-3-chain-fraction-take-drill",
@@ -88567,7 +88946,10 @@
         "j1-3-3",
         "一元一次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j1-3-3-chain-fraction-take-drill",
+      "chapterCode": "j1-3-3",
+      "enabled": true
     },
     {
       "id": "practice-j1-3-3-calendar-block-drill",
@@ -88581,7 +88963,10 @@
         "j1-3-3",
         "一元一次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j1-3-3-calendar-block-drill",
+      "chapterCode": "j1-3-3",
+      "enabled": true
     },
     {
       "id": "practice-j1-3-3-digit-swap-drill",
@@ -88595,7 +88980,10 @@
         "j1-3-3",
         "一元一次方程式",
         "應用問題"
-      ]
+      ],
+      "generatorKey": "j1-3-3-digit-swap-drill",
+      "chapterCode": "j1-3-3",
+      "enabled": true
     },
     {
       "id": "practice-j2-1-1-find-var-value-drill",
@@ -88609,7 +88997,10 @@
         "代入法",
         "二元一次方程式",
         "求值"
-      ]
+      ],
+      "generatorKey": "j2-1-1-find-var-value-drill",
+      "chapterCode": "j2-1-1",
+      "enabled": true
     },
     {
       "id": "practice-j2-1-1-find-x-coeff-drill",
@@ -88623,7 +89014,10 @@
         "代入法",
         "二元一次方程式",
         "求係數"
-      ]
+      ],
+      "generatorKey": "j2-1-1-find-x-coeff-drill",
+      "chapterCode": "j2-1-1",
+      "enabled": true
     },
     {
       "id": "practice-j2-1-1-any-one-solution-drill",
@@ -88636,7 +89030,10 @@
       "tags": [
         "整數解",
         "二元一次方程式"
-      ]
+      ],
+      "generatorKey": "j2-1-1-any-one-solution-drill",
+      "chapterCode": "j2-1-1",
+      "enabled": true
     },
     {
       "id": "practice-j2-1-1-all-pos-int-solution-drill",
@@ -88650,7 +89047,10 @@
         "整數解",
         "正整數",
         "二元一次方程式"
-      ]
+      ],
+      "generatorKey": "j2-1-1-all-pos-int-solution-drill",
+      "chapterCode": "j2-1-1",
+      "enabled": true
     },
     {
       "id": "practice-j2-1-1-range-int-solution-drill",
@@ -88665,7 +89065,10 @@
         "負整數",
         "有界範圍",
         "二元一次方程式"
-      ]
+      ],
+      "generatorKey": "j2-1-1-range-int-solution-drill",
+      "chapterCode": "j2-1-1",
+      "enabled": true
     },
     {
       "id": "practice-j2-1-1-prime-solution-drill",
@@ -88679,7 +89082,10 @@
         "整數解",
         "質數",
         "二元一次方程式"
-      ]
+      ],
+      "generatorKey": "j2-1-1-prime-solution-drill",
+      "chapterCode": "j2-1-1",
+      "enabled": true
     },
     {
       "id": "practice-j2-1-1-shopping-word-drill",
@@ -88694,7 +89100,10 @@
         "整數解",
         "購物",
         "二元一次方程式"
-      ]
+      ],
+      "generatorKey": "j2-1-1-shopping-word-drill",
+      "chapterCode": "j2-1-1",
+      "enabled": true
     },
     {
       "id": "practice-j2-4-2-specific-score-threshold-drill",
@@ -88708,7 +89117,10 @@
         "不等式應用",
         "平均數",
         "分數門檻"
-      ]
+      ],
+      "generatorKey": "j2-4-2-specific-score-threshold-drill",
+      "chapterCode": "j2-4-2",
+      "enabled": true
     },
     {
       "id": "practice-j2-4-2-pos-int-enumerate-drill",
@@ -88722,7 +89134,10 @@
         "不等式應用",
         "正整數",
         "列舉"
-      ]
+      ],
+      "generatorKey": "j2-4-2-pos-int-enumerate-drill",
+      "chapterCode": "j2-4-2",
+      "enabled": true
     },
     {
       "id": "practice-j2-4-2-integer-condition-word-drill",
@@ -88736,7 +89151,10 @@
         "不等式應用",
         "某整數",
         "某正數"
-      ]
+      ],
+      "generatorKey": "j2-4-2-integer-condition-word-drill",
+      "chapterCode": "j2-4-2",
+      "enabled": true
     },
     {
       "id": "practice-j2-4-2-shape-variable-expr-drill",
@@ -88751,7 +89169,10 @@
         "面積",
         "長方形",
         "三角形"
-      ]
+      ],
+      "generatorKey": "j2-4-2-shape-variable-expr-drill",
+      "chapterCode": "j2-4-2",
+      "enabled": true
     },
     {
       "id": "practice-j2-4-2-age-past-relation-drill",
@@ -88764,7 +89185,10 @@
       "tags": [
         "不等式應用",
         "年齡問題"
-      ]
+      ],
+      "generatorKey": "j2-4-2-age-past-relation-drill",
+      "chapterCode": "j2-4-2",
+      "enabled": true
     },
     {
       "id": "j2-1-2-two-solution-one-eq-drill",
@@ -88777,7 +89201,10 @@
         "代入法",
         "係數求解"
       ],
-      "generatorFile": "j2.js"
+      "generatorKey": "j2-1-2-two-solution-one-eq-drill",
+      "chapterCode": "j2-1-2",
+      "enabled": true,
+      "mode": "generator"
     },
     {
       "id": "j2-1-3-balance-scale-drill",
@@ -88790,7 +89217,10 @@
         "天平",
         "應用題"
       ],
-      "generatorFile": "j2.js"
+      "generatorKey": "j2-1-3-balance-scale-drill",
+      "chapterCode": "j2-1-3",
+      "enabled": true,
+      "mode": "generator"
     },
     {
       "id": "j2-1-3-class-size-score-drill",
@@ -88803,7 +89233,10 @@
         "平均數",
         "班級應用"
       ],
-      "generatorFile": "j2.js"
+      "generatorKey": "j2-1-3-class-size-score-drill",
+      "chapterCode": "j2-1-3",
+      "enabled": true,
+      "mode": "generator"
     },
     {
       "id": "j2-1-3-pairwise-sum-drill",
@@ -88816,7 +89249,10 @@
         "成對和",
         "年齡問題"
       ],
-      "generatorFile": "j2.js"
+      "generatorKey": "j2-1-3-pairwise-sum-drill",
+      "chapterCode": "j2-1-3",
+      "enabled": true,
+      "mode": "generator"
     },
     {
       "id": "j2-1-3-box-distribution-drill",
@@ -88829,7 +89265,10 @@
         "分配",
         "箱子問題"
       ],
-      "generatorFile": "j2.js"
+      "generatorKey": "j2-1-3-box-distribution-drill",
+      "chapterCode": "j2-1-3",
+      "enabled": true,
+      "mode": "generator"
     },
     {
       "id": "j2-4-2-solve-ineq-integer-drill",
@@ -88842,7 +89281,10 @@
         "整數解",
         "最大最小值"
       ],
-      "generatorFile": "j2.js"
+      "generatorKey": "j2-4-2-solve-ineq-integer-drill",
+      "chapterId": "j2-4-2",
+      "chapterCode": "j2-4-2",
+      "enabled": true
     },
     {
       "id": "j2-4-2-given-solution-find-coeff-drill",
@@ -88854,7 +89296,10 @@
         "一元一次不等式",
         "逆推係數"
       ],
-      "generatorFile": "j2.js"
+      "generatorKey": "j2-4-2-given-solution-find-coeff-drill",
+      "chapterId": "j2-4-2",
+      "chapterCode": "j2-4-2",
+      "enabled": true
     },
     {
       "id": "j2-4-2-compound-ineq-drill",
@@ -88867,7 +89312,10 @@
         "雙重不等式",
         "整數解"
       ],
-      "generatorFile": "j2.js"
+      "generatorKey": "j2-4-2-compound-ineq-drill",
+      "chapterId": "j2-4-2",
+      "chapterCode": "j2-4-2",
+      "enabled": true
     },
     {
       "id": "j2-4-2-abs-value-ineq-drill",
@@ -88879,7 +89327,10 @@
         "絕對值不等式",
         "整數解"
       ],
-      "generatorFile": "j2.js"
+      "generatorKey": "j2-4-2-abs-value-ineq-drill",
+      "chapterId": "j2-4-2",
+      "chapterCode": "j2-4-2",
+      "enabled": true
     },
     {
       "id": "j2-4-2-x-range-linear-func-drill",
@@ -88892,7 +89343,10 @@
         "線性函數",
         "不等式"
       ],
-      "generatorFile": "j2.js"
+      "generatorKey": "j2-4-2-x-range-linear-func-drill",
+      "chapterId": "j2-4-2",
+      "chapterCode": "j2-4-2",
+      "enabled": true
     },
     {
       "id": "j2-4-2-concentration-ineq-drill",
@@ -88905,7 +89359,10 @@
         "混合問題",
         "不等式應用"
       ],
-      "generatorFile": "j2.js"
+      "generatorKey": "j2-4-2-concentration-ineq-drill",
+      "chapterId": "j2-4-2",
+      "chapterCode": "j2-4-2",
+      "enabled": true
     },
     {
       "id": "practice-j3-4-1-diff-square-solve",
@@ -89430,7 +89887,8 @@
         "j4-1-1",
         "等差數列",
         "直角三角形"
-      ]
+      ],
+      "chapterCode": "j4-1-1"
     },
     {
       "id": "practice-j4-1-1-polygon-ap-drill",
@@ -89445,7 +89903,8 @@
         "j4-1-1",
         "等差數列",
         "多邊形"
-      ]
+      ],
+      "chapterCode": "j4-1-1"
     },
     {
       "id": "practice-j4-1-1-first-positive-term-drill",
@@ -89460,7 +89919,8 @@
         "j4-1-1",
         "等差數列",
         "正負項"
-      ]
+      ],
+      "chapterCode": "j4-1-1"
     },
     {
       "id": "practice-j4-1-1-coordinate-move-drill",
@@ -89475,7 +89935,8 @@
         "j4-1-1",
         "等差數列",
         "座標"
-      ]
+      ],
+      "chapterCode": "j4-1-1"
     },
     {
       "id": "practice-j4-1-3-polygon-sum-drill",
@@ -89490,7 +89951,8 @@
         "j4-1-3",
         "等差級數",
         "多邊形"
-      ]
+      ],
+      "chapterCode": "j4-1-3"
     },
     {
       "id": "practice-j4-1-3-catch-up-race-drill",
@@ -89505,7 +89967,8 @@
         "j4-1-3",
         "等差級數",
         "應用"
-      ]
+      ],
+      "chapterCode": "j4-1-3"
     },
     {
       "id": "practice-j4-3-1-isosceles-angle-drill",
@@ -89520,7 +89983,8 @@
         "j4-3-1",
         "等腰三角形",
         "角度"
-      ]
+      ],
+      "chapterCode": "j4-3-1"
     },
     {
       "id": "practice-j4-3-2-triangle-bisector-intersection-drill",
@@ -89535,7 +89999,8 @@
         "j4-3-2",
         "角平分線",
         "交點"
-      ]
+      ],
+      "chapterCode": "j4-3-2"
     },
     {
       "id": "practice-j4-3-3-congruence-algebra-drill",
@@ -89550,7 +90015,8 @@
         "j4-3-3",
         "全等",
         "代數"
-      ]
+      ],
+      "chapterCode": "j4-3-3"
     },
     {
       "id": "practice-j4-3-4-exterior-angle-side-comparison-drill",
@@ -89565,7 +90031,8 @@
         "j4-3-4",
         "外角",
         "邊角關係"
-      ]
+      ],
+      "chapterCode": "j4-3-4"
     },
     {
       "id": "practice-j4-3-4-hinge-theorem-drill",
@@ -89580,7 +90047,8 @@
         "j4-3-4",
         "鉸鏈定理",
         "邊角比較"
-      ]
+      ],
+      "chapterCode": "j4-3-4"
     },
     {
       "id": "practice-j4-4-1-bent-line-parallel-drill",
@@ -89590,7 +90058,8 @@
       "generatorKey": "j4-4-1-bent-line-parallel",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypes": []
+      "subtypes": [],
+      "chapterCode": "j4-4-1"
     },
     {
       "id": "practice-j4-4-2-angle-bisector-parallelogram-drill",
@@ -89600,7 +90069,8 @@
       "generatorKey": "j4-4-2-angle-bisector-parallelogram",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypes": []
+      "subtypes": [],
+      "chapterCode": "j4-4-2"
     },
     {
       "id": "practice-j4-4-2-coordinate-parallelogram-drill",
@@ -89610,7 +90080,8 @@
       "generatorKey": "j4-4-2-coordinate-parallelogram",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypes": []
+      "subtypes": [],
+      "chapterCode": "j4-4-2"
     },
     {
       "id": "practice-j4-4-3-kite-property-drill",
@@ -89620,7 +90091,8 @@
       "generatorKey": "j4-4-3-kite-property",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypes": []
+      "subtypes": [],
+      "chapterCode": "j4-4-3"
     },
     {
       "id": "practice-j4-4-3-right-trapezoid-drill",
@@ -89630,7 +90102,8 @@
       "generatorKey": "j4-4-3-right-trapezoid",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypes": []
+      "subtypes": [],
+      "chapterCode": "j4-4-3"
     },
     {
       "id": "practice-j4-2-1-linear-degree-condition-drill",
@@ -89639,7 +90112,8 @@
       "generatorKey": "j4-2-1-linear-degree-condition",
       "difficulty": "medium",
       "questionCount": 5,
-      "enabled": true
+      "enabled": true,
+      "chapterCode": "j4-2-1"
     },
     {
       "id": "practice-j4-2-1-cross-function-substitution-drill",
@@ -89648,7 +90122,8 @@
       "generatorKey": "j4-2-1-cross-function-substitution",
       "difficulty": "medium",
       "questionCount": 5,
-      "enabled": true
+      "enabled": true,
+      "chapterCode": "j4-2-1"
     },
     {
       "id": "practice-j4-2-2-word-model-two-point-drill",
@@ -89657,7 +90132,8 @@
       "generatorKey": "j4-2-2-word-model-two-point",
       "difficulty": "medium",
       "questionCount": 5,
-      "enabled": true
+      "enabled": true,
+      "chapterCode": "j4-2-2"
     },
     {
       "id": "practice-j1-2-1-prime-identify-drill",
@@ -91189,7 +91665,7 @@
       "order": 1
     },
     {
-      "practiceId": "practice-j6-3-1-frequency-distribution-six-subtypes",
+      "practiceId": "practice-j6-3-1-frequency-distribution-eight-subtypes",
       "targetType": "chapter",
       "targetId": "j6-3-1",
       "enabled": true,
@@ -91945,7 +92421,7 @@
       "order": 2
     },
     {
-      "practiceId": "practice-j6-3-2-quartile-boxplot-six-subtypes",
+      "practiceId": "practice-j6-3-2-quartile-boxplot-seven-subtypes",
       "targetType": "chapter",
       "targetId": "j6-3-2",
       "enabled": true,
@@ -99596,6 +100072,13 @@
       "targetId": "j5-2-1",
       "enabled": true,
       "order": 1
+    },
+    {
+      "practiceId": "practice-j5-2-1-semicircle-chord-width",
+      "targetType": "chapter",
+      "targetId": "j5-2-1",
+      "enabled": true,
+      "order": 2
     },
     {
       "practiceId": "practice-j5-2-1-semicircle-chord-width",

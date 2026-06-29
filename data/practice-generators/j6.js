@@ -522,11 +522,41 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function buildJ612ExtremeParameterFromConditionSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = i % 2 === 0 ? randInt(1, 5) : -randInt(1, 5);
+      const h = randInt(-5, 5);
+      const extreme = randInt(-8, 12);
+      const b = -2 * a * h;
+      const c = extreme + a * h * h;
+      const kind = a > 0 ? '最小' : '最大';
+      if (i % 2 === 0) {
+        questions.push(
+          `已知二次函數 \\(y=${a}x^2${formatJ611SignedLinearTerm(b)}+k\\) 在 \\(x=${h}\\) 時有${kind}值 \\(${extreme}\\)，求 \\(k\\)。`
+        );
+        answers.push(
+          `簡答：\\(k=${c}\\)。過程：此式的頂點 \\(x\\) 坐標為 \\(-\\frac{b}{2a}=${h}\\)。因為在 \\(x=${h}\\) 時函數值為 \\(${extreme}\\)，所以 \\(${extreme}=${a}\\cdot(${h})^2+${b}\\cdot(${h})+k\\)，解得 \\(k=${c}\\)。`
+        );
+        continue;
+      }
+      questions.push(
+        `已知二次函數 \\(y=${a}x^2+bx${formatJ611SignedConstant(c)}\\) 在 \\(x=${h}\\) 時有${kind}值 \\(${extreme}\\)，求 \\(b\\)。`
+      );
+      answers.push(
+        `簡答：\\(b=${b}\\)。過程：二次函數 \\(y=ax^2+bx+c\\) 的頂點 \\(x\\) 坐標為 \\(-\\frac{b}{2a}\\)。本題 \\(-\\frac{b}{2\\cdot${a}}=${h}\\)，所以 \\(b=${b}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ612VertexFormExtremaMixedSet(count) {
     const banks = [
       buildJ612VertexFormReadSet,
       buildJ612CompletingSquareExtremeSet,
       buildJ612FunctionFromVertexPointSet,
+      buildJ612ExtremeParameterFromConditionSet,
     ];
     const questions = [];
     const answers = [];
@@ -857,11 +887,39 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function buildJ613IntervalExtremaSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = i % 2 === 0 ? randInt(1, 4) : -randInt(1, 4);
+      const h = randInt(-3, 5);
+      const k = randInt(-8, 8);
+      const left = h - randInt(1, 4);
+      const right = h + randInt(1, 4);
+      const expanded = j612ExpandVertexForm(makeFraction(a), h, k);
+      const eq = j612FormatGeneralQuadratic(expanded.a, expanded.b, expanded.c);
+      const valueAt = (x) => a * (x - h) * (x - h) + k;
+      const candidates = [
+        { x: left, y: valueAt(left) },
+        { x: right, y: valueAt(right) },
+        { x: h, y: k },
+      ];
+      const maxItem = candidates.reduce((best, item) => (item.y > best.y ? item : best), candidates[0]);
+      const minItem = candidates.reduce((best, item) => (item.y < best.y ? item : best), candidates[0]);
+      questions.push(`設 \\(${left}\\le x\\le ${right}\\)，二次函數 \\(${eq}\\) 的最大值 \\(M\\) 與最小值 \\(m\\) 各為多少？`);
+      answers.push(
+        `簡答：\\(M=${maxItem.y}\\)，\\(m=${minItem.y}\\)。過程：區間內二次函數的最大、最小值只需比較端點與區間內的頂點。本題頂點為 \\((${h},${k})\\)，再比較 \\(x=${left},${h},${right}\\) 的函數值即可。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ613AlgebraExtremaMixedSet(count) {
     const banks = [
       buildJ613NumberSumSquareExtremaSet,
       buildJ613LineDistanceSquareSet,
       buildJ613LinearConstraintExtremaSet,
+      buildJ613IntervalExtremaSet,
     ];
     const questions = [];
     const answers = [];
@@ -889,16 +947,57 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function buildJ613FencingVariationsSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+      if (mode === 0) {
+        const fence = randInt(8, 30) * 4;
+        const depth = fence / 4;
+        const length = fence / 2;
+        const area = depth * length;
+        questions.push(`用長 \\(${fence}\\) 公尺的圍籬靠著河邊圍成一個矩形菜園，河邊那一側不用圍。求可圍出的最大面積。`);
+        answers.push(
+          `簡答：\\(${area}\\) 平方公尺。過程：設垂直河邊的邊長為 \\(x\\)，另一邊為 \\(${fence}-2x\\)，面積 \\(A=x(${fence}-2x)\\)。頂點在 \\(x=${depth}\\)，所以最大面積為 \\(${depth}\\cdot${length}=${area}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const fence = randInt(3, 8) * 24;
+        const depth = fence / 6;
+        const width = fence / 8;
+        const area = (fence * fence) / 24;
+        questions.push(`用長 \\(${fence}\\) 公尺的圍籬圍成兩個並排且大小相同的矩形養雞場，中間共用一道隔欄。求兩個養雞場的最大總面積。`);
+        answers.push(
+          `簡答：\\(${area}\\) 平方公尺。過程：設每格深 \\(x\\)、寬 \\(y\\)，圍籬總長為 \\(3x+4y=${fence}\\)，總面積 \\(A=2xy\\)。代入 \\(y=\\frac{${fence}-3x}{4}\\) 後得到二次函數，頂點在 \\(x=${depth}\\)，\\(y=${width}\\)。`
+        );
+        continue;
+      }
+      const opening = randInt(2, 8) * 2;
+      const totalPerimeter = randInt(8, 25) * 4;
+      const fence = totalPerimeter - opening;
+      const side = totalPerimeter / 4;
+      const area = side * side;
+      questions.push(
+        `用長 \\(${fence}\\) 公尺的圍籬圍成一個矩形停車場，其中一邊保留 \\(${opening}\\) 公尺作為出入口不圍。求可圍出的最大面積。`
+      );
+      answers.push(
+        `簡答：\\(${area}\\) 平方公尺。過程：實際矩形周長等於圍籬長加出入口長，為 \\(${fence}+${opening}=${totalPerimeter}\\)。固定周長時矩形面積在正方形時最大，所以邊長為 \\(${side}\\)，面積為 \\(${area}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ613SplitSquaresMinimumSet(count) {
     const questions = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const length = randInt(20, 100);
-      const minText =
-        length % 2 === 0 ? `${(length / 2) * (length / 2) * 2}` : fractionToLatex(makeFraction(length * length, 2));
+      const minText = fractionToLatex(makeFraction(length * length, 32));
       questions.push(`將一條長 \\(${length}\\) 公分的鐵絲剪成兩段，分別圍成兩個正方形，求這兩個正方形面積和的最小值。`);
       answers.push(
-        `簡答：\\(${minText}\\) 平方公分。過程：若兩段周長分別為 \\(x\\) 與 \\(${length}-x\\)，面積和為 \\(\\left(\\frac{x}{4}\\right)^2+\\left(\\frac{${length}-x}{4}\\right)^2\\)。兩段長度相等時平方和最小。`
+        `簡答：\\(${minText}\\) 平方公分。過程：若兩段周長分別為 \\(x\\) 與 \\(${length}-x\\)，面積和為 \\(\\left(\\frac{x}{4}\\right)^2+\\left(\\frac{${length}-x}{4}\\right)^2\\)。兩段長度相等時最小，此時每段周長為 \\(\\frac{${length}}{2}\\)，面積和為 \\(\\frac{${length}^2}{32}\\)。`
       );
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
@@ -949,6 +1048,7 @@
   function buildJ613GeometryModelingMixedSet(count) {
     const banks = [
       buildJ613RectanglePerimeterAreaSet,
+      buildJ613FencingVariationsSet,
       buildJ613SplitSquaresMinimumSet,
       buildJ613ParabolaClearanceSet,
       buildJ613WaterChannelWidthSet,
@@ -2359,6 +2459,55 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function buildJ623ComplementProbabilitySet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      if (i % 3 === 0) {
+        const attempts = randInt(2, 5);
+        const missFractions = [
+          [1, 2],
+          [1, 3],
+          [1, 4],
+          [1, 5],
+          [2, 5],
+          [2, 7],
+          [3, 5],
+        ];
+        const [missNumerator, missDenominator] = missFractions[randInt(0, missFractions.length - 1)];
+        const missPower = missNumerator ** attempts;
+        const totalPower = missDenominator ** attempts;
+        questions.push(
+          `某人每次射擊沒中目標的機率為 \\(\\frac{${missNumerator}}{${missDenominator}}\\)，連續射擊 \\(${attempts}\\) 次且每次結果互不影響。求至少射中一次的機率。`
+        );
+        answers.push(
+          `簡答：\\(${j623ProbabilityText(totalPower - missPower, totalPower)}\\)。過程：至少一次可用互補事件，先算一次都沒中：\\((\\frac{${missNumerator}}{${missDenominator}})^{${attempts}}=\\frac{${missPower}}{${totalPower}}\\)，所以至少一次命中為 \\(1-\\frac{${missPower}}{${totalPower}}=${j623ProbabilityText(totalPower - missPower, totalPower)}\\)。`
+        );
+      } else if (i % 3 === 1) {
+        const bags = randInt(2, 4);
+        const bad = randInt(1, 3);
+        const total = bad + randInt(5, 9);
+        const goodPower = (total - bad) ** bags;
+        const totalPower = total ** bags;
+        questions.push(
+          `袋中有 \\(${bad}\\) 顆瑕疵球、\\(${total - bad}\\) 顆正常球。每次取一球後放回，共取 \\(${bags}\\) 次。求至少取到一次瑕疵球的機率。`
+        );
+        answers.push(
+          `簡答：\\(${j623ProbabilityText(totalPower - goodPower, totalPower)}\\)。過程：互補事件是「每次都取到正常球」，機率為 \\((\\frac{${total - bad}}{${total}})^{${bags}}=\\frac{${goodPower}}{${totalPower}}\\)，故至少一次瑕疵為 \\(1-\\frac{${goodPower}}{${totalPower}}=${j623ProbabilityText(totalPower - goodPower, totalPower)}\\)。`
+        );
+      } else {
+        const tosses = randInt(3, 5);
+        const noHead = 1;
+        const total = 2 ** tosses;
+        questions.push(`連續投擲一枚公正硬幣 \\(${tosses}\\) 次，求至少出現一次正面的機率。`);
+        answers.push(
+          `簡答：\\(${j623ProbabilityText(total - noHead, total)}\\)。過程：互補事件是完全沒有正面，也就是全反面，只有 1 種；總結果 \\(2^{${tosses}}=${total}\\) 種，所以機率為 \\(1-\\frac1{${total}}=${j623ProbabilityText(total - noHead, total)}\\)。`
+        );
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ623RockPaperScissorsSet(count) {
     const questions = [];
     const answers = [];
@@ -2403,6 +2552,7 @@
       buildJ623SamplingWithWithoutReplacementSet,
       buildJ623TwoBagCombinationSet,
       buildJ623AlgebraConditionProbabilitySet,
+      buildJ623ComplementProbabilitySet,
     ];
     const questions = [];
     const answers = [];
@@ -2616,6 +2766,98 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function buildJ631ChartTrendReadingSet(count) {
+    const questions = [];
+    const answers = [];
+    const contexts = [
+      { label: '某市一月至六月的觀光人數', unit: '人' },
+      { label: '某校一週午餐訂購數', unit: '份' },
+      { label: '某店連續六個月的銷售量', unit: '件' },
+      { label: '某地一天六個時段的氣溫', unit: '度' },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const context = contexts[randInt(0, contexts.length - 1)];
+      const start = context.unit === '度' ? randInt(18, 25) : randInt(20, 60) * 10;
+      const steps = Array.from({ length: 5 }, () => randInt(-3, 6) * (context.unit === '度' ? 1 : 10));
+      const values = steps.reduce(
+        (list, step) => {
+          const next = Math.max(context.unit === '度' ? 10 : 50, list[list.length - 1] + step);
+          list.push(next);
+          return list;
+        },
+        [start]
+      );
+      const labels = ['第1期', '第2期', '第3期', '第4期', '第5期', '第6期'];
+      const changes = values.slice(1).map((value, index) => value - values[index]);
+      const maxChangeIndex = changes.reduce((best, value, index) => (Math.abs(value) > Math.abs(changes[best]) ? index : best), 0);
+      if (i % 3 === 0) {
+        const from = randInt(0, 3);
+        const to = randInt(from + 1, 5);
+        questions.push(
+          `${context.label}依序為 \\(${values.join('、')}\\) ${context.unit}。若把這些資料畫成折線圖，求${labels[from]}到${labels[to]}的變化量。`
+        );
+        answers.push(
+          `簡答：\\(${values[to] - values[from]}\\)${context.unit}。過程：變化量 = 後一期數值 - 前一期數值，\\(${values[to]}-${values[from]}=${values[to] - values[from]}\\)。`
+        );
+      } else if (i % 3 === 1) {
+        questions.push(
+          `${context.label}依序為 \\(${values.join('、')}\\)。若畫成折線圖，相鄰兩期中哪一段變化幅度最大？`
+        );
+        answers.push(
+          `簡答：${labels[maxChangeIndex]}到${labels[maxChangeIndex + 1]}。過程：相鄰差依序為 \\(${changes.join('、')}\\)，比較絕對值，最大的是 \\(${changes[maxChangeIndex]}\\)。`
+        );
+      } else {
+        const first = values[0];
+        const last = values[5];
+        const percent = ((last - first) * 100) / first;
+        const percentText = Number.isInteger(percent) ? `${percent}\\%` : `${percent.toFixed(1)}\\%`;
+        questions.push(
+          `${context.label}第1期為 \\(${first}\\)，第6期為 \\(${last}\\)。求第6期相對於第1期的成長率或減少率。（百分率四捨五入到小數第一位）`
+        );
+        answers.push(
+          `簡答：\\(${percentText}\\)。過程：變化百分率 \\(=\\frac{${last}-${first}}{${first}}\\times100\\%=${percentText}\\)。正值表示成長，負值表示減少。`
+        );
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildJ631SamplingEstimatedTotalSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      if (i % 2 === 0) {
+        const perBox = [25, 40, 50, 60][randInt(0, 3)];
+        const goodNumerator = [9, 18, 19, 24, 47][randInt(0, 4)];
+        const goodDenominator = goodNumerator === 47 ? 50 : goodNumerator === 24 ? 25 : goodNumerator + 1;
+        const boxes = goodDenominator * randInt(2, 6);
+        const totalItems = boxes * perBox;
+        const bad = makeFraction(totalItems * (goodDenominator - goodNumerator), goodDenominator);
+        questions.push(
+          `某批商品共有 \\(${boxes}\\) 箱，每箱 \\(${perBox}\\) 個。經抽樣估計，完好商品約占 \\(\\frac{${goodNumerator}}{${goodDenominator}}\\)。估計這批商品中瑕疵品約有幾個？`
+        );
+        answers.push(
+          `簡答：約 \\(${j632StatText(bad)}\\) 個。過程：總數 \\(${boxes}\\times${perBox}=${totalItems}\\)，瑕疵比例 \\(=1-\\frac{${goodNumerator}}{${goodDenominator}}=\\frac{${goodDenominator - goodNumerator}}{${goodDenominator}}\\)，所以約 \\(${totalItems}\\times\\frac{${goodDenominator - goodNumerator}}{${goodDenominator}}=${j632StatText(bad)}\\)。`
+        );
+      } else {
+        const perBundle = [20, 30, 40, 50][randInt(0, 3)];
+        const sampleBundles = randInt(4, 10);
+        const totalBundles = sampleBundles * randInt(5, 10);
+        const damagedInSample = randInt(sampleBundles + 2, sampleBundles * 4);
+        const sampleItems = sampleBundles * perBundle;
+        const totalItems = totalBundles * perBundle;
+        const estimate = makeFraction(totalItems * damagedInSample, sampleItems);
+        questions.push(
+          `某書店進了 \\(${totalBundles}\\) 捆書，每捆 \\(${perBundle}\\) 本。隨機抽查 \\(${sampleBundles}\\) 捆，共發現 \\(${damagedInSample}\\) 本破損。依抽樣比例估計，整批約有幾本破損？`
+        );
+        answers.push(
+          `簡答：約 \\(${j632StatText(estimate)}\\) 本。過程：樣本破損率 \\(=\\frac{${damagedInSample}}{${sampleItems}}\\)，整批共有 \\(${totalItems}\\) 本，所以估計破損本數 \\(=${totalItems}\\times\\frac{${damagedInSample}}{${sampleItems}}=${j632StatText(estimate)}\\)。`
+        );
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ631FrequencyDistributionMixedSet(count) {
     const banks = [
       buildJ631RelativeFrequencySet,
@@ -2624,6 +2866,8 @@
       buildJ631MarkRecaptureSet,
       buildJ631DataSortingCountSet,
       buildJ631MissingFrequencySet,
+      buildJ631ChartTrendReadingSet,
+      buildJ631SamplingEstimatedTotalSet,
     ];
     const questions = [];
     const answers = [];
@@ -3073,6 +3317,40 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function buildJ632SortedDataPercentileSet(count) {
+    const questions = [];
+    const answers = [];
+    const percentileChoices = [25, 40, 50, 60, 75, 80, 90];
+    for (let i = 0; i < count; i += 1) {
+      const length = [10, 12, 15, 20][randInt(0, 3)];
+      const base = randInt(35, 55);
+      const data = Array.from({ length }, (_, index) => base + index * randInt(2, 4) + randInt(0, 1));
+      data.sort((a, b) => a - b);
+      if (i % 2 === 0) {
+        const p = percentileChoices[randInt(0, percentileChoices.length - 1)];
+        const position = Math.ceil((length * p) / 100);
+        const value = data[position - 1];
+        questions.push(
+          `某測驗成績由小到大排列為 \\(${data.join('、')}\\)。以「第 \\(p\\) 百分位數約看第 \\(\\lceil np/100\\rceil\\) 筆」計算，求第 \\(${p}\\) 百分位數。`
+        );
+        answers.push(
+          `簡答：\\(${value}\\) 分。過程：共有 \\(${length}\\) 筆，位置 \\(=\\lceil ${length}\\times${p}/100\\rceil=\\lceil ${(length * p) / 100}\\rceil=${position}\\)，所以看第 \\(${position}\\) 筆，為 \\(${value}\\) 分。`
+        );
+      } else {
+        const position = randInt(2, length - 1);
+        const value = data[position - 1];
+        const pr = Math.round((position / length) * 100);
+        questions.push(
+          `某測驗成績由小到大排列為 \\(${data.join('、')}\\)。若小華得到 \\(${value}\\) 分，且這是第 \\(${position}\\) 筆資料，估計他的百分等級約為多少？`
+        );
+        answers.push(
+          `簡答：約 \\(PR${pr}\\)。過程：百分等級可用「不高於他的資料數占全體比例」估計，\\(\\frac{${position}}{${length}}\\times100\\%=${((position / length) * 100).toFixed(1)}\\%\\)，約為 \\(PR${pr}\\)。`
+        );
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildJ632QuartileBoxplotMixedSet(count) {
     const banks = [
       buildJ632FiveNumberRangeIqrSet,
@@ -3081,6 +3359,7 @@
       buildJ632BoxplotFiveNumberSummarySet,
       buildJ632BoxplotComparisonSet,
       buildJ632PercentileRankConversionSet,
+      buildJ632SortedDataPercentileSet,
     ];
     const questions = [];
     const answers = [];
@@ -3282,6 +3561,15 @@
         return buildJ612FunctionFromVertexPointSet(5);
       },
     },
+    'j6-1-2-extreme-parameter-from-condition': {
+      type: 'drill',
+      title: '由極值條件反求參數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ612ExtremeParameterFromConditionSet(5);
+      },
+    },
     'j6-1-2-translation-graph-five-subtypes': {
       type: 'drill',
       title: '平移變換與圖形重合綜合',
@@ -3408,6 +3696,15 @@
         return buildJ613LinearConstraintExtremaSet(5);
       },
     },
+    'j6-1-3-interval-extrema': {
+      type: 'drill',
+      title: '限制區間內的最大值與最小值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ613IntervalExtremaSet(5);
+      },
+    },
     'j6-1-3-geometry-modeling-four-subtypes': {
       type: 'drill',
       title: '幾何面積、通行限制與拋物線建模綜合',
@@ -3424,6 +3721,15 @@
       questionCount: 5,
       generate() {
         return buildJ613RectanglePerimeterAreaSet(5);
+      },
+    },
+    'j6-1-3-fencing-variations': {
+      type: 'drill',
+      title: '圍籬、河邊與出入口面積最大化',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ613FencingVariationsSet(5);
       },
     },
     'j6-1-3-split-squares-minimum': {
@@ -3923,7 +4229,7 @@
     },
     'j6-3-3-probability-compound-mixed': {
       type: 'drill',
-      title: '兩步試驗與抽樣機率綜合',
+      title: '兩步試驗、抽樣與互補事件綜合',
       difficulty: 'medium',
       questionCount: 6,
       generate() {
@@ -3957,6 +4263,15 @@
         return buildJ623AlgebraConditionProbabilitySet(5);
       },
     },
+    'j6-3-3-complement-probability': {
+      type: 'drill',
+      title: '互補事件與至少一次機率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ623ComplementProbabilitySet(5);
+      },
+    },
     'j6-3-3-probability-game-mixed': {
       type: 'drill',
       title: '猜拳、骰子與遊戲機率綜合',
@@ -3975,13 +4290,13 @@
         return buildJ623RockPaperScissorsSet(5);
       },
     },
-    'j6-3-1-frequency-distribution-six-subtypes': {
+    'j6-3-1-frequency-distribution-eight-subtypes': {
       type: 'drill',
-      title: '次數分配、累積次數與分組判讀綜合',
+      title: '次數分配、統計圖表與抽樣估計綜合',
       difficulty: 'medium',
-      questionCount: 6,
+      questionCount: 8,
       generate() {
-        return buildJ631FrequencyDistributionMixedSet(6);
+        return buildJ631FrequencyDistributionMixedSet(8);
       },
     },
     'j6-3-1-relative-frequency': {
@@ -4036,6 +4351,24 @@
       questionCount: 5,
       generate() {
         return buildJ631MissingFrequencySet(5);
+      },
+    },
+    'j6-3-1-chart-trend-reading': {
+      type: 'drill',
+      title: '折線圖與統計表增減判讀',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ631ChartTrendReadingSet(5);
+      },
+    },
+    'j6-3-1-sampling-estimated-total': {
+      type: 'drill',
+      title: '抽樣比例估計總量',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ631SamplingEstimatedTotalSet(5);
       },
     },
     'j6-3-1-pie-chart-five-subtypes': {
@@ -4155,13 +4488,13 @@
         return buildJ632ArithmeticSequenceStatisticsSet(5);
       },
     },
-    'j6-3-2-quartile-boxplot-six-subtypes': {
+    'j6-3-2-quartile-boxplot-seven-subtypes': {
       type: 'drill',
       title: '四分位數、盒狀圖與百分位數綜合',
       difficulty: 'medium',
-      questionCount: 6,
+      questionCount: 7,
       generate() {
-        return buildJ632QuartileBoxplotMixedSet(6);
+        return buildJ632QuartileBoxplotMixedSet(7);
       },
     },
     'j6-3-2-five-number-range-iqr': {
@@ -4218,9 +4551,18 @@
         return buildJ632PercentileRankConversionSet(5);
       },
     },
+    'j6-3-2-sorted-data-percentile': {
+      type: 'drill',
+      title: '排序資料中的百分位定位',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ632SortedDataPercentileSet(5);
+      },
+    },
   };
 
-  const bundleFingerprint = 'j6-bundle-v20260619-v1';
+  const bundleFingerprint = 'j6-bundle-v20260629-stats-prob-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

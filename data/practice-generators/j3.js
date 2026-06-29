@@ -5438,7 +5438,6 @@
           return buildJ322RadicalMixedSimplifySet(6);
         },
       },
-      'j3-2-3-triple-expand-drill': {
       'j3-2-2-radical-compare': {
         type: 'drill',
         title: '根式表達式大小比較',
@@ -5448,6 +5447,7 @@
           return buildJ322RadicalCompareSet(5);
         },
       },
+      'j3-2-3-triple-expand-drill': {
         type: 'drill',
         title: '畢氏數擴展與倍數',
         difficulty: 'easy',
@@ -6142,7 +6142,7 @@
       },
   };
 
-  const bundleFingerprint = "j3-bundle-v20260622-j34-v1";
+  const bundleFingerprint = "j3-bundle-v20260628-v2";
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== "object") return;
     config.__generatorFingerprint = bundleFingerprint;

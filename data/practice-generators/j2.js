@@ -937,91 +937,113 @@
 
   // ── j2-1-3 新增：等臂天平稱重 ────────────────────────────────────────────
   function buildJ213BalanceScaleSet(count) {
+    // 等臂天平稱重聯立方程 — 預先驗算模板，無 i-=1 無限迴圈
     const questions = [];
-    const answers = [];
+    const answers   = [];
 
-    for (let i = 0; i < count; i += 1) {
+    // Variant 0: la*a = lb*b  且  ra*a + rb*b = w → 驗算 w % (ra*lb + rb*la) === 0
+    const poolV0 = [
+      { la: 2, lb: 3, ra: 2, rb: 1, w: 1200 },  // denom=8,  k=150, a=450, b=300
+      { la: 3, lb: 2, ra: 1, rb: 3, w: 1100 },  // denom=11, k=100, a=200, b=300
+      { la: 2, lb: 5, ra: 3, rb: 2, w: 950  },  // denom=19, k=50,  a=250, b=100
+      { la: 4, lb: 3, ra: 2, rb: 1, w: 1400 },  // denom=10, k=140, a=420, b=560 — wait let me just fix values
+      { la: 3, lb: 4, ra: 2, rb: 3, w: 850  },  // denom=17, k=50,  a=200, b=150
+      { la: 5, lb: 2, ra: 1, rb: 2, w: 1200 },  // denom=12, k=100, a=200, b=500
+    ];
+    const itemsV0 = [
+      ['甲牌番茄汁', '乙牌番茄汁', '罐'],
+      ['蘋果', '橘子', '顆'],
+      ['甲種飲料', '乙種飲料', '罐'],
+      ['甲牌罐頭', '乙牌罐頭', '罐'],
+      ['甲種果汁', '乙種果汁', '罐'],
+      ['白色棋子', '黑色棋子', '枚'],
+    ];
+
+    // Variant 1: a1*x+b1*y=t1, a2*x+b2*y=t2 → 整數正解
+    const poolV1 = [
+      { a1: 5, b1: 3, t1: 235, a2: 6, b2: 4, t2: 290 },  // x=35, y=20
+      { a1: 3, b1: 2, t1:  96, a2: 2, b2: 3, t2:  84 },  // x=24, y=12
+      { a1: 4, b1: 3, t1: 180, a2: 3, b2: 5, t2: 185 },  // x=15? let me check det=4*5-3*3=11, x=(180*5-185*3)/11=(900-555)/11=345/11 no
+      { a1: 5, b1: 2, t1: 225, a2: 2, b2: 3, t2: 129 },  // det=5*3-2*2=11, x=(225*3-129*2)/11=(675-258)/11=417/11 no
+      { a1: 3, b1: 4, t1: 170, a2: 4, b2: 3, t2: 180 },  // det=9-16=-7, x=(170*3-180*4)/(-7)=(510-720)/(-7)=30 ✓, y=(3*180-4*170)/(-7)=(540-680)/(-7)=20 ✓
+      { a1: 2, b1: 3, t1: 130, a2: 3, b2: 2, t2: 120 },  // det=4-9=-5, x=(130*2-120*3)/(-5)=(260-360)/(-5)=20 ✓, y=(2*120-3*130)/(-5)=(240-390)/(-5)=30 ✓
+    ];
+    const namesV1 = [
+      ['玫瑰', '康乃馨'], ['礦泉水', '汽水'], ['麥克筆', '簽字筆'],
+      ['橡皮', '鉛筆'], ['蘋果', '橘子'], ['餅乾', '糖果'],
+    ];
+
+    // Variant 2: a*x = b*y  且  ra*x + rb*y = w
+    const poolV2 = [
+      { a: 2, b: 3, ra: 2, rb: 1, w: 1200, nameA: '餅乾（塊）', nameB: '糖果（顆）' },
+      { a: 3, b: 4, ra: 3, rb: 1, w:  750, nameA: '棋子（枚）', nameB: '石頭（顆）' },
+      { a: 4, b: 5, ra: 4, rb: 1, w:  720, nameA: '彈珠（顆）', nameB: '積木（塊）' },
+      { a: 5, b: 3, ra: 5, rb: 2, w: 1200, nameA: '鉛筆（支）', nameB: '橡皮（塊）' },
+      { a: 2, b: 5, ra: 2, rb: 1, w:  720, nameA: '玻璃球（顆）', nameB: '金屬球（顆）' },
+      { a: 3, b: 2, ra: 3, rb: 1, w:  720, nameA: '木塊', nameB: '鐵塊' },
+    ];
+
+    for (let i = 0; i < count; i++) {
       const variant = i % 3;
-      const cycle = Math.floor(i / 3);
 
       if (variant === 0) {
-        // 兩罐甲=三罐乙; 兩罐甲+一罐乙=W公克 → 求甲乙各重
-        const templates = [
-          { la: 2, lb: 3, ra: 2, rb: 1, w: 1200 },
-          { la: 3, lb: 2, ra: 1, rb: 3, w: 1000 },
-          { la: 2, lb: 5, ra: 3, rb: 2, w: 900 },
-          { la: 4, lb: 3, ra: 2, rb: 1, w: 1400 },
-          { la: 3, lb: 4, ra: 2, rb: 3, w: 840 },
-          { la: 5, lb: 2, ra: 1, rb: 2, w: 1600 },
-        ];
-        const pick = templates[cycle % templates.length];
-        // la*a = lb*b (balance 1)
-        // ra*a + rb*b = w (balance 2)
-        const det = pick.la * pick.rb + pick.lb * pick.ra; // lb*ra not right
-        // a = lb*k, b = la*k → ra*lb*k + rb*la*k = w → k = w/(ra*lb + rb*la)
-        const denom = pick.ra * pick.lb + pick.rb * pick.la;
-        if (pick.w % denom !== 0) { i -= 1; continue; }
-        const k = pick.w / denom;
-        const a = pick.lb * k;
-        const b = pick.la * k;
-        const itemA = ['甲牌番茄汁', '甲種飲料', '蘋果', '甲牌罐頭', '甲種果汁'][cycle % 5];
-        const itemB = ['乙牌番茄汁', '乙種飲料', '橘子', '乙牌罐頭', '乙種果汁'][cycle % 5];
-        const unit = ['罐', '罐', '顆', '罐', '罐'][cycle % 5];
+        const t = poolV0[randInt(0, poolV0.length - 1)];
+        const nm = itemsV0[randInt(0, itemsV0.length - 1)];
+        const denom = t.ra * t.lb + t.rb * t.la;
+        const k = t.w / denom;
+        const a = t.lb * k, b = t.la * k;
         questions.push(
-          `用等臂天平稱重：第一次 ${pick.la} ${unit}${itemA}與 ${pick.lb} ${unit}${itemB}平衡；第二次 ${pick.ra} ${unit}${itemA}和 ${pick.rb} ${unit}${itemB}與 ${pick.w} 公克砝碼平衡。求每${unit}${itemA}和每${unit}${itemB}各重多少公克？`
+          `用等臂天平稱重：第一次 ${t.la} ${nm[2]}${nm[0]}和 ${t.lb} ${nm[2]}${nm[1]}平衡；` +
+          `第二次 ${t.ra} ${nm[2]}${nm[0]}和 ${t.rb} ${nm[2]}${nm[1]}與 ${t.w} 公克砝碼平衡。` +
+          `求每${nm[2]}${nm[0]}和每${nm[2]}${nm[1]}各重多少公克？`
         );
         answers.push(
-          `設每${unit}${itemA}重 $x$ 公克，每${unit}${itemB}重 $y$ 公克。依題意列聯立方程式：$${formatSystemLatex(`${pick.la}x=${pick.lb}y`, `${pick.ra}x+${pick.rb}y=${pick.w}`)}$。由第一式得 $x=\\dfrac{${pick.lb}}{${pick.la}}y$，代入第二式整理得 $y=${b}$，$x=${a}$。所以每${unit}${itemA}重 $${a}$ 公克，每${unit}${itemB}重 $${b}$ 公克。`
+          `設每${nm[2]}${nm[0]}重 $x$ 公克，每${nm[2]}${nm[1]}重 $y$ 公克。` +
+          `$\\begin{cases}${t.la}x=${t.lb}y\\\\${t.ra}x+${t.rb}y=${t.w}\\end{cases}$` +
+          `解得 $x=${a}$，$y=${b}$。`
         );
         continue;
       }
 
       if (variant === 1) {
-        // 兩種物品，兩次購買金額 → 求各自單價（相當於聯立）
-        const templates = [
-          { a1: 5, b1: 3, t1: 235, a2: 6, b2: 4, t2: 290, nameA: '玫瑰', nameB: '康乃馨' },
-          { a1: 3, b1: 5, t1: 138, a2: 4, b2: 3, t2: 132, nameA: '礦泉水', nameB: '汽水' },
-          { a1: 5, b1: 2, t1: 225, a2: 2, b2: 3, t2: 129, nameA: '麥克筆', nameB: '簽字筆' },
-          { a1: 4, b1: 7, t1: 965, a2: 3, b2: 4, t2: 555, nameA: '豆乾（包）', nameB: '太陽餅（盒）' },
-          { a1: 6, b1: 5, t1: 225, a2: 5, b2: 8, t2: 174, nameA: '耶誕襪（雙）', nameB: '鈴噹（個）' },
+        // only use pre-validated rows
+        const validV1 = [
+          { a1:5,b1:3,t1:235,a2:6,b2:4,t2:290, x:35,y:20 },
+          { a1:3,b1:4,t1:170,a2:4,b2:3,t2:180, x:30,y:20 },
+          { a1:2,b1:3,t1:130,a2:3,b2:2,t2:120, x:20,y:30 },
+          { a1:3,b1:2,t1: 96,a2:2,b2:3,t2: 84, x:24,y:12 },
+          { a1:4,b1:3,t1:220,a2:3,b2:4,t2:200, x:40,y:20 },
+          { a1:4,b1:1,t1:105,a2:3,b2:1,t2: 80, x:25,y: 5 },
         ];
-        const pick = templates[cycle % templates.length];
-        // a1*x + b1*y = t1, a2*x + b2*y = t2
-        const det = pick.a1 * pick.b2 - pick.a2 * pick.b1;
-        if (det === 0) { i -= 1; continue; }
-        const x = (pick.t1 * pick.b2 - pick.t2 * pick.b1) / det;
-        const y = (pick.a1 * pick.t2 - pick.a2 * pick.t1) / det;
-        if (!Number.isInteger(x) || !Number.isInteger(y) || x <= 0 || y <= 0) { i -= 1; continue; }
+        const t = validV1[randInt(0, validV1.length - 1)];
+        const nm = namesV1[randInt(0, namesV1.length - 1)];
         questions.push(
-          `甲買了 ${pick.a1} 件${pick.nameA}和 ${pick.b1} 件${pick.nameB}，共花 ${pick.t1} 元；乙買了 ${pick.a2} 件${pick.nameA}和 ${pick.b2} 件${pick.nameB}，共花 ${pick.t2} 元。求每件${pick.nameA}和每件${pick.nameB}各多少元？`
+          `甲買了 ${t.a1} 件${nm[0]}和 ${t.b1} 件${nm[1]}，共花 ${t.t1} 元；` +
+          `乙買了 ${t.a2} 件${nm[0]}和 ${t.b2} 件${nm[1]}，共花 ${t.t2} 元。` +
+          `求每件${nm[0]}和每件${nm[1]}各多少元？`
         );
         answers.push(
-          `設每件${pick.nameA}售價 $x$ 元，每件${pick.nameB}售價 $y$ 元。依題意列聯立方程式：$${formatSystemLatex(`${pick.a1}x+${pick.b1}y=${pick.t1}`, `${pick.a2}x+${pick.b2}y=${pick.t2}`)}$。消去法解得 $x=${x},\\ y=${y}$。故每件${pick.nameA}售價 ${x} 元，每件${pick.nameB}售價 ${y} 元。`
+          `設每件${nm[0]} $x$ 元，每件${nm[1]} $y$ 元。` +
+          `$\\begin{cases}${t.a1}x+${t.b1}y=${t.t1}\\\\${t.a2}x+${t.b2}y=${t.t2}\\end{cases}$` +
+          `解得 $x=${t.x}$，$y=${t.y}$。`
         );
         continue;
       }
 
-      // variant 2: 天平比較兩物品求差
-      const templates = [
-        { a: 2, b: 3, ra: 2, rb: 1, w: 1200, nameA: '餅乾（塊）', nameB: '糖果（顆）' },
-        { a: 3, b: 4, ra: 3, rb: 1, w: 800, nameA: '棋子（枚）', nameB: '石頭（顆）' },
-        { a: 4, b: 5, ra: 2, rb: 1, w: 900, nameA: '彈珠（顆）', nameB: '積木（塊）' },
-        { a: 5, b: 6, ra: 3, rb: 1, w: 1500, nameA: '鉛筆（支）', nameB: '橡皮（塊）' },
-        { a: 2, b: 3, ra: 1, rb: 2, w: 700, nameA: '玻璃球（顆）', nameB: '金屬球（顆）' },
-        { a: 3, b: 5, ra: 2, rb: 1, w: 1100, nameA: '木塊', nameB: '鐵塊' },
-      ];
-      const pick = templates[cycle % templates.length];
-      const denom2 = pick.ra * pick.b + pick.rb * pick.a;
-      if (pick.w % denom2 !== 0) { i -= 1; continue; }
-      const k2 = pick.w / denom2;
-      const aWeight = pick.b * k2;
-      const bWeight = pick.a * k2;
-      const diff = Math.abs(aWeight - bWeight);
+      // variant 2
+      const t = poolV2[randInt(0, poolV2.length - 1)];
+      const denom2 = t.ra * t.b + t.rb * t.a;
+      const k2 = t.w / denom2;
+      const aW = t.b * k2, bW = t.a * k2;
+      const diff = Math.abs(aW - bW);
       questions.push(
-        `用等臂天平稱重：第一次 ${pick.a} 個${pick.nameA}和 ${pick.b} 個${pick.nameB}平衡；第二次 ${pick.ra} 個${pick.nameA}和 ${pick.rb} 個${pick.nameB}放在左盤，右盤放 ${pick.w} 公克砝碼達到平衡。求兩種物品重量相差多少公克？`
+        `用等臂天平：第一次 ${t.a} 個${t.nameA}和 ${t.b} 個${t.nameB}平衡；` +
+        `第二次 ${t.ra} 個${t.nameA}和 ${t.rb} 個${t.nameB}共重 ${t.w} 公克。` +
+        `兩種物品重量相差多少公克？`
       );
       answers.push(
-        `設每個${pick.nameA}重 $x$ 公克，每個${pick.nameB}重 $y$ 公克。依題意列聯立方程式：$${formatSystemLatex(`${pick.a}x=${pick.b}y`, `${pick.ra}x+${pick.rb}y=${pick.w}`)}$。由第一式得 $x=\\dfrac{${pick.b}}{${pick.a}}y$，代入整理得 $y=${bWeight}$，$x=${aWeight}$。兩者相差 $|${aWeight}-${bWeight}|=${diff}$ 公克。`
+        `$\\begin{cases}${t.a}x=${t.b}y\\\\${t.ra}x+${t.rb}y=${t.w}\\end{cases}$` +
+        `解得 $x=${aW}$，$y=${bW}$，相差 $${diff}$ 公克。`
       );
     }
 
@@ -1053,7 +1075,7 @@
         const malePct = pick.avgF - pick.avg;
         const femalePct = pick.avg - pick.avgM;
         const denomPct = pick.avgF - pick.avgM;
-        if (totalScore % 1 !== 0 || (malePct * pick.total) % denomPct !== 0) { i -= 1; continue; }
+        if (totalScore % 1 !== 0 || (malePct * pick.total) % denomPct !== 0) { continue; }
         const male = (malePct * pick.total) / denomPct;
         const female = pick.total - male;
         questions.push(
@@ -1084,10 +1106,10 @@
         // qf*x = qm*y → y = qf/qm * x
         // pm/100*x - pf/100*(qf/qm)*x = diff → x(pm*qm - pf*qf)/(100*qm) = diff
         const num = pick.pm * qm - pick.pf * qf;
-        if (num <= 0 || (pick.diff * 100 * qm) % num !== 0) { i -= 1; continue; }
+        if (num <= 0 || (pick.diff * 100 * qm) % num !== 0) { continue; }
         const male = (pick.diff * 100 * qm) / num;
         const female = (qf * male) / qm;
-        if (!Number.isInteger(female) || female <= 0) { i -= 1; continue; }
+        if (!Number.isInteger(female) || female <= 0) { continue; }
         const total = male + female;
         questions.push(
           `某班男生有 ${pick.pm}%、女生有 ${pick.pf}% 自行上學，其餘由家長接送。已知自行上學的男生比女生多 ${pick.diff} 人，且由家長接送的男女生人數相同，求全班共有幾人。`
@@ -1100,11 +1122,11 @@
 
       // variant 2: 全班N人，不及格占1/p，及格未到80占1/q多r人，80以上有s人 → 求不及格人數
       const templates = [
-        { inv_p: 3, inv_q: 2, r: 3, s: 3 },
-        { inv_p: 4, inv_q: 3, r: 2, s: 4 },
-        { inv_p: 5, inv_q: 4, r: 1, s: 5 },
-        { inv_p: 3, inv_q: 2, r: 5, s: 5 },
-        { inv_p: 4, inv_q: 3, r: 4, s: 6 },
+        { inv_p: 3, inv_q: 2, r: 3, s: 3 },   // N=36  ✓
+        { inv_p: 4, inv_q: 3, r: 2, s: 8 },   // N=24  ✓
+        { inv_p: 3, inv_q: 2, r: 4, s: 8 },   // N=72  ✓
+        { inv_p: 3, inv_q: 2, r: 5, s: 5 },   // N=60  ✓
+        { inv_p: 4, inv_q: 3, r: 4, s: 6 },   // N=24  ✓
       ];
       const pick = templates[cycle % templates.length];
       // fail = N/p, pass_low = N/q + r, pass_high = s
@@ -1116,7 +1138,7 @@
       const rs = pick.r + pick.s;
       const numer = p * q;
       const denom3 = numer - q - p;
-      if (denom3 <= 0 || (rs * numer) % denom3 !== 0) { i -= 1; continue; }
+      if (denom3 <= 0 || (rs * numer) % denom3 !== 0) { continue; }
       const N = (rs * numer) / denom3;
       const fail = N / p;
       const pass_low = N / q + pick.r;
@@ -1228,7 +1250,7 @@
         const templates = [
           { bigA: 3, smallA: 3, rA: 144, bigB: 2, smallB: 6, rB: 72, bigC: 2, smallC: 4, item: '磁磚' },
           { bigA: 4, smallA: 2, rA: 12, bigB: 3, smallB: 4, rB: 9, bigC: 2, smallC: 5, item: '糖果' },
-          { bigA: 3, smallA: 4, rA: 8, bigB: 2, smallB: 6, rB: 4, bigC: 1, smallC: 8, item: '石頭' },
+          { bigA: 5, smallA: 1, rA: 80, bigB: 4, smallB: 3, rB: 60, bigC: 3, smallC: 4, item: '石頭' },
           { bigA: 5, smallA: 2, rA: 60, bigB: 3, smallB: 6, rB: 30, bigC: 4, smallC: 3, item: '零件' },
         ];
         const pick = templates[cycle % templates.length];
@@ -1241,10 +1263,10 @@
         const da2 = pick.bigB - pick.bigC;
         const db2 = pick.smallB - pick.smallC;
         const det = da1 * db2 - da2 * db1;
-        if (det === 0) { i -= 1; continue; }
+        if (det === 0) { continue; }
         const x = (pick.rA * db2 - pick.rB * db1) / det;
         const y = (da1 * pick.rB - da2 * pick.rA) / det;
-        if (!Number.isInteger(x) || !Number.isInteger(y) || x <= 0 || y <= 0) { i -= 1; continue; }
+        if (!Number.isInteger(x) || !Number.isInteger(y) || x <= 0 || y <= 0) { continue; }
         const target = pick.bigC * x + pick.smallC * y;
         questions.push(
           `三個工地鋪設${pick.item}的量均相同。帶 ${pick.bigA} 大箱和 ${pick.smallA} 小箱去甲工地，剩 ${pick.rA} 片；帶 ${pick.bigB} 大箱和 ${pick.smallB} 小箱去乙工地，剩 ${pick.rB} 片；帶 ${pick.bigC} 大箱和 ${pick.smallC} 小箱去丙工地，剛好鋪完。求每大箱和每小箱各有多少片${pick.item}。`
@@ -1260,7 +1282,7 @@
         const templates = [
           { m: 30, r: 8, n: 28, d: 12, item: '康乃馨' },
           { m: 5, r: 15, n: 4, d: 2, item: '糖果' },
-          { m: 4, r: 3, n: 5, d: 2, item: '橘子' },
+          { m: 5, r: 3, n: 4, d: 2, item: '橘子' },
           { m: 6, r: 10, n: 5, d: 5, item: '蘋果' },
           { m: 8, r: 6, n: 7, d: 4, item: '餅乾' },
           { m: 10, r: 2, n: 9, d: 8, item: '飲料' },
@@ -1270,8 +1292,8 @@
         // t = m*g - r (每組m個，多出r)
         // t = n*g + d (每組n個，少d個)
         // m*g - r = n*g + d → g = (r+d)/(m-n)
-        if ((pick.m - pick.n) === 0) { i -= 1; continue; }
-        if ((pick.r + pick.d) % (pick.m - pick.n) !== 0) { i -= 1; continue; }
+        if ((pick.m - pick.n) === 0) { continue; }
+        if ((pick.r + pick.d) % (pick.m - pick.n) !== 0) { continue; }
         const g = (pick.r + pick.d) / (pick.m - pick.n);
         const total = pick.m * g - pick.r;
         questions.push(
@@ -1285,7 +1307,7 @@
 
       // variant 3: 大小箱混裝問題 → 求個數
       const templates = [
-        { bigCnt: 7, bigSize: 7, smallSize: 5, total: 260, unit: '顆水蜜桃' },
+        { bigCnt: 7, bigSize: 7, smallSize: 5, total: 259, unit: '顆水蜜桃' },
         { bigCnt: 5, bigSize: 8, smallSize: 5, total: 220, unit: '顆蘋果' },
         { bigCnt: 6, bigSize: 6, smallSize: 4, total: 180, unit: '個橘子' },
         { bigCnt: 8, bigSize: 5, smallSize: 3, total: 190, unit: '個柳丁' },
@@ -1297,10 +1319,10 @@
       // 每大箱放bigSize，每小箱放smallSize
       // 找 totalBoxes 使得 bigCnt*bigSize + (totalBoxes-bigCnt)*smallSize = total
       const remainder = pick.total - pick.bigCnt * (pick.bigSize - pick.smallSize);
-      if (remainder % pick.smallSize !== 0) { i -= 1; continue; }
+      if (remainder % pick.smallSize !== 0) { continue; }
       const totalBoxes = remainder / pick.smallSize;
       const smallBoxes = totalBoxes - pick.bigCnt;
-      if (smallBoxes <= 0) { i -= 1; continue; }
+      if (smallBoxes <= 0) { continue; }
       questions.push(
         `有大、小共 ${totalBoxes} 個盒子，大盒每個裝 ${pick.bigSize} ${pick.unit}，小盒每個裝 ${pick.smallSize} ${pick.unit}，共裝 ${pick.total} ${pick.unit}。求大盒和小盒各有幾個。`
       );
@@ -3822,77 +3844,60 @@
 
   // ── j2-1-2 新增：兩組解求單方程係數 ──────────────────────────────────────
   function buildJ212TwoSolutionOneEqSet(count) {
+    // 已知方程式 mx + ny = C 有兩組整數解，求 m、n 的某種組合
+    // 生成策略：先定 m、n，再推導兩組解點，保證無無限迴圈
     const questions = [];
     const answers = [];
+    const summaryAnswers = [];
+
+    // 預先驗算好的 (m, n, x1, y1, x2, y2, ask) 題組
+    // 滿足 m*x1+n*y1=C 且 m*x2+n*y2=C，其中 x2=x1+n, y2=y1-m
+    const pool = [
+      { m: 2, n: 3, x1: 3, y1: 4, ask: 'm+n',  label: 'm+n'  },
+      { m: 3, n: 2, x1: 2, y1: 3, ask: 'm-n',  label: 'm-n'  },
+      { m: 1, n: 4, x1: 4, y1: 3, ask: 'm+n',  label: 'm+n'  },
+      { m: 4, n: 1, x1: 1, y1: 4, ask: '2m+n', label: '2m+n' },
+      { m: 2, n: 5, x1: 5, y1: 2, ask: 'm+n',  label: 'm+n'  },
+      { m: 5, n: 2, x1: 2, y1: 5, ask: 'm-n',  label: 'm-n'  },
+      { m: 3, n: 4, x1: 4, y1: 3, ask: 'm+n',  label: 'm+n'  },
+      { m: 4, n: 3, x1: 3, y1: 4, ask: 'm+2n', label: 'm+2n' },
+      { m: 1, n: 5, x1: 5, y1: 1, ask: '2m+n', label: '2m+n' },
+      { m: 2, n: 3, x1: 1, y1: 6, ask: 'm+n',  label: 'm+n'  },
+      { m: 3, n: 5, x1: 5, y1: 3, ask: 'm+n',  label: 'm+n'  },
+      { m: 2, n: 4, x1: 2, y1: 3, ask: 'm-n',  label: 'm-n'  },
+      { m: 3, n: 2, x1: 4, y1: 2, ask: 'm+2n', label: 'm+2n' },
+      { m: 1, n: 3, x1: 3, y1: 2, ask: 'm+n',  label: 'm+n'  },
+      { m: 4, n: 2, x1: 2, y1: 4, ask: '2m+n', label: '2m+n' },
+    ];
 
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 4;
-      const cycle = Math.floor(i / 4);
+      const t = pool[randInt(0, pool.length - 1)];
+      const { m, n } = t;
+      const x1 = t.x1, y1 = t.y1;
+      const C = m * x1 + n * y1;
+      // 第二組解：沿等差方向移動
+      const x2 = x1 + n;
+      const y2 = y1 - m;
 
-      // 生成兩組解 (x1,y1), (x2,y2) 並決定係數 a, b
-      // 策略: 先挑 a, b, C，再算出第二個解點
-      const aOptions = [2, 3, 1, 4, 2, 3, 1, 2];
-      const bOptions = [3, 2, 4, 1, 5, 1, 3, 4];
-      const COptions = [12, 18, 20, 16, 25, 15, 22, 24];
-      const idx = cycle % aOptions.length;
-      const a = aOptions[idx];
-      const b = bOptions[idx];
-      const C = COptions[idx];
-
-      // 選兩個整數解: ax + by = C
-      // 找 x1, y1 使得 a*x1 + b*y1 = C
-      // 方法: 選 x1 = cycle%3, 確保 C - a*x1 可被 b 整除
-      let x1 = (cycle % 3) + 1;
-      while ((C - a * x1) % b !== 0) { x1 += 1; if (x1 > 10) break; }
-      const y1 = (C - a * x1) / b;
-      // x2 = x1 + b, y2 = y1 - a (shifting by one period)
-      let x2 = x1 + b;
-      const y2 = y1 - a;
-
-      if (!Number.isInteger(y1) || !Number.isInteger(y2) || y1 === y2) { i -= 1; continue; }
-
-      // 構成問題: 方程式 ax + by = C 中 a, b 未知（以 m, n 命名），給兩組解求 m+n 或 m-n
-      // 重新設計: 方程式 mx + ny = C，給 (x1,y1) 和 (x2,y2) 兩組解，求 m, n 後計算 m+n
-
-      // 換做更自然的版本：方程式 mx + ny = 20（未知係數），兩解已知
-      // 需保證 det != 0
-      const mTemplates = [
-        { x1: 2, y1: 3, x2: 4, y2: 1, C: 17, ask: 'm+n' },
-        { x1: 1, y1: 4, x2: 3, y2: 2, C: 18, ask: 'm-n' },
-        { x1: 3, y1: 1, x2: 1, y2: 5, C: 22, ask: '2m+n' },
-        { x1: 2, y1: 5, x2: 4, y2: 3, C: 26, ask: 'm+2n' },
-        { x1: 5, y1: 1, x2: 1, y2: 3, C: 23, ask: 'm+n' },
-        { x1: 3, y1: 2, x2: 1, y2: 4, C: 19, ask: 'm-n' },
-        { x1: 2, y1: 4, x2: 6, y2: 2, C: 22, ask: '3m+n' },
-        { x1: 4, y1: 2, x2: 2, y2: 6, C: 28, ask: 'm+3n' },
-      ];
-      const pick = mTemplates[(variant * 2 + cycle) % mTemplates.length];
-      const det2 = pick.x1 * pick.y2 - pick.x2 * pick.y1;
-      if (det2 === 0) { i -= 1; continue; }
-      const m = (pick.C * pick.y2 - pick.C * pick.y1) / det2;
-      const n = (pick.x1 * pick.C - pick.x2 * pick.C) / det2;
-      if (!Number.isInteger(m) || !Number.isInteger(n)) { i -= 1; continue; }
-      // calc ask
       let askVal;
-      if (pick.ask === 'm+n') askVal = m + n;
-      else if (pick.ask === 'm-n') askVal = m - n;
-      else if (pick.ask === '2m+n') askVal = 2 * m + n;
-      else if (pick.ask === 'm+2n') askVal = m + 2 * n;
-      else if (pick.ask === '3m+n') askVal = 3 * m + n;
-      else if (pick.ask === 'm+3n') askVal = m + 3 * n;
+      if (t.ask === 'm+n')  askVal = m + n;
+      else if (t.ask === 'm-n')  askVal = m - n;
+      else if (t.ask === '2m+n') askVal = 2 * m + n;
+      else if (t.ask === 'm+2n') askVal = m + 2 * n;
       else askVal = m + n;
 
-      const askLatex = pick.ask.replace('m', 'm').replace('n', 'n');
-
       questions.push(
-        `已知方程式 $mx+ny=${pick.C}$ 有兩組解 $(x,y)=(${pick.x1},\\ ${pick.y1})$ 和 $(x,y)=(${pick.x2},\\ ${pick.y2})$，求 $${askLatex}$ 的值。`
+        `已知方程式 $mx+ny=${C}$ 有兩組解 $(x,y)=(${x1},\ ${y1})$ 與 $(x,y)=(${x2},\ ${y2})$，求 $${t.label}$ 的值。`
       );
       answers.push(
-        `將兩組解代入方程式 $mx+ny=${pick.C}$，可得聯立方程式：$${formatSystemLatex(`${pick.x1}m+${pick.y1}n=${pick.C}`, `${pick.x2}m+${pick.y2}n=${pick.C}`)}$。消去法解得 $m=${m},\\ n=${n}$。所以 $${askLatex}=${askVal}$。`
+        `將兩組解代入 $mx+ny=${C}$，得聯立方程組：` +
+        `$\begin{cases}${x1}m+${y1}n=${C}\\${x2}m+${y2}n=${C}\end{cases}$。` +
+        `解得 $m=${m},\ n=${n}$，故 $${t.label}=${askVal}$。`
       );
+      summaryAnswers.push(`$${t.label}=${askVal}$`);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function lcm(a, b) {

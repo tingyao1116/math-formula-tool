@@ -1,4 +1,4 @@
-const CACHE_NAME = "math-formula-tool-v259";
+const CACHE_NAME = "math-formula-tool-v275";
 const ASSETS = [
   "./",
   "./index.html",
@@ -28,7 +28,10 @@ const ASSETS = [
   "./quest-practice/quest-practice.js",
   "./practice-playlist/practice-playlist-store.js",
   "./practice-playlist/practice-playlist-builder.js",
+  "./practice-playlist/practice-schedule-builder.js",
   "./practice-playlist/practice-playlist-player.js",
+  "./practice-playlist/practice-mode-toggle.js",
+  "./practice-playlist/practice-schedule-player.js",
   "./styles.css",
   "./formulas.js",
   "./data/chapter-code-config.js",
@@ -49,6 +52,9 @@ const ASSETS = [
   "./data/practice-learning/practice-ability-map.js",
   "./data/practice-learning/practice-quest-campaign.js",
   "./data/practice-learning/practice-skill-tree.js",
+  "./data/practice-task-playlists.js",
+  "./data/practice-chapter-playlists.js",
+  "./data/practice-schedules.js",
   "./formula-data.js",
   "./formula-core.js",
   "./app.js",

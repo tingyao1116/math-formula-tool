@@ -822,7 +822,7 @@
       shortLabel: "圖表整理",
       summary: "整理次數分配表、相對次數、累積次數與圓餅圖轉換，適合當成第二冊後段的資料感延伸。",
       practiceIds: [
-        "practice-j6-3-1-frequency-distribution-six-subtypes",
+        "practice-j6-3-1-frequency-distribution-eight-subtypes",
         "practice-j6-3-1-pie-chart-five-subtypes",
       ],
       prerequisiteSkillIds: ["inequality-application-optimization"],
@@ -863,7 +863,7 @@
       title: "四分位與分布判斷",
       shortLabel: "分布判斷",
       summary: "用盒狀圖、四分位距與百分等級判斷資料分散狀態，補上更完整的資料分析視角。",
-      practiceIds: ["practice-j6-3-2-quartile-boxplot-six-subtypes"],
+      practiceIds: ["practice-j6-3-2-quartile-boxplot-seven-subtypes"],
       prerequisiteSkillIds: ["stats-frequency-chart"],
       mainAbilityId: "j2-data-analysis",
       stageId: "stage-j2-data-analysis",

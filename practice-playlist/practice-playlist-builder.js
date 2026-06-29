@@ -11,14 +11,20 @@
     return;
   }
 
+  const ALL_FILTER_VALUE = "\u5168\u90e8";
+  const DEFAULT_CHAPTER_FILTER = "j1-1-1";
+
   const elements = {
     playlistTitleInput: document.getElementById("playlistTitleInput"),
+    playlistGradeSelect: document.getElementById("playlistGradeSelect"),
+    playlistTypeSelect: document.getElementById("playlistTypeSelect"),
     playlistDescriptionInput: document.getElementById("playlistDescriptionInput"),
     playlistQuestionCountInput: document.getElementById("playlistQuestionCountInput"),
     playlistShuffleInput: document.getElementById("playlistShuffleInput"),
     savePlaylistButton: document.getElementById("savePlaylistButton"),
     newPlaylistButton: document.getElementById("newPlaylistButton"),
     exportPlaylistButton: document.getElementById("exportPlaylistButton"),
+    saveDataFileButton: document.getElementById("saveDataFileButton"),
     importPlaylistInput: document.getElementById("importPlaylistInput"),
     playlistBuilderStatus: document.getElementById("playlistBuilderStatus"),
     storedPlaylistCount: document.getElementById("storedPlaylistCount"),
@@ -34,6 +40,103 @@
     playlistPracticeTableBody: document.getElementById("playlistPracticeTableBody"),
   };
 
+  // 填入年級 / 類型選項
+  if (elements.playlistGradeSelect) {
+    elements.playlistGradeSelect.innerHTML = playlistStore.GRADE_OPTIONS.map(
+      (g) => `<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`
+    ).join("");
+  }
+  if (elements.playlistTypeSelect) {
+    elements.playlistTypeSelect.innerHTML = playlistStore.PLAYLIST_TYPES.map(
+      (t) => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`
+    ).join("");
+  }
+
+  // ── File System Access API（IndexedDB 快取 handle）─────────────────────────
+  const FS_DB_NAME  = "playlist-fs-handles";
+  const FS_DB_VER   = 1;
+  const FS_STORE    = "handles";
+  const FS_KEY      = "practice-playlists-js";
+
+  function openFsDb() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open(FS_DB_NAME, FS_DB_VER);
+      req.onupgradeneeded = (e) => e.target.result.createObjectStore(FS_STORE);
+      req.onsuccess  = (e) => resolve(e.target.result);
+      req.onerror    = () => reject(req.error);
+    });
+  }
+
+  async function getStoredHandle() {
+    try {
+      const db  = await openFsDb();
+      return await new Promise((resolve) => {
+        const tx  = db.transaction(FS_STORE, "readonly");
+        const req = tx.objectStore(FS_STORE).get(FS_KEY);
+        req.onsuccess = () => resolve(req.result || null);
+        req.onerror   = () => resolve(null);
+      });
+    } catch (_) { return null; }
+  }
+
+  async function storeHandle(handle) {
+    try {
+      const db = await openFsDb();
+      await new Promise((resolve) => {
+        const tx = db.transaction(FS_STORE, "readwrite");
+        tx.objectStore(FS_STORE).put(handle, FS_KEY);
+        tx.oncomplete = resolve;
+        tx.onerror    = resolve;
+      });
+    } catch (_) {}
+  }
+
+  // 直接寫入 practice-playlists.js（第一次選檔，之後直接覆寫）
+  async function saveDataFileDirect() {
+    if (!("showSaveFilePicker" in window)) {
+      // 瀏覽器不支援 File System Access API → fallback 下載
+      downloadBlob("practice-playlists.js", playlistStore.generateDataFileContent(), "text/javascript");
+      setStatus("已下載 practice-playlists.js（此瀏覽器不支援直接儲存，請手動替換檔案）。");
+      return;
+    }
+
+    try {
+      let handle = await getStoredHandle();
+      let needPick = !handle;
+
+      // 若有快取 handle，先確認寫入權限
+      if (handle) {
+        const perm = await handle.queryPermission({ mode: "readwrite" });
+        if (perm !== "granted") {
+          const req = await handle.requestPermission({ mode: "readwrite" });
+          if (req !== "granted") needPick = true;
+        }
+      }
+
+      if (needPick) {
+        handle = await window.showSaveFilePicker({
+          suggestedName: "practice-playlists.js",
+          types: [{ description: "JavaScript", accept: { "text/javascript": [".js"] } }],
+        });
+        await storeHandle(handle);
+      }
+
+      const writable = await handle.createWritable();
+      await writable.write(playlistStore.generateDataFileContent());
+      await writable.close();
+      setStatus(`已直接寫入 ${handle.name}，重新整理頁面後生效。`);
+    } catch (err) {
+      if (err.name !== "AbortError") {
+        setStatus(`儲存失敗：${err.message}`);
+      }
+    }
+  }
+
+  function setStatus(msg) {
+    if (elements.playlistBuilderStatus) elements.playlistBuilderStatus.textContent = msg;
+  }
+
+  // ── 題庫清單資料 ──────────────────────────────────────────────────────────
   const chapterOptionByCode = new Map(
     (store.getChapterOptions?.() || []).map((entry) => [String(entry?.code || "").trim(), entry]),
   );
@@ -63,11 +166,8 @@
 
   function escapeHtml(value) {
     return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
 
   function renderMathText(value) {
@@ -111,14 +211,21 @@
 
   function getVisiblePractices() {
     const { keyword, chapter, difficulty } = currentFilter();
+    const selectedOrder = new Map(getSelectedPracticeIds().map((id, index) => [id, index]));
     return practices.filter((practice) => {
       if (chapter && chapter !== "全部" && practice.chapterCode !== chapter) return false;
       if (difficulty && difficulty !== "全部" && practice.difficulty !== difficulty) return false;
       if (!keyword) return true;
       const blob = [practice.id, practice.title, practice.chapterCode, practice.chapterLabel, practice.difficulty]
-        .join(" ")
-        .toLowerCase();
+        .join(" ").toLowerCase();
       return blob.includes(keyword);
+    }).sort((a, b) => {
+      const aSelected = selectedOrder.has(a.id);
+      const bSelected = selectedOrder.has(b.id);
+      if (aSelected && bSelected) return selectedOrder.get(a.id) - selectedOrder.get(b.id);
+      if (aSelected) return -1;
+      if (bSelected) return 1;
+      return a.chapterCode.localeCompare(b.chapterCode) || a.title.localeCompare(b.title, "zh-Hant");
     });
   }
 
@@ -126,6 +233,8 @@
     return playlistStore.normalizePlaylist({
       id: state.activePlaylistId || "",
       title: elements.playlistTitleInput.value,
+      grade: elements.playlistGradeSelect?.value || "全部年級",
+      playlistType: elements.playlistTypeSelect?.value || "任務型",
       description: elements.playlistDescriptionInput.value,
       practiceIds: getSelectedPracticeIds(),
       questionCount: Number(elements.playlistQuestionCountInput.value) || 5,
@@ -136,40 +245,55 @@
 
   function fillForm(playlist) {
     elements.playlistTitleInput.value = playlist?.title || "";
+    if (elements.playlistGradeSelect) elements.playlistGradeSelect.value = playlist?.grade || "全部年級";
+    if (elements.playlistTypeSelect) elements.playlistTypeSelect.value = playlist?.playlistType || "任務型";
     elements.playlistDescriptionInput.value = playlist?.description || "";
     elements.playlistQuestionCountInput.value = String(playlist?.questionCount || 5);
     elements.playlistShuffleInput.checked = Boolean(playlist?.shufflePractices);
     state.activePlaylistId = String(playlist?.id || "").trim();
     state.selectedPracticeIds = Array.isArray(playlist?.practiceIds) ? playlist.practiceIds.slice() : [];
+    if (elements.playlistKeywordInput) elements.playlistKeywordInput.value = "";
+    if (elements.playlistDifficultyFilter) elements.playlistDifficultyFilter.value = ALL_FILTER_VALUE;
+    if (elements.playlistChapterFilter) {
+      elements.playlistChapterFilter.value = playlist ? ALL_FILTER_VALUE : DEFAULT_CHAPTER_FILTER;
+    }
     render();
   }
 
   function renderStoredPlaylists() {
     const playlists = playlistStore.loadAll();
+    const localIds = new Set(playlistStore.loadLocal().map((playlist) => playlist.id));
+    const bundledIds = new Set(
+      (Array.isArray(window.practicePlaylistData) ? window.practicePlaylistData : [])
+        .map((playlist) => String(playlist?.id || "").trim())
+        .filter(Boolean),
+    );
     elements.storedPlaylistCount.textContent = `${playlists.length} 份`;
     elements.storedPlaylistList.innerHTML = playlists.length
-      ? playlists
-          .map(
-            (playlist) => `
-              <div class="playlist-saved-card${playlist.id === state.activePlaylistId ? " is-active" : ""}">
-                <button type="button" class="ghost-button" data-load-playlist="${escapeHtml(playlist.id)}">
-                  載入
-                </button>
-                <div class="playlist-saved-card__body">
-                  <strong>${escapeHtml(playlist.title)}</strong>
-                  <p>${escapeHtml(playlist.description || "沒有補充說明")}</p>
-                  <div class="playlist-saved-card__meta">
-                    <span>${playlist.practiceIds.length} 題型</span>
-                    <span>${escapeHtml(playlist.updatedAt.slice(0, 16).replace("T", " "))}</span>
-                  </div>
-                </div>
-                <button type="button" class="ghost-button" data-delete-playlist="${escapeHtml(playlist.id)}">
-                  刪除
-                </button>
+      ? playlists.map((playlist) => {
+          const isLocal = localIds.has(playlist.id);
+          const isBundled = bundledIds.has(playlist.id);
+          const deleteControl = isLocal
+            ? `<button type="button" class="ghost-button" data-delete-playlist="${escapeHtml(playlist.id)}">${isBundled ? "還原內建" : "刪除"}</button>`
+            : `<span class="meta-chip">內建</span>`;
+          return `
+          <div class="playlist-saved-card${playlist.id === state.activePlaylistId ? " is-active" : ""}">
+            <button type="button" class="ghost-button" data-load-playlist="${escapeHtml(playlist.id)}">載入</button>
+            <div class="playlist-saved-card__body">
+              <strong>${escapeHtml(playlist.title)}</strong>
+              <div class="playlist-saved-card__badges">
+                <span class="meta-chip">${escapeHtml(playlist.grade || "全部年級")}</span>
+                <span class="meta-chip">${escapeHtml(playlist.playlistType || "任務型")}</span>
               </div>
-            `,
-          )
-          .join("")
+              <p>${escapeHtml(playlist.description || "沒有補充說明")}</p>
+              <div class="playlist-saved-card__meta">
+                <span>${playlist.practiceIds.length} 題型</span>
+                <span>${escapeHtml(playlist.updatedAt.slice(0, 16).replace("T", " "))}</span>
+              </div>
+            </div>
+            ${deleteControl}
+          </div>`;
+        }).join("")
       : `<p class="detail-note">目前還沒有儲存的 playlist。</p>`;
 
     elements.storedPlaylistList.querySelectorAll("[data-load-playlist]").forEach((button) => {
@@ -193,73 +317,59 @@
 
   function renderFilters() {
     const chapterValues = ["全部"].concat(
-      Array.from(new Set(practices.map((practice) => practice.chapterCode))).filter(Boolean),
+      Array.from(new Set(practices.map((p) => p.chapterCode))).filter(Boolean),
     );
     const difficultyValues = ["全部"].concat(
-      Array.from(new Set(practices.map((practice) => practice.difficulty))).filter(Boolean),
+      Array.from(new Set(practices.map((p) => p.difficulty))).filter(Boolean),
     );
-
     if (!elements.playlistChapterFilter.options.length) {
       elements.playlistChapterFilter.innerHTML = chapterValues
-        .map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`)
-        .join("");
+        .map((v) => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join("");
+      if (chapterValues.includes(DEFAULT_CHAPTER_FILTER)) {
+        elements.playlistChapterFilter.value = DEFAULT_CHAPTER_FILTER;
+      }
     }
     if (!elements.playlistDifficultyFilter.options.length) {
       elements.playlistDifficultyFilter.innerHTML = difficultyValues
-        .map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`)
-        .join("");
+        .map((v) => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join("");
     }
   }
 
   function renderTable() {
     const visiblePractices = getVisiblePractices();
-    elements.playlistSelectionSummary.textContent = `已選 ${getSelectedPracticeIds().length} 題型 / 目前顯示 ${visiblePractices.length} 題型`;
+    elements.playlistSelectionSummary.textContent =
+      `已選 ${getSelectedPracticeIds().length} 題型 / 目前顯示 ${visiblePractices.length} 題型`;
     elements.playlistPracticeTableBody.innerHTML = visiblePractices.length
-      ? visiblePractices
-          .map((practice) => {
-            const sample = state.sampleByPracticeId[practice.id] || "尚未生成範例";
-            return `
-              <tr>
-                <td>
-                  <input type="checkbox" data-practice-id="${escapeHtml(practice.id)}" ${
-                    isSelected(practice.id) ? "checked" : ""
-                  } />
-                </td>
-                <td class="playlist-title-cell">
-                  <strong>${escapeHtml(practice.title)}</strong>
-                  <div class="detail-note">${escapeHtml(practice.id)}</div>
-                </td>
-                <td>${escapeHtml(practice.chapterCode || "未分類")}</td>
-                <td>${escapeHtml(practice.difficulty)}</td>
-                <td>
-                  <div class="playlist-sample-cell">
-                    <div class="playlist-sample-cell__text">${renderMathText(sample)}</div>
-                  </div>
-                </td>
-                <td>
-                  <button
-                    class="ghost-button playlist-refresh-button"
-                    type="button"
-                    data-sample-practice="${escapeHtml(practice.id)}"
-                    aria-label="更新範例"
-                    title="更新範例"
-                  >⟳</button>
-                </td>
-              </tr>
-            `;
-          })
-          .join("")
+      ? visiblePractices.map((practice) => {
+          const sample = state.sampleByPracticeId[practice.id] || "尚未生成範例";
+          const sampleIsError = ["目前無法生成範例", "生成失敗"].includes(sample);
+          const sampleHtml = sampleIsError
+            ? `<span style="color:red;font-weight:bold">${escapeHtml(sample)}</span>`
+            : renderMathText(sample);
+          return `
+            <tr>
+              <td><input type="checkbox" data-practice-id="${escapeHtml(practice.id)}" ${isSelected(practice.id) ? "checked" : ""} /></td>
+              <td class="playlist-title-cell">
+                <strong>${escapeHtml(practice.title)}</strong>
+                <div class="detail-note">${escapeHtml(practice.id)}</div>
+              </td>
+              <td>${escapeHtml(practice.chapterCode || "未分類")}</td>
+              <td>${escapeHtml(practice.difficulty)}</td>
+              <td><div class="playlist-sample-cell"><div class="playlist-sample-cell__text">${sampleHtml}</div></div></td>
+              <td>
+                <button class="ghost-button playlist-refresh-button" type="button"
+                  data-sample-practice="${escapeHtml(practice.id)}" aria-label="更新範例" title="更新範例">⟳</button>
+              </td>
+            </tr>`;
+        }).join("")
       : `<tr><td colspan="6">目前沒有符合條件的題型。</td></tr>`;
 
     elements.playlistPracticeTableBody.querySelectorAll("[data-practice-id]").forEach((checkbox) => {
       checkbox.addEventListener("change", () => {
         const practiceId = String(checkbox.getAttribute("data-practice-id") || "").trim();
         if (!practiceId) return;
-        if (checkbox.checked) {
-          addSelectedPractice(practiceId);
-        } else {
-          removeSelectedPractice(practiceId);
-        }
+        if (checkbox.checked) addSelectedPractice(practiceId);
+        else removeSelectedPractice(practiceId);
         render();
       });
     });
@@ -276,7 +386,6 @@
     if (!practice) return;
     state.sampleByPracticeId[practiceId] = "生成中...";
     renderTable();
-
     try {
       const config = practiceStore.getConfig?.(practice.id);
       if (!config && generatorLoader?.ensureForPractice) {
@@ -304,39 +413,23 @@
       elements.selectedPracticeList.innerHTML = `<p class="detail-note">目前還沒有選取任何題型。</p>`;
       return;
     }
-
-    elements.selectedPracticeList.innerHTML = selectedIds
-      .map((practiceId, index) => {
-        const practice = practices.find((item) => item.id === practiceId);
-        const title = practice?.title || practiceId;
-        const chapterCode = practice?.chapterCode || "";
-        return `
-          <div class="playlist-selected-card">
-            <div class="playlist-selected-card__body">
-              <div class="playlist-selected-card__title-row">
-                <span class="meta-chip">#${index + 1}</span>
-                <strong>${escapeHtml(title)}</strong>
-                <button
-                  type="button"
-                  class="ghost-button playlist-mini-button"
-                  data-move-up="${escapeHtml(practiceId)}"
-                  aria-label="上移"
-                  title="上移"
-                >↑</button>
-                <button
-                  type="button"
-                  class="ghost-button playlist-mini-button"
-                  data-move-down="${escapeHtml(practiceId)}"
-                  aria-label="下移"
-                  title="下移"
-                >↓</button>
-              </div>
-              <div class="detail-note">${escapeHtml(chapterCode)} · ${escapeHtml(practiceId)}</div>
+    elements.selectedPracticeList.innerHTML = selectedIds.map((practiceId, index) => {
+      const practice = practices.find((item) => item.id === practiceId);
+      const title = practice?.title || practiceId;
+      const chapterCode = practice?.chapterCode || "";
+      return `
+        <div class="playlist-selected-card">
+          <div class="playlist-selected-card__body">
+            <div class="playlist-selected-card__title-row">
+              <span class="meta-chip">#${index + 1}</span>
+              <strong>${escapeHtml(title)}</strong>
+              <button type="button" class="ghost-button playlist-mini-button" data-move-up="${escapeHtml(practiceId)}" title="上移">↑</button>
+              <button type="button" class="ghost-button playlist-mini-button" data-move-down="${escapeHtml(practiceId)}" title="下移">↓</button>
             </div>
+            <div class="detail-note">${escapeHtml(chapterCode)} · ${escapeHtml(practiceId)}</div>
           </div>
-        `;
-      })
-      .join("");
+        </div>`;
+    }).join("");
 
     elements.selectedPracticeList.querySelectorAll("[data-move-up]").forEach((button) => {
       button.addEventListener("click", () => {
@@ -358,15 +451,13 @@
       .filter((practice) => forceRefresh || !state.sampleByPracticeId[practice.id])
       .slice(0, Number.isFinite(limit) ? Math.max(1, limit) : undefined);
     if (!targets.length) return;
-
     state.autoGeneratingSamples = true;
-    elements.playlistBuilderStatus.textContent = `正在生成目前列表的範例（${targets.length} 題型）...`;
+    setStatus(`正在生成目前列表的範例（${targets.length} 題型）...`);
     for (const practice of targets) {
-      // Sequential generation keeps the page responsive and avoids hammering lazy loaders.
       await generateSample(practice.id);
     }
     state.autoGeneratingSamples = false;
-    elements.playlistBuilderStatus.textContent = `已更新目前列表的範例（${targets.length} 題型）。`;
+    setStatus(`已更新目前列表的範例（${targets.length} 題型）。`);
   }
 
   function render() {
@@ -376,8 +467,8 @@
     renderSelectedPractices();
   }
 
-  function downloadJson(filename, text) {
-    const blob = new Blob([text], { type: "application/json" });
+  function downloadBlob(filename, content, mimeType = "application/json") {
+    const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
@@ -386,11 +477,13 @@
     URL.revokeObjectURL(url);
   }
 
+  // ── 事件綁定 ───────────────────────────────────────────────────────────────
+
   elements.savePlaylistButton?.addEventListener("click", () => {
     const playlist = readFormPlaylist();
     const saved = playlistStore.upsert(playlist);
     state.activePlaylistId = saved.id;
-    elements.playlistBuilderStatus.textContent = `已儲存：${saved.title}`;
+    setStatus(`已儲存：${saved.title}（${saved.grade} · ${saved.playlistType}）`);
     renderStoredPlaylists();
   });
 
@@ -398,32 +491,48 @@
     state.activePlaylistId = "";
     state.selectedPracticeIds = [];
     elements.playlistTitleInput.value = "";
+    if (elements.playlistGradeSelect) elements.playlistGradeSelect.value = "全部年級";
+    if (elements.playlistTypeSelect) elements.playlistTypeSelect.value = "任務型";
     elements.playlistDescriptionInput.value = "";
     elements.playlistQuestionCountInput.value = "5";
     elements.playlistShuffleInput.checked = false;
-    elements.playlistBuilderStatus.textContent = "已建立新的空白清單。";
+    setStatus("已建立新的空白清單。");
     render();
   });
 
   elements.exportPlaylistButton?.addEventListener("click", () => {
     const playlist = readFormPlaylist();
-    downloadJson(`${playlist.id || "practice-playlist"}.json`, playlistStore.exportJson(playlist));
+    downloadBlob(`${playlist.id || "practice-playlist"}.json`, playlistStore.exportJson(playlist));
   });
 
+  // 直接寫入 practice-playlists.js（File System Access API）
+  elements.saveDataFileButton?.addEventListener("click", async () => {
+    await saveDataFileDirect();
+  });
+
+  // 匯入 JSON → 直接儲存到 store
   elements.importPlaylistInput?.addEventListener("change", async (event) => {
     const file = event.target.files?.[0];
     if (!file) return;
-    const text = await file.text();
-    const playlist = playlistStore.importJson(text);
-    fillForm(playlist);
-    elements.playlistBuilderStatus.textContent = `已載入匯入清單：${playlist.title}`;
+    try {
+      const text = await file.text();
+      const playlist = playlistStore.importJson(text);
+      const saved = playlistStore.upsert(playlist);
+      fillForm(saved);
+      setStatus(`已匯入並儲存：${saved.title}`);
+    } catch (err) {
+      setStatus(`匯入失敗：${err.message}`);
+    }
     event.target.value = "";
   });
 
   elements.playlistKeywordInput?.addEventListener("input", renderTable);
   elements.playlistChapterFilter?.addEventListener("change", async () => {
     renderTable();
-    await generateVisibleSamples({ forceRefresh: true, limit: Infinity });
+    const selectedChapter = String(elements.playlistChapterFilter.value || "").trim();
+    if (selectedChapter && selectedChapter !== "全部") {
+      await generateVisibleSamples({ forceRefresh: true, limit: Infinity });
+    }
   });
   elements.playlistDifficultyFilter?.addEventListener("change", renderTable);
 
@@ -433,10 +542,10 @@
   });
 
   elements.playlistClearVisibleButton?.addEventListener("click", () => {
-    getVisiblePractices().forEach((practice) => removeSelectedPractice(practice.id));
+    const visibleIds = new Set(getVisiblePractices().map((p) => p.id));
+    state.selectedPracticeIds = getSelectedPracticeIds().filter((id) => !visibleIds.has(id));
     render();
   });
 
   render();
-  void generateVisibleSamples({ forceRefresh: false, limit: 8 });
 })();

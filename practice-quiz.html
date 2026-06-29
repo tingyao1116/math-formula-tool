@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d5c63" />
+    <title>無限練習測驗頁</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Kurenaido&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    <link rel="stylesheet" href="styles.css?v=20260628-quiz-v1" />
+    <style>
+      /* ── 月曆 ─────────────────────────────────────── */
+      .calendar-nav { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:.75rem; }
+      .calendar-nav span { font-weight:600; font-size:1rem; flex:1; text-align:center; }
+      .calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; text-align:center; font-size:.8rem; margin-bottom:.5rem; }
+      .cal-header { font-weight:600; color:var(--color-text-muted,#888); padding:3px 0; }
+      .cal-day { padding:4px 2px; border-radius:4px; cursor:default; line-height:22px; min-height:22px; }
+      .cal-day.has-task { background:var(--color-panel-alt,#e8f4f5); color:var(--color-accent,#0d5c63); font-weight:600; cursor:pointer; }
+      .cal-day.has-task:hover { background:var(--color-accent,#0d5c63); color:#fff; }
+      .cal-day.is-selected { background:var(--color-accent,#0d5c63)!important; color:#fff!important; font-weight:700; }
+      .cal-day.is-today { outline:2px solid var(--color-accent,#0d5c63); outline-offset:-2px; }
+      .cal-day.other-month { opacity:.25; }
+      .cal-day.day-done { background:#e8f5e9!important; color:#2e7d32!important; }
+      .cal-day.day-partial { background:#fff3e0!important; color:#e65100!important; }
+      /* ── 測驗 ─────────────────────────────────────── */
+      .quiz-progress-bar { background:#e0e0e0; border-radius:6px; height:8px; margin:.5rem 0 1rem; overflow:hidden; }
+      .quiz-progress-bar__fill { background:var(--color-accent,#0d5c63); height:100%; transition:width .3s; }
+      .quiz-rating-row { display:flex; gap:.75rem; margin-top:1rem; }
+      .btn-correct { background:#2e7d32; color:#fff; border:none; padding:.5rem 1.25rem; border-radius:6px; font-size:1rem; cursor:pointer; flex:1; }
+      .btn-correct:hover { background:#1b5e20; }
+      .btn-wrong   { background:#c62828; color:#fff; border:none; padding:.5rem 1.25rem; border-radius:6px; font-size:1rem; cursor:pointer; flex:1; }
+      .btn-wrong:hover { background:#7f0000; }
+      .quiz-score-table { width:100%; border-collapse:collapse; margin-top:1rem; font-size:.9rem; }
+      .quiz-score-table th, .quiz-score-table td { text-align:left; padding:.4rem .6rem; border-bottom:1px solid var(--color-border,#ddd); }
+      .quiz-score-table th { font-weight:700; background:var(--color-panel-alt,#f5f5f5); }
+      .score-correct { color:#2e7d32; font-weight:700; }
+      .score-wrong   { color:#c62828; font-weight:700; }
+    </style>
+  </head>
+  <body class="playlist-page">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero__content">
+          <p class="eyebrow">Practice Quiz</p>
+          <h1>無限練習測驗頁</h1>
+          <p class="hero__lead">選擇清單與日期，答題前先思考，答對或答錯自評，最後看成績。</p>
+          <div class="hero__quicklinks">
+            <a class="ghost-link" href="index.html">首頁</a>
+            <a class="ghost-link" href="practice-playlist-player.html">回練習頁</a>
+          </div>
+        </div>
+        <div class="hero__panel">
+          <h2>測驗流程</h2>
+          <ol>
+            <li>選清單，日程型請再選日期。</li>
+            <li>按「開始測驗」，題目會逐題出現。</li>
+            <li>想好答案後按「看答案」，再按答對或答錯。</li>
+            <li>全部做完後顯示得分，可選擇重做錯題。</li>
+          </ol>
+        </div>
+      </header>
+
+      <main class="layout playlist-layout">
+        <aside class="sidebar">
+          <!-- 年級 + 清單選擇 -->
+          <section class="panel">
+            <h2>選擇清單</h2>
+            <label class="field">
+              <span>年級</span>
+              <select id="quizGradeSelect"></select>
+            </label>
+            <h3 style="margin:.75rem 0 .25rem;font-size:.9rem">任務型</h3>
+            <div id="quizTaskPlaylistList" class="playlist-player-list"></div>
+            <h3 style="margin:.75rem 0 .25rem;font-size:.9rem">日程型</h3>
+            <div id="quizSchedulePlaylistList" class="playlist-player-list"></div>
+          </section>
+
+          <!-- 日程型月曆 -->
+          <section class="panel" id="quizCalendarSection" hidden>
+            <h2>選擇日期</h2>
+            <div class="calendar-nav">
+              <button id="quizCalPrev" class="ghost-button" type="button">◀</button>
+              <span id="quizCalLabel"></span>
+              <button id="quizCalNext" class="ghost-button" type="button">▶</button>
+            </div>
+            <div id="quizCalGrid" class="calendar-grid"></div>
+            <p id="quizCalDayLabel" class="detail-note">點選日期開始測驗</p>
+          </section>
+
+          <!-- 測驗進度（測驗中顯示） -->
+          <section class="panel" id="quizSideProgress" hidden>
+            <h2>測驗進度</h2>
+            <p id="quizSideProgressText" class="detail-note"></p>
+            <div class="quiz-progress-bar">
+              <div class="quiz-progress-bar__fill" id="quizSideProgressFill" style="width:0%"></div>
+            </div>
+            <div id="quizSidePracticeList" class="playlist-player-list"></div>
+          </section>
+        </aside>
+
+        <section class="content">
+          <!-- 設定面板 -->
+          <section class="panel" id="quizSetupPanel">
+            <div class="summary-panel">
+              <div>
+                <p class="summary-label">測驗設定</p>
+                <h2 id="quizSetupTitle">尚未選擇清單</h2>
+              </div>
+              <p id="quizSetupMeta" class="summary-count"></p>
+            </div>
+            <p id="quizSetupDesc" class="detail-note">從左側選清單，日程型請再選日期，再按「開始測驗」。</p>
+            <button id="quizStartButton" class="ghost-button" type="button" disabled style="margin-top:1rem;font-size:1rem;padding:.6rem 1.5rem">開始測驗</button>
+          </section>
+
+          <!-- 測驗進行中 -->
+          <section class="panel" id="quizRunningPanel" hidden>
+            <div class="summary-panel">
+              <div>
+                <p class="summary-label">測驗中</p>
+                <h2 id="quizRunningTitle">題目</h2>
+              </div>
+              <p id="quizRunningMeta" class="summary-count"></p>
+            </div>
+
+            <div id="quizRunningCard" class="ability-session-card is-empty">
+              <p>準備中…</p>
+            </div>
+            <div id="quizAnswerReveal" class="ability-feedback-panel" hidden></div>
+          </section>
+
+          <!-- 完成面板 -->
+          <section class="panel" id="quizDonePanel" hidden>
+            <div class="summary-panel">
+              <div>
+                <p class="summary-label">測驗完成</p>
+                <h2 id="quizDoneTitle">得分</h2>
+              </div>
+              <p id="quizDoneScore" class="summary-count"></p>
+            </div>
+            <table class="quiz-score-table">
+              <thead>
+                <tr><th>題型</th><th>答對</th><th>答錯</th><th>正確率</th></tr>
+              </thead>
+              <tbody id="quizScoreTableBody"></tbody>
+            </table>
+            <div style="display:flex;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap">
+              <button id="quizRetryButton" class="ghost-button" type="button">重新設定測驗</button>
+              <button id="quizRetryWrongButton" class="ghost-button" type="button" hidden>只重做答錯題型</button>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script defer src="formulas.js"></script>
+    <script defer src="data/formula-content.js?v=20260423-abs-count-layout-v4"></script>
+    <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
+    <script defer src="data/chapter-code-config.js?v=20260616-e425-split-v1"></script>
+    <script defer src="data/formula-practice-assignments.js?v=20260627-fix-generatorkeys-v1"></script>
+    <script defer src="data/formula-practice.js?v=20260620-runtime-main-v1"></script>
+    <script defer src="data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"></script>
+    <script defer src="data/practice-generator-bootstrap.js?v=20260619-e5-cutover-v1"></script>
+    <script defer src="data/practice-generator-bundles.js?v=20260624-nullfix-v1"></script>
+    <script defer src="data/practice-generator-loader.js?v=20260619-e5-force-bundle-v3"></script>
+    <script defer src="data/practice-generators/e5.js?v=20260628-e5-real-bundle-v7"></script>
+    <script defer src="data/practice-generators/e6.js?v=20260628-e6-real-bundle-v3"></script>
+    <script defer src="data/practice-generators/j1.js?v=20260622-j133-file-v1"></script>
+    <script defer src="data/practice-generators/j2.js?v=20260628-j2-real-bundle-v2"></script>
+    <script defer src="data/practice-generators/j3.js?v=20260628-j3-fix-v2"></script>
+    <script defer src="data/practice-generators/j4.js?v=20260622-j44-quad-v1"></script>
+    <script defer src="data/practice-generators/j5.js?v=20260619-j5-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/j6.js?v=20260629-j6-stats-prob-v1"></script>
+    <script defer src="data/practice-generators/s1.js?v=20260619-s1-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/s2.js?v=20260619-s2-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/s3.js?v=20260619-s3-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/s4.js?v=20260624-s4-44new-v1"></script>
+    <script defer src="formula-data.js?v=20260616-e425-split-v1"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="formula-core.js?v=20260619-e5-fingerprint-v5"></script>
+    <script defer src="data/practice-playlists.js?v=20260629-stats-prob-v1"></script>
+    <script defer src="practice-playlist/practice-playlist-store.js?v=20260628-schedule-v1"></script>
+    <script defer src="practice-playlist/practice-progress-store.js?v=20260628-progress-v1"></script>
+    <script defer src="practice-quiz/practice-quiz.js?v=20260628-quiz-v1"></script>
+    <script defer src="pwa.js"></script>
+  </body>
+</html>

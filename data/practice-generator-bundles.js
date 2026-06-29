@@ -5,12 +5,12 @@
       chapterPrefixes: ["e4-"],
     },
     e5: {
-      src: "data/practice-generators/e5.js?v=20260619-e5-real-bundle-v2",
+      src: "data/practice-generators/e5.js?v=20260628-e5-real-bundle-v7",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["e5-"],
     },
     e6: {
-      src: "data/practice-generators/e6.js?v=20260619-e6-real-bundle-v1",
+      src: "data/practice-generators/e6.js?v=20260628-e6-real-bundle-v3",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["e6-"],
     },
@@ -20,12 +20,12 @@
       chapterPrefixes: ["j1-"],
     },
     j2: {
-      src: "data/practice-generators/j2.js?v=20260622-j25-stats-v1",
+      src: "data/practice-generators/j2.js?v=20260628-j2-real-bundle-v2",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j2-"],
     },
     j3: {
-      src: "data/practice-generators/j3.js?v=20260622-j34-quad-v1",
+      src: "data/practice-generators/j3.js?v=20260628-j3-fix-v2",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j3-"],
     },
@@ -40,7 +40,7 @@
       chapterPrefixes: ["j5-"],
     },
     j6: {
-      src: "data/practice-generators/j6.js?v=20260619-j6-real-bundle-v1",
+      src: "data/practice-generators/j6.js?v=20260629-j6-stats-prob-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j6-"],
     },

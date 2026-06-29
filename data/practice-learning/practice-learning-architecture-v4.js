@@ -299,7 +299,7 @@
       shortLabel: "統計表圖",
       summary: "把次數分配、累積次數、相對次數與圓餅圖判讀整合成第三冊的資料分析輔線。",
       practiceIds: [
-        "practice-j6-3-1-frequency-distribution-six-subtypes",
+        "practice-j6-3-1-frequency-distribution-eight-subtypes",
         "practice-j6-3-1-pie-chart-five-subtypes",
       ],
       prerequisiteSkillIds: ["quadratic-word-modeling"],
@@ -316,7 +316,7 @@
       summary: "整理平均數、中位數、眾數、資料修正與盒狀圖判讀，補足第三冊資料閱讀能力。",
       practiceIds: [
         "practice-j6-3-2-central-tendency-six-subtypes",
-        "practice-j6-3-2-quartile-boxplot-six-subtypes",
+        "practice-j6-3-2-quartile-boxplot-seven-subtypes",
       ],
       prerequisiteSkillIds: ["j3-stats-frequency-visual"],
       mainAbilityId: "j3-data-analysis",

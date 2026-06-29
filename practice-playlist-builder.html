@@ -50,8 +50,16 @@
               <input id="playlistTitleInput" type="text" placeholder="例如：國三複習第一輪" />
             </label>
             <label class="field">
+              <span>年級</span>
+              <select id="playlistGradeSelect"></select>
+            </label>
+            <label class="field">
+              <span>清單類型</span>
+              <select id="playlistTypeSelect"></select>
+            </label>
+            <label class="field">
               <span>說明</span>
-              <textarea id="playlistDescriptionInput" rows="4" placeholder="例如：乘法公式、因式分解、公式解先修"></textarea>
+              <textarea id="playlistDescriptionInput" rows="3" placeholder="例如：乘法公式、因式分解、公式解先修"></textarea>
             </label>
             <label class="field">
               <span>每個題型預設題數</span>
@@ -66,13 +74,14 @@
           <section class="panel">
             <h2>清單操作</h2>
             <div class="interactive-actions interactive-actions--stacked">
-              <button id="savePlaylistButton" class="ghost-button" type="button">儲存到瀏覽器</button>
+              <button id="savePlaylistButton" class="ghost-button" type="button">儲存清單</button>
               <button id="newPlaylistButton" class="ghost-button" type="button">建立新清單</button>
               <button id="exportPlaylistButton" class="ghost-button" type="button">匯出 JSON</button>
               <label class="ghost-button playlist-upload-button">
-                匯入 JSON
+                匯入 JSON（自動儲存）
                 <input id="importPlaylistInput" type="file" accept="application/json" hidden />
               </label>
+              <button id="saveDataFileButton" class="ghost-button" type="button">寫入資料檔</button>
             </div>
             <p id="playlistBuilderStatus" class="detail-note">尚未儲存。</p>
           </section>
@@ -157,29 +166,35 @@
     <script defer src="data/main-topic-overviews.js?v=20260508-topic-title-clean-v1"></script>
     <script defer src="data/chapter-code-config.js?v=20260616-e425-split-v1"></script>
     <script defer src="data/formula-calculators.js"></script>
-    <script defer src="data/formula-practice-assignments.js?v=20260622-j44-quad-v1"></script>
+    <script defer src="data/formula-practice-assignments.js?v=20260627-fix-generatorkeys-v1"></script>
     <script defer src="data/formula-practice.js?v=20260620-runtime-main-v1"></script>
     <script defer src="data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"></script>
     <script defer src="data/practice-generator-bootstrap.js?v=20260619-e5-cutover-v1"></script>
     <script defer src="data/practice-generator-bundles.js?v=20260624-nullfix-v1"></script>
     <script defer src="data/practice-generator-loader.js?v=20260619-e5-force-bundle-v3"></script>
-    <script defer src="data/practice-generators/e5.js?v=20260619-e5-fingerprint-v5"></script>
-    <script defer src="data/practice-generators/e6.js?v=20260619-e6-real-bundle-v1"></script>
-    <script defer src="data/practice-generators/j1.js?v=20260619-j1-chapter-owned-v2"></script>
-    <script defer src="data/practice-generators/j2.js?v=20260619-j2-real-bundle-v1"></script>
-    <script defer src="data/practice-generators/j3.js?v=20260619-j3-chapter-owned-v2"></script>
-    <script defer src="data/practice-generators/j4.js?v=20260619-j4-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/e5.js?v=20260628-e5-real-bundle-v7"></script>
+    <script defer src="data/practice-generators/e6.js?v=20260628-e6-real-bundle-v3"></script>
+    <script defer src="data/practice-generators/j1.js?v=20260622-j133-file-v1"></script>
+    <script defer src="data/practice-generators/j2.js?v=20260628-j2-real-bundle-v2"></script>
+    <script defer src="data/practice-generators/j3.js?v=20260628-j3-fix-v2"></script>
+    <script defer src="data/practice-generators/j4.js?v=20260622-j44-quad-v1"></script>
     <script defer src="data/practice-generators/j5.js?v=20260619-j5-real-bundle-v1"></script>
-    <script defer src="data/practice-generators/j6.js?v=20260619-j6-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/j6.js?v=20260629-j6-stats-prob-v1"></script>
     <script defer src="data/practice-generators/s1.js?v=20260619-s1-real-bundle-v1"></script>
     <script defer src="data/practice-generators/s2.js?v=20260619-s2-real-bundle-v1"></script>
     <script defer src="data/practice-generators/s3.js?v=20260619-s3-real-bundle-v1"></script>
-    <script defer src="data/practice-generators/s4.js?v=20260624-s4-trycatch-v1"></script>
+    <script defer src="data/practice-generators/s4.js?v=20260624-s4-44new-v1"></script>
     <script defer src="formula-data.js?v=20260616-e425-split-v1"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
     <script defer src="formula-core.js?v=20260619-e5-fingerprint-v5"></script>
-    <script defer src="practice-playlist/practice-playlist-store.js?v=20260627-playlist-v1"></script>
-    <script defer src="practice-playlist/practice-playlist-builder.js?v=20260627-playlist-v1"></script>
+    <script defer src="data/practice-playlists.js?v=20260629-stats-prob-v1"></script>
+    <script defer src="data/practice-task-playlists.js?v=20260629-stats-prob-v1"></script>
+    <script defer src="data/practice-chapter-playlists.js?v=20260629-stats-prob-v1"></script>
+    <script defer src="data/practice-schedules.js?v=20260628-schedule-data-v1"></script>
+    <script defer src="practice-playlist/practice-playlist-store.js?v=20260629-playlist-store-v4"></script>
+    <script defer src="practice-playlist/practice-playlist-builder.js?v=20260629-playlist-builder-v4"></script>
+    <script defer src="practice-playlist/practice-schedule-builder.js?v=20260628-schedule-builder-v1"></script>
+    <script defer src="practice-playlist/practice-mode-toggle.js?v=20260628-mode-toggle-v1"></script>
     <script defer src="pwa.js"></script>
   </body>
 </html>

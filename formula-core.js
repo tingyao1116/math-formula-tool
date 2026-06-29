@@ -577,7 +577,7 @@
       return `
         <section class="content-section practice-section" data-practice-id="${escapeHtml(item.id)}">
           <h4>${escapeHtml(title)}</h4>
-          <div class="interactive-output">${renderRichTextLine(config.prompt || "尚未設定題目")}</div>
+          <div class="interactive-output">${config.prompt ? renderRichTextLine(config.prompt) : '<span style="color:red;font-weight:bold">尚未設定題目</span>'}</div>
           <div class="interactive-actions">
             <button type="button" class="ghost-button" data-practice-answer="${escapeHtml(item.id)}">顯示答案</button>
           </div>
@@ -819,7 +819,7 @@
         const summaryBox = container.querySelector(`[data-practice-summary-box="${id}"]`);
         const answerBox = container.querySelector(`[data-practice-answer-box="${id}"]`);
         if (!config || typeof config.generate !== "function") {
-          if (output) output.textContent = "這一題尚未設定練習內容。";
+          if (output) output.innerHTML = '<span style="color:red;font-weight:bold">這一題尚未設定練習內容。</span>';
           if (summaryBox) {
             summaryBox.textContent = "";
             summaryBox.classList.add("is-hidden");
@@ -848,7 +848,7 @@
         const summaryBox = container.querySelector(`[data-practice-summary-box="${id}"]`);
         const answerBox = container.querySelector(`[data-practice-answer-box="${id}"]`);
         if (!config || typeof config.generate !== "function") {
-          if (output) output.textContent = "這一題尚未設定練習內容。";
+          if (output) output.innerHTML = '<span style="color:red;font-weight:bold">這一題尚未設定練習內容。</span>';
           if (summaryBox) {
             summaryBox.textContent = "";
             summaryBox.classList.add("is-hidden");

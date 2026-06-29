@@ -9789,6 +9789,7 @@
         generate() {
           return buildE622EchoDistanceSet(5);
         },
+      },
       'e6-2-2-two-seg-distance-drill': {
         type: 'drill',
         title: '分段行走求總路程',
@@ -9815,7 +9816,6 @@
         generate() {
           return buildE622PartialRemainSet(5);
         },
-      },
       },
       'e6-2-2-basic-five-subtypes': {
         type: 'drill',
@@ -10041,6 +10041,7 @@
         generate() {
           return buildE623PackageCompareSet(5);
         },
+      },
       'e6-2-3-cube-to-max-cylinder-drill': {
         type: 'drill',
         title: '正方體削成最大圓柱',
@@ -10058,7 +10059,6 @@
         generate() {
           return buildE623DimChangeVolumeSet(5);
         },
-      },
       },
       'e6-2-3-volume-basic-three-subtypes': {
         type: 'drill',
@@ -10554,6 +10554,7 @@
         generate() {
           return buildE625PrincipleMixedSet(5);
         },
+      },
       'e6-2-5-linear-int-coef-drill': {
         type: 'drill',
         title: '整數係數一元一次方程',
@@ -10634,7 +10635,6 @@
         generate() {
           return buildE625FractionConsumeSet(5);
         },
-      },
       },
       'e6-2-6-count-to-percent-drill': {
         type: 'drill',
@@ -10815,6 +10815,7 @@
         generate() {
           return buildE626InterpretMixedSet(5);
         },
+      },
       'e6-2-6-average-from-data-drill': {
         type: 'drill',
         title: '從資料計算平均數',
@@ -10824,10 +10825,9 @@
           return buildE626AverageFromDataSet(5);
         },
       },
-      },
   };
 
-  const bundleFingerprint = "e6-bundle-v20260619-v1";
+  const bundleFingerprint = "e6-bundle-v20260628-v3";
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== "object") return;
     config.__generatorFingerprint = bundleFingerprint;

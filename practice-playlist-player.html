@@ -15,6 +15,92 @@
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
     <link rel="stylesheet" href="styles.css?v=20260627-playlist-v1" />
+    <style>
+      /* ── 日程型月曆 ────────────────────────────────── */
+      .calendar-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+      .calendar-nav span {
+        font-weight: 600;
+        font-size: 1rem;
+        flex: 1;
+        text-align: center;
+      }
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+        text-align: center;
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+      }
+      .cal-header {
+        font-weight: 600;
+        color: var(--color-text-muted, #888);
+        padding: 3px 0;
+      }
+      .cal-day {
+        padding: 4px 2px;
+        border-radius: 4px;
+        cursor: default;
+        line-height: 22px;
+        min-height: 22px;
+      }
+      .cal-day.has-task {
+        background: var(--color-panel-alt, #e8f4f5);
+        color: var(--color-accent, #0d5c63);
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .cal-day.has-task:hover {
+        background: var(--color-accent, #0d5c63);
+        color: #fff;
+      }
+      .cal-day.is-selected {
+        background: var(--color-accent, #0d5c63) !important;
+        color: #fff !important;
+        font-weight: 700;
+      }
+      .cal-day.is-today {
+        outline: 2px solid var(--color-accent, #0d5c63);
+        outline-offset: -2px;
+      }
+      .cal-day.other-month {
+        opacity: 0.25;
+      }
+      /* 完成進度色 */
+      .cal-day.has-task.day-done {
+        background: var(--color-success-pale, #e8f5e9);
+        color: #2e7d32;
+        font-weight: 700;
+      }
+      .cal-day.has-task.day-done::after {
+        content: "✓";
+        display: block;
+        font-size: 0.6rem;
+        line-height: 1;
+        margin-top: -2px;
+      }
+      .cal-day.has-task.day-partial {
+        background: #fff3e0;
+        color: #e65100;
+      }
+      /* 練習列表完成標記 */
+      .practice-done-badge {
+        display: inline-block;
+        background: #2e7d32;
+        color: #fff;
+        border-radius: 3px;
+        padding: 0 4px;
+        font-size: 0.75rem;
+        margin-left: 4px;
+        vertical-align: middle;
+      }
+    </style>
   </head>
   <body class="playlist-page">
     <div class="page-shell">
@@ -26,6 +112,7 @@
           <div class="hero__quicklinks">
             <a class="ghost-link" href="index.html">首頁</a>
             <a class="ghost-link" href="practice-playlist-builder.html">回編輯頁</a>
+            <a class="ghost-link" href="practice-quiz.html">開啟測驗頁</a>
           </div>
         </div>
         <div class="hero__panel">
@@ -40,15 +127,60 @@
 
       <main class="layout playlist-layout">
         <aside class="sidebar">
+
+          <!-- 年級篩選 -->
           <section class="panel">
-            <h2>選擇清單</h2>
+            <h2>選擇年級</h2>
             <label class="field">
-              <span>已存 playlist</span>
-              <select id="playlistPlayerSelect"></select>
+              <span>年級</span>
+              <select id="playerGradeSelect"></select>
             </label>
-            <p id="playlistPlayerStatus" class="detail-note">請先選擇一份清單。</p>
+            <label class="field">
+              <span>清單分類</span>
+              <select id="playerCategorySelect">
+                <option value="全部">全部清單</option>
+                <option value="複習必做">複習必做</option>
+                <option value="章節重點">章節重點</option>
+                <option value="其他">其他 / 自訂</option>
+              </select>
+            </label>
           </section>
 
+          <!-- 任務型清單 -->
+          <section class="panel">
+            <h2>第一類：任務型</h2>
+            <div id="taskPlaylistList" class="playlist-player-list"></div>
+          </section>
+
+          <!-- 日程型清單 -->
+          <section class="panel">
+            <h2>第二類：日程型</h2>
+            <div id="schedulePlaylistList" class="playlist-player-list"></div>
+          </section>
+
+          <!-- 日程型月曆（日程型清單選取時顯示） -->
+          <section class="panel" id="scheduleCalendarSection" hidden>
+            <h2>月曆選擇日期</h2>
+            <div class="calendar-nav">
+              <button id="calPrevMonth" class="ghost-button" type="button">◀</button>
+              <span id="calMonthLabel"></span>
+              <button id="calNextMonth" class="ghost-button" type="button">▶</button>
+            </div>
+            <div id="calGrid" class="calendar-grid"></div>
+            <p id="calDayLabel" class="detail-note">點選有任務的日期開始練習</p>
+          </section>
+
+          <!-- 匯入 -->
+          <section class="panel">
+            <h2>匯入清單</h2>
+            <label class="ghost-button playlist-upload-button">
+              匯入 JSON（自動儲存）
+              <input id="playerImportInput" type="file" accept="application/json" hidden />
+            </label>
+            <p id="playerImportStatus" class="detail-note"></p>
+          </section>
+
+          <!-- 題型列表 -->
           <section class="panel">
             <div class="skill-tree-toolbar">
               <h2>清單題型</h2>
@@ -68,6 +200,7 @@
               <p id="playlistPlayerMeta" class="summary-count"></p>
             </div>
             <p id="playlistPlayerDescription" class="detail-note"></p>
+            <p id="playlistPlayerStatus" class="detail-note">請先從左側選擇一份清單。</p>
           </section>
 
           <section class="panel">
@@ -97,29 +230,36 @@
     <script defer src="data/formula-content.js?v=20260423-abs-count-layout-v4"></script>
     <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
     <script defer src="data/chapter-code-config.js?v=20260616-e425-split-v1"></script>
-    <script defer src="data/formula-practice-assignments.js?v=20260622-j44-quad-v1"></script>
+    <script defer src="data/formula-practice-assignments.js?v=20260627-fix-generatorkeys-v1"></script>
     <script defer src="data/formula-practice.js?v=20260620-runtime-main-v1"></script>
     <script defer src="data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"></script>
     <script defer src="data/practice-generator-bootstrap.js?v=20260619-e5-cutover-v1"></script>
     <script defer src="data/practice-generator-bundles.js?v=20260624-nullfix-v1"></script>
     <script defer src="data/practice-generator-loader.js?v=20260619-e5-force-bundle-v3"></script>
-    <script defer src="data/practice-generators/e5.js?v=20260619-e5-fingerprint-v5"></script>
-    <script defer src="data/practice-generators/e6.js?v=20260619-e6-real-bundle-v1"></script>
-    <script defer src="data/practice-generators/j1.js?v=20260619-j1-chapter-owned-v2"></script>
-    <script defer src="data/practice-generators/j2.js?v=20260619-j2-real-bundle-v1"></script>
-    <script defer src="data/practice-generators/j3.js?v=20260619-j3-chapter-owned-v2"></script>
-    <script defer src="data/practice-generators/j4.js?v=20260619-j4-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/e5.js?v=20260628-e5-real-bundle-v7"></script>
+    <script defer src="data/practice-generators/e6.js?v=20260628-e6-real-bundle-v3"></script>
+    <script defer src="data/practice-generators/j1.js?v=20260622-j133-file-v1"></script>
+    <script defer src="data/practice-generators/j2.js?v=20260628-j2-real-bundle-v2"></script>
+    <script defer src="data/practice-generators/j3.js?v=20260628-j3-fix-v2"></script>
+    <script defer src="data/practice-generators/j4.js?v=20260622-j44-quad-v1"></script>
     <script defer src="data/practice-generators/j5.js?v=20260619-j5-real-bundle-v1"></script>
-    <script defer src="data/practice-generators/j6.js?v=20260619-j6-real-bundle-v1"></script>
+    <script defer src="data/practice-generators/j6.js?v=20260629-j6-stats-prob-v1"></script>
     <script defer src="data/practice-generators/s1.js?v=20260619-s1-real-bundle-v1"></script>
     <script defer src="data/practice-generators/s2.js?v=20260619-s2-real-bundle-v1"></script>
     <script defer src="data/practice-generators/s3.js?v=20260619-s3-real-bundle-v1"></script>
-    <script defer src="data/practice-generators/s4.js?v=20260624-s4-trycatch-v1"></script>
+    <script defer src="data/practice-generators/s4.js?v=20260624-s4-44new-v1"></script>
     <script defer src="formula-data.js?v=20260616-e425-split-v1"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
     <script defer src="formula-core.js?v=20260619-e5-fingerprint-v5"></script>
-    <script defer src="practice-playlist/practice-playlist-store.js?v=20260627-playlist-v1"></script>
-    <script defer src="practice-playlist/practice-playlist-player.js?v=20260627-playlist-v1"></script>
+    <script defer src="data/practice-playlists.js?v=20260629-stats-prob-v1"></script>
+    <script defer src="data/practice-task-playlists.js?v=20260629-stats-prob-v1"></script>
+    <script defer src="data/practice-chapter-playlists.js?v=20260629-stats-prob-v1"></script>
+    <script defer src="data/practice-schedules.js?v=20260628-schedule-data-v1"></script>
+    <script defer src="practice-playlist/practice-playlist-store.js?v=20260629-playlist-store-v4"></script>
+    <script defer src="practice-playlist/practice-progress-store.js?v=20260628-progress-v1"></script>
+    <script defer src="practice-playlist/practice-playlist-player.js?v=20260629-category-filter-v1"></script>
+    <script defer src="practice-playlist/practice-schedule-player.js?v=20260628-schedule-player-v4"></script>
+    <script defer src="practice-playlist/practice-mode-toggle.js?v=20260628-mode-toggle-v1"></script>
     <script defer src="pwa.js"></script>
   </body>
 </html>

@@ -2328,6 +2328,111 @@
     return { questions, summaryAnswers, answers };
   }
 
+  function buildE528RelativeCompareSet(count) {
+    // 甲比乙多/少幾%（相對比較）
+    const pool = [
+      { aName: '甲班', bName: '乙班', a: 60, b: 50, item: '人數', moreOrLess: '多' },
+      { aName: '今年', bName: '去年', a: 120, b: 100, item: '產量（公斤）', moreOrLess: '多' },
+      { aName: '大包', bName: '小包', a: 75, b: 50, item: '重量（公克）', moreOrLess: '多' },
+      { aName: '甲', bName: '乙', a: 80, b: 100, item: '存款（元）', moreOrLess: '少' },
+      { aName: '新價', bName: '舊價', a: 90, b: 120, item: '售價（元）', moreOrLess: '少' },
+      { aName: '甲校', bName: '乙校', a: 48, b: 40, item: '出席人數', moreOrLess: '多' },
+      { aName: '小明', bName: '小華', a: 84, b: 70, item: '分數', moreOrLess: '多' },
+      { aName: '二月', bName: '一月', a: 68, b: 80, item: '銷售量', moreOrLess: '少' },
+      { aName: '甲', bName: '乙', a: 110, b: 100, item: '體重（公斤）', moreOrLess: '多' },
+      { aName: '今天', bName: '昨天', a: 144, b: 120, item: '步數', moreOrLess: '多' },
+    ];
+    const questions = [], answers = [], summaryAnswers = [];
+    for (let i = 0; i < count; i++) {
+      const t = pool[randInt(0, pool.length - 1)];
+      const diff = Math.abs(t.a - t.b);
+      const base = t.moreOrLess === '多' ? t.b : t.a;
+      const pct = Math.round(diff / base * 100);
+      questions.push(
+        `${t.aName}的${t.item}是 $${t.a}$，${t.bName}的${t.item}是 $${t.b}$，` +
+        `${t.aName}比${t.bName}${t.moreOrLess}百分之幾？`
+      );
+      answers.push(
+        `差：$${t.a}-${t.b}=${diff > 0 ? diff : t.b - t.a}$（取絕對值）。` +
+        `以${t.bName === (t.moreOrLess === '多' ? t.bName : t.aName) ? (t.moreOrLess === '多' ? t.bName : t.aName) : t.bName}為基準：` +
+        `$${diff}\div${base}\times100\%=${pct}\%$。` +
+        `故${t.aName}比${t.bName}${t.moreOrLess}百分之 $${pct}$。`
+      );
+      summaryAnswers.push(`$${pct}\%$`);
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildE528PercentChangeSet(count) {
+    // 增加/減少某%後是原來的幾%
+    const pool = [
+      { item: '一件商品', pct: 20, upOrDown: '增加', result: 120 },
+      { item: '學校人數', pct: 10, upOrDown: '減少', result: 90 },
+      { item: '某商品售價', pct: 15, upOrDown: '增加', result: 115 },
+      { item: '工廠產量', pct: 25, upOrDown: '減少', result: 75 },
+      { item: '存款金額', pct: 8, upOrDown: '增加', result: 108 },
+      { item: '班上人數', pct: 5, upOrDown: '減少', result: 95 },
+      { item: '商品進價', pct: 30, upOrDown: '增加', result: 130 },
+      { item: '水電費', pct: 12, upOrDown: '減少', result: 88 },
+      { item: '年薪', pct: 6, upOrDown: '增加', result: 106 },
+      { item: '零件數量', pct: 40, upOrDown: '減少', result: 60 },
+    ];
+    const questions = [], answers = [], summaryAnswers = [];
+    for (let i = 0; i < count; i++) {
+      const t = pool[randInt(0, pool.length - 1)];
+      questions.push(
+        `${t.item}${t.upOrDown}了百分之 $${t.pct}$ 後，` +
+        `是原來的百分之幾？`
+      );
+      answers.push(
+        `${t.upOrDown === '增加' ? '增加' : '減少'}了 $${t.pct}\%$，` +
+        `故${t.upOrDown === '增加' ? '加上' : '減去'} $${t.pct}\%$：` +
+        `$100\%${t.upOrDown === '增加' ? '+' : '-'}${t.pct}\%=${t.result}\%$。` +
+        `所以是原來的 $${t.result}\%$。`
+      );
+      summaryAnswers.push(`$${t.result}\%$`);
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildE528FindOriginalSet(count) {
+    // 已知折扣後（或增加後）的價格，逆推原價
+    const pool = [
+      { name: '一件外套', discount: 8, pct: 80, after: 480, original: 600 },
+      { name: '一雙球鞋', discount: 7, pct: 70, after: 560, original: 800 },
+      { name: '一本書', discount: 9, pct: 90, after: 270, original: 300 },
+      { name: '一台玩具車', discount: 6, pct: 60, after: 360, original: 600 },
+      { name: '一件T恤', discount: 75, pct: 75, after: 300, original: 400, isDirect: true },
+      { name: '一個書包', discount: 8, pct: 80, after: 640, original: 800 },
+      { name: '一雙手套', discount: 5, pct: 50, after: 250, original: 500 },
+      { name: '一頂帽子', discount: 9, pct: 90, after: 180, original: 200 },
+      { name: '一件雨衣', discount: 7, pct: 70, after: 420, original: 600 },
+      { name: '一個水壺', discount: 6, pct: 60, after: 240, original: 400 },
+    ];
+    const questions = [], answers = [], summaryAnswers = [];
+    for (let i = 0; i < count; i++) {
+      const t = pool[randInt(0, pool.length - 1)];
+      const label = t.isDirect ? `售價是原價的 $${t.pct}\%$` : `打了 $${t.discount}$ 折`;
+      questions.push(
+        `${t.name}${label}，折後售價為 $${t.after}$ 元，原價是多少元？`
+      );
+      answers.push(
+        `折後售價 $=${t.after}$ 元，占原價的 $${t.pct}\%$。` +
+        `原價 $=${t.after}\div${t.pct}\%=${t.after}\times\dfrac{100}{${t.pct}}=${t.original}$ 元。`
+      );
+      summaryAnswers.push(`$${t.original}$ 元`);
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildE528CompareChangeThreeSet(count) {
+    return buildE528MixedSet([
+      buildE528RelativeCompareSet,
+      buildE528PercentChangeSet,
+      buildE528FindOriginalSet,
+    ], count);
+  }
+
   function buildE528BasicThreeSet(count) {
     return buildE528MixedSet([buildE528BasicRateSet, buildE528PartFromRateSet, buildE528ComplementRateSet], count);
   }
@@ -3376,7 +3481,8 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const cases = [
+    // 24 組已驗算的（時速, 行駛小時, 行駛分鐘, 距離）— 答案均為整數公里
+    const pool = [
       { speed: 60, h: 2, m: 30, dist: 150 },
       { speed: 70, h: 2, m: 30, dist: 175 },
       { speed: 80, h: 2, m: 15, dist: 180 },
@@ -3387,17 +3493,47 @@
       { speed: 60, h: 2, m: 45, dist: 165 },
       { speed: 48, h: 2, m: 30, dist: 120 },
       { speed: 120, h: 1, m: 30, dist: 180 },
+      { speed: 60, h: 1, m: 45, dist: 105 },
+      { speed: 96, h: 2, m: 30, dist: 240 },
+      { speed: 60, h: 2, m: 20, dist: 140 },
+      { speed: 84, h: 2, m: 20, dist: 196 },
+      { speed: 80, h: 2, m: 45, dist: 220 },
+      { speed: 66, h: 2, m: 20, dist: 154 },
+      { speed: 54, h: 2, m: 40, dist: 144 },
+      { speed: 75, h: 1, m: 20, dist: 100 },
+      { speed: 60, h: 3, m: 20, dist: 200 },
+      { speed: 90, h: 1, m: 20, dist: 120 },
+      { speed: 105, h: 2, m: 40, dist: 280 },
+      { speed: 72, h: 1, m: 40, dist: 120 },
+      { speed: 80, h: 1, m: 30, dist: 120 },
+      { speed: 60, h: 3, m: 45, dist: 225 },
     ];
+    // 情境用語，增加題目多樣性
+    const ctxFns = [
+      (s, t) => `一輛汽車以時速 ${s} 公里行駛，行駛了 ${t}，請問共走了多少公里？`,
+      (s, t) => `一列火車以時速 ${s} 公里的速度行駛，行駛 ${t} 後共走了多少公里？`,
+      (s, t) => `一輛公車以時速 ${s} 公里前進，行駛了 ${t}，共行駛了多少公里？`,
+      (s, t) => `一輛卡車以時速 ${s} 公里行駛，行駛 ${t} 後，抵達目的地，距離是多少公里？`,
+      (s, t) => `小明搭乘時速 ${s} 公里的火車，乘坐了 ${t}，共移動了多少公里？`,
+    ];
+    // 把分鐘轉成小數或分數說明
+    function toFracStr(h, m) {
+      if (m === 30) return `${h}.5 小時`;
+      if (m === 15) return `${h}.25 小時`;
+      if (m === 45) return `${h}.75 小時`;
+      if (m === 20) return `${h} 又 1/3 小時`;
+      if (m === 40) return `${h} 又 2/3 小時`;
+      return `${h + m / 60} 小時`;
+    }
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = pool[randInt(0, pool.length - 1)];
       const timeStr = `${c.h} 小時 ${c.m} 分`;
-      const fracStr = c.m === 30 ? `${c.h}.5 小時` : c.m === 15 ? `${c.h}.25 小時` : c.m === 45 ? `${c.h}.75 小時` : c.m === 40 ? `${c.h} 又 ${c.m}/60 小時` : `${c.h + c.m / 60} 小時`;
-      questions.push(
-        `一輛車以時速 ${c.speed} 公里行駛，行駛了 ${timeStr}，請問共走了多少公里？`
-      );
+      const fracStr = toFracStr(c.h, c.m);
+      const ctx = ctxFns[randInt(0, ctxFns.length - 1)];
+      questions.push(ctx(c.speed, timeStr));
       summaryAnswers.push(`${c.dist}公里`);
       answers.push(
-        `簡答：${c.dist}公里。過程：先把時間換算成小數，${timeStr} = ${fracStr}，距離 = 時速 × 時間 = ${c.speed} × ${fracStr} = ${c.dist} 公里。`
+        `簡答：${c.dist}公里。過程：先換算時間，${timeStr} = ${fracStr}，距離 = 時速 × 時間 = ${c.speed} × ${fracStr} = ${c.dist} 公里。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3407,7 +3543,8 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const cases = [
+    // 15 組已驗算的比賽情境（total = sections×secMin + breaks×breakMin + halftime）
+    const pool = [
       { sport: '籃球賽', sections: 4, secMin: 12, breaks: 3, breakMin: 2, halftime: 15, total: 69, unit: '節' },
       { sport: '足球賽', sections: 2, secMin: 45, breaks: 1, breakMin: 15, halftime: 0, total: 105, unit: '半場' },
       { sport: '排球賽', sections: 3, secMin: 20, breaks: 2, breakMin: 5, halftime: 10, total: 80, unit: '局' },
@@ -3416,15 +3553,22 @@
       { sport: '羽球賽', sections: 3, secMin: 25, breaks: 2, breakMin: 5, halftime: 0, total: 85, unit: '局' },
       { sport: '手球賽', sections: 2, secMin: 30, breaks: 1, breakMin: 10, halftime: 0, total: 70, unit: '半場' },
       { sport: '棒球賽', sections: 3, secMin: 20, breaks: 2, breakMin: 3, halftime: 5, total: 71, unit: '節' },
+      { sport: '冰上曲棍球賽', sections: 3, secMin: 20, breaks: 2, breakMin: 15, halftime: 0, total: 90, unit: '節' },
+      { sport: '網球賽', sections: 3, secMin: 30, breaks: 2, breakMin: 5, halftime: 0, total: 100, unit: '盤' },
+      { sport: '籃球賽', sections: 4, secMin: 10, breaks: 3, breakMin: 2, halftime: 15, total: 61, unit: '節' },
+      { sport: '足球賽', sections: 2, secMin: 40, breaks: 1, breakMin: 20, halftime: 0, total: 100, unit: '半場' },
+      { sport: '游泳接力賽', sections: 4, secMin: 5, breaks: 3, breakMin: 2, halftime: 0, total: 26, unit: '輪' },
+      { sport: '壘球賽', sections: 3, secMin: 25, breaks: 2, breakMin: 5, halftime: 0, total: 85, unit: '局' },
+      { sport: '排球賽', sections: 5, secMin: 15, breaks: 4, breakMin: 3, halftime: 0, total: 87, unit: '局' },
     ];
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = pool[randInt(0, pool.length - 1)];
       const gamePart = `${c.sections} ${c.unit} × 每${c.unit} ${c.secMin} 分 = ${c.sections * c.secMin} 分`;
-      const breakPart = c.breaks > 0 ? `${c.breaks} 次中場休息 × ${c.breakMin} 分 = ${c.breaks * c.breakMin} 分` : '';
+      const breakPart = c.breaks > 0 ? `${c.breaks} 次${c.unit}間休息 × ${c.breakMin} 分 = ${c.breaks * c.breakMin} 分` : '';
       const halftimePart = c.halftime > 0 ? `大中場休息 ${c.halftime} 分` : '';
       const parts = [gamePart, breakPart, halftimePart].filter(Boolean);
       questions.push(
-        `一場${c.sport}共 ${c.sections} ${c.unit}，每${c.unit}進行 ${c.secMin} 分鐘，${c.unit}間休息 ${c.breakMin} 分鐘${c.halftime > 0 ? `，大中場休息 ${c.halftime} 分鐘` : ''}，整場比賽共歷時多少分鐘？`
+        `一場${c.sport}共 ${c.sections} ${c.unit}，每${c.unit}進行 ${c.secMin} 分鐘，${c.unit}間休息 ${c.breakMin} 分鐘${c.halftime > 0 ? `，另有大中場休息 ${c.halftime} 分鐘` : ''}，整場比賽共歷時多少分鐘？`
       );
       summaryAnswers.push(`${c.total}分鐘`);
       answers.push(
@@ -3438,24 +3582,45 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const cases = [
-      { activity: '游泳', dist1: '100公尺', dist2: '200公尺', t1: '1分25秒', t2: '2分50秒', sec1: 85, sec2: 170, ratio: 2 },
-      { activity: '走路', dist1: '500公尺', dist2: '1500公尺', t1: '6分鐘', t2: '18分鐘', sec1: 6, sec2: 18, ratio: 3 },
-      { activity: '跑步', dist1: '100公尺', dist2: '300公尺', t1: '1分15秒', t2: '3分45秒', sec1: 75, sec2: 225, ratio: 3 },
-      { activity: '游泳', dist1: '50公尺', dist2: '100公尺', t1: '55秒', t2: '1分50秒', sec1: 55, sec2: 110, ratio: 2 },
-      { activity: '健走', dist1: '1公里', dist2: '3公里', t1: '15分鐘', t2: '45分鐘', sec1: 15, sec2: 45, ratio: 3 },
-      { activity: '騎腳踏車', dist1: '2公里', dist2: '6公里', t1: '8分鐘', t2: '24分鐘', sec1: 8, sec2: 24, ratio: 3 },
-      { activity: '賽跑', dist1: '200公尺', dist2: '400公尺', t1: '40秒', t2: '1分20秒', sec1: 40, sec2: 80, ratio: 2 },
-      { activity: '跑步', dist1: '1公里', dist2: '2公里', t1: '5分鐘', t2: '10分鐘', sec1: 5, sec2: 10, ratio: 2 },
+    // 秒數轉時間字串（秒→「X分Y秒」或「X分鐘」或「X秒」）
+    function secToStr(s) {
+      if (s < 60) return `${s}秒`;
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return r === 0 ? `${m}分鐘` : `${m}分${r}秒`;
+    }
+    // 15 組情境（sec1 為秒，ratio 已驗算，sec2 = sec1 × ratio）
+    const pool = [
+      { activity: '游泳', dist1: '100公尺', dist2: '200公尺', sec1: 85, ratio: 2 },
+      { activity: '走路', dist1: '500公尺', dist2: '1500公尺', sec1: 360, ratio: 3 },
+      { activity: '跑步', dist1: '100公尺', dist2: '300公尺', sec1: 75, ratio: 3 },
+      { activity: '游泳', dist1: '50公尺', dist2: '100公尺', sec1: 35, ratio: 2 },
+      { activity: '健走', dist1: '1公里', dist2: '3公里', sec1: 900, ratio: 3 },
+      { activity: '騎腳踏車', dist1: '2公里', dist2: '6公里', sec1: 480, ratio: 3 },
+      { activity: '賽跑', dist1: '200公尺', dist2: '400公尺', sec1: 40, ratio: 2 },
+      { activity: '跑步', dist1: '1公里', dist2: '2公里', sec1: 300, ratio: 2 },
+      { activity: '慢跑', dist1: '2公里', dist2: '10公里', sec1: 720, ratio: 5 },
+      { activity: '游泳', dist1: '100公尺', dist2: '400公尺', sec1: 90, ratio: 4 },
+      { activity: '走路', dist1: '200公尺', dist2: '800公尺', sec1: 120, ratio: 4 },
+      { activity: '騎車', dist1: '5公里', dist2: '15公里', sec1: 1200, ratio: 3 },
+      { activity: '游泳', dist1: '100公尺', dist2: '500公尺', sec1: 80, ratio: 5 },
+      { activity: '跑步', dist1: '400公尺', dist2: '800公尺', sec1: 80, ratio: 2 },
+      { activity: '健走', dist1: '500公尺', dist2: '2500公尺', sec1: 360, ratio: 5 },
     ];
+    // 使用不同稱呼增加多樣性
+    const names = ['小明', '小華', '小美', '小強', '小莉', '小傑'];
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = pool[randInt(0, pool.length - 1)];
+      const sec2 = c.sec1 * c.ratio;
+      const t1 = secToStr(c.sec1);
+      const t2 = secToStr(sec2);
+      const name = names[randInt(0, names.length - 1)];
       questions.push(
-        `小明${c.activity}${c.dist1}需要 ${c.t1}，${c.activity}${c.dist2}需要 ${c.t2}，${c.activity}${c.dist2}所需時間是${c.activity}${c.dist1}的幾倍？`
+        `${name}${c.activity}${c.dist1}需要 ${t1}，${c.activity}${c.dist2}需要 ${t2}，${c.activity}${c.dist2}所需的時間是${c.activity}${c.dist1}的幾倍？`
       );
       summaryAnswers.push(`${c.ratio}倍`);
       answers.push(
-        `簡答：${c.ratio}倍。過程：先統一單位，${c.t2} = ${c.sec2}秒，${c.t1} = ${c.sec1}秒，${c.sec2} ÷ ${c.sec1} = ${c.ratio} 倍。`
+        `簡答：${c.ratio}倍。過程：先統一單位，${t2} = ${sec2}秒，${t1} = ${c.sec1}秒，${sec2} ÷ ${c.sec1} = ${c.ratio} 倍。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -5588,52 +5753,61 @@
   }
 
 
+
+  function buildE523RockCupThreeSet(count) {
+    return buildE523MixedSet([
+      buildE523RockWaterLevelSet,
+      buildE523CupPourSet,
+      buildE523FractionBaseAreaSet,
+    ], count);
+  }
+
   function buildE523RockWaterLevelSet(count) {
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const cases = [
-      { L: 70, W: 60, H: 50, waterVol: 60000, rockVol: 18000, finalH: 130 / 6 },
-      { L: 60, W: 40, H: 30, waterVol: 36000, rockVol: 4000, finalH: 40000 / 2400 },
-      { L: 50, W: 40, H: 30, waterVol: 40000, rockVol: 10000, finalH: 25 },
-      { L: 80, W: 50, H: 40, waterVol: 60000, rockVol: 8000, finalH: 68000 / 4000 },
-      { L: 60, W: 50, H: 40, waterVol: 50000, rockVol: 15000, finalH: 65000 / 3000 },
-      { L: 90, W: 70, H: 60, waterVol: 280000, rockVol: 17000, finalH: 297000 / 6300 },
+    // 底面積尺寸池（公分）
+    const dimPool = [
+      [30, 20], [40, 25], [50, 40], [60, 40], [70, 60],
+      [80, 50], [90, 70], [45, 30], [50, 30], [60, 50],
+      [40, 40], [80, 60], [60, 40], [50, 50], [70, 50],
+      [30, 30], [55, 40], [75, 40], [40, 30], [60, 30],
     ];
-    // Pre-baked with clean answers
-    const cleanCases = [
-      { L: 50, W: 40, containerH: 30, waterL: 40, rockVol: 10000, finalH: 25,
-        waterVol: 40000, totalVol: 50000, note: '40公升水 + 10000立方公分石頭' },
-      { L: 60, W: 40, containerH: 30, waterL: 36, rockVol: 4000, finalH: 17,
-        waterVol: 36000, totalVol: 40000, note: '36公升水 + 4000立方公分石頭' },
-      { L: 70, W: 60, containerH: 50, waterL: 60, rockVol: 18000, finalH: 20,
-        waterVol: 60000, totalVol: 78000, note: '60公升水 + 18000立方公分石頭' },
-      { L: 80, W: 50, containerH: 40, waterL: 60, rockVol: 8000, finalH: 17,
-        waterVol: 60000, totalVol: 68000, note: '60公升水 + 8000立方公分石頭' },
-      { L: 30, W: 20, containerH: 40, waterL: 12, rockVol: 1200, finalH: 22,
-        waterVol: 12000, totalVol: 13200, note: '12公升水 + 1200立方公分石頭' },
-      { L: 45, W: 35, containerH: 25, waterL: 20, rockVol: 7875, finalH: 18,
-        waterVol: 20000, totalVol: 27875, note: '20公升水 + 7875立方公分石頭' },
-    ];
-    // verify: 27875/(45*35)=17.7... not clean. Use simple ones:
-    const verifiedCases = [
-      { L: 50, W: 40, containerH: 35, waterL: 40, rockVol: 10000, finalH: 25, waterVol: 40000 },
-      { L: 60, W: 40, containerH: 30, waterL: 36, rockVol: 4000, finalH: Math.round(40000/2400), waterVol: 36000 },
-      { L: 70, W: 60, containerH: 50, waterL: 60, rockVol: 18000, finalH: Math.round(78000/4200), waterVol: 60000 },
-      { L: 30, W: 20, containerH: 40, waterL: 12, rockVol: 1200, finalH: Math.round(13200/600), waterVol: 12000 },
-      { L: 80, W: 50, containerH: 45, waterL: 60, rockVol: 8000, finalH: Math.round(68000/4000), waterVol: 60000 },
-    ];
+    // 水面高度池與上升量池（確保 finalH = waterH + delta 為整數）
+    const waterHPool = [5, 6, 7, 8, 9, 10, 11, 12, 15, 6, 8, 10, 7, 9, 5];
+    const deltaPool  = [2, 3, 4, 5, 6, 3, 4, 5, 2, 4, 3, 6, 5, 4, 3];
     for (let i = 0; i < count; i += 1) {
-      const c = verifiedCases[i % verifiedCases.length];
-      const area = c.L * c.W;
-      const finalH = Math.round((c.waterVol + c.rockVol) / area);
-      questions.push(
-        `一個長方體容器，內部長 ${c.L} 公分、寬 ${c.W} 公分、高 ${c.containerH} 公分。先倒入 ${c.waterL} 公升的水，再放入一塊體積 ${c.rockVol} 立方公分的石頭，完全沉入水中，水面高度是多少公分？`
-      );
-      summaryAnswers.push(`${finalH}公分`);
-      answers.push(
-        `簡答：${finalH}公分。過程：${c.waterL} 公升 = ${c.waterVol} 立方公分，水+石頭總體積 = ${c.waterVol} + ${c.rockVol} = ${c.waterVol + c.rockVol}，水面高 = ${c.waterVol + c.rockVol} ÷ (${c.L} × ${c.W}) = ${c.waterVol + c.rockVol} ÷ ${area} = ${finalH} 公分。`
-      );
+      const [L, W] = dimPool[randInt(0, dimPool.length - 1)];
+      const waterH = waterHPool[randInt(0, waterHPool.length - 1)];
+      const delta = deltaPool[randInt(0, deltaPool.length - 1)];
+      const finalH = waterH + delta;
+      const containerH = finalH + randInt(5, 15);
+      const area = L * W;
+      const waterVol = waterH * area;
+      const rockVol = delta * area;
+      const waterL = waterVol / 1000;
+      // 水量字串：可整除時用公升，否則用毫升
+      const waterStr = Number.isInteger(waterL) ? `${waterL} 公升` : `${waterVol} 毫升`;
+      const waterConvertStr = Number.isInteger(waterL) ? `${waterL} 公升 = ${waterVol} 立方公分，` : '';
+      if (i % 2 === 0) {
+        // 類型 A：已知石頭體積，求最終水面高度
+        questions.push(
+          `一個長方體容器，內部長 ${L} 公分、寬 ${W} 公分、高 ${containerH} 公分。先倒入 ${waterStr} 的水，再放入一塊體積 ${rockVol} 立方公分的石頭，完全沉入水中，水面高度是多少公分？`
+        );
+        summaryAnswers.push(`${finalH}公分`);
+        answers.push(
+          `簡答：${finalH}公分。過程：${waterConvertStr}底面積 = ${L} × ${W} = ${area} 平方公分，水 + 石頭總體積 = ${waterVol} + ${rockVol} = ${waterVol + rockVol} 立方公分，水面高 = ${waterVol + rockVol} ÷ ${area} = ${finalH} 公分。`
+        );
+      } else {
+        // 類型 B：已知水面上升量，求石頭體積
+        questions.push(
+          `一個長方體容器，內部長 ${L} 公分、寬 ${W} 公分。原本裡面有 ${waterStr} 的水（水面高 ${waterH} 公分），放入一塊石頭完全沉入後，水面上升到 ${finalH} 公分，請問石頭的體積是多少立方公分？`
+        );
+        summaryAnswers.push(`${rockVol}立方公分`);
+        answers.push(
+          `簡答：${rockVol}立方公分。過程：底面積 = ${L} × ${W} = ${area} 平方公分，水面上升 = ${finalH} − ${waterH} = ${delta} 公分，石頭體積 = ${area} × ${delta} = ${rockVol} 立方公分。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5642,32 +5816,60 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const cupCases = [
-      { total: 2000, unit: '公升', totalCm3: 2000, cupMl: 500, cups: 4, ctx: '一個 2 公升的水瓶裝滿水後，倒入容量 500 毫升的杯子，可以倒幾杯？' },
-      { total: 3000, unit: '毫升', totalCm3: 3000, cupMl: 300, cups: 10, ctx: '3000 毫升的果汁，每杯 300 毫升，可以倒幾杯？' },
-      { total: 5000, unit: '毫升', totalCm3: 5000, cupMl: 250, cups: 20, ctx: '5000 毫升的牛奶，每瓶 250 毫升，可以裝幾瓶？' },
-      { total: 15000, unit: '毫升', totalCm3: 15000, cupMl: 750, cups: 20, ctx: '一個 15 公升的水桶，用 750 毫升的瓶子裝水，需要裝幾瓶才能裝滿水桶？' },
-      { total: 2000, unit: '毫升', totalCm3: 2000, cupMl: 400, cups: 5, ctx: '一個容量 2000 毫升的保特瓶，用 400 毫升的杯子，可以倒幾杯？' },
+    // 類型 A：大容器倒入小杯（15 組，totalMl ÷ cupMl = cups 均為整數）
+    const typeAPool = [
+      { totalL: 2, totalMl: 2000, cupMl: 500, cups: 4, item: '水瓶', liquid: '水' },
+      { totalL: 3, totalMl: 3000, cupMl: 300, cups: 10, item: '果汁瓶', liquid: '果汁' },
+      { totalL: 2, totalMl: 2000, cupMl: 400, cups: 5, item: '保特瓶', liquid: '茶' },
+      { totalL: 1.5, totalMl: 1500, cupMl: 300, cups: 5, item: '牛奶盒', liquid: '牛奶' },
+      { totalL: 5, totalMl: 5000, cupMl: 250, cups: 20, item: '水桶', liquid: '水' },
+      { totalL: 2.5, totalMl: 2500, cupMl: 500, cups: 5, item: '茶壺', liquid: '茶' },
+      { totalL: 4, totalMl: 4000, cupMl: 250, cups: 16, item: '果汁瓶', liquid: '果汁' },
+      { totalL: 1.8, totalMl: 1800, cupMl: 300, cups: 6, item: '果汁瓶', liquid: '柳橙汁' },
+      { totalL: 2, totalMl: 2000, cupMl: 250, cups: 8, item: '茶壺', liquid: '紅茶' },
+      { totalL: 1.2, totalMl: 1200, cupMl: 400, cups: 3, item: '水瓶', liquid: '牛奶' },
+      { totalL: 3, totalMl: 3000, cupMl: 500, cups: 6, item: '水桶', liquid: '果汁' },
+      { totalL: 0.6, totalMl: 600, cupMl: 150, cups: 4, item: '礦泉水', liquid: '水' },
+      { totalL: 10, totalMl: 10000, cupMl: 500, cups: 20, item: '大水桶', liquid: '水' },
+      { totalL: 15, totalMl: 15000, cupMl: 750, cups: 20, item: '水桶', liquid: '水' },
+      { totalL: 2.4, totalMl: 2400, cupMl: 300, cups: 8, item: '果汁瓶', liquid: '蘋果汁' },
     ];
-    const pourCases = [
-      { sideA: 10, totalVol: 1000, L: 20, W: 10, finalH: 5, ctx: '一個內部邊長 10 公分的正方體容器裝滿水，倒入一個內部長 20 公分、寬 10 公分的長方體容器，水深是多少公分？' },
-      { sideA: 8, totalVol: 512, L: 16, W: 4, finalH: 8, ctx: '一個內部邊長 8 公分的正方體容器裝滿水，倒入一個內部長 16 公分、寬 4 公分的長方體容器，水深是多少公分？' },
-      { sideA: 15, totalVol: 3375, L: 25, W: 9, finalH: 15, ctx: '一個內部邊長 15 公分的正方體容器裝滿水，倒入一個內部長 25 公分、寬 9 公分的長方體容器，水深是多少公分？' },
+    // 類型 B：正方體裝滿水倒入長方體，求水深（所有答案均已驗算為整數）
+    const typeBPool = [
+      { sideA: 10, vol: 1000, L: 20, W: 10, area: 200, finalH: 5 },
+      { sideA: 8, vol: 512, L: 16, W: 4, area: 64, finalH: 8 },
+      { sideA: 15, vol: 3375, L: 25, W: 9, area: 225, finalH: 15 },
+      { sideA: 12, vol: 1728, L: 24, W: 9, area: 216, finalH: 8 },
+      { sideA: 20, vol: 8000, L: 40, W: 20, area: 800, finalH: 10 },
+      { sideA: 10, vol: 1000, L: 25, W: 4, area: 100, finalH: 10 },
+      { sideA: 6, vol: 216, L: 12, W: 6, area: 72, finalH: 3 },
+      { sideA: 9, vol: 729, L: 27, W: 9, area: 243, finalH: 3 },
+      { sideA: 15, vol: 3375, L: 27, W: 25, area: 675, finalH: 5 },
+      { sideA: 10, vol: 1000, L: 20, W: 5, area: 100, finalH: 10 },
+      { sideA: 12, vol: 1728, L: 18, W: 16, area: 288, finalH: 6 },
+      { sideA: 18, vol: 5832, L: 27, W: 24, area: 648, finalH: 9 },
+      { sideA: 5, vol: 125, L: 5, W: 5, area: 25, finalH: 5 },
+      { sideA: 4, vol: 64, L: 8, W: 4, area: 32, finalH: 2 },
+      { sideA: 12, vol: 1728, L: 48, W: 9, area: 432, finalH: 4 },
     ];
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
-        const c = cupCases[i % cupCases.length];
-        questions.push(c.ctx);
+        const c = typeAPool[randInt(0, typeAPool.length - 1)];
+        questions.push(
+          `一個容量 ${c.totalL} 公升的${c.item}裝滿${c.liquid}，倒入容量 ${c.cupMl} 毫升的杯子，可以倒幾杯？`
+        );
         summaryAnswers.push(`${c.cups}杯`);
         answers.push(
-          `簡答：${c.cups}杯。過程：${c.totalCm3} ÷ ${c.cupMl} = ${c.cups} 杯。`
+          `簡答：${c.cups}杯。過程：${c.totalL} 公升 = ${c.totalMl} 毫升，${c.totalMl} ÷ ${c.cupMl} = ${c.cups} 杯。`
         );
       } else {
-        const c = pourCases[i % pourCases.length];
-        questions.push(c.ctx);
+        const c = typeBPool[randInt(0, typeBPool.length - 1)];
+        questions.push(
+          `一個內部邊長 ${c.sideA} 公分的正方體容器裝滿水，全部倒入一個內部長 ${c.L} 公分、寬 ${c.W} 公分的長方體容器，水深是多少公分？`
+        );
         summaryAnswers.push(`${c.finalH}公分`);
         answers.push(
-          `簡答：${c.finalH}公分。過程：正方體容積 = ${c.sideA}³ = ${c.totalVol} 立方公分，倒入長方體後水深 = ${c.totalVol} ÷ (${c.L} × ${c.W}) = ${c.finalH} 公分。`
+          `簡答：${c.finalH}公分。過程：正方體容積 = ${c.sideA}³ = ${c.vol} 立方公分，底面積 = ${c.L} × ${c.W} = ${c.area} 平方公分，水深 = ${c.vol} ÷ ${c.area} = ${c.finalH} 公分。`
         );
       }
     }
@@ -5678,39 +5880,61 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const fractionCases = [
-      { L: 60, W: 40, H: 50, num: 3, den: 4, waterVol: 90000, waterL: 90, frac: '3/4' },
-      { L: 30, W: 20, H: 25, num: 3, den: 5, waterVol: 9000, waterL: 9, frac: '3/5' },
-      { L: 40, W: 25, H: 20, num: 1, den: 2, waterVol: 10000, waterL: 10, frac: '1/2' },
-      { L: 75, W: 65, H: 55, num: 4, den: 11, waterVol: 97500, waterL: 97, frac: '4/11' },
+    // 類型 A：容器裝幾分之幾的水，求水量（公升）—— 所有答案均為整數公升
+    const typeAPool = [
+      { L: 60, W: 40, H: 50, num: 3, den: 4, frac: '3/4', waterVol: 90000, waterL: 90 },
+      { L: 30, W: 20, H: 25, num: 3, den: 5, frac: '3/5', waterVol: 9000, waterL: 9 },
+      { L: 40, W: 25, H: 20, num: 1, den: 2, frac: '1/2', waterVol: 10000, waterL: 10 },
+      { L: 50, W: 40, H: 30, num: 3, den: 4, frac: '3/4', waterVol: 45000, waterL: 45 },
+      { L: 60, W: 50, H: 40, num: 2, den: 3, frac: '2/3', waterVol: 80000, waterL: 80 },
+      { L: 40, W: 30, H: 25, num: 2, den: 5, frac: '2/5', waterVol: 12000, waterL: 12 },
+      { L: 70, W: 50, H: 60, num: 1, den: 2, frac: '1/2', waterVol: 105000, waterL: 105 },
+      { L: 60, W: 40, H: 50, num: 1, den: 3, frac: '1/3', waterVol: 40000, waterL: 40 },
+      { L: 80, W: 50, H: 60, num: 3, den: 4, frac: '3/4', waterVol: 180000, waterL: 180 },
+      { L: 45, W: 40, H: 50, num: 2, den: 3, frac: '2/3', waterVol: 60000, waterL: 60 },
+      { L: 50, W: 40, H: 45, num: 4, den: 9, frac: '4/9', waterVol: 40000, waterL: 40 },
+      { L: 60, W: 50, H: 25, num: 4, den: 5, frac: '4/5', waterVol: 60000, waterL: 60 },
+      { L: 30, W: 25, H: 16, num: 3, den: 4, frac: '3/4', waterVol: 9000, waterL: 9 },
+      { L: 50, W: 30, H: 40, num: 1, den: 2, frac: '1/2', waterVol: 30000, waterL: 30 },
+      { L: 70, W: 60, H: 50, num: 1, den: 3, frac: '1/3', waterVol: 70000, waterL: 70 },
     ];
-    const baseAreaCases = [
-      { totalVol: 20000, depth: 16, area: 1250, ctx: '一個魚缸的容量是 20 公升，水深 16 公分，魚缸的底面積是多少平方公分？' },
-      { totalVol: 30000, depth: 50, area: 600, ctx: '一個浴缸的容量是 30 公升，平均水深 50 公分，浴缸底面積是多少平方公分？' },
-      { totalVol: 3500, depth: 5, area: 700, ctx: '一塊體積 3500 立方公分的石頭放入長方體水箱，水位上升 5 公分，水箱底面積是多少平方公分？' },
-      { totalVol: 75000, depth: 1, area: 75000, ctx: '一個游泳池容積 75 立方公尺，水深 1 公尺，底面積是多少平方公尺？' },
+    // 類型 B：已知容積與水深，求底面積（vol ÷ depth = area，均驗算為整數）
+    const typeBPool = [
+      { volStr: '20 公升', vol: 20000, depth: 16, depthU: '公分', area: 1250, areaU: '平方公分', thing: '魚缸' },
+      { volStr: '30 公升', vol: 30000, depth: 20, depthU: '公分', area: 1500, areaU: '平方公分', thing: '魚缸' },
+      { volStr: '12 公升', vol: 12000, depth: 8, depthU: '公分', area: 1500, areaU: '平方公分', thing: '水族箱' },
+      { volStr: '36 公升', vol: 36000, depth: 30, depthU: '公分', area: 1200, areaU: '平方公分', thing: '水槽' },
+      { volStr: '3500 立方公分', vol: 3500, depth: 5, depthU: '公分', area: 700, areaU: '平方公分', thing: '水箱' },
+      { volStr: '6 公升', vol: 6000, depth: 4, depthU: '公分', area: 1500, areaU: '平方公分', thing: '魚缸' },
+      { volStr: '45 公升', vol: 45000, depth: 30, depthU: '公分', area: 1500, areaU: '平方公分', thing: '水族箱' },
+      { volStr: '8 公升', vol: 8000, depth: 5, depthU: '公分', area: 1600, areaU: '平方公分', thing: '水箱' },
+      { volStr: '24 公升', vol: 24000, depth: 15, depthU: '公分', area: 1600, areaU: '平方公分', thing: '水族箱' },
+      { volStr: '10 公升', vol: 10000, depth: 8, depthU: '公分', area: 1250, areaU: '平方公分', thing: '魚缸' },
+      { volStr: '75 立方公尺', vol: 75, depth: 1, depthU: '公尺', area: 75, areaU: '平方公尺', thing: '游泳池' },
+      { volStr: '50 立方公尺', vol: 50, depth: 2, depthU: '公尺', area: 25, areaU: '平方公尺', thing: '游泳池' },
+      { volStr: '120 立方公尺', vol: 120, depth: 3, depthU: '公尺', area: 40, areaU: '平方公尺', thing: '蓄水池' },
+      { volStr: '15 公升', vol: 15000, depth: 12, depthU: '公分', area: 1250, areaU: '平方公分', thing: '水槽' },
+      { volStr: '18 公升', vol: 18000, depth: 9, depthU: '公分', area: 2000, areaU: '平方公分', thing: '水族箱' },
     ];
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
-        const c = fractionCases[i % fractionCases.length];
+        const c = typeAPool[randInt(0, typeAPool.length - 1)];
         const totalVol = c.L * c.W * c.H;
-        const waterVol = Math.round(totalVol * c.num / c.den);
-        const unit = waterVol >= 1000 ? `${waterVol / 1000} 公升` : `${waterVol} 毫升`;
         questions.push(
           `一個長方體容器，內部長 ${c.L} 公分、寬 ${c.W} 公分、高 ${c.H} 公分，裡面裝了 ${c.frac} 的水，請問有多少公升的水？`
         );
-        const waterLiters = waterVol / 1000;
-        summaryAnswers.push(`${Number.isInteger(waterLiters) ? waterLiters : waterLiters.toFixed(1)}公升`);
+        summaryAnswers.push(`${c.waterL}公升`);
         answers.push(
-          `簡答：${Number.isInteger(waterLiters) ? waterLiters : waterLiters.toFixed(1)}公升。過程：容器容積 = ${c.L} × ${c.W} × ${c.H} = ${totalVol} 立方公分，裝 ${c.frac} = ${totalVol} × ${c.num}/${c.den} = ${waterVol} 立方公分 = ${Number.isInteger(waterLiters) ? waterLiters : waterLiters.toFixed(1)} 公升。`
+          `簡答：${c.waterL}公升。過程：容器容積 = ${c.L} × ${c.W} × ${c.H} = ${totalVol} 立方公分，水量 = ${totalVol} × ${c.num}/${c.den} = ${c.waterVol} 立方公分 = ${c.waterL} 公升。`
         );
       } else {
-        const c = baseAreaCases[i % baseAreaCases.length];
-        questions.push(c.ctx);
-        summaryAnswers.push(`${c.area}${c.area > 10000 ? '平方公尺' : '平方公分'}`);
-        const unit = c.area > 10000 ? '平方公尺' : '平方公分';
+        const c = typeBPool[randInt(0, typeBPool.length - 1)];
+        questions.push(
+          `一個${c.thing}裝有 ${c.volStr} 的水，水深 ${c.depth} ${c.depthU}，請問${c.thing}的底面積是多少${c.areaU}？`
+        );
+        summaryAnswers.push(`${c.area}${c.areaU}`);
         answers.push(
-          `簡答：${c.area}${unit}。過程：底面積 = 容積 ÷ 水深 = ${c.totalVol} ÷ ${c.depth} = ${c.area}${unit}。`
+          `簡答：${c.area}${c.areaU}。過程：底面積 = 水量 ÷ 水深 = ${c.vol} ÷ ${c.depth} = ${c.area} ${c.areaU}。`
         );
       }
     }
@@ -13200,6 +13424,42 @@
         return buildE529ApplicationThreeSet(5);
       },
     },
+    'e5-2-9-speed-distance-drill': {
+      type: 'drill',
+      title: '速度 × 時間 ＝ 距離（含單位換算）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE529SpeedDistanceSet(5);
+      },
+    },
+    'e5-2-9-match-with-break-drill': {
+      type: 'drill',
+      title: '比賽節數與休息時間計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE529MatchWithBreakSet(5);
+      },
+    },
+    'e5-2-9-time-ratio-drill': {
+      type: 'drill',
+      title: '時間倍數比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE529TimeRatioSet(5);
+      },
+    },
+    'e5-2-9-speed-match-three-subtypes': {
+      type: 'drill',
+      title: '速度距離、比賽時間與時間倍數三小類',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE529SpeedMatchThreeSet(5);
+      },
+    },
     'e5-2-10-meter-kilometer-convert-drill': {
       type: 'drill',
       title: '公尺與公里換算',
@@ -13470,6 +13730,42 @@
         return buildE524ApplicationOneSet(5);
       },
     },
+    'e5-2-4-distributive-law-drill': {
+      type: 'drill',
+      title: '分配律簡便計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE524DistributiveLawSet(5);
+      },
+    },
+    'e5-2-4-clever-grouping-drill': {
+      type: 'drill',
+      title: '湊整巧算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE524CleverGroupingSet(5);
+      },
+    },
+    'e5-2-4-discount-drill': {
+      type: 'drill',
+      title: '折扣與售價計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE524DiscountSet(5);
+      },
+    },
+    'e5-2-4-distributive-clever-two-subtypes': {
+      type: 'drill',
+      title: '分配律與湊整兩小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE524DistributiveCleverTwoSet(5);
+      },
+    },
     'e5-2-3-basic-unit-convert-drill': {
       type: 'drill',
       title: '容積與容量基本換算',
@@ -13578,6 +13874,15 @@
         return buildE523WaterTwoSet(5);
       },
     },
+    'e5-2-3-rock-cup-three-subtypes': {
+      type: 'drill',
+      title: '水位石頭、杯子倒水與分數水量三小類',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE523RockCupThreeSet(5);
+      },
+    },
     'e5-2-3-overflow-compare-two-subtypes': {
       type: 'drill',
       title: '溢水與大小比較二小類綜合',
@@ -13594,6 +13899,33 @@
       questionCount: 5,
       generate() {
         return buildE523LargeOneSet(5);
+      },
+    },
+    'e5-2-3-rock-water-level-drill': {
+      type: 'drill',
+      title: '石頭投入水位變化',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE523RockWaterLevelSet(5);
+      },
+    },
+    'e5-2-3-cup-pour-drill': {
+      type: 'drill',
+      title: '杯子倒水容積計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE523CupPourSet(5);
+      },
+    },
+    'e5-2-3-fraction-base-area-drill': {
+      type: 'drill',
+      title: '分數底面積容積計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE523FractionBaseAreaSet(5);
       },
     },
     'e5-2-2-integer-fraction-multiply-drill': {

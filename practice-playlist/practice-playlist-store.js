@@ -1,5 +1,25 @@
 (() => {
-  const STORAGE_KEY = "math-formula-tool-practice-playlists-v1";
+  const STORAGE_KEY = "math-formula-tool-practice-playlists-v2";
+
+  // 年級選項（供 builder / player 共用）
+  const GRADE_OPTIONS = [
+    "全部年級",
+    "國中複習",
+    "高中複習",
+    "國中章節重點",
+    "高中章節重點",
+    "小五",
+    "小六",
+    "國一",
+    "國二",
+    "國三",
+    "高一",
+    "高二",
+    "高三",
+    "其他"
+  ];
+  // 清單類型
+  const PLAYLIST_TYPES = ["任務型", "日程型"];
 
   function nowIso() {
     return new Date().toISOString();
@@ -9,7 +29,7 @@
     return String(text || "")
       .trim()
       .toLowerCase()
-      .replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-")
+      .replace(/[^a-z0-9一-鿿]+/g, "-")
       .replace(/^-+|-+$/g, "")
       .slice(0, 64);
   }
@@ -24,26 +44,56 @@
       id,
       title,
       description: String(raw.description || "").trim(),
+      grade: String(raw.grade || "全部年級").trim(),
+      playlistType: PLAYLIST_TYPES.includes(String(raw.playlistType || "").trim())
+        ? String(raw.playlistType).trim()
+        : "任務型",
+      playlistCategory: String(raw.playlistCategory || "").trim(),
+      chapterGroup: String(raw.chapterGroup || "").trim(),
       practiceIds: Array.from(new Set(practiceIds)),
       questionCount: Math.max(1, Number(raw.questionCount) || 5),
       shufflePractices: Boolean(raw.shufflePractices),
       enabled: raw.enabled !== false,
       updatedAt: String(raw.updatedAt || nowIso()),
+      // 日程型專用：週計畫設定（任務型忽略此欄）
+      scheduleConfig: raw.scheduleConfig || null,
     };
   }
 
+  // ── 讀取：bundled 資料檔優先，localStorage 補充（使用者自行新增）──────────
   function loadAll() {
+    const bundled = Array.isArray(window.practicePlaylistData)
+      ? window.practicePlaylistData.map(normalizePlaylist)
+      : [];
+    const bundledIds = new Set(bundled.map((p) => p.id));
+
     try {
       const raw = window.localStorage?.getItem(STORAGE_KEY) || "[]";
       const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed)) return [];
-      return parsed.map(normalizePlaylist);
+      const local = Array.isArray(parsed) ? parsed.map(normalizePlaylist) : [];
+      // localStorage 同 id 視為覆蓋 bundled；刪除 local 版本後會回到 bundled 預設。
+      const localById = new Map(local.map((playlist) => [playlist.id, playlist]));
+      const mergedBundled = bundled.map((playlist) => localById.get(playlist.id) || playlist);
+      const extra = local.filter((p) => !bundledIds.has(p.id));
+      return [...mergedBundled, ...extra];
+    } catch (_error) {
+      return bundled;
+    }
+  }
+
+  // 取得純 localStorage 清單（不包含 bundled）
+  function loadLocal() {
+    try {
+      const raw = window.localStorage?.getItem(STORAGE_KEY) || "[]";
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed.map(normalizePlaylist) : [];
     } catch (_error) {
       return [];
     }
   }
 
-  function saveAll(playlists) {
+  // 寫入 localStorage
+  function saveToLocal(playlists) {
     const normalized = Array.isArray(playlists) ? playlists.map(normalizePlaylist) : [];
     window.localStorage?.setItem(STORAGE_KEY, JSON.stringify(normalized));
     return normalized;
@@ -51,17 +101,18 @@
 
   function upsert(playlist) {
     const normalized = normalizePlaylist({ ...playlist, updatedAt: nowIso() });
-    const current = loadAll();
+    const current = loadLocal();
     const next = current.filter((item) => item.id !== normalized.id);
     next.unshift(normalized);
-    saveAll(next);
+    saveToLocal(next);
     return normalized;
   }
 
   function remove(id) {
     const targetId = String(id || "").trim();
-    const next = loadAll().filter((item) => item.id !== targetId);
-    saveAll(next);
+    // 只能刪除 localStorage 中的清單（bundled 清單由老師從資料檔移除）
+    const next = loadLocal().filter((item) => item.id !== targetId);
+    saveToLocal(next);
     return next;
   }
 
@@ -79,15 +130,26 @@
     return normalizePlaylist(parsed);
   }
 
+  // 產生資料檔內容，老師下載後手動替換 data/practice-playlists.js
+  function generateDataFileContent() {
+    const all = loadAll();
+    const json = JSON.stringify(all, null, 2);
+    return `// 無限練習清單靜態資料檔（由編輯器產生）\n// 最後更新：${nowIso()}\nwindow.practicePlaylistData = ${json};\n`;
+  }
+
   window.practicePlaylistStore = {
     STORAGE_KEY,
+    GRADE_OPTIONS,
+    PLAYLIST_TYPES,
     normalizePlaylist,
     loadAll,
-    saveAll,
+    loadLocal,
+    saveToLocal,
     upsert,
     remove,
     getById,
     exportJson,
     importJson,
+    generateDataFileContent,
   };
 })();

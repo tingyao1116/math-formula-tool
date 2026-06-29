@@ -33,6 +33,7 @@ from question_data_utils import (
 )
 from check_text_integrity import FORMULA_DB_PATH, QUESTION_DB_PATH, formal_json_files, scan_json_file
 from import_formal_question_packs import import_formal_packs
+from convert_word_to_markdown import convert_word_to_markdown
 from practice_db_utils import (
     DB_PATH as PRACTICE_DB_DEFAULT,
     LEGACY_PRACTICE_JS_PATH,
@@ -4315,7 +4316,11 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                 "   會處理：指定 .md 檔中的 \\\\A~\\\\Z、\\\\a~\\\\z 改成 \\A~\\Z、\\a~\\z，並把 \\=、\\+、\\-、\\>、\\<、\\_、\\. 的反斜線拿掉。\n"
                 "   用途：清掉從其他來源貼進 Markdown 後，多出來的跳脫符號。\n"
                 "   注意：這一步會直接覆蓋原檔，請先確認檔案是你要修改的版本。\n\n"
-                "5. TXT 行去重\n"
+                "5. Word 轉 Markdown\n"
+                "   會處理：指定 .docx 檔直接用 pandoc 轉成 UTF-8 Markdown；若選 .doc，會先嘗試用 LibreOffice 暫轉 .docx。\n"
+                "   用途：把 Word 題卷或詳解轉成較適合無限練習整理的 .md 文字來源。\n"
+                "   注意：.doc 需要本機有 LibreOffice/soffice；若沒有，請先用 Word 另存成 .docx。\n\n"
+                "6. TXT 行去重\n"
                 "   會處理：指定 .txt 檔，把後面重複出現的整行刪掉，只保留第一次出現的位置。\n"
                 "   用途：整理題目清單、講義素材、暫存匯出結果時，快速去掉中間重複內容。\n"
                 "   注意：比對方式是『整行文字完全相同』才算重複；預設會另存新檔，不直接覆蓋原檔。"
@@ -4455,6 +4460,81 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                 parent=window,
             )
 
+        def run_word_to_markdown():
+            path = filedialog.askopenfilename(
+                title="選擇 Word 檔",
+                filetypes=[("Word files", "*.docx *.doc"), ("DOCX files", "*.docx"), ("DOC files", "*.doc"), ("All files", "*.*")],
+                parent=window,
+            )
+            if not path:
+                return
+
+            source_path = Path(path)
+            if source_path.suffix.lower() not in {".docx", ".doc"}:
+                messagebox.showerror("格式錯誤", "請選擇 .docx 或 .doc 檔。", parent=window)
+                return
+
+            default_name = f"{source_path.stem}.md"
+            save_path = filedialog.asksaveasfilename(
+                title="選擇 Markdown 輸出位置",
+                defaultextension=".md",
+                initialdir=str(source_path.parent),
+                initialfile=default_name,
+                filetypes=[("Markdown files", "*.md"), ("All files", "*.*")],
+                parent=window,
+            )
+            if not save_path:
+                write_log(
+                    (
+                        "Word 轉 Markdown 已取消\n"
+                        f"- 來源檔案：{source_path}\n"
+                        "- 未選擇輸出位置"
+                    ),
+                    replace=True,
+                )
+                self.status_var.set("Word 轉 Markdown 已取消")
+                return
+
+            extract_media = messagebox.askyesno(
+                "抽出圖片與媒體？",
+                "是否要同時抽出 Word 內嵌圖片/媒體？\n\n"
+                "建議選「是」：題卷中的圖形、截圖或無法轉成 TeX 的公式會保留下來。\n"
+                "輸出位置會是 Markdown 同名的 _media 資料夾。",
+                parent=window,
+            )
+
+            try:
+                result = convert_word_to_markdown(source_path, Path(save_path), extract_media=extract_media)
+            except Exception as exc:
+                messagebox.showerror("轉換失敗", str(exc), parent=window)
+                write_log(
+                    (
+                        "Word 轉 Markdown 失敗\n"
+                        f"- 來源檔案：{source_path}\n"
+                        f"- 錯誤：{exc}"
+                    ),
+                    replace=True,
+                )
+                self.status_var.set("Word 轉 Markdown 失敗")
+                return
+
+            lines = [
+                "Word 轉 Markdown 完成",
+                f"- 來源檔案：{result['source']}",
+                f"- 輸出檔案：{result['output']}",
+                "- 編碼：UTF-8",
+            ]
+            if result.get("media_dir"):
+                lines.append(f"- 媒體資料夾：{result['media_dir']}")
+            if result.get("converted_from_doc"):
+                lines.append("- 來源為 .doc，已先透過 LibreOffice 暫轉 .docx")
+            if result.get("pandoc_output"):
+                lines.append("")
+                lines.append(result["pandoc_output"])
+            write_log("\n".join(lines), replace=True)
+            self.status_var.set("Word 轉 Markdown 完成")
+            messagebox.showinfo("完成", "\n".join(lines[:5]), parent=window)
+
         def run_txt_deduplicate():
             path = filedialog.askopenfilename(
                 title="選擇要去重的 TXT 檔",
@@ -4562,6 +4642,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         ttk.Button(button_bar, text="同步前端橋接檔", style="Compact.TButton", command=run_sync_all).pack(side="left", padx=(8, 0))
         ttk.Button(button_bar, text="檢查資料亂碼", style="Compact.TButton", command=run_integrity_check).pack(side="left", padx=(8, 0))
         ttk.Button(button_bar, text="Markdown 反跳脫清理", style="Compact.TButton", command=run_markdown_unescape).pack(side="left", padx=(8, 0))
+        ttk.Button(button_bar, text="Word轉MD", style="Compact.TButton", command=run_word_to_markdown).pack(side="left", padx=(8, 0))
         ttk.Button(button_bar, text="TXT 行去重", style="Compact.TButton", command=run_txt_deduplicate).pack(side="left", padx=(8, 0))
         ttk.Button(button_bar, text="講義產生器 v1", style="Compact.TButton", command=self.open_lesson_generator).pack(side="left", padx=(8, 0))
         ttk.Button(button_bar, text="關閉", style="Compact.TButton", command=window.destroy).pack(side="right")
@@ -4572,6 +4653,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             "- 同步前端橋接檔：formula-db / question-db / practice-db -> data/*.js\n"
             "- 檢查資料亂碼：掃描資料庫與正式匯入檔，不直接修改\n"
             "- Markdown 反跳脫清理：清掉指定 .md 檔內多餘的反斜線，直接覆蓋原檔\n"
+            "- Word轉MD：將 .docx/.doc 轉成 UTF-8 Markdown，必要時抽出圖片媒體\n"
             "- TXT 行去重：保留第一次出現，刪掉後面重複整行，預設另存新檔\n"
             "- 講義產生器 v1：開啟章節講義預覽與輸出工具",
             replace=True,
