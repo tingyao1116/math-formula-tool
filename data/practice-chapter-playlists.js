@@ -528,11 +528,11 @@
       "practice-j6-1-3-linear-constraint-extrema",
       "practice-j6-1-2-translation-graph-five-subtypes",
       "practice-j6-1-1-parabola-modeling",
+      "practice-j6-1-2-extreme-parameter-from-condition",
       "practice-j6-1-2-translation-reverse",
       "practice-j6-1-2-vertex-form-extrema-three-subtypes",
       "practice-j6-1-3-algebra-extrema-three-subtypes",
-      "practice-j6-1-3-number-sum-square-extrema",
-      "practice-j6-1-1-triangle-area-on-parabola"
+      "practice-j6-1-3-interval-extrema"
     ],
     "questionCount": 5,
     "shufflePractices": false,
@@ -579,12 +579,12 @@
       "practice-j6-3-3-probability-game-mixed",
       "practice-j6-3-3-probability-single-mixed",
       "practice-j6-3-3-number-arrangement-probability",
-      "practice-j6-3-1-frequency-distribution-eight-subtypes",
       "practice-j6-3-1-pie-chart-five-subtypes",
       "practice-j6-3-2-central-tendency-six-subtypes",
       "practice-j6-3-2-quartile-boxplot-seven-subtypes",
       "practice-j6-3-2-five-number-range-iqr",
-      "practice-j6-3-2-arithmetic-sequence-statistics"
+      "practice-j6-3-2-arithmetic-sequence-statistics",
+      "practice-j6-3-2-linear-transform-statistics"
     ],
     "questionCount": 5,
     "shufflePractices": false,
@@ -602,15 +602,17 @@
     "chapterGroup": "s1-1",
     "practiceIds": [
       "practice-s1-1-2-abs-quadratic-mixed",
+      "practice-s1-1-4-exponential-growth-model",
+      "practice-s1-1-5-log-scale-ratio-model",
       "practice-s1-1-1-radical-integer-range",
+      "practice-s1-1-4-exponential-fraction-range",
+      "practice-s1-1-4-exponential-parameter-relation",
+      "practice-s1-1-4-exponential-quadratic-extrema",
       "practice-s1-1-1-amgm-extrema",
       "practice-s1-1-2-abs-number-line-range",
       "practice-s1-1-2-abs-range-simplification",
       "practice-s1-1-2-abs-reverse-parameter",
-      "practice-s1-1-1-irrational-equality-solve",
-      "practice-s1-1-1-nested-radical-simplify",
-      "practice-s1-1-1-radical-integer-fractional-part",
-      "practice-s1-1-1-telescoping-rationalization"
+      "practice-s1-1-2-quotient-interval-range"
     ],
     "questionCount": 5,
     "shufflePractices": false,
@@ -627,6 +629,7 @@
     "playlistCategory": "章節重點",
     "chapterGroup": "s1-2",
     "practiceIds": [
+      "practice-s1-2-1-linear-fractional-region-extrema",
       "practice-s1-2-2-circle-discriminant-parameter",
       "practice-s1-2-2-circle-point-algebra-extrema",
       "practice-s1-2-2-point-circle-distance-extrema",
@@ -635,8 +638,9 @@
       "practice-s1-2-3-line-circle-parameter-relation",
       "practice-s1-2-1-intercept-constraints",
       "practice-s1-2-1-line-segment-slope-range",
-      "practice-s1-2-1-absolute-inequality-area",
-      "practice-s1-2-1-triangle-centers"
+      "practice-s1-2-1-line-side-parameter-count",
+      "practice-s1-2-3-chord-length-parameterized",
+      "practice-s1-2-1-absolute-inequality-area"
     ],
     "questionCount": 5,
     "shufflePractices": false,
@@ -692,7 +696,9 @@
       "practice-s2-1-2-sigma-five-subtypes",
       "practice-s2-1-1-recurrence-transform-mixed",
       "practice-s2-1-2-sigma-mixed",
-      "practice-s2-1-1-means-application"
+      "practice-s2-1-1-means-application",
+      "practice-s2-1-2-applications",
+      "practice-s2-1-2-geometric-applications"
     ],
     "questionCount": 5,
     "shufflePractices": false,
@@ -715,14 +721,14 @@
       "practice-s2-2-3-applications-five-subtypes",
       "practice-s2-2-1-advanced-counting-five-subtypes",
       "practice-s2-2-3-advanced-binomial-five-subtypes",
+      "practice-s2-2-4-exam-partial-guess-expected-score-parameterized",
       "practice-s2-2-3-combination-counting-five-subtypes",
       "practice-s2-2-4-applied-probability-five-subtypes",
+      "practice-s2-2-2-ordered-blocks-internal-permutation-parameterized",
       "practice-s2-2-2-repeated-letter-permutation-parameterized",
+      "practice-s2-2-3-binomial-adjacent-ratio-parameterized",
       "practice-s2-2-4-basic-probability-five-subtypes",
-      "practice-s2-2-4-exact-k-draw-probability-parameterized",
-      "practice-s2-2-4-probability-set-relations",
-      "practice-s2-2-4-total-probability-parameterized",
-      "practice-s2-2-3-grouping-distribution-five-subtypes"
+      "practice-s2-2-4-exact-k-draw-probability-parameterized"
     ],
     "questionCount": 5,
     "shufflePractices": false,
@@ -741,14 +747,15 @@
     "practiceIds": [
       "practice-s2-3-1-core-stats-five-subtypes",
       "practice-s2-3-2-correlation-five-subtypes",
+      "practice-s2-3-1-mean-median-missing-score-parameterized",
+      "practice-s2-3-1-sqrt-score-transform-parameterized",
       "practice-s2-3-2-linear-transform-correlation",
+      "practice-s2-3-2-signed-linear-correlation-parameterized",
       "practice-s2-3-1-distribution-interpretation-five-subtypes",
       "practice-s2-3-1-revision-merge-five-subtypes",
       "practice-s2-3-2-regression-five-subtypes",
       "practice-s2-3-1-z-score-standardization",
-      "practice-s2-3-1-weighted-mean-applications",
-      "practice-s2-3-1-grouped-mean-parameterized",
-      "practice-s2-3-1-quartiles-iqr-parameterized"
+      "practice-s2-3-1-weighted-mean-applications"
     ],
     "questionCount": 5,
     "shufflePractices": false,
@@ -768,6 +775,7 @@
       "practice-s2-4-1-computation-geometry-five-subtypes",
       "practice-s2-4-1-triangle-identity-five-subtypes",
       "practice-s2-4-1-basic-angle-coordinate-five-subtypes",
+      "practice-s2-4-2-side-sum-ratio-sine-ratio-parameterized",
       "practice-s2-4-2-area-radius-five-subtypes",
       "practice-s2-4-2-cosine-law-five-subtypes",
       "practice-s2-4-2-sine-law-five-subtypes",
@@ -776,9 +784,8 @@
       "practice-s2-4-3-navigation-motion-five-subtypes",
       "practice-s2-4-3-plane-survey-five-subtypes",
       "practice-s2-4-3-special-measurement-five-subtypes",
-      "practice-s2-4-1-trig-extrema-identities",
-      "practice-s2-4-2-algebraic-side-relation",
-      "practice-s2-4-2-diagonal-area-extrema"
+      "practice-s2-4-1-coterminal-quadrant-count-parameterized",
+      "practice-s2-4-1-line-slope-angle-parameterized"
     ],
     "questionCount": 5,
     "shufflePractices": false,
@@ -802,13 +809,13 @@
       "practice-s3-1-4-combo-extrema-five-subtypes",
       "practice-s3-1-2-geometry-rotation-five-subtypes",
       "practice-s3-1-4-geometry-model",
+      "practice-s3-1-1-seven-circles-band-parameterized",
+      "practice-s3-1-2-tangent-addition-equation-parameterized",
       "practice-s3-1-2-triangle-interior-relations",
-      "practice-s3-1-4-quadratic-trig-extrema",
-      "practice-s3-1-4-rational-trig-extrema",
-      "practice-s3-1-4-trig-inequality-parameterized",
-      "practice-s3-1-1-radian-sector-five-subtypes",
-      "practice-s3-1-1-reciprocal-trig-five-subtypes",
-      "practice-s3-1-2-double-half-five-subtypes"
+      "practice-s3-1-3-linear-sincos-graph-facts-parameterized",
+      "practice-s3-1-3-peak-valley-function-parameterized",
+      "practice-s3-1-4-linear-combo-inequality-parameterized",
+      "practice-s3-1-4-quadratic-trig-extrema"
     ],
     "questionCount": 5,
     "shufflePractices": false,
@@ -837,8 +844,8 @@
       "practice-s3-2-3-log-graphs-equations-five-subtypes",
       "practice-s3-2-4-log-scale-science-five-subtypes",
       "practice-s3-2-4-log-linear-modeling",
-      "practice-s3-2-2-log-amgm-extrema",
-      "practice-s3-2-2-log-definition-laws-five-subtypes"
+      "practice-s3-2-1-exponential-graph-parameter-clean",
+      "practice-s3-2-2-log-amgm-extrema"
     ],
     "questionCount": 5,
     "shufflePractices": false,
@@ -861,13 +868,14 @@
       "practice-s3-3-1-geometric-vectors-five-subtypes",
       "practice-s3-3-2-coordinate-vectors-five-subtypes",
       "practice-s3-3-1-triangle-area-coefficient-advanced",
+      "practice-s3-3-2-line-angle-vector-parameterized",
       "practice-s3-3-2-parallel-collinear-parameters",
+      "practice-s3-3-2-triangle-center-coordinate-parameterized",
       "practice-s3-3-4-collinear-parameters",
       "practice-s3-3-2-applications-projection-motion",
       "practice-s3-3-3-work-area-applications",
       "practice-s3-3-2-parametric-line-extrema",
-      "practice-s3-3-2-projection-extrema-lattice",
-      "practice-s3-3-3-cauchy-extrema"
+      "practice-s3-3-2-projection-extrema-lattice"
     ],
     "questionCount": 5,
     "shufflePractices": false,
@@ -886,6 +894,8 @@
     "practiceIds": [
       "practice-s4-1-2-coordinate-vector-basic-five-subtypes",
       "practice-s4-1-2-quadratic-extrema",
+      "practice-s4-1-3-linear-over-norm-extrema-clean",
+      "practice-s4-1-3-sphere-linear-extrema-clean",
       "practice-s4-1-1-point-line-plane-relations",
       "practice-s4-1-1-polyhedron-edge-relations",
       "practice-s4-1-1-regular-solid-relations",
@@ -894,6 +904,7 @@
       "practice-s4-1-2-solid-advanced-two-subtypes",
       "practice-s4-1-3-cauchy-extrema",
       "practice-s4-1-3-cauchy-extrema-three-subtypes",
+      "practice-s4-1-3-pairwise-orthogonal-parameter-clean",
       "practice-s4-1-4-advanced-polynomial-determinants"
     ],
     "questionCount": 5,
@@ -912,15 +923,15 @@
     "chapterGroup": "s4-2",
     "practiceIds": [
       "practice-s4-2-1-plane-application-three-subtypes",
+      "practice-s4-2-1-coplanar-parameter-clean",
+      "practice-s4-2-1-parallel-plane-distance-parameter-clean",
+      "practice-s4-2-1-plane-angle-parameter-clean",
       "practice-s4-2-1-plane-relation-angle",
       "practice-s4-2-2-advanced-line-three-subtypes",
+      "practice-s4-2-2-line-plane-relation-clean",
+      "practice-s4-2-2-line-relation-classification-clean",
       "practice-s4-2-2-moving-point-extrema",
-      "practice-s4-2-2-parameter-constraint",
-      "practice-s4-2-2-relation-distance-four-subtypes",
-      "practice-s4-2-1-plane-equation-three-subtypes",
-      "practice-s4-2-2-coordinate-line-three-subtypes",
-      "practice-s4-2-2-pierce-coordinate-plane",
-      "practice-s4-2-2-line-equation-basic"
+      "practice-s4-2-2-parameter-constraint"
     ],
     "questionCount": 5,
     "shufflePractices": false,
@@ -941,12 +952,12 @@
       "practice-s4-3-1-sequence-transition",
       "practice-s4-3-1-stratified-statistics",
       "practice-s4-3-1-bayes-source-three-subtypes",
+      "practice-s4-3-1-complement-conditional",
       "practice-s4-3-1-concrete-conditions",
       "practice-s4-3-1-conditional-algebra",
       "practice-s4-3-1-diagnostic-bayes",
-      "practice-s4-3-1-drawing-sampling",
-      "practice-s4-3-1-independent-inference",
-      "practice-s4-3-1-inference-transition-three-subtypes"
+      "practice-s4-3-1-drawer-paradox-clean",
+      "practice-s4-3-1-drawing-sampling"
     ],
     "questionCount": 5,
     "shufflePractices": false,
@@ -970,11 +981,11 @@
       "practice-s4-4-1-plane-relations",
       "practice-s4-4-1-coplanar-linear-combination",
       "practice-s4-4-1-homogeneous-ratios",
+      "practice-s4-4-2-elementary-row-operations",
       "practice-s4-4-2-linear-matrix-algebra",
       "practice-s4-4-2-matrix-equations",
       "practice-s4-4-3-inverse-formula",
-      "practice-s4-4-3-inverse-matrix-equations",
-      "practice-s4-4-4-equation-transform"
+      "practice-s4-4-3-inverse-matrix-equations"
     ],
     "questionCount": 5,
     "shufflePractices": false,

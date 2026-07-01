@@ -203,6 +203,225 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function hasOnlyTwoFiveFactors(value) {
+    let n = Math.abs(value);
+    while (n % 2 === 0) n /= 2;
+    while (n % 5 === 0) n /= 5;
+    return n === 1;
+  }
+
+  function finiteDecimalCandidates(numeratorBase, denominator, minA, maxA, multiplier = 1) {
+    const values = [];
+    for (let a = minA; a <= maxA; a += 1) {
+      const numerator = numeratorBase + multiplier * a;
+      const reducedDenominator = Math.abs(denominator / gcdInt(numerator, denominator));
+      if (hasOnlyTwoFiveFactors(reducedDenominator)) values.push(a);
+    }
+    return values;
+  }
+
+  function buildS111FiniteDecimalCriterionSet(count) {
+    const questions = [];
+    const answers = [];
+    const cases = [
+      { base: 290, den: 140, min: 0, max: 9, mult: 1 },
+      { base: 1360, den: 70, min: 0, max: 9, mult: 1 },
+      { base: 520, den: 84, min: 1, max: 12, mult: 2 },
+      { base: 135, den: 90, min: 0, max: 9, mult: 1 },
+      { base: 840, den: 168, min: 0, max: 15, mult: 3 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const item = cases[i % cases.length];
+      const values = finiteDecimalCandidates(item.base, item.den, item.min, item.max, item.mult);
+      const numeratorText =
+        item.mult === 1 ? `${item.base}+a` : `${item.base}+${item.mult}a`;
+      const valueText = values.length ? values.join('、') : '無';
+      questions.push(
+        `設 \\(a\\) 為 ${item.min} 到 ${item.max} 的整數，若 \\(\\frac{${numeratorText}}{${item.den}}\\) 可化為有限小數，求所有可能的 \\(a\\)。`
+      );
+      answers.push(
+        `簡答：${valueText}。過程：分數化為最簡分數後，分母只能含質因數 2 與 5。逐一檢查 \\(${numeratorText}\\) 與 ${item.den} 約分後的分母，符合條件的 \\(a\\) 為 ${valueText}。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function powModInt(base, exponent, mod) {
+    let result = 1 % mod;
+    let current = ((base % mod) + mod) % mod;
+    let power = exponent;
+    while (power > 0) {
+      if (power % 2 === 1) result = (result * current) % mod;
+      current = (current * current) % mod;
+      power = Math.floor(power / 2);
+    }
+    return result;
+  }
+
+  function buildRemainderCycle(base, mod) {
+    const cycle = [];
+    let value = ((base % mod) + mod) % mod;
+    const seen = new Map();
+    for (let step = 1; step <= 2 * mod + 10; step += 1) {
+      if (seen.has(value)) return cycle.slice(seen.get(value));
+      seen.set(value, cycle.length);
+      cycle.push(value);
+      value = (value * base) % mod;
+    }
+    return cycle;
+  }
+
+  function buildS111PowerRemainderCycleSet(count) {
+    const questions = [];
+    const answers = [];
+    const mods = [10, 7, 9, 11, 13];
+    const baseChoices = {
+      10: [2, 3, 7, 8],
+      7: [2, 3, 5],
+      9: [2, 4, 5, 7],
+      11: [2, 3, 7, 8],
+      13: [2, 5, 6, 7],
+    };
+    for (let i = 0; i < count; i += 1) {
+      const mod = mods[i % mods.length];
+      const base = baseChoices[mod][randInt(0, baseChoices[mod].length - 1)];
+      const exponent = randInt(24, 160);
+      const answer = powModInt(base, exponent, mod);
+      const cycle = buildRemainderCycle(base, mod);
+      const cycleText = cycle.join('，');
+      if (mod === 10) {
+        questions.push(`求 \\(${base}^{${exponent}}\\) 的個位數。`);
+        answers.push(
+          `答案：\\(${answer}\\)。解析：觀察 \\(${base}^n\\) 的個位數循環為 ${cycleText}，週期是 ${cycle.length}。第 \\(${exponent}\\) 次方會落在循環第 \\(${((exponent - 1) % cycle.length) + 1}\\) 項，所以個位數為 \\(${answer}\\)。`
+        );
+      } else {
+        questions.push(`求 \\(${base}^{${exponent}}\\) 除以 \\(${mod}\\) 的餘數。`);
+        answers.push(
+          `答案：\\(${answer}\\)。解析：\\(${base}^n\\) 除以 \\(${mod}\\) 的餘數循環為 ${cycleText}，週期是 ${cycle.length}。第 \\(${exponent}\\) 次方會落在循環第 \\(${((exponent - 1) % cycle.length) + 1}\\) 項，得到本題餘數為 \\(${answer}\\)。`
+        );
+      }
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function numberFromDigitArray(digits) {
+    return Number(digits.join(''));
+  }
+
+  function buildS111DivisibilityMissingDigitSet(count) {
+    const questions = [];
+    const answers = [];
+    const cases = [
+      { mod: 72, hint: '同時檢查 8 與 9 的整除條件' },
+      { mod: 36, hint: '同時檢查 4 與 9 的整除條件' },
+      { mod: 45, hint: '同時檢查 5 與 9 的整除條件' },
+      { mod: 88, hint: '同時檢查 8 與 11 的整除條件' },
+      { mod: 99, hint: '同時檢查 9 與 11 的整除條件' },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const item = cases[i % cases.length];
+      let digits = [];
+      let aPos = 1;
+      let bPos = 4;
+      let pairs = [];
+      for (let attempt = 0; attempt < 300; attempt += 1) {
+        const length = randInt(6, 8);
+        digits = Array.from({ length }, (_, index) => (index === 0 ? randInt(1, 9) : randInt(0, 9)));
+        aPos = randInt(1, length - 3);
+        bPos = randInt(aPos + 1, length - 1);
+        pairs = [];
+        for (let a = 0; a <= 9; a += 1) {
+          for (let b = 0; b <= 9; b += 1) {
+            const trial = digits.slice();
+            trial[aPos] = a;
+            trial[bPos] = b;
+            if (numberFromDigitArray(trial) % item.mod === 0) pairs.push([a, b]);
+          }
+        }
+        if (pairs.length >= 1 && pairs.length <= 8) break;
+      }
+      const pattern = digits.map((digit, index) => {
+        if (index === aPos) return 'a';
+        if (index === bPos) return 'b';
+        return `${digit}`;
+      }).join('');
+      const pairText = pairs.map(([a, b]) => `(${a},${b})`).join('，');
+      questions.push(`已知 \\(${pattern}\\) 是 \\(${item.mod}\\) 的倍數，其中 \\(a,b\\) 為數字。求所有可能的 \\((a,b)\\)。`);
+      answers.push(
+        `答案：${pairText}。解析：逐一代入 \\(a,b=0,1,\\ldots,9\\)，並利用「${item.hint}」。符合 \\(${pattern}\\) 可被 \\(${item.mod}\\) 整除的組合為 ${pairText}。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function compareFractions(left, right) {
+    return left.num * right.den - right.num * left.den;
+  }
+
+  function formatFractionObject(value) {
+    return formatFraction(value.num, value.den);
+  }
+
+  function buildS112QuotientIntervalRangeSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const xLow = randInt(-8, 3);
+      const xHigh = xLow + randInt(3, 10);
+      const yLow = randInt(2, 7);
+      const yHigh = yLow + randInt(2, 8);
+      const candidates = [
+        makeFraction(xLow, yLow),
+        makeFraction(xLow, yHigh),
+        makeFraction(xHigh, yLow),
+        makeFraction(xHigh, yHigh),
+      ].sort(compareFractions);
+      const min = candidates[0];
+      const max = candidates[candidates.length - 1];
+      questions.push(`若 \\(${xLow}\\leq x\\leq ${xHigh}\\)，且 \\(${yLow}\\leq y\\leq ${yHigh}\\)，求 \\(\\frac{x}{y}\\) 的範圍。`);
+      answers.push(
+        `答案：\\(${formatFractionObject(min)}\\leq \\frac{x}{y}\\leq ${formatFractionObject(max)}\\)。解析：因為 \\(y\\) 全為正數，\\(\\frac{x}{y}\\) 的最大、最小會出現在端點組合。比較 \\(${formatFractionObject(candidates[0])}, ${formatFractionObject(candidates[1])}, ${formatFractionObject(candidates[2])}, ${formatFractionObject(candidates[3])}\\)，可得範圍。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS114ExponentialParameterRelationSet(count) {
+    const questions = [];
+    const answers = [];
+    const bases = [2, 3, 5, 7];
+    for (let i = 0; i < count; i += 1) {
+      const base = bases[i % bases.length];
+      const mode = i % 4;
+      if (mode === 0) {
+        questions.push(`設 \\(a=1+${base}^k\\)，\\(b=1-${base}^{-k}\\)，試用 \\(a\\) 表示 \\(b\\)。`);
+        answers.push(
+          `答案：\\(b=\\frac{a-2}{a-1}\\)。解析：由 \\(a=1+${base}^k\\) 得 \\(${base}^k=a-1\\)，所以 \\(${base}^{-k}=\\frac{1}{a-1}\\)，因此 \\(b=1-\\frac{1}{a-1}=\\frac{a-2}{a-1}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        questions.push(`設 \\(a=1+${base}^k\\)，\\(b=1+${base}^{-k}\\)，試用 \\(a\\) 表示 \\(b\\)。`);
+        answers.push(
+          `答案：\\(b=\\frac{a}{a-1}\\)。解析：\\(${base}^k=a-1\\)，所以 \\(${base}^{-k}=\\frac{1}{a-1}\\)，故 \\(b=1+\\frac{1}{a-1}=\\frac{a}{a-1}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        questions.push(`設 \\(a=1+${base}^k\\)，\\(b=1+${base}^{-k}\\)，試用 \\(a\\) 表示 \\(a+b\\)。`);
+        answers.push(
+          `答案：\\(a+b=\\frac{a^2}{a-1}\\)。解析：先由 \\(${base}^k=a-1\\) 得 \\(b=1+\\frac{1}{a-1}=\\frac{a}{a-1}\\)，所以 \\(a+b=a+\\frac{a}{a-1}=\\frac{a^2}{a-1}\\)。`
+        );
+        continue;
+      }
+      questions.push(`設 \\(a=${base}^k\\)，\\(b=1+${base}^{-k}\\)，試用 \\(a\\) 表示 \\(b\\)。`);
+      answers.push(
+        `答案：\\(b=\\frac{a+1}{a}\\)。解析：由 \\(a=${base}^k\\) 可知 \\(${base}^{-k}=\\frac1a\\)，因此 \\(b=1+\\frac1a=\\frac{a+1}{a}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function formatS111SignedRadicalTerm(coeff, inside, sign) {
     const radical = inside === 1 ? `${coeff}` : `${coeff === 1 ? '' : coeff}\\sqrt{${inside}}`;
     return sign === '-' ? `-${radical}` : `+${radical}`;
@@ -704,6 +923,40 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function buildS111RadicalDistanceIntegerCountSet(count) {
+    const questions = [];
+    const answers = [];
+    const cases = [
+      { a: 101, near: 5, b: 38, far: 3 },
+      { a: 73, near: 4, b: 20, far: 2 },
+      { a: 146, near: 6, b: 52, far: 3 },
+      { a: 58, near: 4, b: 18, far: 2 },
+      { a: 122, near: 5, b: 47, far: 3 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const item = cases[i % cases.length];
+      const nearCenter = Math.sqrt(item.a);
+      const farCenter = Math.sqrt(item.b);
+      const candidates = [];
+      for (let x = -20; x <= 30; x += 1) {
+        if (Math.abs(x - nearCenter) < item.near && Math.abs(x - farCenter) > item.far) {
+          candidates.push(x);
+        }
+      }
+      const nearLeft = trimFixed(nearCenter - item.near, 3);
+      const nearRight = trimFixed(nearCenter + item.near, 3);
+      const farLeft = trimFixed(farCenter - item.far, 3);
+      const farRight = trimFixed(farCenter + item.far, 3);
+      questions.push(
+        `數線上有多少個整數點與 \\(\\sqrt{${item.a}}\\) 的距離小於 ${item.near}，但與 \\(\\sqrt{${item.b}}\\) 的距離大於 ${item.far}？`
+      );
+      answers.push(
+        `簡答：${candidates.length} 個。過程：第一個條件給出 \\(${nearLeft}<x<${nearRight}\\)，第二個條件要排除 \\(${farLeft}\\leq x\\leq ${farRight}\\)。符合的整數為 ${candidates.join('、')}，共有 ${candidates.length} 個。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildS111TelescopingRationalizationSet(count) {
     const questions = [];
     const answers = [];
@@ -860,6 +1113,42 @@
       const integerCount = countIntegersInClosedInterval(left + 1, right - 1);
       answers.push(
         `簡答：${formatS112OpenInterval(left, right)}，整數解 ${integerCount} 個。過程：\\(${expr}<${bound}\\) 等價於 \\(-${bound}<${formatS112Linear(a, constant)}<${bound}\\)，解得 ${formatS112OpenInterval(left, right)}。其中整數為 ${Math.ceil(left + 1)} 到 ${Math.floor(right - 1)}，共 ${integerCount} 個。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function solveAbsLinearEquality(a, b, c, d) {
+    const candidates = [];
+    if (a !== c) candidates.push(makeFraction(d - b, a - c));
+    if (a !== -c) candidates.push(makeFraction(-d - b, a + c));
+    const unique = [];
+    candidates.forEach((value) => {
+      if (!unique.some((item) => item.num === value.num && item.den === value.den)) unique.push(value);
+    });
+    unique.sort((left, right) => left.num / left.den - right.num / right.den);
+    return unique;
+  }
+
+  function buildS112AbsLinearEquationCountSet(count) {
+    const questions = [];
+    const answers = [];
+    const cases = [
+      { a: 2, b: -1, c: 1, d: 3 },
+      { a: 3, b: 2, c: 2, d: -5 },
+      { a: 4, b: -12, c: 2, d: 0 },
+      { a: 5, b: 5, c: 2, d: -7 },
+      { a: 2, b: -8, c: -3, d: 1 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const item = cases[i % cases.length];
+      const solutions = solveAbsLinearEquality(item.a, item.b, item.c, item.d);
+      const solutionText = solutions.map((value) => `\\(${formatFraction(value.num, value.den)}\\)`).join('、');
+      questions.push(
+        `解方程式 \\(|${formatS112Linear(item.a, item.b)}|=|${formatS112Linear(item.c, item.d)}|\\)，並寫出共有幾個實數解。`
+      );
+      answers.push(
+        `簡答：\\(x=${solutions.map((value) => formatFraction(value.num, value.den)).join('\\) 或 \\(x=')}\\)，共 ${solutions.length} 個。過程：\\(|A|=|B|\\) 等價於 \\(A=B\\) 或 \\(A=-B\\)。分別解 \\(${formatS112Linear(item.a, item.b)}=${formatS112Linear(item.c, item.d)}\\) 與 \\(${formatS112Linear(item.a, item.b)}=-(${formatS112Linear(item.c, item.d)})\\)，得 ${solutionText}。`
       );
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
@@ -2088,6 +2377,118 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function buildS114ExponentialQuadraticExtremaSet(count) {
+    const questions = [];
+    const answers = [];
+    const bases = [2, 3, 5];
+    for (let i = 0; i < count; i += 1) {
+      const base = bases[randInt(0, bases.length - 1)];
+      const denominator = randInt(2, 4);
+      const numerator = randInt(1, denominator - 1);
+      const shift = randInt(-4, 4);
+      const outerBase = base ** denominator;
+      const minValue = base ** numerator;
+      const shiftExpr = shift === 0 ? 'x^2' : `(x${shift > 0 ? '-' : '+'}${Math.abs(shift)})^2`;
+      questions.push(
+        `對任意實數 \\(x\\)，求 \\((${outerBase})^{${shiftExpr}+${formatFraction(numerator, denominator)}}\\) 的最小值。`
+      );
+      answers.push(
+        `簡答：\\(${minValue}\\)。過程：因為底數 \\(${outerBase}>1\\)，指數越小，整個值越小。\\(${shiftExpr}\\geq0\\)，最小值在 \\(x=${shift}\\) 時取得，所以最小指數為 \\(${formatFraction(numerator, denominator)}\\)，原式最小值為 \\((${outerBase})^{${formatFraction(numerator, denominator)}}=(${base}^{${denominator}})^{${formatFraction(numerator, denominator)}}=${base}^{${numerator}}=${minValue}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS114ExponentialFractionRangeSet(count) {
+    const questions = [];
+    const answers = [];
+    const bases = [2, 3, 5];
+    for (let i = 0; i < count; i += 1) {
+      const base = bases[randInt(0, bases.length - 1)];
+      const A = randInt(2, 8);
+      const B = randInt(1, 5);
+      const C = randInt(2, 6);
+      const upper = formatFraction(A, C);
+      questions.push(`已知 \\(x\\) 為實數，求 \\(\\frac{${A}-${B}\\cdot${base}^x}{${C}+${base}^x}\\) 的值域。`);
+      answers.push(
+        `簡答：\\((-${B},\\ ${upper})\\)。過程：令 \\(t=${base}^x>0\\)，原式 \\(y=\\frac{${A}-${B}t}{${C}+t}\\)。整理得 \\(y(${C}+t)=${A}-${B}t\\)，所以 \\(t(y+${B})=${A}-${C}y\\)，即 \\(t=\\frac{${A}-${C}y}{y+${B}}\\)。因為 \\(t>0\\)，分子分母同號；又 \\(\\frac{${A}}{${C}}>${-B}\\)，故 \\(-${B}<y<${upper}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS114RationalExponentOrderingSet(count) {
+    const questions = [];
+    const answers = [];
+    const denominatorSets = [
+      [2, 3, 4],
+      [2, 3, 6],
+      [3, 4, 6],
+      [2, 4, 6],
+      [3, 4, 12],
+    ];
+
+    function lcmMany(values) {
+      return values.reduce((acc, value) => (acc * value) / gcdInt(acc, value), 1);
+    }
+
+    function rootTeX(base, order) {
+      return order === 2 ? `\\sqrt{${base}}` : `\\sqrt[${order}]{${base}}`;
+    }
+
+    for (let i = 0; i < count; i += 1) {
+      const denominators = denominatorSets[i % denominatorSets.length];
+      const bases = shuffle([2, 3, 5, 6, 7, 8, 9]).slice(0, 3);
+      const items = bases.map((base, index) => {
+        const denominator = denominators[index];
+        return {
+          base,
+          denominator,
+          tex: rootTeX(base, denominator),
+        };
+      });
+      const L = lcmMany(denominators);
+      items.forEach((item) => {
+        item.compareValue = item.base ** (L / item.denominator);
+        item.compareTex = `${item.base}^{${L / item.denominator}}`;
+      });
+      if (new Set(items.map((item) => item.compareValue)).size < items.length) {
+        i -= 1;
+        continue;
+      }
+      const sorted = items.slice().sort((a, b) => b.compareValue - a.compareValue);
+      questions.push(`比較 \\(${items.map((item) => item.tex).join('\\)、\\(')}\\) 的大小，並由大到小排列。`);
+      answers.push(
+        `簡答：\\(${sorted.map((item) => item.tex).join('>')}\\)。過程：把三個數都化成 \\(\\frac{1}{${L}}\\) 次方比較：${items
+          .map((item) => `\\(${item.tex}=\\sqrt[${L}]{${item.compareTex}}=\\sqrt[${L}]{${item.compareValue}}\\)`)
+          .join('，')}。因為 \\(${sorted.map((item) => item.compareValue).join('>')}\\)，所以大小順序如上。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS114ExponentialGrowthModelSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const root = randInt(2, 3);
+      const dailyRate = root ** 2;
+      const startCount = randInt(1, 9) * 100;
+      const firstDay = randInt(2, 5);
+      const halfSteps = [3, 5, 7][i % 3];
+      const secondDayText = `${firstDay + Math.floor(halfSteps / 2)}\\frac{1}{2}`;
+      const firstCount = startCount * dailyRate ** firstDay;
+      const secondCount = firstCount * root ** halfSteps;
+      questions.push(
+        `某項實驗中，細菌數每天變為原來的 \\(a\\) 倍。已知第 ${firstDay} 日有 ${firstCount} 個，第 \\(${secondDayText}\\) 日有 ${secondCount} 個，求 \\(a\\)。`
+      );
+      answers.push(
+        `簡答：\\(a=${dailyRate}\\)。過程：兩次觀察相隔 \\(\\frac{${halfSteps}}{2}\\) 日，所以 \\(a^{${formatFraction(halfSteps, 2)}}=\\frac{${secondCount}}{${firstCount}}=${root ** halfSteps}\\)。兩邊平方得 \\(a^{${halfSteps}}=${root ** (2 * halfSteps)}\\)，故 \\(a=${root}^{2}=${dailyRate}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   const S115_LOGS = {
     2: 3010,
     3: 4771,
@@ -2517,6 +2918,114 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function buildS115LogDifferenceEstimateSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const smallerExponent = randInt(6, 16);
+      const gap = randInt(3, 7);
+      const largerExponent = smallerExponent + gap;
+      questions.push(
+        `設 \\(a,b>0\\)，且 \\(\\log a=${largerExponent}\\)、\\(\\log b=${smallerExponent}\\)。判斷 \\(\\log(a-b)\\) 最接近哪一個整數。`
+      );
+      answers.push(
+        `簡答：最接近 ${largerExponent}。過程：由 \\(\\log a=${largerExponent}\\)、\\(\\log b=${smallerExponent}\\) 得 \\(a=10^{${largerExponent}}\\)、\\(b=10^{${smallerExponent}}\\)。所以 \\(a-b=10^{${largerExponent}}(1-10^{-${gap}})\\)，\\(\\log(a-b)=${largerExponent}+\\log(1-10^{-${gap}})\\)。因為 \\(10^{-${gap}}\\) 很小，\\(\\log(1-10^{-${gap}})\\) 接近 0，所以整體最接近 ${largerExponent}。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS115LogIntervalIntegerCountSet(count) {
+    const questions = [];
+    const answers = [];
+    const cases = [
+      { lower: 1.5, upper: 2, multiple: 3, label: '3 的倍數' },
+      { lower: 1.5, upper: 2, multiple: 2, label: '偶數' },
+      { lower: 2.2, upper: 2.7, multiple: 5, label: '5 的倍數' },
+      { lower: 0.8, upper: 1.6, multiple: 4, label: '4 的倍數' },
+      { lower: 2, upper: 2.5, multiple: 9, label: '9 的倍數' },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const item = cases[i % cases.length];
+      const lowerValue = 10 ** item.lower;
+      const upperValue = 10 ** item.upper;
+      const first = Math.floor(lowerValue / item.multiple) * item.multiple + item.multiple;
+      const last = Math.ceil(upperValue / item.multiple) * item.multiple - item.multiple;
+      const countValue = last >= first ? Math.floor((last - first) / item.multiple) + 1 : 0;
+      questions.push(
+        `滿足 \\(a\\) 為 ${item.label}且 \\(${item.lower}<\\log a<${item.upper}\\) 的正整數 \\(a\\) 共有幾個？`
+      );
+      answers.push(
+        `簡答：${countValue} 個。過程：由 \\(${item.lower}<\\log a<${item.upper}\\) 得 \\(10^{${item.lower}}<a<10^{${item.upper}}\\)，約為 \\(${trimFixed(lowerValue, 3)}<a<${trimFixed(upperValue, 3)}\\)。其中符合 ${item.label}者從 ${first} 到 ${last}，共有 ${countValue} 個。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function formatS115PowerOfTenFromFraction(num, den) {
+    const reduced = reduceFraction(num, den);
+    if (reduced.denominator === 1) return `10^{${reduced.numerator}}`;
+    if (reduced.numerator === 1) return `\\sqrt[${reduced.denominator}]{10}`;
+    return `10^{${formatFraction(reduced.numerator, reduced.denominator)}}`;
+  }
+
+  function buildS115LogScaleRatioModelSet(count) {
+    const questions = [];
+    const answers = [];
+    const modes = [
+      () => {
+        const coefficient = randInt(2, 5);
+        const increase = randInt(1, 3);
+        const ratio = formatS115PowerOfTenFromFraction(increase, coefficient);
+        return {
+          q: `某實驗數據滿足 \\(T=3+${coefficient}\\log E\\)。若 \\(T\\) 增加 ${increase}，原始數據 \\(E\\) 變為原來的幾倍？`,
+          a: `簡答：\\(${ratio}\\) 倍。過程：設新舊數據比為 \\(r\\)，則 \\(${increase}=${coefficient}\\log r\\)，所以 \\(\\log r=\\frac{${increase}}{${coefficient}}\\)，\\(r=${ratio}\\)。`,
+        };
+      },
+      () => {
+        const diffTenths = [6, 8, 10, 12][randInt(0, 3)];
+        const exponentNum = 15 * diffTenths;
+        const ratio = formatS115PowerOfTenFromFraction(exponentNum, 100);
+        return {
+          q: `芮氏規模與能量滿足 \\(\\log E=1.5R+11.8\\)。若甲地震規模比乙大 ${trimFixed(diffTenths / 10, 1)}，甲釋放能量約為乙的幾倍？`,
+          a: `簡答：\\(${ratio}\\) 倍。過程：兩者對數差為 \\(1.5\\times${trimFixed(diffTenths / 10, 1)}=${formatFraction(exponentNum, 100)}\\)，所以能量比為 \\(10^{${formatFraction(exponentNum, 100)}}\\)。`,
+        };
+      },
+      () => {
+        const low = randInt(2, 4);
+        const high = low + randInt(2, 4);
+        const ratio = 10 ** (high - low);
+        return {
+          q: `pH 值定義為 \\(\\mathrm{pH}=-\\log[H^+]\\)。若 A 溶液 pH 為 ${low}，B 溶液 pH 為 ${high}，A 的氫離子濃度是 B 的幾倍？`,
+          a: `簡答：${ratio} 倍。過程：\\([H^+]_A=10^{-${low}}\\)，\\([H^+]_B=10^{-${high}}\\)，所以 \\(\\frac{[H^+]_A}{[H^+]_B}=10^{${high - low}}=${ratio}\\)。`,
+        };
+      },
+      () => {
+        const screens = [10, 100, 1000][randInt(0, 2)];
+        const increase = 10 * Math.round(Math.log10(screens));
+        return {
+          q: `聲音分貝滿足 \\(D=10\\log W\\)。若 ${screens} 個相同音源同時發聲，總強度為單一音源的 ${screens} 倍，分貝會增加多少？`,
+          a: `簡答：${increase} 分貝。過程：分貝差為 \\(10\\log ${screens}=10\\times${Math.round(Math.log10(screens))}=${increase}\\)。`,
+        };
+      },
+      () => {
+        const current = randInt(2, 5) * 100;
+        const remain = current / 4;
+        const years = randInt(2, 6);
+        return {
+          q: `某放射性物質目前有 ${current} 克，${years} 年後剩 ${remain} 克。若每個半衰期剩一半，求半衰期。`,
+          a: `簡答：\\(${formatFraction(years, 2)}\\) 年。過程：${remain} 是 ${current} 的 \\(\\frac14=(\\frac12)^2\\)，表示經過 2 個半衰期。故半衰期為 \\(\\frac{${years}}{2}=${formatFraction(years, 2)}\\) 年。`,
+        };
+      },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const item = modes[i % modes.length]();
+      questions.push(item.q);
+      answers.push(item.a);
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function formatS121Point(p) {
     return `(${p.x},${p.y})`;
   }
@@ -2565,6 +3074,106 @@
     const absCoeff = Math.abs(coeff);
     const coefText = absCoeff === 1 ? '' : `${absCoeff}`;
     return `${base}${sign}${coefText}${parameter}`;
+  }
+
+  function positiveDivisors(n) {
+    const values = [];
+    for (let d = 1; d * d <= n; d += 1) {
+      if (n % d !== 0) continue;
+      values.push(d);
+      if (d * d !== n) values.push(n / d);
+    }
+    return values.sort((a, b) => a - b);
+  }
+
+  function buildS121InterceptIntegerCountSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const yIntercept = randInt(2, 6);
+      const px = randInt(4, 12);
+      const product = yIntercept * px;
+      const divisors = positiveDivisors(product);
+      questions.push(
+        `共有多少個正整數 \\(n\\)，使得通過 \\(A(-n,0)\\)、\\(B(0,${yIntercept})\\) 的直線也通過 \\(P(${px},k)\\)，其中 \\(k\\) 為正整數？`
+      );
+      answers.push(
+        `簡答：${divisors.length} 個。過程：直線斜率為 \\(\\frac{${yIntercept}}{n}\\)，故 \\(x=${px}\\) 時 \\(k=${yIntercept}+\\frac{${product}}{n}\\)。要使 \\(k\\) 為整數，需 \\(n\\mid ${product}\\)。正因數為 ${divisors.join('、')}，共有 ${divisors.length} 個。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS121LineSideParameterCountSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const a = randInt(1, 5);
+      const b = pickNonZero(-4, 4);
+      const p = { x: randInt(-3, 4), y: randInt(-3, 5) };
+      let q = { x: randInt(-4, 5), y: randInt(-4, 5) };
+      let s1 = a * p.x + b * p.y;
+      let s2 = a * q.x + b * q.y;
+      while (s1 === s2 || Math.abs(s1 - s2) < 4 || Math.abs(s1 - s2) > 18) {
+        q = { x: randInt(-4, 5), y: randInt(-4, 5) };
+        s1 = a * p.x + b * p.y;
+        s2 = a * q.x + b * q.y;
+      }
+      const low = Math.min(s1, s2);
+      const high = Math.max(s1, s2);
+      const integerValues = [];
+      for (let k = low + 1; k <= high - 1; k += 1) integerValues.push(k);
+      questions.push(
+        `設 \\(k\\) 為整數，若兩點 \\(A${formatS121Point(p)}\\)、\\(B${formatS121Point(q)}\\) 位於直線 \\(${formatS121Line(a, b, 0).replace('=0', '-k=0')}\\) 的異側，求所有可能的 \\(k\\) 個數。`
+      );
+      answers.push(
+        `簡答：${integerValues.length} 個。過程：令 \\(f(x,y)=${formatS121Term(a, 'x')}${b > 0 ? '+' : ''}${formatS121Term(b, 'y')}\\)。兩點異側表示 \\((f(A)-k)(f(B)-k)<0\\)，所以 \\(${low}<k<${high}\\)。整數 \\(k\\) 為 ${integerValues.join('、')}，共有 ${integerValues.length} 個。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function formatS121IndexedTerm(coef, base, index) {
+    if (coef === 1) return `${base}_${index}`;
+    if (coef === -1) return `-${base}_${index}`;
+    return `${coef}${base}_${index}`;
+  }
+
+  function formatS121IndexedSum(beta, gamma, index) {
+    const first = formatS121IndexedTerm(beta, 'a', index);
+    const second = formatS121IndexedTerm(gamma, 'b', index);
+    return `${first}${gamma > 0 ? '+' : ''}${second}`;
+  }
+
+  function formatS121SimpleLinearXY(alpha, beta) {
+    const xPart = formatS121Term(alpha, 'x');
+    const yPart = formatS121Term(beta, 'y');
+    return `${xPart}${beta > 0 ? '+' : ''}${yPart}`;
+  }
+
+  function buildS121TransformedSystemSolutionSet(count) {
+    const questions = [];
+    const answers = [];
+    const transforms = [
+      { alpha: 2, beta: 1, gamma: -3 },
+      { alpha: 3, beta: -1, gamma: 2 },
+      { alpha: 2, beta: 3, gamma: 4 },
+      { alpha: 4, beta: -2, gamma: 3 },
+      { alpha: 5, beta: 1, gamma: -2 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const t = transforms[i % transforms.length];
+      const target = { x: randInt(-3, 4), y: pickNonZero(-3, 4) };
+      const u = t.alpha * target.x + t.beta * target.y;
+      const v = t.gamma * target.y;
+      questions.push(
+        `已知聯立方程式 \\(\\left\\{\\begin{array}{r}a_1x+b_1y=c_1\\\\a_2x+b_2y=c_2\\end{array}\\right.\\) 的解為 \\((${u},${v})\\)。求聯立方程式 \\(\\left\\{\\begin{array}{r}${formatS121IndexedTerm(t.alpha, 'a', 1)}x+(${formatS121IndexedSum(t.beta, t.gamma, 1)})y=c_1\\\\${formatS121IndexedTerm(t.alpha, 'a', 2)}x+(${formatS121IndexedSum(t.beta, t.gamma, 2)})y=c_2\\end{array}\\right.\\) 的解。`
+      );
+      answers.push(
+        `簡答：\\((x,y)=(${target.x},${target.y})\\)。過程：新方程可看成把原方程中的 \\(x\\) 換成 \\(${formatS121SimpleLinearXY(t.alpha, t.beta)}\\)，把 \\(y\\) 換成 \\(${formatS121Term(t.gamma, 'y')}\\)。因此需滿足 \\(${formatS121SimpleLinearXY(t.alpha, t.beta)}=${u}\\)、\\(${formatS121Term(t.gamma, 'y')}=${v}\\)。解得 \\(y=${target.y}\\)，再代回得 \\(x=${target.x}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildS121ProjectionSymmetrySet(count) {
@@ -3099,6 +3708,130 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function buildS121LineFormFactsSet(count) {
+    const questions = [];
+    const answers = [];
+    const samples = [
+      { a: 3, b: 4, c: -12 },
+      { a: 2, b: -5, c: 10 },
+      { a: -4, b: 3, c: 24 },
+      { a: 5, b: 2, c: -20 },
+      { a: -3, b: -6, c: 18 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const base = samples[i % samples.length];
+      const scale = randInt(1, 3);
+      const a = base.a * scale;
+      const b = base.b * scale;
+      const c = base.c * scale;
+      const slope = makeFraction(-a, b);
+      const xIntercept = makeFraction(-c, a);
+      const yIntercept = makeFraction(-c, b);
+      const area = makeFraction(c * c, 2 * Math.abs(a * b));
+      const line = formatS123LineEquation(a, b, c);
+      questions.push(`已知直線 \\(L:${line}\\)，求斜率、\\(x\\) 截距、\\(y\\) 截距，以及它與兩坐標軸所圍三角形的面積。`);
+      answers.push(
+        `答案：斜率 \\(${formatFractionObject(slope)}\\)，\\(x\\) 截距 \\(${formatFractionObject(xIntercept)}\\)，\\(y\\) 截距 \\(${formatFractionObject(yIntercept)}\\)，面積 \\(${formatFractionObject(area)}\\)。解析：由 \\(ax+by+c=0\\) 可得斜率 \\(-\\frac{a}{b}\\)，\\(x\\) 截距 \\(-\\frac{c}{a}\\)，\\(y\\) 截距 \\(-\\frac{c}{b}\\)。面積為 \\(\\frac12\\left|x_0y_0\\right|\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS121LinearFractionalRegionExtremaSet(count) {
+    const questions = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const s = randInt(2, 5);
+      const p = s + randInt(3, 7);
+      const q = s + randInt(2, 6);
+      const u = randInt(1, 4);
+      const v = randInt(2, 6);
+      const vertices = [
+        { x: s, y: 0 },
+        { x: p, y: 0 },
+        { x: 0, y: q },
+        { x: 0, y: s },
+      ];
+      const values = vertices.map((point) => ({
+        point,
+        value: makeFraction(point.y + u, point.x + v),
+      }));
+      values.sort((left, right) => compareFractions(left.value, right.value));
+      const min = values[0];
+      const max = values[values.length - 1];
+      const vertexText = vertices.map((point) => `(${point.x},${point.y})`).join('，');
+      questions.push(
+        `在 \\(x\\geq0\\)，\\(y\\geq0\\)，\\(x+y\\geq${s}\\)，\\(${q}x+${p}y\\leq${p * q}\\) 的條件下，求 \\(\\frac{y+${u}}{x+${v}}\\) 的最大值與最小值。`
+      );
+      answers.push(
+        `答案：最大值 \\(${formatFractionObject(max.value)}\\)，最小值 \\(${formatFractionObject(min.value)}\\)。解析：可行區域的頂點為 ${vertexText}。因為分母 \\(x+${v}>0\\)，線性分式在此凸多邊形上的極值會出現在頂點。逐一代入比較，可得最大值在 \\((${max.point.x},${max.point.y})\\)，最小值在 \\((${min.point.x},${min.point.y})\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS122TwoCircleCommonTangentsSet(count) {
+    const questions = [];
+    const answers = [];
+    const cases = [
+      { r1: 3, r2: 2, d: 8, count: 4 },
+      { r1: 3, r2: 2, d: 5, count: 3 },
+      { r1: 5, r2: 3, d: 6, count: 2 },
+      { r1: 5, r2: 2, d: 3, count: 1 },
+      { r1: 6, r2: 2, d: 2, count: 0 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const item = cases[i % cases.length];
+      const h = randInt(-5, 3);
+      const k = randInt(-4, 4);
+      const c1 = formatS122CircleStandard(h, k, item.r1 * item.r1);
+      const c2 = formatS122CircleStandard(h + item.d, k, item.r2 * item.r2);
+      const sum = item.r1 + item.r2;
+      const diff = Math.abs(item.r1 - item.r2);
+      questions.push(`兩圓 \\(C_1:${c1}\\)，\\(C_2:${c2}\\) 共有幾條公切線？`);
+      answers.push(
+        `答案：\\(${item.count}\\) 條。解析：兩圓圓心距 \\(d=${item.d}\\)，半徑和 \\(r_1+r_2=${sum}\\)，半徑差 \\(|r_1-r_2|=${diff}\\)。依序比較 \\(d\\) 與 \\(r_1+r_2\\)、\\(|r_1-r_2|\\)，即可判斷公切線條數。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function countCircleLineDistancePoints(radius, centerDistance, targetDistance) {
+    const distances = [Math.abs(centerDistance - targetDistance), centerDistance + targetDistance];
+    return distances.reduce((sum, distance) => {
+      if (distance > radius) return sum;
+      if (distance === radius) return sum + 1;
+      return sum + 2;
+    }, 0);
+  }
+
+  function buildS123CircleLineDistancePointCountSet(count) {
+    const questions = [];
+    const answers = [];
+    const cases = [
+      { r: 4, d: 0, e: 2 },
+      { r: 4, d: 2, e: 2 },
+      { r: 4, d: 5, e: 1 },
+      { r: 3, d: 6, e: 2 },
+      { r: 5, d: 3, e: 2 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const item = cases[i % cases.length];
+      const h = randInt(-4, 4);
+      const k = randInt(-4, 4);
+      const t = -3 * h - 4 * k + 5 * item.d;
+      const line = formatS123LineEquation(3, 4, t);
+      const circle = formatS122CircleStandard(h, k, item.r * item.r);
+      const distances = [Math.abs(item.d - item.e), item.d + item.e];
+      const total = countCircleLineDistancePoints(item.r, item.d, item.e);
+      questions.push(`圓 \\(C:${circle}\\) 上，有幾個點到直線 \\(L:${line}\\) 的距離等於 \\(${item.e}\\)？`);
+      answers.push(
+        `答案：\\(${total}\\) 個。解析：圓心到 \\(L\\) 的距離為 \\(${item.d}\\)。距離 \\(L\\) 等於 \\(${item.e}\\) 的點落在兩條與 \\(L\\) 平行的直線上，這兩條直線到圓心的距離分別為 \\(${distances[0]}\\) 與 \\(${distances[1]}\\)。分別和半徑 \\(${item.r}\\) 比較：小於半徑有 2 點，等於半徑有 1 點，大於半徑沒有點。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function formatS122Point(point) {
     return `(${point.x},${point.y})`;
   }
@@ -3158,6 +3891,106 @@
       }
     }
     return `${parts.join('')}=0`;
+  }
+
+  function buildS122CircleCenterLineTwoPointsSet(count) {
+    const questions = [];
+    const answers = [];
+    const centerLines = [
+      { a: 1, b: 2 },
+      { a: 2, b: -1 },
+      { a: 3, b: 1 },
+      { a: 1, b: -3 },
+      { a: 2, b: 3 },
+    ];
+    const offsets = [
+      { x: 2, y: 1 },
+      { x: 1, y: 3 },
+      { x: 3, y: -2 },
+      { x: 2, y: -3 },
+      { x: 4, y: 1 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const center = { x: randInt(-3, 4), y: randInt(-3, 4) };
+      const offset = offsets[i % offsets.length];
+      const lineBase = centerLines[i % centerLines.length];
+      const pointA = { x: center.x + offset.x, y: center.y + offset.y };
+      const pointB = { x: center.x - offset.x, y: center.y - offset.y };
+      const lineC = -(lineBase.a * center.x + lineBase.b * center.y);
+      const radius2 = offset.x * offset.x + offset.y * offset.y;
+      questions.push(
+        `圓 \\(C\\) 的圓心在直線 \\(${formatS123LineEquation(lineBase.a, lineBase.b, lineC)}\\) 上，且通過 \\(A${formatS122Point(pointA)}\\)、\\(B${formatS122Point(pointB)}\\)。求圓 \\(C\\) 的方程式。`
+      );
+      answers.push(
+        `簡答：\\(${formatS122CircleStandard(center.x, center.y, radius2)}\\)。過程：圓心必在線段 \\(AB\\) 的垂直平分線上。由 \\(A,B\\) 中點得 \\(M${formatS122Point(center)}\\)，且 \\(M\\) 也在已知直線上，所以圓心為 \\(${formatS122Point(center)}\\)。半徑平方為 \\(${offset.x}^2+${offset.y}^2=${radius2}\\)，故方程式為 \\(${formatS122CircleStandard(center.x, center.y, radius2)}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS123ChordLengthParameterizedSet(count) {
+    const questions = [];
+    const answers = [];
+    const normals = [
+      { a: 3, b: 4, norm: 5 },
+      { a: 5, b: 12, norm: 13 },
+      { a: 8, b: 15, norm: 17 },
+      { a: 7, b: 24, norm: 25 },
+      { a: 9, b: 12, norm: 15 },
+    ];
+    const pairs = [
+      { r: 5, half: 4 },
+      { r: 10, half: 8 },
+      { r: 13, half: 5 },
+      { r: 17, half: 8 },
+      { r: 25, half: 7 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const normal = normals[i % normals.length];
+      const pair = pairs[i % pairs.length];
+      const center = { x: randInt(-3, 4), y: randInt(-3, 4) };
+      const distance = Math.sqrt(pair.r * pair.r - pair.half * pair.half);
+      const base = normal.a * center.x + normal.b * center.y;
+      const t1 = base + normal.norm * distance;
+      const t2 = base - normal.norm * distance;
+      questions.push(
+        `直線 \\(${normal.a}x${normal.b >= 0 ? '+' : ''}${normal.b}y=t\\) 與圓 \\(${formatS122CircleStandard(center.x, center.y, pair.r * pair.r)}\\) 相交的弦長為 ${2 * pair.half}，求 \\(t\\)。`
+      );
+      answers.push(
+        `簡答：\\(t=${t1}\\) 或 \\(t=${t2}\\)。過程：弦長為 ${2 * pair.half}，半弦長為 ${pair.half}。圓半徑為 ${pair.r}，故圓心到直線距離 \\(d=\\sqrt{${pair.r}^2-${pair.half}^2}=${distance}\\)。圓心 \\(${formatS122Point(center)}\\) 到直線距離為 \\(\\frac{|${base}-t|}{${normal.norm}}\\)，所以 \\(|${base}-t|=${normal.norm * distance}\\)，得 \\(t=${t1}\\) 或 \\(t=${t2}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS123TangentPointCircleCoefficientSet(count) {
+    const questions = [];
+    const answers = [];
+    const normals = [
+      { a: 3, b: -4 },
+      { a: 4, b: 3 },
+      { a: 5, b: -12 },
+      { a: 12, b: 5 },
+      { a: 8, b: -15 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const normal = normals[i % normals.length];
+      const point = { x: randInt(1, 6), y: randInt(-3, 4) };
+      const lambda = randInt(1, 3);
+      const center = { x: point.x + lambda * normal.a, y: point.y + lambda * normal.b };
+      const dCoef = -2 * center.x;
+      const eCoef = -2 * center.y;
+      const radius2 = lambda * lambda * (normal.a * normal.a + normal.b * normal.b);
+      const fCoef = center.x * center.x + center.y * center.y - radius2;
+      const lineC = -(normal.a * point.x + normal.b * point.y);
+      questions.push(
+        `直線 \\(${formatS123LineEquation(normal.a, normal.b, lineC)}\\) 與圓 \\(x^2+y^2${formatS122SignedNumber(dCoef)}x+ay+b=0\\) 切於點 \\(${formatS122Point(point)}\\)，求 \\((a,b)\\)。`
+      );
+      answers.push(
+        `簡答：\\((a,b)=(${eCoef},${fCoef})\\)。過程：切點到圓心的半徑垂直切線，所以圓心在過切點、方向為法向量 \\((${normal.a},${normal.b})\\) 的直線上。由 \\(x^2+y^2${formatS122SignedNumber(dCoef)}x+ay+b=0\\) 知圓心的 \\(x\\) 坐標為 \\(${-dCoef}/2=${center.x}\\)，因此圓心為 \\(${formatS122Point(center)}\\)。所以 \\(a=-2\\cdot${center.y}=${eCoef}\\)。再代入切點 \\(${formatS122Point(point)}\\) 到圓方程，得 \\(b=${fCoef}\\)。`
+      );
+    }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
   function buildS122GeneralToStandardSet(count) {
@@ -4906,6 +5739,161 @@
     return parts.join('') || '0';
   }
 
+  function expandS13PolynomialFromRoots(roots, leading = 1) {
+    let coeffs = [leading];
+    roots.forEach((root) => {
+      coeffs = multiplyLinearByPoly([1, -root], coeffs);
+    });
+    return coeffs;
+  }
+
+  function formatS13FactorList(roots) {
+    return roots.map((root) => `\\(${formatS131LinearFactor(root)}\\)`).join('，');
+  }
+
+  function formatS13FactorProduct(roots) {
+    return roots.map((root) => `(${formatS131LinearFactor(root)})`).join('');
+  }
+
+  function buildS131FactorCheckSpecialPolynomialSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 5;
+
+      if (type === 0) {
+        const roots = shuffle([randInt(-5, -1), randInt(1, 5), randInt(6, 9)]).slice(0, 3).sort((a, b) => a - b);
+        const coeffs = expandS13PolynomialFromRoots(roots);
+        const polynomial = formatPolynomialFromCoeffs(coeffs);
+        questions.push(`已知 \\(f(x)=${polynomial}\\)，列出 \\(f(x)\\) 的所有一次因式。`);
+        answers.push(
+          `簡答：${formatS13FactorList(roots)}。過程：把 \\(f(x)\\) 因式分解為 \\(${formatS13FactorProduct(roots)}\\)，所以一次因式如上。`
+        );
+        continue;
+      }
+
+      if (type === 1) {
+        const a = randInt(2, 4);
+        const n = randInt(3, 6);
+        const constant = Math.pow(a, n);
+        const hasPlus = n % 2 === 0;
+        questions.push(`判斷 \\(x-${a}\\) 與 \\(x+${a}\\) 是否為 \\(x^{${n}}-${constant}\\) 的因式。`);
+        answers.push(
+          `簡答：\\(x-${a}\\) 一定是因式；\\(x+${a}\\)${hasPlus ? '也是' : '不是'}因式。過程：代入 \\(x=${a}\\) 得 0，所以 \\(x-${a}\\) 是因式。代入 \\(x=-${a}\\) 得 \\((-${a})^{${n}}-${constant}${hasPlus ? '=0' : `=${-constant - constant}`}\\)，因此 \\(x+${a}\\)${hasPlus ? '是' : '不是'}因式。`
+        );
+        continue;
+      }
+
+      if (type === 2) {
+        const a = randInt(2, 4);
+        const n = [3, 5][randInt(0, 1)];
+        const constant = Math.pow(a, n);
+        questions.push(`判斷 \\(x-${a}\\) 與 \\(x+${a}\\) 是否為 \\(x^{${n}}+${constant}\\) 的因式。`);
+        answers.push(
+          `簡答：\\(x+${a}\\) 是因式，\\(x-${a}\\) 不是因式。過程：因為 \\(n\\) 為奇數，代入 \\(x=-${a}\\) 得 \\((-${a})^{${n}}+${constant}=0\\)，所以 \\(x+${a}\\) 是因式；代入 \\(x=${a}\\) 得 \\(${constant}+${constant}\\ne0\\)，所以 \\(x-${a}\\) 不是因式。`
+        );
+        continue;
+      }
+
+      if (type === 3) {
+        const m = randInt(2, 5);
+        let r = pickNonZero(-4, 4);
+        while (Math.abs(r) === m) r = pickNonZero(-4, 4);
+        const coeffs = expandS13PolynomialFromRoots([-m, m, r]);
+        const polynomial = formatPolynomialFromCoeffs(coeffs);
+        questions.push(`已知 \\(f(x)=${polynomial}\\)，判斷 \\(x^2-${m * m}\\) 是否為 \\(f(x)\\) 的因式，並說明理由。`);
+        answers.push(
+          `簡答：是。過程：\\(x^2-${m * m}=(x-${m})(x+${m})\\)。由 \\(f(x)\\) 可分解出 ${formatS13FactorList([-m, m, r])}，同時含有 \\(x-${m}\\) 與 \\(x+${m}\\)，所以 \\(x^2-${m * m}\\) 是因式。`
+        );
+        continue;
+      }
+
+      const a = randInt(2, 5);
+      const b = randInt(1, 4);
+      const c = randInt(2, 6);
+      const polynomial = `(x^2+${a}x+${b})(x-${c})`;
+      const value = c * c + a * c + b;
+      questions.push(`設 \\(f(x)=${polynomial}\\)。若 \\(x-${c}\\) 已知為因式，判斷 \\(x+${c}\\) 是否也一定是因式。`);
+      answers.push(
+        `簡答：不一定；本題不是。過程：因式定理要代入對應的根。\\(x+${c}\\) 是因式需 \\(f(-${c})=0\\)，但 \\(f(-${c})=((-${c})^2-${a * c}+${b})(-${2 * c})\\)，通常不為 0。不能因為 \\(x-${c}\\) 是因式，就誤以為 \\(x+${c}\\) 也會是因式。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS131NearbyRootsValueSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 5;
+
+      if (type === 0) {
+        const a = randInt(-4, 5);
+        const k = pickNonZero(-5, 5);
+        const given = -6 * k;
+        const target = 6 * k;
+        questions.push(`三次多項式 \\(f(x)\\) 的根為 ${a}、${a + 1}、${a + 2}，且最高次項係數為 \\(k\\)。若 \\(f(${a - 1})=${given}\\)，求 \\(f(${a + 3})\\)。`);
+        answers.push(
+          `簡答：${target}。過程：設 \\(f(x)=k${formatS13FactorProduct([a, a + 1, a + 2])}\\)。代入 \\(x=${a - 1}\\) 得 \\(f(${a - 1})=-6k=${given}\\)，所以 \\(k=${k}\\)。代入 \\(x=${a + 3}\\) 得 \\(f(${a + 3})=6k=${target}\\)。`
+        );
+        continue;
+      }
+
+      if (type === 1) {
+        const a = randInt(-3, 4);
+        const k = pickNonZero(-4, 4);
+        const given = 6 * k;
+        const target = -6 * k;
+        questions.push(`三次多項式 \\(f(x)\\) 有三根 ${a}、${a + 1}、${a + 2}。若最高次項係數固定，且 \\(f(${a + 3})=${given}\\)，求 \\(f(${a - 1})\\)。`);
+        answers.push(
+          `簡答：${target}。過程：設 \\(f(x)=k${formatS13FactorProduct([a, a + 1, a + 2])}\\)。\\(f(${a + 3})=6k=${given}\\)，所以 \\(k=${k}\\)。因此 \\(f(${a - 1})=(-1)(-2)(-3)k=-6k=${target}\\)。`
+        );
+        continue;
+      }
+
+      if (type === 2) {
+        const a = randInt(-3, 4);
+        const d = randInt(2, 4);
+        const k = pickNonZero(-3, 3);
+        const given = 6 * k * d ** 3;
+        const target = -given;
+        questions.push(`三次多項式 \\(f(x)\\) 的根為 ${a - d}、${a}、${a + d}。若 \\(f(${a + 2 * d})=${given}\\)，求 \\(f(${a - 2 * d})\\)。`);
+        answers.push(
+          `簡答：${target}。過程：設 \\(f(x)=k${formatS13FactorProduct([a - d, a, a + d])}\\)。在 \\(x=${a + 2 * d}\\) 時三因數為 \\(${3 * d},${2 * d},${d}\\)，乘積為 \\(${6 * d ** 3}\\)；在 \\(x=${a - 2 * d}\\) 時三因數為 \\(${-d},${-2 * d},${-3 * d}\\)，乘積為 \\(${-6 * d ** 3}\\)。所以兩值相反，答案為 ${target}。`
+        );
+        continue;
+      }
+
+      if (type === 3) {
+        const a = randInt(-3, 3);
+        const k = pickNonZero(-3, 3);
+        const given = 24 * k;
+        questions.push(`四次多項式 \\(f(x)\\) 的根為 ${a}、${a + 1}、${a + 2}、${a + 3}。若 \\(f(${a - 1})=${given}\\)，求 \\(f(${a + 4})\\)。`);
+        answers.push(
+          `簡答：${given}。過程：設 \\(f(x)=k${formatS13FactorProduct([a, a + 1, a + 2, a + 3])}\\)。代入 \\(x=${a - 1}\\) 的四個因數為 \\(-1,-2,-3,-4\\)，乘積為 24；代入 \\(x=${a + 4}\\) 的四個因數為 \\(4,3,2,1\\)，乘積也為 24。因此兩值相同。`
+        );
+        continue;
+      }
+
+      const a = randInt(-5, 4);
+      const b = a + randInt(2, 5);
+      const k = pickNonZero(-5, 5);
+      const givenX = a - 1;
+      const targetX = b + 1;
+      const given = k * (givenX - a) * (givenX - b);
+      const target = k * (targetX - a) * (targetX - b);
+      questions.push(`二次多項式 \\(f(x)\\) 的兩根為 ${a}、${b}，且 \\(f(${givenX})=${given}\\)，求 \\(f(${targetX})\\)。`);
+      answers.push(
+        `簡答：${target}。過程：設 \\(f(x)=k${formatS13FactorProduct([a, b])}\\)。由 \\(f(${givenX})=k(${givenX - a})(${givenX - b})=${given}\\) 可得 \\(k=${k}\\)。所以 \\(f(${targetX})=k(${targetX - a})(${targetX - b})=${target}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildS131AxMinusBDivisionSet(count) {
     const questions = [];
     const answers = [];
@@ -5787,6 +6775,85 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function formatShiftBase(h) {
+    return h === 0 ? 'x' : h > 0 ? `x-${h}` : `x+${-h}`;
+  }
+
+  function formatSignedNumber(value) {
+    return value >= 0 ? `+${value}` : `-${Math.abs(value)}`;
+  }
+
+  function buildS131OddEvenValueRelationSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 4;
+      const t = randInt(2, 6);
+
+      if (type < 2) {
+        const a = pickNonZero(-3, 3);
+        const b = randInt(-4, 4);
+        const c = randInt(-8, 8);
+        const evenValue = a * t ** 4 + b * t ** 2 + c;
+        const oddValue = randInt(-18, 18);
+        const given = evenValue - oddValue;
+        const target = evenValue + oddValue;
+        const poly = `${formatPolynomialFromCoeffs([a, 0, b, 0, c])}+\\phi(x)`;
+        questions.push(
+          `設 \\(\\phi(x)\\) 為奇函數，\\(f(x)=${poly}\\)。若 \\(f(-${t})=${given}\\)，求 \\(f(${t})\\)。`
+        );
+        answers.push(
+          `簡答：\\(${target}\\)。過程：偶次多項式部分在 \\(x=${t}\\) 與 \\(x=-${t}\\) 的值相同，為 \\(${evenValue}\\)；奇函數部分兩邊互為相反數。已知 \\(f(-${t})=${evenValue}-\\phi(${t})=${given}\\)，得 \\(\\phi(${t})=${oddValue}\\)，所以 \\(f(${t})=${evenValue}${formatSignedNumber(oddValue)}=${target}\\)。`
+        );
+        continue;
+      }
+
+      const c = randInt(-9, 9);
+      const oddValue = pickNonZero(-18, 18);
+      const given = c - oddValue;
+      const target = c + oddValue;
+      questions.push(
+        `設 \\(g(x)\\) 為只含奇次項的多項式，且 \\(f(x)=g(x)${c >= 0 ? '+' : ''}${c}\\)。若 \\(f(-${t})=${given}\\)，求 \\(f(${t})\\)。`
+      );
+      answers.push(
+        `簡答：\\(${target}\\)。過程：因 \\(g(-x)=-g(x)\\)，所以 \\(f(${t})+f(-${t})=2\\cdot${c}\\)。故 \\(f(${t})=2\\cdot${c}-(${given})=${target}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS131ShiftedBasisCoefficientsSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const h = randInt(-3, 4);
+      const p = pickNonZero(-3, 3);
+      const q = randInt(-5, 5);
+      const r = randInt(-6, 6);
+      const s = randInt(-8, 8);
+      const coeffs = [
+        p,
+        q - 3 * p * h,
+        3 * p * h * h - 2 * q * h + r,
+        -p * h ** 3 + q * h ** 2 - r * h + s,
+      ];
+      const expanded = formatPolynomialFromCoeffs(coeffs);
+      const base = formatShiftBase(h);
+
+      questions.push(
+        `已知 \\(f(x)=${expanded}\\)，若 \\(f(x)=a(${base})^3+b(${base})^2+c(${base})+d\\)，求 \\((a,b,c,d)\\)。`
+      );
+      answers.push(
+        `簡答：\\((a,b,c,d)=(${p},${q},${r},${s})\\)。過程：將多項式改用 \\(${base}\\) 作基準，原式可寫成 \\(${p}(${base})^3${q >= 0 ? '+' : ''}${q}(${base})^2${r >= 0 ? '+' : ''}${r}(${base})${s >= 0 ? '+' : ''}${s}\\)，所以係數依序為 \\(${p},${q},${r},${s}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildS132GeneralVertexConversionSet(count) {
     const templates = [
       {
@@ -5850,6 +6917,165 @@
       questions.push(item.q);
       answers.push(item.a);
     }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS132ParabolaSymmetryPointSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const a = pickNonZero(-4, 4);
+      const h = randInt(-4, 5);
+      const k = randInt(-6, 6);
+      let x = h + pickNonZero(-5, 5);
+      if (x === h) x += 1;
+      const y = a * (x - h) ** 2 + k;
+      const mirrorX = 2 * h - x;
+      const base = formatShiftBase(h);
+      const vertexForm = `${a}(${base})^2${k >= 0 ? '+' : ''}${k}`;
+
+      questions.push(
+        `二次函數 \\(\\Gamma:y=${vertexForm}\\) 上有一點 \\(P(${x},${y})\\)。利用圖形對稱性，求另一個與 \\(P\\) 對稱且也在 \\(\\Gamma\\) 上的點坐標。`
+      );
+      answers.push(
+        `簡答：\\((${mirrorX},${y})\\)。過程：\\(\\Gamma\\) 的對稱軸為 \\(x=${h}\\)，所以對稱點的 \\(x\\) 坐標為 \\(2\\cdot(${h})-(${x})=${mirrorX}\\)，\\(y\\) 坐標不變。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS132QuadraticAxisTwoPointsSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const h = randInt(-3, 4);
+      const a = pickNonZero(-3, 3);
+      const k = randInt(-6, 6);
+      let x1 = h + pickNonZero(-4, 4);
+      let x2 = h + pickNonZero(-4, 4);
+      while (x2 === x1 || Math.abs(x2 - h) === Math.abs(x1 - h)) x2 = h + pickNonZero(-4, 4);
+      const y1 = a * (x1 - h) ** 2 + k;
+      const y2 = a * (x2 - h) ** 2 + k;
+      const general = formatPolynomialFromCoeffs([a, -2 * a * h, a * h * h + k]);
+      const base = formatShiftBase(h);
+      const vertex = `${a}(${base})^2${k >= 0 ? '+' : ''}${k}`;
+
+      questions.push(
+        `已知二次函數 \\(f(x)\\) 的對稱軸為 \\(x=${h}\\)，且圖形通過 \\((${x1},${y1})\\)、\\((${x2},${y2})\\) 兩點，求 \\(f(x)\\)。`
+      );
+      answers.push(
+        `簡答：\\(f(x)=${vertex}\\)，一般式為 \\(${general}\\)。過程：設 \\(f(x)=A(${base})^2+B\\)。代入兩點得 \\(A=${a}\\)、\\(B=${k}\\)，因此 \\(f(x)=${vertex}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS132CubicCenterStandardFormSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const a = pickNonZero(-3, 3);
+      const h = randInt(-3, 4);
+      const p = pickNonZero(-6, 6);
+      const q = randInt(-8, 8);
+      const coeffs = [
+        a,
+        -3 * a * h,
+        3 * a * h * h + p,
+        -a * h ** 3 - p * h + q,
+      ];
+      const expanded = formatPolynomialFromCoeffs(coeffs);
+      const base = formatShiftBase(h);
+      const shifted = `${a}(${base})^3${p >= 0 ? '+' : ''}${p}(${base})${q >= 0 ? '+' : ''}${q}`;
+
+      questions.push(
+        `已知三次函數 \\(f(x)=${expanded}\\)。將它改寫成 \\(A(${base})^3+B(${base})+C\\)，並求圖形的對稱中心。`
+      );
+      answers.push(
+        `簡答：\\(f(x)=${shifted}\\)，對稱中心為 \\((${h},${q})\\)。過程：三次函數若寫成 \\(A(x-h)^3+B(x-h)+C\\)，中心即為 \\((h,C)\\)。本題 \\(h=${h},C=${q}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS132CubicCenterFormEvaluationSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 5;
+      const a = pickNonZero(-3, 3);
+      const h = randInt(-3, 4);
+      const p = pickNonZero(-6, 6);
+      const q = randInt(-8, 8);
+      const coeffs = [
+        a,
+        -3 * a * h,
+        3 * a * h * h + p,
+        -a * h ** 3 - p * h + q,
+      ];
+      const expanded = formatPolynomialFromCoeffs(coeffs);
+      const base = formatShiftBase(h);
+      const shifted = `${a}(${base})^3${p >= 0 ? '+' : ''}${p}(${base})${q >= 0 ? '+' : ''}${q}`;
+
+      if (type === 0) {
+        const t = randInt(1, 4);
+        const targetX = h + t;
+        const value = a * t ** 3 + p * t + q;
+        questions.push(`已知 \\(f(x)=${expanded}\\)，利用中心式求 \\(f(${targetX})\\)。`);
+        answers.push(
+          `簡答：${value}。過程：先改寫為 \\(f(x)=${shifted}\\)。當 \\(x=${targetX}\\) 時，\\(${base}=${t}\\)，所以 \\(f(${targetX})=${a}\\cdot${t}^3${formatSignedNumber(p)}\\cdot${t}${formatSignedNumber(q)}=${value}\\)。`
+        );
+        continue;
+      }
+
+      if (type === 1) {
+        const t = -randInt(1, 4);
+        const targetX = h + t;
+        const value = a * t ** 3 + p * t + q;
+        questions.push(`已知 \\(f(x)=${expanded}\\)，將它改成 \\(${base}\\) 附近的形式後，求 \\(f(${targetX})\\)。`);
+        answers.push(
+          `簡答：${value}。過程：\\(f(x)=${shifted}\\)。代入 \\(x=${targetX}\\)，有 \\(${base}=${t}\\)，所以函數值為 \\(${a}(${t})^3${formatSignedNumber(p)}(${t})${formatSignedNumber(q)}=${value}\\)。`
+        );
+        continue;
+      }
+
+      if (type === 2) {
+        const t = 0.01;
+        const targetX = Number((h + t).toFixed(2));
+        const value = a * t ** 3 + p * t + q;
+        questions.push(`已知 \\(f(x)=${expanded}\\)。將 \\(f(x)\\) 改寫成中心式後，估計 \\(f(${targetX.toFixed(2)})\\) 到小數點後四位。`);
+        answers.push(
+          `簡答：約 ${trimFixed(value, 4)}。過程：\\(f(x)=${shifted}\\)。當 \\(x=${targetX.toFixed(2)}\\) 時，\\(${base}=0.01\\)，所以 \\(f(x)=${q}${formatSignedNumber(p)}(0.01)${formatSignedNumber(a)}(0.01)^3\\approx${trimFixed(value, 4)}\\)。`
+        );
+        continue;
+      }
+
+      if (type === 3) {
+        const t = randInt(1, 3);
+        const y1 = a * t ** 3 + p * t + q;
+        const y2 = a * (-t) ** 3 + p * (-t) + q;
+        questions.push(`三次函數 \\(f(x)=${expanded}\\) 的中心為何？並求 \\(f(${h + t})+f(${h - t})\\)。`);
+        answers.push(
+          `簡答：中心 \\((${h},${q})\\)，和為 ${2 * q}。過程：中心式為 \\(f(x)=${shifted}\\)，所以中心是 \\((${h},${q})\\)。對稱點的函數值和等於兩倍中心的 \\(y\\) 坐標，故 \\(f(${h + t})+f(${h - t})=${y1}+${y2}=2\\cdot${q}=${2 * q}\\)。`
+        );
+        continue;
+      }
+
+      const t = randInt(1, 4);
+      const value = a * t ** 3 + p * t + q;
+      questions.push(`已知 \\(f(x)=${shifted}\\)。若 \\(f(${h + t})=${value}\\)，請檢查由一般式 \\(${expanded}\\) 代入是否一致。`);
+      answers.push(
+        `簡答：一致，函數值為 ${value}。過程：中心式中 \\(${base}=${t}\\)，所以 \\(f(${h + t})=${a}\\cdot${t}^3+${p}\\cdot${t}+${q}=${value}\\)。中心式與一般式是同一個多項式，代入一般式也必得相同結果。`
+      );
+    }
+
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
@@ -7077,6 +8303,38 @@
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
+  function buildS133QuadraticInequalityFromSolutionSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const closed = i % 2 === 1;
+      const inside = i % 4 < 2;
+      let r1 = randInt(-5, 3);
+      let r2 = randInt(r1 + 2, r1 + 8);
+      if (r1 === 0 && r2 === 0) r2 += 2;
+      const lead = inside ? -randInt(1, 4) : randInt(1, 4);
+      const b = -lead * (r1 + r2);
+      const c = lead * r1 * r2;
+      const relation = closed ? '\\ge0' : '>0';
+      const interval = inside
+        ? `${r1}${closed ? '\\le' : '<'}x${closed ? '\\le' : '<'}${r2}`
+        : `x${closed ? '\\le' : '<'}${r1}\\text{ 或 }x${closed ? '\\ge' : '>'}${r2}`;
+      const poly = formatPolynomialFromCoeffs([lead, b, c]);
+      const f1 = `(x${r1 >= 0 ? '-' : '+'}${Math.abs(r1)})`;
+      const f2 = `(x${r2 >= 0 ? '-' : '+'}${Math.abs(r2)})`;
+
+      questions.push(
+        `已知二次不等式 \\(${lead}x^2+mx+n${relation}\\) 的解為 \\(${interval}\\)，求 \\((m,n)\\)。`
+      );
+      answers.push(
+        `簡答：\\((m,n)=(${b},${c})\\)。過程：解的端點就是兩根 \\(${r1}\\)、\\(${r2}\\)，且首項係數為 \\(${lead}\\)，所以二次式為 \\(${lead}${f1}${f2}=${poly}\\)。因此 \\(m=${b},n=${c}\\)。`
+      );
+    }
+
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
   function buildS133QuadraticSubstitutionSolutionSet(count) {
     const templates = [
       {
@@ -7225,6 +8483,67 @@
       questions.push(item.q);
       answers.push(item.a);
     }
+    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+  }
+
+  function buildS133SameSolutionTransformSet(count) {
+    const questions = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const type = i % 5;
+      const a = randInt(-5, 1);
+      const b = a + randInt(3, 7);
+      const fa = formatS131LinearFactor(a);
+      const fb = formatS131LinearFactor(b);
+
+      if (type === 0) {
+        const c = i % 2 === 0 ? a - randInt(1, 3) : b + randInt(1, 3);
+        const fc = formatS131LinearFactor(c);
+        questions.push(`解不等式 \\((${fa})(${fb})(${fc})^2\\le0\\)，並說明它和 \\((${fa})(${fb})\\le0\\) 是否有相同解集。`);
+        answers.push(
+          `簡答：\\([${a},${b}]\\cup\\{${c}\\}\\)，不相同。過程：平方因式 \\((${fc})^2\\ge0\\)，一般不改變正負號，但在 \\(x=${c}\\) 時會讓整體等於 0。原本 \\((${fa})(${fb})\\le0\\) 的解為 \\([${a},${b}]\\)，此題平方因式的零點在區間外，會額外多出 \\(x=${c}\\)。`
+        );
+        continue;
+      }
+
+      if (type === 1) {
+        const c = a + randInt(1, b - a - 1);
+        const fc = formatS131LinearFactor(c);
+        questions.push(`解不等式 \\((${fa})(${fb})(${fc})^2<0\\)。`);
+        answers.push(
+          `簡答：\\((${a},${c})\\cup(${c},${b})\\)。過程：\\((${fc})^2\\) 在 \\(x\\ne${c}\\) 時為正，不改變正負號；但嚴格小於 0 不能取使乘積為 0 的點。\\((${fa})(${fb})<0\\) 原本是 \\((${a},${b})\\)，再排除 \\(x=${c}\\)，得到答案。`
+        );
+        continue;
+      }
+
+      if (type === 2) {
+        const h = randInt(-3, 3);
+        const d = randInt(1, 5);
+        const positive = formatPolynomialFromCoeffs([1, -2 * h, h * h + d]);
+        const hBase = formatS131ShiftBase(h);
+        questions.push(`解不等式 \\((${fa})(${fb})(${positive})\\ge0\\)。`);
+        answers.push(
+          `簡答：\\((-\\infty,${a}]\\cup[${b},\\infty)\\)。過程：\\(${positive}=${hBase}^2+${d}\\)，對所有實數都大於 0，所以不改變不等式正負號。只需解 \\((${fa})(${fb})\\ge0\\)，得到 \\(x\\le${a}\\) 或 \\(x\\ge${b}\\)。`
+        );
+        continue;
+      }
+
+      if (type === 3) {
+        const d = randInt(1, 6);
+        questions.push(`解不等式 \\(-(x^2+${d})(${fa})(${fb})\\ge0\\)。`);
+        answers.push(
+          `簡答：\\([${a},${b}]\\)。過程：\\(x^2+${d}\\) 恆正，所以 \\(-(x^2+${d})\\) 恆負。兩邊同除以恆負量時不等號方向要改變，等價於 \\((${fa})(${fb})\\le0\\)，解為 \\([${a},${b}]\\)。`
+        );
+        continue;
+      }
+
+      questions.push(`解分式不等式 \\(\\frac{${fa}}{${fb}}\\ge0\\)，並比較它與 \\((${fa})(${fb})\\ge0\\) 的差異。`);
+      answers.push(
+        `簡答：\\((-\\infty,${a}]\\cup(${b},\\infty)\\)。過程：分式與乘積判號的分界點同為 ${a}、${b}，但 \\(x=${b}\\) 會使分母為 0，必須排除。若只解 \\((${fa})(${fb})\\ge0\\)，會錯把 \\(x=${b}\\) 包進去。`
+      );
+    }
+
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
   }
 
@@ -7774,6 +9093,33 @@
         return buildS111RepeatingDecimalFractionSet(5);
       },
     },
+    's1-1-1-finite-decimal-criterion': {
+      type: 'drill',
+      title: '有限小數的分母判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS111FiniteDecimalCriterionSet(5);
+      },
+    },
+    's1-1-1-power-remainder-cycle': {
+      type: 'drill',
+      title: '乘方餘數循環',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS111PowerRemainderCycleSet(5);
+      },
+    },
+    's1-1-1-divisibility-missing-digit': {
+      type: 'drill',
+      title: '缺位數整除判斷',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS111DivisibilityMissingDigitSet(5);
+      },
+    },
     's1-1-1-nested-radical-simplify': {
       type: 'drill',
       title: '雙重根號的化簡',
@@ -7837,6 +9183,15 @@
         return buildS111RadicalIntegerRangeSet(5);
       },
     },
+    's1-1-1-radical-distance-integer-count': {
+      type: 'drill',
+      title: '根式距離的整數點計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS111RadicalDistanceIntegerCountSet(5);
+      },
+    },
     's1-1-1-telescoping-rationalization': {
       type: 'drill',
       title: '連鎖型有理化',
@@ -7853,6 +9208,15 @@
       questionCount: 5,
       generate() {
         return buildS112AbsInequalityBasicSet(5);
+      },
+    },
+    's1-1-2-abs-linear-equation-count': {
+      type: 'drill',
+      title: '一次絕對值方程的解數判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS112AbsLinearEquationCountSet(5);
       },
     },
     's1-1-2-abs-reverse-parameter': {
@@ -7889,6 +9253,15 @@
       questionCount: 5,
       generate() {
         return buildS112AbsRangeSimplificationSet(5);
+      },
+    },
+    's1-1-2-quotient-interval-range': {
+      type: 'drill',
+      title: '區間商的範圍',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS112QuotientIntervalRangeSet(5);
       },
     },
     's1-1-2-abs-quadratic-mixed': {
@@ -8035,6 +9408,15 @@
         return buildS114SubstitutionEquationSet(5);
       },
     },
+    's1-1-4-exponential-parameter-relation': {
+      type: 'drill',
+      title: '指數參數關係式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS114ExponentialParameterRelationSet(5);
+      },
+    },
     's1-1-4-extract-factor-equation': {
       type: 'drill',
       title: '提公因數指數方程式',
@@ -8042,6 +9424,42 @@
       questionCount: 5,
       generate() {
         return buildS114ExtractFactorEquationSet(5);
+      },
+    },
+    's1-1-4-exponential-quadratic-extrema': {
+      type: 'drill',
+      title: '指數式的最小值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS114ExponentialQuadraticExtremaSet(5);
+      },
+    },
+    's1-1-4-exponential-fraction-range': {
+      type: 'drill',
+      title: '指數換元與分式值域',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS114ExponentialFractionRangeSet(5);
+      },
+    },
+    's1-1-4-rational-exponent-ordering': {
+      type: 'drill',
+      title: '分數指數與根式三數比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS114RationalExponentOrderingSet(5);
+      },
+    },
+    's1-1-4-exponential-growth-model': {
+      type: 'drill',
+      title: '指數成長倍率模型',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS114ExponentialGrowthModelSet(5);
       },
     },
     's1-1-5-large-number-digit-count': {
@@ -8098,6 +9516,33 @@
         return buildS115BasicLogCalculationSet(5);
       },
     },
+    's1-1-5-log-difference-estimate': {
+      type: 'drill',
+      title: '大數相減的對數估算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS115LogDifferenceEstimateSet(5);
+      },
+    },
+    's1-1-5-log-interval-integer-count': {
+      type: 'drill',
+      title: '常用對數區間的整數計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS115LogIntervalIntegerCountSet(5);
+      },
+    },
+    's1-1-5-log-scale-ratio-model': {
+      type: 'drill',
+      title: '對數量表的倍率模型',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS115LogScaleRatioModelSet(5);
+      },
+    },
     's1-2-1-projection-symmetry': {
       type: 'drill',
       title: '點對直線的投影與對稱',
@@ -8105,6 +9550,42 @@
       questionCount: 5,
       generate() {
         return buildS121ProjectionSymmetrySet(5);
+      },
+    },
+    's1-2-1-intercept-integer-count': {
+      type: 'drill',
+      title: '截距式直線的整數參數計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121InterceptIntegerCountSet(5);
+      },
+    },
+    's1-2-1-line-form-facts': {
+      type: 'drill',
+      title: '直線斜率與截距',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121LineFormFactsSet(5);
+      },
+    },
+    's1-2-1-line-side-parameter-count': {
+      type: 'drill',
+      title: '同側異側的參數整數計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121LineSideParameterCountSet(5);
+      },
+    },
+    's1-2-1-transformed-system-solution': {
+      type: 'drill',
+      title: '聯立方程線性代換後的解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121TransformedSystemSolutionSet(5);
       },
     },
     's1-2-1-perpendicular-bisector': {
@@ -8233,6 +9714,15 @@
         return buildS121AbsoluteInequalityAreaSet(5);
       },
     },
+    's1-2-1-linear-fractional-region-extrema': {
+      type: 'drill',
+      title: '線性分式在區域上的極值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS121LinearFractionalRegionExtremaSet(5);
+      },
+    },
     's1-2-2-general-to-standard': {
       type: 'drill',
       title: '一般式轉換為標準式',
@@ -8258,6 +9748,15 @@
       questionCount: 5,
       generate() {
         return buildS122CircleFromConditionsSet(5);
+      },
+    },
+    's1-2-2-center-line-through-two-points': {
+      type: 'drill',
+      title: '圓心在線上且過兩點的圓',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS122CircleCenterLineTwoPointsSet(5);
       },
     },
     's1-2-2-apollonius-circle': {
@@ -8348,6 +9847,24 @@
       questionCount: 5,
       generate() {
         return buildS123ChordLengthSet(5);
+      },
+    },
+    's1-2-3-chord-length-parameterized': {
+      type: 'drill',
+      title: '弦長反推平行直線參數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123ChordLengthParameterizedSet(5);
+      },
+    },
+    's1-2-3-tangent-point-circle-coefficients': {
+      type: 'drill',
+      title: '切點與切線反推圓係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123TangentPointCircleCoefficientSet(5);
       },
     },
     's1-2-3-chord-midpoint-locus': {
@@ -8468,6 +9985,15 @@
         return buildS122PointCircleRelationSet(5);
       },
     },
+    's1-2-2-two-circle-common-tangents': {
+      type: 'drill',
+      title: '兩圓公切線數判斷',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS122TwoCircleCommonTangentsSet(5);
+      },
+    },
     's1-2-3-line-circle-intersection': {
       type: 'drill',
       title: '直線與圓的交點坐標',
@@ -8475,6 +10001,15 @@
       questionCount: 5,
       generate() {
         return buildS123LineCirIntersectionSet(5);
+      },
+    },
+    's1-2-3-circle-line-distance-point-count': {
+      type: 'drill',
+      title: '圓上到直線定距的點數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS123CircleLineDistancePointCountSet(5);
       },
     },
     's1-3-1-polynomial-five-subtypes': {
@@ -8493,6 +10028,42 @@
       questionCount: 5,
       generate() {
         return buildS131CoefficientSumParitySet(5);
+      },
+    },
+    's1-3-1-odd-even-value-relation': {
+      type: 'drill',
+      title: '多項式奇偶結構的函數值互推',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131OddEvenValueRelationSet(5);
+      },
+    },
+    's1-3-1-shifted-basis-coefficients': {
+      type: 'drill',
+      title: '位移基底下的多項式係數反推',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131ShiftedBasisCoefficientsSet(5);
+      },
+    },
+    's1-3-1-factor-check-special-polynomial': {
+      type: 'drill',
+      title: '特殊多項式的因式判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131FactorCheckSpecialPolynomialSet(5);
+      },
+    },
+    's1-3-1-nearby-roots-value': {
+      type: 'drill',
+      title: '已知相鄰根的函數值互推',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS131NearbyRootsValueSet(5);
       },
     },
     's1-3-1-difference-reverse-polynomial': {
@@ -8801,6 +10372,24 @@
         return buildS132QuadraticFromConditionsSet(5);
       },
     },
+    's1-3-2-parabola-symmetry-point': {
+      type: 'drill',
+      title: '拋物線對稱點坐標判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132ParabolaSymmetryPointSet(5);
+      },
+    },
+    's1-3-2-quadratic-axis-two-points': {
+      type: 'drill',
+      title: '對稱軸與兩點反求二次函數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132QuadraticAxisTwoPointsSet(5);
+      },
+    },
     's1-3-2-restricted-range-extrema': {
       type: 'drill',
       title: '有範圍限制的二次函數極值判定',
@@ -8972,6 +10561,24 @@
         return buildS132CubicTransformCenterSet(5);
       },
     },
+    's1-3-2-cubic-center-standard-form': {
+      type: 'drill',
+      title: '三次函數中心式改寫與對稱中心',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132CubicCenterStandardFormSet(5);
+      },
+    },
+    's1-3-2-cubic-center-form-evaluation': {
+      type: 'drill',
+      title: '三次函數中心式代值與估算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS132CubicCenterFormEvaluationSet(5);
+      },
+    },
     's1-3-2-cubic-local-linear-approximation': {
       type: 'drill',
       title: '特定點附近的一次近似',
@@ -9081,6 +10688,15 @@
         return buildS133QuadraticInverseCoefficientSet(5);
       },
     },
+    's1-3-3-quadratic-inequality-from-solution': {
+      type: 'drill',
+      title: '由二次不等式解集合反推係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133QuadraticInequalityFromSolutionSet(5);
+      },
+    },
     's1-3-3-quadratic-substitution-solution': {
       type: 'drill',
       title: '二次函數代數變換後的解判定',
@@ -9124,6 +10740,15 @@
       questionCount: 5,
       generate() {
         return buildS133RationalInequalitySet(5);
+      },
+    },
+    's1-3-3-same-solution-transform': {
+      type: 'drill',
+      title: '不等式同解轉換與陷阱判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS133SameSolutionTransformSet(5);
       },
     },
     's1-3-3-advanced-always-sign': {
@@ -9219,7 +10844,7 @@
     },
   };
 
-  const bundleFingerprint = 's1-bundle-v20260623-v3';
+  const bundleFingerprint = 's1-bundle-v20260701-s1-3-sanmin-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

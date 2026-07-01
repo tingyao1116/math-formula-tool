@@ -5,11 +5,11 @@ window.formulaPracticeAssignmentStore = {
     "schema": "practice-db-v1",
     "count": 0,
     "assignmentCount": 0,
-    "practiceCount": 2671,
-    "bindingCount": 1227,
-    "updatedAt": "2026-06-29T16:28:38.395334+00:00",
-    "totalPractices": 2671,
-    "totalBindings": 1227
+    "practiceCount": 2847,
+    "bindingCount": 1432,
+    "updatedAt": "2026-07-01T08:14:27.090830+00:00",
+    "totalPractices": 2847,
+    "totalBindings": 1432
   },
   "byId": {},
   "catalog": {}
@@ -19,13 +19,330 @@ window.practiceLibraryStore = {
     "schema": "practice-db-v1",
     "count": 0,
     "assignmentCount": 0,
-    "practiceCount": 2671,
-    "bindingCount": 1227,
-    "updatedAt": "2026-06-29T16:28:38.395334+00:00",
-    "totalPractices": 2671,
-    "totalBindings": 1227
+    "practiceCount": 2847,
+    "bindingCount": 1432,
+    "updatedAt": "2026-07-01T08:14:27.090830+00:00",
+    "totalPractices": 2847,
+    "totalBindings": 1432
   },
   "byId": {
+    "j2-1-2-two-solution-one-eq-drill": {
+      "id": "j2-1-2-two-solution-one-eq-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩組解求方程式係數",
+      "generatorKey": "j2-1-2-two-solution-one-eq-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "聯立方程式",
+        "代入法",
+        "係數求解"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "j2-1-3-balance-scale-drill": {
+      "id": "j2-1-3-balance-scale-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等臂天平稱重聯立方程",
+      "generatorKey": "j2-1-3-balance-scale-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "聯立方程式",
+        "天平",
+        "應用題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "j2-1-3-box-distribution-drill": {
+      "id": "j2-1-3-box-distribution-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分配與分箱問題",
+      "generatorKey": "j2-1-3-box-distribution-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "聯立方程式",
+        "分配",
+        "箱子問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "j2-1-3-class-size-score-drill": {
+      "id": "j2-1-3-class-size-score-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "班級人數與成績分析",
+      "generatorKey": "j2-1-3-class-size-score-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "聯立方程式",
+        "平均數",
+        "班級應用"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "j2-1-3-pairwise-sum-drill": {
+      "id": "j2-1-3-pairwise-sum-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "多人成對和問題",
+      "generatorKey": "j2-1-3-pairwise-sum-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "聯立方程式",
+        "成對和",
+        "年齡問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "j2-4-2-abs-value-ineq-drill": {
+      "id": "j2-4-2-abs-value-ineq-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "絕對值不等式",
+      "generatorKey": "j2-4-2-abs-value-ineq-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-4-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "絕對值不等式",
+        "整數解"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "j2-4-2-compound-ineq-drill": {
+      "id": "j2-4-2-compound-ineq-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "聯立（雙重）不等式",
+      "generatorKey": "j2-4-2-compound-ineq-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-4-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "聯立不等式",
+        "雙重不等式",
+        "整數解"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "j2-4-2-concentration-ineq-drill": {
+      "id": "j2-4-2-concentration-ineq-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "濃度不等式應用",
+      "generatorKey": "j2-4-2-concentration-ineq-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-4-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "濃度",
+        "混合問題",
+        "不等式應用"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "j2-4-2-given-solution-find-coeff-drill": {
+      "id": "j2-4-2-given-solution-find-coeff-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "已知解求係數",
+      "generatorKey": "j2-4-2-given-solution-find-coeff-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-4-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一元一次不等式",
+        "逆推係數"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "j2-4-2-solve-ineq-integer-drill": {
+      "id": "j2-4-2-solve-ineq-integer-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "解不等式求整數解",
+      "generatorKey": "j2-4-2-solve-ineq-integer-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-4-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一元一次不等式",
+        "整數解",
+        "最大最小值"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "j2-4-2-x-range-linear-func-drill": {
+      "id": "j2-4-2-x-range-linear-func-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "已知 x 範圍求函數範圍",
+      "generatorKey": "j2-4-2-x-range-linear-func-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-4-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "範圍推導",
+        "線性函數",
+        "不等式"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-abs-both-sides-advanced-drill": {
       "id": "practice-abs-both-sides-advanced-drill",
       "enabled": true,
@@ -11776,6 +12093,40 @@ window.practiceLibraryStore = {
         "把求最多組數和求每組多少混成同一件事。"
       ]
     },
+    "practice-e5-1-2-prime-factorization-drill": {
+      "id": "practice-e5-1-2-prime-factorization-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "質因數分解",
+      "generatorKey": "e5-1-2-prime-factorization-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-1-2",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "上學期",
+      "chapter": "因數與公因數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-1-2",
+        "因數與公因數",
+        "質因數分解",
+        "質數"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "從最小的質數 2 開始試除，持續除到商為質數為止，用短除法整理步驟。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把合數也當成質因數，或除到 1 就停下來。"
+      ]
+    },
     "practice-e5-1-2-single-number-two-subtypes": {
       "id": "practice-e5-1-2-single-number-two-subtypes",
       "enabled": true,
@@ -12391,6 +12742,40 @@ window.practiceLibraryStore = {
         "通分做對了，最後卻忘記化成最簡答案。"
       ]
     },
+    "practice-e5-1-4-common-denom3-drill": {
+      "id": "practice-e5-1-4-common-denom3-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三個分數通分並比較大小",
+      "generatorKey": "e5-1-4-common-denom3-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-1-4",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "上學期",
+      "chapter": "擴分、約分與通分",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-1-4",
+        "擴分、約分與通分",
+        "三分數通分",
+        "比較大小"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "找三個分母的最小公倍數作為公分母，然後比較分子大小。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只取兩個分母的公倍數，未對第三個分母通分。"
+      ]
+    },
     "practice-e5-1-4-common-denominator-compare-drill": {
       "id": "practice-e5-1-4-common-denominator-compare-drill",
       "enabled": true,
@@ -12717,6 +13102,74 @@ window.practiceLibraryStore = {
         "只注意空格，沒先抓題目核心條件。"
       ]
     },
+    "practice-e5-1-4-mixed-calc3-drill": {
+      "id": "practice-e5-1-4-mixed-calc3-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三項分數混合加減",
+      "generatorKey": "e5-1-4-mixed-calc3-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-1-4",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "上學期",
+      "chapter": "擴分、約分與通分",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-1-4",
+        "擴分、約分與通分",
+        "分數加減",
+        "三項計算"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "先通分，再依序加減分子，最後化簡。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "逐次通分兩個分數，第三個分數未一起通分。"
+      ]
+    },
+    "practice-e5-1-4-multi-step-sub-drill": {
+      "id": "practice-e5-1-4-multi-step-sub-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "多步驟分數減法應用題",
+      "generatorKey": "e5-1-4-multi-step-sub-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-1-4",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "上學期",
+      "chapter": "擴分、約分與通分",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-1-4",
+        "擴分、約分與通分",
+        "應用題",
+        "分數減法"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "先算各步驟消耗量，再從總量逐步扣減，或一次列式計算。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記化簡最後答案，或通分錯誤。"
+      ]
+    },
     "practice-e5-1-4-property-compare-drill": {
       "id": "practice-e5-1-4-property-compare-drill",
       "enabled": true,
@@ -12787,6 +13240,44 @@ window.practiceLibraryStore = {
         "分子、分母除以不同的數，或沒有約到最簡。"
       ]
     },
+    "practice-e5-1-4-three-frac-three-subtypes": {
+      "id": "practice-e5-1-4-three-frac-three-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分數進階三小類綜合",
+      "generatorKey": "e5-1-4-three-frac-three-subtypes",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-e5-1-4-common-denom3-drill",
+        "practice-e5-1-4-mixed-calc3-drill",
+        "practice-e5-1-4-multi-step-sub-drill"
+      ],
+      "chapterCode": "e5-1-4",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "上學期",
+      "chapter": "擴分、約分與通分",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-1-4",
+        "擴分、約分與通分",
+        "分數進階",
+        "綜合練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "三題都需要通分，找最小公倍數是關鍵。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "通分後忘記約分化簡。"
+      ]
+    },
     "practice-e5-1-4-unlike-denominator-add-drill": {
       "id": "practice-e5-1-4-unlike-denominator-add-drill",
       "enabled": true,
@@ -12855,6 +13346,44 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "直接相減分子和分母，或借位時分數大小寫錯。"
+      ]
+    },
+    "practice-e5-1-5-area-three-subtypes": {
+      "id": "practice-e5-1-5-area-three-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "多邊形面積三小類綜合",
+      "generatorKey": "e5-1-5-area-three-subtypes",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-e5-1-5-parallelogram-area-drill",
+        "practice-e5-1-5-trapezoid-area-drill",
+        "practice-e5-1-5-triangle-area-drill"
+      ],
+      "chapterCode": "e5-1-5",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "上學期",
+      "chapter": "多邊形與扇形",
+      "domain": "空間與形狀",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-1-5",
+        "多邊形與扇形",
+        "面積綜合",
+        "多邊形"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "先辨認圖形種類，再套用對應的面積公式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "混淆三種公式，尤其是有無除以 2 的差別。"
       ]
     },
     "practice-e5-1-5-can-form-triangle-drill": {
@@ -12995,6 +13524,40 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "把對角和鄰角的規則互相用錯。"
+      ]
+    },
+    "practice-e5-1-5-parallelogram-area-drill": {
+      "id": "practice-e5-1-5-parallelogram-area-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平行四邊形面積",
+      "generatorKey": "e5-1-5-parallelogram-area-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-1-5",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "上學期",
+      "chapter": "多邊形與扇形",
+      "domain": "空間與形狀",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-1-5",
+        "多邊形與扇形",
+        "平行四邊形",
+        "面積"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "平行四邊形面積 = 底 × 高，注意高是底的垂直距離，不是斜邊長。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "用斜邊長代替高。"
       ]
     },
     "practice-e5-1-5-polygon-angle-five-subtypes": {
@@ -13323,6 +13886,40 @@ window.practiceLibraryStore = {
         "把端點也算進去，忘記是不等號。"
       ]
     },
+    "practice-e5-1-5-trapezoid-area-drill": {
+      "id": "practice-e5-1-5-trapezoid-area-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "梯形面積",
+      "generatorKey": "e5-1-5-trapezoid-area-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-1-5",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "上學期",
+      "chapter": "多邊形與扇形",
+      "domain": "空間與形狀",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-1-5",
+        "多邊形與扇形",
+        "梯形",
+        "面積"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "梯形面積 = (上底 + 下底) × 高 ÷ 2。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記除以 2，或把斜腰當成高。"
+      ]
+    },
     "practice-e5-1-5-triangle-angle-drill": {
       "id": "practice-e5-1-5-triangle-angle-drill",
       "enabled": true,
@@ -13356,6 +13953,40 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "少減一個角，或把 180° 錯看成 360°。"
+      ]
+    },
+    "practice-e5-1-5-triangle-area-drill": {
+      "id": "practice-e5-1-5-triangle-area-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三角形面積",
+      "generatorKey": "e5-1-5-triangle-area-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-1-5",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "上學期",
+      "chapter": "多邊形與扇形",
+      "domain": "空間與形狀",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-1-5",
+        "多邊形與扇形",
+        "三角形",
+        "面積"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "三角形面積 = 底 × 高 ÷ 2，高必須是底的垂直距離。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記除以 2，或用斜邊當高。"
       ]
     },
     "practice-e5-1-5-triangle-side-three-subtypes": {
@@ -16408,6 +17039,40 @@ window.practiceLibraryStore = {
         "把公斤和公克混用，或把大型載具寫成公斤。"
       ]
     },
+    "practice-e5-2-2-add-multiply-mixed-drill": {
+      "id": "practice-e5-2-2-add-multiply-mixed-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分數混合四則（乘加減）",
+      "generatorKey": "e5-2-2-add-multiply-mixed-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-2",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "分數的計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-2",
+        "分數的計算",
+        "混合四則",
+        "運算順序"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "先乘除、後加減；有括號先算括號內。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "未注意運算順序，先加減後乘。"
+      ]
+    },
     "practice-e5-2-2-amount-three-subtypes": {
       "id": "practice-e5-2-2-amount-three-subtypes",
       "enabled": true,
@@ -16838,6 +17503,40 @@ window.practiceLibraryStore = {
         "帶分數沒有先化成假分數就直接相乘。"
       ]
     },
+    "practice-e5-2-2-mixed-mixed-multiply-drill": {
+      "id": "practice-e5-2-2-mixed-mixed-multiply-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "帶分數乘帶分數",
+      "generatorKey": "e5-2-2-mixed-mixed-multiply-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-2",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "分數的計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-2",
+        "分數的計算",
+        "帶分數乘法",
+        "分數計算"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "先化假分數再相乘，最後化回帶分數或整數。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記先化假分數，直接用整數部分和分數部分分開計算。"
+      ]
+    },
     "practice-e5-2-2-multi-step-application-drill": {
       "id": "practice-e5-2-2-multi-step-application-drill",
       "enabled": true,
@@ -16912,6 +17611,42 @@ window.practiceLibraryStore = {
       "mistakes": [
         "帶分數與真分數的處理方式混在一起。"
       ]
+    },
+    "practice-e5-2-2-new-three-subtypes": {
+      "id": "practice-e5-2-2-new-three-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "進階分數計算三小類綜合",
+      "generatorKey": "e5-2-2-new-three-subtypes",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-e5-2-2-mixed-mixed-multiply-drill",
+        "practice-e5-2-2-triple-multiply-drill",
+        "practice-e5-2-2-add-multiply-mixed-drill"
+      ],
+      "chapterCode": "e5-2-2",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "分數的計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-2",
+        "分數的計算",
+        "進階分數計算",
+        "綜合練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "帶分數先化假分數，連乘善用交叉約分，混合四則注意運算順序。"
+      ],
+      "notes": [],
+      "mistakes": []
     },
     "practice-e5-2-2-product-compare-drill": {
       "id": "practice-e5-2-2-product-compare-drill",
@@ -17092,6 +17827,108 @@ window.practiceLibraryStore = {
         "明明要概數，卻直接寫完整除法結果。"
       ]
     },
+    "practice-e5-2-2-remainder-application-drill": {
+      "id": "practice-e5-2-2-remainder-application-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "剩餘量應用",
+      "generatorKey": "e5-2-2-remainder-application-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-2",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "分數的計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-2",
+        "分數的計算",
+        "剩餘量",
+        "分數應用"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "先算用掉的量（總量 × 分率），再用總量減去用掉的量。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "直接用分率當答案，忘記求實際數量。"
+      ]
+    },
+    "practice-e5-2-2-triple-multiply-drill": {
+      "id": "practice-e5-2-2-triple-multiply-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三個分數連乘",
+      "generatorKey": "e5-2-2-triple-multiply-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-2",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "分數的計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-2",
+        "分數的計算",
+        "三分數連乘",
+        "交叉約分"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "先找分子和分母間的公因數進行交叉約分，再相乘。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "每次相乘後才約分，步驟繁瑣且易出錯。"
+      ]
+    },
+    "practice-e5-2-2-two-step-consume-drill": {
+      "id": "practice-e5-2-2-two-step-consume-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩步驟消耗應用",
+      "generatorKey": "e5-2-2-two-step-consume-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-2",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "分數的計算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-2",
+        "分數的計算",
+        "兩步驟",
+        "連續消耗"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "第二步驟的基準量是第一步驟後的剩餘量，不是原來總量。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "第二次分率仍以原總量為基準，導致計算錯誤。"
+      ]
+    },
     "practice-e5-2-3-basic-unit-convert-drill": {
       "id": "practice-e5-2-3-basic-unit-convert-drill",
       "enabled": true,
@@ -17238,6 +18075,31 @@ window.practiceLibraryStore = {
         "小單位和大單位的 1000 倍關係混用。"
       ]
     },
+    "practice-e5-2-3-cup-pour-drill": {
+      "id": "practice-e5-2-3-cup-pour-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "幾個杯子與正方體倒水",
+      "generatorKey": "e5-2-3-cup-pour-drill",
+      "difficulty": "easy",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-e5-2-3-displacement-volume-drill": {
       "id": "practice-e5-2-3-displacement-volume-drill",
       "enabled": true,
@@ -17307,6 +18169,31 @@ window.practiceLibraryStore = {
       "mistakes": [
         "把底面積只看成長或只看成寬。"
       ]
+    },
+    "practice-e5-2-3-fraction-base-area-drill": {
+      "id": "practice-e5-2-3-fraction-base-area-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "幾分之幾的水量與底面積逆推",
+      "generatorKey": "e5-2-3-fraction-base-area-drill",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
     "practice-e5-2-3-inner-dimension-capacity-drill": {
       "id": "practice-e5-2-3-inner-dimension-capacity-drill",
@@ -17523,6 +18410,56 @@ window.practiceLibraryStore = {
         "沒有先確認物體是否完全沉入。"
       ]
     },
+    "practice-e5-2-3-rock-cup-three-subtypes": {
+      "id": "practice-e5-2-3-rock-cup-three-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "水位石頭、杯子倒水與分數水量三小類",
+      "generatorKey": "e5-2-3-rock-cup-three-subtypes",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-e5-2-3-rock-water-level-drill": {
+      "id": "practice-e5-2-3-rock-water-level-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "水中放石頭後的水位高度",
+      "generatorKey": "e5-2-3-rock-water-level-drill",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-e5-2-3-thickness-capacity-drill": {
       "id": "practice-e5-2-3-thickness-capacity-drill",
       "enabled": true,
@@ -17666,6 +18603,42 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "題目看見小數就急著算，沒有先判斷關係。"
+      ]
+    },
+    "practice-e5-2-4-clever-grouping-drill": {
+      "id": "practice-e5-2-4-clever-grouping-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "湊整巧算（結合律）",
+      "generatorKey": "e5-2-4-clever-grouping-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-4",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "小數的乘法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-4",
+        "小數乘法",
+        "湊整",
+        "結合律"
+      ],
+      "usage": [
+        "三數相乘時，先找能湊成整數的兩個數（如0.4×2.5=1），再乘第三個數。"
+      ],
+      "examples": [],
+      "tips": [
+        "常見湊整對：0.4×2.5=1、1.25×8=10、2.5×4=10、5×0.2=1。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "按順序從左到右計算，沒有先湊整。"
       ]
     },
     "practice-e5-2-4-compare-product-drill": {
@@ -17844,6 +18817,117 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "把兩種直式的點位規則混在一起。"
+      ]
+    },
+    "practice-e5-2-4-discount-drill": {
+      "id": "practice-e5-2-4-discount-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "打折與加成應用",
+      "generatorKey": "e5-2-4-discount-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-4",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "小數的乘法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-4",
+        "小數乘法",
+        "打折",
+        "加成"
+      ],
+      "usage": [
+        "計算商品打折或加成後的售價，練習小數乘法的生活應用。"
+      ],
+      "examples": [],
+      "tips": [
+        "打折：售價 = 原價 × 折扣率；加成：售價 = 成本 × 倍率。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把折扣率加1或搞混打折和加成的計算方向。"
+      ]
+    },
+    "practice-e5-2-4-distributive-clever-two-subtypes": {
+      "id": "practice-e5-2-4-distributive-clever-two-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分配律與湊整兩小類",
+      "generatorKey": "e5-2-4-distributive-clever-two-subtypes",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e5-2-4-distributive-law-drill",
+        "practice-e5-2-4-clever-grouping-drill"
+      ],
+      "chapterCode": "e5-2-4",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "小數的乘法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-4",
+        "小數乘法",
+        "分配律",
+        "湊整",
+        "兩小類綜合"
+      ],
+      "usage": [
+        "混合練習分配律化簡與湊整巧算兩種策略。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷：有公因數用分配律；三數相乘有湊整對用結合律。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "兩種策略搞混，沒有判斷適合哪一種。"
+      ]
+    },
+    "practice-e5-2-4-distributive-law-drill": {
+      "id": "practice-e5-2-4-distributive-law-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "小數乘法分配律",
+      "generatorKey": "e5-2-4-distributive-law-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-4",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "小數的乘法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-4",
+        "小數乘法",
+        "分配律"
+      ],
+      "usage": [
+        "利用分配律將小數乘法化簡：a×b ± a×c = a×(b±c)。"
+      ],
+      "examples": [],
+      "tips": [
+        "找出公因數後提出，將括號內的數字化簡再相乘。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "沒先提出公因數，直接各自計算不夠簡便。"
       ]
     },
     "practice-e5-2-4-infer-from-integer-drill": {
@@ -18494,6 +19578,106 @@ window.practiceLibraryStore = {
       "mistakes": [
         "忽略縱軸單位或省略符號時，整題都會判錯。"
       ]
+    },
+    "practice-e5-2-5-pie-angle-count-drill": {
+      "id": "practice-e5-2-5-pie-angle-count-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圓形圖角度↔百分比↔數量",
+      "generatorKey": "e5-2-5-pie-angle-count-drill",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-5",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-e5-2-5-pie-complement-drill": {
+      "id": "practice-e5-2-5-pie-complement-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圓形圖百分比補集",
+      "generatorKey": "e5-2-5-pie-complement-drill",
+      "difficulty": "easy",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-5",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-e5-2-5-pie-inverse-drill": {
+      "id": "practice-e5-2-5-pie-inverse-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由部分逆推圓形圖全體",
+      "generatorKey": "e5-2-5-pie-inverse-drill",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-5",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-e5-2-5-pie-three-subtypes": {
+      "id": "practice-e5-2-5-pie-three-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圓形圖三小類綜合",
+      "generatorKey": "e5-2-5-pie-three-subtypes",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-5",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
     "practice-e5-2-5-place-digit-drill": {
       "id": "practice-e5-2-5-place-digit-drill",
@@ -19558,6 +20742,42 @@ window.practiceLibraryStore = {
         "把增加和減少的方向弄反。"
       ]
     },
+    "practice-e5-2-7-dim-change-drill": {
+      "id": "practice-e5-2-7-dim-change-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "一個維度改變後的表面積差",
+      "generatorKey": "e5-2-7-dim-change-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-7",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "表面積",
+      "domain": "空間與形狀",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-7",
+        "表面積",
+        "維度變化",
+        "面積差"
+      ],
+      "usage": [
+        "長度改變 Δ，計算表面積增加或減少多少。"
+      ],
+      "examples": [],
+      "tips": [
+        "改變長：ΔSA = 2 × Δl × (w+h)。只有兩對面改變。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "誤算成改變4個面或6個面。"
+      ]
+    },
     "practice-e5-2-7-full-cover-application-drill": {
       "id": "practice-e5-2-7-full-cover-application-drill",
       "enabled": true,
@@ -19592,6 +20812,81 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "把只包側面和包全部外表面混在一起。"
+      ]
+    },
+    "practice-e5-2-7-inverse-height-drill": {
+      "id": "practice-e5-2-7-inverse-height-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "長方體逆推高",
+      "generatorKey": "e5-2-7-inverse-height-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-7",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "表面積",
+      "domain": "空間與形狀",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-7",
+        "表面積",
+        "逆推高"
+      ],
+      "usage": [
+        "已知長方體表面積與長、寬，反推高。"
+      ],
+      "examples": [],
+      "tips": [
+        "由 2(lw + (l+w)h) = SA，得 h = (SA/2 - lw) ÷ (l+w)。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記除以2再扣底面積，或除錯周長。"
+      ]
+    },
+    "practice-e5-2-7-inverse-room-two-subtypes": {
+      "id": "practice-e5-2-7-inverse-room-two-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "逆推高與粉刷扣門窗兩小類",
+      "generatorKey": "e5-2-7-inverse-room-two-subtypes",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e5-2-7-inverse-height-drill",
+        "practice-e5-2-7-room-window-drill"
+      ],
+      "chapterCode": "e5-2-7",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "表面積",
+      "domain": "空間與形狀",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-7",
+        "表面積",
+        "逆推",
+        "粉刷",
+        "兩小類綜合"
+      ],
+      "usage": [
+        "混合練習逆推高與扣除門窗的粉刷問題。"
+      ],
+      "examples": [],
+      "tips": [
+        "逆推高：從SA反推；粉刷：算四面牆再扣門窗。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "逆推時忘記先除以2。"
       ]
     },
     "practice-e5-2-7-lateral-wrap-drill": {
@@ -19704,6 +20999,115 @@ window.practiceLibraryStore = {
         "只減 1 個面，或忘了有幾個接觸處。"
       ]
     },
+    "practice-e5-2-7-open-top-cube-drill": {
+      "id": "practice-e5-2-7-open-top-cube-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "無蓋正方體表面積",
+      "generatorKey": "e5-2-7-open-top-cube-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-7",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "表面積",
+      "domain": "空間與形狀",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-7",
+        "表面積",
+        "無蓋正方體"
+      ],
+      "usage": [
+        "計算只有五個面的正方體所需材料面積。"
+      ],
+      "examples": [],
+      "tips": [
+        "無蓋正方體 = 5 × 邊長²。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "用6面公式，多算一個底面。"
+      ]
+    },
+    "practice-e5-2-7-open-top-rect-drill": {
+      "id": "practice-e5-2-7-open-top-rect-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "無蓋長方體表面積",
+      "generatorKey": "e5-2-7-open-top-rect-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-7",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "表面積",
+      "domain": "空間與形狀",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-7",
+        "表面積",
+        "無蓋長方體"
+      ],
+      "usage": [
+        "計算只有五個面（無蓋）的長方體所需材料面積。"
+      ],
+      "examples": [],
+      "tips": [
+        "無蓋長方體 = 底面積 + 四個側面積 = l×w + 2×l×h + 2×w×h。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記只有5面，誤用6面公式。"
+      ]
+    },
+    "practice-e5-2-7-open-top-two-subtypes": {
+      "id": "practice-e5-2-7-open-top-two-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "無蓋長方體與無蓋正方體兩小類",
+      "generatorKey": "e5-2-7-open-top-two-subtypes",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [
+        "practice-e5-2-7-open-top-rect-drill",
+        "practice-e5-2-7-open-top-cube-drill"
+      ],
+      "chapterCode": "e5-2-7",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "表面積",
+      "domain": "空間與形狀",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-7",
+        "表面積",
+        "無蓋",
+        "兩小類綜合"
+      ],
+      "usage": [
+        "混合練習無蓋長方體與無蓋正方體表面積。"
+      ],
+      "examples": [],
+      "tips": [
+        "長方體無蓋用5面公式；正方體無蓋用5s²。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "搞混兩種容器的公式。"
+      ]
+    },
     "practice-e5-2-7-rect-surface-drill": {
       "id": "practice-e5-2-7-rect-surface-drill",
       "enabled": true,
@@ -19777,6 +21181,42 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "把不同題型混成只套一條公式，不先判斷條件。"
+      ]
+    },
+    "practice-e5-2-7-room-window-drill": {
+      "id": "practice-e5-2-7-room-window-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "房間粉刷扣除門窗",
+      "generatorKey": "e5-2-7-room-window-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-7",
+      "stage": "國小",
+      "grade": "小五",
+      "term": "下學期",
+      "chapter": "表面積",
+      "domain": "空間與形狀",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e5-2-7",
+        "表面積",
+        "粉刷",
+        "扣除門窗"
+      ],
+      "usage": [
+        "計算四面牆的面積後，扣除門和窗的面積。"
+      ],
+      "examples": [],
+      "tips": [
+        "四面牆 = 2h(l+w)，再減去門(2m²)和窗(1.5m²)。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記扣除門窗，或算成6面。"
       ]
     },
     "practice-e5-2-7-special-rect-surface-drill": {
@@ -19961,6 +21401,31 @@ window.practiceLibraryStore = {
         "不要在還沒有確認基準量之前就直接乘除，否則容易用錯分母。"
       ]
     },
+    "practice-e5-2-8-compare-change-three-subtypes": {
+      "id": "practice-e5-2-8-compare-change-three-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "相對比較、增減百分率與逆推原價三小類",
+      "generatorKey": "e5-2-8-compare-change-three-subtypes",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-8",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-e5-2-8-complement-rate-drill": {
       "id": "practice-e5-2-8-complement-rate-drill",
       "enabled": true,
@@ -20141,6 +21606,31 @@ window.practiceLibraryStore = {
         "不要用原價除以售價，否則容易得到大於 1 的錯誤比率。"
       ]
     },
+    "practice-e5-2-8-find-original-drill": {
+      "id": "practice-e5-2-8-find-original-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "已知折扣後價格逆推原價",
+      "generatorKey": "e5-2-8-find-original-drill",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-8",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-e5-2-8-fraction-to-percent-expand-drill": {
       "id": "practice-e5-2-8-fraction-to-percent-expand-drill",
       "enabled": true,
@@ -20315,6 +21805,31 @@ window.practiceLibraryStore = {
       "mistakes": [
         "不要把比率當成數量直接作答，還要乘上全量。"
       ]
+    },
+    "practice-e5-2-8-percent-change-drill": {
+      "id": "practice-e5-2-8-percent-change-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "增減後是原來的幾%",
+      "generatorKey": "e5-2-8-percent-change-drill",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-8",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
     "practice-e5-2-8-percent-from-data-drill": {
       "id": "practice-e5-2-8-percent-from-data-drill",
@@ -20535,6 +22050,31 @@ window.practiceLibraryStore = {
       "mistakes": [
         "不能只比較部分量，還要注意各題的全量是否相同。"
       ]
+    },
+    "practice-e5-2-8-relative-compare-drill": {
+      "id": "practice-e5-2-8-relative-compare-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "甲比乙多/少幾%",
+      "generatorKey": "e5-2-8-relative-compare-drill",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-8",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
     "practice-e5-2-8-service-multi-step-drill": {
       "id": "practice-e5-2-8-service-multi-step-drill",
@@ -21078,6 +22618,31 @@ window.practiceLibraryStore = {
         "只換算小數部分，卻忘了整數部分要保留。"
       ]
     },
+    "practice-e5-2-9-match-with-break-drill": {
+      "id": "practice-e5-2-9-match-with-break-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "比賽節數與休息時間計算",
+      "generatorKey": "e5-2-9-match-with-break-drill",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-9",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-e5-2-9-minute-second-multiply-drill": {
       "id": "practice-e5-2-9-minute-second-multiply-drill",
       "enabled": true,
@@ -21298,6 +22863,81 @@ window.practiceLibraryStore = {
       "mistakes": [
         "只寫出未約分的分數，沒有整理成最簡形式。"
       ]
+    },
+    "practice-e5-2-9-speed-distance-drill": {
+      "id": "practice-e5-2-9-speed-distance-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "速度×時間=距離（含單位換算）",
+      "generatorKey": "e5-2-9-speed-distance-drill",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-9",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-e5-2-9-speed-match-three-subtypes": {
+      "id": "practice-e5-2-9-speed-match-three-subtypes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "速度距離、比賽時間與時間倍數三小類",
+      "generatorKey": "e5-2-9-speed-match-three-subtypes",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-9",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-e5-2-9-time-ratio-drill": {
+      "id": "practice-e5-2-9-time-ratio-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "時間倍數比較",
+      "generatorKey": "e5-2-9-time-ratio-drill",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e5-2-9",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
     "practice-e5-2-9-work-constant-drill": {
       "id": "practice-e5-2-9-work-constant-drill",
@@ -22432,6 +24072,41 @@ window.practiceLibraryStore = {
       "mistakes": [
         "算出來數字對，但單位寫錯。"
       ]
+    },
+    "practice-e6-1-2-remainder-cut-drill": {
+      "id": "practice-e6-1-2-remainder-cut-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "有餘數的分數切割",
+      "generatorKey": "e6-1-2-remainder-cut-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-1-2",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "上學期",
+      "chapter": "分數除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-1-2",
+        "分數除法",
+        "分數除法",
+        "有餘數",
+        "切割"
+      ],
+      "usage": [
+        "練習分數切割後有餘數的情形：最多幾段？剩多少？"
+      ],
+      "examples": [],
+      "tips": [
+        "結果取整數部分（商），餘數 = 總量 - 段數×每段長。"
+      ],
+      "notes": [],
+      "mistakes": []
     },
     "practice-e6-1-2-same-denominator-division-drill": {
       "id": "practice-e6-1-2-same-denominator-division-drill",
@@ -23653,6 +25328,41 @@ window.practiceLibraryStore = {
         "只會筆算，不會先觀察題目結構。"
       ]
     },
+    "practice-e6-1-4-mixed-computation-drill": {
+      "id": "practice-e6-1-4-mixed-computation-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "混合四則運算（含小數除法）",
+      "generatorKey": "e6-1-4-mixed-computation-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-1-4",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "小數除法",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-1-4",
+        "小數除法",
+        "小數除法",
+        "混合四則",
+        "運算順序"
+      ],
+      "usage": [
+        "練習含小數除法的混合四則計算，包含先乘除後加減及括號規則。"
+      ],
+      "examples": [],
+      "tips": [
+        "先算括號，再算乘除，最後才是加減。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-e6-1-4-packaging-drill": {
       "id": "practice-e6-1-4-packaging-drill",
       "enabled": true,
@@ -23989,6 +25699,40 @@ window.practiceLibraryStore = {
         "把基準量與比較量顛倒。"
       ]
     },
+    "practice-e6-1-5-chain-ratio-drill": {
+      "id": "practice-e6-1-5-chain-ratio-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "連比合併（A:B與B:C→A:B:C）",
+      "generatorKey": "e6-1-5-chain-ratio-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-1-5",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "上學期",
+      "chapter": "比與比值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-1-5",
+        "比與比值",
+        "連比",
+        "合併"
+      ],
+      "usage": [
+        "練習從兩個有共同項的比求三個量的連比。"
+      ],
+      "examples": [],
+      "tips": [
+        "把中間那個量化成相同的數，再合併成連比。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-e6-1-5-compare-three-subtypes": {
       "id": "practice-e6-1-5-compare-three-subtypes",
       "enabled": true,
@@ -24069,6 +25813,40 @@ window.practiceLibraryStore = {
       "mistakes": [
         "還沒分清比和值，就急著做應用。"
       ]
+    },
+    "practice-e6-1-5-discount-drill": {
+      "id": "practice-e6-1-5-discount-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "打折計算（正比應用）",
+      "generatorKey": "e6-1-5-discount-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-1-5",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "上學期",
+      "chapter": "比與比值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-1-5",
+        "比與比值",
+        "打折",
+        "正比應用"
+      ],
+      "usage": [
+        "練習打折的實際金額計算，包含已知原價求售價及已知售價反推原價。"
+      ],
+      "examples": [],
+      "tips": [
+        "打N折 = 售價是原價的 N/10，例如打8折 = × 0.8。"
+      ],
+      "notes": [],
+      "mistakes": []
     },
     "practice-e6-1-5-distribution-drill": {
       "id": "practice-e6-1-5-distribution-drill",
@@ -24776,6 +26554,41 @@ window.practiceLibraryStore = {
         "把周長倍數誤當成面積倍數。"
       ]
     },
+    "practice-e6-1-6-pi-22-over-7-drill": {
+      "id": "practice-e6-1-6-pi-22-over-7-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "以 22/7 計算圓周長",
+      "generatorKey": "e6-1-6-pi-22-over-7-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-1-6",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "上學期",
+      "chapter": "圓周率與圓的周長",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-1-6",
+        "圓周率與圓的周長",
+        "圓周長",
+        "22/7",
+        "圓周率"
+      ],
+      "usage": [
+        "當半徑或直徑是 7 的倍數（或 3.5 的倍數）時，用 22/7 計算圓周長更方便。"
+      ],
+      "examples": [],
+      "tips": [
+        "22/7 是圓周率的分數近似值，適合半徑為 3.5、7、14 等情況。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-e6-1-6-pi-concept-drill": {
       "id": "practice-e6-1-6-pi-concept-drill",
       "enabled": true,
@@ -24997,6 +26810,42 @@ window.practiceLibraryStore = {
       "mistakes": [
         "先拿步數去除 3.14，卻忘了還缺步長。"
       ]
+    },
+    "practice-e6-1-7-area-inverse-drill": {
+      "id": "practice-e6-1-7-area-inverse-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由面積逆推半徑或直徑",
+      "generatorKey": "e6-1-7-area-inverse-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-1-7",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "上學期",
+      "chapter": "圓面積",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-1-7",
+        "圓面積",
+        "圓面積",
+        "逆推",
+        "半徑",
+        "直徑"
+      ],
+      "usage": [
+        "練習已知圓面積，反推半徑或直徑的計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "先用面積 ÷ 3.14 得到半徑²，再開平方得到半徑。"
+      ],
+      "notes": [],
+      "mistakes": []
     },
     "practice-e6-1-7-area-multiplier-drill": {
       "id": "practice-e6-1-7-area-multiplier-drill",
@@ -26010,6 +27859,41 @@ window.practiceLibraryStore = {
         "把放大後的角也跟著乘倍數。"
       ]
     },
+    "practice-e6-1-9-area-ratio-to-scale-drill": {
+      "id": "practice-e6-1-9-area-ratio-to-scale-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "面積比與邊長比互推",
+      "generatorKey": "e6-1-9-area-ratio-to-scale-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-1-9",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "上學期",
+      "chapter": "縮圖與比例尺",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-1-9",
+        "縮圖與比例尺",
+        "比例尺",
+        "面積比",
+        "邊長比"
+      ],
+      "usage": [
+        "練習面積放大N²倍與邊長放大N倍之間的換算。"
+      ],
+      "examples": [],
+      "tips": [
+        "面積倍數是邊長倍數的平方；邊長倍數是面積倍數的平方根。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-e6-1-9-area-scale-drill": {
       "id": "practice-e6-1-9-area-scale-drill",
       "enabled": true,
@@ -26119,6 +28003,41 @@ window.practiceLibraryStore = {
       "mistakes": [
         "把扇形圓心角也跟著縮放。"
       ]
+    },
+    "practice-e6-1-9-map-area-drill": {
+      "id": "practice-e6-1-9-map-area-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "地圖面積換算實際面積",
+      "generatorKey": "e6-1-9-map-area-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-1-9",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "上學期",
+      "chapter": "縮圖與比例尺",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-1-9",
+        "縮圖與比例尺",
+        "比例尺",
+        "地圖面積",
+        "實際面積"
+      ],
+      "usage": [
+        "練習利用比例尺換算地圖面積與實際面積。"
+      ],
+      "examples": [],
+      "tips": [
+        "實際面積 = 圖上面積 × 比例尺²，注意單位換算（平方公分↔平方公尺）。"
+      ],
+      "notes": [],
+      "mistakes": []
     },
     "practice-e6-1-9-map-length-drill": {
       "id": "practice-e6-1-9-map-length-drill",
@@ -27329,6 +29248,35 @@ window.practiceLibraryStore = {
         "把快者速度直接當答案。"
       ]
     },
+    "practice-e6-2-2-circular-chase-drill": {
+      "id": "practice-e6-2-2-circular-chase-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圓形跑道同向追及",
+      "generatorKey": "e6-2-2-circular-chase-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-2",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "速率與應用",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "速率",
+        "追及",
+        "圓形跑道"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-e6-2-2-compare-speed-drill": {
       "id": "practice-e6-2-2-compare-speed-drill",
       "enabled": true,
@@ -27765,6 +29713,36 @@ window.practiceLibraryStore = {
         "誤用速度差。"
       ]
     },
+    "practice-e6-2-2-partial-remain-drill": {
+      "id": "practice-e6-2-2-partial-remain-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "行駛後剩餘或途中休息求全程時間",
+      "generatorKey": "e6-2-2-partial-remain-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-2",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "速率與應用",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "速率",
+        "路程",
+        "剩餘",
+        "休息"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-e6-2-2-pass-bridge-drill": {
       "id": "practice-e6-2-2-pass-bridge-drill",
       "enabled": true,
@@ -28065,6 +30043,35 @@ window.practiceLibraryStore = {
         "沒有把答案寫成題目要求的時間單位。"
       ]
     },
+    "practice-e6-2-2-two-seg-distance-drill": {
+      "id": "practice-e6-2-2-two-seg-distance-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分段行走求總路程",
+      "generatorKey": "e6-2-2-two-seg-distance-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-2",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "速率與應用",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "速率",
+        "路程",
+        "分段"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-e6-2-2-unit-convert-drill": {
       "id": "practice-e6-2-2-unit-convert-drill",
       "enabled": true,
@@ -28220,6 +30227,36 @@ window.practiceLibraryStore = {
         "只算其中一塊。"
       ]
     },
+    "practice-e6-2-3-cube-to-max-cylinder-drill": {
+      "id": "practice-e6-2-3-cube-to-max-cylinder-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "正方體削成最大圓柱",
+      "generatorKey": "e6-2-3-cube-to-max-cylinder-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-3",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "柱體體積與表面積",
+      "domain": "空間與形狀",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "柱體",
+        "圓柱",
+        "體積",
+        "最大圓柱"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-e6-2-3-cylinder-surface-drill": {
       "id": "practice-e6-2-3-cylinder-surface-drill",
       "enabled": true,
@@ -28291,6 +30328,36 @@ window.practiceLibraryStore = {
       "mistakes": [
         "把直徑直接拿去平方。"
       ]
+    },
+    "practice-e6-2-3-dim-change-volume-drill": {
+      "id": "practice-e6-2-3-dim-change-volume-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "維度增加求體積變化",
+      "generatorKey": "e6-2-3-dim-change-volume-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-3",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "柱體體積與表面積",
+      "domain": "空間與形狀",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "柱體",
+        "體積",
+        "維度變化",
+        "圓柱"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
     "practice-e6-2-3-drilled-solid-volume-drill": {
       "id": "practice-e6-2-3-drilled-solid-volume-drill",
@@ -30566,6 +32633,42 @@ window.practiceLibraryStore = {
         "差額基準選錯。"
       ]
     },
+    "practice-e6-2-5-consume-then-share-drill": {
+      "id": "practice-e6-2-5-consume-then-share-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "先用後分型方程",
+      "generatorKey": "e6-2-5-consume-then-share-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-5",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "怎麼解題",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-2-5",
+        "怎麼解題",
+        "先用後分",
+        "(x-a)/n=b"
+      ],
+      "usage": [
+        "(x-a)/n=b，先取出再平分，求原量"
+      ],
+      "examples": [],
+      "tips": [
+        "兩邊乘以 n 後移項，逆推回原量"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記先乘 n 再移項"
+      ]
+    },
     "practice-e6-2-5-digit-restriction-drill": {
       "id": "practice-e6-2-5-digit-restriction-drill",
       "enabled": true,
@@ -30600,6 +32703,42 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "忽略十位不能是 0。"
+      ]
+    },
+    "practice-e6-2-5-distribute-remain-drill": {
+      "id": "practice-e6-2-5-distribute-remain-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分配求總量",
+      "generatorKey": "e6-2-5-distribute-remain-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-5",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "怎麼解題",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-2-5",
+        "怎麼解題",
+        "分配",
+        "ax+r=T"
+      ],
+      "usage": [
+        "每組分 a 個剩 r 個，列式 ax+r=T 求組數"
+      ],
+      "examples": [],
+      "tips": [
+        "設人數為 x，用總數列方程"
+      ],
+      "notes": [],
+      "mistakes": [
+        "餘數加法方向搞反"
       ]
     },
     "practice-e6-2-5-entry-exit-drill": {
@@ -30638,6 +32777,186 @@ window.practiceLibraryStore = {
         "把入口出口當同一個位置。"
       ]
     },
+    "practice-e6-2-5-fraction-consume-drill": {
+      "id": "practice-e6-2-5-fraction-consume-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分數消耗求原量",
+      "generatorKey": "e6-2-5-fraction-consume-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-5",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "怎麼解題",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-2-5",
+        "怎麼解題",
+        "分數消耗",
+        "(1-p/q)x=r"
+      ],
+      "usage": [
+        "用掉分之幾後剩 r，用 (1-p/q)x=r 求原量"
+      ],
+      "examples": [],
+      "tips": [
+        "剩下的分率乘以原量等於剩餘數量"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把『剩餘分率』算成『用掉分率』"
+      ]
+    },
+    "practice-e6-2-5-linear-bracket-frac-drill": {
+      "id": "practice-e6-2-5-linear-bracket-frac-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "括號分式方程",
+      "generatorKey": "e6-2-5-linear-bracket-frac-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-5",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "怎麼解題",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-2-5",
+        "怎麼解題",
+        "括號分式",
+        "一元一次方程"
+      ],
+      "usage": [
+        "(x+b)/c=d 型，兩邊乘以 c 後移項；進階 (2x-b)/c=d"
+      ],
+      "examples": [],
+      "tips": [
+        "先兩邊同乘分母，再移項"
+      ],
+      "notes": [],
+      "mistakes": [
+        "分母沒有乘到分子全部"
+      ]
+    },
+    "practice-e6-2-5-linear-frac-coef-drill": {
+      "id": "practice-e6-2-5-linear-frac-coef-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分數係數方程",
+      "generatorKey": "e6-2-5-linear-frac-coef-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-5",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "怎麼解題",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-2-5",
+        "怎麼解題",
+        "一元一次方程",
+        "分數係數"
+      ],
+      "usage": [
+        "含 1/q 係數的方程，移項後乘以分母求整數解"
+      ],
+      "examples": [],
+      "tips": [
+        "兩邊同乘分母可消去分數"
+      ],
+      "notes": [],
+      "mistakes": [
+        "乘分母時忘了乘右側常數"
+      ]
+    },
+    "practice-e6-2-5-linear-frac-merge-drill": {
+      "id": "practice-e6-2-5-linear-frac-merge-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "通分型方程應用",
+      "generatorKey": "e6-2-5-linear-frac-merge-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-5",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "怎麼解題",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-2-5",
+        "怎麼解題",
+        "通分",
+        "x/a+x/b"
+      ],
+      "usage": [
+        "x/a + x/b = total 情境題，以通分化簡後求 x"
+      ],
+      "examples": [],
+      "tips": [
+        "找公分母，合併分子後化簡"
+      ],
+      "notes": [],
+      "mistakes": [
+        "通分後分子計算錯誤"
+      ]
+    },
+    "practice-e6-2-5-linear-int-coef-drill": {
+      "id": "practice-e6-2-5-linear-int-coef-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "整係數一元一次方程",
+      "generatorKey": "e6-2-5-linear-int-coef-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-5",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "怎麼解題",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-2-5",
+        "怎麼解題",
+        "一元一次方程",
+        "整係數"
+      ],
+      "usage": [
+        "ax+b=c 型方程移項求解，進階練習 ax+b=cx+d 合併同類項"
+      ],
+      "examples": [],
+      "tips": [
+        "先移項讓 x 在一側，再除以係數"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記移項後符號改變"
+      ]
+    },
     "practice-e6-2-5-multiplication-pair-drill": {
       "id": "practice-e6-2-5-multiplication-pair-drill",
       "enabled": true,
@@ -30672,6 +32991,43 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "把分步題誤加。"
+      ]
+    },
+    "practice-e6-2-5-price-change-drill": {
+      "id": "practice-e6-2-5-price-change-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "找零求單價與數量",
+      "generatorKey": "e6-2-5-price-change-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-5",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "怎麼解題",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-2-5",
+        "怎麼解題",
+        "找零",
+        "單價",
+        "數量"
+      ],
+      "usage": [
+        "付款找零求單價，或知道單價和總金額求數量"
+      ],
+      "examples": [],
+      "tips": [
+        "實際花費 = 付款 - 找零，再除以件數"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記扣掉找零再除"
       ]
     },
     "practice-e6-2-5-principle-five-subtypes": {
@@ -30865,6 +33221,42 @@ window.practiceLibraryStore = {
         "把和差題和倍數題混在一起。"
       ]
     },
+    "practice-e6-2-5-surplus-deficit-drill": {
+      "id": "practice-e6-2-5-surplus-deficit-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "盈虧問題",
+      "generatorKey": "e6-2-5-surplus-deficit-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-5",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "怎麼解題",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-2-5",
+        "怎麼解題",
+        "盈虧",
+        "兩情境列方程"
+      ],
+      "usage": [
+        "兩種分法各多/差若干，列出兩式相等求人數"
+      ],
+      "examples": [],
+      "tips": [
+        "兩種情境的總量相等，列出方程解人數"
+      ],
+      "notes": [],
+      "mistakes": [
+        "多出與差的方向判斷錯誤"
+      ]
+    },
     "practice-e6-2-5-transfer-equal-drill": {
       "id": "practice-e6-2-5-transfer-equal-drill",
       "enabled": true,
@@ -31011,6 +33403,42 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "只除以 100，沒有除以 360。"
+      ]
+    },
+    "practice-e6-2-6-average-from-data-drill": {
+      "id": "practice-e6-2-6-average-from-data-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "從原始數據計算平均數",
+      "generatorKey": "e6-2-6-average-from-data-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "e6-2-6",
+      "stage": "國小",
+      "grade": "小六",
+      "term": "下學期",
+      "chapter": "統計圖表與圓餅圖",
+      "domain": "統計與機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "e6-2-6",
+        "統計圖表",
+        "平均數",
+        "原始數據"
+      ],
+      "usage": [
+        "給定N筆資料，計算平均值（合計÷筆數）"
+      ],
+      "examples": [],
+      "tips": [
+        "先將所有數據加總，再除以筆數"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記除以正確的筆數"
       ]
     },
     "practice-e6-2-6-chart-selection-drill": {
@@ -36561,6 +38989,51 @@ window.practiceLibraryStore = {
         "把極小數也寫成正指數。"
       ]
     },
+    "practice-j1-2-1-divisibility-digit-fill-drill": {
+      "id": "practice-j1-2-1-divisibility-digit-fill-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "整除規則缺位數字",
+      "generatorKey": "j1-2-1-divisibility-digit-fill-drill",
+      "difficulty": "進階",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "倍數與因數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整除規則",
+        "3的倍數",
+        "9的倍數",
+        "4的倍數",
+        "8的倍數",
+        "11的倍數",
+        "缺位數字"
+      ],
+      "usage": [
+        "給定含一個未知位的四或五位數，要求利用整除規則找出符合條件的位數字。"
+      ],
+      "examples": [],
+      "tips": [
+        "能整除 3：各位數字和為 3 的倍數。",
+        "能整除 9：各位數字和為 9 的倍數。",
+        "能整除 4：末兩位為 4 的倍數。",
+        "能整除 8：末三位為 8 的倍數。",
+        "能整除 11：奇偶位交錯和差為 11 的倍數（含 0）。"
+      ],
+      "notes": [
+        "答案可能不只一個，需列出所有合法位數字。"
+      ],
+      "mistakes": [
+        "只找到一個答案就停下，沒有檢查所有可能的位數字。"
+      ]
+    },
     "practice-j1-2-1-divisor-count-sum-mixed-drill": {
       "id": "practice-j1-2-1-divisor-count-sum-mixed-drill",
       "enabled": true,
@@ -36717,6 +39190,45 @@ window.practiceLibraryStore = {
         "沒有意識到解會以最小公倍數為週期重複出現。"
       ]
     },
+    "practice-j1-2-1-multiple-count-range-drill": {
+      "id": "practice-j1-2-1-multiple-count-range-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "範圍倍數計數",
+      "generatorKey": "j1-2-1-multiple-count-range-drill",
+      "difficulty": "進階",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "倍數與因數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "倍數計數",
+        "餘數",
+        "範圍",
+        "容斥原理"
+      ],
+      "usage": [
+        "在指定整數範圍中，計算特定倍數、特定餘數、或同時滿足/排除多個條件的整數個數。"
+      ],
+      "examples": [],
+      "tips": [
+        "a 到 b 中 k 的倍數個數 = ⌊b/k⌋ − ⌊(a−1)/k⌋。",
+        "計算同時是 j 倍數又是 k 倍數的個數，要用 lcm(j,k) 的倍數。"
+      ],
+      "notes": [
+        "注意範圍端點是否包含在內。"
+      ],
+      "mistakes": [
+        "直接用 b÷k 取整，沒有扣掉起點以前的倍數個數。"
+      ]
+    },
     "practice-j1-2-1-prime-factor-notation-drill": {
       "id": "practice-j1-2-1-prime-factor-notation-drill",
       "enabled": true,
@@ -36754,6 +39266,45 @@ window.practiceLibraryStore = {
       "mistakes": [
         "把合數也當成最後的因數寫進去，沒有繼續分到質數。",
         "沒有把相同質因數合併，或底數順序寫亂。"
+      ]
+    },
+    "practice-j1-2-1-prime-identify-drill": {
+      "id": "practice-j1-2-1-prime-identify-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "質數辨識",
+      "generatorKey": "j1-2-1-prime-identify-drill",
+      "difficulty": "基礎",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "倍數與因數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "質數",
+        "合數",
+        "質數判別"
+      ],
+      "usage": [
+        "訓練學生用試除法辨別質數與合數，特別針對容易誤判的合數（如49、91、121等）。"
+      ],
+      "examples": [],
+      "tips": [
+        "質數只有 1 和本身兩個因數。",
+        "判斷一個數是否為質數，只需試除到其平方根即可。"
+      ],
+      "notes": [
+        "刻意選用外型像質數但其實是合數的數（如 91=7×13）作為干擾選項。"
+      ],
+      "mistakes": [
+        "誤以為奇數都是質數。",
+        "忘記 1 不是質數。"
       ]
     },
     "practice-j1-2-1-rectangle-factor-pairs-drill": {
@@ -36833,6 +39384,81 @@ window.practiceLibraryStore = {
       "mistakes": [
         "把『不足 2』誤看成餘 2。",
         "只找到一個符合的數，沒有回頭檢查題目問的是最大、最小還是全部。"
+      ]
+    },
+    "practice-j1-2-2-common-divisors-count-drill": {
+      "id": "practice-j1-2-2-common-divisors-count-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "公因數個數計算",
+      "generatorKey": "j1-2-2-common-divisors-count-drill",
+      "difficulty": "基礎",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "公因數與公倍數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "公因數",
+        "最大公因數",
+        "因數個數"
+      ],
+      "usage": [
+        "練習利用「兩數的公因數 = 最大公因數的因數」這個性質，計算公因數個數或列出所有公因數。"
+      ],
+      "examples": [],
+      "tips": [
+        "先求最大公因數 gcd(a,b)，所有公因數就是 gcd(a,b) 的所有因數。"
+      ],
+      "notes": [
+        "列舉時不要遺漏 1 和最大公因數本身。"
+      ],
+      "mistakes": [
+        "直接分別列出 a 與 b 的因數再取交集，容易出錯且效率低。"
+      ]
+    },
+    "practice-j1-2-2-coprime-identify-drill": {
+      "id": "practice-j1-2-2-coprime-identify-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "互質判別",
+      "generatorKey": "j1-2-2-coprime-identify-drill",
+      "difficulty": "基礎",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "公因數與公倍數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "互質",
+        "最大公因數",
+        "公因數"
+      ],
+      "usage": [
+        "練習判別兩數是否互質，並在多個候選數中找出與給定數互質的那一個。"
+      ],
+      "examples": [],
+      "tips": [
+        "兩數互質意指最大公因數等於 1。",
+        "可先分解質因數再比對，或直接用輾轉相除法求 gcd。"
+      ],
+      "notes": [
+        "互質不代表兩數是質數，如 4 與 9 互質但均為合數。"
+      ],
+      "mistakes": [
+        "誤認為互質必須其中一個是質數。"
       ]
     },
     "practice-j1-2-2-gcd-cutting-application": {
@@ -37243,6 +39869,44 @@ window.practiceLibraryStore = {
         "剩餘量題目把基準量抓錯。"
       ]
     },
+    "practice-j1-2-3-fraction-compare-drill": {
+      "id": "practice-j1-2-3-fraction-compare-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分數大小比較",
+      "generatorKey": "j1-2-3-fraction-compare-drill",
+      "difficulty": "基礎",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "分數加減",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分數大小",
+        "通分",
+        "負分數比較"
+      ],
+      "usage": [
+        "練習通分後比較正分數、負分數及正負混合分數的大小。"
+      ],
+      "examples": [],
+      "tips": [
+        "通分後分子大者數值較大（正分數）。",
+        "負分數中，絕對值較小者數值較大。"
+      ],
+      "notes": [
+        "包含正分數比較、負分數比較、正負混合三種子題型。"
+      ],
+      "mistakes": [
+        "把負分數的大小判斷方向搞反。"
+      ]
+    },
     "practice-j1-2-3-fraction-distributive-common-factor-drill": {
       "id": "practice-j1-2-3-fraction-distributive-common-factor-drill",
       "enabled": true,
@@ -37358,6 +40022,46 @@ window.practiceLibraryStore = {
       "mistakes": [
         "帶分數沒有先化成假分數就直接算。",
         "除法改倒數時只倒一個數，忘記整體方向。"
+      ]
+    },
+    "practice-j1-2-3-fraction-reciprocal-drill": {
+      "id": "practice-j1-2-3-fraction-reciprocal-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "倒數概念與計算",
+      "generatorKey": "j1-2-3-fraction-reciprocal-drill",
+      "difficulty": "基礎",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "分數加減",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "倒數",
+        "帶分數",
+        "假分數",
+        "分數乘法"
+      ],
+      "usage": [
+        "練習求分數、負分數、帶分數的倒數，以及解 □×(a/b)=1 型方程。"
+      ],
+      "examples": [],
+      "tips": [
+        "分數的倒數：分子分母互換，符號不變。",
+        "帶分數先化為假分數再求倒數。",
+        "□×a=1 ⟹ □ 是 a 的倒數。"
+      ],
+      "notes": [
+        "0 沒有倒數。"
+      ],
+      "mistakes": [
+        "帶分數直接對整數部分和分數部分分別取倒數，而非先化為假分數。"
       ]
     },
     "practice-j1-2-3-fraction-remainder-life-application": {
@@ -37503,6 +40207,44 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "看不出規律，全部硬通分或硬展開。"
+      ]
+    },
+    "practice-j1-2-3-fraction-simplify-drill": {
+      "id": "practice-j1-2-3-fraction-simplify-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分數化簡",
+      "generatorKey": "j1-2-3-fraction-simplify-drill",
+      "difficulty": "基礎",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "分數加減",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "最簡分數",
+        "約分",
+        "最大公因數"
+      ],
+      "usage": [
+        "練習將分數約分至最簡形式，或辨認四個選項中哪一個已經是最簡分數。"
+      ],
+      "examples": [],
+      "tips": [
+        "分子分母同除以 gcd(分子, 分母)，即得最簡分數。",
+        "最簡分數的判斷：gcd(分子, 分母) = 1。"
+      ],
+      "notes": [
+        "含負分數的約分，符號保留在分子。"
+      ],
+      "mistakes": [
+        "只除以一個公因數而非最大公因數，導致結果仍不是最簡分數。"
       ]
     },
     "practice-j1-2-3-mixed-number-add-sub-application": {
@@ -37770,6 +40512,35 @@ window.practiceLibraryStore = {
         "把倍數關係誤套到未來或過去的錯誤時間點。"
       ]
     },
+    "practice-j1-3-3-age-ratio-plus-drill": {
+      "id": "practice-j1-3-3-age-ratio-plus-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "倍加型父子年齡應用題",
+      "generatorKey": "j1-3-3-age-ratio-plus-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "一元一次方程式的應用",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j1-3-3-allocation-application-drill": {
       "id": "practice-j1-3-3-allocation-application-drill",
       "enabled": true,
@@ -37847,6 +40618,122 @@ window.practiceLibraryStore = {
         "只看平均數大小，卻沒有乘回各自的人數。",
         "把全班平均直接和其中一組平均相加減。"
       ]
+    },
+    "practice-j1-3-3-calendar-block-drill": {
+      "id": "practice-j1-3-3-calendar-block-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "月曆方框日期問題",
+      "generatorKey": "j1-3-3-calendar-block-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j1-3-3-candle-burn-drill": {
+      "id": "practice-j1-3-3-candle-burn-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "蠟燭同時燃燒比例問題",
+      "generatorKey": "j1-3-3-candle-burn-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j1-3-3-chain-fraction-take-drill": {
+      "id": "practice-j1-3-3-chain-fraction-take-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "連續取分數型問題",
+      "generatorKey": "j1-3-3-chain-fraction-take-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j1-3-3-circular-track-drill": {
+      "id": "practice-j1-3-3-circular-track-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圓形跑道反向相遇週期問題",
+      "generatorKey": "j1-3-3-circular-track-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
     "practice-j1-3-3-clock-angle-application-drill": {
       "id": "practice-j1-3-3-clock-angle-application-drill",
@@ -37926,6 +40813,93 @@ window.practiceLibraryStore = {
         "求出其中一個未知數後，忘了回到題目要的那一個數。"
       ]
     },
+    "practice-j1-3-3-digit-swap-drill": {
+      "id": "practice-j1-3-3-digit-swap-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "四位數移位問題",
+      "generatorKey": "j1-3-3-digit-swap-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j1-3-3-double-discount-drill": {
+      "id": "practice-j1-3-3-double-discount-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩折扣比較應用題",
+      "generatorKey": "j1-3-3-double-discount-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "一元一次方程式的應用",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j1-3-3-find-fraction-drill": {
+      "id": "practice-j1-3-3-find-fraction-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "求特定分數應用題",
+      "generatorKey": "j1-3-3-find-fraction-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "一元一次方程式的應用",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j1-3-3-fraction-remainder-application-drill": {
       "id": "practice-j1-3-3-fraction-remainder-application-drill",
       "enabled": true,
@@ -37965,6 +40939,35 @@ window.practiceLibraryStore = {
         "沒有先看清楚最後剩下的是哪一段的量。"
       ]
     },
+    "practice-j1-3-3-guess-number-drill": {
+      "id": "practice-j1-3-3-guess-number-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "猜數遊戲應用題",
+      "generatorKey": "j1-3-3-guess-number-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "一元一次方程式的應用",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j1-3-3-heads-coins-application-drill": {
       "id": "practice-j1-3-3-heads-coins-application-drill",
       "enabled": true,
@@ -38002,45 +41005,6 @@ window.practiceLibraryStore = {
       "mistakes": [
         "頭數、腳數或幣值條件對應錯誤。",
         "把 10 元硬幣 3 倍誤寫成總值 3 倍。"
-      ]
-    },
-    "practice-j1-3-3-ratio-chain-application-drill": {
-      "id": "practice-j1-3-3-ratio-chain-application-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "連比與連等比例應用題",
-      "generatorKey": "j1-3-3-ratio-chain-application-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 2,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "一元一次方程式應用問題",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "比",
-        "連比",
-        "比例",
-        "應用題"
-      ],
-      "usage": [
-        "利用連比或 x/a = y/b = z/c 的共同倍數關係，把多個量改寫成同一個未知數的倍數。"
-      ],
-      "examples": [],
-      "tips": [
-        "看到比時，可先設公因數 k，再把各量寫成比值乘 k。"
-      ],
-      "notes": [
-        "連比題的關鍵不是硬湊，而是先把各量寫成同一個基準。"
-      ],
-      "mistakes": [
-        "只看到兩個比，卻沒有先把中間那個量對齊。",
-        "把比值直接當成實際數量。"
       ]
     },
     "practice-j1-3-3-mixture-application-drill": {
@@ -38082,6 +41046,64 @@ window.practiceLibraryStore = {
         "只看總重量，忘了有效成分的等量關係。"
       ]
     },
+    "practice-j1-3-3-monkey-banana-drill": {
+      "id": "practice-j1-3-3-monkey-banana-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "猴子香蕉問題",
+      "generatorKey": "j1-3-3-monkey-banana-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "一元一次方程式的應用",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j1-3-3-opposite-number-application-drill": {
+      "id": "practice-j1-3-3-opposite-number-application-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩數互為相反數",
+      "generatorKey": "j1-3-3-opposite-number-application-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "一元一次方程式的應用",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j1-3-3-purchase-discount-application-drill": {
       "id": "practice-j1-3-3-purchase-discount-application-drill",
       "enabled": true,
@@ -38121,15 +41143,15 @@ window.practiceLibraryStore = {
         "把獲利 20% 誤看成售價的 20%。"
       ]
     },
-    "practice-j1-3-3-score-penalty-application-drill": {
-      "id": "practice-j1-3-3-score-penalty-application-drill",
+    "practice-j1-3-3-ratio-chain-application-drill": {
+      "id": "practice-j1-3-3-ratio-chain-application-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "得分倒扣問題",
-      "generatorKey": "j1-3-3-score-penalty-application-drill",
+      "title": "連比與連等比例應用題",
+      "generatorKey": "j1-3-3-ratio-chain-application-drill",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 3,
+      "subtypeCount": 2,
       "relatedPracticeIds": [],
       "chapterCode": "j1-3-3",
       "stage": "國中",
@@ -38140,25 +41162,54 @@ window.practiceLibraryStore = {
       "prompt": "",
       "answer": "",
       "tags": [
-        "得分",
-        "倒扣",
-        "競賽評分",
+        "比",
+        "連比",
+        "比例",
         "應用題"
       ],
       "usage": [
-        "透過總題數、答對給分與答錯倒扣的規則來建立方程式。"
+        "利用連比或 x/a = y/b = z/c 的共同倍數關係，把多個量改寫成同一個未知數的倍數。"
       ],
       "examples": [],
       "tips": [
-        "先設答對或答錯的題數，再用「總題數關係」把另一個數量表示出來。"
+        "看到比時，可先設公因數 k，再把各量寫成比值乘 k。"
       ],
       "notes": [
-        "這類題目常用一元一次方程式就能解，不一定要設兩個未知數。"
+        "連比題的關鍵不是硬湊，而是先把各量寫成同一個基準。"
       ],
       "mistakes": [
-        "把倒扣分寫成加分。",
-        "忘了未作答是否計分。"
+        "只看到兩個比，卻沒有先把中間那個量對齊。",
+        "把比值直接當成實際數量。"
       ]
+    },
+    "practice-j1-3-3-rectangle-dimension-drill": {
+      "id": "practice-j1-3-3-rectangle-dimension-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "長方形長寬關係應用題",
+      "generatorKey": "j1-3-3-rectangle-dimension-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "一元一次方程式的應用",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
     "practice-j1-3-3-relative-speed-application-drill": {
       "id": "practice-j1-3-3-relative-speed-application-drill",
@@ -38199,6 +41250,74 @@ window.practiceLibraryStore = {
         "只列一人的路程，忘了另一人也有走。"
       ]
     },
+    "practice-j1-3-3-rope-folding-drill": {
+      "id": "practice-j1-3-3-rope-folding-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "繩子折段差與井深問題",
+      "generatorKey": "j1-3-3-rope-folding-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j1-3-3-score-penalty-application-drill": {
+      "id": "practice-j1-3-3-score-penalty-application-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "得分倒扣問題",
+      "generatorKey": "j1-3-3-score-penalty-application-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "一元一次方程式應用問題",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "得分",
+        "倒扣",
+        "競賽評分",
+        "應用題"
+      ],
+      "usage": [
+        "透過總題數、答對給分與答錯倒扣的規則來建立方程式。"
+      ],
+      "examples": [],
+      "tips": [
+        "先設答對或答錯的題數，再用「總題數關係」把另一個數量表示出來。"
+      ],
+      "notes": [
+        "這類題目常用一元一次方程式就能解，不一定要設兩個未知數。"
+      ],
+      "mistakes": [
+        "把倒扣分寫成加分。",
+        "忘了未作答是否計分。"
+      ]
+    },
     "practice-j1-3-3-speed-application-drill": {
       "id": "practice-j1-3-3-speed-application-drill",
       "enabled": true,
@@ -38237,6 +41356,35 @@ window.practiceLibraryStore = {
         "把總距離直接除以平均速度，忽略兩段速率不同。",
         "數線題沒有先把位置用式子表示。"
       ]
+    },
+    "practice-j1-3-3-three-person-chain-diff-drill": {
+      "id": "practice-j1-3-3-three-person-chain-diff-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三人連差應用題",
+      "generatorKey": "j1-3-3-three-person-chain-diff-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "一元一次方程式的應用",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
     "practice-j1-3-3-tiered-fee-application-drill": {
       "id": "practice-j1-3-3-tiered-fee-application-drill",
@@ -38354,6 +41502,35 @@ window.practiceLibraryStore = {
         "兩邊都加同一個量，或兩邊都減同一個量。",
         "把倍數關係誤列在移轉前，而不是題目指定的移轉後。"
       ]
+    },
+    "practice-j1-3-3-weight-compare-drill": {
+      "id": "practice-j1-3-3-weight-compare-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "和倍差體重應用題",
+      "generatorKey": "j1-3-3-weight-compare-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "一元一次方程式的應用",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-3-3",
+        "一元一次方程式",
+        "應用題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
     "practice-j1-3-3-work-rate-application-drill": {
       "id": "practice-j1-3-3-work-rate-application-drill",
@@ -38738,44 +41915,62 @@ window.practiceLibraryStore = {
         "展開後把 -(a+1)b 少減了 b。"
       ]
     },
-    "practice-j2-1-1-context-to-equation-drill": {
-      "id": "practice-j2-1-1-context-to-equation-drill",
+    "practice-j2-1-1-all-pos-int-solution-drill": {
+      "id": "practice-j2-1-1-all-pos-int-solution-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "文字敘述轉換為代數式",
-      "generatorKey": "j2-1-1-context-to-equation-drill",
-      "difficulty": "easy",
+      "title": "所有正整數解",
+      "generatorKey": "j2-1-1-all-pos-int-solution-drill",
+      "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "j2-1-1",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "二元一次聯立方程式",
-      "domain": "代數",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
       "prompt": "",
       "answer": "",
       "tags": [
-        "j2-1-1",
-        "列式",
-        "代數式",
-        "無限練習"
+        "整數解",
+        "正整數",
+        "二元一次方程式"
       ],
-      "usage": [
-        "練習把生活語句快速翻成含 x、y 的代數式。"
-      ],
+      "usage": [],
       "examples": [],
-      "tips": [
-        "先定義 x、y 各代表什麼，再把總價、原數或固定費逐句翻成式子。"
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j2-1-1-any-one-solution-drill": {
+      "id": "practice-j2-1-1-any-one-solution-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "找任意一組整數解",
+      "generatorKey": "j2-1-1-any-one-solution-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數解",
+        "二元一次方程式"
       ],
-      "notes": [
-        "重點不是急著求解，而是先把題意翻成正確的代數式。"
-      ],
-      "mistakes": [
-        "把未知數的意義寫反。",
-        "漏掉十位數的 10 倍關係。"
-      ]
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
     "practice-j2-1-1-context-linear-equation-drill": {
       "id": "practice-j2-1-1-context-linear-equation-drill",
@@ -38814,6 +42009,45 @@ window.practiceLibraryStore = {
       "mistakes": [
         "只抓到單位量，沒有乘上數量。",
         "周長題忘了長和寬都要乘 2。"
+      ]
+    },
+    "practice-j2-1-1-context-to-equation-drill": {
+      "id": "practice-j2-1-1-context-to-equation-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "文字敘述轉換為代數式",
+      "generatorKey": "j2-1-1-context-to-equation-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "二元一次聯立方程式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-1-1",
+        "列式",
+        "代數式",
+        "無限練習"
+      ],
+      "usage": [
+        "練習把生活語句快速翻成含 x、y 的代數式。"
+      ],
+      "examples": [],
+      "tips": [
+        "先定義 x、y 各代表什麼，再把總價、原數或固定費逐句翻成式子。"
+      ],
+      "notes": [
+        "重點不是急著求解，而是先把題意翻成正確的代數式。"
+      ],
+      "mistakes": [
+        "把未知數的意義寫反。",
+        "漏掉十位數的 10 倍關係。"
       ]
     },
     "practice-j2-1-1-distribute-expand-drill": {
@@ -39011,6 +42245,64 @@ window.practiceLibraryStore = {
         "把常數項忘記一起整理。"
       ]
     },
+    "practice-j2-1-1-find-var-value-drill": {
+      "id": "practice-j2-1-1-find-var-value-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "代入求變數值（若x=c,y=a型）",
+      "generatorKey": "j2-1-1-find-var-value-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "代入法",
+        "二元一次方程式",
+        "求值"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j2-1-1-find-x-coeff-drill": {
+      "id": "practice-j2-1-1-find-x-coeff-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "代入求x係數",
+      "generatorKey": "j2-1-1-find-x-coeff-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "代入法",
+        "二元一次方程式",
+        "求係數"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j2-1-1-fraction-simplify-drill": {
       "id": "practice-j2-1-1-fraction-simplify-drill",
       "enabled": true,
@@ -39167,6 +42459,95 @@ window.practiceLibraryStore = {
         "把參數誤當成第二個未知數一起移項。"
       ]
     },
+    "practice-j2-1-1-prime-solution-drill": {
+      "id": "practice-j2-1-1-prime-solution-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "質數條件整數解",
+      "generatorKey": "j2-1-1-prime-solution-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數解",
+        "質數",
+        "二元一次方程式"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j2-1-1-range-int-solution-drill": {
+      "id": "practice-j2-1-1-range-int-solution-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "有條件整數解（負整數/有界範圍）",
+      "generatorKey": "j2-1-1-range-int-solution-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "整數解",
+        "負整數",
+        "有界範圍",
+        "二元一次方程式"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j2-1-1-shopping-word-drill": {
+      "id": "practice-j2-1-1-shopping-word-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "購物情境應用題",
+      "generatorKey": "j2-1-1-shopping-word-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "應用題",
+        "整數解",
+        "購物",
+        "二元一次方程式"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j2-1-1-solve-for-variable-drill": {
       "id": "practice-j2-1-1-solve-for-variable-drill",
       "enabled": true,
@@ -39245,45 +42626,6 @@ window.practiceLibraryStore = {
         "只把整體看成 0，沒有逐項判斷非負性質。"
       ]
     },
-    "practice-j2-1-2-elimination-adjustment-drill": {
-      "id": "practice-j2-1-2-elimination-adjustment-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "加減消去法的係數調整",
-      "generatorKey": "j2-1-2-elimination-adjustment-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "二元一次聯立方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-1-2",
-        "加減消去法",
-        "聯立方程式",
-        "無限練習"
-      ],
-      "usage": [
-        "練習找最小公倍數調整係數，再利用相加或相減消去未知數。"
-      ],
-      "examples": [],
-      "tips": [
-        "先看哪個未知數的係數比較容易配成相同或相反。"
-      ],
-      "notes": [
-        "有些題只需一式擴分，有些題需要兩式都調整。"
-      ],
-      "mistakes": [
-        "只把某一項乘上倍數，忘記整式都要一起乘。",
-        "係數相反時還用相減，白白把未知數留下。"
-      ]
-    },
     "practice-j2-1-2-bracket-simplify-drill": {
       "id": "practice-j2-1-2-bracket-simplify-drill",
       "enabled": true,
@@ -39321,6 +42663,45 @@ window.practiceLibraryStore = {
       "mistakes": [
         "括號前有負號時漏掉變號。",
         "還沒化簡完成就急著代入另一式。"
+      ]
+    },
+    "practice-j2-1-2-elimination-adjustment-drill": {
+      "id": "practice-j2-1-2-elimination-adjustment-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "加減消去法的係數調整",
+      "generatorKey": "j2-1-2-elimination-adjustment-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "二元一次聯立方程式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-1-2",
+        "加減消去法",
+        "聯立方程式",
+        "無限練習"
+      ],
+      "usage": [
+        "練習找最小公倍數調整係數，再利用相加或相減消去未知數。"
+      ],
+      "examples": [],
+      "tips": [
+        "先看哪個未知數的係數比較容易配成相同或相反。"
+      ],
+      "notes": [
+        "有些題只需一式擴分，有些題需要兩式都調整。"
+      ],
+      "mistakes": [
+        "只把某一項乘上倍數，忘記整式都要一起乘。",
+        "係數相反時還用相減，白白把未知數留下。"
       ]
     },
     "practice-j2-1-2-error-diagnosis-drill": {
@@ -39440,6 +42821,84 @@ window.practiceLibraryStore = {
         "求出係數後，忘記回到題目要求的代數式。"
       ]
     },
+    "practice-j2-1-2-reciprocal-structure-drill": {
+      "id": "practice-j2-1-2-reciprocal-structure-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "和差倒數結構代換",
+      "generatorKey": "j2-1-2-reciprocal-structure-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "二元一次聯立方程式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-1-2",
+        "結構代換",
+        "x+y",
+        "x-y"
+      ],
+      "usage": [
+        "遇到 $\\frac{1}{x+y}$、$\\frac{1}{x-y}$ 這種固定結構時，先代換成新變數，再還原回 x、y。"
+      ],
+      "examples": [],
+      "tips": [
+        "若題目同時出現 $x+y$ 和 $x-y$，可先把它們看成兩個整體。"
+      ],
+      "notes": [
+        "這一類通常要做兩次聯立：先解代換後的新系統，再回頭解 x、y。"
+      ],
+      "mistakes": [
+        "只求出 $x+y$、$x-y$ 就停住。",
+        "回代時把 x、y 的和差聯立寫反。"
+      ]
+    },
+    "practice-j2-1-2-reciprocal-substitution-drill": {
+      "id": "practice-j2-1-2-reciprocal-substitution-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "倒數代換聯立方程式",
+      "generatorKey": "j2-1-2-reciprocal-substitution-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "二元一次聯立方程式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-1-2",
+        "倒數",
+        "代換",
+        "聯立方程式"
+      ],
+      "usage": [
+        "遇到 $\\frac{1}{x}$、$\\frac{1}{y}$ 這類結構時，先做倒數代換，再把題目轉成一般聯立方程式。"
+      ],
+      "examples": [],
+      "tips": [
+        "看到分母裡直接放 x、y，就先想設 $u=\\frac{1}{x}$、$v=\\frac{1}{y}$。"
+      ],
+      "notes": [
+        "這類題不是硬通分，而是先看出新未知數後再聯立。"
+      ],
+      "mistakes": [
+        "只把一個倒數代換，另一個還留在原式裡。",
+        "求出 u、v 後忘了再換回 x、y。"
+      ]
+    },
     "practice-j2-1-2-shared-solution-drill": {
       "id": "practice-j2-1-2-shared-solution-drill",
       "enabled": true,
@@ -39555,84 +43014,6 @@ window.practiceLibraryStore = {
       "mistakes": [
         "只看 x、y 係數，忘記常數項。",
         "把無解與無限多解的條件混在一起。"
-      ]
-    },
-    "practice-j2-1-2-reciprocal-substitution-drill": {
-      "id": "practice-j2-1-2-reciprocal-substitution-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "倒數代換聯立方程式",
-      "generatorKey": "j2-1-2-reciprocal-substitution-drill",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 5,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "二元一次聯立方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-1-2",
-        "倒數",
-        "代換",
-        "聯立方程式"
-      ],
-      "usage": [
-        "遇到 $\\frac{1}{x}$、$\\frac{1}{y}$ 這類結構時，先做倒數代換，再把題目轉成一般聯立方程式。"
-      ],
-      "examples": [],
-      "tips": [
-        "看到分母裡直接放 x、y，就先想設 $u=\\frac{1}{x}$、$v=\\frac{1}{y}$。"
-      ],
-      "notes": [
-        "這類題不是硬通分，而是先看出新未知數後再聯立。"
-      ],
-      "mistakes": [
-        "只把一個倒數代換，另一個還留在原式裡。",
-        "求出 u、v 後忘了再換回 x、y。"
-      ]
-    },
-    "practice-j2-1-2-reciprocal-structure-drill": {
-      "id": "practice-j2-1-2-reciprocal-structure-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "和差倒數結構代換",
-      "generatorKey": "j2-1-2-reciprocal-structure-drill",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 5,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "二元一次聯立方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-1-2",
-        "結構代換",
-        "x+y",
-        "x-y"
-      ],
-      "usage": [
-        "遇到 $\\frac{1}{x+y}$、$\\frac{1}{x-y}$ 這種固定結構時，先代換成新變數，再還原回 x、y。"
-      ],
-      "examples": [],
-      "tips": [
-        "若題目同時出現 $x+y$ 和 $x-y$，可先把它們看成兩個整體。"
-      ],
-      "notes": [
-        "這一類通常要做兩次聯立：先解代換後的新系統，再回頭解 x、y。"
-      ],
-      "mistakes": [
-        "只求出 $x+y$、$x-y$ 就停住。",
-        "回代時把 x、y 的和差聯立寫反。"
       ]
     },
     "practice-j2-1-2-substitution-basic-drill": {
@@ -39830,6 +43211,45 @@ window.practiceLibraryStore = {
         "把扣分題誤寫成加分，或把平手、空白的分數漏掉。"
       ]
     },
+    "practice-j2-1-3-age-relation-drill": {
+      "id": "practice-j2-1-3-age-relation-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "年齡與倍數和差問題",
+      "generatorKey": "j2-1-3-age-relation-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "二元一次聯立方程式的應用",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-1-3",
+        "年齡",
+        "倍數",
+        "應用題"
+      ],
+      "usage": [
+        "處理年齡的和、差與倍數關係，建立兩條一次方程式後求解。"
+      ],
+      "examples": [],
+      "tips": [
+        "先分清楚倍數關係是現在成立，還是幾年後成立。"
+      ],
+      "notes": [
+        "年齡題的核心觀念是：兩人的年齡差固定不變。"
+      ],
+      "mistakes": [
+        "把未來的倍數條件誤套到現在。",
+        "年齡差方向寫反。"
+      ]
+    },
     "practice-j2-1-3-allocation-work-drill": {
       "id": "practice-j2-1-3-allocation-work-drill",
       "enabled": true,
@@ -39906,201 +43326,6 @@ window.practiceLibraryStore = {
       "mistakes": [
         "直接背答案型，不先判斷每個數字代表的是總數、單位量還是效果量。",
         "看到三分之一就漏掉分數係數，沒有先把方程式整體乘開整理。"
-      ]
-    },
-    "practice-j2-1-3-unit-price-system-drill": {
-      "id": "practice-j2-1-3-unit-price-system-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "單價與總價聯立問題",
-      "generatorKey": "j2-1-3-unit-price-system-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "二元一次聯立方程式的應用",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-1-3",
-        "單價",
-        "總價",
-        "應用題"
-      ],
-      "usage": [
-        "利用兩次不同購買紀錄，列出兩條總價關係式來求單價。"
-      ],
-      "examples": [],
-      "tips": [
-        "每一筆購買都要先拆成『件數 × 單價』再相加。"
-      ],
-      "notes": [
-        "這一類是二元一次聯立應用題中最核心、也最常見的模型之一。"
-      ],
-      "mistakes": [
-        "把件數和單價配錯對象。",
-        "只列出一筆購買紀錄，少了一條方程式。"
-      ]
-    },
-    "practice-j2-1-3-age-relation-drill": {
-      "id": "practice-j2-1-3-age-relation-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "年齡與倍數和差問題",
-      "generatorKey": "j2-1-3-age-relation-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 2,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "二元一次聯立方程式的應用",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-1-3",
-        "年齡",
-        "倍數",
-        "應用題"
-      ],
-      "usage": [
-        "處理年齡的和、差與倍數關係，建立兩條一次方程式後求解。"
-      ],
-      "examples": [],
-      "tips": [
-        "先分清楚倍數關係是現在成立，還是幾年後成立。"
-      ],
-      "notes": [
-        "年齡題的核心觀念是：兩人的年齡差固定不變。"
-      ],
-      "mistakes": [
-        "把未來的倍數條件誤套到現在。",
-        "年齡差方向寫反。"
-      ]
-    },
-    "practice-j2-1-3-perimeter-relation-drill": {
-      "id": "practice-j2-1-3-perimeter-relation-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "長寬與周長條件問題",
-      "generatorKey": "j2-1-3-perimeter-relation-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 2,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "二元一次聯立方程式的應用",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-1-3",
-        "長方形",
-        "周長",
-        "應用題"
-      ],
-      "usage": [
-        "從周長搭配和差或倍數條件，反推出長方形的長與寬。"
-      ],
-      "examples": [],
-      "tips": [
-        "周長先寫成 $2x+2y$，再接上『多幾』或『幾倍』條件。"
-      ],
-      "notes": [
-        "雖然是幾何情境，但列式本質仍然是二元一次聯立。"
-      ],
-      "mistakes": [
-        "把周長誤寫成 x+y。",
-        "『多幾公分』和『幾倍』的關係式混寫。"
-      ]
-    },
-    "practice-j2-1-3-transfer-change-drill": {
-      "id": "practice-j2-1-3-transfer-change-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "移轉後倍數相等問題",
-      "generatorKey": "j2-1-3-transfer-change-drill",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 2,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "二元一次聯立方程式的應用",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-1-3",
-        "移轉",
-        "倍數",
-        "應用題"
-      ],
-      "usage": [
-        "處理把書本、錢或物品從甲移給乙之後，形成相等或倍數關係的題型。"
-      ],
-      "examples": [],
-      "tips": [
-        "先分清楚是『移之前』還是『移之後』的數量關係。"
-      ],
-      "notes": [
-        "這類題的重點在於每一步前後的變化都要寫清楚。"
-      ],
-      "mistakes": [
-        "兩邊都加同一個量，沒有看誰給誰。",
-        "把倍數關係套在錯誤的時間點。"
-      ]
-    },
-    "practice-j2-1-3-travel-schedule-drill": {
-      "id": "practice-j2-1-3-travel-schedule-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "往返與準時行程問題",
-      "generatorKey": "j2-1-3-travel-schedule-drill",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 2,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "二元一次聯立方程式的應用",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-1-3",
-        "行程",
-        "準時",
-        "往返"
-      ],
-      "usage": [
-        "把遲到、提早、到站後折返相遇等情境翻成兩條行程關係式。"
-      ],
-      "examples": [],
-      "tips": [
-        "先固定兩個未知量，例如總距離與原定時間，或總距離與相遇時間。"
-      ],
-      "notes": [
-        "文字雖長，但核心仍然是『路程 = 速度 × 時間』。"
-      ],
-      "mistakes": [
-        "提早與遲到的時間方向寫反。",
-        "折返相遇時沒有扣掉休息時間。"
       ]
     },
     "practice-j2-1-3-digit-placevalue-drill": {
@@ -40220,6 +43445,45 @@ window.practiceLibraryStore = {
         "把濃度直接相加平均，沒有考慮兩種溶液的重量不同。"
       ]
     },
+    "practice-j2-1-3-perimeter-relation-drill": {
+      "id": "practice-j2-1-3-perimeter-relation-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "長寬與周長條件問題",
+      "generatorKey": "j2-1-3-perimeter-relation-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "二元一次聯立方程式的應用",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-1-3",
+        "長方形",
+        "周長",
+        "應用題"
+      ],
+      "usage": [
+        "從周長搭配和差或倍數條件，反推出長方形的長與寬。"
+      ],
+      "examples": [],
+      "tips": [
+        "周長先寫成 $2x+2y$，再接上『多幾』或『幾倍』條件。"
+      ],
+      "notes": [
+        "雖然是幾何情境，但列式本質仍然是二元一次聯立。"
+      ],
+      "mistakes": [
+        "把周長誤寫成 x+y。",
+        "『多幾公分』和『幾倍』的關係式混寫。"
+      ]
+    },
     "practice-j2-1-3-speed-chase-drill": {
       "id": "practice-j2-1-3-speed-chase-drill",
       "enabled": true,
@@ -40296,6 +43560,123 @@ window.practiceLibraryStore = {
       "mistakes": [
         "把超過的部分直接寫成總量，忘記先扣掉門檻值。",
         "只列一條式子，忘了要利用兩次不同紀錄才能解出兩個未知數。"
+      ]
+    },
+    "practice-j2-1-3-transfer-change-drill": {
+      "id": "practice-j2-1-3-transfer-change-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "移轉後倍數相等問題",
+      "generatorKey": "j2-1-3-transfer-change-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "二元一次聯立方程式的應用",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-1-3",
+        "移轉",
+        "倍數",
+        "應用題"
+      ],
+      "usage": [
+        "處理把書本、錢或物品從甲移給乙之後，形成相等或倍數關係的題型。"
+      ],
+      "examples": [],
+      "tips": [
+        "先分清楚是『移之前』還是『移之後』的數量關係。"
+      ],
+      "notes": [
+        "這類題的重點在於每一步前後的變化都要寫清楚。"
+      ],
+      "mistakes": [
+        "兩邊都加同一個量，沒有看誰給誰。",
+        "把倍數關係套在錯誤的時間點。"
+      ]
+    },
+    "practice-j2-1-3-travel-schedule-drill": {
+      "id": "practice-j2-1-3-travel-schedule-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "往返與準時行程問題",
+      "generatorKey": "j2-1-3-travel-schedule-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "二元一次聯立方程式的應用",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-1-3",
+        "行程",
+        "準時",
+        "往返"
+      ],
+      "usage": [
+        "把遲到、提早、到站後折返相遇等情境翻成兩條行程關係式。"
+      ],
+      "examples": [],
+      "tips": [
+        "先固定兩個未知量，例如總距離與原定時間，或總距離與相遇時間。"
+      ],
+      "notes": [
+        "文字雖長，但核心仍然是『路程 = 速度 × 時間』。"
+      ],
+      "mistakes": [
+        "提早與遲到的時間方向寫反。",
+        "折返相遇時沒有扣掉休息時間。"
+      ]
+    },
+    "practice-j2-1-3-unit-price-system-drill": {
+      "id": "practice-j2-1-3-unit-price-system-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "單價與總價聯立問題",
+      "generatorKey": "j2-1-3-unit-price-system-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-1-3",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "二元一次聯立方程式的應用",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-1-3",
+        "單價",
+        "總價",
+        "應用題"
+      ],
+      "usage": [
+        "利用兩次不同購買紀錄，列出兩條總價關係式來求單價。"
+      ],
+      "examples": [],
+      "tips": [
+        "每一筆購買都要先拆成『件數 × 單價』再相加。"
+      ],
+      "notes": [
+        "這一類是二元一次聯立應用題中最核心、也最常見的模型之一。"
+      ],
+      "mistakes": [
+        "把件數和單價配錯對象。",
+        "只列出一筆購買紀錄，少了一條方程式。"
       ]
     },
     "practice-j2-2-1-area-drill": {
@@ -40772,6 +44153,45 @@ window.practiceLibraryStore = {
         "求出係數後忘了把直線方程式完整寫出。"
       ]
     },
+    "practice-j2-2-2-line-intersection-drill": {
+      "id": "practice-j2-2-2-line-intersection-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩直線交點與參數判定",
+      "generatorKey": "j2-2-2-line-intersection-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-2-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "直角座標平面",
+      "domain": "函數與圖形",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-2-2",
+        "交點",
+        "聯立",
+        "參數"
+      ],
+      "usage": [
+        "把兩條直線聯立求交點，也練習由交點落在坐標軸上的條件反推坐標。"
+      ],
+      "examples": [],
+      "tips": [
+        "看到交點就想到聯立；若交點在 x 軸或 y 軸上，可先把對應坐標設成 0。"
+      ],
+      "notes": [
+        "這組把直線圖形和聯立方程式重新連回來，適合當作圖形章節的核心整理題。"
+      ],
+      "mistakes": [
+        "把兩條直線各自算完，卻沒有真正聯立求公共解。",
+        "題目說交點在坐標軸上時，忘了先用該軸的坐標條件簡化。"
+      ]
+    },
     "practice-j2-2-2-only-two-quadrants-drill": {
       "id": "practice-j2-2-2-only-two-quadrants-drill",
       "enabled": true,
@@ -40848,6 +44268,45 @@ window.practiceLibraryStore = {
       "mistakes": [
         "把平行 y 軸誤寫成 y=常數。",
         "看見兩點 y 相同卻沒有想到是水平線。"
+      ]
+    },
+    "practice-j2-2-2-parallel-perpendicular-equation-drill": {
+      "id": "practice-j2-2-2-parallel-perpendicular-equation-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "過一點作平行線與垂直線",
+      "generatorKey": "j2-2-2-parallel-perpendicular-equation-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-2-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "直角座標平面",
+      "domain": "函數與圖形",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-2-2",
+        "平行",
+        "垂直",
+        "過一點作直線"
+      ],
+      "usage": [
+        "利用平行線同斜率、垂直線負倒數的觀念，配合已知點寫出新直線方程式。"
+      ],
+      "examples": [],
+      "tips": [
+        "先看是平行還是垂直，再決定新直線的斜率；最後一定要把已知點代回去求常數項。"
+      ],
+      "notes": [
+        "這組刻意避開只有水平線、鉛垂線的特殊情況，改練一般直線的作線規則。"
+      ],
+      "mistakes": [
+        "把垂直線的斜率誤寫成相反數，而不是負倒數。",
+        "知道係數比例不變，卻忘了還要用已知點求出新的常數項。"
       ]
     },
     "practice-j2-2-2-point-line-relation-drill": {
@@ -40967,45 +44426,6 @@ window.practiceLibraryStore = {
         "把「不通過哪個象限」誤看成「通過哪幾個象限」。"
       ]
     },
-    "practice-j2-2-2-two-lines-area-drill": {
-      "id": "practice-j2-2-2-two-lines-area-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "兩直線交點與坐標軸圍成面積",
-      "generatorKey": "j2-2-2-two-lines-area-drill",
-      "difficulty": "challenge",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-2-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "直角座標平面",
-      "domain": "函數與圖形",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-2-2",
-        "兩直線",
-        "交點",
-        "面積"
-      ],
-      "usage": [
-        "先找兩直線交點，再找與坐標軸的截距，用底和高求面積。"
-      ],
-      "examples": [],
-      "tips": [
-        "面積題要先把圖形看清楚：哪一段當底，哪一段是高。"
-      ],
-      "notes": [
-        "這類題把聯立、截距和坐標幾何面積整合在一起，是章節的進階綜合題。"
-      ],
-      "mistakes": [
-        "只算出交點，忘了還要找與坐標軸的截距。",
-        "把底長或高看錯成坐標差的一半。"
-      ]
-    },
     "practice-j2-2-2-slope-intercept-drill": {
       "id": "practice-j2-2-2-slope-intercept-drill",
       "enabled": true,
@@ -41045,13 +44465,13 @@ window.practiceLibraryStore = {
         "已知斜率與一點時，設出 y=mx+b 卻忘了再代入該點求 b。"
       ]
     },
-    "practice-j2-2-2-parallel-perpendicular-equation-drill": {
-      "id": "practice-j2-2-2-parallel-perpendicular-equation-drill",
+    "practice-j2-2-2-two-lines-area-drill": {
+      "id": "practice-j2-2-2-two-lines-area-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "過一點作平行線與垂直線",
-      "generatorKey": "j2-2-2-parallel-perpendicular-equation-drill",
-      "difficulty": "medium",
+      "title": "兩直線交點與坐標軸圍成面積",
+      "generatorKey": "j2-2-2-two-lines-area-drill",
+      "difficulty": "challenge",
       "questionCount": 5,
       "subtypeCount": 3,
       "relatedPracticeIds": [],
@@ -41065,62 +44485,23 @@ window.practiceLibraryStore = {
       "answer": "",
       "tags": [
         "j2-2-2",
-        "平行",
-        "垂直",
-        "過一點作直線"
-      ],
-      "usage": [
-        "利用平行線同斜率、垂直線負倒數的觀念，配合已知點寫出新直線方程式。"
-      ],
-      "examples": [],
-      "tips": [
-        "先看是平行還是垂直，再決定新直線的斜率；最後一定要把已知點代回去求常數項。"
-      ],
-      "notes": [
-        "這組刻意避開只有水平線、鉛垂線的特殊情況，改練一般直線的作線規則。"
-      ],
-      "mistakes": [
-        "把垂直線的斜率誤寫成相反數，而不是負倒數。",
-        "知道係數比例不變，卻忘了還要用已知點求出新的常數項。"
-      ]
-    },
-    "practice-j2-2-2-line-intersection-drill": {
-      "id": "practice-j2-2-2-line-intersection-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "兩直線交點與參數判定",
-      "generatorKey": "j2-2-2-line-intersection-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-2-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "直角座標平面",
-      "domain": "函數與圖形",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-2-2",
+        "兩直線",
         "交點",
-        "聯立",
-        "參數"
+        "面積"
       ],
       "usage": [
-        "把兩條直線聯立求交點，也練習由交點落在坐標軸上的條件反推坐標。"
+        "先找兩直線交點，再找與坐標軸的截距，用底和高求面積。"
       ],
       "examples": [],
       "tips": [
-        "看到交點就想到聯立；若交點在 x 軸或 y 軸上，可先把對應坐標設成 0。"
+        "面積題要先把圖形看清楚：哪一段當底，哪一段是高。"
       ],
       "notes": [
-        "這組把直線圖形和聯立方程式重新連回來，適合當作圖形章節的核心整理題。"
+        "這類題把聯立、截距和坐標幾何面積整合在一起，是章節的進階綜合題。"
       ],
       "mistakes": [
-        "把兩條直線各自算完，卻沒有真正聯立求公共解。",
-        "題目說交點在坐標軸上時，忘了先用該軸的坐標條件簡化。"
+        "只算出交點，忘了還要找與坐標軸的截距。",
+        "把底長或高看錯成坐標差的一半。"
       ]
     },
     "practice-j2-3-1-advanced-three-step-drill": {
@@ -41207,6 +44588,46 @@ window.practiceLibraryStore = {
         "看到比例後沒有先確認單位是否一致。"
       ]
     },
+    "practice-j2-3-1-chain-ratio-drill": {
+      "id": "practice-j2-3-1-chain-ratio-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "連比整合與分配",
+      "generatorKey": "j2-3-1-chain-ratio-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-3-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "比例",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-3-1",
+        "比例",
+        "連比",
+        "分配"
+      ],
+      "usage": [
+        "先把兩個相接的比整合成三項連比，再做分配、總量回推或三變數求值。"
+      ],
+      "examples": [],
+      "tips": [
+        "看到 $a:b$ 和 $b:c$ 時，先把中間那一項對齊，再寫成 $a:b:c$。",
+        "若連比後還給總量或線性條件，就設成 $a=pk,\\ b=qk,\\ c=rk$。"
+      ],
+      "notes": [
+        "這組重點不只是會合併連比，還要能把合併後的比拿去做第二步分配或反求。"
+      ],
+      "mistakes": [
+        "把兩個比直接左右接起來，沒有先把中間項放大成相同份數。",
+        "寫出連比後，忘了再用總量或條件求真正的數值。"
+      ]
+    },
     "practice-j2-3-1-concentration-reverse-drill": {
       "id": "practice-j2-3-1-concentration-reverse-drill",
       "enabled": true,
@@ -41248,46 +44669,6 @@ window.practiceLibraryStore = {
       "mistakes": [
         "把濃度直接相加平均，忽略兩部分的重量不同。",
         "加水或加鹽後，只改分子或只改分母，沒有同時更新總重量。"
-      ]
-    },
-    "practice-j2-3-1-chain-ratio-drill": {
-      "id": "practice-j2-3-1-chain-ratio-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "連比整合與分配",
-      "generatorKey": "j2-3-1-chain-ratio-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-3-1",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "比例",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-3-1",
-        "比例",
-        "連比",
-        "分配"
-      ],
-      "usage": [
-        "先把兩個相接的比整合成三項連比，再做分配、總量回推或三變數求值。"
-      ],
-      "examples": [],
-      "tips": [
-        "看到 $a:b$ 和 $b:c$ 時，先把中間那一項對齊，再寫成 $a:b:c$。",
-        "若連比後還給總量或線性條件，就設成 $a=pk,\\ b=qk,\\ c=rk$。"
-      ],
-      "notes": [
-        "這組重點不只是會合併連比，還要能把合併後的比拿去做第二步分配或反求。"
-      ],
-      "mistakes": [
-        "把兩個比直接左右接起來，沒有先把中間項放大成相同份數。",
-        "寫出連比後，忘了再用總量或條件求真正的數值。"
       ]
     },
     "practice-j2-3-1-k-method-drill": {
@@ -41585,6 +44966,46 @@ window.practiceLibraryStore = {
         "前一層算出的新值沒有帶進後一層。"
       ]
     },
+    "practice-j2-3-2-dog-rabbit-drill": {
+      "id": "practice-j2-3-2-dog-rabbit-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "犬兔步距速率問題",
+      "generatorKey": "j2-3-2-dog-rabbit-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-3-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "正比反比",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-3-2",
+        "正比反比",
+        "犬兔",
+        "步距",
+        "速率比"
+      ],
+      "usage": [
+        "給定犬兔步距比與步頻比，合成速率比，再解追趕問題。"
+      ],
+      "examples": [],
+      "tips": [
+        "速率比 = 步距比 × 步頻比。",
+        "追趕：犬速 × T = 兔速 × (T + 先跑時間)。"
+      ],
+      "notes": [
+        "先跑距離、先跑步數、先跑時間三種起跑優勢的列式方式不同。"
+      ],
+      "mistakes": [
+        "把步距比直接當速率比，忘記乘以步頻比。"
+      ]
+    },
     "practice-j2-3-2-linear-combo-proportion-drill": {
       "id": "practice-j2-3-2-linear-combo-proportion-drill",
       "enabled": true,
@@ -41667,6 +45088,164 @@ window.practiceLibraryStore = {
       "mistakes": [
         "把增加 20% 誤看成增加 0.2 個單位。",
         "反比時忘了取倒數，直接照正比方式處理。"
+      ]
+    },
+    "practice-j2-3-2-root-reciprocal-variation-drill": {
+      "id": "practice-j2-3-2-root-reciprocal-variation-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平方根與倒平方結構正反比",
+      "generatorKey": "j2-3-2-root-reciprocal-variation-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-3-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "正比反比",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-3-2",
+        "正比反比",
+        "平方根",
+        "倒平方"
+      ],
+      "usage": [
+        "處理 $y$ 與 $\\sqrt{x}$ 成正比、成反比，或 $y$ 與 $x^2$ 成反比這類結構型題目。"
+      ],
+      "examples": [],
+      "tips": [
+        "先看清楚題目是和 $x$、$\\sqrt{x}$ 還是 $x^2$ 在成比例。",
+        "若不是直接和 $x$ 成比例，就把那個整體當成新的量再列式。"
+      ],
+      "notes": [
+        "這組雖然外表像次方題，但核心仍是比例常數不變，只是比例的對象換成了平方根或平方。"
+      ],
+      "mistakes": [
+        "把與 $\\sqrt{x}$ 成正比誤看成與 $x$ 成正比。",
+        "看到 $x^2$ 成反比時，忘了常數應該固定在 $x^2y$。"
+      ]
+    },
+    "practice-j2-3-2-shifted-variation-drill": {
+      "id": "practice-j2-3-2-shifted-variation-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "位移型正反比",
+      "generatorKey": "j2-3-2-shifted-variation-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-3-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "正比反比",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-3-2",
+        "正比反比",
+        "位移",
+        "平移結構"
+      ],
+      "usage": [
+        "把 $(x+a)$、$(x-a)$、$(y+b)$ 這類整體先當成一個量，再判斷是正比還是反比。"
+      ],
+      "examples": [],
+      "tips": [
+        "不要把它誤看成單純的 $x$ 和 $y$ 在成比例，先把括號整體保留下來。",
+        "反比時要用乘積固定，正比時要用倍數關係固定。"
+      ],
+      "notes": [
+        "這組的關鍵是結構代換：先把位移後的式子視為新變數，再回到正比反比基本型。"
+      ],
+      "mistakes": [
+        "把 $(x+2)$ 與 $x$ 當成同一件事直接套公式。",
+        "遇到位移型反比時，仍誤寫成 $y=kx$ 或 $xy=k$。"
+      ]
+    },
+    "practice-j2-3-2-speed-race-drill": {
+      "id": "practice-j2-3-2-speed-race-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "速率比賽跑落後問題",
+      "generatorKey": "j2-3-2-speed-race-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-3-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "正比反比",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-3-2",
+        "正比反比",
+        "速率比",
+        "賽跑"
+      ],
+      "usage": [
+        "同時出發跑相同距離，速率快者先到時，速率慢者的位置計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "速率比 = 同時間的路程比。",
+        "追趕問題中，速率比 = 路程反比（時間相同時）。"
+      ],
+      "notes": [
+        "讓跑問題：快者退後，使兩人同時到達終點。"
+      ],
+      "mistakes": [
+        "把速率比與時間比搞反（時間比是速率比的倒數）。"
+      ]
+    },
+    "practice-j2-3-2-spring-scale-drill": {
+      "id": "practice-j2-3-2-spring-scale-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "彈簧秤（胡克定律）應用",
+      "generatorKey": "j2-3-2-spring-scale-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-3-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "正比反比",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-3-2",
+        "正比反比",
+        "彈簧秤",
+        "胡克定律"
+      ],
+      "usage": [
+        "彈性限度內彈簧伸長量與所掛重量成正比，給定一組數據求其他情況。"
+      ],
+      "examples": [],
+      "tips": [
+        "先算出比例常數 k（每公克對應幾公分），再乘以新重量。",
+        "若題目問全長，別忘了原長 + 伸長量。"
+      ],
+      "notes": [
+        "胡克定律：伸長量 ∝ 重量，在彈性限度內有效。"
+      ],
+      "mistakes": [
+        "把原長忘記加進去而只回答伸長量。"
       ]
     },
     "practice-j2-3-2-square-proportion-drill": {
@@ -41753,125 +45332,6 @@ window.practiceLibraryStore = {
         "沒有先列式，只靠感覺判斷，容易把「都不是」誤看成正比或反比。"
       ]
     },
-    "practice-j2-3-2-shifted-variation-drill": {
-      "id": "practice-j2-3-2-shifted-variation-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "位移型正反比",
-      "generatorKey": "j2-3-2-shifted-variation-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-3-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "正比反比",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-3-2",
-        "正比反比",
-        "位移",
-        "平移結構"
-      ],
-      "usage": [
-        "把 $(x+a)$、$(x-a)$、$(y+b)$ 這類整體先當成一個量，再判斷是正比還是反比。"
-      ],
-      "examples": [],
-      "tips": [
-        "不要把它誤看成單純的 $x$ 和 $y$ 在成比例，先把括號整體保留下來。",
-        "反比時要用乘積固定，正比時要用倍數關係固定。"
-      ],
-      "notes": [
-        "這組的關鍵是結構代換：先把位移後的式子視為新變數，再回到正比反比基本型。"
-      ],
-      "mistakes": [
-        "把 $(x+2)$ 與 $x$ 當成同一件事直接套公式。",
-        "遇到位移型反比時，仍誤寫成 $y=kx$ 或 $xy=k$。"
-      ]
-    },
-    "practice-j2-3-2-root-reciprocal-variation-drill": {
-      "id": "practice-j2-3-2-root-reciprocal-variation-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "平方根與倒平方結構正反比",
-      "generatorKey": "j2-3-2-root-reciprocal-variation-drill",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-3-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "正比反比",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-3-2",
-        "正比反比",
-        "平方根",
-        "倒平方"
-      ],
-      "usage": [
-        "處理 $y$ 與 $\\sqrt{x}$ 成正比、成反比，或 $y$ 與 $x^2$ 成反比這類結構型題目。"
-      ],
-      "examples": [],
-      "tips": [
-        "先看清楚題目是和 $x$、$\\sqrt{x}$ 還是 $x^2$ 在成比例。",
-        "若不是直接和 $x$ 成比例，就把那個整體當成新的量再列式。"
-      ],
-      "notes": [
-        "這組雖然外表像次方題，但核心仍是比例常數不變，只是比例的對象換成了平方根或平方。"
-      ],
-      "mistakes": [
-        "把與 $\\sqrt{x}$ 成正比誤看成與 $x$ 成正比。",
-        "看到 $x^2$ 成反比時，忘了常數應該固定在 $x^2y$。"
-      ]
-    },
-    "practice-j2-3-2-spring-scale-drill": {
-      "id": "practice-j2-3-2-spring-scale-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "彈簧秤（胡克定律）應用",
-      "generatorKey": "j2-3-2-spring-scale-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 4,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-3-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "正比反比",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-3-2",
-        "正比反比",
-        "彈簧秤",
-        "胡克定律"
-      ],
-      "usage": [
-        "彈性限度內彈簧伸長量與所掛重量成正比，給定一組數據求其他情況。"
-      ],
-      "examples": [],
-      "tips": [
-        "先算出比例常數 k（每公克對應幾公分），再乘以新重量。",
-        "若題目問全長，別忘了原長 + 伸長量。"
-      ],
-      "notes": [
-        "胡克定律：伸長量 ∝ 重量，在彈性限度內有效。"
-      ],
-      "mistakes": [
-        "把原長忘記加進去而只回答伸長量。"
-      ]
-    },
     "practice-j2-3-2-work-manpower-drill": {
       "id": "practice-j2-3-2-work-manpower-drill",
       "enabled": true,
@@ -41911,84 +45371,65 @@ window.practiceLibraryStore = {
         "把新人數忘記減去原人數，沒有回答增加幾人。"
       ]
     },
-    "practice-j2-3-2-speed-race-drill": {
-      "id": "practice-j2-3-2-speed-race-drill",
+    "practice-j2-4-1-absolute-inequality-drill": {
+      "id": "practice-j2-4-1-absolute-inequality-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "速率比賽跑落後問題",
-      "generatorKey": "j2-3-2-speed-race-drill",
+      "title": "絕對值一次不等式",
+      "generatorKey": "j2-4-1-absolute-inequality-drill",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 4,
       "relatedPracticeIds": [],
-      "chapterCode": "j2-3-2",
+      "chapterCode": "j2-4-1",
       "stage": "國中",
       "grade": "國一",
       "term": "下學期",
-      "chapter": "正比反比",
+      "chapter": "一元一次不等式",
       "domain": "代數",
       "prompt": "",
       "answer": "",
       "tags": [
-        "j2-3-2",
-        "正比反比",
-        "速率比",
-        "賽跑"
+        "j2-4-1",
+        "一元一次不等式",
+        "絕對值一次不等式",
+        "無限練習"
       ],
-      "usage": [
-        "同時出發跑相同距離，速率快者先到時，速率慢者的位置計算。"
-      ],
+      "usage": [],
       "examples": [],
-      "tips": [
-        "速率比 = 同時間的路程比。",
-        "追趕問題中，速率比 = 路程反比（時間相同時）。"
-      ],
-      "notes": [
-        "讓跑問題：快者退後，使兩人同時到達終點。"
-      ],
-      "mistakes": [
-        "把速率比與時間比搞反（時間比是速率比的倒數）。"
-      ]
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
-    "practice-j2-3-2-dog-rabbit-drill": {
-      "id": "practice-j2-3-2-dog-rabbit-drill",
+    "practice-j2-4-1-compound-inequality-drill": {
+      "id": "practice-j2-4-1-compound-inequality-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "犬兔步距速率問題",
-      "generatorKey": "j2-3-2-dog-rabbit-drill",
-      "difficulty": "hard",
+      "title": "雙重不等式範圍求解",
+      "generatorKey": "j2-4-1-compound-inequality-drill",
+      "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 4,
       "relatedPracticeIds": [],
-      "chapterCode": "j2-3-2",
+      "chapterCode": "j2-4-1",
       "stage": "國中",
       "grade": "國一",
       "term": "下學期",
-      "chapter": "正比反比",
+      "chapter": "一元一次不等式",
       "domain": "代數",
       "prompt": "",
       "answer": "",
       "tags": [
-        "j2-3-2",
-        "正比反比",
-        "犬兔",
-        "步距",
-        "速率比"
+        "j2-4-1",
+        "一元一次不等式",
+        "雙重不等式範圍求解",
+        "無限練習"
       ],
-      "usage": [
-        "給定犬兔步距比與步頻比，合成速率比，再解追趕問題。"
-      ],
+      "usage": [],
       "examples": [],
-      "tips": [
-        "速率比 = 步距比 × 步頻比。",
-        "追趕：犬速 × T = 兔速 × (T + 先跑時間)。"
-      ],
-      "notes": [
-        "先跑距離、先跑步數、先跑時間三種起跑優勢的列式方式不同。"
-      ],
-      "mistakes": [
-        "把步距比直接當速率比，忘記乘以步頻比。"
-      ]
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
     "practice-j2-4-1-inequality-decimal-drill": {
       "id": "practice-j2-4-1-inequality-decimal-drill",
@@ -42230,66 +45671,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j2-4-1-compound-inequality-drill": {
-      "id": "practice-j2-4-1-compound-inequality-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "雙重不等式範圍求解",
-      "generatorKey": "j2-4-1-compound-inequality-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 4,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-1",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "一元一次不等式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-4-1",
-        "一元一次不等式",
-        "雙重不等式範圍求解",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-4-1-absolute-inequality-drill": {
-      "id": "practice-j2-4-1-absolute-inequality-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "絕對值一次不等式",
-      "generatorKey": "j2-4-1-absolute-inequality-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 4,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-1",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "一元一次不等式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-4-1",
-        "一元一次不等式",
-        "絕對值一次不等式",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
     "practice-j2-4-1-integer-boundary-drill": {
       "id": "practice-j2-4-1-integer-boundary-drill",
       "enabled": true,
@@ -42350,59 +45731,27 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j2-4-2-basic-word-drill": {
-      "id": "practice-j2-4-2-basic-word-drill",
+    "practice-j2-4-2-age-past-relation-drill": {
+      "id": "practice-j2-4-2-age-past-relation-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "基本題型（單層動作）",
-      "generatorKey": "j2-4-2-basic-word-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 6,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "一元一次不等式應用問題",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-4-2",
-        "一元一次不等式應用問題",
-        "基本題型（單層動作）",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-4-2-regular-word-drill": {
-      "id": "practice-j2-4-2-regular-word-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "正規題型（二層動作）",
-      "generatorKey": "j2-4-2-regular-word-drill",
+      "title": "父子年齡過去比較型",
+      "generatorKey": "j2-4-2-age-past-relation-drill",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 6,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "j2-4-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "一元一次不等式應用問題",
-      "domain": "代數",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
       "prompt": "",
       "answer": "",
       "tags": [
-        "j2-4-2",
-        "一元一次不等式應用問題",
-        "正規題型（二層動作）",
-        "無限練習"
+        "不等式應用",
+        "年齡問題"
       ],
       "usage": [],
       "examples": [],
@@ -42440,6 +45789,183 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j2-4-2-basic-word-drill": {
+      "id": "practice-j2-4-2-basic-word-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "基本題型（單層動作）",
+      "generatorKey": "j2-4-2-basic-word-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 6,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-4-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "一元一次不等式應用問題",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-4-2",
+        "一元一次不等式應用問題",
+        "基本題型（單層動作）",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j2-4-2-integer-condition-word-drill": {
+      "id": "practice-j2-4-2-integer-condition-word-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "某整數／某正數條件型",
+      "generatorKey": "j2-4-2-integer-condition-word-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-4-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "不等式應用",
+        "某整數",
+        "某正數"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j2-4-2-pos-int-enumerate-drill": {
+      "id": "practice-j2-4-2-pos-int-enumerate-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "正整數列舉（符合條件的所有正整數）",
+      "generatorKey": "j2-4-2-pos-int-enumerate-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-4-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "不等式應用",
+        "正整數",
+        "列舉"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j2-4-2-regular-word-drill": {
+      "id": "practice-j2-4-2-regular-word-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "正規題型（二層動作）",
+      "generatorKey": "j2-4-2-regular-word-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 6,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-4-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "一元一次不等式應用問題",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-4-2",
+        "一元一次不等式應用問題",
+        "正規題型（二層動作）",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j2-4-2-shape-variable-expr-drill": {
+      "id": "practice-j2-4-2-shape-variable-expr-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圖形含變數表達式（長方形＋三角形）",
+      "generatorKey": "j2-4-2-shape-variable-expr-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-4-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "不等式應用",
+        "面積",
+        "長方形",
+        "三角形"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j2-4-2-specific-score-threshold-drill": {
+      "id": "practice-j2-4-2-specific-score-threshold-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "具體分數平均門檻",
+      "generatorKey": "j2-4-2-specific-score-threshold-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-4-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "不等式應用",
+        "平均數",
+        "分數門檻"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j2-5-1-frequency-relative-cumulative-drill": {
       "id": "practice-j2-5-1-frequency-relative-cumulative-drill",
       "enabled": true,
@@ -42470,36 +45996,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j2-5-1-pie-chart-conversion-drill": {
-      "id": "practice-j2-5-1-pie-chart-conversion-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "圓形圖百分比與角度換算",
-      "generatorKey": "j2-5-1-pie-chart-conversion-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-5-1",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "下學期",
-      "chapter": "資料整理與統計圖表",
-      "domain": "統計",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j2-5-1",
-        "資料整理與統計圖表",
-        "圓形圖百分比與角度換算",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
     "practice-j2-5-1-grouped-mean-estimate-drill": {
       "id": "practice-j2-5-1-grouped-mean-estimate-drill",
       "enabled": true,
@@ -42522,6 +46018,36 @@ window.practiceLibraryStore = {
         "j2-5-1",
         "資料整理與統計圖表",
         "組中點估計平均數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j2-5-1-pie-chart-conversion-drill": {
+      "id": "practice-j2-5-1-pie-chart-conversion-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圓形圖百分比與角度換算",
+      "generatorKey": "j2-5-1-pie-chart-conversion-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j2-5-1",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "下學期",
+      "chapter": "資料整理與統計圖表",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j2-5-1",
+        "資料整理與統計圖表",
+        "圓形圖百分比與角度換算",
         "無限練習"
       ],
       "usage": [],
@@ -42797,44 +46323,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "只看到常數項是平方數，卻忘記一次項係數可能有正負兩種情況。"
-      ]
-    },
-    "practice-j3-1-2-polynomial-substitution-drill": {
-      "id": "practice-j3-1-2-polynomial-substitution-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "多項式代值計算",
-      "generatorKey": "j3-1-2-polynomial-substitution-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-1-2",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "上學期",
-      "chapter": "乘法公式與多項式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "多項式",
-        "代值",
-        "代入計算",
-        "無限練習"
-      ],
-      "usage": [
-        "練習把指定數值正確代入多項式並依序計算。"
-      ],
-      "examples": [
-        "已知 f(x)=2x^2-3x+1，求 f(-2)。"
-      ],
-      "tips": [
-        "代入負數時要先加括號，再處理次方與乘法。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把 f(-2) 誤算成 -2^2，忽略括號造成正負號錯誤。"
       ]
     },
     "practice-j3-1-2-degree-constraint-drill": {
@@ -43284,6 +46772,44 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j3-1-2-polynomial-substitution-drill": {
+      "id": "practice-j3-1-2-polynomial-substitution-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "多項式代值計算",
+      "generatorKey": "j3-1-2-polynomial-substitution-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-1-2",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上學期",
+      "chapter": "乘法公式與多項式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "多項式",
+        "代值",
+        "代入計算",
+        "無限練習"
+      ],
+      "usage": [
+        "練習把指定數值正確代入多項式並依序計算。"
+      ],
+      "examples": [
+        "已知 f(x)=2x^2-3x+1，求 f(-2)。"
+      ],
+      "tips": [
+        "代入負數時要先加括號，再處理次方與乘法。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把 f(-2) 誤算成 -2^2，忽略括號造成正負號錯誤。"
+      ]
+    },
     "practice-j3-1-3-coeff-sum-drill": {
       "id": "practice-j3-1-3-coeff-sum-drill",
       "enabled": true,
@@ -43343,44 +46869,6 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
-    },
-    "practice-j3-1-3-special-product-structure-drill": {
-      "id": "practice-j3-1-3-special-product-structure-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "特殊乘積結構化簡",
-      "generatorKey": "j3-1-3-special-product-structure-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 4,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-1-3",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "上學期",
-      "chapter": "乘法公式與多項式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "多項式",
-        "乘法公式",
-        "結構觀察",
-        "無限練習"
-      ],
-      "usage": [
-        "練習先辨認乘積結構，再套用立方和、立方差或平方差公式化簡。"
-      ],
-      "examples": [
-        "化簡 (x+3)(x^2-3x+9)。"
-      ],
-      "tips": [
-        "不要急著硬展開，先看是否符合 (u+v)(u^2-uv+v^2) 或 A^2-B^2。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "看到三項式就直接分配律展開，錯過較快的公式結構。"
-      ]
     },
     "practice-j3-1-3-polynomial-division-regular-drill": {
       "id": "practice-j3-1-3-polynomial-division-regular-drill",
@@ -43473,55 +46961,93 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j3-2-3-pythagorean-context-drill": {
-      "id": "practice-j3-2-3-pythagorean-context-drill",
+    "practice-j3-1-3-special-product-structure-drill": {
+      "id": "practice-j3-1-3-special-product-structure-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "畢氏定理生活情境",
-      "generatorKey": "j3-2-3-pythagorean-context-drill",
+      "title": "特殊乘積結構化簡",
+      "generatorKey": "j3-1-3-special-product-structure-drill",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 4,
       "relatedPracticeIds": [],
-      "chapterCode": "j3-2-3",
+      "chapterCode": "j3-1-3",
       "stage": "國中",
-      "grade": "國二",
+      "grade": "國三",
       "term": "上學期",
-      "chapter": "平方根與畢氏定理",
-      "domain": "幾何",
+      "chapter": "乘法公式與多項式",
+      "domain": "代數",
       "prompt": "",
       "answer": "",
       "tags": [
-        "畢氏定理",
-        "生活情境",
-        "長方形對角線",
+        "多項式",
+        "乘法公式",
+        "結構觀察",
         "無限練習"
       ],
       "usage": [
-        "練習把長方形、梯子、正方形與正三角形情境轉成直角三角形。"
+        "練習先辨認乘積結構，再套用立方和、立方差或平方差公式化簡。"
       ],
       "examples": [
-        "一個長方形的長為 8，寬為 6，求對角線長。"
+        "化簡 (x+3)(x^2-3x+9)。"
       ],
       "tips": [
-        "先畫出直角三角形，再判斷誰是斜邊。"
+        "不要急著硬展開，先看是否符合 (u+v)(u^2-uv+v^2) 或 A^2-B^2。"
       ],
       "notes": [],
       "mistakes": [
-        "情境題直接套公式，但沒有先確認直角三角形的三邊對應。"
+        "看到三項式就直接分配律展開，錯過較快的公式結構。"
       ]
     },
-    "practice-j3-2-3-right-triangle-judgement-drill": {
-      "id": "practice-j3-2-3-right-triangle-judgement-drill",
+    "practice-j3-2-1-exact-square-root-drill": {
+      "id": "practice-j3-2-1-exact-square-root-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "畢氏定理直角判定",
-      "generatorKey": "j3-2-3-right-triangle-judgement-drill",
+      "title": "算術平方根直接求值",
+      "generatorKey": "j3-2-1-exact-square-root-drill",
       "difficulty": "easy",
       "questionCount": 5,
-      "subtypeCount": 2,
+      "subtypeCount": 4,
       "relatedPracticeIds": [],
-      "chapterCode": "j3-2-3",
+      "chapterCode": "j3-2-1",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "平方根與畢氏定理",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "平方根",
+        "算術平方根",
+        "直接求值",
+        "無限練習"
+      ],
+      "usage": [
+        "練習完全平方數、小數、分數與平方後再開根號的基本求值。"
+      ],
+      "examples": [
+        "求 √(9/16) 的值。"
+      ],
+      "tips": [
+        "算術平方根只取非負值，像 √((-5)^2)=5。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把算術平方根誤寫成正負兩值。"
+      ]
+    },
+    "practice-j3-2-1-sqrt-definition-relation": {
+      "id": "practice-j3-2-1-sqrt-definition-relation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平方根定義關係推導",
+      "generatorKey": "j3-2-1-sqrt-definition-relation",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-2-1",
       "stage": "國中",
       "grade": "國二",
       "term": "上學期",
@@ -43530,23 +47056,217 @@ window.practiceLibraryStore = {
       "prompt": "",
       "answer": "",
       "tags": [
-        "畢氏定理",
-        "直角三角形",
-        "判定",
+        "j3-2-1",
+        "無限練習",
+        "平方根定義"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-2-1-sqrt-linear-system": {
+      "id": "practice-j3-2-1-sqrt-linear-system",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩平方根聯立求解",
+      "generatorKey": "j3-2-1-sqrt-linear-system",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-2-1",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "平方根與畢氏定理",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-2-1",
+        "無限練習",
+        "聯立",
+        "平方根"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-2-1-sqrt-reverse-square": {
+      "id": "practice-j3-2-1-sqrt-reverse-square",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平方根反推未知數",
+      "generatorKey": "j3-2-1-sqrt-reverse-square",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-2-1",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "平方根與畢氏定理",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-2-1",
+        "無限練習",
+        "反推",
+        "平方根"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-2-1-square-root-compare-drill": {
+      "id": "practice-j3-2-1-square-root-compare-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平方根大小比較",
+      "generatorKey": "j3-2-1-square-root-compare-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-2-1",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "平方根與畢氏定理",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "平方根",
+        "大小比較",
+        "估算",
         "無限練習"
       ],
       "usage": [
-        "練習用 a²+b² 是否等於 c² 判斷三角形是否為直角三角形。"
+        "練習利用平方或被開方數比較平方根大小。"
       ],
       "examples": [
-        "判斷邊長為 5、12、13 的三角形是否為直角三角形。"
+        "比較 √23 和 2√6 的大小。"
       ],
       "tips": [
-        "要先把最大邊當成 c，再比較 a²+b² 和 c²。"
+        "兩邊都非負時，可以先平方再比較。"
       ],
       "notes": [],
       "mistakes": [
-        "沒有先找最大邊，就隨便拿一邊當斜邊比較。"
+        "看到根號就只比表面數字，忽略平方後比較更穩定。"
+      ]
+    },
+    "practice-j3-2-2-radical-compare": {
+      "id": "practice-j3-2-2-radical-compare",
+      "enabled": true,
+      "mode": "generator",
+      "title": "根式表達式大小比較",
+      "generatorKey": "j3-2-2-radical-compare",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-2-2",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "平方根與畢氏定理",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-2-2",
+        "無限練習",
+        "根式比較"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-2-2-radical-formula-drill": {
+      "id": "practice-j3-2-2-radical-formula-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "根式公式運算",
+      "generatorKey": "j3-2-2-radical-formula-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-2-2",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "平方根與畢氏定理",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "根式",
+        "乘法公式",
+        "平方差",
+        "無限練習"
+      ],
+      "usage": [
+        "練習共軛乘積與平方公式在根式中的運用。"
+      ],
+      "examples": [
+        "計算 (√11+√5)(√11-√5)。"
+      ],
+      "tips": [
+        "先辨認是否符合 (A+B)(A-B) 或 (A±B)^2。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "少掉中間項，或把根式平方後忘記一起化簡。"
+      ]
+    },
+    "practice-j3-2-2-radical-mixed-simplify-drill": {
+      "id": "practice-j3-2-2-radical-mixed-simplify-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "根式混合化簡",
+      "generatorKey": "j3-2-2-radical-mixed-simplify-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-2-2",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "平方根與畢氏定理",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "根式",
+        "混合運算",
+        "化簡",
+        "無限練習"
+      ],
+      "usage": [
+        "練習根式乘除、化簡與同類根式合併的綜合題。"
+      ],
+      "examples": [
+        "化簡 √3×√12+√27。"
+      ],
+      "tips": [
+        "先把每個根式化到最簡，再判斷能不能合併。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "還沒化到最簡根式就直接相加，導致不能正確合併。"
       ]
     },
     "practice-j3-2-3-coordinate-distance-drill": {
@@ -43613,6 +47333,143 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j3-2-3-isosceles-triangle-area": {
+      "id": "practice-j3-2-3-isosceles-triangle-area",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等腰三角形面積（畢氏求高）",
+      "generatorKey": "j3-2-3-isosceles-triangle-area",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-2-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "平方根與畢氏定理",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-2-3",
+        "無限練習",
+        "等腰三角形",
+        "面積"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-2-3-pythagorean-context-drill": {
+      "id": "practice-j3-2-3-pythagorean-context-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "畢氏定理生活情境",
+      "generatorKey": "j3-2-3-pythagorean-context-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-2-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "平方根與畢氏定理",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "畢氏定理",
+        "生活情境",
+        "長方形對角線",
+        "無限練習"
+      ],
+      "usage": [
+        "練習把長方形、梯子、正方形與正三角形情境轉成直角三角形。"
+      ],
+      "examples": [
+        "一個長方形的長為 8，寬為 6，求對角線長。"
+      ],
+      "tips": [
+        "先畫出直角三角形，再判斷誰是斜邊。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "情境題直接套公式，但沒有先確認直角三角形的三邊對應。"
+      ]
+    },
+    "practice-j3-2-3-ratio-perim-area": {
+      "id": "practice-j3-2-3-ratio-perim-area",
+      "enabled": true,
+      "mode": "generator",
+      "title": "直角三角形三邊比與周長面積",
+      "generatorKey": "j3-2-3-ratio-perim-area",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-2-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "平方根與畢氏定理",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-2-3",
+        "無限練習",
+        "三邊比",
+        "周長",
+        "面積"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-2-3-right-triangle-judgement-drill": {
+      "id": "practice-j3-2-3-right-triangle-judgement-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "畢氏定理直角判定",
+      "generatorKey": "j3-2-3-right-triangle-judgement-drill",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-2-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "平方根與畢氏定理",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "畢氏定理",
+        "直角三角形",
+        "判定",
+        "無限練習"
+      ],
+      "usage": [
+        "練習用 a²+b² 是否等於 c² 判斷三角形是否為直角三角形。"
+      ],
+      "examples": [
+        "判斷邊長為 5、12、13 的三角形是否為直角三角形。"
+      ],
+      "tips": [
+        "要先把最大邊當成 c，再比較 a²+b² 和 c²。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "沒有先找最大邊，就隨便拿一邊當斜邊比較。"
+      ]
+    },
     "practice-j3-2-3-spatial-diagonal-drill": {
       "id": "practice-j3-2-3-spatial-diagonal-drill",
       "enabled": true,
@@ -43640,6 +47497,36 @@ window.practiceLibraryStore = {
       "usage": [
         "練習平面畢氏擴展到三維與展開圖最短距離。"
       ],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-2-3-trapezoid-pythag": {
+      "id": "practice-j3-2-3-trapezoid-pythag",
+      "enabled": true,
+      "mode": "generator",
+      "title": "梯形畢氏定理求高與面積",
+      "generatorKey": "j3-2-3-trapezoid-pythag",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-2-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "平方根與畢氏定理",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-2-3",
+        "無限練習",
+        "梯形",
+        "畢氏定理"
+      ],
+      "usage": [],
       "examples": [],
       "tips": [],
       "notes": [],
@@ -43935,6 +47822,35 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j3-3-2-composite-formula": {
+      "id": "practice-j3-3-2-composite-formula",
+      "enabled": true,
+      "mode": "generator",
+      "title": "複合運算（先提公因式）",
+      "generatorKey": "j3-3-2-composite-formula",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-3-2",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "因式分解",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-3-2",
+        "先提公因式",
+        "子練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j3-3-2-cube-formula": {
       "id": "practice-j3-3-2-cube-formula",
       "enabled": true,
@@ -43972,73 +47888,6 @@ window.practiceLibraryStore = {
       "mistakes": [
         "把立方和差的二次因式符號寫反。"
       ]
-    },
-    "practice-j3-3-2-higher-power-diff-squares": {
-      "id": "practice-j3-3-2-higher-power-diff-squares",
-      "enabled": true,
-      "mode": "generator",
-      "title": "高次平方差連續分解",
-      "generatorKey": "j3-3-2-higher-power-diff-squares",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 4,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-3-2",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "多項式的因式分解",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-3-2",
-        "高次式",
-        "平方差",
-        "無限練習"
-      ],
-      "usage": [
-        "練習把高次式反覆視為平方差，分解到不能再分為止。"
-      ],
-      "examples": [
-        "因式分解 x^4-16。"
-      ],
-      "tips": [
-        "高次式先不要急著拆很多步，先看能不能當成 A^2-B^2。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "只做第一步平方差就停下來，沒有繼續分解。"
-      ]
-    },
-    "practice-j3-3-2-composite-formula": {
-      "id": "practice-j3-3-2-composite-formula",
-      "enabled": true,
-      "mode": "generator",
-      "title": "複合運算（先提公因式）",
-      "generatorKey": "j3-3-2-composite-formula",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-3-2",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "因式分解",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-3-2",
-        "先提公因式",
-        "子練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
     },
     "practice-j3-3-2-diff-squares": {
       "id": "practice-j3-3-2-diff-squares",
@@ -44107,6 +47956,44 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j3-3-2-higher-power-diff-squares": {
+      "id": "practice-j3-3-2-higher-power-diff-squares",
+      "enabled": true,
+      "mode": "generator",
+      "title": "高次平方差連續分解",
+      "generatorKey": "j3-3-2-higher-power-diff-squares",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-3-2",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "多項式的因式分解",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-3-2",
+        "高次式",
+        "平方差",
+        "無限練習"
+      ],
+      "usage": [
+        "練習把高次式反覆視為平方差，分解到不能再分為止。"
+      ],
+      "examples": [
+        "因式分解 x^4-16。"
+      ],
+      "tips": [
+        "高次式先不要急著拆很多步，先看能不能當成 A^2-B^2。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只做第一步平方差就停下來，沒有繼續分解。"
+      ]
+    },
     "practice-j3-3-2-perfect-square": {
       "id": "practice-j3-3-2-perfect-square",
       "enabled": true,
@@ -44165,44 +48052,6 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
-    },
-    "practice-j3-3-3-factor-parameter-reverse": {
-      "id": "practice-j3-3-3-factor-parameter-reverse",
-      "enabled": true,
-      "mode": "generator",
-      "title": "十字交乘反推係數",
-      "generatorKey": "j3-3-3-factor-parameter-reverse",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 4,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-3-3",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "多項式的因式分解",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-3-3",
-        "十字交乘",
-        "反推係數",
-        "無限練習"
-      ],
-      "usage": [
-        "練習從已知因式分解式反推一次項或常數項係數。"
-      ],
-      "examples": [
-        "已知 x^2+ax+b=(x+2)(x+3)，求 a,b。"
-      ],
-      "tips": [
-        "先展開右式，再對照同次項係數。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "只比一次項，忘記常數項也要同時符合。"
-      ]
     },
     "practice-j3-3-3-cross-coeff-nonone": {
       "id": "practice-j3-3-3-cross-coeff-nonone",
@@ -44426,6 +48275,44 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j3-3-3-factor-parameter-reverse": {
+      "id": "practice-j3-3-3-factor-parameter-reverse",
+      "enabled": true,
+      "mode": "generator",
+      "title": "十字交乘反推係數",
+      "generatorKey": "j3-3-3-factor-parameter-reverse",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-3-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "多項式的因式分解",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-3-3",
+        "十字交乘",
+        "反推係數",
+        "無限練習"
+      ],
+      "usage": [
+        "練習從已知因式分解式反推一次項或常數項係數。"
+      ],
+      "examples": [
+        "已知 x^2+ax+b=(x+2)(x+3)，求 a,b。"
+      ],
+      "tips": [
+        "先展開右式，再對照同次項係數。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只比一次項，忘記常數項也要同時符合。"
+      ]
+    },
     "practice-j3-4-1-cross-solve": {
       "id": "practice-j3-4-1-cross-solve",
       "enabled": true,
@@ -44448,6 +48335,36 @@ window.practiceLibraryStore = {
         "j3-4-1",
         "十字交乘",
         "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-4-1-diff-square-solve": {
+      "id": "practice-j3-4-1-diff-square-solve",
+      "enabled": true,
+      "mode": "generator",
+      "title": "差平方型方程式",
+      "generatorKey": "j3-4-1-diff-square-solve",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-1",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "一元二次方程式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-1",
+        "無限練習",
+        "差平方",
+        "因式分解"
       ],
       "usage": [],
       "examples": [],
@@ -44515,6 +48432,35 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j3-4-1-shared-root": {
+      "id": "practice-j3-4-1-shared-root",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩方程式共同解",
+      "generatorKey": "j3-4-1-shared-root",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-1",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "一元二次方程式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-1",
+        "無限練習",
+        "共同解"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j3-4-1-standard-transform-solve": {
       "id": "practice-j3-4-1-standard-transform-solve",
       "enabled": true,
@@ -44538,6 +48484,95 @@ window.practiceLibraryStore = {
         "標準式",
         "消因式",
         "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-4-1-substitute-var-solve": {
+      "id": "practice-j3-4-1-substitute-var-solve",
+      "enabled": true,
+      "mode": "generator",
+      "title": "換元法解方程式",
+      "generatorKey": "j3-4-1-substitute-var-solve",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-1",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "一元二次方程式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-1",
+        "無限練習",
+        "換元法"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-4-2-abs-double-zero": {
+      "id": "practice-j3-4-2-abs-double-zero",
+      "enabled": true,
+      "mode": "generator",
+      "title": "絕對值方程式 |f(x)|+|g(x)|=0",
+      "generatorKey": "j3-4-2-abs-double-zero",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-2",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "一元二次方程式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-2",
+        "絕對值",
+        "共同根",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-4-2-complete-square-lead-coeff": {
+      "id": "practice-j3-4-2-complete-square-lead-coeff",
+      "enabled": true,
+      "mode": "generator",
+      "title": "配方法求首項係數",
+      "generatorKey": "j3-4-2-complete-square-lead-coeff",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-2",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "一元二次方程式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-2",
+        "無限練習",
+        "完全平方式",
+        "配方"
       ],
       "usage": [],
       "examples": [],
@@ -44635,6 +48670,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j3-4-2-discriminant-range": {
+      "id": "practice-j3-4-2-discriminant-range",
+      "enabled": true,
+      "mode": "generator",
+      "title": "判別式求參數範圍",
+      "generatorKey": "j3-4-2-discriminant-range",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-2",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "一元二次方程式",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-2",
+        "判別式",
+        "參數範圍",
+        "實根判斷"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j3-4-2-formula-direct-solve": {
       "id": "practice-j3-4-2-formula-direct-solve",
       "enabled": true,
@@ -44658,6 +48723,36 @@ window.practiceLibraryStore = {
         "公式解",
         "二次方程式",
         "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-4-2-known-root-parameter": {
+      "id": "practice-j3-4-2-known-root-parameter",
+      "enabled": true,
+      "mode": "generator",
+      "title": "已知一根求參數與另一根",
+      "generatorKey": "j3-4-2-known-root-parameter",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-2",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "一元二次方程式",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-2",
+        "已知一根",
+        "求參數",
+        "另一根"
       ],
       "usage": [],
       "examples": [],
@@ -44941,29 +49036,29 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j3-4-2-known-root-parameter": {
-      "id": "practice-j3-4-2-known-root-parameter",
+    "practice-j3-4-2-two-person-mistake": {
+      "id": "practice-j3-4-2-two-person-mistake",
       "enabled": true,
       "mode": "generator",
-      "title": "已知一根求參數與另一根",
-      "generatorKey": "j3-4-2-known-root-parameter",
-      "difficulty": "medium",
+      "title": "甲乙各看錯不同係數",
+      "generatorKey": "j3-4-2-two-person-mistake",
+      "difficulty": "hard",
       "questionCount": 5,
-      "subtypeCount": 3,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "j3-4-2",
       "stage": "國中",
       "grade": "國二",
       "term": "上學期",
       "chapter": "一元二次方程式",
-      "domain": "數與式",
+      "domain": "代數",
       "prompt": "",
       "answer": "",
       "tags": [
         "j3-4-2",
-        "已知一根",
-        "求參數",
-        "另一根"
+        "無限練習",
+        "看錯係數",
+        "韋達定理"
       ],
       "usage": [],
       "examples": [],
@@ -44971,87 +49066,29 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j3-4-2-discriminant-range": {
-      "id": "practice-j3-4-2-discriminant-range",
+    "practice-j3-4-3-business-sales-word": {
+      "id": "practice-j3-4-3-business-sales-word",
       "enabled": true,
       "mode": "generator",
-      "title": "判別式求參數範圍",
-      "generatorKey": "j3-4-2-discriminant-range",
+      "title": "商業銷售與分攤問題",
+      "generatorKey": "j3-4-3-business-sales-word",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 3,
+      "subtypeCount": 5,
       "relatedPracticeIds": [],
-      "chapterCode": "j3-4-2",
+      "chapterCode": "j3-4-3",
       "stage": "國中",
       "grade": "國二",
       "term": "上學期",
-      "chapter": "一元二次方程式",
-      "domain": "數與式",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-2",
-        "判別式",
-        "參數範圍",
-        "實根判斷"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-3-tile-floor-drill": {
-      "id": "practice-j3-4-3-tile-floor-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "瓷磚鋪地板問題",
-      "generatorKey": "j3-4-3-tile-floor-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
+      "chapter": "一元二次方程式應用",
+      "domain": "應用",
       "prompt": "",
       "answer": "",
       "tags": [
         "j3-4-3",
-        "二次方程式",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-3-two-square-perim-area-drill": {
-      "id": "practice-j3-4-3-two-square-perim-area-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "兩正方形周長與面積問題",
-      "generatorKey": "j3-4-3-two-square-perim-area-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-3",
-        "二次方程式",
-        "應用問題"
+        "商業",
+        "銷售",
+        "無限練習"
       ],
       "usage": [],
       "examples": [],
@@ -45065,122 +49102,6 @@ window.practiceLibraryStore = {
       "mode": "generator",
       "title": "連續奇（偶）數平方和問題",
       "generatorKey": "j3-4-3-consec-odd-square-sum-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-3",
-        "二次方程式",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-3-neg-reciprocal-word-drill": {
-      "id": "practice-j3-4-3-neg-reciprocal-word-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "負數倒數關係與年份問題",
-      "generatorKey": "j3-4-3-neg-reciprocal-word-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-3",
-        "二次方程式",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-3-pen-pricing-drill": {
-      "id": "practice-j3-4-3-pen-pricing-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "買筆折扣應用問題",
-      "generatorKey": "j3-4-3-pen-pricing-drill",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-3",
-        "二次方程式",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-3-toy-vendor-drill": {
-      "id": "practice-j3-4-3-toy-vendor-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "玩具攤販利潤問題",
-      "generatorKey": "j3-4-3-toy-vendor-drill",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-3",
-        "二次方程式",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-3-straw-table-drill": {
-      "id": "practice-j3-4-3-straw-table-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "吸管測量桌面問題",
-      "generatorKey": "j3-4-3-straw-table-drill",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 0,
@@ -45233,29 +49154,30 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j3-4-3-business-sales-word": {
-      "id": "practice-j3-4-3-business-sales-word",
+    "practice-j3-4-3-garden-path": {
+      "id": "practice-j3-4-3-garden-path",
       "enabled": true,
       "mode": "generator",
-      "title": "商業銷售與分攤問題",
-      "generatorKey": "j3-4-3-business-sales-word",
-      "difficulty": "medium",
+      "title": "長方形土地開路問題",
+      "generatorKey": "j3-4-3-garden-path",
+      "difficulty": "hard",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "j3-4-3",
       "stage": "國中",
       "grade": "國二",
       "term": "上學期",
-      "chapter": "一元二次方程式應用",
-      "domain": "應用",
+      "chapter": "一元二次方程式",
+      "domain": "代數",
       "prompt": "",
       "answer": "",
       "tags": [
         "j3-4-3",
-        "商業",
-        "銷售",
-        "無限練習"
+        "無限練習",
+        "開路",
+        "面積",
+        "應用問題"
       ],
       "usage": [],
       "examples": [],
@@ -45293,6 +49215,35 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j3-4-3-neg-reciprocal-word-drill": {
+      "id": "practice-j3-4-3-neg-reciprocal-word-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "負數倒數關係與年份問題",
+      "generatorKey": "j3-4-3-neg-reciprocal-word-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-3",
+        "二次方程式",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j3-4-3-number-property-word": {
       "id": "practice-j3-4-3-number-property-word",
       "enabled": true,
@@ -45316,6 +49267,243 @@ window.practiceLibraryStore = {
         "數字",
         "應用",
         "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-4-3-open-box": {
+      "id": "practice-j3-4-3-open-box",
+      "enabled": true,
+      "mode": "generator",
+      "title": "正方形薄片折成開口盒",
+      "generatorKey": "j3-4-3-open-box",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "一元二次方程式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-3",
+        "無限練習",
+        "開口盒",
+        "體積",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-4-3-pen-pricing-drill": {
+      "id": "practice-j3-4-3-pen-pricing-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "買筆折扣應用問題",
+      "generatorKey": "j3-4-3-pen-pricing-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-3",
+        "二次方程式",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-4-3-round-robin": {
+      "id": "practice-j3-4-3-round-robin",
+      "enabled": true,
+      "mode": "generator",
+      "title": "循環賽場次求人數",
+      "generatorKey": "j3-4-3-round-robin",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "一元二次方程式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-3",
+        "無限練習",
+        "循環賽",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-4-3-square-side-change": {
+      "id": "practice-j3-4-3-square-side-change",
+      "enabled": true,
+      "mode": "generator",
+      "title": "正方形邊長變化問題",
+      "generatorKey": "j3-4-3-square-side-change",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "上學期",
+      "chapter": "一元二次方程式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-3",
+        "無限練習",
+        "邊長變化",
+        "面積",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-4-3-straw-table-drill": {
+      "id": "practice-j3-4-3-straw-table-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "吸管測量桌面問題",
+      "generatorKey": "j3-4-3-straw-table-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-3",
+        "二次方程式",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-4-3-tile-floor-drill": {
+      "id": "practice-j3-4-3-tile-floor-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "瓷磚鋪地板問題",
+      "generatorKey": "j3-4-3-tile-floor-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-3",
+        "二次方程式",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-4-3-toy-vendor-drill": {
+      "id": "practice-j3-4-3-toy-vendor-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "玩具攤販利潤問題",
+      "generatorKey": "j3-4-3-toy-vendor-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-3",
+        "二次方程式",
+        "應用問題"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j3-4-3-two-square-perim-area-drill": {
+      "id": "practice-j3-4-3-two-square-perim-area-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩正方形周長與面積問題",
+      "generatorKey": "j3-4-3-two-square-perim-area-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j3-4-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j3-4-3",
+        "二次方程式",
+        "應用問題"
       ],
       "usage": [],
       "examples": [],
@@ -45505,36 +49693,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j4-1-1-ap-range-multiple-count": {
-      "id": "practice-j4-1-1-ap-range-multiple-count",
-      "enabled": true,
-      "mode": "generator",
-      "title": "特定範圍的倍數判定",
-      "generatorKey": "j4-1-1-ap-range-multiple-count",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 4,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-1-1",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "下學期",
-      "chapter": "等差數列與應用",
-      "domain": "數論",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-1-1",
-        "倍數",
-        "計數",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
     "practice-j4-1-1-ap-pair-sum-reverse": {
       "id": "practice-j4-1-1-ap-pair-sum-reverse",
       "enabled": true,
@@ -45557,6 +49715,36 @@ window.practiceLibraryStore = {
         "j4-1-1",
         "項和",
         "反推",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-1-1-ap-range-multiple-count": {
+      "id": "practice-j4-1-1-ap-range-multiple-count",
+      "enabled": true,
+      "mode": "generator",
+      "title": "特定範圍的倍數判定",
+      "generatorKey": "j4-1-1-ap-range-multiple-count",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-1-1",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "下學期",
+      "chapter": "等差數列與應用",
+      "domain": "數論",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-1-1",
+        "倍數",
+        "計數",
         "無限練習"
       ],
       "usage": [],
@@ -45588,6 +49776,122 @@ window.practiceLibraryStore = {
         "兩項",
         "首項公差",
         "子練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-1-1-coordinate-move-drill": {
+      "id": "practice-j4-1-1-coordinate-move-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "座標點等差移動",
+      "generatorKey": "j4-1-1-coordinate-move",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-1-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-1-1",
+        "等差數列",
+        "座標"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-1-1-first-positive-term-drill": {
+      "id": "practice-j4-1-1-first-positive-term-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "第幾項起為正／負數",
+      "generatorKey": "j4-1-1-first-positive-term",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-1-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-1-1",
+        "等差數列",
+        "正負項"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-1-1-polygon-ap-drill": {
+      "id": "practice-j4-1-1-polygon-ap-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "多邊形邊長與內角成等差",
+      "generatorKey": "j4-1-1-polygon-ap",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-1-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-1-1",
+        "等差數列",
+        "多邊形"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-1-1-right-triangle-ap-drill": {
+      "id": "practice-j4-1-1-right-triangle-ap-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "直角三角形三邊成等差",
+      "generatorKey": "j4-1-1-right-triangle-ap",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-1-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-1-1",
+        "等差數列",
+        "直角三角形"
       ],
       "usage": [],
       "examples": [],
@@ -45782,6 +50086,35 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j4-1-3-catch-up-race-drill": {
+      "id": "practice-j4-1-3-catch-up-race-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等差遞增應用：競速與累計",
+      "generatorKey": "j4-1-3-catch-up-race",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-1-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-1-3",
+        "等差級數",
+        "應用"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j4-1-3-max-min-sum": {
       "id": "practice-j4-1-3-max-min-sum",
       "enabled": true,
@@ -45813,6 +50146,35 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j4-1-3-polygon-sum-drill": {
+      "id": "practice-j4-1-3-polygon-sum-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "多邊形邊長成等差求周長",
+      "generatorKey": "j4-1-3-polygon-sum",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-1-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-1-3",
+        "等差級數",
+        "多邊形"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j4-1-3-range-multiple-sum": {
       "id": "practice-j4-1-3-range-multiple-sum",
       "enabled": true,
@@ -45836,6 +50198,36 @@ window.practiceLibraryStore = {
         "倍數",
         "餘數",
         "總和",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-1-3-series-block-sum-relation": {
+      "id": "practice-j4-1-3-series-block-sum-relation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分段和關係",
+      "generatorKey": "j4-1-3-series-block-sum-relation",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-1-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "下學期",
+      "chapter": "等差級數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-1-3",
+        "分段和",
+        "S_n",
         "無限練習"
       ],
       "usage": [],
@@ -45910,6 +50302,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j4-1-3-series-odd-even-sum": {
+      "id": "practice-j4-1-3-series-odd-even-sum",
+      "enabled": true,
+      "mode": "generator",
+      "title": "奇數項與偶數項和",
+      "generatorKey": "j4-1-3-series-odd-even-sum",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-1-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "下學期",
+      "chapter": "等差級數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-1-3",
+        "奇數項",
+        "偶數項",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j4-1-3-sn-relation": {
       "id": "practice-j4-1-3-sn-relation",
       "enabled": true,
@@ -45933,66 +50355,6 @@ window.practiceLibraryStore = {
         "S_n",
         "前n項和",
         "進階",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-1-3-series-block-sum-relation": {
-      "id": "practice-j4-1-3-series-block-sum-relation",
-      "enabled": true,
-      "mode": "generator",
-      "title": "分段和關係",
-      "generatorKey": "j4-1-3-series-block-sum-relation",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 2,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-1-3",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "下學期",
-      "chapter": "等差級數",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-1-3",
-        "分段和",
-        "S_n",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-1-3-series-odd-even-sum": {
-      "id": "practice-j4-1-3-series-odd-even-sum",
-      "enabled": true,
-      "mode": "generator",
-      "title": "奇數項與偶數項和",
-      "generatorKey": "j4-1-3-series-odd-even-sum",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 2,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-1-3",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "下學期",
-      "chapter": "等差級數",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-1-3",
-        "奇數項",
-        "偶數項",
         "無限練習"
       ],
       "usage": [],
@@ -46031,6 +50393,31 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j4-2-1-cross-function-substitution-drill": {
+      "id": "practice-j4-2-1-cross-function-substitution-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "跨函數移位代換",
+      "generatorKey": "j4-2-1-cross-function-substitution",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-2-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j4-2-1-function-flow-composite": {
       "id": "practice-j4-2-1-function-flow-composite",
       "enabled": true,
@@ -46053,36 +50440,6 @@ window.practiceLibraryStore = {
         "j4-2-1",
         "流程圖",
         "複合運算",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-2-1-function-shift-substitution": {
-      "id": "practice-j4-2-1-function-shift-substitution",
-      "enabled": true,
-      "mode": "generator",
-      "title": "位移代換函數求值",
-      "generatorKey": "j4-2-1-function-shift-substitution",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 5,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-2-1",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "下學期",
-      "chapter": "函數",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-2-1",
-        "位移代換",
-        "函數式",
         "無限練習"
       ],
       "usage": [],
@@ -46188,6 +50545,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j4-2-1-function-shift-substitution": {
+      "id": "practice-j4-2-1-function-shift-substitution",
+      "enabled": true,
+      "mode": "generator",
+      "title": "位移代換函數求值",
+      "generatorKey": "j4-2-1-function-shift-substitution",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-2-1",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "下學期",
+      "chapter": "函數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-2-1",
+        "位移代換",
+        "函數式",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j4-2-1-function-value-basic": {
       "id": "practice-j4-2-1-function-value-basic",
       "enabled": true,
@@ -46242,6 +50629,31 @@ window.practiceLibraryStore = {
         "公式轉換",
         "無限練習"
       ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-2-1-linear-degree-condition-drill": {
+      "id": "practice-j4-2-1-linear-degree-condition-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "一次函數係數條件",
+      "generatorKey": "j4-2-1-linear-degree-condition",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-2-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
       "usage": [],
       "examples": [],
       "tips": [],
@@ -46338,36 +50750,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j4-2-2-perpendicular-equation": {
-      "id": "practice-j4-2-2-perpendicular-equation",
-      "enabled": true,
-      "mode": "generator",
-      "title": "垂直直線方程式",
-      "generatorKey": "j4-2-2-perpendicular-equation",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 5,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-2-2",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "下學期",
-      "chapter": "線型函數",
-      "domain": "函數與圖形",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-2-2",
-        "垂直",
-        "直線方程式",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
     "practice-j4-2-2-linear-equation-two-points": {
       "id": "practice-j4-2-2-linear-equation-two-points",
       "enabled": true,
@@ -46435,6 +50817,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j4-2-2-perpendicular-equation": {
+      "id": "practice-j4-2-2-perpendicular-equation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "垂直直線方程式",
+      "generatorKey": "j4-2-2-perpendicular-equation",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-2-2",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "下學期",
+      "chapter": "線型函數",
+      "domain": "函數與圖形",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-2-2",
+        "垂直",
+        "直線方程式",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j4-2-2-quadrant-slope-range": {
       "id": "practice-j4-2-2-quadrant-slope-range",
       "enabled": true,
@@ -46465,6 +50877,31 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j4-2-2-word-model-two-point-drill": {
+      "id": "practice-j4-2-2-word-model-two-point-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩點線型函數應用",
+      "generatorKey": "j4-2-2-word-model-two-point",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-2-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j4-3-1-complementary-supplementary-angles": {
       "id": "practice-j4-3-1-complementary-supplementary-angles",
       "enabled": true,
@@ -46489,6 +50926,35 @@ window.practiceLibraryStore = {
         "餘角",
         "角度推理",
         "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-3-1-isosceles-angle-drill": {
+      "id": "practice-j4-3-1-isosceles-angle-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等腰三角形角度計算",
+      "generatorKey": "j4-3-1-isosceles-angle",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-3-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-3-1",
+        "等腰三角形",
+        "角度"
       ],
       "usage": [],
       "examples": [],
@@ -46531,6 +50997,40 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j4-3-1-polygon-arithmetic-angles": {
+      "id": "practice-j4-3-1-polygon-arithmetic-angles",
+      "enabled": true,
+      "mode": "generator",
+      "title": "多邊形內角等差",
+      "generatorKey": "j4-3-1-polygon-arithmetic-angles",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [
+        "practice-j4-3-1-polygon-angle-mixed",
+        "practice-j4-3-1-triangle-exterior-angle"
+      ],
+      "chapterCode": "j4-3-1",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "下學期",
+      "chapter": "三角形與多邊形的內角和",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-3-1",
+        "多邊形內角和",
+        "等差角",
+        "角度推理",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j4-3-1-triangle-exterior-angle": {
       "id": "practice-j4-3-1-triangle-exterior-angle",
       "enabled": true,
@@ -46565,32 +51065,32 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j4-3-1-polygon-arithmetic-angles": {
-      "id": "practice-j4-3-1-polygon-arithmetic-angles",
+    "practice-j4-3-2-angle-bisector-measure": {
+      "id": "practice-j4-3-2-angle-bisector-measure",
       "enabled": true,
       "mode": "generator",
-      "title": "多邊形內角等差",
-      "generatorKey": "j4-3-1-polygon-arithmetic-angles",
-      "difficulty": "medium",
+      "title": "角平分與作圖角度",
+      "generatorKey": "j4-3-2-angle-bisector-measure",
+      "difficulty": "easy",
       "questionCount": 5,
       "subtypeCount": 5,
       "relatedPracticeIds": [
-        "practice-j4-3-1-polygon-angle-mixed",
-        "practice-j4-3-1-triangle-exterior-angle"
+        "practice-j4-3-2-construction-mixed",
+        "practice-j4-3-2-construction-bisection-count"
       ],
-      "chapterCode": "j4-3-1",
+      "chapterCode": "j4-3-2",
       "stage": "國中",
       "grade": "國二",
       "term": "下學期",
-      "chapter": "三角形與多邊形的內角和",
+      "chapter": "尺規作圖",
       "domain": "幾何",
       "prompt": "",
       "answer": "",
       "tags": [
-        "j4-3-1",
-        "多邊形內角和",
-        "等差角",
-        "角度推理",
+        "j4-3-2",
+        "角平分線",
+        "角度",
+        "作圖性質",
         "無限練習"
       ],
       "usage": [],
@@ -46703,32 +51203,90 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j4-3-2-angle-bisector-measure": {
-      "id": "practice-j4-3-2-angle-bisector-measure",
+    "practice-j4-3-2-triangle-bisector-intersection-drill": {
+      "id": "practice-j4-3-2-triangle-bisector-intersection-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "角平分與作圖角度",
-      "generatorKey": "j4-3-2-angle-bisector-measure",
-      "difficulty": "easy",
+      "title": "角平分線交點角度",
+      "generatorKey": "j4-3-2-triangle-bisector-intersection",
+      "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-3-2-construction-mixed",
-        "practice-j4-3-2-construction-bisection-count"
-      ],
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
       "chapterCode": "j4-3-2",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "下學期",
-      "chapter": "尺規作圖",
-      "domain": "幾何",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
       "prompt": "",
       "answer": "",
       "tags": [
         "j4-3-2",
         "角平分線",
-        "角度",
-        "作圖性質",
+        "交點"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-3-3-congruence-algebra-drill": {
+      "id": "practice-j4-3-3-congruence-algebra-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "全等三角形代數求解",
+      "generatorKey": "j4-3-3-congruence-algebra",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-3-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-3-3",
+        "全等",
+        "代數"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-3-3-congruence-criterion": {
+      "id": "practice-j4-3-3-congruence-criterion",
+      "enabled": true,
+      "mode": "generator",
+      "title": "全等判別依據",
+      "generatorKey": "j4-3-3-congruence-criterion",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [
+        "practice-j4-3-3-congruence-mixed",
+        "practice-j4-3-3-congruent-correspondence"
+      ],
+      "chapterCode": "j4-3-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "下學期",
+      "chapter": "三角形的全等",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-3-3",
+        "三角形全等",
+        "SSS",
+        "SAS",
         "無限練習"
       ],
       "usage": [],
@@ -46764,40 +51322,6 @@ window.practiceLibraryStore = {
         "三角形全等",
         "全等判別",
         "對應邊角",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-3-3-congruence-criterion": {
-      "id": "practice-j4-3-3-congruence-criterion",
-      "enabled": true,
-      "mode": "generator",
-      "title": "全等判別依據",
-      "generatorKey": "j4-3-3-congruence-criterion",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-3-3-congruence-mixed",
-        "practice-j4-3-3-congruent-correspondence"
-      ],
-      "chapterCode": "j4-3-3",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "下學期",
-      "chapter": "三角形的全等",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-3-3",
-        "三角形全等",
-        "SSS",
-        "SAS",
         "無限練習"
       ],
       "usage": [],
@@ -46874,34 +51398,28 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j4-3-4-triangle-side-angle-mixed": {
-      "id": "practice-j4-3-4-triangle-side-angle-mixed",
+    "practice-j4-3-4-exterior-angle-side-comparison-drill": {
+      "id": "practice-j4-3-4-exterior-angle-side-comparison-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "三角形邊角關係三類綜合",
-      "generatorKey": "j4-3-4-triangle-side-angle-mixed",
+      "title": "外角推算邊大小順序",
+      "generatorKey": "j4-3-4-exterior-angle-side-comparison",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [
-        "practice-j4-3-4-triangle-inequality-range",
-        "practice-j4-3-4-side-angle-comparison",
-        "practice-j4-3-4-pythagorean-classification"
-      ],
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
       "chapterCode": "j4-3-4",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "下學期",
-      "chapter": "三角形邊角關係",
-      "domain": "幾何",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
       "prompt": "",
       "answer": "",
       "tags": [
         "j4-3-4",
-        "三角形邊角關係",
-        "不等式",
-        "角形判定",
-        "無限練習"
+        "外角",
+        "邊角關係"
       ],
       "usage": [],
       "examples": [],
@@ -46909,12 +51427,41 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j4-3-4-triangle-inequality-range": {
-      "id": "practice-j4-3-4-triangle-inequality-range",
+    "practice-j4-3-4-hinge-theorem-drill": {
+      "id": "practice-j4-3-4-hinge-theorem-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "三角形不等式範圍",
-      "generatorKey": "j4-3-4-triangle-inequality-range",
+      "title": "鉸鏈定理：兩三角形邊角比較",
+      "generatorKey": "j4-3-4-hinge-theorem",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-3-4",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-3-4",
+        "鉸鏈定理",
+        "邊角比較"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-3-4-pythagorean-classification": {
+      "id": "practice-j4-3-4-pythagorean-classification",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三邊判定銳直鈍角",
+      "generatorKey": "j4-3-4-pythagorean-classification",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
@@ -46932,9 +51479,9 @@ window.practiceLibraryStore = {
       "answer": "",
       "tags": [
         "j4-3-4",
-        "三角形不等式",
-        "整數範圍",
-        "個數",
+        "銳角三角形",
+        "直角三角形",
+        "鈍角三角形",
         "無限練習"
       ],
       "usage": [],
@@ -46977,12 +51524,12 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j4-3-4-pythagorean-classification": {
-      "id": "practice-j4-3-4-pythagorean-classification",
+    "practice-j4-3-4-triangle-inequality-range": {
+      "id": "practice-j4-3-4-triangle-inequality-range",
       "enabled": true,
       "mode": "generator",
-      "title": "三邊判定銳直鈍角",
-      "generatorKey": "j4-3-4-pythagorean-classification",
+      "title": "三角形不等式範圍",
+      "generatorKey": "j4-3-4-triangle-inequality-range",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
@@ -47000,11 +51547,71 @@ window.practiceLibraryStore = {
       "answer": "",
       "tags": [
         "j4-3-4",
-        "銳角三角形",
-        "直角三角形",
-        "鈍角三角形",
+        "三角形不等式",
+        "整數範圍",
+        "個數",
         "無限練習"
       ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-3-4-triangle-side-angle-mixed": {
+      "id": "practice-j4-3-4-triangle-side-angle-mixed",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三角形邊角關係三類綜合",
+      "generatorKey": "j4-3-4-triangle-side-angle-mixed",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [
+        "practice-j4-3-4-triangle-inequality-range",
+        "practice-j4-3-4-side-angle-comparison",
+        "practice-j4-3-4-pythagorean-classification"
+      ],
+      "chapterCode": "j4-3-4",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "下學期",
+      "chapter": "三角形邊角關係",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-3-4",
+        "三角形邊角關係",
+        "不等式",
+        "角形判定",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-4-1-bent-line-parallel-drill": {
+      "id": "practice-j4-4-1-bent-line-parallel-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩平行線間折線角度",
+      "generatorKey": "j4-4-1-bent-line-parallel",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-4-1",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
       "usage": [],
       "examples": [],
       "tips": [],
@@ -47036,6 +51643,40 @@ window.practiceLibraryStore = {
         "j4-4-1",
         "平行",
         "垂直",
+        "角度計算",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-4-1-transversal-find-angle": {
+      "id": "practice-j4-4-1-transversal-find-angle",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平行線截角求角度",
+      "generatorKey": "j4-4-1-transversal-find-angle",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [
+        "practice-j4-4-1-parallel-perpendicular-angles",
+        "practice-j4-4-1-transversal-solve-x"
+      ],
+      "chapterCode": "j4-4-1",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "下學期",
+      "chapter": "平行與垂直的角度關係",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-4-1",
+        "平行線",
+        "截線",
         "角度計算",
         "無限練習"
       ],
@@ -47079,55 +51720,68 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j4-4-1-transversal-find-angle": {
-      "id": "practice-j4-4-1-transversal-find-angle",
+    "practice-j4-4-2-angle-bisector-parallelogram-drill": {
+      "id": "practice-j4-4-2-angle-bisector-parallelogram-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "平行線截角求角度",
-      "generatorKey": "j4-4-1-transversal-find-angle",
+      "title": "平行四邊形角平分線",
+      "generatorKey": "j4-4-2-angle-bisector-parallelogram",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-4-1-parallel-perpendicular-angles",
-        "practice-j4-4-1-transversal-solve-x"
-      ],
-      "chapterCode": "j4-4-1",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "下學期",
-      "chapter": "平行與垂直的角度關係",
-      "domain": "幾何",
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-4-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
       "prompt": "",
       "answer": "",
-      "tags": [
-        "j4-4-1",
-        "平行線",
-        "截線",
-        "角度計算",
-        "無限練習"
-      ],
+      "tags": [],
       "usage": [],
       "examples": [],
       "tips": [],
       "notes": [],
       "mistakes": []
     },
-    "practice-j4-4-2-quadrilateral-property-codes": {
-      "id": "practice-j4-4-2-quadrilateral-property-codes",
+    "practice-j4-4-2-coordinate-parallelogram-drill": {
+      "id": "practice-j4-4-2-coordinate-parallelogram-drill",
       "enabled": true,
       "mode": "generator",
-      "title": "特殊四邊形性質代號判讀",
-      "generatorKey": "j4-4-2-quadrilateral-property-codes",
+      "title": "座標系中的平行四邊形",
+      "generatorKey": "j4-4-2-coordinate-parallelogram",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 2,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-4-2",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-4-2-parallelogram-equations": {
+      "id": "practice-j4-4-2-parallelogram-equations",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平行四邊形邊角方程",
+      "generatorKey": "j4-4-2-parallelogram-equations",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
       "relatedPracticeIds": [
         "practice-j4-4-2-quadrilateral-mixed",
-        "practice-j4-4-2-parallelogram-equations",
-        "practice-j4-4-2-shape-classification",
-        "practice-j4-4-2-rectangle-square-diagonal",
-        "practice-j4-4-2-rhombus-diagonal"
+        "practice-j4-4-2-shape-classification"
       ],
       "chapterCode": "j4-4-2",
       "stage": "國中",
@@ -47139,9 +51793,9 @@ window.practiceLibraryStore = {
       "answer": "",
       "tags": [
         "j4-4-2",
-        "特殊四邊形",
-        "性質判讀",
-        "代號題組",
+        "平行四邊形",
+        "方程",
+        "邊角關係",
         "無限練習"
       ],
       "usage": [],
@@ -47187,52 +51841,21 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j4-4-2-parallelogram-equations": {
-      "id": "practice-j4-4-2-parallelogram-equations",
+    "practice-j4-4-2-quadrilateral-property-codes": {
+      "id": "practice-j4-4-2-quadrilateral-property-codes",
       "enabled": true,
       "mode": "generator",
-      "title": "平行四邊形邊角方程",
-      "generatorKey": "j4-4-2-parallelogram-equations",
+      "title": "特殊四邊形性質代號判讀",
+      "generatorKey": "j4-4-2-quadrilateral-property-codes",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 2,
       "relatedPracticeIds": [
         "practice-j4-4-2-quadrilateral-mixed",
-        "practice-j4-4-2-shape-classification"
-      ],
-      "chapterCode": "j4-4-2",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "下學期",
-      "chapter": "特殊四邊形",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-4-2",
-        "平行四邊形",
-        "方程",
-        "邊角關係",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-4-2-shape-classification": {
-      "id": "practice-j4-4-2-shape-classification",
-      "enabled": true,
-      "mode": "generator",
-      "title": "特殊四邊形判別",
-      "generatorKey": "j4-4-2-shape-classification",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-4-2-quadrilateral-mixed",
-        "practice-j4-4-2-quadrilateral-property-codes"
+        "practice-j4-4-2-parallelogram-equations",
+        "practice-j4-4-2-shape-classification",
+        "practice-j4-4-2-rectangle-square-diagonal",
+        "practice-j4-4-2-rhombus-diagonal"
       ],
       "chapterCode": "j4-4-2",
       "stage": "國中",
@@ -47245,8 +51868,8 @@ window.practiceLibraryStore = {
       "tags": [
         "j4-4-2",
         "特殊四邊形",
-        "判別",
-        "性質",
+        "性質判讀",
+        "代號題組",
         "無限練習"
       ],
       "usage": [],
@@ -47323,6 +51946,100 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j4-4-2-shape-classification": {
+      "id": "practice-j4-4-2-shape-classification",
+      "enabled": true,
+      "mode": "generator",
+      "title": "特殊四邊形判別",
+      "generatorKey": "j4-4-2-shape-classification",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [
+        "practice-j4-4-2-quadrilateral-mixed",
+        "practice-j4-4-2-quadrilateral-property-codes"
+      ],
+      "chapterCode": "j4-4-2",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "下學期",
+      "chapter": "特殊四邊形",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-4-2",
+        "特殊四邊形",
+        "判別",
+        "性質",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-4-3-isosceles-trapezoid": {
+      "id": "practice-j4-4-3-isosceles-trapezoid",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等腰梯形邊角與高",
+      "generatorKey": "j4-4-3-isosceles-trapezoid",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [
+        "practice-j4-4-3-trapezoid-core-mixed",
+        "practice-j4-4-3-trapezoid-area",
+        "practice-j4-4-3-trapezoid-midline-basic"
+      ],
+      "chapterCode": "j4-4-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "下學期",
+      "chapter": "梯形中線與平行線分割",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-4-3",
+        "等腰梯形",
+        "周長",
+        "高",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-4-3-kite-property-drill": {
+      "id": "practice-j4-4-3-kite-property-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "鳶形性質計算",
+      "generatorKey": "j4-4-3-kite-property",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-4-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j4-4-3-parallel-division": {
       "id": "practice-j4-4-3-parallel-division",
       "enabled": true,
@@ -47351,6 +52068,66 @@ window.practiceLibraryStore = {
         "梯形分割",
         "平行線",
         "等差規律",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-4-3-right-trapezoid-drill": {
+      "id": "practice-j4-4-3-right-trapezoid-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "直角梯形邊長計算",
+      "generatorKey": "j4-4-3-right-trapezoid",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j4-4-3",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-j4-4-3-trapezoid-area": {
+      "id": "practice-j4-4-3-trapezoid-area",
+      "enabled": true,
+      "mode": "generator",
+      "title": "梯形面積正反算",
+      "generatorKey": "j4-4-3-trapezoid-area",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [
+        "practice-j4-4-3-trapezoid-core-mixed",
+        "practice-j4-4-3-trapezoid-midline-basic",
+        "practice-j4-4-3-isosceles-trapezoid"
+      ],
+      "chapterCode": "j4-4-3",
+      "stage": "國中",
+      "grade": "國二",
+      "term": "下學期",
+      "chapter": "梯形中線與平行線分割",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j4-4-3",
+        "梯形面積",
+        "反推",
+        "應用題",
         "無限練習"
       ],
       "usage": [],
@@ -47422,76 +52199,6 @@ window.practiceLibraryStore = {
         "j4-4-3",
         "梯形中線",
         "上底下底",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-4-3-trapezoid-area": {
-      "id": "practice-j4-4-3-trapezoid-area",
-      "enabled": true,
-      "mode": "generator",
-      "title": "梯形面積正反算",
-      "generatorKey": "j4-4-3-trapezoid-area",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-4-3-trapezoid-core-mixed",
-        "practice-j4-4-3-trapezoid-midline-basic",
-        "practice-j4-4-3-isosceles-trapezoid"
-      ],
-      "chapterCode": "j4-4-3",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "下學期",
-      "chapter": "梯形中線與平行線分割",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-4-3",
-        "梯形面積",
-        "反推",
-        "應用題",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-4-3-isosceles-trapezoid": {
-      "id": "practice-j4-4-3-isosceles-trapezoid",
-      "enabled": true,
-      "mode": "generator",
-      "title": "等腰梯形邊角與高",
-      "generatorKey": "j4-4-3-isosceles-trapezoid",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-4-3-trapezoid-core-mixed",
-        "practice-j4-4-3-trapezoid-area",
-        "practice-j4-4-3-trapezoid-midline-basic"
-      ],
-      "chapterCode": "j4-4-3",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "下學期",
-      "chapter": "梯形中線與平行線分割",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-4-3",
-        "等腰梯形",
-        "周長",
-        "高",
         "無限練習"
       ],
       "usage": [],
@@ -48420,6 +53127,40 @@ window.practiceLibraryStore = {
         "梯形分點截線若 AE:EB=m:n，公式是 EF=(n×AD+m×BC)/(m+n)，權重會交叉乘到底邊。",
         "j5-1-2 聚焦平行截線與中點連線；相似判別、面積平方比、圓冪與測量題應放到後續章節。"
       ]
+    },
+    "practice-j5-1-2-rectangle-similarity-check": {
+      "id": "practice-j5-1-2-rectangle-similarity-check",
+      "enabled": true,
+      "mode": "generator",
+      "title": "矩形相似判別",
+      "generatorKey": "j5-1-2-rectangle-similarity-check",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-2",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上學期",
+      "chapter": "平行線截比例線段",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-2",
+        "相似形",
+        "矩形",
+        "判別"
+      ],
+      "usage": [
+        "給定一個矩形，判別哪個長方形與它相似（長寬比相同）。"
+      ],
+      "examples": [],
+      "tips": [
+        "相似矩形的長寬比（化簡後）必須相等。"
+      ],
+      "notes": [],
+      "mistakes": []
     },
     "practice-j5-1-2-trapezoid-midline": {
       "id": "practice-j5-1-2-trapezoid-midline",
@@ -49775,6 +54516,41 @@ window.practiceLibraryStore = {
         "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
     },
+    "practice-j5-1-3-similar-polygon-angle": {
+      "id": "practice-j5-1-3-similar-polygon-angle",
+      "enabled": true,
+      "mode": "generator",
+      "title": "相似多邊形角度計算",
+      "generatorKey": "j5-1-3-similar-polygon-angle",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-3",
+        "相似形",
+        "多邊形",
+        "角度",
+        "內角和"
+      ],
+      "usage": [
+        "兩個相似多邊形，利用內角和求未知角。"
+      ],
+      "examples": [],
+      "tips": [
+        "四邊形內角和360°，五邊形內角和540°，對應角相等。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j5-1-3-similarity-criteria-five-subtypes": {
       "id": "practice-j5-1-3-similarity-criteria-five-subtypes",
       "enabled": true,
@@ -49821,6 +54597,41 @@ window.practiceLibraryStore = {
         "題目與解答必須討論同一組圖形；例如題目是兩相似三角形，就不可在答案改成沙漏型或蝴蝶形。",
         "j5-1-3 聚焦相似形、縮放、母子相似與相似測量；內分比定理與圓冪題不掛在本節。"
       ]
+    },
+    "practice-j5-1-3-slope-position-height": {
+      "id": "practice-j5-1-3-slope-position-height",
+      "enabled": true,
+      "mode": "generator",
+      "title": "斜坡位置高度計算",
+      "generatorKey": "j5-1-3-slope-position-height",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-1-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上學期",
+      "chapter": "相似形與相似三角形",
+      "domain": "比例與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-1-3",
+        "相似形",
+        "斜坡",
+        "比例",
+        "高度"
+      ],
+      "usage": [
+        "斜坡全長與高度已知，利用相似比求特定位置的高度。"
+      ],
+      "examples": [],
+      "tips": [
+        "高度與沿坡距離成正比：h = H × d / L。"
+      ],
+      "notes": [],
+      "mistakes": []
     },
     "practice-j5-1-3-sss-criterion": {
       "id": "practice-j5-1-3-sss-criterion",
@@ -51039,6 +55850,42 @@ window.practiceLibraryStore = {
         "兩圓位置要同時比較 d、r1+r2 與 |r1-r2|；外公切線用半徑差，內公切線用半徑和。"
       ]
     },
+    "practice-j5-2-1-chord-sagitta-radius": {
+      "id": "practice-j5-2-1-chord-sagitta-radius",
+      "enabled": true,
+      "mode": "generator",
+      "title": "弓形矢高求半徑",
+      "generatorKey": "j5-2-1-chord-sagitta-radius",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-2-1",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上",
+      "chapter": "圓的基本性質與長度計算",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-2-1",
+        "圓",
+        "弦",
+        "矢高",
+        "半徑",
+        "弓形"
+      ],
+      "usage": [
+        "已知弦長與矢高（弓形高），用勾股定理求圓半徑。"
+      ],
+      "examples": [],
+      "tips": [
+        "r = (半弦² + 矢高²) / (2 × 矢高)。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j5-2-1-circumscribed-quadrilateral": {
       "id": "practice-j5-2-1-circumscribed-quadrilateral",
       "enabled": true,
@@ -51587,6 +56434,42 @@ window.practiceLibraryStore = {
         "弦長題要先取半弦長；半徑、弦心距、半弦長會構成直角三角形。",
         "兩圓位置要同時比較 d、r1+r2 與 |r1-r2|；外公切線用半徑差，內公切線用半徑和。"
       ]
+    },
+    "practice-j5-2-1-semicircle-chord-width": {
+      "id": "practice-j5-2-1-semicircle-chord-width",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圓形容器水面寬度",
+      "generatorKey": "j5-2-1-semicircle-chord-width",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-2-1",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上",
+      "chapter": "圓的基本性質與長度計算",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-2-1",
+        "圓",
+        "弦",
+        "水面寬",
+        "半圓",
+        "容器"
+      ],
+      "usage": [
+        "圓形容器裝水，已知半徑與水深，求水面寬度（弦長）。"
+      ],
+      "examples": [],
+      "tips": [
+        "弦長² = 4(r² - (r-h)²) = 4(2rh - h²)。"
+      ],
+      "notes": [],
+      "mistakes": []
     },
     "practice-j5-2-1-tangent-length-from-point": {
       "id": "practice-j5-2-1-tangent-length-from-point",
@@ -52888,6 +57771,42 @@ window.practiceLibraryStore = {
         "圓內接四邊形要抓對角互補；一個外角等於其對內角。",
         "圓內角用兩弧和的一半，圓外角用大弧減小弧的一半，不能把公式混用。"
       ]
+    },
+    "practice-j5-2-2-tangent-combined-angle": {
+      "id": "practice-j5-2-2-tangent-combined-angle",
+      "enabled": true,
+      "mode": "generator",
+      "title": "切線弦角綜合計算",
+      "generatorKey": "j5-2-2-tangent-combined-angle",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-2-2",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上",
+      "chapter": "圓心角、圓周角及弦切角",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-2-2",
+        "圓",
+        "切線",
+        "弦切角",
+        "圓周角",
+        "兩切線夾角"
+      ],
+      "usage": [
+        "結合兩切線夾角、弦切角與圓周角的綜合計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "兩切線夾角 = (優弧 - 劣弧) / 2；弦切角 = 對應弧 / 2。"
+      ],
+      "notes": [],
+      "mistakes": []
     },
     "practice-j5-2-2-two-tangents-angle": {
       "id": "practice-j5-2-2-two-tangents-angle",
@@ -56179,6 +61098,41 @@ window.practiceLibraryStore = {
         "圓的證明要先判斷是同弧、弦切角、圓內接四邊形，還是切線垂直半徑。"
       ]
     },
+    "practice-j5-3-2-perp-bisector-perimeter": {
+      "id": "practice-j5-3-2-perp-bisector-perimeter",
+      "enabled": true,
+      "mode": "generator",
+      "title": "中垂線性質求周長",
+      "generatorKey": "j5-3-2-perp-bisector-perimeter",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-2",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上",
+      "chapter": "幾何證明的常用工具",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-2",
+        "中垂線",
+        "周長",
+        "等距離",
+        "垂直平分線"
+      ],
+      "usage": [
+        "利用中垂線上的點到兩端等距的性質，化簡周長計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "點在AB中垂線上 ⟺ 點到A、B的距離相等。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j5-3-2-perpendicular-bisector-point": {
       "id": "practice-j5-3-2-perpendicular-bisector-point",
       "enabled": true,
@@ -57783,6 +62737,41 @@ window.practiceLibraryStore = {
         "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
     },
+    "practice-j5-3-3-incircle-tangent-length": {
+      "id": "practice-j5-3-3-incircle-tangent-length",
+      "enabled": true,
+      "mode": "generator",
+      "title": "內切圓切線段計算",
+      "generatorKey": "j5-3-3-incircle-tangent-length",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "內切圓",
+        "切線段",
+        "半周長",
+        "三角形"
+      ],
+      "usage": [
+        "已知三角形三邊，利用半周長公式求各頂點到切點的距離。"
+      ],
+      "examples": [],
+      "tips": [
+        "從頂點A的切線段長 = s - a，其中 s 為半周長，a 為對邊長。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-j5-3-3-inradius-from-area-perimeter": {
       "id": "practice-j5-3-3-inradius-from-area-perimeter",
       "enabled": true,
@@ -57900,6 +62889,41 @@ window.practiceLibraryStore = {
         "直角三角形外心在斜邊中點；正三角形外心、內心、重心三心合一。",
         "坐標題要先寫出公式，再代入數值，避免把平均坐標與距離公式混用。"
       ]
+    },
+    "practice-j5-3-3-median-length-formula": {
+      "id": "practice-j5-3-3-median-length-formula",
+      "enabled": true,
+      "mode": "generator",
+      "title": "中線長公式計算",
+      "generatorKey": "j5-3-3-median-length-formula",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j5-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "上學期",
+      "chapter": "三心與幾何綜合",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-3",
+        "中線",
+        "中線長公式",
+        "三角形",
+        "重心"
+      ],
+      "usage": [
+        "已知三角形三邊長，利用中線長公式求中線長度。"
+      ],
+      "examples": [],
+      "tips": [
+        "中線長公式：m_a² = (2b² + 2c² - a²) / 4。"
+      ],
+      "notes": [],
+      "mistakes": []
     },
     "practice-j5-3-3-missing-vertex-from-centroid": {
       "id": "practice-j5-3-3-missing-vertex-from-centroid",
@@ -59225,40 +64249,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j6-1-2-function-from-vertex-point": {
-      "id": "practice-j6-1-2-function-from-vertex-point",
-      "enabled": true,
-      "mode": "generator",
-      "title": "給定頂點與通過點反求函數式",
-      "generatorKey": "j6-1-2-function-from-vertex-point",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j6-1-2",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "下",
-      "chapter": "二次函數",
-      "domain": "函數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j6-1-2",
-        "二次函數",
-        "頂點式",
-        "反求函數",
-        "代入法",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "先設 \\(y=a(x-h)^2+k\\)，再把通過點代入求 \\(a\\)。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
     "practice-j6-1-2-extreme-parameter-from-condition": {
       "id": "practice-j6-1-2-extreme-parameter-from-condition",
       "enabled": true,
@@ -59294,6 +64284,40 @@ window.practiceLibraryStore = {
       "notes": [
         "對應題庫中「已知最小值求 k」或「已知最高點求係數」的固定模型，保留為可換參數題。"
       ],
+      "mistakes": []
+    },
+    "practice-j6-1-2-function-from-vertex-point": {
+      "id": "practice-j6-1-2-function-from-vertex-point",
+      "enabled": true,
+      "mode": "generator",
+      "title": "給定頂點與通過點反求函數式",
+      "generatorKey": "j6-1-2-function-from-vertex-point",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-1-2",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "二次函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-1-2",
+        "二次函數",
+        "頂點式",
+        "反求函數",
+        "代入法",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "先設 \\(y=a(x-h)^2+k\\)，再把通過點代入求 \\(a\\)。"
+      ],
+      "notes": [],
       "mistakes": []
     },
     "practice-j6-1-2-point-after-translation": {
@@ -59722,6 +64746,44 @@ window.practiceLibraryStore = {
       ],
       "mistakes": []
     },
+    "practice-j6-1-3-fencing-variations": {
+      "id": "practice-j6-1-3-fencing-variations",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圍籬、河邊與出入口面積最大化",
+      "generatorKey": "j6-1-3-fencing-variations",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-1-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "二次函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-1-3",
+        "二次函數應用",
+        "極值",
+        "圍籬",
+        "河邊",
+        "出入口",
+        "矩形面積",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "圍籬題先畫出需要圍的邊：靠河邊少一邊、並排隔間多一道、出入口少圍一段。列式正確後才找最大面積。"
+      ],
+      "notes": [
+        "對應題庫中河邊菜園、兩格養雞場與停車場出入口題；全部改成文字完整且可換參數的模型。"
+      ],
+      "mistakes": []
+    },
     "practice-j6-1-3-geometry-modeling-four-subtypes": {
       "id": "practice-j6-1-3-geometry-modeling-four-subtypes",
       "enabled": true,
@@ -59766,6 +64828,43 @@ window.practiceLibraryStore = {
       ],
       "notes": [
         "截圖中靠圖才懂的題目已改成文字完整描述；河道、隧道、鐵絲分段、河邊圍籬與出入口題都改成可參數化的完整題型。"
+      ],
+      "mistakes": []
+    },
+    "practice-j6-1-3-interval-extrema": {
+      "id": "practice-j6-1-3-interval-extrema",
+      "enabled": true,
+      "mode": "generator",
+      "title": "限制區間內的最大值與最小值",
+      "generatorKey": "j6-1-3-interval-extrema",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-1-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "二次函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-1-3",
+        "二次函數應用",
+        "極值",
+        "限制區間",
+        "端點",
+        "頂點",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "在限制區間內找最大、最小值時，比較區間兩端點與區間內頂點；學生常漏掉端點。"
+      ],
+      "notes": [
+        "對應題庫中 \\(0\\le x\\le 3\\) 下求最大值、最小值的固定題型。"
       ],
       "mistakes": []
     },
@@ -59836,43 +64935,6 @@ window.practiceLibraryStore = {
         "先用限制式把其中一個變數表示成另一個變數，再把目標式化成一元二次函數。"
       ],
       "notes": [],
-      "mistakes": []
-    },
-    "practice-j6-1-3-interval-extrema": {
-      "id": "practice-j6-1-3-interval-extrema",
-      "enabled": true,
-      "mode": "generator",
-      "title": "限制區間內的最大值與最小值",
-      "generatorKey": "j6-1-3-interval-extrema",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j6-1-3",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "下",
-      "chapter": "二次函數",
-      "domain": "函數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j6-1-3",
-        "二次函數應用",
-        "極值",
-        "限制區間",
-        "端點",
-        "頂點",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "在限制區間內找最大、最小值時，比較區間兩端點與區間內頂點；學生常漏掉端點。"
-      ],
-      "notes": [
-        "對應題庫中 \\(0\\le x\\le 3\\) 下求最大值、最小值的固定題型。"
-      ],
       "mistakes": []
     },
     "practice-j6-1-3-number-sum-square-extrema": {
@@ -60045,44 +65107,6 @@ window.practiceLibraryStore = {
         "周長固定時，矩形面積在長寬相等時最大。"
       ],
       "notes": [],
-      "mistakes": []
-    },
-    "practice-j6-1-3-fencing-variations": {
-      "id": "practice-j6-1-3-fencing-variations",
-      "enabled": true,
-      "mode": "generator",
-      "title": "圍籬、河邊與出入口面積最大化",
-      "generatorKey": "j6-1-3-fencing-variations",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j6-1-3",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "下",
-      "chapter": "二次函數",
-      "domain": "函數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j6-1-3",
-        "二次函數應用",
-        "極值",
-        "圍籬",
-        "河邊",
-        "出入口",
-        "矩形面積",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "圍籬題先畫出需要圍的邊：靠河邊少一邊、並排隔間多一道、出入口少圍一段。列式正確後才找最大面積。"
-      ],
-      "notes": [
-        "對應題庫中河邊菜園、兩格養雞場與停車場出入口題；全部改成文字完整且可換參數的模型。"
-      ],
       "mistakes": []
     },
     "practice-j6-1-3-split-squares-minimum": {
@@ -61775,6 +66799,46 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j6-3-1-chart-trend-reading": {
+      "id": "practice-j6-3-1-chart-trend-reading",
+      "enabled": true,
+      "mode": "generator",
+      "title": "折線圖與統計表增減判讀",
+      "generatorKey": "j6-3-1-chart-trend-reading",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-3-1",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "資料的整理與統計圖表",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-3-1",
+        "統計圖表",
+        "折線圖",
+        "變化量",
+        "成長率",
+        "無限練習"
+      ],
+      "usage": [
+        "把右圖折線圖題改成文字表格資料，可練習相鄰變化、最大變化幅度與成長率。"
+      ],
+      "examples": [],
+      "tips": [
+        "看折線圖先讀縱軸數值，再比較後一期減前一期；成長率要除以前一期。"
+      ],
+      "notes": [
+        "純粹要求看右圖但圖形缺失或數值不足的題目未收錄。"
+      ],
+      "mistakes": [
+        "把變化量直接當百分率，忘記除以原來數值。"
+      ]
+    },
     "practice-j6-3-1-class-interval-rule": {
       "id": "practice-j6-3-1-class-interval-rule",
       "enabled": true,
@@ -62005,85 +67069,6 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": []
-    },
-    "practice-j6-3-1-chart-trend-reading": {
-      "id": "practice-j6-3-1-chart-trend-reading",
-      "enabled": true,
-      "mode": "generator",
-      "title": "折線圖與統計表增減判讀",
-      "generatorKey": "j6-3-1-chart-trend-reading",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j6-3-1",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "下",
-      "chapter": "資料的整理與統計圖表",
-      "domain": "統計",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j6-3-1",
-        "統計圖表",
-        "折線圖",
-        "變化量",
-        "成長率",
-        "無限練習"
-      ],
-      "usage": [
-        "把右圖折線圖題改成文字表格資料，可練習相鄰變化、最大變化幅度與成長率。"
-      ],
-      "examples": [],
-      "tips": [
-        "看折線圖先讀縱軸數值，再比較後一期減前一期；成長率要除以前一期。"
-      ],
-      "notes": [
-        "純粹要求看右圖但圖形缺失或數值不足的題目未收錄。"
-      ],
-      "mistakes": [
-        "把變化量直接當百分率，忘記除以原來數值。"
-      ]
-    },
-    "practice-j6-3-1-sampling-estimated-total": {
-      "id": "practice-j6-3-1-sampling-estimated-total",
-      "enabled": true,
-      "mode": "generator",
-      "title": "抽樣比例估計總量",
-      "generatorKey": "j6-3-1-sampling-estimated-total",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j6-3-1",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "下",
-      "chapter": "資料的整理與統計圖表",
-      "domain": "統計",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j6-3-1",
-        "抽樣",
-        "樣本比例",
-        "母體估計",
-        "無限練習"
-      ],
-      "usage": [
-        "對應抽樣文件中的抽樣檢查、估計整批瑕疵數或總量題。"
-      ],
-      "examples": [],
-      "tips": [
-        "先用樣本算比例，再乘回母體總數；若題目給完好比例，瑕疵比例要用 1 減掉。"
-      ],
-      "notes": [
-        "抽樣文件中只有概念或缺少表格數值的題目未收錄。"
-      ],
-      "mistakes": [
-        "把樣本中的瑕疵數直接當整批瑕疵數，沒有乘回總量。"
-      ]
     },
     "practice-j6-3-1-pie-angle-percent": {
       "id": "practice-j6-3-1-pie-angle-percent",
@@ -62345,6 +67330,45 @@ window.practiceLibraryStore = {
       ],
       "notes": [],
       "mistakes": []
+    },
+    "practice-j6-3-1-sampling-estimated-total": {
+      "id": "practice-j6-3-1-sampling-estimated-total",
+      "enabled": true,
+      "mode": "generator",
+      "title": "抽樣比例估計總量",
+      "generatorKey": "j6-3-1-sampling-estimated-total",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-3-1",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "資料的整理與統計圖表",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-3-1",
+        "抽樣",
+        "樣本比例",
+        "母體估計",
+        "無限練習"
+      ],
+      "usage": [
+        "對應抽樣文件中的抽樣檢查、估計整批瑕疵數或總量題。"
+      ],
+      "examples": [],
+      "tips": [
+        "先用樣本算比例，再乘回母體總數；若題目給完好比例，瑕疵比例要用 1 減掉。"
+      ],
+      "notes": [
+        "抽樣文件中只有概念或缺少表格數值的題目未收錄。"
+      ],
+      "mistakes": [
+        "把樣本中的瑕疵數直接當整批瑕疵數，沒有乘回總量。"
+      ]
     },
     "practice-j6-3-2-arithmetic-sequence-statistics": {
       "id": "practice-j6-3-2-arithmetic-sequence-statistics",
@@ -62703,45 +67727,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-j6-3-2-sorted-data-percentile": {
-      "id": "practice-j6-3-2-sorted-data-percentile",
-      "enabled": true,
-      "mode": "generator",
-      "title": "排序資料中的百分位定位",
-      "generatorKey": "j6-3-2-sorted-data-percentile",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j6-3-2",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "下",
-      "chapter": "資料分析與統計量",
-      "domain": "統計",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j6-3-2",
-        "百分位數",
-        "百分等級",
-        "排序資料",
-        "無限練習"
-      ],
-      "usage": [
-        "練習從已排序資料找百分位位置，或由資料位置估計百分等級。"
-      ],
-      "examples": [],
-      "tips": [
-        "百分位數不是原始名次，要先把百分比換成第幾筆資料。"
-      ],
-      "notes": [
-        "與既有 PR 反推名次題合併觀念，但保留排序資料定位的計算小類。"
-      ],
-      "mistakes": [
-        "把第 80 百分位數誤解成第 80 名。"
-      ]
-    },
     "practice-j6-3-2-quartile-boxplot-seven-subtypes": {
       "id": "practice-j6-3-2-quartile-boxplot-seven-subtypes",
       "enabled": true,
@@ -62860,6 +67845,45 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-j6-3-2-sorted-data-percentile": {
+      "id": "practice-j6-3-2-sorted-data-percentile",
+      "enabled": true,
+      "mode": "generator",
+      "title": "排序資料中的百分位定位",
+      "generatorKey": "j6-3-2-sorted-data-percentile",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-3-2",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "資料分析與統計量",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-3-2",
+        "百分位數",
+        "百分等級",
+        "排序資料",
+        "無限練習"
+      ],
+      "usage": [
+        "練習從已排序資料找百分位位置，或由資料位置估計百分等級。"
+      ],
+      "examples": [],
+      "tips": [
+        "百分位數不是原始名次，要先把百分比換成第幾筆資料。"
+      ],
+      "notes": [
+        "與既有 PR 反推名次題合併觀念，但保留排序資料定位的計算小類。"
+      ],
+      "mistakes": [
+        "把第 80 百分位數誤解成第 80 名。"
+      ]
+    },
     "practice-j6-3-2-weighted-average": {
       "id": "practice-j6-3-2-weighted-average",
       "enabled": true,
@@ -62933,6 +67957,45 @@ window.practiceLibraryStore = {
       ],
       "mistakes": []
     },
+    "practice-j6-3-3-coin-tree-probability": {
+      "id": "practice-j6-3-3-coin-tree-probability",
+      "enabled": true,
+      "mode": "generator",
+      "title": "硬幣與性別樹狀圖機率",
+      "generatorKey": "j6-3-3-coin-tree-probability",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j6-3-3",
+      "stage": "國中",
+      "grade": "國三",
+      "term": "下",
+      "chapter": "機率的基本計算",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j6-3-3",
+        "機率的基本計算",
+        "機率",
+        "古典機率",
+        "無限練習",
+        "硬幣",
+        "樹狀圖",
+        "性別"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "每次只有兩種等可能結果時，連續 n 次共有 2^n 種結果；「至少」題常用反面事件較快。"
+      ],
+      "notes": [
+        "依照截圖整理為可重生的文字題；只有大方向、缺少明確條件或需要額外圖形才能判讀的題目未直接收錄。",
+        "重複題型已合併：單次抽取、硬幣樹狀圖、骰子表格、放回與不放回抽樣各自集中成小類。"
+      ],
+      "mistakes": []
+    },
     "practice-j6-3-3-complement-probability": {
       "id": "practice-j6-3-3-complement-probability",
       "enabled": true,
@@ -62972,45 +68035,6 @@ window.practiceLibraryStore = {
       "mistakes": [
         "把「至少一次」誤當成「恰好一次」。"
       ]
-    },
-    "practice-j6-3-3-coin-tree-probability": {
-      "id": "practice-j6-3-3-coin-tree-probability",
-      "enabled": true,
-      "mode": "generator",
-      "title": "硬幣與性別樹狀圖機率",
-      "generatorKey": "j6-3-3-coin-tree-probability",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j6-3-3",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "下",
-      "chapter": "機率的基本計算",
-      "domain": "機率",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j6-3-3",
-        "機率的基本計算",
-        "機率",
-        "古典機率",
-        "無限練習",
-        "硬幣",
-        "樹狀圖",
-        "性別"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "每次只有兩種等可能結果時，連續 n 次共有 2^n 種結果；「至少」題常用反面事件較快。"
-      ],
-      "notes": [
-        "依照截圖整理為可重生的文字題；只有大方向、缺少明確條件或需要額外圖形才能判讀的題目未直接收錄。",
-        "重複題型已合併：單次抽取、硬幣樹狀圖、骰子表格、放回與不放回抽樣各自集中成小類。"
-      ],
-      "mistakes": []
     },
     "practice-j6-3-3-dice-sum-product": {
       "id": "practice-j6-3-3-dice-sum-product",
@@ -63419,6 +68443,45 @@ window.practiceLibraryStore = {
       ],
       "mistakes": []
     },
+    "practice-linear-decimal-move-solve-drill": {
+      "id": "practice-linear-decimal-move-solve-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "小數一元一次方程式",
+      "generatorKey": "linear-decimal-move-solve-drill",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-3-2",
+      "stage": "國中",
+      "grade": "國一",
+      "term": "上學期",
+      "chapter": "一元一次方程式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "小數",
+        "方程式",
+        "移項",
+        "無限練習"
+      ],
+      "usage": [
+        "練習含小數係數與常數的一元一次方程式，重點在移項、合併與必要時同乘 10。"
+      ],
+      "examples": [],
+      "tips": [
+        "可以先直接移項，也可以整式同乘 10 把小數化成整數再解。"
+      ],
+      "notes": [
+        "若同乘 10，等號左右每一項都要乘到。"
+      ],
+      "mistakes": [
+        "只把有小數的某幾項乘 10，漏掉其他項。",
+        "小數移項時，正負號改變不完整。"
+      ]
+    },
     "practice-linear-expand-move-solve-drill": {
       "id": "practice-linear-expand-move-solve-drill",
       "enabled": true,
@@ -63660,45 +68723,6 @@ window.practiceLibraryStore = {
       "mistakes": [
         "第一層還沒先求出 x，就急著把兩個式子同時展開。",
         "代回第二式時，把 nx 誤看成 n+x。"
-      ]
-    },
-    "practice-linear-decimal-move-solve-drill": {
-      "id": "practice-linear-decimal-move-solve-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "小數一元一次方程式",
-      "generatorKey": "linear-decimal-move-solve-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "一元一次方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "小數",
-        "方程式",
-        "移項",
-        "無限練習"
-      ],
-      "usage": [
-        "練習含小數係數與常數的一元一次方程式，重點在移項、合併與必要時同乘 10。"
-      ],
-      "examples": [],
-      "tips": [
-        "可以先直接移項，也可以整式同乘 10 把小數化成整數再解。"
-      ],
-      "notes": [
-        "若同乘 10，等號左右每一項都要乘到。"
-      ],
-      "mistakes": [
-        "只把有小數的某幾項乘 10，漏掉其他項。",
-        "小數移項時，正負號改變不完整。"
       ]
     },
     "practice-linear-substitution-value-drill": {
@@ -64487,82 +69511,6 @@ window.practiceLibraryStore = {
         "知道是相反數，卻忘了回到正負號判斷左右。"
       ]
     },
-    "practice-j3-2-2-radical-formula-drill": {
-      "id": "practice-j3-2-2-radical-formula-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "根式公式運算",
-      "generatorKey": "j3-2-2-radical-formula-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 4,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-2-2",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "平方根與畢氏定理",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "根式",
-        "乘法公式",
-        "平方差",
-        "無限練習"
-      ],
-      "usage": [
-        "練習共軛乘積與平方公式在根式中的運用。"
-      ],
-      "examples": [
-        "計算 (√11+√5)(√11-√5)。"
-      ],
-      "tips": [
-        "先辨認是否符合 (A+B)(A-B) 或 (A±B)^2。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "少掉中間項，或把根式平方後忘記一起化簡。"
-      ]
-    },
-    "practice-j3-2-2-radical-mixed-simplify-drill": {
-      "id": "practice-j3-2-2-radical-mixed-simplify-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "根式混合化簡",
-      "generatorKey": "j3-2-2-radical-mixed-simplify-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 4,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-2-2",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "平方根與畢氏定理",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "根式",
-        "混合運算",
-        "化簡",
-        "無限練習"
-      ],
-      "usage": [
-        "練習根式乘除、化簡與同類根式合併的綜合題。"
-      ],
-      "examples": [
-        "化簡 √3×√12+√27。"
-      ],
-      "tips": [
-        "先把每個根式化到最簡，再判斷能不能合併。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "還沒化到最簡根式就直接相加，導致不能正確合併。"
-      ]
-    },
     "practice-radical-add-subtract-like-terms": {
       "id": "practice-radical-add-subtract-like-terms",
       "enabled": true,
@@ -64719,6 +69667,66 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-1-1-divisibility-missing-digit": {
+      "id": "practice-s1-1-1-divisibility-missing-digit",
+      "enabled": true,
+      "mode": "generator",
+      "title": "缺位數整除判斷",
+      "generatorKey": "s1-1-1-divisibility-missing-digit",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "數與式",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數與式",
+        "整除性",
+        "缺位數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-1-1-finite-decimal-criterion": {
+      "id": "practice-s1-1-1-finite-decimal-criterion",
+      "enabled": true,
+      "mode": "generator",
+      "title": "有限小數的分母判定",
+      "generatorKey": "s1-1-1-finite-decimal-criterion",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "實數",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "實數",
+        "有限小數",
+        "分母質因數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-1-1-irrational-equality-solve": {
       "id": "practice-s1-1-1-irrational-equality-solve",
       "enabled": true,
@@ -64802,6 +69810,67 @@ window.practiceLibraryStore = {
         "數線",
         "分點公式",
         "坐標",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-1-1-power-remainder-cycle": {
+      "id": "practice-s1-1-1-power-remainder-cycle",
+      "enabled": true,
+      "mode": "generator",
+      "title": "乘方餘數循環",
+      "generatorKey": "s1-1-1-power-remainder-cycle",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "數與式",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數與式",
+        "整數運算",
+        "餘數循環",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-1-1-radical-distance-integer-count": {
+      "id": "practice-s1-1-1-radical-distance-integer-count",
+      "enabled": true,
+      "mode": "generator",
+      "title": "根式距離的整數點計數",
+      "generatorKey": "s1-1-1-radical-distance-integer-count",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "實數",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "實數",
+        "根式估計",
+        "數線",
+        "整數點",
         "無限練習"
       ],
       "usage": [],
@@ -64994,6 +70063,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-1-2-abs-linear-equation-count": {
+      "id": "practice-s1-1-2-abs-linear-equation-count",
+      "enabled": true,
+      "mode": "generator",
+      "title": "一次絕對值方程的解數判定",
+      "generatorKey": "s1-1-2-abs-linear-equation-count",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "絕對值",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "絕對值",
+        "一次方程",
+        "解數判定",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-1-2-abs-number-line-range": {
       "id": "practice-s1-1-2-abs-number-line-range",
       "enabled": true,
@@ -65145,6 +70244,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-1-2-quotient-interval-range": {
+      "id": "practice-s1-1-2-quotient-interval-range",
+      "enabled": true,
+      "mode": "generator",
+      "title": "區間商的範圍",
+      "generatorKey": "s1-1-2-quotient-interval-range",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "數與式",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數與式",
+        "不等式",
+        "範圍",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-1-3-binomial-cube-expansion": {
       "id": "practice-s1-1-3-binomial-cube-expansion",
       "enabled": true,
@@ -65197,6 +70326,37 @@ window.practiceLibraryStore = {
         "乘法公式",
         "立方和",
         "立方差",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-1-3-polynomial-factorization": {
+      "id": "practice-s1-1-3-polynomial-factorization",
+      "enabled": true,
+      "mode": "generator",
+      "title": "因式分解（立方和差、高次型）",
+      "generatorKey": "s1-1-3-polynomial-factorization",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "乘法公式",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "乘法公式",
+        "因式分解",
+        "立方和差",
+        "Sophie Germain",
         "無限練習"
       ],
       "usage": [],
@@ -65353,29 +70513,28 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-s1-1-3-polynomial-factorization": {
-      "id": "practice-s1-1-3-polynomial-factorization",
+    "practice-s1-1-4-exponent-compare": {
+      "id": "practice-s1-1-4-exponent-compare",
       "enabled": true,
       "mode": "generator",
-      "title": "因式分解（立方和差、高次型）",
-      "generatorKey": "s1-1-3-polynomial-factorization",
+      "title": "換底比較指數大小",
+      "generatorKey": "s1-1-4-exponent-compare",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
       "relatedPracticeIds": [],
-      "chapterCode": "s1-1-3",
+      "chapterCode": "s1-1-4",
       "stage": "高中",
       "grade": "高一",
       "term": "上學期",
-      "chapter": "乘法公式",
+      "chapter": "指數與指數律",
       "domain": "數與式",
       "prompt": "",
       "answer": "",
       "tags": [
-        "乘法公式",
-        "因式分解",
-        "立方和差",
-        "Sophie Germain",
+        "指數",
+        "換底",
+        "比較大小",
         "無限練習"
       ],
       "usage": [],
@@ -65414,6 +70573,126 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-1-4-exponential-fraction-range": {
+      "id": "practice-s1-1-4-exponential-fraction-range",
+      "enabled": true,
+      "mode": "generator",
+      "title": "指數換元與分式值域",
+      "generatorKey": "s1-1-4-exponential-fraction-range",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "指數與指數律",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "指數",
+        "換元",
+        "值域",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-1-4-exponential-growth-model": {
+      "id": "practice-s1-1-4-exponential-growth-model",
+      "enabled": true,
+      "mode": "generator",
+      "title": "指數成長倍率模型",
+      "generatorKey": "s1-1-4-exponential-growth-model",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "指數與指數律",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "指數函數",
+        "成長倍率",
+        "應用題",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-1-4-exponential-parameter-relation": {
+      "id": "practice-s1-1-4-exponential-parameter-relation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "指數參數關係式",
+      "generatorKey": "s1-1-4-exponential-parameter-relation",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "指數與指數律",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "指數",
+        "指數律",
+        "參數表示",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-1-4-exponential-quadratic-extrema": {
+      "id": "practice-s1-1-4-exponential-quadratic-extrema",
+      "enabled": true,
+      "mode": "generator",
+      "title": "指數式的最小值",
+      "generatorKey": "s1-1-4-exponential-quadratic-extrema",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "指數與指數律",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "指數",
+        "二次式",
+        "最小值",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-1-4-exponential-symmetric-value": {
       "id": "practice-s1-1-4-exponential-symmetric-value",
       "enabled": true,
@@ -65436,6 +70715,66 @@ window.practiceLibraryStore = {
         "指數",
         "對稱式",
         "求值",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-1-4-extract-factor-equation": {
+      "id": "practice-s1-1-4-extract-factor-equation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "提公因數指數方程式",
+      "generatorKey": "s1-1-4-extract-factor-equation",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "指數與指數律",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "指數",
+        "提公因數",
+        "方程式",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-1-4-known-power": {
+      "id": "practice-s1-1-4-known-power",
+      "enabled": true,
+      "mode": "generator",
+      "title": "已知 a^x 求 a^(mx)",
+      "generatorKey": "s1-1-4-known-power",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "指數與指數律",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "指數",
+        "已知冪次",
+        "代換",
         "無限練習"
       ],
       "usage": [],
@@ -65474,12 +70813,12 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-s1-1-4-variable-exponent-simplification": {
-      "id": "practice-s1-1-4-variable-exponent-simplification",
+    "practice-s1-1-4-rational-exponent-ordering": {
+      "id": "practice-s1-1-4-rational-exponent-ordering",
       "enabled": true,
       "mode": "generator",
-      "title": "含有變數的指數式化簡",
-      "generatorKey": "s1-1-4-variable-exponent-simplification",
+      "title": "分數指數與根式三數比較",
+      "generatorKey": "s1-1-4-rational-exponent-ordering",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
@@ -65493,69 +70832,9 @@ window.practiceLibraryStore = {
       "prompt": "",
       "answer": "",
       "tags": [
-        "指數",
-        "指數律",
-        "立方根",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s1-1-4-exponent-compare": {
-      "id": "practice-s1-1-4-exponent-compare",
-      "enabled": true,
-      "mode": "generator",
-      "title": "換底比較指數大小",
-      "generatorKey": "s1-1-4-exponent-compare",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 5,
-      "relatedPracticeIds": [],
-      "chapterCode": "s1-1-4",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "上學期",
-      "chapter": "指數與指數律",
-      "domain": "數與式",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "指數",
-        "換底",
-        "比較大小",
-        "無限練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s1-1-4-known-power": {
-      "id": "practice-s1-1-4-known-power",
-      "enabled": true,
-      "mode": "generator",
-      "title": "已知 a^x 求 a^(mx)",
-      "generatorKey": "s1-1-4-known-power",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 5,
-      "relatedPracticeIds": [],
-      "chapterCode": "s1-1-4",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "上學期",
-      "chapter": "指數與指數律",
-      "domain": "數與式",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "指數",
-        "已知冪次",
-        "代換",
+        "分數指數",
+        "根式",
+        "大小比較",
         "無限練習"
       ],
       "usage": [],
@@ -65595,12 +70874,12 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-s1-1-4-extract-factor-equation": {
-      "id": "practice-s1-1-4-extract-factor-equation",
+    "practice-s1-1-4-variable-exponent-simplification": {
+      "id": "practice-s1-1-4-variable-exponent-simplification",
       "enabled": true,
       "mode": "generator",
-      "title": "提公因數指數方程式",
-      "generatorKey": "s1-1-4-extract-factor-equation",
+      "title": "含有變數的指數式化簡",
+      "generatorKey": "s1-1-4-variable-exponent-simplification",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
@@ -65615,8 +70894,37 @@ window.practiceLibraryStore = {
       "answer": "",
       "tags": [
         "指數",
-        "提公因數",
-        "方程式",
+        "指數律",
+        "立方根",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-1-5-basic-log-calculation": {
+      "id": "practice-s1-1-5-basic-log-calculation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "對數直接計算",
+      "generatorKey": "s1-1-5-basic-log-calculation",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-5",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "常用對數",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "常用對數",
+        "對數計算",
         "無限練習"
       ],
       "usage": [],
@@ -65745,6 +71053,66 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-1-5-log-difference-estimate": {
+      "id": "practice-s1-1-5-log-difference-estimate",
+      "enabled": true,
+      "mode": "generator",
+      "title": "大數相減的對數估算",
+      "generatorKey": "s1-1-5-log-difference-estimate",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-5",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "常用對數",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "常用對數",
+        "估算",
+        "科學記號",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-1-5-log-interval-integer-count": {
+      "id": "practice-s1-1-5-log-interval-integer-count",
+      "enabled": true,
+      "mode": "generator",
+      "title": "常用對數區間的整數計數",
+      "generatorKey": "s1-1-5-log-interval-integer-count",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-1-5",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "常用對數",
+      "domain": "數與式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "常用對數",
+        "區間估計",
+        "整數計數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-1-5-log-operation-scientific-notation": {
       "id": "practice-s1-1-5-log-operation-scientific-notation",
       "enabled": true,
@@ -65775,12 +71143,12 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-s1-1-5-basic-log-calculation": {
-      "id": "practice-s1-1-5-basic-log-calculation",
+    "practice-s1-1-5-log-scale-ratio-model": {
+      "id": "practice-s1-1-5-log-scale-ratio-model",
       "enabled": true,
       "mode": "generator",
-      "title": "對數直接計算",
-      "generatorKey": "s1-1-5-basic-log-calculation",
+      "title": "對數量表的倍率模型",
+      "generatorKey": "s1-1-5-log-scale-ratio-model",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
@@ -65795,7 +71163,9 @@ window.practiceLibraryStore = {
       "answer": "",
       "tags": [
         "常用對數",
-        "對數計算",
+        "pH值",
+        "地震規模",
+        "分貝",
         "無限練習"
       ],
       "usage": [],
@@ -65826,6 +71196,36 @@ window.practiceLibraryStore = {
         "絕對值",
         "不等式區域",
         "面積",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-2-1-angle-bisector-lines": {
+      "id": "practice-s1-2-1-angle-bisector-lines",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩直線夾角的角平分線方程式",
+      "generatorKey": "s1-2-1-angle-bisector-lines",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-2-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "直線方程式",
+      "domain": "解析幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "直線",
+        "角平分線",
+        "等距",
         "無限練習"
       ],
       "usage": [],
@@ -65954,6 +71354,37 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-2-1-intercept-integer-count": {
+      "id": "practice-s1-2-1-intercept-integer-count",
+      "enabled": true,
+      "mode": "generator",
+      "title": "截距式直線的整數參數計數",
+      "generatorKey": "s1-2-1-intercept-integer-count",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-2-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "直線方程式與平面幾何",
+      "domain": "解析幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "直線",
+        "截距",
+        "整數參數",
+        "因數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-2-1-inverse-distance": {
       "id": "practice-s1-2-1-inverse-distance",
       "enabled": true,
@@ -66074,6 +71505,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-2-1-line-form-facts": {
+      "id": "practice-s1-2-1-line-form-facts",
+      "enabled": true,
+      "mode": "generator",
+      "title": "直線斜率與截距",
+      "generatorKey": "s1-2-1-line-form-facts",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-2-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "直線與圓",
+      "domain": "解析幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "直線",
+        "斜率",
+        "截距",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-2-1-line-segment-slope-range": {
       "id": "practice-s1-2-1-line-segment-slope-range",
       "enabled": true,
@@ -66103,6 +71564,107 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s1-2-1-line-side-parameter-count": {
+      "id": "practice-s1-2-1-line-side-parameter-count",
+      "enabled": true,
+      "mode": "generator",
+      "title": "同側異側的參數整數計數",
+      "generatorKey": "s1-2-1-line-side-parameter-count",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-2-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "直線方程式與平面幾何",
+      "domain": "解析幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "直線",
+        "同側異側",
+        "參數範圍",
+        "整數計數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-2-1-linear-fractional-region-extrema": {
+      "id": "practice-s1-2-1-linear-fractional-region-extrema",
+      "enabled": true,
+      "mode": "generator",
+      "title": "線性分式在區域上的極值",
+      "generatorKey": "s1-2-1-linear-fractional-region-extrema",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-2-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "直線與圓",
+      "domain": "解析幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "直線",
+        "線性規劃",
+        "極值",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-2-1-perpendicular-bisector": {
+      "id": "practice-s1-2-1-perpendicular-bisector",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩點求垂直平分線方程式",
+      "generatorKey": "s1-2-1-perpendicular-bisector",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-2-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "直線方程式與平面幾何",
+      "domain": "解析幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "中點",
+        "垂直平分線",
+        "直線方程式",
+        "無限練習"
+      ],
+      "usage": [
+        "由兩點先找中點，再利用垂直關係寫出垂直平分線方程式。"
+      ],
+      "examples": [],
+      "tips": [
+        "遇到水平線段時，中垂線是鉛直線；遇到鉛直線段時，中垂線是水平線。"
+      ],
+      "notes": [
+        "若先求出線段 AB 的方向向量，就能直接把它當成中垂線的法向量來寫方程式。"
+      ],
+      "mistakes": [
+        "只找到中點，卻忘了直線還要垂直於 AB。",
+        "把 AB 的斜率直接當成垂直平分線的斜率，沒有取負倒數。",
+        "遇到水平或鉛直線段時，仍硬套一般斜率公式。"
+      ]
     },
     "practice-s1-2-1-point-line-side": {
       "id": "practice-s1-2-1-point-line-side",
@@ -66164,15 +71726,15 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-s1-2-1-perpendicular-bisector": {
-      "id": "practice-s1-2-1-perpendicular-bisector",
+    "practice-s1-2-1-transformed-system-solution": {
+      "id": "practice-s1-2-1-transformed-system-solution",
       "enabled": true,
       "mode": "generator",
-      "title": "兩點求垂直平分線方程式",
-      "generatorKey": "s1-2-1-perpendicular-bisector",
-      "difficulty": "easy",
+      "title": "聯立方程線性代換後的解",
+      "generatorKey": "s1-2-1-transformed-system-solution",
+      "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 3,
+      "subtypeCount": 5,
       "relatedPracticeIds": [],
       "chapterCode": "s1-2-1",
       "stage": "高中",
@@ -66183,26 +71745,16 @@ window.practiceLibraryStore = {
       "prompt": "",
       "answer": "",
       "tags": [
-        "中點",
-        "垂直平分線",
-        "直線方程式",
+        "聯立方程",
+        "線性代換",
+        "解的反推",
         "無限練習"
       ],
-      "usage": [
-        "由兩點先找中點，再利用垂直關係寫出垂直平分線方程式。"
-      ],
+      "usage": [],
       "examples": [],
-      "tips": [
-        "遇到水平線段時，中垂線是鉛直線；遇到鉛直線段時，中垂線是水平線。"
-      ],
-      "notes": [
-        "若先求出線段 AB 的方向向量，就能直接把它當成中垂線的法向量來寫方程式。"
-      ],
-      "mistakes": [
-        "只找到中點，卻忘了直線還要垂直於 AB。",
-        "把 AB 的斜率直接當成垂直平分線的斜率，沒有取負倒數。",
-        "遇到水平或鉛直線段時，仍硬套一般斜率公式。"
-      ]
+      "tips": [],
+      "notes": [],
+      "mistakes": []
     },
     "practice-s1-2-1-triangle-centers": {
       "id": "practice-s1-2-1-triangle-centers",
@@ -66317,6 +71869,36 @@ window.practiceLibraryStore = {
         "圓",
         "坐標軸相切",
         "圓方程式",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-2-2-center-line-through-two-points": {
+      "id": "practice-s1-2-2-center-line-through-two-points",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圓心在線上且過兩點的圓",
+      "generatorKey": "s1-2-2-center-line-through-two-points",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-2-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "圓的方程式",
+      "domain": "解析幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "圓方程式",
+        "圓心",
+        "垂直平分線",
         "無限練習"
       ],
       "usage": [],
@@ -66507,6 +72089,37 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-2-2-point-circle-relation": {
+      "id": "practice-s1-2-2-point-circle-relation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "點與圓的位置關係及切線長",
+      "generatorKey": "s1-2-2-point-circle-relation",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-2-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "圓的方程式",
+      "domain": "解析幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "圓",
+        "點與圓",
+        "切線長",
+        "位置關係",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-2-2-radical-axis": {
       "id": "practice-s1-2-2-radical-axis",
       "enabled": true,
@@ -66567,6 +72180,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-2-2-two-circle-common-tangents": {
+      "id": "practice-s1-2-2-two-circle-common-tangents",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩圓公切線數判斷",
+      "generatorKey": "s1-2-2-two-circle-common-tangents",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-2-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "圓方程式",
+      "domain": "解析幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "圓",
+        "公切線",
+        "兩圓位置關係",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-2-3-chord-length": {
       "id": "practice-s1-2-3-chord-length",
       "enabled": true,
@@ -66589,6 +72232,36 @@ window.practiceLibraryStore = {
         "弦長",
         "圓心到弦距離",
         "中點弦",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-2-3-chord-length-parameterized": {
+      "id": "practice-s1-2-3-chord-length-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "弦長反推平行直線參數",
+      "generatorKey": "s1-2-3-chord-length-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-2-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "圓與直線的關係",
+      "domain": "解析幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "弦長",
+        "圓心到直線距離",
+        "參數",
         "無限練習"
       ],
       "usage": [],
@@ -66649,6 +72322,36 @@ window.practiceLibraryStore = {
         "面積極值",
         "圓上動點",
         "內接外切",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-2-3-circle-line-distance-point-count": {
+      "id": "practice-s1-2-3-circle-line-distance-point-count",
+      "enabled": true,
+      "mode": "generator",
+      "title": "圓上到直線定距的點數",
+      "generatorKey": "s1-2-3-circle-line-distance-point-count",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-2-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "直線與圓的關係",
+      "domain": "解析幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "圓",
+        "直線距離",
+        "點數判斷",
         "無限練習"
       ],
       "usage": [],
@@ -66807,6 +72510,37 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-2-3-line-circle-intersection": {
+      "id": "practice-s1-2-3-line-circle-intersection",
+      "enabled": true,
+      "mode": "generator",
+      "title": "直線與圓的交點坐標",
+      "generatorKey": "s1-2-3-line-circle-intersection",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-2-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "圓與直線的關係",
+      "domain": "解析幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "直線",
+        "圓",
+        "交點",
+        "代入法",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-2-3-line-circle-parameter-relation": {
       "id": "practice-s1-2-3-line-circle-parameter-relation",
       "enabled": true,
@@ -66949,6 +72683,37 @@ window.practiceLibraryStore = {
         "根軸",
         "公共弦",
         "圓系",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-2-3-tangent-point-circle-coefficients": {
+      "id": "practice-s1-2-3-tangent-point-circle-coefficients",
+      "enabled": true,
+      "mode": "generator",
+      "title": "切點與切線反推圓係數",
+      "generatorKey": "s1-2-3-tangent-point-circle-coefficients",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-2-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "圓與直線的關係",
+      "domain": "解析幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "切線",
+        "切點",
+        "圓方程式",
+        "係數反推",
         "無限練習"
       ],
       "usage": [],
@@ -67344,6 +73109,36 @@ window.practiceLibraryStore = {
       ],
       "mistakes": []
     },
+    "practice-s1-3-1-factor-check-special-polynomial": {
+      "id": "practice-s1-3-1-factor-check-special-polynomial",
+      "enabled": true,
+      "mode": "generator",
+      "title": "特殊多項式的因式判定",
+      "generatorKey": "s1-3-1-factor-check-special-polynomial",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "多項式函數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "多項式",
+        "因式定理",
+        "特殊因式",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-3-1-high-power-remainder": {
       "id": "practice-s1-3-1-high-power-remainder",
       "enabled": true,
@@ -67608,6 +73403,66 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-3-1-nearby-roots-value": {
+      "id": "practice-s1-3-1-nearby-roots-value",
+      "enabled": true,
+      "mode": "generator",
+      "title": "已知相鄰根的函數值互推",
+      "generatorKey": "s1-3-1-nearby-roots-value",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "多項式函數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "多項式",
+        "根",
+        "函數值",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-3-1-odd-even-value-relation": {
+      "id": "practice-s1-3-1-odd-even-value-relation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "多項式奇偶結構的函數值互推",
+      "generatorKey": "s1-3-1-odd-even-value-relation",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "多項式函數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "奇函數",
+        "偶函數",
+        "函數值",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-3-1-polynomial-five-subtypes": {
       "id": "practice-s1-3-1-polynomial-five-subtypes",
       "enabled": true,
@@ -67831,6 +73686,36 @@ window.practiceLibraryStore = {
         "餘式定理",
         "代數變形",
         "除法原理",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-3-1-shifted-basis-coefficients": {
+      "id": "practice-s1-3-1-shifted-basis-coefficients",
+      "enabled": true,
+      "mode": "generator",
+      "title": "位移基底下的多項式係數反推",
+      "generatorKey": "s1-3-1-shifted-basis-coefficients",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "多項式函數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "位移基底",
+        "係數反推",
+        "多項式展開",
         "無限練習"
       ],
       "usage": [],
@@ -68111,6 +73996,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-3-2-composite-function": {
+      "id": "practice-s1-3-2-composite-function",
+      "enabled": true,
+      "mode": "generator",
+      "title": "合成函數的計算與反推",
+      "generatorKey": "s1-3-2-composite-function",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "合成函數",
+        "函數運算",
+        "反推",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-3-2-compound-regions-extrema": {
       "id": "practice-s1-3-2-compound-regions-extrema",
       "enabled": true,
@@ -68134,6 +74049,66 @@ window.practiceLibraryStore = {
         "區域極值",
         "複合極值",
         "絕對值和",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-3-2-cubic-center-form-evaluation": {
+      "id": "practice-s1-3-2-cubic-center-form-evaluation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三次函數中心式代值與估算",
+      "generatorKey": "s1-3-2-cubic-center-form-evaluation",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "二次函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三次函數",
+        "中心式",
+        "代值",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-3-2-cubic-center-standard-form": {
+      "id": "practice-s1-3-2-cubic-center-standard-form",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三次函數中心式改寫與對稱中心",
+      "generatorKey": "s1-3-2-cubic-center-standard-form",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "二次函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "三次函數",
+        "對稱中心",
+        "中心式",
         "無限練習"
       ],
       "usage": [],
@@ -68497,6 +74472,35 @@ window.practiceLibraryStore = {
       ],
       "mistakes": []
     },
+    "practice-s1-3-2-linear-function-from-points": {
+      "id": "practice-s1-3-2-linear-function-from-points",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由函數值決定一次函數",
+      "generatorKey": "s1-3-2-linear-function-from-points",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "一次函數",
+        "函數值",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-3-2-monomial-function-features": {
       "id": "practice-s1-3-2-monomial-function-features",
       "enabled": true,
@@ -68590,6 +74594,65 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-3-2-parabola-symmetry-point": {
+      "id": "practice-s1-3-2-parabola-symmetry-point",
+      "enabled": true,
+      "mode": "generator",
+      "title": "拋物線對稱點坐標判定",
+      "generatorKey": "s1-3-2-parabola-symmetry-point",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "二次函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "拋物線",
+        "對稱軸",
+        "對稱點",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-3-2-piecewise-function-eval": {
+      "id": "practice-s1-3-2-piecewise-function-eval",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分段函數的代值計算",
+      "generatorKey": "s1-3-2-piecewise-function-eval",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分段函數",
+        "函數代值",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-3-2-quadratic-advanced-graph-extrema-five-subtypes": {
       "id": "practice-s1-3-2-quadratic-advanced-graph-extrema-five-subtypes",
       "enabled": true,
@@ -68619,6 +74682,36 @@ window.practiceLibraryStore = {
         "圖形變換",
         "相對位置",
         "進階極值",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-3-2-quadratic-axis-two-points": {
+      "id": "practice-s1-3-2-quadratic-axis-two-points",
+      "enabled": true,
+      "mode": "generator",
+      "title": "對稱軸與兩點反求二次函數",
+      "generatorKey": "s1-3-2-quadratic-axis-two-points",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "二次函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "對稱軸",
+        "二次函數",
+        "兩點條件",
         "無限練習"
       ],
       "usage": [],
@@ -68897,6 +74990,35 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-3-2-quadratic-three-points": {
+      "id": "practice-s1-3-2-quadratic-three-points",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由三點條件求二次函數係數",
+      "generatorKey": "s1-3-2-quadratic-three-points",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "函數",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "二次函數",
+        "三點求係數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-3-2-quadratic-transformations": {
       "id": "practice-s1-3-2-quadratic-transformations",
       "enabled": true,
@@ -68959,6 +75081,65 @@ window.practiceLibraryStore = {
       "notes": [
         "子練習，不直接掛載在章節主頁。"
       ],
+      "mistakes": []
+    },
+    "practice-s1-3-3-absolute-value-inequality": {
+      "id": "practice-s1-3-3-absolute-value-inequality",
+      "enabled": true,
+      "mode": "generator",
+      "title": "絕對值不等式",
+      "generatorKey": "s1-3-3-absolute-value-inequality",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "多項式不等式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "絕對值",
+        "不等式",
+        "解題",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-3-3-absolute-value-minimum": {
+      "id": "practice-s1-3-3-absolute-value-minimum",
+      "enabled": true,
+      "mode": "generator",
+      "title": "絕對值函數的最值問題",
+      "generatorKey": "s1-3-3-absolute-value-minimum",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "不等式",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "絕對值",
+        "最小值",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
       "mistakes": []
     },
     "practice-s1-3-3-advanced-always-sign": {
@@ -69083,6 +75264,37 @@ window.practiceLibraryStore = {
         "三次不等式",
         "高次不等式",
         "圖形判號",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-3-3-double-absolute-inequality": {
+      "id": "practice-s1-3-3-double-absolute-inequality",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩絕對值和差不等式",
+      "generatorKey": "s1-3-3-double-absolute-inequality",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "多項式不等式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "絕對值",
+        "兩絕對值",
+        "距離",
+        "不等式",
         "無限練習"
       ],
       "usage": [],
@@ -69279,6 +75491,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-3-3-quadratic-inequality-from-solution": {
+      "id": "practice-s1-3-3-quadratic-inequality-from-solution",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由二次不等式解集合反推係數",
+      "generatorKey": "s1-3-3-quadratic-inequality-from-solution",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "多項式不等式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "二次不等式",
+        "解集合",
+        "反推係數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s1-3-3-quadratic-inverse-coefficient": {
       "id": "practice-s1-3-3-quadratic-inverse-coefficient",
       "enabled": true,
@@ -69369,6 +75611,65 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s1-3-3-same-solution-transform": {
+      "id": "practice-s1-3-3-same-solution-transform",
+      "enabled": true,
+      "mode": "generator",
+      "title": "不等式同解轉換與陷阱判定",
+      "generatorKey": "s1-3-3-same-solution-transform",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "多項式不等式",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "不等式",
+        "同解轉換",
+        "平方因式",
+        "分式不等式",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s1-3-3-square-root-inequality": {
+      "id": "practice-s1-3-3-square-root-inequality",
+      "enabled": true,
+      "mode": "generator",
+      "title": "含根號的不等式",
+      "generatorKey": "s1-3-3-square-root-inequality",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s1-3-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "上學期",
+      "chapter": "不等式",
+      "domain": "函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "根號不等式",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s2-1-1-arithmetic-basic-parameters": {
       "id": "practice-s2-1-1-arithmetic-basic-parameters",
       "enabled": true,
@@ -69392,6 +75693,66 @@ window.practiceLibraryStore = {
         "等差數列",
         "公差",
         "子練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-1-1-arithmetic-common-terms": {
+      "id": "practice-s2-1-1-arithmetic-common-terms",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩等差數列的共同項",
+      "generatorKey": "s2-1-1-arithmetic-common-terms",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數列與級數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "等差數列",
+        "共同項",
+        "最小公倍數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-1-1-arithmetic-geometric-bridge": {
+      "id": "practice-s2-1-1-arithmetic-geometric-bridge",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等差等比混合條件反推",
+      "generatorKey": "s2-1-1-arithmetic-geometric-bridge",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數列與級數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "等差數列",
+        "等比數列",
+        "聯立條件",
+        "無限練習"
       ],
       "usage": [],
       "examples": [],
@@ -69526,6 +75887,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-1-1-difference-method-nonlinear": {
+      "id": "practice-s2-1-1-difference-method-nonlinear",
+      "enabled": true,
+      "mode": "generator",
+      "title": "差分法（非線性型）",
+      "generatorKey": "s2-1-1-difference-method-nonlinear",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數列與級數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-1-1",
+        "差分法",
+        "遞迴",
+        "子練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s2-1-1-geometric-basic-parameters": {
       "id": "practice-s2-1-1-geometric-basic-parameters",
       "enabled": true,
@@ -69580,6 +75971,36 @@ window.practiceLibraryStore = {
         "幾何分割",
         "座標數列",
         "圖形數列",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-1-1-geometric-product-symmetry": {
+      "id": "practice-s2-1-1-geometric-product-symmetry",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等比數列的對稱乘積",
+      "generatorKey": "s2-1-1-geometric-product-symmetry",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數列與級數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "等比數列",
+        "對稱乘積",
+        "中項",
         "無限練習"
       ],
       "usage": [],
@@ -69648,6 +76069,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-1-1-prefix-product-terms": {
+      "id": "practice-s2-1-1-prefix-product-terms",
+      "enabled": true,
+      "mode": "generator",
+      "title": "前綴乘積反求數列項",
+      "generatorKey": "s2-1-1-prefix-product-terms",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數列與級數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "遞迴",
+        "前綴乘積",
+        "一般項",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s2-1-1-recurrence-transform-mixed": {
       "id": "practice-s2-1-1-recurrence-transform-mixed",
       "enabled": true,
@@ -69672,6 +76123,36 @@ window.practiceLibraryStore = {
         "遞迴",
         "線性遞迴",
         "分式遞迴",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-1-1-repeated-block-sequence": {
+      "id": "practice-s2-1-1-repeated-block-sequence",
+      "enabled": true,
+      "mode": "generator",
+      "title": "重複分組數列的項與部分和",
+      "generatorKey": "s2-1-1-repeated-block-sequence",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數列與級數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分組數列",
+        "三角數",
+        "部分和",
         "無限練習"
       ],
       "usage": [],
@@ -69715,6 +76196,36 @@ window.practiceLibraryStore = {
       "usage": [
         "五小類整合成一個主練習；子練習不直接掛載在章節主頁，供需要補強基礎的學生進入單獨練習。"
       ],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-1-1-sequence-transformation-classification": {
+      "id": "practice-s2-1-1-sequence-transformation-classification",
+      "enabled": true,
+      "mode": "generator",
+      "title": "數列轉換後的等差等比判定",
+      "generatorKey": "s2-1-1-sequence-transformation-classification",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數列與級數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "等差數列",
+        "等比數列",
+        "數列轉換",
+        "無限練習"
+      ],
+      "usage": [],
       "examples": [],
       "tips": [],
       "notes": [],
@@ -69813,6 +76324,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-1-2-arithmetic-end-block-count": {
+      "id": "practice-s2-1-2-arithmetic-end-block-count",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等差級數前後端項和反推",
+      "generatorKey": "s2-1-2-arithmetic-end-block-count",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "級數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "等差級數",
+        "端項配對",
+        "反推項數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s2-1-2-basic-sum-formula": {
       "id": "practice-s2-1-2-basic-sum-formula",
       "enabled": true,
@@ -69836,6 +76377,36 @@ window.practiceLibraryStore = {
         "等差級數",
         "公式求和",
         "子練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-1-2-consecutive-cube-range-sum": {
+      "id": "practice-s2-1-2-consecutive-cube-range-sum",
+      "enabled": true,
+      "mode": "generator",
+      "title": "連續立方和的區間計算",
+      "generatorKey": "s2-1-2-consecutive-cube-range-sum",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "級數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "立方和",
+        "區間求和",
+        "級數",
+        "無限練習"
       ],
       "usage": [],
       "examples": [],
@@ -69926,6 +76497,36 @@ window.practiceLibraryStore = {
         "等比級數",
         "基礎參數",
         "子練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-1-2-geometric-partial-sum-extension": {
+      "id": "practice-s2-1-2-geometric-partial-sum-extension",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等比級數分段和反推延伸",
+      "generatorKey": "s2-1-2-geometric-partial-sum-extension",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "級數",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "等比級數",
+        "分段和",
+        "反推",
+        "無限練習"
       ],
       "usage": [],
       "examples": [],
@@ -70151,6 +76752,36 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-1-2-non-standard-sigma-limits": {
+      "id": "practice-s2-1-2-non-standard-sigma-limits",
+      "enabled": true,
+      "mode": "generator",
+      "title": "非標準下界的 Sigma 求和",
+      "generatorKey": "s2-1-2-non-standard-sigma-limits",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "級數與求和",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-1-2",
+        "Sigma",
+        "求和範圍",
+        "子練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s2-1-2-radical-special-telescoping": {
       "id": "practice-s2-1-2-radical-special-telescoping",
       "enabled": true,
@@ -70235,6 +76866,36 @@ window.practiceLibraryStore = {
         "重複數字",
         "等比級數",
         "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-1-2-reverse-n-from-sum": {
+      "id": "practice-s2-1-2-reverse-n-from-sum",
+      "enabled": true,
+      "mode": "generator",
+      "title": "已知級數和反求項數 n",
+      "generatorKey": "s2-1-2-reverse-n-from-sum",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "級數與求和",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-1-2",
+        "Sigma",
+        "反求項數",
+        "子練習"
       ],
       "usage": [],
       "examples": [],
@@ -70567,6 +77228,126 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-1-3-induction-divisibility-step": {
+      "id": "practice-s2-1-3-induction-divisibility-step",
+      "enabled": true,
+      "mode": "generator",
+      "title": "數學歸納法的整除證明",
+      "generatorKey": "s2-1-3-induction-divisibility-step",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數學歸納法",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數學歸納法",
+        "整除",
+        "倍數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-1-3-induction-recurrence-conjecture": {
+      "id": "practice-s2-1-3-induction-recurrence-conjecture",
+      "enabled": true,
+      "mode": "generator",
+      "title": "遞迴一般項的歸納驗證",
+      "generatorKey": "s2-1-3-induction-recurrence-conjecture",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數學歸納法",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數學歸納法",
+        "遞迴",
+        "一般項",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-1-3-induction-sum-step": {
+      "id": "practice-s2-1-3-induction-sum-step",
+      "enabled": true,
+      "mode": "generator",
+      "title": "數學歸納法的級數公式推導",
+      "generatorKey": "s2-1-3-induction-sum-step",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數學歸納法",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "數學歸納法",
+        "級數公式",
+        "k到k+1",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-1-3-periodic-remainder-sequence": {
+      "id": "practice-s2-1-3-periodic-remainder-sequence",
+      "enabled": true,
+      "mode": "generator",
+      "title": "週期餘數與整除循環",
+      "generatorKey": "s2-1-3-periodic-remainder-sequence",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-1-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數學歸納法",
+      "domain": "代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "週期",
+        "餘數",
+        "整除",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s2-2-1-advanced-counting-five-subtypes": {
       "id": "practice-s2-2-1-advanced-counting-five-subtypes",
       "enabled": true,
@@ -70605,6 +77386,44 @@ window.practiceLibraryStore = {
         "小類整合成一個主練習；子練習保留章節代碼，但不直接掛載在章節主頁。"
       ],
       "mistakes": []
+    },
+    "practice-s2-2-1-ambidextrous-pairing-parameterized": {
+      "id": "practice-s2-2-1-ambidextrous-pairing-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "左右手皆可的配對計數",
+      "generatorKey": "s2-2-1-ambidextrous-pairing-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "集合與計數原理",
+      "domain": "排列組合",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-1",
+        "分類計數",
+        "配對",
+        "組合",
+        "無限練習"
+      ],
+      "usage": [
+        "把可行配對分成右專配左專、皆可配專長、兩位皆可三種情況。"
+      ],
+      "examples": [],
+      "tips": [
+        "左右手皆可者不是兩個人，不能把角色分配數直接當選人數。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把一位左右手皆可的人同時當成右手與左手，造成重複或不合法計數。"
+      ],
+      "generatorBundle": "s2"
     },
     "practice-s2-2-1-competition-probability-paths": {
       "id": "practice-s2-2-1-competition-probability-paths",
@@ -70711,6 +77530,36 @@ window.practiceLibraryStore = {
       ],
       "mistakes": []
     },
+    "practice-s2-2-1-distinct-distribution-at-least-parameterized": {
+      "id": "practice-s2-2-1-distinct-distribution-at-least-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "相異物分配與至少限制",
+      "generatorKey": "s2-2-1-distinct-distribution-at-least-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "集合與計數原理",
+      "domain": "排列組合與機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "取捨原理",
+        "相異物分配",
+        "至少限制",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s2-2-1-divisor-counting-conditions": {
       "id": "practice-s2-2-1-divisor-counting-conditions",
       "enabled": true,
@@ -70744,6 +77593,112 @@ window.practiceLibraryStore = {
       ],
       "mistakes": []
     },
+    "practice-s2-2-1-ferry-capacity-assignment-parameterized": {
+      "id": "practice-s2-2-1-ferry-capacity-assignment-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "渡船容量限制分配",
+      "generatorKey": "s2-2-1-ferry-capacity-assignment-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "集合與計數原理",
+      "domain": "排列組合與機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "乘法原理",
+        "容量限制",
+        "分類計數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-2-1-fixed-end-no-repeat-schedule-parameterized": {
+      "id": "practice-s2-2-1-fixed-end-no-repeat-schedule-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "固定首尾且相鄰不同的安排",
+      "generatorKey": "s2-2-1-fixed-end-no-repeat-schedule-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "集合與計數原理",
+      "domain": "排列組合",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-1",
+        "乘法原理",
+        "狀態轉移",
+        "相鄰不同",
+        "無限練習"
+      ],
+      "usage": [
+        "用是否回到固定選項分成兩個狀態，練習有首尾限制的逐步計數。"
+      ],
+      "examples": [],
+      "tips": [
+        "首尾都固定時不能只算每一天有幾種選擇，最後一天必須落回指定選項。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把中間每天都當成固定有 m-1 種，忽略最後一天回到 A 的限制。"
+      ],
+      "generatorBundle": "s2"
+    },
+    "practice-s2-2-1-handshake-couples-parameterized": {
+      "id": "practice-s2-2-1-handshake-couples-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "夫妻握手計數",
+      "generatorKey": "s2-2-1-handshake-couples-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "集合與計數原理",
+      "domain": "排列組合",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-1",
+        "乘法原理",
+        "握手問題",
+        "分類計數",
+        "無限練習"
+      ],
+      "usage": [
+        "將握手分成先生與先生、先生與太太兩類，避免把太太之間也算進去。"
+      ],
+      "examples": [],
+      "tips": [
+        "夫妻題常見陷阱是把每個人可握手人數直接相乘，會重複計數。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記排除先生與自己太太握手，或把每次握手算成兩次。"
+      ],
+      "generatorBundle": "s2"
+    },
     "practice-s2-2-1-inclusion-exclusion-applications": {
       "id": "practice-s2-2-1-inclusion-exclusion-applications",
       "enabled": true,
@@ -70775,6 +77730,72 @@ window.practiceLibraryStore = {
       "notes": [
         "子練習，不直接掛載在章節主頁。"
       ],
+      "mistakes": []
+    },
+    "practice-s2-2-1-inclusion-exclusion-multiples": {
+      "id": "practice-s2-2-1-inclusion-exclusion-multiples",
+      "enabled": true,
+      "mode": "generator",
+      "title": "倍數聯集的取捨原理",
+      "generatorKey": "s2-2-1-inclusion-exclusion-multiples",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "排列組合",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-1",
+        "取捨原理",
+        "倍數計數",
+        "無限練習"
+      ],
+      "usage": [
+        "先算各自個數，再減掉重複算到的交集。"
+      ],
+      "examples": [],
+      "tips": [
+        "重疊部分要用最小公倍數來判定。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記扣掉同時是兩者倍數的數。"
+      ]
+    },
+    "practice-s2-2-1-license-plate-restrictions-parameterized": {
+      "id": "practice-s2-2-1-license-plate-restrictions-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "車牌號碼限制計數",
+      "generatorKey": "s2-2-1-license-plate-restrictions-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "集合與計數原理",
+      "domain": "排列組合與機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "乘法原理",
+        "車牌",
+        "限制計數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
       "mistakes": []
     },
     "practice-s2-2-1-multiple-survey-counting": {
@@ -70842,6 +77863,42 @@ window.practiceLibraryStore = {
         "子練習，不直接掛載在章節主頁。"
       ],
       "mistakes": []
+    },
+    "practice-s2-2-1-product-rule-parameterized": {
+      "id": "practice-s2-2-1-product-rule-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "乘法原理的參數化搭配題",
+      "generatorKey": "s2-2-1-product-rule-parameterized",
+      "difficulty": "easy",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "排列組合",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-1",
+        "乘法原理",
+        "搭配問題",
+        "無限練習"
+      ],
+      "usage": [
+        "依序把每一步的選法數相乘。"
+      ],
+      "examples": [],
+      "tips": [
+        "只要每一步彼此獨立，就可以直接用乘法原理。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把不同步驟的選法用加法相加。"
+      ]
     },
     "practice-s2-2-1-region-coloring-counting": {
       "id": "practice-s2-2-1-region-coloring-counting",
@@ -70975,6 +78032,70 @@ window.practiceLibraryStore = {
       ],
       "mistakes": []
     },
+    "practice-s2-2-2-adjacent-pair-arrangement-parameterized": {
+      "id": "practice-s2-2-2-adjacent-pair-arrangement-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "指定兩項相鄰的排列",
+      "generatorKey": "s2-2-2-adjacent-pair-arrangement-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "排列組合",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-2",
+        "相鄰排列",
+        "綁成一體",
+        "無限練習"
+      ],
+      "usage": [
+        "把指定相鄰的兩項先綁成一個整體，再乘上內部交換的 2 種順序。"
+      ],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": [
+        "把兩項綁成一體後，忘記再乘上內部前後交換。"
+      ]
+    },
+    "practice-s2-2-2-adjacent-pair-end-restriction-parameterized": {
+      "id": "practice-s2-2-2-adjacent-pair-end-restriction-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "相鄰成組與端點限制",
+      "generatorKey": "s2-2-2-adjacent-pair-end-restriction-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "排列",
+      "domain": "排列組合與機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "排列",
+        "相鄰",
+        "端點限制",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s2-2-2-derangement-position-exclusion": {
       "id": "practice-s2-2-2-derangement-position-exclusion",
       "enabled": true,
@@ -71062,6 +78183,42 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s2-2-2-gender-non-adjacent-parameterized": {
+      "id": "practice-s2-2-2-gender-non-adjacent-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "男女不相鄰排列",
+      "generatorKey": "s2-2-2-gender-non-adjacent-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "排列組合",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-2",
+        "不相鄰",
+        "插空法",
+        "無限練習"
+      ],
+      "usage": [
+        "先排一類，再從其間隔插入另一類。"
+      ],
+      "examples": [],
+      "tips": [
+        "\\(f\\) 位女生全排列後有 \\(f+1\\) 個空隙，從中選 \\(m\\) 個插入男生。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "用 \\(f-1\\) 個空隙而非 \\(f+1\\)。"
+      ]
     },
     "practice-s2-2-2-grid-paths": {
       "id": "practice-s2-2-2-grid-paths",
@@ -71172,6 +78329,36 @@ window.practiceLibraryStore = {
         "s2-2-2",
         "數字組成",
         "限制條件"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-2-2-ordered-blocks-internal-permutation-parameterized": {
+      "id": "practice-s2-2-2-ordered-blocks-internal-permutation-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "固定區塊順序的內部排列",
+      "generatorKey": "s2-2-2-ordered-blocks-internal-permutation-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "排列",
+      "domain": "排列組合與機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "分組排列",
+        "相同類別",
+        "區塊法",
+        "無限練習"
       ],
       "usage": [],
       "examples": [],
@@ -71311,6 +78498,138 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-2-2-repeated-digit-leading-zero-parameterized": {
+      "id": "practice-s2-2-2-repeated-digit-leading-zero-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "重複數字與首位不可為零",
+      "generatorKey": "s2-2-2-repeated-digit-leading-zero-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "排列",
+      "domain": "排列組合與機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "不盡相異物排列",
+        "首位限制",
+        "數字排列",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s2-2-2-repeated-letter-permutation-parameterized": {
+      "id": "practice-s2-2-2-repeated-letter-permutation-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "重複字母排列總數",
+      "generatorKey": "s2-2-2-repeated-letter-permutation-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "排列組合",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-2",
+        "重複排列",
+        "階乘",
+        "無限練習"
+      ],
+      "usage": [
+        "先算全排列，再除以相同字母彼此交換的重複數。"
+      ],
+      "examples": [],
+      "tips": [
+        "同一種字母若出現 3 次，就要除以 3!。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只算總階乘，忘了處理重複字母。"
+      ]
+    },
+    "practice-s2-2-2-same-group-together-parameterized": {
+      "id": "practice-s2-2-2-same-group-together-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "同科目書排在一起（分組排列）",
+      "generatorKey": "s2-2-2-same-group-together-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "排列組合",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-2",
+        "分組排列",
+        "相鄰",
+        "無限練習"
+      ],
+      "usage": [
+        "把同科目書視為一個整體（區塊），先排整體，再排內部。"
+      ],
+      "examples": [],
+      "tips": [
+        "整體個數的階乘 × 每組內部階乘的乘積。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記每組內部也要全排列。"
+      ]
+    },
+    "practice-s2-2-2-same-type-nonadjacent-programs-parameterized": {
+      "id": "practice-s2-2-2-same-type-nonadjacent-programs-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "同類節目不相鄰排列",
+      "generatorKey": "s2-2-2-same-type-nonadjacent-programs-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "排列",
+      "domain": "排列組合與機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "排列",
+        "不相鄰",
+        "插空法",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s2-2-2-signals-runs": {
       "id": "practice-s2-2-2-signals-runs",
       "enabled": true,
@@ -71340,6 +78659,44 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s2-2-2-specified-non-adjacent-parameterized": {
+      "id": "practice-s2-2-2-specified-non-adjacent-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "指定對象兩兩不相鄰排列",
+      "generatorKey": "s2-2-2-specified-non-adjacent-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列",
+      "domain": "排列組合",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-2",
+        "排列",
+        "不相鄰",
+        "插空法",
+        "無限練習"
+      ],
+      "usage": [
+        "先排非指定對象，再把指定對象插入空位，建立標準插空法。"
+      ],
+      "examples": [],
+      "tips": [
+        "指定對象兩兩不相鄰時，要從空位中選位置，並排列指定對象本身。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只選空位而忘記指定對象也可以交換順序。"
+      ],
+      "generatorBundle": "s2"
     },
     "practice-s2-2-3-advanced-binomial-five-subtypes": {
       "id": "practice-s2-2-3-advanced-binomial-five-subtypes",
@@ -71414,6 +78771,44 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-2-3-binomial-adjacent-ratio-parameterized": {
+      "id": "practice-s2-2-3-binomial-adjacent-ratio-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "連續組合數比值求 n 與 r",
+      "generatorKey": "s2-2-3-binomial-adjacent-ratio-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "組合與二項式定理",
+      "domain": "組合與二項式定理",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-3",
+        "組合數",
+        "二項式係數",
+        "相鄰比值",
+        "無限練習"
+      ],
+      "usage": [
+        "由相鄰組合數比值建立兩個方程，反推 n 與 r。"
+      ],
+      "examples": [],
+      "tips": [
+        "連續三項的比值應先化成相鄰比，不要直接把比例當作 n、r。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把 C(n,r+1)/C(n,r) 的分子分母寫反。"
+      ],
+      "generatorBundle": "s2"
+    },
     "practice-s2-2-3-binomial-basics-five-subtypes": {
       "id": "practice-s2-2-3-binomial-basics-five-subtypes",
       "enabled": true,
@@ -71478,6 +78873,40 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s2-2-3-binomial-coefficient-parameterized": {
+      "id": "practice-s2-2-3-binomial-coefficient-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "二項式指定項係數參數題",
+      "generatorKey": "s2-2-3-binomial-coefficient-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "排列組合",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-3",
+        "二項式定理",
+        "指定項係數",
+        "無限練習"
+      ],
+      "usage": [
+        "先決定取幾次第二項，再乘上組合數與各項係數的冪次。"
+      ],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": [
+        "次方對到了，但忘記把前面的數字係數一起乘進去。"
+      ]
     },
     "practice-s2-2-3-binomial-constant-term": {
       "id": "practice-s2-2-3-binomial-constant-term",
@@ -71844,6 +79273,40 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s2-2-3-identical-distribution-parameterized": {
+      "id": "practice-s2-2-3-identical-distribution-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "相同物分配與最低限制",
+      "generatorKey": "s2-2-3-identical-distribution-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-3",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "排列組合",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-3",
+        "插板法",
+        "相同物分配",
+        "無限練習"
+      ],
+      "usage": [
+        "先把至少要分到的數量扣掉，再做非負整數解的計數。"
+      ],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": [
+        "有最低限制時，沒有先做平移轉換就直接套公式。"
+      ]
     },
     "practice-s2-2-3-maximum-coefficient": {
       "id": "practice-s2-2-3-maximum-coefficient",
@@ -72357,6 +79820,43 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-2-4-biased-binomial-at-least-parameterized": {
+      "id": "practice-s2-2-4-biased-binomial-at-least-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "二項分佈至少 k 次",
+      "generatorKey": "s2-2-4-biased-binomial-at-least-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-4",
+        "二項分佈",
+        "至少",
+        "補集",
+        "無限練習"
+      ],
+      "usage": [
+        "用補集：\\(P(X\\geq k)=1-P(X<k)\\)。"
+      ],
+      "examples": [],
+      "tips": [
+        "至少 1 次最簡單：\\(P(X\\geq 1)=1-(1-p)^n\\)。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記包含 \\(P(X=0)\\) 或 \\(P(X=1)\\) 就直接減。"
+      ]
+    },
     "practice-s2-2-4-classical-probability": {
       "id": "practice-s2-2-4-classical-probability",
       "enabled": true,
@@ -72385,6 +79885,40 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s2-2-4-complement-independent-parameterized": {
+      "id": "practice-s2-2-4-complement-independent-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "補集事件與獨立事件",
+      "generatorKey": "s2-2-4-complement-independent-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-4",
+        "獨立事件",
+        "補集",
+        "無限練習"
+      ],
+      "usage": [
+        "獨立時 \\(P(A\\cap B)=P(A)\\cdot P(B)\\)；補集 \\(P(A^c)=1-P(A)\\)。"
+      ],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": [
+        "把互斥和獨立混淆。"
+      ]
     },
     "practice-s2-2-4-conditional-bayes": {
       "id": "practice-s2-2-4-conditional-bayes",
@@ -72473,6 +80007,77 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-2-4-event-count-relations-parameterized": {
+      "id": "practice-s2-2-4-event-count-relations-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "事件交並與條件機率",
+      "generatorKey": "s2-2-4-event-count-relations-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-4",
+        "交集",
+        "聯集",
+        "條件機率",
+        "無限練習"
+      ],
+      "usage": [
+        "交並用取捨原理，條件機率用 \\(P(A\\mid B)=\\frac{P(A\\cap B)}{P(B)}\\)。"
+      ],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": [
+        "把 \\(P(A\\mid B)\\) 誤寫成 \\(\\frac{P(A)}{P(B)}\\)。"
+      ]
+    },
+    "practice-s2-2-4-exact-k-draw-probability-parameterized": {
+      "id": "practice-s2-2-4-exact-k-draw-probability-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "不放回抽取的恰好機率",
+      "generatorKey": "s2-2-4-exact-k-draw-probability-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-4",
+        "超幾何分配",
+        "不放回",
+        "無限練習"
+      ],
+      "usage": [
+        "用符合條件的取法數除以全部取法數。"
+      ],
+      "examples": [],
+      "tips": [
+        "分子與分母都要用組合數，因為取出順序不重要。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把不放回誤寫成連乘機率，但題目其實是在算組合型機率。"
+      ]
+    },
     "practice-s2-2-4-expected-value": {
       "id": "practice-s2-2-4-expected-value",
       "enabled": true,
@@ -72501,6 +80106,113 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s2-2-4-expected-value-parameterized": {
+      "id": "practice-s2-2-4-expected-value-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "期望值與遊戲損益參數題",
+      "generatorKey": "s2-2-4-expected-value-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-4",
+        "期望值",
+        "公平遊戲",
+        "無限練習"
+      ],
+      "usage": [
+        "把每種結果的報酬乘上其機率後加總。"
+      ],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": [
+        "只算中獎時的平均，忽略要付出的成本或虧損。"
+      ]
+    },
+    "practice-s2-2-4-grid-comparison-probability-parameterized": {
+      "id": "practice-s2-2-4-grid-comparison-probability-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "方格大小比較機率",
+      "generatorKey": "s2-2-4-grid-comparison-probability-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "機率",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-4",
+        "古典機率",
+        "大小比較",
+        "獨立事件",
+        "無限練習"
+      ],
+      "usage": [
+        "先計算一組有序數對滿足大於關係的數量，再利用兩組獨立相乘。"
+      ],
+      "examples": [],
+      "tips": [
+        "可重複填入時樣本空間是 m^2，不是 C(m,2)。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把 A>B 當成抽兩個不同數，忘記 A=B 也在樣本空間中但不利。"
+      ],
+      "generatorBundle": "s2"
+    },
+    "practice-s2-2-4-hypergeometric-expected-value-parameterized": {
+      "id": "practice-s2-2-4-hypergeometric-expected-value-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "超幾何分佈期望值",
+      "generatorKey": "s2-2-4-hypergeometric-expected-value-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-4",
+        "超幾何",
+        "期望值",
+        "指示變數",
+        "無限練習"
+      ],
+      "usage": [
+        "利用指示變數線性性：\\(E(X)=n\\cdot\\frac{R}{R+W}\\)。"
+      ],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": [
+        "試圖直接展開超幾何機率式求期望值，計算非常繁雜。"
+      ]
     },
     "practice-s2-2-4-independent-repeated": {
       "id": "practice-s2-2-4-independent-repeated",
@@ -72560,6 +80272,44 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-2-4-overlap-days-off-probability-parameterized": {
+      "id": "practice-s2-2-4-overlap-days-off-probability-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "休假日重疊機率",
+      "generatorKey": "s2-2-4-overlap-days-off-probability-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-4",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "機率",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-2-4",
+        "組合機率",
+        "對立事件",
+        "至少一個",
+        "無限練習"
+      ],
+      "usage": [
+        "固定甲的休假日後，用對立事件計算乙完全不重疊，再從 1 扣掉。"
+      ],
+      "examples": [],
+      "tips": [
+        "至少同休一天通常用對立事件最乾淨。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "直接把重疊一天、兩天分開加，容易漏算或重複算。"
+      ],
+      "generatorBundle": "s2"
+    },
     "practice-s2-2-4-probability-set-relations": {
       "id": "practice-s2-2-4-probability-set-relations",
       "enabled": true,
@@ -72618,393 +80368,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
-    "practice-s2-2-1-product-rule-parameterized": {
-      "id": "practice-s2-2-1-product-rule-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "乘法原理的參數化搭配題",
-      "generatorKey": "s2-2-1-product-rule-parameterized",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-1",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "排列組合",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-1",
-        "乘法原理",
-        "搭配問題",
-        "無限練習"
-      ],
-      "usage": [
-        "依序把每一步的選法數相乘。"
-      ],
-      "examples": [],
-      "tips": [
-        "只要每一步彼此獨立，就可以直接用乘法原理。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把不同步驟的選法用加法相加。"
-      ]
-    },
-    "practice-s2-2-1-inclusion-exclusion-multiples": {
-      "id": "practice-s2-2-1-inclusion-exclusion-multiples",
-      "enabled": true,
-      "mode": "generator",
-      "title": "倍數聯集的取捨原理",
-      "generatorKey": "s2-2-1-inclusion-exclusion-multiples",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-1",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "排列組合",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-1",
-        "取捨原理",
-        "倍數計數",
-        "無限練習"
-      ],
-      "usage": [
-        "先算各自個數，再減掉重複算到的交集。"
-      ],
-      "examples": [],
-      "tips": [
-        "重疊部分要用最小公倍數來判定。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記扣掉同時是兩者倍數的數。"
-      ]
-    },
-    "practice-s2-2-2-repeated-letter-permutation-parameterized": {
-      "id": "practice-s2-2-2-repeated-letter-permutation-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "重複字母排列總數",
-      "generatorKey": "s2-2-2-repeated-letter-permutation-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-2",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "排列組合",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-2",
-        "重複排列",
-        "階乘",
-        "無限練習"
-      ],
-      "usage": [
-        "先算全排列，再除以相同字母彼此交換的重複數。"
-      ],
-      "examples": [],
-      "tips": [
-        "同一種字母若出現 3 次，就要除以 3!。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "只算總階乘，忘了處理重複字母。"
-      ]
-    },
-    "practice-s2-2-2-adjacent-pair-arrangement-parameterized": {
-      "id": "practice-s2-2-2-adjacent-pair-arrangement-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "指定兩項相鄰的排列",
-      "generatorKey": "s2-2-2-adjacent-pair-arrangement-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-2",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "排列組合",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-2",
-        "相鄰排列",
-        "綁成一體",
-        "無限練習"
-      ],
-      "usage": [
-        "把指定相鄰的兩項先綁成一個整體，再乘上內部交換的 2 種順序。"
-      ],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": [
-        "把兩項綁成一體後，忘記再乘上內部前後交換。"
-      ]
-    },
-    "practice-s2-2-3-binomial-coefficient-parameterized": {
-      "id": "practice-s2-2-3-binomial-coefficient-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "二項式指定項係數參數題",
-      "generatorKey": "s2-2-3-binomial-coefficient-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-3",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "排列組合",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-3",
-        "二項式定理",
-        "指定項係數",
-        "無限練習"
-      ],
-      "usage": [
-        "先決定取幾次第二項，再乘上組合數與各項係數的冪次。"
-      ],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": [
-        "次方對到了，但忘記把前面的數字係數一起乘進去。"
-      ]
-    },
-    "practice-s2-2-3-identical-distribution-parameterized": {
-      "id": "practice-s2-2-3-identical-distribution-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "相同物分配與最低限制",
-      "generatorKey": "s2-2-3-identical-distribution-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-3",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "排列組合",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-3",
-        "插板法",
-        "相同物分配",
-        "無限練習"
-      ],
-      "usage": [
-        "先把至少要分到的數量扣掉，再做非負整數解的計數。"
-      ],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": [
-        "有最低限制時，沒有先做平移轉換就直接套公式。"
-      ]
-    },
-    "practice-s2-2-4-exact-k-draw-probability-parameterized": {
-      "id": "practice-s2-2-4-exact-k-draw-probability-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "不放回抽取的恰好機率",
-      "generatorKey": "s2-2-4-exact-k-draw-probability-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-4",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "機率",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-4",
-        "超幾何分配",
-        "不放回",
-        "無限練習"
-      ],
-      "usage": [
-        "用符合條件的取法數除以全部取法數。"
-      ],
-      "examples": [],
-      "tips": [
-        "分子與分母都要用組合數，因為取出順序不重要。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把不放回誤寫成連乘機率，但題目其實是在算組合型機率。"
-      ]
-    },
-    "practice-s2-2-4-event-count-relations-parameterized": {
-      "id": "practice-s2-2-4-event-count-relations-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "事件交並與條件機率",
-      "generatorKey": "s2-2-4-event-count-relations-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-4",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "機率",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-4",
-        "交集",
-        "聯集",
-        "條件機率",
-        "無限練習"
-      ],
-      "usage": [
-        "交並用取捨原理，條件機率用 \\(P(A\\mid B)=\\frac{P(A\\cap B)}{P(B)}\\)。"
-      ],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": [
-        "把 \\(P(A\\mid B)\\) 誤寫成 \\(\\frac{P(A)}{P(B)}\\)。"
-      ]
-    },
-    "practice-s2-2-4-expected-value-parameterized": {
-      "id": "practice-s2-2-4-expected-value-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "期望值與遊戲損益參數題",
-      "generatorKey": "s2-2-4-expected-value-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-4",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "機率",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-4",
-        "期望值",
-        "公平遊戲",
-        "無限練習"
-      ],
-      "usage": [
-        "把每種結果的報酬乘上其機率後加總。"
-      ],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": [
-        "只算中獎時的平均，忽略要付出的成本或虧損。"
-      ]
-    },
-    "practice-s2-2-2-same-group-together-parameterized": {
-      "id": "practice-s2-2-2-same-group-together-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "同科目書排在一起（分組排列）",
-      "generatorKey": "s2-2-2-same-group-together-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-2",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "排列組合",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-2",
-        "分組排列",
-        "相鄰",
-        "無限練習"
-      ],
-      "usage": [
-        "把同科目書視為一個整體（區塊），先排整體，再排內部。"
-      ],
-      "examples": [],
-      "tips": [
-        "整體個數的階乘 × 每組內部階乘的乘積。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記每組內部也要全排列。"
-      ]
-    },
-    "practice-s2-2-2-gender-non-adjacent-parameterized": {
-      "id": "practice-s2-2-2-gender-non-adjacent-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "男女不相鄰排列",
-      "generatorKey": "s2-2-2-gender-non-adjacent-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-2",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "排列組合",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-2",
-        "不相鄰",
-        "插空法",
-        "無限練習"
-      ],
-      "usage": [
-        "先排一類，再從其間隔插入另一類。"
-      ],
-      "examples": [],
-      "tips": [
-        "\\(f\\) 位女生全排列後有 \\(f+1\\) 個空隙，從中選 \\(m\\) 個插入男生。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "用 \\(f-1\\) 個空隙而非 \\(f+1\\)。"
-      ]
-    },
     "practice-s2-2-4-three-set-union-parameterized": {
       "id": "practice-s2-2-4-three-set-union-parameterized",
       "enabled": true,
@@ -73039,77 +80402,6 @@ window.practiceLibraryStore = {
         "把三個兩兩交集都減掉後，忘記加回三個全交集。"
       ]
     },
-    "practice-s2-2-4-complement-independent-parameterized": {
-      "id": "practice-s2-2-4-complement-independent-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "補集事件與獨立事件",
-      "generatorKey": "s2-2-4-complement-independent-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-4",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "機率",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-4",
-        "獨立事件",
-        "補集",
-        "無限練習"
-      ],
-      "usage": [
-        "獨立時 \\(P(A\\cap B)=P(A)\\cdot P(B)\\)；補集 \\(P(A^c)=1-P(A)\\)。"
-      ],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": [
-        "把互斥和獨立混淆。"
-      ]
-    },
-    "practice-s2-2-4-biased-binomial-at-least-parameterized": {
-      "id": "practice-s2-2-4-biased-binomial-at-least-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "二項分佈至少 k 次",
-      "generatorKey": "s2-2-4-biased-binomial-at-least-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-4",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "機率",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-4",
-        "二項分佈",
-        "至少",
-        "補集",
-        "無限練習"
-      ],
-      "usage": [
-        "用補集：\\(P(X\\geq k)=1-P(X<k)\\)。"
-      ],
-      "examples": [],
-      "tips": [
-        "至少 1 次最簡單：\\(P(X\\geq 1)=1-(1-p)^n\\)。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記包含 \\(P(X=0)\\) 或 \\(P(X=1)\\) 就直接減。"
-      ]
-    },
     "practice-s2-2-4-total-probability-parameterized": {
       "id": "practice-s2-2-4-total-probability-parameterized",
       "enabled": true,
@@ -73142,41 +80434,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "沒有分兩種情況，只用其中一條路徑的條件機率。"
-      ]
-    },
-    "practice-s2-2-4-hypergeometric-expected-value-parameterized": {
-      "id": "practice-s2-2-4-hypergeometric-expected-value-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "超幾何分佈期望值",
-      "generatorKey": "s2-2-4-hypergeometric-expected-value-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-2-4",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "排列組合與機率",
-      "domain": "機率",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-2-4",
-        "超幾何",
-        "期望值",
-        "指示變數",
-        "無限練習"
-      ],
-      "usage": [
-        "利用指示變數線性性：\\(E(X)=n\\cdot\\frac{R}{R+W}\\)。"
-      ],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": [
-        "試圖直接展開超幾何機率式求期望值，計算非常繁雜。"
       ]
     },
     "practice-s2-3-1-algebraic-sums-variance": {
@@ -73426,6 +80683,82 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-3-1-equal-size-group-merge-parameterized": {
+      "id": "practice-s2-3-1-equal-size-group-merge-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等人數兩組合併平均與標準差",
+      "generatorKey": "s2-3-1-equal-size-group-merge-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數據分析",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-1",
+        "合併資料",
+        "平均數",
+        "標準差",
+        "無限練習"
+      ],
+      "usage": [
+        "等人數兩組合併時，可用組內變異加組間變異理解合併標準差。"
+      ],
+      "examples": [],
+      "tips": [
+        "兩組標準差相同但平均不同，合併後標準差會變大。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只把兩組標準差取平均，忽略兩組平均數之間的差距。"
+      ],
+      "generatorBundle": "s2"
+    },
+    "practice-s2-3-1-geometric-growth-rate-parameterized": {
+      "id": "practice-s2-3-1-geometric-growth-rate-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平均成長率的幾何平均",
+      "generatorKey": "s2-3-1-geometric-growth-rate-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數據分析",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-1",
+        "幾何平均",
+        "平均成長率",
+        "百分率",
+        "無限練習"
+      ],
+      "usage": [
+        "用整體倍率的幾何平均處理連續成長率，避免把百分率直接算算術平均。"
+      ],
+      "examples": [],
+      "tips": [
+        "平均成長率要先把每年的成長率改成倍率，再開 n 次方。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把 20%、-10%、50% 直接相加除以年數，忽略複利效果。"
+      ],
+      "generatorBundle": "s2"
+    },
     "practice-s2-3-1-geometric-mean-growth": {
       "id": "practice-s2-3-1-geometric-mean-growth",
       "enabled": true,
@@ -73512,6 +80845,41 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s2-3-1-grouped-mean-parameterized": {
+      "id": "practice-s2-3-1-grouped-mean-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "分組資料加權平均數估計",
+      "generatorKey": "s2-3-1-grouped-mean-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "統計",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-1",
+        "分組資料",
+        "加權平均",
+        "組中點",
+        "無限練習"
+      ],
+      "usage": [
+        "分組資料平均數：\\(\\bar{x} = \\dfrac{\\sum f_i m_i}{\\sum f_i}\\)，其中 \\(m_i\\) 為各組組中點。"
+      ],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": [
+        "忘記以次數作為各組的權重，誤對所有組中點直接求平均。"
+      ]
     },
     "practice-s2-3-1-linear-transform-statistics": {
       "id": "practice-s2-3-1-linear-transform-statistics",
@@ -73601,6 +80969,41 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-3-1-quartiles-iqr-parameterized": {
+      "id": "practice-s2-3-1-quartiles-iqr-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "四分位數與四分位距",
+      "generatorKey": "s2-3-1-quartiles-iqr-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "統計",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-1",
+        "四分位數",
+        "四分位距",
+        "IQR",
+        "無限練習"
+      ],
+      "usage": [
+        "將數據排序後，\\(Q_2\\) 為中位數，\\(Q_1\\) 為下半部中位數，\\(Q_3\\) 為上半部中位數。"
+      ],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": [
+        "偶數筆資料求四分位數時，忘記取相鄰兩數的平均。"
+      ]
+    },
     "practice-s2-3-1-revision-merge-five-subtypes": {
       "id": "practice-s2-3-1-revision-merge-five-subtypes",
       "enabled": true,
@@ -73666,6 +81069,82 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-3-1-sqrt-score-transform-parameterized": {
+      "id": "practice-s2-3-1-sqrt-score-transform-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "開根號調分反推原始平均",
+      "generatorKey": "s2-3-1-sqrt-score-transform-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數據分析",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-1",
+        "平均數",
+        "標準差",
+        "非線性變換",
+        "無限練習"
+      ],
+      "usage": [
+        "由 Y=10√X 轉成 X=Y^2/100，再利用 E(Y^2)=變異數+平均數平方。"
+      ],
+      "examples": [],
+      "tips": [
+        "這不是線性變換，不能用平均數直接開平方反推。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把原始平均誤算成 (調整後平均/10)^2，漏掉標準差造成的平方平均差異。"
+      ],
+      "generatorBundle": "s2"
+    },
+    "practice-s2-3-1-variance-correction-difference-parameterized": {
+      "id": "practice-s2-3-1-variance-correction-difference-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "資料更正與變異數差",
+      "generatorKey": "s2-3-1-variance-correction-difference-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數據分析",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-1",
+        "資料更正",
+        "變異數",
+        "標準差平方",
+        "無限練習"
+      ],
+      "usage": [
+        "平均數不變時，直接比較被更正資料的離均差平方和。"
+      ],
+      "examples": [],
+      "tips": [
+        "題目問 x^2-y^2 就是在問更正前後變異數差，不必先開根號。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "先算標準差再平方，或忘記除以總人數。"
+      ],
+      "generatorBundle": "s2"
+    },
     "practice-s2-3-1-weighted-mean-applications": {
       "id": "practice-s2-3-1-weighted-mean-applications",
       "enabled": true,
@@ -73723,146 +81202,6 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
-    },
-    "practice-s2-3-1-quartiles-iqr-parameterized": {
-      "id": "practice-s2-3-1-quartiles-iqr-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "四分位數與四分位距",
-      "generatorKey": "s2-3-1-quartiles-iqr-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-3-1",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "統計",
-      "domain": "統計",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-3-1",
-        "四分位數",
-        "四分位距",
-        "IQR",
-        "無限練習"
-      ],
-      "usage": [
-        "將數據排序後，\\(Q_2\\) 為中位數，\\(Q_1\\) 為下半部中位數，\\(Q_3\\) 為上半部中位數。"
-      ],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": [
-        "偶數筆資料求四分位數時，忘記取相鄰兩數的平均。"
-      ]
-    },
-    "practice-s2-3-1-grouped-mean-parameterized": {
-      "id": "practice-s2-3-1-grouped-mean-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "分組資料加權平均數估計",
-      "generatorKey": "s2-3-1-grouped-mean-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-3-1",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "統計",
-      "domain": "統計",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-3-1",
-        "分組資料",
-        "加權平均",
-        "組中點",
-        "無限練習"
-      ],
-      "usage": [
-        "分組資料平均數：\\(\\bar{x} = \\dfrac{\\sum f_i m_i}{\\sum f_i}\\)，其中 \\(m_i\\) 為各組組中點。"
-      ],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": [
-        "忘記以次數作為各組的權重，誤對所有組中點直接求平均。"
-      ]
-    },
-    "practice-s2-3-2-correlation-from-sums-parameterized": {
-      "id": "practice-s2-3-2-correlation-from-sums-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "由離差積和計算相關係數",
-      "generatorKey": "s2-3-2-correlation-from-sums-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-3-2",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "統計",
-      "domain": "統計",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-3-2",
-        "相關係數",
-        "離差積和",
-        "無限練習"
-      ],
-      "usage": [
-        "\\(r = \\dfrac{S_{xy}}{\\sqrt{S_{xx} \\cdot S_{yy}}}\\)，其中 \\(S_{xy} = \\sum x_i y_i - \\dfrac{(\\sum x_i)(\\sum y_i)}{n}\\)。"
-      ],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": [
-        "計算 \\(S_{xx}\\) 時忘記減去 \\((\\sum x_i)^2/n\\)。"
-      ]
-    },
-    "practice-s2-3-2-least-squares-small-data-parameterized": {
-      "id": "practice-s2-3-2-least-squares-small-data-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "三點最小平方法迴歸直線",
-      "generatorKey": "s2-3-2-least-squares-small-data-parameterized",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "s2-3-2",
-      "stage": "高中",
-      "grade": "高一",
-      "term": "下學期",
-      "chapter": "統計",
-      "domain": "統計",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "s2-3-2",
-        "最小平方法",
-        "迴歸直線",
-        "無限練習"
-      ],
-      "usage": [
-        "斜率 \\(b = \\dfrac{S_{xy}}{S_{xx}}\\)，截距 \\(a = \\bar{y} - b\\bar{x}\\)。"
-      ],
-      "examples": [],
-      "tips": [
-        "對 x=[1,2,3]：\\(S_{xx}=2\\)，\\(S_{xy}=y_3-y_1\\)。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "用最近兩點的斜率代替迴歸線斜率，而非用最小平方法計算。"
-      ]
     },
     "practice-s2-3-2-correlation-basic": {
       "id": "practice-s2-3-2-correlation-basic",
@@ -73929,6 +81268,40 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-3-2-correlation-from-sums-parameterized": {
+      "id": "practice-s2-3-2-correlation-from-sums-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由離差積和計算相關係數",
+      "generatorKey": "s2-3-2-correlation-from-sums-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "統計",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-2",
+        "相關係數",
+        "離差積和",
+        "無限練習"
+      ],
+      "usage": [
+        "\\(r = \\dfrac{S_{xy}}{\\sqrt{S_{xx} \\cdot S_{yy}}}\\)，其中 \\(S_{xy} = \\sum x_i y_i - \\dfrac{(\\sum x_i)(\\sum y_i)}{n}\\)。"
+      ],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": [
+        "計算 \\(S_{xx}\\) 時忘記減去 \\((\\sum x_i)^2/n\\)。"
+      ]
+    },
     "practice-s2-3-2-correlation-sensitivity": {
       "id": "practice-s2-3-2-correlation-sensitivity",
       "enabled": true,
@@ -73986,6 +81359,42 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s2-3-2-least-squares-small-data-parameterized": {
+      "id": "practice-s2-3-2-least-squares-small-data-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三點最小平方法迴歸直線",
+      "generatorKey": "s2-3-2-least-squares-small-data-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "統計",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-2",
+        "最小平方法",
+        "迴歸直線",
+        "無限練習"
+      ],
+      "usage": [
+        "斜率 \\(b = \\dfrac{S_{xy}}{S_{xx}}\\)，截距 \\(a = \\bar{y} - b\\bar{x}\\)。"
+      ],
+      "examples": [],
+      "tips": [
+        "對 x=[1,2,3]：\\(S_{xx}=2\\)，\\(S_{xy}=y_3-y_1\\)。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "用最近兩點的斜率代替迴歸線斜率，而非用最小平方法計算。"
+      ]
     },
     "practice-s2-3-2-linear-transform-correlation": {
       "id": "practice-s2-3-2-linear-transform-correlation",
@@ -74103,6 +81512,44 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-3-2-regression-correlation-from-line-parameterized": {
+      "id": "practice-s2-3-2-regression-correlation-from-line-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由迴歸線斜率反推相關係數",
+      "generatorKey": "s2-3-2-regression-correlation-from-line-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "相關與迴歸",
+      "domain": "相關與迴歸",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-2",
+        "迴歸直線",
+        "相關係數",
+        "標準差",
+        "無限練習"
+      ],
+      "usage": [
+        "利用迴歸線斜率 b=r·σy/σx 反推 r。"
+      ],
+      "examples": [],
+      "tips": [
+        "最適直線必通過平均點，先由兩點求斜率再代入公式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把迴歸線斜率直接當作相關係數，忽略標準差比例。"
+      ],
+      "generatorBundle": "s2"
+    },
     "practice-s2-3-2-regression-five-subtypes": {
       "id": "practice-s2-3-2-regression-five-subtypes",
       "enabled": true,
@@ -74195,6 +81642,44 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s2-3-2-signed-linear-correlation-parameterized": {
+      "id": "practice-s2-3-2-signed-linear-correlation-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "正負線性變換下的相關係數",
+      "generatorKey": "s2-3-2-signed-linear-correlation-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "相關與迴歸",
+      "domain": "相關與迴歸",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-2",
+        "相關係數",
+        "線性變換",
+        "符號判斷",
+        "無限練習"
+      ],
+      "usage": [
+        "平移不改變相關係數；乘正數不變號，乘負數變號。"
+      ],
+      "examples": [],
+      "tips": [
+        "兩個變數各自乘上的係數符號相乘，決定相關係數是否改變正負。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把加減常數也拿去影響相關係數，或把倍數大小誤當成相關係數倍數。"
+      ],
+      "generatorBundle": "s2"
     },
     "practice-s2-3-2-transformed-regression": {
       "id": "practice-s2-3-2-transformed-regression",
@@ -74558,6 +82043,44 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-4-1-sin-cos-sum-difference-parameterized": {
+      "id": "practice-s2-4-1-sin-cos-sum-difference-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "正弦餘弦和差反推與乘積",
+      "generatorKey": "s2-4-1-sin-cos-sum-difference-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-4-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "三角比",
+      "domain": "三角比",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-4-1",
+        "正弦",
+        "餘弦",
+        "和差平方",
+        "無限練習"
+      ],
+      "usage": [
+        "適合練習用平方恆等式由 sinθ±cosθ 反推 sinθcosθ。"
+      ],
+      "examples": [],
+      "tips": [
+        "先用公式求乘積，再用象限決定 sinθ、cosθ 的正負。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是把 (sinθ+cosθ)^2 展開成 1+sinθcosθ，漏掉係數 2。"
+      ],
+      "generatorBundle": "s2"
+    },
     "practice-s2-4-1-square-sum-identities": {
       "id": "practice-s2-4-1-square-sum-identities",
       "enabled": true,
@@ -74586,6 +82109,82 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s2-4-1-tangent-expression-parameterized": {
+      "id": "practice-s2-4-1-tangent-expression-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "已知正切值化簡正餘弦分式",
+      "generatorKey": "s2-4-1-tangent-expression-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-4-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "三角比",
+      "domain": "三角比",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-4-1",
+        "正切",
+        "分式化簡",
+        "象限",
+        "無限練習"
+      ],
+      "usage": [
+        "適合練習把含 sinθ、cosθ 的分式同除以 cosθ，改用 tanθ 計算。"
+      ],
+      "examples": [],
+      "tips": [
+        "若題目只給 tanθ，通常要把式子整理成 tanθ 的有理式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是直接假設 sinθ、cosθ 都是正數，忽略題目給的象限。"
+      ],
+      "generatorBundle": "s2"
+    },
+    "practice-s2-4-1-tangent-ordering-parameterized": {
+      "id": "practice-s2-4-1-tangent-ordering-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "正切值象限判斷與大小排列",
+      "generatorKey": "s2-4-1-tangent-ordering-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-4-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "三角比",
+      "domain": "三角比",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-4-1",
+        "正切",
+        "象限",
+        "大小比較",
+        "無限練習"
+      ],
+      "usage": [
+        "適合練習先判斷正負號，再比較特殊角正切值大小。"
+      ],
+      "examples": [],
+      "tips": [
+        "正切在第二、第四象限為負，第三象限為正，不能只看角度大小。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是把正切值當成隨角度一路增加，忘記不同象限會跨過無定義點。"
+      ],
+      "generatorBundle": "s2"
     },
     "practice-s2-4-1-terminal-line-definition": {
       "id": "practice-s2-4-1-terminal-line-definition",
@@ -75229,6 +82828,44 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-4-2-isosceles-circumradius-parameterized": {
+      "id": "practice-s2-4-2-isosceles-circumradius-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等腰三角形外接圓半徑求底邊與面積",
+      "generatorKey": "s2-4-2-isosceles-circumradius-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-4-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "三角比",
+      "domain": "三角比",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-4-2",
+        "正弦定理",
+        "外接圓半徑",
+        "等腰三角形",
+        "無限練習"
+      ],
+      "usage": [
+        "適合練習 a=2R sinA 與等腰三角形的角邊關係。"
+      ],
+      "examples": [],
+      "tips": [
+        "底邊對頂角，腰長對底角；先辨認哪一邊對哪一角。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是把外接圓半徑 R 誤當成邊長，漏掉 2R。"
+      ],
+      "generatorBundle": "s2"
+    },
     "practice-s2-4-2-median-length": {
       "id": "practice-s2-4-2-median-length",
       "enabled": true,
@@ -75288,6 +82925,82 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s2-4-2-sas-side-area-parameterized": {
+      "id": "practice-s2-4-2-sas-side-area-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩邊夾角求第三邊與面積",
+      "generatorKey": "s2-4-2-sas-side-area-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-4-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "三角比",
+      "domain": "三角比",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-4-2",
+        "餘弦定理",
+        "面積公式",
+        "兩邊夾角",
+        "無限練習"
+      ],
+      "usage": [
+        "適合練習同一組條件下同時使用餘弦定理與 K=1/2bc sinA。"
+      ],
+      "examples": [],
+      "tips": [
+        "求第三邊用餘弦定理，求面積用兩邊夾角公式，兩者不要混用。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是面積公式忘記乘 1/2，或餘弦定理最後一項符號寫錯。"
+      ],
+      "generatorBundle": "s2"
+    },
+    "practice-s2-4-2-side-sum-ratio-sine-ratio-parameterized": {
+      "id": "practice-s2-4-2-side-sum-ratio-sine-ratio-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "邊長和比例反推正弦比例",
+      "generatorKey": "s2-4-2-side-sum-ratio-sine-ratio-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-4-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "三角比",
+      "domain": "三角比",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-4-2",
+        "正弦定理",
+        "邊長比例",
+        "比例反推",
+        "無限練習"
+      ],
+      "usage": [
+        "適合練習由 (a+b):(b+c):(c+a) 反推出 a:b:c，再套正弦定理。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把三個和相加減還原單邊比例，再用 sinA:sinB:sinC=a:b:c。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是直接把邊長和比例當成邊長比例。"
+      ],
+      "generatorBundle": "s2"
     },
     "practice-s2-4-2-sine-law-five-subtypes": {
       "id": "practice-s2-4-2-sine-law-five-subtypes",
@@ -75604,6 +83317,44 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-4-3-bearing-cosine-distance-parameterized": {
+      "id": "practice-s2-4-3-bearing-cosine-distance-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "方位夾角與餘弦定理求距離",
+      "generatorKey": "s2-4-3-bearing-cosine-distance-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-4-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "三角比",
+      "domain": "三角比",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-4-3",
+        "方位",
+        "餘弦定理",
+        "距離",
+        "無限練習"
+      ],
+      "usage": [
+        "適合練習兩個目標與觀測點形成夾角時，用餘弦定理求兩目標距離。"
+      ],
+      "examples": [],
+      "tips": [
+        "把方位或觀測角轉成 ∠AOB，再套 AB²=OA²+OB²-2OA·OB cos∠AOB。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是把兩段觀測距離直接相加或相減，沒有使用夾角。"
+      ],
+      "generatorBundle": "s2"
+    },
     "practice-s2-4-3-bearing-navigation": {
       "id": "practice-s2-4-3-bearing-navigation",
       "enabled": true,
@@ -75819,6 +83570,44 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s2-4-3-height-limit-floors-parameterized": {
+      "id": "practice-s2-4-3-height-limit-floors-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "仰角限制求建築樓層上限",
+      "generatorKey": "s2-4-3-height-limit-floors-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-4-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "三角比",
+      "domain": "三角比",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-4-3",
+        "仰角",
+        "生活應用",
+        "樓層上限",
+        "無限練習"
+      ],
+      "usage": [
+        "適合練習用高度=水平距離×tanθ，再取不超過限制的整數樓層。"
+      ],
+      "examples": [],
+      "tips": [
+        "注意公里要先換成公尺，最後樓層數要取小於等於的整數。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是四捨五入樓層，實際上題目問最多可蓋，必須無條件捨去。"
+      ],
+      "generatorBundle": "s2"
     },
     "practice-s2-4-3-height-projection-stack": {
       "id": "practice-s2-4-3-height-projection-stack",
@@ -76189,6 +83978,44 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s2-4-3-two-observation-height-parameterized": {
+      "id": "practice-s2-4-3-two-observation-height-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩次仰角觀測求高度",
+      "generatorKey": "s2-4-3-two-observation-height-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-4-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "三角比",
+      "domain": "三角比",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-4-3",
+        "仰角",
+        "測量",
+        "高度",
+        "無限練習"
+      ],
+      "usage": [
+        "適合練習同一直線上兩次觀測，建立 h=x tanα=(x-d)tanβ。"
+      ],
+      "examples": [],
+      "tips": [
+        "先畫出遠點距離 x，前進後距離變成 x-d，再列等高關係。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是把前進距離直接當成建築物底部距離。"
+      ],
+      "generatorBundle": "s2"
+    },
     "practice-s2-4-3-typhoon-tracking": {
       "id": "practice-s2-4-3-typhoon-tracking",
       "enabled": true,
@@ -76526,6 +84353,135 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-1-1-sector-cone-parameterized": {
+      "id": "practice-s3-1-1-sector-cone-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "扇形展開成圓錐：半徑、高與體積",
+      "generatorKey": "s3-1-1-sector-cone-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-1-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "三角函數",
+      "domain": "三角函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-1-1",
+        "弧度與扇形",
+        "圓錐側面展開",
+        "體積"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "扇形弧長等於圓錐底圓周長，扇形半徑就是圓錐母線。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-1-1-clock-hands-angle-parameterized": {
+      "id": "practice-s3-1-1-clock-hands-angle-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "時鐘指針夾角",
+      "generatorKey": "s3-1-1-clock-hands-angle-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-1-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "三角函數",
+      "domain": "弧度與扇形",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-1-1",
+        "弧度",
+        "時鐘",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "時針每分鐘轉 0.5 度，分針每分鐘轉 6 度，兩者差的絕對值即為夾角，超過 180 度要用 360 度減。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-1-1-belt-two-pulleys-parameterized": {
+      "id": "practice-s3-1-1-belt-two-pulleys-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩輪皮帶長",
+      "generatorKey": "s3-1-1-belt-two-pulleys-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-1-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "三角函數",
+      "domain": "弧度與扇形",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-1-1",
+        "弧度",
+        "皮帶輪",
+        "公切線",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "皮帶總長 = 兩段公切線長 + 兩輪各自被皮帶包住的弧長，善用 sin/cos 的夾角求弧長。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-1-1-seven-circles-band-parameterized": {
+      "id": "practice-s3-1-1-seven-circles-band-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "七圓緊密排列外圍包裝長度",
+      "generatorKey": "s3-1-1-seven-circles-band-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-1-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "三角函數",
+      "domain": "弧度與扇形",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-1-1",
+        "弧度",
+        "圓形包裝",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "外圍圓心連線構成正六邊形，直線段總長 = 6 倍直徑，轉彎弧總和恰好一整圈。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-1-1-sector-extrema": {
       "id": "practice-s3-1-1-sector-extrema",
       "enabled": true,
@@ -76648,6 +84604,38 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-1-2-cos-arithmetic-progression-parameterized": {
+      "id": "practice-s3-1-2-cos-arithmetic-progression-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "餘弦等差數列條件",
+      "generatorKey": "s3-1-2-cos-arithmetic-progression-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-1-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "三角函數",
+      "domain": "三角函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-1-2",
+        "和差化積",
+        "等差數列",
+        "解的個數"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "三數成等差時，中項的兩倍等於首項加末項。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -76926,6 +84914,35 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-1-2-sin-cos-sum-square": {
+      "id": "practice-s3-1-2-sin-cos-sum-square",
+      "enabled": true,
+      "mode": "generator",
+      "title": "",
+      "generatorKey": "s3-1-2-sin-cos-sum-square",
+      "difficulty": "",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-1-2",
+      "stage": "senior",
+      "grade": "3",
+      "term": "1",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "trigonometry",
+        "sum-difference",
+        "identity"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-1-2-special-18-36": {
       "id": "practice-s3-1-2-special-18-36",
       "enabled": true,
@@ -76998,6 +85015,38 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-1-2-tangent-addition-equation-parameterized": {
+      "id": "practice-s3-1-2-tangent-addition-equation-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "正切和差角：方程與反解",
+      "generatorKey": "s3-1-2-tangent-addition-equation-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-1-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "三角函數",
+      "domain": "三角函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-1-2",
+        "和差角公式",
+        "正切",
+        "反解"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "看見分式形式時，先判斷它是否就是 tan(A-B) 或 tan(A+B)。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -77376,6 +85425,39 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-1-3-linear-sincos-graph-facts-parameterized": {
+      "id": "practice-s3-1-3-linear-sincos-graph-facts-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "a sin kx + b cos kx 圖形基本量",
+      "generatorKey": "s3-1-3-linear-sincos-graph-facts-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-1-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "三角函數",
+      "domain": "三角函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-1-3",
+        "三角函數圖形",
+        "振幅",
+        "週期",
+        "極值"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "a sin kx + b cos kx 的振幅是 sqrt(a^2+b^2)，週期看 k。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-1-3-monotonic-interval": {
       "id": "practice-s3-1-3-monotonic-interval",
       "enabled": true,
@@ -77423,6 +85505,39 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-1-3-peak-valley-function-parameterized": {
+      "id": "practice-s3-1-3-peak-valley-function-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由相鄰最高點與最低點求函數",
+      "generatorKey": "s3-1-3-peak-valley-function-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-1-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "三角函數",
+      "domain": "三角函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-1-3",
+        "三角函數圖形",
+        "最高點",
+        "最低點",
+        "函數模型"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "最高點到相鄰最低點是半個週期，兩個 y 值的平均是中線。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -77726,6 +85841,38 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-1-4-combo-max-point-tangent-parameterized": {
+      "id": "practice-s3-1-4-combo-max-point-tangent-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "合成函數最大點的正切值",
+      "generatorKey": "s3-1-4-combo-max-point-tangent-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-1-4",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "三角函數",
+      "domain": "三角函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-1-4",
+        "三角函數合成",
+        "最大值",
+        "導數條件"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "最大點可用合成角判斷，也可用 f'(x)=0 求 tan x。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-1-4-equation-solving": {
       "id": "practice-s3-1-4-equation-solving",
       "enabled": true,
@@ -77773,6 +85920,66 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-1-4-inverse-trig-eval": {
+      "id": "practice-s3-1-4-inverse-trig-eval",
+      "enabled": true,
+      "mode": "generator",
+      "title": "",
+      "generatorKey": "s3-1-4-inverse-trig-eval",
+      "difficulty": "",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-1-4",
+      "stage": "senior",
+      "grade": "3",
+      "term": "1",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "trigonometry",
+        "inverse"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-1-4-linear-combo-inequality-parameterized": {
+      "id": "practice-s3-1-4-linear-combo-inequality-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "合成後解三角不等式",
+      "generatorKey": "s3-1-4-linear-combo-inequality-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-1-4",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "三角函數",
+      "domain": "三角函數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-1-4",
+        "三角函數合成",
+        "不等式",
+        "區間解"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "先把 a sin x + b cos x 合成單一三角函數，再回到指定範圍取解。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -77926,6 +86133,34 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-1-4-trig-inequality-parameterized": {
+      "id": "practice-s3-1-4-trig-inequality-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "",
+      "generatorKey": "s3-1-4-trig-inequality-parameterized",
+      "difficulty": "",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-1-4",
+      "stage": "senior",
+      "grade": "3",
+      "term": "1",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "trigonometry",
+        "inequality"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-1-4-wave-model": {
       "id": "practice-s3-1-4-wave-model",
       "enabled": true,
@@ -78057,6 +86292,35 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-2-1-diff-base-exp-equation": {
+      "id": "practice-s3-2-1-diff-base-exp-equation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "",
+      "generatorKey": "s3-2-1-diff-base-exp-equation",
+      "difficulty": "",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-1",
+      "stage": "2",
+      "grade": "2",
+      "term": "1",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "指數函數",
+        "不同底數方程",
+        "取對數求解"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-2-1-exponent-law-simplification": {
       "id": "practice-s3-2-1-exponent-law-simplification",
       "enabled": true,
@@ -78138,6 +86402,39 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-2-1-exponential-graph-parameter-clean": {
+      "id": "practice-s3-2-1-exponential-graph-parameter-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由漸近線與兩點求指數函數",
+      "generatorKey": "s3-2-1-exponential-graph-parameter-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "指數函數",
+      "domain": "指數與對數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-2-1",
+        "指數圖形",
+        "水平漸近線",
+        "參數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-2-1-exponential-inequalities": {
       "id": "practice-s3-2-1-exponential-inequalities",
       "enabled": true,
@@ -78160,6 +86457,39 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-2-1-exponential-integer-count-clean": {
+      "id": "practice-s3-2-1-exponential-integer-count-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "指數不等式的整數解個數",
+      "generatorKey": "s3-2-1-exponential-integer-count-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "指數函數",
+      "domain": "指數與對數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-2-1",
+        "指數不等式",
+        "對數估算",
+        "整數解",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -78319,6 +86649,38 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-2-1-hyperbolic-compose-parameterized": {
+      "id": "practice-s3-2-1-hyperbolic-compose-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "指數分式函數合成求值",
+      "generatorKey": "s3-2-1-hyperbolic-compose-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "指數函數",
+      "domain": "指數函數進階代數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-2-1",
+        "指數分式函數",
+        "函數合成",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "設 A=a^α、B=a^β，f(α∓β) 只需要 A²、B²（由 f(α)、f(β) 解出），不需要知道 A、B 本身的正負號。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-2-1-parameter-from-graph": {
       "id": "practice-s3-2-1-parameter-from-graph",
       "enabled": true,
@@ -78341,6 +86703,39 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-2-1-power-root-comparison-clean": {
+      "id": "practice-s3-2-1-power-root-comparison-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "指數根式大小比較",
+      "generatorKey": "s3-2-1-power-root-comparison-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "指數函數",
+      "domain": "指數與對數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-2-1",
+        "指數",
+        "根式",
+        "大小比較",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -78444,6 +86839,39 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-2-2-chain-change-base-clean": {
+      "id": "practice-s3-2-2-chain-change-base-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "連鎖換底與複合底數",
+      "generatorKey": "s3-2-2-chain-change-base-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "對數",
+      "domain": "指數與對數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-2-2",
+        "換底公式",
+        "複合底數",
+        "連鎖關係",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-2-2-chain-product-logs": {
       "id": "practice-s3-2-2-chain-product-logs",
       "enabled": true,
@@ -78463,6 +86891,64 @@ window.practiceLibraryStore = {
       "prompt": "",
       "answer": "",
       "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-2-2-change-base-log-equation": {
+      "id": "practice-s3-2-2-change-base-log-equation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "",
+      "generatorKey": "s3-2-2-change-base-log-equation",
+      "difficulty": "",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-2",
+      "stage": "2",
+      "grade": "2",
+      "term": "1",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "對數函數",
+        "換底公式",
+        "多基對數方程"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-2-2-diff-base-log-inequality": {
+      "id": "practice-s3-2-2-diff-base-log-inequality",
+      "enabled": true,
+      "mode": "generator",
+      "title": "",
+      "generatorKey": "s3-2-2-diff-base-log-inequality",
+      "difficulty": "",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-2",
+      "stage": "2",
+      "grade": "2",
+      "term": "1",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "對數函數",
+        "不同底數不等式",
+        "倒數對數"
+      ],
       "usage": [],
       "examples": [],
       "tips": [],
@@ -78491,6 +86977,39 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-2-2-dominant-log-approx-clean": {
+      "id": "practice-s3-2-2-dominant-log-approx-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "對數估算：和式的主導項",
+      "generatorKey": "s3-2-2-dominant-log-approx-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "對數",
+      "domain": "指數與對數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-2-2",
+        "對數估算",
+        "數量級",
+        "主導項",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -78681,6 +87200,39 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-2-2-log-domain-integer-count-clean": {
+      "id": "practice-s3-2-2-log-domain-integer-count-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "對數定義域的整數解個數",
+      "generatorKey": "s3-2-2-log-domain-integer-count-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "對數",
+      "domain": "指數與對數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-2-2",
+        "對數定義域",
+        "底數限制",
+        "整數解",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-2-2-log-inequalities-domain-five-subtypes": {
       "id": "practice-s3-2-2-log-inequalities-domain-five-subtypes",
       "enabled": true,
@@ -78856,6 +87408,35 @@ window.practiceLibraryStore = {
       "prompt": "",
       "answer": "",
       "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-2-2-special-log-equation": {
+      "id": "practice-s3-2-2-special-log-equation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "",
+      "generatorKey": "s3-2-2-special-log-equation",
+      "difficulty": "",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-2",
+      "stage": "2",
+      "grade": "2",
+      "term": "1",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "對數函數",
+        "對數二次方程",
+        "變底方程"
+      ],
       "usage": [],
       "examples": [],
       "tips": [],
@@ -79112,6 +87693,39 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-2-3-log-base-order-clean": {
+      "id": "practice-s3-2-3-log-base-order-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由對數大小判斷底數範圍",
+      "generatorKey": "s3-2-3-log-base-order-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "對數函數圖形",
+      "domain": "指數與對數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-2-3",
+        "對數函數",
+        "單調性",
+        "底數範圍",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-2-3-log-comparison": {
       "id": "practice-s3-2-3-log-comparison",
       "enabled": true,
@@ -79280,6 +87894,68 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-2-3-log-parity-range": {
+      "id": "practice-s3-2-3-log-parity-range",
+      "enabled": true,
+      "mode": "generator",
+      "title": "",
+      "generatorKey": "s3-2-3-log-parity-range",
+      "difficulty": "",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-3",
+      "stage": "2",
+      "grade": "2",
+      "term": "1",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "對數函數",
+        "奇偶性",
+        "值域"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-2-3-log-point-transform-clean": {
+      "id": "practice-s3-2-3-log-point-transform-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "對數圖形上的點變換",
+      "generatorKey": "s3-2-3-log-point-transform-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "對數函數圖形",
+      "domain": "指數與對數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-2-3",
+        "對數圖形",
+        "點變換",
+        "平移",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-2-3-modeling-applications": {
       "id": "practice-s3-2-3-modeling-applications",
       "enabled": true,
@@ -79299,6 +87975,35 @@ window.practiceLibraryStore = {
       "prompt": "",
       "answer": "",
       "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-2-3-power-log-equation": {
+      "id": "practice-s3-2-3-power-log-equation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "",
+      "generatorKey": "s3-2-3-power-log-equation",
+      "difficulty": "",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-3",
+      "stage": "2",
+      "grade": "2",
+      "term": "1",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "對數函數",
+        "冪對數方程",
+        "高階方程"
+      ],
       "usage": [],
       "examples": [],
       "tips": [],
@@ -79402,6 +88107,39 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-2-4-compound-inference-clean": {
+      "id": "practice-s3-2-4-compound-inference-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "固定倍率成長的倍期推算",
+      "generatorKey": "s3-2-4-compound-inference-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-4",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "指數與對數應用",
+      "domain": "指數與對數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-2-4",
+        "複利",
+        "固定倍率",
+        "倍期推算",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -79542,6 +88280,39 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-2-4-growth-threshold-clean": {
+      "id": "practice-s3-2-4-growth-threshold-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "指數成長衰退的門檻時間",
+      "generatorKey": "s3-2-4-growth-threshold-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-4",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "指數與對數應用",
+      "domain": "指數與對數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-2-4",
+        "成長衰退",
+        "門檻時間",
+        "對數求解",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-2-4-information-spreading": {
       "id": "practice-s3-2-4-information-spreading",
       "enabled": true,
@@ -79639,6 +88410,40 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-2-4-log-scale-ratio-clean": {
+      "id": "practice-s3-2-4-log-scale-ratio-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "對數尺度的倍率判讀",
+      "generatorKey": "s3-2-4-log-scale-ratio-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-2-4",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "上學期",
+      "chapter": "指數與對數應用",
+      "domain": "指數與對數",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-2-4",
+        "對數尺度",
+        "pH",
+        "星等",
+        "芮氏規模",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -79823,6 +88628,39 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-3-1-area-ratio-coefficient-clean": {
+      "id": "practice-s3-3-1-area-ratio-coefficient-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由向量係數求三角形面積比",
+      "generatorKey": "s3-3-1-area-ratio-coefficient-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-1",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "平面向量",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-1",
+        "向量係數",
+        "面積比",
+        "三角形",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-3-1-area-ratio-vectors": {
       "id": "practice-s3-3-1-area-ratio-vectors",
       "enabled": true,
@@ -79848,6 +88686,39 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-3-1-barycentric-interior-clean": {
+      "id": "practice-s3-3-1-barycentric-interior-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三角形內部的向量係數條件",
+      "generatorKey": "s3-3-1-barycentric-interior-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-1",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "平面向量",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-1",
+        "向量線性組合",
+        "三角形內部",
+        "係數條件",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -80173,6 +89044,39 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-3-1-segment-section-clean": {
+      "id": "practice-s3-3-1-segment-section-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "線段內分點的向量表示",
+      "generatorKey": "s3-3-1-segment-section-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-1",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "平面向量",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-1",
+        "內分點",
+        "向量表示",
+        "線段比",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -80603,6 +89507,31 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-3-2-line-direction-normal": {
+      "id": "practice-s3-3-2-line-direction-normal",
+      "enabled": true,
+      "mode": "generator",
+      "title": "直線方向向量、法向量與平行垂直方程式",
+      "generatorKey": "s3-3-2-line-direction-normal",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-3-2-linear-combination-equations": {
       "id": "practice-s3-3-2-linear-combination-equations",
       "enabled": true,
@@ -80687,6 +89616,72 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-3-2-parametric-min-length-clean": {
+      "id": "practice-s3-3-2-parametric-min-length-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "參數向量長度最小值",
+      "generatorKey": "s3-3-2-parametric-min-length-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-2",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "座標向量",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-2",
+        "參數向量",
+        "最小長度",
+        "垂直",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-3-2-projection-equality-clean": {
+      "id": "practice-s3-3-2-projection-equality-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "正射影相等求參數",
+      "generatorKey": "s3-3-2-projection-equality-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-2",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "座標向量",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-2",
+        "正射影",
+        "內積",
+        "參數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-3-2-projection-extrema-lattice": {
       "id": "practice-s3-3-2-projection-extrema-lattice",
       "enabled": true,
@@ -80712,6 +89707,105 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-3-2-region-area-clean": {
+      "id": "practice-s3-3-2-region-area-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "座標向量係數區域面積",
+      "generatorKey": "s3-3-2-region-area-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-2",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "座標向量",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-2",
+        "係數區域",
+        "行列式面積",
+        "座標向量",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-3-2-line-angle-vector-parameterized": {
+      "id": "practice-s3-3-2-line-angle-vector-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩直線交角（法向量／方向向量內積）",
+      "generatorKey": "s3-3-2-line-angle-vector-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-2",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "座標向量",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-2",
+        "法向量",
+        "方向向量",
+        "兩直線夾角",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "兩直線夾角的餘弦值可用法向量（或方向向量）的內積除以兩向量長度之積求得，取絕對值後即為銳角或直角的餘弦。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-3-2-triangle-center-coordinate-parameterized": {
+      "id": "practice-s3-3-2-triangle-center-coordinate-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由頂點坐標求垂心與外心坐標",
+      "generatorKey": "s3-3-2-triangle-center-coordinate-parameterized",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-2",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "座標向量",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-2",
+        "垂心",
+        "外心",
+        "坐標幾何",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "垂心用兩組互相垂直的向量內積為 0 列方程式；外心用到三頂點距離相等列方程式，兩者都可化成關於 (x,y) 的線性方程組求解。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -80922,6 +90016,64 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-3-3-norm-relation-angle-clean": {
+      "id": "practice-s3-3-3-norm-relation-angle-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由長度關係求夾角餘弦",
+      "generatorKey": "s3-3-3-norm-relation-angle-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-3",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "向量內積",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-3",
+        "長度平方",
+        "夾角餘弦",
+        "內積",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-3-3-norm-relation-condition": {
+      "id": "practice-s3-3-3-norm-relation-condition",
+      "enabled": true,
+      "mode": "generator",
+      "title": "向量和差長度條件推夾角關係",
+      "generatorKey": "s3-3-3-norm-relation-condition",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-3-3-perpendicular-parameter": {
       "id": "practice-s3-3-3-perpendicular-parameter",
       "enabled": true,
@@ -81006,6 +90158,122 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-3-3-projection-vector-clean": {
+      "id": "practice-s3-3-3-projection-vector-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "座標向量的正射影向量",
+      "generatorKey": "s3-3-3-projection-vector-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-3",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "向量內積",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-3",
+        "正射影向量",
+        "內積",
+        "座標",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-3-3-triangle-angle-cosine": {
+      "id": "practice-s3-3-3-triangle-angle-cosine",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三角形頂角餘弦與三角形類型判定",
+      "generatorKey": "s3-3-3-triangle-angle-cosine",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-3-3-triangle-side-dot-clean": {
+      "id": "practice-s3-3-3-triangle-side-dot-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由三邊長求向量內積",
+      "generatorKey": "s3-3-3-triangle-side-dot-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-3",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "向量內積",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-3",
+        "餘弦定理",
+        "內積",
+        "三角形",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-3-3-vector-from-dot-constraints": {
+      "id": "practice-s3-3-3-vector-from-dot-constraints",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由兩個內積條件解向量",
+      "generatorKey": "s3-3-3-vector-from-dot-constraints",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-3-3-work-area-applications": {
       "id": "practice-s3-3-3-work-area-applications",
       "enabled": true,
@@ -81059,6 +90327,39 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-3-4-area-scale-clean": {
+      "id": "practice-s3-3-4-area-scale-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "線性變換的面積倍率",
+      "generatorKey": "s3-3-4-area-scale-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-4",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "行列式與方程組",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-4",
+        "行列式面積",
+        "線性變換",
+        "倍率",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -81182,6 +90483,40 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s3-3-4-cramer-parameter-clean": {
+      "id": "practice-s3-3-4-cramer-parameter-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "參數方程組的無限多解與無解",
+      "generatorKey": "s3-3-4-cramer-parameter-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-4",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "行列式與方程組",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-4",
+        "聯立方程組",
+        "參數",
+        "無限多解",
+        "無解",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s3-3-4-cramer-parameter-three-subtypes": {
       "id": "practice-s3-3-4-cramer-parameter-three-subtypes",
       "enabled": true,
@@ -81239,6 +90574,39 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s3-3-4-determinant-operation-clean": {
+      "id": "practice-s3-3-4-determinant-operation-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "二階行列式列運算性質",
+      "generatorKey": "s3-3-4-determinant-operation-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s3-3-4",
+      "stage": "高中",
+      "grade": "高三",
+      "term": "上學期",
+      "chapter": "行列式與方程組",
+      "domain": "向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s3-3-4",
+        "行列式",
+        "列運算",
+        "性質",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -81410,6 +90778,72 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-1-1-equidistant-plane-locus-clean": {
+      "id": "practice-s4-1-1-equidistant-plane-locus-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "等距點在坐標平面上的軌跡",
+      "generatorKey": "s4-1-1-equidistant-plane-locus-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間概念",
+      "domain": "空間向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-1",
+        "等距點",
+        "垂直平分平面",
+        "坐標平面",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-1-1-moving-point-distance-clean": {
+      "id": "practice-s4-1-1-moving-point-distance-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "空間等速動點距離極值",
+      "generatorKey": "s4-1-1-moving-point-distance-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間概念",
+      "domain": "空間向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-1",
+        "等速動點",
+        "距離平方",
+        "極值",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -81822,6 +91256,72 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-1-2-line-projection-point-clean": {
+      "id": "practice-s4-1-2-line-projection-point-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "點到空間直線的正射影點",
+      "generatorKey": "s4-1-2-line-projection-point-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間坐標與向量",
+      "domain": "空間向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-2",
+        "正射影點",
+        "空間直線",
+        "垂足",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-1-2-parametric-vector-min-clean": {
+      "id": "practice-s4-1-2-parametric-vector-min-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "參數空間向量長度最小值",
+      "generatorKey": "s4-1-2-parametric-vector-min-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間坐標與向量",
+      "domain": "空間向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-2",
+        "參數向量",
+        "長度最小",
+        "垂直條件",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s4-1-2-point-projection-distance": {
       "id": "practice-s4-1-2-point-projection-distance",
       "enabled": true,
@@ -82021,6 +91521,68 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-1-2-symmetric-line-equation": {
+      "id": "practice-s4-1-2-symmetric-line-equation",
+      "enabled": true,
+      "mode": "generator",
+      "title": "空間直線的對稱式方程",
+      "generatorKey": "s4-1-2-symmetric-line-equation",
+      "difficulty": "medium",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "space-vectors",
+        "line-equation",
+        "symmetric-form"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-1-2-unit-direction-sum-clean": {
+      "id": "practice-s4-1-2-unit-direction-sum-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "同方向單位向量與坐標和",
+      "generatorKey": "s4-1-2-unit-direction-sum-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間坐標與向量",
+      "domain": "空間向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-2",
+        "單位向量",
+        "方向向量",
+        "坐標和",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s4-1-2-vector-operation-length": {
       "id": "practice-s4-1-2-vector-operation-length",
       "enabled": true,
@@ -82042,6 +91604,36 @@ window.practiceLibraryStore = {
       "tags": [
         "空間坐標",
         "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-1-3-amgm-extrema": {
+      "id": "practice-s4-1-3-amgm-extrema",
+      "enabled": true,
+      "mode": "generator",
+      "title": "AM-GM與球面距離極值",
+      "generatorKey": "s4-1-3-amgm-extrema",
+      "difficulty": "hard",
+      "questionCount": 0,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "space-vectors",
+        "AM-GM",
+        "extrema",
+        "cauchy"
       ],
       "usage": [],
       "examples": [],
@@ -82254,6 +91846,39 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-1-3-plane-distance-minimum-clean": {
+      "id": "practice-s4-1-3-plane-distance-minimum-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平面限制下的平方距離最小值",
+      "generatorKey": "s4-1-3-plane-distance-minimum-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間向量的內積",
+      "domain": "空間向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-3",
+        "點到平面距離",
+        "平方距離",
+        "最小值",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s4-1-3-plane-normal-projection": {
       "id": "practice-s4-1-3-plane-normal-projection",
       "enabled": true,
@@ -82314,6 +91939,39 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-1-3-projection-scalar-clean": {
+      "id": "practice-s4-1-3-projection-scalar-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "帶正負正射影長判讀",
+      "generatorKey": "s4-1-3-projection-scalar-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間向量的內積",
+      "domain": "空間向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-3",
+        "正射影長",
+        "內積",
+        "夾角",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s4-1-3-projection-vector": {
       "id": "practice-s4-1-3-projection-vector",
       "enabled": true,
@@ -82339,6 +91997,39 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-1-3-sphere-linear-extrema-clean": {
+      "id": "practice-s4-1-3-sphere-linear-extrema-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "球面上一次式最大最小值",
+      "generatorKey": "s4-1-3-sphere-linear-extrema-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間向量的內積",
+      "domain": "空間向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-3",
+        "球面",
+        "一次式極值",
+        "柯西不等式",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -82603,6 +92294,39 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-1-4-determinant-operation-clean": {
+      "id": "practice-s4-1-4-determinant-operation-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三階行列式欄運算性質",
+      "generatorKey": "s4-1-4-determinant-operation-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-4",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "外積與行列式",
+      "domain": "空間向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-4",
+        "行列式性質",
+        "欄運算",
+        "交錯性",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s4-1-4-determinant-properties": {
       "id": "practice-s4-1-4-determinant-properties",
       "enabled": true,
@@ -82687,6 +92411,39 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-1-4-triangle-height-clean": {
+      "id": "practice-s4-1-4-triangle-height-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "外積求空間三角形的高",
+      "generatorKey": "s4-1-4-triangle-height-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-4",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "外積與行列式",
+      "domain": "空間向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-4",
+        "外積",
+        "三角形面積",
+        "高",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s4-1-4-triple-volume": {
       "id": "practice-s4-1-4-triple-volume",
       "enabled": true,
@@ -82712,6 +92469,39 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-1-4-vandermonde-parameter-clean": {
+      "id": "practice-s4-1-4-vandermonde-parameter-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "范德蒙行列式參數方程",
+      "generatorKey": "s4-1-4-vandermonde-parameter-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-4",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "外積與行列式",
+      "domain": "空間向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-4",
+        "范德蒙行列式",
+        "參數方程",
+        "行列式",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -82744,6 +92534,105 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-1-4-volume-linear-combination-clean": {
+      "id": "practice-s4-1-4-volume-linear-combination-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "向量線性組合下的體積倍率",
+      "generatorKey": "s4-1-4-volume-linear-combination-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-4",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "外積與行列式",
+      "domain": "空間向量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-4",
+        "三階行列式",
+        "體積倍率",
+        "線性組合",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-2-1-common-line-plane-family-clean": {
+      "id": "practice-s4-2-1-common-line-plane-family-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "通過兩點的平面族共同交集",
+      "generatorKey": "s4-2-1-common-line-plane-family-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-2-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "平面方程式",
+      "domain": "空間中的平面與直線",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-2-1",
+        "平面族",
+        "共同交集",
+        "直線",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-2-1-coplanar-parameter-clean": {
+      "id": "practice-s4-2-1-coplanar-parameter-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "四點共面與參數求值",
+      "generatorKey": "s4-2-1-coplanar-parameter-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-2-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "平面方程式",
+      "domain": "空間中的平面與直線",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-2-1",
+        "四點共面",
+        "參數",
+        "行列式",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -82808,6 +92697,39 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-2-1-parallel-plane-distance-parameter-clean": {
+      "id": "practice-s4-2-1-parallel-plane-distance-parameter-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平行平面的距離與參數",
+      "generatorKey": "s4-2-1-parallel-plane-distance-parameter-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-2-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "平面方程式",
+      "domain": "空間中的平面與直線",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-2-1",
+        "平行平面",
+        "距離公式",
+        "參數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s4-2-1-perpendicular-bisector": {
       "id": "practice-s4-2-1-perpendicular-bisector",
       "enabled": true,
@@ -82833,6 +92755,39 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-2-1-plane-angle-parameter-clean": {
+      "id": "practice-s4-2-1-plane-angle-parameter-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "平面平行垂直的參數判定",
+      "generatorKey": "s4-2-1-plane-angle-parameter-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-2-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "平面方程式",
+      "domain": "空間中的平面與直線",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-2-1",
+        "平面夾角",
+        "法向量",
+        "參數",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -82949,6 +92904,35 @@ window.practiceLibraryStore = {
       "tags": [
         "空間中的平面",
         "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-2-1-plane-special-condition": {
+      "id": "practice-s4-2-1-plane-special-condition",
+      "enabled": true,
+      "mode": "generator",
+      "title": "特殊條件平面建構（平行向量、垂直直線、含線垂面）",
+      "generatorKey": "s4-2-1-plane-special-condition",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "空間向量",
+        "平面方程",
+        "法向量"
       ],
       "usage": [],
       "examples": [],
@@ -83096,6 +93080,35 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-2-1-two-plane-intersection": {
+      "id": "practice-s4-2-1-two-plane-intersection",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩平面交線方向與方程",
+      "generatorKey": "s4-2-1-two-plane-intersection",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "空間向量",
+        "平面方程",
+        "交線"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s4-2-2-advanced-line-three-subtypes": {
       "id": "practice-s4-2-2-advanced-line-three-subtypes",
       "enabled": true,
@@ -83216,6 +93229,68 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-2-2-line-perp-plane": {
+      "id": "practice-s4-2-2-line-perp-plane",
+      "enabled": true,
+      "mode": "generator",
+      "title": "直線通過點且垂直平面",
+      "generatorKey": "s4-2-2-line-perp-plane",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "空間向量",
+        "直線方程",
+        "法向量"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-2-2-line-plane-hit-time-clean": {
+      "id": "practice-s4-2-2-line-plane-hit-time-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "直線動點到達平面的時間",
+      "generatorKey": "s4-2-2-line-plane-hit-time-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間直線",
+      "domain": "空間中的平面與直線",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-2-2",
+        "直線參數式",
+        "線面交點",
+        "動點",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s4-2-2-line-plane-interaction": {
       "id": "practice-s4-2-2-line-plane-interaction",
       "enabled": true,
@@ -83241,6 +93316,73 @@ window.practiceLibraryStore = {
       "usage": [],
       "examples": [],
       "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-2-2-line-plane-relation-clean": {
+      "id": "practice-s4-2-2-line-plane-relation-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "直線與平面關係判斷",
+      "generatorKey": "s4-2-2-line-plane-relation-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間直線",
+      "domain": "空間中的平面與直線",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-2-2",
+        "線面關係",
+        "方向向量",
+        "法向量",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-2-2-line-relation-classification-clean": {
+      "id": "practice-s4-2-2-line-relation-classification-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩直線位置關係判定",
+      "generatorKey": "s4-2-2-line-relation-classification-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間直線",
+      "domain": "空間中的平面與直線",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-2-2",
+        "兩直線關係",
+        "平行",
+        "相交",
+        "歪斜",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
       "mistakes": []
     },
@@ -83412,6 +93554,39 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-2-2-point-line-reflection-clean": {
+      "id": "practice-s4-2-2-point-line-reflection-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "點到直線垂足與對稱點",
+      "generatorKey": "s4-2-2-point-line-reflection-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間直線",
+      "domain": "空間中的平面與直線",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-2-2",
+        "點線距離",
+        "垂足",
+        "對稱點",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": []
+    },
     "practice-s4-2-2-relation-distance-four-subtypes": {
       "id": "practice-s4-2-2-relation-distance-four-subtypes",
       "enabled": true,
@@ -83438,6 +93613,35 @@ window.practiceLibraryStore = {
       "tags": [
         "空間中的直線",
         "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": []
+    },
+    "practice-s4-2-2-two-line-relation-full": {
+      "id": "practice-s4-2-2-two-line-relation-full",
+      "enabled": true,
+      "mode": "generator",
+      "title": "兩直線完整關係判斷與求值（平行、相交、歪斜）",
+      "generatorKey": "s4-2-2-two-line-relation-full",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "",
+      "stage": "",
+      "grade": "",
+      "term": "",
+      "chapter": "",
+      "domain": "",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "空間向量",
+        "直線方程",
+        "歪斜線"
       ],
       "usage": [],
       "examples": [],
@@ -83508,6 +93712,41 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s4-3-1-complement-conditional": {
+      "id": "practice-s4-3-1-complement-conditional",
+      "enabled": true,
+      "mode": "generator",
+      "title": "補事件條件機率 P(A|B^c) 與 P(B|A^c)",
+      "generatorKey": "s4-3-1-complement-conditional",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-3-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "條件機率與貝氏定理",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-3-1",
+        "條件機率",
+        "補事件",
+        "聯集公式",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是只看題目中的單一百分比，忘記條件機率的分母已經換成已知事件。"
+      ]
     },
     "practice-s4-3-1-concrete-conditions": {
       "id": "practice-s4-3-1-concrete-conditions",
@@ -83793,6 +94032,41 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-3-1-total-prob-abstract": {
+      "id": "practice-s4-3-1-total-prob-abstract",
+      "enabled": true,
+      "mode": "generator",
+      "title": "全機率公式抽象樹形",
+      "generatorKey": "s4-3-1-total-prob-abstract",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-3-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "條件機率與貝氏定理",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-3-1",
+        "全機率公式",
+        "樹狀圖",
+        "貝氏定理",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是只看題目中的單一百分比，忘記條件機率的分母已經換成已知事件。"
+      ]
+    },
     "practice-s4-3-2-advanced-distribution-three-subtypes": {
       "id": "practice-s4-3-2-advanced-distribution-three-subtypes",
       "enabled": true,
@@ -83909,6 +94183,41 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-3-2-exam-guessing": {
+      "id": "practice-s4-3-2-exam-guessing",
+      "enabled": true,
+      "mode": "generator",
+      "title": "考試猜題 Bayes 模型",
+      "generatorKey": "s4-3-2-exam-guessing",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-3-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "獨立事件與重複試驗",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-3-2",
+        "貝氏定理",
+        "猜題模型",
+        "條件反推",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是只看題目中的單一百分比，忘記條件機率的分母已經換成已知事件。"
+      ]
+    },
     "practice-s4-3-2-independence-algebra": {
       "id": "practice-s4-3-2-independence-algebra",
       "enabled": true,
@@ -83968,6 +94277,41 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s4-3-2-inverse-bayes": {
+      "id": "practice-s4-3-2-inverse-bayes",
+      "enabled": true,
+      "mode": "generator",
+      "title": "逆向 Bayes：已知 P(A|B) 求 P(B|A)",
+      "generatorKey": "s4-3-2-inverse-bayes",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-3-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "獨立事件與重複試驗",
+      "domain": "機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-3-2",
+        "條件機率",
+        "乘法定理",
+        "反向條件",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是只看題目中的單一百分比，忘記條件機率的分母已經換成已知事件。"
+      ]
     },
     "practice-s4-3-2-multi-member-success": {
       "id": "practice-s4-3-2-multi-member-success",
@@ -84240,26 +94584,32 @@ window.practiceLibraryStore = {
       "generatorKey": "s4-4-1-gaussian-basic",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 1,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-1",
       "stage": "高中",
       "grade": "高二",
       "term": "下學期",
-      "chapter": "三元一次聯立方程組與高斯消去法",
-      "domain": "",
+      "chapter": "三元一次方程組與高斯消去法",
+      "domain": "矩陣與方程組",
       "prompt": "",
       "answer": "",
       "tags": [
-        "三元一次聯立方程組",
-        "高斯消去法",
+        "s4-4-1",
+        "高斯消去",
+        "增廣矩陣",
+        "回代",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
     },
     "practice-s4-4-1-homogeneous-ratios": {
       "id": "practice-s4-4-1-homogeneous-ratios",
@@ -84298,26 +94648,32 @@ window.practiceLibraryStore = {
       "generatorKey": "s4-4-1-matrix-back-substitution",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 1,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-1",
       "stage": "高中",
       "grade": "高二",
       "term": "下學期",
-      "chapter": "三元一次聯立方程組與高斯消去法",
-      "domain": "",
+      "chapter": "三元一次方程組與高斯消去法",
+      "domain": "矩陣與方程組",
       "prompt": "",
       "answer": "",
       "tags": [
-        "三元一次聯立方程組",
-        "高斯消去法",
+        "s4-4-1",
+        "增廣矩陣",
+        "回代",
+        "係數還原",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
     },
     "practice-s4-4-1-matrix-model-three-subtypes": {
       "id": "practice-s4-4-1-matrix-model-three-subtypes",
@@ -84420,28 +94776,34 @@ window.practiceLibraryStore = {
       "mode": "generator",
       "title": "含參數方程組的解數討論",
       "generatorKey": "s4-4-1-parameter-solutions",
-      "difficulty": "hard",
+      "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 1,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-1",
       "stage": "高中",
       "grade": "高二",
       "term": "下學期",
-      "chapter": "三元一次聯立方程組與高斯消去法",
-      "domain": "",
+      "chapter": "三元一次方程組與高斯消去法",
+      "domain": "矩陣與方程組",
       "prompt": "",
       "answer": "",
       "tags": [
-        "三元一次聯立方程組",
-        "高斯消去法",
+        "s4-4-1",
+        "參數",
+        "解數討論",
+        "方程組",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
     },
     "practice-s4-4-1-plane-relations": {
       "id": "practice-s4-4-1-plane-relations",
@@ -84471,6 +94833,41 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s4-4-1-reciprocal-substitution": {
+      "id": "practice-s4-4-1-reciprocal-substitution",
+      "enabled": true,
+      "mode": "generator",
+      "title": "倒數代換解三元方程組",
+      "generatorKey": "s4-4-1-reciprocal-substitution",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-4-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "三元一次方程組與高斯消去法",
+      "domain": "矩陣與方程組",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-4-1",
+        "倒數代換",
+        "三元一次方程組",
+        "高斯消去",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
     },
     "practice-s4-4-1-special-solutions": {
       "id": "practice-s4-4-1-special-solutions",
@@ -84509,26 +94906,32 @@ window.practiceLibraryStore = {
       "generatorKey": "s4-4-2-algebraic-properties",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 1,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-2",
       "stage": "高中",
       "grade": "高二",
       "term": "下學期",
       "chapter": "矩陣的運算",
-      "domain": "",
+      "domain": "矩陣",
       "prompt": "",
       "answer": "",
       "tags": [
-        "矩陣",
-        "矩陣的運算",
+        "s4-4-2",
+        "矩陣乘法",
+        "不可交換",
+        "消去律",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
     },
     "practice-s4-4-2-cayley-hamilton": {
       "id": "practice-s4-4-2-cayley-hamilton",
@@ -84559,6 +94962,41 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-4-2-det-properties": {
+      "id": "practice-s4-4-2-det-properties",
+      "enabled": true,
+      "mode": "generator",
+      "title": "行列式性質：純量倍、乘積與反矩陣",
+      "generatorKey": "s4-4-2-det-properties",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-4-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "矩陣的運算",
+      "domain": "矩陣",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-4-2",
+        "行列式",
+        "純量倍",
+        "乘積",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
+    },
     "practice-s4-4-2-diagonal-power": {
       "id": "practice-s4-4-2-diagonal-power",
       "enabled": true,
@@ -84587,6 +95025,41 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
+    },
+    "practice-s4-4-2-elementary-row-operations": {
+      "id": "practice-s4-4-2-elementary-row-operations",
+      "enabled": true,
+      "mode": "generator",
+      "title": "基本矩陣與列運算表示",
+      "generatorKey": "s4-4-2-elementary-row-operations",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-4-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "矩陣的運算",
+      "domain": "矩陣",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-4-2",
+        "基本矩陣",
+        "列運算",
+        "矩陣乘法",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
     },
     "practice-s4-4-2-equality-algebra-three-subtypes": {
       "id": "practice-s4-4-2-equality-algebra-three-subtypes",
@@ -84832,6 +95305,41 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-4-2-similar-matrix": {
+      "id": "practice-s4-4-2-similar-matrix",
+      "enabled": true,
+      "mode": "generator",
+      "title": "相似矩陣 BAB^{-1} 的計算與性質",
+      "generatorKey": "s4-4-2-similar-matrix",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-4-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "矩陣的運算",
+      "domain": "矩陣",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-4-2",
+        "相似矩陣",
+        "反矩陣",
+        "行列式",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
+    },
     "practice-s4-4-2-special-matrices": {
       "id": "practice-s4-4-2-special-matrices",
       "enabled": true,
@@ -84903,27 +95411,32 @@ window.practiceLibraryStore = {
       "generatorKey": "s4-4-3-inverse-existence",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 1,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-3",
       "stage": "高中",
       "grade": "高二",
       "term": "下學期",
-      "chapter": "矩陣的應用：轉移矩陣與反矩陣",
-      "domain": "",
+      "chapter": "反矩陣與轉移矩陣",
+      "domain": "矩陣",
       "prompt": "",
       "answer": "",
       "tags": [
-        "矩陣",
-        "轉移矩陣",
+        "s4-4-3",
         "反矩陣",
+        "行列式",
+        "參數",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
     },
     "practice-s4-4-3-inverse-formula": {
       "id": "practice-s4-4-3-inverse-formula",
@@ -84933,27 +95446,31 @@ window.practiceLibraryStore = {
       "generatorKey": "s4-4-3-inverse-formula",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 1,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-3",
       "stage": "高中",
       "grade": "高二",
       "term": "下學期",
-      "chapter": "矩陣的應用：轉移矩陣與反矩陣",
-      "domain": "",
+      "chapter": "反矩陣與轉移矩陣",
+      "domain": "矩陣",
       "prompt": "",
       "answer": "",
       "tags": [
-        "矩陣",
-        "轉移矩陣",
-        "反矩陣",
+        "s4-4-3",
+        "反矩陣公式",
+        "二階矩陣",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
     },
     "practice-s4-4-3-inverse-matrix-equations": {
       "id": "practice-s4-4-3-inverse-matrix-equations",
@@ -84991,29 +95508,34 @@ window.practiceLibraryStore = {
       "mode": "generator",
       "title": "反矩陣多項式降階表示",
       "generatorKey": "s4-4-3-inverse-polynomial",
-      "difficulty": "hard",
+      "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 1,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-3",
       "stage": "高中",
       "grade": "高二",
       "term": "下學期",
-      "chapter": "矩陣的應用：轉移矩陣與反矩陣",
-      "domain": "",
+      "chapter": "反矩陣與轉移矩陣",
+      "domain": "矩陣",
       "prompt": "",
       "answer": "",
       "tags": [
-        "矩陣",
-        "轉移矩陣",
+        "s4-4-3",
         "反矩陣",
+        "矩陣多項式",
+        "降階",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
     },
     "practice-s4-4-3-inverse-powers": {
       "id": "practice-s4-4-3-inverse-powers",
@@ -85177,27 +95699,32 @@ window.practiceLibraryStore = {
       "generatorKey": "s4-4-3-transition-properties",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 1,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-3",
       "stage": "高中",
       "grade": "高二",
       "term": "下學期",
-      "chapter": "矩陣的應用：轉移矩陣與反矩陣",
-      "domain": "",
+      "chapter": "反矩陣與轉移矩陣",
+      "domain": "矩陣",
       "prompt": "",
       "answer": "",
       "tags": [
-        "矩陣",
+        "s4-4-3",
         "轉移矩陣",
-        "反矩陣",
+        "欄和",
+        "性質判定",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
     },
     "practice-s4-4-3-transition-stable-three-subtypes": {
       "id": "practice-s4-4-3-transition-stable-three-subtypes",
@@ -85271,31 +95798,36 @@ window.practiceLibraryStore = {
       "id": "practice-s4-4-4-area-scaling",
       "enabled": true,
       "mode": "generator",
-      "title": "面積倍率與行列式應用",
+      "title": "面積倍率與行列式",
       "generatorKey": "s4-4-4-area-scaling",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 1,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-4",
       "stage": "高中",
       "grade": "高二",
       "term": "下學期",
       "chapter": "平面上的線性變換",
-      "domain": "",
+      "domain": "矩陣與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
-        "矩陣",
+        "s4-4-4",
+        "面積倍率",
+        "行列式",
         "線性變換",
-        "平面幾何",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
     },
     "practice-s4-4-4-classification": {
       "id": "practice-s4-4-4-classification",
@@ -85451,6 +95983,41 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": []
     },
+    "practice-s4-4-4-line-transform": {
+      "id": "practice-s4-4-4-line-transform",
+      "enabled": true,
+      "mode": "generator",
+      "title": "直線在線性變換下的像方程",
+      "generatorKey": "s4-4-4-line-transform",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-4-4",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "平面上的線性變換",
+      "domain": "矩陣與幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-4-4",
+        "線性變換",
+        "直線方程",
+        "反代入",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
+    },
     "practice-s4-4-4-matrix-solving": {
       "id": "practice-s4-4-4-matrix-solving",
       "enabled": true,
@@ -85459,27 +96026,32 @@ window.practiceLibraryStore = {
       "generatorKey": "s4-4-4-matrix-solving",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 1,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-4",
       "stage": "高中",
       "grade": "高二",
       "term": "下學期",
       "chapter": "平面上的線性變換",
-      "domain": "",
+      "domain": "矩陣與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
-        "矩陣",
+        "s4-4-4",
         "線性變換",
-        "平面幾何",
+        "像點",
+        "矩陣求解",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
     },
     "practice-s4-4-4-point-mapping": {
       "id": "practice-s4-4-4-point-mapping",
@@ -85553,27 +96125,32 @@ window.practiceLibraryStore = {
       "generatorKey": "s4-4-4-rotation-reflection",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 1,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-4",
       "stage": "高中",
       "grade": "高二",
       "term": "下學期",
       "chapter": "平面上的線性變換",
-      "domain": "",
+      "domain": "矩陣與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
-        "矩陣",
-        "線性變換",
-        "平面幾何",
+        "s4-4-4",
+        "旋轉",
+        "鏡射",
+        "座標變換",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "此小類以同一解題模型換參數產生題目，避免只重排固定題目。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是把數字運算規則直接套到矩陣上，或忘記矩陣乘法有左右順序。"
+      ]
     },
     "practice-s4-4-4-scaling-shear": {
       "id": "practice-s4-4-4-scaling-shear",
@@ -85805,82 +96382,6 @@ window.practiceLibraryStore = {
       "tips": [],
       "notes": [],
       "mistakes": []
-    },
-    "practice-j3-2-1-exact-square-root-drill": {
-      "id": "practice-j3-2-1-exact-square-root-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "算術平方根直接求值",
-      "generatorKey": "j3-2-1-exact-square-root-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 4,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-2-1",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "平方根與畢氏定理",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "平方根",
-        "算術平方根",
-        "直接求值",
-        "無限練習"
-      ],
-      "usage": [
-        "練習完全平方數、小數、分數與平方後再開根號的基本求值。"
-      ],
-      "examples": [
-        "求 √(9/16) 的值。"
-      ],
-      "tips": [
-        "算術平方根只取非負值，像 √((-5)^2)=5。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把算術平方根誤寫成正負兩值。"
-      ]
-    },
-    "practice-j3-2-1-square-root-compare-drill": {
-      "id": "practice-j3-2-1-square-root-compare-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "平方根大小比較",
-      "generatorKey": "j3-2-1-square-root-compare-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 4,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-2-1",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "平方根與畢氏定理",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "平方根",
-        "大小比較",
-        "估算",
-        "無限練習"
-      ],
-      "usage": [
-        "練習利用平方或被開方數比較平方根大小。"
-      ],
-      "examples": [
-        "比較 √23 和 2√6 的大小。"
-      ],
-      "tips": [
-        "兩邊都非負時，可以先平方再比較。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "看到根號就只比表面數字，忽略平方後比較更穩定。"
-      ]
     },
     "practice-sum-square-variable-drill": {
       "id": "practice-sum-square-variable-drill",
@@ -86149,6027 +96650,1504 @@ window.practiceLibraryStore = {
         "知道規則後沒有真的代回去整理。"
       ]
     },
-    "practice-s1-2-1-angle-bisector-lines": {
-      "id": "practice-s1-2-1-angle-bisector-lines",
+    "practice-s2-3-1-mean-median-missing-score-parameterized": {
+      "id": "practice-s2-3-1-mean-median-missing-score-parameterized",
       "enabled": true,
       "mode": "generator",
-      "title": "兩直線夾角的角平分線方程式",
-      "generatorKey": "s1-2-1-angle-bisector-lines",
+      "title": "平均數等於中位數反推缺值",
+      "generatorKey": "s2-3-1-mean-median-missing-score-parameterized",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "s1-2-1",
+      "chapterCode": "s2-3-1",
       "stage": "高中",
       "grade": "高一",
-      "term": "上學期",
-      "chapter": "直線方程式",
-      "domain": "解析幾何",
+      "term": "下學期",
+      "chapter": "數據分析",
+      "domain": "統計",
       "prompt": "",
       "answer": "",
       "tags": [
-        "直線",
-        "角平分線",
-        "等距",
+        "s2-3-1",
+        "平均數",
+        "中位數",
+        "缺值",
+        "無限練習"
+      ],
+      "usage": [
+        "先利用題目條件固定中位數位置，再令平均數等於中位數建立方程式。"
+      ],
+      "examples": [],
+      "tips": [
+        "平均數會受每一筆資料影響；中位數要先看排序位置。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "未先判斷 x 的排序位置，就直接把已知資料的中間數當中位數。"
+      ],
+      "generatorBundle": "s2"
+    },
+    "practice-s2-3-1-bounded-variance-max-parameterized": {
+      "id": "practice-s2-3-1-bounded-variance-max-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "範圍限制下的最大變異數",
+      "generatorKey": "s2-3-1-bounded-variance-max-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數據分析",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-1",
+        "變異數",
+        "最大值",
+        "資料分散",
+        "無限練習"
+      ],
+      "usage": [
+        "固定平均且有上下界時，變異數最大發生在資料盡量集中到兩端。"
+      ],
+      "examples": [],
+      "tips": [
+        "當平均數是上下界中點，兩端各放一半資料最分散。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把最大變異數誤認為出現在資料平均分布於整段範圍。"
+      ],
+      "generatorBundle": "s2"
+    },
+    "practice-s2-3-1-delete-equal-high-values-parameterized": {
+      "id": "practice-s2-3-1-delete-equal-high-values-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "刪除兩筆資料後重算平均與標準差",
+      "generatorKey": "s2-3-1-delete-equal-high-values-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數據分析",
+      "domain": "統計",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-1",
+        "平均數",
+        "標準差",
+        "刪除資料",
+        "無限練習"
+      ],
+      "usage": [
+        "由原平均與標準差先還原總和與平方和，再扣掉刪除資料。"
+      ],
+      "examples": [],
+      "tips": [
+        "標準差題常要先轉成平方和，刪資料後再重新除以新的筆數。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只把平均數重新計算，忘記標準差也要用新的平方和與新的平均數。"
+      ],
+      "generatorBundle": "s2"
+    },
+    "practice-s2-3-2-perfect-line-correlation-parameterized": {
+      "id": "practice-s2-3-2-perfect-line-correlation-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "完全線性相關的相關係數判定",
+      "generatorKey": "s2-3-2-perfect-line-correlation-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數據分析",
+      "domain": "相關與迴歸",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-2",
+        "相關係數",
+        "完全相關",
+        "散布圖",
+        "無限練習"
+      ],
+      "usage": [
+        "資料點完全落在非水平直線上時，只看斜率正負決定 r=1 或 r=-1。"
+      ],
+      "examples": [],
+      "tips": [
+        "相關係數不是迴歸線斜率；完全共線時相關係數只能是 1 或 -1。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把直線斜率直接當成相關係數。"
+      ],
+      "generatorBundle": "s2"
+    },
+    "practice-s2-3-2-regression-line-prediction-parameterized": {
+      "id": "practice-s2-3-2-regression-line-prediction-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "由迴歸直線預測與解讀斜率",
+      "generatorKey": "s2-3-2-regression-line-prediction-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數據分析",
+      "domain": "相關與迴歸",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-2",
+        "迴歸直線",
+        "預測",
+        "斜率",
+        "無限練習"
+      ],
+      "usage": [
+        "代入 x 得預測值，並用斜率說明 x 每增加 1 單位時 y 的預測改變量。"
+      ],
+      "examples": [],
+      "tips": [
+        "迴歸線上的值是預測值，不是每一筆資料的真實值。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把迴歸線預測值誤解成必然實測值。"
+      ],
+      "generatorBundle": "s2"
+    },
+    "practice-s2-3-2-standardized-regression-parameterized": {
+      "id": "practice-s2-3-2-standardized-regression-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "標準化後的迴歸直線",
+      "generatorKey": "s2-3-2-standardized-regression-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-3-2",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "數據分析",
+      "domain": "相關與迴歸",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s2-3-2",
+        "標準化",
+        "迴歸直線",
+        "相關係數",
+        "無限練習"
+      ],
+      "usage": [
+        "標準化後平均為 0、標準差為 1，因此迴歸線為 Y'=rX'。"
+      ],
+      "examples": [],
+      "tips": [
+        "標準化不改變相關係數，但會把迴歸線斜率化成 r。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "仍用原本的標準差比例去算標準化後的斜率。"
+      ],
+      "generatorBundle": "s2"
+    },
+    "practice-s2-2-1-set-equality-unknowns-parameterized": {
+      "id": "practice-s2-2-1-set-equality-unknowns-parameterized",
+      "enabled": true,
+      "mode": "generator",
+      "title": "集合相等與差集求未知數",
+      "generatorKey": "s2-2-1-set-equality-unknowns-parameterized",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [],
+      "chapterCode": "s2-2-1",
+      "stage": "高中",
+      "grade": "高一",
+      "term": "下學期",
+      "chapter": "邏輯、集合與計數原理",
+      "domain": "排列組合與機率",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "集合相等",
+        "差集",
+        "未知數",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
       "tips": [],
       "notes": [],
-      "mistakes": []
+      "mistakes": [],
+      "generatorBundle": "s2"
     },
-    "practice-s1-2-2-point-circle-relation": {
-      "id": "practice-s1-2-2-point-circle-relation",
+    "practice-s2-2-1-proposition-equivalence-negation-parameterized": {
+      "id": "practice-s2-2-1-proposition-equivalence-negation-parameterized",
       "enabled": true,
       "mode": "generator",
-      "title": "點與圓的位置關係及切線長",
-      "generatorKey": "s1-2-2-point-circle-relation",
+      "title": "命題的等價敘述與否定",
+      "generatorKey": "s2-2-1-proposition-equivalence-negation-parameterized",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 2,
       "relatedPracticeIds": [],
-      "chapterCode": "s1-2-2",
+      "chapterCode": "s2-2-1",
       "stage": "高中",
       "grade": "高一",
-      "term": "上學期",
-      "chapter": "圓的方程式",
-      "domain": "解析幾何",
+      "term": "下學期",
+      "chapter": "邏輯、集合與計數原理",
+      "domain": "排列組合與機率",
       "prompt": "",
       "answer": "",
       "tags": [
-        "圓",
-        "點與圓",
-        "切線長",
-        "位置關係",
+        "命題",
+        "逆否命題",
+        "笛摩根定律",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
       "tips": [],
       "notes": [],
-      "mistakes": []
+      "mistakes": [],
+      "generatorBundle": "s2"
     },
-    "practice-s1-2-3-line-circle-intersection": {
-      "id": "practice-s1-2-3-line-circle-intersection",
+    "practice-s2-2-2-grid-rectangle-count-parameterized": {
+      "id": "practice-s2-2-2-grid-rectangle-count-parameterized",
       "enabled": true,
       "mode": "generator",
-      "title": "直線與圓的交點坐標",
-      "generatorKey": "s1-2-3-line-circle-intersection",
+      "title": "棋盤格矩形計數與指定點",
+      "generatorKey": "s2-2-2-grid-rectangle-count-parameterized",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 3,
       "relatedPracticeIds": [],
-      "chapterCode": "s1-2-3",
+      "chapterCode": "s2-2-2",
       "stage": "高中",
       "grade": "高一",
-      "term": "上學期",
-      "chapter": "圓與直線的關係",
-      "domain": "解析幾何",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "排列組合",
       "prompt": "",
       "answer": "",
       "tags": [
-        "直線",
-        "圓",
-        "交點",
-        "代入法",
+        "棋盤格",
+        "矩形計數",
+        "取捨原理",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
       "tips": [],
       "notes": [],
-      "mistakes": []
+      "mistakes": [],
+      "generatorBundle": "s2"
     },
-    "practice-s1-3-2-piecewise-function-eval": {
-      "id": "practice-s1-3-2-piecewise-function-eval",
+    "practice-s2-2-2-lattice-walk-displacement-parameterized": {
+      "id": "practice-s2-2-2-lattice-walk-displacement-parameterized",
       "enabled": true,
       "mode": "generator",
-      "title": "分段函數的代值計算",
-      "generatorKey": "s1-3-2-piecewise-function-eval",
+      "title": "數線與格點跳動位移計數",
+      "generatorKey": "s2-2-2-lattice-walk-displacement-parameterized",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 2,
       "relatedPracticeIds": [],
-      "chapterCode": "s1-3-2",
+      "chapterCode": "s2-2-2",
       "stage": "高中",
       "grade": "高一",
-      "term": "上學期",
-      "chapter": "函數",
-      "domain": "函數",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "排列組合",
       "prompt": "",
       "answer": "",
       "tags": [
-        "分段函數",
-        "函數代值",
+        "格點",
+        "跳動位移",
+        "組合數",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
       "tips": [],
       "notes": [],
-      "mistakes": []
+      "mistakes": [],
+      "generatorBundle": "s2"
     },
-    "practice-s1-3-2-composite-function": {
-      "id": "practice-s1-3-2-composite-function",
+    "practice-s2-2-2-restricted-consecutive-step-staircase-parameterized": {
+      "id": "practice-s2-2-2-restricted-consecutive-step-staircase-parameterized",
       "enabled": true,
       "mode": "generator",
-      "title": "合成函數的計算與反推",
-      "generatorKey": "s1-3-2-composite-function",
+      "title": "限制連續跳兩階的爬樓梯計數",
+      "generatorKey": "s2-2-2-restricted-consecutive-step-staircase-parameterized",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "s1-3-2",
+      "chapterCode": "s2-2-2",
       "stage": "高中",
       "grade": "高一",
-      "term": "上學期",
-      "chapter": "函數",
-      "domain": "函數",
+      "term": "下學期",
+      "chapter": "排列組合與機率",
+      "domain": "排列組合",
       "prompt": "",
       "answer": "",
       "tags": [
-        "合成函數",
-        "函數運算",
-        "反推",
+        "遞迴計數",
+        "爬樓梯",
+        "限制條件",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
       "tips": [],
       "notes": [],
-      "mistakes": []
+      "mistakes": [],
+      "generatorBundle": "s2"
     },
-    "practice-s1-3-3-absolute-value-inequality": {
-      "id": "practice-s1-3-3-absolute-value-inequality",
+    "practice-s2-2-4-exam-partial-guess-expected-score-parameterized": {
+      "id": "practice-s2-2-4-exam-partial-guess-expected-score-parameterized",
       "enabled": true,
       "mode": "generator",
-      "title": "絕對值不等式",
-      "generatorKey": "s1-3-3-absolute-value-inequality",
+      "title": "測驗猜題得分期望值",
+      "generatorKey": "s2-2-4-exam-partial-guess-expected-score-parameterized",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "s1-3-3",
+      "chapterCode": "s2-2-4",
       "stage": "高中",
       "grade": "高一",
-      "term": "上學期",
-      "chapter": "多項式不等式",
-      "domain": "代數",
+      "term": "下學期",
+      "chapter": "機率",
+      "domain": "機率",
       "prompt": "",
       "answer": "",
       "tags": [
-        "絕對值",
-        "不等式",
-        "解題",
+        "期望值",
+        "猜題",
+        "倒扣計分",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
       "tips": [],
       "notes": [],
-      "mistakes": []
+      "mistakes": [],
+      "generatorBundle": "s2"
     },
-    "practice-s1-3-3-double-absolute-inequality": {
-      "id": "practice-s1-3-3-double-absolute-inequality",
+    "practice-s2-2-4-linear-distribution-normalization-parameterized": {
+      "id": "practice-s2-2-4-linear-distribution-normalization-parameterized",
       "enabled": true,
       "mode": "generator",
-      "title": "兩絕對值和差不等式",
-      "generatorKey": "s1-3-3-double-absolute-inequality",
+      "title": "線性機率分布求參數與期望值",
+      "generatorKey": "s2-2-4-linear-distribution-normalization-parameterized",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 3,
       "relatedPracticeIds": [],
-      "chapterCode": "s1-3-3",
+      "chapterCode": "s2-2-4",
       "stage": "高中",
       "grade": "高一",
-      "term": "上學期",
-      "chapter": "多項式不等式",
-      "domain": "代數",
+      "term": "下學期",
+      "chapter": "機率",
+      "domain": "機率",
       "prompt": "",
       "answer": "",
       "tags": [
-        "絕對值",
-        "兩絕對值",
-        "距離",
-        "不等式",
+        "機率分布",
+        "歸一化",
+        "期望值",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
       "tips": [],
       "notes": [],
-      "mistakes": []
+      "mistakes": [],
+      "generatorBundle": "s2"
     },
-    "practice-s1-3-2-linear-function-from-points": {
-      "id": "practice-s1-3-2-linear-function-from-points",
+    "practice-s2-2-4-color-exhausted-order-parameterized": {
+      "id": "practice-s2-2-4-color-exhausted-order-parameterized",
       "enabled": true,
       "mode": "generator",
-      "title": "由函數值決定一次函數",
-      "generatorKey": "s1-3-2-linear-function-from-points",
+      "title": "不放回抽球顏色取完順序機率",
+      "generatorKey": "s2-2-4-color-exhausted-order-parameterized",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 2,
       "relatedPracticeIds": [],
-      "chapterCode": "s1-3-2",
+      "chapterCode": "s2-2-4",
       "stage": "高中",
       "grade": "高一",
-      "term": "上學期",
-      "chapter": "函數",
-      "domain": "函數",
+      "term": "下學期",
+      "chapter": "機率",
+      "domain": "機率",
       "prompt": "",
       "answer": "",
       "tags": [
-        "一次函數",
-        "函數值",
+        "不放回抽球",
+        "順序機率",
+        "對稱論證",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
       "tips": [],
       "notes": [],
-      "mistakes": []
+      "mistakes": [],
+      "generatorBundle": "s2"
     },
-    "practice-s1-3-2-quadratic-three-points": {
-      "id": "practice-s1-3-2-quadratic-three-points",
+    "practice-s2-4-1-line-slope-angle-parameterized": {
+      "id": "practice-s2-4-1-line-slope-angle-parameterized",
       "enabled": true,
       "mode": "generator",
-      "title": "由三點條件求二次函數係數",
-      "generatorKey": "s1-3-2-quadratic-three-points",
+      "title": "兩直線斜率求夾角",
+      "generatorKey": "s2-4-1-line-slope-angle-parameterized",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "s1-3-2",
+      "chapterCode": "s2-4-1",
       "stage": "高中",
       "grade": "高一",
-      "term": "上學期",
-      "chapter": "函數",
-      "domain": "函數",
+      "term": "下學期",
+      "chapter": "三角函數",
+      "domain": "廣義角與三角比",
       "prompt": "",
       "answer": "",
       "tags": [
-        "二次函數",
-        "三點求係數",
+        "直線夾角",
+        "斜率",
+        "反正切",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
       "tips": [],
       "notes": [],
-      "mistakes": []
+      "mistakes": [],
+      "generatorBundle": "s2"
     },
-    "practice-s1-3-3-square-root-inequality": {
-      "id": "practice-s1-3-3-square-root-inequality",
+    "practice-s2-4-1-coterminal-quadrant-count-parameterized": {
+      "id": "practice-s2-4-1-coterminal-quadrant-count-parameterized",
       "enabled": true,
       "mode": "generator",
-      "title": "含根號的不等式",
-      "generatorKey": "s1-3-3-square-root-inequality",
+      "title": "同界角象限個數統計",
+      "generatorKey": "s2-4-1-coterminal-quadrant-count-parameterized",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "s1-3-3",
+      "chapterCode": "s2-4-1",
       "stage": "高中",
       "grade": "高一",
-      "term": "上學期",
-      "chapter": "不等式",
-      "domain": "函數",
+      "term": "下學期",
+      "chapter": "三角函數",
+      "domain": "廣義角與三角比",
       "prompt": "",
       "answer": "",
       "tags": [
-        "根號不等式",
+        "同界角",
+        "象限角",
+        "計數",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
       "tips": [],
       "notes": [],
-      "mistakes": []
+      "mistakes": [],
+      "generatorBundle": "s2"
     },
-    "practice-s1-3-3-absolute-value-minimum": {
-      "id": "practice-s1-3-3-absolute-value-minimum",
+    "practice-s2-4-3-box-space-angle-parameterized": {
+      "id": "practice-s2-4-3-box-space-angle-parameterized",
       "enabled": true,
       "mode": "generator",
-      "title": "絕對值函數的最值問題",
-      "generatorKey": "s1-3-3-absolute-value-minimum",
+      "title": "長方體空間角度",
+      "generatorKey": "s2-4-3-box-space-angle-parameterized",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 5,
+      "subtypeCount": 2,
       "relatedPracticeIds": [],
-      "chapterCode": "s1-3-3",
+      "chapterCode": "s2-4-3",
       "stage": "高中",
       "grade": "高一",
-      "term": "上學期",
-      "chapter": "不等式",
-      "domain": "函數",
+      "term": "下學期",
+      "chapter": "三角比",
+      "domain": "三角測量",
       "prompt": "",
       "answer": "",
       "tags": [
-        "絕對值",
+        "長方體",
+        "空間角度",
+        "仰角",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [],
+      "notes": [],
+      "mistakes": [],
+      "generatorBundle": "s2"
+    },
+    "practice-s4-1-1-cube-face-center-octahedron-volume-clean": {
+      "id": "practice-s4-1-1-cube-face-center-octahedron-volume-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "立方體面心正八面體體積",
+      "generatorKey": "s4-1-1-cube-face-center-octahedron-volume-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間向量",
+      "domain": "空間幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-1",
+        "立方體",
+        "正八面體",
+        "體積",
+        "無限練習"
+      ],
+      "usage": [
+        "正立方體六個面心形成的正八面體體積為立方體體積的六分之一。"
+      ],
+      "examples": [],
+      "tips": [
+        "不要把面心正八面體的邊長誤當成立方體邊長。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看圖形相似，沒有先確認兩者體積倍率。"
+      ],
+      "generatorBundle": "s4"
+    },
+    "practice-s4-1-2-axis-equidistant-point-clean": {
+      "id": "practice-s4-1-2-axis-equidistant-point-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "坐標軸上等距點",
+      "generatorKey": "s4-1-2-axis-equidistant-point-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間向量",
+      "domain": "空間坐標",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-2",
+        "坐標軸",
+        "等距離",
+        "距離公式",
+        "無限練習"
+      ],
+      "usage": [
+        "將軸上動點設為單一參數，再用距離平方相等解一次方程。"
+      ],
+      "examples": [],
+      "tips": [
+        "用距離平方即可，通常不必開根號。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把 P 在 z 軸上誤設為 (x,y,z)，導致多出不必要未知數。"
+      ],
+      "generatorBundle": "s4"
+    },
+    "practice-s4-1-2-centroid-plane-projection-clean": {
+      "id": "practice-s4-1-2-centroid-plane-projection-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "重心投影到坐標平面",
+      "generatorKey": "s4-1-2-centroid-plane-projection-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間向量",
+      "domain": "空間坐標",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-2",
+        "重心",
+        "坐標平面投影",
+        "三點平均",
+        "無限練習"
+      ],
+      "usage": [
+        "先求原三角形重心，再將此點投影到三個坐標平面並取新重心。"
+      ],
+      "examples": [],
+      "tips": [
+        "投影到坐標平面就是把垂直該平面的坐標改成 0。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "直接把原三角形重心當成投影三角形的重心。"
+      ],
+      "generatorBundle": "s4"
+    },
+    "practice-s4-1-3-angle-bisector-coefficient-clean": {
+      "id": "practice-s4-1-3-angle-bisector-coefficient-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "角平分向量係數反推",
+      "generatorKey": "s4-1-3-angle-bisector-coefficient-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間向量",
+      "domain": "內積與夾角",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-3",
+        "角平分",
+        "單位向量",
+        "係數",
+        "無限練習"
+      ],
+      "usage": [
+        "角平分方向為兩個單位方向向量和，係數比由兩向量長度比決定。"
+      ],
+      "examples": [],
+      "tips": [
+        "角平分不能直接用 OA+OB，除非兩向量長度相同。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "忘記先單位化，直接把原向量相加。"
+      ],
+      "generatorBundle": "s4"
+    },
+    "practice-s4-1-3-linear-over-norm-extrema-clean": {
+      "id": "practice-s4-1-3-linear-over-norm-extrema-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "一次式除以向量長度的最大最小",
+      "generatorKey": "s4-1-3-linear-over-norm-extrema-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-1-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間向量",
+      "domain": "內積與柯西不等式",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-1-3",
+        "柯西不等式",
+        "最大值",
         "最小值",
         "無限練習"
       ],
-      "usage": [],
+      "usage": [
+        "把分子視為固定向量與 (x,y,z) 的內積，再除以 |(x,y,z)|。"
+      ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "最大值是係數向量長度，不是係數和。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "把分母誤當成 x+y+z，或忘記最小值是負的同長度。"
+      ],
+      "generatorBundle": "s4"
     },
-    "practice-s2-1-1-difference-method-nonlinear": {
-      "id": "practice-s2-1-1-difference-method-nonlinear",
+    "practice-s4-1-3-pairwise-orthogonal-parameter-clean": {
+      "id": "practice-s4-1-3-pairwise-orthogonal-parameter-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "差分法（非線性型）",
-      "generatorKey": "s2-1-1-difference-method-nonlinear",
+      "title": "三向量兩兩垂直參數",
+      "generatorKey": "s4-1-3-pairwise-orthogonal-parameter-clean",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "s2-1-1",
+      "chapterCode": "s4-1-3",
       "stage": "高中",
-      "grade": "高一",
+      "grade": "高二",
       "term": "下學期",
-      "chapter": "數列與級數",
-      "domain": "代數",
+      "chapter": "空間向量",
+      "domain": "內積與垂直",
       "prompt": "",
       "answer": "",
       "tags": [
-        "s2-1-1",
-        "差分法",
-        "遞迴",
-        "子練習"
+        "s4-1-3",
+        "兩兩垂直",
+        "內積",
+        "參數",
+        "無限練習"
       ],
-      "usage": [],
+      "usage": [
+        "三向量兩兩垂直代表三個內積同時為 0，找共同參數解。"
+      ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "至少要檢查三組內積，不是只檢查其中一組。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "只解出一個內積為 0 的 k，就誤以為三向量已兩兩垂直。"
+      ],
+      "generatorBundle": "s4"
     },
-    "practice-s2-1-2-reverse-n-from-sum": {
-      "id": "practice-s2-1-2-reverse-n-from-sum",
+    "practice-s4-1-4-consecutive-row-determinant-clean": {
+      "id": "practice-s4-1-4-consecutive-row-determinant-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "已知級數和反求項數 n",
-      "generatorKey": "s2-1-2-reverse-n-from-sum",
+      "title": "連續型三階行列式化簡",
+      "generatorKey": "s4-1-4-consecutive-row-determinant-clean",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "s2-1-2",
+      "chapterCode": "s4-1-4",
       "stage": "高中",
-      "grade": "高一",
+      "grade": "高二",
       "term": "下學期",
-      "chapter": "級數與求和",
-      "domain": "代數",
+      "chapter": "外積與行列式",
+      "domain": "空間向量",
       "prompt": "",
       "answer": "",
       "tags": [
-        "s2-1-2",
-        "Sigma",
-        "反求項數",
-        "子練習"
+        "s4-1-4",
+        "三階行列式",
+        "列運算",
+        "無限練習"
       ],
-      "usage": [],
+      "usage": [
+        "連續型行列式先做列差，可把大數化成小數再計算。"
+      ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "看到連續數字，不要急著展開，先做列運算。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "直接展開大數行列式，容易算錯且看不出結構。"
+      ],
+      "generatorBundle": "s4"
     },
-    "practice-s2-1-2-non-standard-sigma-limits": {
-      "id": "practice-s2-1-2-non-standard-sigma-limits",
+    "practice-s4-2-1-plane-system-consistency-clean": {
+      "id": "practice-s4-2-1-plane-system-consistency-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "非標準下界的 Sigma 求和",
-      "generatorKey": "s2-1-2-non-standard-sigma-limits",
+      "title": "三平面方程組共線參數",
+      "generatorKey": "s4-2-1-plane-system-consistency-clean",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "s2-1-2",
+      "chapterCode": "s4-2-1",
       "stage": "高中",
-      "grade": "高一",
+      "grade": "高二",
       "term": "下學期",
-      "chapter": "級數與求和",
-      "domain": "代數",
+      "chapter": "空間中的平面與直線",
+      "domain": "平面方程式",
       "prompt": "",
       "answer": "",
       "tags": [
-        "s2-1-2",
-        "Sigma",
-        "求和範圍",
-        "子練習"
+        "s4-2-1",
+        "三平面",
+        "方程組",
+        "共線",
+        "參數",
+        "無限練習"
       ],
-      "usage": [],
+      "usage": [
+        "用前兩平面交線作核心，第三平面若要包含同一直線，方程式需為前兩式的線性組合。"
+      ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "法向量做線性組合時，常數項也必須做同樣組合。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "只比較法向量，忘記檢查常數項是否同步。"
+      ],
+      "generatorBundle": "s4"
     },
-    "practice-s3-1-2-sin-cos-sum-square": {
-      "id": "practice-s3-1-2-sin-cos-sum-square",
+    "practice-s4-2-1-segment-projection-length-clean": {
+      "id": "practice-s4-2-1-segment-projection-length-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "",
-      "generatorKey": "s3-1-2-sin-cos-sum-square",
-      "difficulty": "",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "s3-1-2",
-      "stage": "senior",
-      "grade": "3",
-      "term": "1",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "trigonometry",
-        "sum-difference",
-        "identity"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s3-1-4-trig-inequality-parameterized": {
-      "id": "practice-s3-1-4-trig-inequality-parameterized",
-      "enabled": true,
-      "mode": "generator",
-      "title": "",
-      "generatorKey": "s3-1-4-trig-inequality-parameterized",
-      "difficulty": "",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "s3-1-4",
-      "stage": "senior",
-      "grade": "3",
-      "term": "1",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "trigonometry",
-        "inequality"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s3-1-4-inverse-trig-eval": {
-      "id": "practice-s3-1-4-inverse-trig-eval",
-      "enabled": true,
-      "mode": "generator",
-      "title": "",
-      "generatorKey": "s3-1-4-inverse-trig-eval",
-      "difficulty": "",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "s3-1-4",
-      "stage": "senior",
-      "grade": "3",
-      "term": "1",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "trigonometry",
-        "inverse"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s3-2-1-diff-base-exp-equation": {
-      "id": "practice-s3-2-1-diff-base-exp-equation",
-      "enabled": true,
-      "mode": "generator",
-      "title": "",
-      "generatorKey": "s3-2-1-diff-base-exp-equation",
-      "difficulty": "",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "s3-2-1",
-      "stage": "2",
-      "grade": "2",
-      "term": "1",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "指數函數",
-        "不同底數方程",
-        "取對數求解"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s3-2-2-change-base-log-equation": {
-      "id": "practice-s3-2-2-change-base-log-equation",
-      "enabled": true,
-      "mode": "generator",
-      "title": "",
-      "generatorKey": "s3-2-2-change-base-log-equation",
-      "difficulty": "",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "s3-2-2",
-      "stage": "2",
-      "grade": "2",
-      "term": "1",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "對數函數",
-        "換底公式",
-        "多基對數方程"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s3-2-2-special-log-equation": {
-      "id": "practice-s3-2-2-special-log-equation",
-      "enabled": true,
-      "mode": "generator",
-      "title": "",
-      "generatorKey": "s3-2-2-special-log-equation",
-      "difficulty": "",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "s3-2-2",
-      "stage": "2",
-      "grade": "2",
-      "term": "1",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "對數函數",
-        "對數二次方程",
-        "變底方程"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s3-2-2-diff-base-log-inequality": {
-      "id": "practice-s3-2-2-diff-base-log-inequality",
-      "enabled": true,
-      "mode": "generator",
-      "title": "",
-      "generatorKey": "s3-2-2-diff-base-log-inequality",
-      "difficulty": "",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "s3-2-2",
-      "stage": "2",
-      "grade": "2",
-      "term": "1",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "對數函數",
-        "不同底數不等式",
-        "倒數對數"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s3-2-3-log-parity-range": {
-      "id": "practice-s3-2-3-log-parity-range",
-      "enabled": true,
-      "mode": "generator",
-      "title": "",
-      "generatorKey": "s3-2-3-log-parity-range",
-      "difficulty": "",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "s3-2-3",
-      "stage": "2",
-      "grade": "2",
-      "term": "1",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "對數函數",
-        "奇偶性",
-        "值域"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s3-2-3-power-log-equation": {
-      "id": "practice-s3-2-3-power-log-equation",
-      "enabled": true,
-      "mode": "generator",
-      "title": "",
-      "generatorKey": "s3-2-3-power-log-equation",
-      "difficulty": "",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "s3-2-3",
-      "stage": "2",
-      "grade": "2",
-      "term": "1",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "對數函數",
-        "冪對數方程",
-        "高階方程"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s3-3-2-line-direction-normal": {
-      "id": "practice-s3-3-2-line-direction-normal",
-      "enabled": true,
-      "mode": "generator",
-      "title": "直線方向向量、法向量與平行垂直方程式",
-      "generatorKey": "s3-3-2-line-direction-normal",
+      "title": "線段在平面上的正射影長",
+      "generatorKey": "s4-2-1-segment-projection-length-clean",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 0,
+      "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s3-3-3-triangle-angle-cosine": {
-      "id": "practice-s3-3-3-triangle-angle-cosine",
-      "enabled": true,
-      "mode": "generator",
-      "title": "三角形頂角餘弦與三角形類型判定",
-      "generatorKey": "s3-3-3-triangle-angle-cosine",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s3-3-3-vector-from-dot-constraints": {
-      "id": "practice-s3-3-3-vector-from-dot-constraints",
-      "enabled": true,
-      "mode": "generator",
-      "title": "由兩個內積條件解向量",
-      "generatorKey": "s3-3-3-vector-from-dot-constraints",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s3-3-3-norm-relation-condition": {
-      "id": "practice-s3-3-3-norm-relation-condition",
-      "enabled": true,
-      "mode": "generator",
-      "title": "向量和差長度條件推夾角關係",
-      "generatorKey": "s3-3-3-norm-relation-condition",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s4-1-2-symmetric-line-equation": {
-      "id": "practice-s4-1-2-symmetric-line-equation",
-      "enabled": true,
-      "mode": "generator",
-      "title": "空間直線的對稱式方程",
-      "generatorKey": "s4-1-2-symmetric-line-equation",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
+      "chapterCode": "s4-2-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間中的平面與直線",
+      "domain": "平面投影",
       "prompt": "",
       "answer": "",
       "tags": [
-        "space-vectors",
-        "line-equation",
-        "symmetric-form"
+        "s4-2-1",
+        "線段投影",
+        "平面投影",
+        "法向量",
+        "無限練習"
       ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s4-1-3-amgm-extrema": {
-      "id": "practice-s4-1-3-amgm-extrema",
-      "enabled": true,
-      "mode": "generator",
-      "title": "AM-GM與球面距離極值",
-      "generatorKey": "s4-1-3-amgm-extrema",
-      "difficulty": "hard",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "space-vectors",
-        "AM-GM",
-        "extrema",
-        "cauchy"
+      "usage": [
+        "將線段方向分解為平面內分量與法向量分量，投影長只取平面內分量長度。"
       ],
-      "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "正射影不是把三個坐標各自刪掉，而是沿平面法向量壓到平面上。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "把原線段長誤當成投影長，沒有扣掉垂直平面的分量。"
+      ],
+      "generatorBundle": "s4"
     },
-    "practice-s4-2-1-two-plane-intersection": {
-      "id": "practice-s4-2-1-two-plane-intersection",
+    "practice-s4-2-2-two-plane-line-param-clean": {
+      "id": "practice-s4-2-2-two-plane-line-param-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "兩平面交線方向與方程",
-      "generatorKey": "s4-2-1-two-plane-intersection",
+      "title": "兩平面交線轉參數式",
+      "generatorKey": "s4-2-2-two-plane-line-param-clean",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 0,
+      "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
+      "chapterCode": "s4-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間中的平面與直線",
+      "domain": "空間直線",
       "prompt": "",
       "answer": "",
       "tags": [
-        "空間向量",
-        "平面方程",
-        "交線"
+        "s4-2-2",
+        "兩平面交線",
+        "參數式",
+        "外積",
+        "無限練習"
       ],
-      "usage": [],
+      "usage": [
+        "交線方向取兩平面法向量外積，再找一個共同點寫成直線參數式。"
+      ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "交線方向不是兩個法向量相加，而是兩法向量外積。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "只解出一點，忘記還需要方向向量才能寫直線。"
+      ],
+      "generatorBundle": "s4"
     },
-    "practice-s4-2-1-plane-special-condition": {
-      "id": "practice-s4-2-1-plane-special-condition",
+    "practice-s4-2-2-coplanar-perpendicular-line-clean": {
+      "id": "practice-s4-2-2-coplanar-perpendicular-line-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "特殊條件平面建構（平行向量、垂直直線、含線垂面）",
-      "generatorKey": "s4-2-1-plane-special-condition",
+      "title": "過點作共面垂直直線",
+      "generatorKey": "s4-2-2-coplanar-perpendicular-line-clean",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 0,
+      "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
+      "chapterCode": "s4-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間中的平面與直線",
+      "domain": "空間直線",
       "prompt": "",
       "answer": "",
       "tags": [
-        "空間向量",
-        "平面方程",
-        "法向量"
+        "s4-2-2",
+        "共面",
+        "垂直直線",
+        "垂足",
+        "無限練習"
       ],
-      "usage": [],
+      "usage": [
+        "過外點與已知直線決定一平面，在此平面內作垂線，交點就是點到直線的垂足。"
+      ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "空間中只說垂直不夠，還要用共面條件排除歪斜。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "把方向向量內積為 0 就當作兩直線一定相交。"
+      ],
+      "generatorBundle": "s4"
     },
-    "practice-s4-2-2-two-line-relation-full": {
-      "id": "practice-s4-2-2-two-line-relation-full",
+    "practice-s4-2-2-line-projection-on-plane-clean": {
+      "id": "practice-s4-2-2-line-projection-on-plane-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "兩直線完整關係判斷與求值（平行、相交、歪斜）",
-      "generatorKey": "s4-2-2-two-line-relation-full",
+      "title": "直線投影到平面",
+      "generatorKey": "s4-2-2-line-projection-on-plane-clean",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 0,
+      "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
+      "chapterCode": "s4-2-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "空間中的平面與直線",
+      "domain": "線面投影",
       "prompt": "",
       "answer": "",
       "tags": [
-        "空間向量",
-        "直線方程",
-        "歪斜線"
+        "s4-2-2",
+        "直線投影",
+        "平面投影",
+        "方向向量",
+        "無限練習"
       ],
-      "usage": [],
+      "usage": [
+        "投影直線由一個投影點與投影後方向決定；方向向量要扣掉法向量分量。"
+      ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "投影後直線的方向必須平行平面，因此要和法向量內積為 0。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "直接把原直線方向向量拿來當投影方向。"
+      ],
+      "generatorBundle": "s4"
     },
-    "practice-s4-2-2-line-perp-plane": {
-      "id": "practice-s4-2-2-line-perp-plane",
+    "practice-s4-3-1-drawer-paradox-clean": {
+      "id": "practice-s4-3-1-drawer-paradox-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "直線通過點且垂直平面",
-      "generatorKey": "s4-2-2-line-perp-plane",
+      "title": "抽屜與雙面卡片的條件樣本空間",
+      "generatorKey": "s4-3-1-drawer-paradox-clean",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 0,
+      "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
+      "chapterCode": "s4-3-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "條件機率與貝氏定理",
+      "domain": "條件機率",
       "prompt": "",
       "answer": "",
       "tags": [
-        "空間向量",
-        "直線方程",
-        "法向量"
+        "s4-3-1",
+        "條件樣本空間",
+        "抽屜問題",
+        "雙面卡片",
+        "無限練習"
       ],
-      "usage": [],
+      "usage": [
+        "已知看到某結果後，樣本空間應改成可能被看到的面或抽屜，而不是原物件數。"
+      ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "雙金桌有兩個可被看到的金抽屜，不能只算一張桌子。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "把條件樣本空間誤當成桌子或卡片本身，忽略可觀察面的倍數。"
+      ],
+      "generatorBundle": "s4"
     },
-    "practice-s4-3-1-complement-conditional": {
-      "id": "practice-s4-3-1-complement-conditional",
+    "practice-s4-3-1-lost-card-bayes-clean": {
+      "id": "practice-s4-3-1-lost-card-bayes-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "補事件條件機率 P(A|B^c) 與 P(B|A^c)",
-      "generatorKey": "s4-3-1-complement-conditional",
+      "title": "遺失牌與觀察結果的貝氏反推",
+      "generatorKey": "s4-3-1-lost-card-bayes-clean",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 0,
+      "subtypeCount": 1,
       "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
+      "chapterCode": "s4-3-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "條件機率與貝氏定理",
+      "domain": "貝氏定理",
       "prompt": "",
       "answer": "",
       "tags": [
+        "s4-3-1",
+        "遺失牌",
+        "貝氏定理",
+        "組合數",
+        "無限練習"
+      ],
+      "usage": [
+        "比較遺失目標牌與遺失非目標牌兩種來源造成同一觀察結果的權重。"
+      ],
+      "examples": [],
+      "tips": [
+        "觀察到抽出的牌都是指定點數，不代表遺失牌較可能也是指定點數。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只看剩餘牌中指定點數的張數，沒有乘上遺失牌來源的先驗數量。"
+      ],
+      "generatorBundle": "s4"
+    },
+    "practice-s4-3-1-truth-report-color-clean": {
+      "id": "practice-s4-3-1-truth-report-color-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "證詞可靠度與球色反推",
+      "generatorKey": "s4-3-1-truth-report-color-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-3-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "條件機率與貝氏定理",
+      "domain": "貝氏定理",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-3-1",
+        "說實話",
+        "說謊",
+        "球色",
+        "貝氏定理",
+        "無限練習"
+      ],
+      "usage": [
+        "將證詞視為觀察結果，分別計算真實顏色造成此證詞的權重。"
+      ],
+      "examples": [],
+      "tips": [
+        "說謊機率若已給，先換成說實話機率或說錯機率，再列式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只用箱中球的比例，沒有乘上兩個人的證詞可靠度。"
+      ],
+      "generatorBundle": "s4"
+    },
+    "practice-s4-3-1-signal-channel-bayes-clean": {
+      "id": "practice-s4-3-1-signal-channel-bayes-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "通訊誤碼與原訊號反推",
+      "generatorKey": "s4-3-1-signal-channel-bayes-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-3-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "條件機率與貝氏定理",
+      "domain": "全機率與貝氏定理",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-3-1",
+        "通訊誤碼",
+        "全機率",
+        "貝氏定理",
+        "無限練習"
+      ],
+      "usage": [
+        "收到同一符號可能來自多個原訊號，先用全機率加總，再反推來源。"
+      ],
+      "examples": [],
+      "tips": [
+        "收到星號或錯碼仍然是有資訊的條件事件。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "看到收到 0 就直接判定原訊號為 0，忽略 1 誤收為 0 的來源。"
+      ],
+      "generatorBundle": "s4"
+    },
+    "practice-s4-3-2-conditioned-success-position-clean": {
+      "id": "practice-s4-3-2-conditioned-success-position-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "已知成功總數下的位置機率",
+      "generatorKey": "s4-3-2-conditioned-success-position-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-3-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "條件機率與貝氏定理",
+      "domain": "獨立試驗",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-3-2",
         "條件機率",
-        "補事件"
+        "位置對稱",
+        "成功總數",
+        "無限練習"
       ],
-      "usage": [],
+      "usage": [
+        "在已知成功總數後，各位置對稱，指定位置成功的機率為成功數除以總次數。"
+      ],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "條件固定總成功數後，不需要回頭重算每一種原始機率。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "仍用單次成功率作答，忘記題目已經給定總成功數。"
+      ],
+      "generatorBundle": "s4"
     },
-    "practice-s4-3-1-total-prob-abstract": {
-      "id": "practice-s4-3-1-total-prob-abstract",
+    "practice-s4-3-2-traffic-light-counts-clean": {
+      "id": "practice-s4-3-2-traffic-light-counts-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "全機率公式抽象樹形（直接給 P(B|A), P(B|A^c)）",
-      "generatorKey": "s4-3-1-total-prob-abstract",
+      "title": "紅綠燈獨立事件與恰遇次數",
+      "generatorKey": "s4-3-2-traffic-light-counts-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-3-2",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "條件機率與貝氏定理",
+      "domain": "獨立事件",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-3-2",
+        "紅綠燈",
+        "獨立事件",
+        "恰好次數",
+        "無限練習"
+      ],
+      "usage": [
+        "三個獨立事件成功率不同時，恰好幾次需列所有位置組合相加。"
+      ],
+      "examples": [],
+      "tips": [
+        "各紅綠燈秒數不同時，不要直接套同一成功率的二項公式。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把三處紅綠燈誤當成相同機率，導致組合數乘單一項。"
+      ],
+      "generatorBundle": "s4"
+    },
+    "practice-s4-4-1-matrix-entry-double-sum-clean": {
+      "id": "practice-s4-4-1-matrix-entry-double-sum-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "矩陣元素公式與二重和計算",
+      "generatorKey": "s4-4-1-matrix-entry-double-sum-clean",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 0,
       "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
+      "chapterCode": "s4-4-1",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "矩陣與線性方程組",
+      "domain": "矩陣",
       "prompt": "",
       "answer": "",
       "tags": [
-        "全機率公式",
-        "貝氏定理"
+        "s4-4-1",
+        "矩陣元素",
+        "二重和",
+        "矩陣記號",
+        "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s4-3-2-inverse-bayes": {
-      "id": "practice-s4-3-2-inverse-bayes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "逆向 Bayes：已知 P(A|B) 求 P(B|A)",
-      "generatorKey": "s4-3-2-inverse-bayes",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "貝氏定理",
-        "逆向條件機率"
+      "tips": [
+        "此小類會更換矩陣元素、參數或變換資料，核心計算方法固定但題目不只是重排。"
       ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是把 i、j 的範圍混在一起，或忘記常數項會出現 m×n 次。"
+      ]
     },
-    "practice-s4-3-2-exam-guessing": {
-      "id": "practice-s4-3-2-exam-guessing",
+    "practice-s4-4-2-commutator-parameter-clean": {
+      "id": "practice-s4-4-2-commutator-parameter-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "考試猜題 Bayes 模型",
-      "generatorKey": "s4-3-2-exam-guessing",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "貝氏定理",
-        "考試猜題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-s4-4-2-det-properties": {
-      "id": "practice-s4-4-2-det-properties",
-      "enabled": true,
-      "mode": "generator",
-      "title": "行列式性質：純量倍、乘積與反矩陣",
-      "generatorKey": "s4-4-2-det-properties",
+      "title": "矩陣平方公式與可交換參數",
+      "generatorKey": "s4-4-2-commutator-parameter-clean",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "矩陣的運算",
+      "domain": "矩陣",
       "prompt": "",
       "answer": "",
       "tags": [
-        "矩陣",
-        "行列式",
-        "性質"
+        "s4-4-2",
+        "矩陣乘法",
+        "可交換",
+        "參數",
+        "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "此小類會更換矩陣元素、參數或變換資料，核心計算方法固定但題目不只是重排。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是直接套用數的平方公式，忽略矩陣乘法通常不可交換。"
+      ]
     },
-    "practice-s4-4-2-similar-matrix": {
-      "id": "practice-s4-4-2-similar-matrix",
+    "practice-s4-4-2-rank-one-power-sum-clean": {
+      "id": "practice-s4-4-2-rank-one-power-sum-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "相似矩陣 BAB⁻¹ 的計算與性質",
-      "generatorKey": "s4-4-2-similar-matrix",
-      "difficulty": "hard",
+      "title": "秩一矩陣高次方與等比和",
+      "generatorKey": "s4-4-2-rank-one-power-sum-clean",
+      "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "矩陣的運算",
+      "domain": "矩陣",
       "prompt": "",
       "answer": "",
       "tags": [
-        "矩陣",
-        "相似矩陣",
-        "跡數"
+        "s4-4-2",
+        "矩陣高次方",
+        "秩一矩陣",
+        "等比級數",
+        "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
+      "tips": [
+        "此小類會更換矩陣元素、參數或變換資料，核心計算方法固定但題目不只是重排。"
+      ],
       "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是每次都硬乘矩陣，沒有先抓到 A^2 是 A 的倍數。"
+      ]
     },
-    "practice-s4-4-4-line-transform": {
-      "id": "practice-s4-4-4-line-transform",
+    "practice-s4-4-3-power-recovery-clean": {
+      "id": "practice-s4-4-3-power-recovery-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "直線在線性變換下的像方程",
-      "generatorKey": "s4-4-4-line-transform",
+      "title": "由矩陣高次方反推低次方",
+      "generatorKey": "s4-4-3-power-recovery-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-4-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "反矩陣與轉移矩陣",
+      "domain": "矩陣",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-4-3",
+        "矩陣次方",
+        "反矩陣",
+        "對角矩陣",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類會更換矩陣元素、參數或變換資料，核心計算方法固定但題目不只是重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是把矩陣次方相除寫成一般除法，沒有改用反矩陣。"
+      ]
+    },
+    "practice-s4-4-3-matrix-code-decode-clean": {
+      "id": "practice-s4-4-3-matrix-code-decode-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "反矩陣應用：矩陣編碼解碼",
+      "generatorKey": "s4-4-3-matrix-code-decode-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "s4-4-3",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "反矩陣與轉移矩陣",
+      "domain": "矩陣",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "s4-4-3",
+        "反矩陣",
+        "矩陣方程",
+        "編碼解碼",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類會更換矩陣元素、參數或變換資料，核心計算方法固定但題目不只是重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是左右乘順序顛倒，或把 C=KP 誤移成 P=CK^{-1}。"
+      ]
+    },
+    "practice-s4-4-4-coordinate-rotation-clean": {
+      "id": "practice-s4-4-4-coordinate-rotation-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "坐標軸旋轉與新舊坐標換算",
+      "generatorKey": "s4-4-4-coordinate-rotation-clean",
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 0,
       "relatedPracticeIds": [],
       "chapterCode": "s4-4-4",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "平面上的線性變換",
+      "domain": "矩陣與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
+        "s4-4-4",
+        "坐標軸旋轉",
+        "新舊坐標",
         "線性變換",
-        "直線",
-        "像"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e6-2-6-average-from-data-drill": {
-      "id": "practice-e6-2-6-average-from-data-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "從原始數據計算平均數",
-      "generatorKey": "e6-2-6-average-from-data-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-6",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "統計圖表與圓餅圖",
-      "domain": "統計與機率",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-2-6",
-        "統計圖表",
-        "平均數",
-        "原始數據"
-      ],
-      "usage": [
-        "給定N筆資料，計算平均值（合計÷筆數）"
-      ],
-      "examples": [],
-      "tips": [
-        "先將所有數據加總，再除以筆數"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記除以正確的筆數"
-      ]
-    },
-    "practice-e6-2-5-linear-int-coef-drill": {
-      "id": "practice-e6-2-5-linear-int-coef-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "整係數一元一次方程",
-      "generatorKey": "e6-2-5-linear-int-coef-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-5",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "怎麼解題",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-2-5",
-        "怎麼解題",
-        "一元一次方程",
-        "整係數"
-      ],
-      "usage": [
-        "ax+b=c 型方程移項求解，進階練習 ax+b=cx+d 合併同類項"
-      ],
-      "examples": [],
-      "tips": [
-        "先移項讓 x 在一側，再除以係數"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記移項後符號改變"
-      ]
-    },
-    "practice-e6-2-5-linear-frac-coef-drill": {
-      "id": "practice-e6-2-5-linear-frac-coef-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "分數係數方程",
-      "generatorKey": "e6-2-5-linear-frac-coef-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-5",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "怎麼解題",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-2-5",
-        "怎麼解題",
-        "一元一次方程",
-        "分數係數"
-      ],
-      "usage": [
-        "含 1/q 係數的方程，移項後乘以分母求整數解"
-      ],
-      "examples": [],
-      "tips": [
-        "兩邊同乘分母可消去分數"
-      ],
-      "notes": [],
-      "mistakes": [
-        "乘分母時忘了乘右側常數"
-      ]
-    },
-    "practice-e6-2-5-linear-bracket-frac-drill": {
-      "id": "practice-e6-2-5-linear-bracket-frac-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "括號分式方程",
-      "generatorKey": "e6-2-5-linear-bracket-frac-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-5",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "怎麼解題",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-2-5",
-        "怎麼解題",
-        "括號分式",
-        "一元一次方程"
-      ],
-      "usage": [
-        "(x+b)/c=d 型，兩邊乘以 c 後移項；進階 (2x-b)/c=d"
-      ],
-      "examples": [],
-      "tips": [
-        "先兩邊同乘分母，再移項"
-      ],
-      "notes": [],
-      "mistakes": [
-        "分母沒有乘到分子全部"
-      ]
-    },
-    "practice-e6-2-5-linear-frac-merge-drill": {
-      "id": "practice-e6-2-5-linear-frac-merge-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "通分型方程應用",
-      "generatorKey": "e6-2-5-linear-frac-merge-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-5",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "怎麼解題",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-2-5",
-        "怎麼解題",
-        "通分",
-        "x/a+x/b"
-      ],
-      "usage": [
-        "x/a + x/b = total 情境題，以通分化簡後求 x"
-      ],
-      "examples": [],
-      "tips": [
-        "找公分母，合併分子後化簡"
-      ],
-      "notes": [],
-      "mistakes": [
-        "通分後分子計算錯誤"
-      ]
-    },
-    "practice-e6-2-5-distribute-remain-drill": {
-      "id": "practice-e6-2-5-distribute-remain-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "分配求總量",
-      "generatorKey": "e6-2-5-distribute-remain-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-5",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "怎麼解題",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-2-5",
-        "怎麼解題",
-        "分配",
-        "ax+r=T"
-      ],
-      "usage": [
-        "每組分 a 個剩 r 個，列式 ax+r=T 求組數"
-      ],
-      "examples": [],
-      "tips": [
-        "設人數為 x，用總數列方程"
-      ],
-      "notes": [],
-      "mistakes": [
-        "餘數加法方向搞反"
-      ]
-    },
-    "practice-e6-2-5-price-change-drill": {
-      "id": "practice-e6-2-5-price-change-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "找零求單價與數量",
-      "generatorKey": "e6-2-5-price-change-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-5",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "怎麼解題",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-2-5",
-        "怎麼解題",
-        "找零",
-        "單價",
-        "數量"
-      ],
-      "usage": [
-        "付款找零求單價，或知道單價和總金額求數量"
-      ],
-      "examples": [],
-      "tips": [
-        "實際花費 = 付款 - 找零，再除以件數"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記扣掉找零再除"
-      ]
-    },
-    "practice-e6-2-5-consume-then-share-drill": {
-      "id": "practice-e6-2-5-consume-then-share-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "先用後分型方程",
-      "generatorKey": "e6-2-5-consume-then-share-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-5",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "怎麼解題",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-2-5",
-        "怎麼解題",
-        "先用後分",
-        "(x-a)/n=b"
-      ],
-      "usage": [
-        "(x-a)/n=b，先取出再平分，求原量"
-      ],
-      "examples": [],
-      "tips": [
-        "兩邊乘以 n 後移項，逆推回原量"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記先乘 n 再移項"
-      ]
-    },
-    "practice-e6-2-5-surplus-deficit-drill": {
-      "id": "practice-e6-2-5-surplus-deficit-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "盈虧問題",
-      "generatorKey": "e6-2-5-surplus-deficit-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-5",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "怎麼解題",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-2-5",
-        "怎麼解題",
-        "盈虧",
-        "兩情境列方程"
-      ],
-      "usage": [
-        "兩種分法各多/差若干，列出兩式相等求人數"
-      ],
-      "examples": [],
-      "tips": [
-        "兩種情境的總量相等，列出方程解人數"
-      ],
-      "notes": [],
-      "mistakes": [
-        "多出與差的方向判斷錯誤"
-      ]
-    },
-    "practice-e6-2-5-fraction-consume-drill": {
-      "id": "practice-e6-2-5-fraction-consume-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "分數消耗求原量",
-      "generatorKey": "e6-2-5-fraction-consume-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-5",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "怎麼解題",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-2-5",
-        "怎麼解題",
-        "分數消耗",
-        "(1-p/q)x=r"
-      ],
-      "usage": [
-        "用掉分之幾後剩 r，用 (1-p/q)x=r 求原量"
-      ],
-      "examples": [],
-      "tips": [
-        "剩下的分率乘以原量等於剩餘數量"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把『剩餘分率』算成『用掉分率』"
-      ]
-    },
-    "practice-e6-2-3-cube-to-max-cylinder-drill": {
-      "id": "practice-e6-2-3-cube-to-max-cylinder-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "正方體削成最大圓柱",
-      "generatorKey": "e6-2-3-cube-to-max-cylinder-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-3",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "柱體體積與表面積",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "柱體",
-        "圓柱",
-        "體積",
-        "最大圓柱"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e6-2-3-dim-change-volume-drill": {
-      "id": "practice-e6-2-3-dim-change-volume-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "維度增加求體積變化",
-      "generatorKey": "e6-2-3-dim-change-volume-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-3",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "柱體體積與表面積",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "柱體",
-        "體積",
-        "維度變化",
-        "圓柱"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e6-2-2-two-seg-distance-drill": {
-      "id": "practice-e6-2-2-two-seg-distance-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "分段行走求總路程",
-      "generatorKey": "e6-2-2-two-seg-distance-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-2",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "速率與應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "速率",
-        "路程",
-        "分段"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e6-2-2-circular-chase-drill": {
-      "id": "practice-e6-2-2-circular-chase-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "圓形跑道同向追及",
-      "generatorKey": "e6-2-2-circular-chase-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-2",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "速率與應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "速率",
-        "追及",
-        "圓形跑道"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e6-2-2-partial-remain-drill": {
-      "id": "practice-e6-2-2-partial-remain-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "行駛後剩餘或途中休息求全程時間",
-      "generatorKey": "e6-2-2-partial-remain-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-2-2",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "速率與應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "速率",
-        "路程",
-        "剩餘",
-        "休息"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e6-1-5-chain-ratio-drill": {
-      "id": "practice-e6-1-5-chain-ratio-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "連比合併（A:B與B:C→A:B:C）",
-      "generatorKey": "e6-1-5-chain-ratio-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-1-5",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "上學期",
-      "chapter": "比與比值",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-5",
-        "比與比值",
-        "連比",
-        "合併"
-      ],
-      "usage": [
-        "練習從兩個有共同項的比求三個量的連比。"
-      ],
-      "examples": [],
-      "tips": [
-        "把中間那個量化成相同的數，再合併成連比。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e6-1-5-discount-drill": {
-      "id": "practice-e6-1-5-discount-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "打折計算（正比應用）",
-      "generatorKey": "e6-1-5-discount-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-1-5",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "上學期",
-      "chapter": "比與比值",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-5",
-        "比與比值",
-        "打折",
-        "正比應用"
-      ],
-      "usage": [
-        "練習打折的實際金額計算，包含已知原價求售價及已知售價反推原價。"
-      ],
-      "examples": [],
-      "tips": [
-        "打N折 = 售價是原價的 N/10，例如打8折 = × 0.8。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e6-1-6-pi-22-over-7-drill": {
-      "id": "practice-e6-1-6-pi-22-over-7-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "以 22/7 計算圓周長",
-      "generatorKey": "e6-1-6-pi-22-over-7-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-1-6",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "上學期",
-      "chapter": "圓周率與圓的周長",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-6",
-        "圓周率與圓的周長",
-        "圓周長",
-        "22/7",
-        "圓周率"
-      ],
-      "usage": [
-        "當半徑或直徑是 7 的倍數（或 3.5 的倍數）時，用 22/7 計算圓周長更方便。"
-      ],
-      "examples": [],
-      "tips": [
-        "22/7 是圓周率的分數近似值，適合半徑為 3.5、7、14 等情況。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e6-1-7-area-inverse-drill": {
-      "id": "practice-e6-1-7-area-inverse-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "由面積逆推半徑或直徑",
-      "generatorKey": "e6-1-7-area-inverse-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-1-7",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "上學期",
-      "chapter": "圓面積",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-7",
-        "圓面積",
-        "圓面積",
-        "逆推",
-        "半徑",
-        "直徑"
-      ],
-      "usage": [
-        "練習已知圓面積，反推半徑或直徑的計算。"
-      ],
-      "examples": [],
-      "tips": [
-        "先用面積 ÷ 3.14 得到半徑²，再開平方得到半徑。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e6-1-9-area-ratio-to-scale-drill": {
-      "id": "practice-e6-1-9-area-ratio-to-scale-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "面積比與邊長比互推",
-      "generatorKey": "e6-1-9-area-ratio-to-scale-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-1-9",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "上學期",
-      "chapter": "縮圖與比例尺",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-9",
-        "縮圖與比例尺",
-        "比例尺",
-        "面積比",
-        "邊長比"
-      ],
-      "usage": [
-        "練習面積放大N²倍與邊長放大N倍之間的換算。"
-      ],
-      "examples": [],
-      "tips": [
-        "面積倍數是邊長倍數的平方；邊長倍數是面積倍數的平方根。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e6-1-9-map-area-drill": {
-      "id": "practice-e6-1-9-map-area-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "地圖面積換算實際面積",
-      "generatorKey": "e6-1-9-map-area-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-1-9",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "上學期",
-      "chapter": "縮圖與比例尺",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-9",
-        "縮圖與比例尺",
-        "比例尺",
-        "地圖面積",
-        "實際面積"
-      ],
-      "usage": [
-        "練習利用比例尺換算地圖面積與實際面積。"
-      ],
-      "examples": [],
-      "tips": [
-        "實際面積 = 圖上面積 × 比例尺²，注意單位換算（平方公分↔平方公尺）。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e6-1-2-remainder-cut-drill": {
-      "id": "practice-e6-1-2-remainder-cut-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "有餘數的分數切割",
-      "generatorKey": "e6-1-2-remainder-cut-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-1-2",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "上學期",
-      "chapter": "分數除法",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-2",
-        "分數除法",
-        "分數除法",
-        "有餘數",
-        "切割"
-      ],
-      "usage": [
-        "練習分數切割後有餘數的情形：最多幾段？剩多少？"
-      ],
-      "examples": [],
-      "tips": [
-        "結果取整數部分（商），餘數 = 總量 - 段數×每段長。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e6-1-4-mixed-computation-drill": {
-      "id": "practice-e6-1-4-mixed-computation-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "混合四則運算（含小數除法）",
-      "generatorKey": "e6-1-4-mixed-computation-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e6-1-4",
-      "stage": "國小",
-      "grade": "小六",
-      "term": "下學期",
-      "chapter": "小數除法",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-4",
-        "小數除法",
-        "小數除法",
-        "混合四則",
-        "運算順序"
-      ],
-      "usage": [
-        "練習含小數除法的混合四則計算，包含先乘除後加減及括號規則。"
-      ],
-      "examples": [],
-      "tips": [
-        "先算括號，再算乘除，最後才是加減。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-7-open-top-rect-drill": {
-      "id": "practice-e5-2-7-open-top-rect-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "無蓋長方體表面積",
-      "generatorKey": "e5-2-7-open-top-rect-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-7",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "表面積",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-7",
-        "表面積",
-        "無蓋長方體"
-      ],
-      "usage": [
-        "計算只有五個面（無蓋）的長方體所需材料面積。"
-      ],
-      "examples": [],
-      "tips": [
-        "無蓋長方體 = 底面積 + 四個側面積 = l×w + 2×l×h + 2×w×h。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記只有5面，誤用6面公式。"
-      ]
-    },
-    "practice-e5-2-7-open-top-cube-drill": {
-      "id": "practice-e5-2-7-open-top-cube-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "無蓋正方體表面積",
-      "generatorKey": "e5-2-7-open-top-cube-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-7",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "表面積",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-7",
-        "表面積",
-        "無蓋正方體"
-      ],
-      "usage": [
-        "計算只有五個面的正方體所需材料面積。"
-      ],
-      "examples": [],
-      "tips": [
-        "無蓋正方體 = 5 × 邊長²。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "用6面公式，多算一個底面。"
-      ]
-    },
-    "practice-e5-2-7-inverse-height-drill": {
-      "id": "practice-e5-2-7-inverse-height-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "長方體逆推高",
-      "generatorKey": "e5-2-7-inverse-height-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-7",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "表面積",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-7",
-        "表面積",
-        "逆推高"
-      ],
-      "usage": [
-        "已知長方體表面積與長、寬，反推高。"
-      ],
-      "examples": [],
-      "tips": [
-        "由 2(lw + (l+w)h) = SA，得 h = (SA/2 - lw) ÷ (l+w)。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記除以2再扣底面積，或除錯周長。"
-      ]
-    },
-    "practice-e5-2-7-room-window-drill": {
-      "id": "practice-e5-2-7-room-window-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "房間粉刷扣除門窗",
-      "generatorKey": "e5-2-7-room-window-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-7",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "表面積",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-7",
-        "表面積",
-        "粉刷",
-        "扣除門窗"
-      ],
-      "usage": [
-        "計算四面牆的面積後，扣除門和窗的面積。"
-      ],
-      "examples": [],
-      "tips": [
-        "四面牆 = 2h(l+w)，再減去門(2m²)和窗(1.5m²)。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記扣除門窗，或算成6面。"
-      ]
-    },
-    "practice-e5-2-7-dim-change-drill": {
-      "id": "practice-e5-2-7-dim-change-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "一個維度改變後的表面積差",
-      "generatorKey": "e5-2-7-dim-change-drill",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-7",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "表面積",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-7",
-        "表面積",
-        "維度變化",
-        "面積差"
-      ],
-      "usage": [
-        "長度改變 Δ，計算表面積增加或減少多少。"
-      ],
-      "examples": [],
-      "tips": [
-        "改變長：ΔSA = 2 × Δl × (w+h)。只有兩對面改變。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "誤算成改變4個面或6個面。"
-      ]
-    },
-    "practice-e5-2-7-open-top-two-subtypes": {
-      "id": "practice-e5-2-7-open-top-two-subtypes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "無蓋長方體與無蓋正方體兩小類",
-      "generatorKey": "e5-2-7-open-top-two-subtypes",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 2,
-      "relatedPracticeIds": [
-        "practice-e5-2-7-open-top-rect-drill",
-        "practice-e5-2-7-open-top-cube-drill"
-      ],
-      "chapterCode": "e5-2-7",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "表面積",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-7",
-        "表面積",
-        "無蓋",
-        "兩小類綜合"
-      ],
-      "usage": [
-        "混合練習無蓋長方體與無蓋正方體表面積。"
-      ],
-      "examples": [],
-      "tips": [
-        "長方體無蓋用5面公式；正方體無蓋用5s²。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "搞混兩種容器的公式。"
-      ]
-    },
-    "practice-e5-2-7-inverse-room-two-subtypes": {
-      "id": "practice-e5-2-7-inverse-room-two-subtypes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "逆推高與粉刷扣門窗兩小類",
-      "generatorKey": "e5-2-7-inverse-room-two-subtypes",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 2,
-      "relatedPracticeIds": [
-        "practice-e5-2-7-inverse-height-drill",
-        "practice-e5-2-7-room-window-drill"
-      ],
-      "chapterCode": "e5-2-7",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "表面積",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-7",
-        "表面積",
-        "逆推",
-        "粉刷",
-        "兩小類綜合"
-      ],
-      "usage": [
-        "混合練習逆推高與扣除門窗的粉刷問題。"
-      ],
-      "examples": [],
-      "tips": [
-        "逆推高：從SA反推；粉刷：算四面牆再扣門窗。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "逆推時忘記先除以2。"
-      ]
-    },
-    "practice-e5-2-4-distributive-law-drill": {
-      "id": "practice-e5-2-4-distributive-law-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "小數乘法分配律",
-      "generatorKey": "e5-2-4-distributive-law-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-4",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "小數的乘法",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-4",
-        "小數乘法",
-        "分配律"
-      ],
-      "usage": [
-        "利用分配律將小數乘法化簡：a×b ± a×c = a×(b±c)。"
-      ],
-      "examples": [],
-      "tips": [
-        "找出公因數後提出，將括號內的數字化簡再相乘。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "沒先提出公因數，直接各自計算不夠簡便。"
-      ]
-    },
-    "practice-e5-2-4-clever-grouping-drill": {
-      "id": "practice-e5-2-4-clever-grouping-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "湊整巧算（結合律）",
-      "generatorKey": "e5-2-4-clever-grouping-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-4",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "小數的乘法",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-4",
-        "小數乘法",
-        "湊整",
-        "結合律"
-      ],
-      "usage": [
-        "三數相乘時，先找能湊成整數的兩個數（如0.4×2.5=1），再乘第三個數。"
-      ],
-      "examples": [],
-      "tips": [
-        "常見湊整對：0.4×2.5=1、1.25×8=10、2.5×4=10、5×0.2=1。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "按順序從左到右計算，沒有先湊整。"
-      ]
-    },
-    "practice-e5-2-4-discount-drill": {
-      "id": "practice-e5-2-4-discount-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "打折與加成應用",
-      "generatorKey": "e5-2-4-discount-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-4",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "小數的乘法",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-4",
-        "小數乘法",
-        "打折",
-        "加成"
-      ],
-      "usage": [
-        "計算商品打折或加成後的售價，練習小數乘法的生活應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "打折：售價 = 原價 × 折扣率；加成：售價 = 成本 × 倍率。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把折扣率加1或搞混打折和加成的計算方向。"
-      ]
-    },
-    "practice-e5-2-4-distributive-clever-two-subtypes": {
-      "id": "practice-e5-2-4-distributive-clever-two-subtypes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "分配律與湊整兩小類",
-      "generatorKey": "e5-2-4-distributive-clever-two-subtypes",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 2,
-      "relatedPracticeIds": [
-        "practice-e5-2-4-distributive-law-drill",
-        "practice-e5-2-4-clever-grouping-drill"
-      ],
-      "chapterCode": "e5-2-4",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "小數的乘法",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-4",
-        "小數乘法",
-        "分配律",
-        "湊整",
-        "兩小類綜合"
-      ],
-      "usage": [
-        "混合練習分配律化簡與湊整巧算兩種策略。"
-      ],
-      "examples": [],
-      "tips": [
-        "先判斷：有公因數用分配律；三數相乘有湊整對用結合律。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "兩種策略搞混，沒有判斷適合哪一種。"
-      ]
-    },
-    "practice-e5-2-8-relative-compare-drill": {
-      "id": "practice-e5-2-8-relative-compare-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "甲比乙多/少幾%",
-      "generatorKey": "e5-2-8-relative-compare-drill",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-8",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-8-percent-change-drill": {
-      "id": "practice-e5-2-8-percent-change-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "增減後是原來的幾%",
-      "generatorKey": "e5-2-8-percent-change-drill",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-8",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-8-find-original-drill": {
-      "id": "practice-e5-2-8-find-original-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "已知折扣後價格逆推原價",
-      "generatorKey": "e5-2-8-find-original-drill",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-8",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-8-compare-change-three-subtypes": {
-      "id": "practice-e5-2-8-compare-change-three-subtypes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "相對比較、增減百分率與逆推原價三小類",
-      "generatorKey": "e5-2-8-compare-change-three-subtypes",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-8",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-9-speed-distance-drill": {
-      "id": "practice-e5-2-9-speed-distance-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "速度×時間=距離（含單位換算）",
-      "generatorKey": "e5-2-9-speed-distance-drill",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-9",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-9-match-with-break-drill": {
-      "id": "practice-e5-2-9-match-with-break-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "比賽節數與休息時間計算",
-      "generatorKey": "e5-2-9-match-with-break-drill",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-9",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-9-time-ratio-drill": {
-      "id": "practice-e5-2-9-time-ratio-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "時間倍數比較",
-      "generatorKey": "e5-2-9-time-ratio-drill",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-9",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-9-speed-match-three-subtypes": {
-      "id": "practice-e5-2-9-speed-match-three-subtypes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "速度距離、比賽時間與時間倍數三小類",
-      "generatorKey": "e5-2-9-speed-match-three-subtypes",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-9",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-5-pie-complement-drill": {
-      "id": "practice-e5-2-5-pie-complement-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "圓形圖百分比補集",
-      "generatorKey": "e5-2-5-pie-complement-drill",
-      "difficulty": "easy",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-5",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-5-pie-angle-count-drill": {
-      "id": "practice-e5-2-5-pie-angle-count-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "圓形圖角度↔百分比↔數量",
-      "generatorKey": "e5-2-5-pie-angle-count-drill",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-5",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-5-pie-inverse-drill": {
-      "id": "practice-e5-2-5-pie-inverse-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "由部分逆推圓形圖全體",
-      "generatorKey": "e5-2-5-pie-inverse-drill",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-5",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-5-pie-three-subtypes": {
-      "id": "practice-e5-2-5-pie-three-subtypes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "圓形圖三小類綜合",
-      "generatorKey": "e5-2-5-pie-three-subtypes",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-5",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-3-rock-water-level-drill": {
-      "id": "practice-e5-2-3-rock-water-level-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "水中放石頭後的水位高度",
-      "generatorKey": "e5-2-3-rock-water-level-drill",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-3-cup-pour-drill": {
-      "id": "practice-e5-2-3-cup-pour-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "幾個杯子與正方體倒水",
-      "generatorKey": "e5-2-3-cup-pour-drill",
-      "difficulty": "easy",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-3-fraction-base-area-drill": {
-      "id": "practice-e5-2-3-fraction-base-area-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "幾分之幾的水量與底面積逆推",
-      "generatorKey": "e5-2-3-fraction-base-area-drill",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-3-rock-cup-three-subtypes": {
-      "id": "practice-e5-2-3-rock-cup-three-subtypes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "水位石頭、杯子倒水與分數水量三小類",
-      "generatorKey": "e5-2-3-rock-cup-three-subtypes",
-      "difficulty": "medium",
-      "questionCount": 0,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-2-2-mixed-mixed-multiply-drill": {
-      "id": "practice-e5-2-2-mixed-mixed-multiply-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "帶分數乘帶分數",
-      "generatorKey": "e5-2-2-mixed-mixed-multiply-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-2",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "分數的計算",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-2",
-        "分數的計算",
-        "帶分數乘法",
-        "分數計算"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "先化假分數再相乘，最後化回帶分數或整數。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記先化假分數，直接用整數部分和分數部分分開計算。"
-      ]
-    },
-    "practice-e5-2-2-triple-multiply-drill": {
-      "id": "practice-e5-2-2-triple-multiply-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "三個分數連乘",
-      "generatorKey": "e5-2-2-triple-multiply-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-2",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "分數的計算",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-2",
-        "分數的計算",
-        "三分數連乘",
-        "交叉約分"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "先找分子和分母間的公因數進行交叉約分，再相乘。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "每次相乘後才約分，步驟繁瑣且易出錯。"
-      ]
-    },
-    "practice-e5-2-2-add-multiply-mixed-drill": {
-      "id": "practice-e5-2-2-add-multiply-mixed-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "分數混合四則（乘加減）",
-      "generatorKey": "e5-2-2-add-multiply-mixed-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-2",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "分數的計算",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-2",
-        "分數的計算",
-        "混合四則",
-        "運算順序"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "先乘除、後加減；有括號先算括號內。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "未注意運算順序，先加減後乘。"
-      ]
-    },
-    "practice-e5-2-2-remainder-application-drill": {
-      "id": "practice-e5-2-2-remainder-application-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "剩餘量應用",
-      "generatorKey": "e5-2-2-remainder-application-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-2",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "分數的計算",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-2",
-        "分數的計算",
-        "剩餘量",
-        "分數應用"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "先算用掉的量（總量 × 分率），再用總量減去用掉的量。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "直接用分率當答案，忘記求實際數量。"
-      ]
-    },
-    "practice-e5-2-2-two-step-consume-drill": {
-      "id": "practice-e5-2-2-two-step-consume-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "兩步驟消耗應用",
-      "generatorKey": "e5-2-2-two-step-consume-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-2-2",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "分數的計算",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-2",
-        "分數的計算",
-        "兩步驟",
-        "連續消耗"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "第二步驟的基準量是第一步驟後的剩餘量，不是原來總量。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "第二次分率仍以原總量為基準，導致計算錯誤。"
-      ]
-    },
-    "practice-e5-2-2-new-three-subtypes": {
-      "id": "practice-e5-2-2-new-three-subtypes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "進階分數計算三小類綜合",
-      "generatorKey": "e5-2-2-new-three-subtypes",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [
-        "practice-e5-2-2-mixed-mixed-multiply-drill",
-        "practice-e5-2-2-triple-multiply-drill",
-        "practice-e5-2-2-add-multiply-mixed-drill"
-      ],
-      "chapterCode": "e5-2-2",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "下學期",
-      "chapter": "分數的計算",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-2",
-        "分數的計算",
-        "進階分數計算",
-        "綜合練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "帶分數先化假分數，連乘善用交叉約分，混合四則注意運算順序。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-e5-1-5-parallelogram-area-drill": {
-      "id": "practice-e5-1-5-parallelogram-area-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "平行四邊形面積",
-      "generatorKey": "e5-1-5-parallelogram-area-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-1-5",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "上學期",
-      "chapter": "多邊形與扇形",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-1-5",
-        "多邊形與扇形",
-        "平行四邊形",
-        "面積"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "平行四邊形面積 = 底 × 高，注意高是底的垂直距離，不是斜邊長。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "用斜邊長代替高。"
-      ]
-    },
-    "practice-e5-1-5-trapezoid-area-drill": {
-      "id": "practice-e5-1-5-trapezoid-area-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "梯形面積",
-      "generatorKey": "e5-1-5-trapezoid-area-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-1-5",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "上學期",
-      "chapter": "多邊形與扇形",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-1-5",
-        "多邊形與扇形",
-        "梯形",
-        "面積"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "梯形面積 = (上底 + 下底) × 高 ÷ 2。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記除以 2，或把斜腰當成高。"
-      ]
-    },
-    "practice-e5-1-5-triangle-area-drill": {
-      "id": "practice-e5-1-5-triangle-area-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "三角形面積",
-      "generatorKey": "e5-1-5-triangle-area-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-1-5",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "上學期",
-      "chapter": "多邊形與扇形",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-1-5",
-        "多邊形與扇形",
-        "三角形",
-        "面積"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "三角形面積 = 底 × 高 ÷ 2，高必須是底的垂直距離。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記除以 2，或用斜邊當高。"
-      ]
-    },
-    "practice-e5-1-5-area-three-subtypes": {
-      "id": "practice-e5-1-5-area-three-subtypes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "多邊形面積三小類綜合",
-      "generatorKey": "e5-1-5-area-three-subtypes",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [
-        "practice-e5-1-5-parallelogram-area-drill",
-        "practice-e5-1-5-trapezoid-area-drill",
-        "practice-e5-1-5-triangle-area-drill"
-      ],
-      "chapterCode": "e5-1-5",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "上學期",
-      "chapter": "多邊形與扇形",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-1-5",
-        "多邊形與扇形",
-        "面積綜合",
-        "多邊形"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "先辨認圖形種類，再套用對應的面積公式。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "混淆三種公式，尤其是有無除以 2 的差別。"
-      ]
-    },
-    "practice-e5-1-4-common-denom3-drill": {
-      "id": "practice-e5-1-4-common-denom3-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "三個分數通分並比較大小",
-      "generatorKey": "e5-1-4-common-denom3-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-1-4",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "上學期",
-      "chapter": "擴分、約分與通分",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-1-4",
-        "擴分、約分與通分",
-        "三分數通分",
-        "比較大小"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "找三個分母的最小公倍數作為公分母，然後比較分子大小。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "只取兩個分母的公倍數，未對第三個分母通分。"
-      ]
-    },
-    "practice-e5-1-4-mixed-calc3-drill": {
-      "id": "practice-e5-1-4-mixed-calc3-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "三項分數混合加減",
-      "generatorKey": "e5-1-4-mixed-calc3-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-1-4",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "上學期",
-      "chapter": "擴分、約分與通分",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-1-4",
-        "擴分、約分與通分",
-        "分數加減",
-        "三項計算"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "先通分，再依序加減分子，最後化簡。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "逐次通分兩個分數，第三個分數未一起通分。"
-      ]
-    },
-    "practice-e5-1-4-multi-step-sub-drill": {
-      "id": "practice-e5-1-4-multi-step-sub-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "多步驟分數減法應用題",
-      "generatorKey": "e5-1-4-multi-step-sub-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-1-4",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "上學期",
-      "chapter": "擴分、約分與通分",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-1-4",
-        "擴分、約分與通分",
-        "應用題",
-        "分數減法"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "先算各步驟消耗量，再從總量逐步扣減，或一次列式計算。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忘記化簡最後答案，或通分錯誤。"
-      ]
-    },
-    "practice-e5-1-4-three-frac-three-subtypes": {
-      "id": "practice-e5-1-4-three-frac-three-subtypes",
-      "enabled": true,
-      "mode": "generator",
-      "title": "分數進階三小類綜合",
-      "generatorKey": "e5-1-4-three-frac-three-subtypes",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [
-        "practice-e5-1-4-common-denom3-drill",
-        "practice-e5-1-4-mixed-calc3-drill",
-        "practice-e5-1-4-multi-step-sub-drill"
-      ],
-      "chapterCode": "e5-1-4",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "上學期",
-      "chapter": "擴分、約分與通分",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-1-4",
-        "擴分、約分與通分",
-        "分數進階",
-        "綜合練習"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "三題都需要通分，找最小公倍數是關鍵。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "通分後忘記約分化簡。"
-      ]
-    },
-    "practice-e5-1-2-prime-factorization-drill": {
-      "id": "practice-e5-1-2-prime-factorization-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "質因數分解",
-      "generatorKey": "e5-1-2-prime-factorization-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "e5-1-2",
-      "stage": "國小",
-      "grade": "小五",
-      "term": "上學期",
-      "chapter": "因數與公因數",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-1-2",
-        "因數與公因數",
-        "質因數分解",
-        "質數"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [
-        "從最小的質數 2 開始試除，持續除到商為質數為止，用短除法整理步驟。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把合數也當成質因數，或除到 1 就停下來。"
-      ]
-    },
-    "practice-j1-3-3-opposite-number-application-drill": {
-      "id": "practice-j1-3-3-opposite-number-application-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "兩數互為相反數",
-      "generatorKey": "j1-3-3-opposite-number-application-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "一元一次方程式的應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-three-person-chain-diff-drill": {
-      "id": "practice-j1-3-3-three-person-chain-diff-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "三人連差應用題",
-      "generatorKey": "j1-3-3-three-person-chain-diff-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "一元一次方程式的應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-monkey-banana-drill": {
-      "id": "practice-j1-3-3-monkey-banana-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "猴子香蕉問題",
-      "generatorKey": "j1-3-3-monkey-banana-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "一元一次方程式的應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-double-discount-drill": {
-      "id": "practice-j1-3-3-double-discount-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "兩折扣比較應用題",
-      "generatorKey": "j1-3-3-double-discount-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "一元一次方程式的應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-guess-number-drill": {
-      "id": "practice-j1-3-3-guess-number-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "猜數遊戲應用題",
-      "generatorKey": "j1-3-3-guess-number-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "一元一次方程式的應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-rectangle-dimension-drill": {
-      "id": "practice-j1-3-3-rectangle-dimension-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "長方形長寬關係應用題",
-      "generatorKey": "j1-3-3-rectangle-dimension-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "一元一次方程式的應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-age-ratio-plus-drill": {
-      "id": "practice-j1-3-3-age-ratio-plus-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "倍加型父子年齡應用題",
-      "generatorKey": "j1-3-3-age-ratio-plus-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "一元一次方程式的應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-weight-compare-drill": {
-      "id": "practice-j1-3-3-weight-compare-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "和倍差體重應用題",
-      "generatorKey": "j1-3-3-weight-compare-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "一元一次方程式的應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-find-fraction-drill": {
-      "id": "practice-j1-3-3-find-fraction-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "求特定分數應用題",
-      "generatorKey": "j1-3-3-find-fraction-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "一元一次方程式的應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-rope-folding-drill": {
-      "id": "practice-j1-3-3-rope-folding-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "繩子折段差與井深問題",
-      "generatorKey": "j1-3-3-rope-folding-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-candle-burn-drill": {
-      "id": "practice-j1-3-3-candle-burn-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "蠟燭同時燃燒比例問題",
-      "generatorKey": "j1-3-3-candle-burn-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-circular-track-drill": {
-      "id": "practice-j1-3-3-circular-track-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "圓形跑道反向相遇週期問題",
-      "generatorKey": "j1-3-3-circular-track-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-chain-fraction-take-drill": {
-      "id": "practice-j1-3-3-chain-fraction-take-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "連續取分數型問題",
-      "generatorKey": "j1-3-3-chain-fraction-take-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-calendar-block-drill": {
-      "id": "practice-j1-3-3-calendar-block-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "月曆方框日期問題",
-      "generatorKey": "j1-3-3-calendar-block-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-3-3-digit-swap-drill": {
-      "id": "practice-j1-3-3-digit-swap-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "四位數移位問題",
-      "generatorKey": "j1-3-3-digit-swap-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-3-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-3-3",
-        "一元一次方程式",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-1-1-find-var-value-drill": {
-      "id": "practice-j2-1-1-find-var-value-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "代入求變數值（若x=c,y=a型）",
-      "generatorKey": "j2-1-1-find-var-value-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "代入法",
-        "二元一次方程式",
-        "求值"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-1-1-find-x-coeff-drill": {
-      "id": "practice-j2-1-1-find-x-coeff-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "代入求x係數",
-      "generatorKey": "j2-1-1-find-x-coeff-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "代入法",
-        "二元一次方程式",
-        "求係數"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-1-1-any-one-solution-drill": {
-      "id": "practice-j2-1-1-any-one-solution-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "找任意一組整數解",
-      "generatorKey": "j2-1-1-any-one-solution-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "整數解",
-        "二元一次方程式"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-1-1-all-pos-int-solution-drill": {
-      "id": "practice-j2-1-1-all-pos-int-solution-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "所有正整數解",
-      "generatorKey": "j2-1-1-all-pos-int-solution-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "整數解",
-        "正整數",
-        "二元一次方程式"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-1-1-range-int-solution-drill": {
-      "id": "practice-j2-1-1-range-int-solution-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "有條件整數解（負整數/有界範圍）",
-      "generatorKey": "j2-1-1-range-int-solution-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "整數解",
-        "負整數",
-        "有界範圍",
-        "二元一次方程式"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-1-1-prime-solution-drill": {
-      "id": "practice-j2-1-1-prime-solution-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "質數條件整數解",
-      "generatorKey": "j2-1-1-prime-solution-drill",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "整數解",
-        "質數",
-        "二元一次方程式"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-1-1-shopping-word-drill": {
-      "id": "practice-j2-1-1-shopping-word-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "購物情境應用題",
-      "generatorKey": "j2-1-1-shopping-word-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "應用題",
-        "整數解",
-        "購物",
-        "二元一次方程式"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-4-2-specific-score-threshold-drill": {
-      "id": "practice-j2-4-2-specific-score-threshold-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "具體分數平均門檻",
-      "generatorKey": "j2-4-2-specific-score-threshold-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "不等式應用",
-        "平均數",
-        "分數門檻"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-4-2-pos-int-enumerate-drill": {
-      "id": "practice-j2-4-2-pos-int-enumerate-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "正整數列舉（符合條件的所有正整數）",
-      "generatorKey": "j2-4-2-pos-int-enumerate-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "不等式應用",
-        "正整數",
-        "列舉"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-4-2-integer-condition-word-drill": {
-      "id": "practice-j2-4-2-integer-condition-word-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "某整數／某正數條件型",
-      "generatorKey": "j2-4-2-integer-condition-word-drill",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "不等式應用",
-        "某整數",
-        "某正數"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-4-2-shape-variable-expr-drill": {
-      "id": "practice-j2-4-2-shape-variable-expr-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "圖形含變數表達式（長方形＋三角形）",
-      "generatorKey": "j2-4-2-shape-variable-expr-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "不等式應用",
-        "面積",
-        "長方形",
-        "三角形"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j2-4-2-age-past-relation-drill": {
-      "id": "practice-j2-4-2-age-past-relation-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "父子年齡過去比較型",
-      "generatorKey": "j2-4-2-age-past-relation-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "不等式應用",
-        "年齡問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "j2-1-2-two-solution-one-eq-drill": {
-      "id": "j2-1-2-two-solution-one-eq-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "兩組解求方程式係數",
-      "generatorKey": "j2-1-2-two-solution-one-eq-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "聯立方程式",
-        "代入法",
-        "係數求解"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "j2-1-3-balance-scale-drill": {
-      "id": "j2-1-3-balance-scale-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "等臂天平稱重聯立方程",
-      "generatorKey": "j2-1-3-balance-scale-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "聯立方程式",
-        "天平",
-        "應用題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "j2-1-3-class-size-score-drill": {
-      "id": "j2-1-3-class-size-score-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "班級人數與成績分析",
-      "generatorKey": "j2-1-3-class-size-score-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "聯立方程式",
-        "平均數",
-        "班級應用"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "j2-1-3-pairwise-sum-drill": {
-      "id": "j2-1-3-pairwise-sum-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "多人成對和問題",
-      "generatorKey": "j2-1-3-pairwise-sum-drill",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "聯立方程式",
-        "成對和",
-        "年齡問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "j2-1-3-box-distribution-drill": {
-      "id": "j2-1-3-box-distribution-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "分配與分箱問題",
-      "generatorKey": "j2-1-3-box-distribution-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-1-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "聯立方程式",
-        "分配",
-        "箱子問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "j2-4-2-solve-ineq-integer-drill": {
-      "id": "j2-4-2-solve-ineq-integer-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "解不等式求整數解",
-      "generatorKey": "j2-4-2-solve-ineq-integer-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "一元一次不等式",
-        "整數解",
-        "最大最小值"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "j2-4-2-given-solution-find-coeff-drill": {
-      "id": "j2-4-2-given-solution-find-coeff-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "已知解求係數",
-      "generatorKey": "j2-4-2-given-solution-find-coeff-drill",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "一元一次不等式",
-        "逆推係數"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "j2-4-2-compound-ineq-drill": {
-      "id": "j2-4-2-compound-ineq-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "聯立（雙重）不等式",
-      "generatorKey": "j2-4-2-compound-ineq-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "聯立不等式",
-        "雙重不等式",
-        "整數解"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "j2-4-2-abs-value-ineq-drill": {
-      "id": "j2-4-2-abs-value-ineq-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "絕對值不等式",
-      "generatorKey": "j2-4-2-abs-value-ineq-drill",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "絕對值不等式",
-        "整數解"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "j2-4-2-x-range-linear-func-drill": {
-      "id": "j2-4-2-x-range-linear-func-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "已知 x 範圍求函數範圍",
-      "generatorKey": "j2-4-2-x-range-linear-func-drill",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "範圍推導",
-        "線性函數",
-        "不等式"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "j2-4-2-concentration-ineq-drill": {
-      "id": "j2-4-2-concentration-ineq-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "濃度不等式應用",
-      "generatorKey": "j2-4-2-concentration-ineq-drill",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j2-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "濃度",
-        "混合問題",
-        "不等式應用"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-1-diff-square-solve": {
-      "id": "practice-j3-4-1-diff-square-solve",
-      "enabled": true,
-      "mode": "generator",
-      "title": "差平方型方程式",
-      "generatorKey": "j3-4-1-diff-square-solve",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-1",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "一元二次方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-1",
-        "無限練習",
-        "差平方",
-        "因式分解"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-1-substitute-var-solve": {
-      "id": "practice-j3-4-1-substitute-var-solve",
-      "enabled": true,
-      "mode": "generator",
-      "title": "換元法解方程式",
-      "generatorKey": "j3-4-1-substitute-var-solve",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-1",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "一元二次方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-1",
-        "無限練習",
-        "換元法"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-1-shared-root": {
-      "id": "practice-j3-4-1-shared-root",
-      "enabled": true,
-      "mode": "generator",
-      "title": "兩方程式共同解",
-      "generatorKey": "j3-4-1-shared-root",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-1",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "一元二次方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-1",
-        "無限練習",
-        "共同解"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-2-two-person-mistake": {
-      "id": "practice-j3-4-2-two-person-mistake",
-      "enabled": true,
-      "mode": "generator",
-      "title": "甲乙各看錯不同係數",
-      "generatorKey": "j3-4-2-two-person-mistake",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-2",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "一元二次方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-2",
-        "無限練習",
-        "看錯係數",
-        "韋達定理"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-2-complete-square-lead-coeff": {
-      "id": "practice-j3-4-2-complete-square-lead-coeff",
-      "enabled": true,
-      "mode": "generator",
-      "title": "配方法求首項係數",
-      "generatorKey": "j3-4-2-complete-square-lead-coeff",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-2",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "一元二次方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-2",
-        "無限練習",
-        "完全平方式",
-        "配方"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-3-round-robin": {
-      "id": "practice-j3-4-3-round-robin",
-      "enabled": true,
-      "mode": "generator",
-      "title": "循環賽場次求人數",
-      "generatorKey": "j3-4-3-round-robin",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-3",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "一元二次方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-3",
-        "無限練習",
-        "循環賽",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-3-garden-path": {
-      "id": "practice-j3-4-3-garden-path",
-      "enabled": true,
-      "mode": "generator",
-      "title": "長方形土地開路問題",
-      "generatorKey": "j3-4-3-garden-path",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-3",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "一元二次方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-3",
-        "無限練習",
-        "開路",
-        "面積",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-3-open-box": {
-      "id": "practice-j3-4-3-open-box",
-      "enabled": true,
-      "mode": "generator",
-      "title": "正方形薄片折成開口盒",
-      "generatorKey": "j3-4-3-open-box",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-3",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "一元二次方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-3",
-        "無限練習",
-        "開口盒",
-        "體積",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-3-square-side-change": {
-      "id": "practice-j3-4-3-square-side-change",
-      "enabled": true,
-      "mode": "generator",
-      "title": "正方形邊長變化問題",
-      "generatorKey": "j3-4-3-square-side-change",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-3",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "一元二次方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-3",
-        "無限練習",
-        "邊長變化",
-        "面積",
-        "應用問題"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-4-2-abs-double-zero": {
-      "id": "practice-j3-4-2-abs-double-zero",
-      "enabled": true,
-      "mode": "generator",
-      "title": "絕對值方程式 |f(x)|+|g(x)|=0",
-      "generatorKey": "j3-4-2-abs-double-zero",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-4-2",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "一元二次方程式",
-      "domain": "代數",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-4-2",
-        "絕對值",
-        "共同根",
         "無限練習"
       ],
       "usage": [],
       "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-2-1-sqrt-definition-relation": {
-      "id": "practice-j3-2-1-sqrt-definition-relation",
-      "enabled": true,
-      "mode": "generator",
-      "title": "平方根定義關係推導",
-      "generatorKey": "j3-2-1-sqrt-definition-relation",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-2-1",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "平方根與畢氏定理",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-2-1",
-        "無限練習",
-        "平方根定義"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-2-1-sqrt-reverse-square": {
-      "id": "practice-j3-2-1-sqrt-reverse-square",
-      "enabled": true,
-      "mode": "generator",
-      "title": "平方根反推未知數",
-      "generatorKey": "j3-2-1-sqrt-reverse-square",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-2-1",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "平方根與畢氏定理",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-2-1",
-        "無限練習",
-        "反推",
-        "平方根"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-2-1-sqrt-linear-system": {
-      "id": "practice-j3-2-1-sqrt-linear-system",
-      "enabled": true,
-      "mode": "generator",
-      "title": "兩平方根聯立求解",
-      "generatorKey": "j3-2-1-sqrt-linear-system",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-2-1",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "平方根與畢氏定理",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-2-1",
-        "無限練習",
-        "聯立",
-        "平方根"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-2-2-radical-compare": {
-      "id": "practice-j3-2-2-radical-compare",
-      "enabled": true,
-      "mode": "generator",
-      "title": "根式表達式大小比較",
-      "generatorKey": "j3-2-2-radical-compare",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-2-2",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "平方根與畢氏定理",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-2-2",
-        "無限練習",
-        "根式比較"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-2-3-isosceles-triangle-area": {
-      "id": "practice-j3-2-3-isosceles-triangle-area",
-      "enabled": true,
-      "mode": "generator",
-      "title": "等腰三角形面積（畢氏求高）",
-      "generatorKey": "j3-2-3-isosceles-triangle-area",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-2-3",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "平方根與畢氏定理",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-2-3",
-        "無限練習",
-        "等腰三角形",
-        "面積"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-2-3-ratio-perim-area": {
-      "id": "practice-j3-2-3-ratio-perim-area",
-      "enabled": true,
-      "mode": "generator",
-      "title": "直角三角形三邊比與周長面積",
-      "generatorKey": "j3-2-3-ratio-perim-area",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-2-3",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "平方根與畢氏定理",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-2-3",
-        "無限練習",
-        "三邊比",
-        "周長",
-        "面積"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j3-2-3-trapezoid-pythag": {
-      "id": "practice-j3-2-3-trapezoid-pythag",
-      "enabled": true,
-      "mode": "generator",
-      "title": "梯形畢氏定理求高與面積",
-      "generatorKey": "j3-2-3-trapezoid-pythag",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j3-2-3",
-      "stage": "國中",
-      "grade": "國二",
-      "term": "上學期",
-      "chapter": "平方根與畢氏定理",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j3-2-3",
-        "無限練習",
-        "梯形",
-        "畢氏定理"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-1-1-right-triangle-ap-drill": {
-      "id": "practice-j4-1-1-right-triangle-ap-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "直角三角形三邊成等差",
-      "generatorKey": "j4-1-1-right-triangle-ap",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-1-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-1-1",
-        "等差數列",
-        "直角三角形"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-1-1-polygon-ap-drill": {
-      "id": "practice-j4-1-1-polygon-ap-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "多邊形邊長與內角成等差",
-      "generatorKey": "j4-1-1-polygon-ap",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-1-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-1-1",
-        "等差數列",
-        "多邊形"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-1-1-first-positive-term-drill": {
-      "id": "practice-j4-1-1-first-positive-term-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "第幾項起為正／負數",
-      "generatorKey": "j4-1-1-first-positive-term",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-1-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-1-1",
-        "等差數列",
-        "正負項"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-1-1-coordinate-move-drill": {
-      "id": "practice-j4-1-1-coordinate-move-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "座標點等差移動",
-      "generatorKey": "j4-1-1-coordinate-move",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-1-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-1-1",
-        "等差數列",
-        "座標"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-1-3-polygon-sum-drill": {
-      "id": "practice-j4-1-3-polygon-sum-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "多邊形邊長成等差求周長",
-      "generatorKey": "j4-1-3-polygon-sum",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-1-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-1-3",
-        "等差級數",
-        "多邊形"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-1-3-catch-up-race-drill": {
-      "id": "practice-j4-1-3-catch-up-race-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "等差遞增應用：競速與累計",
-      "generatorKey": "j4-1-3-catch-up-race",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-1-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-1-3",
-        "等差級數",
-        "應用"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-3-1-isosceles-angle-drill": {
-      "id": "practice-j4-3-1-isosceles-angle-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "等腰三角形角度計算",
-      "generatorKey": "j4-3-1-isosceles-angle",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-3-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-3-1",
-        "等腰三角形",
-        "角度"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-3-2-triangle-bisector-intersection-drill": {
-      "id": "practice-j4-3-2-triangle-bisector-intersection-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "角平分線交點角度",
-      "generatorKey": "j4-3-2-triangle-bisector-intersection",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-3-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-3-2",
-        "角平分線",
-        "交點"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-3-3-congruence-algebra-drill": {
-      "id": "practice-j4-3-3-congruence-algebra-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "全等三角形代數求解",
-      "generatorKey": "j4-3-3-congruence-algebra",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-3-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-3-3",
-        "全等",
-        "代數"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-3-4-exterior-angle-side-comparison-drill": {
-      "id": "practice-j4-3-4-exterior-angle-side-comparison-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "外角推算邊大小順序",
-      "generatorKey": "j4-3-4-exterior-angle-side-comparison",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-3-4",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-3-4",
-        "外角",
-        "邊角關係"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-3-4-hinge-theorem-drill": {
-      "id": "practice-j4-3-4-hinge-theorem-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "鉸鏈定理：兩三角形邊角比較",
-      "generatorKey": "j4-3-4-hinge-theorem",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-3-4",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j4-3-4",
-        "鉸鏈定理",
-        "邊角比較"
-      ],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-4-1-bent-line-parallel-drill": {
-      "id": "practice-j4-4-1-bent-line-parallel-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "兩平行線間折線角度",
-      "generatorKey": "j4-4-1-bent-line-parallel",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-4-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-4-2-angle-bisector-parallelogram-drill": {
-      "id": "practice-j4-4-2-angle-bisector-parallelogram-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "平行四邊形角平分線",
-      "generatorKey": "j4-4-2-angle-bisector-parallelogram",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-4-2-coordinate-parallelogram-drill": {
-      "id": "practice-j4-4-2-coordinate-parallelogram-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "座標系中的平行四邊形",
-      "generatorKey": "j4-4-2-coordinate-parallelogram",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-4-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-4-3-kite-property-drill": {
-      "id": "practice-j4-4-3-kite-property-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "鳶形性質計算",
-      "generatorKey": "j4-4-3-kite-property",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-4-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-4-3-right-trapezoid-drill": {
-      "id": "practice-j4-4-3-right-trapezoid-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "直角梯形邊長計算",
-      "generatorKey": "j4-4-3-right-trapezoid",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-4-3",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-2-1-linear-degree-condition-drill": {
-      "id": "practice-j4-2-1-linear-degree-condition-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "一次函數係數條件",
-      "generatorKey": "j4-2-1-linear-degree-condition",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-2-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-2-1-cross-function-substitution-drill": {
-      "id": "practice-j4-2-1-cross-function-substitution-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "跨函數移位代換",
-      "generatorKey": "j4-2-1-cross-function-substitution",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-2-1",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j4-2-2-word-model-two-point-drill": {
-      "id": "practice-j4-2-2-word-model-two-point-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "兩點線型函數應用",
-      "generatorKey": "j4-2-2-word-model-two-point",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 0,
-      "relatedPracticeIds": [],
-      "chapterCode": "j4-2-2",
-      "stage": "",
-      "grade": "",
-      "term": "",
-      "chapter": "",
-      "domain": "",
-      "prompt": "",
-      "answer": "",
-      "tags": [],
-      "usage": [],
-      "examples": [],
-      "tips": [],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j1-2-1-prime-identify-drill": {
-      "id": "practice-j1-2-1-prime-identify-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "質數辨識",
-      "generatorKey": "j1-2-1-prime-identify-drill",
-      "difficulty": "基礎",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-2-1",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "倍數與因數",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "質數",
-        "合數",
-        "質數判別"
-      ],
-      "usage": [
-        "訓練學生用試除法辨別質數與合數，特別針對容易誤判的合數（如49、91、121等）。"
-      ],
-      "examples": [],
       "tips": [
-        "質數只有 1 和本身兩個因數。",
-        "判斷一個數是否為質數，只需試除到其平方根即可。"
+        "此小類會更換矩陣元素、參數或變換資料，核心計算方法固定但題目不只是重排。"
       ],
-      "notes": [
-        "刻意選用外型像質數但其實是合數的數（如 91=7×13）作為干擾選項。"
-      ],
+      "notes": [],
       "mistakes": [
-        "誤以為奇數都是質數。",
-        "忘記 1 不是質數。"
+        "常見錯誤是把坐標軸旋轉當成點本身旋轉，導致正負號相反。"
       ]
     },
-    "practice-j1-2-1-divisibility-digit-fill-drill": {
-      "id": "practice-j1-2-1-divisibility-digit-fill-drill",
+    "practice-s4-4-4-line-stretch-parameter-clean": {
+      "id": "practice-s4-4-4-line-stretch-parameter-clean",
       "enabled": true,
       "mode": "generator",
-      "title": "整除規則缺位數字",
-      "generatorKey": "j1-2-1-divisibility-digit-fill-drill",
-      "difficulty": "進階",
-      "questionCount": 5,
-      "subtypeCount": 5,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-2-1",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "倍數與因數",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "整除規則",
-        "3的倍數",
-        "9的倍數",
-        "4的倍數",
-        "8的倍數",
-        "11的倍數",
-        "缺位數字"
-      ],
-      "usage": [
-        "給定含一個未知位的四或五位數，要求利用整除規則找出符合條件的位數字。"
-      ],
-      "examples": [],
-      "tips": [
-        "能整除 3：各位數字和為 3 的倍數。",
-        "能整除 9：各位數字和為 9 的倍數。",
-        "能整除 4：末兩位為 4 的倍數。",
-        "能整除 8：末三位為 8 的倍數。",
-        "能整除 11：奇偶位交錯和差為 11 的倍數（含 0）。"
-      ],
-      "notes": [
-        "答案可能不只一個，需列出所有合法位數字。"
-      ],
-      "mistakes": [
-        "只找到一個答案就停下，沒有檢查所有可能的位數字。"
-      ]
-    },
-    "practice-j1-2-1-multiple-count-range-drill": {
-      "id": "practice-j1-2-1-multiple-count-range-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "範圍倍數計數",
-      "generatorKey": "j1-2-1-multiple-count-range-drill",
-      "difficulty": "進階",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-2-1",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "倍數與因數",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "倍數計數",
-        "餘數",
-        "範圍",
-        "容斥原理"
-      ],
-      "usage": [
-        "在指定整數範圍中，計算特定倍數、特定餘數、或同時滿足/排除多個條件的整數個數。"
-      ],
-      "examples": [],
-      "tips": [
-        "a 到 b 中 k 的倍數個數 = ⌊b/k⌋ − ⌊(a−1)/k⌋。",
-        "計算同時是 j 倍數又是 k 倍數的個數，要用 lcm(j,k) 的倍數。"
-      ],
-      "notes": [
-        "注意範圍端點是否包含在內。"
-      ],
-      "mistakes": [
-        "直接用 b÷k 取整，沒有扣掉起點以前的倍數個數。"
-      ]
-    },
-    "practice-j1-2-2-coprime-identify-drill": {
-      "id": "practice-j1-2-2-coprime-identify-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "互質判別",
-      "generatorKey": "j1-2-2-coprime-identify-drill",
-      "difficulty": "基礎",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-2-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "公因數與公倍數",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "互質",
-        "最大公因數",
-        "公因數"
-      ],
-      "usage": [
-        "練習判別兩數是否互質，並在多個候選數中找出與給定數互質的那一個。"
-      ],
-      "examples": [],
-      "tips": [
-        "兩數互質意指最大公因數等於 1。",
-        "可先分解質因數再比對，或直接用輾轉相除法求 gcd。"
-      ],
-      "notes": [
-        "互質不代表兩數是質數，如 4 與 9 互質但均為合數。"
-      ],
-      "mistakes": [
-        "誤認為互質必須其中一個是質數。"
-      ]
-    },
-    "practice-j1-2-2-common-divisors-count-drill": {
-      "id": "practice-j1-2-2-common-divisors-count-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "公因數個數計算",
-      "generatorKey": "j1-2-2-common-divisors-count-drill",
-      "difficulty": "基礎",
-      "questionCount": 5,
-      "subtypeCount": 2,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-2-2",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "公因數與公倍數",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "公因數",
-        "最大公因數",
-        "因數個數"
-      ],
-      "usage": [
-        "練習利用「兩數的公因數 = 最大公因數的因數」這個性質，計算公因數個數或列出所有公因數。"
-      ],
-      "examples": [],
-      "tips": [
-        "先求最大公因數 gcd(a,b)，所有公因數就是 gcd(a,b) 的所有因數。"
-      ],
-      "notes": [
-        "列舉時不要遺漏 1 和最大公因數本身。"
-      ],
-      "mistakes": [
-        "直接分別列出 a 與 b 的因數再取交集，容易出錯且效率低。"
-      ]
-    },
-    "practice-j1-2-3-fraction-compare-drill": {
-      "id": "practice-j1-2-3-fraction-compare-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "分數大小比較",
-      "generatorKey": "j1-2-3-fraction-compare-drill",
-      "difficulty": "基礎",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-2-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "分數加減",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "分數大小",
-        "通分",
-        "負分數比較"
-      ],
-      "usage": [
-        "練習通分後比較正分數、負分數及正負混合分數的大小。"
-      ],
-      "examples": [],
-      "tips": [
-        "通分後分子大者數值較大（正分數）。",
-        "負分數中，絕對值較小者數值較大。"
-      ],
-      "notes": [
-        "包含正分數比較、負分數比較、正負混合三種子題型。"
-      ],
-      "mistakes": [
-        "把負分數的大小判斷方向搞反。"
-      ]
-    },
-    "practice-j1-2-3-fraction-simplify-drill": {
-      "id": "practice-j1-2-3-fraction-simplify-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "分數化簡",
-      "generatorKey": "j1-2-3-fraction-simplify-drill",
-      "difficulty": "基礎",
-      "questionCount": 5,
-      "subtypeCount": 2,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-2-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "分數加減",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "最簡分數",
-        "約分",
-        "最大公因數"
-      ],
-      "usage": [
-        "練習將分數約分至最簡形式，或辨認四個選項中哪一個已經是最簡分數。"
-      ],
-      "examples": [],
-      "tips": [
-        "分子分母同除以 gcd(分子, 分母)，即得最簡分數。",
-        "最簡分數的判斷：gcd(分子, 分母) = 1。"
-      ],
-      "notes": [
-        "含負分數的約分，符號保留在分子。"
-      ],
-      "mistakes": [
-        "只除以一個公因數而非最大公因數，導致結果仍不是最簡分數。"
-      ]
-    },
-    "practice-j1-2-3-fraction-reciprocal-drill": {
-      "id": "practice-j1-2-3-fraction-reciprocal-drill",
-      "enabled": true,
-      "mode": "generator",
-      "title": "倒數概念與計算",
-      "generatorKey": "j1-2-3-fraction-reciprocal-drill",
-      "difficulty": "基礎",
-      "questionCount": 5,
-      "subtypeCount": 3,
-      "relatedPracticeIds": [],
-      "chapterCode": "j1-2-3",
-      "stage": "國中",
-      "grade": "國一",
-      "term": "上學期",
-      "chapter": "分數加減",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "倒數",
-        "帶分數",
-        "假分數",
-        "分數乘法"
-      ],
-      "usage": [
-        "練習求分數、負分數、帶分數的倒數，以及解 □×(a/b)=1 型方程。"
-      ],
-      "examples": [],
-      "tips": [
-        "分數的倒數：分子分母互換，符號不變。",
-        "帶分數先化為假分數再求倒數。",
-        "□×a=1 ⟹ □ 是 a 的倒數。"
-      ],
-      "notes": [
-        "0 沒有倒數。"
-      ],
-      "mistakes": [
-        "帶分數直接對整數部分和分數部分分別取倒數，而非先化為假分數。"
-      ]
-    },
-    "practice-j5-1-2-rectangle-similarity-check": {
-      "id": "practice-j5-1-2-rectangle-similarity-check",
-      "enabled": true,
-      "mode": "generator",
-      "title": "矩形相似判別",
-      "generatorKey": "j5-1-2-rectangle-similarity-check",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-1-2",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "上學期",
-      "chapter": "平行線截比例線段",
-      "domain": "比例與幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-1-2",
-        "相似形",
-        "矩形",
-        "判別"
-      ],
-      "usage": [
-        "給定一個矩形，判別哪個長方形與它相似（長寬比相同）。"
-      ],
-      "examples": [],
-      "tips": [
-        "相似矩形的長寬比（化簡後）必須相等。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j5-1-3-similar-polygon-angle": {
-      "id": "practice-j5-1-3-similar-polygon-angle",
-      "enabled": true,
-      "mode": "generator",
-      "title": "相似多邊形角度計算",
-      "generatorKey": "j5-1-3-similar-polygon-angle",
+      "title": "伸縮推移下的直線像方程",
+      "generatorKey": "s4-4-4-line-stretch-parameter-clean",
       "difficulty": "medium",
       "questionCount": 5,
-      "subtypeCount": 1,
+      "subtypeCount": 0,
       "relatedPracticeIds": [],
-      "chapterCode": "j5-1-3",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "上學期",
-      "chapter": "相似形與相似三角形",
-      "domain": "比例與幾何",
+      "chapterCode": "s4-4-4",
+      "stage": "高中",
+      "grade": "高二",
+      "term": "下學期",
+      "chapter": "平面上的線性變換",
+      "domain": "矩陣與幾何",
       "prompt": "",
       "answer": "",
       "tags": [
-        "j5-1-3",
-        "相似形",
-        "多邊形",
-        "角度",
-        "內角和"
+        "s4-4-4",
+        "直線像方程",
+        "伸縮",
+        "推移",
+        "無限練習"
       ],
-      "usage": [
-        "兩個相似多邊形，利用內角和求未知角。"
-      ],
+      "usage": [],
       "examples": [],
       "tips": [
-        "四邊形內角和360°，五邊形內角和540°，對應角相等。"
+        "此小類會更換矩陣元素、參數或變換資料，核心計算方法固定但題目不只是重排。"
       ],
       "notes": [],
-      "mistakes": []
-    },
-    "practice-j5-1-3-slope-position-height": {
-      "id": "practice-j5-1-3-slope-position-height",
-      "enabled": true,
-      "mode": "generator",
-      "title": "斜坡位置高度計算",
-      "generatorKey": "j5-1-3-slope-position-height",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-1-3",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "上學期",
-      "chapter": "相似形與相似三角形",
-      "domain": "比例與幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-1-3",
-        "相似形",
-        "斜坡",
-        "比例",
-        "高度"
-      ],
-      "usage": [
-        "斜坡全長與高度已知，利用相似比求特定位置的高度。"
-      ],
-      "examples": [],
-      "tips": [
-        "高度與沿坡距離成正比：h = H × d / L。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j5-2-1-chord-sagitta-radius": {
-      "id": "practice-j5-2-1-chord-sagitta-radius",
-      "enabled": true,
-      "mode": "generator",
-      "title": "弓形矢高求半徑",
-      "generatorKey": "j5-2-1-chord-sagitta-radius",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-2-1",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "圓的基本性質與長度計算",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-2-1",
-        "圓",
-        "弦",
-        "矢高",
-        "半徑",
-        "弓形"
-      ],
-      "usage": [
-        "已知弦長與矢高（弓形高），用勾股定理求圓半徑。"
-      ],
-      "examples": [],
-      "tips": [
-        "r = (半弦² + 矢高²) / (2 × 矢高)。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j5-2-1-semicircle-chord-width": {
-      "id": "practice-j5-2-1-semicircle-chord-width",
-      "enabled": true,
-      "mode": "generator",
-      "title": "圓形容器水面寬度",
-      "generatorKey": "j5-2-1-semicircle-chord-width",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-2-1",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "圓的基本性質與長度計算",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-2-1",
-        "圓",
-        "弦",
-        "水面寬",
-        "半圓",
-        "容器"
-      ],
-      "usage": [
-        "圓形容器裝水，已知半徑與水深，求水面寬度（弦長）。"
-      ],
-      "examples": [],
-      "tips": [
-        "弦長² = 4(r² - (r-h)²) = 4(2rh - h²)。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j5-2-2-tangent-combined-angle": {
-      "id": "practice-j5-2-2-tangent-combined-angle",
-      "enabled": true,
-      "mode": "generator",
-      "title": "切線弦角綜合計算",
-      "generatorKey": "j5-2-2-tangent-combined-angle",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-2-2",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "圓心角、圓周角及弦切角",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-2-2",
-        "圓",
-        "切線",
-        "弦切角",
-        "圓周角",
-        "兩切線夾角"
-      ],
-      "usage": [
-        "結合兩切線夾角、弦切角與圓周角的綜合計算。"
-      ],
-      "examples": [],
-      "tips": [
-        "兩切線夾角 = (優弧 - 劣弧) / 2；弦切角 = 對應弧 / 2。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j5-3-2-perp-bisector-perimeter": {
-      "id": "practice-j5-3-2-perp-bisector-perimeter",
-      "enabled": true,
-      "mode": "generator",
-      "title": "中垂線性質求周長",
-      "generatorKey": "j5-3-2-perp-bisector-perimeter",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-3-2",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "上",
-      "chapter": "幾何證明的常用工具",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-3-2",
-        "中垂線",
-        "周長",
-        "等距離",
-        "垂直平分線"
-      ],
-      "usage": [
-        "利用中垂線上的點到兩端等距的性質，化簡周長計算。"
-      ],
-      "examples": [],
-      "tips": [
-        "點在AB中垂線上 ⟺ 點到A、B的距離相等。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j5-3-3-incircle-tangent-length": {
-      "id": "practice-j5-3-3-incircle-tangent-length",
-      "enabled": true,
-      "mode": "generator",
-      "title": "內切圓切線段計算",
-      "generatorKey": "j5-3-3-incircle-tangent-length",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-3-3",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "上學期",
-      "chapter": "三心與幾何綜合",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-3-3",
-        "內切圓",
-        "切線段",
-        "半周長",
-        "三角形"
-      ],
-      "usage": [
-        "已知三角形三邊，利用半周長公式求各頂點到切點的距離。"
-      ],
-      "examples": [],
-      "tips": [
-        "從頂點A的切線段長 = s - a，其中 s 為半周長，a 為對邊長。"
-      ],
-      "notes": [],
-      "mistakes": []
-    },
-    "practice-j5-3-3-median-length-formula": {
-      "id": "practice-j5-3-3-median-length-formula",
-      "enabled": true,
-      "mode": "generator",
-      "title": "中線長公式計算",
-      "generatorKey": "j5-3-3-median-length-formula",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [],
-      "chapterCode": "j5-3-3",
-      "stage": "國中",
-      "grade": "國三",
-      "term": "上學期",
-      "chapter": "三心與幾何綜合",
-      "domain": "幾何",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j5-3-3",
-        "中線",
-        "中線長公式",
-        "三角形",
-        "重心"
-      ],
-      "usage": [
-        "已知三角形三邊長，利用中線長公式求中線長度。"
-      ],
-      "examples": [],
-      "tips": [
-        "中線長公式：m_a² = (2b² + 2c² - a²) / 4。"
-      ],
-      "notes": [],
-      "mistakes": []
+      "mistakes": [
+        "常見錯誤是把新坐標直接代成舊坐標，沒有先寫出反向關係。"
+      ]
     }
   },
   "bindings": [
@@ -93126,6 +99104,13 @@ window.practiceLibraryStore = {
       "order": 1
     },
     {
+      "practiceId": "practice-s2-1-3-induction-sum-step",
+      "targetType": "chapter",
+      "targetId": "s2-1-3",
+      "enabled": true,
+      "order": 1
+    },
+    {
       "practiceId": "practice-s2-2-1-counting-applications-five-subtypes",
       "targetType": "chapter",
       "targetId": "s2-2-1",
@@ -93875,6 +99860,13 @@ window.practiceLibraryStore = {
       "order": 2
     },
     {
+      "practiceId": "practice-s2-1-3-induction-divisibility-step",
+      "targetType": "chapter",
+      "targetId": "s2-1-3",
+      "enabled": true,
+      "order": 2
+    },
+    {
       "practiceId": "practice-s2-2-1-advanced-counting-five-subtypes",
       "targetType": "chapter",
       "targetId": "s2-2-1",
@@ -94582,6 +100574,13 @@ window.practiceLibraryStore = {
       "order": 3
     },
     {
+      "practiceId": "practice-s1-3-3-quadratic-inequality-from-solution",
+      "targetType": "chapter",
+      "targetId": "s1-3-3",
+      "enabled": true,
+      "order": 3
+    },
+    {
       "practiceId": "practice-s2-1-1-recurrence-transform-mixed",
       "targetType": "chapter",
       "targetId": "s2-1-1",
@@ -94592,6 +100591,13 @@ window.practiceLibraryStore = {
       "practiceId": "practice-s2-1-2-sigma-five-subtypes",
       "targetType": "chapter",
       "targetId": "s2-1-2",
+      "enabled": true,
+      "order": 3
+    },
+    {
+      "practiceId": "practice-s2-1-3-induction-recurrence-conjecture",
+      "targetType": "chapter",
+      "targetId": "s2-1-3",
       "enabled": true,
       "order": 3
     },
@@ -94631,6 +100637,13 @@ window.practiceLibraryStore = {
       "order": 3
     },
     {
+      "practiceId": "practice-s2-3-2-correlation-from-sums-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-2",
+      "enabled": true,
+      "order": 3
+    },
+    {
       "practiceId": "practice-s2-4-1-triangle-identity-five-subtypes",
       "targetType": "chapter",
       "targetId": "s2-4-1",
@@ -94655,6 +100668,13 @@ window.practiceLibraryStore = {
       "practiceId": "practice-s3-1-3-parameter-model-five-subtypes",
       "targetType": "chapter",
       "targetId": "s3-1-3",
+      "enabled": true,
+      "order": 3
+    },
+    {
+      "practiceId": "practice-s3-1-4-linear-combo-inequality-parameterized",
+      "targetType": "chapter",
+      "targetId": "s3-1-4",
       "enabled": true,
       "order": 3
     },
@@ -95226,6 +101246,13 @@ window.practiceLibraryStore = {
       "order": 4
     },
     {
+      "practiceId": "practice-s1-3-3-same-solution-transform",
+      "targetType": "chapter",
+      "targetId": "s1-3-3",
+      "enabled": true,
+      "order": 4
+    },
+    {
       "practiceId": "practice-s2-1-1-combinatorial-recurrence",
       "targetType": "chapter",
       "targetId": "s2-1-1",
@@ -95236,6 +101263,13 @@ window.practiceLibraryStore = {
       "practiceId": "practice-s2-1-2-special-series-sigma-five-subtypes",
       "targetType": "chapter",
       "targetId": "s2-1-2",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "practiceId": "practice-s2-1-3-periodic-remainder-sequence",
+      "targetType": "chapter",
+      "targetId": "s2-1-3",
       "enabled": true,
       "order": 4
     },
@@ -95268,9 +101302,72 @@ window.practiceLibraryStore = {
       "order": 4
     },
     {
+      "practiceId": "practice-s2-3-1-quartiles-iqr-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-1",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "practiceId": "practice-s2-3-2-least-squares-small-data-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-2",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "practiceId": "practice-s2-4-1-tangent-ordering-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-4-1",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "practiceId": "practice-s3-1-1-sector-cone-parameterized",
+      "targetType": "chapter",
+      "targetId": "s3-1-1",
+      "enabled": true,
+      "order": 4
+    },
+    {
       "practiceId": "practice-s3-1-2-geometry-rotation-five-subtypes",
       "targetType": "chapter",
       "targetId": "s3-1-2",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "practiceId": "practice-s3-1-3-linear-sincos-graph-facts-parameterized",
+      "targetType": "chapter",
+      "targetId": "s3-1-3",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "practiceId": "practice-s3-1-4-combo-max-point-tangent-parameterized",
+      "targetType": "chapter",
+      "targetId": "s3-1-4",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "practiceId": "practice-s3-2-1-power-root-comparison-clean",
+      "targetType": "chapter",
+      "targetId": "s3-2-1",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "practiceId": "practice-s3-2-2-dominant-log-approx-clean",
+      "targetType": "chapter",
+      "targetId": "s3-2-2",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "practiceId": "practice-s3-2-3-log-point-transform-clean",
+      "targetType": "chapter",
+      "targetId": "s3-2-3",
       "enabled": true,
       "order": 4
     },
@@ -95723,6 +101820,27 @@ window.practiceLibraryStore = {
       "order": 5
     },
     {
+      "practiceId": "practice-s2-1-2-consecutive-cube-range-sum",
+      "targetType": "chapter",
+      "targetId": "s2-1-2",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "practiceId": "practice-s2-2-1-license-plate-restrictions-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-1",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "practiceId": "practice-s2-2-2-same-group-together-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-2",
+      "enabled": true,
+      "order": 5
+    },
+    {
       "practiceId": "practice-s2-2-3-grouping-distribution-five-subtypes",
       "targetType": "chapter",
       "targetId": "s2-2-3",
@@ -95733,6 +101851,76 @@ window.practiceLibraryStore = {
       "practiceId": "practice-s2-2-4-expected-value-parameterized",
       "targetType": "chapter",
       "targetId": "s2-2-4",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "practiceId": "practice-s2-3-1-grouped-mean-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-1",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "practiceId": "practice-s2-3-2-signed-linear-correlation-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-2",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "practiceId": "practice-s2-4-1-sin-cos-sum-difference-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-4-1",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "practiceId": "practice-s2-4-3-two-observation-height-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-4-3",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "practiceId": "practice-s3-1-1-clock-hands-angle-parameterized",
+      "targetType": "chapter",
+      "targetId": "s3-1-1",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "practiceId": "practice-s3-1-2-tangent-addition-equation-parameterized",
+      "targetType": "chapter",
+      "targetId": "s3-1-2",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "practiceId": "practice-s3-1-3-peak-valley-function-parameterized",
+      "targetType": "chapter",
+      "targetId": "s3-1-3",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "practiceId": "practice-s3-2-1-exponential-integer-count-clean",
+      "targetType": "chapter",
+      "targetId": "s3-2-1",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "practiceId": "practice-s3-2-2-log-domain-integer-count-clean",
+      "targetType": "chapter",
+      "targetId": "s3-2-2",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "practiceId": "practice-s3-2-3-log-base-order-clean",
+      "targetType": "chapter",
+      "targetId": "s3-2-3",
       "enabled": true,
       "order": 5
     },
@@ -95975,6 +102163,13 @@ window.practiceLibraryStore = {
       "order": 6
     },
     {
+      "practiceId": "practice-s1-3-2-parabola-symmetry-point",
+      "targetType": "chapter",
+      "targetId": "s1-3-2",
+      "enabled": true,
+      "order": 6
+    },
+    {
       "practiceId": "practice-s2-1-1-arithmetic-geometric-mixed-parameters",
       "targetType": "chapter",
       "targetId": "s2-1-1",
@@ -95982,9 +102177,93 @@ window.practiceLibraryStore = {
       "order": 6
     },
     {
+      "practiceId": "practice-s2-1-2-geometric-partial-sum-extension",
+      "targetType": "chapter",
+      "targetId": "s2-1-2",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "practiceId": "practice-s2-2-1-distinct-distribution-at-least-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-1",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "practiceId": "practice-s2-2-2-gender-non-adjacent-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-2",
+      "enabled": true,
+      "order": 6
+    },
+    {
       "practiceId": "practice-s2-2-3-binomial-coefficient-parameterized",
       "targetType": "chapter",
       "targetId": "s2-2-3",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "practiceId": "practice-s2-2-4-three-set-union-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-4",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "practiceId": "practice-s2-3-1-geometric-growth-rate-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-1",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "practiceId": "practice-s2-3-2-regression-correlation-from-line-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-2",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "practiceId": "practice-s2-4-1-tangent-expression-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-4-1",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "practiceId": "practice-s2-4-3-bearing-cosine-distance-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-4-3",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "practiceId": "practice-s3-1-1-belt-two-pulleys-parameterized",
+      "targetType": "chapter",
+      "targetId": "s3-1-1",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "practiceId": "practice-s3-1-2-cos-arithmetic-progression-parameterized",
+      "targetType": "chapter",
+      "targetId": "s3-1-2",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "practiceId": "practice-s3-2-1-exponential-graph-parameter-clean",
+      "targetType": "chapter",
+      "targetId": "s3-2-1",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "practiceId": "practice-s3-2-2-chain-change-base-clean",
+      "targetType": "chapter",
+      "targetId": "s3-2-2",
       "enabled": true,
       "order": 6
     },
@@ -96192,6 +102471,20 @@ window.practiceLibraryStore = {
       "order": 7
     },
     {
+      "practiceId": "practice-s1-3-1-odd-even-value-relation",
+      "targetType": "chapter",
+      "targetId": "s1-3-1",
+      "enabled": true,
+      "order": 7
+    },
+    {
+      "practiceId": "practice-s1-3-2-quadratic-axis-two-points",
+      "targetType": "chapter",
+      "targetId": "s1-3-2",
+      "enabled": true,
+      "order": 7
+    },
+    {
       "practiceId": "practice-s2-1-1-cumulative-product-recurrence",
       "targetType": "chapter",
       "targetId": "s2-1-1",
@@ -96199,9 +102492,79 @@ window.practiceLibraryStore = {
       "order": 7
     },
     {
+      "practiceId": "practice-s2-1-2-arithmetic-end-block-count",
+      "targetType": "chapter",
+      "targetId": "s2-1-2",
+      "enabled": true,
+      "order": 7
+    },
+    {
+      "practiceId": "practice-s2-2-1-ferry-capacity-assignment-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-1",
+      "enabled": true,
+      "order": 7
+    },
+    {
+      "practiceId": "practice-s2-2-2-adjacent-pair-end-restriction-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-2",
+      "enabled": true,
+      "order": 7
+    },
+    {
       "practiceId": "practice-s2-2-3-identical-distribution-parameterized",
       "targetType": "chapter",
       "targetId": "s2-2-3",
+      "enabled": true,
+      "order": 7
+    },
+    {
+      "practiceId": "practice-s2-2-4-complement-independent-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-4",
+      "enabled": true,
+      "order": 7
+    },
+    {
+      "practiceId": "practice-s2-3-1-sqrt-score-transform-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-1",
+      "enabled": true,
+      "order": 7
+    },
+    {
+      "practiceId": "practice-s2-3-2-perfect-line-correlation-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-2",
+      "enabled": true,
+      "order": 7
+    },
+    {
+      "practiceId": "practice-s2-4-1-line-slope-angle-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-4-1",
+      "enabled": true,
+      "order": 7
+    },
+    {
+      "practiceId": "practice-s2-4-3-height-limit-floors-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-4-3",
+      "enabled": true,
+      "order": 7
+    },
+    {
+      "practiceId": "practice-s3-1-1-seven-circles-band-parameterized",
+      "targetType": "chapter",
+      "targetId": "s3-1-1",
+      "enabled": true,
+      "order": 7
+    },
+    {
+      "practiceId": "practice-s3-2-1-hyperbolic-compose-parameterized",
+      "targetType": "chapter",
+      "targetId": "s3-2-1",
       "enabled": true,
       "order": 7
     },
@@ -96423,6 +102786,83 @@ window.practiceLibraryStore = {
       "order": 8
     },
     {
+      "practiceId": "practice-s1-3-1-shifted-basis-coefficients",
+      "targetType": "chapter",
+      "targetId": "s1-3-1",
+      "enabled": true,
+      "order": 8
+    },
+    {
+      "practiceId": "practice-s1-3-2-cubic-center-standard-form",
+      "targetType": "chapter",
+      "targetId": "s1-3-2",
+      "enabled": true,
+      "order": 8
+    },
+    {
+      "practiceId": "practice-s2-1-1-sequence-transformation-classification",
+      "targetType": "chapter",
+      "targetId": "s2-1-1",
+      "enabled": true,
+      "order": 8
+    },
+    {
+      "practiceId": "practice-s2-2-1-handshake-couples-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-1",
+      "enabled": true,
+      "order": 8
+    },
+    {
+      "practiceId": "practice-s2-2-2-same-type-nonadjacent-programs-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-2",
+      "enabled": true,
+      "order": 8
+    },
+    {
+      "practiceId": "practice-s2-2-3-binomial-adjacent-ratio-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-3",
+      "enabled": true,
+      "order": 8
+    },
+    {
+      "practiceId": "practice-s2-2-4-biased-binomial-at-least-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-4",
+      "enabled": true,
+      "order": 8
+    },
+    {
+      "practiceId": "practice-s2-3-1-variance-correction-difference-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-1",
+      "enabled": true,
+      "order": 8
+    },
+    {
+      "practiceId": "practice-s2-3-2-regression-line-prediction-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-2",
+      "enabled": true,
+      "order": 8
+    },
+    {
+      "practiceId": "practice-s2-4-1-coterminal-quadrant-count-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-4-1",
+      "enabled": true,
+      "order": 8
+    },
+    {
+      "practiceId": "practice-s2-4-3-box-space-angle-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-4-3",
+      "enabled": true,
+      "order": 8
+    },
+    {
       "practiceId": "practice-abs-context-interpretation-drill",
       "targetType": "chapter",
       "targetId": "j1-1-1",
@@ -96598,6 +103038,62 @@ window.practiceLibraryStore = {
       "order": 9
     },
     {
+      "practiceId": "practice-s1-3-1-factor-check-special-polynomial",
+      "targetType": "chapter",
+      "targetId": "s1-3-1",
+      "enabled": true,
+      "order": 9
+    },
+    {
+      "practiceId": "practice-s1-3-2-cubic-center-form-evaluation",
+      "targetType": "chapter",
+      "targetId": "s1-3-2",
+      "enabled": true,
+      "order": 9
+    },
+    {
+      "practiceId": "practice-s2-1-1-repeated-block-sequence",
+      "targetType": "chapter",
+      "targetId": "s2-1-1",
+      "enabled": true,
+      "order": 9
+    },
+    {
+      "practiceId": "practice-s2-2-1-fixed-end-no-repeat-schedule-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-1",
+      "enabled": true,
+      "order": 9
+    },
+    {
+      "practiceId": "practice-s2-2-2-repeated-digit-leading-zero-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-2",
+      "enabled": true,
+      "order": 9
+    },
+    {
+      "practiceId": "practice-s2-2-4-total-probability-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-4",
+      "enabled": true,
+      "order": 9
+    },
+    {
+      "practiceId": "practice-s2-3-1-equal-size-group-merge-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-1",
+      "enabled": true,
+      "order": 9
+    },
+    {
+      "practiceId": "practice-s2-3-2-standardized-regression-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-2",
+      "enabled": true,
+      "order": 9
+    },
+    {
       "practiceId": "practice-square-difference-variable-drill",
       "targetType": "chapter",
       "targetId": "j3-1-1",
@@ -96734,6 +103230,48 @@ window.practiceLibraryStore = {
       "practiceId": "practice-j2-4-1-absolute-inequality-drill",
       "targetType": "chapter",
       "targetId": "j2-4-1",
+      "enabled": true,
+      "order": 10
+    },
+    {
+      "practiceId": "practice-s1-3-1-nearby-roots-value",
+      "targetType": "chapter",
+      "targetId": "s1-3-1",
+      "enabled": true,
+      "order": 10
+    },
+    {
+      "practiceId": "practice-s2-1-1-arithmetic-common-terms",
+      "targetType": "chapter",
+      "targetId": "s2-1-1",
+      "enabled": true,
+      "order": 10
+    },
+    {
+      "practiceId": "practice-s2-2-1-ambidextrous-pairing-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-1",
+      "enabled": true,
+      "order": 10
+    },
+    {
+      "practiceId": "practice-s2-2-2-ordered-blocks-internal-permutation-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-2",
+      "enabled": true,
+      "order": 10
+    },
+    {
+      "practiceId": "practice-s2-2-4-hypergeometric-expected-value-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-4",
+      "enabled": true,
+      "order": 10
+    },
+    {
+      "practiceId": "practice-s2-3-1-mean-median-missing-score-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-1",
       "enabled": true,
       "order": 10
     },
@@ -97004,6 +103542,55 @@ window.practiceLibraryStore = {
       "order": 11
     },
     {
+      "practiceId": "practice-s2-1-1-geometric-product-symmetry",
+      "targetType": "chapter",
+      "targetId": "s2-1-1",
+      "enabled": true,
+      "order": 11
+    },
+    {
+      "practiceId": "practice-s2-2-1-set-equality-unknowns-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-1",
+      "enabled": true,
+      "order": 11
+    },
+    {
+      "practiceId": "practice-s2-2-2-specified-non-adjacent-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-2",
+      "enabled": true,
+      "order": 11
+    },
+    {
+      "practiceId": "practice-s2-2-4-grid-comparison-probability-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-4",
+      "enabled": true,
+      "order": 11
+    },
+    {
+      "practiceId": "practice-s2-3-1-bounded-variance-max-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-1",
+      "enabled": true,
+      "order": 11
+    },
+    {
+      "practiceId": "practice-s3-3-2-projection-equality-clean",
+      "targetType": "chapter",
+      "targetId": "s3-3-2",
+      "enabled": true,
+      "order": 11
+    },
+    {
+      "practiceId": "practice-s3-3-3-triangle-side-dot-clean",
+      "targetType": "chapter",
+      "targetId": "s3-3-3",
+      "enabled": true,
+      "order": 11
+    },
+    {
       "practiceId": "practice-s3-3-4-cramer-parameter-three-subtypes",
       "targetType": "chapter",
       "targetId": "s3-3-4",
@@ -97207,6 +103794,55 @@ window.practiceLibraryStore = {
       "order": 12
     },
     {
+      "practiceId": "practice-s2-1-1-arithmetic-geometric-bridge",
+      "targetType": "chapter",
+      "targetId": "s2-1-1",
+      "enabled": true,
+      "order": 12
+    },
+    {
+      "practiceId": "practice-s2-2-1-proposition-equivalence-negation-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-1",
+      "enabled": true,
+      "order": 12
+    },
+    {
+      "practiceId": "practice-s2-2-2-grid-rectangle-count-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-2",
+      "enabled": true,
+      "order": 12
+    },
+    {
+      "practiceId": "practice-s2-2-4-overlap-days-off-probability-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-4",
+      "enabled": true,
+      "order": 12
+    },
+    {
+      "practiceId": "practice-s2-3-1-delete-equal-high-values-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-3-1",
+      "enabled": true,
+      "order": 12
+    },
+    {
+      "practiceId": "practice-s3-3-2-parametric-min-length-clean",
+      "targetType": "chapter",
+      "targetId": "s3-3-2",
+      "enabled": true,
+      "order": 12
+    },
+    {
+      "practiceId": "practice-s3-3-3-projection-vector-clean",
+      "targetType": "chapter",
+      "targetId": "s3-3-3",
+      "enabled": true,
+      "order": 12
+    },
+    {
       "practiceId": "practice-s3-3-4-area-transform-three-subtypes",
       "targetType": "chapter",
       "targetId": "s3-3-4",
@@ -97389,6 +104025,132 @@ window.practiceLibraryStore = {
       "order": 13
     },
     {
+      "practiceId": "practice-s2-1-1-prefix-product-terms",
+      "targetType": "chapter",
+      "targetId": "s2-1-1",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s2-2-2-lattice-walk-displacement-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-2",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s2-2-4-exam-partial-guess-expected-score-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-4",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s3-3-2-region-area-clean",
+      "targetType": "chapter",
+      "targetId": "s3-3-2",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s3-3-3-norm-relation-angle-clean",
+      "targetType": "chapter",
+      "targetId": "s3-3-3",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s3-3-4-determinant-operation-clean",
+      "targetType": "chapter",
+      "targetId": "s3-3-4",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s4-1-1-equidistant-plane-locus-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-1",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s4-1-2-unit-direction-sum-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-2",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s4-1-3-projection-scalar-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-3",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s4-1-4-triangle-height-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-4",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s4-2-1-common-line-plane-family-clean",
+      "targetType": "chapter",
+      "targetId": "s4-2-1",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s4-2-2-line-relation-classification-clean",
+      "targetType": "chapter",
+      "targetId": "s4-2-2",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s4-3-1-complement-conditional",
+      "targetType": "chapter",
+      "targetId": "s4-3-1",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s4-3-2-inverse-bayes",
+      "targetType": "chapter",
+      "targetId": "s4-3-2",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s4-4-1-reciprocal-substitution",
+      "targetType": "chapter",
+      "targetId": "s4-4-1",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s4-4-2-elementary-row-operations",
+      "targetType": "chapter",
+      "targetId": "s4-4-2",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s4-4-3-inverse-existence",
+      "targetType": "chapter",
+      "targetId": "s4-4-3",
+      "enabled": true,
+      "order": 13
+    },
+    {
+      "practiceId": "practice-s4-4-4-line-transform",
+      "targetType": "chapter",
+      "targetId": "s4-4-4",
+      "enabled": true,
+      "order": 13
+    },
+    {
       "practiceId": "j2-1-3-balance-scale-drill",
       "targetType": "chapter",
       "targetId": "j2-1-3",
@@ -97480,6 +104242,118 @@ window.practiceLibraryStore = {
       "order": 14
     },
     {
+      "practiceId": "practice-s2-2-2-restricted-consecutive-step-staircase-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-2",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s2-2-4-linear-distribution-normalization-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-4",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s3-3-2-line-angle-vector-parameterized",
+      "targetType": "chapter",
+      "targetId": "s3-3-2",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s3-3-4-cramer-parameter-clean",
+      "targetType": "chapter",
+      "targetId": "s3-3-4",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s4-1-1-moving-point-distance-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-1",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s4-1-2-parametric-vector-min-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-2",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s4-1-3-sphere-linear-extrema-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-3",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s4-1-4-volume-linear-combination-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-4",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s4-2-1-coplanar-parameter-clean",
+      "targetType": "chapter",
+      "targetId": "s4-2-1",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s4-2-2-line-plane-hit-time-clean",
+      "targetType": "chapter",
+      "targetId": "s4-2-2",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s4-3-1-total-prob-abstract",
+      "targetType": "chapter",
+      "targetId": "s4-3-1",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s4-3-2-exam-guessing",
+      "targetType": "chapter",
+      "targetId": "s4-3-2",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s4-4-1-gaussian-basic",
+      "targetType": "chapter",
+      "targetId": "s4-4-1",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s4-4-2-algebraic-properties",
+      "targetType": "chapter",
+      "targetId": "s4-4-2",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s4-4-3-inverse-formula",
+      "targetType": "chapter",
+      "targetId": "s4-4-3",
+      "enabled": true,
+      "order": 14
+    },
+    {
+      "practiceId": "practice-s4-4-4-matrix-solving",
+      "targetType": "chapter",
+      "targetId": "s4-4-4",
+      "enabled": true,
+      "order": 14
+    },
+    {
       "practiceId": "j2-1-3-class-size-score-drill",
       "targetType": "chapter",
       "targetId": "j2-1-3",
@@ -97564,6 +104438,111 @@ window.practiceLibraryStore = {
       "order": 15
     },
     {
+      "practiceId": "practice-s2-2-4-color-exhausted-order-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-2-4",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s3-3-2-triangle-center-coordinate-parameterized",
+      "targetType": "chapter",
+      "targetId": "s3-3-2",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s3-3-4-area-scale-clean",
+      "targetType": "chapter",
+      "targetId": "s3-3-4",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s4-1-1-cube-face-center-octahedron-volume-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-1",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s4-1-2-line-projection-point-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-2",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s4-1-3-plane-distance-minimum-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-3",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s4-1-4-vandermonde-parameter-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-4",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s4-2-1-parallel-plane-distance-parameter-clean",
+      "targetType": "chapter",
+      "targetId": "s4-2-1",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s4-2-2-line-plane-relation-clean",
+      "targetType": "chapter",
+      "targetId": "s4-2-2",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s4-3-1-drawer-paradox-clean",
+      "targetType": "chapter",
+      "targetId": "s4-3-1",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s4-3-2-conditioned-success-position-clean",
+      "targetType": "chapter",
+      "targetId": "s4-3-2",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s4-4-1-parameter-solutions",
+      "targetType": "chapter",
+      "targetId": "s4-4-1",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s4-4-2-det-properties",
+      "targetType": "chapter",
+      "targetId": "s4-4-2",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s4-4-3-inverse-polynomial",
+      "targetType": "chapter",
+      "targetId": "s4-4-3",
+      "enabled": true,
+      "order": 15
+    },
+    {
+      "practiceId": "practice-s4-4-4-rotation-reflection",
+      "targetType": "chapter",
+      "targetId": "s4-4-4",
+      "enabled": true,
+      "order": 15
+    },
+    {
       "practiceId": "j2-1-2-two-solution-one-eq-drill",
       "targetType": "chapter",
       "targetId": "j2-1-2",
@@ -97641,6 +104620,83 @@ window.practiceLibraryStore = {
       "order": 16
     },
     {
+      "practiceId": "practice-s4-1-2-axis-equidistant-point-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-2",
+      "enabled": true,
+      "order": 16
+    },
+    {
+      "practiceId": "practice-s4-1-3-angle-bisector-coefficient-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-3",
+      "enabled": true,
+      "order": 16
+    },
+    {
+      "practiceId": "practice-s4-1-4-determinant-operation-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-4",
+      "enabled": true,
+      "order": 16
+    },
+    {
+      "practiceId": "practice-s4-2-1-plane-angle-parameter-clean",
+      "targetType": "chapter",
+      "targetId": "s4-2-1",
+      "enabled": true,
+      "order": 16
+    },
+    {
+      "practiceId": "practice-s4-2-2-point-line-reflection-clean",
+      "targetType": "chapter",
+      "targetId": "s4-2-2",
+      "enabled": true,
+      "order": 16
+    },
+    {
+      "practiceId": "practice-s4-3-1-lost-card-bayes-clean",
+      "targetType": "chapter",
+      "targetId": "s4-3-1",
+      "enabled": true,
+      "order": 16
+    },
+    {
+      "practiceId": "practice-s4-3-2-traffic-light-counts-clean",
+      "targetType": "chapter",
+      "targetId": "s4-3-2",
+      "enabled": true,
+      "order": 16
+    },
+    {
+      "practiceId": "practice-s4-4-1-matrix-back-substitution",
+      "targetType": "chapter",
+      "targetId": "s4-4-1",
+      "enabled": true,
+      "order": 16
+    },
+    {
+      "practiceId": "practice-s4-4-2-similar-matrix",
+      "targetType": "chapter",
+      "targetId": "s4-4-2",
+      "enabled": true,
+      "order": 16
+    },
+    {
+      "practiceId": "practice-s4-4-3-transition-properties",
+      "targetType": "chapter",
+      "targetId": "s4-4-3",
+      "enabled": true,
+      "order": 16
+    },
+    {
+      "practiceId": "practice-s4-4-4-area-scaling",
+      "targetType": "chapter",
+      "targetId": "s4-4-4",
+      "enabled": true,
+      "order": 16
+    },
+    {
       "practiceId": "j2-1-3-box-distribution-drill",
       "targetType": "chapter",
       "targetId": "j2-1-3",
@@ -97704,6 +104760,76 @@ window.practiceLibraryStore = {
       "order": 17
     },
     {
+      "practiceId": "practice-s4-1-2-centroid-plane-projection-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-2",
+      "enabled": true,
+      "order": 17
+    },
+    {
+      "practiceId": "practice-s4-1-3-linear-over-norm-extrema-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-3",
+      "enabled": true,
+      "order": 17
+    },
+    {
+      "practiceId": "practice-s4-1-4-consecutive-row-determinant-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-4",
+      "enabled": true,
+      "order": 17
+    },
+    {
+      "practiceId": "practice-s4-2-1-plane-system-consistency-clean",
+      "targetType": "chapter",
+      "targetId": "s4-2-1",
+      "enabled": true,
+      "order": 17
+    },
+    {
+      "practiceId": "practice-s4-2-2-two-plane-line-param-clean",
+      "targetType": "chapter",
+      "targetId": "s4-2-2",
+      "enabled": true,
+      "order": 17
+    },
+    {
+      "practiceId": "practice-s4-3-1-truth-report-color-clean",
+      "targetType": "chapter",
+      "targetId": "s4-3-1",
+      "enabled": true,
+      "order": 17
+    },
+    {
+      "practiceId": "practice-s4-4-1-matrix-entry-double-sum-clean",
+      "targetType": "chapter",
+      "targetId": "s4-4-1",
+      "enabled": true,
+      "order": 17
+    },
+    {
+      "practiceId": "practice-s4-4-2-commutator-parameter-clean",
+      "targetType": "chapter",
+      "targetId": "s4-4-2",
+      "enabled": true,
+      "order": 17
+    },
+    {
+      "practiceId": "practice-s4-4-3-power-recovery-clean",
+      "targetType": "chapter",
+      "targetId": "s4-4-3",
+      "enabled": true,
+      "order": 17
+    },
+    {
+      "practiceId": "practice-s4-4-4-coordinate-rotation-clean",
+      "targetType": "chapter",
+      "targetId": "s4-4-4",
+      "enabled": true,
+      "order": 17
+    },
+    {
       "practiceId": "practice-e6-2-2-delayed-chase-drill",
       "targetType": "chapter",
       "targetId": "e6-2-2",
@@ -97749,6 +104875,55 @@ window.practiceLibraryStore = {
       "practiceId": "practice-j3-1-3-coeff-sum-drill",
       "targetType": "chapter",
       "targetId": "j3-1-3",
+      "enabled": true,
+      "order": 18
+    },
+    {
+      "practiceId": "practice-s4-1-3-pairwise-orthogonal-parameter-clean",
+      "targetType": "chapter",
+      "targetId": "s4-1-3",
+      "enabled": true,
+      "order": 18
+    },
+    {
+      "practiceId": "practice-s4-2-1-segment-projection-length-clean",
+      "targetType": "chapter",
+      "targetId": "s4-2-1",
+      "enabled": true,
+      "order": 18
+    },
+    {
+      "practiceId": "practice-s4-2-2-coplanar-perpendicular-line-clean",
+      "targetType": "chapter",
+      "targetId": "s4-2-2",
+      "enabled": true,
+      "order": 18
+    },
+    {
+      "practiceId": "practice-s4-3-1-signal-channel-bayes-clean",
+      "targetType": "chapter",
+      "targetId": "s4-3-1",
+      "enabled": true,
+      "order": 18
+    },
+    {
+      "practiceId": "practice-s4-4-2-rank-one-power-sum-clean",
+      "targetType": "chapter",
+      "targetId": "s4-4-2",
+      "enabled": true,
+      "order": 18
+    },
+    {
+      "practiceId": "practice-s4-4-3-matrix-code-decode-clean",
+      "targetType": "chapter",
+      "targetId": "s4-4-3",
+      "enabled": true,
+      "order": 18
+    },
+    {
+      "practiceId": "practice-s4-4-4-line-stretch-parameter-clean",
+      "targetType": "chapter",
+      "targetId": "s4-4-4",
       "enabled": true,
       "order": 18
     },
@@ -97812,6 +104987,13 @@ window.practiceLibraryStore = {
       "practiceId": "practice-j3-1-3-remainder-theorem-drill",
       "targetType": "chapter",
       "targetId": "j3-1-3",
+      "enabled": true,
+      "order": 19
+    },
+    {
+      "practiceId": "practice-s4-2-2-line-projection-on-plane-clean",
+      "targetType": "chapter",
+      "targetId": "s4-2-2",
       "enabled": true,
       "order": 19
     },
@@ -97942,6 +105124,13 @@ window.practiceLibraryStore = {
       "order": 21
     },
     {
+      "practiceId": "practice-s3-3-1-barycentric-interior-clean",
+      "targetType": "chapter",
+      "targetId": "s3-3-1",
+      "enabled": true,
+      "order": 21
+    },
+    {
       "practiceId": "practice-coordinate-old-new-inverse-drill",
       "targetType": "chapter",
       "targetId": "j1-1-1",
@@ -97994,6 +105183,13 @@ window.practiceLibraryStore = {
       "practiceId": "practice-j1-3-3-guess-number-drill",
       "targetType": "chapter",
       "targetId": "j1-3-3",
+      "enabled": true,
+      "order": 22
+    },
+    {
+      "practiceId": "practice-s3-3-1-area-ratio-coefficient-clean",
+      "targetType": "chapter",
+      "targetId": "s3-3-1",
       "enabled": true,
       "order": 22
     },
@@ -98057,6 +105253,13 @@ window.practiceLibraryStore = {
       "practiceId": "practice-j1-3-3-rectangle-dimension-drill",
       "targetType": "chapter",
       "targetId": "j1-3-3",
+      "enabled": true,
+      "order": 23
+    },
+    {
+      "practiceId": "practice-s3-3-1-segment-section-clean",
+      "targetType": "chapter",
+      "targetId": "s3-3-1",
       "enabled": true,
       "order": 23
     },
@@ -98439,6 +105642,13 @@ window.practiceLibraryStore = {
       "order": 31
     },
     {
+      "practiceId": "practice-s3-2-4-growth-threshold-clean",
+      "targetType": "chapter",
+      "targetId": "s3-2-4",
+      "enabled": true,
+      "order": 31
+    },
+    {
       "practiceId": "practice-absolute-sum-minimum-drill",
       "targetType": "chapter",
       "targetId": "j1-1-1",
@@ -98474,6 +105684,13 @@ window.practiceLibraryStore = {
       "order": 32
     },
     {
+      "practiceId": "practice-s3-2-4-log-scale-ratio-clean",
+      "targetType": "chapter",
+      "targetId": "s3-2-4",
+      "enabled": true,
+      "order": 32
+    },
+    {
       "practiceId": "practice-absolute-sum-maximum-drill",
       "targetType": "chapter",
       "targetId": "j1-1-1",
@@ -98499,6 +105716,13 @@ window.practiceLibraryStore = {
       "targetType": "chapter",
       "targetId": "j1-1-3",
       "enabled": false,
+      "order": 33
+    },
+    {
+      "practiceId": "practice-s3-2-4-compound-inference-clean",
+      "targetType": "chapter",
+      "targetId": "s3-2-4",
+      "enabled": true,
       "order": 33
     },
     {
@@ -100231,11 +107455,25 @@ window.practiceLibraryStore = {
       "order": 272
     },
     {
+      "practiceId": "practice-s1-1-1-finite-decimal-criterion",
+      "targetType": "chapter",
+      "targetId": "s1-1-1",
+      "enabled": true,
+      "order": 273
+    },
+    {
       "practiceId": "practice-s1-1-2-abs-inequality-basic",
       "targetType": "chapter",
       "targetId": "s1-1-2",
       "enabled": true,
       "order": 273
+    },
+    {
+      "practiceId": "practice-s1-1-1-radical-distance-integer-count",
+      "targetType": "chapter",
+      "targetId": "s1-1-1",
+      "enabled": true,
+      "order": 274
     },
     {
       "practiceId": "practice-s1-1-2-abs-reverse-parameter",
@@ -100245,11 +107483,25 @@ window.practiceLibraryStore = {
       "order": 274
     },
     {
+      "practiceId": "practice-s1-1-1-power-remainder-cycle",
+      "targetType": "chapter",
+      "targetId": "s1-1-1",
+      "enabled": true,
+      "order": 275
+    },
+    {
       "practiceId": "practice-s1-1-2-abs-sum-minimum",
       "targetType": "chapter",
       "targetId": "s1-1-2",
       "enabled": true,
       "order": 275
+    },
+    {
+      "practiceId": "practice-s1-1-1-divisibility-missing-digit",
+      "targetType": "chapter",
+      "targetId": "s1-1-1",
+      "enabled": true,
+      "order": 276
     },
     {
       "practiceId": "practice-s1-1-2-abs-number-line-range",
@@ -100273,11 +107525,25 @@ window.practiceLibraryStore = {
       "order": 278
     },
     {
+      "practiceId": "practice-s1-1-2-abs-linear-equation-count",
+      "targetType": "chapter",
+      "targetId": "s1-1-2",
+      "enabled": true,
+      "order": 279
+    },
+    {
       "practiceId": "practice-s1-1-3-binomial-cube-expansion",
       "targetType": "chapter",
       "targetId": "s1-1-3",
       "enabled": true,
       "order": 279
+    },
+    {
+      "practiceId": "practice-s1-1-2-quotient-interval-range",
+      "targetType": "chapter",
+      "targetId": "s1-1-2",
+      "enabled": true,
+      "order": 280
     },
     {
       "practiceId": "practice-s1-1-3-cube-sum-difference",
@@ -100427,11 +107693,25 @@ window.practiceLibraryStore = {
       "order": 742
     },
     {
+      "practiceId": "practice-s1-1-4-exponential-quadratic-extrema",
+      "targetType": "chapter",
+      "targetId": "s1-1-4",
+      "enabled": true,
+      "order": 743
+    },
+    {
       "practiceId": "practice-s1-1-5-log-operation-scientific-notation",
       "targetType": "chapter",
       "targetId": "s1-1-5",
       "enabled": true,
       "order": 743
+    },
+    {
+      "practiceId": "practice-s1-1-4-exponential-fraction-range",
+      "targetType": "chapter",
+      "targetId": "s1-1-4",
+      "enabled": true,
+      "order": 744
     },
     {
       "practiceId": "practice-s1-1-5-basic-log-calculation",
@@ -100448,6 +107728,20 @@ window.practiceLibraryStore = {
       "order": 744
     },
     {
+      "practiceId": "practice-s1-1-4-rational-exponent-ordering",
+      "targetType": "chapter",
+      "targetId": "s1-1-4",
+      "enabled": true,
+      "order": 745
+    },
+    {
+      "practiceId": "practice-s1-1-5-log-difference-estimate",
+      "targetType": "chapter",
+      "targetId": "s1-1-5",
+      "enabled": true,
+      "order": 745
+    },
+    {
       "practiceId": "practice-s1-2-1-line-cluster-fixed-point",
       "targetType": "chapter",
       "targetId": "s1-2-1",
@@ -100455,11 +107749,39 @@ window.practiceLibraryStore = {
       "order": 745
     },
     {
+      "practiceId": "practice-s1-1-4-exponential-growth-model",
+      "targetType": "chapter",
+      "targetId": "s1-1-4",
+      "enabled": true,
+      "order": 746
+    },
+    {
+      "practiceId": "practice-s1-1-5-log-interval-integer-count",
+      "targetType": "chapter",
+      "targetId": "s1-1-5",
+      "enabled": true,
+      "order": 746
+    },
+    {
       "practiceId": "practice-s1-2-1-triangle-nonexistence",
       "targetType": "chapter",
       "targetId": "s1-2-1",
       "enabled": true,
       "order": 746
+    },
+    {
+      "practiceId": "practice-s1-1-4-exponential-parameter-relation",
+      "targetType": "chapter",
+      "targetId": "s1-1-4",
+      "enabled": true,
+      "order": 747
+    },
+    {
+      "practiceId": "practice-s1-1-5-log-scale-ratio-model",
+      "targetType": "chapter",
+      "targetId": "s1-1-5",
+      "enabled": true,
+      "order": 747
     },
     {
       "practiceId": "practice-s1-2-1-inverse-distance",
@@ -100553,11 +107875,25 @@ window.practiceLibraryStore = {
       "order": 758
     },
     {
+      "practiceId": "practice-s1-2-1-intercept-integer-count",
+      "targetType": "chapter",
+      "targetId": "s1-2-1",
+      "enabled": true,
+      "order": 759
+    },
+    {
       "practiceId": "practice-s1-2-2-circle-discriminant-parameter",
       "targetType": "chapter",
       "targetId": "s1-2-2",
       "enabled": true,
       "order": 759
+    },
+    {
+      "practiceId": "practice-s1-2-1-line-side-parameter-count",
+      "targetType": "chapter",
+      "targetId": "s1-2-1",
+      "enabled": true,
+      "order": 760
     },
     {
       "practiceId": "practice-s1-2-2-circle-from-conditions",
@@ -100567,6 +107903,13 @@ window.practiceLibraryStore = {
       "order": 760
     },
     {
+      "practiceId": "practice-s1-2-1-transformed-system-solution",
+      "targetType": "chapter",
+      "targetId": "s1-2-1",
+      "enabled": true,
+      "order": 761
+    },
+    {
       "practiceId": "practice-s1-2-2-apollonius-circle",
       "targetType": "chapter",
       "targetId": "s1-2-2",
@@ -100574,11 +107917,25 @@ window.practiceLibraryStore = {
       "order": 761
     },
     {
+      "practiceId": "practice-s1-2-1-line-form-facts",
+      "targetType": "chapter",
+      "targetId": "s1-2-1",
+      "enabled": true,
+      "order": 762
+    },
+    {
       "practiceId": "practice-s1-2-2-radical-axis",
       "targetType": "chapter",
       "targetId": "s1-2-2",
       "enabled": true,
       "order": 762
+    },
+    {
+      "practiceId": "practice-s1-2-1-linear-fractional-region-extrema",
+      "targetType": "chapter",
+      "targetId": "s1-2-1",
+      "enabled": true,
+      "order": 763
     },
     {
       "practiceId": "practice-s1-2-2-point-circle-distance-extrema",
@@ -100637,11 +107994,25 @@ window.practiceLibraryStore = {
       "order": 767
     },
     {
+      "practiceId": "practice-s1-2-2-center-line-through-two-points",
+      "targetType": "chapter",
+      "targetId": "s1-2-2",
+      "enabled": true,
+      "order": 768
+    },
+    {
       "practiceId": "practice-s1-2-3-chord-midpoint-locus",
       "targetType": "chapter",
       "targetId": "s1-2-3",
       "enabled": true,
       "order": 768
+    },
+    {
+      "practiceId": "practice-s1-2-2-two-circle-common-tangents",
+      "targetType": "chapter",
+      "targetId": "s1-2-2",
+      "enabled": true,
+      "order": 769
     },
     {
       "practiceId": "practice-s1-2-3-perpendicular-tangents-locus",
@@ -100714,6 +108085,13 @@ window.practiceLibraryStore = {
       "order": 778
     },
     {
+      "practiceId": "practice-s1-2-3-chord-length-parameterized",
+      "targetType": "chapter",
+      "targetId": "s1-2-3",
+      "enabled": true,
+      "order": 779
+    },
+    {
       "practiceId": "practice-s2-4-2-sine-law-five-subtypes",
       "targetType": "chapter",
       "targetId": "s2-4-2",
@@ -100721,11 +108099,25 @@ window.practiceLibraryStore = {
       "order": 779
     },
     {
+      "practiceId": "practice-s1-2-3-tangent-point-circle-coefficients",
+      "targetType": "chapter",
+      "targetId": "s1-2-3",
+      "enabled": true,
+      "order": 780
+    },
+    {
       "practiceId": "practice-s2-4-2-cosine-law-five-subtypes",
       "targetType": "chapter",
       "targetId": "s2-4-2",
       "enabled": true,
       "order": 780
+    },
+    {
+      "practiceId": "practice-s1-2-3-circle-line-distance-point-count",
+      "targetType": "chapter",
+      "targetId": "s1-2-3",
+      "enabled": true,
+      "order": 781
     },
     {
       "practiceId": "practice-s2-4-2-area-radius-five-subtypes",
@@ -100749,6 +108141,13 @@ window.practiceLibraryStore = {
       "order": 783
     },
     {
+      "practiceId": "practice-s2-4-2-side-sum-ratio-sine-ratio-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-4-2",
+      "enabled": true,
+      "order": 783
+    },
+    {
       "practiceId": "practice-j4-2-1-cross-function-substitution-drill",
       "targetType": "chapter",
       "targetId": "j4-2-1",
@@ -100756,9 +108155,23 @@ window.practiceLibraryStore = {
       "order": 784
     },
     {
+      "practiceId": "practice-s2-4-2-sas-side-area-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-4-2",
+      "enabled": true,
+      "order": 784
+    },
+    {
       "practiceId": "practice-j4-2-2-word-model-two-point-drill",
       "targetType": "chapter",
       "targetId": "j4-2-2",
+      "enabled": true,
+      "order": 785
+    },
+    {
+      "practiceId": "practice-s2-4-2-isosceles-circumradius-parameterized",
+      "targetType": "chapter",
+      "targetId": "s2-4-2",
       "enabled": true,
       "order": 785
     }
@@ -100812,7 +108225,11 @@ window.practiceLibraryStore = {
       "practice-s2-4-3-elevation-spatial-five-subtypes",
       "practice-s2-4-3-navigation-motion-five-subtypes",
       "practice-s2-4-3-plane-survey-five-subtypes",
-      "practice-s2-4-3-special-measurement-five-subtypes"
+      "practice-s2-4-3-special-measurement-five-subtypes",
+      "practice-s2-4-3-two-observation-height-parameterized",
+      "practice-s2-4-3-bearing-cosine-distance-parameterized",
+      "practice-s2-4-3-height-limit-floors-parameterized",
+      "practice-s2-4-3-box-space-angle-parameterized"
     ],
     "j1-3-2": [
       "practice-abs-both-sides-advanced-drill",
@@ -101660,18 +109077,28 @@ window.practiceLibraryStore = {
       "practice-s1-3-1-advanced-remainder-five-subtypes",
       "practice-s1-3-1-remainder-applications-five-subtypes",
       "practice-s1-3-1-division-principle-reverse-two-subtypes",
-      "practice-s1-3-1-interpolation-polynomial-five-subtypes"
+      "practice-s1-3-1-interpolation-polynomial-five-subtypes",
+      "practice-s1-3-1-odd-even-value-relation",
+      "practice-s1-3-1-shifted-basis-coefficients",
+      "practice-s1-3-1-factor-check-special-polynomial",
+      "practice-s1-3-1-nearby-roots-value"
     ],
     "s1-3-2": [
       "practice-s1-3-2-quadratic-form-graph-three-subtypes",
       "practice-s1-3-2-quadratic-inequality-extrema-application-three-subtypes",
       "practice-s1-3-2-quadratic-advanced-graph-extrema-five-subtypes",
       "practice-s1-3-2-quadratic-symmetry-modeling-compound-five-subtypes",
-      "practice-s1-3-2-cubic-functions-seven-subtypes"
+      "practice-s1-3-2-cubic-functions-seven-subtypes",
+      "practice-s1-3-2-parabola-symmetry-point",
+      "practice-s1-3-2-quadratic-axis-two-points",
+      "practice-s1-3-2-cubic-center-standard-form",
+      "practice-s1-3-2-cubic-center-form-evaluation"
     ],
     "s1-3-3": [
       "practice-s1-3-3-quadratic-inequality-core-five-subtypes",
-      "practice-s1-3-3-advanced-inequality-five-subtypes"
+      "practice-s1-3-3-advanced-inequality-five-subtypes",
+      "practice-s1-3-3-quadratic-inequality-from-solution",
+      "practice-s1-3-3-same-solution-transform"
     ],
     "s2-1-1": [
       "practice-s2-1-1-sequence-core-five-subtypes",
@@ -101680,25 +109107,58 @@ window.practiceLibraryStore = {
       "practice-s2-1-1-combinatorial-recurrence",
       "practice-s2-1-1-geometric-coordinate-sequences",
       "practice-s2-1-1-arithmetic-geometric-mixed-parameters",
-      "practice-s2-1-1-cumulative-product-recurrence"
+      "practice-s2-1-1-cumulative-product-recurrence",
+      "practice-s2-1-1-sequence-transformation-classification",
+      "practice-s2-1-1-repeated-block-sequence",
+      "practice-s2-1-1-arithmetic-common-terms",
+      "practice-s2-1-1-geometric-product-symmetry",
+      "practice-s2-1-1-arithmetic-geometric-bridge",
+      "practice-s2-1-1-prefix-product-terms"
     ],
     "s2-1-2": [
       "practice-s2-1-2-series-sum-seven-subtypes",
       "practice-s2-1-2-geometric-series-five-subtypes",
       "practice-s2-1-2-sigma-five-subtypes",
-      "practice-s2-1-2-special-series-sigma-five-subtypes"
+      "practice-s2-1-2-special-series-sigma-five-subtypes",
+      "practice-s2-1-2-consecutive-cube-range-sum",
+      "practice-s2-1-2-geometric-partial-sum-extension",
+      "practice-s2-1-2-arithmetic-end-block-count"
+    ],
+    "s2-1-3": [
+      "practice-s2-1-3-induction-sum-step",
+      "practice-s2-1-3-induction-divisibility-step",
+      "practice-s2-1-3-induction-recurrence-conjecture",
+      "practice-s2-1-3-periodic-remainder-sequence"
     ],
     "s2-2-1": [
       "practice-s2-2-1-counting-applications-five-subtypes",
       "practice-s2-2-1-advanced-counting-five-subtypes",
       "practice-s2-2-1-product-rule-parameterized",
-      "practice-s2-2-1-inclusion-exclusion-multiples"
+      "practice-s2-2-1-inclusion-exclusion-multiples",
+      "practice-s2-2-1-license-plate-restrictions-parameterized",
+      "practice-s2-2-1-distinct-distribution-at-least-parameterized",
+      "practice-s2-2-1-ferry-capacity-assignment-parameterized",
+      "practice-s2-2-1-handshake-couples-parameterized",
+      "practice-s2-2-1-fixed-end-no-repeat-schedule-parameterized",
+      "practice-s2-2-1-ambidextrous-pairing-parameterized",
+      "practice-s2-2-1-set-equality-unknowns-parameterized",
+      "practice-s2-2-1-proposition-equivalence-negation-parameterized"
     ],
     "s2-2-2": [
       "practice-s2-2-2-permutation-core-five-subtypes",
       "practice-s2-2-2-permutation-applications-five-subtypes",
       "practice-s2-2-2-repeated-letter-permutation-parameterized",
-      "practice-s2-2-2-adjacent-pair-arrangement-parameterized"
+      "practice-s2-2-2-adjacent-pair-arrangement-parameterized",
+      "practice-s2-2-2-same-group-together-parameterized",
+      "practice-s2-2-2-gender-non-adjacent-parameterized",
+      "practice-s2-2-2-adjacent-pair-end-restriction-parameterized",
+      "practice-s2-2-2-same-type-nonadjacent-programs-parameterized",
+      "practice-s2-2-2-repeated-digit-leading-zero-parameterized",
+      "practice-s2-2-2-ordered-blocks-internal-permutation-parameterized",
+      "practice-s2-2-2-specified-non-adjacent-parameterized",
+      "practice-s2-2-2-grid-rectangle-count-parameterized",
+      "practice-s2-2-2-lattice-walk-displacement-parameterized",
+      "practice-s2-2-2-restricted-consecutive-step-staircase-parameterized"
     ],
     "s2-2-3": [
       "practice-s2-2-3-binomial-basics-five-subtypes",
@@ -101707,63 +109167,114 @@ window.practiceLibraryStore = {
       "practice-s2-2-3-applications-five-subtypes",
       "practice-s2-2-3-grouping-distribution-five-subtypes",
       "practice-s2-2-3-binomial-coefficient-parameterized",
-      "practice-s2-2-3-identical-distribution-parameterized"
+      "practice-s2-2-3-identical-distribution-parameterized",
+      "practice-s2-2-3-binomial-adjacent-ratio-parameterized"
     ],
     "s2-2-4": [
       "practice-s2-2-4-basic-probability-five-subtypes",
       "practice-s2-2-4-applied-probability-five-subtypes",
       "practice-s2-2-4-exact-k-draw-probability-parameterized",
       "practice-s2-2-4-event-count-relations-parameterized",
-      "practice-s2-2-4-expected-value-parameterized"
+      "practice-s2-2-4-expected-value-parameterized",
+      "practice-s2-2-4-three-set-union-parameterized",
+      "practice-s2-2-4-complement-independent-parameterized",
+      "practice-s2-2-4-biased-binomial-at-least-parameterized",
+      "practice-s2-2-4-total-probability-parameterized",
+      "practice-s2-2-4-hypergeometric-expected-value-parameterized",
+      "practice-s2-2-4-grid-comparison-probability-parameterized",
+      "practice-s2-2-4-overlap-days-off-probability-parameterized",
+      "practice-s2-2-4-exam-partial-guess-expected-score-parameterized",
+      "practice-s2-2-4-linear-distribution-normalization-parameterized",
+      "practice-s2-2-4-color-exhausted-order-parameterized"
     ],
     "s2-3-1": [
       "practice-s2-3-1-core-stats-five-subtypes",
       "practice-s2-3-1-revision-merge-five-subtypes",
-      "practice-s2-3-1-distribution-interpretation-five-subtypes"
+      "practice-s2-3-1-distribution-interpretation-five-subtypes",
+      "practice-s2-3-1-quartiles-iqr-parameterized",
+      "practice-s2-3-1-grouped-mean-parameterized",
+      "practice-s2-3-1-geometric-growth-rate-parameterized",
+      "practice-s2-3-1-sqrt-score-transform-parameterized",
+      "practice-s2-3-1-variance-correction-difference-parameterized",
+      "practice-s2-3-1-equal-size-group-merge-parameterized",
+      "practice-s2-3-1-mean-median-missing-score-parameterized",
+      "practice-s2-3-1-bounded-variance-max-parameterized",
+      "practice-s2-3-1-delete-equal-high-values-parameterized"
     ],
     "s2-3-2": [
       "practice-s2-3-2-correlation-five-subtypes",
-      "practice-s2-3-2-regression-five-subtypes"
+      "practice-s2-3-2-regression-five-subtypes",
+      "practice-s2-3-2-correlation-from-sums-parameterized",
+      "practice-s2-3-2-least-squares-small-data-parameterized",
+      "practice-s2-3-2-signed-linear-correlation-parameterized",
+      "practice-s2-3-2-regression-correlation-from-line-parameterized",
+      "practice-s2-3-2-perfect-line-correlation-parameterized",
+      "practice-s2-3-2-regression-line-prediction-parameterized",
+      "practice-s2-3-2-standardized-regression-parameterized"
     ],
     "s2-4-1": [
       "practice-s2-4-1-basic-angle-coordinate-five-subtypes",
       "practice-s2-4-1-computation-geometry-five-subtypes",
-      "practice-s2-4-1-triangle-identity-five-subtypes"
+      "practice-s2-4-1-triangle-identity-five-subtypes",
+      "practice-s2-4-1-tangent-ordering-parameterized",
+      "practice-s2-4-1-sin-cos-sum-difference-parameterized",
+      "practice-s2-4-1-tangent-expression-parameterized",
+      "practice-s2-4-1-line-slope-angle-parameterized",
+      "practice-s2-4-1-coterminal-quadrant-count-parameterized"
     ],
     "s3-1-1": [
       "practice-s3-1-1-radian-sector-five-subtypes",
       "practice-s3-1-1-sector-application-five-subtypes",
-      "practice-s3-1-1-reciprocal-trig-five-subtypes"
+      "practice-s3-1-1-reciprocal-trig-five-subtypes",
+      "practice-s3-1-1-sector-cone-parameterized",
+      "practice-s3-1-1-clock-hands-angle-parameterized",
+      "practice-s3-1-1-belt-two-pulleys-parameterized",
+      "practice-s3-1-1-seven-circles-band-parameterized"
     ],
     "s3-1-2": [
       "practice-s3-1-2-double-half-five-subtypes",
       "practice-s3-1-2-sum-difference-five-subtypes",
       "practice-s3-1-2-triple-angle-five-subtypes",
-      "practice-s3-1-2-geometry-rotation-five-subtypes"
+      "practice-s3-1-2-geometry-rotation-five-subtypes",
+      "practice-s3-1-2-tangent-addition-equation-parameterized",
+      "practice-s3-1-2-cos-arithmetic-progression-parameterized"
     ],
     "s3-1-3": [
       "practice-s3-1-3-period-transform-five-subtypes",
       "practice-s3-1-3-range-equation-five-subtypes",
-      "practice-s3-1-3-parameter-model-five-subtypes"
+      "practice-s3-1-3-parameter-model-five-subtypes",
+      "practice-s3-1-3-linear-sincos-graph-facts-parameterized",
+      "practice-s3-1-3-peak-valley-function-parameterized"
     ],
     "s3-1-4": [
       "practice-s3-1-4-combo-extrema-five-subtypes",
-      "practice-s3-1-4-parameter-equation-model-five-subtypes"
+      "practice-s3-1-4-parameter-equation-model-five-subtypes",
+      "practice-s3-1-4-linear-combo-inequality-parameterized",
+      "practice-s3-1-4-combo-max-point-tangent-parameterized"
     ],
     "s3-2-1": [
       "practice-s3-2-1-exponent-laws-equations-five-subtypes",
       "practice-s3-2-1-graphs-extrema-five-subtypes",
-      "practice-s3-2-1-advanced-algebra-five-subtypes"
+      "practice-s3-2-1-advanced-algebra-five-subtypes",
+      "practice-s3-2-1-power-root-comparison-clean",
+      "practice-s3-2-1-exponential-integer-count-clean",
+      "practice-s3-2-1-exponential-graph-parameter-clean",
+      "practice-s3-2-1-hyperbolic-compose-parameterized"
     ],
     "s3-2-2": [
       "practice-s3-2-2-log-definition-laws-five-subtypes",
       "practice-s3-2-2-log-inequalities-domain-five-subtypes",
-      "practice-s3-2-2-log-advanced-applications-five-subtypes"
+      "practice-s3-2-2-log-advanced-applications-five-subtypes",
+      "practice-s3-2-2-dominant-log-approx-clean",
+      "practice-s3-2-2-log-domain-integer-count-clean",
+      "practice-s3-2-2-chain-change-base-clean"
     ],
     "s3-2-3": [
       "practice-s3-2-3-log-operations-applications-five-subtypes",
       "practice-s3-2-3-log-graphs-equations-five-subtypes",
-      "practice-s3-2-3-log-extrema-models-five-subtypes"
+      "practice-s3-2-3-log-extrema-models-five-subtypes",
+      "practice-s3-2-3-log-point-transform-clean",
+      "practice-s3-2-3-log-base-order-clean"
     ],
     "j3-1-1": [
       "practice-j3-1-1-formula-mixed-integer-drill",
@@ -101800,81 +109311,163 @@ window.practiceLibraryStore = {
     "s3-2-4": [
       "practice-s3-2-4-growth-decay-models-five-subtypes",
       "practice-s3-2-4-log-scale-science-five-subtypes",
-      "practice-s3-2-4-finance-digits-models-five-subtypes"
+      "practice-s3-2-4-finance-digits-models-five-subtypes",
+      "practice-s3-2-4-growth-threshold-clean",
+      "practice-s3-2-4-log-scale-ratio-clean",
+      "practice-s3-2-4-compound-inference-clean"
     ],
     "s3-3-1": [
-      "practice-s3-3-1-geometric-vectors-five-subtypes"
+      "practice-s3-3-1-geometric-vectors-five-subtypes",
+      "practice-s3-3-1-barycentric-interior-clean",
+      "practice-s3-3-1-area-ratio-coefficient-clean",
+      "practice-s3-3-1-segment-section-clean"
     ],
     "s3-3-2": [
-      "practice-s3-3-2-coordinate-vectors-five-subtypes"
+      "practice-s3-3-2-coordinate-vectors-five-subtypes",
+      "practice-s3-3-2-projection-equality-clean",
+      "practice-s3-3-2-parametric-min-length-clean",
+      "practice-s3-3-2-region-area-clean",
+      "practice-s3-3-2-line-angle-vector-parameterized",
+      "practice-s3-3-2-triangle-center-coordinate-parameterized"
     ],
     "s3-3-3": [
-      "practice-s3-3-3-inner-product-projection-applications-ten-subtypes"
+      "practice-s3-3-3-inner-product-projection-applications-ten-subtypes",
+      "practice-s3-3-3-triangle-side-dot-clean",
+      "practice-s3-3-3-projection-vector-clean",
+      "practice-s3-3-3-norm-relation-angle-clean"
     ],
     "s3-3-4": [
       "practice-s3-3-4-basic-determinant-three-subtypes",
       "practice-s3-3-4-cramer-parameter-three-subtypes",
-      "practice-s3-3-4-area-transform-three-subtypes"
+      "practice-s3-3-4-area-transform-three-subtypes",
+      "practice-s3-3-4-determinant-operation-clean",
+      "practice-s3-3-4-cramer-parameter-clean",
+      "practice-s3-3-4-area-scale-clean"
     ],
     "s4-1-1": [
       "practice-s4-1-1-spatial-relations-three-subtypes",
       "practice-s4-1-1-distance-three-perpendicular-two-subtypes",
-      "practice-s4-1-1-regular-solid-measure-two-subtypes"
+      "practice-s4-1-1-regular-solid-measure-two-subtypes",
+      "practice-s4-1-1-equidistant-plane-locus-clean",
+      "practice-s4-1-1-moving-point-distance-clean",
+      "practice-s4-1-1-cube-face-center-octahedron-volume-clean"
     ],
     "s4-1-2": [
       "practice-s4-1-2-coordinate-vector-basic-five-subtypes",
       "practice-s4-1-2-extrema-projection-three-subtypes",
-      "practice-s4-1-2-solid-advanced-two-subtypes"
+      "practice-s4-1-2-solid-advanced-two-subtypes",
+      "practice-s4-1-2-unit-direction-sum-clean",
+      "practice-s4-1-2-parametric-vector-min-clean",
+      "practice-s4-1-2-line-projection-point-clean",
+      "practice-s4-1-2-axis-equidistant-point-clean",
+      "practice-s4-1-2-centroid-plane-projection-clean"
     ],
     "s4-1-3": [
       "practice-s4-1-3-inner-product-angle-four-subtypes",
       "practice-s4-1-3-projection-plane-three-subtypes",
-      "practice-s4-1-3-cauchy-extrema-three-subtypes"
+      "practice-s4-1-3-cauchy-extrema-three-subtypes",
+      "practice-s4-1-3-projection-scalar-clean",
+      "practice-s4-1-3-sphere-linear-extrema-clean",
+      "practice-s4-1-3-plane-distance-minimum-clean",
+      "practice-s4-1-3-angle-bisector-coefficient-clean",
+      "practice-s4-1-3-linear-over-norm-extrema-clean",
+      "practice-s4-1-3-pairwise-orthogonal-parameter-clean"
     ],
     "s4-1-4": [
       "practice-s4-1-4-cross-area-distance-three-subtypes",
       "practice-s4-1-4-volume-coplanar-parameter-three-subtypes",
-      "practice-s4-1-4-determinant-algebra-four-subtypes"
+      "practice-s4-1-4-determinant-algebra-four-subtypes",
+      "practice-s4-1-4-triangle-height-clean",
+      "practice-s4-1-4-volume-linear-combination-clean",
+      "practice-s4-1-4-vandermonde-parameter-clean",
+      "practice-s4-1-4-determinant-operation-clean",
+      "practice-s4-1-4-consecutive-row-determinant-clean"
     ],
     "s4-2-1": [
       "practice-s4-2-1-plane-equation-three-subtypes",
       "practice-s4-2-1-distance-projection-four-subtypes",
-      "practice-s4-2-1-plane-application-three-subtypes"
+      "practice-s4-2-1-plane-application-three-subtypes",
+      "practice-s4-2-1-common-line-plane-family-clean",
+      "practice-s4-2-1-coplanar-parameter-clean",
+      "practice-s4-2-1-parallel-plane-distance-parameter-clean",
+      "practice-s4-2-1-plane-angle-parameter-clean",
+      "practice-s4-2-1-plane-system-consistency-clean",
+      "practice-s4-2-1-segment-projection-length-clean"
     ],
     "s4-2-2": [
       "practice-s4-2-2-coordinate-line-three-subtypes",
       "practice-s4-2-2-relation-distance-four-subtypes",
-      "practice-s4-2-2-advanced-line-three-subtypes"
+      "practice-s4-2-2-advanced-line-three-subtypes",
+      "practice-s4-2-2-line-relation-classification-clean",
+      "practice-s4-2-2-line-plane-hit-time-clean",
+      "practice-s4-2-2-line-plane-relation-clean",
+      "practice-s4-2-2-point-line-reflection-clean",
+      "practice-s4-2-2-two-plane-line-param-clean",
+      "practice-s4-2-2-coplanar-perpendicular-line-clean",
+      "practice-s4-2-2-line-projection-on-plane-clean"
     ],
     "s4-3-1": [
       "practice-s4-3-1-basic-sampling-three-subtypes",
       "practice-s4-3-1-bayes-source-three-subtypes",
-      "practice-s4-3-1-inference-transition-three-subtypes"
+      "practice-s4-3-1-inference-transition-three-subtypes",
+      "practice-s4-3-1-complement-conditional",
+      "practice-s4-3-1-total-prob-abstract",
+      "practice-s4-3-1-drawer-paradox-clean",
+      "practice-s4-3-1-lost-card-bayes-clean",
+      "practice-s4-3-1-truth-report-color-clean",
+      "practice-s4-3-1-signal-channel-bayes-clean"
     ],
     "s4-3-2": [
       "practice-s4-3-2-independence-trials-three-subtypes",
       "practice-s4-3-2-tables-systems-three-subtypes",
-      "practice-s4-3-2-advanced-distribution-three-subtypes"
+      "practice-s4-3-2-advanced-distribution-three-subtypes",
+      "practice-s4-3-2-inverse-bayes",
+      "practice-s4-3-2-exam-guessing",
+      "practice-s4-3-2-conditioned-success-position-clean",
+      "practice-s4-3-2-traffic-light-counts-clean"
     ],
     "s4-4-1": [
       "practice-s4-4-1-basic-cramer-three-subtypes",
       "practice-s4-4-1-parameter-geometry-three-subtypes",
-      "practice-s4-4-1-matrix-model-three-subtypes"
+      "practice-s4-4-1-matrix-model-three-subtypes",
+      "practice-s4-4-1-reciprocal-substitution",
+      "practice-s4-4-1-gaussian-basic",
+      "practice-s4-4-1-parameter-solutions",
+      "practice-s4-4-1-matrix-back-substitution",
+      "practice-s4-4-1-matrix-entry-double-sum-clean"
     ],
     "s4-4-2": [
       "practice-s4-4-2-equality-algebra-three-subtypes",
       "practice-s4-4-2-multiplication-property-three-subtypes",
-      "practice-s4-4-2-power-polynomial-three-subtypes"
+      "practice-s4-4-2-power-polynomial-three-subtypes",
+      "practice-s4-4-2-elementary-row-operations",
+      "practice-s4-4-2-algebraic-properties",
+      "practice-s4-4-2-det-properties",
+      "practice-s4-4-2-similar-matrix",
+      "practice-s4-4-2-commutator-parameter-clean",
+      "practice-s4-4-2-rank-one-power-sum-clean"
     ],
     "s4-4-3": [
       "practice-s4-4-3-inverse-basic-three-subtypes",
       "practice-s4-4-3-inverse-property-three-subtypes",
-      "practice-s4-4-3-transition-stable-three-subtypes"
+      "practice-s4-4-3-transition-stable-three-subtypes",
+      "practice-s4-4-3-inverse-existence",
+      "practice-s4-4-3-inverse-formula",
+      "practice-s4-4-3-inverse-polynomial",
+      "practice-s4-4-3-transition-properties",
+      "practice-s4-4-3-power-recovery-clean",
+      "practice-s4-4-3-matrix-code-decode-clean"
     ],
     "s4-4-4": [
       "practice-s4-4-4-point-matrix-three-subtypes",
       "practice-s4-4-4-geometry-equation-three-subtypes",
-      "practice-s4-4-4-area-composition-three-subtypes"
+      "practice-s4-4-4-area-composition-three-subtypes",
+      "practice-s4-4-4-line-transform",
+      "practice-s4-4-4-matrix-solving",
+      "practice-s4-4-4-rotation-reflection",
+      "practice-s4-4-4-area-scaling",
+      "practice-s4-4-4-coordinate-rotation-clean",
+      "practice-s4-4-4-line-stretch-parameter-clean"
     ],
     "j1-3-1": [
       "practice-linear-remove-parentheses-drill",
@@ -102097,7 +109690,11 @@ window.practiceLibraryStore = {
       "practice-j3-2-1-square-root-compare-drill",
       "practice-rationalize-denominator-binomial-junior",
       "practice-rationalize-denominator-monomial-junior",
-      "practice-s1-1-1-telescoping-rationalization"
+      "practice-s1-1-1-telescoping-rationalization",
+      "practice-s1-1-1-finite-decimal-criterion",
+      "practice-s1-1-1-radical-distance-integer-count",
+      "practice-s1-1-1-power-remainder-cycle",
+      "practice-s1-1-1-divisibility-missing-digit"
     ],
     "j4-3-4": [
       "practice-j4-3-4-triangle-side-angle-mixed",
@@ -102113,7 +109710,9 @@ window.practiceLibraryStore = {
       "practice-s1-1-2-abs-sum-minimum",
       "practice-s1-1-2-abs-number-line-range",
       "practice-s1-1-2-abs-range-simplification",
-      "practice-s1-1-2-abs-quadratic-mixed"
+      "practice-s1-1-2-abs-quadratic-mixed",
+      "practice-s1-1-2-abs-linear-equation-count",
+      "practice-s1-1-2-quotient-interval-range"
     ],
     "s1-1-3": [
       "practice-s1-1-3-binomial-cube-expansion",
@@ -102133,7 +109732,12 @@ window.practiceLibraryStore = {
       "practice-s1-1-4-exponent-compare",
       "practice-s1-1-4-known-power",
       "practice-s1-1-4-substitution-equation",
-      "practice-s1-1-4-extract-factor-equation"
+      "practice-s1-1-4-extract-factor-equation",
+      "practice-s1-1-4-exponential-quadratic-extrema",
+      "practice-s1-1-4-exponential-fraction-range",
+      "practice-s1-1-4-rational-exponent-ordering",
+      "practice-s1-1-4-exponential-growth-model",
+      "practice-s1-1-4-exponential-parameter-relation"
     ],
     "s1-1-5": [
       "practice-s1-1-5-large-number-digit-count",
@@ -102141,7 +109745,10 @@ window.practiceLibraryStore = {
       "practice-s1-1-5-leading-digit",
       "practice-s1-1-5-characteristic-mantissa-algebra",
       "practice-s1-1-5-log-operation-scientific-notation",
-      "practice-s1-1-5-basic-log-calculation"
+      "practice-s1-1-5-basic-log-calculation",
+      "practice-s1-1-5-log-difference-estimate",
+      "practice-s1-1-5-log-interval-integer-count",
+      "practice-s1-1-5-log-scale-ratio-model"
     ],
     "s1-2-1": [
       "practice-s1-2-1-projection-symmetry",
@@ -102158,7 +109765,12 @@ window.practiceLibraryStore = {
       "practice-s1-2-1-point-line-side",
       "practice-s1-2-1-lattice-point-counting",
       "practice-s1-2-1-absolute-inequality-area",
-      "practice-s1-2-1-perpendicular-bisector"
+      "practice-s1-2-1-perpendicular-bisector",
+      "practice-s1-2-1-intercept-integer-count",
+      "practice-s1-2-1-line-side-parameter-count",
+      "practice-s1-2-1-transformed-system-solution",
+      "practice-s1-2-1-line-form-facts",
+      "practice-s1-2-1-linear-fractional-region-extrema"
     ],
     "s1-2-2": [
       "practice-s1-2-2-general-to-standard",
@@ -102170,7 +109782,9 @@ window.practiceLibraryStore = {
       "practice-s1-2-2-triangle-circum-incircle",
       "practice-s1-2-2-axis-tangent-circle",
       "practice-s1-2-2-parametric-standard-circle",
-      "practice-s1-2-2-circle-point-algebra-extrema"
+      "practice-s1-2-2-circle-point-algebra-extrema",
+      "practice-s1-2-2-center-line-through-two-points",
+      "practice-s1-2-2-two-circle-common-tangents"
     ],
     "s1-2-3": [
       "practice-s1-2-3-given-slope-tangent",
@@ -102186,13 +109800,19 @@ window.practiceLibraryStore = {
       "practice-s1-2-3-vertical-tangent-trap",
       "practice-s1-2-3-integer-distance-counting",
       "practice-s1-2-3-common-chord-diameter-circle",
-      "practice-s1-2-3-circle-area-extrema"
+      "practice-s1-2-3-circle-area-extrema",
+      "practice-s1-2-3-chord-length-parameterized",
+      "practice-s1-2-3-tangent-point-circle-coefficients",
+      "practice-s1-2-3-circle-line-distance-point-count"
     ],
     "s2-4-2": [
       "practice-s2-4-2-sine-law-five-subtypes",
       "practice-s2-4-2-cosine-law-five-subtypes",
       "practice-s2-4-2-area-radius-five-subtypes",
-      "practice-s2-4-2-special-segment-five-subtypes"
+      "practice-s2-4-2-special-segment-five-subtypes",
+      "practice-s2-4-2-side-sum-ratio-sine-ratio-parameterized",
+      "practice-s2-4-2-sas-side-area-parameterized",
+      "practice-s2-4-2-isosceles-circumradius-parameterized"
     ]
   },
   "byTopic": {}

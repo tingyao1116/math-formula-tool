@@ -45,22 +45,22 @@
       chapterPrefixes: ["j6-"],
     },
     s1: {
-      src: "data/practice-generators/s1.js?v=20260619-s1-real-bundle-v1",
+      src: "data/practice-generators/s1.js?v=20260701-s1-3-sanmin-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["s1-"],
     },
     s2: {
-      src: "data/practice-generators/s2.js?v=20260619-s2-real-bundle-v1",
+      src: "data/practice-generators/s2.js?v=20260701-s2-3-sanmin-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["s2-"],
     },
     s3: {
-      src: "data/practice-generators/s3.js?v=20260619-s3-real-bundle-v1",
+      src: "data/practice-generators/s3.js?v=20260630-s3-3-vector-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["s3-"],
     },
     s4: {
-      src: "data/practice-generators/s4.js?v=20260624-s4-44new-v1",
+      src: "data/practice-generators/s4.js?v=20260701-s4-4-sanmin-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["s4-"],
     },
