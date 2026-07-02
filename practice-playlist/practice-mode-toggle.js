@@ -54,7 +54,8 @@
       [
         "playlistTitleInput",
         "savePlaylistButton",
-        "storedPlaylistList",
+        "storedPlaylistSelect",
+        "themeChainSelect",
         "selectedPracticeList",
       ].forEach((id) => setHidden(closestPanel(id), isSchedule));
       document.querySelectorAll(".playlist-layout .content > .panel").forEach((panel) => {

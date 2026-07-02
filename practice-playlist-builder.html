@@ -14,7 +14,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
-    <link rel="stylesheet" href="styles.css?v=20260627-playlist-v1" />
+    <link rel="stylesheet" href="styles.css?v=20260702-theme-print-v1" />
   </head>
   <body class="playlist-page">
     <div class="page-shell">
@@ -91,7 +91,43 @@
               <h2>已存清單</h2>
               <span id="storedPlaylistCount" class="meta-chip"></span>
             </div>
-            <div id="storedPlaylistList" class="playlist-saved-list"></div>
+            <label class="field">
+              <span>選擇清單</span>
+              <select id="storedPlaylistSelect"></select>
+            </label>
+            <div class="interactive-actions">
+              <button id="storedPlaylistLoadButton" class="ghost-button" type="button">載入</button>
+              <button id="storedPlaylistDeleteButton" class="ghost-button" type="button">刪除</button>
+            </div>
+            <p id="storedPlaylistInfo" class="detail-note"></p>
+          </section>
+
+          <section class="panel">
+            <div class="skill-tree-toolbar">
+              <h2>主題串資料庫</h2>
+              <span id="themeChainCount" class="meta-chip"></span>
+            </div>
+            <p class="detail-note">每個小章節一個主題串，載入後可在「已選題型順序」重排練習順序。正式匯出 PDF 建議用程式資料庫 GUI 的「主題串PDF」。</p>
+            <label class="field">
+              <span>搜尋主題串</span>
+              <input id="themeKeywordInput" type="search" placeholder="例如：j1-1-1、一元一次" />
+            </label>
+            <label class="field">
+              <span>選擇主題串</span>
+              <select id="themeChainSelect"></select>
+            </label>
+            <div class="interactive-actions">
+              <button id="themeLoadButton" class="ghost-button" type="button">載入</button>
+              <button id="themeExportPdfButton" class="ghost-button" type="button">匯出 PDF（列印）</button>
+              <button id="themeResetButton" class="ghost-button" type="button">還原內建</button>
+            </div>
+            <p id="themeActiveLabel" class="detail-note">尚未載入主題串。</p>
+            <div class="interactive-actions interactive-actions--stacked">
+              <button id="themeSortDifficultyButton" class="ghost-button" type="button">已選題型依難度排序（易→難）</button>
+              <button id="themeSaveBackButton" class="ghost-button" type="button">存回主題串</button>
+              <button id="themeWriteDataFileButton" class="ghost-button" type="button">寫入主題串資料檔</button>
+            </div>
+            <p id="themeBuilderStatus" class="detail-note">主題串尚未變動。</p>
           </section>
 
           <section class="panel">
@@ -160,6 +196,9 @@
       </main>
     </div>
 
+    <!-- 主題串 PDF 列印用容器（平常隱藏，列印時只顯示這一塊） -->
+    <div id="themePrintRoot" class="theme-print-root" aria-hidden="true"></div>
+
     <script defer src="formulas.js"></script>
     <script defer src="data/formula-content.js?v=20260423-abs-count-layout-v4"></script>
     <script defer src="data/question-content.js?v=20260424-question-bridge-v1"></script>
@@ -191,10 +230,13 @@
     <script defer src="data/practice-task-playlists.js?v=20260629-stats-prob-v1"></script>
     <script defer src="data/practice-chapter-playlists.js?v=20260629-stats-prob-v1"></script>
     <script defer src="data/practice-schedules.js?v=20260628-schedule-data-v1"></script>
+    <script defer src="data/practice-theme-chains.js?v=20260702-theme-chains-v1"></script>
     <script defer src="practice-playlist/practice-playlist-store.js?v=20260629-playlist-store-v4"></script>
-    <script defer src="practice-playlist/practice-playlist-builder.js?v=20260629-playlist-builder-v4"></script>
+    <script defer src="practice-playlist/practice-theme-store.js?v=20260702-theme-store-v1"></script>
+    <script defer src="practice-playlist/practice-playlist-builder.js?v=20260702-dropdown-v1"></script>
+    <script defer src="practice-playlist/practice-theme-builder.js?v=20260702-theme-builder-v3"></script>
     <script defer src="practice-playlist/practice-schedule-builder.js?v=20260628-schedule-builder-v1"></script>
-    <script defer src="practice-playlist/practice-mode-toggle.js?v=20260628-mode-toggle-v1"></script>
+    <script defer src="practice-playlist/practice-mode-toggle.js?v=20260702-mode-toggle-v2"></script>
     <script defer src="pwa.js"></script>
   </body>
 </html>

@@ -10,12 +10,15 @@
 - `data/practice-playlists.js`：任務型清單資料，來源是老師在編輯頁勾選題型後儲存。
 - `data/practice-task-playlists.js`：預設任務型播放清單，用來疊加常用主題，例如正負數、絕對值、因式分解、一元二次方程式。
 - `data/practice-schedules.js`：日程型安排資料，來源是段考時段、週次、前半段無限練習與後半段題庫練習。
+- `program-db/database/practice-theme-db.json`：主題串「主資料庫」。每個小章節（chapterCode）一個主題串，共 164 串；程式資料庫 GUI 的「主題串PDF」直接讀寫這個檔。
+- `data/practice-theme-chains.js`：主題串網頁 bridge（AUTO-GENERATED，勿手動編輯）。由 theme-db 同步產生；GUI 儲存順序時會自動同步，或手動跑 `node scripts/build-practice-theme-chains.mjs`。
 
 ## 編輯頁腳本
 
 - `practice-playlist/practice-playlist-builder.js`：任務型編輯器，負責列出所有無限練習題型、勾選、排序、儲存任務清單。
 - `practice-playlist/practice-schedule-builder.js`：日程型編輯/預覽器，負責顯示日程、日期區段、模式、章節與題型數。
-- `practice-playlist/practice-mode-toggle.js`：共用切換器，讓編輯頁與播放頁都能在任務型/日程型之間切換。
+- `practice-playlist/practice-mode-toggle.js`：共用切換器，讓編輯頁與播放頁都能在任務型/日程型之間切換（主題串面板屬於任務型，切到日程型會一併隱藏）。
+- `practice-playlist/practice-theme-builder.js`：主題串編輯器（任務型模式的延伸）。列出主題串資料庫、載入到「已選題型順序」重排、易→難排序、存回主題串、匯出整串 PDF（題目在前、答案附後，走 `window.print()`）、寫入主題串資料檔。透過 `window.practicePlaylistBuilderApi`（定義在 `practice-playlist-builder.js` 尾端）借用既有編輯區。
 
 ## 播放頁腳本
 
@@ -26,6 +29,12 @@
 ## 共用 store
 
 - `practice-playlist/practice-playlist-store.js`：任務型清單的讀取、儲存、匯入、匯出。
+- `practice-playlist/practice-theme-store.js`：主題串資料庫存取層。`data/practice-theme-chains.js` 為基底、localStorage 同 id 覆蓋，提供易→難排序與 `generateDataFileContent()` 全部落地。
+
+## 主題串工具腳本與 GUI
+
+- `scripts/build-practice-theme-chains.mjs`：預設從 theme-db 同步網頁 bridge；加 `--seed` 才會從 `practice-db.json` 重建 theme-db（會覆蓋手動調整過的順序，重跑前先確認）。
+- `program-db/scripts/gui_app.py` 的「主題串PDF」按鈕：下拉選主題串 → 上移/下移、依難度排序（易→難）→「儲存順序」寫回 theme-db 並同步網頁 bridge →「匯出 PDF/MD」走既有 pandoc + XeLaTeX 排版管線（`_run_practice_records_export`，與練習本體「匯出PDF」共用）。正式的紙本 PDF 建議從 GUI 匯出；網頁端的「匯出 PDF（列印）」只是快速列印用。
 
 ## 目前不應再使用
 

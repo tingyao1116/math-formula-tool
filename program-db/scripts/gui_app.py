@@ -70,6 +70,8 @@ OVERVIEW_BODY_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "chapter-ov
 CHAPTER_CLOSING_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "chapter-closing-db.json"
 MAIN_TOPIC_OVERVIEW_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "main-topic-overview-db.json"
 FORMULA_DATA_JS_PATH = ROOT / "formula-data.js"
+THEME_DB_DEFAULT = DB_DIR / "practice-theme-db.json"
+THEME_BRIDGE_JS_DEFAULT = ROOT / "data" / "practice-theme-chains.js"
 
 ALL = "全部"
 LETTER_ESCAPE_RE = re.compile(r"\\\\([A-Za-z])")
@@ -410,6 +412,7 @@ class DualDbGui:
         ttk.Button(action_bar, text="儲存（新增/更新）", style="Compact.TButton", command=self.save_item).pack(side="left", padx=4)
         ttk.Button(action_bar, text="刪除選取", style="Compact.TButton", command=self.delete_selected).pack(side="left", padx=4)
         ttk.Button(action_bar, text="匯出PDF", style="Compact.TButton", command=self.export_selected_pdf).pack(side="left", padx=4)
+        ttk.Button(action_bar, text="主題串PDF", style="Compact.TButton", command=self.open_theme_chain_export_dialog).pack(side="left", padx=4)
         ttk.Button(action_bar, text="批次掛載 practice", style="Compact.TButton", command=self.open_practice_binding_dialog).pack(side="left", padx=4)
 
         ttk.Button(action_bar, text="題目指派", style="Compact.TButton", command=self.open_question_assignment_dialog).pack(side="left", padx=4)
@@ -4015,7 +4018,18 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         records = self._selected_practice_records_for_pdf()
         if not records:
             return messagebox.showwarning("提醒", "請先在『練習本體』模式選取至少一筆無限練習。")
+        default_base_name = (
+            self._safe_filename(str(records[0].get("title", "")).strip() or "practice")
+            if len(records) == 1
+            else f"selected-practices-{len(records)}"
+        )
+        return self._run_practice_records_export(records, default_base_name, "無限練習題目與答案")
 
+    def _run_practice_records_export(self, records: list[dict], default_base_name: str, combined_title: str):
+        """共用的無限練習匯出流程：題數設定 → 格式選擇 → 生成 → PDF/MD 輸出。
+
+        `export_selected_practices_pdf`（練習本體多選）與主題串匯出都走這裡。
+        """
         export_options = self._open_practice_pdf_count_dialog(records)
         if not export_options:
             return
@@ -4038,11 +4052,6 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             return
         out_dir = Path(out_dir)
 
-        default_base_name = (
-            self._safe_filename(str(records[0].get("title", "")).strip() or "practice")
-            if len(records) == 1
-            else f"selected-practices-{len(records)}"
-        )
         date_prefix = datetime.now().strftime("%Y%m%d_%H%M%S")
         base_name = self._safe_filename(f"{date_prefix}_{default_base_name}")
 
@@ -4054,7 +4063,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             return messagebox.showerror("輸出失敗", f"無限練習生成失敗：\n{generated_result.get('reason', '未知錯誤')}")
 
         generated_sets = generated_result.get("sets", [])
-        combined_title = "無限練習題目與答案"
+        combined_title = str(combined_title or "無限練習題目與答案").strip() or "無限練習題目與答案"
         markdown_text = pdf_markdown_export.build_practice_sets_markdown(
             generated_sets,
             combined_title,
@@ -4083,6 +4092,224 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         except Exception as exc:
             self.status_var.set(f"無限練習 PDF 匯出完成：{combined_pdf.name}（MD 失敗）")
             return messagebox.showwarning("部分完成", f"已輸出 PDF：\n{combined_pdf}\n\n但 Markdown 匯出失敗：\n{exc}")
+
+    # ── 主題串（program-db/database/practice-theme-db.json）────────────────────
+
+    def _theme_db_load(self):
+        try:
+            payload = json.loads(THEME_DB_DEFAULT.read_text(encoding="utf-8-sig"))
+        except Exception:
+            return {"meta": {}, "themeChains": []}
+        chains = payload.get("themeChains")
+        payload["themeChains"] = [c for c in chains if isinstance(c, dict)] if isinstance(chains, list) else []
+        return payload
+
+    def _theme_db_save(self, payload: dict):
+        chains = payload.get("themeChains", [])
+        stamp = practice_now_iso()
+        meta = payload.get("meta") or {}
+        practice_id_count = sum(len(c.get("practiceIds", []) or []) for c in chains)
+        meta.update(
+            {
+                "schema": "practice-theme-db-v1",
+                "source": "program-db/database/practice-db.json",
+                "chainCount": len(chains),
+                "practiceIdCount": practice_id_count,
+                "updatedAt": stamp,
+            }
+        )
+        payload["meta"] = meta
+        THEME_DB_DEFAULT.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
+        # 同步網頁 bridge（data/practice-theme-chains.js）
+        banner = (
+            "// AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.\n"
+            "// Source: program-db/database/practice-theme-db.json\n"
+            f"// 主題串數：{len(chains)}、題型總數：{practice_id_count}\n"
+            f"// 最後更新：{stamp}\n"
+        )
+        THEME_BRIDGE_JS_DEFAULT.write_text(
+            banner
+            + "window.practiceThemeChainData = "
+            + json.dumps(chains, ensure_ascii=False, indent=2)
+            + ";\n",
+            encoding="utf-8",
+        )
+
+    def open_theme_chain_export_dialog(self):
+        payload = self._theme_db_load()
+        chains = payload.get("themeChains", [])
+        if not chains:
+            return messagebox.showwarning(
+                "提醒",
+                "找不到主題串資料庫（program-db/database/practice-theme-db.json）。\n"
+                "請先在專案根目錄執行：\n"
+                "node scripts/build-practice-theme-chains.mjs --seed",
+            )
+
+        practice_by_id = {
+            str(row.get("id", "")).strip(): row
+            for row in self.practice_payload.get("practices", [])
+            if isinstance(row, dict) and str(row.get("id", "")).strip()
+        }
+
+        dialog = tk.Toplevel(self.root)
+        dialog.title("主題串匯出 PDF")
+        dialog.transient(self.root)
+        dialog.grab_set()
+        dialog.geometry("860x640")
+        dialog.minsize(760, 520)
+
+        state = {"chain": None, "ids": []}
+
+        top = ttk.Frame(dialog, padding=12)
+        top.pack(fill="x")
+        ttk.Label(top, text="選擇主題串（每個小章節一串），可調整練習順序、存回資料庫、匯出 PDF。").pack(anchor="w")
+
+        pick_row = ttk.Frame(dialog, padding=(12, 4))
+        pick_row.pack(fill="x")
+        keyword_var = tk.StringVar(value="")
+        ttk.Label(pick_row, text="篩選").pack(side="left")
+        keyword_entry = ttk.Entry(pick_row, textvariable=keyword_var, width=16)
+        keyword_entry.pack(side="left", padx=(6, 10))
+        chain_var = tk.StringVar(value="")
+        chain_combo = ttk.Combobox(pick_row, textvariable=chain_var, state="readonly", width=52)
+        chain_combo.pack(side="left", fill="x", expand=True)
+        visible_chains = {"rows": list(chains)}
+
+        info_var = tk.StringVar(value="")
+        ttk.Label(dialog, textvariable=info_var, padding=(12, 2)).pack(anchor="w")
+
+        list_frame = ttk.Frame(dialog, padding=(12, 4))
+        list_frame.pack(fill="both", expand=True)
+        order_list = tk.Listbox(list_frame, activestyle="dotbox")
+        order_scroll = ttk.Scrollbar(list_frame, orient="vertical", command=order_list.yview)
+        order_list.configure(yscrollcommand=order_scroll.set)
+        order_list.pack(side="left", fill="both", expand=True)
+        order_scroll.pack(side="left", fill="y")
+
+        def display_chains(*_args):
+            keyword = keyword_var.get().strip().lower()
+            rows = [
+                c
+                for c in chains
+                if not keyword
+                or keyword in f"{c.get('id', '')} {c.get('title', '')} {c.get('chapterCode', '')}".lower()
+            ]
+            visible_chains["rows"] = rows
+            chain_combo["values"] = [str(c.get("title") or c.get("id") or "") for c in rows]
+
+        def practice_label(pid, index):
+            row = practice_by_id.get(pid) or {}
+            title = str(row.get("title", "")).strip() or pid
+            difficulty = str(row.get("difficulty", "")).strip() or "-"
+            return f"{index + 1:>3}. [{difficulty}] {title}"
+
+        def refresh_order_list():
+            order_list.delete(0, tk.END)
+            for index, pid in enumerate(state["ids"]):
+                order_list.insert(tk.END, practice_label(pid, index))
+            chain = state["chain"] or {}
+            missing = [pid for pid in state["ids"] if pid not in practice_by_id]
+            text = f"{chain.get('title', '')}：{len(state['ids'])} 題型"
+            if missing:
+                text += f"（{len(missing)} 個 id 在 practice-db 找不到，會以提示文字輸出）"
+            info_var.set(text)
+
+        def on_pick(_event=None):
+            rows = visible_chains["rows"]
+            idx = chain_combo.current()
+            if not (0 <= idx < len(rows)):
+                return
+            state["chain"] = rows[idx]
+            state["ids"] = [str(pid).strip() for pid in rows[idx].get("practiceIds", []) if str(pid).strip()]
+            refresh_order_list()
+
+        chain_combo.bind("<<ComboboxSelected>>", on_pick)
+        keyword_var.trace_add("write", display_chains)
+
+        def move_selected(direction):
+            selection = order_list.curselection()
+            if not selection:
+                return
+            index = selection[0]
+            target = index + direction
+            if not (0 <= target < len(state["ids"])):
+                return
+            state["ids"][index], state["ids"][target] = state["ids"][target], state["ids"][index]
+            refresh_order_list()
+            order_list.selection_set(target)
+            order_list.see(target)
+
+        def sort_by_difficulty():
+            rank = {"easy": 0, "medium": 1, "hard": 2}
+            decorated = [
+                (
+                    rank.get(str((practice_by_id.get(pid) or {}).get("difficulty", "")).strip().lower(), 3),
+                    index,
+                    pid,
+                )
+                for index, pid in enumerate(state["ids"])
+            ]
+            state["ids"] = [pid for _, _, pid in sorted(decorated)]
+            refresh_order_list()
+
+        def save_order():
+            chain = state["chain"]
+            if not chain:
+                return messagebox.showwarning("提醒", "請先選擇主題串。", parent=dialog)
+            chain["practiceIds"] = list(state["ids"])
+            chain["updatedAt"] = practice_now_iso()
+            try:
+                self._theme_db_save(payload)
+            except Exception as exc:
+                return messagebox.showerror("儲存失敗", str(exc), parent=dialog)
+            self.status_var.set(f"主題串已儲存：{chain.get('title', '')}（已同步網頁資料檔）")
+            messagebox.showinfo(
+                "完成",
+                "已寫入 practice-theme-db.json，並同步 data/practice-theme-chains.js。",
+                parent=dialog,
+            )
+
+        def export_pdf():
+            chain = state["chain"]
+            if not chain:
+                return messagebox.showwarning("提醒", "請先選擇主題串。", parent=dialog)
+            records = []
+            for pid in state["ids"]:
+                row = practice_by_id.get(pid)
+                if row:
+                    records.append(row)
+                else:
+                    records.append({"id": pid, "title": pid, "questionCount": chain.get("questionCount", 5)})
+            if not records:
+                return messagebox.showwarning("提醒", "這個主題串沒有任何題型。", parent=dialog)
+            title = str(chain.get("title", "")).strip() or "主題串"
+            dialog.grab_release()
+            try:
+                self._run_practice_records_export(records, self._safe_filename(title), f"{title} 題目與答案")
+            finally:
+                try:
+                    dialog.grab_set()
+                except Exception:
+                    pass
+
+        button_bar = ttk.Frame(dialog, padding=12)
+        button_bar.pack(fill="x")
+        ttk.Button(button_bar, text="上移", style="Compact.TButton", command=lambda: move_selected(-1)).pack(side="left")
+        ttk.Button(button_bar, text="下移", style="Compact.TButton", command=lambda: move_selected(1)).pack(side="left", padx=(6, 0))
+        ttk.Button(button_bar, text="依難度排序(易→難)", style="Compact.TButton", command=sort_by_difficulty).pack(side="left", padx=(12, 0))
+        ttk.Button(button_bar, text="儲存順序", style="Compact.TButton", command=save_order).pack(side="left", padx=(12, 0))
+        ttk.Button(button_bar, text="關閉", style="Compact.TButton", command=dialog.destroy).pack(side="right")
+        ttk.Button(button_bar, text="匯出 PDF/MD", style="Compact.TButton", command=export_pdf).pack(side="right", padx=(0, 8))
+
+        display_chains()
+        if visible_chains["rows"]:
+            chain_combo.current(0)
+            on_pick()
+        keyword_entry.focus_set()
+        dialog.wait_window()
 
     def _split_pipe(self, value: str):
         text = (value or "").strip()

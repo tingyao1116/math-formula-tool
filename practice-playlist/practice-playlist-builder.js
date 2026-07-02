@@ -28,7 +28,10 @@
     importPlaylistInput: document.getElementById("importPlaylistInput"),
     playlistBuilderStatus: document.getElementById("playlistBuilderStatus"),
     storedPlaylistCount: document.getElementById("storedPlaylistCount"),
-    storedPlaylistList: document.getElementById("storedPlaylistList"),
+    storedPlaylistSelect: document.getElementById("storedPlaylistSelect"),
+    storedPlaylistLoadButton: document.getElementById("storedPlaylistLoadButton"),
+    storedPlaylistDeleteButton: document.getElementById("storedPlaylistDeleteButton"),
+    storedPlaylistInfo: document.getElementById("storedPlaylistInfo"),
     selectedPracticeCount: document.getElementById("selectedPracticeCount"),
     selectedPracticeList: document.getElementById("selectedPracticeList"),
     playlistSelectionSummary: document.getElementById("playlistSelectionSummary"),
@@ -260,59 +263,50 @@
     render();
   }
 
-  function renderStoredPlaylists() {
-    const playlists = playlistStore.loadAll();
+  function getStoredPlaylistFlags(playlistId) {
     const localIds = new Set(playlistStore.loadLocal().map((playlist) => playlist.id));
     const bundledIds = new Set(
       (Array.isArray(window.practicePlaylistData) ? window.practicePlaylistData : [])
         .map((playlist) => String(playlist?.id || "").trim())
         .filter(Boolean),
     );
+    return { isLocal: localIds.has(playlistId), isBundled: bundledIds.has(playlistId) };
+  }
+
+  function updateStoredPlaylistInfo() {
+    if (!elements.storedPlaylistSelect || !elements.storedPlaylistInfo) return;
+    const selectedId = String(elements.storedPlaylistSelect.value || "").trim();
+    const playlist = selectedId ? playlistStore.getById(selectedId) : null;
+    if (!playlist) {
+      elements.storedPlaylistInfo.textContent = "目前還沒有儲存的 playlist。";
+      if (elements.storedPlaylistDeleteButton) elements.storedPlaylistDeleteButton.disabled = true;
+      return;
+    }
+    const { isLocal, isBundled } = getStoredPlaylistFlags(playlist.id);
+    const sourceLabel = isLocal ? (isBundled ? "已調整（可還原內建）" : "自訂") : "內建";
+    elements.storedPlaylistInfo.textContent =
+      `${playlist.grade || "全部年級"} · ${playlist.playlistType || "任務型"} · ${playlist.practiceIds.length} 題型 · ${sourceLabel}` +
+      `${playlist.description ? ` · ${playlist.description}` : ""}` +
+      ` · ${playlist.updatedAt.slice(0, 16).replace("T", " ")}`;
+    if (elements.storedPlaylistDeleteButton) {
+      elements.storedPlaylistDeleteButton.disabled = !isLocal;
+      elements.storedPlaylistDeleteButton.textContent = isLocal && isBundled ? "還原內建" : "刪除";
+    }
+  }
+
+  function renderStoredPlaylists() {
+    const playlists = playlistStore.loadAll();
     elements.storedPlaylistCount.textContent = `${playlists.length} 份`;
-    elements.storedPlaylistList.innerHTML = playlists.length
-      ? playlists.map((playlist) => {
-          const isLocal = localIds.has(playlist.id);
-          const isBundled = bundledIds.has(playlist.id);
-          const deleteControl = isLocal
-            ? `<button type="button" class="ghost-button" data-delete-playlist="${escapeHtml(playlist.id)}">${isBundled ? "還原內建" : "刪除"}</button>`
-            : `<span class="meta-chip">內建</span>`;
-          return `
-          <div class="playlist-saved-card${playlist.id === state.activePlaylistId ? " is-active" : ""}">
-            <button type="button" class="ghost-button" data-load-playlist="${escapeHtml(playlist.id)}">載入</button>
-            <div class="playlist-saved-card__body">
-              <strong>${escapeHtml(playlist.title)}</strong>
-              <div class="playlist-saved-card__badges">
-                <span class="meta-chip">${escapeHtml(playlist.grade || "全部年級")}</span>
-                <span class="meta-chip">${escapeHtml(playlist.playlistType || "任務型")}</span>
-              </div>
-              <p>${escapeHtml(playlist.description || "沒有補充說明")}</p>
-              <div class="playlist-saved-card__meta">
-                <span>${playlist.practiceIds.length} 題型</span>
-                <span>${escapeHtml(playlist.updatedAt.slice(0, 16).replace("T", " "))}</span>
-              </div>
-            </div>
-            ${deleteControl}
-          </div>`;
-        }).join("")
-      : `<p class="detail-note">目前還沒有儲存的 playlist。</p>`;
-
-    elements.storedPlaylistList.querySelectorAll("[data-load-playlist]").forEach((button) => {
-      button.addEventListener("click", () => {
-        const playlist = playlistStore.getById(button.getAttribute("data-load-playlist"));
-        if (playlist) fillForm(playlist);
-      });
-    });
-
-    elements.storedPlaylistList.querySelectorAll("[data-delete-playlist]").forEach((button) => {
-      button.addEventListener("click", () => {
-        playlistStore.remove(button.getAttribute("data-delete-playlist"));
-        if (state.activePlaylistId === button.getAttribute("data-delete-playlist")) {
-          fillForm(null);
-        } else {
-          renderStoredPlaylists();
-        }
-      });
-    });
+    if (!elements.storedPlaylistSelect) return;
+    const previous = String(elements.storedPlaylistSelect.value || "").trim();
+    const selectedId = state.activePlaylistId || previous;
+    elements.storedPlaylistSelect.innerHTML = playlists
+      .map((playlist) => {
+        const selected = playlist.id === selectedId ? " selected" : "";
+        return `<option value="${escapeHtml(playlist.id)}"${selected}>${escapeHtml(playlist.title)}（${escapeHtml(playlist.grade || "全部年級")} · ${playlist.practiceIds.length} 題型）</option>`;
+      })
+      .join("");
+    updateStoredPlaylistInfo();
   }
 
   function renderFilters() {
@@ -526,6 +520,30 @@
     event.target.value = "";
   });
 
+  elements.storedPlaylistSelect?.addEventListener("change", updateStoredPlaylistInfo);
+
+  elements.storedPlaylistLoadButton?.addEventListener("click", () => {
+    const playlist = playlistStore.getById(elements.storedPlaylistSelect?.value);
+    if (playlist) {
+      fillForm(playlist);
+      setStatus(`已載入清單：${playlist.title}`);
+    }
+  });
+
+  elements.storedPlaylistDeleteButton?.addEventListener("click", () => {
+    const targetId = String(elements.storedPlaylistSelect?.value || "").trim();
+    if (!targetId) return;
+    const { isLocal } = getStoredPlaylistFlags(targetId);
+    if (!isLocal) return;
+    playlistStore.remove(targetId);
+    if (state.activePlaylistId === targetId) {
+      fillForm(null);
+    } else {
+      renderStoredPlaylists();
+    }
+    setStatus("已刪除/還原選取的清單。");
+  });
+
   elements.playlistKeywordInput?.addEventListener("input", renderTable);
   elements.playlistChapterFilter?.addEventListener("change", async () => {
     renderTable();
@@ -548,4 +566,16 @@
   });
 
   render();
+
+  // 提供給主題串編輯器（practice-theme-builder.js）的最小介面：
+  // 讀取 / 覆蓋「已選題型順序」，讓主題串可以借用同一個編輯區重排。
+  window.practicePlaylistBuilderApi = {
+    getSelectedPracticeIds: () => getSelectedPracticeIds().slice(),
+    setSelectedPracticeIds: (ids) => {
+      state.selectedPracticeIds = Array.isArray(ids)
+        ? ids.map((id) => String(id || "").trim()).filter(Boolean)
+        : [];
+      render();
+    },
+  };
 })();
