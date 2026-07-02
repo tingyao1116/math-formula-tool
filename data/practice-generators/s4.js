@@ -1060,7 +1060,7 @@
     // helper: render symmetric line equation (x-px)/vx=(y-py)/vy=(z-pz)/vz
     function s412LinePart(varName, p, d) {
       const shift = p === 0 ? varName : (p > 0 ? varName + '-' + p : varName + '+' + (-p));
-      return d === 1 ? shift : ('\\\\dfrac{' + shift + '}{' + d + '}');
+      return d === 1 ? shift : ('\\dfrac{' + shift + '}{' + d + '}');
     }
     function s412SymLineTex(P, v) {
       return s412LinePart('x', P[0], v[0]) + '=' + s412LinePart('y', P[1], v[1]) + '=' + s412LinePart('z', P[2], v[2]);
@@ -1071,8 +1071,8 @@
         const v = [randInt(1, 4), s324Pick([-3, -2, -1, 1, 2, 3]), s324Pick([-3, -2, -1, 1, 2, 3])];
         return s331QA(
           '求過點 ' + s331M(s412Point('P', P)) + '、方向向量為 ' + s331M(s412Vec3(v[0], v[1], v[2])) + ' 的直線對稱式。',
-          '\\\\(' + s412SymLineTex(P, v) + '\\\\)',
-          '對稱式為 ' + s331M('\\\\dfrac{x-p_x}{a}=\\\\dfrac{y-p_y}{b}=\\\\dfrac{z-p_z}{c}') + '，代入點坐標與方向向量各分量。'
+          '\\(' + s412SymLineTex(P, v) + '\\)',
+          '對稱式為 ' + s331M('\\dfrac{x-p_x}{a}=\\dfrac{y-p_y}{b}=\\dfrac{z-p_z}{c}') + '，代入點坐標與方向向量各分量。'
         );
       },
       () => {
@@ -1081,8 +1081,8 @@
         const B = [A[0] + d[0], A[1] + d[1], A[2] + d[2]];
         return s331QA(
           '求過兩點 ' + s331M(s412Point('A', A)) + ' 與 ' + s331M(s412Point('B', B)) + ' 的直線對稱式。',
-          '\\\\(' + s412SymLineTex(A, d) + '\\\\)',
-          '方向向量為 ' + s331M('\\\\overrightarrow{AB}=' + s412Vec3(d[0], d[1], d[2])) + '，再代入點 ' + s331M('A') + ' 套公式。'
+          '\\(' + s412SymLineTex(A, d) + '\\)',
+          '方向向量為 ' + s331M('\\overrightarrow{AB}=' + s412Vec3(d[0], d[1], d[2])) + '，再代入點 ' + s331M('A') + ' 套公式。'
         );
       },
       () => {
@@ -1656,7 +1656,7 @@
         return s331QA(
           '正數 ' + s331M('x,y,z') + ' 滿足 ' + s331M('x+y+z=' + S) + '，求 ' + s331M('xyz') + ' 的最大值。',
           s331MJ(maxXyz),
-          '由 AM-GM：' + s331M('\\\\dfrac{x+y+z}{3}\\\\ge\\\\sqrt[3]{xyz}') + '，等號在 ' + s331M('x=y=z=' + n) + ' 時成立，最大值 ' + s331M(maxXyz + '') + '。'
+          '由 AM-GM：' + s331M('\\dfrac{x+y+z}{3}\\ge\\sqrt[3]{xyz}') + '，等號在 ' + s331M('x=y=z=' + n) + ' 時成立，最大值 ' + s331M(maxXyz + '') + '。'
         );
       },
       () => {
@@ -1667,7 +1667,7 @@
         return s331QA(
           '正數 ' + s331M('x,y,z') + ' 滿足 ' + s331M('x+y+z=' + S) + '，求 ' + s331M('x^2+y^2+z^2') + ' 的最小值。',
           s331MJ(minSq),
-          '由柯西：' + s331M('(x^2+y^2+z^2)\\\\cdot3\\\\ge(x+y+z)^2=' + (S*S)) + '，等號在 ' + s331M('x=y=z=' + k) + ' 時成立，最小值 ' + s331M(minSq + '') + '。'
+          '由柯西：' + s331M('(x^2+y^2+z^2)\\cdot3\\ge(x+y+z)^2=' + (S*S)) + '，等號在 ' + s331M('x=y=z=' + k) + ' 時成立，最小值 ' + s331M(minSq + '') + '。'
         );
       },
       () => {
@@ -1689,7 +1689,7 @@
         return s331QA(
           '已知 ' + s331M('x^2+y^2+z^2=' + cc.rSq) + '，求點 ' + s331M('(x,y,z)') + ' 到平面 ' + s331M(planeStr) + ' 的最大距離。',
           s331MJ(cc.maxDist),
-          '球心到平面距離 ' + s331M('\\\\dfrac{' + cc.d + '}{' + cc.nLen + '}=' + cc.cDist) + '，球半徑 ' + s331M(cc.r + '') + '，最大距離 ' + s331M('=' + cc.cDist + '+' + cc.r + '=' + cc.maxDist) + '。'
+          '球心到平面距離 ' + s331M('\\dfrac{' + cc.d + '}{' + cc.nLen + '}=' + cc.cDist) + '，球半徑 ' + s331M(cc.r + '') + '，最大距離 ' + s331M('=' + cc.cDist + '+' + cc.r + '=' + cc.maxDist) + '。'
         );
       },
     ];
@@ -7922,6 +7922,17 @@
       .replace(/\s+/g, ' ')
       .trim();
     if (!text) return '';
+
+    // Prefer an explicit "簡答：X" / "答案：X" label when present (the vast
+    // majority of practice-generator answers are written this way): extract
+    // everything up to the next "過程/解析/詳解/說明" label. This must run
+    // before the looser heuristics below, which otherwise can grab an
+    // unrelated trailing fragment of the *explanation* text (e.g. a sentence
+    // ending in "...可得範圍。" gets misread as the answer "範圍").
+    const labelMatch = text.match(/(?:簡答|答案)[:：]\s*([\s\S]*?)(?=(?:。|；|\n)?\s*(?:過程|解析|詳解|說明)[:：]|$)/);
+    if (labelMatch && labelMatch[1] && labelMatch[1].trim()) {
+      return labelMatch[1].trim();
+    }
 
     const simpleAnswer = text.match(/簡答[:：]\s*([^。]+)(?:。|$)/u);
     if (simpleAnswer && simpleAnswer[1]) return simpleAnswer[1].trim();

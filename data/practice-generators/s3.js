@@ -3887,8 +3887,8 @@
         const [a, b] = pairs[randInt(0, pairs.length-1)];
         const k = s321Pick([1,2,3]);
         return {
-          q: `解方程式 \\\\(${a}^x=${b}^{x+${k}}\\\\)。`,
-          a: `簡答：\\\\(x=\\\\dfrac{${k}\\\\lg ${b}}{\\\\lg ${a}-\\\\lg ${b}}\\\\)。過程：兩邊取常用對數，\\\\(x\\\\lg ${a}=(x+${k})\\\\lg ${b}\\\\)，整理得 \\\\(x(\\\\lg ${a}-\\\\lg ${b})=${k}\\\\lg ${b}\\\\)。`
+          q: `解方程式 \\(${a}^x=${b}^{x+${k}}\\)。`,
+          a: `簡答：\\(x=\\dfrac{${k}\\lg ${b}}{\\lg ${a}-\\lg ${b}}\\)。過程：兩邊取常用對數，\\(x\\lg ${a}=(x+${k})\\lg ${b}\\)，整理得 \\(x(\\lg ${a}-\\lg ${b})=${k}\\lg ${b}\\)。`
         };
       },
       () => {
@@ -3897,8 +3897,8 @@
         const [a, b] = pairs[randInt(0, pairs.length-1)];
         const k = s321Pick([1,2]);
         return {
-          q: `解方程式 \\\\(${a}^{x+${k}}=${b}^x\\\\)。`,
-          a: `簡答：\\\\(x=\\\\dfrac{${k}\\\\lg ${a}}{\\\\lg ${b}-\\\\lg ${a}}\\\\)。過程：兩邊取常用對數，\\\\((x+${k})\\\\lg ${a}=x\\\\lg ${b}\\\\)，整理得 \\\\(x(\\\\lg ${b}-\\\\lg ${a})=${k}\\\\lg ${a}\\\\)。`
+          q: `解方程式 \\(${a}^{x+${k}}=${b}^x\\)。`,
+          a: `簡答：\\(x=\\dfrac{${k}\\lg ${a}}{\\lg ${b}-\\lg ${a}}\\)。過程：兩邊取常用對數，\\((x+${k})\\lg ${a}=x\\lg ${b}\\)，整理得 \\(x(\\lg ${b}-\\lg ${a})=${k}\\lg ${a}\\)。`
         };
       },
       () => {
@@ -3907,8 +3907,8 @@
         const [p, q] = pairs[randInt(0, pairs.length-1)];
         const k = s321Pick([1,2]);
         return {
-          q: `解方程式 \\\\(${p}^{2x-${k}}=${q}^x\\\\)。`,
-          a: `簡答：\\\\(x=\\\\dfrac{${k}\\\\lg ${p}}{2\\\\lg ${p}-\\\\lg ${q}}\\\\)。過程：兩邊取常用對數，\\\\((2x-${k})\\\\lg ${p}=x\\\\lg ${q}\\\\)，整理得 \\\\(x(2\\\\lg ${p}-\\\\lg ${q})=${k}\\\\lg ${p}\\\\)。`
+          q: `解方程式 \\(${p}^{2x-${k}}=${q}^x\\)。`,
+          a: `簡答：\\(x=\\dfrac{${k}\\lg ${p}}{2\\lg ${p}-\\lg ${q}}\\)。過程：兩邊取常用對數，\\((2x-${k})\\lg ${p}=x\\lg ${q}\\)，整理得 \\(x(2\\lg ${p}-\\lg ${q})=${k}\\lg ${p}\\)。`
         };
       },
       () => {
@@ -3916,19 +3916,19 @@
         const b = s321Pick([2,3,4,5,6]);
         const k = s321Pick([1,2,3]);
         return {
-          q: `解方程式 \\\\(${b}^x=10^{x-${k}}\\\\)。`,
-          a: `簡答：\\\\(x=\\\\dfrac{${k}}{1-\\\\lg ${b}}\\\\)。過程：兩邊取常用對數，\\\\(x\\\\lg ${b}=x-${k}\\\\)，整理得 \\\\(x(1-\\\\lg ${b})=${k}\\\\)，故 \\\\(x=${k}/(1-\\\\lg ${b})\\\\)。`
+          q: `解方程式 \\(${b}^x=10^{x-${k}}\\)。`,
+          a: `簡答：\\(x=\\dfrac{${k}}{1-\\lg ${b}}\\)。過程：兩邊取常用對數，\\(x\\lg ${b}=x-${k}\\)，整理得 \\(x(1-\\lg ${b})=${k}\\)，故 \\(x=${k}/(1-\\lg ${b})\\)。`
         };
       },
       () => {
         // 4^x = 3^(x+k)  →  2x·lg2 = (x+k)·lg3  →  x(2lg2-lg3) = k·lg3
         const pairs = [[4,3],[4,5],[9,5],[9,2]];
         const [a2, b2] = pairs[randInt(0, pairs.length-1)];
-        const la = a2 === 4 ? '2\\\\lg 2' : (a2===9 ? '2\\\\lg 3' : `\\\\lg ${a2}`);
+        const la = a2 === 4 ? '2\\lg 2' : (a2===9 ? '2\\lg 3' : `\\lg ${a2}`);
         const k2 = s321Pick([1,2,3]);
         return {
-          q: `解方程式 \\\\(${a2}^x=${b2}^{x+${k2}}\\\\)。`,
-          a: `簡答：\\\\(x=\\\\dfrac{${k2}\\\\lg ${b2}}{${la}-\\\\lg ${b2}}\\\\)。過程：兩邊取常用對數，\\\\(x\\\\lg ${a2}=(x+${k2})\\\\lg ${b2}\\\\)，整理後除以係數得解。`
+          q: `解方程式 \\(${a2}^x=${b2}^{x+${k2}}\\)。`,
+          a: `簡答：\\(x=\\dfrac{${k2}\\lg ${b2}}{${la}-\\lg ${b2}}\\)。過程：兩邊取常用對數，\\(x\\lg ${a2}=(x+${k2})\\lg ${b2}\\)，整理後除以係數得解。`
         };
       },
     ];
@@ -4762,9 +4762,9 @@
         const k = s322Pick([11,22,33]);
         const pw = (6*k/11);
         return s322Item(
-          '解方程式 ' + s322M('\\\\log_2 x+\\\\log_4 x+\\\\log_8 x='+k) + '。',
+          '解方程式 ' + s322M('\\log_2 x+\\log_4 x+\\log_8 x='+k) + '。',
           s322M('x=2^{'+pw+'}'),
-          '統一換成以 2 為底：\\\\frac{11}{6}\\\\log_2 x='+k+'，得 \\\\log_2 x='+pw+'。'
+          '統一換成以 2 為底：\\frac{11}{6}\\log_2 x='+k+'，得 \\log_2 x='+pw+'。'
         );
       },
       () => {
@@ -4772,9 +4772,9 @@
         const k = s322Pick([3,6,9,12]);
         const pw = (2*k/3);
         return s322Item(
-          '解方程式 ' + s322M('\\\\log_2 x+\\\\log_4 x='+k) + '。',
+          '解方程式 ' + s322M('\\log_2 x+\\log_4 x='+k) + '。',
           s322M('x=2^{'+pw+'}'),
-          '換底：\\\\log_4 x=\\\\tfrac12\\\\log_2 x，代入得 \\\\tfrac32\\\\log_2 x='+k+'，解得 \\\\log_2 x='+pw+'。'
+          '換底：\\log_4 x=\\tfrac12\\log_2 x，代入得 \\tfrac32\\log_2 x='+k+'，解得 \\log_2 x='+pw+'。'
         );
       },
       () => {
@@ -4782,9 +4782,9 @@
         const k = s322Pick([4,8,12]);
         const pw = (3*k/4);
         return s322Item(
-          '解方程式 ' + s322M('\\\\log_3 x+\\\\log_9 x='+k) + '。',
+          '解方程式 ' + s322M('\\log_3 x+\\log_9 x='+k) + '。',
           s322M('x=3^{'+pw+'}'),
-          '換底：\\\\log_9 x=\\\\tfrac12\\\\log_3 x，代入得 \\\\tfrac32 \\\\cdot \\\\tfrac{2}{3}\\\\cdot 2\\\\log_3 x='+k+'；整理得 \\\\tfrac{4}{3}\\\\log_3 x='+k+'，x=3^{'+pw+'}。'
+          '換底：\\log_9 x=\\tfrac12\\log_3 x，代入得 \\tfrac32 \\cdot \\tfrac{2}{3}\\cdot 2\\log_3 x='+k+'；整理得 \\tfrac{4}{3}\\log_3 x='+k+'，x=3^{'+pw+'}。'
         );
       },
       () => {
@@ -4792,9 +4792,9 @@
         const h = s322Pick([1,2,3]);
         const C = h*h + 4*h + 2;
         return s322Item(
-          '解方程式 ' + s322M('\\\\log_2(x+'+h+')=\\\\log_4(x+'+C+')') + '。',
+          '解方程式 ' + s322M('\\log_2(x+'+h+')=\\log_4(x+'+C+')') + '。',
           s322M('x=2'),
-          '將右邊換底：\\\\log_4(x+'+C+')=\\\\tfrac12\\\\log_2(x+'+C+')，兩邊乘 2 後得 (x+'+h+')^2=x+'+C+'，展開整理後僅 x=2 滿足真數條件。'
+          '將右邊換底：\\log_4(x+'+C+')=\\tfrac12\\log_2(x+'+C+')，兩邊乘 2 後得 (x+'+h+')^2=x+'+C+'，展開整理後僅 x=2 滿足真數條件。'
         );
       },
       () => {
@@ -4802,9 +4802,9 @@
         const k = s322Pick([7,14,21]);
         const pw = (4*k/7);
         return s322Item(
-          '解方程式 ' + s322M('\\\\log_2 x+\\\\log_4 x+\\\\log_{16} x='+k) + '。',
+          '解方程式 ' + s322M('\\log_2 x+\\log_4 x+\\log_{16} x='+k) + '。',
           s322M('x=2^{'+pw+'}'),
-          '換底為以 2 為底：\\\\tfrac{7}{4}\\\\log_2 x='+k+'，得 \\\\log_2 x='+pw+'。'
+          '換底為以 2 為底：\\tfrac{7}{4}\\log_2 x='+k+'，得 \\log_2 x='+pw+'。'
         );
       },
     ];
@@ -4822,11 +4822,11 @@
         const pairs = [[5,4],[3,6],[7,2],[2,14],[5,20]];
         const [b, c] = pairs[randInt(0, pairs.length-1)];
         const ans = Math.sqrt(b+c);
-        const ansStr = Number.isInteger(ans) ? String(ans) : '\\\\sqrt{'+(b+c)+'}';
+        const ansStr = Number.isInteger(ans) ? String(ans) : '\\sqrt{'+(b+c)+'}';
         return s322Item(
-          '解方程式 ' + s322M('\\\\log_'+b+'(x^2-'+c+')=1') + '。',
-          s322M('x=\\\\pm '+ansStr),
-          'x^2-'+c+'='+b+'，得 x^2='+(b+c)+'，因真數需正故 |x|>\\\\sqrt{'+c+'}，兩根均符合。'
+          '解方程式 ' + s322M('\\log_'+b+'(x^2-'+c+')=1') + '。',
+          s322M('x=\\pm '+ansStr),
+          'x^2-'+c+'='+b+'，得 x^2='+(b+c)+'，因真數需正故 |x|>\\sqrt{'+c+'}，兩根均符合。'
         );
       },
       () => {
@@ -4834,10 +4834,10 @@
         const cases = [[2,3],[3,5],[4,7],[3,8],[5,16]];
         const [b, c] = cases[randInt(0, cases.length-1)];
         const val = b*b - c;
-        const ansStr = Number.isInteger(Math.sqrt(val)) ? String(Math.sqrt(val)) : '\\\\sqrt{'+val+'}';
+        const ansStr = Number.isInteger(Math.sqrt(val)) ? String(Math.sqrt(val)) : '\\sqrt{'+val+'}';
         return s322Item(
-          '解方程式 ' + s322M('\\\\log_'+b+'(x^2+'+c+')=2') + '。',
-          s322M('x=\\\\pm '+ansStr),
+          '解方程式 ' + s322M('\\log_'+b+'(x^2+'+c+')=2') + '。',
+          s322M('x=\\pm '+ansStr),
           '真數 x^2+'+c+'='+b+'^2='+(b*b)+'，得 x^2='+(b*b-c)+'，兩根均使真數為正。'
         );
       },
@@ -4851,22 +4851,22 @@
         const c = cases[randInt(0, cases.length-1)];
         const expr = c.a===1 ? `x+${c.b}` : `${c.a}x+${c.b}`;
         return s322Item(
-          '解方程式 ' + s322M('\\\\log_x('+expr+')=2') + '。',
+          '解方程式 ' + s322M('\\log_x('+expr+')=2') + '。',
           s322M('x='+c.ans),
-          'x^2='+expr+'，整理得 '+c.eq+'；取 x>0 且 x\\\\ne1 的根，得 x='+c.ans+'。'
+          'x^2='+expr+'，整理得 '+c.eq+'；取 x>0 且 x\\ne1 的根，得 x='+c.ans+'。'
         );
       },
       () => {
         // log_5(x^2-4) = 1  →  x^2=9  →  x=±3
         const cases = [
-          {b:5,c:4,val:9,ans:'\\\\pm3'},
-          {b:3,c:1,val:4,ans:'\\\\pm2'},
-          {b:4,c:3,val:7,ans:'\\\\pm\\\\sqrt7'},
-          {b:2,c:1,val:3,ans:'\\\\pm\\\\sqrt3'},
+          {b:5,c:4,val:9,ans:'\\pm3'},
+          {b:3,c:1,val:4,ans:'\\pm2'},
+          {b:4,c:3,val:7,ans:'\\pm\\sqrt7'},
+          {b:2,c:1,val:3,ans:'\\pm\\sqrt3'},
         ];
         const cas = cases[randInt(0, cases.length-1)];
         return s322Item(
-          '解方程式 ' + s322M('\\\\log_'+cas.b+'(x^2-'+cas.c+')=1') + '。',
+          '解方程式 ' + s322M('\\log_'+cas.b+'(x^2-'+cas.c+')=1') + '。',
           s322M('x='+cas.ans),
           '真數 x^2-'+cas.c+'='+cas.b+'，得 x^2='+(cas.b+cas.c)+'='+ cas.val +'，確認兩根均使 x^2>'+cas.c+'。'
         );
@@ -4874,9 +4874,9 @@
       () => {
         // log_x(5x-6) = 2  →  x^2-5x+6=0  →  x=2 or 3
         return s322Item(
-          '解方程式 ' + s322M('\\\\log_x(5x-6)=2') + '。',
+          '解方程式 ' + s322M('\\log_x(5x-6)=2') + '。',
           s322M('x=2 或 x=3'),
-          'x^2=5x-6，整理得 x^2-5x+6=0，(x-2)(x-3)=0；兩根均滿足 x>0,x\\\\ne1 且 5x-6>0。'
+          'x^2=5x-6，整理得 x^2-5x+6=0，(x-2)(x-3)=0；兩根均滿足 x>0,x\\ne1 且 5x-6>0。'
         );
       },
     ];
@@ -4893,40 +4893,40 @@
         // log_2(x) > log_4(ax-c)  →  x^2>ax-c (with specific roots r,s)
         // Using r=1,s=2: a=3,c=2. Domain: x>2/3. Answer: (2/3,1)∪(2,∞)
         const cases = [
-          {r:1,s:2,a:3,c:2,dom:'x>\\\\tfrac23',ans:'\\\\tfrac23<x<1 或 x>2'},
-          {r:1,s:3,a:4,c:3,dom:'x>\\\\tfrac34',ans:'\\\\tfrac34<x<1 或 x>3'},
-          {r:2,s:3,a:5,c:6,dom:'x>\\\\tfrac65',ans:'\\\\tfrac65<x<2 或 x>3'},
+          {r:1,s:2,a:3,c:2,dom:'x>\\tfrac23',ans:'\\tfrac23<x<1 或 x>2'},
+          {r:1,s:3,a:4,c:3,dom:'x>\\tfrac34',ans:'\\tfrac34<x<1 或 x>3'},
+          {r:2,s:3,a:5,c:6,dom:'x>\\tfrac65',ans:'\\tfrac65<x<2 或 x>3'},
         ];
         const c = cases[randInt(0, cases.length-1)];
         return s322Item(
-          '解不等式 ' + s322M('\\\\log_2 x>\\\\log_4('+c.a+'x-'+c.c+')') + '。',
+          '解不等式 ' + s322M('\\log_2 x>\\log_4('+c.a+'x-'+c.c+')') + '。',
           s322M(c.ans),
-          '換底：\\\\log_4('+c.a+'x-'+c.c+')=\\\\tfrac12\\\\log_2('+c.a+'x-'+c.c+')，不等式化為 x^2>'+c.a+'x-'+c.c+'；定義域 '+c.dom+'，解 (x-'+c.r+')(x-'+c.s+')>0 後取交集。'
+          '換底：\\log_4('+c.a+'x-'+c.c+')=\\tfrac12\\log_2('+c.a+'x-'+c.c+')，不等式化為 x^2>'+c.a+'x-'+c.c+'；定義域 '+c.dom+'，解 (x-'+c.r+')(x-'+c.s+')>0 後取交集。'
         );
       },
       () => {
         // 1/log_b(x) > k  →  1<x<b^(1/k)
         const cases = [
-          {b:5,k:2,ans:'1<x<\\\\sqrt5'},
-          {b:3,k:2,ans:'1<x<\\\\sqrt3'},
-          {b:2,k:3,ans:'1<x<\\\\sqrt[3]{2}'},
+          {b:5,k:2,ans:'1<x<\\sqrt5'},
+          {b:3,k:2,ans:'1<x<\\sqrt3'},
+          {b:2,k:3,ans:'1<x<\\sqrt[3]{2}'},
           {b:4,k:2,ans:'1<x<2'},
           {b:5,k:1,ans:'1<x<5'},
         ];
         const c = cases[randInt(0, cases.length-1)];
         return s322Item(
-          '解不等式 ' + s322M('\\\\dfrac{1}{\\\\log_'+c.b+' x}>'+c.k) + '。',
+          '解不等式 ' + s322M('\\dfrac{1}{\\log_'+c.b+' x}>'+c.k) + '。',
           s322M(c.ans),
-          '需 \\\\log_'+c.b+' x\\\\ne0。當 x>1 時 \\\\log_'+c.b+' x>0，不等式等價於 \\\\log_'+c.b+' x<\\\\tfrac{1}{'+c.k+'}，即 x<'+c.b+'^{1/'+c.k+'}；當 0<x<1 時左側為負，不滿足。'
+          '需 \\log_'+c.b+' x\\ne0。當 x>1 時 \\log_'+c.b+' x>0，不等式等價於 \\log_'+c.b+' x<\\tfrac{1}{'+c.k+'}，即 x<'+c.b+'^{1/'+c.k+'}；當 0<x<1 時左側為負，不滿足。'
         );
       },
       () => {
         // 1/log_b(x) < -1  →  1/b < x < 1
         const b = s322Pick([2,3,4,5]);
         return s322Item(
-          '解不等式 ' + s322M('\\\\dfrac{1}{\\\\log_'+b+' x}<-1') + '。',
-          s322M('\\\\tfrac{1}{'+b+'}<x<1'),
-          '當 0<x<1 時 \\\\log_'+b+' x<0，乘以 \\\\log_'+b+' x（負值）方向反向：1>-\\\\log_'+b+' x，即 \\\\log_'+b+' x>-1，得 x>\\\\tfrac{1}{'+b+'}；當 x>1 時左側為正，不符合。'
+          '解不等式 ' + s322M('\\dfrac{1}{\\log_'+b+' x}<-1') + '。',
+          s322M('\\tfrac{1}{'+b+'}<x<1'),
+          '當 0<x<1 時 \\log_'+b+' x<0，乘以 \\log_'+b+' x（負值）方向反向：1>-\\log_'+b+' x，即 \\log_'+b+' x>-1，得 x>\\tfrac{1}{'+b+'}；當 x>1 時左側為正，不符合。'
         );
       },
       () => {
@@ -4951,9 +4951,9 @@
         // h=1,d=4: (x+1)^2>x+4 → x^2+2x+1>x+4 → x^2+x-3>0. Roots: (-1±√13)/2. Not clean.
         // Let me just use specific clean cases instead.
         return s322Item(
-          '解不等式 ' + s322M('\\\\log_2(x+1)>\\\\log_4(x+3)') + '。',
+          '解不等式 ' + s322M('\\log_2(x+1)>\\log_4(x+3)') + '。',
           s322M('x>1'),
-          '換底：\\\\log_4(x+3)=\\\\tfrac12\\\\log_2(x+3)，不等式化為 2\\\\log_2(x+1)>\\\\log_2(x+3)，即 (x+1)^2>x+3；定義域 x>-1，解 x^2+x-2>0 得 x>1 或 x<-2，取交集得 x>1。'
+          '換底：\\log_4(x+3)=\\tfrac12\\log_2(x+3)，不等式化為 2\\log_2(x+1)>\\log_2(x+3)，即 (x+1)^2>x+3；定義域 x>-1，解 x^2+x-2>0 得 x>1 或 x<-2，取交集得 x>1。'
         );
       },
       () => {
@@ -4963,9 +4963,9 @@
         // domain: x>0 AND 4x-3>0 → x>3/4
         // combined: (3/4,1)∪(3,∞)
         return s322Item(
-          '解不等式 ' + s322M('\\\\log_3 x>\\\\log_9(4x-3)') + '。',
-          s322M('\\\\tfrac34<x<1 或 x>3'),
-          '換底：\\\\log_9(4x-3)=\\\\tfrac12\\\\log_3(4x-3)，不等式化為 x^2>4x-3；定義域 x>\\\\tfrac34，解 (x-1)(x-3)>0 後取交集得 \\\\tfrac34<x<1 或 x>3。'
+          '解不等式 ' + s322M('\\log_3 x>\\log_9(4x-3)') + '。',
+          s322M('\\tfrac34<x<1 或 x>3'),
+          '換底：\\log_9(4x-3)=\\tfrac12\\log_3(4x-3)，不等式化為 x^2>4x-3；定義域 x>\\tfrac34，解 (x-1)(x-3)>0 後取交集得 \\tfrac34<x<1 或 x>3。'
         );
       },
     ];
@@ -5734,41 +5734,41 @@
   function buildS323LogParityRangeSet(count) {
     const builders = [
       () => buildS323QA(
-        '已知 ' + s323M('f(x)=\\\\log_2(x+\\\\sqrt{x^2+1})') + '，判斷 ' + s323M('f(x)') + ' 的奇偶性並說明理由。',
+        '已知 ' + s323M('f(x)=\\log_2(x+\\sqrt{x^2+1})') + '，判斷 ' + s323M('f(x)') + ' 的奇偶性並說明理由。',
         '奇函數',
-        '定義域對稱於原點。計算 f(-x)=\\\\log_2(-x+\\\\sqrt{x^2+1})；注意 (-x+\\\\sqrt{x^2+1})(x+\\\\sqrt{x^2+1})=1，故 f(-x)=\\\\log_2(1/(x+\\\\sqrt{x^2+1}))=-f(x)。'
+        '定義域對稱於原點。計算 f(-x)=\\log_2(-x+\\sqrt{x^2+1})；注意 (-x+\\sqrt{x^2+1})(x+\\sqrt{x^2+1})=1，故 f(-x)=\\log_2(1/(x+\\sqrt{x^2+1}))=-f(x)。'
       ),
       () => {
         const b = s323Pick([2,3,5]);
         const h = s323Pick([1,2,3]);
         const k = s323Pick([1,2,4]);
-        const minVal = b===2&&k===4 ? 2 : (b===3&&k===3 ? 1 : (b===2&&k===1 ? 0 : `\\\\log_${b} ${k}`));
-        const minStr = (k===1) ? '0' : (k===b ? '1' : (k===b*b ? '2' : `\\\\log_{${b}} ${k}`));
+        const minVal = b===2&&k===4 ? 2 : (b===3&&k===3 ? 1 : (b===2&&k===1 ? 0 : `\\log_${b} ${k}`));
+        const minStr = (k===1) ? '0' : (k===b ? '1' : (k===b*b ? '2' : `\\log_{${b}} ${k}`));
         return buildS323QA(
-          '求函數 ' + s323M('y=\\\\log_'+b+'((x-'+h+')^2+'+k+')') + ' 的值域。',
-          s323M('['+minStr+',+\\\\infty)'),
-          '(x-'+h+')^2+'+k+' \\\\ge '+k+'，故 y\\\\ge\\\\log_{'+b+'} '+k+'='+minStr+'；當 x='+h+' 時取等，值域為 ['+minStr+',+\\\\infty)。'
+          '求函數 ' + s323M('y=\\log_'+b+'((x-'+h+')^2+'+k+')') + ' 的值域。',
+          s323M('['+minStr+',+\\infty)'),
+          '(x-'+h+')^2+'+k+' \\ge '+k+'，故 y\\ge\\log_{'+b+'} '+k+'='+minStr+'；當 x='+h+' 時取等，值域為 ['+minStr+',+\\infty)。'
         );
       },
       () => buildS323QA(
-        '已知 ' + s323M('f(x)=\\\\log_3(x^2+1)') + '，判斷 ' + s323M('f(x)') + ' 的奇偶性。',
+        '已知 ' + s323M('f(x)=\\log_3(x^2+1)') + '，判斷 ' + s323M('f(x)') + ' 的奇偶性。',
         '偶函數',
-        '定義域 \\\\mathbb{R} 對稱於原點。f(-x)=\\\\log_3((-x)^2+1)=\\\\log_3(x^2+1)=f(x)，故為偶函數。'
+        '定義域 \\mathbb{R} 對稱於原點。f(-x)=\\log_3((-x)^2+1)=\\log_3(x^2+1)=f(x)，故為偶函數。'
       ),
       () => {
         const b = s323Pick([2,3]);
         const h = s323Pick([1,2]);
         const minK = 1; // (x+h)^2 + 1 >= 1
         return buildS323QA(
-          '求函數 ' + s323M('y=\\\\log_'+b+'(x^2+'+2*h+'x+'+(h*h+1)+')') + ' 的值域。',
-          s323M('[0,+\\\\infty)'),
-          '配方得 (x+'+h+')^2+1\\\\ge1，故 y=\\\\log_'+b+'((x+'+h+')^2+1)\\\\ge\\\\log_'+b+' 1=0。值域為 [0,+\\\\infty)。'
+          '求函數 ' + s323M('y=\\log_'+b+'(x^2+'+2*h+'x+'+(h*h+1)+')') + ' 的值域。',
+          s323M('[0,+\\infty)'),
+          '配方得 (x+'+h+')^2+1\\ge1，故 y=\\log_'+b+'((x+'+h+')^2+1)\\ge\\log_'+b+' 1=0。值域為 [0,+\\infty)。'
         );
       },
       () => buildS323QA(
-        '已知 ' + s323M('g(x)=\\\\log(x^2-x+1)+\\\\log(x^2+x+1)') + '，判斷 ' + s323M('g(x)') + ' 的奇偶性。',
+        '已知 ' + s323M('g(x)=\\log(x^2-x+1)+\\log(x^2+x+1)') + '，判斷 ' + s323M('g(x)') + ' 的奇偶性。',
         '偶函數',
-        '化簡：g(x)=\\\\log((x^2+1)^2-x^2)=\\\\log(x^4+x^2+1)；因 x^4+x^2+1 僅含偶次項，g(-x)=g(x)，故為偶函數。'
+        '化簡：g(x)=\\log((x^2+1)^2-x^2)=\\log(x^4+x^2+1)；因 x^4+x^2+1 僅含偶次項，g(-x)=g(x)，故為偶函數。'
       ),
     ];
     return s323MakeSet(count, builders);
@@ -5784,33 +5784,33 @@
         // x^(log x) = 10^m · x^n  →  (log x)^2 = m + n·log x  →  t^2-n·t-m=0
         // m=2,n=1: t^2-t-2=0, t=2 or t=-1, x=100 or x=0.1
         return buildS323QA(
-          '解方程式 ' + s323M('x^{\\\\log x}=100x') + '（\\\\(x>0\\\\)）。',
+          '解方程式 ' + s323M('x^{\\log x}=100x') + '（\\(x>0\\)）。',
           s323M('x=100 或 x=0.1'),
-          '兩邊取常用對數得 (\\\\log x)^2=\\\\log(100x)=2+\\\\log x；令 t=\\\\log x，則 t^2-t-2=0，(t-2)(t+1)=0，t=2 或 t=-1，故 x=10^2=100 或 x=10^{-1}=0.1。'
+          '兩邊取常用對數得 (\\log x)^2=\\log(100x)=2+\\log x；令 t=\\log x，則 t^2-t-2=0，(t-2)(t+1)=0，t=2 或 t=-1，故 x=10^2=100 或 x=10^{-1}=0.1。'
         );
       },
       () => {
         // m=3,n=2: t^2-2t-3=0, t=3 or t=-1, x=1000 or 0.1
         return buildS323QA(
-          '解方程式 ' + s323M('x^{\\\\log x}=1000x^2') + '（\\\\(x>0\\\\)）。',
+          '解方程式 ' + s323M('x^{\\log x}=1000x^2') + '（\\(x>0\\)）。',
           s323M('x=1000 或 x=0.1'),
-          '取對數：(\\\\log x)^2=3+2\\\\log x；令 t=\\\\log x，t^2-2t-3=0，(t-3)(t+1)=0，t=3 或 t=-1，x=10^3 或 10^{-1}。'
+          '取對數：(\\log x)^2=3+2\\log x；令 t=\\log x，t^2-2t-3=0，(t-3)(t+1)=0，t=3 或 t=-1，x=10^3 或 10^{-1}。'
         );
       },
       () => {
         // m=6,n=1: t^2-t-6=0, t=3 or t=-2, x=1000 or 0.01
         return buildS323QA(
-          '解方程式 ' + s323M('x^{\\\\log x}=10^6 x') + '（\\\\(x>0\\\\)）。',
+          '解方程式 ' + s323M('x^{\\log x}=10^6 x') + '（\\(x>0\\)）。',
           s323M('x=10^3 或 x=10^{-2}'),
-          '取對數：(\\\\log x)^2=6+\\\\log x；令 t=\\\\log x，t^2-t-6=0，(t-3)(t+2)=0，t=3 或 t=-2。'
+          '取對數：(\\log x)^2=6+\\log x；令 t=\\log x，t^2-t-6=0，(t-3)(t+2)=0，t=3 或 t=-2。'
         );
       },
       () => {
         // x^(log_2 x) = 8x^2  →  (log_2 x)^2 = 3 + 2·log_2 x  →  t^2-2t-3=0, t=3 or -1, x=8 or 1/2
         return buildS323QA(
-          '解方程式 ' + s323M('x^{\\\\log_2 x}=8x^2') + '（\\\\(x>0\\\\)）。',
-          s323M('x=8 或 x=\\\\tfrac12'),
-          '兩邊取 \\\\log_2：(\\\\log_2 x)^2=\\\\log_2(8x^2)=3+2\\\\log_2 x；令 t=\\\\log_2 x，t^2-2t-3=0，t=3 或 t=-1，x=2^3=8 或 x=2^{-1}=\\\\tfrac12。'
+          '解方程式 ' + s323M('x^{\\log_2 x}=8x^2') + '（\\(x>0\\)）。',
+          s323M('x=8 或 x=\\tfrac12'),
+          '兩邊取 \\log_2：(\\log_2 x)^2=\\log_2(8x^2)=3+2\\log_2 x；令 t=\\log_2 x，t^2-2t-3=0，t=3 或 t=-1，x=2^3=8 或 x=2^{-1}=\\tfrac12。'
         );
       },
       () => {
@@ -5819,9 +5819,9 @@
         // Better: x^(log_3 x) = 9·x^4  →  (log_3 x)^2 = log_3(9x^4) = 2+4·log_3 x
         // t^2-4t-... hmm. Let me try: x^(log_3 x) = 9x  → t^2=2+t → t^2-t-2=0 → t=2 or t=-1 → x=9 or 1/3
         return buildS323QA(
-          '解方程式 ' + s323M('x^{\\\\log_3 x}=9x') + '（\\\\(x>0\\\\)）。',
-          s323M('x=9 或 x=\\\\tfrac13'),
-          '兩邊取 \\\\log_3：(\\\\log_3 x)^2=\\\\log_3(9x)=2+\\\\log_3 x；令 t=\\\\log_3 x，t^2-t-2=0，(t-2)(t+1)=0，t=2 或 t=-1，x=9 或 \\\\tfrac13。'
+          '解方程式 ' + s323M('x^{\\log_3 x}=9x') + '（\\(x>0\\)）。',
+          s323M('x=9 或 x=\\tfrac13'),
+          '兩邊取 \\log_3：(\\log_3 x)^2=\\log_3(9x)=2+\\log_3 x；令 t=\\log_3 x，t^2-t-2=0，(t-2)(t+1)=0，t=2 或 t=-1，x=9 或 \\tfrac13。'
         );
       },
     ];
@@ -12053,6 +12053,17 @@
       .replace(/\s+/g, ' ')
       .trim();
     if (!text) return '';
+
+    // Prefer an explicit "簡答：X" / "答案：X" label when present (the vast
+    // majority of practice-generator answers are written this way): extract
+    // everything up to the next "過程/解析/詳解/說明" label. This must run
+    // before the looser heuristics below, which otherwise can grab an
+    // unrelated trailing fragment of the *explanation* text (e.g. a sentence
+    // ending in "...可得範圍。" gets misread as the answer "範圍").
+    const labelMatch = text.match(/(?:簡答|答案)[:：]\s*([\s\S]*?)(?=(?:。|；|\n)?\s*(?:過程|解析|詳解|說明)[:：]|$)/);
+    if (labelMatch && labelMatch[1] && labelMatch[1].trim()) {
+      return labelMatch[1].trim();
+    }
 
     const answerLabelIndex = text.lastIndexOf('答案：');
     if (answerLabelIndex >= 0) {

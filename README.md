@@ -95,7 +95,8 @@
 - `formulas.js`：保留的基底入口，目前只放 `window.baseFormulas = []`
 - `data/formula-content.js`：主題內容資料
 - `data/formula-calculators.js`：計算器設定；只放互動欄位與計算邏輯
-- `data/formula-practice.js`：無限練習設定；只放出題邏輯與答案生成
+- `data/formula-practice.js`：無限練習主控／包裝層；合併指派資料與 generator 設定，不建議改名或移除
+- `data/practice-generators/*.js`：真正的出題邏輯與答案生成（依章碼字首拆檔，例如 `j1.js`–`j6.js`、`s1.js`–`s4.js`）
 - `data/formula-practice-assignments.js`：無限練習橋接檔；由資料庫自動產生
 - `formula-data.js`：章節結構、章碼、管理頁儲存與資料覆寫邏輯
 - `formula-core.js`：共用渲染、計算、練習邏輯
@@ -168,12 +169,14 @@ formula.html?id=divisibility-rules
 
 ## 無限練習現在怎麼管理
 
-現在無限練習分成兩層：
+目前題目資料不是只看單一檔案，真正運作牽涉好幾層：
 
-- `data/formula-practice.js`：真正的出題程式邏輯，負責 `generate()`
 - `program-db/database/practice-db.json`：管理哪些主題要掛哪一個練習、是否啟用、是否改成固定範例題
+- `data/formula-practice-assignments.js`：自動產生的橋接檔（不要手動改）
+- `data/formula-practice.js`：主控與包裝層，負責合併指派資料與已註冊的 generator 設定；目前還不能直接刪或改名，否則整個生成流程會壞掉
+- `data/practice-generators/*.js`：真正的出題函式所在，已拆出去不少，像 `e5.js`、`e6.js`、`j1.js` 到 `j6.js`、`s1.js` 到 `s4.js`，這些新的 generator 檔已經接上無限練習網頁（`practice-bank.html`、`practice-mobile.html`）
 
-前端實際讀到的是自動產生的橋接檔：
+前端實際讀到指派資料的是自動產生的橋接檔：
 
 - `data/formula-practice-assignments.js`
 
@@ -187,19 +190,20 @@ python .\program-db\scripts\sync_practice_bridge.py
 
 ## 目前的資料分層
 
-現在專案不是把所有資訊都塞在同一筆公式資料裡，而是分成四層：
+現在專案不是把所有資訊都塞在同一筆公式資料裡，而是分成好幾層：
 
 - 內容主體：`data/formula-content.js`
 - 計算器：`data/formula-calculators.js`
-- 無限練習：`data/formula-practice.js`
-- 無限練習掛載資料庫：`program-db/database/practice-db.json`
+- 無限練習主控／包裝層：`data/formula-practice.js`
+- 無限練習實際出題邏輯：`data/practice-generators/*.js`
+- 無限練習掛載資料庫：`program-db/database/practice-db.json`（前端實際讀到的是自動產生的 `data/formula-practice-assignments.js`）
 - 章節結構 / 顯示名稱 / parent 對應：`formula-data.js`
 
 實際顯示時：
 
 - 公式卡本體先讀 `data/formula-content.js`
 - 如果同一個 `id` 在 `data/formula-calculators.js` 有設定，就顯示計算器
-- 如果同一個 `id` 在 `practice-db.json` 或 `data/formula-practice.js` 有設定，就顯示無限練習
+- 如果同一個 `id` 在 `practice-db.json`（經橋接檔）有啟用的指派，且對應的 `data/practice-generators/*.js` 有註冊該 generator，就顯示無限練習
 - 分支關係與課綱位置則由 `formula-data.js` 負責
 
 更完整說明請看：
@@ -221,7 +225,7 @@ python .\program-db\scripts\sync_practice_bridge.py
 若是改互動功能：
 
 - 計算器在 `data/formula-calculators.js`
-- 無限練習在 `data/formula-practice.js`
+- 無限練習的出題邏輯在 `data/practice-generators/*.js`（找對應章碼字首的檔案；`data/formula-practice.js` 只是主控／包裝層，不要直接在裡面加題型）
 - 無限練習掛載與覆寫在 `program-db/database/practice-db.json`
 - parent 與顯示名稱在 `formula-data.js`
 
@@ -302,8 +306,8 @@ formula: "a1 + (n - 1)d"
   - 顯示名稱
 - `data/formula-calculators.js`
   - 若這題需要計算器
-- `data/formula-practice.js`
-  - 若這題需要無限練習
+- `program-db/database/practice-db.json`（+ 對應的 `data/practice-generators/*.js`）
+  - 若這題需要無限練習：先在 `practice-db.json` 掛指派，再到對應章碼的 generator 檔加 `generate()` 邏輯
 
 ## 目前已支援的計算器類型
 

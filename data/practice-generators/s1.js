@@ -3731,7 +3731,7 @@
       const line = formatS123LineEquation(a, b, c);
       questions.push(`已知直線 \\(L:${line}\\)，求斜率、\\(x\\) 截距、\\(y\\) 截距，以及它與兩坐標軸所圍三角形的面積。`);
       answers.push(
-        `答案：斜率 \\(${formatFractionObject(slope)}\\)，\\(x\\) 截距 \\(${formatFractionObject(xIntercept)}\\)，\\(y\\) 截距 \\(${formatFractionObject(yIntercept)}\\)，面積 \\(${formatFractionObject(area)}\\)。解析：由 \\(ax+by+c=0\\) 可得斜率 \\(-\\frac{a}{b}\\)，\\(x\\) 截距 \\(-\\frac{c}{a}\\)，\\(y\\) 截距 \\(-\\frac{c}{b}\\)。面積為 \\(\\frac12\\left|x_0y_0\\right|\\)。`
+        `答案：斜率 \\(${formatFractionObject(slope)}\\)，\\(x\\) 截距 \\(${formatFractionObject(xIntercept)}\\)，\\(y\\) 截距 \\(${formatFractionObject(yIntercept)}\\)，面積 \\(${formatFractionObject(area)}\\)。解析：直線方程式 \\(${line}=0\\) 對應 \\(ax+by+c=0\\)，其中 \\(a=${a}\\)，\\(b=${b}\\)，\\(c=${c}\\)。由公式可得斜率 \\(-\\frac{a}{b}=-\\frac{${a}}{${b}}=${formatFractionObject(slope)}\\)；\\(x\\) 截距（令 \\(y=0\\)）為 \\(-\\frac{c}{a}=-\\frac{${c}}{${a}}=${formatFractionObject(xIntercept)}\\)；\\(y\\) 截距（令 \\(x=0\\)）為 \\(-\\frac{c}{b}=-\\frac{${c}}{${b}}=${formatFractionObject(yIntercept)}\\)。三角形面積為 \\(\\frac12\\left|x_0y_0\\right|=\\frac12\\left|${formatFractionObject(xIntercept)}\\right|\\left|${formatFractionObject(yIntercept)}\\right|=${formatFractionObject(area)}\\)。`
       );
     }
     return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
@@ -8318,7 +8318,7 @@
       const c = lead * r1 * r2;
       const relation = closed ? '\\ge0' : '>0';
       const interval = inside
-        ? `${r1}${closed ? '\\le' : '<'}x${closed ? '\\le' : '<'}${r2}`
+        ? `${r1}${closed ? '\\le ' : '<'}x${closed ? '\\le' : '<'}${r2}`
         : `x${closed ? '\\le' : '<'}${r1}\\text{ 或 }x${closed ? '\\ge' : '>'}${r2}`;
       const poly = formatPolynomialFromCoeffs([lead, b, c]);
       const f1 = `(x${r1 >= 0 ? '-' : '+'}${Math.abs(r1)})`;
@@ -8469,7 +8469,7 @@
       },
       {
         q: '解分式不等式 \\(\\frac1{x+1}+\\frac1{x+4}\\ge\\frac1{x+3}+\\frac1{x+2}\\)。',
-        a: '簡答：\\((-4,-3)\\cup[-\\frac52,-2)\\cup(-1,\\infty)\\)。過程：移項通分可得 \\(\\frac{2x+5}{(x+1)(x+2)(x+3)(x+4)}\\ge0\\)。臨界點為 -4、-3、-\\frac52、-2、-1，且 -4、-3、-2、-1 不可取，判號得解集。',
+        a: '簡答：\\((-4,-3)\\cup[-\\frac52,-2)\\cup(-1,\\infty)\\)。過程：移項通分可得 \\(\\frac{2x+5}{(x+1)(x+2)(x+3)(x+4)}\\ge0\\)。臨界點為 -4、-3、\\(-\\frac52\\)、-2、-1，且 -4、-3、-2、-1 不可取，判號得解集。',
       },
       {
         q: '判定 \\(y=\\frac{x-2}{(x^2+x+1)(x-1)}\\ge0\\) 的 \\(x\\) 值範圍。',
@@ -8716,6 +8716,17 @@
       .replace(/\s+/g, ' ')
       .trim();
     if (!text) return '';
+
+    // Prefer an explicit "簡答：X" / "答案：X" label when present (the vast
+    // majority of practice-generator answers are written this way): extract
+    // everything up to the next "過程/解析/詳解/說明" label. This must run
+    // before the looser heuristics below, which otherwise can grab an
+    // unrelated trailing fragment of the *explanation* text (e.g. a sentence
+    // ending in "...可得範圍。" gets misread as the answer "範圍").
+    const labelMatch = text.match(/(?:簡答|答案)[:：]\s*([\s\S]*?)(?=(?:。|；|\n)?\s*(?:過程|解析|詳解|說明)[:：]|$)/);
+    if (labelMatch && labelMatch[1] && labelMatch[1].trim()) {
+      return labelMatch[1].trim();
+    }
 
     const directKeywords = ['所以', '解得', '結果是', '因此', '答案是', '可得'];
     let lastKeywordIndex = -1;

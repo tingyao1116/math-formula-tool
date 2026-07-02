@@ -66134,6 +66134,17 @@
       .trim();
     if (!text) return '';
 
+    // Prefer an explicit "簡答：X" / "答案：X" label when present (the vast
+    // majority of practice-generator answers are written this way): extract
+    // everything up to the next "過程/解析/詳解/說明" label. This must run
+    // before the looser heuristics below, which otherwise can grab an
+    // unrelated trailing fragment of the *explanation* text (e.g. a sentence
+    // ending in "...可得範圍。" gets misread as the answer "範圍").
+    const labelMatch = text.match(/(?:簡答|答案)[:：]\s*([\s\S]*?)(?=(?:。|；|\n)?\s*(?:過程|解析|詳解|說明)[:：]|$)/);
+    if (labelMatch && labelMatch[1] && labelMatch[1].trim()) {
+      return labelMatch[1].trim();
+    }
+
     const directKeywords = ['所以', '解得', '結果是', '因此', '答案是', '可得'];
     let lastKeywordIndex = -1;
     let lastKeyword = '';

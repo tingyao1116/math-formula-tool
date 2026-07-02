@@ -55,15 +55,19 @@
   - 是否有 `--`
   - 分數/比例/根式是否最簡
 
-## 9) 目前共用 formatter 位置
-- 檔案：`data/formula-practice.js`
-- 目前已建立：
-  - `gcdInt`
-  - `reduceFraction`
-  - `formatFraction`
-  - `simplifyRadical`
-  - `formatRadical`
-  - `formatCoeffTerm`
-  - `formatSubtraction`
+## 9) 目前 formatter 實際位置（修正）
 
-新增題型時，請優先呼叫以上函式，不要在題型內重寫一套。
+這些 formatter 目前**不是**集中放在 `data/formula-practice.js`（該檔現在是主控／包裝層，不含這些函式），而是各自複製在 `data/practice-generators/*.js` 每個檔案內部（各檔是獨立 IIFE，互不共用）：
+
+- `gcdInt`：`e4.js`、`e5.js`、`j1.js`–`j5.js`、`s1.js`–`s4.js`
+- `reduceFraction` / `formatFraction`：`e5.js`、`j1.js`–`j5.js`、`s1.js`–`s4.js`
+- `simplifyRadical` / `formatRadical`：`j3.js`、`j4.js`、`s1.js`–`s3.js`
+- `formatCoeffTerm`：`j2.js`、`j3.js`
+- `formatSubtraction`：`j3.js`
+
+也就是說：
+
+- 涵蓋並不完整，`e6.js`、`j6.js`、`s5.js` 目前沒有這些函式的本地副本。
+- 同一個函式在不同檔案裡是各自貼上的複本，不是引用同一份程式碼；改一份不會同步到其他檔案。
+- 新增或修改題型時，先確認你要編輯的那個 `data/practice-generators/<章碼>.js` 檔裡有沒有這些函式；沒有的話，先從既有檔案（例如 `j3.js`）複製一份對應函式進來，再呼叫，不要每次都重寫一套邏輯。
+- 若之後要做「真正共用」，可考慮抽成獨立檔案讓所有 generator 檔載入，但目前現況就是分散複製，文件與實作要先對齊，不要照抄舊的「集中在 formula-practice.js」說法。

@@ -1,4 +1,4 @@
-﻿(() => {
+(() => {
   function shuffle(array) {
     const copy = Array.isArray(array) ? array.slice() : [];
     for (let i = copy.length - 1; i > 0; i -= 1) {
@@ -95,6 +95,17 @@
       .replace(/\s+/g, " ")
       .trim();
     if (!text) return "";
+
+    // Prefer an explicit "簡答：X" / "答案：X" label when present (the vast
+    // majority of practice-generator answers are written this way): extract
+    // everything up to the next "過程/解析/詳解/說明" label. This must run
+    // before the looser heuristics below, which otherwise can grab an
+    // unrelated trailing fragment of the *explanation* text (e.g. a sentence
+    // ending in "...可得範圍。" gets misread as the answer "範圍").
+    const labelMatch = text.match(/(?:簡答|答案)[:：]\s*([\s\S]*?)(?=(?:。|；|\n)?\s*(?:過程|解析|詳解|說明)[:：]|$)/);
+    if (labelMatch && labelMatch[1] && labelMatch[1].trim()) {
+      return labelMatch[1].trim();
+    }
 
     const afterEquals = text.match(/=\s*([^=]+?)\s*$/);
     if (afterEquals?.[1]) {

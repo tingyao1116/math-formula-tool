@@ -69,7 +69,7 @@
     chapterCode: chapterLabelLookup[initialChapterCode] ? initialChapterCode : "all",
     keyword: "",
     practiceId: initialPracticeId,
-    catalogMode: "binding",
+    catalogMode: "record",
   };
   const COMPOSITE_SESSION_STORAGE_KEY = "math-formula-tool-composite-sessions-v3";
 

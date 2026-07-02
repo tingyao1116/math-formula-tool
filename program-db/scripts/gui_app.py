@@ -1,4 +1,5 @@
 ﻿import json
+import json
 import re
 import subprocess
 import sys
@@ -48,6 +49,7 @@ from sync_legacy_bridge import sync_legacy_js_from_db
 from sync_extra_bridge import sync_extra_web_from_db
 from sync_practice_bridge import sync_practice_assignment_js_from_db
 from sync_web_data import sync_question_js_from_db
+import pdf_markdown_export
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT = SCRIPT_DIR.parent.parent
@@ -67,6 +69,7 @@ OVERVIEW_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "chapter-overvie
 OVERVIEW_BODY_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "chapter-overview-body-db.json"
 CHAPTER_CLOSING_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "chapter-closing-db.json"
 MAIN_TOPIC_OVERVIEW_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "main-topic-overview-db.json"
+FORMULA_DATA_JS_PATH = ROOT / "formula-data.js"
 
 ALL = "全部"
 LETTER_ESCAPE_RE = re.compile(r"\\\\([A-Za-z])")
@@ -91,6 +94,174 @@ def resolve_db_path(kind: str) -> Path:
     if kind == "practices":
         return PRACTICE_DB_DEFAULT if PRACTICE_DB_DEFAULT.exists() else PRACTICE_DB_FALLBACK
     return QUESTION_DB_DEFAULT if QUESTION_DB_DEFAULT.exists() else QUESTION_DB_FALLBACK
+
+
+_CHAPTER_CODE_STAGE_GRADE_CACHE: dict | None = None
+
+
+def _extract_js_object_literal(js_text: str, marker: str) -> str:
+    """Extract a brace-balanced object literal following `marker` inside `js_text`."""
+    start = js_text.find(marker)
+    if start < 0:
+        raise ValueError(f"找不到標記：{marker}")
+    brace_start = start + len(marker) - 1
+    depth = 0
+    end = -1
+    for i in range(brace_start, len(js_text)):
+        ch = js_text[i]
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                end = i
+                break
+    if end < 0:
+        raise ValueError(f"找不到物件結尾（標記：{marker}）")
+    return js_text[brace_start:end + 1]
+
+
+def _load_chapter_code_stage_grade_map() -> dict:
+    """chapterCode -> {stage, grade, term} derived from formula-data.js's chapterCodeMap.
+
+    This mirrors formula-data.js's own chapterCodeMap + inferMetaFromCode logic so the GUI
+    shows/filters the same stage/grade as the website, without practice-db.json needing to
+    carry its own (easily miskeyed) copies of stage/grade per record.
+    """
+    global _CHAPTER_CODE_STAGE_GRADE_CACHE
+    if _CHAPTER_CODE_STAGE_GRADE_CACHE is not None:
+        return _CHAPTER_CODE_STAGE_GRADE_CACHE
+
+    result: dict = {}
+    try:
+        raw = FORMULA_DATA_JS_PATH.read_text(encoding="utf-8-sig")
+        obj_text = _extract_js_object_literal(raw, "const chapterCodeMap = {")
+        composite_map = json.loads(obj_text)
+        for composite, code in composite_map.items():
+            code = str(code or "").strip()
+            if not code or code in result:
+                continue
+            parts = str(composite or "").split("-", 3)
+            if len(parts) < 3:
+                continue
+            stage, grade, term = parts[0], parts[1], parts[2]
+            result[code] = {"stage": stage, "grade": grade, "term": term}
+    except Exception:
+        result = {}
+
+    _CHAPTER_CODE_STAGE_GRADE_CACHE = result
+    return result
+
+
+def infer_stage_grade_term_from_code(code: str) -> dict:
+    """Regex fallback mirroring formula-data.js's inferMetaFromCode(), used when a
+    chapterCode is not (yet) listed in formula-data.js's chapterCodeMap."""
+    key = str(code or "").strip().lower()
+    if not key:
+        return {"stage": "", "grade": "", "term": ""}
+    rules = [
+        (r"^e1-", {"stage": "國小", "grade": "小一", "term": ""}),
+        (r"^e2-", {"stage": "國小", "grade": "小二", "term": ""}),
+        (r"^e3-", {"stage": "國小", "grade": "小三", "term": ""}),
+        (r"^e4-", {"stage": "國小", "grade": "小四", "term": "下學期"}),
+        (r"^e5-1-", {"stage": "國小", "grade": "小五", "term": "上學期"}),
+        (r"^e5-2-", {"stage": "國小", "grade": "小五", "term": "下學期"}),
+        (r"^e5-", {"stage": "國小", "grade": "小五", "term": ""}),
+        (r"^e6-1-", {"stage": "國小", "grade": "小六", "term": "上學期"}),
+        (r"^e6-2-", {"stage": "國小", "grade": "小六", "term": "下學期"}),
+        (r"^e6-", {"stage": "國小", "grade": "小六", "term": ""}),
+        (r"^j1-", {"stage": "國中", "grade": "國一", "term": "上學期"}),
+        (r"^j2-", {"stage": "國中", "grade": "國一", "term": "下學期"}),
+        (r"^j3-", {"stage": "國中", "grade": "國二", "term": "上學期"}),
+        (r"^j4-", {"stage": "國中", "grade": "國二", "term": "下學期"}),
+        (r"^j5-", {"stage": "國中", "grade": "國三", "term": "上學期"}),
+        (r"^j6-", {"stage": "國中", "grade": "國三", "term": "下學期"}),
+        (r"^s1-", {"stage": "高中", "grade": "高一", "term": "上學期"}),
+        (r"^s2-", {"stage": "高中", "grade": "高一", "term": "下學期"}),
+        (r"^s3-", {"stage": "高中", "grade": "高二", "term": "上學期"}),
+        (r"^s4-", {"stage": "高中", "grade": "高二", "term": "下學期"}),
+        (r"^(s5-|b-)", {"stage": "高中", "grade": "高三", "term": ""}),
+    ]
+    for pattern, meta in rules:
+        if re.match(pattern, key):
+            return meta
+    return {"stage": "", "grade": "", "term": ""}
+
+
+def resolve_practice_stage_grade_term(record: dict) -> tuple[str, str, str]:
+    """Resolve (stage, grade, term) for a practice record.
+
+    Priority: the record's own explicit fields (kept for backward compatibility / manual
+    override) -> formula-data.js's chapterCodeMap (single source of truth) -> regex fallback.
+    This is what lets practice-db.json drop its own stage/grade columns without breaking the
+    GUI's display or grade filter dropdown.
+    """
+    record = record if isinstance(record, dict) else {}
+    stage = str(record.get("stage", "") or "").strip()
+    grade = str(record.get("grade", "") or "").strip()
+    term = str(record.get("term", "") or "").strip()
+    if stage and grade:
+        return stage, grade, term
+
+    code = str(record.get("chapterCode", "") or "").strip()
+    if not code:
+        return stage, grade, term
+
+    meta = _load_chapter_code_stage_grade_map().get(code)
+    if not meta:
+        meta = infer_stage_grade_term_from_code(code)
+
+    return (
+        stage or meta.get("stage", ""),
+        grade or meta.get("grade", ""),
+        term or meta.get("term", ""),
+    )
+
+
+# Canonical small-to-large ordering for the 學層 (stage) dropdown/sort.
+STAGE_ORDER = ["國小", "國中", "高中"]
+
+# Canonical small-to-large ordering for the 年級 (grade) dropdown/sort, matching the
+# e1~e6 / j1~j6 / s1~s4 / s5 chapter-code convention: e-codes are one grade per code
+# (小一~小六, no term split shown), j/s-codes pair two codes per grade (上/下學期),
+# and s5 (高三) has no term split.
+GRADE_LABEL_ORDER = [
+    "小一", "小二", "小三", "小四", "小五", "小六",
+    "國一上", "國一下", "國二上", "國二下", "國三上", "國三下",
+    "高一上", "高一下", "高二上", "高二下", "高三",
+]
+
+
+def build_grade_label(stage: str, grade: str, term: str) -> str:
+    """Combine (stage, grade, term) into the single label the 年級 dropdown shows,
+    e.g. ("國中", "國一", "上學期") -> "國一上". Mirrors the getGradeLabel() convention
+    already used on the student-facing pages (practice-bank.js / practice-mobile.js),
+    so the GUI and the website group grades the same way."""
+    grade = str(grade or "").strip()
+    if not grade:
+        return ""
+    stage = str(stage or "").strip()
+    if stage == "國小" or grade == "高三":
+        return grade
+    term = str(term or "").strip()
+    if term.startswith("上"):
+        return f"{grade}上"
+    if term.startswith("下"):
+        return f"{grade}下"
+    return grade
+
+
+def _ordered_sort_key(order: list[str]):
+    def key(label):
+        text = str(label or "").strip()
+        if text in order:
+            return (0, order.index(text))
+        return (1, text)
+    return key
+
+
+_stage_sort_key = _ordered_sort_key(STAGE_ORDER)
+_grade_label_sort_key = _ordered_sort_key(GRADE_LABEL_ORDER)
 
 
 def normalize_markdown_escapes(text: str) -> tuple[str, int, int]:
@@ -142,7 +313,7 @@ class DualDbGui:
         self.practice_unbound_only_var = tk.BooleanVar(value=False)
         self.import_delete_var = tk.BooleanVar(value=False)
         self.editor_wrap_var = tk.BooleanVar(value=True)
-        self.preview_auto_load_var = tk.BooleanVar(value=True)
+        self.preview_auto_load_var = tk.BooleanVar(value=False)
         self.status_var = tk.StringVar(value="準備中")
         self.preview_status_var = tk.StringVar(value="預覽尚未建立")
         self.chapter_filter_lookup = {}
@@ -207,19 +378,19 @@ class DualDbGui:
         ttk.Button(filter_bar, text="查詢", style="Compact.TButton", command=self.search).pack(side="left", padx=(0, 10))
 
         ttk.Label(filter_detail_bar, text="學層").pack(side="left")
-        self.stage_combo = ttk.Combobox(filter_detail_bar, textvariable=self.stage_var, width=10, state="readonly")
+        self.stage_combo = ttk.Combobox(filter_detail_bar, textvariable=self.stage_var, width=20, state="readonly")
         self.stage_combo.pack(side="left", padx=(4, 10))
 
         ttk.Label(filter_detail_bar, text="年級").pack(side="left")
-        self.grade_combo = ttk.Combobox(filter_detail_bar, textvariable=self.grade_var, width=10, state="readonly")
+        self.grade_combo = ttk.Combobox(filter_detail_bar, textvariable=self.grade_var, width=20, state="readonly")
         self.grade_combo.pack(side="left", padx=(4, 10))
 
         ttk.Label(filter_detail_bar, text="章節").pack(side="left")
-        self.chapter_combo = ttk.Combobox(filter_detail_bar, textvariable=self.chapter_var, width=44, state="readonly")
+        self.chapter_combo = ttk.Combobox(filter_detail_bar, textvariable=self.chapter_var, width=88, state="readonly")
         self.chapter_combo.pack(side="left", padx=(4, 10))
 
         ttk.Label(filter_detail_bar, text="難度").pack(side="left")
-        self.difficulty_combo = ttk.Combobox(filter_detail_bar, textvariable=self.difficulty_var, width=10, state="readonly")
+        self.difficulty_combo = ttk.Combobox(filter_detail_bar, textvariable=self.difficulty_var, width=20, state="readonly")
         self.difficulty_combo.pack(side="left", padx=(4, 0))
         self.practice_unbound_only_check = ttk.Checkbutton(
             filter_detail_bar,
@@ -665,13 +836,15 @@ class DualDbGui:
             or (str(chapter_meta.get("section", "")).strip() if isinstance(chapter_meta, dict) else "")
             or chapter_code
         )
+        resolved_stage, resolved_grade, resolved_term = resolve_practice_stage_grade_term(source)
+        resolved_grade_label = build_grade_label(resolved_stage, resolved_grade, resolved_term)
         return {
             "id": str(source.get("id", "")).strip(),
             "title": str(source.get("title", "")).strip() or "無限練習",
-            "stage": str(source.get("stage", "")).strip(),
-            "grade": str(source.get("grade", "")).strip(),
-            "term": str(source.get("term", "")).strip(),
-            "gradeLabel": "",
+            "stage": resolved_stage,
+            "grade": resolved_grade_label,
+            "term": resolved_term,
+            "gradeLabel": resolved_grade_label,
             "chapter": chapter_title,
             "chapterCode": chapter_code,
             "domain": str(source.get("domain", "")).strip() or "無限練習",
@@ -706,14 +879,14 @@ class DualDbGui:
             display_title = str(practice.get("title", "") or rid)
             if binding_count == 0:
                 display_title = f"{display_title}【未掛載】"
+            row_stage, row_grade, row_term = resolve_practice_stage_grade_term(practice)
             row = {
                 "id": rid,
                 "kind": "practice",
                 "title": display_title,
                 "topicTitle": "",
-                "stage": str(practice.get("stage", "") or ""),
-                "grade": str(practice.get("grade", "") or ""),
-                "term": str(practice.get("term", "") or ""),
+                "stage": row_stage,
+                "grade": build_grade_label(row_stage, row_grade, row_term),
                 "chapter": base_chapter,
                 "chapter_code": str(practice.get("chapterCode", "") or ""),
                 "difficulty": str(practice.get("difficulty", "") or ""),
@@ -742,14 +915,14 @@ class DualDbGui:
             practice = practice_lookup.get(practice_id, {})
             target_id = str(binding.get("targetId", "")).strip()
             binding_target = self._chapter_label(target_id)
+            binding_stage, binding_grade, binding_term = resolve_practice_stage_grade_term(practice)
             rows.append({
                 "id": self._practice_binding_row_id(binding),
                 "kind": "binding",
                 "title": f"掛載｜{practice.get('title', practice_id) or practice_id}",
                 "topicTitle": binding_target,
-                "stage": str(practice.get("stage", "") or ""),
-                "grade": str(practice.get("grade", "") or ""),
-                "term": str(practice.get("term", "") or ""),
+                "stage": binding_stage,
+                "grade": build_grade_label(binding_stage, binding_grade, binding_term),
                 "chapter": self._chapter_label(target_id),
                 "chapter_code": target_id,
                 "difficulty": str(practice.get("difficulty", "") or ""),
@@ -864,17 +1037,18 @@ class DualDbGui:
         return (*self._chapter_code_sort_key(code), display)
 
     def _chapter_code_sort_key(self, code: str):
+        # Stage order must go from small to large: 國小(e) -> 國中(j) -> 高中(s) -> 數B(b).
         lower = str(code or "").strip().lower()
-        m = re.match(r"^([js])(\d+)(?:-(\d+))?(?:-(\d+))?(?:-(\d+))?$", lower)
+        m = re.match(r"^([ejs])(\d+)(?:-(\d+))?(?:-(\d+))?(?:-(\d+))?$", lower)
         if m:
-            prefix_order = {"j": 0, "s": 1}.get(m.group(1), 9)
+            prefix_order = {"e": 0, "j": 1, "s": 2}.get(m.group(1), 9)
             nums = [int(part) if part else -1 for part in m.groups()[1:]]
             return (prefix_order, *nums)
         if lower.startswith("b-"):
             try:
-                return (2, int(lower.split("-", 1)[1]), -1, -1, -1)
+                return (3, int(lower.split("-", 1)[1]), -1, -1, -1)
             except ValueError:
-                return (2, 999, -1, -1, -1)
+                return (3, 999, -1, -1, -1)
         return (9, 999, 999, 999, 999)
 
     def _search_text(self, *parts):
@@ -951,35 +1125,65 @@ class DualDbGui:
                 "names": {str(v).strip() for v in (names or []) if str(v).strip()},
             }
 
-        for code, meta in catalog.items():
-            if not isinstance(meta, dict):
-                meta = {}
-            add_option(
-                self._chapter_label(code, meta),
-                code,
-                [code, meta.get("chapter", ""), meta.get("section", "")],
-            )
+        # For the 無限練習 screens (practice records / bindings / legacy), only offer
+        # chapters that actually have a matching row here. Listing every chapter in the
+        # whole curriculum catalog (regardless of whether it has any practice content)
+        # made the dropdown huge and full of choices that return zero results when picked.
+        restrict_to_rows = self.mode in {"practice_records", "practice_bindings", "practice_legacy"}
+
+        if not restrict_to_rows:
+            for code, meta in catalog.items():
+                if not isinstance(meta, dict):
+                    meta = {}
+                add_option(
+                    self._chapter_label(code, meta),
+                    code,
+                    [code, meta.get("chapter", ""), meta.get("section", "")],
+                )
 
         if rows:
             for row in rows:
                 row_chapter = str(row.get("chapter", "")).strip()
                 row_code = str(row.get("chapter_code", "") or row.get("chapterCode", "")).strip()
-                if row_code or row_chapter:
-                    if row_code and row_code not in catalog:
-                        add_option(row_code, row_code, [row_code, row_chapter])
-                    elif row_chapter and not any(row_chapter in data.get("names", set()) for data in lookup.values()):
-                        add_option(row_chapter, "", [row_chapter])
+                if not row_code and not row_chapter:
+                    continue
+                if row_code and row_code in catalog:
+                    meta = catalog.get(row_code) or {}
+                    if not isinstance(meta, dict):
+                        meta = {}
+                    add_option(
+                        self._chapter_label(row_code, meta),
+                        row_code,
+                        [row_code, row_chapter, meta.get("chapter", ""), meta.get("section", "")],
+                    )
+                elif row_code:
+                    add_option(row_code, row_code, [row_code, row_chapter])
+                elif row_chapter and not any(row_chapter in data.get("names", set()) for data in lookup.values()):
+                    add_option(row_chapter, "", [row_chapter])
 
         values.sort(key=self._chapter_label_sort_key)
 
         self.chapter_filter_lookup = lookup
         return [ALL] + values
 
+    def _stage_grade_filtered_rows(self, rows=None):
+        """Rows narrowed by the currently selected 學層/年級, used to decide which
+        chapters are worth offering in the chapter dropdown."""
+        rows = self._all_rows() if rows is None else rows
+        stage = "" if self.stage_var.get() == ALL else self.stage_var.get().strip()
+        grade = "" if self.grade_var.get() == ALL else self.grade_var.get().strip()
+        if not stage and not grade:
+            return rows
+        return [
+            r for r in rows
+            if (not stage or r.get("stage") == stage) and (not grade or r.get("grade") == grade)
+        ]
+
     def refresh_filters(self):
         rows = self._all_rows()
-        stages = sorted({r.get("stage", "") for r in rows if r.get("stage")})
-        grades = sorted({r.get("grade", "") for r in rows if r.get("grade")})
-        chapters = self._build_chapter_filter_values(rows)
+        stages = sorted({r.get("stage", "") for r in rows if r.get("stage")}, key=_stage_sort_key)
+        grades = sorted({r.get("grade", "") for r in rows if r.get("grade")}, key=_grade_label_sort_key)
+        chapters = self._build_chapter_filter_values(self._stage_grade_filtered_rows(rows))
         diffs = sorted({r.get("difficulty", "") for r in rows if r.get("difficulty")})
 
         self.stage_combo["values"] = [ALL] + stages
@@ -1001,7 +1205,10 @@ class DualDbGui:
         stage = self.stage_var.get()
         if stage == ALL:
             stage = ""
-        grades = sorted({r.get("grade", "") for r in rows if r.get("grade") and (not stage or r.get("stage") == stage)})
+        grades = sorted(
+            {r.get("grade", "") for r in rows if r.get("grade") and (not stage or r.get("stage") == stage)},
+            key=_grade_label_sort_key,
+        )
         self.grade_combo["values"] = [ALL] + grades
         if self.grade_var.get() not in self.grade_combo["values"]:
             self.grade_var.set(ALL)
@@ -1009,7 +1216,7 @@ class DualDbGui:
         self.search()
 
     def _on_grade_changed(self):
-        self.chapter_combo["values"] = self._build_chapter_filter_values()
+        self.chapter_combo["values"] = self._build_chapter_filter_values(self._stage_grade_filtered_rows())
         if self.chapter_var.get() not in self.chapter_combo["values"]:
             self.chapter_var.set(ALL)
         self.search()
@@ -3195,6 +3402,10 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             if not pack or not pack.get("topics"):
                 return messagebox.showwarning("提示", "此章節目前沒有掛到主題或分支的題目。")
 
+            toolchain = pdf_markdown_export.check_pdf_toolchain()
+            if not toolchain["ok"]:
+                return messagebox.showerror("找不到排版工具", toolchain["reason"])
+
             out_dir = filedialog.askdirectory(title="選擇講義輸出資料夾")
             if not out_dir:
                 return
@@ -3206,23 +3417,14 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             student_pdf = out_dir / f"{base}_學生版.pdf"
             teacher_pdf = out_dir / f"{base}_教師版.pdf"
 
-            student_html = self._build_lesson_print_html(pack, show_answer=False)
-            teacher_html = self._build_lesson_print_html(pack, show_answer=True)
-            student_result = self._print_html_to_pdf(student_html, student_pdf)
-            teacher_result = self._print_html_to_pdf(teacher_html, teacher_pdf)
+            student_md = pdf_markdown_export.build_lesson_markdown(pack, show_answer=False)
+            teacher_md = pdf_markdown_export.build_lesson_markdown(pack, show_answer=True)
+            student_result = pdf_markdown_export.convert_markdown_to_pdf(student_md, student_pdf, title=f"{chapter_name}（學生版）")
+            teacher_result = pdf_markdown_export.convert_markdown_to_pdf(teacher_md, teacher_pdf, title=f"{chapter_name}（教師版）")
 
             if student_result["ok"] and teacher_result["ok"]:
                 self.status_var.set(f"講義輸出完成：{student_pdf.name}、{teacher_pdf.name}")
                 return messagebox.showinfo("完成", f"已輸出：\n{student_pdf}\n{teacher_pdf}")
-
-            fallback_paths = []
-            if student_result.get("html"):
-                fallback_paths.append(str(student_result["html"]))
-            if teacher_result.get("html"):
-                fallback_paths.append(str(teacher_result["html"]))
-            if fallback_paths:
-                self.status_var.set("找不到 Edge，已輸出 HTML 講義。")
-                return messagebox.showwarning("未偵測到 Edge", "目前無法直接輸出 PDF，已改輸出 HTML：\n" + "\n".join(fallback_paths))
 
             errors = [x.get("reason", "") for x in [student_result, teacher_result] if not x.get("ok")]
             return messagebox.showerror("輸出失敗", "\n".join([e for e in errors if e]) or "未知錯誤")
@@ -3252,6 +3454,10 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         if not picked:
             return messagebox.showwarning("提醒", "目前選取項目無法匯出。")
 
+        toolchain = pdf_markdown_export.check_pdf_toolchain()
+        if not toolchain["ok"]:
+            return messagebox.showerror("找不到排版工具", toolchain["reason"])
+
         out_path = filedialog.asksaveasfilename(
             title="匯出分支 PDF",
             defaultextension=".pdf",
@@ -3261,45 +3467,13 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         if not out_path:
             return
 
-        html = self._build_topics_print_html(picked)
-        edge = self._find_edge_exe()
-        with NamedTemporaryFile("w", suffix=".html", delete=False, encoding="utf-8") as tmp:
-            tmp.write(html)
-            html_path = Path(tmp.name)
-
-        if not edge:
-            html_out = Path(out_path).with_suffix(".html")
-            html_out.write_text(html, encoding="utf-8")
-            self.status_var.set(f"未找到 Edge，已改輸出 HTML：{html_out}")
-            return messagebox.showwarning("找不到 Edge", f"系統找不到 Edge，已輸出 HTML：\n{html_out}\n\n可用瀏覽器開啟後另存為 PDF。")
-
-        try:
-            url = html_path.as_uri()
-            subprocess.run(
-                [
-                    edge,
-                    "--headless",
-                    "--disable-gpu",
-                    "--virtual-time-budget=12000",
-                    f"--print-to-pdf={out_path}",
-                    "--no-pdf-header-footer",
-                    "--allow-file-access-from-files",
-                    url,
-                ],
-                check=True,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            )
-        except Exception as exc:
-            return messagebox.showerror("匯出失敗", str(exc))
-        finally:
-            try:
-                html_path.unlink(missing_ok=True)
-            except Exception:
-                pass
+        markdown_text = pdf_markdown_export.build_topics_markdown(picked)
+        result = pdf_markdown_export.convert_markdown_to_pdf(markdown_text, Path(out_path), title="Selected Topics")
+        if not result["ok"]:
+            return messagebox.showerror("匯出失敗", result.get("reason", "") or "未知錯誤")
 
         self.status_var.set(f"PDF 匯出完成：{len(picked)} 筆 -> {out_path}")
-        messagebox.showinfo("完成", f"已輸出網頁版樣式 PDF：{len(picked)} 筆主題。")
+        messagebox.showinfo("完成", f"已輸出 PDF：{len(picked)} 筆主題。")
 
     def export_selected_pdf(self):
         if self.mode == "topics":
@@ -3324,8 +3498,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         mode_var = tk.StringVar(value="same")
         export_order_var = tk.StringVar(value="separate")
         answer_mode_var = tk.StringVar(value="detail")
-        question_spacing_var = tk.StringVar(value="18")
-        markdown_gap_var = tk.StringVar(value="0")
+        question_gap_mm_var = tk.StringVar(value="10")
         same_count_var = tk.StringVar(value="5")
         entry_vars: dict[str, tk.StringVar] = {}
 
@@ -3365,19 +3538,15 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         answer_box.pack(fill="x", padx=12, pady=(0, 8))
         ttk.Radiobutton(answer_box, text="簡答", variable=answer_mode_var, value="simple").pack(anchor="w")
         ttk.Radiobutton(answer_box, text="詳解", variable=answer_mode_var, value="detail").pack(anchor="w", pady=(4, 0))
+        ttk.Radiobutton(answer_box, text="簡答＋詳解都要", variable=answer_mode_var, value="both").pack(anchor="w", pady=(4, 0))
 
         layout_box = ttk.LabelFrame(dialog, text="版面間距", padding=12)
         layout_box.pack(fill="x", padx=12, pady=(0, 8))
         spacing_row = ttk.Frame(layout_box)
         spacing_row.pack(fill="x")
-        ttk.Label(spacing_row, text="每題下方間距").pack(side="left")
-        ttk.Entry(spacing_row, textvariable=question_spacing_var, width=8).pack(side="left", padx=(8, 4))
-        ttk.Label(spacing_row, text="px（建議 18；可填 0～80）").pack(side="left")
-        markdown_gap_row = ttk.Frame(layout_box)
-        markdown_gap_row.pack(fill="x", pady=(8, 0))
-        ttk.Label(markdown_gap_row, text="MD 題目每題後空白行").pack(side="left")
-        ttk.Entry(markdown_gap_row, textvariable=markdown_gap_var, width=8).pack(side="left", padx=(8, 4))
-        ttk.Label(markdown_gap_row, text="行（例如 2 或 3；可填 0～5）").pack(side="left")
+        ttk.Label(spacing_row, text="每題下方留白高度").pack(side="left")
+        ttk.Entry(spacing_row, textvariable=question_gap_mm_var, width=8).pack(side="left", padx=(8, 4))
+        ttk.Label(spacing_row, text="mm（可填 0～80；0 代表不留白，答案卷不受影響）").pack(side="left")
 
         button_bar = ttk.Frame(dialog, padding=(12, 0, 12, 12))
         button_bar.pack(side="bottom", fill="x")
@@ -3439,23 +3608,16 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             except ValueError:
                 return messagebox.showerror("題數錯誤", "題數請填正整數。", parent=dialog)
             try:
-                question_spacing_px = int(str(question_spacing_var.get()).strip() or "18")
-                if question_spacing_px < 0 or question_spacing_px > 80:
+                question_gap_mm = float(str(question_gap_mm_var.get()).strip() or "0")
+                if question_gap_mm < 0 or question_gap_mm > 80:
                     raise ValueError
             except ValueError:
-                return messagebox.showerror("間距錯誤", "每題下方間距請填 0～80 的整數。", parent=dialog)
-            try:
-                markdown_gap_lines = int(str(markdown_gap_var.get()).strip() or "0")
-                if markdown_gap_lines < 0 or markdown_gap_lines > 5:
-                    raise ValueError
-            except ValueError:
-                return messagebox.showerror("MD 間距錯誤", "MD 題目每題後空白行請填 0～5 的整數。", parent=dialog)
+                return messagebox.showerror("間距錯誤", "每題下方留白高度請填 0～80 的數字（mm）。", parent=dialog)
             result["options"] = {
                 "counts": counts,
                 "export_order": export_order_var.get() if export_order_var.get() in {"separate", "interleaved"} else "separate",
-                "answer_mode": answer_mode_var.get() if answer_mode_var.get() in {"simple", "detail"} else "detail",
-                "question_spacing_px": question_spacing_px,
-                "markdown_gap_lines": markdown_gap_lines,
+                "answer_mode": answer_mode_var.get() if answer_mode_var.get() in {"simple", "detail", "both"} else "detail",
+                "question_gap_mm": question_gap_mm,
             }
             dialog.destroy()
 
@@ -3860,12 +4022,16 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         counts = export_options.get("counts", {})
         export_order = export_options.get("export_order", "separate")
         answer_mode = export_options.get("answer_mode", "detail")
-        question_spacing_px = export_options.get("question_spacing_px", 18)
-        markdown_gap_lines = export_options.get("markdown_gap_lines", 0)
+        question_gap_mm = export_options.get("question_gap_mm", 0)
 
         export_format = self._open_practice_export_format_dialog()
         if not export_format:
             return
+
+        if export_format in {"pdf", "both"}:
+            toolchain = pdf_markdown_export.check_pdf_toolchain()
+            if not toolchain["ok"]:
+                return messagebox.showerror("找不到排版工具", toolchain["reason"])
 
         out_dir = filedialog.askdirectory(title="選擇無限練習 PDF 輸出資料夾")
         if not out_dir:
@@ -3889,12 +4055,12 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
 
         generated_sets = generated_result.get("sets", [])
         combined_title = "無限練習題目與答案"
-        markdown_text = self._build_practice_markdown_from_sets(
+        markdown_text = pdf_markdown_export.build_practice_sets_markdown(
             generated_sets,
             combined_title,
             export_order=export_order,
             answer_mode=answer_mode,
-            markdown_gap_lines=markdown_gap_lines,
+            gap_mm=question_gap_mm,
         )
 
         if export_format == "md":
@@ -3902,14 +4068,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             self.status_var.set(f"無限練習 MD 匯出完成：{combined_md.name}")
             return messagebox.showinfo("完成", f"已輸出：\n{combined_md}")
 
-        combined_result = self._export_practice_sets_to_pdf(
-            generated_sets,
-            combined_pdf,
-            combined_title,
-            export_order=export_order,
-            answer_mode=answer_mode,
-            question_spacing_px=question_spacing_px,
-        )
+        combined_result = pdf_markdown_export.convert_markdown_to_pdf(markdown_text, combined_pdf, title=combined_title)
         if not combined_result.get("ok"):
             return messagebox.showerror("輸出失敗", combined_result.get("reason", "") or "未知錯誤")
 
@@ -5424,5 +5583,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

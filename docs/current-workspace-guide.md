@@ -80,9 +80,9 @@
 
 ### 練習生成資料
 
-- `data/formula-practice.js`
-
-放練習生成設定本身。
+- `data/formula-practice.js`：主控／包裝層，定義 `window.formulaPracticeStore`，負責把 `practice-db.json`（經 bridge）給的指派資料，跟真正的 generator 設定合併起來。它自己不太放個別題型的出題邏輯，但不能改名或移除，否則整條生成流程會壞掉。
+- `data/practice-generators/*.js`（例如 `e5.js`、`e6.js`、`j1.js` 到 `j6.js`、`s1.js` 到 `s4.js` 等）：真正放各章節出題邏輯（`generate()`）的地方，依章碼字首拆檔。這些檔案會呼叫 `formulaPracticeStore.registerConfigs(...)` 把自己註冊進去。
+- `data/practice-generator-bundles.js` + `data/practice-generator-loader.js`：決定哪個章碼字首要載入哪個 generator 檔（依需要才載入，不是全部一次載完）。
 
 ### 結構與排序資料
 
@@ -126,15 +126,18 @@
 
 改：
 
-- `data/formula-practice.js`
+- `data/practice-generators/*.js`（先找對應章碼字首的檔案，例如 `j3-...` 的題型改 `j3.js`）
+
+不要直接改 `data/formula-practice.js`——它現在是主控與包裝層，不是題型出題邏輯本體。
 
 ## 4. 練習系統目前的理解
 
-目前 infinite practice 相關資料，實際上要一起看三層：
+目前 infinite practice 相關資料，實際上不是只看單一檔案，至少要一起看四層：
 
-1. `program-db/database/practice-db.json`
-2. `data/formula-practice-assignments.js`
-3. `data/formula-practice.js`
+1. `program-db/database/practice-db.json`：老師/GUI 實際編輯的來源，決定哪個主題要掛哪個練習、是否啟用。
+2. `data/formula-practice-assignments.js`：自動產生的橋接檔，不要手動改；跑 `sync_practice_bridge.py` 才會更新。
+3. `data/formula-practice.js`：主控與包裝層，負責合併「指派資料」與「已註冊的 generator 設定」，回傳最終要渲染的練習設定。目前還不能直接刪或改名，否則整個生成流程會壞掉。
+4. `data/practice-generators/*.js`：真正的出題函式所在。已經拆出去不少，像 `e5.js`、`e6.js`、`j1.js` 到 `j6.js`、`s1.js` 到 `s4.js`，這些新的 generator 檔已經接上無限練習網頁（`practice-bank.html`、`practice-mobile.html`），由 `data/practice-generator-loader.js` 依 `data/practice-generator-bundles.js` 的章碼字首設定按需載入。
 
 不要只改其中一層就以為整套會自動同步。
 

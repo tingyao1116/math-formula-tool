@@ -120,11 +120,25 @@
   const termOrderMap = { 上學期: 1, 下學期: 2, "": 9 };
   const gradeOptions = ["國小", "國一上", "國一下", "國二上", "國二下", "國三上", "國三下", "高一上", "高一下", "高二上", "高二下", "高三", "其他"];
   const chapterCodeMap = {
+    "國小-小四-下學期-一億以內的數": "e4-1-1",
+    "國小-小四-下學期-整數的乘法": "e4-1-2",
+    "國小-小四-下學期-角度": "e4-1-3",
+    "國小-小四-下學期-整數的除法": "e4-1-4",
+    "國小-小四-下學期-公里": "e4-1-5",
+    "國小-小四-下學期-三角形": "e4-1-6",
+    "國小-小四-下學期-小數": "e4-1-7",
+    "國小-小四-下學期-整數四則計算": "e4-1-8",
+    "國小-小四-下學期-分數": "e4-1-9",
     "國小-小四-下學期-多位數的乘與除": "e4-2-1",
+    "國小-小四-下學期-四邊形": "e4-2-2",
     "國小-小四-下學期-概數": "e4-2-3",
     "國小-小四-下學期-數量規律": "e4-2-4",
     "國小-小四-下學期-小數乘法": "e4-2-5",
+    "國小-小四-下學期-周長與面積": "e4-2-6",
     "國小-小四-下學期-等值分數": "e4-2-7",
+    "國小-小四-下學期-簡化計算": "e4-2-8",
+    "國小-小四-下學期-時間的計算": "e4-2-9",
+    "國小-小四-下學期-立方公分": "e4-2-10",
     "國小-小五-上學期-多位小數與加減": "e5-1-1",
     "國小-小五-上學期-因數與公因數": "e5-1-2",
     "國小-小五-上學期-倍數與公倍數": "e5-1-3",
@@ -331,6 +345,13 @@
   function inferMetaFromCode(code) {
     const key = String(code || "").trim();
     if (!key) return { stage: "其他", grade: "其他", term: "", chapter: key };
+    if (/^e4-/.test(key)) return { stage: "國小", grade: "小四", term: "下學期", chapter: key };
+    if (/^e5-1-/.test(key)) return { stage: "國小", grade: "小五", term: "上學期", chapter: key };
+    if (/^e5-2-/.test(key)) return { stage: "國小", grade: "小五", term: "下學期", chapter: key };
+    if (/^e5-/.test(key)) return { stage: "國小", grade: "小五", term: "", chapter: key };
+    if (/^e6-1-/.test(key)) return { stage: "國小", grade: "小六", term: "上學期", chapter: key };
+    if (/^e6-2-/.test(key)) return { stage: "國小", grade: "小六", term: "下學期", chapter: key };
+    if (/^e6-/.test(key)) return { stage: "國小", grade: "小六", term: "", chapter: key };
     if (/^j1-/.test(key)) return { stage: "國中", grade: "國一", term: "上學期", chapter: key };
     if (/^j2-/.test(key)) return { stage: "國中", grade: "國一", term: "下學期", chapter: key };
     if (/^j3-/.test(key)) return { stage: "國中", grade: "國二", term: "上學期", chapter: key };
