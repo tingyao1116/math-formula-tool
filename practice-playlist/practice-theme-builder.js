@@ -64,14 +64,42 @@
       elements.activeLabel.textContent = "尚未載入主題串。";
       return;
     }
-    const chain = themeStore.getById(state.activeThemeId);
+    const chain = findChain(state.activeThemeId);
+    const isCustom = customChainIds().has(state.activeThemeId);
     elements.activeLabel.textContent = chain
-      ? `編輯中：${chain.title}`
+      ? `編輯中：${chain.title}${isCustom ? "（自訂串請在 GUI 修改）" : ""}`
       : "尚未載入主題串。";
   }
 
   function selectedChainId() {
     return String(elements.chainSelect?.value || "").trim();
+  }
+
+  // GUI 自訂主題串（唯讀，來源 data/practice-custom-theme-chains.js）
+  function loadCustomChains() {
+    const chains = Array.isArray(window.practiceCustomThemeChainData)
+      ? window.practiceCustomThemeChainData
+      : [];
+    return chains
+      .filter((chain) => chain && chain.enabled !== false && String(chain.id || "").trim())
+      .map((chain) => {
+        const normalized = themeStore.normalizeChain(chain);
+        normalized.category = String(chain.category || "自訂").trim() || "自訂";
+        return normalized;
+      });
+  }
+
+  function customChainIds() {
+    return new Set(loadCustomChains().map((chain) => chain.id));
+  }
+
+  function findChain(chainId) {
+    const targetId = String(chainId || "").trim();
+    return (
+      themeStore.getById(targetId) ||
+      loadCustomChains().find((chain) => chain.id === targetId) ||
+      null
+    );
   }
 
   function updateResetButton() {
@@ -83,17 +111,22 @@
   function renderChainList() {
     const keyword = String(elements.keywordInput?.value || "").trim().toLowerCase();
     const localIds = new Set(themeStore.loadLocal().map((chain) => chain.id));
-    const chains = themeStore.loadAll().filter((chain) => {
-      if (!keyword) return true;
-      return [chain.id, chain.title, chain.chapterCode].join(" ").toLowerCase().includes(keyword);
-    });
+    const customIds = customChainIds();
+    const chains = loadCustomChains()
+      .concat(themeStore.loadAll())
+      .filter((chain) => {
+        if (!keyword) return true;
+        return [chain.id, chain.title, chain.chapterCode].join(" ").toLowerCase().includes(keyword);
+      });
 
     if (elements.chainCount) elements.chainCount.textContent = `${chains.length} 串`;
 
     const previous = selectedChainId() || state.activeThemeId;
     elements.chainSelect.innerHTML = chains
       .map((chain) => {
-        const marker = localIds.has(chain.id) ? "＊" : "";
+        const marker = customIds.has(chain.id)
+          ? `【${chain.category || "自訂"}】`
+          : localIds.has(chain.id) ? "＊" : "";
         const selected = chain.id === previous ? " selected" : "";
         return `<option value="${escapeHtml(chain.id)}"${selected}>${marker}${escapeHtml(chain.title)}（${chain.practiceIds.length} 題型）</option>`;
       })
@@ -102,7 +135,7 @@
   }
 
   function loadTheme(themeId) {
-    const chain = themeStore.getById(themeId);
+    const chain = findChain(themeId);
     if (!chain) return;
     state.activeThemeId = chain.id;
     if (builderApi?.setSelectedPracticeIds) {
@@ -116,6 +149,10 @@
   function saveBack() {
     if (!state.activeThemeId) {
       setStatus("請先從主題串資料庫載入一個主題串。");
+      return;
+    }
+    if (customChainIds().has(state.activeThemeId)) {
+      setStatus("這是 GUI 自訂主題串（唯讀），請到程式資料庫 GUI 的「自訂主題串」修改。");
       return;
     }
     const chain = themeStore.getById(state.activeThemeId);
@@ -269,7 +306,7 @@
       setStatus("正在匯出中，請稍候...");
       return;
     }
-    const chain = themeStore.getById(themeId);
+    const chain = findChain(themeId);
     if (!chain || !elements.printRoot) {
       setStatus("找不到主題串或列印容器。");
       return;

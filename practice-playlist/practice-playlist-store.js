@@ -60,11 +60,42 @@
     };
   }
 
+  // GUI 自訂主題串（data/practice-custom-theme-chains.js，單向同步、網頁只讀取播放）
+  function loadCustomThemePlaylists() {
+    const chains = Array.isArray(window.practiceCustomThemeChainData)
+      ? window.practiceCustomThemeChainData
+      : [];
+    return chains
+      .filter((chain) => chain && chain.enabled !== false && String(chain.id || "").trim())
+      .map((chain) => {
+        const category = String(chain.category || "自訂").trim() || "自訂";
+        const title = String(chain.title || chain.id || "").trim();
+        return normalizePlaylist({
+          id: String(chain.id || "").trim(),
+          // 複習必做／章節重點的標題本身已含分類字樣，只有自訂串加前綴
+          title: category === "自訂" ? `【自訂】${title}` : title,
+          description: String(chain.description || "").trim() || "來自 GUI 主題串資料庫（請在 GUI 修改）",
+          grade: String(chain.grade || "全部年級").trim() || "全部年級",
+          playlistType: "任務型",
+          playlistCategory: category === "自訂" ? "其他" : category,
+          practiceIds: Array.isArray(chain.practiceIds) ? chain.practiceIds : [],
+          questionCount: Number(chain.questionCount) || 5,
+          enabled: chain.enabled !== false,
+          updatedAt: chain.updatedAt,
+        });
+      });
+  }
+
+  function customThemePlaylistIds() {
+    return new Set(loadCustomThemePlaylists().map((playlist) => playlist.id));
+  }
+
   // ── 讀取：bundled 資料檔優先，localStorage 補充（使用者自行新增）──────────
   function loadAll() {
-    const bundled = Array.isArray(window.practicePlaylistData)
+    const bundled = (Array.isArray(window.practicePlaylistData)
       ? window.practicePlaylistData.map(normalizePlaylist)
-      : [];
+      : []
+    ).concat(loadCustomThemePlaylists());
     const bundledIds = new Set(bundled.map((p) => p.id));
 
     try {
@@ -131,8 +162,10 @@
   }
 
   // 產生資料檔內容，老師下載後手動替換 data/practice-playlists.js
+  // 注意：GUI 自訂主題串（practice-custom-theme-chains.js）是唯讀來源，不落地到這個檔。
   function generateDataFileContent() {
-    const all = loadAll();
+    const customIds = customThemePlaylistIds();
+    const all = loadAll().filter((playlist) => !customIds.has(playlist.id));
     const json = JSON.stringify(all, null, 2);
     return `// 無限練習清單靜態資料檔（由編輯器產生）\n// 最後更新：${nowIso()}\nwindow.practicePlaylistData = ${json};\n`;
   }

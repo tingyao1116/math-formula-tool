@@ -1,7 +1,7 @@
 // AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
 // Source: program-db/database/practice-theme-db.json
 // 主題串數：164、題型總數：2847
-// 最後更新：2026-07-02T07:59:13.792528+00:00
+// 最後更新：2026-07-02T15:51:49.240429+00:00
 window.practiceThemeChainData = [
   {
     "id": "theme-e4-1-1",
@@ -10,6 +10,7 @@ window.practiceThemeChainData = [
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
       "practice-e4-1-1-arabic-chinese-conversion-drill",
+      "practice-e4-1-1-sequence-pattern-drill",
       "practice-e4-1-1-comparison-adjustment-mixed",
       "practice-e4-1-1-digit-adjustment-drill",
       "practice-e4-1-1-inequality-digit-drill",
@@ -18,14 +19,13 @@ window.practiceThemeChainData = [
       "practice-e4-1-1-number-comparison-drill",
       "practice-e4-1-1-place-value-decomposition-drill",
       "practice-e4-1-1-reading-place-value-mixed",
-      "practice-e4-1-1-sequence-pattern-drill",
       "practice-e4-1-1-unit-conversion-drill",
       "practice-e4-1-1-unit-sequence-mixed",
       "practice-e4-1-1-zero-reading-writing-drill"
     ],
     "questionCount": 5,
     "enabled": true,
-    "updatedAt": "2026-07-02T06:42:52.392Z"
+    "updatedAt": "2026-07-02T15:51:49.240363+00:00"
   },
   {
     "id": "theme-e4-1-2",
@@ -2101,13 +2101,13 @@ window.practiceThemeChainData = [
     "chapterCode": "j2-5-2",
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
+      "practice-j2-5-2-median-mode-drill",
       "practice-j2-5-2-mean-basic-drill",
-      "practice-j2-5-2-mean-reverse-drill",
-      "practice-j2-5-2-median-mode-drill"
+      "practice-j2-5-2-mean-reverse-drill"
     ],
     "questionCount": 5,
     "enabled": true,
-    "updatedAt": "2026-07-02T06:42:52.392Z"
+    "updatedAt": "2026-07-02T14:59:34.751123+00:00"
   },
   {
     "id": "theme-j3-1-1",

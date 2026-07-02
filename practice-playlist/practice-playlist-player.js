@@ -294,6 +294,33 @@
     return playlist.scheduleConfig.weeks.reduce((s, w) => s + (w.days?.length || 0), 0);
   }
 
+  function selectPlaylist(pid) {
+    const changed = pid !== state.playlistId;
+    if (changed) {
+      state.playlistId    = pid;
+      state.practiceId    = "";
+      state.generated     = null;
+      state.answerVisible = false;
+      state.detailVisible = false;
+      state.selectedDate  = "";
+      const pl = playlistStore.getById(pid);
+      if (pl?.playlistType === "日程型" && pl.scheduleConfig?.startDate) {
+        const s = new Date(pl.scheduleConfig.startDate + "T12:00:00");
+        state.calYear  = s.getFullYear();
+        state.calMonth = s.getMonth();
+      } else {
+        state.calYear  = new Date().getFullYear();
+        state.calMonth = new Date().getMonth();
+      }
+    }
+    render();
+    // 任務型：選完清單後自動出題（第一題）
+    const pl = playlistStore.getById(state.playlistId);
+    if (pl?.playlistType !== "日程型" && state.practiceId) {
+      generateCurrentPractice();
+    }
+  }
+
   function buildPlaylistCards(list, container, isSchedule) {
     if (!container) return;
     if (!list.length) {
@@ -313,39 +340,47 @@
     }).join("");
 
     container.querySelectorAll("[data-select-playlist]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const pid     = btn.getAttribute("data-select-playlist");
-        const changed = pid !== state.playlistId;
-        if (changed) {
-          state.playlistId    = pid;
-          state.practiceId    = "";
-          state.generated     = null;
-          state.answerVisible = false;
-          state.detailVisible = false;
-          state.selectedDate  = "";
-          const pl = playlistStore.getById(pid);
-          if (pl?.playlistType === "日程型" && pl.scheduleConfig?.startDate) {
-            const s = new Date(pl.scheduleConfig.startDate + "T12:00:00");
-            state.calYear  = s.getFullYear();
-            state.calMonth = s.getMonth();
-          } else {
-            state.calYear  = new Date().getFullYear();
-            state.calMonth = new Date().getMonth();
-          }
-        }
-        render();
-        // 任務型：選完清單後自動出題（第一題）
-        const pl = playlistStore.getById(state.playlistId);
-        if (pl?.playlistType !== "日程型" && state.practiceId) {
-          generateCurrentPractice();
-        }
-      });
+      btn.addEventListener("click", () => selectPlaylist(btn.getAttribute("data-select-playlist")));
+    });
+  }
+
+  // 任務型清單改用下拉式選單，避免側欄過長
+  function buildTaskPlaylistSelect(list, container) {
+    if (!container) return;
+    if (!list.length) {
+      container.innerHTML = `<p class="detail-note">目前沒有此類清單。</p>`;
+      return;
+    }
+    const hasActive = list.some((p) => p.id === state.playlistId);
+    const placeholder = hasActive ? "" : `<option value="" selected disabled>請選擇清單</option>`;
+    container.innerHTML = `
+      <label class="field">
+        <span>選擇清單（${list.length} 份）</span>
+        <select id="taskPlaylistSelect">
+          ${placeholder}
+          ${list.map((p) => `
+            <option value="${escapeHtml(p.id)}"${p.id === state.playlistId ? " selected" : ""}>
+              ${escapeHtml(p.title)}（${escapeHtml(p.grade || "全部年級")} · ${p.practiceIds.length} 題型）
+            </option>`).join("")}
+        </select>
+      </label>
+      <p id="taskPlaylistInfo" class="detail-note"></p>`;
+
+    const select = container.querySelector("#taskPlaylistSelect");
+    const info = container.querySelector("#taskPlaylistInfo");
+    const updateInfo = () => {
+      const playlist = list.find((p) => p.id === select.value) || null;
+      if (info) info.textContent = playlist ? (playlist.description || "") : "選擇後自動載入第一題。";
+    };
+    updateInfo();
+    select?.addEventListener("change", () => {
+      if (select.value) selectPlaylist(select.value);
     });
   }
 
   function renderPlaylistGroups() {
     const all = getFilteredPlaylists();
-    buildPlaylistCards(all.filter((p) => p.playlistType === "任務型"), elements.taskPlaylistList, false);
+    buildTaskPlaylistSelect(all.filter((p) => p.playlistType === "任務型"), elements.taskPlaylistList);
     buildPlaylistCards(all.filter((p) => p.playlistType === "日程型"), elements.schedulePlaylistList, true);
   }
 

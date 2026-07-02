@@ -8,10 +8,13 @@
 ## 資料檔
 
 - `data/practice-playlists.js`：任務型清單資料，來源是老師在編輯頁勾選題型後儲存。
-- `data/practice-task-playlists.js`：預設任務型播放清單，用來疊加常用主題，例如正負數、絕對值、因式分解、一元二次方程式。
+- `data/practice-task-playlists.js`：預設任務型播放清單（只剩 12 份 task-* 主題練習）。複習必做（review-*）已於 2026-07-02 遷入 practice-custom-theme-db.json。
+- `data/practice-chapter-playlists.js`：已清空為空操作檔。章節重點（chapter-focus-*，36 份）已遷入 practice-custom-theme-db.json，由 GUI 管理並經 bridge 自動生成。
 - `data/practice-schedules.js`：日程型安排資料，來源是段考時段、週次、前半段無限練習與後半段題庫練習。
-- `program-db/database/practice-theme-db.json`：主題串「主資料庫」。每個小章節（chapterCode）一個主題串，共 164 串；程式資料庫 GUI 的「主題串PDF」直接讀寫這個檔。
-- `data/practice-theme-chains.js`：主題串網頁 bridge（AUTO-GENERATED，勿手動編輯）。由 theme-db 同步產生；GUI 儲存順序時會自動同步，或手動跑 `node scripts/build-practice-theme-chains.mjs`。
+- `program-db/database/practice-theme-db.json`：章節主題串「主資料庫」。每個小章節（chapterCode）一個主題串，共 164 串；程式資料庫 GUI 的「主題串PDF」直接讀寫這個檔。
+- `program-db/database/practice-custom-theme-db.json`：自訂主題串資料庫。GUI「自訂主題串」按鈕讀寫；每串的 `items` 可混放小類（`{"type":"practice","id":題型id}`）與大類（`{"type":"chapter","id":chapterCode}`，匯出時整章展開，順序照章節主題串）。每串另有 `category`（自訂／複習必做／章節重點）與 `grade` 欄位：複習必做（review-*，10 份）與章節重點（chapter-focus-*，36 份）已全部遷入此資料庫，保留原 id 所以學生完成進度不受影響；播放頁的清單分類篩選依 `category` 對應 `playlistCategory`。
+- `data/practice-custom-theme-chains.js`：自訂主題串網頁 bridge（AUTO-GENERATED，勿手動編輯）。GUI「自訂主題串」儲存時自動同步，含展開後的 `practiceIds`。**單向：GUI 為主、網頁唯讀**——編輯頁主題串下拉會出現【自訂】串（可載入、可列印，「存回主題串」會擋下）；編輯頁「已存清單」與學生播放頁會以【自訂】開頭的任務型清單出現，可直接播放；「寫入資料檔」不會把自訂串落地進 practice-playlists.js。
+- `data/practice-theme-chains.js`：主題串網頁 bridge（AUTO-GENERATED，勿手動編輯）。由 theme-db 同步產生；GUI 儲存順序時會自動同步，或手動跑 `node scripts/build-practice-theme-chains.mjs`。除了主題串頁面，`practice-bank.html` 與 `practice-mobile.html` 的題型排序也吃這個檔：章節內順序＝主題串順序（不在主題串裡的題型排到該章最後，依標題排）。在 GUI「主題串PDF」調整順序並儲存後，這兩頁重新整理就會跟著變。
 
 ## 編輯頁腳本
 
@@ -35,6 +38,17 @@
 
 - `scripts/build-practice-theme-chains.mjs`：預設從 theme-db 同步網頁 bridge；加 `--seed` 才會從 `practice-db.json` 重建 theme-db（會覆蓋手動調整過的順序，重跑前先確認）。
 - `program-db/scripts/gui_app.py` 的「主題串PDF」按鈕：下拉選主題串 → 上移/下移、依難度排序（易→難）→「儲存順序」寫回 theme-db 並同步網頁 bridge →「匯出 PDF/MD」走既有 pandoc + XeLaTeX 排版管線（`_run_practice_records_export`，與練習本體「匯出PDF」共用）。正式的紙本 PDF 建議從 GUI 匯出；網頁端的「匯出 PDF（列印）」只是快速列印用。
+- `gui_app.py` 的「自訂主題串」按鈕：左邊選章節直接列出該章分類（勾選加入小類，或整章加入為大類）、右邊排順序，「儲存」寫入 practice-custom-theme-db.json，「匯出 PDF/MD」同上走共用管線。
+
+## 舊式直連已移除（2026-07-02）
+
+- GUI 的「舊式直連」唯讀模式與 `_legacy_practice_rows` 已移除；狀態列不再顯示 legacy 計數。`data/formula-practice.js` 本體與 `_legacy_practice_catalog()`（統計用）保留不動。
+
+## 章節綁定已移除（2026-07-02）
+
+- 移除範圍：GUI 的「章節綁定」模式、「批次掛載 practice」對話框與「只看未掛載」篩選；`practice-db.json` 的 `bindings` 已清空（移除前 1433 筆，備份在 `practice-db.backup-*.json`）；`data/formula-practice-assignments.js` 已重新同步（bindings: []）；practice-bank 頁的「掛載項目數」按鈕已移除。
+- 原因：practice 以 `chapterCode` 直接歸屬章節即可，「某章只綁部分分類」的需求改由主題串/自訂主題串處理。
+- 殘留：`gui_app.py` 內部 `_practice_bindings()` 等少數防禦性 helper 與 practice-bank.js 的 null-guarded 舊分支保留（無 UI 入口，不影響行為）。
 
 ## 目前不應再使用
 

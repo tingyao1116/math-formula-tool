@@ -72,6 +72,8 @@ MAIN_TOPIC_OVERVIEW_DB_FALLBACK = Path.cwd() / "program-db" / "database" / "main
 FORMULA_DATA_JS_PATH = ROOT / "formula-data.js"
 THEME_DB_DEFAULT = DB_DIR / "practice-theme-db.json"
 THEME_BRIDGE_JS_DEFAULT = ROOT / "data" / "practice-theme-chains.js"
+CUSTOM_THEME_DB_DEFAULT = DB_DIR / "practice-custom-theme-db.json"
+CUSTOM_THEME_BRIDGE_JS_DEFAULT = ROOT / "data" / "practice-custom-theme-chains.js"
 
 ALL = "全部"
 LETTER_ESCAPE_RE = re.compile(r"\\\\([A-Za-z])")
@@ -288,7 +290,7 @@ def deduplicate_text_lines(text: str) -> tuple[str, int, int]:
 
 
 class DualDbGui:
-    PRACTICE_MODES = {"practice_records", "practice_bindings", "practice_legacy"}
+    PRACTICE_MODES = {"practice_records"}
 
     def __init__(self, root: tk.Tk):
         self.root = root
@@ -338,8 +340,6 @@ class DualDbGui:
         current = mode if mode is not None else self.mode
         return {
             "practice_records": "練習本體",
-            "practice_bindings": "章節綁定",
-            "practice_legacy": "舊式直連",
         }.get(current, "無限練習")
 
     def _build_ui(self):
@@ -367,10 +367,6 @@ class DualDbGui:
         self.main_overview_btn.pack(side="left", padx=(0, 10))
         self.practice_record_btn = ttk.Button(filter_bar, text="練習本體", style="Compact.TButton", command=lambda: self.switch_mode("practice_records"))
         self.practice_record_btn.pack(side="left", padx=(0, 4))
-        self.practice_binding_btn = ttk.Button(filter_bar, text="章節綁定", style="Compact.TButton", command=lambda: self.switch_mode("practice_bindings"))
-        self.practice_binding_btn.pack(side="left", padx=(0, 4))
-        self.practice_legacy_btn = ttk.Button(filter_bar, text="舊式直連", style="Compact.TButton", command=lambda: self.switch_mode("practice_legacy"))
-        self.practice_legacy_btn.pack(side="left", padx=(0, 10))
         self.topic_btn = ttk.Button(filter_bar, text="分支模式", style="Compact.TButton", command=lambda: self.switch_mode("topics"))
         self.topic_btn.pack(side="left", padx=(0, 10))
         self.question_btn = ttk.Button(filter_bar, text="題庫模式", style="Compact.TButton", command=lambda: self.switch_mode("questions"))
@@ -394,13 +390,6 @@ class DualDbGui:
         ttk.Label(filter_detail_bar, text="難度").pack(side="left")
         self.difficulty_combo = ttk.Combobox(filter_detail_bar, textvariable=self.difficulty_var, width=20, state="readonly")
         self.difficulty_combo.pack(side="left", padx=(4, 0))
-        self.practice_unbound_only_check = ttk.Checkbutton(
-            filter_detail_bar,
-            text="只看未掛載",
-            variable=self.practice_unbound_only_var,
-            command=self.search,
-        )
-        self.practice_unbound_only_check.pack(side="left", padx=(12, 0))
 
         ttk.Button(action_bar, text="新增範本", style="Compact.TButton", command=self.new_template).pack(side="left", padx=(0, 4))
         ttk.Button(action_bar, text="重載(讀檔)", style="Compact.TButton", command=self.load_all).pack(side="left", padx=4)
@@ -413,7 +402,7 @@ class DualDbGui:
         ttk.Button(action_bar, text="刪除選取", style="Compact.TButton", command=self.delete_selected).pack(side="left", padx=4)
         ttk.Button(action_bar, text="匯出PDF", style="Compact.TButton", command=self.export_selected_pdf).pack(side="left", padx=4)
         ttk.Button(action_bar, text="主題串PDF", style="Compact.TButton", command=self.open_theme_chain_export_dialog).pack(side="left", padx=4)
-        ttk.Button(action_bar, text="批次掛載 practice", style="Compact.TButton", command=self.open_practice_binding_dialog).pack(side="left", padx=4)
+        ttk.Button(action_bar, text="自訂主題串", style="Compact.TButton", command=self.open_custom_theme_dialog).pack(side="left", padx=4)
 
         ttk.Button(action_bar, text="題目指派", style="Compact.TButton", command=self.open_question_assignment_dialog).pack(side="left", padx=4)
         ttk.Button(action_bar, text="改分類/難度", style="Compact.TButton", command=self.open_question_meta_edit_dialog).pack(side="left", padx=4)
@@ -631,8 +620,6 @@ class DualDbGui:
         self.main_overview_btn.state(["!disabled"] if mode != "main_overviews" else ["disabled"])
         self.closing_btn.state(["!disabled"] if mode != "closings" else ["disabled"])
         self.practice_record_btn.state(["!disabled"] if mode != "practice_records" else ["disabled"])
-        self.practice_binding_btn.state(["!disabled"] if mode != "practice_bindings" else ["disabled"])
-        self.practice_legacy_btn.state(["!disabled"] if mode != "practice_legacy" else ["disabled"])
         mode_label = {
             "topics": "分支",
             "questions": "題庫",
@@ -642,22 +629,14 @@ class DualDbGui:
             "main_overviews": "主題整理",
             "closings": "章節後話",
             "practice_records": "練習本體",
-            "practice_bindings": "章節綁定",
-            "practice_legacy": "舊式直連",
         }.get(mode, mode)
         if self._is_practice_mode(mode):
             counts = self._practice_inventory_counts()
             self.status_var.set(
-                f"目前模式：{mode_label}｜legacy 直連 {counts['legacy_direct']} 筆｜"
-                f"已轉新制 {counts['legacy_migrated_to_library']} 筆｜"
-                f"practice {counts['practice_count']} 筆｜binding {counts['binding_count']} 筆｜"
-                f"未掛載 {counts['unbound_practice_count']} 筆"
+                f"目前模式：{mode_label}｜practice {counts['practice_count']} 筆"
             )
         else:
             self.status_var.set(f"目前模式：{mode_label}")
-        self.practice_unbound_only_check.state(
-            ["!disabled"] if mode == "practice_records" else ["disabled"]
-        )
         self.refresh_filters()
         self.search()
 
@@ -667,10 +646,6 @@ class DualDbGui:
             return payload.get(self._current_key(), [])
         if self.mode == "practice_records":
             return [row for row in self._practice_rows() if str(row.get("kind", "")).strip() == "practice"]
-        if self.mode == "practice_bindings":
-            return [row for row in self._practice_rows() if str(row.get("kind", "")).strip() == "binding"]
-        if self.mode == "practice_legacy":
-            return self._legacy_practice_rows()
         if self.mode == "chapter":
             rows = []
             for code, v in payload.get("catalog", {}).items():
@@ -862,26 +837,16 @@ class DualDbGui:
         }
 
     def _practice_rows(self):
+        # 章節綁定（bindings）已移除：practice 直接以 chapterCode 歸屬章節，
+        # 不再顯示掛載狀態，也不再輸出 binding 列。
         practice_lookup = self._practice_record_lookup()
-        bindings = self._practice_bindings()
         rows = []
-        active_binding_counts = defaultdict(int)
-        for binding in bindings:
-            if not binding.get("enabled", True):
-                continue
-            if str(binding.get("targetType", "")).strip().lower() != "chapter":
-                continue
-            practice_id = str(binding.get("practiceId", "")).strip()
-            if practice_id:
-                active_binding_counts[practice_id] += 1
 
         for rid, practice in practice_lookup.items():
             base_chapter = str(practice.get("chapter", "") or self._chapter_label(practice.get("chapterCode", "")))
-            binding_count = int(active_binding_counts.get(rid, 0) or 0)
-            binding_summary = f"已掛載 {binding_count} 章" if binding_count else "未掛載"
+            binding_count = 0
+            binding_summary = ""
             display_title = str(practice.get("title", "") or rid)
-            if binding_count == 0:
-                display_title = f"{display_title}【未掛載】"
             row_stage, row_grade, row_term = resolve_practice_stage_grade_term(practice)
             row = {
                 "id": rid,
@@ -903,7 +868,7 @@ class DualDbGui:
                 "targetId": "",
                 "bindingCount": binding_count,
                 "bindingSummary": binding_summary,
-                "isUnbound": binding_count == 0,
+                "isUnbound": False,
                 "dbRecord": {"kind": "practice", **practice},
                 "notes": "；".join(practice.get("notes", []) or []),
                 "previewItem": self._build_practice_preview_item(practice),
@@ -913,80 +878,6 @@ class DualDbGui:
                 row["answer"] = practice.get("answer", "")
             rows.append(row)
 
-        for binding in bindings:
-            practice_id = str(binding.get("practiceId", "")).strip()
-            practice = practice_lookup.get(practice_id, {})
-            target_id = str(binding.get("targetId", "")).strip()
-            binding_target = self._chapter_label(target_id)
-            binding_stage, binding_grade, binding_term = resolve_practice_stage_grade_term(practice)
-            rows.append({
-                "id": self._practice_binding_row_id(binding),
-                "kind": "binding",
-                "title": f"掛載｜{practice.get('title', practice_id) or practice_id}",
-                "topicTitle": binding_target,
-                "stage": binding_stage,
-                "grade": build_grade_label(binding_stage, binding_grade, binding_term),
-                "chapter": self._chapter_label(target_id),
-                "chapter_code": target_id,
-                "difficulty": str(practice.get("difficulty", "") or ""),
-                "practice_mode": "",
-                "practiceKey": practice_id,
-                "enabled": binding.get("enabled", True),
-                "questionCount": int(practice.get("questionCount", 0) or 0),
-                "practiceTitle": str(practice.get("title", "") or practice_id),
-                "bindingTarget": binding_target,
-                "targetType": "chapter",
-                "targetId": target_id,
-                "dbRecord": {"kind": "binding", **binding},
-                "notes": "",
-                "previewItem": self._build_practice_preview_item(practice) if practice else {},
-            })
-
-        return rows
-
-    def _legacy_practice_rows(self):
-        topic_lookup = self._topic_lookup()
-        catalog = self._legacy_practice_catalog()
-        practice_lookup = self._practice_record_lookup()
-        rows = []
-        for topic_id in sorted(pid for pid in catalog if pid in topic_lookup):
-            topic_meta = topic_lookup.get(topic_id, {})
-            legacy = catalog.get(topic_id, {})
-            practice_id = f"practice-{topic_id}"
-            rows.append({
-                "id": topic_id,
-                "kind": "legacy-direct",
-                "title": str(topic_meta.get("title", "") or legacy.get("title", "") or topic_id),
-                "topicTitle": str(topic_meta.get("title", "") or ""),
-                "stage": str(topic_meta.get("stage", "") or ""),
-                "grade": str(topic_meta.get("grade", "") or ""),
-                "term": str(topic_meta.get("term", "") or ""),
-                "chapter": str(topic_meta.get("chapter", "") or ""),
-                "chapter_code": str(topic_meta.get("chapterCode", "") or topic_meta.get("chapter_code", "") or ""),
-                "difficulty": str(legacy.get("difficulty", "") or topic_meta.get("difficulty", "")),
-                "practice_mode": "generator",
-                "practiceKey": topic_id,
-                "enabled": True,
-                "questionCount": int(legacy.get("questionCount", 0) or 0),
-                "practiceTitle": str(legacy.get("title", "") or ""),
-                "libraryPracticeId": practice_id if practice_id in practice_lookup else "",
-                "notes": "唯讀：這是舊式直連設定，來源是 data/formula-practice.js",
-                "dbRecord": {
-                    "kind": "legacy-direct",
-                    "id": topic_id,
-                    "practiceKey": topic_id,
-                    "title": legacy.get("title", "") or "",
-                    "difficulty": legacy.get("difficulty", "") or "",
-                    "questionCount": int(legacy.get("questionCount", 0) or 0),
-                    "libraryPracticeId": practice_id if practice_id in practice_lookup else "",
-                    "source": "data/formula-practice.js",
-                    "_help": [
-                        "這一頁是唯讀清單，不直接修改資料。",
-                        "若要搬成新制，請去『練習本體』與『章節綁定』查看。"
-                    ],
-                },
-                "previewItem": topic_meta,
-            })
         return rows
 
     def _chapter_label(self, code: str, meta: dict | None = None):
@@ -1132,7 +1023,7 @@ class DualDbGui:
         # chapters that actually have a matching row here. Listing every chapter in the
         # whole curriculum catalog (regardless of whether it has any practice content)
         # made the dropdown huge and full of choices that return zero results when picked.
-        restrict_to_rows = self.mode in {"practice_records", "practice_bindings", "practice_legacy"}
+        restrict_to_rows = self.mode == "practice_records"
 
         if not restrict_to_rows:
             for code, meta in catalog.items():
@@ -1324,15 +1215,11 @@ class DualDbGui:
             "main_overviews": "主題整理",
             "closings": "章節後話",
             "practice_records": "練習本體",
-            "practice_bindings": "章節綁定",
-            "practice_legacy": "舊式直連",
         }.get(self.mode, self.mode)
         if self._is_practice_mode():
             counts = self._practice_inventory_counts()
             self.status_var.set(
-                f"{label} 查詢結果：{len(self.filtered)} 筆｜legacy 直連 {counts['legacy_direct']} 筆｜"
-                f"已轉新制 {counts['legacy_migrated_to_library']} 筆｜practice {counts['practice_count']} 筆｜"
-                f"binding {counts['binding_count']} 筆｜未掛載 {counts['unbound_practice_count']} 筆"
+                f"{label} 查詢結果：{len(self.filtered)} 筆｜practice {counts['practice_count']} 筆"
             )
         else:
             self.status_var.set(f"{label} 查詢結果：{len(self.filtered)} 筆")
@@ -1397,8 +1284,6 @@ class DualDbGui:
 
     # ----- actions -----
     def new_template(self):
-        if self.mode == "practice_legacy":
-            return messagebox.showwarning("提醒", "舊式直連是唯讀清單，請改到『練習本體』或『章節綁定』。")
         if self.mode == "topics":
             obj = {
                 "id": "new-topic-id", "title": "新主題", "stage": "", "grade": "", "term": "", "chapter": "", "domain": "",
@@ -1437,19 +1322,9 @@ class DualDbGui:
                 "notes": [],
                 "mistakes": [],
                 "_help": [
-                    "kind 可填 practice / binding。",
-                    "practice：管理可重複使用的無限練習本體。",
-                    "binding：把某個 practice 掛到 chapter。"
+                    "kind 填 practice。",
+                    "practice：管理可重複使用的無限練習本體。"
                 ]
-            }
-        elif self.mode == "practice_bindings":
-            obj = {
-                "kind": "binding",
-                "practiceId": "practice-new-id",
-                "targetType": "chapter",
-                "targetId": "j1-1-2",
-                "enabled": True,
-                "order": 1
             }
         elif self.mode == "chapter":
             obj = {
@@ -1592,8 +1467,6 @@ class DualDbGui:
         self.editor.insert("1.0", json.dumps(obj, ensure_ascii=False, indent=2))
 
     def save_item(self):
-        if self.mode == "practice_legacy":
-            return messagebox.showwarning("提醒", "舊式直連是唯讀清單，不能直接在這裡儲存。")
         text = self.editor.get("1.0", "end").strip()
         if not text:
             return messagebox.showwarning("提醒", "請先貼上或編輯 JSON")
@@ -1780,8 +1653,6 @@ class DualDbGui:
         self.status_var.set(f"{action}：{rid}")
         messagebox.showinfo("完成", f"{action} {rid}")
     def delete_selected(self):
-        if self.mode == "practice_legacy":
-            return messagebox.showwarning("提醒", "舊式直連是唯讀清單，不能直接在這裡刪除。")
         selected = self.tree.selection()
         if not selected:
             return messagebox.showwarning("提醒", "請先選一筆")
@@ -4311,6 +4182,479 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         keyword_entry.focus_set()
         dialog.wait_window()
 
+    # ── 自訂主題串（program-db/database/practice-custom-theme-db.json）─────────
+    # 內容項目可混放：{"type": "practice", "id": 題型id}（小類）
+    #                {"type": "chapter", "id": chapterCode}（大類，匯出時展開整章）
+
+    def _custom_theme_db_load(self):
+        try:
+            payload = json.loads(CUSTOM_THEME_DB_DEFAULT.read_text(encoding="utf-8-sig"))
+        except Exception:
+            return {"meta": {}, "themeChains": []}
+        chains = payload.get("themeChains")
+        payload["themeChains"] = [c for c in chains if isinstance(c, dict)] if isinstance(chains, list) else []
+        return payload
+
+    def _custom_theme_db_save(self, payload: dict):
+        chains = payload.get("themeChains", [])
+        stamp = practice_now_iso()
+        meta = payload.get("meta") or {}
+        meta.update(
+            {
+                "schema": "practice-custom-theme-db-v1",
+                "chainCount": len(chains),
+                "updatedAt": stamp,
+            }
+        )
+        payload["meta"] = meta
+        CUSTOM_THEME_DB_DEFAULT.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
+        self._sync_custom_theme_bridge(chains, stamp)
+
+    def _sync_custom_theme_bridge(self, chains: list, stamp: str):
+        """同步網頁 bridge（data/practice-custom-theme-chains.js）。
+
+        單向：GUI 為主，網頁只讀取播放。除了原始 items，也附上展開後的
+        practiceIds（整章項目照章節主題串順序展開），讓網頁不用自己展開。
+        """
+        bridge_chains = []
+        for chain in chains:
+            if not isinstance(chain, dict):
+                continue
+            expanded = []
+            seen = set()
+            for item in chain.get("items", []) or []:
+                if not isinstance(item, dict):
+                    continue
+                kind = str(item.get("type", "practice"))
+                item_id = str(item.get("id", "")).strip()
+                if not item_id:
+                    continue
+                pids = (
+                    self._chapter_practice_ids_in_theme_order(item_id, {})
+                    if kind == "chapter"
+                    else [item_id]
+                )
+                for pid in pids:
+                    if pid not in seen:
+                        seen.add(pid)
+                        expanded.append(pid)
+            bridge_chains.append(
+                {
+                    "id": str(chain.get("id", "")).strip(),
+                    "title": str(chain.get("title", "")).strip(),
+                    "description": str(chain.get("description", "")).strip(),
+                    "category": str(chain.get("category", "自訂")).strip() or "自訂",
+                    "grade": str(chain.get("grade", "全部年級")).strip() or "全部年級",
+                    "items": chain.get("items", []) or [],
+                    "practiceIds": expanded,
+                    "questionCount": int(chain.get("questionCount", 5) or 5),
+                    "enabled": chain.get("enabled", True),
+                    "updatedAt": str(chain.get("updatedAt", stamp)),
+                }
+            )
+        banner = (
+            "// AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.\n"
+            "// Source: program-db/database/practice-custom-theme-db.json（GUI 自訂主題串）\n"
+            f"// 主題串數：{len(bridge_chains)}\n"
+            f"// 最後更新：{stamp}\n"
+        )
+        CUSTOM_THEME_BRIDGE_JS_DEFAULT.write_text(
+            banner
+            + "window.practiceCustomThemeChainData = "
+            + json.dumps(bridge_chains, ensure_ascii=False, indent=2)
+            + ";\n",
+            encoding="utf-8",
+        )
+
+    def _chapter_practice_ids_in_theme_order(self, chapter_code: str, practice_by_id: dict):
+        """整章展開時的題型順序：優先照章節主題串（practice-theme-db.json），否則照 practice-db 原始順序。"""
+        chapter_code = str(chapter_code or "").strip()
+        theme_payload = self._theme_db_load()
+        for chain in theme_payload.get("themeChains", []):
+            if str(chain.get("chapterCode", "")).strip() == chapter_code:
+                ids = [str(pid).strip() for pid in chain.get("practiceIds", []) if str(pid).strip()]
+                if ids:
+                    return ids
+        return [
+            str(row.get("id", "")).strip()
+            for row in self.practice_payload.get("practices", [])
+            if isinstance(row, dict)
+            and row.get("enabled", True)
+            and str(row.get("chapterCode", "")).strip() == chapter_code
+            and str(row.get("id", "")).strip()
+        ]
+
+    def open_custom_theme_dialog(self):
+        payload = self._custom_theme_db_load()
+        chains = payload.get("themeChains", [])
+
+        practice_by_id = {
+            str(row.get("id", "")).strip(): row
+            for row in self.practice_payload.get("practices", [])
+            if isinstance(row, dict) and str(row.get("id", "")).strip()
+        }
+
+        def chapter_sort_key(code):
+            match = re.match(r"^([a-z]+)(\d+)-(\d+)-(\d+)$", str(code or ""))
+            if not match:
+                return (str(code or ""), 0, 0, 0)
+            return (match.group(1), int(match.group(2)), int(match.group(3)), int(match.group(4)))
+
+        chapter_codes = sorted(
+            {
+                str(row.get("chapterCode", "")).strip()
+                for row in self.practice_payload.get("practices", [])
+                if isinstance(row, dict) and row.get("enabled", True) and str(row.get("chapterCode", "")).strip()
+            },
+            key=chapter_sort_key,
+        )
+        chapter_labels = [self._chapter_label(code) for code in chapter_codes]
+
+        dialog = tk.Toplevel(self.root)
+        dialog.title("自訂主題串")
+        dialog.transient(self.root)
+        dialog.grab_set()
+        dialog.geometry("1080x680")
+        dialog.minsize(920, 560)
+
+        state = {"chain": None, "items": [], "chapter_practice_ids": []}
+        status_var = tk.StringVar(value="選擇或新增一個自訂主題串。")
+
+        # ── 上排：主題串選擇與管理 ──
+        top = ttk.Frame(dialog, padding=12)
+        top.pack(fill="x")
+        ttk.Label(top, text="自訂主題串").pack(side="left")
+        chain_combo = ttk.Combobox(top, state="readonly", width=36)
+        chain_combo.pack(side="left", padx=(8, 12))
+        title_var = tk.StringVar(value="")
+        ttk.Label(top, text="名稱").pack(side="left")
+        title_entry = ttk.Entry(top, textvariable=title_var, width=24)
+        title_entry.pack(side="left", padx=(6, 8))
+
+        CATEGORY_OPTIONS = ["自訂", "複習必做", "章節重點"]
+        GRADE_OPTIONS = [
+            "全部年級", "國中複習", "高中複習", "國中章節重點", "高中章節重點",
+            "小五", "小六", "國一", "國二", "國三", "高一", "高二", "高三", "其他",
+        ]
+        category_var = tk.StringVar(value="自訂")
+        grade_var = tk.StringVar(value="全部年級")
+        ttk.Label(top, text="分類").pack(side="left")
+        category_combo = ttk.Combobox(top, textvariable=category_var, values=CATEGORY_OPTIONS, state="readonly", width=10)
+        category_combo.pack(side="left", padx=(6, 8))
+        ttk.Label(top, text="年級").pack(side="left")
+        grade_combo = ttk.Combobox(top, textvariable=grade_var, values=GRADE_OPTIONS, state="readonly", width=12)
+        grade_combo.pack(side="left", padx=(6, 8))
+
+        def refresh_chain_combo(select_index=None):
+            chain_combo["values"] = [
+                f"【{str(c.get('category', '自訂')) or '自訂'}】{str(c.get('title') or c.get('id') or '')}"
+                for c in chains
+            ]
+            if select_index is not None and 0 <= select_index < len(chains):
+                chain_combo.current(select_index)
+
+        def item_label(item, index):
+            kind = str(item.get("type", "practice"))
+            item_id = str(item.get("id", "")).strip()
+            if kind == "chapter":
+                count = len(self._chapter_practice_ids_in_theme_order(item_id, practice_by_id))
+                return f"{index + 1:>3}. 【整章】{self._chapter_label(item_id)}（{count} 題型）"
+            row = practice_by_id.get(item_id) or {}
+            title = str(row.get("title", "")).strip() or item_id
+            difficulty = str(row.get("difficulty", "")).strip() or "-"
+            code = str(row.get("chapterCode", "")).strip()
+            return f"{index + 1:>3}. [{difficulty}] {title}（{code}）"
+
+        def refresh_items():
+            items_list.delete(0, tk.END)
+            for index, item in enumerate(state["items"]):
+                items_list.insert(tk.END, item_label(item, index))
+            chain = state["chain"] or {}
+            expanded = sum(
+                len(self._chapter_practice_ids_in_theme_order(item.get("id", ""), practice_by_id))
+                if item.get("type") == "chapter"
+                else 1
+                for item in state["items"]
+            )
+            status_var.set(
+                f"{chain.get('title', '')}：{len(state['items'])} 個項目，展開後約 {expanded} 個題型。"
+            )
+
+        def on_pick_chain(_event=None):
+            idx = chain_combo.current()
+            if not (0 <= idx < len(chains)):
+                return
+            state["chain"] = chains[idx]
+            state["items"] = [
+                dict(item)
+                for item in (chains[idx].get("items") or [])
+                if isinstance(item, dict) and str(item.get("id", "")).strip()
+            ]
+            title_var.set(str(chains[idx].get("title", "")))
+            category_var.set(str(chains[idx].get("category", "自訂")) or "自訂")
+            grade_var.set(str(chains[idx].get("grade", "全部年級")) or "全部年級")
+            refresh_items()
+
+        chain_combo.bind("<<ComboboxSelected>>", on_pick_chain)
+
+        def add_chain():
+            title = title_var.get().strip() or f"自訂主題串 {len(chains) + 1}"
+            chain = {
+                "id": f"custom-{datetime.now().strftime('%Y%m%d%H%M%S')}",
+                "title": title,
+                "description": "",
+                "category": category_var.get().strip() or "自訂",
+                "grade": grade_var.get().strip() or "全部年級",
+                "items": [],
+                "questionCount": 5,
+                "enabled": True,
+                "updatedAt": practice_now_iso(),
+            }
+            chains.append(chain)
+            refresh_chain_combo(len(chains) - 1)
+            on_pick_chain()
+
+        def rename_chain():
+            chain = state["chain"]
+            if not chain:
+                return messagebox.showwarning("提醒", "請先選擇主題串。", parent=dialog)
+            title = title_var.get().strip()
+            if not title:
+                return messagebox.showwarning("提醒", "名稱不可空白。", parent=dialog)
+            chain["title"] = title
+            refresh_chain_combo(chains.index(chain))
+            refresh_items()
+
+        def delete_chain():
+            chain = state["chain"]
+            if not chain:
+                return messagebox.showwarning("提醒", "請先選擇主題串。", parent=dialog)
+            if not messagebox.askyesno("確認", f"確定刪除「{chain.get('title', '')}」？", parent=dialog):
+                return
+            chains.remove(chain)
+            state["chain"] = None
+            state["items"] = []
+            title_var.set("")
+            refresh_chain_combo(0 if chains else None)
+            if chains:
+                on_pick_chain()
+            else:
+                chain_combo.set("")
+                refresh_items_empty()
+
+        def refresh_items_empty():
+            items_list.delete(0, tk.END)
+            status_var.set("目前沒有自訂主題串，輸入名稱後按「新增」。")
+
+        ttk.Button(top, text="新增", style="Compact.TButton", command=add_chain).pack(side="left")
+        ttk.Button(top, text="改名", style="Compact.TButton", command=rename_chain).pack(side="left", padx=(6, 0))
+        ttk.Button(top, text="刪除", style="Compact.TButton", command=delete_chain).pack(side="left", padx=(6, 0))
+
+        # ── 中間：左邊選來源、右邊主題串內容 ──
+        body = ttk.Frame(dialog, padding=(12, 4))
+        body.pack(fill="both", expand=True)
+        body.columnconfigure(0, weight=1)
+        body.columnconfigure(1, weight=1)
+        body.rowconfigure(1, weight=1)
+
+        left_box = ttk.LabelFrame(body, text="從章節加入（直接列出該章的分類）", padding=8)
+        left_box.grid(row=0, column=0, rowspan=2, sticky="nsew", padx=(0, 8))
+        left_box.columnconfigure(0, weight=1)
+        left_box.rowconfigure(1, weight=1)
+
+        chapter_combo = ttk.Combobox(left_box, state="readonly", values=chapter_labels, width=40)
+        chapter_combo.grid(row=0, column=0, sticky="ew", pady=(0, 6))
+        source_list = tk.Listbox(left_box, selectmode="extended", activestyle="dotbox")
+        source_scroll = ttk.Scrollbar(left_box, orient="vertical", command=source_list.yview)
+        source_list.configure(yscrollcommand=source_scroll.set)
+        source_list.grid(row=1, column=0, sticky="nsew")
+        source_scroll.grid(row=1, column=1, sticky="ns")
+
+        def on_pick_chapter(_event=None):
+            idx = chapter_combo.current()
+            source_list.delete(0, tk.END)
+            state["chapter_practice_ids"] = []
+            if not (0 <= idx < len(chapter_codes)):
+                return
+            ids = self._chapter_practice_ids_in_theme_order(chapter_codes[idx], practice_by_id)
+            state["chapter_practice_ids"] = ids
+            for pid in ids:
+                row = practice_by_id.get(pid) or {}
+                difficulty = str(row.get("difficulty", "")).strip() or "-"
+                title = str(row.get("title", "")).strip() or pid
+                source_list.insert(tk.END, f"[{difficulty}] {title}")
+
+        chapter_combo.bind("<<ComboboxSelected>>", on_pick_chapter)
+
+        def require_chain():
+            if not state["chain"]:
+                messagebox.showwarning("提醒", "請先選擇或新增一個自訂主題串。", parent=dialog)
+                return False
+            return True
+
+        def add_selected_practices():
+            if not require_chain():
+                return
+            picked = [state["chapter_practice_ids"][i] for i in source_list.curselection()]
+            if not picked:
+                return messagebox.showwarning("提醒", "請先在左邊列表選取要加入的小類。", parent=dialog)
+            existing = {
+                (item.get("type", "practice"), str(item.get("id", "")).strip())
+                for item in state["items"]
+            }
+            added = 0
+            for pid in picked:
+                key = ("practice", pid)
+                if key in existing:
+                    continue
+                state["items"].append({"type": "practice", "id": pid})
+                existing.add(key)
+                added += 1
+            refresh_items()
+            status_var.set(f"已加入 {added} 個小類（重複的自動略過）。")
+
+        def add_whole_chapter():
+            if not require_chain():
+                return
+            idx = chapter_combo.current()
+            if not (0 <= idx < len(chapter_codes)):
+                return messagebox.showwarning("提醒", "請先選擇章節。", parent=dialog)
+            code = chapter_codes[idx]
+            key = ("chapter", code)
+            if any((item.get("type", "practice"), str(item.get("id", "")).strip()) == key for item in state["items"]):
+                return messagebox.showwarning("提醒", "這一章已經加入過了。", parent=dialog)
+            state["items"].append({"type": "chapter", "id": code})
+            refresh_items()
+
+        left_buttons = ttk.Frame(left_box)
+        left_buttons.grid(row=2, column=0, columnspan=2, sticky="ew", pady=(6, 0))
+        ttk.Button(left_buttons, text="加入選取小類 →", style="Compact.TButton", command=add_selected_practices).pack(side="left")
+        ttk.Button(left_buttons, text="加入整章（大類）→", style="Compact.TButton", command=add_whole_chapter).pack(side="left", padx=(8, 0))
+
+        right_box = ttk.LabelFrame(body, text="主題串內容（匯出時整章會展開）", padding=8)
+        right_box.grid(row=0, column=1, rowspan=2, sticky="nsew")
+        right_box.columnconfigure(0, weight=1)
+        right_box.rowconfigure(0, weight=1)
+
+        items_list = tk.Listbox(right_box, activestyle="dotbox")
+        items_scroll = ttk.Scrollbar(right_box, orient="vertical", command=items_list.yview)
+        items_list.configure(yscrollcommand=items_scroll.set)
+        items_list.grid(row=0, column=0, sticky="nsew")
+        items_scroll.grid(row=0, column=1, sticky="ns")
+
+        def move_item(direction):
+            selection = items_list.curselection()
+            if not selection:
+                return
+            index = selection[0]
+            target = index + direction
+            if not (0 <= target < len(state["items"])):
+                return
+            state["items"][index], state["items"][target] = state["items"][target], state["items"][index]
+            refresh_items()
+            items_list.selection_set(target)
+            items_list.see(target)
+
+        def remove_item():
+            selection = items_list.curselection()
+            if not selection:
+                return
+            state["items"].pop(selection[0])
+            refresh_items()
+
+        def sort_items_by_difficulty():
+            rank = {"easy": 0, "medium": 1, "hard": 2}
+
+            def item_rank(item):
+                if item.get("type") == "chapter":
+                    return 3
+                row = practice_by_id.get(str(item.get("id", "")).strip()) or {}
+                return rank.get(str(row.get("difficulty", "")).strip().lower(), 3)
+
+            decorated = [(item_rank(item), index, item) for index, item in enumerate(state["items"])]
+            state["items"] = [item for _, _, item in sorted(decorated, key=lambda entry: (entry[0], entry[1]))]
+            refresh_items()
+
+        right_buttons = ttk.Frame(right_box)
+        right_buttons.grid(row=1, column=0, columnspan=2, sticky="ew", pady=(6, 0))
+        ttk.Button(right_buttons, text="上移", style="Compact.TButton", command=lambda: move_item(-1)).pack(side="left")
+        ttk.Button(right_buttons, text="下移", style="Compact.TButton", command=lambda: move_item(1)).pack(side="left", padx=(6, 0))
+        ttk.Button(right_buttons, text="移除", style="Compact.TButton", command=remove_item).pack(side="left", padx=(6, 0))
+        ttk.Button(right_buttons, text="依難度排序(易→難)", style="Compact.TButton", command=sort_items_by_difficulty).pack(side="left", padx=(12, 0))
+
+        # ── 底部：儲存與匯出 ──
+        def save_all():
+            chain = state["chain"]
+            if chain:
+                chain["items"] = [dict(item) for item in state["items"]]
+                chain["category"] = category_var.get().strip() or "自訂"
+                chain["grade"] = grade_var.get().strip() or "全部年級"
+                chain["updatedAt"] = practice_now_iso()
+            try:
+                self._custom_theme_db_save(payload)
+            except Exception as exc:
+                return messagebox.showerror("儲存失敗", str(exc), parent=dialog)
+            self.status_var.set("自訂主題串已儲存（practice-custom-theme-db.json）。")
+            status_var.set("已儲存到 practice-custom-theme-db.json。")
+
+        def expand_records():
+            records = []
+            seen = set()
+            for item in state["items"]:
+                kind = str(item.get("type", "practice"))
+                item_id = str(item.get("id", "")).strip()
+                pids = (
+                    self._chapter_practice_ids_in_theme_order(item_id, practice_by_id)
+                    if kind == "chapter"
+                    else [item_id]
+                )
+                for pid in pids:
+                    if pid in seen:
+                        continue
+                    seen.add(pid)
+                    row = practice_by_id.get(pid)
+                    if row:
+                        records.append(row)
+                    else:
+                        records.append({"id": pid, "title": pid, "questionCount": 5})
+            return records
+
+        def export_pdf():
+            chain = state["chain"]
+            if not chain:
+                return messagebox.showwarning("提醒", "請先選擇主題串。", parent=dialog)
+            records = expand_records()
+            if not records:
+                return messagebox.showwarning("提醒", "這個主題串沒有任何內容。", parent=dialog)
+            title = str(chain.get("title", "")).strip() or "自訂主題串"
+            dialog.grab_release()
+            try:
+                self._run_practice_records_export(records, self._safe_filename(title), f"{title} 題目與答案")
+            finally:
+                try:
+                    dialog.grab_set()
+                except Exception:
+                    pass
+
+        bottom = ttk.Frame(dialog, padding=12)
+        bottom.pack(fill="x")
+        ttk.Label(bottom, textvariable=status_var).pack(side="left")
+        ttk.Button(bottom, text="關閉", style="Compact.TButton", command=dialog.destroy).pack(side="right")
+        ttk.Button(bottom, text="匯出 PDF/MD", style="Compact.TButton", command=export_pdf).pack(side="right", padx=(0, 8))
+        ttk.Button(bottom, text="儲存", style="Compact.TButton", command=save_all).pack(side="right", padx=(0, 8))
+
+        refresh_chain_combo(0 if chains else None)
+        if chains:
+            on_pick_chain()
+        else:
+            refresh_items_empty()
+        if chapter_labels:
+            chapter_combo.current(0)
+            on_pick_chapter()
+        dialog.wait_window()
+
     def _split_pipe(self, value: str):
         text = (value or "").strip()
         if not text:
@@ -5099,19 +5443,6 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             rows.append(practice_by_id[pid])
         return rows
 
-    def _practice_binding_target_options(self, target_type: str):
-        target_type = str(target_type or "").strip().lower()
-        if target_type != "chapter":
-            return []
-        return [
-            {
-                "id": code,
-                "label": self._chapter_label(code, meta),
-                "title": self._chapter_label(code, meta),
-            }
-            for code, meta in sorted(self._chapter_catalog().items(), key=lambda item: self._chapter_code_sort_key(item[0]))
-        ]
-
     def _question_category_options(self):
         existing = sorted(
             {
@@ -5417,258 +5748,6 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
 
         chapter_combo.bind("<<ComboboxSelected>>", refresh_targets)
         level_combo.bind("<<ComboboxSelected>>", refresh_targets)
-        refresh_targets()
-
-    def open_practice_binding_dialog(self):
-        if self.mode != "practice_records":
-            return messagebox.showwarning("提醒", "請先切到『練習本體』再做批次掛載。")
-
-        selected_rows = self._selected_practice_record_rows()
-        if not selected_rows:
-            return messagebox.showwarning("提醒", "請先在左邊選至少一筆練習本體。")
-
-        single_mode = len(selected_rows) == 1
-        dialog = tk.Toplevel(self.root)
-        dialog.title("practice 掛載管理" if single_mode else "批次掛載 practice")
-        dialog.transient(self.root)
-        dialog.grab_set()
-        dialog.geometry("860x560" if single_mode else "780x430")
-
-        frame = ttk.Frame(dialog, padding=12)
-        frame.pack(fill="both", expand=True)
-
-        title_text = (
-            f"正在管理：{str(selected_rows[0].get('title', '') or selected_rows[0].get('id', '')).strip()}"
-            if single_mode
-            else f"已選 {len(selected_rows)} 筆 practice"
-        )
-        ttk.Label(frame, text=title_text).grid(row=0, column=0, columnspan=2, sticky="w")
-
-        target_type_labels = {"chapter": "章節頁"}
-        target_type_lookup = {value: key for key, value in target_type_labels.items()}
-        target_type_var = tk.StringVar(value=target_type_labels["chapter"])
-        target_var = tk.StringVar()
-        start_order_var = tk.StringVar(value="1")
-        selected_practice_id = str(selected_rows[0].get("id", "")).strip() if single_mode else ""
-
-        preview_text = "\n".join(
-            f"- {str(row.get('title', '') or row.get('id', '')).strip()} <{str(row.get('id', '')).strip()}>"
-            for row in selected_rows[:10]
-        )
-        if len(selected_rows) > 10:
-            preview_text += f"\n... 另外還有 {len(selected_rows) - 10} 筆"
-
-        ttk.Label(frame, text="掛載到").grid(row=1, column=0, sticky="w", pady=(10, 4))
-        target_type_combo = ttk.Combobox(
-            frame,
-            textvariable=target_type_var,
-            values=[target_type_labels["chapter"]],
-            state="readonly",
-            width=20,
-        )
-        target_type_combo.grid(row=1, column=1, sticky="w", pady=(10, 4))
-
-        checkbox_vars = {}
-        option_by_id = {}
-        option_order = []
-
-        if single_mode:
-            ttk.Label(frame, text="預設掛載").grid(row=2, column=0, sticky="nw", pady=4)
-            target_box = ttk.Frame(frame)
-            target_box.grid(row=2, column=1, sticky="nsew", pady=4)
-            target_canvas = tk.Canvas(target_box, height=230, highlightthickness=0)
-            target_scrollbar = ttk.Scrollbar(target_box, orient="vertical", command=target_canvas.yview)
-            target_inner = ttk.Frame(target_canvas)
-            target_inner.bind(
-                "<Configure>",
-                lambda _event: target_canvas.configure(scrollregion=target_canvas.bbox("all"))
-            )
-            target_canvas.create_window((0, 0), window=target_inner, anchor="nw")
-            target_canvas.configure(yscrollcommand=target_scrollbar.set)
-            target_canvas.pack(side="left", fill="both", expand=True)
-            target_scrollbar.pack(side="right", fill="y")
-        else:
-            ttk.Label(frame, text="目標").grid(row=2, column=0, sticky="w", pady=4)
-            target_combo = ttk.Combobox(frame, textvariable=target_var, state="readonly", width=68)
-            target_combo.grid(row=2, column=1, sticky="ew", pady=4)
-
-        ttk.Label(frame, text="起始排序").grid(row=3, column=0, sticky="w", pady=4)
-        ttk.Entry(frame, textvariable=start_order_var, width=12).grid(row=3, column=1, sticky="w", pady=4)
-
-        ttk.Label(frame, text="目前選取").grid(row=4, column=0, sticky="nw", pady=(12, 4))
-        preview = tk.Text(frame, height=10, wrap="word")
-        preview.grid(row=4, column=1, sticky="nsew", pady=(12, 4))
-        preview.insert("1.0", preview_text)
-        preview.configure(state="disabled")
-
-        status_var = tk.StringVar(value="")
-        ttk.Label(frame, textvariable=status_var).grid(row=5, column=0, columnspan=2, sticky="w", pady=(4, 0))
-
-        frame.columnconfigure(1, weight=1)
-        frame.rowconfigure(4, weight=1)
-        if single_mode:
-            frame.rowconfigure(2, weight=1)
-
-        target_lookup = {}
-
-        def refresh_targets(*_args):
-            target_type_key = target_type_lookup.get(target_type_var.get(), "chapter")
-            options = self._practice_binding_target_options(target_type_key)
-            values = [option["label"] for option in options]
-            target_lookup.clear()
-            option_by_id.clear()
-            option_order.clear()
-            for option in options:
-                target_lookup[option["label"]] = option
-                option_id = str(option.get("id", "")).strip()
-                option_by_id[option_id] = option
-                option_order.append(option_id)
-
-            if single_mode:
-                existing_ids = {
-                    str(binding.get("targetId", "")).strip()
-                    for binding in self._practice_bindings()
-                    if str(binding.get("practiceId", "")).strip() == selected_practice_id
-                    and str(binding.get("targetType", "")).strip() == target_type_key
-                }
-                checkbox_vars.clear()
-                for child in target_inner.winfo_children():
-                    child.destroy()
-                for idx, option in enumerate(options):
-                    option_id = str(option.get("id", "")).strip()
-                    variable = tk.BooleanVar(value=option_id in existing_ids)
-                    checkbox_vars[option_id] = variable
-                    ttk.Checkbutton(
-                        target_inner,
-                        text=str(option.get("label", "")).strip(),
-                        variable=variable,
-                    ).grid(row=idx, column=0, sticky="w", pady=2)
-                status_var.set(f"{target_type_var.get()}共 {len(options)} 個目標，已掛載 {len(existing_ids)} 個")
-            else:
-                target_combo["values"] = values
-                target_var.set(values[0] if values else "")
-                status_var.set(f"{target_type_var.get()}可選 {len(values)} 個目標")
-
-        def apply_bindings():
-            target_type_key = target_type_lookup.get(target_type_var.get(), "chapter")
-
-            try:
-                start_order = int(start_order_var.get().strip() or "1")
-            except ValueError:
-                return messagebox.showerror("錯誤", "起始排序需要是整數。", parent=dialog)
-
-            payload = self._current_payload()
-            rows = payload.setdefault("bindings", [])
-            if single_mode:
-                desired_ids = [
-                    option_id
-                    for option_id in option_order
-                    if checkbox_vars.get(option_id) and checkbox_vars[option_id].get()
-                ]
-                existing_ids = {
-                    str(binding.get("targetId", "")).strip()
-                    for binding in self._practice_bindings()
-                    if str(binding.get("practiceId", "")).strip() == selected_practice_id
-                    and str(binding.get("targetType", "")).strip() == target_type_key
-                }
-                kept_rows = []
-                for row in rows:
-                    if not isinstance(row, dict):
-                        kept_rows.append(row)
-                        continue
-                    binding = normalize_practice_binding(row)
-                    same_binding_group = (
-                        str(binding.get("practiceId", "")).strip() == selected_practice_id
-                        and str(binding.get("targetType", "")).strip() == target_type_key
-                    )
-                    if not same_binding_group:
-                        kept_rows.append(row)
-                rebuilt_rows = []
-                for offset, option_id in enumerate(desired_ids):
-                    rebuilt_rows.append(normalize_practice_binding({
-                        "practiceId": selected_practice_id,
-                        "targetType": target_type_key,
-                        "targetId": option_id,
-                        "enabled": True,
-                        "order": start_order + offset,
-                    }))
-                payload["bindings"] = kept_rows + rebuilt_rows
-                added = len([value for value in desired_ids if value not in existing_ids])
-                removed = len([value for value in existing_ids if value not in desired_ids])
-                status_target = f"{selected_rows[0].get('title') or selected_practice_id}｜{target_type_var.get()}"
-            else:
-                target_option = target_lookup.get(target_var.get())
-                if not target_option:
-                    return messagebox.showerror("錯誤", "請先選擇要掛載的目標。", parent=dialog)
-
-                existing_keys = {
-                    (
-                        str(row.get("practiceId", "")).strip(),
-                        str(row.get("targetType", "")).strip().lower(),
-                        str(row.get("targetId", "")).strip(),
-                    )
-                    for row in rows
-                    if isinstance(row, dict)
-                }
-
-                added = 0
-                skipped = 0
-                for offset, practice in enumerate(selected_rows):
-                    binding = normalize_practice_binding({
-                        "practiceId": str(practice.get("id", "")).strip(),
-                        "targetType": target_type_key,
-                        "targetId": str(target_option.get("id", "")).strip(),
-                        "enabled": True,
-                        "order": start_order + offset,
-                    })
-                    binding_key = (
-                        binding["practiceId"],
-                        binding["targetType"],
-                        binding["targetId"],
-                    )
-                    if binding_key in existing_keys:
-                        skipped += 1
-                        continue
-                    rows.append(binding)
-                    existing_keys.add(binding_key)
-                    added += 1
-                removed = 0
-                status_target = target_option.get('title') or target_option.get('id')
-
-            payload.setdefault("meta", {})
-            payload["meta"]["updatedAt"] = practice_now_iso()
-            self._normalize_practice_payload_state()
-            self._write_current_db()
-            self.refresh_filters()
-            self.search()
-            if single_mode:
-                self.status_var.set(
-                    f"practice 掛載已同步：新增 {added} 筆，移除 {removed} 筆 -> {status_target}"
-                )
-            else:
-                self.status_var.set(
-                    f"practice 批次掛載完成：新增 {added} 筆，略過 {skipped} 筆 -> {status_target}"
-                )
-            dialog.destroy()
-            if single_mode:
-                messagebox.showinfo(
-                    "完成",
-                    f"已同步掛載設定。\n新增 {added} 筆，移除 {removed} 筆。\n範圍：{status_target}",
-                    parent=self.root,
-                )
-            else:
-                messagebox.showinfo(
-                    "完成",
-                    f"已新增 {added} 筆掛載，略過 {skipped} 筆重複掛載。\n目標：{status_target}",
-                    parent=self.root,
-                )
-
-        button_bar = ttk.Frame(frame)
-        button_bar.grid(row=6, column=0, columnspan=2, sticky="e", pady=(12, 0))
-        ttk.Button(button_bar, text="取消", command=dialog.destroy).pack(side="right", padx=(6, 0))
-        ttk.Button(button_bar, text="套用掛載", command=apply_bindings).pack(side="right")
-
-        target_type_combo.bind("<<ComboboxSelected>>", refresh_targets)
         refresh_targets()
 
     def open_question_meta_edit_dialog(self):

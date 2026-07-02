@@ -222,6 +222,24 @@
     return chapterCodeCollator.compare(String(left || "").trim(), String(right || "").trim());
   }
 
+  // 主題串順序（data/practice-theme-chains.js）：章節內題型排序跟著主題串的練習順序走
+  const themeOrderLookup = (() => {
+    const lookup = new Map();
+    const chains = Array.isArray(window.practiceThemeChainData) ? window.practiceThemeChainData : [];
+    chains.forEach((chain) => {
+      (Array.isArray(chain?.practiceIds) ? chain.practiceIds : []).forEach((pid, index) => {
+        const key = String(pid || "").trim();
+        if (key && !lookup.has(key)) lookup.set(key, index);
+      });
+    });
+    return lookup;
+  })();
+
+  function themeOrderOf(id) {
+    const value = themeOrderLookup.get(String(id || "").trim());
+    return Number.isFinite(value) ? value : Number.MAX_SAFE_INTEGER;
+  }
+
   function formatTimeText(value) {
     const date = value ? new Date(value) : null;
     if (!date || Number.isNaN(date.getTime())) return "";
@@ -290,6 +308,7 @@
       .sort(
         (a, b) =>
           compareChapterCodes(a.chapterCode, b.chapterCode) ||
+          (themeOrderOf(a.id) - themeOrderOf(b.id)) ||
           a.title.localeCompare(b.title, "zh-Hant"),
       );
   }

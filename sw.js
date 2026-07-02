@@ -1,4 +1,4 @@
-const CACHE_NAME = "math-formula-tool-v303";
+const CACHE_NAME = "math-formula-tool-v307";
 const ASSETS = [
   "./",
   "./index.html",
@@ -58,6 +58,7 @@ const ASSETS = [
   "./data/practice-chapter-playlists.js",
   "./data/practice-schedules.js",
   "./data/practice-theme-chains.js",
+  "./data/practice-custom-theme-chains.js",
   "./formula-data.js",
   "./formula-core.js",
   "./app.js",

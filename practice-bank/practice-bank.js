@@ -28,6 +28,25 @@
     console.warn("practice bank loaded without formulaPracticeStore; filters will render but practice configs may be incomplete");
   }
 
+  // 主題串順序（data/practice-theme-chains.js）：題型排序跟著主題串的練習順序走。
+  // 每個題型 id 只屬於一個小章節主題串，所以全域一張 id → 順序索引表即可。
+  const themeOrderLookup = (() => {
+    const lookup = new Map();
+    const chains = Array.isArray(window.practiceThemeChainData) ? window.practiceThemeChainData : [];
+    chains.forEach((chain) => {
+      (Array.isArray(chain?.practiceIds) ? chain.practiceIds : []).forEach((pid, index) => {
+        const key = String(pid || "").trim();
+        if (key && !lookup.has(key)) lookup.set(key, index);
+      });
+    });
+    return lookup;
+  })();
+
+  function themeOrderOf(id) {
+    const value = themeOrderLookup.get(String(id || "").trim());
+    return Number.isFinite(value) ? value : Number.MAX_SAFE_INTEGER;
+  }
+
   const allItems = store.getCurrentFormulas ? store.getCurrentFormulas() : [];
   const topicIdSet = new Set(
     allItems
@@ -418,14 +437,13 @@
       const practiceOk = !state.practiceId || itemId === state.practiceId;
       return chapterOk && keywordOk && practiceOk;
     }).slice().sort((a, b) => {
-      if (state.chapterCode !== "all") {
-        const leftOrder = Number(a?.chapterOrderLookup?.[state.chapterCode]);
-        const rightOrder = Number(b?.chapterOrderLookup?.[state.chapterCode]);
-        const leftHas = Number.isFinite(leftOrder);
-        const rightHas = Number.isFinite(rightOrder);
-        if (leftHas && rightHas && leftOrder !== rightOrder) return leftOrder - rightOrder;
-        if (leftHas !== rightHas) return leftHas ? -1 : 1;
+      // 全部章節時先依章節分組，再依主題串順序，最後才比標題
+      if (state.chapterCode === "all") {
+        const chapterDiff = String(a?.chapterCode || "").localeCompare(String(b?.chapterCode || ""), "zh-Hant", { numeric: true });
+        if (chapterDiff !== 0) return chapterDiff;
       }
+      const themeDiff = themeOrderOf(a?.id) - themeOrderOf(b?.id);
+      if (themeDiff !== 0) return themeDiff;
       return String(a?.title || "").localeCompare(String(b?.title || ""), "zh-Hant");
     });
   }
@@ -696,14 +714,13 @@
       const practiceOk = !state.practiceId || itemId === state.practiceId;
       return gradeOk && chapterOk && keywordOk && practiceOk;
     }).slice().sort((a, b) => {
-      if (state.chapterCode !== "all") {
-        const leftOrder = Number(a?.chapterOrderLookup?.[state.chapterCode]);
-        const rightOrder = Number(b?.chapterOrderLookup?.[state.chapterCode]);
-        const leftHas = Number.isFinite(leftOrder);
-        const rightHas = Number.isFinite(rightOrder);
-        if (leftHas && rightHas && leftOrder !== rightOrder) return leftOrder - rightOrder;
-        if (leftHas !== rightHas) return leftHas ? -1 : 1;
+      // 全部章節時先依章節分組，再依主題串順序，最後才比標題
+      if (state.chapterCode === "all") {
+        const chapterDiff = String(a?.chapterCode || "").localeCompare(String(b?.chapterCode || ""), "zh-Hant", { numeric: true });
+        if (chapterDiff !== 0) return chapterDiff;
       }
+      const themeDiff = themeOrderOf(a?.id) - themeOrderOf(b?.id);
+      if (themeDiff !== 0) return themeDiff;
       return String(a?.title || "").localeCompare(String(b?.title || ""), "zh-Hant");
     });
   }
