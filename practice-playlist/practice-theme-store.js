@@ -53,6 +53,33 @@
     }
   }
 
+  // 練習本體（practiceLibraryStore）目前各章實際存在的題型 id 對照表
+  function buildLiveChapterMap() {
+    const byId = window.practiceLibraryStore?.byId || {};
+    const map = new Map();
+    Object.values(byId).forEach((record) => {
+      if (!record || record.enabled === false) return;
+      const code = String(record.chapterCode || "").trim();
+      const id = String(record.id || "").trim();
+      if (!code || !id) return;
+      if (!map.has(code)) map.set(code, []);
+      map.get(code).push(id);
+    });
+    return map;
+  }
+
+  // 主題串只存排序；資料本體即時讀練習本體。
+  // 新題型自動附加在該章最後，已刪除/停用的自動消失。
+  function mergeChainWithLive(chain, liveMap) {
+    const code = String(chain.chapterCode || "").trim();
+    if (!code || !liveMap.has(code)) return chain;
+    const live = liveMap.get(code);
+    const liveSet = new Set(live);
+    const ordered = chain.practiceIds.filter((pid) => liveSet.has(pid));
+    const orderedSet = new Set(ordered);
+    return { ...chain, practiceIds: ordered.concat(live.filter((pid) => !orderedSet.has(pid))) };
+  }
+
   // bundled 為基底，localStorage 同 id 覆蓋；localStorage 新 id 附加在後
   function loadAll() {
     const bundled = loadBundled();
@@ -61,7 +88,8 @@
     const localById = new Map(local.map((chain) => [chain.id, chain]));
     const merged = bundled.map((chain) => localById.get(chain.id) || chain);
     const extra = local.filter((chain) => !bundledIds.has(chain.id));
-    return [...merged, ...extra];
+    const liveMap = buildLiveChapterMap();
+    return [...merged, ...extra].map((chain) => mergeChainWithLive(chain, liveMap));
   }
 
   function saveToLocal(chains) {

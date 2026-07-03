@@ -1,4 +1,4 @@
-const CACHE_NAME = "math-formula-tool-v307";
+const CACHE_NAME = "math-formula-tool-v316";
 const ASSETS = [
   "./",
   "./index.html",

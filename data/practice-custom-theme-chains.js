@@ -1,26 +1,181 @@
 // AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
-// Source: program-db/database/practice-custom-theme-db.json（GUI 自訂主題串／複習必做／章節重點）
+// Source: program-db/database/practice-custom-theme-db.json（GUI 自訂主題串）
 // 主題串數：48
-// 最後更新：2026-07-02T15:31:55.800Z
+// 最後更新：2026-07-03T07:42:14.846935+00:00
 window.practiceCustomThemeChainData = [
   {
     "id": "custom-20260702205441",
     "title": "高一上乘法公式",
     "description": "",
     "category": "自訂",
-    "grade": "全部年級",
+    "grade": "國一",
     "items": [
       {
         "type": "practice",
-        "id": "practice-identity-value-square-pair-drill"
+        "id": "practice-j1-3-3-age-ratio-plus-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-calendar-block-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-rectangle-dimension-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-age-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-allocation-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-average-count-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-candle-burn-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-chain-fraction-take-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-circular-track-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-consecutive-integer-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-digit-swap-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-double-discount-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-find-fraction-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-fraction-remainder-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-guess-number-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-heads-coins-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-mixture-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-monkey-banana-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-opposite-number-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-purchase-discount-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-ratio-chain-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-relative-speed-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-rope-folding-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-score-penalty-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-speed-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-three-person-chain-diff-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-total-price-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-transfer-equalization-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-weight-compare-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-work-rate-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-clock-angle-application-drill"
+      },
+      {
+        "type": "practice",
+        "id": "practice-j1-3-3-tiered-fee-application-drill"
       }
     ],
     "practiceIds": [
-      "practice-identity-value-square-pair-drill"
+      "practice-j1-3-3-age-ratio-plus-drill",
+      "practice-j1-3-3-calendar-block-drill",
+      "practice-j1-3-3-rectangle-dimension-drill",
+      "practice-j1-3-3-age-application-drill",
+      "practice-j1-3-3-allocation-application-drill",
+      "practice-j1-3-3-average-count-application-drill",
+      "practice-j1-3-3-candle-burn-drill",
+      "practice-j1-3-3-chain-fraction-take-drill",
+      "practice-j1-3-3-circular-track-drill",
+      "practice-j1-3-3-consecutive-integer-application-drill",
+      "practice-j1-3-3-digit-swap-drill",
+      "practice-j1-3-3-double-discount-drill",
+      "practice-j1-3-3-find-fraction-drill",
+      "practice-j1-3-3-fraction-remainder-application-drill",
+      "practice-j1-3-3-guess-number-drill",
+      "practice-j1-3-3-heads-coins-application-drill",
+      "practice-j1-3-3-mixture-application-drill",
+      "practice-j1-3-3-monkey-banana-drill",
+      "practice-j1-3-3-opposite-number-application-drill",
+      "practice-j1-3-3-purchase-discount-application-drill",
+      "practice-j1-3-3-ratio-chain-application-drill",
+      "practice-j1-3-3-relative-speed-application-drill",
+      "practice-j1-3-3-rope-folding-drill",
+      "practice-j1-3-3-score-penalty-application-drill",
+      "practice-j1-3-3-speed-application-drill",
+      "practice-j1-3-3-three-person-chain-diff-drill",
+      "practice-j1-3-3-total-price-application-drill",
+      "practice-j1-3-3-transfer-equalization-application-drill",
+      "practice-j1-3-3-weight-compare-drill",
+      "practice-j1-3-3-work-rate-application-drill",
+      "practice-j1-3-3-clock-angle-application-drill",
+      "practice-j1-3-3-tiered-fee-application-drill"
     ],
     "questionCount": 5,
     "enabled": true,
-    "updatedAt": "2026-07-02T12:56:59.850887+00:00"
+    "updatedAt": "2026-07-03T07:42:14.846909+00:00"
   },
   {
     "id": "custom-20260702205504",
@@ -826,23 +981,11 @@ window.practiceCustomThemeChainData = [
       },
       {
         "type": "practice",
-        "id": "practice-j4-3-1-polygon-angle-mixed"
-      },
-      {
-        "type": "practice",
-        "id": "practice-j4-3-1-triangle-exterior-angle"
-      },
-      {
-        "type": "practice",
         "id": "practice-j4-3-2-construction-mixed"
       },
       {
         "type": "practice",
         "id": "practice-j4-3-2-midpoint-perpendicular"
-      },
-      {
-        "type": "practice",
-        "id": "practice-j4-3-3-congruence-mixed"
       },
       {
         "type": "practice",
@@ -886,10 +1029,6 @@ window.practiceCustomThemeChainData = [
       },
       {
         "type": "practice",
-        "id": "practice-j4-4-3-trapezoid-core-mixed"
-      },
-      {
-        "type": "practice",
         "id": "practice-j4-4-3-trapezoid-area"
       }
     ],
@@ -915,11 +1054,8 @@ window.practiceCustomThemeChainData = [
       "practice-j4-2-2-line-intersection-parallel",
       "practice-j4-2-2-perpendicular-equation",
       "practice-j4-2-2-word-model-two-point-drill",
-      "practice-j4-3-1-polygon-angle-mixed",
-      "practice-j4-3-1-triangle-exterior-angle",
       "practice-j4-3-2-construction-mixed",
       "practice-j4-3-2-midpoint-perpendicular",
-      "practice-j4-3-3-congruence-mixed",
       "practice-j4-3-3-congruence-algebra-drill",
       "practice-j4-3-4-triangle-inequality-range",
       "practice-j4-3-4-pythagorean-classification",
@@ -930,7 +1066,6 @@ window.practiceCustomThemeChainData = [
       "practice-j4-4-2-rhombus-diagonal",
       "practice-j4-4-2-angle-bisector-parallelogram-drill",
       "practice-j4-4-2-coordinate-parallelogram-drill",
-      "practice-j4-4-3-trapezoid-core-mixed",
       "practice-j4-4-3-trapezoid-area"
     ],
     "questionCount": 5,
@@ -3066,15 +3201,7 @@ window.practiceCustomThemeChainData = [
     "items": [
       {
         "type": "practice",
-        "id": "practice-j4-3-4-triangle-side-angle-mixed"
-      },
-      {
-        "type": "practice",
         "id": "practice-j4-3-4-triangle-inequality-range"
-      },
-      {
-        "type": "practice",
-        "id": "practice-j4-3-1-polygon-angle-mixed"
       },
       {
         "type": "practice",
@@ -3082,15 +3209,7 @@ window.practiceCustomThemeChainData = [
       },
       {
         "type": "practice",
-        "id": "practice-j4-3-3-congruence-mixed"
-      },
-      {
-        "type": "practice",
         "id": "practice-j4-3-2-triangle-bisector-intersection-drill"
-      },
-      {
-        "type": "practice",
-        "id": "practice-j4-3-1-triangle-exterior-angle"
       },
       {
         "type": "practice",
@@ -3106,13 +3225,9 @@ window.practiceCustomThemeChainData = [
       }
     ],
     "practiceIds": [
-      "practice-j4-3-4-triangle-side-angle-mixed",
       "practice-j4-3-4-triangle-inequality-range",
-      "practice-j4-3-1-polygon-angle-mixed",
       "practice-j4-3-2-construction-mixed",
-      "practice-j4-3-3-congruence-mixed",
       "practice-j4-3-2-triangle-bisector-intersection-drill",
-      "practice-j4-3-1-triangle-exterior-angle",
       "practice-j4-3-4-pythagorean-classification",
       "practice-j4-3-1-isosceles-angle-drill",
       "practice-j4-3-3-congruence-algebra-drill"
@@ -3131,10 +3246,6 @@ window.practiceCustomThemeChainData = [
       {
         "type": "practice",
         "id": "practice-j4-4-2-quadrilateral-mixed"
-      },
-      {
-        "type": "practice",
-        "id": "practice-j4-4-3-trapezoid-core-mixed"
       },
       {
         "type": "practice",
@@ -3163,23 +3274,17 @@ window.practiceCustomThemeChainData = [
       {
         "type": "practice",
         "id": "practice-j4-4-1-parallel-perpendicular-angles"
-      },
-      {
-        "type": "practice",
-        "id": "practice-j4-4-1-transversal-find-angle"
       }
     ],
     "practiceIds": [
       "practice-j4-4-2-quadrilateral-mixed",
-      "practice-j4-4-3-trapezoid-core-mixed",
       "practice-j4-4-2-angle-bisector-parallelogram-drill",
       "practice-j4-4-2-coordinate-parallelogram-drill",
       "practice-j4-4-2-parallelogram-equations",
       "practice-j4-4-1-bent-line-parallel-drill",
       "practice-j4-4-3-kite-property-drill",
       "practice-j4-4-3-right-trapezoid-drill",
-      "practice-j4-4-1-parallel-perpendicular-angles",
-      "practice-j4-4-1-transversal-find-angle"
+      "practice-j4-4-1-parallel-perpendicular-angles"
     ],
     "questionCount": 5,
     "enabled": true,

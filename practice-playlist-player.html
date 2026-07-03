@@ -14,7 +14,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
-    <link rel="stylesheet" href="styles.css?v=20260627-playlist-v1" />
+    <link rel="stylesheet" href="styles.css?v=20260702-student-focus-v1" />
     <style>
       /* ── 日程型月曆 ────────────────────────────────── */
       .calendar-nav {
@@ -201,6 +201,10 @@
             </div>
             <p id="playlistPlayerDescription" class="detail-note"></p>
             <p id="playlistPlayerStatus" class="detail-note">請先從左側選擇一份清單。</p>
+            <div class="interactive-actions">
+              <button id="playlistShareButton" class="ghost-button" type="button" hidden>開學生練習頁（新分頁）</button>
+              <button id="playlistCopyLinkButton" class="ghost-button" type="button" hidden>複製學生連結</button>
+            </div>
           </section>
 
           <section class="panel">
@@ -255,10 +259,11 @@
     <script defer src="data/practice-task-playlists.js?v=20260702-migrate-v1"></script>
     <script defer src="data/practice-chapter-playlists.js?v=20260702-migrate-v1"></script>
     <script defer src="data/practice-schedules.js?v=20260628-schedule-data-v1"></script>
+    <script defer src="data/practice-theme-chains.js?v=20260702-theme-chains-v1"></script>
     <script defer src="data/practice-custom-theme-chains.js?v=20260702-custom-theme-v2"></script>
-    <script defer src="practice-playlist/practice-playlist-store.js?v=20260702-custom-merge-v2"></script>
+    <script defer src="practice-playlist/practice-playlist-store.js?v=20260702-live-merge-v1"></script>
     <script defer src="practice-playlist/practice-progress-store.js?v=20260628-progress-v1"></script>
-    <script defer src="practice-playlist/practice-playlist-player.js?v=20260702-task-select-v1"></script>
+    <script defer src="practice-playlist/practice-playlist-player.js?v=20260702-student-link-v1"></script>
     <script defer src="practice-playlist/practice-schedule-player.js?v=20260628-schedule-player-v4"></script>
     <script defer src="practice-playlist/practice-mode-toggle.js?v=20260628-mode-toggle-v1"></script>
     <script defer src="pwa.js"></script>

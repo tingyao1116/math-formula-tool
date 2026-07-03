@@ -3279,3 +3279,17 @@ select {
     padding-bottom: 4pt;
   }
 }
+
+/* ── 播放頁學生模式（?playlist=<id>）：只留這份清單的練習 ─────────────────── */
+
+body.player-focus-task .playlist-layout .sidebar {
+  display: none;
+}
+
+body.player-focus-task .playlist-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+body.player-focus-schedule .playlist-layout .sidebar > .panel:not(#scheduleCalendarSection) {
+  display: none !important;
+}

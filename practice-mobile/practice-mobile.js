@@ -240,6 +240,23 @@
     return Number.isFinite(value) ? value : Number.MAX_SAFE_INTEGER;
   }
 
+  // 資料夾檢視：大類（資料夾）與「小類 → 所屬大類」對照（僅計啟用中的大類）
+  const practiceFolderIds = new Set();
+  const practiceParentsByChild = new Map();
+  Object.values(practiceLibrary?.byId || {}).forEach((record) => {
+    if (!record || record.enabled === false) return;
+    const pid = String(record.id || "").trim();
+    const kids = Array.isArray(record.relatedPracticeIds) ? record.relatedPracticeIds : [];
+    if (!pid || !kids.length) return;
+    practiceFolderIds.add(pid);
+    kids.forEach((kidRaw) => {
+      const kid = String(kidRaw || "").trim();
+      if (!kid) return;
+      if (!practiceParentsByChild.has(kid)) practiceParentsByChild.set(kid, []);
+      practiceParentsByChild.get(kid).push(pid);
+    });
+  });
+
   function formatTimeText(value) {
     const date = value ? new Date(value) : null;
     if (!date || Number.isNaN(date.getTime())) return "";
@@ -382,7 +399,15 @@
 
   function getChapterItems() {
     if (!state.chapterCode) return [];
-    return getFilteredItems().filter((item) => item.chapterCode === state.chapterCode);
+    const items = getFilteredItems().filter((item) => item.chapterCode === state.chapterCode);
+    // 資料夾檢視：已歸檔的小類只透過其大類出現，不再單獨重複一次
+    const presentFolderIds = new Set(
+      items.filter((item) => practiceFolderIds.has(item.id)).map((item) => item.id),
+    );
+    return items.filter((item) => {
+      const owners = practiceParentsByChild.get(item.id) || [];
+      return !owners.some((owner) => presentFolderIds.has(owner));
+    });
   }
 
   function ensureSelectedPractice() {

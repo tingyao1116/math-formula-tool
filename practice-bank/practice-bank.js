@@ -47,6 +47,24 @@
     return Number.isFinite(value) ? value : Number.MAX_SAFE_INTEGER;
   }
 
+  // 小類 → 所屬大類（僅計啟用中的大類；資料夾檢視用）
+  const practiceParentsByChild = (() => {
+    const map = new Map();
+    Object.values(practiceLibrary?.byId || {}).forEach((record) => {
+      if (!record || record.enabled === false) return;
+      const pid = String(record.id || "").trim();
+      const kids = Array.isArray(record.relatedPracticeIds) ? record.relatedPracticeIds : [];
+      if (!pid || !kids.length) return;
+      kids.forEach((kidRaw) => {
+        const kid = String(kidRaw || "").trim();
+        if (!kid) return;
+        if (!map.has(kid)) map.set(kid, []);
+        map.get(kid).push(pid);
+      });
+    });
+    return map;
+  })();
+
   const allItems = store.getCurrentFormulas ? store.getCurrentFormulas() : [];
   const topicIdSet = new Set(
     allItems
@@ -246,8 +264,11 @@
 
   function buildChapterPracticeCatalogItems() {
     const counts = new Map();
+    const leafCounts = new Map();
     for (const item of practiceItems) {
       const practiceId = String(item?.id || "").trim();
+      // 小類＝真正的生成函數（沒有 relatedPracticeIds 的題型）；大類＝小類合併的資料夾
+      const isLeaf = !(Array.isArray(item?.relatedPracticeIds) && item.relatedPracticeIds.length);
       const chapterCodes = Array.isArray(item?.chapterCodes) && item.chapterCodes.length
         ? item.chapterCodes
         : [getItemChapterCode(item)].filter(Boolean);
@@ -257,6 +278,7 @@
         if (!chapterCode || seen.has(chapterCode)) continue;
         seen.add(chapterCode);
         counts.set(chapterCode, (counts.get(chapterCode) || 0) + 1);
+        if (isLeaf) leafCounts.set(chapterCode, (leafCounts.get(chapterCode) || 0) + 1);
       }
     }
 
@@ -267,23 +289,32 @@
           code,
           label: String(entry?.label || code).trim() || code,
           count: counts.get(code) || 0,
+          leafCount: leafCounts.get(code) || 0,
         };
       })
       .filter((row) => row.count > 0);
 
+    const totalLeaf = practiceItems.filter(
+      (item) => !(Array.isArray(item?.relatedPracticeIds) && item.relatedPracticeIds.length),
+    ).length;
     return [
-      { code: "all", label: "全部章節", count: practiceItems.length },
+      { code: "all", label: "全部章節", count: practiceItems.length, leafCount: totalLeaf },
       ...chapterRows,
     ];
   }
 
   function buildChapterPracticeRecordCatalogItems() {
     const counts = new Map();
+    const leafCounts = new Map();
     const records = Object.values(practiceLibrary?.byId || {}).filter((row) => row && row.enabled !== false);
     for (const record of records) {
       const chapterCode = String(record?.chapterCode || "").trim();
       if (!chapterCode) continue;
       counts.set(chapterCode, (counts.get(chapterCode) || 0) + 1);
+      // 小類＝真正的生成函數（沒有 relatedPracticeIds）；大類＝小類合併的資料夾
+      if (!(Array.isArray(record?.relatedPracticeIds) && record.relatedPracticeIds.length)) {
+        leafCounts.set(chapterCode, (leafCounts.get(chapterCode) || 0) + 1);
+      }
     }
 
     const chapterRows = chapterOptions
@@ -293,14 +324,21 @@
           code,
           label: String(entry?.label || code).trim() || code,
           count: counts.get(code) || 0,
+          leafCount: leafCounts.get(code) || 0,
         };
       })
       .filter((row) => row.count > 0);
 
+    const withChapter = records.filter((record) => Boolean(String(record?.chapterCode || "").trim()));
     return [
-      { code: "all", label: "全部章節", count: records.filter((record) => {
-        return Boolean(String(record?.chapterCode || "").trim());
-      }).length },
+      {
+        code: "all",
+        label: "全部章節",
+        count: withChapter.length,
+        leafCount: withChapter.filter(
+          (record) => !(Array.isArray(record?.relatedPracticeIds) && record.relatedPracticeIds.length),
+        ).length,
+      },
       ...chapterRows,
     ];
   }
@@ -395,7 +433,7 @@
           data-chapter-catalog-code="${escapeHtml(row.code)}"
         >
           <span class="chapter-practice-catalog__label">${escapeHtml(row.label)}</span>
-          <span class="chapter-practice-catalog__count">${escapeHtml(String(row.count))} 項</span>
+          <span class="chapter-practice-catalog__count">${escapeHtml(String(row.leafCount ?? row.count))} 小類 / ${escapeHtml(String(row.count))} 題型</span>
         </button>
       `)
       .join("");
@@ -450,7 +488,18 @@
 
   function getCompositeChapterItems() {
     if (state.chapterCode === "all" || state.practiceId) return [];
-    return getFilteredItems();
+    const items = getFilteredItems();
+    // 資料夾檢視：已歸檔的小類只透過其大類的展開出現，不再單獨重複一次
+    const presentFolderIds = new Set(
+      items
+        .filter((item) => Array.isArray(item?.relatedPracticeIds) && item.relatedPracticeIds.length)
+        .map((item) => String(item?.id || "").trim()),
+    );
+    return items.filter((item) => {
+      const itemId = String(item?.id || "").trim();
+      const owners = practiceParentsByChild.get(itemId) || [];
+      return !owners.some((owner) => presentFolderIds.has(owner));
+    });
   }
 
   function renderCompositePracticeSection(position = "bottom") {
@@ -690,7 +739,7 @@
           data-chapter-catalog-code="${escapeHtml(row.code)}"
         >
           <span class="chapter-practice-catalog__label">${escapeHtml(row.label)}</span>
-          <span class="chapter-practice-catalog__count">${escapeHtml(String(row.count))} 題型</span>
+          <span class="chapter-practice-catalog__count">${escapeHtml(String(row.leafCount ?? row.count))} 小類 / ${escapeHtml(String(row.count))} 題型</span>
         </button>
       `)
       .join("");
@@ -727,7 +776,18 @@
 
   function getCompositeChapterItems() {
     if (state.chapterCode === "all" || state.practiceId) return [];
-    return getFilteredItems();
+    const items = getFilteredItems();
+    // 資料夾檢視：已歸檔的小類只透過其大類的展開出現，不再單獨重複一次
+    const presentFolderIds = new Set(
+      items
+        .filter((item) => Array.isArray(item?.relatedPracticeIds) && item.relatedPracticeIds.length)
+        .map((item) => String(item?.id || "").trim()),
+    );
+    return items.filter((item) => {
+      const itemId = String(item?.id || "").trim();
+      const owners = practiceParentsByChild.get(itemId) || [];
+      return !owners.some((owner) => presentFolderIds.has(owner));
+    });
   }
 
   function renderCompositePracticeSection(position = "bottom") {
@@ -1074,19 +1134,22 @@
       : chapterPracticeCatalogItems;
     const chapterRows = sourceRows.filter((row) => row.code !== "all" && matchesGradeFilterByChapterCode(row.code));
     const activeGradeLabel = getActiveGradeLabelV2();
-    const allCount = state.catalogMode === "record"
+    const isLeafRecord = (record) =>
+      !(Array.isArray(record?.relatedPracticeIds) && record.relatedPracticeIds.length);
+    const allRecords = state.catalogMode === "record"
       ? Object.values(practiceLibrary?.byId || {}).filter((record) => {
           if (!record || record.enabled === false) return false;
           const chapterCode = String(record?.chapterCode || "").trim();
           if (!chapterCode) return false;
           return matchesGradeFilterByChapterCode(chapterCode);
-        }).length
-      : practiceItems.filter((item) => matchesGradeFilter(item)).length;
+        })
+      : practiceItems.filter((item) => matchesGradeFilter(item));
     const visibleRows = [
       {
         code: "all",
         label: activeGradeLabel ? `${activeGradeLabel}\u5168\u90e8\u7ae0\u7bc0` : "\u5168\u90e8\u7ae0\u7bc0",
-        count: allCount,
+        count: allRecords.length,
+        leafCount: allRecords.filter(isLeafRecord).length,
       },
       ...chapterRows,
     ];
@@ -1104,7 +1167,7 @@
           data-chapter-catalog-code="${escapeHtml(row.code)}"
         >
           <span class="chapter-practice-catalog__label">${escapeHtml(row.label)}</span>
-          <span class="chapter-practice-catalog__count">${escapeHtml(String(row.count))} \u984c\u578b</span>
+          <span class="chapter-practice-catalog__count">${escapeHtml(String(row.leafCount ?? row.count))} \u5c0f\u985e / ${escapeHtml(String(row.count))} \u984c\u578b</span>
         </button>
       `)
       .join("");

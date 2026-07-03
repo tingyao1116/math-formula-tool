@@ -31,6 +31,8 @@
     playerImportInput:             document.getElementById("playerImportInput"),
     playerImportStatus:            document.getElementById("playerImportStatus"),
     playlistPlayerStatus:          document.getElementById("playlistPlayerStatus"),
+    playlistShareButton:           document.getElementById("playlistShareButton"),
+    playlistCopyLinkButton:        document.getElementById("playlistCopyLinkButton"),
     playlistPlayerTitle:           document.getElementById("playlistPlayerTitle"),
     playlistPlayerMeta:            document.getElementById("playlistPlayerMeta"),
     playlistPlayerDescription:     document.getElementById("playlistPlayerDescription"),
@@ -396,12 +398,19 @@
       if (elements.playlistPlayerPracticeCount) elements.playlistPlayerPracticeCount.textContent = "";
       if (elements.playlistPlayerPracticeList)  elements.playlistPlayerPracticeList.innerHTML = "";
       if (elements.scheduleCalendarSection)     elements.scheduleCalendarSection.hidden = true;
+      if (elements.playlistShareButton)    elements.playlistShareButton.hidden = true;
+      if (elements.playlistCopyLinkButton) elements.playlistCopyLinkButton.hidden = true;
       renderPlayerCard();
       return;
     }
 
     if (elements.playlistPlayerTitle)       elements.playlistPlayerTitle.textContent     = playlist.title;
     if (elements.playlistPlayerDescription) elements.playlistPlayerDescription.textContent = playlist.description || "";
+    const isStudentFocus =
+      document.body.classList.contains("player-focus-task") ||
+      document.body.classList.contains("player-focus-schedule");
+    if (elements.playlistShareButton)    elements.playlistShareButton.hidden = isStudentFocus;
+    if (elements.playlistCopyLinkButton) elements.playlistCopyLinkButton.hidden = isStudentFocus;
 
     const isSchedule = playlist.playlistType === "日程型" && !!playlist.scheduleConfig;
     if (isSchedule) {
@@ -532,12 +541,18 @@
     const summaryAnswer = state.generated.summaryAnswers[index] || "";
     const detailAnswer  = state.generated.answers[index] || summaryAnswer;
 
+    const topicIds   = getActivePracticeIds();
+    const topicPos   = topicIds.indexOf(state.practiceId);
+    const topicLabel = topicPos >= 0
+      ? `第 ${topicPos + 1} / ${topicIds.length} 個主題`
+      : "";
+
     if (elements.playlistPlayerCard) {
       elements.playlistPlayerCard.className = "ability-session-card";
       elements.playlistPlayerCard.innerHTML = `
         <div class="ability-session-card__meta">
-          <span class="meta-chip">${escapeHtml(practiceRecord.chapterCode || "未標記章節")}</span>
-          <span class="meta-chip">${escapeHtml(practiceRecord.difficulty || "未標記難度")}</span>
+          <strong class="playlist-player-topic-title">${escapeHtml(practiceRecord.title || state.practiceId)}</strong>
+          ${topicLabel ? `<span class="meta-chip">${escapeHtml(topicLabel)}</span>` : ""}
           <span class="meta-chip">第 ${index+1} / ${state.generated.questions.length} 題</span>
           ${statusChip}
         </div>
@@ -630,6 +645,29 @@
   elements.playlistNextPracticeButton?.addEventListener("click", async () => { await movePractice(1); });
   elements.playlistGenerateButton?.addEventListener("click", async () => { await generateCurrentPractice(); });
 
+  // ── 學生連結：以目前清單為主的獨立練習頁（可傳給學生）─────────────────────
+  function buildStudentLink() {
+    if (!state.playlistId) return "";
+    const base = window.location.href.split(/[?#]/)[0];
+    return `${base}?playlist=${encodeURIComponent(state.playlistId)}`;
+  }
+
+  elements.playlistShareButton?.addEventListener("click", () => {
+    const url = buildStudentLink();
+    if (url) window.open(url, "_blank");
+  });
+
+  elements.playlistCopyLinkButton?.addEventListener("click", async () => {
+    const url = buildStudentLink();
+    if (!url) return;
+    try {
+      await navigator.clipboard.writeText(url);
+      if (elements.playlistPlayerStatus) elements.playlistPlayerStatus.textContent = "已複製學生連結，貼給學生即可直接練習這份清單。";
+    } catch (_error) {
+      if (elements.playlistPlayerStatus) elements.playlistPlayerStatus.textContent = `學生連結：${url}`;
+    }
+  });
+
   elements.calPrevMonth?.addEventListener("click", () => {
     if (state.calMonth === 0) { state.calYear -= 1; state.calMonth = 11; }
     else state.calMonth -= 1;
@@ -660,5 +698,27 @@
     event.target.value = "";
   });
 
+  // ── 學生模式：網址帶 ?playlist=<id> 時直接鎖定該清單練習 ──────────────────
+  function initFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const playlistId = String(params.get("playlist") || "").trim();
+    if (!playlistId) return false;
+    const playlist = playlistStore.getById(playlistId);
+    if (!playlist) return false;
+    state.playlistId = playlistId;
+    const isSchedule = playlist.playlistType === "日程型" && !!playlist.scheduleConfig;
+    document.body.classList.add(isSchedule ? "player-focus-schedule" : "player-focus-task");
+    if (isSchedule && playlist.scheduleConfig?.startDate) {
+      const start = new Date(playlist.scheduleConfig.startDate + "T12:00:00");
+      state.calYear = start.getFullYear();
+      state.calMonth = start.getMonth();
+    }
+    return !isSchedule;
+  }
+
+  const autoGenerate = initFromUrl();
   render();
+  if (autoGenerate && state.practiceId) {
+    generateCurrentPractice();
+  }
 })();

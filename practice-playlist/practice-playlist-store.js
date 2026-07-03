@@ -60,11 +60,64 @@
     };
   }
 
+  // 各章「主題串排序 + 練習本體即時資料」合併後的題型順序
+  // （主題串只存排序，新題型自動附加在該章最後）
+  function buildMergedChapterOrderMap() {
+    const byId = window.practiceLibraryStore?.byId || {};
+    const liveMap = new Map();
+    Object.values(byId).forEach((record) => {
+      if (!record || record.enabled === false) return;
+      const code = String(record.chapterCode || "").trim();
+      const id = String(record.id || "").trim();
+      if (!code || !id) return;
+      if (!liveMap.has(code)) liveMap.set(code, []);
+      liveMap.get(code).push(id);
+    });
+    const chains = Array.isArray(window.practiceThemeChainData) ? window.practiceThemeChainData : [];
+    chains.forEach((chain) => {
+      const code = String(chain?.chapterCode || "").trim();
+      if (!code || !liveMap.has(code)) return;
+      const live = liveMap.get(code);
+      const liveSet = new Set(live);
+      const stored = (Array.isArray(chain.practiceIds) ? chain.practiceIds : [])
+        .map((pid) => String(pid || "").trim())
+        .filter((pid) => liveSet.has(pid));
+      const storedSet = new Set(stored);
+      liveMap.set(code, stored.concat(live.filter((pid) => !storedSet.has(pid))));
+    });
+    return liveMap;
+  }
+
+  // 自訂主題串的 items（小類/大類）即時展開成題型清單
+  function expandCustomChainItems(chain, mergedChapterMap) {
+    const items = Array.isArray(chain?.items) ? chain.items : [];
+    if (!items.length) {
+      return Array.isArray(chain?.practiceIds) ? chain.practiceIds : [];
+    }
+    const expanded = [];
+    const seen = new Set();
+    items.forEach((item) => {
+      if (!item || typeof item !== "object") return;
+      const kind = String(item.type || "practice");
+      const itemId = String(item.id || "").trim();
+      if (!itemId) return;
+      const ids = kind === "chapter" ? (mergedChapterMap.get(itemId) || []) : [itemId];
+      ids.forEach((pid) => {
+        if (!seen.has(pid)) {
+          seen.add(pid);
+          expanded.push(pid);
+        }
+      });
+    });
+    return expanded;
+  }
+
   // GUI 自訂主題串（data/practice-custom-theme-chains.js，單向同步、網頁只讀取播放）
   function loadCustomThemePlaylists() {
     const chains = Array.isArray(window.practiceCustomThemeChainData)
       ? window.practiceCustomThemeChainData
       : [];
+    const mergedChapterMap = buildMergedChapterOrderMap();
     return chains
       .filter((chain) => chain && chain.enabled !== false && String(chain.id || "").trim())
       .map((chain) => {
@@ -78,7 +131,7 @@
           grade: String(chain.grade || "全部年級").trim() || "全部年級",
           playlistType: "任務型",
           playlistCategory: category === "自訂" ? "其他" : category,
-          practiceIds: Array.isArray(chain.practiceIds) ? chain.practiceIds : [],
+          practiceIds: expandCustomChainItems(chain, mergedChapterMap),
           questionCount: Number(chain.questionCount) || 5,
           enabled: chain.enabled !== false,
           updatedAt: chain.updatedAt,

@@ -1,7 +1,7 @@
 // AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
 // Source: program-db/database/practice-theme-db.json
-// 主題串數：164、題型總數：2847
-// 最後更新：2026-07-02T15:51:49.240429+00:00
+// 主題串數：164、題型總數：2771
+// 最後更新：2026-07-03T01:20:52.645Z
 window.practiceThemeChainData = [
   {
     "id": "theme-e4-1-1",
@@ -18,7 +18,6 @@ window.practiceThemeChainData = [
       "practice-e4-1-1-large-number-overview-mixed",
       "practice-e4-1-1-number-comparison-drill",
       "practice-e4-1-1-place-value-decomposition-drill",
-      "practice-e4-1-1-reading-place-value-mixed",
       "practice-e4-1-1-unit-conversion-drill",
       "practice-e4-1-1-unit-sequence-mixed",
       "practice-e4-1-1-zero-reading-writing-drill"
@@ -112,8 +111,7 @@ window.practiceThemeChainData = [
       "practice-e4-1-5-km-m-basic-conversion-drill",
       "practice-e4-1-5-km-m-cm-conversion-drill",
       "practice-e4-1-5-km-m-compound-conversion-drill",
-      "practice-e4-1-5-length-compare-drill",
-      "practice-e4-1-5-multi-unit-conversion-mixed"
+      "practice-e4-1-5-length-compare-drill"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -135,8 +133,7 @@ window.practiceThemeChainData = [
       "practice-e4-1-6-properties-mixed",
       "practice-e4-1-6-side-angle-combined-classify-drill",
       "practice-e4-1-6-side-classify-drill",
-      "practice-e4-1-6-special-angle-drill",
-      "practice-e4-1-6-special-angle-perimeter-mixed"
+      "practice-e4-1-6-special-angle-drill"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -160,8 +157,7 @@ window.practiceThemeChainData = [
       "practice-e4-1-7-integer-decimal-subtract-drill",
       "practice-e4-1-7-place-value-alignment-mixed",
       "practice-e4-1-7-sum-difference-application-mixed",
-      "practice-e4-1-7-two-step-application-mixed",
-      "practice-e4-1-7-unit-conversion-mixed"
+      "practice-e4-1-7-two-step-application-mixed"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -175,14 +171,10 @@ window.practiceThemeChainData = [
     "practiceIds": [
       "practice-e4-1-8-add-sub-left-to-right-drill",
       "practice-e4-1-8-application-expression-drill",
-      "practice-e4-1-8-application-mixed",
       "practice-e4-1-8-bracket-order-drill",
-      "practice-e4-1-8-bracket-order-mixed",
       "practice-e4-1-8-mixed-no-bracket-drill",
       "practice-e4-1-8-mul-div-left-to-right-drill",
       "practice-e4-1-8-order-judge-drill",
-      "practice-e4-1-8-order-judge-mixed",
-      "practice-e4-1-8-precedence-mixed",
       "practice-e4-1-8-same-level-order-mixed"
     ],
     "questionCount": 5,
@@ -222,15 +214,10 @@ window.practiceThemeChainData = [
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
       "practice-e4-2-1-divide-standard-drill",
-      "practice-e4-2-1-divide-standard-mixed",
       "practice-e4-2-1-divide-zero-ending-drill",
-      "practice-e4-2-1-divide-zero-ending-mixed",
       "practice-e4-2-1-multiply-standard-drill",
-      "practice-e4-2-1-multiply-standard-mixed",
       "practice-e4-2-1-multiply-zero-ending-drill",
-      "practice-e4-2-1-multiply-zero-ending-mixed",
-      "practice-e4-2-1-word-problem-drill",
-      "practice-e4-2-1-word-problem-mixed"
+      "practice-e4-2-1-word-problem-drill"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -264,15 +251,10 @@ window.practiceThemeChainData = [
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
       "practice-e4-2-3-ceil-estimate-drill",
-      "practice-e4-2-3-ceil-estimate-mixed",
       "practice-e4-2-3-estimate-application-drill",
-      "practice-e4-2-3-estimate-application-mixed",
       "practice-e4-2-3-exact-approx-judge-drill",
-      "practice-e4-2-3-exact-approx-judge-mixed",
       "practice-e4-2-3-floor-estimate-drill",
-      "practice-e4-2-3-floor-estimate-mixed",
-      "practice-e4-2-3-round-nearest-reverse-drill",
-      "practice-e4-2-3-round-nearest-reverse-mixed"
+      "practice-e4-2-3-round-nearest-reverse-drill"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -285,15 +267,10 @@ window.practiceThemeChainData = [
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
       "practice-e4-2-4-calendar-pattern-drill",
-      "practice-e4-2-4-calendar-pattern-mixed",
       "practice-e4-2-4-number-table-drill",
-      "practice-e4-2-4-number-table-mixed",
       "practice-e4-2-4-parity-digit-drill",
-      "practice-e4-2-4-parity-digit-mixed",
       "practice-e4-2-4-pattern-sequence-drill",
-      "practice-e4-2-4-pattern-sequence-mixed",
-      "practice-e4-2-4-seat-number-drill",
-      "practice-e4-2-4-seat-number-mixed"
+      "practice-e4-2-4-seat-number-drill"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -306,15 +283,10 @@ window.practiceThemeChainData = [
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
       "practice-e4-2-5-decimal-concept-drill",
-      "practice-e4-2-5-decimal-concept-mixed",
       "practice-e4-2-5-decimal-multiply-basic-drill",
-      "practice-e4-2-5-decimal-multiply-basic-mixed",
       "practice-e4-2-5-decimal-single-step-word-drill",
-      "practice-e4-2-5-decimal-single-step-word-mixed",
       "practice-e4-2-5-decimal-two-step-word-drill",
-      "practice-e4-2-5-decimal-two-step-word-mixed",
-      "practice-e4-2-5-decimal-zero-ending-drill",
-      "practice-e4-2-5-decimal-zero-ending-mixed"
+      "practice-e4-2-5-decimal-zero-ending-drill"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -348,16 +320,12 @@ window.practiceThemeChainData = [
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
       "practice-e4-2-7-decimal-conversion-drill",
-      "practice-e4-2-7-decimal-conversion-mixed",
       "practice-e4-2-7-discrete-context-drill",
-      "practice-e4-2-7-discrete-context-mixed",
       "practice-e4-2-7-equivalent-basic-mixed",
       "practice-e4-2-7-equivalent-integer-drill",
       "practice-e4-2-7-expand-equivalent-drill",
       "practice-e4-2-7-fraction-decimal-compare-drill",
-      "practice-e4-2-7-fraction-decimal-compare-mixed",
-      "practice-e4-2-7-number-line-drill",
-      "practice-e4-2-7-number-line-mixed"
+      "practice-e4-2-7-number-line-drill"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -373,7 +341,6 @@ window.practiceThemeChainData = [
       "practice-e4-2-8-add-sub-mixed-drill",
       "practice-e4-2-8-add-sub-shortcut-mixed",
       "practice-e4-2-8-consecutive-addition-drill",
-      "practice-e4-2-8-consecutive-addition-mixed",
       "practice-e4-2-8-mul-div-application-drill",
       "practice-e4-2-8-mul-div-application-mixed",
       "practice-e4-2-8-mul-div-first-divide-drill",
@@ -792,7 +759,6 @@ window.practiceThemeChainData = [
       "practice-e5-2-3-fraction-base-area-drill",
       "practice-e5-2-3-inner-dimension-capacity-drill",
       "practice-e5-2-3-large-application-drill",
-      "practice-e5-2-3-large-one-subtype",
       "practice-e5-2-3-large-unit-convert-drill",
       "practice-e5-2-3-overflow-compare-two-subtypes",
       "practice-e5-2-3-overflow-volume-drill",
@@ -812,7 +778,6 @@ window.practiceThemeChainData = [
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
       "practice-e5-2-4-application-drill",
-      "practice-e5-2-4-application-one-subtype",
       "practice-e5-2-4-clever-grouping-drill",
       "practice-e5-2-4-compare-product-drill",
       "practice-e5-2-4-decimal-decimal-direct-drill",
@@ -841,7 +806,6 @@ window.practiceThemeChainData = [
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
       "practice-e5-2-5-chinese-convert-drill",
-      "practice-e5-2-5-compare-one-subtype",
       "practice-e5-2-5-expanded-notation-drill",
       "practice-e5-2-5-large-compare-drill",
       "practice-e5-2-5-line-condition-drill",
@@ -884,8 +848,6 @@ window.practiceThemeChainData = [
       "practice-e5-2-6-integer-divide-decimal-drill",
       "practice-e5-2-6-quotient-rounding-drill",
       "practice-e5-2-6-quotient-zero-gap-drill",
-      "practice-e5-2-6-rounding-one-subtype",
-      "practice-e5-2-6-time-one-subtype",
       "practice-e5-2-6-time-unit-convert-drill"
     ],
     "questionCount": 5,
@@ -1062,21 +1024,17 @@ window.practiceThemeChainData = [
     "practiceIds": [
       "practice-e6-1-2-basics-four-subtypes",
       "practice-e6-1-2-comparison-drill",
-      "practice-e6-1-2-comparison-one-subtype",
       "practice-e6-1-2-general-fraction-division-drill",
       "practice-e6-1-2-geometry-inverse-drill",
-      "practice-e6-1-2-geometry-one-subtype",
       "practice-e6-1-2-integer-divide-fraction-drill",
       "practice-e6-1-2-part-to-whole-drill",
       "practice-e6-1-2-partition-drill",
       "practice-e6-1-2-rate-application-drill",
-      "practice-e6-1-2-rate-one-subtype",
       "practice-e6-1-2-remainder-cut-drill",
       "practice-e6-1-2-same-denominator-division-drill",
       "practice-e6-1-2-simplify-fraction-drill",
       "practice-e6-1-2-unit-rate-drill",
-      "practice-e6-1-2-unit-two-subtypes",
-      "practice-e6-1-2-whole-one-subtype"
+      "practice-e6-1-2-unit-two-subtypes"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -1089,11 +1047,8 @@ window.practiceThemeChainData = [
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
       "practice-e6-1-3-chicken-rabbit-drill",
-      "practice-e6-1-3-chicken-rabbit-one-subtype",
       "practice-e6-1-3-cycle-drill",
-      "practice-e6-1-3-cycle-one-subtype",
       "practice-e6-1-3-difference-invariant-drill",
-      "practice-e6-1-3-difference-one-subtype",
       "practice-e6-1-3-growth-basic-drill",
       "practice-e6-1-3-growth-inverse-drill",
       "practice-e6-1-3-growth-two-subtypes",
@@ -1101,11 +1056,8 @@ window.practiceThemeChainData = [
       "practice-e6-1-3-interval-index-drill",
       "practice-e6-1-3-interval-two-subtypes",
       "practice-e6-1-3-product-invariant-drill",
-      "practice-e6-1-3-product-one-subtype",
       "practice-e6-1-3-ratio-invariant-drill",
-      "practice-e6-1-3-ratio-one-subtype",
-      "practice-e6-1-3-sum-invariant-drill",
-      "practice-e6-1-3-sum-one-subtype"
+      "practice-e6-1-3-sum-invariant-drill"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -1131,7 +1083,6 @@ window.practiceThemeChainData = [
       "practice-e6-1-4-packaging-drill",
       "practice-e6-1-4-rate-percent-drill",
       "practice-e6-1-4-remainder-division-drill",
-      "practice-e6-1-4-remainder-one-subtype",
       "practice-e6-1-4-unit-rate-drill",
       "practice-e6-1-4-unit-two-subtypes"
     ],
@@ -1156,7 +1107,6 @@ window.practiceThemeChainData = [
       "practice-e6-1-5-distribution-two-subtypes",
       "practice-e6-1-5-equivalent-ratio-drill",
       "practice-e6-1-5-exchange-drill",
-      "practice-e6-1-5-geometry-one-subtype",
       "practice-e6-1-5-geometry-ratio-drill",
       "practice-e6-1-5-part-whole-drill",
       "practice-e6-1-5-percent-application-drill",
@@ -1177,11 +1127,9 @@ window.practiceThemeChainData = [
       "practice-e6-1-6-circular-interval-drill",
       "practice-e6-1-6-circumference-drill",
       "practice-e6-1-6-foundation-three-subtypes",
-      "practice-e6-1-6-interval-one-subtype",
       "practice-e6-1-6-inverse-circumference-drill",
       "practice-e6-1-6-motion-two-subtypes",
       "practice-e6-1-6-multiplier-drill",
-      "practice-e6-1-6-multiplier-one-subtype",
       "practice-e6-1-6-pi-22-over-7-drill",
       "practice-e6-1-6-pi-concept-drill",
       "practice-e6-1-6-rolling-distance-drill",
@@ -1205,15 +1153,12 @@ window.practiceThemeChainData = [
       "practice-e6-1-7-circle-area-direct-drill",
       "practice-e6-1-7-circle-area-from-circumference-drill",
       "practice-e6-1-7-composite-area-drill",
-      "practice-e6-1-7-composite-one-subtype",
       "practice-e6-1-7-foundation-three-subtypes",
       "practice-e6-1-7-ring-area-drill",
-      "practice-e6-1-7-ring-one-subtype",
       "practice-e6-1-7-sector-area-drill",
       "practice-e6-1-7-sector-fraction-drill",
       "practice-e6-1-7-sector-two-subtypes",
-      "practice-e6-1-7-tether-area-drill",
-      "practice-e6-1-7-tether-one-subtype"
+      "practice-e6-1-7-tether-area-drill"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -1226,13 +1171,11 @@ window.practiceThemeChainData = [
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
       "practice-e6-1-8-basic-three-subtypes",
-      "practice-e6-1-8-compare-one-subtype",
       "practice-e6-1-8-compare-speed-drill",
       "practice-e6-1-8-convert-three-subtypes",
       "practice-e6-1-8-distance-basic-drill",
       "practice-e6-1-8-double-unit-convert-drill",
       "practice-e6-1-8-length-unit-convert-drill",
-      "practice-e6-1-8-proportion-one-subtype",
       "practice-e6-1-8-proportionality-drill",
       "practice-e6-1-8-rate-basic-drill",
       "practice-e6-1-8-time-basic-drill",
@@ -1622,7 +1565,6 @@ window.practiceThemeChainData = [
     "chapterCode": "j1-1-3",
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
-      "practice-j1-1-3-application-one-subtype",
       "practice-j1-1-3-exponent-law-mixed-rule-drill",
       "practice-j1-1-3-exponent-law-single-rule-drill",
       "practice-j1-1-3-exponent-law-three-subtypes",
@@ -1645,7 +1587,6 @@ window.practiceThemeChainData = [
       "practice-j1-1-3-power-compare-parity-drill",
       "practice-j1-1-3-power-compare-positive-base-drill",
       "practice-j1-1-3-power-compare-unary-minus-drill",
-      "practice-j1-1-3-power-concept-one-subtype",
       "practice-j1-1-3-power-of-power-basic-drill",
       "practice-j1-1-3-power-of-power-four-subtypes",
       "practice-j1-1-3-power-of-power-negative-base-drill",
@@ -1670,26 +1611,19 @@ window.practiceThemeChainData = [
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
       "practice-j1-1-4-large-to-scientific-drill",
-      "practice-j1-1-4-large-to-scientific-one-subtype",
       "practice-j1-1-4-scientific-add-sub-drill",
-      "practice-j1-1-4-scientific-add-sub-one-subtype",
       "practice-j1-1-4-scientific-add-sub-standard-drill",
       "practice-j1-1-4-scientific-compare-drill",
-      "practice-j1-1-4-scientific-compare-one-subtype",
       "practice-j1-1-4-scientific-compare-standard-drill",
       "practice-j1-1-4-scientific-context-drill",
-      "practice-j1-1-4-scientific-context-one-subtype",
       "practice-j1-1-4-scientific-convert-drill",
       "practice-j1-1-4-scientific-digit-reading-drill",
       "practice-j1-1-4-scientific-mul-div-drill",
-      "practice-j1-1-4-scientific-mul-div-one-subtype",
       "practice-j1-1-4-scientific-mul-div-standard-drill",
       "practice-j1-1-4-scientific-normalize-drill",
       "practice-j1-1-4-scientific-to-plain-drill",
-      "practice-j1-1-4-scientific-to-plain-one-subtype",
       "practice-j1-1-4-scientific-unit-conversion-drill",
-      "practice-j1-1-4-small-to-scientific-drill",
-      "practice-j1-1-4-small-to-scientific-one-subtype"
+      "practice-j1-1-4-small-to-scientific-drill"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -1754,12 +1688,10 @@ window.practiceThemeChainData = [
     "chapterCode": "j1-2-3",
     "description": "由小章節自動建立的主題串，順序照母資料。",
     "practiceIds": [
-      "practice-j1-2-3-bracket-mixed-four-subtypes",
       "practice-j1-2-3-bracket-mixed-operation-application",
       "practice-j1-2-3-fraction-add-sub-absolute-drill",
       "practice-j1-2-3-fraction-add-sub-brackets-drill",
       "practice-j1-2-3-fraction-add-sub-negative-drill",
-      "practice-j1-2-3-fraction-application-one-subtype",
       "practice-j1-2-3-fraction-compare-drill",
       "practice-j1-2-3-fraction-distributive-common-factor-drill",
       "practice-j1-2-3-fraction-distributive-regroup-drill",
@@ -2484,9 +2416,7 @@ window.practiceThemeChainData = [
     "practiceIds": [
       "practice-j4-3-1-complementary-supplementary-angles",
       "practice-j4-3-1-isosceles-angle-drill",
-      "practice-j4-3-1-polygon-angle-mixed",
-      "practice-j4-3-1-polygon-arithmetic-angles",
-      "practice-j4-3-1-triangle-exterior-angle"
+      "practice-j4-3-1-polygon-arithmetic-angles"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -2516,8 +2446,6 @@ window.practiceThemeChainData = [
     "practiceIds": [
       "practice-j4-3-3-congruence-algebra-drill",
       "practice-j4-3-3-congruence-criterion",
-      "practice-j4-3-3-congruence-mixed",
-      "practice-j4-3-3-congruent-correspondence",
       "practice-j4-3-3-isosceles-median-properties"
     ],
     "questionCount": 5,
@@ -2533,9 +2461,7 @@ window.practiceThemeChainData = [
       "practice-j4-3-4-exterior-angle-side-comparison-drill",
       "practice-j4-3-4-hinge-theorem-drill",
       "practice-j4-3-4-pythagorean-classification",
-      "practice-j4-3-4-side-angle-comparison",
-      "practice-j4-3-4-triangle-inequality-range",
-      "practice-j4-3-4-triangle-side-angle-mixed"
+      "practice-j4-3-4-triangle-inequality-range"
     ],
     "questionCount": 5,
     "enabled": true,
@@ -2549,7 +2475,6 @@ window.practiceThemeChainData = [
     "practiceIds": [
       "practice-j4-4-1-bent-line-parallel-drill",
       "practice-j4-4-1-parallel-perpendicular-angles",
-      "practice-j4-4-1-transversal-find-angle",
       "practice-j4-4-1-transversal-solve-x"
     ],
     "questionCount": 5,
@@ -2586,7 +2511,6 @@ window.practiceThemeChainData = [
       "practice-j4-4-3-parallel-division",
       "practice-j4-4-3-right-trapezoid-drill",
       "practice-j4-4-3-trapezoid-area",
-      "practice-j4-4-3-trapezoid-core-mixed",
       "practice-j4-4-3-trapezoid-midline-basic"
     ],
     "questionCount": 5,

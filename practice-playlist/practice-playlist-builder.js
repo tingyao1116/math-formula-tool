@@ -167,6 +167,32 @@
     autoGeneratingSamples: false,
   };
 
+  // 大類/小類關係（唯讀呈現）：大類 = relatedPracticeIds 非空（由小類合併生成）
+  const relationMaps = (() => {
+    const childrenByParent = new Map();
+    const parentsByChild = new Map();
+    Object.values(practiceLibrary.byId || {}).forEach((record) => {
+      const pid = String(record?.id || "").trim();
+      const kids = (Array.isArray(record?.relatedPracticeIds) ? record.relatedPracticeIds : [])
+        .map((value) => String(value || "").trim())
+        .filter(Boolean);
+      if (!pid || !kids.length) return;
+      childrenByParent.set(pid, kids);
+      kids.forEach((kid) => {
+        if (!parentsByChild.has(kid)) parentsByChild.set(kid, []);
+        parentsByChild.get(kid).push(pid);
+      });
+    });
+    return { childrenByParent, parentsByChild };
+  })();
+
+  function relationMarker(practiceId) {
+    const kids = relationMaps.childrenByParent.get(practiceId);
+    if (kids && kids.length) return `大類·含${kids.length}小類`;
+    if (relationMaps.parentsByChild.has(practiceId)) return "小類";
+    return "";
+  }
+
   function escapeHtml(value) {
     return String(value ?? "")
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -345,6 +371,7 @@
               <td><input type="checkbox" data-practice-id="${escapeHtml(practice.id)}" ${isSelected(practice.id) ? "checked" : ""} /></td>
               <td class="playlist-title-cell">
                 <strong>${escapeHtml(practice.title)}</strong>
+                ${relationMarker(practice.id) ? `<span class="meta-chip">${escapeHtml(relationMarker(practice.id))}</span>` : ""}
                 <div class="detail-note">${escapeHtml(practice.id)}</div>
               </td>
               <td>${escapeHtml(practice.chapterCode || "未分類")}</td>
@@ -407,9 +434,13 @@
       elements.selectedPracticeList.innerHTML = `<p class="detail-note">目前還沒有選取任何題型。</p>`;
       return;
     }
+    const selectedIdSet = new Set(selectedIds);
     elements.selectedPracticeList.innerHTML = selectedIds.map((practiceId, index) => {
       const practice = practices.find((item) => item.id === practiceId);
-      const title = practice?.title || practiceId;
+      // 資料夾式呈現：小類（檔案）若其大類（資料夾）也在清單中，用 └ 縮排顯示
+      const owners = relationMaps.parentsByChild.get(practiceId) || [];
+      const isFiledChild = owners.some((owner) => selectedIdSet.has(owner));
+      const title = `${isFiledChild ? "└ " : ""}${practice?.title || practiceId}`;
       const chapterCode = practice?.chapterCode || "";
       return `
         <div class="playlist-selected-card">
@@ -417,6 +448,7 @@
             <div class="playlist-selected-card__title-row">
               <span class="meta-chip">#${index + 1}</span>
               <strong>${escapeHtml(title)}</strong>
+              ${relationMarker(practiceId) ? `<span class="meta-chip">${escapeHtml(relationMarker(practiceId))}</span>` : ""}
               <button type="button" class="ghost-button playlist-mini-button" data-move-up="${escapeHtml(practiceId)}" title="上移">↑</button>
               <button type="button" class="ghost-button playlist-mini-button" data-move-down="${escapeHtml(practiceId)}" title="下移">↓</button>
             </div>

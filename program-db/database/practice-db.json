@@ -5,7 +5,7 @@
     "assignmentCount": 0,
     "practiceCount": 2846,
     "bindingCount": 0,
-    "updatedAt": "2026-07-02T12:36:10.106322+00:00",
+    "updatedAt": "2026-07-03T01:20:31.267301+00:00",
     "totalPractices": 2847,
     "totalBindings": 0
   },
@@ -1388,7 +1388,6 @@
       "relatedPracticeIds": [
         "practice-e4-1-1-arabic-chinese-conversion-drill",
         "practice-e4-1-1-place-value-decomposition-drill",
-        "practice-e4-1-1-number-comparison-drill",
         "practice-e4-1-1-large-add-subtract-drill"
       ],
       "chapterCode": "e4-1-1",
@@ -1485,7 +1484,7 @@
     },
     {
       "id": "practice-e4-1-1-reading-place-value-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "讀寫與位值綜合",
       "generatorKey": "e4-1-1-reading-place-value-mixed",
@@ -1493,10 +1492,7 @@
       "questionCount": 5,
       "subtypeCount": 4,
       "relatedPracticeIds": [
-        "practice-e4-1-1-arabic-chinese-conversion-drill",
-        "practice-e4-1-1-zero-reading-writing-drill",
-        "practice-e4-1-1-place-value-decomposition-drill",
-        "practice-e4-1-1-unit-conversion-drill"
+        "practice-e4-1-1-zero-reading-writing-drill"
       ],
       "chapterCode": "e4-1-1",
       "chapter": "一億以內的數",
@@ -1816,7 +1812,6 @@
       "subtypeCount": 3,
       "relatedPracticeIds": [
         "practice-e4-1-2-three-digit-times-two-digit-drill",
-        "practice-e4-1-2-zero-containing-drill",
         "practice-e4-1-2-four-digit-times-two-digit-drill"
       ],
       "chapterCode": "e4-1-2",
@@ -2310,10 +2305,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 2,
-      "relatedPracticeIds": [
-        "practice-e4-1-3-angle-composition-drill",
-        "practice-e4-1-3-rotation-angle-drill"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "e4-1-3",
       "chapter": "角度",
       "domain": "幾何",
@@ -2363,10 +2355,7 @@
       "difficulty": "easy",
       "questionCount": 5,
       "subtypeCount": 2,
-      "relatedPracticeIds": [
-        "practice-e4-1-3-protractor-reading-drill",
-        "practice-e4-1-3-angle-classification-drill"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "e4-1-3",
       "chapter": "角度",
       "domain": "幾何",
@@ -2600,9 +2589,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e4-1-4-estimate-division-drill"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "e4-1-4",
       "chapter": "整數的除法",
       "domain": "數與量",
@@ -3019,11 +3006,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 3,
-      "relatedPracticeIds": [
-        "practice-e4-1-5-km-m-basic-conversion-drill",
-        "practice-e4-1-5-km-m-cm-conversion-drill",
-        "practice-e4-1-5-km-m-add-subtract-drill"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "e4-1-5",
       "chapter": "公里",
       "domain": "數與量",
@@ -3220,7 +3203,7 @@
     },
     {
       "id": "practice-e4-1-5-multi-unit-conversion-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "跨單位換算綜合",
       "generatorKey": "e4-1-5-multi-unit-conversion-mixed",
@@ -3228,7 +3211,6 @@
       "questionCount": 5,
       "subtypeCount": 2,
       "relatedPracticeIds": [
-        "practice-e4-1-5-km-m-compound-conversion-drill",
         "practice-e4-1-5-km-m-cm-conversion-drill"
       ],
       "chapterCode": "e4-1-5",
@@ -3510,7 +3492,6 @@
       "questionCount": 5,
       "subtypeCount": 3,
       "relatedPracticeIds": [
-        "practice-e4-1-6-side-angle-combined-classify-drill",
         "practice-e4-1-6-special-angle-drill",
         "practice-e4-1-6-perimeter-reverse-drill"
       ],
@@ -3642,7 +3623,7 @@
     },
     {
       "id": "practice-e4-1-6-special-angle-perimeter-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "特殊角與周長綜合",
       "generatorKey": "e4-1-6-special-angle-perimeter-mixed",
@@ -3650,9 +3631,7 @@
       "questionCount": 5,
       "subtypeCount": 3,
       "relatedPracticeIds": [
-        "practice-e4-1-6-special-angle-drill",
-        "practice-e4-1-6-perimeter-direct-drill",
-        "practice-e4-1-6-perimeter-reverse-drill"
+        "practice-e4-1-6-perimeter-direct-drill"
       ],
       "chapterCode": "e4-1-6",
       "chapter": "三角形",
@@ -4134,7 +4113,7 @@
     },
     {
       "id": "practice-e4-1-7-unit-conversion-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "單位換算混合",
       "generatorKey": "e4-1-7-unit-conversion-mixed",
@@ -4238,7 +4217,7 @@
     },
     {
       "id": "practice-e4-1-8-application-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "多步驟應用列式混合",
       "generatorKey": "e4-1-8-application-mixed",
@@ -4308,7 +4287,7 @@
     },
     {
       "id": "practice-e4-1-8-bracket-order-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "括號改變順序混合",
       "generatorKey": "e4-1-8-bracket-order-mixed",
@@ -4446,7 +4425,7 @@
     },
     {
       "id": "practice-e4-1-8-order-judge-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "順序概念辨析混合",
       "generatorKey": "e4-1-8-order-judge-mixed",
@@ -4482,7 +4461,7 @@
     },
     {
       "id": "practice-e4-1-8-precedence-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "先乘除後加減混合",
       "generatorKey": "e4-1-8-precedence-mixed",
@@ -5113,7 +5092,7 @@
     },
     {
       "id": "practice-e4-2-1-divide-standard-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "三、四位數除以三位數綜合",
       "generatorKey": "e4-2-1-divide-standard-mixed",
@@ -5181,7 +5160,7 @@
     },
     {
       "id": "practice-e4-2-1-divide-zero-ending-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "末幾位為 0 的除法綜合",
       "generatorKey": "e4-2-1-divide-zero-ending-mixed",
@@ -5249,7 +5228,7 @@
     },
     {
       "id": "practice-e4-2-1-multiply-standard-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "三、四位數乘以三位數綜合",
       "generatorKey": "e4-2-1-multiply-standard-mixed",
@@ -5317,7 +5296,7 @@
     },
     {
       "id": "practice-e4-2-1-multiply-zero-ending-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "末幾位為 0 的乘法綜合",
       "generatorKey": "e4-2-1-multiply-zero-ending-mixed",
@@ -5385,7 +5364,7 @@
     },
     {
       "id": "practice-e4-2-1-word-problem-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "多位數乘除生活應用綜合",
       "generatorKey": "e4-2-1-word-problem-mixed",
@@ -5461,10 +5440,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 2,
-      "relatedPracticeIds": [
-        "practice-e4-2-10-compare-order-drill",
-        "practice-e4-2-10-volume-conservation-drill"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "e4-2-10",
       "chapter": "立方公分",
       "domain": "數與量",
@@ -5497,10 +5473,7 @@
       "difficulty": "easy",
       "questionCount": 5,
       "subtypeCount": 2,
-      "relatedPracticeIds": [
-        "practice-e4-2-10-direct-count-drill",
-        "practice-e4-2-10-layered-count-drill"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "e4-2-10",
       "chapter": "立方公分",
       "domain": "數與量",
@@ -5639,10 +5612,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 2,
-      "relatedPracticeIds": [
-        "practice-e4-2-10-structured-count-drill",
-        "practice-e4-2-10-compare-order-drill"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "e4-2-10",
       "chapter": "立方公分",
       "domain": "數與量",
@@ -5987,11 +5957,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 3,
-      "relatedPracticeIds": [
-        "practice-e4-2-2-quadrilateral-classify-drill",
-        "practice-e4-2-2-structure-relations-drill",
-        "practice-e4-2-2-perimeter-direct-drill"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "e4-2-2",
       "chapter": "四邊形",
       "domain": "幾何",
@@ -6123,7 +6089,7 @@
     },
     {
       "id": "practice-e4-2-3-ceil-estimate-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "無條件進入法綜合",
       "generatorKey": "e4-2-3-ceil-estimate-mixed",
@@ -6193,7 +6159,7 @@
     },
     {
       "id": "practice-e4-2-3-estimate-application-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "概數估算應用綜合",
       "generatorKey": "e4-2-3-estimate-application-mixed",
@@ -6263,7 +6229,7 @@
     },
     {
       "id": "practice-e4-2-3-exact-approx-judge-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "概數與精確數判斷綜合",
       "generatorKey": "e4-2-3-exact-approx-judge-mixed",
@@ -6333,7 +6299,7 @@
     },
     {
       "id": "practice-e4-2-3-floor-estimate-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "無條件捨去法綜合",
       "generatorKey": "e4-2-3-floor-estimate-mixed",
@@ -6403,7 +6369,7 @@
     },
     {
       "id": "practice-e4-2-3-round-nearest-reverse-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "四捨五入與反推範圍綜合",
       "generatorKey": "e4-2-3-round-nearest-reverse-mixed",
@@ -6475,7 +6441,7 @@
     },
     {
       "id": "practice-e4-2-4-calendar-pattern-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "月曆日期規律綜合",
       "generatorKey": "e4-2-4-calendar-pattern-mixed",
@@ -6549,7 +6515,7 @@
     },
     {
       "id": "practice-e4-2-4-number-table-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "數字表格與百數表規律綜合",
       "generatorKey": "e4-2-4-number-table-mixed",
@@ -6623,7 +6589,7 @@
     },
     {
       "id": "practice-e4-2-4-parity-digit-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "奇偶運算與數字卡綜合",
       "generatorKey": "e4-2-4-parity-digit-mixed",
@@ -6697,7 +6663,7 @@
     },
     {
       "id": "practice-e4-2-4-pattern-sequence-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "圖形週期與鋪排預測綜合",
       "generatorKey": "e4-2-4-pattern-sequence-mixed",
@@ -6771,7 +6737,7 @@
     },
     {
       "id": "practice-e4-2-4-seat-number-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "座位門牌與週期編號綜合",
       "generatorKey": "e4-2-4-seat-number-mixed",
@@ -6843,7 +6809,7 @@
     },
     {
       "id": "practice-e4-2-5-decimal-concept-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "小數數線與分數換算綜合",
       "generatorKey": "e4-2-5-decimal-concept-mixed",
@@ -6913,7 +6879,7 @@
     },
     {
       "id": "practice-e4-2-5-decimal-multiply-basic-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "小數乘整數直式綜合",
       "generatorKey": "e4-2-5-decimal-multiply-basic-mixed",
@@ -6983,7 +6949,7 @@
     },
     {
       "id": "practice-e4-2-5-decimal-single-step-word-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "小數乘法生活單步題綜合",
       "generatorKey": "e4-2-5-decimal-single-step-word-mixed",
@@ -7053,7 +7019,7 @@
     },
     {
       "id": "practice-e4-2-5-decimal-two-step-word-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "兩步驟小數乘法應用綜合",
       "generatorKey": "e4-2-5-decimal-two-step-word-mixed",
@@ -7123,7 +7089,7 @@
     },
     {
       "id": "practice-e4-2-5-decimal-zero-ending-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "末位 0 與整十整百乘法綜合",
       "generatorKey": "e4-2-5-decimal-zero-ending-mixed",
@@ -7234,10 +7200,7 @@
       "difficulty": "easy",
       "questionCount": 5,
       "subtypeCount": 2,
-      "relatedPracticeIds": [
-        "practice-e4-2-6-perimeter-direct-drill",
-        "practice-e4-2-6-area-direct-drill"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "e4-2-6",
       "chapter": "周長與面積",
       "domain": "幾何",
@@ -7307,9 +7270,7 @@
       "subtypeCount": 4,
       "relatedPracticeIds": [
         "practice-e4-2-6-perimeter-direct-drill",
-        "practice-e4-2-6-area-direct-drill",
-        "practice-e4-2-6-reverse-inference-drill",
-        "practice-e4-2-6-perimeter-area-relation-drill"
+        "practice-e4-2-6-area-direct-drill"
       ],
       "chapterCode": "e4-2-6",
       "chapter": "周長與面積",
@@ -7549,7 +7510,7 @@
     },
     {
       "id": "practice-e4-2-7-decimal-conversion-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "分數小數互換綜合",
       "generatorKey": "e4-2-7-decimal-conversion-mixed",
@@ -7619,7 +7580,7 @@
     },
     {
       "id": "practice-e4-2-7-discrete-context-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "離散量等值分數綜合",
       "generatorKey": "e4-2-7-discrete-context-mixed",
@@ -7794,7 +7755,7 @@
     },
     {
       "id": "practice-e4-2-7-fraction-decimal-compare-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "分數小數比較綜合",
       "generatorKey": "e4-2-7-fraction-decimal-compare-mixed",
@@ -7864,7 +7825,7 @@
     },
     {
       "id": "practice-e4-2-7-number-line-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "分數數線綜合",
       "generatorKey": "e4-2-7-number-line-mixed",
@@ -8039,7 +8000,7 @@
     },
     {
       "id": "practice-e4-2-8-consecutive-addition-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "連加的簡化綜合",
       "generatorKey": "e4-2-8-consecutive-addition-mixed",
@@ -16761,7 +16722,7 @@
     },
     {
       "id": "practice-e5-2-3-large-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "大型容積生活應用",
       "generatorKey": "e5-2-3-large-one-subtype",
@@ -17037,7 +16998,7 @@
     },
     {
       "id": "practice-e5-2-4-application-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "生活情境中的小數乘法",
       "generatorKey": "e5-2-4-application-one-subtype",
@@ -17445,7 +17406,6 @@
       "subtypeCount": 3,
       "relatedPracticeIds": [
         "practice-e5-2-4-compare-product-drill",
-        "practice-e5-2-4-decimal-place-count-drill",
         "practice-e5-2-4-order-compare-drill"
       ],
       "chapterCode": "e5-2-4",
@@ -17635,7 +17595,7 @@
     },
     {
       "id": "practice-e5-2-5-compare-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "大數大小比較與排序",
       "generatorKey": "e5-2-5-compare-one-subtype",
@@ -18655,7 +18615,7 @@
     },
     {
       "id": "practice-e5-2-6-rounding-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "概數處理",
       "generatorKey": "e5-2-6-rounding-one-subtype",
@@ -18688,7 +18648,7 @@
     },
     {
       "id": "practice-e5-2-6-time-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "時間換算應用",
       "generatorKey": "e5-2-6-time-one-subtype",
@@ -21776,7 +21736,7 @@
     },
     {
       "id": "practice-e6-1-2-comparison-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "倍數關係判定",
       "generatorKey": "e6-1-2-comparison-one-subtype",
@@ -21876,7 +21836,7 @@
     },
     {
       "id": "practice-e6-1-2-geometry-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "幾何反推計算",
       "generatorKey": "e6-1-2-geometry-one-subtype",
@@ -22042,7 +22002,7 @@
     },
     {
       "id": "practice-e6-1-2-rate-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "速率與單位比例應用",
       "generatorKey": "e6-1-2-rate-one-subtype",
@@ -22242,7 +22202,7 @@
     },
     {
       "id": "practice-e6-1-2-whole-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "部分量求全體",
       "generatorKey": "e6-1-2-whole-one-subtype",
@@ -22309,7 +22269,7 @@
     },
     {
       "id": "practice-e6-1-3-chicken-rabbit-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "雞兔問題",
       "generatorKey": "e6-1-3-chicken-rabbit-one-subtype",
@@ -22377,7 +22337,7 @@
     },
     {
       "id": "practice-e6-1-3-cycle-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "週期循環規律",
       "generatorKey": "e6-1-3-cycle-one-subtype",
@@ -22445,7 +22405,7 @@
     },
     {
       "id": "practice-e6-1-3-difference-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "差不變",
       "generatorKey": "e6-1-3-difference-one-subtype",
@@ -22717,7 +22677,7 @@
     },
     {
       "id": "practice-e6-1-3-product-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "積不變",
       "generatorKey": "e6-1-3-product-one-subtype",
@@ -22785,7 +22745,7 @@
     },
     {
       "id": "practice-e6-1-3-ratio-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "商不變",
       "generatorKey": "e6-1-3-ratio-one-subtype",
@@ -22853,7 +22813,7 @@
     },
     {
       "id": "practice-e6-1-3-sum-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "和不變",
       "generatorKey": "e6-1-3-sum-one-subtype",
@@ -23361,7 +23321,7 @@
     },
     {
       "id": "practice-e6-1-4-remainder-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "有餘數的小數除法",
       "generatorKey": "e6-1-4-remainder-one-subtype",
@@ -23844,7 +23804,7 @@
     },
     {
       "id": "practice-e6-1-5-geometry-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "幾何比例與生活尺規應用",
       "generatorKey": "e6-1-5-geometry-one-subtype",
@@ -24184,7 +24144,7 @@
     },
     {
       "id": "practice-e6-1-6-interval-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "圓周上的間隔問題",
       "generatorKey": "e6-1-6-interval-one-subtype",
@@ -24322,7 +24282,7 @@
     },
     {
       "id": "practice-e6-1-6-multiplier-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "圓周長的倍數比較",
       "generatorKey": "e6-1-6-multiplier-one-subtype",
@@ -24762,7 +24722,7 @@
     },
     {
       "id": "practice-e6-1-7-composite-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "複合圖形面積計算",
       "generatorKey": "e6-1-7-composite-one-subtype",
@@ -24868,7 +24828,7 @@
     },
     {
       "id": "practice-e6-1-7-ring-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "環形與外圍步道面積",
       "generatorKey": "e6-1-7-ring-one-subtype",
@@ -25042,7 +25002,7 @@
     },
     {
       "id": "practice-e6-1-7-tether-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "拴繩活動範圍面積",
       "generatorKey": "e6-1-7-tether-one-subtype",
@@ -25114,7 +25074,7 @@
     },
     {
       "id": "practice-e6-1-8-compare-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "不同單位的快慢比較",
       "generatorKey": "e6-1-8-compare-one-subtype",
@@ -25319,7 +25279,7 @@
     },
     {
       "id": "practice-e6-1-8-proportion-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "倍數關係與正比練習",
       "generatorKey": "e6-1-8-proportion-one-subtype",
@@ -33792,7 +33752,7 @@
     },
     {
       "id": "practice-j1-1-3-application-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "指數應用",
       "generatorKey": "j1-1-3-application-one-subtype",
@@ -34629,7 +34589,7 @@
     },
     {
       "id": "practice-j1-1-3-power-concept-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "次方基礎觀念",
       "generatorKey": "j1-1-3-power-concept-one-subtype",
@@ -35097,7 +35057,7 @@
     },
     {
       "id": "practice-j1-1-4-large-to-scientific-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "將大數轉化為科學記號",
       "generatorKey": "j1-1-4-large-to-scientific-one-subtype",
@@ -35168,7 +35128,7 @@
     },
     {
       "id": "practice-j1-1-4-scientific-add-sub-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "科學記號的進階加減運算",
       "generatorKey": "j1-1-4-scientific-add-sub-one-subtype",
@@ -35271,7 +35231,7 @@
     },
     {
       "id": "practice-j1-1-4-scientific-compare-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "科學記號的大小比較",
       "generatorKey": "j1-1-4-scientific-compare-one-subtype",
@@ -35370,7 +35330,7 @@
     },
     {
       "id": "practice-j1-1-4-scientific-context-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "情境應用與單位轉換",
       "generatorKey": "j1-1-4-scientific-context-one-subtype",
@@ -35513,7 +35473,7 @@
     },
     {
       "id": "practice-j1-1-4-scientific-mul-div-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "科學記號的進階乘除運算",
       "generatorKey": "j1-1-4-scientific-mul-div-one-subtype",
@@ -35648,7 +35608,7 @@
     },
     {
       "id": "practice-j1-1-4-scientific-to-plain-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "將科學記號還原為一般數字",
       "generatorKey": "j1-1-4-scientific-to-plain-one-subtype",
@@ -35752,7 +35712,7 @@
     },
     {
       "id": "practice-j1-1-4-small-to-scientific-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "將極小數轉化為科學記號",
       "generatorKey": "j1-1-4-small-to-scientific-one-subtype",
@@ -36388,7 +36348,7 @@
     },
     {
       "id": "practice-j1-2-3-bracket-mixed-four-subtypes",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "多重括號與混合運算",
       "generatorKey": "j1-2-3-bracket-mixed-four-subtypes",
@@ -36563,7 +36523,7 @@
     },
     {
       "id": "practice-j1-2-3-fraction-application-one-subtype",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "分數生活應用（分配與剩餘量）",
       "generatorKey": "j1-2-3-fraction-application-one-subtype",
@@ -38299,15 +38259,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 7,
-      "relatedPracticeIds": [
-        "practice-j1-distributive-law-drill",
-        "practice-j1-common-factor-drill",
-        "practice-j1-common-factor-four-terms-drill",
-        "practice-j1-common-factor-four-terms-signed-drill",
-        "practice-j1-variable-distributive-pair-difference-drill",
-        "practice-j1-variable-distributive-offset-difference-drill",
-        "practice-j1-common-factor-then-distributive-drill"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "j1-1-2",
       "chapter": "正負數與數線",
       "domain": "數與量",
@@ -46709,7 +46661,7 @@
     },
     {
       "id": "practice-j4-3-1-polygon-angle-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "三角形與多邊形角度綜合",
       "generatorKey": "j4-3-1-polygon-angle-mixed",
@@ -46717,8 +46669,6 @@
       "questionCount": 5,
       "subtypeCount": 5,
       "relatedPracticeIds": [
-        "practice-j4-3-1-triangle-exterior-angle",
-        "practice-j4-3-1-polygon-arithmetic-angles",
         "practice-j4-3-1-complementary-supplementary-angles"
       ],
       "chapterCode": "j4-3-1",
@@ -46772,7 +46722,7 @@
     },
     {
       "id": "practice-j4-3-1-triangle-exterior-angle",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "三角形外角推理",
       "generatorKey": "j4-3-1-triangle-exterior-angle",
@@ -46780,7 +46730,6 @@
       "questionCount": 5,
       "subtypeCount": 5,
       "relatedPracticeIds": [
-        "practice-j4-3-1-polygon-angle-mixed",
         "practice-j4-3-1-polygon-arithmetic-angles"
       ],
       "chapterCode": "j4-3-1",
@@ -46842,7 +46791,6 @@
       "questionCount": 5,
       "subtypeCount": 5,
       "relatedPracticeIds": [
-        "practice-j4-3-2-construction-mixed",
         "practice-j4-3-2-midpoint-perpendicular",
         "practice-j4-3-2-angle-bisector-measure"
       ],
@@ -46873,11 +46821,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 3,
-      "relatedPracticeIds": [
-        "practice-j4-3-2-construction-bisection-count",
-        "practice-j4-3-2-midpoint-perpendicular",
-        "practice-j4-3-2-angle-bisector-measure"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "j4-3-2",
       "chapter": "尺規作圖",
       "domain": "幾何",
@@ -46905,10 +46849,7 @@
       "difficulty": "easy",
       "questionCount": 5,
       "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-3-2-construction-mixed",
-        "practice-j4-3-2-construction-bisection-count"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "j4-3-2",
       "chapter": "尺規作圖",
       "domain": "幾何",
@@ -47012,7 +46953,7 @@
     },
     {
       "id": "practice-j4-3-3-congruence-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "三角形全等三類綜合",
       "generatorKey": "j4-3-3-congruence-mixed",
@@ -47020,8 +46961,6 @@
       "questionCount": 5,
       "subtypeCount": 3,
       "relatedPracticeIds": [
-        "practice-j4-3-3-congruence-criterion",
-        "practice-j4-3-3-congruent-correspondence",
         "practice-j4-3-3-isosceles-median-properties"
       ],
       "chapterCode": "j4-3-3",
@@ -47044,7 +46983,7 @@
     },
     {
       "id": "practice-j4-3-3-congruent-correspondence",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "全等後對應邊角求值",
       "generatorKey": "j4-3-3-congruent-correspondence",
@@ -47052,7 +46991,6 @@
       "questionCount": 5,
       "subtypeCount": 5,
       "relatedPracticeIds": [
-        "practice-j4-3-3-congruence-mixed",
         "practice-j4-3-3-congruence-criterion"
       ],
       "chapterCode": "j4-3-3",
@@ -47082,10 +47020,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-3-3-congruence-mixed",
-        "practice-j4-3-3-congruent-correspondence"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "j4-3-3",
       "chapter": "三角形的全等",
       "domain": "幾何",
@@ -47189,7 +47124,7 @@
     },
     {
       "id": "practice-j4-3-4-side-angle-comparison",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "邊對角大小比較",
       "generatorKey": "j4-3-4-side-angle-comparison",
@@ -47197,7 +47132,6 @@
       "questionCount": 5,
       "subtypeCount": 5,
       "relatedPracticeIds": [
-        "practice-j4-3-4-triangle-side-angle-mixed",
         "practice-j4-3-4-triangle-inequality-range"
       ],
       "chapterCode": "j4-3-4",
@@ -47227,10 +47161,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-3-4-triangle-side-angle-mixed",
-        "practice-j4-3-4-side-angle-comparison"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "j4-3-4",
       "chapter": "三角形邊角關係",
       "domain": "幾何",
@@ -47251,7 +47182,7 @@
     },
     {
       "id": "practice-j4-3-4-triangle-side-angle-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "三角形邊角關係三類綜合",
       "generatorKey": "j4-3-4-triangle-side-angle-mixed",
@@ -47259,8 +47190,6 @@
       "questionCount": 5,
       "subtypeCount": 3,
       "relatedPracticeIds": [
-        "practice-j4-3-4-triangle-inequality-range",
-        "practice-j4-3-4-side-angle-comparison",
         "practice-j4-3-4-pythagorean-classification"
       ],
       "chapterCode": "j4-3-4",
@@ -47336,7 +47265,7 @@
     },
     {
       "id": "practice-j4-4-1-transversal-find-angle",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "平行線截角求角度",
       "generatorKey": "j4-4-1-transversal-find-angle",
@@ -47344,8 +47273,7 @@
       "questionCount": 5,
       "subtypeCount": 5,
       "relatedPracticeIds": [
-        "practice-j4-4-1-parallel-perpendicular-angles",
-        "practice-j4-4-1-transversal-solve-x"
+        "practice-j4-4-1-parallel-perpendicular-angles"
       ],
       "chapterCode": "j4-4-1",
       "chapter": "平行與垂直的角度關係",
@@ -47374,10 +47302,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-4-1-parallel-perpendicular-angles",
-        "practice-j4-4-1-transversal-find-angle"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "j4-4-1",
       "chapter": "平行與垂直的角度關係",
       "domain": "幾何",
@@ -47449,10 +47374,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-4-2-quadrilateral-mixed",
-        "practice-j4-4-2-shape-classification"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "j4-4-2",
       "chapter": "特殊四邊形",
       "domain": "幾何",
@@ -47481,7 +47403,6 @@
       "questionCount": 5,
       "subtypeCount": 5,
       "relatedPracticeIds": [
-        "practice-j4-4-2-quadrilateral-property-codes",
         "practice-j4-4-2-parallelogram-equations",
         "practice-j4-4-2-shape-classification",
         "practice-j4-4-2-rectangle-square-diagonal",
@@ -47514,13 +47435,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 2,
-      "relatedPracticeIds": [
-        "practice-j4-4-2-quadrilateral-mixed",
-        "practice-j4-4-2-parallelogram-equations",
-        "practice-j4-4-2-shape-classification",
-        "practice-j4-4-2-rectangle-square-diagonal",
-        "practice-j4-4-2-rhombus-diagonal"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "j4-4-2",
       "chapter": "特殊四邊形",
       "domain": "幾何",
@@ -47548,10 +47463,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-4-2-quadrilateral-mixed",
-        "practice-j4-4-2-rhombus-diagonal"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "j4-4-2",
       "chapter": "特殊四邊形",
       "domain": "幾何",
@@ -47579,10 +47491,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-4-2-quadrilateral-mixed",
-        "practice-j4-4-2-rectangle-square-diagonal"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "j4-4-2",
       "chapter": "特殊四邊形",
       "domain": "幾何",
@@ -47641,11 +47550,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-4-3-trapezoid-core-mixed",
-        "practice-j4-4-3-trapezoid-area",
-        "practice-j4-4-3-trapezoid-midline-basic"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "j4-4-3",
       "chapter": "梯形中線與平行線分割",
       "domain": "幾何",
@@ -47750,11 +47655,7 @@
       "difficulty": "easy",
       "questionCount": 5,
       "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-4-3-trapezoid-core-mixed",
-        "practice-j4-4-3-trapezoid-midline-basic",
-        "practice-j4-4-3-isosceles-trapezoid"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "j4-4-3",
       "chapter": "梯形中線與平行線分割",
       "domain": "幾何",
@@ -47775,7 +47676,7 @@
     },
     {
       "id": "practice-j4-4-3-trapezoid-core-mixed",
-      "enabled": true,
+      "enabled": false,
       "mode": "generator",
       "title": "梯形核心四類綜合",
       "generatorKey": "j4-4-3-trapezoid-core-mixed",
@@ -47783,10 +47684,7 @@
       "questionCount": 5,
       "subtypeCount": 4,
       "relatedPracticeIds": [
-        "practice-j4-4-3-trapezoid-midline-basic",
-        "practice-j4-4-3-parallel-division",
-        "practice-j4-4-3-trapezoid-area",
-        "practice-j4-4-3-isosceles-trapezoid"
+        "practice-j4-4-3-parallel-division"
       ],
       "chapterCode": "j4-4-3",
       "chapter": "梯形中線與平行線分割",
@@ -47815,12 +47713,7 @@
       "difficulty": "medium",
       "questionCount": 5,
       "subtypeCount": 5,
-      "relatedPracticeIds": [
-        "practice-j4-4-3-trapezoid-core-mixed",
-        "practice-j4-4-3-parallel-division",
-        "practice-j4-4-3-trapezoid-area",
-        "practice-j4-4-3-isosceles-trapezoid"
-      ],
+      "relatedPracticeIds": [],
       "chapterCode": "j4-4-3",
       "chapter": "梯形中線與平行線分割",
       "domain": "幾何",
@@ -48041,7 +47934,6 @@
         "practice-j5-1-1-mixture-ratio",
         "practice-j5-1-1-population-ratio-change",
         "practice-j5-1-1-work-rate-speed",
-        "practice-j5-1-1-reverse-value-from-ratio",
         "practice-j5-1-1-work-efficiency-applied",
         "practice-j5-1-1-coin-denomination-ratio",
         "practice-j5-1-1-mixture-shared-term"
@@ -48648,8 +48540,6 @@
       "subtypeCount": 5,
       "relatedPracticeIds": [
         "practice-j5-1-2-triangle-parallel-proportional-segments",
-        "practice-j5-1-2-trapezoid-parallel-segment",
-        "practice-j5-1-2-multi-parallel-intercepts",
         "practice-j5-1-2-midpoint-segment",
         "practice-j5-1-2-triangle-parallel-converse"
       ],
@@ -48900,12 +48790,9 @@
       "questionCount": 5,
       "subtypeCount": 6,
       "relatedPracticeIds": [
-        "practice-j5-1-2-triangle-parallel-proportional-segments",
         "practice-j5-1-2-triangle-parallel-side-ratio",
         "practice-j5-1-2-triangle-parallel-segment-length",
-        "practice-j5-1-2-triangle-parallel-algebra",
-        "practice-j5-1-2-triangle-parallel-converse",
-        "practice-j5-1-2-midpoint-segment"
+        "practice-j5-1-2-triangle-parallel-algebra"
       ],
       "chapterCode": "j5-1-2",
       "chapter": "平行線截比例線段",
@@ -49898,8 +49785,7 @@
         "practice-j5-1-3-figure-scale-length",
         "practice-j5-1-3-scale-back-length",
         "practice-j5-1-3-area-scale-factor",
-        "practice-j5-1-3-angle-invariant-scale",
-        "practice-j5-1-3-scale-area-change"
+        "practice-j5-1-3-angle-invariant-scale"
       ],
       "chapterCode": "j5-1-3",
       "chapter": "相似形與相似三角形",
@@ -50006,8 +49892,7 @@
         "practice-j5-1-3-aa-criterion",
         "practice-j5-1-3-sss-criterion",
         "practice-j5-1-3-sas-criterion",
-        "practice-j5-1-3-parallel-basic-length",
-        "practice-j5-1-3-butterfly-parallel-length"
+        "practice-j5-1-3-parallel-basic-length"
       ],
       "chapterCode": "j5-1-3",
       "chapter": "相似形與相似三角形",
@@ -62598,8 +62483,6 @@
       "subtypeCount": 4,
       "relatedPracticeIds": [
         "practice-j6-3-3-single-trial-probability",
-        "practice-j6-3-3-coin-tree-probability",
-        "practice-j6-3-3-dice-sum-product",
         "practice-j6-3-3-number-arrangement-probability"
       ],
       "chapterCode": "j6-3-3",
@@ -83811,9 +83694,7 @@
       "subtypeCount": 4,
       "relatedPracticeIds": [
         "practice-s4-1-3-inner-product-angle",
-        "practice-s4-1-3-perpendicular-parallel",
-        "practice-s4-1-3-length-combination",
-        "practice-s4-1-3-triangle-area"
+        "practice-s4-1-3-perpendicular-parallel"
       ],
       "chapterCode": "s4-1-3",
       "chapter": "空間向量的內積",
@@ -84602,7 +84483,6 @@
       "questionCount": 5,
       "subtypeCount": 4,
       "relatedPracticeIds": [
-        "practice-s4-2-1-point-plane-distance",
         "practice-s4-2-1-parallel-plane-distance",
         "practice-s4-2-1-projection-reflection",
         "practice-s4-2-1-perpendicular-bisector"
@@ -85457,7 +85337,6 @@
       "questionCount": 5,
       "subtypeCount": 4,
       "relatedPracticeIds": [
-        "practice-s4-2-2-line-plane-interaction",
         "practice-s4-2-2-point-line-projection",
         "practice-s4-2-2-parallel-skew-distance",
         "practice-s4-2-2-common-perpendicular"

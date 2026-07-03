@@ -1857,7 +1857,14 @@
   function getChapterOptions() {
     const fromCatalog = Object.entries(chapterCodeCatalog)
       .map(([code, catalog]) => {
-        const meta = mergedChapterMetaByCode[code] || inferMetaFromCode(code);
+        const explicitMeta = mergedChapterMetaByCode[code] || {};
+        const inferredMeta = inferMetaFromCode(code);
+        const meta = {
+          stage: String(explicitMeta.stage || inferredMeta.stage || "").trim(),
+          grade: String(explicitMeta.grade || inferredMeta.grade || "").trim(),
+          term: String(explicitMeta.term || inferredMeta.term || "").trim(),
+          chapter: String(explicitMeta.chapter || inferredMeta.chapter || "").trim()
+        };
         const section = isUsableCatalogText(catalog?.section) ? catalog.section : "";
         const chapter = isUsableCatalogText(catalog?.chapter) ? catalog.chapter : section || meta.chapter || "";
         return {

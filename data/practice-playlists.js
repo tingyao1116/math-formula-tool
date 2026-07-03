@@ -131,7 +131,7 @@ window.practicePlaylistData = [
     "grade": "國一",
     "playlistType": "任務型",
     "practiceIds": [
-      "practice-j1-1-3-power-concept-one-subtype",
+      "practice-j1-1-3-sign-brackets-power-drill",
       "practice-j1-1-3-exponent-law-three-subtypes",
       "practice-j1-1-3-same-base-four-subtypes",
       "practice-j1-1-3-power-of-power-four-subtypes",

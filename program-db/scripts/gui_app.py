@@ -4032,11 +4032,11 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         dialog.geometry("860x640")
         dialog.minsize(760, 520)
 
-        state = {"chain": None, "ids": []}
+        state = {"chain": None, "ids": [], "new_ids": set(), "units": [], "rows": []}
 
         top = ttk.Frame(dialog, padding=12)
         top.pack(fill="x")
-        ttk.Label(top, text="選擇主題串（每個小章節一串），可調整練習順序、存回資料庫、匯出 PDF。").pack(anchor="w")
+        ttk.Label(top, text="選擇主題串（每個小章節一串）。內容即時讀練習本體：新題型自動附加在最後（標〔新〕），儲存後才併入排序。").pack(anchor="w")
 
         pick_row = ttk.Frame(dialog, padding=(12, 4))
         pick_row.pack(fill="x")
@@ -4051,6 +4051,10 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
 
         info_var = tk.StringVar(value="")
         ttk.Label(dialog, textvariable=info_var, padding=(12, 2)).pack(anchor="w")
+        rel_var = tk.StringVar(value="點選題型可查看大類/小類關係。")
+        ttk.Label(dialog, textvariable=rel_var, padding=(12, 0), wraplength=800, justify="left").pack(anchor="w")
+
+        children_by_parent, parents_by_child = self._practice_relation_maps()
 
         list_frame = ttk.Frame(dialog, padding=(12, 4))
         list_frame.pack(fill="both", expand=True)
@@ -4059,6 +4063,52 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         order_list.configure(yscrollcommand=order_scroll.set)
         order_list.pack(side="left", fill="both", expand=True)
         order_scroll.pack(side="left", fill="y")
+
+        # ── 資料夾式呈現：大類＝資料夾、小類＝檔案，一個檔案只屬一個資料夾 ──
+        def build_units():
+            ids = state["ids"]
+            id_set = set(ids)
+            units = []
+            used = set()
+            for pid in ids:
+                if pid in used:
+                    continue
+                kids = [k for k in (children_by_parent.get(pid) or []) if k in id_set]
+                if kids:
+                    units.append({"id": pid, "children": kids})
+                    used.add(pid)
+                    used.update(kids)
+                    continue
+                owners = [o for o in (parents_by_child.get(pid) or []) if o in id_set]
+                if owners:
+                    continue  # 由所屬資料夾帶入
+                units.append({"id": pid, "children": []})
+                used.add(pid)
+            state["units"] = units
+
+        def flatten_units():
+            flat = []
+            for unit in state["units"]:
+                flat.append(unit["id"])
+                flat.extend(unit["children"])
+            return flat
+
+        def row_practice_id(row_index):
+            if not (0 <= row_index < len(state["rows"])):
+                return ""
+            u_index, c_index = state["rows"][row_index]
+            unit = state["units"][u_index]
+            return unit["id"] if c_index is None else unit["children"][c_index]
+
+        def on_order_select(_event=None):
+            selection = order_list.curselection()
+            if not selection:
+                return
+            pid = row_practice_id(selection[0])
+            if pid:
+                rel_var.set(self._practice_relation_text(pid, children_by_parent, parents_by_child, practice_by_id))
+
+        order_list.bind("<<ListboxSelect>>", on_order_select)
 
         def display_chains(*_args):
             keyword = keyword_var.get().strip().lower()
@@ -4071,21 +4121,35 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             visible_chains["rows"] = rows
             chain_combo["values"] = [str(c.get("title") or c.get("id") or "") for c in rows]
 
-        def practice_label(pid, index):
+        def practice_label(pid, prefix):
             row = practice_by_id.get(pid) or {}
             title = str(row.get("title", "")).strip() or pid
             difficulty = str(row.get("difficulty", "")).strip() or "-"
-            return f"{index + 1:>3}. [{difficulty}] {title}"
+            new_marker = "〔新〕" if pid in state["new_ids"] else ""
+            return f"{prefix}[{difficulty}] {new_marker}{title}"
 
         def refresh_order_list():
             order_list.delete(0, tk.END)
-            for index, pid in enumerate(state["ids"]):
-                order_list.insert(tk.END, practice_label(pid, index))
+            state["rows"] = []
+            for u_index, unit in enumerate(state["units"]):
+                pid = unit["id"]
+                if unit["children"]:
+                    head = practice_label(pid, f"{u_index + 1:>3}. 📂 ")
+                    order_list.insert(tk.END, f"{head}（含 {len(unit['children'])} 小類）")
+                else:
+                    order_list.insert(tk.END, practice_label(pid, f"{u_index + 1:>3}. "))
+                state["rows"].append((u_index, None))
+                for c_index, kid in enumerate(unit["children"]):
+                    order_list.insert(tk.END, practice_label(kid, "         └ "))
+                    state["rows"].append((u_index, c_index))
             chain = state["chain"] or {}
-            missing = [pid for pid in state["ids"] if pid not in practice_by_id]
-            text = f"{chain.get('title', '')}：{len(state['ids'])} 題型"
-            if missing:
-                text += f"（{len(missing)} 個 id 在 practice-db 找不到，會以提示文字輸出）"
+            folder_count = sum(1 for unit in state["units"] if unit["children"])
+            text = (
+                f"{chain.get('title', '')}：{len(state['units'])} 個項目"
+                f"（{folder_count} 個資料夾）／展開共 {len(flatten_units())} 題型"
+            )
+            if state["new_ids"]:
+                text += f"（{len(state['new_ids'])} 個新題型尚未入排序，按「儲存順序」併入）"
             info_var.set(text)
 
         def on_pick(_event=None):
@@ -4094,7 +4158,16 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             if not (0 <= idx < len(rows)):
                 return
             state["chain"] = rows[idx]
-            state["ids"] = [str(pid).strip() for pid in rows[idx].get("practiceIds", []) if str(pid).strip()]
+            stored = [str(pid).strip() for pid in rows[idx].get("practiceIds", []) if str(pid).strip()]
+            # 即時合併練習本體：排序只是一層設定，資料以 practice-db 為準
+            merged = self._chapter_practice_ids_in_theme_order(rows[idx].get("chapterCode", ""), practice_by_id)
+            if merged:
+                state["ids"] = merged
+                state["new_ids"] = set(merged) - set(stored)
+            else:
+                state["ids"] = stored
+                state["new_ids"] = set()
+            build_units()
             refresh_order_list()
 
         chain_combo.bind("<<ComboboxSelected>>", on_pick)
@@ -4102,40 +4175,45 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
 
         def move_selected(direction):
             selection = order_list.curselection()
-            if not selection:
+            if not selection or not (0 <= selection[0] < len(state["rows"])):
                 return
-            index = selection[0]
-            target = index + direction
-            if not (0 <= target < len(state["ids"])):
+            u_index, _c_index = state["rows"][selection[0]]
+            target = u_index + direction
+            if not (0 <= target < len(state["units"])):
                 return
-            state["ids"][index], state["ids"][target] = state["ids"][target], state["ids"][index]
+            units = state["units"]
+            units[u_index], units[target] = units[target], units[u_index]
             refresh_order_list()
-            order_list.selection_set(target)
-            order_list.see(target)
+            for row_index, (ui, ci) in enumerate(state["rows"]):
+                if ui == target and ci is None:
+                    order_list.selection_set(row_index)
+                    order_list.see(row_index)
+                    break
 
         def sort_by_difficulty():
             rank = {"easy": 0, "medium": 1, "hard": 2}
-            decorated = [
-                (
-                    rank.get(str((practice_by_id.get(pid) or {}).get("difficulty", "")).strip().lower(), 3),
-                    index,
-                    pid,
-                )
-                for index, pid in enumerate(state["ids"])
-            ]
-            state["ids"] = [pid for _, _, pid in sorted(decorated)]
+
+            def unit_rank(unit):
+                row = practice_by_id.get(unit["id"]) or {}
+                return rank.get(str(row.get("difficulty", "")).strip().lower(), 3)
+
+            decorated = [(unit_rank(unit), index, unit) for index, unit in enumerate(state["units"])]
+            state["units"] = [unit for _, _, unit in sorted(decorated, key=lambda entry: (entry[0], entry[1]))]
             refresh_order_list()
 
         def save_order():
             chain = state["chain"]
             if not chain:
                 return messagebox.showwarning("提醒", "請先選擇主題串。", parent=dialog)
+            state["ids"] = flatten_units()
             chain["practiceIds"] = list(state["ids"])
             chain["updatedAt"] = practice_now_iso()
             try:
                 self._theme_db_save(payload)
             except Exception as exc:
                 return messagebox.showerror("儲存失敗", str(exc), parent=dialog)
+            state["new_ids"] = set()
+            refresh_order_list()
             self.status_var.set(f"主題串已儲存：{chain.get('title', '')}（已同步網頁資料檔）")
             messagebox.showinfo(
                 "完成",
@@ -4148,7 +4226,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             if not chain:
                 return messagebox.showwarning("提醒", "請先選擇主題串。", parent=dialog)
             records = []
-            for pid in state["ids"]:
+            for pid in flatten_units():
                 row = practice_by_id.get(pid)
                 if row:
                     records.append(row)
@@ -4268,15 +4346,48 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             encoding="utf-8",
         )
 
-    def _chapter_practice_ids_in_theme_order(self, chapter_code: str, practice_by_id: dict):
-        """整章展開時的題型順序：優先照章節主題串（practice-theme-db.json），否則照 practice-db 原始順序。"""
+    def _practice_relation_maps(self):
+        """大類/小類關係（唯讀呈現用）。
+
+        大類 = relatedPracticeIds 非空的題型（由小類合併生成）；
+        小類 = 被某個大類引用的題型。回傳 (children_by_parent, parents_by_child)。
+        """
+        children_by_parent = {}
+        parents_by_child = {}
+        for row in self.practice_payload.get("practices", []):
+            if not isinstance(row, dict):
+                continue
+            pid = str(row.get("id", "")).strip()
+            kids = [str(k).strip() for k in (row.get("relatedPracticeIds") or []) if str(k).strip()]
+            if not pid or not kids:
+                continue
+            children_by_parent[pid] = kids
+            for kid in kids:
+                parents_by_child.setdefault(kid, []).append(pid)
+        return children_by_parent, parents_by_child
+
+    def _practice_relation_marker(self, pid, children_by_parent, parents_by_child):
+        kids = children_by_parent.get(pid)
+        if kids:
+            return f"【大{len(kids)}】"
+        if pid in parents_by_child:
+            return "【小】"
+        return ""
+
+    def _practice_relation_text(self, pid, children_by_parent, parents_by_child, practice_by_id):
+        def title_of(x):
+            return str((practice_by_id.get(x) or {}).get("title", "")).strip() or x
+        kids = children_by_parent.get(pid) or []
+        parents = parents_by_child.get(pid) or []
+        if kids:
+            return "大類，由小類合併生成：" + "、".join(title_of(k) for k in kids)
+        if parents:
+            return "小類，屬於大類：" + "、".join(title_of(k) for k in parents)
+        return "獨立題型（無大小類關係）"
+
+    def _live_chapter_practice_ids(self, chapter_code: str):
+        """練習本體（practice-db）目前這一章實際存在的題型 id，照母資料順序。"""
         chapter_code = str(chapter_code or "").strip()
-        theme_payload = self._theme_db_load()
-        for chain in theme_payload.get("themeChains", []):
-            if str(chain.get("chapterCode", "")).strip() == chapter_code:
-                ids = [str(pid).strip() for pid in chain.get("practiceIds", []) if str(pid).strip()]
-                if ids:
-                    return ids
         return [
             str(row.get("id", "")).strip()
             for row in self.practice_payload.get("practices", [])
@@ -4285,6 +4396,25 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             and str(row.get("chapterCode", "")).strip() == chapter_code
             and str(row.get("id", "")).strip()
         ]
+
+    def _chapter_practice_ids_in_theme_order(self, chapter_code: str, practice_by_id: dict):
+        """整章的題型順序：資料本體永遠即時讀 practice-db，主題串只提供排序。
+
+        合併規則：主題串排序中仍存在的題型照排序在前；practice-db 新增（尚未入排序）
+        的題型自動附加在該章最後；已刪除/停用的題型自動消失。
+        """
+        chapter_code = str(chapter_code or "").strip()
+        live = self._live_chapter_practice_ids(chapter_code)
+        stored = []
+        theme_payload = self._theme_db_load()
+        for chain in theme_payload.get("themeChains", []):
+            if str(chain.get("chapterCode", "")).strip() == chapter_code:
+                stored = [str(pid).strip() for pid in chain.get("practiceIds", []) if str(pid).strip()]
+                break
+        live_set = set(live)
+        ordered = [pid for pid in stored if pid in live_set]
+        ordered_set = set(ordered)
+        return ordered + [pid for pid in live if pid not in ordered_set]
 
     def open_custom_theme_dialog(self):
         payload = self._custom_theme_db_load()
@@ -4355,6 +4485,8 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             if select_index is not None and 0 <= select_index < len(chains):
                 chain_combo.current(select_index)
 
+        children_by_parent, parents_by_child = self._practice_relation_maps()
+
         def item_label(item, index):
             kind = str(item.get("type", "practice"))
             item_id = str(item.get("id", "")).strip()
@@ -4365,7 +4497,8 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             title = str(row.get("title", "")).strip() or item_id
             difficulty = str(row.get("difficulty", "")).strip() or "-"
             code = str(row.get("chapterCode", "")).strip()
-            return f"{index + 1:>3}. [{difficulty}] {title}（{code}）"
+            relation_marker = self._practice_relation_marker(item_id, children_by_parent, parents_by_child)
+            return f"{index + 1:>3}. [{difficulty}] {relation_marker}{title}（{code}）"
 
         def refresh_items():
             items_list.delete(0, tk.END)
@@ -4484,9 +4617,22 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                 row = practice_by_id.get(pid) or {}
                 difficulty = str(row.get("difficulty", "")).strip() or "-"
                 title = str(row.get("title", "")).strip() or pid
-                source_list.insert(tk.END, f"[{difficulty}] {title}")
+                relation_marker = self._practice_relation_marker(pid, children_by_parent, parents_by_child)
+                source_list.insert(tk.END, f"[{difficulty}] {relation_marker}{title}")
 
         chapter_combo.bind("<<ComboboxSelected>>", on_pick_chapter)
+
+        # 點選題型時，用底部狀態列顯示大類/小類關係（唯讀）
+        def show_relation_for(pid):
+            if pid:
+                status_var.set(self._practice_relation_text(pid, children_by_parent, parents_by_child, practice_by_id))
+
+        def on_source_select(_event=None):
+            selection = source_list.curselection()
+            if len(selection) == 1 and 0 <= selection[0] < len(state["chapter_practice_ids"]):
+                show_relation_for(state["chapter_practice_ids"][selection[0]])
+
+        source_list.bind("<<ListboxSelect>>", on_source_select)
 
         def require_chain():
             if not state["chain"]:
@@ -4543,6 +4689,16 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         items_list.configure(yscrollcommand=items_scroll.set)
         items_list.grid(row=0, column=0, sticky="nsew")
         items_scroll.grid(row=0, column=1, sticky="ns")
+
+        def on_items_select(_event=None):
+            selection = items_list.curselection()
+            if not selection or not (0 <= selection[0] < len(state["items"])):
+                return
+            item = state["items"][selection[0]]
+            if str(item.get("type", "practice")) != "chapter":
+                show_relation_for(str(item.get("id", "")).strip())
+
+        items_list.bind("<<ListboxSelect>>", on_items_select)
 
         def move_item(direction):
             selection = items_list.curselection()
