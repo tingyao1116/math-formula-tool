@@ -25,6 +25,16 @@
     return value < 0 ? `(${value})` : `${value}`;
   }
 
+  // a - b，避免出現連續負號（x--y），負數改寫成 a-(-b)
+  function formatMinus(a, b) {
+    return b < 0 ? `${a}-(${b})` : `${a}-${b}`;
+  }
+
+  // a + b，避免出現 +- 連寫，負數改寫成 a+(-b)
+  function formatPlus(a, b) {
+    return b < 0 ? `${a}+(${b})` : `${a}+${b}`;
+  }
+
   // Shared math display formatter helpers
 
   function gcdInt(a, b) {
@@ -89,12 +99,12 @@
     for (let i = 0; i < count; i += 1) {
       const a = randInt(-30, 30);
       const b = randInt(-30, 30);
-      questions.push(`求 ${a} 與 ${b} 的中點。`);
+      questions.push(`求 $${a}$ 與 $${b}$ 的中點。`);
       const sum = a + b;
       const sumExpr = `${a}${b < 0 ? `+(${b})` : `+${b}`}`;
       summaryAnswers.push(`$${formatFraction(sum, 2)}$`);
       if (sum % 2 === 0) {
-        answers.push(`中點 = $\\frac{${sumExpr}}{2}$ = ${sum / 2}`);
+        answers.push(`中點 = $\\frac{${sumExpr}}{2}$ = $${sum / 2}$`);
       } else {
         answers.push(`中點 = $\\frac{${sumExpr}}{2}=\\frac{${sum}}{2}$`);
       }
@@ -110,9 +120,9 @@
       const a = randInt(-30, 30);
       const b = randInt(-30, 30);
       const distance = Math.abs(a - b);
-      questions.push(`求 ${a} 與 ${b} 的距離。`);
+      questions.push(`求 $${a}$ 與 $${b}$ 的距離。`);
       summaryAnswers.push(`$${distance}$`);
-      answers.push(`距離 = |${a}-${b}| = ${distance}`);
+      answers.push(`數線上兩點距離 = 兩坐標相減取絕對值，$|${formatMinus(a, b)}|=${distance}$。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -122,7 +132,7 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const triples = Array.from({ length: 3 }, () => [pickNonZero(-9, 9), pickNonZero(-9, 9)]);
+      const triples = Array.from({ length: 3 }, () => [pickNonZero(-30, 30), pickNonZero(-9, 9)]);
       const ops = shuffle(['+', '-']);
       const products = triples.map(([a, b]) => a * b);
       const q = `${wrapIfNegative(triples[0][0])}\\times${wrapIfNegative(triples[0][1])} ${ops[0]} ${wrapIfNegative(triples[1][0])}\\times${wrapIfNegative(triples[1][1])} ${ops[1]} ${wrapIfNegative(triples[2][0])}\\times${wrapIfNegative(triples[2][1])}`;
@@ -140,10 +150,10 @@
 
   function formatClockLabel(hour24) {
     const h = ((hour24 % 24) + 24) % 24;
-    if (h === 12) return '中午12時';
-    if (h === 0) return '上午12時';
-    if (h < 12) return `上午${h}時`;
-    return `下午${h - 12}時`;
+    if (h === 12) return '中午$12$時';
+    if (h === 0) return '上午$12$時';
+    if (h < 12) return `上午$${h}$時`;
+    return `下午$${h - 12}$時`;
   }
 
   function buildTimeBaselineBasicSet(count) {
@@ -163,9 +173,9 @@
       const askText = formatClockLabel(askHour);
       const knownValueText = knownValue > 0 ? `+${knownValue}` : `${knownValue}`;
 
-      questions.push(`中午12時為基準，${knownText}記為${knownValueText}，則${askText}記作____。`);
+      questions.push(`中午$12$時為基準，${knownText}記為$${knownValueText}$，則${askText}記作____。`);
       summaryAnswers.push(`$${askValue}$`);
-      answers.push(`${askValue}`);
+      answers.push(`$${askValue}$`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -190,9 +200,9 @@
       const t2 = formatClockLabel(h2);
       const t3 = formatClockLabel(h3);
 
-      questions.push(`若${t1}記為${v1}，${t2}記為${v2}，則${t3}記為應記為何？`);
+      questions.push(`若${t1}記為$${v1}$，${t2}記為$${v2}$，則${t3}記為應記為何？`);
       summaryAnswers.push(`$${v3}$`);
-      answers.push(`${v3}`);
+      answers.push(`$${v3}$`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -235,10 +245,10 @@
       if (mode === 0) {
         const numberText = numbers.join('、');
         const offsetText = offsets.map((offset) => formatSignedOffset(offset)).join('、');
-        questions.push(`以 ${baseline} 為基準值，五個整數 ${numberText} 的平均數是多少？`);
+        questions.push(`以 $${baseline}$ 為基準值，五個整數 $${numberText}$ 的平均數是多少？`);
         summaryAnswers.push(`$${baseline}$`);
         answers.push(
-          `以 ${baseline} 為基準值，五個數和基準值的差分別是 ${offsetText}，差的總和是 0，所以平均數就是 ${baseline}。`
+          `以 $${baseline}$ 為基準值，五個數和基準值的差分別是 $${offsetText}$，差的總和是 0，所以平均數就是 $${baseline}$。`
         );
         continue;
       }
@@ -250,10 +260,12 @@
         .map((offset, index) => (index === missingIndex ? null : formatSignedOffset(offset)))
         .filter((value) => value !== null);
       const missingOffset = offsets[missingIndex];
-      questions.push(`以 ${baseline} 為基準值，五個整數 ${visibleNumbers.join('、')} 的平均數是 ${baseline}，求 x。`);
+      questions.push(
+        `以 $${baseline}$ 為基準值，五個整數 $${visibleNumbers.join('、')}$ 的平均數是 $${baseline}$，求 $x$。`
+      );
       summaryAnswers.push(`$${xValue}$`);
       answers.push(
-        `已知另外四個數相對 ${baseline} 的差是 ${knownOffsets.join('、')}，合計是 ${formatSignedOffset(-missingOffset)} 的相反數，所以 x 相對 ${baseline} 的差要是 ${formatSignedOffset(missingOffset)}，因此 x = ${xValue}。`
+        `已知另外四個數相對 $${baseline}$ 的差是 $${knownOffsets.join('、')}$，合計是 $${formatSignedOffset(-missingOffset)}$ 的相反數，所以 x 相對 $${baseline}$ 的差要是 $${formatSignedOffset(missingOffset)}$，因此 x = $${xValue}$。`
       );
     }
 
@@ -885,9 +897,9 @@
       const exprValue = x + c;
       const opposite = -exprValue;
       const exprText = c >= 0 ? `x+${c}` : `x${c}`;
-      questions.push(`${exprText}的相反數是${opposite}，求x=`);
+      questions.push(`$${exprText}$的相反數是$${opposite}$，求$x=$`);
       summaryAnswers.push(`$${x}$`);
-      answers.push(`${x}`);
+      answers.push(`$${x}$`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1256,10 +1268,10 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const bases = [2, 3, 5];
+    const bases = [2, 3, 4, 5, 6, 7];
 
     for (let i = 0; i < count; i += 1) {
-      const base = bases[i % bases.length];
+      const base = bases[randInt(0, bases.length - 1)];
       const a = randInt(2, 4);
       const b = randInt(2, 4);
       questions.push(`計算：$(${base}^{${a}})^{${b}}$。`);
@@ -1294,12 +1306,12 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const bases = [2, 3, 10];
+    const bases = [2, 3, 4, 5];
 
     for (let i = 0; i < count; i += 1) {
-      const base = bases[i % bases.length];
+      const base = bases[randInt(0, bases.length - 1)];
       const a = randInt(2, 3);
-      const b = randInt(2, 4);
+      const b = randInt(2, 3);
       const value = Math.pow(base, a * b);
       questions.push(`計算：$(${base}^{${a}})^{${b}}$ 的值。`);
       summaryAnswers.push(`$${value}$`);
@@ -1333,10 +1345,10 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const bases = [2, 3, 5, 10];
+    const bases = [2, 3, 4, 5, 6, 7, 10];
 
     for (let i = 0; i < count; i += 1) {
-      const base = bases[i % bases.length];
+      const base = bases[randInt(0, bases.length - 1)];
       const exponent = randInt(2, 4);
       questions.push(`計算：$${base}^{-${exponent}}$。`);
       summaryAnswers.push(`$${formatFraction(1, Math.pow(base, exponent))}$`);
@@ -1418,7 +1430,7 @@
     const answers = [];
 
     for (let i = 0; i < count; i += 1) {
-      const a = randInt(2, 6);
+      const a = randInt(2, 12);
       const sumText = formatFraction(a * a + 1, a);
       questions.push(`已知 $a$ 與 $b$ 互為倒數，且 $a=${a}$，求 $a+b$ 的值。`);
       summaryAnswers.push(`$${sumText}$`);
@@ -1474,7 +1486,7 @@
     const answers = [];
 
     for (let i = 0; i < count; i += 1) {
-      const end = randInt(4, 7) * 2;
+      const end = randInt(3, 12) * 2;
       const termCount = end / 2;
       questions.push(`計算：$(-1)^{2}+(-1)^{4}+(-1)^{6}+\\cdots+(-1)^{${end}}$ 的值。`);
       summaryAnswers.push(`$${termCount}$`);
@@ -1490,7 +1502,7 @@
     const answers = [];
 
     for (let i = 0; i < count; i += 1) {
-      const terms = randInt(5, 10);
+      const terms = randInt(3, 14);
       const end = 2 * terms - 1;
       questions.push(`計算：$(-1)^{1}+(-1)^{3}+(-1)^{5}+\\cdots+(-1)^{${end}}$ 的值。`);
       summaryAnswers.push(`$-${terms}$`);
@@ -1711,7 +1723,7 @@
       const variableName = variableNames[i % variableNames.length];
       const value = pickNonZero(-12, 12);
       const opposite = -value;
-      const side = opposite > 0 ? '原點右側' : '原點左側';
+      const side = opposite > 0 ? '右' : '左';
       questions.push(`已知 $${variableName}$ 是 $${value}$ 的相反數，判斷 $${variableName}$ 在數線原點的哪一側。`);
       summaryAnswers.push(side);
       answers.push(
@@ -1733,7 +1745,7 @@
       const midpoint = (a + b) / 2;
       const distance = Math.abs(a - b);
       questions.push(`數線上有$A(${a})$和$B(${b})$兩點，求$A$、$B$兩點的中點座標和距離？`);
-      summaryAnswers.push(`$${formatFraction(a + b, 2)}$，$${distance}$`);
+      summaryAnswers.push(`$${formatFraction(a + b, 2)}$,$${distance}$`);
       answers.push(`中點=$${midpoint}$，距離=$${distance}$`);
     }
     return { questions, summaryAnswers, answers };
@@ -1749,9 +1761,9 @@
       const usePlus = randInt(0, 1) === 1;
       const x = usePlus ? -(a + b) / 2 : (a + b) / 2;
       const opText = usePlus ? '加' : '減';
-      questions.push(`${a}和${b}兩數，同時${opText}x後成相反數，求x=?`);
+      questions.push(`$${a}$和$${b}$兩數，同時${opText}$x$後成相反數，求$x=$?`);
       summaryAnswers.push(`$${formatFraction(usePlus ? -(a + b) : a + b, 2)}$`);
-      answers.push(`${x}`);
+      answers.push(`$${x}$`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1945,82 +1957,48 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const easyRounds = [300, 400, 500, 700, 800, 900, 1200, 1500, 1800, 2100, 2400, 2700, 3000];
-
-    function makeParenNegative(value) {
-      const a = randInt(120, 980);
-      const b = a + value;
-      const variants = [
-        { text: `(${a}+(${-b}))`, value: a - b, shown: `${a}-${b}` },
-        { text: `(${a}-(${b}))`, value: a - b, shown: `${a}-${b}` },
-        { text: `((${-b})+${a})`, value: -b + a, shown: `${a}-${b}` },
-      ];
-      return variants[randInt(0, variants.length - 1)];
-    }
-
-    function makeParenPositive(value) {
-      const a = randInt(120, 980);
-      const b = a + value;
-      const variants = [
-        { text: `(${b}-${a})`, value: b - a, shown: `${b}-${a}` },
-        { text: `((${-a})+${b})`, value: -a + b, shown: `${b}-${a}` },
-      ];
-      return variants[randInt(0, variants.length - 1)];
-    }
-
+    // 一項是絕對值、一項是括號，兩項都由同一組大數 a、b 組成，位移 x < y（皆為 100 的倍數）。
+    // 去絕對值＋去括號後 a、b 抵消，答案＝位移差 y-x（必為 100 的整數倍）。中間連接號可為 + 或 -。
     for (let i = 0; i < count; i += 1) {
-      const roundA = pickFromList(easyRounds);
-      const roundB = pickFromList(easyRounds);
-      const absTerm = makeAbsoluteReductionPair(roundA, roundB);
-      const variant = i % 4;
+      let x = randInt(1, 6) * 100;
+      let y = randInt(1, 6) * 100;
+      while (y === x) y = randInt(1, 6) * 100;
+      if (x > y) {
+        const tmp = x;
+        x = y;
+        y = tmp;
+      }
+      const result = y - x;
 
-      if (variant === 0) {
-        const plain = makeParenPositive(roundB);
-        const result = roundA + roundB;
-        questions.push(`計算：$|${absTerm.leftText}|+${plain.text}$。`);
+      const a = randInt(700, 1800);
+      const b = a + randInt(y + 50, y + 1200); // b - a > y，確保絕對值內為負
+
+      const bMinusX = b - x; // 算出來的數字
+      const aPlusY = a + y; // 算出來的數字
+      const absDisp = `${a}-${bMinusX}`; // = a-(b-x) = a-b+x（<0）
+      const absVal = a - bMinusX;
+      const absAbs = Math.abs(absVal); // = b-a-x
+
+      const usePlus = randInt(0, 1) === 1;
+      if (usePlus) {
+        const parenVal = aPlusY - b; // (a+y)-b = a-b+y（<0）
+        questions.push(`計算：$|${absDisp}| + (${aPlusY}-${b})$。`);
         summaryAnswers.push(`$${result}$`);
         answers.push(
-          `先判斷正負：$${absTerm.leftText}=${absTerm.leftInner}<0$，所以 $|${absTerm.leftText}|=${absTerm.leftAbs}$；` +
-            `再算括號：$${plain.text}=${plain.shown}$。` +
-            `原式 $=${absTerm.leftAbs}+${plain.shown}=(${roundA})+(${roundB})=${result}$。`
+          `去絕對值：$${absDisp}=${absVal}<0$，故 $|${absDisp}|=${absAbs}$。` +
+            `去括號：$+(${aPlusY}-${b})=${aPlusY}-${b}=${parenVal}$。` +
+            `原式 $=${absAbs}+(${parenVal})=${result}$。`
         );
-        continue;
-      }
-
-      if (variant === 1) {
-        const plain = makeParenNegative(roundB);
-        const result = roundA - roundB;
-        questions.push(`計算：$|${absTerm.leftText}|+${plain.text}$。`);
+      } else {
+        const parenInner = b - aPlusY; // b-(a+y) = b-a-y（>0）
+        questions.push(`計算：$|${absDisp}| - (${b}-${aPlusY})$。`);
         summaryAnswers.push(`$${result}$`);
         answers.push(
-          `先判斷正負：$${absTerm.leftText}=${absTerm.leftInner}<0$，所以 $|${absTerm.leftText}|=${absTerm.leftAbs}$；` +
-            `再算括號：$${plain.text}=${plain.shown}$。` +
-            `原式 $=${absTerm.leftAbs}${plain.value >= 0 ? '+' : ''}${plain.shown}=(${roundA})${plain.value >= 0 ? '+' : ''}(${-roundB})=${result}$。`
+          `去絕對值：$${absDisp}=${absVal}<0$，故 $|${absDisp}|=${absAbs}$。` +
+            `去括號：$-(${b}-${aPlusY})=-${b}+${aPlusY}=${-parenInner}$。` +
+            `原式 $=${absAbs}-${parenInner}=${result}$。`
         );
-        continue;
       }
-
-      if (variant === 2) {
-        const plain = makeParenPositive(roundB);
-        const result = roundA - roundB;
-        questions.push(`計算：$|${absTerm.leftText}|-${plain.text}$。`);
-        summaryAnswers.push(`$${result}$`);
-        answers.push(
-          `先判斷正負：$${absTerm.leftText}=${absTerm.leftInner}<0$，所以 $|${absTerm.leftText}|=${absTerm.leftAbs}$；` +
-            `再算括號：$${plain.text}=${plain.shown}$。` +
-            `原式 $=${absTerm.leftAbs}-(${plain.shown})=(${roundA})-(${roundB})=${result}$。`
-        );
-        continue;
-      }
-
-      const plain = makeParenNegative(roundB);
-      const result = roundA + roundB;
-      questions.push(`計算：$${plain.text}+|${absTerm.rightText}|$。`);
-      summaryAnswers.push(`$${result}$`);
-      answers.push(
-        `先算括號：$${plain.text}=${plain.shown}$；再判斷正負：$${absTerm.rightText}=${absTerm.rightInner}<0$，所以 $|${absTerm.rightText}|=${absTerm.rightAbs}$。` +
-          `原式 $=${plain.shown}+${absTerm.rightAbs}=(${-roundB})+(${roundA + roundB})=${result}$。`
-      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2038,11 +2016,11 @@
       const totalDiff = diff * people;
       const changeText = direction > 0 ? '增加' : '減少';
       questions.push(
-        `某組有 ${people} 人，原本平均是 ${avg}。若現在平均變成 ${newAvg}，則全組總和共${changeText}多少？`
+        `某組有 $${people}$ 人，原本平均是 $${avg}$。若現在平均變成 $${newAvg}$，則全組總和共${changeText}多少？`
       );
       summaryAnswers.push(`$${totalDiff}$`);
       answers.push(
-        `平均每人改變 ${diff}，共有 ${people} 人，所以總和共${changeText} $${diff}\\times ${people}=${totalDiff}$。`
+        `平均每人改變 $${diff}$，共有 $${people}$ 人，所以總和共$${changeText} $${diff}\\times ${people}=${totalDiff}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2056,16 +2034,16 @@
       const x = pickNonZero(-18, 18);
       const y = -x;
       if (i % 2 === 0) {
-        questions.push(`若甲、乙兩數互為相反數，且甲數為 ${x}，求乙數。`);
+        questions.push(`若甲、乙兩數互為相反數，且甲數為 $${x}$，求乙數。`);
         summaryAnswers.push(`$${y}$`);
-        answers.push(`相反數大小相同、正負相反，所以乙數是 ${y}。`);
+        answers.push(`相反數大小相同、正負相反，所以乙數是 $${y}$。`);
         continue;
       }
       const k = randInt(2, 9);
-      questions.push(`若兩數互為相反數，且兩數相差 ${2 * k}，求這兩數。`);
-      summaryAnswers.push(`$${k}$、$${-k}$`);
+      questions.push(`若兩數互為相反數，且兩數相差 $${2 * k}$，求這兩數。`);
+      summaryAnswers.push(`$${k}$,$${-k}$`);
       answers.push(
-        `設兩數為 $x$ 與 $-x$，則相差是 $|x-(-x)|=2|x|=${2 * k}$，所以 $|x|=${k}$。因此兩數為 ${k}、${-k}。`
+        `設兩數為 $x$ 與 $-x$，則相差是 $|x-(-x)|=2|x|=${2 * k}$，所以 $|x|=${k}$。因此兩數為 $${k}$、$${-k}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2158,7 +2136,7 @@
         const a = pickNonZero(-8, 8);
         const b = pickNonZero(-8, 8);
         const result = def.value(a, b);
-        questions.push(`若規定 ${def.solveText}，且 $x${def.sym}${b}=${result}$，求 $x$。`);
+        questions.push(`若規定 $${def.solveText}$，且 $x${def.sym}${b}=${result}$，求 $x$。`);
         summaryAnswers.push(`$${result - 2 * b}$`);
         answers.push(`由規定得 $x+2\\times ${b}=${result}$，所以 $x=${result - 2 * b}$。`);
         continue;
@@ -2167,7 +2145,7 @@
       const b = pickNonZero(-8, 8);
       const result = def.value(a, b);
       if (def.sym === '◎') {
-        questions.push(`若規定 ${def.solveText}，且 $${a}${def.sym}x=${result}$，求 $x$。`);
+        questions.push(`若規定 $${def.solveText}$，且 $${a}${def.sym}x=${result}$，求 $x$。`);
         summaryAnswers.push(`$${2 * a - result}$`);
         answers.push(`由規定得 $2\\times ${a}-x=${result}$，所以 $x=${2 * a - result}$。`);
         continue;
@@ -2191,13 +2169,10 @@
         continue;
       }
       const b = (a + c) / 2;
-      if (i === 0) {
-        questions.push(`數線上有A(${a})、B(${b})和C(c)三點，且B為A、C中點，求c=?`);
-      } else {
-        questions.push(`A(${a})、B(${b})和C(c)，求c=?`);
-      }
+      questions.push(`數線上有$A(${a})$、$B(${b})$和$C(c)$三點，且$B$為$A$、$C$中點，求$c=$?`);
+
       summaryAnswers.push(`$${c}$`);
-      answers.push(`${c}`);
+      answers.push(`B 是 A、C 的中點，所以 $\\frac{${a}+c}{2}=${b}$，解得 $c=2\\times(${b})-(${a})=${c}$。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2217,7 +2192,9 @@
 
       questions.push(`$A(${a})、B(${b})、C(${c})$為數線上三點，若$D$為$\\overline{AB}$中點，求$\\overline{CD}$？`);
       summaryAnswers.push(`$${formatFraction(Math.abs(2 * c - a - b), 2)}$`);
-      answers.push(`$${dist}$`);
+      answers.push(
+        `$D$ 為 $\\overline{AB}$ 中點，$D=\\frac{${formatPlus(a, b)}}{2}=${formatFraction(a + b, 2)}$。故 $\\overline{CD}=|C-D|=\\frac{|2\\times(${c})-(${formatPlus(a, b)})|}{2}=${formatFraction(Math.abs(2 * c - a - b), 2)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2237,8 +2214,10 @@
       const ca = Math.abs(c - a);
 
       questions.push(`$A(${a})、B(${b})、C(${c})$為數線上三點，求$\\overline{AB}、\\overline{BC}、\\overline{CA}？$`);
-      summaryAnswers.push(`$\\overline{AB}=${ab},\\ \\overline{BC}=${bc},\\ \\overline{CA}=${ca}$`);
-      answers.push(`$\\overline{AB}=${ab}，\\overline{BC}=${bc}，\\overline{CA}=${ca}$`);
+      summaryAnswers.push(`$${ab}, ${bc}, ${ca}$`);
+      answers.push(
+        `$\\overline{AB}=|${formatMinus(a, b)}|=${ab}$，$\\overline{BC}=|${formatMinus(b, c)}|=${bc}$，$\\overline{CA}=|${formatMinus(c, a)}|=${ca}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2259,12 +2238,14 @@
       const cNew = (c - b) / s;
       const scaleText = s >= 1 ? `放大${s}倍` : `縮小為${s === 0.5 ? '2分之1' : '4分之1'}`;
       if (i === 0) {
-        questions.push(`A(${a})、B(${b})、C(${c})，B當新原點，單位長${scaleText}，求A、C新的坐標。`);
+        questions.push(`$A(${a})$、$B(${b})$、$C(${c})$，$B$當新原點，單位長$${scaleText}$，求$A$、$C$新的坐標。`);
       } else {
-        questions.push(`A(${a})、B(${b})、C(${c})，單位長${scaleText}，求A、C新坐標。`);
+        questions.push(`$A(${a})$、$B(${b})$、$C(${c})$，單位長$${scaleText}$，求$A$、$C$新坐標。`);
       }
-      summaryAnswers.push(`$A'=${formatCoordinateValue(aNew)},\\ C'=${formatCoordinateValue(cNew)}$`);
-      answers.push(`A'=${aNew}，C'=${cNew}`);
+      summaryAnswers.push(`$${formatCoordinateValue(aNew)}, ${formatCoordinateValue(cNew)}$`);
+      answers.push(
+        `以 $B$ 為新原點先平移，再除以單位倍數：$A'=\\frac{${formatMinus(a, b)}}{${s}}=${formatCoordinateValue(aNew)}$，$C'=\\frac{${formatMinus(c, b)}}{${s}}=${formatCoordinateValue(cNew)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2282,7 +2263,7 @@
       if (mode === 0) {
         const value = randInt(1, 12);
         questions.push(`如果 $|${variableName}|=${value}$，則 $${variableName}$ 可能的值有哪些？`);
-        summaryAnswers.push(`$${-value}$、$${value}$`);
+        summaryAnswers.push(`$${-value}$,$${value}$`);
         answers.push(`離原點距離是 $${value}$ 的點有左右兩個，所以 $${variableName}=${-value}$ 或 $${value}$。`);
         continue;
       }
@@ -2317,11 +2298,25 @@
       ['m', 'n'],
       ['p', 'q'],
       ['x', 'y'],
+      ['c', 'd'],
+      ['s', 't'],
+      ['u', 'v'],
+      ['k', 'w'],
     ];
 
+    // 純符號題本身沒有數值可變，靠「模式 × 字母組」組合來增加相異題數。
+    // 全部組合洗牌後依序取，收滿 count；不夠再多洗一輪，讓重複呼叫去重也能累積更多題。
+    const combos = [];
+    vars.forEach((pair) => {
+      for (let m = 0; m < 5; m += 1) combos.push({ mode: m, pair });
+    });
+    let order = [];
+    while (order.length < count) order = order.concat(shuffle(combos));
+    order = order.slice(0, count);
+
     for (let i = 0; i < count; i += 1) {
-      const [u, v] = vars[i % vars.length];
-      const mode = i % 5;
+      const [u, v] = order[i].pair;
+      const mode = order[i].mode;
 
       if (mode === 0) {
         questions.push(`已知 $${u}<0$，$${v}>0$，化簡：$|${u}|+|${v}|$。`);
@@ -2369,14 +2364,15 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const m = 50;
 
     for (let i = 0; i < count; i += 1) {
       const mode = i % 4;
-
+      const a = randInt(-m, m);
+      const b = randInt(-m, m);
+      const c = randInt(-m, m);
+      const d = randInt(-m, m);
       if (mode === 0) {
-        const a = randInt(-12, 12);
-        const b = randInt(-12, 12);
-        const c = randInt(-12, 12);
         const result = Math.abs(a) + Math.abs(b) - Math.abs(c);
         questions.push(`計算：$|${a}|+|${b}|-|${c}|$。`);
         summaryAnswers.push(`$${result}$`);
@@ -2387,9 +2383,6 @@
       }
 
       if (mode === 1) {
-        const a = randInt(-10, 10);
-        const b = randInt(-10, 10);
-        const c = randInt(-10, 10);
         const left = Math.abs(a + b);
         const right = Math.abs(c);
         const result = left + right;
@@ -2402,10 +2395,6 @@
       }
 
       if (mode === 2) {
-        const a = randInt(-9, 9);
-        const b = randInt(-9, 9);
-        const c = randInt(-9, 9);
-        const d = randInt(-9, 9);
         const left = Math.abs(a - b);
         const right = Math.abs(c + d);
         const result = left - right;
@@ -2417,9 +2406,6 @@
         continue;
       }
 
-      const a = randInt(-8, 8);
-      const b = randInt(-8, 8);
-      const c = randInt(-8, 8);
       const value = Math.abs(a) - b + Math.abs(c);
       questions.push(`計算：$|${a}|-${wrapIfNegative(b)}+|${c}|$。`);
       summaryAnswers.push(`$${value}$`);
@@ -2442,7 +2428,7 @@
       if (mode === 0) {
         const temp = randInt(-9, -1);
         questions.push(`清晨氣溫是 $${temp}$\\(^\\circ\\)C。這個溫度的絕對值是多少？它表示什麼意思？`);
-        summaryAnswers.push(`$${Math.abs(temp)}$，表示離 $0^\\circ C$ $${Math.abs(temp)}$ 度`);
+        summaryAnswers.push(`$${Math.abs(temp)}$`);
         answers.push(
           `絕對值是 $|${temp}|=${Math.abs(temp)}$。它表示這個溫度和 $0$\\(^\\circ\\)$C$ 相差 $${Math.abs(temp)}$\\(^\\circ\\)$C$。`
         );
@@ -2454,7 +2440,7 @@
         const to = randInt(3, 9);
         const diff = Math.abs(to - from);
         questions.push(`電梯從 $${from}$ 樓移動到 $${to}$ 樓，共移動了幾層？`);
-        summaryAnswers.push(`$${diff}$ 層`);
+        summaryAnswers.push(`$${diff}$`);
         answers.push(
           `樓層差要看距離，所以是 $|${to}-(${from})|=${diff}$，共移動 $${diff}$ 層。(但現實生活中沒有$0$樓，所以會$${diff}-1$)。`
         );
@@ -2466,7 +2452,7 @@
         const profit = randInt(80, 360);
         const diff = Math.abs(profit - loss);
         questions.push(`某店昨天盈虧記為 $${loss}$ 元，今天盈虧記為 $${profit}$ 元。兩天的盈虧相差多少元？`);
-        summaryAnswers.push(`$${diff}$ 元`);
+        summaryAnswers.push(`$${diff}$`);
         answers.push(`相差要看兩數距離，所以是 $|${profit}-(${loss})|=${diff}$，兩天盈虧相差 $${diff}$ 元。`);
         continue;
       }
@@ -2475,7 +2461,7 @@
       questions.push(
         `潛水員在海平面下 $${Math.abs(seaLevel)}$ 公尺處，可記作 $${seaLevel}$ 公尺。這個數的絕對值代表什麼？是多少？`
       );
-      summaryAnswers.push(`$${Math.abs(seaLevel)}$，表示離海平面 $${Math.abs(seaLevel)}$ 公尺`);
+      summaryAnswers.push(`$${Math.abs(seaLevel)}$`);
       answers.push(
         `絕對值代表他離海平面的距離，所以 $|${seaLevel}|=${Math.abs(seaLevel)}$，表示離海平面 $${Math.abs(seaLevel)}$ 公尺。`
       );
@@ -2497,7 +2483,7 @@
         b = randInt(a + 2, 20);
       }
       const midpoint = (a + b) / 2;
-      questions.push(`數線上點 P 到 ${a} 與 ${b} 的距離相等，求點 P 的坐標。`);
+      questions.push(`數線上點 $P$ 到 $${a}$ 與 $${b}$ 的距離相等，求點 $P$ 的坐標。`);
       summaryAnswers.push(`$${formatFraction(a + b, 2)}$`);
       answers.push(`等距點就是這兩點的中點，所以 $P=\\frac{${a}${b >= 0 ? '+' : ''}${b}}{2}=${midpoint}$。`);
     }
@@ -2515,10 +2501,10 @@
       const distance = randInt(2, 12);
       const left = a - distance;
       const right = a + distance;
-      questions.push(`數線上點 P 與 ${a} 的距離是 ${distance}，求點 P 的所有可能坐標。`);
-      summaryAnswers.push(`$${left}$ 或 $${right}$`);
+      questions.push(`數線上點 $P$ 與 $${a}$ 的距離是 $${distance}$，求點 $P$ 的所有可能坐標。`);
+      summaryAnswers.push(`$${left}$,$${right}$`);
       answers.push(
-        `與 ${a} 距離 ${distance}，表示在 ${a} 的左邊 ${distance} 單位或右邊 ${distance} 單位，所以 $P=${left}$ 或 $P=${right}$。`
+        `與 $${a}$ 距離 $${distance}$，表示在 $${a}$ 的左邊 $${distance}$ 單位或右邊 $${distance}$ 單位，所以 $P=${left}$ 或 $P=${right}$。`
       );
     }
 
@@ -2539,9 +2525,9 @@
       questions.push(
         `數線上 $A$、$B$ 兩點的中點是 $${midpoint}$，且 $\\overline{AB}=${distance}$，求 $A$、$B$ 兩點的坐標。`
       );
-      summaryAnswers.push(`$${left}$、$${right}$`);
+      summaryAnswers.push(`$${left}$,$${right}$`);
       answers.push(
-        `簡答：$${left}$、$${right}$。中點左右距離相等，而 $\\overline{AB}=${distance}$，所以每邊各是 $${half}$。因此兩點坐標是 $${midpoint}-${half}=${left}$、$${midpoint}+${half}=${right}$。`
+        `中點左右距離相等，而 $\\overline{AB}=${distance}$，所以每邊各是 $${half}$。因此兩點坐標是 $${midpoint}-${half}=${left}$、$${midpoint}+${half}=${right}$。`
       );
     }
 
@@ -2551,7 +2537,7 @@
   function formatUnitScaleText(scale) {
     if (scale === 0.5) return '縮小為原來的 $\\frac{1}{2}$';
     if (scale === 0.25) return '縮小為原來的 $\\frac{1}{4}$';
-    return `放大 ${scale} 倍`;
+    return `放大 $${scale}$ 倍`;
   }
 
   function pickCompatibleOffset(scale) {
@@ -2560,7 +2546,7 @@
   }
 
   function formatCoordinateValue(value) {
-    if (Number.isInteger(value)) return `${value}`;
+    if (Number.isInteger(value)) return `$${value}$`;
     return `${Number(value.toFixed(2))}`;
   }
 
@@ -2574,7 +2560,9 @@
       let newOrigin = randInt(-18, 18);
       while (newOrigin === oldValue) newOrigin = randInt(-18, 18);
       const newValue = oldValue - newOrigin;
-      questions.push(`數線上點 A 原來在 ${oldValue}，若把 ${newOrigin} 改當新原點，且單位長不變，求 A 的新坐標。`);
+      questions.push(
+        `數線上點 $A$ 原來在 $${oldValue}$，若把 $${newOrigin}$ 改當新原點，且單位長不變，求 $A$ 的新坐標。`
+      );
       summaryAnswers.push(`$${newValue}$`);
       answers.push(`只改原點時，用「舊坐標 - 新原點」即可，所以新坐標為 $${oldValue}-(${newOrigin})=${newValue}$。`);
     }
@@ -2621,7 +2609,7 @@
       );
       summaryAnswers.push(`$${formatCoordinateValue(newValue)}$`);
       answers.push(
-        `先平移：$${oldValue}-(${origin})=${offset}$；再依新單位長換算：$${offset}\\div${scale}=${formatCoordinateValue(newValue)}$。所以 A 的新坐標是 ${formatCoordinateValue(newValue)}。`
+        `先平移：$${oldValue}-(${origin})=${offset}$；再依新單位長換算：$${offset}\\div${scale}=${formatCoordinateValue(newValue)}$。所以 $A$ 的新坐標是 ${formatCoordinateValue(newValue)}。`
       );
     }
 
@@ -2644,7 +2632,7 @@
       );
       summaryAnswers.push(`$${formatCoordinateValue(oldValue)}$`);
       answers.push(
-        `反推時先把新坐標換回舊單位，再加回新原點，所以原坐標 = $${origin}+${newValue}\\times${scale}=${formatCoordinateValue(oldValue)}$。`
+        `反推時先把新坐標換回舊單位，再加回新原點，所以原坐標 = $${formatPlus(origin, newValue * scale)}=${formatCoordinateValue(oldValue)}$，其中 $${newValue}\\times${scale}=${formatCoordinateValue(newValue * scale)}$。`
       );
     }
 
@@ -2670,11 +2658,11 @@
       const midpoint = (aNew + bNew) / 2;
       const distance = Math.abs(aNew - bNew);
       questions.push(
-        `把 ${origin} 當新原點，新單位長${formatUnitScaleText(scale)}。原數線上 A(${a})、B(${b}) 兩點，在新數線上的中點與距離各是多少？`
+        `把 $${origin}$ 當新原點，新單位長${formatUnitScaleText(scale)}。原數線上 $A(${a})$、$B(${b})$ 兩點，在新數線上的中點與距離各是多少？`
       );
-      summaryAnswers.push(`中點 $${formatCoordinateValue(midpoint)}$，距離 $${formatCoordinateValue(distance)}$`);
+      summaryAnswers.push(`$${formatCoordinateValue(midpoint)}$,$${formatCoordinateValue(distance)}$`);
       answers.push(
-        `先換新坐標：$A'=${formatCoordinateValue(aNew)}$，$B'=${formatCoordinateValue(bNew)}$。所以中點為 $\\frac{${formatCoordinateValue(aNew)}+${formatCoordinateValue(bNew)}}{2}=${formatCoordinateValue(midpoint)}$，距離為 $|${formatCoordinateValue(aNew)}-${formatCoordinateValue(bNew)}|=${formatCoordinateValue(distance)}$。`
+        `先換新坐標：$A'=${formatCoordinateValue(aNew)}$，$B'=${formatCoordinateValue(bNew)}$。所以中點為 $\\frac{${formatPlus(aNew, bNew)}}{2}=${formatCoordinateValue(midpoint)}$，距離為 $|${formatMinus(aNew, bNew)}|=${formatCoordinateValue(distance)}$。`
       );
     }
 
@@ -2685,9 +2673,17 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    // 建立子題型的抽取順序：先洗牌讓題型不再固定綁在同一題位，
+    // 若題數多於題型數就再接一輪洗牌，確保每個題型都有機會出現、且盡量不連續重複。
+    let order = [];
+    while (order.length < count) {
+      order = order.concat(shuffle(banks));
+    }
+    order = order.slice(0, count);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](5);
-      const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
+      const generated = order[i](5);
+      // 隨機挑該題型產生的其中一題，避免永遠只拿第 0 題造成同題重複
+      const itemIndex = Math.floor(Math.random() * generated.questions.length);
       questions.push(generated.questions[itemIndex]);
       summaryAnswers.push(
         Array.isArray(generated.summaryAnswers) ? generated.summaryAnswers[itemIndex] : generated.answers[itemIndex]
@@ -2791,11 +2787,12 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const m = 50;
     for (let i = 0; i < count; i += 1) {
-      const a = randInt(-20, 20);
-      const b = randInt(-20, 20);
-      const c = randInt(-20, 20);
-      const d = randInt(-20, 20);
+      const a = randInt(-m, m);
+      const b = randInt(-m, m);
+      const c = randInt(-m, m);
+      const d = randInt(-m, m);
       questions.push(
         `計算：\\(|${a}| ${b >= 0 ? '+' : '-'} ${Math.abs(b)} ${c >= 0 ? '+' : '-'} |${c}| ${d >= 0 ? '+' : '-'} ${Math.abs(d)}\\)`
       );
@@ -2814,17 +2811,23 @@
     const answers = [];
     const m = 50;
     for (let i = 0; i < count; i += 1) {
-      const a = randInt(-m, m),
-        b = randInt(-m, m);
-      const c = randInt(-m, m),
-        d = randInt(-m, m);
+      const a = pickNonZero(-m, m),
+        b = pickNonZero(-m, m);
+      const c = pickNonZero(-m, m),
+        d = pickNonZero(-m, m);
       const op = i % 2 === 0 ? '+' : '-';
-      const left = Math.abs(a + b);
-      const right = Math.abs(c + d);
+      const op1 = i % 2 === 0 ? '+' : '-';
+      const op2 = i % 2 === 0 ? '+' : '-';
+      const left = op1 === '+' ? Math.abs(a + b) : Math.abs(a - b);
+      const right = op2 === '+' ? Math.abs(c + d) : Math.abs(c - d);
       const result = op === '+' ? left + right : left - right;
-      questions.push(`計算：\\(|(${a})+(${b})| ${op} |(${c})+(${d})|\\)`);
+      questions.push(
+        `計算：\\(|${wrapIfNegative(a)}${op1}${wrapIfNegative(b)}| ${op} |${wrapIfNegative(c)}${op2}${wrapIfNegative(d)}|\\)`
+      );
       summaryAnswers.push(`$${result}$`);
-      answers.push(`\\(|(${a})+(${b})| ${op} |(${c})+(${d})|=${left} ${op} ${right}=${result}\\)`);
+      answers.push(
+        `\\(|${wrapIfNegative(a)}${op1}${wrapIfNegative(b)}| ${op} |${wrapIfNegative(c)}${op2}${wrapIfNegative(d)}|=${left} ${op} ${right}=${result}\\)`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2833,24 +2836,41 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    // 「抵消型」：兩組都由同一組大數 a、b 組成，兩個位移 x < y（皆為 100 的倍數）。
+    // 第一組顯示 a-(b-x)，第二組顯示 (a+y)-b，題目直接呈現算好的數字。
+    // 中間連接號可為「＋」或「−」，靠 b-a 的範圍讓 a、b 抵消，答案都等於 y-x（100 的倍數）。
     for (let i = 0; i < count; i += 1) {
-      const a = randInt(-3000, 3000);
-      const b = randInt(-3000, 3000);
-      const shift = randInt(-900, 900);
-      const delta = [200, 400, 600, 800, 1000, 2000, 4000][randInt(0, 6)] * (randInt(0, 1) ? 1 : -1);
+      let x = randInt(1, 7) * 100;
+      let y = randInt(1, 7) * 100;
+      while (y === x) y = randInt(1, 7) * 100;
+      if (x > y) {
+        const tmp = x;
+        x = y;
+        y = tmp;
+      }
+      const result = y - x; // 答案：兩位移之差，必為 100 的整數倍
 
-      // 第二組由第一組推導，形成「四個數字分兩組有關聯」
-      const c = a + shift;
-      const d = b + delta - shift;
+      const usePlus = randInt(0, 1) === 1;
+      // diff = b - a：夾在 (x, y) 之間 → 相加抵消；大於 y → 兩組同號 → 相減抵消。
+      const diff = usePlus ? randInt(x + 1, y - 1) : randInt(y + 50, y + 1200);
+      const a = randInt(700, 1800);
+      const b = a + diff;
 
-      const op = randInt(0, 1) ? '+' : '-';
-      const v1 = Math.abs(a + b);
-      const v2 = Math.abs(c + d);
-      const result = op === '+' ? v1 + v2 : v1 - v2;
+      const bMinusX = b - x; // 要算出來的數字
+      const aPlusY = a + y; // 要算出來的數字
+      const g1disp = `${a}-${wrapIfNegative(bMinusX)}`; // = a-(b-x) = a-b+x
+      const g2disp = `${aPlusY}-${b}`; // = (a+y)-b = a-b+y
+      const g1val = a - bMinusX;
+      const g2val = aPlusY - b;
+      const abs1 = Math.abs(g1val);
+      const abs2 = Math.abs(g2val);
+      const op = usePlus ? '+' : '-';
 
-      questions.push(`計算：\\(|(${a})+(${b})| ${op} |(${c})+(${d})|\\)`);
+      questions.push(`計算：\\(|${g1disp}| ${op} |${g2disp}|\\)`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`\\(|(${a})+(${b})| ${op} |(${c})+(${d})|=${v1} ${op} ${v2}=${result}\\)`);
+      answers.push(
+        `\\(${g1disp}=${g1val}\\)，故 \\(|${g1disp}|=${abs1}\\)；\\(${g2disp}=${g2val}\\)，故 \\(|${g2disp}|=${abs2}\\)。相${usePlus ? '加' : '減'}得 \\(${abs1} ${op} ${abs2}=${result}\\)。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2914,7 +2934,7 @@
         `求滿足 $${formatIntervalCondition(left, includeLeft, variableName, includeRight, right)}$ 的所有整數 $${variableName}$ 的個數。`
       );
       summaryAnswers.push(`$${values.length}$`);
-      answers.push(`符合條件的整數有 ${formatIntegerList(values)}，所以個數是 $${values.length}$。`);
+      answers.push(`符合條件的整數有 $${formatIntegerList(values)}$，所以個數是 $${values.length}$。`);
     }
 
     return { questions, summaryAnswers, answers };
@@ -2940,7 +2960,7 @@
         `求滿足 $${formatIntervalCondition(left, includeLeft, variableName, includeRight, right)}$ 的所有整數 $${variableName}$ 的總和。`
       );
       summaryAnswers.push(`$${result}$`);
-      answers.push(`符合條件的整數有 ${formatIntegerList(values)}，所以總和是 $${result}$。`);
+      answers.push(`符合條件的整數有 $${formatIntegerList(values)}$，所以總和是 $${result}$。`);
     }
 
     return { questions, summaryAnswers, answers };
@@ -2968,7 +2988,7 @@
       );
       summaryAnswers.push(`$${result}$`);
       answers.push(
-        `由 $|${shiftedText}|${symbol}${radius}$ 可得整數解為 ${formatIntegerList(values)}，所以總和是 $${result}$。`
+        `由 $|${shiftedText}|${symbol}${radius}$ 可得整數解為 $${formatIntegerList(values)}$，所以總和是 $${result}$。`
       );
     }
 
@@ -2988,20 +3008,24 @@
       let question = '';
       let result = 0;
 
+      let solution = '';
       if (mode === 0) {
         result = countIntegersInRange(-n, n, category);
         question = `絕對值小於或等於$${n}$的${category}共有幾個？`;
+        solution = `絕對值小於或等於 $${n}$，代表這個數落在 $-${n}\\le 數 \\le ${n}$；此範圍內的${category}共有 $${result}$ 個。`;
       } else if (mode === 1) {
         result = countIntegersInRange(-n, n, category);
         question = `絕對值不大於$${n}$的${category}共有幾個？`;
+        solution = `不大於 $${n}$ 就是小於或等於 $${n}$，代表這個數落在 $-${n}\\le 數 \\le ${n}$；此範圍內的${category}共有 $${result}$ 個。`;
       } else {
         result = countIntegersInRange(-n + 1, n - 1, category);
         question = `絕對值小於$${n}$的${category}共有幾個？`;
+        solution = `絕對值小於 $${n}$，代表 $-${n}< 數 < ${n}$，即 $-${n - 1}\\le 數 \\le ${n - 1}$；此範圍內的${category}共有 $${result}$ 個。`;
       }
 
       questions.push(question);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`$${result}$`);
+      answers.push(solution);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3026,7 +3050,16 @@
 
       questions.push(`符合\\(${lower}\\le |甲| ${rightSymbol} ${upper}\\)的${category}甲共有幾個？`);
       summaryAnswers.push(`$${result}$`);
-      answers.push(`$${result}$`);
+      const rightPart = `$${lower}\\le 甲 ${rightSymbol} ${upper}$（$${countRight}$ 個）`;
+      if (countLeft > 0) {
+        answers.push(
+          `絕對值介於 $${lower}$ 到 $${upper}$ 之間，代表甲落在原點兩側各一段：$-${rightRangeMax}\\le 甲\\le -${lower}$（$${countLeft}$ 個）或 ${rightPart}，合計 $${countLeft}+${countRight}=${result}$ 個。`
+        );
+      } else {
+        answers.push(
+          `絕對值介於 $${lower}$ 到 $${upper}$ 之間，且限定為${category}，只需算 ${rightPart}，共 $${result}$ 個。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6094,10 +6127,10 @@
       const delta = randInt(1, 8) * (randInt(0, 1) ? 1 : -1);
       const exact = near + delta;
       const total = exact * base;
-      questions.push(`利用分配律計算：${exact}×${base}`);
+      questions.push(`計算：$${exact}×${base}$`);
       summaryAnswers.push(`$${total}$`);
       answers.push(
-        `把 ${exact} 看成 ${near}${delta >= 0 ? '+' : ''}${delta}，依分配律：$(${near}${delta >= 0 ? '+' : ''}${delta})\\times ${base}=${near}\\times ${base}${delta >= 0 ? '+' : ''}${delta}\\times ${base}=${total}$。`
+        `把 $${exact}$ 看成 $${near}${delta >= 0 ? '+' : ''}${delta}，依分配律：$(${near}${delta >= 0 ? '+' : ''}${delta})\\times ${base}=${near}\\times ${base}${delta >= 0 ? '+' : ''}${delta}\\times ${base}=${total}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -6112,7 +6145,7 @@
       const a = pickNonZero(-40, 40);
       const b = pickNonZero(-40, 40);
       const total = common * a + common * b;
-      questions.push(`利用提出公因數計算：${common}×(${a}) + ${common}×(${b})`);
+      questions.push(`計算：$${common}×(${a}) + ${common}×(${b})$`);
       summaryAnswers.push(`$${total}$`);
       answers.push(
         `提出公因數 ${common}：$${common}\\times(${a})+${common}\\times(${b})=${common}\\times(${a}${b >= 0 ? '+' : ''}${b})=${common}\\times(${a + b})=${total}$。`
@@ -6131,7 +6164,7 @@
       const [a, b] = pickPositivePairWithSum(leftSum, 100);
       const [m, n] = pickPositivePairWithSum(rightSum, 20);
       const value = leftSum * rightSum;
-      questions.push(`利用分組提出公因數計算：${a}×${m} + ${a}×${n} + ${b}×${m} + ${b}×${n}`);
+      questions.push(`計算：$${a}×${m} + ${a}×${n} + ${b}×${m} + ${b}×${n}$`);
       summaryAnswers.push(`$${value}$`);
       answers.push(
         `先前兩項與後兩項分組：$${a}\\times(${m}+${n})+${b}\\times(${m}+${n})=(${a}+${b})\\times(${m}+${n})=${leftSum}\\times${rightSum}=${value}$。`
@@ -6150,7 +6183,7 @@
       const [a, b] = pickPositivePairWithSum(leftSum, 80);
       const [m, n] = pickSignedPairWithSum(rightSum);
       const value = leftSum * rightSum;
-      questions.push(`利用分組提出公因數計算：${a}×(${m}) + ${a}×(${n}) + ${b}×(${m}) + ${b}×(${n})`);
+      questions.push(`計算：$${a}×(${m}) + ${a}×(${n}) + ${b}×(${m}) + ${b}×(${n})$`);
       summaryAnswers.push(`$${value}$`);
       answers.push(
         `先前兩項與後兩項分組：$${a}\\times(${m}${n >= 0 ? '+' : ''}${n})+${b}\\times(${m}${n >= 0 ? '+' : ''}${n})=(${a}+${b})\\times(${m}${n >= 0 ? '+' : ''}${n})=${leftSum}\\times(${rightSum})=${value}$。`
@@ -6172,7 +6205,7 @@
       const known = jia * base;
       const extra = offset * base;
       const result = (jia + offset) * base;
-      questions.push(`已知 甲×${base}=${known}，求 (甲+${offset})×${base} 的值。`);
+      questions.push(`已知 $甲×${base}=${known}$，求 $(甲+${offset})×${base}$ 的值。`);
       summaryAnswers.push(`$${result}$`);
       answers.push(
         `利用分配律：$(甲+${offset})\\times ${base}=甲\\times ${base}+${offset}\\times ${base}=${known}+${extra}=${result}$。`
@@ -6190,7 +6223,7 @@
       const diff = randInt(2, 18);
       const a = b + diff;
       const value = a - b;
-      questions.push(`設法利用分配律計算：${a}×${b + 1}-${a + 1}×${b}`);
+      questions.push(`計算：$${a}×(${b}+1)-(${a}+1)×${b}$`);
       summaryAnswers.push(`$${value}$`);
       answers.push(
         `把原式看成 $${a}×(${b}+1)-(${a}+1)×${b}$。依分配律展開：$${a}×${b}+${a}-${a}×${b}-${b}=${a}-${b}=${value}$。`
@@ -6209,7 +6242,7 @@
       const diff = randInt(2, 18);
       const a = k * b - diff;
       const value = diff;
-      questions.push(`設法利用分配律計算：${a + k}×${b}-${a}×${b + 1}`);
+      questions.push(`計算：$${a + k}×${b}-${a}×${b + 1}$`);
       summaryAnswers.push(`$${value}$`);
       answers.push(
         `把第一項拆成 $(${a}+${k})×${b}$，原式 $=${a}×${b}+${k}×${b}-${a}×(${b}+1)=${a}×${b}+${k}×${b}-${a}×${b}-${a}=${k}×${b}-${a}=${value}$。`
@@ -6231,7 +6264,7 @@
       const a = k * b - diff;
       const inner = diff;
       const value = common * inner;
-      questions.push(`先提出公因數，再利用分配律計算：${common}×${a + k}×${b}-${common}×${a}×${b + 1}`);
+      questions.push(`計算：$${common}×${a + k}×${b}-${common}×${a}×${b + 1}$`);
       summaryAnswers.push(`$${value}$`);
       answers.push(
         `先提出公因數 $${common}$：原式 $=${common}\\bigl(${a + k}×${b}-${a}×${b + 1}\\bigr)$。` +
@@ -6319,10 +6352,10 @@
       const c = pickNonZero(-6, 6);
       const inner = d1.calc(a, b);
       const value = d2.calc(inner, c);
-      questions.push(`若規定 ${d1.text}，${d2.text}，求 (${a}${d1.sym}${b})${d2.sym}${c}。`);
+      questions.push(`若規定 $${d1.text}$，$${d2.text}$，求 $(${a}${d1.sym}${b})${d2.sym}${c}$。`);
       summaryAnswers.push(`$${value}$`);
       answers.push(
-        `先算內層：$${a}${d1.sym}${b}=${inner}$；再算外層：$${inner}${d2.sym}${c}=${value}$。所以結果是 ${value}。`
+        `先算內層：$${a}${d1.sym}${b}=${inner}$；再算外層：$${inner}${d2.sym}${c}=${value}$。所以結果是 $${value}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -6816,11 +6849,12 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const m = 30;
     for (let i = 0; i < count; i += 1) {
-      const a = pickNonZero(-6, 6);
-      const b = pickNonZero(-6, 6);
-      const divisor = pickNonZero(-6, 6);
-      const quotient = pickNonZero(-6, 6);
+      const a = pickNonZero(-m, m);
+      const b = pickNonZero(-m, m);
+      const divisor = pickNonZero(-m, m);
+      const quotient = pickNonZero(-m, m);
       const dividend = divisor * quotient;
       const result = a * b + quotient;
       questions.push(
@@ -6839,10 +6873,10 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const divisor = pickNonZero(-6, 6);
-      const quotient = pickNonZero(-6, 6);
+      const divisor = pickNonZero(-16, 16);
+      const quotient = pickNonZero(-16, 16);
       const inside = divisor * quotient;
-      const a = randInt(-10, 10);
+      const a = randInt(-20, 20);
       const b = inside - a;
       questions.push(
         `計算：$\\left[${wrapIfNegative(a)}+${wrapIfNegative(b)}\\right]\\div ${wrapIfNegative(divisor)}$。`
@@ -6860,9 +6894,9 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const a = pickNonZero(-6, 6);
-      const b = pickNonZero(-8, 8);
-      const c = pickNonZero(-8, 8);
+      const a = pickNonZero(-16, 16);
+      const b = pickNonZero(-18, 18);
+      const c = pickNonZero(-18, 18);
       const inside = b + c;
       const result = a * inside;
       questions.push(`計算：$${wrapIfNegative(a)}\\times \\left[${wrapIfNegative(b)}+${wrapIfNegative(c)}\\right]$。`);
@@ -6879,11 +6913,11 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const a = pickNonZero(-5, 5);
-      const b = pickNonZero(-6, 6);
-      const c = pickNonZero(-6, 6);
-      const divisor = pickNonZero(-6, 6);
-      const quotient = pickNonZero(-6, 6);
+      const a = pickNonZero(-15, 15);
+      const b = pickNonZero(-16, 16);
+      const c = pickNonZero(-16, 16);
+      const divisor = pickNonZero(-16, 16);
+      const quotient = pickNonZero(-16, 16);
       const dividend = divisor * quotient;
       const left = a * (b + c);
       const result = left - quotient;
@@ -6903,11 +6937,11 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const a = pickNonZero(-5, 5);
-      const divisor = pickNonZero(-5, 5);
-      const quotient = pickNonZero(-4, 4);
+      const a = pickNonZero(-15, 15);
+      const divisor = pickNonZero(-15, 15);
+      const quotient = pickNonZero(-14, 14);
       const dividend = divisor * quotient;
-      const c = pickNonZero(-6, 6);
+      const c = pickNonZero(-16, 16);
       const inside = quotient + c;
       const result = a * inside;
       questions.push(
@@ -7010,11 +7044,12 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const m = 30;
     for (let i = 0; i < count; i += 1) {
-      const a = pickNonZero(-9, 9);
-      const b = pickNonZero(-9, 9);
-      const c = pickNonZero(-4, 4);
-      const d = pickNonZero(-8, 8);
+      const a = pickNonZero(-m, m);
+      const b = pickNonZero(-m, m);
+      const c = pickNonZero(-9, 9);
+      const d = pickNonZero(-m, m);
       const absValue = Math.abs(a + b);
       const result = absValue * c + d;
       questions.push(
@@ -7032,11 +7067,12 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const m = 30;
     for (let i = 0; i < count; i += 1) {
-      const a = pickNonZero(-9, 9);
-      const b = pickNonZero(-9, 9);
-      const c = pickNonZero(-5, 5);
-      const d = pickNonZero(-6, 6);
+      const a = pickNonZero(-m, m);
+      const b = pickNonZero(-m, m);
+      const c = pickNonZero(-9, 9);
+      const d = pickNonZero(-m, m);
       const valueA = Math.abs(a);
       const valueB = Math.abs(b);
       const result = valueA + valueB * c - Math.abs(d);
@@ -7054,14 +7090,14 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const a = pickNonZero(-4, 4);
-      const b = randInt(2, 5);
-      const c = randInt(2, 5);
-      const d = pickNonZero(-7, 7);
+      const a = pickNonZero(-9, 9);
+      const b = pickNonZero(-9, 9);
+      const c = pickNonZero(-9, 9);
+      const d = pickNonZero(-9, 9);
       const square = Math.pow(a, 2);
       const absValue = Math.abs(d);
       const result = b * square - c * absValue;
-      questions.push(`計算：$${b}\\times (${a})^2-${c}\\times |${d}|$。`);
+      questions.push(`計算：$${b}\\times (${a})^2-${wrapIfNegative(c)}\\times |${d}|$。`);
       summaryAnswers.push(`$${result}$`);
       answers.push(
         `先算次方與絕對值：$(${a})^2=${square}$，$|${d}|=${absValue}$。再算乘法：$${b}\\times ${square}=${b * square}$，$${c}\\times ${absValue}=${c * absValue}$，所以結果是 $${result}$。`
@@ -7074,11 +7110,12 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const m = 30;
     for (let i = 0; i < count; i += 1) {
-      const a = randInt(-9, 9);
-      const b = randInt(-9, 9);
-      const c = randInt(-9, 9);
-      const d = randInt(-9, 9);
+      const a = pickNonZero(-m, m);
+      const b = pickNonZero(-m, m);
+      const c = pickNonZero(-m, m);
+      const d = pickNonZero(-m, m);
       const first = Math.abs(a - b);
       const second = Math.abs(c - d);
       const result = first + second;
@@ -7326,9 +7363,13 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    // 洗牌讓子題型不再固定綁在同一題位；題數多於題型時再接一輪洗牌，確保每個題型都會出現。
+    let order = [];
+    while (order.length < count) order = order.concat(shuffle(banks));
+    order = order.slice(0, count);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](5);
-      const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
+      const generated = order[i](5);
+      const itemIndex = Math.floor(Math.random() * generated.questions.length);
       questions.push(generated.questions[itemIndex]);
       summaryAnswers.push(
         Array.isArray(generated.summaryAnswers) ? generated.summaryAnswers[itemIndex] : generated.answers[itemIndex]
@@ -8693,7 +8734,7 @@
   const nextConfigs = {
     'midpoint-formula': {
       type: 'drill',
-      title: '簡易無限練習',
+      title: '中點問題',
       difficulty: 'easy',
       questionCount: 10,
       generate() {
@@ -8702,7 +8743,7 @@
     },
     'distance-formula': {
       type: 'drill',
-      title: '簡易無限練習',
+      title: '簡易二點距離',
       difficulty: 'easy',
       questionCount: 10,
       generate() {
@@ -11078,6 +11119,7 @@
     },
   };
 
+  // j1-1-1 題型：修正重複性、補詳解、修正連續負號顯示（詳見 docs/math-display-rules.md）
   const bundleFingerprint = 'j1-bundle-v20260622-j123-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;

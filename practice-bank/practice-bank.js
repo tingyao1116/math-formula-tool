@@ -1226,24 +1226,65 @@
     }
     if (typeof config.generate !== "function") return [];
     const desiredCount = Math.max(1, Number(maxVariants || 1) || 1);
-    const result = normalizeGeneratedPracticeResultV2(config.generate(item) || {});
-    const questions = Array.isArray(result.questions) ? result.questions : [];
-    const summaryAnswers = Array.isArray(result.summaryAnswers) ? result.summaryAnswers : [];
-    const answers = Array.isArray(result.answers) ? result.answers : [];
     const variants = [];
+    const seen = new Set();
+    // 單次 generate() 只會回傳 config.questionCount 題（通常是 5），
+    // 這裡改成重複呼叫並去重，收滿使用者要的題數為止（拿不到那麼多題就有多少給多少）。
+    const attemptLimit = Math.max(6, desiredCount * 6);
 
-    for (let index = 0; index < questions.length && variants.length < desiredCount; index += 1) {
-      const question = String(questions[index] || "").trim();
-      if (!question) continue;
-      const summaryAnswer = String(summaryAnswers[index] || answers[index] || "").trim();
-      const answer = String(answers[index] || "").trim();
-      variants.push({ question, summaryAnswer, answer });
+    for (let attempt = 0; attempt < attemptLimit && variants.length < desiredCount; attempt += 1) {
+      const result = normalizeGeneratedPracticeResultV2(config.generate(item) || {});
+      const questions = Array.isArray(result.questions) ? result.questions : [];
+      const summaryAnswers = Array.isArray(result.summaryAnswers) ? result.summaryAnswers : [];
+      const answers = Array.isArray(result.answers) ? result.answers : [];
+
+      for (let index = 0; index < questions.length && variants.length < desiredCount; index += 1) {
+        const question = String(questions[index] || "").trim();
+        if (!question || seen.has(question)) continue;
+        seen.add(question);
+        const summaryAnswer = String(summaryAnswers[index] || answers[index] || "").trim();
+        const answer = String(answers[index] || "").trim();
+        variants.push({ question, summaryAnswer, answer });
+      }
     }
 
     return variants;
   }
 
-  const TOP_COMPOSITE_QUESTIONS_PER_SUBTYPE = 3;
+  // 綜合（題型變化總覽）每一種題型要出幾題：可由前端輸入框調整，並記憶在 localStorage。
+  // 預設 10 題，範圍 1–50，方便逐一校對題目正確性與重複性。
+  const COMPOSITE_PER_SUBTYPE_STORAGE_KEY = "math-formula-tool-composite-per-subtype-v1";
+  const COMPOSITE_PER_SUBTYPE_DEFAULT = 10;
+  const COMPOSITE_PER_SUBTYPE_MIN = 1;
+  const COMPOSITE_PER_SUBTYPE_MAX = 50;
+
+  function clampCompositePerSubtype(value) {
+    const n = Math.floor(Number(value));
+    if (!Number.isFinite(n)) return COMPOSITE_PER_SUBTYPE_DEFAULT;
+    return Math.max(COMPOSITE_PER_SUBTYPE_MIN, Math.min(COMPOSITE_PER_SUBTYPE_MAX, n));
+  }
+
+  function loadCompositePerSubtype() {
+    try {
+      const raw = window.localStorage.getItem(COMPOSITE_PER_SUBTYPE_STORAGE_KEY);
+      if (raw === null || raw === "") return COMPOSITE_PER_SUBTYPE_DEFAULT;
+      return clampCompositePerSubtype(raw);
+    } catch (_) {
+      return COMPOSITE_PER_SUBTYPE_DEFAULT;
+    }
+  }
+
+  let compositeQuestionsPerSubtype = loadCompositePerSubtype();
+
+  function setCompositeQuestionsPerSubtype(value) {
+    compositeQuestionsPerSubtype = clampCompositePerSubtype(value);
+    try {
+      window.localStorage.setItem(COMPOSITE_PER_SUBTYPE_STORAGE_KEY, String(compositeQuestionsPerSubtype));
+    } catch (_) {
+      // ignore storage errors
+    }
+    return compositeQuestionsPerSubtype;
+  }
 
   function buildCompositeChildItemV2(record, fallbackChapterCode = "") {
     if (!record || typeof record !== "object") return null;
@@ -1324,8 +1365,9 @@
 
     if (typeof config.generate !== "function") return [];
 
-    const variants = collectPracticeVariationsV2(config, item, TOP_COMPOSITE_QUESTIONS_PER_SUBTYPE)
-      .slice(0, TOP_COMPOSITE_QUESTIONS_PER_SUBTYPE);
+    const perSubtype = compositeQuestionsPerSubtype;
+    const variants = collectPracticeVariationsV2(config, item, perSubtype)
+      .slice(0, perSubtype);
     return variants.length ? [{ title: fullTitle, variants }] : [];
   }
 
@@ -1569,6 +1611,15 @@
             <button type="button" class="ghost-button" data-chapter-composite-summary-reveal="${escapeHtml(state.chapterCode)}">簡答</button>
             <button type="button" class="ghost-button" data-chapter-composite-detail-reveal="${escapeHtml(state.chapterCode)}">詳解</button>
           </div>
+          ${
+            isTop
+              ? `<div class="interactive-actions__row">
+            <label class="detail-note chapter-composite-per-subtype">每種題型出題數
+              <input type="number" min="${COMPOSITE_PER_SUBTYPE_MIN}" max="${COMPOSITE_PER_SUBTYPE_MAX}" step="1" value="${compositeQuestionsPerSubtype}" data-chapter-composite-per-subtype="${escapeHtml(state.chapterCode)}" />
+            </label>
+          </div>`
+              : ""
+          }
         </div>
         <div class="interactive-output" data-chapter-composite-output>請先按出題；若想換新的一輪，再按重新出題。</div>
         <div class="interactive-answer-panels">
@@ -1623,6 +1674,24 @@
         const section = button.closest("[data-chapter-composite]");
         const answerBox = section?.querySelector("[data-chapter-composite-answer]");
         if (answerBox) answerBox.classList.toggle("is-hidden");
+      });
+    });
+
+    elements.practiceBoard?.querySelectorAll("[data-chapter-composite-per-subtype]").forEach((input) => {
+      if (input.dataset.boundV2 === "true") return;
+      input.dataset.boundV2 = "true";
+      input.addEventListener("change", async () => {
+        setCompositeQuestionsPerSubtype(input.value);
+        input.value = String(compositeQuestionsPerSubtype);
+        const section = input.closest("[data-chapter-composite]");
+        const position = section?.getAttribute("data-chapter-composite-position") || "bottom";
+        // 已經出過題才立即用新題數重出；還沒出題就只記住設定，等使用者按出題。
+        if (readCompositeSessionV2(position)) {
+          const items = getCompositeChapterItems();
+          await ensurePracticeGeneratorsForItemsV2(items);
+          const session = regenerateCompositeSessionV2(position, items);
+          renderCompositeSessionV2(section, session);
+        }
       });
     });
   }

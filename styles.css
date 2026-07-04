@@ -2083,6 +2083,17 @@ select {
   gap: 10px;
 }
 
+.chapter-composite-per-subtype {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chapter-composite-per-subtype input {
+  width: 72px;
+  padding: 4px 6px;
+}
+
 .calculator-fields {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
