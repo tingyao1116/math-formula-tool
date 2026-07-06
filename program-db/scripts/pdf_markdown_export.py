@@ -402,6 +402,90 @@ def build_practice_set_answer_md(summary_answer, detail_answer, index: int, answ
     return [f"{index}. {detail}"]
 
 
+# Math commands that are only valid inside LaTeX math mode. If any of these show
+# up in a practice string *outside* a $…$ / \(…\) / \[…\] span, xelatex will fail
+# with "! Missing $ inserted." — so we can catch the offending generator before
+# even running pandoc, and name it directly instead of surfacing a raw LaTeX error.
+_MATH_ONLY_CMD = re.compile(
+    r"\\(?:d|t)?frac\b|\\sqrt\b|\\times\b|\\cdot\b|\\div\b|\\leq?\b|\\geq?\b|\\neq\b"
+    r"|\\pm\b|\\mp\b|\\overline\b|\\overset\b|\\underset\b|\\vec\b|\\angle\b"
+    r"|\\alpha\b|\\beta\b|\\gamma\b|\\theta\b|\\pi\b|\\sum\b|\\int\b|\\Rightarrow\b"
+    r"|\\begin\b|\\end\b|\^\{|_\{"
+)
+
+# Control / invalid characters that XeLaTeX rejects with "Text line contains an
+# invalid character" (shown in the log as ^^H etc.). These are usually stray
+# control chars (e.g. a backspace 0x08) that slipped into a generator string or
+# imported data. Tab (\x09), newline (\x0a) and carriage return (\x0d) are fine.
+_BAD_CHARS = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f​‎‏‪-‮﻿]")
+
+
+def _strip_math_spans(text: str) -> str:
+    """Remove $$…$$, \\(…\\), \\[…\\] and $…$ spans so what's left is text mode."""
+    text = re.sub(r"\$\$.*?\$\$", " ", text, flags=re.S)
+    text = re.sub(r"\\\(.*?\\\)", " ", text, flags=re.S)
+    text = re.sub(r"\\\[.*?\\\]", " ", text, flags=re.S)
+    text = re.sub(r"(?<!\\)\$.*?(?<!\\)\$", " ", text, flags=re.S)
+    return text
+
+
+def _latex_problem_in_text(text: str) -> str | None:
+    """Return a human description of the first LaTeX math-mode problem, or None."""
+    if not isinstance(text, str) or not text.strip():
+        return None
+    bad = _BAD_CHARS.search(text)
+    if bad:
+        return (
+            f"含有無效字元（控制字元／隱藏字元 U+{ord(bad.group(0)):04X}），"
+            f"LaTeX 排版時會報「invalid character」，需刪除這個字元"
+        )
+    # Collapse "\\" (a LaTeX line break / escaped backslash) to spaces first, so
+    # "\\(" — an array row break followed by a parenthesis, e.g. inside a
+    # \begin{array} system of equations — is not mistaken for an inline-math "\("
+    # (and "\\$" is not mistaken for an escaped "$").
+    probe = text.replace("\\\\", "  ")
+    if len(re.findall(r"(?<!\\)\$", probe)) % 2 != 0:
+        return "數學符號 $ 沒有成對（奇數個 $），$ 之後的內容會被當成純文字"
+    if probe.count(r"\(") != probe.count(r"\)"):
+        return "行內數學 \\( 與 \\) 的數量不一致（沒有成對）"
+    hit = _MATH_ONLY_CMD.search(_strip_math_spans(probe))
+    if hit:
+        return f"數學指令「{hit.group(0)}」寫在數學模式（$…$ 或 \\(…\\)）外面"
+    return None
+
+
+def find_latex_problem_in_sets(generated_sets: list) -> dict | None:
+    """Scan generated practice sets for the first string that xelatex would reject.
+
+    Returns ``{"title","id","field","index","problem","sample"}`` for the first
+    offending string (so the export can name the broken generator), or ``None``.
+    """
+    for si, practice_set in enumerate(generated_sets or []):
+        if not isinstance(practice_set, dict):
+            continue
+        title = str(practice_set.get("title") or practice_set.get("id") or f"第 {si + 1} 組").strip()
+        pid = str(
+            practice_set.get("practiceId")
+            or practice_set.get("id")
+            or practice_set.get("generatorKey")
+            or ""
+        ).strip()
+        for field, label in (("questions", "題目"), ("summaryAnswers", "簡答"), ("answers", "詳解")):
+            for qi, value in enumerate(practice_set.get(field) or []):
+                problem = _latex_problem_in_text(value)
+                if problem:
+                    sample = str(value).strip().replace("\n", " ")
+                    return {
+                        "title": title,
+                        "id": pid,
+                        "field": label,
+                        "index": qi + 1,
+                        "problem": problem,
+                        "sample": sample[:160],
+                    }
+    return None
+
+
 def build_practice_sets_markdown(
     generated_sets: list,
     title: str,
@@ -571,13 +655,30 @@ def convert_markdown_to_pdf(
             if "mainfont" in log or "font" in log.lower():
                 reason += f" 可能是找不到字型「{font}」，請確認電腦上有安裝這個中文字型，或改用其他字型。"
             else:
-                # Surface the actual LaTeX error (lines starting with "!") so a bad
-                # data entry (e.g. a stray \frac/\times typed outside math mode in
-                # a practice-generator string) can be tracked down without having
-                # to dig through the full pandoc/xelatex log by hand.
-                error_lines = [ln.strip() for ln in log.splitlines() if ln.strip().startswith("!")]
-                if error_lines:
-                    reason += f" LaTeX 錯誤：{error_lines[-1]}"
+                # Surface the FIRST LaTeX error (lines starting with "!") plus the
+                # source location xelatex points at ("l.<N> ..."), so a bad data
+                # entry (e.g. a stray \frac/\times typed outside math mode in a
+                # practice-generator string) can be tracked down directly.
+                # The first error is the root cause; later ones are usually cascades
+                # triggered by it, so reporting the last error was often misleading.
+                log_lines = log.splitlines()
+                err_idx = next(
+                    (i for i, ln in enumerate(log_lines) if ln.strip().startswith("!")),
+                    None,
+                )
+                if err_idx is not None:
+                    reason += f" 第一個 LaTeX 錯誤：{log_lines[err_idx].strip()}"
+                    # xelatex prints the offending line as "l.<N> <text-before-error>"
+                    # and the remainder of that line on the next line; show both with
+                    # a marker so the exact spot is obvious.
+                    for j in range(err_idx + 1, min(err_idx + 15, len(log_lines))):
+                        m = re.match(r"^l\.(\d+)\s?(.*)$", log_lines[j].rstrip())
+                        if m:
+                            before = m.group(2).strip()
+                            after = log_lines[j + 1].strip() if j + 1 < len(log_lines) else ""
+                            spot = (before + " ⟨✗這裡⟩ " + after).strip()
+                            reason += f" 出錯位置（排版第 {m.group(1)} 行）：{spot[:140]}"
+                            break
             return {"ok": False, "pdf": None, "reason": reason, "log": log[-4000:]}
         return {"ok": True, "pdf": out_path, "reason": "", "log": log[-4000:]}
     except subprocess.TimeoutExpired:

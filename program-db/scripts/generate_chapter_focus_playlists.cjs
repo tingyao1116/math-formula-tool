@@ -62,10 +62,24 @@ for (const record of records) {
   byGroup.get(key).push(record);
 }
 
+const chapterPinnedPracticeIds = {
+  "j1-2": [
+    "practice-j1-2-1-combined-divisibility-clean",
+    "practice-j1-2-1-remainder-crt-range-clean",
+    "practice-j1-2-1-divisor-count-inverse-clean",
+    "practice-j1-2-2-gcd-lcm-pair-constraints-clean",
+    "practice-j1-2-2-ratio-lcm-three-numbers-clean",
+    "practice-j1-2-2-periodic-lcm-modeling-clean",
+    "practice-j1-2-3-advanced-telescoping-sum-clean",
+    "practice-j1-2-3-telescoping-product-clean",
+  ],
+};
+
 const weights = [
   [/five-subtypes|six-subtypes|seven-subtypes|ten-subtypes/, 26],
   [/mixed|core/, 24],
   [/application|applications|word|model|modeling|context/, 22],
+  [/divisibility|remainder|gcd-lcm|lcm|telescoping|divisor-count|crt/, 22],
   [/advanced|parameter|reverse|relation|constraint|range|extrema/, 18],
   [/formula|factor|equation|inequality|proportion|ratio|function|quadratic|linear|circle|triangle|vector|probability|statistics|series|sequence|permutation|combination|log|exponent|radical|pythagorean|coordinate|geometry/, 14],
   [/basic|concept|identify|definition|true-false/, -8],
@@ -98,6 +112,14 @@ const chapterPlaylists = Array.from(byGroup.keys()).sort(compareGroupKey).map((k
       || String(a.id || "").localeCompare(String(b.id || ""));
   });
   const targetCount = Math.min(Math.max(10, Math.ceil(items.length * 0.22)), 14);
+  const pinned = (chapterPinnedPracticeIds[key] || [])
+    .map((id) => items.find((record) => record.id === id))
+    .filter(Boolean);
+  const pinnedIds = new Set(pinned.map((record) => record.id));
+  const selectedItems = [
+    ...pinned,
+    ...items.filter((record) => !pinnedIds.has(record.id)),
+  ].slice(0, targetCount);
   const stage = key.startsWith("j") ? "國中章節重點" : "高中章節重點";
   return {
     id: `chapter-focus-${key}`,
@@ -107,7 +129,7 @@ const chapterPlaylists = Array.from(byGroup.keys()).sort(compareGroupKey).map((k
     playlistType: "任務型",
     playlistCategory: "章節重點",
     chapterGroup: key,
-    practiceIds: items.slice(0, targetCount).map((record) => record.id),
+    practiceIds: selectedItems.map((record) => record.id),
     questionCount: 5,
     shufflePractices: false,
     enabled: true,

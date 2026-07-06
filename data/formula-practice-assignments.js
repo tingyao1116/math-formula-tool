@@ -5,11 +5,11 @@ window.formulaPracticeAssignmentStore = {
     "schema": "practice-db-v1",
     "count": 0,
     "assignmentCount": 0,
-    "practiceCount": 2847,
-    "bindingCount": 0,
-    "updatedAt": "2026-07-03T01:20:31.267301+00:00",
-    "totalPractices": 2847,
-    "totalBindings": 0
+    "practiceCount": 2829,
+    "bindingCount": 16,
+    "updatedAt": "2026-07-05T04:28:12.353459+00:00",
+    "totalPractices": 2829,
+    "totalBindings": 16
   },
   "byId": {},
   "catalog": {}
@@ -19,11 +19,11 @@ window.practiceLibraryStore = {
     "schema": "practice-db-v1",
     "count": 0,
     "assignmentCount": 0,
-    "practiceCount": 2847,
-    "bindingCount": 0,
-    "updatedAt": "2026-07-03T01:20:31.267301+00:00",
-    "totalPractices": 2847,
-    "totalBindings": 0
+    "practiceCount": 2829,
+    "bindingCount": 16,
+    "updatedAt": "2026-07-05T04:28:12.353459+00:00",
+    "totalPractices": 2829,
+    "totalBindings": 16
   },
   "byId": {
     "j2-1-2-two-solution-one-eq-drill": {
@@ -16735,40 +16735,6 @@ window.practiceLibraryStore = {
         "算出立方公尺後忘記再換成題目要求的單位。"
       ]
     },
-    "practice-e5-2-3-large-one-subtype": {
-      "id": "practice-e5-2-3-large-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "大型容積生活應用",
-      "generatorKey": "e5-2-3-large-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e5-2-3-large-application-drill"
-      ],
-      "chapterCode": "e5-2-3",
-      "chapter": "容積",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-3",
-        "容積",
-        "大型情境"
-      ],
-      "usage": [
-        "集中練習游泳池、水塔與用水度數的生活應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "大型情境多半要在立方公尺、公升、度水之間切換。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "只算到體積，沒有轉成題目最後要的單位。"
-      ]
-    },
     "practice-e5-2-3-large-unit-convert-drill": {
       "id": "practice-e5-2-3-large-unit-convert-drill",
       "enabled": true,
@@ -17009,40 +16975,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "單位沒跟著答案一起寫，或把乘法誤做成加法。"
-      ]
-    },
-    "practice-e5-2-4-application-one-subtype": {
-      "id": "practice-e5-2-4-application-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "生活情境中的小數乘法",
-      "generatorKey": "e5-2-4-application-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e5-2-4-application-drill"
-      ],
-      "chapterCode": "e5-2-4",
-      "chapter": "小數的乘法",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-4",
-        "小數的乘法",
-        "應用綜合"
-      ],
-      "usage": [
-        "集中練習單價、重量、容量、面積的生活應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "先抓出每 1 單位多少，再乘數量。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "題目看見小數就急著算，沒有先判斷關係。"
       ]
     },
     "practice-e5-2-4-clever-grouping-drill": {
@@ -17606,40 +17538,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "常見錯誤是漏掉中間的零，或把家族單位的位置對錯。"
-      ]
-    },
-    "practice-e5-2-5-compare-one-subtype": {
-      "id": "practice-e5-2-5-compare-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "大數大小比較與排序",
-      "generatorKey": "e5-2-5-compare-one-subtype",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e5-2-5-large-compare-drill"
-      ],
-      "chapterCode": "e5-2-5",
-      "chapter": "大數與折線圖",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-5",
-        "大數與折線圖",
-        "比較"
-      ],
-      "usage": [
-        "單獨拉出大數比較，方便集中刷題。"
-      ],
-      "examples": [],
-      "tips": [
-        "永遠先比位數，再比最高位。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "不要被逗號或中文單位分心。"
       ]
     },
     "practice-e5-2-5-expanded-notation-drill": {
@@ -18626,72 +18524,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "最常漏寫商的 0，導致整個答案位值錯掉。"
-      ]
-    },
-    "practice-e5-2-6-rounding-one-subtype": {
-      "id": "practice-e5-2-6-rounding-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "概數處理",
-      "generatorKey": "e5-2-6-rounding-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e5-2-6-quotient-rounding-drill"
-      ],
-      "chapterCode": "e5-2-6",
-      "chapter": "整數、小數除以整數",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-6",
-        "概數"
-      ],
-      "usage": [
-        "專門練習除不盡時的取概數。"
-      ],
-      "examples": [],
-      "tips": [
-        "算到指定位的下一位，才能正確四捨五入。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "直接停在指定位置，不看下一位。"
-      ]
-    },
-    "practice-e5-2-6-time-one-subtype": {
-      "id": "practice-e5-2-6-time-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "時間換算應用",
-      "generatorKey": "e5-2-6-time-one-subtype",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e5-2-6-time-unit-convert-drill"
-      ],
-      "chapterCode": "e5-2-6",
-      "chapter": "整數、小數除以整數",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e5-2-6",
-        "時間換算"
-      ],
-      "usage": [
-        "用在分、時、日之間的除法換算。"
-      ],
-      "examples": [],
-      "tips": [
-        "確認是大單位換小單位還是小單位換大單位。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把 60 與 24 背成規則但沒看單位，容易套錯。"
       ]
     },
     "practice-e5-2-6-time-unit-convert-drill": {
@@ -21749,41 +21581,6 @@ window.practiceLibraryStore = {
         "沒有看除數與 1 的關係就亂猜。"
       ]
     },
-    "practice-e6-1-2-comparison-one-subtype": {
-      "id": "practice-e6-1-2-comparison-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "倍數關係判定",
-      "generatorKey": "e6-1-2-comparison-one-subtype",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-2-comparison-drill"
-      ],
-      "chapterCode": "e6-1-2",
-      "chapter": "分數除法",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-2",
-        "分數除法",
-        "比較",
-        "商的大小"
-      ],
-      "usage": [
-        "不必完整計算，也能先判斷商與原數的大小關係。"
-      ],
-      "examples": [],
-      "tips": [
-        "核心就是看除數與 1 的關係。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把比較題當成一定要全部算完。"
-      ]
-    },
     "practice-e6-1-2-general-fraction-division-drill": {
       "id": "practice-e6-1-2-general-fraction-division-drill",
       "enabled": true,
@@ -21847,41 +21644,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "把乘法公式反推時沒有改成除法。"
-      ]
-    },
-    "practice-e6-1-2-geometry-one-subtype": {
-      "id": "practice-e6-1-2-geometry-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "幾何反推計算",
-      "generatorKey": "e6-1-2-geometry-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-2-geometry-inverse-drill"
-      ],
-      "chapterCode": "e6-1-2",
-      "chapter": "分數除法",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-2",
-        "分數除法",
-        "幾何",
-        "反推"
-      ],
-      "usage": [
-        "針對面積、周長等公式反推另一個量。"
-      ],
-      "examples": [],
-      "tips": [
-        "先寫出原公式，再改成除法。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "看不出題目其實是在做公式反推。"
       ]
     },
     "practice-e6-1-2-integer-divide-fraction-drill": {
@@ -22013,41 +21775,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "單位前後倒置。"
-      ]
-    },
-    "practice-e6-1-2-rate-one-subtype": {
-      "id": "practice-e6-1-2-rate-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "速率與單位比例應用",
-      "generatorKey": "e6-1-2-rate-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-2-rate-application-drill"
-      ],
-      "chapterCode": "e6-1-2",
-      "chapter": "分數除法",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-2",
-        "分數除法",
-        "速率",
-        "單位比例"
-      ],
-      "usage": [
-        "把單位換成「每 1 單位」的觀念題。"
-      ],
-      "examples": [],
-      "tips": [
-        "看清楚最後要的是時間率還是數量率。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "算出來數字對，但單位寫錯。"
       ]
     },
     "practice-e6-1-2-remainder-cut-drill": {
@@ -22215,40 +21942,6 @@ window.practiceLibraryStore = {
         "不知道要用總量除每份量，還是總價除數量。"
       ]
     },
-    "practice-e6-1-2-whole-one-subtype": {
-      "id": "practice-e6-1-2-whole-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "部分量求全體",
-      "generatorKey": "e6-1-2-whole-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-2-part-to-whole-drill"
-      ],
-      "chapterCode": "e6-1-2",
-      "chapter": "分數除法",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-2",
-        "分數除法",
-        "部分量求全體"
-      ],
-      "usage": [
-        "已知某部分代表整體的幾分之幾，反推整體。"
-      ],
-      "examples": [],
-      "tips": [
-        "整體一定比部分大，所以可順手檢查答案合理性。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把題目中的分率當成乘法題。"
-      ]
-    },
     "practice-e6-1-3-chicken-rabbit-drill": {
       "id": "practice-e6-1-3-chicken-rabbit-drill",
       "enabled": true,
@@ -22280,41 +21973,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "沒有看出每換 1 個會差多少，導致最後除錯差量。"
-      ]
-    },
-    "practice-e6-1-3-chicken-rabbit-one-subtype": {
-      "id": "practice-e6-1-3-chicken-rabbit-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "雞兔問題",
-      "generatorKey": "e6-1-3-chicken-rabbit-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-3-chicken-rabbit-drill"
-      ],
-      "chapterCode": "e6-1-3",
-      "chapter": "數量關係",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-3",
-        "數量關係",
-        "雞兔問題",
-        "大類"
-      ],
-      "usage": [
-        "以假設法整理兩類物件的總數與總量，是這章很有代表性的題型。"
-      ],
-      "examples": [],
-      "tips": [
-        "先全部假設成同一種，再處理差額。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "總數與每次差量沒有分開看，導致最後商算錯。"
       ]
     },
     "practice-e6-1-3-cycle-drill": {
@@ -22350,41 +22008,6 @@ window.practiceLibraryStore = {
         "把第 n 個直接拿去除，沒有先處理成 n-1 的餘數。"
       ]
     },
-    "practice-e6-1-3-cycle-one-subtype": {
-      "id": "practice-e6-1-3-cycle-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "週期循環規律",
-      "generatorKey": "e6-1-3-cycle-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-3-cycle-drill"
-      ],
-      "chapterCode": "e6-1-3",
-      "chapter": "數量關係",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-3",
-        "數量關係",
-        "週期規律",
-        "大類"
-      ],
-      "usage": [
-        "觀察重複規律並用餘數定位，是很穩定的出題模型。"
-      ],
-      "examples": [],
-      "tips": [
-        "先確認一循環有幾個，再找餘數。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "沒有對準循環起點，導致第幾個位置判錯。"
-      ]
-    },
     "practice-e6-1-3-difference-invariant-drill": {
       "id": "practice-e6-1-3-difference-invariant-drill",
       "enabled": true,
@@ -22416,41 +22039,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "誤以為經過幾年後，兩人的年齡差也會跟著改變。"
-      ]
-    },
-    "practice-e6-1-3-difference-one-subtype": {
-      "id": "practice-e6-1-3-difference-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "差不變",
-      "generatorKey": "e6-1-3-difference-one-subtype",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-3-difference-invariant-drill"
-      ],
-      "chapterCode": "e6-1-3",
-      "chapter": "數量關係",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-3",
-        "數量關係",
-        "差不變",
-        "大類"
-      ],
-      "usage": [
-        "年齡、年份與固定差的題目，都可以放在這一類集中練。"
-      ],
-      "examples": [],
-      "tips": [
-        "先找固定差，再用固定差推未知量。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "經過時間後，把差也跟著加上去。"
       ]
     },
     "practice-e6-1-3-growth-basic-drill": {
@@ -22690,41 +22278,6 @@ window.practiceLibraryStore = {
         "把每份量和總量看反，導致除數與被除數放錯。"
       ]
     },
-    "practice-e6-1-3-product-one-subtype": {
-      "id": "practice-e6-1-3-product-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "積不變",
-      "generatorKey": "e6-1-3-product-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-3-product-invariant-drill"
-      ],
-      "chapterCode": "e6-1-3",
-      "chapter": "數量關係",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-3",
-        "數量關係",
-        "積不變",
-        "大類"
-      ],
-      "usage": [
-        "總量固定的分裝、分組與注水問題都能放進這一類。"
-      ],
-      "examples": [],
-      "tips": [
-        "先寫成乘法關係，再用除法反推。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "只看到總量固定，卻沒注意是乘積固定。"
-      ]
-    },
     "practice-e6-1-3-ratio-invariant-drill": {
       "id": "practice-e6-1-3-ratio-invariant-drill",
       "enabled": true,
@@ -22758,41 +22311,6 @@ window.practiceLibraryStore = {
         "沒有先看出比值固定，就把題目當成普通加減法處理。"
       ]
     },
-    "practice-e6-1-3-ratio-one-subtype": {
-      "id": "practice-e6-1-3-ratio-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "商不變",
-      "generatorKey": "e6-1-3-ratio-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-3-ratio-invariant-drill"
-      ],
-      "chapterCode": "e6-1-3",
-      "chapter": "數量關係",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-3",
-        "數量關係",
-        "商不變",
-        "大類"
-      ],
-      "usage": [
-        "單價、進度和兌換率固定的題目，可在這一類一起練。"
-      ],
-      "examples": [],
-      "tips": [
-        "把固定商看成單位量。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "沒有先找單位量，就直接把兩組數字亂乘。"
-      ]
-    },
     "practice-e6-1-3-sum-invariant-drill": {
       "id": "practice-e6-1-3-sum-invariant-drill",
       "enabled": true,
@@ -22824,41 +22342,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "只看到增加或減少的字眼就直接加減，沒有先確認總量是否固定。"
-      ]
-    },
-    "practice-e6-1-3-sum-one-subtype": {
-      "id": "practice-e6-1-3-sum-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "和不變",
-      "generatorKey": "e6-1-3-sum-one-subtype",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-3-sum-invariant-drill"
-      ],
-      "chapterCode": "e6-1-3",
-      "chapter": "數量關係",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-3",
-        "數量關係",
-        "和不變",
-        "大類"
-      ],
-      "usage": [
-        "總量固定時，先練和不變會最有感。"
-      ],
-      "examples": [],
-      "tips": [
-        "看見總量固定就要想到相加結果不變。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把和不變和差不變搞混。"
       ]
     },
     "practice-e6-1-4-basics-two-subtypes": {
@@ -23334,41 +22817,6 @@ window.practiceLibraryStore = {
         "把餘數的小數點放錯，或把餘數寫成和商一樣的單位。"
       ]
     },
-    "practice-e6-1-4-remainder-one-subtype": {
-      "id": "practice-e6-1-4-remainder-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "有餘數的小數除法",
-      "generatorKey": "e6-1-4-remainder-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-4-remainder-division-drill"
-      ],
-      "chapterCode": "e6-1-4",
-      "chapter": "小數除法",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-4",
-        "小數除法",
-        "有餘數",
-        "一小類綜合"
-      ],
-      "usage": [
-        "聚焦在商取整數後，如何正確表示剩下的小數量。"
-      ],
-      "examples": [],
-      "tips": [
-        "先確定要的是『最多幾瓶、幾包』這種整數商，再看剩多少。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把商算成小數，卻忽略題目其實要整數份數與剩餘量。"
-      ]
-    },
     "practice-e6-1-4-unit-rate-drill": {
       "id": "practice-e6-1-4-unit-rate-drill",
       "enabled": true,
@@ -23817,41 +23265,6 @@ window.practiceLibraryStore = {
         "把要換到的量誤當成前項，而不是後項。"
       ]
     },
-    "practice-e6-1-5-geometry-one-subtype": {
-      "id": "practice-e6-1-5-geometry-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "幾何比例與生活尺規應用",
-      "generatorKey": "e6-1-5-geometry-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-5-geometry-ratio-drill"
-      ],
-      "chapterCode": "e6-1-5",
-      "chapter": "比與比值",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-5",
-        "比與比值",
-        "幾何比例",
-        "生活應用"
-      ],
-      "usage": [
-        "集中練習螢幕比例、比例尺、影長與面積等比的圖形應用。"
-      ],
-      "examples": [],
-      "tips": [
-        "先寫出對應量的比，再把題目中的已知值代進去。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把不對應的兩個量硬放進同一個比。"
-      ]
-    },
     "practice-e6-1-5-geometry-ratio-drill": {
       "id": "practice-e6-1-5-geometry-ratio-drill",
       "enabled": true,
@@ -24157,41 +23570,6 @@ window.practiceLibraryStore = {
         "觀念沒穩就直接跳應用，容易公式亂套。"
       ]
     },
-    "practice-e6-1-6-interval-one-subtype": {
-      "id": "practice-e6-1-6-interval-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "圓周上的間隔問題",
-      "generatorKey": "e6-1-6-interval-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-6-circular-interval-drill"
-      ],
-      "chapterCode": "e6-1-6",
-      "chapter": "圓周長與扇形周長",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-6",
-        "圓周長與扇形周長",
-        "間隔問題",
-        "一小類綜合"
-      ],
-      "usage": [
-        "練習圓周上的首尾相接間隔。"
-      ],
-      "examples": [],
-      "tips": [
-        "圓周上沒有頭尾，所以間隔數和物件數相同。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "照抄直線間隔公式，導致多 1 或少 1。"
-      ]
-    },
     "practice-e6-1-6-inverse-circumference-drill": {
       "id": "practice-e6-1-6-inverse-circumference-drill",
       "enabled": true,
@@ -24293,41 +23671,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "把倍數關係誤以為和面積一樣要平方。"
-      ]
-    },
-    "practice-e6-1-6-multiplier-one-subtype": {
-      "id": "practice-e6-1-6-multiplier-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "圓周長的倍數比較",
-      "generatorKey": "e6-1-6-multiplier-one-subtype",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-6-multiplier-drill"
-      ],
-      "chapterCode": "e6-1-6",
-      "chapter": "圓周長與扇形周長",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-6",
-        "圓周長與扇形周長",
-        "倍數比較",
-        "一小類綜合"
-      ],
-      "usage": [
-        "集中練習圓周長和半徑、直徑的正比關係。"
-      ],
-      "examples": [],
-      "tips": [
-        "本類不用硬算，先看倍數關係就夠。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把周長倍數誤當成面積倍數。"
       ]
     },
     "practice-e6-1-6-pi-22-over-7-drill": {
@@ -24735,41 +24078,6 @@ window.practiceLibraryStore = {
         "沒有先拆圖，直接把不同圖形公式混在一起算。"
       ]
     },
-    "practice-e6-1-7-composite-one-subtype": {
-      "id": "practice-e6-1-7-composite-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "複合圖形面積計算",
-      "generatorKey": "e6-1-7-composite-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-7-composite-area-drill"
-      ],
-      "chapterCode": "e6-1-7",
-      "chapter": "圓面積與扇形面積",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-7",
-        "圓面積與扇形面積",
-        "複合圖形",
-        "綜合"
-      ],
-      "usage": [
-        "集中練習可穩定文字化的圓與方形複合圖形。"
-      ],
-      "examples": [],
-      "tips": [
-        "先拆成已知基本圖形，再決定加減關係。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "沒有辨認圖形邊界，導致多算或少算。"
-      ]
-    },
     "practice-e6-1-7-foundation-three-subtypes": {
       "id": "practice-e6-1-7-foundation-three-subtypes",
       "enabled": true,
@@ -24839,42 +24147,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "把半徑差先平方，誤以為可以直接得到環形面積。"
-      ]
-    },
-    "practice-e6-1-7-ring-one-subtype": {
-      "id": "practice-e6-1-7-ring-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "環形與外圍步道面積",
-      "generatorKey": "e6-1-7-ring-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-7-ring-area-drill"
-      ],
-      "chapterCode": "e6-1-7",
-      "chapter": "圓面積與扇形面積",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-7",
-        "圓面積與扇形面積",
-        "環形",
-        "步道",
-        "綜合"
-      ],
-      "usage": [
-        "集中練習大圓減小圓的環狀面積模型。"
-      ],
-      "examples": [],
-      "tips": [
-        "先確認內外半徑，再計算兩個圓面積差。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把步道寬誤當成外圓半徑直接使用。"
       ]
     },
     "practice-e6-1-7-sector-area-drill": {
@@ -25015,42 +24287,6 @@ window.practiceLibraryStore = {
         "沒有先判斷場地限制，直接把整個圓面積拿來算。"
       ]
     },
-    "practice-e6-1-7-tether-one-subtype": {
-      "id": "practice-e6-1-7-tether-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "拴繩活動範圍面積",
-      "generatorKey": "e6-1-7-tether-one-subtype",
-      "difficulty": "hard",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-7-tether-area-drill"
-      ],
-      "chapterCode": "e6-1-7",
-      "chapter": "圓面積與扇形面積",
-      "domain": "空間與形狀",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-7",
-        "圓面積與扇形面積",
-        "拴繩",
-        "活動範圍",
-        "綜合"
-      ],
-      "usage": [
-        "練習根據場地邊長與繩長判斷活動圖形。"
-      ],
-      "examples": [],
-      "tips": [
-        "先畫出繩子轉到牆角前後的路徑，再決定是單一扇形還是分段相加。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "只看繩長，不看場地寬長限制。"
-      ]
-    },
     "practice-e6-1-8-basic-three-subtypes": {
       "id": "practice-e6-1-8-basic-three-subtypes",
       "enabled": true,
@@ -25085,41 +24321,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "三個公式分不清楚。"
-      ]
-    },
-    "practice-e6-1-8-compare-one-subtype": {
-      "id": "practice-e6-1-8-compare-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "不同單位的快慢比較",
-      "generatorKey": "e6-1-8-compare-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-8-compare-speed-drill"
-      ],
-      "chapterCode": "e6-1-8",
-      "chapter": "認識速率",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-8",
-        "認識速率",
-        "快慢比較",
-        "綜合"
-      ],
-      "usage": [
-        "集中練習不同單位速率的比較與排序。"
-      ],
-      "examples": [],
-      "tips": [
-        "全部換成同一單位後再比。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "沒有統一單位就直接比較。"
       ]
     },
     "practice-e6-1-8-compare-speed-drill": {
@@ -25290,42 +24491,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "同時亂動時間單位，或 1000、100 的倍數關係弄錯。"
-      ]
-    },
-    "practice-e6-1-8-proportion-one-subtype": {
-      "id": "practice-e6-1-8-proportion-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "倍數關係與正比練習",
-      "generatorKey": "e6-1-8-proportion-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-e6-1-8-proportionality-drill"
-      ],
-      "chapterCode": "e6-1-8",
-      "chapter": "認識速率",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "e6-1-8",
-        "認識速率",
-        "倍數關係",
-        "正比",
-        "綜合"
-      ],
-      "usage": [
-        "集中練習速率、距離、時間在固定條件下的倍數變化。"
-      ],
-      "examples": [],
-      "tips": [
-        "先圈出固定量，倍數關係才不會判錯。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把正比題看成單純計算題，忽略關係判斷。"
       ]
     },
     "practice-e6-1-8-proportionality-drill": {
@@ -32374,6 +31539,42 @@ window.practiceLibraryStore = {
         "新舊單位換算時把乘除方向寫反。"
       ]
     },
+    "practice-j1-1-1-coordinate-reverse-multi-drill": {
+      "id": "practice-j1-1-1-coordinate-reverse-multi-drill",
+      "enabled": true,
+      "mode": "generator",
+      "title": "座標系逆向多重變換",
+      "generatorKey": "j1-1-1-coordinate-reverse-multi-drill",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-1",
+        "數線與絕對值",
+        "新原點",
+        "單位長",
+        "逆向",
+        "增難"
+      ],
+      "usage": [
+        "給兩點的新舊坐標，反求新原點位置與單位長縮放倍數。"
+      ],
+      "examples": [],
+      "tips": [
+        "先用「原坐標差 ÷ 新坐標差」求單位長倍數，再代回一點求新原點。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把原坐標差與新坐標差的比值上下顛倒。",
+        "求出倍數後忘了代回求新原點。"
+      ]
+    },
     "practice-j1-1-1-range-integer-five-subtypes": {
       "id": "practice-j1-1-1-range-integer-five-subtypes",
       "enabled": true,
@@ -33765,41 +32966,6 @@ window.practiceLibraryStore = {
         "把自訂符號當成一般加減乘除直接算。"
       ]
     },
-    "practice-j1-1-3-application-one-subtype": {
-      "id": "practice-j1-1-3-application-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "指數應用",
-      "generatorKey": "j1-1-3-application-one-subtype",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-j1-1-3-exponent-word-problem-drill"
-      ],
-      "chapterCode": "j1-1-3",
-      "chapter": "指數律",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-1-3",
-        "指數",
-        "應用",
-        "生活情境"
-      ],
-      "usage": [
-        "把指數規律帶進生活情境與文字題。"
-      ],
-      "examples": [],
-      "tips": [
-        "先翻成倍數關係，再寫成指數式。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "只看數字大小，沒有抓到倍增倍減結構。"
-      ]
-    },
     "practice-j1-1-3-binary-quadratic-cross-factoring": {
       "id": "practice-j1-1-3-binary-quadratic-cross-factoring",
       "enabled": true,
@@ -34602,41 +33768,6 @@ window.practiceLibraryStore = {
         "把括號內負號和括號外負號混在一起。"
       ]
     },
-    "practice-j1-1-3-power-concept-one-subtype": {
-      "id": "practice-j1-1-3-power-concept-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "次方基礎觀念",
-      "generatorKey": "j1-1-3-power-concept-one-subtype",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-j1-1-3-sign-brackets-power-drill"
-      ],
-      "chapterCode": "j1-1-3",
-      "chapter": "指數律",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-1-3",
-        "次方",
-        "括號",
-        "觀念"
-      ],
-      "usage": [
-        "先釐清正負號、括號與奇偶次方的判別。"
-      ],
-      "examples": [],
-      "tips": [
-        "先分清楚是 -a^n 還是 (-a)^n。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把負號和次方一起看錯位置。"
-      ]
-    },
     "practice-j1-1-3-power-of-power-basic-drill": {
       "id": "practice-j1-1-3-power-of-power-basic-drill",
       "enabled": true,
@@ -35070,41 +34201,6 @@ window.practiceLibraryStore = {
         "把係數寫成超過 10，沒有整理成標準格式。"
       ]
     },
-    "practice-j1-1-4-large-to-scientific-one-subtype": {
-      "id": "practice-j1-1-4-large-to-scientific-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "將大數轉化為科學記號",
-      "generatorKey": "j1-1-4-large-to-scientific-one-subtype",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-j1-1-4-large-to-scientific-drill"
-      ],
-      "chapterCode": "j1-1-4",
-      "chapter": "科學記號",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-1-4",
-        "科學記號",
-        "將大數轉化為科學記號",
-        "1小類綜合"
-      ],
-      "usage": [
-        "練習把大數改寫成科學記號。"
-      ],
-      "examples": [],
-      "tips": [
-        "係數要整理成 1 到 10 之間。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "位數數錯，導致指數錯誤。"
-      ]
-    },
     "practice-j1-1-4-scientific-add-sub-drill": {
       "id": "practice-j1-1-4-scientific-add-sub-drill",
       "enabled": true,
@@ -35139,41 +34235,6 @@ window.practiceLibraryStore = {
       "mistakes": [
         "把科學記號的加減誤用成乘除的規則。",
         "指數還沒統一就直接把係數相加減。"
-      ]
-    },
-    "practice-j1-1-4-scientific-add-sub-one-subtype": {
-      "id": "practice-j1-1-4-scientific-add-sub-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "科學記號的進階加減運算",
-      "generatorKey": "j1-1-4-scientific-add-sub-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-j1-1-4-scientific-add-sub-standard-drill"
-      ],
-      "chapterCode": "j1-1-4",
-      "chapter": "科學記號",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-1-4",
-        "科學記號",
-        "科學記號的進階加減運算",
-        "1小類綜合"
-      ],
-      "usage": [
-        "練習科學記號加減的核心流程。"
-      ],
-      "examples": [],
-      "tips": [
-        "一定要先把 10 的次方對齊。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "直接把兩個係數做加減。"
       ]
     },
     "practice-j1-1-4-scientific-add-sub-standard-drill": {
@@ -35244,41 +34305,6 @@ window.practiceLibraryStore = {
         "指數相同時，忘記還要比較前面的係數。"
       ]
     },
-    "practice-j1-1-4-scientific-compare-one-subtype": {
-      "id": "practice-j1-1-4-scientific-compare-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "科學記號的大小比較",
-      "generatorKey": "j1-1-4-scientific-compare-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-j1-1-4-scientific-compare-standard-drill"
-      ],
-      "chapterCode": "j1-1-4",
-      "chapter": "科學記號",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-1-4",
-        "科學記號",
-        "科學記號的大小比較",
-        "1小類綜合"
-      ],
-      "usage": [
-        "練習科學記號的大小比較。"
-      ],
-      "examples": [],
-      "tips": [
-        "先看次方，再看係數。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "忽略正負號或次方數。"
-      ]
-    },
     "practice-j1-1-4-scientific-compare-standard-drill": {
       "id": "practice-j1-1-4-scientific-compare-standard-drill",
       "enabled": true,
@@ -35341,41 +34367,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "單位還沒換完，就直接套科學記號。"
-      ]
-    },
-    "practice-j1-1-4-scientific-context-one-subtype": {
-      "id": "practice-j1-1-4-scientific-context-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "情境應用與單位轉換",
-      "generatorKey": "j1-1-4-scientific-context-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-j1-1-4-scientific-context-drill"
-      ],
-      "chapterCode": "j1-1-4",
-      "chapter": "科學記號",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-1-4",
-        "科學記號",
-        "情境應用與單位轉換",
-        "1小類綜合"
-      ],
-      "usage": [
-        "練習把科學記號放進實際情境與單位換算中。"
-      ],
-      "examples": [],
-      "tips": [
-        "情境題先釐清單位，再做科學記號。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "只算數字，忘記單位也要一起處理。"
       ]
     },
     "practice-j1-1-4-scientific-convert-drill": {
@@ -35486,41 +34477,6 @@ window.practiceLibraryStore = {
         "算完後沒有整理回標準科學記號。"
       ]
     },
-    "practice-j1-1-4-scientific-mul-div-one-subtype": {
-      "id": "practice-j1-1-4-scientific-mul-div-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "科學記號的進階乘除運算",
-      "generatorKey": "j1-1-4-scientific-mul-div-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-j1-1-4-scientific-mul-div-standard-drill"
-      ],
-      "chapterCode": "j1-1-4",
-      "chapter": "科學記號",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-1-4",
-        "科學記號",
-        "科學記號的進階乘除運算",
-        "1小類綜合"
-      ],
-      "usage": [
-        "練習科學記號乘除後再調整格式。"
-      ],
-      "examples": [],
-      "tips": [
-        "先算完，再檢查是否為標準格式。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "中間結果不是標準格式就直接停下。"
-      ]
-    },
     "practice-j1-1-4-scientific-mul-div-standard-drill": {
       "id": "practice-j1-1-4-scientific-mul-div-standard-drill",
       "enabled": true,
@@ -35621,41 +34577,6 @@ window.practiceLibraryStore = {
         "正負次方方向弄反。"
       ]
     },
-    "practice-j1-1-4-scientific-to-plain-one-subtype": {
-      "id": "practice-j1-1-4-scientific-to-plain-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "將科學記號還原為一般數字",
-      "generatorKey": "j1-1-4-scientific-to-plain-one-subtype",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-j1-1-4-scientific-to-plain-drill"
-      ],
-      "chapterCode": "j1-1-4",
-      "chapter": "科學記號",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-1-4",
-        "科學記號",
-        "將科學記號還原為一般數字",
-        "1小類綜合"
-      ],
-      "usage": [
-        "練習把科學記號還原成一般數字。"
-      ],
-      "examples": [],
-      "tips": [
-        "先判斷是整數型還是小數型。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把小數點移動方向看反。"
-      ]
-    },
     "practice-j1-1-4-scientific-unit-conversion-drill": {
       "id": "practice-j1-1-4-scientific-unit-conversion-drill",
       "enabled": true,
@@ -35723,41 +34644,6 @@ window.practiceLibraryStore = {
       "notes": [],
       "mistakes": [
         "負指數方向判斷錯誤。"
-      ]
-    },
-    "practice-j1-1-4-small-to-scientific-one-subtype": {
-      "id": "practice-j1-1-4-small-to-scientific-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "將極小數轉化為科學記號",
-      "generatorKey": "j1-1-4-small-to-scientific-one-subtype",
-      "difficulty": "easy",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-j1-1-4-small-to-scientific-drill"
-      ],
-      "chapterCode": "j1-1-4",
-      "chapter": "科學記號",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-1-4",
-        "科學記號",
-        "將極小數轉化為科學記號",
-        "1小類綜合"
-      ],
-      "usage": [
-        "練習把極小數改寫成科學記號。"
-      ],
-      "examples": [],
-      "tips": [
-        "負指數代表小數點原本在左邊更遠。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "把極小數也寫成正指數。"
       ]
     },
     "practice-j1-2-1-divisibility-digit-fill-drill": {
@@ -36361,41 +35247,6 @@ window.practiceLibraryStore = {
         "只看兩個間隔相加，沒有找週期的最小公倍數。"
       ]
     },
-    "practice-j1-2-3-bracket-mixed-four-subtypes": {
-      "id": "practice-j1-2-3-bracket-mixed-four-subtypes",
-      "enabled": false,
-      "mode": "generator",
-      "title": "多重括號與混合運算",
-      "generatorKey": "j1-2-3-bracket-mixed-four-subtypes",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-j1-2-3-bracket-mixed-operation-application"
-      ],
-      "chapterCode": "j1-2-3",
-      "chapter": "分數的四則運算與應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-2-3",
-        "分數的四則運算與應用",
-        "多重括號與混合運算",
-        "1小類綜合"
-      ],
-      "usage": [
-        "練習括號優先與分數混合運算。"
-      ],
-      "examples": [],
-      "tips": [
-        "先算括號，再處理乘除。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "運算順序混亂。"
-      ]
-    },
     "practice-j1-2-3-bracket-mixed-operation-application": {
       "id": "practice-j1-2-3-bracket-mixed-operation-application",
       "enabled": true,
@@ -36534,41 +35385,6 @@ window.practiceLibraryStore = {
       "mistakes": [
         "把減去負數仍然當成減號處理。",
         "符號改對了，但後面通分又漏掉正負。"
-      ]
-    },
-    "practice-j1-2-3-fraction-application-one-subtype": {
-      "id": "practice-j1-2-3-fraction-application-one-subtype",
-      "enabled": false,
-      "mode": "generator",
-      "title": "分數生活應用（分配與剩餘量）",
-      "generatorKey": "j1-2-3-fraction-application-one-subtype",
-      "difficulty": "medium",
-      "questionCount": 5,
-      "subtypeCount": 1,
-      "relatedPracticeIds": [
-        "practice-j1-2-3-fraction-remainder-life-application"
-      ],
-      "chapterCode": "j1-2-3",
-      "chapter": "分數的四則運算與應用",
-      "domain": "數與量",
-      "prompt": "",
-      "answer": "",
-      "tags": [
-        "j1-2-3",
-        "分數的四則運算與應用",
-        "分數生活應用（分配與剩餘量）",
-        "1小類綜合"
-      ],
-      "usage": [
-        "練習分數分配與剩餘量的應用題。"
-      ],
-      "examples": [],
-      "tips": [
-        "先釐清基準量是原有量還是剩餘量。"
-      ],
-      "notes": [],
-      "mistakes": [
-        "剩餘量題目把基準量抓錯。"
       ]
     },
     "practice-j1-2-3-fraction-compare-drill": {
@@ -89485,9 +88301,690 @@ window.practiceLibraryStore = {
       "mistakes": [
         "常見錯誤是把新坐標直接代成舊坐標，沒有先寫出反向關係。"
       ]
+    },
+    "practice-j1-1-1-coordinate-scale-origin-inference-clean": {
+      "id": "practice-j1-1-1-coordinate-scale-origin-inference-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "已知新舊坐標反推原點與固定點",
+      "generatorKey": "j1-1-1-coordinate-scale-origin-inference-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-1",
+        "數線",
+        "坐標變換",
+        "新原點",
+        "單位長",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類會更換數線位置、倍率、指數或科學記號參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是把新坐標直接加減原點，忘記還要乘上新單位長倍率。"
+      ]
+    },
+    "practice-j1-1-1-absolute-interval-simplify-clean": {
+      "id": "practice-j1-1-1-absolute-interval-simplify-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "給定範圍的絕對值化簡",
+      "generatorKey": "j1-1-1-absolute-interval-simplify-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-1",
+        "絕對值",
+        "範圍判斷",
+        "化簡",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類會更換數線位置、倍率、指數或科學記號參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是看到絕對值就直接把符號拿掉，沒有先判斷內部式子的正負。"
+      ]
+    },
+    "practice-j1-1-1-absolute-equation-count-clean": {
+      "id": "practice-j1-1-1-absolute-equation-count-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "絕對值方程與整數解個數",
+      "generatorKey": "j1-1-1-absolute-equation-count-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-1",
+        "絕對值方程",
+        "距離",
+        "整數解",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類會更換數線位置、倍率、指數或科學記號參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是忽略絕對值不可能等於負數，或漏掉左右兩側的解。"
+      ]
+    },
+    "practice-j1-1-1-midpoint-ratio-nested-clean": {
+      "id": "practice-j1-1-1-midpoint-ratio-nested-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "連續中點與比例點反推",
+      "generatorKey": "j1-1-1-midpoint-ratio-nested-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-1",
+      "chapter": "數線與絕對值",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-1",
+        "中點",
+        "比例點",
+        "距離",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類會更換數線位置、倍率、指數或科學記號參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是把比例 AC=2CB 當成 C 是中點，沒有注意左右兩段長度不同。"
+      ]
+    },
+    "practice-j1-1-3-common-base-conversion-clean": {
+      "id": "practice-j1-1-3-common-base-conversion-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "不同底數先轉同底數",
+      "generatorKey": "j1-1-3-common-base-conversion-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-3",
+      "chapter": "指數律",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-3",
+        "指數律",
+        "同底數",
+        "底數轉換",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類會更換數線位置、倍率、指數或科學記號參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是沒有先轉底數，就直接把不同底數的指數相加減。"
+      ]
+    },
+    "practice-j1-1-3-common-base-equation-clean": {
+      "id": "practice-j1-1-3-common-base-equation-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "轉同底數解指數方程",
+      "generatorKey": "j1-1-3-common-base-equation-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-3",
+      "chapter": "指數律",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-3",
+        "指數方程",
+        "同底數",
+        "指數律",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類會更換數線位置、倍率、指數或科學記號參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是只把底數改寫，卻忘記次方也要乘進去。"
+      ]
+    },
+    "practice-j1-1-4-scientific-trap-compare-clean": {
+      "id": "practice-j1-1-4-scientific-trap-compare-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "科學記號加減比較陷阱",
+      "generatorKey": "j1-1-4-scientific-trap-compare-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-4",
+      "chapter": "科學記號",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-4",
+        "科學記號",
+        "加減",
+        "比較",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類會更換數線位置、倍率、指數或科學記號參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是加減時只看係數，沒有先把 10 的次方調成相同。"
+      ]
+    },
+    "practice-j1-1-4-scientific-unit-stack-clean": {
+      "id": "practice-j1-1-4-scientific-unit-stack-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "科學記號單位換算堆疊題",
+      "generatorKey": "j1-1-4-scientific-unit-stack-clean",
+      "difficulty": "medium",
+      "questionCount": 5,
+      "subtypeCount": 0,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-1-4",
+      "chapter": "科學記號",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-1-4",
+        "科學記號",
+        "單位換算",
+        "乘法",
+        "無限練習"
+      ],
+      "usage": [],
+      "examples": [],
+      "tips": [
+        "此小類會更換數線位置、倍率、指數或科學記號參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "常見錯誤是忘記最後單位換算要再除以 10，或把指數加減方向弄反。"
+      ]
+    },
+    "practice-j1-2-1-combined-divisibility-clean": {
+      "id": "practice-j1-2-1-combined-divisibility-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "複合整除規則與缺位數字",
+      "generatorKey": "j1-2-1-combined-divisibility-clean",
+      "difficulty": "進階",
+      "questionCount": 5,
+      "subtypeCount": 4,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-1",
+      "chapter": "倍數與因數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-2-1",
+        "整除規則",
+        "缺位數字",
+        "3的倍數",
+        "8的倍數",
+        "11的倍數",
+        "無限練習"
+      ],
+      "usage": [
+        "用兩種以上整除規則同時限制未知位數字，訓練學生先拆條件再交集。"
+      ],
+      "examples": [],
+      "tips": [
+        "72 要拆成 8 與 9；33 要拆成 3 與 11；11 的倍數要看奇偶位交錯和差。",
+        "此小類會更換位數字、範圍、質因數指數或級數上限等參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只套用其中一個整除規則，忘記所有條件都要同時成立。"
+      ]
+    },
+    "practice-j1-2-1-remainder-crt-range-clean": {
+      "id": "practice-j1-2-1-remainder-crt-range-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "混合餘數與範圍限制",
+      "generatorKey": "j1-2-1-remainder-crt-range-clean",
+      "difficulty": "進階",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-1",
+      "chapter": "倍數與因數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-2-1",
+        "餘數",
+        "韓信點兵",
+        "範圍限制",
+        "無限練習"
+      ],
+      "usage": [
+        "把多個餘數條件合併，再用範圍或最小正整數限制篩答案。"
+      ],
+      "examples": [],
+      "tips": [
+        "可先固定一個條件列數列，再逐一檢查其他餘數條件。",
+        "此小類會更換位數字、範圍、質因數指數或級數上限等參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "找到符合餘數條件的數後，忘記檢查題目指定的範圍。"
+      ]
+    },
+    "practice-j1-2-1-divisor-count-inverse-clean": {
+      "id": "practice-j1-2-1-divisor-count-inverse-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "反向因數個數與因數和",
+      "generatorKey": "j1-2-1-divisor-count-inverse-clean",
+      "difficulty": "進階",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-1",
+      "chapter": "倍數與因數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-2-1",
+        "標準分解式",
+        "正因數個數",
+        "正因數總和",
+        "無限練習"
+      ],
+      "usage": [
+        "從正因數個數或因數和反推質因數指數，避免只會順向套公式。"
+      ],
+      "examples": [],
+      "tips": [
+        "因數個數看指數加一相乘；要求最小數時，較大的指數要放在較小質數上。",
+        "此小類會更換位數字、範圍、質因數指數或級數上限等參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把正因數個數公式誤用成正因數總和公式。"
+      ]
+    },
+    "practice-j1-2-2-gcd-lcm-pair-constraints-clean": {
+      "id": "practice-j1-2-2-gcd-lcm-pair-constraints-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "最大公因數與最小公倍數限制反推",
+      "generatorKey": "j1-2-2-gcd-lcm-pair-constraints-clean",
+      "difficulty": "進階",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-2",
+      "chapter": "最大公因數與最小公倍數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-2-2",
+        "最大公因數",
+        "最小公倍數",
+        "乘積關係",
+        "無限練習"
+      ],
+      "usage": [
+        "利用最大公因數、最小公倍數、乘積或大小限制反推兩數。"
+      ],
+      "examples": [],
+      "tips": [
+        "設 a=gm、b=gn 後，m 與 n 要互質，這是反推題的關鍵。",
+        "此小類會更換位數字、範圍、質因數指數或級數上限等參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只用 ab=(a,b)[a,b]，但沒有檢查縮小後兩數是否互質。"
+      ]
+    },
+    "practice-j1-2-2-ratio-lcm-three-numbers-clean": {
+      "id": "practice-j1-2-2-ratio-lcm-three-numbers-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "三數比例與最小公倍數",
+      "generatorKey": "j1-2-2-ratio-lcm-three-numbers-clean",
+      "difficulty": "中等",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-2",
+      "chapter": "最大公因數與最小公倍數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-2-2",
+        "最小公倍數",
+        "比例",
+        "三數",
+        "無限練習"
+      ],
+      "usage": [
+        "把三數比例寫成 kt，再用最小公倍數決定 k。"
+      ],
+      "examples": [],
+      "tips": [
+        "先算比例數本身的最小公倍數，再乘上共同倍數 k。",
+        "此小類會更換位數字、範圍、質因數指數或級數上限等參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "直接把題目給的最小公倍數當成 k，導致三數全部放大錯誤。"
+      ]
+    },
+    "practice-j1-2-2-periodic-lcm-modeling-clean": {
+      "id": "practice-j1-2-2-periodic-lcm-modeling-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "週期模型與位置保留",
+      "generatorKey": "j1-2-2-periodic-lcm-modeling-clean",
+      "difficulty": "中等",
+      "questionCount": 5,
+      "subtypeCount": 2,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-2",
+      "chapter": "最大公因數與最小公倍數",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-2-2",
+        "最小公倍數",
+        "週期",
+        "種樹",
+        "無限練習"
+      ],
+      "usage": [
+        "用最小公倍數處理週期重合、道路種樹改間距與位置不動的問題。"
+      ],
+      "examples": [],
+      "tips": [
+        "位置不動代表同時是兩個間距的倍數；共同週期用最小公倍數。",
+        "此小類會更換位數字、範圍、質因數指數或級數上限等參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把道路兩端是否計入看錯，或把不需移動的樹誤當成需要移動。"
+      ]
+    },
+    "practice-j1-2-3-advanced-telescoping-sum-clean": {
+      "id": "practice-j1-2-3-advanced-telescoping-sum-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "進階分項對消連加",
+      "generatorKey": "j1-2-3-advanced-telescoping-sum-clean",
+      "difficulty": "進階",
+      "questionCount": 5,
+      "subtypeCount": 3,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-3",
+      "chapter": "分數的運算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-2-3",
+        "分數",
+        "分項對消",
+        "級數",
+        "無限練習"
+      ],
+      "usage": [
+        "練習把連加分數拆成相鄰兩項差，觀察中間項消去。"
+      ],
+      "examples": [],
+      "tips": [
+        "先把一般項拆出來，不要急著通分全部項。",
+        "此小類會更換位數字、範圍、質因數指數或級數上限等參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "只記得結果形式，換成三連乘分母或奇數分母時不會重新拆項。"
+      ]
+    },
+    "practice-j1-2-3-telescoping-product-clean": {
+      "id": "practice-j1-2-3-telescoping-product-clean",
+      "enabled": true,
+      "mode": "generator",
+      "title": "進階分項對消連乘",
+      "generatorKey": "j1-2-3-telescoping-product-clean",
+      "difficulty": "進階",
+      "questionCount": 5,
+      "subtypeCount": 1,
+      "relatedPracticeIds": [],
+      "chapterCode": "j1-2-3",
+      "chapter": "分數的運算",
+      "domain": "數與量",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j1-2-3",
+        "分數",
+        "連乘",
+        "分項對消",
+        "無限練習"
+      ],
+      "usage": [
+        "練習把 1-1/k^2 拆成兩個可約分因子，再做連乘約分。"
+      ],
+      "examples": [],
+      "tips": [
+        "先將 1-1/k^2 改寫為 (k-1)(k+1)/k^2，再觀察前後約分。",
+        "此小類會更換位數字、範圍、質因數指數或級數上限等參數，核心方法固定但題目不是只重排。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "把連乘當成連加處理，或忘記第一項與最後一項會留下來。"
+      ]
     }
   },
-  "bindings": [],
-  "byChapter": {},
+  "bindings": [
+    {
+      "practiceId": "practice-j1-1-1-coordinate-scale-origin-inference-clean",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "practiceId": "practice-j1-1-3-common-base-conversion-clean",
+      "targetType": "chapter",
+      "targetId": "j1-1-3",
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "practiceId": "practice-j1-1-4-scientific-trap-compare-clean",
+      "targetType": "chapter",
+      "targetId": "j1-1-4",
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "practiceId": "practice-j1-2-1-combined-divisibility-clean",
+      "targetType": "chapter",
+      "targetId": "j1-2-1",
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "practiceId": "practice-j1-2-2-gcd-lcm-pair-constraints-clean",
+      "targetType": "chapter",
+      "targetId": "j1-2-2",
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "practiceId": "practice-j1-2-3-advanced-telescoping-sum-clean",
+      "targetType": "chapter",
+      "targetId": "j1-2-3",
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "practiceId": "practice-j1-1-1-absolute-interval-simplify-clean",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": true,
+      "order": 2
+    },
+    {
+      "practiceId": "practice-j1-1-3-common-base-equation-clean",
+      "targetType": "chapter",
+      "targetId": "j1-1-3",
+      "enabled": true,
+      "order": 2
+    },
+    {
+      "practiceId": "practice-j1-1-4-scientific-unit-stack-clean",
+      "targetType": "chapter",
+      "targetId": "j1-1-4",
+      "enabled": true,
+      "order": 2
+    },
+    {
+      "practiceId": "practice-j1-2-1-remainder-crt-range-clean",
+      "targetType": "chapter",
+      "targetId": "j1-2-1",
+      "enabled": true,
+      "order": 2
+    },
+    {
+      "practiceId": "practice-j1-2-2-ratio-lcm-three-numbers-clean",
+      "targetType": "chapter",
+      "targetId": "j1-2-2",
+      "enabled": true,
+      "order": 2
+    },
+    {
+      "practiceId": "practice-j1-2-3-telescoping-product-clean",
+      "targetType": "chapter",
+      "targetId": "j1-2-3",
+      "enabled": true,
+      "order": 2
+    },
+    {
+      "practiceId": "practice-j1-1-1-absolute-equation-count-clean",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": true,
+      "order": 3
+    },
+    {
+      "practiceId": "practice-j1-2-1-divisor-count-inverse-clean",
+      "targetType": "chapter",
+      "targetId": "j1-2-1",
+      "enabled": true,
+      "order": 3
+    },
+    {
+      "practiceId": "practice-j1-2-2-periodic-lcm-modeling-clean",
+      "targetType": "chapter",
+      "targetId": "j1-2-2",
+      "enabled": true,
+      "order": 3
+    },
+    {
+      "practiceId": "practice-j1-1-1-midpoint-ratio-nested-clean",
+      "targetType": "chapter",
+      "targetId": "j1-1-1",
+      "enabled": true,
+      "order": 4
+    }
+  ],
+  "byChapter": {
+    "j1-1-1": [
+      "practice-j1-1-1-coordinate-scale-origin-inference-clean",
+      "practice-j1-1-1-absolute-interval-simplify-clean",
+      "practice-j1-1-1-absolute-equation-count-clean",
+      "practice-j1-1-1-midpoint-ratio-nested-clean"
+    ],
+    "j1-1-3": [
+      "practice-j1-1-3-common-base-conversion-clean",
+      "practice-j1-1-3-common-base-equation-clean"
+    ],
+    "j1-1-4": [
+      "practice-j1-1-4-scientific-trap-compare-clean",
+      "practice-j1-1-4-scientific-unit-stack-clean"
+    ],
+    "j1-2-1": [
+      "practice-j1-2-1-combined-divisibility-clean",
+      "practice-j1-2-1-remainder-crt-range-clean",
+      "practice-j1-2-1-divisor-count-inverse-clean"
+    ],
+    "j1-2-2": [
+      "practice-j1-2-2-gcd-lcm-pair-constraints-clean",
+      "practice-j1-2-2-ratio-lcm-three-numbers-clean",
+      "practice-j1-2-2-periodic-lcm-modeling-clean"
+    ],
+    "j1-2-3": [
+      "practice-j1-2-3-advanced-telescoping-sum-clean",
+      "practice-j1-2-3-telescoping-product-clean"
+    ]
+  },
   "byTopic": {}
 };

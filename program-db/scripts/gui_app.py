@@ -3370,10 +3370,10 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         dialog.resizable(True, True)
 
         mode_var = tk.StringVar(value="same")
-        export_order_var = tk.StringVar(value="separate")
-        answer_mode_var = tk.StringVar(value="detail")
+        export_order_var = tk.StringVar(value="interleaved")
+        answer_mode_var = tk.StringVar(value="both")
         question_gap_mm_var = tk.StringVar(value="10")
-        same_count_var = tk.StringVar(value="5")
+        same_count_var = tk.StringVar(value="20")
         entry_vars: dict[str, tk.StringVar] = {}
 
         header = ttk.Frame(dialog, padding=12)
@@ -3934,6 +3934,23 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             return messagebox.showerror("輸出失敗", f"無限練習生成失敗：\n{generated_result.get('reason', '未知錯誤')}")
 
         generated_sets = generated_result.get("sets", [])
+
+        # 丟給 xelatex 之前，先逐一檢查每個生成器的內容有沒有會讓 LaTeX 失敗的問題
+        # （$ 沒成對、數學指令寫在 $ 外面等），有的話直接指名是哪個生成器壞掉，
+        # 不用再從一堆 LaTeX 錯誤裡回推。
+        latex_problem = pdf_markdown_export.find_latex_problem_in_sets(generated_sets)
+        if latex_problem:
+            gen_label = latex_problem["title"]
+            if latex_problem["id"]:
+                gen_label += f"（{latex_problem['id']}）"
+            return messagebox.showerror(
+                "輸出失敗：生成器內容有問題",
+                f"生成器「{gen_label}」的{latex_problem['field']}第 {latex_problem['index']} 題"
+                f"有 LaTeX 問題，無法排版：\n\n"
+                f"{latex_problem['problem']}\n\n"
+                f"出問題的內容：\n{latex_problem['sample']}",
+            )
+
         combined_title = str(combined_title or "無限練習題目與答案").strip() or "無限練習題目與答案"
         markdown_text = pdf_markdown_export.build_practice_sets_markdown(
             generated_sets,

@@ -163,7 +163,8 @@
 
   function buildS111RepeatingDecimalFractionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const patterns = [
       { intMin: 0, intMax: 0, nonRepeatLen: 0, repeatLen: 2 },
       { intMin: 0, intMax: 0, nonRepeatLen: 0, repeatLen: 3 },
@@ -200,7 +201,7 @@
         `簡答：\\(${formatFraction(value.numerator, value.denominator)}\\)。過程：${prefixText}循環節為 ${repeat}。小數部分 \\(=\\frac{${toNumber(`${nonRepeat}${repeat}`)}-${toNumber(nonRepeat)}}{10^{${m}}(10^{${r}}-1)}=\\frac{${numeratorPart}}{${denominator}}\\)。加上整數部分後得 \\(\\frac{${totalNumerator}}{${denominator}}=${formatFraction(value.numerator, value.denominator)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function hasOnlyTwoFiveFactors(value) {
@@ -222,7 +223,8 @@
 
   function buildS111FiniteDecimalCriterionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { base: 290, den: 140, min: 0, max: 9, mult: 1 },
       { base: 1360, den: 70, min: 0, max: 9, mult: 1 },
@@ -233,8 +235,7 @@
     for (let i = 0; i < count; i += 1) {
       const item = cases[i % cases.length];
       const values = finiteDecimalCandidates(item.base, item.den, item.min, item.max, item.mult);
-      const numeratorText =
-        item.mult === 1 ? `${item.base}+a` : `${item.base}+${item.mult}a`;
+      const numeratorText = item.mult === 1 ? `${item.base}+a` : `${item.base}+${item.mult}a`;
       const valueText = values.length ? values.join('、') : '無';
       questions.push(
         `設 \\(a\\) 為 ${item.min} 到 ${item.max} 的整數，若 \\(\\frac{${numeratorText}}{${item.den}}\\) 可化為有限小數，求所有可能的 \\(a\\)。`
@@ -243,7 +244,7 @@
         `簡答：${valueText}。過程：分數化為最簡分數後，分母只能含質因數 2 與 5。逐一檢查 \\(${numeratorText}\\) 與 ${item.den} 約分後的分母，符合條件的 \\(a\\) 為 ${valueText}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function powModInt(base, exponent, mod) {
@@ -273,7 +274,8 @@
 
   function buildS111PowerRemainderCycleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const mods = [10, 7, 9, 11, 13];
     const baseChoices = {
       10: [2, 3, 7, 8],
@@ -301,7 +303,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function numberFromDigitArray(digits) {
@@ -310,7 +312,8 @@
 
   function buildS111DivisibilityMissingDigitSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { mod: 72, hint: '同時檢查 8 與 9 的整除條件' },
       { mod: 36, hint: '同時檢查 4 與 9 的整除條件' },
@@ -340,18 +343,22 @@
         }
         if (pairs.length >= 1 && pairs.length <= 8) break;
       }
-      const pattern = digits.map((digit, index) => {
-        if (index === aPos) return 'a';
-        if (index === bPos) return 'b';
-        return `${digit}`;
-      }).join('');
+      const pattern = digits
+        .map((digit, index) => {
+          if (index === aPos) return 'a';
+          if (index === bPos) return 'b';
+          return `${digit}`;
+        })
+        .join('');
       const pairText = pairs.map(([a, b]) => `(${a},${b})`).join('，');
-      questions.push(`已知 \\(${pattern}\\) 是 \\(${item.mod}\\) 的倍數，其中 \\(a,b\\) 為數字。求所有可能的 \\((a,b)\\)。`);
+      questions.push(
+        `已知 \\(${pattern}\\) 是 \\(${item.mod}\\) 的倍數，其中 \\(a,b\\) 為數字。求所有可能的 \\((a,b)\\)。`
+      );
       answers.push(
         `答案：${pairText}。解析：逐一代入 \\(a,b=0,1,\\ldots,9\\)，並利用「${item.hint}」。符合 \\(${pattern}\\) 可被 \\(${item.mod}\\) 整除的組合為 ${pairText}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function compareFractions(left, right) {
@@ -364,7 +371,8 @@
 
   function buildS112QuotientIntervalRangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const xLow = randInt(-8, 3);
       const xHigh = xLow + randInt(3, 10);
@@ -378,17 +386,20 @@
       ].sort(compareFractions);
       const min = candidates[0];
       const max = candidates[candidates.length - 1];
-      questions.push(`若 \\(${xLow}\\leq x\\leq ${xHigh}\\)，且 \\(${yLow}\\leq y\\leq ${yHigh}\\)，求 \\(\\frac{x}{y}\\) 的範圍。`);
+      questions.push(
+        `若 \\(${xLow}\\leq x\\leq ${xHigh}\\)，且 \\(${yLow}\\leq y\\leq ${yHigh}\\)，求 \\(\\frac{x}{y}\\) 的範圍。`
+      );
       answers.push(
         `答案：\\(${formatFractionObject(min)}\\leq \\frac{x}{y}\\leq ${formatFractionObject(max)}\\)。解析：因為 \\(y\\) 全為正數，\\(\\frac{x}{y}\\) 的最大、最小會出現在端點組合。比較 \\(${formatFractionObject(candidates[0])}, ${formatFractionObject(candidates[1])}, ${formatFractionObject(candidates[2])}, ${formatFractionObject(candidates[3])}\\)，可得範圍。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS114ExponentialParameterRelationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const bases = [2, 3, 5, 7];
     for (let i = 0; i < count; i += 1) {
       const base = bases[i % bases.length];
@@ -419,7 +430,7 @@
         `答案：\\(b=\\frac{a+1}{a}\\)。解析：由 \\(a=${base}^k\\) 可知 \\(${base}^{-k}=\\frac1a\\)，因此 \\(b=1+\\frac1a=\\frac{a+1}{a}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatS111SignedRadicalTerm(coeff, inside, sign) {
@@ -434,7 +445,8 @@
 
   function buildS111NestedRadicalSimplifySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     while (questions.length < count) {
       const sign = questions.length % 2 === 0 ? '-' : '+';
       const p = randInt(1, 24);
@@ -459,12 +471,13 @@
         `簡答：\\(${answerText}\\)。過程：因為 \\((${left}${sign === '+' ? '+' : '-'}${right})^2=${p}+${q}${middleTerm}=${constant}${middleTerm}\\)，且根號表示非負值，所以 \\(\\sqrt{${constant}${middleTerm}}=${answerText}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS111RadicalIntegerFractionalPartSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const nonSquares = [2, 3, 5, 6, 7, 10, 11, 13, 14, 15, 17, 19];
     for (let i = 0; i < count; i += 1) {
       const sign = i % 2 === 0 ? '+' : '-';
@@ -495,12 +508,13 @@
         `簡答：\\(a=${a},\\ b=${b}\\)。過程：\\(\\sqrt{${constant}${middleTerm}}=${simplified}\\)。又 \\(${rootFloor}<\\sqrt{${n}}<${rootCeil}\\)，所以此數介於 \\(${a}\\) 與 \\(${a + 1}\\) 之間，整數部分 \\(a=${a}\\)，正小數部分 \\(b=(${simplified})-${a}=${b}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS111RationalIrrationalTrueFalseSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const items = [
       {
         statement: '若 \\(a,b\\) 均為無理數，則 \\(a+b\\) 必為無理數。',
@@ -560,7 +574,7 @@
       questions.push(`判斷是非，並說明理由：${item.statement}`);
       answers.push(`簡答：${item.truth ? '正確' : '錯誤'}。過程：${item.process}`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatS111SurdPart(coeff, radical) {
@@ -585,7 +599,8 @@
 
   function buildS111IrrationalEqualitySolveSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const radicals = [2, 3, 5, 6, 7, 10, 11];
     while (questions.length < count) {
       const mode = questions.length % 5;
@@ -673,7 +688,7 @@
         `簡答：\\(${x * x + y * y}\\)。過程：比較有理數部分與 \\(\\sqrt{${radical}}\\) 的係數，得 \\(x+${m * m}=${rationalTarget}\\)、\\(${n}y=${irrationalTarget}\\)，所以 \\(x=${x}, y=${y}\\)，\\(x^2+y^2=${x * x + y * y}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatS111PointFraction(fraction) {
@@ -682,7 +697,8 @@
 
   function buildS111NumberLineSectionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -752,12 +768,13 @@
         `簡答：\\(\\frac{a+b}{2}\\)。過程：三個等分點會把 \\(a,b\\) 分成 4 等分，\\(P_2\\) 是第 2 個等分點，坐標為 \\(${aText}+\\frac{2}{4}(${bText}-${aText})=\\frac{a+b}{2}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS111AmgmExtremaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -824,7 +841,7 @@
         `簡答：${4 * c}。過程：令 \\(t=\\frac{y}{x}>0\\)，則原式 \\(=${2 * c}t+${2 * c}\\cdot\\frac{1}{t}\\geq2\\sqrt{${2 * c}t\\cdot${2 * c}\\cdot\\frac{1}{t}}=${4 * c}\\)。當 \\(t=1\\)，也就是 \\(x=y=${c}\\) 時取到最小值。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatS111RootOrInteger(n) {
@@ -849,7 +866,8 @@
 
   function buildS111RadicalIntegerRangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const nonSquares = [2, 3, 5, 6, 7, 10, 11, 13, 14, 15, 17, 19, 21, 22, 23];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -920,12 +938,13 @@
         `簡答：${integerPart}。過程：因 \\(${floor}<\\sqrt{${n}}<${ceil}\\)，所以 \\(${c - ceil}<${c}-\\sqrt{${n}}<${c - floor}\\)。因此整數部分為 ${integerPart}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS111RadicalDistanceIntegerCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { a: 101, near: 5, b: 38, far: 3 },
       { a: 73, near: 4, b: 20, far: 2 },
@@ -954,12 +973,13 @@
         `簡答：${candidates.length} 個。過程：第一個條件給出 \\(${nearLeft}<x<${nearRight}\\)，第二個條件要排除 \\(${farLeft}\\leq x\\leq ${farRight}\\)。符合的整數為 ${candidates.join('、')}，共有 ${candidates.length} 個。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS111TelescopingRationalizationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1031,7 +1051,7 @@
         `簡答：\\(\\sqrt{x+${n}}-\\sqrt{x}\\)。過程：每一項有理化後 \\(\\frac{1}{\\sqrt{x+k}+\\sqrt{x+k+1}}=\\sqrt{x+k+1}-\\sqrt{x+k}\\)。連續相加後中間項消去，剩 \\(\\sqrt{x+${n}}-\\sqrt{x}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatS112Linear(coeff, constant, variable = 'x') {
@@ -1066,7 +1086,8 @@
 
   function buildS112AbsInequalityBasicSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       const a = randInt(2, 5);
@@ -1115,7 +1136,7 @@
         `簡答：${formatS112OpenInterval(left, right)}，整數解 ${integerCount} 個。過程：\\(${expr}<${bound}\\) 等價於 \\(-${bound}<${formatS112Linear(a, constant)}<${bound}\\)，解得 ${formatS112OpenInterval(left, right)}。其中整數為 ${Math.ceil(left + 1)} 到 ${Math.floor(right - 1)}，共 ${integerCount} 個。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function solveAbsLinearEquality(a, b, c, d) {
@@ -1132,7 +1153,8 @@
 
   function buildS112AbsLinearEquationCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { a: 2, b: -1, c: 1, d: 3 },
       { a: 3, b: 2, c: 2, d: -5 },
@@ -1151,12 +1173,13 @@
         `簡答：\\(x=${solutions.map((value) => formatFraction(value.num, value.den)).join('\\) 或 \\(x=')}\\)，共 ${solutions.length} 個。過程：\\(|A|=|B|\\) 等價於 \\(A=B\\) 或 \\(A=-B\\)。分別解 \\(${formatS112Linear(item.a, item.b)}=${formatS112Linear(item.c, item.d)}\\) 與 \\(${formatS112Linear(item.a, item.b)}=-(${formatS112Linear(item.c, item.d)})\\)，得 ${solutionText}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS112AbsReverseParameterSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       const center = randInt(-4, 6);
@@ -1218,12 +1241,13 @@
         `簡答：\\(b=${bound}\\)。過程：解集半徑為 ${radius}，而 \\(|${m}x${constant < 0 ? constant : `+${constant}`}|<b\\) 的半徑為 \\(\\frac{b}{${m}}\\)，故 \\(b=${m}\\cdot${radius}=${bound}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS112AbsSumMinimumSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       const a = randInt(-8, 0);
@@ -1235,7 +1259,7 @@
           `對任意實數 \\(x\\)，求 \\(${formatS112DistanceTerm(a)}+${formatS112DistanceTerm(b)}+${formatS112DistanceTerm(c)}\\) 的最小值。`
         );
         answers.push(
-          `簡答：${min}。過程：三個點的距離和在中位數 \\(x=${b}\\) 時最小，最小值為距離 ${b - a}+0+${c - b}=${min}\\)。`
+          `簡答：$${min}$。過程：三個點的距離和在中位數 \\(x=${b}\\) 時最小，最小值為距離 \\(${b - a}+0+${c - b}=${min}\\)。`
         );
         continue;
       }
@@ -1286,12 +1310,13 @@
         `簡答：最小值 ${q - p}，在 ${formatS112ClosedInterval(p, q)} 取到。過程：\\(x\\) 在兩點 ${p}, ${q} 之間時，兩段距離和恰為兩點距離 ${q - p}；在外側會更大。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS112AbsNumberLineRangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       const a = randInt(-8, -1);
@@ -1320,7 +1345,7 @@
           `對任意實數 \\(x\\)，求 \\(${formatS112DistanceTerm(p)}+${formatS112DistanceTerm(q)}+${formatS112DistanceTerm(r)}\\) 的最小值。`
         );
         answers.push(
-          `簡答：${min}。過程：三個距離和在中間點 \\(x=${q}\\) 最小，最小值為距離 ${q - p}+0+${r - q}=${min}\\)。`
+          `簡答：${min}。過程：三個距離和在中間點 \\(x=${q}\\) 最小，最小值為距離 \\(${q - p}+0+${r - q}=${min}\\)。`
         );
         continue;
       }
@@ -1356,12 +1381,13 @@
         `簡答：\\(x=${left}\\) 或 \\(x=${right}\\)。過程：\\(${formatS112DistanceTerm(a)}+${formatS112DistanceTerm(b)}\\) 是 \\(P\\) 到兩端點的距離和，線段長為 ${distance}。總距離多出 ${extra}，平均分到線段外兩端，所以 \\(x=${left}\\) 或 \\(x=${right}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS112AbsRangeSimplificationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1409,12 +1435,13 @@
         `簡答：2。過程：\\(\\sqrt{a^2+2a+1}=|a+1|=a+1\\)，\\(\\sqrt{a^2-2a+1}=|a-1|=a-1\\)。因 \\(a>1\\)，相減得 2。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS112AbsQuadraticMixedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1462,7 +1489,7 @@
         `簡答：\\(x=\\pm${u}\\)。過程：令 \\(t=|x|\\geq0\\)，則 \\(x^2=t^2\\)，得到 \\(t^2-t-${c}=0\\)。解得 \\(t=${u}\\) 或負根；因 \\(t\\geq0\\)，取 \\(t=${u}\\)，所以 \\(x=\\pm${u}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatS113MonoTerm(coeff, mono) {
@@ -1500,7 +1527,8 @@
 
   function buildS113BinomialCubeExpansionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const monoSets = [
       ['x', 'y', 'x^3', 'x^2y', 'xy^2', 'y^3'],
       ['a', 'b', 'a^3', 'a^2b', 'ab^2', 'b^3'],
@@ -1534,12 +1562,13 @@
         `簡答：\\(${expanded}\\)。過程：套用 \\((A+B)^3=A^3+3A^2B+3AB^2+B^3\\)，令 \\(A=${formatS113MonoTerm(a, monoA)}\\)、\\(B=${formatS113MonoTerm(b, monoB)}\\)，整理得 \\(${expanded}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS113CubeSumDifferenceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1587,12 +1616,13 @@
         `簡答：${value}。過程：先求 \\(a^3+b^3=${cubeSum}\\)。再用 \\(a^6+b^6=(a^3+b^3)^2-2a^3b^3\\)，得 \\(${cubeSum}^2-2\\cdot${p ** 3}=${value}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS113ReciprocalCubeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       const s = randInt(3, 8);
@@ -1636,12 +1666,13 @@
         `簡答：52。過程：\\(\\frac1x=2+\\sqrt3\\)，所以 \\(x+\\frac1x=4\\)。因此 \\(x^3+\\frac1{x^3}=4^3-3\\cdot4=52\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS113TernarySquareSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode <= 1) {
@@ -1696,12 +1727,13 @@
         `簡答：\\(x^2+2xy+y^2-${t * t}\\)。過程：視為 \\((x+y)^2-${t}^2\\)，故結果為 \\(x^2+2xy+y^2-${t * t}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS113TernaryCubicSpecialSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode <= 1) {
@@ -1741,12 +1773,13 @@
         `簡答：\\((x+y-z)(x^2+y^2+z^2-xy+yz+zx)\\)。過程：令 \\(a=x,b=y,c=-z\\)，套用 \\(a^3+b^3+c^3-3abc\\) 公式，即得結果。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS113RadicalTernaryOperationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const roots = [2, 3, 5, 6, 7, 10, 11];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -1790,13 +1823,14 @@
         `簡答：\\(a=${aVal},\\ b=${bVal}\\)。過程：比較有理部分得 \\(a-b=${2 * aVal - bVal}-a\\)，比較 \\(\\sqrt{${radical}}\\) 係數得 \\(a+b=${aVal + 2 * bVal}-b\\)，解得 \\(a=${aVal}, b=${bVal}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── s1-1-3 新增：三因式展開 ──────────────────────────────────────
   function buildS113TripleFactorExpansionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function termStr(c, power) {
       if (c === 0) return '';
@@ -1882,13 +1916,14 @@
         `簡答：\\(${poly3(C2, C1, C0)}\\)。過程：先展開 \\((x-${b})(x-${c})=x^2-${b + c}x+${b * c}\\)，再乘以 \\((x+${a})\\)，整理得 \\(${poly3(C2, C1, C0)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── s1-1-3 新增：因式分解（乘法公式）────────────────────────────
   function buildS113PolynomialFactorizationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1943,7 +1978,7 @@
         `簡答：\\((x^2+${xterm}+${a2})(x^2-${xterm}+${a2})\\)。過程：\\(x^4+${x2term}+${a4}=(x^2+${a2})^2-${xterm}^2=(x^2+${xterm}+${a2})(x^2-${xterm}+${a2})\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatS114Exponent(num, den = 1) {
@@ -1961,7 +1996,8 @@
 
   function buildS114NumericRationalExponentSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2020,12 +2056,13 @@
         `簡答：\\(2\\)。過程：全部化為 2 的冪，指數和為 \\(\\frac12+\\frac14+\\frac18+\\frac18=1\\)，所以原式為 2。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS114VariableExponentSimplificationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2064,12 +2101,13 @@
         `簡答：\\(a^4\\)。過程：分子指數相加為 \\(2x+3-x=x+3\\)，再除以 \\(a^{x-1}\\) 等於指數相減，得 \\(a^{x+3-(x-1)}=a^4\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS114ExponentialSymmetricValueSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       const s = randInt(3, 8);
@@ -2102,12 +2140,13 @@
         `簡答：\\(a^{2x}+a^{-2x}-1\\)。過程：令 \\(u=a^x\\)，則 \\(\\frac{u^3+u^{-3}}{u+u^{-1}}=u^2+u^{-2}-1\\)，代回即可。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS114ExponentialEquationInequalitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2148,13 +2187,14 @@
         `簡答：\\(x>0\\)。過程：令 \\(t=(\\frac12)^x>0\\)，則 \\((\\frac14)^x=t^2\\)，不等式為 \\(t^2+t-2<0\\)，得 \\(0<t<1\\)，所以 \\(x>0\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── s1-1-4 新增：換底比大小 ─────────────────────────────────────
   function buildS114ExponentCompareSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function lcm2(x, y) {
       return (x * y) / gcdInt(x, y);
@@ -2191,13 +2231,14 @@
         `簡答：\\(${aTeX}${symbol}${bTeX}\\)。過程：化為同次根式，取公分母指數 ${L}：\\(${aTeX}=${a}^{${Lm}/${L}}=\\sqrt[${L}]{${aLTeX}}=\\sqrt[${L}]{${aL}}\\)，\\(${bTeX}=${b}^{${Ln}/${L}}=\\sqrt[${L}]{${bLTeX}}=\\sqrt[${L}]{${bL}}\\)。因為 \\(${aL}${aL > bL ? '>' : '<'}${bL}\\)，所以 \\(${bigger}\\) 較大。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── s1-1-4 新增：已知 a^x 求 a^(mx) ────────────────────────────
   function buildS114KnownPowerSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const kVals = [2, 3, 4, 5, 6];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -2232,13 +2273,14 @@
       questions.push(`已知 \\(2^x=${k}\\)，求 \\(4^{x+1}\\) 之值。`);
       answers.push(`簡答：${4 * k * k}。過程：\\(4^{x+1}=4\\cdot4^x=4\\cdot(2^x)^2=4\\cdot${k}^2=${4 * k * k}\\)。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── s1-1-4 新增：指數換元（混合底，4^x 與 2^x 型）────────────────
   function buildS114SubstitutionEquationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2311,13 +2353,14 @@
         `簡答：\\(x=${n}\\)。過程：令 \\(t=3^x>0\\)，\\(9^x=t^2\\)，方程變為 \\(t^2-${Sn}t+${Pn}=0\\)，即 \\((t-${tn})^2=0\\)，唯一正根 \\(t=${tn}=3^${n}\\)，所以 \\(x=${n}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── s1-1-4 新增：提公因數指數方程 ──────────────────────────────
   function buildS114ExtractFactorEquationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2374,12 +2417,13 @@
         `簡答：\\(x=${n}\\)。過程：提出公因式 \\(2^x\\)，得 \\(2^x(2^${r}+1)=${k}\\)，即 \\(${factor}\\cdot2^x=${k}\\)，所以 \\(2^x=${2 ** n}=2^${n}\\)，\\(x=${n}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS114ExponentialQuadraticExtremaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const bases = [2, 3, 5];
     for (let i = 0; i < count; i += 1) {
       const base = bases[randInt(0, bases.length - 1)];
@@ -2396,12 +2440,13 @@
         `簡答：\\(${minValue}\\)。過程：因為底數 \\(${outerBase}>1\\)，指數越小，整個值越小。\\(${shiftExpr}\\geq0\\)，最小值在 \\(x=${shift}\\) 時取得，所以最小指數為 \\(${formatFraction(numerator, denominator)}\\)，原式最小值為 \\((${outerBase})^{${formatFraction(numerator, denominator)}}=(${base}^{${denominator}})^{${formatFraction(numerator, denominator)}}=${base}^{${numerator}}=${minValue}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS114ExponentialFractionRangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const bases = [2, 3, 5];
     for (let i = 0; i < count; i += 1) {
       const base = bases[randInt(0, bases.length - 1)];
@@ -2414,12 +2459,13 @@
         `簡答：\\((-${B},\\ ${upper})\\)。過程：令 \\(t=${base}^x>0\\)，原式 \\(y=\\frac{${A}-${B}t}{${C}+t}\\)。整理得 \\(y(${C}+t)=${A}-${B}t\\)，所以 \\(t(y+${B})=${A}-${C}y\\)，即 \\(t=\\frac{${A}-${C}y}{y+${B}}\\)。因為 \\(t>0\\)，分子分母同號；又 \\(\\frac{${A}}{${C}}>${-B}\\)，故 \\(-${B}<y<${upper}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS114RationalExponentOrderingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const denominatorSets = [
       [2, 3, 4],
       [2, 3, 6],
@@ -2464,12 +2510,13 @@
           .join('，')}。因為 \\(${sorted.map((item) => item.compareValue).join('>')}\\)，所以大小順序如上。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS114ExponentialGrowthModelSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const root = randInt(2, 3);
       const dailyRate = root ** 2;
@@ -2486,7 +2533,7 @@
         `簡答：\\(a=${dailyRate}\\)。過程：兩次觀察相隔 \\(\\frac{${halfSteps}}{2}\\) 日，所以 \\(a^{${formatFraction(halfSteps, 2)}}=\\frac{${secondCount}}{${firstCount}}=${root ** halfSteps}\\)。兩邊平方得 \\(a^{${halfSteps}}=${root ** (2 * halfSteps)}\\)，故 \\(a=${root}^{2}=${dailyRate}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   const S115_LOGS = {
@@ -2536,7 +2583,8 @@
 
   function buildS115LargeNumberDigitCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const logItems = [
       { base: 2, logInt: S115_LOGS[2] },
       { base: 3, logInt: S115_LOGS[3] },
@@ -2584,12 +2632,13 @@
         `簡答：${digits} 位數。過程：\\(\\log 6=\\log2+\\log3\\approx0.7781\\)，\\(\\log 6^{${exponent}}\\approx ${formatS115LogInt(product)}\\)，首數為 ${integerPart}，所以位數為 ${digits}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS115FirstNonzeroDecimalPlaceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const bases = [
       { base: 2, logInt: S115_LOGS[2] },
       { base: 3, logInt: S115_LOGS[3] },
@@ -2646,12 +2695,13 @@
         `簡答：第 ${place} 位。過程：\\(\\log(1.04)^{-${exponent}}=-${exponent}\\log1.04\\approx-${formatS115LogInt(positiveLog)}\\)，所以首位非零在小數點後第 ${place} 位。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS115LeadingDigitSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const baseItems = [
       { base: 2, logInt: S115_LOGS[2] },
       { base: 3, logInt: S115_LOGS[3] },
@@ -2699,12 +2749,13 @@
         `簡答：${digit}。過程：\\(\\log(\\frac{5}{6})^{${exponent}}=${exponent}(\\log5-\\log6)\\approx${formatS115LogInt(logValue)}\\)，其尾數為 ${formatS115PureDecimal(mantissa)}，所以首位非零數字為 ${digit}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS115CharacteristicMantissaAlgebraSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const tails = [3010, 4771, 6021, 6990, 8451];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -2735,12 +2786,13 @@
         `簡答：\\(x=\\sqrt[3]{10}\\)。過程：設 \\(\\log x=\\alpha\\)，\\(0<\\alpha<\\frac{1}{2}\\)。\\(\\log x^2=2\\alpha\\)，\\(\\log\\frac{1}{x}=-\\alpha\\) 的尾數為 \\(1-\\alpha\\)。令 \\(2\\alpha=1-\\alpha\\)，得 \\(\\alpha=\\frac{1}{3}\\)，所以 \\(x=10^{1/3}=\\sqrt[3]{10}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS115LogOperationScientificNotationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2782,7 +2834,7 @@
         const value = coefficient * 10 ** zeros;
         questions.push(`將 ${value} 表為科學記號，並判定其對數的首數。`);
         answers.push(
-          `簡答：\\(${coefficient / 10}\\times10^{${zeros + 1}}\\)，首數為 ${zeros + 1}。過程：${value}=${coefficient / 10}\\times10^{${zeros + 1}}\\)，且 \\(1\\leq${coefficient / 10}<10\\)，所以 \\(\\log ${value}=\\log(${coefficient / 10})+${zeros + 1}\\)，首數為 ${zeros + 1}。`
+          `簡答：\\(${coefficient / 10}\\times10^{${zeros + 1}}\\)，首數為 ${zeros + 1}。過程：\\(${value}=${coefficient / 10}\\times10^{${zeros + 1}}\\)，且 \\(1\\leq${coefficient / 10}<10\\)，所以 \\(\\log ${value}=\\log(${coefficient / 10})+${zeros + 1}\\)，首數為 ${zeros + 1}。`
         );
         continue;
       }
@@ -2817,13 +2869,14 @@
       questions.push(`已知 \\(\\log x=${formatS115LogInt(item.logInt)}\\)，將 \\(x\\) 表示為科學記號。`);
       answers.push(`簡答：\\(${item.text}\\)。過程：因為 \\(${item.process}\\)，所以 \\(x=${item.text}\\)。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── s1-1-5 新增：對數直接計算 ────────────────────────────────────
   function buildS115BasicLogCalculationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2915,12 +2968,13 @@
         `簡答：${result}。過程：\\(\\log_{${base}}${val}=\\log_{${a}^${k}}${a}^{${n}}=\\dfrac{${n}}{${k}}=${result}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS115LogDifferenceEstimateSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const smallerExponent = randInt(6, 16);
       const gap = randInt(3, 7);
@@ -2932,12 +2986,13 @@
         `簡答：最接近 ${largerExponent}。過程：由 \\(\\log a=${largerExponent}\\)、\\(\\log b=${smallerExponent}\\) 得 \\(a=10^{${largerExponent}}\\)、\\(b=10^{${smallerExponent}}\\)。所以 \\(a-b=10^{${largerExponent}}(1-10^{-${gap}})\\)，\\(\\log(a-b)=${largerExponent}+\\log(1-10^{-${gap}})\\)。因為 \\(10^{-${gap}}\\) 很小，\\(\\log(1-10^{-${gap}})\\) 接近 0，所以整體最接近 ${largerExponent}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS115LogIntervalIntegerCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { lower: 1.5, upper: 2, multiple: 3, label: '3 的倍數' },
       { lower: 1.5, upper: 2, multiple: 2, label: '偶數' },
@@ -2959,7 +3014,7 @@
         `簡答：${countValue} 個。過程：由 \\(${item.lower}<\\log a<${item.upper}\\) 得 \\(10^{${item.lower}}<a<10^{${item.upper}}\\)，約為 \\(${trimFixed(lowerValue, 3)}<a<${trimFixed(upperValue, 3)}\\)。其中符合 ${item.label}者從 ${first} 到 ${last}，共有 ${countValue} 個。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatS115PowerOfTenFromFraction(num, den) {
@@ -2971,7 +3026,8 @@
 
   function buildS115LogScaleRatioModelSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const modes = [
       () => {
         const coefficient = randInt(2, 5);
@@ -3023,7 +3079,7 @@
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatS121Point(p) {
@@ -3088,7 +3144,8 @@
 
   function buildS121InterceptIntegerCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const yIntercept = randInt(2, 6);
       const px = randInt(4, 12);
@@ -3101,12 +3158,13 @@
         `簡答：${divisors.length} 個。過程：直線斜率為 \\(\\frac{${yIntercept}}{n}\\)，故 \\(x=${px}\\) 時 \\(k=${yIntercept}+\\frac{${product}}{n}\\)。要使 \\(k\\) 為整數，需 \\(n\\mid ${product}\\)。正因數為 ${divisors.join('、')}，共有 ${divisors.length} 個。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121LineSideParameterCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randInt(1, 5);
       const b = pickNonZero(-4, 4);
@@ -3130,7 +3188,7 @@
         `簡答：${integerValues.length} 個。過程：令 \\(f(x,y)=${formatS121Term(a, 'x')}${b > 0 ? '+' : ''}${formatS121Term(b, 'y')}\\)。兩點異側表示 \\((f(A)-k)(f(B)-k)<0\\)，所以 \\(${low}<k<${high}\\)。整數 \\(k\\) 為 ${integerValues.join('、')}，共有 ${integerValues.length} 個。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatS121IndexedTerm(coef, base, index) {
@@ -3153,7 +3211,8 @@
 
   function buildS121TransformedSystemSolutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const transforms = [
       { alpha: 2, beta: 1, gamma: -3 },
       { alpha: 3, beta: -1, gamma: 2 },
@@ -3173,12 +3232,13 @@
         `簡答：\\((x,y)=(${target.x},${target.y})\\)。過程：新方程可看成把原方程中的 \\(x\\) 換成 \\(${formatS121SimpleLinearXY(t.alpha, t.beta)}\\)，把 \\(y\\) 換成 \\(${formatS121Term(t.gamma, 'y')}\\)。因此需滿足 \\(${formatS121SimpleLinearXY(t.alpha, t.beta)}=${u}\\)、\\(${formatS121Term(t.gamma, 'y')}=${v}\\)。解得 \\(y=${target.y}\\)，再代回得 \\(x=${target.x}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121ProjectionSymmetrySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const normals = [
       [1, 2],
       [2, -1],
@@ -3234,12 +3294,13 @@
         `簡答：\\(${formatS121Point(foot)}\\)。過程：對稱點連線 \\(PQ\\) 會垂直對稱軸，且被對稱軸平分，所以 \\(PQ\\) 的中點就是 \\(P\\) 在 \\(L\\) 上的投影點 \\(${formatS121Point(foot)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121PerpendicularBisectorSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const obliqueOffsets = [
       [1, 2],
       [2, 1],
@@ -3292,12 +3353,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121LineClusterFixedPointSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const p = { x: randInt(-4, 4), y: randInt(-4, 4) };
       const a0 = randInt(1, 4);
@@ -3319,12 +3381,13 @@
         `簡答：\\(${formatS121Point(p)}\\)。過程：把含 \\(${parameter}\\) 與不含 \\(${parameter}\\) 的部分分開，得 \\(${formatS121Line(a0, b0, c0)}\\) 與 \\(${formatS121Line(a1, b1, c1)}\\)。兩式交點同時滿足所有 \\(${parameter}\\) 的直線，解得定點為 \\(${formatS121Point(p)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121TriangleNonexistenceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const templates = [
       {
         q: '三直線 \\(L_1:x=0\\)、\\(L_2:y=0\\)、\\(L_3:kx+y-1=0\\) 不能圍成三角形，求 \\(k\\)。',
@@ -3352,12 +3415,13 @@
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121InverseDistanceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const templates = [
       {
         q: '設直線 \\(L\\) 的斜率為 \\(\\frac{3}{4}\\)，且與兩坐標軸圍成的三角形面積為 24，求 \\(L\\) 的方程式。',
@@ -3385,7 +3449,7 @@
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121GeometricOptimizationSet(count) {
@@ -3412,12 +3476,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121TriangleCentersSet(count) {
@@ -3444,12 +3509,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121InterceptConstraintsSet(count) {
@@ -3476,12 +3542,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121AnglesBetweenLinesSet(count) {
@@ -3508,12 +3575,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121LightReflectionPathSet(count) {
@@ -3540,12 +3608,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121AreaPartitioningSet(count) {
@@ -3572,12 +3641,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121LineSegmentSlopeRangeSet(count) {
@@ -3604,12 +3674,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121PointLineSideSet(count) {
@@ -3636,12 +3707,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121LatticePointCountingSet(count) {
@@ -3668,12 +3740,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121AbsoluteInequalityAreaSet(count) {
@@ -3700,17 +3773,19 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121LineFormFactsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const samples = [
       { a: 3, b: 4, c: -12 },
       { a: 2, b: -5, c: 10 },
@@ -3729,17 +3804,20 @@
       const yIntercept = makeFraction(-c, b);
       const area = makeFraction(c * c, 2 * Math.abs(a * b));
       const line = formatS123LineEquation(a, b, c);
-      questions.push(`已知直線 \\(L:${line}\\)，求斜率、\\(x\\) 截距、\\(y\\) 截距，以及它與兩坐標軸所圍三角形的面積。`);
+      questions.push(
+        `已知直線 \\(L:${line}\\)，求斜率、\\(x\\) 截距、\\(y\\) 截距，以及它與兩坐標軸所圍三角形的面積。`
+      );
       answers.push(
         `答案：斜率 \\(${formatFractionObject(slope)}\\)，\\(x\\) 截距 \\(${formatFractionObject(xIntercept)}\\)，\\(y\\) 截距 \\(${formatFractionObject(yIntercept)}\\)，面積 \\(${formatFractionObject(area)}\\)。解析：直線方程式 \\(${line}=0\\) 對應 \\(ax+by+c=0\\)，其中 \\(a=${a}\\)，\\(b=${b}\\)，\\(c=${c}\\)。由公式可得斜率 \\(-\\frac{a}{b}=-\\frac{${a}}{${b}}=${formatFractionObject(slope)}\\)；\\(x\\) 截距（令 \\(y=0\\)）為 \\(-\\frac{c}{a}=-\\frac{${c}}{${a}}=${formatFractionObject(xIntercept)}\\)；\\(y\\) 截距（令 \\(x=0\\)）為 \\(-\\frac{c}{b}=-\\frac{${c}}{${b}}=${formatFractionObject(yIntercept)}\\)。三角形面積為 \\(\\frac12\\left|x_0y_0\\right|=\\frac12\\left|${formatFractionObject(xIntercept)}\\right|\\left|${formatFractionObject(yIntercept)}\\right|=${formatFractionObject(area)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS121LinearFractionalRegionExtremaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const s = randInt(2, 5);
       const p = s + randInt(3, 7);
@@ -3767,12 +3845,13 @@
         `答案：最大值 \\(${formatFractionObject(max.value)}\\)，最小值 \\(${formatFractionObject(min.value)}\\)。解析：可行區域的頂點為 ${vertexText}。因為分母 \\(x+${v}>0\\)，線性分式在此凸多邊形上的極值會出現在頂點。逐一代入比較，可得最大值在 \\((${max.point.x},${max.point.y})\\)，最小值在 \\((${min.point.x},${min.point.y})\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS122TwoCircleCommonTangentsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { r1: 3, r2: 2, d: 8, count: 4 },
       { r1: 3, r2: 2, d: 5, count: 3 },
@@ -3793,7 +3872,7 @@
         `答案：\\(${item.count}\\) 條。解析：兩圓圓心距 \\(d=${item.d}\\)，半徑和 \\(r_1+r_2=${sum}\\)，半徑差 \\(|r_1-r_2|=${diff}\\)。依序比較 \\(d\\) 與 \\(r_1+r_2\\)、\\(|r_1-r_2|\\)，即可判斷公切線條數。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function countCircleLineDistancePoints(radius, centerDistance, targetDistance) {
@@ -3807,7 +3886,8 @@
 
   function buildS123CircleLineDistancePointCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { r: 4, d: 0, e: 2 },
       { r: 4, d: 2, e: 2 },
@@ -3829,7 +3909,7 @@
         `答案：\\(${total}\\) 個。解析：圓心到 \\(L\\) 的距離為 \\(${item.d}\\)。距離 \\(L\\) 等於 \\(${item.e}\\) 的點落在兩條與 \\(L\\) 平行的直線上，這兩條直線到圓心的距離分別為 \\(${distances[0]}\\) 與 \\(${distances[1]}\\)。分別和半徑 \\(${item.r}\\) 比較：小於半徑有 2 點，等於半徑有 1 點，大於半徑沒有點。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatS122Point(point) {
@@ -3895,7 +3975,8 @@
 
   function buildS122CircleCenterLineTwoPointsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const centerLines = [
       { a: 1, b: 2 },
       { a: 2, b: -1 },
@@ -3925,12 +4006,13 @@
         `簡答：\\(${formatS122CircleStandard(center.x, center.y, radius2)}\\)。過程：圓心必在線段 \\(AB\\) 的垂直平分線上。由 \\(A,B\\) 中點得 \\(M${formatS122Point(center)}\\)，且 \\(M\\) 也在已知直線上，所以圓心為 \\(${formatS122Point(center)}\\)。半徑平方為 \\(${offset.x}^2+${offset.y}^2=${radius2}\\)，故方程式為 \\(${formatS122CircleStandard(center.x, center.y, radius2)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123ChordLengthParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const normals = [
       { a: 3, b: 4, norm: 5 },
       { a: 5, b: 12, norm: 13 },
@@ -3960,12 +4042,13 @@
         `簡答：\\(t=${t1}\\) 或 \\(t=${t2}\\)。過程：弦長為 ${2 * pair.half}，半弦長為 ${pair.half}。圓半徑為 ${pair.r}，故圓心到直線距離 \\(d=\\sqrt{${pair.r}^2-${pair.half}^2}=${distance}\\)。圓心 \\(${formatS122Point(center)}\\) 到直線距離為 \\(\\frac{|${base}-t|}{${normal.norm}}\\)，所以 \\(|${base}-t|=${normal.norm * distance}\\)，得 \\(t=${t1}\\) 或 \\(t=${t2}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123TangentPointCircleCoefficientSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const normals = [
       { a: 3, b: -4 },
       { a: 4, b: 3 },
@@ -3990,12 +4073,13 @@
         `簡答：\\((a,b)=(${eCoef},${fCoef})\\)。過程：切點到圓心的半徑垂直切線，所以圓心在過切點、方向為法向量 \\((${normal.a},${normal.b})\\) 的直線上。由 \\(x^2+y^2${formatS122SignedNumber(dCoef)}x+ay+b=0\\) 知圓心的 \\(x\\) 坐標為 \\(${-dCoef}/2=${center.x}\\)，因此圓心為 \\(${formatS122Point(center)}\\)。所以 \\(a=-2\\cdot${center.y}=${eCoef}\\)。再代入切點 \\(${formatS122Point(point)}\\) 到圓方程，得 \\(b=${fCoef}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS122GeneralToStandardSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       const a = mode === 1 || mode === 2 || mode === 4 ? [2, 3, 5][randInt(0, 2)] : 1;
@@ -4013,7 +4097,7 @@
         `簡答：${formatS122CircleAnswer(h, k, r * r)}。過程：${divideText}得 \\(${standard}\\)。所以圓心為 \\(${formatS122Point({ x: h, y: k })}\\)，半徑為 \\(${r}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS122CircleDiscriminantParameterSet(count) {
@@ -4040,12 +4124,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS122CircleFromConditionsSet(count) {
@@ -4072,12 +4157,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS122ApolloniusCircleSet(count) {
@@ -4134,7 +4220,8 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       const eq = equationForRatio(item.a, item.b, item.m, item.n);
@@ -4153,7 +4240,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS122RadicalAxisSet(count) {
@@ -4180,12 +4267,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS122PointCircleDistanceExtremaSet(count) {
@@ -4212,17 +4300,19 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS122AxisTangentCircleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const type = i % 5;
@@ -4279,12 +4369,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS122ParametricStandardSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const paramCoord = (center, radius, trig) => {
       if (center === 0) return `${radius}\\${trig}`;
       return `${center}${radius >= 0 ? '+' : ''}${radius}\\${trig}`;
@@ -4351,12 +4442,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS122CirclePointAlgebraExtremaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const formatCoeffRadical = (coeff, inside) => {
       const simplified = simplifyRadical(inside);
       const outside = coeff * simplified.outside;
@@ -4449,7 +4541,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS122TriangleCircumInCircleSet(count) {
@@ -4476,12 +4568,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123GivenSlopeTangentSet(count) {
@@ -4508,12 +4601,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123ExternalPointTangentSet(count) {
@@ -4540,12 +4634,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123ChordLengthSet(count) {
@@ -4572,12 +4667,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123ChordMidpointLocusSet(count) {
@@ -4604,12 +4700,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123PerpendicularTangentsLocusSet(count) {
@@ -4636,12 +4733,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123RadicalAxisCircleFamilySet(count) {
@@ -4668,12 +4766,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123PolarLineSet(count) {
@@ -4700,12 +4799,13 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123LightShadowProjectionSet(count) {
@@ -4732,17 +4832,19 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       questions.push(templates[i % templates.length].q);
       answers.push(templates[i % templates.length].a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123LineCircleParameterRelationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const type = i % 5;
@@ -4812,12 +4914,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123PointPowerTangentChordSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const type = i % 5;
@@ -4885,12 +4988,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123VerticalTangentTrapSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { h: 0, k: 3, r: 1, t: -2, side: 1 },
       { h: -1, k: 0, r: 2, t: 4, side: -1 },
@@ -4921,12 +5025,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123IntegerDistanceCountingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const isPrime = (n) => {
       if (n < 2) return false;
       for (let d = 2; d * d <= n; d += 1) {
@@ -5014,12 +5119,13 @@
       answers.push(item.answer);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123CommonChordDiameterCircleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { r: 5, a: 3, d: -10 },
       { r: 10, a: 6, d: -8 },
@@ -5040,12 +5146,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS123CircleAreaExtremaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const type = i % 5;
@@ -5122,65 +5229,108 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
   // ── s1-2-1 新增：兩直線角平分線方程式 ──────────────────────────────
   function buildS121AngleBisectorLinesSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function fmtL(a, b, c) {
       const xp = a === 1 ? 'x' : a === -1 ? '-x' : `${a}x`;
       const yp = b === 0 ? '' : b === 1 ? '+y' : b === -1 ? '-y' : b > 0 ? `+${b}y` : `${b}y`;
       return `${xp}${yp}=${c}`;
     }
-    function sm(v) { return v >= 0 ? `-${v}` : `+${-v}`; }
+    function sm(v) {
+      return v >= 0 ? `-${v}` : `+${-v}`;
+    }
 
     const modes = [
       {
-        a1:3,b1:4,a2:4,b2:-3,norm:5,
-        getBis(d1,d2){ return [`x-7y=${d2-d1}`, `7x+y=${d1+d2}`]; },
-        getProc(d1,d2){
-          return `法向量 \\((3,4)\\) 與 \\((4,-3)\\) 模均為 5。`+
-            `由 \\(3x+4y${sm(d1)}=\\pm(4x-3y${sm(d2)})\\)，`+
-            `取正號得 \\(x-7y=${d2-d1}\\)；取負號得 \\(7x+y=${d1+d2}\\)。`;
-        }
+        a1: 3,
+        b1: 4,
+        a2: 4,
+        b2: -3,
+        norm: 5,
+        getBis(d1, d2) {
+          return [`x-7y=${d2 - d1}`, `7x+y=${d1 + d2}`];
+        },
+        getProc(d1, d2) {
+          return (
+            `法向量 \\((3,4)\\) 與 \\((4,-3)\\) 模均為 5。` +
+            `由 \\(3x+4y${sm(d1)}=\\pm(4x-3y${sm(d2)})\\)，` +
+            `取正號得 \\(x-7y=${d2 - d1}\\)；取負號得 \\(7x+y=${d1 + d2}\\)。`
+          );
+        },
       },
       {
-        a1:4,b1:3,a2:3,b2:-4,norm:5,
-        getBis(d1,d2){ return [`x+7y=${d1-d2}`, `7x-y=${d1+d2}`]; },
-        getProc(d1,d2){
-          return `法向量 \\((4,3)\\) 與 \\((3,-4)\\) 模均為 5。`+
-            `由 \\(4x+3y${sm(d1)}=\\pm(3x-4y${sm(d2)})\\)，`+
-            `取正號得 \\(x+7y=${d1-d2}\\)；取負號得 \\(7x-y=${d1+d2}\\)。`;
-        }
+        a1: 4,
+        b1: 3,
+        a2: 3,
+        b2: -4,
+        norm: 5,
+        getBis(d1, d2) {
+          return [`x+7y=${d1 - d2}`, `7x-y=${d1 + d2}`];
+        },
+        getProc(d1, d2) {
+          return (
+            `法向量 \\((4,3)\\) 與 \\((3,-4)\\) 模均為 5。` +
+            `由 \\(4x+3y${sm(d1)}=\\pm(3x-4y${sm(d2)})\\)，` +
+            `取正號得 \\(x+7y=${d1 - d2}\\)；取負號得 \\(7x-y=${d1 + d2}\\)。`
+          );
+        },
       },
       {
-        a1:5,b1:12,a2:12,b2:-5,norm:13,
-        getBis(d1,d2){ return [`7x-17y=${d2-d1}`, `17x+7y=${d1+d2}`]; },
-        getProc(d1,d2){
-          return `法向量 \\((5,12)\\) 與 \\((12,-5)\\) 模均為 13。`+
-            `由 \\(5x+12y${sm(d1)}=\\pm(12x-5y${sm(d2)})\\)，`+
-            `取正號得 \\(7x-17y=${d2-d1}\\)；取負號得 \\(17x+7y=${d1+d2}\\)。`;
-        }
+        a1: 5,
+        b1: 12,
+        a2: 12,
+        b2: -5,
+        norm: 13,
+        getBis(d1, d2) {
+          return [`7x-17y=${d2 - d1}`, `17x+7y=${d1 + d2}`];
+        },
+        getProc(d1, d2) {
+          return (
+            `法向量 \\((5,12)\\) 與 \\((12,-5)\\) 模均為 13。` +
+            `由 \\(5x+12y${sm(d1)}=\\pm(12x-5y${sm(d2)})\\)，` +
+            `取正號得 \\(7x-17y=${d2 - d1}\\)；取負號得 \\(17x+7y=${d1 + d2}\\)。`
+          );
+        },
       },
       {
-        a1:3,b1:4,a2:-4,b2:3,norm:5,
-        getBis(d1,d2){ return [`7x+y=${d1-d2}`, `x-7y=${-(d1+d2)}`]; },
-        getProc(d1,d2){
-          return `法向量 \\((3,4)\\) 與 \\((-4,3)\\) 模均為 5。`+
-            `由 \\(3x+4y${sm(d1)}=\\pm(-4x+3y${sm(d2)})\\)，`+
-            `取正號得 \\(7x+y=${d1-d2}\\)；取負號得 \\(x-7y=${-(d1+d2)}\\)。`;
-        }
+        a1: 3,
+        b1: 4,
+        a2: -4,
+        b2: 3,
+        norm: 5,
+        getBis(d1, d2) {
+          return [`7x+y=${d1 - d2}`, `x-7y=${-(d1 + d2)}`];
+        },
+        getProc(d1, d2) {
+          return (
+            `法向量 \\((3,4)\\) 與 \\((-4,3)\\) 模均為 5。` +
+            `由 \\(3x+4y${sm(d1)}=\\pm(-4x+3y${sm(d2)})\\)，` +
+            `取正號得 \\(7x+y=${d1 - d2}\\)；取負號得 \\(x-7y=${-(d1 + d2)}\\)。`
+          );
+        },
       },
       {
-        a1:8,b1:15,a2:15,b2:-8,norm:17,
-        getBis(d1,d2){ return [`7x-23y=${d2-d1}`, `23x+7y=${d1+d2}`]; },
-        getProc(d1,d2){
-          return `法向量 \\((8,15)\\) 與 \\((15,-8)\\) 模均為 17。`+
-            `由 \\(8x+15y${sm(d1)}=\\pm(15x-8y${sm(d2)})\\)，`+
-            `取正號得 \\(7x-23y=${d2-d1}\\)；取負號得 \\(23x+7y=${d1+d2}\\)。`;
-        }
+        a1: 8,
+        b1: 15,
+        a2: 15,
+        b2: -8,
+        norm: 17,
+        getBis(d1, d2) {
+          return [`7x-23y=${d2 - d1}`, `23x+7y=${d1 + d2}`];
+        },
+        getProc(d1, d2) {
+          return (
+            `法向量 \\((8,15)\\) 與 \\((15,-8)\\) 模均為 17。` +
+            `由 \\(8x+15y${sm(d1)}=\\pm(15x-8y${sm(d2)})\\)，` +
+            `取正號得 \\(7x-23y=${d2 - d1}\\)；取負號得 \\(23x+7y=${d1 + d2}\\)。`
+          );
+        },
       },
     ];
 
@@ -5198,16 +5348,31 @@
       answers.push(`簡答：\\(${B1}\\) 及 \\(${B2}\\)。過程：${m.getProc(d1, d2)}`);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── s1-2-2 新增：點與圓的位置關係及切線長 ──────────────────────────
   function buildS122PointCircleRelationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
-    const off5  = [[3,4],[4,3],[-3,4],[4,-3],[3,-4],[-4,3]];
-    const off13 = [[5,12],[12,5],[-5,12],[12,-5],[5,-12],[-12,5]];
+    const off5 = [
+      [3, 4],
+      [4, 3],
+      [-3, 4],
+      [4, -3],
+      [3, -4],
+      [-4, 3],
+    ];
+    const off13 = [
+      [5, 12],
+      [12, 5],
+      [-5, 12],
+      [12, -5],
+      [5, -12],
+      [-12, 5],
+    ];
 
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -5217,77 +5382,95 @@
       if (mode === 0) {
         // 圓外 d=5 r=3 切線=4
         const [dx, dy] = off5[randInt(0, off5.length - 1)];
-        const px = h + dx, py = k + dy;
+        const px = h + dx,
+          py = k + dy;
         const circ = formatS122CircleStandard(h, k, 9);
         questions.push(`判斷點 \\(P(${px},\\,${py})\\) 與圓 \\(${circ}\\) 的位置關係，若在圓外則求切線長。`);
         answers.push(
           `簡答：\\(P\\) 在圓外，切線長為 4。` +
-          `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=3\\)。` +
-          `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx*dx+dy*dy}\\)，` +
-          `\\(d=5>3\\)，故 \\(P\\) 在圓外。切線長 \\(=\\sqrt{25-9}=4\\)。`
+            `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=3\\)。` +
+            `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx * dx + dy * dy}\\)，` +
+            `\\(d=5>3\\)，故 \\(P\\) 在圓外。切線長 \\(=\\sqrt{25-9}=4\\)。`
         );
       } else if (mode === 1) {
         // 圓外 d=5 r=4 切線=3
         const [dx, dy] = off5[randInt(0, off5.length - 1)];
-        const px = h + dx, py = k + dy;
+        const px = h + dx,
+          py = k + dy;
         const circ = formatS122CircleStandard(h, k, 16);
         questions.push(`判斷點 \\(P(${px},\\,${py})\\) 與圓 \\(${circ}\\) 的位置關係，若在圓外則求切線長。`);
         answers.push(
           `簡答：\\(P\\) 在圓外，切線長為 3。` +
-          `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=4\\)。` +
-          `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx*dx+dy*dy}\\)，` +
-          `\\(d=5>4\\)，故 \\(P\\) 在圓外。切線長 \\(=\\sqrt{25-16}=3\\)。`
+            `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=4\\)。` +
+            `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx * dx + dy * dy}\\)，` +
+            `\\(d=5>4\\)，故 \\(P\\) 在圓外。切線長 \\(=\\sqrt{25-16}=3\\)。`
         );
       } else if (mode === 2) {
         // 圓外 d=13 r=5 切線=12
         const [dx, dy] = off13[randInt(0, off13.length - 1)];
-        const px = h + dx, py = k + dy;
+        const px = h + dx,
+          py = k + dy;
         const circ = formatS122CircleStandard(h, k, 25);
         questions.push(`判斷點 \\(P(${px},\\,${py})\\) 與圓 \\(${circ}\\) 的位置關係，若在圓外則求切線長。`);
         answers.push(
           `簡答：\\(P\\) 在圓外，切線長為 12。` +
-          `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=5\\)。` +
-          `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx*dx+dy*dy}\\)，` +
-          `\\(d=13>5\\)，故 \\(P\\) 在圓外。切線長 \\(=\\sqrt{169-25}=12\\)。`
+            `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=5\\)。` +
+            `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx * dx + dy * dy}\\)，` +
+            `\\(d=13>5\\)，故 \\(P\\) 在圓外。切線長 \\(=\\sqrt{169-25}=12\\)。`
         );
       } else if (mode === 3) {
         // 在圓上 d=r=5
         const [dx, dy] = off5[randInt(0, off5.length - 1)];
-        const px = h + dx, py = k + dy;
+        const px = h + dx,
+          py = k + dy;
         const circ = formatS122CircleStandard(h, k, 25);
         questions.push(`判斷點 \\(P(${px},\\,${py})\\) 與圓 \\(${circ}\\) 的位置關係。`);
         answers.push(
           `簡答：\\(P\\) 在圓上。` +
-          `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=5\\)。` +
-          `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx*dx+dy*dy}=25=r^2\\)，故 \\(P\\) 在圓上。`
+            `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=5\\)。` +
+            `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx * dx + dy * dy}=25=r^2\\)，故 \\(P\\) 在圓上。`
         );
       } else {
         // 在圓內 d<5
-        const smalls = [[3,0],[0,3],[4,0],[0,4],[2,2],[1,3],[3,1]];
+        const smalls = [
+          [3, 0],
+          [0, 3],
+          [4, 0],
+          [0, 4],
+          [2, 2],
+          [1, 3],
+          [3, 1],
+        ];
         const [ax, ay] = smalls[randInt(0, smalls.length - 1)];
-        const sx = randInt(0,1)===0?1:-1, sy = randInt(0,1)===0?1:-1;
-        const dx = ax*sx, dy = ay*sy;
-        const d2 = dx*dx+dy*dy;
-        const px = h + dx, py = k + dy;
+        const sx = randInt(0, 1) === 0 ? 1 : -1,
+          sy = randInt(0, 1) === 0 ? 1 : -1;
+        const dx = ax * sx,
+          dy = ay * sy;
+        const d2 = dx * dx + dy * dy;
+        const px = h + dx,
+          py = k + dy;
         const circ = formatS122CircleStandard(h, k, 25);
         questions.push(`判斷點 \\(P(${px},\\,${py})\\) 與圓 \\(${circ}\\) 的位置關係。`);
         answers.push(
           `簡答：\\(P\\) 在圓內。` +
-          `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=5\\)。` +
-          `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${d2}<25=r^2\\)，故 \\(P\\) 在圓內，無切線。`
+            `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=5\\)。` +
+            `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${d2}<25=r^2\\)，故 \\(P\\) 在圓內，無切線。`
         );
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── s1-2-3 新增：直線與圓的交點坐標 ────────────────────────────────
   function buildS123LineCirIntersectionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
-    function signC(c) { return c >= 0 ? `+${c}` : `${c}`; }
+    function signC(c) {
+      return c >= 0 ? `+${c}` : `${c}`;
+    }
     function xSqTerm(h) {
       if (h === 0) return 'x^2';
       return h > 0 ? `(x-${h})^2` : `(x+${-h})^2`;
@@ -5302,98 +5485,118 @@
 
       if (mode === 0) {
         // 水平線 y=k 與 x^2+y^2=r^2
-        const cases = [{r:5,k:3,xv:4},{r:5,k:4,xv:3},{r:13,k:5,xv:12},{r:13,k:12,xv:5},{r:10,k:6,xv:8}];
-        const {r,k,xv} = cases[randInt(0,cases.length-1)];
-        const kv = (randInt(0,1)===0?1:-1)*k;
-        questions.push(`求直線 \\(y=${kv}\\) 與圓 \\(x^2+y^2=${r*r}\\) 的交點坐標。`);
+        const cases = [
+          { r: 5, k: 3, xv: 4 },
+          { r: 5, k: 4, xv: 3 },
+          { r: 13, k: 5, xv: 12 },
+          { r: 13, k: 12, xv: 5 },
+          { r: 10, k: 6, xv: 8 },
+        ];
+        const { r, k, xv } = cases[randInt(0, cases.length - 1)];
+        const kv = (randInt(0, 1) === 0 ? 1 : -1) * k;
+        questions.push(`求直線 \\(y=${kv}\\) 與圓 \\(x^2+y^2=${r * r}\\) 的交點坐標。`);
         answers.push(
           `簡答：\\((${xv},${kv})\\) 與 \\((-${xv},${kv})\\)。` +
-          `過程：代入 \\(y=${kv}\\) 得 \\(x^2+${kv*kv}=${r*r}\\)，` +
-          `\\(x^2=${r*r-kv*kv}\\)，\\(x=\\pm${xv}\\)。`
+            `過程：代入 \\(y=${kv}\\) 得 \\(x^2+${kv * kv}=${r * r}\\)，` +
+            `\\(x^2=${r * r - kv * kv}\\)，\\(x=\\pm${xv}\\)。`
         );
       } else if (mode === 1) {
         // 垂直線 x=h 與 x^2+y^2=r^2
-        const cases = [{r:5,h:3,yv:4},{r:5,h:4,yv:3},{r:13,h:5,yv:12},{r:13,h:12,yv:5}];
-        const {r,h,yv} = cases[randInt(0,cases.length-1)];
-        const hv = (randInt(0,1)===0?1:-1)*h;
-        questions.push(`求直線 \\(x=${hv}\\) 與圓 \\(x^2+y^2=${r*r}\\) 的交點坐標。`);
+        const cases = [
+          { r: 5, h: 3, yv: 4 },
+          { r: 5, h: 4, yv: 3 },
+          { r: 13, h: 5, yv: 12 },
+          { r: 13, h: 12, yv: 5 },
+        ];
+        const { r, h, yv } = cases[randInt(0, cases.length - 1)];
+        const hv = (randInt(0, 1) === 0 ? 1 : -1) * h;
+        questions.push(`求直線 \\(x=${hv}\\) 與圓 \\(x^2+y^2=${r * r}\\) 的交點坐標。`);
         answers.push(
           `簡答：\\((${hv},${yv})\\) 與 \\((${hv},-${yv})\\)。` +
-          `過程：代入 \\(x=${hv}\\) 得 \\(${hv*hv}+y^2=${r*r}\\)，` +
-          `\\(y^2=${r*r-hv*hv}\\)，\\(y=\\pm${yv}\\)。`
+            `過程：代入 \\(x=${hv}\\) 得 \\(${hv * hv}+y^2=${r * r}\\)，` +
+            `\\(y^2=${r * r - hv * hv}\\)，\\(y=\\pm${yv}\\)。`
         );
       } else if (mode === 2) {
         // y=x+c 與 x^2+y^2=25，2x^2+2cx+(c^2-25)=0
         const cases = [
-          {c:1,  P:{x:3,y:4},  Q:{x:-4,y:-3}},
-          {c:-1, P:{x:4,y:3},  Q:{x:-3,y:-4}},
-          {c:7,  P:{x:-3,y:4}, Q:{x:-4,y:3}},
-          {c:-7, P:{x:3,y:-4}, Q:{x:4,y:-3}},
+          { c: 1, P: { x: 3, y: 4 }, Q: { x: -4, y: -3 } },
+          { c: -1, P: { x: 4, y: 3 }, Q: { x: -3, y: -4 } },
+          { c: 7, P: { x: -3, y: 4 }, Q: { x: -4, y: 3 } },
+          { c: -7, P: { x: 3, y: -4 }, Q: { x: 4, y: -3 } },
         ];
-        const cas = cases[randInt(0,cases.length-1)];
+        const cas = cases[randInt(0, cases.length - 1)];
         const cStr = cas.c === 0 ? 'x' : cas.c > 0 ? `x+${cas.c}` : `x${cas.c}`;
-        const P = cas.P, Q = cas.Q;
-        const coefX = 2*cas.c, constT = cas.c*cas.c - 25;
+        const P = cas.P,
+          Q = cas.Q;
+        const coefX = 2 * cas.c,
+          constT = cas.c * cas.c - 25;
         questions.push(`求直線 \\(y=${cStr}\\) 與圓 \\(x^2+y^2=25\\) 的交點坐標。`);
         answers.push(
           `簡答：\\((${P.x},${P.y})\\) 與 \\((${Q.x},${Q.y})\\)。` +
-          `過程：代入得 \\(2x^2${signC(coefX)}x${signC(constT)}=0\\)，` +
-          `化簡解得 \\(x=${P.x}\\) 或 \\(x=${Q.x}\\)，` +
-          `對應 y 值由 \\(y=x+${cas.c}\\) 求出，交點為 \\((${P.x},${P.y})\\) 與 \\((${Q.x},${Q.y})\\)。`
+            `過程：代入得 \\(2x^2${signC(coefX)}x${signC(constT)}=0\\)，` +
+            `化簡解得 \\(x=${P.x}\\) 或 \\(x=${Q.x}\\)，` +
+            `對應 y 值由 \\(y=x+${cas.c}\\) 求出，交點為 \\((${P.x},${P.y})\\) 與 \\((${Q.x},${Q.y})\\)。`
         );
       } else if (mode === 3) {
         // y=-x+c 與 x^2+y^2=25，2x^2-2cx+(c^2-25)=0
         const cases = [
-          {c:1,  P:{x:4,y:-3}, Q:{x:-3,y:4}},
-          {c:-1, P:{x:-4,y:3}, Q:{x:3,y:-4}},
-          {c:5,  P:{x:0,y:5},  Q:{x:5,y:0}},
-          {c:7,  P:{x:3,y:4},  Q:{x:4,y:3}},
-          {c:-7, P:{x:-3,y:-4},Q:{x:-4,y:-3}},
+          { c: 1, P: { x: 4, y: -3 }, Q: { x: -3, y: 4 } },
+          { c: -1, P: { x: -4, y: 3 }, Q: { x: 3, y: -4 } },
+          { c: 5, P: { x: 0, y: 5 }, Q: { x: 5, y: 0 } },
+          { c: 7, P: { x: 3, y: 4 }, Q: { x: 4, y: 3 } },
+          { c: -7, P: { x: -3, y: -4 }, Q: { x: -4, y: -3 } },
         ];
-        const cas = cases[randInt(0,cases.length-1)];
+        const cas = cases[randInt(0, cases.length - 1)];
         const cStr = cas.c === 0 ? '-x' : cas.c > 0 ? `-x+${cas.c}` : `-x${cas.c}`;
-        const P = cas.P, Q = cas.Q;
-        const coefX = -2*cas.c, constT = cas.c*cas.c - 25;
+        const P = cas.P,
+          Q = cas.Q;
+        const coefX = -2 * cas.c,
+          constT = cas.c * cas.c - 25;
         questions.push(`求直線 \\(y=${cStr}\\) 與圓 \\(x^2+y^2=25\\) 的交點坐標。`);
         answers.push(
           `簡答：\\((${P.x},${P.y})\\) 與 \\((${Q.x},${Q.y})\\)。` +
-          `過程：代入得 \\(2x^2${signC(coefX)}x${signC(constT)}=0\\)，` +
-          `化簡解得 \\(x=${P.x}\\) 或 \\(x=${Q.x}\\)，交點為 \\((${P.x},${P.y})\\) 與 \\((${Q.x},${Q.y})\\)。`
+            `過程：代入得 \\(2x^2${signC(coefX)}x${signC(constT)}=0\\)，` +
+            `化簡解得 \\(x=${P.x}\\) 或 \\(x=${Q.x}\\)，交點為 \\((${P.x},${P.y})\\) 與 \\((${Q.x},${Q.y})\\)。`
         );
       } else {
         // 水平線 y=k 與移心圓 (x-h0)^2+(y-k0)^2=25
         const h0 = randInt(-3, 3);
         const k0 = randInt(-3, 3);
-        const deltaCases = [[3,4],[4,3],[0,5]];
+        const deltaCases = [
+          [3, 4],
+          [4, 3],
+          [0, 5],
+        ];
         const [dk, xHalf] = deltaCases[randInt(0, deltaCases.length - 1)];
-        const signDk = randInt(0,1)===0?1:-1;
+        const signDk = randInt(0, 1) === 0 ? 1 : -1;
         const k = k0 + signDk * dk;
-        const diff = 25 - dk*dk;
-        const x1 = h0 + xHalf, x2 = h0 - xHalf;
+        const diff = 25 - dk * dk;
+        const x1 = h0 + xHalf,
+          x2 = h0 - xHalf;
         const circEq = formatS122CircleStandard(h0, k0, 25);
         const xsolve = xSolveTerm(h0);
         questions.push(`求直線 \\(y=${k}\\) 與圓 \\(${circEq}\\) 的交點坐標。`);
         if (xHalf === 0) {
-          questions[questions.length-1] = `求直線 \\(y=${k}\\) 與圓 \\(${circEq}\\) 的切點坐標（若為切線）。`;
+          questions[questions.length - 1] = `求直線 \\(y=${k}\\) 與圓 \\(${circEq}\\) 的切點坐標（若為切線）。`;
           answers.push(`簡答：切點 \\((${h0},${k})\\)。過程：代入得 \\(${xSqTerm(h0)}=0\\)，\\(x=${h0}\\)。`);
         } else {
           answers.push(
             `簡答：\\((${x1},${k})\\) 與 \\((${x2},${k})\\)。` +
-            `過程：代入 \\(y=${k}\\) 得 \\(${xSqTerm(h0)}+${dk*dk}=25\\)，` +
-            `\\(${xSqTerm(h0)}=${diff}\\)，\\(${xsolve}=\\pm${xHalf}\\)，` +
-            `交點為 \\((${x1},${k})\\) 與 \\((${x2},${k})\\)。`
+              `過程：代入 \\(y=${k}\\) 得 \\(${xSqTerm(h0)}+${dk * dk}=25\\)，` +
+              `\\(${xSqTerm(h0)}=${diff}\\)，\\(${xsolve}=\\pm${xHalf}\\)，` +
+              `交點為 \\((${x1},${k})\\) 與 \\((${x2},${k})\\)。`
           );
         }
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
 
   function buildS131CoefficientSumParitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const type = i % 5;
@@ -5475,12 +5678,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131DifferenceReversePolynomialSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const type = i % 5;
@@ -5546,12 +5750,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131PolynomialIdentityParameterSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const templates = [
       {
         q: '若 \\((a+b)x^3+(1-a)x^2+(a-b)x+2b+3\\) 為一次式，求數對 \\((a,b)\\)。',
@@ -5581,12 +5786,13 @@
       answers.push(item.a);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131DegreeAfterOperationsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const templates = [
       {
         q: '若 \\(\\deg f(x)=4\\)、\\(\\deg g(x)=4\\)，則 \\(\\deg(f(x)-g(x))\\) 的可能值為何？',
@@ -5616,12 +5822,13 @@
       answers.push(item.a);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131SpecificCoefficientSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const templates = [
       {
         q: '求 \\((x+1)(x+2)\\cdots(x+10)\\) 展開式中的 \\(x^9\\) 項係數。',
@@ -5651,7 +5858,7 @@
       answers.push(item.a);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131PolynomialFiveSubtypeMixedSet(count) {
@@ -5663,14 +5870,15 @@
       buildS131SpecificCoefficientSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function multiplyLinearByPoly(linear, poly) {
@@ -5757,13 +5965,16 @@
 
   function buildS131FactorCheckSpecialPolynomialSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const type = i % 5;
 
       if (type === 0) {
-        const roots = shuffle([randInt(-5, -1), randInt(1, 5), randInt(6, 9)]).slice(0, 3).sort((a, b) => a - b);
+        const roots = shuffle([randInt(-5, -1), randInt(1, 5), randInt(6, 9)])
+          .slice(0, 3)
+          .sort((a, b) => a - b);
         const coeffs = expandS13PolynomialFromRoots(roots);
         const polynomial = formatPolynomialFromCoeffs(coeffs);
         questions.push(`已知 \\(f(x)=${polynomial}\\)，列出 \\(f(x)\\) 的所有一次因式。`);
@@ -5820,12 +6031,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131NearbyRootsValueSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const type = i % 5;
@@ -5835,7 +6047,9 @@
         const k = pickNonZero(-5, 5);
         const given = -6 * k;
         const target = 6 * k;
-        questions.push(`三次多項式 \\(f(x)\\) 的根為 ${a}、${a + 1}、${a + 2}，且最高次項係數為 \\(k\\)。若 \\(f(${a - 1})=${given}\\)，求 \\(f(${a + 3})\\)。`);
+        questions.push(
+          `三次多項式 \\(f(x)\\) 的根為 ${a}、${a + 1}、${a + 2}，且最高次項係數為 \\(k\\)。若 \\(f(${a - 1})=${given}\\)，求 \\(f(${a + 3})\\)。`
+        );
         answers.push(
           `簡答：${target}。過程：設 \\(f(x)=k${formatS13FactorProduct([a, a + 1, a + 2])}\\)。代入 \\(x=${a - 1}\\) 得 \\(f(${a - 1})=-6k=${given}\\)，所以 \\(k=${k}\\)。代入 \\(x=${a + 3}\\) 得 \\(f(${a + 3})=6k=${target}\\)。`
         );
@@ -5847,7 +6061,9 @@
         const k = pickNonZero(-4, 4);
         const given = 6 * k;
         const target = -6 * k;
-        questions.push(`三次多項式 \\(f(x)\\) 有三根 ${a}、${a + 1}、${a + 2}。若最高次項係數固定，且 \\(f(${a + 3})=${given}\\)，求 \\(f(${a - 1})\\)。`);
+        questions.push(
+          `三次多項式 \\(f(x)\\) 有三根 ${a}、${a + 1}、${a + 2}。若最高次項係數固定，且 \\(f(${a + 3})=${given}\\)，求 \\(f(${a - 1})\\)。`
+        );
         answers.push(
           `簡答：${target}。過程：設 \\(f(x)=k${formatS13FactorProduct([a, a + 1, a + 2])}\\)。\\(f(${a + 3})=6k=${given}\\)，所以 \\(k=${k}\\)。因此 \\(f(${a - 1})=(-1)(-2)(-3)k=-6k=${target}\\)。`
         );
@@ -5860,7 +6076,9 @@
         const k = pickNonZero(-3, 3);
         const given = 6 * k * d ** 3;
         const target = -given;
-        questions.push(`三次多項式 \\(f(x)\\) 的根為 ${a - d}、${a}、${a + d}。若 \\(f(${a + 2 * d})=${given}\\)，求 \\(f(${a - 2 * d})\\)。`);
+        questions.push(
+          `三次多項式 \\(f(x)\\) 的根為 ${a - d}、${a}、${a + d}。若 \\(f(${a + 2 * d})=${given}\\)，求 \\(f(${a - 2 * d})\\)。`
+        );
         answers.push(
           `簡答：${target}。過程：設 \\(f(x)=k${formatS13FactorProduct([a - d, a, a + d])}\\)。在 \\(x=${a + 2 * d}\\) 時三因數為 \\(${3 * d},${2 * d},${d}\\)，乘積為 \\(${6 * d ** 3}\\)；在 \\(x=${a - 2 * d}\\) 時三因數為 \\(${-d},${-2 * d},${-3 * d}\\)，乘積為 \\(${-6 * d ** 3}\\)。所以兩值相反，答案為 ${target}。`
         );
@@ -5871,7 +6089,9 @@
         const a = randInt(-3, 3);
         const k = pickNonZero(-3, 3);
         const given = 24 * k;
-        questions.push(`四次多項式 \\(f(x)\\) 的根為 ${a}、${a + 1}、${a + 2}、${a + 3}。若 \\(f(${a - 1})=${given}\\)，求 \\(f(${a + 4})\\)。`);
+        questions.push(
+          `四次多項式 \\(f(x)\\) 的根為 ${a}、${a + 1}、${a + 2}、${a + 3}。若 \\(f(${a - 1})=${given}\\)，求 \\(f(${a + 4})\\)。`
+        );
         answers.push(
           `簡答：${given}。過程：設 \\(f(x)=k${formatS13FactorProduct([a, a + 1, a + 2, a + 3])}\\)。代入 \\(x=${a - 1}\\) 的四個因數為 \\(-1,-2,-3,-4\\)，乘積為 24；代入 \\(x=${a + 4}\\) 的四個因數為 \\(4,3,2,1\\)，乘積也為 24。因此兩值相同。`
         );
@@ -5885,18 +6105,21 @@
       const targetX = b + 1;
       const given = k * (givenX - a) * (givenX - b);
       const target = k * (targetX - a) * (targetX - b);
-      questions.push(`二次多項式 \\(f(x)\\) 的兩根為 ${a}、${b}，且 \\(f(${givenX})=${given}\\)，求 \\(f(${targetX})\\)。`);
+      questions.push(
+        `二次多項式 \\(f(x)\\) 的兩根為 ${a}、${b}，且 \\(f(${givenX})=${given}\\)，求 \\(f(${targetX})\\)。`
+      );
       answers.push(
         `簡答：${target}。過程：設 \\(f(x)=k${formatS13FactorProduct([a, b])}\\)。由 \\(f(${givenX})=k(${givenX - a})(${givenX - b})=${given}\\) 可得 \\(k=${k}\\)。所以 \\(f(${targetX})=k(${targetX - a})(${targetX - b})=${target}\\)。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131AxMinusBDivisionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = [2, 3, 4][randInt(0, 2)];
       const b = pickNonZero(-5, 5);
@@ -5916,7 +6139,7 @@
         `簡答：商式 \\(${quotientText}\\)，餘式 ${r}。過程：此題除式首項係數不是 1，做綜合除法時若先用根 \\(x=${formatFraction(-b, a)}\\) 得到偽商，最後還要除以 ${a} 才是真正商式。檢查可得 \\(${dividendText}=(${divisorText})(${quotientText})${remainderText}\\)，所以答案如上。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131SuccessiveDivisionTaylorSet(count) {
@@ -5943,7 +6166,8 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const type = i % 5;
       if (i < templates.length && Math.random() < 0.5) {
@@ -5977,12 +6201,13 @@
         `簡答：\\(f(x)=${shiftedPoly}\\)。過程：連續除以 \\(${formatS131LinearFactor(c)}\\) 時，第一次餘式是常數項 ${a0}，第二次餘式是一次係數 ${a1}，再來是二次係數 ${a2}，最後最高次係數 ${a3}，所以得到上述降冪排列。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131ProductSpecificCoefficientSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const templates = [
       {
         q: '求 \\((x^2-x+3)(5x^6+2x^5-3x^4+5x^2-1)\\) 展開式中 \\(x^3\\) 的係數。',
@@ -6010,12 +6235,13 @@
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131RemainderTransformationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const templates = [
       {
         q: '設 \\(f(x)\\) 除以 \\((x-2)\\) 的商為 \\(Q(x)\\)、餘式為 5，求 \\(xf(x)\\) 除以 \\((x-2)\\) 的餘式。',
@@ -6059,12 +6285,13 @@
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131HighPowerRemainderSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const templates = [
       {
         q: '求 \\(x^{12}\\) 除以 \\((x+1)^2\\) 的餘式。',
@@ -6108,7 +6335,7 @@
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131DivisionRemainderFiveSubtypeMixedSet(count) {
@@ -6120,14 +6347,15 @@
       buildS131HighPowerRemainderSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131ComplexRootRemainderSet(count) {
@@ -6154,13 +6382,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131CompositionRemainderSet(count) {
@@ -6187,13 +6416,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131SquareDivisorRemainderSet(count) {
@@ -6220,13 +6450,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131StepwiseRemainderConstructionSet(count) {
@@ -6253,13 +6484,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131CoefficientTransformRemainderSet(count) {
@@ -6294,13 +6526,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131RemainderOperationsSet(count) {
@@ -6327,13 +6560,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131LowToHighRemainderSet(count) {
@@ -6360,13 +6594,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131TransformedDividendRemainderSet(count) {
@@ -6393,13 +6628,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131SquareDivisorCalculationSet(count) {
@@ -6426,13 +6662,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131SpecialXnRemainderSet(count) {
@@ -6467,13 +6704,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131RecoverDividendFromQuotientSet(count) {
@@ -6500,13 +6738,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131DivisibilityUnknownCoefficientSet(count) {
@@ -6533,26 +6772,28 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131DivisionPrincipleReverseTwoSubtypeMixedSet(count) {
     const banks = [buildS131RecoverDividendFromQuotientSet, buildS131DivisibilityUnknownCoefficientSet];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131InterpolationPolynomialFromPointsSet(count) {
@@ -6579,13 +6820,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131InterpolationValueOnlySet(count) {
@@ -6612,13 +6854,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131InterpolationStructuralRemainderSet(count) {
@@ -6645,13 +6888,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131InterpolationFiniteDifferenceSet(count) {
@@ -6678,13 +6922,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131InterpolationLagrangeSpecialSet(count) {
@@ -6711,13 +6956,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131InterpolationPolynomialFiveSubtypeMixedSet(count) {
@@ -6729,14 +6975,15 @@
       buildS131InterpolationLagrangeSpecialSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131AdvancedRemainderFiveSubtypeMixedSet(count) {
@@ -6748,13 +6995,14 @@
       buildS131CoefficientTransformRemainderSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131RemainderApplicationsFiveSubtypeMixedSet(count) {
@@ -6766,13 +7014,14 @@
       buildS131SpecialXnRemainderSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatShiftBase(h) {
@@ -6785,7 +7034,8 @@
 
   function buildS131OddEvenValueRelationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const type = i % 4;
@@ -6821,12 +7071,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS131ShiftedBasisCoefficientsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const h = randInt(-3, 4);
@@ -6834,12 +7085,7 @@
       const q = randInt(-5, 5);
       const r = randInt(-6, 6);
       const s = randInt(-8, 8);
-      const coeffs = [
-        p,
-        q - 3 * p * h,
-        3 * p * h * h - 2 * q * h + r,
-        -p * h ** 3 + q * h ** 2 - r * h + s,
-      ];
+      const coeffs = [p, q - 3 * p * h, 3 * p * h * h - 2 * q * h + r, -p * h ** 3 + q * h ** 2 - r * h + s];
       const expanded = formatPolynomialFromCoeffs(coeffs);
       const base = formatShiftBase(h);
 
@@ -6851,7 +7097,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132GeneralVertexConversionSet(count) {
@@ -6878,13 +7124,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132QuadraticFromConditionsSet(count) {
@@ -6911,18 +7158,20 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132ParabolaSymmetryPointSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const a = pickNonZero(-4, 4);
@@ -6943,12 +7192,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132QuadraticAxisTwoPointsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const h = randInt(-3, 4);
@@ -6971,24 +7221,20 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132CubicCenterStandardFormSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const a = pickNonZero(-3, 3);
       const h = randInt(-3, 4);
       const p = pickNonZero(-6, 6);
       const q = randInt(-8, 8);
-      const coeffs = [
-        a,
-        -3 * a * h,
-        3 * a * h * h + p,
-        -a * h ** 3 - p * h + q,
-      ];
+      const coeffs = [a, -3 * a * h, 3 * a * h * h + p, -a * h ** 3 - p * h + q];
       const expanded = formatPolynomialFromCoeffs(coeffs);
       const base = formatShiftBase(h);
       const shifted = `${a}(${base})^3${p >= 0 ? '+' : ''}${p}(${base})${q >= 0 ? '+' : ''}${q}`;
@@ -7001,12 +7247,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132CubicCenterFormEvaluationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const type = i % 5;
@@ -7014,12 +7261,7 @@
       const h = randInt(-3, 4);
       const p = pickNonZero(-6, 6);
       const q = randInt(-8, 8);
-      const coeffs = [
-        a,
-        -3 * a * h,
-        3 * a * h * h + p,
-        -a * h ** 3 - p * h + q,
-      ];
+      const coeffs = [a, -3 * a * h, 3 * a * h * h + p, -a * h ** 3 - p * h + q];
       const expanded = formatPolynomialFromCoeffs(coeffs);
       const base = formatShiftBase(h);
       const shifted = `${a}(${base})^3${p >= 0 ? '+' : ''}${p}(${base})${q >= 0 ? '+' : ''}${q}`;
@@ -7050,7 +7292,9 @@
         const t = 0.01;
         const targetX = Number((h + t).toFixed(2));
         const value = a * t ** 3 + p * t + q;
-        questions.push(`已知 \\(f(x)=${expanded}\\)。將 \\(f(x)\\) 改寫成中心式後，估計 \\(f(${targetX.toFixed(2)})\\) 到小數點後四位。`);
+        questions.push(
+          `已知 \\(f(x)=${expanded}\\)。將 \\(f(x)\\) 改寫成中心式後，估計 \\(f(${targetX.toFixed(2)})\\) 到小數點後四位。`
+        );
         answers.push(
           `簡答：約 ${trimFixed(value, 4)}。過程：\\(f(x)=${shifted}\\)。當 \\(x=${targetX.toFixed(2)}\\) 時，\\(${base}=0.01\\)，所以 \\(f(x)=${q}${formatSignedNumber(p)}(0.01)${formatSignedNumber(a)}(0.01)^3\\approx${trimFixed(value, 4)}\\)。`
         );
@@ -7060,7 +7304,7 @@
       if (type === 3) {
         const t = randInt(1, 3);
         const y1 = a * t ** 3 + p * t + q;
-        const y2 = a * (-t) ** 3 + p * (-t) + q;
+        const y2 = a * (-t) ** 3 + p * -t + q;
         questions.push(`三次函數 \\(f(x)=${expanded}\\) 的中心為何？並求 \\(f(${h + t})+f(${h - t})\\)。`);
         answers.push(
           `簡答：中心 \\((${h},${q})\\)，和為 ${2 * q}。過程：中心式為 \\(f(x)=${shifted}\\)，所以中心是 \\((${h},${q})\\)。對稱點的函數值和等於兩倍中心的 \\(y\\) 坐標，故 \\(f(${h + t})+f(${h - t})=${y1}+${y2}=2\\cdot${q}=${2 * q}\\)。`
@@ -7070,13 +7314,15 @@
 
       const t = randInt(1, 4);
       const value = a * t ** 3 + p * t + q;
-      questions.push(`已知 \\(f(x)=${shifted}\\)。若 \\(f(${h + t})=${value}\\)，請檢查由一般式 \\(${expanded}\\) 代入是否一致。`);
+      questions.push(
+        `已知 \\(f(x)=${shifted}\\)。若 \\(f(${h + t})=${value}\\)，請檢查由一般式 \\(${expanded}\\) 代入是否一致。`
+      );
       answers.push(
         `簡答：一致，函數值為 ${value}。過程：中心式中 \\(${base}=${t}\\)，所以 \\(f(${h + t})=${a}\\cdot${t}^3+${p}\\cdot${t}+${q}=${value}\\)。中心式與一般式是同一個多項式，代入一般式也必得相同結果。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132RestrictedRangeExtremaSet(count) {
@@ -7103,13 +7349,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132QuadraticDiscriminantSignSet(count) {
@@ -7136,13 +7383,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132LeastSquaresMinimumSet(count) {
@@ -7169,13 +7417,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132QuadraticModelApplicationsSet(count) {
@@ -7202,13 +7451,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132QuadraticFormGraphThreeSubtypeMixedSet(count) {
@@ -7218,14 +7468,15 @@
       buildS132RestrictedRangeExtremaSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132QuadraticInequalityExtremaApplicationThreeSubtypeMixedSet(count) {
@@ -7235,14 +7486,15 @@
       buildS132QuadraticModelApplicationsSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132QuadraticTransformationsSet(count) {
@@ -7269,13 +7521,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132QuadraticRelativePositionSet(count) {
@@ -7302,13 +7555,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132ParabolaGeometricAreasSet(count) {
@@ -7335,13 +7589,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132AbsoluteValueQuadraticSet(count) {
@@ -7368,13 +7623,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132AlgebraicExtremaSet(count) {
@@ -7401,13 +7657,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132QuadraticAdvancedGraphExtremaFiveSubtypeMixedSet(count) {
@@ -7419,14 +7676,15 @@
       buildS132AlgebraicExtremaSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132QuadraticSymmetryFunctionalRelationsSet(count) {
@@ -7453,13 +7711,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132ParabolaInterceptDistanceSet(count) {
@@ -7486,13 +7745,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132QuadraticStructuralModelingSet(count) {
@@ -7519,13 +7779,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132MonomialFunctionFeaturesSet(count) {
@@ -7552,13 +7813,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132CompoundRegionsExtremaSet(count) {
@@ -7585,13 +7847,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132QuadraticSymmetryModelingCompoundFiveSubtypeMixedSet(count) {
@@ -7603,14 +7866,15 @@
       buildS132CompoundRegionsExtremaSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132CubicTransformCenterSet(count) {
@@ -7637,13 +7901,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132CubicLocalLinearApproximationSet(count) {
@@ -7670,13 +7935,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132CubicRootsCenterRelationSet(count) {
@@ -7703,13 +7969,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132CubicSymmetryEvaluationSet(count) {
@@ -7736,13 +8003,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132CubicMonomialOverlapSet(count) {
@@ -7769,13 +8037,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132CubicInflectionTangentSet(count) {
@@ -7802,13 +8071,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132CubicChordMidpointSet(count) {
@@ -7835,13 +8105,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS132CubicFunctionsSevenSubtypeMixedSet(count) {
@@ -7855,29 +8126,35 @@
       buildS132CubicChordMidpointSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
   // ── s1-3-2 新增：分段函數代值計算 ───────────────────────────────────
   function buildS132PiecewiseFunctionEvalSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
 
       if (mode === 0) {
         // f(x) = { ax+b  x≥0; cx+d  x<0 }
-        const a = randInt(1,4), b = randInt(-3,3);
-        const c = randInt(1,4), d = randInt(-3,3);
-        const p = randInt(1,4), q = randInt(-4,-1);
-        const fp = a*p+b, fq = c*q+d;
+        const a = randInt(1, 4),
+          b = randInt(-3, 3);
+        const c = randInt(1, 4),
+          d = randInt(-3, 3);
+        const p = randInt(1, 4),
+          q = randInt(-4, -1);
+        const fp = a * p + b,
+          fq = c * q + d;
         const bStr = b >= 0 ? `+${b}` : `${b}`;
         const dStr = d >= 0 ? `+${d}` : `${d}`;
         questions.push(
@@ -7885,14 +8162,18 @@
         );
         answers.push(
           `簡答：\\(f(${p})=${fp}\\)，\\(f(${q})=${fq}\\)。` +
-          `過程：\\(${p}\\ge0\\) 用第一段，\\(f(${p})=${a}\\cdot${wrapIfNegative(p)}${bStr}=${fp}\\)；` +
-          `\\(${q}<0\\) 用第二段，\\(f(${q})=${c}\\cdot${wrapIfNegative(q)}${dStr}=${fq}\\)。`
+            `過程：\\(${p}\\ge0\\) 用第一段，\\(f(${p})=${a}\\cdot${wrapIfNegative(p)}${bStr}=${fp}\\)；` +
+            `\\(${q}<0\\) 用第二段，\\(f(${q})=${c}\\cdot${wrapIfNegative(q)}${dStr}=${fq}\\)。`
         );
       } else if (mode === 1) {
         // f(x) = { x^2+a  x≥1; bx+c  x<1 }
-        const a = randInt(0,5), b = randInt(1,4), c = randInt(-5,5);
-        const p = randInt(1,4), q = randInt(-3,0);
-        const fp = p*p+a, fq = b*q+c;
+        const a = randInt(0, 5),
+          b = randInt(1, 4),
+          c = randInt(-5, 5);
+        const p = randInt(1, 4),
+          q = randInt(-3, 0);
+        const fp = p * p + a,
+          fq = b * q + c;
         const aStr = a >= 0 ? `+${a}` : `${a}`;
         const cStr = c >= 0 ? `+${c}` : `${c}`;
         questions.push(
@@ -7900,16 +8181,20 @@
         );
         answers.push(
           `簡答：\\(f(${p})=${fp}\\)，\\(f(${q})=${fq}\\)。` +
-          `過程：\\(${p}\\ge1\\) 用第一段，\\(f(${p})=${p}^2${aStr}=${fp}\\)；` +
-          `\\(${q}<1\\) 用第二段，\\(f(${q})=${b}\\cdot${wrapIfNegative(q)}${cStr}=${fq}\\)。`
+            `過程：\\(${p}\\ge1\\) 用第一段，\\(f(${p})=${p}^2${aStr}=${fp}\\)；` +
+            `\\(${q}<1\\) 用第二段，\\(f(${q})=${b}\\cdot${wrapIfNegative(q)}${cStr}=${fq}\\)。`
         );
       } else if (mode === 2) {
         // f(x) = { x+a  x>k; bx+c  x≤k }
-        const a = randInt(1,5), b = randInt(2,4), c = randInt(-5,5);
-        const k = randInt(-2,2);
-        const m = randInt(1,3);
-        const p = k+m, q = k;
-        const fp = p+a, fq = b*k+c;
+        const a = randInt(1, 5),
+          b = randInt(2, 4),
+          c = randInt(-5, 5);
+        const k = randInt(-2, 2);
+        const m = randInt(1, 3);
+        const p = k + m,
+          q = k;
+        const fp = p + a,
+          fq = b * k + c;
         const aStr = a >= 0 ? `+${a}` : `${a}`;
         const cStr = c >= 0 ? `+${c}` : `${c}`;
         questions.push(
@@ -7917,292 +8202,318 @@
         );
         answers.push(
           `簡答：\\(f(${p})=${fp}\\)，\\(f(${q})=${fq}\\)。` +
-          `過程：\\(${p}>${k}\\) 用第一段，\\(f(${p})=${p}${aStr}=${fp}\\)；` +
-          `\\(${q}\\le${k}\\) 用第二段，\\(f(${q})=${b}\\cdot${wrapIfNegative(q)}${cStr}=${fq}\\)。`
+            `過程：\\(${p}>${k}\\) 用第一段，\\(f(${p})=${p}${aStr}=${fp}\\)；` +
+            `\\(${q}\\le${k}\\) 用第二段，\\(f(${q})=${b}\\cdot${wrapIfNegative(q)}${cStr}=${fq}\\)。`
         );
       } else if (mode === 3) {
         // f(x) = { x^2  x≥0; 2x+a  x<0 }，求 f(p) 和 f(q)
-        const a = randInt(-5,5);
-        const p = randInt(1,4), q = randInt(-4,-1);
-        const fp = p*p, fq = 2*q+a;
+        const a = randInt(-5, 5);
+        const p = randInt(1, 4),
+          q = randInt(-4, -1);
+        const fp = p * p,
+          fq = 2 * q + a;
         const aStr = a >= 0 ? `+${a}` : `${a}`;
         questions.push(
           `設 \\(f(x)=\\begin{cases}x^2, & x\\ge0\\\\ 2x${aStr}, & x<0\\end{cases}\\)，求 \\(f(${p})\\) 與 \\(f(${q})\\)。`
         );
         answers.push(
           `簡答：\\(f(${p})=${fp}\\)，\\(f(${q})=${fq}\\)。` +
-          `過程：\\(${p}\\ge0\\) 用第一段，\\(f(${p})=${p}^2=${fp}\\)；` +
-          `\\(${q}<0\\) 用第二段，\\(f(${q})=2\\cdot${wrapIfNegative(q)}${aStr}=${fq}\\)。`
+            `過程：\\(${p}\\ge0\\) 用第一段，\\(f(${p})=${p}^2=${fp}\\)；` +
+            `\\(${q}<0\\) 用第二段，\\(f(${q})=2\\cdot${wrapIfNegative(q)}${aStr}=${fq}\\)。`
         );
       } else {
         // 三段函數 f(x) = { a  x>k2; bx+c  k1<x≤k2; d  x≤k1 }
-        const a = randInt(5,10), d = randInt(-5,0);
-        const b = randInt(1,3), c = randInt(-3,3);
-        const k1 = randInt(-3,-1), k2 = randInt(1,3);
-        const p = k2+1, q0 = k1+Math.floor((k2-k1)/2), r0 = k1-1;
-        const fk2p1 = a, fmid = b*q0+c, fk1m1 = d;
+        const a = randInt(5, 10),
+          d = randInt(-5, 0);
+        const b = randInt(1, 3),
+          c = randInt(-3, 3);
+        const k1 = randInt(-3, -1),
+          k2 = randInt(1, 3);
+        const p = k2 + 1,
+          q0 = k1 + Math.floor((k2 - k1) / 2),
+          r0 = k1 - 1;
+        const fk2p1 = a,
+          fmid = b * q0 + c,
+          fk1m1 = d;
         const cStr = c >= 0 ? `+${c}` : `${c}`;
         questions.push(
           `設 \\(f(x)=\\begin{cases}${a}, & x>${k2}\\\\ ${b}x${cStr}, & ${k1}<x\\le${k2}\\\\ ${d}, & x\\le${k1}\\end{cases}\\)，` +
-          `求 \\(f(${p})\\)、\\(f(${q0})\\) 與 \\(f(${r0})\\)。`
+            `求 \\(f(${p})\\)、\\(f(${q0})\\) 與 \\(f(${r0})\\)。`
         );
         answers.push(
           `簡答：\\(f(${p})=${fk2p1}\\)，\\(f(${q0})=${fmid}\\)，\\(f(${r0})=${fk1m1}\\)。` +
-          `過程：\\(${p}>${k2}\\) 得 \\(f(${p})=${a}\\)；` +
-          `\\(${k1}<${q0}\\le${k2}\\) 得 \\(f(${q0})=${b}\\cdot${wrapIfNegative(q0)}${cStr}=${fmid}\\)；` +
-          `\\(${r0}\\le${k1}\\) 得 \\(f(${r0})=${d}\\)。`
+            `過程：\\(${p}>${k2}\\) 得 \\(f(${p})=${a}\\)；` +
+            `\\(${k1}<${q0}\\le${k2}\\) 得 \\(f(${q0})=${b}\\cdot${wrapIfNegative(q0)}${cStr}=${fmid}\\)；` +
+            `\\(${r0}\\le${k1}\\) 得 \\(f(${r0})=${d}\\)。`
         );
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── s1-3-2 新增：合成函數計算與反推 ────────────────────────────────
   function buildS132CompositeFunctionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
 
       if (mode === 0) {
         // 給 f(x)=ax+b, g(x)=x^2+c，求 f(g(m))
-        const a = randInt(1,3), b = randInt(-3,3), c = randInt(-3,3), m = randInt(-3,3);
-        const gm = m*m+c, fgm = a*gm+b;
+        const a = randInt(1, 3),
+          b = randInt(-3, 3),
+          c = randInt(-3, 3),
+          m = randInt(-3, 3);
+        const gm = m * m + c,
+          fgm = a * gm + b;
         const bStr = b >= 0 ? `+${b}` : `${b}`;
         const cStr = c >= 0 ? `+${c}` : `${c}`;
-        questions.push(
-          `設 \\(f(x)=${a}x${bStr}\\)，\\(g(x)=x^2${cStr}\\)，求 \\(f(g(${m}))\\)。`
-        );
+        questions.push(`設 \\(f(x)=${a}x${bStr}\\)，\\(g(x)=x^2${cStr}\\)，求 \\(f(g(${m}))\\)。`);
         answers.push(
           `簡答：\\(${fgm}\\)。` +
-          `過程：\\(g(${m})=${m}^2${cStr}=${gm}\\)，` +
-          `\\(f(g(${m}))=f(${gm})=${a}\\cdot${wrapIfNegative(gm)}${bStr}=${fgm}\\)。`
+            `過程：\\(g(${m})=${m}^2${cStr}=${gm}\\)，` +
+            `\\(f(g(${m}))=f(${gm})=${a}\\cdot${wrapIfNegative(gm)}${bStr}=${fgm}\\)。`
         );
       } else if (mode === 1) {
         // 給 f(x)=ax+b，求 f(f(n))
-        const a = randInt(2,4), b = randInt(-3,3), n = randInt(-2,2);
-        const fn = a*n+b, ffn = a*fn+b;
+        const a = randInt(2, 4),
+          b = randInt(-3, 3),
+          n = randInt(-2, 2);
+        const fn = a * n + b,
+          ffn = a * fn + b;
         const bStr = b >= 0 ? `+${b}` : `${b}`;
         questions.push(`設 \\(f(x)=${a}x${bStr}\\)，求 \\(f(f(${n}))\\)。`);
         answers.push(
           `簡答：\\(${ffn}\\)。` +
-          `過程：\\(f(${n})=${a}\\cdot${wrapIfNegative(n)}${bStr}=${fn}\\)，` +
-          `\\(f(f(${n}))=f(${fn})=${a}\\cdot${wrapIfNegative(fn)}${bStr}=${ffn}\\)。`
+            `過程：\\(f(${n})=${a}\\cdot${wrapIfNegative(n)}${bStr}=${fn}\\)，` +
+            `\\(f(f(${n}))=f(${fn})=${a}\\cdot${wrapIfNegative(fn)}${bStr}=${ffn}\\)。`
         );
       } else if (mode === 2) {
         // 已知 f(g(x))=ax+b 且 g(x)=x-k，求 f(x)
         // f(x) = ax+(b+ak)
-        const a = randInt(1,4), k = randInt(1,3);
-        const b = randInt(-4,4);
-        const q = b + a*k;
+        const a = randInt(1, 4),
+          k = randInt(1, 3);
+        const b = randInt(-4, 4);
+        const q = b + a * k;
         const bStr = b >= 0 ? `+${b}` : `${b}`;
         const qStr = q >= 0 ? `+${q}` : `${q}`;
         const compStr = b === 0 ? `${a}x` : `${a}x${bStr}`;
-        questions.push(
-          `已知 \\(f(g(x))=${a}x${bStr}\\) 且 \\(g(x)=x-${k}\\)，求 \\(f(x)\\)。`
-        );
+        questions.push(`已知 \\(f(g(x))=${a}x${bStr}\\) 且 \\(g(x)=x-${k}\\)，求 \\(f(x)\\)。`);
         answers.push(
           `簡答：\\(f(x)=${a}x${qStr}\\)。` +
-          `過程：設 \\(f(x)=px+q\\)。因 \\(f(g(x))=f(x-${k})=p(x-${k})+q=px${-k*1>=0?'+':''}${-k}p+q\\)，` +
-          `比較係數得 \\(p=${a}\\)，\\(-${k}p+q=${b}\\)，解得 \\(q=${q}\\)。`
+            `過程：設 \\(f(x)=px+q\\)。因 \\(f(g(x))=f(x-${k})=p(x-${k})+q=px${-k * 1 >= 0 ? '+' : ''}${-k}p+q\\)，` +
+            `比較係數得 \\(p=${a}\\)，\\(-${k}p+q=${b}\\)，解得 \\(q=${q}\\)。`
         );
       } else if (mode === 3) {
         // 已知 g(f(x))=ax+b 且 f(x)=x+k，求 g(x)
         // g(x) = ax+(b-ak)
-        const a = randInt(1,4), k = randInt(1,3);
-        const b = randInt(-4,4);
-        const r = b - a*k;
+        const a = randInt(1, 4),
+          k = randInt(1, 3);
+        const b = randInt(-4, 4);
+        const r = b - a * k;
         const bStr = b >= 0 ? `+${b}` : `${b}`;
         const rStr = r >= 0 ? `+${r}` : `${r}`;
-        questions.push(
-          `已知 \\(g(f(x))=${a}x${bStr}\\) 且 \\(f(x)=x+${k}\\)，求 \\(g(x)\\)。`
-        );
+        questions.push(`已知 \\(g(f(x))=${a}x${bStr}\\) 且 \\(f(x)=x+${k}\\)，求 \\(g(x)\\)。`);
         answers.push(
           `簡答：\\(g(x)=${a}x${rStr}\\)。` +
-          `過程：設 \\(g(x)=px+q\\)。因 \\(g(f(x))=g(x+${k})=p(x+${k})+q=px+${k}p+q\\)，` +
-          `比較係數得 \\(p=${a}\\)，\\(${k}p+q=${b}\\)，解得 \\(q=${r}\\)。`
+            `過程：設 \\(g(x)=px+q\\)。因 \\(g(f(x))=g(x+${k})=p(x+${k})+q=px+${k}p+q\\)，` +
+            `比較係數得 \\(p=${a}\\)，\\(${k}p+q=${b}\\)，解得 \\(q=${r}\\)。`
         );
       } else {
         // 已知 f 為一次函數且 f(f(x))=a^2x+(a+1)b，求 f(x)=ax+b
         // f(f(x))=a^2*x+a*b+b=a^2*x+b(a+1)
-        const a = randInt(2,4), b = randInt(1,4);
-        const a2 = a*a, comp_const = b*(a+1);
+        const a = randInt(2, 4),
+          b = randInt(1, 4);
+        const a2 = a * a,
+          comp_const = b * (a + 1);
         const a2Str = a2 === 1 ? 'x' : `${a2}x`;
         const bStr = b >= 0 ? `+${b}` : `${b}`;
-        questions.push(
-          `設 \\(f(x)\\) 為一次函數且 \\(f(f(x))=${a2}x+${comp_const}\\)，求 \\(f(x)\\)。`
-        );
+        questions.push(`設 \\(f(x)\\) 為一次函數且 \\(f(f(x))=${a2}x+${comp_const}\\)，求 \\(f(x)\\)。`);
         answers.push(
           `簡答：\\(f(x)=${a}x${bStr}\\)。` +
-          `過程：設 \\(f(x)=px+q\\)，則 \\(f(f(x))=p^2x+pq+q=p^2x+q(p+1)\\)。` +
-          `比較得 \\(p^2=${a2}\\Rightarrow p=${a}\\)（取正），\\(q(p+1)=${comp_const}\\Rightarrow q=${b}\\)。`
+            `過程：設 \\(f(x)=px+q\\)，則 \\(f(f(x))=p^2x+pq+q=p^2x+q(p+1)\\)。` +
+            `比較得 \\(p^2=${a2}\\Rightarrow p=${a}\\)（取正），\\(q(p+1)=${comp_const}\\Rightarrow q=${b}\\)。`
         );
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── s1-3-3 新增：絕對值不等式 ───────────────────────────────────────
   function buildS133AbsoluteValueInequalitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
 
       if (mode === 0) {
         // |x+a| < b → -b-a < x < b-a
-        const a = randInt(-3,3), b = randInt(2,6);
-        const lo = -b-a, hi = b-a;
+        const a = randInt(-3, 3),
+          b = randInt(2, 6);
+        const lo = -b - a,
+          hi = b - a;
         const aStr = a >= 0 ? `+${a}` : `${a}`;
         questions.push(`解不等式 \\(|x${aStr}|<${b}\\)。`);
         answers.push(
           `簡答：\\(${lo}<x<${hi}\\)。` +
-          `過程：\\(|x${aStr}|<${b}\\) 等價於 \\(-${b}<x${aStr}<${b}\\)，` +
-          `各減 \\(${a}\\) 得 \\(${lo}<x<${hi}\\)。`
+            `過程：\\(|x${aStr}|<${b}\\) 等價於 \\(-${b}<x${aStr}<${b}\\)，` +
+            `各減 \\(${a}\\) 得 \\(${lo}<x<${hi}\\)。`
         );
       } else if (mode === 1) {
         // |x-a| > b → x < a-b 或 x > a+b
-        const a = randInt(-3,3), b = randInt(1,5);
-        const lo = a-b, hi = a+b;
+        const a = randInt(-3, 3),
+          b = randInt(1, 5);
+        const lo = a - b,
+          hi = a + b;
         const aStr = a >= 0 ? `-${a}` : `+${-a}`;
         questions.push(`解不等式 \\(|x${aStr}|>${b}\\)。`);
         answers.push(
           `簡答：\\(x<${lo}\\) 或 \\(x>${hi}\\)。` +
-          `過程：\\(|x${aStr}|>${b}\\) 等價於 \\(x${aStr}<-${b}\\) 或 \\(x${aStr}>${b}\\)，` +
-          `移項得 \\(x<${lo}\\) 或 \\(x>${hi}\\)。`
+            `過程：\\(|x${aStr}|>${b}\\) 等價於 \\(x${aStr}<-${b}\\) 或 \\(x${aStr}>${b}\\)，` +
+            `移項得 \\(x<${lo}\\) 或 \\(x>${hi}\\)。`
         );
       } else if (mode === 2) {
         // |2x+a| ≤ b → (-b-a)/2 ≤ x ≤ (b-a)/2，取 a,b 使結果為整數
-        const a = randInt(-3,3)*2, b = randInt(2,5)*2;
-        const lo = (-b-a)/2, hi = (b-a)/2;
+        const a = randInt(-3, 3) * 2,
+          b = randInt(2, 5) * 2;
+        const lo = (-b - a) / 2,
+          hi = (b - a) / 2;
         const aStr = a >= 0 ? `+${a}` : `${a}`;
         questions.push(`解不等式 \\(|2x${aStr}|\\le${b}\\)。`);
         answers.push(
           `簡答：\\(${lo}\\le x\\le${hi}\\)。` +
-          `過程：\\(-${b}\\le2x${aStr}\\le${b}\\)，` +
-          `減 \\(${a}\\) 得 \\(${-b-a}\\le2x\\le${b-a}\\)，` +
-          `除以 2 得 \\(${lo}\\le x\\le${hi}\\)。`
+            `過程：\\(-${b}\\le2x${aStr}\\le${b}\\)，` +
+            `減 \\(${a}\\) 得 \\(${-b - a}\\le2x\\le${b - a}\\)，` +
+            `除以 2 得 \\(${lo}\\le x\\le${hi}\\)。`
         );
       } else if (mode === 3) {
         // |2x-a| ≥ b → x ≤ (a-b)/2 或 x ≥ (a+b)/2，同樣取偶數
-        const a = randInt(-2,4)*2, b = randInt(1,4)*2;
-        const lo = (a-b)/2, hi = (a+b)/2;
+        const a = randInt(-2, 4) * 2,
+          b = randInt(1, 4) * 2;
+        const lo = (a - b) / 2,
+          hi = (a + b) / 2;
         const aStr = a >= 0 ? `-${a}` : `+${-a}`;
         questions.push(`解不等式 \\(|2x${aStr}|\\ge${b}\\)。`);
         answers.push(
           `簡答：\\(x\\le${lo}\\) 或 \\(x\\ge${hi}\\)。` +
-          `過程：\\(2x${aStr}\\le-${b}\\) 或 \\(2x${aStr}\\ge${b}\\)，` +
-          `移項除以 2 得 \\(x\\le${lo}\\) 或 \\(x\\ge${hi}\\)。`
+            `過程：\\(2x${aStr}\\le-${b}\\) 或 \\(2x${aStr}\\ge${b}\\)，` +
+            `移項除以 2 得 \\(x\\le${lo}\\) 或 \\(x\\ge${hi}\\)。`
         );
       } else {
         // |x+a| ≤ |x-b|，a,b≥0，a+b>0 → x ≤ (b-a)/2
-        const a = randInt(0,3)*2, b = randInt(1,4)*2;
-        const mid = (b-a)/2;
+        const a = randInt(0, 3) * 2,
+          b = randInt(1, 4) * 2;
+        const mid = (b - a) / 2;
         const aStr = a === 0 ? 'x' : `x+${a}`;
         const bStr = b === 0 ? 'x' : `x-${b}`;
         questions.push(`解不等式 \\(|${aStr}|\\le|${bStr}|\\)。`);
         answers.push(
           `簡答：\\(x\\le${mid}\\)。` +
-          `過程：兩邊平方（均非負），\\((x+${a})^2\\le(x-${b})^2\\)，` +
-          `展開得 \\(x^2+${2*a}x+${a*a}\\le x^2-${2*b}x+${b*b}\\)，` +
-          `化簡得 \\(${2*(a+b)}x\\le${b*b-a*a}\\)，故 \\(x\\le${mid}\\)。`
+            `過程：兩邊平方（均非負），\\((x+${a})^2\\le(x-${b})^2\\)，` +
+            `展開得 \\(x^2+${2 * a}x+${a * a}\\le x^2-${2 * b}x+${b * b}\\)，` +
+            `化簡得 \\(${2 * (a + b)}x\\le${b * b - a * a}\\)，故 \\(x\\le${mid}\\)。`
         );
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── s1-3-3 新增：兩絕對值不等式 ────────────────────────────────────
   function buildS133DoubleAbsoluteInequalitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
 
       if (mode === 0) {
         // |x-a|+|x-b| ≤ c，a<b，c>b-a，解為 [(a+b-c)/2, (a+b+c)/2]
-        const a = randInt(0,2);
-        const b = a + 2*randInt(1,3);
-        const extra = 2*randInt(1,3);
-        const c = (b-a)+extra;
-        const lo = (a+b-c)/2, hi = (a+b+c)/2;
+        const a = randInt(0, 2);
+        const b = a + 2 * randInt(1, 3);
+        const extra = 2 * randInt(1, 3);
+        const c = b - a + extra;
+        const lo = (a + b - c) / 2,
+          hi = (a + b + c) / 2;
         questions.push(`解不等式 \\(|x-${a}|+|x-${b}|\\le${c}\\)。`);
         answers.push(
           `簡答：\\(${lo}\\le x\\le${hi}\\)。` +
-          `過程：分三段討論。\\(x\\le${a}\\) 時，左式 \\(=${a}-x+${b}-x=${a+b}-2x\\le${c}\\)，得 \\(x\\ge${lo}\\)；` +
-          `\\(${a}\\le x\\le${b}\\) 時，左式 \\(=x-${a}+${b}-x=${b-a}\\le${c}\\) 恆成立；` +
-          `\\(x\\ge${b}\\) 時，左式 \\(=x-${a}+x-${b}=2x-${a+b}\\le${c}\\)，得 \\(x\\le${hi}\\)。` +
-          `綜合得 \\(${lo}\\le x\\le${hi}\\)。`
+            `過程：分三段討論。\\(x\\le${a}\\) 時，左式 \\(=${a}-x+${b}-x=${a + b}-2x\\le${c}\\)，得 \\(x\\ge${lo}\\)；` +
+            `\\(${a}\\le x\\le${b}\\) 時，左式 \\(=x-${a}+${b}-x=${b - a}\\le${c}\\) 恆成立；` +
+            `\\(x\\ge${b}\\) 時，左式 \\(=x-${a}+x-${b}=2x-${a + b}\\le${c}\\)，得 \\(x\\le${hi}\\)。` +
+            `綜合得 \\(${lo}\\le x\\le${hi}\\)。`
         );
       } else if (mode === 1) {
         // |x-a|+|x-b| ≥ c，a<b，c>b-a，解為 x≤(a+b-c)/2 或 x≥(a+b+c)/2
-        const a = randInt(0,2);
-        const b = a + 2*randInt(1,3);
-        const extra = 2*randInt(1,3);
-        const c = (b-a)+extra;
-        const lo = (a+b-c)/2, hi = (a+b+c)/2;
+        const a = randInt(0, 2);
+        const b = a + 2 * randInt(1, 3);
+        const extra = 2 * randInt(1, 3);
+        const c = b - a + extra;
+        const lo = (a + b - c) / 2,
+          hi = (a + b + c) / 2;
         questions.push(`解不等式 \\(|x-${a}|+|x-${b}|\\ge${c}\\)。`);
         answers.push(
           `簡答：\\(x\\le${lo}\\) 或 \\(x\\ge${hi}\\)。` +
-          `過程：分段討論。\\(x\\ge${b}\\) 時，\\(2x-${a+b}\\ge${c}\\) 得 \\(x\\ge${hi}\\)；` +
-          `\\(${a}\\le x\\le${b}\\) 時，\\(${b-a}\\ge${c}\\) 不成立（因 \\(${b-a}<${c}\\)）；` +
-          `\\(x\\le${a}\\) 時，\\(${a+b}-2x\\ge${c}\\) 得 \\(x\\le${lo}\\)。`
+            `過程：分段討論。\\(x\\ge${b}\\) 時，\\(2x-${a + b}\\ge${c}\\) 得 \\(x\\ge${hi}\\)；` +
+            `\\(${a}\\le x\\le${b}\\) 時，\\(${b - a}\\ge${c}\\) 不成立（因 \\(${b - a}<${c}\\)）；` +
+            `\\(x\\le${a}\\) 時，\\(${a + b}-2x\\ge${c}\\) 得 \\(x\\le${lo}\\)。`
         );
       } else if (mode === 2) {
         // |x-a| < |x-b|，a<b → x < (a+b)/2（點比較靠近 a）
-        const a = randInt(0,3);
-        const diff = 2*randInt(1,4);
+        const a = randInt(0, 3);
+        const diff = 2 * randInt(1, 4);
         const b = a + diff;
-        const mid = (a+b)/2;
+        const mid = (a + b) / 2;
         questions.push(`解不等式 \\(|x-${a}|<|x-${b}|\\)。`);
         answers.push(
           `簡答：\\(x<${mid}\\)。` +
-          `過程：兩邊平方，\\((x-${a})^2<(x-${b})^2\\)，` +
-          `展開得 \\(-${2*a}x+${a*a}<-${2*b}x+${b*b}\\)，` +
-          `整理得 \\(${2*(b-a)}x<${b*b-a*a}=${(b-a)*(b+a)}\\)，` +
-          `故 \\(x<${mid}\\)。（幾何意義：\\(x\\) 到 \\(${a}\\) 的距離小於到 \\(${b}\\) 的距離，即 \\(x\\) 位於 \\(${a}\\) 與 \\(${b}\\) 的中點 \\(${mid}\\) 左側。）`
+            `過程：兩邊平方，\\((x-${a})^2<(x-${b})^2\\)，` +
+            `展開得 \\(-${2 * a}x+${a * a}<-${2 * b}x+${b * b}\\)，` +
+            `整理得 \\(${2 * (b - a)}x<${b * b - a * a}=${(b - a) * (b + a)}\\)，` +
+            `故 \\(x<${mid}\\)。（幾何意義：\\(x\\) 到 \\(${a}\\) 的距離小於到 \\(${b}\\) 的距離，即 \\(x\\) 位於 \\(${a}\\) 與 \\(${b}\\) 的中點 \\(${mid}\\) 左側。）`
         );
       } else if (mode === 3) {
         // |x-a| > |x-b|，a<b → x > (a+b)/2（點比較靠近 b）
-        const a = randInt(0,3);
-        const diff = 2*randInt(1,4);
+        const a = randInt(0, 3);
+        const diff = 2 * randInt(1, 4);
         const b = a + diff;
-        const mid = (a+b)/2;
+        const mid = (a + b) / 2;
         questions.push(`解不等式 \\(|x-${a}|>|x-${b}|\\)。`);
         answers.push(
           `簡答：\\(x>${mid}\\)。` +
-          `過程：兩邊平方，\\((x-${a})^2>(x-${b})^2\\)，` +
-          `整理得 \\(${2*(b-a)}x>${b*b-a*a}\\)，故 \\(x>${mid}\\)。` +
-          `（幾何意義：\\(x\\) 位於中點 \\(${mid}\\) 右側。）`
+            `過程：兩邊平方，\\((x-${a})^2>(x-${b})^2\\)，` +
+            `整理得 \\(${2 * (b - a)}x>${b * b - a * a}\\)，故 \\(x>${mid}\\)。` +
+            `（幾何意義：\\(x\\) 位於中點 \\(${mid}\\) 右側。）`
         );
       } else {
         // |x+a|+|x-b| ≤ c，a>0，b>0，解為 [(b-a-c)/2, (b-a+c)/2]
-        const a = randInt(1,3);
-        const b = randInt(1,3);
-        const extra = 2*randInt(1,3);
-        const c = (a+b)+extra;
-        const lo = (b-a-c)/2, hi = (b-a+c)/2;
+        const a = randInt(1, 3);
+        const b = randInt(1, 3);
+        const extra = 2 * randInt(1, 3);
+        const c = a + b + extra;
+        const lo = (b - a - c) / 2,
+          hi = (b - a + c) / 2;
         const aStr = `x+${a}`;
         const bStr = `x-${b}`;
         questions.push(`解不等式 \\(|${aStr}|+|${bStr}|\\le${c}\\)。`);
         answers.push(
           `簡答：\\(${lo}\\le x\\le${hi}\\)。` +
-          `過程：改寫為 \\(|x-(-${a})|+|x-${b}|\\le${c}\\)，` +
-          `兩定點為 \\(-${a}\\) 與 \\(${b}\\)，距離為 \\(${a+b}\\)，\\(c=${c}>${a+b}\\)，有解。` +
-          `利用公式，解為 \\(\\frac{-${a}+${b}-${c}}{2}\\le x\\le\\frac{-${a}+${b}+${c}}{2}\\)，即 \\(${lo}\\le x\\le${hi}\\)。`
+            `過程：改寫為 \\(|x-(-${a})|+|x-${b}|\\le${c}\\)，` +
+            `兩定點為 \\(-${a}\\) 與 \\(${b}\\)，距離為 \\(${a + b}\\)，\\(c=${c}>${a + b}\\)，有解。` +
+            `利用公式，解為 \\(\\frac{-${a}+${b}-${c}}{2}\\le x\\le\\frac{-${a}+${b}+${c}}{2}\\)，即 \\(${lo}\\le x\\le${hi}\\)。`
         );
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
 
   function buildS133QuadraticDiscriminantSolveSet(count) {
     const templates = [
@@ -8228,13 +8539,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133QuadraticAlwaysSignParameterSet(count) {
@@ -8261,13 +8573,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133QuadraticInverseCoefficientSet(count) {
@@ -8294,18 +8607,20 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133QuadraticInequalityFromSolutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const closed = i % 2 === 1;
@@ -8324,15 +8639,13 @@
       const f1 = `(x${r1 >= 0 ? '-' : '+'}${Math.abs(r1)})`;
       const f2 = `(x${r2 >= 0 ? '-' : '+'}${Math.abs(r2)})`;
 
-      questions.push(
-        `已知二次不等式 \\(${lead}x^2+mx+n${relation}\\) 的解為 \\(${interval}\\)，求 \\((m,n)\\)。`
-      );
+      questions.push(`已知二次不等式 \\(${lead}x^2+mx+n${relation}\\) 的解為 \\(${interval}\\)，求 \\((m,n)\\)。`);
       answers.push(
         `簡答：\\((m,n)=(${b},${c})\\)。過程：解的端點就是兩根 \\(${r1}\\)、\\(${r2}\\)，且首項係數為 \\(${lead}\\)，所以二次式為 \\(${lead}${f1}${f2}=${poly}\\)。因此 \\(m=${b},n=${c}\\)。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133QuadraticSubstitutionSolutionSet(count) {
@@ -8359,13 +8672,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133QuadraticAppliedSubstitutionSet(count) {
@@ -8392,13 +8706,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133QuadraticInequalityCoreFiveSubtypeMixedSet(count) {
@@ -8410,14 +8725,15 @@
       buildS133QuadraticAppliedSubstitutionSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133HighDegreeSignInequalitySet(count) {
@@ -8444,13 +8760,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133RationalInequalitySet(count) {
@@ -8477,18 +8794,20 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133SameSolutionTransformSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const type = i % 5;
@@ -8500,7 +8819,9 @@
       if (type === 0) {
         const c = i % 2 === 0 ? a - randInt(1, 3) : b + randInt(1, 3);
         const fc = formatS131LinearFactor(c);
-        questions.push(`解不等式 \\((${fa})(${fb})(${fc})^2\\le0\\)，並說明它和 \\((${fa})(${fb})\\le0\\) 是否有相同解集。`);
+        questions.push(
+          `解不等式 \\((${fa})(${fb})(${fc})^2\\le0\\)，並說明它和 \\((${fa})(${fb})\\le0\\) 是否有相同解集。`
+        );
         answers.push(
           `簡答：\\([${a},${b}]\\cup\\{${c}\\}\\)，不相同。過程：平方因式 \\((${fc})^2\\ge0\\)，一般不改變正負號，但在 \\(x=${c}\\) 時會讓整體等於 0。原本 \\((${fa})(${fb})\\le0\\) 的解為 \\([${a},${b}]\\)，此題平方因式的零點在區間外，會額外多出 \\(x=${c}\\)。`
         );
@@ -8544,7 +8865,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133AdvancedAlwaysSignSet(count) {
@@ -8571,13 +8892,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133AdvancedInverseProblemSet(count) {
@@ -8604,13 +8926,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133GeometricAppliedInequalitySet(count) {
@@ -8637,13 +8960,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133CubicInequalitySet(count) {
@@ -8670,13 +8994,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS133AdvancedInequalitySixSubtypeMixedSet(count) {
@@ -8689,14 +9014,15 @@
       buildS133CubicInequalitySet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function addPolyCoeffs(a, b) {
@@ -8757,12 +9083,25 @@
     return sentence || text;
   }
 
+  function createAnswerList(summaryAnswers) {
+    const answers = [];
+    const nativePush = Array.prototype.push;
+    answers.push = function pushAnswerWithSummary(...items) {
+      items.forEach((item) => {
+        summaryAnswers.push(deriveSummaryAnswerFromDetail(item));
+      });
+      return nativePush.apply(this, items);
+    };
+    return answers;
+  }
 
   // ── s1-3 新增生成器 ────────────────────────────────────────────────────────
 
   // s1-3-2: 由函數值決定一次函數 (5 modes)
   function buildS132LinearFunctionFromPointsSet(count) {
-    function sn(k) { return formatS122SignedNumber(k); }
+    function sn(k) {
+      return formatS122SignedNumber(k);
+    }
     function fmtL(m, k) {
       const mp = m === 1 ? 'x' : m === -1 ? '-x' : m + 'x';
       return k === 0 ? mp : mp + sn(k);
@@ -8813,8 +9152,8 @@
       () => {
         const a = [2, 3, -2, -3][randInt(0, 3)];
         const b = randInt(-3, 3);
-        const ff0 = a * b + b;         // f(b) = ab+b
-        const ff1 = a * (a + b) + b;   // f(a+b) = a(a+b)+b
+        const ff0 = a * b + b; // f(b) = ab+b
+        const ff1 = a * (a + b) + b; // f(a+b) = a(a+b)+b
         return {
           q: `設 \\(f(x)=ax+b\\)，已知 \\(f(f(0))=${ff0}\\)，\\(f(f(1))=${ff1}\\)，求 \\(a\\) 與 \\(b\\)。`,
           a: `簡答：\\(a=${a}\\)，\\(b=${b}\\)。過程：\\(f(0)=b\\)，\\(f(f(0))=f(b)=ab+b=b(a+1)=${ff0}\\)。\\(f(1)=a+b\\)，\\(f(f(1))=a(a+b)+b=a^2+ab+b=${ff1}\\)。兩式相減得 \\(a^2=${ff1 - ff0}\\)，故 \\(a=${a}\\)，代回得 \\(b=${b}\\)。`,
@@ -8826,29 +9165,33 @@
         const b = randInt(-4, 4);
         const coeffX = 2 * a;
         const constTerm = a + b;
-        const constStr = constTerm === 0 ? '' : (constTerm > 0 ? '+' + constTerm : '' + constTerm);
+        const constStr = constTerm === 0 ? '' : constTerm > 0 ? '+' + constTerm : '' + constTerm;
         return {
           q: `設 \\(f(x)\\) 為一次函數，已知 \\(f(2x+1)=${coeffX}x${constStr}\\)，求 \\(f(x)\\)。`,
           a: `簡答：\\(f(x)=${fmtL(a, b)}\\)。過程：令 \\(t=2x+1\\)，則 \\(x=\\dfrac{t-1}{2}\\)。\\(f(t)=${coeffX}\\cdot\\dfrac{t-1}{2}${constStr}=${a}t${sn(b)}\\)。所以 \\(f(x)=${fmtL(a, b)}\\)。`,
         };
       },
     ];
-    const questions = [], answers = [];
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i++) {
       const { q, a } = modes[i % modes.length]();
       questions.push(q);
       answers.push(a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // s1-3-2: 由三點求二次函數係數 (5 modes)
   function buildS132QuadraticThreePointsSet(count) {
-    function sn(k) { return formatS122SignedNumber(k); }
+    function sn(k) {
+      return formatS122SignedNumber(k);
+    }
     function fmtQ(a, b, c) {
       // format ax²+bx+c
       const aTerm = a === 1 ? 'x^2' : a === -1 ? '-x^2' : a + 'x^2';
-      const bTerm = b === 0 ? '' : (b === 1 ? '+x' : b === -1 ? '-x' : (b > 0 ? '+' + b + 'x' : b + 'x'));
+      const bTerm = b === 0 ? '' : b === 1 ? '+x' : b === -1 ? '-x' : b > 0 ? '+' + b + 'x' : b + 'x';
       const cTerm = c === 0 ? '' : sn(c);
       return aTerm + bTerm + cTerm;
     }
@@ -8928,13 +9271,15 @@
         };
       },
     ];
-    const questions = [], answers = [];
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i++) {
       const { q, a } = modes[i % modes.length]();
       questions.push(q);
       answers.push(a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // s1-3-3: 含根號的不等式 (5 modes, 全為整數解)
@@ -8976,7 +9321,13 @@
       // Mode 3: √(a-x) > x-b, clean triples: (a,b,c): solution x<c
       // (a=5,b=3,c=4),(a=10,b=4,c=6),(a=4,b=2,c=3),(a=11,b=5,c=7),(a=3,b=1,c=2)
       () => {
-        const triples = [[5,3,4],[10,4,6],[4,2,3],[11,5,7],[3,1,2]];
+        const triples = [
+          [5, 3, 4],
+          [10, 4, 6],
+          [4, 2, 3],
+          [11, 5, 7],
+          [3, 1, 2],
+        ];
         const [a, b, c] = triples[randInt(0, 4)];
         return {
           q: `解不等式 \\(\\sqrt{${a}-x}>x-${b}\\)。`,
@@ -9006,13 +9357,15 @@
         };
       },
     ];
-    const questions = [], answers = [];
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i++) {
       const { q, a } = modes[i % modes.length]();
       questions.push(q);
       answers.push(a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // s1-3-3: 絕對值最小值/最大值問題 (5 modes)
@@ -9029,7 +9382,8 @@
         const a = randInt(-3, 1);
         const b = a + randInt(2, 6);
         const minVal = b - a;
-        const fa = fmtAbsTerm(a), fb = fmtAbsTerm(b);
+        const fa = fmtAbsTerm(a),
+          fb = fmtAbsTerm(b);
         return {
           q: `求 \\(f(x)=${fa}+${fb}\\) 的最小值。`,
           a: `簡答：最小值為 \\(${minVal}\\)。過程：由三角不等式，\\(${fa}+${fb}\\geq${minVal}\\)。當 \\(${a}\\leq x\\leq${b}\\) 時等號成立，最小值為 \\(${minVal}\\)。`,
@@ -9041,7 +9395,9 @@
         const b = randInt(0, 2);
         const c = b + randInt(2, 5);
         const minVal = c - a;
-        const fa = fmtAbsTerm(a), fb = fmtAbsTerm(b), fc = fmtAbsTerm(c);
+        const fa = fmtAbsTerm(a),
+          fb = fmtAbsTerm(b),
+          fc = fmtAbsTerm(c);
         return {
           q: `求 \\(f(x)=${fa}+${fb}+${fc}\\) 的最小值。`,
           a: `簡答：最小值為 \\(${minVal}\\)，在 \\(x=${b}\\) 時取得。過程：\\(${fa}+${fc}\\geq${c - a}\\)（等號在 \\(${a}\\leq x\\leq${c}\\) 成立），\\(${fb}\\geq0\\)（等號在 \\(x=${b}\\) 成立）。兩者同時在 \\(x=${b}\\) 取到等號，最小值為 \\(${minVal}\\)。`,
@@ -9053,8 +9409,11 @@
         const b = randInt(-1, 1);
         const c = b + randInt(1, 3);
         const d = c + randInt(2, 4);
-        const minVal = (d - a) + (c - b);
-        const fa = fmtAbsTerm(a), fb = fmtAbsTerm(b), fc = fmtAbsTerm(c), fd = fmtAbsTerm(d);
+        const minVal = d - a + (c - b);
+        const fa = fmtAbsTerm(a),
+          fb = fmtAbsTerm(b),
+          fc = fmtAbsTerm(c),
+          fd = fmtAbsTerm(d);
         return {
           q: `求 \\(f(x)=${fa}+${fb}+${fc}+${fd}\\) 的最小值。`,
           a: `簡答：最小值為 \\(${minVal}\\)，在 \\(${b}\\leq x\\leq${c}\\) 時取得。過程：\\(${fa}+${fd}\\geq${d - a}\\)，\\(${fb}+${fc}\\geq${c - b}\\)，合計最小值 \\(${minVal}\\)，在 \\(x\\in[${b},${c}]\\) 時同時等號成立。`,
@@ -9077,21 +9436,24 @@
         const a = randInt(-3, 0);
         const b = a + randInt(2, 5);
         const minVal = p * (b - a); // f(b) = p(b-a)
-        const slopeMid = p - q;     // slope in (a,b): p-q < 0
-        const fa = fmtAbsTerm(a), fb = fmtAbsTerm(b);
+        const slopeMid = p - q; // slope in (a,b): p-q < 0
+        const fa = fmtAbsTerm(a),
+          fb = fmtAbsTerm(b);
         return {
           q: `求 \\(f(x)=${p}${fa}+${q}${fb}\\) 的最小值。`,
           a: `簡答：最小值為 \\(${minVal}\\)，在 \\(x=${b}\\) 時取得。過程：\\(f(x)\\) 的斜率：\\(x<${a}\\) 時為 \\(-(${p}+${q})\\)（遞減），\\(${a}<x<${b}\\) 時為 \\(${p}-${q}=${slopeMid}\\)（仍遞減），\\(x>${b}\\) 時為 \\(${p}+${q}\\)（遞增）。最小值在斜率由負轉正的 \\(x=${b}\\) 處：\\(f(${b})=${p}\\cdot${b - a}+0=${minVal}\\)。`,
         };
       },
     ];
-    const questions = [], answers = [];
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i++) {
       const { q, a } = modes[i % modes.length]();
       questions.push(q);
       answers.push(a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   const nextConfigs = {
@@ -10855,7 +11217,7 @@
     },
   };
 
-  const bundleFingerprint = 's1-bundle-v20260701-s1-3-sanmin-v1';
+  const bundleFingerprint = 's1-bundle-v20260706-summary-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

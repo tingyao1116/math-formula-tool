@@ -1,6 +1,6 @@
 (() => {
   const store = window.formulaPracticeStore;
-  if (!store || typeof store.registerConfigs !== "function") return;
+  if (!store || typeof store.registerConfigs !== 'function') return;
 
   function randInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -133,6 +133,18 @@
     return `${negative ? '-' : ''}${whole}\\frac{${rem}}{${value.den}}`;
   }
 
+  function createAnswerList(summaryAnswers) {
+    const answers = [];
+    const nativePush = Array.prototype.push;
+    answers.push = function pushAnswerWithSummary(...items) {
+      items.forEach((item) => {
+        summaryAnswers.push(deriveSummaryAnswerFromDetail(item));
+      });
+      return nativePush.apply(this, items);
+    };
+    return answers;
+  }
+
   function integerOrFractionLatex(frac, mixed = true) {
     return fractionToLatex(frac, mixed);
   }
@@ -158,7 +170,8 @@
 
   function buildJ213MoneyTicketSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function isFriendlyPercent(frac) {
       const value = makeFraction(frac.num, frac.den);
@@ -281,12 +294,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ213HeadsCoinsScoreSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -348,12 +362,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ213DigitPlaceValueSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -400,12 +415,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ213AgeChaseSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -452,12 +468,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ213SpeedChaseSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -541,7 +558,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function lcmInt(a, b) {
@@ -550,7 +567,8 @@
 
   function buildJ213AllocationWorkSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -628,12 +646,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ213TieredFeeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -705,12 +724,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ213ClassicalTextSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -755,12 +775,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ213UnitPriceSystemSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -778,8 +799,12 @@
         }
         const total1 = a1 * xValue + b1 * yValue;
         const total2 = a2 * xValue + b2 * yValue;
-        questions.push(`蘋果每公斤 $x$ 元、梨子每公斤 $y$ 元。小明買了 ${a1} 公斤蘋果和 ${b1} 公斤梨子共花 ${total1} 元，小華買了 ${a2} 公斤蘋果和 ${b2} 公斤梨子共花 ${total2} 元，求蘋果與梨子每公斤各多少元。`);
-        answers.push(`依題意可列聯立方程式 $${formatSystemLatex(`${a1}x+${b1}y=${total1}`, `${a2}x+${b2}y=${total2}`)}$。解得 $x=${xValue},\\ y=${yValue}$，所以蘋果每公斤 ${xValue} 元，梨子每公斤 ${yValue} 元。`);
+        questions.push(
+          `蘋果每公斤 $x$ 元、梨子每公斤 $y$ 元。小明買了 ${a1} 公斤蘋果和 ${b1} 公斤梨子共花 ${total1} 元，小華買了 ${a2} 公斤蘋果和 ${b2} 公斤梨子共花 ${total2} 元，求蘋果與梨子每公斤各多少元。`
+        );
+        answers.push(
+          `依題意可列聯立方程式 $${formatSystemLatex(`${a1}x+${b1}y=${total1}`, `${a2}x+${b2}y=${total2}`)}$。解得 $x=${xValue},\\ y=${yValue}$，所以蘋果每公斤 ${xValue} 元，梨子每公斤 ${yValue} 元。`
+        );
         continue;
       }
 
@@ -796,8 +821,12 @@
         }
         const total1 = adult1 * xValue + child1 * yValue;
         const total2 = adult2 * xValue + child2 * yValue;
-        questions.push(`樂園全票 $x$ 元、優待票 $y$ 元。甲家買了 ${adult1} 張全票和 ${child1} 張優待票共花 ${total1} 元，乙家買了 ${adult2} 張全票和 ${child2} 張優待票共花 ${total2} 元，求全票與優待票各多少元。`);
-        answers.push(`可列聯立方程式 $${formatSystemLatex(`${adult1}x+${child1}y=${total1}`, `${adult2}x+${child2}y=${total2}`)}$。解得 $x=${xValue},\\ y=${yValue}$，所以全票 ${xValue} 元，優待票 ${yValue} 元。`);
+        questions.push(
+          `樂園全票 $x$ 元、優待票 $y$ 元。甲家買了 ${adult1} 張全票和 ${child1} 張優待票共花 ${total1} 元，乙家買了 ${adult2} 張全票和 ${child2} 張優待票共花 ${total2} 元，求全票與優待票各多少元。`
+        );
+        answers.push(
+          `可列聯立方程式 $${formatSystemLatex(`${adult1}x+${child1}y=${total1}`, `${adult2}x+${child2}y=${total2}`)}$。解得 $x=${xValue},\\ y=${yValue}$，所以全票 ${xValue} 元，優待票 ${yValue} 元。`
+        );
         continue;
       }
 
@@ -807,16 +836,21 @@
       const bookCount = [4, 5, 6][randInt(0, 2)];
       const total = penCount * xValue + bookCount * yValue;
       const diff = yValue - xValue;
-      questions.push(`原子筆每支 $x$ 元、筆記本每本 $y$ 元。已知筆記本比原子筆貴 ${diff} 元，且買 ${penCount} 支原子筆和 ${bookCount} 本筆記本共花 ${total} 元，求兩者單價。`);
-      answers.push(`依題意可列聯立方程式 $${formatSystemLatex(`y-x=${diff}`, `${penCount}x+${bookCount}y=${total}`)}$。解得 $x=${xValue},\\ y=${yValue}$，所以原子筆每支 ${xValue} 元，筆記本每本 ${yValue} 元。`);
+      questions.push(
+        `原子筆每支 $x$ 元、筆記本每本 $y$ 元。已知筆記本比原子筆貴 ${diff} 元，且買 ${penCount} 支原子筆和 ${bookCount} 本筆記本共花 ${total} 元，求兩者單價。`
+      );
+      answers.push(
+        `依題意可列聯立方程式 $${formatSystemLatex(`y-x=${diff}`, `${penCount}x+${bookCount}y=${total}`)}$。解得 $x=${xValue},\\ y=${yValue}$，所以原子筆每支 ${xValue} 元，筆記本每本 ${yValue} 元。`
+      );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ213AgeRelationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 2;
@@ -826,7 +860,9 @@
         const father = child * [3, 4][randInt(0, 1)];
         const total = child + father;
         questions.push(`爸爸年齡是兒子年齡的 ${father / child} 倍，兩人的年齡和為 ${total} 歲，求爸爸與兒子各幾歲。`);
-        answers.push(`設爸爸年齡為 $x$ 歲、兒子年齡為 $y$ 歲。依題意可列聯立方程式 $${formatSystemLatex(`x+y=${total}`, `x=${father / child}y`)}$。解得 $x=${father},\\ y=${child}$，所以爸爸 ${father} 歲，兒子 ${child} 歲。`);
+        answers.push(
+          `設爸爸年齡為 $x$ 歲、兒子年齡為 $y$ 歲。依題意可列聯立方程式 $${formatSystemLatex(`x+y=${total}`, `x=${father / child}y`)}$。解得 $x=${father},\\ y=${child}$，所以爸爸 ${father} 歲，兒子 ${child} 歲。`
+        );
         continue;
       }
 
@@ -835,16 +871,21 @@
       const younger = [4, 5, 6, 7, 8][randInt(0, 4)];
       const older = ratio * (younger + yearsLater) - yearsLater;
       const diff = older - younger;
-      questions.push(`甲比乙大 ${diff} 歲，再過 ${yearsLater} 年後，甲的年齡會是乙的 ${ratio} 倍，求甲、乙現在各幾歲。`);
-      answers.push(`設甲現在 $x$ 歲、乙現在 $y$ 歲。可列聯立方程式 $${formatSystemLatex(`x-y=${diff}`, `x+${yearsLater}=${ratio}(y+${yearsLater})`)}$。解得 $x=${older},\\ y=${younger}$，所以甲現在 ${older} 歲，乙現在 ${younger} 歲。`);
+      questions.push(
+        `甲比乙大 ${diff} 歲，再過 ${yearsLater} 年後，甲的年齡會是乙的 ${ratio} 倍，求甲、乙現在各幾歲。`
+      );
+      answers.push(
+        `設甲現在 $x$ 歲、乙現在 $y$ 歲。可列聯立方程式 $${formatSystemLatex(`x-y=${diff}`, `x+${yearsLater}=${ratio}(y+${yearsLater})`)}$。解得 $x=${older},\\ y=${younger}$，所以甲現在 ${older} 歲，乙現在 ${younger} 歲。`
+      );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ213PerimeterRelationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 2;
@@ -854,7 +895,9 @@
         const length = width + [2, 3, 4, 5][randInt(0, 3)];
         const perimeter = 2 * (length + width);
         questions.push(`一個長方形的周長為 ${perimeter} 公分，長比寬多 ${length - width} 公分，求長和寬。`);
-        answers.push(`設長為 $x$ 公分、寬為 $y$ 公分。依題意可列聯立方程式 $${formatSystemLatex(`2x+2y=${perimeter}`, `x-y=${length - width}`)}$。解得 $x=${length},\\ y=${width}$，所以長 ${length} 公分，寬 ${width} 公分。`);
+        answers.push(
+          `設長為 $x$ 公分、寬為 $y$ 公分。依題意可列聯立方程式 $${formatSystemLatex(`2x+2y=${perimeter}`, `x-y=${length - width}`)}$。解得 $x=${length},\\ y=${width}$，所以長 ${length} 公分，寬 ${width} 公分。`
+        );
         continue;
       }
 
@@ -863,15 +906,18 @@
       const length = ratio * width;
       const perimeter = 2 * (length + width);
       questions.push(`一個長方形的周長為 ${perimeter} 公分，長是寬的 ${ratio} 倍，求長和寬。`);
-      answers.push(`設長為 $x$ 公分、寬為 $y$ 公分。可列聯立方程式 $${formatSystemLatex(`2x+2y=${perimeter}`, `x=${ratio}y`)}$。解得 $x=${length},\\ y=${width}$，所以長 ${length} 公分，寬 ${width} 公分。`);
+      answers.push(
+        `設長為 $x$ 公分、寬為 $y$ 公分。可列聯立方程式 $${formatSystemLatex(`2x+2y=${perimeter}`, `x=${ratio}y`)}$。解得 $x=${length},\\ y=${width}$，所以長 ${length} 公分，寬 ${width} 公分。`
+      );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ213TransferChangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 2;
@@ -880,24 +926,33 @@
         const transfer = [6, 8, 10, 12][randInt(0, 3)];
         const b = [12, 16, 20, 24][randInt(0, 3)];
         const a = b + 2 * transfer;
-        questions.push(`小明和小華原來各有一些書。若小明給小華 ${transfer} 本，兩人的書就一樣多，求兩人原來各有多少本書。`);
-        answers.push(`設小明原有 $x$ 本、小華原有 $y$ 本。依題意可列聯立方程式 $${formatSystemLatex(`x-y=${2 * transfer}`, `x-${transfer}=y+${transfer}`)}$。解得 $x=${a},\\ y=${b}$，所以小明原有 ${a} 本，小華原有 ${b} 本。`);
+        questions.push(
+          `小明和小華原來各有一些書。若小明給小華 ${transfer} 本，兩人的書就一樣多，求兩人原來各有多少本書。`
+        );
+        answers.push(
+          `設小明原有 $x$ 本、小華原有 $y$ 本。依題意可列聯立方程式 $${formatSystemLatex(`x-y=${2 * transfer}`, `x-${transfer}=y+${transfer}`)}$。解得 $x=${a},\\ y=${b}$，所以小明原有 ${a} 本，小華原有 ${b} 本。`
+        );
         continue;
       }
 
       const transfer = [6, 8, 10][randInt(0, 2)];
       const yValue = [14, 16, 18][randInt(0, 2)];
       const xValue = 5 * transfer + 3 * yValue;
-      questions.push(`小明和小華原來各有一些書。若小明給小華 ${transfer} 本，則小華的書會是小明的 2 倍；若小華給小明 ${transfer} 本，則小明的書會是小華的 3 倍。求兩人原來各有多少本書。`);
-      answers.push(`設小明原有 $x$ 本、小華原有 $y$ 本。可列聯立方程式 $${formatSystemLatex(`y+${transfer}=2(x-${transfer})`, `x+${transfer}=3(y-${transfer})`)}$。解得 $x=${xValue},\\ y=${yValue}$，所以小明原有 ${xValue} 本，小華原有 ${yValue} 本。`);
+      questions.push(
+        `小明和小華原來各有一些書。若小明給小華 ${transfer} 本，則小華的書會是小明的 2 倍；若小華給小明 ${transfer} 本，則小明的書會是小華的 3 倍。求兩人原來各有多少本書。`
+      );
+      answers.push(
+        `設小明原有 $x$ 本、小華原有 $y$ 本。可列聯立方程式 $${formatSystemLatex(`y+${transfer}=2(x-${transfer})`, `x+${transfer}=3(y-${transfer})`)}$。解得 $x=${xValue},\\ y=${yValue}$，所以小明原有 ${xValue} 本，小華原有 ${yValue} 本。`
+      );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ213TravelScheduleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 2;
@@ -912,8 +967,12 @@
         const distance = slow * timeSlow;
         const late = timeSlow - planned;
         const early = planned - timeFast;
-        questions.push(`某人從甲地到乙地，若每小時走 ${slow} 公里，會遲到 ${late} 小時；若每小時走 ${fast} 公里，會提早 ${early} 小時到達。求甲、乙兩地相距多少公里，以及原定需在幾小時內到達。`);
-        answers.push(`設甲、乙兩地相距 $x$ 公里，原定需在 $y$ 小時內到達。依題意可列聯立方程式 $${formatSystemLatex(`\\frac{x}{${slow}}=y+${late}`, `\\frac{x}{${fast}}=y-${early}`)}$。解得 $x=${distance},\\ y=${planned}$，所以距離是 ${distance} 公里，原定需在 ${planned} 小時內到達。`);
+        questions.push(
+          `某人從甲地到乙地，若每小時走 ${slow} 公里，會遲到 ${late} 小時；若每小時走 ${fast} 公里，會提早 ${early} 小時到達。求甲、乙兩地相距多少公里，以及原定需在幾小時內到達。`
+        );
+        answers.push(
+          `設甲、乙兩地相距 $x$ 公里，原定需在 $y$ 小時內到達。依題意可列聯立方程式 $${formatSystemLatex(`\\frac{x}{${slow}}=y+${late}`, `\\frac{x}{${fast}}=y-${early}`)}$。解得 $x=${distance},\\ y=${planned}$，所以距離是 ${distance} 公里，原定需在 ${planned} 小時內到達。`
+        );
         continue;
       }
 
@@ -928,27 +987,32 @@
         continue;
       }
       const distance = walk * meetTime + meetFromB;
-      questions.push(`甲、乙兩人同時從 A 地出發前往 B 地。甲每小時走 ${walk} 公里，乙每小時騎 ${bike} 公里。乙先到 B 地後休息 ${rest} 小時，再原速返回，於距離 B 地 ${meetFromB} 公里處與甲相遇，求 A、B 兩地相距多少公里。`);
-      answers.push(`設 A、B 兩地相距 $x$ 公里，甲走到相遇點共用了 $t$ 小時。依題意可列聯立方程式 $${formatSystemLatex(`${walk}t=x-${meetFromB}`, `${bike}(t-${rest})=x+${meetFromB}`)}$。解得 $t=${meetTime},\\ x=${distance}$，所以 A、B 兩地相距 ${distance} 公里。`);
+      questions.push(
+        `甲、乙兩人同時從 A 地出發前往 B 地。甲每小時走 ${walk} 公里，乙每小時騎 ${bike} 公里。乙先到 B 地後休息 ${rest} 小時，再原速返回，於距離 B 地 ${meetFromB} 公里處與甲相遇，求 A、B 兩地相距多少公里。`
+      );
+      answers.push(
+        `設 A、B 兩地相距 $x$ 公里，甲走到相遇點共用了 $t$ 小時。依題意可列聯立方程式 $${formatSystemLatex(`${walk}t=x-${meetFromB}`, `${bike}(t-${rest})=x+${meetFromB}`)}$。解得 $t=${meetTime},\\ x=${distance}$，所以 A、B 兩地相距 ${distance} 公里。`
+      );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-1-3 新增：等臂天平稱重 ────────────────────────────────────────────
   function buildJ213BalanceScaleSet(count) {
     // 等臂天平稱重聯立方程 — 預先驗算模板，無 i-=1 無限迴圈
     const questions = [];
-    const answers   = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     // Variant 0: la*a = lb*b  且  ra*a + rb*b = w → 驗算 w % (ra*lb + rb*la) === 0
     const poolV0 = [
-      { la: 2, lb: 3, ra: 2, rb: 1, w: 1200 },  // denom=8,  k=150, a=450, b=300
-      { la: 3, lb: 2, ra: 1, rb: 3, w: 1100 },  // denom=11, k=100, a=200, b=300
-      { la: 2, lb: 5, ra: 3, rb: 2, w: 950  },  // denom=19, k=50,  a=250, b=100
-      { la: 4, lb: 3, ra: 2, rb: 1, w: 1400 },  // denom=10, k=140, a=420, b=560 — wait let me just fix values
-      { la: 3, lb: 4, ra: 2, rb: 3, w: 850  },  // denom=17, k=50,  a=200, b=150
-      { la: 5, lb: 2, ra: 1, rb: 2, w: 1200 },  // denom=12, k=100, a=200, b=500
+      { la: 2, lb: 3, ra: 2, rb: 1, w: 1200 }, // denom=8,  k=150, a=450, b=300
+      { la: 3, lb: 2, ra: 1, rb: 3, w: 1100 }, // denom=11, k=100, a=200, b=300
+      { la: 2, lb: 5, ra: 3, rb: 2, w: 950 }, // denom=19, k=50,  a=250, b=100
+      { la: 4, lb: 3, ra: 2, rb: 1, w: 1400 }, // denom=10, k=140, a=420, b=560 — wait let me just fix values
+      { la: 3, lb: 4, ra: 2, rb: 3, w: 850 }, // denom=17, k=50,  a=200, b=150
+      { la: 5, lb: 2, ra: 1, rb: 2, w: 1200 }, // denom=12, k=100, a=200, b=500
     ];
     const itemsV0 = [
       ['甲牌番茄汁', '乙牌番茄汁', '罐'],
@@ -961,26 +1025,30 @@
 
     // Variant 1: a1*x+b1*y=t1, a2*x+b2*y=t2 → 整數正解
     const poolV1 = [
-      { a1: 5, b1: 3, t1: 235, a2: 6, b2: 4, t2: 290 },  // x=35, y=20
-      { a1: 3, b1: 2, t1:  96, a2: 2, b2: 3, t2:  84 },  // x=24, y=12
-      { a1: 4, b1: 3, t1: 180, a2: 3, b2: 5, t2: 185 },  // x=15? let me check det=4*5-3*3=11, x=(180*5-185*3)/11=(900-555)/11=345/11 no
-      { a1: 5, b1: 2, t1: 225, a2: 2, b2: 3, t2: 129 },  // det=5*3-2*2=11, x=(225*3-129*2)/11=(675-258)/11=417/11 no
-      { a1: 3, b1: 4, t1: 170, a2: 4, b2: 3, t2: 180 },  // det=9-16=-7, x=(170*3-180*4)/(-7)=(510-720)/(-7)=30 ✓, y=(3*180-4*170)/(-7)=(540-680)/(-7)=20 ✓
-      { a1: 2, b1: 3, t1: 130, a2: 3, b2: 2, t2: 120 },  // det=4-9=-5, x=(130*2-120*3)/(-5)=(260-360)/(-5)=20 ✓, y=(2*120-3*130)/(-5)=(240-390)/(-5)=30 ✓
+      { a1: 5, b1: 3, t1: 235, a2: 6, b2: 4, t2: 290 }, // x=35, y=20
+      { a1: 3, b1: 2, t1: 96, a2: 2, b2: 3, t2: 84 }, // x=24, y=12
+      { a1: 4, b1: 3, t1: 180, a2: 3, b2: 5, t2: 185 }, // x=15? let me check det=4*5-3*3=11, x=(180*5-185*3)/11=(900-555)/11=345/11 no
+      { a1: 5, b1: 2, t1: 225, a2: 2, b2: 3, t2: 129 }, // det=5*3-2*2=11, x=(225*3-129*2)/11=(675-258)/11=417/11 no
+      { a1: 3, b1: 4, t1: 170, a2: 4, b2: 3, t2: 180 }, // det=9-16=-7, x=(170*3-180*4)/(-7)=(510-720)/(-7)=30 ✓, y=(3*180-4*170)/(-7)=(540-680)/(-7)=20 ✓
+      { a1: 2, b1: 3, t1: 130, a2: 3, b2: 2, t2: 120 }, // det=4-9=-5, x=(130*2-120*3)/(-5)=(260-360)/(-5)=20 ✓, y=(2*120-3*130)/(-5)=(240-390)/(-5)=30 ✓
     ];
     const namesV1 = [
-      ['玫瑰', '康乃馨'], ['礦泉水', '汽水'], ['麥克筆', '簽字筆'],
-      ['橡皮', '鉛筆'], ['蘋果', '橘子'], ['餅乾', '糖果'],
+      ['玫瑰', '康乃馨'],
+      ['礦泉水', '汽水'],
+      ['麥克筆', '簽字筆'],
+      ['橡皮', '鉛筆'],
+      ['蘋果', '橘子'],
+      ['餅乾', '糖果'],
     ];
 
     // Variant 2: a*x = b*y  且  ra*x + rb*y = w
     const poolV2 = [
       { a: 2, b: 3, ra: 2, rb: 1, w: 1200, nameA: '餅乾（塊）', nameB: '糖果（顆）' },
-      { a: 3, b: 4, ra: 3, rb: 1, w:  750, nameA: '棋子（枚）', nameB: '石頭（顆）' },
-      { a: 4, b: 5, ra: 4, rb: 1, w:  720, nameA: '彈珠（顆）', nameB: '積木（塊）' },
+      { a: 3, b: 4, ra: 3, rb: 1, w: 750, nameA: '棋子（枚）', nameB: '石頭（顆）' },
+      { a: 4, b: 5, ra: 4, rb: 1, w: 720, nameA: '彈珠（顆）', nameB: '積木（塊）' },
       { a: 5, b: 3, ra: 5, rb: 2, w: 1200, nameA: '鉛筆（支）', nameB: '橡皮（塊）' },
-      { a: 2, b: 5, ra: 2, rb: 1, w:  720, nameA: '玻璃球（顆）', nameB: '金屬球（顆）' },
-      { a: 3, b: 2, ra: 3, rb: 1, w:  720, nameA: '木塊', nameB: '鐵塊' },
+      { a: 2, b: 5, ra: 2, rb: 1, w: 720, nameA: '玻璃球（顆）', nameB: '金屬球（顆）' },
+      { a: 3, b: 2, ra: 3, rb: 1, w: 720, nameA: '木塊', nameB: '鐵塊' },
     ];
 
     for (let i = 0; i < count; i++) {
@@ -991,16 +1059,17 @@
         const nm = itemsV0[randInt(0, itemsV0.length - 1)];
         const denom = t.ra * t.lb + t.rb * t.la;
         const k = t.w / denom;
-        const a = t.lb * k, b = t.la * k;
+        const a = t.lb * k,
+          b = t.la * k;
         questions.push(
           `用等臂天平稱重：第一次 ${t.la} ${nm[2]}${nm[0]}和 ${t.lb} ${nm[2]}${nm[1]}平衡；` +
-          `第二次 ${t.ra} ${nm[2]}${nm[0]}和 ${t.rb} ${nm[2]}${nm[1]}與 ${t.w} 公克砝碼平衡。` +
-          `求每${nm[2]}${nm[0]}和每${nm[2]}${nm[1]}各重多少公克？`
+            `第二次 ${t.ra} ${nm[2]}${nm[0]}和 ${t.rb} ${nm[2]}${nm[1]}與 ${t.w} 公克砝碼平衡。` +
+            `求每${nm[2]}${nm[0]}和每${nm[2]}${nm[1]}各重多少公克？`
         );
         answers.push(
           `設每${nm[2]}${nm[0]}重 $x$ 公克，每${nm[2]}${nm[1]}重 $y$ 公克。` +
-          `$\\begin{cases}${t.la}x=${t.lb}y\\\\${t.ra}x+${t.rb}y=${t.w}\\end{cases}$` +
-          `解得 $x=${a}$，$y=${b}$。`
+            `$\\begin{cases}${t.la}x=${t.lb}y\\\\${t.ra}x+${t.rb}y=${t.w}\\end{cases}$` +
+            `解得 $x=${a}$，$y=${b}$。`
         );
         continue;
       }
@@ -1008,24 +1077,24 @@
       if (variant === 1) {
         // only use pre-validated rows
         const validV1 = [
-          { a1:5,b1:3,t1:235,a2:6,b2:4,t2:290, x:35,y:20 },
-          { a1:3,b1:4,t1:170,a2:4,b2:3,t2:180, x:30,y:20 },
-          { a1:2,b1:3,t1:130,a2:3,b2:2,t2:120, x:20,y:30 },
-          { a1:3,b1:2,t1: 96,a2:2,b2:3,t2: 84, x:24,y:12 },
-          { a1:4,b1:3,t1:220,a2:3,b2:4,t2:200, x:40,y:20 },
-          { a1:4,b1:1,t1:105,a2:3,b2:1,t2: 80, x:25,y: 5 },
+          { a1: 5, b1: 3, t1: 235, a2: 6, b2: 4, t2: 290, x: 35, y: 20 },
+          { a1: 3, b1: 4, t1: 170, a2: 4, b2: 3, t2: 180, x: 30, y: 20 },
+          { a1: 2, b1: 3, t1: 130, a2: 3, b2: 2, t2: 120, x: 20, y: 30 },
+          { a1: 3, b1: 2, t1: 96, a2: 2, b2: 3, t2: 84, x: 24, y: 12 },
+          { a1: 4, b1: 3, t1: 220, a2: 3, b2: 4, t2: 200, x: 40, y: 20 },
+          { a1: 4, b1: 1, t1: 105, a2: 3, b2: 1, t2: 80, x: 25, y: 5 },
         ];
         const t = validV1[randInt(0, validV1.length - 1)];
         const nm = namesV1[randInt(0, namesV1.length - 1)];
         questions.push(
           `甲買了 ${t.a1} 件${nm[0]}和 ${t.b1} 件${nm[1]}，共花 ${t.t1} 元；` +
-          `乙買了 ${t.a2} 件${nm[0]}和 ${t.b2} 件${nm[1]}，共花 ${t.t2} 元。` +
-          `求每件${nm[0]}和每件${nm[1]}各多少元？`
+            `乙買了 ${t.a2} 件${nm[0]}和 ${t.b2} 件${nm[1]}，共花 ${t.t2} 元。` +
+            `求每件${nm[0]}和每件${nm[1]}各多少元？`
         );
         answers.push(
           `設每件${nm[0]} $x$ 元，每件${nm[1]} $y$ 元。` +
-          `$\\begin{cases}${t.a1}x+${t.b1}y=${t.t1}\\\\${t.a2}x+${t.b2}y=${t.t2}\\end{cases}$` +
-          `解得 $x=${t.x}$，$y=${t.y}$。`
+            `$\\begin{cases}${t.a1}x+${t.b1}y=${t.t1}\\\\${t.a2}x+${t.b2}y=${t.t2}\\end{cases}$` +
+            `解得 $x=${t.x}$，$y=${t.y}$。`
         );
         continue;
       }
@@ -1034,26 +1103,28 @@
       const t = poolV2[randInt(0, poolV2.length - 1)];
       const denom2 = t.ra * t.b + t.rb * t.a;
       const k2 = t.w / denom2;
-      const aW = t.b * k2, bW = t.a * k2;
+      const aW = t.b * k2,
+        bW = t.a * k2;
       const diff = Math.abs(aW - bW);
       questions.push(
         `用等臂天平：第一次 ${t.a} 個${t.nameA}和 ${t.b} 個${t.nameB}平衡；` +
-        `第二次 ${t.ra} 個${t.nameA}和 ${t.rb} 個${t.nameB}共重 ${t.w} 公克。` +
-        `兩種物品重量相差多少公克？`
+          `第二次 ${t.ra} 個${t.nameA}和 ${t.rb} 個${t.nameB}共重 ${t.w} 公克。` +
+          `兩種物品重量相差多少公克？`
       );
       answers.push(
         `$\\begin{cases}${t.a}x=${t.b}y\\\\${t.ra}x+${t.rb}y=${t.w}\\end{cases}$` +
-        `解得 $x=${aW}$，$y=${bW}$，相差 $${diff}$ 公克。`
+          `解得 $x=${aW}$，$y=${bW}$，相差 $${diff}$ 公克。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-1-3 新增：班級人數與成績分析 ──────────────────────────────────────
   function buildJ213ClassSizeScoreSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1075,7 +1146,9 @@
         const malePct = pick.avgF - pick.avg;
         const femalePct = pick.avg - pick.avgM;
         const denomPct = pick.avgF - pick.avgM;
-        if (totalScore % 1 !== 0 || (malePct * pick.total) % denomPct !== 0) { continue; }
+        if (totalScore % 1 !== 0 || (malePct * pick.total) % denomPct !== 0) {
+          continue;
+        }
         const male = (malePct * pick.total) / denomPct;
         const female = pick.total - male;
         questions.push(
@@ -1106,10 +1179,14 @@
         // qf*x = qm*y → y = qf/qm * x
         // pm/100*x - pf/100*(qf/qm)*x = diff → x(pm*qm - pf*qf)/(100*qm) = diff
         const num = pick.pm * qm - pick.pf * qf;
-        if (num <= 0 || (pick.diff * 100 * qm) % num !== 0) { continue; }
+        if (num <= 0 || (pick.diff * 100 * qm) % num !== 0) {
+          continue;
+        }
         const male = (pick.diff * 100 * qm) / num;
         const female = (qf * male) / qm;
-        if (!Number.isInteger(female) || female <= 0) { continue; }
+        if (!Number.isInteger(female) || female <= 0) {
+          continue;
+        }
         const total = male + female;
         questions.push(
           `某班男生有 ${pick.pm}%、女生有 ${pick.pf}% 自行上學，其餘由家長接送。已知自行上學的男生比女生多 ${pick.diff} 人，且由家長接送的男女生人數相同，求全班共有幾人。`
@@ -1122,11 +1199,11 @@
 
       // variant 2: 全班N人，不及格占1/p，及格未到80占1/q多r人，80以上有s人 → 求不及格人數
       const templates = [
-        { inv_p: 3, inv_q: 2, r: 3, s: 3 },   // N=36  ✓
-        { inv_p: 4, inv_q: 3, r: 2, s: 8 },   // N=24  ✓
-        { inv_p: 3, inv_q: 2, r: 4, s: 8 },   // N=72  ✓
-        { inv_p: 3, inv_q: 2, r: 5, s: 5 },   // N=60  ✓
-        { inv_p: 4, inv_q: 3, r: 4, s: 6 },   // N=24  ✓
+        { inv_p: 3, inv_q: 2, r: 3, s: 3 }, // N=36  ✓
+        { inv_p: 4, inv_q: 3, r: 2, s: 8 }, // N=24  ✓
+        { inv_p: 3, inv_q: 2, r: 4, s: 8 }, // N=72  ✓
+        { inv_p: 3, inv_q: 2, r: 5, s: 5 }, // N=60  ✓
+        { inv_p: 4, inv_q: 3, r: 4, s: 6 }, // N=24  ✓
       ];
       const pick = templates[cycle % templates.length];
       // fail = N/p, pass_low = N/q + r, pass_high = s
@@ -1138,7 +1215,9 @@
       const rs = pick.r + pick.s;
       const numer = p * q;
       const denom3 = numer - q - p;
-      if (denom3 <= 0 || (rs * numer) % denom3 !== 0) { continue; }
+      if (denom3 <= 0 || (rs * numer) % denom3 !== 0) {
+        continue;
+      }
       const N = (rs * numer) / denom3;
       const fail = N / p;
       const pass_low = N / q + pick.r;
@@ -1150,13 +1229,14 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-1-3 新增：多人成對和（任意兩人／三人年齡和）──────────────────────
   function buildJ213PairwiseSumSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1174,14 +1254,16 @@
         ];
         const pick = templates[cycle % templates.length];
         const [a, b, c] = pick.ages;
-        const s1 = a + b; const s2 = a + c; const s3 = b + c;
+        const s1 = a + b;
+        const s2 = a + c;
+        const s3 = b + c;
         const total = a + b + c;
         const sorted = [...pick.ages].sort((x, y) => y - x);
         questions.push(
           `${pick.people[0]}、${pick.people[1]}、${pick.people[2]} 三人任意兩人年齡和分別為 ${Math.min(s1, s2, s3)}、${s1 + s2 + s3 - Math.min(s1, s2, s3) - Math.max(s1, s2, s3)}、${Math.max(s1, s2, s3)} 歲，求年齡最大的人幾歲。`
         );
         answers.push(
-          `三人任意兩人和之總和為三人年齡和的兩倍，即 $${Math.min(s1,s2,s3)}+${s1+s2+s3-Math.min(s1,s2,s3)-Math.max(s1,s2,s3)}+${Math.max(s1,s2,s3)}=${2*total}$，所以三人年齡和為 $${total}$。年齡最大的人 $=${total}-${Math.min(s2,s3)-(sorted[0]-sorted[1]>0?0:0)}$...\n設三人為 $x,y,z$。已知 $x+y=${s1}$，$x+z=${s2}$，$y+z=${s3}$。三式相加得 $2(x+y+z)=${2*total}$，所以 $x+y+z=${total}$。年齡最大的人（${sorted[0]} 歲）為 $${total}-${s3}=${sorted[0]}$ 歲。`
+          `三人任意兩人和之總和為三人年齡和的兩倍，即 $${Math.min(s1, s2, s3)}+${s1 + s2 + s3 - Math.min(s1, s2, s3) - Math.max(s1, s2, s3)}+${Math.max(s1, s2, s3)}=${2 * total}$，所以三人年齡和為 $${total}$。年齡最大的人 $=${total}-${Math.min(s2, s3) - (sorted[0] - sorted[1] > 0 ? 0 : 0)}$...\n設三人為 $x,y,z$。已知 $x+y=${s1}$，$x+z=${s2}$，$y+z=${s3}$。三式相加得 $2(x+y+z)=${2 * total}$，所以 $x+y+z=${total}$。年齡最大的人（${sorted[0]} 歲）為 $${total}-${s3}=${sorted[0]}$ 歲。`
         );
         continue;
       }
@@ -1198,14 +1280,16 @@
         ];
         const pick = templates[cycle % templates.length];
         const [a, b, c] = pick.ages;
-        const sAB = a + b; const sAC = a + c; const sBC = b + c;
+        const sAB = a + b;
+        const sAC = a + c;
+        const sBC = b + c;
         const sums = [sAB, sAC, sBC].sort((x, y) => x - y);
         const total = a + b + c;
         questions.push(
           `${pick.people[0]}、${pick.people[1]}、${pick.people[2]} 三人，任意兩人年齡和分別為 ${sums[0]}、${sums[1]}、${sums[2]} 歲，求三人各幾歲。`
         );
         answers.push(
-          `設三人年齡分別為 $x,y,z$。已知任意兩人和，三式相加得 $2(x+y+z)=${sums[0]+sums[1]+sums[2]}$，故 $x+y+z=${total}$。再依序減去各兩人和可得三人年齡：最大的和為 $${sums[2]}$，對應最小的人年齡為 $${total}-${sums[2]}=${total-sums[2]}$；次大的和 $${sums[1]}$ 對應 $${total-sums[1]}$；最小的和 $${sums[0]}$ 對應 $${total-sums[0]}$。故三人年齡分別為 ${total-sums[2]}、${total-sums[1]}、${total-sums[0]} 歲。`
+          `設三人年齡分別為 $x,y,z$。已知任意兩人和，三式相加得 $2(x+y+z)=${sums[0] + sums[1] + sums[2]}$，故 $x+y+z=${total}$。再依序減去各兩人和可得三人年齡：最大的和為 $${sums[2]}$，對應最小的人年齡為 $${total}-${sums[2]}=${total - sums[2]}$；次大的和 $${sums[1]}$ 對應 $${total - sums[1]}$；最小的和 $${sums[0]}$ 對應 $${total - sums[0]}$。故三人年齡分別為 ${total - sums[2]}、${total - sums[1]}、${total - sums[0]} 歲。`
         );
         continue;
       }
@@ -1223,23 +1307,24 @@
       const [a, b, c, d] = pick.ages;
       const total = a + b + c + d;
       // Four triple sums: total-a, total-b, total-c, total-d
-      const tripleSums = [total-a, total-b, total-c, total-d].sort((x, y) => x - y);
+      const tripleSums = [total - a, total - b, total - c, total - d].sort((x, y) => x - y);
       const maxAge = Math.max(...pick.ages);
       questions.push(
         `${pick.people[0]}、${pick.people[1]}、${pick.people[2]}、${pick.people[3]} 四人，任意三人年齡和分別為 ${tripleSums[0]}、${tripleSums[1]}、${tripleSums[2]}、${tripleSums[3]} 歲，求年齡最大的人幾歲。`
       );
       answers.push(
-        `四個三人和加總等於 $3(${pick.people[0]}+${pick.people[1]}+${pick.people[2]}+${pick.people[3]})$，即 $${tripleSums[0]}+${tripleSums[1]}+${tripleSums[2]}+${tripleSums[3]}=${tripleSums.reduce((s,v)=>s+v,0)}=3\\times(四人和)$，所以四人年齡和為 $${total}$。年齡最大者對應最小的三人和（${tripleSums[0]}），其年齡為 $${total}-${tripleSums[0]}=${maxAge}$ 歲。`
+        `四個三人和加總等於 $3(${pick.people[0]}+${pick.people[1]}+${pick.people[2]}+${pick.people[3]})$，即 $${tripleSums[0]}+${tripleSums[1]}+${tripleSums[2]}+${tripleSums[3]}=${tripleSums.reduce((s, v) => s + v, 0)}=3\\times(四人和)$，所以四人年齡和為 $${total}$。年齡最大者對應最小的三人和（${tripleSums[0]}），其年齡為 $${total}-${tripleSums[0]}=${maxAge}$ 歲。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-1-3 新增：分箱問題（磁磚/糖果/水果分大小箱條件）────────────────────
   function buildJ213BoxDistributionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1263,10 +1348,14 @@
         const da2 = pick.bigB - pick.bigC;
         const db2 = pick.smallB - pick.smallC;
         const det = da1 * db2 - da2 * db1;
-        if (det === 0) { continue; }
+        if (det === 0) {
+          continue;
+        }
         const x = (pick.rA * db2 - pick.rB * db1) / det;
         const y = (da1 * pick.rB - da2 * pick.rA) / det;
-        if (!Number.isInteger(x) || !Number.isInteger(y) || x <= 0 || y <= 0) { continue; }
+        if (!Number.isInteger(x) || !Number.isInteger(y) || x <= 0 || y <= 0) {
+          continue;
+        }
         const target = pick.bigC * x + pick.smallC * y;
         questions.push(
           `三個工地鋪設${pick.item}的量均相同。帶 ${pick.bigA} 大箱和 ${pick.smallA} 小箱去甲工地，剩 ${pick.rA} 片；帶 ${pick.bigB} 大箱和 ${pick.smallB} 小箱去乙工地，剩 ${pick.rB} 片；帶 ${pick.bigC} 大箱和 ${pick.smallC} 小箱去丙工地，剛好鋪完。求每大箱和每小箱各有多少片${pick.item}。`
@@ -1292,8 +1381,12 @@
         // t = m*g - r (每組m個，多出r)
         // t = n*g + d (每組n個，少d個)
         // m*g - r = n*g + d → g = (r+d)/(m-n)
-        if ((pick.m - pick.n) === 0) { continue; }
-        if ((pick.r + pick.d) % (pick.m - pick.n) !== 0) { continue; }
+        if (pick.m - pick.n === 0) {
+          continue;
+        }
+        if ((pick.r + pick.d) % (pick.m - pick.n) !== 0) {
+          continue;
+        }
         const g = (pick.r + pick.d) / (pick.m - pick.n);
         const total = pick.m * g - pick.r;
         questions.push(
@@ -1319,10 +1412,14 @@
       // 每大箱放bigSize，每小箱放smallSize
       // 找 totalBoxes 使得 bigCnt*bigSize + (totalBoxes-bigCnt)*smallSize = total
       const remainder = pick.total - pick.bigCnt * (pick.bigSize - pick.smallSize);
-      if (remainder % pick.smallSize !== 0) { continue; }
+      if (remainder % pick.smallSize !== 0) {
+        continue;
+      }
       const totalBoxes = remainder / pick.smallSize;
       const smallBoxes = totalBoxes - pick.bigCnt;
-      if (smallBoxes <= 0) { continue; }
+      if (smallBoxes <= 0) {
+        continue;
+      }
       questions.push(
         `有大、小共 ${totalBoxes} 個盒子，大盒每個裝 ${pick.bigSize} ${pick.unit}，小盒每個裝 ${pick.smallSize} ${pick.unit}，共裝 ${pick.total} ${pick.unit}。求大盒和小盒各有幾個。`
       );
@@ -1331,12 +1428,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ221AxisDistanceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const quadrantLabel = ['一', '二', '三', '四'];
 
     for (let i = 0; i < count; i += 1) {
@@ -1375,12 +1473,13 @@
       answers.push(`到兩軸的距離先告訴我們 $|x|=${dx}$、$|y|=${dy}$，再依第${qLabel}象限判斷正負，所以 $P${point}$。`);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ221QuadrantBasicSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function quadrantName(x, y) {
       if (x > 0 && y > 0) return '第一象限';
@@ -1428,12 +1527,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ221TranslationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1476,12 +1576,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ221AxisSpecialSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1556,12 +1657,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ221MidpointSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1610,12 +1712,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ221SymmetrySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1638,12 +1741,13 @@
       answers.push(`關於原點對稱時，$x$、$y$ 都變號，所以對稱點是 $(${-x},${-y})$。`);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ221AreaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1692,12 +1796,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ221QuadrantReasoningSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function qName(id) {
       return ['第一象限', '第二象限', '第三象限', '第四象限'][id - 1];
@@ -1746,12 +1851,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ221NonnegativeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1818,7 +1924,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatAxByEq(a, b, c) {
@@ -1867,7 +1973,8 @@
 
   function buildJ222PointLineRelationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1905,12 +2012,13 @@
       answers.push(`圖形通過原點表示把 $(0,0)$ 代入後要成立，所以原式變成 $${c0}-k=0$，因此 $k=${k}$。`);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ222InterceptAreaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1992,12 +2100,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ222QuadrantExclusionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -2024,12 +2133,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ222ParallelPerpendicularSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -2066,12 +2176,13 @@
       answers.push(`兩點的 $x$ 坐標相同，表示這是一條鉛直線，所以方程式是 $x=${x}$。`);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ222LineFromPointsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function findPointsForFixedLine(a, b) {
       const pts = [];
@@ -2134,12 +2245,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ222TwoQuadrantsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -2190,12 +2302,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ222TranslationLineSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -2242,12 +2355,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ222TwoLinesAreaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -2332,7 +2446,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function appendSignedExprPart(parts, text, negative) {
@@ -2362,7 +2476,8 @@
 
   function buildJ2ContextEquationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -2418,12 +2533,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ2ClassifySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const parameterNames = ['a', 'b', 'm', 'n'];
 
     for (let i = 0; i < count; i += 1) {
@@ -2464,12 +2580,13 @@
       answers.push(`它只有一個未知數 $x$，${name} 在這裡是參數，不是第二個未知數，所以不算二元一次式。`);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ2ExpressionSimplifySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const terms = [];
@@ -2518,12 +2635,13 @@
       answers.push(`把 $x$ 項、$y$ 項與常數項分別合併，可得 $${formatTwoVarExpr(xCoef, yCoef, constant)}$。`);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ2DistributeExpandSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -2571,12 +2689,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ2EvaluateExpressionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const xValue = randInt(-5, 5);
@@ -2592,12 +2711,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ2FractionSimplifySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const denominatorPairs = [
       [3, 4],
       [3, 5],
@@ -2639,12 +2759,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ2OrderedPairCheckSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const xValue = randInt(-4, 6);
@@ -2661,12 +2782,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ2ParameterSubstitutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const names = ['a', 'b', 'm', 'n'];
 
     for (let i = 0; i < count; i += 1) {
@@ -2688,12 +2810,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ2EquivalentTransformSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const leftAx = pickNonZero(-6, 6);
@@ -2717,12 +2840,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ2IntegerConstraintSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const pairsCoPrime = [
       [2, 3],
       [2, 5],
@@ -2749,12 +2873,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ2SolveForVariableSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const a = pickNonZero(-6, 6);
@@ -2769,12 +2894,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ222SlopeInterceptSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -2813,12 +2939,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ222ParallelPerpendicularEquationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -2862,12 +2989,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ222LineIntersectionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -2880,7 +3008,9 @@
         while (m2 === m1) m2 = pickNonZero(-4, 4);
         const b1 = y - m1 * x;
         const b2 = y - m2 * x;
-        questions.push(`求直線 $${formatLineSlopeIntercept(m1, b1)}$ 與直線 $${formatLineSlopeIntercept(m2, b2)}$ 的交點坐標。`);
+        questions.push(
+          `求直線 $${formatLineSlopeIntercept(m1, b1)}$ 與直線 $${formatLineSlopeIntercept(m2, b2)}$ 的交點坐標。`
+        );
         answers.push(
           `兩直線交點同時滿足兩式，所以解聯立方程式 $${formatSystemLatex(formatLineSlopeIntercept(m1, b1), formatLineSlopeIntercept(m2, b2))}$。整理可得交點是 $(${x},${y})$。`
         );
@@ -2892,7 +3022,9 @@
         const y = randInt(-2, 5);
         const l1 = lineThroughPointsStd(x, y, x + 1, y + randInt(1, 3));
         const l2 = lineThroughPointsStd(x, y, x + randInt(1, 3), y - randInt(1, 3));
-        questions.push(`求直線 $${formatAxByEq(l1.a, l1.b, l1.c)}$ 與直線 $${formatAxByEq(l2.a, l2.b, l2.c)}$ 的交點坐標。`);
+        questions.push(
+          `求直線 $${formatAxByEq(l1.a, l1.b, l1.c)}$ 與直線 $${formatAxByEq(l2.a, l2.b, l2.c)}$ 的交點坐標。`
+        );
         answers.push(
           `把兩條直線聯立求解即可。解 $${formatSystemLatex(formatAxByEq(l1.a, l1.b, l1.c), formatAxByEq(l2.a, l2.b, l2.c))}$，可得交點是 $(${x},${y})$。`
         );
@@ -2905,18 +3037,21 @@
       const xIntercept = randInt(-4, 4);
       const b1 = -m1 * xIntercept;
       const b2 = -m2 * xIntercept;
-      questions.push(`若直線 $L_1: ${formatLineSlopeIntercept(m1, b1)}$ 與直線 $L_2: ${formatLineSlopeIntercept(m2, b2)}$ 的交點在 $x$ 軸上，求交點坐標。`);
+      questions.push(
+        `若直線 $L_1: ${formatLineSlopeIntercept(m1, b1)}$ 與直線 $L_2: ${formatLineSlopeIntercept(m2, b2)}$ 的交點在 $x$ 軸上，求交點坐標。`
+      );
       answers.push(
         `交點在 $x$ 軸上，表示交點的 $y=0$。把 $y=0$ 代入兩式，會得到相同的 $x$ 值：$x=${xIntercept}$。所以交點坐標是 $(${xIntercept},0)$。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ211ContextLinearEquationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -2941,8 +3076,12 @@
         const xPrice = [20, 25, 30, 35][randInt(0, 3)];
         const yPrice = [15, 18, 22, 28][randInt(0, 3)];
         const total = a * xPrice + b * yPrice;
-        questions.push(`蘋果每公斤 $x$ 元、橘子每公斤 $y$ 元，若買了 ${a} 公斤蘋果與 ${b} 公斤橘子，共花 ${total} 元，列出二元一次方程式。`);
-        answers.push(`蘋果總價是 $${a}x$，橘子總價是 $${b}y$，總共 ${total} 元，所以可列出方程式 $${a}x+${b}y=${total}$。`);
+        questions.push(
+          `蘋果每公斤 $x$ 元、橘子每公斤 $y$ 元，若買了 ${a} 公斤蘋果與 ${b} 公斤橘子，共花 ${total} 元，列出二元一次方程式。`
+        );
+        answers.push(
+          `蘋果總價是 $${a}x$，橘子總價是 $${b}y$，總共 ${total} 元，所以可列出方程式 $${a}x+${b}y=${total}$。`
+        );
         continue;
       }
 
@@ -2950,18 +3089,24 @@
         const base = [4, 5, 6][randInt(0, 2)];
         const diff = [1, 2, 3, 4][randInt(0, 3)];
         const total = 4 * base + (base + diff);
-        questions.push(`雞有 $x$ 隻、兔有 $y$ 隻，已知共有 ${base + diff + base} 隻、共有 ${total} 隻腳，列出其中表示腳數的二元一次方程式。`);
+        questions.push(
+          `雞有 $x$ 隻、兔有 $y$ 隻，已知共有 ${base + diff + base} 隻、共有 ${total} 隻腳，列出其中表示腳數的二元一次方程式。`
+        );
         answers.push(`每隻雞有 2 隻腳，每隻兔有 4 隻腳，所以腳數關係可列成 $2x+4y=${total}$。`);
         continue;
       }
 
       const total = [900, 1200, 1500, 1800][randInt(0, 3)];
       const days = [20, 25, 30][randInt(0, 2)];
-      questions.push(`小華每天存 $x$ 元、小美每天存 $y$ 元，兩人連續存了 ${days} 天，共存了 ${total} 元，列出二元一次方程式。`);
-      answers.push(`兩人一天共存 $x+y$ 元，存 ${days} 天就是 ${days}(x+y)$ 元，所以可列出方程式 $${days}x+${days}y=${total}$。`);
+      questions.push(
+        `小華每天存 $x$ 元、小美每天存 $y$ 元，兩人連續存了 ${days} 天，共存了 ${total} 元，列出二元一次方程式。`
+      );
+      answers.push(
+        `兩人一天共存 $x+y$ 元，存 $${days}$ 天就是 $${days}(x+y)$ 元，所以可列出方程式 $${days}x+${days}y=${total}$。`
+      );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatSystemLatex(eq1, eq2) {
@@ -2970,7 +3115,8 @@
 
   function buildJ212SubstitutionBasicSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -3032,12 +3178,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ212EliminationAdjustmentSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -3092,12 +3239,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ212FractionDecimalSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -3142,12 +3290,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ212SolutionTypeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -3227,12 +3376,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ212TripleEqualSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const xValue = randInt(-3, 5);
@@ -3258,12 +3408,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ212SymmetricSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 2;
@@ -3295,12 +3446,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ212AbsZeroSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -3336,7 +3488,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildNumericSystemForPoint(xValue, yValue) {
@@ -3354,7 +3506,8 @@
 
   function buildJ212KnownSolutionCoeffSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -3423,12 +3576,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ212ErrorDiagnosisSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 2;
@@ -3521,12 +3675,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ212SharedSolutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -3585,12 +3740,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ212ThirdConditionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -3659,12 +3815,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ212SpecialReverseSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -3724,12 +3881,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ212BracketSimplifySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -3742,7 +3900,9 @@
         const simplified1 = `x+2y=${xValue + 2 * (yValue - 1) + 2}`;
         const simplified2 = `2x-y=${2 * xValue - yValue}`;
         questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-        answers.push(`先化簡第一式得 $${simplified1}$，第二式化簡得 $${simplified2}$。再解聯立方程式，可得 $(x,y)=(${xValue},${yValue})$。`);
+        answers.push(
+          `先化簡第一式得 $${simplified1}$，第二式化簡得 $${simplified2}$。再解聯立方程式，可得 $(x,y)=(${xValue},${yValue})$。`
+        );
         continue;
       }
 
@@ -3752,7 +3912,9 @@
         const simplified1 = `3x-2y=${3 * (xValue - 2) - 2 * (yValue + 1) + 8}`;
         const simplified2 = `2x+y=${2 * (xValue + 1) + yValue - 2}`;
         questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-        answers.push(`先展開整理，可得 $${simplified1}$ 與 $${simplified2}$。接著用消去法或代入法求解，得到 $(x,y)=(${xValue},${yValue})$。`);
+        answers.push(
+          `先展開整理，可得 $${simplified1}$ 與 $${simplified2}$。接著用消去法或代入法求解，得到 $(x,y)=(${xValue},${yValue})$。`
+        );
         continue;
       }
 
@@ -3760,15 +3922,18 @@
       const eq2 = `4x+y=${4 * xValue + yValue}`;
       const simplified1 = `-x+5y=${2 * (xValue + yValue) - 3 * (xValue - yValue)}`;
       questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-      answers.push(`先把第一式展開：$2(x+y)-3(x-y)=-x+5y$，所以原式可化成 $${formatSystemLatex(simplified1, eq2)}$。再解得 $(x,y)=(${xValue},${yValue})$。`);
+      answers.push(
+        `先把第一式展開：$2(x+y)-3(x-y)=-x+5y$，所以原式可化成 $${formatSystemLatex(simplified1, eq2)}$。再解得 $(x,y)=(${xValue},${yValue})$。`
+      );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ212ReciprocalSubstitutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const coeffChoices = [
       [1, 2],
       [1, -1],
@@ -3798,12 +3963,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ212ReciprocalStructureSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const coeffChoices = [
       [1, 1],
       [1, -1],
@@ -3839,7 +4005,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-1-2 新增：兩組解求單方程係數 ──────────────────────────────────────
@@ -3853,35 +4019,36 @@
     // 預先驗算好的 (m, n, x1, y1, x2, y2, ask) 題組
     // 滿足 m*x1+n*y1=C 且 m*x2+n*y2=C，其中 x2=x1+n, y2=y1-m
     const pool = [
-      { m: 2, n: 3, x1: 3, y1: 4, ask: 'm+n',  label: 'm+n'  },
-      { m: 3, n: 2, x1: 2, y1: 3, ask: 'm-n',  label: 'm-n'  },
-      { m: 1, n: 4, x1: 4, y1: 3, ask: 'm+n',  label: 'm+n'  },
+      { m: 2, n: 3, x1: 3, y1: 4, ask: 'm+n', label: 'm+n' },
+      { m: 3, n: 2, x1: 2, y1: 3, ask: 'm-n', label: 'm-n' },
+      { m: 1, n: 4, x1: 4, y1: 3, ask: 'm+n', label: 'm+n' },
       { m: 4, n: 1, x1: 1, y1: 4, ask: '2m+n', label: '2m+n' },
-      { m: 2, n: 5, x1: 5, y1: 2, ask: 'm+n',  label: 'm+n'  },
-      { m: 5, n: 2, x1: 2, y1: 5, ask: 'm-n',  label: 'm-n'  },
-      { m: 3, n: 4, x1: 4, y1: 3, ask: 'm+n',  label: 'm+n'  },
+      { m: 2, n: 5, x1: 5, y1: 2, ask: 'm+n', label: 'm+n' },
+      { m: 5, n: 2, x1: 2, y1: 5, ask: 'm-n', label: 'm-n' },
+      { m: 3, n: 4, x1: 4, y1: 3, ask: 'm+n', label: 'm+n' },
       { m: 4, n: 3, x1: 3, y1: 4, ask: 'm+2n', label: 'm+2n' },
       { m: 1, n: 5, x1: 5, y1: 1, ask: '2m+n', label: '2m+n' },
-      { m: 2, n: 3, x1: 1, y1: 6, ask: 'm+n',  label: 'm+n'  },
-      { m: 3, n: 5, x1: 5, y1: 3, ask: 'm+n',  label: 'm+n'  },
-      { m: 2, n: 4, x1: 2, y1: 3, ask: 'm-n',  label: 'm-n'  },
+      { m: 2, n: 3, x1: 1, y1: 6, ask: 'm+n', label: 'm+n' },
+      { m: 3, n: 5, x1: 5, y1: 3, ask: 'm+n', label: 'm+n' },
+      { m: 2, n: 4, x1: 2, y1: 3, ask: 'm-n', label: 'm-n' },
       { m: 3, n: 2, x1: 4, y1: 2, ask: 'm+2n', label: 'm+2n' },
-      { m: 1, n: 3, x1: 3, y1: 2, ask: 'm+n',  label: 'm+n'  },
+      { m: 1, n: 3, x1: 3, y1: 2, ask: 'm+n', label: 'm+n' },
       { m: 4, n: 2, x1: 2, y1: 4, ask: '2m+n', label: '2m+n' },
     ];
 
     for (let i = 0; i < count; i += 1) {
       const t = pool[randInt(0, pool.length - 1)];
       const { m, n } = t;
-      const x1 = t.x1, y1 = t.y1;
+      const x1 = t.x1,
+        y1 = t.y1;
       const C = m * x1 + n * y1;
       // 第二組解：沿等差方向移動
       const x2 = x1 + n;
       const y2 = y1 - m;
 
       let askVal;
-      if (t.ask === 'm+n')  askVal = m + n;
-      else if (t.ask === 'm-n')  askVal = m - n;
+      if (t.ask === 'm+n') askVal = m + n;
+      else if (t.ask === 'm-n') askVal = m - n;
       else if (t.ask === '2m+n') askVal = 2 * m + n;
       else if (t.ask === 'm+2n') askVal = m + 2 * n;
       else askVal = m + n;
@@ -3891,8 +4058,8 @@
       );
       answers.push(
         `將兩組解代入 $mx+ny=${C}$，得聯立方程組：` +
-        `$\begin{cases}${x1}m+${y1}n=${C}\\${x2}m+${y2}n=${C}\end{cases}$。` +
-        `解得 $m=${m},\ n=${n}$，故 $${t.label}=${askVal}$。`
+          `$\\begin{cases}${x1}m+${y1}n=${C}\\\\${x2}m+${y2}n=${C}\\end{cases}$。` +
+          `解得 $m=${m},\ n=${n}$，故 $${t.label}=${askVal}$。`
       );
       summaryAnswers.push(`$${t.label}=${askVal}$`);
     }
@@ -3942,7 +4109,8 @@
 
   function buildJ231RatioSimplifySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -4032,7 +4200,8 @@
 
   function buildJ231ProportionSolveSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -4119,7 +4288,8 @@
 
   function buildJ231RelationTransformSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -4189,7 +4359,8 @@
 
   function buildJ231ChainRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -4205,7 +4376,7 @@
         const ratio = normalizeRatioInts3(left, mid, right);
         questions.push(`已知 $x:y=${a}:${b}$，且 $y:z=${c}:${d}$，求 $x:y:z$ 的最簡整數比。`);
         answers.push(
-          `先把兩個比中的 $y$ 對齊。$x:y=${a}:${b}$ 可放大成 ${a * c}:${b * c}；$y:z=${c}:${d}$ 可放大成 ${b * c}:${b * d}$。因此 $x:y:z=${left}:${mid}:${right}$，最簡整數比為 $${ratio.a}:${ratio.b}:${ratio.c}$。`
+          `先把兩個比中的 $y$ 對齊。$x:y=${a}:${b}$ 可放大成 $${a * c}:${b * c}$；$y:z=${c}:${d}$ 可放大成 $${b * c}:${b * d}$。因此 $x:y:z=${left}:${mid}:${right}$，最簡整數比為 $${ratio.a}:${ratio.b}:${ratio.c}$。`
         );
         continue;
       }
@@ -4237,9 +4408,7 @@
       const coeff2 = randInt(1, 3);
       const coeff3 = randInt(1, 3);
       const rhs = coeff1 * x + coeff2 * y + coeff3 * z;
-      questions.push(
-        `已知 $a:b:c=${a}:${b}:${c}$，且 $${coeff1}a+${coeff2}b+${coeff3}c=${rhs}$，求 $a,b,c$。`
-      );
+      questions.push(`已知 $a:b:c=${a}:${b}:${c}$，且 $${coeff1}a+${coeff2}b+${coeff3}c=${rhs}$，求 $a,b,c$。`);
       answers.push(
         `因為 $a:b:c=${a}:${b}:${c}$，可設 $a=${a}k,\\ b=${b}k,\\ c=${c}k$。代入條件得 $${coeff1 * a + coeff2 * b + coeff3 * c}k=${rhs}$，所以 $k=${unit}$。因此 $a=${x},\\ b=${y},\\ c=${z}$。`
       );
@@ -4250,7 +4419,8 @@
 
   function buildJ231BasicSingleStepSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -4704,7 +4874,7 @@
         );
         answers.push(
           formatJ231Answer(
-            `${formatPercentLatexLocal(simplifyFraction(avg.num * 100, avg.den))}\\%`,
+            `$${formatPercentLatexLocal(simplifyFraction(avg.num * 100, avg.den))}\\%$`,
             `設兩罐各重 $w$ 克，則酒精分別為 $${fractionToLatex(s1)}w$ 與 $${fractionToLatex(s2)}w$。混合後酒精共重 $\\left(${fractionToLatex(s1)}+${fractionToLatex(s2)}\\right)w$，總重量是 $2w$，所以濃度為 $${fractionToLatex(avg)}=${formatPercentLatexLocal(simplifyFraction(avg.num * 100, avg.den))}\\%$。`
           )
         );
@@ -4727,7 +4897,7 @@
         const finalWeight = divFraction(mulFraction(solute, makeFraction(100, 1)), makeFraction(target, 1));
         const water = subFraction(finalWeight, makeFraction(total, 1));
         questions.push(
-          `有一杯 ${total} 公克、濃度 ${start}% 的食鹽水，若要把濃度稀釋成 ${target}% ，需要再加入多少公克的水？`
+          `有一杯 $${total}$ 公克、濃度 $${start}%$ 的食鹽水，若要把濃度稀釋成 $${target}%$ ，需要再加入多少公克的水？`
         );
         answers.push(
           formatJ231Answer(
@@ -4812,7 +4982,7 @@
         );
         answers.push(
           formatJ231Answer(
-            `甲 ${fractionToLatex(concA)}、乙 ${fractionToLatex(concB)}`,
+            `甲 $${fractionToLatex(concA)}$、乙 $${fractionToLatex(concB)}$`,
             `濃度就是 $\\dfrac{鹽}{鹽+水}$。所以甲杯濃度為 $\\dfrac{${saltRatio}}{${saltRatio}+${waterRatio}}=${fractionToLatex(concA)}$，乙杯濃度為 $\\dfrac{${saltRatioB}}{${saltRatioB}+${waterRatioB}}=${fractionToLatex(concB)}$。`
           )
         );
@@ -4848,7 +5018,8 @@
 
   function buildJ231AdvancedThreeStepSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -4924,7 +5095,7 @@
       );
       answers.push(
         formatJ231Answer(
-          `${fractionToLatex(addWater)} 公克`,
+          `$${fractionToLatex(addWater)}$ 公克`,
           `原來的食鹽量不變，都是 $${pick.total}\\times ${pick.start}\\%=${fractionToLatex(solute)}$ 公克。設加水後總重量為 $x$ 公克，則有 $${pick.target}\\%\\times x=${fractionToLatex(solute)}$，所以 $x=${fractionToLatex(finalWeight)}$。因此需要再加 $${fractionToLatex(finalWeight)}-${pick.total}=${fractionToLatex(addWater)}$ 公克的水。`
         )
       );
@@ -4943,7 +5114,8 @@
       return `${coef}k`;
     };
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -5036,7 +5208,8 @@
 
   function buildJ232BasicDirectInverseSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const variants = shuffle([0, 1, 2, 3, 4, 5]);
     const niceFractions = [
       makeFraction(1, 2),
@@ -5166,12 +5339,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ232ShiftedVariationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -5223,12 +5397,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ232RootReciprocalVariationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -5281,12 +5456,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ232LinearComboProportionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const variants = shuffle([0, 1, 2, 3, 4]);
 
     for (let i = 0; i < count; i += 1) {
@@ -5433,12 +5609,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ232SquareProportionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const variants = shuffle([0, 1, 2, 3, 4]);
 
     for (let i = 0; i < count; i += 1) {
@@ -5565,12 +5742,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ232ChainedVariationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const variants = shuffle([0, 1, 2, 3, 4]);
 
     for (let i = 0; i < count; i += 1) {
@@ -5729,12 +5907,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ232PercentChangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const variants = shuffle([0, 1, 2, 3, 4]);
 
     for (let i = 0; i < count; i += 1) {
@@ -5820,12 +5999,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ232WordJudgmentSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     const directBank = [
       () => {
@@ -5984,13 +6164,14 @@
       answers.push(pick.a);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-3-2 新增：彈簧秤（胡克定律）────────────────────────────────────────
   function buildJ232SpringScaleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -6009,11 +6190,11 @@
         const pick = templates[cycle % templates.length];
         const ext2 = simplifyFraction(pick.w2 * pick.ext1, pick.w1);
         questions.push(
-          `彈性限度內，彈簧伸長量與所掛物體重量成正比。已知掛上 ${pick.w1} 公克的砝碼時，彈簧伸長 ${pick.ext1} 公分，則掛上 ${pick.w2} 公克時，彈簧伸長幾公分？`
+          `彈性限度內，彈簧伸長量與所掛物體重量成正比。已知掛上 $${pick.w1}$ 公克的砝碼時，彈簧伸長 $${pick.ext1}$ 公分，則掛上 $${pick.w2}$ 公克時，彈簧伸長幾公分？`
         );
         answers.push(
           formatJ232Answer(
-            `${fractionToLatex(ext2)} 公分`,
+            `$${fractionToLatex(ext2)}$ 公分`,
             `設伸長量為 $e$，重量為 $w$，則 $e=kw$。由 $w=${pick.w1},\\ e=${pick.ext1}$ 得 $k=\\dfrac{${pick.ext1}}{${pick.w1}}${fractionToLatex(simplifyFraction(pick.ext1, pick.w1)) !== String(pick.ext1 / pick.w1) ? `=${fractionToLatex(simplifyFraction(pick.ext1, pick.w1))}` : ''}$。當 $w=${pick.w2}$ 時，$e=${fractionToLatex(simplifyFraction(pick.ext1, pick.w1))}\\times ${pick.w2}=${fractionToLatex(ext2)}$ 公分。`
           )
         );
@@ -6083,23 +6264,24 @@
       const ext2 = simplifyFraction(pick.w2 * pick.ext_max, pick.maxW);
       const bounce = subFraction(makeFraction(pick.ext_max, 1), ext2);
       questions.push(
-        `一彈簧秤在彈性限度內最多可稱重 ${pick.maxW} 公斤，已知稱 ${pick.maxW} 公斤時彈簧被拉長 ${pick.ext_max} 公分。若改稱 ${pick.w2} 公斤的物體，彈簧會比最大伸長量縮短幾公分？`
+        `一彈簧秤在彈性限度內最多可稱重 $${pick.maxW}$ 公斤，已知稱 $${pick.maxW}$ 公斤時彈簧被拉長 $${pick.ext_max}$ 公分。若改稱 $${pick.w2}$ 公斤的物體，彈簧會比最大伸長量縮短幾公分？`
       );
       answers.push(
         formatJ232Answer(
-          `${fractionToLatex(bounce)} 公分`,
-          `稱 ${pick.w2} 公斤時的伸長量為 $\\dfrac{${pick.w2}}{${pick.maxW}}\\times ${pick.ext_max}=${fractionToLatex(ext2)}$ 公分。最大伸長量為 ${pick.ext_max} 公分，所以縮短了 $${pick.ext_max}-${fractionToLatex(ext2)}=${fractionToLatex(bounce)}$ 公分。`
+          `$${fractionToLatex(bounce)}$ 公分`,
+          `稱 $${pick.w2}$ 公斤時的伸長量為 $\\dfrac{${pick.w2}}{${pick.maxW}}\\times ${pick.ext_max}=${fractionToLatex(ext2)}$ 公分。最大伸長量為 $${pick.ext_max}$ 公分，所以縮短了 $${pick.ext_max}-${fractionToLatex(ext2)}=${fractionToLatex(bounce)}$ 公分。`
         )
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-3-2 新增：工程人力反比問題 ─────────────────────────────────────────
   function buildJ232WorkManpowerSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -6118,12 +6300,12 @@
         const pick = templates[cycle % templates.length];
         const d2 = simplifyFraction(pick.w1 * pick.d1, pick.w2);
         questions.push(
-          `有一工程，${pick.w1} 人合作需 ${pick.d1} 天完工（每人每天工作量相同）。若改由 ${pick.w2} 人合作，需要幾天才能完工？`
+          `有一工程，$${pick.w1}$ 人合作需 $${pick.d1}$ 天完工（每人每天工作量相同）。若改由 $${pick.w2}$ 人合作，需要幾天才能完工？`
         );
         answers.push(
           formatJ232Answer(
-            `${fractionToLatex(d2)} 天`,
-            `人數與天數成反比，乘積固定：$${pick.w1}\\times ${pick.d1}=${pick.w1 * pick.d1}$。設 ${pick.w2} 人需要 $d$ 天，則 $${pick.w2}\\times d=${pick.w1 * pick.d1}$，解得 $d=${fractionToLatex(d2)}$ 天。`
+            `$${fractionToLatex(d2)}$ 天`,
+            `人數與天數成反比，乘積固定：$${pick.w1}\\times ${pick.d1}=${pick.w1 * pick.d1}$。設 $${pick.w2}$ 人需要 $d$ 天，則 $${pick.w2}\\times d=${pick.w1 * pick.d1}$，解得 $d=${fractionToLatex(d2)}$ 天。`
           )
         );
         continue;
@@ -6142,12 +6324,10 @@
         const pick = templates[cycle % templates.length];
         const w2 = simplifyFraction(pick.w1 * pick.d1, pick.d2);
         const extra = subFraction(w2, makeFraction(pick.w1, 1));
-        questions.push(
-          `有一工程，${pick.w1} 人合作需 ${pick.d1} 天完工。若想提前至 ${pick.d2} 天完工，需要增加幾人？`
-        );
+        questions.push(`有一工程，${pick.w1} 人合作需 ${pick.d1} 天完工。若想提前至 ${pick.d2} 天完工，需要增加幾人？`);
         answers.push(
           formatJ232Answer(
-            `${fractionToLatex(extra)} 人`,
+            `$${fractionToLatex(extra)}$ 人`,
             `原本總工量為 $${pick.w1}\\times ${pick.d1}=${pick.w1 * pick.d1}$ 人天。若要 ${pick.d2} 天完工，需要 $\\dfrac{${pick.w1 * pick.d1}}{${pick.d2}}=${fractionToLatex(w2)}$ 人。因此需增加 $${fractionToLatex(w2)}-${pick.w1}=${fractionToLatex(extra)}$ 人。`
           )
         );
@@ -6169,11 +6349,11 @@
         // 新情境: p2人喝b2瓶需時 = b2 / (p2 * b1/(p1*t1)) = b2*p1*t1/(p2*b1)
         const t2 = simplifyFraction(pick.b2 * pick.p1 * pick.t1, pick.p2 * pick.b1);
         questions.push(
-          `${pick.p1} 個學生合作喝 ${pick.b1} 瓶飲料（每瓶等量）需 ${pick.t1} 分鐘，假設每人喝的速率相同。若改成 ${pick.p2} 個學生喝 ${pick.b2} 瓶，需要幾分鐘？`
+          `$${pick.p1}$ 個學生合作喝 $${pick.b1}$ 瓶飲料（每瓶等量）需 $${pick.t1}$ 分鐘，假設每人喝的速率相同。若改成 $${pick.p2}$ 個學生喝 $${pick.b2}$ 瓶，需要幾分鐘？`
         );
         answers.push(
           formatJ232Answer(
-            `${fractionToLatex(t2)} 分鐘`,
+            `$${fractionToLatex(t2)}$ 分鐘`,
             `每人每分鐘喝的量為 $\\dfrac{${pick.b1}}{${pick.p1}\\times ${pick.t1}}=\\dfrac{${pick.b1}}{${pick.p1 * pick.t1}}$ 瓶。${pick.p2} 人每分鐘共喝 $${pick.p2}\\times\\dfrac{${pick.b1}}{${pick.p1 * pick.t1}}$ 瓶，喝完 ${pick.b2} 瓶需要 $\\dfrac{${pick.b2}}{${pick.p2}\\times\\dfrac{${pick.b1}}{${pick.p1 * pick.t1}}}=\\dfrac{${pick.b2}\\times ${pick.p1 * pick.t1}}{${pick.p2}\\times ${pick.b1}}=${fractionToLatex(t2)}$ 分鐘。`
           )
         );
@@ -6206,19 +6386,20 @@
       );
       answers.push(
         formatJ232Answer(
-          `${fractionToLatex(extraMale)} 人`,
+          `$${fractionToLatex(extraMale)}$ 人`,
           `先以「女工人天」計算總工量：$${pick.totalFemale}\\times ${pick.femDays}=${totalWork}$ 女工人天。${pick.totalFemale} 名女工做 ${pick.targetDays} 天，已完成 $${totalWork - totalWork + existingWork}$ 女工人天，還剩 $${remainWork}$ 女工人天。每名男工的效率是女工的 $\\dfrac{${pick.femaleEq}}{${pick.maleEq}}$ 倍，設需增加 $m$ 名男工，則 $m\\times ${pick.targetDays}\\times\\dfrac{${pick.femaleEq}}{${pick.maleEq}}=${remainWork}$，解得 $m=${fractionToLatex(extraMale)}$ 人。`
         )
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-3-2 新增：速率比賽跑落後問題 ──────────────────────────────────────
   function buildJ232SpeedRaceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -6243,7 +6424,7 @@
         );
         answers.push(
           formatJ232Answer(
-            `${fractionToLatex(behind)} 公尺`,
+            `$${fractionToLatex(behind)}$ 公尺`,
             `${pick.name[0]}跑完 ${pick.dist} 公尺的時間，${pick.name[1]}跑了 $${pick.dist}\\times\\dfrac{${pick.vb}}{${pick.va}}=${fractionToLatex(bDist)}$ 公尺，距終點還有 $${pick.dist}-${fractionToLatex(bDist)}=${fractionToLatex(behind)}$ 公尺。`
           )
         );
@@ -6300,7 +6481,7 @@
         );
         answers.push(
           formatJ232Answer(
-            `${fractionToLatex(h)} 公尺`,
+            `$${fractionToLatex(h)}$ 公尺`,
             `兩人速率比為 ${pick.name[0]}：${pick.name[1]} $=\\dfrac{1}{${pick.tFast}}:\\dfrac{1}{${pick.tSlow}}=${pick.tSlow}:${pick.tFast}$。設${pick.name[0]}退後 $h$ 公尺，則${pick.name[0]}跑 $${pick.dist}+h$ 公尺，${pick.name[1]}跑 ${pick.dist} 公尺，時間相同可得 $\\dfrac{${pick.dist}+h}{${pick.tSlow}}=\\dfrac{${pick.dist}}{${pick.tFast}}$，解得 $h=${fractionToLatex(h)}$ 公尺。`
           )
         );
@@ -6330,13 +6511,14 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-3-2 新增：犬兔步距速率問題 ─────────────────────────────────────────
   function buildJ232DogRabbitSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -6360,12 +6542,12 @@
         const rabbitSpeed = pick.a * pick.c;
         const ratio = normalizeRatioInts(dogSpeed, rabbitSpeed);
         questions.push(
-          `設犬跑 ${pick.a} 步的距離等於兔跳 ${pick.b} 步的距離，且犬跑 ${pick.c} 步的時間等於兔跳 ${pick.d} 步的時間，求犬與兔的速率比。`
+          `設犬跑 $${pick.a}$ 步的距離等於兔跳 $${pick.b}$ 步的距離，且犬跑 $${pick.c}$ 步的時間等於兔跳 $${pick.d}$ 步的時間，求犬與兔的速率比。`
         );
         answers.push(
           formatJ232Answer(
             `$${ratio.a}:${ratio.b}$`,
-            `每步距離比：犬步距 $=\\dfrac{${pick.b}}{${pick.a}}$ 兔步距。同一時間內步數比：犬跑 ${pick.d} 步：兔跳 ${pick.c} 步。速率比 $=$ 每步距離比 $\\times$ 步頻比 $=\\dfrac{${pick.b}}{${pick.a}}\\times\\dfrac{${pick.d}}{${pick.c}}=\\dfrac{${pick.b * pick.d}}{${pick.a * pick.c}}$，即犬：兔 $=${ratio.a}:${ratio.b}$。`
+            `每步距離比：犬步距 $=\\dfrac{${pick.b}}{${pick.a}}$ 兔步距。同一時間內步數比：犬跑 $${pick.d}$ 步：兔跳 $${pick.c}$ 步。速率比 $=$ 每步距離比 $\\times$ 步頻比 $=\\dfrac{${pick.b}}{${pick.a}}\\times\\dfrac{${pick.d}}{${pick.c}}=\\dfrac{${pick.b * pick.d}}{${pick.a * pick.c}}$，即犬：兔 $=${ratio.a}:${ratio.b}$。`
           )
         );
         continue;
@@ -6395,11 +6577,11 @@
         const rabbitVal = pick.a * pick.c;
         const D = simplifyFraction(pick.head * dogVal, dogVal - rabbitVal);
         questions.push(
-          `設犬跑 ${pick.a} 步的距離等於兔跳 ${pick.b} 步的距離，且犬跑 ${pick.c} 步的時間等於兔跳 ${pick.d} 步的時間（兩者均在同一直線上）。若兔先跑 ${pick.head} 公尺，則犬需跑多少公尺才能追上兔？`
+          `設犬跑 $${pick.a}$ 步的距離等於兔跳 $${pick.b}$ 步的距離，且犬跑 $${pick.c}$ 步的時間等於兔跳 $${pick.d}$ 步的時間（兩者均在同一直線上）。若兔先跑 $${pick.head}$ 公尺，則犬需跑多少公尺才能追上兔？`
         );
         answers.push(
           formatJ232Answer(
-            `${fractionToLatex(D)} 公尺`,
+            `$${fractionToLatex(D)}$ 公尺`,
             `由前題知犬：兔的速率比為 $${ratio.a}:${ratio.b}$。設犬追上時跑了 $D$ 公尺，兔跑了 $D-${pick.head}$ 公尺，兩者時間相同：$\\dfrac{D}{${ratio.a}}=\\dfrac{D-${pick.head}}{${ratio.b}}$。解得 $D=${fractionToLatex(D)}$ 公尺。`
           )
         );
@@ -6428,7 +6610,7 @@
         // 犬X步 = 兔的 X*(b/a) 步等效距离
         // 兔先跑了 headSteps 步的距离
         // 追上时：犬X步距离 = 兔先跑headSteps步 + 兔追逃的距离
-        // 时间：犬X步时间 = 犬(c/d)步/step * X... 
+        // 时间：犬X步时间 = 犬(c/d)步/step * X...
         // 实际上，这类题目通常是：兔先跑headSteps步对应的距离
         // 设犬步长为 b 个单位（兔步长为 a 个单位）
         // 速率：犬每单位时间走 b*d/(c) 个单位，兔每单位时间走 a 个单位
@@ -6437,11 +6619,11 @@
         // 犬步数 = t * d/c = headSteps*a*c/(b*d - a*c) * d/c = headSteps*a*d/(b*d - a*c)
         const numSteps = simplifyFraction(pick.headSteps * pick.a * pick.d, pick.b * pick.d - pick.a * pick.c);
         questions.push(
-          `設犬跑 ${pick.a} 步的距離等於兔跳 ${pick.b} 步的距離，且犬跑 ${pick.c} 步的時間等於兔跳 ${pick.d} 步的時間。若兔先跑 ${pick.headSteps} 步，則犬需跑幾步才能追上兔？`
+          `設犬跑 $${pick.a}$ 步的距離等於兔跳 $${pick.b}$ 步的距離，且犬跑 $${pick.c}$ 步的時間等於兔跳 $${pick.d}$ 步的時間。若兔先跑 $${pick.headSteps}$ 步，則犬需跑幾步才能追上兔？`
         );
         answers.push(
           formatJ232Answer(
-            `${fractionToLatex(numSteps)} 步`,
+            `$${fractionToLatex(numSteps)}$ 步`,
             `以「單位距離」計，設兔步長為 $${pick.a}$，則犬步長為 $${pick.b}$。兔先跑 ${pick.headSteps} 步，領先距離為 $${pick.headSteps}\\times ${pick.a}=${pick.headSteps * pick.a}$ 個單位。同一時間內，犬跑 ${pick.d} 步（距離 $${pick.b * pick.d}$），兔跑 ${pick.c} 步（距離 $${pick.a * pick.c}$），速率差為 $${pick.b * pick.d - pick.a * pick.c}$ 個單位。追上所需時間（以犬的 ${pick.c} 步為計時單位）$=\\dfrac{${pick.headSteps * pick.a}}{${pick.b * pick.d - pick.a * pick.c}}$ 個時間單位。犬的步數 $=\\dfrac{${pick.headSteps * pick.a}}{${pick.b * pick.d - pick.a * pick.c}}\\times ${pick.d}=${fractionToLatex(numSteps)}$ 步。`
           )
         );
@@ -6466,23 +6648,23 @@
       const T = simplifyFraction(pick.headMin * rabbitSpeed, dogSpeed - rabbitSpeed);
       const ratio = normalizeRatioInts(dogSpeed, rabbitSpeed);
       questions.push(
-        `設犬跑 ${pick.a} 步的距離等於兔跳 ${pick.b} 步的距離，且犬跑 ${pick.c} 步的時間等於兔跳 ${pick.d} 步的時間。若兔先跑 ${pick.headMin} 分鐘，則犬需追幾分鐘才能追上兔？`
+        `設犬跑 $${pick.a}$ 步的距離等於兔跳 $${pick.b}$ 步的距離，且犬跑 $${pick.c}$ 步的時間等於兔跳 $${pick.d}$ 步的時間。若兔先跑 $${pick.headMin}$ 分鐘，則犬需追幾分鐘才能追上兔？`
       );
       answers.push(
         formatJ232Answer(
-          `${fractionToLatex(T)} 分鐘`,
-          `速率比為犬：兔 $=${ratio.a}:${ratio.b}$。設犬追 $T$ 分鐘追上，此時犬走了 ${ratio.a} 份，兔走了 ${ratio.b} 份（犬走的時間也是 $T$，兔總共走了 $T+${pick.headMin}$ 分鐘）：$${ratio.a}\\cdot T=${ratio.b}\\cdot(T+${pick.headMin})$，解得 $T=${fractionToLatex(T)}$ 分鐘。`
+          `$${fractionToLatex(T)}$ 分鐘`,
+          `速率比為犬：兔 $=${ratio.a}:${ratio.b}$。設犬追 $T$ 分鐘追上，此時犬走了 $${ratio.a}$ 份，兔走了 $${ratio.b}$ 份（犬走的時間也是 $T$，兔總共走了 $T+${pick.headMin}$ 分鐘）：$${ratio.a}\\cdot T=${ratio.b}\\cdot(T+${pick.headMin})$，解得 $T=${fractionToLatex(T)}$ 分鐘。`
         )
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
 
   function buildJ241InequalityLanguageSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const directBank = [
       () => {
         const add = randInt(2, 9);
@@ -6645,7 +6827,7 @@
       answers.push(pick.a);
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function flipInequality(op) {
@@ -6680,8 +6862,15 @@
     return `x${displayIneqOp(op)}${formatIneqBound(frac)}`;
   }
 
+  // 簡答若含裸露的 \frac / \dfrac（沒有包在 $…$ 內），自動補上 $…$，避免匯出 PDF 時
+  // xelatex 報「Missing $ inserted」。已含 $ 或 \( 的就原樣保留，不重複包。
+  function wrapBareShortAnswerMath(text) {
+    if (text.includes('$') || text.includes('\\(')) return text;
+    return text.replace(/-?\d*\\d?frac\{-?\d+\}\{-?\d+\}/g, (m) => `$${m}$`);
+  }
+
   function formatPracticeShortAnswer(shortAnswer, process = '') {
-    const shortText = String(shortAnswer || '').trim();
+    const shortText = wrapBareShortAnswerMath(String(shortAnswer || '').trim());
     const processText = String(process || '').trim();
     return processText ? `簡答：${shortText}\n過程：${processText}` : `簡答：${shortText}`;
   }
@@ -6734,9 +6923,13 @@
       if (text.startsWith('簡答：')) return text;
       return formatJ231Answer(inferPracticeShortAnswer(text), text);
     });
+    const summaryAnswers = [];
+    detailedAnswers.forEach((answer) => {
+      summaryAnswers.push(deriveSummaryAnswerFromDetail(answer));
+    });
     return {
       questions,
-      summaryAnswers: detailedAnswers.map(deriveSummaryAnswerFromDetail),
+      summaryAnswers,
       answers: detailedAnswers,
     };
   }
@@ -6781,7 +6974,8 @@
 
   function buildJ241IntegerSolveSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const solOps = ['>', '<', '≥', '≤'];
 
     for (let i = 0; i < count; i += 1) {
@@ -6879,12 +7073,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ241DecimalSolveSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const solOps = ['>', '<', '≥', '≤'];
 
     for (let i = 0; i < count; i += 1) {
@@ -6966,12 +7161,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ241FractionSolveSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const solOps = ['>', '<', '≥', '≤'];
 
     function gcdInt(a, b) {
@@ -7146,12 +7342,13 @@
       answers.push(clearAnswer(aFrac, bFrac, rhsFrac, rawOp, solOp, target));
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ241RangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const low = randInt(-6, 3);
@@ -7195,12 +7392,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ241ReverseCoeffSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const ops = ['>', '<', '≥', '≤'];
     const targetChoices = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7];
 
@@ -7312,12 +7510,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ241KnownSolutionParamRangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const ops = ['>', '<', '≥', '≤'];
 
     function chooseTargetsForX0(x0) {
@@ -7404,12 +7603,13 @@
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ241SameSolutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const ops = ['>', '<', '≥', '≤'];
 
     function symbolWithConst(symbol, constant) {
@@ -7529,12 +7729,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ241CompoundInequalitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const coefChoices = [-4, -3, -2, 2, 3, 4];
 
     for (let i = 0; i < count; i += 1) {
@@ -7551,8 +7752,8 @@
       const increasing = coef > 0;
       const lowerY = increasing ? valueAtLow : valueAtHigh;
       const upperY = increasing ? valueAtHigh : valueAtLow;
-      const leftOp = increasing ? (includeLow ? '\\le' : '<') : (includeHigh ? '\\le' : '<');
-      const rightOp = increasing ? (includeHigh ? '\\le' : '<') : (includeLow ? '\\le' : '<');
+      const leftOp = increasing ? (includeLow ? '\\le' : '<') : includeHigh ? '\\le' : '<';
+      const rightOp = increasing ? (includeHigh ? '\\le' : '<') : includeLow ? '\\le' : '<';
       const solutionLeft = includeLow ? '\\le' : '<';
       const solutionRight = includeHigh ? '\\le' : '<';
       const solutionText = `${formatIneqBound(lowPoint)}${displayIneqOp(solutionLeft)}x${displayIneqOp(solutionRight)}${formatIneqBound(highPoint)}`;
@@ -7569,12 +7770,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ241AbsoluteInequalitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const ops = ['<', '\\le', '>', '\\ge'];
 
     for (let i = 0; i < count; i += 1) {
@@ -7603,12 +7805,13 @@
       answers.push(formatJ241Answer(shortAnswer, process));
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ241IntegerBoundarySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const solOps = ['>', '<', '\\ge', '\\le'];
 
     for (let i = 0; i < count; i += 1) {
@@ -7650,18 +7853,15 @@
         const increasing = coef > 0;
         const lowerY = increasing ? valueAtLow : valueAtHigh;
         const upperY = increasing ? valueAtHigh : valueAtLow;
-        const leftOp = increasing ? (includeLow ? '\\le' : '<') : (includeHigh ? '\\le' : '<');
-        const rightOp = increasing ? (includeHigh ? '\\le' : '<') : (includeLow ? '\\le' : '<');
+        const leftOp = increasing ? (includeLow ? '\\le' : '<') : includeHigh ? '\\le' : '<';
+        const rightOp = increasing ? (includeHigh ? '\\le' : '<') : includeLow ? '\\le' : '<';
         const integerCount = countIntegersInInterval(lowPoint, includeLow, highPoint, includeHigh);
         const solutionText = `${formatIneqBound(lowPoint)}${displayIneqOp(includeLow ? '\\le' : '<')}x${displayIneqOp(includeHigh ? '\\le' : '<')}${formatIneqBound(highPoint)}`;
         questions.push(
           `若 $x$ 為整數，滿足 $${formatIneqBound(lowerY)}${displayIneqOp(leftOp)}${formatLinearExpr(coef, bias)}${displayIneqOp(rightOp)}${formatIneqBound(upperY)}$，共有幾個整數解？`
         );
         answers.push(
-          formatJ241Answer(
-            `${integerCount}`,
-            `先解得 $${solutionText}$，再數出區間內的整數，共有 ${integerCount} 個。`
-          )
+          formatJ241Answer(`${integerCount}`, `先解得 $${solutionText}$，再數出區間內的整數，共有 ${integerCount} 個。`)
         );
         continue;
       }
@@ -7684,12 +7884,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ242AverageThresholdSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = [
       { noun: '小考', unit: '分', action: '考' },
       { noun: '練習測驗', unit: '分', action: '測驗' },
@@ -7716,12 +7917,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ242BasicWordSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 6;
@@ -7812,12 +8014,13 @@
       answers.push(formatJ242Answer(`$x<${bound}$`, `依題意可列 $${length}x<${areaLimit}$，因此 $x<${bound}$。`));
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ242RegularWordSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 6;
@@ -7931,12 +8134,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ242AdvancedWordSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 6;
@@ -8068,7 +8272,7 @@
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function deriveSummaryAnswerFromDetail(detail) {
@@ -8120,7 +8324,8 @@
 
   function buildJ251FrequencyRelativeCumulativeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const labelsPool = [
       ['60-69 分', '70-79 分', '80-89 分', '90-99 分'],
       ['小說', '散文', '漫畫', '科普'],
@@ -8141,11 +8346,13 @@
       if (variant === 0) {
         const targetIndex = randInt(0, labels.length - 1);
         const rate = makeFraction(counts[targetIndex] * 100, total);
-        questions.push(`某次調查的次數分配如下：${tableText(labels, counts)}。求「${labels[targetIndex]}」的相對次數（百分率）。`);
+        questions.push(
+          `某次調查的次數分配如下：${tableText(labels, counts)}。求「${labels[targetIndex]}」的相對次數（百分率）。`
+        );
         answers.push(
           formatPracticeShortAnswer(
-            `${fractionToLatex(rate, true)}\\%`,
-            `相對次數 = \\dfrac{${counts[targetIndex]}}{${total}} = ${fractionToLatex(rate, true)}\\%`
+            `$${fractionToLatex(rate, true)}\\%$`,
+            `相對次數 $= \\dfrac{${counts[targetIndex]}}{${total}} = ${fractionToLatex(rate, true)}\\%$`
           )
         );
         continue;
@@ -8154,7 +8361,9 @@
       if (variant === 1) {
         const targetIndex = randInt(1, labels.length - 1);
         const cumulative = counts.slice(0, targetIndex + 1).reduce((sum, value) => sum + value, 0);
-        questions.push(`某次調查的次數分配如下：${tableText(labels, counts)}。求到「${labels[targetIndex]}」為止的累積次數。`);
+        questions.push(
+          `某次調查的次數分配如下：${tableText(labels, counts)}。求到「${labels[targetIndex]}」為止的累積次數。`
+        );
         answers.push(
           formatPracticeShortAnswer(
             `${cumulative}`,
@@ -8179,12 +8388,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ251PieChartConversionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const categoryPool = [
       ['籃球社', '排球社', '羽球社', '其他'],
       ['紅茶', '綠茶', '奶茶', '其他'],
@@ -8204,11 +8414,13 @@
 
       if (variant === 0) {
         const people = (total * percentages[targetIndex]) / 100;
-        questions.push(`某調查共有 ${total} 人，各類別所占百分比如下：${categories.map((name, idx) => `${name} ${percentages[idx]}%`).join('，')}。求「${categories[targetIndex]}」有多少人。`);
+        questions.push(
+          `某調查共有 ${total} 人，各類別所占百分比如下：${categories.map((name, idx) => `${name} ${percentages[idx]}%`).join('，')}。求「${categories[targetIndex]}」有多少人。`
+        );
         answers.push(
           formatPracticeShortAnswer(
-            `${people} 人`,
-            `${categories[targetIndex]}的人數 = ${total} \\times ${percentages[targetIndex]}\\% = ${people}`
+            `$${people}$ 人`,
+            `${categories[targetIndex]}的人數 = $${total} \\times ${percentages[targetIndex]}\\% = ${people}$`
           )
         );
         continue;
@@ -8216,12 +8428,11 @@
 
       if (variant === 1) {
         const angle = (360 * percentages[targetIndex]) / 100;
-        questions.push(`某圓形圖中各類別百分比如下：${categories.map((name, idx) => `${name} ${percentages[idx]}%`).join('，')}。求「${categories[targetIndex]}」對應的圓心角。`);
+        questions.push(
+          `某圓形圖中各類別百分比如下：${categories.map((name, idx) => `${name} ${percentages[idx]}%`).join('，')}。求「${categories[targetIndex]}」對應的圓心角。`
+        );
         answers.push(
-          formatPracticeShortAnswer(
-            `${angle}°`,
-            `圓心角 = 360° \\times ${percentages[targetIndex]}\\% = ${angle}°`
-          )
+          formatPracticeShortAnswer(`$${angle}°$`, `圓心角 $= 360° \\times ${percentages[targetIndex]}\\% = ${angle}°$`)
         );
         continue;
       }
@@ -8230,18 +8441,19 @@
       questions.push(`某圓形圖中，「${categories[targetIndex]}」的圓心角是 ${angle}°。求它占全部的百分之幾。`);
       answers.push(
         formatPracticeShortAnswer(
-          `${percentages[targetIndex]}\\%`,
-          `百分率 = \\dfrac{${angle}}{360} = ${fractionToLatex(makeFraction(angle, 360), true)} = ${percentages[targetIndex]}\\%`
+          `$${percentages[targetIndex]}\\%$`,
+          `百分率 $= \\dfrac{${angle}}{360} = ${fractionToLatex(makeFraction(angle, 360), true)} = ${percentages[targetIndex]}\\%$`
         )
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ251GroupedMeanEstimateSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const start = 20 + 5 * (i % 4);
@@ -8254,21 +8466,24 @@
       const weighted = intervals.reduce((sum, item, idx) => sum + item.mid * freq[idx], 0);
       const total = freq.reduce((sum, value) => sum + value, 0);
       const mean = makeFraction(weighted, total);
-      questions.push(`某組資料的分組次數如下：${intervals.map((item, idx) => `${item.low}-${item.high}：${freq[idx]}`).join('，')}。若以各組組中點估計，求這組資料的平均數。`);
+      questions.push(
+        `某組資料的分組次數如下：${intervals.map((item, idx) => `${item.low}-${item.high}：${freq[idx]}`).join('，')}。若以各組組中點估計，求這組資料的平均數。`
+      );
       answers.push(
         formatPracticeShortAnswer(
-          `${fractionToLatex(mean, true)}`,
-          `先取組中點：${intervals.map((item) => item.mid).join('、')}。估計平均數 = \\dfrac{${intervals.map((item, idx) => `${item.mid}\\times ${freq[idx]}`).join('+')}}{${total}} = ${fractionToLatex(mean, true)}`
+          `$${fractionToLatex(mean, true)}$`,
+          `先取組中點：$${intervals.map((item) => item.mid).join('、')}$。估計平均數 $= \\dfrac{${intervals.map((item, idx) => `${item.mid}\\times ${freq[idx]}`).join('+')}}{${total}} = ${fractionToLatex(mean, true)}$`
         )
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ252MeanBasicSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 2;
@@ -8279,8 +8494,8 @@
         questions.push(`一組資料為 ${numbers.join('、')}，求這組資料的平均數。`);
         answers.push(
           formatPracticeShortAnswer(
-            `${fractionToLatex(mean, true)}`,
-            `平均數 = \\dfrac{${numbers.join('+')}}{${numbers.length}} = ${fractionToLatex(mean, true)}`
+            `$${fractionToLatex(mean, true)}$`,
+            `平均數 $= \\dfrac{${numbers.join('+')}}{${numbers.length}} = ${fractionToLatex(mean, true)}$`
           )
         );
         continue;
@@ -8291,21 +8506,24 @@
       const totalFreq = freqs.reduce((sum, value) => sum + value, 0);
       const totalValue = values.reduce((sum, value, idx) => sum + value * freqs[idx], 0);
       const mean = makeFraction(totalValue, totalFreq);
-      questions.push(`某組資料的數值與次數如下：${values.map((value, idx) => `${value} 出現 ${freqs[idx]} 次`).join('，')}。求平均數。`);
+      questions.push(
+        `某組資料的數值與次數如下：${values.map((value, idx) => `${value} 出現 ${freqs[idx]} 次`).join('，')}。求平均數。`
+      );
       answers.push(
         formatPracticeShortAnswer(
-          `${fractionToLatex(mean, true)}`,
-          `平均數 = \\dfrac{${values.map((value, idx) => `${value}\\times ${freqs[idx]}`).join('+')}}{${totalFreq}} = ${fractionToLatex(mean, true)}`
+          `$${fractionToLatex(mean, true)}$`,
+          `平均數 $= \\dfrac{${values.map((value, idx) => `${value}\\times ${freqs[idx]}`).join('+')}}{${totalFreq}} = ${fractionToLatex(mean, true)}$`
         )
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ252MeanReverseSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -8318,8 +8536,8 @@
         questions.push(`一組資料為 ${values.join('、')}、$x$，其平均數是 ${targetMean}，求 $x$。`);
         answers.push(
           formatPracticeShortAnswer(
-            `${x}`,
-            `由平均數可得總和為 ${targetMean}\\times 5=${total}，所以 $x=${total}-(${knownSum})=${x}$。`
+            `$${x}$`,
+            `由平均數可得總和為 $${targetMean}\\times 5=${total}$，所以 $x=${total}-(${knownSum})=${x}$。`
           )
         );
         continue;
@@ -8334,11 +8552,13 @@
         const totalScore = totalPeople * totalMean;
         const girlsTotal = totalScore - boys * boysMean;
         const girlsMean = makeFraction(girlsTotal, girls);
-        questions.push(`某班共有 ${totalPeople} 人，平均分數是 ${totalMean} 分，其中 ${boys} 位男生平均 ${boysMean} 分，求女生的平均分數。`);
+        questions.push(
+          `某班共有 ${totalPeople} 人，平均分數是 ${totalMean} 分，其中 ${boys} 位男生平均 ${boysMean} 分，求女生的平均分數。`
+        );
         answers.push(
           formatPracticeShortAnswer(
             `${fractionToLatex(girlsMean, true)} 分`,
-            `全班總分 = ${totalPeople}\\times ${totalMean}=${totalScore}，男生總分 = ${boys}\\times ${boysMean}=${boys * boysMean}，所以女生平均 = \\dfrac{${girlsTotal}}{${girls}} = ${fractionToLatex(girlsMean, true)}`
+            `全班總分 = $${totalPeople}\\times ${totalMean}=${totalScore}$，男生總分 $= ${boys}\\times ${boysMean}=${boys * boysMean}$，所以女生平均 $= \\dfrac{${girlsTotal}}{${girls}} = ${fractionToLatex(girlsMean, true)}$`
           )
         );
         continue;
@@ -8348,21 +8568,22 @@
       const oldMean = randInt(60, 85);
       const newValue = randInt(70, 95);
       const newMean = makeFraction(oldCount * oldMean + newValue, oldCount + 1);
-      questions.push(`原本 ${oldCount} 個數的平均數是 ${oldMean}，若再加入一個數 ${newValue}，求新的平均數。`);
+      questions.push(`原本 $${oldCount}$ 個數的平均數是 $${oldMean}$，若再加入一個數 $${newValue}$，求新的平均數。`);
       answers.push(
         formatPracticeShortAnswer(
-          `${fractionToLatex(newMean, true)}`,
-          `新平均 = \\dfrac{${oldCount}\\times ${oldMean}+${newValue}}{${oldCount + 1}} = ${fractionToLatex(newMean, true)}`
+          `$${fractionToLatex(newMean, true)}$`,
+          `新平均 $= \\dfrac{${oldCount}\\times ${oldMean}+${newValue}}{${oldCount + 1}} = ${fractionToLatex(newMean, true)}$`
         )
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ252MedianModeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function buildOddOrderedList() {
       const values = [];
@@ -8394,12 +8615,11 @@
         const freqs = [randInt(2, 4), randInt(5, 8), randInt(2, 4), randInt(1, 3)];
         freqs[1] = Math.max(...freqs) + 1;
         const mode = values[1];
-        questions.push(`某組資料的數值與次數如下：${values.map((value, idx) => `${value} 出現 ${freqs[idx]} 次`).join('，')}。求眾數。`);
+        questions.push(
+          `某組資料的數值與次數如下：${values.map((value, idx) => `${value} 出現 ${freqs[idx]} 次`).join('，')}。求眾數。`
+        );
         answers.push(
-          formatPracticeShortAnswer(
-            `${mode}`,
-            `出現次數最多的是 ${mode}，共出現 ${freqs[1]} 次，所以眾數是 ${mode}。`
-          )
+          formatPracticeShortAnswer(`${mode}`, `出現次數最多的是 ${mode}，共出現 ${freqs[1]} 次，所以眾數是 ${mode}。`)
         );
         continue;
       }
@@ -8421,7 +8641,9 @@
         }
       }
       const mode = values[freqs.indexOf(Math.max(...freqs))];
-      questions.push(`某組資料的數值與次數如下：${values.map((value, idx) => `${value} 出現 ${freqs[idx]} 次`).join('，')}。求中位數與眾數。`);
+      questions.push(
+        `某組資料的數值與次數如下：${values.map((value, idx) => `${value} 出現 ${freqs[idx]} 次`).join('，')}。求中位數與眾數。`
+      );
       answers.push(
         formatPracticeShortAnswer(
           `中位數 ${median}，眾數 ${mode}`,
@@ -8430,14 +8652,14 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
 
   // ── j2-1-1 新增：代入求變數值（若x=c,y=a或若x=a,y=c求a）────────────────
   function buildJ211FindVarValueSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const names = ['a', 'b', 'm', 'k'];
 
     while (questions.length < count) {
@@ -8449,22 +8671,27 @@
       const unknownIsY = questions.length % 2 === 0;
 
       let xv, yv;
-      if (unknownIsY) { xv = knownVal; yv = unknownVal; }
-      else { xv = unknownVal; yv = knownVal; }
+      if (unknownIsY) {
+        xv = knownVal;
+        yv = unknownVal;
+      } else {
+        xv = unknownVal;
+        yv = knownVal;
+      }
 
       const r = -(p * xv + q * yv);
       const eqStr = `${formatTwoVarExpr(p, q, r)}=0`;
 
       if (unknownIsY) {
         // 代入 x=xv → q*y + (p*xv+r) = 0
-        const constTerm = p * xv + r;   // = -q*yv
+        const constTerm = p * xv + r; // = -q*yv
         const afterSub = `${formatTwoVarExpr(0, q, constTerm)}=0`;
         const qTerm = q === 1 ? 'y' : q === -1 ? '-y' : `${q}y`;
         questions.push(`若 $x=${xv}$，$y=${nm}$ 為方程式 $${eqStr}$ 的解，求 $${nm}$ 的值。`);
         answers.push(`代入 $x=${xv}$，得 $${afterSub}$，整理得 $${qTerm}=${-constTerm}$，所以 $${nm}=${yv}$。`);
       } else {
         // 代入 y=yv → p*x + (q*yv+r) = 0
-        const constTerm = q * yv + r;   // = -p*xv
+        const constTerm = q * yv + r; // = -p*xv
         const afterSub = `${formatTwoVarExpr(p, 0, constTerm)}=0`;
         const pTerm = p === 1 ? 'x' : p === -1 ? '-x' : `${p}x`;
         questions.push(`若 $x=${nm}$，$y=${yv}$ 為方程式 $${eqStr}$ 的解，求 $${nm}$ 的值。`);
@@ -8472,13 +8699,14 @@
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-1-1 新增：代入求 x 係數（若(x₀,y₀)已知，ax+by+c=0 求 a）──────────
   function buildJ211FindXCoeffSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const names = ['a', 'b', 'm', 'k'];
 
     while (questions.length < count) {
@@ -8495,21 +8723,24 @@
       const eqStr = `${nm}x${separator}${restStr}=0`;
 
       // after substituting (xv, yv): xv*nm + bCoef*yv + c = 0
-      const byvPlusC = bCoef * yv + c;  // = -aVal*xv
+      const byvPlusC = bCoef * yv + c; // = -aVal*xv
       const byvPlusCStr = byvPlusC === 0 ? '' : byvPlusC > 0 ? `+${byvPlusC}` : `${byvPlusC}`;
       const xvTerm = xv === 1 ? nm : xv === -1 ? `-${nm}` : `${xv}${nm}`;
 
       questions.push(`若 $(x,y)=(${xv},${yv})$ 為方程式 $${eqStr}$ 的解，求 $${nm}$ 的值。`);
-      answers.push(`代入 $(x,y)=(${xv},${yv})$，得 $${xvTerm}${byvPlusCStr}=0$，整理得 $${xvTerm}=${-byvPlusC}$，所以 $${nm}=${aVal}$。`);
+      answers.push(
+        `代入 $(x,y)=(${xv},${yv})$，得 $${xvTerm}${byvPlusCStr}=0$，整理得 $${xvTerm}=${-byvPlusC}$，所以 $${nm}=${aVal}$。`
+      );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-1-1 新增：找任意一組整數解 ────────────────────────────────────────
   function buildJ211AnyOneSolutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     while (questions.length < count) {
       const a = pickNonZero(-4, 4);
@@ -8520,23 +8751,38 @@
       if (Math.abs(c) < 3) continue;
 
       const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
-      const subRhs = c - a * hintX;   // = b * hintY
+      const subRhs = c - a * hintX; // = b * hintY
       const yTerm = formatTwoVarExpr(0, b, 0);
 
       questions.push(`已知 $x$、$y$ 為整數，試找出滿足 $${eqStr}$ 的任意一組解。`);
-      answers.push(`令 $x=${hintX}$，代入得 $${yTerm}=${subRhs}$，解得 $y=${hintY}$，所以 $(x,y)=(${hintX},${hintY})$ 為一組整數解。`);
+      answers.push(
+        `令 $x=${hintX}$，代入得 $${yTerm}=${subRhs}$，解得 $y=${hintY}$，所以 $(x,y)=(${hintX},${hintY})$ 為一組整數解。`
+      );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-1-1 新增：所有正整數解（x,y > 0）─────────────────────────────────
   function buildJ211AllPosIntSolutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const coefPairs = [
-      [1, 1], [1, 2], [1, 3], [2, 3], [2, 5], [3, 4], [3, 5],
-      [1, 4], [4, 5], [1, 5], [2, 1], [3, 1], [5, 2], [4, 3],
+      [1, 1],
+      [1, 2],
+      [1, 3],
+      [2, 3],
+      [2, 5],
+      [3, 4],
+      [3, 5],
+      [1, 4],
+      [4, 5],
+      [1, 5],
+      [2, 1],
+      [3, 1],
+      [5, 2],
+      [4, 3],
     ];
 
     while (questions.length < count) {
@@ -8554,16 +8800,19 @@
       questions.push(`已知 $x$、$y$ 為正整數，求滿足 $${eqStr}$ 的所有解。`);
       const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
       const yExpr = b === 1 ? 'y' : `${b}y`;
-      answers.push(`由 $${eqStr}$ 可得 $${yExpr}=${total}${a > 0 ? '-' : '+'}${a > 0 ? a : -a}x$，逐一代入正整數 $x=1,2,\\ldots$ 並驗證 $y$ 為正整數，可得所有解為 ${pairText}。`);
+      answers.push(
+        `由 $${eqStr}$ 可得 $${yExpr}=${total}${a > 0 ? '-' : '+'}${a > 0 ? a : -a}x$，逐一代入正整數 $x=1,2,\\ldots$ 並驗證 $y$ 為正整數，可得所有解為 ${pairText}。`
+      );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-1-1 新增：有條件整數解（負整數 / 小於N的正整數 / 介於±N之間）──────
   function buildJ211RangeIntSolutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     while (questions.length < count) {
       const typeIdx = questions.length % 3;
@@ -8587,8 +8836,9 @@
         const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
         questions.push(`設 $x$、$y$ 為負整數，求方程式 $${eqStr}$ 的所有解。`);
         const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
-        answers.push(`因 $x,y$ 皆為負整數（即 $x\\leq-1$，$y\\leq-1$），逐一代入 $x=-1,-2,\\ldots$ 並檢查 $y$ 是否為負整數，可得所有解為 ${pairText}。`);
-
+        answers.push(
+          `因 $x,y$ 皆為負整數（即 $x\\leq-1$，$y\\leq-1$），逐一代入 $x=-1,-2,\\ldots$ 並檢查 $y$ 是否為負整數，可得所有解為 ${pairText}。`
+        );
       } else if (typeIdx === 1) {
         // 設x、y都是小於N的正整數（1 ≤ x,y < N）
         const N = randInt(8, 12);
@@ -8607,8 +8857,9 @@
         const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
         questions.push(`設 $x$、$y$ 都是小於 $${N}$ 的正整數，求方程式 $${eqStr}$ 的所有解。`);
         const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
-        answers.push(`因 $1\\leq x,y<${N}$，代入 $x=1,2,\\ldots,${N-1}$ 並驗證 $y$ 是否滿足條件，可得所有解為 ${pairText}。`);
-
+        answers.push(
+          `因 $1\\leq x,y<${N}$，代入 $x=1,2,\\ldots,${N - 1}$ 並驗證 $y$ 是否滿足條件，可得所有解為 ${pairText}。`
+        );
       } else {
         // 設x、y都是介於-N與N之間的整數
         const N = 10;
@@ -8629,17 +8880,20 @@
         const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
         questions.push(`設 $x$、$y$ 都是介於 $-${N}$ 與 $${N}$ 之間的整數，求方程式 $${eqStr}$ 的所有解。`);
         const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
-        answers.push(`因 $-${N}\\leq x,y\\leq${N}$，代入 $x=-${N},-${N-1},\\ldots,${N}$ 並驗證 $y$ 是否在範圍內，可得所有解為 ${pairText}。`);
+        answers.push(
+          `因 $-${N}\\leq x,y\\leq${N}$，代入 $x=-${N},-${N - 1},\\ldots,${N}$ 並驗證 $y$ 是否在範圍內，可得所有解為 ${pairText}。`
+        );
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-1-1 新增：質數條件整數解 ─────────────────────────────────────────
   function buildJ211PrimeSolutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const smallPrimes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
 
     function isPrime(n) {
@@ -8650,7 +8904,16 @@
       return true;
     }
 
-    const coefPairs = [[3, 2], [2, 3], [5, 2], [3, 4], [7, 2], [5, 3], [2, 5], [4, 3]];
+    const coefPairs = [
+      [3, 2],
+      [2, 3],
+      [5, 2],
+      [3, 4],
+      [7, 2],
+      [5, 3],
+      [2, 5],
+      [4, 3],
+    ];
 
     while (questions.length < count) {
       const [a, b] = coefPairs[questions.length % coefPairs.length];
@@ -8674,16 +8937,19 @@
       const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
       questions.push(`設 $x$、$y$ 均為質數，求方程式 $${eqStr}$ 的所有解。`);
       const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
-      answers.push(`逐一代入質數 $x=2,3,5,7,\\ldots$，計算 $y=\\dfrac{${c}-${a}x}{${b}}$，篩選出 $y$ 也為質數的情況，可得所有解為 ${pairText}。`);
+      answers.push(
+        `逐一代入質數 $x=2,3,5,7,\\ldots$，計算 $y=\\dfrac{${c}-${a}x}{${b}}$，篩選出 $y$ 也為質數的情況，可得所有解為 ${pairText}。`
+      );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-1-1 新增：購物情境應用題 ──────────────────────────────────────────
   function buildJ211ShoppingWordSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     const items = [
       { item1: '茶葉蛋', unit1: '顆', item2: '魚板', unit2: '條' },
@@ -8699,7 +8965,7 @@
       const p2 = randInt(1, 6);
       if (p1 === p2) continue;
       const g = gcdInt(p1, p2);
-      const total = (p1 + p2) + g * randInt(2, 5);
+      const total = p1 + p2 + g * randInt(2, 5);
 
       const pairs = [];
       for (let x = 1; p1 * x < total; x += 1) {
@@ -8713,26 +8979,33 @@
 
       if (questions.length % 2 === 0) {
         // 問法一：列出所有可能買法
-        questions.push(`${item1}每${unit1} $${p1}$ 元，${item2}每${unit2} $${p2}$ 元，${buyer}兩樣都買，共花了 $${total}$ 元，請寫出所有可能的買法。`);
+        questions.push(
+          `${item1}每${unit1} $${p1}$ 元，${item2}每${unit2} $${p2}$ 元，${buyer}兩樣都買，共花了 $${total}$ 元，請寫出所有可能的買法。`
+        );
         const buyText = pairs.map(([x, y]) => `${item1} $${x}$ ${unit1}、${item2} $${y}$ ${unit2}`).join('；');
-        answers.push(`設買 ${item1} $x$ ${unit1}、${item2} $y$ ${unit2}，列方程式 $${p1}x+${p2}y=${total}$。因 $x,y$ 為正整數，逐一驗算可得：${buyText}。`);
+        answers.push(
+          `設買 ${item1} $x$ ${unit1}、${item2} $y$ ${unit2}，列方程式 $${p1}x+${p2}y=${total}$。因 $x,y$ 為正整數，逐一驗算可得：${buyText}。`
+        );
       } else {
         // 問法二：問某一項的數量
-        questions.push(`${buyer}買了每${unit1} $${p1}$ 元的${item1}及每${unit2} $${p2}$ 元的${item2}各若干，共花了 $${total}$ 元，她可能買了幾${unit2}${item2}？`);
+        questions.push(
+          `${buyer}買了每${unit1} $${p1}$ 元的${item1}及每${unit2} $${p2}$ 元的${item2}各若干，共花了 $${total}$ 元，她可能買了幾${unit2}${item2}？`
+        );
         const yCounts = pairs.map(([, y]) => `$${y}$ ${unit2}`).join('、');
-        answers.push(`設買${item1} $x$ ${unit1}、${item2} $y$ ${unit2}，列方程式 $${p1}x+${p2}y=${total}$。因 $x,y$ 為正整數，逐一驗算可得 $y$ 可為 ${yCounts}。`);
+        answers.push(
+          `設買${item1} $x$ ${unit1}、${item2} $y$ ${unit2}，列方程式 $${p1}x+${p2}y=${total}$。因 $x,y$ 為正整數，逐一驗算可得 $y$ 可為 ${yCounts}。`
+        );
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
-
 
   // ── j2-4-2 新增：前幾次具體分數已知，求下次最低分（具體分數平均門檻）────
   function buildJ242SpecificScoreThresholdSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const names = ['小梅', '小翔', '小安', '明軒', '欣宜', '小宇', '美琪', '阿昇'];
     const subjects = ['數學', '英語', '自然', '社會', '國文'];
 
@@ -8748,7 +9021,7 @@
       const prevTotal = prevScores.reduce((a, b) => a + b, 0);
       const totalRounds = prevCount + 1;
       // "超過 targetAvg" → strict > → x > targetAvg * totalRounds - prevTotal
-      const threshold = targetAvg * totalRounds - prevTotal;  // x must be > threshold
+      const threshold = targetAvg * totalRounds - prevTotal; // x must be > threshold
       const minScore = threshold + 1;
       if (minScore < 1 || minScore > 150) continue;
 
@@ -8766,20 +9039,21 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-4-2 新增：正整數列舉型（列出所有滿足條件的正整數）─────────────────
   function buildJ242PosIntEnumerateSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     while (questions.length < count) {
       // Always use x/2 (一半) with odd x_max so M is a .5 decimal
-      const x_max = 2 * randInt(1, 7) - 1;  // odd: 1,3,5,7,...,13
+      const x_max = 2 * randInt(1, 7) - 1; // odd: 1,3,5,7,...,13
       const c = randInt(1, 7);
       // M = x_max/2 + c (which is x.5 since x_max is odd → x_max/2 = n+0.5)
-      const M = x_max / 2 + c;  // e.g. 6.5+1=7.5
+      const M = x_max / 2 + c; // e.g. 6.5+1=7.5
       const MDisplay = M.toFixed(1);
 
       // Validate: all positive integers x where x/2 + c ≤ M
@@ -8825,13 +9099,14 @@
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-4-2 新增：某整數 / 某正數直接條件型 ───────────────────────────────
   function buildJ242IntegerConditionWordSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     while (questions.length < count) {
       const typeIdx = questions.length % 5;
@@ -8841,7 +9116,7 @@
         const a = randInt(2, 6);
         const b = randInt(1, 10);
         const ansInt = randInt(1, 8);
-        const c = a * ansInt + b - randInt(0, a - 1);  // c such that ceil((c-b)/a)=ansInt
+        const c = a * ansInt + b - randInt(0, a - 1); // c such that ceil((c-b)/a)=ansInt
         const rhs = c - b;
         const bound = makeFraction(rhs, a);
         const minVal = minIntegerForIneq('≥', bound);
@@ -8857,7 +9132,7 @@
         const a = randInt(2, 5);
         const b = randInt(1, 8);
         const ansInt = randInt(2, 9);
-        const c = a * ansInt + b + randInt(1, a);  // c such that max is ansInt
+        const c = a * ansInt + b + randInt(1, a); // c such that max is ansInt
         const rhs = c - b;
         const bound = makeFraction(rhs, a);
         const maxVal = maxIntegerForIneq('<', bound);
@@ -8885,7 +9160,7 @@
         const M = ansInt / 2 - cVal + 0.5;
         if (M <= 0) continue;
         const MDisp = M % 1 === 0 ? M.toString() : M.toFixed(1);
-        const rhsVal = M + cVal;  // = (ansInt+1)/2
+        const rhsVal = M + cVal; // = (ansInt+1)/2
         const rhsDisp = rhsVal % 1 === 0 ? rhsVal.toString() : rhsVal.toFixed(1);
         questions.push(`若某整數的一半減 $${cVal}$ 小於 $${MDisp}$，求此數最大應為多少？`);
         answers.push(
@@ -8898,7 +9173,7 @@
         // "若某正數的a倍加b小於c，求此正數的範圍" ax+b<c, x>0 → 0<x<(c-b)/a
         const a = randInt(2, 6);
         const b = randInt(1, 8);
-        const rhsVal = randInt(a + b + 1, a + b + 3 * a);  // ensure positive solution exists
+        const rhsVal = randInt(a + b + 1, a + b + 3 * a); // ensure positive solution exists
         const c = rhsVal;
         const cMinusB = c - b;
         const bound = makeFraction(cMinusB, a);
@@ -8914,32 +9189,28 @@
         // "若某整數大於N，求此數最小應為多少"  x > N → min = N+1
         const N = randInt(3, 30);
         questions.push(`若某整數大於 $${N}$，求此數最小應為多少？`);
-        answers.push(
-          formatJ242Answer(
-            `${N + 1}`,
-            `依題意 $x>${N}$，所以此整數的最小值為 ${N + 1}。`
-          )
-        );
+        answers.push(formatJ242Answer(`${N + 1}`, `依題意 $x>${N}$，所以此整數的最小值為 ${N + 1}。`));
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-4-2 新增：圖形底/長含變數表達式（長方形 + 三角形輪換）────────────
   function buildJ242ShapeVariableExprSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     while (questions.length < count) {
       const shapeIdx = questions.length % 2;
 
       if (shapeIdx === 0) {
         // 長方形：長 = (x - a), 寬 = b, 面積 < C → a < x < a + C/b
-        const a = randInt(2, 8);   // offset in length expr
-        const b = randInt(1, 5);   // width
-        const C = b * randInt(2, 8);  // area limit (multiple of b for clean answer)
-        const xMax_num = C;        // x < a + C/b → x < a + xMax_num/b
+        const a = randInt(2, 8); // offset in length expr
+        const b = randInt(1, 5); // width
+        const C = b * randInt(2, 8); // area limit (multiple of b for clean answer)
+        const xMax_num = C; // x < a + C/b → x < a + xMax_num/b
         const xMaxFrac = makeFraction(xMax_num, b);
         const upperBound = addFraction(makeFraction(a), xMaxFrac);
         const upperStr = fractionToLatex(upperBound, true);
@@ -8954,22 +9225,22 @@
         );
       } else {
         // 三角形：底 = (ax + b), 高 = h, 面積 ≥ S → x ≥ (2S/h - b) / a
-        const aCoef = randInt(1, 4);   // coefficient of x in base
+        const aCoef = randInt(1, 4); // coefficient of x in base
         const bConst = -randInt(1, 5); // negative offset in base (e.g. 3x-4)
         const h = randInt(1, 9);
         // pick answer x_min (positive integer), compute S
         const x_min = randInt(2, 8);
         const baseAtMin = aCoef * x_min + bConst;
         if (baseAtMin <= 0) continue;
-        const S_exact = aCoef * x_min * h / 2 + bConst * h / 2;
+        const S_exact = (aCoef * x_min * h) / 2 + (bConst * h) / 2;
         // S must be positive and the inequality should be ≥
-        const S = Math.max(1, Math.ceil(S_exact - h * aCoef / 2 + 1));
+        const S = Math.max(1, Math.ceil(S_exact - (h * aCoef) / 2 + 1));
         if (S <= 0) continue;
         // Verify: (aCoef*x_min + bConst)*h/2 ≥ S → x_min is indeed the min
-        const lhsAtMin = (aCoef * x_min + bConst) * h / 2;
+        const lhsAtMin = ((aCoef * x_min + bConst) * h) / 2;
         if (lhsAtMin < S) continue;
-        const lhsAtMinMinus1 = (aCoef * (x_min - 1) + bConst) * h / 2;
-        if (lhsAtMinMinus1 >= S) continue;  // x_min-1 also satisfies → not the minimum
+        const lhsAtMinMinus1 = ((aCoef * (x_min - 1) + bConst) * h) / 2;
+        if (lhsAtMinMinus1 >= S) continue; // x_min-1 also satisfies → not the minimum
 
         const bConstStr = bConst < 0 ? `${bConst}` : `+${bConst}`;
         const baseExpr = aCoef === 1 ? `x${bConstStr}` : `${aCoef}x${bConstStr}`;
@@ -8991,13 +9262,14 @@
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-4-2 新增：父子年齡過去比較型 ─────────────────────────────────────
   function buildJ242AgePastRelationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const fatherNames = ['欣宜的父親', '明哲的父親', '小安的爸爸', '美琪的父親', '小翔的爸爸'];
     const childNames = ['欣宜', '明哲', '小安', '美琪', '小翔'];
 
@@ -9006,9 +9278,9 @@
       const fatherLabel = fatherNames[idx];
       const childLabel = childNames[idx];
 
-      const F = randInt(35, 85);   // father's current age
-      const N = randInt(2, 5);     // years ago
-      const k = randInt(2, 4);     // multiplier
+      const F = randInt(35, 85); // father's current age
+      const N = randInt(2, 5); // years ago
+      const k = randInt(2, 4); // multiplier
       const extra = randInt(1, 6); // extra offset
 
       // (F-N) > k*(C-N) + extra → solve for C (child's current age)
@@ -9038,15 +9310,14 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
-
 
   // ── j2-4-2 新增：解不等式求整數解 ────────────────────────────────────────
   function buildJ242SolveIneqIntegerSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     const templates = [
       // variant 0: 求最大整數解 (ax > bx + c → x > c/(a-b))
@@ -9064,14 +9335,16 @@
         const rhsConst = lhsConst - c;
         const rhsCoef = b;
         // lhsConst - lhsCoef*x > rhsConst - rhsCoef*x
-        const lhsStr = rhsConst >= 0
-          ? `${lhsConst}-${lhsCoef}x>${rhsConst}-${rhsCoef}x`
-          : `${lhsConst}-${lhsCoef}x>${rhsConst}+${-rhsCoef}x`;
+        const lhsStr =
+          rhsConst >= 0
+            ? `${lhsConst}-${lhsCoef}x>${rhsConst}-${rhsCoef}x`
+            : `${lhsConst}-${lhsCoef}x>${rhsConst}+${-rhsCoef}x`;
         return {
-          q: `解不等式 $${lhsConst}-${lhsCoef}x>${rhsConst === 0 ? '' : `${rhsConst < 0 ? rhsConst : `+${rhsConst}`}`}${rhsCoef > 0 ? `${rhsConst === 0 ? '' : ''}${rhsCoef === 1 ? '' : rhsCoef}x` : `${-rhsCoef}x`}` +
-             `$，求此不等式的最大整數解。`,
+          q:
+            `解不等式 $${lhsConst}-${lhsCoef}x>${rhsConst === 0 ? '' : `${rhsConst < 0 ? rhsConst : `+${rhsConst}`}`}${rhsCoef > 0 ? `${rhsConst === 0 ? '' : ''}${rhsCoef === 1 ? '' : rhsCoef}x` : `${-rhsCoef}x`}` +
+            `$，求此不等式的最大整數解。`,
           a: `整理得 $(${lhsCoef}-${rhsCoef})x < ${c}$，即 $${diff}x < ${c}$，解得 $x < ${fractionToLatex(bound, true)}$。最大整數解為 $${maxInt}$。`,
-          ans: `${maxInt}`
+          ans: `${maxInt}`,
         };
       },
       // variant 1: 求正整數解個數 (3+8x ≦ 19+5x → x ≦ ...)
@@ -9089,7 +9362,7 @@
         return {
           q: `滿足不等式 $${c}+${a}x\\leq ${d}+${b}x$ 的正整數 $x$ 共有幾個？`,
           a: `整理得 $(${a}-${b})x\\leq ${rhs2}$，即 $x\\leq ${fractionToLatex(bound, true)}$。正整數解為 $1,2,\\ldots,${maxInt}$，共 $${posCount}$ 個。`,
-          ans: `${posCount} 個`
+          ans: `${posCount} 個`,
         };
       },
       // variant 2: 聯立整數範圍求個數
@@ -9112,7 +9385,7 @@
         return {
           q: `滿足不等式 $-${M}<${aCoef}x+${b}<${N}$ 的整數解為？`,
           a: `各邊減去 $${b}$ 得 $-${M + b}<${aCoef}x<${N - b}$，再除以 $${aCoef}$ 得 $${fractionToLatex(loFrac, true)}<x<${fractionToLatex(hiFrac, true)}$。整數解為 $${intList}$。`,
-          ans: `${intList}`
+          ans: `${intList}`,
         };
       },
       // variant 3: 求最小整數解（2x+9 < 7x-1 型）
@@ -9129,7 +9402,7 @@
         return {
           q: `滿足不等式 $${b}x+${c1}<${a}x-${c2}$ 的最小正整數解為何？`,
           a: `整理得 $(${a}-${b})x>${c1}+${c2}=${rhs3}$，即 $x>${fractionToLatex(bound, true)}$。最小正整數解為 $${minInt}$。`,
-          ans: `${minInt}`
+          ans: `${minInt}`,
         };
       },
     ];
@@ -9146,13 +9419,14 @@
       answers.push(formatJ242Answer(result.ans, result.a));
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-4-2 新增：已知解求係數 ─────────────────────────────────────────────
   function buildJ242GivenSolutionFindCoeffSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -9172,17 +9446,23 @@
         // solution x≧M means 2-a<0 and M = -(10+rhsConst)/(2-a) → 2-a = -(10+rhsConst)/M
         // Only valid if M≠0 and (10+rhsConst) divisible
         const C = 10 + rhsConst;
-        if (M === 0 || C % M !== 0) { i -= 1; continue; }
-        const ka = 2 - (-C / M); // 2-a = -C/M → a = 2+C/M
+        if (M === 0 || C % M !== 0) {
+          i -= 1;
+          continue;
+        }
+        const ka = 2 - -C / M; // 2-a = -C/M → a = 2+C/M
         const a = 2 + C / M;
-        if (!Number.isInteger(a) || a === 2) { i -= 1; continue; }
-        questions.push(
-          `不等式 $2x-${rhsConst}\\leq ax+10$ 的解為 $x\\geq ${M}$，求 $a$ 的值。`
+        if (!Number.isInteger(a) || a === 2) {
+          i -= 1;
+          continue;
+        }
+        questions.push(`不等式 $2x-${rhsConst}\\leq ax+10$ 的解為 $x\\geq ${M}$，求 $a$ 的值。`);
+        answers.push(
+          formatJ242Answer(
+            `$a=${a}$`,
+            `整理得 $(2-a)x\\leq ${C}$。因為解為 $x\\geq ${M}$，表示 $x$ 符號反向，即 $2-a<0$，且 $x\\geq \\dfrac{${C}}{2-a}=${M}$，故 $2-a=${-C / M}$，解得 $a=${a}$。`
+          )
         );
-        answers.push(formatJ242Answer(
-          `$a=${a}$`,
-          `整理得 $(2-a)x\\leq ${C}$。因為解為 $x\\geq ${M}$，表示 $x$ 符號反向，即 $2-a<0$，且 $x\\geq \\dfrac{${C}}{2-a}=${M}$，故 $2-a=${-C / M}$，解得 $a=${a}$。`
-        ));
         continue;
       }
 
@@ -9190,7 +9470,7 @@
         // 兩不等式解相同求 k: ax+b≦c 與 kx+d≧e 有相同解
         const aCoef = randInt(2, 6);
         const b = randInt(1, 10);
-        const solNum = -randInt(1, 8);  // solution x≦solNum
+        const solNum = -randInt(1, 8); // solution x≦solNum
         // ax+b≦c → solution x≦(c-b)/aCoef = solNum → c = aCoef*solNum + b
         const c = aCoef * solNum + b;
         // kx+d≧e → solution x≧(e-d)/k = solNum → need x≦solNum, so kx≦c → k<0
@@ -9198,16 +9478,22 @@
         const e = d + randInt(2, 8);
         // kx+d≧e → kx≧e-d → x≦(e-d)/k (if k<0) = solNum → k = (e-d)/solNum
         const eDiffD = e - d;
-        if (solNum === 0 || eDiffD % solNum !== 0) { i -= 1; continue; }
+        if (solNum === 0 || eDiffD % solNum !== 0) {
+          i -= 1;
+          continue;
+        }
         const k = eDiffD / solNum;
-        if (k >= 0 || !Number.isInteger(k)) { i -= 1; continue; }
-        questions.push(
-          `不等式 $${aCoef}x+${b}\\leq ${c}$ 與 $kx+${d}\\geq ${e}$（$k\\neq 0$）的解相同，求 $k$ 的值。`
+        if (k >= 0 || !Number.isInteger(k)) {
+          i -= 1;
+          continue;
+        }
+        questions.push(`不等式 $${aCoef}x+${b}\\leq ${c}$ 與 $kx+${d}\\geq ${e}$（$k\\neq 0$）的解相同，求 $k$ 的值。`);
+        answers.push(
+          formatJ242Answer(
+            `$k=${k}$`,
+            `先解第一式：$${aCoef}x\\leq ${c - b}$，解得 $x\\leq ${solNum}$。第二式 $kx+${d}\\geq ${e}$ 的解也須為 $x\\leq ${solNum}$，故 $kx\\geq ${eDiffD}$（$k<0$），即 $x\\leq \\dfrac{${eDiffD}}{k}=${solNum}$，解得 $k=${k}$。`
+          )
         );
-        answers.push(formatJ242Answer(
-          `$k=${k}$`,
-          `先解第一式：$${aCoef}x\\leq ${c - b}$，解得 $x\\leq ${solNum}$。第二式 $kx+${d}\\geq ${e}$ 的解也須為 $x\\leq ${solNum}$，故 $kx\\geq ${eDiffD}$（$k<0$），即 $x\\leq \\dfrac{${eDiffD}}{k}=${solNum}$，解得 $k=${k}$。`
-        ));
         continue;
       }
 
@@ -9223,13 +9509,13 @@
         const a2 = b2 + aMinusB;
         const rhsVal = aMinusB * M2 + c2 - c2; // = aMinusB*M2
         const d2Val = aMinusB * M2 + c2;
-        questions.push(
-          `已知 $a>${b2}$，且不等式 $ax-${b2}x+${c2}\\geq ${d2Val}$ 的解為 $x\\geq ${M2}$，求 $a$ 的值。`
+        questions.push(`已知 $a>${b2}$，且不等式 $ax-${b2}x+${c2}\\geq ${d2Val}$ 的解為 $x\\geq ${M2}$，求 $a$ 的值。`);
+        answers.push(
+          formatJ242Answer(
+            `$a=${a2}$`,
+            `整理得 $(a-${b2})x\\geq ${d2Val - c2}$。因為 $a>${b2}$，故 $a-${b2}>0$，解得 $x\\geq \\dfrac{${d2Val - c2}}{a-${b2}}=${M2}$，所以 $a-${b2}=${aMinusB}$，即 $a=${a2}$。`
+          )
         );
-        answers.push(formatJ242Answer(
-          `$a=${a2}$`,
-          `整理得 $(a-${b2})x\\geq ${d2Val - c2}$。因為 $a>${b2}$，故 $a-${b2}>0$，解得 $x\\geq \\dfrac{${d2Val - c2}}{a-${b2}}=${M2}$，所以 $a-${b2}=${aMinusB}$，即 $a=${a2}$。`
-        ));
         continue;
       }
 
@@ -9240,25 +9526,32 @@
       const rhs3Const = 8;
       // (14+a3)x ≧ 8+40 = 48 → x≧48/(14+a3)
       const numer3 = rhs3Const + 40;
-      if (numer3 % (lhs3Expand + a3) !== 0) { i -= 1; continue; }
+      if (numer3 % (lhs3Expand + a3) !== 0) {
+        i -= 1;
+        continue;
+      }
       const M3 = numer3 / (lhs3Expand + a3);
-      if (M3 <= 0 || M3 > 10) { i -= 1; continue; }
-      questions.push(
-        `不等式 $14(x-5)+30\\geq 8-${a3}x$ 的解為 $x\\geq ${M3}$，請驗證並求解。`
+      if (M3 <= 0 || M3 > 10) {
+        i -= 1;
+        continue;
+      }
+      questions.push(`不等式 $14(x-5)+30\\geq 8-${a3}x$ 的解為 $x\\geq ${M3}$，請驗證並求解。`);
+      answers.push(
+        formatJ242Answer(
+          `$x\\geq ${M3}$`,
+          `展開得 $14x-70+30\\geq 8-${a3}x$，整理得 $(14+${a3})x\\geq 8+40=${numer3}$，即 $${lhs3Expand + a3}x\\geq ${numer3}$，解得 $x\\geq ${M3}$。✓`
+        )
       );
-      answers.push(formatJ242Answer(
-        `$x\\geq ${M3}$`,
-        `展開得 $14x-70+30\\geq 8-${a3}x$，整理得 $(14+${a3})x\\geq 8+40=${numer3}$，即 $${lhs3Expand + a3}x\\geq ${numer3}$，解得 $x\\geq ${M3}$。✓`
-      ));
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-4-2 新增：聯立（雙重）不等式 ─────────────────────────────────────
   function buildJ242CompoundIneqSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -9277,17 +9570,20 @@
         const xHiFrac = makeFraction(hi - c, b);
         const xLo = Math.ceil((lo - c) / b + 1e-9);
         const xHi = Math.floor((hi - c) / b - 1e-9);
-        if (xHi < xLo) { i -= 1; continue; }
+        if (xHi < xLo) {
+          i -= 1;
+          continue;
+        }
         const intList = Array.from({ length: xHi - xLo + 1 }, (_, k) => xLo + k);
         const sumVal = intList.reduce((s, v) => s + v, 0);
         const listStr = intList.join('、');
-        questions.push(
-          `滿足不等式 $${lo}<${b}x+${c}<${hi}$ 的所有整數解的和為？`
+        questions.push(`滿足不等式 $${lo}<${b}x+${c}<${hi}$ 的所有整數解的和為？`);
+        answers.push(
+          formatJ242Answer(
+            `${sumVal}`,
+            `各邊減 $${c}$ 得 $${lo - c}<${b}x<${hi - c}$，再除以 $${b}$ 得 $${fractionToLatex(xLoFrac, true)}<x<${fractionToLatex(xHiFrac, true)}$。整數解為 $${listStr}$，和為 $${sumVal}$。`
+          )
         );
-        answers.push(formatJ242Answer(
-          `${sumVal}`,
-          `各邊減 $${c}$ 得 $${lo - c}<${b}x<${hi - c}$，再除以 $${b}$ 得 $${fractionToLatex(xLoFrac, true)}<x<${fractionToLatex(xHiFrac, true)}$。整數解為 $${listStr}$，和為 $${sumVal}$。`
-        ));
         continue;
       }
 
@@ -9307,15 +9603,18 @@
         const hiFrac = makeFraction(f - e, d);
         const hiXExact = Math.floor((f - e) / d - 1e-9);
         const intCount = Math.max(0, hiXExact - loX2 + 1);
-        if (intCount < 1 || intCount > 10) { i -= 1; continue; }
-        questions.push(
-          `同時滿足不等式 $${a}x+${b}\\geq ${c}$ 與 $${d}x+${e}<${f}$ 的正整數解共有幾個？`
+        if (intCount < 1 || intCount > 10) {
+          i -= 1;
+          continue;
+        }
+        questions.push(`同時滿足不等式 $${a}x+${b}\\geq ${c}$ 與 $${d}x+${e}<${f}$ 的正整數解共有幾個？`);
+        const intList2 = Array.from({ length: intCount }, (_, k) => loX2 + k).filter((x) => x > 0);
+        answers.push(
+          formatJ242Answer(
+            `${intList2.length} 個`,
+            `第一式：$x\\geq ${fractionToLatex(loFrac, true)}$，正整數解從 $${Math.max(1, loX2)}$ 開始。第二式：$x<${fractionToLatex(hiFrac, true)}$，最大整數解為 $${hiXExact}$。故正整數解為 $${intList2.join('、')}$，共 $${intList2.length}$ 個。`
+          )
         );
-        const intList2 = Array.from({ length: intCount }, (_, k) => loX2 + k).filter(x => x > 0);
-        answers.push(formatJ242Answer(
-          `${intList2.length} 個`,
-          `第一式：$x\\geq ${fractionToLatex(loFrac, true)}$，正整數解從 $${Math.max(1, loX2)}$ 開始。第二式：$x<${fractionToLatex(hiFrac, true)}$，最大整數解為 $${hiXExact}$。故正整數解為 $${intList2.join('、')}$，共 $${intList2.length}$ 個。`
-        ));
         continue;
       }
 
@@ -9333,13 +9632,13 @@
         const hiVal2 = loVal2 + randInt(3, 8);
         const f2 = Math.round(d2 * hiVal2 + e2 + 0.5); // slightly above d2*hiVal2+e2
         const hiFrac2 = makeFraction(f2 - e2, d2);
-        questions.push(
-          `若 $x$ 同時滿足 $${a2}x+${b2}>${c2}$ 與 $${d2}x+${e2}<${f2}$，求 $x$ 的範圍。`
+        questions.push(`若 $x$ 同時滿足 $${a2}x+${b2}>${c2}$ 與 $${d2}x+${e2}<${f2}$，求 $x$ 的範圍。`);
+        answers.push(
+          formatJ242Answer(
+            `$${fractionToLatex(loFrac2, true)}<x<${fractionToLatex(hiFrac2, true)}$`,
+            `第一式整理：$x>${fractionToLatex(loFrac2, true)}$；第二式整理：$x<${fractionToLatex(hiFrac2, true)}$。取交集得 $${fractionToLatex(loFrac2, true)}<x<${fractionToLatex(hiFrac2, true)}$。`
+          )
         );
-        answers.push(formatJ242Answer(
-          `$${fractionToLatex(loFrac2, true)}<x<${fractionToLatex(hiFrac2, true)}$`,
-          `第一式整理：$x>${fractionToLatex(loFrac2, true)}$；第二式整理：$x<${fractionToLatex(hiFrac2, true)}$。取交集得 $${fractionToLatex(loFrac2, true)}<x<${fractionToLatex(hiFrac2, true)}$。`
-        ));
         continue;
       }
 
@@ -9362,22 +9661,23 @@
       const hi3 = finalLo + randInt(2, 6);
       const intList3 = Array.from({ length: hi3 - finalLo + 1 }, (_, k) => finalLo + k);
       const sum3 = intList3.reduce((s, v) => s + v, 0);
-      questions.push(
-        `滿足不等式 $${a3}x-${b3}>${c3}\\geq ${d3}-${e3}x$ 的所有整數解的和為？`
+      questions.push(`滿足不等式 $${a3}x-${b3}>${c3}\\geq ${d3}-${e3}x$ 的所有整數解的和為？`);
+      answers.push(
+        formatJ242Answer(
+          `（見解析）`,
+          `第一式：$${a3}x-${b3}>${c3}$ → $x>${fractionToLatex(lo3Frac, true)}$，正整數解從 $${lo3Val}$。第二式：$${c3}\\geq ${d3}-${e3}x$ → $${e3}x\\geq ${d3 - c3}$ → $x\\geq ${fractionToLatex(loFrac3b, true)}$。取交集，整數解為 $${intList3.slice(0, 8).join('、')}\\ldots$（依題目限定範圍）。`
+        )
       );
-      answers.push(formatJ242Answer(
-        `（見解析）`,
-        `第一式：$${a3}x-${b3}>${c3}$ → $x>${fractionToLatex(lo3Frac, true)}$，正整數解從 $${lo3Val}$。第二式：$${c3}\\geq ${d3}-${e3}x$ → $${e3}x\\geq ${d3 - c3}$ → $x\\geq ${fractionToLatex(loFrac3b, true)}$。取交集，整數解為 $${intList3.slice(0, 8).join('、')}\\ldots$（依題目限定範圍）。`
-      ));
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-4-2 新增：絕對值不等式 ────────────────────────────────────────────
   function buildJ242AbsValueIneqSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -9399,13 +9699,13 @@
         const loVal = Math.ceil((-c - b) / a - 1e-9);
         const hiVal = Math.floor((c - b) / a + 1e-9);
         for (let x = loVal; x <= hiVal; x += 1) intList.push(x);
-        questions.push(
-          `解不等式 $|${a === 1 ? '' : a}x+${b}|\\leq ${c}$，並求整數解共有幾個。`
+        questions.push(`解不等式 $|${a === 1 ? '' : a}x+${b}|\\leq ${c}$，並求整數解共有幾個。`);
+        answers.push(
+          formatJ242Answer(
+            `$${loStr}\\leq x\\leq ${hiStr}$，共 $${intList.length}$ 個整數解`,
+            `由 $|${a === 1 ? '' : a}x+${b}|\\leq ${c}$ 得 $-${c}\\leq ${a === 1 ? '' : a}x+${b}\\leq ${c}$，各邊減 ${b} 再除以 ${a}，得 $${loStr}\\leq x\\leq ${hiStr}$。整數解：$${intList.join('、')}$，共 $${intList.length}$ 個。`
+          )
         );
-        answers.push(formatJ242Answer(
-          `${loStr}\\leq x\\leq ${hiStr}，共 ${intList.length} 個整數解`,
-          `由 $|${a === 1 ? '' : a}x+${b}|\\leq ${c}$ 得 $-${c}\\leq ${a === 1 ? '' : a}x+${b}\\leq ${c}$，各邊減 ${b} 再除以 ${a}，得 $${loStr}\\leq x\\leq ${hiStr}$。整數解：$${intList.join('、')}$，共 ${intList.length} 個。`
-        ));
         continue;
       }
 
@@ -9416,13 +9716,13 @@
         const lo = aCenter - bRadius;
         const hi = aCenter + bRadius;
         const totalLen = 2 * bRadius;
-        questions.push(
-          `不等式 $|x-a|\\leq b$（$a,b$ 為實數）的解為 $${lo}\\leq x\\leq ${hi}$，求 $a+b$。`
+        questions.push(`不等式 $|x-a|\\leq b$（$a,b$ 為實數）的解為 $${lo}\\leq x\\leq ${hi}$，求 $a+b$。`);
+        answers.push(
+          formatJ242Answer(
+            `${aCenter + bRadius}`,
+            `解 $|x-a|\\leq b$ 等價於 $a-b\\leq x\\leq a+b$。依題意 $a-b=${lo}$ 且 $a+b=${hi}$，兩式相加得 $2a=${lo + hi}$，即 $a=${aCenter}$；相減得 $2b=${totalLen}$，即 $b=${bRadius}$。故 $a+b=${aCenter + bRadius}$。`
+          )
         );
-        answers.push(formatJ242Answer(
-          `${aCenter + bRadius}`,
-          `解 $|x-a|\\leq b$ 等價於 $a-b\\leq x\\leq a+b$。依題意 $a-b=${lo}$ 且 $a+b=${hi}$，兩式相加得 $2a=${lo + hi}$，即 $a=${aCenter}$；相減得 $2b=${totalLen}$，即 $b=${bRadius}$。故 $a+b=${aCenter + bRadius}$。`
-        ));
         continue;
       }
 
@@ -9438,13 +9738,13 @@
         const loStr = fractionToLatex(loFrac, true);
         const hiStr = fractionToLatex(hiFrac, true);
         const lineLen = c; // (c-b)/2 - (-c-b)/2 = c
-        questions.push(
-          `解不等式 $|2x+${b}|\\leq ${c}$，並求解在數線上所對應線段的長度。`
+        questions.push(`解不等式 $|2x+${b}|\\leq ${c}$，並求解在數線上所對應線段的長度。`);
+        answers.push(
+          formatJ242Answer(
+            `$${loStr}\\leq x\\leq ${hiStr}$，線段長 $${lineLen}$`,
+            `由 $|2x+${b}|\\leq ${c}$ 得 $-${c}\\leq 2x+${b}\\leq ${c}$，整理得 $${loStr}\\leq x\\leq ${hiStr}$。線段長為 $${hiStr}-(${loStr})=${lineLen}$。`
+          )
         );
-        answers.push(formatJ242Answer(
-          `$${loStr}\\leq x\\leq ${hiStr}$，線段長 $${lineLen}$`,
-          `由 $|2x+${b}|\\leq ${c}$ 得 $-${c}\\leq 2x+${b}\\leq ${c}$，整理得 $${loStr}\\leq x\\leq ${hiStr}$。線段長為 $${hiStr}-(${loStr})=${lineLen}$。`
-        ));
         continue;
       }
 
@@ -9458,22 +9758,23 @@
       for (let x = lo + 1; x < hi; x += 1) {
         if (x !== center) intList2.push(x);
       }
-      questions.push(
-        `設 $x$ 為整數，滿足 $0<|x-${center}|<${radius}$ 的整數 $x$ 共有幾個？`
+      questions.push(`設 $x$ 為整數，滿足 $0<|x-${center}|<${radius}$ 的整數 $x$ 共有幾個？`);
+      answers.push(
+        formatJ242Answer(
+          `${intList2.length} 個`,
+          `$0<|x-${center}|<${radius}$ 表示 $x$ 與 $${center}$ 的距離大於 $0$（排除 $x=${center}$）且小於 $${radius}$，即 $${lo}<x<${hi}$ 且 $x\\neq ${center}$。整數解為 $${intList2.join('、')}$，共 $${intList2.length}$ 個。`
+        )
       );
-      answers.push(formatJ242Answer(
-        `${intList2.length} 個`,
-        `$0<|x-${center}|<${radius}$ 表示 $x$ 與 $${center}$ 的距離大於 $0$（排除 $x=${center}$）且小於 $${radius}$，即 $${lo}<x<${hi}$ 且 $x\\neq ${center}$。整數解為 $${intList2.join('、')}$，共 $${intList2.length}$ 個。`
-      ));
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-4-2 新增：已知 x 範圍求線性函數範圍 ──────────────────────────────
   function buildJ242XRangeLinearFuncSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -9487,13 +9788,13 @@
         const d = randInt(-8, 8);
         const fLo = c * xLo + d;
         const fHi = c * xHi + d;
-        questions.push(
-          `設 $${xLo}\\leq x\\leq ${xHi}$，求 $${c}x+${d}$ 的範圍。`
+        questions.push(`設 $${xLo}\\leq x\\leq ${xHi}$，求 $${c}x+${d}$ 的範圍。`);
+        answers.push(
+          formatJ242Answer(
+            `$${fLo}\\leq ${c}x+${d}\\leq ${fHi}$`,
+            `因為 $${c}>0$，對不等式各邊同乘以 $${c}$：$${c * xLo}\\leq ${c}x\\leq ${c * xHi}$，各邊加 $${d}$：$${fLo}\\leq ${c}x+${d}\\leq ${fHi}$。`
+          )
         );
-        answers.push(formatJ242Answer(
-          `$${fLo}\\leq ${c}x+${d}\\leq ${fHi}$`,
-          `因為 $${c}>0$，對不等式各邊同乘以 $${c}$：$${c * xLo}\\leq ${c}x\\leq ${c * xHi}$，各邊加 $${d}$：$${fLo}\\leq ${c}x+${d}\\leq ${fHi}$。`
-        ));
         continue;
       }
 
@@ -9503,15 +9804,15 @@
         const xHi = randInt(2, 7);
         const c = randInt(2, 6);
         const d = randInt(5, 20);
-        const fLo = -c * xHi + d;  // -c*x 在 x=xHi 時取最小
+        const fLo = -c * xHi + d; // -c*x 在 x=xHi 時取最小
         const fHi = -c * xLo + d;
-        questions.push(
-          `設 $${xLo}<x<${xHi}$，求 $-${c}x+${d}$ 的範圍。`
+        questions.push(`設 $${xLo}<x<${xHi}$，求 $-${c}x+${d}$ 的範圍。`);
+        answers.push(
+          formatJ242Answer(
+            `$${fLo}<-${c}x+${d}<${fHi}$`,
+            `因為 $-${c}<0$，各邊乘以 $-${c}$ 需反向：由 $${xLo}<x<${xHi}$ 得 $${-c * xHi}<-${c}x<${-c * xLo}$，再加 $${d}$ 得 $${fLo}<-${c}x+${d}<${fHi}$。`
+          )
         );
-        answers.push(formatJ242Answer(
-          `$${fLo}<-${c}x+${d}<${fHi}$`,
-          `因為 $-${c}<0$，各邊乘以 $-${c}$ 需反向：由 $${xLo}<x<${xHi}$ 得 $${-c * xHi}<-${c}x<${-c * xLo}$，再加 $${d}$ 得 $${fLo}<-${c}x+${d}<${fHi}$。`
-        ));
         continue;
       }
 
@@ -9525,13 +9826,13 @@
         const fHiIsInt = Number.isInteger(fHiExact);
         const maxK = fHiExact; // since x≦xHi is included
         const varName = ['k', 'p', 'q', 'm'][cycle % 4];
-        questions.push(
-          `若 $${xLo}\\leq x\\leq ${xHi}$，且 $${varName}=${c}x+${d}$，求 $${varName}$ 的最大整數值。`
+        questions.push(`若 $${xLo}\\leq x\\leq ${xHi}$，且 $${varName}=${c}x+${d}$，求 $${varName}$ 的最大整數值。`);
+        answers.push(
+          formatJ242Answer(
+            `${maxK}`,
+            `因 $${c}>0$，$${varName}$ 在 $x=${xHi}$ 時最大：$${varName}_{\\max}=${c}\\times ${xHi}+${d}=${maxK}$。最大整數值為 $${maxK}$。`
+          )
         );
-        answers.push(formatJ242Answer(
-          `${maxK}`,
-          `因 $${c}>0$，$${varName}$ 在 $x=${xHi}$ 時最大：$${varName}_{\\max}=${c}\\times ${xHi}+${d}=${maxK}$。最大整數值為 $${maxK}$。`
-        ));
         continue;
       }
 
@@ -9558,19 +9859,22 @@
       const xLoF2 = makeFraction(bConst - pHi, aConst);
       const xHiF2 = makeFraction(bConst - pLo, aConst);
       questions[questions.length - 1] = `設 $P=-${aConst}x+${bConst}$，若 $${pLo}<P<${pHi}$，求 $x$ 的範圍。`;
-      answers.push(formatJ242Answer(
-        `$${fractionToLatex(xLoF2, true)}<x<${fractionToLatex(xHiF2, true)}$`,
-        `由 $${pLo}<-${aConst}x+${bConst}<${pHi}$ 各邊減 $${bConst}$：$${pLo - bConst}<-${aConst}x<${pHi - bConst}$，再除以 $-${aConst}$（不等號反向）：$${fractionToLatex(xLoF2, true)}<x<${fractionToLatex(xHiF2, true)}$。`
-      ));
+      answers.push(
+        formatJ242Answer(
+          `$${fractionToLatex(xLoF2, true)}<x<${fractionToLatex(xHiF2, true)}$`,
+          `由 $${pLo}<-${aConst}x+${bConst}<${pHi}$ 各邊減 $${bConst}$：$${pLo - bConst}<-${aConst}x<${pHi - bConst}$，再除以 $-${aConst}$（不等號反向）：$${fractionToLatex(xLoF2, true)}<x<${fractionToLatex(xHiF2, true)}$。`
+        )
+      );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── j2-4-2 新增：濃度不等式應用 ──────────────────────────────────────────
   function buildJ242ConcentrationIneqSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -9581,20 +9885,26 @@
         const aConc = [9, 8, 6, 10, 12][cycle % 5];
         const bConc = [3, 4, 2, 5, 4][cycle % 5];
         const W = [500, 400, 300, 600, 500][cycle % 5];
-        if (aConc <= bConc) { i -= 1; continue; }
+        if (aConc <= bConc) {
+          i -= 1;
+          continue;
+        }
         // salt = aConc*W/100, after adding x water: salt/(W+x) ≦ bConc/100
         // aConc*W ≦ bConc*(W+x) → x ≧ (aConc-bConc)*W/bConc
         const xNumer = (aConc - bConc) * W;
         const xDenom = bConc;
         const xMin = xNumer / xDenom;
-        if (!Number.isInteger(xMin)) { i -= 1; continue; }
-        questions.push(
-          `${aConc}% 的食鹽水 ${W} 克，至少須加清水多少克，才能使食鹽水的濃度不超過 ${bConc}%？`
+        if (!Number.isInteger(xMin)) {
+          i -= 1;
+          continue;
+        }
+        questions.push(`${aConc}% 的食鹽水 ${W} 克，至少須加清水多少克，才能使食鹽水的濃度不超過 ${bConc}%？`);
+        answers.push(
+          formatJ242Answer(
+            `${xMin} 克`,
+            `設加清水 $x$ 克，食鹽量不變為 $${aConc}\\%\\times ${W}=${(aConc * W) / 100}$ 克。依題意 $\\dfrac{${(aConc * W) / 100}}{${W}+x}\\leq ${bConc}\\%$，整理得 $${(aConc * W) / 100}\\leq \\dfrac{${bConc}}{100}(${W}+x)$，解得 $x\\geq ${xMin}$。故至少加 $${xMin}$ 克清水。`
+          )
         );
-        answers.push(formatJ242Answer(
-          `${xMin} 克`,
-          `設加清水 $x$ 克，食鹽量不變為 $${aConc}\\%\\times ${W}=${aConc * W / 100}$ 克。依題意 $\\dfrac{${aConc * W / 100}}{${W}+x}\\leq ${bConc}\\%$，整理得 $${aConc * W / 100}\\leq \\dfrac{${bConc}}{100}(${W}+x)$，解得 $x\\geq ${xMin}$。故至少加 $${xMin}$ 克清水。`
-        ));
         continue;
       }
 
@@ -9603,24 +9913,30 @@
         const aConc = [9, 4, 6, 8, 5][cycle % 5];
         const bConc = [12, 7, 10, 12, 9][cycle % 5];
         const W = [500, 300, 400, 500, 600][cycle % 5];
-        if (aConc >= bConc) { i -= 1; continue; }
-        const saltInit = aConc * W / 100;
+        if (aConc >= bConc) {
+          i -= 1;
+          continue;
+        }
+        const saltInit = (aConc * W) / 100;
         // (saltInit + x)/(W + x) > bConc/100
         // 100*(saltInit + x) > bConc*(W+x)
         // 100*saltInit + 100x > bConc*W + bConc*x
         // (100-bConc)*x > bConc*W - 100*saltInit
         const coef = 100 - bConc;
         const rhs = bConc * W - 100 * saltInit;
-        if (coef <= 0) { i -= 1; continue; }
+        if (coef <= 0) {
+          i -= 1;
+          continue;
+        }
         const xBound = rhs / coef;
         const xMin = Math.ceil(xBound + 1e-9);
-        questions.push(
-          `${aConc}% 的食鹽水 ${W} 克，至少須加鹽多少克（取最小整數），才能使濃度超過 ${bConc}%？`
+        questions.push(`${aConc}% 的食鹽水 ${W} 克，至少須加鹽多少克（取最小整數），才能使濃度超過 ${bConc}%？`);
+        answers.push(
+          formatJ242Answer(
+            `${xMin} 克`,
+            `設加食鹽 $x$ 克，鹽水共 $(${W}+x)$ 克，鹽共 $(${saltInit}+x)$ 克。依題意 $\\dfrac{${saltInit}+x}{${W}+x}>\\dfrac{${bConc}}{100}$，整理得 $${coef}x>${rhs}$，即 $x>${xBound.toFixed(3)}$，取最小整數為 $${xMin}$ 克。`
+          )
         );
-        answers.push(formatJ242Answer(
-          `${xMin} 克`,
-          `設加食鹽 $x$ 克，鹽水共 $(${W}+x)$ 克，鹽共 $(${saltInit}+x)$ 克。依題意 $\\dfrac{${saltInit}+x}{${W}+x}>\\dfrac{${bConc}}{100}$，整理得 $${coef}x>${rhs}$，即 $x>${xBound.toFixed(3)}$，取最小整數為 $${xMin}$ 克。`
-        ));
         continue;
       }
 
@@ -9629,1158 +9945,1166 @@
       const bConc = [9, 12, 10, 8, 10][cycle % 5];
       const cConc = [6, 8, 5, 6, 7][cycle % 5];
       const W1 = [300, 200, 400, 300, 500][cycle % 5];
-      if (aConc >= cConc || cConc >= bConc) { i -= 1; continue; }
+      if (aConc >= cConc || cConc >= bConc) {
+        i -= 1;
+        continue;
+      }
       // (aConc*W1 + bConc*x) / (W1+x) ≧ cConc
       // aConc*W1 + bConc*x ≧ cConc*(W1+x)
       // (bConc-cConc)*x ≧ (cConc-aConc)*W1
       const coef2 = bConc - cConc;
       const rhs2 = (cConc - aConc) * W1;
       const xMin2 = rhs2 / coef2;
-      if (!Number.isInteger(xMin2) || xMin2 <= 0) { i -= 1; continue; }
+      if (!Number.isInteger(xMin2) || xMin2 <= 0) {
+        i -= 1;
+        continue;
+      }
       questions.push(
         `${aConc}% 的食鹽水 ${W1} 克與 ${bConc}% 的食鹽水 $x$ 克混合，若希望混合後的濃度不低於 ${cConc}%，求 $x$ 的範圍。`
       );
-      answers.push(formatJ242Answer(
-        `$x\\geq ${xMin2}$ 克`,
-        `混合後鹽為 $${aConc * W1 / 100}+\\dfrac{${bConc}x}{100}$ 克，水共 $${W1}+x$ 克。依題意 $\\dfrac{${aConc * W1 / 100}+\\frac{${bConc}x}{100}}{${W1}+x}\\geq \\dfrac{${cConc}}{100}$，整理得 $(${bConc}-${cConc})x\\geq (${cConc}-${aConc})\\times ${W1}=${rhs2}$，即 $${coef2}x\\geq ${rhs2}$，解得 $x\\geq ${xMin2}$。`
-      ));
+      answers.push(
+        formatJ242Answer(
+          `$x\\geq ${xMin2}$ 克`,
+          `混合後鹽為 $${(aConc * W1) / 100}+\\dfrac{${bConc}x}{100}$ 克，水共 $${W1}+x$ 克。依題意 $\\dfrac{${(aConc * W1) / 100}+\\frac{${bConc}x}{100}}{${W1}+x}\\geq \\dfrac{${cConc}}{100}$，整理得 $(${bConc}-${cConc})x\\geq (${cConc}-${aConc})\\times ${W1}=${rhs2}$，即 $${coef2}x\\geq ${rhs2}$，解得 $x\\geq ${xMin2}$。`
+        )
+      );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
   const nextConfigs = {
-      'j2-1-1-context-to-equation-drill': {
-        type: 'drill',
-        title: '文字敘述轉換為代數式',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ2ContextEquationSet(5);
-        },
+    'j2-1-1-context-to-equation-drill': {
+      type: 'drill',
+      title: '文字敘述轉換為代數式',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ2ContextEquationSet(5);
       },
-      'j2-1-1-context-linear-equation-drill': {
-        type: 'drill',
-        title: '文字情境列二元一次方程式',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ211ContextLinearEquationSet(5);
-        },
+    },
+    'j2-1-1-context-linear-equation-drill': {
+      type: 'drill',
+      title: '文字情境列二元一次方程式',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ211ContextLinearEquationSet(5);
       },
-      'j2-1-1-expression-classify-drill': {
-        type: 'drill',
-        title: '二元一次式與方程式判別',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ2ClassifySet(5);
-        },
+    },
+    'j2-1-1-expression-classify-drill': {
+      type: 'drill',
+      title: '二元一次式與方程式判別',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ2ClassifySet(5);
       },
-      'j2-1-1-evaluate-expression-drill': {
-        type: 'drill',
-        title: '求二元一次式的值',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ2EvaluateExpressionSet(5);
-        },
+    },
+    'j2-1-1-evaluate-expression-drill': {
+      type: 'drill',
+      title: '求二元一次式的值',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ2EvaluateExpressionSet(5);
       },
-      'j2-1-1-expression-simplify-drill': {
-        type: 'drill',
-        title: '二元一次式的化簡（合併同類項）',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ2ExpressionSimplifySet(5);
-        },
+    },
+    'j2-1-1-expression-simplify-drill': {
+      type: 'drill',
+      title: '二元一次式的化簡（合併同類項）',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ2ExpressionSimplifySet(5);
       },
-      'j2-1-1-distribute-expand-drill': {
-        type: 'drill',
-        title: '去括號與分配律運算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ2DistributeExpandSet(5);
-        },
+    },
+    'j2-1-1-distribute-expand-drill': {
+      type: 'drill',
+      title: '去括號與分配律運算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ2DistributeExpandSet(5);
       },
-      'j2-1-1-fraction-simplify-drill': {
-        type: 'drill',
-        title: '分數形式的化簡（通分）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ2FractionSimplifySet(5);
-        },
+    },
+    'j2-1-1-fraction-simplify-drill': {
+      type: 'drill',
+      title: '分數形式的化簡（通分）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ2FractionSimplifySet(5);
       },
-      'j2-1-1-ordered-pair-check-drill': {
-        type: 'drill',
-        title: '數對代入與成立判斷',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ2OrderedPairCheckSet(5);
-        },
+    },
+    'j2-1-1-ordered-pair-check-drill': {
+      type: 'drill',
+      title: '數對代入與成立判斷',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ2OrderedPairCheckSet(5);
       },
-      'j2-1-1-parameter-substitution-drill': {
-        type: 'drill',
-        title: '參數題代入求係數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ2ParameterSubstitutionSet(5);
-        },
+    },
+    'j2-1-1-parameter-substitution-drill': {
+      type: 'drill',
+      title: '參數題代入求係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ2ParameterSubstitutionSet(5);
       },
-      'j2-1-1-equivalent-transform-drill': {
-        type: 'drill',
-        title: '標準型整理（移項）',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ2EquivalentTransformSet(5);
-        },
+    },
+    'j2-1-1-equivalent-transform-drill': {
+      type: 'drill',
+      title: '標準型整理（移項）',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ2EquivalentTransformSet(5);
       },
-      'j2-1-1-integer-constraint-drill': {
-        type: 'drill',
-        title: '列出多組整數解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ2IntegerConstraintSet(5);
-        },
+    },
+    'j2-1-1-integer-constraint-drill': {
+      type: 'drill',
+      title: '列出多組整數解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ2IntegerConstraintSet(5);
       },
-      'j2-1-1-solve-for-variable-drill': {
-        type: 'drill',
-        title: '整理成 x 表示 y、y 表示 x',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ2SolveForVariableSet(5);
-        },
+    },
+    'j2-1-1-solve-for-variable-drill': {
+      type: 'drill',
+      title: '整理成 x 表示 y、y 表示 x',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ2SolveForVariableSet(5);
       },
-      'j2-1-1-find-var-value-drill': {
-        type: 'drill',
-        title: '代入求變數值（若x=c,y=a型）',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ211FindVarValueSet(5);
-        },
+    },
+    'j2-1-1-find-var-value-drill': {
+      type: 'drill',
+      title: '代入求變數值（若x=c,y=a型）',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ211FindVarValueSet(5);
       },
-      'j2-1-1-find-x-coeff-drill': {
-        type: 'drill',
-        title: '代入求x係數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ211FindXCoeffSet(5);
-        },
+    },
+    'j2-1-1-find-x-coeff-drill': {
+      type: 'drill',
+      title: '代入求x係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ211FindXCoeffSet(5);
       },
-      'j2-1-1-any-one-solution-drill': {
-        type: 'drill',
-        title: '任意一組整數解',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ211AnyOneSolutionSet(5);
-        },
+    },
+    'j2-1-1-any-one-solution-drill': {
+      type: 'drill',
+      title: '任意一組整數解',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ211AnyOneSolutionSet(5);
       },
-      'j2-1-1-all-pos-int-solution-drill': {
-        type: 'drill',
-        title: '所有正整數解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ211AllPosIntSolutionSet(5);
-        },
+    },
+    'j2-1-1-all-pos-int-solution-drill': {
+      type: 'drill',
+      title: '所有正整數解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ211AllPosIntSolutionSet(5);
       },
-      'j2-1-1-range-int-solution-drill': {
-        type: 'drill',
-        title: '有條件整數解（負整數/有界範圍）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ211RangeIntSolutionSet(5);
-        },
+    },
+    'j2-1-1-range-int-solution-drill': {
+      type: 'drill',
+      title: '有條件整數解（負整數/有界範圍）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ211RangeIntSolutionSet(5);
       },
-      'j2-1-1-prime-solution-drill': {
-        type: 'drill',
-        title: '質數條件整數解',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ211PrimeSolutionSet(5);
-        },
+    },
+    'j2-1-1-prime-solution-drill': {
+      type: 'drill',
+      title: '質數條件整數解',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ211PrimeSolutionSet(5);
       },
-      'j2-1-1-shopping-word-drill': {
-        type: 'drill',
-        title: '購物情境應用題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ211ShoppingWordSet(5);
-        },
+    },
+    'j2-1-1-shopping-word-drill': {
+      type: 'drill',
+      title: '購物情境應用題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ211ShoppingWordSet(5);
       },
+    },
 
-      'j2-1-2-substitution-basic-drill': {
-        type: 'drill',
-        title: '代入消去法的基礎練習',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ212SubstitutionBasicSet(5);
-        },
-      },
-      'j2-1-2-elimination-adjustment-drill': {
-        type: 'drill',
-        title: '加減消去法的係數調整',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ212EliminationAdjustmentSet(5);
-        },
-      },
-      'j2-1-2-bracket-simplify-drill': {
-        type: 'drill',
-        title: '先化簡再解聯立方程式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ212BracketSimplifySet(5);
-        },
-      },
-      'j2-1-2-fraction-decimal-drill': {
-        type: 'drill',
-        title: '分數與小數型的化簡',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ212FractionDecimalSet(5);
-        },
-      },
-      'j2-1-2-solution-type-drill': {
-        type: 'drill',
-        title: '解的個數判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ212SolutionTypeSet(5);
-        },
-      },
-      'j2-1-2-triple-equal-drill': {
-        type: 'drill',
-        title: '特殊結構運算（A=B=C）',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ212TripleEqualSet(5);
-        },
-      },
-      'j2-1-2-symmetric-system-drill': {
-        type: 'drill',
-        title: '特殊結構運算（係數對稱）',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ212SymmetricSet(5);
-        },
-      },
-      'j2-1-2-abs-zero-drill': {
-        type: 'drill',
-        title: '特殊結構運算（非負性質）',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ212AbsZeroSet(5);
-        },
-      },
-      'j2-1-2-known-solution-coeff-drill': {
-        type: 'drill',
-        title: '已知解反求係數',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ212KnownSolutionCoeffSet(5);
-        },
-      },
-      'j2-1-2-error-diagnosis-drill': {
-        type: 'drill',
-        title: '看錯題目（邏輯排錯）',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ212ErrorDiagnosisSet(5);
-        },
-      },
-      'j2-1-2-shared-solution-drill': {
-        type: 'drill',
-        title: '同解問題（兩組方程組共有解）',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ212SharedSolutionSet(5);
-        },
-      },
-      'j2-1-2-third-condition-drill': {
-        type: 'drill',
-        title: '解滿足第三個條件',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ212ThirdConditionSet(5);
-        },
-      },
-      'j2-1-2-special-reverse-drill': {
-        type: 'drill',
-        title: '特殊解情形的反求',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ212SpecialReverseSet(5);
-        },
-      },
-      'j2-1-2-reciprocal-substitution-drill': {
-        type: 'drill',
-        title: '倒數代換聯立方程式',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ212ReciprocalSubstitutionSet(5);
-        },
-      },
-      'j2-1-2-reciprocal-structure-drill': {
-        type: 'drill',
-        title: '和差倒數結構代換',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ212ReciprocalStructureSet(5);
-        },
-      },
-      'j2-1-2-two-solution-one-eq-drill': {
-        type: 'drill',
-        title: '兩組解求方程式係數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ212TwoSolutionOneEqSet(5);
-        },
-      },
-      'j2-1-3-money-ticket-drill': {
-        type: 'drill',
-        title: '濃度與混合問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ213MoneyTicketSet(5);
-        },
-      },
-      'j2-1-3-heads-coins-score-drill': {
-        type: 'drill',
-        title: '淨重、毛重與容器問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ213HeadsCoinsScoreSet(5);
-        },
-      },
-      'j2-1-3-digit-placevalue-drill': {
-        type: 'drill',
-        title: '數字位數與交換問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ213DigitPlaceValueSet(5);
-        },
-      },
-      'j2-1-3-age-chase-drill': {
-        type: 'drill',
-        title: '測驗得分與勝負判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ213AgeChaseSet(5);
-        },
-      },
-      'j2-1-3-speed-chase-drill': {
-        type: 'drill',
-        title: '行程速率與追趕問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ213SpeedChaseSet(5);
-        },
-      },
-      'j2-1-3-allocation-work-drill': {
-        type: 'drill',
-        title: '分配與工程問題',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ213AllocationWorkSet(5);
-        },
-      },
-      'j2-1-3-tiered-fee-drill': {
-        type: 'drill',
-        title: '基本費與超額計費問題',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ213TieredFeeSet(5);
-        },
-      },
-      'j2-1-3-classical-text-drill': {
-        type: 'drill',
-        title: '古文應用題',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ213ClassicalTextSet(5);
-        },
-      },
-      'j2-1-3-unit-price-system-drill': {
-        type: 'drill',
-        title: '單價與總價聯立問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ213UnitPriceSystemSet(5);
-        },
-      },
-      'j2-1-3-age-relation-drill': {
-        type: 'drill',
-        title: '年齡與倍數和差問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ213AgeRelationSet(5);
-        },
-      },
-      'j2-1-3-perimeter-relation-drill': {
-        type: 'drill',
-        title: '長寬與周長條件問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ213PerimeterRelationSet(5);
-        },
-      },
-      'j2-1-3-transfer-change-drill': {
-        type: 'drill',
-        title: '移轉後倍數相等問題',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ213TransferChangeSet(5);
-        },
-      },
-      'j2-1-3-travel-schedule-drill': {
-        type: 'drill',
-        title: '往返與準時行程問題',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ213TravelScheduleSet(5);
-        },
-      },
-      'j2-1-3-balance-scale-drill': {
-        type: 'drill',
-        title: '等臂天平稱重聯立方程',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ213BalanceScaleSet(5);
-        },
-      },
-      'j2-1-3-class-size-score-drill': {
-        type: 'drill',
-        title: '班級人數與成績分析',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ213ClassSizeScoreSet(5);
-        },
-      },
-      'j2-1-3-pairwise-sum-drill': {
-        type: 'drill',
-        title: '多人成對和問題',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ213PairwiseSumSet(5);
-        },
-      },
-      'j2-1-3-box-distribution-drill': {
-        type: 'drill',
-        title: '分配與分箱問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ213BoxDistributionSet(5);
-        },
-      },
-      'j2-2-1-axis-distance-drill': {
-        type: 'drill',
-        title: '點的坐標表示法與坐標軸距離',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ221AxisDistanceSet(5);
-        },
-      },
-      'j2-2-1-quadrant-basic-drill': {
-        type: 'drill',
-        title: '各象限及其性質符號判別',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ221QuadrantBasicSet(5);
-        },
-      },
-      'j2-2-1-translation-basic-drill': {
-        type: 'drill',
-        title: '坐標平面上的平移移動',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ221TranslationSet(5);
-        },
-      },
-      'j2-2-1-axis-special-drill': {
-        type: 'drill',
-        title: '坐標軸上的點與特殊位置判定',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ221AxisSpecialSet(5);
-        },
-      },
-      'j2-2-1-midpoint-drill': {
-        type: 'drill',
-        title: '中點坐標公式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ221MidpointSet(5);
-        },
-      },
-      'j2-2-1-symmetry-drill': {
-        type: 'drill',
-        title: '坐標平面上的對稱點',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ221SymmetrySet(5);
-        },
-      },
-      'j2-2-1-area-drill': {
-        type: 'drill',
-        title: '幾何圖形的面積計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ221AreaSet(5);
-        },
-      },
-      'j2-2-1-quadrant-reasoning-drill': {
-        type: 'drill',
-        title: '含代數參數的象限推理',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ221QuadrantReasoningSet(5);
-        },
-      },
-      'j2-2-1-nonnegative-drill': {
-        type: 'drill',
-        title: '絕對值與平方的非負性質應用',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ221NonnegativeSet(5);
-        },
-      },
-      'j2-2-2-point-line-relation-drill': {
-        type: 'drill',
-        title: '含有未知數的點與方程式關係',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ222PointLineRelationSet(5);
-        },
-      },
-      'j2-2-2-intercept-area-drill': {
-        type: 'drill',
-        title: '利用截距找交點與三角形面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ222InterceptAreaSet(5);
-        },
-      },
-      'j2-2-2-quadrant-exclusion-drill': {
-        type: 'drill',
-        title: '由係數正負判斷不通過之象限',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ222QuadrantExclusionSet(5);
-        },
-      },
-      'j2-2-2-parallel-perpendicular-drill': {
-        type: 'drill',
-        title: '水平線與鉛垂線的判定與方程',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ222ParallelPerpendicularSet(5);
-        },
-      },
-      'j2-2-2-line-from-points-drill': {
-        type: 'drill',
-        title: '已知兩點求直線方程式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ222LineFromPointsSet(5);
-        },
-      },
-      'j2-2-2-only-two-quadrants-drill': {
-        type: 'drill',
-        title: '進階判斷：只通過兩個象限',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ222TwoQuadrantsSet(5);
-        },
-      },
-      'j2-2-2-point-translation-line-drill': {
-        type: 'drill',
-        title: '點的平移與直線的變動',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ222TranslationLineSet(5);
-        },
-      },
-      'j2-2-2-two-lines-area-drill': {
-        type: 'drill',
-        title: '兩直線交點與坐標軸圍成面積',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ222TwoLinesAreaSet(5);
-        },
-      },
-      'j2-2-2-slope-intercept-drill': {
-        type: 'drill',
-        title: '斜率、截距與方程式互換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ222SlopeInterceptSet(5);
-        },
-      },
-      'j2-2-2-parallel-perpendicular-equation-drill': {
-        type: 'drill',
-        title: '過一點作平行線與垂直線',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ222ParallelPerpendicularEquationSet(5);
-        },
-      },
-      'j2-2-2-line-intersection-drill': {
-        type: 'drill',
-        title: '兩直線交點與參數判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ222LineIntersectionSet(5);
-        },
-      },
-      'j2-3-1-ratio-simplify-drill': {
-        type: 'drill',
-        title: '比例化簡與比值運算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ231RatioSimplifySet(5);
-        },
-      },
-      'j2-3-1-proportion-solve-drill': {
-        type: 'drill',
-        title: '比例式求解未知數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ231ProportionSolveSet(5);
-        },
-      },
-      'j2-3-1-relation-transform-drill': {
-        type: 'drill',
-        title: '關係式與比例式互換',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ231RelationTransformSet(5);
-        },
-      },
-      'j2-3-1-k-method-drill': {
-        type: 'drill',
-        title: '設比例常數求值',
-        difficulty: 'challenge',
-        questionCount: 5,
-        generate() {
-          return buildJ231KMethodSet(5);
-        },
-      },
-      'j2-3-1-basic-single-step-drill': {
-        type: 'drill',
-        title: '基本題型（單層動作）',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ231BasicSingleStepSet(5);
-        },
-      },
-      'j2-3-1-regular-two-step-drill': {
-        type: 'drill',
-        title: '正規題型（二層動作）',
-        difficulty: 'medium',
-        questionCount: 7,
-        generate() {
-          return buildJ231RegularTwoStepSet(7);
-        },
-      },
-      'j2-3-1-advanced-three-step-drill': {
-        type: 'drill',
-        title: '進階題型（三層動作）',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ231AdvancedThreeStepSet(5);
-        },
-      },
-      'j2-3-1-concentration-reverse-drill': {
-        type: 'drill',
-        title: '濃度混合與逆推稀釋題',
-        difficulty: 'challenge',
-        questionCount: 6,
-        generate() {
-          return buildJ231ConcentrationReverseSet(6);
-        },
-      },
-      'j2-3-1-chain-ratio-drill': {
-        type: 'drill',
-        title: '連比整合與分配',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ231ChainRatioSet(5);
-        },
-      },
-      'j2-3-2-basic-direct-inverse-drill': {
-        type: 'drill',
-        title: '基礎正反比運算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ232BasicDirectInverseSet(5);
-        },
-      },
-      'j2-3-2-linear-combo-proportion-drill': {
-        type: 'drill',
-        title: '線性組合式比例',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ232LinearComboProportionSet(5);
-        },
-      },
-      'j2-3-2-square-proportion-drill': {
-        type: 'drill',
-        title: '次方型比例',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ232SquareProportionSet(5);
-        },
-      },
-      'j2-3-2-chained-variation-drill': {
-        type: 'drill',
-        title: '正反比鏈接',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ232ChainedVariationSet(5);
-        },
-      },
-      'j2-3-2-percent-change-drill': {
-        type: 'drill',
-        title: '變量百分率異動下的比例計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ232PercentChangeSet(5);
-        },
-      },
-      'j2-3-2-word-judgment-drill': {
-        type: 'drill',
-        title: '正反比文字判斷',
-        difficulty: 'easy',
-        questionCount: 10,
-        generate() {
-          return buildJ232WordJudgmentSet(10);
-        },
-      },
-      'j2-3-2-shifted-variation-drill': {
-        type: 'drill',
-        title: '位移型正反比',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ232ShiftedVariationSet(5);
-        },
-      },
-      'j2-3-2-root-reciprocal-variation-drill': {
-        type: 'drill',
-        title: '平方根與倒平方結構正反比',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ232RootReciprocalVariationSet(5);
-        },
-      },
-      'j2-3-2-spring-scale-drill': {
-        type: 'drill',
-        title: '彈簧秤（胡克定律）應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ232SpringScaleSet(5);
-        },
-      },
-      'j2-3-2-work-manpower-drill': {
-        type: 'drill',
-        title: '工程人力反比應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ232WorkManpowerSet(5);
-        },
-      },
-      'j2-3-2-speed-race-drill': {
-        type: 'drill',
-        title: '速率比賽跑落後問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ232SpeedRaceSet(5);
-        },
-      },
-      'j2-3-2-dog-rabbit-drill': {
-        type: 'drill',
-        title: '犬兔步距速率問題',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ232DogRabbitSet(5);
-        },
-      },
-      'j2-4-1-inequality-language-drill': {
-        type: 'drill',
-        title: '基本判定與直覺題',
-        difficulty: 'easy',
-        questionCount: 8,
-        generate() {
-          return buildJ241InequalityLanguageSet(8);
-        },
-      },
-      'j2-4-1-inequality-integer-drill': {
-        type: 'drill',
-        title: '正規解不等式（整數型）',
-        difficulty: 'easy',
-        questionCount: 6,
-        generate() {
-          return buildJ241IntegerSolveSet(6);
-        },
-      },
-      'j2-4-1-inequality-fraction-drill': {
-        type: 'drill',
-        title: '進階運算題（分數型）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ241FractionSolveSet(5);
-        },
-      },
-      'j2-4-1-inequality-decimal-drill': {
-        type: 'drill',
-        title: '進階運算題（小數型）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ241DecimalSolveSet(5);
-        },
-      },
-      'j2-4-1-inequality-range-drill': {
-        type: 'drill',
-        title: '範圍推導',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildJ241RangeSet(6);
-        },
-      },
-      'j2-4-1-inequality-reverse-coeff-drill': {
-        type: 'drill',
-        title: '由解逆推原不等式中的未知係數',
-        difficulty: 'hard',
-        questionCount: 6,
-        generate() {
-          return buildJ241ReverseCoeffSet(6);
-        },
-      },
-      'j2-4-1-inequality-known-solution-range-drill': {
-        type: 'drill',
-        title: '已知解反求參數範圍',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ241KnownSolutionParamRangeSet(5);
-        },
-      },
-      'j2-4-1-inequality-same-solution-drill': {
-        type: 'drill',
-        title: '綜合應用題（兩不等式解相同）',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ241SameSolutionSet(5);
-        },
-      },
-      'j2-4-1-compound-inequality-drill': {
-        type: 'drill',
-        title: '雙重不等式範圍求解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ241CompoundInequalitySet(5);
-        },
-      },
-      'j2-4-1-absolute-inequality-drill': {
-        type: 'drill',
-        title: '絕對值一次不等式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ241AbsoluteInequalitySet(5);
-        },
-      },
-      'j2-4-1-integer-boundary-drill': {
-        type: 'drill',
-        title: '整數解個數與最大最小值',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ241IntegerBoundarySet(5);
-        },
-      },
-      'j2-4-2-specific-score-threshold-drill': {
-        type: 'drill',
-        title: '具體分數平均門檻',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ242SpecificScoreThresholdSet(5);
-        },
-      },
-      'j2-4-2-pos-int-enumerate-drill': {
-        type: 'drill',
-        title: '正整數列舉（符合條件的所有正整數）',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ242PosIntEnumerateSet(5);
-        },
-      },
-      'j2-4-2-integer-condition-word-drill': {
-        type: 'drill',
-        title: '某整數／某正數條件型',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ242IntegerConditionWordSet(5);
-        },
-      },
-      'j2-4-2-shape-variable-expr-drill': {
-        type: 'drill',
-        title: '圖形含變數表達式（長方形＋三角形）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ242ShapeVariableExprSet(5);
-        },
-      },
-      'j2-4-2-age-past-relation-drill': {
-        type: 'drill',
-        title: '父子年齡過去比較型',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ242AgePastRelationSet(5);
-        },
-      },
-      'j2-4-2-solve-ineq-integer-drill': {
-        type: 'drill',
-        title: '解不等式求整數解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ242SolveIneqIntegerSet(5);
-        },
-      },
-      'j2-4-2-given-solution-find-coeff-drill': {
-        type: 'drill',
-        title: '已知解求係數',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ242GivenSolutionFindCoeffSet(5);
-        },
-      },
-      'j2-4-2-compound-ineq-drill': {
-        type: 'drill',
-        title: '聯立（雙重）不等式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ242CompoundIneqSet(5);
-        },
-      },
-      'j2-4-2-abs-value-ineq-drill': {
-        type: 'drill',
-        title: '絕對值不等式',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ242AbsValueIneqSet(5);
-        },
-      },
-      'j2-4-2-x-range-linear-func-drill': {
-        type: 'drill',
-        title: '已知 x 範圍求函數範圍',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ242XRangeLinearFuncSet(5);
-        },
-      },
-      'j2-4-2-concentration-ineq-drill': {
-        type: 'drill',
-        title: '濃度不等式應用',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ242ConcentrationIneqSet(5);
-        },
-      },
+    'j2-1-2-substitution-basic-drill': {
+      type: 'drill',
+      title: '代入消去法的基礎練習',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ212SubstitutionBasicSet(5);
+      },
+    },
+    'j2-1-2-elimination-adjustment-drill': {
+      type: 'drill',
+      title: '加減消去法的係數調整',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ212EliminationAdjustmentSet(5);
+      },
+    },
+    'j2-1-2-bracket-simplify-drill': {
+      type: 'drill',
+      title: '先化簡再解聯立方程式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ212BracketSimplifySet(5);
+      },
+    },
+    'j2-1-2-fraction-decimal-drill': {
+      type: 'drill',
+      title: '分數與小數型的化簡',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ212FractionDecimalSet(5);
+      },
+    },
+    'j2-1-2-solution-type-drill': {
+      type: 'drill',
+      title: '解的個數判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ212SolutionTypeSet(5);
+      },
+    },
+    'j2-1-2-triple-equal-drill': {
+      type: 'drill',
+      title: '特殊結構運算（A=B=C）',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ212TripleEqualSet(5);
+      },
+    },
+    'j2-1-2-symmetric-system-drill': {
+      type: 'drill',
+      title: '特殊結構運算（係數對稱）',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ212SymmetricSet(5);
+      },
+    },
+    'j2-1-2-abs-zero-drill': {
+      type: 'drill',
+      title: '特殊結構運算（非負性質）',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ212AbsZeroSet(5);
+      },
+    },
+    'j2-1-2-known-solution-coeff-drill': {
+      type: 'drill',
+      title: '已知解反求係數',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ212KnownSolutionCoeffSet(5);
+      },
+    },
+    'j2-1-2-error-diagnosis-drill': {
+      type: 'drill',
+      title: '看錯題目（邏輯排錯）',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ212ErrorDiagnosisSet(5);
+      },
+    },
+    'j2-1-2-shared-solution-drill': {
+      type: 'drill',
+      title: '同解問題（兩組方程組共有解）',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ212SharedSolutionSet(5);
+      },
+    },
+    'j2-1-2-third-condition-drill': {
+      type: 'drill',
+      title: '解滿足第三個條件',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ212ThirdConditionSet(5);
+      },
+    },
+    'j2-1-2-special-reverse-drill': {
+      type: 'drill',
+      title: '特殊解情形的反求',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ212SpecialReverseSet(5);
+      },
+    },
+    'j2-1-2-reciprocal-substitution-drill': {
+      type: 'drill',
+      title: '倒數代換聯立方程式',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ212ReciprocalSubstitutionSet(5);
+      },
+    },
+    'j2-1-2-reciprocal-structure-drill': {
+      type: 'drill',
+      title: '和差倒數結構代換',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ212ReciprocalStructureSet(5);
+      },
+    },
+    'j2-1-2-two-solution-one-eq-drill': {
+      type: 'drill',
+      title: '兩組解求方程式係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ212TwoSolutionOneEqSet(5);
+      },
+    },
+    'j2-1-3-money-ticket-drill': {
+      type: 'drill',
+      title: '濃度與混合問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ213MoneyTicketSet(5);
+      },
+    },
+    'j2-1-3-heads-coins-score-drill': {
+      type: 'drill',
+      title: '淨重、毛重與容器問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ213HeadsCoinsScoreSet(5);
+      },
+    },
+    'j2-1-3-digit-placevalue-drill': {
+      type: 'drill',
+      title: '數字位數與交換問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ213DigitPlaceValueSet(5);
+      },
+    },
+    'j2-1-3-age-chase-drill': {
+      type: 'drill',
+      title: '測驗得分與勝負判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ213AgeChaseSet(5);
+      },
+    },
+    'j2-1-3-speed-chase-drill': {
+      type: 'drill',
+      title: '行程速率與追趕問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ213SpeedChaseSet(5);
+      },
+    },
+    'j2-1-3-allocation-work-drill': {
+      type: 'drill',
+      title: '分配與工程問題',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ213AllocationWorkSet(5);
+      },
+    },
+    'j2-1-3-tiered-fee-drill': {
+      type: 'drill',
+      title: '基本費與超額計費問題',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ213TieredFeeSet(5);
+      },
+    },
+    'j2-1-3-classical-text-drill': {
+      type: 'drill',
+      title: '古文應用題',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ213ClassicalTextSet(5);
+      },
+    },
+    'j2-1-3-unit-price-system-drill': {
+      type: 'drill',
+      title: '單價與總價聯立問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ213UnitPriceSystemSet(5);
+      },
+    },
+    'j2-1-3-age-relation-drill': {
+      type: 'drill',
+      title: '年齡與倍數和差問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ213AgeRelationSet(5);
+      },
+    },
+    'j2-1-3-perimeter-relation-drill': {
+      type: 'drill',
+      title: '長寬與周長條件問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ213PerimeterRelationSet(5);
+      },
+    },
+    'j2-1-3-transfer-change-drill': {
+      type: 'drill',
+      title: '移轉後倍數相等問題',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ213TransferChangeSet(5);
+      },
+    },
+    'j2-1-3-travel-schedule-drill': {
+      type: 'drill',
+      title: '往返與準時行程問題',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ213TravelScheduleSet(5);
+      },
+    },
+    'j2-1-3-balance-scale-drill': {
+      type: 'drill',
+      title: '等臂天平稱重聯立方程',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ213BalanceScaleSet(5);
+      },
+    },
+    'j2-1-3-class-size-score-drill': {
+      type: 'drill',
+      title: '班級人數與成績分析',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ213ClassSizeScoreSet(5);
+      },
+    },
+    'j2-1-3-pairwise-sum-drill': {
+      type: 'drill',
+      title: '多人成對和問題',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ213PairwiseSumSet(5);
+      },
+    },
+    'j2-1-3-box-distribution-drill': {
+      type: 'drill',
+      title: '分配與分箱問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ213BoxDistributionSet(5);
+      },
+    },
+    'j2-2-1-axis-distance-drill': {
+      type: 'drill',
+      title: '點的坐標表示法與坐標軸距離',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ221AxisDistanceSet(5);
+      },
+    },
+    'j2-2-1-quadrant-basic-drill': {
+      type: 'drill',
+      title: '各象限及其性質符號判別',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ221QuadrantBasicSet(5);
+      },
+    },
+    'j2-2-1-translation-basic-drill': {
+      type: 'drill',
+      title: '坐標平面上的平移移動',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ221TranslationSet(5);
+      },
+    },
+    'j2-2-1-axis-special-drill': {
+      type: 'drill',
+      title: '坐標軸上的點與特殊位置判定',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ221AxisSpecialSet(5);
+      },
+    },
+    'j2-2-1-midpoint-drill': {
+      type: 'drill',
+      title: '中點坐標公式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ221MidpointSet(5);
+      },
+    },
+    'j2-2-1-symmetry-drill': {
+      type: 'drill',
+      title: '坐標平面上的對稱點',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ221SymmetrySet(5);
+      },
+    },
+    'j2-2-1-area-drill': {
+      type: 'drill',
+      title: '幾何圖形的面積計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ221AreaSet(5);
+      },
+    },
+    'j2-2-1-quadrant-reasoning-drill': {
+      type: 'drill',
+      title: '含代數參數的象限推理',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ221QuadrantReasoningSet(5);
+      },
+    },
+    'j2-2-1-nonnegative-drill': {
+      type: 'drill',
+      title: '絕對值與平方的非負性質應用',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ221NonnegativeSet(5);
+      },
+    },
+    'j2-2-2-point-line-relation-drill': {
+      type: 'drill',
+      title: '含有未知數的點與方程式關係',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ222PointLineRelationSet(5);
+      },
+    },
+    'j2-2-2-intercept-area-drill': {
+      type: 'drill',
+      title: '利用截距找交點與三角形面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ222InterceptAreaSet(5);
+      },
+    },
+    'j2-2-2-quadrant-exclusion-drill': {
+      type: 'drill',
+      title: '由係數正負判斷不通過之象限',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ222QuadrantExclusionSet(5);
+      },
+    },
+    'j2-2-2-parallel-perpendicular-drill': {
+      type: 'drill',
+      title: '水平線與鉛垂線的判定與方程',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ222ParallelPerpendicularSet(5);
+      },
+    },
+    'j2-2-2-line-from-points-drill': {
+      type: 'drill',
+      title: '已知兩點求直線方程式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ222LineFromPointsSet(5);
+      },
+    },
+    'j2-2-2-only-two-quadrants-drill': {
+      type: 'drill',
+      title: '進階判斷：只通過兩個象限',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ222TwoQuadrantsSet(5);
+      },
+    },
+    'j2-2-2-point-translation-line-drill': {
+      type: 'drill',
+      title: '點的平移與直線的變動',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ222TranslationLineSet(5);
+      },
+    },
+    'j2-2-2-two-lines-area-drill': {
+      type: 'drill',
+      title: '兩直線交點與坐標軸圍成面積',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ222TwoLinesAreaSet(5);
+      },
+    },
+    'j2-2-2-slope-intercept-drill': {
+      type: 'drill',
+      title: '斜率、截距與方程式互換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ222SlopeInterceptSet(5);
+      },
+    },
+    'j2-2-2-parallel-perpendicular-equation-drill': {
+      type: 'drill',
+      title: '過一點作平行線與垂直線',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ222ParallelPerpendicularEquationSet(5);
+      },
+    },
+    'j2-2-2-line-intersection-drill': {
+      type: 'drill',
+      title: '兩直線交點與參數判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ222LineIntersectionSet(5);
+      },
+    },
+    'j2-3-1-ratio-simplify-drill': {
+      type: 'drill',
+      title: '比例化簡與比值運算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ231RatioSimplifySet(5);
+      },
+    },
+    'j2-3-1-proportion-solve-drill': {
+      type: 'drill',
+      title: '比例式求解未知數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ231ProportionSolveSet(5);
+      },
+    },
+    'j2-3-1-relation-transform-drill': {
+      type: 'drill',
+      title: '關係式與比例式互換',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ231RelationTransformSet(5);
+      },
+    },
+    'j2-3-1-k-method-drill': {
+      type: 'drill',
+      title: '設比例常數求值',
+      difficulty: 'challenge',
+      questionCount: 5,
+      generate() {
+        return buildJ231KMethodSet(5);
+      },
+    },
+    'j2-3-1-basic-single-step-drill': {
+      type: 'drill',
+      title: '基本題型（單層動作）',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ231BasicSingleStepSet(5);
+      },
+    },
+    'j2-3-1-regular-two-step-drill': {
+      type: 'drill',
+      title: '正規題型（二層動作）',
+      difficulty: 'medium',
+      questionCount: 7,
+      generate() {
+        return buildJ231RegularTwoStepSet(7);
+      },
+    },
+    'j2-3-1-advanced-three-step-drill': {
+      type: 'drill',
+      title: '進階題型（三層動作）',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ231AdvancedThreeStepSet(5);
+      },
+    },
+    'j2-3-1-concentration-reverse-drill': {
+      type: 'drill',
+      title: '濃度混合與逆推稀釋題',
+      difficulty: 'challenge',
+      questionCount: 6,
+      generate() {
+        return buildJ231ConcentrationReverseSet(6);
+      },
+    },
+    'j2-3-1-chain-ratio-drill': {
+      type: 'drill',
+      title: '連比整合與分配',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ231ChainRatioSet(5);
+      },
+    },
+    'j2-3-2-basic-direct-inverse-drill': {
+      type: 'drill',
+      title: '基礎正反比運算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ232BasicDirectInverseSet(5);
+      },
+    },
+    'j2-3-2-linear-combo-proportion-drill': {
+      type: 'drill',
+      title: '線性組合式比例',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ232LinearComboProportionSet(5);
+      },
+    },
+    'j2-3-2-square-proportion-drill': {
+      type: 'drill',
+      title: '次方型比例',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ232SquareProportionSet(5);
+      },
+    },
+    'j2-3-2-chained-variation-drill': {
+      type: 'drill',
+      title: '正反比鏈接',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ232ChainedVariationSet(5);
+      },
+    },
+    'j2-3-2-percent-change-drill': {
+      type: 'drill',
+      title: '變量百分率異動下的比例計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ232PercentChangeSet(5);
+      },
+    },
+    'j2-3-2-word-judgment-drill': {
+      type: 'drill',
+      title: '正反比文字判斷',
+      difficulty: 'easy',
+      questionCount: 10,
+      generate() {
+        return buildJ232WordJudgmentSet(10);
+      },
+    },
+    'j2-3-2-shifted-variation-drill': {
+      type: 'drill',
+      title: '位移型正反比',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ232ShiftedVariationSet(5);
+      },
+    },
+    'j2-3-2-root-reciprocal-variation-drill': {
+      type: 'drill',
+      title: '平方根與倒平方結構正反比',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ232RootReciprocalVariationSet(5);
+      },
+    },
+    'j2-3-2-spring-scale-drill': {
+      type: 'drill',
+      title: '彈簧秤（虎克定律）應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ232SpringScaleSet(5);
+      },
+    },
+    'j2-3-2-work-manpower-drill': {
+      type: 'drill',
+      title: '工程人力反比應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ232WorkManpowerSet(5);
+      },
+    },
+    'j2-3-2-speed-race-drill': {
+      type: 'drill',
+      title: '速率比賽跑落後問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ232SpeedRaceSet(5);
+      },
+    },
+    'j2-3-2-dog-rabbit-drill': {
+      type: 'drill',
+      title: '犬兔步距速率問題',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ232DogRabbitSet(5);
+      },
+    },
+    'j2-4-1-inequality-language-drill': {
+      type: 'drill',
+      title: '基本判定與直覺題',
+      difficulty: 'easy',
+      questionCount: 8,
+      generate() {
+        return buildJ241InequalityLanguageSet(8);
+      },
+    },
+    'j2-4-1-inequality-integer-drill': {
+      type: 'drill',
+      title: '正規解不等式（整數型）',
+      difficulty: 'easy',
+      questionCount: 6,
+      generate() {
+        return buildJ241IntegerSolveSet(6);
+      },
+    },
+    'j2-4-1-inequality-fraction-drill': {
+      type: 'drill',
+      title: '進階運算題（分數型）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ241FractionSolveSet(5);
+      },
+    },
+    'j2-4-1-inequality-decimal-drill': {
+      type: 'drill',
+      title: '進階運算題（小數型）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ241DecimalSolveSet(5);
+      },
+    },
+    'j2-4-1-inequality-range-drill': {
+      type: 'drill',
+      title: '範圍推導',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildJ241RangeSet(6);
+      },
+    },
+    'j2-4-1-inequality-reverse-coeff-drill': {
+      type: 'drill',
+      title: '由解逆推原不等式中的未知係數',
+      difficulty: 'hard',
+      questionCount: 6,
+      generate() {
+        return buildJ241ReverseCoeffSet(6);
+      },
+    },
+    'j2-4-1-inequality-known-solution-range-drill': {
+      type: 'drill',
+      title: '已知解反求參數範圍',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ241KnownSolutionParamRangeSet(5);
+      },
+    },
+    'j2-4-1-inequality-same-solution-drill': {
+      type: 'drill',
+      title: '綜合應用題（兩不等式解相同）',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ241SameSolutionSet(5);
+      },
+    },
+    'j2-4-1-compound-inequality-drill': {
+      type: 'drill',
+      title: '雙重不等式範圍求解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ241CompoundInequalitySet(5);
+      },
+    },
+    'j2-4-1-absolute-inequality-drill': {
+      type: 'drill',
+      title: '絕對值一次不等式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ241AbsoluteInequalitySet(5);
+      },
+    },
+    'j2-4-1-integer-boundary-drill': {
+      type: 'drill',
+      title: '整數解個數與最大最小值',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ241IntegerBoundarySet(5);
+      },
+    },
+    'j2-4-2-specific-score-threshold-drill': {
+      type: 'drill',
+      title: '具體分數平均門檻',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ242SpecificScoreThresholdSet(5);
+      },
+    },
+    'j2-4-2-pos-int-enumerate-drill': {
+      type: 'drill',
+      title: '正整數列舉（符合條件的所有正整數）',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ242PosIntEnumerateSet(5);
+      },
+    },
+    'j2-4-2-integer-condition-word-drill': {
+      type: 'drill',
+      title: '某整數／某正數條件型',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ242IntegerConditionWordSet(5);
+      },
+    },
+    'j2-4-2-shape-variable-expr-drill': {
+      type: 'drill',
+      title: '圖形含變數表達式（長方形＋三角形）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ242ShapeVariableExprSet(5);
+      },
+    },
+    'j2-4-2-age-past-relation-drill': {
+      type: 'drill',
+      title: '父子年齡過去比較型',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ242AgePastRelationSet(5);
+      },
+    },
+    'j2-4-2-solve-ineq-integer-drill': {
+      type: 'drill',
+      title: '解不等式求整數解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ242SolveIneqIntegerSet(5);
+      },
+    },
+    'j2-4-2-given-solution-find-coeff-drill': {
+      type: 'drill',
+      title: '已知解求係數',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ242GivenSolutionFindCoeffSet(5);
+      },
+    },
+    'j2-4-2-compound-ineq-drill': {
+      type: 'drill',
+      title: '聯立（雙重）不等式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ242CompoundIneqSet(5);
+      },
+    },
+    'j2-4-2-abs-value-ineq-drill': {
+      type: 'drill',
+      title: '絕對值不等式',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ242AbsValueIneqSet(5);
+      },
+    },
+    'j2-4-2-x-range-linear-func-drill': {
+      type: 'drill',
+      title: '已知 x 範圍求函數範圍',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ242XRangeLinearFuncSet(5);
+      },
+    },
+    'j2-4-2-concentration-ineq-drill': {
+      type: 'drill',
+      title: '濃度不等式應用',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ242ConcentrationIneqSet(5);
+      },
+    },
 
-      'j2-4-2-basic-word-drill': {
-        type: 'drill',
-        title: '基本題型（單層動作）',
-        difficulty: 'easy',
-        questionCount: 6,
-        generate() {
-          return buildJ242BasicWordSet(6);
-        },
+    'j2-4-2-basic-word-drill': {
+      type: 'drill',
+      title: '基本題型（單層動作）',
+      difficulty: 'easy',
+      questionCount: 6,
+      generate() {
+        return buildJ242BasicWordSet(6);
       },
-      'j2-4-2-regular-word-drill': {
-        type: 'drill',
-        title: '正規題型（二層動作）',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildJ242RegularWordSet(6);
-        },
+    },
+    'j2-4-2-regular-word-drill': {
+      type: 'drill',
+      title: '正規題型（二層動作）',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildJ242RegularWordSet(6);
       },
-      'j2-4-2-advanced-word-drill': {
-        type: 'drill',
-        title: '進階題型（三層動作）',
-        difficulty: 'hard',
-        questionCount: 7,
-        generate() {
-          return buildJ242AdvancedWordSet(7);
-        },
+    },
+    'j2-4-2-advanced-word-drill': {
+      type: 'drill',
+      title: '進階題型（三層動作）',
+      difficulty: 'hard',
+      questionCount: 7,
+      generate() {
+        return buildJ242AdvancedWordSet(7);
       },
-      'j2-4-2-average-threshold-word-drill': {
-        type: 'drill',
-        title: '平均門檻應用題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ242AverageThresholdSet(5);
-        },
+    },
+    'j2-4-2-average-threshold-word-drill': {
+      type: 'drill',
+      title: '平均門檻應用題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ242AverageThresholdSet(5);
       },
-      'j2-5-1-frequency-relative-cumulative-drill': {
-        type: 'drill',
-        title: '次數、相對次數與累積次數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ251FrequencyRelativeCumulativeSet(5);
-        },
+    },
+    'j2-5-1-frequency-relative-cumulative-drill': {
+      type: 'drill',
+      title: '次數、相對次數與累積次數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ251FrequencyRelativeCumulativeSet(5);
       },
-      'j2-5-1-pie-chart-conversion-drill': {
-        type: 'drill',
-        title: '圓形圖百分比與角度換算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ251PieChartConversionSet(5);
-        },
+    },
+    'j2-5-1-pie-chart-conversion-drill': {
+      type: 'drill',
+      title: '圓形圖百分比與角度換算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ251PieChartConversionSet(5);
       },
-      'j2-5-1-grouped-mean-estimate-drill': {
-        type: 'drill',
-        title: '組中點估計平均數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ251GroupedMeanEstimateSet(5);
-        },
+    },
+    'j2-5-1-grouped-mean-estimate-drill': {
+      type: 'drill',
+      title: '組中點估計平均數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ251GroupedMeanEstimateSet(5);
       },
-      'j2-5-2-mean-basic-drill': {
-        type: 'drill',
-        title: '平均數直接計算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ252MeanBasicSet(5);
-        },
+    },
+    'j2-5-2-mean-basic-drill': {
+      type: 'drill',
+      title: '平均數直接計算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ252MeanBasicSet(5);
       },
-      'j2-5-2-mean-reverse-drill': {
-        type: 'drill',
-        title: '平均數反推與調整',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ252MeanReverseSet(5);
-        },
+    },
+    'j2-5-2-mean-reverse-drill': {
+      type: 'drill',
+      title: '平均數反推與調整',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ252MeanReverseSet(5);
       },
-      'j2-5-2-median-mode-drill': {
-        type: 'drill',
-        title: '中位數與眾數判讀',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ252MedianModeSet(5);
-        },
+    },
+    'j2-5-2-median-mode-drill': {
+      type: 'drill',
+      title: '中位數與眾數判讀',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ252MedianModeSet(5);
       },
+    },
   };
 
-  const bundleFingerprint = "j2-bundle-v20260622-j25-v1";
+  const bundleFingerprint = 'j2-bundle-v20260706-summary-v1';
   Object.values(nextConfigs).forEach((config) => {
-    if (!config || typeof config !== "object") return;
+    if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;
   });
 

@@ -73,7 +73,8 @@
 
   function buildJ511MergeSharedTermSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randInt(2, 9);
       const b = randInt(2, 9);
@@ -86,12 +87,13 @@
         `簡答：\\(${ratioTex(ratio)}\\)。過程：先把共同項 \\(y\\) 調成相同。\\(${a}:${b}=${a * (common / b)}:${common}\\)，\\(${c}:${d}=${common}:${d * (common / c)}\\)，所以 \\(x:y:z=${ratioTex(ratio)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511EquationToRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const p = randInt(2, 8);
       const q = randInt(2, 9);
@@ -103,12 +105,13 @@
         `簡答：\\(${ratioTex(ratio)}\\)。過程：設共同值為 \\(k\\)，則 \\(x=${fracText(1, p)}k\\)，\\(y=${fracText(1, q)}k\\)，\\(z=${fracText(1, r)}k\\)。同乘 \\(${common}\\) 後得 \\(x:y:z=${ratioTex(ratio)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511FractionFormRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randInt(2, 9);
       const b = randInt(2, 9);
@@ -121,12 +124,13 @@
         `簡答：\\(${ratioTex(ratio)}\\)。過程：設共同值為 \\(r\\)，則 \\(x=${a}r\\)，\\(y=${b}r\\)，\\(z=${c}r\\)，所以 \\(x:y:z=${ratioTex(ratio)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511ReciprocalRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const base = reduceRatioTriple([randInt(2, 9), randInt(2, 9), randInt(2, 9)]);
       const common = lcmArray(base);
@@ -138,12 +142,13 @@
         `簡答：\\(${ratioTex(reciprocal)}\\)。過程：倒數比要先倒再同乘公倍數：\\(\\frac{1}{${base[0]}}:\\frac{1}{${base[1]}}:\\frac{1}{${base[2]}}\\)，同乘 \\(${common}\\) 得 \\(${ratioTex(reciprocal)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511FractionStatementRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randInt(2, 8);
       const b = randInt(3, 9);
@@ -156,7 +161,7 @@
         `簡答：\\(${ratioTex(ratio)}\\)。過程：題意為 \\(${fracText('x', a)}=${fracText('y', b)}=${fracText('z', c)}\\)。設共同值為 \\(r\\)，得 \\(x:y:z=${ratioTex(ratio)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511RatioConversionMixedSet(count) {
@@ -168,18 +173,20 @@
       buildJ511FractionStatementRatioSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const built = builders[i % builders.length](1);
       questions.push(built.questions[0]);
       answers.push(built.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511ParametricLinearEquationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const ratio = reduceRatioTriple([randInt(2, 8), randInt(3, 9), randInt(2, 10)]);
       const t = randInt(2, 12);
@@ -196,12 +203,13 @@
         `簡答：\\((x,y,z)=(${ratio[0] * t},${ratio[1] * t},${ratio[2] * t})\\)。過程：設 \\(x=${ratio[0]}r\\)，\\(y=${ratio[1]}r\\)，\\(z=${ratio[2]}r\\)。代入得 \\(${coefficientSum}r=${value}\\)，所以 \\(r=${t}\\)，答案為 \\((x,y,z)=(${ratio[0] * t},${ratio[1] * t},${ratio[2] * t})\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511RatioExpressionTransformSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const modes = ['sumCycle', 'linearPair', 'square'];
     for (let i = 0; i < count; i += 1) {
       const ratio = reduceRatioTriple([randInt(1, 7), randInt(2, 8), randInt(3, 9)]);
@@ -226,12 +234,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511ReverseValueFromRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const ratio = reduceRatioTriple([randInt(2, 8), randInt(3, 9), randInt(2, 10)]);
       const unit = randInt(5, 18);
@@ -242,12 +251,13 @@
         `簡答：甲、乙、丙分別為 \\(${values[0]},${values[1]},${values[2]}\\) 人。過程：每一份為 \\(${total}\\div(${ratio.join('+')})=${unit}\\)，所以三組人數為 \\(${ratioTex(ratio)}\\) 各乘以 \\(${unit}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511ShiftedVariableRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const ratio = reduceRatioTriple([randInt(2, 7), randInt(2, 8), randInt(3, 9)]);
       const unit = randInt(4, 12);
@@ -265,7 +275,7 @@
         `簡答：\\(${i % 2 === 0 ? 'x-y' : 'x+z'}=${target}\\)。過程：設 \\(x+${shiftX}=${ratio[0]}r\\)、\\(y-${shiftY}=${ratio[1]}r\\)、\\(z=${ratio[2]}r\\)，則 \\(x=${ratio[0]}r-${shiftX}\\)、\\(y=${ratio[1]}r+${shiftY}\\)、\\(z=${ratio[2]}r\\)。代入總和得 \\(${ratio.reduce((sum, value) => sum + value, 0)}r${shiftY - shiftX >= 0 ? `+${shiftY - shiftX}` : shiftY - shiftX}=${total}\\)，所以 \\(r=${unit}\\)，再代回可得答案。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511RatioAlgebraMixedSet(count) {
@@ -276,18 +286,20 @@
       buildJ511ShiftedVariableRatioSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const built = builders[i % builders.length](1);
       questions.push(built.questions[0]);
       answers.push(built.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511TriangleAngleRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const triples = [
       [1, 2, 3],
       [2, 3, 4],
@@ -308,12 +320,13 @@
         `簡答：三內角為 \\(${angles[0]}^\\circ,${angles[1]}^\\circ,${angles[2]}^\\circ\\)。過程：三角形內角和為 \\(180^\\circ\\)，每一份為 \\(180\\div${sum}=${unit}\\)，再依比例分配。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511TriangleSideHeightRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const validSideRatios = [
       [3, 4, 5],
       [5, 6, 7],
@@ -343,12 +356,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511GeometryPerimeterAreaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const modes = ['perimeter', 'area', 'rectangle'];
     for (let i = 0; i < count; i += 1) {
       const mode = modes[i % modes.length];
@@ -380,7 +394,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511GeometryRatioMixedSet(count) {
@@ -390,18 +404,20 @@
       buildJ511GeometryPerimeterAreaSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const built = builders[i % builders.length](1);
       questions.push(built.questions[0]);
       answers.push(built.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511MoneyProfitSharingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const ratio = reduceRatioTriple([randInt(2, 8), randInt(3, 9), randInt(2, 10)]);
       const unit = randInt(100, 900);
@@ -414,12 +430,13 @@
         `簡答：甲、乙、丙分別得 \\(${values[0]},${values[1]},${values[2]}\\) 元。過程：每一份為 \\(${total}\\div(${ratio.join('+')})=${unit}\\) 元，再依比例分配。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511MixtureRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const ratio = reduceRatioTriple([randInt(2, 6), randInt(3, 7), randInt(1, 5)]);
       const knownIndex = randInt(0, 2);
@@ -434,12 +451,13 @@
         `簡答：整杯飲品共有 \\(${total}\\) 克。過程：${names[knownIndex]}占 \\(${ratio[knownIndex]}\\) 份，所以每一份為 \\(${known}\\div${ratio[knownIndex]}=${unit}\\) 克，總量為 \\(${total}\\) 克。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511PopulationRatioChangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const base = reduceRatioTriple([randInt(3, 8), randInt(3, 8), randInt(3, 8)]);
       const unit = randInt(8, 25);
@@ -455,12 +473,13 @@
         `簡答：\\(${ratioTex(afterRatio)}\\)。過程：每一份為 \\(${total}\\div(${base.join('+')})=${unit}\\)，原人數為 \\(${before[0]},${before[1]},${before[2]}\\)。變動後為 \\(${after[0]},${after[1]},${after[2]}\\)，化為最簡整數比得 \\(${ratioTex(afterRatio)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511WorkRateSpeedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const times = reduceRatioTriple([randInt(2, 7), randInt(3, 8), randInt(4, 9)]);
       const common = lcmArray(times);
@@ -470,12 +489,13 @@
         `簡答：工作效率比為 \\(${ratioTex(rates)}\\)。過程：同一工作量下，效率與時間成反比，所以把 \\(${ratioTex(times)}\\) 取倒數並化為整數比。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511WorkEfficiencyAppliedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const times = reduceRatioTriple([randInt(2, 6), randInt(3, 8), randInt(4, 10)]);
       const common = lcmArray(times);
@@ -487,12 +507,13 @@
         `簡答：\\(${ratioTex(rates)}\\)。過程：完成同一工程時，每日效率分別為 \\(\\frac1{${times[0]}}:\\frac1{${times[1]}}:\\frac1{${times[2]}}\\)。同乘 \\(${common}\\) 後得 \\(${ratioTex(rates)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511CoinDenominationRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const denominations = [5, 10, 50];
     for (let i = 0; i < count; i += 1) {
       const ratio = reduceRatioTriple([randInt(2, 7), randInt(2, 8), randInt(1, 6)]);
@@ -507,12 +528,13 @@
         `簡答：\\(${denominations[targetIndex]}\\) 元硬幣有 \\(${counts[targetIndex]}\\) 枚。過程：每一份硬幣組合的金額為 \\(5\\times${ratio[0]}+10\\times${ratio[1]}+50\\times${ratio[2]}=${denominations.reduce((sum, value, idx) => sum + value * ratio[idx], 0)}\\) 元，所以份數為 \\(${total}\\div${denominations.reduce((sum, value, idx) => sum + value * ratio[idx], 0)}=${unit}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511MixtureSharedTermSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const names = ['咖啡', '牛奶', '糖'];
     for (let i = 0; i < count; i += 1) {
       const ratioA = reduceRatioTriple([randInt(2, 6), randInt(2, 7), randInt(1, 5)]);
@@ -530,7 +552,7 @@
         `簡答：\\(${ratioTex(merged)}\\)。過程：兩牌取相同重量，需先把 A 牌的總份數 \\(${sumA}\\) 與 B 牌的總份數 \\(${sumB}\\) 調成同一總量 \\(${common}\\)。各成分相加後化簡，得到 \\(${ratioTex(merged)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ511LifeRatioMixedSet(count) {
@@ -545,18 +567,20 @@
       buildJ511MixtureSharedTermSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const built = builders[i % builders.length](1);
       questions.push(built.questions[0]);
       answers.push(built.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ512Set(kind, count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const kinds = {
       triangleMixed: [
         'triangleFullProportion',
@@ -837,12 +861,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ513Set(kind, count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const kinds = {
       criteriaMixed: ['aaCriterion', 'sssCriterion', 'sasCriterion', 'parallelBasic', 'butterflyBasic'],
       ratioMixed: ['correspondingElement', 'areaToSide', 'areaFromSide', 'scaleArea'],
@@ -1168,12 +1193,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ514Set(kind, count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const kinds = {
       measurementMixed: ['shadowHeight', 'standardPole', 'mirrorHeight', 'pinholeImage', 'riverWidth'],
       ratioMixed: ['perimeterSide', 'areaToLength', 'parallelAreaSplit', 'scaleArea'],
@@ -1443,12 +1469,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ521Set(kind, count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const kinds = {
       positionMixed: ['pointCirclePosition', 'lineCirclePosition', 'tangentLength'],
       chordMixed: ['chordDistance', 'chordLength', 'radiusFromChord', 'concentricAnnulus'],
@@ -1685,12 +1712,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ522Set(kind, count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const kinds = {
       centralMixed: ['centralArcDegree', 'arcLengthFromAngle', 'angleFromArcLength', 'sectorArea'],
       inscribedMixed: [
@@ -1970,12 +1998,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ523Set(kind, count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const kinds = {
       powerBasicMixed: [
         'intersectingChordsSegment',
@@ -2343,12 +2372,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ531Set(kind, count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const kinds = {
       parityMixed: ['paritySum', 'oddProduct', 'squareParity', 'linearParity', 'oddSquaresSum'],
       divisibilityMixed: [
@@ -2589,12 +2619,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ532Set(kind, count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const kinds = {
       centersMixed: [
         'circumcenterEqualDistance',
@@ -2823,12 +2854,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ533Set(kind, count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const kinds = {
       circumcenterMixed: [
         'circumcenterAngle',
@@ -3345,7 +3377,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function deriveSummaryAnswerFromDetail(detail) {
@@ -3395,12 +3427,25 @@
     return sentence || text;
   }
 
+  function createAnswerList(summaryAnswers) {
+    const answers = [];
+    const nativePush = Array.prototype.push;
+    answers.push = function pushAnswerWithSummary(...items) {
+      items.forEach((item) => {
+        summaryAnswers.push(deriveSummaryAnswerFromDetail(item));
+      });
+      return nativePush.apply(this, items);
+    };
+    return answers;
+  }
+
   // ─── j5-1/2/3 文件補充 generators ──────────────────────────────────────
 
   // 矩形相似判別（j5-1-2）
   function buildRectangleSimilarityCheckSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const basePairs = [
       [3,2],[4,3],[5,4],[6,5],[8,5],[9,6],[10,6],[12,8],[15,10],[10,4],[9,3],[15,9]
     ];
@@ -3436,13 +3481,14 @@
         `簡答：${labels[simIdx]} 長 ${similar[0]} 寬 ${similar[1]}。過程：原長方形長寬比 \\(${l}:${w}=${ln}:${wn}\\)。選項${labels[simIdx]}的長寬比 \\(${similar[0]}:${similar[1]}=${ln}:${wn}\\)，比值相同，故相似。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // 相似多邊形角度計算（j5-1-3）
   function buildSimilarPolygonAngleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i++) {
       const mode = i % 3;
       if (mode === 0) {
@@ -3502,13 +3548,14 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // 斜坡位置高度計算（j5-1-3）
   function buildSlopePositionHeightSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i++) {
       const mode = i % 3;
       if (mode === 0) {
@@ -3556,13 +3603,14 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // 弓形矢高求半徑（j5-2-1）
   function buildChordSagittaRadiusSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     // r = (c²/(8h) + h/2) where c = chord, h = sagitta
     // Use Pythagorean: r² = (c/2)² + (r-h)² → r = (c²/4 + h²) / (2h)
     const cases = [
@@ -3596,13 +3644,14 @@
         `簡答：\\(${r}\\) 公分。過程：設半徑為 \\(r\\)，弦長 \\(${c}\\) 的一半是 \\(${half}\\)，矢高 \\(${h}\\)，由勾股定理 \\(r^2=${half}^2+(r-${h})^2\\)，展開得 \\(r=\\frac{${half}^2+${h}^2}{2\\times${h}}=\\frac{${(half * half) + (h * h)}}{${2 * h}}=${r}\\) 公分。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // 圓形容器水面寬度（j5-2-1）
   function buildSemicircleChordWidthSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i++) {
       const mode = i % 2;
       // Half-circle container radius r, water depth h → chord width = 2√(r²-(r-h)²) = 2√(2rh-h²)
@@ -3639,13 +3688,14 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // 切線弦角綜合計算（j5-2-2）
   function buildTangentCombinedAngleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i++) {
       const mode = i % 3;
       if (mode === 0) {
@@ -3701,13 +3751,14 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // 中垂線性質求周長（j5-3-2）
   function buildPerpBisectorPerimeterSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i++) {
       const mode = i % 3;
       if (mode === 0) {
@@ -3767,13 +3818,14 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // 內切圓切線段計算（j5-3-3）
   function buildIncircleTangentLengthSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     // Tangent lengths: s = (a+b+c)/2; from A: s-a, from B: s-b, from C: s-c
     // where a=BC, b=CA, c=AB
     const sideTriples = [
@@ -3811,13 +3863,14 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // 中線長公式計算（j5-3-3）
   function buildMedianLengthFormulaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     // Median from A to BC: m_a² = (2b²+2c²-a²)/4
     // where a=BC, b=CA, c=AB
     const cases = [
@@ -3871,7 +3924,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ─── 文件補充 generators 結束 ─────────────────────────────────────────────
@@ -6480,7 +6533,7 @@
       },
   };
 
-  const bundleFingerprint = "j5-bundle-v20260619-v1";
+  const bundleFingerprint = "j5-bundle-v20260706-summary-v1";
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== "object") return;
     config.__generatorFingerprint = bundleFingerprint;

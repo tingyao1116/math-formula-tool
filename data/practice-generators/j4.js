@@ -1,6 +1,6 @@
 (() => {
   const store = window.formulaPracticeStore;
-  if (!store || typeof store.registerConfigs !== "function") return;
+  if (!store || typeof store.registerConfigs !== 'function') return;
 
   function randInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -133,7 +133,8 @@
 
   function buildJ411FindAnFromA1DNSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a1 = pickNonZero(-30, 30);
       const d = pickNonZero(-9, 9);
@@ -142,12 +143,13 @@
       questions.push(`已知等差數列首項 \\(a_1=${a1}\\)、公差 \\(d=${d}\\)，求第 ${n} 項 \\(a_${n}\\)。`);
       answers.push(`簡答：\\(a_${n}=${an}\\)。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ411TwoTermsFindA1DSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const m = randInt(2, 8);
       const n = randInt(m + 2, m + 10);
@@ -166,12 +168,13 @@
         answers.push(`簡答：\\(a_${k}=${ak}\\)。`);
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ411FindNSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a1 = pickNonZero(-20, 20);
       const d = pickNonZero(-8, 8);
@@ -180,24 +183,26 @@
       questions.push(`等差數列 \\(${a1},\\ ${a1 + d},\\ ${a1 + 2 * d},\\ldots,\\ ${an}\\)，共有幾項？`);
       answers.push(`簡答：${n} 項。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ411CoreMixedSet(count) {
     const banks = [buildJ411FindAnFromA1DNSet, buildJ411TwoTermsFindA1DSet, buildJ411FindNSet];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const one = banks[i % banks.length](1);
       questions.push(one.questions[0]);
       answers.push(one.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ411MiddleTermApplySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 4;
       if (mode === 0) {
@@ -229,12 +234,13 @@
         answers.push(`簡答：${p} 與 ${q}。`);
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ411InsertNumbersSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 4;
       if (mode === 0) {
@@ -271,12 +277,13 @@
         answers.push(`簡答：${x}。`);
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ411RangeMultipleCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 4;
       if (mode === 0) {
@@ -310,12 +317,13 @@
         answers.push(`簡答：${cnt} 個。`);
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ411CommonTermTwoAPSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 4;
       const d1 = [2, 3, 4, 5, 6][randInt(0, 4)];
@@ -350,12 +358,13 @@
         answers.push(`簡答：${firstCommon}。`);
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ411PairSumReverseSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a1 = pickNonZero(-18, 18);
       const d = pickNonZero(-6, 6);
@@ -383,7 +392,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatApList(a1, d, visibleCount = 4) {
@@ -483,12 +492,12 @@
     return start + offset;
   }
 
-
   // === 新增 j4-1-1 generators ===
 
   function buildJ411RightTriangleAPSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -496,10 +505,10 @@
         const kVals = [2, 3, 4, 5, 6, 7, 8];
         const k = kVals[randInt(0, kVals.length - 1)];
         const area = 6 * k * k;
-        const s3 = 3 * k, s4 = 4 * k, s5 = 5 * k;
-        questions.push(
-          `一個直角三角形的三邊長成等差數列，面積為 ${area}，求此三角形的三邊長。`
-        );
+        const s3 = 3 * k,
+          s4 = 4 * k,
+          s5 = 5 * k;
+        questions.push(`一個直角三角形的三邊長成等差數列，面積為 ${area}，求此三角形的三邊長。`);
         answers.push(
           `簡答：三邊為 ${s3}、${s4}、${s5}。過程：設三邊成等差，公差為 \\(k\\)，則三邊可設為 \\(3k, 4k, 5k\\)（其中 \\(5k\\) 為斜邊，\\((3k)^2+(4k)^2=(5k)^2\\) 成立）。面積 \\(\\frac{1}{2}\\cdot 3k\\cdot 4k=6k^2=${area}\\)，所以 \\(k^2=${k * k}\\Rightarrow k=${k}\\)，三邊為 ${s3}、${s4}、${s5}。`
         );
@@ -511,9 +520,7 @@
         const k = kVals[randInt(0, kVals.length - 1)];
         const peri = 12 * k;
         const area = 6 * k * k;
-        questions.push(
-          `一個直角三角形的三邊長成等差數列，周長為 ${peri}，求此三角形的面積。`
-        );
+        questions.push(`一個直角三角形的三邊長成等差數列，周長為 ${peri}，求此三角形的面積。`);
         answers.push(
           `簡答：面積為 ${area}。過程：設三邊為 \\(3k, 4k, 5k\\)，周長 \\(=12k=${peri}\\Rightarrow k=${k}\\)，面積 \\(=\\frac{1}{2}\\cdot${3 * k}\\cdot${4 * k}=${area}\\)。`
         );
@@ -526,9 +533,7 @@
         const hyp = 5 * k;
         const area = 6 * k * k;
         const peri = 12 * k;
-        questions.push(
-          `一個直角三角形的三邊長成等差數列，斜邊長為 ${hyp}，求此三角形的面積與周長。`
-        );
+        questions.push(`一個直角三角形的三邊長成等差數列，斜邊長為 ${hyp}，求此三角形的面積與周長。`);
         answers.push(
           `簡答：面積 ${area}，周長 ${peri}。過程：設三邊為 \\(3k,4k,5k\\)，斜邊 \\(5k=${hyp}\\Rightarrow k=${k}\\)，面積 \\(=6k^2=${area}\\)，周長 \\(=12k=${peri}\\)。`
         );
@@ -541,10 +546,10 @@
         const d = k;
         const area = 6 * k * k;
         const peri = 12 * k;
-        const s3 = 3 * k, s4 = 4 * k, s5 = 5 * k;
-        questions.push(
-          `一個直角三角形三邊長成等差數列，公差為 ${d}，求此三角形的面積與周長。`
-        );
+        const s3 = 3 * k,
+          s4 = 4 * k,
+          s5 = 5 * k;
+        questions.push(`一個直角三角形三邊長成等差數列，公差為 ${d}，求此三角形的面積與周長。`);
         answers.push(
           `簡答：面積 ${area}，周長 ${peri}。過程：三邊設為 \\(3k,4k,5k\\)，公差 \\(=k=${d}\\Rightarrow k=${k}\\)，三邊為 ${s3}、${s4}、${s5}，面積 \\(=6k^2=${area}\\)，周長 \\(=12k=${peri}\\)。`
         );
@@ -556,19 +561,18 @@
       const shortest = 3 * k;
       const hyp = 5 * k;
       const area = 6 * k * k;
-      questions.push(
-        `一個直角三角形的三邊長成等差數列，最短邊為 ${shortest}，求斜邊長與面積。`
-      );
+      questions.push(`一個直角三角形的三邊長成等差數列，最短邊為 ${shortest}，求斜邊長與面積。`);
       answers.push(
         `簡答：斜邊 ${hyp}，面積 ${area}。過程：設三邊為 \\(3k,4k,5k\\)，最短邊 \\(3k=${shortest}\\Rightarrow k=${k}\\)，斜邊 \\(=5k=${hyp}\\)，面積 \\(=6k^2=${area}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ411PolygonAPSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -578,9 +582,7 @@
         const d = randInt(1, 4);
         const an = a1 + (n - 1) * d;
         const peri = (n * (a1 + an)) / 2;
-        questions.push(
-          `一個 ${n} 邊形，各邊長成等差數列，最短邊為 ${a1}，公差為 ${d}，求此多邊形的周長。`
-        );
+        questions.push(`一個 ${n} 邊形，各邊長成等差數列，最短邊為 ${a1}，公差為 ${d}，求此多邊形的周長。`);
         answers.push(
           `簡答：周長為 ${peri}。過程：最長邊 \\(=${a1}+${n - 1}\\times${d}=${an}\\)，周長為各邊之和 \\(=\\frac{${n}(${a1}+${an})}{2}=${peri}\\)。`
         );
@@ -605,12 +607,12 @@
         // n邊形各內角成等差，已知最小內角、公差，求各內角
         // Build valid cases by fixing n and D, computing A1
         const configs = [
-          {n:4, D:10, A1:75},
-          {n:4, D:15, A1:67},
-          {n:5, D:12, A1:84},
-          {n:5, D:8,  A1:92},
-          {n:6, D:6,  A1:90},
-          {n:6, D:10, A1:85},
+          { n: 4, D: 10, A1: 75 },
+          { n: 4, D: 15, A1: 67 },
+          { n: 5, D: 12, A1: 84 },
+          { n: 5, D: 8, A1: 92 },
+          { n: 6, D: 6, A1: 90 },
+          { n: 6, D: 10, A1: 85 },
         ];
         const cfg = configs[i % configs.length];
         const { n, D, A1 } = cfg;
@@ -621,27 +623,25 @@
           `一個 ${n} 邊形的各內角成等差數列，最小內角為 ${A1}°，公差為 ${D}°，求各內角的大小並驗算內角和。`
         );
         answers.push(
-          `簡答：各內角為 ${angles.map(a => a + '°').join('、')}。過程：最大內角 \\(=${A1}+${n - 1}\\times${D}=${angles[n-1]}°\\)，各內角和 \\(=\\frac{${n}(${A1}+${angles[n-1]})}{2}=${totalAngle}°=(${n}-2)\\times180°\\)，符合 ${n} 邊形內角和。`
+          `簡答：各內角為 ${angles.map((a) => a + '°').join('、')}。過程：最大內角 \\(=${A1}+${n - 1}\\times${D}=${angles[n - 1]}°\\)，各內角和 \\(=\\frac{${n}(${A1}+${angles[n - 1]})}{2}=${totalAngle}°=(${n}-2)\\times180°\\)，符合 ${n} 邊形內角和。`
         );
         continue;
       }
       if (mode === 3) {
         // 已知最大內角、公差，求邊數（n邊形內角和=(n-2)*180）
         const configs = [
-          {n:4, D:10, A1:75},
-          {n:4, D:20, A1:60},
-          {n:5, D:12, A1:84},
-          {n:5, D:16, A1:80},
-          {n:6, D:8,  A1:86},
-          {n:6, D:6,  A1:90},
+          { n: 4, D: 10, A1: 75 },
+          { n: 4, D: 20, A1: 60 },
+          { n: 5, D: 12, A1: 84 },
+          { n: 5, D: 16, A1: 80 },
+          { n: 6, D: 8, A1: 86 },
+          { n: 6, D: 6, A1: 90 },
         ];
         const cfg = configs[i % configs.length];
         const { n, D, A1 } = cfg;
         const An = A1 + (n - 1) * D;
         const totalAngle = (n - 2) * 180;
-        questions.push(
-          `一個凸多邊形各內角成等差數列，最大內角為 ${An}°，公差為 ${D}°，求該多邊形的邊數。`
-        );
+        questions.push(`一個凸多邊形各內角成等差數列，最大內角為 ${An}°，公差為 ${D}°，求該多邊形的邊數。`);
         answers.push(
           `簡答：${n} 邊形。過程：設邊數為 \\(n\\)，最小內角 \\(=${An}-(n-1)\\times${D}\\)，內角和 \\(=\\frac{n(最小角+${An})}{2}=(n-2)\\times180°\\)，代入解方程得 \\(n=${n}\\)，最小內角為 ${A1}°。`
         );
@@ -653,19 +653,18 @@
       const a1 = randInt(3, 8);
       const an = a1 + (n - 1) * d;
       const peri = (n * (a1 + an)) / 2;
-      questions.push(
-        `一個多邊形各邊長成等差數列，最長邊為 ${an}，公差為 ${d}，周長為 ${peri}，求邊數。`
-      );
+      questions.push(`一個多邊形各邊長成等差數列，最長邊為 ${an}，公差為 ${d}，周長為 ${peri}，求邊數。`);
       answers.push(
         `簡答：${n} 邊形。過程：設最短邊為 \\(a_1\\)，邊數為 \\(n\\)，最長邊 \\(=a_1+(n-1)\\times${d}=${an}\\Rightarrow a_1=${an}-(n-1)\\times${d}\\)，代入周長公式 \\(\\frac{n(a_1+${an})}{2}=${peri}\\) 解得 \\(n=${n}\\)，\\(a_1=${a1}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ411FirstPositiveTermSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -675,12 +674,10 @@
         const ak_minus_1_neg = randInt(1, d - 1);
         const a1 = -(k - 2) * d - ak_minus_1_neg;
         const ak = a1 + (k - 1) * d;
-        const threshold = (-a1 / d + 1);
-        questions.push(
-          `等差數列的首項 \\(a_1=${a1}\\)，公差 \\(d=${d}\\)，求此數列第一個正項是第幾項？`
-        );
+        const threshold = -a1 / d + 1;
+        questions.push(`等差數列的首項 \\(a_1=${a1}\\)，公差 \\(d=${d}\\)，求此數列第一個正項是第幾項？`);
         answers.push(
-          `簡答：第 ${k} 項。過程：\\(a_n=${a1}+(n-1)\\times${d}\\)。解 \\(a_n>0\\Rightarrow${a1}+(n-1)\\times${d}>0\\Rightarrow n-1>\\frac{${-a1}}{${d}}\\approx${((-a1)/d).toFixed(2)}\\)，故 \\(n\\geq${k}\\)，第一個正項是第 ${k} 項，值為 ${ak}。`
+          `簡答：第 ${k} 項。過程：\\(a_n=${a1}+(n-1)\\times${d}\\)。解 \\(a_n>0\\Rightarrow${a1}+(n-1)\\times${d}>0\\Rightarrow n-1>\\frac{${-a1}}{${d}}\\approx${(-a1 / d).toFixed(2)}\\)，故 \\(n\\geq${k}\\)，第一個正項是第 ${k} 項，值為 ${ak}。`
         );
         continue;
       }
@@ -692,11 +689,9 @@
         const ak_minus_1_pos = randInt(1, dAbs - 1);
         const a1 = (k - 2) * dAbs + ak_minus_1_pos;
         const ak = a1 + (k - 1) * d;
-        questions.push(
-          `等差數列的首項 \\(a_1=${a1}\\)，公差 \\(d=${d}\\)，求此數列第一個負項是第幾項？`
-        );
+        questions.push(`等差數列的首項 \\(a_1=${a1}\\)，公差 \\(d=${d}\\)，求此數列第一個負項是第幾項？`);
         answers.push(
-          `簡答：第 ${k} 項。過程：\\(a_n=${a1}+(n-1)\\times(${d})\\)。解 \\(a_n<0\\Rightarrow${a1}+(n-1)\\times(${d})<0\\Rightarrow n-1>\\frac{${a1}}{${dAbs}}\\approx${(a1/dAbs).toFixed(2)}\\)，故 \\(n\\geq${k}\\)，第一個負項是第 ${k} 項，值為 ${ak}。`
+          `簡答：第 ${k} 項。過程：\\(a_n=${a1}+(n-1)\\times(${d})\\)。解 \\(a_n<0\\Rightarrow${a1}+(n-1)\\times(${d})<0\\Rightarrow n-1>\\frac{${a1}}{${dAbs}}\\approx${(a1 / dAbs).toFixed(2)}\\)，故 \\(n\\geq${k}\\)，第一個負項是第 ${k} 項，值為 ${ak}。`
         );
         continue;
       }
@@ -706,11 +701,9 @@
         const k = randInt(4, 10);
         const lower = -(k - 1) * d;
         const upper = -(k - 2) * d;
-        questions.push(
-          `等差數列的公差為 ${d}，若第 ${k} 項是此數列中第一個正項，求整數首項 \\(a_1\\) 的範圍。`
-        );
+        questions.push(`等差數列的公差為 ${d}，若第 ${k} 項是此數列中第一個正項，求整數首項 \\(a_1\\) 的範圍。`);
         answers.push(
-          `簡答：\\(${lower}<a_1\\leq${upper}\\)（\\(a_1\\) 為整數，可取 \\(${lower+1}\\) 到 \\(${upper}\\)）。過程：要求 \\(a_{${k-1}}\\leq0\\) 且 \\(a_{${k}}>0\\)，即 \\(a_1+(${k-2})\\times${d}\\leq0\\) 且 \\(a_1+(${k-1})\\times${d}>0\\)，解得 \\(${lower}<a_1\\leq${upper}\\)。`
+          `簡答：\\(${lower}<a_1\\leq${upper}\\)（\\(a_1\\) 為整數，可取 \\(${lower + 1}\\) 到 \\(${upper}\\)）。過程：要求 \\(a_{${k - 1}}\\leq0\\) 且 \\(a_{${k}}>0\\)，即 \\(a_1+(${k - 2})\\times${d}\\leq0\\) 且 \\(a_1+(${k - 1})\\times${d}>0\\)，解得 \\(${lower}<a_1\\leq${upper}\\)。`
         );
         continue;
       }
@@ -722,11 +715,9 @@
         const ak_minus_1_nonneg = randInt(0, dAbs - 1);
         const a1 = (k - 2) * dAbs + ak_minus_1_nonneg;
         const ak = a1 + (k - 1) * d;
-        questions.push(
-          `等差數列首項 \\(a_1=${a1}\\)，公差 \\(d=${d}\\)，求從第幾項起，之後各項均為負數？`
-        );
+        questions.push(`等差數列首項 \\(a_1=${a1}\\)，公差 \\(d=${d}\\)，求從第幾項起，之後各項均為負數？`);
         answers.push(
-          `簡答：從第 ${k} 項起均為負數。過程：\\(a_n=${a1}+(n-1)\\times(${d})\\)，解 \\(a_n<0\\Rightarrow n-1>\\frac{${a1}}{${dAbs}}\\approx${(a1/dAbs).toFixed(2)}\\Rightarrow n\\geq${k}\\)。因公差為負，第 ${k} 項起持續遞減，故第 ${k} 項（值為 ${ak}）起均為負數。`
+          `簡答：從第 ${k} 項起均為負數。過程：\\(a_n=${a1}+(n-1)\\times(${d})\\)，解 \\(a_n<0\\Rightarrow n-1>\\frac{${a1}}{${dAbs}}\\approx${(a1 / dAbs).toFixed(2)}\\Rightarrow n\\geq${k}\\)。因公差為負，第 ${k} 項起持續遞減，故第 ${k} 項（值為 ${ak}）起均為負數。`
         );
         continue;
       }
@@ -744,15 +735,16 @@
         `等差數列中，\\(a_{${giveK}}=${a_giveK}\\)，\\(a_{${giveM}}=${a_giveM}\\)，求此數列第一個正項是第幾項？`
       );
       answers.push(
-        `簡答：第 ${firstPosK} 項。過程：公差 \\(d=\\frac{a_{${giveM}}-a_{${giveK}}}{${giveM}-${giveK}}=\\frac{${a_giveM}-${a_giveK}}{${giveM-giveK}}=${d}\\)，\\(a_1=a_{${giveK}}-(${giveK-1})d=${a_giveK}-${(giveK-1)*d}=${a1}\\)。解 \\(a_n>0\\Rightarrow n\\geq${firstPosK}\\)，第一個正項是第 ${firstPosK} 項，值為 ${firstPosVal}。`
+        `簡答：第 ${firstPosK} 項。過程：公差 \\(d=\\frac{a_{${giveM}}-a_{${giveK}}}{${giveM}-${giveK}}=\\frac{${a_giveM}-${a_giveK}}{${giveM - giveK}}=${d}\\)，\\(a_1=a_{${giveK}}-(${giveK - 1})d=${a_giveK}-${(giveK - 1) * d}=${a1}\\)。解 \\(a_n>0\\Rightarrow n\\geq${firstPosK}\\)，第一個正項是第 ${firstPosK} 項，值為 ${firstPosVal}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ411CoordinateMoveSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -764,7 +756,16 @@
         const n = randInt(4, 10);
         const xn = x0 + n * dx;
         const yn = y0 + n * dy;
-        const quadrant = xn > 0 && yn > 0 ? '第一象限' : xn < 0 && yn > 0 ? '第二象限' : xn < 0 && yn < 0 ? '第三象限' : xn > 0 && yn < 0 ? '第四象限' : '座標軸上';
+        const quadrant =
+          xn > 0 && yn > 0
+            ? '第一象限'
+            : xn < 0 && yn > 0
+              ? '第二象限'
+              : xn < 0 && yn < 0
+                ? '第三象限'
+                : xn > 0 && yn < 0
+                  ? '第四象限'
+                  : '座標軸上';
         questions.push(
           `點 \\(P\\) 從 \\((${x0},${y0})\\) 出發，每次 \\(x\\) 增加 ${dx}、\\(y\\) 增加 ${dy}，移動 ${n} 次後，\\(P\\) 的座標為何？在第幾象限？`
         );
@@ -786,7 +787,7 @@
           `點 \\(A=(${x0},${y0})\\) 每次移動固定量 \\((p,q)\\)，移動 ${n} 次後到達 \\(B=(${xn},${yn})\\)，求每次的移動量 \\((p,q)\\)。`
         );
         answers.push(
-          `簡答：\\((p,q)=(${dx},${dy})\\)。過程：\\(p=\\frac{${xn}-${x0}}{${n}}=\\frac{${xn-x0}}{${n}}=${dx}\\)，\\(q=\\frac{${yn}-${y0}}{${n}}=\\frac{${yn-y0}}{${n}}=${dy}\\)。`
+          `簡答：\\((p,q)=(${dx},${dy})\\)。過程：\\(p=\\frac{${xn}-${x0}}{${n}}=\\frac{${xn - x0}}{${n}}=${dx}\\)，\\(q=\\frac{${yn}-${y0}}{${n}}=\\frac{${yn - y0}}{${n}}=${dy}\\)。`
         );
         continue;
       }
@@ -822,7 +823,7 @@
           `一動點第 1 次位於 \\((${x0},${y0})\\)，之後每次 \\(x\\) 增加 ${dx}、\\(y\\) 增加 ${dy}。求第幾次時 \\(x+y=${target}\\)？`
         );
         answers.push(
-          `簡答：第 ${n} 次。過程：第 \\(k\\) 次時 \\(x+y=(${x0}+(k-1)\\times${dx})+(${y0}+(k-1)\\times${dy})=(${x0+y0})+(k-1)\\times(${sumD})=${target}\\)，解得 \\(k=${n}\\)。`
+          `簡答：第 ${n} 次。過程：第 \\(k\\) 次時 \\(x+y=(${x0}+(k-1)\\times${dx})+(${y0}+(k-1)\\times${dy})=(${x0 + y0})+(k-1)\\times(${sumD})=${target}\\)，解得 \\(k=${n}\\)。`
         );
         continue;
       }
@@ -838,15 +839,16 @@
         `點 \\(P\\) 從 \\((${x0},${y0})\\) 出發，每次 \\(x\\) 增加 ${dx}、\\(y\\) 增加 ${dy}，求移動幾次後 \\(P\\) 第一次進入第一象限？`
       );
       answers.push(
-        `簡答：移動 ${nFirst} 次後。過程：第 \\(n\\) 次後 \\(P=(${x0}+${dx}n,\\ ${y0}+${dy}n)\\)。須 \\(${x0}+${dx}n>0\\Rightarrow n>\\frac{${-x0}}{${dx}}=${(-x0/dx).toFixed(2)}\\ldots\\) 且 \\(${y0}+${dy}n>0\\Rightarrow n>\\frac{${-y0}}{${dy}}=${(-y0/dy).toFixed(2)}\\ldots\\)，故 \\(n\\geq${nFirst}\\)，此時 \\(P=(${x0+nFirst*dx},${y0+nFirst*dy})\\) 在第一象限。`
+        `簡答：移動 ${nFirst} 次後。過程：第 \\(n\\) 次後 \\(P=(${x0}+${dx}n,\\ ${y0}+${dy}n)\\)。須 \\(${x0}+${dx}n>0\\Rightarrow n>\\frac{${-x0}}{${dx}}=${(-x0 / dx).toFixed(2)}\\ldots\\) 且 \\(${y0}+${dy}n>0\\Rightarrow n>\\frac{${-y0}}{${dy}}=${(-y0 / dy).toFixed(2)}\\ldots\\)，故 \\(n\\geq${nFirst}\\)，此時 \\(P=(${x0 + nFirst * dx},${y0 + nFirst * dy})\\) 在第一象限。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ413SeriesFormulaCoreSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -911,12 +913,13 @@
         `簡答：${n} 項。過程：設共有 \\(n\\) 項，\\(S_n=\\frac{n(${formatPairSum(a1, an)})}{2}=${sum}\\)，所以 \\(n=\\frac{2\\cdot${sum}}{${formatPairSum(a1, an)}}=${n}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ413RangeMultipleSumSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -988,12 +991,13 @@
         `簡答：共 ${n} 個，總和 ${sum}。過程：符合條件的第一個數是 ${first}，最後一個數是 ${last}，公差 ${divisor}，故項數為 ${n}，總和為 \\(\\frac{${n}(${first}+${last})}{2}=${sum}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ413MaxMinSumSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1067,12 +1071,13 @@
         `簡答：前 ${lastPositiveIndex} 項和最大，最大值 ${maxSum}。過程：\\(a_n=${formatApNthFormula(a1, d)}\\)，最後一個正項是第 ${lastPositiveIndex} 項，值為 ${lastPositive}；再下一項為 ${lastPositive + d}<0，所以最大和為 \\(\\frac{${lastPositiveIndex}(${formatPairSum(a1, lastPositive)})}{2}=${maxSum}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ413WordApplicationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1139,12 +1144,13 @@
         `簡答：最大獎 ${top} 元，總獎金 ${total} 元。過程：最大獎為第 ${awards} 項，\\(${first}+${awards - 1}\\cdot${d}=${top}\\)；總獎金 \\(\\frac{${awards}(${first}+${top})}{2}=${total}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ413SnRelationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1217,12 +1223,13 @@
         `簡答：${ra}:${rb}。過程：第 \\(n\\) 項為前 \\(n\\) 項和減前 \\(n-1\\) 項和。故 \\(${latexSub('a', askN)}=${a}\\)，\\(${latexSub('b', askN)}=${b}\\)，比為 ${a}:${b}=${ra}:${rb}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ413BlockSumRelationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a1 = pickNonZero(-10, 20);
       const d = pickNonZero(1, 6);
@@ -1245,18 +1252,21 @@
         const s1 = block1;
         const s2 = block1 + block2;
         const s3 = block1 + block2 + block3;
-        questions.push(`某等差數列滿足 \\(S_${blockSize}=${s1}\\)、\\(S_${2 * blockSize}=${s2}\\)，求 \\(S_${3 * blockSize}\\)。`);
+        questions.push(
+          `某等差數列滿足 \\(S_${blockSize}=${s1}\\)、\\(S_${2 * blockSize}=${s2}\\)，求 \\(S_${3 * blockSize}\\)。`
+        );
         answers.push(
           `先算第二段和為 \\(S_${2 * blockSize}-S_${blockSize}=${s2 - s1}\\)，再利用等差分段和成等差，可得第三段和為 ${block3}，所以 \\(S_${3 * blockSize}=${s3}\\)。`
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ413OddEvenSumRelationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const half = [5, 10][i % 2];
       const a1 = pickNonZero(-12, 15);
@@ -1268,9 +1278,7 @@
       const evenLast = a1 + (2 * half - 1) * d;
       const evenSum = apSumFromFirstLast(half, evenFirst, evenLast);
       if (i % 2 === 0) {
-        questions.push(
-          `某等差數列共有 ${2 * half} 項，奇數項和為 ${oddSum}，偶數項和為 ${evenSum}，求公差 \\(d\\)。`
-        );
+        questions.push(`某等差數列共有 ${2 * half} 項，奇數項和為 ${oddSum}，偶數項和為 ${evenSum}，求公差 \\(d\\)。`);
         answers.push(
           `偶數項和減奇數項和，等於每一對多出的 \\(d\\) 共 ${half} 次，所以 \\(${evenSum}-${oddSum}=${half}d\\Rightarrow d=${d}\\)。`
         );
@@ -1279,18 +1287,20 @@
         questions.push(
           `某等差數列共有 ${2 * half} 項，奇數項和為 ${oddSum}，偶數項和為 ${evenSum}，求前 ${2 * half} 項和。`
         );
-        answers.push(`前 ${2 * half} 項和就是奇數項和加偶數項和，所以 \\(S_${2 * half}=${oddSum}+${evenSum}=${total}\\)。`);
+        answers.push(
+          `前 ${2 * half} 項和就是奇數項和加偶數項和，所以 \\(S_${2 * half}=${oddSum}+${evenSum}=${total}\\)。`
+        );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
 
   // === 新增 j4-1-3 generators ===
 
   function buildJ413PolygonSumSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1300,11 +1310,9 @@
         const d = randInt(1, 4);
         const an = a1 + (n - 1) * d;
         const peri = (n * (a1 + an)) / 2;
-        questions.push(
-          `一個 ${n} 邊形各邊長成等差數列，最短邊為 ${a1} 公分，公差為 ${d} 公分，求周長。`
-        );
+        questions.push(`一個 ${n} 邊形各邊長成等差數列，最短邊為 ${a1} 公分，公差為 ${d} 公分，求周長。`);
         answers.push(
-          `簡答：周長為 ${peri} 公分。過程：最長邊 \\(=${a1}+${n-1}\\times${d}=${an}\\)，周長 \\(=\\frac{${n}(${a1}+${an})}{2}=${peri}\\) 公分。`
+          `簡答：周長為 ${peri} 公分。過程：最長邊 \\(=${a1}+${n - 1}\\times${d}=${an}\\)，周長 \\(=\\frac{${n}(${a1}+${an})}{2}=${peri}\\) 公分。`
         );
         continue;
       }
@@ -1330,11 +1338,9 @@
         const a1 = randInt(3, 10);
         const an = a1 + (n - 1) * d;
         const peri = (n * (a1 + an)) / 2;
-        questions.push(
-          `一個 ${n} 邊形各邊長成等差數列，公差為 ${d} 公分，周長為 ${peri} 公分，求最短邊的長度。`
-        );
+        questions.push(`一個 ${n} 邊形各邊長成等差數列，公差為 ${d} 公分，周長為 ${peri} 公分，求最短邊的長度。`);
         answers.push(
-          `簡答：最短邊為 ${a1} 公分。過程：設最短邊為 \\(a_1\\)，最長邊 \\(=a_1+${(n-1)*d}\\)，周長 \\(=\\frac{${n}(2a_1+${(n-1)*d})}{2}=${n}a_1+${n*(n-1)*d/2}=${peri}\\Rightarrow a_1=${a1}\\)。`
+          `簡答：最短邊為 ${a1} 公分。過程：設最短邊為 \\(a_1\\)，最長邊 \\(=a_1+${(n - 1) * d}\\)，周長 \\(=\\frac{${n}(2a_1+${(n - 1) * d})}{2}=${n}a_1+${(n * (n - 1) * d) / 2}=${peri}\\Rightarrow a_1=${a1}\\)。`
         );
         continue;
       }
@@ -1349,7 +1355,7 @@
           `一個多邊形各邊長成等差數列，最長邊為 ${an} 公分，公差為 ${d} 公分，周長為 ${peri} 公分，求邊數。`
         );
         answers.push(
-          `簡答：共 ${n} 邊。過程：設最短邊 \\(a_1=${an}-(n-1)\\times${d}\\)，代入周長 \\(\\frac{n(a_1+${an})}{2}=${peri}\\)，整理得 \\(n(${an+an}-(n-1)\\times${d})=2\\times${peri}\\)，試代入 \\(n=${n}\\) 驗算正確，最短邊為 ${a1} 公分。`
+          `簡答：共 ${n} 邊。過程：設最短邊 \\(a_1=${an}-(n-1)\\times${d}\\)，代入周長 \\(\\frac{n(a_1+${an})}{2}=${peri}\\)，整理得 \\(n(${an + an}-(n-1)\\times${d})=2\\times${peri}\\)，試代入 \\(n=${n}\\) 驗算正確，最短邊為 ${a1} 公分。`
         );
         continue;
       }
@@ -1359,19 +1365,18 @@
       const d = randInt(2, 6);
       const an = a1 + (layers - 1) * d;
       const total = (layers * (a1 + an)) / 2;
-      questions.push(
-        `某劇場共 ${layers} 排座位，第一排有 ${a1} 個座位，之後每排比前一排多 ${d} 個，求全場座位總數。`
-      );
+      questions.push(`某劇場共 ${layers} 排座位，第一排有 ${a1} 個座位，之後每排比前一排多 ${d} 個，求全場座位總數。`);
       answers.push(
         `簡答：共 ${total} 個座位。過程：各排座位成等差，首排 ${a1}、末排 ${an}，總座位 \\(=\\frac{${layers}(${a1}+${an})}{2}=${total}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ413CatchUpRaceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1386,7 +1391,7 @@
           `甲跑步，第一圈用時 ${a1} 秒，此後每圈比前一圈多用 ${d} 秒；乙每圈固定用 ${b} 秒。問甲從第幾圈開始比乙慢？`
         );
         answers.push(
-          `簡答：第 ${k} 圈。過程：甲第 \\(n\\) 圈時間 \\(=${a1}+(n-1)\\times${d}\\)。解 \\(${a1}+(n-1)\\times${d}>${b}\\Rightarrow n-1>\\frac{${b-a1}}{${d}}\\approx${((b-a1)/d).toFixed(2)}\\)，故 \\(n\\geq${k}\\)，第 ${k} 圈甲用時 ${ak} 秒，第一次比乙慢。`
+          `簡答：第 ${k} 圈。過程：甲第 \\(n\\) 圈時間 \\(=${a1}+(n-1)\\times${d}\\)。解 \\(${a1}+(n-1)\\times${d}>${b}\\Rightarrow n-1>\\frac{${b - a1}}{${d}}\\approx${((b - a1) / d).toFixed(2)}\\)，故 \\(n\\geq${k}\\)，第 ${k} 圈甲用時 ${ak} 秒，第一次比乙慢。`
         );
         continue;
       }
@@ -1396,7 +1401,7 @@
         const d = randInt(3, 7);
         const b = a1 + randInt(2, 5) * d;
         const nAsk = randInt(8, 15);
-        const sumA = nAsk * a1 + (nAsk * (nAsk - 1) / 2) * d;
+        const sumA = nAsk * a1 + ((nAsk * (nAsk - 1)) / 2) * d;
         const sumB = nAsk * b;
         const diff = Math.abs(sumA - sumB);
         const faster = sumA > sumB ? '甲比乙多用' : '乙比甲多用';
@@ -1404,7 +1409,7 @@
           `甲第一圈用時 ${a1} 秒，之後每圈多用 ${d} 秒；乙每圈固定 ${b} 秒。跑完 ${nAsk} 圈後，${faster.slice(0, 1) === '甲' ? '甲' : '乙'}比${faster.slice(0, 1) === '甲' ? '乙' : '甲'}共多用多少秒？`
         );
         answers.push(
-          `簡答：${faster} ${diff} 秒。過程：甲前 ${nAsk} 圈總時間 \\(=\\frac{${nAsk}(${2*a1}+(${nAsk-1})\\times${d})}{2}=${sumA}\\) 秒；乙 \\(=${nAsk}\\times${b}=${sumB}\\) 秒；差值 \\(=|${sumA}-${sumB}|=${diff}\\) 秒。`
+          `簡答：${faster} ${diff} 秒。過程：甲前 ${nAsk} 圈總時間 \\(=\\frac{${nAsk}(${2 * a1}+(${nAsk - 1})\\times${d})}{2}=${sumA}\\) 秒；乙 \\(=${nAsk}\\times${b}=${sumB}\\) 秒；差值 \\(=|${sumA}-${sumB}|=${diff}\\) 秒。`
         );
         continue;
       }
@@ -1413,14 +1418,14 @@
         const a1 = randInt(50, 75);
         const d = randInt(3, 7);
         const b = a1 + randInt(1, 3) * d;
-        const nCross = Math.floor(2 * (b - a1) / d) + 2;
-        const sumAN = nCross * a1 + (nCross * (nCross - 1) / 2) * d;
+        const nCross = Math.floor((2 * (b - a1)) / d) + 2;
+        const sumAN = nCross * a1 + ((nCross * (nCross - 1)) / 2) * d;
         const sumBN = nCross * b;
         questions.push(
           `甲第一圈用時 ${a1} 秒，之後每圈多用 ${d} 秒；乙每圈固定 ${b} 秒。問跑幾圈後甲的累計時間第一次超過乙的累計時間？`
         );
         answers.push(
-          `簡答：第 ${nCross} 圈後。過程：甲前 \\(n\\) 圈總時間 \\(=na_1+\\frac{n(n-1)}{2}d\\)，乙 \\(=nb\\)。甲超過乙需 \\(n(a_1-b)+\\frac{n(n-1)}{2}d>0\\Rightarrow\\frac{n-1}{2}d>b-a_1\\Rightarrow n>${(2*(b-a1)/d+1).toFixed(2)}\\)，故 \\(n\\geq${nCross}\\)，此時甲 ${sumAN} 秒，乙 ${sumBN} 秒。`
+          `簡答：第 ${nCross} 圈後。過程：甲前 \\(n\\) 圈總時間 \\(=na_1+\\frac{n(n-1)}{2}d\\)，乙 \\(=nb\\)。甲超過乙需 \\(n(a_1-b)+\\frac{n(n-1)}{2}d>0\\Rightarrow\\frac{n-1}{2}d>b-a_1\\Rightarrow n>${((2 * (b - a1)) / d + 1).toFixed(2)}\\)，故 \\(n\\geq${nCross}\\)，此時甲 ${sumAN} 秒，乙 ${sumBN} 秒。`
         );
         continue;
       }
@@ -1429,15 +1434,15 @@
         const a1 = randInt(500, 1500);
         const d = randInt(100, 300);
         const nTarget = randInt(8, 14);
-        const target = nTarget * a1 + (nTarget * (nTarget - 1) / 2) * d - randInt(50, 200);
+        const target = nTarget * a1 + ((nTarget * (nTarget - 1)) / 2) * d - randInt(50, 200);
         let n = 1;
-        while (n * a1 + (n * (n - 1) / 2) * d < target) n++;
-        const sn = n * a1 + (n * (n - 1) / 2) * d;
+        while (n * a1 + ((n * (n - 1)) / 2) * d < target) n++;
+        const sn = n * a1 + ((n * (n - 1)) / 2) * d;
         questions.push(
           `小明第一個月儲蓄 ${a1} 元，之後每個月比前一個月多存 ${d} 元，問至少幾個月後累計儲蓄超過 ${target} 元？`
         );
         answers.push(
-          `簡答：第 ${n} 個月後。過程：前 \\(n\\) 個月累計 \\(S_n=n\\times${a1}+\\frac{n(n-1)}{2}\\times${d}\\)。解 \\(S_n>${target}\\)，代入 \\(n=${n}\\) 得 \\(S_{${n}}=${sn}>${target}\\)，\\(n=${n-1}\\) 時 \\(S_{${n-1}}=${(n-1)*a1+((n-1)*(n-2)/2)*d}<${target}\\)，故至少需 ${n} 個月。`
+          `簡答：第 ${n} 個月後。過程：前 \\(n\\) 個月累計 \\(S_n=n\\times${a1}+\\frac{n(n-1)}{2}\\times${d}\\)。解 \\(S_n>${target}\\)，代入 \\(n=${n}\\) 得 \\(S_{${n}}=${sn}>${target}\\)，\\(n=${n - 1}\\) 時 \\(S_{${n - 1}}=${(n - 1) * a1 + (((n - 1) * (n - 2)) / 2) * d}<${target}\\)，故至少需 ${n} 個月。`
         );
         continue;
       }
@@ -1454,7 +1459,7 @@
         `簡答：(1) 第 ${n} 天讀 ${an} 分鐘；(2) 前 ${n} 天共讀 ${sn} 分鐘。過程：(1) \\(a_{${n}}=${a1}+(${n}-1)\\times${d}=${an}\\)；(2) \\(S_{${n}}=\\frac{${n}(${a1}+${an})}{2}=${sn}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ413ArithmeticSeriesMixedSet(count) {
@@ -1466,18 +1471,20 @@
       buildJ413SnRelationSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const one = banks[i % banks.length](1);
       questions.push(one.questions[0]);
       answers.push(one.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ412GeometricNthTermSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       let a1;
@@ -1514,12 +1521,13 @@
         `簡答：\\(${latexSub('a', n)}=${formatGeometricTermLatex(an)}\\)。過程：\\(${latexSub('a', n)}=a_1r^{${n - 1}}=${formatGeometricNthFormula(a1, r, n)}=${formatGeometricTermLatex(an)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ412FindRatioFirstTermSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1589,12 +1597,13 @@
         `簡答：\\(r=${formatRatioLatex(r)}\\)。過程：\\(a_${m}=a_1r^{${m - 1}}\\)，所以 \\(r^{${m - 1}}=${formatGeometricTermLatex(am)}\\div ${formatGeometricTermLatex(a1)}=${formatRatioLatex(powFraction(r, m - 1))}\\)。因為 ${m - 1} 是奇數，符號可一起判定，得 \\(r=${formatRatioLatex(r)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ412GeometricMeanUnknownSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1654,12 +1663,13 @@
         `簡答：\\(m=\\pm ${mAbs}\\)。過程：若三數成等比，必須 \\(m^2=${first}\\cdot${last}=${product}\\)，所以 \\(m=\\pm ${mAbs}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ412TermIndexSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       const r =
@@ -1706,12 +1716,13 @@
         `簡答：不是。過程：相鄰項都固定乘以 \\(r=${formatRatioLatex(r)}\\)，而 ${formatGeometricTermLatex(notTerm)} 介於已生成的等比項附近，無法寫成 \\(${formatGeometricTermLatex(a1)}\\cdot ${formatFractionLatexForFactor(r)}^k\\)（\\(k\\) 為非負整數），所以不是。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ412WordApplicationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1775,7 +1786,7 @@
         `簡答：\\(${formatGeometricTermLatex(future)}\\) 人。過程：每年乘以 \\(${formatRatioLatex(ratio)}\\)，${years} 年後為 \\(${population}\\cdot ${formatFractionLatexForFactor(ratio)}^{${years}}=${formatGeometricTermLatex(future)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ412GeometricSequenceMixedSet(count) {
@@ -1787,13 +1798,14 @@
       buildJ412WordApplicationSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const one = banks[i % banks.length](1);
       questions.push(one.questions[0]);
       answers.push(one.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatFunctionLinear(a, b, variable = 'x') {
@@ -1850,7 +1862,8 @@
 
   function buildJ421FunctionRelationJudgeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = [
       {
         x: '一位學生的身分證字號',
@@ -1940,12 +1953,13 @@
         )
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ421FunctionValueBasicSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2005,12 +2019,13 @@
         `簡答：\\(h(${x})=${formatFunctionFractionValue(value)}\\)。過程：分母為 \\(${x}${formatSignedAdd(denShift)}=${x + denShift}\\)，所以 \\(h(${x})=\\frac{${numerator}}{${x + denShift}}=${formatFunctionFractionValue(value)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ421FunctionReverseSolveSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2072,12 +2087,13 @@
         `簡答：\\(t=${input}\\)。過程：\\(${formatFunctionLinear(a, b, 't')}=${target}\\)，所以 \\(${formatTerm(a, 't')}=${target - b}\\)，解得 \\(t=${input}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ421FunctionFlowCompositeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2149,12 +2165,13 @@
       questions.push(`已知函數 \\(f(x)=${formatFunctionLinear(a, b)}\\)，求 \\(f(1)+f(2)+\\cdots+f(${n})\\)。`);
       answers.push(`簡答：${sum}。過程：\\(f(1)+\\cdots+f(${n})=${aSumText}${bSumText}=${totalText}=${sum}\\)。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ421FunctionWordModelSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2218,21 +2235,24 @@
         `簡答：\\(y=180+\\frac{x-300}{10}\\)，費用 \\(${formatFunctionFractionValue(cost)}\\) 元。過程：超過的秒數是 \\(x-300\\)，所以 \\(y=180+\\frac{x-300}{10}\\)。代入 \\(x=${seconds}\\)，\\(y=180+\\frac{${extra}}{10}=${formatFunctionFractionValue(cost)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ421FunctionShiftSubstitutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       const a = pickNonZero(-5, 5);
       const b = randInt(-10, 10);
       const shift = randInt(1, 5);
       if (mode === 0) {
-        const h0 = a * (-shift) + b;
+        const h0 = a * -shift + b;
         const hs = b;
-        questions.push(`已知函數 \\(h(x+${shift})=${formatFunctionLinear(a, b)}\\)，求 \\(h(0)\\) 與 \\(h(${shift})\\) 的值。`);
+        questions.push(
+          `已知函數 \\(h(x+${shift})=${formatFunctionLinear(a, b)}\\)，求 \\(h(0)\\) 與 \\(h(${shift})\\) 的值。`
+        );
         answers.push(
           `簡答：\\(h(0)=${h0}\\)，\\(h(${shift})=${hs}\\)。過程：求 \\(h(0)\\) 時令 \\(x+${shift}=0\\)，得 \\(x=-${shift}\\)，所以 \\(h(0)=${formatProductForSubstitution(a, -shift)}${formatSignedAdd(b)}=${h0}\\)。求 \\(h(${shift})\\) 時令 \\(x=0\\)，得 \\(h(${shift})=${b}\\)。`
         );
@@ -2241,7 +2261,9 @@
       if (mode === 1) {
         const h0 = a * shift + b;
         const hNeg = b;
-        questions.push(`已知函數 \\(f(x-${shift})=${formatFunctionLinear(a, b)}\\)，求 \\(f(0)\\) 與 \\(f(-${shift})\\) 的值。`);
+        questions.push(
+          `已知函數 \\(f(x-${shift})=${formatFunctionLinear(a, b)}\\)，求 \\(f(0)\\) 與 \\(f(-${shift})\\) 的值。`
+        );
         answers.push(
           `簡答：\\(f(0)=${h0}\\)，\\(f(-${shift})=${hNeg}\\)。過程：求 \\(f(0)\\) 時令 \\(x-${shift}=0\\)，得 \\(x=${shift}\\)，所以 \\(f(0)=${formatProductForSubstitution(a, shift)}${formatSignedAdd(b)}=${h0}\\)。求 \\(f(-${shift})\\) 時令 \\(x=0\\)，得 \\(f(-${shift})=${b}\\)。`
         );
@@ -2270,7 +2292,7 @@
         `簡答：\\(p(${target})=${value}\\)。過程：要求 \\(p(${target})\\)，令 \\(x+${shift}=${target}\\)，得 \\(x=${target - shift}\\)。所以 \\(p(${target})=${formatProductForSubstitution(a, target - shift)}${formatSignedAdd(b)}=${value}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ421FunctionMixedSet(count) {
@@ -2283,13 +2305,14 @@
       buildJ421FunctionShiftSubstitutionSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const one = banks[i % banks.length](1);
       questions.push(one.questions[0]);
       answers.push(one.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatSignedFractionTerm(frac) {
@@ -2330,7 +2353,8 @@
 
   function buildJ422LinearEquationTwoPointsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       const a = pickNonZero(-5, 5);
@@ -2383,12 +2407,13 @@
         `簡答：\\(f(x)=${formatFunctionLinear(a, b)}\\)。過程：\\(a=f(2)-f(1)=${formatDifferenceText(f2, f1)}=${a}\\)，再由 \\(a+b=${f1}\\) 得 \\(b=${b}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ422InterceptPositionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const quadrantNames = ['第一象限', '第二象限', '第三象限', '第四象限'];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -2443,12 +2468,13 @@
         `簡答：通過${pass.join('、')}。過程：圖形是水平直線 \\(y=${c}\\)，在 \\(x>0\\) 與 \\(x<0\\) 都有點；因為 \\(y${c > 0 ? '>0' : '<0'}\\)，所以不通過${missing}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ422AxisAreaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       const xIntercept = pickNonZero(-10, 10);
@@ -2459,8 +2485,9 @@
         questions.push(
           `計算一次函數 \\(y=${formatLinearFractionExpr(slope, makeFraction(yIntercept))}\\) 的圖形與兩坐標軸所圍成的三角形面積。`
         );
+        summaryAnswers.push(`$${formatFunctionFractionValue(makeFraction(Math.abs(xIntercept * yIntercept), 2))}$`);
         answers.push(
-          `簡答：${formatFunctionFractionValue(makeFraction(Math.abs(xIntercept * yIntercept), 2))} 平方單位。過程：\\(x\\) 軸截距為 ${xIntercept}，\\(y\\) 軸截距為 ${yIntercept}，面積 \\(=\\frac{|${xIntercept}\\cdot${yIntercept}|}{2}=${formatFunctionFractionValue(makeFraction(Math.abs(xIntercept * yIntercept), 2))}\\)。`
+          `過程：\\(x\\) 軸截距為 ${xIntercept}，\\(y\\) 軸截距為 ${yIntercept}，面積 \\(=\\frac{|${xIntercept}\\cdot${yIntercept}|}{2}=${formatFunctionFractionValue(makeFraction(Math.abs(xIntercept * yIntercept), 2))}\\)。`
         );
         continue;
       }
@@ -2474,7 +2501,7 @@
         }
         const a = makeFraction(-b, x0);
         questions.push(
-          `若一次函數 \\(y=ax+${b}\\) 的圖形與兩坐標軸圍成的面積為 ${targetArea} 平方單位，且 \\(a<0\\)，求 \\(a\\)。`
+          `若一次函數 \\(y=ax+${b}\\) 的圖形與兩坐標軸圍成的面積為 $${targetArea}$ 平方單位，且 \\(a<0\\)，求 \\(a\\)。`
         );
         answers.push(
           `簡答：\\(a=${formatFunctionFractionValue(a)}\\)。過程：\\(y\\) 軸截距為 ${b}，面積 \\(\\frac{|x_0|\\cdot${b}}{2}=${targetArea}\\)，得 \\(x_0=${x0}\\)。又 \\(0=a\\cdot${x0}+${b}\\)，所以 \\(a=${formatFunctionFractionValue(a)}\\)。`
@@ -2508,12 +2535,13 @@
         `簡答：\\(${formatFunctionFractionValue(makeFraction(Math.abs(xIntercept * yIntercept), 2))}\\) 平方單位。過程：兩軸截距分別為 ${formatFunctionFractionValue(makeFraction(xIntercept))} 與 ${formatFunctionFractionValue(makeFraction(yIntercept))}，所以面積為 \\(\\frac{|${xIntercept}\\cdot${yIntercept}|}{2}=${formatFunctionFractionValue(makeFraction(Math.abs(xIntercept * yIntercept), 2))}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ422LineIntersectionParallelSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2529,8 +2557,9 @@
         questions.push(
           `求兩個一次函數 \\(y=${formatLinearFractionExpr(line1.slope, line1.intercept)}\\) 與 \\(y=${formatLinearFractionExpr(line2.slope, line2.intercept)}\\) 的圖形交點座標。`
         );
+        summaryAnswers.push(`簡答：$${formatPoint(px, py)}$。`);
         answers.push(
-          `簡答：${formatPoint(px, py)}。過程：聯立兩式，移項得 \\(${formatTerm(diffSlope, 'x')}=${diffIntercept}\\)，解得 \\(x=${px}\\)，代回得 \\(y=${py}\\)。`
+          `簡答：$${formatPoint(px, py)}$。過程：聯立兩式，移項得 \\(${formatTerm(diffSlope, 'x')}=${diffIntercept}\\)，解得 \\(x=${px}\\)，代回得 \\(y=${py}\\)。`
         );
         continue;
       }
@@ -2539,8 +2568,9 @@
         const c2 = pickNonZero(-10, 10);
         questions.push(`求一次函數 \\(y=${c1}\\) 與 \\(y=${formatFunctionLinear(-2, c2)}\\) 圖形的交點座標。`);
         const x = makeFraction(c2 - c1, 2);
+        summaryAnswers.push(`簡答：$${formatPoint(x, c1)}$。`);
         answers.push(
-          `簡答：${formatPoint(x, c1)}。過程：聯立 \\(${c1}=-2x${formatSignedAdd(c2)}\\)，得 \\(x=${formatFunctionFractionValue(x)}\\)，所以交點為 ${formatPoint(x, c1)}。`
+          `簡答：$${formatPoint(x, c1)}$。過程：聯立 \\(${c1}=-2x${formatSignedAdd(c2)}\\)，得 \\(x=${formatFunctionFractionValue(x)}\\)，所以交點為 $${formatPoint(x, c1)}$。`
         );
         continue;
       }
@@ -2584,12 +2614,13 @@
         `簡答：\\(a+b=${slope + b}\\)。過程：平行直線斜率相同，所以 \\(a=${slope}\\)。代入 ${formatPoint(px, py)} 得 \\(${py}=${formatProductForSubstitution(slope, px)}+b\\)，所以 \\(b=${b}\\)，\\(a+b=${slope + b}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ422PerpendicularEquationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2597,7 +2628,9 @@
         const px = randInt(-5, 5);
         const py = randInt(-6, 8);
         const line = lineThroughPointSlope(px, py, makeFraction(-1, m));
-        questions.push(`求通過 ${formatPoint(px, py)} 且與直線 \\(y=${formatFunctionLinear(m, randInt(-8, 8))}\\) 垂直的直線方程式。`);
+        questions.push(
+          `求通過 ${formatPoint(px, py)} 且與直線 \\(y=${formatFunctionLinear(m, randInt(-8, 8))}\\) 垂直的直線方程式。`
+        );
         answers.push(
           `簡答：\\(y=${formatLinearFractionExpr(line.slope, line.intercept)}\\)。過程：原直線斜率為 ${m}，垂直直線斜率為 \\(-\\frac{1}{${m}}\\)。代入點 ${formatPoint(px, py)} 求截距，可得方程式 \\(y=${formatLinearFractionExpr(line.slope, line.intercept)}\\)。`
         );
@@ -2611,7 +2644,9 @@
         const py = randInt(-7, 7);
         const slope = makeFraction(b, a);
         const line = lineThroughPointSlope(px, py, slope);
-        questions.push(`求通過 ${formatPoint(px, py)} 且與直線 \\(${a}x${b >= 0 ? '+' : ''}${b}y${c >= 0 ? '-' : '+'}${Math.abs(c)}=0\\) 垂直的直線方程式。`);
+        questions.push(
+          `求通過 ${formatPoint(px, py)} 且與直線 \\(${a}x${b >= 0 ? '+' : ''}${b}y${c >= 0 ? '-' : '+'}${Math.abs(c)}=0\\) 垂直的直線方程式。`
+        );
         answers.push(
           `簡答：\\(y=${formatLinearFractionExpr(line.slope, line.intercept)}\\)。過程：\\(${a}x${b >= 0 ? '+' : ''}${b}y${c >= 0 ? '-' : '+'}${Math.abs(c)}=0\\) 的斜率為 \\(-\\frac{${a}}{${b}}\\)，所以垂線斜率為 \\(\\frac{${b}}{${a}}\\)。再利用點 ${formatPoint(px, py)} 求得方程式。`
         );
@@ -2621,7 +2656,9 @@
         const m = pickNonZero(-4, 4);
         const x0 = pickNonZero(-6, 6);
         const line = lineThroughPointSlope(x0, 0, makeFraction(-1, m));
-        questions.push(`若一直線與直線 \\(y=${formatFunctionLinear(m, randInt(-9, 9))}\\) 垂直，且它的 \\(x\\) 軸截距為 ${x0}，求此直線方程式。`);
+        questions.push(
+          `若一直線與直線 \\(y=${formatFunctionLinear(m, randInt(-9, 9))}\\) 垂直，且它的 \\(x\\) 軸截距為 ${x0}，求此直線方程式。`
+        );
         answers.push(
           `簡答：\\(y=${formatLinearFractionExpr(line.slope, line.intercept)}\\)。過程：垂直表示斜率為 \\(-\\frac{1}{${m}}\\)，又直線通過 \\(x\\) 軸截距點 ${formatPoint(x0, 0)}，所以可求得方程式 \\(y=${formatLinearFractionExpr(line.slope, line.intercept)}\\)。`
         );
@@ -2633,7 +2670,9 @@
         const y0 = pickNonZero(-8, 8);
         const slope = makeFraction(b, a);
         const line = lineThroughPointSlope(0, y0, slope);
-        questions.push(`若一直線與直線 \\(${a}x${b >= 0 ? '+' : ''}${b}y=${randInt(-12, 12)}\\) 垂直，且它的 \\(y\\) 軸截距為 ${y0}，求此直線方程式。`);
+        questions.push(
+          `若一直線與直線 \\(${a}x${b >= 0 ? '+' : ''}${b}y=${randInt(-12, 12)}\\) 垂直，且它的 \\(y\\) 軸截距為 ${y0}，求此直線方程式。`
+        );
         answers.push(
           `簡答：\\(y=${formatLinearFractionExpr(line.slope, line.intercept)}\\)。過程：原直線斜率為 \\(-\\frac{${a}}{${b}}\\)，所以垂直直線斜率為 \\(\\frac{${b}}{${a}}\\)。又它通過 \\((0,${y0})\\)，因此方程式為 \\(y=${formatLinearFractionExpr(line.slope, line.intercept)}\\)。`
         );
@@ -2648,12 +2687,13 @@
         `簡答：\\(L:y=${formatLinearFractionExpr(line.slope, line.intercept)}\\)。過程：因為垂直，所以 \\(L\\) 的斜率為 \\(-\\frac{1}{${m}}\\)。再把點 ${formatPoint(px, py)} 代入求截距，得 \\(L:y=${formatLinearFractionExpr(line.slope, line.intercept)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ422QuadrantSlopeRangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2694,7 +2734,7 @@
         `簡答：\\(t\\le 0\\)。過程：\\(y\\) 軸截距為正，所以一定通過第一、第二象限附近。若還要求不通過第三象限，就不能讓斜率為正；因為斜率為正時，往左延伸會落入第三象限。因此 \\(t\\le 0\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ422LinearFunctionMixedSet(count) {
@@ -2707,20 +2747,21 @@
       buildJ422QuadrantSlopeRangeSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const one = banks[i % banks.length](1);
       questions.push(one.questions[0]);
       answers.push(one.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
 
   // === j4-2-1: 一次函數係數條件 ===
   function buildJ421LinearDegreeConditionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2746,9 +2787,7 @@
         const n = randInt(-4, 4);
         const v1 = a * (n + 1) + b;
         const v0 = a * n + b;
-        questions.push(
-          `已知 \\(f(x)=${formatFunctionLinear(a, b)}\\)，求 \\(f(${n + 1})-f(${n})\\) 的值。`
-        );
+        questions.push(`已知 \\(f(x)=${formatFunctionLinear(a, b)}\\)，求 \\(f(${n + 1})-f(${n})\\) 的值。`);
         answers.push(
           `簡答：${a}。過程：\\(f(${n + 1})=${v1}\\)，\\(f(${n})=${v0}\\)，差值為 \\(${v1}${formatSignedAdd(-v0)}=${a}\\)。線型函數相鄰整數差等於斜率。`
         );
@@ -2782,9 +2821,7 @@
         const vk = a * k + b;
         const vnk = -a * k + b;
         const sumVal = 2 * b;
-        questions.push(
-          `已知 \\(f(x)=${formatFunctionLinear(a, b)}\\)，求 \\(f(${k})+f(-${k})\\) 的值。`
-        );
+        questions.push(`已知 \\(f(x)=${formatFunctionLinear(a, b)}\\)，求 \\(f(${k})+f(-${k})\\) 的值。`);
         answers.push(
           `簡答：${sumVal}。過程：\\(f(${k})=${vk}\\)，\\(f(-${k})=${vnk}\\)，相加得 \\(${vk}${formatSignedAdd(vnk)}=${sumVal}\\)。規律：\\(f(k)+f(-k)=(ak+b)+(-ak+b)=2b\\)。`
         );
@@ -2797,20 +2834,19 @@
       const f0 = b;
       const fnk = -a * k + b;
       const diff4 = f0 - fnk; // = ak
-      questions.push(
-        `已知 \\(f(x)=${formatFunctionLinear(a, b)}\\)，求 \\(f(0)-f(-${k})\\) 的值。`
-      );
+      questions.push(`已知 \\(f(x)=${formatFunctionLinear(a, b)}\\)，求 \\(f(0)-f(-${k})\\) 的值。`);
       answers.push(
         `簡答：${diff4}。過程：\\(f(0)=${f0}\\)，\\(f(-${k})=${fnk}\\)，差值為 \\(${f0}${formatSignedAdd(-fnk)}=${diff4}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // === j4-2-1: 跨函數移位代換 ===
   function buildJ421CrossFunctionSubstitutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2824,7 +2860,8 @@
         const x0 = randInt(-3, 4);
         const T = a * x0 + bShift;
         const gT = p * (c * x0 + d) + q;
-        const innerStr = c === 1 ? `x${formatSignedAdd(d)}` : c === -1 ? `-x${formatSignedAdd(d)}` : `${c}x${formatSignedAdd(d)}`;
+        const innerStr =
+          c === 1 ? `x${formatSignedAdd(d)}` : c === -1 ? `-x${formatSignedAdd(d)}` : `${c}x${formatSignedAdd(d)}`;
         questions.push(
           `已知 \\(f(x)=${formatFunctionLinear(p, q)}\\)，且 \\(g(${a}x${formatSignedAdd(bShift)})=f(${innerStr})\\)，求 \\(g(${T})\\)。`
         );
@@ -2911,13 +2948,14 @@
         `簡答：\\(g(${target4})=${gTarget4}\\)。過程：先求 \\(g(x)\\) 的函數式：令 \\(t=${a}x${formatSignedAdd(bShift4)}\\)，\\(x=\\frac{t${formatSignedAdd(-bShift4)}}{${a}}\\)，所以 \\(g(t)=${formatFunctionLinear(gSlope4, gIntercept4)}\\)。代入 \\(t=${target4}\\)，得 \\(g(${target4})=${gTarget4}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // === j4-2-2: 兩點線型函數應用文字題 ===
   function buildJ422WordModelTwoPointSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -2969,7 +3007,10 @@
         // Ask: given R3, find T3
         const R3 = R1 + randInt(1, slopeMult * 5);
         const T3_times_slope = R3 - intercept;
-        if (T3_times_slope % slopeMult !== 0) { i -= 1; continue; }
+        if (T3_times_slope % slopeMult !== 0) {
+          i -= 1;
+          continue;
+        }
         const T3 = T3_times_slope / slopeMult;
         questions.push(
           `一溫度計在 ${T1}℃ 時讀數為 ${R1} 公分，在 ${T2}℃ 時讀數為 ${R2} 公分，且溫度與讀數成線型函數關係。當讀數為 ${R3} 公分時，溫度為多少℃？`
@@ -3018,12 +3059,13 @@
         `簡答：(1) ${freeQuota} 公斤；(2) ${k_rate} 元/公斤；(3) ${fee3} 元。過程：設費用 \\(f(x)=k(x-a)\\)（\\(x\\) 為總重量，\\(a\\) 為免費配額），由兩組數據列方程組：\\(k(${w1}-a)=${fee1}\\)、\\(k(${w2}-a)=${fee2}\\)；相除得 \\(\\frac{${w2}-a}{${w1}-a}=\\frac{${fee2}}{${fee1}}\\)，解得 \\(a=${freeQuota}\\)，再求 \\(k=${k_rate}\\)。代入 \\(f(${w3})=${k_rate}\\cdot(${w3}-${freeQuota})=${fee3}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ431TriangleInteriorAngleSet(count, startOffset = 0) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const ratioSets = [
       [1, 2, 3],
       [1, 3, 5],
@@ -3126,12 +3168,13 @@
         `簡答：\\(\\angle B=${angleB}°\\)。過程：兩式相加得 \\(\\angle A+2\\angle B+\\angle C=${sumAB + sumBC}°\\)。因為 \\(\\angle A+\\angle B+\\angle C=180°\\)，所以 \\(\\angle B=${sumAB + sumBC}°-180°=${angleB}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ431PolygonInteriorSumSet(count, startOffset = 0) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = (i + startOffset) % 5;
       if (mode === 0) {
@@ -3187,12 +3230,13 @@
         `簡答：\\(n=${n}\\)。過程：內角和為 \\((n-2)180°\\)。等差角總和為 \\(\\frac{n[2\\cdot${first}+(n-1)\\cdot${d}]}{2}\\)。代入檢查得 \\(n=${n}\\) 時，總和為 ${total}°，符合 \\((n-2)180°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ431RegularPolygonAngleSet(count, startOffset = 0) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const regularNs = [3, 4, 5, 6, 8, 9, 10, 12, 15, 18, 20];
     for (let i = 0; i < count; i += 1) {
       const mode = (i + startOffset) % 5;
@@ -3250,24 +3294,26 @@
         `簡答：\\(${formatFunctionFractionValue(absFraction(diff))}°\\)。過程：正 ${n1} 邊形一內角為 \\(${formatFunctionFractionValue(angle1)}°\\)，正 ${n2} 邊形一內角為 \\(${formatFunctionFractionValue(angle2)}°\\)，相差 \\(${formatFunctionFractionValue(absFraction(diff))}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ431PolygonAngleMixedSet(count) {
     const banks = [buildJ431TriangleInteriorAngleSet, buildJ431PolygonInteriorSumSet, buildJ431RegularPolygonAngleSet];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const one = banks[i % banks.length](1, Math.floor(i / banks.length));
       questions.push(one.questions[0]);
       answers.push(one.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ431ComplementarySupplementaryAngleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const ratioPairs = [
       [1, 2],
       [2, 3],
@@ -3344,19 +3390,22 @@
         `簡答：${extra}°。過程：設此角為 \\(x°\\)，補角為 \\(180°-x\\)，餘角為 \\(90°-x\\)。依題意 \\(180-x=2(90-x)+${extra}\\)，化簡得 \\(x=${extra}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ431TriangleExteriorAngleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
         const b = randInt(25, 75);
         const c = randInt(25, 75);
         const ext = b + c;
-        questions.push(`在 \\(\\triangle ABC\\) 中，若 \\(\\angle A\\) 的外角為 ${ext}°，且 \\(\\angle B=${b}°\\)，求 \\(\\angle C\\)。`);
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，若 \\(\\angle A\\) 的外角為 ${ext}°，且 \\(\\angle B=${b}°\\)，求 \\(\\angle C\\)。`
+        );
         answers.push(
           `簡答：\\(\\angle C=${c}°\\)。過程：三角形外角等於兩個不相鄰內角和，所以 \\(\\angle C=${ext}°-${b}°=${c}°\\)。`
         );
@@ -3365,7 +3414,9 @@
       if (mode === 1) {
         const x = randInt(10, 25);
         const ext = 5 * x;
-        questions.push(`若 \\(\\triangle ABC\\) 中某外角為 \\(5x\\)°，兩個不相鄰內角分別為 \\(2x\\)° 與 \\(x+20\\)°，求 \\(x\\)。`);
+        questions.push(
+          `若 \\(\\triangle ABC\\) 中某外角為 \\(5x\\)°，兩個不相鄰內角分別為 \\(2x\\)° 與 \\(x+20\\)°，求 \\(x\\)。`
+        );
         answers.push(
           `簡答：\\(x=${x}\\)。過程：外角等於兩個不相鄰內角和，所以 \\(5x=2x+(x+20)\\)，解得 \\(x=${x}\\)。`
         );
@@ -3396,7 +3447,9 @@
         }
         const a = ratio[0] * unit;
         const b = ratio[1] * unit;
-        questions.push(`若三角形某外角為 ${ext}°，且與它不相鄰的兩個內角比為 ${ratio[0]}:${ratio[1]}，求較大的那個內角。`);
+        questions.push(
+          `若三角形某外角為 ${ext}°，且與它不相鄰的兩個內角比為 ${ratio[0]}:${ratio[1]}，求較大的那個內角。`
+        );
         answers.push(
           `簡答：${Math.max(a, b)}°。過程：兩個不相鄰內角和等於外角 ${ext}°，比例共 ${ratio[0] + ratio[1]} 份，所以一份為 ${unit}°，較大的內角為 ${Math.max(a, b)}°。`
         );
@@ -3410,26 +3463,29 @@
         i -= 1;
         continue;
       }
-      questions.push(`在 \\(\\triangle ABC\\) 中，若 \\(\\angle A\\) 的外角為 ${extA}°，且 \\(\\angle C=${c}°\\)，求 \\(\\angle A\\)。`);
+      questions.push(
+        `在 \\(\\triangle ABC\\) 中，若 \\(\\angle A\\) 的外角為 ${extA}°，且 \\(\\angle C=${c}°\\)，求 \\(\\angle A\\)。`
+      );
       answers.push(
         `簡答：\\(\\angle A=${a}°\\)。過程：先由外角定理得 \\(\\angle B=${extA}°-${c}°=${b}°\\)。再用內角和 \\(\\angle A=180°-${b}°-${c}°=${a}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ431PolygonArithmeticAnglesSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       const n = [4, 5, 6][randInt(0, 2)];
       const total = (n - 2) * 180;
       let d = [5, 10, 15][randInt(0, 2)];
-      let first = (2 * total / n - (n - 1) * d) / 2;
+      let first = ((2 * total) / n - (n - 1) * d) / 2;
       while (!Number.isInteger(first) || first <= 0) {
         d = [5, 10, 15][randInt(0, 2)];
-        first = (2 * total / n - (n - 1) * d) / 2;
+        first = ((2 * total) / n - (n - 1) * d) / 2;
       }
       const last = first + (n - 1) * d;
       if (mode === 0) {
@@ -3449,7 +3505,9 @@
       if (mode === 2) {
         const middleIndex = randInt(2, n - 1);
         const value = first + (middleIndex - 1) * d;
-        questions.push(`一個 ${n} 邊形的內角由小到大成等差數列，最小角為 ${first}°，公差為 ${d}°，求第 ${middleIndex} 小的內角。`);
+        questions.push(
+          `一個 ${n} 邊形的內角由小到大成等差數列，最小角為 ${first}°，公差為 ${d}°，求第 ${middleIndex} 小的內角。`
+        );
         answers.push(
           `簡答：${value}°。過程：第 ${middleIndex} 項為 \\(${first}+(${middleIndex}-1)\\times${d}=${value}\\)，所以答案為 ${value}°。`
         );
@@ -3467,7 +3525,7 @@
         `簡答：${total}°。過程：${n} 邊形內角和為 \\((${n}-2)\\times180°=${total}°\\)。也可用等差總和驗算：\\(\\frac{${n}(${first}+${last})}{2}=${total}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function bisectionCountForParts(parts) {
@@ -3480,10 +3538,10 @@
     return value === 1 ? count : null;
   }
 
-
   function buildJ431IsoscelesAngleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3503,7 +3561,10 @@
         // 已知底角，求頂角及頂角的外角
         const base = [25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80][randInt(0, 11)];
         const apex = 180 - 2 * base;
-        if (apex <= 0) { i -= 1; continue; }
+        if (apex <= 0) {
+          i -= 1;
+          continue;
+        }
         const extApex = 180 - apex;
         questions.push(
           `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，底角 \\(\\angle B=${base}°\\)，求頂角 \\(\\angle A\\) 及頂角的外角。`
@@ -3518,10 +3579,11 @@
         const extBase = [100, 105, 110, 115, 120, 125, 130, 135, 140, 150][randInt(0, 9)];
         const base = 180 - extBase;
         const apex = 180 - 2 * base;
-        if (apex <= 0) { i -= 1; continue; }
-        questions.push(
-          `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，已知底角的外角為 ${extBase}°，求頂角 \\(\\angle A\\)。`
-        );
+        if (apex <= 0) {
+          i -= 1;
+          continue;
+        }
+        questions.push(`等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，已知底角的外角為 ${extBase}°，求頂角 \\(\\angle A\\)。`);
         answers.push(
           `簡答：頂角 \\(\\angle A=${apex}°\\)。過程：底角外角為 ${extBase}°，所以底角 \\(=180°-${extBase}°=${base}°\\)，頂角 \\(\\angle A=180°-2\\times${base}°=${apex}°\\)。`
         );
@@ -3531,9 +3593,15 @@
         // 已知頂角的外角，求底角
         const extApex = [60, 80, 100, 120, 140, 150, 160][randInt(0, 6)];
         const apex = 180 - extApex;
-        if (apex <= 0 || apex >= 180) { i -= 1; continue; }
+        if (apex <= 0 || apex >= 180) {
+          i -= 1;
+          continue;
+        }
         const base = (180 - apex) / 2;
-        if (!Number.isInteger(base)) { i -= 1; continue; }
+        if (!Number.isInteger(base)) {
+          i -= 1;
+          continue;
+        }
         questions.push(
           `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，頂角 \\(\\angle A\\) 的外角為 ${extApex}°，求底角 \\(\\angle B\\)。`
         );
@@ -3551,19 +3619,18 @@
         apex = (180 - 2 * k) / 3;
         base = apex + k;
       } while (!Number.isInteger(apex) || apex <= 0 || base >= 180);
-      questions.push(
-        `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，底角比頂角大 ${k}°，求各角度數。`
-      );
+      questions.push(`等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，底角比頂角大 ${k}°，求各角度數。`);
       answers.push(
         `簡答：頂角 \\(${apex}°\\)，底角 \\(${base}°\\)。過程：設頂角 \\(\\angle A=x°\\)，底角 \\(\\angle B=\\angle C=(x+${k})°\\)。由 \\(x+2(x+${k})=180\\) 解得 \\(x=${apex}\\)，底角為 ${base}°。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ432ConstructionBisectionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const ratioCores = [
       [1, 3],
       [3, 5],
@@ -3652,7 +3719,7 @@
         `簡答：\\(${formatFunctionFractionValue(smallest)}°\\)。過程：每作一次角平分線，角度變為原來的一半；連續 ${steps} 次後為 \\(\\frac{${angle}}{2^${steps}}=${formatFunctionFractionValue(smallest)}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function pickAcuteAngle() {
@@ -3683,7 +3750,8 @@
 
   function buildJ441ParallelAcuteSet(count, startOffset = 0) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const angle = pickAcuteAngle();
       const values = angleParallelValues(angle);
@@ -3703,12 +3771,13 @@
         `簡答：${formatAngleOptions(values)}。過程：兩邊分別平行時，兩角可能相等或互補，所以 \\(\\angle B=${angle}°\\) 或 \\(180°-${angle}°=${180 - angle}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ441ParallelObtuseSet(count, startOffset = 0) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const angle = pickObtuseAngle();
       const values = angleParallelValues(angle);
@@ -3728,12 +3797,13 @@
         `簡答：${formatAngleOptions(values)}。過程：兩邊平行型會得到同角或補角，所以可能為 ${angle}°，也可能為 \\(180°-${angle}°=${180 - angle}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ441PerpendicularAcuteSet(count, startOffset = 0) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const angle = pickAcuteAngle();
       const values = anglePerpValues(angle);
@@ -3751,12 +3821,13 @@
         `簡答：${formatAngleOptions(values)}。過程：兩邊分別垂直時，旋轉後的夾角關係仍可能相等或互補，所以 \\(\\angle B=${angle}°\\) 或 \\(180°-${angle}°=${180 - angle}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ441PerpendicularObtuseSet(count, startOffset = 0) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const angle = pickObtuseAngle();
       const values = anglePerpValues(angle);
@@ -3776,12 +3847,13 @@
         `簡答：${formatAngleOptions(values)}。過程：兩邊垂直型同樣會出現同角或補角，所以可能為 ${angle}° 或 \\(180°-${angle}°=${180 - angle}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ441MixedAcuteSet(count, startOffset = 0) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const angle = pickAcuteAngle();
       const values = angleMixedValues(angle);
@@ -3801,12 +3873,13 @@
         `簡答：${formatAngleOptions(values)}。過程：一平行一垂直時，會與 90° 形成互餘或相差 90°。因 \\(\\angle A\\) 為銳角，所以 \\(\\angle B=90°-${angle}°=${90 - angle}°\\) 或 \\(90°+${angle}°=${90 + angle}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ441MixedObtuseSet(count, startOffset = 0) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const angle = pickObtuseAngle();
       const values = angleMixedValues(angle);
@@ -3826,12 +3899,13 @@
         `簡答：${formatAngleOptions(values)}。過程：一平行一垂直且 \\(\\angle A\\) 為鈍角時，常用 180° 內角處理：相差 90° 得 \\(${angle}°-90°=${angle - 90}°\\)，另一個為 \\(270°-${angle}°=${270 - angle}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ432MidpointPerpendicularSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3866,16 +3940,15 @@
       }
       const ab = [10, 14, 18, 22][randInt(0, 3)];
       questions.push(`線段 \\(AB=${ab}\\)。若 \\(M\\) 是其中點，求 \\(AM:AB\\) 的比。`);
-      answers.push(
-        `簡答：\\(1:2\\)。過程：中點表示 \\(AM=\\frac{AB}{2}\\)，所以 \\(AM:AB=1:2\\)。`
-      );
+      answers.push(`簡答：\\(1:2\\)。過程：中點表示 \\(AM=\\frac{AB}{2}\\)，所以 \\(AM:AB=1:2\\)。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ432AngleBisectorMeasureSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3920,13 +3993,13 @@
         `簡答：${180 - angle / 2}°。過程：平分後角度是 ${angle / 2}°，其補角為 \\(180°-${angle / 2}°=${180 - angle / 2}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
 
   function buildJ432TriangleBisectorIntersectionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3958,7 +4031,10 @@
         const halfB = randInt(15, 45);
         const halfC = randInt(15, 45);
         const bic = 180 - halfB - halfC;
-        if (bic <= 0 || bic >= 180) { i -= 1; continue; }
+        if (bic <= 0 || bic >= 180) {
+          i -= 1;
+          continue;
+        }
         questions.push(
           `在 \\(\\triangle ABC\\) 中，\\(BI\\) 平分 \\(\\angle ABC\\)，\\(CI\\) 平分 \\(\\angle ACB\\)，且 \\(\\angle IBC=${halfB}°\\)、\\(\\angle ICB=${halfC}°\\)，求 \\(\\angle BIC\\)。`
         );
@@ -3972,7 +4048,10 @@
         const angleA = [40, 50, 60, 70, 80][randInt(0, 4)];
         const angleB = randInt(30, 130 - angleA);
         const angleC = 180 - angleA - angleB;
-        if (angleC <= 0) { i -= 1; continue; }
+        if (angleC <= 0) {
+          i -= 1;
+          continue;
+        }
         const bic = 90 + angleA / 2;
         questions.push(
           `在 \\(\\triangle ABC\\) 中，\\(\\angle A=${angleA}°\\)、\\(\\angle B=${angleB}°\\)，\\(\\angle B\\) 和 \\(\\angle C\\) 的角平分線交於點 \\(I\\)，求 \\(\\angle BIC\\)。`
@@ -3991,7 +4070,10 @@
       // Mode 4: 等腰三角形中，已知底角，求∠BIC
       const base = [35, 40, 45, 50, 55, 60, 65][randInt(0, 6)];
       const apex = 180 - 2 * base;
-      if (apex <= 0) { i -= 1; continue; }
+      if (apex <= 0) {
+        i -= 1;
+        continue;
+      }
       const bic = 90 + apex / 2;
       questions.push(
         `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，底角 \\(\\angle B=\\angle C=${base}°\\)，設 \\(\\angle B\\) 和 \\(\\angle C\\) 的角平分線交於點 \\(I\\)，求 \\(\\angle BIC\\)。`
@@ -4000,24 +4082,30 @@
         `簡答：\\(\\angle BIC=${bic}°\\)。過程：頂角 \\(\\angle A=180°-2\\times${base}°=${apex}°\\)，所以 \\(\\angle BIC=90°+\\frac{${apex}°}{2}=${bic}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ432ConstructionMixedSet(count) {
-    const banks = [buildJ432ConstructionBisectionSet, buildJ432MidpointPerpendicularSet, buildJ432AngleBisectorMeasureSet];
+    const banks = [
+      buildJ432ConstructionBisectionSet,
+      buildJ432MidpointPerpendicularSet,
+      buildJ432AngleBisectorMeasureSet,
+    ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const one = banks[i % banks.length](1);
       questions.push(one.questions[0]);
       answers.push(one.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ433CongruenceCriterionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const criteria = [
       { name: 'SSS', prompt: '三邊對應相等', reason: '三邊分別對應相等，可用 SSS 判定全等。' },
       { name: 'SAS', prompt: '兩邊及其夾角對應相等', reason: '兩邊與夾角對應相等，可用 SAS 判定全等。' },
@@ -4030,19 +4118,22 @@
       questions.push(`若兩個三角形已知${item.prompt}，則可依據哪一個全等性質判定它們全等？`);
       answers.push(`簡答：${item.name}。過程：${item.reason}`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ433CongruentCorrespondenceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
         const a = randInt(30, 80);
         const b = randInt(30, 80);
         const c = 180 - a - b;
-        questions.push(`已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，且 \\(\\angle A=${a}°\\)、\\(\\angle B=${b}°\\)，求 \\(\\angle F\\)。`);
+        questions.push(
+          `已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，且 \\(\\angle A=${a}°\\)、\\(\\angle B=${b}°\\)，求 \\(\\angle F\\)。`
+        );
         answers.push(
           `簡答：\\(\\angle F=${c}°\\)。過程：先算 \\(\\angle C=180°-${a}°-${b}°=${c}°\\)。因為全等三角形對應角相等，而 \\(C\\) 對應 \\(F\\)，所以 \\(\\angle F=${c}°\\)。`
         );
@@ -4052,7 +4143,9 @@
         const ab = randInt(4, 9);
         const bc = randInt(5, 10);
         const ac = randInt(6, 11);
-        questions.push(`已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，且 \\(AB=${ab}\\)、\\(BC=${bc}\\)、\\(CA=${ac}\\)，求 \\(\\triangle DEF\\) 的周長。`);
+        questions.push(
+          `已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，且 \\(AB=${ab}\\)、\\(BC=${bc}\\)、\\(CA=${ac}\\)，求 \\(\\triangle DEF\\) 的周長。`
+        );
         answers.push(
           `簡答：${ab + bc + ac}。過程：全等三角形對應邊相等，所以兩三角形周長相同，為 \\(${ab}+${bc}+${ac}=${ab + bc + ac}\\)。`
         );
@@ -4060,14 +4153,14 @@
       }
       if (mode === 2) {
         const value = randInt(4, 12);
-        const x = randInt(2, 9);
-        const exprValue = 2 * x + 1;
-        questions.push(`若 \\(\\triangle ABC\\cong\\triangle DEF\\)，且 \\(AB=${value}\\)、\\(DE=2x+1\\)，求 \\(x\\)。`);
         const solvedX = (value - 1) / 2;
         if (!Number.isInteger(solvedX)) {
           i -= 1;
           continue;
         }
+        questions.push(
+          `若 \\(\\triangle ABC\\cong\\triangle DEF\\)，且 \\(AB=${value}\\)、\\(DE=2x+1\\)，求 \\(x\\)。`
+        );
         answers.push(
           `簡答：\\(x=${solvedX}\\)。過程：全等三角形對應邊相等，所以 \\(AB=DE\\Rightarrow ${value}=2x+1\\)，解得 \\(x=${solvedX}\\)。`
         );
@@ -4075,7 +4168,9 @@
       }
       if (mode === 3) {
         const area = randInt(12, 40);
-        questions.push(`已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，且 \\(\\triangle ABC\\) 面積為 ${area} 平方公分，求 \\(\\triangle DEF\\) 面積。`);
+        questions.push(
+          `已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，且 \\(\\triangle ABC\\) 面積為 ${area} 平方公分，求 \\(\\triangle DEF\\) 面積。`
+        );
         answers.push(`簡答：${area} 平方公分。過程：全等三角形大小完全相同，所以面積也相等。`);
         continue;
       }
@@ -4083,17 +4178,20 @@
       questions.push(`若 \\(\\triangle ABC\\cong\\triangle DEF\\)，且 \\(BC=${side}\\)，求與 \\(BC\\) 對應的邊長。`);
       answers.push(`簡答：對應邊長也為 ${side}。過程：全等三角形的對應邊相等，所以與 \\(BC\\) 對應的邊長相同。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ433IsoscelesMedianPropertySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
         const bc = [8, 10, 12, 14, 16][randInt(0, 4)];
-        questions.push(`等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，且 \\(AD\\) 為底邊 \\(BC\\) 的中線。若 \\(BC=${bc}\\)，求 \\(BD\\)。`);
+        questions.push(
+          `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，且 \\(AD\\) 為底邊 \\(BC\\) 的中線。若 \\(BC=${bc}\\)，求 \\(BD\\)。`
+        );
         answers.push(
           `簡答：\\(BD=${bc / 2}\\)。過程：中線把底邊分成兩等段，所以 \\(BD=DC=\\frac{${bc}}{2}=${bc / 2}\\)。`
         );
@@ -4101,14 +4199,18 @@
       }
       if (mode === 1) {
         const angleA = [40, 50, 60, 80, 100][randInt(0, 4)];
-        questions.push(`等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，且 \\(AD\\) 為底邊 \\(BC\\) 的中線。若 \\(\\angle A=${angleA}°\\)，求 \\(\\angle BAD\\)。`);
+        questions.push(
+          `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，且 \\(AD\\) 為底邊 \\(BC\\) 的中線。若 \\(\\angle A=${angleA}°\\)，求 \\(\\angle BAD\\)。`
+        );
         answers.push(
           `簡答：\\(${angleA / 2}°\\)。過程：等腰三角形頂角的中線也是角平分線，所以 \\(\\angle BAD=\\frac{${angleA}°}{2}=${angleA / 2}°\\)。`
         );
         continue;
       }
       if (mode === 2) {
-        questions.push(`等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，且 \\(AD\\) 為底邊 \\(BC\\) 的中線。求 \\(\\angle ADB\\)。`);
+        questions.push(
+          `等腰三角形 \\(ABC\\) 中，\\(AB=AC\\)，且 \\(AD\\) 為底邊 \\(BC\\) 的中線。求 \\(\\angle ADB\\)。`
+        );
         answers.push(
           `簡答：\\(90°\\)。過程：等腰三角形底邊上的中線同時也是高，所以 \\(AD\\perp BC\\)，因此 \\(\\angle ADB=90°\\)。`
         );
@@ -4116,25 +4218,29 @@
       }
       if (mode === 3) {
         const bc = [6, 8, 10, 12][randInt(0, 3)];
-        questions.push(`若 \\(\\triangle ABC\\) 為等腰三角形且 \\(AB=AC\\)，\\(AD\\) 是底邊 \\(BC\\) 的高。若 \\(BC=${bc}\\)，求 \\(BD\\)。`);
+        questions.push(
+          `若 \\(\\triangle ABC\\) 為等腰三角形且 \\(AB=AC\\)，\\(AD\\) 是底邊 \\(BC\\) 的高。若 \\(BC=${bc}\\)，求 \\(BD\\)。`
+        );
         answers.push(
           `簡答：\\(BD=${bc / 2}\\)。過程：等腰三角形底邊上的高也是中線，所以 \\(D\\) 是 \\(BC\\) 的中點，\\(BD=${bc / 2}\\)。`
         );
         continue;
       }
       const bc = [8, 12, 16][randInt(0, 2)];
-      questions.push(`若 \\(\\triangle ABC\\) 中 \\(AB=AC\\)，且 \\(AD\\) 平分 \\(\\angle BAC\\)。若 \\(BC=${bc}\\)，求 \\(BD:BC\\)。`);
+      questions.push(
+        `若 \\(\\triangle ABC\\) 中 \\(AB=AC\\)，且 \\(AD\\) 平分 \\(\\angle BAC\\)。若 \\(BC=${bc}\\)，求 \\(BD:BC\\)。`
+      );
       answers.push(
         `簡答：\\(1:2\\)。過程：等腰三角形頂角平分線也是底邊中線，所以 \\(BD=\\frac{BC}{2}\\)，故 \\(BD:BC=1:2\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
 
   function buildJ433CongruenceAlgebraSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -4143,7 +4249,10 @@
         const m = [2, 3, 4][randInt(0, 2)];
         const b = randInt(-5, 8);
         const x = (de - b) / m;
-        if (!Number.isInteger(x) || x <= 0) { i -= 1; continue; }
+        if (!Number.isInteger(x) || x <= 0) {
+          i -= 1;
+          continue;
+        }
         questions.push(
           `已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，且 \\(AB=${m}x${b >= 0 ? '+' : ''}${b}\\)、\\(DE=${de}\\)，求 \\(x\\) 的值。`
         );
@@ -4158,7 +4267,10 @@
         const m = [2, 3, 4, 5][randInt(0, 3)];
         const b = randInt(-10, 15);
         const x = (angD - b) / m;
-        if (!Number.isInteger(x) || x <= 0) { i -= 1; continue; }
+        if (!Number.isInteger(x) || x <= 0) {
+          i -= 1;
+          continue;
+        }
         questions.push(
           `已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，且 \\(\\angle A=(${m}x${b >= 0 ? '+' : ''}${b})°\\)、\\(\\angle D=${angD}°\\)，求 \\(x\\)。`
         );
@@ -4181,9 +4293,13 @@
         // Better: set AB = 2x+1, DE = known; BC = 3y-2, EF = known
         // Use specific values
         const ab = 2 * x + b1;
-        const p2 = 3, q2 = randInt(-3, 5);
+        const p2 = 3,
+          q2 = randInt(-3, 5);
         const ef2 = p2 * y + q2;
-        if (ab <= 0 || ef2 <= 0) { i -= 1; continue; }
+        if (ab <= 0 || ef2 <= 0) {
+          i -= 1;
+          continue;
+        }
         questions.push(
           `已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，\\(AB=2x+${b1}\\)、\\(DE=${ab}\\)、\\(BC=${p2}y${q2 >= 0 ? '+' : ''}${q2}\\)、\\(EF=${ef2}\\)，求 \\(x+y\\)。`
         );
@@ -4200,7 +4316,10 @@
         const m = [2, 3][randInt(0, 1)];
         const b = randInt(-3, 5);
         const x = (ab - b) / m;
-        if (!Number.isInteger(x) || x <= 0) { i -= 1; continue; }
+        if (!Number.isInteger(x) || x <= 0) {
+          i -= 1;
+          continue;
+        }
         const peri = ab + bc + ca;
         questions.push(
           `已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，\\(AB=${m}x${b >= 0 ? '+' : ''}${b}\\)、\\(BC=${bc}\\)、\\(CA=${ca}\\)，且 \\(DE=${ab}\\)，求 \\(\\triangle DEF\\) 的周長。`
@@ -4215,12 +4334,18 @@
       const ma = [2, 4, 5][randInt(0, 2)];
       const ba = randInt(-5, 15);
       const x = (angA - ba) / ma;
-      if (!Number.isInteger(x) || x <= 0) { i -= 1; continue; }
+      if (!Number.isInteger(x) || x <= 0) {
+        i -= 1;
+        continue;
+      }
       const ab = randInt(8, 15);
       const mb = [3, 4][randInt(0, 1)];
       const bb = randInt(-3, 6);
       const y = (ab - bb) / mb;
-      if (!Number.isInteger(y) || y <= 0) { i -= 1; continue; }
+      if (!Number.isInteger(y) || y <= 0) {
+        i -= 1;
+        continue;
+      }
       questions.push(
         `已知 \\(\\triangle ABC\\cong\\triangle DEF\\)，\\(\\angle A=(${ma}x${ba >= 0 ? '+' : ''}${ba})°\\)、\\(\\angle D=${angA}°\\)，且 \\(AB=${mb}y${bb >= 0 ? '+' : ''}${bb}\\)、\\(DE=${ab}\\)，求 \\(x+y\\)。`
       );
@@ -4228,24 +4353,30 @@
         `簡答：\\(x+y=${x + y}\\)。過程：對應角相等 \\(\\angle A=\\angle D\\Rightarrow ${ma}x${ba >= 0 ? '+' : ''}${ba}=${angA}\\Rightarrow x=${x}\\)；對應邊相等 \\(AB=DE\\Rightarrow ${mb}y${bb >= 0 ? '+' : ''}${bb}=${ab}\\Rightarrow y=${y}\\)。故 \\(x+y=${x + y}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ433CongruenceMixedSet(count) {
-    const banks = [buildJ433CongruenceCriterionSet, buildJ433CongruentCorrespondenceSet, buildJ433IsoscelesMedianPropertySet];
+    const banks = [
+      buildJ433CongruenceCriterionSet,
+      buildJ433CongruentCorrespondenceSet,
+      buildJ433IsoscelesMedianPropertySet,
+    ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const one = banks[i % banks.length](1);
       questions.push(one.questions[0]);
       answers.push(one.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ434TriangleInequalityRangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -4289,9 +4420,7 @@
         const options = [Math.abs(a - b), Math.abs(a - b) + 1, a + b - 1, a + b];
         const valid = options.filter((v) => Math.abs(a - b) < v && v < a + b);
         questions.push(`已知兩邊長為 ${a}、${b}，下列哪些整數可以作為第三邊：${options.join('、')}？`);
-        answers.push(
-          `簡答：${valid.join('、')}。過程：第三邊需滿足 \\(|${a}-${b}|<x<${a}+${b}\\)，逐一檢查即可。`
-        );
+        answers.push(`簡答：${valid.join('、')}。過程：第三邊需滿足 \\(|${a}-${b}|<x<${a}+${b}\\)，逐一檢查即可。`);
         continue;
       }
       const a = randInt(5, 9);
@@ -4305,22 +4434,31 @@
         `簡答：${sum}。過程：整數第三邊從 ${min} 到 ${max}，共有 ${cnt} 個，總和為等差級數 \\(\\frac{(${min}+${max})\\times${cnt}}{2}=${sum}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ434SideAngleComparisonSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        questions.push(`在 \\(\\triangle ABC\\) 中，若 \\(AB>AC\\)，則 \\(\\angle C\\) 和 \\(\\angle B\\) 哪一個比較大？`);
-        answers.push(`簡答：\\(\\angle C\\) 較大。過程：較長的邊對較大的角，\\(AB\\) 對 \\(\\angle C\\)，\\(AC\\) 對 \\(\\angle B\\)。`);
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，若 \\(AB>AC\\)，則 \\(\\angle C\\) 和 \\(\\angle B\\) 哪一個比較大？`
+        );
+        answers.push(
+          `簡答：\\(\\angle C\\) 較大。過程：較長的邊對較大的角，\\(AB\\) 對 \\(\\angle C\\)，\\(AC\\) 對 \\(\\angle B\\)。`
+        );
         continue;
       }
       if (mode === 1) {
-        questions.push(`在 \\(\\triangle ABC\\) 中，若 \\(\\angle A>\\angle B\\)，則 \\(BC\\) 和 \\(AC\\) 哪一邊較長？`);
-        answers.push(`簡答：\\(BC\\) 較長。過程：較大的角對較長的邊，\\(\\angle A\\) 對應邊是 \\(BC\\)，\\(\\angle B\\) 對應邊是 \\(AC\\)。`);
+        questions.push(
+          `在 \\(\\triangle ABC\\) 中，若 \\(\\angle A>\\angle B\\)，則 \\(BC\\) 和 \\(AC\\) 哪一邊較長？`
+        );
+        answers.push(
+          `簡答：\\(BC\\) 較長。過程：較大的角對較長的邊，\\(\\angle A\\) 對應邊是 \\(BC\\)，\\(\\angle B\\) 對應邊是 \\(AC\\)。`
+        );
         continue;
       }
       if (mode === 2) {
@@ -4341,7 +4479,9 @@
           i -= 1;
           continue;
         }
-        questions.push(`若 \\(\\triangle ABC\\) 的三內角為 \\(\\angle A=${a}°\\)、\\(\\angle B=${b}°\\)、\\(\\angle C=${c}°\\)，求最長邊。`);
+        questions.push(
+          `若 \\(\\triangle ABC\\) 的三內角為 \\(\\angle A=${a}°\\)、\\(\\angle B=${b}°\\)、\\(\\angle C=${c}°\\)，求最長邊。`
+        );
         const maxAngle = Math.max(a, b, c);
         const longest = maxAngle === a ? 'BC' : maxAngle === b ? 'AC' : 'AB';
         answers.push(
@@ -4350,14 +4490,17 @@
         continue;
       }
       questions.push(`在 \\(\\triangle ABC\\) 中，若 \\(AB=AC\\)，則 \\(\\angle B\\) 與 \\(\\angle C\\) 有何關係？`);
-      answers.push(`簡答：\\(\\angle B=\\angle C\\)。過程：等邊對等角，因為 \\(AB\\) 與 \\(AC\\) 相等，所以對應的底角 \\(\\angle B\\)、\\(\\angle C\\) 相等。`);
+      answers.push(
+        `簡答：\\(\\angle B=\\angle C\\)。過程：等邊對等角，因為 \\(AB\\) 與 \\(AC\\) 相等，所以對應的底角 \\(\\angle B\\)、\\(\\angle C\\) 相等。`
+      );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ434PythagoreanClassificationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const classify = (a, b, c) => {
       const left = a * a + b * b;
       const right = c * c;
@@ -4413,7 +4556,9 @@
           i -= 1;
           continue;
         }
-        questions.push(`若三角形三邊為 \\(${a}\\)、\\(${b}\\)、\\(x\\)，且此三角形為直角三角形，求 \\(x\\) 的值（取最長邊）。`);
+        questions.push(
+          `若三角形三邊為 \\(${a}\\)、\\(${b}\\)、\\(x\\)，且此三角形為直角三角形，求 \\(x\\) 的值（取最長邊）。`
+        );
         answers.push(
           `簡答：\\(x=${c}\\)。過程：直角三角形滿足畢氏定理，所以 \\(x^2=${a}^2+${b}^2=${a * a + b * b}\\)，因此 \\(x=${c}\\)。`
         );
@@ -4429,13 +4574,13 @@
         `簡答：${classify(a, b, c)}。過程：\\(${a}^2+${b}^2=${left}\\)，\\(${c}^2=${right}\\)。因為 ${left === right ? '兩者相等' : left > right ? '左邊較大' : '右邊較大'}，所以是${classify(a, b, c)}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
 
   function buildJ434ExteriorAngleSideComparisonSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -4444,10 +4589,16 @@
         const angleA = 180 - extA;
         const angleB = randInt(20, 180 - angleA - 10);
         const angleC = 180 - angleA - angleB;
-        if (angleC <= 0) { i -= 1; continue; }
-        const sorted = [{a: 'BC', opp: angleA}, {a: 'AC', opp: angleB}, {a: 'AB', opp: angleC}]
-          .sort((x, y) => y.opp - x.opp);
-        const order = sorted.map(s => s.a).join('>');
+        if (angleC <= 0) {
+          i -= 1;
+          continue;
+        }
+        const sorted = [
+          { a: 'BC', opp: angleA },
+          { a: 'AC', opp: angleB },
+          { a: 'AB', opp: angleC },
+        ].sort((x, y) => y.opp - x.opp);
+        const order = sorted.map((s) => s.a).join('>');
         questions.push(
           `在 \\(\\triangle ABC\\) 中，\\(\\angle A\\) 的外角為 ${extA}°，\\(\\angle B=${angleB}°\\)，求三邊 \\(BC\\)、\\(AC\\)、\\(AB\\) 的大小關係。`
         );
@@ -4462,10 +4613,16 @@
         const angleB = 180 - extB;
         const angleC = randInt(20, 180 - angleB - 10);
         const angleA = 180 - angleB - angleC;
-        if (angleA <= 0) { i -= 1; continue; }
-        const sorted = [{a: 'BC', opp: angleA}, {a: 'AC', opp: angleB}, {a: 'AB', opp: angleC}]
-          .sort((x, y) => y.opp - x.opp);
-        const order = sorted.map(s => s.a).join('>');
+        if (angleA <= 0) {
+          i -= 1;
+          continue;
+        }
+        const sorted = [
+          { a: 'BC', opp: angleA },
+          { a: 'AC', opp: angleB },
+          { a: 'AB', opp: angleC },
+        ].sort((x, y) => y.opp - x.opp);
+        const order = sorted.map((s) => s.a).join('>');
         questions.push(
           `在 \\(\\triangle ABC\\) 中，\\(\\angle B\\) 的外角為 ${extB}°，\\(\\angle C=${angleC}°\\)，求三邊的大小順序。`
         );
@@ -4481,10 +4638,16 @@
         const extB = randInt(95, 180 - angleA - 5 + 95); // ensure valid
         const angleB = 180 - extB;
         const angleC = 180 - angleA - angleB;
-        if (angleC <= 0 || angleC >= 180) { i -= 1; continue; }
-        const sorted = [{a: 'BC', opp: angleA}, {a: 'AC', opp: angleB}, {a: 'AB', opp: angleC}]
-          .sort((x, y) => y.opp - x.opp);
-        const order = sorted.map(s => s.a).join('>');
+        if (angleC <= 0 || angleC >= 180) {
+          i -= 1;
+          continue;
+        }
+        const sorted = [
+          { a: 'BC', opp: angleA },
+          { a: 'AC', opp: angleB },
+          { a: 'AB', opp: angleC },
+        ].sort((x, y) => y.opp - x.opp);
+        const order = sorted.map((s) => s.a).join('>');
         questions.push(
           `在 \\(\\triangle ABC\\) 中，\\(\\angle A\\) 的外角為 ${extA}°，\\(\\angle B\\) 的外角為 ${extB}°，求 \\(\\angle C\\) 及三邊大小關係。`
         );
@@ -4495,15 +4658,28 @@
       }
       if (mode === 3) {
         // 已知∠A:∠B:∠C = p:q:r，求三邊順序
-        const ratioSets = [[1,2,3],[2,3,4],[1,3,5],[2,5,8],[3,4,8],[1,4,5]];
+        const ratioSets = [
+          [1, 2, 3],
+          [2, 3, 4],
+          [1, 3, 5],
+          [2, 5, 8],
+          [3, 4, 8],
+          [1, 4, 5],
+        ];
         const ratio = ratioSets[randInt(0, ratioSets.length - 1)];
-        const total = ratio.reduce((s,v) => s+v, 0);
+        const total = ratio.reduce((s, v) => s + v, 0);
         const unit = 180 / total;
-        if (!Number.isInteger(unit)) { i -= 1; continue; }
-        const angles = ratio.map(r => r * unit);
-        const sorted = [{a: 'BC', opp: angles[0]}, {a: 'AC', opp: angles[1]}, {a: 'AB', opp: angles[2]}]
-          .sort((x, y) => y.opp - x.opp);
-        const order = sorted.map(s => s.a).join('>');
+        if (!Number.isInteger(unit)) {
+          i -= 1;
+          continue;
+        }
+        const angles = ratio.map((r) => r * unit);
+        const sorted = [
+          { a: 'BC', opp: angles[0] },
+          { a: 'AC', opp: angles[1] },
+          { a: 'AB', opp: angles[2] },
+        ].sort((x, y) => y.opp - x.opp);
+        const order = sorted.map((s) => s.a).join('>');
         questions.push(
           `在 \\(\\triangle ABC\\) 中，\\(\\angle A:\\angle B:\\angle C=${ratio[0]}:${ratio[1]}:${ratio[2]}\\)，求三邊長的大小關係。`
         );
@@ -4517,25 +4693,32 @@
       const angleA = 180 - extA;
       const angleB = randInt(20, 180 - angleA - 20);
       const angleC = 180 - angleA - angleB;
-      if (angleC <= 0) { i -= 1; continue; }
+      if (angleC <= 0) {
+        i -= 1;
+        continue;
+      }
       // extA = angleB + angleC (exterior angle theorem)
       const verifyExt = angleB + angleC;
-      const sorted = [{a: 'BC', opp: angleA}, {a: 'AC', opp: angleB}, {a: 'AB', opp: angleC}]
-        .sort((x, y) => y.opp - x.opp);
-      const order = sorted.map(s => s.a).join('>');
+      const sorted = [
+        { a: 'BC', opp: angleA },
+        { a: 'AC', opp: angleB },
+        { a: 'AB', opp: angleC },
+      ].sort((x, y) => y.opp - x.opp);
+      const order = sorted.map((s) => s.a).join('>');
       questions.push(
         `在 \\(\\triangle ABC\\) 中，\\(\\angle A\\) 的外角為 ${extA}°（即 \\(\\angle B+\\angle C=${verifyExt}°\\)），且 \\(\\angle B=${angleB}°\\)，求三邊的大小關係。`
       );
       answers.push(
-        `簡答：\\(${order}\\)。過程：由外角定理 \\(\\angle A=180°-${extA}°=${angleA}°\\)，\\(\\angle C=${extA}°-${angleB}°=${angleC}°\\)。角度大小：${sorted.map(s => `${s.opp}°→${s.a}`).join('，')}，故 \\(${order}\\)。`
+        `簡答：\\(${order}\\)。過程：由外角定理 \\(\\angle A=180°-${extA}°=${angleA}°\\)，\\(\\angle C=${extA}°-${angleB}°=${angleC}°\\)。角度大小：${sorted.map((s) => `${s.opp}°→${s.a}`).join('，')}，故 \\(${order}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ434HingeTheoremSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -4565,25 +4748,15 @@
         continue;
       }
       if (mode === 2) {
-        // 在同一三角形中比較：從頂點連到底邊不同位置的線段
-        const ab = randInt(6, 10);
-        const ac = ab + randInt(1, 4);
-        // AB < AC → ∠ACB < ∠ABC (smaller side → smaller opposite angle)
-        // D on BC, AD splits the triangle: AD < max(AB, AC) = AC
-        questions.push(
-          `在 \\(\\triangle ABC\\) 中，\\(AB=${ab}\\)、\\(AC=${ac}\\)，\\(D\\) 是 \\(BC\\) 上一點（不與端點重合），比較 \\(AD\\) 與 \\(AB\\) 的大小。`
-        );
-        answers.push(
-          `簡答：\\(AD<AB\\) 不一定成立，但 \\(AD<AC\\)（因為三角形內的線段短於從同頂點出發的較長邊）實際上也不一定。正確結論：\\(|AB-AC|<AD\\) 不對。直接由三角形不等式：\\(AD\\) 在 \\(\\triangle ABD\\) 中 \\(AD<AB+BD\\)，在 \\(\\triangle ACD\\) 中 \\(AD<AC+DC\\)。僅能確定 \\(AD<\\)（較大值未必）。過程：利用三角形不等式，在 \\(\\triangle ABD\\) 中 \\(AD<AB=${ab}\\Rightarrow\\) 當 \\(\\angle ADB\\) 為鈍角時 \\(AD<AB\\)；一般情況下無法比大小，需要更多條件。`
-        );
-        // This mode is too conceptual. Let me replace with a cleaner hinge problem.
-        // Replace mode 2 with: in △ABC, AB=8, BC=10, ∠B=60°; in △DEF, DE=8, EF=10, ∠E=80°. Compare AC and DF.
-        questions.pop(); answers.pop();
+        // 鉸鏈定理數值比較：兩邊相等時，夾角較大者對應第三邊較長。
         const ab2 = randInt(5, 10);
         const bc2 = randInt(5, 10);
         const angleB2 = [50, 60, 70, 80][randInt(0, 3)];
         const angleE2 = angleB2 + randInt(10, 30);
-        if (angleE2 >= 180) { i -= 1; continue; }
+        if (angleE2 >= 180) {
+          i -= 1;
+          continue;
+        }
         questions.push(
           `在 \\(\\triangle ABC\\) 中，\\(AB=${ab2}\\)、\\(BC=${bc2}\\)、\\(\\angle B=${angleB2}°\\)；在 \\(\\triangle DEF\\) 中，\\(DE=${ab2}\\)、\\(EF=${bc2}\\)、\\(\\angle E=${angleE2}°\\)，比較 \\(AC\\) 與 \\(DF\\) 的大小。`
         );
@@ -4616,7 +4789,10 @@
       const sharedSide2 = randInt(5, 10);
       const ang1 = randInt(50, 90);
       const ang2 = ang1 + randInt(15, 40);
-      if (ang2 >= 180) { i -= 1; continue; }
+      if (ang2 >= 180) {
+        i -= 1;
+        continue;
+      }
       questions.push(
         `小明的三角形：兩邊長 ${sharedSide1} 和 ${sharedSide2}，夾角 ${ang1}°；小華的三角形：兩邊長同為 ${sharedSide1} 和 ${sharedSide2}，夾角 ${ang2}°。哪個三角形的第三邊較長？`
       );
@@ -4624,19 +4800,24 @@
         `簡答：小華的三角形第三邊較長。過程：兩個三角形的兩組對應邊分別相等，小華的夾角 ${ang2}°大於小明的 ${ang1}°，由鉸鏈定理，夾角較大的三角形，其第三邊也較長。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ434TriangleSideAngleMixedSet(count) {
-    const banks = [buildJ434TriangleInequalityRangeSet, buildJ434SideAngleComparisonSet, buildJ434PythagoreanClassificationSet];
+    const banks = [
+      buildJ434TriangleInequalityRangeSet,
+      buildJ434SideAngleComparisonSet,
+      buildJ434PythagoreanClassificationSet,
+    ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const one = banks[i % banks.length](1);
       questions.push(one.questions[0]);
       answers.push(one.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ441ParallelPerpendicularAngleMixedSet(count) {
@@ -4649,18 +4830,20 @@
       buildJ441MixedObtuseSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const one = banks[i % banks.length](1, Math.floor(i / banks.length));
       questions.push(one.questions[0]);
       answers.push(one.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ441TransversalSolveXSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -4722,9 +4905,7 @@
           i -= 1;
           continue;
         }
-        questions.push(
-          `已知兩平行線被截線所截，一組同側內角分別為 \\(x+${b}\\)° 與 \\(${k}x+${d}\\)°，求 \\(x\\)。`
-        );
+        questions.push(`已知兩平行線被截線所截，一組同側內角分別為 \\(x+${b}\\)° 與 \\(${k}x+${d}\\)°，求 \\(x\\)。`);
         answers.push(
           `簡答：\\(x=${x}\\)。過程：同側內角互補，所以 \\((x+${b})+(${k}x+${d})=180\\)。化簡得 \\(${k + 1}x=${180 - b - d}\\)，解得 \\(x=${x}\\)。`
         );
@@ -4741,19 +4922,18 @@
         i -= 1;
         continue;
       }
-      questions.push(
-        `若兩平行線被截線所截，一組同位角分別為 \\(${a}x+${b}\\)° 與 \\(${c}x+${d}\\)°，求 \\(x\\)。`
-      );
+      questions.push(`若兩平行線被截線所截，一組同位角分別為 \\(${a}x+${b}\\)° 與 \\(${c}x+${d}\\)°，求 \\(x\\)。`);
       answers.push(
         `簡答：\\(x=${x}\\)。過程：同位角相等，所以 \\(${a}x+${b}=${c}x+${d}\\)。移項得 \\(${a - c}x=${d - b}\\)，故 \\(x=${x}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ441TransversalFindAngleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -4826,9 +5006,7 @@
           i -= 1;
           continue;
         }
-        questions.push(
-          `兩平行線被截線所截，一組同側內角為 \\(2x+${b}\\)° 與 \\(3x+${d}\\)°，求較大的角。`
-        );
+        questions.push(`兩平行線被截線所截，一組同側內角為 \\(2x+${b}\\)° 與 \\(3x+${d}\\)°，求較大的角。`);
         answers.push(
           `簡答：${angle2}°。過程：由 \\((2x+${b})+(3x+${d})=180\\) 解得 \\(x=${x}\\)。代入後兩角為 ${angle1}° 與 ${angle2}°，較大的是 ${angle2}°。`
         );
@@ -4839,20 +5017,18 @@
       const b = randInt(10, 24);
       const angle = a * x + b;
       const supplement = 180 - angle;
-      questions.push(
-        `若兩平行線被截線所截，且一個角為 \\(${a}x+${b}\\)°，其中 \\(x=${x}\\)。求它的同側內角。`
-      );
+      questions.push(`若兩平行線被截線所截，且一個角為 \\(${a}x+${b}\\)°，其中 \\(x=${x}\\)。求它的同側內角。`);
       answers.push(
         `簡答：${supplement}°。過程：先算原角為 \\(${a}\\times${x}+${b}=${angle}°\\)。同側內角與它互補，所以為 \\(180°-${angle}°=${supplement}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
 
   function buildJ441BentLineParallelSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -4889,10 +5065,13 @@
             if (m !== n && abc % (m + n) === 0) ratios.push([m, n]);
           }
         }
-        if (ratios.length === 0) { i -= 1; continue; }
+        if (ratios.length === 0) {
+          i -= 1;
+          continue;
+        }
         const [m, n] = ratios[randInt(0, ratios.length - 1)];
-        const alpha = abc * m / (m + n);
-        const beta = abc * n / (m + n);
+        const alpha = (abc * m) / (m + n);
+        const beta = (abc * n) / (m + n);
         questions.push(
           `已知 \\(L \\parallel M\\)，\\(B\\) 在兩平行線之間，折線 \\(ABC\\) 的彎折角 \\(\\angle ABC=${abc}°\\)。若 \\(\\angle BAL : \\angle BCM = ${m}:${n}\\)，求 \\(\\angle BAL\\) 與 \\(\\angle BCM\\)。`
         );
@@ -4926,7 +5105,7 @@
         `簡答：\\(${abcW}°\\)。過程：過 \\(B\\) 作 \\(BD \\parallel L \\parallel M\\)，由內錯角得 \\(\\angle ABD=${alphaW}°\\)，\\(\\angle DBC=${betaW}°\\)，所以 \\(\\angle ABC=${alphaW}°+${betaW}°=${abcW}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   const J442_SHAPE_CODES = [
@@ -4980,7 +5159,8 @@
 
   function buildJ442QuadrilateralPropertyCodeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const shapeList = formatJ442ShapeList();
     const propertyList = formatJ442PropertyList();
     for (let i = 0; i < count; i += 1) {
@@ -5008,12 +5188,13 @@
       questions.push(`圖形代號選項：${shapeList}。請依每個性質名稱，填入符合的圖形代號：${prompts}。`);
       answers.push(`簡答：\n${simple}\n過程：\n${process}`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ442ParallelogramEquationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -5021,9 +5202,7 @@
         const b1 = randInt(2, 8);
         const b2 = b1 + x;
         questions.push(`平行四邊形 \\(ABCD\\) 中，若 \\(AB=x+${b1}\\)、\\(CD=2x-${b2}\\)，求 \\(x\\)。`);
-        answers.push(
-          `簡答：\\(x=${x}\\)。過程：平行四邊形對邊相等，所以 \\(x+${b1}=2x-${b2}\\)，解得 \\(x=${x}\\)。`
-        );
+        answers.push(`簡答：\\(x=${x}\\)。過程：平行四邊形對邊相等，所以 \\(x+${b1}=2x-${b2}\\)，解得 \\(x=${x}\\)。`);
         continue;
       }
       if (mode === 1) {
@@ -5036,7 +5215,9 @@
           i -= 1;
           continue;
         }
-        questions.push(`平行四邊形 \\(ABCD\\) 中，若 \\(\\angle A=${formatFunctionLinear(a, b)}\\)°、\\(\\angle B=${formatFunctionLinear(c, d)}\\)°，求 \\(x\\)。`);
+        questions.push(
+          `平行四邊形 \\(ABCD\\) 中，若 \\(\\angle A=${formatFunctionLinear(a, b)}\\)°、\\(\\angle B=${formatFunctionLinear(c, d)}\\)°，求 \\(x\\)。`
+        );
         answers.push(
           `簡答：\\(x=${x}\\)。過程：平行四邊形相鄰內角互補，所以 \\(${formatFunctionLinear(a, b)}+${formatFunctionLinear(c, d)}=180\\)，化簡得 \\(${a + c}x=${180 - b - d}\\)，解得 \\(x=${x}\\)。`
         );
@@ -5055,7 +5236,9 @@
       }
       if (mode === 3) {
         const angleA = [50, 60, 70, 80][randInt(0, 3)];
-        questions.push(`平行四邊形 \\(ABCD\\) 中，若 \\(\\angle A=${angleA}°\\)，求 \\(\\angle C\\) 與 \\(\\angle D\\)。`);
+        questions.push(
+          `平行四邊形 \\(ABCD\\) 中，若 \\(\\angle A=${angleA}°\\)，求 \\(\\angle C\\) 與 \\(\\angle D\\)。`
+        );
         answers.push(
           `簡答：\\(\\angle C=${angleA}°\\)，\\(\\angle D=${180 - angleA}°\\)。過程：對角相等，所以 \\(\\angle C=${angleA}°\\)；相鄰內角互補，所以 \\(\\angle D=180°-${angleA}°=${180 - angleA}°\\)。`
         );
@@ -5074,32 +5257,33 @@
         `簡答：\\(x=${x}\\)、\\(y=${y}\\)。過程：對邊相等，所以 \\(x+${p}=2x-${q}\\Rightarrow x=${x}\\)。又 \\(y+${r}=3y-${s}\\Rightarrow 2y=${s - r}\\)，解得 \\(y=${y}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ442ShapeClassificationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const bank = [
       {
         q: '若一個平行四邊形有一個內角是直角，則它一定是哪一種特殊四邊形？',
-        a: '簡答：矩形。過程：平行四邊形若有一角是直角，則其餘角也都成直角，所以是矩形。'
+        a: '簡答：矩形。過程：平行四邊形若有一角是直角，則其餘角也都成直角，所以是矩形。',
       },
       {
         q: '若一個平行四邊形的對角線互相垂直，則它一定是哪一種特殊四邊形？',
-        a: '簡答：菱形。過程：平行四邊形若對角線互相垂直，可判定四邊等長，所以是菱形。'
+        a: '簡答：菱形。過程：平行四邊形若對角線互相垂直，可判定四邊等長，所以是菱形。',
       },
       {
         q: '若一個平行四邊形的對角線等長，則它一定是哪一種特殊四邊形？',
-        a: '簡答：矩形。過程：平行四邊形若對角線等長，可判定四角為直角，所以是矩形。'
+        a: '簡答：矩形。過程：平行四邊形若對角線等長，可判定四角為直角，所以是矩形。',
       },
       {
         q: '若一個平行四邊形的對角線互相垂直且等長，則它一定是哪一種特殊四邊形？',
-        a: '簡答：正方形。過程：同時具有菱形與矩形的性質，因此可判定為正方形。'
+        a: '簡答：正方形。過程：同時具有菱形與矩形的性質，因此可判定為正方形。',
       },
       {
         q: '若一個四邊形只有一組對邊平行，且兩腰相等，則它是哪一種特殊四邊形？',
-        a: '簡答：等腰梯形。過程：只有一組對邊平行是梯形，兩腰相等則是等腰梯形。'
+        a: '簡答：等腰梯形。過程：只有一組對邊平行是梯形，兩腰相等則是等腰梯形。',
       },
     ];
     for (let i = 0; i < count; i += 1) {
@@ -5107,12 +5291,13 @@
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ442RectangleSquareDiagonalSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -5165,12 +5350,13 @@
         `簡答：\\(${side}\\sqrt{2}\\)。過程：先求邊長 \\(\\sqrt{${area}}=${side}\\)，再用正方形對角線公式得 \\(${side}\\sqrt{2}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ442RhombusDiagonalSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -5211,7 +5397,7 @@
       }
       if (mode === 3) {
         const d1 = [8, 10, 12][randInt(0, 2)];
-        const area = d1 * [6, 8, 10][randInt(0, 2)] / 2;
+        const area = (d1 * [6, 8, 10][randInt(0, 2)]) / 2;
         const d2 = (2 * area) / d1;
         questions.push(`菱形面積為 ${area}，其中一條對角線長為 ${d1}，求另一條對角線長。`);
         answers.push(
@@ -5233,7 +5419,7 @@
         `簡答：${area}。過程：因為對角線互相平分，所以 \\(AC=${d1}\\)、\\(BD=${d2}\\)。面積 \\(=\\frac{${d1}\\times${d2}}{2}=${area}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ442QuadrilateralMixedSet(count) {
@@ -5245,19 +5431,20 @@
       buildJ442RhombusDiagonalSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const one = banks[i % banks.length](1);
       questions.push(one.questions[0]);
       answers.push(one.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
 
   function buildJ442AngleBisectorParallelogramSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -5308,10 +5495,15 @@
         );
         continue;
       }
-      const ratioSets = [[2, 1], [1, 2], [2, 3], [3, 2]];
+      const ratioSets = [
+        [2, 1],
+        [1, 2],
+        [2, 3],
+        [3, 2],
+      ];
       const [m, n] = ratioSets[randInt(0, ratioSets.length - 1)];
-      const angleA4 = 180 * m / (m + n);
-      const angleB4 = 180 * n / (m + n);
+      const angleA4 = (180 * m) / (m + n);
+      const angleB4 = (180 * n) / (m + n);
       const aeb4 = angleB4 / 2;
       questions.push(
         `平行四邊形 \\(ABCD\\) 中，\\(\\angle A:\\angle B=${m}:${n}\\)。\\(BE\\) 平分 \\(\\angle ABC\\)，\\(E\\) 在 \\(AD\\) 上，求 \\(\\angle AEB\\)。`
@@ -5320,12 +5512,13 @@
         `簡答：\\(${aeb4}°\\)。過程：\\(\\angle A+\\angle B=180°\\)，故 \\(\\angle A=${angleA4}°\\)，\\(\\angle B=${angleB4}°\\)。\\(BE\\) 平分 \\(\\angle B\\)，\\(\\angle ABE=${aeb4}°\\)。在 \\(\\triangle ABE\\) 中，\\(\\angle AEB=180°-${angleA4}°-${aeb4}°=${aeb4}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ442CoordinateParallelogramSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       const ax = randInt(-5, 3);
@@ -5334,12 +5527,18 @@
       const q = randInt(-3, 3);
       const r = randInt(-4, -1);
       const s = randInt(2, 6);
-      const Ax = ax, Ay = ay;
-      const Bx = ax + p, By = ay + q;
-      const Cx = ax + p + r, Cy = ay + q + s;
-      const Dx = ax + r, Dy = ay + s;
-      const D2x = Ax + Bx - Cx, D2y = Ay + By - Cy;
-      const D3x = Bx + Cx - Ax, D3y = By + Cy - Ay;
+      const Ax = ax,
+        Ay = ay;
+      const Bx = ax + p,
+        By = ay + q;
+      const Cx = ax + p + r,
+        Cy = ay + q + s;
+      const Dx = ax + r,
+        Dy = ay + s;
+      const D2x = Ax + Bx - Cx,
+        D2y = Ay + By - Cy;
+      const D3x = Bx + Cx - Ax,
+        D3y = By + Cy - Ay;
       if (mode === 0) {
         questions.push(
           `在平行四邊形 \\(ABCD\\) 中，已知 \\(A(${Ax},\\,${Ay})\\)，\\(B(${Bx},\\,${By})\\)，\\(C(${Cx},\\,${Cy})\\)，求頂點 \\(D\\) 的坐標。`
@@ -5368,7 +5567,8 @@
         continue;
       }
       if (mode === 3) {
-        const wrongDx = Dx + 1, wrongDy = Dy + 1;
+        const wrongDx = Dx + 1,
+          wrongDy = Dy + 1;
         questions.push(
           `平行四邊形中已知三頂點 \\(A(${Ax},\\,${Ay})\\)、\\(B(${Bx},\\,${By})\\)、\\(C(${Cx},\\,${Cy})\\)，下列哪個坐標不可能是第四頂點？(A) \\((${Dx},\\,${Dy})\\) (B) \\((${D2x},\\,${D2y})\\) (C) \\((${D3x},\\,${D3y})\\) (D) \\((${wrongDx},\\,${wrongDy})\\)`
         );
@@ -5384,12 +5584,13 @@
         `簡答：\\(A(${Ax},\\,${Ay})\\)。過程：\\(A=B+D-C=(${Bx}+${Dx}-${Cx},\\;${By}+${Dy}-${Cy})=(${Ax},\\,${Ay})\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ443TrapezoidMidlineBasicSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -5469,12 +5670,13 @@
         `簡答：\\(x=${x}\\)。過程：中線公式為 \\(\\frac{(x+${topConst})+(${formatFunctionLinear(bottomA, bottomConst)})}{2}=13\\)，化簡得 \\(${formatFunctionLinear(1 + bottomA, topConst + bottomConst)}=26\\)，解得 \\(x=${x}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ443TrapezoidAreaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -5484,7 +5686,7 @@
         const area = ((top + bottom) * height) / 2;
         questions.push(`梯形上底為 ${top}、下底為 ${bottom}、高為 ${height}，求面積。`);
         answers.push(
-          `簡答：${area}。過程：梯形面積 \\(=\\frac{(上底+下底)\\times高}{2}=\\frac{(${top}+${bottom})\\times${height}}{2}=${area}\\)。`
+          `簡答：${area}。過程：梯形面積 \\(=\\frac{(上底+下底)\\times 高}{2}=\\frac{(${top}+${bottom})\\times${height}}{2}=${area}\\)。`
         );
         continue;
       }
@@ -5515,7 +5717,7 @@
         const height = randInt(3, 8);
         questions.push(`梯形中線長為 ${mid}、高為 ${height}，求面積。`);
         answers.push(
-          `簡答：${mid * height}。過程：梯形面積也可寫成 \\(中線\\times高=${mid}\\times${height}=${mid * height}\\)。`
+          `簡答：${mid * height}。過程：梯形面積也可寫成 \\(中線\\times 高=${mid}\\times${height}=${mid * height}\\)。`
         );
         continue;
       }
@@ -5525,20 +5727,23 @@
       const area = ((top + bottom) * height) / 2;
       questions.push(`一塊梯形土地的上底為 ${top} 公尺、下底為 ${bottom} 公尺、高為 ${height} 公尺，求面積。`);
       answers.push(
-        `簡答：${area} 平方公尺。過程：土地看成梯形，面積公式同樣是 \\(\\frac{(上底+下底)\\times高}{2}\\)，代入得 ${area}。`
+        `簡答：${area} 平方公尺。過程：土地看成梯形，面積公式同樣是 \\(\\frac{(上底+下底)\\times 高}{2}\\)，代入得 ${area}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ443IsoscelesTrapezoidSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
         const angleA = [50, 60, 70, 80][randInt(0, 3)];
-        questions.push(`等腰梯形 \\(ABCD\\) 中，若 \\(AD\\parallel BC\\)，且 \\(\\angle A=${angleA}°\\)，求 \\(\\angle B\\) 與 \\(\\angle C\\)。`);
+        questions.push(
+          `等腰梯形 \\(ABCD\\) 中，若 \\(AD\\parallel BC\\)，且 \\(\\angle A=${angleA}°\\)，求 \\(\\angle B\\) 與 \\(\\angle C\\)。`
+        );
         answers.push(
           `簡答：\\(\\angle B=${180 - angleA}°\\)，\\(\\angle C=${180 - angleA}°\\)。過程：梯形同腰所對底角相等，且同側內角互補，所以 \\(\\angle B=180°-${angleA}°=${180 - angleA}°\\)，又 \\(\\angle B=\\angle C\\)。`
         );
@@ -5594,11 +5799,9 @@
       const bottom = top + randInt(4, 10);
       const angle = [60, 70, 80][randInt(0, 2)];
       questions.push(`等腰梯形中，若一個底角為 ${angle}°，求與它同底的另一個底角。`);
-      answers.push(
-        `簡答：${angle}°。過程：等腰梯形同一底上的兩個底角相等，所以另一個底角也是 ${angle}°。`
-      );
+      answers.push(`簡答：${angle}°。過程：等腰梯形同一底上的兩個底角相等，所以另一個底角也是 ${angle}°。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ443TrapezoidCoreMixedSet(count) {
@@ -5609,18 +5812,20 @@
       buildJ443IsoscelesTrapezoidSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const one = banks[i % banks.length](1);
       questions.push(one.questions[0]);
       answers.push(one.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ443ParallelDivisionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -5687,22 +5892,20 @@
         `簡答：\\(${formatFunctionFractionValue(addFraction(first, second))}\\)。過程：四層表示從最上到最下共有 3 個等差間隔，公差為 \\(\\frac{${bottom}-${top}}{3}=${formatFunctionFractionValue(d)}\\)。中間兩層為 \\(${formatFunctionFractionValue(first)}\\)、\\(${formatFunctionFractionValue(second)}\\)，和為 \\(${formatFunctionFractionValue(addFraction(first, second))}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
-
 
   function buildJ443KitePropertySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
         const d1 = randInt(4, 12) * 2;
         const d2 = randInt(4, 12) * 2;
-        const area = d1 * d2 / 2;
-        questions.push(
-          `鳶形 \\(ABCD\\) 的兩條對角線長分別為 \\(${d1}\\) 與 \\(${d2}\\)，求此鳶形的面積。`
-        );
+        const area = (d1 * d2) / 2;
+        questions.push(`鳶形 \\(ABCD\\) 的兩條對角線長分別為 \\(${d1}\\) 與 \\(${d2}\\)，求此鳶形的面積。`);
         answers.push(
           `簡答：\\(${area}\\)。過程：鳶形（箏形）面積為兩對角線乘積的一半：面積 \\(=\\dfrac{${d1}\\times${d2}}{2}=${area}\\)。`
         );
@@ -5711,10 +5914,8 @@
       if (mode === 1) {
         const d1 = randInt(4, 12) * 2;
         const d2 = randInt(4, 12) * 2;
-        const area = d1 * d2 / 2;
-        questions.push(
-          `鳶形的面積為 \\(${area}\\)，其中一條對角線長為 \\(${d1}\\)，求另一條對角線的長度。`
-        );
+        const area = (d1 * d2) / 2;
+        questions.push(`鳶形的面積為 \\(${area}\\)，其中一條對角線長為 \\(${d1}\\)，求另一條對角線的長度。`);
         answers.push(
           `簡答：\\(${d2}\\)。過程：由面積公式 \\(\\dfrac{${d1}\\times d}{2}=${area}\\)，解得 \\(d=\\dfrac{${area * 2}}{${d1}}=${d2}\\)。`
         );
@@ -5726,9 +5927,15 @@
         const angleA = angleAList[randInt(0, angleAList.length - 1)];
         const angleC = angleCList[randInt(0, angleCList.length - 1)];
         const rem = 360 - angleA - angleC;
-        if (rem <= 0 || rem % 2 !== 0) { i -= 1; continue; }
+        if (rem <= 0 || rem % 2 !== 0) {
+          i -= 1;
+          continue;
+        }
         const angleB = rem / 2;
-        if (angleB <= 0 || angleB >= 180) { i -= 1; continue; }
+        if (angleB <= 0 || angleB >= 180) {
+          i -= 1;
+          continue;
+        }
         questions.push(
           `鳶形 \\(ABCD\\) 中，\\(AB=AD\\)，\\(CB=CD\\)，\\(\\angle BAD=${angleA}°\\)，\\(\\angle BCD=${angleC}°\\)，求 \\(\\angle ABC\\)（即 \\(\\angle ADC\\)）。`
         );
@@ -5743,7 +5950,10 @@
         const angleA = angleAList[randInt(0, angleAList.length - 1)];
         const angleB = angleBList[randInt(0, angleBList.length - 1)];
         const angleC = 360 - angleA - 2 * angleB;
-        if (angleC <= 0 || angleC >= 360) { i -= 1; continue; }
+        if (angleC <= 0 || angleC >= 360) {
+          i -= 1;
+          continue;
+        }
         questions.push(
           `鳶形 \\(ABCD\\) 中，\\(AB=AD\\)，\\(CB=CD\\)，\\(\\angle ABC=\\angle ADC=${angleB}°\\)，\\(\\angle BAD=${angleA}°\\)，求 \\(\\angle BCD\\)。`
         );
@@ -5759,13 +5969,16 @@
       for (let m = 1; m <= 4; m += 1) {
         for (let n = 1; n <= 4; n += 1) {
           if (m !== n && remaining4 % (m + n) === 0) {
-            const a = remaining4 * m / (m + n);
-            const c = remaining4 * n / (m + n);
+            const a = (remaining4 * m) / (m + n);
+            const c = (remaining4 * n) / (m + n);
             if (a > 0 && c > 0) ratioOpts.push([m, n, a, c]);
           }
         }
       }
-      if (ratioOpts.length === 0) { i -= 1; continue; }
+      if (ratioOpts.length === 0) {
+        i -= 1;
+        continue;
+      }
       const [m4, n4, aA, aC] = ratioOpts[randInt(0, ratioOpts.length - 1)];
       questions.push(
         `鳶形 \\(ABCD\\) 中，\\(\\angle ABC=\\angle ADC=${angleB4}°\\)，且 \\(\\angle BAD:\\angle BCD=${m4}:${n4}\\)，求 \\(\\angle BAD\\) 與 \\(\\angle BCD\\)。`
@@ -5774,15 +5987,21 @@
         `簡答：\\(\\angle BAD=${aA}°\\)，\\(\\angle BCD=${aC}°\\)。過程：\\(\\angle BAD+\\angle BCD=360°-2\\times${angleB4}°=${remaining4}°\\)。依比例 \\(${m4}:${n4}\\)，\\(\\angle BAD=${remaining4}\\times\\dfrac{${m4}}{${m4 + n4}}=${aA}°\\)，\\(\\angle BCD=${remaining4}\\times\\dfrac{${n4}}{${m4 + n4}}=${aC}°\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ443RightTrapezoidSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const triples = [
-      [3, 4, 5], [4, 3, 5], [5, 12, 13], [12, 5, 13],
-      [8, 15, 17], [6, 8, 10], [8, 6, 10],
+      [3, 4, 5],
+      [4, 3, 5],
+      [5, 12, 13],
+      [12, 5, 13],
+      [8, 15, 17],
+      [6, 8, 10],
+      [8, 6, 10],
     ];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -5794,7 +6013,7 @@
           `直角梯形 \\(ABCD\\) 中，\\(AD\\parallel BC\\)，\\(\\angle A=90°\\)，\\(BC=${top}\\)（上底），\\(AD=${bottom}\\)（下底），\\(AB=${h}\\)（高），求斜腰 \\(CD\\)。`
         );
         answers.push(
-          `簡答：\\(${leg}\\)。過程：作輔助線 \\(CE\\perp AD\\)，\\(CE=AB=${h}\\)，\\(DE=AD-BC=${diff}\\)。在直角 \\(\\triangle CED\\) 中，\\(CD=\\sqrt{${h}^2+${diff}^2}=\\sqrt{${h*h+diff*diff}}=${leg}\\)。`
+          `簡答：\\(${leg}\\)。過程：作輔助線 \\(CE\\perp AD\\)，\\(CE=AB=${h}\\)，\\(DE=AD-BC=${diff}\\)。在直角 \\(\\triangle CED\\) 中，\\(CD=\\sqrt{${h}^2+${diff}^2}=\\sqrt{${h * h + diff * diff}}=${leg}\\)。`
         );
         continue;
       }
@@ -5803,7 +6022,7 @@
           `直角梯形 \\(ABCD\\) 中，\\(AD\\parallel BC\\)，\\(\\angle A=90°\\)，\\(BC=${top}\\)，\\(AD=${bottom}\\)，斜腰 \\(CD=${leg}\\)，求高 \\(AB\\)。`
         );
         answers.push(
-          `簡答：\\(${h}\\)。過程：\\(DE=AD-BC=${diff}\\)。在直角 \\(\\triangle CED\\) 中，\\(CE=\\sqrt{${leg}^2-${diff}^2}=\\sqrt{${leg*leg-diff*diff}}=${h}\\)，故高 \\(AB=CE=${h}\\)。`
+          `簡答：\\(${h}\\)。過程：\\(DE=AD-BC=${diff}\\)。在直角 \\(\\triangle CED\\) 中，\\(CE=\\sqrt{${leg}^2-${diff}^2}=\\sqrt{${leg * leg - diff * diff}}=${h}\\)，故高 \\(AB=CE=${h}\\)。`
         );
         continue;
       }
@@ -5812,16 +6031,14 @@
           `直角梯形 \\(ABCD\\) 中，\\(AD\\parallel BC\\)，\\(\\angle A=90°\\)，\\(BC=${top}\\)，\\(AB=${h}\\)（高），斜腰 \\(CD=${leg}\\)，求下底 \\(AD\\)。`
         );
         answers.push(
-          `簡答：\\(${bottom}\\)。過程：\\(DE=\\sqrt{CD^2-AB^2}=\\sqrt{${leg*leg}-${h*h}}=\\sqrt{${diff*diff}}=${diff}\\)，所以 \\(AD=BC+DE=${top}+${diff}=${bottom}\\)。`
+          `簡答：\\(${bottom}\\)。過程：\\(DE=\\sqrt{CD^2-AB^2}=\\sqrt{${leg * leg}-${h * h}}=\\sqrt{${diff * diff}}=${diff}\\)，所以 \\(AD=BC+DE=${top}+${diff}=${bottom}\\)。`
         );
         continue;
       }
       if (mode === 3) {
-        questions.push(
-          `直角梯形中，高為 \\(${h}\\)，斜腰長為 \\(${leg}\\)，求兩底之差（下底減上底）。`
-        );
+        questions.push(`直角梯形中，高為 \\(${h}\\)，斜腰長為 \\(${leg}\\)，求兩底之差（下底減上底）。`);
         answers.push(
-          `簡答：\\(${diff}\\)。過程：兩底之差等於斜腰在底邊上的水平投影長，\\(\\Delta b=\\sqrt{${leg}^2-${h}^2}=\\sqrt{${leg*leg}-${h*h}}=\\sqrt{${diff*diff}}=${diff}\\)。`
+          `簡答：\\(${diff}\\)。過程：兩底之差等於斜腰在底邊上的水平投影長，\\(\\Delta b=\\sqrt{${leg}^2-${h}^2}=\\sqrt{${leg * leg}-${h * h}}=\\sqrt{${diff * diff}}=${diff}\\)。`
         );
         continue;
       }
@@ -5833,7 +6050,7 @@
         `簡答：\\(${perimeter}\\)。過程：周長 \\(=BC+CD+AD+AB=${top}+${leg}+${bottom}+${h}=${perimeter}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function deriveSummaryAnswerFromDetail(detail) {
@@ -5883,786 +6100,798 @@
     return sentence || text;
   }
 
+  function createAnswerList(summaryAnswers) {
+    const answers = [];
+    const nativePush = Array.prototype.push;
+    answers.push = function pushAnswerWithSummary(...items) {
+      items.forEach((item) => {
+        summaryAnswers.push(deriveSummaryAnswerFromDetail(item));
+      });
+      return nativePush.apply(this, items);
+    };
+    return answers;
+  }
+
   const nextConfigs = {
-      'j4-1-1-ap-core-mixed': {
-        type: 'drill',
-        title: '等差數列核心綜合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildJ411CoreMixedSet(6);
-        },
-      },
-      'j4-1-1-ap-find-an': {
-        type: 'drill',
-        title: '基礎通項求值',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ411FindAnFromA1DNSet(5);
-        },
-      },
-      'j4-1-1-ap-two-terms': {
-        type: 'drill',
-        title: '已知兩項求首項公差',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ411TwoTermsFindA1DSet(5);
-        },
-      },
-      'j4-1-1-ap-find-n': {
-        type: 'drill',
-        title: '求項數判定',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ411FindNSet(5);
-        },
-      },
-      'j4-1-1-ap-middle-term': {
-        type: 'drill',
-        title: '等差中項應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ411MiddleTermApplySet(5);
-        },
-      },
-      'j4-1-1-ap-insert': {
-        type: 'drill',
-        title: '插入數與新公差',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ411InsertNumbersSet(5);
-        },
-      },
-      'j4-1-1-ap-range-multiple-count': {
-        type: 'drill',
-        title: '範圍倍數判定（計算個數）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ411RangeMultipleCountSet(5);
-        },
-      },
-      'j4-1-1-ap-common-term': {
-        type: 'drill',
-        title: '兩等差數列共同項',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ411CommonTermTwoAPSet(5);
-        },
-      },
-      'j4-1-1-ap-pair-sum-reverse': {
-        type: 'drill',
-        title: '兩組項和反推數列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ411PairSumReverseSet(5);
-        },
-      },
-      'j4-1-1-right-triangle-ap': {
-        type: 'drill',
-        title: '直角三角形三邊成等差',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ411RightTriangleAPSet(5);
-        },
-      },
-      'j4-1-1-polygon-ap': {
-        type: 'drill',
-        title: '多邊形邊長與內角成等差',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ411PolygonAPSet(5);
-        },
-      },
-      'j4-1-1-first-positive-term': {
-        type: 'drill',
-        title: '第幾項起為正／負數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ411FirstPositiveTermSet(5);
-        },
-      },
-      'j4-1-1-coordinate-move': {
-        type: 'drill',
-        title: '座標點等差移動',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ411CoordinateMoveSet(5);
-        },
-      },
-      'j4-1-2-geometric-mixed': {
-        type: 'drill',
-        title: '等比數列五大題型綜合',
-        difficulty: 'medium',
-        questionCount: 10,
-        generate() {
-          return buildJ412GeometricSequenceMixedSet(10);
-        },
-      },
-      'j4-1-2-geometric-nth-term': {
-        type: 'drill',
-        title: '基礎通項求值',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ412GeometricNthTermSet(5);
-        },
-      },
-      'j4-1-2-geometric-find-ratio-first': {
-        type: 'drill',
-        title: '求公比與首項',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ412FindRatioFirstTermSet(5);
-        },
-      },
-      'j4-1-2-geometric-mean-unknown': {
-        type: 'drill',
-        title: '等比中項與代數應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ412GeometricMeanUnknownSet(5);
-        },
-      },
-      'j4-1-2-geometric-term-index': {
-        type: 'drill',
-        title: '項數判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ412TermIndexSet(5);
-        },
-      },
-      'j4-1-2-geometric-word-applications': {
-        type: 'drill',
-        title: '生活應用規律',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ412WordApplicationSet(5);
-        },
-      },
-      'j4-1-3-series-mixed': {
-        type: 'drill',
-        title: '等差級數五大題型綜合',
-        difficulty: 'medium',
-        questionCount: 10,
-        generate() {
-          return buildJ413ArithmeticSeriesMixedSet(10);
-        },
-      },
-      'j4-1-3-series-formula-core': {
-        type: 'drill',
-        title: '基礎求和與反求練習',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ413SeriesFormulaCoreSet(5);
-        },
-      },
-      'j4-1-3-range-multiple-sum': {
-        type: 'drill',
-        title: '特定範圍內的倍數與餘數總和',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ413RangeMultipleSumSet(5);
-        },
-      },
-      'j4-1-3-max-min-sum': {
-        type: 'drill',
-        title: '級數最大值與最小值判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ413MaxMinSumSet(5);
-        },
-      },
-      'j4-1-3-word-applications': {
-        type: 'drill',
-        title: '生活情境與幾何排列應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ413WordApplicationSet(5);
-        },
-      },
-      'j4-1-3-sn-relation': {
-        type: 'drill',
-        title: '進階 S_n 函數與項的關係',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ413SnRelationSet(5);
-        },
-      },
-      'j4-1-3-series-block-sum-relation': {
-        type: 'drill',
-        title: '分段和關係',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ413BlockSumRelationSet(5);
-        },
-      },
-      'j4-1-3-series-odd-even-sum': {
-        type: 'drill',
-        title: '奇數項與偶數項和',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ413OddEvenSumRelationSet(5);
-        },
-      },
-      'j4-1-3-polygon-sum': {
-        type: 'drill',
-        title: '多邊形邊長成等差求周長',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ413PolygonSumSet(5);
-        },
-      },
-      'j4-1-3-catch-up-race': {
-        type: 'drill',
-        title: '等差遞增應用：競速與累計',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ413CatchUpRaceSet(5);
-        },
-      },
-      'j4-2-1-function-mixed': {
-        type: 'drill',
-        title: '函數五大題型綜合',
-        difficulty: 'medium',
-        questionCount: 10,
-        generate() {
-          return buildJ421FunctionMixedSet(10);
-        },
-      },
-      'j4-2-1-function-relation-judge': {
-        type: 'drill',
-        title: '函數關係判別題',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ421FunctionRelationJudgeSet(5);
-        },
-      },
-      'j4-2-1-function-value-basic': {
-        type: 'drill',
-        title: '基礎函數值計算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ421FunctionValueBasicSet(5);
-        },
-      },
-      'j4-2-1-function-reverse-solve': {
-        type: 'drill',
-        title: '函數值的反求與未知數求解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ421FunctionReverseSolveSet(5);
-        },
-      },
-      'j4-2-1-function-flow-composite': {
-        type: 'drill',
-        title: '計算流程圖與複合運算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ421FunctionFlowCompositeSet(5);
-        },
-      },
-      'j4-2-1-function-shift-substitution': {
-        type: 'drill',
-        title: '位移代換函數求值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ421FunctionShiftSubstitutionSet(5);
-        },
-      },
-      'j4-2-1-function-word-model': {
-        type: 'drill',
-        title: '生活情境與公式轉換應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ421FunctionWordModelSet(5);
-        },
-      },
-      'j4-2-2-linear-function-mixed': {
-        type: 'drill',
-        title: '線型函數四大題型綜合',
-        difficulty: 'medium',
-        questionCount: 8,
-        generate() {
-          return buildJ422LinearFunctionMixedSet(8);
-        },
-      },
-      'j4-2-2-linear-equation-two-points': {
-        type: 'drill',
-        title: '求線型函數關係式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ422LinearEquationTwoPointsSet(5);
-        },
-      },
-      'j4-2-2-intercept-position': {
-        type: 'drill',
-        title: '坐標軸交點與圖形位置判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ422InterceptPositionSet(5);
-        },
-      },
-      'j4-2-2-axis-area': {
-        type: 'drill',
-        title: '線型函數圖形與坐標軸的面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ422AxisAreaSet(5);
-        },
-      },
-      'j4-2-2-line-intersection-parallel': {
-        type: 'drill',
-        title: '兩直線交點與平行性質',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ422LineIntersectionParallelSet(5);
-        },
-      },
-      'j4-2-2-perpendicular-equation': {
-        type: 'drill',
-        title: '垂直直線方程式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ422PerpendicularEquationSet(5);
-        },
-      },
-      'j4-2-2-quadrant-slope-range': {
-        type: 'drill',
-        title: '象限限制與斜率範圍',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ422QuadrantSlopeRangeSet(5);
-        },
-      },
-      'j4-2-1-linear-degree-condition': {
-        type: 'drill',
-        title: '一次函數係數條件',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ421LinearDegreeConditionSet(5);
-        },
-      },
-      'j4-2-1-cross-function-substitution': {
-        type: 'drill',
-        title: '跨函數移位代換',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildJ421CrossFunctionSubstitutionSet(5);
-        },
-      },
-      'j4-2-2-word-model-two-point': {
-        type: 'drill',
-        title: '兩點線型函數應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ422WordModelTwoPointSet(5);
-        },
-      },
-      'j4-3-1-polygon-angle-mixed': {
-        type: 'drill',
-        title: '三角形與多邊形角度綜合',
-        difficulty: 'medium',
-        questionCount: 9,
-        generate() {
-          return buildJ431PolygonAngleMixedSet(9);
-        },
-      },
-      'j4-3-1-triangle-exterior-angle': {
-        type: 'drill',
-        title: '三角形外角推理',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ431TriangleExteriorAngleSet(5);
-        },
-      },
-      'j4-3-1-polygon-arithmetic-angles': {
-        type: 'drill',
-        title: '多邊形內角等差',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ431PolygonArithmeticAnglesSet(5);
-        },
-      },
-      'j4-3-1-complementary-supplementary-angles': {
-        type: 'drill',
-        title: '補角與餘角推理綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ431ComplementarySupplementaryAngleSet(5);
-        },
-      },
-      'j4-3-1-isosceles-angle': {
-        type: 'drill',
-        title: '等腰三角形角度計算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ431IsoscelesAngleSet(5);
-        },
-      },
-      'j4-3-2-construction-bisection-count': {
-        type: 'drill',
-        title: '尺規作圖平分次數判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ432ConstructionBisectionSet(5);
-        },
-      },
-      'j4-3-2-construction-mixed': {
-        type: 'drill',
-        title: '尺規作圖三類綜合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildJ432ConstructionMixedSet(6);
-        },
-      },
-      'j4-3-2-midpoint-perpendicular': {
-        type: 'drill',
-        title: '中點與垂直平分線',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ432MidpointPerpendicularSet(5);
-        },
-      },
-      'j4-3-2-angle-bisector-measure': {
-        type: 'drill',
-        title: '角平分與作圖角度',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ432AngleBisectorMeasureSet(5);
-        },
-      },
-      'j4-3-2-triangle-bisector-intersection': {
-        type: 'drill',
-        title: '角平分線交點角度',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ432TriangleBisectorIntersectionSet(5);
-        },
-      },
-      'j4-3-3-congruence-mixed': {
-        type: 'drill',
-        title: '三角形全等三類綜合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildJ433CongruenceMixedSet(6);
-        },
-      },
-      'j4-3-3-congruence-criterion': {
-        type: 'drill',
-        title: '全等判別依據',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ433CongruenceCriterionSet(5);
-        },
-      },
-      'j4-3-3-congruent-correspondence': {
-        type: 'drill',
-        title: '全等後對應邊角求值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ433CongruentCorrespondenceSet(5);
-        },
-      },
-      'j4-3-3-isosceles-median-properties': {
-        type: 'drill',
-        title: '等腰三角形中線高角平分線',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ433IsoscelesMedianPropertySet(5);
-        },
-      },
-      'j4-3-3-congruence-algebra': {
-        type: 'drill',
-        title: '全等三角形代數求解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ433CongruenceAlgebraSet(5);
-        },
-      },
-      'j4-3-4-triangle-side-angle-mixed': {
-        type: 'drill',
-        title: '三角形邊角關係三類綜合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildJ434TriangleSideAngleMixedSet(6);
-        },
-      },
-      'j4-3-4-triangle-inequality-range': {
-        type: 'drill',
-        title: '三角形不等式範圍',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ434TriangleInequalityRangeSet(5);
-        },
-      },
-      'j4-3-4-side-angle-comparison': {
-        type: 'drill',
-        title: '邊對角大小比較',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ434SideAngleComparisonSet(5);
-        },
-      },
-      'j4-3-4-pythagorean-classification': {
-        type: 'drill',
-        title: '三邊判定銳直鈍角',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ434PythagoreanClassificationSet(5);
-        },
-      },
-      'j4-3-4-exterior-angle-side-comparison': {
-        type: 'drill',
-        title: '外角推算邊大小順序',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ434ExteriorAngleSideComparisonSet(5);
-        },
-      },
-      'j4-3-4-hinge-theorem': {
-        type: 'drill',
-        title: '鉸鏈定理：兩三角形邊角比較',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ434HingeTheoremSet(5);
-        },
-      },
-      'j4-4-1-parallel-perpendicular-angles': {
-        type: 'drill',
-        title: '平行垂直角度六型綜合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildJ441ParallelPerpendicularAngleMixedSet(6);
-        },
-      },
-      'j4-4-1-transversal-solve-x': {
-        type: 'drill',
-        title: '平行線截角解 x',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ441TransversalSolveXSet(5);
-        },
-      },
-      'j4-4-1-transversal-find-angle': {
-        type: 'drill',
-        title: '平行線截角求角度',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ441TransversalFindAngleSet(5);
-        },
-      },
-      'j4-4-1-bent-line-parallel': {
-        type: 'drill',
-        title: '兩平行線間折線角度',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ441BentLineParallelSet(5);
-        },
-      },
-      'j4-4-2-quadrilateral-mixed': {
-        type: 'drill',
-        title: '特殊四邊形五類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ442QuadrilateralMixedSet(5);
-        },
-      },
-      'j4-4-2-quadrilateral-property-codes': {
-        type: 'drill',
-        title: '特殊四邊形性質代號判讀',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildJ442QuadrilateralPropertyCodeSet(6);
-        },
-      },
-      'j4-4-2-parallelogram-equations': {
-        type: 'drill',
-        title: '平行四邊形邊角方程',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ442ParallelogramEquationSet(5);
-        },
-      },
-      'j4-4-2-shape-classification': {
-        type: 'drill',
-        title: '特殊四邊形判別',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ442ShapeClassificationSet(5);
-        },
-      },
-      'j4-4-2-rectangle-square-diagonal': {
-        type: 'drill',
-        title: '矩形正方形對角線運算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ442RectangleSquareDiagonalSet(5);
-        },
-      },
-      'j4-4-2-rhombus-diagonal': {
-        type: 'drill',
-        title: '菱形對角線運算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ442RhombusDiagonalSet(5);
-        },
-      },
-      'j4-4-2-angle-bisector-parallelogram': {
-        type: 'drill',
-        title: '平行四邊形角平分線',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ442AngleBisectorParallelogramSet(5);
-        },
-      },
-      'j4-4-2-coordinate-parallelogram': {
-        type: 'drill',
-        title: '座標系中的平行四邊形',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ442CoordinateParallelogramSet(5);
-        },
-      },
-      'j4-4-3-trapezoid-core-mixed': {
-        type: 'drill',
-        title: '梯形核心四類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ443TrapezoidCoreMixedSet(5);
-        },
-      },
-      'j4-4-3-trapezoid-midline-basic': {
-        type: 'drill',
-        title: '梯形中線基本運算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ443TrapezoidMidlineBasicSet(5);
-        },
-      },
-      'j4-4-3-parallel-division': {
-        type: 'drill',
-        title: '多重平行線分割',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ443ParallelDivisionSet(5);
-        },
-      },
-      'j4-4-3-trapezoid-area': {
-        type: 'drill',
-        title: '梯形面積正反算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildJ443TrapezoidAreaSet(5);
-        },
-      },
-      'j4-4-3-isosceles-trapezoid': {
-        type: 'drill',
-        title: '等腰梯形邊角與高',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ443IsoscelesTrapezoidSet(5);
-        },
-      },
-      'j4-4-3-kite-property': {
-        type: 'drill',
-        title: '鳶形性質計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ443KitePropertySet(5);
-        },
-      },
-      'j4-4-3-right-trapezoid': {
-        type: 'drill',
-        title: '直角梯形邊長計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildJ443RightTrapezoidSet(5);
-        },
-      },
+    'j4-1-1-ap-core-mixed': {
+      type: 'drill',
+      title: '等差數列核心綜合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildJ411CoreMixedSet(6);
+      },
+    },
+    'j4-1-1-ap-find-an': {
+      type: 'drill',
+      title: '基礎通項求值',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ411FindAnFromA1DNSet(5);
+      },
+    },
+    'j4-1-1-ap-two-terms': {
+      type: 'drill',
+      title: '已知兩項求首項公差',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ411TwoTermsFindA1DSet(5);
+      },
+    },
+    'j4-1-1-ap-find-n': {
+      type: 'drill',
+      title: '求項數判定',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ411FindNSet(5);
+      },
+    },
+    'j4-1-1-ap-middle-term': {
+      type: 'drill',
+      title: '等差中項應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ411MiddleTermApplySet(5);
+      },
+    },
+    'j4-1-1-ap-insert': {
+      type: 'drill',
+      title: '插入數與新公差',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ411InsertNumbersSet(5);
+      },
+    },
+    'j4-1-1-ap-range-multiple-count': {
+      type: 'drill',
+      title: '範圍倍數判定（計算個數）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ411RangeMultipleCountSet(5);
+      },
+    },
+    'j4-1-1-ap-common-term': {
+      type: 'drill',
+      title: '兩等差數列共同項',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ411CommonTermTwoAPSet(5);
+      },
+    },
+    'j4-1-1-ap-pair-sum-reverse': {
+      type: 'drill',
+      title: '兩組項和反推數列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ411PairSumReverseSet(5);
+      },
+    },
+    'j4-1-1-right-triangle-ap': {
+      type: 'drill',
+      title: '直角三角形三邊成等差',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ411RightTriangleAPSet(5);
+      },
+    },
+    'j4-1-1-polygon-ap': {
+      type: 'drill',
+      title: '多邊形邊長與內角成等差',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ411PolygonAPSet(5);
+      },
+    },
+    'j4-1-1-first-positive-term': {
+      type: 'drill',
+      title: '第幾項起為正／負數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ411FirstPositiveTermSet(5);
+      },
+    },
+    'j4-1-1-coordinate-move': {
+      type: 'drill',
+      title: '座標點等差移動',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ411CoordinateMoveSet(5);
+      },
+    },
+    'j4-1-2-geometric-mixed': {
+      type: 'drill',
+      title: '等比數列五大題型綜合',
+      difficulty: 'medium',
+      questionCount: 10,
+      generate() {
+        return buildJ412GeometricSequenceMixedSet(10);
+      },
+    },
+    'j4-1-2-geometric-nth-term': {
+      type: 'drill',
+      title: '基礎通項求值',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ412GeometricNthTermSet(5);
+      },
+    },
+    'j4-1-2-geometric-find-ratio-first': {
+      type: 'drill',
+      title: '求公比與首項',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ412FindRatioFirstTermSet(5);
+      },
+    },
+    'j4-1-2-geometric-mean-unknown': {
+      type: 'drill',
+      title: '等比中項與代數應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ412GeometricMeanUnknownSet(5);
+      },
+    },
+    'j4-1-2-geometric-term-index': {
+      type: 'drill',
+      title: '項數判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ412TermIndexSet(5);
+      },
+    },
+    'j4-1-2-geometric-word-applications': {
+      type: 'drill',
+      title: '生活應用規律',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ412WordApplicationSet(5);
+      },
+    },
+    'j4-1-3-series-mixed': {
+      type: 'drill',
+      title: '等差級數五大題型綜合',
+      difficulty: 'medium',
+      questionCount: 10,
+      generate() {
+        return buildJ413ArithmeticSeriesMixedSet(10);
+      },
+    },
+    'j4-1-3-series-formula-core': {
+      type: 'drill',
+      title: '基礎求和與反求練習',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ413SeriesFormulaCoreSet(5);
+      },
+    },
+    'j4-1-3-range-multiple-sum': {
+      type: 'drill',
+      title: '特定範圍內的倍數與餘數總和',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ413RangeMultipleSumSet(5);
+      },
+    },
+    'j4-1-3-max-min-sum': {
+      type: 'drill',
+      title: '級數最大值與最小值判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ413MaxMinSumSet(5);
+      },
+    },
+    'j4-1-3-word-applications': {
+      type: 'drill',
+      title: '生活情境與幾何排列應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ413WordApplicationSet(5);
+      },
+    },
+    'j4-1-3-sn-relation': {
+      type: 'drill',
+      title: '進階 S_n 函數與項的關係',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ413SnRelationSet(5);
+      },
+    },
+    'j4-1-3-series-block-sum-relation': {
+      type: 'drill',
+      title: '分段和關係',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ413BlockSumRelationSet(5);
+      },
+    },
+    'j4-1-3-series-odd-even-sum': {
+      type: 'drill',
+      title: '奇數項與偶數項和',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ413OddEvenSumRelationSet(5);
+      },
+    },
+    'j4-1-3-polygon-sum': {
+      type: 'drill',
+      title: '多邊形邊長成等差求周長',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ413PolygonSumSet(5);
+      },
+    },
+    'j4-1-3-catch-up-race': {
+      type: 'drill',
+      title: '等差遞增應用：競速與累計',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ413CatchUpRaceSet(5);
+      },
+    },
+    'j4-2-1-function-mixed': {
+      type: 'drill',
+      title: '函數五大題型綜合',
+      difficulty: 'medium',
+      questionCount: 10,
+      generate() {
+        return buildJ421FunctionMixedSet(10);
+      },
+    },
+    'j4-2-1-function-relation-judge': {
+      type: 'drill',
+      title: '函數關係判別題',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ421FunctionRelationJudgeSet(5);
+      },
+    },
+    'j4-2-1-function-value-basic': {
+      type: 'drill',
+      title: '基礎函數值計算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ421FunctionValueBasicSet(5);
+      },
+    },
+    'j4-2-1-function-reverse-solve': {
+      type: 'drill',
+      title: '函數值的反求與未知數求解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ421FunctionReverseSolveSet(5);
+      },
+    },
+    'j4-2-1-function-flow-composite': {
+      type: 'drill',
+      title: '計算流程圖與複合運算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ421FunctionFlowCompositeSet(5);
+      },
+    },
+    'j4-2-1-function-shift-substitution': {
+      type: 'drill',
+      title: '位移代換函數求值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ421FunctionShiftSubstitutionSet(5);
+      },
+    },
+    'j4-2-1-function-word-model': {
+      type: 'drill',
+      title: '生活情境與公式轉換應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ421FunctionWordModelSet(5);
+      },
+    },
+    'j4-2-2-linear-function-mixed': {
+      type: 'drill',
+      title: '線型函數四大題型綜合',
+      difficulty: 'medium',
+      questionCount: 8,
+      generate() {
+        return buildJ422LinearFunctionMixedSet(8);
+      },
+    },
+    'j4-2-2-linear-equation-two-points': {
+      type: 'drill',
+      title: '求線型函數關係式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ422LinearEquationTwoPointsSet(5);
+      },
+    },
+    'j4-2-2-intercept-position': {
+      type: 'drill',
+      title: '坐標軸交點與圖形位置判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ422InterceptPositionSet(5);
+      },
+    },
+    'j4-2-2-axis-area': {
+      type: 'drill',
+      title: '線型函數圖形與坐標軸的面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ422AxisAreaSet(5);
+      },
+    },
+    'j4-2-2-line-intersection-parallel': {
+      type: 'drill',
+      title: '兩直線交點與平行性質',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ422LineIntersectionParallelSet(5);
+      },
+    },
+    'j4-2-2-perpendicular-equation': {
+      type: 'drill',
+      title: '垂直直線方程式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ422PerpendicularEquationSet(5);
+      },
+    },
+    'j4-2-2-quadrant-slope-range': {
+      type: 'drill',
+      title: '象限限制與斜率範圍',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ422QuadrantSlopeRangeSet(5);
+      },
+    },
+    'j4-2-1-linear-degree-condition': {
+      type: 'drill',
+      title: '一次函數係數條件',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ421LinearDegreeConditionSet(5);
+      },
+    },
+    'j4-2-1-cross-function-substitution': {
+      type: 'drill',
+      title: '跨函數移位代換',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ421CrossFunctionSubstitutionSet(5);
+      },
+    },
+    'j4-2-2-word-model-two-point': {
+      type: 'drill',
+      title: '兩點線型函數應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ422WordModelTwoPointSet(5);
+      },
+    },
+    'j4-3-1-polygon-angle-mixed': {
+      type: 'drill',
+      title: '三角形與多邊形角度綜合',
+      difficulty: 'medium',
+      questionCount: 9,
+      generate() {
+        return buildJ431PolygonAngleMixedSet(9);
+      },
+    },
+    'j4-3-1-triangle-exterior-angle': {
+      type: 'drill',
+      title: '三角形外角推理',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ431TriangleExteriorAngleSet(5);
+      },
+    },
+    'j4-3-1-polygon-arithmetic-angles': {
+      type: 'drill',
+      title: '多邊形內角等差',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ431PolygonArithmeticAnglesSet(5);
+      },
+    },
+    'j4-3-1-complementary-supplementary-angles': {
+      type: 'drill',
+      title: '補角與餘角推理綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ431ComplementarySupplementaryAngleSet(5);
+      },
+    },
+    'j4-3-1-isosceles-angle': {
+      type: 'drill',
+      title: '等腰三角形角度計算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ431IsoscelesAngleSet(5);
+      },
+    },
+    'j4-3-2-construction-bisection-count': {
+      type: 'drill',
+      title: '尺規作圖平分次數判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ432ConstructionBisectionSet(5);
+      },
+    },
+    'j4-3-2-construction-mixed': {
+      type: 'drill',
+      title: '尺規作圖三類綜合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildJ432ConstructionMixedSet(6);
+      },
+    },
+    'j4-3-2-midpoint-perpendicular': {
+      type: 'drill',
+      title: '中點與垂直平分線',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ432MidpointPerpendicularSet(5);
+      },
+    },
+    'j4-3-2-angle-bisector-measure': {
+      type: 'drill',
+      title: '角平分與作圖角度',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ432AngleBisectorMeasureSet(5);
+      },
+    },
+    'j4-3-2-triangle-bisector-intersection': {
+      type: 'drill',
+      title: '角平分線交點角度',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ432TriangleBisectorIntersectionSet(5);
+      },
+    },
+    'j4-3-3-congruence-mixed': {
+      type: 'drill',
+      title: '三角形全等三類綜合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildJ433CongruenceMixedSet(6);
+      },
+    },
+    'j4-3-3-congruence-criterion': {
+      type: 'drill',
+      title: '全等判別依據',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ433CongruenceCriterionSet(5);
+      },
+    },
+    'j4-3-3-congruent-correspondence': {
+      type: 'drill',
+      title: '全等後對應邊角求值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ433CongruentCorrespondenceSet(5);
+      },
+    },
+    'j4-3-3-isosceles-median-properties': {
+      type: 'drill',
+      title: '等腰三角形中線高角平分線',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ433IsoscelesMedianPropertySet(5);
+      },
+    },
+    'j4-3-3-congruence-algebra': {
+      type: 'drill',
+      title: '全等三角形代數求解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ433CongruenceAlgebraSet(5);
+      },
+    },
+    'j4-3-4-triangle-side-angle-mixed': {
+      type: 'drill',
+      title: '三角形邊角關係三類綜合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildJ434TriangleSideAngleMixedSet(6);
+      },
+    },
+    'j4-3-4-triangle-inequality-range': {
+      type: 'drill',
+      title: '三角形不等式範圍',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ434TriangleInequalityRangeSet(5);
+      },
+    },
+    'j4-3-4-side-angle-comparison': {
+      type: 'drill',
+      title: '邊對角大小比較',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ434SideAngleComparisonSet(5);
+      },
+    },
+    'j4-3-4-pythagorean-classification': {
+      type: 'drill',
+      title: '三邊判定銳直鈍角',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ434PythagoreanClassificationSet(5);
+      },
+    },
+    'j4-3-4-exterior-angle-side-comparison': {
+      type: 'drill',
+      title: '外角推算邊大小順序',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ434ExteriorAngleSideComparisonSet(5);
+      },
+    },
+    'j4-3-4-hinge-theorem': {
+      type: 'drill',
+      title: '鉸鏈定理：兩三角形邊角比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ434HingeTheoremSet(5);
+      },
+    },
+    'j4-4-1-parallel-perpendicular-angles': {
+      type: 'drill',
+      title: '平行垂直角度六型綜合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildJ441ParallelPerpendicularAngleMixedSet(6);
+      },
+    },
+    'j4-4-1-transversal-solve-x': {
+      type: 'drill',
+      title: '平行線截角解 x',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ441TransversalSolveXSet(5);
+      },
+    },
+    'j4-4-1-transversal-find-angle': {
+      type: 'drill',
+      title: '平行線截角求角度',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ441TransversalFindAngleSet(5);
+      },
+    },
+    'j4-4-1-bent-line-parallel': {
+      type: 'drill',
+      title: '兩平行線間折線角度',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ441BentLineParallelSet(5);
+      },
+    },
+    'j4-4-2-quadrilateral-mixed': {
+      type: 'drill',
+      title: '特殊四邊形五類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ442QuadrilateralMixedSet(5);
+      },
+    },
+    'j4-4-2-quadrilateral-property-codes': {
+      type: 'drill',
+      title: '特殊四邊形性質代號判讀',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildJ442QuadrilateralPropertyCodeSet(6);
+      },
+    },
+    'j4-4-2-parallelogram-equations': {
+      type: 'drill',
+      title: '平行四邊形邊角方程',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ442ParallelogramEquationSet(5);
+      },
+    },
+    'j4-4-2-shape-classification': {
+      type: 'drill',
+      title: '特殊四邊形判別',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ442ShapeClassificationSet(5);
+      },
+    },
+    'j4-4-2-rectangle-square-diagonal': {
+      type: 'drill',
+      title: '矩形正方形對角線運算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ442RectangleSquareDiagonalSet(5);
+      },
+    },
+    'j4-4-2-rhombus-diagonal': {
+      type: 'drill',
+      title: '菱形對角線運算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ442RhombusDiagonalSet(5);
+      },
+    },
+    'j4-4-2-angle-bisector-parallelogram': {
+      type: 'drill',
+      title: '平行四邊形角平分線',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ442AngleBisectorParallelogramSet(5);
+      },
+    },
+    'j4-4-2-coordinate-parallelogram': {
+      type: 'drill',
+      title: '座標系中的平行四邊形',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ442CoordinateParallelogramSet(5);
+      },
+    },
+    'j4-4-3-trapezoid-core-mixed': {
+      type: 'drill',
+      title: '梯形核心四類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ443TrapezoidCoreMixedSet(5);
+      },
+    },
+    'j4-4-3-trapezoid-midline-basic': {
+      type: 'drill',
+      title: '梯形中線基本運算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ443TrapezoidMidlineBasicSet(5);
+      },
+    },
+    'j4-4-3-parallel-division': {
+      type: 'drill',
+      title: '多重平行線分割',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ443ParallelDivisionSet(5);
+      },
+    },
+    'j4-4-3-trapezoid-area': {
+      type: 'drill',
+      title: '梯形面積正反算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildJ443TrapezoidAreaSet(5);
+      },
+    },
+    'j4-4-3-isosceles-trapezoid': {
+      type: 'drill',
+      title: '等腰梯形邊角與高',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ443IsoscelesTrapezoidSet(5);
+      },
+    },
+    'j4-4-3-kite-property': {
+      type: 'drill',
+      title: '鳶形性質計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ443KitePropertySet(5);
+      },
+    },
+    'j4-4-3-right-trapezoid': {
+      type: 'drill',
+      title: '直角梯形邊長計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ443RightTrapezoidSet(5);
+      },
+    },
   };
 
-  const bundleFingerprint = "j4-bundle-v20260622-j44-v1";
+  const bundleFingerprint = 'j4-bundle-v20260706-summary-v1';
   Object.values(nextConfigs).forEach((config) => {
-    if (!config || typeof config !== "object") return;
+    if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;
   });
 

@@ -38,14 +38,15 @@
 
   function buildS223MixedSet(banks, count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function s324Pick(items) {
@@ -7907,13 +7908,14 @@
 
   function s331MakeSet(count, builders) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = builders[i % builders.length]();
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function deriveSummaryAnswerFromDetail(detail) {
@@ -7964,6 +7966,18 @@
 
     const sentence = text.split(/[。．]/)[0].trim();
     return sentence || text;
+  }
+
+  function createAnswerList(summaryAnswers) {
+    const answers = [];
+    const nativePush = Array.prototype.push;
+    answers.push = function pushAnswerWithSummary(...items) {
+      items.forEach((item) => {
+        summaryAnswers.push(deriveSummaryAnswerFromDetail(item));
+      });
+      return nativePush.apply(this, items);
+    };
+    return answers;
   }
 
   const nextConfigs = {
@@ -9866,7 +9880,7 @@
       },
   };
 
-  const bundleFingerprint = "s4-bundle-v20260701-s4-4-sanmin-v1";
+  const bundleFingerprint = "s4-bundle-v20260706-summary-v1";
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== "object") return;
     config.__generatorFingerprint = bundleFingerprint;

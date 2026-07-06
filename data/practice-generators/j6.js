@@ -111,7 +111,8 @@
 
   function buildJ611QuadraticDefinitionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -153,12 +154,13 @@
         '簡答：不是。過程：雖然絕對值內有 \\(x^2\\)，但整個式子含有絕對值，不能化成固定的 \\(ax^2+bx+c\\) 形式。'
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ611OpeningDirectionVertexAxisSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randomJ611Coefficient();
       const eq = formatJ611Parabola(a);
@@ -188,12 +190,13 @@
       questions.push(`二次函數 \\(${eq}\\) 的頂點坐標為何？`);
       answers.push('簡答：\\((0,0)\\)。過程：標準型 \\(y=ax^2\\) 沒有左右或上下平移，所以頂點固定在原點 \\((0,0)\\)。');
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ611OpeningWidthOrderSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const seen = new Set();
       const list = [];
@@ -214,21 +217,22 @@
       if (i % 2 === 0) {
         questions.push(`${descriptions}，請依開口由小到大排列。`);
         answers.push(
-          `簡答：${narrowToWide.map((item) => item.label).join('、')}。過程：\\(|a|\\) 越大，開口越小；\\(|a|\\) 越小，開口越大。各式的 \\(|a|\\) 分別為 ${list.map((a, idx) => `${labels[idx]}:${formatJ611Abs(a)}`).join('、')}，所以由小到大為 ${narrowToWide.map((item) => item.label).join('、')}。`
+          `簡答：${narrowToWide.map((item) => item.label).join('、')}。過程：\\(|a|\\) 越大，開口越小；\\(|a|\\) 越小，開口越大。各式的 \\(|a|\\) 分別為 $${list.map((a, idx) => `${labels[idx]}:${formatJ611Abs(a)}`).join('、')}$，所以由小到大為 ${narrowToWide.map((item) => item.label).join('、')}。`
         );
       } else {
         questions.push(`${descriptions}，請依開口由大到小排列。`);
         answers.push(
-          `簡答：${wideToNarrow.map((item) => item.label).join('、')}。過程：\\(|a|\\) 越小，開口越大；\\(|a|\\) 越大，開口越小。各式的 \\(|a|\\) 分別為 ${list.map((a, idx) => `${labels[idx]}:${formatJ611Abs(a)}`).join('、')}，所以由大到小為 ${wideToNarrow.map((item) => item.label).join('、')}。`
+          `簡答：${wideToNarrow.map((item) => item.label).join('、')}。過程：\\(|a|\\) 越小，開口越大；\\(|a|\\) 越大，開口越小。各式的 \\(|a|\\) 分別為 $${list.map((a, idx) => `${labels[idx]}:${formatJ611Abs(a)}`).join('、')}$，所以由大到小為 ${wideToNarrow.map((item) => item.label).join('、')}。`
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ611FindCoefficientFromPointSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const x = pickNonZero(-6, 6);
       const a = randomJ611Coefficient();
@@ -240,12 +244,13 @@
         `簡答：\\(a=${fractionToLatex(a)}\\)。過程：把點 \\((${x},${yText})\\) 代入 \\(y=ax^2\\)，得 \\(${yText}=a\\cdot${xSub}^2\\)。所以 \\(a=\\dfrac{${yText}}{${x * x}}=${fractionToLatex(a)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ611YAxisReflectionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 5 === 4) {
         questions.push(`若 \\(y=ax^2\\) 通過 \\((p,q)\\)，則該圖形必也會通過哪一個點？請用 \\(p,q\\) 表示。`);
@@ -264,12 +269,13 @@
         `簡答：\\(${reflected}\\)。過程：\\(y=ax^2\\) 的對稱軸是 \\(y\\) 軸，也就是 \\(x=0\\)。關於 \\(y\\) 軸對稱時，\\(x\\) 坐標變號、\\(y\\) 坐標不變，所以對稱點為 \\(${reflected}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ611QuadrantLocationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randomJ611Coefficient();
       const opensUp = a.num > 0;
@@ -278,7 +284,7 @@
         `簡答：第${opensUp ? '一、二' : '三、四'}象限。過程：\\(x^2\\ge0\\)，所以 \\(y=ax^2\\) 的 \\(y\\) 值符號由 \\(a\\) 決定。本題 \\(a${opensUp ? '>0' : '<0'}\\)，除原點外 \\(y${opensUp ? '>0' : '<0'}\\)，故在第${opensUp ? '一、二' : '三、四'}象限。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ611ParabolaAx2FourSubtypeMixedSet(count) {
@@ -291,19 +297,21 @@
       buildJ611QuadrantLocationSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ611SquareInParabolaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const side = randInt(2, 12);
       const a = makeFraction(4, side);
@@ -317,12 +325,13 @@
         `簡答：${askArea ? area : perimeter}。過程：設正方形邊長為 \\(s\\)，則上方頂點可設為 \\((\\frac{s}{2},s)\\)。代入 \\(y=ax^2\\) 得 \\(s=a(\\frac{s}{2})^2\\)，所以 \\(a=\\frac{4}{s}\\)，本題 \\(a=${fractionToLatex(a)}\\)，故 \\(s=${side}\\)。因此${askArea ? `面積為 \\(${side}^2=${area}\\)` : `周長為 \\(4\\cdot${side}=${perimeter}\\)`}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ611HorizontalChordLengthSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const x0 = randInt(2, 9);
       const a = randInt(1, 5) * (i % 2 === 0 ? 1 : -1);
@@ -335,12 +344,13 @@
         `簡答：\\(${length}\\)。過程：聯立 \\(${k}=${a}x^2\\)，得 \\(x^2=${x0 * x0}\\)，所以交點的 \\(x\\) 坐標為 \\(\\pm${x0}\\)。水平弦長為 \\(${x0}-(-${x0})=${length}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ611TriangleAreaOnParabolaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const x0 = randInt(2, 7);
       const a = randInt(1, 4);
@@ -353,12 +363,13 @@
         `簡答：\\(${area}\\)。過程：由 \\(${k}=${a}x^2\\) 得 \\(x=\\pm${x0}\\)，所以 \\(AB=${2 * x0}\\)。\\(O\\) 到直線 \\(y=${k}\\) 的距離為 \\(${k}\\)，故面積 \\(=\\frac12\\cdot${2 * x0}\\cdot${k}=${area}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ611LineParabolaGridPointSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randInt(1, 4);
       const m = randInt(3, 10);
@@ -374,12 +385,13 @@
         `簡答：\\(${countPoints}\\) 個。過程：區域內需滿足 \\(${a}x^2\\le y\\le ${m}\\)。整數 \\(x\\) 需滿足 \\(${a}x^2\\le ${m}\\)，所以 \\(|x|\\le${limit}\\)。再逐一計算每個整數 \\(x\\) 可搭配的整數 \\(y\\) 數量並相加，得到 \\(${countPoints}\\) 個。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ611ParabolaModelingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const aInt = randInt(1, 3);
       const half = randInt(5, 12);
@@ -395,7 +407,7 @@
         `簡答：\\(${2 * newHalf}\\) 公尺。過程：水深 \\(${depth}\\) 時半寬為 \\(${half}\\)，代入 \\(y=ax^2\\) 得 \\(${depth}=a\\cdot${half}^2\\)，所以 \\(a=${aInt}\\)。下降 \\(${lower}\\) 公尺後水深為 \\(${newDepth}\\)，解 \\(${newDepth}=${aInt}x^2\\)，得 \\(x=${newHalf}\\)，故水面寬為 \\(${2 * newHalf}\\) 公尺。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ611ParabolaApplicationsFiveSubtypeMixedSet(count) {
@@ -407,13 +419,14 @@
       buildJ611ParabolaModelingSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function j612FormatVertexEquation(a, h, k) {
@@ -473,7 +486,8 @@
 
   function buildJ612VertexFormReadSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const { a, h, k } = j612PickVertexData();
       const eq = j612FormatVertexEquation(a, h, k);
@@ -484,12 +498,13 @@
         `簡答：在 \\(x=${h}\\) 時有${j612ExtremeName(a)}值 \\(${k}\\)，對稱軸為 \\(x=${h}\\)。過程：頂點式 \\(y=a(x-h)^2+k\\) 的頂點為 \\((h,k)\\)，本題頂點為 \\((${h},${k})\\)。因為 \\(a=${fractionToLatex(a)}${a.num > 0 ? '>0' : '<0'}\\)，所以頂點給出${j612ExtremeName(a)}值。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612CompletingSquareExtremeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const { a, h, k } = j612PickVertexData();
       const expanded = j612ExpandVertexForm(a, h, k);
@@ -500,12 +515,13 @@
         `簡答：\\(${vertex}\\)，頂點 \\((${h},${k})\\)，對稱軸 \\(x=${h}\\)，${j612ExtremeName(a)}值為 \\(${k}\\)。過程：配方可把一般式化為 \\(y=a(x-h)^2+k\\)。本題化為 \\(${vertex}\\)，所以直接讀出頂點與極值。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612FunctionFromVertexPointSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randomJ611Coefficient({ integerOnly: true });
       const h = randInt(-4, 4);
@@ -519,12 +535,13 @@
         `簡答：\\(${eq}\\)。過程：設 \\(y=a${j612FormatShiftedX(h)}^2${formatJ611SignedConstant(k)}\\)，代入 \\((${p},${q})\\) 得 \\(${q}=a(${p - h})^2${formatJ611SignedConstant(k)}\\)，解得 \\(a=${fractionToLatex(a)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612ExtremeParameterFromConditionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = i % 2 === 0 ? randInt(1, 5) : -randInt(1, 5);
       const h = randInt(-5, 5);
@@ -548,7 +565,7 @@
         `簡答：\\(b=${b}\\)。過程：二次函數 \\(y=ax^2+bx+c\\) 的頂點 \\(x\\) 坐標為 \\(-\\frac{b}{2a}\\)。本題 \\(-\\frac{b}{2\\cdot${a}}=${h}\\)，所以 \\(b=${b}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612VertexFormExtremaMixedSet(count) {
@@ -559,18 +576,20 @@
       buildJ612ExtremeParameterFromConditionSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612BasicTranslationEquationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randomJ611Coefficient({ integerOnly: true });
       let dx = randInt(-7, 7);
@@ -583,12 +602,13 @@
         `簡答：\\(${eq}\\)。過程：由 \\(y=ax^2\\) 平移，右 \\(h\\)、上 \\(k\\) 後為 \\(y=a(x-h)^2+k\\)。本題 \\(h=${dx}\\)、\\(k=${dy}\\)，且平移不改變 \\(a\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612VertexAxisTranslationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const { a, h, k } = j612PickVertexData();
       const dx = pickNonZero(-6, 6);
@@ -602,12 +622,13 @@
         `簡答：新頂點為 \\((${newH},${newK})\\)，對稱軸為 \\(x=${newH}\\)。過程：平移只改變頂點位置，原頂點 \\((${h},${k})\\) 加上位移 \\((${dx},${dy})\\)，得到 \\((${newH},${newK})\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612TranslationReverseSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randomJ611Coefficient({ integerOnly: true });
       const h1 = randInt(-5, 5);
@@ -623,12 +644,13 @@
         `簡答：${j612MoveText(dx, dy)}。過程：比較頂點，原頂點為 \\((${h1},${k1})\\)，新頂點為 \\((${h2},${k2})\\)，位移量為 \\((${h2}-${h1},${k2}-${k1})=(${dx},${dy})\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612CongruenceSameASet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const labels = ['甲', '乙', '丙'];
     for (let i = 0; i < count; i += 1) {
       const a = randomJ611Coefficient({ integerOnly: true });
@@ -649,12 +671,13 @@
         `簡答：${answerLabels}。過程：二次函數圖形只靠平移互相重合時，開口大小與方向不變，也就是 \\(a\\) 值相同；頂點位置不同沒有關係。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612PointAfterTranslationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const x = randInt(-6, 6);
       const y = randInt(-8, 8);
@@ -665,7 +688,7 @@
         `簡答：\\((${x + dx},${y + dy})\\)。過程：圖形平移時，圖形上每一點都跟著加上相同位移量；所以 \\((x,y)\\to(x+${dx},y+${dy})\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612TranslationGraphMixedSet(count) {
@@ -677,18 +700,20 @@
       buildJ612PointAfterTranslationSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612XInterceptsCoordinateSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randomJ611Coefficient({ integerOnly: true });
       const h = randInt(-5, 5);
@@ -702,12 +727,13 @@
         `簡答：\\((${x1},0)\\)、\\((${x2},0)\\)。過程：令 \\(y=0\\)，得 \\(0=${fractionToLatex(a)}${j612FormatShiftedX(h)}^2${formatJ611SignedConstant(k)}\\)，所以 \\(${j612FormatShiftedX(h)}^2=${r * r}\\)，\\(x=${x1}\\) 或 \\(x=${x2}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612DiscriminantCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 3;
       let a = pickNonZero(-5, 5);
@@ -742,12 +768,13 @@
         `簡答：${countText}交點。過程：判別式 \\(D=b^2-4ac=${d}\\)。因為 \\(D${d > 0 ? '>0' : d === 0 ? '=0' : '<0'}\\)，所以與 \\(x\\) 軸有${countText}交點。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612VertexPositionIntersectionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 3;
       const opensUp = i % 2 === 0;
@@ -771,7 +798,7 @@
         `簡答：${countText}交點。過程：頂點為 \\((${h},${k})\\)，且圖形開口向${opensUp ? '上' : '下'}。${countText === '一個' ? '頂點剛好在 \\(x\\) 軸上，所以只相切一次。' : countText === '兩個' ? `頂點在 \\(x\\) 軸${opensUp ? '下方且開口向上' : '上方且開口向下'}，圖形會穿過 \\(x\\) 軸兩次。` : `頂點在 \\(x\\) 軸${opensUp ? '上方且開口向上' : '下方且開口向下'}，整個圖形不會碰到 \\(x\\) 軸。`}`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ612XAxisIntersectionMixedSet(count) {
@@ -781,18 +808,20 @@
       buildJ612VertexPositionIntersectionSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613NumberSumSquareExtremaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const sum = randInt(5, 25) * 2;
       const half = sum / 2;
@@ -818,12 +847,13 @@
         `簡答：\\(0\\)。過程：設較大數為 \\(x+${diff}\\)，較小數為 \\(x\\)，且 \\(x\\ge0\\)。乘積為 \\(x(x+${diff})\\)，在可行範圍 \\(x\\ge0\\) 中，端點 \\(x=0\\) 時最小，故最小值為 \\(0\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613LineDistanceSquareSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randInt(-9, 3);
       const b = randInt(a + 2, 10);
@@ -850,12 +880,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613LinearConstraintExtremaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 3;
       if (mode === 0) {
@@ -884,12 +915,13 @@
         `簡答：\\(${squareSum}\\)。過程：平方和在兩數相等時最小，所以 \\(x=y=\\frac{${total}}{2}\\)，最小值為 \\(2\\left(\\frac{${total}}{2}\\right)^2=\\frac{${total * total}}{2}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613IntervalExtremaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = i % 2 === 0 ? randInt(1, 4) : -randInt(1, 4);
       const h = randInt(-3, 5);
@@ -906,12 +938,14 @@
       ];
       const maxItem = candidates.reduce((best, item) => (item.y > best.y ? item : best), candidates[0]);
       const minItem = candidates.reduce((best, item) => (item.y < best.y ? item : best), candidates[0]);
-      questions.push(`設 \\(${left}\\le x\\le ${right}\\)，二次函數 \\(${eq}\\) 的最大值 \\(M\\) 與最小值 \\(m\\) 各為多少？`);
+      questions.push(
+        `設 \\(${left}\\le x\\le ${right}\\)，二次函數 \\(${eq}\\) 的最大值 \\(M\\) 與最小值 \\(m\\) 各為多少？`
+      );
       answers.push(
         `簡答：\\(M=${maxItem.y}\\)，\\(m=${minItem.y}\\)。過程：區間內二次函數的最大、最小值只需比較端點與區間內的頂點。本題頂點為 \\((${h},${k})\\)，再比較 \\(x=${left},${h},${right}\\) 的函數值即可。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613AlgebraExtremaMixedSet(count) {
@@ -922,18 +956,20 @@
       buildJ613IntervalExtremaSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613RectanglePerimeterAreaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const perimeter = randInt(20, 90) * 2;
       const half = perimeter / 2;
@@ -944,12 +980,13 @@
         `簡答：\\(${areaText}\\) 平方公分。過程：設長為 \\(x\\)，寬為 \\(${half}-x\\)，面積 \\(A=x(${half}-x)\\)。固定周長的矩形中，正方形面積最大，所以長、寬皆為 \\(\\frac{${half}}{2}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613FencingVariationsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 3;
       if (mode === 0) {
@@ -957,7 +994,9 @@
         const depth = fence / 4;
         const length = fence / 2;
         const area = depth * length;
-        questions.push(`用長 \\(${fence}\\) 公尺的圍籬靠著河邊圍成一個矩形菜園，河邊那一側不用圍。求可圍出的最大面積。`);
+        questions.push(
+          `用長 \\(${fence}\\) 公尺的圍籬靠著河邊圍成一個矩形菜園，河邊那一側不用圍。求可圍出的最大面積。`
+        );
         answers.push(
           `簡答：\\(${area}\\) 平方公尺。過程：設垂直河邊的邊長為 \\(x\\)，另一邊為 \\(${fence}-2x\\)，面積 \\(A=x(${fence}-2x)\\)。頂點在 \\(x=${depth}\\)，所以最大面積為 \\(${depth}\\cdot${length}=${area}\\)。`
         );
@@ -968,7 +1007,9 @@
         const depth = fence / 6;
         const width = fence / 8;
         const area = (fence * fence) / 24;
-        questions.push(`用長 \\(${fence}\\) 公尺的圍籬圍成兩個並排且大小相同的矩形養雞場，中間共用一道隔欄。求兩個養雞場的最大總面積。`);
+        questions.push(
+          `用長 \\(${fence}\\) 公尺的圍籬圍成兩個並排且大小相同的矩形養雞場，中間共用一道隔欄。求兩個養雞場的最大總面積。`
+        );
         answers.push(
           `簡答：\\(${area}\\) 平方公尺。過程：設每格深 \\(x\\)、寬 \\(y\\)，圍籬總長為 \\(3x+4y=${fence}\\)，總面積 \\(A=2xy\\)。代入 \\(y=\\frac{${fence}-3x}{4}\\) 後得到二次函數，頂點在 \\(x=${depth}\\)，\\(y=${width}\\)。`
         );
@@ -986,12 +1027,13 @@
         `簡答：\\(${area}\\) 平方公尺。過程：實際矩形周長等於圍籬長加出入口長，為 \\(${fence}+${opening}=${totalPerimeter}\\)。固定周長時矩形面積在正方形時最大，所以邊長為 \\(${side}\\)，面積為 \\(${area}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613SplitSquaresMinimumSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const length = randInt(20, 100);
       const minText = fractionToLatex(makeFraction(length * length, 32));
@@ -1000,12 +1042,13 @@
         `簡答：\\(${minText}\\) 平方公分。過程：若兩段周長分別為 \\(x\\) 與 \\(${length}-x\\)，面積和為 \\(\\left(\\frac{x}{4}\\right)^2+\\left(\\frac{${length}-x}{4}\\right)^2\\)。兩段長度相等時最小，此時每段周長為 \\(\\frac{${length}}{2}\\)，面積和為 \\(\\frac{${length}^2}{32}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613ParabolaClearanceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const height = randInt(4, 12);
       const halfWidth = randInt(3, 10);
@@ -1022,12 +1065,13 @@
         `簡答：\\(${fractionToLatex(clearance)}\\) 公尺。過程：以隧道中心底部為原點，設拋物線為 \\(y=${height}-\\frac{${height}}{${halfWidth * halfWidth}}x^2\\)。車寬 \\(${vehicleWidth}\\) 表示車頂角落在 \\(x=\\pm${vehicleHalf}\\)，代入得到高度 \\(${fractionToLatex(clearance)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613WaterChannelWidthSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const depth = randInt(4, 12);
       const width = randInt(5, 12) * 2;
@@ -1042,7 +1086,7 @@
         `簡答：\\(2\\sqrt{${fractionToLatex(newHalfSquared)}}\\) 公尺。過程：以河底為原點設 \\(y=ax^2\\)。滿水時半寬為 \\(${halfWidth}\\)，代入得 \\(${depth}=a(${halfWidth})^2\\)。新水深為 \\(${newDepth}\\)，解 \\(ax^2=${newDepth}\\)，水面寬為 \\(2|x|\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613GeometryModelingMixedSet(count) {
@@ -1054,18 +1098,20 @@
       buildJ613WaterChannelWidthSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613TicketRevenueSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const basePeople = randInt(20, 80);
       const basePrice = randInt(20, 80) * 100;
@@ -1085,12 +1131,13 @@
         `簡答：定為 \\(${bestPrice}\\) 元時收入最大。過程：設降價 \\(x\\) 次，收入 \\(R=(${basePrice}-${priceStep}x)(${basePeople}+${extraPeople}x)\\)，這是開口向下的二次函數，取頂點附近的整數 \\(x=${bestX}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613PriceProfitSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const cost = randInt(20, 90);
       const basePrice = cost + randInt(20, 80);
@@ -1110,12 +1157,13 @@
         `簡答：定為 \\(${bestPrice}\\) 元時利潤最大。過程：設降價 \\(x\\) 次，利潤 \\(P=(${basePrice}-${step}x-${cost})(${baseSales}+${salesGain}x)\\)，配方或用頂點判斷最大值位置。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613OrchardYieldSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const trees = randInt(20, 80);
       const yieldPerTree = randInt(200, 1200);
@@ -1130,19 +1178,20 @@
         `簡答：約加種 \\(${bestAdd}\\) 棵，總產量 \\(${bestTotal}\\) 顆。過程：設加種 \\(x\\) 棵，總產量 \\(T=(${trees}+x)(${yieldPerTree}-${drop}x)\\)，為開口向下的二次函數，最大值在頂點附近。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ613BusinessProductionMixedSet(count) {
     const banks = [buildJ613TicketRevenueSet, buildJ613PriceProfitSet, buildJ613OrchardYieldSet];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function j621SqrtText(value) {
@@ -1165,7 +1214,8 @@
       [9, 12, 20],
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const [length, width, height] = triples[randInt(0, triples.length - 1)];
       const diagonalSquared = length * length + width * width + height * height;
@@ -1176,7 +1226,7 @@
         `簡答：\\(${j621SqrtText(diagonalSquared)}\\) 公分。過程：空間中的三個互相垂直方向可用三維畢氏定理，體對角線 \\(d\\) 滿足 \\(d^2=${j621SquareTerm(length)}+${j621SquareTerm(width)}+${j621SquareTerm(height)}=${diagonalSquared}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ621LinePlaneDistanceSet(count) {
@@ -1189,7 +1239,8 @@
       [9, 12, 15],
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const [height, planeDistance, slant] = triples[randInt(0, triples.length - 1)];
       questions.push(
@@ -1199,7 +1250,7 @@
         `簡答：\\(${planeDistance}\\)。過程：因為 \\(AB\\perp S\\)，且 \\(BC\\) 在平面 \\(S\\) 上並通過垂足 \\(B\\)，所以 \\(AB\\perp BC\\)。在直角三角形 \\(ABC\\) 中，\\(BC=\\sqrt{${slant}^2-${height}^2}=${planeDistance}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ621ThreePerpendicularDistanceSet(count) {
@@ -1212,7 +1263,8 @@
       [9, 12, 20],
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const [height, first, second] = cases[randInt(0, cases.length - 1)];
       const distanceSquared = height * height + first * first + second * second;
@@ -1223,12 +1275,13 @@
         `簡答：\\(${j621SqrtText(distanceSquared)}\\)。過程：先在平面內得 \\(PR^2=PQ^2+QR^2\\)，再由 \\(LP\\perp S\\) 得 \\(LP\\perp PR\\)。所以 \\(LR^2=LP^2+PQ^2+QR^2=${height * height}+${first * first}+${second * second}=${distanceSquared}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ621CubeFaceCenterDistanceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const side = randInt(4, 18);
       const answerText = side % 2 === 0 ? `${side / 2}\\sqrt{2}` : `\\frac{${side}\\sqrt{2}}{2}`;
@@ -1237,7 +1290,7 @@
         `簡答：\\(${answerText}\\) 公分。過程：兩個相鄰面中心與共同稜的中點可形成等腰直角三角形，兩股皆為 \\(\\frac{${side}}{2}\\)，距離為 \\(\\sqrt{(\\frac{${side}}{2})^2+(\\frac{${side}}{2})^2}=\\frac{${side}\\sqrt{2}}{2}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ621SpatialDistanceMixedSet(count) {
@@ -1248,20 +1301,22 @@
       buildJ621CubeFaceCenterDistanceSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ621LinePlanePerpendicularLogicSet(count) {
     const lineNames = ['L', 'M', 'N', 'K'];
     const planeNames = ['S', 'P', 'Q', 'R'];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const l1 = lineNames[i % lineNames.length];
       const l2 = lineNames[(i + 1) % lineNames.length];
@@ -1288,14 +1343,15 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ621ParallelPerpendicularRelationsSet(count) {
     const planeNames = ['P', 'Q', 'R', 'S'];
     const lineNames = ['L', 'M', 'N', 'K'];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 3;
       if (mode === 0) {
@@ -1330,19 +1386,20 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ621SpatialLogicMixedSet(count) {
     const banks = [buildJ621LinePlanePerpendicularLogicSet, buildJ621ParallelPerpendicularRelationsSet];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function j621RatioText(num, den) {
@@ -1352,7 +1409,8 @@
 
   function buildJ621SolidScalingRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
         const radiusScale = randInt(2, 5);
@@ -1373,12 +1431,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ621CylinderVolumeModelSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
         const radiusA = randInt(2, 8);
@@ -1404,12 +1463,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ621CompositeSolidVolumeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
         const side = randInt(8, 20);
@@ -1433,19 +1493,20 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ621SolidVolumeRatioMixedSet(count) {
     const banks = [buildJ621SolidScalingRatioSet, buildJ621CylinderVolumeModelSet, buildJ621CompositeSolidVolumeSet];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function j622PiTerm(coefficient) {
@@ -1479,7 +1540,8 @@
       [8, 15, 17],
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const [a, b, hyp] = triples[randInt(0, triples.length - 1)];
       const height = randInt(6, 18);
@@ -1493,12 +1555,13 @@
       );
       void hyp;
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622RectPrismSurfaceVolumeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const length = randInt(3, 12);
       const width = randInt(3, 10);
@@ -1519,12 +1582,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622CylinderSurfaceVolumeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const radius = randInt(2, 9);
       const height = randInt(5, 18);
@@ -1546,7 +1610,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622BasicSurfaceVolumeMixedSet(count) {
@@ -1556,18 +1620,20 @@
       buildJ622CylinderSurfaceVolumeSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622HollowCylinderVolumeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const outer = randInt(5, 12);
       const inner = randInt(2, outer - 2);
@@ -1580,12 +1646,13 @@
         `簡答：\\(${j622PiTerm(coeff)}\\) 立方公分。過程：材料體積為外圓柱減內圓柱，\\(V=\\pi(${outer}^2-${inner}^2)\\cdot${length}=${j622PiTerm(coeff)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622PrismCylinderCompositeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
         const side = randInt(8, 18);
@@ -1612,12 +1679,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622SolidScalingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
         const scale = randInt(2, 5);
@@ -1637,24 +1705,26 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622CompositeScalingMixedSet(count) {
     const banks = [buildJ622HollowCylinderVolumeSet, buildJ622PrismCylinderCompositeSet, buildJ622SolidScalingSet];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622CuboidSurfaceShortestPathSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const length = randInt(4, 12);
       const width = randInt(3, 10);
@@ -1667,12 +1737,13 @@
         `簡答：\\(${best.text}\\) 公分。過程：展開相鄰兩個面，把路徑化為平面直線。比較 \\((l+w)^2+h^2\\)、\\((l+h)^2+w^2\\)、\\((w+h)^2+l^2\\)，最小為 \\(${best.flat}^2+${best.height}^2=${best.squared}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622CylinderSurfaceShortestPathSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const circumference = randInt(6, 24);
       const height = randInt(5, 20);
@@ -1684,24 +1755,26 @@
         `簡答：\\(${j621SqrtText(distanceSquared)}\\) 公分。過程：圓柱側面展開是長方形，寬為底面周長 \\(${circumference}\\)，高為 \\(${height}\\)，最短路徑為對角線 \\(\\sqrt{${circumference}^2+${height}^2}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622SurfaceShortestPathMixedSet(count) {
     const banks = [buildJ622CuboidSurfaceShortestPathSet, buildJ622CylinderSurfaceShortestPathSet];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622PrismCountingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const n = randInt(3, 12);
       const vertices = 2 * n;
@@ -1725,12 +1798,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622EulerFormulaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const vertices = randInt(6, 20);
       const faces = randInt(5, 14);
@@ -1747,24 +1821,26 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622PrismEulerMixedSet(count) {
     const banks = [buildJ622PrismCountingSet, buildJ622EulerFormulaSet];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622WaterDisplacementSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const baseArea = randInt(20, 150);
       const rise = randInt(2, 12);
@@ -1776,12 +1852,13 @@
         `簡答：\\(${volume}\\) 立方公分。過程：水位上升造成的體積增加等於石頭排開的水量，\\(V=\\text{底面積}\\times\\text{上升高度}=${baseArea}\\cdot${rise}=${volume}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622WaterPipeVolumeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const diameter = randInt(4, 16);
       const radius = diameter / 2;
@@ -1796,19 +1873,20 @@
         `簡答：\\(${coeffText}\\) 立方公分。過程：半徑為 \\(${radius}\\) 公分，水的體積為 \\(\\pi r^2h=\\pi\\cdot(${diameter}/2)^2\\cdot${length}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ622ContainerWaterMixedSet(count) {
     const banks = [buildJ622WaterDisplacementSet, buildJ622WaterPipeVolumeSet];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function j623PiTerm(coefficient) {
@@ -1835,7 +1913,8 @@
 
   function buildJ623SphereSectionRadiusDistanceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const [r, h, radius] = j623SphereSectionTriple();
       const mode = i % 3;
@@ -1854,12 +1933,13 @@
         answers.push(`簡答：\\(${radius}\\) 公分。過程：\\(R=\\sqrt{r^2+h^2}=\\sqrt{${r}^2+${h}^2}=${radius}\\)。`);
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623SphereSectionCircleMeasureSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const [r, h, radius] = j623SphereSectionTriple();
       if (i % 2 === 0) {
@@ -1878,12 +1958,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623SphereSectionReverseSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const [r, h, radius] = j623SphereSectionTriple();
       if (i % 2 === 0) {
@@ -1902,12 +1983,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623SphereGreatCircleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const radius = randInt(4, 15);
       if (i % 3 === 0) {
@@ -1927,7 +2009,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623SphereSectionMixedSet(count) {
@@ -1938,13 +2020,14 @@
       buildJ623SphereGreatCircleSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function j623ConeSectorPair() {
@@ -1962,7 +2045,8 @@
 
   function buildJ623ConeSectorAngleArcSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = j623ConeSectorPair();
       if (i % 3 === 0) {
@@ -1988,7 +2072,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623ConePythagoreanSet(count) {
@@ -2000,7 +2084,8 @@
       [7, 24, 25],
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const [radius, height, slant] = triples[randInt(0, triples.length - 1)];
       if (i % 3 === 0) {
@@ -2020,12 +2105,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623ConeSurfaceAreaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const radius = randInt(2, 9);
       const slant = randInt(radius + 3, radius + 16);
@@ -2054,12 +2140,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623ConeAreaRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const radius = randInt(2, 8);
       const multiplier = randInt(2, 6);
@@ -2080,7 +2167,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623ConeSurfaceMixedSet(count) {
@@ -2091,18 +2178,20 @@
       buildJ623ConeAreaRatioSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623PyramidCountingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const n = randInt(3, 18);
       const vertices = n + 1;
@@ -2125,12 +2214,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623PyramidEulerSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const vertices = randInt(5, 20);
       const faces = randInt(5, 16);
@@ -2145,12 +2235,13 @@
         answers.push(`簡答：\\(${vertices}\\) 個。過程：\\(V=E-F+2=${edges}-${faces}+2=${vertices}\\)。`);
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623PyramidReverseSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const n = randInt(3, 18);
       const vertices = n + 1;
@@ -2175,19 +2266,20 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623PyramidCountingMixedSet(count) {
     const banks = [buildJ623PyramidCountingSet, buildJ623PyramidEulerSet, buildJ623PyramidReverseSet];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function j623ProbabilityText(numerator, denominator) {
@@ -2210,7 +2302,8 @@
 
   function buildJ623SingleTrialProbabilitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const primeDice = [2, 3, 5];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -2251,12 +2344,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623CoinTreeProbabilitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const tosses = randInt(2, 4);
       const total = 2 ** tosses;
@@ -2286,12 +2380,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623DiceSumProductSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const pairs = [];
       for (let a = 1; a <= 6; a += 1) {
@@ -2334,12 +2429,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623NumberArrangementProbabilitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const digits = i % 2 === 0 ? [0, randInt(1, 4), randInt(5, 9)] : [randInt(1, 3), randInt(4, 6), randInt(7, 9)];
       const hundredsDigits = digits.filter((digit) => digit !== 0);
@@ -2373,12 +2469,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623SamplingWithWithoutReplacementSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const red = randInt(3, 8);
       const white = randInt(3, 8);
@@ -2399,12 +2496,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623TwoBagCombinationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const maxA = randInt(3, 6);
       const maxB = randInt(3, 6);
@@ -2430,12 +2528,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623AlgebraConditionProbabilitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const pairs = [];
       for (let a = 1; a <= 6; a += 1) {
@@ -2456,12 +2555,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623ComplementProbabilitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 3 === 0) {
         const attempts = randInt(2, 5);
@@ -2505,12 +2605,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623RockPaperScissorsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 3 === 0) {
         questions.push('甲、乙兩人猜拳一次，求甲獲勝的機率。');
@@ -2527,7 +2628,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623ProbabilitySingleMixedSet(count) {
@@ -2538,13 +2639,14 @@
       buildJ623NumberArrangementProbabilitySet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623ProbabilityCompoundMixedSet(count) {
@@ -2555,25 +2657,27 @@
       buildJ623ComplementProbabilitySet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ623ProbabilityGameMixedSet(count) {
     const banks = [buildJ623RockPaperScissorsSet, buildJ623CoinTreeProbabilitySet, buildJ623DiceSumProductSet];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function j631PercentText(numerator, denominator) {
@@ -2588,7 +2692,8 @@
 
   function buildJ631RelativeFrequencySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const totals = [40, 50, 60, 80, 100, 120, 200];
     for (let i = 0; i < count; i += 1) {
       const total = totals[randInt(0, totals.length - 1)];
@@ -2620,12 +2725,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631CumulativeFrequencySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const counts = [randInt(3, 8), randInt(4, 10), randInt(5, 12), randInt(4, 10), randInt(3, 8)];
       const cumulative = counts.reduce((list, value) => {
@@ -2659,12 +2765,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631ClassIntervalRuleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const width = [5, 10][randInt(0, 1)];
       const start = width === 10 ? randInt(1, 5) * 10 : randInt(4, 10) * 5;
@@ -2694,12 +2801,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631MarkRecaptureSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const markedTotal = randInt(10, 40);
       const sample = randInt(50, 160);
@@ -2713,12 +2821,13 @@
         `簡答：約 \\(${estimateText}\\) 條。過程：用比例 \\(\\frac{\\text{標記總數}}{\\text{魚總數}}\\approx\\frac{\\text{樣本中標記數}}{\\text{樣本數}}\\)，所以魚總數 \\(\\approx\\frac{${markedTotal}\\cdot${sample}}{${markedInSample}}=${estimateText}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631DataSortingCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const start = randInt(20, 60);
       const width = 10;
@@ -2733,12 +2842,13 @@
         `簡答：\\(${hits}\\)。過程：逐一檢查資料中滿足 \\(${lower}\\le x<${upper}\\) 的數值，共有 \\(${hits}\\) 個。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631MissingFrequencySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const total = randInt(40, 100);
       const counts = [randInt(3, 12), randInt(5, 16), randInt(4, 15), randInt(3, 12)];
@@ -2763,12 +2873,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631ChartTrendReadingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = [
       { label: '某市一月至六月的觀光人數', unit: '人' },
       { label: '某校一週午餐訂購數', unit: '份' },
@@ -2789,7 +2900,10 @@
       );
       const labels = ['第1期', '第2期', '第3期', '第4期', '第5期', '第6期'];
       const changes = values.slice(1).map((value, index) => value - values[index]);
-      const maxChangeIndex = changes.reduce((best, value, index) => (Math.abs(value) > Math.abs(changes[best]) ? index : best), 0);
+      const maxChangeIndex = changes.reduce(
+        (best, value, index) => (Math.abs(value) > Math.abs(changes[best]) ? index : best),
+        0
+      );
       if (i % 3 === 0) {
         const from = randInt(0, 3);
         const to = randInt(from + 1, 5);
@@ -2819,12 +2933,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631SamplingEstimatedTotalSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
         const perBox = [25, 40, 50, 60][randInt(0, 3)];
@@ -2855,7 +2970,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631FrequencyDistributionMixedSet(count) {
@@ -2870,18 +2985,20 @@
       buildJ631SamplingEstimatedTotalSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631PieAnglePercentSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const percents = [5, 10, 12.5, 15, 20, 25, 30, 40, 45];
     const angles = [36, 45, 54, 72, 90, 108, 120, 144, 162];
     for (let i = 0; i < count; i += 1) {
@@ -2900,12 +3017,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631PiePartialQuantitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const totals = [40, 50, 60, 80, 100, 200, 500, 1000];
     const percents = [6, 10, 12, 15, 20, 24, 25, 30, 40];
     for (let i = 0; i < count; i += 1) {
@@ -2926,12 +3044,13 @@
         answers.push(`簡答：\\(${total}\\) 人。過程：全體人數 \\(=\\frac{${countValue}}{${percent}\\%}=${total}\\)。`);
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631PieCompareDifferenceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const totals = [40, 100, 200, 400, 500, 1000];
     for (let i = 0; i < count; i += 1) {
       const total = totals[randInt(0, totals.length - 1)];
@@ -2941,12 +3060,13 @@
       questions.push(`在 \\(${total}\\) 人的資料中，甲項占 \\(${p1}\\%\\)，乙項占 \\(${p2}\\%\\)。求甲比乙多幾人。`);
       answers.push(`簡答：\\(${diff}\\) 人。過程：人數差 \\(=${total}\\times(${p1}\\%-${p2}\\%)=${diff}\\)。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631PieMissingAllocationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const p1 = randInt(1, 4) * 10;
       const p2 = randInt(1, 3) * 10;
@@ -2972,12 +3092,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631PiePercentilePositionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const total = [40, 60, 80, 100, 120][randInt(0, 4)];
       const percentiles = [25, 50, 75, 90];
@@ -2991,7 +3112,7 @@
         `簡答：圓心角 \\(${angle}^\\circ\\)，約第 \\(${position}\\) 筆。過程：第 \\(${p}\\) 百分位數以前占 \\(${p}\\%\\)，圓心角 \\(=360^\\circ\\times${p}\\%=${angle}^\\circ\\)，位置約 \\(${total}\\times${p}\\%=${position}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ631PieChartMixedSet(count) {
@@ -3003,13 +3124,14 @@
       buildJ631PiePercentilePositionSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function j632StatText(value) {
@@ -3040,7 +3162,8 @@
 
   function buildJ632RawMeanMedianModeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = randInt(5, 30);
       const data = [
@@ -3059,12 +3182,13 @@
         `簡答：平均數 \\(${j632MeanText(sum, data.length)}\\)，中位數 \\(${median}\\)，眾數 \\(${mode}\\)。過程：平均數看總和，\\(${sum}\\div${data.length}=${j632MeanText(sum, data.length)}\\)；資料已排序且共有 7 筆，中位數是第 4 筆；出現最多次的是 \\(${mode}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632LinearTransformStatisticsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mean = randInt(40, 80);
       const median = mean + randInt(-4, 4);
@@ -3089,12 +3213,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632WeightedAverageSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const n1 = randInt(8, 30);
       const n2 = randInt(8, 30);
@@ -3109,12 +3234,13 @@
         `簡答：\\(${j632StatText(combined)}\\) 分。過程：合併平均要用人數加權，\\(\\bar x=\\frac{${n1}\\cdot${avg1}+${n2}\\cdot${avg2}}{${n1}+${n2}}=${j632StatText(combined)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632MeanMissingValueSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const countValue = randInt(4, 7);
       const average = randInt(8, 30);
@@ -3127,12 +3253,13 @@
         `簡答：\\(${missing}\\)。過程：總和 \\(=\\text{平均數}\\times\\text{個數}=${average}\\times${countValue}=${average * countValue}\\)，已知數總和為 \\(${known.reduce((sum, value) => sum + value, 0)}\\)，所以未知數為 \\(${average * countValue}-${known.reduce((sum, value) => sum + value, 0)}=${missing}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632DataCorrectionEffectSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const countValue = randInt(20, 45);
       const oldMean = randInt(45, 80);
@@ -3147,12 +3274,13 @@
         `簡答：\\(${newMean}\\) 分。過程：只需修正總和的差，平均數改變 \\(\\frac{${correct}-${wrong}}{${countValue}}=${delta / countValue}\\)，所以新平均為 \\(${oldMean}+${delta / countValue}=${newMean}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632ArithmeticSequenceStatisticsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const lengths = [5, 9, 13];
     for (let i = 0; i < count; i += 1) {
       const length = lengths[randInt(0, lengths.length - 1)];
@@ -3167,7 +3295,7 @@
         `簡答：中位數 \\(${j632StatText(quartiles.q2)}\\)，\\(Q_1=${j632StatText(quartiles.q1)}\\)，\\(Q_3=${j632StatText(quartiles.q3)}\\)，全距 \\(${data[data.length - 1] - data[0]}\\)。過程：等差數列的中位數就是中間項；再分別看下半部與上半部的中間位置。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632CentralTendencyMixedSet(count) {
@@ -3180,18 +3308,20 @@
       buildJ632ArithmeticSequenceStatisticsSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632FiveNumberRangeIqrSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const min = randInt(10, 40);
       const q1 = min + randInt(5, 15);
@@ -3205,12 +3335,13 @@
         `簡答：全距 \\(${max - min}\\)，四分位距 \\(${q3 - q1}\\)。過程：全距 \\(=\\text{最大值}-\\text{最小值}=${max}-${min}\\)；四分位距 \\(=Q_3-Q_1=${q3}-${q1}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632RawQuartileCalculationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const start = randInt(5, 30);
       const data = [0, 2, 5, 8, 12, 16, 21, 25, 30].map((value) => start + value + randInt(0, 1));
@@ -3223,12 +3354,13 @@
         `簡答：\\(Q_1=${j632StatText(quartiles.q1)},Q_2=${j632StatText(quartiles.q2)},Q_3=${j632StatText(quartiles.q3)}\\)，四分位距 \\(${j632StatText(makeFraction(quartiles.q3.num * quartiles.q1.den - quartiles.q1.num * quartiles.q3.den, quartiles.q3.den * quartiles.q1.den))}\\)。過程：先找中位數 \\(Q_2\\)，再分別取下半部與上半部的中位數。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632FrequencyQuartilePositionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const labels = ['40～50', '50～60', '60～70', '70～80', '80～90'];
     for (let i = 0; i < count; i += 1) {
       const counts = [randInt(3, 8), randInt(5, 12), randInt(8, 16), randInt(5, 12), randInt(3, 8)];
@@ -3251,12 +3383,13 @@
         `簡答：\\(${targetName}\\) 落在 \\(${group}\\) 組。過程：\\(${targetName}\\) 約看第 \\(${targetPosition}\\) 筆資料；累積次數首次達到或超過此位置的組別就是答案。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632BoxplotFiveNumberSummarySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const min = randInt(10, 30);
       const q1 = min + randInt(4, 12);
@@ -3277,12 +3410,13 @@
         `簡答：全距 \\(${max - min}\\)，四分位距 \\(${q3 - q1}\\)，最集中的是「${smallest.name}」。過程：盒狀圖相鄰五數的距離越短，表示同樣 25% 資料越集中。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632BoxplotComparisonSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const rangeA = randInt(30, 70);
       const iqrA = randInt(10, Math.floor(rangeA / 2));
@@ -3297,12 +3431,13 @@
         `簡答：整體分散較大：${spreadWinner}；中間 50% 較集中：${concentrated}。過程：全距比較整體分散，四分位距比較中間 50% 的集中程度，四分位距越小越集中。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632PercentileRankConversionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const totals = [40, 50, 80, 100, 200, 8000];
     const prs = [25, 40, 53, 75, 82, 90, 92];
     for (let i = 0; i < count; i += 1) {
@@ -3314,12 +3449,13 @@
         `簡答：約 \\(${below}\\) 人。過程：\\(PR${pr}\\) 表示約有 \\(${pr}\\%\\) 的人不高於他，所以人數約為 \\(${total}\\times${pr}\\%=${(total * pr) / 100}\\)，取整數約 \\(${below}\\) 人。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632SortedDataPercentileSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const percentileChoices = [25, 40, 50, 60, 75, 80, 90];
     for (let i = 0; i < count; i += 1) {
       const length = [10, 12, 15, 20][randInt(0, 3)];
@@ -3348,7 +3484,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ632QuartileBoxplotMixedSet(count) {
@@ -3362,13 +3498,14 @@
       buildJ632SortedDataPercentileSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function deriveSummaryAnswerFromDetail(detail) {
@@ -3416,6 +3553,18 @@
 
     const sentence = text.split(/[。．]/)[0].trim();
     return sentence || text;
+  }
+
+  function createAnswerList(summaryAnswers) {
+    const answers = [];
+    const nativePush = Array.prototype.push;
+    answers.push = function pushAnswerWithSummary(...items) {
+      items.forEach((item) => {
+        summaryAnswers.push(deriveSummaryAnswerFromDetail(item));
+      });
+      return nativePush.apply(this, items);
+    };
+    return answers;
   }
 
   const nextConfigs = {
@@ -4573,7 +4722,7 @@
     },
   };
 
-  const bundleFingerprint = 'j6-bundle-v20260629-stats-prob-v1';
+  const bundleFingerprint = 'j6-bundle-v20260706-summary-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

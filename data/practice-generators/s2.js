@@ -1,6 +1,6 @@
 (() => {
   const store = window.formulaPracticeStore;
-  if (!store || typeof store.registerConfigs !== "function") return;
+  if (!store || typeof store.registerConfigs !== 'function') return;
 
   function randInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -194,7 +194,8 @@
 
   function buildS211SequenceFiveSubtypeMixedSet(count, fixedMode = null) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const aTerm = (index) => latexSub('a', index);
     for (let i = 0; i < count; i += 1) {
       const mode = Number.isInteger(fixedMode) ? fixedMode : i % 5;
@@ -495,7 +496,7 @@
         `簡答：\\(${aTerm(n)}=${value}\\)。過程：每次增加奇數，\\(a_n=1+3+5+\\cdots+(2n-1)=n^2\\)。代入 \\(n=${n}\\)，得 \\(${aTerm(n)}=${n}^2=${value}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS211NthFormulaValueSet(count) {
@@ -520,7 +521,8 @@
 
   function buildS211ArithmeticGeometricMixedParameterSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const aTerm = (index) => latexSub('a', index);
 
     for (let i = 0; i < count; i += 1) {
@@ -588,12 +590,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS211VisualGroupPatternSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const aTerm = (index) => latexSub('a', index);
 
     for (let i = 0; i < count; i += 1) {
@@ -662,12 +665,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS211RecurrenceTransformSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const aTerm = (index) => latexSub('a', index);
     const fracText = (frac) => formatFraction(frac.num, frac.den);
     const transformFraction = (start, steps, coeffs) => {
@@ -812,12 +816,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS211CumulativeProductRecurrenceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const aTerm = (index) => latexSub('a', index);
 
     for (let i = 0; i < count; i += 1) {
@@ -883,12 +888,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS211CombinatorialRecurrenceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const aTerm = (index) => latexSub('a', index);
     const fib = [0, 1];
     for (let i = 2; i <= 40; i += 1) fib[i] = fib[i - 1] + fib[i - 2];
@@ -948,12 +954,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS211GeometricCoordinateSequenceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const aTerm = (index) => latexSub('a', index);
     const pointText = (x, y) => `(${formatFraction(x.num, x.den)},${formatFraction(y.num, y.den)})`;
 
@@ -1014,7 +1021,7 @@
           `幾何分割與座標數列：一點 \\(P\\) 在座標平面上，\\(P_1=(1,0)\\)，之後依「上、右、下、左」循環移動，從 \\(P_{k-1}\\) 到 \\(P_k\\) 的距離為 \\(\\frac1k\\)。求 \\(P_{${n}}\\) 的座標。`
         );
         answers.push(
-          `簡答：\\(P_{${n}}=${pointText(x, y)}\\)。過程：從 \\(P_1=(1,0)\\) 開始，依序把第 2 次到第 ${n} 次的位移向量相加；水平方向與鉛直方向分開累加，可得座標為 ${pointText(x, y)}。`
+          `簡答：\\(P_{${n}}=${pointText(x, y)}\\)。過程：從 \\(P_1=(1,0)\\) 開始，依序把第 2 次到第 ${n} 次的位移向量相加；水平方向與鉛直方向分開累加，可得座標為 \\(${pointText(x, y)}\\)。`
         );
         continue;
       }
@@ -1070,7 +1077,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatIntegerRatio(a, b) {
@@ -1094,7 +1101,8 @@
 
   function buildS212SevenSubtypeMixedSet(count, fixedMode = null) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const aTerm = (index) => latexSub('a', index);
     const sTerm = (index) => latexSub('S', index);
 
@@ -1377,7 +1385,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212BasicSumFormulaSet(count) {
@@ -1445,7 +1453,8 @@
 
   function buildS212GeometricSeriesFiveSubtypeMixedSet(count, fixedMode = null) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const aTerm = (index) => latexSub('a', index);
     const sTerm = (index) => latexSub('S', index);
 
@@ -1477,7 +1486,7 @@
             `基礎參數求和。已知等比數列 \\(${aTerm(1)}=${fractionText(a1)}\\)，公比 \\(r=2\\)，求前 ${n} 項和。`
           );
           answers.push(
-            `簡答：${fractionText(sum)}。過程：\\(S_n=a_1\\frac{1-r^n}{1-r}\\)，所以 \\(S_{${n}}=${fractionText(a1)}\\cdot\\frac{1-2^{${n}}}{1-2}=${fractionText(sum)}\\)。`
+            `簡答：\\(${fractionText(sum)}\\)。過程：\\(S_n=a_1\\frac{1-r^n}{1-r}\\)，所以 \\(S_{${n}}=${fractionText(a1)}\\cdot\\frac{1-2^{${n}}}{1-2}=${fractionText(sum)}\\)。`
           );
           continue;
         }
@@ -1487,7 +1496,7 @@
           const n = randInt(5, 10);
           const sum = geometricSumFraction(a1, r, n);
           questions.push(
-            `基礎參數求和。已知等比數列首項為 ${fractionText(a1)}，公比為 2，總和為 ${fractionText(sum)}，求項數 \\(n\\)。`
+            `基礎參數求和。已知等比數列首項為 \\(${fractionText(a1)}\\)，公比為 2，總和為 \\(${fractionText(sum)}\\)，求項數 \\(n\\)。`
           );
           answers.push(
             `簡答：\\(n=${n}\\)。過程：\\(S_n=${fractionText(a1)}(2^n-1)\\)。由 \\(${fractionText(sum)}=${fractionText(a1)}(2^n-1)\\)，得 \\(2^n=${powInt(2, n)}\\)，所以 \\(n=${n}\\)。`
@@ -1513,7 +1522,7 @@
           `基礎參數求和。設等比數列 \\(${aTerm(1)}=${fractionText(a1)}\\)，\\(r=\\frac12\\)，求前 ${n} 項和。`
         );
         answers.push(
-          `簡答：${fractionText(sum)}。過程：\\(S_n=a_1\\frac{1-r^n}{1-r}\\)，所以 \\(S_{${n}}=${fractionText(a1)}\\cdot\\frac{1-(\\frac12)^{${n}}}{1-\\frac12}=${fractionText(sum)}\\)。`
+          `簡答：\\(${fractionText(sum)}\\)。過程：\\(S_n=a_1\\frac{1-r^n}{1-r}\\)，所以 \\(S_{${n}}=${fractionText(a1)}\\cdot\\frac{1-(\\frac12)^{${n}}}{1-\\frac12}=${fractionText(sum)}\\)。`
         );
         continue;
       }
@@ -1528,7 +1537,7 @@
           const sum = geometricSumFraction(a1, r, n);
           questions.push(`級數求和計算。求等比級數 \\(${formatGeometricSeriesTerms(a1, r, n)}\\) 的總和。`);
           answers.push(
-            `簡答：${fractionText(sum)}。過程：首項為 ${fractionText(a1)}，公比為 ${fractionText(r)}，末項為 ${fractionText(last)}，共有 ${n} 項。套用等比級數和公式得 \\(S_{${n}}=${fractionText(sum)}\\)。`
+            `簡答：\\(${fractionText(sum)}\\)。過程：首項為 ${fractionText(a1)}，公比為 ${fractionText(r)}，末項為 ${fractionText(last)}，共有 ${n} 項。套用等比級數和公式得 \\(S_{${n}}=${fractionText(sum)}\\)。`
           );
           continue;
         }
@@ -1539,7 +1548,7 @@
           const sum = geometricSumFraction(a1, r, n);
           questions.push(`級數求和計算。求等比級數 \\(${formatGeometricSeriesTerms(a1, r, n)}\\) 的總和。`);
           answers.push(
-            `簡答：${fractionText(sum)}。過程：此級數首項為 ${fractionText(a1)}、公比為 \\(\\frac12\\)、共 ${n} 項，所以 \\(S_{${n}}=${fractionText(a1)}\\frac{1-(\\frac12)^{${n}}}{1-\\frac12}=${fractionText(sum)}\\)。`
+            `簡答：\\(${fractionText(sum)}\\)。過程：此級數首項為 ${fractionText(a1)}、公比為 \\(\\frac12\\)、共 ${n} 項，所以 \\(S_{${n}}=${fractionText(a1)}\\frac{1-(\\frac12)^{${n}}}{1-\\frac12}=${fractionText(sum)}\\)。`
           );
           continue;
         }
@@ -1549,7 +1558,7 @@
         const sum = geometricSumFraction(a1, r, n);
         questions.push(`級數求和計算。求等比級數 \\(1+\\frac23+\\frac49+\\cdots\\) 的前 ${n} 項和。`);
         answers.push(
-          `簡答：${fractionText(sum)}。過程：首項為 1，公比為 \\(\\frac23\\)，所以 \\(S_{${n}}=\\frac{1-(\\frac23)^{${n}}}{1-\\frac23}=${fractionText(sum)}\\)。`
+          `簡答：\\(${fractionText(sum)}\\)。過程：首項為 1，公比為 \\(\\frac23\\)，所以 \\(S_{${n}}=\\frac{1-(\\frac23)^{${n}}}{1-\\frac23}=${fractionText(sum)}\\)。`
         );
         continue;
       }
@@ -1565,7 +1574,7 @@
           `分段和性質的應用。設等比級數前 ${block} 項和為 ${s1}，前 ${2 * block} 項和為 ${s2}，求前 ${3 * block} 項和。`
         );
         answers.push(
-          `簡答：${s3}。過程：等比級數每一段相同長度的和也成等比。設第二段與第一段的比為 \\(q\\)，由 \\(${s2}=${s1}(1+q)\\) 得 \\(q=${q}\\)。所以前三段和為 \\(${s1}(1+${q}+${q}^2)=${s3}\\)。`
+          `簡答：\\(${s3}\\)。過程：等比級數每一段相同長度的和也成等比。設第二段與第一段的比為 \\(q\\)，由 \\(${s2}=${s1}(1+q)\\) 得 \\(q=${q}\\)。所以前三段和為 \\(${s1}(1+${q}+${q}^2)=${s3}\\)。`
         );
         continue;
       }
@@ -1630,10 +1639,10 @@
           rebound = mulFraction(rebound, ratio);
         }
         questions.push(
-          `生活情境應用。一個球從 ${height} 公尺落下，每次著地後跳回原高度的 \\(\\frac13\\)，求第 ${bounce} 次著地時，球所經過的總路程。`
+          `生活情境應用。一個球從 \\(${height}\\) 公尺落下，每次著地後跳回原高度的 \\(\\frac13\\)，求第 ${bounce} 次著地時，球所經過的總路程。`
         );
         answers.push(
-          `簡答：${fractionText(distance)} 公尺。過程：第一次落下為 ${height} 公尺；之後每次彈起與落下成對出現，長度形成等比級數。總路程為 \\(${height}+2(${height}\\cdot\\frac13+${height}\\cdot(\\frac13)^2+\\cdots+${height}\\cdot(\\frac13)^{${bounce - 1}})=${fractionText(distance)}\\)。`
+          `簡答：\\(${fractionText(distance)}\\) 公尺。過程：第一次落下為 ${height} 公尺；之後每次彈起與落下成對出現，長度形成等比級數。總路程為 \\(${height}+2(${height}\\cdot\\frac13+${height}\\cdot(\\frac13)^2+\\cdots+${height}\\cdot(\\frac13)^{${bounce - 1}})=${fractionText(distance)}\\)。`
         );
         continue;
       }
@@ -1670,7 +1679,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212GeometricBasicSumSet(count) {
@@ -1712,7 +1721,8 @@
 
   function buildS212SigmaFiveSubtypeMixedSet(count, fixedMode = null) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const mode = Number.isInteger(fixedMode) ? fixedMode : i % 5;
@@ -1733,7 +1743,7 @@
           const value = sumCubes(upper) + upper;
           questions.push(`標準公式與範圍變換。求 \\(\\sum_{k=1}^{${upper}}(k^3+1)\\) 之總和。`);
           answers.push(
-            `簡答：${value}。過程：\\(\\sum(k^3+1)=\\sum k^3+\\sum1\\)，且 \\(\\sum_{k=1}^{n}k^3=\\left[\\frac{n(n+1)}{2}\\right]^2\\)。代入 \\(n=${upper}\\)，得 ${sumCubes(upper)}+${upper}=${value}\\)。`
+            `簡答：${value}。過程：\\(\\sum(k^3+1)=\\sum k^3+\\sum1\\)，且 \\(\\sum_{k=1}^{n}k^3=\\left[\\frac{n(n+1)}{2}\\right]^2\\)。代入 \\(n=${upper}\\)，得 \\(${sumCubes(upper)}+${upper}=${value}\\)。`
           );
           continue;
         }
@@ -1743,7 +1753,7 @@
           const value = sumSquaresRange(start, end);
           questions.push(`標準公式與範圍變換。計算 \\(${start}^2+${start + 1}^2+\\cdots+${end}^2\\) 的值。`);
           answers.push(
-            `簡答：${value}。過程：改寫為 \\(\\sum_{k=${start}}^{${end}}k^2=\\sum_{k=1}^{${end}}k^2-\\sum_{k=1}^{${start - 1}}k^2\\)。所以值為 ${sumSquares(end)}-${sumSquares(start - 1)}=${value}。`
+            `簡答：${value}。過程：改寫為 \\(\\sum_{k=${start}}^{${end}}k^2=\\sum_{k=1}^{${end}}k^2-\\sum_{k=1}^{${start - 1}}k^2\\)。所以值為 \\(${sumSquares(end)}-${sumSquares(start - 1)}=${value}\\)。`
           );
           continue;
         }
@@ -1752,7 +1762,7 @@
           const value = sumSquares(upper) + sumFirstN(upper);
           questions.push(`標準公式與範圍變換。計算 \\(\\sum_{k=1}^{${upper}} k(k+1)\\) 的值。`);
           answers.push(
-            `簡答：${value}。過程：\\(k(k+1)=k^2+k\\)，所以 \\(\\sum k(k+1)=\\sum k^2+\\sum k\\)。代入 \\(n=${upper}\\)，得 ${sumSquares(upper)}+${sumFirstN(upper)}=${value}。`
+            `簡答：${value}。過程：\\(k(k+1)=k^2+k\\)，所以 \\(\\sum k(k+1)=\\sum k^2+\\sum k\\)。代入 \\(n=${upper}\\)，得 \\(${sumSquares(upper)}+${sumFirstN(upper)}=${value}\\)。`
           );
           continue;
         }
@@ -1989,7 +1999,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212SigmaFormulaRangeSet(count) {
@@ -2036,13 +2046,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212RadicalTelescopingSet(count) {
@@ -2069,13 +2080,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212ConsecutiveProductsSet(count) {
@@ -2102,13 +2114,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212GeometricStackingSet(count) {
@@ -2135,13 +2148,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212AlgebraicVariantsSigmaSet(count) {
@@ -2168,13 +2182,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212SpecialSeriesSigmaFiveSubtypeMixedSet(count) {
@@ -2186,14 +2201,15 @@
       buildS212AlgebraicVariantsSigmaSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212RepeatingDigitsSeriesSubtypeSet(count) {
@@ -2218,7 +2234,8 @@
 
   function buildS211DifferenceMethodNonlinearSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const aTerm = (idx) => latexSub('a', idx);
 
     for (let i = 0; i < count; i += 1) {
@@ -2228,7 +2245,7 @@
         // a_{n+1} = a_n + n^2 -> a_n = a_1 + sum_{k=1}^{n-1} k^2 = a_1 + (n-1)n(2n-1)/6
         const a1 = randInt(1, 5);
         const n = randInt(4, 8);
-        const sumVal = (n - 1) * n * (2 * n - 1) / 6;
+        const sumVal = ((n - 1) * n * (2 * n - 1)) / 6;
         const an = a1 + sumVal;
         questions.push(
           `差分法求一般項。設 \\(${aTerm(1)}=${a1}\\)，\\(a_{n+1}=a_n+n^2\\ (n\\geq1)\\)，求一般項 \\(a_n\\) 並計算 \\(${aTerm(n)}\\)。`
@@ -2243,7 +2260,7 @@
         // a_{n+1} = a_n + n(n+1) -> a_n = a_1 + (n-1)n(n+1)/3
         const a1 = randInt(1, 4);
         const n = randInt(4, 7);
-        const sumVal = (n - 1) * n * (n + 1) / 3;
+        const sumVal = ((n - 1) * n * (n + 1)) / 3;
         const an = a1 + sumVal;
         questions.push(
           `差分法求一般項。設 \\(${aTerm(1)}=${a1}\\)，\\(a_{n+1}=a_n+n(n+1)\\ (n\\geq1)\\)，求一般項公式並計算 \\(${aTerm(n)}\\)。`
@@ -2293,7 +2310,7 @@
       const a1 = randInt(1, 3);
       const n = randInt(4, 6);
       // sum_{k=1}^{n-1} r^k = r(r^{n-1}-1)/(r-1)
-      const sumVal = r * (powInt(r, n - 1) - 1) / (r - 1);
+      const sumVal = (r * (powInt(r, n - 1) - 1)) / (r - 1);
       const an = a1 + sumVal;
       const rExpr = r === 2 ? '2^n' : '3^n';
       questions.push(
@@ -2304,12 +2321,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212ReverseNFromSumSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -2319,7 +2337,7 @@
         const a1 = randInt(1, 5);
         const d = [2, 3, 4][randInt(0, 2)];
         const n0 = [8, 10, 12, 14, 15][randInt(0, 4)];
-        const C = n0 * (2 * a1 + (n0 - 1) * d) / 2;
+        const C = (n0 * (2 * a1 + (n0 - 1) * d)) / 2;
         // quadratic: d*n^2 + (2a1-d)*n - 2C = 0
         const coefB = 2 * a1 - d;
         const discr = coefB * coefB + 8 * d * C;
@@ -2342,7 +2360,7 @@
         const a = [2, 3, 4][randInt(0, 2)];
         const b = randInt(1, 4);
         const n0 = [8, 9, 10, 11, 12][randInt(0, 4)];
-        const C = a * n0 * (n0 + 1) / 2 + b * n0;
+        const C = (a * n0 * (n0 + 1)) / 2 + b * n0;
         // a*n^2 + (a+2b)*n - 2C = 0 (after *2)
         const coefA = a;
         const coefB = a + 2 * b;
@@ -2350,9 +2368,7 @@
         const sqrtD = Math.round(Math.sqrt(discr));
         const aStr = a === 1 ? 'k' : `${a}k`;
         const bPart = `+${b}`;
-        questions.push(
-          `反求項數。若 \\(\\sum_{k=1}^{n}(${aStr}${bPart})=${C}\\)，求 \\(n\\)。`
-        );
+        questions.push(`反求項數。若 \\(\\sum_{k=1}^{n}(${aStr}${bPart})=${C}\\)，求 \\(n\\)。`);
         answers.push(
           `簡答：\\(n=${n0}\\)。過程：\\(\\sum_{k=1}^{n}(${aStr}${bPart})=${a}\\cdot\\dfrac{n(n+1)}{2}+${b}n\\)，整理（兩邊乘 2）得 \\(${coefA}n^2+${coefB}n-${2 * C}=0\\)。判別式 \\(\\Delta=${discr}\\)，取正根 \\(n=\\dfrac{-${coefB}+${sqrtD}}{${2 * coefA}}=${n0}\\)。`
         );
@@ -2363,9 +2379,7 @@
         // sum_{k=1}^{n}(2k-1) = n^2 = C, find n = sqrt(C)
         const n0 = [9, 10, 12, 13, 15, 16, 20][randInt(0, 6)];
         const C = n0 * n0;
-        questions.push(
-          `反求項數（奇數求和）。奇數數列 \\(1+3+5+\\cdots+(2n-1)=${C}\\)，求 \\(n\\)。`
-        );
+        questions.push(`反求項數（奇數求和）。奇數數列 \\(1+3+5+\\cdots+(2n-1)=${C}\\)，求 \\(n\\)。`);
         answers.push(
           `簡答：\\(n=${n0}\\)。過程：前 \\(n\\) 個奇數之和公式為 \\(\\sum_{k=1}^{n}(2k-1)=n^2\\)，所以 \\(n^2=${C}\\)，解得 \\(n=${n0}\\)。`
         );
@@ -2375,12 +2389,10 @@
       if (mode === 3) {
         // sum_{k=1}^{n}k = n(n+1)/2 = C, find n
         const n0 = [9, 10, 12, 14, 15, 20][randInt(0, 5)];
-        const C = n0 * (n0 + 1) / 2;
+        const C = (n0 * (n0 + 1)) / 2;
         const discr = 1 + 8 * C;
         const sqrtD = Math.round(Math.sqrt(discr));
-        questions.push(
-          `反求項數（自然數求和）。若 \\(1+2+3+\\cdots+n=${C}\\)，求 \\(n\\)。`
-        );
+        questions.push(`反求項數（自然數求和）。若 \\(1+2+3+\\cdots+n=${C}\\)，求 \\(n\\)。`);
         answers.push(
           `簡答：\\(n=${n0}\\)。過程：\\(\\dfrac{n(n+1)}{2}=${C}\\)，整理得 \\(n^2+n-${2 * C}=0\\)。判別式 \\(\\Delta=1+${8 * C}=${discr}\\)，取正根 \\(n=\\dfrac{-1+${sqrtD}}{2}=${n0}\\)。`
         );
@@ -2392,20 +2404,19 @@
       const n0 = [5, 6, 7][randInt(0, 2)];
       const C = (powInt(r, n0) - 1) / (r - 1);
       const rN0 = powInt(r, n0);
-      questions.push(
-        `反求項數（等比級數）。若 \\(1+${r}+${r}^2+\\cdots+${r}^{n-1}=${C}\\)，求 \\(n\\)。`
-      );
+      questions.push(`反求項數（等比級數）。若 \\(1+${r}+${r}^2+\\cdots+${r}^{n-1}=${C}\\)，求 \\(n\\)。`);
       answers.push(
         `簡答：\\(n=${n0}\\)。過程：等比級數和 \\(\\dfrac{${r}^n-1}{${r}-1}=${C}\\)，所以 \\(${r}^n-1=${C * (r - 1)}\\)，得 \\(${r}^n=${rN0}\\)。由此可得 \\(n=${n0}\\)。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212NonStandardSigmaLimitsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -2415,9 +2426,7 @@
         const r = [2, 3][randInt(0, 1)];
         const n = randInt(5, 8);
         const total = (powInt(r, n + 1) - 1) / (r - 1);
-        questions.push(
-          `非標準下界的 Sigma。計算 \\(\\sum_{k=0}^{${n}}${r}^k\\)。`
-        );
+        questions.push(`非標準下界的 Sigma。計算 \\(\\sum_{k=0}^{${n}}${r}^k\\)。`);
         answers.push(
           `簡答：${total}。過程：下界從 \\(k=0\\) 開始，包含 \\(${r}^0=1\\) 這一項，共有 ${n + 1} 項。等比級數公式：\\(\\sum_{k=0}^{n}r^k=\\dfrac{r^{n+1}-1}{r-1}\\)，代入 \\(r=${r},n=${n}\\)，得 \\(\\dfrac{${r}^{${n + 1}}-1}{${r - 1}}=${total}\\)。`
         );
@@ -2431,15 +2440,13 @@
         const m = [2, 3][randInt(0, 1)];
         const n = [10, 12, 15][randInt(0, 2)];
         // full sum: a*n(n+1)/2 + b*n
-        const fullSum = a * n * (n + 1) / 2 + b * n;
+        const fullSum = (a * n * (n + 1)) / 2 + b * n;
         // prefix sum from 1 to m-1: a*(m-1)*m/2 + b*(m-1)
-        const partSum = a * (m - 1) * m / 2 + b * (m - 1);
+        const partSum = (a * (m - 1) * m) / 2 + b * (m - 1);
         const result = fullSum - partSum;
         const aStr = a === 1 ? 'k' : `${a}k`;
         const bPart = `+${b}`;
-        questions.push(
-          `非標準下界的 Sigma。計算 \\(\\sum_{k=${m}}^{${n}}(${aStr}${bPart})\\)。`
-        );
+        questions.push(`非標準下界的 Sigma。計算 \\(\\sum_{k=${m}}^{${n}}(${aStr}${bPart})\\)。`);
         answers.push(
           `簡答：${result}。過程：拆分為 \\(\\sum_{k=1}^{${n}}(${aStr}${bPart})-\\sum_{k=1}^{${m - 1}}(${aStr}${bPart})\\)。前者 \\(=${fullSum}\\)，後者 \\(=${partSum}\\)，差為 \\(${result}\\)。`
         );
@@ -2449,7 +2456,7 @@
       if (mode === 2) {
         // sum_{k=n+1}^{2n} k = n(3n+1)/2
         const n = [5, 8, 10, 12][randInt(0, 3)];
-        const result = n * (3 * n + 1) / 2;
+        const result = (n * (3 * n + 1)) / 2;
         questions.push(
           `非標準上下界的 Sigma。計算 \\(\\sum_{k=${n + 1}}^{${2 * n}}k=${n + 1}+${n + 2}+\\cdots+${2 * n}\\)。`
         );
@@ -2464,8 +2471,8 @@
         const m = [3, 4, 5][randInt(0, 2)];
         const n = [12, 15, 20][randInt(0, 2)];
         // g(n) = sum_{k=1}^{n}(3k-1) = 3n(n+1)/2 - n = n(3n+1)/2
-        const gn = n * (3 * n + 1) / 2;
-        const gm = m * (3 * m + 1) / 2;
+        const gn = (n * (3 * n + 1)) / 2;
+        const gm = (m * (3 * m + 1)) / 2;
         const result = gn - gm;
         questions.push(
           `應用已知公式求部分和。已知 \\(\\sum_{k=1}^{n}(3k-1)=\\dfrac{n(3n+1)}{2}\\)，求 \\(\\sum_{k=${m + 1}}^{${n}}(3k-1)\\)。`
@@ -2481,23 +2488,22 @@
       const b = randInt(0, 3);
       const n = [8, 10, 12, 15][randInt(0, 3)];
       // sum_{k=0}^{n-1}(ak+b) = a*(n-1)*n/2 + b*n
-      const result = a * (n - 1) * n / 2 + b * n;
+      const result = (a * (n - 1) * n) / 2 + b * n;
       const aStr = a === 1 ? 'k' : `${a}k`;
       const bPart = b === 0 ? '' : `+${b}`;
-      questions.push(
-        `指標從 0 開始的 Sigma。計算 \\(\\sum_{k=0}^{${n - 1}}(${aStr}${bPart})\\)。`
-      );
+      questions.push(`指標從 0 開始的 Sigma。計算 \\(\\sum_{k=0}^{${n - 1}}(${aStr}${bPart})\\)。`);
       answers.push(
-        `簡答：${result}。過程：令 \\(j=k+1\\)，則 \\(\\sum_{k=0}^{n-1}(ak+b)=\\sum_{j=1}^{n}(a(j-1)+b)=a\\cdot\\dfrac{(n-1)n}{2}+bn\\)。代入 \\(a=${a},b=${b},n=${n}\\)，得 \\(${a}\\cdot${(n - 1) * n / 2}+${b}\\cdot${n}=${result}\\)。`
+        `簡答：${result}。過程：令 \\(j=k+1\\)，則 \\(\\sum_{k=0}^{n-1}(ak+b)=\\sum_{j=1}^{n}(a(j-1)+b)=a\\cdot\\dfrac{(n-1)n}{2}+bn\\)。代入 \\(a=${a},b=${b},n=${n}\\)，得 \\(${a}\\cdot${((n - 1) * n) / 2}+${b}\\cdot${n}=${result}\\)。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS211SequenceTransformationClassificationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const aTerm = (idx) => latexSub('a', idx);
     const bTerm = (idx) => latexSub('b', idx);
 
@@ -2564,12 +2570,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS211RepeatedBlockSequenceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function groupOfIndex(index) {
       return Math.ceil((Math.sqrt(8 * index + 1) - 1) / 2);
@@ -2578,8 +2585,8 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 4;
       const group = randInt(5, 14);
-      const left = group * (group - 1) / 2 + 1;
-      const right = group * (group + 1) / 2;
+      const left = (group * (group - 1)) / 2 + 1;
+      const right = (group * (group + 1)) / 2;
 
       if (mode === 0) {
         const index = randInt(left, right);
@@ -2601,7 +2608,7 @@
       }
 
       if (mode === 2) {
-        const total = group * (group + 1) * (2 * group + 1) / 6;
+        const total = (group * (group + 1) * (2 * group + 1)) / 6;
         questions.push(`同一數列中，求前 \\(${right}\\) 項的和。`);
         answers.push(
           `簡答：${total}。過程：前 ${right} 項剛好到數字 ${group} 結束，總和為 \\(1^2+2^2+\\cdots+${group}^2=\\dfrac{${group}(${group}+1)(2\\cdot${group}+1)}{6}=${total}\\)。`
@@ -2611,7 +2618,7 @@
 
       const extra = randInt(1, group);
       const index = left + extra - 1;
-      const previousSum = (group - 1) * group * (2 * group - 1) / 6;
+      const previousSum = ((group - 1) * group * (2 * group - 1)) / 6;
       const partial = previousSum + extra * group;
       questions.push(`同一數列中，求前 \\(${index}\\) 項的和。`);
       answers.push(
@@ -2619,18 +2626,19 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212ConsecutiveCubeRangeSumSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const start = randInt(4, 15);
       const end = start + randInt(5, 12);
-      const sumToEnd = (end * (end + 1) / 2) ** 2;
-      const before = ((start - 1) * start / 2) ** 2;
+      const sumToEnd = ((end * (end + 1)) / 2) ** 2;
+      const before = (((start - 1) * start) / 2) ** 2;
       const result = sumToEnd - before;
       questions.push(`利用立方和公式，計算 \\(${start}^3+${start + 1}^3+\\cdots+${end}^3\\)。`);
       answers.push(
@@ -2638,12 +2646,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212GeometricPartialSumExtensionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const n = randInt(3, 8);
@@ -2659,12 +2668,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS213InductionSumStepSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const a = randInt(2, 6);
@@ -2681,12 +2691,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS213InductionDivisibilityStepSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const m = [3, 5, 7, 11][randInt(0, 3)];
@@ -2703,12 +2714,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS213InductionRecurrenceConjectureSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const r = [2, 3][randInt(0, 1)];
@@ -2726,7 +2738,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function s21FactorText(root) {
@@ -2736,7 +2748,8 @@
 
   function buildS211ArithmeticCommonTermsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const d1 = [3, 4, 5, 6][randInt(0, 3)];
@@ -2748,7 +2761,7 @@
       const a1 = firstCommon - randInt(0, 2) * d1;
       const b1 = firstCommon - randInt(0, 2) * d2;
       const limit = lastCommon + randInt(0, step - 1);
-      const sum = commonCount * (firstCommon + lastCommon) / 2;
+      const sum = (commonCount * (firstCommon + lastCommon)) / 2;
 
       if (i % 3 === 0) {
         questions.push(
@@ -2780,12 +2793,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS211GeometricProductSymmetrySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const aTerm = (idx) => latexSub('a', idx);
 
     for (let i = 0; i < count; i += 1) {
@@ -2815,7 +2829,7 @@
         const aCenter = [2, 3, 4, 6][randInt(0, 3)];
         const value = aCenter ** 2;
         questions.push(
-          `正項等比數列中，若 \\(${aTerm(center - 2)}\\cdot${aTerm(center + 2)}=${value}\\)，求 \\(${aTerm(center)}\\)。`
+          `正項等比數列中，若 \\(${aTerm(center - 2)}\\cdot ${aTerm(center + 2)}=${value}\\)，求 \\(${aTerm(center)}\\)。`
         );
         answers.push(
           `簡答：\\(${aTerm(center)}=${aCenter}\\)。過程：等比數列的對稱乘積滿足 \\(a_{${center - 2}}a_{${center + 2}}=a_{${center}}^2\\)。又各項為正，所以 \\(${aTerm(center)}=\\sqrt{${value}}=${aCenter}\\)。`
@@ -2829,7 +2843,7 @@
         const midValue = [2, 3, 5][randInt(0, 2)];
         const product = midValue ** n;
         questions.push(
-          `正項等比數列共有 ${n} 項，且中間項 \\(${aTerm(center)}=${midValue}\\)。求 \\(a_1a_2\\cdots a_{${n}}\\)。`
+          `正項等比數列共有 ${n} 項，且中間項 \\(${aTerm(center)}=${midValue}\\)。求 \\(a_1 a_2\\cdots a_{${n}}\\)。`
         );
         answers.push(
           `簡答：${product}。過程：首末對稱的乘積都等於中間項平方，全部 ${n} 項的乘積等於 \\(a_{${center}}^{${n}}=${midValue}^{${n}}=${product}\\)。`
@@ -2861,19 +2875,20 @@
       const aN = a1 * powInt(r, n - 1);
       const product = a1 * aN;
       questions.push(
-        `等比數列共有 ${n} 項，首項為 ${a1}，末項為 ${aN}。求 \\(a_1a_n\\)、\\(a_2a_{n-1}\\) 是否相等，並求其值。`
+        `等比數列共有 ${n} 項，首項為 ${a1}，末項為 ${aN}。求 \\(a_1 a_n\\)、\\(a_2a_{n-1}\\) 是否相等，並求其值。`
       );
       answers.push(
-        `簡答：相等，值為 ${product}。過程：等比數列首末對稱兩項的下標和相同，所以 \\(a_1a_n=a_2a_{n-1}=\\cdots\\)。本題 \\(a_1a_n=${a1}\\cdot${aN}=${product}\\)。`
+        `簡答：相等，值為 ${product}。過程：等比數列首末對稱兩項的下標和相同，所以 \\(a_1 a_n=a_2a_{n-1}=\\cdots\\)。本題 \\(a_1 a_n=${a1}\\cdot${aN}=${product}\\)。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS211ArithmeticGeometricBridgeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const mode = i % 4;
@@ -2929,12 +2944,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS211PrefixProductTermSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const aTerm = (idx) => latexSub('a', idx);
 
     for (let i = 0; i < count; i += 1) {
@@ -2942,12 +2958,10 @@
 
       if (mode === 0) {
         const n = randInt(4, 9);
-        const target = n * n / ((n - 1) * (n - 1));
-        questions.push(
-          `數列 \\(\\langle a_n\\rangle\\) 滿足 \\(a_1a_2\\cdots a_n=n^2\\)。求 \\(${aTerm(n)}\\)。`
-        );
+        const target = (n * n) / ((n - 1) * (n - 1));
+        questions.push(`數列 \\(\\langle a_n\\rangle\\) 滿足 \\(a_1 a_2\\cdots a_n=n^2\\)。求 \\(${aTerm(n)}\\)。`);
         answers.push(
-          `簡答：\\(${aTerm(n)}=${formatFraction(n * n, (n - 1) * (n - 1))}\\)。過程：\\(a_n=\\dfrac{a_1a_2\\cdots a_n}{a_1a_2\\cdots a_{n-1}}=\\dfrac{n^2}{(n-1)^2}\\)。代入 \\(n=${n}\\)，得 \\(${formatFraction(n * n, (n - 1) * (n - 1))}\\)。`
+          `簡答：\\(${aTerm(n)}=${formatFraction(n * n, (n - 1) * (n - 1))}\\)。過程：\\(a_n=\\dfrac{a_1 a_2\\cdots a_n}{a_1 a_2\\cdots a_{n-1}}=\\dfrac{n^2}{(n-1)^2}\\)。代入 \\(n=${n}\\)，得 \\(${formatFraction(n * n, (n - 1) * (n - 1))}\\)。`
         );
         continue;
       }
@@ -2955,7 +2969,7 @@
       if (mode === 1) {
         const n = randInt(4, 8);
         questions.push(
-          `數列 \\(\\langle a_n\\rangle\\) 滿足 \\(a_1a_2\\cdots a_n=2^n\\cdot n\\)。求 \\(${aTerm(n)}\\)。`
+          `數列 \\(\\langle a_n\\rangle\\) 滿足 \\(a_1 a_2\\cdots a_n=2^n\\cdot n\\)。求 \\(${aTerm(n)}\\)。`
         );
         answers.push(
           `簡答：\\(${aTerm(n)}=${formatFraction(2 * n, n - 1)}\\)。過程：\\(a_n=\\dfrac{2^n n}{2^{n-1}(n-1)}=\\dfrac{2n}{n-1}\\)。代入 \\(n=${n}\\)，得 \\(${formatFraction(2 * n, n - 1)}\\)。`
@@ -2965,23 +2979,17 @@
 
       if (mode === 2) {
         const n = randInt(5, 10);
-        questions.push(
-          `數列 \\(\\langle a_n\\rangle\\) 滿足 \\(a_1a_2\\cdots a_n=n!\\)。求 \\(${aTerm(n)}\\)。`
-        );
-        answers.push(
-          `簡答：\\(${aTerm(n)}=${n}\\)。過程：\\(a_n=\\dfrac{n!}{(n-1)!}=n\\)，所以第 ${n} 項為 ${n}。`
-        );
+        questions.push(`數列 \\(\\langle a_n\\rangle\\) 滿足 \\(a_1 a_2\\cdots a_n=n!\\)。求 \\(${aTerm(n)}\\)。`);
+        answers.push(`簡答：\\(${aTerm(n)}=${n}\\)。過程：\\(a_n=\\dfrac{n!}{(n-1)!}=n\\)，所以第 ${n} 項為 ${n}。`);
         continue;
       }
 
       if (mode === 3) {
         const n = randInt(4, 8);
-        const a = n * n / ((n - 1) * (n - 1));
-        const b = (n + 2) * (n + 2) / ((n + 1) * (n + 1));
+        const a = (n * n) / ((n - 1) * (n - 1));
+        const b = ((n + 2) * (n + 2)) / ((n + 1) * (n + 1));
         const product = makeFraction(n * n * (n + 2) * (n + 2), (n - 1) * (n - 1) * (n + 1) * (n + 1));
-        questions.push(
-          `若 \\(a_1a_2\\cdots a_n=n^2\\)，求 \\(${aTerm(n)}\\cdot${aTerm(n + 2)}\\)。`
-        );
+        questions.push(`若 \\(a_1 a_2\\cdots a_n=n^2\\)，求 \\(${aTerm(n)}\\cdots ${aTerm(n + 2)}\\)。`);
         answers.push(
           `簡答：\\(${formatFraction(product.num, product.den)}\\)。過程：\\(a_k=\\dfrac{k^2}{(k-1)^2}\\)。因此 \\(${aTerm(n)}=${formatFraction(n * n, (n - 1) * (n - 1))}\\)，\\(${aTerm(n + 2)}=${formatFraction((n + 2) * (n + 2), (n + 1) * (n + 1))}\\)，相乘得答案。`
         );
@@ -2989,20 +2997,19 @@
       }
 
       const n = randInt(4, 8);
-      questions.push(
-        `數列 \\(\\langle a_n\\rangle\\) 滿足 \\(a_1a_2\\cdots a_n=n(n+1)\\)。求一般項 \\(a_n\\)。`
-      );
+      questions.push(`數列 \\(\\langle a_n\\rangle\\) 滿足 \\(a_1 a_2\\cdots a_n=n(n+1)\\)。求一般項 \\(a_n\\)。`);
       answers.push(
         `簡答：\\(a_n=\\frac{n+1}{n-1}\\ (n\\ge2)\\)，且 \\(a_1=2\\)。過程：當 \\(n\\ge2\\)，\\(a_n=\\dfrac{n(n+1)}{(n-1)n}=\\dfrac{n+1}{n-1}\\)。例如 \\(${aTerm(n)}=${formatFraction(n + 1, n - 1)}\\)。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS212ArithmeticEndBlockCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const m = randInt(3, 5);
@@ -3043,12 +3050,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS213PeriodicRemainderSequenceSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function powMod(base, exponent, mod) {
       let result = 1 % mod;
@@ -3097,7 +3105,9 @@
         const cycle = cycleFor(base, mod);
         const full = Math.floor(n / cycle.length);
         const rem = n % cycle.length;
-        const sum = full * cycle.reduce((acc, value) => acc + value, 0) + cycle.slice(0, rem).reduce((acc, value) => acc + value, 0);
+        const sum =
+          full * cycle.reduce((acc, value) => acc + value, 0) +
+          cycle.slice(0, rem).reduce((acc, value) => acc + value, 0);
         questions.push(`設 \\(a_n\\) 為 \\(${base}^n\\) 的個位數，求 \\(a_1+a_2+\\cdots+a_{${n}}\\)。`);
         answers.push(
           `簡答：${sum}。過程：個位數循環為 ${cycle.join('，')}，一輪和為 ${cycle.reduce((acc, value) => acc + value, 0)}，週期 ${cycle.length}。前 ${n} 項包含 ${full} 輪又 ${rem} 項，所以總和為 ${sum}。`
@@ -3138,7 +3148,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function combinationCount(n, r) {
@@ -3193,7 +3203,8 @@
 
   function buildS221InclusionExclusionApplicationsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -3274,12 +3285,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221CompetitionProbabilityPathsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -3341,12 +3353,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221RouteSelectionCountingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -3414,12 +3427,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221DigitFormationCountingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -3478,12 +3492,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221MultipleSurveyCountingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -3559,7 +3574,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221CountingApplicationsFiveSubtypeMixedSet(count) {
@@ -3571,14 +3586,15 @@
       buildS221MultipleSurveyCountingSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221InclusionExclusionApplicationsSubtypeSet(count) {
@@ -3633,7 +3649,8 @@
 
   function buildS221PolynomialExpansionTermCountingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -3698,12 +3715,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221DivisorCountingConditionsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -3714,9 +3732,9 @@
         const factors = primeFactorize(n);
         const countD = divisorCountFromFactors(factors);
         const sumD = divisorSumFromFactors(factors);
-        questions.push(`求 ${n} 的正因數個數及其總和。`);
+        questions.push(`求 $${n}$ 的正因數個數及其總和。`);
         answers.push(
-          `簡答：正因數 ${countD} 個，總和 ${sumD}。過程：${n}=${formatPrimeFactorization(factors)}。正因數個數為各指數加 1 後相乘，得 ${countD} 個；正因數總和為各質因數等比和相乘，得 ${sumD}。`
+          `簡答：正因數 $${countD}$ 個，總和 $${sumD}$。過程：\\(${n}=${formatPrimeFactorization(factors)}\\)。正因數個數為各指數加 $1$ 後相乘，得 $${countD}$ 個；正因數總和為各質因數等比和相乘，得 $${sumD}$。`
         );
         continue;
       }
@@ -3726,9 +3744,9 @@
         const m = [12, 18, 20][cycle % 3];
         const factors = primeFactorize(n);
         const result = countDivisorsMatching(factors, (d) => d % m === 0);
-        questions.push(`求 ${n} 的正因數中，為 ${m} 的倍數者共有多少個？`);
+        questions.push(`求 $${n}$ 的正因數中，為 $${m}$ 的倍數者共有多少個？`);
         answers.push(
-          `簡答：${result} 個。過程：先將 ${n} 分解為 ${formatPrimeFactorization(factors)}。正因數若要是 ${m} 的倍數，必須至少含有 ${m} 的質因數需求；把符合條件的指數選擇數相乘，可得 ${result} 個。`
+          `簡答：$${result}$ 個。過程：先將 $${n}$ 分解為 \\(${formatPrimeFactorization(factors)}\\)。正因數若要是 $${m}$ 的倍數，必須至少含有 $${m}$ 的質因數需求；把符合條件的指數選擇數相乘，可得 $${result}$ 個。`
         );
         continue;
       }
@@ -3737,9 +3755,9 @@
         const n = [1200, 1800, 2700][cycle % 3];
         const factors = primeFactorize(n);
         const result = countDivisorsMatching(factors, (d) => Number.isInteger(Math.sqrt(d)));
-        questions.push(`求 ${n} 的正因數中，是完全平方數者共有多少個？`);
+        questions.push(`求 $${n}$ 的正因數中，是完全平方數者共有多少個？`);
         answers.push(
-          `簡答：${result} 個。過程：完全平方數的每個質因數指數都必須是偶數。把 ${n}=${formatPrimeFactorization(factors)} 中每個指數可取的偶數次方數量相乘，即得 ${result} 個。`
+          `簡答：$${result}$ 個。過程：完全平方數的每個質因數指數都必須是偶數。把 \\(${n}=${formatPrimeFactorization(factors)}\\) 中每個指數可取的偶數次方數量相乘，即得 $${result}$ 個。`
         );
         continue;
       }
@@ -3756,7 +3774,7 @@
           `設 \\(N=2^{${powers.a}}\\cdot3^{${powers.b}}\\cdot5^{${powers.c}}\\)，求 \\(N\\) 的正因數中，為偶數但不是 5 的倍數者共有多少個？`
         );
         answers.push(
-          `簡答：${powers.a * (powers.b + 1)} 個。過程：偶數表示 2 的指數可取 1 到 ${powers.a}，共有 ${powers.a} 種；不是 5 的倍數表示 5 的指數只能取 0；3 的指數可取 0 到 ${powers.b}，共有 ${powers.b + 1} 種。因此共有 ${powers.a}\\times${powers.b + 1}\\times1=${powers.a * (powers.b + 1)} 個。全部正因數則有 ${total} 個，這可作為檢查。`
+          `簡答：\\(${powers.a * (powers.b + 1)}\\) 個。過程：偶數表示 2 的指數可取 1 到 ${powers.a}，共有 ${powers.a} 種；不是 5 的倍數表示 5 的指數只能取 0；3 的指數可取 0 到 ${powers.b}，共有 ${powers.b + 1} 種。因此共有 \\(${powers.a}\\times${powers.b + 1}\\times1=${powers.a * (powers.b + 1)}\\) 個。全部正因數則有 $${total}$ 個，這可作為檢查。`
         );
         continue;
       }
@@ -3770,12 +3788,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221RouteRestrictionCountingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -3847,12 +3866,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221RestrictedDigitCountingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -3913,12 +3933,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221RegionColoringCountingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
@@ -3982,7 +4003,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221AdvancedCountingFiveSubtypeMixedSet(count) {
@@ -3994,14 +4015,15 @@
       buildS221RegionColoringCountingSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221PolynomialExpansionTermCountingSubtypeSet(count) {
@@ -4048,28 +4070,94 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222IdenticalItemsPermutationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     const wordBank = [
-      { word: 'SUCCESS', n: 7, repMap: [['S', 3], ['C', 2]] },
-      { word: 'MISSISSIPPI', n: 11, repMap: [['I', 4], ['S', 4], ['P', 2]] },
-      { word: 'COMMITTEE', n: 9, repMap: [['M', 2], ['T', 2], ['E', 2]] },
-      { word: 'STATISTICS', n: 10, repMap: [['S', 3], ['T', 3], ['I', 2]] },
-      { word: 'BANANA', n: 6, repMap: [['A', 3], ['N', 2]] },
-      { word: 'ARRANGEMENT', n: 11, repMap: [['A', 2], ['R', 2], ['N', 2], ['E', 2]] },
-      { word: 'TENNESSEE', n: 9, repMap: [['E', 4], ['N', 2], ['S', 2]] },
-      { word: 'ENGINEERING', n: 11, repMap: [['E', 3], ['N', 3], ['G', 2], ['I', 2]] },
+      {
+        word: 'SUCCESS',
+        n: 7,
+        repMap: [
+          ['S', 3],
+          ['C', 2],
+        ],
+      },
+      {
+        word: 'MISSISSIPPI',
+        n: 11,
+        repMap: [
+          ['I', 4],
+          ['S', 4],
+          ['P', 2],
+        ],
+      },
+      {
+        word: 'COMMITTEE',
+        n: 9,
+        repMap: [
+          ['M', 2],
+          ['T', 2],
+          ['E', 2],
+        ],
+      },
+      {
+        word: 'STATISTICS',
+        n: 10,
+        repMap: [
+          ['S', 3],
+          ['T', 3],
+          ['I', 2],
+        ],
+      },
+      {
+        word: 'BANANA',
+        n: 6,
+        repMap: [
+          ['A', 3],
+          ['N', 2],
+        ],
+      },
+      {
+        word: 'ARRANGEMENT',
+        n: 11,
+        repMap: [
+          ['A', 2],
+          ['R', 2],
+          ['N', 2],
+          ['E', 2],
+        ],
+      },
+      {
+        word: 'TENNESSEE',
+        n: 9,
+        repMap: [
+          ['E', 4],
+          ['N', 2],
+          ['S', 2],
+        ],
+      },
+      {
+        word: 'ENGINEERING',
+        n: 11,
+        repMap: [
+          ['E', 3],
+          ['N', 3],
+          ['G', 2],
+          ['I', 2],
+        ],
+      },
     ];
     const colorOptions = [
       ['紅', '藍', '白'],
@@ -4085,7 +4173,9 @@
         const idx = randInt(0, wordBank.length - 1);
         const { word, n, repMap } = wordBank[idx];
         let denom = 1;
-        repMap.forEach(([, k]) => { denom *= factorialInt(k); });
+        repMap.forEach(([, k]) => {
+          denom *= factorialInt(k);
+        });
         const total = factorialInt(n) / denom;
         const denomStr = repMap.map(([, k]) => `${k}!`).join('\\cdot');
         const repDesc = repMap.map(([l, k]) => `${l} 有 ${k} 個`).join('、');
@@ -4105,20 +4195,20 @@
         counts[1] = Math.max(counts[1], 2);
         const totalFlags = counts.reduce((s, c) => s + c, 0);
         let denom = 1;
-        counts.forEach(k => { denom *= factorialInt(k); });
+        counts.forEach((k) => {
+          denom *= factorialInt(k);
+        });
         const total = factorialInt(totalFlags) / denom;
-        const denomStr = counts.map(k => `${k}!`).join('\\cdot');
+        const denomStr = counts.map((k) => `${k}!`).join('\\cdot');
         const colorDesc = colors.map((c, j) => `${c}旗 ${counts[j]} 面`).join('、');
-        questions.push(
-          `有${colorDesc}，共 ${totalFlags} 面，將這些旗子全部升上旗竿，可組成多少種不同的信號？`
-        );
+        questions.push(`有${colorDesc}，共 ${totalFlags} 面，將這些旗子全部升上旗竿，可組成多少種不同的信號？`);
         answers.push(
           `簡答：${total} 種。過程：共 ${totalFlags} 面旗，${colorDesc}。相同顏色旗互換不增加新信號，排法為 \\(\\frac{${totalFlags}!}{${denomStr}}=${total}\\)。`
         );
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222FixedRelativeOrderSet(count) {
@@ -4145,13 +4235,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222PositionConstraintSet(count) {
@@ -4178,13 +4269,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222DerangementPositionExclusionSet(count) {
@@ -4211,13 +4303,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222DistributionRepeatedSet(count) {
@@ -4244,13 +4337,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222GridPathSet(count) {
@@ -4277,24 +4371,26 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222NumberFormationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     // P(n, k) = n*(n-1)*...*(n-k+1)
     function P(n, k) {
       if (k === 0) return 1;
       let r = 1;
-      for (let j = 0; j < k; j += 1) r *= (n - j);
+      for (let j = 0; j < k; j += 1) r *= n - j;
       return r;
     }
     // 111...1 (k ones)
@@ -4315,9 +4411,7 @@
         const permsRest = P(n - 1, k - 1);
         const total = odds * permsRest;
         const maxOdd = 2 * odds - 1;
-        questions.push(
-          `從 1 到 ${n} 的數字中每個各取至多一次，組成 ${k} 位數，其中奇數共有多少個？`
-        );
+        questions.push(`從 1 到 ${n} 的數字中每個各取至多一次，組成 ${k} 位數，其中奇數共有多少個？`);
         answers.push(
           `簡答：${total} 個。過程：個位必須是奇數（1、3、...、${maxOdd}），共有 ${odds} 種選法；其餘 ${k - 1} 個位置從剩下 ${n - 1} 個數字中依序排列，有 \\(P(${n - 1},${k - 1})=${permsRest}\\) 種。故共有 \\(${odds}\\times${permsRest}=${total}\\) 個。`
         );
@@ -4339,19 +4433,17 @@
         const n = randInt(3, 5);
         const k = randInt(2, Math.min(n, 4));
         const permsEach = P(n - 1, k - 1); // times each digit appears per position
-        const digitSum = n * (n + 1) / 2;
+        const digitSum = (n * (n + 1)) / 2;
         const ru = repunit(k); // 111...1
         const total = digitSum * permsEach * ru;
-        questions.push(
-          `用 1 到 ${n} 的數字，每個各取至多一次，組成所有可能的 ${k} 位數，求這些數的總和。`
-        );
+        questions.push(`用 1 到 ${n} 的數字，每個各取至多一次，組成所有可能的 ${k} 位數，求這些數的總和。`);
         answers.push(
           `簡答：${total}。過程：每個數字 1 到 ${n} 在每個位置各出現 \\(P(${n - 1},${k - 1})=${permsEach}\\) 次。1 到 ${n} 的數字和為 ${digitSum}，各位之和為 \\(${digitSum}\\times${permsEach}\\)。再乘位值因子 ${ru}（即 ${k} 個 1）得總和 \\(${digitSum}\\times${permsEach}\\times${ru}=${total}\\)。`
         );
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
   function buildS222SignalsRunsSet(count) {
     const templates = [
@@ -4377,13 +4469,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222InternalOrderConstraintSet(count) {
@@ -4410,13 +4503,14 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222PermutationCoreFiveSubtypeMixedSet(count) {
@@ -4428,14 +4522,15 @@
       buildS222DerangementPositionExclusionSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222PermutationApplicationsFiveSubtypeMixedSet(count) {
@@ -4447,14 +4542,15 @@
       buildS222InternalOrderConstraintSet,
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222PermutationEquationSubtypeSet(count) {
@@ -4499,25 +4595,27 @@
 
   function buildS223TemplateSet(templates, count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = templates[i % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS223MixedSet(banks, count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS223BinomialCoefficientSet(count) {
@@ -5739,7 +5837,8 @@
 
   function buildS221ProductRuleParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const scenarios = [
       {
         lead: '某餐廳推出套餐',
@@ -5777,12 +5876,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221InclusionExclusionMultiplesSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const pairs = [
       [2, 3],
       [2, 5],
@@ -5801,23 +5901,24 @@
       const countBoth = Math.floor(totalCount / lcm(a, b));
       const union = countA + countB - countBoth;
       const probability = simplifyFraction(union, totalCount);
-      questions.push(
-        `從 1 到 ${totalCount} 的整數中隨機任取 1 個，求此數為 ${a} 的倍數或 ${b} 的倍數的機率。`
-      );
+      questions.push(`從 1 到 ${totalCount} 的整數中隨機任取 1 個，求此數為 ${a} 的倍數或 ${b} 的倍數的機率。`);
       answers.push(
         `簡答：\\(${formatFraction(probability.num, probability.den)}\\)。過程：${a} 的倍數有 ${countA} 個，${b} 的倍數有 ${countB} 個，同時為兩者倍數者是 ${lcm(a, b)} 的倍數，共 ${countBoth} 個。由取捨原理，可得符合者共有 ${countA}+${countB}-${countBoth}=${union} 個，所以機率為 \\(\\frac{${union}}{${totalCount}}=${formatFraction(probability.num, probability.den)}\\)。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222RepeatedLetterPermutationParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
-      const repeatedCounts = shuffle([2, 2, 3, 3, 4]).slice(0, randInt(2, 3)).sort((x, y) => y - x);
+      const repeatedCounts = shuffle([2, 2, 3, 3, 4])
+        .slice(0, randInt(2, 3))
+        .sort((x, y) => y - x);
       const singleCount = randInt(1, 3);
       const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
       const parts = [];
@@ -5844,12 +5945,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222AdjacentPairArrangementParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = [
       { noun: '位同學', subject: '甲、乙兩人' },
       { noun: '本不同的書', subject: '數學課本與英文課本' },
@@ -5861,20 +5963,19 @@
       const context = contexts[i % contexts.length];
       const n = randInt(5, 9);
       const total = 2 * factorialInt(n - 1);
-      questions.push(
-        `將 ${n} ${context.noun}排成一列，若要求 ${context.subject}必須相鄰，則共有多少種排列方式？`
-      );
+      questions.push(`將 ${n} ${context.noun}排成一列，若要求 ${context.subject}必須相鄰，則共有多少種排列方式？`);
       answers.push(
         `簡答：${total} 種。過程：把 ${context.subject}視為一個整體，則原來 ${n} 個對象可先看成 ${n - 1} 個單位排列，有 \\((${n - 1})!\\) 種；而這兩個對象內部還可交換順序 2 種，所以總數為 \\(2\\times(${n - 1})!=${total}\\)。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS223BinomialCoefficientParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const n = randInt(4, 8);
@@ -5883,20 +5984,19 @@
       const a = pickNonZero(-4, 4);
       const b = pickNonZero(-4, 4);
       const coefficient = combinationCount(n, q) * powInt(a, p) * powInt(b, q);
-      questions.push(
-        `展開 \\((${a}x${b >= 0 ? '+' : ''}${b}y)^{${n}}\\)，求 \\(x^{${p}}y^{${q}}\\) 項的係數。`
-      );
+      questions.push(`展開 \\((${a}x${b >= 0 ? '+' : ''}${b}y)^{${n}}\\)，求 \\(x^{${p}}y^{${q}}\\) 項的係數。`);
       answers.push(
         `簡答：${coefficient}。過程：在 \\((${a}x${b >= 0 ? '+' : ''}${b}y)^{${n}}\\) 中，要得到 \\(x^{${p}}y^{${q}}\\)，需從 ${n} 個因式中選 ${q} 個取 \\(${b}y\\)，其餘 ${p} 個取 \\(${a}x\\)。所以係數為 \\(C(${n},${q})\\cdot(${a})^{${p}}\\cdot(${b})^{${q}}=${coefficient}\\)。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS223IdenticalDistributionParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = [
       { item: '顆相同的糖果', people: '位小朋友', each: '位小朋友', variable: 'x' },
       { item: '本相同的練習簿', people: '位學生', each: '位學生', variable: 'x' },
@@ -5927,12 +6027,13 @@
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS224ExactKDrawProbabilityParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = [
       { good: '紅球', bad: '白球' },
       { good: '良品', bad: '不良品' },
@@ -5957,12 +6058,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS224EventCountRelationsParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const total = randInt(24, 60);
@@ -5991,12 +6093,13 @@
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS224ExpectedValueParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
@@ -6027,14 +6130,15 @@
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   // ── NEW s2-2-2 / s2-2-4 PARAMETERIZED BUILDERS ────────────────────────────
 
   function buildS222SameGroupTogetherArrangementParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     const subjectPairs = [
       { labels: ['數學', '英文'], units: ['本', '本'] },
@@ -6052,24 +6156,25 @@
       const totalBooks = groupSizes.reduce((s, c) => s + c, 0);
       // Ways: treat each group as block → numGroups! × product(groupSize!)
       let withinWays = 1;
-      groupSizes.forEach(k => { withinWays *= factorialInt(k); });
+      groupSizes.forEach((k) => {
+        withinWays *= factorialInt(k);
+      });
       const total = factorialInt(numGroups) * withinWays;
       const bookDesc = labels.map((l, j) => `${groupSizes[j]} 本${l}書`).join('、');
-      const withinStr = groupSizes.map(k => `${k}!`).join('\\times');
-      questions.push(
-        `將${bookDesc}共 ${totalBooks} 本排成一列，要求相同科目的書必須排在一起，共有多少種排法？`
-      );
+      const withinStr = groupSizes.map((k) => `${k}!`).join('\\times');
+      questions.push(`將${bookDesc}共 ${totalBooks} 本排成一列，要求相同科目的書必須排在一起，共有多少種排法？`);
       answers.push(
         `簡答：${total} 種。過程：把每科書視為一個整體，共 ${numGroups} 個整體，排列有 \\(${numGroups}!=${factorialInt(numGroups)}\\) 種；每科書內部各自全排列，共有 \\(${withinStr}=${withinWays}\\) 種。故總排法為 \\(${factorialInt(numGroups)}\\times${withinWays}=${total}\\) 種。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222GenderNonAdjacentParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     const contexts = [
       { maleName: '男生', femaleName: '女生', lineType: '一列' },
@@ -6080,7 +6185,7 @@
     for (let i = 0; i < count; i += 1) {
       const ctx = contexts[i % contexts.length];
       const f = randInt(3, 5); // females
-      const m = randInt(2, f);  // males ≤ females (ensures non-adjacent is possible)
+      const m = randInt(2, f); // males ≤ females (ensures non-adjacent is possible)
       // Females arranged: f! ways
       // Insert m males into f+1 gaps (choose m gaps, arrange m males): P(f+1, m)
       const femaleWays = factorialInt(f);
@@ -6094,12 +6199,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS224ThreeSetInclusionExclusionParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
@@ -6116,12 +6222,21 @@
         // Verify union ≤ total
         if (unionCount > total || unionCount <= 0) {
           // fallback to fixed values
-          const fa = 18; const fb = 20; const fc = 22;
-          const fab = 7; const fbc = 8; const fac = 6; const fabc = 3;
+          const fa = 18;
+          const fb = 20;
+          const fc = 22;
+          const fab = 7;
+          const fbc = 8;
+          const fac = 6;
+          const fabc = 3;
           const fu = fa + fb + fc - fab - fbc - fac + fabc;
           const ft = 60;
-          questions.push(`某班 ${ft} 人，喜歡科目 A 的有 ${fa} 人、B 有 ${fb} 人、C 有 ${fc} 人，A 和 B 都喜歡有 ${fab} 人，B 和 C 都喜歡有 ${fbc} 人，A 和 C 都喜歡有 ${fac} 人，三科都喜歡有 ${fabc} 人。求至少喜歡一科的人數。`);
-          answers.push(`簡答：${fu} 人。過程：由三集合取捨原理，至少一科 ＝ ${fa}+${fb}+${fc}-${fab}-${fbc}-${fac}+${fabc}=${fu} 人。`);
+          questions.push(
+            `某班 ${ft} 人，喜歡科目 A 的有 ${fa} 人、B 有 ${fb} 人、C 有 ${fc} 人，A 和 B 都喜歡有 ${fab} 人，B 和 C 都喜歡有 ${fbc} 人，A 和 C 都喜歡有 ${fac} 人，三科都喜歡有 ${fabc} 人。求至少喜歡一科的人數。`
+          );
+          answers.push(
+            `簡答：${fu} 人。過程：由三集合取捨原理，至少一科 ＝ ${fa}+${fb}+${fc}-${fab}-${fbc}-${fac}+${fabc}=${fu} 人。`
+          );
           continue;
         }
         questions.push(
@@ -6144,7 +6259,9 @@
         const unionNum = pa + pb + pc - pab - pbc - pac + pabc;
         if (unionNum <= 0 || unionNum > den) {
           // fallback
-          questions.push(`設 \\(P(A)=0.4\\)，\\(P(B)=0.5\\)，\\(P(C)=0.3\\)，\\(P(A\\cap B)=0.2\\)，\\(P(B\\cap C)=0.2\\)，\\(P(A\\cap C)=0.1\\)，\\(P(A\\cap B\\cap C)=0.05\\)。求 \\(P(A\\cup B\\cup C)\\)。`);
+          questions.push(
+            `設 \\(P(A)=0.4\\)，\\(P(B)=0.5\\)，\\(P(C)=0.3\\)，\\(P(A\\cap B)=0.2\\)，\\(P(B\\cap C)=0.2\\)，\\(P(A\\cap C)=0.1\\)，\\(P(A\\cap B\\cap C)=0.05\\)。求 \\(P(A\\cup B\\cup C)\\)。`
+          );
           answers.push(`簡答：\\(0.75\\)。過程：\\(P(A\\cup B\\cup C)=0.4+0.5+0.3-0.2-0.2-0.1+0.05=0.75\\)。`);
           continue;
         }
@@ -6158,17 +6275,27 @@
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS224ComplementIndependentParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     // Simple fraction pairs (pa_num/den, pb_num/den) for clean arithmetic
     const fracPool = [
-      [1, 3], [2, 3], [1, 4], [3, 4], [1, 5], [2, 5], [3, 5], [4, 5],
-      [1, 6], [5, 6], [1, 2],
+      [1, 3],
+      [2, 3],
+      [1, 4],
+      [3, 4],
+      [1, 5],
+      [2, 5],
+      [3, 5],
+      [4, 5],
+      [1, 6],
+      [5, 6],
+      [1, 2],
     ];
 
     for (let i = 0; i < count; i += 1) {
@@ -6224,12 +6351,13 @@
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS224BiasedBinomialAtLeastParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     // Simple probability fractions and their complements
     const pOptions = [
@@ -6257,7 +6385,7 @@
         // P(X≥1) = 1-(1-p)^n
         // (1-p)^n = (q)^n where q = 1 - p
         const qn = pOpt.d - pOpt.n; // q numerator
-        const qd = pOpt.d;          // q denominator
+        const qd = pOpt.d; // q denominator
         // q^n = qn^n / qd^n
         const qpowN = powInt(qn, n);
         const qpowD = powInt(qd, n);
@@ -6273,8 +6401,10 @@
       } else {
         // P(X≥2) = 1 - P(X=0) - P(X=1)
         // P(X=0) = q^n, P(X=1) = n*p*q^(n-1)
-        const pn = pOpt.n; const pd = pOpt.d;
-        const qn = pd - pn; const qd = pd;
+        const pn = pOpt.n;
+        const pd = pOpt.d;
+        const qn = pd - pn;
+        const qd = pd;
         const qpowN = powInt(qn, n);
         const qpowD = powInt(qd, n);
         const qpowNm1 = powInt(qn, n - 1);
@@ -6290,10 +6420,16 @@
         const { num: sn, den: sd } = simplifyFraction(pAtLeast2Num, pAtLeast2Den);
         if (pAtLeast2Num <= 0) {
           // Fallback to P(X≥1)
-          const qpn2 = powInt(qn, n); const qpd2 = powInt(qd, n);
-          const rn2 = qpd2 - qpn2; const { num: sn2, den: sd2 } = simplifyFraction(rn2, qpd2);
-          questions.push(`${ctx.trial}${ctx.success}的機率為 \\(${pOpt.label}\\)。今重複 ${n} 次，求至少一次${ctx.success}的機率。`);
-          answers.push(`簡答：\\(${formatFraction(sn2, sd2)}\\)。過程：\\(P(X\\geq 1)=1-P(X=0)=1-(\\frac{${qn}}{${qd}})^{${n}}=${formatFraction(sn2, sd2)}\\)。`);
+          const qpn2 = powInt(qn, n);
+          const qpd2 = powInt(qd, n);
+          const rn2 = qpd2 - qpn2;
+          const { num: sn2, den: sd2 } = simplifyFraction(rn2, qpd2);
+          questions.push(
+            `${ctx.trial}${ctx.success}的機率為 \\(${pOpt.label}\\)。今重複 ${n} 次，求至少一次${ctx.success}的機率。`
+          );
+          answers.push(
+            `簡答：\\(${formatFraction(sn2, sd2)}\\)。過程：\\(P(X\\geq 1)=1-P(X=0)=1-(\\frac{${qn}}{${qd}})^{${n}}=${formatFraction(sn2, sd2)}\\)。`
+          );
           continue;
         }
         questions.push(
@@ -6305,12 +6441,13 @@
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS224TotalProbabilityParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     const contexts = [
       { aName: '甲工廠', bName: '乙工廠', item: '零件', goodName: '良品' },
@@ -6320,8 +6457,22 @@
     ];
 
     // Use fractions with denominator 10 or 20 for clean arithmetic
-    const paFracs = [[3,10],[4,10],[6,10],[7,10],[2,5],[3,5]];
-    const condFracs = [[8,10],[9,10],[7,10],[6,10],[4,5],[3,4]];
+    const paFracs = [
+      [3, 10],
+      [4, 10],
+      [6, 10],
+      [7, 10],
+      [2, 5],
+      [3, 5],
+    ];
+    const condFracs = [
+      [8, 10],
+      [9, 10],
+      [7, 10],
+      [6, 10],
+      [4, 5],
+      [3, 4],
+    ];
 
     for (let i = 0; i < count; i += 1) {
       const ctx = contexts[i % contexts.length];
@@ -6346,12 +6497,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS224HypergeometricExpectedValueParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     const contexts = [
       { red: '紅球', white: '白球', bag: '袋中' },
@@ -6376,12 +6528,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221LicensePlateRestrictionsParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 3;
       if (mode === 0) {
@@ -6419,12 +6572,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221DistinctDistributionAtLeastParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function ontoCount(items, people) {
       let total = 0;
@@ -6441,7 +6595,9 @@
       const mode = i % 3;
       if (mode === 0) {
         const total = people ** items - (people - 1) ** items;
-        questions.push(`將 ${items} 件不同的獎品全部分給 ${people} 位同學，每件獎品只能給一人。若甲至少得到一件，共有多少種分法？`);
+        questions.push(
+          `將 ${items} 件不同的獎品全部分給 ${people} 位同學，每件獎品只能給一人。若甲至少得到一件，共有多少種分法？`
+        );
         answers.push(
           `簡答：${total} 種。過程：全部分法為 \\(${people}^{${items}}\\)。甲一件都沒有時，每件只能分給其他 ${people - 1} 人，有 \\(${people - 1}^{${items}}\\) 種。因此甲至少一件有 \\(${people}^{${items}}-${people - 1}^{${items}}=${total}\\) 種。`
         );
@@ -6459,12 +6615,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221FerryCapacityAssignmentParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function capacityWays(people, boats, cap, fixedFirstBoat = false) {
       const loads = Array(boats).fill(0);
@@ -6474,7 +6631,9 @@
           if (remaining > cap) return;
           loads[index] = remaining;
           let ways = factorialInt(people);
-          loads.forEach((load) => { ways /= factorialInt(load); });
+          loads.forEach((load) => {
+            ways /= factorialInt(load);
+          });
           total += ways;
           return;
         }
@@ -6494,7 +6653,9 @@
               finalLoads[0] += 1;
               let ways = factorialInt(people - 1);
               finalLoads[0] -= 1;
-              finalLoads.forEach((load) => { ways /= factorialInt(load); });
+              finalLoads.forEach((load) => {
+                ways /= factorialInt(load);
+              });
               restTotal += ways;
             }
             return;
@@ -6519,31 +6680,38 @@
       if (i % 2 === 0) {
         const total = capacityWays(people, boats, cap);
         const invalid = people === cap + 1 ? 3 : 3 + 6 * people;
-        const invalidText = people === cap + 1
-          ? `超載只會是 ${people} 人全在同一船，共 3 種`
-          : `超載包含 ${people} 人全在同一船 3 種，以及某船 ${cap + 1} 人、另一船 1 人，共 \\(3\\times2\\times${people}=${6 * people}\\) 種`;
-        questions.push(`${boats} 艘不同的渡船，每艘最多載 ${cap} 人。今有 ${people} 位乘客同時渡河，共有多少種安全乘載方法？`);
+        const invalidText =
+          people === cap + 1
+            ? `超載只會是 ${people} 人全在同一船，共 3 種`
+            : `超載包含 ${people} 人全在同一船 3 種，以及某船 ${cap + 1} 人、另一船 1 人，共 \\(3\\times2\\times${people}=${6 * people}\\) 種`;
+        questions.push(
+          `${boats} 艘不同的渡船，每艘最多載 ${cap} 人。今有 ${people} 位乘客同時渡河，共有多少種安全乘載方法？`
+        );
         answers.push(
           `簡答：${total} 種。過程：不管容量時，每人有 3 種選擇，共 \\(3^{${people}}=${3 ** people}\\) 種。排除超載情形：${invalidText}。所以安全乘載方法為 \\(${3 ** people}-${invalid}=${total}\\) 種。`
         );
       } else {
         const total = capacityWays(people, boats, cap, true);
         const invalid = people === cap + 1 ? 1 : 2 * cap + 5;
-        const invalidText = people === cap + 1
-          ? `只有其餘 ${people - 1} 人全搭 A 船會使 A 船超載，共 1 種`
-          : `A 船超載有其餘 ${people - 1} 人全搭 A 船 1 種，或只有 1 人不搭 A 船共 \\(2\\times${people - 1}\\) 種；另有其餘 ${people - 1} 人全搭 B 船或全搭 C 船共 2 種，所以超載共 ${invalid} 種`;
-        questions.push(`${boats} 艘不同的渡船，每艘最多載 ${cap} 人。今有 ${people} 位乘客同時渡河，若甲指定搭 A 船，共有多少種安全乘載方法？`);
+        const invalidText =
+          people === cap + 1
+            ? `只有其餘 ${people - 1} 人全搭 A 船會使 A 船超載，共 1 種`
+            : `A 船超載有其餘 ${people - 1} 人全搭 A 船 1 種，或只有 1 人不搭 A 船共 \\(2\\times${people - 1}\\) 種；另有其餘 ${people - 1} 人全搭 B 船或全搭 C 船共 2 種，所以超載共 ${invalid} 種`;
+        questions.push(
+          `${boats} 艘不同的渡船，每艘最多載 ${cap} 人。今有 ${people} 位乘客同時渡河，若甲指定搭 A 船，共有多少種安全乘載方法？`
+        );
         answers.push(
           `簡答：${total} 種。過程：先固定甲在 A 船，其餘 ${people - 1} 人各有 3 種選擇，共 \\(3^{${people - 1}}=${3 ** (people - 1)}\\) 種。排除超載情形：${invalidText}。所以共有 \\(${3 ** (people - 1)}-${invalid}=${total}\\) 種。`
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222AdjacentPairEndRestrictionParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const n = randInt(5, 8);
       const totalAdjacent = 2 * factorialInt(n - 1);
@@ -6554,12 +6722,13 @@
         `簡答：${total} 種。過程：先把乙、丙視為一塊，內部有 2 種，故相鄰總排法為 \\(2\\cdot${n - 1}!=${totalAdjacent}\\)。再扣掉甲在首或末的情形：甲固定一端時，乙丙仍成一塊，排法為 \\(2\\cdot${n - 2}!\\)，兩端共 \\(4\\cdot${n - 2}!=${badEnds}\\)。所以答案為 \\(${totalAdjacent}-${badEnds}=${total}\\) 種。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222SameTypeNonAdjacentProgramsParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = [
       { special: '歌唱節目', otherA: '樂器演奏', otherB: '話劇' },
       { special: '舞蹈表演', otherA: '合唱', otherB: '短劇' },
@@ -6572,52 +6741,64 @@
       const b = randInt(2, 3);
       const others = a + b;
       const total = factorialInt(others) * combinationCount(others + 1, special) * factorialInt(special);
-      questions.push(`同樂會有 ${a} 個${ctx.otherA}、${b} 個${ctx.otherB}、${special} 個${ctx.special}，所有節目皆不同。若 ${special} 個${ctx.special}都不相鄰，共有多少種演出順序？`);
+      questions.push(
+        `同樂會有 ${a} 個${ctx.otherA}、${b} 個${ctx.otherB}、${special} 個${ctx.special}，所有節目皆不同。若 ${special} 個${ctx.special}都不相鄰，共有多少種演出順序？`
+      );
       answers.push(
         `簡答：${total} 種。過程：先排非${ctx.special}的 ${others} 個節目，有 \\(${others}!=${factorialInt(others)}\\) 種。此時產生 ${others + 1} 個空位，從中選 ${special} 個放入${ctx.special}，並排列這 ${special} 個節目，有 \\(C(${others + 1},${special})\\cdot${special}!\\) 種。總數為 \\(${factorialInt(others)}\\times C(${others + 1},${special})\\times${special}!=${total}\\) 種。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222RepeatedDigitLeadingZeroParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const zeroCount = randInt(1, 3);
       const pairCount = randInt(2, 3);
       const totalDigits = zeroCount + 2 * pairCount;
-      const allWays = factorialInt(totalDigits) / (factorialInt(zeroCount) * factorialInt(pairCount) * factorialInt(pairCount));
-      const leadingZeroWays = zeroCount > 0
-        ? factorialInt(totalDigits - 1) / (factorialInt(zeroCount - 1) * factorialInt(pairCount) * factorialInt(pairCount))
-        : 0;
+      const allWays =
+        factorialInt(totalDigits) / (factorialInt(zeroCount) * factorialInt(pairCount) * factorialInt(pairCount));
+      const leadingZeroWays =
+        zeroCount > 0
+          ? factorialInt(totalDigits - 1) /
+            (factorialInt(zeroCount - 1) * factorialInt(pairCount) * factorialInt(pairCount))
+          : 0;
       const total = allWays - leadingZeroWays;
-      questions.push(`用 ${zeroCount} 個 0、${pairCount} 個 1、${pairCount} 個 2 排成 ${totalDigits} 位數，共可排成多少個不同的正整數？`);
+      questions.push(
+        `用 ${zeroCount} 個 0、${pairCount} 個 1、${pairCount} 個 2 排成 ${totalDigits} 位數，共可排成多少個不同的正整數？`
+      );
       answers.push(
         `簡答：${total} 個。過程：先不管首位限制，不盡相異排列有 \\(\\frac{${totalDigits}!}{${zeroCount}!${pairCount}!${pairCount}!}=${allWays}\\) 種。首位為 0 時，剩下 ${totalDigits - 1} 位有 \\(\\frac{${totalDigits - 1}!}{${zeroCount - 1}!${pairCount}!${pairCount}!}=${leadingZeroWays}\\) 種。故可形成的正整數有 \\(${allWays}-${leadingZeroWays}=${total}\\) 個。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222OrderedBlocksInternalPermutationParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const labels = ['冠軍獎盃', '亞軍獎盃', '季軍獎盃'];
     for (let i = 0; i < count; i += 1) {
       const sizes = [randInt(2, 4), randInt(3, 5), randInt(2, 4)];
       const total = sizes.reduce((product, size) => product * factorialInt(size), 1);
-      questions.push(`有 ${sizes[0]} 座${labels[0]}、${sizes[1]} 座${labels[1]}、${sizes[2]} 座${labels[2]}要排成一列。若相同獎項放在一起，且由左至右固定為冠軍、亞軍、季軍，共有多少種排法？`);
+      questions.push(
+        `有 ${sizes[0]} 座${labels[0]}、${sizes[1]} 座${labels[1]}、${sizes[2]} 座${labels[2]}要排成一列。若相同獎項放在一起，且由左至右固定為冠軍、亞軍、季軍，共有多少種排法？`
+      );
       answers.push(
         `簡答：${total} 種。過程：三類獎盃的區塊順序已固定，不需再乘 \\(3!\\)。只需排列各區塊內部，故共有 \\(${sizes[0]}!\\times${sizes[1]}!\\times${sizes[2]}!=${total}\\) 種。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221HandshakeCouplesParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const couples = randInt(5, 12);
@@ -6632,12 +6813,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221FixedEndNoRepeatScheduleParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function fixedEndWays(days, choices) {
       let sameAsFirst = 1;
@@ -6671,12 +6853,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS221AmbidextrousPairingParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     const contexts = [
       { activity: '桌球雙打', unit: '名選手' },
@@ -6701,12 +6884,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS222SpecifiedNonAdjacentParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = [
       { noun: '位同學', specials: '甲、乙、丙' },
       { noun: '張不同卡片', specials: 'A、B、C' },
@@ -6729,12 +6913,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS223BinomialAdjacentRatioParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function ratioEntry(n, r) {
       const values = [combinationCount(n, r - 1), combinationCount(n, r), combinationCount(n, r + 1)];
@@ -6781,12 +6966,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS224GridComparisonProbabilityParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const maxDigit = randInt(3, 9);
@@ -6803,12 +6989,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS224OverlapDaysOffProbabilityParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const days = randInt(7, 14);
@@ -6825,12 +7012,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS231BasicUngroupedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const nOpts = [5, 8, 10, 12, 15, 20];
     const muOpts = [10, 20, 25, 30, 40, 50, 60, 70, 80];
     const sigOpts = [2, 3, 4, 5, 6, 8, 10];
@@ -6838,154 +7026,142 @@
       const mode = i % 3;
       if (mode === 0) {
         // Mode 0: Given Σx and Σx², find mean and std dev
-        const n   = nOpts[randInt(0, nOpts.length - 1)];
-        const mu  = muOpts[randInt(0, muOpts.length - 1)];
+        const n = nOpts[randInt(0, nOpts.length - 1)];
+        const mu = muOpts[randInt(0, muOpts.length - 1)];
         const sig = sigOpts[randInt(0, sigOpts.length - 1)];
-        const S   = n * mu;
-        const Q   = n * (sig * sig + mu * mu);
+        const S = n * mu;
+        const Q = n * (sig * sig + mu * mu);
         questions.push(
           `設 \\(x_1, x_2, \\dots, x_{${n}}\\) 為 ${n} 個數據，` +
-          `且 \\(\\displaystyle\\sum_{i=1}^{${n}} x_i = ${S}\\)，` +
-          `\\(\\displaystyle\\sum_{i=1}^{${n}} x_i^2 = ${Q}\\)。` +
-          `求此 ${n} 個數據的平均數與母體標準差。`
+            `且 \\(\\displaystyle\\sum_{i=1}^{${n}} x_i = ${S}\\)，` +
+            `\\(\\displaystyle\\sum_{i=1}^{${n}} x_i^2 = ${Q}\\)。` +
+            `求此 ${n} 個數據的平均數與母體標準差。`
         );
         answers.push(
           `簡答：平均數 \\(${mu}\\)，標準差 \\(${sig}\\)。` +
-          `過程：\\(\\mu = \\dfrac{${S}}{${n}} = ${mu}\\)；` +
-          `\\(\\sigma^2 = \\dfrac{${Q}}{${n}} - ${mu}^2 = ${sig*sig + mu*mu} - ${mu*mu} = ${sig*sig}\\)，` +
-          `故 \\(\\sigma = ${sig}\\)。`
+            `過程：\\(\\mu = \\dfrac{${S}}{${n}} = ${mu}\\)；` +
+            `\\(\\sigma^2 = \\dfrac{${Q}}{${n}} - ${mu}^2 = ${sig * sig + mu * mu} - ${mu * mu} = ${sig * sig}\\)，` +
+            `故 \\(\\sigma = ${sig}\\)。`
         );
       } else if (mode === 1) {
         // Mode 1: n values with known mean; add one new value → find new mean
-        const n     = [5, 8, 10, 12][randInt(0, 3)];
-        const mu    = muOpts[randInt(0, muOpts.length - 1)];
+        const n = [5, 8, 10, 12][randInt(0, 3)];
+        const mu = muOpts[randInt(0, muOpts.length - 1)];
         const delta = [-20, -15, -10, -5, 5, 10, 15, 20][randInt(0, 7)];
-        const newV  = mu + delta;
+        const newV = mu + delta;
         const oldSum = n * mu;
         const newSum = oldSum + newV;
-        const newN   = n + 1;
+        const newN = n + 1;
         // Check clean division
-        const isClean = (newSum % newN === 0);
-        const newMuDisplay = isClean
-          ? String(newSum / newN)
-          : `\\dfrac{${newSum}}{${newN}}`;
-        questions.push(
-          `一組 ${n} 個數據的平均數為 ${mu}。` +
-          `若新增數值 ${newV}，求新的 ${newN} 個數據的平均數。`
-        );
+        const isClean = newSum % newN === 0;
+        const newMuDisplay = isClean ? String(newSum / newN) : `\\dfrac{${newSum}}{${newN}}`;
+        questions.push(`一組 ${n} 個數據的平均數為 ${mu}。` + `若新增數值 ${newV}，求新的 ${newN} 個數據的平均數。`);
         answers.push(
           `簡答：\\(${newMuDisplay}\\)。` +
-          `過程：原總和為 \\(${n} \\times ${mu} = ${oldSum}\\)，加入 ${newV} 後總和為 \\(${newSum}\\)。` +
-          `新平均數為 \\(\\dfrac{${newSum}}{${newN}} = ${newMuDisplay}\\)。`
+            `過程：原總和為 \\(${n} \\times ${mu} = ${oldSum}\\)，加入 ${newV} 後總和為 \\(${newSum}\\)。` +
+            `新平均數為 \\(\\dfrac{${newSum}}{${newN}} = ${newMuDisplay}\\)。`
         );
       } else {
         // Mode 2: n values missing one; find missing given mean
-        const n       = [5, 6, 7][randInt(0, 2)];
-        const mu      = muOpts[randInt(0, muOpts.length - 1)];
-        const totalS  = n * mu;
+        const n = [5, 6, 7][randInt(0, 2)];
+        const mu = muOpts[randInt(0, muOpts.length - 1)];
+        const totalS = n * mu;
         // Build n-1 values with controlled offsets
         const devSets = [
-          [-10, -5, 0, 5],      // sum_dev = -10, x_dev = +10
-          [-8, -2, 4, 6],       // sum_dev =  0, x_dev =  0 (use only for n=5 with different pattern)
-          [-6, 0, 2, 8],        // sum_dev =  4, x_dev = -4
-          [-15, -5, 0, 5, 10],  // sum_dev = -5, x_dev = +5
-          [-12, -4, 2, 8, 14],  // sum_dev =  8, x_dev = -8
-          [-10, -2, 4, 6, 12],  // sum_dev = 10, x_dev = -10
+          [-10, -5, 0, 5], // sum_dev = -10, x_dev = +10
+          [-8, -2, 4, 6], // sum_dev =  0, x_dev =  0 (use only for n=5 with different pattern)
+          [-6, 0, 2, 8], // sum_dev =  4, x_dev = -4
+          [-15, -5, 0, 5, 10], // sum_dev = -5, x_dev = +5
+          [-12, -4, 2, 8, 14], // sum_dev =  8, x_dev = -8
+          [-10, -2, 4, 6, 12], // sum_dev = 10, x_dev = -10
         ];
-        const setIdx  = n === 5 ? randInt(0, 2) : randInt(3, 5);
-        const devs    = devSets[setIdx];
-        const knownVals = devs.map(d => mu + d);
-        const knownSum  = knownVals.reduce((a, b) => a + b, 0);
-        const missing   = totalS - knownSum;
-        const listStr   = knownVals.join(', ');
+        const setIdx = n === 5 ? randInt(0, 2) : randInt(3, 5);
+        const devs = devSets[setIdx];
+        const knownVals = devs.map((d) => mu + d);
+        const knownSum = knownVals.reduce((a, b) => a + b, 0);
+        const missing = totalS - knownSum;
+        const listStr = knownVals.join(', ');
         questions.push(
           `已知 ${n} 個數據的平均數為 ${mu}，其中 ${n - 1} 個數據為 \\(${listStr}\\)，求第 ${n} 個數據 \\(x\\)。`
         );
         answers.push(
           `簡答：\\(x = ${missing}\\)。` +
-          `過程：${n} 個數據的總和為 \\(${n} \\times ${mu} = ${totalS}\\)。` +
-          `已知 ${n - 1} 個數的和為 \\(${knownSum}\\)，` +
-          `故 \\(x = ${totalS} - ${knownSum} = ${missing}\\)。`
+            `過程：${n} 個數據的總和為 \\(${n} \\times ${mu} = ${totalS}\\)。` +
+            `已知 ${n - 1} 個數的和為 \\(${knownSum}\\)，` +
+            `故 \\(x = ${totalS} - ${knownSum} = ${missing}\\)。`
         );
       }
     }
-    return {
-      questions,
-      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
-      answers,
-    };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS231LinearTransformSet(count) {
     const questions = [];
-    const answers = [];
-    const aOpts    = [2, 3, 4, 5, 10, 0.5, 1.5, 0.2];
-    const bOpts    = [3, 5, 10, 20, -10, -5, 0, 100];
-    const muOpts   = [10, 20, 30, 40, 50, 60];
-    const sigOpts  = [2, 3, 4, 5, 6, 8, 10];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
+    const aOpts = [2, 3, 4, 5, 10, 0.5, 1.5, 0.2];
+    const bOpts = [3, 5, 10, 20, -10, -5, 0, 100];
+    const muOpts = [10, 20, 30, 40, 50, 60];
+    const sigOpts = [2, 3, 4, 5, 6, 8, 10];
     for (let i = 0; i < count; i++) {
       const mode = i % 3;
       if (mode === 0) {
         // Mode 0: given mu_x, sigma_x, a, b → find mu_y, sigma_y
-        const a   = aOpts[randInt(0, aOpts.length - 1)];
-        const b   = bOpts[randInt(0, bOpts.length - 1)];
-        const mu  = muOpts[randInt(0, muOpts.length - 1)];
+        const a = aOpts[randInt(0, aOpts.length - 1)];
+        const b = bOpts[randInt(0, bOpts.length - 1)];
+        const mu = muOpts[randInt(0, muOpts.length - 1)];
         const sig = sigOpts[randInt(0, sigOpts.length - 1)];
-        const muY  = a * mu + b;
+        const muY = a * mu + b;
         const sigY = Math.abs(a) * sig;
-        const aStr  = Number.isInteger(a)  ? String(a)  : String(a);
-        const muYStr = Number.isInteger(muY)  ? String(muY)  : `${muY}`;
+        const aStr = Number.isInteger(a) ? String(a) : String(a);
+        const muYStr = Number.isInteger(muY) ? String(muY) : `${muY}`;
         const sigYStr = Number.isInteger(sigY) ? String(sigY) : `${sigY}`;
-        const bStr  = b >= 0 ? `+${b}` : `${b}`;
+        const bStr = b >= 0 ? `+${b}` : `${b}`;
         questions.push(
           `已知一組數據 \\(x\\) 的平均數為 \\(${mu}\\)、標準差為 \\(${sig}\\)。` +
-          `若新數據 \\(y = ${aStr}x ${bStr}\\)，求 \\(y\\) 的平均數與標準差。`
+            `若新數據 \\(y = ${aStr}x ${bStr}\\)，求 \\(y\\) 的平均數與標準差。`
         );
         answers.push(
           `簡答：平均數 \\(${muYStr}\\)，標準差 \\(${sigYStr}\\)。` +
-          `過程：線性變換 \\(y = ax + b\\) 下，\\(\\mu_y = a\\mu_x + b = ${aStr} \\times ${mu} ${bStr} = ${muYStr}\\)；` +
-          `\\(\\sigma_y = |a|\\sigma_x = ${aStr} \\times ${sig} = ${sigYStr}\\)。`
+            `過程：線性變換 \\(y = ax + b\\) 下，\\(\\mu_y = a\\mu_x + b = ${aStr} \\times ${mu} ${bStr} = ${muYStr}\\)；` +
+            `\\(\\sigma_y = |a|\\sigma_x = ${aStr} \\times ${sig} = ${sigYStr}\\)。`
         );
       } else if (mode === 1) {
         // Mode 1: given mu_x, sigma_x, a, mu_y → find b
-        const a   = [2, 3, 4, 5][randInt(0, 3)];
-        const mu  = muOpts[randInt(0, muOpts.length - 1)];
+        const a = [2, 3, 4, 5][randInt(0, 3)];
+        const mu = muOpts[randInt(0, muOpts.length - 1)];
         const sig = sigOpts[randInt(0, sigOpts.length - 1)];
         const bChoices = [-10, -5, 0, 5, 10, 15, 20];
-        const b   = bChoices[randInt(0, bChoices.length - 1)];
+        const b = bChoices[randInt(0, bChoices.length - 1)];
         const muY = a * mu + b;
         questions.push(
           `已知 \\(x\\) 的平均數為 \\(${mu}\\)，標準差為 \\(${sig}\\)。` +
-          `若 \\(y = ${a}x + b\\) 的平均數為 \\(${muY}\\)，求常數 \\(b\\)。`
+            `若 \\(y = ${a}x + b\\) 的平均數為 \\(${muY}\\)，求常數 \\(b\\)。`
         );
         answers.push(
           `簡答：\\(b = ${b}\\)。` +
-          `過程：\\(\\mu_y = a\\mu_x + b\\)，即 \\(${muY} = ${a} \\times ${mu} + b\\)，` +
-          `解得 \\(b = ${muY} - ${a * mu} = ${b}\\)。`
+            `過程：\\(\\mu_y = a\\mu_x + b\\)，即 \\(${muY} = ${a} \\times ${mu} + b\\)，` +
+            `解得 \\(b = ${muY} - ${a * mu} = ${b}\\)。`
         );
       } else {
         // Mode 2: given sigma_x and sigma_y → find |a|
-        const a   = [2, 3, 4, 5][randInt(0, 3)];
+        const a = [2, 3, 4, 5][randInt(0, 3)];
         const sig = sigOpts[randInt(0, sigOpts.length - 1)];
         const sigY = a * sig;
-        const mu  = muOpts[randInt(0, muOpts.length - 1)];
-        const b   = bOpts[randInt(0, bOpts.length - 1)];
+        const mu = muOpts[randInt(0, muOpts.length - 1)];
+        const b = bOpts[randInt(0, bOpts.length - 1)];
         const bStr = b >= 0 ? `+${b}` : `${b}`;
         questions.push(
           `已知 \\(x\\) 的標準差為 \\(${sig}\\)，且 \\(y = ax ${bStr}\\)（\\(a > 0\\)）的標準差為 \\(${sigY}\\)，求 \\(a\\)。`
         );
         answers.push(
           `簡答：\\(a = ${a}\\)。` +
-          `過程：\\(\\sigma_y = |a| \\cdot \\sigma_x\\)，即 \\(${sigY} = a \\times ${sig}\\)，` +
-          `解得 \\(a = \\dfrac{${sigY}}{${sig}} = ${a}\\)。`
+            `過程：\\(\\sigma_y = |a| \\cdot \\sigma_x\\)，即 \\(${sigY} = a \\times ${sig}\\)，` +
+            `解得 \\(a = \\dfrac{${sigY}}{${sig}} = ${a}\\)。`
         );
       }
     }
-    return {
-      questions,
-      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
-      answers,
-    };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS231WeightedMeanSet(count) {
@@ -7018,62 +7194,59 @@
 
   function buildS231ZScoreSet(count) {
     const questions = [];
-    const answers = [];
-    const muOpts  = [60, 65, 70, 72, 75, 80];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
+    const muOpts = [60, 65, 70, 72, 75, 80];
     const sigOpts = [4, 5, 6, 8, 10, 12];
     for (let i = 0; i < count; i++) {
       const mode = i % 3;
-      const mu   = muOpts[randInt(0, muOpts.length - 1)];
-      const sig  = sigOpts[randInt(0, sigOpts.length - 1)];
+      const mu = muOpts[randInt(0, muOpts.length - 1)];
+      const sig = sigOpts[randInt(0, sigOpts.length - 1)];
       if (mode === 0) {
         // Mode 0: given x, mu, sigma → find z
         const zNums = [-2, -1, 0, 1, 2];
-        const z     = zNums[randInt(0, zNums.length - 1)];
-        const x     = mu + z * sig;
+        const z = zNums[randInt(0, zNums.length - 1)];
+        const x = mu + z * sig;
         questions.push(
           `某次考試全班平均分數為 \\(${mu}\\) 分，標準差為 \\(${sig}\\) 分。` +
-          `若小明的分數為 \\(${x}\\) 分，求其標準分數（Z 分數）。`
+            `若小明的分數為 \\(${x}\\) 分，求其標準分數（Z 分數）。`
         );
         answers.push(
           `簡答：Z 分數為 \\(${z}\\)。` +
-          `過程：\\(z = \\dfrac{x - \\mu}{\\sigma} = \\dfrac{${x} - ${mu}}{${sig}} = \\dfrac{${x - mu}}{${sig}} = ${z}\\)。`
+            `過程：\\(z = \\dfrac{x - \\mu}{\\sigma} = \\dfrac{${x} - ${mu}}{${sig}} = \\dfrac{${x - mu}}{${sig}} = ${z}\\)。`
         );
       } else if (mode === 1) {
         // Mode 1: given z, mu, sigma → find x
         const zVals = [-2, -1.5, -1, -0.5, 0.5, 1, 1.5, 2];
-        const z     = zVals[randInt(0, zVals.length - 1)];
-        const xRaw  = mu + z * sig;
+        const z = zVals[randInt(0, zVals.length - 1)];
+        const xRaw = mu + z * sig;
         const isClean = Number.isInteger(xRaw);
-        const xStr  = isClean ? String(xRaw) : `${xRaw}`;
+        const xStr = isClean ? String(xRaw) : `${xRaw}`;
         questions.push(
           `已知某組數據平均數為 \\(${mu}\\)，標準差為 \\(${sig}\\)。` +
-          `若某筆資料的 Z 分數為 \\(${z}\\)，求其原始數值。`
+            `若某筆資料的 Z 分數為 \\(${z}\\)，求其原始數值。`
         );
         answers.push(
           `簡答：原始數值為 \\(${xStr}\\)。` +
-          `過程：由 \\(z = \\dfrac{x - \\mu}{\\sigma}\\)，` +
-          `得 \\(x = \\mu + z \\cdot \\sigma = ${mu} + (${z}) \\times ${sig} = ${xStr}\\)。`
+            `過程：由 \\(z = \\dfrac{x - \\mu}{\\sigma}\\)，` +
+            `得 \\(x = \\mu + z \\cdot \\sigma = ${mu} + (${z}) \\times ${sig} = ${xStr}\\)。`
         );
       } else {
         // Mode 2: given x, z → find mu (sigma known)
         const zNums2 = [-2, -1, 1, 2];
-        const z      = zNums2[randInt(0, zNums2.length - 1)];
-        const x      = mu + z * sig;
+        const z = zNums2[randInt(0, zNums2.length - 1)];
+        const x = mu + z * sig;
         questions.push(
           `已知某組數據標準差為 \\(${sig}\\)，且某筆原始數值為 \\(${x}\\)，其 Z 分數為 \\(${z}\\)，求此組數據的平均數 \\(\\mu\\)。`
         );
         answers.push(
           `簡答：\\(\\mu = ${mu}\\)。` +
-          `過程：由 \\(z = \\dfrac{x - \\mu}{\\sigma}\\)，得 \\(${z} = \\dfrac{${x} - \\mu}{${sig}}\\)，` +
-          `解得 \\(\\mu = ${x} - ${z} \\times ${sig} = ${x} - ${z * sig} = ${mu}\\)。`
+            `過程：由 \\(z = \\dfrac{x - \\mu}{\\sigma}\\)，得 \\(${z} = \\dfrac{${x} - \\mu}{${sig}}\\)，` +
+            `解得 \\(\\mu = ${x} - ${z} \\times ${sig} = ${x} - ${z * sig} = ${mu}\\)。`
         );
       }
     }
-    return {
-      questions,
-      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
-      answers,
-    };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS231BinaryDataSet(count) {
@@ -7389,14 +7562,15 @@
   function buildS231QuartilesIQRParameterizedSet(count) {
     // 四分位數與四分位距：給定 7~11 個有序整數，求 Q1, Q2, Q3, IQR
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i++) {
       const mode = i % 2;
       if (mode === 0) {
         // Odd n (7 or 9): Q2 = middle, Q1 = median of lower half, Q3 = median of upper half
-        const n      = [7, 9][randInt(0, 1)];
-        const base   = [40, 50, 60, 70][randInt(0, 3)];
-        const step   = [2, 3, 4, 5][randInt(0, 3)];
+        const n = [7, 9][randInt(0, 1)];
+        const base = [40, 50, 60, 70][randInt(0, 3)];
+        const step = [2, 3, 4, 5][randInt(0, 3)];
         // Generate arithmetic-ish sequence with small noise
         const vals = [];
         for (let k = 0; k < n; k++) {
@@ -7405,7 +7579,7 @@
         vals.sort((a, b) => a - b);
         // Remove duplicates for cleanliness
         const mid = Math.floor(n / 2);
-        const q2  = vals[mid];
+        const q2 = vals[mid];
         // Lower half: vals[0..mid-1], Q1 = median of those
         const lowerHalf = vals.slice(0, mid);
         const upperHalf = vals.slice(mid + 1);
@@ -7415,61 +7589,71 @@
         const valsStr = vals.join(', ');
         questions.push(
           `給定已排序的數據：\\(${valsStr}\\)。` +
-          `求第一四分位數 \\(Q_1\\)、中位數 \\(Q_2\\)、第三四分位數 \\(Q_3\\) 與四分位距 \\(IQR\\)。`
+            `求第一四分位數 \\(Q_1\\)、中位數 \\(Q_2\\)、第三四分位數 \\(Q_3\\) 與四分位距 \\(IQR\\)。`
         );
         answers.push(
           `簡答：\\(Q_1=${q1}\\)，\\(Q_2=${q2}\\)，\\(Q_3=${q3}\\)，\\(IQR=${iqr}\\)。` +
-          `過程：共 ${n} 筆，\\(Q_2\\)（中位數）= 第 ${mid+1} 個 = \\(${q2}\\)。` +
-          `下半部 \\(${lowerHalf.join(', ')}\\) 的中位數為 \\(Q_1=${q1}\\)；` +
-          `上半部 \\(${upperHalf.join(', ')}\\) 的中位數為 \\(Q_3=${q3}\\)。` +
-          `\\(IQR = Q_3 - Q_1 = ${q3} - ${q1} = ${iqr}\\)。`
+            `過程：共 ${n} 筆，\\(Q_2\\)（中位數）= 第 ${mid + 1} 個 = \\(${q2}\\)。` +
+            `下半部 \\(${lowerHalf.join(', ')}\\) 的中位數為 \\(Q_1=${q1}\\)；` +
+            `上半部 \\(${upperHalf.join(', ')}\\) 的中位數為 \\(Q_3=${q3}\\)。` +
+            `\\(IQR = Q_3 - Q_1 = ${q3} - ${q1} = ${iqr}\\)。`
         );
       } else {
         // Mode 1: even n (8 or 10)
-        const n      = [8, 10][randInt(0, 1)];
-        const base   = [40, 50, 60][randInt(0, 2)];
-        const step   = [3, 4, 5][randInt(0, 2)];
+        const n = [8, 10][randInt(0, 1)];
+        const base = [40, 50, 60][randInt(0, 2)];
+        const step = [3, 4, 5][randInt(0, 2)];
         const vals = [];
         for (let k = 0; k < n; k++) vals.push(base + k * step);
+        const medianInfo = (arr) => {
+          const len = arr.length;
+          const mid = Math.floor(len / 2);
+          if (len % 2 === 1) {
+            return {
+              value: arr[mid],
+              text: String(arr[mid]),
+              explanation: `第 ${mid + 1} 個 = ${arr[mid]}`,
+            };
+          }
+          const sum = arr[mid - 1] + arr[mid];
+          const value = sum / 2;
+          return {
+            value,
+            text: String(value),
+            explanation: `\\dfrac{${arr[mid - 1]}+${arr[mid]}}{2} = ${value}`,
+          };
+        };
         // Q2 = average of n/2 and n/2+1 (0-indexed: n/2-1 and n/2)
-        const mid1 = n / 2 - 1, mid2 = n / 2;
-        const q2Num = vals[mid1] + vals[mid2];
-        const q2Str = (q2Num % 2 === 0) ? String(q2Num / 2) : `${q2Num / 2}`;
+        const mid1 = n / 2 - 1,
+          mid2 = n / 2;
+        const q2 = medianInfo(vals);
         // Q1 = median of lower half (n/2 elements, which is even if n divisible by 4, odd otherwise)
         const lH = vals.slice(0, n / 2);
         const uH = vals.slice(n / 2);
-        const lHmid = lH.length / 2;
-        const q1Num  = lH[lHmid - 1] + lH[lHmid];
-        const q1Str  = (q1Num % 2 === 0) ? String(q1Num / 2) : `${q1Num / 2}`;
-        const q3Num  = uH[lHmid - 1] + uH[lHmid];
-        const q3Str  = (q3Num % 2 === 0) ? String(q3Num / 2) : `${q3Num / 2}`;
-        const iqrNum = q3Num - q1Num;
-        const iqrStr = (iqrNum % 2 === 0) ? String(iqrNum / 2) : `${iqrNum / 2}`;
+        const q1 = medianInfo(lH);
+        const q3 = medianInfo(uH);
+        const iqrStr = String(q3.value - q1.value);
         const valsStr = vals.join(', ');
         questions.push(
-          `給定已排序的 ${n} 筆數據：\\(${valsStr}\\)。` +
-          `求 \\(Q_1\\)、\\(Q_2\\)、\\(Q_3\\) 與四分位距 \\(IQR\\)。`
+          `給定已排序的 ${n} 筆數據：\\(${valsStr}\\)。` + `求 \\(Q_1\\)、\\(Q_2\\)、\\(Q_3\\) 與四分位距 \\(IQR\\)。`
         );
         answers.push(
-          `簡答：\\(Q_1=${q1Str}\\)，\\(Q_2=${q2Str}\\)，\\(Q_3=${q3Str}\\)，\\(IQR=${iqrStr}\\)。` +
-          `過程：共 ${n} 筆，\\(Q_2 = \\dfrac{${vals[mid1]}+${vals[mid2]}}{2} = ${q2Str}\\)。` +
-          `下半部 \\(${lH.join(', ')}\\)：\\(Q_1 = \\dfrac{${lH[lHmid-1]}+${lH[lHmid]}}{2} = ${q1Str}\\)；` +
-          `上半部 \\(${uH.join(', ')}\\)：\\(Q_3 = \\dfrac{${uH[lHmid-1]}+${uH[lHmid]}}{2} = ${q3Str}\\)。` +
-          `\\(IQR = ${q3Str} - ${q1Str} = ${iqrStr}\\)。`
+          `簡答：\\(Q_1=${q1.text}\\)，\\(Q_2=${q2.text}\\)，\\(Q_3=${q3.text}\\)，\\(IQR=${iqrStr}\\)。` +
+            `過程：共 ${n} 筆，\\(Q_2 = ${q2.explanation}\\)。` +
+            `下半部 \\(${lH.join(', ')}\\)：\\(Q_1 = ${q1.explanation}\\)；` +
+            `上半部 \\(${uH.join(', ')}\\)：\\(Q_3 = ${q3.explanation}\\)。` +
+            `\\(IQR = ${q3.text} - ${q1.text} = ${iqrStr}\\)。`
         );
       }
     }
-    return {
-      questions,
-      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
-      answers,
-    };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS231GroupedMeanParameterizedSet(count) {
     // 分組資料：給定組中點與次數，估計加權平均數；或求缺少的次數
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const midpointSets = [
       [25, 35, 45, 55],
       [30, 40, 50, 60],
@@ -7477,9 +7661,9 @@
       [10, 20, 30, 40],
     ];
     for (let i = 0; i < count; i++) {
-      const mode  = i % 2;
+      const mode = i % 2;
       const mpSet = midpointSets[randInt(0, midpointSets.length - 1)];
-      const freqs = [randInt(3,8), randInt(5,12), randInt(8,15), randInt(3,7)];
+      const freqs = [randInt(3, 8), randInt(5, 12), randInt(8, 15), randInt(3, 7)];
       const n = freqs.reduce((a, b) => a + b, 0);
       const sumFM = mpSet.reduce((s, m, k) => s + m * freqs[k], 0);
       const mu = sumFM / n;
@@ -7487,174 +7671,173 @@
       const muStr = isClean ? String(mu) : `\\dfrac{${sumFM}}{${n}}`;
       if (mode === 0) {
         // Given midpoints and frequencies → estimate weighted mean
-        const tableRows = mpSet.map((m, k) =>
-          `\\(${k > 0 ? mpSet[k - 1] : mpSet[k] - 5}\\sim${m + 5}\\) & \\(${m}\\) & \\(${freqs[k]}\\)`
-        ).join(' \\\\ ');
+        const tableRows = mpSet
+          .map((m, k) => `\\(${k > 0 ? mpSet[k - 1] : mpSet[k] - 5}\\sim${m + 5}\\) & \\(${m}\\) & \\(${freqs[k]}\\)`)
+          .join(' \\\\ ');
         questions.push(
           `某班考試成績分組如下：組距各為 10，組中點依序為 \\(${mpSet.join(', ')}\\)，` +
-          `各組人數依序為 \\(${freqs.join(', ')}\\)，共 ${n} 人。` +
-          `試估計平均成績。`
+            `各組人數依序為 \\(${freqs.join(', ')}\\)，共 ${n} 人。` +
+            `試估計平均成績。`
         );
         const prodStr = mpSet.map((m, k) => `${m}\\times${freqs[k]}`).join(' + ');
         answers.push(
           `簡答：\\(\\bar{x} \\approx ${muStr}\\)。` +
-          `過程：加權平均 \\(= \\dfrac{\\sum f_i m_i}{\\sum f_i} = \\dfrac{${prodStr}}{${n}} = \\dfrac{${sumFM}}{${n}} = ${muStr}\\)。`
+            `過程：加權平均 \\(= \\dfrac{\\sum f_i m_i}{\\sum f_i} = \\dfrac{${prodStr}}{${n}} = \\dfrac{${sumFM}}{${n}} = ${muStr}\\)。`
         );
       } else {
         // Mode 1: given 3 frequencies and total mean → find missing frequency
         const missingIdx = randInt(0, 3);
         const knownFreqs = freqs.slice();
-        const missingF   = knownFreqs[missingIdx];
+        const missingF = knownFreqs[missingIdx];
         knownFreqs[missingIdx] = null;
         // Total: n = sumKnownFreqs + missingF
-        const knownN = freqs.reduce((s, f, k) => k === missingIdx ? s : s + f, 0);
-        const knownSumFM = mpSet.reduce((s, m, k) => k === missingIdx ? s : s + m * freqs[k], 0);
+        const knownN = freqs.reduce((s, f, k) => (k === missingIdx ? s : s + f), 0);
+        const knownSumFM = mpSet.reduce((s, m, k) => (k === missingIdx ? s : s + m * freqs[k]), 0);
         // muStr is clean? Use the clean version for the question
         const cleanMu = Math.round(mu * 10) / 10;
-        const freqsDisplay = knownFreqs.map((f, k) => f === null ? `x` : String(f)).join(', ');
+        const freqsDisplay = knownFreqs.map((f, k) => (f === null ? `x` : String(f))).join(', ');
         questions.push(
           `某班考試分組，組中點依序為 \\(${mpSet.join(', ')}\\)，` +
-          `各組人數依序為 \\(${freqsDisplay}\\)，已知平均成績為 \\(${muStr}\\)。` +
-          `求未知次數 \\(x\\)。`
+            `各組人數依序為 \\(${freqsDisplay}\\)，已知平均成績為 \\(${muStr}\\)。` +
+            `求未知次數 \\(x\\)。`
         );
         answers.push(
           `簡答：\\(x = ${missingF}\\)。` +
-          `過程：設總人數 \\(N = ${knownN} + x\\)。` +
-          `由 \\(\\dfrac{${knownSumFM} + ${mpSet[missingIdx]}x}{${knownN} + x} = ${muStr}\\)，` +
-          `解得 \\(x = ${missingF}\\)。`
+            `過程：設總人數 \\(N = ${knownN} + x\\)。` +
+            `由 \\(\\dfrac{${knownSumFM} + ${mpSet[missingIdx]}x}{${knownN} + x} = ${muStr}\\)，` +
+            `解得 \\(x = ${missingF}\\)。`
         );
       }
     }
-    return {
-      questions,
-      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
-      answers,
-    };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS232CorrelationFromSumsParameterizedSet(count) {
     // 給定 Sxx, Syy, Sxy 或 Σ → 計算相關係數 r
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     // Pre-designed datasets giving clean r fractions
     const datasets = [
-      { label: 'Sxx=100, Syy=400, Sxy=120', sxx:100, syy:400, sxy:120, rNum:3, rDen:5 },
-      { label: 'Sxx=50, Syy=200, Sxy=60',   sxx:50,  syy:200, sxy:60,  rNum:3, rDen:5 },
-      { label: 'Sxx=25, Syy=100, Sxy=20',   sxx:25,  syy:100, sxy:20,  rNum:2, rDen:5 },
-      { label: 'Sxx=36, Syy=100, Sxy=54',   sxx:36,  syy:100, sxy:54,  rNum:9, rDen:10 },
-      { label: 'Sxx=100, Syy=64, Sxy=64',   sxx:100, syy:64,  sxy:64,  rNum:4, rDen:5 },
-      { label: 'Sxx=100, Syy=25, Sxy=-40',  sxx:100, syy:25,  sxy:-40, rNum:-4, rDen:5 },
-      { label: 'Sxx=400, Syy=100, Sxy=120', sxx:400, syy:100, sxy:120, rNum:3, rDen:5 },
-      { label: 'Sxx=16, Syy=100, Sxy=-32',  sxx:16,  syy:100, sxy:-32, rNum:-4, rDen:5 },
+      { label: 'Sxx=100, Syy=400, Sxy=120', sxx: 100, syy: 400, sxy: 120, rNum: 3, rDen: 5 },
+      { label: 'Sxx=50, Syy=200, Sxy=60', sxx: 50, syy: 200, sxy: 60, rNum: 3, rDen: 5 },
+      { label: 'Sxx=25, Syy=100, Sxy=20', sxx: 25, syy: 100, sxy: 20, rNum: 2, rDen: 5 },
+      { label: 'Sxx=36, Syy=100, Sxy=54', sxx: 36, syy: 100, sxy: 54, rNum: 9, rDen: 10 },
+      { label: 'Sxx=100, Syy=64, Sxy=64', sxx: 100, syy: 64, sxy: 64, rNum: 4, rDen: 5 },
+      { label: 'Sxx=100, Syy=25, Sxy=-40', sxx: 100, syy: 25, sxy: -40, rNum: -4, rDen: 5 },
+      { label: 'Sxx=400, Syy=100, Sxy=120', sxx: 400, syy: 100, sxy: 120, rNum: 3, rDen: 5 },
+      { label: 'Sxx=16, Syy=100, Sxy=-32', sxx: 16, syy: 100, sxy: -32, rNum: -4, rDen: 5 },
     ];
     for (let i = 0; i < count; i++) {
       const mode = i % 2;
-      const ds   = datasets[randInt(0, datasets.length - 1)];
-      const gcd  = (a, b) => b ? gcd(b, a % b) : a;
-      const g    = gcd(Math.abs(ds.rNum), ds.rDen);
-      const rNs  = ds.rNum / g, rDs = ds.rDen / g;
+      const ds = datasets[randInt(0, datasets.length - 1)];
+      const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+      const g = gcd(Math.abs(ds.rNum), ds.rDen);
+      const rNs = ds.rNum / g,
+        rDs = ds.rDen / g;
       const rStr = rDs === 1 ? String(rNs) : `\\dfrac{${rNs}}{${rDs}}`;
       if (mode === 0) {
         // Direct: given Sxx, Syy, Sxy
         questions.push(
           `已知兩組變數的離差平方和與離差乘積和為：` +
-          `\\(S_{xx} = ${ds.sxx}\\)，\\(S_{yy} = ${ds.syy}\\)，\\(S_{xy} = ${ds.sxy}\\)。` +
-          `求 \\(x\\) 與 \\(y\\) 的相關係數 \\(r\\)。`
+            `\\(S_{xx} = ${ds.sxx}\\)，\\(S_{yy} = ${ds.syy}\\)，\\(S_{xy} = ${ds.sxy}\\)。` +
+            `求 \\(x\\) 與 \\(y\\) 的相關係數 \\(r\\)。`
         );
         const rootValue = Math.sqrt(ds.sxx * ds.syy);
         answers.push(
           `簡答：\\(r = ${rStr}\\)。` +
-          `過程：\\(r = \\dfrac{S_{xy}}{\\sqrt{S_{xx} \\cdot S_{yy}}} = \\dfrac{${ds.sxy}}{\\sqrt{${ds.sxx} \\times ${ds.syy}}} = \\dfrac{${ds.sxy}}{${rootValue}} = ${rStr}\\)。`
+            `過程：\\(r = \\dfrac{S_{xy}}{\\sqrt{S_{xx} \\cdot S_{yy}}} = \\dfrac{${ds.sxy}}{\\sqrt{${ds.sxx} \\times ${ds.syy}}} = \\dfrac{${ds.sxy}}{${rootValue}} = ${rStr}\\)。`
         );
       } else {
         // Mode 1: Scale up to Σ form
         const n = [5, 8, 10][randInt(0, 2)];
         const muX = [10, 20, 30][randInt(0, 2)];
         const muY = [15, 25, 35][randInt(0, 2)];
-        const sumX = n * muX, sumY = n * muY;
+        const sumX = n * muX,
+          sumY = n * muY;
         // Σx² = Sxx + (Σx)²/n = Sxx + n*muX²
         const sumX2 = ds.sxx + n * muX * muX;
         const sumY2 = ds.syy + n * muY * muY;
         const sumXY = ds.sxy + n * muX * muY;
         questions.push(
           `已知 \\(n = ${n}\\)，\\(\\sum x_i = ${sumX}\\)，\\(\\sum y_i = ${sumY}\\)，` +
-          `\\(\\sum x_i^2 = ${sumX2}\\)，\\(\\sum y_i^2 = ${sumY2}\\)，\\(\\sum x_i y_i = ${sumXY}\\)。` +
-          `求 \\(x\\) 與 \\(y\\) 的相關係數。`
+            `\\(\\sum x_i^2 = ${sumX2}\\)，\\(\\sum y_i^2 = ${sumY2}\\)，\\(\\sum x_i y_i = ${sumXY}\\)。` +
+            `求 \\(x\\) 與 \\(y\\) 的相關係數。`
         );
         answers.push(
           `簡答：\\(r = ${rStr}\\)。` +
-          `過程：\\(S_{xx} = ${sumX2} - \\dfrac{${sumX}^2}{${n}} = ${ds.sxx}\\)，` +
-          `\\(S_{yy} = ${sumY2} - \\dfrac{${sumY}^2}{${n}} = ${ds.syy}\\)，` +
-          `\\(S_{xy} = ${sumXY} - \\dfrac{${sumX} \\times ${sumY}}{${n}} = ${ds.sxy}\\)。` +
-          `\\(r = \\dfrac{${ds.sxy}}{\\sqrt{${ds.sxx} \\times ${ds.syy}}} = ${rStr}\\)。`
+            `過程：\\(S_{xx} = ${sumX2} - \\dfrac{${sumX}^2}{${n}} = ${ds.sxx}\\)，` +
+            `\\(S_{yy} = ${sumY2} - \\dfrac{${sumY}^2}{${n}} = ${ds.syy}\\)，` +
+            `\\(S_{xy} = ${sumXY} - \\dfrac{${sumX} \\times ${sumY}}{${n}} = ${ds.sxy}\\)。` +
+            `\\(r = \\dfrac{${ds.sxy}}{\\sqrt{${ds.sxx} \\times ${ds.syy}}} = ${rStr}\\)。`
         );
       }
     }
-    return {
-      questions,
-      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
-      answers,
-    };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS232LeastSquaresSmallDataParameterizedSet(count) {
     // 給定 3 個數據點（x=[1,2,3]），用最小平方法求迴歸直線 y=bx+a
     // b = (y3-y1)/2, ȳ = (y1+y2+y3)/3, a = ȳ - 2b
     const questions = [];
-    const answers = [];
-    const gcd = (a, b) => b ? gcd(b, a % b) : a;
-    const kOpts = [1, 2, 3, 4, 5];       // underlying slope
-    const cOpts = [5, 10, 15, 20, 30];   // intercept offset
-    const qOpts = [-6, -3, 0, 3, 6];     // noise on y2 (divisible by 3 → clean ȳ)
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
+    const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+    const kOpts = [1, 2, 3, 4, 5]; // underlying slope
+    const cOpts = [5, 10, 15, 20, 30]; // intercept offset
+    const qOpts = [-6, -3, 0, 3, 6]; // noise on y2 (divisible by 3 → clean ȳ)
     for (let i = 0; i < count; i++) {
       const mode = i % 2;
       const k = kOpts[randInt(0, kOpts.length - 1)];
       const c = cOpts[randInt(0, cOpts.length - 1)];
       const q = qOpts[randInt(0, qOpts.length - 1)];
       // x=[1,2,3], y=[2k+c, 3k+q+c, 4k+c]
-      const y1 = 2*k + c, y2 = 3*k + q + c, y3 = 4*k + c;
-      const b = k;  // (y3-y1)/2 = (4k-2k)/2 = k
-      const ybar = (y1 + y2 + y3) / 3;  // = (9k+q+3c)/3 = 3k+q/3+c
-      const a = ybar - 2 * b;            // = k + q/3 + c
+      const y1 = 2 * k + c,
+        y2 = 3 * k + q + c,
+        y3 = 4 * k + c;
+      const b = k; // (y3-y1)/2 = (4k-2k)/2 = k
+      const ybar = (y1 + y2 + y3) / 3; // = (9k+q+3c)/3 = 3k+q/3+c
+      const a = ybar - 2 * b; // = k + q/3 + c
       const aIsClean = Number.isInteger(a);
       if (!aIsClean && mode === 1) {
         // Re-generate with q=0 to guarantee clean a
         const qSafe = 0;
-        const y1s = 2*k+c, y2s = 3*k+c, y3s = 4*k+c;
-        const ybars = (y1s+y2s+y3s)/3;
-        const as = ybars - 2*k;
+        const y1s = 2 * k + c,
+          y2s = 3 * k + c,
+          y3s = 4 * k + c;
+        const ybars = (y1s + y2s + y3s) / 3;
+        const as = ybars - 2 * k;
         if (mode === 1) {
           // predict at x=5
-          const x0 = 5, y0 = k*5 + as;
+          const x0 = 5,
+            y0 = k * 5 + as;
           questions.push(
             `已知數據 \\((1,${y1s}),(2,${y2s}),(3,${y3s})\\)，` +
-            `利用最小平方法求迴歸直線 \\(y = bx + a\\)，並預測 \\(x=5\\) 時 \\(y\\) 的值。`
+              `利用最小平方法求迴歸直線 \\(y = bx + a\\)，並預測 \\(x=5\\) 時 \\(y\\) 的值。`
           );
           answers.push(
             `簡答：迴歸線 \\(y = ${k}x + ${as}\\)，\\(x=5\\) 時 \\(y=${y0}\\)。` +
-            `過程：\\(\\bar x = 2\\)，\\(\\bar y = ${ybars}\\)；` +
-            `\\(S_{xx} = 2\\)，\\(S_{xy} = (1-2)(${y1s}-${ybars})+(3-2)(${y3s}-${ybars}) = ${y3s-y1s}\\)；` +
-            `\\(b = \\dfrac{${y3s-y1s}}{2} = ${k}\\)，\\(a = ${ybars} - ${k} \\times 2 = ${as}\\)。` +
-            `預測：\\(y = ${k} \\times 5 + ${as} = ${y0}\\)。`
+              `過程：\\(\\bar x = 2\\)，\\(\\bar y = ${ybars}\\)；` +
+              `\\(S_{xx} = 2\\)，\\(S_{xy} = (1-2)(${y1s}-${ybars})+(3-2)(${y3s}-${ybars}) = ${y3s - y1s}\\)；` +
+              `\\(b = \\dfrac{${y3s - y1s}}{2} = ${k}\\)，\\(a = ${ybars} - ${k} \\times 2 = ${as}\\)。` +
+              `預測：\\(y = ${k} \\times 5 + ${as} = ${y0}\\)。`
           );
-          questions[questions.length-1] && answers.push && null; // no-op
+          questions[questions.length - 1] && answers.push && null; // no-op
         }
         continue;
       }
-      const aStr  = Number.isInteger(a) ? String(a) : `\\dfrac{${a*3}}{3}`;
+      const aStr = Number.isInteger(a) ? String(a) : `\\dfrac{${a * 3}}{3}`;
       const aDisplay = Number.isInteger(a) ? String(a) : `${a}`;
       if (mode === 0) {
         // Just find the regression line
-        const sxy = y3 - y1;  // = 2k
-        questions.push(
-          `利用最小平方法，求通過數據 \\((1,${y1}),(2,${y2}),(3,${y3})\\) 的迴歸直線 \\(y = bx + a\\)。`
-        );
+        const sxy = y3 - y1; // = 2k
+        questions.push(`利用最小平方法，求通過數據 \\((1,${y1}),(2,${y2}),(3,${y3})\\) 的迴歸直線 \\(y = bx + a\\)。`);
         answers.push(
           `簡答：\\(y = ${b}x + ${aDisplay}\\)。` +
-          `過程：\\(\\bar x = 2\\)，\\(\\bar y = \\dfrac{${y1}+${y2}+${y3}}{3} = ${ybar}\\)。` +
-          `\\(S_{xx} = (1-2)^2+(2-2)^2+(3-2)^2 = 2\\)。` +
-          `\\(S_{xy} = (1-2)(${y1}-${ybar})+(2-2)(${y2}-${ybar})+(3-2)(${y3}-${ybar}) = ${sxy}\\)。` +
-          `\\(b = \\dfrac{${sxy}}{2} = ${b}\\)，\\(a = ${ybar} - ${b} \\times 2 = ${aDisplay}\\)。`
+            `過程：\\(\\bar x = 2\\)，\\(\\bar y = \\dfrac{${y1}+${y2}+${y3}}{3} = ${ybar}\\)。` +
+            `\\(S_{xx} = (1-2)^2+(2-2)^2+(3-2)^2 = 2\\)。` +
+            `\\(S_{xy} = (1-2)(${y1}-${ybar})+(2-2)(${y2}-${ybar})+(3-2)(${y3}-${ybar}) = ${sxy}\\)。` +
+            `\\(b = \\dfrac{${sxy}}{2} = ${b}\\)，\\(a = ${ybar} - ${b} \\times 2 = ${aDisplay}\\)。`
         );
       } else {
         // Predict at x=4 or x=5
@@ -7663,25 +7846,22 @@
         const y0Str = Number.isInteger(y0) ? String(y0) : `${y0}`;
         questions.push(
           `已知最小平方法求得迴歸直線通過數據 \\((1,${y1}),(2,${y2}),(3,${y3})\\)。` +
-          `求迴歸直線，並預測 \\(x = ${x0}\\) 時 \\(y\\) 的估計值。`
+            `求迴歸直線，並預測 \\(x = ${x0}\\) 時 \\(y\\) 的估計值。`
         );
         answers.push(
           `簡答：\\(y = ${b}x + ${aDisplay}\\)，\\(x=${x0}\\) 時 \\(y=${y0Str}\\)。` +
-          `過程：\\(b = \\dfrac{${y3}-${y1}}{2} = ${b}\\)，\\(\\bar y = ${ybar}\\)，\\(a = ${ybar} - ${b} \\times 2 = ${aDisplay}\\)。` +
-          `預測：\\(y = ${b} \\times ${x0} + ${aDisplay} = ${y0Str}\\)。`
+            `過程：\\(b = \\dfrac{${y3}-${y1}}{2} = ${b}\\)，\\(\\bar y = ${ybar}\\)，\\(a = ${ybar} - ${b} \\times 2 = ${aDisplay}\\)。` +
+            `預測：\\(y = ${b} \\times ${x0} + ${aDisplay} = ${y0Str}\\)。`
         );
       }
     }
-    return {
-      questions,
-      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
-      answers,
-    };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS231GeometricGrowthRateParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = ['公司營業額', '地區人口', '房價指數', '網站會員數'];
     const factorOptions = [
       { pct: -20, num: 80, den: 100 },
@@ -7714,12 +7894,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS231SqrtScoreTransformParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = ['小考', '數學平時考', '能力測驗', '段考'];
 
     for (let i = 0; i < count; i += 1) {
@@ -7739,12 +7920,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS231VarianceCorrectionDifferenceParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = ['義工時數', '測驗分數', '閱讀時數', '練習題數'];
 
     for (let i = 0; i < count; i += 1) {
@@ -7767,12 +7949,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS231EqualSizeGroupMergeParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = ['甲、乙兩班', '兩個校區', '兩組選手', '兩個社團'];
 
     for (let i = 0; i < count; i += 1) {
@@ -7793,12 +7976,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS231MeanMedianMissingScoreParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = ['五科成績', '五次小考分數', '五位同學的測驗分數', '五筆資料'];
     const offsetPairs = [
       [12, 4, 5, 11],
@@ -7821,12 +8005,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS231BoundedVarianceMaxParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = ['測驗成績', '產品誤差值', '每日溫差紀錄', '資料值'];
 
     for (let i = 0; i < count; i += 1) {
@@ -7846,12 +8031,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS231DeleteEqualHighValuesParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = ['數學成績', '英文成績', '物理成績', '練習測驗分數'];
 
     for (let i = 0; i < count; i += 1) {
@@ -7871,12 +8057,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS232SignedLinearCorrelationParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const rOptions = [
       { label: '\\frac{1}{5}', value: [1, 5] },
       { label: '\\frac{2}{5}', value: [2, 5] },
@@ -7911,12 +8098,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS232PerfectLineCorrelationParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = ['成績資料', '身高體重資料', '投資與收益資料', '實驗數據'];
 
     for (let i = 0; i < count; i += 1) {
@@ -7938,12 +8126,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS232RegressionLinePredictionParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = [
       { x: '投入廣告費（萬元）', y: '營業額（萬元）' },
       { x: '練習題數（十題）', y: '測驗分數' },
@@ -7967,12 +8156,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS232StandardizedRegressionParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const rOptions = [
       [1, 5],
       [2, 5],
@@ -7998,12 +8188,13 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS232RegressionCorrelationFromLineParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const rOptions = [
       [1, 2],
       [2, 3],
@@ -8034,7 +8225,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS231CoreStatsFiveSubtypeMixedSet(count) {
@@ -8278,69 +8469,80 @@
 
   function buildS232RegressionLineSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     // r values as fractions [num, den]
-    const rFracs = [[1,2],[2,3],[3,4],[3,5],[4,5],[-1,2],[-2,3],[-3,4]];
+    const rFracs = [
+      [1, 2],
+      [2, 3],
+      [3, 4],
+      [3, 5],
+      [4, 5],
+      [-1, 2],
+      [-2, 3],
+      [-3, 4],
+    ];
     const muXOpts = [40, 50, 60, 70, 80];
     const muYOpts = [50, 60, 70, 75, 80];
     const sigXOpts = [5, 8, 10, 12];
     const sigYOpts = [4, 6, 8, 10];
     for (let i = 0; i < count; i++) {
-      const mode  = i % 3;
+      const mode = i % 3;
       const rFrac = rFracs[randInt(0, rFracs.length - 1)];
-      const rNum  = rFrac[0], rDen = rFrac[1];
-      const muX   = muXOpts[randInt(0, muXOpts.length - 1)];
-      const muY   = muYOpts[randInt(0, muYOpts.length - 1)];
-      const sigX  = sigXOpts[randInt(0, sigXOpts.length - 1)];
-      const sigY  = sigYOpts[randInt(0, sigYOpts.length - 1)];
+      const rNum = rFrac[0],
+        rDen = rFrac[1];
+      const muX = muXOpts[randInt(0, muXOpts.length - 1)];
+      const muY = muYOpts[randInt(0, muYOpts.length - 1)];
+      const sigX = sigXOpts[randInt(0, sigXOpts.length - 1)];
+      const sigY = sigYOpts[randInt(0, sigYOpts.length - 1)];
       // slope b = r * sigY / sigX (as fraction: rNum*sigY / rDen*sigX)
-      const bNum  = rNum * sigY;
-      const bDen  = rDen * sigX;
-      const gcd = (a, b) => b ? gcd(b, a % b) : a;
-      const g     = gcd(Math.abs(bNum), bDen);
-      const bNs   = bNum / g, bDs = bDen / g;
-      const bStr  = bDs === 1 ? String(bNs) : `\\dfrac{${bNs}}{${bDs}}`;
-      const rStr  = rDen === 1 ? String(rNum) : `\\dfrac{${rNum}}{${rDen}}`;
+      const bNum = rNum * sigY;
+      const bDen = rDen * sigX;
+      const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+      const g = gcd(Math.abs(bNum), bDen);
+      const bNs = bNum / g,
+        bDs = bDen / g;
+      const bStr = bDs === 1 ? String(bNs) : `\\dfrac{${bNs}}{${bDs}}`;
+      const rStr = rDen === 1 ? String(rNum) : `\\dfrac{${rNum}}{${rDen}}`;
       if (mode === 0) {
         // Write equation + predict for x0
-        const xStep  = sigX * [1, 2, 3][randInt(0, 2)];
-        const x0     = muX + xStep;
+        const xStep = sigX * [1, 2, 3][randInt(0, 2)];
+        const x0 = muX + xStep;
         // y0 = muY + bNum/bDen * xStep = muY + rNum*sigY*xStep / (rDen*sigX)
-        const y0Num  = muY * bDen + bNs * xStep;
-        const y0     = y0Num / bDs;
+        const y0Num = muY * bDen + bNs * xStep;
+        const y0 = y0Num / bDs;
         const isClean = Number.isInteger(y0);
-        const y0Str  = isClean ? String(y0) : `\\dfrac{${y0Num}}{${bDs}}`;
+        const y0Str = isClean ? String(y0) : `\\dfrac{${y0Num}}{${bDs}}`;
         questions.push(
           `已知 \\(\\mu_x = ${muX}\\)，\\(\\mu_y = ${muY}\\)，` +
-          `\\(\\sigma_x = ${sigX}\\)，\\(\\sigma_y = ${sigY}\\)，相關係數 \\(r = ${rStr}\\)。` +
-          `求 \\(y\\) 對 \\(x\\) 的迴歸直線方程式，並預測 \\(x = ${x0}\\) 時 \\(y\\) 的值。`
+            `\\(\\sigma_x = ${sigX}\\)，\\(\\sigma_y = ${sigY}\\)，相關係數 \\(r = ${rStr}\\)。` +
+            `求 \\(y\\) 對 \\(x\\) 的迴歸直線方程式，並預測 \\(x = ${x0}\\) 時 \\(y\\) 的值。`
         );
         answers.push(
           `簡答：迴歸線為 \\(y - ${muY} = ${bStr}(x - ${muX})\\)，預測值 \\(y = ${y0Str}\\)。` +
-          `過程：斜率 \\(b = r \\cdot \\dfrac{\\sigma_y}{\\sigma_x} = ${rStr} \\times \\dfrac{${sigY}}{${sigX}} = ${bStr}\\)。` +
-          `迴歸線過均值點 \\((${muX}, ${muY})\\)，故方程式為 \\(y - ${muY} = ${bStr}(x - ${muX})\\)。` +
-          `代入 \\(x = ${x0}\\)：\\(y = ${muY} + ${bStr} \\times ${xStep} = ${y0Str}\\)。`
+            `過程：斜率 \\(b = r \\cdot \\dfrac{\\sigma_y}{\\sigma_x} = ${rStr} \\times \\dfrac{${sigY}}{${sigX}} = ${bStr}\\)。` +
+            `迴歸線過均值點 \\((${muX}, ${muY})\\)，故方程式為 \\(y - ${muY} = ${bStr}(x - ${muX})\\)。` +
+            `代入 \\(x = ${x0}\\)：\\(y = ${muY} + ${bStr} \\times ${xStep} = ${y0Str}\\)。`
         );
       } else if (mode === 1) {
         // Given equation and muX → find muY
         // Use equation y = bStr * x + c where c = muY - bNum/bDen * muX
-        const cNum  = muY * bDen - bNs * muX;
-        const cg    = gcd(Math.abs(cNum), bDs);
-        const cNs   = cNum / cg, cDs = bDs / cg;
-        const cStr  = cDs === 1 ? String(cNs) : `\\dfrac{${cNs}}{${cDs}}`;
+        const cNum = muY * bDen - bNs * muX;
+        const cg = gcd(Math.abs(cNum), bDs);
+        const cNs = cNum / cg,
+          cDs = bDs / cg;
+        const cStr = cDs === 1 ? String(cNs) : `\\dfrac{${cNs}}{${cDs}}`;
         const cSign = cNs >= 0 ? `+${cStr}` : `${cStr}`;
-        questions.push(
-          `已知迴歸直線方程式為 \\(y = ${bStr}x ${cSign}\\)，且 \\(\\mu_x = ${muX}\\)，求 \\(\\mu_y\\)。`
-        );
+        questions.push(`已知迴歸直線方程式為 \\(y = ${bStr}x ${cSign}\\)，且 \\(\\mu_x = ${muX}\\)，求 \\(\\mu_y\\)。`);
         answers.push(
           `簡答：\\(\\mu_y = ${muY}\\)。` +
-          `過程：迴歸線必通過均值點 \\((\\mu_x, \\mu_y)\\)，代入 \\(x = ${muX}\\)：` +
-          `\\(\\mu_y = ${bStr} \\times ${muX} ${cSign} = ${muY}\\)。`
+            `過程：迴歸線必通過均值點 \\((\\mu_x, \\mu_y)\\)，代入 \\(x = ${muX}\\)：` +
+            `\\(\\mu_y = ${bStr} \\times ${muX} ${cSign} = ${muY}\\)。`
         );
       } else {
         // Given equation passes through mean + another point → find equation
         const xOther = muX - sigX;
-        const yOtherNum = muY * bDen + bNs * (-sigX);
+        const yOtherNum = muY * bDen + bNs * -sigX;
         const yOther = yOtherNum / bDs;
         const isOtherClean = Number.isInteger(yOther);
         if (!isOtherClean) {
@@ -8350,7 +8552,7 @@
           );
           answers.push(
             `簡答：\\(y - ${muY} = ${bStr}(x - ${muX})\\)。` +
-            `過程：迴歸線斜率為 \\(${bStr}\\)，且必過均值點 \\((${muX}, ${muY})\\)。`
+              `過程：迴歸線斜率為 \\(${bStr}\\)，且必過均值點 \\((${muX}, ${muY})\\)。`
           );
         } else {
           questions.push(
@@ -8358,88 +8560,94 @@
           );
           answers.push(
             `簡答：\\(y - ${muY} = ${bStr}(x - ${muX})\\)。` +
-            `過程：斜率 \\(= \\dfrac{${muY} - ${yOther}}{${muX} - ${xOther}} = \\dfrac{${muY - yOther}}{${muX - xOther}} = ${bStr}\\)。` +
-            `通過均值點故方程式為 \\(y - ${muY} = ${bStr}(x - ${muX})\\)。`
+              `過程：斜率 \\(= \\dfrac{${muY} - ${yOther}}{${muX} - ${xOther}} = \\dfrac{${muY - yOther}}{${muX - xOther}} = ${bStr}\\)。` +
+              `通過均值點故方程式為 \\(y - ${muY} = ${bStr}(x - ${muX})\\)。`
           );
         }
       }
     }
-    return {
-      questions,
-      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
-      answers,
-    };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS232ReciprocalSlopesSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     // r as simple fractions [num, den], positive only (sign determined separately)
-    const rFracs = [[1,2],[2,5],[3,5],[3,4],[4,5]];
+    const rFracs = [
+      [1, 2],
+      [2, 5],
+      [3, 5],
+      [3, 4],
+      [4, 5],
+    ];
     const sigXOpts = [4, 5, 8, 10];
     const sigYOpts = [2, 5, 8, 10];
-    const gcd = (a, b) => b ? gcd(b, a % b) : a;
+    const gcd = (a, b) => (b ? gcd(b, a % b) : a);
     for (let i = 0; i < count; i++) {
-      const mode  = i % 3;
+      const mode = i % 3;
       const rFrac = rFracs[randInt(0, rFracs.length - 1)];
-      const rNum  = rFrac[0], rDen = rFrac[1]; // |r| = rNum/rDen
-      const sigX  = sigXOpts[randInt(0, sigXOpts.length - 1)];
-      const sigY  = sigYOpts[randInt(0, sigYOpts.length - 1)];
+      const rNum = rFrac[0],
+        rDen = rFrac[1]; // |r| = rNum/rDen
+      const sigX = sigXOpts[randInt(0, sigXOpts.length - 1)];
+      const sigY = sigYOpts[randInt(0, sigYOpts.length - 1)];
       // b1 = r*sigY/sigX  →  b1 = rNum*sigY / rDen*sigX
       // b2 = r*sigX/sigY  →  b2 = rNum*sigX / rDen*sigY
-      const b1Num = rNum * sigY, b1Den = rDen * sigX;
-      const b2Num = rNum * sigX, b2Den = rDen * sigY;
-      const g1 = gcd(b1Num, b1Den), g2 = gcd(b2Num, b2Den);
-      const b1Ns = b1Num/g1, b1Ds = b1Den/g1;
-      const b2Ns = b2Num/g2, b2Ds = b2Den/g2;
+      const b1Num = rNum * sigY,
+        b1Den = rDen * sigX;
+      const b2Num = rNum * sigX,
+        b2Den = rDen * sigY;
+      const g1 = gcd(b1Num, b1Den),
+        g2 = gcd(b2Num, b2Den);
+      const b1Ns = b1Num / g1,
+        b1Ds = b1Den / g1;
+      const b2Ns = b2Num / g2,
+        b2Ds = b2Den / g2;
       const b1Str = b1Ds === 1 ? String(b1Ns) : `\\dfrac{${b1Ns}}{${b1Ds}}`;
       const b2Str = b2Ds === 1 ? String(b2Ns) : `\\dfrac{${b2Ns}}{${b2Ds}}`;
-      const rStr  = rDen === 1 ? String(rNum) : `\\dfrac{${rNum}}{${rDen}}`;
-      const r2Num = rNum * rNum, r2Den = rDen * rDen;
+      const rStr = rDen === 1 ? String(rNum) : `\\dfrac{${rNum}}{${rDen}}`;
+      const r2Num = rNum * rNum,
+        r2Den = rDen * rDen;
       const gR2 = gcd(r2Num, r2Den);
-      const r2Str = (r2Den/gR2 === 1) ? String(r2Num/gR2) : `\\dfrac{${r2Num/gR2}}{${r2Den/gR2}}`;
+      const r2Str = r2Den / gR2 === 1 ? String(r2Num / gR2) : `\\dfrac{${r2Num / gR2}}{${r2Den / gR2}}`;
       if (mode === 0) {
         // Given b1, b2 → find |r|
         questions.push(
           `已知 \\(y\\) 對 \\(x\\) 的迴歸線斜率為 \\(${b1Str}\\)，` +
-          `\\(x\\) 對 \\(y\\) 的迴歸線斜率為 \\(${b2Str}\\)，` +
-          `求相關係數 \\(r\\) 的絕對值。`
+            `\\(x\\) 對 \\(y\\) 的迴歸線斜率為 \\(${b2Str}\\)，` +
+            `求相關係數 \\(r\\) 的絕對值。`
         );
         answers.push(
           `簡答：\\(|r| = ${rStr}\\)。` +
-          `過程：兩迴歸線斜率之乘積等於 \\(r^2\\)，即 ` +
-          `\\(r^2 = ${b1Str} \\times ${b2Str} = ${r2Str}\\)，` +
-          `故 \\(|r| = ${rStr}\\)。`
+            `過程：兩迴歸線斜率之乘積等於 \\(r^2\\)，即 ` +
+            `\\(r^2 = ${b1Str} \\times ${b2Str} = ${r2Str}\\)，` +
+            `故 \\(|r| = ${rStr}\\)。`
         );
       } else if (mode === 1) {
         // Given r and b1 → find b2
         questions.push(
           `已知相關係數 \\(r = ${rStr}\\)，且 \\(y\\) 對 \\(x\\) 的迴歸線斜率為 \\(${b1Str}\\)，` +
-          `求 \\(x\\) 對 \\(y\\) 的迴歸線斜率。`
+            `求 \\(x\\) 對 \\(y\\) 的迴歸線斜率。`
         );
         answers.push(
           `簡答：\\(${b2Str}\\)。` +
-          `過程：設斜率為 \\(m\\)，由 \\(m \\times ${b1Str} = r^2 = ${r2Str}\\)，` +
-          `解得 \\(m = ${b2Str}\\)。`
+            `過程：設斜率為 \\(m\\)，由 \\(m \\times ${b1Str} = r^2 = ${r2Str}\\)，` +
+            `解得 \\(m = ${b2Str}\\)。`
         );
       } else {
         // Given r, sigX, sigY → find both slopes
         questions.push(
           `已知 \\(\\sigma_x = ${sigX}\\)，\\(\\sigma_y = ${sigY}\\)，相關係數 \\(r = ${rStr}\\)。` +
-          `求 \\(y\\) 對 \\(x\\) 與 \\(x\\) 對 \\(y\\) 兩條迴歸線的斜率。`
+            `求 \\(y\\) 對 \\(x\\) 與 \\(x\\) 對 \\(y\\) 兩條迴歸線的斜率。`
         );
         answers.push(
           `簡答：\\(y\\) 對 \\(x\\) 斜率為 \\(${b1Str}\\)，\\(x\\) 對 \\(y\\) 斜率為 \\(${b2Str}\\)。` +
-          `過程：\\(b_1 = r \\cdot \\dfrac{\\sigma_y}{\\sigma_x} = ${rStr} \\times \\dfrac{${sigY}}{${sigX}} = ${b1Str}\\)；` +
-          `\\(b_2 = r \\cdot \\dfrac{\\sigma_x}{\\sigma_y} = ${rStr} \\times \\dfrac{${sigX}}{${sigY}} = ${b2Str}\\)。`
+            `過程：\\(b_1 = r \\cdot \\dfrac{\\sigma_y}{\\sigma_x} = ${rStr} \\times \\dfrac{${sigY}}{${sigX}} = ${b1Str}\\)；` +
+            `\\(b_2 = r \\cdot \\dfrac{\\sigma_x}{\\sigma_y} = ${rStr} \\times \\dfrac{${sigX}}{${sigY}} = ${b2Str}\\)。`
         );
       }
     }
-    return {
-      questions,
-      summaryAnswers: answers.map(a => a.split('。')[0] + '。'),
-      answers,
-    };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS232MeanPointSet(count) {
@@ -8451,7 +8659,7 @@
         },
         {
           q: '已知 \\(\\mu_x=60,\\mu_y=70\\)，且迴歸線通過 \\((50,62)\\)，求該迴歸線方程式。',
-          a: '簡答：\\(y-70=\\frac45(x-60)\\)。過程：迴歸線通過 \\((60,70)\\) 與 \\((50,62)\\)，斜率為 \\(\\frac{70-62}{60-50}=\\frac45\\)，故方程式為 \\(y-70=\\frac45(x-60)\\)。',
+          a: '簡答：\\(y-70=\\frac45(x-60)\\)。過程：迴歸線通過 \\((60,70)\\) 與 \\((50,62)\\)，斜率為 \\(\\frac{70-62}{60-50}=\\frac 4 5\\)，故方程式為 \\(y-70=\\frac45(x-60)\\)。',
         },
         {
           q: '給定三筆數據 \\((2,4),(4,6),(a,b)\\)，若其迴歸線為 \\(y=x+2\\) 且 \\(\\mu_x=4\\)，求數對 \\((a,b)\\)。',
@@ -8483,7 +8691,7 @@
         },
         {
           q: '已知三點 \\((1,2),(2,3),(3,k)\\)，若最小平方法所得迴歸線斜率為 1，求 \\(k\\)。',
-          a: '簡答：4。過程：\\(\\bar x=2\\)，\\(S_{xx}=2\\)。\\(\\bar y=\\frac{5+k}{3}\\)，\\(S_{xy}=(-1)(2-\\bar y)+0+(1)(k-\bar y)=k-2\\)。斜率 \\(b=\\frac{S_{xy}}{S_{xx}}=\\frac{k-2}{2}=1\\)，得 \\(k=4\\)。',
+          a: '簡答：4。過程：\\(\\bar x=2\\)，\\(S_{xx}=2\\)。\\(\\bar y=\\frac{5+k}{3}\\)，\\(S_{xy}=(-1)(2-\\bar y)+0+(1)(k-\\bar y)=k-2\\)。斜率 \\(b=\\frac{S_{xy}}{S_{xx}}=\\frac{k-2}{2}=1\\)，得 \\(k=4\\)。',
         },
         {
           q: '證明當 \\(y=a+bx\\) 為迴歸線時，\\(\\sum (y_i-\\mu_y)=b\\sum(x_i-\mu_x)\\) 恆成立。',
@@ -8653,7 +8861,8 @@
   function buildS241CoordinateConversionSet(count) {
     const standard = [0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
         const r = s241Pick([2, 3, 4, 5, 6, 8, 10, 12]);
@@ -8684,7 +8893,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241OneKnownRatioSet(count) {
@@ -8702,7 +8911,8 @@
     };
     const quadrants = Object.keys(signs);
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const tri = s241Pick(triples);
       const quadrant = s241Pick(quadrants);
@@ -8722,12 +8932,13 @@
         `簡答：\\(\\sin\\theta=${formatFraction(sinNum, tri.c)}\\)，\\(\\cos\\theta=${formatFraction(cosNum, tri.c)}\\)，\\(\\tan\\theta=${formatFraction(sinNum, cosNum)}\\)。過程：由已知比值先得直角三角形三邊比例為 ${tri.a}:${tri.b}:${tri.c}，再依${quadrant}決定正負號。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241CoterminalQuadrantSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 3 === 0) {
         const angle = s241Pick([720, 810, 930, 1120, 1280, -250, -530, 2000]);
@@ -8758,12 +8969,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241ReductionIdentitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const theta = s241Pick([10, 20, 30, 40, 50, 60, 70, 80]);
       const type = i % 5;
@@ -8798,7 +9010,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241PolarGeometrySet(count) {
@@ -8810,7 +9022,8 @@
       [210, 300],
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const r1 = s241Pick([2, 3, 4, 5, 6]);
       const r2 = s241Pick([3, 4, 5, 6, 8]);
@@ -8837,12 +9050,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241TrigInterpolationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const start = s241Pick([20, 25, 30, 34, 40]);
       const step = 10;
@@ -8858,13 +9072,14 @@
         `簡答：約 \\(${value.toFixed(4)}\\)。過程：目標角距離前一表值 ${target} 分，占 ${target}/${step}。線性內插為 \\(${v1.toFixed(4)}+(${v2.toFixed(4)}-${v1.toFixed(4)})\\cdot\\frac{${target}}{${step}}=${value.toFixed(4)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241TrigQuadraticRootsSet(count) {
     const angles = [30, 45, 60, 120, 135, 150];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const angle = s241Pick(angles);
       const trig = S241_TRIG[angle];
@@ -8881,12 +9096,13 @@
         `簡答：\\(\\tan A=${tanText}\\)。過程：方程兩根為 \\(\\sin A\\) 與 \\(\\cos A\\)，由係數可得其和與積。又 \\(A\\) 在${S241_TRIG[angle].quad}，對應標準角為 \\(${angle}^\\circ\\)，所以 \\(\\sin A=${sinText}\\)、\\(\\cos A=${cosText}\\)，故 \\(\\tan A=\\frac{\\sin A}{\\cos A}=${tanText}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241RepresentingSegmentsSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const type = i % 3;
       if (type === 0) {
@@ -8912,12 +9128,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241AngleBisectorAreaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const angle = s241Pick([60, 120]);
       const b = s241Pick([4, 6, 8, 10, 12]);
@@ -8931,12 +9148,13 @@
         `簡答：\\(AD=${len}\\)。過程：角平分線長可由面積拆分或公式 \\(AD=\\frac{2bc\\cos(A/2)}{b+c}\\)。代入 \\(b=${b},c=${c},A=${angle}^\\circ\\)，得 \\(AD=${len}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241TrigExtremaIdentitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
         const s = s241Pick([
@@ -8963,12 +9181,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241SideAltitudeSineRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const hs = shuffle([3, 4, 6, 8, 12]).slice(0, 3);
       const inv = hs.map((h) => 1 / h);
@@ -8983,12 +9202,13 @@
         `簡答：\\(${simple[0]}:${simple[1]}:${simple[2]}\\)。過程：同一三角形面積 \\(\\Delta=\\frac12ah_a=\\frac12bh_b=\\frac12ch_c\\)，所以邊長與高成反比。又正弦定理給 \\(\\sin A:\\sin B:\\sin C=a:b:c\\)，故比值為 \\(\\frac1{${hs[0]}}:\\frac1{${hs[1]}}:\\frac1{${hs[2]}}=${simple[0]}:${simple[1]}:${simple[2]}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241TerminalLineDefinitionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const x = s241Pick([2, 3, 4, -2, -3, -4]);
       const y = s241Pick([2, 3, 4, -2, -3, -4]);
@@ -9005,7 +9225,7 @@
         `簡答：\\(\\sin\\theta=${sinText}\\)，\\(\\cos\\theta=${cosText}\\)，\\(\\tan\\theta=${formatFraction(y, x)}\\)。過程：終邊上一點到原點距離為 \\(r=${rText}\\)。依定義 \\(\\sin\\theta=\\frac{y}{r}\\)、\\(\\cos\\theta=\\frac{x}{r}\\)，代入並有理化得 \\(\\sin\\theta=${sinText}\\)、\\(\\cos\\theta=${cosText}\\)，且此點在${quad}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241TriangleAngleIdentitySet(count) {
@@ -9020,7 +9240,8 @@
       ['\\tan(A+B)\\tan C', '\\tan(180^\\circ-C)\\tan C=-\\tan^2 C'],
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s241Pick(identities);
       questions.push(`在 \\(\\triangle ABC\\) 中，化簡 \\(${item[0]}\\)。`);
@@ -9028,12 +9249,13 @@
         `簡答：\\(${item[1].split('=')[item[1].split('=').length - 1]}\\)。過程：三角形內角和為 \\(A+B+C=180^\\circ\\)，所以 \\(A+B=180^\\circ-C\\)。代入後用誘導公式：\\(${item[1]}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241SquareSumSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const step = s241Pick([1, 2, 3, 5, 6, 9, 10, 15, 18, 30]);
       const func = s241Pick(['\\sin', '\\cos']);
@@ -9046,12 +9268,13 @@
         `簡答：\\(${ans}\\)。過程：利用互餘角關係與 \\(\\sin^2\\theta+\\cos^2\\theta=1\\)。將 \\(\\theta\\) 與 \\(90^\\circ-\\theta\\) 配對，每組和為 1；若出現 \\(45^\\circ\\)，其平方為 \\(\\frac12\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241SameAngleComparisonSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
         const theta = s241Pick([10, 15, 20, 30, 40, 45, 50, 60, 75, 80]);
@@ -9091,7 +9314,7 @@
         answers.push(`簡答：${mode.order}。過程：${mode.reason}`);
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241BasicFiveSubtypeMixedSet(count) {
@@ -9214,7 +9437,8 @@
       { angles: [60, 60, 60], ratio: ['1', '1', '1'] },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(patterns);
       if (i % 2 === 0) {
@@ -9241,7 +9465,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242AsaAasSet(count) {
@@ -9284,7 +9508,8 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const scale = s242Pick([2, 3, 4, 5, 6, 8]);
@@ -9296,13 +9521,14 @@
         `簡答：\\(a=${aText},b=${bText},c=${cText}\\)。過程：先得 \\(\\angle C=${item.C}^\\circ\\)。由正弦定理，\\(a:b:c=\\sin A:\\sin B:\\sin C\\)，再用已知邊長決定倍率。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242CircumradiusSet(count) {
     const angles = [30, 45, 60, 90, 120, 135, 150];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const R = s242Pick([3, 4, 5, 6, 8, 10]);
       const A = s242Pick(angles);
@@ -9323,12 +9549,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242SsaAmbiguousSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const b = s242Pick([8, 10, 12, 14, 16]);
       const A = 30;
@@ -9351,12 +9578,13 @@
         `簡答：${result}。過程：SSA 情形先比較 \\(a\\)、\\(b\\sin A\\)、\\(b\\)。本題 ${reason}，所以為${result}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242AltitudeSineRatioSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const hs = shuffle([3, 4, 5, 6, 8, 10, 12]).slice(0, 3);
       const lcm = hs.reduce((acc, value) => (acc * value) / gcdInt(acc, value), 1);
@@ -9368,12 +9596,13 @@
         `簡答：\\(${s242RatioText(ratio)}\\)。過程：同一三角形中 \\(a h_a=b h_b=c h_c=2\\Delta\\)，所以邊長與高成反比；又 \\(a:b:c=\\sin A:\\sin B:\\sin C\\)，故比值為 \\(\\frac1{${hs[0]}}:\\frac1{${hs[1]}}:\\frac1{${hs[2]}}=${s242RatioText(ratio)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242CosineSasSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const angles = [60, 90, 120];
     for (let i = 0; i < count; i += 1) {
       const b = s242Pick([3, 4, 5, 6, 8]);
@@ -9390,7 +9619,7 @@
         `簡答：\\(a=${aText}\\)。過程：餘弦定理 \\(a^2=b^2+c^2-2bc\\cos A\\)。代入得 \\(a^2=${a2}\\)，所以 \\(a=${aText}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242CosineSssAngleSet(count) {
@@ -9402,7 +9631,8 @@
       { a: 5, b: 5, c: 6, angle: '約 \\(73.7^\\circ\\)', cos: '\\frac{7}{25}' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(triples);
       const scale = s242Pick([1, 2, 3, 4]);
@@ -9414,7 +9644,7 @@
         `簡答：\\(\\cos A=${item.cos}\\)，\\(\\angle A\\) 為${type}。過程：\\(\\cos A=\\frac{b^2+c^2-a^2}{2bc}\\)。代入三邊得 \\(\\cos A=${item.cos}\\)，再由正負判斷角的類型。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242AlgebraicSideRelationSet(count) {
@@ -9424,7 +9654,8 @@
       { k: 3, angle: '60^\\circ', cos: '\\frac12' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const letter = s242Pick(['A', 'B', 'C']);
@@ -9436,7 +9667,7 @@
         `簡答：\\(\\angle ${letter}=${item.angle}\\)。過程：左式為 \\((${pair[0]}+${pair[1]})^2-${pair[2]}^2=${pair[0]}^2+${pair[1]}^2-${pair[2]}^2+2${pair[0]}${pair[1]}\\)。由條件得 \\(${pair[0]}^2+${pair[1]}^2-${pair[2]}^2=(${item.k}-2)${pair[0]}${pair[1]}\\)，所以 \\(\\cos ${letter}=${item.cos}\\)，故 \\(\\angle ${letter}=${item.angle}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242TriangleShapeSet(count) {
@@ -9448,14 +9679,15 @@
       { sides: [5, 12, 13], ans: '直角三角形', why: '\\(5^2+12^2=13^2\\)' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const scale = s242Pick([1, 2, 3, 4]);
       questions.push(`三角形三邊長分別為 ${item.sides.map((value) => value * scale).join('、')}，判斷此三角形的形狀。`);
       answers.push(`簡答：${item.ans}。過程：先取最大邊檢查平方關係；${item.why}，因此判定為${item.ans}。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242CyclicQuadrilateralDiagonalSet(count) {
@@ -9465,7 +9697,8 @@
       { AB: 5, BC: 5, CD: 4, DA: 6, angleB: 60 },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const cos = item.angleB === 60 ? 1 / 2 : -1 / 2;
@@ -9480,13 +9713,14 @@
         `簡答：\\(AC=${acText}\\)，\\(\\angle ADC=${dAngle}^\\circ\\)。過程：在 \\(\\triangle ABC\\) 用餘弦定理得 \\(AC^2=${scale * scale * ac2}\\)。又圓內接四邊形對角互補，所以 \\(\\angle ADC=180^\\circ-${item.angleB}^\\circ=${dAngle}^\\circ\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242TwoSideAngleAreaSet(count) {
     const angles = [30, 45, 60, 90, 120, 150];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const b = s242Pick([4, 6, 8, 10, 12]);
       const c = s242Pick([3, 5, 6, 7, 9]);
@@ -9497,7 +9731,7 @@
         `簡答：\\(\\Delta=${area}\\)。過程：兩邊夾角面積公式 \\(\\Delta=\\frac12bc\\sin A\\)。代入得 \\(\\Delta=\\frac12\\cdot${b}\\cdot${c}\\cdot\\sin${A}^\\circ=${area}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242HeronAreaSet(count) {
@@ -9510,7 +9744,8 @@
       { sides: [10, 9, 17], areaCoeff: 36, areaRad: 1 },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const scale = s242Pick([1, 2, 3]);
@@ -9522,7 +9757,7 @@
         `簡答：\\(\\Delta=${area}\\)。過程：半周長 \\(s=${s}\\)，海龍公式 \\(\\Delta=\\sqrt{s(s-a)(s-b)(s-c)}\\)。此題可視為基本邊組放大 ${scale} 倍，面積放大 ${scale * scale} 倍，得 \\(${area}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242InradiusCircumradiusSet(count) {
@@ -9533,7 +9768,8 @@
       { sides: [13, 14, 15], r: [4, 1], R: [65, 8] },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const scale = s242Pick([1, 2, 3]);
@@ -9548,7 +9784,7 @@
         `簡答：\\(r=${rText}\\)，\\(R=${RText}\\)。過程：先由海龍公式得面積，半周長為 \\(s=${s}\\)。內切圓半徑 \\(r=\\frac{\\Delta}{s}\\)，外接圓半徑 \\(R=\\frac{abc}{4\\Delta}\\)。邊長放大 ${scale} 倍時，兩個半徑也放大 ${scale} 倍。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242CyclicQuadrilateralAreaSet(count) {
@@ -9559,7 +9795,8 @@
       { sides: [3, 3, 5, 5], areaCoeff: 4, areaRad: 14 },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const scale = s242Pick([1, 2, 3]);
@@ -9571,12 +9808,13 @@
         `簡答：\\(${area}\\)。過程：圓內接四邊形可用婆羅摩笈多公式 \\(K=\\sqrt{(s-a)(s-b)(s-c)(s-d)}\\)。半周長 \\(s=${s}\\)；也可視為基本邊組放大 ${scale} 倍，面積放大 ${scale * scale} 倍。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242DiagonalAreaExtremaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const d1 = s242Pick([4, 6, 8, 10, 12]);
       const d2 = s242Pick([5, 7, 9, 11]);
@@ -9598,7 +9836,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242MedianLengthSet(count) {
@@ -9609,7 +9847,8 @@
       { a: 8, b: 6, c: 9, m2: 98 },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const scale = s242Pick([1, 2, 3]);
@@ -9621,7 +9860,7 @@
         `簡答：\\(m_a=${mText}\\)。過程：中線公式 \\(m_a=\\frac12\\sqrt{2b^2+2c^2-a^2}\\)。代入三邊後化簡得 \\(m_a=${mText}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242AngleBisectorLengthSet(count) {
@@ -9632,7 +9871,8 @@
       { A: 60, b: 10, c: 5 },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const scale = s242Pick([1, 2, 3]);
@@ -9645,7 +9885,7 @@
         `簡答：\\(AD=${len}\\)。過程：\\(AD=\\frac{2bc\\cos(A/2)}{b+c}\\)。代入 \\(b=${item.b * scale}\\)、\\(c=${item.c * scale}\\)、\\(A=${item.A}^\\circ\\)，得 \\(AD=${len}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242HeightProjectionSet(count) {
@@ -9655,7 +9895,8 @@
       { hyp: 13, leg1: 5, leg2: 12, h: [60, 13] },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const scale = s242Pick([1, 2, 3]);
@@ -9667,12 +9908,13 @@
         `簡答：\\(${hText}\\)。過程：面積可寫成 \\(\\frac12\\cdot${item.leg1 * scale}\\cdot${item.leg2 * scale}\\)，也可寫成 \\(\\frac12\\cdot${item.hyp * scale}\\cdot h\\)。所以 \\(h=${hText}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242ParallelogramDiagonalSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = s242Pick([4, 5, 6, 8]);
       const b = s242Pick([5, 7, 9]);
@@ -9687,12 +9929,13 @@
         `簡答：\\(${formatRadical(d2sq)}\\)。過程：平行四邊形定理 \\(d_1^2+d_2^2=2(a^2+b^2)\\)。代入得 \\(d_2^2=2(${a}^2+${b}^2)-${d1}^2=${d2sq}\\)，故另一條對角線為 \\(${formatRadical(d2sq)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242TrapezoidAreaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const top = s242Pick([4, 5, 6, 8]);
       const bottom = top + s242Pick([4, 6, 8, 10]);
@@ -9703,7 +9946,7 @@
         `簡答：\\(${area}\\)。過程：梯形面積 \\(K=\\frac{(上底+下底)\\times 高}{2}=\\frac{(${top}+${bottom})\\cdot${height}}2=${area}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242SineLawFiveSubtypeMixedSet(count) {
@@ -9888,7 +10131,8 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const scale = s242Pick([1, 2, 3]);
@@ -9901,13 +10145,14 @@
         `簡答：\\(${ans}\\) 公尺。過程：先得 \\(\\angle C=180^\\circ-${item.A}^\\circ-${item.B}^\\circ\\)。由正弦定理，所求邊可用 \\(\\frac{AB}{\\sin C}\\) 與對應角的正弦相乘；代入基線與兩端角即可得到 \\(${ans}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243SasCrossDistanceSet(count) {
     const angles = [60, 90, 120];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = s242Pick([50, 80, 100, 120, 150]);
       const b = s242Pick([60, 90, 110, 140, 160]);
@@ -9924,7 +10169,7 @@
         `簡答：\\(${len.text}\\) 公尺。過程：這是兩邊一夾角，使用餘弦定理 \\(AB^2=AC^2+BC^2-2\\cdot AC\\cdot BC\\cos C\\)。代入得 \\(AB^2=${len.square}\\)，所以 \\(AB=${len.text}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243SlopeDoubleObservationSet(count) {
@@ -9935,7 +10180,8 @@
       { d: 80, a: 45, b: 60, h: '40(3+\\sqrt{3})' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const scale = s242Pick([1, 2, 3, 4]);
@@ -9947,7 +10193,7 @@
         `簡答：\\(${h}\\) 公尺。過程：設原位置到山腳投影的水平距離為 \\(x\\)，高度為 \\(h\\)。由 \\(h=x\\tan ${item.a}^\\circ=(x-${item.d * scale})\\tan ${item.b}^\\circ\\)，解出 \\(h=${h}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243SegmentedHeightSet(count) {
@@ -9986,7 +10232,8 @@
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const scale = s242Pick([1, 2, 3]);
@@ -9998,7 +10245,7 @@
         `簡答：\\(${h}\\) 公尺。過程：樓頂高度為 \\(d\\tan ${item.high}^\\circ\\)，樓底高度為 \\(d\\tan ${item.low}^\\circ\\)。兩者相減，得所求高度 \\(${h}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243ArbitraryDivisionLineSet(count) {
@@ -10009,7 +10256,8 @@
       { AB: 9, AC: 6, BC: 5, BD: 4, DC: 1, d2: 41 },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const scale = s242Pick([1, 2, 3]);
@@ -10021,7 +10269,7 @@
         `簡答：\\(AD=${ans}\\)。過程：用 Stewart 定理處理任意分點，\\(b^2m+c^2n=a(d^2+mn)\\)。代入三邊與分段長後解出 \\(AD=${ans}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243CommonElevationCircumradiusSet(count) {
@@ -10032,7 +10280,8 @@
       { triangle: '200、200、200', R: '\\frac{200\\sqrt{3}}{3}', theta: 60, h: '200' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       questions.push(
@@ -10042,7 +10291,7 @@
         `簡答：\\(${item.h}\\) 公尺。過程：三個觀測點仰角相同，目標底部投影到三點距離相同，因此投影點是 \\(\\triangle ABC\\) 的外心。水平距離為外接圓半徑 \\(R=${item.R}\\)，高度為 \\(R\\tan ${item.theta}^\\circ=${item.h}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243DepressionTwoTargetsSet(count) {
@@ -10053,7 +10302,8 @@
       { h: 2400, a: 45, b: 30, ans: '2400(\\sqrt{3}-1)' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       questions.push(
@@ -10063,7 +10313,7 @@
         `簡答：\\(${item.ans}\\) 公尺。過程：俯角等於仰角。到目標的水平距離分別為 \\(\\frac{h}{\\tan ${item.a}^\\circ}\\)、\\(\\frac{h}{\\tan ${item.b}^\\circ}\\)，相減即得 \\(${item.ans}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243SameElevationCircumcenterSet(count) {
@@ -10073,7 +10323,8 @@
       { angle: 60, side: 500, known: '三邊長為 300、400、500', R: '250', h: '250\\sqrt{3}' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       questions.push(
@@ -10083,7 +10334,7 @@
         `簡答：\\(${item.h}\\)。過程：仰角相同表示目標底部投影為觀測三角形外心，所以水平距離為 \\(R\\)。高度 \\(h=R\\tan ${item.angle}^\\circ=${item.h}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243OffsetCollinearObservationSet(count) {
@@ -10094,7 +10345,8 @@
       { AB: 800, BC: 400, ans: '400\\sqrt{3}' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       questions.push(
@@ -10104,7 +10356,7 @@
         `簡答：\\(${item.ans}\\) 公尺。過程：設塔底不一定在三點連線上，利用三個觀測點到塔底投影的距離與高度構成直角三角形。由三個仰角的 \\(\\tan\\) 關係建立距離差，再解出高度為 \\(${item.ans}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243SpatialMotionTrackingSet(count) {
@@ -10114,7 +10366,8 @@
       { h: '1000', a: 45, b: 30, t: 5, v: '200(\\sqrt{3}-1)' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       questions.push(
@@ -10124,7 +10377,7 @@
         `簡答：\\(${item.v}\\) 公尺/秒。過程：水平距離為 \\(\\frac{h}{\\tan\\theta}\\)。兩次觀測的水平距離差除以時間，就是速率；代入 \\(${item.a}^\\circ\\)、\\(${item.b}^\\circ\\) 與 ${item.t} 秒，得 \\(${item.v}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243BearingNavigationSet(count) {
@@ -10135,7 +10388,8 @@
       { d: 40, angle: 60, ans: '40' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       questions.push(
@@ -10145,7 +10399,7 @@
         `簡答：\\(${item.ans}\\) 公里。過程：把航行路徑與兩條視線視為三角形，已知一邊與夾角。依題意用正弦定理或餘弦定理建立邊長關係，代入得 \\(${item.ans}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243PerpendicularBearingSet(count) {
@@ -10156,17 +10410,18 @@
       { h: '60\\sqrt{3}', a: 60, b: 60, ans: '60\\sqrt{2}' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       questions.push(
-        `在塔的東方與南方各有一個觀測點，兩方向互相垂直。已知塔高 ${item.h} 公尺，兩點觀測塔頂的仰角分別為 \\(${item.a}^\\circ\\)、\\(${item.b}^\\circ\\)，求兩觀測點距離。`
+        `在塔的東方與南方各有一個觀測點，兩方向互相垂直。已知塔高 \\(${item.h}\\) 公尺，兩點觀測塔頂的仰角分別為 \\(${item.a}^\\circ\\)、\\(${item.b}^\\circ\\)，求兩觀測點距離。`
       );
       answers.push(
         `簡答：\\(${item.ans}\\) 公尺。過程：兩觀測點到塔底的水平距離分別為 \\(\\frac{${item.h}}{\\tan ${item.a}^\\circ}\\)、\\(\\frac{${item.h}}{\\tan ${item.b}^\\circ}\\)。兩方向垂直，所以用畢氏定理求兩觀測點距離。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243TyphoonTrackingSet(count) {
@@ -10177,7 +10432,8 @@
       { d: 600, speed: 60, ans: '10' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       questions.push(
@@ -10187,7 +10443,7 @@
         `簡答：約 ${item.ans} 小時。過程：把城市到颱風路徑的垂線距離與颱風位移構成直角三角形。先判斷進入警戒區的位置，再用距離除以速率得到時間。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243UniformMotionAngleChangeSet(count) {
@@ -10198,7 +10454,8 @@
       { h: 600, from: 60, to: 45, t: 10, ans: '20(3-\\sqrt{3})' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       questions.push(
@@ -10208,7 +10465,7 @@
         `簡答：\\(${item.ans}\\) 公尺/秒。過程：每次觀測的水平距離都是 \\(\\frac{h}{\\tan\\theta}\\)。兩次水平距離差除以 ${item.t} 秒，即為水平速率。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243DynamicShortestDistanceSet(count) {
@@ -10219,7 +10476,8 @@
       { D: 50, v1: 5, v2: 12, ans: '\\frac{600}{13}' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       questions.push(
@@ -10229,7 +10487,7 @@
         `簡答：\\(${item.ans}\\) 公里。過程：設時間為 \\(t\\)，距離平方可寫成 \\((${item.D}-${item.v1}t)^2+(${item.v2}t)^2\\)。這是一個二次式，配方或用頂點公式可得最小距離為 \\(${item.ans}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243AngleBisectorMeasurementSet(count) {
@@ -10243,7 +10501,8 @@
       { a: 7, b: 5, c: 6, m: '\\frac{\\sqrt{85}}{2}' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       questions.push(
@@ -10253,7 +10512,7 @@
         `簡答：中線長 \\(${item.m}\\)，\\(AG=\\frac{2}{3}\\cdot ${item.m}\\)。過程：中線公式 \\(m_a=\\frac12\\sqrt{2b^2+2c^2-a^2}\\)。重心把中線分成 \\(2:1\\)，所以 \\(AG=\\frac23m_a\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243DisplacementSegmentSet(count) {
@@ -10264,7 +10523,8 @@
       { a: 90, b: 45, ans: '1' },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       questions.push(
@@ -10274,7 +10534,7 @@
         `簡答：\\(${item.ans}\\)。過程：等時間且等速表示兩段位移長相等。把 \\(P,Q,R\\) 與觀測點 \\(O\\) 構成三角形，再用正弦定理與角度關係可求 \\(\\tan\\angle OPQ=${item.ans}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243HeightProjectionStackSet(count) {
@@ -10442,18 +10702,14 @@
   }
 
   function s24LinearTrigText(sinCoef, cosCoef) {
-    const first = sinCoef === 0
-      ? ''
-      : `${sinCoef === 1 ? '' : sinCoef === -1 ? '-' : sinCoef}\\sin\\theta`;
+    const first = sinCoef === 0 ? '' : `${sinCoef === 1 ? '' : sinCoef === -1 ? '-' : sinCoef}\\sin\\theta`;
     const second = s24SignedTerm(cosCoef, '\\cos\\theta');
     const raw = `${first}${second}`;
     return raw.startsWith('+') ? raw.slice(1) : raw;
   }
 
   function s24LinearTanText(coef, constant) {
-    const tanPart = coef === 0
-      ? ''
-      : `${coef === 1 ? '' : coef === -1 ? '-' : coef}\\tan\\theta`;
+    const tanPart = coef === 0 ? '' : `${coef === 1 ? '' : coef === -1 ? '-' : coef}\\tan\\theta`;
     if (constant === 0) return tanPart || '0';
     const raw = `${tanPart}${s24SignedValueText(constant)}`;
     return raw.startsWith('+') ? raw.slice(1) : raw;
@@ -10477,19 +10733,20 @@
       [150, 330],
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const picked = shuffle(angleGroups).slice(0, 5).map((group) => s241Pick(group));
+      const picked = shuffle(angleGroups)
+        .slice(0, 5)
+        .map((group) => s241Pick(group));
       const sorted = picked.slice().sort((a, b) => s24TrigApprox(S241_TRIG[a].tan) - s24TrigApprox(S241_TRIG[b].tan));
       const values = sorted.map((angle) => s24TrigNameValue('tan', angle)).join('，');
-      questions.push(
-        `將下列正切值由小到大排列：\\(${picked.map((angle) => `\\tan${angle}^\\circ`).join('，')}\\)。`
-      );
+      questions.push(`將下列正切值由小到大排列：\\(${picked.map((angle) => `\\tan${angle}^\\circ`).join('，')}\\)。`);
       answers.push(
-        `簡答：\\(${sorted.map((angle) => `\\tan${angle}^\\circ`).join('<')}\\)。過程：先依象限判斷正負，再用特殊角正切值比較；${values}，所以由小到大如上。`
+        `簡答：\\(${sorted.map((angle) => `\\tan${angle}^\\circ`).join('<')}\\)。過程：先依象限判斷正負，再用特殊角正切值比較；\\(${values}\\)，所以由小到大如上。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241SinCosSumDifferenceParameterizedSet(count) {
@@ -10506,7 +10763,8 @@
       { name: '第四象限', sinSign: -1, cosSign: 1 },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const tri = s241Pick(triples);
       const quad = s241Pick(quadrants);
@@ -10525,7 +10783,7 @@
         `簡答：\\(\\sin\\theta\\cos\\theta=${product}\\)，\\(\\sin\\theta${useSum ? '-' : '+'}\\cos\\theta=${other}\\)。過程：由 \\((\\sin\\theta${useSum ? '+' : '-'}\\cos\\theta)^2=1${useSum ? '+' : '-'}2\\sin\\theta\\cos\\theta\\) 先求乘積，再依${quad.name}判斷 \\(\\sin\\theta=${formatFraction(sinNum, den)}\\)，\\(\\cos\\theta=${formatFraction(cosNum, den)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS241TangentExpressionParameterizedSet(count) {
@@ -10537,7 +10795,8 @@
       { quad: '第四象限', tan: [-4, 3] },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s241Pick(tangentCases);
       const [tn, td] = item.tan;
@@ -10558,7 +10817,7 @@
         `簡答：\\(${formatFraction(numerator, denominator)}\\)。過程：將分子、分母同除以 \\(\\cos\\theta\\)，原式變成 \\(\\dfrac{${s24LinearTanText(a, b)}}{${s24LinearTanText(c, d)}}\\)。代入 \\(\\tan\\theta=${formatFraction(tn, td)}\\)，得 \\(\\dfrac{${numerator}}{${denominator}}=${formatFraction(numerator, denominator)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242SideSumRatioSineRatioParameterizedSet(count) {
@@ -10570,7 +10829,8 @@
       [6, 7, 9],
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const sides = s242Pick(sideSets);
       const scale = s242Pick([1, 2, 3, 4]);
@@ -10587,13 +10847,14 @@
         `簡答：\\(${answerRatio}\\)。過程：設 \\(a+b=${ratioParts[0]}k\\)，\\(b+c=${ratioParts[1]}k\\)，\\(c+a=${ratioParts[2]}k\\)。相加減得 \\(a:b:c=${answerRatio}\\)。由正弦定理，\\(\\sin A:\\sin B:\\sin C=a:b:c=${answerRatio}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242SasSideAreaParameterizedSet(count) {
     const angles = [30, 45, 60, 90, 120];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const b = s242Pick([4, 5, 6, 8, 10, 12]);
       const c = s242Pick([3, 5, 7, 9, 11]);
@@ -10617,32 +10878,51 @@
         `簡答：\\(a=${formatRadical(a2)}\\)，面積 \\(=${area}\\)。過程：餘弦定理 \\(a^2=b^2+c^2-2bc\\cos A=${a2}\\)，所以 \\(a=${formatRadical(a2)}\\)。面積 \\(K=\\frac12bc\\sin A=${area}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS242IsoscelesCircumradiusParameterizedSet(count) {
     const cases = [
       {
         angle: 60,
-        base(R) { return s241SqrtCoeff(R, 1, 3); },
-        side(R) { return s241SqrtCoeff(R, 1, 3); },
-        area(R) { return s241SqrtCoeff(3 * R * R, 4, 3); },
+        base(R) {
+          return s241SqrtCoeff(R, 1, 3);
+        },
+        side(R) {
+          return s241SqrtCoeff(R, 1, 3);
+        },
+        area(R) {
+          return s241SqrtCoeff(3 * R * R, 4, 3);
+        },
       },
       {
         angle: 90,
-        base(R) { return `${2 * R}`; },
-        side(R) { return s241SqrtCoeff(R, 1, 2); },
-        area(R) { return `${R * R}`; },
+        base(R) {
+          return `${2 * R}`;
+        },
+        side(R) {
+          return s241SqrtCoeff(R, 1, 2);
+        },
+        area(R) {
+          return `${R * R}`;
+        },
       },
       {
         angle: 120,
-        base(R) { return s241SqrtCoeff(R, 1, 3); },
-        side(R) { return `${R}`; },
-        area(R) { return s241SqrtCoeff(R * R, 4, 3); },
+        base(R) {
+          return s241SqrtCoeff(R, 1, 3);
+        },
+        side(R) {
+          return `${R}`;
+        },
+        area(R) {
+          return s241SqrtCoeff(R * R, 4, 3);
+        },
       },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const R = s242Pick([4, 6, 8, 10, 12]);
@@ -10653,18 +10933,47 @@
         `簡答：\\(BC=${item.base(R)}\\)，面積 \\(=${item.area(R)}\\)。過程：由正弦定理 \\(a=2R\\sin A\\)，所以底邊 \\(BC=${item.base(R)}\\)。腰長 \\(AB=AC=${item.side(R)}\\)，再用 \\(K=\\frac12 AB\\cdot AC\\sin A\\) 得面積 \\(${item.area(R)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243TwoObservationHeightParameterizedSet(count) {
     const cases = [
-      { d: 100, first: 30, second: 60, height(scale) { return `${50 * scale}\\sqrt{3}`; } },
-      { d: 80, first: 45, second: 60, height(scale) { return `${40 * scale}(3+\\sqrt{3})`; } },
-      { d: 120, first: 30, second: 45, height(scale) { return `${60 * scale}(1+\\sqrt{3})`; } },
-      { d: 60, first: 45, second: 60, height(scale) { return `${30 * scale}(3+\\sqrt{3})`; } },
+      {
+        d: 100,
+        first: 30,
+        second: 60,
+        height(scale) {
+          return `${50 * scale}\\sqrt{3}`;
+        },
+      },
+      {
+        d: 80,
+        first: 45,
+        second: 60,
+        height(scale) {
+          return `${40 * scale}(3+\\sqrt{3})`;
+        },
+      },
+      {
+        d: 120,
+        first: 30,
+        second: 45,
+        height(scale) {
+          return `${60 * scale}(1+\\sqrt{3})`;
+        },
+      },
+      {
+        d: 60,
+        first: 45,
+        second: 60,
+        height(scale) {
+          return `${30 * scale}(3+\\sqrt{3})`;
+        },
+      },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const scale = s242Pick([1, 2, 3]);
@@ -10677,13 +10986,14 @@
         `簡答：\\(${height}\\) 公尺。過程：設第一次觀測點到建築物底部距離為 \\(x\\)，高度為 \\(h\\)。則 \\(h=x\\tan${item.first}^\\circ=(x-${d})\\tan${item.second}^\\circ\\)，解得 \\(h=${height}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243BearingCosineDistanceParameterizedSet(count) {
     const angles = [60, 90, 120];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const r1 = s242Pick([100, 150, 200, 300, 400]);
       const r2 = s242Pick([120, 180, 240, 300, 500]);
@@ -10700,7 +11010,7 @@
         `簡答：\\(${len.text}\\) 公尺。過程：由餘弦定理，\\(AB^2=${r1}^2+${r2}^2-2\\cdot${r1}\\cdot${r2}\\cos${angle}^\\circ=${len.square}\\)，所以 \\(AB=${len.text}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS243HeightLimitFloorsParameterizedSet(count) {
@@ -10711,7 +11021,8 @@
       { distanceKm: 4, tan: 0.2126, floorHeight: 4, angle: 12 },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const maxHeight = item.distanceKm * 1000 * item.tan;
@@ -10723,7 +11034,7 @@
         `簡答：\\(${floors}\\) 層。過程：最高高度約為 \\(${item.distanceKm * 1000}\\times${item.tan}=${s24FormatDecimal(maxHeight, 1)}\\) 公尺。每層 \\(${item.floorHeight}\\) 公尺，所以最多 \\(\\left\\lfloor ${s24FormatDecimal(maxHeight, 1)}/${item.floorHeight}\\right\\rfloor=${floors}\\) 層。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function fracTextForDisplay(frac) {
@@ -10789,6 +11100,18 @@
     return sentence || text;
   }
 
+  function createAnswerList(summaryAnswers) {
+    const answers = [];
+    const nativePush = Array.prototype.push;
+    answers.push = function pushAnswerWithSummary(...items) {
+      items.forEach((item) => {
+        summaryAnswers.push(deriveSummaryAnswerFromDetail(item));
+      });
+      return nativePush.apply(this, items);
+    };
+    return answers;
+  }
+
   /* ============================================================
    * 新增小類（依三民版 S2-2 排列組合 / 機率期望值學生卷整理）
    * 以下 8 個 generator 皆使用 randInt/Math.random 進行真隨機參數化，
@@ -10812,7 +11135,8 @@
   /* ---------- 集合相等與差集求未知數 ---------- */
   function buildS221SetEqualityUnknownsParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 2;
@@ -10858,7 +11182,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ---------- 命題的等價敘述與否定 ---------- */
@@ -10875,7 +11199,8 @@
 
   function buildS221PropositionEquivalenceNegationParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 2;
@@ -10924,15 +11249,13 @@
       const correctLetter = letters[options.findIndex((o) => o.correct)];
       const optionText = options.map((o, idx) => `(${letters[idx]}) ${o.text}`).join('　');
 
-      questions.push(
-        `敘述「${name}${compoundText}」。下列哪一個選項是這個敘述的正確否定？\n${optionText}`
-      );
+      questions.push(`敘述「${name}${compoundText}」。下列哪一個選項是這個敘述的正確否定？\n${optionText}`);
       answers.push(
         `簡答：(${correctLetter})。過程：由笛摩根定律，「P或Q」的否定是「非P且非Q」，「P且Q」的否定是「非P或非Q」。本題正確否定為「${name}${correctNegation}」，對應選項 (${correctLetter})。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ---------- 棋盤格矩形計數與指定點 ---------- */
@@ -10956,7 +11279,8 @@
 
   function buildS222GridRectangleCountParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -11024,13 +11348,18 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ---------- 數線與格點跳動位移計數 ---------- */
   function s222CountLatticeWalks2D(steps, targetX, targetY) {
     let dp = { '0_0': 1 };
-    const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+    const dirs = [
+      [1, 0],
+      [-1, 0],
+      [0, 1],
+      [0, -1],
+    ];
     for (let s = 0; s < steps; s += 1) {
       const next = {};
       Object.keys(dp).forEach((key) => {
@@ -11048,7 +11377,8 @@
 
   function buildS222LatticeWalkDisplacementParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 2;
@@ -11074,7 +11404,12 @@
       const n = randInt(4, 6);
       let x = 0;
       let y = 0;
-      const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+      const dirs = [
+        [1, 0],
+        [-1, 0],
+        [0, 1],
+        [0, -1],
+      ];
       for (let s = 0; s < n; s += 1) {
         const [dx, dy] = dirs[randInt(0, 3)];
         x += dx;
@@ -11089,7 +11424,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ---------- 限制連續跳兩階的爬樓梯計數 ---------- */
@@ -11115,7 +11450,8 @@
 
   function buildS222RestrictedStaircaseParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const n = randInt(6, 12);
@@ -11129,13 +11465,14 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ---------- 測驗猜題得分期望值 ---------- */
   function buildS224ExamPartialGuessExpectedScoreParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const totalOptions = Math.random() < 0.5 ? 5 : 4;
@@ -11158,17 +11495,18 @@
         `某次測驗共有 ${total} 題單一選擇題，每題有 ${totalOptions} 個選項，答對得 ${c} 分，答錯倒扣 ${w} 分。某生確定其中 ${k1} 題可以答對；另外有 ${k3} 題他確定其中 ${eliminated} 個選項錯誤，因此從剩下 ${r2} 個選項中隨機猜一個；剩下 ${k5} 題完全不會，只能從 ${totalOptions} 個選項中隨機猜一個。試求他這次測驗得分的期望值（四捨五入取最接近的整數）。`
       );
       answers.push(
-        `簡答：約 ${rounded} 分（精確值為 ${frac.denominator === 1 ? frac.numerator : formatFraction(frac.numerator, frac.denominator)} 分）。過程：確定答對的 ${k1} 題貢獻 \\(${k1}\\times${c}=${k1 * c}\\) 分。部分猜測的 ${k3} 題每題期望值為 \\(\\frac{${c}-${w}\\times${r2 - 1}}{${r2}}\\)，共貢獻 \\(${k3}\\times\\frac{${c - w * (r2 - 1)}}{${r2}}\\) 分。完全猜測的 ${k5} 題每題期望值為 \\(\\frac{${c}-${w}\\times${totalOptions - 1}}{${totalOptions}}\\)，共貢獻 \\(${k5}\\times\\frac{${c - w * (totalOptions - 1)}}{${totalOptions}}\\) 分。三部分加總後四捨五入，得期望值約為 ${rounded} 分。`
+        `簡答：約 ${rounded} 分（精確值為 \\(${frac.denominator === 1 ? frac.numerator : formatFraction(frac.numerator, frac.denominator)}\\) 分）。過程：確定答對的 ${k1} 題貢獻 \\(${k1}\\times${c}=${k1 * c}\\) 分。部分猜測的 ${k3} 題每題期望值為 \\(\\frac{${c}-${w}\\times${r2 - 1}}{${r2}}\\)，共貢獻 \\(${k3}\\times\\frac{${c - w * (r2 - 1)}}{${r2}}\\) 分。完全猜測的 ${k5} 題每題期望值為 \\(\\frac{${c}-${w}\\times${totalOptions - 1}}{${totalOptions}}\\)，共貢獻 \\(${k5}\\times\\frac{${c - w * (totalOptions - 1)}}{${totalOptions}}\\) 分。三部分加總後四捨五入，得期望值約為 ${rounded} 分。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ---------- 線性機率分布求參數與期望值 ---------- */
   function buildS224LinearDistributionNormalizationParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const focus = i % 3;
@@ -11209,7 +11547,7 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ---------- 不放回抽球顏色取完順序機率 ---------- */
@@ -11217,7 +11555,8 @@
 
   function buildS224ColorExhaustedOrderParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 2;
@@ -11232,7 +11571,7 @@
           `袋中有${colorPool[0]}球 ${countA} 顆、${colorPool[1]}球 ${countB} 顆，每次從袋中取出 1 球，取後不放回，直到所有球都被取完為止。求${colorPool[0]}球比${colorPool[1]}球先取完的機率。`
         );
         answers.push(
-          `簡答：${formatFraction(frac.numerator, frac.denominator)}。過程：「${colorPool[0]}球先取完」等同於「最後一顆被取出的球是${colorPool[1]}球」。把所有 ${total} 顆球排成一列視為等機率的排列，最後一個位置是任一顆球的機率相同，是${colorPool[1]}球的機率為 \\(\\frac{${countB}}{${total}}\\)。所以${colorPool[0]}球先取完的機率為 ${formatFraction(frac.numerator, frac.denominator)}。`
+          `簡答：\\(${formatFraction(frac.numerator, frac.denominator)}\\)。過程：「${colorPool[0]}球先取完」等同於「最後一顆被取出的球是${colorPool[1]}球」。把所有 ${total} 顆球排成一列視為等機率的排列，最後一個位置是任一顆球的機率相同，是${colorPool[1]}球的機率為 \\(\\frac{${countB}}{${total}}\\)。所以${colorPool[0]}球先取完的機率為 \\(${formatFraction(frac.numerator, frac.denominator)}\\)。`
         );
         continue;
       }
@@ -11242,11 +11581,11 @@
         `袋中有${colorPool[0]}球 ${countA} 顆、${colorPool[1]}球 ${countB} 顆，每次從袋中取出 1 球，取後不放回，直到所有球都被取完為止。求最後一顆被取出的球是${colorPool[0]}球的機率。`
       );
       answers.push(
-        `簡答：${formatFraction(frac.numerator, frac.denominator)}。過程：把所有 ${total} 顆球視為排成一列的等機率排列，最後一個位置恰好是${colorPool[0]}球的機率，等於${colorPool[0]}球數占全部球數的比例，即 \\(\\frac{${countA}}{${total}}=${formatFraction(frac.numerator, frac.denominator)}\\)。`
+        `簡答：\\(${formatFraction(frac.numerator, frac.denominator)}\\)。過程：把所有 ${total} 顆球視為排成一列的等機率排列，最後一個位置恰好是${colorPool[0]}球的機率，等於${colorPool[0]}球數占全部球數的比例，即 \\(\\frac{${countA}}{${total}}=${formatFraction(frac.numerator, frac.denominator)}\\)。`
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ============================================================
@@ -11267,7 +11606,8 @@
   /* ---------- 兩直線斜率求夾角 ---------- */
   function buildS241LineSlopeAngleParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const slopePool = [-4, -3, -2, -1, 1, 2, 3, 4];
 
     for (let i = 0; i < count; i += 1) {
@@ -11307,13 +11647,14 @@
       }
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ---------- 同界角象限個數統計 ---------- */
   function buildS241CoterminalQuadrantCountParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const units = [30, 45, 60];
     const quadrantNames = ['第一象限', '第二象限', '第三象限', '第四象限'];
 
@@ -11346,13 +11687,14 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ---------- 長方體空間角度 ---------- */
   function buildS243BoxSpaceAngleParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 2;
@@ -11388,2551 +11730,2551 @@
       );
     }
 
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   const nextConfigs = {
-      's2-1-1-sequence-core-five-subtypes': {
-        type: 'drill',
-        title: '數列核心五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS211SequenceFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-1-1-nth-formula-value': {
-        type: 'drill',
-        title: '已知一般項公式求特定項',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS211NthFormulaValueSet(5);
-        },
-      },
-      's2-1-1-arithmetic-basic-parameters': {
-        type: 'drill',
-        title: '等差數列基本參數計算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS211ArithmeticBasicParameterSet(5);
-        },
-      },
-      's2-1-1-geometric-basic-parameters': {
-        type: 'drill',
-        title: '等比數列基本參數計算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS211GeometricBasicParameterSet(5);
-        },
-      },
-      's2-1-1-means-application': {
-        type: 'drill',
-        title: '等差中項與等比中項應用',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS211MeansApplicationSet(5);
-        },
-      },
-      's2-1-1-basic-recurrence-terms': {
-        type: 'drill',
-        title: '基礎遞迴關係式項數推導',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS211BasicRecurrenceTermSet(5);
-        },
-      },
-      's2-1-1-arithmetic-geometric-mixed-parameters': {
-        type: 'drill',
-        title: '等差與等比數列的混合參數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS211ArithmeticGeometricMixedParameterSet(5);
-        },
-      },
-      's2-1-1-sequence-transformation-classification': {
-        type: 'drill',
-        title: '數列轉換後的等差等比判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS211SequenceTransformationClassificationSet(5);
-        },
-      },
-      's2-1-1-visual-group-patterns': {
-        type: 'drill',
-        title: '圖形規律與群數列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS211VisualGroupPatternSet(5);
-        },
-      },
-      's2-1-1-repeated-block-sequence': {
-        type: 'drill',
-        title: '重複分組數列的項與部分和',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS211RepeatedBlockSequenceSet(5);
-        },
-      },
-      's2-1-1-recurrence-transform-mixed': {
-        type: 'drill',
-        title: '遞迴轉換與一般項推測',
-        difficulty: 'medium',
-        questionCount: 8,
-        generate() {
-          return buildS211RecurrenceTransformSet(8);
-        },
-      },
-      's2-1-1-cumulative-product-recurrence': {
-        type: 'drill',
-        title: '累加型與累乘型遞迴',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS211CumulativeProductRecurrenceSet(5);
-        },
-      },
-      's2-1-1-combinatorial-recurrence': {
-        type: 'drill',
-        title: '計數類遞迴與費氏數列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS211CombinatorialRecurrenceSet(5);
-        },
-      },
-      's2-1-1-geometric-coordinate-sequences': {
-        type: 'drill',
-        title: '幾何分割與座標數列',
-        difficulty: 'medium',
-        questionCount: 8,
-        generate() {
-          return buildS211GeometricCoordinateSequenceSet(8);
-        },
-      },
-      's2-1-1-arithmetic-common-terms': {
-        type: 'drill',
-        title: '兩等差數列的共同項',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS211ArithmeticCommonTermsSet(5);
-        },
-      },
-      's2-1-1-geometric-product-symmetry': {
-        type: 'drill',
-        title: '等比數列的對稱乘積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS211GeometricProductSymmetrySet(5);
-        },
-      },
-      's2-1-1-arithmetic-geometric-bridge': {
-        type: 'drill',
-        title: '等差等比混合條件反推',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS211ArithmeticGeometricBridgeSet(5);
-        },
-      },
-      's2-1-1-prefix-product-terms': {
-        type: 'drill',
-        title: '前綴乘積反求數列項',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS211PrefixProductTermSet(5);
-        },
-      },
-      's2-1-2-series-sum-seven-subtypes': {
-        type: 'drill',
-        title: '等差級數與求和七小類綜合',
-        difficulty: 'medium',
-        questionCount: 7,
-        generate() {
-          return buildS212SevenSubtypeMixedSet(7);
-        },
-      },
-      's2-1-2-basic-sum-formula': {
-        type: 'drill',
-        title: '基礎公式求和',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS212BasicSumFormulaSet(5);
-        },
-      },
-      's2-1-2-consecutive-cube-range-sum': {
-        type: 'drill',
-        title: '連續立方和的區間計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212ConsecutiveCubeRangeSumSet(5);
-        },
-      },
-      's2-1-2-range-multiple-sum': {
-        type: 'drill',
-        title: '範圍內倍數之和',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS212RangeMultipleSumSet(5);
-        },
-      },
-      's2-1-2-max-sum': {
-        type: 'drill',
-        title: '級數和的最大值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212MaxSumSet(5);
-        },
-      },
-      's2-1-2-sn-to-an': {
-        type: 'drill',
-        title: '已知 Sn 公式求一般項',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212SnToAnSet(5);
-        },
-      },
-      's2-1-2-two-ap-ratio': {
-        type: 'drill',
-        title: '兩等差數列的和與項之比',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212TwoApRatioSet(5);
-        },
-      },
-      's2-1-2-applications': {
-        type: 'drill',
-        title: '等差級數生活情境應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212ApplicationSet(5);
-        },
-      },
-      's2-1-2-given-sn-general-term': {
-        type: 'drill',
-        title: '給定前 n 項和公式求一般項',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212GivenSnGeneralTermSet(5);
-        },
-      },
-      's2-1-2-geometric-series-five-subtypes': {
-        type: 'drill',
-        title: '等比級數與複利五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212GeometricSeriesFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-1-2-geometric-basic-sum': {
-        type: 'drill',
-        title: '等比級數基礎參數求和',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS212GeometricBasicSumSet(5);
-        },
-      },
-      's2-1-2-geometric-series-compute': {
-        type: 'drill',
-        title: '等比級數求和計算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS212GeometricSeriesComputeSet(5);
-        },
-      },
-      's2-1-2-geometric-segment-property': {
-        type: 'drill',
-        title: '等比級數分段和性質',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212GeometricSegmentPropertySet(5);
-        },
-      },
-      's2-1-2-geometric-partial-sum-extension': {
-        type: 'drill',
-        title: '等比級數分段和反推延伸',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212GeometricPartialSumExtensionSet(5);
-        },
-      },
-      's2-1-2-geometric-sn-to-an': {
-        type: 'drill',
-        title: '等比型 Sn 公式求一般項',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212GeometricSnToAnSet(5);
-        },
-      },
-      's2-1-2-geometric-applications': {
-        type: 'drill',
-        title: '等比級數生活情境應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212GeometricApplicationsSet(5);
-        },
-      },
-      's2-1-2-sigma-five-subtypes': {
-        type: 'drill',
-        title: 'Sigma 求和五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212SigmaFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-1-2-sigma-formula-range': {
-        type: 'drill',
-        title: 'Sigma 標準公式與範圍變換',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS212SigmaFormulaRangeSet(5);
-        },
-      },
-      's2-1-2-sigma-linearity': {
-        type: 'drill',
-        title: 'Sigma 線性性質與常數項',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS212SigmaLinearitySet(5);
-        },
-      },
-      's2-1-2-sigma-telescoping': {
-        type: 'drill',
-        title: '分式拆項對消',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212SigmaTelescopingSet(5);
-        },
-      },
-      's2-1-2-sigma-pattern': {
-        type: 'drill',
-        title: '數列規律轉化為 Sigma 記號',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212SigmaPatternSet(5);
-        },
-      },
-      's2-1-2-sigma-mixed': {
-        type: 'drill',
-        title: '多項式與指數混合型 Sigma',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212SigmaMixedSet(5);
-        },
-      },
-      's2-1-2-special-series-sigma-five-subtypes': {
-        type: 'drill',
-        title: '特殊級數與 Sigma 應用五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212SpecialSeriesSigmaFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-1-2-repeating-digits-series': {
-        type: 'drill',
-        title: '重複數字級數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212RepeatingDigitsSeriesSubtypeSet(5);
-        },
-      },
-      's2-1-2-radical-special-telescoping': {
-        type: 'drill',
-        title: '根式與特殊分式對消',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212RadicalTelescopingSubtypeSet(5);
-        },
-      },
-      's2-1-2-consecutive-products-sum': {
-        type: 'drill',
-        title: '連續整數乘積之級數和',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212ConsecutiveProductsSubtypeSet(5);
-        },
-      },
-      's2-1-2-geometric-stacking-series': {
-        type: 'drill',
-        title: '空間幾何規律與點陣計數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212GeometricStackingSubtypeSet(5);
-        },
-      },
-      's2-1-2-algebraic-variants-sigma': {
-        type: 'drill',
-        title: '結合特殊代數結構的 Sigma',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212AlgebraicVariantsSigmaSubtypeSet(5);
-        },
-      },
-      's2-1-1-difference-method-nonlinear': {
-        type: 'drill',
-        title: '差分法（非線性型）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS211DifferenceMethodNonlinearSet(5);
-        },
-      },
-      's2-1-2-reverse-n-from-sum': {
-        type: 'drill',
-        title: '已知級數和反求項數 n',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212ReverseNFromSumSet(5);
-        },
-      },
-      's2-1-2-non-standard-sigma-limits': {
-        type: 'drill',
-        title: '非標準下界的 Sigma 求和',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212NonStandardSigmaLimitsSet(5);
-        },
-      },
-      's2-1-2-arithmetic-end-block-count': {
-        type: 'drill',
-        title: '等差級數前後端項和反推',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS212ArithmeticEndBlockCountSet(5);
-        },
-      },
-      's2-1-3-induction-sum-step': {
-        type: 'drill',
-        title: '數學歸納法的級數公式推導',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS213InductionSumStepSet(5);
-        },
-      },
-      's2-1-3-induction-divisibility-step': {
-        type: 'drill',
-        title: '數學歸納法的整除證明',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS213InductionDivisibilityStepSet(5);
-        },
-      },
-      's2-1-3-induction-recurrence-conjecture': {
-        type: 'drill',
-        title: '遞迴一般項的歸納驗證',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS213InductionRecurrenceConjectureSet(5);
-        },
-      },
-      's2-1-3-periodic-remainder-sequence': {
-        type: 'drill',
-        title: '週期餘數與整除循環',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS213PeriodicRemainderSequenceSet(5);
-        },
-      },
-      's2-2-1-counting-applications-five-subtypes': {
-        type: 'drill',
-        title: '取捨計數與排列組合五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221CountingApplicationsFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-2-1-inclusion-exclusion-applications': {
-        type: 'drill',
-        title: '取捨原理與文氏圖應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221InclusionExclusionApplicationsSubtypeSet(5);
-        },
-      },
-      's2-2-1-competition-probability-paths': {
-        type: 'drill',
-        title: '賽制與勝負機率路徑',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221CompetitionProbabilityPathsSubtypeSet(5);
-        },
-      },
-      's2-2-1-route-selection-counting': {
-        type: 'drill',
-        title: '路徑、選購與搭配問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221RouteSelectionCountingSubtypeSet(5);
-        },
-      },
-      's2-2-1-digit-formation-counting': {
-        type: 'drill',
-        title: '數字組成與計數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221DigitFormationCountingSubtypeSet(5);
-        },
-      },
-      's2-2-1-multiple-survey-counting': {
-        type: 'drill',
-        title: '倍數計數與調查統計',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221MultipleSurveyCountingSubtypeSet(5);
-        },
-      },
-      's2-2-1-product-rule-parameterized': {
-        type: 'drill',
-        title: '乘法原理的參數化搭配題',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS221ProductRuleParameterizedSet(5);
-        },
-      },
-      's2-2-1-inclusion-exclusion-multiples': {
-        type: 'drill',
-        title: '倍數聯集的取捨原理',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildS221InclusionExclusionMultiplesSet(5);
-        },
-      },
-      's2-2-1-license-plate-restrictions-parameterized': {
-        type: 'drill',
-        title: '車牌號碼限制計數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221LicensePlateRestrictionsParameterizedSet(5);
-        },
-      },
-      's2-2-1-distinct-distribution-at-least-parameterized': {
-        type: 'drill',
-        title: '相異物分配與至少限制',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221DistinctDistributionAtLeastParameterizedSet(5);
-        },
-      },
-      's2-2-1-ferry-capacity-assignment-parameterized': {
-        type: 'drill',
-        title: '渡船容量限制分配',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221FerryCapacityAssignmentParameterizedSet(5);
-        },
-      },
-      's2-2-1-handshake-couples-parameterized': {
-        type: 'drill',
-        title: '夫妻握手計數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221HandshakeCouplesParameterizedSet(5);
-        },
-      },
-      's2-2-1-fixed-end-no-repeat-schedule-parameterized': {
-        type: 'drill',
-        title: '固定首尾且相鄰不同的安排',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221FixedEndNoRepeatScheduleParameterizedSet(5);
-        },
-      },
-      's2-2-1-ambidextrous-pairing-parameterized': {
-        type: 'drill',
-        title: '左右手皆可的配對計數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221AmbidextrousPairingParameterizedSet(5);
-        },
-      },
-      's2-2-1-advanced-counting-five-subtypes': {
-        type: 'drill',
-        title: '展開項數因數路徑與塗色五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221AdvancedCountingFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-2-1-polynomial-expansion-term-counting': {
-        type: 'drill',
-        title: '多項式展開項數與同型項',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221PolynomialExpansionTermCountingSubtypeSet(5);
-        },
-      },
-      's2-2-1-divisor-counting-conditions': {
-        type: 'drill',
-        title: '正因數個數與特定倍數判別',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221DivisorCountingConditionsSubtypeSet(5);
-        },
-      },
-      's2-2-1-route-restriction-counting': {
-        type: 'drill',
-        title: '搭配、路徑與開關問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221RouteRestrictionCountingSubtypeSet(5);
-        },
-      },
-      's2-2-1-restricted-digit-counting': {
-        type: 'drill',
-        title: '數字組成與限制條件',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221RestrictedDigitCountingSubtypeSet(5);
-        },
-      },
-      's2-2-1-region-coloring-counting': {
-        type: 'drill',
-        title: '區域塗色問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221RegionColoringCountingSubtypeSet(5);
-        },
-      },
-      's2-2-2-permutation-core-five-subtypes': {
-        type: 'drill',
-        title: '排列公式與直線排列限制五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222PermutationCoreFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-2-2-permutation-equations': {
-        type: 'drill',
-        title: '排列數公式的代數運算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222PermutationEquationSubtypeSet(5);
-        },
-      },
-      's2-2-2-identical-items-permutation': {
-        type: 'drill',
-        title: '不盡相異物排列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222IdenticalItemsPermutationSubtypeSet(5);
-        },
-      },
-      's2-2-2-fixed-relative-order': {
-        type: 'drill',
-        title: '指定項目的相對順序固定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222FixedRelativeOrderSubtypeSet(5);
-        },
-      },
-      's2-2-2-position-constraints': {
-        type: 'drill',
-        title: '限制條件的直線排列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222PositionConstraintSubtypeSet(5);
-        },
-      },
-      's2-2-2-derangement-position-exclusion': {
-        type: 'drill',
-        title: '多重位置限制與錯排應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222DerangementPositionExclusionSubtypeSet(5);
-        },
-      },
-      's2-2-2-permutation-applications-five-subtypes': {
-        type: 'drill',
-        title: '路徑數字信號與分配五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222PermutationApplicationsFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-2-2-distribution-repeated': {
-        type: 'drill',
-        title: '重複排列與分配問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222DistributionRepeatedSubtypeSet(5);
-        },
-      },
-      's2-2-2-grid-paths': {
-        type: 'drill',
-        title: '棋盤街道的捷徑走法',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222GridPathSubtypeSet(5);
-        },
-      },
-      's2-2-2-number-formation': {
-        type: 'drill',
-        title: '數字組成與限制條件',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222NumberFormationSubtypeSet(5);
-        },
-      },
-      's2-2-2-signals-runs': {
-        type: 'drill',
-        title: '信號組成與連串變化數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222SignalsRunsSubtypeSet(5);
-        },
-      },
-      's2-2-2-internal-order-constraints': {
-        type: 'drill',
-        title: '具備內部次序限制的分組排列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222InternalOrderConstraintSubtypeSet(5);
-        },
-      },
-      's2-2-2-repeated-letter-permutation-parameterized': {
-        type: 'drill',
-        title: '重複字母排列總數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222RepeatedLetterPermutationParameterizedSet(5);
-        },
-      },
-      's2-2-2-adjacent-pair-arrangement-parameterized': {
-        type: 'drill',
-        title: '指定兩項相鄰的排列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222AdjacentPairArrangementParameterizedSet(5);
-        },
-      },
-      's2-2-2-adjacent-pair-end-restriction-parameterized': {
-        type: 'drill',
-        title: '相鄰成組與端點限制',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222AdjacentPairEndRestrictionParameterizedSet(5);
-        },
-      },
-      's2-2-2-same-type-nonadjacent-programs-parameterized': {
-        type: 'drill',
-        title: '同類節目不相鄰排列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222SameTypeNonAdjacentProgramsParameterizedSet(5);
-        },
-      },
-      's2-2-2-repeated-digit-leading-zero-parameterized': {
-        type: 'drill',
-        title: '重複數字與首位不可為零',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222RepeatedDigitLeadingZeroParameterizedSet(5);
-        },
-      },
-      's2-2-2-ordered-blocks-internal-permutation-parameterized': {
-        type: 'drill',
-        title: '固定區塊順序的內部排列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222OrderedBlocksInternalPermutationParameterizedSet(5);
-        },
-      },
-      's2-2-2-specified-non-adjacent-parameterized': {
-        type: 'drill',
-        title: '指定對象兩兩不相鄰排列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222SpecifiedNonAdjacentParameterizedSet(5);
-        },
-      },
-      's2-2-3-binomial-basics-five-subtypes': {
-        type: 'drill',
-        title: '二項式展開與基本應用五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223BinomialBasicsFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-2-3-binomial-coefficient': {
-        type: 'drill',
-        title: '求展開式中指定項的係數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223BinomialCoefficientSubtypeSet(5);
-        },
-      },
-      's2-2-3-binomial-constant-term': {
-        type: 'drill',
-        title: '求展開式中的常數項',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223BinomialConstantTermSubtypeSet(5);
-        },
-      },
-      's2-2-3-binomial-remainder-number': {
-        type: 'drill',
-        title: '大數除法的餘數判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223BinomialRemainderNumberSubtypeSet(5);
-        },
-      },
-      's2-2-3-polynomial-remainder-binomial': {
-        type: 'drill',
-        title: '多項式除法的餘式計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223PolynomialRemainderBinomialSubtypeSet(5);
-        },
-      },
-      's2-2-3-combination-identity': {
-        type: 'drill',
-        title: '組合數恆等式求和',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223CombinationIdentitySubtypeSet(5);
-        },
-      },
-      's2-2-3-combination-counting-five-subtypes': {
-        type: 'drill',
-        title: '組合計數與限制取法五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223CombinationCountingFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-2-3-subset-property': {
-        type: 'drill',
-        title: '數字子集的特殊性質判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223SubsetPropertySubtypeSet(5);
-        },
-      },
-      's2-2-3-non-adjacent-selection': {
-        type: 'drill',
-        title: '不相鄰選取問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223NonAdjacentSelectionSubtypeSet(5);
-        },
-      },
-      's2-2-3-poker-dice': {
-        type: 'drill',
-        title: '撲克牌牌型與骰子點數組合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223PokerDiceSubtypeSet(5);
-        },
-      },
-      's2-2-3-hockey-stick-identity': {
-        type: 'drill',
-        title: '組合恆等式與曲棍球棒求和',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223HockeyStickIdentitySubtypeSet(5);
-        },
-      },
-      's2-2-3-restricted-integer-solutions': {
-        type: 'drill',
-        title: '整除性奇偶與範圍限制方程解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223RestrictedIntegerSolutionsSubtypeSet(5);
-        },
-      },
-      's2-2-3-advanced-binomial-five-subtypes': {
-        type: 'drill',
-        title: '進階二項式係數與多項式五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223AdvancedBinomialFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-2-3-maximum-coefficient': {
-        type: 'drill',
-        title: '係數最大項的判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223MaximumCoefficientSubtypeSet(5);
-        },
-      },
-      's2-2-3-consecutive-coefficients': {
-        type: 'drill',
-        title: '連續項係數成特殊數列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223ConsecutiveCoefficientSubtypeSet(5);
-        },
-      },
-      's2-2-3-weighted-binomial-sums': {
-        type: 'drill',
-        title: '二項式展開的級數求和',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223WeightedBinomialSumSubtypeSet(5);
-        },
-      },
-      's2-2-3-multinomial-expansion': {
-        type: 'drill',
-        title: '多項式展開與同型項計數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223MultinomialExpansionSubtypeSet(5);
-        },
-      },
-      's2-2-3-complex-binomial-identity': {
-        type: 'drill',
-        title: '二項式與複數結合的組合求和',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223ComplexBinomialIdentitySubtypeSet(5);
-        },
-      },
-      's2-2-3-applications-five-subtypes': {
-        type: 'drill',
-        title: '分配集合連串與有理項五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223ApplicationsFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-2-3-product-partition': {
-        type: 'drill',
-        title: '正整數乘積的分解與方程式解',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223ProductPartitionSubtypeSet(5);
-        },
-      },
-      's2-2-3-nested-subsets': {
-        type: 'drill',
-        title: '巢狀集合與包含關係計數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223NestedSubsetsSubtypeSet(5);
-        },
-      },
-      's2-2-3-runs-counting': {
-        type: 'drill',
-        title: '符號排列的連串問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223RunsCountingSubtypeSet(5);
-        },
-      },
-      's2-2-3-rational-irrational-terms': {
-        type: 'drill',
-        title: '二項式展開的有理項與無理項計數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223RationalIrrationalTermsSubtypeSet(5);
-        },
-      },
-      's2-2-3-polynomial-remainder-variants': {
-        type: 'drill',
-        title: '多項式除法的二項式應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223PolynomialRemainderVariantsSubtypeSet(5);
-        },
-      },
-      's2-2-3-grouping-distribution-five-subtypes': {
-        type: 'drill',
-        title: '分組分堆與同物分配五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223GroupingDistributionFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-2-3-binomial-coefficient-parameterized': {
-        type: 'drill',
-        title: '二項式指定項係數參數題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223BinomialCoefficientParameterizedSet(5);
-        },
-      },
-      's2-2-3-identical-distribution-parameterized': {
-        type: 'drill',
-        title: '相同物分配與最低限制',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223IdenticalDistributionParameterizedSet(5);
-        },
-      },
-      's2-2-3-binomial-adjacent-ratio-parameterized': {
-        type: 'drill',
-        title: '連續組合數比值求 n 與 r',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223BinomialAdjacentRatioParameterizedSet(5);
-        },
-      },
-      's2-2-3-distinct-equal-named-distribution': {
-        type: 'drill',
-        title: '相異物平均給特定對象',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223DistinctEqualNamedDistributionSubtypeSet(5);
-        },
-      },
-      's2-2-3-distinct-equal-unnamed-piles': {
-        type: 'drill',
-        title: '相異物平均分成若干堆',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223DistinctEqualUnnamedPilesSubtypeSet(5);
-        },
-      },
-      's2-2-3-distinct-specified-pile-sizes': {
-        type: 'drill',
-        title: '相異物按指定數量分堆',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223DistinctSpecifiedPileSizesSubtypeSet(5);
-        },
-      },
-      's2-2-3-restricted-grouping-distribution': {
-        type: 'drill',
-        title: '具備特定人選限制的分組分配',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223RestrictedGroupingDistributionSubtypeSet(5);
-        },
-      },
-      's2-2-3-identical-distribution': {
-        type: 'drill',
-        title: '相同物分配給相異對象',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS223IdenticalDistributionSubtypeSet(5);
-        },
-      },
-      's2-2-4-basic-probability-five-subtypes': {
-        type: 'drill',
-        title: '古典機率與條件事件五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224BasicProbabilityFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-2-4-classical-probability': {
-        type: 'drill',
-        title: '古典機率：骰子硬幣與卡片計數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224ClassicalProbabilitySubtypeSet(5);
-        },
-      },
-      's2-2-4-conditional-bayes': {
-        type: 'drill',
-        title: '條件機率與貝氏定理',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224ConditionalBayesSubtypeSet(5);
-        },
-      },
-      's2-2-4-independent-repeated': {
-        type: 'drill',
-        title: '獨立事件與重複試驗',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224IndependentRepeatedSubtypeSet(5);
-        },
-      },
-      's2-2-4-drawing-allocation': {
-        type: 'drill',
-        title: '取球與分配問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224DrawingAllocationSubtypeSet(5);
-        },
-      },
-      's2-2-4-algebra-geometry-probability': {
-        type: 'drill',
-        title: '代數幾何機率結合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224AlgebraGeometryProbabilitySubtypeSet(5);
-        },
-      },
-      's2-2-4-applied-probability-five-subtypes': {
-        type: 'drill',
-        title: '期望值集合與抽樣應用五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224AppliedProbabilityFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-2-4-expected-value': {
-        type: 'drill',
-        title: '期望值與公平遊戲',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224ExpectedValueSubtypeSet(5);
-        },
-      },
-      's2-2-4-probability-set-relations': {
-        type: 'drill',
-        title: '機率性質與集合邊界判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224ProbabilitySetRelationsSubtypeSet(5);
-        },
-      },
-      's2-2-4-distribution-probability': {
-        type: 'drill',
-        title: '分組分堆與分配的機率',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224DistributionProbabilitySubtypeSet(5);
-        },
-      },
-      's2-2-4-infinite-games': {
-        type: 'drill',
-        title: '無窮循環賽與狀態轉移',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224InfiniteGamesSubtypeSet(5);
-        },
-      },
-      's2-2-4-sampling-diagnostic': {
-        type: 'drill',
-        title: '抽樣調查與診斷誤判',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224SamplingDiagnosticSubtypeSet(5);
-        },
-      },
-      's2-2-4-exact-k-draw-probability-parameterized': {
-        type: 'drill',
-        title: '不放回抽取的恰好機率',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224ExactKDrawProbabilityParameterizedSet(5);
-        },
-      },
-      's2-2-4-event-count-relations-parameterized': {
-        type: 'drill',
-        title: '事件交並與條件機率',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224EventCountRelationsParameterizedSet(5);
-        },
-      },
-      's2-2-4-expected-value-parameterized': {
-        type: 'drill',
-        title: '期望值與遊戲損益參數題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224ExpectedValueParameterizedSet(5);
-        },
-      },
-      's2-2-2-same-group-together-parameterized': {
-        type: 'drill',
-        title: '同科目書排在一起（分組排列）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222SameGroupTogetherArrangementParameterizedSet(5);
-        },
-      },
-      's2-2-2-gender-non-adjacent-parameterized': {
-        type: 'drill',
-        title: '男女不相鄰排列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222GenderNonAdjacentParameterizedSet(5);
-        },
-      },
-      's2-2-4-three-set-union-parameterized': {
-        type: 'drill',
-        title: '三集合取捨原理與機率',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224ThreeSetInclusionExclusionParameterizedSet(5);
-        },
-      },
-      's2-2-4-complement-independent-parameterized': {
-        type: 'drill',
-        title: '補集事件與獨立事件',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224ComplementIndependentParameterizedSet(5);
-        },
-      },
-      's2-2-4-biased-binomial-at-least-parameterized': {
-        type: 'drill',
-        title: '二項分佈至少 k 次',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224BiasedBinomialAtLeastParameterizedSet(5);
-        },
-      },
-      's2-2-4-total-probability-parameterized': {
-        type: 'drill',
-        title: '全機率公式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224TotalProbabilityParameterizedSet(5);
-        },
-      },
-      's2-2-4-hypergeometric-expected-value-parameterized': {
-        type: 'drill',
-        title: '超幾何分佈期望值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224HypergeometricExpectedValueParameterizedSet(5);
-        },
-      },
-      's2-2-4-grid-comparison-probability-parameterized': {
-        type: 'drill',
-        title: '方格大小比較機率',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224GridComparisonProbabilityParameterizedSet(5);
-        },
-      },
-      's2-2-4-overlap-days-off-probability-parameterized': {
-        type: 'drill',
-        title: '休假日重疊機率',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224OverlapDaysOffProbabilityParameterizedSet(5);
-        },
-      },
-      's2-3-1-quartiles-iqr-parameterized': {
-        type: 'drill',
-        title: '四分位數與四分位距',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231QuartilesIQRParameterizedSet(5);
-        },
-      },
-      's2-3-1-grouped-mean-parameterized': {
-        type: 'drill',
-        title: '分組資料加權平均數估計',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231GroupedMeanParameterizedSet(5);
-        },
-      },
-      's2-3-2-correlation-from-sums-parameterized': {
-        type: 'drill',
-        title: '由離差積和計算相關係數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232CorrelationFromSumsParameterizedSet(5);
-        },
-      },
-      's2-3-2-least-squares-small-data-parameterized': {
-        type: 'drill',
-        title: '三點最小平方法迴歸直線',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232LeastSquaresSmallDataParameterizedSet(5);
-        },
-      },
-      's2-3-1-geometric-growth-rate-parameterized': {
-        type: 'drill',
-        title: '平均成長率的幾何平均',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231GeometricGrowthRateParameterizedSet(5);
-        },
-      },
-      's2-3-1-sqrt-score-transform-parameterized': {
-        type: 'drill',
-        title: '開根號調分反推原始平均',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231SqrtScoreTransformParameterizedSet(5);
-        },
-      },
-      's2-3-1-variance-correction-difference-parameterized': {
-        type: 'drill',
-        title: '資料更正與變異數差',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231VarianceCorrectionDifferenceParameterizedSet(5);
-        },
-      },
-      's2-3-1-equal-size-group-merge-parameterized': {
-        type: 'drill',
-        title: '等人數兩組合併平均與標準差',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231EqualSizeGroupMergeParameterizedSet(5);
-        },
-      },
-      's2-3-1-mean-median-missing-score-parameterized': {
-        type: 'drill',
-        title: '平均數等於中位數反推缺值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231MeanMedianMissingScoreParameterizedSet(5);
-        },
-      },
-      's2-3-1-bounded-variance-max-parameterized': {
-        type: 'drill',
-        title: '範圍限制下的最大變異數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231BoundedVarianceMaxParameterizedSet(5);
-        },
-      },
-      's2-3-1-delete-equal-high-values-parameterized': {
-        type: 'drill',
-        title: '刪除兩筆資料後重算平均與標準差',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231DeleteEqualHighValuesParameterizedSet(5);
-        },
-      },
-      's2-3-2-signed-linear-correlation-parameterized': {
-        type: 'drill',
-        title: '正負線性變換下的相關係數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232SignedLinearCorrelationParameterizedSet(5);
-        },
-      },
-      's2-3-2-perfect-line-correlation-parameterized': {
-        type: 'drill',
-        title: '完全線性相關的相關係數判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232PerfectLineCorrelationParameterizedSet(5);
-        },
-      },
-      's2-3-2-regression-line-prediction-parameterized': {
-        type: 'drill',
-        title: '由迴歸直線預測與解讀斜率',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232RegressionLinePredictionParameterizedSet(5);
-        },
-      },
-      's2-3-2-standardized-regression-parameterized': {
-        type: 'drill',
-        title: '標準化後的迴歸直線',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232StandardizedRegressionParameterizedSet(5);
-        },
-      },
-      's2-3-2-regression-correlation-from-line-parameterized': {
-        type: 'drill',
-        title: '由迴歸線斜率反推相關係數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232RegressionCorrelationFromLineParameterizedSet(5);
-        },
-      },
-      's2-4-1-tangent-ordering-parameterized': {
-        type: 'drill',
-        title: '正切值象限判斷與大小排列',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241TangentOrderingParameterizedSet(5);
-        },
-      },
-      's2-4-1-sin-cos-sum-difference-parameterized': {
-        type: 'drill',
-        title: '正弦餘弦和差反推與乘積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241SinCosSumDifferenceParameterizedSet(5);
-        },
-      },
-      's2-4-1-tangent-expression-parameterized': {
-        type: 'drill',
-        title: '已知正切值化簡正餘弦分式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241TangentExpressionParameterizedSet(5);
-        },
-      },
-      's2-4-2-side-sum-ratio-sine-ratio-parameterized': {
-        type: 'drill',
-        title: '邊長和比例反推正弦比例',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242SideSumRatioSineRatioParameterizedSet(5);
-        },
-      },
-      's2-4-2-sas-side-area-parameterized': {
-        type: 'drill',
-        title: '兩邊夾角求第三邊與面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242SasSideAreaParameterizedSet(5);
-        },
-      },
-      's2-4-2-isosceles-circumradius-parameterized': {
-        type: 'drill',
-        title: '等腰三角形外接圓半徑求底邊與面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242IsoscelesCircumradiusParameterizedSet(5);
-        },
-      },
-      's2-4-3-two-observation-height-parameterized': {
-        type: 'drill',
-        title: '兩次仰角觀測求高度',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243TwoObservationHeightParameterizedSet(5);
-        },
-      },
-      's2-4-3-bearing-cosine-distance-parameterized': {
-        type: 'drill',
-        title: '方位夾角與餘弦定理求距離',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243BearingCosineDistanceParameterizedSet(5);
-        },
-      },
-      's2-4-3-height-limit-floors-parameterized': {
-        type: 'drill',
-        title: '仰角限制求建築樓層上限',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243HeightLimitFloorsParameterizedSet(5);
-        },
-      },
-      's2-3-1-core-stats-five-subtypes': {
-        type: 'drill',
-        title: '基本統計量與資料變換五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231CoreStatsFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-3-1-basic-ungrouped-statistics': {
-        type: 'drill',
-        title: '基礎統計量計算（未分組數據）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231BasicUngroupedSubtypeSet(5);
-        },
-      },
-      's2-3-1-linear-transform-statistics': {
-        type: 'drill',
-        title: '數據的線性變換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231LinearTransformSubtypeSet(5);
-        },
-      },
-      's2-3-1-weighted-mean-applications': {
-        type: 'drill',
-        title: '加權平均與幾何平均數應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231WeightedMeanSubtypeSet(5);
-        },
-      },
-      's2-3-1-z-score-standardization': {
-        type: 'drill',
-        title: '數據標準化（Z 分數）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231ZScoreSubtypeSet(5);
-        },
-      },
-      's2-3-1-binary-data-analysis': {
-        type: 'drill',
-        title: '二元數據（0 與 1）的特殊標準差',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231BinaryDataSubtypeSet(5);
-        },
-      },
-      's2-3-1-revision-merge-five-subtypes': {
-        type: 'drill',
-        title: '資料修正合併與變異追蹤五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231RevisionMergeFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-3-1-merge-loss-tracking': {
-        type: 'drill',
-        title: '數據合併與缺失值追蹤',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231MergeLossSubtypeSet(5);
-        },
-      },
-      's2-3-1-data-revision': {
-        type: 'drill',
-        title: '數據更正與修補',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231DataRevisionSubtypeSet(5);
-        },
-      },
-      's2-3-1-group-merging': {
-        type: 'drill',
-        title: '多組數據合併',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231GroupMergingSubtypeSet(5);
-        },
-      },
-      's2-3-1-algebraic-sums-variance': {
-        type: 'drill',
-        title: '平方和與變異數公式應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231AlgebraVarianceSubtypeSet(5);
-        },
-      },
-      's2-3-1-geometric-mean-growth': {
-        type: 'drill',
-        title: '幾何平均數與平均成長率',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231GeometricGrowthSubtypeSet(5);
-        },
-      },
-      's2-3-1-distribution-interpretation-five-subtypes': {
-        type: 'drill',
-        title: '分布判讀抽樣與分組資料五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231DistributionInterpretationFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-3-1-deviation-minimization': {
-        type: 'drill',
-        title: '離差平方與絕對值的極小化',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231DeviationMinimizationSubtypeSet(5);
-        },
-      },
-      's2-3-1-percentile-outlier': {
-        type: 'drill',
-        title: '百分位數、四分位數與離群值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231PercentileOutlierSubtypeSet(5);
-        },
-      },
-      's2-3-1-sampling-methods': {
-        type: 'drill',
-        title: '抽樣方法與樣本代表性',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231SamplingMethodsSubtypeSet(5);
-        },
-      },
-      's2-3-1-cumulative-frequency': {
-        type: 'drill',
-        title: '累積次數分配曲線的判定與比較',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231CumulativeFrequencySubtypeSet(5);
-        },
-      },
-      's2-3-1-grouped-data-estimation': {
-        type: 'drill',
-        title: '分組數據的統計量估計',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS231GroupedEstimationSubtypeSet(5);
-        },
-      },
-      's2-3-2-correlation-five-subtypes': {
-        type: 'drill',
-        title: '相關係數與散布圖判讀五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232CorrelationFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-3-2-correlation-basic': {
-        type: 'drill',
-        title: '相關係數的基本計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232CorrelationBasicSubtypeSet(5);
-        },
-      },
-      's2-3-2-scatter-judgment': {
-        type: 'drill',
-        title: '散布圖的判讀與性質',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232ScatterJudgmentSubtypeSet(5);
-        },
-      },
-      's2-3-2-correlation-sensitivity': {
-        type: 'drill',
-        title: '特定點對相關係數的敏感度分析',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232CorrelationSensitivitySubtypeSet(5);
-        },
-      },
-      's2-3-2-linear-transform-correlation': {
-        type: 'drill',
-        title: '線性變換對相關係數與迴歸線的影響',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232LinearTransformCorrelationSubtypeSet(5);
-        },
-      },
-      's2-3-2-regression-consistency': {
-        type: 'drill',
-        title: '迴歸分析的綜合性質判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232RegressionConsistencySubtypeSet(5);
-        },
-      },
-      's2-3-2-regression-five-subtypes': {
-        type: 'drill',
-        title: '迴歸線最小平方法與變換五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232RegressionFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-3-2-regression-line': {
-        type: 'drill',
-        title: '迴歸直線方程式與預測',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232RegressionLineSubtypeSet(5);
-        },
-      },
-      's2-3-2-reciprocal-slopes': {
-        type: 'drill',
-        title: '雙重迴歸線的斜率關係',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232ReciprocalSlopesSubtypeSet(5);
-        },
-      },
-      's2-3-2-mean-point': {
-        type: 'drill',
-        title: '利用必過平均點性質求值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232MeanPointSubtypeSet(5);
-        },
-      },
-      's2-3-2-least-squares': {
-        type: 'drill',
-        title: '最小平方法定義的代數運算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232LeastSquaresSubtypeSet(5);
-        },
-      },
-      's2-3-2-transformed-regression': {
-        type: 'drill',
-        title: '變數線性變換後的迴歸線預測',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS232TransformedRegressionSubtypeSet(5);
-        },
-      },
-      's2-4-1-basic-angle-coordinate-five-subtypes': {
-        type: 'drill',
-        title: '三角比座標象限與極座標五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241BasicFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-4-1-coordinate-conversion': {
-        type: 'drill',
-        title: '極坐標與直角坐標互換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241CoordinateConversionSubtypeSet(5);
-        },
-      },
-      's2-4-1-one-known-ratio': {
-        type: 'drill',
-        title: '已知廣義角三角比求其他項',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241OneKnownRatioSubtypeSet(5);
-        },
-      },
-      's2-4-1-coterminal-quadrant': {
-        type: 'drill',
-        title: '同界角與象限角判別',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241CoterminalQuadrantSubtypeSet(5);
-        },
-      },
-      's2-4-1-reduction-identities': {
-        type: 'drill',
-        title: '誘導公式與式子化簡',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241ReductionIdentitySubtypeSet(5);
-        },
-      },
-      's2-4-1-polar-geometry': {
-        type: 'drill',
-        title: '極坐標的幾何計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241PolarGeometrySubtypeSet(5);
-        },
-      },
-      's2-4-1-computation-geometry-five-subtypes': {
-        type: 'drill',
-        title: '三角函數計算與幾何應用五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241ComputationGeometryFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-4-1-trig-interpolation': {
-        type: 'drill',
-        title: '三角函數表與線性內插法',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241TrigInterpolationSubtypeSet(5);
-        },
-      },
-      's2-4-1-trig-quadratic-roots': {
-        type: 'drill',
-        title: '三角比與二次方程式的根',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241TrigQuadraticRootsSubtypeSet(5);
-        },
-      },
-      's2-4-1-representing-segments': {
-        type: 'drill',
-        title: '幾何圖形中的線段長度代數表示',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241RepresentingSegmentsSubtypeSet(5);
-        },
-      },
-      's2-4-1-angle-bisector-area': {
-        type: 'drill',
-        title: '角平分線長度與面積性質',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241AngleBisectorAreaSubtypeSet(5);
-        },
-      },
-      's2-4-1-trig-extrema-identities': {
-        type: 'drill',
-        title: '三角恆等式的極值與判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241TrigExtremaIdentitySubtypeSet(5);
-        },
-      },
-      's2-4-1-side-altitude-sine-ratio': {
-        type: 'drill',
-        title: '邊長高與三角比的比例轉化',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241SideAltitudeSineRatioSubtypeSet(5);
-        },
-      },
-      's2-4-1-same-angle-comparison': {
-        type: 'drill',
-        title: '同一角度不同三角比的大小比較',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241SameAngleComparisonSubtypeSet(5);
-        },
-      },
-      's2-4-1-square-sum-identities': {
-        type: 'drill',
-        title: '平方關係與餘角性質的級數求和',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241SquareSumSubtypeSet(5);
-        },
-      },
-      's2-4-1-terminal-line-definition': {
-        type: 'drill',
-        title: '終邊落在特定直線上的廣義角定義',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241TerminalLineDefinitionSubtypeSet(5);
-        },
-      },
-      's2-4-1-triangle-angle-identities': {
-        type: 'drill',
-        title: '三角形內角特有的三角恆等變換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241TriangleAngleIdentitySubtypeSet(5);
-        },
-      },
-      's2-4-1-triangle-identity-five-subtypes': {
-        type: 'drill',
-        title: '三角形比例比較與恆等式五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241TriangleIdentityFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-4-2-sine-law-five-subtypes': {
-        type: 'drill',
-        title: '正弦定理與邊角比例五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242SineLawFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-4-2-cosine-law-five-subtypes': {
-        type: 'drill',
-        title: '餘弦定理與三角形判定五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242CosineLawFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-4-2-area-radius-five-subtypes': {
-        type: 'drill',
-        title: '面積公式與內外接圓五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242AreaRadiusFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-4-2-special-segment-five-subtypes': {
-        type: 'drill',
-        title: '特殊線段與四邊形幾何五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242SpecialSegmentFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-4-2-sine-side-ratio': {
-        type: 'drill',
-        title: '邊角比例轉換與代數運算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242SineSideRatioSubtypeSet(5);
-        },
-      },
-      's2-4-2-asa-aas': {
-        type: 'drill',
-        title: '已知兩角一邊求其他元素',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242AsaAasSubtypeSet(5);
-        },
-      },
-      's2-4-2-circumradius': {
-        type: 'drill',
-        title: '外接圓半徑的推導與計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242CircumradiusSubtypeSet(5);
-        },
-      },
-      's2-4-2-ssa-ambiguous': {
-        type: 'drill',
-        title: 'SSA 條件下的解數判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242SsaAmbiguousSubtypeSet(5);
-        },
-      },
-      's2-4-2-altitude-sine-ratio': {
-        type: 'drill',
-        title: '結合高與邊角比例的綜合題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242AltitudeSineRatioSubtypeSet(5);
-        },
-      },
-      's2-4-2-cosine-sas': {
-        type: 'drill',
-        title: '已知兩邊一夾角求第三邊',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242CosineSasSubtypeSet(5);
-        },
-      },
-      's2-4-2-cosine-sss-angle': {
-        type: 'drill',
-        title: '已知三邊長求內角',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242CosineSssAngleSubtypeSet(5);
-        },
-      },
-      's2-4-2-algebraic-side-relation': {
-        type: 'drill',
-        title: '邊角關係的代數恆等式與比例轉換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242AlgebraicSideRelationSubtypeSet(5);
-        },
-      },
-      's2-4-2-triangle-shape': {
-        type: 'drill',
-        title: '三角形的形狀判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242TriangleShapeSubtypeSet(5);
-        },
-      },
-      's2-4-2-cyclic-quadrilateral-diagonal': {
-        type: 'drill',
-        title: '圓內接四邊形的邊長與對角線',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242CyclicQuadrilateralDiagonalSubtypeSet(5);
-        },
-      },
-      's2-4-2-two-side-angle-area': {
-        type: 'drill',
-        title: '兩邊一夾角面積公式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242TwoSideAngleAreaSubtypeSet(5);
-        },
-      },
-      's2-4-2-heron-area': {
-        type: 'drill',
-        title: '海龍公式求面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242HeronAreaSubtypeSet(5);
-        },
-      },
-      's2-4-2-inradius-circumradius': {
-        type: 'drill',
-        title: '面積與外接圓內切圓半徑的關係',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242InradiusCircumradiusSubtypeSet(5);
-        },
-      },
-      's2-4-2-cyclic-quadrilateral-area': {
-        type: 'drill',
-        title: '圓內接四邊形的面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242CyclicQuadrilateralAreaSubtypeSet(5);
-        },
-      },
-      's2-4-2-diagonal-area-extrema': {
-        type: 'drill',
-        title: '對角線與夾角及面積最大值的應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242DiagonalAreaExtremaSubtypeSet(5);
-        },
-      },
-      's2-4-2-median-length': {
-        type: 'drill',
-        title: '中線定理與中線長度計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242MedianLengthSubtypeSet(5);
-        },
-      },
-      's2-4-2-angle-bisector-length': {
-        type: 'drill',
-        title: '角平分線長度判定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242AngleBisectorLengthSubtypeSet(5);
-        },
-      },
-      's2-4-2-height-projection': {
-        type: 'drill',
-        title: '高的比例與投影關係',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242HeightProjectionSubtypeSet(5);
-        },
-      },
-      's2-4-2-parallelogram-diagonal': {
-        type: 'drill',
-        title: '平行四邊形定理與複合四邊形幾何',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242ParallelogramDiagonalSubtypeSet(5);
-        },
-      },
-      's2-4-2-trapezoid-area': {
-        type: 'drill',
-        title: '梯形與多邊形面積應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS242TrapezoidAreaSubtypeSet(5);
-        },
-      },
-      's2-4-3-elevation-spatial-five-subtypes': {
-        type: 'drill',
-        title: '立體仰俯角與空間測量五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243ElevationSpatialFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-4-3-navigation-motion-five-subtypes': {
-        type: 'drill',
-        title: '航行方位與動態追蹤五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243NavigationMotionFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-4-3-plane-survey-five-subtypes': {
-        type: 'drill',
-        title: '平面測量與跨越障礙五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243PlaneSurveyFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-4-3-special-measurement-five-subtypes': {
-        type: 'drill',
-        title: '特殊線段與測量模型五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243SpecialMeasurementFiveSubtypeMixedSet(5);
-        },
-      },
-      's2-4-3-asa-cross-distance': {
-        type: 'drill',
-        title: '平面測量：跨越障礙求距離（ASA/AAS）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243AsaCrossDistanceSubtypeSet(5);
-        },
-      },
-      's2-4-3-sas-cross-distance': {
-        type: 'drill',
-        title: '平面測量：跨越障礙物求距離（SAS）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243SasCrossDistanceSubtypeSet(5);
-        },
-      },
-      's2-4-3-slope-double-observation': {
-        type: 'drill',
-        title: '平面測量：坡度上的二次觀測',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243SlopeDoubleObservationSubtypeSet(5);
-        },
-      },
-      's2-4-3-segmented-height': {
-        type: 'drill',
-        title: '分段高度與疊加測量題型',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243SegmentedHeightSubtypeSet(5);
-        },
-      },
-      's2-4-3-arbitrary-division-line': {
-        type: 'drill',
-        title: '任意分點的距離與分線',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243ArbitraryDivisionLineSubtypeSet(5);
-        },
-      },
-      's2-4-3-common-elevation-circumradius': {
-        type: 'drill',
-        title: '立體測量：共仰角求高度',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243CommonElevationCircumradiusSubtypeSet(5);
-        },
-      },
-      's2-4-3-depression-two-targets': {
-        type: 'drill',
-        title: '高處對地面多目標觀測',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243DepressionTwoTargetsSubtypeSet(5);
-        },
-      },
-      's2-4-3-same-elevation-circumcenter': {
-        type: 'drill',
-        title: '共仰角觀測與外心性質',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243SameElevationCircumcenterSubtypeSet(5);
-        },
-      },
-      's2-4-3-offset-collinear-observation': {
-        type: 'drill',
-        title: '非通過底部的共線三點觀測',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243OffsetCollinearObservationSubtypeSet(5);
-        },
-      },
-      's2-4-3-spatial-motion-tracking': {
-        type: 'drill',
-        title: '空間動態目標與方位追蹤',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243SpatialMotionTrackingSubtypeSet(5);
-        },
-      },
-      's2-4-3-bearing-navigation': {
-        type: 'drill',
-        title: '航行與追蹤：方位轉換與目標間距',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243BearingNavigationSubtypeSet(5);
-        },
-      },
-      's2-4-3-perpendicular-bearing': {
-        type: 'drill',
-        title: '方位角與垂直方向觀測',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243PerpendicularBearingSubtypeSet(5);
-        },
-      },
-      's2-4-3-typhoon-tracking': {
-        type: 'drill',
-        title: '颱風侵襲路徑分析',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243TyphoonTrackingSubtypeSet(5);
-        },
-      },
-      's2-4-3-uniform-motion-angle-change': {
-        type: 'drill',
-        title: '等速運動與角度變化率',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243UniformMotionAngleChangeSubtypeSet(5);
-        },
-      },
-      's2-4-3-dynamic-shortest-distance': {
-        type: 'drill',
-        title: '動態運動：兩移動物體間的最短距離',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243DynamicShortestDistanceSubtypeSet(5);
-        },
-      },
-      's2-4-3-angle-bisector-measurement': {
-        type: 'drill',
-        title: '角平分線測量題型',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243AngleBisectorMeasurementSubtypeSet(5);
-        },
-      },
-      's2-4-3-median-centroid-measurement': {
-        type: 'drill',
-        title: '中線定理與重心測量題型',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243MedianCentroidMeasurementSubtypeSet(5);
-        },
-      },
-      's2-4-3-displacement-segment': {
-        type: 'drill',
-        title: '動態運動產生的位移線段',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243DisplacementSegmentSubtypeSet(5);
-        },
-      },
-      's2-4-3-height-projection-stack': {
-        type: 'drill',
-        title: '分段高度與投影疊加',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243HeightProjectionStackSubtypeSet(5);
-        },
-      },
-      's2-4-3-bearing-target-distance': {
-        type: 'drill',
-        title: '方位角與目標距離計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243BearingTargetDistanceSubtypeSet(5);
-        },
-      },
-      's2-2-1-set-equality-unknowns-parameterized': {
-        type: 'drill',
-        title: '集合相等與差集求未知數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221SetEqualityUnknownsParameterizedSet(5);
-        },
-      },
-      's2-2-1-proposition-equivalence-negation-parameterized': {
-        type: 'drill',
-        title: '命題的等價敘述與否定',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS221PropositionEquivalenceNegationParameterizedSet(5);
-        },
-      },
-      's2-2-2-grid-rectangle-count-parameterized': {
-        type: 'drill',
-        title: '棋盤格矩形計數與指定點',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222GridRectangleCountParameterizedSet(5);
-        },
-      },
-      's2-2-2-lattice-walk-displacement-parameterized': {
-        type: 'drill',
-        title: '數線與格點跳動位移計數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222LatticeWalkDisplacementParameterizedSet(5);
-        },
-      },
-      's2-2-2-restricted-consecutive-step-staircase-parameterized': {
-        type: 'drill',
-        title: '限制連續跳兩階的爬樓梯計數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS222RestrictedStaircaseParameterizedSet(5);
-        },
-      },
-      's2-2-4-exam-partial-guess-expected-score-parameterized': {
-        type: 'drill',
-        title: '測驗猜題得分期望值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224ExamPartialGuessExpectedScoreParameterizedSet(5);
-        },
-      },
-      's2-2-4-linear-distribution-normalization-parameterized': {
-        type: 'drill',
-        title: '線性機率分布求參數與期望值',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224LinearDistributionNormalizationParameterizedSet(5);
-        },
-      },
-      's2-2-4-color-exhausted-order-parameterized': {
-        type: 'drill',
-        title: '不放回抽球顏色取完順序機率',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS224ColorExhaustedOrderParameterizedSet(5);
-        },
-      },
-      's2-4-1-line-slope-angle-parameterized': {
-        type: 'drill',
-        title: '兩直線斜率求夾角',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241LineSlopeAngleParameterizedSet(5);
-        },
-      },
-      's2-4-1-coterminal-quadrant-count-parameterized': {
-        type: 'drill',
-        title: '同界角象限個數統計',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS241CoterminalQuadrantCountParameterizedSet(5);
-        },
-      },
-      's2-4-3-box-space-angle-parameterized': {
-        type: 'drill',
-        title: '長方體空間角度',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildS243BoxSpaceAngleParameterizedSet(5);
-        },
-      },
-    };
+    's2-1-1-sequence-core-five-subtypes': {
+      type: 'drill',
+      title: '數列核心五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS211SequenceFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-1-1-nth-formula-value': {
+      type: 'drill',
+      title: '已知一般項公式求特定項',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS211NthFormulaValueSet(5);
+      },
+    },
+    's2-1-1-arithmetic-basic-parameters': {
+      type: 'drill',
+      title: '等差數列基本參數計算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS211ArithmeticBasicParameterSet(5);
+      },
+    },
+    's2-1-1-geometric-basic-parameters': {
+      type: 'drill',
+      title: '等比數列基本參數計算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS211GeometricBasicParameterSet(5);
+      },
+    },
+    's2-1-1-means-application': {
+      type: 'drill',
+      title: '等差中項與等比中項應用',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS211MeansApplicationSet(5);
+      },
+    },
+    's2-1-1-basic-recurrence-terms': {
+      type: 'drill',
+      title: '基礎遞迴關係式項數推導',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS211BasicRecurrenceTermSet(5);
+      },
+    },
+    's2-1-1-arithmetic-geometric-mixed-parameters': {
+      type: 'drill',
+      title: '等差與等比數列的混合參數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS211ArithmeticGeometricMixedParameterSet(5);
+      },
+    },
+    's2-1-1-sequence-transformation-classification': {
+      type: 'drill',
+      title: '數列轉換後的等差等比判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS211SequenceTransformationClassificationSet(5);
+      },
+    },
+    's2-1-1-visual-group-patterns': {
+      type: 'drill',
+      title: '圖形規律與群數列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS211VisualGroupPatternSet(5);
+      },
+    },
+    's2-1-1-repeated-block-sequence': {
+      type: 'drill',
+      title: '重複分組數列的項與部分和',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS211RepeatedBlockSequenceSet(5);
+      },
+    },
+    's2-1-1-recurrence-transform-mixed': {
+      type: 'drill',
+      title: '遞迴轉換與一般項推測',
+      difficulty: 'medium',
+      questionCount: 8,
+      generate() {
+        return buildS211RecurrenceTransformSet(8);
+      },
+    },
+    's2-1-1-cumulative-product-recurrence': {
+      type: 'drill',
+      title: '累加型與累乘型遞迴',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS211CumulativeProductRecurrenceSet(5);
+      },
+    },
+    's2-1-1-combinatorial-recurrence': {
+      type: 'drill',
+      title: '計數類遞迴與費氏數列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS211CombinatorialRecurrenceSet(5);
+      },
+    },
+    's2-1-1-geometric-coordinate-sequences': {
+      type: 'drill',
+      title: '幾何分割與座標數列',
+      difficulty: 'medium',
+      questionCount: 8,
+      generate() {
+        return buildS211GeometricCoordinateSequenceSet(8);
+      },
+    },
+    's2-1-1-arithmetic-common-terms': {
+      type: 'drill',
+      title: '兩等差數列的共同項',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS211ArithmeticCommonTermsSet(5);
+      },
+    },
+    's2-1-1-geometric-product-symmetry': {
+      type: 'drill',
+      title: '等比數列的對稱乘積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS211GeometricProductSymmetrySet(5);
+      },
+    },
+    's2-1-1-arithmetic-geometric-bridge': {
+      type: 'drill',
+      title: '等差等比混合條件反推',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS211ArithmeticGeometricBridgeSet(5);
+      },
+    },
+    's2-1-1-prefix-product-terms': {
+      type: 'drill',
+      title: '前綴乘積反求數列項',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS211PrefixProductTermSet(5);
+      },
+    },
+    's2-1-2-series-sum-seven-subtypes': {
+      type: 'drill',
+      title: '等差級數與求和七小類綜合',
+      difficulty: 'medium',
+      questionCount: 7,
+      generate() {
+        return buildS212SevenSubtypeMixedSet(7);
+      },
+    },
+    's2-1-2-basic-sum-formula': {
+      type: 'drill',
+      title: '基礎公式求和',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS212BasicSumFormulaSet(5);
+      },
+    },
+    's2-1-2-consecutive-cube-range-sum': {
+      type: 'drill',
+      title: '連續立方和的區間計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212ConsecutiveCubeRangeSumSet(5);
+      },
+    },
+    's2-1-2-range-multiple-sum': {
+      type: 'drill',
+      title: '範圍內倍數之和',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS212RangeMultipleSumSet(5);
+      },
+    },
+    's2-1-2-max-sum': {
+      type: 'drill',
+      title: '級數和的最大值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212MaxSumSet(5);
+      },
+    },
+    's2-1-2-sn-to-an': {
+      type: 'drill',
+      title: '已知 Sn 公式求一般項',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212SnToAnSet(5);
+      },
+    },
+    's2-1-2-two-ap-ratio': {
+      type: 'drill',
+      title: '兩等差數列的和與項之比',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212TwoApRatioSet(5);
+      },
+    },
+    's2-1-2-applications': {
+      type: 'drill',
+      title: '等差級數生活情境應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212ApplicationSet(5);
+      },
+    },
+    's2-1-2-given-sn-general-term': {
+      type: 'drill',
+      title: '給定前 n 項和公式求一般項',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212GivenSnGeneralTermSet(5);
+      },
+    },
+    's2-1-2-geometric-series-five-subtypes': {
+      type: 'drill',
+      title: '等比級數與複利五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212GeometricSeriesFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-1-2-geometric-basic-sum': {
+      type: 'drill',
+      title: '等比級數基礎參數求和',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS212GeometricBasicSumSet(5);
+      },
+    },
+    's2-1-2-geometric-series-compute': {
+      type: 'drill',
+      title: '等比級數求和計算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS212GeometricSeriesComputeSet(5);
+      },
+    },
+    's2-1-2-geometric-segment-property': {
+      type: 'drill',
+      title: '等比級數分段和性質',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212GeometricSegmentPropertySet(5);
+      },
+    },
+    's2-1-2-geometric-partial-sum-extension': {
+      type: 'drill',
+      title: '等比級數分段和反推延伸',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212GeometricPartialSumExtensionSet(5);
+      },
+    },
+    's2-1-2-geometric-sn-to-an': {
+      type: 'drill',
+      title: '等比型 Sn 公式求一般項',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212GeometricSnToAnSet(5);
+      },
+    },
+    's2-1-2-geometric-applications': {
+      type: 'drill',
+      title: '等比級數生活情境應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212GeometricApplicationsSet(5);
+      },
+    },
+    's2-1-2-sigma-five-subtypes': {
+      type: 'drill',
+      title: 'Sigma 求和五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212SigmaFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-1-2-sigma-formula-range': {
+      type: 'drill',
+      title: 'Sigma 標準公式與範圍變換',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS212SigmaFormulaRangeSet(5);
+      },
+    },
+    's2-1-2-sigma-linearity': {
+      type: 'drill',
+      title: 'Sigma 線性性質與常數項',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS212SigmaLinearitySet(5);
+      },
+    },
+    's2-1-2-sigma-telescoping': {
+      type: 'drill',
+      title: '分式拆項對消',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212SigmaTelescopingSet(5);
+      },
+    },
+    's2-1-2-sigma-pattern': {
+      type: 'drill',
+      title: '數列規律轉化為 Sigma 記號',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212SigmaPatternSet(5);
+      },
+    },
+    's2-1-2-sigma-mixed': {
+      type: 'drill',
+      title: '多項式與指數混合型 Sigma',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212SigmaMixedSet(5);
+      },
+    },
+    's2-1-2-special-series-sigma-five-subtypes': {
+      type: 'drill',
+      title: '特殊級數與 Sigma 應用五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212SpecialSeriesSigmaFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-1-2-repeating-digits-series': {
+      type: 'drill',
+      title: '重複數字級數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212RepeatingDigitsSeriesSubtypeSet(5);
+      },
+    },
+    's2-1-2-radical-special-telescoping': {
+      type: 'drill',
+      title: '根式與特殊分式對消',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212RadicalTelescopingSubtypeSet(5);
+      },
+    },
+    's2-1-2-consecutive-products-sum': {
+      type: 'drill',
+      title: '連續整數乘積之級數和',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212ConsecutiveProductsSubtypeSet(5);
+      },
+    },
+    's2-1-2-geometric-stacking-series': {
+      type: 'drill',
+      title: '空間幾何規律與點陣計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212GeometricStackingSubtypeSet(5);
+      },
+    },
+    's2-1-2-algebraic-variants-sigma': {
+      type: 'drill',
+      title: '結合特殊代數結構的 Sigma',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212AlgebraicVariantsSigmaSubtypeSet(5);
+      },
+    },
+    's2-1-1-difference-method-nonlinear': {
+      type: 'drill',
+      title: '差分法（非線性型）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS211DifferenceMethodNonlinearSet(5);
+      },
+    },
+    's2-1-2-reverse-n-from-sum': {
+      type: 'drill',
+      title: '已知級數和反求項數 n',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212ReverseNFromSumSet(5);
+      },
+    },
+    's2-1-2-non-standard-sigma-limits': {
+      type: 'drill',
+      title: '非標準下界的 Sigma 求和',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212NonStandardSigmaLimitsSet(5);
+      },
+    },
+    's2-1-2-arithmetic-end-block-count': {
+      type: 'drill',
+      title: '等差級數前後端項和反推',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS212ArithmeticEndBlockCountSet(5);
+      },
+    },
+    's2-1-3-induction-sum-step': {
+      type: 'drill',
+      title: '數學歸納法的級數公式推導',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS213InductionSumStepSet(5);
+      },
+    },
+    's2-1-3-induction-divisibility-step': {
+      type: 'drill',
+      title: '數學歸納法的整除證明',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS213InductionDivisibilityStepSet(5);
+      },
+    },
+    's2-1-3-induction-recurrence-conjecture': {
+      type: 'drill',
+      title: '遞迴一般項的歸納驗證',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS213InductionRecurrenceConjectureSet(5);
+      },
+    },
+    's2-1-3-periodic-remainder-sequence': {
+      type: 'drill',
+      title: '週期餘數與整除循環',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS213PeriodicRemainderSequenceSet(5);
+      },
+    },
+    's2-2-1-counting-applications-five-subtypes': {
+      type: 'drill',
+      title: '取捨計數與排列組合五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221CountingApplicationsFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-2-1-inclusion-exclusion-applications': {
+      type: 'drill',
+      title: '取捨原理與文氏圖應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221InclusionExclusionApplicationsSubtypeSet(5);
+      },
+    },
+    's2-2-1-competition-probability-paths': {
+      type: 'drill',
+      title: '賽制與勝負機率路徑',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221CompetitionProbabilityPathsSubtypeSet(5);
+      },
+    },
+    's2-2-1-route-selection-counting': {
+      type: 'drill',
+      title: '路徑、選購與搭配問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221RouteSelectionCountingSubtypeSet(5);
+      },
+    },
+    's2-2-1-digit-formation-counting': {
+      type: 'drill',
+      title: '數字組成與計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221DigitFormationCountingSubtypeSet(5);
+      },
+    },
+    's2-2-1-multiple-survey-counting': {
+      type: 'drill',
+      title: '倍數計數與調查統計',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221MultipleSurveyCountingSubtypeSet(5);
+      },
+    },
+    's2-2-1-product-rule-parameterized': {
+      type: 'drill',
+      title: '乘法原理的參數化搭配題',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS221ProductRuleParameterizedSet(5);
+      },
+    },
+    's2-2-1-inclusion-exclusion-multiples': {
+      type: 'drill',
+      title: '倍數聯集的取捨原理',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildS221InclusionExclusionMultiplesSet(5);
+      },
+    },
+    's2-2-1-license-plate-restrictions-parameterized': {
+      type: 'drill',
+      title: '車牌號碼限制計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221LicensePlateRestrictionsParameterizedSet(5);
+      },
+    },
+    's2-2-1-distinct-distribution-at-least-parameterized': {
+      type: 'drill',
+      title: '相異物分配與至少限制',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221DistinctDistributionAtLeastParameterizedSet(5);
+      },
+    },
+    's2-2-1-ferry-capacity-assignment-parameterized': {
+      type: 'drill',
+      title: '渡船容量限制分配',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221FerryCapacityAssignmentParameterizedSet(5);
+      },
+    },
+    's2-2-1-handshake-couples-parameterized': {
+      type: 'drill',
+      title: '夫妻握手計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221HandshakeCouplesParameterizedSet(5);
+      },
+    },
+    's2-2-1-fixed-end-no-repeat-schedule-parameterized': {
+      type: 'drill',
+      title: '固定首尾且相鄰不同的安排',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221FixedEndNoRepeatScheduleParameterizedSet(5);
+      },
+    },
+    's2-2-1-ambidextrous-pairing-parameterized': {
+      type: 'drill',
+      title: '左右手皆可的配對計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221AmbidextrousPairingParameterizedSet(5);
+      },
+    },
+    's2-2-1-advanced-counting-five-subtypes': {
+      type: 'drill',
+      title: '展開項數因數路徑與塗色五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221AdvancedCountingFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-2-1-polynomial-expansion-term-counting': {
+      type: 'drill',
+      title: '多項式展開項數與同型項',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221PolynomialExpansionTermCountingSubtypeSet(5);
+      },
+    },
+    's2-2-1-divisor-counting-conditions': {
+      type: 'drill',
+      title: '正因數個數與特定倍數判別',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221DivisorCountingConditionsSubtypeSet(5);
+      },
+    },
+    's2-2-1-route-restriction-counting': {
+      type: 'drill',
+      title: '搭配、路徑與開關問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221RouteRestrictionCountingSubtypeSet(5);
+      },
+    },
+    's2-2-1-restricted-digit-counting': {
+      type: 'drill',
+      title: '數字組成與限制條件',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221RestrictedDigitCountingSubtypeSet(5);
+      },
+    },
+    's2-2-1-region-coloring-counting': {
+      type: 'drill',
+      title: '區域塗色問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221RegionColoringCountingSubtypeSet(5);
+      },
+    },
+    's2-2-2-permutation-core-five-subtypes': {
+      type: 'drill',
+      title: '排列公式與直線排列限制五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222PermutationCoreFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-2-2-permutation-equations': {
+      type: 'drill',
+      title: '排列數公式的代數運算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222PermutationEquationSubtypeSet(5);
+      },
+    },
+    's2-2-2-identical-items-permutation': {
+      type: 'drill',
+      title: '不盡相異物排列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222IdenticalItemsPermutationSubtypeSet(5);
+      },
+    },
+    's2-2-2-fixed-relative-order': {
+      type: 'drill',
+      title: '指定項目的相對順序固定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222FixedRelativeOrderSubtypeSet(5);
+      },
+    },
+    's2-2-2-position-constraints': {
+      type: 'drill',
+      title: '限制條件的直線排列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222PositionConstraintSubtypeSet(5);
+      },
+    },
+    's2-2-2-derangement-position-exclusion': {
+      type: 'drill',
+      title: '多重位置限制與錯排應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222DerangementPositionExclusionSubtypeSet(5);
+      },
+    },
+    's2-2-2-permutation-applications-five-subtypes': {
+      type: 'drill',
+      title: '路徑數字信號與分配五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222PermutationApplicationsFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-2-2-distribution-repeated': {
+      type: 'drill',
+      title: '重複排列與分配問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222DistributionRepeatedSubtypeSet(5);
+      },
+    },
+    's2-2-2-grid-paths': {
+      type: 'drill',
+      title: '棋盤街道的捷徑走法',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222GridPathSubtypeSet(5);
+      },
+    },
+    's2-2-2-number-formation': {
+      type: 'drill',
+      title: '數字組成與限制條件',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222NumberFormationSubtypeSet(5);
+      },
+    },
+    's2-2-2-signals-runs': {
+      type: 'drill',
+      title: '信號組成與連串變化數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222SignalsRunsSubtypeSet(5);
+      },
+    },
+    's2-2-2-internal-order-constraints': {
+      type: 'drill',
+      title: '具備內部次序限制的分組排列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222InternalOrderConstraintSubtypeSet(5);
+      },
+    },
+    's2-2-2-repeated-letter-permutation-parameterized': {
+      type: 'drill',
+      title: '重複字母排列總數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222RepeatedLetterPermutationParameterizedSet(5);
+      },
+    },
+    's2-2-2-adjacent-pair-arrangement-parameterized': {
+      type: 'drill',
+      title: '指定兩項相鄰的排列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222AdjacentPairArrangementParameterizedSet(5);
+      },
+    },
+    's2-2-2-adjacent-pair-end-restriction-parameterized': {
+      type: 'drill',
+      title: '相鄰成組與端點限制',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222AdjacentPairEndRestrictionParameterizedSet(5);
+      },
+    },
+    's2-2-2-same-type-nonadjacent-programs-parameterized': {
+      type: 'drill',
+      title: '同類節目不相鄰排列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222SameTypeNonAdjacentProgramsParameterizedSet(5);
+      },
+    },
+    's2-2-2-repeated-digit-leading-zero-parameterized': {
+      type: 'drill',
+      title: '重複數字與首位不可為零',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222RepeatedDigitLeadingZeroParameterizedSet(5);
+      },
+    },
+    's2-2-2-ordered-blocks-internal-permutation-parameterized': {
+      type: 'drill',
+      title: '固定區塊順序的內部排列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222OrderedBlocksInternalPermutationParameterizedSet(5);
+      },
+    },
+    's2-2-2-specified-non-adjacent-parameterized': {
+      type: 'drill',
+      title: '指定對象兩兩不相鄰排列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222SpecifiedNonAdjacentParameterizedSet(5);
+      },
+    },
+    's2-2-3-binomial-basics-five-subtypes': {
+      type: 'drill',
+      title: '二項式展開與基本應用五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223BinomialBasicsFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-2-3-binomial-coefficient': {
+      type: 'drill',
+      title: '求展開式中指定項的係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223BinomialCoefficientSubtypeSet(5);
+      },
+    },
+    's2-2-3-binomial-constant-term': {
+      type: 'drill',
+      title: '求展開式中的常數項',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223BinomialConstantTermSubtypeSet(5);
+      },
+    },
+    's2-2-3-binomial-remainder-number': {
+      type: 'drill',
+      title: '大數除法的餘數判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223BinomialRemainderNumberSubtypeSet(5);
+      },
+    },
+    's2-2-3-polynomial-remainder-binomial': {
+      type: 'drill',
+      title: '多項式除法的餘式計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223PolynomialRemainderBinomialSubtypeSet(5);
+      },
+    },
+    's2-2-3-combination-identity': {
+      type: 'drill',
+      title: '組合數恆等式求和',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223CombinationIdentitySubtypeSet(5);
+      },
+    },
+    's2-2-3-combination-counting-five-subtypes': {
+      type: 'drill',
+      title: '組合計數與限制取法五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223CombinationCountingFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-2-3-subset-property': {
+      type: 'drill',
+      title: '數字子集的特殊性質判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223SubsetPropertySubtypeSet(5);
+      },
+    },
+    's2-2-3-non-adjacent-selection': {
+      type: 'drill',
+      title: '不相鄰選取問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223NonAdjacentSelectionSubtypeSet(5);
+      },
+    },
+    's2-2-3-poker-dice': {
+      type: 'drill',
+      title: '撲克牌牌型與骰子點數組合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223PokerDiceSubtypeSet(5);
+      },
+    },
+    's2-2-3-hockey-stick-identity': {
+      type: 'drill',
+      title: '組合恆等式與曲棍球棒求和',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223HockeyStickIdentitySubtypeSet(5);
+      },
+    },
+    's2-2-3-restricted-integer-solutions': {
+      type: 'drill',
+      title: '整除性奇偶與範圍限制方程解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223RestrictedIntegerSolutionsSubtypeSet(5);
+      },
+    },
+    's2-2-3-advanced-binomial-five-subtypes': {
+      type: 'drill',
+      title: '進階二項式係數與多項式五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223AdvancedBinomialFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-2-3-maximum-coefficient': {
+      type: 'drill',
+      title: '係數最大項的判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223MaximumCoefficientSubtypeSet(5);
+      },
+    },
+    's2-2-3-consecutive-coefficients': {
+      type: 'drill',
+      title: '連續項係數成特殊數列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223ConsecutiveCoefficientSubtypeSet(5);
+      },
+    },
+    's2-2-3-weighted-binomial-sums': {
+      type: 'drill',
+      title: '二項式展開的級數求和',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223WeightedBinomialSumSubtypeSet(5);
+      },
+    },
+    's2-2-3-multinomial-expansion': {
+      type: 'drill',
+      title: '多項式展開與同型項計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223MultinomialExpansionSubtypeSet(5);
+      },
+    },
+    's2-2-3-complex-binomial-identity': {
+      type: 'drill',
+      title: '二項式與複數結合的組合求和',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223ComplexBinomialIdentitySubtypeSet(5);
+      },
+    },
+    's2-2-3-applications-five-subtypes': {
+      type: 'drill',
+      title: '分配集合連串與有理項五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223ApplicationsFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-2-3-product-partition': {
+      type: 'drill',
+      title: '正整數乘積的分解與方程式解',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223ProductPartitionSubtypeSet(5);
+      },
+    },
+    's2-2-3-nested-subsets': {
+      type: 'drill',
+      title: '巢狀集合與包含關係計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223NestedSubsetsSubtypeSet(5);
+      },
+    },
+    's2-2-3-runs-counting': {
+      type: 'drill',
+      title: '符號排列的連串問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223RunsCountingSubtypeSet(5);
+      },
+    },
+    's2-2-3-rational-irrational-terms': {
+      type: 'drill',
+      title: '二項式展開的有理項與無理項計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223RationalIrrationalTermsSubtypeSet(5);
+      },
+    },
+    's2-2-3-polynomial-remainder-variants': {
+      type: 'drill',
+      title: '多項式除法的二項式應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223PolynomialRemainderVariantsSubtypeSet(5);
+      },
+    },
+    's2-2-3-grouping-distribution-five-subtypes': {
+      type: 'drill',
+      title: '分組分堆與同物分配五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223GroupingDistributionFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-2-3-binomial-coefficient-parameterized': {
+      type: 'drill',
+      title: '二項式指定項係數參數題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223BinomialCoefficientParameterizedSet(5);
+      },
+    },
+    's2-2-3-identical-distribution-parameterized': {
+      type: 'drill',
+      title: '相同物分配與最低限制',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223IdenticalDistributionParameterizedSet(5);
+      },
+    },
+    's2-2-3-binomial-adjacent-ratio-parameterized': {
+      type: 'drill',
+      title: '連續組合數比值求 n 與 r',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223BinomialAdjacentRatioParameterizedSet(5);
+      },
+    },
+    's2-2-3-distinct-equal-named-distribution': {
+      type: 'drill',
+      title: '相異物平均給特定對象',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223DistinctEqualNamedDistributionSubtypeSet(5);
+      },
+    },
+    's2-2-3-distinct-equal-unnamed-piles': {
+      type: 'drill',
+      title: '相異物平均分成若干堆',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223DistinctEqualUnnamedPilesSubtypeSet(5);
+      },
+    },
+    's2-2-3-distinct-specified-pile-sizes': {
+      type: 'drill',
+      title: '相異物按指定數量分堆',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223DistinctSpecifiedPileSizesSubtypeSet(5);
+      },
+    },
+    's2-2-3-restricted-grouping-distribution': {
+      type: 'drill',
+      title: '具備特定人選限制的分組分配',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223RestrictedGroupingDistributionSubtypeSet(5);
+      },
+    },
+    's2-2-3-identical-distribution': {
+      type: 'drill',
+      title: '相同物分配給相異對象',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS223IdenticalDistributionSubtypeSet(5);
+      },
+    },
+    's2-2-4-basic-probability-five-subtypes': {
+      type: 'drill',
+      title: '古典機率與條件事件五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224BasicProbabilityFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-2-4-classical-probability': {
+      type: 'drill',
+      title: '古典機率：骰子硬幣與卡片計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224ClassicalProbabilitySubtypeSet(5);
+      },
+    },
+    's2-2-4-conditional-bayes': {
+      type: 'drill',
+      title: '條件機率與貝氏定理',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224ConditionalBayesSubtypeSet(5);
+      },
+    },
+    's2-2-4-independent-repeated': {
+      type: 'drill',
+      title: '獨立事件與重複試驗',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224IndependentRepeatedSubtypeSet(5);
+      },
+    },
+    's2-2-4-drawing-allocation': {
+      type: 'drill',
+      title: '取球與分配問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224DrawingAllocationSubtypeSet(5);
+      },
+    },
+    's2-2-4-algebra-geometry-probability': {
+      type: 'drill',
+      title: '代數幾何機率結合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224AlgebraGeometryProbabilitySubtypeSet(5);
+      },
+    },
+    's2-2-4-applied-probability-five-subtypes': {
+      type: 'drill',
+      title: '期望值集合與抽樣應用五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224AppliedProbabilityFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-2-4-expected-value': {
+      type: 'drill',
+      title: '期望值與公平遊戲',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224ExpectedValueSubtypeSet(5);
+      },
+    },
+    's2-2-4-probability-set-relations': {
+      type: 'drill',
+      title: '機率性質與集合邊界判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224ProbabilitySetRelationsSubtypeSet(5);
+      },
+    },
+    's2-2-4-distribution-probability': {
+      type: 'drill',
+      title: '分組分堆與分配的機率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224DistributionProbabilitySubtypeSet(5);
+      },
+    },
+    's2-2-4-infinite-games': {
+      type: 'drill',
+      title: '無窮循環賽與狀態轉移',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224InfiniteGamesSubtypeSet(5);
+      },
+    },
+    's2-2-4-sampling-diagnostic': {
+      type: 'drill',
+      title: '抽樣調查與診斷誤判',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224SamplingDiagnosticSubtypeSet(5);
+      },
+    },
+    's2-2-4-exact-k-draw-probability-parameterized': {
+      type: 'drill',
+      title: '不放回抽取的恰好機率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224ExactKDrawProbabilityParameterizedSet(5);
+      },
+    },
+    's2-2-4-event-count-relations-parameterized': {
+      type: 'drill',
+      title: '事件交並與條件機率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224EventCountRelationsParameterizedSet(5);
+      },
+    },
+    's2-2-4-expected-value-parameterized': {
+      type: 'drill',
+      title: '期望值與遊戲損益參數題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224ExpectedValueParameterizedSet(5);
+      },
+    },
+    's2-2-2-same-group-together-parameterized': {
+      type: 'drill',
+      title: '同科目書排在一起（分組排列）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222SameGroupTogetherArrangementParameterizedSet(5);
+      },
+    },
+    's2-2-2-gender-non-adjacent-parameterized': {
+      type: 'drill',
+      title: '男女不相鄰排列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222GenderNonAdjacentParameterizedSet(5);
+      },
+    },
+    's2-2-4-three-set-union-parameterized': {
+      type: 'drill',
+      title: '三集合取捨原理與機率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224ThreeSetInclusionExclusionParameterizedSet(5);
+      },
+    },
+    's2-2-4-complement-independent-parameterized': {
+      type: 'drill',
+      title: '補集事件與獨立事件',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224ComplementIndependentParameterizedSet(5);
+      },
+    },
+    's2-2-4-biased-binomial-at-least-parameterized': {
+      type: 'drill',
+      title: '二項分佈至少 k 次',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224BiasedBinomialAtLeastParameterizedSet(5);
+      },
+    },
+    's2-2-4-total-probability-parameterized': {
+      type: 'drill',
+      title: '全機率公式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224TotalProbabilityParameterizedSet(5);
+      },
+    },
+    's2-2-4-hypergeometric-expected-value-parameterized': {
+      type: 'drill',
+      title: '超幾何分佈期望值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224HypergeometricExpectedValueParameterizedSet(5);
+      },
+    },
+    's2-2-4-grid-comparison-probability-parameterized': {
+      type: 'drill',
+      title: '方格大小比較機率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224GridComparisonProbabilityParameterizedSet(5);
+      },
+    },
+    's2-2-4-overlap-days-off-probability-parameterized': {
+      type: 'drill',
+      title: '休假日重疊機率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224OverlapDaysOffProbabilityParameterizedSet(5);
+      },
+    },
+    's2-3-1-quartiles-iqr-parameterized': {
+      type: 'drill',
+      title: '四分位數與四分位距',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231QuartilesIQRParameterizedSet(5);
+      },
+    },
+    's2-3-1-grouped-mean-parameterized': {
+      type: 'drill',
+      title: '分組資料加權平均數估計',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231GroupedMeanParameterizedSet(5);
+      },
+    },
+    's2-3-2-correlation-from-sums-parameterized': {
+      type: 'drill',
+      title: '由離差積和計算相關係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232CorrelationFromSumsParameterizedSet(5);
+      },
+    },
+    's2-3-2-least-squares-small-data-parameterized': {
+      type: 'drill',
+      title: '三點最小平方法迴歸直線',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232LeastSquaresSmallDataParameterizedSet(5);
+      },
+    },
+    's2-3-1-geometric-growth-rate-parameterized': {
+      type: 'drill',
+      title: '平均成長率的幾何平均',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231GeometricGrowthRateParameterizedSet(5);
+      },
+    },
+    's2-3-1-sqrt-score-transform-parameterized': {
+      type: 'drill',
+      title: '開根號調分反推原始平均',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231SqrtScoreTransformParameterizedSet(5);
+      },
+    },
+    's2-3-1-variance-correction-difference-parameterized': {
+      type: 'drill',
+      title: '資料更正與變異數差',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231VarianceCorrectionDifferenceParameterizedSet(5);
+      },
+    },
+    's2-3-1-equal-size-group-merge-parameterized': {
+      type: 'drill',
+      title: '等人數兩組合併平均與標準差',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231EqualSizeGroupMergeParameterizedSet(5);
+      },
+    },
+    's2-3-1-mean-median-missing-score-parameterized': {
+      type: 'drill',
+      title: '平均數等於中位數反推缺值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231MeanMedianMissingScoreParameterizedSet(5);
+      },
+    },
+    's2-3-1-bounded-variance-max-parameterized': {
+      type: 'drill',
+      title: '範圍限制下的最大變異數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231BoundedVarianceMaxParameterizedSet(5);
+      },
+    },
+    's2-3-1-delete-equal-high-values-parameterized': {
+      type: 'drill',
+      title: '刪除兩筆資料後重算平均與標準差',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231DeleteEqualHighValuesParameterizedSet(5);
+      },
+    },
+    's2-3-2-signed-linear-correlation-parameterized': {
+      type: 'drill',
+      title: '正負線性變換下的相關係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232SignedLinearCorrelationParameterizedSet(5);
+      },
+    },
+    's2-3-2-perfect-line-correlation-parameterized': {
+      type: 'drill',
+      title: '完全線性相關的相關係數判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232PerfectLineCorrelationParameterizedSet(5);
+      },
+    },
+    's2-3-2-regression-line-prediction-parameterized': {
+      type: 'drill',
+      title: '由迴歸直線預測與解讀斜率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232RegressionLinePredictionParameterizedSet(5);
+      },
+    },
+    's2-3-2-standardized-regression-parameterized': {
+      type: 'drill',
+      title: '標準化後的迴歸直線',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232StandardizedRegressionParameterizedSet(5);
+      },
+    },
+    's2-3-2-regression-correlation-from-line-parameterized': {
+      type: 'drill',
+      title: '由迴歸線斜率反推相關係數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232RegressionCorrelationFromLineParameterizedSet(5);
+      },
+    },
+    's2-4-1-tangent-ordering-parameterized': {
+      type: 'drill',
+      title: '正切值象限判斷與大小排列',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241TangentOrderingParameterizedSet(5);
+      },
+    },
+    's2-4-1-sin-cos-sum-difference-parameterized': {
+      type: 'drill',
+      title: '正弦餘弦和差反推與乘積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241SinCosSumDifferenceParameterizedSet(5);
+      },
+    },
+    's2-4-1-tangent-expression-parameterized': {
+      type: 'drill',
+      title: '已知正切值化簡正餘弦分式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241TangentExpressionParameterizedSet(5);
+      },
+    },
+    's2-4-2-side-sum-ratio-sine-ratio-parameterized': {
+      type: 'drill',
+      title: '邊長和比例反推正弦比例',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242SideSumRatioSineRatioParameterizedSet(5);
+      },
+    },
+    's2-4-2-sas-side-area-parameterized': {
+      type: 'drill',
+      title: '兩邊夾角求第三邊與面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242SasSideAreaParameterizedSet(5);
+      },
+    },
+    's2-4-2-isosceles-circumradius-parameterized': {
+      type: 'drill',
+      title: '等腰三角形外接圓半徑求底邊與面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242IsoscelesCircumradiusParameterizedSet(5);
+      },
+    },
+    's2-4-3-two-observation-height-parameterized': {
+      type: 'drill',
+      title: '兩次仰角觀測求高度',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243TwoObservationHeightParameterizedSet(5);
+      },
+    },
+    's2-4-3-bearing-cosine-distance-parameterized': {
+      type: 'drill',
+      title: '方位夾角與餘弦定理求距離',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243BearingCosineDistanceParameterizedSet(5);
+      },
+    },
+    's2-4-3-height-limit-floors-parameterized': {
+      type: 'drill',
+      title: '仰角限制求建築樓層上限',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243HeightLimitFloorsParameterizedSet(5);
+      },
+    },
+    's2-3-1-core-stats-five-subtypes': {
+      type: 'drill',
+      title: '基本統計量與資料變換五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231CoreStatsFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-3-1-basic-ungrouped-statistics': {
+      type: 'drill',
+      title: '基礎統計量計算（未分組數據）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231BasicUngroupedSubtypeSet(5);
+      },
+    },
+    's2-3-1-linear-transform-statistics': {
+      type: 'drill',
+      title: '數據的線性變換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231LinearTransformSubtypeSet(5);
+      },
+    },
+    's2-3-1-weighted-mean-applications': {
+      type: 'drill',
+      title: '加權平均與幾何平均數應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231WeightedMeanSubtypeSet(5);
+      },
+    },
+    's2-3-1-z-score-standardization': {
+      type: 'drill',
+      title: '數據標準化（Z 分數）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231ZScoreSubtypeSet(5);
+      },
+    },
+    's2-3-1-binary-data-analysis': {
+      type: 'drill',
+      title: '二元數據（0 與 1）的特殊標準差',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231BinaryDataSubtypeSet(5);
+      },
+    },
+    's2-3-1-revision-merge-five-subtypes': {
+      type: 'drill',
+      title: '資料修正合併與變異追蹤五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231RevisionMergeFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-3-1-merge-loss-tracking': {
+      type: 'drill',
+      title: '數據合併與缺失值追蹤',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231MergeLossSubtypeSet(5);
+      },
+    },
+    's2-3-1-data-revision': {
+      type: 'drill',
+      title: '數據更正與修補',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231DataRevisionSubtypeSet(5);
+      },
+    },
+    's2-3-1-group-merging': {
+      type: 'drill',
+      title: '多組數據合併',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231GroupMergingSubtypeSet(5);
+      },
+    },
+    's2-3-1-algebraic-sums-variance': {
+      type: 'drill',
+      title: '平方和與變異數公式應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231AlgebraVarianceSubtypeSet(5);
+      },
+    },
+    's2-3-1-geometric-mean-growth': {
+      type: 'drill',
+      title: '幾何平均數與平均成長率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231GeometricGrowthSubtypeSet(5);
+      },
+    },
+    's2-3-1-distribution-interpretation-five-subtypes': {
+      type: 'drill',
+      title: '分布判讀抽樣與分組資料五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231DistributionInterpretationFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-3-1-deviation-minimization': {
+      type: 'drill',
+      title: '離差平方與絕對值的極小化',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231DeviationMinimizationSubtypeSet(5);
+      },
+    },
+    's2-3-1-percentile-outlier': {
+      type: 'drill',
+      title: '百分位數、四分位數與離群值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231PercentileOutlierSubtypeSet(5);
+      },
+    },
+    's2-3-1-sampling-methods': {
+      type: 'drill',
+      title: '抽樣方法與樣本代表性',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231SamplingMethodsSubtypeSet(5);
+      },
+    },
+    's2-3-1-cumulative-frequency': {
+      type: 'drill',
+      title: '累積次數分配曲線的判定與比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231CumulativeFrequencySubtypeSet(5);
+      },
+    },
+    's2-3-1-grouped-data-estimation': {
+      type: 'drill',
+      title: '分組數據的統計量估計',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS231GroupedEstimationSubtypeSet(5);
+      },
+    },
+    's2-3-2-correlation-five-subtypes': {
+      type: 'drill',
+      title: '相關係數與散布圖判讀五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232CorrelationFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-3-2-correlation-basic': {
+      type: 'drill',
+      title: '相關係數的基本計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232CorrelationBasicSubtypeSet(5);
+      },
+    },
+    's2-3-2-scatter-judgment': {
+      type: 'drill',
+      title: '散布圖的判讀與性質',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232ScatterJudgmentSubtypeSet(5);
+      },
+    },
+    's2-3-2-correlation-sensitivity': {
+      type: 'drill',
+      title: '特定點對相關係數的敏感度分析',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232CorrelationSensitivitySubtypeSet(5);
+      },
+    },
+    's2-3-2-linear-transform-correlation': {
+      type: 'drill',
+      title: '線性變換對相關係數與迴歸線的影響',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232LinearTransformCorrelationSubtypeSet(5);
+      },
+    },
+    's2-3-2-regression-consistency': {
+      type: 'drill',
+      title: '迴歸分析的綜合性質判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232RegressionConsistencySubtypeSet(5);
+      },
+    },
+    's2-3-2-regression-five-subtypes': {
+      type: 'drill',
+      title: '迴歸線最小平方法與變換五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232RegressionFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-3-2-regression-line': {
+      type: 'drill',
+      title: '迴歸直線方程式與預測',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232RegressionLineSubtypeSet(5);
+      },
+    },
+    's2-3-2-reciprocal-slopes': {
+      type: 'drill',
+      title: '雙重迴歸線的斜率關係',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232ReciprocalSlopesSubtypeSet(5);
+      },
+    },
+    's2-3-2-mean-point': {
+      type: 'drill',
+      title: '利用必過平均點性質求值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232MeanPointSubtypeSet(5);
+      },
+    },
+    's2-3-2-least-squares': {
+      type: 'drill',
+      title: '最小平方法定義的代數運算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232LeastSquaresSubtypeSet(5);
+      },
+    },
+    's2-3-2-transformed-regression': {
+      type: 'drill',
+      title: '變數線性變換後的迴歸線預測',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS232TransformedRegressionSubtypeSet(5);
+      },
+    },
+    's2-4-1-basic-angle-coordinate-five-subtypes': {
+      type: 'drill',
+      title: '三角比座標象限與極座標五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241BasicFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-4-1-coordinate-conversion': {
+      type: 'drill',
+      title: '極坐標與直角坐標互換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241CoordinateConversionSubtypeSet(5);
+      },
+    },
+    's2-4-1-one-known-ratio': {
+      type: 'drill',
+      title: '已知廣義角三角比求其他項',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241OneKnownRatioSubtypeSet(5);
+      },
+    },
+    's2-4-1-coterminal-quadrant': {
+      type: 'drill',
+      title: '同界角與象限角判別',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241CoterminalQuadrantSubtypeSet(5);
+      },
+    },
+    's2-4-1-reduction-identities': {
+      type: 'drill',
+      title: '誘導公式與式子化簡',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241ReductionIdentitySubtypeSet(5);
+      },
+    },
+    's2-4-1-polar-geometry': {
+      type: 'drill',
+      title: '極坐標的幾何計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241PolarGeometrySubtypeSet(5);
+      },
+    },
+    's2-4-1-computation-geometry-five-subtypes': {
+      type: 'drill',
+      title: '三角函數計算與幾何應用五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241ComputationGeometryFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-4-1-trig-interpolation': {
+      type: 'drill',
+      title: '三角函數表與線性內插法',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241TrigInterpolationSubtypeSet(5);
+      },
+    },
+    's2-4-1-trig-quadratic-roots': {
+      type: 'drill',
+      title: '三角比與二次方程式的根',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241TrigQuadraticRootsSubtypeSet(5);
+      },
+    },
+    's2-4-1-representing-segments': {
+      type: 'drill',
+      title: '幾何圖形中的線段長度代數表示',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241RepresentingSegmentsSubtypeSet(5);
+      },
+    },
+    's2-4-1-angle-bisector-area': {
+      type: 'drill',
+      title: '角平分線長度與面積性質',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241AngleBisectorAreaSubtypeSet(5);
+      },
+    },
+    's2-4-1-trig-extrema-identities': {
+      type: 'drill',
+      title: '三角恆等式的極值與判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241TrigExtremaIdentitySubtypeSet(5);
+      },
+    },
+    's2-4-1-side-altitude-sine-ratio': {
+      type: 'drill',
+      title: '邊長高與三角比的比例轉化',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241SideAltitudeSineRatioSubtypeSet(5);
+      },
+    },
+    's2-4-1-same-angle-comparison': {
+      type: 'drill',
+      title: '同一角度不同三角比的大小比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241SameAngleComparisonSubtypeSet(5);
+      },
+    },
+    's2-4-1-square-sum-identities': {
+      type: 'drill',
+      title: '平方關係與餘角性質的級數求和',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241SquareSumSubtypeSet(5);
+      },
+    },
+    's2-4-1-terminal-line-definition': {
+      type: 'drill',
+      title: '終邊落在特定直線上的廣義角定義',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241TerminalLineDefinitionSubtypeSet(5);
+      },
+    },
+    's2-4-1-triangle-angle-identities': {
+      type: 'drill',
+      title: '三角形內角特有的三角恆等變換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241TriangleAngleIdentitySubtypeSet(5);
+      },
+    },
+    's2-4-1-triangle-identity-five-subtypes': {
+      type: 'drill',
+      title: '三角形比例比較與恆等式五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241TriangleIdentityFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-4-2-sine-law-five-subtypes': {
+      type: 'drill',
+      title: '正弦定理與邊角比例五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242SineLawFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-4-2-cosine-law-five-subtypes': {
+      type: 'drill',
+      title: '餘弦定理與三角形判定五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242CosineLawFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-4-2-area-radius-five-subtypes': {
+      type: 'drill',
+      title: '面積公式與內外接圓五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242AreaRadiusFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-4-2-special-segment-five-subtypes': {
+      type: 'drill',
+      title: '特殊線段與四邊形幾何五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242SpecialSegmentFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-4-2-sine-side-ratio': {
+      type: 'drill',
+      title: '邊角比例轉換與代數運算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242SineSideRatioSubtypeSet(5);
+      },
+    },
+    's2-4-2-asa-aas': {
+      type: 'drill',
+      title: '已知兩角一邊求其他元素',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242AsaAasSubtypeSet(5);
+      },
+    },
+    's2-4-2-circumradius': {
+      type: 'drill',
+      title: '外接圓半徑的推導與計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242CircumradiusSubtypeSet(5);
+      },
+    },
+    's2-4-2-ssa-ambiguous': {
+      type: 'drill',
+      title: 'SSA 條件下的解數判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242SsaAmbiguousSubtypeSet(5);
+      },
+    },
+    's2-4-2-altitude-sine-ratio': {
+      type: 'drill',
+      title: '結合高與邊角比例的綜合題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242AltitudeSineRatioSubtypeSet(5);
+      },
+    },
+    's2-4-2-cosine-sas': {
+      type: 'drill',
+      title: '已知兩邊一夾角求第三邊',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242CosineSasSubtypeSet(5);
+      },
+    },
+    's2-4-2-cosine-sss-angle': {
+      type: 'drill',
+      title: '已知三邊長求內角',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242CosineSssAngleSubtypeSet(5);
+      },
+    },
+    's2-4-2-algebraic-side-relation': {
+      type: 'drill',
+      title: '邊角關係的代數恆等式與比例轉換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242AlgebraicSideRelationSubtypeSet(5);
+      },
+    },
+    's2-4-2-triangle-shape': {
+      type: 'drill',
+      title: '三角形的形狀判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242TriangleShapeSubtypeSet(5);
+      },
+    },
+    's2-4-2-cyclic-quadrilateral-diagonal': {
+      type: 'drill',
+      title: '圓內接四邊形的邊長與對角線',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242CyclicQuadrilateralDiagonalSubtypeSet(5);
+      },
+    },
+    's2-4-2-two-side-angle-area': {
+      type: 'drill',
+      title: '兩邊一夾角面積公式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242TwoSideAngleAreaSubtypeSet(5);
+      },
+    },
+    's2-4-2-heron-area': {
+      type: 'drill',
+      title: '海龍公式求面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242HeronAreaSubtypeSet(5);
+      },
+    },
+    's2-4-2-inradius-circumradius': {
+      type: 'drill',
+      title: '面積與外接圓內切圓半徑的關係',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242InradiusCircumradiusSubtypeSet(5);
+      },
+    },
+    's2-4-2-cyclic-quadrilateral-area': {
+      type: 'drill',
+      title: '圓內接四邊形的面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242CyclicQuadrilateralAreaSubtypeSet(5);
+      },
+    },
+    's2-4-2-diagonal-area-extrema': {
+      type: 'drill',
+      title: '對角線與夾角及面積最大值的應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242DiagonalAreaExtremaSubtypeSet(5);
+      },
+    },
+    's2-4-2-median-length': {
+      type: 'drill',
+      title: '中線定理與中線長度計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242MedianLengthSubtypeSet(5);
+      },
+    },
+    's2-4-2-angle-bisector-length': {
+      type: 'drill',
+      title: '角平分線長度判定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242AngleBisectorLengthSubtypeSet(5);
+      },
+    },
+    's2-4-2-height-projection': {
+      type: 'drill',
+      title: '高的比例與投影關係',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242HeightProjectionSubtypeSet(5);
+      },
+    },
+    's2-4-2-parallelogram-diagonal': {
+      type: 'drill',
+      title: '平行四邊形定理與複合四邊形幾何',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242ParallelogramDiagonalSubtypeSet(5);
+      },
+    },
+    's2-4-2-trapezoid-area': {
+      type: 'drill',
+      title: '梯形與多邊形面積應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS242TrapezoidAreaSubtypeSet(5);
+      },
+    },
+    's2-4-3-elevation-spatial-five-subtypes': {
+      type: 'drill',
+      title: '立體仰俯角與空間測量五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243ElevationSpatialFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-4-3-navigation-motion-five-subtypes': {
+      type: 'drill',
+      title: '航行方位與動態追蹤五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243NavigationMotionFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-4-3-plane-survey-five-subtypes': {
+      type: 'drill',
+      title: '平面測量與跨越障礙五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243PlaneSurveyFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-4-3-special-measurement-five-subtypes': {
+      type: 'drill',
+      title: '特殊線段與測量模型五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243SpecialMeasurementFiveSubtypeMixedSet(5);
+      },
+    },
+    's2-4-3-asa-cross-distance': {
+      type: 'drill',
+      title: '平面測量：跨越障礙求距離（ASA/AAS）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243AsaCrossDistanceSubtypeSet(5);
+      },
+    },
+    's2-4-3-sas-cross-distance': {
+      type: 'drill',
+      title: '平面測量：跨越障礙物求距離（SAS）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243SasCrossDistanceSubtypeSet(5);
+      },
+    },
+    's2-4-3-slope-double-observation': {
+      type: 'drill',
+      title: '平面測量：坡度上的二次觀測',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243SlopeDoubleObservationSubtypeSet(5);
+      },
+    },
+    's2-4-3-segmented-height': {
+      type: 'drill',
+      title: '分段高度與疊加測量題型',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243SegmentedHeightSubtypeSet(5);
+      },
+    },
+    's2-4-3-arbitrary-division-line': {
+      type: 'drill',
+      title: '任意分點的距離與分線',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243ArbitraryDivisionLineSubtypeSet(5);
+      },
+    },
+    's2-4-3-common-elevation-circumradius': {
+      type: 'drill',
+      title: '立體測量：共仰角求高度',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243CommonElevationCircumradiusSubtypeSet(5);
+      },
+    },
+    's2-4-3-depression-two-targets': {
+      type: 'drill',
+      title: '高處對地面多目標觀測',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243DepressionTwoTargetsSubtypeSet(5);
+      },
+    },
+    's2-4-3-same-elevation-circumcenter': {
+      type: 'drill',
+      title: '共仰角觀測與外心性質',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243SameElevationCircumcenterSubtypeSet(5);
+      },
+    },
+    's2-4-3-offset-collinear-observation': {
+      type: 'drill',
+      title: '非通過底部的共線三點觀測',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243OffsetCollinearObservationSubtypeSet(5);
+      },
+    },
+    's2-4-3-spatial-motion-tracking': {
+      type: 'drill',
+      title: '空間動態目標與方位追蹤',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243SpatialMotionTrackingSubtypeSet(5);
+      },
+    },
+    's2-4-3-bearing-navigation': {
+      type: 'drill',
+      title: '航行與追蹤：方位轉換與目標間距',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243BearingNavigationSubtypeSet(5);
+      },
+    },
+    's2-4-3-perpendicular-bearing': {
+      type: 'drill',
+      title: '方位角與垂直方向觀測',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243PerpendicularBearingSubtypeSet(5);
+      },
+    },
+    's2-4-3-typhoon-tracking': {
+      type: 'drill',
+      title: '颱風侵襲路徑分析',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243TyphoonTrackingSubtypeSet(5);
+      },
+    },
+    's2-4-3-uniform-motion-angle-change': {
+      type: 'drill',
+      title: '等速運動與角度變化率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243UniformMotionAngleChangeSubtypeSet(5);
+      },
+    },
+    's2-4-3-dynamic-shortest-distance': {
+      type: 'drill',
+      title: '動態運動：兩移動物體間的最短距離',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243DynamicShortestDistanceSubtypeSet(5);
+      },
+    },
+    's2-4-3-angle-bisector-measurement': {
+      type: 'drill',
+      title: '角平分線測量題型',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243AngleBisectorMeasurementSubtypeSet(5);
+      },
+    },
+    's2-4-3-median-centroid-measurement': {
+      type: 'drill',
+      title: '中線定理與重心測量題型',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243MedianCentroidMeasurementSubtypeSet(5);
+      },
+    },
+    's2-4-3-displacement-segment': {
+      type: 'drill',
+      title: '動態運動產生的位移線段',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243DisplacementSegmentSubtypeSet(5);
+      },
+    },
+    's2-4-3-height-projection-stack': {
+      type: 'drill',
+      title: '分段高度與投影疊加',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243HeightProjectionStackSubtypeSet(5);
+      },
+    },
+    's2-4-3-bearing-target-distance': {
+      type: 'drill',
+      title: '方位角與目標距離計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243BearingTargetDistanceSubtypeSet(5);
+      },
+    },
+    's2-2-1-set-equality-unknowns-parameterized': {
+      type: 'drill',
+      title: '集合相等與差集求未知數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221SetEqualityUnknownsParameterizedSet(5);
+      },
+    },
+    's2-2-1-proposition-equivalence-negation-parameterized': {
+      type: 'drill',
+      title: '命題的等價敘述與否定',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS221PropositionEquivalenceNegationParameterizedSet(5);
+      },
+    },
+    's2-2-2-grid-rectangle-count-parameterized': {
+      type: 'drill',
+      title: '棋盤格矩形計數與指定點',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222GridRectangleCountParameterizedSet(5);
+      },
+    },
+    's2-2-2-lattice-walk-displacement-parameterized': {
+      type: 'drill',
+      title: '數線與格點跳動位移計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222LatticeWalkDisplacementParameterizedSet(5);
+      },
+    },
+    's2-2-2-restricted-consecutive-step-staircase-parameterized': {
+      type: 'drill',
+      title: '限制連續跳兩階的爬樓梯計數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS222RestrictedStaircaseParameterizedSet(5);
+      },
+    },
+    's2-2-4-exam-partial-guess-expected-score-parameterized': {
+      type: 'drill',
+      title: '測驗猜題得分期望值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224ExamPartialGuessExpectedScoreParameterizedSet(5);
+      },
+    },
+    's2-2-4-linear-distribution-normalization-parameterized': {
+      type: 'drill',
+      title: '線性機率分布求參數與期望值',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224LinearDistributionNormalizationParameterizedSet(5);
+      },
+    },
+    's2-2-4-color-exhausted-order-parameterized': {
+      type: 'drill',
+      title: '不放回抽球顏色取完順序機率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS224ColorExhaustedOrderParameterizedSet(5);
+      },
+    },
+    's2-4-1-line-slope-angle-parameterized': {
+      type: 'drill',
+      title: '兩直線斜率求夾角',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241LineSlopeAngleParameterizedSet(5);
+      },
+    },
+    's2-4-1-coterminal-quadrant-count-parameterized': {
+      type: 'drill',
+      title: '同界角象限個數統計',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS241CoterminalQuadrantCountParameterizedSet(5);
+      },
+    },
+    's2-4-3-box-space-angle-parameterized': {
+      type: 'drill',
+      title: '長方體空間角度',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildS243BoxSpaceAngleParameterizedSet(5);
+      },
+    },
+  };
 
-  const fingerprint = 's2-bundle-v20260701-s2-4-sanmin-v3';
+  const fingerprint = 's2-bundle-v20260706-summary-v1';
   if (window.__s2BundleFingerprint === fingerprint) return;
   window.__s2BundleFingerprint = fingerprint;
   window.formulaPracticeStore.registerConfigs(nextConfigs);

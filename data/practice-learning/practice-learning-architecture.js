@@ -149,7 +149,6 @@
       shortLabel: "次方概念",
       summary: "先分清楚 \\((-3)^4\\) 和 \\(-3^4\\) 的差別，再建立次方的基本直覺。",
       practiceIds: [
-        "practice-j1-1-3-power-concept-one-subtype",
         "practice-j1-1-3-sign-brackets-power-drill",
       ],
       prerequisiteSkillIds: ["integer-add-subtract"],
@@ -189,7 +188,6 @@
       shortLabel: "指數應用",
       summary: "把指數放回情境題與規律題，避免只會空算不會判讀。",
       practiceIds: [
-        "practice-j1-1-3-application-one-subtype",
         "practice-j1-1-3-exponent-word-problem-drill",
       ],
       prerequisiteSkillIds: ["exponent-laws"],

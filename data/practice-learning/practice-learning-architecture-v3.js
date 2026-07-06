@@ -159,7 +159,6 @@
       shortLabel: "指數概念",
       summary: "先分清楚次方作用到哪裡，再談規則，避免把括號和負號一起算錯。",
       practiceIds: [
-        "practice-j1-1-3-power-concept-one-subtype",
         "practice-j1-1-3-sign-brackets-power-drill",
       ],
       prerequisiteSkillIds: ["integer-add-subtract"],
@@ -193,7 +192,6 @@
       shortLabel: "指數應用",
       summary: "從規律觀察進一步進到指數型表達，讓指數不是只有算式操作。",
       practiceIds: [
-        "practice-j1-1-3-application-one-subtype",
         "practice-j1-1-3-exponent-word-problem-drill",
       ],
       prerequisiteSkillIds: ["exponent-laws"],

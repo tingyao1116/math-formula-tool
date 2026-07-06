@@ -92,14 +92,15 @@
 
   function buildS223MixedSet(banks, count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
       questions.push(generated.questions[itemIndex]);
       answers.push(generated.answers[itemIndex]);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function s242Pick(list) {
@@ -123,7 +124,8 @@
 
   function buildS311DegreeRadianConversionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const degreeCases = [15, 18, 24, 30, 36, 45, 60, 72, 90, 120, 135, 150, 210, 225, 270, 300, 330];
     const radCases = [
       [1, 6],
@@ -167,12 +169,13 @@
         `簡答：\\(${rad}\\)。過程：先把角度化成度，\\(${degree}^\\circ${minute}'=${degree}+\\frac{${minute}}{60}=\\frac{${totalMinutes}}{60}^\\circ\\)。再乘 \\(\\frac{\\pi}{180}\\)，得 \\(${rad}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS311SectorParameterSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -248,12 +251,13 @@
         `簡答：\\(${area}\\)。過程：由 \\(s=r\\theta\\)，\\(\\theta=\\frac{${arc}}{${r}}=${theta}\\)。扇形面積 \\(A=\\frac12r^2\\theta=\\frac12\\cdot${r}^2\\cdot\\pi=${area}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS311ClockSectorSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const minuteCases = [10, 15, 20, 25, 30, 35, 40, 45];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 4;
@@ -297,12 +301,13 @@
         `簡答：時針 \\(${hourAngle}\\)，分針 \\(${minuteAngle}\\)。過程：時針 12 小時轉 \\(2\\pi\\)，每分鐘轉 \\(\\frac{\\pi}{360}\\)；分針 60 分鐘轉 \\(2\\pi\\)，每分鐘轉 \\(\\frac{\\pi}{30}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS311RollingMotionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 4;
       if (mode === 0) {
@@ -358,12 +363,13 @@
         `簡答：\\(${belt}\\)。過程：皮帶長由兩段直線外公切線與兩段圓弧組成。直線部分每段長為 \\(\\sqrt{d^2-(R-r)^2}\\)，兩段共兩倍；弧線總角度合計為 \\(2\\pi\\)，所以弧線總長為 \\(\\pi(R+r)\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS311OverlapAreaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -422,12 +428,13 @@
         `簡答：\\(${theta}\\) 弧度。過程：展開扇形的弧長等於底面圓周 \\(2\\pi\\cdot${baseR}\\)，且弧長 \\(s=${l}\\theta\\)，所以 \\(\\theta=\\frac{2\\pi\\cdot${baseR}}{${l}}=${theta}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS311SectorExtremaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -473,7 +480,7 @@
         `簡答：2 弧度。過程：面積最大時 \\(s=2r\\)，而 \\(s=r\\theta\\)，因此 \\(\\theta=2\\) 弧度。此時半徑為 \\(${r}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS311RightTriangleReciprocalSet(count) {
@@ -484,7 +491,8 @@
       { a: 7, b: 24, c: 25 },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const t = s242Pick(triples);
       const mode = i % 4;
@@ -516,7 +524,7 @@
         `簡答：\\(${s311PlainFrac(t.c + t.a, t.b)}\\)。過程：\\(\\cos A=\\frac{${t.b}}{${t.c}}\\)，可得鄰邊 ${t.b}、斜邊 ${t.c}、對邊 ${t.a}。因此 \\(\\sec A=\\frac{${t.c}}{${t.b}}\\)，\\(\\tan A=\\frac{${t.a}}{${t.b}}\\)，相加為 \\(${s311PlainFrac(t.c + t.a, t.b)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS311ReciprocalFromOneRatioSet(count) {
@@ -526,7 +534,8 @@
       { s: [8, 17], c: [15, 17], t: [8, 15] },
     ];
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(triples);
       const mode = i % 5;
@@ -575,12 +584,13 @@
         `簡答：\\(${fractionToLatex(ans)}\\)。過程：取對邊、鄰邊、斜邊為 ${item.t[0]},${item.t[1]},${item.s[1]}，把 \\(\\sin,\\cos,\\sec,\\csc\\) 全部改成分數後化簡，可得 \\(${fractionToLatex(ans)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS311ReciprocalIdentitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const angles = [10, 20, 30, 40, 50, 60, 70];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -623,12 +633,13 @@
         `簡答：\\(\\sqrt{\\sec^2\\theta+\\csc^2\\theta}=\\sec\\theta\\csc\\theta\\)。過程：平方根內為 \\(\\frac1{\\cos^2\\theta}+\\frac1{\\sin^2\\theta}=\\frac{\\sin^2\\theta+\cos^2\\theta}{\\sin^2\\theta\cos^2\\theta}=\\frac1{\\sin^2\\theta\cos^2\\theta}\\)。銳角時取正，得 \\(\\frac1{\\sin\\theta\cos\\theta}=\\sec\\theta\\csc\\theta\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS311ReciprocalComparisonSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -675,12 +686,13 @@
         `簡答：成立。過程：在 \\(0^\\circ<\\theta<45^\\circ\\) 時，\\(\\sin\\theta<\\cos\\theta\\)，取正倒數後不等號反向，故 \\(\\csc\\theta=\\frac1{\sin\theta}>\\frac1{\cos\theta}=\\sec\\theta\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS311SpecialReciprocalSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -755,7 +767,7 @@
         `簡答：\\(q\\)。過程：兩根積 \\(q=\\sec\\theta\\csc\\theta\\)。而 \\(\\tan\\theta+\cot\\theta=\\frac{\\sin^2\\theta+\\cos^2\\theta}{\\sin\\theta\\cos\\theta}=\\sec\\theta\\csc\\theta\\)，所以其值為 \\(q\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS311RadianSectorFiveSubtypeMixedSet(count) {
@@ -860,7 +872,8 @@
 
   function buildS312DoubleFromSingleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const t = s242Pick(S312_TRIPLES);
       const mode = i % 5;
@@ -929,12 +942,13 @@
         `簡答：\\(\\sin2\\theta=${sin2},\\ \\cos4\\theta=${ans}\\)。過程：\\((\\sin\\theta-\\cos\\theta)^2=1-\\sin2\\theta\\)，先得 \\(\\sin2\\theta=${sin2}\\)，再用 \\(\\cos4\\theta=1-2\\sin^2 2\\theta\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312HalfAngleKnownSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const data = [
       { cos: [3, 5], range: '第三象限', sinHalfSign: 1, cosHalfSign: -1 },
       { cos: [-3, 5], range: '第二象限', sinHalfSign: 1, cosHalfSign: 1 },
@@ -993,12 +1007,13 @@
         `簡答：\\(${ans}\\)。過程：\\(\\cos^2\\frac{\\theta}{2}=\\frac{1+\\cos\\theta}{2}\\)，再依象限取正根。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312RadicalHalfSimplifySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1041,12 +1056,13 @@
         `簡答：\\(2\\cos ${a}^\\circ\\)。過程：內層 \\(\\sqrt{2+2\\cos4a}=2\\cos2a\\)，原式變成 \\(\\sqrt{2+2\\cos2a}=2\\cos a\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312TanSubstitutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const tans = [
       [1, 2],
       [2, 3],
@@ -1099,12 +1115,13 @@
         `簡答：\\(\\frac{(1+k)^2}{1-k^2}\\)。過程：代入 \\(\\sin2x=\\frac{2k}{1+k^2}\\)、\\(\\cos2x=\\frac{1-k^2}{1+k^2}\\)，再合併分式。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312QuadraticDoubleHalfSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1158,12 +1175,13 @@
         `簡答：\\(2u^2-5u+2=0\\)，所以 \\(u=\\frac12\\) 或 \\(u=2\\)，有效為 \\(\\cos x=\\frac12\\)。過程：\\(\\cos2x=2\\cos^2x-1\\)，代入後整理並排除不可能的 \\(\\cos x=2\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312ProductValuesSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1202,12 +1220,13 @@
         `簡答：\\(\\sqrt3\\)。過程：利用 \\(\\tan x\\tan(60^\\circ-x)\\tan(60^\\circ+x)=\\tan3x\\)，取 \\(x=20^\\circ\\)，得 \\(\\tan60^\\circ=\\sqrt3\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312SumDifferenceExactSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { q: '\\sin75^\\circ', ans: '\\frac{\\sqrt6+\\sqrt2}{4}', process: '\\sin(45^\\circ+30^\\circ)' },
       { q: '\\cos15^\\circ', ans: '\\frac{\\sqrt6+\\sqrt2}{4}', process: '\\cos(45^\\circ-30^\\circ)' },
@@ -1220,12 +1239,13 @@
       questions.push(`求 \\(${item.q}\\) 的精確值。`);
       answers.push(`簡答：\\(${item.ans}\\)。過程：將角度拆成 ${item.process}，再套用和差角公式化簡。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312CompoundQuadrantSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const triples = [
       { s: [3, 5], c: [4, 5] },
       { s: [5, 13], c: [12, 13] },
@@ -1275,12 +1295,13 @@
         `簡答：2。過程：由 \\(\\tan(\\alpha-\\beta)=1\\)，得 \\(\\frac{\\tan\\alpha-\\tan\\beta}{1+\\tan\\alpha\\tan\\beta}=1\\)，整理即 \\((1+\\tan\\alpha)(1-\\tan\\beta)=2\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312InverseFormulaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const pairs = [
       [17, 47],
       [82, 38],
@@ -1322,12 +1343,13 @@
         `簡答：\\(\\frac12\\)。過程：原式為 \\(\\cos(\\frac{\\pi}{12}-\\frac{5\\pi}{12})=\\cos(-\\frac{\\pi}{3})=\\frac12\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312TanEquationLineAngleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1369,12 +1391,13 @@
       questions.push(`在正方形網格中，一條線斜率為 2，另一條線斜率為 \\(-\\frac12\\)，求兩線夾角。`);
       answers.push(`簡答：\\(90^\\circ\\)。過程：兩斜率乘積為 \\(-1\\)，所以兩線互相垂直。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312TriangleInteriorSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1417,12 +1440,13 @@
         `簡答：\\(-\\sqrt3\\)。過程：由 \\(\\tan(A+B)=\\tan120^\\circ=-\\sqrt3\\)，整理 \\(\\frac{\\tan A+\\tan B}{1-\\tan A\\tan B}=-\\sqrt3\\) 即得。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312RotationCoordinateSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const points = [
       [3, 4],
       [2, -1],
@@ -1463,12 +1487,13 @@
         `簡答：\\(90^\\circ\\)。過程：\\((x,y)\\mapsto(-y,x)\\) 正是逆時針 \\(90^\\circ\\) 旋轉，而 \\((3,1)\\mapsto(-1,3)\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312TripleFromSingleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1523,7 +1548,7 @@
       questions.push(`若 \\(x=\\cos20^\\circ\\)，求 \\(8x^3-6x+1\\) 的值。`);
       answers.push(`簡答：2。過程：\\(4x^3-3x=\\cos60^\\circ=\\frac12\\)，所以 \\(8x^3-6x+1=2\\cdot\\frac12+1=2\\)。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312TripleProductSet(count) {
@@ -1532,7 +1557,8 @@
 
   function buildS312TriplePolynomialSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1566,12 +1592,13 @@
       questions.push(`求 \\(16\\cos^320^\\circ-12\\cos20^\\circ+1\\) 的值。`);
       answers.push(`簡答：3。過程：由 \\(4\\cos^3x-3\\cos x=\\cos3x\\)，原式為 \\(4\\cos60^\\circ+1=3\\)。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312Special1836Set(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { q: '證明 \\(\\sin18^\\circ\\) 為方程式 \\(4x^2+2x-1=0\\) 的正根。', a: '\\sin18^\\circ=\\frac{\\sqrt5-1}{4}' },
       {
@@ -1589,12 +1616,13 @@
         `簡答：\\(${item.a}\\)。過程：使用 \\(18^\\circ,36^\\circ,72^\\circ\\) 與五邊形的黃金比例關係，必要時由倍角或三倍角公式推得。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312TripleExpressionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1628,12 +1656,13 @@
         `簡答：\\(\\frac{17}{27}\\)。過程：令 \\(u=\\sin\\theta+\\cos\\theta\\)，由差平方可得 \\(\\sin\\theta\\cos\\theta=\\frac49\\)，再用三次和公式整理。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312AngleFormulaAlgebraSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1665,12 +1694,13 @@
       questions.push(`計算 \\(\\cos(A+B)\\cos(A-B)\\) 並改寫成 \\(\\cos^2A\\) 與 \\(\\sin^2B\\) 的形式。`);
       answers.push(`簡答：\\(\\cos^2A-\\sin^2B\\)。過程：利用積化和差或直接展開 \\(\\cos(A+B)\\cos(A-B)\\)。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312PositiveTanProductSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1702,12 +1732,13 @@
       questions.push(`設 \\(\\alpha-\\beta=225^\\circ\\)，求 \\((1+\\tan\\alpha)(1-\\tan\\beta)\\) 的值。`);
       answers.push(`簡答：2。過程：\\(\\tan225^\\circ=1\\)，代入 \\(\\tan(\\alpha-\\beta)\\) 並整理。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312GridAngleSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -1737,7 +1768,7 @@
       questions.push(`長方形內切一個直角三角形，兩銳角的正切分別為 \\(\\frac12\\) 與 \\(\\frac13\\)，求兩角和的正切。`);
       answers.push(`簡答：1。過程：\\(\\tan(A+B)=\\frac{\\frac12+\\frac13}{1-\\frac16}=1\\)。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312DoubleHalfFiveSubtypeMixedSet(count) {
@@ -1876,7 +1907,8 @@
     // 已知 sinA+sinB=p 且 cosA+cosB=q，求 cos(A-B)
     // 公式：(p)²+(q)² = 2+2cos(A-B)，故 cos(A-B)=(p²+q²-2)/2
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { p: '\\frac{\\sqrt{6}}{2}', q: '\\frac{\\sqrt{2}}{2}', pSq: '\\frac{3}{2}', qSq: '\\frac{1}{2}', sumSq: '2', cosAB: '0' },
       { p: '1',                         q: '1',                         pSq: '1',             qSq: '1',             sumSq: '2', cosAB: '0' },
@@ -1899,7 +1931,7 @@
         answers.push(`簡答：\\(${item.cosAB}\\)。過程：\\((\\sin x+\\sin y)^2+(\\cos x+\\cos y)^2=2+2\\cos(x-y)\\)，代入得 \\(2+2\\cos(x-y)=${item.sumSq}\\)，所以 \\(\\cos(x-y)=${item.cosAB}\\)。`);
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312SinCosSumSquareSubtypeSet(count) {
@@ -1954,7 +1986,8 @@
 
   function buildS313PeriodAmplitudeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const kind = s313Pick(['sin', 'cos', 'tan']);
       const k = s313Pick([2, 3, 4, 5, 6]);
@@ -1981,12 +2014,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313TransformEquationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const bases = ['sin', 'cos', 'tan'];
     for (let i = 0; i < count; i += 1) {
       const kind = s313Pick(bases);
@@ -2008,12 +2042,13 @@
         `簡答：\\(${f}\\)。過程：水平位移寫成 \\(x-h\\)，內部若再作 ${k} 倍水平壓縮則成 \\(${s313Arg(k, h[0], h[1])}\\)；外部乘上 ${a}，再加上 ${d}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313SymmetrySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const kind = s313Pick(['sin', 'cos']);
       const k = s313Pick([1, 2, 3, 4]);
@@ -2038,12 +2073,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313AbsolutePeriodSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const kind = s313Pick(['sin', 'cos']);
       const k = s313Pick([1, 2, 3, 4, 5]);
@@ -2053,12 +2089,13 @@
         `簡答：\\(${period}\\)。過程：原本 \\(\\${kind}\\) 的週期為 \\(\\frac{2\\pi}{${k}}\\)，加絕對值後上下兩半波重合，週期減半為 \\(\\frac{\\pi}{${k}}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313MonotonicIntervalSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const k = s313Pick([1, 2, 3, 4]);
       const sign = s313Pick([1, -1]);
@@ -2077,12 +2114,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313ExtremaRangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const kind = s313Pick(['sin', 'cos']);
       const a = s313Pick([2, -2, 3, -4, 5]);
@@ -2094,12 +2132,13 @@
         `簡答：最大值 ${d + Math.abs(a)}，最小值 ${d - Math.abs(a)}，值域 ${s313RangeText(a, d)}。過程：\\(\\${kind}\\) 的值域為 \\([-1,1]\\)，乘上 ${a} 後上下幅度為 ${Math.abs(a)}，再平移到中線 \\(y=${d}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313RestrictedRangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = s313Pick([2, 3, -2, -3, 4]);
       const d = s313Pick([-2, 0, 1, 3]);
@@ -2112,12 +2151,13 @@
         `簡答：\\([${low},${high}]\\)。過程：在 \\([0,\\pi]\\) 內，\\(\\sin x\\) 的值域為 \\([0,1]\\)。代入 \\(y=${a}\\sin x${s313SignedNumber(d)}\\)，端點與最高點給出值域。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313RootCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const constants = [
       { text: '0', per: 2 },
       { text: '\\frac12', per: 2 },
@@ -2136,12 +2176,13 @@
         `簡答：${total} 個。過程：\\(\\sin u=${c.text}\\) 在一個週期 \\([0,2\\pi)\\) 內有 ${c.per} 個解；\\(u=${k === 1 ? 'x' : `${k}x`}\\) 讓 \\([0,2\\pi)\\) 內包含 ${k} 個完整週期，所以共有 ${total} 個。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313EquationCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 2;
       const k = s313Pick([1, 2, 3, 4]);
@@ -2160,12 +2201,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313ExactComparisonSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const angles = [
       { a: '\\frac{\\pi}{6}', s: '\\frac12', c: '\\frac{\\sqrt3}{2}', type: 'half' },
       { a: '\\frac{\\pi}{4}', s: '\\frac{\\sqrt2}{2}', c: '\\frac{\\sqrt2}{2}', type: 'sqrt2' },
@@ -2195,12 +2237,13 @@
         `簡答：\\(f(${item.a})=${value}\\)。過程：直接代入特殊角；\\(${item.a}\\) 的正弦值為 \\(${item.s}\\)，餘弦值為 \\(${item.c}\\)，所以 \\(f(${item.a})=${mult}+1=${value}\\)，再比較正弦與餘弦的大小。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313GraphParameterSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = s313Pick([2, 3, 4, 5]);
       const d = s313Pick([-2, 0, 3]);
@@ -2215,12 +2258,13 @@
         `簡答：\\(a=${a},d=${d},b=${k}\\)。過程：振幅 \\(a=\\frac{${max}-(${min})}{2}=${a}\\)，中線 \\(d=\\frac{${max}+(${min})}{2}=${d}\\)；週期 \\(\\frac{2\\pi}{b}=${period}\\)，所以 \\(b=${k}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313PeakValleySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = s313Pick([2, 3, 4]);
       const d = s313Pick([-1, 0, 2]);
@@ -2234,12 +2278,13 @@
         `簡答：\\(y=${a}\\sin ${k === 1 ? 'x' : `${k}x`}${s313SignedNumber(d)}\\)。過程：波峰與波谷的中線為 \\(y=${d}\\)，振幅為 ${a}；\\(\\sin bx\\) 的第一個波峰在 \\(x=\\frac{\\pi}{2b}\\)，由 \\(${peakX}\\) 得 \\(b=${k}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313FerrisModelSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const r = s313Pick([10, 15, 20, 30]);
       const low = s313Pick([2, 5, 8]);
@@ -2252,12 +2297,13 @@
         `簡答：\\(h(t)=${center}-${r}\\cos\\frac{2\\pi t}{${minutes}}\\)。過程：中線高度為 ${center}，振幅為 ${r}，角速度為 \\(\\frac{2\\pi}{${minutes}}\\)。從最低點開始，所以用 \\(-\\cos\\) 表示。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313ClockPendulumSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const len = s313Pick([6, 8, 10, 12]);
       const minutes = s313Pick([10, 15, 20, 30]);
@@ -2268,12 +2314,13 @@
         `簡答：\\(${fractionToLatex(area)}\\pi\\) 平方公分。過程：${minutes} 分鐘對應圓心角 \\(${theta}\\) 弧度，扇形面積為 \\(\\frac12 r^2\\theta=\\frac12\\cdot${len}^2\\cdot ${theta}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313ReverseTransformSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const kind = s313Pick(['sin', 'cos']);
       const a = s313Pick([2, 3, 4]);
@@ -2290,7 +2337,7 @@
         `簡答：水平壓縮為原來的 \\(\\frac1{${k}}\\) 倍，向右平移 \\(${s313Pi(h[0], h[1])}\\)，縱向伸縮 ${a} 倍，並上下平移 ${d} 單位。過程：由內部 \\(${s313Arg(k, h[0], h[1])}\\) 讀出水平變換，由外部係數 ${a} 與常數 ${d} 讀出縱向變換。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313PeriodTransformFiveSubtypeMixedSet(count) {
@@ -2461,7 +2508,8 @@
 
   function buildS314BasicComboExtremaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const [p, q, r] = s314Triple();
       const signA = s313Pick([1, -1]);
@@ -2474,12 +2522,13 @@
         `簡答：${s314MaxMinText(c + r, c - r)}。過程：把 \\(${s314ComboText(a, b)}\\) 疊合成 \\(${r}\\sin(x+\\theta)\\)，其中 \\(\\cos\\theta=${formatFraction(a, r)}\\)、\\(\\sin\\theta=${formatFraction(b, r)}\\)。因此原函數值域為 \\([${c - r},${c + r}]\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314RestrictedRangeSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = s313Pick([1, 2, 3, 4]);
       const c = s313Pick([-3, 0, 2]);
@@ -2500,12 +2549,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314QuadraticReductionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const [p, q, r] = s314Triple();
       const base = s313Pick([1, 3, 5]);
@@ -2519,12 +2569,13 @@
         `簡答：最大值 ${mid + r}，最小值 ${mid - r}。過程：用 \\(\\sin^2x=\\frac{1-\\cos2x}{2}\\)、\\(\\cos^2x=\\frac{1+\\cos2x}{2}\\)、\\(\\sin x\\cos x=\\frac12\\sin2x\\)，可化為 \\(${mid}+${p}\\cos2x+${q}\\sin2x\\)，振幅為 \\(\\sqrt{${p}^2+${q}^2}=${r}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314SubstitutionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const m = s313Pick([1, 2]);
       const n = s313Pick([1, 2]);
@@ -2535,12 +2586,13 @@
         `簡答：\\(${s314ValueText(4 * n - m * m, 4)}\\)。過程：令 \\(t=\\sin x+\\cos x\\)，則 \\(t\\in[-\\sqrt2,\\sqrt2]\\)，原式成 \\(t^2${tLinearPart}+${n}\\)。頂點 \\(t=-\\frac{${m}}{2}\\) 落在範圍內，所以最小值為 \\(${n}-\\frac{${m * m}}{4}=${s314ValueText(4 * n - m * m, 4)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314FractionalExtremaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = s313Pick([1, 2, 3]);
       const b = s313Pick([1, 2]);
@@ -2558,12 +2610,13 @@
         `簡答：最大值 \\(${s314ValueText(values[1].num, values[1].den)}\\)，最小值 \\(${s314ValueText(values[0].num, values[0].den)}\\)。過程：令 \\(u=\\sin x\\)，\\(-1\\le u\\le1\\)，且分母 \\(${denominatorU}\\) 恆為正。分式 \\(\\frac{${numeratorU}}{${denominatorU}}\\) 在此區間單調，因此只需比較 \\(u=-1,1\\) 的值。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314ParameterInverseSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const [a0, b0, r] = s314Triple();
       const k = s313Pick([1, 2, 3, 4]);
@@ -2578,12 +2631,13 @@
         `簡答：\\(b=${b0},c=${d},k=${k}\\)。過程：最大最小值給出振幅 \\(R=\\frac{${max}-(${min})}{2}=${r}\\)，中線 \\(c=\\frac{${max}+(${min})}{2}=${d}\\)。又 \\(R^2=a^2+b^2\\)，所以 \\(b=\\sqrt{${r}^2-${a0}^2}=${b0}\\)。週期 \\(\\frac{2\\pi}{k}=${period}\\)，因此 \\(k=${k}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314EquationSolvingSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const sinCases = [
       { c: '0',                          ans: '0,\\pi',                               hint: '\\(\\sin\\theta=0\\) 在 \\([0,2\\pi)\\) 時 \\(\\theta=0,\\pi\\)。' },
       { c: '\\frac{1}{2}',             ans: '\\frac{\\pi}{6},\\frac{5\\pi}{6}', hint: '基本角 \\(\\frac{\\pi}{6}\\)，第二象限解 \\(\\pi-\\frac{\\pi}{6}=\\frac{5\\pi}{6}\\)。' },
@@ -2631,12 +2685,13 @@
         answers.push(`簡答：\\(\\theta=${item.ans}\\)。過程：${item.hint}`);
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314CombineFormSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const [p, q, r] = s314Triple();
       const mode = i % 2;
@@ -2656,12 +2711,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314GeometryModelSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const r = s313Pick([2, 3, 4, 5, 6]);
       questions.push(
@@ -2671,12 +2727,13 @@
         `簡答：${r * r}。過程：矩形寬為 \\(${2 * r}\\cos\\theta\\)，高為 \\(${r}\\sin\\theta\\)，面積 \\(A=${2 * r * r}\\sin\\theta\\cos\\theta=${r * r}\\sin2\\theta\\)，最大值為 ${r * r}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314WaveModelSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const [a, b, r] = s314Triple();
       const w = s313Pick([1, 2, 3, 4]);
@@ -2687,12 +2744,13 @@
         `簡答：${r}。過程：同頻的 \\(a\\sin\\omega t+b\\cos\\omega t\\) 可疊合成 \\(R\\sin(\\omega t+\\theta)\\)，其中 \\(R=\\sqrt{${a}^2+${b}^2}=${r}\\)，所以最大位移為 ${r}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314TrigInequalityParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const sinGtCases = [
       { c: '\\frac{1}{2}',            ans: '\\frac{\\pi}{6}<\\theta<\\frac{5\\pi}{6}',   detail: '\\(\\sin\\theta=\\frac{1}{2}\\) 解為 \\(\\frac{\\pi}{6},\\frac{5\\pi}{6}\\)，\\(\\sin\\theta>\\frac{1}{2}\\) 在兩解之間。' },
       { c: '\\frac{\\sqrt{2}}{2}',  ans: '\\frac{\\pi}{4}<\\theta<\\frac{3\\pi}{4}',   detail: '\\(\\sin\\theta=\\frac{\\sqrt{2}}{2}\\) 解為 \\(\\frac{\\pi}{4},\\frac{3\\pi}{4}\\)，取中間弧段。' },
@@ -2718,12 +2776,13 @@
         answers.push(`簡答：\\(${item.ans}\\)。過程：${item.detail}`);
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314InverseTrigEvalSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const arcsinCases = [
       { expr: '\\sin\\frac{5\\pi}{6}',  val: '\\frac{\\pi}{6}',  hint: '\\(\\sin\\frac{5\\pi}{6}=\\frac{1}{2}\\)，\\(\\arcsin\\frac{1}{2}=\\frac{\\pi}{6}\\)（在 \\([-\\frac{\\pi}{2},\\frac{\\pi}{2}]\\) 內）。' },
       { expr: '\\sin\\frac{2\\pi}{3}',  val: '\\frac{\\pi}{3}',  hint: '\\(\\sin\\frac{2\\pi}{3}=\\frac{\\sqrt{3}}{2}\\)，\\(\\arcsin\\frac{\\sqrt{3}}{2}=\\frac{\\pi}{3}\\)。' },
@@ -2765,7 +2824,7 @@
         answers.push(`簡答：\\(${item.val}\\)。過程：${item.hint}`);
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314TrigInequalityParameterizedSubtypeSet(count) {
@@ -2891,7 +2950,8 @@
 
   function buildS311SectorConeParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { slant: 5, degree: 216, base: 3, height: 4, volume: '12\\pi' },
       { slant: 10, degree: 216, base: 6, height: 8, volume: '96\\pi' },
@@ -2908,12 +2968,13 @@
         `底面半徑 \\(${item.base}\\)，高 \\(${item.height}\\)，體積 \\(${item.volume}\\)。扇形弧長等於圓錐底圓周長，所以 \\(2\\pi r=${item.slant}\\cdot ${s31PiText(item.degree, 180)}\\)，得 \\(r=${item.base}\\)。母線長為 \\(${item.slant}\\)，因此 \\(h=\\sqrt{${item.slant}^2-${item.base}^2}=${item.height}\\)，體積 \\(V=\\frac13\\pi r^2h=${item.volume}\\)。答案：底面半徑 \\(${item.base}\\)，高 \\(${item.height}\\)，體積 \\(${item.volume}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312TangentAdditionEquationParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const equationCases = [
       { shift: 20, value: '1', delta: 45, theta: 65 },
       { shift: 35, value: '0', delta: 0, theta: 35 },
@@ -2946,12 +3007,13 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS312CosArithmeticProgressionParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { n: 2, shift: 45, interval: '0^\\circ<\\theta<180^\\circ' },
       { n: 3, shift: 60, interval: '0^\\circ<\\theta<180^\\circ' },
@@ -2971,12 +3033,13 @@
         `共有 \\(${item.n}\\) 個。等差條件給 \\(2\\cos ${item.n}\\theta=\\cos(${item.n}\\theta-${item.shift}^\\circ)+\\cos(${item.n}\\theta+${item.shift}^\\circ)=2\\cos ${item.n}\\theta\\cos ${item.shift}^\\circ\\)。因 \\(\\cos ${item.shift}^\\circ\\ne1\\)，所以 \\(\\cos ${item.n}\\theta=0\\)。在 \\(0^\\circ<\\theta<180^\\circ\\) 中，\\(\\theta=${values.join(', ')}\\)，共有 \\(${item.n}\\) 個。答案：\\(${item.n}\\) 個。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313LinearSinCosGraphFactsParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { a: 3, b: 4, r: 5, k: 1, c: 2 },
       { a: 5, b: 12, r: 13, k: 2, c: -1 },
@@ -2993,12 +3056,13 @@
         `振幅 \\(${item.r}\\)，週期 \\(${s31PiText(2, item.k)}\\)，\\(y\\) 軸截距 \\(${item.b + item.c}\\)，最大值 \\(${item.c + item.r}\\)，最小值 \\(${item.c - item.r}\\)。因 \\(a\\sin kx+b\\cos kx\\) 的振幅為 \\(\\sqrt{a^2+b^2}\\)，本題為 \\(\\sqrt{${item.a}^2+${item.b}^2}=${item.r}\\)。答案：振幅 \\(${item.r}\\)，週期 \\(${s31PiText(2, item.k)}\\)，截距 \\(${item.b + item.c}\\)，最大 \\(${item.c + item.r}\\)，最小 \\(${item.c - item.r}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS313PeakValleyFunctionParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { amp: 3, mid: 1, k: 1 },
       { amp: 4, mid: -2, k: 2 },
@@ -3019,12 +3083,13 @@
         `\\(y=${expression}\\)。振幅 \\(A=\\frac{${maxY}-(${minY})}{2}=${item.amp}\\)，中線 \\(d=\\frac{${maxY}+(${minY})}{2}=${item.mid}\\)。最高點到相鄰最低點是半個週期，所以半週期為 \\(${s31PiText(1, item.k)}\\)，週期為 \\(${s31PiText(2, item.k)}\\)，得 \\(k=${item.k}\\)。答案：\\(y=${expression}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314LinearComboInequalityParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       {
         expression: '\\sqrt{3}\\cos x-\\sin x',
@@ -3068,12 +3133,13 @@
         `解為 \\(${item.answer}\\)。先合成 \\(${item.expression}=${item.combined}\\)，原不等式化為 \\(${item.normalized}\\)，再回到 \\(0\\le x<2\\pi\\) 的範圍取解。答案：\\(${item.answer}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS314MaxPointTangentParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const cases = [
       { a: 3, b: 4, c: 1 },
       { a: 5, b: 12, c: -2 },
@@ -3090,7 +3156,7 @@
         `\\(\\tan\\alpha=${formatFraction(item.a, item.b)}\\)。最大值發生在 \\(f'(x)=0\\)，即 \\(${item.a}\\cos x-${item.b}\\sin x=0\\)，所以 \\(\\tan\\alpha=\\frac{${item.a}}{${item.b}}\\)。答案：\\(\\tan\\alpha=${formatFraction(item.a, item.b)}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function s321Plus(value) {
@@ -3118,7 +3184,8 @@
 
   function buildS321ExponentLawSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3169,12 +3236,13 @@
         `簡答：\\(a^{${formatFraction(2, n)}}-b^{${formatFraction(2, n)}}\\)。過程：套用平方差，\\(X=a^{1/${n}},Y=b^{1/${n}}\\)，則 \\((X-Y)(X+Y)=X^2-Y^2\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321SizeComparisonSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3219,12 +3287,13 @@
         `簡答：\\(a^{${formatFraction(2, 3)}}>a^{${formatFraction(1, 2)}}>a^{-1}\\)。過程：因為底數 ${a}>1，指數愈大值愈大，直接比較 \\(\\frac23,\\frac12,-1\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321EquationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3274,12 +3343,13 @@
         `簡答：\\(x=\\log_2 ${m}\\) 或 \\(x=-\\log_2 ${m}\\)。過程：令 \\(t=2^x>0\\)，得 \\(t+\\frac1t=${sumText}\\)，所以 \\(t=${m}\\) 或 \\(t=\\frac1{${m}}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321InequalitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3328,12 +3398,13 @@
         `簡答：\\(0<x<2\\)。過程：把兩側都寫成 3 的次方，\\(3^{-1}<3^{2x-1}<3^3\\)，底數大於 1，不等號方向不變。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321ApplicationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3377,12 +3448,13 @@
       questions.push(`某藥物在血液中每 2 小時濃度減半，初始濃度為 ${start}，求 8 小時後濃度。`);
       answers.push(`簡答：${start / 16}。過程：8 小時是 4 個半衰期，濃度為 \\(${start}(\\frac12)^4=${start / 16}\\)。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321GraphFeatureSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = s321Pick([2, 3, 4, 5]);
       const mode = i % 5;
@@ -3415,12 +3487,13 @@
       questions.push(`判斷 \\(y=${a}^x\\) 與反函數 \\(y=\\log_${a}x\\) 是否關於直線 \\(y=x\\) 對稱。`);
       answers.push(`簡答：是。過程：互為反函數的兩個圖形會關於直線 \\(y=x\\) 對稱。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321GraphTransformSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = s321Pick([2, 3, 4]);
       const h = s321Pick([1, 2, 3]);
@@ -3456,12 +3529,13 @@
         `簡答：\\(y=3^{x+1}+2\\)。過程：設 \\(y=3^{x-h}+k\\)。代入兩點可得 \\(3^{-h}+k=5\\)、\\(3^{1-h}+k=11\\)，相減得 \\(2\\cdot3^{-h}=6\\)，故 \\(h=-1,k=2\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321CompositeExtremaSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3506,12 +3580,13 @@
         `簡答：${min}。過程：由 \\(x=${total}-2y\\)，原式為 \\(3^{${total}-2y}+3^{2y}\\)。令 \\(t=3^{2y}>0\\)，成 \\(\\frac{3^{${total}}}{t}+t\\)，由 AM-GM 得最小值 \\(2\\sqrt{3^{${total}}}=${min}\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321AdvancedInequalitySet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3554,12 +3629,13 @@
         `簡答：\\(t^2-2\\)，代入得 ${c * c - 2}。過程：\\((2^x+2^{-x})^2=4^x+2+4^{-x}\\)，所以 \\(4^x+4^{-x}=t^2-2\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321AdvancedComparisonSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3597,12 +3673,13 @@
         `簡答：2 個。過程：令 \\(F(x)=2^x-x-3\\)。\\(F(-3)>0,F(-2)<0\\)，故 \\((-3,-2)\\) 有一根；\\(F(1)<0,F(2)>0\\)，故 \\((1,2)\\) 有一根。又 \\(F''(x)=(\\ln2)^2 2^x>0\\)，凸函數至多有兩個零點，所以共 2 根。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321FunctionalEquationSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = s321Pick([2, 3, 5]);
       const mode = i % 5;
@@ -3632,12 +3709,13 @@
       questions.push(`若 \\(f(x)=a^x\\)、\\(f(k)=125\\)，求 \\(f(-k)\\)。`);
       answers.push(`簡答：\\(\\frac1{125}\\)。過程：\\(f(k)f(-k)=a^k a^{-k}=1\\)。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321SymmetricExpressionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3671,12 +3749,13 @@
         `簡答：\\(\\sqrt5+\\frac1{\\sqrt5}-1\\)。過程：令 \\(u=a^x\\)，則 \\(u^2=5\\)，用 \\(u^3+u^{-3}=(u+u^{-1})(u^2+u^{-2}-1)\\)。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321HyperbolicFunctionSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = s321Pick([2, 3, 5]);
       const mode = i % 5;
@@ -3703,12 +3782,13 @@
       questions.push(`設 \\(f(x)=\\frac{${a}^{2x}-${a}^{-2x}}{2}\\)，用 \\(f(x)\\) 的想法說明其奇偶性。`);
       answers.push(`簡答：奇函數。過程：代入 \\(-x\\) 後，兩項互換並整體變號。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321IntersectionRootCountSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3738,12 +3818,13 @@
         `簡答：1 個。過程：令 \\(F(x)=2^x+x-2\\)，則 \\(F'(x)=(\\ln2)2^x+1>0\\)，所以 \\(F\\) 嚴格遞增；又 \\(F(0)=-1,F(1)=1\\)，因此恰有 1 個實根。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321ParameterFromGraphSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -3775,7 +3856,7 @@
       questions.push(`已知 \\(y=a^x\\) 通過 \\((2,9)\\)，求 \\(y=27\\) 對應的 \\(x\\)。`);
       answers.push(`簡答：3。過程：由 \\(a^2=9\\) 且 \\(a>0\\)，得 \\(a=3\\)。所以 \\(3^x=27\\)，\\(x=3\\)。`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS321BasicFiveSubtypeMixedSet(count) {
@@ -3932,13 +4013,15 @@
         };
       },
     ];
-    const questions = [], answers = [];
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i++) {
       const { q, a } = caseMakers[i % caseMakers.length]();
       questions.push(q);
       answers.push(a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
   function buildS321DiffBaseExpEquationSubtypeSet(count) {
     return buildS321DiffBaseExpEquationSet(count);
@@ -3995,13 +4078,14 @@
 
   function s322MakeSet(count, builders) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = builders[i % builders.length]();
       questions.push(item.question);
       answers.push(item.answer);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function s322Single(builder) {
@@ -4990,13 +5074,14 @@
 
   function s323MakeSet(count, builders) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const built = builders[i % builders.length]();
       questions.push(built.q);
       answers.push(built.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS323QA(q, short, process) {
@@ -5854,13 +5939,14 @@
 
   function s324MakeSet(count, builders) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = builders[i % builders.length]();
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildS324GrowthDecaySet(count) {
@@ -6884,13 +6970,14 @@
 
   function s32CleanSet(count, builders) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = builders[i % builders.length]();
       questions.push(item.q);
       answers.push(s32CleanAnswer(item.short, item.process));
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function s32LogApprox(base) {
@@ -12038,13 +12125,14 @@
 
   function s331MakeSet(count, builders) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = builders[i % builders.length]();
       questions.push(item.q);
       answers.push(item.a);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function deriveSummaryAnswerFromDetail(detail) {
@@ -12104,6 +12192,18 @@
     return sentence || text;
   }
 
+  function createAnswerList(summaryAnswers) {
+    const answers = [];
+    const nativePush = Array.prototype.push;
+    answers.push = function pushAnswerWithSummary(...items) {
+      items.forEach((item) => {
+        summaryAnswers.push(deriveSummaryAnswerFromDetail(item));
+      });
+      return nativePush.apply(this, items);
+    };
+    return answers;
+  }
+
   /* ============================================================
    * 新增小類（依三民版 S3-1 三角函數學生卷整理）
    * 以下 3 個 generator 皆使用 randInt/Math.random 進行真隨機參數化，
@@ -12113,7 +12213,8 @@
   /* ---------- 時鐘指針夾角（給定 H 點 M 分，求時針與分針夾角） ---------- */
   function buildS311ClockHandsAngleParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const H = randInt(1, 12);
       const M = randInt(1, 59);
@@ -12133,13 +12234,14 @@
         `簡答：\\(${radLatex}\\) 弳（即 \\(${degText}^\\circ\\)）。過程：以 12 點方向為基準，時針經過 ${H} 點 ${M} 分時轉過 \\(30^\\circ\\times ${Hmod}+0.5^\\circ\\times ${M}\\)，分針轉過 \\(6^\\circ\\times ${M}\\)，兩者角度差取絕對值後再與 \\(360^\\circ\\) 減之取較小者，得夾角 \\(${degText}^\\circ=${radLatex}\\) 弳。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ---------- 兩輪皮帶長（外接皮帶，兩輪同向轉動，皮帶不交叉） ---------- */
   function buildS311BeltTwoPulleysParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const r = randInt(1, 5);
       const gap = randInt(2 * r + 1, 2 * r + 8); // R - r
@@ -12157,13 +12259,14 @@
         `簡答：\\((${2 * Lcoef}\\sqrt{3}+${piText})\\) 公分。過程：設小輪半徑 \\(r=${r}\\)，大輪半徑 \\(R=${R}\\)，中心距 \\(d=${d}\\)。因為 \\(\\dfrac{R-r}{d}=\\dfrac{${gap}}{${d}}=\\dfrac12\\)，可知皮帶與圓心連線的夾角 \\(\\theta=30^\\circ=\\dfrac{\\pi}{6}\\)。兩段公切線長 \\(L=\\sqrt{d^2-(R-r)^2}=\\sqrt{${d}^2-${gap}^2}=${Lcoef}\\sqrt{3}\\)，共兩段為 \\(${2 * Lcoef}\\sqrt{3}\\)。皮帶繞大輪的弧角為 \\(\\pi+2\\theta=\\dfrac{4\\pi}{3}\\)，繞小輪的弧角為 \\(\\pi-2\\theta=\\dfrac{2\\pi}{3}\\)，兩段弧長之和為 \\(R\\cdot\\dfrac{4\\pi}{3}+r\\cdot\\dfrac{2\\pi}{3}=${piText}\\)。故皮帶總長為 \\(${2 * Lcoef}\\sqrt{3}+${piText}\\) 公分。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ---------- 七圓（六圓環繞一圓）緊密排列外圍包裝長度 ---------- */
   function buildS311SevenCirclesBandParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const contexts = [
       { obj: '圓柱形鋼筋', unit: '公分', verb: '環繞' },
       { obj: '圓形管件', unit: '公分', verb: '包裝' },
@@ -12179,7 +12282,7 @@
         `簡答：\\((${total}+${2 * r}\\pi)\\) ${ctx.unit}。過程：外圍 6 根圓兩兩外切，圓心連線構成正六邊形，每邊長 \\(=2r=${2 * r}\\)，故 6 段公切線（緊貼直線段）總長為 \\(6\\times 2r=${total}\\)。轉彎處 6 段弧的圓心角之和恰為一整圈 \\(360^\\circ\\)，弧長之和為 \\(2\\pi r=${2 * r}\\pi\\)。所以鐵條總長為 \\(${total}+${2 * r}\\pi\\) ${ctx.unit}。`
       );
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ============================================================
@@ -12202,7 +12305,8 @@
   /* ---------- 指數分式函數合成求值：由 f(α)、f(β) 求 f(α±β) ---------- */
   function buildS321HyperbolicComposeParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const bases = [2, 3, 5, 7];
     const pool = [2, 3, 4, 5, 6, -2, -3, -4, -5, -6];
 
@@ -12250,7 +12354,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ============================================================
@@ -12268,7 +12372,8 @@
   /* ---------- 兩直線交角（法向量／方向向量內積） ---------- */
   function buildS332LineAngleVectorParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     // 整數邊長的直角三角形斜邊組（含正負號變化），確保長度是整數，避免根號
     const base = [
       [3, 4, 5], [4, 3, 5], [5, 12, 13], [12, 5, 13],
@@ -12334,13 +12439,14 @@
         }
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   /* ---------- 由頂點坐標求垂心與外心坐標 ---------- */
   function buildS332TriangleCenterCoordinateParameterizedSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function s332Cross(A, B, C) {
       return (B[0] - A[0]) * (C[1] - A[1]) - (B[1] - A[1]) * (C[0] - A[0]);
@@ -12395,7 +12501,7 @@
         );
       }
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   const nextConfigs = {
@@ -14750,7 +14856,7 @@
       },
   };
 
-  const bundleFingerprint = "s3-bundle-v20260701-s3-3-sanmin-v4";
+  const bundleFingerprint = "s3-bundle-v20260706-summary-v1";
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== "object") return;
     config.__generatorFingerprint = bundleFingerprint;

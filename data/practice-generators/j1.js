@@ -294,8 +294,8 @@
         summaryAnswers.push(`$${left} ${relation} ${right}$`);
         answers.push(
           exponent % 2 === 0
-            ? `$(-${base})^{${exponent}}=${left}$，因為偶數次方會把負號一起平方成正；而 $-${base}^{${exponent}}=${right}$ 是先算 ${base}^{${exponent}} 再補前面的負號，所以關係是 $${left} ${relation} ${right}$。`
-            : `$(-${base})^{${exponent}}=${left}$，$-${base}^{${exponent}}=${right}$。這一題雖然結果同為負數，但前者是整個 $(-${base})$ 連乘，後者是 ${base}^{${exponent}} 前面再補負號，所以兩者關係是 $${left}=${right}$。`
+            ? `$(-${base})^{${exponent}}=${left}$，因為偶數次方會把負號一起平方成正；而 $-${base}^{${exponent}}=${right}$ 是先算 $${base}^{${exponent}}$ 再補前面的負號，所以關係是 $${left} ${relation} ${right}$。`
+            : `$(-${base})^{${exponent}}=${left}$，$-${base}^{${exponent}}=${right}$。這一題雖然結果同為負數，但前者是整個 $(-${base})$ 連乘，後者是 $${base}^{${exponent}}$ 前面再補負號，所以兩者關係是 $${left}=${right}$。`
         );
         continue;
       }
@@ -428,7 +428,7 @@
         questions.push(`計算：$(${base}^{${a}}\\times ${base}^{${b}})^{${c}}\\div ${base}^{${d}}$。`);
         summaryAnswers.push(`$${base}^{${totalExponent}}$`);
         answers.push(
-          `先把括號內同底數相乘整理成 $${base}^{${a + b}}$；再做乘方的乘方，得到 $(${base}^{${a + b}})^{${c}}=${base}^{${(a + b) * c}}$；最後再除以 ${base}^{${d}}，指數相減得 $${(a + b) * c}-${d}=${totalExponent}$，所以結果是 $${base}^{${totalExponent}}$。`
+          `先把括號內同底數相乘整理成 $${base}^{${a + b}}$；再做乘方的乘方，得到 $(${base}^{${a + b}})^{${c}}=${base}^{${(a + b) * c}}$；最後再除以 $${base}^{${d}}$，指數相減得 $${(a + b) * c}-${d}=${totalExponent}$，所以結果是 $${base}^{${totalExponent}}$。`
         );
         continue;
       }
@@ -827,9 +827,14 @@
         `計算：$${coeffAText} \\times 10^{${expA}} ${isAdd ? '+' : '-'} ${coeffBText} \\times 10^{${expB}}$。`
       );
       summaryAnswers.push(`$${normalized.text}$`);
+      const sumText = trimDecimalString(`${Number(resultCoeff.toFixed(6))}`);
+      const sameExpDetail =
+        normalized.exponent === commonExp
+          ? `兩個指數已相同，直接合併係數：${coeffAText} ${isAdd ? '+' : '-'} ${coeffBText} = ${sumText}，所以結果是 $${normalized.text}$。`
+          : `兩個指數已相同，先合併係數：${coeffAText} ${isAdd ? '+' : '-'} ${coeffBText} = ${sumText}，得 $${sumText} \\times 10^{${commonExp}}$；係數不在 1～10 之間，再整理成標準科學記號 $= ${normalized.text}$。`;
       answers.push(
         shift === 0
-          ? `兩個指數已相同，直接合併係數：${coeffAText} ${isAdd ? '+' : '-'} ${coeffBText} = ${trimDecimalString(`${Number(resultCoeff.toFixed(6))}`)}，所以結果是 $${normalized.text}$。`
+          ? sameExpDetail
           : `先把 $${coeffBText} \\times 10^{${expB}}$ 改寫成 $${trimDecimalString(`${Number(alignedB.toFixed(6))}`)} \\times 10^{${alignedExpText}}$，再合併係數，最後整理成標準科學記號，結果是 $${normalized.text}$。`
       );
     }
@@ -1023,11 +1028,12 @@
         `計算 $${coeffAText} \\times 10^{${expA}} ${isAdd ? '+' : '-'} ${coeffBText} \\times 10^{${expB}}$，並以科學記號表示。`
       );
       summaryAnswers.push(`$${normalized.text}$`);
+      const sumText114 = trimDecimalString(`${Number(resultCoeff.toFixed(6))}`);
       answers.push(
         expA === expB
-          ? `次方數相同，可直接合併係數：${coeffAText} ${isAdd ? '+' : '-'} ${coeffBText} = ${trimDecimalString(
-              `${Number(resultCoeff.toFixed(6))}`
-            )}，所以結果是 $${normalized.text}$。`
+          ? normalized.exponent === commonExp
+            ? `次方數相同，可直接合併係數：${coeffAText} ${isAdd ? '+' : '-'} ${coeffBText} = ${sumText114}，所以結果是 $${normalized.text}$。`
+            : `次方數相同，先合併係數：${coeffAText} ${isAdd ? '+' : '-'} ${coeffBText} = ${sumText114}，得 $${sumText114} \\times 10^{${commonExp}}$；係數不在 1～10 之間，再整理成標準科學記號 $= ${normalized.text}$。`
           : `先把 $${coeffBText} \\times 10^{${expB}}$ 改寫成 $${trimDecimalString(
               `${Number(alignedB.toFixed(6))}`
             )} \\times 10^{${commonExp}}$，再合併係數，最後整理成 $${normalized.text}$。`
@@ -1132,7 +1138,7 @@
       );
       summaryAnswers.push(`$${result.text}$ 公尺`);
       answers.push(
-        `距離 = 速度 × 時間，所以先算 $${speedText}\\times ${timeText} = ${trimDecimalString(`${Number(rawCoeff.toFixed(6))}`)}$，指數相加得 ${speedExp}+${timeExp}=${rawExp}$，整理後為 $${result.text}$ 公尺。`
+        `距離 = 速度 × 時間，所以先算 $${speedText}\\times ${timeText} = ${trimDecimalString(`${Number(rawCoeff.toFixed(6))}`)}$，指數相加得 $${speedExp}+${timeExp}=${rawExp}$，整理後為 $${result.text}$ 公尺。`
       );
     }
 
@@ -1430,7 +1436,7 @@
     const answers = [];
 
     for (let i = 0; i < count; i += 1) {
-      const a = randInt(2, 12);
+      const a = pickNonZero(-12, 12);
       const sumText = formatFraction(a * a + 1, a);
       questions.push(`已知 $a$ 與 $b$ 互為倒數，且 $a=${a}$，求 $a+b$ 的值。`);
       summaryAnswers.push(`$${sumText}$`);
@@ -2020,7 +2026,7 @@
       );
       summaryAnswers.push(`$${totalDiff}$`);
       answers.push(
-        `平均每人改變 $${diff}$，共有 $${people}$ 人，所以總和共$${changeText} $${diff}\\times ${people}=${totalDiff}$。`
+        `平均每人改變 $${diff}$，共有 $${people}$ 人，所以總和共${changeText} $${diff}\\times ${people}=${totalDiff}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2238,15 +2244,431 @@
       const cNew = (c - b) / s;
       const scaleText = s >= 1 ? `放大${s}倍` : `縮小為${s === 0.5 ? '2分之1' : '4分之1'}`;
       if (i === 0) {
-        questions.push(`$A(${a})$、$B(${b})$、$C(${c})$，$B$當新原點，單位長$${scaleText}$，求$A$、$C$新的坐標。`);
+        questions.push(`$A(${a})$、$B(${b})$、$C(${c})$，$B$當新原點，單位長${scaleText}，求$A$、$C$新的坐標。`);
       } else {
-        questions.push(`$A(${a})$、$B(${b})$、$C(${c})$，單位長$${scaleText}$，求$A$、$C$新坐標。`);
+        questions.push(`$A(${a})$、$B(${b})$、$C(${c})$，單位長${scaleText}，求$A$、$C$新坐標。`);
       }
-      summaryAnswers.push(`$${formatCoordinateValue(aNew)}, ${formatCoordinateValue(cNew)}$`);
+      summaryAnswers.push(`${formatCoordinateValue(aNew)}, ${formatCoordinateValue(cNew)}`);
       answers.push(
-        `以 $B$ 為新原點先平移，再除以單位倍數：$A'=\\frac{${formatMinus(a, b)}}{${s}}=${formatCoordinateValue(aNew)}$，$C'=\\frac{${formatMinus(c, b)}}{${s}}=${formatCoordinateValue(cNew)}$。`
+        `以 $B$ 為新原點先平移，再除以單位倍數：$A'=\\frac{${formatMinus(a, b)}}{${s}}=$${formatCoordinateValue(aNew)}，$C'=\\frac{${formatMinus(c, b)}}{${s}}=$${formatCoordinateValue(cNew)}。`
       );
     }
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 增難：座標系逆向多重變換 —— 給兩點的新舊坐標，反求新原點與單位長倍數。
+  function buildCoordinateReverseMultiSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const scales = [2, 3, 4];
+    for (let i = 0; i < count; i += 1) {
+      const origin = randInt(-8, 8);
+      const scale = scales[randInt(0, scales.length - 1)];
+      let aNew = randInt(-6, 6);
+      let bNew = randInt(-6, 6);
+      while (bNew === aNew) bNew = randInt(-6, 6);
+      if (aNew < bNew) {
+        const t = aNew;
+        aNew = bNew;
+        bNew = t;
+      }
+      const aOld = origin + aNew * scale;
+      const bOld = origin + bNew * scale;
+      const oldDiff = aOld - bOld;
+      const newDiff = aNew - bNew;
+      const setup = `數線上 A、B 兩點原坐標分別為 $${aOld}$、$${bOld}$；改變原點與單位長後，新坐標分別為 $${aNew}$、$${bNew}$。`;
+      const variant = i % 3;
+      if (variant === 0) {
+        questions.push(`${setup}求新單位長是原本的幾倍？`);
+        summaryAnswers.push(`$${scale}$ 倍`);
+        answers.push(
+          `單位長倍數 $=\\dfrac{\\text{原坐標差}}{\\text{新坐標差}}=\\dfrac{${aOld}-(${bOld})}{${aNew}-(${bNew})}=\\dfrac{${oldDiff}}{${newDiff}}=${scale}$，即放大 ${scale} 倍。`
+        );
+      } else if (variant === 1) {
+        questions.push(`${setup}求新原點在原數線上的坐標。`);
+        summaryAnswers.push(`$${origin}$`);
+        answers.push(
+          `先求單位長倍數 $=\\dfrac{${aOld}-(${bOld})}{${aNew}-(${bNew})}=${scale}$。再用「原坐標 $=$ 新原點 $+$ 新坐標 $\\times$ 單位倍數」：$${aOld}=O+(${aNew})\\times${scale}$，解得 $O=${aOld}-(${aNew})\\times${scale}=${origin}$。`
+        );
+      } else {
+        questions.push(`${setup}求新原點的原坐標與新單位長倍數。`);
+        summaryAnswers.push(`新原點 $${origin}$，單位長 $${scale}$ 倍`);
+        answers.push(
+          `單位長倍數 $=\\dfrac{${aOld}-(${bOld})}{${aNew}-(${bNew})}=${scale}$；再由 $${aOld}=O+(${aNew})\\times${scale}$ 解得新原點 $O=${origin}$。`
+        );
+      }
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildCoordinateScaleOriginInferenceCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const scales = [2, 3, 4];
+
+    for (let i = 0; i < count; i += 1) {
+      const scale = scales[i % scales.length];
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const origin = randInt(-15, 15);
+        const newValue = pickNonZero(-8, 8);
+        const oldValue = origin + newValue * scale;
+        questions.push(
+          `數線上點 $A$ 原坐標為 $${oldValue}$，改變原點並把新單位長放大為原來的 $${scale}$ 倍後，$A$ 的新坐標為 $${newValue}$。求新原點在原數線上的坐標。`
+        );
+        summaryAnswers.push(`$${origin}$`);
+        answers.push(
+          `用「原坐標 = 新原點 + 新坐標 $\\times$ 新單位倍數」：$${oldValue}=O+(${newValue})\\times${scale}$，所以 $O=${oldValue}-${newValue * scale}=${origin}$。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        const origin = randInt(-12, 12);
+        const newValue = pickNonZero(-7, 7);
+        const oldValue = origin + newValue * scale;
+        questions.push(
+          `把 $${origin}$ 改當新原點，且新單位長放大為原來的 $${scale}$ 倍。若某點的新坐標為 $${newValue}$，求它的原坐標。`
+        );
+        summaryAnswers.push(`$${oldValue}$`);
+        answers.push(
+          `原坐標 $=$ 新原點 $+$ 新坐標 $\\times$ 新單位倍數，所以 $${origin}+(${newValue})\\times${scale}=${oldValue}$。`
+        );
+        continue;
+      }
+
+      const fixedValue = pickNonZero(-8, 8);
+      const origin = fixedValue * (1 - scale);
+      questions.push(
+        `把 $${origin}$ 改當新原點，且新單位長放大為原來的 $${scale}$ 倍。請問哪一點在轉換前後的坐標完全相同？`
+      );
+      summaryAnswers.push(`$${fixedValue}$`);
+      answers.push(
+        `設這個點原坐標為 $x$，新坐標也為 $x$，則 $x=\\dfrac{x-(${origin})}{${scale}}$。解得 $${scale}x=x-(${origin})$，所以 $x=${fixedValue}$。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildAbsoluteIntervalSimplifyCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const a = randInt(-8, 2);
+        const b = randInt(a + 3, a + 12);
+        const result = b - a;
+        const leftExpr = formatShiftedAbsoluteVariable('x', a);
+        const rightExpr = formatShiftedAbsoluteVariable('x', b);
+        questions.push(`已知 $${a}<x<${b}$，化簡 $|${leftExpr}|+|${rightExpr}|$。`);
+        summaryAnswers.push(`$${result}$`);
+        answers.push(
+          `因為 $x$ 在 $${a}$ 與 $${b}$ 中間，所以 $|${leftExpr}|=x-(${a})$，$|${rightExpr}|=${b}-x$，相加得 $${result}$。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        const a = -randInt(8, 18);
+        const b = randInt(a + 1, -1);
+        questions.push(`若 $${a}<${b}<0$，化簡 $|a-b|-|b-a|+|a|$，其中 $a=${a}$、$b=${b}$。`);
+        summaryAnswers.push(`$${-a}$`);
+        answers.push(`因為 $|a-b|=|b-a|$，前兩項相減為 $0$；又 $a<0$，所以 $|a|=-a=${-a}$。`);
+        continue;
+      }
+
+      const x = randInt(-12, 12);
+      const center = randInt(-6, 6);
+      const radius = randInt(1, 8);
+      const value = Math.abs(Math.abs(x - center) - radius);
+      questions.push(`已知 $x=${x}$，化簡並求值：$\\left||x-(${center})|-${radius}\\right|$。`);
+      summaryAnswers.push(`$${value}$`);
+      answers.push(
+        `先算內層：$|${x}-(${center})|=${Math.abs(x - center)}$，再算外層：$|${Math.abs(x - center)}-${radius}|=${value}$。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildAbsoluteEquationCountCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const center = randInt(-8, 8);
+        const radius = randInt(2, 10);
+        const left = center - radius;
+        const right = center + radius;
+        questions.push(`求滿足 $|x-(${center})|=${radius}$ 的所有整數解。`);
+        summaryAnswers.push(`$${left}$、$${right}$`);
+        answers.push(
+          `距離 $${center}$ 為 $${radius}$ 的點在左右兩側，所以 $x=${center}-${radius}=${left}$ 或 $x=${center}+${radius}=${right}$。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        const center = randInt(-8, 8);
+        const impossible = -randInt(1, 6);
+        questions.push(`求滿足 $|x-(${center})|=${impossible}$ 的所有可能值。`);
+        summaryAnswers.push('無解');
+        answers.push(`絕對值代表距離，距離不可能是負數；因為右邊是 $${impossible}<0$，所以無解。`);
+        continue;
+      }
+
+      const a = randInt(-10, 2);
+      const b = randInt(a + 3, a + 12);
+      const values = listIntegersInRange(a, b, '整數');
+      questions.push(`求滿足 $|x-(${a})|+|x-${b}|=${b - a}$ 的所有整數解個數。`);
+      summaryAnswers.push(`$${values.length}$`);
+      answers.push(
+        `兩定點距離為 $${b - a}$。只有 $x$ 落在 $${a}$ 到 $${b}$ 之間時，兩段距離和才等於整段距離，所以整數解為 $${formatIntegerList(values)}$，共 $${values.length}$ 個。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ113CommonBaseConversionCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const a = randInt(4, 12);
+        const b = randInt(2, 6);
+        const c = randInt(1, 5);
+        const exp = a + 2 * b - 3 * c;
+        questions.push(`計算：$2^{${a}}\\times 4^{${b}}\\div 8^{${c}}$，並以 $2$ 的次方表示。`);
+        summaryAnswers.push(`$2^{${exp}}$`);
+        answers.push(
+          `先統一成底數 $2$：$4^{${b}}=2^{${2 * b}}$，$8^{${c}}=2^{${3 * c}}$，所以指數為 $${a}+${2 * b}-${3 * c}=${exp}$。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        const a = randInt(2, 8);
+        const b = randInt(1, 5);
+        const c = randInt(1, 4);
+        const exp = a + 2 * b + 3 * c;
+        questions.push(`計算：$3^{${a}}\\times 9^{${b}}\\div (\\frac{1}{27})^{${c}}$，並以 $3$ 的次方表示。`);
+        summaryAnswers.push(`$3^{${exp}}$`);
+        answers.push(
+          `先化成底數 $3$：$9^{${b}}=3^{${2 * b}}$，$(\\frac{1}{27})^{${c}}=3^{-${3 * c}}$；除以它等於指數再加 $${3 * c}$，所以結果為 $3^{${exp}}$。`
+        );
+        continue;
+      }
+
+      const a = randInt(5, 12);
+      const b = randInt(2, 6);
+      const c = randInt(1, 4);
+      const data = [
+        { text: `2^{${a}}`, exp: a },
+        { text: `4^{${b}}`, exp: 2 * b },
+        { text: `8^{${c}}`, exp: 3 * c },
+      ];
+      data.sort((u, v) => v.exp - u.exp);
+      questions.push(`比較 $2^{${a}}$、$4^{${b}}$、$8^{${c}}$ 的大小，並寫出最大者。`);
+      summaryAnswers.push(`$${data[0].text}$`);
+      answers.push(
+        `全部化成底數 $2$：$2^{${a}}$、$4^{${b}}=2^{${2 * b}}$、$8^{${c}}=2^{${3 * c}}$，指數最大者為 $${data[0].text}$。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ113CommonBaseEquationCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const shift = randInt(-5, 6);
+        const rightExp = randInt(2, 6);
+        const x = 3 * rightExp - shift;
+        questions.push(`若 $2^{x${shift >= 0 ? '+' : ''}${shift}}=8^{${rightExp}}$，求 $x$。`);
+        summaryAnswers.push(`$${x}$`);
+        answers.push(
+          `把右邊化成底數 $2$：$8^{${rightExp}}=2^{${3 * rightExp}}$，所以 $x${shift >= 0 ? '+' : ''}${shift}=${3 * rightExp}$，得 $x=${x}$。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        const x = randInt(-3, 8);
+        const shift = randInt(-4, 4);
+        const rightExp = 2 * (x - shift);
+        questions.push(`若 $9^{x${shift < 0 ? '+' + Math.abs(shift) : '-' + shift}}=3^{${rightExp}}$，求 $x$。`);
+        summaryAnswers.push(`$${x}$`);
+        answers.push(
+          `因為 $9=3^2$，左邊是 $3^{2(x${shift < 0 ? '+' + Math.abs(shift) : '-' + shift})}$，所以 $2(x${shift < 0 ? '+' + Math.abs(shift) : '-' + shift})=${rightExp}$，解得 $x=${x}$。`
+        );
+        continue;
+      }
+
+      const x = randInt(1, 8);
+      const a = randInt(2, 5);
+      const rightPower = randInt(3, 12);
+      const b = 2 * rightPower - a * x;
+      const rightExp = 2 * rightPower;
+      questions.push(`若 $2^{${a}x${b >= 0 ? '+' : ''}${b}}=4^{${rightPower}}$，求 $x$。`);
+      summaryAnswers.push(`$${x}$`);
+      answers.push(
+        `右邊 $4^{${rightPower}}=2^{${rightExp}}$，所以 $${a}x${b >= 0 ? '+' : ''}${b}=${rightExp}$，解得 $x=${x}$。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ114ScientificTrapCompareCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const exp = randInt(3, 7);
+        const a = Number(`${randInt(2, 8)}.${randInt(0, 9)}`);
+        const b = Number(`${randInt(1, 8)}.${randInt(0, 9)}`);
+        const threshold = Number(`${randInt(2, 9)}.${randInt(0, 9)}`);
+        const sumCoeff = Number((a + b / 10).toFixed(6));
+        const relation = sumCoeff > threshold ? '大於' : sumCoeff < threshold ? '小於' : '等於';
+        const normalized = plainToScientificParts(scientificToPlainString(trimDecimalString(`${sumCoeff}`), exp));
+        questions.push(
+          `判斷 $( ${trimDecimalString(`${a}`)}\\times 10^{${exp}} )+( ${trimDecimalString(`${b}`)}\\times 10^{${exp - 1}} )$ 是否大於 $${trimDecimalString(`${threshold}`)}\\times 10^{${exp}}$。`
+        );
+        summaryAnswers.push(`${relation}`);
+        answers.push(
+          `先把第二項改成 $${trimDecimalString(`${b / 10}`)}\\times10^{${exp}}$，相加為 $${normalized.text}$。比較係數 $${trimDecimalString(`${sumCoeff}`)}$ 與 $${trimDecimalString(`${threshold}`)}$，所以結果是${relation}。`
+        );
+        continue;
+      }
+
+      if (mode === 1) {
+        const exp = randInt(4, 8);
+        const a = randInt(2, 9);
+        const b = randInt(1, 8);
+        const coeff = Number((a - b / 10).toFixed(6));
+        const normalized = plainToScientificParts(scientificToPlainString(trimDecimalString(`${coeff}`), exp));
+        questions.push(`計算：$( ${a}\\times10^{${exp}} )-( ${b}\\times10^{${exp - 1}} )$，並以標準科學記號表示。`);
+        summaryAnswers.push(`$${normalized.text}$`);
+        answers.push(
+          `先把 $${b}\\times10^{${exp - 1}}$ 改成 $${b / 10}\\times10^{${exp}}$，再合併係數：$${a}-${b / 10}=${coeff}$，所以結果是 $${normalized.text}$。`
+        );
+        continue;
+      }
+
+      const exp = randInt(-8, 4);
+      const ratioCoeff = randInt(2, 9);
+      const expDiff = randInt(1, 4);
+      questions.push(
+        `若 $A=${ratioCoeff}\\times10^{${exp + expDiff}}$，$B=1\\times10^{${exp}}$，請問 $A$ 是 $B$ 的幾倍？`
+      );
+      summaryAnswers.push(`$${ratioCoeff}\\times10^{${expDiff}}$ 倍`);
+      answers.push(
+        `倍數 $=A\\div B=${ratioCoeff}\\times10^{${exp + expDiff}-${exp}}=${ratioCoeff}\\times10^{${expDiff}}$。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ114ScientificUnitStackCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const coeff = Number(`${randInt(1, 9)}.${randInt(0, 9)}`);
+      const pieces = randInt(2, 9);
+      const thicknessExp = -randInt(3, 5);
+      const countExp = randInt(4, 6);
+      const mmCoeff = Number((coeff * pieces).toFixed(6));
+      const mmExp = thicknessExp + countExp;
+      const cm = plainToScientificParts(scientificToPlainString(trimDecimalString(`${mmCoeff}`), mmExp - 1));
+      questions.push(
+        `一片薄片厚度為 $${trimDecimalString(`${coeff}`)}\\times10^{${thicknessExp}}$ 毫米，疊 $${pieces}\\times10^{${countExp}}$ 片後，總厚度是多少公分？`
+      );
+      summaryAnswers.push(`$${cm.text}$ 公分`);
+      answers.push(
+        `先算毫米：$(${trimDecimalString(`${coeff}`)}\\times10^{${thicknessExp}})(${pieces}\\times10^{${countExp}})=${trimDecimalString(`${mmCoeff}`)}\\times10^{${mmExp}}$ 毫米。因為 $1$ 公分 $=10$ 毫米，所以再除以 $10$，得 $${cm.text}$ 公分。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildMidpointRatioNestedCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const c = randInt(-10, 10);
+        const gap = randInt(2, 8) * 2;
+        const a = c - gap;
+        const b = c + gap;
+        const d = (a + c) / 2;
+        questions.push(`$C$ 為 $A(${a})$ 與 $B(${b})$ 的中點，$D$ 為 $A$ 與 $C$ 的中點，求 $D$ 的坐標。`);
+        summaryAnswers.push(`$${d}$`);
+        answers.push(`先得 $C=\\frac{${a}+${b}}{2}=${c}$，再得 $D=\\frac{${a}+${c}}{2}=${d}$。`);
+        continue;
+      }
+
+      if (mode === 1) {
+        const r = randInt(2, 4);
+        const step = randInt(2, 8);
+        const c = randInt(-5, 8);
+        const a = c - r * step;
+        const b = c + step;
+        questions.push(`數線上 $A(${a})$、$B(${b})$，若 $C$ 在 $AB$ 之間且 $AC=${r}CB$，求 $C$ 的坐標。`);
+        summaryAnswers.push(`$${c}$`);
+        answers.push(
+          `因為 $AC:CB=${r}:1$，可想成從 $C$ 往左有 ${r} 份、往右有 1 份；本題每份長 $${step}$，所以 $C=${c}$。`
+        );
+        continue;
+      }
+
+      const midpoint = randInt(-10, 10);
+      const shift = pickNonZero(-6, 6);
+      const newMidpoint = midpoint + shift;
+      const direction = shift > 0 ? '向右' : '向左';
+      questions.push(
+        `已知 $A$、$B$ 的中點為 $${midpoint}$。若將 $A$、$B$ 兩點都${direction}平移 $${Math.abs(shift)}$ 單位，則 $A'$、$B'$ 的中點坐標為何？`
+      );
+      summaryAnswers.push(`$${newMidpoint}$`);
+      answers.push(
+        `兩點坐標都會同時加上 $${shift}$，中點也跟著加上 $${shift}$，所以新中點為 $${midpoint}+${shift}=${newMidpoint}$。`
+      );
+    }
+
     return { questions, summaryAnswers, answers };
   }
 
@@ -2547,7 +2969,7 @@
 
   function formatCoordinateValue(value) {
     if (Number.isInteger(value)) return `$${value}$`;
-    return `${Number(value.toFixed(2))}`;
+    return `$${Number(value.toFixed(2))}$`;
   }
 
   function buildCoordinateOriginShiftOnlySet(count) {
@@ -2583,9 +3005,9 @@
       questions.push(
         `原點不變，若新單位長 ${formatUnitScaleText(scale)}，原來坐標為 $${oldValue}$ 的點在新數線上的坐標是多少？`
       );
-      summaryAnswers.push(`$${formatCoordinateValue(newValue)}$`);
+      summaryAnswers.push(`${formatCoordinateValue(newValue)}`);
       answers.push(
-        `原點不變時，只要把原坐標除以新單位倍數，所以新坐標為 $${oldValue}\\div${scale}=${formatCoordinateValue(newValue)}$。`
+        `原點不變時，只要把原坐標除以新單位倍數，所以新坐標為 $${oldValue}\\div${scale}=$${formatCoordinateValue(newValue)}。`
       );
     }
 
@@ -2607,9 +3029,9 @@
       questions.push(
         `把 $${origin}$ 當新原點，再把新單位長調成${formatUnitScaleText(scale)}。若點 $A$ 原來在 $${oldValue}$，求 $A$ 的新坐標。`
       );
-      summaryAnswers.push(`$${formatCoordinateValue(newValue)}$`);
+      summaryAnswers.push(`${formatCoordinateValue(newValue)}`);
       answers.push(
-        `先平移：$${oldValue}-(${origin})=${offset}$；再依新單位長換算：$${offset}\\div${scale}=${formatCoordinateValue(newValue)}$。所以 $A$ 的新坐標是 ${formatCoordinateValue(newValue)}。`
+        `先平移：$${oldValue}-(${origin})=${offset}$；再依新單位長換算：$${offset}\\div${scale}=$${formatCoordinateValue(newValue)}。所以 $A$ 的新坐標是 ${formatCoordinateValue(newValue)}。`
       );
     }
 
@@ -2630,9 +3052,9 @@
       questions.push(
         `把 $${origin}$ 當新原點，新單位長${formatUnitScaleText(scale)}。若點 $P$ 的新坐標是 $${newValue}$，求它原來的坐標。`
       );
-      summaryAnswers.push(`$${formatCoordinateValue(oldValue)}$`);
+      summaryAnswers.push(`${formatCoordinateValue(oldValue)}`);
       answers.push(
-        `反推時先把新坐標換回舊單位，再加回新原點，所以原坐標 = $${formatPlus(origin, newValue * scale)}=${formatCoordinateValue(oldValue)}$，其中 $${newValue}\\times${scale}=${formatCoordinateValue(newValue * scale)}$。`
+        `反推時先把新坐標換回舊單位，再加回新原點，所以原坐標 = $${formatPlus(origin, newValue * scale)}=$${formatCoordinateValue(oldValue)}，其中 $${newValue}\\times${scale}=$${formatCoordinateValue(newValue * scale)}。`
       );
     }
 
@@ -2660,9 +3082,9 @@
       questions.push(
         `把 $${origin}$ 當新原點，新單位長${formatUnitScaleText(scale)}。原數線上 $A(${a})$、$B(${b})$ 兩點，在新數線上的中點與距離各是多少？`
       );
-      summaryAnswers.push(`$${formatCoordinateValue(midpoint)}$,$${formatCoordinateValue(distance)}$`);
+      summaryAnswers.push(`${formatCoordinateValue(midpoint)},${formatCoordinateValue(distance)}`);
       answers.push(
-        `先換新坐標：$A'=${formatCoordinateValue(aNew)}$，$B'=${formatCoordinateValue(bNew)}$。所以中點為 $\\frac{${formatPlus(aNew, bNew)}}{2}=${formatCoordinateValue(midpoint)}$，距離為 $|${formatMinus(aNew, bNew)}|=${formatCoordinateValue(distance)}$。`
+        `先換新坐標：$A'=$${formatCoordinateValue(aNew)}，$B'=$${formatCoordinateValue(bNew)}。所以中點為 $\\frac{${formatPlus(aNew, bNew)}}{2}=$${formatCoordinateValue(midpoint)}，距離為 $|${formatMinus(aNew, bNew)}|=$${formatCoordinateValue(distance)}。`
       );
     }
 
@@ -2789,10 +3211,10 @@
     const answers = [];
     const m = 50;
     for (let i = 0; i < count; i += 1) {
-      const a = randInt(-m, m);
-      const b = randInt(-m, m);
-      const c = randInt(-m, m);
-      const d = randInt(-m, m);
+      const a = pickNonZero(-m, m);
+      const b = pickNonZero(-m, m);
+      const c = pickNonZero(-m, m);
+      const d = pickNonZero(-m, m);
       questions.push(
         `計算：\\(|${a}| ${b >= 0 ? '+' : '-'} ${Math.abs(b)} ${c >= 0 ? '+' : '-'} |${c}| ${d >= 0 ? '+' : '-'} ${Math.abs(d)}\\)`
       );
@@ -3281,18 +3703,21 @@
 
   function buildModuloRemainderSet(mod, count) {
     const questions = [];
+    const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const n = buildLargeNumberString(randInt(8, 11));
       const r = calcStringRemainder(n, mod);
       questions.push(`求${n}除以${mod}的餘數？`);
+      summaryAnswers.push(`${r}`);
       answers.push(`${r}`);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildModuloUnknownMultipleSet(mod, count) {
     const questions = [];
+    const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const n = buildLargeNumberString(randInt(7, 10));
@@ -3300,13 +3725,16 @@
       const template = replaceAt(n, holeIndex, '□');
       const validDigits = solveUnknownDigit(template, mod, 0);
       questions.push(`${template}為${mod}的倍數，求□=?`);
-      answers.push(validDigits.length ? validDigits.join(' 或 ') : '無解');
+      const answerText = validDigits.length ? validDigits.join(' 或 ') : '無解';
+      summaryAnswers.push(answerText);
+      answers.push(answerText);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildModuloUnknownRemainderSet(mod, count) {
     const questions = [];
+    const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const n = buildLargeNumberString(randInt(7, 10));
@@ -3323,9 +3751,11 @@
       const template = replaceAt(n, holeIndex, '□');
       const validDigits = solveUnknownDigit(template, mod, target);
       questions.push(`${template}除以${mod}餘${target}，求□=?`);
-      answers.push(validDigits.length ? validDigits.join(' 或 ') : '無解');
+      const answerText = validDigits.length ? validDigits.join(' 或 ') : '無解';
+      summaryAnswers.push(answerText);
+      answers.push(answerText);
     }
-    return { questions, summaryAnswers: answers.map(deriveSummaryAnswerFromDetail), answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildPrimeFactorList(max = 180) {
@@ -3742,7 +4172,7 @@
       const boys = groups * boysEach;
       const girls = groups * girlsEach;
       const maxGroups = gcd(boys, girls);
-      questions.push(`男生有${boys}人，女生有${girls}人。`);
+      questions.push(`男生有${boys}人，女生有${girls}人，${stem}。`);
       summaryAnswers.push(`${maxGroups} 組，男生每組 ${boys / maxGroups} 人，女生每組 ${girls / maxGroups} 人`);
       answers.push(`${maxGroups}組，男生每組${boys / maxGroups}人，女生每組${girls / maxGroups}人`);
     }
@@ -3754,7 +4184,7 @@
     const summaryAnswers = [];
     const answers = [];
     const trackLength = 1200;
-    const stem = `三人同時由起點同方向出發，繞周長為${trackLength}公尺的環狀步道，則至少在幾分鐘後三人會同時回到出發點？`;
+    const stem = `三人同時由起點同方向出發，繞周長為$${trackLength}$公尺的環狀步道，則至少在幾分鐘後三人會同時回到出發點？`;
     for (let i = 0; i < count; i += 1) {
       const t1 = [20, 24, 25, 30, 40, 48, 50, 60][randInt(0, 7)];
       const t2 = [12, 15, 20, 24, 30, 40, 50, 60][randInt(0, 7)];
@@ -3763,7 +4193,7 @@
       const v2 = trackLength / t2;
       const v3 = trackLength / t3;
       const meetMinutes = lcm(lcm(t1, t2), t3);
-      questions.push(`三人分速分別為${v1}公尺、${v2}公尺、${v3}公尺。`);
+      questions.push(`${stem}三人分速分別為${v1}公尺、${v2}公尺、${v3}公尺。`);
       summaryAnswers.push(`$${meetMinutes}$ 分鐘`);
       answers.push(`${meetMinutes}`);
     }
@@ -4935,10 +5365,10 @@
       const bValue = baseB;
       const cValue = (q * baseB) / p;
       const total = aValue + bValue + cValue;
-      questions.push(`將 ${total} 分成甲、乙、丙三數，已知甲：乙 = ${m}:${n}，乙：丙 = ${p}:${q}，求乙數。`);
+      questions.push(`將 $${total}$ 分成甲、乙、丙三數，已知甲：乙 $= ${m}:${n}$，乙：丙 $= ${p}:${q}$，求乙數。`);
       summaryAnswers.push(`$${bValue}$`);
       answers.push(
-        `先設乙數為共同連接量。因為甲：乙 = ${m}:${n}$，所以甲 $=\\dfrac{${m}}{${n}}\\times$ 乙；又因乙：丙 = ${p}:${q}$，所以丙 $=\\dfrac{${q}}{${p}}\\times$ 乙。代入總和得 $\\dfrac{${m}}{${n}}x+x+\\dfrac{${q}}{${p}}x=${total}$，解得乙數 $x=${bValue}$。`
+        `先設乙數為共同連接量。因為甲：乙 $= ${m}:${n}$，所以甲 $=\\dfrac{${m}}{${n}}\\times$ 乙；又因乙：丙 $= ${p}:${q}$，所以丙 $=\\dfrac{${q}}{${p}}\\times$ 乙。代入總和得 $\\dfrac{${m}}{${n}}x+x+\\dfrac{${q}}{${p}}x=${total}$，解得乙數 $x=${bValue}$。`
       );
     }
 
@@ -4974,7 +5404,7 @@
       );
       summaryAnswers.push(`$${countA}$`);
       answers.push(
-        `設${groupA}有 $x$ 人，則${groupB}有 ${totalCount}-x 人。由總分相加得 ${avgA}x+${avgB}(${totalCount}-x)=${overall}\\times ${totalCount}$，解得 $x=${countA}$。`
+        `設${groupA}有 $x$ 人，則${groupB}有 $${totalCount}-x$ 人。由總分相加得 $${avgA}x+${avgB}(${totalCount}-x)=${overall}\\times ${totalCount}$，解得 $x=${countA}$。`
       );
     }
 
@@ -5025,10 +5455,12 @@
           continue;
         }
         const aValue = bValue + diff;
-        questions.push(`甲有 $x$ 元，乙有 ${bValue} 元。若甲給乙 ${transfer} 元後，兩人的錢數相等，求甲原有多少元。`);
+        questions.push(
+          `甲有 $x$ 元，乙有 $${bValue}$ 元。若甲給乙 $${transfer}$ 元後，兩人的錢數相等，求甲原有多少元。`
+        );
         summaryAnswers.push(`$${aValue}$`);
         answers.push(
-          `甲給乙 ${transfer} 元後，甲剩 $x-${transfer}$，乙變成 ${bValue}+${transfer}$。由兩人相等可列 $x-${transfer}=${bValue}+${transfer}$，解得 $x=${aValue}$。`
+          `甲給乙 $${transfer}$ 元後，甲剩 $x-${transfer}$，乙變成 $${bValue}+${transfer}$。由兩人相等可列 $x-${transfer}=${bValue}+${transfer}$，解得 $x=${aValue}$。`
         );
         continue;
       }
@@ -5038,11 +5470,11 @@
       const transfer = randInt(10, 30);
       const aValue = ratio * (bValue + transfer) + transfer;
       questions.push(
-        `甲有 $x$ 元，乙原有 ${bValue} 元。若甲給乙 ${transfer} 元後，甲的錢是乙的 ${ratio} 倍，求甲原有多少元。`
+        `甲有 $x$ 元，乙原有 $${bValue}$ 元。若甲給乙 $${transfer}$ 元後，甲的錢是乙的 $${ratio}$ 倍，求甲原有多少元。`
       );
       summaryAnswers.push(`$${aValue}$`);
       answers.push(
-        `甲給乙 ${transfer} 元後，甲剩 $x-${transfer}$，乙變成 ${bValue}+${transfer}$。依題意可列 $x-${transfer}=${ratio}(${bValue}+${transfer})$，解得 $x=${aValue}$。`
+        `甲給乙 $${transfer}$ 元後，甲剩 $x-${transfer}$，乙變成 $${bValue}+${transfer}$。依題意可列 $x-${transfer}=${ratio}(${bValue}+${transfer})$，解得 $x=${aValue}$。`
       );
     }
 
@@ -5300,14 +5732,14 @@
         );
         summaryAnswers.push(`兒子 $${t.child}$ 歲，父親 $${t.father}$ 歲`);
         answers.push(
-          `設兒子現在 $x$ 歲，父親現在 $y$ 歲。依題意可列聯立方程式 $${formatSystemLatex(`y=4x`, `(x+${t.afterYears})+(y+${t.afterYears})=${t.child + t.father + 2 * t.afterYears}`)}$。解得 $x=${t.child},\\ y=${t.father}$，所以兒子 ${t.child} 歲、父親 ${t.father} 歲。`
+          `設兒子現在 $x$ 歲，父親現在 $y$ 歲。依題意可列聯立方程式 $${formatSystemLatex(`y=4x`, `(x+${t.afterYears})+(y+${t.afterYears})=${t.child + t.father + 2 * t.afterYears}`)}$。解得 $x=${t.child},\\ y=${t.father}$，所以兒子 $${t.child}$ 歲、父親 $${t.father}$ 歲。`
         );
       } else if (variant === 1) {
         const t = sumRatioTemplates[cycle % sumRatioTemplates.length];
         questions.push(`年齡推算問題：已知父子年齡和為 ${t.total} 歲，且父親年齡為兒子的 3 倍，求兩人各幾歲。`);
         summaryAnswers.push(`兒子 $${t.child}$ 歲，父親 $${t.father}$ 歲`);
         answers.push(
-          `設兒子現在 $x$ 歲，父親現在 $y$ 歲。依題意可列聯立方程式 $${formatSystemLatex(`x+y=${t.total}`, `y=3x`)}$。解得 $x=${t.child},\\ y=${t.father}$，所以兒子 ${t.child} 歲、父親 ${t.father} 歲。`
+          `設兒子現在 $x$ 歲，父親現在 $y$ 歲。依題意可列聯立方程式 $${formatSystemLatex(`x+y=${t.total}`, `y=3x`)}$。解得 $x=${t.child},\\ y=${t.father}$，所以兒子 $${t.child}$ 歲、父親 $${t.father}$ 歲。`
         );
       } else {
         const t = phraseTemplates[cycle % phraseTemplates.length];
@@ -5915,6 +6347,7 @@
 
   function buildJ113BiquadraticSplitSquareFactoringSet(count) {
     const questions = [];
+    const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -5934,6 +6367,7 @@
           formatJ113PolyTerm(1, ''),
         ]);
         questions.push(`因式分解 \\(${high} + ${mid} + 1\\)。`);
+        summaryAnswers.push(`\\((${f1})(${f2})\\)`);
         answers.push(
           `簡答：\\((${f1})(${f2})\\)。過程：令 \\(y=${low}\\)，則原式為 \\(y^4+y^2+1\\)。補上並扣除 \\(y^2\\)，得 \\((y^2+1)^2-y^2\\)，再用平方差分解並代回。`
         );
@@ -5954,6 +6388,7 @@
           formatJ113PolyTerm(p, ''),
         ]);
         questions.push(`因式分解 \\(${poly}\\)。（提示：補上 \\(${2 * p}x^2\\) 並扣除）`);
+        summaryAnswers.push(`\\((${f1})(${f2})\\)`);
         answers.push(
           `簡答：\\((${f1})(${f2})\\)。過程：\\(${poly}=(x^2+${p})^2-${2 * p}x^2=(x^2+${p})^2-(${2 * r}x)^2\\)，所以分解為 \\((${f1})(${f2})\\)。`
         );
@@ -5987,15 +6422,17 @@
       ]);
       const qVarText = q === 1 ? variable : `${q}${variable}`;
       questions.push(`因式分解 \\(${poly}\\)。`);
+      summaryAnswers.push(`\\((${f1})(${f2})\\)`);
       answers.push(
         `簡答：\\((${f1})(${f2})\\)。過程：補成 \\((${leadCoeff === 1 ? '' : leadCoeff}${variable}^2+${p})^2-(${qVarText})^2\\)，再用平方差公式分解，得 \\((${f1})(${f2})\\)。`
       );
     }
-    return { questions, answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ113BinaryQuadraticCrossFactoringSet(count) {
     const questions = [];
+    const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       let a = pickNonZero(-4, 4);
@@ -6021,11 +6458,12 @@
       const f1 = formatJ113LinearFactor(a, b, c);
       const f2 = formatJ113LinearFactor(d, e, f);
       questions.push(`因式分解 \\(${poly}\\)。`);
+      summaryAnswers.push(`\\((${f1})(${f2})\\)`);
       answers.push(
         `簡答：\\((${f1})(${f2})\\)。過程：把二元二次式看成兩個一次式相乘，用雙十字交乘配 \\(x^2,xy,y^2\\) 與 \\(x,y,常數\\) 項，可得 \\((${f1})(${f2})\\)。`
       );
     }
-    return { questions, answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function formatSystemLatex(eq1, eq2) {
@@ -6055,7 +6493,7 @@
         questions.push(`幾何圖形：梯形上底是 $2x+1$、下底是 $4x-2$、高是 6，面積應記成什麼代數式？`);
         summaryAnswers.push(`$18x-3$`);
         answers.push(
-          `梯形面積是 $\\frac{(上底+下底)\\times高}{2}$，所以面積為 $\\frac{[(2x+1)+(4x-2)]\\times 6}{2}=18x-3$。`
+          `梯形面積是 $\\frac{(\\text{上底}+\\text{下底})\\times\\text{高}}{2}$，所以面積為 $\\frac{[(2x+1)+(4x-2)]\\times 6}{2}=18x-3$。`
         );
       } else {
         questions.push(`幣值計算：我有 $x$ 個 5 元硬幣和 32 個 10 元硬幣，總共有多少元？`);
@@ -6130,7 +6568,7 @@
       questions.push(`計算：$${exact}×${base}$`);
       summaryAnswers.push(`$${total}$`);
       answers.push(
-        `把 $${exact}$ 看成 $${near}${delta >= 0 ? '+' : ''}${delta}，依分配律：$(${near}${delta >= 0 ? '+' : ''}${delta})\\times ${base}=${near}\\times ${base}${delta >= 0 ? '+' : ''}${delta}\\times ${base}=${total}$。`
+        `把 $${exact}$ 看成 $${near}${delta >= 0 ? '+' : ''}${delta}$，依分配律：$(${near}${delta >= 0 ? '+' : ''}${delta})\\times ${base}=${near}\\times ${base}${delta >= 0 ? '+' : ''}${delta}\\times ${base}=${total}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -6142,13 +6580,13 @@
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const common = pickNonZero(-90, 90);
-      const a = pickNonZero(-40, 40);
-      const b = pickNonZero(-40, 40);
-      const total = common * a + common * b;
-      questions.push(`計算：$${common}×(${a}) + ${common}×(${b})$`);
+      const a = pickNonZero(-20, 20) * 100;
+      const b = pickNonZero(-400, 400);
+      const total = common * a;
+      questions.push(`計算：$${common}×${wrapIfNegative(b)} + ${wrapIfNegative(common)}×${wrapIfNegative(a - b)}$`);
       summaryAnswers.push(`$${total}$`);
       answers.push(
-        `提出公因數 ${common}：$${common}\\times(${a})+${common}\\times(${b})=${common}\\times(${a}${b >= 0 ? '+' : ''}${b})=${common}\\times(${a + b})=${total}$。`
+        `提出公因數 ${common}：$${common}\\times(${b})+${common}\\times(${a - b})=${common}\\times(${a}=${common}=${total}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -6178,12 +6616,14 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const leftSum = pickFromList([200, 300, 400, 500, 600, 800]);
+      const leftSum = pickFromList([200, 300, 400, 500, 600, 800, -200, -300, -400, -500]);
       const rightSum = pickFromList([-40, -30, -20, -10, 20, 30, 40, 50, 100, 200]);
       const [a, b] = pickPositivePairWithSum(leftSum, 80);
       const [m, n] = pickSignedPairWithSum(rightSum);
       const value = leftSum * rightSum;
-      questions.push(`計算：$${a}×(${m}) + ${a}×(${n}) + ${b}×(${m}) + ${b}×(${n})$`);
+      questions.push(
+        `計算：$${wrapIfNegative(a)}×${wrapIfNegative(m)} + ${wrapIfNegative(a)}×${wrapIfNegative(n)} + ${wrapIfNegative(b)}×${wrapIfNegative(m)} + ${wrapIfNegative(b)}×${wrapIfNegative(n)}$`
+      );
       summaryAnswers.push(`$${value}$`);
       answers.push(
         `先前兩項與後兩項分組：$${a}\\times(${m}${n >= 0 ? '+' : ''}${n})+${b}\\times(${m}${n >= 0 ? '+' : ''}${n})=(${a}+${b})\\times(${m}${n >= 0 ? '+' : ''}${n})=${leftSum}\\times(${rightSum})=${value}$。`
@@ -6224,7 +6664,7 @@
       const a = b + diff;
       const value = a - b;
       questions.push(`計算：$${a}×(${b}+1)-(${a}+1)×${b}$`);
-      summaryAnswers.push(`$${value}$`);
+      summaryAnswers.push(`${value}`);
       answers.push(
         `把原式看成 $${a}×(${b}+1)-(${a}+1)×${b}$。依分配律展開：$${a}×${b}+${a}-${a}×${b}-${b}=${a}-${b}=${value}$。`
       );
@@ -6243,7 +6683,7 @@
       const a = k * b - diff;
       const value = diff;
       questions.push(`計算：$${a + k}×${b}-${a}×${b + 1}$`);
-      summaryAnswers.push(`$${value}$`);
+      summaryAnswers.push(`${value}`);
       answers.push(
         `把第一項拆成 $(${a}+${k})×${b}$，原式 $=${a}×${b}+${k}×${b}-${a}×(${b}+1)=${a}×${b}+${k}×${b}-${a}×${b}-${a}=${k}×${b}-${a}=${value}$。`
       );
@@ -6265,7 +6705,7 @@
       const inner = diff;
       const value = common * inner;
       questions.push(`計算：$${common}×${a + k}×${b}-${common}×${a}×${b + 1}$`);
-      summaryAnswers.push(`$${value}$`);
+      summaryAnswers.push(`${value}`);
       answers.push(
         `先提出公因數 $${common}$：原式 $=${common}\\bigl(${a + k}×${b}-${a}×${b + 1}\\bigr)$。` +
           `再把括號內拆成 $(${a}+${k})×${b}-${a}×(${b}+1)$，可得 $${a}×${b}+${k}×${b}-${a}×${b}-${a}=${k}×${b}-${a}=${inner}$。` +
@@ -6282,14 +6722,18 @@
       buildJ1CommonFactorThenDistributiveSet,
     ];
     const questions = [];
+    const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const fn = banks[i % banks.length];
       const one = fn(1);
       questions.push(one.questions[0]);
+      // 帶出子生成器本來就有的乾淨簡答（例如 "17"）；否則簡答會被自動從詳解推導，
+      // 抓到 "…=17$。" 這種帶落單 $ 的片段而害 LaTeX 排版失敗。
+      summaryAnswers.push(Array.isArray(one.summaryAnswers) ? one.summaryAnswers[0] : one.answers[0]);
       answers.push(one.answers[0]);
     }
-    return { questions, answers };
+    return { questions, summaryAnswers, answers };
   }
 
   function buildJ1DistributiveCommonFactorMixedSet(count) {
@@ -6501,7 +6945,7 @@
         );
         summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
         answers.push(
-          `先把帶分數化成假分數並合併括號：$${integerOrFractionLatex(a)}+${integerOrFractionLatex(b)}=${fractionToLatex(left, true)}$；再乘上 ${fractionToLatex(c)}，得 $${fractionToLatex(result, true)}$。`
+          `先把帶分數化成假分數並合併括號：$${integerOrFractionLatex(a)}+${integerOrFractionLatex(b)}=${fractionToLatex(left, true)}$；再乘上 $${fractionToLatex(c)}$，得 $${fractionToLatex(result, true)}$。`
         );
         continue;
       }
@@ -6517,7 +6961,7 @@
         );
         summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
         answers.push(
-          `先算括號內：$${fractionToLatex(a)}+${fractionToLatex(b)}=${fractionToLatex(left)}$；再把除以 ${fractionToLatex(c)} 改成乘倒數，結果是 $${fractionToLatex(result, true)}$。`
+          `先算括號內：$${fractionToLatex(a)}+${fractionToLatex(b)}=${fractionToLatex(left)}$；再把除以 $${fractionToLatex(c)}$ 改成乘倒數，結果是 $${fractionToLatex(result, true)}$。`
         );
         continue;
       }
@@ -6696,7 +7140,7 @@
         const num = randInt(1, den - 1);
         const used = makeFraction(num, den);
         const remain = mulFraction(makeFraction(whole, 1), subFraction(makeFraction(1, 1), used));
-        questions.push(`剩餘量計算：一條繩子長 ${whole} 公尺，剪掉 ${fractionToLatex(used)} 後，還剩多少公尺？`);
+        questions.push(`剩餘量計算：一條繩子長 $${whole}$ 公尺，剪掉 $${fractionToLatex(used)}$ 後，還剩多少公尺？`);
         summaryAnswers.push(`$${fractionToLatex(remain, true)}$ 公尺`);
         answers.push(
           `剩下的是全長的 $1-${fractionToLatex(used)}=${fractionToLatex(subFraction(makeFraction(1, 1), used))}$，所以剩餘長度是 $${fractionToLatex(remain, true)}$ 公尺。`
@@ -6711,7 +7155,7 @@
         const used = mulFraction(makeFraction(money, 1), makeFraction(num, den));
         const remain = subFraction(makeFraction(money, 1), used);
         questions.push(
-          `金錢花費：小明有 ${money} 元，用了 ${fractionToLatex(makeFraction(num, den))} 買玩具，還剩多少元？`
+          `金錢花費：小明有 ${money} 元，用了 $${fractionToLatex(makeFraction(num, den))}$ 買玩具，還剩多少元？`
         );
         summaryAnswers.push(`$${fractionToLatex(remain, true)}$ 元`);
         answers.push(
@@ -7133,15 +7577,22 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const whole = randInt(1, 4);
+      const s1 = randInt(0, 1) ? 1 : -1;
+      const s2 = randInt(0, 1) ? 1 : -1;
+      const s3 = randInt(0, 1) ? 1 : -1;
+      const wholeMag = randInt(1, 4);
       const a = randomProperFraction([2, 3, 4, 5, 6]);
       const b = randomProperFraction([2, 3, 4, 5, 6]);
-      const result = subFraction(subFraction(makeFraction(whole, 1), a), b);
-      questions.push(`計算：$${whole}-${fractionToLatex(a)}-${fractionToLatex(b)}$。`);
+      let result = makeFraction(s1 * wholeMag, 1);
+      result = s2 > 0 ? addFraction(result, a) : subFraction(result, a);
+      result = s3 > 0 ? addFraction(result, b) : subFraction(result, b);
+      const expr =
+        `${s1 < 0 ? '-' : ''}${wholeMag}` +
+        `${s2 > 0 ? '+' : '-'}${fractionToLatex(a)}` +
+        `${s3 > 0 ? '+' : '-'}${fractionToLatex(b)}`;
+      questions.push(`計算：$${expr}$。`);
       summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-      answers.push(
-        `先通分再相減，可得 $${whole}-${fractionToLatex(a)}-${fractionToLatex(b)}=${fractionToLatex(result, true)}$。`
-      );
+      answers.push(`先通分再依序加減，可得 $${expr}=${fractionToLatex(result, true)}$。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7151,15 +7602,22 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
+      const s1 = randInt(0, 1) ? 1 : -1;
+      const s2 = randInt(0, 1) ? 1 : -1;
+      const s3 = randInt(0, 1) ? 1 : -1;
       const a = randomProperFraction([2, 3, 4, 5, 6]);
       const b = randomProperFraction([2, 3, 4, 5, 6]);
       const c = randomProperFraction([2, 3, 4, 5, 6]);
-      const result = addFraction(subFraction(a, b), c);
-      questions.push(`計算：$${fractionToLatex(a)}-${fractionToLatex(b)}+${fractionToLatex(c)}$。`);
+      let result = s1 > 0 ? a : subFraction(makeFraction(0, 1), a);
+      result = s2 > 0 ? addFraction(result, b) : subFraction(result, b);
+      result = s3 > 0 ? addFraction(result, c) : subFraction(result, c);
+      const expr =
+        `${s1 < 0 ? '-' : ''}${fractionToLatex(a)}` +
+        `${s2 > 0 ? '+' : '-'}${fractionToLatex(b)}` +
+        `${s3 > 0 ? '+' : '-'}${fractionToLatex(c)}`;
+      questions.push(`計算：$${expr}$。`);
       summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-      answers.push(
-        `依序通分整理，$${fractionToLatex(a)}-${fractionToLatex(b)}+${fractionToLatex(c)}=${fractionToLatex(result, true)}$。`
-      );
+      answers.push(`依序通分整理，$${expr}=${fractionToLatex(result, true)}$。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -8729,6 +9187,411 @@
     return { questions, summaryAnswers, answers };
   }
 
+  function numberFromDigits(digits) {
+    return digits.reduce((sum, digit) => sum * 10 + digit, 0);
+  }
+
+  function digitAltSumMod11(digits) {
+    const n = digits.length;
+    const alt = digits.reduce((sum, digit, idx) => {
+      const fromRight = n - 1 - idx;
+      return sum + (fromRight % 2 === 0 ? digit : -digit);
+    }, 0);
+    return ((alt % 11) + 11) % 11;
+  }
+
+  function listDigitPairs(test) {
+    const pairs = [];
+    for (let a = 0; a <= 9; a += 1) {
+      for (let b = 0; b <= 9; b += 1) {
+        if (test(a, b)) pairs.push([a, b]);
+      }
+    }
+    return pairs;
+  }
+
+  function formatDigitPairs(pairs, firstName = 'a', secondName = 'b') {
+    return pairs.map(([a, b]) => `$(${firstName},${secondName})=(${a},${b})$`).join('、');
+  }
+
+  // 複合整除規則：同時套用兩種以上整除條件（j1-2-1）
+  function buildJ121CombinedDivisibilityCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 4;
+
+      if (mode === 0) {
+        const pairs = listDigitPairs((x, y) => numberFromDigits([1, 2, x, 3, 4, y]) % 72 === 0);
+        const maxSum = Math.max(...pairs.map(([x, y]) => x + y));
+        const best = pairs.filter(([x, y]) => x + y === maxSum);
+        questions.push(`若六位數 $12x34y$ 是 $72$ 的倍數，求 $x+y$ 的最大值。`);
+        summaryAnswers.push(`$${maxSum}$`);
+        answers.push(
+          `$72=8\\times9$，所以需同時被 8 與 9 整除。末三位 $34y$ 要被 8 整除，且各位數字和 $1+2+x+3+4+y=10+x+y$ 要被 9 整除。檢查可得 ${formatDigitPairs(best, 'x', 'y')}，所以最大 $x+y=${maxSum}$。`
+        );
+      } else if (mode === 1) {
+        const pairs = listDigitPairs((a, b) => a > b && numberFromDigits([2, a, 3, b]) % 33 === 0);
+        questions.push(`四位數 $2a3b$ 能被 $33$ 整除，且 $a>b$，求所有可能的 $(a,b)$。`);
+        summaryAnswers.push(formatDigitPairs(pairs));
+        answers.push(
+          `$33=3\\times11$，所以需同時被 3 與 11 整除。被 3 整除看數字和 $2+a+3+b=5+a+b$；被 11 整除看交錯和差 $(b+a)-(3+2)=a+b-5$。再加上 $a>b$，可得 ${formatDigitPairs(pairs)}。`
+        );
+      } else if (mode === 2) {
+        const pairs = listDigitPairs(
+          (x, y) => numberFromDigits([7, 6, x, 5, 4, y, 2]) % 8 === 0 && digitAltSumMod11([7, 6, x, 5, 4, y, 2]) === 0
+        );
+        questions.push(`七位數 $76x54y2$ 同時是 $8$ 與 $11$ 的倍數，求所有可能的 $(x,y)$。`);
+        summaryAnswers.push(formatDigitPairs(pairs, 'x', 'y'));
+        answers.push(
+          `被 8 整除只看末三位 $4y2$；被 11 整除看交錯和差為 11 的倍數。逐一檢查 $x,y$ 的位數字，可得 ${formatDigitPairs(pairs, 'x', 'y')}。`
+        );
+      } else {
+        const tail = pickFromList([0, 5]);
+        const pairs = listDigitPairs(
+          (a, b) => numberFromDigits([5, a, 8, b, tail]) % 15 === 0 && digitAltSumMod11([5, a, 8, b, tail]) === 0
+        );
+        questions.push(`五位數 $5a8b${tail}$ 同時是 $15$ 與 $11$ 的倍數，求所有可能的 $(a,b)$。`);
+        summaryAnswers.push(formatDigitPairs(pairs));
+        answers.push(
+          `被 15 整除表示同時被 3 與 5 整除；個位已是 ${tail}，符合被 5 整除。再檢查數字和是否為 3 的倍數，以及 11 的交錯和差條件，可得 ${formatDigitPairs(pairs)}。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  function findNumbersByRemainders(conditions, minValue, maxValue) {
+    const values = [];
+    for (let n = minValue; n <= maxValue; n += 1) {
+      if (conditions.every(({ mod, rem }) => (((n - rem) % mod) + mod) % mod === 0)) values.push(n);
+    }
+    return values;
+  }
+
+  // 混合餘數與範圍限制（j1-2-1）
+  function buildJ121RemainderCrtRangeCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    const fruitSets = [
+      { mods: [8, 10, 12], remainders: [5, 7, 9], range: [500, 700] },
+      { mods: [6, 8, 10], remainders: [5, 7, 9], range: [300, 500] },
+      { mods: [7, 9, 11], remainders: [3, 5, 7], range: [400, 800] },
+    ];
+    const soldierSets = [
+      { mods: [3, 5, 7], remainders: [2, 3, 2], range: [1, 300] },
+      { mods: [4, 6, 9], remainders: [1, 3, 0], range: [1, 250] },
+      { mods: [5, 8, 9], remainders: [2, 4, 7], range: [1, 400] },
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const spec = fruitSets[randInt(0, fruitSets.length - 1)];
+        const conditions = spec.mods.map((mod, idx) => ({ mod, rem: spec.remainders[idx] }));
+        const values = findNumbersByRemainders(conditions, spec.range[0], spec.range[1]);
+        questions.push(
+          `某批物品每 ${spec.mods[0]} 個一數餘 ${spec.remainders[0]}，每 ${spec.mods[1]} 個一數餘 ${spec.remainders[1]}，每 ${spec.mods[2]} 個一數餘 ${spec.remainders[2]}。若總數在 ${spec.range[0]} 到 ${spec.range[1]} 之間，求可能的總數。`
+        );
+        summaryAnswers.push(`$${values.join('、')}$`);
+        answers.push(
+          `依序列出同時符合三個餘數條件的數，再限制在 ${spec.range[0]} 到 ${spec.range[1]} 之間，得到 $${values.join('、')}$。`
+        );
+      } else if (mode === 1) {
+        const m1 = pickFromList([4, 5, 6, 8]);
+        const m2 = pickFromList([7, 9, 11]);
+        const r = randInt(1, m2 - 1);
+        const values = findNumbersByRemainders(
+          [
+            { mod: m1, rem: 0 },
+            { mod: m2, rem: r },
+          ],
+          1,
+          m1 * m2 * 3
+        );
+        const ans = values[0];
+        questions.push(`求最小的正整數，使它能被 $${m1}$ 整除，且除以 $${m2}$ 餘 $${r}$。`);
+        summaryAnswers.push(`$${ans}$`);
+        answers.push(`此數形如 $${m1}k$，逐一代入除以 ${m2} 餘 ${r} 的條件，最小正整數為 $${ans}$。`);
+      } else {
+        const spec = soldierSets[randInt(0, soldierSets.length - 1)];
+        const conditions = spec.mods.map((mod, idx) => ({ mod, rem: spec.remainders[idx] }));
+        const values = findNumbersByRemainders(conditions, spec.range[0], spec.range[1]);
+        questions.push(
+          `某數除以 ${spec.mods[0]} 餘 ${spec.remainders[0]}，除以 ${spec.mods[1]} 餘 ${spec.remainders[1]}，除以 ${spec.mods[2]} 餘 ${spec.remainders[2]}。求最小的正整數解。`
+        );
+        summaryAnswers.push(`$${values[0]}$`);
+        answers.push(`逐一檢查共同週期內的數，可得最小正整數為 $${values[0]}$。`);
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 反向因數題：由因數個數或因數總和往回找指數（j1-2-1）
+  function buildJ121DivisorCountInverseCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    const divisorTargets = [6, 8, 10, 12, 16, 18, 20, 24];
+    function sigmaPrimePower(p, exponent) {
+      let sum = 0;
+      for (let k = 0; k <= exponent; k += 1) sum += p ** k;
+      return sum;
+    }
+    function smallestWithDivisorCount(target) {
+      let best = null;
+      function search(remaining, maxExponent, primeIndex, value) {
+        if (remaining === 1) {
+          if (best === null || value < best) best = value;
+          return;
+        }
+        const primes = [2, 3, 5, 7, 11, 13, 17];
+        for (let e = Math.min(maxExponent, remaining - 1); e >= 1; e -= 1) {
+          if (remaining % (e + 1) !== 0) continue;
+          const nextValue = value * primes[primeIndex] ** e;
+          if (best !== null && nextValue >= best) continue;
+          search(remaining / (e + 1), e, primeIndex + 1, nextValue);
+        }
+      }
+      search(target, 20, 0, 1);
+      return best;
+    }
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const a = randInt(2, 7);
+        const b = randInt(1, 3);
+        const c = randInt(1, 2);
+        const total = (a + 1) * (b + 1) * (c + 1);
+        questions.push(`已知 $n=2^a\\times3^${b}\\times5^${c}$ 有 $${total}$ 個正因數，求 $a$。`);
+        summaryAnswers.push(`$a=${a}$`);
+        answers.push(`正因數個數為 $(a+1)(${b}+1)(${c}+1)=${total}$，所以 $a+1=${a + 1}$，得 $a=${a}$。`);
+      } else if (mode === 1) {
+        const target = divisorTargets[randInt(0, divisorTargets.length - 1)];
+        const ans = smallestWithDivisorCount(target);
+        questions.push(`求最小的正整數，使它恰好有 $${target}$ 個正因數。`);
+        summaryAnswers.push(`$${ans}$`);
+        answers.push(
+          `要讓數最小，較大的指數放在較小的質數上。檢查 ${target} 的因數分解組合後，可得最小正整數為 $${ans}$。`
+        );
+      } else {
+        const a = randInt(1, 3);
+        const b = randInt(1, 2);
+        const n = 3 ** a * 7 ** b;
+        const sigma = sigmaPrimePower(3, a) * sigmaPrimePower(7, b);
+        questions.push(`若正整數 $n$ 的標準分解式為 $3^a\\times7^b$，且所有正因數和為 $${sigma}$，求 $n$。`);
+        summaryAnswers.push(`$${n}$`);
+        answers.push(
+          `正因數和為 $(1+3+\\cdots+3^a)(1+7+\\cdots+7^b)$。由 $${sigma}$ 可配成 $(1+3+\\cdots+3^${a})(1+7+\\cdots+7^${b})$，故 $n=3^${a}\\times7^${b}=${n}$。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 最大公因數與最小公倍數的限制反推（j1-2-2）
+  function buildJ122GcdLcmPairConstraintsCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const g = pickFromList([4, 6, 8, 10, 12, 15]);
+        const m = pickFromList([6, 10, 12, 15, 18]);
+        const l = g * m;
+        const pairs = [];
+        divisorsOf(m).forEach((u) => {
+          const v = m / u;
+          if (u < v && gcd(u, v) === 1) pairs.push([g * u, g * v]);
+        });
+        questions.push(
+          `已知兩正整數 $a,b$ 的最大公因數為 $${g}$，最小公倍數為 $${l}$，且 $a<b$，求所有可能的 $(a,b)$。`
+        );
+        summaryAnswers.push(pairs.map(([a, b]) => `$(a,b)=(${a},${b})$`).join('、'));
+        answers.push(
+          `設 $a=${g}m$、$b=${g}n$，且 $(m,n)=1$。因 $[a,b]=${l}$，所以 $mn=${l / g}$。找互質因數對可得 ${pairs.map(([a, b]) => `$(a,b)=(${a},${b})$`).join('、')}。`
+        );
+      } else if (mode === 1) {
+        const fixed = pickFromList([18, 24, 30, 36, 42]);
+        const g = pickFromList(divisorsOf(fixed).filter((d) => d > 1 && d < fixed));
+        const multiplier = pickFromList([2, 3, 4, 5]);
+        const l = fixed * multiplier;
+        const x = (g * l) / fixed;
+        if (!Number.isInteger(x) || gcd(x, fixed) !== g || lcm(x, fixed) !== l) {
+          i -= 1;
+          continue;
+        }
+        questions.push(`若 $(x,${fixed})=${g}$ 且 $[x,${fixed}]=${l}$，求 $x$。`);
+        summaryAnswers.push(`$x=${x}$`);
+        answers.push(
+          `利用 $(x,${fixed})\\times[x,${fixed}]=x\\times${fixed}$，得 $x=\\dfrac{${g}\\times${l}}{${fixed}}=${x}$。`
+        );
+      } else {
+        const g = pickFromList([6, 10, 12, 15]);
+        const u = pickFromList([2, 3, 4, 5]);
+        const v = pickFromList([7, 8, 9, 11]);
+        const a = g * u;
+        const b = g * v;
+        const product = a * b;
+        questions.push(`設 $a,b$ 為兩正整數，且 $(a,b)=${g}$、$ab=${product}$。若 $a<b$，求 $(a,b)$。`);
+        summaryAnswers.push(`$(a,b)=(${a},${b})$`);
+        answers.push(
+          `設 $a=${g}m$、$b=${g}n$ 且 $(m,n)=1$，則 $mn=${product / (g * g)}$。符合且 $m<n$ 的互質因數對為 $(${u},${v})$，所以 $(a,b)=(${a},${b})$。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 三數比例與最小公倍數（j1-2-2）
+  function buildJ122RatioLcmThreeNumbersCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const ratios = [
+      [3, 4, 6],
+      [2, 3, 5],
+      [4, 6, 9],
+      [5, 6, 10],
+      [6, 8, 9],
+    ];
+
+    for (let i = 0; i < count; i += 1) {
+      const ratio = ratios[randInt(0, ratios.length - 1)];
+      const baseLcm = lcm(lcm(ratio[0], ratio[1]), ratio[2]);
+      const k = randInt(2, 8);
+      const targetLcm = baseLcm * k;
+      const nums = ratio.map((r) => r * k);
+      questions.push(
+        `若三個正整數 $a,b,c$ 滿足 $a:b:c=${ratio.join(':')}$，且最小公倍數為 $${targetLcm}$，求 $a,b,c$。`
+      );
+      summaryAnswers.push(`$a=${nums[0]}$、$b=${nums[1]}$、$c=${nums[2]}$`);
+      answers.push(
+        `設三數為 $${ratio[0]}t,${ratio[1]}t,${ratio[2]}t$。比例數的最小公倍數為 ${baseLcm}，所以 ${baseLcm}t=${targetLcm}，得 $t=${k}$，故三數為 $${nums.join('、')}$。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 週期性最小公倍數模型（j1-2-2）
+  function buildJ122PeriodicLcmModelingCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 2;
+
+      if (mode === 0) {
+        const oldGap = pickFromList([12, 15, 18, 20]);
+        const newGap = pickFromList([20, 24, 30, 36]);
+        const length = lcm(oldGap, newGap) * randInt(3, 6);
+        const oldInternal = Math.floor((length - 1) / oldGap);
+        const same = Math.floor((length - 1) / lcm(oldGap, newGap));
+        const moved = oldInternal - same;
+        questions.push(
+          `長 ${length} 公尺的道路兩端不種樹，原本每 ${oldGap} 公尺種一棵，後來改成每 ${newGap} 公尺種一棵。原本的樹中，有幾棵需要移動？`
+        );
+        summaryAnswers.push(`$${moved}$ 棵`);
+        answers.push(
+          `原本內部樹共有 $\\lfloor(${length}-1)/${oldGap}\\rfloor=${oldInternal}$ 棵；位置仍相同者在 $[${oldGap},${length - 1}]$ 內同時是 ${oldGap} 與 ${newGap} 的倍數，即 ${lcm(oldGap, newGap)} 的倍數，共 ${same} 棵。所以需移動 $${oldInternal}-${same}=${moved}$ 棵。`
+        );
+      } else {
+        const periods = shuffle([pickFromList([6, 8, 10]), pickFromList([9, 12, 15]), pickFromList([14, 16, 18])]);
+        const first = lcm(lcm(periods[0], periods[1]), periods[2]);
+        const second = first * 2;
+        questions.push(
+          `三盞燈分別每 ${periods[0]}、${periods[1]}、${periods[2]} 分鐘亮一次。若現在同時亮，第二次再同時亮是幾分鐘後？`
+        );
+        summaryAnswers.push(`$${second}$ 分鐘後`);
+        answers.push(
+          `第一次再同時亮是三個週期的最小公倍數 $[${periods.join(',')}]=${first}$ 分鐘後；第二次再同時亮為 $${first}\\times2=${second}$ 分鐘後。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 進階分項對消：連加模型（j1-2-3）
+  function buildJ123AdvancedTelescopingSumCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 3;
+
+      if (mode === 0) {
+        const n = randInt(5, 10);
+        const frac = reduceFraction(n, 2 * (n + 1) * (n + 2));
+        questions.push(
+          `計算：$\\dfrac{1}{1\\times2\\times3}+\\dfrac{1}{2\\times3\\times4}+\\cdots+\\dfrac{1}{${n}\\times${n + 1}\\times${n + 2}}$。`
+        );
+        summaryAnswers.push(`$${formatFraction(frac.numerator, frac.denominator)}$`);
+        answers.push(
+          `$\\dfrac{1}{k(k+1)(k+2)}=\\dfrac12\\left(\\dfrac{1}{k(k+1)}-\\dfrac{1}{(k+1)(k+2)}\\right)$，中間項會對消，剩 $\\dfrac12\\left(\\dfrac12-\\dfrac{1}{${n + 1}\\times${n + 2}}\\right)=${formatFraction(frac.numerator, frac.denominator)}$。`
+        );
+      } else if (mode === 1) {
+        const n = randInt(5, 12);
+        questions.push(
+          `計算：$\\dfrac{1}{1\\times3}+\\dfrac{1}{3\\times5}+\\cdots+\\dfrac{1}{${2 * n - 1}\\times${2 * n + 1}}$。`
+        );
+        summaryAnswers.push(`$${formatFraction(n, 2 * n + 1)}$`);
+        answers.push(
+          `$\\dfrac{1}{(2k-1)(2k+1)}=\\dfrac12\\left(\\dfrac{1}{2k-1}-\\dfrac{1}{2k+1}\\right)$，對消後得 $\\dfrac12\\left(1-\\dfrac{1}{${2 * n + 1}}\\right)=${formatFraction(n, 2 * n + 1)}$。`
+        );
+      } else {
+        const n = randInt(4, 9);
+        const numerator = 2 ** (n + 1) - 1;
+        const denominator = 2 ** n;
+        questions.push(`若 $S=1+\\dfrac12+\\dfrac14+\\cdots+\\dfrac{1}{2^${n}}$，求 $2S-S$ 的結果。`);
+        summaryAnswers.push(`$${formatFraction(numerator, denominator)}$`);
+        answers.push(
+          `因為 $2S=2+1+\\dfrac12+\\cdots+\\dfrac{1}{2^${n - 1}}$，相減得 $S=2-\\dfrac{1}{2^${n}}=${formatFraction(numerator, denominator)}$，所以 $2S-S=${formatFraction(numerator, denominator)}$。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  // 進階分項對消：連乘模型（j1-2-3）
+  function buildJ123TelescopingProductCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const n = randInt(6, 20);
+      questions.push(
+        `計算：$\\left(1-\\dfrac{1}{2^2}\\right)\\left(1-\\dfrac{1}{3^2}\\right)\\cdots\\left(1-\\dfrac{1}{${n}^2}\\right)$。`
+      );
+      summaryAnswers.push(`$${formatFraction(n + 1, 2 * n)}$`);
+      answers.push(
+        `$1-\\dfrac{1}{k^2}=\\dfrac{(k-1)(k+1)}{k^2}=\\dfrac{k-1}{k}\\times\\dfrac{k+1}{k}$。連乘後前後大量約分，剩下 $\\dfrac{${n + 1}}{2\\times${n}}=${formatFraction(n + 1, 2 * n)}$。`
+      );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
   // ─── j1-2-1/2/3 文件題型補充 generators 結束 ─────────────────────────────
 
   const nextConfigs = {
@@ -8876,15 +9739,6 @@
         return buildExponentWordProblemSet(5);
       },
     },
-    'j1-1-3-power-concept-one-subtype': {
-      type: 'drill',
-      title: '次方基礎觀念',
-      difficulty: 'easy',
-      questionCount: 6,
-      generate() {
-        return buildJ113ConceptMixedSet(6);
-      },
-    },
     'j1-1-3-exponent-law-three-subtypes': {
       type: 'drill',
       title: '指數律與運算',
@@ -8892,15 +9746,6 @@
       questionCount: 8,
       generate() {
         return buildJ113LawMixedSet(8);
-      },
-    },
-    'j1-1-3-application-one-subtype': {
-      type: 'drill',
-      title: '指數應用',
-      difficulty: 'easy',
-      questionCount: 6,
-      generate() {
-        return buildJ113ApplicationMixedSet(6);
       },
     },
     'j1-1-3-same-base-multiply-drill': {
@@ -9155,6 +10000,24 @@
         return buildJ113PowerCompareMixedSet(5);
       },
     },
+    'j1-1-3-common-base-conversion-clean': {
+      type: 'drill',
+      title: '不同底數先轉同底數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ113CommonBaseConversionCleanSet(5);
+      },
+    },
+    'j1-1-3-common-base-equation-clean': {
+      type: 'drill',
+      title: '轉同底數解指數方程',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ113CommonBaseEquationCleanSet(5);
+      },
+    },
     'j1-1-3-biquadratic-split-square-factoring': {
       type: 'drill',
       title: '二次三項式的拆項配方因式分解',
@@ -9299,67 +10162,22 @@
         return buildJ114ScientificContextSet(5);
       },
     },
-    'j1-1-4-large-to-scientific-one-subtype': {
+    'j1-1-4-scientific-trap-compare-clean': {
       type: 'drill',
-      title: '將大數轉化為科學記號',
-      difficulty: 'easy',
-      questionCount: 5,
-      generate() {
-        return buildJ114LargeConvertMixedSet(5);
-      },
-    },
-    'j1-1-4-small-to-scientific-one-subtype': {
-      type: 'drill',
-      title: '將極小數轉化為科學記號',
-      difficulty: 'easy',
-      questionCount: 5,
-      generate() {
-        return buildJ114SmallConvertMixedSet(5);
-      },
-    },
-    'j1-1-4-scientific-to-plain-one-subtype': {
-      type: 'drill',
-      title: '將科學記號還原為一般數字',
-      difficulty: 'easy',
-      questionCount: 5,
-      generate() {
-        return buildJ114ScientificToPlainMixedSet(5);
-      },
-    },
-    'j1-1-4-scientific-mul-div-one-subtype': {
-      type: 'drill',
-      title: '科學記號的進階乘除運算',
+      title: '科學記號加減比較陷阱',
       difficulty: 'medium',
       questionCount: 5,
       generate() {
-        return buildJ114ScientificMulDivMixedSet(5);
+        return buildJ114ScientificTrapCompareCleanSet(5);
       },
     },
-    'j1-1-4-scientific-add-sub-one-subtype': {
+    'j1-1-4-scientific-unit-stack-clean': {
       type: 'drill',
-      title: '科學記號的進階加減運算',
+      title: '科學記號單位換算堆疊題',
       difficulty: 'medium',
       questionCount: 5,
       generate() {
-        return buildJ114ScientificAddSubMixedSet(5);
-      },
-    },
-    'j1-1-4-scientific-compare-one-subtype': {
-      type: 'drill',
-      title: '科學記號的大小比較',
-      difficulty: 'medium',
-      questionCount: 5,
-      generate() {
-        return buildJ114ScientificCompareMixedSet(5);
-      },
-    },
-    'j1-1-4-scientific-context-one-subtype': {
-      type: 'drill',
-      title: '情境應用與單位轉換',
-      difficulty: 'medium',
-      questionCount: 5,
-      generate() {
-        return buildJ114ScientificContextMixedSet(5);
+        return buildJ114ScientificUnitStackCleanSet(5);
       },
     },
     'opposite-number-equation-drill': {
@@ -9684,6 +10502,51 @@
       questionCount: 5,
       generate() {
         return buildJ111OriginUnitMixedSet(5);
+      },
+    },
+    'j1-1-1-coordinate-reverse-multi-drill': {
+      type: 'drill',
+      title: '座標系逆向多重變換',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildCoordinateReverseMultiSet(5);
+      },
+    },
+    'j1-1-1-coordinate-scale-origin-inference-clean': {
+      type: 'drill',
+      title: '已知新舊坐標反推原點與固定點',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildCoordinateScaleOriginInferenceCleanSet(5);
+      },
+    },
+    'j1-1-1-absolute-interval-simplify-clean': {
+      type: 'drill',
+      title: '給定範圍的絕對值化簡',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildAbsoluteIntervalSimplifyCleanSet(5);
+      },
+    },
+    'j1-1-1-absolute-equation-count-clean': {
+      type: 'drill',
+      title: '絕對值方程與整數解個數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildAbsoluteEquationCountCleanSet(5);
+      },
+    },
+    'j1-1-1-midpoint-ratio-nested-clean': {
+      type: 'drill',
+      title: '連續中點與比例點反推',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildMidpointRatioNestedCleanSet(5);
       },
     },
     'abs-four-terms-calc-drill': {
@@ -10748,6 +11611,15 @@
         return buildDivisorCountSumMixedSet(5);
       },
     },
+    'j1-2-1-divisor-count-inverse-clean': {
+      type: 'drill',
+      title: '反向因數個數與因數和',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ121DivisorCountInverseCleanSet(5);
+      },
+    },
     'j1-2-1-rectangle-factor-pairs-drill': {
       type: 'drill',
       title: '矩形排列問題',
@@ -10838,6 +11710,24 @@
         return buildTelescopingProductSet(5);
       },
     },
+    'j1-2-3-advanced-telescoping-sum-clean': {
+      type: 'drill',
+      title: '進階分項對消連加',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ123AdvancedTelescopingSumCleanSet(5);
+      },
+    },
+    'j1-2-3-telescoping-product-clean': {
+      type: 'drill',
+      title: '進階分項對消連乘',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ123TelescopingProductCleanSet(5);
+      },
+    },
     'j1-2-3-bracket-mixed-operation-application': {
       type: 'drill',
       title: '多重括號與混合運算',
@@ -10892,15 +11782,6 @@
         return buildJ123FractionRemainderApplicationSet(5);
       },
     },
-    'j1-2-3-bracket-mixed-four-subtypes': {
-      type: 'drill',
-      title: '多重括號與混合運算',
-      difficulty: 'medium',
-      questionCount: 5,
-      generate() {
-        return buildJ123BracketMixedWrapperSet(5);
-      },
-    },
     'j1-2-3-fraction-series-two-subtypes': {
       type: 'drill',
       title: '分數級數與消去律規律題',
@@ -10917,15 +11798,6 @@
       questionCount: 5,
       generate() {
         return buildJ123MixedNumberWrapperSet(5);
-      },
-    },
-    'j1-2-3-fraction-application-one-subtype': {
-      type: 'drill',
-      title: '分數生活應用（分配與剩餘量）',
-      difficulty: 'medium',
-      questionCount: 5,
-      generate() {
-        return buildJ123ApplicationWrapperSet(5);
       },
     },
     'factor-application-separate-grouping-drill': {
@@ -11027,6 +11899,15 @@
         return buildJ122LcmPeriodicSet(5);
       },
     },
+    'j1-2-2-periodic-lcm-modeling-clean': {
+      type: 'drill',
+      title: '週期模型與位置保留',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ122PeriodicLcmModelingCleanSet(5);
+      },
+    },
     'j1-2-2-lcm-min-square-application': {
       type: 'drill',
       title: '拼湊幾何與最小面積問題',
@@ -11045,6 +11926,24 @@
         return buildJ122LcmMultiplesSet(5);
       },
     },
+    'j1-2-2-gcd-lcm-pair-constraints-clean': {
+      type: 'drill',
+      title: '最大公因數與最小公倍數限制反推',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ122GcdLcmPairConstraintsCleanSet(5);
+      },
+    },
+    'j1-2-2-ratio-lcm-three-numbers-clean': {
+      type: 'drill',
+      title: '三數比例與最小公倍數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ122RatioLcmThreeNumbersCleanSet(5);
+      },
+    },
     'j1-2-1-prime-identify-drill': {
       type: 'drill',
       title: '質數辨識',
@@ -11061,6 +11960,24 @@
       questionCount: 5,
       generate() {
         return buildDivisibilityDigitFillSet(5);
+      },
+    },
+    'j1-2-1-combined-divisibility-clean': {
+      type: 'drill',
+      title: '複合整除規則與缺位數字',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ121CombinedDivisibilityCleanSet(5);
+      },
+    },
+    'j1-2-1-remainder-crt-range-clean': {
+      type: 'drill',
+      title: '混合餘數與範圍限制',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ121RemainderCrtRangeCleanSet(5);
       },
     },
     'j1-2-1-multiple-count-range-drill': {
@@ -11119,8 +12036,8 @@
     },
   };
 
-  // j1-1-1 題型：修正重複性、補詳解、修正連續負號顯示（詳見 docs/math-display-rules.md）
-  const bundleFingerprint = 'j1-bundle-v20260622-j123-v1';
+  // j1-2 截圖題型：補複合整除、限制型公因倍數、進階分項對消與反向因數題。
+  const bundleFingerprint = 'j1-bundle-v20260706-summary-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

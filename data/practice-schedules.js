@@ -141,7 +141,6 @@
           "practice-j1-1-2-substitution-five-subtypes",
           "practice-j1-1-2-pattern-five-subtypes",
           "practice-j1-1-3-exponent-law-three-subtypes",
-          "practice-j1-1-3-power-concept-one-subtype",
           "practice-j1-1-4-scientific-convert-drill"
         ],
         teachingFocus: ["負數乘方先看括號", "指數律先分清底數是否相同", "科學記號注意小數點移動方向"]

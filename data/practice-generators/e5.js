@@ -1158,7 +1158,7 @@
       answers.push(
         e527Answer(
           `$${edge}$ 公分`,
-          `先用表面積除以 $6$，求出一個面的面積：$${surface}\\div6=${faceArea}$。再因為正方形面積 $= 邊長\\times邊長$，所以邊長是 $${edge}$ 公分。`
+          `先用表面積除以 $6$，求出一個面的面積：$${surface}\\div6=${faceArea}$。再因為正方形面積 $= 邊長\\times 邊長$，所以邊長是 $${edge}$ 公分。`
         )
       );
     }
@@ -1186,7 +1186,7 @@
       answers.push(
         e527Answer(
           `$${surface}$ 平方公分`,
-          `長方體表面積 $=2\\times(長\\times寬+寬\\times高+長\\times高)$，所以 $2\\times(${length}\\times${width}+${width}\\times${height}+${length}\\times${height})=${surface}$ 平方公分。`
+          `長方體表面積 $=2\\times(長\\times 寬+寬\\times 高+長\\times 高)$，所以 $2\\times(${length}\\times${width}+${width}\\times${height}+${length}\\times${height})=${surface}$ 平方公分。`
         )
       );
     }
@@ -1328,7 +1328,7 @@
       answers.push(
         e527Answer(
           `$${e527FormatNumber(lateral)}$ 平方公分`,
-          `只貼側面一圈，不含上下面，所以面積 $= 底面周長\\times高 = 2\\times(${length}+${width})\\times${height}=${e527FormatNumber(lateral)}$ 平方公分。`
+          `只貼側面一圈，不含上下面，所以面積 $= 底面周長\\times 高 = 2\\times(${length}+${width})\\times${height}=${e527FormatNumber(lateral)}$ 平方公分。`
         )
       );
     }

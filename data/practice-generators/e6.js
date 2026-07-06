@@ -4622,7 +4622,7 @@
       );
       summaryAnswers.push(`$${e622FormatNumber(distance)}$ ${mode.distanceUnit}`);
       answers.push(
-        `用距離公式：距離 $=速率\\times時間=${e622FormatNumber(speed)}\\times${e622FormatNumber(time)}=${e622FormatNumber(distance)}$，所以共走 $${e622FormatNumber(distance)}$ ${mode.distanceUnit}。`
+        `用距離公式：距離 $=速率\\times 時間=${e622FormatNumber(speed)}\\times${e622FormatNumber(time)}=${e622FormatNumber(distance)}$，所以共走 $${e622FormatNumber(distance)}$ ${mode.distanceUnit}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -5187,7 +5187,7 @@
       );
       summaryAnswers.push(`$${obstacle}$ 公尺`);
       answers.push(
-        `完全通過時總距離 $=速度\\times時間=${speed}\\times${e622FormatNumber(time)}=${speed * time}$ 公尺。橋長 $=總距離-火車長=${speed * time}-${train}=${obstacle}$ 公尺。`
+        `完全通過時總距離 $=速度\\times 時間=${speed}\\times${e622FormatNumber(time)}=${speed * time}$ 公尺。橋長 $=總距離-火車長=${speed * time}-${train}=${obstacle}$ 公尺。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -5211,7 +5211,7 @@
       );
       summaryAnswers.push(`$${e622FormatNumber(distance)}$ ${mode.distanceUnit}`);
       answers.push(
-        `回聲是來回，所以單程距離 $=\\frac{聲速\\times時間}{2}=\\frac{${e622FormatNumber(mode.sound)}\\times${e622FormatNumber(time)}}{2}=${e622FormatNumber(distance)}$ ${mode.distanceUnit}。`
+        `回聲是來回，所以單程距離 $=\\frac{聲速\\times 時間}{2}=\\frac{${e622FormatNumber(mode.sound)}\\times${e622FormatNumber(time)}}{2}=${e622FormatNumber(distance)}$ ${mode.distanceUnit}。`
       );
     }
     return { questions, summaryAnswers, answers };
