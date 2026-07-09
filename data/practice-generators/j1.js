@@ -2132,9 +2132,9 @@
     const summaryAnswers = [];
     const answers = [];
     const symbolDefs = [
-      { sym: '★', solveText: 'a★b=a+2b', value: (a, b) => a + 2 * b, targetVar: 'a' },
-      { sym: '◎', solveText: 'a◎b=2a-b', value: (a, b) => 2 * a - b, targetVar: 'b' },
-      { sym: '◆', solveText: 'a◆b=ab+a', value: (a, b) => a * b + a, targetVar: 'b' },
+      { sym: '★', solveText: '$a$★$b=a+2b$', value: (a, b) => a + 2 * b, targetVar: 'a' },
+      { sym: '◎', solveText: '$a$◎$b=2a-b$', value: (a, b) => 2 * a - b, targetVar: 'b' },
+      { sym: '◆', solveText: '$a$◆$b=ab+a$', value: (a, b) => a * b + a, targetVar: 'b' },
     ];
     for (let i = 0; i < count; i += 1) {
       const def = symbolDefs[i % symbolDefs.length];
@@ -2142,23 +2142,23 @@
         const a = pickNonZero(-8, 8);
         const b = pickNonZero(-8, 8);
         const result = def.value(a, b);
-        questions.push(`若規定 $${def.solveText}$，且 $x${def.sym}${b}=${result}$，求 $x$。`);
-        summaryAnswers.push(`$${result - 2 * b}$`);
-        answers.push(`由規定得 $x+2\\times ${b}=${result}$，所以 $x=${result - 2 * b}$。`);
+        questions.push(`若規定 ${def.solveText}，且 $x$${def.sym}$${b}=${result}$，求 $x$。`);
+        summaryAnswers.push(`$${a}$`);
+        answers.push(`由規定得 $x+2\\times ${b}=${result}$，所以 $x=${a}$。`);
         continue;
       }
       const a = pickNonZero(-8, 8);
       const b = pickNonZero(-8, 8);
       const result = def.value(a, b);
       if (def.sym === '◎') {
-        questions.push(`若規定 $${def.solveText}$，且 $${a}${def.sym}x=${result}$，求 $x$。`);
-        summaryAnswers.push(`$${2 * a - result}$`);
-        answers.push(`由規定得 $2\\times ${a}-x=${result}$，所以 $x=${2 * a - result}$。`);
+        questions.push(`若規定 ${def.solveText}，且 $${a}$${def.sym}$x=${result}$，求 $x$。`);
+        summaryAnswers.push(`$${b}$`);
+        answers.push(`由規定得 $2\\times ${a}-x=${result}$，所以 $x=${b}$。`);
         continue;
       }
-      questions.push(`若規定 ${def.solveText}，且 $${a}${def.sym}x=${result}$，求 $x$。`);
-      summaryAnswers.push(`$${(result - a) / a}$`);
-      answers.push(`由規定得 $${a}x+${a}=${result}$，所以 $${a}x=${result - a}$，因此 $x=${(result - a) / a}$。`);
+      questions.push(`若規定 ${def.solveText}，且 $${a}$${def.sym}$x=${result}$，求 $x$。`);
+      summaryAnswers.push(`$${b}$`);
+      answers.push(`由規定得 $${a}x+${a}=${result}$，所以 $${a}x=${result - a}$，因此 $x=${b}$。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3470,12 +3470,12 @@
       const result = countLeft + countRight;
       const rightSymbol = includeUpper ? '\\le' : '<';
 
-      questions.push(`符合\\(${lower}\\le |甲| ${rightSymbol} ${upper}\\)的${category}甲共有幾個？`);
+      questions.push(`符合\\(${lower}\\le |x| ${rightSymbol} ${upper}\\)的${category}$x$共有幾個？`);
       summaryAnswers.push(`$${result}$`);
-      const rightPart = `$${lower}\\le 甲 ${rightSymbol} ${upper}$（$${countRight}$ 個）`;
+      const rightPart = `$${lower}\\le x ${rightSymbol} ${upper}$（$${countRight}$ 個）`;
       if (countLeft > 0) {
         answers.push(
-          `絕對值介於 $${lower}$ 到 $${upper}$ 之間，代表甲落在原點兩側各一段：$-${rightRangeMax}\\le 甲\\le -${lower}$（$${countLeft}$ 個）或 ${rightPart}，合計 $${countLeft}+${countRight}=${result}$ 個。`
+          `絕對值介於 $${lower}$ 到 $${upper}$ 之間，代表$x$落在原點兩側各一段：$-${rightRangeMax}\\le x\\le -${lower}$（$${countLeft}$ 個）或 ${rightPart}，合計 $${countLeft}+${countRight}=${result}$ 個。`
         );
       } else {
         answers.push(
@@ -5275,6 +5275,210 @@
     return { questions, summaryAnswers, answers };
   }
 
+  function buildJ132ComplexLinearEquationCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+
+      if (mode === 0) {
+        const x = randInt(-6, 8);
+        const left = subFraction(
+          negateFraction(makeFraction(3 * x - 4, 2)),
+          mulFraction(makeFraction(2, 1), makeFraction(-x + 5, 3))
+        );
+        questions.push(`解方程式：$-\\dfrac{3x-4}{2}-\\dfrac{2(-x+5)}{3}=${fractionToLatex(left)}$。`);
+        summaryAnswers.push(`$x=${x}$`);
+        answers.push(`同乘 $6$ 去分母，再展開整理，可得一元一次方程。代入並整理後解得 $x=${x}$。`);
+      } else if (mode === 1) {
+        const x = randInt(-5, 9);
+        const k = x - 4;
+        questions.push(`解方程式：$0.2(10x-5)-\\dfrac{1}{4}(8x+12)=-x${k >= 0 ? '+' : ''}${k}$。`);
+        summaryAnswers.push(`$x=${x}$`);
+        answers.push(
+          `$0.2(10x-5)=2x-1$，$\\dfrac{1}{4}(8x+12)=2x+3$，左邊整理為 $-4$。所以 $-4=-x${k >= 0 ? '+' : ''}${k}$，解得 $x=${x}$。`
+        );
+      } else if (mode === 2) {
+        const x = randInt(-4, 10);
+        const rhs = 12 - 2 * x;
+        questions.push(`解方程式：$2\\{3x-[4(x-1)-2]\\}=${rhs}$。`);
+        summaryAnswers.push(`$x=${x}$`);
+        answers.push(
+          `先處理中括號：$4(x-1)-2=4x-6$，所以 $2\\{3x-(4x-6)\\}=2(6-x)=12-2x$。由 $12-2x=${rhs}$，解得 $x=${x}$。`
+        );
+      } else if (mode === 3) {
+        const x = pickFromList([-5, -3, -1, 1, 3, 5, 7]);
+        const a = (3 - x) / 2;
+        questions.push(`已知 $\\dfrac{2x+a}{3}-\\dfrac{x-1}{2}=1$ 的解為 $x=${x}$，求 $a$。`);
+        summaryAnswers.push(`$a=${a}$`);
+        answers.push(`把 $x=${x}$ 代入原方程：$\\dfrac{${2 * x}+a}{3}-\\dfrac{${x}-1}{2}=1$，整理得 $a=${a}$。`);
+      } else {
+        const x = randInt(-6, 8);
+        const value = subFraction(
+          mulFraction(
+            makeFraction(1, 2),
+            subFraction(
+              mulFraction(makeFraction(1, 3), subFraction(makeFraction(x - 1, 4), makeFraction(1, 1))),
+              makeFraction(1, 1)
+            )
+          ),
+          makeFraction(1, 1)
+        );
+        questions.push(
+          `解方程式：$\\dfrac{1}{2}\\left[\\dfrac{1}{3}\\left(\\dfrac{x-1}{4}-1\\right)-1\\right]-1=${fractionToLatex(value)}$。`
+        );
+        summaryAnswers.push(`$x=${x}$`);
+        answers.push(
+          `這題先由最內層括號往外整理：先處理 $\\dfrac{x-1}{4}-1$，再乘 $\\dfrac{1}{3}$、減 $1$、乘 $\\dfrac{1}{2}$。逐層反推或同乘公倍數整理，解得 $x=${x}$。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ132AbsoluteEquationLogicCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+
+      if (mode === 0) {
+        const a = randInt(2, 5);
+        const b = randInt(-6, 2);
+        const c = randInt(1, 4);
+        const d = randInt(-5, 5);
+        if (a === c) {
+          i -= 1;
+          continue;
+        }
+        const s1 = formatSolvedX(d - b, a - c);
+        const s2 = formatSolvedX(-d - b, a + c);
+        questions.push(`解方程式：$|${formatLinearExpr(a, b)}|=|${formatLinearExpr(c, d)}|$。`);
+        summaryAnswers.push(`$x=${s1}$ 或 $x=${s2}$`);
+        answers.push(
+          `兩邊都是絕對值，可分成內部相等與內部互為相反數：$${formatLinearExpr(a, b)}=${formatLinearExpr(c, d)}$ 或 $${formatLinearExpr(a, b)}=-(${formatLinearExpr(c, d)})$。解得 $x=${s1}$ 或 $x=${s2}$。`
+        );
+      } else if (mode === 1) {
+        const left = randInt(-5, 0);
+        const right = left + randInt(4, 9);
+        questions.push(
+          `解方程式：$|${formatShiftedAbsoluteVariable('x', left)}|+|${formatShiftedAbsoluteVariable('x', right)}|=${right - left}$。`
+        );
+        summaryAnswers.push(`$${left}\\le x\\le ${right}$`);
+        answers.push(
+          `這是數線上到 ${left} 與 ${right} 的距離和。兩點距離為 $${right - left}$，所以所有介於兩點之間的 $x$ 都符合，答案為 $${left}\\le x\\le ${right}$。`
+        );
+      } else if (mode === 2) {
+        const m = randInt(2, 5);
+        const center = randInt(-4, 5);
+        const radius = randInt(1, 6);
+        const k = m * center;
+        const rhs = m * radius;
+        questions.push(`若 $|${formatLinearExpr(m, -k)}|=${rhs}$ 的解皆為整數，求所有解。`);
+        summaryAnswers.push(`$x=${center - radius}$ 或 $x=${center + radius}$`);
+        answers.push(
+          `$|${formatLinearExpr(m, -k)}|=${rhs}$ 可化為 $|${formatShiftedAbsoluteVariable('x', center)}|=${radius}$，所以 ${formatShiftedAbsoluteVariable('x', center)}=\\pm ${radius}$，得 $x=${center - radius}$ 或 $x=${center + radius}$。`
+        );
+      } else if (mode === 3) {
+        const center = randInt(-5, 5);
+        const inner = randInt(1, 4);
+        const outer = randInt(1, 3);
+        const a = center - inner - outer;
+        const b = center - inner + outer;
+        const c = center + inner - outer;
+        const d = center + inner + outer;
+        const values = Array.from(new Set([a, b, c, d])).sort((x, y) => x - y);
+        questions.push(`解方程式：$||${formatShiftedAbsoluteVariable('x', center)}|-${inner}|=${outer}$。`);
+        summaryAnswers.push(values.map((v) => `$x=${v}$`).join(' 或 '));
+        answers.push(
+          `令 $|${formatShiftedAbsoluteVariable('x', center)}|-${inner}=\\pm ${outer}$，所以 $|${formatShiftedAbsoluteVariable('x', center)}|=${inner + outer}$ 或 $|${formatShiftedAbsoluteVariable('x', center)}|=${Math.abs(inner - outer)}$。解得 ${values.map((v) => `$x=${v}$`).join(' 或 ')}。`
+        );
+      } else {
+        const u = randInt(-5, 1);
+        const v = u + pickFromList([4, 6, 8]);
+        const a = pickFromList([1, 2, 3]);
+        const centerNum = u + v;
+        const b = (-a * centerNum) / 2;
+        const rhs = (a * (v - u)) / 2;
+        const sumText = `${u}${v >= 0 ? '+' : ''}${v}`;
+        questions.push(
+          `已知 $|${formatLinearExpr(a, b)}|=${rhs}$ 的兩個解為 $x=${u}$ 與 $x=${v}$，說明此方程的對稱中心。`
+        );
+        summaryAnswers.push(`中心為 $x=${(u + v) / 2}$`);
+        answers.push(
+          `絕對值方程的兩解會以中心對稱。兩解平均為 $\\dfrac{${sumText}}{2}=${(u + v) / 2}$，所以對稱中心是 $x=${(u + v) / 2}$。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ132SpecialSolutionParametersCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+
+      if (mode === 0) {
+        const m = randInt(-4, 5);
+        const c = pickNonZero(2, 9);
+        const coefficientExpr = m >= 0 ? `a-${m}` : `a+${Math.abs(m)}`;
+        questions.push(`已知 $(${coefficientExpr})x=${c}$ 無解，求 $a$ 的值。`);
+        summaryAnswers.push(`$a=${m}$`);
+        answers.push(`若 $${coefficientExpr}=0$，左邊恆為 $0$，不可能等於 $${c}$，所以無解時 $a=${m}$。`);
+      } else if (mode === 1) {
+        const p = pickNonZero(-5, 5);
+        const q = randInt(-8, 8);
+        questions.push(`若 $${formatLinearExpr(p, q)}=ax+b$ 有無限多組解，求 $a,b$。`);
+        summaryAnswers.push(`$a=${p}$，$b=${q}$`);
+        answers.push(`兩邊要成為同一個式子，係數與常數都必須相同，所以 $a=${p}$、$b=${q}$。`);
+      } else if (mode === 2) {
+        const x = randInt(-4, 6);
+        const h = randInt(2, 7);
+        const right = 2 * x + 1;
+        const c = right + 3;
+        const m = (c + 3) / (x + h);
+        if (!Number.isInteger(m) || m === 0) {
+          i -= 1;
+          continue;
+        }
+        questions.push(`已知 $x=${x}$ 是 $k(x+${h})-3=2x+1$ 的解，求 $k$。`);
+        summaryAnswers.push(`$k=${m}$`);
+        answers.push(`代入 $x=${x}$：$k(${x}+${h})-3=${right}$，所以 $${x + h}k=${c + 3}$，解得 $k=${m}$。`);
+      } else if (mode === 3) {
+        const a = randInt(2, 7);
+        const b = pickFromList([3, 4, 5, 6, 7, 8]);
+        questions.push(`解方程式：$\\dfrac{x-${a}}{2}=\\dfrac{x-${a}}{${b}}$。`);
+        summaryAnswers.push(`$x=${a}$`);
+        answers.push(
+          `同乘 $${2 * b}$ 得 $${b}(x-${a})=2(x-${a})$，移項後 $${b - 2}(x-${a})=0$，因 $${b - 2}\\ne0$，所以 $x=${a}$。`
+        );
+      } else {
+        const a = randInt(2, 5);
+        const b = randInt(-8, 2);
+        const c = randInt(1, 4);
+        const d = randInt(-5, 5);
+        const numerator = -d - b;
+        const denominator = a + c;
+        questions.push(`若 $${formatLinearExpr(a, b)}$ 的相反數是 $${formatLinearExpr(c, d)}$，求 $x$。`);
+        summaryAnswers.push(`$x=${formatSolvedX(numerator, denominator)}$`);
+        answers.push(
+          `相反數表示兩式相加為 $0$，所以 $${formatLinearExpr(a, b)}+${formatLinearExpr(c, d)}=0$。整理得 $${denominator}x=${numerator}$，故 $x=${formatSolvedX(numerator, denominator)}$。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
   function buildJ133ConsecutiveIntegerSet(count) {
     const questions = [];
     const summaryAnswers = [];
@@ -5312,6 +5516,169 @@
       answers.push(
         `設最小的偶數為 $x$，則四數為 $x,\\ x+2,\\ x+4,\\ x+6$。由 $x+(x+2)+(x+4)+(x+6)=${sum}$ 得 $4x+12=${sum}$，解得 $x=${firstEven}$。`
       );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ133ConstraintModelingCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+
+      if (mode === 0) {
+        const totalVotes = pickFromList([31, 37, 43]);
+        const elect = 2;
+        const minVotes = Math.floor(totalVotes / (elect + 1)) + 1;
+        questions.push(
+          `${totalVotes} 票選出 ${elect} 人，且同票視為尚未保證當選。若阿文目前有 $x$ 票，求他至少要有幾票才一定能進入前 ${elect} 名。`
+        );
+        summaryAnswers.push(`至少 $${minVotes}$ 票`);
+        answers.push(
+          `若阿文有 $x$ 票，其他人合計最多有 $${totalVotes}-x$ 票。要保證前 ${elect} 名，不能讓另外 ${elect} 人都達到 $x$ 票，因此需 $${totalVotes}-x<${elect}x$。解得 $x>${formatSolvedX(totalVotes, elect + 1)}$，所以至少 $${minVotes}$ 票。`
+        );
+      } else if (mode === 1) {
+        const spec = pickFromList([
+          { rooms: 12, peoplePerRoom1: 5, unplaced: 10, peoplePerRoom2: 7, emptyRooms: 2 },
+          { rooms: 10, peoplePerRoom1: 4, unplaced: 14, peoplePerRoom2: 6, emptyRooms: 1 },
+          { rooms: 15, peoplePerRoom1: 6, unplaced: 14, peoplePerRoom2: 8, emptyRooms: 2 },
+          { rooms: 14, peoplePerRoom1: 5, unplaced: 10, peoplePerRoom2: 8, emptyRooms: 4 },
+        ]);
+        const { rooms, peoplePerRoom1, unplaced, peoplePerRoom2, emptyRooms } = spec;
+        const students = peoplePerRoom1 * rooms + unplaced;
+        questions.push(
+          `宿舍分配：若每間住 ${peoplePerRoom1} 人，則有 ${unplaced} 人沒房可住；若每間住 ${peoplePerRoom2} 人，則空出 ${emptyRooms} 間房。求宿舍間數與學生總數。`
+        );
+        summaryAnswers.push(`$${rooms}$ 間，$${students}$ 人`);
+        answers.push(
+          `設宿舍有 $x$ 間。學生總數可寫成 $${peoplePerRoom1}x+${unplaced}$，也可寫成 $${peoplePerRoom2}(x-${emptyRooms})$。列式 $${peoplePerRoom1}x+${unplaced}=${peoplePerRoom2}(x-${emptyRooms})$，解得 $x=${rooms}$，學生共 $${students}$ 人。`
+        );
+      } else if (mode === 2) {
+        const slow = randInt(4, 10);
+        const faster = slow + randInt(2, 6);
+        const headStartTime = randInt(1, 4);
+        const lead = slow * headStartTime;
+        const catchTime = lead / (faster - slow);
+        if (!Number.isInteger(catchTime)) {
+          i -= 1;
+          continue;
+        }
+        questions.push(
+          `追趕行程：乙先出發 ${headStartTime} 小時，速度為每小時 ${slow} 公里；甲從同地出發，速度比乙快 ${faster - slow} 公里。甲出發後幾小時可追上乙？`
+        );
+        summaryAnswers.push(`$${catchTime}$ 小時`);
+        answers.push(
+          `乙先走的距離為 $${slow}\\times${headStartTime}=${lead}$ 公里。甲每小時比乙多追 $${faster - slow}$ 公里，所以追上時間為 $${lead}\\div${faster - slow}=${catchTime}$ 小時。`
+        );
+      } else if (mode === 3) {
+        const percent = pickFromList([8, 10, 12]);
+        const target = pickFromList([20, 25, 30]);
+        const water = pickFromList([150, 200, 240, 300]);
+        const salt = (percent * water) / 100;
+        const addSalt = (target * water - 100 * salt) / (100 - target);
+        if (!Number.isInteger(addSalt) || addSalt <= 0) {
+          i -= 1;
+          continue;
+        }
+        questions.push(`${percent}% 鹽水 ${water} 克，加入多少克鹽後，濃度會變成 ${target}%？`);
+        summaryAnswers.push(`$${addSalt}$ 克`);
+        answers.push(
+          `原有鹽 $${water}\\times${percent}\\%=${salt}$ 克。設加入 $x$ 克鹽，則 $\\dfrac{${salt}+x}{${water}+x}=${target}\\%$。解得 $x=${addSalt}$，所以需加入 $${addSalt}$ 克鹽。`
+        );
+      } else {
+        const aHours = pickFromList([6, 8, 10, 12]);
+        const doneHours = randInt(1, Math.floor(aHours / 2));
+        const remainNumerator = aHours - doneHours;
+        const bHours = pickFromList([4, 5, 6, 8]);
+        const bWorkTime = (remainNumerator * bHours) / aHours;
+        if (!Number.isInteger(bWorkTime)) {
+          i -= 1;
+          continue;
+        }
+        questions.push(
+          `一項工程甲單獨做需 ${aHours} 小時完成。甲先做 ${doneHours} 小時後離開，剩下由乙單獨做，乙單獨完成整項工程需 ${bHours} 小時。乙還要做幾小時才能完成？`
+        );
+        summaryAnswers.push(`$${bWorkTime}$ 小時`);
+        answers.push(
+          `甲已完成 $\\dfrac{${doneHours}}{${aHours}}$，剩下 $\\dfrac{${remainNumerator}}{${aHours}}$。乙每小時完成 $\\dfrac{1}{${bHours}}$，所以需 $\\dfrac{${remainNumerator}}{${aHours}}\\div\\dfrac{1}{${bHours}}=${bWorkTime}$ 小時。`
+        );
+      }
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ133VariableRelationModelingCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+
+      if (mode === 0) {
+        const original = pickFromList([500, 800, 1200, 1500]);
+        const discount = pickFromList([70, 80, 85]);
+        const service = pickFromList([5, 10]);
+        const final = (original * discount * (100 + service)) / 10000;
+        if (!Number.isInteger(final)) {
+          i -= 1;
+          continue;
+        }
+        questions.push(
+          `打折再加價：原價 $x$ 元，先打 ${discount / 10} 折，再加收 ${service}% 服務費，最後價格為 ${final} 元。求原價 $x$。`
+        );
+        summaryAnswers.push(`$x=${original}$`);
+        answers.push(
+          `打 ${discount / 10} 折後為 $${discount / 100}x$，再加收 ${service}% 變成 $${discount / 100}\\times${(100 + service) / 100}x=${final}$，解得 $x=${original}$。`
+        );
+      } else if (mode === 1) {
+        const lengthDrop = pickFromList([10, 20, 25]);
+        const widthRise = pickFromList([10, 20, 25, 30]);
+        const ratio = ((100 - lengthDrop) * (100 + widthRise)) / 10000;
+        questions.push(`長方形長減少 ${lengthDrop}%、寬增加 ${widthRise}% 後，面積變為原來的幾倍？`);
+        summaryAnswers.push(`$${formatDecimalValue(ratio)}$ 倍`);
+        answers.push(
+          `設原長寬為 $L,W$，新面積為 $(1-${lengthDrop / 100})L(1+${widthRise / 100})W=${formatDecimalValue(ratio)}LW$，所以是原來的 $${formatDecimalValue(ratio)}$ 倍。`
+        );
+      } else if (mode === 2) {
+        const tens = randInt(2, 8);
+        const ones = randInt(1, 9);
+        if (tens === ones) {
+          i -= 1;
+          continue;
+        }
+        const original = 10 * tens + ones;
+        const swapped = 10 * ones + tens;
+        const diff = Math.abs(swapped - original);
+        questions.push(
+          `位數交換：一個二位數，十位數字與個位數字的比為 $${tens}:${ones}$，交換十位與個位後，新數與原數相差 ${diff}。求原數。`
+        );
+        summaryAnswers.push(`$${original}$`);
+        answers.push(
+          `原數與交換後的差等於 $9$ 倍兩位數字差。題目給十位與個位的比為 $${tens}:${ones}$，且 $9\\times|${tens}-${ones}|=${diff}$，所以原數是 $${original}$。`
+        );
+      } else if (mode === 3) {
+        const firstAvg = pickFromList([70, 72, 74, 76]);
+        const targetAvg = pickFromList([78, 80, 82]);
+        const fifth = targetAvg * 5 - firstAvg * 4;
+        questions.push(
+          `平均分門檻：前 4 次平均為 ${firstAvg} 分，第 5 次至少要幾分，五次平均才能達到 ${targetAvg} 分？`
+        );
+        summaryAnswers.push(`至少 $${fifth}$ 分`);
+        answers.push(
+          `前 4 次總分為 $4\\times${firstAvg}=${4 * firstAvg}$。設第 5 次為 $x$ 分，需 $\\dfrac{${4 * firstAvg}+x}{5}\\ge ${targetAvg}$，解得 $x\\ge ${fifth}$。`
+        );
+      } else {
+        const x = randInt(5, 20);
+        const y = 5 * x + 10 * (x + 3);
+        questions.push(`幣值轉換：$x$ 個 5 元與 $(x+3)$ 個 10 元，總面額為 ${y} 元，求 $x$。`);
+        summaryAnswers.push(`$x=${x}$`);
+        answers.push(`依題意 $5x+10(x+3)=${y}$，整理得 $15x+30=${y}$，解得 $x=${x}$。`);
+      }
     }
 
     return { questions, summaryAnswers, answers };
@@ -6645,10 +7012,10 @@
       const known = jia * base;
       const extra = offset * base;
       const result = (jia + offset) * base;
-      questions.push(`已知 $甲×${base}=${known}$，求 $(甲+${offset})×${base}$ 的值。`);
+      questions.push(`已知 $x×${base}=${known}$，求 $(x+${offset})×${base}$ 的值。`);
       summaryAnswers.push(`$${result}$`);
       answers.push(
-        `利用分配律：$(甲+${offset})\\times ${base}=甲\\times ${base}+${offset}\\times ${base}=${known}+${extra}=${result}$。`
+        `利用分配律：$(x+${offset})\\times ${base}=x\\times ${base}+${offset}\\times ${base}=${known}+${extra}=${result}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -6664,7 +7031,7 @@
       const a = b + diff;
       const value = a - b;
       questions.push(`計算：$${a}×(${b}+1)-(${a}+1)×${b}$`);
-      summaryAnswers.push(`${value}`);
+      summaryAnswers.push(`$${value}$`);
       answers.push(
         `把原式看成 $${a}×(${b}+1)-(${a}+1)×${b}$。依分配律展開：$${a}×${b}+${a}-${a}×${b}-${b}=${a}-${b}=${value}$。`
       );
@@ -6683,7 +7050,7 @@
       const a = k * b - diff;
       const value = diff;
       questions.push(`計算：$${a + k}×${b}-${a}×${b + 1}$`);
-      summaryAnswers.push(`${value}`);
+      summaryAnswers.push(`$${value}$`);
       answers.push(
         `把第一項拆成 $(${a}+${k})×${b}$，原式 $=${a}×${b}+${k}×${b}-${a}×(${b}+1)=${a}×${b}+${k}×${b}-${a}×${b}-${a}=${k}×${b}-${a}=${value}$。`
       );
@@ -6705,7 +7072,7 @@
       const inner = diff;
       const value = common * inner;
       questions.push(`計算：$${common}×${a + k}×${b}-${common}×${a}×${b + 1}$`);
-      summaryAnswers.push(`${value}`);
+      summaryAnswers.push(`$${value}$`);
       answers.push(
         `先提出公因數 $${common}$：原式 $=${common}\\bigl(${a + k}×${b}-${a}×${b + 1}\\bigr)$。` +
           `再把括號內拆成 $(${a}+${k})×${b}-${a}×(${b}+1)$，可得 $${a}×${b}+${k}×${b}-${a}×${b}-${a}=${k}×${b}-${a}=${inner}$。` +
@@ -6764,18 +7131,18 @@
     const summaryAnswers = [];
     const answers = [];
     const symbolDefs = [
-      { sym: '★', calc: (a, b) => a + 2 * b, text: 'a★b=a+2b' },
-      { sym: '◎', calc: (a, b) => 2 * a - b, text: 'a◎b=2a-b' },
-      { sym: '◆', calc: (a, b) => a * b + a, text: 'a◆b=ab+a' },
+      { sym: '★', calc: (a, b) => a + 2 * b, text: '$a$★$b=a+2b$' },
+      { sym: '◎', calc: (a, b) => 2 * a - b, text: '$a$◎$b=2a-b$' },
+      { sym: '◆', calc: (a, b) => a * b + a, text: '$a$◆$b=ab+a$' },
     ];
     for (let i = 0; i < count; i += 1) {
       const def = symbolDefs[i % symbolDefs.length];
       const a = pickNonZero(-9, 9);
       const b = pickNonZero(-9, 9);
       const value = def.calc(a, b);
-      questions.push(`若規定 ${def.text}，求 ${a}${def.sym}${b}。`);
+      questions.push(`若規定 ${def.text}，求 $${a}$${def.sym}$${b}$。`);
       summaryAnswers.push(`$${value}$`);
-      answers.push(`依規定代入：$${a}${def.sym}${b}=${value}$。`);
+      answers.push(`依規定代入：$${a}$${def.sym}$${b}=${value}$。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6785,8 +7152,8 @@
     const summaryAnswers = [];
     const answers = [];
     const symbolDefs = [
-      { sym: '★', calc: (a, b) => a + 2 * b, text: 'a★b=a+2b' },
-      { sym: '◎', calc: (a, b) => 2 * a - b, text: 'a◎b=2a-b' },
+      { sym: '★', calc: (a, b) => a + 2 * b, text: '$a$★$b=a+2b$' },
+      { sym: '◎', calc: (a, b) => 2 * a - b, text: '$a$◎$b=2a-b$' },
     ];
     for (let i = 0; i < count; i += 1) {
       const d1 = symbolDefs[0];
@@ -6796,10 +7163,10 @@
       const c = pickNonZero(-6, 6);
       const inner = d1.calc(a, b);
       const value = d2.calc(inner, c);
-      questions.push(`若規定 $${d1.text}$，$${d2.text}$，求 $(${a}${d1.sym}${b})${d2.sym}${c}$。`);
+      questions.push(`若規定 ${d1.text}，${d2.text}，求 $(${a}$${d1.sym}$${b})$${d2.sym}$${c}$。`);
       summaryAnswers.push(`$${value}$`);
       answers.push(
-        `先算內層：$${a}${d1.sym}${b}=${inner}$；再算外層：$${inner}${d2.sym}${c}=${value}$。所以結果是 $${value}$。`
+        `先算內層：$${a}$${d1.sym}$${b}=${inner}$；再算外層：$${inner}$${d2.sym}$${c}=${value}$。所以結果是 $${value}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -9221,34 +9588,58 @@
     const answers = [];
 
     for (let i = 0; i < count; i += 1) {
-      const mode = i % 4;
+      const mode = i % 5;
 
       if (mode === 0) {
-        const pairs = listDigitPairs((x, y) => numberFromDigits([1, 2, x, 3, 4, y]) % 72 === 0);
+        const specs = [
+          { label: '12x34y', digits: (x, y) => [1, 2, x, 3, 4, y], baseSum: 10, tailText: '34y' },
+          { label: '23x45y', digits: (x, y) => [2, 3, x, 4, 5, y], baseSum: 14, tailText: '45y' },
+          { label: '34x56y', digits: (x, y) => [3, 4, x, 5, 6, y], baseSum: 18, tailText: '56y' },
+        ];
+        const spec = specs[randInt(0, specs.length - 1)];
+        const pairs = listDigitPairs((x, y) => numberFromDigits(spec.digits(x, y)) % 72 === 0);
         const maxSum = Math.max(...pairs.map(([x, y]) => x + y));
         const best = pairs.filter(([x, y]) => x + y === maxSum);
-        questions.push(`若六位數 $12x34y$ 是 $72$ 的倍數，求 $x+y$ 的最大值。`);
+        questions.push(`若六位數 $${spec.label}$ 是 $72$ 的倍數，求 $x+y$ 的最大值。`);
         summaryAnswers.push(`$${maxSum}$`);
         answers.push(
-          `$72=8\\times9$，所以需同時被 8 與 9 整除。末三位 $34y$ 要被 8 整除，且各位數字和 $1+2+x+3+4+y=10+x+y$ 要被 9 整除。檢查可得 ${formatDigitPairs(best, 'x', 'y')}，所以最大 $x+y=${maxSum}$。`
+          `$72=8\\times9$，所以需同時被 8 與 9 整除。末三位 $${spec.tailText}$ 要被 8 整除，且各位數字和為 $${spec.baseSum}+x+y$，也要被 9 整除。檢查可得 ${formatDigitPairs(best, 'x', 'y')}，所以最大 $x+y=${maxSum}$。`
         );
       } else if (mode === 1) {
-        const pairs = listDigitPairs((a, b) => a > b && numberFromDigits([2, a, 3, b]) % 33 === 0);
-        questions.push(`四位數 $2a3b$ 能被 $33$ 整除，且 $a>b$，求所有可能的 $(a,b)$。`);
+        const specs = [
+          { label: '2a3b', digits: (a, b) => [2, a, 3, b], baseSum: 5, relation: (a, b) => a > b, relationText: 'a>b' },
+          { label: '3a2b', digits: (a, b) => [3, a, 2, b], baseSum: 5, relation: (a, b) => a < b, relationText: 'a<b' },
+          {
+            label: '4a1b',
+            digits: (a, b) => [4, a, 1, b],
+            baseSum: 5,
+            relation: (a, b) => a !== b,
+            relationText: 'a\\ne b',
+          },
+        ];
+        const spec = specs[randInt(0, specs.length - 1)];
+        const pairs = listDigitPairs((a, b) => spec.relation(a, b) && numberFromDigits(spec.digits(a, b)) % 33 === 0);
+        questions.push(`四位數 $${spec.label}$ 能被 $33$ 整除，且 $${spec.relationText}$，求所有可能的 $(a,b)$。`);
         summaryAnswers.push(formatDigitPairs(pairs));
         answers.push(
-          `$33=3\\times11$，所以需同時被 3 與 11 整除。被 3 整除看數字和 $2+a+3+b=5+a+b$；被 11 整除看交錯和差 $(b+a)-(3+2)=a+b-5$。再加上 $a>b$，可得 ${formatDigitPairs(pairs)}。`
+          `$33=3\\times11$，所以需同時被 3 與 11 整除。被 3 整除看數字和 $${spec.baseSum}+a+b$；被 11 整除看交錯和差是否為 11 的倍數。再加上 $${spec.relationText}$，可得 ${formatDigitPairs(pairs)}。`
         );
       } else if (mode === 2) {
+        const specs = [
+          { label: '76x54y2', digits: (x, y) => [7, 6, x, 5, 4, y, 2], tailText: '4y2' },
+          { label: '58x43y6', digits: (x, y) => [5, 8, x, 4, 3, y, 6], tailText: '3y6' },
+          { label: '64x25y4', digits: (x, y) => [6, 4, x, 2, 5, y, 4], tailText: '5y4' },
+        ];
+        const spec = specs[randInt(0, specs.length - 1)];
         const pairs = listDigitPairs(
-          (x, y) => numberFromDigits([7, 6, x, 5, 4, y, 2]) % 8 === 0 && digitAltSumMod11([7, 6, x, 5, 4, y, 2]) === 0
+          (x, y) => numberFromDigits(spec.digits(x, y)) % 8 === 0 && digitAltSumMod11(spec.digits(x, y)) === 0
         );
-        questions.push(`七位數 $76x54y2$ 同時是 $8$ 與 $11$ 的倍數，求所有可能的 $(x,y)$。`);
+        questions.push(`七位數 $${spec.label}$ 同時是 $8$ 與 $11$ 的倍數，求所有可能的 $(x,y)$。`);
         summaryAnswers.push(formatDigitPairs(pairs, 'x', 'y'));
         answers.push(
-          `被 8 整除只看末三位 $4y2$；被 11 整除看交錯和差為 11 的倍數。逐一檢查 $x,y$ 的位數字，可得 ${formatDigitPairs(pairs, 'x', 'y')}。`
+          `被 8 整除只看末三位 $${spec.tailText}$；被 11 整除看交錯和差為 11 的倍數。逐一檢查 $x,y$ 的位數字，可得 ${formatDigitPairs(pairs, 'x', 'y')}。`
         );
-      } else {
+      } else if (mode === 3) {
         const tail = pickFromList([0, 5]);
         const pairs = listDigitPairs(
           (a, b) => numberFromDigits([5, a, 8, b, tail]) % 15 === 0 && digitAltSumMod11([5, a, 8, b, tail]) === 0
@@ -9257,6 +9648,30 @@
         summaryAnswers.push(formatDigitPairs(pairs));
         answers.push(
           `被 15 整除表示同時被 3 與 5 整除；個位已是 ${tail}，符合被 5 整除。再檢查數字和是否為 3 的倍數，以及 11 的交錯和差條件，可得 ${formatDigitPairs(pairs)}。`
+        );
+      } else {
+        const specs = [
+          { divisors: [4, 9], remMod: 11, rem: 2 },
+          { divisors: [6, 8], remMod: 13, rem: 5 },
+          { divisors: [5, 12], remMod: 7, rem: 3 },
+        ];
+        const spec = specs[randInt(0, specs.length - 1)];
+        const commonMultiple = lcm(spec.divisors[0], spec.divisors[1]);
+        const values = findNumbersByRemainders(
+          [
+            { mod: commonMultiple, rem: 0 },
+            { mod: spec.remMod, rem: spec.rem },
+          ],
+          1,
+          commonMultiple * spec.remMod
+        );
+        const ans = values[0];
+        questions.push(
+          `找出最小的正整數，同時能被 $${spec.divisors[0]}$ 與 $${spec.divisors[1]}$ 整除，且除以 $${spec.remMod}$ 餘 $${spec.rem}$。`
+        );
+        summaryAnswers.push(`$${ans}$`);
+        answers.push(
+          `先把「同時被 ${spec.divisors[0]} 與 ${spec.divisors[1]} 整除」合併成「被 $[${spec.divisors[0]},${spec.divisors[1]}]=${commonMultiple}$ 整除」。再檢查 $${commonMultiple},${2 * commonMultiple},${3 * commonMultiple},\\ldots$ 除以 ${spec.remMod} 的餘數，最小符合者為 $${ans}$。`
         );
       }
     }
@@ -9304,21 +9719,30 @@
           `依序列出同時符合三個餘數條件的數，再限制在 ${spec.range[0]} 到 ${spec.range[1]} 之間，得到 $${values.join('、')}$。`
         );
       } else if (mode === 1) {
-        const m1 = pickFromList([4, 5, 6, 8]);
-        const m2 = pickFromList([7, 9, 11]);
-        const r = randInt(1, m2 - 1);
+        const specs = [
+          { divisors: [4, 9], remMod: 11, rem: 2 },
+          { divisors: [6, 8], remMod: 13, rem: 5 },
+          { divisors: [5, 12], remMod: 7, rem: 3 },
+          { divisors: [8, 9], remMod: 5, rem: 4 },
+        ];
+        const spec = specs[randInt(0, specs.length - 1)];
+        const m1 = lcm(spec.divisors[0], spec.divisors[1]);
         const values = findNumbersByRemainders(
           [
             { mod: m1, rem: 0 },
-            { mod: m2, rem: r },
+            { mod: spec.remMod, rem: spec.rem },
           ],
           1,
-          m1 * m2 * 3
+          m1 * spec.remMod * 2
         );
         const ans = values[0];
-        questions.push(`求最小的正整數，使它能被 $${m1}$ 整除，且除以 $${m2}$ 餘 $${r}$。`);
+        questions.push(
+          `求最小的正整數，使它能同時被 $${spec.divisors[0]}$ 與 $${spec.divisors[1]}$ 整除，且除以 $${spec.remMod}$ 餘 $${spec.rem}$。`
+        );
         summaryAnswers.push(`$${ans}$`);
-        answers.push(`此數形如 $${m1}k$，逐一代入除以 ${m2} 餘 ${r} 的條件，最小正整數為 $${ans}$。`);
+        answers.push(
+          `先合併整除條件：此數必為 $[${spec.divisors[0]},${spec.divisors[1]}]=${m1}$ 的倍數。再逐一檢查 $${m1}k$ 除以 ${spec.remMod} 餘 ${spec.rem} 的條件，最小正整數為 $${ans}$。`
+        );
       } else {
         const spec = soldierSets[randInt(0, soldierSets.length - 1)];
         const conditions = spec.mods.map((mod, idx) => ({ mod, rem: spec.remainders[idx] }));
@@ -9440,7 +9864,7 @@
         answers.push(
           `利用 $(x,${fixed})\\times[x,${fixed}]=x\\times${fixed}$，得 $x=\\dfrac{${g}\\times${l}}{${fixed}}=${x}$。`
         );
-      } else {
+      } else if (mode === 2) {
         const g = pickFromList([6, 10, 12, 15]);
         const u = pickFromList([2, 3, 4, 5]);
         const v = pickFromList([7, 8, 9, 11]);
@@ -9451,6 +9875,22 @@
         summaryAnswers.push(`$(a,b)=(${a},${b})$`);
         answers.push(
           `設 $a=${g}m$、$b=${g}n$ 且 $(m,n)=1$，則 $mn=${product / (g * g)}$。符合且 $m<n$ 的互質因數對為 $(${u},${v})$，所以 $(a,b)=(${a},${b})$。`
+        );
+      } else {
+        const specs = [
+          { a: 42, b: 70, coprimeTo: 12, target: '最大' },
+          { a: 60, b: 84, coprimeTo: 15, target: '最大' },
+          { a: 72, b: 108, coprimeTo: 10, target: '最大' },
+        ];
+        const spec = specs[randInt(0, specs.length - 1)];
+        const commonDivisors = divisorsOf(gcd(spec.a, spec.b)).filter((d) => gcd(d, spec.coprimeTo) === 1);
+        const ans = Math.max(...commonDivisors);
+        questions.push(
+          `已知 $\\dfrac{${spec.a}}{n}$ 與 $\\dfrac{${spec.b}}{n}$ 均為整數，且 $(n,${spec.coprimeTo})=1$，求 $n$ 的${spec.target}值。`
+        );
+        summaryAnswers.push(`$n=${ans}$`);
+        answers.push(
+          `$\\dfrac{${spec.a}}{n}$ 與 $\\dfrac{${spec.b}}{n}$ 均為整數，表示 $n$ 是 ${spec.a} 與 ${spec.b} 的公因數。先列出 $(${spec.a},${spec.b})=${gcd(spec.a, spec.b)}$ 的正因數，再保留與 ${spec.coprimeTo} 互質者，最大為 $${ans}$。`
         );
       }
     }
@@ -9557,7 +9997,7 @@
         answers.push(
           `$\\dfrac{1}{(2k-1)(2k+1)}=\\dfrac12\\left(\\dfrac{1}{2k-1}-\\dfrac{1}{2k+1}\\right)$，對消後得 $\\dfrac12\\left(1-\\dfrac{1}{${2 * n + 1}}\\right)=${formatFraction(n, 2 * n + 1)}$。`
         );
-      } else {
+      } else if (mode === 2) {
         const n = randInt(4, 9);
         const numerator = 2 ** (n + 1) - 1;
         const denominator = 2 ** n;
@@ -9565,6 +10005,15 @@
         summaryAnswers.push(`$${formatFraction(numerator, denominator)}$`);
         answers.push(
           `因為 $2S=2+1+\\dfrac12+\\cdots+\\dfrac{1}{2^${n - 1}}$，相減得 $S=2-\\dfrac{1}{2^${n}}=${formatFraction(numerator, denominator)}$，所以 $2S-S=${formatFraction(numerator, denominator)}$。`
+        );
+      } else {
+        const n = randInt(5, 12);
+        questions.push(
+          `利用分項對消，計算 $\\dfrac{2}{1\\times3}+\\dfrac{2}{3\\times5}+\\cdots+\\dfrac{2}{${2 * n - 1}\\times${2 * n + 1}}$ 的值。`
+        );
+        summaryAnswers.push(`$${formatFraction(2 * n, 2 * n + 1)}$`);
+        answers.push(
+          `$\\dfrac{2}{(2k-1)(2k+1)}=\\dfrac{1}{2k-1}-\\dfrac{1}{2k+1}$。連加後中間項對消，剩 $1-\\dfrac{1}{${2 * n + 1}}=${formatFraction(2 * n, 2 * n + 1)}$。`
         );
       }
     }
@@ -10756,6 +11205,33 @@
         return buildLinearDecimalMoveSolveSet(5);
       },
     },
+    'j1-3-2-complex-linear-equation-clean': {
+      type: 'drill',
+      title: '複合型去括號與去分母解方程',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ132ComplexLinearEquationCleanSet(5);
+      },
+    },
+    'j1-3-2-absolute-equation-logic-clean': {
+      type: 'drill',
+      title: '絕對值方程的邏輯變形',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ132AbsoluteEquationLogicCleanSet(5);
+      },
+    },
+    'j1-3-2-special-solution-parameters-clean': {
+      type: 'drill',
+      title: '特殊解與係數判別',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ132SpecialSolutionParametersCleanSet(5);
+      },
+    },
     'j1-3-3-purchase-discount-application-drill': {
       type: 'drill',
       title: '錢數買賣與折扣問題',
@@ -10853,6 +11329,24 @@
       questionCount: 5,
       generate() {
         return buildJ133ClockAngleSet(5);
+      },
+    },
+    'j1-3-3-constraint-modeling-clean': {
+      type: 'drill',
+      title: '具備約束條件的應用建模',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ133ConstraintModelingCleanSet(5);
+      },
+    },
+    'j1-3-3-variable-relation-modeling-clean': {
+      type: 'drill',
+      title: '變量關係與列式建模',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildJ133VariableRelationModelingCleanSet(5);
       },
     },
     'j1-3-3-consecutive-integer-application-drill': {
@@ -11091,7 +11585,7 @@
     },
     'j1-variable-distributive-eval-drill': {
       type: 'drill',
-      title: '已知甲×a，求(甲+b)×a',
+      title: '已知x×a，求(x+b)×a',
       difficulty: 'medium',
       questionCount: 5,
       generate() {
@@ -12036,8 +12530,8 @@
     },
   };
 
-  // j1-2 截圖題型：補複合整除、限制型公因倍數、進階分項對消與反向因數題。
-  const bundleFingerprint = 'j1-bundle-v20260706-summary-v1';
+  // j1-2/j1-3 截圖題型：補整除、公因倍數、分項對消、方程與應用建模題。
+  const bundleFingerprint = 'j1-bundle-v20260707-j13-extension-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

@@ -13,6 +13,7 @@
 - `data/practice-schedules.js`：日程型安排資料，來源是段考時段、週次、前半段無限練習與後半段題庫練習。
 - `program-db/database/practice-theme-db.json`：章節主題串「主資料庫」。每個小章節（chapterCode）一個主題串，共 164 串；程式資料庫 GUI 的「主題串PDF」直接讀寫這個檔。
 - **主題串只存排序，不存資料本體**（2026-07-02 起）：GUI 與網頁讀主題串時都會即時合併練習本體（practice-db）——排序中仍存在的題型照排序在前，practice-db 新增的題型自動附加在該章最後（GUI 標〔新〕），已刪除/停用的自動消失；在 GUI 按「儲存順序」後新題型才正式併入排序。自訂主題串的「整章（大類）」展開也走同一套合併。
+- 分類「中等練習」（2026-07-09）：國一 10 個小節各一串（id `custom-medium-j1-*`，j1-1-1 為老師手選版 `custom-20260708230909`）。生成規則：小節資料夾檢視的頂層項目（大類＋未歸檔小類）、難度屬 easy／基礎／medium／中等（排除 hard／進階／挑戰）、照主題串順序且易在前。播放頁分類下拉對應：中等練習（一小節一串）／困難練習＝章節重點（一章一串）／複習練習＝複習必做（一冊一串）。
 - `program-db/database/practice-custom-theme-db.json`：自訂主題串資料庫。GUI「自訂主題串」按鈕讀寫；每串的 `items` 可混放小類（`{"type":"practice","id":題型id}`）與大類（`{"type":"chapter","id":chapterCode}`，匯出時整章展開，順序照章節主題串）。每串另有 `category`（自訂／複習必做／章節重點）與 `grade` 欄位：複習必做（review-*，10 份）與章節重點（chapter-focus-*，36 份）已全部遷入此資料庫，保留原 id 所以學生完成進度不受影響；播放頁的清單分類篩選依 `category` 對應 `playlistCategory`。
 - `data/practice-custom-theme-chains.js`：自訂主題串網頁 bridge（AUTO-GENERATED，勿手動編輯）。GUI「自訂主題串」儲存時自動同步，含展開後的 `practiceIds`。**單向：GUI 為主、網頁唯讀**——編輯頁主題串下拉會出現【自訂】串（可載入、可列印，「存回主題串」會擋下）；編輯頁「已存清單」與學生播放頁會以【自訂】開頭的任務型清單出現，可直接播放；「寫入資料檔」不會把自訂串落地進 practice-playlists.js。
 - `data/practice-theme-chains.js`：主題串網頁 bridge（AUTO-GENERATED，勿手動編輯）。由 theme-db 同步產生；GUI 儲存順序時會自動同步，或手動跑 `node scripts/build-practice-theme-chains.mjs`。除了主題串頁面，`practice-bank.html` 與 `practice-mobile.html` 的題型排序也吃這個檔：章節內順序＝主題串順序（不在主題串裡的題型排到該章最後，依標題排）。在 GUI「主題串PDF」調整順序並儲存後，這兩頁重新整理就會跟著變。
@@ -28,6 +29,7 @@
 
 - `practice-playlist/practice-playlist-player.js`：任務型播放器，讀取 `practicePlaylistStore` 與 `data/practice-playlists.js`。
 - `practice-playlist/practice-schedule-player.js`：日程型播放器，讀取 `window.practiceScheduleData` 與 `data/practice-schedules.js`；日程型年級下拉只顯示實際有日程的年級，不顯示「全部」。
+- **元件所有權規則（2026-07-09 修正兩個互踩 bug）**：`#playerGradeSelect`（年級篩選）歸任務型播放器獨管，日程型改用自己的 `#scheduleGradeSelect`（在日程型面板內）；`#schedulePlaylistList`（日程清單容器）歸日程型播放器獨管，任務型播放器不可寫入。違反會導致年級篩選失效／日程清單被洗掉。
 - `practice-playlist/practice-progress-store.js`：完成進度儲存，任務型與日程型都可以共用。
 
 ## 共用 store

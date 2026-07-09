@@ -3,7 +3,7 @@
     "schema": "practice-custom-theme-db-v1",
     "chainCount": 158,
     "practiceIdCount": 807,
-    "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+    "updatedAt": "2026-07-08T16:42:12.189604+00:00"
   },
   "themeChains": [
     {
@@ -4024,7 +4024,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:18:29.356051+00:00"
     },
     {
       "id": "custom-medium-j1-1-3",
@@ -4035,11 +4035,7 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j1-1-3-sign-brackets-power-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-1-3-negative-exponent-five-subtypes"
+          "id": "practice-j1-1-3-exponent-word-problem-drill"
         },
         {
           "type": "practice",
@@ -4047,15 +4043,15 @@
         },
         {
           "type": "practice",
-          "id": "practice-j1-1-3-common-base-conversion-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-1-3-common-base-equation-clean"
+          "id": "practice-j1-1-3-sign-brackets-power-drill"
         },
         {
           "type": "practice",
           "id": "practice-j1-1-3-exponent-law-three-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j1-1-3-negative-exponent-five-subtypes"
         },
         {
           "type": "practice",
@@ -4071,12 +4067,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j1-1-3-exponent-word-problem-drill"
+          "id": "practice-j1-1-3-common-base-conversion-clean"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j1-1-3-common-base-equation-clean"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:18:29.356051+00:00"
     },
     {
       "id": "custom-medium-j1-1-4",
@@ -4085,10 +4085,6 @@
       "category": "中等練習",
       "grade": "國一",
       "items": [
-        {
-          "type": "practice",
-          "id": "practice-j1-1-4-scientific-digit-reading-drill"
-        },
         {
           "type": "practice",
           "id": "practice-j1-1-4-large-to-scientific-drill"
@@ -4100,6 +4096,10 @@
         {
           "type": "practice",
           "id": "practice-j1-1-4-scientific-convert-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j1-1-4-scientific-digit-reading-drill"
         },
         {
           "type": "practice",
@@ -4127,6 +4127,10 @@
         },
         {
           "type": "practice",
+          "id": "practice-j1-1-4-scientific-context-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j1-1-4-scientific-mul-div-standard-drill"
         },
         {
@@ -4136,15 +4140,11 @@
         {
           "type": "practice",
           "id": "practice-j1-1-4-scientific-unit-stack-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-1-4-scientific-context-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:18:29.356051+00:00"
     },
     {
       "id": "custom-medium-j1-2-1",
@@ -4196,7 +4196,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:18:29.356051+00:00"
     },
     {
       "id": "custom-medium-j1-2-2",
@@ -4205,10 +4205,6 @@
       "category": "中等練習",
       "grade": "國一",
       "items": [
-        {
-          "type": "practice",
-          "id": "practice-j1-2-2-coprime-identify-drill"
-        },
         {
           "type": "practice",
           "id": "practice-factor-application-separate-grouping-drill"
@@ -4231,7 +4227,23 @@
         },
         {
           "type": "practice",
+          "id": "practice-j1-2-2-coprime-identify-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j1-2-2-gcd-cutting-application"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j1-2-2-gcd-grouping-application"
+        },
+        {
+          "type": "practice",
           "id": "practice-factor-application-circular-track-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-factor-application-mixed-grouping-drill"
         },
         {
           "type": "practice",
@@ -4251,32 +4263,20 @@
         },
         {
           "type": "practice",
+          "id": "practice-j1-2-2-lcm-periodic-application"
+        },
+        {
+          "type": "practice",
           "id": "practice-j1-2-2-periodic-lcm-modeling-clean"
         },
         {
           "type": "practice",
           "id": "practice-j1-2-2-ratio-lcm-three-numbers-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-factor-application-mixed-grouping-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-2-2-gcd-cutting-application"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-2-2-gcd-grouping-application"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-2-2-lcm-periodic-application"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:18:29.356051+00:00"
     },
     {
       "id": "custom-medium-j1-2-3",
@@ -4287,11 +4287,11 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j1-2-3-fraction-reciprocal-drill"
+          "id": "practice-j1-2-3-fraction-compare-drill"
         },
         {
           "type": "practice",
-          "id": "practice-j1-2-3-fraction-compare-drill"
+          "id": "practice-j1-2-3-fraction-reciprocal-drill"
         },
         {
           "type": "practice",
@@ -4303,16 +4303,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j1-2-3-mixed-number-two-subtypes"
+          "id": "practice-j1-2-3-fraction-remainder-life-application"
         },
         {
           "type": "practice",
-          "id": "practice-j1-2-3-fraction-remainder-life-application"
+          "id": "practice-j1-2-3-mixed-number-two-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:18:29.356051+00:00"
     },
     {
       "id": "custom-medium-j1-3-1",
@@ -4344,7 +4344,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:18:29.356051+00:00"
     },
     {
       "id": "custom-medium-j1-3-2",
@@ -4392,7 +4392,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:18:29.356051+00:00"
     },
     {
       "id": "custom-medium-j1-3-3",
@@ -4403,7 +4403,15 @@
       "items": [
         {
           "type": "practice",
+          "id": "practice-j1-3-3-age-ratio-plus-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j1-3-3-calendar-block-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j1-3-3-rectangle-dimension-drill"
         },
         {
           "type": "practice",
@@ -4412,6 +4420,10 @@
         {
           "type": "practice",
           "id": "practice-j1-3-3-allocation-application-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j1-3-3-average-count-application-drill"
         },
         {
           "type": "practice",
@@ -4427,7 +4439,19 @@
         },
         {
           "type": "practice",
+          "id": "practice-j1-3-3-consecutive-integer-application-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j1-3-3-digit-swap-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j1-3-3-double-discount-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j1-3-3-find-fraction-drill"
         },
         {
           "type": "practice",
@@ -4435,7 +4459,15 @@
         },
         {
           "type": "practice",
+          "id": "practice-j1-3-3-guess-number-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j1-3-3-heads-coins-application-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j1-3-3-mixture-application-drill"
         },
         {
           "type": "practice",
@@ -4451,6 +4483,14 @@
         },
         {
           "type": "practice",
+          "id": "practice-j1-3-3-ratio-chain-application-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j1-3-3-relative-speed-application-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j1-3-3-rope-folding-drill"
         },
         {
@@ -4460,50 +4500,6 @@
         {
           "type": "practice",
           "id": "practice-j1-3-3-speed-application-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-3-3-work-rate-application-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-3-3-mixture-application-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-3-3-age-ratio-plus-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-3-3-rectangle-dimension-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-3-3-average-count-application-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-3-3-consecutive-integer-application-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-3-3-double-discount-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-3-3-find-fraction-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-3-3-guess-number-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-3-3-ratio-chain-application-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j1-3-3-relative-speed-application-drill"
         },
         {
           "type": "practice",
@@ -4523,12 +4519,16 @@
         },
         {
           "type": "practice",
+          "id": "practice-j1-3-3-work-rate-application-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j1-3-3-variable-relation-modeling-clean"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:18:29.356051+00:00"
     },
     {
       "id": "custom-medium-j2-1-1",
@@ -4539,15 +4539,15 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j2-1-1-expression-classify-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j2-1-1-ordered-pair-check-drill"
-        },
-        {
-          "type": "practice",
           "id": "practice-j2-1-1-any-one-solution-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j2-1-1-context-linear-equation-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j2-1-1-context-to-equation-drill"
         },
         {
           "type": "practice",
@@ -4563,11 +4563,19 @@
         },
         {
           "type": "practice",
+          "id": "practice-j2-1-1-expression-classify-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j2-1-1-expression-simplify-drill"
         },
         {
           "type": "practice",
           "id": "practice-j2-1-1-find-var-value-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j2-1-1-ordered-pair-check-drill"
         },
         {
           "type": "practice",
@@ -4595,24 +4603,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j2-1-1-solve-for-variable-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j2-1-1-context-linear-equation-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j2-1-1-context-to-equation-drill"
-        },
-        {
-          "type": "practice",
           "id": "practice-j2-1-1-shopping-word-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j2-1-1-solve-for-variable-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:29:51.466834+00:00"
     },
     {
       "id": "custom-medium-j2-1-2",
@@ -4648,7 +4648,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:29:51.466834+00:00"
     },
     {
       "id": "custom-medium-j2-1-3",
@@ -4687,6 +4687,10 @@
         },
         {
           "type": "practice",
+          "id": "practice-j2-1-3-money-ticket-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j2-1-3-perimeter-relation-drill"
         },
         {
@@ -4696,15 +4700,11 @@
         {
           "type": "practice",
           "id": "practice-j2-1-3-unit-price-system-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j2-1-3-money-ticket-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:29:51.466834+00:00"
     },
     {
       "id": "custom-medium-j2-2-1",
@@ -4715,15 +4715,15 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j2-2-1-quadrant-basic-drill"
-        },
-        {
-          "type": "practice",
           "id": "practice-j2-2-1-axis-distance-drill"
         },
         {
           "type": "practice",
           "id": "practice-j2-2-1-axis-special-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j2-2-1-quadrant-basic-drill"
         },
         {
           "type": "practice",
@@ -4744,7 +4744,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:29:51.466834+00:00"
     },
     {
       "id": "custom-medium-j2-2-2",
@@ -4753,10 +4753,6 @@
       "category": "中等練習",
       "grade": "國一",
       "items": [
-        {
-          "type": "practice",
-          "id": "practice-j2-2-2-quadrant-exclusion-drill"
-        },
         {
           "type": "practice",
           "id": "practice-j2-2-2-parallel-perpendicular-drill"
@@ -4783,12 +4779,16 @@
         },
         {
           "type": "practice",
+          "id": "practice-j2-2-2-quadrant-exclusion-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j2-2-2-slope-intercept-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:29:51.466834+00:00"
     },
     {
       "id": "custom-medium-j2-3-1",
@@ -4820,7 +4820,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:29:51.466834+00:00"
     },
     {
       "id": "custom-medium-j2-3-2",
@@ -4832,6 +4832,10 @@
         {
           "type": "practice",
           "id": "practice-j2-3-2-basic-direct-inverse-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j2-3-2-word-judgment-drill"
         },
         {
           "type": "practice",
@@ -4851,10 +4855,6 @@
         },
         {
           "type": "practice",
-          "id": "practice-j2-3-2-word-judgment-drill"
-        },
-        {
-          "type": "practice",
           "id": "practice-j2-3-2-spring-scale-drill"
         },
         {
@@ -4864,7 +4864,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:29:51.466834+00:00"
     },
     {
       "id": "custom-medium-j2-4-1",
@@ -4904,7 +4904,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:29:51.466834+00:00"
     },
     {
       "id": "custom-medium-j2-4-2",
@@ -4943,6 +4943,10 @@
         },
         {
           "type": "practice",
+          "id": "practice-j2-4-2-average-threshold-word-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j2-4-2-regular-word-drill"
         },
         {
@@ -4952,15 +4956,11 @@
         {
           "type": "practice",
           "id": "practice-j2-4-2-specific-score-threshold-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j2-4-2-average-threshold-word-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:29:51.466834+00:00"
     },
     {
       "id": "custom-medium-j2-5-1",
@@ -4969,10 +4969,6 @@
       "category": "中等練習",
       "grade": "國一",
       "items": [
-        {
-          "type": "practice",
-          "id": "practice-j2-5-1-data-cleaning-logic-clean"
-        },
         {
           "type": "practice",
           "id": "practice-j2-5-1-frequency-relative-cumulative-drill"
@@ -4984,15 +4980,11 @@
         {
           "type": "practice",
           "id": "practice-j2-5-1-grouped-mean-estimate-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j2-5-1-dynamic-pie-data-clean"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:29:51.466834+00:00"
     },
     {
       "id": "custom-medium-j2-5-2",
@@ -5016,7 +5008,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:29:51.466834+00:00"
     },
     {
       "id": "custom-medium-j3-1-1",
@@ -5051,6 +5043,14 @@
         },
         {
           "type": "practice",
+          "id": "practice-j3-1-1-formula-mixed-fraction-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j3-1-1-formula-mixed-variable-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-identity-value-integer-basic-drill"
         },
         {
@@ -5063,11 +5063,23 @@
         },
         {
           "type": "practice",
+          "id": "practice-identity-value-reciprocal-mixed-fraction-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-identity-value-reciprocal-reverse-drill"
         },
         {
           "type": "practice",
+          "id": "practice-identity-value-mixed-advanced-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j3-1-1-perfect-square-parameter-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-identity-value-pair-mixed-drill"
         },
         {
           "type": "practice",
@@ -5076,31 +5088,11 @@
         {
           "type": "practice",
           "id": "practice-j3-1-1-geometric-formula-model-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j3-1-1-formula-mixed-fraction-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j3-1-1-formula-mixed-variable-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-identity-value-reciprocal-mixed-fraction-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-identity-value-mixed-advanced-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-identity-value-pair-mixed-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j3-1-2",
@@ -5123,16 +5115,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j3-1-2-degree-coefficient-deep-judgement-drill"
+          "id": "practice-j3-1-2-polynomial-reverse-application-drill"
         },
         {
           "type": "practice",
-          "id": "practice-j3-1-2-polynomial-reverse-application-drill"
+          "id": "practice-j3-1-2-degree-coefficient-deep-judgement-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j3-1-3",
@@ -5147,14 +5139,6 @@
         },
         {
           "type": "practice",
-          "id": "practice-j3-1-3-coeff-sum-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j3-1-3-special-product-structure-drill"
-        },
-        {
-          "type": "practice",
           "id": "practice-j3-1-2-div-monomial-mixed-drill"
         },
         {
@@ -5163,12 +5147,20 @@
         },
         {
           "type": "practice",
+          "id": "practice-j3-1-3-coeff-sum-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j3-1-3-remainder-theorem-drill"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j3-1-3-special-product-structure-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j3-2-1",
@@ -5179,15 +5171,15 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j3-2-1-sqrt-definition-relation"
-        },
-        {
-          "type": "practice",
           "id": "practice-j3-2-1-exact-square-root-drill"
         },
         {
           "type": "practice",
           "id": "practice-square-root-basic-junior"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j3-2-1-sqrt-definition-relation"
         },
         {
           "type": "practice",
@@ -5200,7 +5192,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j3-2-2",
@@ -5231,20 +5223,20 @@
         },
         {
           "type": "practice",
+          "id": "practice-j3-2-2-radical-mixed-simplify-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-rationalize-denominator-binomial-junior"
         },
         {
           "type": "practice",
           "id": "practice-rationalize-denominator-monomial-junior"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j3-2-2-radical-mixed-simplify-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j3-2-3",
@@ -5275,6 +5267,10 @@
         },
         {
           "type": "practice",
+          "id": "practice-j3-2-3-pythagorean-context-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j3-2-3-ratio-perim-area"
         },
         {
@@ -5287,16 +5283,12 @@
         },
         {
           "type": "practice",
-          "id": "practice-j3-2-3-pythagorean-context-drill"
-        },
-        {
-          "type": "practice",
           "id": "practice-j3-2-3-geometry-sqrt-application-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j3-3-1",
@@ -5315,16 +5307,12 @@
         },
         {
           "type": "practice",
-          "id": "practice-j3-3-1-multiterm-grouping-advanced-drill"
-        },
-        {
-          "type": "practice",
           "id": "practice-j3-3-1-grouping-advanced-mixed"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j3-3-2",
@@ -5339,24 +5327,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j3-3-2-higher-power-diff-squares"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j3-3-2-fraction-high-power-mixed-drill"
-        },
-        {
-          "type": "practice",
           "id": "practice-j3-3-2-formula-mixed"
         },
         {
           "type": "practice",
-          "id": "practice-j3-3-2-special-application-drill"
+          "id": "practice-j3-3-2-higher-power-diff-squares"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j3-3-3",
@@ -5367,28 +5347,20 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j3-3-3-factor-parameter-reverse"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j3-3-3-coefficient-reverse-judgement-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j3-3-3-substitution-hidden-structure-drill"
-        },
-        {
-          "type": "practice",
           "id": "practice-j3-3-3-cross-core-mixed"
         },
         {
           "type": "practice",
           "id": "practice-j3-3-3-cross-sub-mixed"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j3-3-3-factor-parameter-reverse"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j3-4-1",
@@ -5424,7 +5396,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j3-4-2",
@@ -5435,23 +5407,11 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j3-4-2-discriminant-judge"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j3-4-2-discriminant-range"
-        },
-        {
-          "type": "practice",
           "id": "practice-j3-4-2-complete-square-term"
         },
         {
           "type": "practice",
           "id": "practice-j3-4-2-square-root-solve"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j3-4-2-formula-direct-solve"
         },
         {
           "type": "practice",
@@ -5463,6 +5423,18 @@
         },
         {
           "type": "practice",
+          "id": "practice-j3-4-2-discriminant-judge"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j3-4-2-discriminant-range"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j3-4-2-formula-direct-solve"
+        },
+        {
+          "type": "practice",
           "id": "practice-j3-4-2-known-root-parameter"
         },
         {
@@ -5471,16 +5443,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j3-4-2-roots-core-mixed"
+          "id": "practice-j3-4-2-roots-applied-mixed"
         },
         {
           "type": "practice",
-          "id": "practice-j3-4-2-roots-applied-mixed"
+          "id": "practice-j3-4-2-roots-core-mixed"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j3-4-3",
@@ -5523,20 +5495,20 @@
         },
         {
           "type": "practice",
+          "id": "practice-j3-4-3-straw-table-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j3-4-3-tile-floor-drill"
         },
         {
           "type": "practice",
           "id": "practice-j3-4-3-two-square-perim-area-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j3-4-3-straw-table-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j4-1-1",
@@ -5551,7 +5523,15 @@
         },
         {
           "type": "practice",
+          "id": "practice-j4-1-1-ap-core-mixed"
+        },
+        {
+          "type": "practice",
           "id": "practice-j4-1-1-ap-insert"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j4-1-1-ap-middle-term"
         },
         {
           "type": "practice",
@@ -5576,19 +5556,11 @@
         {
           "type": "practice",
           "id": "practice-j4-1-1-right-triangle-ap-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j4-1-1-ap-core-mixed"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j4-1-1-ap-middle-term"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j4-1-2",
@@ -5599,16 +5571,12 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j4-1-2-geometric-applications-advanced"
-        },
-        {
-          "type": "practice",
           "id": "practice-j4-1-2-geometric-mixed"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j4-1-3",
@@ -5619,6 +5587,10 @@
       "items": [
         {
           "type": "practice",
+          "id": "practice-j4-1-3-catch-up-race-drill"
+        },
+        {
+          "type": "practice",
           "id": "practice-j4-1-3-polygon-sum-drill"
         },
         {
@@ -5627,20 +5599,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j4-1-3-series-odd-even-sum"
-        },
-        {
-          "type": "practice",
           "id": "practice-j4-1-3-series-mixed"
         },
         {
           "type": "practice",
-          "id": "practice-j4-1-3-catch-up-race-drill"
+          "id": "practice-j4-1-3-series-odd-even-sum"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j4-2-1",
@@ -5655,24 +5623,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j4-2-1-linear-degree-condition-drill"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j4-2-1-composite-function-advanced"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j4-2-1-function-property-discussion"
-        },
-        {
-          "type": "practice",
           "id": "practice-j4-2-1-function-mixed"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j4-2-1-linear-degree-condition-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j4-2-2",
@@ -5681,14 +5641,6 @@
       "category": "中等練習",
       "grade": "國二",
       "items": [
-        {
-          "type": "practice",
-          "id": "practice-j4-2-2-linear-geometry-area-advanced"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j4-2-2-quadrant-logic-advanced"
-        },
         {
           "type": "practice",
           "id": "practice-j4-2-2-linear-function-mixed"
@@ -5700,7 +5652,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j4-3-1",
@@ -5715,14 +5667,6 @@
         },
         {
           "type": "practice",
-          "id": "practice-j4-3-1-dart-butterfly-angle-advanced"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j4-3-1-parallel-fold-angle-advanced"
-        },
-        {
-          "type": "practice",
           "id": "practice-j4-3-1-complementary-supplementary-angles"
         },
         {
@@ -5732,7 +5676,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j4-3-2",
@@ -5747,16 +5691,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j4-3-2-triangle-bisector-intersection-drill"
+          "id": "practice-j4-3-2-construction-bisection-count"
         },
         {
           "type": "practice",
-          "id": "practice-j4-3-2-construction-bisection-count"
+          "id": "practice-j4-3-2-triangle-bisector-intersection-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j4-3-3",
@@ -5780,7 +5724,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j4-3-4",
@@ -5799,20 +5743,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j4-3-4-triangle-inequality-range"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j4-3-4-triangle-inequality-advanced"
-        },
-        {
-          "type": "practice",
           "id": "practice-j4-3-4-pythagorean-classification"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j4-3-4-triangle-inequality-range"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j4-4-1",
@@ -5827,16 +5767,12 @@
         },
         {
           "type": "practice",
-          "id": "practice-j4-4-1-parallel-line-logic-advanced"
-        },
-        {
-          "type": "practice",
           "id": "practice-j4-4-1-parallel-perpendicular-angles"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j4-4-2",
@@ -5859,16 +5795,12 @@
         },
         {
           "type": "practice",
-          "id": "practice-j4-4-2-coordinate-quadrilateral-advanced"
-        },
-        {
-          "type": "practice",
           "id": "practice-j4-4-2-quadrilateral-mixed"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j4-4-3",
@@ -5883,16 +5815,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j4-4-3-right-trapezoid-drill"
+          "id": "practice-j4-4-3-parallel-division"
         },
         {
           "type": "practice",
-          "id": "practice-j4-4-3-parallel-division"
+          "id": "practice-j4-4-3-right-trapezoid-drill"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j5-1-1",
@@ -5907,24 +5839,20 @@
         },
         {
           "type": "practice",
-          "id": "practice-j5-1-1-geometry-ratio-property-advanced"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j5-1-1-ratio-algebra-three-subtypes"
-        },
-        {
-          "type": "practice",
           "id": "practice-j5-1-1-geometry-ratio-three-subtypes"
         },
         {
           "type": "practice",
           "id": "practice-j5-1-1-life-ratio-five-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j5-1-1-ratio-algebra-three-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j5-1-2",
@@ -5952,7 +5880,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j5-1-3",
@@ -5963,19 +5891,15 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j5-1-3-similarity-criteria-five-subtypes"
-        },
-        {
-          "type": "practice",
           "id": "practice-j5-1-3-slope-position-height"
         },
         {
           "type": "practice",
-          "id": "practice-j5-1-3-similar-polygon-angle"
+          "id": "practice-j5-1-3-butterfly-three-subtypes"
         },
         {
           "type": "practice",
-          "id": "practice-j5-1-3-butterfly-three-subtypes"
+          "id": "practice-j5-1-3-measurement-four-subtypes"
         },
         {
           "type": "practice",
@@ -5991,12 +5915,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j5-1-3-measurement-four-subtypes"
+          "id": "practice-j5-1-3-similar-polygon-angle"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j5-1-3-similarity-criteria-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j5-1-4",
@@ -6007,7 +5935,7 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j5-1-4-trig-basic-four-subtypes"
+          "id": "practice-j5-1-4-measurement-five-subtypes"
         },
         {
           "type": "practice",
@@ -6019,16 +5947,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j5-1-4-measurement-five-subtypes"
+          "id": "practice-j5-1-4-trig-application-four-subtypes"
         },
         {
           "type": "practice",
-          "id": "practice-j5-1-4-trig-application-four-subtypes"
+          "id": "practice-j5-1-4-trig-basic-four-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j5-2-1",
@@ -6039,15 +5967,11 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j5-2-1-chord-sagitta-radius"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j5-2-1-semicircle-chord-width"
-        },
-        {
-          "type": "practice",
           "id": "practice-j5-2-1-chord-distance-four-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j5-2-1-chord-sagitta-radius"
         },
         {
           "type": "practice",
@@ -6056,6 +5980,10 @@
         {
           "type": "practice",
           "id": "practice-j5-2-1-point-line-circle-three-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j5-2-1-semicircle-chord-width"
         },
         {
           "type": "practice",
@@ -6068,7 +5996,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j5-2-2",
@@ -6104,7 +6032,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j5-2-3",
@@ -6115,15 +6043,15 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j5-2-3-power-basic-four-subtypes"
-        },
-        {
-          "type": "practice",
           "id": "practice-j5-2-3-algebra-five-subtypes"
         },
         {
           "type": "practice",
           "id": "practice-j5-2-3-chord-distance-four-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j5-2-3-power-basic-four-subtypes"
         },
         {
           "type": "practice",
@@ -6136,7 +6064,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j5-3-1",
@@ -6168,7 +6096,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j5-3-2",
@@ -6204,7 +6132,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j5-3-3",
@@ -6213,14 +6141,6 @@
       "category": "中等練習",
       "grade": "國三",
       "items": [
-        {
-          "type": "practice",
-          "id": "practice-j5-3-3-incircle-tangent-length"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j5-3-3-median-length-formula"
-        },
         {
           "type": "practice",
           "id": "practice-j5-3-3-centroid-six-subtypes"
@@ -6239,12 +6159,20 @@
         },
         {
           "type": "practice",
+          "id": "practice-j5-3-3-incircle-tangent-length"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j5-3-3-median-length-formula"
+        },
+        {
+          "type": "practice",
           "id": "practice-j5-3-3-special-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j6-1-1",
@@ -6255,20 +6183,16 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j6-1-1-parabola-ax2-four-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j6-1-1-quadratic-property-logic-advanced"
-        },
-        {
-          "type": "practice",
           "id": "practice-j6-1-1-parabola-applications-five-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j6-1-1-parabola-ax2-four-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j6-1-2",
@@ -6279,28 +6203,20 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-j6-1-2-x-axis-intersection-three-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j6-1-2-intersection-constraint-advanced"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j6-1-2-advanced-translation-vertex-track"
-        },
-        {
-          "type": "practice",
           "id": "practice-j6-1-2-translation-graph-five-subtypes"
         },
         {
           "type": "practice",
           "id": "practice-j6-1-2-vertex-form-extrema-three-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-j6-1-2-x-axis-intersection-three-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j6-1-3",
@@ -6320,19 +6236,11 @@
         {
           "type": "practice",
           "id": "practice-j6-1-3-geometry-modeling-four-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j6-1-3-optimization-constraint-advanced"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j6-1-3-parabolic-modeling-advanced"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j6-2-1",
@@ -6347,24 +6255,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j6-2-1-complex-perpendicular-paths"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j6-2-1-coordinate-spatial-hybrid"
+          "id": "practice-j6-2-1-solid-volume-ratio-three-subtypes"
         },
         {
           "type": "practice",
           "id": "practice-j6-2-1-spatial-distance-four-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j6-2-1-solid-volume-ratio-three-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j6-2-2",
@@ -6387,16 +6287,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-j6-2-2-surface-shortest-path-two-subtypes"
+          "id": "practice-j6-2-2-container-water-two-subtypes"
         },
         {
           "type": "practice",
-          "id": "practice-j6-2-2-container-water-two-subtypes"
+          "id": "practice-j6-2-2-surface-shortest-path-two-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j6-2-3",
@@ -6420,7 +6320,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j6-3-1",
@@ -6429,10 +6329,6 @@
       "category": "中等練習",
       "grade": "國三",
       "items": [
-        {
-          "type": "practice",
-          "id": "practice-j6-3-1-data-visualization-logic-advanced"
-        },
         {
           "type": "practice",
           "id": "practice-j6-3-1-frequency-distribution-eight-subtypes"
@@ -6444,7 +6340,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j6-3-2",
@@ -6460,19 +6356,11 @@
         {
           "type": "practice",
           "id": "practice-j6-3-2-quartile-boxplot-seven-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j6-3-2-quartile-analysis-advanced"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j6-3-2-grouped-statistics-advanced"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-j6-3-3",
@@ -6487,14 +6375,6 @@
         },
         {
           "type": "practice",
-          "id": "practice-j6-3-3-probability-complements-advanced"
-        },
-        {
-          "type": "practice",
-          "id": "practice-j6-3-3-compound-experiments-advanced"
-        },
-        {
-          "type": "practice",
           "id": "practice-j6-3-3-probability-compound-mixed"
         },
         {
@@ -6504,7 +6384,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:47:19.883232+00:00"
+      "updatedAt": "2026-07-08T16:34:41.743548+00:00"
     },
     {
       "id": "custom-medium-s1-1-1",
@@ -6513,6 +6393,10 @@
       "category": "中等練習",
       "grade": "高一",
       "items": [
+        {
+          "type": "practice",
+          "id": "practice-s1-1-1-amgm-extrema"
+        },
         {
           "type": "practice",
           "id": "practice-s1-1-1-divisibility-missing-digit"
@@ -6560,15 +6444,11 @@
         {
           "type": "practice",
           "id": "practice-s1-1-1-telescoping-rationalization"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s1-1-1-amgm-extrema"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s1-1-2",
@@ -6591,6 +6471,10 @@
         },
         {
           "type": "practice",
+          "id": "practice-s1-1-2-abs-quadratic-mixed"
+        },
+        {
+          "type": "practice",
           "id": "practice-s1-1-2-abs-range-simplification"
         },
         {
@@ -6604,15 +6488,11 @@
         {
           "type": "practice",
           "id": "practice-s1-1-2-quotient-interval-range"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s1-1-2-abs-quadratic-mixed"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s1-1-3",
@@ -6639,6 +6519,10 @@
         },
         {
           "type": "practice",
+          "id": "practice-s1-1-3-reciprocal-cube"
+        },
+        {
+          "type": "practice",
           "id": "practice-s1-1-3-ternary-cubic-special"
         },
         {
@@ -6648,15 +6532,11 @@
         {
           "type": "practice",
           "id": "practice-s1-1-3-triple-factor-expansion"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s1-1-3-reciprocal-cube"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s1-1-4",
@@ -6711,16 +6591,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-s1-1-4-variable-exponent-simplification"
+          "id": "practice-s1-1-4-substitution-equation"
         },
         {
           "type": "practice",
-          "id": "practice-s1-1-4-substitution-equation"
+          "id": "practice-s1-1-4-variable-exponent-simplification"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s1-1-5",
@@ -6768,7 +6648,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s1-2-1",
@@ -6808,6 +6688,10 @@
         {
           "type": "practice",
           "id": "practice-s1-2-1-intercept-integer-count"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s1-2-1-inverse-distance"
         },
         {
           "type": "practice",
@@ -6856,15 +6740,11 @@
         {
           "type": "practice",
           "id": "practice-s1-2-1-triangle-nonexistence"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s1-2-1-inverse-distance"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s1-2-2",
@@ -6873,10 +6753,6 @@
       "category": "中等練習",
       "grade": "高一",
       "items": [
-        {
-          "type": "practice",
-          "id": "practice-s1-2-2-two-circle-common-tangents"
-        },
         {
           "type": "practice",
           "id": "practice-s1-2-2-apollonius-circle"
@@ -6919,16 +6795,20 @@
         },
         {
           "type": "practice",
+          "id": "practice-s1-2-2-radical-axis"
+        },
+        {
+          "type": "practice",
           "id": "practice-s1-2-2-triangle-circum-incircle"
         },
         {
           "type": "practice",
-          "id": "practice-s1-2-2-radical-axis"
+          "id": "practice-s1-2-2-two-circle-common-tangents"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s1-2-3",
@@ -6937,6 +6817,10 @@
       "category": "中等練習",
       "grade": "高一",
       "items": [
+        {
+          "type": "practice",
+          "id": "practice-s1-2-3-chord-length"
+        },
         {
           "type": "practice",
           "id": "practice-s1-2-3-chord-length-parameterized"
@@ -6987,6 +6871,10 @@
         },
         {
           "type": "practice",
+          "id": "practice-s1-2-3-point-power-tangent-chord"
+        },
+        {
+          "type": "practice",
           "id": "practice-s1-2-3-polar-line"
         },
         {
@@ -7000,19 +6888,11 @@
         {
           "type": "practice",
           "id": "practice-s1-2-3-vertical-tangent-trap"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s1-2-3-chord-length"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s1-2-3-point-power-tangent-chord"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s1-3-1",
@@ -7021,22 +6901,6 @@
       "category": "中等練習",
       "grade": "高一",
       "items": [
-        {
-          "type": "practice",
-          "id": "practice-s1-3-1-factor-check-special-polynomial"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s1-3-1-nearby-roots-value"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s1-3-1-odd-even-value-relation"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s1-3-1-shifted-basis-coefficients"
-        },
         {
           "type": "practice",
           "id": "practice-s1-3-1-advanced-remainder-five-subtypes"
@@ -7051,7 +6915,19 @@
         },
         {
           "type": "practice",
+          "id": "practice-s1-3-1-factor-check-special-polynomial"
+        },
+        {
+          "type": "practice",
           "id": "practice-s1-3-1-interpolation-polynomial-five-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s1-3-1-nearby-roots-value"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s1-3-1-odd-even-value-relation"
         },
         {
           "type": "practice",
@@ -7060,11 +6936,15 @@
         {
           "type": "practice",
           "id": "practice-s1-3-1-remainder-applications-five-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s1-3-1-shifted-basis-coefficients"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s1-3-2",
@@ -7073,10 +6953,6 @@
       "category": "中等練習",
       "grade": "高一",
       "items": [
-        {
-          "type": "practice",
-          "id": "practice-s1-3-2-quadratic-form-graph-three-subtypes"
-        },
         {
           "type": "practice",
           "id": "practice-s1-3-2-composite-function"
@@ -7088,6 +6964,10 @@
         {
           "type": "practice",
           "id": "practice-s1-3-2-cubic-center-standard-form"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s1-3-2-cubic-functions-seven-subtypes"
         },
         {
           "type": "practice",
@@ -7103,19 +6983,15 @@
         },
         {
           "type": "practice",
+          "id": "practice-s1-3-2-quadratic-advanced-graph-extrema-five-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s1-3-2-quadratic-axis-two-points"
         },
         {
           "type": "practice",
-          "id": "practice-s1-3-2-quadratic-three-points"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s1-3-2-cubic-functions-seven-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s1-3-2-quadratic-advanced-graph-extrema-five-subtypes"
+          "id": "practice-s1-3-2-quadratic-form-graph-three-subtypes"
         },
         {
           "type": "practice",
@@ -7124,11 +7000,15 @@
         {
           "type": "practice",
           "id": "practice-s1-3-2-quadratic-symmetry-modeling-compound-five-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s1-3-2-quadratic-three-points"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s1-3-3",
@@ -7147,7 +7027,15 @@
         },
         {
           "type": "practice",
+          "id": "practice-s1-3-3-advanced-inequality-five-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s1-3-3-double-absolute-inequality"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s1-3-3-quadratic-inequality-core-five-subtypes"
         },
         {
           "type": "practice",
@@ -7160,19 +7048,11 @@
         {
           "type": "practice",
           "id": "practice-s1-3-3-square-root-inequality"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s1-3-3-quadratic-inequality-core-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s1-3-3-advanced-inequality-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s2-1-1",
@@ -7184,6 +7064,14 @@
         {
           "type": "practice",
           "id": "practice-s2-1-1-arithmetic-common-terms"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-1-1-arithmetic-geometric-bridge"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-1-1-arithmetic-geometric-mixed-parameters"
         },
         {
           "type": "practice",
@@ -7219,6 +7107,10 @@
         },
         {
           "type": "practice",
+          "id": "practice-s2-1-1-sequence-core-five-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s2-1-1-sequence-transformation-classification"
         },
         {
@@ -7240,23 +7132,11 @@
         {
           "type": "practice",
           "id": "practice-s2-1-3-periodic-remainder-sequence"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-1-1-arithmetic-geometric-bridge"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-1-1-arithmetic-geometric-mixed-parameters"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-1-1-sequence-core-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s2-1-2",
@@ -7279,15 +7159,15 @@
         },
         {
           "type": "practice",
+          "id": "practice-s2-1-2-geometric-series-five-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s2-1-2-non-standard-sigma-limits"
         },
         {
           "type": "practice",
           "id": "practice-s2-1-2-reverse-n-from-sum"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-1-2-geometric-series-five-subtypes"
         },
         {
           "type": "practice",
@@ -7304,7 +7184,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s2-2-1",
@@ -7323,7 +7203,15 @@
         },
         {
           "type": "practice",
+          "id": "practice-s2-2-1-advanced-counting-five-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s2-2-1-ambidextrous-pairing-parameterized"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-2-1-counting-applications-five-subtypes"
         },
         {
           "type": "practice",
@@ -7352,19 +7240,11 @@
         {
           "type": "practice",
           "id": "practice-s2-2-1-proposition-equivalence-negation-parameterized"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-2-1-advanced-counting-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-2-1-counting-applications-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s2-2-2",
@@ -7388,6 +7268,14 @@
         {
           "type": "practice",
           "id": "practice-s2-2-2-ordered-blocks-internal-permutation-parameterized"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-2-2-permutation-applications-five-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-2-2-permutation-core-five-subtypes"
         },
         {
           "type": "practice",
@@ -7420,19 +7308,11 @@
         {
           "type": "practice",
           "id": "practice-s2-2-2-restricted-consecutive-step-staircase-parameterized"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-2-2-permutation-applications-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-2-2-permutation-core-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s2-2-3",
@@ -7443,23 +7323,23 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-s2-2-3-binomial-adjacent-ratio-parameterized"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-2-3-binomial-coefficient-parameterized"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-2-3-identical-distribution-parameterized"
-        },
-        {
-          "type": "practice",
           "id": "practice-s2-2-3-advanced-binomial-five-subtypes"
         },
         {
           "type": "practice",
           "id": "practice-s2-2-3-applications-five-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-2-3-binomial-adjacent-ratio-parameterized"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-2-3-binomial-basics-five-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-2-3-binomial-coefficient-parameterized"
         },
         {
           "type": "practice",
@@ -7471,12 +7351,12 @@
         },
         {
           "type": "practice",
-          "id": "practice-s2-2-3-binomial-basics-five-subtypes"
+          "id": "practice-s2-2-3-identical-distribution-parameterized"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s2-2-4",
@@ -7485,6 +7365,14 @@
       "category": "中等練習",
       "grade": "高一",
       "items": [
+        {
+          "type": "practice",
+          "id": "practice-s2-2-4-applied-probability-five-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-2-4-basic-probability-five-subtypes"
+        },
         {
           "type": "practice",
           "id": "practice-s2-2-4-biased-binomial-at-least-parameterized"
@@ -7536,19 +7424,11 @@
         {
           "type": "practice",
           "id": "practice-s2-2-4-color-exhausted-order-parameterized"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-2-4-basic-probability-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-2-4-applied-probability-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s2-3-1",
@@ -7559,11 +7439,11 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-s2-3-1-distribution-interpretation-five-subtypes"
+          "id": "practice-s2-3-1-core-stats-five-subtypes"
         },
         {
           "type": "practice",
-          "id": "practice-s2-3-1-core-stats-five-subtypes"
+          "id": "practice-s2-3-1-distribution-interpretation-five-subtypes"
         },
         {
           "type": "practice",
@@ -7580,6 +7460,10 @@
         {
           "type": "practice",
           "id": "practice-s2-3-1-quartiles-iqr-parameterized"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-3-1-revision-merge-five-subtypes"
         },
         {
           "type": "practice",
@@ -7600,15 +7484,11 @@
         {
           "type": "practice",
           "id": "practice-s2-3-1-delete-equal-high-values-parameterized"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-3-1-revision-merge-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s2-3-2",
@@ -7635,6 +7515,10 @@
         },
         {
           "type": "practice",
+          "id": "practice-s2-3-2-regression-five-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s2-3-2-signed-linear-correlation-parameterized"
         },
         {
@@ -7648,15 +7532,11 @@
         {
           "type": "practice",
           "id": "practice-s2-3-2-standardized-regression-parameterized"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-3-2-regression-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s2-4-1",
@@ -7667,7 +7547,11 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-s2-4-1-tangent-ordering-parameterized"
+          "id": "practice-s2-4-1-basic-angle-coordinate-five-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-4-1-computation-geometry-five-subtypes"
         },
         {
           "type": "practice",
@@ -7679,15 +7563,7 @@
         },
         {
           "type": "practice",
-          "id": "practice-s2-4-1-line-slope-angle-parameterized"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-1-coterminal-quadrant-count-parameterized"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-1-basic-angle-coordinate-five-subtypes"
+          "id": "practice-s2-4-1-tangent-ordering-parameterized"
         },
         {
           "type": "practice",
@@ -7695,12 +7571,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-s2-4-1-computation-geometry-five-subtypes"
+          "id": "practice-s2-4-1-line-slope-angle-parameterized"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-4-1-coterminal-quadrant-count-parameterized"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s2-4-2",
@@ -7709,6 +7589,14 @@
       "category": "中等練習",
       "grade": "高一",
       "items": [
+        {
+          "type": "practice",
+          "id": "practice-s2-4-2-area-radius-five-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-4-2-cosine-law-five-subtypes"
+        },
         {
           "type": "practice",
           "id": "practice-s2-4-2-isosceles-circumradius-parameterized"
@@ -7723,14 +7611,6 @@
         },
         {
           "type": "practice",
-          "id": "practice-s2-4-2-area-radius-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-2-cosine-law-five-subtypes"
-        },
-        {
-          "type": "practice",
           "id": "practice-s2-4-2-sine-law-five-subtypes"
         },
         {
@@ -7740,7 +7620,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s2-4-3",
@@ -7751,7 +7631,15 @@
       "items": [
         {
           "type": "practice",
+          "id": "practice-s2-4-3-angle-bisector-measurement"
+        },
+        {
+          "type": "practice",
           "id": "practice-s2-4-3-arbitrary-division-line"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-4-3-asa-cross-distance"
         },
         {
           "type": "practice",
@@ -7760,6 +7648,14 @@
         {
           "type": "practice",
           "id": "practice-s2-4-3-bearing-navigation"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-4-3-bearing-target-distance"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-4-3-common-elevation-circumradius"
         },
         {
           "type": "practice",
@@ -7775,11 +7671,23 @@
         },
         {
           "type": "practice",
+          "id": "practice-s2-4-3-elevation-spatial-five-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s2-4-3-height-limit-floors-parameterized"
         },
         {
           "type": "practice",
           "id": "practice-s2-4-3-height-projection-stack"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-4-3-median-centroid-measurement"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-4-3-navigation-motion-five-subtypes"
         },
         {
           "type": "practice",
@@ -7791,11 +7699,31 @@
         },
         {
           "type": "practice",
+          "id": "practice-s2-4-3-plane-survey-five-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s2-4-3-same-elevation-circumcenter"
         },
         {
           "type": "practice",
+          "id": "practice-s2-4-3-sas-cross-distance"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-4-3-segmented-height"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-4-3-slope-double-observation"
+        },
+        {
+          "type": "practice",
           "id": "practice-s2-4-3-spatial-motion-tracking"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s2-4-3-special-measurement-five-subtypes"
         },
         {
           "type": "practice",
@@ -7812,59 +7740,11 @@
         {
           "type": "practice",
           "id": "practice-s2-4-3-box-space-angle-parameterized"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-3-navigation-motion-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-3-angle-bisector-measurement"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-3-asa-cross-distance"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-3-bearing-target-distance"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-3-common-elevation-circumradius"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-3-elevation-spatial-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-3-median-centroid-measurement"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-3-plane-survey-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-3-sas-cross-distance"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-3-segmented-height"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-3-slope-double-observation"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s2-4-3-special-measurement-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s3-1-1",
@@ -7873,18 +7753,6 @@
       "category": "中等練習",
       "grade": "高二",
       "items": [
-        {
-          "type": "practice",
-          "id": "practice-s3-1-1-radian-sector-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-1-1-reciprocal-from-one-ratio"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-1-1-sector-parameter"
-        },
         {
           "type": "practice",
           "id": "practice-s3-1-1-clock-sector"
@@ -7899,7 +7767,15 @@
         },
         {
           "type": "practice",
+          "id": "practice-s3-1-1-radian-sector-five-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s3-1-1-reciprocal-comparison"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s3-1-1-reciprocal-from-one-ratio"
         },
         {
           "type": "practice",
@@ -7912,6 +7788,10 @@
         {
           "type": "practice",
           "id": "practice-s3-1-1-right-triangle-reciprocal"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s3-1-1-rolling-motion"
         },
         {
           "type": "practice",
@@ -7939,16 +7819,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-s3-1-1-special-reciprocal"
+          "id": "practice-s3-1-1-sector-parameter"
         },
         {
           "type": "practice",
-          "id": "practice-s3-1-1-rolling-motion"
+          "id": "practice-s3-1-1-special-reciprocal"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s3-1-2",
@@ -7980,6 +7860,10 @@
         {
           "type": "practice",
           "id": "practice-s3-1-2-exact-sum-difference"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s3-1-2-geometry-rotation-five-subtypes"
         },
         {
           "type": "practice",
@@ -8015,7 +7899,15 @@
         },
         {
           "type": "practice",
+          "id": "practice-s3-1-2-special-18-36"
+        },
+        {
+          "type": "practice",
           "id": "practice-s3-1-2-sum-difference-algebra"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s3-1-2-sum-difference-five-subtypes"
         },
         {
           "type": "practice",
@@ -8028,6 +7920,10 @@
         {
           "type": "practice",
           "id": "practice-s3-1-2-tangent-substitution"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s3-1-2-triangle-interior-relations"
         },
         {
           "type": "practice",
@@ -8048,27 +7944,11 @@
         {
           "type": "practice",
           "id": "practice-s3-1-2-triple-product"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-1-2-geometry-rotation-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-1-2-special-18-36"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-1-2-sum-difference-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-1-2-triangle-interior-relations"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s3-1-3",
@@ -8079,11 +7959,11 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-s3-1-3-linear-sincos-graph-facts-parameterized"
+          "id": "practice-s3-1-3-absolute-period"
         },
         {
           "type": "practice",
-          "id": "practice-s3-1-3-absolute-period"
+          "id": "practice-s3-1-3-clock-sector-model"
         },
         {
           "type": "practice",
@@ -8099,11 +7979,23 @@
         },
         {
           "type": "practice",
+          "id": "practice-s3-1-3-ferris-wheel-model"
+        },
+        {
+          "type": "practice",
           "id": "practice-s3-1-3-graph-parameter-inference"
         },
         {
           "type": "practice",
+          "id": "practice-s3-1-3-linear-sincos-graph-facts-parameterized"
+        },
+        {
+          "type": "practice",
           "id": "practice-s3-1-3-monotonic-interval"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s3-1-3-parameter-model-five-subtypes"
         },
         {
           "type": "practice",
@@ -8144,23 +8036,11 @@
         {
           "type": "practice",
           "id": "practice-s3-1-3-transform-equation"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-1-3-clock-sector-model"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-1-3-ferris-wheel-model"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-1-3-parameter-model-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s3-1-4",
@@ -8191,11 +8071,19 @@
         },
         {
           "type": "practice",
+          "id": "practice-s3-1-4-geometry-model"
+        },
+        {
+          "type": "practice",
           "id": "practice-s3-1-4-inverse-trig-eval"
         },
         {
           "type": "practice",
           "id": "practice-s3-1-4-linear-combo-inequality-parameterized"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s3-1-4-parameter-equation-model-five-subtypes"
         },
         {
           "type": "practice",
@@ -8220,19 +8108,11 @@
         {
           "type": "practice",
           "id": "practice-s3-1-4-wave-model"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-1-4-geometry-model"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-1-4-parameter-equation-model-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s3-2-1",
@@ -8247,6 +8127,10 @@
         },
         {
           "type": "practice",
+          "id": "practice-s3-2-1-exponent-laws-equations-five-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s3-2-1-exponential-graph-parameter-clean"
         },
         {
@@ -8255,24 +8139,20 @@
         },
         {
           "type": "practice",
+          "id": "practice-s3-2-1-graphs-extrema-five-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s3-2-1-hyperbolic-compose-parameterized"
         },
         {
           "type": "practice",
           "id": "practice-s3-2-1-power-root-comparison-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-2-1-graphs-extrema-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-2-1-exponent-laws-equations-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s3-2-2",
@@ -8281,14 +8161,6 @@
       "category": "中等練習",
       "grade": "高二",
       "items": [
-        {
-          "type": "practice",
-          "id": "practice-s3-2-2-log-definition-laws-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-2-2-log-domain-integer-count-clean"
-        },
         {
           "type": "practice",
           "id": "practice-s3-2-2-chain-change-base-clean"
@@ -8307,12 +8179,20 @@
         },
         {
           "type": "practice",
+          "id": "practice-s3-2-2-log-definition-laws-five-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s3-2-2-log-domain-integer-count-clean"
+        },
+        {
+          "type": "practice",
           "id": "practice-s3-2-2-special-log-equation"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s3-2-3",
@@ -8332,19 +8212,11 @@
         {
           "type": "practice",
           "id": "practice-s3-2-3-log-point-transform-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-2-3-log-graphs-equations-five-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-2-3-log-extrema-models-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s3-2-4",
@@ -8355,15 +8227,7 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-s3-2-4-log-scale-ratio-clean"
-        },
-        {
-          "type": "practice",
           "id": "practice-s3-2-4-compound-inference-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-2-4-growth-threshold-clean"
         },
         {
           "type": "practice",
@@ -8375,12 +8239,20 @@
         },
         {
           "type": "practice",
+          "id": "practice-s3-2-4-growth-threshold-clean"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s3-2-4-log-scale-ratio-clean"
+        },
+        {
+          "type": "practice",
           "id": "practice-s3-2-4-log-scale-science-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s3-3-1",
@@ -8399,11 +8271,11 @@
         },
         {
           "type": "practice",
-          "id": "practice-s3-3-1-segment-section-clean"
+          "id": "practice-s3-3-1-geometric-vectors-five-subtypes"
         },
         {
           "type": "practice",
-          "id": "practice-s3-3-1-geometric-vectors-five-subtypes"
+          "id": "practice-s3-3-1-segment-section-clean"
         },
         {
           "type": "practice",
@@ -8416,7 +8288,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s3-3-2",
@@ -8425,6 +8297,10 @@
       "category": "中等練習",
       "grade": "高二",
       "items": [
+        {
+          "type": "practice",
+          "id": "practice-s3-3-2-coordinate-vectors-five-subtypes"
+        },
         {
           "type": "practice",
           "id": "practice-s3-3-2-line-direction-normal"
@@ -8444,15 +8320,11 @@
         {
           "type": "practice",
           "id": "practice-s3-3-2-line-angle-vector-parameterized"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-3-2-coordinate-vectors-five-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s3-3-3",
@@ -8488,7 +8360,7 @@
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s3-3-4",
@@ -8499,19 +8371,7 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-s3-3-4-basic-determinant-three-subtypes"
-        },
-        {
-          "type": "practice",
           "id": "practice-s3-3-4-area-scale-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-3-4-cramer-parameter-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s3-3-4-determinant-operation-clean"
         },
         {
           "type": "practice",
@@ -8519,12 +8379,24 @@
         },
         {
           "type": "practice",
+          "id": "practice-s3-3-4-basic-determinant-three-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s3-3-4-cramer-parameter-clean"
+        },
+        {
+          "type": "practice",
           "id": "practice-s3-3-4-cramer-parameter-three-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s3-3-4-determinant-operation-clean"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s4-1-1",
@@ -8535,7 +8407,7 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-s4-1-1-spatial-relations-three-subtypes"
+          "id": "practice-s4-1-1-distance-three-perpendicular-two-subtypes"
         },
         {
           "type": "practice",
@@ -8547,20 +8419,20 @@
         },
         {
           "type": "practice",
-          "id": "practice-s4-1-1-cube-face-center-octahedron-volume-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-1-1-distance-three-perpendicular-two-subtypes"
-        },
-        {
-          "type": "practice",
           "id": "practice-s4-1-1-regular-solid-measure-two-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-1-1-spatial-relations-three-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-1-1-cube-face-center-octahedron-volume-clean"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s4-1-2",
@@ -8583,6 +8455,10 @@
         },
         {
           "type": "practice",
+          "id": "practice-s4-1-2-solid-advanced-two-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s4-1-2-symmetric-line-equation"
         },
         {
@@ -8596,15 +8472,11 @@
         {
           "type": "practice",
           "id": "practice-s4-1-2-centroid-plane-projection-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-1-2-solid-advanced-two-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s4-1-3",
@@ -8615,11 +8487,19 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-s4-1-3-projection-scalar-clean"
+          "id": "practice-s4-1-3-inner-product-angle-four-subtypes"
         },
         {
           "type": "practice",
           "id": "practice-s4-1-3-plane-distance-minimum-clean"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-1-3-projection-plane-three-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-1-3-projection-scalar-clean"
         },
         {
           "type": "practice",
@@ -8636,19 +8516,11 @@
         {
           "type": "practice",
           "id": "practice-s4-1-3-pairwise-orthogonal-parameter-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-1-3-inner-product-angle-four-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-1-3-projection-plane-three-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s4-1-4",
@@ -8657,6 +8529,14 @@
       "category": "中等練習",
       "grade": "高二",
       "items": [
+        {
+          "type": "practice",
+          "id": "practice-s4-1-4-cross-area-distance-three-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-1-4-determinant-algebra-four-subtypes"
+        },
         {
           "type": "practice",
           "id": "practice-s4-1-4-determinant-operation-clean"
@@ -8671,28 +8551,20 @@
         },
         {
           "type": "practice",
+          "id": "practice-s4-1-4-volume-coplanar-parameter-three-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s4-1-4-volume-linear-combination-clean"
         },
         {
           "type": "practice",
           "id": "practice-s4-1-4-consecutive-row-determinant-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-1-4-cross-area-distance-three-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-1-4-determinant-algebra-four-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-1-4-volume-coplanar-parameter-three-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s4-2-1",
@@ -8711,11 +8583,23 @@
         },
         {
           "type": "practice",
+          "id": "practice-s4-2-1-distance-projection-four-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s4-2-1-parallel-plane-distance-parameter-clean"
         },
         {
           "type": "practice",
           "id": "practice-s4-2-1-plane-angle-parameter-clean"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-2-1-plane-application-three-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-2-1-plane-equation-three-subtypes"
         },
         {
           "type": "practice",
@@ -8732,23 +8616,11 @@
         {
           "type": "practice",
           "id": "practice-s4-2-1-segment-projection-length-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-2-1-distance-projection-four-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-2-1-plane-equation-three-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-2-1-plane-application-three-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s4-2-2",
@@ -8759,11 +8631,11 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-s4-2-2-line-plane-relation-clean"
+          "id": "practice-s4-2-2-advanced-line-three-subtypes"
         },
         {
           "type": "practice",
-          "id": "practice-s4-2-2-two-line-relation-full"
+          "id": "practice-s4-2-2-coordinate-line-three-subtypes"
         },
         {
           "type": "practice",
@@ -8775,11 +8647,23 @@
         },
         {
           "type": "practice",
+          "id": "practice-s4-2-2-line-plane-relation-clean"
+        },
+        {
+          "type": "practice",
           "id": "practice-s4-2-2-line-relation-classification-clean"
         },
         {
           "type": "practice",
           "id": "practice-s4-2-2-point-line-reflection-clean"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-2-2-relation-distance-four-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-2-2-two-line-relation-full"
         },
         {
           "type": "practice",
@@ -8792,23 +8676,11 @@
         {
           "type": "practice",
           "id": "practice-s4-2-2-line-projection-on-plane-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-2-2-advanced-line-three-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-2-2-coordinate-line-three-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-2-2-relation-distance-four-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s4-3-1",
@@ -8823,7 +8695,15 @@
         },
         {
           "type": "practice",
+          "id": "practice-s4-3-1-bayes-source-three-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s4-3-1-complement-conditional"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-3-1-inference-transition-three-subtypes"
         },
         {
           "type": "practice",
@@ -8844,19 +8724,11 @@
         {
           "type": "practice",
           "id": "practice-s4-3-1-signal-channel-bayes-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-3-1-bayes-source-three-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-3-1-inference-transition-three-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s4-3-2",
@@ -8867,11 +8739,23 @@
       "items": [
         {
           "type": "practice",
+          "id": "practice-s4-3-2-advanced-distribution-three-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s4-3-2-exam-guessing"
         },
         {
           "type": "practice",
+          "id": "practice-s4-3-2-independence-trials-three-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s4-3-2-inverse-bayes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-3-2-tables-systems-three-subtypes"
         },
         {
           "type": "practice",
@@ -8880,23 +8764,11 @@
         {
           "type": "practice",
           "id": "practice-s4-3-2-traffic-light-counts-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-3-2-advanced-distribution-three-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-3-2-independence-trials-three-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-3-2-tables-systems-three-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s4-4-1",
@@ -8907,28 +8779,24 @@
       "items": [
         {
           "type": "practice",
+          "id": "practice-s4-4-1-basic-cramer-three-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-4-1-matrix-model-three-subtypes"
+        },
+        {
+          "type": "practice",
           "id": "practice-s4-4-1-reciprocal-substitution"
         },
         {
           "type": "practice",
           "id": "practice-s4-4-1-matrix-entry-double-sum-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-4-1-basic-cramer-three-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-4-1-parameter-geometry-three-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-4-1-matrix-model-three-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s4-4-2",
@@ -8939,11 +8807,19 @@
       "items": [
         {
           "type": "practice",
+          "id": "practice-s4-4-2-det-properties"
+        },
+        {
+          "type": "practice",
           "id": "practice-s4-4-2-elementary-row-operations"
         },
         {
           "type": "practice",
-          "id": "practice-s4-4-2-det-properties"
+          "id": "practice-s4-4-2-equality-algebra-three-subtypes"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-4-2-multiplication-property-three-subtypes"
         },
         {
           "type": "practice",
@@ -8956,19 +8832,11 @@
         {
           "type": "practice",
           "id": "practice-s4-4-2-rank-one-power-sum-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-4-2-equality-algebra-three-subtypes"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-4-2-multiplication-property-three-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s4-4-3",
@@ -8979,10 +8847,6 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-s4-4-3-power-recovery-clean"
-        },
-        {
-          "type": "practice",
           "id": "practice-s4-4-3-inverse-basic-three-subtypes"
         },
         {
@@ -8991,16 +8855,16 @@
         },
         {
           "type": "practice",
-          "id": "practice-s4-4-3-matrix-code-decode-clean"
+          "id": "practice-s4-4-3-power-recovery-clean"
         },
         {
           "type": "practice",
-          "id": "practice-s4-4-3-inverse-property-three-subtypes"
+          "id": "practice-s4-4-3-matrix-code-decode-clean"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     },
     {
       "id": "custom-medium-s4-4-4",
@@ -9011,11 +8875,15 @@
       "items": [
         {
           "type": "practice",
-          "id": "practice-s4-4-4-point-matrix-three-subtypes"
+          "id": "practice-s4-4-4-geometry-equation-three-subtypes"
         },
         {
           "type": "practice",
           "id": "practice-s4-4-4-line-transform"
+        },
+        {
+          "type": "practice",
+          "id": "practice-s4-4-4-point-matrix-three-subtypes"
         },
         {
           "type": "practice",
@@ -9024,15 +8892,11 @@
         {
           "type": "practice",
           "id": "practice-s4-4-4-line-stretch-parameter-clean"
-        },
-        {
-          "type": "practice",
-          "id": "practice-s4-4-4-geometry-equation-three-subtypes"
         }
       ],
       "questionCount": 5,
       "enabled": true,
-      "updatedAt": "2026-07-08T16:58:26.508897+00:00"
+      "updatedAt": "2026-07-08T16:42:12.189604+00:00"
     }
   ]
 }

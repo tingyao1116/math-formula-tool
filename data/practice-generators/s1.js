@@ -9456,6 +9456,1114 @@
     return { questions, summaryAnswers, answers };
   }
 
+  function s11AdvancedSet() {
+    return { questions: [], summaryAnswers: [], answers: [] };
+  }
+
+  function s11Add(set, question, summary, detail) {
+    set.questions.push(question);
+    set.summaryAnswers.push(summary);
+    set.answers.push(`答案：${summary}<br>詳解：${detail}`);
+  }
+
+  function s11PowMod(base, exponent, mod) {
+    let result = 1 % mod;
+    let b = ((base % mod) + mod) % mod;
+    let e = exponent;
+    while (e > 0) {
+      if (e % 2 === 1) result = (result * b) % mod;
+      b = (b * b) % mod;
+      e = Math.floor(e / 2);
+    }
+    return result;
+  }
+
+  function s11CycleText(values) {
+    return values.map((value) => `\\(${value}\\)`).join('、');
+  }
+
+  function s11LogApprox(base) {
+    return formatS115LogInt(S115_LOGS[base]);
+  }
+
+  function s11XMinus(value) {
+    if (value === 0) return 'x';
+    return value > 0 ? `x-${value}` : `x+${-value}`;
+  }
+
+  function s11LinearXPlus(value) {
+    if (value === 0) return 'x';
+    return value > 0 ? `x+${value}` : `x-${-value}`;
+  }
+
+  function s11ConstantMinusX(value) {
+    if (value === 0) return '-x';
+    return `${value}-x`;
+  }
+
+  function s11Paren(value) {
+    return value < 0 ? `(${value})` : `${value}`;
+  }
+
+  function buildS112RootAbsRangeAdvancedSet(count) {
+    const set = s11AdvancedSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const a = randInt(-5, -2);
+        const b = randInt(2, 6);
+        const c = a - randInt(1, 3);
+        const left = a;
+        const right = b - 1;
+        const constant = b - a + c;
+        s11Add(
+          set,
+          `已知 \\(${left}\\le x\\le ${right}\\)，化簡 \\(\\sqrt{(${s11XMinus(a)})^2}+|${s11XMinus(b)}|-|${s11XMinus(c)}|\\)。`,
+          `\\(${s11ConstantMinusX(constant)}\\)`,
+          `在此範圍內，\\(${s11XMinus(a)}\\ge0\\)、\\(${s11XMinus(b)}<0\\)、\\(${s11XMinus(c)}>0\\)。所以原式 \\(=(${s11XMinus(a)})+(${b}-x)-(${s11XMinus(c)})=${s11ConstantMinusX(constant)}\\)。`
+        );
+      } else if (mode === 1) {
+        s11Add(
+          set,
+          `設 \\(0<x<1\\)，化簡 \\(\\sqrt{x^2+\\frac{1}{x^2}-2}+\\sqrt{x^2+2+\\frac{1}{x^2}}\\)。`,
+          `\\(\\frac{2}{x}\\)`,
+          `第一個根號為 \\(\\sqrt{(x-\\frac1x)^2}=|x-\\frac1x|\\)。因為 \\(0<x<1\\)，所以 \\(x-\\frac1x<0\\)，得 \\(\\frac1x-x\\)。第二個根號為 \\(\\sqrt{(x+\\frac1x)^2}=x+\\frac1x\\)，相加得 \\(\\frac2x\\)。`
+        );
+      } else if (mode === 2) {
+        const a = -randInt(4, 8);
+        const b = randInt(a + 1, -1);
+        const value = -a - 2 * b;
+        s11Add(
+          set,
+          `已知 \\(${a}<${b}<0\\)，化簡 \\(\\sqrt{(${a})^2}-|${b}-(${a})|+\\sqrt{(${s11Paren(a)}+${s11Paren(b)})^2}\\)。`,
+          `\\(${value}\\)`,
+          `因為 \\(${a}<0\\)，\\(\\sqrt{(${a})^2}=|${a}|=${-a}\\)。又 \\(${b}-(${a})>0\\)，所以 \\(|${b}-(${a})|=${b - a}\\)。且 \\(${s11Paren(a)}+${s11Paren(b)}<0\\)，\\(\\sqrt{(${s11Paren(a)}+${s11Paren(b)})^2}=|${a + b}|=${-(a + b)}\\)。合併得 \\(${-a}-(${b - a})+${-(a + b)}=${value}\\)。`
+        );
+      } else if (mode === 3) {
+        const k = randInt(-3, 4);
+        s11Add(
+          set,
+          `已知 \\(${k}<x<${k + 1}\\)，化簡 \\(|${s11XMinus(k - 1)}|-\\sqrt{(${s11XMinus(k + 1)})^2}+|${s11XMinus(k + 2)}|\\)。`,
+          `\\(${s11XMinus(k)}\\)`,
+          `此時 \\(${s11XMinus(k - 1)}>0\\)、\\(${s11XMinus(k + 1)}<0\\)、\\(${s11XMinus(k + 2)}<0\\)。所以原式 \\(=(${s11XMinus(k - 1)})-(${k + 1}-x)+(${k + 2}-x)=${s11XMinus(k)}\\)。`
+        );
+      } else {
+        const k = randInt(1, 5);
+        s11Add(
+          set,
+          `已知 \\(${k}<x<${k + 1}\\)，化簡 \\(\\sqrt{(${s11XMinus(k)})^2}+|${s11XMinus(k + 3)}|-|${s11XMinus(k - 2)}|\\)。`,
+          `\\(${s11XMinus(k + 1)}\\)`,
+          `在範圍內，\\(${s11XMinus(k)}>0\\)、\\(${s11XMinus(k + 3)}<0\\)、\\(${s11XMinus(k - 2)}>0\\)。所以原式 \\(=(${s11XMinus(k)})+(${k + 3}-x)-(${s11XMinus(k - 2)})=${s11XMinus(k + 1)}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS114ExponentialFractionRangeAdvancedSet(count) {
+    const set = s11AdvancedSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const base = [2, 3, 5][randInt(0, 2)];
+        const a = randInt(1, 5);
+        s11Add(
+          set,
+          `已知 \\(x\\in\\mathbb R\\)，求 \\(y=\\frac{${base}^{2x}-${a}}{${base}^{2x}+${a}}\\) 的值域。`,
+          `\\((-1,1)\\)`,
+          `令 \\(t=${base}^{2x}\\)，則 \\(t>0\\)。\\(y=\\frac{t-${a}}{t+${a}}=1-\\frac{${2 * a}}{t+${a}}\\)。當 \\(t\\to0^+\\) 時 \\(y\\to-1\\)，當 \\(t\\to\\infty\\) 時 \\(y\\to1\\)，兩端都取不到，所以值域為 \\((-1,1)\\)。`
+        );
+      } else if (mode === 1) {
+        const base = [2, 3, 5][randInt(0, 2)];
+        const A = randInt(4, 9);
+        const B = randInt(2, 5);
+        const C = randInt(2, 7);
+        s11Add(
+          set,
+          `求 \\(f(x)=\\frac{${A}-${B}\\cdot ${base}^x}{${base}^x+${C}}\\) 的最大值與最小值。`,
+          `無最大值，無最小值；值域 \\((-${B},${formatFraction(A, C)})\\)`,
+          `令 \\(t=${base}^x>0\\)。則 \\(f=\\frac{${A}-${B}t}{t+${C}}\\)。當 \\(t\\to0^+\\) 時 \\(f\\to\\frac{${A}}{${C}}\\)；當 \\(t\\to\\infty\\) 時 \\(f\\to-${B}\\)。兩端都取不到，所以沒有最大值也沒有最小值，值域為 \\((-${B},${formatFraction(A, C)})\\)。`
+        );
+      } else if (mode === 2) {
+        const base = [3, 5][randInt(0, 1)];
+        s11Add(
+          set,
+          `設 \\(t=${base}^x\\)，化簡 \\(y=\\frac{t^2-1}{t^2+1}\\) 並求其值域。`,
+          `\\((-1,1)\\)`,
+          `因為 \\(t=${base}^x>0\\)，所以 \\(t^2>0\\)。\\(y=\\frac{t^2-1}{t^2+1}=1-\\frac{2}{t^2+1}\\)。當 \\(t\\to0^+\\) 時 \\(y\\to-1\\)，當 \\(t\\to\\infty\\) 時 \\(y\\to1\\)，故值域為 \\((-1,1)\\)。`
+        );
+      } else if (mode === 3) {
+        const base = [2, 3, 5][randInt(0, 2)];
+        const shift = randInt(1, 4);
+        s11Add(
+          set,
+          `已知 \\(x\\ge0\\)，求 \\(y=\\frac{${base}^x}{${base}^x+${shift}}\\) 的值域。`,
+          `\\([${formatFraction(1, 1 + shift)},1)\\)`,
+          `令 \\(t=${base}^x\\)。因為 \\(x\\ge0\\)，所以 \\(t\\ge1\\)。函數 \\(\\frac{t}{t+${shift}}\\) 隨 \\(t\\) 增加而增加，最小值在 \\(t=1\\)，為 \\(\\frac{1}{${1 + shift}}\\)；當 \\(t\\to\\infty\\) 時趨近 1 但取不到。`
+        );
+      } else {
+        const c = randInt(2, 5);
+        s11Add(
+          set,
+          `若 \\(y=\\frac{e^x+1}{e^x-${c}}\\)，且 \\(x>\\ln ${c}\\)，求其值域。`,
+          `\\((1,\\infty)\\)`,
+          `令 \\(t=e^x\\)。由 \\(x>\\ln ${c}\\) 得 \\(t>${c}\\)。\\(y=\\frac{t+1}{t-${c}}=1+\\frac{${c + 1}}{t-${c}}\\)。因為 \\(t-${c}>0\\)，所以 \\(y>1\\)；當 \\(t\\to${c}^+\\) 時 \\(y\\to\\infty\\)，當 \\(t\\to\\infty\\) 時 \\(y\\to1^+\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS111PowerRemainderPatternAdvancedSet(count) {
+    const set = s11AdvancedSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const base = [7, 11, 13, 17][randInt(0, 3)];
+        const mod = [5, 7, 9, 11][randInt(0, 3)];
+        const exponent = randInt(80, 260);
+        const answer = s11PowMod(base, exponent, mod);
+        const cycle = [];
+        let value = 1 % mod;
+        for (let k = 1; k <= 12; k += 1) {
+          value = (value * (base % mod)) % mod;
+          cycle.push(value);
+          if (value === 1 % mod) break;
+        }
+        s11Add(
+          set,
+          `求 \\(${base}^{${exponent}}\\) 除以 \\(${mod}\\) 的餘數。`,
+          `\\(${answer}\\)`,
+          `先看餘數循環：${s11CycleText(cycle)}。循環長為 \\(${cycle.length}\\)，\\(${exponent}\\) 除以 \\(${cycle.length}\\) 的位置對應到餘數 \\(${answer}\\)。`
+        );
+      } else if (mode === 1) {
+        const base = [3, 7, 9, 13][randInt(0, 3)];
+        const exponent = randInt(60, 180);
+        const answer = s11PowMod(base, exponent, 100);
+        const label = answer < 10 ? `0${answer}` : `${answer}`;
+        s11Add(
+          set,
+          `求 \\(${base}^{${exponent}}\\) 的最後兩位數字。`,
+          `${label}`,
+          `最後兩位就是除以 \\(100\\) 的餘數。用循環或快速冪可得 \\(${base}^{${exponent}}\\equiv ${answer}\\pmod{100}\\)，所以最後兩位為 ${label}。`
+        );
+      } else if (mode === 2) {
+        const exponent = randInt(30, 120);
+        const answer = (s11PowMod(7, exponent, 12) + s11PowMod(5, exponent, 12)) % 12;
+        s11Add(
+          set,
+          `求 \\(7^{${exponent}}+5^{${exponent}}\\) 除以 \\(12\\) 的餘數。`,
+          `\\(${answer}\\)`,
+          `分別取模：\\(7^n\\) 在模 \\(12\\) 下奇次為 7、偶次為 1；\\(5^n\\) 奇次為 5、偶次為 1。依 \\(n=${exponent}\\) 的奇偶代入，相加後再除以 12，餘數為 \\(${answer}\\)。`
+        );
+      } else if (mode === 3) {
+        const base = [2024, 2026, 3008, 5012][randInt(0, 3)];
+        const exponent = randInt(25, 120);
+        s11Add(
+          set,
+          `判斷 \\(${base}^{${exponent}}\\) 是奇數還是偶數。`,
+          `偶數`,
+          `底數 \\(${base}\\) 是偶數，偶數的正整數次方仍是偶數，所以 \\(${base}^{${exponent}}\\) 為偶數。`
+        );
+      } else {
+        const mod = [8, 9, 16][randInt(0, 2)];
+        const sign = randInt(0, 1) === 0 ? 1 : -1;
+        const base = sign === 1 ? mod * randInt(2, 8) + 1 : mod * randInt(2, 8) - 1;
+        const exponent = randInt(11, 55);
+        const answer = s11PowMod(base, exponent, mod);
+        s11Add(
+          set,
+          `利用二項式定理，求 \\(${base}^{${exponent}}\\) 除以 \\(${mod}\\) 的餘數。`,
+          `\\(${answer}\\)`,
+          `因為 \\(${base}\\equiv ${sign === 1 ? 1 : -1}\\pmod{${mod}}\\)，所以 \\(${base}^{${exponent}}\\equiv (${sign === 1 ? 1 : -1})^{${exponent}}\\pmod{${mod}}\\)。換成 \\(km\\pm1\\) 的形式看，就是二項式展開後除了常數項外，其餘項都含有 \\(${mod}\\) 的倍數，餘數為 \\(${answer}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS114ExponentialApplicationModelsAdvancedSet(count) {
+    const set = s11AdvancedSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const halfLife = [20, 30, 40][randInt(0, 2)];
+        const initial = randInt(4, 12) * 50;
+        const years = halfLife * randInt(3, 6);
+        const remain = initial / 2 ** (years / halfLife);
+        s11Add(
+          set,
+          `某放射性物質每 \\(${halfLife}\\) 年衰變為一半，初始有 \\(${initial}\\) g。求 \\(${years}\\) 年後剩餘量。`,
+          `\\(${remain}\\) g`,
+          `經過 \\(${years}/${halfLife}=${years / halfLife}\\) 個半衰期，所以剩餘量 \\(=${initial}\\times(\\frac12)^{${years / halfLife}}=${remain}\\) g。`
+        );
+      } else if (mode === 1) {
+        const rate = [2, 3, 5][randInt(0, 2)];
+        const principal = randInt(1, 5) * 10000;
+        const years = randInt(3, 8);
+        s11Add(
+          set,
+          `某種複利存款年利率 \\(${rate}\\%\\)，本金 \\(${principal}\\) 元。若每年計息一次，寫出 \\(${years}\\) 年後本利和公式。`,
+          `\\(${principal}(1+\\frac{${rate}}{100})^{${years}}\\)`,
+          `複利模型是「每期乘上同一倍數」。年利率 \\(${rate}\\%\\) 表示每年乘 \\(1+\\frac{${rate}}{100}\\)，所以 \\(${years}\\) 年後為 \\(${principal}(1+\\frac{${rate}}{100})^{${years}}\\)。`
+        );
+      } else if (mode === 2) {
+        const loss = [10, 15, 20][randInt(0, 2)];
+        const threshold = [20, 25, 30][randInt(0, 2)];
+        let layers = 0;
+        while ((1 - loss / 100) ** layers >= threshold / 100) layers += 1;
+        s11Add(
+          set,
+          `光線每穿透一層玻璃會損失 \\(${loss}\\%\\)。若要求剩餘強度小於 \\(${threshold}\\%\\)，至少需要幾層玻璃？`,
+          `至少 \\(${layers}\\) 層`,
+          `穿過 \\(n\\) 層後剩餘比例為 \\((1-${loss}\\%)^n\\)。逐步找最小整數 \\(n\\)，第一個使 \\((1-${loss}\\%)^n<${threshold}\\%\\) 成立的是 \\(n=${layers}\\)。`
+        );
+      } else if (mode === 3) {
+        const minutes = [15, 20, 30][randInt(0, 2)];
+        const initial = randInt(5, 15) * 100;
+        const target = 10 ** randInt(5, 7);
+        let divisions = 0;
+        while (initial * 2 ** divisions <= target) divisions += 1;
+        const totalMinutes = divisions * minutes;
+        s11Add(
+          set,
+          `細菌每 \\(${minutes}\\) 分鐘分裂一次（1 變 2），初始有 \\(${initial}\\) 個。多久後會超過 \\(${target}\\) 個？`,
+          `\\(${totalMinutes}\\) 分鐘後`,
+          `分裂 \\(n\\) 次後數量為 \\(${initial}\\cdot2^n\\)。逐步找最小整數 \\(n\\)，使 \\(${initial}\\cdot2^n>${target}\\)，得 \\(n=${divisions}\\)。時間為 \\(${divisions}\\times${minutes}=${totalMinutes}\\) 分鐘。`
+        );
+      } else {
+        const halfLife = [4, 6, 8][randInt(0, 2)];
+        const percent = [12.5, 25][randInt(0, 1)];
+        const halves = percent === 12.5 ? 3 : 2;
+        const time = halves * halfLife;
+        s11Add(
+          set,
+          `某藥物半衰期為 \\(${halfLife}\\) 小時。若要求體內濃度降到初始的 \\(${percent}\\%\\) 以下，服用一次後至少多久需要補藥？`,
+          `至少 \\(${time}\\) 小時後`,
+          `每過一個半衰期乘 \\(\\frac12\\)。\\(${percent}\\%\\) 對應 \\((\\frac12)^{${halves}}\\)，所以需經過 \\(${halves}\\) 個半衰期，時間為 \\(${halves}\\times${halfLife}=${time}\\) 小時。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS115LogDomainScientificNotationAdvancedSet(count) {
+    const set = s11AdvancedSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const c = randInt(1, 5);
+        const r1 = c + 2;
+        const r2 = c + 5;
+        const values = [];
+        for (let x = -10; x <= 20; x += 1) {
+          const base = x - c;
+          const argument = (x - r1) * (x - r2);
+          if (base > 0 && base !== 1 && argument > 0) values.push(x);
+        }
+        s11Add(
+          set,
+          `若 \\(f(x)=\\log_{x-${c}}(x^2-${r1 + r2}x+${r1 * r2})\\) 有意義，求整數 \\(x\\) 的範圍。`,
+          `\\(x>${r2}\\)`,
+          `對數有意義需同時滿足底數 \\(x-${c}>0\\)、\\(x-${c}\\ne1\\)、真數 \\((x-${r1})(x-${r2})>0\\)。交集後為 \\(x>${r2}\\)。若只列整數，就是 \\(${values.slice(0, 4).join(',')},\\ldots\\)。`
+        );
+      } else if (mode === 1) {
+        const exponent = randInt(20, 70);
+        const place = Math.floor((exponent * S115_LOGS[4]) / 10000) + 1;
+        s11Add(
+          set,
+          `已知 \\(\\log2\\approx0.3010\\)，求 \\((0.25)^{${exponent}}\\) 表為小數後，首位非零數字出現在小數第幾位？`,
+          `第 \\(${place}\\) 位`,
+          `\\((0.25)^{${exponent}}=4^{-${exponent}}\\)。\\(\\log 4=2\\log2\\approx0.6020\\)，所以 \\(-\\log(4^{-${exponent}})=${exponent}\\log4\\approx${formatS115LogInt(exponent * S115_LOGS[4])}\\)。因此首位非零數字在小數第 \\(${place}\\) 位。`
+        );
+      } else if (mode === 2) {
+        const exponent = randInt(12, 35);
+        const log15 = S115_LOGS[3] + S115_LOGS[5];
+        const product = exponent * log15;
+        const digits = Math.floor(product / 10000) + 1;
+        s11Add(
+          set,
+          `判斷 \\(15^{${exponent}}\\) 是幾位數？已知 \\(\\log3\\approx${s11LogApprox(3)}\\)、\\(\\log5\\approx${s11LogApprox(5)}\\)。`,
+          `\\(${digits}\\) 位數`,
+          `\\(\\log15=\\log3+\log5\\approx${formatS115LogInt(log15)}\\)，所以 \\(\\log15^{${exponent}}\\approx${formatS115LogInt(product)}\\)。整數部分為 \\(${Math.floor(product / 10000)}\\)，故位數為 \\(${digits}\\)。`
+        );
+      } else if (mode === 3) {
+        const characteristic = randInt(3, 6);
+        s11Add(
+          set,
+          `設 \\(\\log x\\) 的首數為 \\(${characteristic}\\)，求 \\(x\\) 的範圍。`,
+          `\\(10^{${characteristic}}\\le x<10^{${characteristic + 1}}\\)`,
+          `常用對數的首數為 \\(${characteristic}\\)，表示 \\(${characteristic}\\le\\log x<${characteristic + 1}\\)。兩邊以 10 為底還原，得 \\(10^{${characteristic}}\\le x<10^{${characteristic + 1}}\\)。`
+        );
+      } else {
+        const item = [
+          { decimal: '1.25', number: 1250 },
+          { decimal: '1.5', number: 1500 },
+          { decimal: '2.5', number: 2500 },
+          { decimal: '3.2', number: 3200 },
+        ][randInt(0, 3)];
+        s11Add(
+          set,
+          `若 \\(\\log A\\) 的尾數與 \\(\\log ${item.decimal}\\) 相同，且 \\(A\\) 是四位數，求 \\(A\\)。`,
+          `\\(${item.number}\\)`,
+          `尾數相同代表兩數只差一個 \\(10\\) 的整數次方倍。四位數必須寫成 \\(${item.decimal}\\times10^3\\)，所以 \\(A=${item.number}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function s12LineExpr(a, b, c) {
+    const parts = [];
+    if (a !== 0) parts.push(a === 1 ? 'x' : a === -1 ? '-x' : `${a}x`);
+    if (b !== 0) parts.push(`${b > 0 && parts.length ? '+' : ''}${b === 1 ? 'y' : b === -1 ? '-y' : `${b}y`}`);
+    if (c !== 0) parts.push(`${c > 0 && parts.length ? '+' : ''}${c}`);
+    return parts.join('') || '0';
+  }
+
+  function s12CoefVar(coef, variable) {
+    if (coef === 1) return variable;
+    if (coef === -1) return `-${variable}`;
+    return `${coef}${variable}`;
+  }
+
+  function s12LineValue(line, point) {
+    return line.a * point.x + line.b * point.y + line.c;
+  }
+
+  function s12LineIntersection(l1, l2) {
+    const det = l1.a * l2.b - l2.a * l1.b;
+    if (det === 0) return null;
+    return {
+      x: makeFraction(l2.b * -l1.c - l1.b * -l2.c, det),
+      y: makeFraction(l1.a * -l2.c - l2.a * -l1.c, det),
+    };
+  }
+
+  function s12PointText(point) {
+    return `(${formatFraction(point.x.num, point.x.den)},${formatFraction(point.y.num, point.y.den)})`;
+  }
+
+  function s12NumberText(value) {
+    if (Number.isInteger(value)) return `${value}`;
+    return trimFixed(value, 3);
+  }
+
+  function s12PointValueText(point) {
+    return `(${s12NumberText(point.x)},${s12NumberText(point.y)})`;
+  }
+
+  function s12EvalLinearFraction(point, numerator, denominator) {
+    return makeFraction(numerator.a * point.x + numerator.b * point.y + numerator.c, denominator.a * point.x + denominator.b * point.y + denominator.c);
+  }
+
+  function s12FractionCompare(a, b) {
+    return a.num * b.den - b.num * a.den;
+  }
+
+  function s12PolygonArea(points) {
+    let sum = 0;
+    for (let i = 0; i < points.length; i += 1) {
+      const p = points[i];
+      const q = points[(i + 1) % points.length];
+      sum += p.x * q.y - q.x * p.y;
+    }
+    return Math.abs(sum) / 2;
+  }
+
+  function s12ClipPolygon(points, keep) {
+    const next = [];
+    for (let i = 0; i < points.length; i += 1) {
+      const current = points[i];
+      const previous = points[(i + points.length - 1) % points.length];
+      const currentValue = keep.value(current);
+      const previousValue = keep.value(previous);
+      const currentInside = currentValue <= 1e-9;
+      const previousInside = previousValue <= 1e-9;
+      if (currentInside !== previousInside) {
+        const t = previousValue / (previousValue - currentValue);
+        next.push({
+          x: previous.x + (current.x - previous.x) * t,
+          y: previous.y + (current.y - previous.y) * t,
+        });
+      }
+      if (currentInside) next.push(current);
+    }
+    return next;
+  }
+
+  function buildS121ThreeLineTriangleParameterAdvancedSet(count) {
+    const set = s11AdvancedSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const x0 = [1, 2, -1, -2][randInt(0, 3)];
+        const y0 = randInt(-3, 3);
+        const a = randInt(-4, 4) || 2;
+        const c1 = x0 + 2 * y0;
+        const c2 = 3 * x0 - y0;
+        const c3 = a * x0 + y0;
+        s11Add(
+          set,
+          `設 \\(L_1:x+2y=${c1}\\)，\\(L_2:3x-y=${c2}\\)，\\(L_3:ax+y=${c3}\\)。若三線共點，求 \\(a\\)。`,
+          `\\(a=${a}\\)`,
+          `先由 \\(L_1,L_2\\) 解得交點 \\((${x0},${y0})\\)。三線共點時，此點也要在 \\(L_3\\) 上，所以 \\(${a}\\cdot${s11Paren(x0)}+${s11Paren(y0)}=${c3}\\)，得 \\(a=${a}\\)。`
+        );
+      } else if (mode === 1) {
+        const m = randInt(1, 4);
+        const b1 = randInt(-3, 3);
+        const b2 = b1 + randInt(1, 4);
+        s11Add(
+          set,
+          `三直線 \\(L_1:y=${s12CoefVar(m, 'x')}${formatS122SignedNumber(b1)}\\)、\\(L_2:y=${s12CoefVar(m, 'x')}${formatS122SignedNumber(b2)}\\)、\\(L_3:y=ax+1\\) 中，若要求 \\(L_3\\) 也與前兩線平行，求 \\(a\\)。`,
+          `\\(a=${m}\\)`,
+          `\\(L_1\\) 與 \\(L_2\\) 的斜率都是 \\(${m}\\)。若 \\(L_3\\) 也要與這組方向平行，斜率需相同，所以 \\(a=${m}\\)。`
+        );
+      } else if (mode === 2) {
+        const k = randInt(1, 5);
+        const c = randInt(1, 6);
+        s11Add(
+          set,
+          `設 \\(L_1:y=x${formatS122SignedNumber(c)}\\)，\\(L_2:y=-x${formatS122SignedNumber(c + 2)}\\)，\\(L_3:kx-y=${k * c - 1}\\)。若 \\(L_3\\) 與 \\(L_1\\) 平行，使三線無法圍成三角形，求 \\(k\\)。`,
+          `\\(k=1\\)`,
+          `把 \\(L_3\\) 改寫為 \\(y=kx-${k * c - 1}\\)，其斜率為 \\(k\\)。\\(L_1\\) 的斜率為 1，平行時 \\(k=1\\)。`
+        );
+      } else if (mode === 3) {
+        const kNum = [1, 2, 3, 4][randInt(0, 3)];
+        const kDen = [2, 3, 4, 5][randInt(0, 3)];
+        const area = makeFraction(9 * kDen, 2 * kNum);
+        s11Add(
+          set,
+          `直線 \\(x-${formatFraction(kNum, kDen) === '1' ? '' : formatFraction(kNum, kDen)}y-3=0\\) 與兩軸圍成三角形，求其面積。`,
+          `\\(${formatFraction(area.num, area.den)}\\)`,
+          `令 \\(y=0\\) 得 \\(x=3\\)；令 \\(x=0\\) 得 \\(y=-\\frac{3}{${formatFraction(kNum, kDen)}}\\)。面積為 \\(\\frac12\\times3\\times\\left|\\frac{3}{${formatFraction(kNum, kDen)}}\\right|=${formatFraction(area.num, area.den)}\\)。`
+        );
+      } else {
+        let x = 0;
+        let y = 1;
+        let a = 2;
+        for (let attempt = 0; attempt < 30; attempt += 1) {
+          x = randInt(-3, 4);
+          y = 1 - x;
+          if (y === 0) continue;
+          const numerator = 2 - x;
+          if (numerator % y === 0) {
+            a = numerator / y;
+            break;
+          }
+        }
+        const k = a * x + 4 * y;
+        s11Add(
+          set,
+          `討論方程組 \\(\\begin{cases}x+ay=2\\\\ ax+4y=k\\end{cases}\\) 在何種 \\((a,k)\\) 組合下，與直線 \\(x+y=1\\) 三線共點。`,
+          `一組為 \\((a,k)=(${a},${k})\\)`,
+          `取共點 \\((${x},${y})\\)，且它滿足 \\(x+y=1\\)。再代入 \\(x+ay=2\\)，得 \\(a=${a}\\)；代入 \\(ax+4y=k\\)，得 \\(k=${k}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS121PointLineSideAdvancedSet(count) {
+    const set = s11AdvancedSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        s11Add(
+          set,
+          `點 \\(A(k,2)\\) 與 \\(B(1,-k)\\) 位於直線 \\(3x-4y+6=0\\) 之異側，求 \\(k\\) 的範圍。`,
+          `\\(-\\frac{9}{4}<k<\\frac{2}{3}\\)`,
+          `代入直線式，\\(A\\) 得 \\(3k-2\\)，\\(B\\) 得 \\(4k+9\\)。異側代表乘積小於 0：\\((3k-2)(4k+9)<0\\)，所以 \\(-\\frac94<k<\\frac23\\)。`
+        );
+      } else if (mode === 1) {
+        const m = randInt(1, 4);
+        const pointA = { x: -1, y: randInt(2, 5) };
+        const pointB = { x: randInt(3, 6), y: randInt(1, 4) };
+        const thresholdA = m * pointA.x + pointA.y;
+        const thresholdB = m * pointB.x + pointB.y;
+        const low = Math.min(thresholdA, thresholdB);
+        const high = Math.max(thresholdA, thresholdB);
+        const values = [];
+        for (let k = -20; k <= 30; k += 1) {
+          const fA = thresholdA - k;
+          const fB = thresholdB - k;
+          const fO = -k;
+          if (fA * fB > 0 && fA * fO < 0 && fB * fO < 0) values.push(k);
+        }
+        s11Add(
+          set,
+          `設 \\(k\\) 為整數。若 \\(A(${pointA.x},${pointA.y})\\)、\\(B(${pointB.x},${pointB.y})\\) 在直線 \\(${m}x+y-k=0\\) 同側，且原點在另一側，求 \\(k\\) 的可能值。`,
+          values.length ? `\\(k=${values.join(',')}\\)` : `無整數解`,
+          `代入後 \\(A\\) 的符號由 \\(${thresholdA}-k\\) 決定，\\(B\\) 由 \\(${thresholdB}-k\\) 決定，原點由 \\(-k\\) 決定。檢查同側與異側條件，可得整數 \\(k\\) 為 ${values.length ? values.join('、') : '無'}。`
+        );
+      } else if (mode === 2) {
+        const p = randInt(1, 4);
+        s11Add(
+          set,
+          `若點 \\(P(a,a^2)\\) 落在直線 \\(x-y+${p * (p + 1)}>0\\) 的上方半平面，求 \\(a\\) 的範圍。`,
+          `\\(-${p}<a<${p + 1}\\)`,
+          `代入得 \\(a-a^2+${p * (p + 1)}>0\\)，即 \\(a^2-a-${p * (p + 1)}<0\\)，因式分解為 \\((a+${p})(a-${p + 1})<0\\)，所以 \\(-${p}<a<${p + 1}\\)。`
+        );
+      } else if (mode === 3) {
+        s11Add(
+          set,
+          `已知兩點 \\(A(2,3)\\)、\\(B(-1,1)\\)。若直線 \\(mx-y+2=0\\) 與線段 \\(AB\\) 相交，求 \\(m\\) 的範圍。`,
+          `\\(m\\le\\frac12\\) 或 \\(m\\ge1\\)`,
+          `線段與直線相交，端點代入值需異號或其中一點在直線上。\\(A\\) 代入得 \\(2m-1\\)，\\(B\\) 代入得 \\(-m+1\\)。解 \\((2m-1)(-m+1)\\le0\\)，得 \\(m\\le\\frac12\\) 或 \\(m\\ge1\\)。`
+        );
+      } else {
+        const line = { a: 3, b: -2, c: 5 };
+        const points = [
+          { label: '(1,1)', x: 1, y: 1 },
+          { label: '(2,3)', x: 2, y: 3 },
+          { label: '(-1,4)', x: -1, y: 4 },
+        ];
+        const same = points.filter((point) => s12LineValue(line, point) > 0).map((point) => point.label);
+        s11Add(
+          set,
+          `判斷點 \\((1,1)\\)、\\((2,3)\\)、\\((-1,4)\\) 中，哪些點與原點落在直線 \\(3x-2y+5=0\\) 的同一側。`,
+          same.join('、'),
+          `原點代入得 \\(5>0\\)，所以找代入值也為正的點。三點代入分別為 \\(6,5,-6\\)，故同側的是 ${same.join('、')}。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS121AbsoluteInequalityAreaAdvancedSet(count) {
+    const set = s11AdvancedSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const r = randInt(3, 8);
+        s11Add(
+          set,
+          `求 \\(|x-2|+|y+1|\\le ${r}\\) 所圍成的區域面積。`,
+          `\\(${2 * r * r}\\)`,
+          `這是中心在 \\((2,-1)\\) 的菱形，對角線長都是 \\(2r=${2 * r}\\)。面積 \\(=\\frac12\\times${2 * r}\\times${2 * r}=${2 * r * r}\\)。`
+        );
+      } else if (mode === 1) {
+        const a = randInt(2, 5);
+        const b = randInt(2, 5);
+        const c = randInt(0, a + b);
+        let polygon = [
+          { x: -a, y: -b },
+          { x: a, y: -b },
+          { x: a, y: b },
+          { x: -a, y: b },
+        ];
+        polygon = s12ClipPolygon(polygon, { value: (p) => p.x + p.y - c });
+        const area = s12PolygonArea(polygon);
+        s11Add(
+          set,
+          `求 \\(|x|\\le ${a}\\)、\\(|y|\\le ${b}\\) 與 \\(x+y\\le ${c}\\) 的共同交集區域面積。`,
+          `\\(${s12NumberText(area)}\\)`,
+          `先看矩形 \\([-${a},${a}]\\times[-${b},${b}]\\)，再用半平面 \\(x+y\\le${c}\\) 切掉超出的角落。由多邊形頂點計算面積，可得 \\(${s12NumberText(area)}\\)。`
+        );
+      } else if (mode === 2) {
+        const p = randInt(1, 4);
+        const q = randInt(2, 6);
+        const r = p * q;
+        const area = makeFraction(2 * r * r, p * q);
+        s11Add(
+          set,
+          `求 \\(${p}|x|+${q}|y|\\le ${r}\\) 所圍成的幾何圖形面積。`,
+          `\\(${formatFraction(area.num, area.den)}\\)`,
+          `截距為 \\(x=\\pm\\frac{${r}}{${p}}\\)、\\(y=\\pm\\frac{${r}}{${q}}\\)。菱形兩條對角線長為 \\(2\\cdot\\frac{${r}}{${p}}\\)、\\(2\\cdot\\frac{${r}}{${q}}\\)，面積 \\(=\\frac12\\cdot\\frac{2${r}}{${p}}\\cdot\\frac{2${r}}{${q}}=${formatFraction(area.num, area.den)}\\)。`
+        );
+      } else if (mode === 3) {
+        const a = randInt(1, 4);
+        const b = randInt(1, 4);
+        const area = 2 * a * b;
+        s11Add(
+          set,
+          `畫出 \\(|x-y|\\le ${a}\\) 且 \\(|x+y|\\le ${b}\\) 的圖形，並求其面積。`,
+          `面積 \\(${area}\\)`,
+          `令 \\(u=x-y\\)、\\(v=x+y\\)，則 \\(|u|\\le${a}\\)、\\(|v|\\le${b}\\)。在 \\((u,v)\\) 平面是長方形，面積 \\(4\\cdot${a}\\cdot${b}\\)，而 \\((x,y)\\) 面積為其一半，所以面積 \\(${area}\\)。`
+        );
+      } else {
+        const k = randInt(3, 8);
+        const area = 2 * k * k;
+        s11Add(
+          set,
+          `若區域 \\(|x|+|y|\\le k\\) 的面積為 \\(${area}\\)，求正實數 \\(k\\)。`,
+          `\\(k=${k}\\)`,
+          `\\(|x|+|y|\\le k\\) 是對角線長皆為 \\(2k\\) 的菱形，面積為 \\(2k^2\\)。由 \\(2k^2=${area}\\)，且 \\(k>0\\)，得 \\(k=${k}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS121LinearFractionalExtremaAdvancedSet(count) {
+    const set = s11AdvancedSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const vertices = [
+          { x: 0, y: 0 },
+          { x: 4, y: 0 },
+          { x: 0, y: 2 },
+        ];
+        const values = vertices.map((point) => ({ point, value: s12EvalLinearFraction(point, { a: 0, b: 1, c: -3 }, { a: 1, b: 0, c: -5 }) }));
+        const max = values.reduce((best, item) => (s12FractionCompare(item.value, best.value) > 0 ? item : best), values[0]);
+        s11Add(
+          set,
+          `在 \\(x\\ge0,y\\ge0,x+2y\\le4\\) 的條件下，求 \\(\\frac{y-3}{x-5}\\) 的最大值。`,
+          `\\(${formatFraction(max.value.num, max.value.den)}\\)`,
+          `線性分式在此三角形區域的極值可先檢查頂點。三頂點 \\((0,0),(4,0),(0,2)\\) 代入分別為 \\(\\frac35,3,\\frac15\\)，所以最大值為 \\(3\\)。`
+        );
+      } else if (mode === 1) {
+        const n = [4, 6, 8][randInt(0, 2)];
+        const vertices = [
+          { x: 0, y: 0 },
+          { x: n, y: 0 },
+          { x: 0, y: n / 2 },
+        ];
+        const values = vertices.map((point) => ({ point, value: s12EvalLinearFraction(point, { a: 0, b: 1, c: 1 }, { a: 1, b: 0, c: 1 }) }));
+        const min = values.reduce((best, item) => (s12FractionCompare(item.value, best.value) < 0 ? item : best), values[0]);
+        s11Add(
+          set,
+          `在 \\(x\\ge0,y\\ge0,x+2y\\le${n}\\) 的條件下，求 \\(\\frac{y+1}{x+1}\\) 的最小值。`,
+          `\\(${formatFraction(min.value.num, min.value.den)}\\)`,
+          `檢查三角形頂點 \\((0,0),(${n},0),(0,${n / 2})\\)。代入 \\(\\frac{y+1}{x+1}\\) 後最小值出現在 \\((${n},0)\\)，為 \\(\\frac{1}{${n + 1}}\\)。`
+        );
+      } else if (mode === 2) {
+        const a = randInt(2, 6);
+        const b = randInt(2, 6);
+        s11Add(
+          set,
+          `在 \\(|x|\\le${a}\\)、\\(|y|\\le${b}\\) 的範圍內，求點 \\((x,y)\\) 到原點距離的平方 \\(x^2+y^2\\) 之最大值。`,
+          `\\(${a * a + b * b}\\)`,
+          `矩形中離原點最遠的是四個角點，距離平方為 \\((\\pm${a})^2+(\\pm${b})^2=${a * a + b * b}\\)。`
+        );
+      } else if (mode === 3) {
+        const vertices = [
+          { x: 1, y: 1 },
+          { x: 5, y: 2 },
+          { x: 2, y: 6 },
+        ];
+        const line = { a: 3, b: 4, c: 30 };
+        const distances = vertices.map((point) => ({ point, numerator: Math.abs(line.a * point.x + line.b * point.y + line.c) }));
+        const min = distances.reduce((best, item) => (item.numerator < best.numerator ? item : best), distances[0]);
+        s11Add(
+          set,
+          `已知區域由 \\((1,1),(5,2),(2,6)\\) 三點圍成，求區域內點到直線 \\(3x+4y+30=0\\) 的最短距離。`,
+          `\\(${formatFraction(min.numerator, 5)}\\)`,
+          `三角形全部在直線同側，最短距離會出現在離直線最近的頂點。三頂點代入 \\(|3x+4y+30|/5\\)，最小為 \\(${formatFraction(min.numerator, 5)}\\)。`
+        );
+      } else {
+        s11Add(
+          set,
+          `在 \\(x-y+2\\ge0\\)、\\(x+y-4\\le0\\)、\\(x\\ge0\\) 的條件下，求 \\(\\frac{y}{x+2}\\) 的值域。`,
+          `\\((-\infty,1]\\)`,
+          `由條件得 \\(y\\le x+2\\)、\\(y\\le4-x\\)、\\(x\\ge0\\)。上界由兩條上邊界交會附近取得，且 \\(y\\le x+2\\) 給 \\(\\frac{y}{x+2}\\le1\\)。當 \\(y\\) 往下無界時，分式趨向 \\(-\\infty\\)，所以值域為 \\((-\infty,1]\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function s13FreshSet() {
+    return { questions: [], summaryAnswers: [], answers: [] };
+  }
+
+  function s13Add(set, question, summary, detail) {
+    set.questions.push(question);
+    set.summaryAnswers.push(summary);
+    set.answers.push(`簡答：${summary}<br>詳解：${detail}`);
+  }
+
+  function s13Poly(coeffs) {
+    return formatPolynomialFromCoeffs(coeffs).replace(/x\^(\d+)/g, 'x^{$1}');
+  }
+
+  function s13XMinus(value) {
+    if (value === 0) return 'x';
+    return value > 0 ? `x-${value}` : `x+${-value}`;
+  }
+
+  function s13Factor(value) {
+    return `(${s13XMinus(value)})`;
+  }
+
+  function s13Signed(value) {
+    return value >= 0 ? `+${value}` : `${value}`;
+  }
+
+  function s13SignedTerm(coef, term) {
+    if (coef === 0) return '';
+    const abs = Math.abs(coef);
+    const body = abs === 1 ? term : `${abs}${term}`;
+    return coef > 0 ? `+${body}` : `-${body}`;
+  }
+
+  function s13SignedLinearTerm(coef, variable = 'X') {
+    if (coef === 0) return '';
+    const abs = Math.abs(coef);
+    const body = abs === 1 ? variable : `${abs}${variable}`;
+    return coef > 0 ? `+${body}` : `-${body}`;
+  }
+
+  function s13CoefTerm(coef, term) {
+    if (coef === 1) return term;
+    if (coef === -1) return `-${term}`;
+    return `${coef}${term}`;
+  }
+
+  function s13ShiftedCubicText(A, B, C, D, center) {
+    const base = s13Factor(center);
+    const first = A === 1 ? `${base}^3` : A === -1 ? `-${base}^3` : `${A}${base}^3`;
+    const text = `${first}${s13SignedTerm(B, `${base}^2`)}${s13SignedTerm(C, base)}${s13Signed(D)}`;
+    return text.replace(/\+0$/, '');
+  }
+
+  function s13CubicFromCenter(a, h, p, k) {
+    return [a, -3 * a * h, 3 * a * h * h + p, -a * h * h * h - p * h + k];
+  }
+
+  function s13EvalPoly(coeffs, x) {
+    return coeffs.reduce((value, coef) => value * x + coef, 0);
+  }
+
+  function s13DerivativeCoeffs(coeffs) {
+    const degree = coeffs.length - 1;
+    return coeffs.slice(0, -1).map((coef, index) => coef * (degree - index));
+  }
+
+  function s13FormatPoint(x, y) {
+    return `\\((${x},${y})\\)`;
+  }
+
+  function buildS132CubicSymmetryTranslationAdvancedSet(count) {
+    const set = s13FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const h = pickNonZero(-3, 3);
+        const p = pickNonZero(-5, 5);
+        const k = randInt(-8, 8);
+        const coeffs = s13CubicFromCenter(1, h, p, k);
+        s13Add(
+          set,
+          `已知 \\(f(x)=${s13Poly(coeffs)}\\)，求其對稱中心，並寫出平移後的標準型。`,
+          `中心 ${s13FormatPoint(h, k)}，平移後 \\(Y=X^3${s13SignedLinearTerm(p)}\\)`,
+          `將 \\(x\\) 改寫成 \\(X${s13Signed(h)}\\)，並令 \\(Y=y${s13Signed(-k)}\\)。因為 \\(f(x)=${s13Factor(h)}^3${s13SignedLinearTerm(p, s13Factor(h))}${s13Signed(k)}\\)，所以對稱中心為 ${s13FormatPoint(h, k)}，平移後為 \\(Y=X^3${s13SignedLinearTerm(p)}\\)。`
+        );
+      } else if (mode === 1) {
+        const a = pickNonZero(-3, 3);
+        const h = pickNonZero(-3, 3);
+        const p = pickNonZero(-4, 4);
+        const k = randInt(-6, 6);
+        const coeffs = s13CubicFromCenter(a, h, p, k);
+        const value = -3 * a * p;
+        s13Add(
+          set,
+          `三次函數 \\(y=${s13Poly(coeffs)}\\) 的中心為 \\((${h},${k})\\)。若它可寫成 \\(a(x-h)^3+p(x-h)+k\\)，求 \\(b^2-3ac\\) 的值。`,
+          `\\(${value}\\)`,
+          `一般式 \\(ax^3+bx^2+cx+d\\) 若中心在 \\(x=h\\)，則 \\(b=-3ah\\)，且 \\(c=3ah^2+p\\)。所以 \\(b^2-3ac=9a^2h^2-3a(3ah^2+p)=-3ap=${value}\\)。`
+        );
+      } else if (mode === 2) {
+        const h = randInt(1, 4);
+        const a = [1, 2][randInt(0, 1)];
+        const p = pickNonZero(-5, 5);
+        const k = a * h * h * h - p * h;
+        const coeffs = s13CubicFromCenter(a, h, p, k);
+        s13Add(
+          set,
+          `若 \\(f(x)=a(x-${h})^3+p(x-${h})${s13Signed(k)}\\) 的圖形通過原點，且展開後為 \\(f(x)=${s13Poly(coeffs)}\\)，求 \\(p\\)。`,
+          `\\(p=${p}\\)`,
+          `通過原點表示 \\(f(0)=0\\)。代入得 \\(-a${h}^3-p${h}${s13Signed(k)}=0\\)，所以 \\(p=\\dfrac{${k}-${a * h * h * h}}{${h}}=${p}\\)。`
+        );
+      } else if (mode === 3) {
+        const h = pickNonZero(-3, 3);
+        const p = i % 10 === 3 ? 0 : pickNonZero(-4, 4);
+        const k = randInt(-5, 5);
+        const coeffs = s13CubicFromCenter(1, h, p, k);
+        const possible = p === 0;
+        s13Add(
+          set,
+          `判斷 \\(y=${s13Poly(coeffs)}\\) 經平移後是否能與 \\(y=x^3\\) 重合，並說明理由。`,
+          possible ? `可以，因為平移後為 \\(Y=X^3\\)` : `不可以，因為平移後仍有 \\(${p}X\\) 項`,
+          `先移到對稱中心 ${s13FormatPoint(h, k)}，得 \\(Y=X^3${s13SignedLinearTerm(p)}\\)。只有一次項係數為 0 時，才可只靠平移與 \\(y=x^3\\) 重合；本題一次項係數為 \\(${p}\\)，所以${possible ? '可以' : '不可以'}。`
+        );
+      } else {
+        const h = randInt(-3, 3);
+        const k = randInt(-6, 6);
+        const gCoeffs = s13CubicFromCenter(1, 2 * h, 0, 2 * k);
+        s13Add(
+          set,
+          `設 \\(f(x)=x^3\\)，且 \\(f\\) 與 \\(g\\) 的圖形互為以 \\((${h},${k})\\) 為中心的點對稱。求 \\(g(x)\\)。`,
+          `\\(g(x)=${s13Poly(gCoeffs)}\\)`,
+          `點對稱公式為 \\(g(x)=2\\cdot(${k})-f(${2 * h}-x)\\)。因 \\(-(${2 * h}-x)^3=${s13Factor(2 * h)}^3\\)，所以 \\(g(x)=${s13Factor(2 * h)}^3${s13Signed(2 * k)}=${s13Poly(gCoeffs)}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS132CubicTangentLinearApproxAdvancedSet(count) {
+    const set = s13FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const a = [1, 2][randInt(0, 1)];
+        const h = pickNonZero(-3, 3);
+        const p = pickNonZero(-5, 5);
+        const k = randInt(-6, 6);
+        const coeffs = s13CubicFromCenter(a, h, p, k);
+        const factor = s13Factor(h);
+        const tangent = `y${s13Signed(-k)}=${s13CoefTerm(p, factor)}`;
+        s13Add(
+          set,
+          `求 \\(f(x)=${s13Poly(coeffs)}\\) 在其對稱中心處的切線方程式。`,
+          `\\(${tangent}\\)`,
+          `中心型為 \\(f(x)=${s13CoefTerm(a, `${factor}^3`)}${s13SignedLinearTerm(p, factor)}${s13Signed(k)}\\)。中心處三次項的斜率為 0，只剩一次項斜率 \\(${p}\\)，切線為 \\(${tangent}\\)。`
+        );
+      } else if (mode === 1) {
+        const h = randInt(1, 4);
+        const p = pickNonZero(-4, 4);
+        const k = randInt(-5, 5);
+        const intercept = k - p * h;
+        const factor = s13Factor(h);
+        const centerForm = `${factor}^3${s13SignedLinearTerm(p, factor)}${s13Signed(k)}`;
+        s13Add(
+          set,
+          `已知三次函數的首項係數為 1，中心在 \\(x=${h}\\)，且在 \\(x=${h}\\) 附近的一次近似為 \\(y=${s13Poly([p, intercept])}\\)。求其中心與中心型。`,
+          `中心 \\((${h},${k})\\)，\\(f(x)=${centerForm}\\)`,
+          `一次近似線通過中心，所以 \\(k=${p}\\cdot${h}${s13Signed(intercept)}=${k}\\)。首項係數為 1，故中心型為 \\(f(x)=${centerForm}\\)。`
+        );
+      } else if (mode === 2) {
+        const h = 2;
+        const p = randInt(2, 6);
+        const k = randInt(-5, 5);
+        const dx = [0.001, 0.002, 0.01][randInt(0, 2)];
+        const approx = k + p * dx;
+        const coeffs = s13CubicFromCenter(1, h, p, k);
+        s13Add(
+          set,
+          `利用一次近似估計 \\(f(${trimFixed(h + dx, 3)})\\)，其中 \\(f(x)=${s13Poly(coeffs)}\\)。`,
+          `約為 \\(${trimFixed(approx, 4)}\\)`,
+          `中心在 \\(x=${h}\\)，且 \\(f'(${h})=${p}\\)、\\(f(${h})=${k}\\)。因此 \\(f(${trimFixed(h + dx, 3)})\\approx ${k}+${p}\\cdot${trimFixed(dx, 3)}=${trimFixed(approx, 4)}\\)。`
+        );
+      } else if (mode === 3) {
+        const h = randInt(-3, 3);
+        const k = randInt(-8, 8);
+        const t = randInt(1, 4);
+        s13Add(
+          set,
+          `三次函數 \\(f\\) 的對稱中心為 \\((${h},${k})\\)。求 \\(f(${h + t})+f(${h - t})\\)。`,
+          `\\(${2 * k}\\)`,
+          `以對稱中心為中心，左右等距的兩點函數值平均為 \\(k\\)。所以 \\(f(h+t)+f(h-t)=2k=${2 * k}\\)。`
+        );
+      } else {
+        const coeffs = s13CubicFromCenter(1, randInt(-2, 2), pickNonZero(-4, 4), randInt(-4, 4));
+        const x0 = randInt(-2, 3);
+        const dxNum = [1, 2, -1][randInt(0, 2)];
+        const dxDen = 100;
+        const f0 = s13EvalPoly(coeffs, x0);
+        const slope = s13EvalPoly(s13DerivativeCoeffs(coeffs), x0);
+        const change = makeFraction(slope * dxNum, dxDen);
+        s13Add(
+          set,
+          `若 \\(f(x)=${s13Poly(coeffs)}\\)，求 \\(x=${x0}\\) 附近移動 \\(${formatFraction(dxNum, dxDen)}\\) 單位時，函數值的變化量近似值。`,
+          `約 \\(${formatFraction(change.num, change.den)}\\)`,
+          `一次近似用 \\(\\Delta y\\approx f'(${x0})\\Delta x\\)。本題 \\(f'(${x0})=${slope}\\)，所以 \\(\\Delta y\\approx ${slope}\\cdot${formatFraction(dxNum, dxDen)}=${formatFraction(change.num, change.den)}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS131InterpolationStructuredPolynomialAdvancedSet(count) {
+    const set = s13FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const a = pickNonZero(1, 4);
+        const b = randInt(-5, 5);
+        const c = randInt(-6, 6);
+        const values = [1, 2, 3, 4].map((x) => a * x * x + b * x + c);
+        s13Add(
+          set,
+          `給定四點 \\((1,${values[0]}),(2,${values[1]}),(3,${values[2]}),(4,${values[3]})\\)，利用階差法求通過這些點的最低次多項式。`,
+          `\\(f(x)=${s13Poly([a, b, c])}\\)`,
+          `二階差固定為 \\(${2 * a}\\)，所以最低次為二次。設 \\(f(x)=ax^2+bx+c\\) 解得 \\(a=${a},b=${b},c=${c}\\)，故 \\(f(x)=${s13Poly([a, b, c])}\\)。`
+        );
+      } else if (mode === 1) {
+        const equal = randInt(2, 8);
+        const f0 = equal + [-12, -6, 6, 12][randInt(0, 3)];
+        const f4 = 2 * equal - f0;
+        s13Add(
+          set,
+          `設 \\(f(x)\\) 為三次式，滿足 \\(f(1)=f(2)=f(3)=${equal}\\) 且 \\(f(0)=${f0}\\)，求 \\(f(4)\\)。`,
+          `\\(${f4}\\)`,
+          `因 \\(f(x)-${equal}\\) 在 \\(1,2,3\\) 皆為 0，可設 \\(f(x)=${equal}+t(x-1)(x-2)(x-3)\\)。代入 \\(x=0\\) 得 \\(${f0}=${equal}-6t\\)，所以 \\(f(4)=${equal}+6t=2\\cdot${equal}-(${f0})=${f4}\\)。`
+        );
+      } else if (mode === 2) {
+        const a = pickNonZero(1, 3);
+        const b = randInt(-4, 4);
+        const c = randInt(-5, 5);
+        const points = [1, 2, 3].map((x) => `(${x},${a * x * x + b * x + c})`).join('、');
+        s13Add(
+          set,
+          `利用拉格朗日插值法求通過 ${points} 的二次多項式。`,
+          `\\(f(x)=${s13Poly([a, b, c])}\\)`,
+          `設 \\(f(x)=Ax^2+Bx+C\\)，將三點代入可解得 \\(A=${a},B=${b},C=${c}\\)。因此 \\(f(x)=${s13Poly([a, b, c])}\\)。`
+        );
+      } else if (mode === 3) {
+        const a = randInt(-4, 6);
+        const b = randInt(-4, 8);
+        const c = randInt(-4, 10);
+        const f4 = 3 * c - 3 * b + a;
+        s13Add(
+          set,
+          `設 \\(f(x)\\) 為次數不超過 2 的多項式，且 \\(f(1)=${a},f(2)=${b},f(3)=${c}\\)。用這三個值表示並求出 \\(f(4)\\)。`,
+          `\\(f(4)=3f(3)-3f(2)+f(1)=${f4}\\)`,
+          `二次以下多項式的二階差固定，因此下一項可由 \\(f(4)=3f(3)-3f(2)+f(1)\\) 得到，代入為 \\(3\\cdot(${c})-3\\cdot(${b})+(${a})=${f4}\\)。`
+        );
+      } else {
+        const q = [2, 3, 4][randInt(0, 2)];
+        const f4 = 3 * q ** 3 - 3 * q ** 2 + q;
+        s13Add(
+          set,
+          `若二次多項式 \\(f(x)\\) 滿足 \\(f(n)=${q}^n\\) 對 \\(n=1,2,3\\) 成立，求 \\(f(4)\\)。`,
+          `\\(${f4}\\)`,
+          `這題不是把規律延伸成指數函數，而是用二次多項式插值。由二次階差關係，\\(f(4)=3f(3)-3f(2)+f(1)=3\\cdot${q ** 3}-3\\cdot${q ** 2}+${q}=${f4}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS133RationalPolynomialInequalityAdvancedSet(count) {
+    const set = s13FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const c = randInt(-3, 1);
+        const a = c - randInt(1, 3);
+        const b = c + randInt(2, 5);
+        s13Add(
+          set,
+          `解不等式 \\(\\dfrac{(${s13XMinus(a)})^2(${s13XMinus(b)})^3}{(${s13XMinus(c)})^4}\\le0\\)。`,
+          `\\((-\\infty,${b}]\\)，且 \\(x\\ne${c}\\)`,
+          `平方與四次方只影響是否為 0 或不可取，不改變正負號。真正決定正負的是 \\(${s13XMinus(b)}\\)。所以先得 \\(x\\le${b}\\)，再排除分母為 0 的 \\(x=${c}\\)。`
+        );
+      } else if (mode === 1) {
+        const r = randInt(-3, 2);
+        const d = r + randInt(2, 5);
+        const q = randInt(1, 5);
+        s13Add(
+          set,
+          `解不等式 \\((${s13Poly([1, q, q * q + 1])})(${s13XMinus(r)})(${s13XMinus(d)})^2>0\\)。`,
+          `\\((${r},${d})\\cup(${d},\\infty)\\)`,
+          `二次式 \\(${s13Poly([1, q, q * q + 1])}\\) 恆正，平方因式在 \\(x=${d}\\) 為 0 但不變號，所以正負由 \\(${s13XMinus(r)}\\) 決定。要大於 0 得 \\(x>${r}\\)，且 \\(x=${d}\\) 會使左式為 0，須排除。`
+        );
+      } else if (mode === 2) {
+        const r1 = randInt(-5, -2);
+        const r2 = randInt(-1, 2);
+        const r3 = r2 + randInt(2, 4);
+        s13Add(
+          set,
+          `設三次函數 \\(f(x)\\) 的正負號變號點為 \\(${r1},${r2},${r3}\\)，且首項係數為正。求 \\(f(x)<0\\) 的解。`,
+          `\\((-\\infty,${r1})\\cup(${r2},${r3})\\)`,
+          `首項係數為正時，最右側為正，穿過每個單根都會變號。由右往左判斷，正負依序為 \\(+,-,+,-\\)，所以小於 0 的區間是 \\((-\\infty,${r1})\\cup(${r2},${r3})\\)。`
+        );
+      } else if (mode === 3) {
+        const a = randInt(-5, 0);
+        const b = a + randInt(2, 6);
+        s13Add(
+          set,
+          `解不等式 \\(\\dfrac{1}{${s13XMinus(a)}}\\ge\\dfrac{1}{${s13XMinus(b)}}\\)。`,
+          `\\((-\\infty,${a})\\cup(${b},\\infty)\\)`,
+          `通分得 \\(\\dfrac{${b - a}}{${s13Factor(a)}${s13Factor(b)}}\\ge0\\)。因分子為正，只需分母為正，所以 \\(x<${a}\\) 或 \\(x>${b}\\)，且 \\(x=${a},${b}\\) 皆不可取。`
+        );
+      } else {
+        const left = randInt(-7, -4);
+        const right = randInt(1, 5);
+        const hole = randInt(left + 1, right - 1);
+        const ints = [];
+        for (let x = left + 1; x <= right - 1; x += 1) {
+          if (x !== hole) ints.push(x);
+        }
+        s13Add(
+          set,
+          `找出所有整數 \\(x\\)，使得 \\(${s13Factor(left)}${s13Factor(right)}${s13Factor(hole)}^2<0\\)。`,
+          `\\(${ints.join(', ')}\\)`,
+          `平方因式不變號，但 \\(x=${hole}\\) 會讓左式等於 0，不能取。\\(${s13Factor(left)}${s13Factor(right)}<0\\) 的範圍是 \\(${left}<x<${right}\\)，再排除 \\(${hole}\\)，所以整數解為 \\(${ints.join(', ')}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS131PolynomialDivisionRemainderAdvancedSet(count) {
+    const set = s13FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const r = randInt(-3, 4);
+        const c = randInt(-8, 8);
+        const q = s13Poly([randInt(1, 3), randInt(-4, 4), randInt(-3, 3)]);
+        s13Add(
+          set,
+          `設 \\(f(x)=${s13Factor(r)}(${q})${s13Signed(c)}\\)。求 \\(${s13XMinus(r)}\\) 除 \\(f(x)\\) 的餘式。`,
+          `\\(${c}\\)`,
+          `由餘式定理，除以 \\(${s13XMinus(r)}\\) 的餘式為 \\(f(${r})\\)。因第一項含有因式 \\(${s13XMinus(r)}\\)，代入後為 0，所以餘式是 \\(${c}\\)。`
+        );
+      } else if (mode === 1) {
+        const a = randInt(-3, 1);
+        const b = a + 2;
+        const m = pickNonZero(-4, 4);
+        const fa = randInt(-6, 6);
+        const fb = fa + m * (b - a);
+        const constant = fa - m * a;
+        s13Add(
+          set,
+          `已知 \\(f(x)\\) 除以 \\(${s13XMinus(a)}\\) 餘 \\(${fa}\\)，除以 \\(${s13XMinus(b)}\\) 餘 \\(${fb}\\)。求 \\(f(x)\\) 除以 \\(${s13Factor(a)}${s13Factor(b)}\\) 的餘式。`,
+          `\\(${s13Poly([m, constant])}\\)`,
+          `餘式次數小於 2，設為 \\(R(x)=mx+n\\)。由 \\(R(${a})=${fa}\\)、\\(R(${b})=${fb}\\) 解得 \\(m=${m},n=${constant}\\)，所以餘式為 \\(${s13Poly([m, constant])}\\)。`
+        );
+      } else if (mode === 2) {
+        const coeffs = [2, randInt(-5, 5), randInt(-4, 6), randInt(-6, 6)];
+        const c = randInt(-2, 3);
+        const A = coeffs[0];
+        const B = 3 * coeffs[0] * c + coeffs[1];
+        const C = 3 * coeffs[0] * c * c + 2 * coeffs[1] * c + coeffs[2];
+        const D = s13EvalPoly(coeffs, c);
+        const shifted = s13ShiftedCubicText(A, B, C, D, c);
+        s13Add(
+          set,
+          `利用綜合除法，將 \\(f(x)=${s13Poly(coeffs)}\\) 表示成 \\(a${s13Factor(c)}^3+b${s13Factor(c)}^2+c${s13Factor(c)}+d\\)。`,
+          `\\(${shifted}\\)`,
+          `令 \\(t=${s13XMinus(c)}\\)，也就是 \\(x=t${s13Signed(c)}\\)。展開或連續綜合除法可得係數依序為 \\(${A},${B},${C},${D}\\)，所以結果為 \\(${shifted}\\)。`
+        );
+      } else if (mode === 3) {
+        const a = pickNonZero(-4, 4);
+        const b = randInt(-5, 5);
+        const coeffs = [a, a + b, a + b, b];
+        const f0 = b;
+        const f1 = 3 * (a + b);
+        s13Add(
+          set,
+          `若三次式 \\(f(x)\\) 能被 \\(x^2+x+1\\) 整除，且 \\(f(0)=${f0},f(1)=${f1}\\)，求 \\(f(x)\\)。`,
+          `\\(f(x)=${s13Poly(coeffs)}\\)`,
+          `設 \\(f(x)=(x^2+x+1)(ax+b)\\)。由 \\(f(0)=b=${f0}\\)，且 \\(f(1)=3(a+b)=${f1}\\)，解得 \\(a=${a},b=${b}\\)。展開得 \\(f(x)=${s13Poly(coeffs)}\\)。`
+        );
+      } else {
+        const n = randInt(3, 12);
+        s13Add(
+          set,
+          `設 \\(n=${n}\\)，求 \\(x^n-1\\) 除以 \\((x-1)^2\\) 的餘式。`,
+          `\\(${n}(x-1)\\)`,
+          `除以 \\((x-1)^2\\) 的餘式設為 \\(R(x)=a(x-1)+b\\)。因 \\(x^n-1\\) 在 \\(x=1\\) 的值為 0，故 \\(b=0\\)；導數在 \\(x=1\\) 的值為 \\(n\\)，故 \\(a=${n}\\)。餘式為 \\(${n}(x-1)\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
   const nextConfigs = {
     's1-1-1-repeating-decimal-fraction': {
       type: 'drill',
@@ -9482,6 +10590,15 @@
       questionCount: 5,
       generate() {
         return buildS111PowerRemainderCycleSet(5);
+      },
+    },
+    's1-1-1-power-remainder-pattern-advanced': {
+      type: 'drill',
+      title: '乘方餘數與循環規律進階',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS111PowerRemainderPatternAdvancedSet(5);
       },
     },
     's1-1-1-divisibility-missing-digit': {
@@ -9644,6 +10761,15 @@
       questionCount: 5,
       generate() {
         return buildS112AbsQuadraticMixedSet(5);
+      },
+    },
+    's1-1-2-root-abs-range-advanced': {
+      type: 'drill',
+      title: '特定範圍下根式與絕對值化簡',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS112RootAbsRangeAdvancedSet(5);
       },
     },
     's1-1-3-binomial-cube-expansion': {
@@ -9817,6 +10943,15 @@
         return buildS114ExponentialFractionRangeSet(5);
       },
     },
+    's1-1-4-exponential-fraction-range-advanced': {
+      type: 'drill',
+      title: '指數換元與分式值域進階',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS114ExponentialFractionRangeAdvancedSet(5);
+      },
+    },
     's1-1-4-rational-exponent-ordering': {
       type: 'drill',
       title: '分數指數與根式三數比較',
@@ -9833,6 +10968,15 @@
       questionCount: 5,
       generate() {
         return buildS114ExponentialGrowthModelSet(5);
+      },
+    },
+    's1-1-4-exponential-application-models-advanced': {
+      type: 'drill',
+      title: '指數應用模型進階',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS114ExponentialApplicationModelsAdvancedSet(5);
       },
     },
     's1-1-5-large-number-digit-count': {
@@ -9916,6 +11060,15 @@
         return buildS115LogScaleRatioModelSet(5);
       },
     },
+    's1-1-5-log-domain-scientific-notation-advanced': {
+      type: 'drill',
+      title: '對數定義域與科學記號進階',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS115LogDomainScientificNotationAdvancedSet(5);
+      },
+    },
     's1-2-1-projection-symmetry': {
       type: 'drill',
       title: '點對直線的投影與對稱',
@@ -9986,6 +11139,15 @@
       questionCount: 5,
       generate() {
         return buildS121TriangleNonexistenceSet(5);
+      },
+    },
+    's1-2-1-three-line-triangle-parameter-advanced': {
+      type: 'drill',
+      title: '三線不能圍成三角形的參數判定進階',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS121ThreeLineTriangleParameterAdvancedSet(5);
       },
     },
     's1-2-1-inverse-distance': {
@@ -10069,6 +11231,15 @@
         return buildS121PointLineSideSet(5);
       },
     },
+    's1-2-1-point-line-side-advanced': {
+      type: 'drill',
+      title: '點對直線的相對位置進階',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS121PointLineSideAdvancedSet(5);
+      },
+    },
     's1-2-1-lattice-point-counting': {
       type: 'drill',
       title: '線性不等式區域內的格子點計數',
@@ -10087,6 +11258,15 @@
         return buildS121AbsoluteInequalityAreaSet(5);
       },
     },
+    's1-2-1-absolute-inequality-area-advanced': {
+      type: 'drill',
+      title: '絕對值不等式與圖形面積進階',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS121AbsoluteInequalityAreaAdvancedSet(5);
+      },
+    },
     's1-2-1-linear-fractional-region-extrema': {
       type: 'drill',
       title: '線性分式在區域上的極值',
@@ -10094,6 +11274,15 @@
       questionCount: 5,
       generate() {
         return buildS121LinearFractionalRegionExtremaSet(5);
+      },
+    },
+    's1-2-1-linear-fractional-extrema-advanced': {
+      type: 'drill',
+      title: '線性分式與區域極值進階',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS121LinearFractionalExtremaAdvancedSet(5);
       },
     },
     's1-2-2-general-to-standard': {
@@ -10718,6 +11907,24 @@
         return buildS131InterpolationLagrangeSpecialSet(5);
       },
     },
+    's1-3-1-interpolation-structured-polynomial-advanced': {
+      type: 'drill',
+      title: '插值多項式與結構化列式',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS131InterpolationStructuredPolynomialAdvancedSet(5);
+      },
+    },
+    's1-3-1-polynomial-division-remainder-advanced': {
+      type: 'drill',
+      title: '多項式除法原理與餘式定理',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS131PolynomialDivisionRemainderAdvancedSet(5);
+      },
+    },
     's1-3-2-quadratic-form-graph-three-subtypes': {
       type: 'drill',
       title: '二次函數式與圖形判讀三小類綜合',
@@ -11006,6 +12213,24 @@
         return buildS132CubicChordMidpointSet(5);
       },
     },
+    's1-3-2-cubic-symmetry-translation-advanced': {
+      type: 'drill',
+      title: '三次函數的對稱與平移',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS132CubicSymmetryTranslationAdvancedSet(5);
+      },
+    },
+    's1-3-2-cubic-tangent-linear-approx-advanced': {
+      type: 'drill',
+      title: '對稱中心處的切線與一次近似',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS132CubicTangentLinearApproxAdvancedSet(5);
+      },
+    },
 
     's1-3-2-piecewise-function-eval': {
       type: 'drill',
@@ -11115,6 +12340,15 @@
         return buildS133RationalInequalitySet(5);
       },
     },
+    's1-3-3-rational-polynomial-inequality-advanced': {
+      type: 'drill',
+      title: '高次與分式不等式',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS133RationalPolynomialInequalityAdvancedSet(5);
+      },
+    },
     's1-3-3-same-solution-transform': {
       type: 'drill',
       title: '不等式同解轉換與陷阱判定',
@@ -11217,7 +12451,7 @@
     },
   };
 
-  const bundleFingerprint = 's1-bundle-v20260706-summary-v1';
+  const bundleFingerprint = 's1-bundle-v20260708-s13-extension-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

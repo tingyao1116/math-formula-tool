@@ -1194,6 +1194,378 @@
     return { questions, summaryAnswers, answers };
   }
 
+  function j61ManualSet() {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。詳解：${detail}`);
+    };
+    return { questions, summaryAnswers, answers, add };
+  }
+
+  function j61FractionText(num, den = 1) {
+    return fractionToLatex(makeFraction(num, den));
+  }
+
+  function j61SignedConstant(value) {
+    return value === 0 ? '' : `${value > 0 ? '+' : '-'}${Math.abs(value)}`;
+  }
+
+  function j61SqrtText(value) {
+    const root = Math.sqrt(value);
+    if (Number.isInteger(root)) return `${root}`;
+    return `\\sqrt{${value}}`;
+  }
+
+  function j61VertexEquation(a, h, k) {
+    return `y=${formatJ611Coefficient(makeFraction(a))}${j612FormatShiftedX(h)}^2${j61SignedConstant(k)}`;
+  }
+
+  function j61ExpandedFromVertex(a, h, k) {
+    return {
+      a,
+      b: -2 * a * h,
+      c: a * h * h + k,
+    };
+  }
+
+  function j61GeneralEquation(a, b, c) {
+    return formatJ611GeneralQuadratic(makeFraction(a), b, c);
+  }
+
+  function j61FactorFromRoot(root) {
+    if (root === 0) return 'x';
+    return `(x${root > 0 ? `-${root}` : `+${Math.abs(root)}`})`;
+  }
+
+  function buildJ611QuadraticPropertyLogicAdvancedSet(count) {
+    const { questions, summaryAnswers, answers, add } = j61ManualSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const x = pickNonZero(2, 6);
+        const a = pickNonZero(-5, 5);
+        const y = a * x * x;
+        const k = -a;
+        add(
+          `若二次函數 \\(y=ax^2\\) 通過點 \\((${x},${y})\\)，且 \\(y=kx^2\\) 的圖形與它關於 \\(x\\) 軸對稱，求 \\(k\\)。`,
+          `\\(k=${k}\\)`,
+          `先代入點得 \\(${y}=a\\cdot${x}^2\\)，所以 \\(a=${a}\\)。關於 \\(x\\) 軸對稱時，所有 \\(y\\) 值變成相反數，因此係數也變為相反數，\\(k=-a=${k}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const a = pickNonZero(-6, 6);
+        const b = -a;
+        const x = randInt(2, 5);
+        add(
+          `已知兩拋物線 \\(y=${a}x^2\\) 與 \\(y=${b}x^2\\)。若對相同且非零的 \\(x\\) 值，兩者的 \\(y\\) 座標互為相反數，證明 \\(|${a}|=|${b}|\\)。`,
+          `成立`,
+          `設兩式係數分別為 \\(a_1=${a}\\)、\\(a_2=${b}\\)。同一個非零 \\(x\\) 代入後，\\(y\\) 值互為相反數，表示 \\(a_1x^2+a_2x^2=0\\)。因為 \\(x^2>0\\)，所以 \\(a_1+a_2=0\\)，也就是 \\(a_1=-a_2\\)，故兩係數絕對值相等。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const a = randInt(1, 5);
+        const x = randInt(2, 7);
+        const y = a * x * x;
+        const m = -x;
+        const sum = m + y;
+        add(
+          `若點 \\(A(${x},${y})\\) 與 \\(B(m,n)\\) 都在 \\(y=${a}x^2\\) 上，且 \\(\\overline{AB}\\parallel x\\) 軸、\\(A\\ne B\\)，求 \\(m+n\\)。`,
+          `\\(${sum}\\)`,
+          `因為 \\(AB\\parallel x\\) 軸，所以兩點 \\(y\\) 座標相同，\\(n=${y}\\)。在 \\(y=${a}x^2\\) 上同一個 \\(y\\) 值對應的 \\(x\\) 互為相反數，所以 \\(m=-${x}\\)。因此 \\(m+n=${m}+${y}=${sum}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const a = randInt(2, 6);
+        add(
+          `判斷點 \\(P(k,${a}k^2)\\) 是否對所有實數 \\(k\\) 都在二次函數 \\(y=${a}x^2\\) 的圖形上。`,
+          `是`,
+          `點 \\(P\\) 的 \\(x\\) 座標是 \\(k\\)。代入 \\(y=${a}x^2\\) 得 \\(y=${a}k^2\\)，正好等於點 \\(P\\) 的 \\(y\\) 座標，所以所有實數 \\(k\\) 都成立。`
+        );
+        continue;
+      }
+      const a = randInt(1, 6);
+      add(
+        `若二次函數 \\(y=${a}x^2\\) 的圖形開口向上，且通過第四象限，這是否可能？請說明理由。`,
+        `不可能`,
+        `當 \\(a>0\\) 時，對所有實數 \\(x\\)，\\(y=${a}x^2\\ge0\\)。第四象限需要 \\(x>0\\) 且 \\(y<0\\)，與 \\(y\\ge0\\) 矛盾，所以不可能。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ612AdvancedTranslationVertexTrackSet(count) {
+    const { questions, summaryAnswers, answers, add } = j61ManualSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const a = randInt(1, 4);
+        const h = randInt(-4, 4);
+        const k = randInt(-5, 5);
+        const dx = pickNonZero(-5, 5);
+        const dy = pickNonZero(-4, 4);
+        const newH = h + dx;
+        const newK = k + dy;
+        add(
+          `將 \\(${j61VertexEquation(a, h, k)}\\) 先水平平移 \\(${dx}\\) 單位，再鉛直平移 \\(${dy}\\) 單位，求新函數與新頂點。`,
+          `\\(${j61VertexEquation(a, newH, newK)}\\)，頂點 \\((${newH},${newK})\\)`,
+          `平移只改變頂點，不改變 \\(a\\)。原頂點為 \\((${h},${k})\\)，平移後為 \\((${newH},${newK})\\)，所以新函數為 \\(${j61VertexEquation(a, newH, newK)}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const h = randInt(-4, 4);
+        const d = randInt(2, 5);
+        const k = randInt(-6, 6);
+        const y = d * d + k;
+        add(
+          `若 \\(y=x^2\\) 的圖形平移後通過 \\((${h - d},${y})\\) 與 \\((${h + d},${y})\\)，且開口不變，求平移後的函數式。`,
+          `\\(y=(x${h === 0 ? '' : h > 0 ? `-${h}` : `+${Math.abs(h)}`})^2${j61SignedConstant(k)}\\)`,
+          `兩點的 \\(y\\) 座標相同，頂點的 \\(x\\) 座標在兩點 \\(x\\) 座標的中點，為 \\(${h}\\)。與頂點水平距離為 \\(${d}\\)，所以 \\(${y}=d^2+k=${d * d}+k\\)，得 \\(k=${k}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const a = pickNonZero(-4, 4);
+        const h = randInt(-4, 4);
+        const m = pickNonZero(-3, 3);
+        const b = randInt(-5, 5);
+        const k = m * h + b;
+        add(
+          `已知二次函數 \\(y=a(x-h)^2+k\\) 的頂點在直線 \\(y=${m}x${j61SignedConstant(b)}\\) 上，且 \\(a=${a}\\)、\\(h=${h}\\)，求此二次函數。`,
+          `\\(${j61VertexEquation(a, h, k)}\\)`,
+          `頂點為 \\((h,k)\\)，且在直線上，所以 \\(k=${m}\\cdot${h}${j61SignedConstant(b)}=${k}\\)。代回頂點式得 \\(${j61VertexEquation(a, h, k)}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const a = randInt(1, 4);
+        const h = pickNonZero(-5, 5);
+        const k = pickNonZero(-5, 5);
+        const expanded = j61ExpandedFromVertex(a, h, k);
+        const distance2 = h * h + k * k;
+        const direction = `${h > 0 ? '向右' : '向左'} ${Math.abs(h)} 單位，${k > 0 ? '向上' : '向下'} ${Math.abs(k)} 單位`;
+        add(
+          `將 \\(y=${a}x^2\\) 平移後得到 \\(${j61GeneralEquation(expanded.a, expanded.b, expanded.c)}\\)。求平移方向與頂點移動距離。`,
+          `${direction}；距離 \\(${j61SqrtText(distance2)}\\)`,
+          `把新函數改寫成頂點式為 \\(${j61VertexEquation(a, h, k)}\\)，所以頂點由 \\((0,0)\\) 移到 \\((${h},${k})\\)。方向為 ${direction}，距離為 \\(\\sqrt{${h * h}+${k * k}}=${j61SqrtText(distance2)}\\)。`
+        );
+        continue;
+      }
+      const d = 2 * randInt(1, 5);
+      const x = -d / 2;
+      const y = x * x;
+      add(
+        `點 \\(P\\) 在 \\(y=x^2\\) 上。若將點 \\(P\\) 向右平移 \\(${d}\\) 單位後，仍落在 \\(y=x^2\\) 的圖形上，求 \\(P\\) 的座標。`,
+        `\\(P=(${x},${y})\\)`,
+        `設 \\(P=(t,t^2)\\)。向右平移後為 \\((t+${d},t^2)\\)，仍在 \\(y=x^2\\) 上，所以 \\(t^2=(t+${d})^2\\)。解得 \\(t=-${d}/2=${x}\\)，故 \\(P=(${x},${y})\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ612IntersectionConstraintAdvancedSet(count) {
+    const { questions, summaryAnswers, answers, add } = j61ManualSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const h = randInt(-6, 6);
+        const k = h * h;
+        add(
+          `若二次函數 \\(y=x^2${formatJ611SignedLinearTerm(-2 * h)}+k\\) 與 \\(x\\) 軸只有一個交點，求 \\(k\\)。`,
+          `\\(k=${k}\\)`,
+          `與 \\(x\\) 軸只有一個交點表示頂點剛好在 \\(x\\) 軸上。因為 \\(x^2${formatJ611SignedLinearTerm(-2 * h)}+k=${j612FormatShiftedX(h)}^2+k-${k}\\)，所以需 \\(k-${k}=0\\)，得 \\(k=${k}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const a = randInt(1, 4);
+        const c = randInt(2, 8);
+        const limit = Math.ceil(Math.sqrt(4 * a * c)) - 1;
+        add(
+          `已知 \\(y=-${a}x^2+bx-${c}\\) 的圖形完全在 \\(x\\) 軸下方，求整數 \\(b\\) 的範圍。`,
+          `\\(-${limit}\\le b\\le ${limit}\\)`,
+          `開口向下，若要完全在 \\(x\\) 軸下方，就不能與 \\(x\\) 軸相交，因此判別式小於 0。\\(D=b^2-4\\cdot${a}\\cdot${c}<0\\)，所以 \\(b^2<${4 * a * c}\\)。整數 \\(b\\) 的範圍為 \\(-${limit}\\le b\\le ${limit}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        let r1 = randInt(-5, 1);
+        let r2 = randInt(2, 6);
+        if (r1 === r2) r2 += 1;
+        const m = r1 + r2;
+        const b = -r1 * r2;
+        add(
+          `求拋物線 \\(y=x^2\\) 與一次函數 \\(y=${m}x${j61SignedConstant(b)}\\) 的交點座標。`,
+          `\\((${r1},${r1 * r1})\\)、\\((${r2},${r2 * r2})\\)`,
+          `令兩式相等，得 \\(x^2=${m}x${j61SignedConstant(b)}\\)，整理為 \\(x^2${formatJ611SignedLinearTerm(-m)}${j61SignedConstant(-b)}=0\\)，可分解為 \\(${j61FactorFromRoot(r1)}${j61FactorFromRoot(r2)}=0\\)。所以交點為 \\((${r1},${r1 * r1})\\)、\\((${r2},${r2 * r2})\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const q = randInt(3, 9);
+        const combos = Array.from({ length: q - 1 }, (_, index) => `(${index + 1},${q - index - 1})`).join('、');
+        add(
+          `若 \\(y=a(x-1)^2+k\\) 通過 \\((0,${q})\\)，且與 \\(x\\) 軸無交點，求正整數 \\((a,k)\\) 的所有可能組合。`,
+          `\\(${combos}\\)`,
+          `代入 \\((0,${q})\\) 得 \\(a+k=${q}\\)。又 \\(a>0\\)、\\(k>0\\) 時開口向上且頂點在 \\(x\\) 軸上方，所以與 \\(x\\) 軸無交點。正整數組合即為 \\(a+k=${q}\\) 的所有正整數解。`
+        );
+        continue;
+      }
+      const a = randInt(1, 4);
+      const d = randInt(2, 7);
+      const c = a * d * d;
+      add(
+        `直線 \\(y=${c}\\) 與拋物線 \\(y=${a}x^2\\) 交於 \\(A,B\\) 兩點，求線段 \\(AB\\) 的長度。`,
+        `\\(${2 * d}\\)`,
+        `交點滿足 \\(${a}x^2=${c}\\)，所以 \\(x^2=${d * d}\\)，得 \\(x=\\pm${d}\\)。兩點在同一水平線上，距離為 \\(${d}-(-${d})=${2 * d}\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ613ParabolicModelingAdvancedSet(count) {
+    const { questions, summaryAnswers, answers, add } = j61ManualSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const halfWidth = randInt(4, 8);
+        const height = randInt(5, 12);
+        const truckHalf = randInt(1, halfWidth - 1);
+        const clearance = j61FractionText(height * (halfWidth * halfWidth - truckHalf * truckHalf), halfWidth * halfWidth);
+        add(
+          `一個拋物線隧道寬 \\(${2 * halfWidth}\\) 公尺、高 \\(${height}\\) 公尺。若貨車寬 \\(${2 * truckHalf}\\) 公尺，求貨車能安全通過的最大高度。`,
+          `\\(${clearance}\\) 公尺`,
+          `以隧道中心為原點，拋物線可設為 \\(y=${height}-\\frac{${height}}{${halfWidth * halfWidth}}x^2\\)。貨車半寬為 \\(${truckHalf}\\)，最大高度是 \\(x=${truckHalf}\\) 時的高度，為 \\(${clearance}\\) 公尺。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const halfRange = randInt(3, 6);
+        const maxH = randInt(3, 10);
+        const s = randInt(1, halfRange - 1);
+        const y = j61FractionText(maxH * (halfRange * halfRange - (s - halfRange) * (s - halfRange)), halfRange * halfRange);
+        add(
+          `噴泉水柱呈拋物線，噴出點到落點的水平距離為 \\(${2 * halfRange}\\) 公尺，最高點距地面 \\(${maxH}\\) 公尺。求距離噴出點 \\(${s}\\) 公尺處的高度。`,
+          `\\(${y}\\) 公尺`,
+          `令噴出點為 \\((0,0)\\)，落點為 \\((${2 * halfRange},0)\\)，最高點為 \\((${halfRange},${maxH})\\)。函數為 \\(y=-\\frac{${maxH}}{${halfRange * halfRange}}(x-${halfRange})^2+${maxH}\\)，代入 \\(x=${s}\\) 得高度 \\(${y}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const halfSpan = [20, 30, 40, 50][randInt(0, 3)];
+        const low = randInt(3, 8);
+        const end = low + randInt(8, 20);
+        const x = halfSpan / 2;
+        const heightAtX = j61FractionText(low * halfSpan * halfSpan + (end - low) * x * x, halfSpan * halfSpan);
+        add(
+          `吊橋纜繩呈拋物線，兩端相距 \\(${2 * halfSpan}\\) 公尺且高度為 \\(${end}\\) 公尺，最低點距橋面 \\(${low}\\) 公尺。求距離中心 \\(${x}\\) 公尺處的纜繩高度。`,
+          `\\(${heightAtX}\\) 公尺`,
+          `以中心最低點為 \\((0,${low})\\)，設 \\(y=ax^2+${low}\\)。端點 \\((\\pm${halfSpan},${end})\\) 給出 \\(a=\\frac{${end - low}}{${halfSpan * halfSpan}}\\)。代入 \\(x=${x}\\) 得高度 \\(${heightAtX}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const halfWidth = randInt(6, 12);
+        const depth = [4, 8, 12, 16][randInt(0, 3)];
+        const level = depth / 4;
+        const waterWidth = halfWidth;
+        add(
+          `河道截面為拋物線，河道寬 \\(${2 * halfWidth}\\) 公尺、深 \\(${depth}\\) 公尺。若水位距河底 \\(${level}\\) 公尺，求水面寬度。`,
+          `\\(${waterWidth}\\) 公尺`,
+          `以河底為原點，兩岸為 \\((\\pm${halfWidth},${depth})\\)，故 \\(y=\\frac{${depth}}{${halfWidth * halfWidth}}x^2\\)。令 \\(y=${level}\\)，可得 \\(x^2=\\frac{${level}\\cdot${halfWidth * halfWidth}}{${depth}}=\\frac{${halfWidth * halfWidth}}{4}\\)，所以半寬為 \\(${halfWidth / 2}\\)，水面寬度為 \\(${waterWidth}\\) 公尺。`
+        );
+        continue;
+      }
+      const a = randInt(1, 3);
+      const b = 2 * a * randInt(3, 8);
+      const maxX = b / (2 * a);
+      const maxY = (b * b) / (4 * a);
+      const landing = b / a;
+      add(
+        `小明踢球的路徑為 \\(y=-${a}x^2+${b}x\\)，其中 \\(x\\) 為水平距離、\\(y\\) 為高度。求球的最大高度與落地點。`,
+        `最大高度 \\(${maxY}\\)，落地點 \\(x=${landing}\\)`,
+        `拋物線開口向下，最高點在 \\(x=-\\frac{b}{2a}=\\frac{${b}}{2\\cdot${a}}=${maxX}\\)。代入得最大高度 \\(${maxY}\\)。落地時 \\(y=0\\)，\\(x(-${a}x+${b})=0\\)，非起點落地點為 \\(x=${landing}\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ613OptimizationConstraintAdvancedSet(count) {
+    const { questions, summaryAnswers, answers, add } = j61ManualSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const length = 4 * randInt(8, 18);
+        const width = length / 4;
+        const longSide = length / 2;
+        const area = width * longSide;
+        add(
+          `用長 \\(${length}\\) 公尺的鐵絲靠一面牆圍成三邊矩形，求最大面積與此時的長、寬。`,
+          `最大面積 \\(${area}\\)，長 \\(${longSide}\\)、寬 \\(${width}\\)`,
+          `設垂直牆的寬為 \\(x\\)，平行牆的長為 \\(${length}-2x\\)，面積 \\(A=x(${length}-2x)=-2(x-${width})^2+${area}\\)。所以寬 \\(${width}\\)、長 \\(${longSide}\\) 時面積最大。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const sum = 2 * randInt(8, 20);
+        const half = sum / 2;
+        const minValue = 2 * half * half;
+        add(
+          `將 \\(${sum}\\) 分成兩個正數，求其中一數與另一數平方和的最小值。`,
+          `\\(${minValue}\\)`,
+          `設兩數為 \\(x\\) 與 \\(${sum}-x\\)，平方和 \\(S=x^2+(${sum}-x)^2=2(x-${half})^2+${minValue}\\)。因此兩數相等時最小，最小值為 \\(${minValue}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const price = 100;
+        const quantity = 500;
+        const increase = 5;
+        const drop = 10;
+        const bestRaise = (increase * quantity - drop * price) / (2 * increase * drop);
+        const bestPrice = price + increase * bestRaise;
+        const bestQuantity = quantity - drop * bestRaise;
+        const bestRevenue = bestPrice * bestQuantity;
+        add(
+          `某產品定價 \\(${price}\\) 元可賣 \\(${quantity}\\) 件。若每漲價 \\(${increase}\\) 元，銷售量就減少 \\(${drop}\\) 件，求定價多少元時收入最高。`,
+          `\\(${bestPrice}\\) 元`,
+          `設漲價 \\(x\\) 次，收入 \\(R=(${price}+${increase}x)(${quantity}-${drop}x)\\)。此二次函數開口向下，頂點在 \\(x=${bestRaise}\\)，故最佳定價為 \\(${price}+${increase}\\cdot${bestRaise}=${bestPrice}\\) 元，最高收入為 \\(${bestRevenue}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const t = randInt(1, 2);
+        const q = 2 * t * t * t + t;
+        const minValue = t * t * t * t + 4 * t * t * t * t * t * t;
+        add(
+          `點 \\(P\\) 在 \\(y=x^2+1\\) 上，點 \\(Q\\) 為 \\((${q},1)\\)。若 \\(P=(x,x^2+1)\\)，求 \\(PQ^2\\) 的最小值。`,
+          `\\(${minValue}\\)`,
+          `距離平方為 \\(PQ^2=(x-${q})^2+x^4\\)。本題參數設計使最小值出現在 \\(x=${t}\\)，代入得 \\(PQ^2=(${t}-${q})^2+${t}^4=${minValue}\\)。`
+        );
+        continue;
+      }
+      const c = [4, 6, 8, 10][randInt(0, 3)];
+      let countPoints = 0;
+      const limit = Math.floor(Math.sqrt(c / 2));
+      for (let x = -limit; x <= limit; x += 1) {
+        countPoints += c - 2 * x * x + 1;
+      }
+      add(
+        `求 \\(y=x^2\\) 與 \\(y=-x^2+${c}\\) 所圍成的封閉區域內，共有多少個整數格子點。`,
+        `\\(${countPoints}\\) 個`,
+        `整數點需滿足 \\(x^2\\le y\\le -x^2+${c}\\)，所以先要 \\(2x^2\\le${c}\\)。逐一列舉整數 \\(x\\) 從 \\(-${limit}\\) 到 \\(${limit}\\)，每個 \\(x\\) 可取的整數 \\(y\\) 個數為 \\(${c}-2x^2+1\\)，加總得 \\(${countPoints}\\) 個。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
   function j621SqrtText(value) {
     const root = Math.sqrt(value);
     return Number.isInteger(root) ? `${root}` : `\\sqrt{${value}}`;
@@ -1505,6 +1877,341 @@
       const generated = banks[i % banks.length](1);
       questions.push(generated.questions[0]);
       answers.push(generated.answers[0]);
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ621InverseSpatialDistanceAdvancedSet(count) {
+    const { questions, summaryAnswers, answers, add } = j61ManualSet();
+    const triples = [
+      [3, 4, 5],
+      [5, 12, 13],
+      [6, 8, 10],
+      [8, 15, 17],
+      [7, 24, 25],
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const [lp, pr, lr] = triples[randInt(0, triples.length - 1)];
+        const pq = randInt(2, 8);
+        const qr2 = pr * pr + pq * pq;
+        add(
+          `已知 \\(LP\\perp\\) 平面 \\(PQR\\)，\\(LP=${lp}\\)、空間距離 \\(LR=${lr}\\)。若 \\(\\triangle PQR\\) 在 \\(P\\) 為直角，且 \\(PQ=${pq}\\)，求 \\(QR\\)。`,
+          `\\(${j61SqrtText(qr2)}\\)`,
+          `先由 \\(LR^2=LP^2+PR^2\\) 得 \\(PR^2=${lr}^2-${lp}^2=${pr * pr}\\)。又 \\(\\angle QPR=90^\\circ\\)，所以 \\(QR^2=PQ^2+PR^2=${pq * pq}+${pr * pr}=${qr2}\\)，故 \\(QR=${j61SqrtText(qr2)}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const ratio = [2, 3, 6];
+        const scale = randInt(2, 5);
+        const lp = ratio[0] * scale;
+        const pq = ratio[1] * scale;
+        const qr = ratio[2] * scale;
+        const lr = 7 * scale;
+        add(
+          `已知 \\(LP:PQ:QR=2:3:6\\)，且 \\(LP\\perp\\) 平面 \\(PQR\\)、\\(PQ\\perp QR\\)。若空間距離 \\(LR=${lr}\\)，求 \\(LP\\) 的長度。`,
+          `\\(${lp}\\)`,
+          `設 \\(LP=2t\\)、\\(PQ=3t\\)、\\(QR=6t\\)。因為三段依序互相垂直，\\(LR^2=(2t)^2+(3t)^2+(6t)^2=49t^2\\)，所以 \\(LR=7t\\)。由 \\(7t=${lr}\\) 得 \\(t=${scale}\\)，故 \\(LP=${lp}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const side = [6, 8, 10, 12][randInt(0, 3)];
+        const lp = randInt(3, 7);
+        const lr = j61SqrtText(lp * lp + side * side);
+        const area = side * side / 4;
+        const areaText = Number.isInteger(area) ? `${area}\\sqrt3` : `\\frac{${side * side}\\sqrt3}{4}`;
+        add(
+          `已知 \\(LP\\perp\\) 平面 \\(PQR\\)，且 \\(LP=${lp}\\)、\\(LR=${lr}\\)。若 \\(P,Q,R\\) 構成等邊三角形，求 \\(\\triangle PQR\\) 的面積。`,
+          `\\(${areaText}\\)`,
+          `由 \\(LR^2=LP^2+PR^2\\)，可得 \\(PR^2=${side * side}\\)，所以等邊三角形邊長為 \\(${side}\\)。面積為 \\(\\frac{\\sqrt3}{4}\\cdot${side}^2=${areaText}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const a = randInt(2, 9);
+        add(
+          `已知 \\(LP=PQ=QR=a\\)，且 \\(LP\\perp\\) 平面 \\(PQR\\)、\\(PQ\\perp QR\\)。若 \\(LR=${a}\\sqrt3\\)，求 \\(a\\)。`,
+          `\\(${a}\\)`,
+          `三段互相垂直時，\\(LR^2=LP^2+PQ^2+QR^2=3a^2\\)，所以 \\(LR=a\\sqrt3\\)。題目已給 \\(LR=${a}\\sqrt3\\)，因此 \\(a=${a}\\)。`
+        );
+        continue;
+      }
+      const lp = randInt(3, 9);
+      const pr = randInt(4, 12);
+      const rq = randInt(2, 8);
+      const lq2 = lp * lp + pr * pr + rq * rq;
+      add(
+        `若 \\(LP\\perp\\) 平面 \\(S\\) 於 \\(P\\)，且平面上 \\(PR\\perp RQ\\)。已知 \\(LP=${lp}\\)、\\(PR=${pr}\\)、\\(RQ=${rq}\\)，求 \\(LQ\\)。`,
+        `\\(${j61SqrtText(lq2)}\\)`,
+        `先在平面上算 \\(PQ^2=PR^2+RQ^2=${pr * pr}+${rq * rq}\\)。再用 \\(LP\\perp\\) 平面，\\(LQ^2=LP^2+PQ^2=${lp * lp}+${pr * pr + rq * rq}=${lq2}\\)，所以 \\(LQ=${j61SqrtText(lq2)}\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ621CoordinateSpatialHybridSet(count) {
+    const { questions, summaryAnswers, answers, add } = j61ManualSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const px = randInt(1, 4);
+        const py = randInt(1, 4);
+        const rx = px + randInt(3, 8);
+        const ry = py + randInt(4, 9);
+        const h = randInt(5, 12);
+        const pr2 = (rx - px) ** 2 + (ry - py) ** 2;
+        const lr2 = h * h + pr2;
+        add(
+          `在平面直角坐標系上，\\(P(${px},${py})\\)、\\(R(${rx},${ry})\\)。若點 \\(L\\) 位於 \\(P\\) 點正上方 \\(${h}\\) 單位處，求 \\(LR\\) 的距離。`,
+          `\\(${j61SqrtText(lr2)}\\)`,
+          `平面上 \\(PR^2=(${rx}-${px})^2+(${ry}-${py})^2=${pr2}\\)。又 \\(LP=${h}\\) 且垂直平面，所以 \\(LR^2=LP^2+PR^2=${h * h}+${pr2}=${lr2}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const h = randInt(3, 9);
+        const d = randInt(4, 12);
+        const answer2 = h * h + d * d;
+        add(
+          `平面上有直線 \\(x=${d}\\)，點 \\(P(0,0)\\)。若 \\(L\\) 在 \\(P\\) 正上方 \\(${h}\\) 單位處，求 \\(L\\) 到直線 \\(x=${d}\\) 上任一點的最短距離。`,
+          `\\(${j61SqrtText(answer2)}\\)`,
+          `先看垂直投影：\\(P\\) 到直線 \\(x=${d}\\) 的最短平面距離為 \\(${d}\\)。空間中還有高度 \\(${h}\\)，所以最短距離平方為 \\(${h}^2+${d}^2=${answer2}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const h = randInt(6, 12);
+        const a = randInt(3, 8);
+        const b = randInt(4, 9);
+        const la2 = h * h + a * a;
+        const lb2 = h * h + b * b;
+        const perimeter = `${j61SqrtText(la2)}+${j61SqrtText(lb2)}+${j61SqrtText(a * a + b * b)}`;
+        add(
+          `直線 \\(LQ\\) 垂直 \\(xy\\) 平面於原點 \\(Q(0,0,0)\\)，且 \\(LQ=${h}\\)。平面上有兩點 \\(A(${a},0)\\)、\\(B(0,${b})\\)，求 \\(\\triangle LAB\\) 的周長。`,
+          `\\(${perimeter}\\)`,
+          `由空間距離得 \\(LA=\\sqrt{${h}^2+${a}^2}=${j61SqrtText(la2)}\\)，\\(LB=\\sqrt{${h}^2+${b}^2}=${j61SqrtText(lb2)}\\)，平面上 \\(AB=${j61SqrtText(a * a + b * b)}\\)。三者相加即為周長。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const x = -randInt(2, 6);
+        const y = randInt(3, 8);
+        const h = randInt(5, 13);
+        const dist2 = x * x + y * y + h * h;
+        add(
+          `點 \\(P(a,b)\\) 在第二象限，距離 \\(x\\) 軸 \\(${y}\\) 單位、距離 \\(y\\) 軸 \\(${Math.abs(x)}\\) 單位。若 \\(L\\) 在 \\(P\\) 正上方 \\(${h}\\) 單位處，求 \\(L\\) 到原點的距離。`,
+          `\\(${j61SqrtText(dist2)}\\)`,
+          `第二象限表示 \\(P=(${x},${y})\\)。所以 \\(OP^2=${x * x}+${y * y}\\)，再加上高度 \\(${h}\\)，得 \\(LO^2=${x * x}+${y * y}+${h * h}=${dist2}\\)。`
+        );
+        continue;
+      }
+      const r = randInt(3, 10);
+      const h = randInt(4, 12);
+      const lr2 = r * r + h * h;
+      add(
+        `已知 \\(LP\\perp\\) 平面於 \\(P\\)，平面上有一圓以 \\(P\\) 為圓心、半徑為 \\(${r}\\)。若點 \\(R\\) 在圓周上且 \\(LP=${h}\\)，求 \\(LR\\)。`,
+        `\\(${j61SqrtText(lr2)}\\)`,
+        `因為 \\(R\\) 在以 \\(P\\) 為圓心的圓上，所以 \\(PR=${r}\\)。又 \\(LP\\perp\\) 平面，\\(LR^2=LP^2+PR^2=${h * h}+${r * r}=${lr2}\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ621SpatialAreaTrigAdvancedSet(count) {
+    const { questions, summaryAnswers, answers, add } = j61ManualSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const triple = [[3, 4, 5], [5, 12, 13], [6, 8, 10]][randInt(0, 2)];
+        const lp = triple[0];
+        const pq = triple[1];
+        const lq = triple[2];
+        const qr = randInt(6, 14);
+        const area = j61FractionText(lq * qr, 2);
+        add(
+          `在標準三垂線配置中，\\(LP=${lp}\\)、\\(PQ=${pq}\\)、\\(QR=${qr}\\)，且 \\(LP\\perp\\) 平面、\\(PQ\\perp QR\\)。求 \\(\\triangle LQR\\) 的面積。`,
+          `\\(${area}\\)`,
+          `先算 \\(LQ=\\sqrt{LP^2+PQ^2}=\\sqrt{${lp * lp}+${pq * pq}}=${lq}\\)。由三垂線關係，\\(LQ\\perp QR\\)，所以面積為 \\(\\frac12\\cdot LQ\\cdot QR=\\frac12\\cdot${lq}\\cdot${qr}=${area}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const lp = randInt(3, 9);
+        const pq = randInt(4, 12);
+        add(
+          `已知 \\(LP\\perp\\) 平面 \\(S\\)，\\(Q\\) 在平面上且 \\(PQ=${pq}\\)、\\(LP=${lp}\\)。求直線 \\(LQ\\) 與平面 \\(S\\) 所成角 \\(\\theta\\) 的 \\(\\tan\\theta\\)。`,
+          `\\(\\tan\\theta=${j61FractionText(lp, pq)}\\)`,
+          `直線與平面所成角可看成 \\(LQ\\) 與其平面投影 \\(PQ\\) 的夾角。在直角三角形 \\(LPQ\\) 中，\\(\\tan\\theta=\\frac{LP}{PQ}=\\frac{${lp}}{${pq}}=${j61FractionText(lp, pq)}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const [lp, pq, lq] = [[6, 8, 10], [5, 12, 13], [8, 15, 17]][randInt(0, 2)];
+        add(
+          `已知 \\(LP\\perp\\) 平面，\\(LP=${lp}\\)、\\(PQ=${pq}\\)、\\(QR=${lq}\\)，且 \\(PQ\\perp QR\\)。判斷 \\(\\triangle LQR\\) 是銳角、直角或鈍角三角形。`,
+          `直角三角形`,
+          `先得 \\(LQ^2=LP^2+PQ^2=${lp * lp}+${pq * pq}=${lq * lq}\\)，所以 \\(LQ=${lq}\\)。又 \\(QR=${lq}\\)，而 \\(LR^2=LP^2+PQ^2+QR^2=${2 * lq * lq}\\)。因此 \\(LQ^2+QR^2=LR^2\\)，為直角三角形。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const lp = randInt(4, 10);
+        const p = randInt(3, 8);
+        const q = randInt(4, 9);
+        const volume = (lp * p * q) / 6;
+        add(
+          `四面體 \\(L-PQR\\) 中，\\(LP\\perp\\) 底面 \\(PQR\\)，且 \\(\\triangle PQR\\) 為直角三角形，兩股為 \\(${p}\\)、\\(${q}\\)。若 \\(LP=${lp}\\)，求四面體體積。`,
+          `\\(${j61FractionText(lp * p * q, 6)}\\)`,
+          `底面積為 \\(\\frac12\\cdot${p}\\cdot${q}\\)，高為 \\(LP=${lp}\\)。四面體體積為 \\(\\frac13\\times 底面積\\times 高=\\frac{${lp * p * q}}{6}=${j61FractionText(lp * p * q, 6)}\\)。`
+        );
+        continue;
+      }
+      const lp = randInt(3, 9);
+      const pq = randInt(4, 10);
+      const qr = randInt(6, 15);
+      const lpqArea = (lp * pq) / 2;
+      const lq2 = lp * lp + pq * pq;
+      const lqrAreaText = j61FractionText(qr, 2) === `${qr / 2}` ? `${(qr / 2)}${j61SqrtText(lq2)}` : `\\frac{${qr}${j61SqrtText(lq2)}}{2}`;
+      add(
+        `在三垂線配置中，\\(LP=${lp}\\)、\\(PQ=${pq}\\)、\\(QR=${qr}\\)，且 \\(LP\\perp\\) 平面、\\(PQ\\perp QR\\)。求 \\(\\triangle LPQ\\) 與 \\(\\triangle LQR\\) 的面積。`,
+        `\\([LPQ]=${j61FractionText(lp * pq, 2)}\\)，\\([LQR]=${lqrAreaText}\\)`,
+        `\\(\\triangle LPQ\\) 為直角三角形，面積 \\(=\\frac12\\cdot${lp}\\cdot${pq}=${j61FractionText(lp * pq, 2)}\\)。又 \\(LQ=${j61SqrtText(lq2)}\\)，且 \\(LQ\\perp QR\\)，所以 \\([LQR]=\\frac12\\cdot${qr}\\cdot${j61SqrtText(lq2)}=${lqrAreaText}\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ621RealWorldBoxGeometrySet(count) {
+    const { questions, summaryAnswers, answers, add } = j61ManualSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const h = randInt(6, 18);
+        const ground = randInt(4, 15);
+        const wall = randInt(2, h - 1);
+        const dist2 = ground * ground + (h - wall) * (h - wall);
+        add(
+          `旗桿高 \\(${h}\\) 公尺，影子先落在地面 \\(${ground}\\) 公尺後折到牆上，牆上的影長為 \\(${wall}\\) 公尺。求旗桿頂端到牆面影子末端的直線距離。`,
+          `\\(${j61SqrtText(dist2)}\\) 公尺`,
+          `牆面影子末端比旗桿頂端低 \\(${h}-${wall}=${h - wall}\\) 公尺，水平距離為 \\(${ground}\\) 公尺。直線距離平方為 \\(${ground}^2+${h - wall}^2=${dist2}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const l = randInt(8, 20);
+        const w = randInt(3, 10);
+        const h = randInt(3, 10);
+        const straight2 = l * l + w * w + h * h;
+        const surfaceOptions = [
+          (l + w) * (l + w) + h * h,
+          (l + h) * (l + h) + w * w,
+          (w + h) * (w + h) + l * l,
+        ];
+        const surface2 = Math.min(...surfaceOptions);
+        add(
+          `一個長方體長 \\(${l}\\)、寬 \\(${w}\\)、高 \\(${h}\\)。比較從一個頂點到對角頂點的空間直線距離與沿表面最短路徑。`,
+          `直線 \\(${j61SqrtText(straight2)}\\)，表面最短 \\(${j61SqrtText(surface2)}\\)`,
+          `空間直線距離為 \\(\\sqrt{${l}^2+${w}^2+${h}^2}=${j61SqrtText(straight2)}\\)。表面路徑要展開兩個面，取 \\((長+寬,高)\\)、\\((長+高,寬)\\)、\\((寬+高,長)\\) 三種展開的最小值，得 \\(${j61SqrtText(surface2)}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const pole = randInt(8, 18);
+        const attach = randInt(3, pole - 2);
+        const horizontal = randInt(5, 16);
+        const len2 = (pole - attach) ** 2 + horizontal * horizontal;
+        add(
+          `電線桿高 \\(${pole}\\) 公尺，支架固定在離地 \\(${attach}\\) 公尺處，斜拉線連到地面錨點，錨點與電線桿水平距離 \\(${horizontal}\\) 公尺。求斜拉線長度。`,
+          `\\(${j61SqrtText(len2)}\\) 公尺`,
+          `斜拉線、水平距離與高度差形成直角三角形。高度差為 \\(${pole}-${attach}=${pole - attach}\\)，所以長度為 \\(\\sqrt{${pole - attach}^2+${horizontal}^2}=${j61SqrtText(len2)}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const horizontal = randInt(6, 20);
+        const height = randInt(4, 15);
+        const dist2 = horizontal * horizontal + height * height;
+        add(
+          `雷達站在地面點 \\(P\\)，目標物在空間點 \\(L\\)。若目標物的垂直投影為 \\(Q\\)，且 \\(PQ=${horizontal}\\)、\\(LQ=${height}\\)，求雷達到目標物的直線距離。`,
+          `\\(${j61SqrtText(dist2)}\\)`,
+          `\\(LQ\\) 是垂直高度，\\(PQ\\) 是水平距離，所以 \\(PL^2=PQ^2+LQ^2=${horizontal * horizontal}+${height * height}=${dist2}\\)。`
+        );
+        continue;
+      }
+      const ladder = randInt(10, 20);
+      const foot1 = randInt(3, ladder - 5);
+      const foot2 = foot1 + randInt(1, Math.min(4, ladder - foot1 - 1));
+      const top1 = j61SqrtText(ladder * ladder - foot1 * foot1);
+      const top2 = j61SqrtText(ladder * ladder - foot2 * foot2);
+      add(
+        `梯子長 \\(${ladder}\\) 公尺靠在牆角。若梯腳原本離牆 \\(${foot1}\\) 公尺，後來滑到離牆 \\(${foot2}\\) 公尺，求梯頂高度由多少變為多少。`,
+        `由 \\(${top1}\\) 變為 \\(${top2}\\)`,
+        `梯子、牆面與地面形成直角三角形。原高度為 \\(\\sqrt{${ladder}^2-${foot1}^2}=${top1}\\)，滑動後高度為 \\(\\sqrt{${ladder}^2-${foot2}^2}=${top2}\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ621ComplexPerpendicularPathsSet(count) {
+    const { questions, summaryAnswers, answers, add } = j61ManualSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const lp = randInt(3, 9);
+        const pq = randInt(4, 12);
+        const qr = randInt(2, 10);
+        const rs = randInt(3, 11);
+        const ls2 = lp * lp + pq * pq + qr * qr + rs * rs;
+        add(
+          `若 \\(LP\\perp\\) 平面，且平面上的折線滿足 \\(PQ\\perp QR\\)、\\(QR\\perp RS\\)。已知 \\(LP=${lp}\\)、\\(PQ=${pq}\\)、\\(QR=${qr}\\)、\\(RS=${rs}\\)，求 \\(LS\\)。`,
+          `\\(${j61SqrtText(ls2)}\\)`,
+          `每一段都沿互相垂直的方向累加，因此距離平方為四段平方和：\\(LS^2=${lp * lp}+${pq * pq}+${qr * qr}+${rs * rs}=${ls2}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const s = randInt(3, 12);
+        const answer = `${s}\\sqrt6/3`;
+        add(
+          `正方體 \\(ABCD-EFGH\\) 的邊長為 \\(${s}\\)。求頂點 \\(A\\) 到空間對角線 \\(BH\\) 的最短距離。`,
+          `\\(${answer}\\)`,
+          `設 \\(A(0,0,0)\\)、\\(B(${s},0,0)\\)、\\(H(0,${s},${s})\\)。點到直線距離可由垂足或向量計算，結果為 \\(\\sqrt{${2 * s * s}/3}=\\frac{${s}\\sqrt6}{3}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const side = [6, 8, 10, 12][randInt(0, 3)];
+        const pa = randInt(3, 9);
+        const baseAlt2 = (3 * side * side) / 4;
+        const dist2 = pa * pa + baseAlt2;
+        add(
+          `已知 \\(\\triangle ABC\\) 為邊長 \\(${side}\\) 的正三角形，且 \\(PA\\perp\\) 平面 \\(ABC\\)、\\(PA=${pa}\\)。求點 \\(P\\) 到 \\(BC\\) 的距離。`,
+          `\\(${j61SqrtText(dist2)}\\)`,
+          `點 \\(P\\) 到 \\(BC\\) 的最短距離會落在 \\(A\\) 到 \\(BC\\) 的高所在平面。正三角形高平方為 \\(\\frac34\\cdot${side}^2=${baseAlt2}\\)，所以距離平方為 \\(${pa}^2+${baseAlt2}=${dist2}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const r = randInt(6, 14);
+        const h = randInt(2, r - 1);
+        const side2 = r * r + h * h;
+        const top = r - h;
+        add(
+          `在半徑為 \\(${r}\\) 的半球內，底面圓心處有一根垂直底面的支柱，高 \\(${h}\\)。求支柱頂端到球面頂點的距離，以及到底面圓周上任一點的距離。`,
+          `到頂點 \\(${top}\\)，到底面圓周 \\(${j61SqrtText(side2)}\\)`,
+          `球面頂點在支柱正上方，距離為 \\(${r}-${h}=${top}\\)。到底面圓周任一點時，水平半徑為 \\(${r}\\)、高度為 \\(${h}\\)，距離為 \\(\\sqrt{${r}^2+${h}^2}=${j61SqrtText(side2)}\\)。`
+        );
+        continue;
+      }
+      const a = randInt(2, 9);
+      add(
+        `空間中四點 \\(L,P,Q,R\\) 滿足 \\(LP=PQ=QR=${a}\\)，且三段方向兩兩垂直。求 \\(LR\\)。`,
+        `\\(${a}\\sqrt3\\)`,
+        `三段等長且兩兩垂直，因此 \\(LR^2=${a}^2+${a}^2+${a}^2=3${a * a}\\)，所以 \\(LR=${a}\\sqrt3\\)。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3508,6 +4215,391 @@
     return { questions, summaryAnswers, answers };
   }
 
+  function j63NewManualSet() {
+    return { questions: [], summaryAnswers: [], answers: [] };
+  }
+
+  function j63Add(set, question, summary, detail) {
+    set.questions.push(question);
+    set.summaryAnswers.push(summary);
+    set.answers.push(`答案：${summary}<br>詳解：${detail}`);
+  }
+
+  function j63SignedPercent(value) {
+    return `${value > 0 ? '+' : ''}${value}\\%`;
+  }
+
+  function j63Table(rows) {
+    return rows.map((row) => row.join('：')).join('，');
+  }
+
+  function j63IndexOfMax(values) {
+    let index = 0;
+    for (let i = 1; i < values.length; i += 1) {
+      if (values[i] > values[index]) index = i;
+    }
+    return index;
+  }
+
+  function j63IndexOfMin(values) {
+    let index = 0;
+    for (let i = 1; i < values.length; i += 1) {
+      if (values[i] < values[index]) index = i;
+    }
+    return index;
+  }
+
+  function buildJ631DataVisualizationLogicAdvancedSet(count) {
+    const set = j63NewManualSet();
+    const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月'];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const angleDiff = [36, 45, 60, 72, 90][randInt(0, 4)];
+        const diffPeople = randInt(6, 24);
+        const total = (diffPeople * 360) / angleDiff;
+        const smaller = randInt(36, 150 - angleDiff);
+        const larger = smaller + angleDiff;
+        j63Add(
+          set,
+          `圓餅圖中，「籃球社」比「排球社」多 \\(${diffPeople}\\) 人，兩者圓心角分別為 \\(${larger}^\\circ\\)、\\(${smaller}^\\circ\\)。求受訪總人數。`,
+          `\\(${total}\\) 人`,
+          `兩類人數差對應的圓心角差為 \\(${larger}-${smaller}=${angleDiff}^\\circ\\)。所以 \\(\\frac{${angleDiff}}{360}\\) 個全體就是 \\(${diffPeople}\\) 人，總人數 \\(=${diffPeople}\\times\\frac{360}{${angleDiff}}=${total}\\)。`
+        );
+      } else if (mode === 1) {
+        const added = randInt(8, 35);
+        const originalTotal = added * 4;
+        const itemCount = originalTotal / 4;
+        const newTotal = originalTotal + added;
+        j63Add(
+          set,
+          `某問卷原本 A 項佔 \\(25\\%\\)。加入 \\(${added}\\) 筆「非 A 項」的新資料後，A 項百分比變為 \\(20\\%\\)。求原始總資料筆數。`,
+          `\\(${originalTotal}\\) 筆`,
+          `設原始總數為 \\(x\\)，A 項有 \\(0.25x\\) 筆。加入的資料不是 A 項，所以 \\(0.25x=0.20(x+${added})\\)，解得 \\(x=${originalTotal}\\)。檢查：A 項 \\(${itemCount}\\) 筆，新總數 \\(${newTotal}\\) 筆，\\(${itemCount}/${newTotal}=20\\%\\)。`
+        );
+      } else if (mode === 2) {
+        const rates = shuffle([-4, -2, 0, 5, 8, 10]);
+        const rows = monthNames.map((name, index) => [name, j63SignedPercent(rates[index])]);
+        const maxIndex = j63IndexOfMax(rates);
+        const minIndex = j63IndexOfMin(rates);
+        j63Add(
+          set,
+          `某網站連續六個月的成長率如下：${j63Table(rows)}。求這半年成長率最高與最低的月份。`,
+          `最高：${monthNames[maxIndex]}，最低：${monthNames[minIndex]}`,
+          `折線圖或成長率表要比較的是「變化量本身」。最大值為 \\(${j63SignedPercent(rates[maxIndex])}\\)，在${monthNames[maxIndex]}；最小值為 \\(${j63SignedPercent(rates[minIndex])}\\)，在${monthNames[minIndex]}。`
+        );
+      } else if (mode === 3) {
+        const ratios = [
+          [2, 3, 4],
+          [3, 4, 5],
+          [1, 2, 3],
+          [4, 5, 6],
+        ][randInt(0, 3)];
+        const fourthAngle = [40, 60, 72, 90][randInt(0, 3)];
+        const ratioSum = ratios.reduce((sum, value) => sum + value, 0);
+        const remainingAngle = 360 - fourthAngle;
+        const baseDen = 360 * ratioSum;
+        const baseNum = remainingAngle * ratios[0];
+        const unit = baseDen / gcd(baseDen, baseNum);
+        const total = unit * randInt(2, 5);
+        const firstCount = (total * baseNum) / baseDen;
+        j63Add(
+          set,
+          `已知前三項圓餅圖比例為 \\(${ratios.join(':')}\\)，第四項圓心角為 \\(${fourthAngle}^\\circ\\)。若總人數為 \\(${total}\\) 人，求第一項人數。`,
+          `\\(${firstCount}\\) 人`,
+          `前三項合計角度為 \\(360^\\circ-${fourthAngle}^\\circ=${remainingAngle}^\\circ\\)。第一項佔前三項的 \\(\\frac{${ratios[0]}}{${ratioSum}}\\)，所以第一項人數 \\(=${total}\\times\\frac{${remainingAngle}}{360}\\times\\frac{${ratios[0]}}{${ratioSum}}=${firstCount}\\)。`
+        );
+      } else {
+        const base = randInt(80, 130);
+        const deltas = shuffle([12, -8, 20, -15, 6]);
+        const counts = [base];
+        deltas.forEach((delta) => counts.push(counts[counts.length - 1] + delta));
+        const rows = monthNames.map((name, index) => [name, `${counts[index]}人`]);
+        const maxDeltaIndex = j63IndexOfMax(deltas) + 1;
+        const minDeltaIndex = j63IndexOfMin(deltas) + 1;
+        j63Add(
+          set,
+          `下表是某社團一月至六月的人數：${j63Table(rows)}。求單月增加最多與減少最多分別發生在哪個月份。`,
+          `增加最多：${monthNames[maxDeltaIndex]}，減少最多：${monthNames[minDeltaIndex]}`,
+          `先看相鄰月份差：${deltas.map((delta, index) => `${monthNames[index]}到${monthNames[index + 1]}為${delta > 0 ? '+' : ''}${delta}`).join('，')}。最大正差是 \\(${deltas[maxDeltaIndex - 1]}\\)，所以增加最多在${monthNames[maxDeltaIndex]}；最小負差是 \\(${deltas[minDeltaIndex - 1]}\\)，所以減少最多在${monthNames[minDeltaIndex]}。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildJ632QuartileAnalysisAdvancedSet(count) {
+    const set = j63NewManualSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const percentile = [70, 75, 80, 90][randInt(0, 3)];
+        const below = percentile - randInt(4, 12);
+        const groupStart = [70, 80, 90][randInt(0, 2)];
+        const groupEnd = groupStart + 10;
+        const minInGroup = percentile - below;
+        j63Add(
+          set,
+          `一組 \\(100\\) 筆資料中，第 \\(${percentile}\\) 百分位數落在 \\(${groupStart}\\) 到 \\(${groupEnd}\\) 這一組。若低於 \\(${groupStart}\\) 的資料共有 \\(${below}\\) 人，求 \\(${groupStart}\\) 到 \\(${groupEnd}\\) 這組至少有幾人。`,
+          `至少 \\(${minInGroup}\\) 人`,
+          `第 \\(${percentile}\\) 百分位數可先看第 \\(${percentile}\\) 筆附近的位置。低於 \\(${groupStart}\\) 已有 \\(${below}\\) 人，因此這一組至少要補到第 \\(${percentile}\\) 筆，最少為 \\(${percentile}-${below}=${minInGroup}\\) 人。`
+        );
+      } else if (mode === 1) {
+        const q1 = randInt(20, 50);
+        const q3 = q1 + randInt(18, 40);
+        const multiple = randInt(2, 4);
+        const add = randInt(3, 12);
+        const newQ1 = q1 * multiple + add;
+        const newQ3 = q3 * multiple + add;
+        const newIqr = (q3 - q1) * multiple;
+        j63Add(
+          set,
+          `某組資料的 \\(Q_1=${q1}\\)、\\(Q_3=${q3}\\)。若所有數值都乘以 \\(${multiple}\\) 再加 \\(${add}\\)，求新資料的 \\(Q_1\\)、\\(Q_3\\) 與四分位距。`,
+          `\\(Q_1=${newQ1},Q_3=${newQ3}\\)，四分位距 \\(${newIqr}\\)`,
+          `四分位數會跟著同樣線性變換：新 \\(Q_1=${q1}\\times${multiple}+${add}=${newQ1}\\)，新 \\(Q_3=${q3}\\times${multiple}+${add}=${newQ3}\\)。四分位距只受乘法影響，\\((Q_3-Q_1)\\times${multiple}=(${q3}-${q1})\\times${multiple}=${newIqr}\\)。`
+        );
+      } else if (mode === 2) {
+        const labels = ['40-50', '50-60', '60-70', '70-80', '80-90'];
+        const counts = [randInt(2, 6), randInt(4, 9), randInt(8, 14), randInt(6, 12), randInt(2, 7)];
+        const total = counts.reduce((sum, value) => sum + value, 0);
+        const target = Math.ceil(total * 0.5);
+        let cumulative = 0;
+        let interval = labels[labels.length - 1];
+        for (let index = 0; index < counts.length; index += 1) {
+          cumulative += counts[index];
+          if (cumulative >= target) {
+            interval = labels[index];
+            break;
+          }
+        }
+        j63Add(
+          set,
+          `某累積相對次數分配表的各組次數為：${j63Table(labels.map((label, index) => [label, `${counts[index]}人`]))}。求能達到累積百分比 \\(50\\%\\) 的組距。`,
+          `\\(${interval}\\)`,
+          `總數為 \\(${total}\\) 人，\\(50\\%\\) 位置約在第 \\(${target}\\) 人。由低分組開始累加，第一次達到或超過第 \\(${target}\\) 人的組距就是 \\(${interval}\\)。`
+        );
+      } else if (mode === 3) {
+        const center = randInt(50, 80);
+        const counter = [center - 10, center - 1, center, center + 2, center + 9];
+        j63Add(
+          set,
+          `判斷正誤：若一組資料的 \\(Q_2\\) 剛好等於平均數 \\(${center}\\)，則這組資料一定是對稱分布。`,
+          `不一定`,
+          `\\(Q_2\\) 等於平均數只能表示中心量剛好相同，不能保證左右資料形狀對稱。例如資料 \\(${counter.join(',')}\\) 的中位數與平均數都是 \\(${center}\\)，但只要調整兩側距離或筆數，就可能形成偏態資料。因此不能只靠 \\(Q_2=\\bar{x}\\) 判斷對稱。`
+        );
+      } else {
+        const aQ1 = randInt(35, 55);
+        const aQ3 = aQ1 + randInt(12, 24);
+        const bQ1 = randInt(35, 55);
+        const bQ3 = bQ1 + randInt(25, 40);
+        const aIqr = aQ3 - aQ1;
+        const bIqr = bQ3 - bQ1;
+        const loose = aIqr > bIqr ? 'A 組' : 'B 組';
+        j63Add(
+          set,
+          `兩組資料的盒狀圖摘要如下：A 組 \\(Q_1=${aQ1},Q_3=${aQ3}\\)，B 組 \\(Q_1=${bQ1},Q_3=${bQ3}\\)。比較哪一組中間 \\(50\\%\\) 的資料較分散。`,
+          `${loose}較分散`,
+          `比較中間 \\(50\\%\\) 的分散程度要看四分位距。A 組 \\(IQR=${aQ3}-${aQ1}=${aIqr}\\)，B 組 \\(IQR=${bQ3}-${bQ1}=${bIqr}\\)，所以${loose}的中間資料較分散。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildJ633ProbabilityComplementsAdvancedSet(count) {
+    const set = j63NewManualSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const total = randInt(10, 18);
+        const prizes = randInt(2, Math.min(5, total - 5));
+        const draw = randInt(2, 4);
+        const miss = j623Combination(total - prizes, draw);
+        const all = j623Combination(total, draw);
+        const hit = all - miss;
+        j63Add(
+          set,
+          `抽獎箱中有 \\(${prizes}\\) 張中獎券、\\(${total - prizes}\\) 張不中獎券，連續抽 \\(${draw}\\) 張且不放回。求至少中獎一次的機率。`,
+          `\\(${j623ProbabilityText(hit, all)}\\)`,
+          `用互補事件較快：至少中一次 \\(=1-\\) 全部不中。全部不中的取法有 \\(C_{${total - prizes}}^{${draw}}=${miss}\\)，全部取法有 \\(C_{${total}}^{${draw}}=${all}\\)，所以機率 \\(=1-\\frac{${miss}}{${all}}=${j623ProbabilityText(hit, all)}\\)。`
+        );
+      } else if (mode === 1) {
+        const den = [20, 25, 50][randInt(0, 2)];
+        const num = randInt(1, 3);
+        const trials = randInt(4, 8);
+        j63Add(
+          set,
+          `某產品每件瑕疵率為 \\(${j623ProbabilityText(num, den)}\\)，隨機檢查 \\(${trials}\\) 件且各件互相獨立。寫出「至少有一件瑕疵品」的機率。`,
+          `\\(1-\\left(${j623ProbabilityText(den - num, den)}\\right)^{${trials}}\\)`,
+          `至少一件瑕疵的互補事件是「全部都不是瑕疵品」。單件非瑕疵機率為 \\(${j623ProbabilityText(den - num, den)}\\)，\\(${trials}\\) 件全都非瑕疵為 \\(\\left(${j623ProbabilityText(den - num, den)}\\right)^{${trials}}\\)，所以答案是 \\(1-\\left(${j623ProbabilityText(den - num, den)}\\right)^{${trials}}\\)。`
+        );
+      } else if (mode === 2) {
+        const defectPercent = [2, 4, 5][randInt(0, 2)];
+        const trials = randInt(6, 12);
+        const good = 100 - defectPercent;
+        j63Add(
+          set,
+          `生產線瑕疵率為 \\(${defectPercent}\\%\\)，隨機抽取 \\(${trials}\\) 個產品。請列出「至少有一個瑕疵品」的機率式。`,
+          `\\(1-\\left(\\frac{${good}}{100}\\right)^{${trials}}\\)`,
+          `直接算至少一個會分很多情況，所以改算互補事件。全部不是瑕疵品的機率為 \\(\\left(\\frac{${good}}{100}\\right)^{${trials}}\\)，因此至少一個瑕疵品為 \\(1-\\left(\\frac{${good}}{100}\\right)^{${trials}}\\)。`
+        );
+      } else if (mode === 3) {
+        const dice = randInt(2, 5);
+        const numerator = 6 ** dice - 5 ** dice;
+        const denominator = 6 ** dice;
+        j63Add(
+          set,
+          `同時投擲 \\(${dice}\\) 顆公平骰子，求至少有一顆出現 \\(6\\) 點的機率。`,
+          `\\(${j623ProbabilityText(numerator, denominator)}\\)`,
+          `互補事件是「每一顆都不是 6 點」。一顆不是 6 的機率為 \\(\\frac{5}{6}\\)，所以答案 \\(=1-\\left(\\frac{5}{6}\\right)^{${dice}}=${j623ProbabilityText(numerator, denominator)}\\)。`
+        );
+      } else {
+        const hitNum = [3, 4, 7][randInt(0, 2)];
+        const hitDen = 10;
+        const targetNum = [90, 95, 99][randInt(0, 2)];
+        let shots = 1;
+        while (1 - ((hitDen - hitNum) / hitDen) ** shots <= targetNum / 100) shots += 1;
+        j63Add(
+          set,
+          `某人每發命中率為 \\(${j623ProbabilityText(hitNum, hitDen)}\\)。若要讓「至少命中一發」的機率超過 \\(${targetNum}\\%\\)，至少要射擊幾發？`,
+          `至少 \\(${shots}\\) 發`,
+          `至少命中一發 \\(=1-\\left(${j623ProbabilityText(hitDen - hitNum, hitDen)}\\right)^n\\)。逐步檢查最小整數 \\(n\\)，第一個使 \\(1-\\left(${j623ProbabilityText(hitDen - hitNum, hitDen)}\\right)^n>${targetNum}\\%\\) 成立的是 \\(n=${shots}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildJ633CompoundExperimentsAdvancedSet(count) {
+    const set = j63NewManualSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const aRed = randInt(1, 4);
+        const aTotal = aRed + randInt(2, 5);
+        const bRed = randInt(1, 4);
+        const bTotal = bRed + randInt(2, 5);
+        const numerator = aRed * bTotal + bRed * aTotal;
+        const denominator = 2 * aTotal * bTotal;
+        j63Add(
+          set,
+          `甲袋有 \\(${aRed}\\) 顆紅球、\\(${aTotal - aRed}\\) 顆白球；乙袋有 \\(${bRed}\\) 顆紅球、\\(${bTotal - bRed}\\) 顆白球。先等機率選一袋，再取一球，求取到紅球的機率。`,
+          `\\(${j623ProbabilityText(numerator, denominator)}\\)`,
+          `這是樹狀圖的加法：\\(P(紅)=\\frac12\\cdot\\frac{${aRed}}{${aTotal}}+\\frac12\\cdot\\frac{${bRed}}{${bTotal}}=${j623ProbabilityText(numerator, denominator)}\\)。`
+        );
+      } else if (mode === 1) {
+        const targetParity = i % 2 === 0 ? '偶數' : '奇數';
+        const favorable = 18;
+        j63Add(
+          set,
+          `同時投擲兩顆公平骰子，點數和為${targetParity}的機率為何？`,
+          `\\(\\frac{1}{2}\\)`,
+          `兩顆骰子共有 \\(36\\) 種等可能結果。點數和為${targetParity}有 \\(${favorable}\\) 種，所以機率 \\(=\\frac{${favorable}}{36}=\\frac12\\)。`
+        );
+      } else if (mode === 2) {
+        const sum = randInt(3, 11);
+        const countOnLine = sum <= 7 ? sum - 1 : 13 - sum;
+        j63Add(
+          set,
+          `在座標平面上，點 \\(P(a,b)\\) 由 \\(1\\le a,b\\le6\\) 的整數隨機決定。求 \\(P\\) 落在直線 \\(x+y=${sum}\\) 上的機率。`,
+          `\\(${j623ProbabilityText(countOnLine, 36)}\\)`,
+          `共有 \\(6\\times6=36\\) 個整數點。滿足 \\(a+b=${sum}\\) 的點有 \\(${countOnLine}\\) 個，所以機率為 \\(${j623ProbabilityText(countOnLine, 36)}\\)。`
+        );
+      } else if (mode === 3) {
+        const coins = randInt(3, 6);
+        const heads = randInt(1, coins - 1);
+        const favorable = j623Combination(coins, heads);
+        const total = 2 ** coins;
+        j63Add(
+          set,
+          `同時投擲 \\(${coins}\\) 枚公平硬幣，求剛好出現 \\(${heads}\\) 個正面的機率。`,
+          `\\(${j623ProbabilityText(favorable, total)}\\)`,
+          `所有結果共有 \\(2^{${coins}}=${total}\\) 種。剛好 \\(${heads}\\) 個正面只要選出哪些硬幣為正面，有 \\(C_{${coins}}^{${heads}}=${favorable}\\) 種，所以機率為 \\(${j623ProbabilityText(favorable, total)}\\)。`
+        );
+      } else {
+        const broken = randInt(2, 5);
+        const good = randInt(4, 8);
+        const total = broken + good;
+        const favorable = broken * good;
+        const all = j623Combination(total, 2);
+        j63Add(
+          set,
+          `袋中有 \\(${total}\\) 個燈泡，其中 \\(${broken}\\) 個是壞的。隨機取出 \\(2\\) 個，求「剛好一個好的、一個壞的」的機率。`,
+          `\\(${j623ProbabilityText(favorable, all)}\\)`,
+          `剛好一好一壞的取法為 \\(C_{${good}}^1C_{${broken}}^1=${favorable}\\)，全部取兩個的取法為 \\(C_{${total}}^2=${all}\\)，所以機率 \\(=${j623ProbabilityText(favorable, all)}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildJ632GroupedStatisticsAdvancedSet(count) {
+    const set = j63NewManualSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const marks = [65, 75, 85];
+        const left = randInt(4, 10);
+        const missing = randInt(5, 14);
+        const right = randInt(3, 9);
+        const total = left + missing + right;
+        const weightedSum = marks[0] * left + marks[1] * missing + marks[2] * right;
+        j63Add(
+          set,
+          `某分組次數表的組中點為 \\(${marks.join(',')}\\)，次數依序為 \\(${left},x,${right}\\)。若平均數為 \\(${j61FractionText(weightedSum, total)}\\)，求 \\(x\\)。`,
+          `\\(x=${missing}\\)`,
+          `用加權平均：\\(\\frac{${marks[0]}\\cdot${left}+${marks[1]}x+${marks[2]}\\cdot${right}}{${left}+x+${right}}=${j61FractionText(weightedSum, total)}\\)。代入整理可得 \\(x=${missing}\\)。`
+        );
+      } else if (mode === 1) {
+        const range = [35, 45, 52, 67][randInt(0, 3)];
+        const width = [5, 10, 12][randInt(0, 2)];
+        const groups = Math.ceil(range / width);
+        j63Add(
+          set,
+          `在「含下限、不含上限」的分組中，一組資料全距為 \\(${range}\\)，組距為 \\(${width}\\)。最少需要分成幾組？`,
+          `\\(${groups}\\) 組`,
+          `最少組數要讓所有組距加起來能覆蓋全距，所以用無條件進位：\\(\\lceil ${range}/${width}\\rceil=${groups}\\)。含下限、不含上限時，端點資料也要確認被放進最後一組。`
+        );
+      } else if (mode === 2) {
+        const marks = [55, 65, 75, 85];
+        const counts = [randInt(2, 7), randInt(4, 10), randInt(5, 12), randInt(2, 8)];
+        const total = counts.reduce((sum, value) => sum + value, 0);
+        const weightedSum = marks.reduce((sum, mark, index) => sum + mark * counts[index], 0);
+        j63Add(
+          set,
+          `計算下列分組資料的加權平均數：${j63Table(marks.map((mark, index) => [`組中點${mark}`, `${counts[index]}人`]))}。`,
+          `\\(${j61FractionText(weightedSum, total)}\\)`,
+          `分組平均要用組中點代表各組資料，\\(\\bar{x}=\\frac{${marks.map((mark, index) => `${mark}\\cdot${counts[index]}`).join('+')}}{${total}}=${j61FractionText(weightedSum, total)}\\)。`
+        );
+      } else if (mode === 3) {
+        const total = [40, 60, 80][randInt(0, 2)];
+        const belowPercent = [20, 30, 40][randInt(0, 2)];
+        const abovePercent = [10, 20][randInt(0, 1)];
+        const middlePercent = 100 - belowPercent - abovePercent;
+        const middle = (total * middlePercent) / 100;
+        j63Add(
+          set,
+          `某班成績分組中，低於 \\(60\\) 分佔 \\(${belowPercent}\\%\\)，\\(80\\) 分以上佔 \\(${abovePercent}\\%\\)。若總人數為 \\(${total}\\) 人，求 \\(60\\) 到 \\(80\\) 分的人數。`,
+          `\\(${middle}\\) 人`,
+          `中間組百分比為 \\(100\\%-${belowPercent}\\%-${abovePercent}\\%=${middlePercent}\\%\\)。所以人數 \\(=${total}\\times${middlePercent}\\%=${middle}\\)。`
+        );
+      } else {
+        const labels = ['50-60', '60-70', '70-80', '80-90'];
+        const aCounts = [randInt(3, 8), randInt(8, 14), randInt(12, 20), randInt(4, 10)];
+        const bCounts = [randInt(4, 10), randInt(12, 20), randInt(8, 14), randInt(3, 8)];
+        const aMode = labels[j63IndexOfMax(aCounts)];
+        const bMode = labels[j63IndexOfMax(bCounts)];
+        j63Add(
+          set,
+          `甲、乙兩班的分組長條圖次數如下：甲班 ${j63Table(labels.map((label, index) => [label, `${aCounts[index]}人`]))}；乙班 ${j63Table(labels.map((label, index) => [label, `${bCounts[index]}人`]))}。判斷兩班眾數組並說明意義。`,
+          `甲班眾數組 \\(${aMode}\\)，乙班眾數組 \\(${bMode}\\)`,
+          `眾數組就是次數最高的組距。甲班最高次數落在 \\(${aMode}\\)，乙班最高次數落在 \\(${bMode}\\)。它表示該班最多學生集中在那個分數區間。`
+        );
+      }
+    }
+    return set;
+  }
+
   function deriveSummaryAnswerFromDetail(detail) {
     const text = String(detail || '')
       .replace(/<br\s*\/?>/gi, ' ')
@@ -3685,6 +4777,15 @@
         return buildJ611ParabolaModelingSet(5);
       },
     },
+    'j6-1-1-quadratic-property-logic-advanced': {
+      type: 'drill',
+      title: '二次函數性質的綜合逆推',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ611QuadraticPropertyLogicAdvancedSet(5);
+      },
+    },
     'j6-1-2-vertex-form-extrema-three-subtypes': {
       type: 'drill',
       title: '頂點式、配方法與極值判定綜合',
@@ -3784,6 +4885,15 @@
         return buildJ612PointAfterTranslationSet(5);
       },
     },
+    'j6-1-2-advanced-translation-vertex-track': {
+      type: 'drill',
+      title: '多重平移與頂點軌跡',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ612AdvancedTranslationVertexTrackSet(5);
+      },
+    },
     'j6-1-2-x-axis-intersection-three-subtypes': {
       type: 'drill',
       title: '與 x 軸交點與判別式綜合',
@@ -3818,6 +4928,15 @@
       questionCount: 5,
       generate() {
         return buildJ612VertexPositionIntersectionSet(5);
+      },
+    },
+    'j6-1-2-intersection-constraint-advanced': {
+      type: 'drill',
+      title: '判別式與交點關係',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ612IntersectionConstraintAdvancedSet(5);
       },
     },
     'j6-1-3-algebra-extrema-three-subtypes': {
@@ -3919,6 +5038,15 @@
         return buildJ613WaterChannelWidthSet(5);
       },
     },
+    'j6-1-3-parabolic-modeling-advanced': {
+      type: 'drill',
+      title: '拋物線幾何建模',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ613ParabolicModelingAdvancedSet(5);
+      },
+    },
     'j6-1-3-business-production-three-subtypes': {
       type: 'drill',
       title: '利潤策略、票價收入與產量決策綜合',
@@ -3953,6 +5081,15 @@
       questionCount: 5,
       generate() {
         return buildJ613OrchardYieldSet(5);
+      },
+    },
+    'j6-1-3-optimization-constraint-advanced': {
+      type: 'drill',
+      title: '約束條件下的極值應用',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ613OptimizationConstraintAdvancedSet(5);
       },
     },
     'j6-2-1-spatial-distance-four-subtypes': {
@@ -4061,6 +5198,51 @@
       questionCount: 5,
       generate() {
         return buildJ621CompositeSolidVolumeSet(5);
+      },
+    },
+    'j6-2-1-inverse-spatial-distance-advanced': {
+      type: 'drill',
+      title: '空間距離的逆向推導',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ621InverseSpatialDistanceAdvancedSet(5);
+      },
+    },
+    'j6-2-1-coordinate-spatial-hybrid': {
+      type: 'drill',
+      title: '座標平面與空間點位的結合',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ621CoordinateSpatialHybridSet(5);
+      },
+    },
+    'j6-2-1-spatial-area-trig-advanced': {
+      type: 'drill',
+      title: '空間圖形的面積與角度判定',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ621SpatialAreaTrigAdvancedSet(5);
+      },
+    },
+    'j6-2-1-real-world-box-geometry': {
+      type: 'drill',
+      title: '生活情境與建模',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ621RealWorldBoxGeometrySet(5);
+      },
+    },
+    'j6-2-1-complex-perpendicular-paths': {
+      type: 'drill',
+      title: '多重垂直與複合路徑',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ621ComplexPerpendicularPathsSet(5);
       },
     },
     'j6-2-2-basic-surface-volume-three-subtypes': {
@@ -4450,6 +5632,24 @@
         return buildJ623RockPaperScissorsSet(5);
       },
     },
+    'j6-3-3-probability-complements-advanced': {
+      type: 'drill',
+      title: '互補事件與至少一次的連鎖邏輯',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ633ProbabilityComplementsAdvancedSet(5);
+      },
+    },
+    'j6-3-3-compound-experiments-advanced': {
+      type: 'drill',
+      title: '兩步試驗與幾何機率',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ633CompoundExperimentsAdvancedSet(5);
+      },
+    },
     'j6-3-1-frequency-distribution-eight-subtypes': {
       type: 'drill',
       title: '次數分配、統計圖表與抽樣估計綜合',
@@ -4585,6 +5785,15 @@
         return buildJ631PiePercentilePositionSet(5);
       },
     },
+    'j6-3-1-data-visualization-logic-advanced': {
+      type: 'drill',
+      title: '圓餅圖與折線圖的動態邏輯',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ631DataVisualizationLogicAdvancedSet(5);
+      },
+    },
     'j6-3-2-central-tendency-six-subtypes': {
       type: 'drill',
       title: '平均數、中位數、眾數與加權平均綜合',
@@ -4657,6 +5866,15 @@
         return buildJ632QuartileBoxplotMixedSet(7);
       },
     },
+    'j6-3-2-quartile-analysis-advanced': {
+      type: 'drill',
+      title: '四分位數與百分位數的深度應用',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ632QuartileAnalysisAdvancedSet(5);
+      },
+    },
     'j6-3-2-five-number-range-iqr': {
       type: 'drill',
       title: '五數摘要的全距與四分位距',
@@ -4720,9 +5938,18 @@
         return buildJ632SortedDataPercentileSet(5);
       },
     },
+    'j6-3-2-grouped-statistics-advanced': {
+      type: 'drill',
+      title: '分組資料與統計測量',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildJ632GroupedStatisticsAdvancedSet(5);
+      },
+    },
   };
 
-  const bundleFingerprint = 'j6-bundle-v20260706-summary-v1';
+  const bundleFingerprint = 'j6-bundle-v20260708-j63-extension-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

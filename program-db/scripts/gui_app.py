@@ -292,10 +292,22 @@ def deduplicate_text_lines(text: str) -> tuple[str, int, int]:
 class DualDbGui:
     PRACTICE_MODES = {"practice_records"}
 
+    def _maximize_window(self, window):
+        try:
+            window.state("zoomed")
+            return
+        except tk.TclError:
+            pass
+        try:
+            window.attributes("-zoomed", True)
+        except tk.TclError:
+            pass
+
     def __init__(self, root: tk.Tk):
         self.root = root
         self.root.title("Formula / Question DB 管理介面")
         self.root.geometry("1380x800")
+        self.root.after(0, lambda: self._maximize_window(self.root))
 
         self.mode = "topics"
         self.topic_payload = {"meta": {}, "topics": []}
@@ -4457,7 +4469,51 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             },
             key=chapter_sort_key,
         )
-        chapter_labels = [self._chapter_label(code) for code in chapter_codes]
+        chapter_labels_by_code = {code: self._chapter_label(code) for code in chapter_codes}
+
+        def source_category_for_code(code):
+            text = str(code or "").strip().lower()
+            match = re.match(r"^([a-z]+)(\d+)-", text)
+            if not match:
+                return "其他"
+            prefix, raw_number = match.group(1), int(match.group(2))
+            if prefix == "e":
+                return {4: "小四", 5: "小五", 6: "小六"}.get(raw_number, "國小")
+            if prefix == "j":
+                if raw_number in {1, 2}:
+                    return "國一"
+                if raw_number in {3, 4}:
+                    return "國二"
+                if raw_number in {5, 6}:
+                    return "國三"
+                return "國中複習"
+            if prefix == "s":
+                if raw_number in {1, 2}:
+                    return "高一"
+                if raw_number in {3, 4}:
+                    return "高二"
+                if raw_number in {5, 6}:
+                    return "高三"
+                return "高中複習"
+            return "其他"
+
+        def source_category_matches(filter_value, code):
+            category = source_category_for_code(code)
+            text = str(code or "").strip().lower()
+            if filter_value in {"", "全部分類"}:
+                return True
+            if filter_value == "國小":
+                return text.startswith("e")
+            if filter_value == "國中複習":
+                return text.startswith("j")
+            if filter_value == "高中複習":
+                return text.startswith("s")
+            return category == filter_value
+
+        source_category_options = ["全部分類", "國小", "國中複習", "高中複習"]
+        for category in ["小四", "小五", "小六", "國一", "國二", "國三", "高一", "高二", "高三", "其他"]:
+            if any(source_category_for_code(code) == category for code in chapter_codes):
+                source_category_options.append(category)
 
         dialog = tk.Toplevel(self.root)
         dialog.title("自訂主題串")
@@ -4465,6 +4521,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         dialog.grab_set()
         dialog.geometry("1080x680")
         dialog.minsize(920, 560)
+        dialog.after(0, lambda: self._maximize_window(dialog))
 
         state = {"chain": None, "items": [], "chapter_practice_ids": []}
         status_var = tk.StringVar(value="選擇或新增一個自訂主題串。")
@@ -4472,35 +4529,111 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         # ── 上排：主題串選擇與管理 ──
         top = ttk.Frame(dialog, padding=12)
         top.pack(fill="x")
-        ttk.Label(top, text="自訂主題串").pack(side="left")
-        chain_combo = ttk.Combobox(top, state="readonly", width=36)
-        chain_combo.pack(side="left", padx=(8, 12))
-        title_var = tk.StringVar(value="")
-        ttk.Label(top, text="名稱").pack(side="left")
-        title_entry = ttk.Entry(top, textvariable=title_var, width=24)
-        title_entry.pack(side="left", padx=(6, 8))
 
-        CATEGORY_OPTIONS = ["自訂", "複習必做", "章節重點"]
+        BASE_CATEGORY_OPTIONS = ["自訂", "中等練習", "複習必做", "章節重點"]
         GRADE_OPTIONS = [
             "全部年級", "國中複習", "高中複習", "國中章節重點", "高中章節重點",
             "小五", "小六", "國一", "國二", "國三", "高一", "高二", "高三", "其他",
         ]
+        chain_filter_category_var = tk.StringVar(value="全部分類")
+        chain_filter_grade_var = tk.StringVar(value="全部年級")
         category_var = tk.StringVar(value="自訂")
         grade_var = tk.StringVar(value="全部年級")
+
+        ttk.Label(top, text="篩分類").pack(side="left")
+        chain_filter_category_combo = ttk.Combobox(
+            top,
+            textvariable=chain_filter_category_var,
+            state="readonly",
+            width=12,
+        )
+        chain_filter_category_combo.pack(side="left", padx=(6, 8))
+        ttk.Label(top, text="篩年級").pack(side="left")
+        chain_filter_grade_combo = ttk.Combobox(
+            top,
+            textvariable=chain_filter_grade_var,
+            state="readonly",
+            width=12,
+        )
+        chain_filter_grade_combo.pack(side="left", padx=(6, 10))
+        ttk.Label(top, text="自訂主題串").pack(side="left")
+        chain_combo = ttk.Combobox(top, state="readonly", width=32)
+        chain_combo.pack(side="left", padx=(6, 12))
+        title_var = tk.StringVar(value="")
+        ttk.Label(top, text="名稱").pack(side="left")
+        title_entry = ttk.Entry(top, textvariable=title_var, width=22)
+        title_entry.pack(side="left", padx=(6, 8))
         ttk.Label(top, text="分類").pack(side="left")
-        category_combo = ttk.Combobox(top, textvariable=category_var, values=CATEGORY_OPTIONS, state="readonly", width=10)
-        category_combo.pack(side="left", padx=(6, 8))
+        category_entry = ttk.Entry(top, textvariable=category_var, width=12)
+        category_entry.pack(side="left", padx=(6, 8))
         ttk.Label(top, text="年級").pack(side="left")
-        grade_combo = ttk.Combobox(top, textvariable=grade_var, values=GRADE_OPTIONS, state="readonly", width=12)
-        grade_combo.pack(side="left", padx=(6, 8))
+        grade_entry = ttk.Entry(top, textvariable=grade_var, width=12)
+        grade_entry.pack(side="left", padx=(6, 8))
+
+        def category_options():
+            seen = set()
+            values = []
+            for value in BASE_CATEGORY_OPTIONS + [
+                str(c.get("category", "")).strip()
+                for c in chains
+                if isinstance(c, dict) and str(c.get("category", "")).strip()
+            ]:
+                if value and value not in seen:
+                    seen.add(value)
+                    values.append(value)
+            return values
+
+        def grade_options():
+            seen = set()
+            values = []
+            for value in GRADE_OPTIONS + [
+                str(c.get("grade", "")).strip()
+                for c in chains
+                if isinstance(c, dict) and str(c.get("grade", "")).strip()
+            ]:
+                if value and value not in seen:
+                    seen.add(value)
+                    values.append(value)
+            return values
+
+        def refresh_category_options():
+            chain_filter_category_combo["values"] = ["全部分類"] + category_options()
+            chain_filter_grade_combo["values"] = grade_options()
+
+        refresh_category_options()
+        filtered_chain_indexes = []
+
+        def chain_matches_filter(chain):
+            category_filter = chain_filter_category_var.get().strip()
+            grade_filter = chain_filter_grade_var.get().strip()
+            category = str(chain.get("category", "自訂")).strip() or "自訂"
+            grade = str(chain.get("grade", "全部年級")).strip() or "全部年級"
+            category_ok = category_filter in {"", "全部分類"} or category == category_filter
+            grade_ok = grade_filter in {"", "全部年級"} or grade == grade_filter or grade == "全部年級"
+            return category_ok and grade_ok
+
+        def set_chain_filters_to_show(chain):
+            category = str(chain.get("category", "自訂")).strip() or "自訂"
+            grade = str(chain.get("grade", "全部年級")).strip() or "全部年級"
+            chain_filter_category_var.set(category if category in category_options() else "全部分類")
+            chain_filter_grade_var.set(grade if grade in grade_options() else "全部年級")
 
         def refresh_chain_combo(select_index=None):
+            nonlocal filtered_chain_indexes
+            refresh_category_options()
+            filtered_chain_indexes = [
+                index for index, chain in enumerate(chains) if chain_matches_filter(chain)
+            ]
             chain_combo["values"] = [
                 f"【{str(c.get('category', '自訂')) or '自訂'}】{str(c.get('title') or c.get('id') or '')}"
-                for c in chains
+                for c in (chains[index] for index in filtered_chain_indexes)
             ]
-            if select_index is not None and 0 <= select_index < len(chains):
-                chain_combo.current(select_index)
+            if select_index is not None and select_index in filtered_chain_indexes:
+                chain_combo.current(filtered_chain_indexes.index(select_index))
+            elif filtered_chain_indexes:
+                chain_combo.current(0)
+            else:
+                chain_combo.set("")
 
         children_by_parent, parents_by_child = self._practice_relation_maps()
 
@@ -4534,20 +4667,36 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
 
         def on_pick_chain(_event=None):
             idx = chain_combo.current()
-            if not (0 <= idx < len(chains)):
+            if not (0 <= idx < len(filtered_chain_indexes)):
                 return
-            state["chain"] = chains[idx]
+            chain_index = filtered_chain_indexes[idx]
+            state["chain"] = chains[chain_index]
             state["items"] = [
                 dict(item)
-                for item in (chains[idx].get("items") or [])
+                for item in (chains[chain_index].get("items") or [])
                 if isinstance(item, dict) and str(item.get("id", "")).strip()
             ]
-            title_var.set(str(chains[idx].get("title", "")))
-            category_var.set(str(chains[idx].get("category", "自訂")) or "自訂")
-            grade_var.set(str(chains[idx].get("grade", "全部年級")) or "全部年級")
+            title_var.set(str(chains[chain_index].get("title", "")))
+            category_var.set(str(chains[chain_index].get("category", "自訂")) or "自訂")
+            grade_var.set(str(chains[chain_index].get("grade", "全部年級")) or "全部年級")
             refresh_items()
 
         chain_combo.bind("<<ComboboxSelected>>", on_pick_chain)
+
+        def on_chain_filter_changed(_event=None):
+            refresh_chain_combo()
+            if filtered_chain_indexes:
+                on_pick_chain()
+                return
+            state["chain"] = None
+            state["items"] = []
+            title_var.set("")
+            category_var.set("自訂")
+            grade_var.set("全部年級")
+            refresh_items_empty()
+
+        chain_filter_category_combo.bind("<<ComboboxSelected>>", on_chain_filter_changed)
+        chain_filter_grade_combo.bind("<<ComboboxSelected>>", on_chain_filter_changed)
 
         def add_chain():
             title = title_var.get().strip() or f"自訂主題串 {len(chains) + 1}"
@@ -4563,6 +4712,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                 "updatedAt": practice_now_iso(),
             }
             chains.append(chain)
+            set_chain_filters_to_show(chain)
             refresh_chain_combo(len(chains) - 1)
             on_pick_chain()
 
@@ -4614,21 +4764,59 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         left_box.columnconfigure(0, weight=1)
         left_box.rowconfigure(1, weight=1)
 
-        chapter_combo = ttk.Combobox(left_box, state="readonly", values=chapter_labels, width=40)
-        chapter_combo.grid(row=0, column=0, sticky="ew", pady=(0, 6))
+        source_category_var = tk.StringVar(value="全部分類")
+        source_filter_frame = ttk.Frame(left_box)
+        source_filter_frame.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 6))
+        source_filter_frame.columnconfigure(3, weight=1)
+        ttk.Label(source_filter_frame, text="分類").grid(row=0, column=0, sticky="w")
+        source_category_combo = ttk.Combobox(
+            source_filter_frame,
+            textvariable=source_category_var,
+            state="readonly",
+            values=source_category_options,
+            width=12,
+        )
+        source_category_combo.grid(row=0, column=1, sticky="w", padx=(6, 12))
+        ttk.Label(source_filter_frame, text="章節").grid(row=0, column=2, sticky="w")
+        chapter_combo = ttk.Combobox(source_filter_frame, state="readonly", width=40)
+        chapter_combo.grid(row=0, column=3, sticky="ew", padx=(6, 0))
         source_list = tk.Listbox(left_box, selectmode="extended", activestyle="dotbox")
         source_scroll = ttk.Scrollbar(left_box, orient="vertical", command=source_list.yview)
         source_list.configure(yscrollcommand=source_scroll.set)
         source_list.grid(row=1, column=0, sticky="nsew")
         source_scroll.grid(row=1, column=1, sticky="ns")
 
+        filtered_chapter_codes = []
+
+        def refresh_chapter_combo():
+            nonlocal filtered_chapter_codes
+            selected_code = ""
+            idx = chapter_combo.current()
+            if 0 <= idx < len(filtered_chapter_codes):
+                selected_code = filtered_chapter_codes[idx]
+            filter_value = source_category_var.get().strip() or "全部分類"
+            filtered_chapter_codes = [
+                code for code in chapter_codes if source_category_matches(filter_value, code)
+            ]
+            chapter_combo["values"] = [chapter_labels_by_code[code] for code in filtered_chapter_codes]
+            if not filtered_chapter_codes:
+                chapter_combo.set("")
+                source_list.delete(0, tk.END)
+                state["chapter_practice_ids"] = []
+                return
+            if selected_code in filtered_chapter_codes:
+                chapter_combo.current(filtered_chapter_codes.index(selected_code))
+            else:
+                chapter_combo.current(0)
+            on_pick_chapter()
+
         def on_pick_chapter(_event=None):
             idx = chapter_combo.current()
             source_list.delete(0, tk.END)
             state["chapter_practice_ids"] = []
-            if not (0 <= idx < len(chapter_codes)):
+            if not (0 <= idx < len(filtered_chapter_codes)):
                 return
-            ids = self._chapter_practice_ids_in_theme_order(chapter_codes[idx], practice_by_id)
+            ids = self._chapter_practice_ids_in_theme_order(filtered_chapter_codes[idx], practice_by_id)
             state["chapter_practice_ids"] = ids
             for pid in ids:
                 row = practice_by_id.get(pid) or {}
@@ -4638,6 +4826,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                 source_list.insert(tk.END, f"[{difficulty}] {relation_marker}{title}")
 
         chapter_combo.bind("<<ComboboxSelected>>", on_pick_chapter)
+        source_category_combo.bind("<<ComboboxSelected>>", lambda _event=None: refresh_chapter_combo())
 
         # 點選題型時，用底部狀態列顯示大類/小類關係（唯讀）
         def show_relation_for(pid):
@@ -4682,9 +4871,9 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             if not require_chain():
                 return
             idx = chapter_combo.current()
-            if not (0 <= idx < len(chapter_codes)):
+            if not (0 <= idx < len(filtered_chapter_codes)):
                 return messagebox.showwarning("提醒", "請先選擇章節。", parent=dialog)
-            code = chapter_codes[idx]
+            code = filtered_chapter_codes[idx]
             key = ("chapter", code)
             if any((item.get("type", "practice"), str(item.get("id", "")).strip()) == key for item in state["items"]):
                 return messagebox.showwarning("提醒", "這一章已經加入過了。", parent=dialog)
@@ -4769,6 +4958,9 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                 self._custom_theme_db_save(payload)
             except Exception as exc:
                 return messagebox.showerror("儲存失敗", str(exc), parent=dialog)
+            if chain:
+                set_chain_filters_to_show(chain)
+                refresh_chain_combo(chains.index(chain))
             self.status_var.set("自訂主題串已儲存（practice-custom-theme-db.json）。")
             status_var.set("已儲存到 practice-custom-theme-db.json。")
 
@@ -4823,9 +5015,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             on_pick_chain()
         else:
             refresh_items_empty()
-        if chapter_labels:
-            chapter_combo.current(0)
-            on_pick_chapter()
+        refresh_chapter_combo()
         dialog.wait_window()
 
     def _split_pipe(self, value: str):
@@ -5224,7 +5414,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                 "   用途：把 Word 題卷或詳解轉成較適合無限練習整理的 .md 文字來源。\n"
                 "   注意：.doc 需要本機有 LibreOffice/soffice；若沒有，請先用 Word 另存成 .docx。\n\n"
                 "6. TXT 行去重\n"
-                "   會處理：指定 .txt 檔，把後面重複出現的整行刪掉，只保留第一次出現的位置。\n"
+                "   會處理：指定一個或多個文字檔，把後面重複出現的整行刪掉，只保留第一次出現的位置。\n"
                 "   用途：整理題目清單、講義素材、暫存匯出結果時，快速去掉中間重複內容。\n"
                 "   注意：比對方式是『整行文字完全相同』才算重複；預設會另存新檔，不直接覆蓋原檔。"
             ),
@@ -5439,105 +5629,184 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             messagebox.showinfo("完成", "\n".join(lines[:5]), parent=window)
 
         def run_txt_deduplicate():
-            path = filedialog.askopenfilename(
-                title="選擇要去重的 TXT 檔",
-                filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
+            paths = filedialog.askopenfilenames(
+                title="選擇要去重的文字檔",
+                filetypes=[("All files", "*.*"), ("Text files", "*.txt")],
                 parent=window,
             )
-            if not path:
+            if not paths:
                 return
 
-            txt_path = Path(path)
-            original = None
-            read_encoding = None
-            for encoding in ("utf-8-sig", "utf-8"):
+            selected_paths = [Path(path) for path in paths]
+
+            def read_utf8_text(txt_path: Path):
+                for encoding in ("utf-8-sig", "utf-8"):
+                    try:
+                        return txt_path.read_text(encoding=encoding), encoding
+                    except UnicodeDecodeError:
+                        continue
+                raise UnicodeDecodeError("utf-8", b"", 0, 1, "目前只支援 UTF-8 文字檔")
+
+            def default_dedup_path(txt_path: Path) -> Path:
+                suffix = txt_path.suffix or ".txt"
+                candidate = txt_path.with_name(f"{txt_path.stem}-dedup{suffix}")
+                index = 2
+                while candidate.exists():
+                    candidate = txt_path.with_name(f"{txt_path.stem}-dedup-{index}{suffix}")
+                    index += 1
+                return candidate
+
+            def build_dedup_result(txt_path: Path):
+                original, read_encoding = read_utf8_text(txt_path)
+                deduplicated, kept_count, removed_count = deduplicate_text_lines(original)
+                total_lines = len(original.splitlines())
+                retention_rate = (kept_count / total_lines) if total_lines else 0.0
+                retention_label = f"{kept_count}/{total_lines} ({retention_rate:.1%})"
+                return {
+                    "path": txt_path,
+                    "original": original,
+                    "deduplicated": deduplicated,
+                    "encoding": read_encoding,
+                    "total_lines": total_lines,
+                    "kept_count": kept_count,
+                    "removed_count": removed_count,
+                    "retention_label": retention_label,
+                }
+
+            results = []
+            for txt_path in selected_paths:
                 try:
-                    original = txt_path.read_text(encoding=encoding)
-                    read_encoding = encoding
-                    break
+                    results.append(build_dedup_result(txt_path))
                 except UnicodeDecodeError:
-                    continue
-                except Exception as exc:
-                    messagebox.showerror("讀檔失敗", str(exc), parent=window)
+                    messagebox.showerror("編碼錯誤", f"目前只支援 UTF-8 文字檔：\n{txt_path}", parent=window)
                     return
-            if original is None:
-                messagebox.showerror("編碼錯誤", f"目前只支援 UTF-8 文字檔：\n{txt_path}", parent=window)
-                return
+                except Exception as exc:
+                    messagebox.showerror("讀檔失敗", f"{txt_path}\n\n{exc}", parent=window)
+                    return
 
-            deduplicated, kept_count, removed_count = deduplicate_text_lines(original)
-            total_lines = len(original.splitlines())
-            retention_rate = (kept_count / total_lines) if total_lines else 0.0
-            retention_label = f"{kept_count}/{total_lines} ({retention_rate:.1%})"
-            if removed_count == 0:
+            if len(results) == 1:
+                result = results[0]
+                txt_path = result["path"]
+                if result["removed_count"] == 0:
+                    write_log(
+                        (
+                            "TXT 行去重完成\n"
+                            f"- 檔案：{txt_path}\n"
+                            f"- 原始行數：{result['total_lines']}\n"
+                            f"- 留存率：{result['retention_label']}\n"
+                            "- 沒有偵測到重複行"
+                        ),
+                        replace=True,
+                    )
+                    self.status_var.set(f"TXT 去重完成：沒有重複行，留存率 {result['retention_label']}")
+                    messagebox.showinfo(
+                        "完成",
+                        f"沒有偵測到重複行：\n{txt_path}\n\n留存率：{result['retention_label']}",
+                        parent=window,
+                    )
+                    return
+
+                default_name = f"{txt_path.stem}-dedup{txt_path.suffix or '.txt'}"
+                save_path = filedialog.asksaveasfilename(
+                    title="另存去重結果",
+                    defaultextension=txt_path.suffix or ".txt",
+                    initialdir=str(txt_path.parent),
+                    initialfile=default_name,
+                    filetypes=[("All files", "*.*"), ("Text files", "*.txt")],
+                    parent=window,
+                )
+                if not save_path:
+                    write_log(
+                        (
+                            "TXT 行去重已取消輸出\n"
+                            f"- 檔案：{txt_path}\n"
+                            f"- 原始行數：{result['total_lines']}\n"
+                            f"- 保留行數：{result['kept_count']}\n"
+                            f"- 留存率：{result['retention_label']}\n"
+                            f"- 刪除重複行：{result['removed_count']}"
+                        ),
+                        replace=True,
+                    )
+                    self.status_var.set(f"TXT 去重已完成但取消存檔：留存率 {result['retention_label']}")
+                    return
+
+                out_path = Path(save_path)
+                try:
+                    out_path.write_text(result["deduplicated"], encoding=result["encoding"] or "utf-8")
+                except Exception as exc:
+                    messagebox.showerror("寫檔失敗", str(exc), parent=window)
+                    return
+
                 write_log(
                     (
                         "TXT 行去重完成\n"
-                        f"- 檔案：{txt_path}\n"
-                        f"- 原始行數：{total_lines}\n"
-                        f"- 留存率：{retention_label}\n"
-                        "- 沒有偵測到重複行"
+                        f"- 來源檔案：{txt_path}\n"
+                        f"- 輸出檔案：{out_path}\n"
+                        f"- 原始行數：{result['total_lines']}\n"
+                        f"- 保留行數：{result['kept_count']}\n"
+                        f"- 留存率：{result['retention_label']}\n"
+                        f"- 刪除重複行：{result['removed_count']}\n"
+                        "- 規則：保留第一次出現，移除後續完全相同的整行"
                     ),
                     replace=True,
                 )
-                self.status_var.set(f"TXT 去重完成：沒有重複行，留存率 {retention_label}")
-                messagebox.showinfo("完成", f"沒有偵測到重複行：\n{txt_path}\n\n留存率：{retention_label}", parent=window)
-                return
-
-            default_name = f"{txt_path.stem}-dedup{txt_path.suffix}"
-            save_path = filedialog.asksaveasfilename(
-                title="另存去重結果",
-                defaultextension=".txt",
-                initialdir=str(txt_path.parent),
-                initialfile=default_name,
-                filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
-                parent=window,
-            )
-            if not save_path:
-                write_log(
+                self.status_var.set(f"TXT 去重完成：刪除 {result['removed_count']} 行，留存率 {result['retention_label']}")
+                messagebox.showinfo(
+                    "完成",
                     (
-                        "TXT 行去重已取消輸出\n"
-                        f"- 檔案：{txt_path}\n"
-                        f"- 原始行數：{total_lines}\n"
-                        f"- 保留行數：{kept_count}\n"
-                        f"- 留存率：{retention_label}\n"
-                        f"- 刪除重複行：{removed_count}"
+                        f"TXT 去重完成：\n{txt_path}\n\n"
+                        f"原始行數：{result['total_lines']}\n"
+                        f"保留行數：{result['kept_count']}\n"
+                        f"留存率：{result['retention_label']}\n"
+                        f"刪除重複行：{result['removed_count']}\n\n"
+                        f"已輸出到：\n{out_path}"
                     ),
-                    replace=True,
+                    parent=window,
                 )
-                self.status_var.set(f"TXT 去重已完成但取消存檔：留存率 {retention_label}")
                 return
 
-            out_path = Path(save_path)
-            try:
-                out_path.write_text(deduplicated, encoding=read_encoding or "utf-8")
-            except Exception as exc:
-                messagebox.showerror("寫檔失敗", str(exc), parent=window)
-                return
+            written = []
+            unchanged = []
+            for result in results:
+                if result["removed_count"] == 0:
+                    unchanged.append(result)
+                    continue
+                out_path = default_dedup_path(result["path"])
+                try:
+                    out_path.write_text(result["deduplicated"], encoding=result["encoding"] or "utf-8")
+                except Exception as exc:
+                    messagebox.showerror("寫檔失敗", f"{out_path}\n\n{exc}", parent=window)
+                    return
+                result["out_path"] = out_path
+                written.append(result)
 
-            write_log(
-                (
-                    "TXT 行去重完成\n"
-                    f"- 來源檔案：{txt_path}\n"
-                    f"- 輸出檔案：{out_path}\n"
-                    f"- 原始行數：{total_lines}\n"
-                    f"- 保留行數：{kept_count}\n"
-                    f"- 留存率：{retention_label}\n"
-                    f"- 刪除重複行：{removed_count}\n"
-                    "- 規則：保留第一次出現，移除後續完全相同的整行"
-                ),
-                replace=True,
-            )
-            self.status_var.set(f"TXT 去重完成：刪除 {removed_count} 行，留存率 {retention_label}")
+            total_removed = sum(result["removed_count"] for result in results)
+            lines = [
+                "TXT 批次行去重完成",
+                f"- 選取檔案：{len(results)}",
+                f"- 輸出檔案：{len(written)}",
+                f"- 無重複檔案：{len(unchanged)}",
+                f"- 刪除重複行總數：{total_removed}",
+                "- 規則：保留第一次出現，移除後續完全相同的整行",
+            ]
+            if written:
+                lines.append("")
+                lines.append("已輸出：")
+                for result in written:
+                    lines.append(
+                        f"- {result['path']} -> {result['out_path']}；刪除 {result['removed_count']} 行，留存率 {result['retention_label']}"
+                    )
+            if unchanged:
+                lines.append("")
+                lines.append("沒有偵測到重複行：")
+                for result in unchanged:
+                    lines.append(f"- {result['path']}；留存率 {result['retention_label']}")
+
+            write_log("\n".join(lines), replace=True)
+            self.status_var.set(f"TXT 批次去重完成：{len(written)} 個輸出檔，刪除 {total_removed} 行")
             messagebox.showinfo(
                 "完成",
-                (
-                    f"TXT 去重完成：\n{txt_path}\n\n"
-                    f"原始行數：{total_lines}\n"
-                    f"保留行數：{kept_count}\n"
-                    f"留存率：{retention_label}\n"
-                    f"刪除重複行：{removed_count}\n\n"
-                    f"已輸出到：\n{out_path}"
-                ),
+                f"TXT 批次去重完成。\n\n選取檔案：{len(results)}\n輸出檔案：{len(written)}\n無重複檔案：{len(unchanged)}\n刪除重複行總數：{total_removed}",
                 parent=window,
             )
 
@@ -5557,7 +5826,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             "- 檢查資料亂碼：掃描資料庫與正式匯入檔，不直接修改\n"
             "- Markdown 反跳脫清理：清掉指定 .md 檔內多餘的反斜線，直接覆蓋原檔\n"
             "- Word轉MD：將 .docx/.doc 轉成 UTF-8 Markdown，必要時抽出圖片媒體\n"
-            "- TXT 行去重：保留第一次出現，刪掉後面重複整行，預設另存新檔\n"
+            "- TXT 行去重：可複選檔案，保留第一次出現，刪掉後面重複整行，預設另存新檔\n"
             "- 講義產生器 v1：開啟章節講義預覽與輸出工具",
             replace=True,
         )

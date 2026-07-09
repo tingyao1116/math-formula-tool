@@ -33,6 +33,20 @@
     playlistPlayerStatus:          document.getElementById("playlistPlayerStatus"),
     playlistShareButton:           document.getElementById("playlistShareButton"),
     playlistCopyLinkButton:        document.getElementById("playlistCopyLinkButton"),
+    compositeCountInput:           document.getElementById("compositeCountInput"),
+    compositeGenerateButton:       document.getElementById("compositeGenerateButton"),
+    compositeAnswerButton:         document.getElementById("compositeAnswerButton"),
+    compositeDetailButton:         document.getElementById("compositeDetailButton"),
+    compositeOutput:               document.getElementById("compositeOutput"),
+    compositeAnswerBox:            document.getElementById("compositeAnswerBox"),
+    compositeDetailBox:            document.getElementById("compositeDetailBox"),
+    expandedCountInput:            document.getElementById("expandedCountInput"),
+    expandedGenerateButton:        document.getElementById("expandedGenerateButton"),
+    expandedAnswerButton:          document.getElementById("expandedAnswerButton"),
+    expandedDetailButton:          document.getElementById("expandedDetailButton"),
+    expandedOutput:                document.getElementById("expandedOutput"),
+    expandedAnswerBox:             document.getElementById("expandedAnswerBox"),
+    expandedDetailBox:             document.getElementById("expandedDetailBox"),
     playlistPlayerTitle:           document.getElementById("playlistPlayerTitle"),
     playlistPlayerMeta:            document.getElementById("playlistPlayerMeta"),
     playlistPlayerDescription:     document.getElementById("playlistPlayerDescription"),
@@ -383,7 +397,8 @@
   function renderPlaylistGroups() {
     const all = getFilteredPlaylists();
     buildTaskPlaylistSelect(all.filter((p) => p.playlistType === "任務型"), elements.taskPlaylistList);
-    buildPlaylistCards(all.filter((p) => p.playlistType === "日程型"), elements.schedulePlaylistList, true);
+    // 注意：#schedulePlaylistList 由 practice-schedule-player.js 獨管，
+    // 任務型播放器不可寫入，否則會把日程清單洗掉（歷史 bug）。
   }
 
   // ── 主內容 ─────────────────────────────────────────────────────────────────
@@ -644,6 +659,150 @@
   elements.playlistPrevPracticeButton?.addEventListener("click", async () => { await movePractice(-1); });
   elements.playlistNextPracticeButton?.addEventListener("click", async () => { await movePractice(1); });
   elements.playlistGenerateButton?.addEventListener("click", async () => { await generateCurrentPractice(); });
+
+  // ── 整串綜合練習：清單所有題型輪流抽題，一次組成固定題數（預設 10 題）────
+  let compositeGenerating = false;
+
+  async function generateComposite() {
+    if (compositeGenerating) return;
+    const playlist = getActivePlaylist();
+    const practiceIds = getActivePracticeIds();
+    if (!playlist || !practiceIds.length) {
+      if (elements.compositeOutput) elements.compositeOutput.textContent = "請先選擇一份清單（日程型請先選日期）。";
+      return;
+    }
+    const total = Math.max(1, Math.min(100, Number(elements.compositeCountInput?.value) || 10));
+    compositeGenerating = true;
+    if (elements.compositeGenerateButton) elements.compositeGenerateButton.disabled = true;
+    if (elements.compositeOutput) elements.compositeOutput.textContent = `正在從 ${practiceIds.length} 個題型組題（共 ${total} 題）...`;
+    if (elements.compositeAnswerBox) { elements.compositeAnswerBox.innerHTML = ""; elements.compositeAnswerBox.classList.add("is-hidden"); }
+    if (elements.compositeDetailBox) { elements.compositeDetailBox.innerHTML = ""; elements.compositeDetailBox.classList.add("is-hidden"); }
+
+    const sets = [];
+    for (const pid of practiceIds) {
+      const record = getPracticeRecord(pid);
+      if (!record) continue;
+      try {
+        const config = await ensurePracticeConfig(record);
+        if (!config || typeof config.generate !== "function") continue;
+        const generated = normalizeGeneratedSet(config.generate.call(config, record) || {});
+        if (generated.questions.length) {
+          sets.push({ title: String(record.title || pid).trim(), ...generated });
+        }
+      } catch (_error) { /* 單一題型失敗不中斷 */ }
+    }
+
+    // 輪流抽題：第 1 輪每個題型各拿第 1 題，第 2 輪拿第 2 題…直到湊滿
+    const picked = [];
+    let round = 0;
+    while (picked.length < total) {
+      let took = false;
+      for (const set of sets) {
+        if (picked.length >= total) break;
+        if (round < set.questions.length) {
+          picked.push({
+            title: set.title,
+            question: set.questions[round],
+            summary: set.summaryAnswers[round] || "",
+            detail: set.answers[round] || set.summaryAnswers[round] || "",
+          });
+          took = true;
+        }
+      }
+      if (!took) break;
+      round += 1;
+    }
+
+    if (elements.compositeOutput) {
+      elements.compositeOutput.innerHTML = picked.length
+        ? `<ol>${picked.map((row) => `<li><strong>${escapeHtml(row.title)}</strong>：${toolkit.renderRichTextLine(row.question)}</li>`).join("")}</ol>`
+        : "目前沒有可組合的題目。";
+    }
+    if (elements.compositeAnswerBox) {
+      elements.compositeAnswerBox.innerHTML = picked.length
+        ? `<ol>${picked.map((row) => `<li>${toolkit.renderRichTextLine(row.summary || "（無簡答）")}</li>`).join("")}</ol>`
+        : "";
+    }
+    if (elements.compositeDetailBox) {
+      elements.compositeDetailBox.innerHTML = picked.length
+        ? `<ol>${picked.map((row) => `<li>${toolkit.renderRichTextLine(row.detail || "（無詳解）")}</li>`).join("")}</ol>`
+        : "";
+    }
+    compositeGenerating = false;
+    if (elements.compositeGenerateButton) elements.compositeGenerateButton.disabled = false;
+  }
+
+  elements.compositeGenerateButton?.addEventListener("click", () => { generateComposite(); });
+  elements.compositeAnswerButton?.addEventListener("click", () => {
+    elements.compositeAnswerBox?.classList.toggle("is-hidden");
+  });
+  elements.compositeDetailButton?.addEventListener("click", () => {
+    elements.compositeDetailBox?.classList.toggle("is-hidden");
+  });
+
+  // ── 逐題型展開練習：清單中每個題型各出固定題數，依題型分段顯示 ────────────
+  let expandedGenerating = false;
+
+  async function generateExpanded() {
+    if (expandedGenerating) return;
+    const playlist = getActivePlaylist();
+    const practiceIds = getActivePracticeIds();
+    if (!playlist || !practiceIds.length) {
+      if (elements.expandedOutput) elements.expandedOutput.textContent = "請先選擇一份清單（日程型請先選日期）。";
+      return;
+    }
+    const perCount = Math.max(1, Math.min(50, Number(elements.expandedCountInput?.value) || 10));
+    expandedGenerating = true;
+    if (elements.expandedGenerateButton) elements.expandedGenerateButton.disabled = true;
+    if (elements.expandedOutput) elements.expandedOutput.textContent = `正在展開 ${practiceIds.length} 個題型（每題型 ${perCount} 題）...`;
+    if (elements.expandedAnswerBox) { elements.expandedAnswerBox.innerHTML = ""; elements.expandedAnswerBox.classList.add("is-hidden"); }
+    if (elements.expandedDetailBox) { elements.expandedDetailBox.innerHTML = ""; elements.expandedDetailBox.classList.add("is-hidden"); }
+
+    const sections = [];
+    for (const pid of practiceIds) {
+      const record = getPracticeRecord(pid);
+      if (!record) continue;
+      try {
+        const config = await ensurePracticeConfig(record);
+        if (!config || typeof config.generate !== "function") continue;
+        config.questionCount = perCount; // 覆蓋題數，生成器會湊滿指定題數
+        const generated = normalizeGeneratedSet(config.generate.call(config, record) || {});
+        if (generated.questions.length) {
+          sections.push({ title: String(record.title || pid).trim(), ...generated });
+        }
+      } catch (_error) { /* 單一題型失敗不中斷 */ }
+    }
+
+    const renderSections = (getRow, emptyText) => sections.map((section, index) => `
+      <h3>題型 ${index + 1}｜${escapeHtml(section.title)}</h3>
+      <ol>${section.questions.map((_, qi) => `<li>${getRow(section, qi) || emptyText}</li>`).join("")}</ol>`).join("");
+
+    if (elements.expandedOutput) {
+      elements.expandedOutput.innerHTML = sections.length
+        ? renderSections((s, qi) => toolkit.renderRichTextLine(s.questions[qi] || ""), "（無題目）")
+        : "目前沒有可展開的題目。";
+    }
+    if (elements.expandedAnswerBox) {
+      elements.expandedAnswerBox.innerHTML = sections.length
+        ? renderSections((s, qi) => toolkit.renderRichTextLine(s.summaryAnswers[qi] || ""), "（無簡答）")
+        : "";
+    }
+    if (elements.expandedDetailBox) {
+      elements.expandedDetailBox.innerHTML = sections.length
+        ? renderSections((s, qi) => toolkit.renderRichTextLine(s.answers[qi] || s.summaryAnswers[qi] || ""), "（無詳解）")
+        : "";
+    }
+    expandedGenerating = false;
+    if (elements.expandedGenerateButton) elements.expandedGenerateButton.disabled = false;
+  }
+
+  elements.expandedGenerateButton?.addEventListener("click", () => { generateExpanded(); });
+  elements.expandedAnswerButton?.addEventListener("click", () => {
+    elements.expandedAnswerBox?.classList.toggle("is-hidden");
+  });
+  elements.expandedDetailButton?.addEventListener("click", () => {
+    elements.expandedDetailBox?.classList.toggle("is-hidden");
+  });
 
   // ── 學生連結：以目前清單為主的獨立練習頁（可傳給學生）─────────────────────
   function buildStudentLink() {

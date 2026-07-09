@@ -12706,6 +12706,714 @@
    * 每次呼叫 generate() 都會重新抽樣，不是固定樣板。
    * ============================================================ */
 
+  function s32FormatIntervalFromPowers(base, leftExp, rightExp, closed = true) {
+    const l = `${base}^{${leftExp}}`;
+    const r = `${base}^{${rightExp}}`;
+    return `${closed ? '[' : '('}${l},${r}${closed ? ']' : ')'}`;
+  }
+
+  function s32LeadingDigitInfo(logValue) {
+    const floorValue = Math.floor(logValue);
+    const frac = logValue - floorValue;
+    const mantissa = Math.pow(10, frac);
+    return {
+      digits: floorValue + 1,
+      leading: Math.floor(mantissa + 1e-10),
+      fracText: s31Decimal(frac, 4),
+      logText: s31Decimal(logValue, 4),
+    };
+  }
+
+  function buildS322NestedLogDomainInequalityAdvancedSet(count = 5) {
+    const builders = [
+      () => {
+        const base = s322Pick([2, 3, 5]);
+        const limit = s322Pick([1, 2, 3]);
+        return s322Item(
+          `若 \\(\\log_{1/${base}}(\\log_${base}(\\log_{1/${base}} x))\\) 有意義，並使中間的 \\(\\log_${base}(\\log_{1/${base}}x)>0\\)，求 \\(x\\) 的範圍。`,
+          `\\(0<x<\\dfrac{1}{${base}}\\)`,
+          `最內層需 \\(x>0\\)。又 \\(\\log_${base}(\\log_{1/${base}}x)>0\\) 等價於 \\(\\log_{1/${base}}x>1\\)，因底數 \\(1/${base}<1\\) 遞減，所以 \\(0<x<1/${base}\\)。`
+        );
+      },
+      () => {
+        const base = s322Pick([2, 3, 4]);
+        const k = s322Pick([1, 2, 3]);
+        return s322Item(
+          `解不等式 \\(\\log_${base}(\\log_{1/${base}}x)>${k}\\)。`,
+          `\\(0<x<${s31FracText(1, Math.pow(base, k))}\\)`,
+          `外層底數大於 1，所以 \\(\\log_{1/${base}}x>${k}\\)。內層底數小於 1，解得 \\(0<x<(${base})^{-${k}}=${s31FracText(1, Math.pow(base, k))}\\)。`
+        );
+      },
+      () => {
+        const h = s322Pick([1, 2, 3]);
+        const r1 = h + 1;
+        const r2 = h + 3;
+        return s322Item(
+          `設 \\(f(x)=\\log_{x-${h}}(x^2-${r1 + r2}x+${r1 * r2})\\)，求使 \\(f(x)\\) 有意義的所有整數 \\(x\\)。`,
+          `\\(x\\ge ${r2 + 1}\\) 的整數`,
+          `底數需 \\(x-${h}>0\\) 且 \\(x-${h}\\ne1\\)，真數 \\((x-${r1})(x-${r2})>0\\)。交集為 \\(x>${h}\\)、\\(x\\ne ${h + 1}\\)，且 \\(x<${r1}\\) 或 \\(x>${r2}\\)，因此整數解為 \\(x\\ge ${r2 + 1}\\)。`
+        );
+      },
+      () => {
+        const cases = [
+          { base: 2, innerBase: 3, target: 0, exp: 2 },
+          { base: 2, innerBase: 3, target: 1, exp: 4 },
+          { base: 3, innerBase: 2, target: 1, exp: 8 },
+          { base: 2, innerBase: 5, target: 2, exp: 16 },
+        ];
+        const { base, innerBase, target, exp } = s322Pick(cases);
+        return s322Item(
+          `解方程式 \\(\\log_${base}(\\log_2(\\log_${innerBase}x))=${target}\\)。`,
+          `\\(x=${innerBase}^{${exp}}\\)`,
+          `由外往內解：\\(\\log_2(\\log_${innerBase}x)=${base}^{${target}}\\)，所以 \\(\\log_${innerBase}x=2^{${Math.pow(base, target)}}=${exp}\\)，得 \\(x=${innerBase}^{${exp}}\\)。`
+        );
+      },
+      () => {
+        const a = s322Pick([2, 3, 4]);
+        const b = s322Pick([3, 5, 7]);
+        return s322Item(
+          `若 \\(\\log_x(${a}x+${b})\\) 有意義，求實數 \\(x\\) 的完整範圍。`,
+          `\\(x>0\\) 且 \\(x\\ne1\\)`,
+          `對數底數需 \\(x>0\\) 且 \\(x\\ne1\\)。真數 \\(${a}x+${b}>0\\)，在 \\(x>0\\) 時自動成立，所以完整範圍為 \\(x>0,x\\ne1\\)。`
+        );
+      },
+    ];
+    return s322MakeSet(count, builders);
+  }
+
+  function buildS321ExponentialSubstitutionQuadraticExtremaAdvancedSet(count = 5) {
+    const builders = [
+      () => {
+        const left = s322Pick([0, 1, 2]);
+        const right = left + s322Pick([2, 3]);
+        const vertexT = Math.pow(2, left + 1);
+        const c = 2 * vertexT;
+        const d = s322Pick([4, 8, 10]);
+        const vals = [left, right].map((x) => Math.pow(4, x) - c * Math.pow(2, x) + d);
+        const min = d - vertexT * vertexT;
+        const max = Math.max(...vals);
+        return s322Item(
+          `已知 \\(${left}\\le x\\le ${right}\\)，求 \\(f(x)=4^x-${c}\\cdot2^x+${d}\\) 的最大值與最小值。`,
+          `最大值 \\(${max}\\)，最小值 \\(${min}\\)`,
+          `令 \\(t=2^x\\)，則 \\(t\\in[2^{${left}},2^{${right}}]\\)，且 \\(f=t^2-${c}t+${d}\\)。拋物線頂點在 \\(t=${vertexT}\\)，得到最小值 ${min}；最大值比較端點即可。`
+        );
+      },
+      () => {
+        const a = s322Pick([1, 2]);
+        const b = a + s322Pick([1, 2]);
+        const u = Math.pow(3, a);
+        const v = Math.pow(3, b);
+        return s322Item(
+          `解方程組 \\(\\begin{cases}3^x+3^y=${u + v}\\\\3^{x+y}=${u * v}\\end{cases}\\)。`,
+          `\\((x,y)=(${a},${b})\\) 或 \\((${b},${a})\\)`,
+          `令 \\(u=3^x,v=3^y\\)，則 \\(u+v=${u + v}\\)、\\(uv=${u * v}\\)。因此 \\(u,v\\) 是方程 \\(T^2-${u + v}T+${u * v}=0\\) 的兩根，即 ${u},${v}，所以 \\(x,y\\) 可互換。`
+        );
+      },
+      () => {
+        const p = s322Pick([1, 2, 3]);
+        const c = s322Pick([0, 1, 2]);
+        return s322Item(
+          `若 \\(y=(0.5)^{x^2-${2 * p}x+${p * p + c}}\\)，求 \\(y\\) 的最大值。`,
+          `\\(2^{-${c}}\\)`,
+          `指數配方為 \\((x-${p})^2+${c}\\)。因為底數 \\(0.5<1\\)，指數越小，函數值越大；最小指數為 ${c}，故最大值為 \\((0.5)^{${c}}=2^{-${c}}\\)。`
+        );
+      },
+      () => {
+        const l = s322Pick([0, 1]);
+        const r = l + s322Pick([3, 4]);
+        const p = l + 2;
+        const q = s322Pick([3, 5, 7]);
+        const vMin = q - 4;
+        const endVals = [(l - p) * (l - p) + q - 4, (r - p) * (r - p) + q - 4];
+        const vMax = Math.max(...endVals);
+        return s322Item(
+          `設 \\(t=\\log_3x\\)，若 \\(3^{${l}}\\le x\\le3^{${r}}\\)，求 \\(y=(\\log_3x)^2-${2 * p}\\log_3x+${p * p + q - 4}\\) 的值域。`,
+          `\\([${vMin},${vMax}]\\)`,
+          `令 \\(t=\\log_3x\\)，則 \\(t\\in[${l},${r}]\\)。原式為 \\((t-${p})^2${s31Signed(q - 4)}\\)，頂點在區間內，所以最小值為 ${vMin}，最大值比較端點。`
+        );
+      },
+      () => {
+        const m = s322Pick([3, 4, 5, 6]);
+        const numerator = m * m * m - 3 * m;
+        const denominator = m * m - 1;
+        return s322Item(
+          `已知 \\(a^x+a^{-x}=${m}\\)，求 \\(\\dfrac{a^{3x}+a^{-3x}}{a^{2x}+a^{-2x}+1}\\) 的值。`,
+          `\\(${s31FracText(numerator, denominator)}\\)`,
+          `設 \\(T=a^x+a^{-x}=${m}\\)。則 \\(a^{3x}+a^{-3x}=T^3-3T=${numerator}\\)，且 \\(a^{2x}+a^{-2x}+1=T^2-1=${denominator}\\)，相除得 \\(${s31FracText(numerator, denominator)}\\)。`
+        );
+      },
+    ];
+    return s322MakeSet(count, builders);
+  }
+
+  function buildS323ScientificNotationLeadingDigitsAdvancedSet(count = 5) {
+    const builders = [
+      () => {
+        const base = s323Pick([12, 15, 18]);
+        const n = s323Pick([30, 40, 50]);
+        const info = s32LeadingDigitInfo(n * Math.log10(base));
+        return buildS323QA(
+          `判斷 \\(${base}^{${n}}\\) 是幾位數，並求最高位數字。`,
+          `${info.digits} 位，最高位數字 ${info.leading}`,
+          `\\(\\log ${base}^{${n}}\\approx ${info.logText}\\)，所以位數為 \\(\\lfloor ${info.logText}\\rfloor+1=${info.digits}\\)。小數部分約 ${info.fracText}，\\(10^{${info.fracText}}\\) 的整數部分為 ${info.leading}，即最高位數字。`
+        );
+      },
+      () => {
+        const numerator = s323Pick([2, 3, 4]);
+        const denominator = 10;
+        const n = s323Pick([40, 60, 80, 100]);
+        const logValue = n * Math.log10(numerator / denominator);
+        const m = Math.floor(-logValue) + 1;
+        const leading = Math.floor(Math.pow(10, logValue + m) + 1e-10);
+        return buildS323QA(
+          `將 \\((${numerator / denominator})^{${n}}\\) 表為小數，求小數點後第幾位才出現第一個非零數字，並求該數字。`,
+          `第 ${m} 位，該數字為 ${leading}`,
+          `\\(\\log((${numerator / denominator})^{${n}})\\approx ${s31Decimal(logValue, 4)}\\)，表示它介於 \\(10^{-${m}}\\) 與 \\(10^{-${m + 1}}\\) 的相鄰範圍內；再看有效數字可得第一個非零數字為 ${leading}。`
+        );
+      },
+      () => {
+        const base = s323Pick([6, 7, 8, 9]);
+        const digits = s323Pick([12, 15, 20]);
+        const low = Math.ceil((digits - 1) / Math.log10(base));
+        const high = Math.ceil(digits / Math.log10(base)) - 1;
+        const rangeText = low === high ? `\\(n=${low}\\)` : `\\(${low}\\le n\\le ${high}\\)`;
+        return buildS323QA(
+          `若 \\(${base}^n\\) 為 ${digits} 位數，求整數 \\(n\\) 的可能值。`,
+          rangeText,
+          `條件為 \\(10^{${digits - 1}}\\le ${base}^n<10^{${digits}}\\)。兩邊取常用對數，得 \\(${digits - 1}\\le n\\log ${base}<${digits}\\)，再取整數範圍。`
+        );
+      },
+      () => {
+        const n = s323Pick([100, 150, 200, 300]);
+        const d2 = s32LeadingDigitInfo(n * Math.log10(2)).digits;
+        const d3 = s32LeadingDigitInfo(n * Math.log10(3)).digits;
+        return buildS323QA(
+          `比較 \\(2^{${n}}\\) 與 \\(3^{${n}}\\) 的大小，並求兩者的位數差。`,
+          `\\(3^{${n}}>2^{${n}}\\)，位數差 ${d3 - d2} 位`,
+          `因為底數 3 大於 2，所以同次方下 \\(3^{${n}}>2^{${n}}\\)。位數分別由 \\(\\lfloor ${n}\\log2\\rfloor+1\\) 與 \\(\\lfloor ${n}\\log3\\rfloor+1\\) 求得。`
+        );
+      },
+      () =>
+        buildS323QA(
+          '已知 \\(\\log x\\) 的首數為 \\(-5\\)，且 \\(x\\) 的最高位數字為 8，求 \\(x\\) 的科學記號範圍。',
+          '\\(8\\times10^{-5}\\le x<9\\times10^{-5}\\)',
+          '首數為 -5 代表 \\(10^{-5}\\le x<10^{-4}\\)。最高位數字為 8，表示有效數字落在 8 到未滿 9 之間，因此範圍為 \\([8\\times10^{-5},9\\times10^{-5})\\)。'
+        ),
+    ];
+    return s323MakeSet(count, builders);
+  }
+
+  function buildS324LogLinearRegressionModelAdvancedSet(count = 5) {
+    const builders = [
+      () => {
+        const slopeNum = s324Pick([2, 3, 4]);
+        const slopeDen = 5;
+        const intercept = s324Pick([1, 2, 3]);
+        const coefficient = intercept === 1 ? '10' : `10^{${intercept}}`;
+        return s324QA(
+          `某實驗變數取對數後呈直線 \\(\\log Y=${s31FracText(slopeNum, slopeDen)}\\log x+${intercept}\\)，寫出冪次模型 \\(Y=Cx^k\\)。`,
+          `\\(Y=${coefficient}x^{${s31FracText(slopeNum, slopeDen)}}\\)`,
+          `由 \\(\\log Y=\\log C+k\\log x\\) 對照可知 \\(k=${s31FracText(slopeNum, slopeDen)}\\)、\\(C=10^{${intercept}}\\)。`
+        );
+      },
+      () => {
+        const factor = s324Pick([10, 100, 1000]);
+        return s324QA(
+          `聲音分貝公式為 \\(d=10\\log\\dfrac{I}{I_0}\\)。若聲音強度 \\(I\\) 變為原本的 ${factor} 倍，分貝增加多少？`,
+          `增加 ${10 * Math.log10(factor)} 分貝`,
+          `分貝差為 \\(10\\log(${factor})=${10 * Math.log10(factor)}\\)。`
+        );
+      },
+      () => {
+        const start = s324Pick([400, 800, 1200]);
+        const after = start / 4;
+        return s324QA(
+          `某量依固定倍率衰減，初始為 ${start}，3 小時後剩 ${after}。求再經過 3 小時後的剩餘量，並寫出衰減函數。`,
+          `剩 ${after / 4}，\\(N(t)=${start}\\left(\\dfrac14\\right)^{t/3}\\)`,
+          `3 小時變為原來的 \\(1/4\\)，所以模型為 \\(N(t)=${start}(1/4)^{t/3}\\)。再過 3 小時再乘 \\(1/4\\)，得 ${after / 4}。`
+        );
+      },
+      () => {
+        const start = s324Pick([1, 2, 3]);
+        const end = start + s324Pick([1, 2, 3]);
+        return s324QA(
+          `根據班佛法則 \\(P(d)=\\log(1+1/d)\\)，求首位數字為 ${start} 到 ${end} 的機率總和。`,
+          `\\(\\log\\dfrac{${end + 1}}{${start}}\\)`,
+          `連加 \\(\\log\\dfrac{d+1}{d}\\) 會望遠鏡相消，從 ${start} 加到 ${end} 後得到 \\(\\log\\dfrac{${end + 1}}{${start}}\\)。`
+        );
+      },
+      () => {
+        const startScore = s324Pick([70, 80, 90]);
+        const drop = s324Pick([10, 12, 15]);
+        const target = startScore - s324Pick([20, 24, 30]);
+        return s324QA(
+          `遺忘曲線模型 \\(S(t)=${startScore}-${drop}\\log(t+1)\\)。求分數降至 ${target} 以下至少需要幾個月？`,
+          `\\(t>10^{${s31FracText(startScore - target, drop)}}-1\\)`,
+          `解 \\(${startScore}-${drop}\\log(t+1)<${target}\\)，得 \\(\\log(t+1)>${s31FracText(startScore - target, drop)}\\)，所以 \\(t>10^{${s31FracText(startScore - target, drop)}}-1\\)。`
+        );
+      },
+    ];
+    return s324MakeSet(count, builders);
+  }
+
+  function buildS322ChangeBaseComparisonAdvancedSet(count = 5) {
+    const builders = [
+      () => {
+        const belowOne = Math.random() < 0.5;
+        const condition = belowOne ? '0<a<b<1' : '1<a<b';
+        const symbol = belowOne ? '<' : '>';
+        const reason = belowOne
+          ? '因 \\(0<a<b<1\\)，可知 \\(0<\\log_a b<1\\)，而 \\(\\log_b a>1\\)。'
+          : '因 \\(1<a<b\\)，可知 \\(\\log_a b>1\\)，而 \\(0<\\log_b a<1\\)。';
+        return s322Item(
+          `若 \\(${condition}\\)，比較 \\(\\log_a b\\) 與 \\(\\log_b a\\) 的大小。`,
+          `\\(\\log_a b${symbol}\\log_b a\\)`,
+          reason
+        );
+      },
+      () => {
+        const pairs = [
+          [2, 5],
+          [2, 3],
+          [3, 5],
+          [2, 7],
+        ];
+        const [p, q] = s322Pick(pairs);
+        const k = s322Pick([1, 2, 3]);
+        const n = Math.pow(p * q, k);
+        return s322Item(
+          `計算 \\(\\dfrac{1}{\\log_${p} ${n}}+\\dfrac{1}{\\log_${q} ${n}}\\) 的精確值。`,
+          `\\(${s31FracText(1, k)}\\)`,
+          `利用倒數換底，原式為 \\(\\log_${n}${p}+\\log_${n}${q}=\\log_${n}${p * q}\\)。因 \\(${n}=(${p * q})^{${k}}\\)，所以值為 \\(${s31FracText(1, k)}\\)。`
+        );
+      },
+      () => {
+        const m = s322Pick([1, 2, 3, 4]);
+        return s322Item(
+          `已知 \\(\\log_2 3=a,\\log_3 5=b\\)，以 \\(a,b\\) 表示 \\(\\log_{15}(${Math.pow(2, m)}\\cdot5)\\)。`,
+          `\\(\\dfrac{${m}a+b}{1+b}\\)`,
+          `令 \\(\\log2=a\\log3\\)、\\(\\log5=b\\log3\\)。則 \\(\\log_{15}(${Math.pow(2, m)}\\cdot5)=\\dfrac{${m}\\log2+\\log5}{\\log3+\log5}=\\dfrac{${m}a+b}{1+b}\\)。`
+        );
+      },
+      () => {
+        const cases = [
+          {
+            q: '\\log_2 3,\\log_3 5,\\log_5 8',
+            a: '\\log_2 3>\\log_3 5>\\log_5 8',
+            p: '\\log_2 3\\approx1.585\\)、\\(\\log_3 5\\approx1.465\\)、\\(\\log_5 8\\approx1.292',
+          },
+          {
+            q: '\\log_2 5,\\log_3 7,\\log_5 11',
+            a: '\\log_2 5>\\log_3 7>\\log_5 11',
+            p: '\\log_2 5\\approx2.322\\)、\\(\\log_3 7\\approx1.771\\)、\\(\\log_5 11\\approx1.489',
+          },
+          {
+            q: '\\log_3 4,\\log_4 5,\\log_5 6',
+            a: '\\log_3 4>\\log_4 5>\\log_5 6',
+            p: '\\log_3 4\\approx1.262\\)、\\(\\log_4 5\\approx1.161\\)、\\(\\log_5 6\\approx1.113',
+          },
+        ];
+        const item = s322Pick(cases);
+        return s322Item(
+          `比較 \\(${item.q}\\) 的大小。`,
+          `\\(${item.a}\\)`,
+          `可用常用對數估算：\\(${item.p}\\)，所以大小順序如上。`
+        );
+      },
+      () => {
+        const base = s322Pick([2, 3, 5]);
+        const m = s322Pick([2, 3, 4]);
+        const n = s322Pick([2, 3, 5, 7].filter((value) => value !== base));
+        return s322Item(
+          `化簡 \\((${base}^{${m}})^{\\log_${base}${n}}\\div ${n}^{${m}}\\)。`,
+          '\\(1\\)',
+          `\\((${base}^{${m}})^{\\log_${base}${n}}=${base}^{${m}\\log_${base}${n}}=(${base}^{\\log_${base}${n}})^${m}=${n}^{${m}}\\)，故相除為 1。`
+        );
+      },
+    ];
+    return s322MakeSet(count, builders);
+  }
+
+  function s31FreshSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
+    return { questions, summaryAnswers, answers };
+  }
+
+  function s31Choose(list) {
+    return list[randInt(0, list.length - 1)];
+  }
+
+  function s31FracText(numerator, denominator) {
+    const frac = reduceFraction(numerator, denominator);
+    if (frac.denominator === 1) return `${frac.numerator}`;
+    const sign = frac.numerator < 0 ? '-' : '';
+    return `${sign}\\dfrac{${Math.abs(frac.numerator)}}{${frac.denominator}}`;
+  }
+
+  function s31Decimal(value, digits = 2) {
+    return Number(value.toFixed(digits)).toString();
+  }
+
+  function s31RadPerMinuteText(minutes) {
+    const frac = reduceFraction(minutes, 30);
+    const absNumerator = Math.abs(frac.numerator);
+    const sign = frac.numerator < 0 ? '-' : '';
+    const body = absNumerator === 1 ? '\\pi' : `${absNumerator}\\pi`;
+    if (frac.denominator === 1) return `${sign}${body}`;
+    return `${sign}\\dfrac{${body}}{${frac.denominator}}`;
+  }
+
+  function buildS313PeriodicMotionModelAdvancedSet(count) {
+    const set = s31FreshSet(count);
+    const { questions, answers } = set;
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const diameter = s31Choose([30, 36, 40, 48, 60]);
+        const radius = diameter / 2;
+        const center = radius + s31Choose([5, 8, 10, 12, 15]);
+        const period = s31Choose([6, 8, 10, 12]);
+        const t = randInt(1, period - 1);
+        const thetaText = s311PiFrac(2 * t, period);
+        questions.push(
+          `摩天輪直徑 ${diameter} 公尺，中心離地 ${center} 公尺，轉一圈 ${period} 分鐘。若從最低點出發，寫出高度函數 \\(h(t)\\)，並求 ${t} 分鐘後的高度。`
+        );
+        answers.push(
+          `簡答：\\(h(t)=${center}-${radius}\\cos\\left(\\dfrac{2\\pi}{${period}}t\\right)\\)，${t} 分鐘後高度為 \\(${center}-${radius}\\cos ${thetaText}\\) 公尺。詳解：從最低點出發時高度要等於 \\(${center}-${radius}\\)，所以用負的餘弦模型；週期為 ${period}，角速度是 \\(\\dfrac{2\\pi}{${period}}\\)。代入 \\(t=${t}\\) 得 \\(h(${t})=${center}-${radius}\\cos ${thetaText}\\)。`
+        );
+      } else if (mode === 1) {
+        const length = s31Choose([8, 10, 12, 15, 18]);
+        const startMin = randInt(0, 35);
+        const endMin = startMin + s31Choose([10, 15, 20, 25, 30]);
+        const duration = endMin - startMin;
+        const thetaText = s31RadPerMinuteText(duration);
+        const arcNum = reduceFraction(length * duration, 30);
+        const areaNum = reduceFraction(length * length * duration, 60);
+        const arcText =
+          arcNum.denominator === 1 ? `${arcNum.numerator}\\pi` : `\\dfrac{${arcNum.numerator}\\pi}{${arcNum.denominator}}`;
+        const areaText =
+          areaNum.denominator === 1 ? `${areaNum.numerator}\\pi` : `\\dfrac{${areaNum.numerator}\\pi}{${areaNum.denominator}}`;
+        questions.push(
+          `時鐘分針長 ${length} 公分，從 1 點 ${startMin} 分走到 1 點 ${endMin} 分。求分針尖端移動的總路程，並求掃過的扇形面積。`
+        );
+        answers.push(
+          `簡答：路程 \\(${arcText}\\) 公分，面積 \\(${areaText}\\) 平方公分。詳解：分針 ${duration} 分鐘轉過 \\(\\theta=${thetaText}\\) 弳。弧長 \\(s=r\\theta=${length}\\cdot ${thetaText}=${arcText}\\)，扇形面積 \\(A=\\dfrac12r^2\\theta=\\dfrac12\\cdot ${length}^2\\cdot ${thetaText}=${areaText}\\)。`
+        );
+      } else if (mode === 2) {
+        const amp = randInt(2, 6);
+        const mid = randInt(4, 9);
+        const shift = randInt(0, 5);
+        const maxTimes = [];
+        const minTimes = [];
+        for (let k = -2; k <= 3; k += 1) {
+          const maxT = shift + 3 + 12 * k;
+          const minT = shift + 9 + 12 * k;
+          if (maxT >= 0 && maxT <= 24) maxTimes.push(maxT);
+          if (minT >= 0 && minT <= 24) minTimes.push(minT);
+        }
+        questions.push(
+          `某潮汐高度可用模型 \\(y=${amp}\\sin\\left(\\dfrac{\\pi}{6}(t-${shift})\\right)+${mid}\\) 表示，其中 \\(t\\) 為 0 到 24 小時。求潮高範圍，並列出一天內滿潮與乾潮的時間。`
+        );
+        answers.push(
+          `簡答：高度範圍 \\([${mid - amp},${mid + amp}]\\)，滿潮時間 \\(${maxTimes.join(', ')}\\) 時，乾潮時間 \\(${minTimes.join(', ')}\\) 時。詳解：振幅為 ${amp}，中線為 ${mid}，故範圍是 \\(${mid}\\pm ${amp}\\)。當正弦值為 1 時滿潮，\\(\\dfrac{\\pi}{6}(t-${shift})=\\dfrac{\\pi}{2}+2k\\pi\\)，得 \\(t=${shift + 3}+12k\\)；當正弦值為 -1 時乾潮，得 \\(t=${shift + 9}+12k\\)。`
+        );
+      } else if (mode === 3) {
+        const rpm = s31Choose([4, 5, 6, 8, 10]);
+        const degPerSec = rpm * 6;
+        const radius = s31Choose([6, 8, 10, 12]);
+        const lowest = s31Choose([1, 2, 3]);
+        const t = randInt(2, 8);
+        questions.push(
+          `摩天輪每秒轉 \\(${degPerSec}^\\circ\\)，最低點離地 ${lowest} 公尺，半徑 ${radius} 公尺。若座艙從最低點出發，寫出高度與時間 \\(t\\)（秒）的關係式，並表示 ${t} 秒後的高度。`
+        );
+        answers.push(
+          `簡答：\\(h(t)=${lowest + radius}-${radius}\\cos\\left(${degPerSec}^\\circ t\\right)\\)，${t} 秒後為 \\(${lowest + radius}-${radius}\\cos ${degPerSec * t}^\\circ\\) 公尺。詳解：圓心高度為 \\(${lowest}+${radius}=${lowest + radius}\\)，從最低點出發要用 \\(-\\cos\\)；每秒轉 \\(${degPerSec}^\\circ\\)，所以角度為 \\(${degPerSec}t^\\circ\\)。`
+        );
+      } else {
+        const hour = s31Choose([2, 3, 4, 8, 9, 10]);
+        const sols = [];
+        [30 * hour - 90, 30 * hour + 90].forEach((value) => {
+          const minute = reduceFraction(2 * value, 11);
+          if (minute.numerator > 0 && minute.numerator < 60 * minute.denominator) {
+            const text =
+              minute.denominator === 1
+                ? `${minute.numerator}`
+                : `\\dfrac{${minute.numerator}}{${minute.denominator}}`;
+            if (!sols.includes(text)) sols.push(text);
+          }
+        });
+        questions.push(
+          `分針與時針在何時（${hour} 點到 ${hour + 1} 點之間）夾角為 \\(90^\\circ\\)？請用弧度式或角速度關係表示解法。`
+        );
+        answers.push(
+          `簡答：${hour} 點 \\(${sols.join('\\text{ 分、 }')}\\) 分。詳解：設過了 \\(m\\) 分，分針角度為 \\(6m^\\circ\\)，時針角度為 \\(30\\times ${hour}+0.5m^\\circ\\)。令 \\(|6m-(30\\times ${hour}+0.5m)|=90\\)，即 \\(|5.5m-${30 * hour}|=90\\)，解出在 0 到 60 分內的 \\(m\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS313TrigGraphTransformParameterAdvancedSet(count) {
+    const set = s31FreshSet(count);
+    const { questions, answers } = set;
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const a = randInt(2, 6);
+        const d = randInt(-3, 4);
+        const b = s31Choose([1, 2, 3, 4]);
+        const xNum = s31Choose([1, 2, 3, 5]);
+        const xDen = 4;
+        const maxY = d + a;
+        const minY = d - a;
+        const c = reduceFraction(b * xNum, xDen);
+        const minX = reduceFraction(xNum * b + xDen, xDen * b);
+        questions.push(
+          `已知 \\(f(x)=a\\cos(bx-c)+d\\)，其中 \\(a,b>0\\)。若最高點為 \\(\\left(${s311PiFrac(xNum, xDen)},${maxY}\\right)\\)，最低點為 \\(\\left(${s311PiFrac(minX.numerator, minX.denominator)},${minY}\\right)\\)，求一組 \\((a,b,c,d)\\)。`
+        );
+        answers.push(
+          `簡答：一組解為 \\((a,b,c,d)=(${a},${b},${s311PiFrac(c.numerator, c.denominator)},${d})\\)。詳解：最高與最低的平均是中線，所以 \\(d=${d}\\)；最高與最低差的一半是振幅，所以 \\(a=${a}\\)。最高到最低相差半週期，由 \\(${s311PiFrac(xNum, xDen)}\\) 到 \\(${s311PiFrac(minX.numerator, minX.denominator)}\\) 的距離為 \\(\\dfrac{\\pi}{${b}}\\)，所以 \\(b=${b}\\)。最高點須滿足 \\(bx-c=0\\)，得 \\(c=b\\cdot ${s311PiFrac(xNum, xDen)}=${s311PiFrac(c.numerator, c.denominator)}\\)。`
+        );
+      } else if (mode === 1) {
+        const factor = s31Choose([2, 3, 4]);
+        const up = randInt(1, 5);
+        questions.push(
+          `將 \\(y=\\sin x\\) 先水平壓縮為原來的 \\(\\dfrac{1}{${factor}}\\) 倍，再向左平移 \\(\\dfrac{\\pi}{12}\\)，最後向上平移 ${up}，寫出新函數式。`
+        );
+        answers.push(
+          `簡答：\\(y=\\sin\\left(${factor}\\left(x+\\dfrac{\\pi}{12}\\right)\\right)+${up}\\)，也可寫成 \\(y=\\sin\\left(${factor}x+${s311PiFrac(factor, 12)}\\right)+${up}\\)。詳解：水平壓縮為 \\(1/${factor}\\) 倍代表把 \\(x\\) 換成 \\(${factor}x\\)；向左平移 \\(\\dfrac{\\pi}{12}\\) 則把 \\(x\\) 換成 \\(x+\\dfrac{\\pi}{12}\\)；最後整體加 ${up}。`
+        );
+      } else if (mode === 2) {
+        const freq = randInt(2, 5);
+        const p = s31Choose([3, 4, 5, 6, 8]);
+        const k2 = p * p - 1;
+        questions.push(
+          `若 \\(y=\\sin ${freq}x+k\\cos ${freq}x\\) 的最大值為 ${p}，且 \\(k>0\\)，求 \\(k^2\\) 的值。`
+        );
+        answers.push(
+          `簡答：\\(${k2}\\)。詳解：\\(\\sin ${freq}x+k\\cos ${freq}x\\) 可疊合為 \\(R\\sin(${freq}x+\\alpha)\\)，最大值 \\(R=\\sqrt{1+k^2}\\)。由 \\(\\sqrt{1+k^2}=${p}\\)，得 \\(k^2=${p * p}-1=${k2}\\)。`
+        );
+      } else if (mode === 3) {
+        const k = s31Choose([1, 2, 3, 4]);
+        const period = s311PiFrac(1, k);
+        questions.push(
+          `判斷 \\(y=|${k === 1 ? '' : k}\\sin ${k === 1 ? '' : `${k}`}x|+1\\) 的最小正週期，並說明它的值域。`
+        );
+        answers.push(
+          `簡答：最小正週期為 \\(${period}\\)，值域為 \\([1,2]\\)。詳解：\\(\\sin ${k === 1 ? 'x' : `${k}x`}\\) 的週期為 \\(${s311PiFrac(2, k)}\\)，加上絕對值後上下半波重合，週期減半為 \\(${period}\\)。因為 \\(|\\sin|\\) 的範圍是 \\([0,1]\\)，再加 1 得 \\([1,2]\\)。`
+        );
+      } else {
+        const halfPeriod = s31Choose([2, 3, 4]);
+        const b = reduceFraction(1, halfPeriod);
+        const centerText = s311PiFrac(halfPeriod, 1);
+        const y0 = randInt(-2, 3);
+        const yShift = y0 === 0 ? '' : s31Signed(y0);
+        questions.push(
+          `已知正弦函數圖形通過 \\((0,${y0})\\)，對稱中心為 \\(\\left(${centerText},${y0}\\right)\\)，且週期為 \\(${s311PiFrac(2 * halfPeriod, 1)}\\)。請寫出一個符合條件的函數式。`
+        );
+        answers.push(
+          `簡答：可取 \\(y=\\sin\\left(${s31FracText(b.numerator, b.denominator)}x\\right)${yShift}\\)。詳解：正弦函數的週期為 \\(\\dfrac{2\\pi}{b}\\)，令週期等於 \\(${s311PiFrac(2 * halfPeriod, 1)}\\)，可得 \\(b=\\dfrac1{${halfPeriod}}\\)。此函數中線為 \\(y=${y0}\\)，在 \\(x=0\\) 與 \\(x=${centerText}\\) 都落在中線上，因此 \\(\\left(${centerText},${y0}\\right)\\) 是對稱中心。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS312TripleAnglePolynomialAdvancedSet(count) {
+    const set = s31FreshSet(count);
+    const { questions, answers } = set;
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const tripleCases = [
+          { theta: 20, cosNum: 1, cosDen: 2 },
+          { theta: 40, cosNum: -1, cosDen: 2 },
+          { theta: 60, cosNum: -1, cosDen: 1 },
+        ];
+        const c = s31Choose(tripleCases);
+        const constant = randInt(1, 8);
+        const value = reduceFraction(c.cosNum + constant * c.cosDen, c.cosDen);
+        questions.push(
+          `求 \\((x-\\cos ${c.theta}^\\circ)\\) 除 \\(4x^3-3x+${constant}\\) 的餘式精確值。`
+        );
+        answers.push(
+          `簡答：\\(${s31FracText(value.numerator, value.denominator)}\\)。詳解：由餘式定理，餘式為 \\(4\\cos^3 ${c.theta}^\\circ-3\\cos ${c.theta}^\\circ+${constant}\\)。利用三倍角公式 \\(4\\cos^3\\theta-3\\cos\\theta=\\cos3\\theta\\)，得餘式 \\(\\cos ${3 * c.theta}^\\circ+${constant}=${s31FracText(value.numerator, value.denominator)}\\)。`
+        );
+      } else if (mode === 1) {
+        const cases = [
+          { s: 1, c: 2, r: '\\dfrac{1}{\\sqrt5}', cos: '\\dfrac{2}{\\sqrt5}', sin3: '\\dfrac{2}{5\\sqrt5}', cos3: '\\dfrac{2}{5\\sqrt5}' },
+          { s: 2, c: 3, r: '\\dfrac{2}{\\sqrt{13}}', cos: '\\dfrac{3}{\\sqrt{13}}', sin3: '\\dfrac{10}{13\\sqrt{13}}', cos3: '\\dfrac{-9}{13\\sqrt{13}}' },
+          { s: 3, c: 4, r: '\\dfrac{3}{5}', cos: '\\dfrac{4}{5}', sin3: '\\dfrac{117}{125}', cos3: '\\dfrac{44}{125}' },
+        ];
+        const c = s31Choose(cases);
+        questions.push(
+          `已知 \\(\\sin\\theta=${c.r}\\)，且 \\(\\theta\\) 在第一象限，求 \\(\\sin3\\theta\\) 與 \\(\\cos3\\theta\\)。`
+        );
+        answers.push(
+          `簡答：\\(\\sin3\\theta=${c.sin3}\\)，\\(\\cos3\\theta=${c.cos3}\\)。詳解：先由第一象限取 \\(\\cos\\theta=${c.cos}\\)，再代入 \\(\\sin3\\theta=3\\sin\\theta-4\\sin^3\\theta\\) 與 \\(\\cos3\\theta=4\\cos^3\\theta-3\\cos\\theta\\)。`
+        );
+      } else if (mode === 2) {
+        const angle = s31Choose([20, 30, 40, 45, 60]);
+        const zeroText = angle === 45 ? '等於 0' : '不等於 0';
+        questions.push(
+          `化簡 \\(\\dfrac{\\sin 3\\theta}{\\sin\\theta}+\\dfrac{\\cos 3\\theta}{\\cos\\theta}\\)，並判斷當 \\(\\theta=${angle}^\\circ\\) 時其值是否為 0。`
+        );
+        answers.push(
+          `簡答：化簡為 \\(4\\cos2\\theta\\)，當 \\(\\theta=${angle}^\\circ\\) 時${zeroText}。詳解：\\(\\sin3\\theta=3\\sin\\theta-4\\sin^3\\theta\\)，故 \\(\\dfrac{\\sin3\\theta}{\\sin\\theta}=3-4\\sin^2\\theta\\)；\\(\\dfrac{\\cos3\\theta}{\\cos\\theta}=4\\cos^2\\theta-3\\)。相加得 \\(4(\\cos^2\\theta-\\sin^2\\theta)=4\\cos2\\theta\\)。`
+        );
+      } else if (mode === 3) {
+        const xCase = s31Choose([
+          { text: '\\sin10^\\circ', val: '\\cos30^\\circ', ans: '0' },
+          { text: '\\sin30^\\circ', val: '\\cos90^\\circ', ans: '0' },
+          { text: '\\sin45^\\circ', val: '\\cos135^\\circ', ans: '-\\dfrac{\\sqrt2}{2}' },
+          { text: '\\sin60^\\circ', val: '\\cos180^\\circ', ans: '-1' },
+        ]);
+        questions.push(
+          `若 \\(x=${xCase.text}\\)，計算 \\(16x^4-20x^2+5\\) 的值。`
+        );
+        answers.push(
+          `簡答：\\(${xCase.ans}\\)。詳解：\\(16\\sin^4\\theta-20\\sin^2\\theta+5=\\cos3\\theta\\)。代入 \\(x=${xCase.text}\\)，即得 \\(${xCase.val}=${xCase.ans}\\)。`
+        );
+      } else {
+        const angle = s31Choose([10, 20, 30]);
+        const triple = 3 * angle;
+        questions.push(
+          `求 \\(\\cos ${angle}^\\circ\\cos(${60 - angle}^\\circ)\\cos(${60 + angle}^\\circ)\\) 的精確表示。`
+        );
+        answers.push(
+          `簡答：\\(\\dfrac14\\cos ${triple}^\\circ\\)。詳解：利用積化和差或三倍角結構可得 \\(4\\cos x\\cos(60^\\circ-x)\\cos(60^\\circ+x)=\\cos3x\\)，所以原式為 \\(\\dfrac14\\cos3x=\\dfrac14\\cos ${triple}^\\circ\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS314TrigExtremaCombinationAdvancedSet(count) {
+    const set = s31FreshSet(count);
+    const { questions, answers } = set;
+    const triples = [
+      [3, 4, 5],
+      [5, 12, 13],
+      [8, 15, 17],
+      [7, 24, 25],
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const [a, b, r] = s31Choose(triples);
+        const c = randInt(-4, 6);
+        questions.push(
+          `求 \\(y=${a}\\sin x-${b}\\cos x${s31Signed(c)}\\) 的最大值與最小值。`
+        );
+        answers.push(
+          `簡答：最大值 \\(${c + r}\\)，最小值 \\(${c - r}\\)。詳解：\\(${a}\\sin x-${b}\\cos x\\) 可疊合為 \\(R\\sin(x-\\alpha)\\)，其中 \\(R=\\sqrt{${a}^2+${b}^2}=${r}\\)，所以整體範圍是 \\([${c - r},${c + r}]\\)。`
+        );
+      } else if (mode === 1) {
+        const k = s31Choose([1, 2, 3]);
+        const radical = formatRadical(1 + k * k);
+        const cosTerm = k === 1 ? '\\cos x' : `${k}\\cos x`;
+        questions.push(
+          `在 \\(0\\le x\\le \\dfrac{\\pi}{2}\\) 範圍內，求 \\(y=\\sin x+${cosTerm}\\) 的最大值。`
+        );
+        answers.push(
+          `簡答：\\(${radical}\\)。詳解：\\(\\sin x+${cosTerm}\\le \\sqrt{1^2+${k}^2}=${radical}\\)。等號成立於 \\(\\tan x=\\dfrac{1}{${k}}\\)，此角在第一象限，因此最大值可達 \\(${radical}\\)。`
+        );
+      } else if (mode === 2) {
+        const p = 2 * randInt(1, 3);
+        const q = randInt(1, 6);
+        const candidates = [q, 1 + p + q, 1 - p + q];
+        const vertex = -p / 2;
+        if (vertex >= -1 && vertex <= 1) candidates.push(q - (p * p) / 4);
+        const minValue = Math.min(...candidates);
+        const maxValue = Math.max(...candidates);
+        questions.push(
+          `設 \\(y=\\sin^2x+${p}\\sin x+${q}\\)，求其在實數範圍內的值域。`
+        );
+        answers.push(
+          `簡答：\\([${minValue},${maxValue}]\\)。詳解：令 \\(t=\\sin x\\)，則 \\(-1\\le t\\le1\\)，題目化為 \\(y=t^2+${p}t+${q}\\)。檢查端點 \\(t=1,-1\\)，以及頂點 \\(t=-${p}/2\\) 是否落在 \\([-1,1]\\)，即可得值域 \\([${minValue},${maxValue}]\\)。`
+        );
+      } else if (mode === 3) {
+        const a = s31Choose([2, 3, 4]);
+        const b = s31Choose([3, 4, 5]);
+        const radical = formatRadical(a * a + b * b);
+        questions.push(
+          `利用疊合法求 \\(y=\\dfrac{${a}\\sin x+${b}\\cos x}{${a + b}}\\) 的最大值。`
+        );
+        answers.push(
+          `簡答：\\(\\dfrac{${radical}}{${a + b}}\\)。詳解：分子 \\(${a}\\sin x+${b}\\cos x\\) 的最大值為 \\(\\sqrt{${a}^2+${b}^2}=${radical}\\)，再除以分母 ${a + b}，最大值為 \\(\\dfrac{${radical}}{${a + b}}\\)。`
+        );
+      } else {
+        const a = s31Choose([1, 2, 3, 4]);
+        questions.push(
+          `若 \\(f(x)=\\sin ${a}x+\\cos ${a}x\\)，求 \\(0\\le x<2\\pi\\) 中圖形與 \\(x\\) 軸的交點個數，並求 \\(y\\) 軸截距。`
+        );
+        answers.push(
+          `簡答：與 \\(x\\) 軸有 \\(${2 * a}\\) 個交點，\\(y\\) 軸截距為 \\(1\\)。詳解：\\(\\sin ${a}x+\\cos ${a}x=\\sqrt2\\sin\\left(${a}x+45^\\circ\\right)\\)。在 \\(0\\le x<2\\pi\\) 中，\\(${a}x+45^\\circ\\) 走過 ${a} 個完整週期，每週期有 2 個零點，所以共有 \\(${2 * a}\\) 個交點。令 \\(x=0\\)，得 \\(f(0)=0+1=1\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS311GeometryArcPackingAdvancedSet(count) {
+    const set = s31FreshSet(count);
+    const { questions, answers } = set;
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const n = s31Choose([6, 8, 10, 12, 19]);
+        const r = randInt(1, 8);
+        questions.push(
+          `${n} 根半徑為 \\(r=${r}\\) 的圓管緊密排成一列，外面用繩子拉緊包住一圈。求繩長公式與此時繩長。`
+        );
+        answers.push(
+          `簡答：公式 \\(L=2(n-1)r+2\\pi r\\)，此題 \\(L=${2 * (n - 1) * r}+${2 * r}\\pi\\)。詳解：上下兩段直線各長 \\((n-1)\\cdot2r\\)，合計 \\(2(n-1)r\\)；左右兩端半圓合成一整個圓，弧長為 \\(2\\pi r\\)。`
+        );
+      } else if (mode === 1) {
+        const r = s31Choose([6, 8, 10, 12]);
+        questions.push(
+          `已知扇形周長等於同半徑圓周長的一半，半徑為 ${r}，求此扇形的圓心角（弧度）與面積比。`
+        );
+        answers.push(
+          `簡答：圓心角 \\(\\pi-2\\) 弳，面積占同半徑圓的 \\(\\dfrac{\\pi-2}{2\\pi}\\)。詳解：扇形周長為 \\(2r+r\\theta\\)，同半徑圓周長一半為 \\(\\pi r\\)，故 \\(2r+r\\theta=\\pi r\\)，得 \\(\\theta=\\pi-2\\)。面積比為 \\(\\dfrac{\\frac12r^2\\theta}{\\pi r^2}=\\dfrac{\\theta}{2\\pi}\\)。`
+        );
+      } else if (mode === 2) {
+        const r = s31Choose([6, 8, 10]);
+        const d = s31Choose([r, Math.round(1.2 * r), Math.round(1.5 * r)]);
+        questions.push(
+          `兩圓半徑皆為 ${r}，連心線長 ${d}。求兩圓共同交集面積的計算式。`
+        );
+        answers.push(
+          `簡答：\\(2r^2\\cos^{-1}\\left(\\dfrac{d}{2r}\\right)-\\dfrac{d}{2}\\sqrt{4r^2-d^2}\\)，代入為 \\(2\\cdot ${r}^2\\cos^{-1}\\left(\\dfrac{${d}}{${2 * r}}\\right)-\\dfrac{${d}}2\\sqrt{${4 * r * r}-${d * d}}\\)。詳解：共同面積可視為兩個相同圓弓面積相加，也就是兩個扇形扣掉中間兩個等腰三角形。`
+        );
+      } else if (mode === 3) {
+        const small = randInt(2, 5);
+        const gap = randInt(3, 8);
+        const big = small + gap;
+        const d = 2 * gap;
+        const line = 2 * gap;
+        const piFrac = reduceFraction(4 * big + 2 * small, 3);
+        questions.push(
+          `一皮帶繞過半徑 ${small} 與 ${big} 的兩輪，兩輪中心距離 ${d}，且皮帶不交叉。求皮帶總長。`
+        );
+        answers.push(
+          `簡答：\\(${line}\\sqrt3+${s31FracText(piFrac.numerator, piFrac.denominator)}\\pi\\)。詳解：因 \\((R-r)/d=${gap}/${d}=1/2\\)，夾角為 \\(30^\\circ\\)。兩段公切線總長為 \\(2\\sqrt{d^2-(R-r)^2}=${line}\\sqrt3\\)；兩段弧長為 \\(\\dfrac{4R+2r}{3}\\pi=${s31FracText(piFrac.numerator, piFrac.denominator)}\\pi\\)。`
+        );
+      } else {
+        const r = randInt(2, 10);
+        questions.push(
+          `七個半徑皆為 ${r} 的等圓，其中一個在中央，其餘六個緊密圍繞。若用繩子貼住外圍一圈，求外圈包裝長度。`
+        );
+        answers.push(
+          `簡答：\\(${12 * r}+${2 * r}\\pi\\)。詳解：外圍六圓圓心形成正六邊形，六段直線總長 \\(6\\times2r=${12 * r}\\)；六個轉角弧合成一整圈，弧長 \\(2\\pi r=${2 * r}\\pi\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
   function fAdd(f1, f2) {
     return reduceFraction(
       f1.numerator * f2.denominator + f2.numerator * f1.denominator,
@@ -12951,6 +13659,332 @@
     return { questions, summaryAnswers, answers };
   }
 
+  function buildS331TriangleBarycentricAdvancedSet(count) {
+    const builders = [
+      () => {
+        const q = s324Pick([3, 4, 5, 6, 8]);
+        const p = randInt(1, q - 1);
+        const remain = q - p;
+        return s331QA(
+          `在 \\(\\triangle ABC\\) 中，若 \\(\\vec{AP}=${formatFraction(p, q)}\\vec{AB}+t\\vec{AC}\\)，且 \\(P\\) 落在三角形內部，求 \\(t\\) 的範圍。`,
+          `\\(0<t<${formatFraction(remain, q)}\\)`,
+          `令 \\(\\vec{AP}=x\\vec{AB}+y\\vec{AC}\\)。點在三角形內部的條件為 \\(x>0,y>0,x+y<1\\)。本題 \\(x=${formatFraction(p, q)}\\)，所以 \\(0<t<1-${formatFraction(p, q)}=${formatFraction(remain, q)}\\)。`
+        );
+      },
+      () => {
+        const q = s324Pick([4, 5, 6, 8, 10]);
+        return s331QA(
+          `設 \\(\\vec{AP}=s\\vec{AB}+${formatFraction(1, q)}\\vec{AC}\\)。若 \\(P\\) 在 \\(\\triangle ABC\\) 外部但仍位於 \\(\\angle A\\) 的張角內，求 \\(s\\) 的限制。`,
+          `\\(s>${formatFraction(q - 1, q)}\\)`,
+          `位於 \\(\\angle A\\) 張角內表示兩係數皆為正；在三角形外部則表示係數和大於 1。因此 \\(s>0\\) 且 \\(s+${formatFraction(1, q)}>1\\)，得 \\(s>${formatFraction(q - 1, q)}\\)。`
+        );
+      },
+      () => {
+        const d = s324Pick([1, 2, 3]);
+        const minK = d === 1 ? 3 : 2;
+        return s331QA(
+          `在 \\(\\triangle ABC\\) 內部找一點 \\(P\\)，滿足 \\(\\vec{AP}=\\dfrac{1}{k}\\vec{AB}+\\dfrac{1}{k+${d}}\\vec{AC}\\)。求正整數 \\(k\\) 的範圍。`,
+          `\\(k\\ge ${minK}\\)`,
+          `內部條件為 \\(\\dfrac1k>0\\)、\\(\\dfrac1{k+${d}}>0\\)、\\(\\dfrac1k+\\dfrac1{k+${d}}<1\\)。檢查正整數可得最小符合值為 \\(${minK}\\)，之後隨 \\(k\\) 增大左式更小，所以 \\(k\\ge ${minK}\\)。`
+        );
+      },
+      () => {
+        const mDen = s324Pick([5, 6, 8, 10]);
+        const mNum = randInt(1, mDen - 2);
+        const nNum = randInt(1, mDen - mNum - 1);
+        return s331QA(
+          `已知 \\(\\vec{AP}=m\\vec{AB}+n\\vec{AC}\\)，其中 \\(m=${formatFraction(mNum, mDen)}\\)、\\(n=${formatFraction(nNum, mDen)}\\)。判斷 \\(P\\) 是否在 \\(\\triangle ABC\\) 內部，並寫出判斷依據。`,
+          `在內部，因 \\(0<m+n=${formatFraction(mNum + nNum, mDen)}<1\\)`,
+          `以 \\(\\vec{AB},\\vec{AC}\\) 為基底時，三角形內部條件是 \\(m>0,n>0,m+n<1\\)。本題兩係數皆正，且 \\(m+n=${formatFraction(mNum + nNum, mDen)}<1\\)，所以 \\(P\\) 在內部。`
+        );
+      },
+      () => {
+        const h = s324Pick([1, 2, 3, 4]);
+        return s331QA(
+          `若 \\(\\vec{AP}=k^2\\vec{AB}+(hk+1)\\vec{AC}\\)，其中 \\(h=${h}\\)。當 \\(k\\) 為何值時，\\(P\\) 恰落在線段 \\(BC\\) 上？`,
+          `\\(k=0\\) 或 \\(k=-${h}\\)`,
+          `點在直線 \\(BC\\) 上時，\\(\\vec{AB}\\) 與 \\(\\vec{AC}\\) 的係數和為 1。因此 \\(k^2+${h}k+1=1\\)，即 \\(k(k+${h})=0\\)，得 \\(k=0\\) 或 \\(k=-${h}\\)。`
+        );
+      },
+    ];
+    return s331MakeSet(count, builders);
+  }
+
+  function s33ParamExpr(base, coef) {
+    const baseText = base === 0 ? '' : String(base);
+    let term = '';
+    if (coef !== 0) {
+      const absCoef = Math.abs(coef);
+      const body = (absCoef === 1 ? '' : absCoef) + 't';
+      if (!baseText) term = coef < 0 ? '-' + body : body;
+      else term = (coef < 0 ? '-' : '+') + body;
+    }
+    return baseText + term || '0';
+  }
+
+  function buildS332ParametricLineMotionAdvancedSet(count) {
+    const builders = [
+      () => {
+        const start = [randInt(-4, 4), randInt(-4, 4)];
+        const directions = [
+          [3, 4],
+          [4, -3],
+          [5, 12],
+          [-8, 6],
+        ];
+        const v = s324Pick(directions);
+        const m = randInt(1, 4);
+        const end = [start[0] + m * v[0], start[1] + m * v[1]];
+        return s331QA(
+          `點 \\(P\\) 從 \\(${start[0]},${start[1]}\\) 出發沿向量 \\(${v[0]},${v[1]}\\) 方向移動，當移動距離為 \\(${m * Math.sqrt(v[0] * v[0] + v[1] * v[1])}\\) 單位時，求新座標。`,
+          `\\((${end[0]},${end[1]})\\)`,
+          `方向向量長度為 \\(${s331LenText(v[0], v[1])}\\)，移動距離剛好是其 \\(${m}\\) 倍，所以位移為 \\(${m}(${v[0]},${v[1]})=(${m * v[0]},${m * v[1]})\\)。`
+        );
+      },
+      () => {
+        const v = s324Pick([
+          [2, 1],
+          [1, 2],
+          [3, 1],
+          [1, -3],
+        ]);
+        const p0 = [-v[1], v[0]];
+        const k = randInt(1, 4);
+        const radius2 = (v[0] * v[0] + v[1] * v[1]) * (k * k + 1);
+        const pA = [p0[0] + k * v[0], p0[1] + k * v[1]];
+        const pB = [p0[0] - k * v[0], p0[1] - k * v[1]];
+        return s331QA(
+          `直線 \\(L\\) 過點 \\((${p0[0]},${p0[1]})\\)，方向向量為 \\((${v[0]},${v[1]})\\)。求 \\(L\\) 與圓 \\(x^2+y^2=${radius2}\\) 的交點。`,
+          `\\((${pA[0]},${pA[1]})\\)、\\((${pB[0]},${pB[1]})\\)`,
+          `令直線參數式為 \\((x,y)=(${p0[0]},${p0[1]})+t(${v[0]},${v[1]})\\)。因起點向量與方向向量垂直，代入圓後得 \\(|P_0|^2+t^2|v|^2=${radius2}\\)，解得 \\(t=\\pm${k}\\)。`
+        );
+      },
+      () => {
+        const v = s324Pick([
+          [2, -1],
+          [1, 3],
+          [3, 2],
+          [-2, 5],
+        ]);
+        const a = [randInt(-3, 3), randInt(-3, 3)];
+        const t0 = randInt(1, 4);
+        const w = [-v[1], v[0]];
+        const scale = randInt(1, 3);
+        const q = [a[0] + t0 * v[0] + scale * w[0], a[1] + t0 * v[1] + scale * w[1]];
+        return s331QA(
+          `動點 \\(P(t)=(${s33ParamExpr(a[0], v[0])},${s33ParamExpr(a[1], v[1])})\\)。求 \\(P\\) 到定點 \\(Q(${q[0]},${q[1]})\\) 的最短距離及此時 \\(t\\)。`,
+          `\\(t=${t0}\\)，最短距離 \\(${s331LenText(scale * w[0], scale * w[1])}\\)`,
+          `最短時 \\(\\overrightarrow{QP}\\) 垂直於方向向量 \\((${v[0]},${v[1]})\\)。本題設計使最近點發生在 \\(t=${t0}\\)，垂直位移為 \\(${scale}(${w[0]},${w[1]})\\)，所以最短距離為 \\(${s331LenText(scale * w[0], scale * w[1])}\\)。`
+        );
+      },
+      () => {
+        const a = randInt(-5, 5);
+        const b = randInt(-5, 5);
+        const p = s324Pick([2, 3, -2, 4]);
+        const q = s324Pick([1, -3, 2, 5]);
+        const constant = q * a - p * b;
+        return s331QA(
+          `將參數式 \\(x=${a}${s31Signed(p)}t,\\ y=${b}${s31Signed(q)}t\\) 化為一般式，並求其法向量。`,
+          `一般式 \\(${q}x${s31Signed(-p)}y=${constant}\\)，法向量 \\((${q},${-p})\\)`,
+          `方向向量為 \\((${p},${q})\\)，所以法向量可取 \\((${q},${-p})\\)。代入通過點 \\((${a},${b})\\)，得一般式 \\(${q}x${s31Signed(-p)}y=${constant}\\)。`
+        );
+      },
+      () => {
+        const t0Num = s324Pick([1, 2, 3]);
+        const t0Den = 4;
+        const B = s324Pick([
+          [4, 0],
+          [0, 4],
+          [4, 4],
+          [-4, 4],
+        ]);
+        const W = [-B[1] / 4, B[0] / 4];
+        const A = [-(t0Num / t0Den) * B[0] + W[0], -(t0Num / t0Den) * B[1] + W[1]];
+        const q0 = [-A[0], -A[1]];
+        const qv = [1 - B[0], 2 - B[1]];
+        return s331QA(
+          `兩動點 \\(P(t)=(t,2t)\\)、\\(Q(t)=(${s33ParamExpr(q0[0], qv[0])},${s33ParamExpr(q0[1], qv[1])})\\)。求 \\(0\\le t\\le1\\) 時兩點距離最短的 \\(t\\)。`,
+          `\\(t=${formatFraction(t0Num, t0Den)}\\)`,
+          `兩點差向量可整理成 \\(A+tB\\)，其中頂點參數滿足 \\(t=-\\dfrac{A\\cdot B}{|B|^2}\\)。代入本題資料得 \\(t=${formatFraction(t0Num, t0Den)}\\)，且落在 \\([0,1]\\) 中。`
+        );
+      },
+    ];
+    return s331MakeSet(count, builders);
+  }
+
+  function buildS334CramerSolutionCountAdvancedSet(count) {
+    const builders = [
+      () => {
+        const r = s324Pick([2, 3, 4]);
+        const c = s324Pick([1, 2, 3]);
+        return s331QA(
+          `討論方程組 \\(\\begin{cases}x+${r}y=${c}\\\\${r}x+k y=${r * c}\\end{cases}\\) 在何種 \\(k\\) 值下有無限多解、無解或唯一解。`,
+          `\\(k=${r * r}\\) 時無限多解；\\(k\\ne${r * r}\\) 時唯一解；無解不存在`,
+          `係數行列式為 \\(k-${r * r}\\)。若不為 0 則唯一解；若 \\(k=${r * r}\\)，第二式正好是第一式的 \\(${r}\\) 倍，所以有無限多解。`
+        );
+      },
+      () => {
+        const a = s324Pick([2, 3, 4]);
+        const b = s324Pick([1, 2, 5]);
+        const c = s324Pick([3, 4, 6]);
+        const lambda = s324Pick([2, -2, 3]);
+        const line1 = `${s31FirstTerm(a, 'x')}${s31SignedTerm(b, 'y')}`;
+        const line2 = `${s31FirstTerm(lambda * a, 'x')}${s31SignedTerm(lambda * b, 'y')}`;
+        return s331QA(
+          `已知方程組 \\(\\begin{cases}${line1}=${c}\\\\${line2}=f\\end{cases}\\) 無解。若常數項改為 \\(${2 * c},2f\\)，判斷新方程組的解的情形。`,
+          `仍無解`,
+          `兩式左邊仍成比例，是否有解只看右邊是否也成同一比例。原本無解代表 \\(f\\ne${lambda * c}\\)，同乘 2 後仍有 \\(2f\\ne${2 * lambda * c}\\)，所以仍無解。`
+        );
+      },
+      () => {
+        const r = s324Pick([2, 3, 4, 5]);
+        return s331QA(
+          `設方程組的係數行列式 \\(\\Delta=a^2-${r * r}\\)。當 \\(a=${r}\\) 時，若 \\(\\Delta_x=0,\\Delta_y=${r + 3}\\)，說明此方程組的幾何意義。`,
+          `無解，代表兩直線平行不同線`,
+          `當 \\(a=${r}\\) 時 \\(\\Delta=0\\)，但 \\(\\Delta_y\\ne0\\)。係數行列式為 0 代表兩直線平行或重合；增廣行列式不為 0，表示不是同一直線，所以無解。`
+        );
+      },
+      () => {
+        const s = s324Pick([2, 3, 4]);
+        const a = s * s;
+        const b = s324Pick([1, 2, 3]);
+        return s331QA(
+          `求 \\(m\\) 使得方程組 \\(\\begin{cases}${a}x+my=${b}\\\\mx+y=-1\\end{cases}\\) 只有唯一解。`,
+          `\\(m\\ne ${s}\\) 且 \\(m\\ne -${s}\\)`,
+          `係數行列式為 \\(${a}-m^2\\)。若行列式不為 0 才有唯一解，所以 \\(m^2\\ne${a}\\)，即 \\(m\\ne\\pm${s}\\)。`
+        );
+      },
+      () => {
+        const p = s324Pick([2, 3, 4, 5]);
+        const q = s324Pick([1, 2, 3]);
+        const c = s324Pick([2, 3, 5]);
+        const line1 = `${s31FirstTerm(1, 'x')}${s31SignedTerm(-p, 'y')}`;
+        const line2 = `${s31FirstTerm(-q, 'x')}${s31SignedTerm(p * q, 'y')}`;
+        return s331QA(
+          `若 \\(\\begin{cases}${line1}=${c}\\\\${line2}=k\\end{cases}\\) 無解，求整數 \\(k\\) 的限制。`,
+          `\\(k\\in\\mathbb Z,\\ k\\ne ${-q * c}\\)`,
+          `第二式左邊是第一式左邊的 \\(-${q}\\) 倍。若右邊也為 \\(-${q}\\cdot${c}=${-q * c}\\)，則無限多解；要無解就必須 \\(k\\ne${-q * c}\\)。`
+        );
+      },
+    ];
+    return s331MakeSet(count, builders);
+  }
+
+  function buildS333DotPerpendicularParameterAdvancedSet(count) {
+    const builders = [
+      () => {
+        const p = s324Pick([1, 2, 3, -1]);
+        const q = s324Pick([2, 3, -2]);
+        const r = s324Pick([1, -1, 4]);
+        return s331QA(
+          `已知 \\(a=(k,${p})\\)、\\(b=(${q},${r})\\)。若 \\(a\\perp b\\)，求 \\(k\\)。`,
+          `\\(k=${formatFraction(-p * r, q)}\\)`,
+          `垂直等價於內積為 0：\\(k\\cdot${q}+${p}\\cdot${r}=0\\)，所以 \\(k=${formatFraction(-p * r, q)}\\)。`
+        );
+      },
+      () => {
+        const t = s324Pick([1, 2, 3, 4]);
+        const k = s324Pick([1, 2, 3]);
+        const N = (1) * (2 * k) + (t + 1) * 3;
+        return s331QA(
+          `設 \\(u=(1,t+1)\\)、\\(v=(2k,3)\\)，且 \\(u\\cdot v=${N}\\)。當 \\(k=${k}\\) 時，求 \\(t\\)。`,
+          `\\(t=${t}\\)`,
+          `代入 \\(k=${k}\\)，得 \\(2${s31Signed(3)}(t+1)=${N}\\)，解得 \\(t=${t}\\)。`
+        );
+      },
+      () => {
+        const c = s324Pick([2, 3, 4, 5]);
+        const threshold = formatFraction(3 * c, 2);
+        return s331QA(
+          `若向量 \\((x,${c})\\) 與 \\((2,-3)\\) 的夾角為鈍角，求 \\(x\\) 的範圍。`,
+          `\\(x<${threshold}\\)`,
+          `鈍角代表內積小於 0：\\((x,${c})\\cdot(2,-3)=2x-${3 * c}<0\\)，所以 \\(x<${threshold}\\)。`
+        );
+      },
+      () => {
+        const A = s324Pick([3, 4, 5]);
+        const B = s324Pick([2, 3, 6]);
+        return s331QA(
+          `已知 \\(|a|=${A}\\)、\\(|b|=${B}\\)，且 \\(a\\perp b\\)。若 \\((a+kb)\\perp(a-b)\\)，求 \\(k\\)。`,
+          `\\(k=${formatFraction(A * A, B * B)}\\)`,
+          `展開內積：\\((a+kb)\\cdot(a-b)=|a|^2-k|b|^2\\)，因 \\(a\\cdot b=0\\)。令其為 0，得 \\(k=${formatFraction(A * A, B * B)}\\)。`
+        );
+      },
+      () => {
+        const h = s324Pick([1, 2, 3]);
+        const t = formatFraction(h, 2 * h + 2);
+        return s331QA(
+          `設 \\(a=(1,${h})\\)、\\(b=(t,1)\\)。若 \\((a+2b)\\) 與 \\((2a-b)\\) 平行且不為零向量，求 \\(t\\) 的可能值。`,
+          `\\(t=${t}\\)`,
+          `令 \\(a+2b=(1+2t,${h + 2})\\)、\\(2a-b=(2-t,${2 * h - 1})\\)。平行時二階行列式為 0，解得 \\(t=${t}\\)。`
+        );
+      },
+    ];
+    return s331MakeSet(count, builders);
+  }
+
+  function buildS334LinearTransformAreaRegionAdvancedSet(count) {
+    const builders = [
+      () => {
+        const matrices = [
+          [2, 1, 4, 5],
+          [1, -1, 3, 2],
+          [3, 0, 1, 2],
+          [2, 3, 1, 4],
+        ];
+        const M = s324Pick(matrices);
+        const area = s324Pick([5, 8, 10, 12]);
+        const det = Math.abs(M[0] * M[3] - M[1] * M[2]);
+        return s331QA(
+          `平面上一三角形面積為 ${area}，經變換矩陣 \\(\\begin{bmatrix}${M[0]}&${M[1]}\\\\${M[2]}&${M[3]}\\end{bmatrix}\\) 後，新面積為何？`,
+          `\\(${area * det}\\)`,
+          `線性變換會把面積放大 \\(|\\det A|\\) 倍。本題 \\(|\\det A|=${det}\\)，所以新面積為 \\(${area}\\cdot${det}=${area * det}\\)。`
+        );
+      },
+      () => {
+        const k = s324Pick([1, 2, 3, -1, -2]);
+        return s331QA(
+          `判定矩陣 \\(\\begin{bmatrix}1&${k}\\\\0&1\\end{bmatrix}\\) 作用於單位正方形後，其面積是否保持不變。`,
+          `保持不變`,
+          `此矩陣為水平剪變，行列式 \\(1\\cdot1-0\\cdot${k}=1\\)，面積倍率為 1，所以面積保持不變。`
+        );
+      },
+      () => {
+        const a = s324Pick([2, 3, 4]);
+        const b = s324Pick([2, 5, 6]);
+        const det = a * b;
+        return s331QA(
+          `設向量 \\(u,v\\) 張成的平行四邊形面積為 ${det + 1}。若經旋轉再伸縮，矩陣等價於 \\(\\begin{bmatrix}${a}&0\\\\0&${b}\\end{bmatrix}\\) 的面積倍率，求新面積。`,
+          `\\(${(det + 1) * det}\\)`,
+          `旋轉不改變面積，伸縮矩陣的行列式為 \\(${a}\\cdot${b}=${det}\\)，所以新面積為 \\(${det + 1}\\cdot${det}\\)。`
+        );
+      },
+      () => {
+        const a = s324Pick([2, 3, 4, 5]);
+        const b = s324Pick([1, 2, 3, 4]);
+        return s331QA(
+          `單位圓 \\(x^2+y^2=1\\) 經伸縮變換 \\(\\begin{bmatrix}${a}&0\\\\0&${b}\\end{bmatrix}\\) 後變為橢圓，求此橢圓圍成的面積。`,
+          `\\(${a * b}\\pi\\)`,
+          `單位圓面積為 \\(\\pi\\)，線性變換的面積倍率為 \\(|${a}\\cdot${b}|=${a * b}\\)，所以橢圓面積為 \\(${a * b}\\pi\\)。`
+        );
+      },
+      () => {
+        const M = [1, 1, 1, 2];
+        const w = s324Pick([1, 2, 3]);
+        const h = s324Pick([1, 2, 4]);
+        const e1 = [w * M[0], w * M[2]];
+        const e2 = [h * M[1], h * M[3]];
+        const perimeter = `2(${s331LenText(e1[0], e1[1])}+${s331LenText(e2[0], e2[1])})`;
+        return s331QA(
+          `給定區域 \\(0\\le x\\le ${w},\\ 0\\le y\\le ${h}\\)，經矩陣 \\(\\begin{bmatrix}1&1\\\\1&2\\end{bmatrix}\\) 變換後，求所得平行四邊形的周長。`,
+          `\\(${perimeter}\\)`,
+          `矩形兩個邊向量分別為 \\((${w},0)\\)、\\((0,${h})\\)。變換後成為 \\((${e1[0]},${e1[1]})\\)、\\((${e2[0]},${e2[1]})\\)，所以周長為 \\(${perimeter}\\)。`
+        );
+      },
+    ];
+    return s331MakeSet(count, builders);
+  }
+
   const nextConfigs = {
     's3-1-1-clock-hands-angle-parameterized': {
       type: 'drill',
@@ -12986,6 +14020,15 @@
       questionCount: 5,
       generate() {
         return buildS311SectorConeParameterizedSet(5);
+      },
+    },
+    's3-1-1-geometry-arc-packing-advanced': {
+      type: 'drill',
+      title: '幾何包裝與弧度應用',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS311GeometryArcPackingAdvancedSet(5);
       },
     },
     's3-1-1-radian-sector-five-subtypes': {
@@ -13148,6 +14191,15 @@
       questionCount: 5,
       generate() {
         return buildS312DoubleFromSingleSubtypeSet(5);
+      },
+    },
+    's3-1-2-triple-angle-polynomial-advanced': {
+      type: 'drill',
+      title: '三倍角公式與多項式除法',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS312TripleAnglePolynomialAdvancedSet(5);
       },
     },
     's3-1-2-half-angle-known-quadrant': {
@@ -13384,6 +14436,24 @@
         return buildS313PeakValleyFunctionParameterizedSet(5);
       },
     },
+    's3-1-3-periodic-motion-model-advanced': {
+      type: 'drill',
+      title: '週期性運動建模（摩天輪與時鐘）',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS313PeriodicMotionModelAdvancedSet(5);
+      },
+    },
+    's3-1-3-trig-graph-transform-parameter-advanced': {
+      type: 'drill',
+      title: '三角函數圖形變換與參數反推',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS313TrigGraphTransformParameterAdvancedSet(5);
+      },
+    },
     's3-1-3-period-amplitude-basic': {
       type: 'drill',
       title: '週期與振幅判定',
@@ -13569,6 +14639,15 @@
       questionCount: 5,
       generate() {
         return buildS314MaxPointTangentParameterizedSet(5);
+      },
+    },
+    's3-1-4-trig-extrema-combination-advanced': {
+      type: 'drill',
+      title: '三角極值與疊合運算',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS314TrigExtremaCombinationAdvancedSet(5);
       },
     },
     's3-1-4-basic-combo-extrema': {
@@ -13923,6 +15002,15 @@
         return buildS321DiffBaseExpEquationSubtypeSet(5);
       },
     },
+    's3-2-1-exponential-substitution-quadratic-extrema-advanced': {
+      type: 'drill',
+      title: '指數換元與二次式極值',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS321ExponentialSubstitutionQuadraticExtremaAdvancedSet(5);
+      },
+    },
     's3-2-2-dominant-log-approx-clean': {
       type: 'drill',
       title: '對數估算：和式的主導項',
@@ -14160,6 +15248,24 @@
         return buildS322DiffBaseLogInequalitySubtypeSet(5);
       },
     },
+    's3-2-2-nested-log-domain-inequality-advanced': {
+      type: 'drill',
+      title: '多重對數定義域與不等式',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS322NestedLogDomainInequalityAdvancedSet(5);
+      },
+    },
+    's3-2-2-change-base-comparison-advanced': {
+      type: 'drill',
+      title: '換底公式與對數式大小比較',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS322ChangeBaseComparisonAdvancedSet(5);
+      },
+    },
     's3-2-3-log-point-transform-clean': {
       type: 'drill',
       title: '對數圖形上的點變換',
@@ -14379,6 +15485,15 @@
         return buildS323PowerLogEquationSubtypeSet(5);
       },
     },
+    's3-2-3-scientific-notation-leading-digits-advanced': {
+      type: 'drill',
+      title: '科學記號、首位數與首位非零位',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS323ScientificNotationLeadingDigitsAdvancedSet(5);
+      },
+    },
     's3-2-4-growth-threshold-clean': {
       type: 'drill',
       title: '指數成長衰退的門檻時間',
@@ -14528,6 +15643,15 @@
         return buildS324LogLinearSubtypeSet(5);
       },
     },
+    's3-2-4-log-linear-regression-model-advanced': {
+      type: 'drill',
+      title: '對數線性化與回歸模型',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS324LogLinearRegressionModelAdvancedSet(5);
+      },
+    },
     's3-2-4-finance-digits-models-five-subtypes': {
       type: 'drill',
       title: '複利財務、位數與特殊分配五小類',
@@ -14614,6 +15738,15 @@
       questionCount: 5,
       generate() {
         return buildS331SegmentSectionCleanSet(5);
+      },
+    },
+    's3-3-1-triangle-barycentric-coefficient-advanced': {
+      type: 'drill',
+      title: '三角形內部的向量係數判定',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS331TriangleBarycentricAdvancedSet(5);
       },
     },
     's3-3-1-vector-algebra-relations-five-subtypes': {
@@ -14994,6 +16127,15 @@
         return buildS332TriangleCenterCoordinateParameterizedSet(5);
       },
     },
+    's3-3-2-parametric-line-motion-advanced': {
+      type: 'drill',
+      title: '直線參數式與動點位移',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS332ParametricLineMotionAdvancedSet(5);
+      },
+    },
     's3-3-3-triangle-side-dot-clean': {
       type: 'drill',
       title: '由三邊長求向量內積',
@@ -15159,6 +16301,15 @@
         return buildS333NormRelationConditionSet(5);
       },
     },
+    's3-3-3-dot-perpendicular-parameter-advanced': {
+      type: 'drill',
+      title: '向量內積、垂直與參數求解',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS333DotPerpendicularParameterAdvancedSet(5);
+      },
+    },
     's3-3-4-determinant-operation-clean': {
       type: 'drill',
       title: '二階行列式列運算性質',
@@ -15184,6 +16335,24 @@
       questionCount: 5,
       generate() {
         return buildS334AreaScaleCleanSet(5);
+      },
+    },
+    's3-3-4-cramer-solution-count-advanced': {
+      type: 'drill',
+      title: '克拉瑪公式與方程組解數討論',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS334CramerSolutionCountAdvancedSet(5);
+      },
+    },
+    's3-3-4-linear-transform-area-region-advanced': {
+      type: 'drill',
+      title: '線性變換下的面積與區域',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS334LinearTransformAreaRegionAdvancedSet(5);
       },
     },
     's3-3-4-basic-determinant-three-subtypes': {
@@ -15299,7 +16468,7 @@
     },
   };
 
-  const bundleFingerprint = 's3-bundle-v20260706-summary-v1';
+  const bundleFingerprint = 's3-bundle-v20260709-s33-extension-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

@@ -11733,6 +11733,1392 @@
     return { questions, summaryAnswers, answers };
   }
 
+  function s24Frac(frac) {
+    return formatFraction(frac.num, frac.den);
+  }
+
+  function s24RoundDegree(value) {
+    return Math.round(value * 10) / 10;
+  }
+
+  function s24SignedTerm(value, unit = '') {
+    if (value === 0) return '';
+    return value > 0 ? `+${value}${unit}` : `${value}${unit}`;
+  }
+
+  function buildS242SsaSolutionRangeAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const b = 2 * randInt(5, 14);
+        const h = b / 2;
+        const values = [];
+        for (let a = h + 1; a <= b - 1; a += 1) values.push(a);
+        s21Add(
+          set,
+          `已知 \\(\\triangle ABC\\) 中，\\(b=${b}\\)、\\(\\angle A=30^\\circ\\)。若此三角形有兩解，求邊長 \\(a\\) 的整數範圍。`,
+          `\\(${h}<a<${b}\\)，整數為 \\(${values.join(', ')}\\)`,
+          `SSA 的關鍵比較是 \\(a\\)、\\(b\\sin A\\)、\\(b\\)。本題 \\(b\\sin A=${b}\\cdot\\frac12=${h}\\)，兩解條件為 \\(b\\sin A<a<b\\)，所以 \\(${h}<a<${b}\\)。`
+        );
+      } else if (mode === 1) {
+        const b = 2 * randInt(5, 13);
+        const h = b / 2;
+        const cases = [
+          { a: h - randInt(1, 3), result: '無解', reason: `a<b\\sin A` },
+          { a: h, result: '一解（直角三角形）', reason: `a=b\\sin A` },
+          { a: h + randInt(1, Math.max(1, b - h - 1)), result: '兩解', reason: `b\\sin A<a<b` },
+          { a: b + randInt(1, 5), result: '一解', reason: `a\\ge b` },
+        ];
+        const item = cases[randInt(0, cases.length - 1)];
+        s21Add(
+          set,
+          `在 \\(\\triangle ABC\\) 中，\\(a=${item.a}\\)、\\(b=${b}\\)、\\(\\angle A=30^\\circ\\)，判斷此三角形解的個數。`,
+          item.result,
+          `先算高度 \\(b\\sin A=${b}\\cdot\\frac12=${h}\\)。因為 \\(${item.reason}\\)，所以此 SSA 條件下共有${item.result}。`
+        );
+      } else if (mode === 2) {
+        const b = 2 * randInt(5, 15);
+        const a = b / 2;
+        s21Add(
+          set,
+          `給定 \\(b=${b}\\)、\\(\\angle A=30^\\circ\\)。當 \\(a\\) 為何值時，三角形為直角三角形且只有一解？`,
+          `\\(a=${a}\\)`,
+          `SSA 中若 \\(a=b\\sin A\\)，高剛好落在端點，形成唯一的直角三角形。本題 \\(a=${b}\\cdot\\frac12=${a}\\)。`
+        );
+      } else if (mode === 3) {
+        const m = randInt(4, 9);
+        const b = 2 * m;
+        const maxK = Math.ceil(m * Math.sqrt(3)) - 1;
+        s21Add(
+          set,
+          `若 \\(a=k\\)、\\(b=${b}\\)、\\(\\angle A=60^\\circ\\)，且已知三角形無解，求正整數 \\(k\\) 的最大可能值。`,
+          `\\(${maxK}\\)`,
+          `無解條件是 \\(a<b\\sin A\\)。本題 \\(b\\sin A=${b}\\cdot\\frac{\\sqrt3}{2}=${m}\\sqrt3\\)，所以 \\(k<${m}\\sqrt3\\)，最大的正整數為 \\(${maxK}\\)。`
+        );
+      } else {
+        const ratios = [
+          { p: 2, q: 3 },
+          { p: 3, q: 5 },
+          { p: 4, q: 5 },
+        ];
+        const ratio = ratios[randInt(0, ratios.length - 1)];
+        const scale = randInt(1, 4);
+        const a = ratio.q * scale;
+        const b = 2 * ratio.p * scale;
+        const small = s24RoundDegree((Math.asin(ratio.p / ratio.q) * 180) / Math.PI);
+        const large = s24RoundDegree(180 - small);
+        s21Add(
+          set,
+          `已知 \\(a=${a}\\)、\\(b=${b}\\)、\\(\\angle A=30^\\circ\\)，求 \\(\\angle B\\) 的所有可能角度近似值。`,
+          `約 \\(${small}^\\circ\\) 或 \\(${large}^\\circ\\)`,
+          `由正弦定理 \\(\\frac{\\sin B}{b}=\\frac{\\sin A}{a}\\)，得 \\(\\sin B=\\frac{${b}\\cdot\\frac12}{${a}}=${formatFraction(ratio.p, ratio.q)}\\)。同一正弦值在 \\(0^\\circ\\) 到 \\(180^\\circ\\) 內可能對應兩角，因此 \\(B\\approx${small}^\\circ\\) 或 \\(${large}^\\circ\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS242AngleBisectorMedianAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const angle = [60, 120][randInt(0, 1)];
+        const b = [8, 10, 12, 15][randInt(0, 3)];
+        const c = [6, 9, 12, 18][randInt(0, 3)];
+        const len = angle === 60 ? s241SqrtCoeff(b * c, b + c, 3) : formatFraction(b * c, b + c);
+        s21Add(
+          set,
+          `\\(\\triangle ABC\\) 中，\\(\\angle A=${angle}^\\circ\\)、\\(AB=${c}\\)、\\(AC=${b}\\)，求內角平分線 \\(AD\\) 的長度。`,
+          `\\(AD=${len}\\)`,
+          `內角平分線長可用 \\(AD=\\frac{2bc\\cos(A/2)}{b+c}\\)。代入 \\(b=${b}\\)、\\(c=${c}\\)、\\(A=${angle}^\\circ\\)，得 \\(AD=${len}\\)。`
+        );
+      } else if (mode === 1) {
+        const cases = [
+          { a: 21, b: 15, c: 18 },
+          { a: 10, b: 13, c: 13 },
+          { a: 14, b: 13, c: 15 },
+          { a: 16, b: 10, c: 18 },
+        ];
+        const item = cases[randInt(0, cases.length - 1)];
+        const m2num = 2 * item.b * item.b + 2 * item.c * item.c - item.a * item.a;
+        const text = s241SqrtCoeff(1, 2, m2num);
+        s21Add(
+          set,
+          `\\(\\triangle ABC\\) 三邊長為 \\(a=${item.a}\\)、\\(b=${item.b}\\)、\\(c=${item.c}\\)，求 \\(BC\\) 邊上的中線長 \\(m_a\\)。`,
+          `\\(m_a=${text}\\)`,
+          `中線定理給 \\(m_a=\\frac12\\sqrt{2b^2+2c^2-a^2}\\)。代入後 \\(m_a=\\frac12\\sqrt{${m2num}}=${text}\\)。`
+        );
+      } else if (mode === 2) {
+        const m = randInt(2, 6);
+        const n = randInt(3, 8);
+        const k = randInt(3, 8);
+        const bc = (m + n) * k;
+        const bd = m * k;
+        const dc = n * k;
+        s21Add(
+          set,
+          `\\(\\triangle ABC\\) 中，\\(AD\\) 為 \\(\\angle A\\) 之平分線，且 \\(AB:AC=${m}:${n}\\)、\\(BC=${bc}\\)，求 \\(BD\\) 與 \\(DC\\)。`,
+          `\\(BD=${bd}\\)，\\(DC=${dc}\\)`,
+          `角平分線定理給 \\(BD:DC=AB:AC=${m}:${n}\\)。因 \\(BC=${bc}\\)，所以每一份為 \\(${k}\\)，故 \\(BD=${bd}\\)、\\(DC=${dc}\\)。`
+        );
+      } else if (mode === 3) {
+        const a = randInt(5, 12);
+        const b = randInt(4, 10);
+        const d1 = randInt(5, 14);
+        const d2sq = 2 * (a * a + b * b) - d1 * d1;
+        if (d2sq <= 0) {
+          i -= 1;
+          continue;
+        }
+        s21Add(
+          set,
+          `在平行四邊形中，兩鄰邊長為 \\(${a}\\) 與 \\(${b}\\)，一條對角線長為 \\(${d1}\\)，求另一條對角線的長度。`,
+          `\\(${formatRadical(d2sq)}\\)`,
+          `平行四邊形對角線公式為 \\(d_1^2+d_2^2=2(a^2+b^2)\\)。所以 \\(d_2^2=2(${a}^2+${b}^2)-${d1}^2=${d2sq}\\)，故 \\(d_2=${formatRadical(d2sq)}\\)。`
+        );
+      } else {
+        const m = randInt(2, 5);
+        const n = randInt(3, 7);
+        const total = (m + n) * randInt(4, 10);
+        const area = makeFraction(total * m, m + n);
+        s21Add(
+          set,
+          `\\(\\triangle ABC\\) 中，\\(AD\\) 為 \\(\\angle A\\) 之平分線，且 \\(AB:AC=${m}:${n}\\)、\\(\\triangle ABC\\) 面積為 \\(${total}\\)，求 \\(\\triangle ABD\\) 的面積。`,
+          `\\(${s24Frac(area)}\\)`,
+          `角平分線使 \\(BD:DC=AB:AC=${m}:${n}\\)。兩小三角形高相同，所以面積比也為 \\(${m}:${n}\\)。因此 \\([ABD]=${total}\\cdot\\frac{${m}}{${m + n}}=${s24Frac(area)}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS241TrigQuadraticAlgebraAdvancedSet(count) {
+    const set = s21FreshSet();
+    const exactAngles = [
+      { angle: 30, sin: '\\frac12', cos: '\\frac{\\sqrt3}{2}', sum: '\\frac{1+\\sqrt3}{2}', prod: '\\frac{\\sqrt3}{4}', tan: '\\frac{\\sqrt3}{3}' },
+      { angle: 45, sin: '\\frac{\\sqrt2}{2}', cos: '\\frac{\\sqrt2}{2}', sum: '\\sqrt2', prod: '\\frac12', tan: '1' },
+      { angle: 60, sin: '\\frac{\\sqrt3}{2}', cos: '\\frac12', sum: '\\frac{1+\\sqrt3}{2}', prod: '\\frac{\\sqrt3}{4}', tan: '\\sqrt3' },
+      { angle: 120, sin: '\\frac{\\sqrt3}{2}', cos: '-\\frac12', sum: '\\frac{\\sqrt3-1}{2}', prod: '-\\frac{\\sqrt3}{4}', tan: '-\\sqrt3' },
+      { angle: 135, sin: '\\frac{\\sqrt2}{2}', cos: '-\\frac{\\sqrt2}{2}', sum: '0', prod: '-\\frac12', tan: '-1' },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const item = exactAngles[randInt(0, exactAngles.length - 1)];
+        s21Add(
+          set,
+          `設 \\(\\sin A\\) 與 \\(\\cos A\\) 為 \\(t^2-(${item.sum})t+(${item.prod})=0\\) 的兩根，且 \\(A\\) 為標準角，求 \\(\\tan A\\)。`,
+          `\\(${item.tan}\\)`,
+          `兩根為 \\(\\sin A\\)、\\(\\cos A\\)，所以和為 \\(${item.sum}\\)，積為 \\(${item.prod}\\)。符合的標準角為 \\(${item.angle}^\\circ\\)，故 \\(\\tan A=${item.tan}\\)。`
+        );
+      } else if (mode === 1) {
+        const den = randInt(4, 12);
+        const maxNum = Math.min(Math.floor(Math.sqrt(2) * den) - 1, den + 5);
+        if (maxNum <= den) {
+          i -= 1;
+          continue;
+        }
+        const frac = [randInt(den + 1, maxNum), den];
+        const product = makeFraction(frac[0] * frac[0] - frac[1] * frac[1], 2 * frac[1] * frac[1]);
+        s21Add(
+          set,
+          `已知 \\(\\sin\\theta+\\cos\\theta=${formatFraction(frac[0], frac[1])}\\)，求 \\(\\sin\\theta\\cos\\theta\\)。`,
+          `\\(${s24Frac(product)}\\)`,
+          `平方得 \\((\\sin\\theta+\\cos\\theta)^2=1+2\\sin\\theta\\cos\\theta\\)。所以 \\(\\sin\\theta\\cos\\theta=\\frac{(${formatFraction(frac[0], frac[1])})^2-1}{2}=${s24Frac(product)}\\)。`
+        );
+      } else if (mode === 2) {
+        const qDen = randInt(3, 14);
+        const qNum = randInt(1, qDen - 1);
+        const q = [qNum, qDen];
+        const reciprocal = makeFraction(q[1], q[0]);
+        s21Add(
+          set,
+          `設 \\(\\sin A\\)、\\(\\cos A\\) 為 \\(x^2-px+q=0\\) 的兩根，且 \\(q=${formatFraction(q[0], q[1])}\\)，求 \\(\\tan A+\\cot A\\)。`,
+          `\\(${s24Frac(reciprocal)}\\)`,
+          `因 \\(\\sin A\\cos A=q\\)，而 \\(\\tan A+\\cot A=\\frac{\\sin^2 A+\\cos^2 A}{\\sin A\\cos A}=\\frac1q\\)。代入 \\(q=${formatFraction(q[0], q[1])}\\)，得 \\(${s24Frac(reciprocal)}\\)。`
+        );
+      } else if (mode === 3) {
+        const den = randInt(4, 12);
+        const frac = [randInt(1, Math.max(1, Math.floor(den * 0.6))), den];
+        const rad = 2 * frac[1] * frac[1] - frac[0] * frac[0];
+        const answer = s241SqrtCoeff(1, frac[1], rad);
+        s21Add(
+          set,
+          `若 \\(\\theta\\) 在第二象限，且 \\(\\sin\\theta+\\cos\\theta=-${formatFraction(frac[0], frac[1])}\\)，求 \\(\\sin\\theta-\\cos\\theta\\)。`,
+          `\\(${answer}\\)`,
+          `由 \\((\\sin\\theta-\\cos\\theta)^2=2-(\\sin\\theta+\\cos\\theta)^2\\)，得 \\((\\sin\\theta-\\cos\\theta)^2=2-(${formatFraction(frac[0], frac[1])})^2\\)。第二象限中 \\(\\sin\\theta>0\\)、\\(\\cos\\theta<0\\)，所以取正值，答案為 \\(${answer}\\)。`
+        );
+      } else {
+        const den = randInt(3, 12);
+        const frac = [randInt(1, den - 1), den];
+        const diff = makeFraction(frac[0], frac[1]);
+        const product = makeFraction(frac[1] * frac[1] - frac[0] * frac[0], 2 * frac[1] * frac[1]);
+        const answer = divFraction(diff, product);
+        s21Add(
+          set,
+          `已知 \\(\\sin\\theta-\\cos\\theta=${s24Frac(diff)}\\)，求 \\(\\sec\\theta-\\csc\\theta\\)。`,
+          `\\(${s24Frac(answer)}\\)`,
+          `先由 \\((\\sin\\theta-\\cos\\theta)^2=1-2\\sin\\theta\\cos\\theta\\)，得 \\(\\sin\\theta\\cos\\theta=${s24Frac(product)}\\)。又 \\(\\sec\\theta-\\csc\\theta=\\frac{\\sin\\theta-\\cos\\theta}{\\sin\\theta\\cos\\theta}\\)，所以答案為 \\(${s24Frac(answer)}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS242CyclicPolygonAreaAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const cases = [
+          { sides: [3, 5, 3, 5], areaCoeff: 12, areaRad: 1 },
+          { sides: [4, 3, 3, 2], areaCoeff: 6, areaRad: 2 },
+          { sides: [2, 3, 4, 5], areaCoeff: 2, areaRad: 30 },
+        ];
+        const item = cases[randInt(0, cases.length - 1)];
+        const scale = randInt(1, 3);
+        const sides = item.sides.map((x) => x * scale);
+        const area = s241SqrtCoeff(item.areaCoeff * scale * scale, 1, item.areaRad);
+        s21Add(
+          set,
+          `圓內接四邊形四邊長依序為 \\(${sides.join(', ')}\\)，利用婆羅摩笈多公式求其面積。`,
+          `\\(${area}\\)`,
+          `圓內接四邊形可用 \\(K=\\sqrt{(s-a)(s-b)(s-c)(s-d)}\\)。本題半周長 \\(s=${sides.reduce((a, b) => a + b, 0) / 2}\\)，代入得面積 \\(${area}\\)。`
+        );
+      } else if (mode === 1) {
+        const a = randInt(3, 8);
+        const b = randInt(4, 9);
+        const c = randInt(5, 10);
+        const d = randInt(4, 9);
+        const e = randInt(5, 12);
+        const f = makeFraction(a * c + b * d, e);
+        s21Add(
+          set,
+          `已知圓內接四邊形 \\(ABCD\\) 中，\\(AB=${a}\\)、\\(BC=${b}\\)、\\(CD=${c}\\)、\\(DA=${d}\\)，且對角線 \\(AC=${e}\\)，求另一對角線 \\(BD\\)。`,
+          `\\(BD=${s24Frac(f)}\\)`,
+          `托勒密定理給 \\(AC\\cdot BD=AB\\cdot CD+BC\\cdot DA\\)。所以 \\(BD=\\frac{${a}\\cdot${c}+${b}\\cdot${d}}{${e}}=${s24Frac(f)}\\)。`
+        );
+      } else if (mode === 2) {
+        const scale = randInt(1, 4);
+        const sides = [13, 14, 15].map((x) => x * scale);
+        const area = 84 * scale * scale;
+        const r = 4 * scale;
+        s21Add(
+          set,
+          `三角形三邊長為 \\(${sides.join(', ')}\\)，求其面積，並求其內切圓半徑。`,
+          `面積 \\(${area}\\)，內切圓半徑 \\(${r}\\)`,
+          `半周長 \\(s=${21 * scale}\\)。海龍公式得面積 \\(K=${area}\\)。又 \\(K=rs\\)，所以 \\(r=\\frac{${area}}{${21 * scale}}=${r}\\)。`
+        );
+      } else if (mode === 3) {
+        const d1 = randInt(8, 18);
+        const d2 = randInt(7, 16);
+        const angle = [45, 60, 90][randInt(0, 2)];
+        const sin = S241_TRIG[angle].sin;
+        const area = s241SqrtCoeff(d1 * d2 * sin[0], 2 * sin[1], sin[2]);
+        s21Add(
+          set,
+          `給定四邊形兩對角線長 \\(d_1=${d1}\\)、\\(d_2=${d2}\\)，且夾角為 \\(${angle}^\\circ\\)，求四邊形面積。`,
+          `\\(${area}\\)`,
+          `任意四邊形面積可寫成 \\(K=\\frac12d_1d_2\\sin\\theta\\)。代入 \\(d_1=${d1}\\)、\\(d_2=${d2}\\)、\\(\\theta=${angle}^\\circ\\)，得 \\(K=${area}\\)。`
+        );
+      } else {
+        const side = randInt(3, 10);
+        const area = s241SqrtCoeff(3 * side * side, 2, 3);
+        s21Add(
+          set,
+          `正六邊形邊長為 \\(${side}\\)，將其分割為六個正三角形，求其總面積與外接圓半徑的關係。`,
+          `面積 \\(${area}\\)，且外接圓半徑 \\(R=${side}\\)`,
+          `正六邊形可分成 6 個邊長為 \\(${side}\\) 的正三角形，所以面積為 \\(6\\cdot\\frac{\\sqrt3}{4}\\cdot${side}^2=${area}\\)。正六邊形外接圓半徑等於邊長，故 \\(R=${side}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS243PlaneSurveyCosineAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const ac = randInt(8, 16) * 10;
+        const bc = randInt(7, 15) * 10;
+        const angle = [60, 90, 120][randInt(0, 2)];
+        const len = s243CosineLengthText(ac, bc, angle);
+        if (!len) {
+          i -= 1;
+          continue;
+        }
+        s21Add(
+          set,
+          `觀測員在 \\(C\\) 點測得兩目標 \\(A,B\\)，且 \\(AC=${ac}\\)、\\(BC=${bc}\\)、\\(\\angle ACB=${angle}^\\circ\\)，求 \\(AB\\) 距離。`,
+          `\\(${len.text}\\)`,
+          `直接用餘弦定理：\\(AB^2=${ac}^2+${bc}^2-2\\cdot${ac}\\cdot${bc}\\cos${angle}^\\circ=${len.square}\\)，所以 \\(AB=${len.text}\\)。`
+        );
+      } else if (mode === 1) {
+        const d = [40, 60, 80, 120][randInt(0, 3)];
+        const height = d * (1 + Math.sqrt(3)) / 2;
+        s21Add(
+          set,
+          `測量塔高時，先在遠點測得仰角 \\(30^\\circ\\)，向塔前進 \\(${d}\\) 公尺後仰角變為 \\(45^\\circ\\)，求塔高。`,
+          `\\(${formatFraction(d, 2)}(1+\\sqrt3)\\) 公尺`,
+          `設前進後到塔底距離為 \\(x\\)，塔高為 \\(h\\)。由 \\(45^\\circ\\) 得 \\(h=x\\)，由 \\(30^\\circ\\) 得 \\(h=(x+${d})\\tan30^\\circ\\)。解得 \\(h=\\frac{${d}}2(1+\\sqrt3)\\)，約 \\(${s23FormatDecimal(height, 2)}\\) 公尺。`
+        );
+      } else if (mode === 2) {
+        const triples = [
+          { legs: [9, 12], hyp: 15 },
+          { legs: [5, 12], hyp: 13 },
+          { legs: [8, 15], hyp: 17 },
+          { legs: [7, 24], hyp: 25 },
+        ];
+        const item = triples[randInt(0, triples.length - 1)];
+        const h = makeFraction(item.legs[0] * item.legs[1], item.hyp);
+        s21Add(
+          set,
+          `直角 \\(\\triangle ABC\\) 中，\\(\\angle C=90^\\circ\\)，兩股長為 \\(${item.legs[0]}\\) 與 \\(${item.legs[1]}\\)，求斜邊上的高。`,
+          `\\(${s24Frac(h)}\\)`,
+          `面積可寫成 \\(\\frac12\\cdot${item.legs[0]}\\cdot${item.legs[1]}\\)，也可寫成 \\(\\frac12\\cdot${item.hyp}\\cdot h\\)。所以 \\(h=\\frac{${item.legs[0]}\\cdot${item.legs[1]}}{${item.hyp}}=${s24Frac(h)}\\)。`
+        );
+      } else if (mode === 3) {
+        const d1 = randInt(6, 14);
+        const d2 = randInt(4, 12);
+        const angle = [60, 90, 120][randInt(0, 2)];
+        const len = s243CosineLengthText(d1, d2, angle);
+        if (!len) {
+          i -= 1;
+          continue;
+        }
+        s21Add(
+          set,
+          `兩船自同一港口出發，甲航行 \\(${d1}\\) 公里，乙航行 \\(${d2}\\) 公里，兩航向夾角為 \\(${angle}^\\circ\\)。求兩船間距離。`,
+          `\\(${len.text}\\) 公里`,
+          `把兩船與出發點連成三角形，兩船距離是夾角對邊。由餘弦定理得 \\(d^2=${d1}^2+${d2}^2-2\\cdot${d1}\\cdot${d2}\\cos${angle}^\\circ=${len.square}\\)，所以 \\(d=${len.text}\\)。`
+        );
+      } else {
+        const d1 = randInt(8, 16) * 10;
+        const d2 = randInt(10, 20) * 10;
+        const angle = 60;
+        const len = s243CosineLengthText(d1, d2, angle);
+        s21Add(
+          set,
+          `已知兩建築物因障礙無法直接量距，在 \\(C\\) 點測得兩建築物距離分別為 \\(${d1}\\) 與 \\(${d2}\\) 公尺，夾角 \\(60^\\circ\\)，求建築物間距 \\(AB\\)。`,
+          `\\(${len.text}\\) 公尺`,
+          `這是跨越障礙的 SAS 測量。由餘弦定理 \\(AB^2=${d1}^2+${d2}^2-2\\cdot${d1}\\cdot${d2}\\cos60^\\circ=${len.square}\\)，故 \\(AB=${len.text}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function s21FreshSet() {
+    return { questions: [], summaryAnswers: [], answers: [] };
+  }
+
+  function s21Add(set, question, summary, detail) {
+    set.questions.push(question);
+    set.summaryAnswers.push(summary);
+    set.answers.push(`簡答：${summary}<br>詳解：${detail}`);
+  }
+
+  function s21Lcm(a, b) {
+    return Math.abs(a * b) / gcdInt(a, b);
+  }
+
+  function s21Signed(value) {
+    return value >= 0 ? `+${value}` : `${value}`;
+  }
+
+  function s21ApTerm(first, diff, index) {
+    return first + (index - 1) * diff;
+  }
+
+  function s21ApText(first, diff) {
+    return `${first}, ${first + diff}, ${first + 2 * diff}, \\ldots`;
+  }
+
+  function s21LinearK(coef, constant) {
+    const head = coef === 1 ? 'k' : `${coef}k`;
+    if (constant === 0) return head;
+    return `${head}${s21Signed(constant)}`;
+  }
+
+  function s21Factorial(n) {
+    let value = 1;
+    for (let i = 2; i <= n; i += 1) value *= i;
+    return value;
+  }
+
+  function buildS211ArithmeticCommonTermsAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const d1 = [5, 6, 7, 8][randInt(0, 3)];
+        const d2 = [7, 9, 10, 11][randInt(0, 3)];
+        const step = s21Lcm(d1, d2);
+        const firstCommon = randInt(30, 80);
+        const a1 = firstCommon - d1 * randInt(1, 3);
+        const b1 = firstCommon - d2 * randInt(1, 3);
+        const n = randInt(3, 5);
+        const sum = (n * (2 * firstCommon + (n - 1) * step)) / 2;
+        s21Add(
+          set,
+          `數列 \\(A:${s21ApText(a1, d1)}\\) 與 \\(B:${s21ApText(b1, d2)}\\)，求前 ${n} 個共同項的總和。`,
+          `\\(${sum}\\)`,
+          `共同項仍成等差數列，公差為 \\([${d1},${d2}]=${step}\\)。本題第一個共同項為 \\(${firstCommon}\\)，所以前 ${n} 個共同項和為 \\(\\frac{${n}(2\\cdot${firstCommon}+${n - 1}\\cdot${step})}{2}=${sum}\\)。`
+        );
+      } else if (mode === 1) {
+        const c1 = randInt(8, 30);
+        const d1 = randInt(4, 9);
+        const d2 = randInt(6, 12);
+        const step = s21Lcm(d1, d2);
+        const m = randInt(8, 15);
+        const cm = c1 + (m - 1) * step;
+        s21Add(
+          set,
+          `已知 \\(c_n\\) 為兩等差數列的共同項，首項 \\(c_1=${c1}\\)，兩原數列公差為 ${d1}、${d2}，求 \\(c_{${m}}\\)。`,
+          `\\(${cm}\\)`,
+          `共同項的公差是兩公差的最小公倍數：\\([${d1},${d2}]=${step}\\)。因此 \\(c_n=${c1}+(n-1)${step}\\)，所以 \\(c_{${m}}=${cm}\\)。`
+        );
+      } else if (mode === 2) {
+        const left = randInt(80, 150);
+        const right = left + randInt(250, 420);
+        const m1 = [4, 5, 7][randInt(0, 2)];
+        const m2 = [6, 8, 9][randInt(0, 2)];
+        const r1 = randInt(0, m1 - 1);
+        const r2 = randInt(0, m2 - 1);
+        const mod = s21Lcm(m1, m2);
+        let residue = 0;
+        while (residue < mod && (residue % m1 !== r1 || residue % m2 !== r2)) residue += 1;
+        const values = [];
+        for (let x = left; x <= right; x += 1) {
+          if (x % m1 === r1 && x % m2 === r2) values.push(x);
+        }
+        s21Add(
+          set,
+          `在 ${left} 到 ${right} 之間，同時是 ${m1} 的倍數餘 ${r1}，且為 ${m2} 的倍數餘 ${r2} 的數共有幾個？`,
+          `\\(${values.length}\\)`,
+          `先解同餘條件，得到共同型態為 \\(x\\equiv ${residue}\\pmod{${mod}}\\)。落在區間內的數形成公差 ${mod} 的等差數列，共有 \\(${values.length}\\) 個。`
+        );
+      } else if (mode === 3) {
+        const d1 = randInt(4, 9);
+        const d2 = randInt(5, 11);
+        const step = s21Lcm(d1, d2);
+        const value = randInt(60, 150);
+        const m = randInt(4, 9);
+        const n = randInt(5, 10);
+        const a1 = value - (m - 1) * d1;
+        const b1 = value - (n - 1) * d2;
+        s21Add(
+          set,
+          `等差數列 \\(A\\) 的公差為 ${d1}，\\(B\\) 的公差為 ${d2}。若 \\(A\\) 的第 ${m} 項與 \\(B\\) 的第 ${n} 項同為 ${value}，且把此項視為共同項數列 \\(c_n\\) 的首項，求 \\(c_n\\)。`,
+          `\\(c_n=${value}+(n-1)${step}\\)`,
+          `兩數列分別可寫成 \\(A:${s21ApText(a1, d1)}\\)、\\(B:${s21ApText(b1, d2)}\\)。共同項間距為 \\([${d1},${d2}]=${step}\\)，所以 \\(c_n=${value}+(n-1)${step}\\)。`
+        );
+      } else {
+        const d1 = [6, 8, 10, 12][randInt(0, 3)];
+        const d2 = [9, 12, 15, 18][randInt(0, 3)];
+        const step = s21Lcm(d1, d2);
+        const first = randInt(10, 40);
+        const limit = randInt(250, 500);
+        const n = Math.max(0, Math.floor((limit - first) / step) + 1);
+        const sum = n > 0 ? (n * (2 * first + (n - 1) * step)) / 2 : 0;
+        s21Add(
+          set,
+          `兩個等差數列的共同項首項為 ${first}，原公差分別為 ${d1} 與 ${d2}。求不超過 ${limit} 的所有共同項之和。`,
+          `\\(${sum}\\)`,
+          `共同項公差為 \\([${d1},${d2}]=${step}\\)。不超過 ${limit} 的項數為 \\(\\lfloor\\frac{${limit}-${first}}{${step}}\\rfloor+1=${n}\\)，所以總和為 \\(${sum}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS211RecurrenceClosedFormAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const a1 = randInt(2, 5);
+        const n = randInt(8, 15);
+        const value = makeFraction(a1, 1 + (n - 1) * a1);
+        s21Add(
+          set,
+          `設 \\(a_1=${a1}\\)，且 \\(a_{n+1}=\\frac{a_n}{a_n+1}\\)，求 \\(a_{${n}}\\)。`,
+          `\\(${formatFraction(value.num, value.den)}\\)`,
+          `取倒數得 \\(\\frac1{a_{n+1}}=\\frac1{a_n}+1\\)，所以 \\(\\frac1{a_n}=\\frac1{${a1}}+(n-1)\\)。整理得 \\(a_n=\\frac{${a1}}{1+${a1}(n-1)}\\)，故 \\(a_{${n}}=${formatFraction(value.num, value.den)}\\)。`
+        );
+      } else if (mode === 1) {
+        const r = [2, 3, 4][randInt(0, 2)];
+        const fixed = randInt(-3, 5);
+        const a1 = fixed + randInt(1, 5);
+        const n = randInt(5, 9);
+        const value = fixed + (a1 - fixed) * r ** (n - 1);
+        s21Add(
+          set,
+          `設 \\(a_1=${a1}\\)，且 \\(a_{n+1}=${r}a_n${s21Signed(fixed * (1 - r))}\\)。利用平移求 \\(a_{${n}}\\)。`,
+          `\\(${value}\\)`,
+          `固定點為 \\(${fixed}\\)，令 \\(b_n=a_n-(${fixed})\\)，則 \\(b_{n+1}=${r}b_n\\)。所以 \\(a_n=${fixed}+(${a1}-(${fixed}))${r}^{n-1}\\)，代入 \\(n=${n}\\) 得 \\(${value}\\)。`
+        );
+      } else if (mode === 2) {
+        const k = randInt(1, 5);
+        const a1 = randInt(1, 4);
+        const n = randInt(5, 10);
+        const value = (a1 + k) * 2 ** (n - 1) - k;
+        s21Add(
+          set,
+          `遞迴式 \\(a_{n+1}=2a_n+${k}\\)，已知 \\(a_1=${a1}\\)。令 \\(b_n=a_n+k\\)，求 \\(a_{${n}}\\)。`,
+          `\\(${value}\\)`,
+          `令 \\(b_n=a_n+${k}\\)，則 \\(b_{n+1}=2b_n\\)，且 \\(b_1=${a1 + k}\\)。所以 \\(a_n=${a1 + k}\\cdot2^{n-1}-${k}\\)，代入 \\(n=${n}\\) 得 \\(${value}\\)。`
+        );
+      } else if (mode === 3) {
+        const a1 = randInt(1, 4);
+        const a2 = randInt(2, 6);
+        const n = randInt(7, 10);
+        const arr = [0, a1, a2];
+        for (let k = 3; k <= n; k += 1) arr[k] = arr[k - 1] + arr[k - 2];
+        s21Add(
+          set,
+          `設 \\(a_1=${a1},a_2=${a2}\\)，且 \\(a_{n+2}=a_{n+1}+a_n\\)。求 \\(a_{${n}}\\)。`,
+          `\\(${arr[n]}\\)`,
+          `這是費氏型遞迴，依序計算即可：\\(${arr.slice(1, n + 1).join(', ')}\\)，所以 \\(a_{${n}}=${arr[n]}\\)。`
+        );
+      } else {
+        const a1 = randInt(2, 8);
+        const d = randInt(2, 6);
+        const c = randInt(-2, 5);
+        const n = randInt(8, 14);
+        const value = a1 + (n - 1) * c + d * ((n - 1) * n) / 2;
+        s21Add(
+          set,
+          `數列滿足 \\(a_1=${a1}\\)，且 \\(a_n=a_{n-1}+${d}n${s21Signed(c)}\\)。求 \\(a_{${n}}\\)。`,
+          `\\(${value}\\)`,
+          `把每次增加量相加：\\(a_n=${a1}+\\sum_{k=2}^{n}(${d}k${s21Signed(c)})\\)。代入 \\(n=${n}\\)，得 \\(${value}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS212SigmaTelescopingAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const n = randInt(6, 14);
+        const value = makeFraction(3 * n * (n + 3), 2 * (n + 1) * (n + 2));
+        s21Add(
+          set,
+          `計算 \\(\\sum_{k=1}^{${n}}\\frac{3}{k(k+2)}\\) 的值。`,
+          `\\(${formatFraction(value.num, value.den)}\\)`,
+          `因 \\(\\frac{3}{k(k+2)}=\\frac32(\\frac1k-\\frac1{k+2})\\)，中間項會對消，剩 \\(\\frac32(1+\\frac12-\\frac1{${n + 1}}-\\frac1{${n + 2}})=${formatFraction(value.num, value.den)}\\)。`
+        );
+      } else if (mode === 1) {
+        const n = randInt(5, 12);
+        const value = makeFraction(n, 2 * n + 1);
+        s21Add(
+          set,
+          `求級數 \\(\\frac1{1\\cdot3}+\\frac1{3\\cdot5}+\\cdots+\\frac1{(2n-1)(2n+1)}\\) 在 \\(n=${n}\\) 時的和。`,
+          `\\(${formatFraction(value.num, value.den)}\\)`,
+          `\\(\\frac1{(2k-1)(2k+1)}=\\frac12(\\frac1{2k-1}-\\frac1{2k+1})\\)。對消後得 \\(\\frac12(1-\\frac1{2n+1})=\\frac{n}{2n+1}\\)，代入 \\(n=${n}\\) 得 \\(${formatFraction(value.num, value.den)}\\)。`
+        );
+      } else if (mode === 2) {
+        const n = randInt(20, 80);
+        s21Add(
+          set,
+          `計算 \\(\\sum_{k=1}^{${n}}(\\sqrt{k+1}-\\sqrt{k})\\)。`,
+          `\\(\\sqrt{${n + 1}}-1\\)`,
+          `相鄰根式會前後對消：\\((\\sqrt2-1)+(\\sqrt3-\\sqrt2)+\\cdots+(\\sqrt{${n + 1}}-\\sqrt{${n}})=\\sqrt{${n + 1}}-1\\)。`
+        );
+      } else if (mode === 3) {
+        const n = randInt(5, 9);
+        s21Add(
+          set,
+          `求 \\(\\sum_{k=1}^{${n}}\\frac{k}{(k+1)!}\\) 的值。`,
+          `\\(1-\\frac1{${n + 1}!}\\)`,
+          `因 \\(\\frac{k}{(k+1)!}=\\frac1{k!}-\\frac1{(k+1)!}\\)，所以整串對消後剩 \\(1-\\frac1{(${n}+1)!}=1-\\frac1{${n + 1}!}\\)。`
+        );
+      } else {
+        const a = randInt(2, 5);
+        const b = randInt(1, 4);
+        const n = randInt(5, 10);
+        const value = makeFraction(n, b * (a * n + b));
+        const left = s21LinearK(a, b - a);
+        const right = s21LinearK(a, b);
+        s21Add(
+          set,
+          `計算 \\(\\sum_{k=1}^{${n}}\\frac{${a}}{(${left})(${right})}\\)。`,
+          `\\(${formatFraction(value.num, value.den)}\\)`,
+          `拆成 \\(\\frac1{${left}}-\\frac1{${right}}\\)，前後對消後剩 \\(\\frac1{${b}}-\\frac1{${a * n + b}}=${formatFraction(value.num, value.den)}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS212SnToAnAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const p = randInt(1, 5);
+        const q = randInt(-6, 8);
+        const n = randInt(6, 12);
+        const an = 2 * p * n + (q - p);
+        s21Add(
+          set,
+          `若 \\(S_n=${p}n^2${s21Signed(q)}n\\)，求一般項 \\(a_n\\)，並求 \\(a_{${n}}\\)。`,
+          `\\(a_n=${2 * p}n${s21Signed(q - p)}\\)，\\(a_{${n}}=${an}\\)`,
+          `\\(a_n=S_n-S_{n-1}\\)。計算得 \\(a_n=${2 * p}n${s21Signed(q - p)}\\)，代入 \\(n=${n}\\) 得 \\(${an}\\)。`
+        );
+      } else if (mode === 1) {
+        const A = randInt(1, 4);
+        const r = [2, 3][randInt(0, 1)];
+        s21Add(
+          set,
+          `已知 \\(S_n=${A}\\cdot${r}^n-${A}\\)，證明 \\(a_n\\) 為等比數列並求其公比。`,
+          `\\(a_n=${A * (r - 1)}\\cdot${r}^{n-1}\\)，公比 \\(${r}\\)`,
+          `\\(a_n=S_n-S_{n-1}=(${A}\\cdot${r}^n-${A})-(${A}\\cdot${r}^{n-1}-${A})=${A * (r - 1)}\\cdot${r}^{n-1}\\)，所以是等比數列，公比為 \\(${r}\\)。`
+        );
+      } else if (mode === 2) {
+        const n = randInt(8, 15);
+        const an = 3 * n * n - 3 * n + 1;
+        s21Add(
+          set,
+          `設 \\(S_n=n^3\\)，求 \\(a_n\\) 並計算 \\(a_{${n}}\\)。`,
+          `\\(a_n=3n^2-3n+1\\)，\\(a_{${n}}=${an}\\)`,
+          `\\(a_n=n^3-(n-1)^3=3n^2-3n+1\\)。代入 \\(n=${n}\\)，得 \\(${an}\\)。`
+        );
+      } else if (mode === 3) {
+        const a = randInt(1, 6);
+        const b = randInt(-5, 8);
+        s21Add(
+          set,
+          `若 \\(S_n=an^2+bn+c\\) 是某等差數列的前 \\(n\\) 項和，則 \\(c\\) 必須為何值？並以 \\(a,b\\) 表示公差 \\(d\\)。`,
+          `\\(c=0\\)，\\(d=2a\\)`,
+          `前 0 項和必為 0，所以 \\(S_0=c=0\\)。又 \\(a_n=S_n-S_{n-1}=2an+(b-a)\\)，這是等差數列，一般項係數差為 \\(2a\\)，所以公差 \\(d=2a\\)。`
+        );
+      } else {
+        const n = randInt(4, 10);
+        const value = makeFraction(1, n * (n + 1));
+        s21Add(
+          set,
+          `已知 \\(S_n=\\frac{n}{n+1}\\)，求 \\(a_n\\) 並計算 \\(a_{${n}}\\)。`,
+          `\\(a_n=\\frac1{n(n+1)}\\)，\\(a_{${n}}=${formatFraction(value.num, value.den)}\\)`,
+          `\\(a_n=S_n-S_{n-1}=\\frac{n}{n+1}-\\frac{n-1}{n}=\\frac1{n(n+1)}\\)。代入 \\(n=${n}\\) 得 \\(${formatFraction(value.num, value.den)}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS212RepeatingDigitsApplicationsAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const digit = randInt(2, 9);
+        const n = randInt(4, 7);
+        let sum = 0;
+        for (let k = 1; k <= n; k += 1) sum += digit * ((10 ** k - 1) / 9);
+        s21Add(
+          set,
+          `求級數 \\(${digit}+${Number(`${digit}${digit}`)}+${Number(`${digit}${digit}${digit}`)}+\\cdots\\) 前 ${n} 項之和。`,
+          `\\(${sum}\\)`,
+          `第 \\(k\\) 項為 \\(${digit}\\cdot\\frac{10^k-1}{9}\\)。因此總和為 \\(\\frac{${digit}}9(\\sum_{k=1}^{${n}}10^k-${n})=${sum}\\)。`
+        );
+      } else if (mode === 1) {
+        const initial = [50, 80, 100, 120][randInt(0, 3)];
+        const rate = [2, 3, 4][randInt(0, 2)];
+        const n = randInt(4, 8);
+        const value = initial * rate ** n;
+        s21Add(
+          set,
+          `某細胞分裂模型中，每過一小時數量變為 ${rate} 倍，若初始有 ${initial} 個，求 ${n} 小時後細胞的總數量。`,
+          `\\(${value}\\) 個`,
+          `這是等比數列，初始為 \\(${initial}\\)，每小時乘以 \\(${rate}\\)。${n} 小時後為 \\(${initial}\\cdot${rate}^{${n}}=${value}\\)。`
+        );
+      } else if (mode === 2) {
+        const n = randInt(5, 10);
+        const numerator = n * 9 * 10 ** n - (10 ** n - 1);
+        const denominator = 9 * 10 ** n;
+        const value = makeFraction(numerator, denominator);
+        s21Add(
+          set,
+          `計算 \\(0.9+0.99+0.999+\\cdots\\) 前 ${n} 項之和。`,
+          `\\(${formatFraction(value.num, value.den)}\\)`,
+          `第 \\(k\\) 項為 \\(1-10^{-k}\\)，所以總和為 \\(${n}-\\sum_{k=1}^{${n}}10^{-k}=${n}-\\frac{1-10^{-${n}}}{9}=${formatFraction(value.num, value.den)}\\)。`
+        );
+      } else if (mode === 3) {
+        const side = [6, 8, 10, 12][randInt(0, 3)];
+        const n = randInt(2, 5);
+        s21Add(
+          set,
+          `正三角形邊長為 \\(L=${side}\\)，每次取各黑色三角形邊中點連線並塗掉中央小三角形，重複 ${n} 次。求已塗掉面積占原面積的比例。`,
+          `\\(1-(\\frac34)^{${n}}\\)`,
+          `每次保留未塗色面積的 \\(\\frac34\\)，所以做 ${n} 次後未塗色比例為 \\((\\frac34)^{${n}}\\)，已塗掉比例為 \\(1-(\\frac34)^{${n}}\\)。`
+        );
+      } else {
+        const side = randInt(2, 6);
+        const n = randInt(3, 6);
+        const numerator = 3 * side * 4 ** n;
+        const denominator = 3 ** n;
+        const value = makeFraction(numerator, denominator);
+        s21Add(
+          set,
+          `雪花曲線從邊長 ${side} 的正三角形開始，每一步每段線變成原來的 \\(\\frac43\\) 倍。求第 ${n} 步後的總周長。`,
+          `\\(${formatFraction(value.num, value.den)}\\)`,
+          `初始周長為 \\(${3 * side}\\)，每一步乘以 \\(\\frac43\\)。所以第 ${n} 步周長為 \\(${3 * side}(\\frac43)^{${n}}=${formatFraction(value.num, value.den)}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function s22Prob(num, den) {
+    const value = makeFraction(num, den);
+    return `\\frac{${value.num}}{${value.den}}`;
+  }
+
+  function s22PercentText(frac) {
+    return `${formatFraction(frac.num * 100, frac.den)}\\%`;
+  }
+
+  function s22Pow(base, exponent) {
+    return base ** exponent;
+  }
+
+  function buildS221RestrictedDistributionAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const gifts = randInt(5, 8);
+        const people = 3;
+        const total = people ** gifts;
+        const bad = 2 * (people - 1) ** gifts - 1;
+        const ways = total - bad;
+        s21Add(
+          set,
+          `將 ${gifts} 件相異禮物分給甲、乙、丙 3 人，要求甲、乙兩人都至少分到 1 件，有多少種分法？`,
+          `\\(${ways}\\) 種`,
+          `全部分法為 \\(3^{${gifts}}=${total}\\)。扣掉甲空手或乙空手：各有 \\(2^{${gifts}}\\) 種，但甲乙都空手被重複扣一次，要加回 1 種。因此為 \\(3^{${gifts}}-2\\cdot2^{${gifts}}+1=${ways}\\)。`
+        );
+      } else if (mode === 1) {
+        const people = randInt(3, 5);
+        const each = randInt(1, 3);
+        const extra = randInt(2, 6);
+        const books = people * each + extra;
+        const ways = combinationCount(extra + people - 1, people - 1);
+        s21Add(
+          set,
+          `將 ${books} 本相同書分給 ${people} 人，每人至少 ${each} 本，有多少種分法？`,
+          `\\(${ways}\\) 種`,
+          `先每人發 ${each} 本，用掉 \\(${people}\\cdot${each}\\) 本，剩 ${extra} 本。剩下是非負整數解 \\(x_1+\\cdots+x_${people}=${extra}\\)，所以有 \\(C(${extra + people - 1},${people - 1})=${ways}\\) 種。`
+        );
+      } else if (mode === 2) {
+        const letters = randInt(5, 8);
+        const boxes = 3;
+        const cap = randInt(2, Math.max(2, letters - 2));
+        let ways = 0;
+        const allocations = [];
+        for (let a = 0; a <= cap; a += 1) {
+          for (let b = 0; b <= cap; b += 1) {
+            const c = letters - a - b;
+            if (c < 0 || c > cap) continue;
+            const count = factorialInt(letters) / (factorialInt(a) * factorialInt(b) * factorialInt(c));
+            ways += count;
+            allocations.push(`\\((${a},${b},${c})\\)`);
+          }
+        }
+        s21Add(
+          set,
+          `將 ${letters} 封不同信投入 3 個不同郵筒，若每個郵筒最多只能投 ${cap} 封，共有幾種投法？`,
+          `\\(${ways}\\) 種`,
+          `先列出各郵筒信件數 \\((a,b,c)\\)，需 \\(a+b+c=${letters}\\) 且每個不超過 ${cap}。可行分配為 ${allocations.join('、')}。每組分配有多項式排列數，合計為 \\(${ways}\\) 種。`
+        );
+      } else if (mode === 3) {
+        const balls = randInt(5, 8);
+        const boxes = randInt(3, 5);
+        const total = boxes ** balls;
+        const favorable = total - (boxes - 1) ** balls - balls * (boxes - 1) ** (balls - 1);
+        s21Add(
+          set,
+          `將 ${balls} 個相異球隨機投入 ${boxes} 個相異盒子，求第 1 號箱至少有 2 球的機率。`,
+          `\\(${s22Prob(favorable, total)}\\)`,
+          `全部投入方式為 \\(${boxes}^{${balls}}=${total}\\)。第 1 號箱 0 球有 \\(${boxes - 1}^{${balls}}\\) 種；恰 1 球有 \\(${balls}(${boxes - 1})^{${balls - 1}}\\) 種。故機率為 \\(\\frac{${favorable}}{${total}}=${s22Prob(favorable, total)}\\)。`
+        );
+      } else {
+        const students = randInt(5, 8);
+        const courses = randInt(3, 4);
+        let onto = 0;
+        for (let j = 0; j <= courses; j += 1) {
+          onto += (j % 2 === 0 ? 1 : -1) * combinationCount(courses, j) * (courses - j) ** students;
+        }
+        s21Add(
+          set,
+          `${students} 名學生各選修 ${courses} 門課中的 1 門，要求每門課至少有 1 人選修，共有多少種選法？`,
+          `\\(${onto}\\) 種`,
+          `這是把學生分到課程且每門不空的滿射計數。用容斥：\\(\\sum_{j=0}^{${courses}}(-1)^jC(${courses},j)(${courses}-j)^{${students}}=${onto}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS224ConditionalBayesAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const prevalence = makeFraction(randInt(5, 20), 100);
+        const sensitivity = makeFraction(randInt(88, 98), 100);
+        const falsePositive = makeFraction(randInt(2, 8), 100);
+        const truePositive = mulFraction(prevalence, sensitivity);
+        const falseAlarm = mulFraction(makeFraction(prevalence.den - prevalence.num, prevalence.den), falsePositive);
+        const posterior = divFraction(truePositive, addFraction(truePositive, falseAlarm));
+        s21Add(
+          set,
+          `某測謊器對說謊者判斷正確率為 ${s22PercentText(sensitivity)}，對誠實者誤判率為 ${s22PercentText(falsePositive)}。若母群中有 ${s22PercentText(prevalence)} 的人說謊，測謊器顯示說謊，求此人真的說謊的機率。`,
+          `\\(${formatFraction(posterior.num, posterior.den)}\\)`,
+          `用貝氏定理：\\(P(說謊|陽性)=\\frac{P(說謊)P(陽性|說謊)}{P(說謊)P(陽性|說謊)+P(誠實)P(陽性|誠實)}=${formatFraction(posterior.num, posterior.den)}\\)。`
+        );
+      } else if (mode === 1) {
+        const pa = makeFraction(randInt(50, 70), 100);
+        const qa = makeFraction(randInt(1, 4), 100);
+        const qb = makeFraction(randInt(3, 8), 100);
+        const badA = mulFraction(pa, qa);
+        const badB = mulFraction(makeFraction(pa.den - pa.num, pa.den), qb);
+        const posterior = divFraction(badA, addFraction(badA, badB));
+        s21Add(
+          set,
+          `某工廠由甲、乙兩產線生產，甲占 ${s22PercentText(pa)}，乙占其餘。甲不良率 ${s22PercentText(qa)}，乙不良率 ${s22PercentText(qb)}。若抽到不良品，求其來自甲產線的機率。`,
+          `\\(${formatFraction(posterior.num, posterior.den)}\\)`,
+          `先算抽到不良且來自甲的機率，再除以總不良率：\\(\\frac{P(甲)P(不良|甲)}{P(甲)P(不良|甲)+P(乙)P(不良|乙)}=${formatFraction(posterior.num, posterior.den)}\\)。`
+        );
+      } else if (mode === 2) {
+        const fairCount = randInt(1, 3);
+        const doubleHeadCount = randInt(1, 3);
+        const posterior = makeFraction(doubleHeadCount, doubleHeadCount + fairCount);
+        s21Add(
+          set,
+          `盒中有 ${fairCount} 枚均勻硬幣與 ${doubleHeadCount} 枚雙面人頭硬幣，隨機取一枚投擲，已知出現人頭，求此硬幣為雙面人頭硬幣的機率。`,
+          `\\(${formatFraction(posterior.num, posterior.den)}\\)`,
+          `出現人頭的權重：雙面人頭硬幣每枚貢獻 1，均勻硬幣每枚貢獻 \\(\\frac12\\)。所以機率為 \\(\\frac{${doubleHeadCount}}{${doubleHeadCount}+${fairCount}\\cdot\\frac12}=${formatFraction(posterior.num, posterior.den)}\\)。`
+        );
+      } else if (mode === 3) {
+        const prevalence = makeFraction(randInt(1, 5), 100);
+        const sensitivity = makeFraction(randInt(85, 95), 100);
+        const falsePositive = makeFraction(randInt(1, 4), 100);
+        const positiveSick = mulFraction(prevalence, sensitivity);
+        const positiveHealthy = mulFraction(makeFraction(prevalence.den - prevalence.num, prevalence.den), falsePositive);
+        const posteriorHealthy = divFraction(positiveHealthy, addFraction(positiveSick, positiveHealthy));
+        s21Add(
+          set,
+          `某診斷試劑對患者檢出率為 ${s22PercentText(sensitivity)}，健康者誤報率為 ${s22PercentText(falsePositive)}，已知盛行率為 ${s22PercentText(prevalence)}。若檢驗為陽性，求受檢者其實健康的機率。`,
+          `\\(${formatFraction(posteriorHealthy.num, posteriorHealthy.den)}\\)`,
+          `陽性包含真正患者與健康誤報兩部分。所求為 \\(\\frac{P(健康)P(陽性|健康)}{P(患者)P(陽性|患者)+P(健康)P(陽性|健康)}=${formatFraction(posteriorHealthy.num, posteriorHealthy.den)}\\)。`
+        );
+      } else {
+        const white = randInt(2, 5);
+        const black = randInt(2, 5);
+        const posterior = makeFraction(white - 1, white + black - 1);
+        s21Add(
+          set,
+          `袋中有 ${white} 顆白球、${black} 顆黑球，不放回連抽 2 顆。已知第 2 次抽到白球，求第 1 次也抽到白球的機率。`,
+          `\\(${formatFraction(posterior.num, posterior.den)}\\)`,
+          `因每一顆球成為第 2 顆的機會相同；已知第 2 顆是白球後，剩下 ${white + black - 1} 顆中有 ${white - 1} 顆白球，所以第 1 顆為白球的機率為 \\(${formatFraction(posterior.num, posterior.den)}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS222PermutationPathRestrictionAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const m = randInt(3, 6);
+        const n = randInt(3, 6);
+        const cx = randInt(1, m - 1);
+        const cy = randInt(1, n - 1);
+        const total = combinationCount(m + n, m);
+        const through = combinationCount(cx + cy, cx) * combinationCount(m - cx + n - cy, m - cx);
+        s21Add(
+          set,
+          `在 \\(${m}\\times${n}\\) 的棋盤格中，從左下角到右上角走最短路徑且不經過中心點 \\((${cx},${cy})\\)，共有幾種走法？`,
+          `\\(${total - through}\\) 種`,
+          `全部最短路徑有 \\(C(${m + n},${m})=${total}\\) 種。經過 \\((${cx},${cy})\\) 的走法為 \\(C(${cx + cy},${cx})C(${m - cx + n - cy},${m - cx})=${through}\\)。相減得 \\(${total - through}\\) 種。`
+        );
+      } else if (mode === 1) {
+        const maxDigit = randInt(4, 8);
+        const favorablePair = (maxDigit * (maxDigit + 1)) / 2;
+        const totalPair = maxDigit * maxDigit;
+        const probability = makeFraction(favorablePair * favorablePair, totalPair * totalPair);
+        s21Add(
+          set,
+          `用 1 到 ${maxDigit} 的數字填入 \\(2\\times2\\) 方格，每格可重複。求滿足左上 \\(A\\ge B\\) 且左下 \\(C\\ge D\\) 的機率。`,
+          `\\(${formatFraction(probability.num, probability.den)}\\)`,
+          `一組有序數對 \\((A,B)\\) 共有 \\(${maxDigit}^2\\) 種，其中 \\(A\\ge B\\) 有 \\(1+2+\\cdots+${maxDigit}=${favorablePair}\\) 種。上下兩組獨立，所以機率為 \\((\\frac{${favorablePair}}{${totalPair}})^2=${formatFraction(probability.num, probability.den)}\\)。`
+        );
+      } else if (mode === 2) {
+        const totalPeople = randInt(7, 10);
+        const special = 3;
+        const others = totalPeople - special;
+        const ways = factorialInt(others) * combinationCount(others + 1, special) * factorialInt(special);
+        s21Add(
+          set,
+          `${totalPeople} 人排成一列，其中甲、乙、丙三人互不相鄰，共有幾種排法？`,
+          `\\(${ways}\\) 種`,
+          `先排其餘 ${others} 人，有 \\(${others}!\\) 種，形成 ${others + 1} 個空位。選 3 個空位放甲乙丙並排列，有 \\(C(${others + 1},3)3!\\) 種，總數為 \\(${ways}\\)。`
+        );
+      } else if (mode === 3) {
+        const flags = randInt(4, 7);
+        const poles = randInt(2, Math.min(4, flags));
+        const ways = factorialInt(flags) * combinationCount(flags - 1, poles - 1);
+        s21Add(
+          set,
+          `${flags} 面不同旗子掛在 ${poles} 根不同旗竿上，要求每根旗竿至少 1 面，且同一旗竿上下順序有別，共有幾種掛法？`,
+          `\\(${ways}\\) 種`,
+          `先把 ${flags} 面旗排成一列，有 \\(${flags}!\\) 種；再在 ${flags - 1} 個相鄰空隙中選 ${poles - 1} 個切成 ${poles} 段，分給不同旗竿，所以共有 \\(${flags}!C(${flags - 1},${poles - 1})=${ways}\\) 種。`
+        );
+      } else {
+        const a = randInt(2, 4);
+        const b = randInt(2, 4);
+        const others = randInt(3, 5);
+        const totalLetters = a + b + others;
+        const pairB = b - 1;
+        const total = factorialInt(totalLetters - b + 1) / (factorialInt(a) * factorialInt(others)) * factorialInt(b);
+        s21Add(
+          set,
+          `有 ${a} 個相同 A、${b} 個相同 B 與 ${others} 個彼此不同字母，排成一列，要求所有 B 必須相鄰，共有幾種排法？`,
+          `\\(${total}\\) 種`,
+          `把 ${b} 個 B 視為一個區塊，連同 ${a} 個相同 A 與 ${others} 個不同字母，共有 ${totalLetters - b + 1} 個物件，其中 A 重複 ${a} 個。故方法數為 \\(\\frac{${totalLetters - b + 1}!}{${a}!}=${total}\\) 種。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS224TransitionMatrixAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const stayA = makeFraction(randInt(5, 9), 10);
+        const toAFromB = makeFraction(randInt(1, 5), 10);
+        const steadyA = divFraction(toAFromB, addFraction(makeFraction(1, 1), subFraction(toAFromB, stayA)));
+        s21Add(
+          set,
+          `設轉移矩陣 \\(P=\\begin{bmatrix}${formatFraction(stayA.num, stayA.den)}&${formatFraction(toAFromB.num, toAFromB.den)}\\\\${formatFraction(stayA.den - stayA.num, stayA.den)}&${formatFraction(toAFromB.den - toAFromB.num, toAFromB.den)}\\end{bmatrix}\\)，求穩定狀態中 A 狀態的比例。`,
+          `\\(${formatFraction(steadyA.num, steadyA.den)}\\)`,
+          `令穩定狀態為 \\((x,1-x)^T\\)。由 \\(x=${formatFraction(stayA.num, stayA.den)}x+${formatFraction(toAFromB.num, toAFromB.den)}(1-x)\\)，解得 \\(x=${formatFraction(steadyA.num, steadyA.den)}\\)。`
+        );
+      } else if (mode === 1) {
+        const ss = makeFraction(randInt(5, 8), 10);
+        const rr = makeFraction(randInt(5, 8), 10);
+        const startSunny = randInt(0, 1) === 0;
+        const days = randInt(2, 4);
+        let sunny = startSunny ? makeFraction(1, 1) : makeFraction(0, 1);
+        for (let d = 0; d < days; d += 1) {
+          sunny = addFraction(mulFraction(ss, sunny), mulFraction(makeFraction(rr.den - rr.num, rr.den), subFraction(makeFraction(1, 1), sunny)));
+        }
+        s21Add(
+          set,
+          `天氣轉移：晴後仍晴機率 ${formatFraction(ss.num, ss.den)}，雨後轉晴機率 ${formatFraction(rr.den - rr.num, rr.den)}。若今天${startSunny ? '晴天' : '雨天'}，求 ${days} 天後為晴天的機率。`,
+          `\\(${formatFraction(sunny.num, sunny.den)}\\)`,
+          `令第 \\(n\\) 天晴天機率為 \\(p_n\\)，則 \\(p_{n+1}=${formatFraction(ss.num, ss.den)}p_n+${formatFraction(rr.den - rr.num, rr.den)}(1-p_n)\\)。由初始值連續代入 ${days} 次，得 \\(${formatFraction(sunny.num, sunny.den)}\\)。`
+        );
+      } else if (mode === 2) {
+        const keep = makeFraction([6, 7, 8][randInt(0, 2)], 10);
+        const lambda = makeFraction(2 * keep.num - keep.den, keep.den);
+        const n = randInt(3, 8);
+        const lambdaPow = powFraction(lambda, n);
+        s21Add(
+          set,
+          `已知對稱轉移矩陣 \\(P=\\begin{bmatrix}${formatFraction(keep.num, keep.den)}&${formatFraction(keep.den - keep.num, keep.den)}\\\\${formatFraction(keep.den - keep.num, keep.den)}&${formatFraction(keep.num, keep.den)}\\end{bmatrix}\\)。求 \\(P^{${n}}\\) 中左上元素。`,
+          `\\(\\frac12(1+(${formatFraction(lambda.num, lambda.den)})^{${n}})\\)`,
+          `此矩陣特徵值為 \\(1\\) 與 \\(2p-1=${formatFraction(lambda.num, lambda.den)}\\)。因此 \\(P^n\\) 左上元素為 \\(\\frac12(1+(${formatFraction(lambda.num, lambda.den)})^n)\\)，代入 \\(n=${n}\\) 即可；其冪為 \\(${formatFraction(lambdaPow.num, lambdaPow.den)}\\)。`
+        );
+      } else if (mode === 3) {
+        const d1 = randInt(2, 5);
+        const d2 = randInt(6, 10);
+        const n = randInt(3, 6);
+        s21Add(
+          set,
+          `已知 \\(B=ADA^{-1}\\)，其中 \\(D=\\begin{bmatrix}${d1}&0\\\\0&${d2}\\end{bmatrix}\\)。求 \\(B^{${n}}\\) 可化成什麼形式。`,
+          `\\(B^{${n}}=AD^{${n}}A^{-1}=A\\begin{bmatrix}${d1 ** n}&0\\\\0&${d2 ** n}\\end{bmatrix}A^{-1}\\)`,
+          `相似矩陣的冪次可直接作用在對角矩陣上：\\((ADA^{-1})^n=AD^nA^{-1}\\)。所以只要把對角線元素各自做 ${n} 次方即可。`
+        );
+      } else {
+        const a = randInt(2, 5);
+        const b = randInt(3, 7);
+        const ratioA = b;
+        const ratioB = a;
+        s21Add(
+          set,
+          `兩水槽 A、B 互相交換水量：每分鐘 A 有 \\(\\frac1{${a}}\\) 流入 B，B 有 \\(\\frac1{${b}}\\) 流入 A。求長期平衡時 A、B 水量的比例。`,
+          `\\(${ratioA}:${ratioB}\\)`,
+          `平衡時兩邊每分鐘交換量相等：\\(\\frac{A}{${a}}=\\frac{B}{${b}}\\)。因此 \\(A:B=${b}:${a}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS224ExpectationDistributionAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const prize = randInt(8, 20);
+        const probNum = randInt(1, 5);
+        const probDen = randInt(probNum + 2, 12);
+        const fair = makeFraction(prize * probNum, probDen);
+        s21Add(
+          set,
+          `同時擲兩枚硬幣，若出現兩正面可得 ${prize} 元。若要使遊戲公平，每局應繳多少元？`,
+          `\\(${formatFraction(prize, 4)}\\) 元`,
+          `兩正面的機率為 \\(\\frac14\\)，公平入場費等於獎金期望值：\\(${prize}\\cdot\\frac14=${formatFraction(prize, 4)}\\) 元。`
+        );
+      } else if (mode === 1) {
+        const total = randInt(16, 24);
+        const known = randInt(6, 12);
+        const choices = randInt(4, 5);
+        const rightScore = randInt(4, 6);
+        const wrongScore = -randInt(1, 3);
+        const expected = known * rightScore + (total - known) * makeFraction(rightScore + (choices - 1) * wrongScore, choices).num / makeFraction(rightScore + (choices - 1) * wrongScore, choices).den;
+        const guessEv = makeFraction(rightScore + (choices - 1) * wrongScore, choices);
+        const totalEv = addFraction(makeFraction(known * rightScore, 1), makeFraction((total - known) * guessEv.num, guessEv.den));
+        s21Add(
+          set,
+          `某生參加 ${total} 題單選測驗（${choices} 選 1），答對 ${rightScore} 分、答錯 ${wrongScore} 分。已知確定會做 ${known} 題，其餘隨機猜答，求得分期望值。`,
+          `\\(${formatFraction(totalEv.num, totalEv.den)}\\) 分`,
+          `每題猜答期望為 \\(\\frac{${rightScore}+${choices - 1}\\cdot(${wrongScore})}{${choices}}=${formatFraction(guessEv.num, guessEv.den)}\\)。總期望為 \\(${known}\\cdot${rightScore}+${total - known}\\cdot${formatFraction(guessEv.num, guessEv.den)}=${formatFraction(totalEv.num, totalEv.den)}\\)。`
+        );
+      } else if (mode === 2) {
+        const red = randInt(4, 8);
+        const white = randInt(3, 7);
+        const draw = randInt(2, Math.min(5, red + white - 1));
+        const ev = makeFraction(draw * red, red + white);
+        s21Add(
+          set,
+          `袋中有 ${red} 紅 ${white} 白，一次取 ${draw} 球。設 \\(X\\) 為取到紅球個數，求 \\(E(X)\\)。`,
+          `\\(${formatFraction(ev.num, ev.den)}\\)`,
+          `超幾何分配的期望為抽取數乘以成功比例：\\(E(X)=${draw}\\cdot\\frac{${red}}{${red + white}}=${formatFraction(ev.num, ev.den)}\\)。`
+        );
+      } else if (mode === 3) {
+        const target = randInt(4, 8);
+        s21Add(
+          set,
+          `擲一顆 ${target} 面均勻骰子直到出現指定點數才停止，求擲骰次數的期望值。`,
+          `\\(${target}\\) 次`,
+          `這是成功機率 \\(p=\\frac1{${target}}\\) 的幾何分配，等待次數期望為 \\(\\frac1p=${target}\\)。`
+        );
+      } else {
+        const premium = randInt(800, 1600);
+        const payout = randInt(6, 15) * 10000;
+        const pNum = randInt(3, 9);
+        const pDen = 1000;
+        const profit = makeFraction(premium * pDen - payout * pNum, pDen);
+        s21Add(
+          set,
+          `某種保險年費 ${premium} 元，理賠額 ${payout} 元，事故發生率為 \\(\\frac{${pNum}}{${pDen}}\\)。求保險公司對每位客戶的期望獲利。`,
+          `\\(${formatFraction(profit.num, profit.den)}\\) 元`,
+          `期望獲利 = 保費 - 理賠額 \\(\\times\\) 事故機率，所以為 \\(${premium}-${payout}\\cdot\\frac{${pNum}}{${pDen}}=${formatFraction(profit.num, profit.den)}\\) 元。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function s23MeanVarianceFromSum(n, sum, squareSum) {
+    const mean = makeFraction(sum, n);
+    const variance = subFraction(makeFraction(squareSum, n), mulFraction(mean, mean));
+    return { mean, variance };
+  }
+
+  function s23FormatDecimal(value, digits = 3) {
+    return Number(value).toFixed(digits).replace(/\.?0+$/, '');
+  }
+
+  function buildS231BinaryDataAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const ones = randInt(12, 36);
+        const zeros = randInt(12, 36);
+        const total = ones + zeros;
+        const mean = makeFraction(ones, total);
+        const variance = makeFraction(ones * zeros, total * total);
+        s21Add(
+          set,
+          `一組 ${total} 筆 0-1 數據中，有 ${ones} 個 1 與 ${zeros} 個 0。求此組數據的平均數與變異數。`,
+          `平均數 \\(${formatFraction(mean.num, mean.den)}\\)，變異數 \\(${formatFraction(variance.num, variance.den)}\\)`,
+          `0-1 數據的平均數就是 1 的比例 \\(p=\\frac{${ones}}{${total}}\\)。變異數為 \\(p(1-p)=\\frac{${ones}}{${total}}\\cdot\\frac{${zeros}}{${total}}=${formatFraction(variance.num, variance.den)}\\)。`
+        );
+      } else if (mode === 1) {
+        const n1 = [30, 40, 50][randInt(0, 2)];
+        const n2 = [40, 50, 60][randInt(0, 2)];
+        const p1 = makeFraction(randInt(3, 7), 10);
+        const p2 = makeFraction(randInt(4, 9), 10);
+        const ones = n1 * p1.num / p1.den + n2 * p2.num / p2.den;
+        if (!Number.isInteger(ones)) {
+          i -= 1;
+          continue;
+        }
+        const total = n1 + n2;
+        const mean = makeFraction(ones, total);
+        const variance = mulFraction(mean, subFraction(makeFraction(1, 1), mean));
+        s21Add(
+          set,
+          `兩組 0-1 數據合併：第一組 ${n1} 筆平均 ${formatFraction(p1.num, p1.den)}，第二組 ${n2} 筆平均 ${formatFraction(p2.num, p2.den)}。求合併後的平均數與標準差。`,
+          `平均數 \\(${formatFraction(mean.num, mean.den)}\\)，標準差 \\(\\sqrt{${formatFraction(variance.num, variance.den)}}\\)`,
+          `先算 1 的總數：\\(${n1}\\cdot${formatFraction(p1.num, p1.den)}+${n2}\\cdot${formatFraction(p2.num, p2.den)}=${ones}\\)。合併平均為 \\(${formatFraction(mean.num, mean.den)}\\)，0-1 數據變異數為 \\(p(1-p)=${formatFraction(variance.num, variance.den)}\\)，標準差為其平方根。`
+        );
+      } else if (mode === 2) {
+        const sigma = makeFraction(2, 5);
+        s21Add(
+          set,
+          `若一組 0-1 數據的標準差為 \\(${formatFraction(sigma.num, sigma.den)}\\)，求數據中「1」所占比例可能為何。`,
+          `\\(\\frac15\\) 或 \\(\\frac45\\)`,
+          `設 1 的比例為 \\(p\\)。0-1 數據變異數為 \\(p(1-p)\\)，所以 \\(p(1-p)=(\\frac25)^2=\\frac4{25}\\)。解得 \\(p=\\frac15\\) 或 \\(\\frac45\\)。`
+        );
+      } else if (mode === 3) {
+        const n = 100;
+        const observedMean = makeFraction(randInt(55, 85), 100);
+        const errors = randInt(3, 9);
+        const corrected = makeFraction(observedMean.num - errors, n);
+        s21Add(
+          set,
+          `已知 \\(n=100\\) 的 0-1 數據平均為 \\(${formatFraction(observedMean.num, observedMean.den)}\\)。若其中 ${errors} 個 0 誤改為 1，求修正後平均數。`,
+          `\\(${formatFraction(corrected.num, corrected.den)}\\)`,
+          `平均數乘以 100 就是目前記錄的 1 的個數。修正時要把誤加的 ${errors} 個 1 扣回，所以新平均為 \\(\\frac{${observedMean.num}-${errors}}{100}=${formatFraction(corrected.num, corrected.den)}\\)。`
+        );
+      } else {
+        const n = randInt(8, 20);
+        const value = randInt(0, 1);
+        s21Add(
+          set,
+          `證明當 ${n} 筆 0-1 數據全為 ${value} 時，其標準差必為 0。`,
+          `標準差為 \\(0\\)`,
+          `所有資料都相同時，每筆資料都等於平均數，所有離差皆為 0，因此變異數與標準差都為 0。0-1 數據也可用 \\(p(1-p)\\)：若全為 0，\\(p=0\\)；全為 1，\\(p=1\\)，變異數皆為 0。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS231LinearTransformUpdateAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const mean = randInt(50, 80);
+        const sd = randInt(4, 12);
+        const a = pickNonZero(-4, 4);
+        const b = randInt(-20, 20);
+        s21Add(
+          set,
+          `原始數據平均為 ${mean}、標準差為 ${sd}。經變換 \\(y=${a}x${s21Signed(b)}\\) 後，求新數據的平均數與標準差。`,
+          `平均數 \\(${a * mean + b}\\)，標準差 \\(${Math.abs(a) * sd}\\)`,
+          `線性變換 \\(y=ax+b\\) 會使平均數變為 \\(a\\bar x+b\\)，標準差變為 \\(|a|s\\)。所以新平均為 \\(${a}\\cdot${mean}${s21Signed(b)}=${a * mean + b}\\)，新標準差為 \\(${Math.abs(a)}\\cdot${sd}=${Math.abs(a) * sd}\\)。`
+        );
+      } else if (mode === 1) {
+        const oldMean = randInt(30, 60);
+        const oldSd = randInt(5, 12);
+        const a = randInt(2, 4);
+        const b = randInt(-30, 30);
+        const newMean = a * oldMean + b;
+        const newSd = a * oldSd;
+        s21Add(
+          set,
+          `某次考試全班平均 ${oldMean} 分、標準差 ${oldSd} 分。老師將每人分數變成 \\(y=ax+b\\)，使新平均為 ${newMean}、新標準差為 ${newSd}。求 \\((a,b)\\)。`,
+          `\\((a,b)=(${a},${b})\\)`,
+          `標準差只受倍率影響，所以 \\(|a|=${newSd}/${oldSd}=${a}\\)。分數調整通常取正倍率，故 \\(a=${a}\\)。再由平均數 \\(${newMean}=${a}\\cdot${oldMean}+b\\)，得 \\(b=${b}\\)。`
+        );
+      } else if (mode === 2) {
+        const oldSd = randInt(10, 30);
+        const d = randInt(2, 6);
+        const newSd = makeFraction(oldSd, d);
+        s21Add(
+          set,
+          `若數據 \\(X\\) 的標準差為 ${oldSd}，變換為 \\(Y=\\frac{X-c}{${d}}\\)。求 \\(Y\\) 的標準差。`,
+          `\\(${formatFraction(newSd.num, newSd.den)}\\)`,
+          `平移 \\(-c\\) 不影響標準差，除以 ${d} 會讓標準差除以 ${d}。所以 \\(s_Y=\\frac{${oldSd}}{${d}}=${formatFraction(newSd.num, newSd.den)}\\)。`
+        );
+      } else if (mode === 3) {
+        const sd = randInt(3, 12);
+        s21Add(
+          set,
+          `比較 \\(y=2x+5\\) 與 \\(y=-2x+100\\) 對原始數據標準差的影響。若原標準差為 ${sd}，兩者的新標準差是否相同？`,
+          `相同，皆為 \\(${2 * sd}\\)`,
+          `標準差只看倍率的絕對值。兩個變換的倍率分別為 2 與 -2，絕對值皆為 2，因此新標準差都等於 \\(2\\cdot${sd}=${2 * sd}\\)。`
+        );
+      } else {
+        const n = 10;
+        const mean = randInt(4, 8);
+        const variance = randInt(3, 12);
+        const sumSquares = n * (variance + mean * mean);
+        const a = pickNonZero(-4, 4);
+        const b = randInt(-10, 10);
+        const yVariance = a * a * variance;
+        s21Add(
+          set,
+          `已知 \\(x_1,\\ldots,x_{10}\\) 的平均為 ${mean}，且 \\(\\sum x_i^2=${sumSquares}\\)。若 \\(y_i=${a}x_i${s21Signed(b)}\\)，求 \\(Y\\) 的變異數。`,
+          `\\(${yVariance}\\)`,
+          `先由 \\(Var(X)=\\frac{\\sum x_i^2}{10}-\\bar x^2=${sumSquares}/10-${mean}^2=${variance}\\)。線性變換的變異數為 \\(Var(aX+b)=a^2Var(X)\\)，所以 \\(Var(Y)=${a * a}\\cdot${variance}=${yVariance}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS231DataCorrectionAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const n = randInt(8, 15);
+        const mean = randInt(15, 30);
+        const variance = randInt(4, 20);
+        const wrong = mean + randInt(5, 12);
+        const correct = mean - randInt(3, 8);
+        const sum = n * mean;
+        const squareSum = n * (variance + mean * mean);
+        const fixed = s23MeanVarianceFromSum(n, sum - wrong + correct, squareSum - wrong * wrong + correct * correct);
+        s21Add(
+          set,
+          `某組 ${n} 筆數據平均 ${mean}、變異數 ${variance}。發現一筆 ${wrong} 應改為 ${correct}，求更正後平均數與變異數。`,
+          `平均數 \\(${formatFraction(fixed.mean.num, fixed.mean.den)}\\)，變異數 \\(${formatFraction(fixed.variance.num, fixed.variance.den)}\\)`,
+          `用總和與平方和更新。原總和 \\(${n}\\cdot${mean}\\)，原平方和 \\(${n}(${variance}+${mean}^2)\\)。更正後扣掉 ${wrong}、加回 ${correct}，平方和也扣 \\(${wrong}^2\\)、加 \\(${correct}^2\\)，再代入 \\(Var=\\frac{\\sum x_i^2}{n}-\\bar x^2\\)。`
+        );
+      } else if (mode === 1) {
+        const n = randInt(30, 60);
+        const oldA = randInt(70, 90);
+        const oldB = randInt(30, 50);
+        const delta = randInt(5, 15);
+        const newA = oldA - delta;
+        const newB = oldB + delta;
+        const change = makeFraction(newA * newA + newB * newB - oldA * oldA - oldB * oldB, n);
+        s21Add(
+          set,
+          `班級 ${n} 人，更正前有兩筆資料誤為 ${oldA} 與 ${oldB}，正確應為 ${newA} 與 ${newB}。若平均數不變，求變異數改變量。`,
+          `\\(${formatFraction(change.num, change.den)}\\)`,
+          `兩筆資料總和相同，所以平均數不變。變異數改變量只剩平方和改變除以人數：\\(\\frac{${newA}^2+${newB}^2-${oldA}^2-${oldB}^2}{${n}}=${formatFraction(change.num, change.den)}\\)。`
+        );
+      } else if (mode === 2) {
+        const n = [40, 50, 80][randInt(0, 2)];
+        const diff = [100, 200, 300][randInt(0, 2)];
+        const change = makeFraction(-diff, n);
+        s21Add(
+          set,
+          `若更正兩筆資料 \\((a,b)\\to(c,d)\\)，滿足 \\(a+b=c+d\\)，且 \\(a^2+b^2-(c^2+d^2)=${diff}\\)，總人數為 ${n}，求變異數增加或減少多少。`,
+          `減少 \\(${formatFraction(diff, n)}\\)`,
+          `總和不變，所以平均數不變。新平方和比舊平方和少 ${diff}，因此變異數減少 \\(\\frac{${diff}}{${n}}=${formatFraction(diff, n)}\\)。`
+        );
+      } else if (mode === 3) {
+        const n = randInt(15, 30);
+        const mean = randInt(10, 20);
+        const missing = randInt(5, mean - 1);
+        const newMean = makeFraction(n * mean + missing, n + 1);
+        s21Add(
+          set,
+          `${n} 人義工時數平均 ${mean} 小時。更正後發現少算了一個人的 ${missing} 小時，求新平均。`,
+          `\\(${formatFraction(newMean.num, newMean.den)}\\) 小時`,
+          `原總時數為 \\(${n}\\cdot${mean}\\)。補入 ${missing} 小時後，總人數變 ${n + 1}，新平均為 \\(\\frac{${n * mean}+${missing}}{${n + 1}}=${formatFraction(newMean.num, newMean.den)}\\)。`
+        );
+      } else {
+        const n = [20, 40, 100][randInt(0, 2)];
+        const low = 0;
+        const high = 100;
+        const mid = 50;
+        const decrease = makeFraction(high * high + low * low - 2 * mid * mid, n);
+        s21Add(
+          set,
+          `某資料有 ${n} 筆，將兩個極端值 ${low} 與 ${high} 更正為兩筆 ${mid}。若原平均為 ${mid}，求變異數的變化量。`,
+          `減少 \\(${formatFraction(decrease.num, decrease.den)}\\)`,
+          `兩筆資料總和同為 100，所以平均數不變。平方和由 \\(0^2+100^2\\) 變為 \\(50^2+50^2\\)，減少 5000，因此變異數減少 \\(\\frac{5000}{${n}}=${formatFraction(decrease.num, decrease.den)}\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
+  function buildS232RegressionPredictionAdvancedSet(count) {
+    const set = s21FreshSet();
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const xbar = randInt(3, 8);
+        const ybar = randInt(6, 15);
+        const sxx = randInt(4, 12);
+        const slopeNum = randInt(1, 6);
+        const slope = makeFraction(slopeNum, sxx);
+        const sxy = slopeNum;
+        const intercept = subFraction(makeFraction(ybar, 1), mulFraction(slope, makeFraction(xbar, 1)));
+        s21Add(
+          set,
+          `已知 \\(\\bar x=${xbar},\\bar y=${ybar},S_{xx}=${sxx},S_{xy}=${sxy}\\)。求 \\(Y\\) 對 \\(X\\) 的迴歸直線。`,
+          `\\(y-${ybar}=${formatFraction(slope.num, slope.den)}(x-${xbar})\\)`,
+          `迴歸斜率 \\(b=\\frac{S_{xy}}{S_{xx}}=${formatFraction(slope.num, slope.den)}\\)，且迴歸線必通過平均點 \\((\\bar x,\\bar y)=(${xbar},${ybar})\\)。所以 \\(y-${ybar}=${formatFraction(slope.num, slope.den)}(x-${xbar})\\)。`
+        );
+      } else if (mode === 1) {
+        const a = makeFraction(randInt(5, 12), 10);
+        const b = randInt(5, 20);
+        const x = randInt(8, 20);
+        const y = addFraction(mulFraction(a, makeFraction(x, 1)), makeFraction(b, 1));
+        s21Add(
+          set,
+          `利用迴歸直線 \\(y=${formatFraction(a.num, a.den)}x+${b}\\) 預測當 \\(x=${x}\\) 時的 \\(y\\) 值。`,
+          `\\(${formatFraction(y.num, y.den)}\\)`,
+          `直接代入迴歸式：\\(y=${formatFraction(a.num, a.den)}\\cdot${x}+${b}=${formatFraction(y.num, y.den)}\\)。`
+        );
+      } else if (mode === 2) {
+        const h = randInt(3, 8);
+        const k = randInt(8, 20);
+        const slope = randInt(1, 4);
+        const intercept = k - slope * h;
+        s21Add(
+          set,
+          `若數據經線性變換 \\(x'=x-${h},y'=y-${k}\\) 後，迴歸直線通過原點且為 \\(y'=${slope}x'\\)，求原始迴歸直線必通過哪一點，並寫出方程式。`,
+          `通過 \\((${h},${k})\\)，\\(y=${slope}x${s21Signed(intercept)}\\)`,
+          `變換後原點 \\((0,0)\\) 對應原資料中的 \\((${h},${k})\\)，所以原迴歸線必過此點。由 \\(y-${k}=${slope}(x-${h})\\)，整理得 \\(y=${slope}x${s21Signed(intercept)}\\)。`
+        );
+      } else if (mode === 3) {
+        const e = randInt(1, 3);
+        const points = [[1, 2], [2, 4], [3, 6 + e]];
+        const xs = points.map((p) => p[0]);
+        const ys = points.map((p) => p[1]);
+        const xbar = xs.reduce((a, b) => a + b, 0) / 3;
+        const ybar = ys.reduce((a, b) => a + b, 0) / 3;
+        const sxx = xs.reduce((sum, x) => sum + (x - xbar) ** 2, 0);
+        const syy = ys.reduce((sum, y) => sum + (y - ybar) ** 2, 0);
+        const sxy = points.reduce((sum, p) => sum + (p[0] - xbar) * (p[1] - ybar), 0);
+        const r = sxy / Math.sqrt(sxx * syy);
+        s21Add(
+          set,
+          `已知 3 筆數據 \\((1,2),(2,4),(3,${6 + e})\\)，求其相關係數 \\(r\\) 的近似值。`,
+          `\\(${s23FormatDecimal(r, 3)}\\)`,
+          `先算 \\(\\bar x=${s23FormatDecimal(xbar, 3)},\\bar y=${s23FormatDecimal(ybar, 3)}\\)，再用 \\(r=\\frac{S_{xy}}{\\sqrt{S_{xx}S_{yy}}}\\)。本題 \\(S_{xx}=${s23FormatDecimal(sxx, 3)},S_{yy}=${s23FormatDecimal(syy, 3)},S_{xy}=${s23FormatDecimal(sxy, 3)}\\)，所以 \\(r\\approx${s23FormatDecimal(r, 3)}\\)。`
+        );
+      } else {
+        const m = -randInt(1, 4);
+        const b = randInt(5, 20);
+        s21Add(
+          set,
+          `若所有數據點 \\((x_i,y_i)\\) 均落在直線 \\(y=${m}x+${b}\\) 上，求 \\(X\\) 與 \\(Y\\) 的相關係數。`,
+          `\\(-1\\)`,
+          `所有點完全落在同一直線上，表示完全線性相關。因斜率 \\(${m}<0\\)，所以相關係數為 \\(-1\\)。`
+        );
+      }
+    }
+    return set;
+  }
+
   const nextConfigs = {
     's2-1-1-sequence-core-five-subtypes': {
       type: 'drill',
@@ -11869,6 +13255,15 @@
         return buildS211ArithmeticCommonTermsSet(5);
       },
     },
+    's2-1-1-arithmetic-common-terms-advanced': {
+      type: 'drill',
+      title: '兩等差數列共同項',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS211ArithmeticCommonTermsAdvancedSet(5);
+      },
+    },
     's2-1-1-geometric-product-symmetry': {
       type: 'drill',
       title: '等比數列的對稱乘積',
@@ -11885,6 +13280,15 @@
       questionCount: 5,
       generate() {
         return buildS211ArithmeticGeometricBridgeSet(5);
+      },
+    },
+    's2-1-1-recurrence-closed-form-advanced': {
+      type: 'drill',
+      title: '遞迴數列與通項性質',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS211RecurrenceClosedFormAdvancedSet(5);
       },
     },
     's2-1-1-prefix-product-terms': {
@@ -11948,6 +13352,15 @@
       questionCount: 5,
       generate() {
         return buildS212SnToAnSet(5);
+      },
+    },
+    's2-1-2-sn-to-an-advanced': {
+      type: 'drill',
+      title: '由 Sn 反求 an',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS212SnToAnAdvancedSet(5);
       },
     },
     's2-1-2-two-ap-ratio': {
@@ -12076,6 +13489,15 @@
         return buildS212SigmaTelescopingSet(5);
       },
     },
+    's2-1-2-sigma-telescoping-advanced': {
+      type: 'drill',
+      title: 'Sigma 運算與分式對消',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS212SigmaTelescopingAdvancedSet(5);
+      },
+    },
     's2-1-2-sigma-pattern': {
       type: 'drill',
       title: '數列規律轉化為 Sigma 記號',
@@ -12110,6 +13532,15 @@
       questionCount: 5,
       generate() {
         return buildS212RepeatingDigitsSeriesSubtypeSet(5);
+      },
+    },
+    's2-1-2-repeating-digits-applications-advanced': {
+      type: 'drill',
+      title: '重複數字級數與生活建模',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS212RepeatingDigitsApplicationsAdvancedSet(5);
       },
     },
     's2-1-2-radical-special-telescoping': {
@@ -12308,6 +13739,15 @@
       questionCount: 5,
       generate() {
         return buildS221DistinctDistributionAtLeastParameterizedSet(5);
+      },
+    },
+    's2-2-1-restricted-distribution-advanced': {
+      type: 'drill',
+      title: '具限制條件的相異物分配',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS221RestrictedDistributionAdvancedSet(5);
       },
     },
     's2-2-1-ferry-capacity-assignment-parameterized': {
@@ -12569,6 +14009,15 @@
       questionCount: 5,
       generate() {
         return buildS222SpecifiedNonAdjacentParameterizedSet(5);
+      },
+    },
+    's2-2-2-permutation-path-restriction-advanced': {
+      type: 'drill',
+      title: '排列組合與路徑限制',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS222PermutationPathRestrictionAdvancedSet(5);
       },
     },
     's2-2-3-binomial-basics-five-subtypes': {
@@ -12895,6 +14344,15 @@
         return buildS224ConditionalBayesSubtypeSet(5);
       },
     },
+    's2-2-4-conditional-bayes-advanced': {
+      type: 'drill',
+      title: '條件機率與貝氏定理',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS224ConditionalBayesAdvancedSet(5);
+      },
+    },
     's2-2-4-independent-repeated': {
       type: 'drill',
       title: '獨立事件與重複試驗',
@@ -12938,6 +14396,15 @@
       questionCount: 5,
       generate() {
         return buildS224ExpectedValueSubtypeSet(5);
+      },
+    },
+    's2-2-4-expectation-distribution-advanced': {
+      type: 'drill',
+      title: '期望值與機率分布',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS224ExpectationDistributionAdvancedSet(5);
       },
     },
     's2-2-4-probability-set-relations': {
@@ -13084,6 +14551,15 @@
         return buildS224OverlapDaysOffProbabilityParameterizedSet(5);
       },
     },
+    's2-2-4-transition-matrix-advanced': {
+      type: 'drill',
+      title: '轉移矩陣與穩定狀態',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS224TransitionMatrixAdvancedSet(5);
+      },
+    },
     's2-3-1-quartiles-iqr-parameterized': {
       type: 'drill',
       title: '四分位數與四分位距',
@@ -13210,6 +14686,15 @@
         return buildS232RegressionLinePredictionParameterizedSet(5);
       },
     },
+    's2-3-2-regression-prediction-advanced': {
+      type: 'drill',
+      title: '迴歸直線與預測',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS232RegressionPredictionAdvancedSet(5);
+      },
+    },
     's2-3-2-standardized-regression-parameterized': {
       type: 'drill',
       title: '標準化後的迴歸直線',
@@ -13246,6 +14731,15 @@
         return buildS241SinCosSumDifferenceParameterizedSet(5);
       },
     },
+    's2-4-1-trig-quadratic-algebra-advanced': {
+      type: 'drill',
+      title: '三角函數與二次方程根的代數綜合',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS241TrigQuadraticAlgebraAdvancedSet(5);
+      },
+    },
     's2-4-1-tangent-expression-parameterized': {
       type: 'drill',
       title: '已知正切值化簡正餘弦分式',
@@ -13264,6 +14758,15 @@
         return buildS242SideSumRatioSineRatioParameterizedSet(5);
       },
     },
+    's2-4-2-ssa-solution-range-advanced': {
+      type: 'drill',
+      title: 'SSA 條件下的解數邊界判定',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS242SsaSolutionRangeAdvancedSet(5);
+      },
+    },
     's2-4-2-sas-side-area-parameterized': {
       type: 'drill',
       title: '兩邊夾角求第三邊與面積',
@@ -13273,6 +14776,15 @@
         return buildS242SasSideAreaParameterizedSet(5);
       },
     },
+    's2-4-2-angle-bisector-median-advanced': {
+      type: 'drill',
+      title: '內角平分線與中線長度的精確計算',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS242AngleBisectorMedianAdvancedSet(5);
+      },
+    },
     's2-4-2-isosceles-circumradius-parameterized': {
       type: 'drill',
       title: '等腰三角形外接圓半徑求底邊與面積',
@@ -13280,6 +14792,15 @@
       questionCount: 5,
       generate() {
         return buildS242IsoscelesCircumradiusParameterizedSet(5);
+      },
+    },
+    's2-4-2-cyclic-polygon-area-advanced': {
+      type: 'drill',
+      title: '圓內接四邊形與多邊形面積',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS242CyclicPolygonAreaAdvancedSet(5);
       },
     },
     's2-4-3-two-observation-height-parameterized': {
@@ -13298,6 +14819,15 @@
       questionCount: 5,
       generate() {
         return buildS243BearingCosineDistanceParameterizedSet(5);
+      },
+    },
+    's2-4-3-plane-survey-cosine-advanced': {
+      type: 'drill',
+      title: '平面測量與餘弦定理建模',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS243PlaneSurveyCosineAdvancedSet(5);
       },
     },
     's2-4-3-height-limit-floors-parameterized': {
@@ -13336,6 +14866,15 @@
         return buildS231LinearTransformSubtypeSet(5);
       },
     },
+    's2-3-1-linear-transform-update-advanced': {
+      type: 'drill',
+      title: '數據線性變換與統計量更新',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS231LinearTransformUpdateAdvancedSet(5);
+      },
+    },
     's2-3-1-weighted-mean-applications': {
       type: 'drill',
       title: '加權平均與幾何平均數應用',
@@ -13363,6 +14902,15 @@
         return buildS231BinaryDataSubtypeSet(5);
       },
     },
+    's2-3-1-binary-data-statistics-advanced': {
+      type: 'drill',
+      title: '二元數據（0 與 1）的統計特性',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS231BinaryDataAdvancedSet(5);
+      },
+    },
     's2-3-1-revision-merge-five-subtypes': {
       type: 'drill',
       title: '資料修正合併與變異追蹤五小類綜合',
@@ -13388,6 +14936,15 @@
       questionCount: 5,
       generate() {
         return buildS231DataRevisionSubtypeSet(5);
+      },
+    },
+    's2-3-1-data-correction-statistics-advanced': {
+      type: 'drill',
+      title: '資料更正對平均與變異數的影響',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildS231DataCorrectionAdvancedSet(5);
       },
     },
     's2-3-1-group-merging': {
@@ -14274,7 +15831,7 @@
     },
   };
 
-  const fingerprint = 's2-bundle-v20260706-summary-v1';
+  const fingerprint = 's2-bundle-v20260708-s24-extension-v1';
   if (window.__s2BundleFingerprint === fingerprint) return;
   window.__s2BundleFingerprint = fingerprint;
   window.formulaPracticeStore.registerConfigs(nextConfigs);

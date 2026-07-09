@@ -41,6 +41,13 @@
 
 - `word-import-workflow.md`
 
+### 7. 無限練習清單 / 主題串
+
+- `practice-playlist-data-flow.md`
+  - 播放頁、編輯頁、Python GUI 分別讀取哪些檔案、可儲存哪些資料、會影響哪些頁面
+- `practice-playlist-file-map.md`
+  - 無限練習清單、日程、主題串相關檔案分工
+
 ## 歷史文件去哪裡看
 
 已退役、已過期、只保留備查的文件，不再放在 `docs/` 的正式閱讀路線裡。

@@ -139,8 +139,9 @@
               <span>清單分類</span>
               <select id="playerCategorySelect">
                 <option value="全部">全部清單</option>
-                <option value="複習必做">複習必做</option>
-                <option value="章節重點">章節重點</option>
+                <option value="中等練習">中等練習（一小節一串）</option>
+                <option value="章節重點">困難練習（章節重點，一章一串）</option>
+                <option value="複習必做">複習練習（複習必做，一冊一串）</option>
                 <option value="其他">其他 / 自訂</option>
               </select>
             </label>
@@ -155,6 +156,10 @@
           <!-- 日程型清單 -->
           <section class="panel">
             <h2>第二類：日程型</h2>
+            <label class="field">
+              <span>日程年級</span>
+              <select id="scheduleGradeSelect"></select>
+            </label>
             <div id="schedulePlaylistList" class="playlist-player-list"></div>
           </section>
 
@@ -226,6 +231,50 @@
 
             <div id="playlistPlayerAnswerPanel" class="ability-feedback-panel" hidden></div>
           </section>
+
+          <!-- 整串綜合練習：清單所有題型輪流抽題，一次組成固定題數 -->
+          <section class="panel">
+            <div class="ability-session-panel__header">
+              <div>
+                <h2>整串綜合練習</h2>
+                <p class="detail-note">把清單中所有題型輪流抽題，一次組成一份題目。</p>
+              </div>
+              <div class="ability-session-actions playlist-player-toolbar">
+                <label class="field field--inline">
+                  <span>題數</span>
+                  <input id="compositeCountInput" type="number" min="1" max="100" value="10" style="width:70px" />
+                </label>
+                <button id="compositeGenerateButton" class="ghost-button" type="button">出題</button>
+                <button id="compositeAnswerButton" class="ghost-button" type="button">簡答</button>
+                <button id="compositeDetailButton" class="ghost-button" type="button">詳解</button>
+              </div>
+            </div>
+            <div id="compositeOutput" class="interactive-output">選好清單後按「出題」，會依清單順序輪流抽題（預設 10 題）。</div>
+            <div id="compositeAnswerBox" class="interactive-output is-hidden"></div>
+            <div id="compositeDetailBox" class="interactive-output is-hidden"></div>
+          </section>
+
+          <!-- 逐題型展開練習：清單中每個題型各出固定題數（同無限練習主頁上方綜合練習） -->
+          <section class="panel">
+            <div class="ability-session-panel__header">
+              <div>
+                <h2>逐題型展開練習</h2>
+                <p class="detail-note">清單中每個題型各出一組題目，依題型分段顯示。</p>
+              </div>
+              <div class="ability-session-actions playlist-player-toolbar">
+                <label class="field field--inline">
+                  <span>每題型題數</span>
+                  <input id="expandedCountInput" type="number" min="1" max="50" value="10" style="width:70px" />
+                </label>
+                <button id="expandedGenerateButton" class="ghost-button" type="button">出題</button>
+                <button id="expandedAnswerButton" class="ghost-button" type="button">簡答</button>
+                <button id="expandedDetailButton" class="ghost-button" type="button">詳解</button>
+              </div>
+            </div>
+            <div id="expandedOutput" class="interactive-output">選好清單後按「出題」，每個題型各展開一組題目（預設每題型 10 題）。</div>
+            <div id="expandedAnswerBox" class="interactive-output is-hidden"></div>
+            <div id="expandedDetailBox" class="interactive-output is-hidden"></div>
+          </section>
         </section>
       </main>
     </div>
@@ -263,8 +312,8 @@
     <script defer src="data/practice-custom-theme-chains.js?v=20260702-custom-theme-v2"></script>
     <script defer src="practice-playlist/practice-playlist-store.js?v=20260702-live-merge-v1"></script>
     <script defer src="practice-playlist/practice-progress-store.js?v=20260628-progress-v1"></script>
-    <script defer src="practice-playlist/practice-playlist-player.js?v=20260702-student-link-v1"></script>
-    <script defer src="practice-playlist/practice-schedule-player.js?v=20260628-schedule-player-v4"></script>
+    <script defer src="practice-playlist/practice-playlist-player.js?v=20260709-expanded-v1"></script>
+    <script defer src="practice-playlist/practice-schedule-player.js?v=20260709-own-grade-v1"></script>
     <script defer src="practice-playlist/practice-mode-toggle.js?v=20260628-mode-toggle-v1"></script>
     <script defer src="pwa.js"></script>
   </body>

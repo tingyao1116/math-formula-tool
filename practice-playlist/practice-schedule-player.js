@@ -12,7 +12,8 @@
   }
 
   const elements = {
-    gradeSelect: document.getElementById("playerGradeSelect"),
+    // 日程型專屬年級下拉：不可共用 #playerGradeSelect（任務型年級篩選歸任務型播放器管）
+    gradeSelect: document.getElementById("scheduleGradeSelect"),
     scheduleList: document.getElementById("schedulePlaylistList"),
     calendarSection: document.getElementById("scheduleCalendarSection"),
     calPrevMonth: document.getElementById("calPrevMonth"),

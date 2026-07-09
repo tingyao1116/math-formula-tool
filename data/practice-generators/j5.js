@@ -3427,6 +3427,1048 @@
     return sentence || text;
   }
 
+  // ── j5-1 延伸：進階比例推理與三角形應用 ───────────────────────────────
+  function buildJ511TriangleAngleAlgebraRatioSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。過程：${detail}`);
+    };
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const coeffs = [2, 3, 6];
+        const values = coeffs.map((c) => 1 / c);
+        const scale = 180 / values.reduce((sum, value) => sum + value, 0);
+        const angles = values.map((value) => Math.round(value * scale));
+        add(
+          `已知 \\(2\\angle A=3\\angle B=6\\angle C\\)，求三內角各為多少度。`,
+          `\\(\\angle A=${angles[0]}^\\circ\\)、\\(\\angle B=${angles[1]}^\\circ\\)、\\(\\angle C=${angles[2]}^\\circ\\)`,
+          `令共同值為 \\(k\\)，則 \\(A:B:C=\\frac{1}{2}:\\frac{1}{3}:\\frac{1}{6}=3:2:1\\)。三角形內角和為 \\(180^\\circ\\)，所以一份為 \\(180\\div6=30^\\circ\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const unit = randInt(12, 24);
+        const ratios = [2, 3, 4];
+        const angles = ratios.map((r) => r * unit);
+        if (angles.reduce((a, b) => a + b, 0) !== 180) {
+          i -= 1;
+          continue;
+        }
+        add(
+          `已知 \\(\\angle A:2=\\angle B:3=\\angle C:4\\)，求最大角與最小角的差。`,
+          `\\(${angles[2] - angles[0]}^\\circ\\)`,
+          `設共同值為 \\(t\\)，則 \\(A:B:C=2:3:4\\)。因為總份數為 9，且三角形內角和為 \\(180^\\circ\\)，一份為 \\(20^\\circ\\)，所以最大角與最小角差為 \\((4-2)\\times20=40^\\circ\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const ratio = [4, 3, 2];
+        const unit = 20;
+        add(
+          `若 \\(3\\angle A=4\\angle B\\) 且 \\(2\\angle B=3\\angle C\\)，求 \\(\\angle A:\\angle B:\\angle C\\)。`,
+          `\\(4:3:2\\)`,
+          `由 \\(3A=4B\\) 得 \\(A:B=4:3\\)，由 \\(2B=3C\\) 得 \\(B:C=3:2\\)。把共同的 \\(B\\) 對齊，可得 \\(A:B:C=4:3:2\\)。若代入角度則為 ${ratio.map((r) => r * unit).join('、')} 度。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const parts = [5, 6, 7];
+        const unit = 10;
+        const angles = parts.map((r) => r * unit);
+        add(
+          `已知 \\((\\angle A+\\angle B):(\\angle B+\\angle C):(\\angle C+\\angle A)=5:6:7\\)，求三內角度數。`,
+          `\\(\\angle A=60^\\circ\\)、\\(\\angle B=40^\\circ\\)、\\(\\angle C=80^\\circ\\)`,
+          `設三個和為 \\(5t,6t,7t\\)。三式相加為 \\(2(A+B+C)=360^\\circ\\)，所以 \\(18t=360\\)，得 \\(t=20\\)。再用 \\(A=\\frac{(A+B)+(A+C)-(B+C)}{2}\\)，可得 \\(A=60^\\circ,B=40^\\circ,C=80^\\circ\\)。`
+        );
+        continue;
+      }
+      const denominators = [2, 3, 5];
+      const ratio = denominators.slice();
+      const unit = 180 / ratio.reduce((sum, value) => sum + value, 0);
+      const angles = ratio.map((r) => r * unit);
+      add(
+        `若 \\(\\frac{1}{2}\\angle A=\\frac{1}{3}\\angle B=\\frac{1}{5}\\angle C\\)，判斷此三角形形狀。`,
+        `鈍角三角形`,
+        `令共同值為 \\(k\\)，則 \\(A:B:C=2:3:5\\)。三內角為 \\(${angles[0]}^\\circ,${angles[1]}^\\circ,${angles[2]}^\\circ\\)，最大角為 \\(90^\\circ\\)，所以是直角三角形。`
+      );
+      summaryAnswers[summaryAnswers.length - 1] = `直角三角形`;
+      answers[answers.length - 1] = answers[answers.length - 1].replace('簡答：鈍角三角形。', '簡答：直角三角形。');
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ511LinkedRatioAdvancedSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。過程：${detail}`);
+    };
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const x = 2;
+        const y = 3;
+        const z = 15 / 4;
+        const total = 140;
+        const unit = total / (x + y + z);
+        add(
+          `若 \\(x:y=2:3\\)，\\(y:z=4:5\\)，求 \\(x:y:z\\)，並計算當 \\(x+y+z=140\\) 時的 \\(y\\) 值。`,
+          `\\(x:y:z=8:12:15\\)，\\(y=48\\)`,
+          `先把共同的 \\(y\\) 對齊：\\(x:y=8:12\\)，\\(y:z=12:15\\)，所以 \\(x:y:z=8:12:15\\)。總份數為 35，\\(140\\div35=4\\)，故 \\(y=12\\times4=48\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const denoms = [2, 3, 4, 5];
+        const lcm = lcmArray(denoms);
+        const ratio = denoms.map((d) => lcm / d);
+        add(
+          `已知 \\(a:b=\\frac{1}{2}:\\frac{1}{3}\\)，\\(b:c=\\frac{1}{4}:\\frac{1}{5}\\)，將 \\(a:b:c\\) 化為最簡整數比。`,
+          `\\(a:b:c=6:4:5\\)`,
+          `先化 \\(a:b=3:2\\)，\\(b:c=5:4\\)。把共同的 \\(b\\) 對齊成 10，可得 \\(a:b:c=15:10:8\\)。題目中的分數比若直接通分也要先分段處理，不能把四個分母一次混在一起。`
+        );
+        summaryAnswers[summaryAnswers.length - 1] = `\\(a:b:c=15:10:8\\)`;
+        answers[answers.length - 1] = answers[answers.length - 1].replace('簡答：\\(a:b:c=6:4:5\\)。', '簡答：\\(a:b:c=15:10:8\\)。');
+        continue;
+      }
+      if (mode === 2) {
+        const ratio = [8, 12, 9];
+        add(
+          `若 \\(3x=2y\\)，\\(4y=5z\\)，求 \\(x:y:z\\)。`,
+          `\\(x:y:z=8:12:9\\)`,
+          `由 \\(3x=2y\\) 得 \\(x:y=2:3\\)，由 \\(4y=5z\\) 得 \\(y:z=5:4\\)。把 \\(y\\) 對齊為 15，可得 \\(x:y:z=10:15:12\\)。`
+        );
+        summaryAnswers[summaryAnswers.length - 1] = `\\(x:y:z=10:15:12\\)`;
+        answers[answers.length - 1] = answers[answers.length - 1].replace('簡答：\\(x:y:z=8:12:9\\)。', '簡答：\\(x:y:z=10:15:12\\)。');
+        continue;
+      }
+      if (mode === 3) {
+        const parts = [2, 3, 5];
+        const t = randInt(2, 10);
+        const sum = (2 * parts[0] + parts[1] - parts[2]) * t;
+        const total = parts.reduce((a, b) => a + b, 0) * t;
+        add(
+          `若 \\(a:b:c=2:3:5\\)，且 \\(2a+b-c=${sum}\\)，求 \\(a+b+c\\)。`,
+          `\\(${total}\\)`,
+          `設 \\(a=2k,b=3k,c=5k\\)。則 \\(2a+b-c=4k+3k-5k=2k=${sum}\\)，所以 \\(k=${t}\\)，\\(a+b+c=(2+3+5)k=${total}\\)。`
+        );
+        continue;
+      }
+      add(
+        `若 \\((x+y):(y+z):(z+x)=3:4:5\\)，求 \\(x:y:z\\)。`,
+        `\\(x:y:z=2:1:3\\)`,
+        `設 \\(x+y=3k,y+z=4k,z+x=5k\\)。相加得 \\(2(x+y+z)=12k\\)，所以 \\(x+y+z=6k\\)。因此 \\(x=6k-(y+z)=2k\\)，\\(y=6k-(z+x)=k\\)，\\(z=6k-(x+y)=3k\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ511GeometryRatioPropertyAdvancedSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。過程：${detail}`);
+    };
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const ratio = [2, 3];
+        const small = 180 / (2 * ratio[0] + ratio[1]);
+        add(
+          `直角三角形中，兩個銳角的比為 \\(2:3\\)，求較小角的度數。`,
+          `\\(36^\\circ\\)`,
+          `兩銳角和為 \\(90^\\circ\\)，總份數為 5，一份為 \\(18^\\circ\\)，較小角為 \\(2\\times18=36^\\circ\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        add(
+          `等腰三角形的一個頂角與一個底角的比為 \\(4:1\\)，求頂角的度數。`,
+          `\\(120^\\circ\\)`,
+          `等腰三角形兩底角相等。設頂角為 \\(4k\\)，每個底角為 \\(k\\)，則 \\(4k+k+k=180\\)，得 \\(k=30\\)，頂角為 \\(120^\\circ\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const exterior = 120;
+        add(
+          `一個多邊形的內角和與外角和之比為 \\(2:3\\)，求此多邊形是幾邊形。`,
+          `不存在`,
+          `任意多邊形外角和為 \\(360^\\circ\\)。若內角和 : 外角和 = \\(2:3\\)，則內角和為 \\(240^\\circ\\)，但多邊形內角和 \\((n-2)180\\) 不可能等於 240，因此不存在。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const scale = randInt(3, 8);
+        const sides = [3, 4, 5].map((v) => v * scale);
+        const perimeter = sides.reduce((a, b) => a + b, 0);
+        const area = (sides[0] * sides[1]) / 2;
+        add(
+          `已知三角形三邊長的比為 \\(3:4:5\\)，若周長為 ${perimeter}，求其面積。`,
+          `\\(${area}\\)`,
+          `設三邊為 \\(3k,4k,5k\\)。周長 \\(12k=${perimeter}\\)，所以 \\(k=${scale}\\)。這是直角三角形，面積為 \\(\\frac{${sides[0]}\\times${sides[1]}}{2}=${area}\\)。`
+        );
+        continue;
+      }
+      add(
+        `三角形三高之比為 \\(2:3:4\\)，求其三邊長之比。`,
+        `\\(6:4:3\\)`,
+        `同一三角形面積固定，邊長與對應高成反比，所以三邊比為 \\(\\frac{1}{2}:\\frac{1}{3}:\\frac{1}{4}\\)。同乘 12 得 \\(6:4:3\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ511RatioChangeDynamicSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。過程：${detail}`);
+    };
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        add(
+          `若 \\(\\angle A\\) 增加 \\(20\\%\\)，\\(\\angle B\\) 減少 \\(10\\%\\)，且原比例為 \\(1:1:1\\)，求變動後的新角度。`,
+          `\\(72^\\circ,54^\\circ,54^\\circ\\)`,
+          `原本三角形為等角三角形，每角 \\(60^\\circ\\)。變動後暫為 \\(72^\\circ,54^\\circ,60^\\circ\\)，總和為 \\(186^\\circ\\)，不符合三角形內角和。若要求仍為三角形，需把第三角調成 \\(180-72-54=54^\\circ\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        add(
+          `已知 \\(x:y:z=2:3:4\\)。若 \\(x\\) 增加 4 後，比例變為 \\(4:3:4\\)，求原來的三數。`,
+          `\\(4,6,8\\)`,
+          `設原來為 \\(2k,3k,4k\\)。增加後 \\(2k+4:3k:4k=4:3:4\\)，由 \\(3k\\) 對應 3 份得一份為 \\(k\\)，所以 \\(2k+4=4k\\)，得 \\(k=2\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        add(
+          `若 \\(a:b:c=2:3:4\\)，求 \\(\\frac{1}{a}:\\frac{1}{b}:\\frac{1}{c}\\) 的最簡整數比。`,
+          `\\(6:4:3\\)`,
+          `倒數比會反向。\\(\\frac{1}{2}:\\frac{1}{3}:\\frac{1}{4}\\) 同乘 12，得 \\(6:4:3\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const unit = randInt(6, 15);
+        const a = 2 * unit;
+        const b = 3 * unit;
+        const diff = b - a + 30;
+        add(
+          `將 \\(x\\) 顆糖果按 \\(2:3:5\\) 分給甲乙丙，若丙比甲多 ${3 * unit} 顆，求乙得幾顆。`,
+          `\\(${b}\\) 顆`,
+          `丙與甲相差 \\(5-2=3\\) 份，已知相差 ${3 * unit} 顆，所以一份為 ${unit} 顆。乙為 3 份，得到 ${b} 顆。`
+        );
+        continue;
+      }
+      add(
+        `甲、乙、丙三人共有 1200 元，若甲給乙 100 元後，三人的錢數比變為 \\(3:4:5\\)，求原本三人各有多少錢。`,
+        `甲 400 元、乙 300 元、丙 500 元`,
+        `變動後總額仍為 1200 元，\\(3+4+5=12\\) 份，一份 100 元，所以變動後為 300、400、500。因甲給乙 100 元，原本甲為 400，乙為 300，丙不變為 500。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ511RatioLogicTrapSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。過程：${detail}`);
+    };
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        add(
+          `若 \\(\\triangle ABC\\) 三內角比為 \\(1:2:4\\)，請問是否可能為直角三角形？`,
+          `否`,
+          `總份數為 7，一份為 \\(\\frac{180}{7}^\\circ\\)，最大角為 \\(\\frac{720}{7}^\\circ\\)，不是 \\(90^\\circ\\)，所以不是直角三角形。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        add(
+          `已知 \\(a:b:c=1:\\sqrt3:2\\)，求此三角形之三內角度數。`,
+          `\\(30^\\circ,60^\\circ,90^\\circ\\)`,
+          `國中幾何中小寫 \\(a,b,c\\) 通常代表三邊長。\\(1:\\sqrt3:2\\) 是特殊直角三角形的邊長比，對應角為 \\(30^\\circ,60^\\circ,90^\\circ\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        add(
+          `若三內角滿足 \\(\\angle A-\\angle B=\\angle B-\\angle C=20^\\circ\\)，求三角形之邊比。`,
+          `無法由本節比例直接求邊比`,
+          `可先求角為 \\(80^\\circ,60^\\circ,40^\\circ\\)，但角度比不等於邊長比；若未學正弦定理，不能把邊比寫成 \\(80:60:40\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        add(
+          `已知一個三角形的一個外角與兩個不相鄰內角的比為 \\(5:2:3\\)，求此三角形最小內角。`,
+          `\\(40^\\circ\\)`,
+          `外角等於兩個不相鄰內角和。若外角 : 兩不相鄰內角 = \\(5:2:3\\)，設為 \\(5k,2k,3k\\)，確實滿足 \\(5k=2k+3k\\)。此外角的鄰內角為 \\(180-5k\\)。三角形三內角為 \\(2k,3k,180-5k\\)，總和給不出唯一 \\(k\\)，題目條件不足。`
+        );
+        summaryAnswers[summaryAnswers.length - 1] = `條件不足，無法唯一決定`;
+        answers[answers.length - 1] = answers[answers.length - 1].replace('簡答：\\(40^\\circ\\)。', '簡答：條件不足，無法唯一決定。');
+        continue;
+      }
+      add(
+        `判斷正誤：若三角形三邊長之比為 \\(a:b:c\\)，則對應角之比也為 \\(a:b:c\\)。`,
+        `錯`,
+        `邊越長對角越大，但「大小順序」不代表「比例相同」。除非有更高階定理與特定條件，不能把邊長比直接當角度比。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function formatRadical(n) {
+    const root = Math.sqrt(n);
+    if (Number.isInteger(root)) return `${root}`;
+    let outside = 1;
+    let inside = n;
+    for (let k = Math.floor(Math.sqrt(n)); k >= 2; k -= 1) {
+      const square = k * k;
+      if (inside % square === 0) {
+        outside *= k;
+        inside /= square;
+      }
+    }
+    if (outside === 1) return `\\sqrt{${inside}}`;
+    return `${outside}\\sqrt{${inside}}`;
+  }
+
+  function pointText(x, y) {
+    return `(${x},${y})`;
+  }
+
+  function buildJ521CoordinateTangentIntegrationAdvancedSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。詳解：${detail}`);
+    };
+    const triples = [
+      [3, 4, 5],
+      [5, 12, 13],
+      [8, 15, 17],
+      [7, 24, 25],
+      [20, 21, 29],
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const [diff, length, distance] = triples[randInt(0, triples.length - 1)];
+        const r2 = randInt(2, 6);
+        const r1 = r2 + diff;
+        const y = randInt(-3, 3);
+        add(
+          `兩圓 \\(C_1\\)、\\(C_2\\) 的圓心分別為 \\(${pointText(0, y)}\\)、\\(${pointText(distance, y)}\\)，半徑分別為 \\(${r1}\\)、\\(${r2}\\)。求兩圓外公切線段長。`,
+          `\\(${length}\\)`,
+          `外公切線段、連心線與半徑差會形成直角三角形，所以長度為 \\(\\sqrt{d^2-(r_1-r_2)^2}=\\sqrt{${distance}^2-${diff}^2}=${length}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const r = randInt(2, 7);
+        const d = r + randInt(4, 12);
+        add(
+          `已知點 \\(P\\) 到圓心 \\(O\\) 的距離為 \\(${d}\\)，圓 \\(O\\) 的半徑為 \\(${r}\\)。求 \\(P\\) 到圓的最短距離與最長距離。`,
+          `最短 \\(${d - r}\\)，最長 \\(${d + r}\\)`,
+          `點在圓外時，最近點與最遠點都落在 \\(OP\\) 直線上。最短距離為 \\(OP-r=${d}-${r}=${d - r}\\)，最長距離為 \\(OP+r=${d}+${r}=${d + r}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const x = randInt(3, 9);
+        const c = randInt(3, 8);
+        const r = randInt(1, c - 1);
+        const tangent2 = x * x + c * c - r * r;
+        const tangentText = formatRadical(tangent2);
+        add(
+          `在座標平面上，點 \\(P(x,0)\\) 到圓心 \\((0,${c})\\)、半徑 \\(${r}\\) 的圓之切線長為 \\(${tangentText}\\)。若 \\(x>0\\)，求 \\(x\\)。`,
+          `\\(x=${x}\\)`,
+          `由切線長公式 \\(PT^2=OP^2-r^2\\)。又 \\(OP^2=x^2+${c}^2\\)，所以 \\(${tangent2}=x^2+${c * c}-${r * r}\\)，得 \\(x^2=${x * x}\\)。因為 \\(x>0\\)，所以 \\(x=${x}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const bigR = randInt(6, 10);
+        const smallR = randInt(2, bigR - 2);
+        const d = (bigR + smallR) * randInt(2, 4);
+        const external = formatFraction(bigR * d, bigR - smallR);
+        const internal = formatFraction(bigR * d, bigR + smallR);
+        add(
+          `兩圓圓心在 \\(x\\) 軸上，圓 \\(O_1\\) 圓心為 \\((0,0)\\)、半徑 \\(${bigR}\\)，圓 \\(O_2\\) 圓心為 \\((${d},0)\\)、半徑 \\(${smallR}\\)。求外相似中心與內相似中心的 \\(x\\) 座標。`,
+          `外相似中心 \\(x=${external}\\)，內相似中心 \\(x=${internal}\\)`,
+          `相似中心會把連心線按半徑比分割。外分點為 \\(x=\\frac{R\\cdot d}{R-r}=\\frac{${bigR}\\cdot${d}}{${bigR}-${smallR}}=${external}\\)；內分點為 \\(x=\\frac{R\\cdot d}{R+r}=\\frac{${bigR}\\cdot${d}}{${bigR}+${smallR}}=${internal}\\)。`
+        );
+        continue;
+      }
+      const r = randInt(2, 8);
+      const shortest = `${r}\\sqrt{2}-${r}`;
+      add(
+        `一圓同時與兩座標軸相切，且位於第一象限，半徑為 \\(${r}\\)。求原點到此圓的最短距離。`,
+        `\\(${shortest}\\)`,
+        `圓心為 \\((${r},${r})\\)，所以原點到圓心的距離為 \\(${r}\\sqrt2\\)。原點在圓外，最短距離為 \\(OP-r=${r}\\sqrt2-${r}\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ523SecantTangentQuadraticModelSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。詳解：${detail}`);
+    };
+    const tangentTriples = [
+      { r: 5, d: 13, t: 12 },
+      { r: 6, d: 10, t: 8 },
+      { r: 8, d: 17, t: 15 },
+      { r: 7, d: 25, t: 24 },
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const m = randInt(1, 3);
+        const n = randInt(2, 5);
+        const scale = randInt(2, 5);
+        const pa = m * scale;
+        const ab = n * scale;
+        const pb = pa + ab;
+        const pt2 = pa * pb;
+        const pt = formatRadical(pt2);
+        add(
+          `圓外一點 \\(P\\) 作切線 \\(PT\\) 與割線 \\(PAB\\)。若 \\(PA:AB=${m}:${n}\\)，且 \\(PT=${pt}\\)，求割線全長 \\(PB\\)。`,
+          `\\(PB=${pb}\\)`,
+          `設 \\(PA=${m}k\\)、\\(AB=${n}k\\)，則 \\(PB=${m + n}k\\)。由切割線定理 \\(PT^2=PA\\cdot PB\\)，得 \\(${pt2}=${m}k\\cdot${m + n}k\\)，所以 \\(k=${scale}\\)，因此 \\(PB=${pb}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const item = tangentTriples[randInt(0, tangentTriples.length - 1)];
+        const smallR = randInt(2, item.r - 2);
+        const smallT = formatRadical(item.d * item.d - smallR * smallR);
+        add(
+          `圓外一點 \\(P\\) 對兩個同心圓作切線。大圓半徑為 \\(${item.r}\\)，小圓半徑為 \\(${smallR}\\)，且 \\(P\\) 到圓心距離為 \\(${item.d}\\)。已知到大圓的切線長為 \\(${item.t}\\)，求到小圓的切線長。`,
+          `\\(${smallT}\\)`,
+          `切線長由直角三角形計算。到小圓的切線長為 \\(\\sqrt{${item.d}^2-${smallR}^2}=\\sqrt{${item.d * item.d - smallR * smallR}}=${smallT}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const pa = randInt(3, 8);
+        const r = randInt(3, 9);
+        const pb = pa + 2 * r;
+        const pt2 = pa * pb;
+        const pt = formatRadical(pt2);
+        add(
+          `已知 \\(P\\) 為圓外一點，\\(PT\\) 為切線，割線 \\(PAB\\) 通過圓心。若 \\(PA=${pa}\\)、\\(PT=${pt}\\)，求此圓半徑。`,
+          `\\(${r}\\)`,
+          `因為割線通過圓心，所以 \\(PB=PA+2r\\)。由 \\(PT^2=PA\\cdot PB\\)，得 \\(${pt2}=${pa}\\cdot PB\\)，所以 \\(PB=${pb}\\)。因此 \\(2r=PB-PA=${pb}-${pa}\\)，半徑 \\(r=${r}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const t = randInt(5, 15);
+        add(
+          `自圓外一點 \\(P\\) 向同一圓作兩條切線 \\(PT_1\\)、\\(PT_2\\)。若 \\(PT_1=${t}\\)，求 \\(PT_2\\) 與點 \\(P\\) 對此圓的乘冪值。`,
+          `\\(PT_2=${t}\\)，乘冪值 \\(${t * t}\\)`,
+          `同一外點作兩切線，切線長相等，所以 \\(PT_2=PT_1=${t}\\)。外點對圓的乘冪可用切線平方表示，為 \\(PT^2=${t}^2=${t * t}\\)。`
+        );
+        continue;
+      }
+      const pa = randInt(4, 12);
+      const product = 2 * pa * pa;
+      add(
+        `割線 \\(PAB\\) 中，\\(A\\) 在 \\(P\\) 與 \\(B\\) 之間，且 \\(A\\) 是 \\(PB\\) 的中點。若 \\(PA\\cdot PB=${product}\\)，求 \\(PA\\) 的長度。`,
+        `\\(PA=${pa}\\)`,
+        `因為 \\(A\\) 是 \\(PB\\) 的中點，所以 \\(PB=2PA\\)。令 \\(PA=x\\)，則 \\(x\\cdot2x=${product}\\)，也就是 \\(2x^2=${product}\\)，得 \\(x=${pa}\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ521TwoCirclePositionParameterSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。詳解：${detail}`);
+    };
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const k = randInt(2, 6);
+        const a = randInt(1, 3);
+        const b = randInt(1, 4);
+        const r1 = k + a;
+        const r2 = 2 * k + b;
+        const d = r1 + r2;
+        add(
+          `兩圓半徑分別為 \\(k+${a}\\)、\\(2k+${b}\\)，連心線長為 \\(${d}\\)。若兩圓外切，求 \\(k\\)。`,
+          `\\(k=${k}\\)`,
+          `外切時連心線長等於半徑和，所以 \\((k+${a})+(2k+${b})=${d}\\)。整理得 \\(3k=${d - a - b}\\)，所以 \\(k=${k}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const d = 10;
+        add(
+          `兩圓半徑分別為 \\(k+2\\)、\\(2k-1\\)，連心線長為 \\(${d}\\)。若兩圓交於兩點，求正整數 \\(k\\) 的範圍。`,
+          `\\(k=4,5,\\ldots,12\\)`,
+          `交於兩點需滿足 \\(|r_1-r_2|<d<r_1+r_2\\)。本題為 \\(|k-3|<10\\) 且 \\(10<3k+1\\)，再加上半徑為正，得到 \\(4\\le k\\le12\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const bigR = randInt(5, 10);
+        const smallR = randInt(2, bigR - 2);
+        const d = bigR - smallR;
+        add(
+          `兩圓半徑分別為 \\(${bigR}\\)、\\(${smallR}\\)。若兩圓共有 3 條公切線，求連心線長。`,
+          `\\(${d}\\)`,
+          `兩圓共有 3 條公切線代表兩圓內切，因此連心線長為半徑差 \\(${bigR}-${smallR}=${d}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const bigR = randInt(9, 15);
+        const smallR = randInt(2, bigR - 3);
+        const diff = bigR - smallR;
+        add(
+          `兩圓半徑分別為 \\(${bigR}\\)、\\(${smallR}\\)，連心線長為 \\(x\\)。若兩圓內含但不重合且不內切，求 \\(x\\) 的範圍。`,
+          `\\(0<x<${diff}\\)`,
+          `內含但不重合表示兩圓不同心，且小圓在大圓內部；不內切表示還沒有碰到。因此 \\(0<x<R-r=${bigR}-${smallR}=${diff}\\)。`
+        );
+        continue;
+      }
+      const d = randInt(12, 20);
+      const r = randInt(3, d - 5);
+      const upper = d - r;
+      add(
+        `兩圓有 4 條公切線，連心線長為 \\(${d}\\)，其中一圓半徑為 \\(${r}\\)。求另一圓半徑 \\(s\\) 的可能範圍。`,
+        `\\(0<s<${upper}\\)`,
+        `兩圓有 4 條公切線代表兩圓外離，所以連心線長大於半徑和：\\(${d}>${r}+s\\)。因此 \\(0<s<${upper}\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ521TangentPythagoreanIntegrationSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。詳解：${detail}`);
+    };
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const r = randInt(2, 5);
+        const hyp = [13, 17, 25][randInt(0, 2)];
+        const perimeter = 2 * (hyp + r);
+        add(
+          `直角三角形的內切圓半徑為 \\(${r}\\)，斜邊長為 \\(${hyp}\\)。求此三角形的周長。`,
+          `\\(${perimeter}\\)`,
+          `直角三角形內切圓半徑 \\(r=\\frac{a+b-c}{2}\\)，所以 \\(a+b=c+2r\\)。周長 \\(=a+b+c=2c+2r=2(${hyp}+${r})=${perimeter}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const leg1 = randInt(4, 10);
+        const leg2 = randInt(5, 12);
+        const midline = formatFraction(leg1 + leg2, 2);
+        add(
+          `梯形 \\(ABCD\\) 有內切圓，且兩腰長分別為 \\(${leg1}\\)、\\(${leg2}\\)。求此梯形的中線長。`,
+          `\\(${midline}\\)`,
+          `有內切圓的四邊形滿足對邊和相等，所以兩底和等於兩腰和 \\(${leg1}+${leg2}\\)。梯形中線長為兩底和的一半，因此為 \\(${midline}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const pairs = [
+          { d: 13, t: 12, r: 5 },
+          { d: 10, t: 8, r: 6 },
+          { d: 17, t: 15, r: 8 },
+          { d: 25, t: 24, r: 7 },
+        ];
+        const item = pairs[randInt(0, pairs.length - 1)];
+        add(
+          `圓外一點 \\(P\\) 到圓心 \\(O\\) 的距離為 \\(${item.d}\\)，切線長為 \\(${item.t}\\)。若 \\(Q\\) 為圓上一點，求 \\(PQ\\) 的最大值。`,
+          `\\(${item.d + item.r}\\)`,
+          `先由 \\(PT^2=OP^2-r^2\\) 得半徑 \\(r=\\sqrt{${item.d}^2-${item.t}^2}=${item.r}\\)。最遠點在 \\(OP\\) 延長線上，所以 \\(PQ_{\\max}=OP+r=${item.d}+${item.r}=${item.d + item.r}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const triples = [
+          { p: 3, q: 4, side: 5 },
+          { p: 5, q: 12, side: 13 },
+          { p: 8, q: 15, side: 17 },
+        ];
+        const item = triples[randInt(0, triples.length - 1)];
+        const area = 2 * item.p * item.q;
+        const diagonal = 2 * item.p;
+        const radius = formatFraction(area, 2 * item.side);
+        add(
+          `菱形 \\(ABCD\\) 的面積為 \\(${area}\\)，對角線 \\(AC=${diagonal}\\)。若菱形有內切圓，求內切圓半徑。`,
+          `\\(${radius}\\)`,
+          `菱形對角線互相垂直平分，所以另一對角線為 \\(\\frac{2\\times${area}}{${diagonal}}=${2 * item.q}\\)，邊長為 \\(\\sqrt{${item.p}^2+${item.q}^2}=${item.side}\\)。內切圓半徑 \\(r=\\frac{面積}{半周長}=\\frac{${area}}{2\\times${item.side}}=${radius}\\)。`
+        );
+        continue;
+      }
+      const small = randInt(2, 8);
+      add(
+        `一個大圓內部放入三個半徑皆為 \\(${small}\\) 的小圓，三個小圓兩兩外切，且都與大圓內切。求大圓半徑與小圓半徑的比。`,
+        `\\(\\left(1+\\frac{2\\sqrt3}{3}\\right):1\\)`,
+        `三個小圓圓心形成邊長 \\(${2 * small}\\) 的正三角形。正三角形外接圓半徑為 \\(\\frac{${2 * small}}{\\sqrt3}\\)，也就是大圓圓心到小圓圓心的距離。大圓半徑 \\(R=${small}+\\frac{${2 * small}}{\\sqrt3}\\)，所以 \\(R:r=1+\\frac{2}{\\sqrt3}=1+\\frac{2\\sqrt3}{3}\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ523PowerSimilarityAdvancedSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。詳解：${detail}`);
+    };
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const ae = randInt(3, 8);
+        const eb = randInt(4, 10);
+        const ce = randInt(2, 6);
+        const product = ae * eb;
+        const ed = product % ce === 0 ? `${product / ce}` : formatFraction(product, ce);
+        add(
+          `圓內兩弦 \\(AB\\)、\\(CD\\) 交於 \\(E\\)。若 \\(AE=${ae}\\)、\\(EB=${eb}\\)、\\(CE=${ce}\\)，求 \\(ED\\)。`,
+          `\\(ED=${ed}\\)`,
+          `相交弦定理給出 \\(AE\\cdot EB=CE\\cdot ED\\)。所以 \\(ED=\\frac{${ae}\\cdot${eb}}{${ce}}=${ed}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const ae = randInt(3, 7);
+        const ce = randInt(2, 6);
+        const eb = ae + randInt(2, 5);
+        const product = ae * eb;
+        const edRaw = product / ce;
+        if (!Number.isInteger(edRaw)) {
+          i -= 1;
+          continue;
+        }
+        const left = ae * ce;
+        const right = eb * edRaw;
+        const reduced = reduceFraction(left, right);
+        const ratio = reduced.denominator === 1 ? `${reduced.numerator}:1` : `${Math.abs(reduced.numerator)}:${reduced.denominator}`;
+        add(
+          `圓內兩弦 \\(AB\\)、\\(CD\\) 交於 \\(E\\)。若 \\(AE=${ae}\\)、\\(EB=${eb}\\)、\\(CE=${ce}\\)、\\(ED=${edRaw}\\)，求 \\(\\triangle AEC\\) 與 \\(\\triangle BED\\) 的面積比。`,
+          `\\(${ratio}\\)`,
+          `兩三角形在 \\(E\\) 的夾角相等，面積比等於夾角兩邊乘積比：\\([AEC]:[BED]=AE\\cdot CE:BE\\cdot DE=${left}:${right}=${ratio}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const cases = [
+          { r: 13, op: 12, half: 5 },
+          { r: 10, op: 6, half: 8 },
+          { r: 15, op: 9, half: 12 },
+          { r: 17, op: 8, half: 15 },
+          { r: 25, op: 7, half: 24 },
+        ];
+        const item = cases[randInt(0, cases.length - 1)];
+        const r = item.r;
+        const op = item.op;
+        const shortest = 2 * item.half;
+        const longest = 2 * r;
+        const product = r * r - op * op;
+        add(
+          `點 \\(P\\) 在圓內，過 \\(P\\) 的最短弦長為 \\(${shortest}\\)，最長弦長為 \\(${longest}\\)。求過 \\(P\\) 任一弦被 \\(P\\) 分成兩段後的乘積。`,
+          `\\(${product}\\)`,
+          `最長弦是直徑，所以半徑 \\(r=${r}\\)。最短弦垂直 \\(OP\\)，半弦長為 \\(${item.half}\\)，故 \\(OP^2=${r}^2-${item.half}^2=${op * op}\\)。圓內乘冪的段長乘積為 \\(r^2-OP^2=${product}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const options = [
+          { x: 3, a: 2, b: 1, c: 7 },
+          { x: 4, a: 1, b: 2, c: 12 },
+          { x: 5, a: 2, b: 1, c: 6 },
+          { x: 6, a: 3, b: 1, c: 7 },
+          { x: 7, a: 4, b: 1, c: 8 },
+          { x: 8, a: 5, b: 2, c: 14 },
+          { x: 9, a: 3, b: 2, c: 11 },
+          { x: 10, a: 4, b: 2, c: 12 },
+          { x: 11, a: 5, b: 2, c: 13 },
+          { x: 12, a: 6, b: 2, c: 14 },
+        ];
+        const item = options[randInt(0, options.length - 1)];
+        const pbText = `2x+${item.a}`;
+        const pdConst = item.c - item.b;
+        const pdText = pdConst === 0 ? `2x` : `2x+${pdConst}`;
+        add(
+          `圓外一點 \\(P\\) 引兩割線 \\(PAB\\)、\\(PCD\\)。若 \\(PA=x\\)、\\(AB=x+${item.a}\\)、\\(PC=x-${item.b}\\)、\\(CD=x+${item.c}\\)，求 \\(x\\)。`,
+          `\\(x=${item.x}\\)`,
+          `由割線定理 \\(PA\\cdot PB=PC\\cdot PD\\)。因此 \\(PB=${pbText}\\)，\\(PD=${pdText}\\)，所以 \\(x(${pbText})=(x-${item.b})(${pdText})\\)。解得 \\(x=${item.x}\\)。`
+        );
+        continue;
+      }
+      const ae = randInt(3, 8);
+      const eb = randInt(3, 9);
+      const ce = randInt(2, 6);
+      const ed = formatFraction(ae * eb, ce);
+      add(
+        `四邊形 \\(ABCD\\) 的對角線交於 \\(E\\)。若 \\(AE=${ae}\\)、\\(EB=${eb}\\)、\\(CE=${ce}\\)、\\(ED=${ed}\\)，且 \\(AE\\cdot EB=CE\\cdot ED\\)，判斷 \\(A,B,C,D\\) 是否共圓。`,
+        `共圓`,
+        `這是相交弦定理的逆用。因為兩條對角線交點滿足 \\(AE\\cdot EB=CE\\cdot ED\\)，可判斷四點 \\(A,B,C,D\\) 在同一圓上。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ531AdvancedConsecutiveIntegersSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。詳解：${detail}`);
+    };
+    const factorials = { 3: 6, 4: 24, 5: 120 };
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const length = [3, 4, 5][randInt(0, 2)];
+        const terms = Array.from({ length }, (_, index) => (index === 0 ? '\\(n\\)' : `\\(n+${index}\\)`)).join('、');
+        add(
+          `證明任意 ${length} 個連續整數 ${terms} 的乘積必為 \\(${factorials[length]}\\) 的倍數。`,
+          `成立`,
+          `${length} 個連續整數中一定可組成 \\(${length}!\\) 的整除因子；也可看成 \\(\\frac{n(n+1)\\cdots(n+${length - 1})}{${length}!}\\) 是從連續整數中取組合數，必為整數，所以原乘積必為 \\(${factorials[length]}\\) 的倍數。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const shift = randInt(-4, 4);
+        const term = shift === 0 ? 'n' : shift > 0 ? `n+${shift}` : `n-${Math.abs(shift)}`;
+        add(
+          `證明對任意整數 \\(n\\)，\\((${term})^3-(${term})\\) 必為 6 的倍數。`,
+          `成立`,
+          `令 \\(m=${term}\\)，則 \\(m^3-m=m(m-1)(m+1)\\)，是三個連續整數的乘積。三個連續整數必含一個 2 的倍數與一個 3 的倍數，所以必為 6 的倍數。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const length = [3, 5, 7, 9][randInt(0, 3)];
+        const half = (length - 1) / 2;
+        add(
+          `證明任意 ${length} 個連續整數的和必為 \\(${length}\\) 的倍數。`,
+          `成立`,
+          `把這 ${length} 個連續整數寫成 \\((n-${half}),\\ldots,n,\\ldots,(n+${half})\\)。首尾相加會互相抵消偏移量，總和為 \\(${length}n\\)，所以必為 \\(${length}\\) 的倍數。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const divisor = [8, 24][randInt(0, 1)];
+        if (divisor === 8) {
+          add(
+            `已知 \\(n\\) 為奇數，證明 \\(n^2-1\\) 必為 8 的倍數。`,
+            `成立`,
+            `令 \\(n=2k+1\\)，則 \\(n^2-1=(2k+1)^2-1=4k(k+1)\\)。因為 \\(k\\)、\\(k+1\\) 連續，必有一個偶數，所以 \\(4k(k+1)\\) 必為 8 的倍數。`
+          );
+        } else {
+          add(
+            `已知 \\(n\\) 為奇數，證明 \\(n^2-1\\) 必為 24 的倍數不一定成立，並說明正確的必然整除結論。`,
+            `不一定；必為 8 的倍數`,
+            `奇數平方減 1 一定可證為 8 的倍數，但不一定是 24 的倍數。例如 \\(n=5\\)，\\(n^2-1=24\\) 成立；但 \\(n=7\\)，\\(48\\) 不是 24 的倍數。穩定結論是必為 8 的倍數。`
+          );
+        }
+        continue;
+      }
+      const start = 2 * randInt(1, 5);
+      add(
+        `證明三個連續偶數 \\(${start}k\\)、\\(${start}k+2\\)、\\(${start}k+4\\) 的乘積必為 48 的倍數。`,
+        `成立`,
+        `三個連續偶數可寫成 \\(2m\\)、\\(2m+2\\)、\\(2m+4\\)，乘積為 \\(8m(m+1)(m+2)\\)。三個連續整數 \\(m,m+1,m+2\\) 的乘積必為 6 的倍數，所以整體必為 \\(8\\times6=48\\) 的倍數。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ531PolynomialDivisibilitySet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。詳解：${detail}`);
+    };
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const a = randInt(2, 6);
+        add(
+          `證明 \\((${a}n+1)^2-(${a}n-1)^2\\) 必為 \\(${4 * a}\\) 的倍數。`,
+          `成立`,
+          `利用平方差，\\((${a}n+1)^2-(${a}n-1)^2=[(${a}n+1)-(${a}n-1)][(${a}n+1)+(${a}n-1)]=2\\cdot${2 * a}n=${4 * a}n\\)，所以必為 \\(${4 * a}\\) 的倍數。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const d = randInt(2, 9);
+        add(
+          `已知 \\(a-b=${d}\\)，證明 \\(a^2-b^2-${d}(a+b)=0\\)。`,
+          `成立`,
+          `因為 \\(a^2-b^2=(a-b)(a+b)\\)，又 \\(a-b=${d}\\)，所以 \\(a^2-b^2=${d}(a+b)\\)。移項得 \\(a^2-b^2-${d}(a+b)=0\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const k = randInt(3, 8);
+        const remainder = 14 % k;
+        add(
+          `求證 \\(( ${k}n+1)^2+(${k}n+2)^2+(${k}n+3)^2\\) 除以 \\(${k}\\) 的餘數固定，並求此餘數。`,
+          `餘數 \\(${remainder}\\)`,
+          `展開後含 \\(${k}n\\) 的項都可被 \\(${k}\\) 整除，只要看常數平方和：\\(1^2+2^2+3^2=14\\)。所以餘數為 \\(14\\) 除以 \\(${k}\\) 的餘數，即 \\(${remainder}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const m = randInt(2, 7);
+        const divisor = m * m + 1;
+        add(
+          `已知 \\(a=${m}b\\)，證明 \\(a^2+b^2\\) 必為 \\(${divisor}\\) 的倍數。`,
+          `成立`,
+          `代入 \\(a=${m}b\\)，得 \\(a^2+b^2=(${m}b)^2+b^2=(${m * m}+1)b^2=${divisor}b^2\\)，所以必為 \\(${divisor}\\) 的倍數。`
+        );
+        continue;
+      }
+      const c = 2 * randInt(1, 5) + 1;
+      add(
+        `證明對任意整數 \\(n\\)，\\(n^2+${c}n\\) 必為偶數。`,
+        `成立`,
+        `\\(n^2+${c}n=n(n+${c})\\)。因為 \\(${c}\\) 是奇數，\\(n\\) 與 \\(n+${c}\\) 奇偶性相反，所以兩者中必有一個偶數，乘積必為偶數。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ531MultiVariableSignLogicSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。詳解：${detail}`);
+    };
+    const variableSets = [
+      ['a', 'b', 'c', 'd'],
+      ['p', 'q', 'r', 's'],
+      ['x', 'y', 'z', 'w'],
+    ];
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      const [a, b, c, d] = variableSets[randInt(0, variableSets.length - 1)];
+      if (mode === 0) {
+        add(
+          `已知 \\(${a}${b}<0\\)、\\(${b}${c}<0\\)、\\(${c}${d}<0\\)，判斷 \\(${a}${d}\\) 的正負號。`,
+          `\\(${a}${d}<0\\)`,
+          `\\(${a}${b}<0\\) 表示 \\(${a}\\)、\\(${b}\\) 異號；\\(${b}${c}<0\\) 表示 \\(${b}\\)、\\(${c}\\) 異號，所以 \\(${a}\\)、\\(${c}\\) 同號。又 \\(${c}${d}<0\\)，故 \\(${a}\\)、\\(${d}\\) 異號，\\(${a}${d}<0\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        add(
+          `若 \\(${a}${b}${c}>0\\) 且 \\(${a}+${b}+${c}<0\\)，請問 \\(${a}\\)、\\(${b}\\)、\\(${c}\\) 三數中有幾個負數？`,
+          `2 個`,
+          `三數乘積為正，負數個數只能是 0 個或 2 個。若 0 個負數，三數皆正，和不可能小於 0；因此必有 2 個負數。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        add(
+          `已知 \\(${a}<${b}<0<${c}\\)，比較 \\(\\frac1{${a}}\\)、\\(\\frac1{${b}}\\)、\\(\\frac1{${c}}\\) 的大小。`,
+          `\\(\\frac1{${b}}<\\frac1{${a}}<\\frac1{${c}}\\)`,
+          `負數取倒數時大小會反向，所以由 \\(${a}<${b}<0\\) 得 \\(\\frac1{${a}}>\\frac1{${b}}\\)。而 \\(\\frac1{${c}}>0\\)，兩個負倒數都小於它，因此 \\(\\frac1{${b}}<\\frac1{${a}}<\\frac1{${c}}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        add(
+          `若 \\(x^2y<0\\) 且 \\(y^2x>0\\)，判斷點 \\((y,x)\\) 在第幾象限。`,
+          `第二象限`,
+          `因為 \\(x^2>0\\)，由 \\(x^2y<0\\) 得 \\(y<0\\)。又 \\(y^2>0\\)，由 \\(y^2x>0\\) 得 \\(x>0\\)。所以點 \\((y,x)\\) 的橫坐標為負、縱坐標為正，在第二象限。`
+        );
+        continue;
+      }
+      add(
+        `已知 \\(${a}${b}>0\\)、\\(\\frac{${b}}{${c}}<0\\)，證明 \\(${a}${c}<0\\)。`,
+        `成立`,
+        `\\(${a}${b}>0\\) 表示 \\(${a}\\)、\\(${b}\\) 同號；\\(\\frac{${b}}{${c}}<0\\) 表示 \\(${b}\\)、\\(${c}\\) 異號。因此 \\(${a}\\)、\\(${c}\\) 異號，故 \\(${a}${c}<0\\)。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ531InequalityProofsCompositeSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。詳解：${detail}`);
+    };
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const p = randInt(2, 6);
+        const q = randInt(p + 1, 10);
+        add(
+          `已知 \\(0<a<b\\)，證明 \\(\\frac1a>\\frac1b\\)，並比較 \\(\\frac1{${p}}\\) 與 \\(\\frac1{${q}}\\)。`,
+          `\\(\\frac1{${p}}>\\frac1{${q}}\\)`,
+          `因為 \\(a,b\\) 皆為正數，可同乘正數 \\(ab\\)，由 \\(b>a\\) 得 \\(\\frac1a>\\frac1b\\)。所以 \\(${p}<${q}\\) 時，\\(\\frac1{${p}}>\\frac1{${q}}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const left = -randInt(9, 15);
+        const right = -randInt(2, 8);
+        add(
+          `若 \\(a<b<0\\)，證明 \\(a^2>b^2\\)，並用 \\(a=${left}\\)、\\(b=${right}\\) 驗算。`,
+          `\\(${left * left}>${right * right}\\)`,
+          `當 \\(a<b<0\\) 時，\\(|a|>|b|\\)，所以 \\(a^2>b^2\\)。驗算：\\(${left}^2=${left * left}\\)，\\(${right}^2=${right * right}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const x = randInt(-8, 2);
+        const y = randInt(x + 2, x + 10);
+        const middle = formatFraction(x + y, 2);
+        add(
+          `已知 \\(x<y\\)，證明 \\(\\frac{x+y}{2}\\) 必介於 \\(x\\) 與 \\(y\\) 之間，並求 \\(x=${x}\\)、\\(y=${y}\\) 時的中間值。`,
+          `\\(${middle}\\)`,
+          `由 \\(x<y\\)，兩邊同加 \\(x\\) 得 \\(2x<x+y\\)，所以 \\(x<\\frac{x+y}{2}\\)。兩邊同加 \\(y\\) 得 \\(x+y<2y\\)，所以 \\(\\frac{x+y}{2}<y\\)。代入得 \\(${middle}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const b = randInt(2, 8);
+        const a = b + randInt(1, 6);
+        add(
+          `若 \\(a,b\\) 為正整數且 \\(a>b\\)，證明 \\(\\frac{a}{b}>\\frac{a+1}{b+1}\\)，並用 \\(a=${a}\\)、\\(b=${b}\\) 驗算。`,
+          `\\(\\frac{${a}}{${b}}>\\frac{${a + 1}}{${b + 1}}\\)`,
+          `因為分母皆為正，可交叉相乘比較：\\(a(b+1)>b(a+1)\\) 等價於 \\(ab+a>ab+b\\)，也就是 \\(a>b\\)，故成立。`
+        );
+        continue;
+      }
+      const b = randInt(2, 8);
+      const a = b + randInt(1, 7);
+      add(
+        `證明若 \\(a>b>0\\)，則 \\(\\sqrt a>\\sqrt b\\)，並用 \\(a=${a}\\)、\\(b=${b}\\) 驗算。`,
+        `\\(\\sqrt{${a}}>\\sqrt{${b}}\\)`,
+        `平方根函數在正數範圍內保持大小關係；也可反證：若 \\(\\sqrt a\\le\\sqrt b\\)，兩邊平方得 \\(a\\le b\\)，與 \\(a>b\\) 矛盾。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ531AlgebraGeometryProofBridgeSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const add = (question, summary, detail) => {
+      questions.push(question);
+      summaryAnswers.push(summary);
+      answers.push(`簡答：${summary}。詳解：${detail}`);
+    };
+    for (let i = 0; i < count; i += 1) {
+      const mode = i % 5;
+      if (mode === 0) {
+        const p = randInt(2, 8);
+        const q = randInt(1, 9);
+        add(
+          `證明 \\(x^2-${2 * p}x+${p * p + q}\\) 對所有實數 \\(x\\) 恆為正值。`,
+          `恆為正值`,
+          `配方得 \\(x^2-${2 * p}x+${p * p + q}=(x-${p})^2+${q}\\)。平方項 \\((x-${p})^2\\ge0\\)，再加上正數 \\(${q}\\)，所以恆為正值。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        add(
+          `已知 \\(a,b,c\\) 為三角形三邊長，證明 \\(a^2+b^2+c^2<2(ab+bc+ca)\\)。`,
+          `成立`,
+          `由三角形不等式得 \\(a<b+c\\)、\\(b<c+a\\)、\\(c<a+b\\)。因為三邊長皆為正，分別乘以 \\(a,b,c\\)，得 \\(a^2<ab+ac\\)、\\(b^2<bc+ab\\)、\\(c^2<ca+bc\\)。三式相加即得結論。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const a = randInt(-5, 5);
+        const b = randInt(-5, 5);
+        add(
+          `證明 \\((a+b)^2\\ge4ab\\)，並用 \\(a=${a}\\)、\\(b=${b}\\) 驗算。`,
+          `成立`,
+          `因為 \\((a+b)^2-4ab=a^2-2ab+b^2=(a-b)^2\\ge0\\)，所以 \\((a+b)^2\\ge4ab\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const halfPerimeter = 2 * randInt(8, 20);
+        const side = formatFraction(halfPerimeter, 2);
+        const maxArea = formatFraction(halfPerimeter * halfPerimeter, 4);
+        add(
+          `已知矩形周長固定為 \\(${2 * halfPerimeter}\\)。證明當矩形為正方形時面積最大，並求最大面積。`,
+          `邊長 \\(${side}\\)，最大面積 \\(${maxArea}\\)`,
+          `設一邊為 \\(x\\)，另一邊為 \\(${halfPerimeter}-x\\)，面積 \\(A=x(${halfPerimeter}-x)=-(x-${side})^2+${maxArea}\\)。平方項最小為 0，所以 \\(x=${side}\\) 時面積最大，此時為正方形。`
+        );
+        continue;
+      }
+      const shift = randInt(0, 5);
+      add(
+        `證明兩個連續奇數 \\(2n+${2 * shift + 1}\\)、\\(2n+${2 * shift + 3}\\) 的平方差必為 8 的倍數。`,
+        `成立`,
+        `平方差為 \\((2n+${2 * shift + 3})^2-(2n+${2 * shift + 1})^2\\)，利用平方差公式得 \\(2\\cdot(4n+${4 * shift + 4})=8(n+${shift + 1})\\)，所以必為 8 的倍數。`
+      );
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
   function createAnswerList(summaryAnswers) {
     const answers = [];
     const nativePush = Array.prototype.push;
@@ -4029,6 +5071,33 @@
           return buildJ511ShiftedVariableRatioSet(5);
         },
       },
+      'j5-1-1-triangle-angle-algebra-ratio': {
+        type: 'drill',
+        title: '代數係數型三角角度比例',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ511TriangleAngleAlgebraRatioSet(5);
+        },
+      },
+      'j5-1-1-linked-ratio-advanced': {
+        type: 'drill',
+        title: '連續比例鏈接與跨項轉換',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ511LinkedRatioAdvancedSet(5);
+        },
+      },
+      'j5-1-1-geometry-ratio-property-advanced': {
+        type: 'drill',
+        title: '幾何性質結合型比例',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ511GeometryRatioPropertyAdvancedSet(5);
+        },
+      },
       'j5-1-1-geometry-ratio-three-subtypes': {
         type: 'drill',
         title: '三角形與幾何量的連比應用',
@@ -4135,6 +5204,24 @@
         questionCount: 5,
         generate() {
           return buildJ511MixtureSharedTermSet(5);
+        },
+      },
+      'j5-1-1-ratio-change-dynamic': {
+        type: 'drill',
+        title: '百分率與分數變動的動態比例',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ511RatioChangeDynamicSet(5);
+        },
+      },
+      'j5-1-1-ratio-logic-trap': {
+        type: 'drill',
+        title: '異常邏輯判斷與比例陷阱',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ511RatioLogicTrapSet(5);
         },
       },
       'j5-1-2-triangle-parallel-five-subtypes': {
@@ -4947,6 +6034,33 @@
           return buildJ521Set('pointDistanceToCircle', 5);
         },
       },
+      'j5-2-1-coordinate-tangent-integration-advanced': {
+        type: 'drill',
+        title: '座標幾何與切線長整合',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ521CoordinateTangentIntegrationAdvancedSet(5);
+        },
+      },
+      'j5-2-1-two-circle-position-parameter': {
+        type: 'drill',
+        title: '兩圓位置關係的參數逆推',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ521TwoCirclePositionParameterSet(5);
+        },
+      },
+      'j5-2-1-tangent-pythagorean-integration': {
+        type: 'drill',
+        title: '切線長與勾股定理的複合應用',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ521TangentPythagoreanIntegrationSet(5);
+        },
+      },
       'j5-2-2-central-arc-sector-four-subtypes': {
         type: 'drill',
         title: '圓心角、弧長與扇形四小類綜合',
@@ -5253,6 +6367,15 @@
           return buildJ523Set('algebraMixed', 6);
         },
       },
+      'j5-2-3-secant-tangent-quadratic-model': {
+        type: 'drill',
+        title: '比例與二次方程結合',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ523SecantTangentQuadraticModelSet(5);
+        },
+      },
       'j5-2-3-algebra-intersecting-chords': {
         type: 'drill',
         title: '兩弦乘冪一次式求值',
@@ -5449,6 +6572,15 @@
         questionCount: 5,
         generate() {
           return buildJ523Set('commonTangentPower', 5);
+        },
+      },
+      'j5-2-3-power-similarity-advanced': {
+        type: 'drill',
+        title: '冪性質與相似三角形',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ523PowerSimilarityAdvancedSet(5);
         },
       },
       'j5-3-1-parity-five-subtypes': {
@@ -5746,6 +6878,51 @@
         questionCount: 5,
         generate() {
           return buildJ531Set('sameSignProductInequality', 5);
+        },
+      },
+      'j5-3-1-advanced-consecutive-integers': {
+        type: 'drill',
+        title: '連續整數性質的擴展',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ531AdvancedConsecutiveIntegersSet(5);
+        },
+      },
+      'j5-3-1-polynomial-divisibility': {
+        type: 'drill',
+        title: '代數式變形的整除判定',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ531PolynomialDivisibilitySet(5);
+        },
+      },
+      'j5-3-1-multi-variable-sign-logic': {
+        type: 'drill',
+        title: '多變數符號邏輯推導',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ531MultiVariableSignLogicSet(5);
+        },
+      },
+      'j5-3-1-inequality-proofs-composite': {
+        type: 'drill',
+        title: '倒數與不等式的複合變形',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ531InequalityProofsCompositeSet(5);
+        },
+      },
+      'j5-3-1-algebra-geometry-proof-bridge': {
+        type: 'drill',
+        title: '配方法與幾何證明的銜接',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ531AlgebraGeometryProofBridgeSet(5);
         },
       },
       'j5-3-2-centers-five-subtypes': {
@@ -6533,7 +7710,7 @@
       },
   };
 
-  const bundleFingerprint = "j5-bundle-v20260706-summary-v1";
+  const bundleFingerprint = "j5-bundle-v20260708-j53-extension-v1";
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== "object") return;
     config.__generatorFingerprint = bundleFingerprint;
