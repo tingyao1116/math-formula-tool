@@ -623,7 +623,15 @@ def convert_markdown_to_pdf(
 
     with NamedTemporaryFile("w", suffix=".md", delete=False, encoding="utf-8") as tmp:
         if title:
-            tmp.write(f"---\ntitle: \"{title}\"\n---\n\n")
+            tmp.write(
+                f"---\ntitle: \"{title}\"\n"
+                "header-includes:\n"
+                "  - \\XeTeXlinebreaklocale \"zh\"\n"
+                "  - \\XeTeXlinebreakskip=0pt plus 1pt\n"
+                "  - \\sloppy\n"
+                "  - \\emergencystretch=3em\n"
+                "---\n\n"
+            )
         tmp.write(markdown_text)
         md_path = Path(tmp.name)
 

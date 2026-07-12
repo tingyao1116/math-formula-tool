@@ -8,64 +8,6 @@
     return copy;
   }
 
-  function parseGenerateCall(generateFn) {
-    if (typeof generateFn !== "function") return null;
-    const source = Function.prototype.toString.call(generateFn);
-    const match = source.match(/return\s+([A-Za-z_$][\w$]*)\(([\s\S]*?)\)\s*;/);
-    if (!match) return null;
-    return {
-      builderName: match[1],
-      argsSource: String(match[2] || "").trim(),
-    };
-  }
-
-  function resolveLocalBuilder(builderName) {
-    if (!builderName) return null;
-    try {
-      return eval(builderName);
-    } catch (_error) {
-      return null;
-    }
-  }
-
-  function evaluateBuilderArgs(argsSource) {
-    const source = String(argsSource || "").trim();
-    if (!source) return [];
-    try {
-      const result = eval(`[${source}]`);
-      return Array.isArray(result) ? result : null;
-    } catch (_error) {
-      return null;
-    }
-  }
-
-  function replaceTrailingCountArg(argsSource, nextCount) {
-    const source = String(argsSource || "").trim();
-    const count = Number(nextCount);
-    if (!Number.isFinite(count) || count <= 0) return source;
-    if (!source) return `${count}`;
-    return source.replace(/-?\d+(?:\.\d+)?\s*$/, `${count}`);
-  }
-
-  function runGenerateWithQuestionCount(generateFn, nextCount) {
-    const parsed = parseGenerateCall(generateFn);
-    const count = Number(nextCount);
-    if (!parsed || !Number.isFinite(count) || count <= 0) return null;
-
-    const builder = resolveLocalBuilder(parsed.builderName);
-    if (typeof builder !== "function") return null;
-
-    const nextArgsSource = replaceTrailingCountArg(parsed.argsSource, count);
-    const args = evaluateBuilderArgs(nextArgsSource);
-    if (!Array.isArray(args)) return null;
-
-    try {
-      return builder(...args);
-    } catch (_error) {
-      return null;
-    }
-  }
-
   function shuffleGeneratedSet(result) {
     if (!result || typeof result !== "object") return result;
     const questions = Array.isArray(result.questions) ? result.questions.slice() : [];
@@ -179,35 +121,39 @@
     };
   }
 
-  function generateWithExactQuestionCount(generateFn, desiredCount, context, item, preferredResult = null) {
+  function limitGeneratedSet(result, desiredCount) {
     const count = Math.max(1, Number(desiredCount) || 1);
-    const attemptLimit = Math.max(3, Math.min(24, count * 4));
-    const collected = [];
-    let intro = "";
-    let lastBase = null;
+    const extracted = extractGeneratedRows(result);
+    if (extracted.rows.length <= count) return result;
+    return rebuildGeneratedSetFromRows(extracted.base, extracted.intro, extracted.rows, count);
+  }
 
-    function consume(result) {
-      const extracted = extractGeneratedRows(result);
+  function generateTargetCountSet(base, context, item, desiredCount) {
+    const count = Math.max(1, Number(desiredCount) || 1);
+    const rows = [];
+    let intro = "";
+    let baseResult = null;
+    const maxAttempts = Math.max(3, Math.ceil(count / 3) * 4);
+
+    for (let attempt = 0; rows.length < count && attempt < maxAttempts; attempt += 1) {
+      const result = base.generate.call(context, item);
+      const shuffled = shuffleGeneratedSet(ensureGeneratedSummaryAnswers(result));
+      const extracted = extractGeneratedRows(shuffled);
+      if (!baseResult) baseResult = extracted.base;
       if (!intro && extracted.intro) intro = extracted.intro;
-      if (extracted.base && typeof extracted.base === "object") lastBase = extracted.base;
+      if (!extracted.rows.length) break;
       extracted.rows.forEach((row) => {
-        if (collected.length < count) collected.push(row);
+        if (rows.length < count) rows.push(row);
       });
     }
 
-    if (preferredResult) {
-      consume(preferredResult);
+    if (rows.length) {
+      return rebuildGeneratedSetFromRows(baseResult, intro, rows, count);
     }
 
-    for (let attempt = preferredResult ? 1 : 0; attempt < attemptLimit && collected.length < count; attempt += 1) {
-      try {
-        consume(generateFn.call(context, item));
-      } catch (_error) {
-        break;
-      }
-    }
-
-    return rebuildGeneratedSetFromRows(lastBase, intro, collected, count);
+    const fallback = base.generate.call(context, item);
+    const shuffled = shuffleGeneratedSet(ensureGeneratedSummaryAnswers(fallback));
+    return limitGeneratedSet(shuffled, count);
   }
 
   function buildFixedExampleConfig(source) {
@@ -233,19 +179,8 @@
 
     if (typeof base.generate === "function") {
       merged.generate = function generateWithAssignmentCount(item) {
-        const shouldBypassLocalBuilder =
-          Boolean(base.__generatorFingerprint) || Boolean(base.generatorFingerprint);
-        const directGenerated = shouldBypassLocalBuilder
-          ? null
-          : runGenerateWithQuestionCount(base.generate, this.questionCount);
-        const generated = generateWithExactQuestionCount(
-          base.generate,
-          this.questionCount,
-          this,
-          item,
-          directGenerated,
-        );
-        return shuffleGeneratedSet(ensureGeneratedSummaryAnswers(generated));
+        const desiredCount = Math.max(1, Number(this.questionCount) || Number(merged.questionCount) || 5);
+        return generateTargetCountSet(base, { ...this, questionCount: desiredCount }, item, desiredCount);
       };
     }
 
@@ -278,7 +213,7 @@
           return buildFixedExampleConfig(assignment);
         }
 
-        const practiceKey = String(assignment.practiceKey || "").trim();
+        const practiceKey = String(assignment.generatorKey || assignment.practiceKey || "").trim();
         const base = (practiceKey && this.configs[practiceKey]) || direct;
         return buildGeneratorConfig(base, assignment);
       }

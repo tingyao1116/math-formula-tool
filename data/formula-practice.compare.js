@@ -663,7 +663,7 @@ window.formulaPracticeStore = {
           return buildFixedExampleConfig(assignment);
         }
 
-        const practiceKey = String(assignment.practiceKey || '').trim();
+        const practiceKey = String(assignment.generatorKey || assignment.practiceKey || '').trim();
         const base = (practiceKey && this.configs[practiceKey]) || direct;
         return buildGeneratorConfig(base, assignment);
       }

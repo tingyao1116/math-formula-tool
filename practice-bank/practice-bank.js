@@ -1227,25 +1227,22 @@
     if (typeof config.generate !== "function") return [];
     const desiredCount = Math.max(1, Number(maxVariants || 1) || 1);
     const variants = [];
-    const seen = new Set();
-    // 單次 generate() 只會回傳 config.questionCount 題（通常是 5），
-    // 這裡改成重複呼叫並去重，收滿使用者要的題數為止（拿不到那麼多題就有多少給多少）。
-    const attemptLimit = Math.max(6, desiredCount * 6);
+    const attemptLimit = Math.max(desiredCount, desiredCount * 3);
 
     for (let attempt = 0; attempt < attemptLimit && variants.length < desiredCount; attempt += 1) {
       const result = normalizeGeneratedPracticeResultV2(config.generate(item) || {});
       const questions = Array.isArray(result.questions) ? result.questions : [];
       const summaryAnswers = Array.isArray(result.summaryAnswers) ? result.summaryAnswers : [];
       const answers = Array.isArray(result.answers) ? result.answers : [];
-
-      for (let index = 0; index < questions.length && variants.length < desiredCount; index += 1) {
-        const question = String(questions[index] || "").trim();
-        if (!question || seen.has(question)) continue;
-        seen.add(question);
-        const summaryAnswer = String(summaryAnswers[index] || answers[index] || "").trim();
-        const answer = String(answers[index] || "").trim();
-        variants.push({ question, summaryAnswer, answer });
-      }
+      const rows = questions
+        .map((question, index) => ({
+          question: String(question || "").trim(),
+          summaryAnswer: String(summaryAnswers[index] || answers[index] || "").trim(),
+          answer: String(answers[index] || "").trim(),
+        }))
+        .filter((row) => row.question);
+      if (!rows.length) continue;
+      variants.push(rows[Math.floor(Math.random() * rows.length)]);
     }
 
     return variants;
@@ -1317,23 +1314,20 @@
   function collectQuestionsForSubtypeV2(config, item, subtypeIndex, desiredCount) {
     const safeDesiredCount = Math.max(1, Number(desiredCount || 0) || 1);
     const variants = [];
-    const seen = new Set();
-    const attemptLimit = Math.max(8, safeDesiredCount * 8);
+    const attemptLimit = Math.max(safeDesiredCount, safeDesiredCount * 3);
 
     for (let attempt = 0; attempt < attemptLimit && variants.length < safeDesiredCount; attempt += 1) {
       const result = normalizeGeneratedPracticeResultV2(config.generate(item) || {});
       const questions = Array.isArray(result.questions) ? result.questions : [];
       const summaryAnswers = Array.isArray(result.summaryAnswers) ? result.summaryAnswers : [];
       const answers = Array.isArray(result.answers) ? result.answers : [];
-      const question = String(questions[subtypeIndex] || "").trim();
+      const chosenIndex = questions[subtypeIndex] ? subtypeIndex : Math.floor(Math.random() * Math.max(1, questions.length));
+      const question = String(questions[chosenIndex] || "").trim();
       if (!question) continue;
-      const signature = `${subtypeIndex}::${question}`;
-      if (seen.has(signature)) continue;
-      seen.add(signature);
       variants.push({
         question,
-        summaryAnswer: String(summaryAnswers[subtypeIndex] || answers[subtypeIndex] || "").trim(),
-        answer: String(answers[subtypeIndex] || "").trim(),
+        summaryAnswer: String(summaryAnswers[chosenIndex] || answers[chosenIndex] || "").trim(),
+        answer: String(answers[chosenIndex] || "").trim(),
       });
     }
 

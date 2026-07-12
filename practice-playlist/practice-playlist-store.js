@@ -145,10 +145,14 @@
 
   // ── 讀取：bundled 資料檔優先，localStorage 補充（使用者自行新增）──────────
   function loadAll() {
+    const customThemePlaylists = loadCustomThemePlaylists();
+    const customThemeIds = new Set(customThemePlaylists.map((playlist) => playlist.id));
     const bundled = (Array.isArray(window.practicePlaylistData)
       ? window.practicePlaylistData.map(normalizePlaylist)
       : []
-    ).concat(loadCustomThemePlaylists());
+    )
+      .filter((playlist) => !customThemeIds.has(playlist.id))
+      .concat(customThemePlaylists);
     const bundledIds = new Set(bundled.map((p) => p.id));
 
     try {

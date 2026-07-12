@@ -4469,6 +4469,30 @@
     return { questions, summaryAnswers, answers };
   }
 
+  function buildJ531ProofReasoningMixedSet(count) {
+    const sourceSets = [
+      buildJ531AdvancedConsecutiveIntegersSet(5),
+      buildJ531PolynomialDivisibilitySet(5),
+      buildJ531MultiVariableSignLogicSet(5),
+      buildJ531InequalityProofsCompositeSet(5),
+      buildJ531AlgebraGeometryProofBridgeSet(5),
+    ];
+    const order = sourceSets
+      .map((_, index) => index)
+      .sort(() => (randInt(0, 1) === 0 ? -1 : 1));
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    for (let i = 0; i < count; i += 1) {
+      const set = sourceSets[order[i % order.length]];
+      const pick = randInt(0, set.questions.length - 1);
+      questions.push(set.questions[pick]);
+      summaryAnswers.push(set.summaryAnswers[pick]);
+      answers.push(set.answers[pick]);
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
   function createAnswerList(summaryAnswers) {
     const answers = [];
     const nativePush = Array.prototype.push;
@@ -6925,6 +6949,15 @@
           return buildJ531AlgebraGeometryProofBridgeSet(5);
         },
       },
+      'j5-3-1-proof-reasoning-mixed': {
+        type: 'drill',
+        title: '證明推理綜合',
+        difficulty: 'hard',
+        questionCount: 5,
+        generate() {
+          return buildJ531ProofReasoningMixedSet(5);
+        },
+      },
       'j5-3-2-centers-five-subtypes': {
         type: 'drill',
         title: '三心基本性質證明五小類綜合',
@@ -7710,7 +7743,7 @@
       },
   };
 
-  const bundleFingerprint = "j5-bundle-v20260708-j53-extension-v1";
+  const bundleFingerprint = "j5-bundle-v20260711-j531-proof-merged-v1";
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== "object") return;
     config.__generatorFingerprint = bundleFingerprint;

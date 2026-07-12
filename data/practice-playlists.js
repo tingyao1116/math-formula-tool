@@ -593,39 +593,4 @@ window.practicePlaylistData = [
     "updatedAt": "2026-06-29T00:00:00.000Z",
     "scheduleConfig": null
   },
-  {
-    "id": "playlist-221",
-    "title": "221",
-    "description": "",
-    "grade": "全部年級",
-    "playlistType": "任務型",
-    "practiceIds": [
-      "practice-e4-1-1-large-number-overview-mixed",
-      "practice-e4-1-1-large-add-subtract-drill",
-      "practice-e4-1-1-comparison-adjustment-mixed"
-    ],
-    "questionCount": 5,
-    "shufflePractices": false,
-    "enabled": true,
-    "updatedAt": "2026-06-28T20:32:23.359Z",
-    "scheduleConfig": null
-  },
-  {
-    "id": "playlist-test",
-    "title": "test123",
-    "description": "",
-    "grade": "全部年級",
-    "playlistType": "任務型",
-    "practiceIds": [
-      "practice-e4-1-1-large-number-overview-mixed",
-      "practice-e4-1-1-large-add-subtract-drill",
-      "practice-e4-1-1-comparison-adjustment-mixed",
-      "practice-e4-1-1-place-value-decomposition-drill"
-    ],
-    "questionCount": 5,
-    "shufflePractices": false,
-    "enabled": true,
-    "updatedAt": "2026-06-28T20:32:05.712Z",
-    "scheduleConfig": null
-  }
 ];

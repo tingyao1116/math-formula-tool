@@ -20,32 +20,32 @@
       chapterPrefixes: ["j1-"],
     },
     j2: {
-      src: "data/practice-generators/j2.js?v=20260707-j24-j25-extension-v1",
+      src: "data/practice-generators/j2.js?v=20260710-midpoint-sign-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j2-"],
     },
     j3: {
-      src: "data/practice-generators/j3.js?v=20260707-j34-extension-v1",
+      src: "data/practice-generators/j3.js?v=20260710-sign-format-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j3-"],
     },
     j4: {
-      src: "data/practice-generators/j4.js?v=20260708-j44-extension-v1",
+      src: "data/practice-generators/j4.js?v=20260710-subscript-braces-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j4-"],
     },
     j5: {
-      src: "data/practice-generators/j5.js?v=20260708-j53-extension-v1",
+      src: "data/practice-generators/j5.js?v=20260711-j531-proof-merged-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j5-"],
     },
     j6: {
-      src: "data/practice-generators/j6.js?v=20260708-j63-extension-v1",
+      src: "data/practice-generators/j6.js?v=20260710-frequency-interval-text-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j6-"],
     },
     s1: {
-      src: "data/practice-generators/s1.js?v=20260708-s13-extension-v1",
+      src: "data/practice-generators/s1.js?v=20260711-exponential-parameter-random-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["s1-"],
     },

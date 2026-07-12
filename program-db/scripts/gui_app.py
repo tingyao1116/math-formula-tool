@@ -2181,6 +2181,41 @@ function withSeed(seedSource, callback) {{
   }}
 }}
 
+function extractGeneratedRows(generated) {{
+  const questions = Array.isArray(generated?.questions) ? generated.questions : [];
+  const summaryAnswers = Array.isArray(generated?.summaryAnswers) ? generated.summaryAnswers : [];
+  const answers = Array.isArray(generated?.answers) ? generated.answers : [];
+  return questions
+    .map((question, rowIndex) => ({{
+      question: normalizeText(question),
+      summaryAnswer: normalizeText(summaryAnswers[rowIndex] || answers[rowIndex] || ''),
+      answer: normalizeText(answers[rowIndex] || ''),
+    }}))
+    .filter((row) => row.question);
+}}
+
+function collectGeneratedRows(config, practiceRecord, count, seedPrefix) {{
+  const targetCount = Math.max(1, Number(count || 5) || 5);
+  const rows = [];
+  let intro = '';
+  const attemptLimit = Math.max(targetCount, targetCount * 3);
+  for (let attempt = 0; attempt < attemptLimit && rows.length < targetCount; attempt += 1) {{
+    const generated = withSeed(seedPrefix + '|' + attempt, () => config.generate.call(config, practiceRecord) || {{}}) || {{}};
+    if (!intro) intro = normalizeText(generated.intro);
+    const generatedRows = extractGeneratedRows(generated);
+    for (const row of generatedRows) {{
+      if (rows.length >= targetCount) break;
+      rows.push(row);
+    }}
+  }}
+  return {{
+    intro,
+    questions: rows.map((row) => row.question),
+    summaryAnswers: rows.map((row) => row.summaryAnswer),
+    answers: rows.map((row) => row.answer),
+  }};
+}}
+
 load('data/formula-practice-assignments.js');
 load('data/formula-practice.js');
 load('data/practice-generators/shared-legacy-bundle.js');
@@ -2232,7 +2267,7 @@ const generatedSets = items.map((entry, index) => {{
   }}
   let generated = {{}};
   if (typeof config.generate === 'function') {{
-    generated = withSeed(seedText + '|' + index + '|' + id, () => config.generate.call(config, practiceRecord) || {{}}) || {{}};
+    generated = collectGeneratedRows(config, practiceRecord, count, seedText + '|' + index + '|' + id);
   }}
   const questions = Array.isArray(generated.questions) ? generated.questions.map((value) => normalizeText(value)).filter(Boolean) : [];
   const summaryAnswers = Array.isArray(generated.summaryAnswers) ? generated.summaryAnswers.map((value) => normalizeText(value)) : [];
@@ -2273,6 +2308,50 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             except Exception:
                 pass
 
+    def _generate_practice_export_markdown(
+        self,
+        records: list[dict],
+        counts: dict[str, int],
+        combined_title: str,
+        export_order: str,
+        answer_mode: str,
+        question_gap_mm: float,
+        export_seed: str,
+    ):
+        generated_result = self._generate_practice_export_sets(records, counts, export_seed)
+        if not generated_result.get("ok"):
+            return {
+                "ok": False,
+                "reason": f"無限練習生成失敗：{generated_result.get('reason', '未知錯誤')}",
+                "markdown": "",
+            }
+
+        generated_sets = generated_result.get("sets", [])
+        latex_problem = pdf_markdown_export.find_latex_problem_in_sets(generated_sets)
+        if latex_problem:
+            gen_label = latex_problem["title"]
+            if latex_problem["id"]:
+                gen_label += f"（{latex_problem['id']}）"
+            return {
+                "ok": False,
+                "reason": (
+                    f"生成器「{gen_label}」的{latex_problem['field']}第 {latex_problem['index']} 題"
+                    f"有 LaTeX 問題，無法排版：\n{latex_problem['problem']}\n\n"
+                    f"出問題的內容：\n{latex_problem['sample']}"
+                ),
+                "markdown": "",
+            }
+
+        title = str(combined_title or "無限練習題目與答案").strip() or "無限練習題目與答案"
+        markdown_text = pdf_markdown_export.build_practice_sets_markdown(
+            generated_sets,
+            title,
+            export_order=export_order,
+            answer_mode=answer_mode,
+            gap_mm=question_gap_mm,
+        )
+        return {"ok": True, "reason": "", "markdown": markdown_text}
+
     def _export_practice_sets_to_pdf(
         self,
         generated_sets: list[dict],
@@ -2286,6 +2365,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         out_path.parent.mkdir(parents=True, exist_ok=True)
         font_name = self._practice_pdf_font_name()
         spacing_pt = max(2, min(40, int(question_spacing_px or 18)))
+        content_width = A4[0] - (28 * mm)
 
         styles = getSampleStyleSheet()
         title_style = ParagraphStyle(
@@ -2297,6 +2377,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             textColor=HexColor("#3d2a1a"),
             spaceAfter=5 * mm,
             alignment=TA_LEFT,
+            wordWrap="CJK",
         )
         note_style = ParagraphStyle(
             "PracticePdfNote",
@@ -2306,6 +2387,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             leading=15,
             textColor=HexColor("#6f6658"),
             spaceAfter=4 * mm,
+            wordWrap="CJK",
         )
         section_style = ParagraphStyle(
             "PracticePdfSection",
@@ -2316,6 +2398,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             textColor=HexColor("#5a4326"),
             spaceBefore=3 * mm,
             spaceAfter=2 * mm,
+            wordWrap="CJK",
         )
         set_title_style = ParagraphStyle(
             "PracticePdfSetTitle",
@@ -2326,6 +2409,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             textColor=HexColor("#2b2b2b"),
             spaceBefore=2 * mm,
             spaceAfter=1.5 * mm,
+            wordWrap="CJK",
         )
         body_style = ParagraphStyle(
             "PracticePdfBody",
@@ -2335,15 +2419,33 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             leading=18,
             textColor=HexColor("#2b2b2b"),
             spaceAfter=0,
+            wordWrap="CJK",
         )
 
-        def paragraph_text(text: str):
-            return escape(text).replace("\n", "<br/>")
+        def wrap_pdf_text(text: str, style: ParagraphStyle, max_width: float = content_width) -> str:
+            wrapped_lines = []
+            for raw_line in str(text or "").splitlines() or [""]:
+                line = ""
+                for char in raw_line:
+                    trial = line + char
+                    if line and pdfmetrics.stringWidth(trial, style.fontName, style.fontSize) > max_width:
+                        wrapped_lines.append(line.rstrip())
+                        line = "" if char.isspace() else char
+                    else:
+                        line = trial
+                wrapped_lines.append(line.rstrip())
+            return "\n".join(wrapped_lines)
+
+        def paragraph_text(text: str, style: ParagraphStyle):
+            return escape(wrap_pdf_text(text, style)).replace("\n", "<br/>")
+
+        def inline_answer_text(value: str):
+            return " ".join(str(value or "").split())
 
         def append_set(story: list, practice_set: dict, show_answer: bool):
-            story.append(Paragraph(paragraph_text(practice_set.get("title", "未命名題型")), set_title_style))
+            story.append(Paragraph(paragraph_text(practice_set.get("title", "未命名題型"), set_title_style), set_title_style))
             if practice_set.get("intro") and not show_answer:
-                story.append(Paragraph(paragraph_text(self._practice_pdf_plain_text(practice_set.get("intro", ""))), note_style))
+                story.append(Paragraph(paragraph_text(self._practice_pdf_plain_text(practice_set.get("intro", "")), note_style), note_style))
             values = practice_set.get("answers", []) if show_answer else practice_set.get("questions", [])
             if show_answer:
                 values = [self._simplify_practice_answer_text(value, answer_mode) for value in values]
@@ -2353,33 +2455,42 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             if not values:
                 values = ["目前沒有內容。"]
             group = []
-            for idx, value in enumerate(values, 1):
-                group.append(Paragraph(paragraph_text(f"{idx}. {value}"), body_style))
+            if show_answer and answer_mode == "simple":
+                line = "　　".join(
+                    f"{idx}. {inline_answer_text(value)}"
+                    for idx, value in enumerate(values, 1)
+                    if inline_answer_text(value)
+                )
+                group.append(Paragraph(paragraph_text(line or "目前沒有內容。", body_style), body_style))
                 group.append(Spacer(1, spacing_pt))
+            else:
+                for idx, value in enumerate(values, 1):
+                    group.append(Paragraph(paragraph_text(f"{idx}. {value}", body_style), body_style))
+                    group.append(Spacer(1, spacing_pt))
             story.append(KeepTogether(group))
             story.append(Spacer(1, 4))
 
         story = [
-            Paragraph(paragraph_text(title), title_style),
+            Paragraph(paragraph_text(title, title_style), title_style),
             Paragraph(
-                paragraph_text("依所選無限練習自動生成；本 PDF 只生成一次資料，答案對應前方同一批題目。"),
+                paragraph_text("依所選無限練習自動生成；本 PDF 只生成一次資料，答案對應前方同一批題目。", note_style),
                 note_style,
             ),
         ]
 
         if export_order == "interleaved":
             for practice_set in generated_sets:
-                story.append(Paragraph("題目", section_style))
+                story.append(Paragraph(paragraph_text("題目", section_style), section_style))
                 append_set(story, practice_set, show_answer=False)
-                story.append(Paragraph("答案", section_style))
+                story.append(Paragraph(paragraph_text("答案", section_style), section_style))
                 append_set(story, practice_set, show_answer=True)
                 story.append(Spacer(1, 8))
         else:
-            story.append(Paragraph("題目", section_style))
+            story.append(Paragraph(paragraph_text("題目", section_style), section_style))
             for practice_set in generated_sets:
                 append_set(story, practice_set, show_answer=False)
             story.append(PageBreak())
-            story.append(Paragraph("答案", section_style))
+            story.append(Paragraph(paragraph_text("答案", section_style), section_style))
             for practice_set in generated_sets:
                 append_set(story, practice_set, show_answer=True)
 
@@ -3545,6 +3656,91 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         dialog.wait_window()
         return result["format"]
 
+    def _open_practice_batch_pdf_options_dialog(self, chain_count: int):
+        result = {"options": None}
+        dialog = tk.Toplevel(self.root)
+        dialog.title("批次匯出自訂主題串 PDF")
+        dialog.transient(self.root)
+        dialog.grab_set()
+        dialog.geometry("560x360")
+        dialog.resizable(False, False)
+
+        count_var = tk.StringVar(value="10")
+        export_order_var = tk.StringVar(value="interleaved")
+        answer_mode_var = tk.StringVar(value="both")
+        question_gap_mm_var = tk.StringVar(value="10")
+
+        body = ttk.Frame(dialog, padding=14)
+        body.pack(fill="both", expand=True)
+        ttk.Label(
+            body,
+            text=f"將匯出 {max(0, int(chain_count or 0))} 份自訂主題串；每一串會各自生成一個 PDF。",
+        ).pack(anchor="w", pady=(0, 10))
+
+        count_row = ttk.Frame(body)
+        count_row.pack(fill="x", pady=(0, 10))
+        ttk.Label(count_row, text="每個題型題數").pack(side="left")
+        ttk.Entry(count_row, textvariable=count_var, width=8).pack(side="left", padx=(8, 4))
+        ttk.Label(count_row, text="題").pack(side="left")
+
+        order_box = ttk.LabelFrame(body, text="輸出順序", padding=10)
+        order_box.pack(fill="x", pady=(0, 10))
+        ttk.Radiobutton(
+            order_box,
+            text="全部題目在前，全部答案在後",
+            variable=export_order_var,
+            value="separate",
+        ).pack(anchor="w")
+        ttk.Radiobutton(
+            order_box,
+            text="一類題目 + 一類答案，再下一類題目 + 答案",
+            variable=export_order_var,
+            value="interleaved",
+        ).pack(anchor="w", pady=(4, 0))
+
+        answer_box = ttk.LabelFrame(body, text="答案內容", padding=10)
+        answer_box.pack(fill="x", pady=(0, 10))
+        ttk.Radiobutton(answer_box, text="簡答", variable=answer_mode_var, value="simple").pack(side="left")
+        ttk.Radiobutton(answer_box, text="詳解", variable=answer_mode_var, value="detail").pack(side="left", padx=(14, 0))
+        ttk.Radiobutton(answer_box, text="簡答＋詳解都要", variable=answer_mode_var, value="both").pack(side="left", padx=(14, 0))
+
+        gap_row = ttk.Frame(body)
+        gap_row.pack(fill="x")
+        ttk.Label(gap_row, text="每題下方留白").pack(side="left")
+        ttk.Entry(gap_row, textvariable=question_gap_mm_var, width=8).pack(side="left", padx=(8, 4))
+        ttk.Label(gap_row, text="mm（0～80）").pack(side="left")
+
+        buttons = ttk.Frame(body)
+        buttons.pack(fill="x", pady=(16, 0))
+
+        def apply_options():
+            try:
+                question_count = int(str(count_var.get()).strip() or "0")
+                if question_count <= 0:
+                    raise ValueError
+            except ValueError:
+                return messagebox.showerror("題數錯誤", "每個題型題數請填正整數。", parent=dialog)
+            try:
+                question_gap_mm = float(str(question_gap_mm_var.get()).strip() or "0")
+                if question_gap_mm < 0 or question_gap_mm > 80:
+                    raise ValueError
+            except ValueError:
+                return messagebox.showerror("間距錯誤", "每題下方留白請填 0～80 的數字（mm）。", parent=dialog)
+            result["options"] = {
+                "question_count": question_count,
+                "export_order": export_order_var.get() if export_order_var.get() in {"separate", "interleaved"} else "interleaved",
+                "answer_mode": answer_mode_var.get() if answer_mode_var.get() in {"simple", "detail", "both"} else "both",
+                "question_gap_mm": question_gap_mm,
+            }
+            dialog.destroy()
+
+        ttk.Button(buttons, text="取消", command=dialog.destroy).pack(side="right", padx=(8, 0))
+        ttk.Button(buttons, text="開始批次匯出", style="Compact.TButton", command=apply_options).pack(side="right")
+        dialog.bind("<Return>", lambda _event: apply_options())
+        dialog.bind("<Escape>", lambda _event: dialog.destroy())
+        dialog.wait_window()
+        return result["options"]
+
     def _build_practice_pdf_html(
         self,
         records: list[dict],
@@ -3941,36 +4137,19 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         combined_pdf = out_dir / f"{base_name}_題目與答案.pdf"
         combined_md = out_dir / f"{base_name}_題目與答案.md"
         export_seed = "practice-pdf|" + datetime.now().isoformat(timespec="microseconds")
-        generated_result = self._generate_practice_export_sets(records, counts, export_seed)
-        if not generated_result.get("ok"):
-            return messagebox.showerror("輸出失敗", f"無限練習生成失敗：\n{generated_result.get('reason', '未知錯誤')}")
-
-        generated_sets = generated_result.get("sets", [])
-
-        # 丟給 xelatex 之前，先逐一檢查每個生成器的內容有沒有會讓 LaTeX 失敗的問題
-        # （$ 沒成對、數學指令寫在 $ 外面等），有的話直接指名是哪個生成器壞掉，
-        # 不用再從一堆 LaTeX 錯誤裡回推。
-        latex_problem = pdf_markdown_export.find_latex_problem_in_sets(generated_sets)
-        if latex_problem:
-            gen_label = latex_problem["title"]
-            if latex_problem["id"]:
-                gen_label += f"（{latex_problem['id']}）"
-            return messagebox.showerror(
-                "輸出失敗：生成器內容有問題",
-                f"生成器「{gen_label}」的{latex_problem['field']}第 {latex_problem['index']} 題"
-                f"有 LaTeX 問題，無法排版：\n\n"
-                f"{latex_problem['problem']}\n\n"
-                f"出問題的內容：\n{latex_problem['sample']}",
-            )
-
         combined_title = str(combined_title or "無限練習題目與答案").strip() or "無限練習題目與答案"
-        markdown_text = pdf_markdown_export.build_practice_sets_markdown(
-            generated_sets,
+        markdown_result = self._generate_practice_export_markdown(
+            records,
+            counts,
             combined_title,
-            export_order=export_order,
-            answer_mode=answer_mode,
-            gap_mm=question_gap_mm,
+            export_order,
+            answer_mode,
+            question_gap_mm,
+            export_seed,
         )
+        if not markdown_result.get("ok"):
+            return messagebox.showerror("輸出失敗", markdown_result.get("reason", "") or "未知錯誤")
+        markdown_text = markdown_result.get("markdown", "")
 
         if export_format == "md":
             combined_md.write_text(markdown_text, encoding="utf-8")
@@ -4520,7 +4699,11 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         dialog.transient(self.root)
         dialog.grab_set()
         dialog.geometry("1080x680")
-        dialog.minsize(920, 560)
+        dialog.minsize(920, 500)
+        dialog.columnconfigure(0, weight=1)
+        dialog.rowconfigure(0, weight=0)
+        dialog.rowconfigure(1, weight=1, minsize=0)
+        dialog.rowconfigure(2, weight=0)
         dialog.after(0, lambda: self._maximize_window(dialog))
 
         state = {"chain": None, "items": [], "chapter_practice_ids": []}
@@ -4528,7 +4711,12 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
 
         # ── 上排：主題串選擇與管理 ──
         top = ttk.Frame(dialog, padding=12)
-        top.pack(fill="x")
+        top.grid(row=0, column=0, sticky="ew")
+        top.columnconfigure(0, weight=1)
+        top_controls = ttk.Frame(top)
+        top_controls.grid(row=0, column=0, sticky="ew")
+        top_actions = ttk.Frame(top)
+        top_actions.grid(row=1, column=0, sticky="w", pady=(8, 0))
 
         BASE_CATEGORY_OPTIONS = ["自訂", "中等練習", "複習必做", "章節重點"]
         GRADE_OPTIONS = [
@@ -4540,34 +4728,34 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         category_var = tk.StringVar(value="自訂")
         grade_var = tk.StringVar(value="全部年級")
 
-        ttk.Label(top, text="篩分類").pack(side="left")
+        ttk.Label(top_controls, text="篩分類").pack(side="left")
         chain_filter_category_combo = ttk.Combobox(
-            top,
+            top_controls,
             textvariable=chain_filter_category_var,
             state="readonly",
             width=12,
         )
         chain_filter_category_combo.pack(side="left", padx=(6, 8))
-        ttk.Label(top, text="篩年級").pack(side="left")
+        ttk.Label(top_controls, text="篩年級").pack(side="left")
         chain_filter_grade_combo = ttk.Combobox(
-            top,
+            top_controls,
             textvariable=chain_filter_grade_var,
             state="readonly",
             width=12,
         )
         chain_filter_grade_combo.pack(side="left", padx=(6, 10))
-        ttk.Label(top, text="自訂主題串").pack(side="left")
-        chain_combo = ttk.Combobox(top, state="readonly", width=32)
+        ttk.Label(top_controls, text="自訂主題串").pack(side="left")
+        chain_combo = ttk.Combobox(top_controls, state="readonly", width=32)
         chain_combo.pack(side="left", padx=(6, 12))
         title_var = tk.StringVar(value="")
-        ttk.Label(top, text="名稱").pack(side="left")
-        title_entry = ttk.Entry(top, textvariable=title_var, width=22)
+        ttk.Label(top_controls, text="名稱").pack(side="left")
+        title_entry = ttk.Entry(top_controls, textvariable=title_var, width=22)
         title_entry.pack(side="left", padx=(6, 8))
-        ttk.Label(top, text="分類").pack(side="left")
-        category_entry = ttk.Entry(top, textvariable=category_var, width=12)
+        ttk.Label(top_controls, text="分類").pack(side="left")
+        category_entry = ttk.Entry(top_controls, textvariable=category_var, width=12)
         category_entry.pack(side="left", padx=(6, 8))
-        ttk.Label(top, text="年級").pack(side="left")
-        grade_entry = ttk.Entry(top, textvariable=grade_var, width=12)
+        ttk.Label(top_controls, text="年級").pack(side="left")
+        grade_entry = ttk.Entry(top_controls, textvariable=grade_var, width=12)
         grade_entry.pack(side="left", padx=(6, 8))
 
         def category_options():
@@ -4748,19 +4936,22 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             items_list.delete(0, tk.END)
             status_var.set("目前沒有自訂主題串，輸入名稱後按「新增」。")
 
-        ttk.Button(top, text="新增", style="Compact.TButton", command=add_chain).pack(side="left")
-        ttk.Button(top, text="改名", style="Compact.TButton", command=rename_chain).pack(side="left", padx=(6, 0))
-        ttk.Button(top, text="刪除", style="Compact.TButton", command=delete_chain).pack(side="left", padx=(6, 0))
+        ttk.Button(top_actions, text="新增", style="Compact.TButton", command=add_chain).pack(side="left")
+        ttk.Button(top_actions, text="改名", style="Compact.TButton", command=rename_chain).pack(side="left", padx=(6, 0))
+        ttk.Button(top_actions, text="刪除", style="Compact.TButton", command=delete_chain).pack(side="left", padx=(6, 0))
 
         # ── 中間：左邊選來源、右邊主題串內容 ──
         body = ttk.Frame(dialog, padding=(12, 4))
-        body.pack(fill="both", expand=True)
+        body.grid(row=1, column=0, sticky="nsew")
+        body.grid_propagate(False)
         body.columnconfigure(0, weight=1)
         body.columnconfigure(1, weight=1)
+        body.rowconfigure(0, weight=0)
         body.rowconfigure(1, weight=1)
 
         left_box = ttk.LabelFrame(body, text="從章節加入（直接列出該章的分類）", padding=8)
         left_box.grid(row=0, column=0, rowspan=2, sticky="nsew", padx=(0, 8))
+        left_box.grid_propagate(False)
         left_box.columnconfigure(0, weight=1)
         left_box.rowconfigure(1, weight=1)
 
@@ -4887,6 +5078,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
 
         right_box = ttk.LabelFrame(body, text="主題串內容（匯出時整章會展開）", padding=8)
         right_box.grid(row=0, column=1, rowspan=2, sticky="nsew")
+        right_box.grid_propagate(False)
         right_box.columnconfigure(0, weight=1)
         right_box.rowconfigure(0, weight=1)
 
@@ -4957,17 +5149,19 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             try:
                 self._custom_theme_db_save(payload)
             except Exception as exc:
-                return messagebox.showerror("儲存失敗", str(exc), parent=dialog)
+                messagebox.showerror("儲存失敗", str(exc), parent=dialog)
+                return False
             if chain:
                 set_chain_filters_to_show(chain)
                 refresh_chain_combo(chains.index(chain))
             self.status_var.set("自訂主題串已儲存（practice-custom-theme-db.json）。")
             status_var.set("已儲存到 practice-custom-theme-db.json。")
+            return True
 
-        def expand_records():
+        def records_for_items(items):
             records = []
             seen = set()
-            for item in state["items"]:
+            for item in items or []:
                 kind = str(item.get("type", "practice"))
                 item_id = str(item.get("id", "")).strip()
                 pids = (
@@ -4986,6 +5180,9 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                         records.append({"id": pid, "title": pid, "questionCount": 5})
             return records
 
+        def expand_records():
+            return records_for_items(state["items"])
+
         def export_pdf():
             chain = state["chain"]
             if not chain:
@@ -5003,12 +5200,122 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                 except Exception:
                     pass
 
+        def export_all_pdfs():
+            if save_all() is False:
+                return
+            export_chains = [
+                chain for chain in chains
+                if isinstance(chain, dict)
+                and chain.get("enabled", True) is not False
+                and str(chain.get("id", "")).strip()
+            ]
+            if not export_chains:
+                return messagebox.showwarning("提醒", "目前沒有可匯出的自訂主題串。", parent=dialog)
+
+            options = self._open_practice_batch_pdf_options_dialog(len(export_chains))
+            if not options:
+                return
+
+            toolchain = pdf_markdown_export.check_pdf_toolchain()
+            if not toolchain["ok"]:
+                return messagebox.showerror("找不到排版工具", toolchain["reason"], parent=dialog)
+
+            out_dir = filedialog.askdirectory(title="選擇全部自訂主題串 PDF 輸出資料夾", parent=dialog)
+            if not out_dir:
+                return
+            out_dir = Path(out_dir)
+
+            if not messagebox.askyesno(
+                "確認批次匯出",
+                f"即將輸出 {len(export_chains)} 份 PDF 到：\n{out_dir}\n\n這可能需要一段時間，確定開始？",
+                parent=dialog,
+            ):
+                return
+
+            question_count = int(options.get("question_count", 10) or 10)
+            export_order = options.get("export_order", "interleaved")
+            answer_mode = options.get("answer_mode", "both")
+            question_gap_mm = float(options.get("question_gap_mm", 10) or 0)
+            date_prefix = datetime.now().strftime("%Y%m%d_%H%M%S")
+            written = []
+            failures = []
+
+            dialog.grab_release()
+            try:
+                for index, chain in enumerate(export_chains, start=1):
+                    title = str(chain.get("title", "")).strip() or str(chain.get("id", "")).strip() or f"自訂主題串{index}"
+                    records = records_for_items(chain.get("items", []) or [])
+                    if not records:
+                        failures.append(f"{title}：沒有可匯出的題型")
+                        continue
+
+                    counts = {
+                        str(record.get("id", "")).strip(): question_count
+                        for record in records
+                        if str(record.get("id", "")).strip()
+                    }
+                    combined_title = f"{title} 題目與答案"
+                    seed = f"practice-batch-pdf|{date_prefix}|{index}|{chain.get('id', '')}"
+                    markdown_result = self._generate_practice_export_markdown(
+                        records,
+                        counts,
+                        combined_title,
+                        export_order,
+                        answer_mode,
+                        question_gap_mm,
+                        seed,
+                    )
+                    if not markdown_result.get("ok"):
+                        failures.append(f"{title}：{markdown_result.get('reason', '未知錯誤')}")
+                        continue
+
+                    base_name = self._safe_filename(f"{date_prefix}_{index:03d}_{title}")
+                    pdf_path = out_dir / f"{base_name}_題目與答案.pdf"
+                    pdf_result = pdf_markdown_export.convert_markdown_to_pdf(
+                        markdown_result.get("markdown", ""),
+                        pdf_path,
+                        title=combined_title,
+                    )
+                    if not pdf_result.get("ok"):
+                        failures.append(f"{title}：{pdf_result.get('reason', '') or 'PDF 轉換失敗'}")
+                        continue
+
+                    written.append(pdf_path)
+                    status_var.set(f"批次匯出中：{index}/{len(export_chains)}，已完成 {len(written)} 份。")
+                    self.status_var.set(status_var.get())
+                    dialog.update_idletasks()
+            finally:
+                try:
+                    dialog.grab_set()
+                except Exception:
+                    pass
+
+            if failures:
+                preview = "\n".join(failures[:12])
+                more = "" if len(failures) <= 12 else f"\n...另有 {len(failures) - 12} 筆失敗"
+                self.status_var.set(f"自訂主題串批次匯出部分完成：成功 {len(written)} 份，失敗 {len(failures)} 份。")
+                status_var.set(self.status_var.get())
+                return messagebox.showwarning(
+                    "部分完成",
+                    f"已輸出 {len(written)} 份 PDF 到：\n{out_dir}\n\n失敗 {len(failures)} 份：\n{preview}{more}",
+                    parent=dialog,
+                )
+
+            self.status_var.set(f"自訂主題串批次 PDF 匯出完成：{len(written)} 份。")
+            status_var.set(self.status_var.get())
+            return messagebox.showinfo("完成", f"已輸出 {len(written)} 份 PDF 到：\n{out_dir}", parent=dialog)
+
         bottom = ttk.Frame(dialog, padding=12)
-        bottom.pack(fill="x")
-        ttk.Label(bottom, textvariable=status_var).pack(side="left")
-        ttk.Button(bottom, text="關閉", style="Compact.TButton", command=dialog.destroy).pack(side="right")
-        ttk.Button(bottom, text="匯出 PDF/MD", style="Compact.TButton", command=export_pdf).pack(side="right", padx=(0, 8))
-        ttk.Button(bottom, text="儲存", style="Compact.TButton", command=save_all).pack(side="right", padx=(0, 8))
+        bottom.grid(row=2, column=0, sticky="ew")
+        bottom.columnconfigure(0, weight=1)
+        ttk.Label(bottom, textvariable=status_var).grid(row=0, column=0, sticky="w")
+
+        def add_dialog_action_buttons(parent):
+            ttk.Button(parent, text="儲存", style="Compact.TButton", command=save_all).pack(side="left", padx=(12, 0))
+            ttk.Button(parent, text="匯出 PDF/MD", style="Compact.TButton", command=export_pdf).pack(side="left", padx=(8, 0))
+            ttk.Button(parent, text="匯出全部 PDF", style="Compact.TButton", command=export_all_pdfs).pack(side="left", padx=(8, 0))
+
+        add_dialog_action_buttons(top_actions)
 
         refresh_chain_combo(0 if chains else None)
         if chains:

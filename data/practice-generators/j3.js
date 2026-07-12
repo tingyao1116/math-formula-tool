@@ -978,7 +978,12 @@
         const q = randInt(2, 6);
         const r = randInt(2, 6);
         questions.push(`因式分解：\\((x+${p})(x-${q})-(x-${r})(${q}-x)\\)`);
-        answers.push(`\\((x+${p})(x-${q})-(x-${r})(${q}-x)=(x+${p})(x-${q})+(x-${r})(x-${q})=(x-${q})(2x+${p - r})\\)`);
+        answers.push(
+          `\\((x+${p})(x-${q})-(x-${r})(${q}-x)=(x+${p})(x-${q})+(x-${r})(x-${q})=(x-${q})(${formatPolynomialFromCoeffs([
+            2,
+            p - r,
+          ])})\\)`
+        );
         continue;
       }
       const A = randInt(3, 7);
@@ -1491,7 +1496,7 @@
         const p = randInt(1, 6);
         const q = randInt(1, 6);
         questions.push(`已知 \\(x^2+ax+b=(x+${p})(x+${q})\\)，求 \\(a,b\\)。`);
-        answers.push(`展開右式得 \\((x+${p})(x+${q})=x^2+${p + q}x+${p * q}\\)，所以 \\(a=${p + q},\\ b=${p * q}\\)。`);
+        answers.push(`展開右式得 \\((x+${p})(x+${q})=${formatPolynomialFromCoeffs([1, p + q, p * q])}\\)，所以 \\(a=${p + q},\\ b=${p * q}\\)。`);
         continue;
       }
       if (mode === 1) {
@@ -1501,7 +1506,7 @@
         const s = randInt(1, 5);
         questions.push(`已知 \\(${p * r}x^2+mx+n=(${p}x+${q})(${r}x+${s})\\)，求 \\(m,n\\)。`);
         answers.push(
-          `展開右式得 \\(${p * r}x^2+${p * s + q * r}x+${q * s}\\)，所以 \\(m=${p * s + q * r},\\ n=${q * s}\\)。`
+          `展開右式得 \\(${formatPolynomialFromCoeffs([p * r, p * s + q * r, q * s])}\\)，所以 \\(m=${p * s + q * r},\\ n=${q * s}\\)。`
         );
         continue;
       }
@@ -1516,7 +1521,7 @@
       const p = randInt(1, 4);
       const q = randInt(1, 4);
       questions.push(`已知 \\(${a1}x^2+ax-${p * q}=(${a1}x+${p})(x-${q})\\)，求 \\(a\\)。`);
-      answers.push(`展開右式得 \\(${a1}x^2+${p - a1 * q}x-${p * q}\\)，所以 \\(a=${p - a1 * q}\\)。`);
+      answers.push(`展開右式得 \\(${formatPolynomialFromCoeffs([a1, p - a1 * q, -p * q])}\\)，所以 \\(a=${p - a1 * q}\\)。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -5494,105 +5499,144 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    for (let i = 0; i < count; i += 1) {
-      const mode = i % 3;
+    const seen = new Set();
 
+    function coefficientText(value, variable) {
+      const abs = Math.abs(value);
+      return `${abs === 1 ? '' : abs}${variable}`;
+    }
+
+    function formatLinear(a, b) {
+      const first = `${a < 0 ? '-' : ''}${coefficientText(a, 'x')}`;
+      const second = `${b < 0 ? '-' : '+'}${coefficientText(b, 'y')}`;
+      return `${first}${second}`;
+    }
+
+    function rootSignText(value) {
+      return value >= 0 ? '正' : '負';
+    }
+
+    function squareRootsText(value) {
+      if (value === 0) return '0';
+      return `\\pm${formatRadical(value)}`;
+    }
+
+    function makeSystemResult(x0, y0, a, b, c, d) {
+      if (a * d - b * c === 0) return null;
+      const firstValue = a * x0 + b * y0;
+      const secondValue = c * x0 + d * y0;
+      if (firstValue === 0 || secondValue === 0) return null;
+      return {
+        firstExpr: formatLinear(a, b),
+        secondExpr: formatLinear(c, d),
+        firstValue,
+        secondValue,
+      };
+    }
+
+    function buildOne(mode) {
       if (mode === 0) {
-        // Ax+By = P（正平方根）, Cx-Dy = -Q（負平方根）
-        // 選 A,B,C,D 和解 x,y，反推 P²和 Q²
-        const x0 = randInt(1, 8),
-          y0 = randInt(1, 8);
-        const A = randInt(1, 4),
-          B = randInt(1, 4);
-        const C = randInt(1, 4),
-          D = randInt(1, 4);
-        const P = A * x0 + B * y0; // Ax+By = P（正）
-        const Q = C * x0 - D * y0; // Cx-Dy = Q（可正可負）
-        if (P <= 0) {
-          i -= 1;
-          continue;
-        }
-        const P2 = P * P,
-          Q2 = Q * Q;
-        const signQ = Q >= 0 ? '正' : '負';
-        const Astr = A === 1 ? '' : `${A}`;
-        const Bstr = B === 1 ? '' : `${B}`;
-        const Cstr = C === 1 ? '' : `${C}`;
-        const Dstr = D === 1 ? '' : `${D}`;
-        questions.push(
-          `若 \\(${Astr}x+${Bstr}y\\) 是 \\(${P2}\\) 的正平方根，\\(${Cstr}x-${Dstr}y\\) 是 \\(${Q2}\\) 的${signQ}平方根，求 \\(x+y\\)。`
+        const x0 = randInt(1, 9);
+        const y0 = randInt(1, 9);
+        const data = makeSystemResult(
+          x0,
+          y0,
+          randInt(1, 4),
+          randInt(1, 4),
+          randInt(1, 4),
+          -randInt(1, 4)
         );
-        answers.push(
-          `由題意列式：\\(${Astr}x+${Bstr}y=${P}\\)，\\(${Cstr}x-${Dstr}y=${Q}\\)。` +
-            `解此聯立方程組得 \\(x=${x0},\\ y=${y0}\\)，所以 \\(x+y=${x0 + y0}\\)。`
-        );
-        continue;
+        if (!data) return null;
+        return {
+          question:
+            `若 \\(${data.firstExpr}\\) 是 \\(${data.firstValue * data.firstValue}\\) 的${rootSignText(data.firstValue)}平方根，` +
+            `\\(${data.secondExpr}\\) 是 \\(${data.secondValue * data.secondValue}\\) 的${rootSignText(data.secondValue)}平方根，求 \\(x+y\\)。`,
+          answer:
+            `由平方根的正負可列 \\(${data.firstExpr}=${data.firstValue}\\)、\\(${data.secondExpr}=${data.secondValue}\\)。` +
+            `解此聯立方程組得 \\(x=${x0},\\ y=${y0}\\)，所以 \\(x+y=${x0 + y0}\\)。`,
+        };
       }
 
       if (mode === 1) {
-        // 2x+3y 是 p² 的正平方根, x-2y 是 q² 的負平方根，求 x-y 的平方根
-        const x0 = randInt(1, 6),
-          y0 = randInt(1, 6);
-        const p = 2 * x0 + 3 * y0; // 2x+3y = p（正）
-        const q = -(x0 - 2 * y0); // x-2y = -q（負）
-        if (p <= 0 || q <= 0) {
-          i -= 1;
-          continue;
-        }
-        const p2 = p * p,
-          q2 = q * q;
-        const diff = x0 - y0;
-        const diffStr = diff < 0 ? `(${diff})` : `${diff}`;
-        const sqrtDiff = isPerfectSquare(Math.abs(diff))
-          ? `\\pm${Math.sqrt(Math.abs(diff))}`
-          : `\\pm\\sqrt{${Math.abs(diff)}}`;
-        if (diff === 0) {
-          i -= 1;
-          continue;
-        }
-        questions.push(
-          `若 \\(2x+3y\\) 是 \\(${p2}\\) 的正平方根，\\(x-2y\\) 是 \\(${q2}\\) 的負平方根，求 \\(x-y\\) 的平方根。`
-        );
-        answers.push(
-          `\\(2x+3y=${p}\\)，\\(x-2y=-${q}\\)。聯立解得 \\(x=${x0},\\ y=${y0}\\)。` +
-            `所以 \\(x-y=${diffStr}\\)，其平方根為 \\(${sqrtDiff}\\)。`
-        );
-        continue;
+        const y0 = randInt(1, 7);
+        const diff = randInt(1, 9);
+        const x0 = y0 + diff;
+        const data = makeSystemResult(x0, y0, 2, 3, 1, -2);
+        if (!data) return null;
+        return {
+          question:
+            `若 \\(2x+3y\\) 是 \\(${data.firstValue * data.firstValue}\\) 的${rootSignText(data.firstValue)}平方根，` +
+            `\\(x-2y\\) 是 \\(${data.secondValue * data.secondValue}\\) 的${rootSignText(data.secondValue)}平方根，求 \\(x-y\\) 的平方根。`,
+          answer:
+            `由題意得 \\(2x+3y=${data.firstValue}\\)、\\(x-2y=${data.secondValue}\\)，聯立解得 \\(x=${x0},\\ y=${y0}\\)。` +
+            `所以 \\(x-y=${diff}\\)，其平方根為 \\(${squareRootsText(diff)}\\)。`,
+        };
       }
 
-      // mode 2: Ax+By = √(p²) = p, Cx+Dy = -√(q²) = -q，求 x、y 的平方根
-      const x0 = randInt(2, 10),
-        y0 = randInt(2, 10);
-      const A2 = randInt(1, 3),
-        B2 = randInt(1, 3);
-      const C2 = randInt(1, 3),
-        D2 = randInt(1, 3);
-      const p3 = A2 * x0 + B2 * y0;
-      const q3 = C2 * x0 + D2 * y0;
-      if (p3 <= 0 || q3 <= 0) {
-        i -= 1;
-        continue;
+      if (mode === 2) {
+        const x0 = randInt(2, 16);
+        const y0 = randInt(2, 16);
+        const data = makeSystemResult(
+          x0,
+          y0,
+          randInt(1, 4),
+          randInt(1, 4),
+          randInt(1, 4),
+          randInt(1, 4)
+        );
+        if (!data) return null;
+        return {
+          question:
+            `若 \\(${data.firstExpr}\\) 是 \\(${data.firstValue * data.firstValue}\\) 的正平方根，` +
+            `\\(${data.secondExpr}\\) 是 \\(${data.secondValue * data.secondValue}\\) 的正平方根，求 \\(x\\)、\\(y\\) 的平方根。`,
+          answer:
+            `由題意得 \\(${data.firstExpr}=${data.firstValue}\\)、\\(${data.secondExpr}=${data.secondValue}\\)，聯立解得 \\(x=${x0},\\ y=${y0}\\)。` +
+            `\\(x\\) 的平方根為 \\(${squareRootsText(x0)}\\)，\\(y\\) 的平方根為 \\(${squareRootsText(y0)}\\)。`,
+        };
       }
-      // 確保聯立有唯一解
-      const det = A2 * D2 - B2 * C2;
-      if (det === 0) {
-        i -= 1;
-        continue;
+
+      if (mode === 3) {
+        const x0 = randInt(1, 8);
+        const y0 = randInt(1, 8);
+        const target = x0 + 2 * y0;
+        const data = makeSystemResult(x0, y0, 3, 1, 2, -1);
+        if (!data) return null;
+        return {
+          question:
+            `若 \\(3x+y\\) 是 \\(${data.firstValue * data.firstValue}\\) 的${rootSignText(data.firstValue)}平方根，` +
+            `\\(2x-y\\) 是 \\(${data.secondValue * data.secondValue}\\) 的${rootSignText(data.secondValue)}平方根，求 \\(x+2y\\) 的平方根。`,
+          answer:
+            `由題意得 \\(3x+y=${data.firstValue}\\)、\\(2x-y=${data.secondValue}\\)，聯立解得 \\(x=${x0},\\ y=${y0}\\)。` +
+            `所以 \\(x+2y=${target}\\)，其平方根為 \\(${squareRootsText(target)}\\)。`,
+        };
       }
-      const sqrtX = isPerfectSquare(x0) ? `\\pm${Math.sqrt(x0)}` : `\\pm\\sqrt{${x0}}`;
-      const sqrtY = isPerfectSquare(y0) ? `\\pm${Math.sqrt(y0)}` : `\\pm\\sqrt{${y0}}`;
-      const A2s = A2 === 1 ? '' : `${A2}`;
-      const B2s = B2 === 1 ? '' : `${B2}`;
-      const C2s = C2 === 1 ? '' : `${C2}`;
-      const D2s = D2 === 1 ? '' : `${D2}`;
-      questions.push(
-        `若 \\(${A2s}x+${B2s}y\\) 是 \\(${p3 * p3}\\) 的正平方根，\\(${C2s}x+${D2s}y\\) 是 \\(${q3 * q3}\\) 的正平方根，求 \\(x\\)、\\(y\\) 的平方根。`
-      );
-      answers.push(
-        `\\(${A2s}x+${B2s}y=${p3}\\)，\\(${C2s}x+${D2s}y=${q3}\\)，聯立解得 \\(x=${x0},\\ y=${y0}\\)。` +
-          `\\(x\\) 的平方根為 \\(${sqrtX}\\)，\\(y\\) 的平方根為 \\(${sqrtY}\\)。`
-      );
+
+      const x0 = randInt(2, 10);
+      const y0 = randInt(1, x0 - 1);
+      const a = randInt(2, 5);
+      const data = makeSystemResult(x0, y0, 1, a, a, -1);
+      if (!data) return null;
+      const diff = x0 - y0;
+      return {
+        question:
+          `若 \\(x+${a}y\\) 是 \\(${data.firstValue * data.firstValue}\\) 的${rootSignText(data.firstValue)}平方根，` +
+          `\\(${a}x-y\\) 是 \\(${data.secondValue * data.secondValue}\\) 的${rootSignText(data.secondValue)}平方根，求 \\(x-y\\) 的平方根。`,
+        answer:
+          `由題意得 \\(x+${a}y=${data.firstValue}\\)、\\(${a}x-y=${data.secondValue}\\)，聯立解得 \\(x=${x0},\\ y=${y0}\\)。` +
+          `所以 \\(x-y=${diff}\\)，其平方根為 \\(${squareRootsText(diff)}\\)。`,
+      };
     }
+
+    let attempts = 0;
+    while (questions.length < count && attempts < count * 80) {
+      attempts += 1;
+      const item = buildOne(randInt(0, 4));
+      if (!item || seen.has(item.question)) continue;
+      seen.add(item.question);
+      questions.push(item.question);
+      answers.push(item.answer);
+    }
+
     return { questions, summaryAnswers, answers };
   }
 
@@ -7841,7 +7885,7 @@
     },
   };
 
-  const bundleFingerprint = 'j3-bundle-v20260706-summary-v1';
+  const bundleFingerprint = 'j3-bundle-v20260710-sign-format-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

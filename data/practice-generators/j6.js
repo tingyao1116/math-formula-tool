@@ -4069,8 +4069,10 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     const labels = ['40～50', '50～60', '60～70', '70～80', '80～90'];
+    const labelText = labels.join('、');
     for (let i = 0; i < count; i += 1) {
       const counts = [randInt(3, 8), randInt(5, 12), randInt(8, 16), randInt(5, 12), randInt(3, 8)];
+      const countText = counts.join('、');
       const total = counts.reduce((sum, value) => sum + value, 0);
       const targetName = ['Q_1', 'Q_2', 'Q_3'][i % 3];
       const targetPosition = total * [0.25, 0.5, 0.75][i % 3];
@@ -4084,10 +4086,10 @@
         }
       }
       questions.push(
-        `某次數分配表各組 \\(${labels.join('、')}\\) 的次數依序為 \\(${counts.join('、')}\\)，共 \\(${total}\\) 人。判斷 \\(${targetName}\\) 落在哪一組。`
+        `某次數分配表各組 ${labelText} 的次數依序為 ${countText}，共 \\(${total}\\) 人。判斷 \\(${targetName}\\) 落在哪一組。`
       );
       answers.push(
-        `簡答：\\(${targetName}\\) 落在 \\(${group}\\) 組。過程：\\(${targetName}\\) 約看第 \\(${targetPosition}\\) 筆資料；累積次數首次達到或超過此位置的組別就是答案。`
+        `簡答：\\(${targetName}\\) 落在「${group}」組。過程：\\(${targetName}\\) 約看第 \\(${targetPosition}\\) 筆資料；累積次數首次達到或超過此位置的組別就是答案。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -5949,7 +5951,7 @@
     },
   };
 
-  const bundleFingerprint = 'j6-bundle-v20260708-j63-extension-v1';
+  const bundleFingerprint = 'j6-bundle-v20260710-frequency-interval-text-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

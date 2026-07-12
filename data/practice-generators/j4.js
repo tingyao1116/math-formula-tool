@@ -140,8 +140,8 @@
       const d = pickNonZero(-9, 9);
       const n = randInt(6, 25);
       const an = a1 + (n - 1) * d;
-      questions.push(`已知等差數列首項 \\(a_1=${a1}\\)、公差 \\(d=${d}\\)，求第 ${n} 項 \\(a_${n}\\)。`);
-      answers.push(`簡答：\\(a_${n}=${an}\\)。`);
+      questions.push(`已知等差數列首項 \\(a_1=${a1}\\)、公差 \\(d=${d}\\)，求第 ${n} 項 \\(${latexSub('a', n)}\\)。`);
+      answers.push(`簡答：\\(${latexSub('a', n)}=${an}\\)。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -159,13 +159,17 @@
       const an = a1 + (n - 1) * d;
       const askMode = i % 2;
       if (askMode === 0) {
-        questions.push(`已知等差數列 \\(a_${m}=${am},\\ a_${n}=${an}\\)，求公差 \\(d\\) 與首項 \\(a_1\\)。`);
+        questions.push(
+          `已知等差數列 \\(${latexSub('a', m)}=${am},\\ ${latexSub('a', n)}=${an}\\)，求公差 \\(d\\) 與首項 \\(a_1\\)。`
+        );
         answers.push(`簡答：\\(d=${d},\\ a_1=${a1}\\)。`);
       } else {
         const k = randInt(n + 1, n + 10);
         const ak = a1 + (k - 1) * d;
-        questions.push(`已知等差數列 \\(a_${m}=${am},\\ a_${n}=${an}\\)，求第 ${k} 項 \\(a_${k}\\)。`);
-        answers.push(`簡答：\\(a_${k}=${ak}\\)。`);
+        questions.push(
+          `已知等差數列 \\(${latexSub('a', m)}=${am},\\ ${latexSub('a', n)}=${an}\\)，求第 ${k} 項 \\(${latexSub('a', k)}\\)。`
+        );
+        answers.push(`簡答：\\(${latexSub('a', k)}=${ak}\\)。`);
       }
     }
     return { questions, summaryAnswers, answers };
@@ -376,7 +380,7 @@
       const sum2 = 2 * a1 + (r + s - 2) * d;
       if (i % 2 === 0) {
         questions.push(
-          `等差數列 \\(a_n\\) 中，已知 \\(a_${p}+a_${q}=${sum1}\\)，\\(a_${r}+a_${s}=${sum2}\\)，求首項 \\(a_1\\) 與公差 \\(d\\)。`
+          `等差數列 \\(a_n\\) 中，已知 \\(${latexSub('a', p)}+${latexSub('a', q)}=${sum1}\\)，\\(${latexSub('a', r)}+${latexSub('a', s)}=${sum2}\\)，求首項 \\(a_1\\) 與公差 \\(d\\)。`
         );
         answers.push(
           `由 \\(a_m+a_n=2a_1+(m+n-2)d\\)，可列出 \\(2a_1+${p + q - 2}d=${sum1}\\) 與 \\(2a_1+${r + s - 2}d=${sum2}\\)，解得 \\(a_1=${a1}\\)，\\(d=${d}\\)。`
@@ -385,10 +389,10 @@
         const t = s + randInt(2, 5);
         const at = a1 + (t - 1) * d;
         questions.push(
-          `等差數列 \\(a_n\\) 中，已知 \\(a_${p}+a_${q}=${sum1}\\)，\\(a_${r}+a_${s}=${sum2}\\)，求 \\(a_${t}\\)。`
+          `等差數列 \\(a_n\\) 中，已知 \\(${latexSub('a', p)}+${latexSub('a', q)}=${sum1}\\)，\\(${latexSub('a', r)}+${latexSub('a', s)}=${sum2}\\)，求 \\(${latexSub('a', t)}\\)。`
         );
         answers.push(
-          `先由 \\(2a_1+${p + q - 2}d=${sum1}\\) 與 \\(2a_1+${r + s - 2}d=${sum2}\\) 解得 \\(a_1=${a1}\\)，\\(d=${d}\\)，再代入 \\(a_${t}=a_1+(${t}-1)d=${at}\\)。`
+          `先由 \\(2a_1+${p + q - 2}d=${sum1}\\) 與 \\(2a_1+${r + s - 2}d=${sum2}\\) 解得 \\(a_1=${a1}\\)，\\(d=${d}\\)，再代入 \\(${latexSub('a', t)}=a_1+(${t}-1)d=${at}\\)。`
         );
       }
     }
@@ -1253,10 +1257,10 @@
         const s2 = block1 + block2;
         const s3 = block1 + block2 + block3;
         questions.push(
-          `某等差數列滿足 \\(S_${blockSize}=${s1}\\)、\\(S_${2 * blockSize}=${s2}\\)，求 \\(S_${3 * blockSize}\\)。`
+          `某等差數列滿足 \\(${latexSub('S', blockSize)}=${s1}\\)、\\(${latexSub('S', 2 * blockSize)}=${s2}\\)，求 \\(${latexSub('S', 3 * blockSize)}\\)。`
         );
         answers.push(
-          `先算第二段和為 \\(S_${2 * blockSize}-S_${blockSize}=${s2 - s1}\\)，再利用等差分段和成等差，可得第三段和為 ${block3}，所以 \\(S_${3 * blockSize}=${s3}\\)。`
+          `先算第二段和為 \\(${latexSub('S', 2 * blockSize)}-${latexSub('S', blockSize)}=${s2 - s1}\\)，再利用等差分段和成等差，可得第三段和為 ${block3}，所以 \\(${latexSub('S', 3 * blockSize)}=${s3}\\)。`
         );
       }
     }
@@ -1288,7 +1292,7 @@
           `某等差數列共有 ${2 * half} 項，奇數項和為 ${oddSum}，偶數項和為 ${evenSum}，求前 ${2 * half} 項和。`
         );
         answers.push(
-          `前 ${2 * half} 項和就是奇數項和加偶數項和，所以 \\(S_${2 * half}=${oddSum}+${evenSum}=${total}\\)。`
+          `前 ${2 * half} 項和就是奇數項和加偶數項和，所以 \\(${latexSub('S', 2 * half)}=${oddSum}+${evenSum}=${total}\\)。`
         );
       }
     }
@@ -1541,7 +1545,7 @@
           `設一等比數列的第 ${m} 項為 ${formatGeometricTermLatex(am)}，第 ${n} 項為 ${formatGeometricTermLatex(an)}，求公比 \\(r\\)。`
         );
         answers.push(
-          `簡答：\\(r=${formatRatioLatex(r)}\\)。過程：相鄰兩項相除，\\(r=\\frac{a_${n}}{a_${m}}=${formatGeometricTermLatex(an)}\\div ${formatGeometricTermLatex(am)}=${formatRatioLatex(r)}\\)。`
+          `簡答：\\(r=${formatRatioLatex(r)}\\)。過程：相鄰兩項相除，\\(r=\\frac{${latexSub('a', n)}}{${latexSub('a', m)}}=${formatGeometricTermLatex(an)}\\div ${formatGeometricTermLatex(am)}=${formatRatioLatex(r)}\\)。`
         );
         continue;
       }
@@ -1569,7 +1573,7 @@
           `已知一等比數列的第 ${m} 項為 ${formatGeometricTermLatex(am)}，公比 \\(r=${formatRatioLatex(r)}\\)，求首項 \\(a_1\\)。`
         );
         answers.push(
-          `簡答：\\(a_1=${formatGeometricTermLatex(a1)}\\)。過程：\\(a_${m}=a_1r^{${m - 1}}\\)，所以 \\(a_1=${formatGeometricTermLatex(am)}\\div ${formatFractionLatexForFactor(r)}^{${m - 1}}=${formatGeometricTermLatex(a1)}\\)。`
+          `簡答：\\(a_1=${formatGeometricTermLatex(a1)}\\)。過程：\\(${latexSub('a', m)}=a_1r^{${m - 1}}\\)，所以 \\(a_1=${formatGeometricTermLatex(am)}\\div ${formatFractionLatexForFactor(r)}^{${m - 1}}=${formatGeometricTermLatex(a1)}\\)。`
         );
         continue;
       }
@@ -1582,7 +1586,7 @@
           `已知一等比數列的第 ${m} 項為 ${formatGeometricTermLatex(am)}，公比 \\(r=${formatRatioLatex(r)}\\)，求首項 \\(a_1\\)。`
         );
         answers.push(
-          `簡答：\\(a_1=${formatGeometricTermLatex(a1)}\\)。過程：\\(a_${m}=a_1r^{${m - 1}}\\)，所以 \\(a_1=${formatGeometricTermLatex(am)}\\div ${formatFractionLatexForFactor(r)}^{${m - 1}}=${formatGeometricTermLatex(a1)}\\)。`
+          `簡答：\\(a_1=${formatGeometricTermLatex(a1)}\\)。過程：\\(${latexSub('a', m)}=a_1r^{${m - 1}}\\)，所以 \\(a_1=${formatGeometricTermLatex(am)}\\div ${formatFractionLatexForFactor(r)}^{${m - 1}}=${formatGeometricTermLatex(a1)}\\)。`
         );
         continue;
       }
@@ -1594,7 +1598,7 @@
         `一等比數列的首項為 ${formatGeometricTermLatex(a1)}，第 ${m} 項為 ${formatGeometricTermLatex(am)}，求公比 \\(r\\)。`
       );
       answers.push(
-        `簡答：\\(r=${formatRatioLatex(r)}\\)。過程：\\(a_${m}=a_1r^{${m - 1}}\\)，所以 \\(r^{${m - 1}}=${formatGeometricTermLatex(am)}\\div ${formatGeometricTermLatex(a1)}=${formatRatioLatex(powFraction(r, m - 1))}\\)。因為 ${m - 1} 是奇數，符號可一起判定，得 \\(r=${formatRatioLatex(r)}\\)。`
+        `簡答：\\(r=${formatRatioLatex(r)}\\)。過程：\\(${latexSub('a', m)}=a_1r^{${m - 1}}\\)，所以 \\(r^{${m - 1}}=${formatGeometricTermLatex(am)}\\div ${formatGeometricTermLatex(a1)}=${formatRatioLatex(powFraction(r, m - 1))}\\)。因為 ${m - 1} 是奇數，符號可一起判定，得 \\(r=${formatRatioLatex(r)}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -5318,7 +5322,7 @@
         const side = [3, 4, 5, 6, 8][randInt(0, 4)];
         questions.push(`正方形邊長為 ${side}，求其對角線長。`);
         answers.push(
-          `簡答：\\(${side}\\sqrt{2}\\)。過程：正方形對角線為 \\(邊長\\times\\sqrt{2}\\)，所以為 \\(${side}\\sqrt{2}\\)。`
+          `簡答：\\(${side}\\sqrt{2}\\)。過程：正方形對角線為 \\(\\text{邊長}\\times\\sqrt{2}\\)，所以為 \\(${side}\\sqrt{2}\\)。`
         );
         continue;
       }
@@ -6167,7 +6171,7 @@
           `平面上三點 \\(A(${ax},${ay})\\)、\\(B(${bx},${by})\\)、\\(C(${cx},${cy})\\) 可作為某平行四邊形的三個頂點。求所有可能的對角線交點座標。`
         );
         answers.push(
-          `簡答：${mAB}、${mAC}、${mBC}。過程：三點中任選兩點作為一條對角線端點，其交點就是該線段中點，因此可能為 \\(AB\\)、\\(AC\\)、\\(BC\\) 的中點。`
+          `簡答：$${mAB}$、$${mAC}$、$${mBC}$。過程：三點中任選兩點作為一條對角線端點，其交點就是該線段中點，因此可能為 \\(AB\\)、\\(AC\\)、\\(BC\\) 的中點。`
         );
         continue;
       }
@@ -6263,7 +6267,7 @@
           `等腰梯形的上底為 \\(x-${topOffset}\\)，下底為 \\(2x${formatSignedAdd(bottomOffset)}\\)，高為 ${height}，且面積為 ${area}。求 \\(x\\)。`
         );
         answers.push(
-          `簡答：\\(x=${x}\\)。過程：梯形面積 \\(=\\frac{(上底+下底)\\times高}{2}\\)，所以 \\(${area}=\\frac{(x-${topOffset}+2x${formatSignedAdd(bottomOffset)})\\times${height}}{2}\\)，解得 \\(x=${x}\\)。`
+          `簡答：\\(x=${x}\\)。過程：梯形面積 \\(=\\frac{(\\text{上底}+\\text{下底})\\times\\text{高}}{2}\\)，所以 \\(${area}=\\frac{(x-${topOffset}+2x${formatSignedAdd(bottomOffset)})\\times${height}}{2}\\)，解得 \\(x=${x}\\)。`
         );
         continue;
       }
@@ -6278,11 +6282,9 @@
         const d2 = 2 * q;
         const area = (d1 * d2) / 2;
         const height = makeFraction(area, side);
-        questions.push(
-          `菱形 \\(ABCD\\) 的對角線 \\(AC=${d1}\\)、\\(BD=${d2}\\)。求此菱形的高。`
-        );
+        questions.push(`菱形 \\(ABCD\\) 的對角線 \\(AC=${d1}\\)、\\(BD=${d2}\\)。求此菱形的高。`);
         answers.push(
-          `簡答：\\(${formatFunctionFractionValue(height)}\\)。過程：菱形面積 \\(=\\frac{${d1}\\times${d2}}{2}=${area}\\)。半對角線為 ${p}、${q}，邊長 \\(=\\sqrt{${p}^2+${q}^2}=${side}\\)。又面積 \\(=邊長\\times高\\)，所以高 \\(=\\frac{${area}}{${side}}=${formatFunctionFractionValue(height)}\\)。`
+          `簡答：\\(${formatFunctionFractionValue(height)}\\)。過程：菱形面積 \\(=\\frac{${d1}\\times${d2}}{2}=${area}\\)。半對角線為 ${p}、${q}，邊長 \\(=\\sqrt{${p}^2+${q}^2}=${side}\\)。又面積 \\(=\\text{邊長}\\times\\text{高}\\)，所以高 \\(=\\frac{${area}}{${side}}=${formatFunctionFractionValue(height)}\\)。`
         );
         continue;
       }
@@ -6336,9 +6338,7 @@
       }
       if (mode === 1) {
         const half = randInt(3, 9);
-        questions.push(
-          `一個四邊形的兩條對角線互相垂直、互相平分，且四段半對角線都等長為 ${half}。判斷此四邊形為何。`
-        );
+        questions.push(`一個四邊形的兩條對角線互相垂直、互相平分，且四段半對角線都等長為 ${half}。判斷此四邊形為何。`);
         answers.push(
           `簡答：正方形。過程：對角線互相平分得平行四邊形；互相垂直得菱形；四段半對角線等長表示兩對角線相等，所以同時是矩形與菱形，即正方形。`
         );
@@ -6346,11 +6346,9 @@
       }
       if (mode === 2) {
         const side = randInt(4, 13);
-        questions.push(
-          `正方形 \\(ABCD\\) 的對角線長為 \\(${side}\\sqrt{2}\\)。求此正方形的面積與周長。`
-        );
+        questions.push(`正方形 \\(ABCD\\) 的對角線長為 \\(${side}\\sqrt{2}\\)。求此正方形的面積與周長。`);
         answers.push(
-          `簡答：面積 \\(${side * side}\\)，周長 \\(${4 * side}\\)。過程：正方形對角線 \\(=邊長\\sqrt2\\)，所以邊長為 ${side}，面積 \\(${side}^2=${side * side}\\)，周長 \\(4\\times${side}=${4 * side}\\)。`
+          `簡答：面積 \\(${side * side}\\)，周長 \\(${4 * side}\\)。過程：正方形對角線 \\(=\\text{邊長}\\sqrt{2}\\)，所以邊長為 ${side}，面積 \\(${side}^2=${side * side}\\)，周長 \\(4\\times${side}=${4 * side}\\)。`
         );
         continue;
       }
@@ -6358,9 +6356,7 @@
         const d1 = randInt(5, 14);
         const d2 = randInt(6, 16);
         const area = makeFraction(d1 * d2, 2);
-        questions.push(
-          `某梯形的兩條對角線互相垂直，長度分別為 ${d1} 與 ${d2}。利用垂直對角線面積公式求此梯形面積。`
-        );
+        questions.push(`某梯形的兩條對角線互相垂直，長度分別為 ${d1} 與 ${d2}。利用垂直對角線面積公式求此梯形面積。`);
         answers.push(
           `簡答：\\(${formatFunctionFractionValue(area)}\\)。過程：對角線互相垂直的四邊形面積可寫成 \\(\\frac{d_1d_2}{2}\\)，所以面積 \\(=\\frac{${d1}\\times${d2}}{2}=${formatFunctionFractionValue(area)}\\)。`
         );
@@ -6427,9 +6423,7 @@
         const d1 = 3 * r;
         const d2 = 2 * r;
         const area = (d1 * d2) / 2;
-        questions.push(
-          `設計一個箏形風箏，兩條對角線長度比為 \\(3:2\\)，且面積為 ${area} 平方公分。求兩條對角線長。`
-        );
+        questions.push(`設計一個箏形風箏，兩條對角線長度比為 \\(3:2\\)，且面積為 ${area} 平方公分。求兩條對角線長。`);
         answers.push(
           `簡答：\\(${d1}\\) 公分、\\(${d2}\\) 公分。過程：設對角線為 \\(3t\\)、\\(2t\\)，面積 \\(=\\frac{3t\\cdot2t}{2}=3t^2=${area}\\)，得 \\(t=${r}\\)，所以兩對角線為 ${d1}、${d2}。`
         );
@@ -6641,7 +6635,7 @@
       if (mode === 1) {
         const c = [4, 6, 8, 10, 12][randInt(0, 4)];
         const absA = [1, 2, 3, 4, 6][randInt(0, 4)];
-        const area = c * c / (2 * absA);
+        const area = (c * c) / (2 * absA);
         if (!Number.isInteger(area)) {
           i -= 1;
           continue;
@@ -6821,7 +6815,8 @@
         }
         const a = (sum + diff) / 2;
         const b = (sum - diff) / 2;
-        const missing = a > 0 && b > 0 ? '第四象限' : a > 0 && b < 0 ? '第二象限' : a < 0 && b > 0 ? '第三象限' : '第一象限';
+        const missing =
+          a > 0 && b > 0 ? '第四象限' : a > 0 && b < 0 ? '第二象限' : a < 0 && b > 0 ? '第三象限' : '第一象限';
         add(
           `已知 \\(f(x)=ax+b\\)，且 \\(a+b=${sum}\\)、\\(a-b=${diff}\\)，判斷此圖形不通過哪一象限。`,
           `不通過${missing}`,
@@ -7023,7 +7018,7 @@
         const mMax = upper - 1;
         add(
           `若一個三角形的兩邊長為 ${a} 與 ${b}，第三邊上的中線長為 \\(m\\)。已知 \\(\\dfrac{|${a}-${b}|}{2}<m<\\dfrac{${a}+${b}}{2}\\)，求整數 \\(2m\\) 的範圍。`,
-          `${mMin} \\le 2m \\le ${mMax}`,
+          `$${mMin} \\le 2m \\le ${mMax}$`,
           `由題給中線範圍，兩邊同乘 2 得 \\(|${a}-${b}|<2m<${a}+${b}\\)。若 \\(2m\\) 為整數，則 \\(${mMin}\\le2m\\le${mMax}\\)。`
         );
         continue;
@@ -7654,7 +7649,7 @@
         add(
           `一等差級數前 \\(n\\) 項和為 \\(S_n=${formatPositiveQuadraticSn(p, q)}\\)，求前幾項和會最小？最小值為何？`,
           `\\(n=${bestN}\\)，最小值 ${bestValue}`,
-          `把 \\(S_n=${formatPositiveQuadraticSn(p, q)}\\) 視為開口向上的二次式，最小值在 \\(n\\approx\\dfrac{${q}}{2\\cdot${p}}\\) 附近。檢查鄰近整數，得 \\(n=${bestN}\\) 時最小，\\(S_${bestN}=${bestValue}\\)。`
+          `把 \\(S_n=${formatPositiveQuadraticSn(p, q)}\\) 視為開口向上的二次式，最小值在 \\(n\\approx\\dfrac{${q}}{2\\cdot${p}}\\) 附近。檢查鄰近整數，得 \\(n=${bestN}\\) 時最小，\\(${latexSub('S', bestN)}=${bestValue}\\)。`
         );
         continue;
       }
@@ -8799,7 +8794,7 @@
     },
   };
 
-  const bundleFingerprint = 'j4-bundle-v20260708-j44-extension-v1';
+  const bundleFingerprint = 'j4-bundle-v20260710-subscript-braces-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

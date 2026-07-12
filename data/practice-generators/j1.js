@@ -3961,7 +3961,7 @@
     const summaryAnswers = [];
     const answers = [];
 
-    for (let i = 0; i < count; i += 1) {
+    for (let i = 0; i < 3; i += 1) {
       const mode = i % 3;
       const g = [2, 3, 4, 5, 6][randInt(0, 4)];
       let x = randInt(2, 8);
@@ -4001,27 +4001,37 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const used = new Set();
 
-    for (let i = 0; i < count; i += 1) {
-      const mode = i % 3;
+    let guard = 0;
+
+    while (questions.length < count && guard < count * 80) {
+      guard += 1;
+
+      const mode = randInt(0, 2);
+      let item = null;
 
       if (mode === 0) {
         const mods = [
           [8, 11, 15],
           [6, 9, 14],
           [7, 10, 13],
-        ][randInt(0, 2)];
+          [5, 8, 12],
+          [7, 12, 15],
+          [8, 13, 17],
+          [6, 11, 16],
+        ][randInt(0, 6)];
+
         const shortage = randInt(1, 3);
         const period = lcmAll(mods);
         const smallest = period - shortage;
-        questions.push(
-          `求一個最小正整數，用 ${mods[0]} 除不足 ${shortage}，用 ${mods[1]} 除不足 ${shortage}，用 ${mods[2]} 除也不足 ${shortage}。`
-        );
-        summaryAnswers.push(`$${smallest}$`);
-        answers.push(
-          `因為都「不足 ${shortage}」，所以這個數比 ${mods[0]}、${mods[1]}、${mods[2]} 的公倍數少 ${shortage}。最小公倍數是 ${period}，所以最小正整數是 ${smallest}。`
-        );
-        continue;
+
+        item = {
+          key: `m0-${mods.join('-')}-${shortage}`,
+          q: `求一個最小正整數，用 ${mods[0]} 除不足 ${shortage}，用 ${mods[1]} 除不足 ${shortage}，用 ${mods[2]} 除也不足 ${shortage}。`,
+          s: `$${smallest}$`,
+          a: `因為都「不足 ${shortage}」，所以這個數比 ${mods[0]}、${mods[1]}、${mods[2]} 的公倍數少 ${shortage}。最小公倍數是 ${period}，所以最小正整數是 ${smallest}。`,
+        };
       }
 
       if (mode === 1) {
@@ -4029,44 +4039,56 @@
           [6, 8, 9],
           [4, 6, 10],
           [5, 6, 8],
-        ][randInt(0, 2)];
+          [5, 7, 9],
+          [6, 7, 10],
+          [8, 9, 12],
+        ][randInt(0, 5)];
+
         const remainder = randInt(1, Math.min(...mods) - 1);
         const period = lcmAll(mods);
         const start = period + remainder;
         const end = start + period * 2;
+
         const values = [];
         for (let x = start; x <= end; x += 1) {
           if (mods.every((mod) => x % mod === remainder)) values.push(x);
         }
-        questions.push(
-          `在 ${start} 到 ${end} 之間，除以 ${mods[0]}、${mods[1]}、${mods[2]} 都餘 ${remainder} 的數有哪些？`
-        );
-        summaryAnswers.push(values.join('、'));
-        answers.push(
-          `因為都餘 ${remainder}，所以先看 ${xToText(mods)} 的最小公倍數為 ${period}，再加上 ${remainder}。因此在範圍內的數有 ${values.join('、')}。`
-        );
-        continue;
+
+        item = {
+          key: `m1-${mods.join('-')}-${remainder}-${start}-${end}`,
+          q: `在 ${start} 到 ${end} 之間，除以 ${mods[0]}、${mods[1]}、${mods[2]} 都餘 ${remainder} 的數有哪些？`,
+          s: values.join('、'),
+          a: `因為都餘 ${remainder}，所以先看 ${xToText(mods)} 的最小公倍數為 ${period}，再加上 ${remainder}。因此在範圍內的數有 ${values.join('、')}。`,
+        };
       }
 
-      let common = [12, 18, 24, 30, 36][randInt(0, 4)];
-      let remainderA = randInt(1, 4);
-      let shortageB = randInt(1, 4);
-      let candidates = [];
-      let left = 0;
-      let right = 0;
-      while (candidates.length < 2) {
-        common = [12, 18, 24, 30, 36][randInt(0, 4)];
-        remainderA = randInt(1, 4);
-        shortageB = randInt(1, 4);
-        left = common * randInt(4, 9) + remainderA;
-        right = common * randInt(10, 18) - shortageB;
-        candidates = divisorsOf(common).filter((d) => d > Math.max(remainderA, shortageB));
+      if (mode === 2) {
+        const common = randInt(12, 80);
+        const remainderA = randInt(1, 6);
+        const shortageB = randInt(1, 6);
+
+        const left = common * randInt(4, 9) + remainderA;
+        const right = common * randInt(10, 18) - shortageB;
+
+        const g = gcd(left - remainderA, right + shortageB);
+        const candidates = divisorsOf(g).filter((d) => d > Math.max(remainderA, shortageB));
+
+        if (candidates.length < 2) continue;
+
+        item = {
+          key: `m2-${left}-${remainderA}-${right}-${shortageB}`,
+          q: `有一正整數除 ${left} 餘 ${remainderA}，除 ${right} 不足 ${shortageB}，求此數的最大值與最小值。`,
+          s: `最大值 $${candidates[candidates.length - 1]}$，最小值 $${candidates[0]}$`,
+          a: `此數必須同時整除 $${left}-${remainderA}=${left - remainderA}$ 與 $${right}+${shortageB}=${right + shortageB}$。因此可行的因數來自它們的公因數，最大值是 ${candidates[candidates.length - 1]}，最小值是 ${candidates[0]}。`,
+        };
       }
-      questions.push(`有一正整數除 ${left} 餘 ${remainderA}，除 ${right} 不足 ${shortageB}，求此數的最大值與最小值。`);
-      summaryAnswers.push(`最大值 $${candidates[candidates.length - 1]}$，最小值 $${candidates[0]}$`);
-      answers.push(
-        `此數必須同時整除 $${left}-${remainderA}=${left - remainderA}$ 與 $${right}+${shortageB}=${right + shortageB}$。因此可行的因數來自它們的公因數，最大值是 ${candidates[candidates.length - 1]}，最小值是 ${candidates[0]}。`
-      );
+
+      if (!item || used.has(item.key)) continue;
+
+      used.add(item.key);
+      questions.push(item.q);
+      summaryAnswers.push(item.s);
+      answers.push(item.a);
     }
 
     return { questions, summaryAnswers, answers };
@@ -6064,61 +6086,224 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const ratioAfterTemplates = [
-      { child: 9, father: 36, afterYears: 3 },
-      { child: 11, father: 44, afterYears: 4 },
-      { child: 13, father: 52, afterYears: 5 },
-      { child: 8, father: 32, afterYears: 6 },
-      { child: 10, father: 40, afterYears: 2 },
-      { child: 12, father: 48, afterYears: 4 },
-    ];
-    const sumRatioTemplates = [
-      { child: 12, father: 36, total: 48 },
-      { child: 14, father: 42, total: 56 },
-      { child: 15, father: 45, total: 60 },
-      { child: 16, father: 48, total: 64 },
-      { child: 18, father: 54, total: 72 },
-      { child: 20, father: 60, total: 80 },
-    ];
-    const phraseTemplates = [
-      { student: 25, teacher: 45 },
-      { student: 24, teacher: 42 },
-      { student: 28, teacher: 50 },
-      { student: 18, teacher: 30 },
-      { student: 22, teacher: 38 },
-      { student: 30, teacher: 54 },
-    ];
 
-    for (let i = 0; i < count; i += 1) {
-      const variant = i % 3;
-      const cycle = Math.floor(i / 3);
+    function pickOne(list) {
+      return list[randInt(0, list.length - 1)];
+    }
+
+    function inlineMath(latex) {
+      return `\\(${latex}\\)`;
+    }
+
+    function displayMath(latex) {
+      return `\\[${latex}\\]`;
+    }
+
+    function systemLatex(line1, line2) {
+      if (typeof formatSystemLatex === 'function') {
+        return formatSystemLatex(line1, line2);
+      }
+      return `\\begin{cases}${line1}\\\\${line2}\\end{cases}`;
+    }
+
+    function pickParentPair() {
+      return pickOne([
+        { older: '父親', younger: '兒子' },
+        { older: '父親', younger: '女兒' },
+        { older: '母親', younger: '兒子' },
+        { older: '母親', younger: '女兒' },
+      ]);
+    }
+
+    function pickSiblingPair() {
+      return pickOne([
+        { older: '哥哥', younger: '弟弟' },
+        { older: '哥哥', younger: '妹妹' },
+        { older: '姊姊', younger: '弟弟' },
+        { older: '姊姊', younger: '妹妹' },
+      ]);
+    }
+
+    function pushParentAnswer(pair, youngerAge, olderAge) {
+      summaryAnswers.push(`${pair.younger} ${youngerAge} 歲，${pair.older} ${olderAge} 歲`);
+    }
+
+    for (let i = 0; i < 7; i += 1) {
+      const variant = i % 7;
+
       if (variant === 0) {
-        const t = ratioAfterTemplates[cycle % ratioAfterTemplates.length];
+        // 現在是幾倍，幾年後年齡和
+        const pair = pickParentPair();
+        const multiple = randInt(2, 4);
+        const youngerAge = randInt(6, 18);
+        const olderAge = multiple * youngerAge;
+        const afterYears = randInt(2, 10);
+        const futureSum = youngerAge + olderAge + 2 * afterYears;
+
         questions.push(
-          `年齡追蹤問題：父親現在年齡是兒子的 4 倍，${t.afterYears} 年後兩人的年齡和為 ${t.child + t.father + 2 * t.afterYears} 歲，求父子現在各幾歲。`
+          `年齡追蹤問題：${pair.older}現在年齡是${pair.younger}的 ${multiple} 倍，${afterYears} 年後兩人的年齡和為 ${futureSum} 歲，求兩人現在各幾歲。`
         );
-        summaryAnswers.push(`兒子 $${t.child}$ 歲，父親 $${t.father}$ 歲`);
+
+        pushParentAnswer(pair, youngerAge, olderAge);
+
         answers.push(
-          `設兒子現在 $x$ 歲，父親現在 $y$ 歲。依題意可列聯立方程式 $${formatSystemLatex(`y=4x`, `(x+${t.afterYears})+(y+${t.afterYears})=${t.child + t.father + 2 * t.afterYears}`)}$。解得 $x=${t.child},\\ y=${t.father}$，所以兒子 $${t.child}$ 歲、父親 $${t.father}$ 歲。`
+          `設${pair.younger}現在 ${inlineMath('x')} 歲，${pair.older}現在 ${inlineMath('y')} 歲。依題意可列聯立方程式：${inlineMath(
+            systemLatex(`y=${multiple}x`, `(x+${afterYears})+(y+${afterYears})=${futureSum}`)
+          )}解得 ${inlineMath(`x=${youngerAge},\\ y=${olderAge}`)}，所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
         );
-      } else if (variant === 1) {
-        const t = sumRatioTemplates[cycle % sumRatioTemplates.length];
-        questions.push(`年齡推算問題：已知父子年齡和為 ${t.total} 歲，且父親年齡為兒子的 3 倍，求兩人各幾歲。`);
-        summaryAnswers.push(`兒子 $${t.child}$ 歲，父親 $${t.father}$ 歲`);
+
+        continue;
+      }
+
+      if (variant === 1) {
+        // 年齡和，現在是幾倍
+        const pair = pickParentPair();
+        const multiple = randInt(2, 5);
+        const youngerAge = randInt(7, 20);
+        const olderAge = multiple * youngerAge;
+        const total = youngerAge + olderAge;
+
+        questions.push(
+          `年齡推算問題：已知${pair.older}與${pair.younger}現在年齡和為 ${total} 歲，且${pair.older}年齡為${pair.younger}的 ${multiple} 倍，求兩人各幾歲。`
+        );
+
+        pushParentAnswer(pair, youngerAge, olderAge);
+
         answers.push(
-          `設兒子現在 $x$ 歲，父親現在 $y$ 歲。依題意可列聯立方程式 $${formatSystemLatex(`x+y=${t.total}`, `y=3x`)}$。解得 $x=${t.child},\\ y=${t.father}$，所以兒子 $${t.child}$ 歲、父親 $${t.father}$ 歲。`
+          `設${pair.younger}現在 ${inlineMath('x')} 歲，${pair.older}現在 ${inlineMath('y')} 歲。依題意可列聯立方程式：${inlineMath(
+            systemLatex(`x+y=${total}`, `y=${multiple}x`)
+          )}解得 ${inlineMath(`x=${youngerAge},\\ y=${olderAge}`)}，所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
         );
-      } else {
-        const t = phraseTemplates[cycle % phraseTemplates.length];
-        const phrasePast = 2 * t.student - t.teacher;
-        const phraseFuture = 2 * t.teacher - t.student;
+
+        continue;
+      }
+
+      if (variant === 2) {
+        // 年齡差，幾年後是幾倍
+        const pair = pickParentPair();
+        const multiple = randInt(2, 4);
+        const youngerAge = randInt(8, 24);
+        const afterYears = randInt(2, 10);
+        const olderAge = multiple * (youngerAge + afterYears) - afterYears;
+        const diff = olderAge - youngerAge;
+
+        questions.push(
+          `年齡追蹤問題：${pair.older}比${pair.younger}大 ${diff} 歲，${afterYears} 年後${pair.older}的年齡是${pair.younger}的 ${multiple} 倍，求兩人現在各幾歲。`
+        );
+
+        pushParentAnswer(pair, youngerAge, olderAge);
+
+        answers.push(
+          `設${pair.younger}現在 ${inlineMath('x')} 歲，${pair.older}現在 ${inlineMath('y')} 歲。依題意可列聯立方程式：${inlineMath(
+            systemLatex(`y-x=${diff}`, `y+${afterYears}=${multiple}(x+${afterYears})`)
+          )}解得 ${inlineMath(`x=${youngerAge},\\ y=${olderAge}`)}，所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
+        );
+
+        continue;
+      }
+
+      if (variant === 3) {
+        // 年齡差，幾年前是幾倍
+        const pair = pickParentPair();
+        const multiple = randInt(2, 5);
+        const yearsAgo = randInt(1, 8);
+        const youngerAge = randInt(yearsAgo + 5, 26);
+        const olderAge = multiple * (youngerAge - yearsAgo) + yearsAgo;
+        const diff = olderAge - youngerAge;
+
+        questions.push(
+          `年齡追蹤問題：${pair.older}比${pair.younger}大 ${diff} 歲，${yearsAgo} 年前${pair.older}的年齡是${pair.younger}的 ${multiple} 倍，求兩人現在各幾歲。`
+        );
+
+        pushParentAnswer(pair, youngerAge, olderAge);
+
+        answers.push(
+          `設${pair.younger}現在 ${inlineMath('x')} 歲，${pair.older}現在 ${inlineMath('y')} 歲。依題意可列聯立方程式：${inlineMath(
+            systemLatex(`y-x=${diff}`, `y-${yearsAgo}=${multiple}(x-${yearsAgo})`)
+          )}解得 ${inlineMath(`x=${youngerAge},\\ y=${olderAge}`)}，所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
+        );
+
+        continue;
+      }
+
+      if (variant === 4) {
+        // 現在是幾倍，幾年前年齡和
+        const pair = pickParentPair();
+        const multiple = randInt(2, 4);
+        const yearsAgo = randInt(1, 6);
+        const youngerAge = randInt(yearsAgo + 5, 20);
+        const olderAge = multiple * youngerAge;
+        const pastSum = youngerAge + olderAge - 2 * yearsAgo;
+
+        questions.push(
+          `年齡追蹤問題：${pair.older}現在年齡是${pair.younger}的 ${multiple} 倍，${yearsAgo} 年前兩人的年齡和為 ${pastSum} 歲，求兩人現在各幾歲。`
+        );
+
+        pushParentAnswer(pair, youngerAge, olderAge);
+
+        answers.push(
+          `設${pair.younger}現在 ${inlineMath('x')} 歲，${pair.older}現在 ${inlineMath('y')} 歲。依題意可列聯立方程式：${inlineMath(
+            systemLatex(`y=${multiple}x`, `(x-${yearsAgo})+(y-${yearsAgo})=${pastSum}`)
+          )}解得 ${inlineMath(`x=${youngerAge},\\ y=${olderAge}`)}，所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
+        );
+
+        continue;
+      }
+
+      if (variant === 5) {
+        // 老師學生對話型
+        const student = randInt(16, 30);
+        const gap = randInt(6, Math.min(24, student - 1));
+        const teacher = student + gap;
+
+        const phrasePast = 2 * student - teacher;
+        const phraseFuture = 2 * teacher - student;
+
         questions.push(
           `年齡追蹤問題：老師對學生說：「我在你這個年紀時，你只有 ${phrasePast} 歲；等你到我現在這個年紀時，我就 ${phraseFuture} 歲了。」求老師與學生現在各幾歲。`
         );
-        summaryAnswers.push(`學生 $${t.student}$ 歲，老師 $${t.teacher}$ 歲`);
+
+        summaryAnswers.push(`學生 ${student} 歲，老師 ${teacher} 歲`);
+
         answers.push(
-          `設學生現在 $x$ 歲，老師現在 $y$ 歲。由「我在你這個年紀時，你只有 ${phrasePast} 歲」得 $x-(y-x)=${phrasePast}$，即 $2x-y=${phrasePast}$。由「你到我現在年紀時，我就 ${phraseFuture} 歲」得 $y+(y-x)=${phraseFuture}$，即 $2y-x=${phraseFuture}$。聯立解得 $x=${t.student},\\ y=${t.teacher}$，所以學生 ${t.student} 歲、老師 ${t.teacher} 歲。`
+          `設學生現在 ${inlineMath('x')} 歲，老師現在 ${inlineMath('y')} 歲。由「我在你這個年紀時，你只有 ${phrasePast} 歲」得 ${inlineMath(`x-(y-x)=${phrasePast}`)}，即 ${inlineMath(`2x-y=${phrasePast}`)}。由「你到我現在年紀時，我就 ${phraseFuture} 歲」得 ${inlineMath(`y+(y-x)=${phraseFuture}`)}，即 ${inlineMath(`2y-x=${phraseFuture}`)}。聯立解得 ${inlineMath(`x=${student},\\ y=${teacher}`)}，所以學生 ${student} 歲、老師 ${teacher} 歲。`
         );
+
+        continue;
+      }
+
+      if (variant === 6) {
+        // 兄弟姊妹：年齡差 + 未來或過去年齡和
+        const pair = pickSiblingPair();
+        const youngerAge = randInt(5, 18);
+        const diff = randInt(2, 8);
+        const olderAge = youngerAge + diff;
+        const years = randInt(2, 6);
+        const useFuture = randInt(0, 1) === 1;
+
+        const targetSum = useFuture ? youngerAge + olderAge + 2 * years : youngerAge + olderAge - 2 * years;
+
+        if (!useFuture && youngerAge - years <= 0) {
+          i -= 1;
+          continue;
+        }
+
+        questions.push(
+          `年齡推算問題：${pair.older}比${pair.younger}大 ${diff} 歲，${useFuture ? `${years} 年後` : `${years} 年前`}兩人的年齡和為 ${targetSum} 歲，求兩人現在各幾歲。`
+        );
+
+        summaryAnswers.push(`${pair.younger} ${youngerAge} 歲，${pair.older} ${olderAge} 歲`);
+
+        answers.push(
+          `設${pair.younger}現在 ${inlineMath('x')} 歲，${pair.older}現在 ${inlineMath('y')} 歲。依題意可列聯立方程式：${inlineMath(
+            systemLatex(
+              `y-x=${diff}`,
+              useFuture ? ` (x+${years})+(y+${years})=${targetSum}` : ` (x-${years})+(y-${years})=${targetSum}`
+            )
+          )}解得 ${inlineMath(`x=${youngerAge},\\ y=${olderAge}`)}，所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
+        );
+
+        continue;
       }
     }
 

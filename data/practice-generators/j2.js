@@ -1572,7 +1572,7 @@
         `若點 $E$ 先右移 ${right} 單位，再下移 ${down} 單位到達 $F(${endX},${endY})$，求原點 $E$ 的坐標。`
       );
       answers.push(
-        `設點 $E$ 為 $(x,y)$。右移 ${right} 單位後 $x$ 變成 ${endX}$，所以原本 $x=${endX}-${right}=${startX}$；下移 ${down} 單位後 $y$ 變成 ${endY}$，所以原本 $y=${endY}+${down}=${startY}$。故點 $E$ 為 $(${startX},${startY})$。`
+        `設點 $E$ 為 $(x,y)$。右移 ${right} 單位後 $x$ 變成 $${endX}$，所以原本 $x=${endX}-${right}=${startX}$；下移 ${down} 單位後 $y$ 變成 $${endY}$，所以原本 $y=${endY}+${down}=${startY}$。故點 $E$ 為 $(${startX},${startY})$。`
       );
     }
 
@@ -1677,7 +1677,7 @@
         const y2 = 2 * my - y1;
         questions.push(`已知 $A(${x1},${y1})$、$B(${x2},${y2})$，求線段 $\\overline{AB}$ 的中點 $M$ 座標。`);
         answers.push(
-          `中點公式是 $M\\left(\\frac{x_1+x_2}{2},\\frac{y_1+y_2}{2}\\right)$，所以 $M=\\left(\\frac{${x1}+${x2}}{2},\\frac{${y1}+${y2}}{2}\\right)=(${mx},${my})$。`
+          `中點公式是 $M\\left(\\frac{x_1+x_2}{2},\\frac{y_1+y_2}{2}\\right)$，所以 $M=\\left(\\frac{${x1}${formatSignedValue(x2)}}{2},\\frac{${y1}${formatSignedValue(y2)}}{2}\\right)=(${mx},${my})$。`
         );
         continue;
       }
@@ -1693,7 +1693,7 @@
           `已知 $A(${ax},${ay})$、$M(${mx},${my})$，且 $M$ 為線段 $\\overline{AB}$ 的中點，求 $B$ 點座標。`
         );
         answers.push(
-          `因為中點滿足 $\\frac{${ax}+x_B}{2}=${mx}$、$\\frac{${ay}+y_B}{2}=${my}$，所以 $x_B=2\\times ${mx}-${ax}=${bx}$，$y_B=2\\times ${my}-${ay}=${by}$。故 $B(${bx},${by})$。`
+          `因為中點滿足 $\\frac{${ax}+x_B}{2}=${mx}$、$\\frac{${ay}+y_B}{2}=${my}$，所以 $x_B=2\\times ${mx}${formatSignedValue(-ax)}=${bx}$，$y_B=2\\times ${my}${formatSignedValue(-ay)}=${by}$。故 $B(${bx},${by})$。`
         );
         continue;
       }
@@ -1963,7 +1963,9 @@
         const ay = n + 1;
         const bx = -ax;
         const by = -ay;
-        questions.push(`已知 $A(m-3,n+1)$ 與 $B(${bx},${by})$ 關於原點對稱，若 $m=${m}$、$n=${n}$，檢查此組資料是否符合，並寫出 $A,B$。`);
+        questions.push(
+          `已知 $A(m-3,n+1)$ 與 $B(${bx},${by})$ 關於原點對稱，若 $m=${m}$、$n=${n}$，檢查此組資料是否符合，並寫出 $A,B$。`
+        );
         summaryAnswers.push(`符合，$A(${ax},${ay})$，$B(${bx},${by})$`);
         answers.push(
           `關於原點對稱時，兩點坐標要互為相反數。代入 $m=${m},n=${n}$ 得 $A(${ax},${ay})$，其相反點為 $(${bx},${by})$，正是 $B$，所以符合。`
@@ -1973,9 +1975,7 @@
         const y = -randInt(1, 7);
         questions.push(`若點 $P(x,y)$ 滿足 $xy>0$ 且 $x+y<0$，判斷 $P$ 點所在象限。`);
         summaryAnswers.push('第三象限');
-        answers.push(
-          `由 $xy>0$ 可知 $x,y$ 同號；又 $x+y<0$，所以兩者不可能同為正，只能同為負。因此 $P$ 在第三象限。`
-        );
+        answers.push(`由 $xy>0$ 可知 $x,y$ 同號；又 $x+y<0$，所以兩者不可能同為正，只能同為負。因此 $P$ 在第三象限。`);
       } else if (mode === 3) {
         const dx = randInt(2, 8);
         const dy = randInt(2, 8);
@@ -2027,7 +2027,9 @@
         }
         const cy1 = yBase + height;
         const cy2 = yBase - height;
-        questions.push(`已知 $\\triangle ABC$ 的三頂點為 $A(${ax},${yBase})$、$B(${bx},${yBase})$，面積為 ${area}，且 $C$ 點在 $y$ 軸上，求 $C$ 點坐標。`);
+        questions.push(
+          `已知 $\\triangle ABC$ 的三頂點為 $A(${ax},${yBase})$、$B(${bx},${yBase})$，面積為 ${area}，且 $C$ 點在 $y$ 軸上，求 $C$ 點坐標。`
+        );
         summaryAnswers.push(`$C(0,${cy1})$ 或 $C(0,${cy2})$`);
         answers.push(
           `底邊 $AB$ 長為 $${bx}-(${ax})=${bx - ax}$。由面積 $${area}=\\dfrac12\\times ${bx - ax}\\times h$，得高 $h=${height}$。因為 $C$ 在 $y$ 軸上，且到直線 $y=${yBase}$ 的距離為 ${height}，所以 $C(0,${cy1})$ 或 $C(0,${cy2})$。`
@@ -2041,7 +2043,9 @@
         const cy = ay + randInt(2, 6);
         const dx = ax + cx - bx;
         const dy = ay + cy - by;
-        questions.push(`平行四邊形 $ABCD$ 的三個頂點為 $A(${ax},${ay})$、$B(${bx},${by})$、$C(${cx},${cy})$，求第四個頂點 $D$ 的坐標。`);
+        questions.push(
+          `平行四邊形 $ABCD$ 的三個頂點為 $A(${ax},${ay})$、$B(${bx},${by})$、$C(${cx},${cy})$，求第四個頂點 $D$ 的坐標。`
+        );
         summaryAnswers.push(`$D(${dx},${dy})$`);
         answers.push(
           `平行四邊形依序為 $A,B,C,D$ 時，對角線中點相同，所以 $A+C=B+D$。因此 $D=A+C-B=((${ax})+(${cx})-(${bx}),(${ay})+(${cy})-(${by}))=(${dx},${dy})$。`
@@ -2072,7 +2076,9 @@
           i -= 1;
           continue;
         }
-        questions.push(`點 $A(${ax},${ay})$ 經平移後到達 $B$，若 $\\overline{AB}$ 的中點為 $M(${mx},${my})$，求平移方向與距離。`);
+        questions.push(
+          `點 $A(${ax},${ay})$ 經平移後到達 $B$，若 $\\overline{AB}$ 的中點為 $M(${mx},${my})$，求平移方向與距離。`
+        );
         summaryAnswers.push(`平移 $(${dx},${dy})$，距離 $\\sqrt{${dx * dx + dy * dy}}$`);
         answers.push(
           `由中點公式可反求 $B(2\\times${mx}-${ax},2\\times${my}-${ay})=(${bx},${by})$。所以平移向量為 $(${bx}-${ax},${by}-${ay})=(${dx},${dy})$，距離為 $\\sqrt{${dx * dx}+${dy * dy}}=\\sqrt{${dx * dx + dy * dy}}$。`
@@ -2083,7 +2089,9 @@
         const side = randInt(3, 7);
         const x2 = x1 + side;
         const y2 = y1 + side;
-        questions.push(`在坐標平面上，有一正方形的對角線端點為 $(${x1},${y1})$ 與 $(${x2},${y2})$，且邊平行於坐標軸，求另外兩個頂點坐標。`);
+        questions.push(
+          `在坐標平面上，有一正方形的對角線端點為 $(${x1},${y1})$ 與 $(${x2},${y2})$，且邊平行於坐標軸，求另外兩個頂點坐標。`
+        );
         summaryAnswers.push(`$(${x1},${y2})$、$(${x2},${y1})$`);
         answers.push(
           `邊平行於坐標軸時，另外兩點會交換兩端點的 $x$ 與 $y$ 坐標，所以是 $(${x1},${y2})$ 與 $(${x2},${y1})$。`
@@ -2113,8 +2121,12 @@
         const dx = -left;
         const dy = 2;
         const transformed = points.map(([x, y]) => [scale * (x + dx), scale * (y + dy)]);
-        questions.push(`將 $\\triangle ABC$ 先向上平移 2 單位，再向左平移 ${left} 單位，接著把所有坐標放大為 ${scale} 倍。若原座標為 $A(${points[0][0]},${points[0][1]})$、$B(${points[1][0]},${points[1][1]})$、$C(${points[2][0]},${points[2][1]})$，求新三角形的三頂點坐標。`);
-        summaryAnswers.push(transformed.map((p, idx) => `${String.fromCharCode(65 + idx)}'(${p[0]},${p[1]})`).join('、'));
+        questions.push(
+          `將 $\\triangle ABC$ 先向上平移 2 單位，再向左平移 ${left} 單位，接著把所有坐標放大為 ${scale} 倍。若原座標為 $A(${points[0][0]},${points[0][1]})$、$B(${points[1][0]},${points[1][1]})$、$C(${points[2][0]},${points[2][1]})$，求新三角形的三頂點坐標。`
+        );
+        summaryAnswers.push(
+          transformed.map((p, idx) => `${String.fromCharCode(65 + idx)}'(${p[0]},${p[1]})`).join('、')
+        );
         answers.push(
           `平移後先把每點改為 $(x-${left},y+2)$，再把坐標同乘 ${scale}。逐點計算得 ${transformed.map((p, idx) => `${String.fromCharCode(65 + idx)}'(${p[0]},${p[1]})`).join('、')}。`
         );
@@ -2125,7 +2137,9 @@
         const ax = bx - right;
         questions.push(`若點 $A(x,y)$ 向右移 ${right} 單位後與點 $B(${bx},${by})$ 重合，求 $A$ 點坐標。`);
         summaryAnswers.push(`$A(${ax},${by})$`);
-        answers.push(`向右移 ${right} 單位代表 $x$ 坐標加 ${right}$。所以原來 $x=${bx}-${right}=${ax}$，$y$ 不變，故 $A(${ax},${by})$。`);
+        answers.push(
+          `向右移 ${right} 單位代表 $x$ 坐標加 ${right}$。所以原來 $x=${bx}-${right}=${ax}$，$y$ 不變，故 $A(${ax},${by})$。`
+        );
       } else if (mode === 2) {
         const ax = randInt(-5, 2);
         const ay = randInt(-5, 2);
@@ -2135,13 +2149,17 @@
         const by = 2 * my - ay;
         questions.push(`一個圓的直徑端點為 $A(${ax},${ay})$ 與 $B(${bx},${by})$，求圓心坐標。`);
         summaryAnswers.push(`$(${mx},${my})$`);
-        answers.push(`圓心是直徑中點，所以坐標為 $\\left(\\dfrac{${ax}${formatSignedValue(bx)}}{2},\\dfrac{${ay}${formatSignedValue(by)}}{2}\\right)=(${mx},${my})$。`);
+        answers.push(
+          `圓心是直徑中點，所以坐標為 $\\left(\\dfrac{${ax}${formatSignedValue(bx)}}{2},\\dfrac{${ay}${formatSignedValue(by)}}{2}\\right)=(${mx},${my})$。`
+        );
       } else if (mode === 3) {
         const y = [2, -2][randInt(0, 1)];
         const d = randInt(2, 8);
         questions.push(`若點 $P$ 在直線 $y=${y}$ 上，且 $P$ 點到 $y$ 軸的距離為 ${d}，求 $P$ 點所有可能坐標。`);
         summaryAnswers.push(`$(${d},${y})$ 或 $(-${d},${y})$`);
-        answers.push(`在直線 $y=${y}$ 上表示縱坐標固定為 ${y}；到 $y$ 軸距離為 ${d} 表示 $|x|=${d}$。所以 $P(${d},${y})$ 或 $P(-${d},${y})$。`);
+        answers.push(
+          `在直線 $y=${y}$ 上表示縱坐標固定為 ${y}；到 $y$ 軸距離為 ${d} 表示 $|x|=${d}$。所以 $P(${d},${y})$ 或 $P(-${d},${y})$。`
+        );
       } else {
         const unit = randInt(1, 5);
         const a = 2 * unit;
@@ -2149,7 +2167,9 @@
         const total = a + b;
         questions.push(`若點 $A(a,b)$ 在直線 $x+y=${total}$ 上，且 $a:b=2:3$，求 $a,b$。`);
         summaryAnswers.push(`$a=${a}$，$b=${b}$`);
-        answers.push(`由 $a:b=2:3$，設 $a=2t,b=3t$。代入 $a+b=${total}$ 得 $5t=${total}$，所以 $t=${unit}$，故 $a=${a},b=${b}$。`);
+        answers.push(
+          `由 $a:b=2:3$，設 $a=2t,b=3t$。代入 $a+b=${total}$ 得 $5t=${total}$，所以 $t=${unit}$，故 $a=${a},b=${b}$。`
+        );
       }
     }
 
@@ -2771,11 +2791,34 @@
     const answers = createAnswerList(summaryAnswers);
     const parameterNames = ['a', 'b', 'm', 'n'];
 
+    function formatTermList(terms) {
+      const visibleTerms = terms.filter((term) => term.coef !== 0);
+
+      if (!visibleTerms.length) return '0';
+
+      return visibleTerms
+        .map((term, index) => {
+          const coef = term.coef;
+          const variable = term.variable || '';
+          const absCoef = Math.abs(coef);
+
+          const body = variable ? `${absCoef === 1 ? '' : absCoef}${variable}` : `${absCoef}`;
+
+          if (index === 0) {
+            return coef < 0 ? `-${body}` : body;
+          }
+
+          return `${coef < 0 ? '-' : '+'}${body}`;
+        })
+        .join('');
+    }
+
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
 
       if (variant === 0) {
         const expr = formatTwoVarExpr(pickNonZero(-8, 8), pickNonZero(-8, 8), randInt(-9, 9));
+
         questions.push(`判斷：$${expr}$ 是二元一次式、二元一次方程式，還是都不是？`);
         answers.push(`$${expr}$ 沒有等號，且只含 $x,y$ 的一次項，所以它是二元一次式。`);
         continue;
@@ -2784,29 +2827,57 @@
       if (variant === 1) {
         const expr = formatTwoVarExpr(pickNonZero(-8, 8), pickNonZero(-8, 8), 0);
         const rhs = randInt(-12, 12);
+
         questions.push(`判斷：$${expr}=${rhs}$ 是二元一次式、二元一次方程式，還是都不是？`);
         answers.push(`$${expr}=${rhs}$ 有等號，而且 $x,y$ 都只出現一次，所以它是二元一次方程式。`);
         continue;
       }
 
       if (variant === 2) {
-        const expr = `${pickNonZero(1, 6)}x^2${pickNonZero(-6, 6) >= 0 ? '+' : ''}${pickNonZero(-6, 6)}y`;
+        const ax2 = pickNonZero(1, 6);
+        const by = pickNonZero(-6, 6);
+
+        const expr = formatTermList([
+          { coef: ax2, variable: 'x^2' },
+          { coef: by, variable: 'y' },
+        ]);
+
         questions.push(`判斷：$${expr}$ 是二元一次式、二元一次方程式，還是都不是？`);
-        answers.push(`它含有 $x^2$，已經不是一次，所以不屬於二元一次式，也不是二元一次方程式。`);
+        answers.push(`$${expr}$ 含有 $x^2$，已經不是一次，所以不屬於二元一次式，也不是二元一次方程式。`);
         continue;
       }
 
       if (variant === 3) {
-        const expr = `${pickNonZero(1, 5)}xy${pickNonZero(-6, 6) >= 0 ? '+' : ''}${pickNonZero(-6, 6)}x${pickNonZero(-9, 9) >= 0 ? '+' : ''}${randInt(-9, 9)}`;
+        const xy = pickNonZero(1, 5);
+        const x = pickNonZero(-6, 6);
+        const c = pickNonZero(-9, 9);
+
+        const expr = formatTermList([
+          { coef: xy, variable: 'xy' },
+          { coef: x, variable: 'x' },
+          { coef: c, variable: '' },
+        ]);
+
         questions.push(`判斷：$${expr}$ 是二元一次式、二元一次方程式，還是都不是？`);
-        answers.push(`它含有 $xy$，出現兩個未知數相乘，所以不是二元一次式，也不是二元一次方程式。`);
+        answers.push(`$${expr}$ 含有 $xy$，出現兩個未知數相乘，所以不是二元一次式，也不是二元一次方程式。`);
         continue;
       }
 
-      const name = parameterNames[i % parameterNames.length];
-      const expr = `${pickNonZero(1, 6)}x+${name}`;
-      questions.push(`判斷：$${expr}$ 是二元一次式、二元一次方程式，還是都不是？`);
-      answers.push(`它只有一個未知數 $x$，${name} 在這裡是參數，不是第二個未知數，所以不算二元一次式。`);
+      if (variant === 4) {
+        const name = parameterNames[randInt(0, parameterNames.length - 1)];
+        const coef = pickNonZero(1, 6);
+
+        const expr = formatTermList([
+          { coef, variable: 'x' },
+          { coef: 1, variable: name },
+        ]);
+
+        questions.push(`判斷：$${expr}$（其中 $${name}$ 為常數）是二元一次式、二元一次方程式，還是都不是？`);
+        answers.push(
+          `因為 $${name}$ 在題目中被指定為常數，不是第二個未知數，所以 $${expr}$ 只有一個未知數 $x$，不算二元一次式，也不是二元一次方程式。`
+        );
+        continue;
+      }
     }
 
     return { questions, summaryAnswers, answers };
@@ -2901,21 +2972,28 @@
 
       const k1 = pickNonZero(2, 6);
       const k2 = pickNonZero(2, 6);
+
       const a1 = pickNonZero(-4, 4);
       const b1 = pickNonZero(-4, 4);
       const c1 = pickNonZero(-5, 5);
+
       const a2 = pickNonZero(-4, 4);
       const b2 = pickNonZero(-4, 4);
       const c2 = pickNonZero(-5, 5);
+
       const first = `${k1}(${formatTwoVarExpr(a1, b1, c1)})`;
       const second = `${k2}(${formatTwoVarExpr(a2, b2, c2)})`;
+
       const result = formatTwoVarExpr(k1 * a1 + k2 * a2, k1 * b1 + k2 * b2, k1 * c1 + k2 * c2);
+
       const expandedFirst = formatTwoVarExpr(k1 * a1, k1 * b1, k1 * c1);
       const expandedSecond = formatTwoVarExpr(k2 * a2, k2 * b2, k2 * c2);
-      questions.push(`化簡：$${first}${expandedSecond.startsWith('-') ? '' : '+'}${second}$。`);
-      answers.push(
-        `先分別展開兩個括號：$${first}+${second}=${expandedFirst}${expandedSecond.startsWith('-') ? '' : '+'}${expandedSecond}$，再合併同類項得 $${result}$。`
-      );
+
+      const originalExpr = `${first}+${second}`;
+      const expandedExpr = `${expandedFirst}${expandedSecond.startsWith('-') ? '' : '+'}${expandedSecond}`;
+
+      questions.push(`化簡：$${originalExpr}$。`);
+      answers.push(`先分別展開兩個括號：$${originalExpr}=${expandedExpr}$，再合併同類項得 $${result}$。`);
     }
 
     return { questions, summaryAnswers, answers };
@@ -3309,7 +3387,9 @@
         const b = -3;
         const c = 12 * scale;
         const perimeter = xInt + Math.abs(yInt) + 5 * scale;
-        questions.push(`直線 $${formatAxByEq(a, b, c)}$ 通過 $x$ 軸與 $y$ 軸於 $A,B$ 兩點，求 $\\triangle AOB$ 的周長。`);
+        questions.push(
+          `直線 $${formatAxByEq(a, b, c)}$ 通過 $x$ 軸與 $y$ 軸於 $A,B$ 兩點，求 $\\triangle AOB$ 的周長。`
+        );
         summaryAnswers.push(`周長 $${perimeter}$`);
         answers.push(
           `令 $y=0$ 得 $x=${xInt}$，所以 $A(${xInt},0)$；令 $x=0$ 得 $y=${yInt}$，所以 $B(0,${yInt})$。兩股長為 ${xInt}、${Math.abs(yInt)}，斜邊長為 ${5 * scale}，周長為 $${xInt}+${Math.abs(yInt)}+${5 * scale}=${perimeter}$。`
@@ -3319,16 +3399,12 @@
         const k = 0;
         questions.push(`直線 $y=mx+k$ 經過原點，且通過點 $(1,-2)$，求其方程式。`);
         summaryAnswers.push('$y=-2x$');
-        answers.push(
-          `通過原點表示 $k=0$。再代入點 $(1,-2)$，得 $-2=m\\times1$，所以 $m=-2$。方程式為 $y=-2x$。`
-        );
+        answers.push(`通過原點表示 $k=0$。再代入點 $(1,-2)$，得 $-2=m\\times1$，所以 $m=-2$。方程式為 $y=-2x$。`);
       } else {
         const y = randInt(-5, 6);
         questions.push(`已知線型函數 $f(x)=ax+b$ 通過點 $(${randInt(-3, 4)},${y})$，且圖形與 $x$ 軸平行，求此函數。`);
         summaryAnswers.push(`$f(x)=${y}$`);
-        answers.push(
-          `與 $x$ 軸平行代表圖形是水平線，所以斜率 $a=0$，函數值固定為該點的縱坐標。因此 $f(x)=${y}$。`
-        );
+        answers.push(`與 $x$ 軸平行代表圖形是水平線，所以斜率 $a=0$，函數值固定為該點的縱坐標。因此 $f(x)=${y}$。`);
       }
     }
 
@@ -7011,7 +7087,9 @@
         ];
         const pick = templates[cycle % templates.length];
         const ratio = normalizeRatioInts((100 + pick.up) * pick.discount, 1000);
-        questions.push(`某商品原價為 $x$ 元，先調漲 $${pick.up}\\%$ 後再打 ${pick.discount} 折，求最後售價與原價的比。`);
+        questions.push(
+          `某商品原價為 $x$ 元，先調漲 $${pick.up}\\%$ 後再打 ${pick.discount} 折，求最後售價與原價的比。`
+        );
         answers.push(
           formatJ231Answer(
             `$${ratio.a}:${ratio.b}$`,
@@ -7151,7 +7229,9 @@
         ];
         const pick = templates[cycle % templates.length];
         const d1 = simplifyFraction(pick.d0 * pick.t1 * pick.t1, pick.t0 * pick.t0);
-        questions.push(`自由落體下墜距離 $d$ 與時間 $t$ 的平方成正比。若 ${pick.t0} 秒下墜 ${pick.d0} 公尺，則 ${pick.t1} 秒共下墜多少公尺？`);
+        questions.push(
+          `自由落體下墜距離 $d$ 與時間 $t$ 的平方成正比。若 ${pick.t0} 秒下墜 ${pick.d0} 公尺，則 ${pick.t1} 秒共下墜多少公尺？`
+        );
         answers.push(
           formatJ232Answer(
             `$${fractionToLatex(d1)}$ 公尺`,
@@ -7171,7 +7251,9 @@
       const pick = templates[cycle % templates.length];
       const surface = mulFraction(pick.factor, pick.factor);
       const volume = mulFraction(surface, pick.factor);
-      questions.push(`球體表面積與半徑平方成正比，體積與半徑三次方成正比。若半徑縮為原來的 $${fractionToLatex(pick.factor)}$，求表面積與體積各變為原來的幾分之幾。`);
+      questions.push(
+        `球體表面積與半徑平方成正比，體積與半徑三次方成正比。若半徑縮為原來的 $${fractionToLatex(pick.factor)}$，求表面積與體積各變為原來的幾分之幾。`
+      );
       answers.push(
         formatJ232Answer(
           `表面積 $${fractionToLatex(surface)}$，體積 $${fractionToLatex(volume)}$`,
@@ -7202,7 +7284,9 @@
         ];
         const pick = templates[cycle % templates.length];
         const z1 = simplifyFraction(pick.z0 * pick.x1, pick.x0);
-        questions.push(`若 $x$ 與 $y$ 成正比，且 $y$ 與 $z$ 成正比。當 $x=${pick.x0},\\ z=${pick.z0}$ 時，若 $x$ 變為 ${pick.x1}，求 $z$ 的值。`);
+        questions.push(
+          `若 $x$ 與 $y$ 成正比，且 $y$ 與 $z$ 成正比。當 $x=${pick.x0},\\ z=${pick.z0}$ 時，若 $x$ 變為 ${pick.x1}，求 $z$ 的值。`
+        );
         answers.push(
           formatJ232Answer(
             `$z=${fractionToLatex(z1)}$`,
@@ -7259,7 +7343,9 @@
         const pick = templates[cycle % templates.length];
         const newDays = simplifyFraction(pick.people * pick.days, pick.people + pick.add);
         const ahead = subFraction(makeFraction(pick.days, 1), newDays);
-        questions.push(`一項工程固定，原由 ${pick.people} 人合作需 ${pick.days} 天完工。若開工時增加 ${pick.add} 人加入，則可提前幾天完工？`);
+        questions.push(
+          `一項工程固定，原由 ${pick.people} 人合作需 ${pick.days} 天完工。若開工時增加 ${pick.add} 人加入，則可提前幾天完工？`
+        );
         answers.push(
           formatJ232Answer(
             `$${fractionToLatex(ahead)}$ 天`,
@@ -7279,7 +7365,9 @@
       const pick = templates[cycle % templates.length];
       const k = simplifyFraction(pick.y0, pick.x0 - 2);
       const x1 = addFraction(divFraction(makeFraction(pick.y1, 1), k), makeFraction(2, 1));
-      questions.push(`若 $y$ 與 $(x-2)$ 成正比，且 $x=${pick.x0}$ 時 $y=${pick.y0}$，求當 $y=${pick.y1}$ 時的 $x$ 值。`);
+      questions.push(
+        `若 $y$ 與 $(x-2)$ 成正比，且 $x=${pick.x0}$ 時 $y=${pick.y0}$，求當 $y=${pick.y1}$ 時的 $x$ 值。`
+      );
       answers.push(
         formatJ232Answer(
           `$x=${fractionToLatex(x1)}$`,
@@ -7334,8 +7422,13 @@
         ];
         const pick = templates[cycle % templates.length];
         const solute = simplifyFraction(pick.total * pick.start, 100);
-        const add = divFraction(subFraction(simplifyFraction(pick.target * pick.total, 100), solute), simplifyFraction(100 - pick.target, 100));
-        questions.push(`${pick.total} 公克、濃度 $${pick.start}\\%$ 的食鹽水，若要加入食鹽使濃度變為 $${pick.target}\\%$，需加入多少公克食鹽？`);
+        const add = divFraction(
+          subFraction(simplifyFraction(pick.target * pick.total, 100), solute),
+          simplifyFraction(100 - pick.target, 100)
+        );
+        questions.push(
+          `${pick.total} 公克、濃度 $${pick.start}\\%$ 的食鹽水，若要加入食鹽使濃度變為 $${pick.target}\\%$，需加入多少公克食鹽？`
+        );
         answers.push(
           formatJ231Answer(
             `$${fractionToLatex(add)}$ 公克`,
@@ -7354,8 +7447,13 @@
           { aTime: 8, bTime: 6, target: 3 },
         ];
         const pick = templates[cycle % templates.length];
-        const time = simplifyFraction((pick.target - 1) * pick.aTime * pick.bTime, pick.target * pick.aTime - pick.bTime);
-        questions.push(`兩條等長蠟燭，甲 ${pick.aTime} 小時燒完，乙 ${pick.bTime} 小時燒完。若同時點燃，經過多久後，甲剩餘長度是乙的 ${pick.target} 倍？`);
+        const time = simplifyFraction(
+          (pick.target - 1) * pick.aTime * pick.bTime,
+          pick.target * pick.aTime - pick.bTime
+        );
+        questions.push(
+          `兩條等長蠟燭，甲 ${pick.aTime} 小時燒完，乙 ${pick.bTime} 小時燒完。若同時點燃，經過多久後，甲剩餘長度是乙的 ${pick.target} 倍？`
+        );
         answers.push(
           formatJ231Answer(
             `$${fractionToLatex(time)}$ 小時`,
@@ -7375,7 +7473,9 @@
         ];
         const pick = templates[cycle % templates.length];
         const bTurns = simplifyFraction(pick.aTurns * pick.aTeeth, pick.bTeeth);
-        questions.push(`甲、乙兩齒輪互相咬合。甲輪有 ${pick.aTeeth} 齒，乙輪有 ${pick.bTeeth} 齒。當甲輪轉動 ${pick.aTurns} 圈時，乙輪轉動幾圈？`);
+        questions.push(
+          `甲、乙兩齒輪互相咬合。甲輪有 ${pick.aTeeth} 齒，乙輪有 ${pick.bTeeth} 齒。當甲輪轉動 ${pick.aTurns} 圈時，乙輪轉動幾圈？`
+        );
         answers.push(
           formatJ231Answer(
             `$${fractionToLatex(bTurns)}$ 圈`,
@@ -7395,7 +7495,9 @@
       const pick = templates[cycle % templates.length];
       const unit = simplifyFraction(pick.more, pick.ratio[2] - pick.ratio[0]);
       const bProfit = mulFraction(makeFraction(pick.ratio[1], 1), unit);
-      questions.push(`甲、乙、丙三人投資比為 $${pick.ratio.join(':')}$，年底獲利按投資比分配。若丙比甲多得 ${pick.more} 萬元，求乙分得多少萬元。`);
+      questions.push(
+        `甲、乙、丙三人投資比為 $${pick.ratio.join(':')}$，年底獲利按投資比分配。若丙比甲多得 ${pick.more} 萬元，求乙分得多少萬元。`
+      );
       answers.push(
         formatJ231Answer(
           `$${fractionToLatex(bProfit)}$ 萬元`,
@@ -7420,7 +7522,9 @@
         const a = [2, 3, 4, 5, 6][cycle % 5];
         const x0 = [1, 2, 3, 4, 5][(cycle * 2) % 5];
         const y0 = a * x0;
-        questions.push(`線型函數 $f(x)=ax+b$ 通過原點，且通過點 $(${x0},${y0})$。求 $a,b$，並判斷 $f(x)$ 與 $x$ 是否成正比。`);
+        questions.push(
+          `線型函數 $f(x)=ax+b$ 通過原點，且通過點 $(${x0},${y0})$。求 $a,b$，並判斷 $f(x)$ 與 $x$ 是否成正比。`
+        );
         answers.push(
           formatJ232Answer(
             `$a=${a},\\ b=0$，成正比`,
@@ -7434,7 +7538,9 @@
         const m = [2, 3, 4, 5, 6][cycle % 5];
         const x1 = [3, 4, 5, 6, 7][cycle % 5];
         const y1 = m * x1;
-        questions.push(`在坐標平面上，點 $(x,y)$ 在直線 $y=${m}x$ 上移動。若 $x=${x1}$，求 $y$，並判斷 $y$ 與 $x$ 的關係。`);
+        questions.push(
+          `在坐標平面上，點 $(x,y)$ 在直線 $y=${m}x$ 上移動。若 $x=${x1}$，求 $y$，並判斷 $y$ 與 $x$ 的關係。`
+        );
         answers.push(
           formatJ232Answer(
             `$y=${y1}$，成正比`,
@@ -7499,7 +7605,9 @@
       const y = pick.ratio[1] * unit;
       const z = pick.ratio[2] * unit;
       const ratio = normalizeRatioInts3(x + pick.addX, y - pick.subY, z);
-      questions.push(`若 $x:y:z=${pick.ratio.join(':')}$，且 $x+y+z=${pick.total}$，求 $(x+${pick.addX}):(y-${pick.subY}):z$ 的最簡整數比。`);
+      questions.push(
+        `若 $x:y:z=${pick.ratio.join(':')}$，且 $x+y+z=${pick.total}$，求 $(x+${pick.addX}):(y-${pick.subY}):z$ 的最簡整數比。`
+      );
       answers.push(
         formatJ232Answer(
           `$${ratio.a}:${ratio.b}:${ratio.c}$`,
@@ -7619,7 +7727,9 @@
         const low = center - radius;
         const high = center + radius;
         const countInt = high - low + 1;
-        questions.push(`同時滿足 $\\dfrac{x-1}{2}>\\dfrac{x-2}{3}$ 與 $|x-${center}|\\le ${radius}$ 的整數解共有幾個？`);
+        questions.push(
+          `同時滿足 $\\dfrac{x-1}{2}>\\dfrac{x-2}{3}$ 與 $|x-${center}|\\le ${radius}$ 的整數解共有幾個？`
+        );
         answers.push(
           formatJ241Answer(
             `${countInt} 個`,
@@ -7632,10 +7742,12 @@
       if (variant === 1) {
         const a = [0, 1, 2, 3, 4][cycle % 5];
         const high = a + 4;
-        questions.push(`若關於 $x$ 的不等式組 $\\begin{cases}x-1\\le ${high - 1}\\\\ x>a\\end{cases}$ 恰有 4 個整數解，求 $a$ 的範圍。`);
+        questions.push(
+          `若關於 $x$ 的不等式組 $\\begin{cases}x-1\\le ${high - 1}\\\\ x>a\\end{cases}$ 恰有 4 個整數解，求 $a$ 的範圍。`
+        );
         answers.push(
           formatJ241Answer(
-          `$${a}\\le a<${a + 1}$`,
+            `$${a}\\le a<${a + 1}$`,
             `由第一式得 $x\\le ${high}$，第二式為 $x>a$。若整數解恰為 ${a + 1}、${a + 2}、${a + 3}、${a + 4}，則 $a$ 必須滿足 $${a}\\le a<${a + 1}$。`
           )
         );
@@ -7686,7 +7798,7 @@
     return { questions, summaryAnswers, answers };
   }
 
-  function buildJ242LogicApplicationsCleanSet(count) {
+  /*  function buildJ242LogicApplicationsCleanSet(count) {
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
@@ -7698,7 +7810,9 @@
       if (variant === 0) {
         const total = [31, 35, 39, 43, 47][cycle % 5];
         const minVote = Math.floor(total / 3) + 1;
-        questions.push(`保證當選題：班級 ${total} 人選 3 位模範生，採單記投票法。阿文目前得 $x$ 票，剩下票數尚未開出，問 $x$ 至少要多少才能保證當選？`);
+        questions.push(
+          `保證當選題：班級 ${total} 人選 3 位模範生，採單記投票法。阿文目前得 $x$ 票，剩下票數尚未開出，問 $x$ 至少要多少才能保證當選？`
+        );
         answers.push(
           formatJ242Answer(
             `${minVote} 票`,
@@ -7715,7 +7829,9 @@
           const students = 5 * r + unplaced;
           if (7 * (r - 1) < students && students < 7 * r) rooms.push(r);
         }
-        questions.push(`宿舍不滿房問題：一群學生住宿舍，每間住 5 人剩 ${unplaced} 人無房可住；每間住 7 人則有一間不滿但不是空房。求宿舍間數可能有哪些？`);
+        questions.push(
+          `宿舍不滿房問題：一群學生住宿舍，每間住 5 人剩 ${unplaced} 人無房可住；每間住 7 人則有一間不滿但不是空房。求宿舍間數可能有哪些？`
+        );
         answers.push(
           formatJ242Answer(
             `${rooms.join('、')} 間`,
@@ -7729,7 +7845,9 @@
         const avg = [74, 76, 78, 80, 82][cycle % 5];
         const target = avg + [4, 5, 6, 7, 8][cycle % 5];
         const needed = target * 5 - avg * 4;
-        questions.push(`平均分門檻：前 4 次平均為 ${avg} 分，第 5 次要考幾分才能使總平均至少達 ${target} 分？若滿分 100 分，判斷是否可能。`);
+        questions.push(
+          `平均分門檻：前 4 次平均為 ${avg} 分，第 5 次要考幾分才能使總平均至少達 ${target} 分？若滿分 100 分，判斷是否可能。`
+        );
         answers.push(
           formatJ242Answer(
             needed <= 100 ? `至少 ${needed} 分，可行` : `至少 ${needed} 分，不可行`,
@@ -7747,7 +7865,9 @@
         const gap = cup - water;
         const low = makeFraction(gap, first + overflow);
         const high = makeFraction(gap, first);
-        questions.push(`體積位移：一個 ${cup}cc 杯子裝 ${water}cc 水，放入 $n$ 顆體積 $x$ cc 的珠子。若放 ${first} 顆不溢出，放 ${first + overflow} 顆會溢出，求 $x$ 的範圍。`);
+        questions.push(
+          `體積位移：一個 ${cup}cc 杯子裝 ${water}cc 水，放入 $n$ 顆體積 $x$ cc 的珠子。若放 ${first} 顆不溢出，放 ${first + overflow} 顆會溢出，求 $x$ 的範圍。`
+        );
         answers.push(
           formatJ242Answer(
             `$${fractionToLatex(low, true)}<x\\le ${fractionToLatex(high, true)}$`,
@@ -7760,16 +7880,228 @@
       const ticket = [50, 80, 100, 120, 150][cycle % 5];
       const group = [50, 40, 60, 80, 100][cycle % 5];
       const discount = [8, 75, 7, 85, 8][cycle % 5];
-      const discountRate = discount === 75 ? makeFraction(3, 4) : discount === 85 ? makeFraction(17, 20) : makeFraction(discount, 10);
+      const discountRate =
+        discount === 75 ? makeFraction(3, 4) : discount === 85 ? makeFraction(17, 20) : makeFraction(discount, 10);
       const groupCost = mulFraction(makeFraction(ticket * group, 1), discountRate);
       const minPeople = Math.floor(groupCost.num / groupCost.den / ticket) + 1;
-      questions.push(`折扣方案比較：門票 ${ticket} 元，${group} 人以上可打 ${discount === 75 ? '75' : discount} 折。若某團體不足 ${group} 人，但直接買 ${group} 張團體票反而較便宜，求人數 $x$ 的最小值。`);
+      questions.push(
+        `折扣方案比較：門票 ${ticket} 元，${group} 人以上可打 ${discount === 75 ? '75' : discount} 折。若某團體不足 ${group} 人，但直接買 ${group} 張團體票反而較便宜，求人數 $x$ 的最小值。`
+      );
       answers.push(
         formatJ242Answer(
           `${minPeople} 人`,
           `原價買 $x$ 張需 $${ticket}x$ 元；買 ${group} 張團體票需 $${fractionToLatex(groupCost)}$ 元。要團體票較便宜，需 $${fractionToLatex(groupCost)}<${ticket}x$，所以 $x>${fractionToLatex(divFraction(groupCost, makeFraction(ticket, 1)), true)}$，最小整數為 ${minPeople}。`
         )
       );
+    }
+
+    return { questions, summaryAnswers, answers };
+  }*/
+
+  function buildJ242LogicApplicationsCleanSet(count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
+
+    function pickOne(list) {
+      return list[randInt(0, list.length - 1)];
+    }
+
+    for (let i = 0; i < count; i += 1) {
+      const variant = i % 8;
+
+      if (variant === 0) {
+        // 保證當選：名額可變
+        const seats = randInt(2, 5);
+        const total = randInt(28, 72);
+        const minVote = Math.floor(total / (seats + 1)) + 1;
+
+        questions.push(
+          `保證當選題：班級 ${total} 人選 ${seats} 位模範生，採單記投票法。若阿文最後得到 $x$ 票，問 $x$ 至少要多少才能保證當選？`
+        );
+
+        answers.push(
+          formatJ242Answer(
+            `${minVote} 票`,
+            `若阿文得 $x$ 票，其餘 $${total}-x$ 票分給其他候選人。要讓阿文不保證當選，至少要有 ${seats} 人各得到 $x$ 票，所以需 $${total}-x\\ge ${seats}x$。要保證當選就要 $${total}-x<${seats}x$，得 $x>${fractionToLatex(makeFraction(total, seats + 1), true)}$，因此至少 ${minVote} 票。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 1) {
+        // 宿舍不滿房：每間人數可變
+        const perSmall = randInt(4, 6);
+        const perLarge = perSmall + randInt(1, 3);
+        const unplaced = randInt(perSmall + 2, perSmall + 16);
+
+        const rooms = [];
+        for (let r = 2; r <= 40; r += 1) {
+          const students = perSmall * r + unplaced;
+          if (perLarge * (r - 1) < students && students < perLarge * r) {
+            rooms.push(r);
+          }
+        }
+
+        // 避免沒有答案或答案太長
+        if (rooms.length === 0 || rooms.length > 5) {
+          i -= 1;
+          continue;
+        }
+
+        questions.push(
+          `宿舍不滿房問題：一群學生住宿舍，每間住 ${perSmall} 人，尚有 ${unplaced} 人無房可住；每間住 ${perLarge} 人，則有一間不滿但不是空房。求宿舍間數可能有哪些？`
+        );
+
+        answers.push(
+          formatJ242Answer(
+            `${rooms.join('、')} 間`,
+            `設宿舍有 $r$ 間，學生數為 $${perSmall}r+${unplaced}$。每間住 ${perLarge} 人且有一間不滿但非空房，表示 $${perLarge}(r-1)<${perSmall}r+${unplaced}<${perLarge}r$。解得整數 $r$ 為 ${rooms.join('、')}。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 2) {
+        // 平均分門檻：次數、滿分、目標可變
+        const doneCount = randInt(3, 5);
+        const avg = randInt(62, 85);
+        const maxScore = pickOne([100, 120]);
+        const target = avg + randInt(3, 10);
+        const needed = target * (doneCount + 1) - avg * doneCount;
+
+        questions.push(
+          `平均分門檻：前 ${doneCount} 次平均為 ${avg} 分，第 ${doneCount + 1} 次要考幾分，才能使總平均至少達 ${target} 分？若滿分 ${maxScore} 分，判斷是否可能。`
+        );
+
+        answers.push(
+          formatJ242Answer(
+            needed <= maxScore ? `至少 ${needed} 分，可行` : `至少 ${needed} 分，不可行`,
+            `前 ${doneCount} 次總分為 $${doneCount}\\times ${avg}=${doneCount * avg}$。設第 ${doneCount + 1} 次為 $x$，則 $\\dfrac{${doneCount * avg}+x}{${doneCount + 1}}\\ge ${target}$，得 $x\\ge ${needed}$。${needed <= maxScore ? `因為不超過滿分 ${maxScore} 分，所以可行。` : `因為超過滿分 ${maxScore} 分，所以不可行。`}`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 3) {
+        // 體積位移：杯子、水量、珠子顆數可變
+        const cup = pickOne([400, 500, 600, 750, 800, 900, 1000, 1200]);
+        const gap = randInt(80, Math.min(360, cup - 100));
+        const water = cup - gap;
+        const first = randInt(3, 9);
+        const overflow = randInt(1, 5);
+
+        const low = makeFraction(gap, first + overflow);
+        const high = makeFraction(gap, first);
+
+        questions.push(
+          `體積位移：一個 ${cup}cc 杯子裝 ${water}cc 水，放入 $n$ 顆體積 $x$ cc 的珠子。若放 ${first} 顆不溢出，放 ${first + overflow} 顆會溢出，求 $x$ 的範圍。`
+        );
+
+        answers.push(
+          formatJ242Answer(
+            `$${fractionToLatex(low, true)}<x\\le ${fractionToLatex(high, true)}$`,
+            `杯中剩餘空間為 $${cup}-${water}=${gap}$ cc。放 ${first} 顆不溢出：$${first}x\\le ${gap}$；放 ${first + overflow} 顆會溢出：$${first + overflow}x>${gap}$。合併得 $${fractionToLatex(low, true)}<x\\le ${fractionToLatex(high, true)}$。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 4) {
+        // 折扣方案比較：票價、團體門檻、折扣可變
+        const ticket = pickOne([50, 60, 80, 100, 120, 150, 200]);
+        const group = pickOne([30, 40, 50, 60, 80, 100]);
+        const discountOption = pickOne([
+          { label: '65', rate: makeFraction(13, 20) },
+          { label: '7', rate: makeFraction(7, 10) },
+          { label: '75', rate: makeFraction(3, 4) },
+          { label: '8', rate: makeFraction(4, 5) },
+          { label: '85', rate: makeFraction(17, 20) },
+          { label: '9', rate: makeFraction(9, 10) },
+        ]);
+
+        const groupCost = mulFraction(makeFraction(ticket * group, 1), discountOption.rate);
+        const breakEven = divFraction(groupCost, makeFraction(ticket, 1));
+        const minPeople = Math.floor(breakEven.num / breakEven.den) + 1;
+
+        questions.push(
+          `折扣方案比較：門票 ${ticket} 元，${group} 人以上可打 ${discountOption.label} 折。若某團體不足 ${group} 人，但直接買 ${group} 張團體票反而較便宜，求人數 $x$ 的最小值。`
+        );
+
+        answers.push(
+          formatJ242Answer(
+            `${minPeople} 人`,
+            `原價買 $x$ 張需 $${ticket}x$ 元；買 ${group} 張團體票需 $${fractionToLatex(groupCost)}$ 元。要團體票較便宜，需 $${fractionToLatex(groupCost)}<${ticket}x$，所以 $x>${fractionToLatex(breakEven, true)}$，最小整數為 ${minPeople}。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 5) {
+        // 座位範圍：車輛容量與車數可變
+        const capacity = pickOne([32, 35, 40, 42, 45, 50]);
+        const buses = randInt(2, 8);
+        const low = capacity * buses;
+        const high = capacity * (buses + 1);
+
+        questions.push(
+          `座位安排問題：學生搭遊覽車，每車最多坐 ${capacity} 人。若安排 ${buses} 輛車不夠坐，安排 ${buses + 1} 輛車可以坐完，求學生人數 $x$ 的範圍。`
+        );
+
+        answers.push(
+          formatJ242Answer(
+            `${low + 1}～${high} 人`,
+            `${buses} 輛不夠坐，表示 $x>${capacity}\\times ${buses}=${low}$；${buses + 1} 輛可以坐完，表示 $x\\le ${capacity}\\times ${buses + 1}=${high}$。所以 $${low}<x\\le ${high}$，整數人數為 ${low + 1}～${high} 人。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 6) {
+        // 訂購費用區間：單價、手續費、上下限可變
+        const price = pickOne([20, 25, 30, 35, 40, 50, 60, 80]);
+        const service = pickOne([30, 40, 50, 60, 80, 100, 120]);
+        const minX = randInt(3, 12);
+        const maxX = minX + randInt(3, 10);
+
+        const lowerCost = price * (minX - 1) + service;
+        const upperCost = price * maxX + service;
+
+        questions.push(
+          `訂購費用問題：訂購獎品每份 ${price} 元，另收手續費 ${service} 元。若總費用超過 ${lowerCost} 元且不超過 ${upperCost} 元，求可訂購份數 $x$ 的範圍。`
+        );
+
+        answers.push(
+          formatJ242Answer(
+            `${minX}～${maxX} 份`,
+            `總費用為 $${price}x+${service}$。依題意可列 $${lowerCost}<${price}x+${service}\\le ${upperCost}$。兩邊整理得 $${minX - 1}<x\\le ${maxX}$，因為 $x$ 為正整數，所以可訂購 ${minX}～${maxX} 份。`
+          )
+        );
+        continue;
+      }
+
+      if (variant === 7) {
+        // 鐘點費區間：基本費、每小時費用、上下限可變
+        const base = pickOne([300, 500, 800, 1000]);
+        const hourly = pickOne([120, 150, 180, 200, 250]);
+        const minHour = randInt(2, 8);
+        const maxHour = minHour + randInt(2, 8);
+
+        const lowerCost = base + hourly * (minHour - 1);
+        const upperCost = base + hourly * maxHour;
+
+        questions.push(
+          `鐘點費問題：場地租借基本費 ${base} 元，每小時加收 ${hourly} 元。若總費用超過 ${lowerCost} 元且不超過 ${upperCost} 元，求租借時數 $x$ 的範圍。`
+        );
+
+        answers.push(
+          formatJ242Answer(
+            `${minHour}～${maxHour} 小時`,
+            `總費用為 $${base}+${hourly}x$。依題意可列 $${lowerCost}<${base}+${hourly}x\\le ${upperCost}$。整理得 $${minHour - 1}<x\\le ${maxHour}$，因為 $x$ 為正整數，所以租借時數為 ${minHour}～${maxHour} 小時。`
+          )
+        );
+        continue;
+      }
     }
 
     return { questions, summaryAnswers, answers };
@@ -9864,7 +10196,12 @@
         const part = [12, 25, 40, 32, 15][cycle % 5];
         const total = (part * 360) / angle;
         questions.push(`在一份圓形圖中，「排球社」的圓心角是 ${angle}°，且該社有 ${part} 人，求全體受訪者共有多少人。`);
-        answers.push(formatPracticeShortAnswer(`${total} 人`, `此類占全體 $\\dfrac{${angle}}{360}$，所以全體人數為 $${part}\\div\\dfrac{${angle}}{360}=${total}$ 人。`));
+        answers.push(
+          formatPracticeShortAnswer(
+            `${total} 人`,
+            `此類占全體 $\\dfrac{${angle}}{360}$，所以全體人數為 $${part}\\div\\dfrac{${angle}}{360}=${total}$ 人。`
+          )
+        );
         continue;
       }
 
@@ -9874,36 +10211,71 @@
         const targetPercent = [25, 30, 35, 15, 40][cycle % 5];
         const otherCount = (total * otherPercent) / 100;
         const targetCount = (total * targetPercent) / 100;
-        questions.push(`圓形圖中「其他」占 ${otherPercent}% ，對應人數為 ${otherCount} 人。求「籃球社」（占 ${targetPercent}%）的人數。`);
-        answers.push(formatPracticeShortAnswer(`${targetCount} 人`, `先反推總人數：$${otherCount}\\div ${otherPercent}\\%=${total}$。籃球社人數為 $${total}\\times ${targetPercent}\\%=${targetCount}$ 人。`));
+        questions.push(
+          `圓形圖中「其他」占 ${otherPercent}% ，對應人數為 ${otherCount} 人。求「籃球社」（占 ${targetPercent}%）的人數。`
+        );
+        answers.push(
+          formatPracticeShortAnswer(
+            `${targetCount} 人`,
+            `先反推總人數：$${otherCount}\\div ${otherPercent}\\%=${total}$。籃球社人數為 $${total}\\times ${targetPercent}\\%=${targetCount}$ 人。`
+          )
+        );
         continue;
       }
 
       if (variant === 2) {
         const total = [500, 600, 700, 800, 900][cycle % 5];
-        const ratio = [[2, 3], [3, 5], [4, 5], [5, 7], [3, 4]][cycle % 5];
+        const ratio = [
+          [2, 3],
+          [3, 5],
+          [4, 5],
+          [5, 7],
+          [3, 4],
+        ][cycle % 5];
         const sumCount = total / 2;
         const red = makeFraction(sumCount * ratio[0], ratio[0] + ratio[1]);
         const green = makeFraction(sumCount * ratio[1], ratio[0] + ratio[1]);
-        questions.push(`已知「紅茶」與「綠茶」的圓心角共為 180°，且兩者人數比為 $${ratio[0]}:${ratio[1]}$。若總人數為 ${total} 人，求兩者各有多少人。`);
-        answers.push(formatPracticeShortAnswer(`紅茶 ${fractionToLatex(red, true)} 人，綠茶 ${fractionToLatex(green, true)} 人`, `180° 表示兩者共占一半，所以共有 ${sumCount} 人。再按 $${ratio[0]}:${ratio[1]}$ 分配，得紅茶 ${fractionToLatex(red, true)} 人、綠茶 ${fractionToLatex(green, true)} 人。`));
+        questions.push(
+          `已知「紅茶」與「綠茶」的圓心角共為 180°，且兩者人數比為 $${ratio[0]}:${ratio[1]}$。若總人數為 ${total} 人，求兩者各有多少人。`
+        );
+        answers.push(
+          formatPracticeShortAnswer(
+            `紅茶 ${fractionToLatex(red, true)} 人，綠茶 ${fractionToLatex(green, true)} 人`,
+            `180° 表示兩者共占一半，所以共有 ${sumCount} 人。再按 $${ratio[0]}:${ratio[1]}$ 分配，得紅茶 ${fractionToLatex(red, true)} 人、綠茶 ${fractionToLatex(green, true)} 人。`
+          )
+        );
         continue;
       }
 
       if (variant === 3) {
-        const ratio = [[2, 3, 5], [3, 4, 5], [1, 2, 3], [4, 5, 6], [2, 5, 8]][cycle % 5];
+        const ratio = [
+          [2, 3, 5],
+          [3, 4, 5],
+          [1, 2, 3],
+          [4, 5, 6],
+          [2, 5, 8],
+        ][cycle % 5];
         const target = cycle % 3;
         const totalParts = ratio.reduce((sum, value) => sum + value, 0);
         const angle = makeFraction(360 * ratio[target], totalParts);
-        questions.push(`某圓形圖中 A、B、C 三類別的人數比為 $${ratio.join(':')}$。求 ${['A', 'B', 'C'][target]} 類對應的圓心角。`);
-        answers.push(formatPracticeShortAnswer(`$${fractionToLatex(angle, true)}°$`, `總份數為 ${totalParts}，目標類別占 ${ratio[target]} 份，所以圓心角為 $360°\\times\\dfrac{${ratio[target]}}{${totalParts}}=${fractionToLatex(angle, true)}°$。`));
+        questions.push(
+          `某圓形圖中 A、B、C 三類別的人數比為 $${ratio.join(':')}$。求 ${['A', 'B', 'C'][target]} 類對應的圓心角。`
+        );
+        answers.push(
+          formatPracticeShortAnswer(
+            `$${fractionToLatex(angle, true)}°$`,
+            `總份數為 ${totalParts}，目標類別占 ${ratio[target]} 份，所以圓心角為 $360°\\times\\dfrac{${ratio[target]}}{${totalParts}}=${fractionToLatex(angle, true)}°$。`
+          )
+        );
         continue;
       }
 
       const percent = [12, 15, 20, 25, 30][cycle % 5];
       const angle = (360 * percent) / 100;
       questions.push(`給定某類別的圓心角為 ${angle}°，求該類別占全體的百分比。`);
-      answers.push(formatPracticeShortAnswer(`$${percent}\\%$`, `百分比為 $\\dfrac{${angle}}{360}\\times100\\%=${percent}\\%$。`));
+      answers.push(
+        formatPracticeShortAnswer(`$${percent}\\%$`, `百分比為 $\\dfrac{${angle}}{360}\\times100\\%=${percent}\\%$。`)
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -9924,45 +10296,94 @@
         const percent = makeFraction(angle * 100, 360);
         const amount = divFraction(mulFraction(makeFraction(total, 1), percent), makeFraction(100, 1));
         questions.push(`若「遊戲道具 A」的圓心角是 ${angle}°，求其百分比；若總數為 ${total} 個，A 有多少個？`);
-        answers.push(formatPracticeShortAnswer(`$${fractionToLatex(percent, true)}\\%$，$${fractionToLatex(amount, true)}$ 個`, `百分比 $=\\dfrac{${angle}}{360}\\times100\\%=${fractionToLatex(percent, true)}\\%$。個數為 $${total}\\times ${fractionToLatex(percent, true)}\\%=${fractionToLatex(amount, true)}$ 個。`));
+        answers.push(
+          formatPracticeShortAnswer(
+            `$${fractionToLatex(percent, true)}\\%$，$${fractionToLatex(amount, true)}$ 個`,
+            `百分比 $=\\dfrac{${angle}}{360}\\times100\\%=${fractionToLatex(percent, true)}\\%$。個數為 $${total}\\times ${fractionToLatex(percent, true)}\\%=${fractionToLatex(amount, true)}$ 個。`
+          )
+        );
         continue;
       }
 
       if (variant === 1) {
-        const angles = [[120, 90, 60], [100, 80, 70], [144, 72, 54], [150, 90, 30], [108, 96, 84]][cycle % 5];
+        const angles = [
+          [120, 90, 60],
+          [100, 80, 70],
+          [144, 72, 54],
+          [150, 90, 30],
+          [108, 96, 84],
+        ][cycle % 5];
         const missing = 360 - angles.reduce((sum, value) => sum + value, 0);
         const percent = makeFraction(missing * 100, 360);
         questions.push(`圓形圖中有四個圖形，其中三個角度分別為 ${angles.join('°、')}°，求第四個圖形占全部的百分比。`);
-        answers.push(formatPracticeShortAnswer(`$${fractionToLatex(percent, true)}\\%$`, `第四個圓心角為 $360°-(${angles.join('+')})°=${missing}°$，所以百分比為 $\\dfrac{${missing}}{360}\\times100\\%=${fractionToLatex(percent, true)}\\%$。`));
+        answers.push(
+          formatPracticeShortAnswer(
+            `$${fractionToLatex(percent, true)}\\%$`,
+            `第四個圓心角為 $360°-(${angles.join('+')})°=${missing}°$，所以百分比為 $\\dfrac{${missing}}{360}\\times100\\%=${fractionToLatex(percent, true)}\\%$。`
+          )
+        );
         continue;
       }
 
       if (variant === 2) {
-        const aFrac = [makeFraction(1, 8), makeFraction(1, 6), makeFraction(1, 5), makeFraction(1, 4), makeFraction(3, 10)][cycle % 5];
+        const aFrac = [
+          makeFraction(1, 8),
+          makeFraction(1, 6),
+          makeFraction(1, 5),
+          makeFraction(1, 4),
+          makeFraction(3, 10),
+        ][cycle % 5];
         const bPercent = [20, 25, 30, 15, 35][cycle % 5];
         const aAngle = mulFraction(makeFraction(360, 1), aFrac);
         const bAngle = makeFraction(360 * bPercent, 100);
         const diff = makeFraction(Math.abs(aAngle.num * bAngle.den - bAngle.num * aAngle.den), aAngle.den * bAngle.den);
-        questions.push(`已知 A 部分占 $${fractionToLatex(aFrac)}$，B 部分占 ${bPercent}% ，求兩者對應的圓心角相差多少度。`);
-        answers.push(formatPracticeShortAnswer(`$${fractionToLatex(diff, true)}°$`, `A 的圓心角為 ${fractionToLatex(aAngle, true)}°，B 的圓心角為 ${fractionToLatex(bAngle, true)}°，相差 $${fractionToLatex(diff, true)}°$。`));
+        questions.push(
+          `已知 A 部分占 $${fractionToLatex(aFrac)}$，B 部分占 ${bPercent}% ，求兩者對應的圓心角相差多少度。`
+        );
+        answers.push(
+          formatPracticeShortAnswer(
+            `$${fractionToLatex(diff, true)}°$`,
+            `A 的圓心角為 ${fractionToLatex(aAngle, true)}°，B 的圓心角為 ${fractionToLatex(bAngle, true)}°，相差 $${fractionToLatex(diff, true)}°$。`
+          )
+        );
         continue;
       }
 
       if (variant === 3) {
         const totalPercent = [40, 50, 60, 30, 70][cycle % 5];
-        const ratio = [[3, 1], [2, 3], [4, 1], [5, 2], [3, 4]][cycle % 5];
+        const ratio = [
+          [3, 1],
+          [2, 3],
+          [4, 1],
+          [5, 2],
+          [3, 4],
+        ][cycle % 5];
         const aAngle = makeFraction(360 * totalPercent * ratio[0], 100 * (ratio[0] + ratio[1]));
         const bAngle = makeFraction(360 * totalPercent * ratio[1], 100 * (ratio[0] + ratio[1]));
-        questions.push(`若一個占全體 ${totalPercent}% 的類別再細分為兩個子類別，比例為 $${ratio[0]}:${ratio[1]}$，求兩個子類別各自的圓心角。`);
-        answers.push(formatPracticeShortAnswer(`$${fractionToLatex(aAngle, true)}°$、$${fractionToLatex(bAngle, true)}°$`, `此類別總圓心角為 $360°\\times ${totalPercent}\\%=${3.6 * totalPercent}°$。再按 $${ratio[0]}:${ratio[1]}$ 分配，得 $${fractionToLatex(aAngle, true)}°$、$${fractionToLatex(bAngle, true)}°$。`));
+        questions.push(
+          `若一個占全體 ${totalPercent}% 的類別再細分為兩個子類別，比例為 $${ratio[0]}:${ratio[1]}$，求兩個子類別各自的圓心角。`
+        );
+        answers.push(
+          formatPracticeShortAnswer(
+            `$${fractionToLatex(aAngle, true)}°$、$${fractionToLatex(bAngle, true)}°$`,
+            `此類別總圓心角為 $360°\\times ${totalPercent}\\%=${3.6 * totalPercent}°$。再按 $${ratio[0]}:${ratio[1]}$ 分配，得 $${fractionToLatex(aAngle, true)}°$、$${fractionToLatex(bAngle, true)}°$。`
+          )
+        );
         continue;
       }
 
       const totalPercent = [60, 50, 75, 40, 80][cycle % 5];
       const multiplier = [3, 2, 4, 5, 3][cycle % 5];
       const bAngle = makeFraction(360 * totalPercent, 100 * (multiplier + 1));
-      questions.push(`一個圓形圖中，A 區塊的角度是 B 區塊的 ${multiplier} 倍，且兩者共占全體的 ${totalPercent}% ，求 B 區塊的圓心角。`);
-      answers.push(formatPracticeShortAnswer(`$${fractionToLatex(bAngle, true)}°$`, `A:B=${multiplier}:1$，兩者合計角度為 $360°\\times ${totalPercent}\\%=${3.6 * totalPercent}°$。B 占其中 1 份，所以 B 的圓心角為 $${fractionToLatex(bAngle, true)}°$。`));
+      questions.push(
+        `一個圓形圖中，A 區塊的角度是 B 區塊的 ${multiplier} 倍，且兩者共占全體的 ${totalPercent}% ，求 B 區塊的圓心角。`
+      );
+      answers.push(
+        formatPracticeShortAnswer(
+          `$${fractionToLatex(bAngle, true)}°$`,
+          `A:B=${multiplier}:1$，兩者合計角度為 $360°\\times ${totalPercent}\\%=${3.6 * totalPercent}°$。B 占其中 1 份，所以 B 的圓心角為 $${fractionToLatex(bAngle, true)}°$。`
+        )
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -9983,8 +10404,15 @@
         const add = [20, 30, 40, 50, 60][cycle % 5];
         const oldCount = (total * percent) / 100;
         const newPercent = mulFraction(makeFraction(oldCount + add, total + add), makeFraction(100, 1));
-        questions.push(`原本 A 社團占 ${percent}%（總人數 ${total} 人），現在增加 ${add} 個新成員且都加入 A 社團，求 A 社團在新圓形圖中的百分比。`);
-        answers.push(formatPracticeShortAnswer(`$${fractionToLatex(newPercent, true)}\\%$`, `原本 A 有 $${total}\\times${percent}\\%=${oldCount}$ 人。新增後 A 有 ${oldCount + add} 人，總人數 ${total + add} 人，所以新百分比為 $\\dfrac{${oldCount + add}}{${total + add}}\\times100\\%=${fractionToLatex(newPercent, true)}\\%$。`));
+        questions.push(
+          `原本 A 社團占 ${percent}%（總人數 ${total} 人），現在增加 ${add} 個新成員且都加入 A 社團，求 A 社團在新圓形圖中的百分比。`
+        );
+        answers.push(
+          formatPracticeShortAnswer(
+            `$${fractionToLatex(newPercent, true)}\\%$`,
+            `原本 A 有 $${total}\\times${percent}\\%=${oldCount}$ 人。新增後 A 有 ${oldCount + add} 人，總人數 ${total + add} 人，所以新百分比為 $\\dfrac{${oldCount + add}}{${total + add}}\\times100\\%=${fractionToLatex(newPercent, true)}\\%$。`
+          )
+        );
         continue;
       }
 
@@ -9992,8 +10420,15 @@
         const otherPercent = [20, 24, 30, 36, 40][cycle % 5];
         const movedPercent = otherPercent / 2;
         const angleIncrease = (360 * movedPercent) / 100;
-        questions.push(`若原本「其他」類別占 ${otherPercent}% ，將其中一半重新劃分為「羽球社」，求羽球社圓心角增加多少度。`);
-        answers.push(formatPracticeShortAnswer(`$${angleIncrease}°$`, `重新劃分的一半是 ${otherPercent}% 的一半，也就是 ${movedPercent}% 。圓心角增加 $360°\\times ${movedPercent}\\%=${angleIncrease}°$。`));
+        questions.push(
+          `若原本「其他」類別占 ${otherPercent}% ，將其中一半重新劃分為「羽球社」，求羽球社圓心角增加多少度。`
+        );
+        answers.push(
+          formatPracticeShortAnswer(
+            `$${angleIncrease}°$`,
+            `重新劃分的一半是 ${otherPercent}% 的一半，也就是 ${movedPercent}% 。圓心角增加 $360°\\times ${movedPercent}\\%=${angleIncrease}°$。`
+          )
+        );
         continue;
       }
 
@@ -10005,8 +10440,15 @@
         const firstCount = (firstTotal * firstPercent) / 100;
         const secondCount = (secondTotal * secondPercent) / 100;
         const diff = secondCount - firstCount;
-        questions.push(`兩份圓形圖比較：第一年總人數 ${firstTotal} 人，A 占 ${firstPercent}%；第二年總人數 ${secondTotal} 人，A 占 ${secondPercent}% 。問 A 類別的人數增加還是減少多少？`);
-        answers.push(formatPracticeShortAnswer(diff >= 0 ? `增加 ${diff} 人` : `減少 ${-diff} 人`, `第一年 A 有 ${firstCount} 人；第二年 A 有 ${secondCount} 人，所以${diff >= 0 ? '增加' : '減少'} ${Math.abs(diff)} 人。`));
+        questions.push(
+          `兩份圓形圖比較：第一年總人數 ${firstTotal} 人，A 占 ${firstPercent}%；第二年總人數 ${secondTotal} 人，A 占 ${secondPercent}% 。問 A 類別的人數增加還是減少多少？`
+        );
+        answers.push(
+          formatPracticeShortAnswer(
+            diff >= 0 ? `增加 ${diff} 人` : `減少 ${-diff} 人`,
+            `第一年 A 有 ${firstCount} 人；第二年 A 有 ${secondCount} 人，所以${diff >= 0 ? '增加' : '減少'} ${Math.abs(diff)} 人。`
+          )
+        );
         continue;
       }
 
@@ -10015,7 +10457,12 @@
         const newPercent = oldPercent + [5, 6, 10, 8, 12][cycle % 5];
         const angleInc = (360 * (newPercent - oldPercent)) / 100;
         questions.push(`某類別百分比從 ${oldPercent}% 提升到 ${newPercent}% ，在圓形圖上圓心角增加了多少度？`);
-        answers.push(formatPracticeShortAnswer(`$${angleInc}°$`, `百分比增加 $${newPercent}-${oldPercent}=${newPercent - oldPercent}\\%$，所以圓心角增加 $360°\\times ${newPercent - oldPercent}\\%=${angleInc}°$。`));
+        answers.push(
+          formatPracticeShortAnswer(
+            `$${angleInc}°$`,
+            `百分比增加 $${newPercent}-${oldPercent}=${newPercent - oldPercent}\\%$，所以圓心角增加 $360°\\times ${newPercent - oldPercent}\\%=${angleInc}°$。`
+          )
+        );
         continue;
       }
 
@@ -10023,8 +10470,15 @@
       const percentIncrease = [20, 30, 40, 50, 60][cycle % 5];
       const factor = makeFraction(100 + percentIncrease, 100);
       const newCount = mulFraction(makeFraction(oldCount, 1), factor);
-      questions.push(`已知總人數增加 ${percentIncrease}% ，但某類別的圓心角不變。若該類別原有 ${oldCount} 人，求新的人數是原來的幾倍，並求新的人數。`);
-      answers.push(formatPracticeShortAnswer(`$${fractionToLatex(factor)}$ 倍，$${fractionToLatex(newCount, true)}$ 人`, `圓心角不變表示百分比不變。總人數增加 ${percentIncrease}% ，所以該類別人數也同倍增加，變為原來的 $${fractionToLatex(factor)}$ 倍，即 ${fractionToLatex(newCount, true)} 人。`));
+      questions.push(
+        `已知總人數增加 ${percentIncrease}% ，但某類別的圓心角不變。若該類別原有 ${oldCount} 人，求新的人數是原來的幾倍，並求新的人數。`
+      );
+      answers.push(
+        formatPracticeShortAnswer(
+          `$${fractionToLatex(factor)}$ 倍，$${fractionToLatex(newCount, true)}$ 人`,
+          `圓心角不變表示百分比不變。總人數增加 ${percentIncrease}% ，所以該類別人數也同倍增加，變為原來的 $${fractionToLatex(factor)}$ 倍，即 ${fractionToLatex(newCount, true)} 人。`
+        )
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -10044,7 +10498,12 @@
         const percent = [20, 25, 30, 40, 15][cycle % 5];
         const areaCoeff = makeFraction(r * r * percent, 100);
         questions.push(`一個半徑 ${r} 公分的圓形圖中，「籃球社」占 ${percent}% ，求該扇形面積。`);
-        answers.push(formatPracticeShortAnswer(`$${fractionToLatex(areaCoeff, true)}\\pi$ 平方公分`, `整個圓面積是 $${r}^2\\pi=${r * r}\\pi$。此類占 ${percent}% ，所以扇形面積為 $${r * r}\\pi\\times ${percent}\\%=${fractionToLatex(areaCoeff, true)}\\pi$。`));
+        answers.push(
+          formatPracticeShortAnswer(
+            `$${fractionToLatex(areaCoeff, true)}\\pi$ 平方公分`,
+            `整個圓面積是 $${r}^2\\pi=${r * r}\\pi$。此類占 ${percent}% ，所以扇形面積為 $${r * r}\\pi\\times ${percent}\\%=${fractionToLatex(areaCoeff, true)}\\pi$。`
+          )
+        );
         continue;
       }
 
@@ -10053,7 +10512,12 @@
         const angle = [60, 72, 90, 120, 144][cycle % 5];
         const arcCoeff = makeFraction(2 * r * angle, 360);
         questions.push(`圓形圖半徑為 ${r} 公分，某類別圓心角為 ${angle}°，求此類別對應扇形的弧長。`);
-        answers.push(formatPracticeShortAnswer(`$${fractionToLatex(arcCoeff, true)}\\pi$ 公分`, `弧長為圓周長的 $\\dfrac{${angle}}{360}$，所以弧長 $=2\\pi\\times${r}\\times\\dfrac{${angle}}{360}=${fractionToLatex(arcCoeff, true)}\\pi$ 公分。`));
+        answers.push(
+          formatPracticeShortAnswer(
+            `$${fractionToLatex(arcCoeff, true)}\\pi$ 公分`,
+            `弧長為圓周長的 $\\dfrac{${angle}}{360}$，所以弧長 $=2\\pi\\times${r}\\times\\dfrac{${angle}}{360}=${fractionToLatex(arcCoeff, true)}\\pi$ 公分。`
+          )
+        );
         continue;
       }
 
@@ -10062,25 +10526,56 @@
         const sectorCoeff = [25, 36, 45, 64, 80][cycle % 5];
         const percent = makeFraction(sectorCoeff * 100, totalCoeff);
         const angle = makeFraction(sectorCoeff * 360, totalCoeff);
-        questions.push(`若「綠茶」扇形面積為 $${sectorCoeff}\\pi$，整個圓形圖面積為 $${totalCoeff}\\pi$，求綠茶占全體的百分比及圓心角。`);
-        answers.push(formatPracticeShortAnswer(`$${fractionToLatex(percent, true)}\\%$，$${fractionToLatex(angle, true)}°$`, `比例為 $\\dfrac{${sectorCoeff}\\pi}{${totalCoeff}\\pi}$。所以百分比為 $${fractionToLatex(percent, true)}\\%$，圓心角為 $${fractionToLatex(angle, true)}°$。`));
+        questions.push(
+          `若「綠茶」扇形面積為 $${sectorCoeff}\\pi$，整個圓形圖面積為 $${totalCoeff}\\pi$，求綠茶占全體的百分比及圓心角。`
+        );
+        answers.push(
+          formatPracticeShortAnswer(
+            `$${fractionToLatex(percent, true)}\\%$，$${fractionToLatex(angle, true)}°$`,
+            `比例為 $\\dfrac{${sectorCoeff}\\pi}{${totalCoeff}\\pi}$。所以百分比為 $${fractionToLatex(percent, true)}\\%$，圓心角為 $${fractionToLatex(angle, true)}°$。`
+          )
+        );
         continue;
       }
 
       if (variant === 3) {
-        const ratio = [[1, 2], [2, 3], [3, 4], [2, 5], [3, 5]][cycle % 5];
+        const ratio = [
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [2, 5],
+          [3, 5],
+        ][cycle % 5];
         const areaRatio = normalizeRatioInts(ratio[0] * ratio[0], ratio[1] * ratio[1]);
         questions.push(`兩個圓形圖直徑比為 $${ratio[0]}:${ratio[1]}$，若 A 類別在兩圖中的百分比相同，求其扇形面積比。`);
-        answers.push(formatPracticeShortAnswer(`$${areaRatio.a}:${areaRatio.b}$`, `百分比相同代表扇形面積都占各自圓面積的同一比例。圓面積與直徑平方成正比，所以扇形面積比為 $${ratio[0]}^2:${ratio[1]}^2=${areaRatio.a}:${areaRatio.b}$。`));
+        answers.push(
+          formatPracticeShortAnswer(
+            `$${areaRatio.a}:${areaRatio.b}$`,
+            `百分比相同代表扇形面積都占各自圓面積的同一比例。圓面積與直徑平方成正比，所以扇形面積比為 $${ratio[0]}^2:${ratio[1]}^2=${areaRatio.a}:${areaRatio.b}$。`
+          )
+        );
         continue;
       }
 
       const totalPercent = [30, 40, 50, 60, 70][cycle % 5];
-      const subRatio = [[2, 1], [3, 2], [4, 1], [5, 3], [3, 4]][cycle % 5];
+      const subRatio = [
+        [2, 1],
+        [3, 2],
+        [4, 1],
+        [5, 3],
+        [3, 4],
+      ][cycle % 5];
       const angleA = makeFraction(360 * totalPercent * subRatio[0], 100 * (subRatio[0] + subRatio[1]));
       const angleB = makeFraction(360 * totalPercent * subRatio[1], 100 * (subRatio[0] + subRatio[1]));
-      questions.push(`一個占全體 ${totalPercent}% 的類別再切成兩個子扇形，比例為 $${subRatio[0]}:${subRatio[1]}$。求兩個子扇形的圓心角。`);
-      answers.push(formatPracticeShortAnswer(`$${fractionToLatex(angleA, true)}°$、$${fractionToLatex(angleB, true)}°$`, `此類別總圓心角為 $360°\\times${totalPercent}\\%=${3.6 * totalPercent}°$，再依 $${subRatio[0]}:${subRatio[1]}$ 分配，得 $${fractionToLatex(angleA, true)}°$、$${fractionToLatex(angleB, true)}°$。`));
+      questions.push(
+        `一個占全體 ${totalPercent}% 的類別再切成兩個子扇形，比例為 $${subRatio[0]}:${subRatio[1]}$。求兩個子扇形的圓心角。`
+      );
+      answers.push(
+        formatPracticeShortAnswer(
+          `$${fractionToLatex(angleA, true)}°$、$${fractionToLatex(angleB, true)}°$`,
+          `此類別總圓心角為 $360°\\times${totalPercent}\\%=${3.6 * totalPercent}°$，再依 $${subRatio[0]}:${subRatio[1]}$ 分配，得 $${fractionToLatex(angleA, true)}°$、$${fractionToLatex(angleB, true)}°$。`
+        )
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -10101,8 +10596,15 @@
         const b = [40, 35, 30, 25, 45][cycle % 5];
         const c = 100 - a - b;
         const cCount = (total * c) / 100;
-        questions.push(`一份調查有 ${total} 人，百分比如下：A(${a}%)、B(${b}%)、C(?%)。若 C 的人數必須是偶數，請問 C 的百分比與人數為何？`);
-        answers.push(formatPracticeShortAnswer(`C 為 $${c}\\%$，${cCount} 人`, `三類百分比總和為 100%，所以 C 占 $100-${a}-${b}=${c}\\%$。C 人數為 $${total}\\times${c}\\%=${cCount}$，且${cCount % 2 === 0 ? '是' : '不是'}偶數。`));
+        questions.push(
+          `一份調查有 ${total} 人，百分比如下：A(${a}%)、B(${b}%)、C(?%)。若 C 的人數必須是偶數，請問 C 的百分比與人數為何？`
+        );
+        answers.push(
+          formatPracticeShortAnswer(
+            `C 為 $${c}\\%$，${cCount} 人`,
+            `三類百分比總和為 100%，所以 C 占 $100-${a}-${b}=${c}\\%$。C 人數為 $${total}\\times${c}\\%=${cCount}$，且${cCount % 2 === 0 ? '是' : '不是'}偶數。`
+          )
+        );
         continue;
       }
 
@@ -10110,14 +10612,26 @@
         const angleIncrease = [10, 15, 20, 30, 45][cycle % 5];
         const percentIncrease = makeFraction(angleIncrease * 100, 360);
         questions.push(`判斷正誤：若一個類別的圓心角增加 ${angleIncrease}°，它的百分比一定增加 10% 嗎？請說明。`);
-        answers.push(formatPracticeShortAnswer(`不一定；本題增加 $${fractionToLatex(percentIncrease, true)}\\%$`, `圓心角增加 ${angleIncrease}° 對應的百分比增加量為 $\\dfrac{${angleIncrease}}{360}\\times100\\%=${fractionToLatex(percentIncrease, true)}\\%$，不一定是 10%。`));
+        answers.push(
+          formatPracticeShortAnswer(
+            `不一定；本題增加 $${fractionToLatex(percentIncrease, true)}\\%$`,
+            `圓心角增加 ${angleIncrease}° 對應的百分比增加量為 $\\dfrac{${angleIncrease}}{360}\\times100\\%=${fractionToLatex(percentIncrease, true)}\\%$，不一定是 10%。`
+          )
+        );
         continue;
       }
 
       if (variant === 2) {
         const total = [60, 90, 120, 150, 180][cycle % 5];
-        questions.push(`已知 A、B、C 三類別百分比皆為等數，且總和為 100%。若總人數為 ${total} 人，求三類別的圓心角與各自人數。`);
-        answers.push(formatPracticeShortAnswer(`各 $120°$，各 ${total / 3} 人`, `三類別百分比相等，所以各占 $\\dfrac13$，圓心角各為 $360°\\div3=120°$，人數各為 $${total}\\div3=${total / 3}$ 人。`));
+        questions.push(
+          `已知 A、B、C 三類別百分比皆為等數，且總和為 100%。若總人數為 ${total} 人，求三類別的圓心角與各自人數。`
+        );
+        answers.push(
+          formatPracticeShortAnswer(
+            `各 $120°$，各 ${total / 3} 人`,
+            `三類別百分比相等，所以各占 $\\dfrac13$，圓心角各為 $360°\\div3=120°$，人數各為 $${total}\\div3=${total / 3}$ 人。`
+          )
+        );
         continue;
       }
 
@@ -10125,15 +10639,27 @@
         const total = [70, 90, 110, 130, 150][cycle % 5];
         const percent = [25, 20, 30, 40, 15][cycle % 5];
         const exact = makeFraction(total * percent, 100);
-        questions.push(`若總人數不是 100 的倍數，例如總人數 ${total} 人，百分比為 ${percent}% 時，對應人數應如何處理？`);
-        answers.push(formatPracticeShortAnswer(`$${fractionToLatex(exact, true)}$ 人；若需整數須說明四捨五入規則`, `直接計算為 $${total}\\times ${percent}\\%=${fractionToLatex(exact, true)}$ 人。若結果不是整數，代表原百分比可能是四捨五入後的資料，不能自行硬取整數。`));
+        questions.push(
+          `若總人數不是 100 的倍數，例如總人數 ${total} 人，百分比為 ${percent}% 時，對應人數應如何處理？`
+        );
+        answers.push(
+          formatPracticeShortAnswer(
+            `$${fractionToLatex(exact, true)}$ 人；若需整數須說明四捨五入規則`,
+            `直接計算為 $${total}\\times ${percent}\\%=${fractionToLatex(exact, true)}$ 人。若結果不是整數，代表原百分比可能是四捨五入後的資料，不能自行硬取整數。`
+          )
+        );
         continue;
       }
 
       const minAngle = [15, 18, 24, 30, 36][cycle % 5];
       const frac = makeFraction(minAngle, 360);
       questions.push(`已知圓形圖中最小的角度是 ${minAngle}°，求該類別至少占全體的幾分之幾。`);
-      answers.push(formatPracticeShortAnswer(`$${fractionToLatex(frac)}$`, `占全體的比例就是圓心角除以 $360°$，所以為 $\\dfrac{${minAngle}}{360}=${fractionToLatex(frac)}$。`));
+      answers.push(
+        formatPracticeShortAnswer(
+          `$${fractionToLatex(frac)}$`,
+          `占全體的比例就是圓心角除以 $360°$，所以為 $\\dfrac{${minAngle}}{360}=${fractionToLatex(frac)}$。`
+        )
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -11260,6 +11786,13 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
 
+    function formatLinearExpr(a, b, variable = 'x') {
+      const aPart = a === 1 ? variable : a === -1 ? `-${variable}` : `${a}${variable}`;
+
+      if (b === 0) return aPart;
+      return `${aPart}${b > 0 ? '+' : ''}${b}`;
+    }
+
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
       const cycle = Math.floor(i / 4);
@@ -11272,11 +11805,14 @@
         const d = randInt(-8, 8);
         const fLo = c * xLo + d;
         const fHi = c * xHi + d;
-        questions.push(`設 $${xLo}\\leq x\\leq ${xHi}$，求 $${c}x+${d}$ 的範圍。`);
+        const expr = formatLinearExpr(c, d);
+
+        questions.push(`設 $${xLo}\\leq x\\leq ${xHi}$，求 $${expr}$ 的範圍。`);
+
         answers.push(
           formatJ242Answer(
-            `$${fLo}\\leq ${c}x+${d}\\leq ${fHi}$`,
-            `因為 $${c}>0$，對不等式各邊同乘以 $${c}$：$${c * xLo}\\leq ${c}x\\leq ${c * xHi}$，各邊加 $${d}$：$${fLo}\\leq ${c}x+${d}\\leq ${fHi}$。`
+            `$${fLo}\\leq ${expr}\\leq ${fHi}$`,
+            `因為 $${c}>0$，對不等式各邊同乘以 $${c}$：$${c * xLo}\\leq ${c}x\\leq ${c * xHi}$，各邊加 $${d}$：$${fLo}\\leq ${expr}\\leq ${fHi}$。`
           )
         );
         continue;
@@ -11526,7 +12062,9 @@
         }
         const maxSum = Math.max(...pairs.map(([x, y]) => x + y));
         const best = pairs.filter(([x, y]) => x + y === maxSum);
-        questions.push(`若 $x,y$ 均為正整數，且 $\\dfrac{x}{${p}}+\\dfrac{y}{${q}}=${fractionToLatex(rhs)}$，求 $x+y$ 的最大值。`);
+        questions.push(
+          `若 $x,y$ 均為正整數，且 $\\dfrac{x}{${p}}+\\dfrac{y}{${q}}=${fractionToLatex(rhs)}$，求 $x+y$ 的最大值。`
+        );
         summaryAnswers.push(`最大值為 $${maxSum}$`);
         answers.push(
           `同乘 ${p * q} 後可轉為整係數方程，再列出正整數解。符合條件的解為 ${formatPairList(pairs)}，其中 $x+y$ 最大的是 ${formatPairList(best)}，最大值為 $${maxSum}$。`
@@ -11547,9 +12085,7 @@
         }
         questions.push(`求 $${a}x+${b}y=${total}$ 中，使 $x>y$ 的所有正整數解。`);
         summaryAnswers.push(formatPairList(pairs));
-        answers.push(
-          `先列出 $${a}x+${b}y=${total}$ 的正整數解，再保留 $x>y$ 的數對，可得 ${formatPairList(pairs)}。`
-        );
+        answers.push(`先列出 $${a}x+${b}y=${total}$ 的正整數解，再保留 $x>y$ 的數對，可得 ${formatPairList(pairs)}。`);
       } else if (mode === 3) {
         const n = randInt(5, 10);
         const countPairs = ((n + 1) * (n + 2)) / 2;
@@ -11617,7 +12153,9 @@
         const x = randInt(1, 7);
         const y = randInt(1, 7);
         const k = 3 * x - y;
-        questions.push(`已知聯立方程式 $${formatSystemLatex(`x+2y=${x + 2 * y}`, `3x-y=k`)}$ 的解滿足 $x+y=${x + y}$，求 $k$。`);
+        questions.push(
+          `已知聯立方程式 $${formatSystemLatex(`x+2y=${x + 2 * y}`, `3x-y=k`)}$ 的解滿足 $x+y=${x + y}$，求 $k$。`
+        );
         summaryAnswers.push(`$k=${k}$`);
         answers.push(
           `由 $${formatSystemLatex(`x+2y=${x + 2 * y}`, `x+y=${x + y}`)}$ 可先解得 $(x,y)=(${x},${y})$。代入 $3x-y=k$，得 $k=${k}$。`
@@ -11638,9 +12176,13 @@
         const b = randInt(2, 5);
         const c1 = a * x + 3 * y;
         const c2 = x - b * y;
-        questions.push(`已知 $(x,y)=(${x},${y})$ 是 $${formatSystemLatex(`ax+3y=${c1}`, `x-by=${c2}`)}$ 的解，求 $a+b$。`);
+        questions.push(
+          `已知 $(x,y)=(${x},${y})$ 是 $${formatSystemLatex(`ax+3y=${c1}`, `x-by=${c2}`)}$ 的解，求 $a+b$。`
+        );
         summaryAnswers.push(`$${a + b}$`);
-        answers.push(`代入已知解：$${a}x+3y=${c1}$ 可求得 $a=${a}$，$x-by=${c2}$ 可求得 $b=${b}$，所以 $a+b=${a + b}$。`);
+        answers.push(
+          `代入已知解：$${a}x+3y=${c1}$ 可求得 $a=${a}$，$x-by=${c2}$ 可求得 $b=${b}$，所以 $a+b=${a + b}$。`
+        );
       }
     }
 
@@ -11698,7 +12240,9 @@
         const v = makeFraction(1, y);
         const r1 = addFraction(mulFraction(makeFraction(2, 1), u), mulFraction(makeFraction(3, 1), v));
         const r2 = subFraction(mulFraction(makeFraction(4, 1), u), v);
-        questions.push(`解聯立方程式：$${formatSystemLatex(`\\dfrac{2}{x}+\\dfrac{3}{y}=${fractionToLatex(r1)}`, `\\dfrac{4}{x}-\\dfrac{1}{y}=${fractionToLatex(r2)}`)}$。`);
+        questions.push(
+          `解聯立方程式：$${formatSystemLatex(`\\dfrac{2}{x}+\\dfrac{3}{y}=${fractionToLatex(r1)}`, `\\dfrac{4}{x}-\\dfrac{1}{y}=${fractionToLatex(r2)}`)}$。`
+        );
         summaryAnswers.push(`$(x,y)=(${x},${y})$`);
         answers.push(
           `設 $u=\\dfrac{1}{x},\\ v=\\dfrac{1}{y}$，原式化為 $${formatSystemLatex(`2u+3v=${fractionToLatex(r1)}`, `4u-v=${fractionToLatex(r2)}`)}$。解得 $u=${fractionToLatex(u)},\\ v=${fractionToLatex(v)}$，所以 $(x,y)=(${x},${y})$。`
@@ -11712,7 +12256,9 @@
         const v = makeFraction(1, d);
         const r1 = addFraction(u, v);
         const r2 = subFraction(u, v);
-        questions.push(`解聯立方程式：$${formatSystemLatex(`\\dfrac{1}{x+y}+\\dfrac{1}{x-y}=${fractionToLatex(r1)}`, `\\dfrac{1}{x+y}-\\dfrac{1}{x-y}=${fractionToLatex(r2)}`)}$。`);
+        questions.push(
+          `解聯立方程式：$${formatSystemLatex(`\\dfrac{1}{x+y}+\\dfrac{1}{x-y}=${fractionToLatex(r1)}`, `\\dfrac{1}{x+y}-\\dfrac{1}{x-y}=${fractionToLatex(r2)}`)}$。`
+        );
         summaryAnswers.push(`$(x,y)=(${x},${y})$`);
         answers.push(
           `設 $u=\\dfrac{1}{x+y},\\ v=\\dfrac{1}{x-y}$，先解得 $u=${fractionToLatex(u)},\\ v=${fractionToLatex(v)}$，所以 $x+y=${s}$、$x-y=${d}$。再聯立得 $(x,y)=(${x},${y})$。`
@@ -11724,7 +12270,9 @@
         const d = x - y;
         const r1 = subFraction(makeFraction(s, 2), makeFraction(d, 3));
         const r2 = addFraction(makeFraction(s, 4), makeFraction(d, 5));
-        questions.push(`解聯立方程式：$${formatSystemLatex(`\\dfrac{x+y}{2}-\\dfrac{x-y}{3}=${fractionToLatex(r1)}`, `\\dfrac{x+y}{4}+\\dfrac{x-y}{5}=${fractionToLatex(r2)}`)}$。`);
+        questions.push(
+          `解聯立方程式：$${formatSystemLatex(`\\dfrac{x+y}{2}-\\dfrac{x-y}{3}=${fractionToLatex(r1)}`, `\\dfrac{x+y}{4}+\\dfrac{x-y}{5}=${fractionToLatex(r2)}`)}$。`
+        );
         summaryAnswers.push(`$(x,y)=(${x},${y})$`);
         answers.push(
           `把 $x+y$ 與 $x-y$ 視為兩個整體，先解出 $x+y=${s}$、$x-y=${d}$，再聯立和差，得 $(x,y)=(${x},${y})$。`
@@ -11734,11 +12282,11 @@
         const y = randInt(1, 8);
         const r1 = subFraction(makeFraction(x - y + 1, 3), makeFraction(2 * x + y - 1, 2));
         const sum = x + y;
-        questions.push(`化簡並解聯立方程式：$${formatSystemLatex(`\\dfrac{x-y+1}{3}-\\dfrac{2x+y-1}{2}=${fractionToLatex(r1)}`, `x+y=${sum}`)}$。`);
-        summaryAnswers.push(`$(x,y)=(${x},${y})$`);
-        answers.push(
-          `第一式先同乘 6 化成一次式，再與 $x+y=${sum}$ 聯立。整理後可解得 $(x,y)=(${x},${y})$。`
+        questions.push(
+          `化簡並解聯立方程式：$${formatSystemLatex(`\\dfrac{x-y+1}{3}-\\dfrac{2x+y-1}{2}=${fractionToLatex(r1)}`, `x+y=${sum}`)}$。`
         );
+        summaryAnswers.push(`$(x,y)=(${x},${y})$`);
+        answers.push(`第一式先同乘 6 化成一次式，再與 $x+y=${sum}$ 聯立。整理後可解得 $(x,y)=(${x},${y})$。`);
       } else {
         const x = [4, 6, 8, 10, 12][randInt(0, 4)];
         const ratio = [2, 3, 4][randInt(0, 2)];
@@ -11774,7 +12322,9 @@
         const w2 = w1 + randInt(4, 9);
         const fee1 = rate * (w1 - free);
         const fee2 = rate * (w2 - free);
-        questions.push(`航空公司規定行李 $a$ 公斤以下免費，超過部分每公斤收 $b$ 元。已知 ${w1} 公斤需付 ${fee1} 元，${w2} 公斤需付 ${fee2} 元，求 $a,b$。`);
+        questions.push(
+          `航空公司規定行李 $a$ 公斤以下免費，超過部分每公斤收 $b$ 元。已知 ${w1} 公斤需付 ${fee1} 元，${w2} 公斤需付 ${fee2} 元，求 $a,b$。`
+        );
         summaryAnswers.push(`$a=${free}$，$b=${rate}$`);
         answers.push(
           `由題意可列 $${formatSystemLatex(`b(${w1}-a)=${fee1}`, `b(${w2}-a)=${fee2}`)}$。兩式相減得 $${w2 - w1}b=${fee2 - fee1}$，所以 $b=${rate}$；代回得 $a=${free}$。`
@@ -11787,7 +12337,9 @@
         const m2 = 150;
         const total1 = drink + base + (m1 - 60) * minuteFee;
         const total2 = drink + base + (m2 - 60) * minuteFee;
-        questions.push(`網咖基本費 $x$ 元含 60 分鐘，超過後每分鐘 $y$ 元，另需飲料低消 ${drink} 元。若上網 ${m1} 分鐘花 ${total1} 元，${m2} 分鐘花 ${total2} 元，求 $x,y$。`);
+        questions.push(
+          `網咖基本費 $x$ 元含 60 分鐘，超過後每分鐘 $y$ 元，另需飲料低消 ${drink} 元。若上網 ${m1} 分鐘花 ${total1} 元，${m2} 分鐘花 ${total2} 元，求 $x,y$。`
+        );
         summaryAnswers.push(`$x=${base}$，$y=${minuteFee}$`);
         answers.push(
           `可列 $${formatSystemLatex(`${drink}+x+${m1 - 60}y=${total1}`, `${drink}+x+${m2 - 60}y=${total2}`)}$。兩式相減得 $${m2 - m1}y=${total2 - total1}$，所以 $y=${minuteFee}$，再代回得 $x=${base}$。`
@@ -11802,7 +12354,9 @@
           i -= 1;
           continue;
         }
-        questions.push(`將 10% 鹽水 $x$ 克與 20% 鹽水 $y$ 克混合，再加入 ${addWater} 克水後濃度為 ${target}%，且混合前共有 ${total} 克，求 $x,y$。`);
+        questions.push(
+          `將 10% 鹽水 $x$ 克與 20% 鹽水 $y$ 克混合，再加入 ${addWater} 克水後濃度為 ${target}%，且混合前共有 ${total} 克，求 $x,y$。`
+        );
         summaryAnswers.push(`$x=${x}$，$y=${y}$`);
         answers.push(
           `由總重量得 $x+y=${total}$。由鹽量不變得 $10x+20y=${target}(x+y+${addWater})$。聯立解得 $x=${x},\\ y=${y}$。`
@@ -11812,7 +12366,9 @@
         const fast = slow + [5, 6, 8][randInt(0, 2)];
         const distance = (slow + fast) * 2;
         const catchTime = distance / (fast - slow);
-        questions.push(`甲、乙兩人相距 ${distance} 公里。若相向而行，2 小時後相遇；若同向而行，甲 ${catchTime} 小時追上乙。求甲、乙兩人的時速。`);
+        questions.push(
+          `甲、乙兩人相距 ${distance} 公里。若相向而行，2 小時後相遇；若同向而行，甲 ${catchTime} 小時追上乙。求甲、乙兩人的時速。`
+        );
         summaryAnswers.push(`甲 $${fast}$ 公里/時，乙 $${slow}$ 公里/時`);
         answers.push(
           `設甲較快，時速為 $x$，乙時速為 $y$。相向而行得 $2(x+y)=${distance}$；同向追及得 $${catchTime}(x-y)=${distance}$。解得 $x=${fast},\\ y=${slow}$。`
@@ -11826,7 +12382,9 @@
           i -= 1;
           continue;
         }
-        questions.push(`我有 5 元與 10 元硬幣共 ${totalCoins} 個。若把兩種硬幣的數量交換，總金額會減少 ${decrease} 元。求原來各有多少個 10 元硬幣與 5 元硬幣。`);
+        questions.push(
+          `我有 5 元與 10 元硬幣共 ${totalCoins} 個。若把兩種硬幣的數量交換，總金額會減少 ${decrease} 元。求原來各有多少個 10 元硬幣與 5 元硬幣。`
+        );
         summaryAnswers.push(`10 元 $${ten}$ 個，5 元 $${five}$ 個`);
         answers.push(
           `設 10 元硬幣有 $x$ 個、5 元硬幣有 $y$ 個。由總個數得 $x+y=${totalCoins}$。交換後金額減少表示 $(10x+5y)-(10y+5x)=${decrease}$。解得 $x=${ten},\\ y=${five}$。`
@@ -13174,7 +13732,7 @@
     },
   };
 
-  const bundleFingerprint = 'j2-bundle-v20260707-j24-j25-extension-v1';
+  const bundleFingerprint = 'j2-bundle-v20260710-midpoint-sign-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

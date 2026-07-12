@@ -5,11 +5,11 @@ window.formulaPracticeAssignmentStore = {
     "schema": "practice-db-v1",
     "count": 0,
     "assignmentCount": 0,
-    "practiceCount": 2995,
-    "bindingCount": 129,
-    "updatedAt": "2026-07-08T16:48:28.282900+00:00",
-    "totalPractices": 2922,
-    "totalBindings": 66
+    "practiceCount": 2996,
+    "bindingCount": 125,
+    "updatedAt": "2026-07-11T00:00:00+08:00",
+    "totalPractices": 2996,
+    "totalBindings": 125
   },
   "byId": {},
   "catalog": {}
@@ -19,11 +19,11 @@ window.practiceLibraryStore = {
     "schema": "practice-db-v1",
     "count": 0,
     "assignmentCount": 0,
-    "practiceCount": 2995,
-    "bindingCount": 129,
-    "updatedAt": "2026-07-08T16:48:28.282900+00:00",
-    "totalPractices": 2922,
-    "totalBindings": 66
+    "practiceCount": 2996,
+    "bindingCount": 125,
+    "updatedAt": "2026-07-11T00:00:00+08:00",
+    "totalPractices": 2996,
+    "totalBindings": 125
   },
   "byId": {
     "j2-1-2-two-solution-one-eq-drill": {
@@ -48136,7 +48136,7 @@ window.practiceLibraryStore = {
     },
     "practice-j4-3-1-polygon-angle-mixed": {
       "id": "practice-j4-3-1-polygon-angle-mixed",
-      "enabled": false,
+      "enabled": true,
       "mode": "generator",
       "title": "三角形與多邊形角度綜合",
       "generatorKey": "j4-3-1-polygon-angle-mixed",
@@ -48254,7 +48254,7 @@ window.practiceLibraryStore = {
     },
     "practice-j4-3-1-triangle-exterior-angle": {
       "id": "practice-j4-3-1-triangle-exterior-angle",
-      "enabled": false,
+      "enabled": true,
       "mode": "generator",
       "title": "三角形外角推理",
       "generatorKey": "j4-3-1-triangle-exterior-angle",
@@ -48515,7 +48515,7 @@ window.practiceLibraryStore = {
     },
     "practice-j4-3-3-congruent-correspondence": {
       "id": "practice-j4-3-3-congruent-correspondence",
-      "enabled": false,
+      "enabled": true,
       "mode": "generator",
       "title": "全等後對應邊角求值",
       "generatorKey": "j4-3-3-congruent-correspondence",
@@ -48656,7 +48656,7 @@ window.practiceLibraryStore = {
     },
     "practice-j4-3-4-side-angle-comparison": {
       "id": "practice-j4-3-4-side-angle-comparison",
-      "enabled": false,
+      "enabled": true,
       "mode": "generator",
       "title": "邊對角大小比較",
       "generatorKey": "j4-3-4-side-angle-comparison",
@@ -48742,7 +48742,7 @@ window.practiceLibraryStore = {
     },
     "practice-j4-3-4-triangle-side-angle-mixed": {
       "id": "practice-j4-3-4-triangle-side-angle-mixed",
-      "enabled": false,
+      "enabled": true,
       "mode": "generator",
       "title": "三角形邊角關係三類綜合",
       "generatorKey": "j4-3-4-triangle-side-angle-mixed",
@@ -55955,6 +55955,49 @@ window.practiceLibraryStore = {
         "兩弦相交在圓內用 PA×PB=PC×PD；兩割線相交在圓外也用外部段乘全長。",
         "切割線定理是 PT²=PA×PB，PB 是整條割線全長，不是只取圓內那一段。",
         "遇到半徑與圓心距時，先判斷圓冪值是 r²-d² 還是 d²-r²，再轉成線段乘積。"
+      ]
+    },
+    "practice-j5-3-1-proof-reasoning-mixed": {
+      "id": "practice-j5-3-1-proof-reasoning-mixed",
+      "enabled": true,
+      "mode": "generator",
+      "title": "證明推理綜合",
+      "generatorKey": "j5-3-1-proof-reasoning-mixed",
+      "difficulty": "hard",
+      "questionCount": 5,
+      "subtypeCount": 5,
+      "relatedPracticeIds": [
+        "practice-j5-3-1-advanced-consecutive-integers",
+        "practice-j5-3-1-polynomial-divisibility",
+        "practice-j5-3-1-multi-variable-sign-logic",
+        "practice-j5-3-1-inequality-proofs-composite",
+        "practice-j5-3-1-algebra-geometry-proof-bridge"
+      ],
+      "chapterCode": "j5-3-1",
+      "chapter": "證明的基本想法",
+      "domain": "幾何",
+      "prompt": "",
+      "answer": "",
+      "tags": [
+        "j5-3-1",
+        "證明的基本想法",
+        "證明推理",
+        "整除",
+        "不等式",
+        "符號判斷",
+        "配方法"
+      ],
+      "usage": [
+        "將固定證明題與變化較少的推理題統整為同一小類，避免章節清單被大量證明模板切碎。"
+      ],
+      "examples": [],
+      "tips": [
+        "先判斷題目要證明的是整除、正負、大小或恆成立，再選擇因式分解、奇偶性、倒數比較或配方法。"
+      ],
+      "notes": [],
+      "mistakes": [
+        "證明題不能只代數字驗算，要說明任意情況成立。",
+        "若題型本身參數變化有限，應作為同一綜合類的內部題源，不另外拆成多個章節小類。"
       ]
     },
     "practice-j5-3-1-advanced-consecutive-integers": {
@@ -94522,7 +94565,7 @@ window.practiceLibraryStore = {
       "order": 1
     },
     {
-      "practiceId": "practice-j5-3-1-advanced-consecutive-integers",
+      "practiceId": "practice-j5-3-1-proof-reasoning-mixed",
       "targetType": "chapter",
       "targetId": "j5-3-1",
       "enabled": true,
@@ -94914,13 +94957,6 @@ window.practiceLibraryStore = {
       "order": 2
     },
     {
-      "practiceId": "practice-j5-3-1-polynomial-divisibility",
-      "targetType": "chapter",
-      "targetId": "j5-3-1",
-      "enabled": true,
-      "order": 2
-    },
-    {
       "practiceId": "practice-j6-1-2-intersection-constraint-advanced",
       "targetType": "chapter",
       "targetId": "j6-1-2",
@@ -95131,13 +95167,6 @@ window.practiceLibraryStore = {
       "order": 3
     },
     {
-      "practiceId": "practice-j5-3-1-multi-variable-sign-logic",
-      "targetType": "chapter",
-      "targetId": "j5-3-1",
-      "enabled": true,
-      "order": 3
-    },
-    {
       "practiceId": "practice-j6-2-1-spatial-area-trig-advanced",
       "targetType": "chapter",
       "targetId": "j6-2-1",
@@ -95222,13 +95251,6 @@ window.practiceLibraryStore = {
       "order": 4
     },
     {
-      "practiceId": "practice-j5-3-1-inequality-proofs-composite",
-      "targetType": "chapter",
-      "targetId": "j5-3-1",
-      "enabled": true,
-      "order": 4
-    },
-    {
       "practiceId": "practice-j6-2-1-real-world-box-geometry",
       "targetType": "chapter",
       "targetId": "j6-2-1",
@@ -95253,13 +95275,6 @@ window.practiceLibraryStore = {
       "practiceId": "practice-j5-1-1-ratio-logic-trap",
       "targetType": "chapter",
       "targetId": "j5-1-1",
-      "enabled": true,
-      "order": 5
-    },
-    {
-      "practiceId": "practice-j5-3-1-algebra-geometry-proof-bridge",
-      "targetType": "chapter",
-      "targetId": "j5-3-1",
       "enabled": true,
       "order": 5
     },
@@ -95366,11 +95381,7 @@ window.practiceLibraryStore = {
       "practice-j5-2-3-secant-tangent-quadratic-model"
     ],
     "j5-3-1": [
-      "practice-j5-3-1-advanced-consecutive-integers",
-      "practice-j5-3-1-polynomial-divisibility",
-      "practice-j5-3-1-multi-variable-sign-logic",
-      "practice-j5-3-1-inequality-proofs-composite",
-      "practice-j5-3-1-algebra-geometry-proof-bridge"
+      "practice-j5-3-1-proof-reasoning-mixed"
     ],
     "j6-1-1": [
       "practice-j6-1-1-quadratic-property-logic-advanced"

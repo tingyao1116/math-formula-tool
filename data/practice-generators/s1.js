@@ -400,34 +400,100 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const bases = [2, 3, 5, 7];
-    for (let i = 0; i < count; i += 1) {
-      const base = bases[i % bases.length];
-      const mode = i % 4;
+    const bases = [2, 3, 5, 7, 11];
+    const seen = new Set();
+
+    function shiftedDenominator(variable, shift, sign = '-') {
+      if (shift === 0) return variable;
+      return sign === '-' ? `${variable}-${shift}` : `${shift}-${variable}`;
+    }
+
+    function fracOver(numerator, denominator) {
+      return `\\frac{${numerator}}{${denominator}}`;
+    }
+
+    function addFractionExpr(constant, numerator, denominator) {
+      const frac = fracOver(numerator, denominator);
+      if (constant === 0) return frac;
+      return `${constant}+${frac}`;
+    }
+
+    function subtractFractionExpr(constant, numerator, denominator) {
+      const frac = fracOver(numerator, denominator);
+      if (constant === 0) return `-${frac}`;
+      return `${constant}-${frac}`;
+    }
+
+    function coefficientPower(coefficient, base, exponentText) {
+      const power = `${base}^{${exponentText}}`;
+      return coefficient === 1 ? power : `${coefficient}\\cdot ${power}`;
+    }
+
+    function addQuestion(question, answer) {
+      if (seen.has(question)) return false;
+      seen.add(question);
+      questions.push(question);
+      answers.push(answer);
+      return true;
+    }
+
+    let attempts = 0;
+    while (questions.length < count && attempts < count * 20) {
+      attempts += 1;
+      const base = bases[randInt(0, bases.length - 1)];
+      const shift = randInt(1, 5);
+      const constant = randInt(1, 4);
+      const coefficient = randInt(1, 4);
+      const inverseCoefficient = randInt(1, 5);
+      const numerator = coefficient * inverseCoefficient;
+      const mode = randInt(0, 4);
+
       if (mode === 0) {
-        questions.push(`設 \\(a=1+${base}^k\\)，\\(b=1-${base}^{-k}\\)，試用 \\(a\\) 表示 \\(b\\)。`);
-        answers.push(
-          `答案：\\(b=\\frac{a-2}{a-1}\\)。解析：由 \\(a=1+${base}^k\\) 得 \\(${base}^k=a-1\\)，所以 \\(${base}^{-k}=\\frac{1}{a-1}\\)，因此 \\(b=1-\\frac{1}{a-1}=\\frac{a-2}{a-1}\\)。`
+        const denominator = shiftedDenominator('a', shift);
+        const answerExpr = subtractFractionExpr(constant, numerator, denominator);
+        addQuestion(
+          `設 \\(a=${shift}+${coefficientPower(coefficient, base, 'k')}\\)，\\(b=${constant}-${coefficientPower(inverseCoefficient, base, '-k')}\\)，試用 \\(a\\) 表示 \\(b\\)。`,
+          `答案：\\(b=${answerExpr}\\)。解析：由 \\(a=${shift}+${coefficientPower(coefficient, base, 'k')}\\) 得 \\(${base}^k=\\frac{a-${shift}}{${coefficient}}\\)，所以 \\(${base}^{-k}=\\frac{${coefficient}}{a-${shift}}\\)。代入 \\(b=${constant}-${coefficientPower(inverseCoefficient, base, '-k')}\\)，得 \\(b=${constant}-${fracOver(numerator, denominator)}=${answerExpr}\\)。`
         );
         continue;
       }
+
       if (mode === 1) {
-        questions.push(`設 \\(a=1+${base}^k\\)，\\(b=1+${base}^{-k}\\)，試用 \\(a\\) 表示 \\(b\\)。`);
-        answers.push(
-          `答案：\\(b=\\frac{a}{a-1}\\)。解析：\\(${base}^k=a-1\\)，所以 \\(${base}^{-k}=\\frac{1}{a-1}\\)，故 \\(b=1+\\frac{1}{a-1}=\\frac{a}{a-1}\\)。`
+        const denominator = shiftedDenominator('a', shift);
+        const answerExpr = addFractionExpr(constant, numerator, denominator);
+        addQuestion(
+          `設 \\(a=${shift}+${coefficientPower(coefficient, base, 'k')}\\)，\\(b=${constant}+${coefficientPower(inverseCoefficient, base, '-k')}\\)，試用 \\(a\\) 表示 \\(b\\)。`,
+          `答案：\\(b=${answerExpr}\\)。解析：由 \\(a=${shift}+${coefficientPower(coefficient, base, 'k')}\\) 得 \\(${base}^{-k}=\\frac{${coefficient}}{a-${shift}}\\)，所以 \\(b=${constant}+${inverseCoefficient}\\cdot\\frac{${coefficient}}{a-${shift}}=${answerExpr}\\)。`
         );
         continue;
       }
+
       if (mode === 2) {
-        questions.push(`設 \\(a=1+${base}^k\\)，\\(b=1+${base}^{-k}\\)，試用 \\(a\\) 表示 \\(a+b\\)。`);
-        answers.push(
-          `答案：\\(a+b=\\frac{a^2}{a-1}\\)。解析：先由 \\(${base}^k=a-1\\) 得 \\(b=1+\\frac{1}{a-1}=\\frac{a}{a-1}\\)，所以 \\(a+b=a+\\frac{a}{a-1}=\\frac{a^2}{a-1}\\)。`
+        const denominator = shiftedDenominator('a', shift);
+        const bExpr = addFractionExpr(constant, numerator, denominator);
+        const sumExpr = `a+${constant}+${fracOver(numerator, denominator)}`;
+        addQuestion(
+          `設 \\(a=${shift}+${coefficientPower(coefficient, base, 'k')}\\)，\\(b=${constant}+${coefficientPower(inverseCoefficient, base, '-k')}\\)，試用 \\(a\\) 表示 \\(a+b\\)。`,
+          `答案：\\(a+b=${sumExpr}\\)。解析：先由 \\(a=${shift}+${coefficientPower(coefficient, base, 'k')}\\) 得 \\(${base}^{-k}=\\frac{${coefficient}}{a-${shift}}\\)，所以 \\(b=${bExpr}\\)。因此 \\(a+b=a+${constant}+${fracOver(numerator, denominator)}\\)。`
         );
         continue;
       }
-      questions.push(`設 \\(a=${base}^k\\)，\\(b=1+${base}^{-k}\\)，試用 \\(a\\) 表示 \\(b\\)。`);
-      answers.push(
-        `答案：\\(b=\\frac{a+1}{a}\\)。解析：由 \\(a=${base}^k\\) 可知 \\(${base}^{-k}=\\frac1a\\)，因此 \\(b=1+\\frac1a=\\frac{a+1}{a}\\)。`
+
+      if (mode === 3) {
+        const denominator = 'a';
+        const answerExpr = addFractionExpr(constant, numerator, denominator);
+        addQuestion(
+          `設 \\(a=${coefficientPower(coefficient, base, 'k')}\\)，\\(b=${constant}+${coefficientPower(inverseCoefficient, base, '-k')}\\)，試用 \\(a\\) 表示 \\(b\\)。`,
+          `答案：\\(b=${answerExpr}\\)。解析：由 \\(a=${coefficientPower(coefficient, base, 'k')}\\) 得 \\(${base}^{-k}=\\frac{${coefficient}}{a}\\)，所以 \\(b=${constant}+${inverseCoefficient}\\cdot\\frac{${coefficient}}{a}=${answerExpr}\\)。`
+        );
+        continue;
+      }
+
+      const denominator = shiftedDenominator('a', shift);
+      const answerExpr = addFractionExpr(constant, numerator, denominator);
+      addQuestion(
+        `設 \\(a=${shift}+${coefficientPower(coefficient, base, '-k')}\\)，\\(b=${constant}+${coefficientPower(inverseCoefficient, base, 'k')}\\)，試用 \\(a\\) 表示 \\(b\\)。`,
+        `答案：\\(b=${answerExpr}\\)。解析：由 \\(a=${shift}+${coefficientPower(coefficient, base, '-k')}\\) 得 \\(${base}^{-k}=\\frac{a-${shift}}{${coefficient}}\\)，所以 \\(${base}^k=\\frac{${coefficient}}{a-${shift}}\\)。代入 \\(b=${constant}+${coefficientPower(inverseCoefficient, base, 'k')}\\)，得 \\(b=${constant}+${fracOver(numerator, denominator)}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -12451,7 +12517,7 @@
     },
   };
 
-  const bundleFingerprint = 's1-bundle-v20260708-s13-extension-v1';
+  const bundleFingerprint = 's1-bundle-v20260711-exponential-parameter-random-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;
