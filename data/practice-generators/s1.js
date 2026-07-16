@@ -221,19 +221,30 @@
     return values;
   }
 
+  function makeS111FiniteDecimalCase() {
+    const badFactors = [3, 7, 9, 11, 13, 27];
+    for (let attempt = 0; attempt < 100; attempt += 1) {
+      const bad = badFactors[randInt(0, badFactors.length - 1)];
+      const smooth = 2 ** randInt(1, 3) * 5 ** randInt(0, 2);
+      const den = bad * smooth;
+      const mult = randInt(1, 3);
+      const min = randInt(0, 3);
+      const max = min + randInt(8, 15);
+      const targetA = randInt(min, max);
+      const base = bad * randInt(8, 80) - mult * targetA;
+      if (base <= 0) continue;
+      const values = finiteDecimalCandidates(base, den, min, max, mult);
+      if (values.length > 0 && values.length <= 8) return { base, den, min, max, mult };
+    }
+    return { base: 290, den: 140, min: 0, max: 9, mult: 1 };
+  }
+
   function buildS111FiniteDecimalCriterionSet(count) {
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const cases = [
-      { base: 290, den: 140, min: 0, max: 9, mult: 1 },
-      { base: 1360, den: 70, min: 0, max: 9, mult: 1 },
-      { base: 520, den: 84, min: 1, max: 12, mult: 2 },
-      { base: 135, den: 90, min: 0, max: 9, mult: 1 },
-      { base: 840, den: 168, min: 0, max: 15, mult: 3 },
-    ];
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
+      const item = makeS111FiniteDecimalCase();
       const values = finiteDecimalCandidates(item.base, item.den, item.min, item.max, item.mult);
       const numeratorText = item.mult === 1 ? `${item.base}+a` : `${item.base}+${item.mult}a`;
       const valueText = values.length ? values.join('、') : '無';
@@ -635,9 +646,16 @@
       },
     ];
     const selected = shuffle(items);
+    const prompts = [
+      '判斷是非，並說明理由：',
+      '判斷下列敘述是否正確，並簡述理由：',
+      '下列敘述對嗎？請說明：',
+      '判斷命題真假：',
+    ];
     for (let i = 0; i < count; i += 1) {
       const item = selected[i % selected.length];
-      questions.push(`判斷是非，並說明理由：${item.statement}`);
+      const prompt = prompts[randInt(0, prompts.length - 1)];
+      questions.push(`${prompt}${item.statement}`);
       answers.push(`簡答：${item.truth ? '正確' : '錯誤'}。過程：${item.process}`);
     }
     return { questions, summaryAnswers, answers };
@@ -661,6 +679,24 @@
   function formatS111LinearEquationRow(a, xName, b, yName, value) {
     const left = `${formatTerm(a, xName)} ${b < 0 ? '- ' : '+ '}${formatTerm(Math.abs(b), yName)}`;
     return `${left}=${value}`;
+  }
+
+  function formatS111ConstantMinusVariable(value, variable) {
+    if (value === 0) return `-${variable}`;
+    return value > 0 ? `${value}-${variable}` : `-${Math.abs(value)}-${variable}`;
+  }
+
+  function formatS111ConstantMinusVariableSqrtTerm(value, variable, radical) {
+    if (value < 0) return `-(${Math.abs(value)}+${variable})\\sqrt{${radical}}`;
+    if (value === 0) return `-${variable}\\sqrt{${radical}}`;
+    return `+(${value}-${variable})\\sqrt{${radical}}`;
+  }
+
+  function formatS111SurdBinomialVariableTerm(rational, coeff, radical, variable, isFirst = false) {
+    const body = formatS111SurdBinomial(rational, coeff, radical);
+    if (isFirst) return `(${body})${variable}`;
+    if (body.startsWith('-')) return `-(${formatS111SurdBinomial(-rational, -coeff, radical)})${variable}`;
+    return `+(${body})${variable}`;
   }
 
   function buildS111IrrationalEqualitySolveSet(count) {
@@ -687,7 +723,7 @@
         }
         const rationalTarget = a * x + c * y;
         const irrationalTarget = b * x + d * y;
-        const left = `(${formatS111SurdBinomial(a, b, radical)})x+(${formatS111SurdBinomial(c, d, radical)})y`;
+        const left = `${formatS111SurdBinomialVariableTerm(a, b, radical, 'x', true)}${formatS111SurdBinomialVariableTerm(c, d, radical, 'y')}`;
         const right = formatS111SurdBinomial(rationalTarget, irrationalTarget, radical);
         if (mode === 0) {
           questions.push(`設 \\(x,y\\) 為有理數，若 \\(${left}=${right}\\)，求 \\(x,y\\) 的值。`);
@@ -709,10 +745,10 @@
         const r = 2 * aValue - bValue;
         const s = aValue + 2 * bValue;
         questions.push(
-          `設 \\(a,b\\in\\mathbb{Q}\\)，若 \\((a-b)+(a+b)\\sqrt{${radical}}=(${r}-a)+(${s}-b)\\sqrt{${radical}}\\)，求 \\(a,b\\)。`
+          `設 \\(a,b\\in\\mathbb{Q}\\)，若 \\((a-b)+(a+b)\\sqrt{${radical}}=(${formatS111ConstantMinusVariable(r, 'a')})${formatS111ConstantMinusVariableSqrtTerm(s, 'b', radical)}\\)，求 \\(a,b\\)。`
         );
         answers.push(
-          `簡答：\\(a=${aValue},\\ b=${bValue}\\)。過程：比較有理數部分得 \\(a-b=${r}-a\\)，比較 \\(\\sqrt{${radical}}\\) 的係數得 \\(a+b=${s}-b\\)。解此聯立方程式，得 \\(a=${aValue},\\ b=${bValue}\\)。`
+          `簡答：\\(a=${aValue},\\ b=${bValue}\\)。過程：比較有理數部分得 \\(a-b=${formatS111ConstantMinusVariable(r, 'a')}\\)，比較 \\(\\sqrt{${radical}}\\) 的係數得 \\(a+b=${formatS111ConstantMinusVariable(s, 'b')}\\)。解此聯立方程式，得 \\(a=${aValue},\\ b=${bValue}\\)。`
         );
         continue;
       }
@@ -733,7 +769,7 @@
         const rationalTarget = p * aValue + r * bValue;
         const irrationalTarget = q * aValue + s * bValue;
         questions.push(
-          `設 \\(a,b\\) 為有理數，若 \\((${formatS111SurdBinomial(p, q, radical)})a+(${formatS111SurdBinomial(r, s, radical)})b=${formatS111SurdBinomial(rationalTarget, irrationalTarget, radical)}\\)，求 \\(a,b\\)。`
+          `設 \\(a,b\\) 為有理數，若 \\(${formatS111SurdBinomialVariableTerm(p, q, radical, 'a', true)}${formatS111SurdBinomialVariableTerm(r, s, radical, 'b')}=${formatS111SurdBinomial(rationalTarget, irrationalTarget, radical)}\\)，求 \\(a,b\\)。`
         );
         answers.push(
           `簡答：\\(a=${aValue},\\ b=${bValue}\\)。過程：比較有理數部分與 \\(\\sqrt{${radical}}\\) 的係數，得 \\(${formatS111LinearEquationRow(p, 'a', r, 'b', rationalTarget)}\\)、\\(${formatS111LinearEquationRow(q, 'a', s, 'b', irrationalTarget)}\\)。解得 \\(a=${aValue},\\ b=${bValue}\\)。`
@@ -759,6 +795,10 @@
 
   function formatS111PointFraction(fraction) {
     return formatFunctionFractionValue(fraction);
+  }
+
+  function formatS111NumericDifferenceText(end, start) {
+    return `${end}${formatSignedNumber(-start)}`;
   }
 
   function buildS111NumberLineSectionSet(count) {
@@ -807,7 +847,7 @@
           `設 \\(A(${a}), B(${b})\\)，\\(P\\) 介於 \\(A,B\\) 之間且 \\(AP:BP=${m}:${n}\\)，求 \\(P\\) 點坐標。`
         );
         answers.push(
-          `簡答：\\(${formatS111PointFraction(p)}\\)。過程：\\(AP:BP=${m}:${n}\\) 表示 \\(P\\) 距離 \\(A\\) 佔全長的 \\(\\frac{${m}}{${m}+${n}}\\)。因此 \\(P=${a}+\\frac{${m}}{${m}+${n}}(${b}-${wrapIfNegative(a)})=${formatS111PointFraction(p)}\\)。`
+          `簡答：\\(${formatS111PointFraction(p)}\\)。過程：\\(AP:BP=${m}:${n}\\) 表示 \\(P\\) 距離 \\(A\\) 佔全長的 \\(\\frac{${m}}{${m}+${n}}\\)。因此 \\(P=${a}+\\frac{${m}}{${m}+${n}}(${formatS111NumericDifferenceText(b, a)})=${formatS111PointFraction(p)}\\)。`
         );
         continue;
       }
@@ -1011,15 +1051,25 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const cases = [
-      { a: 101, near: 5, b: 38, far: 3 },
-      { a: 73, near: 4, b: 20, far: 2 },
-      { a: 146, near: 6, b: 52, far: 3 },
-      { a: 58, near: 4, b: 18, far: 2 },
-      { a: 122, near: 5, b: 47, far: 3 },
-    ];
+    const makeCase = () => {
+      for (let attempt = 0; attempt < 100; attempt += 1) {
+        const a = randInt(20, 180);
+        const b = randInt(10, 100);
+        if (Number.isInteger(Math.sqrt(a)) || Number.isInteger(Math.sqrt(b)) || a === b) continue;
+        const near = randInt(3, 7);
+        const far = randInt(1, Math.min(4, near - 1));
+        const nearCenter = Math.sqrt(a);
+        const farCenter = Math.sqrt(b);
+        const candidates = [];
+        for (let x = -20; x <= 30; x += 1) {
+          if (Math.abs(x - nearCenter) < near && Math.abs(x - farCenter) > far) candidates.push(x);
+        }
+        if (candidates.length > 0 && candidates.length < 20) return { a, near, b, far };
+      }
+      return { a: 101, near: 5, b: 38, far: 3 };
+    };
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
+      const item = makeCase();
       const nearCenter = Math.sqrt(item.a);
       const farCenter = Math.sqrt(item.b);
       const candidates = [];
@@ -1124,6 +1174,10 @@
     return formatFunctionLinear(coeff, constant).replaceAll('x', variable);
   }
 
+  function formatS112NegatedLinear(coeff, constant, variable = 'x') {
+    return formatS112Linear(-coeff, -constant, variable);
+  }
+
   function formatS112AbsLinear(coeff, constant, variable = 'x') {
     return `|${formatS112Linear(coeff, constant, variable)}|`;
   }
@@ -1221,22 +1275,28 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const cases = [
-      { a: 2, b: -1, c: 1, d: 3 },
-      { a: 3, b: 2, c: 2, d: -5 },
-      { a: 4, b: -12, c: 2, d: 0 },
-      { a: 5, b: 5, c: 2, d: -7 },
-      { a: 2, b: -8, c: -3, d: 1 },
-    ];
+    const makeCase = () => {
+      for (let attempt = 0; attempt < 100; attempt += 1) {
+        const item = {
+          a: pickNonZero(-5, 5),
+          b: randInt(-12, 12),
+          c: pickNonZero(-5, 5),
+          d: randInt(-12, 12),
+        };
+        const solutions = solveAbsLinearEquality(item.a, item.b, item.c, item.d);
+        if (solutions.length > 0 && solutions.length <= 2) return item;
+      }
+      return { a: 2, b: -1, c: 1, d: 3 };
+    };
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
+      const item = makeCase();
       const solutions = solveAbsLinearEquality(item.a, item.b, item.c, item.d);
       const solutionText = solutions.map((value) => `\\(${formatFraction(value.num, value.den)}\\)`).join('、');
       questions.push(
         `解方程式 \\(|${formatS112Linear(item.a, item.b)}|=|${formatS112Linear(item.c, item.d)}|\\)，並寫出共有幾個實數解。`
       );
       answers.push(
-        `簡答：\\(x=${solutions.map((value) => formatFraction(value.num, value.den)).join('\\) 或 \\(x=')}\\)，共 ${solutions.length} 個。過程：\\(|A|=|B|\\) 等價於 \\(A=B\\) 或 \\(A=-B\\)。分別解 \\(${formatS112Linear(item.a, item.b)}=${formatS112Linear(item.c, item.d)}\\) 與 \\(${formatS112Linear(item.a, item.b)}=-(${formatS112Linear(item.c, item.d)})\\)，得 ${solutionText}。`
+        `簡答：\\(x=${solutions.map((value) => formatFraction(value.num, value.den)).join('\\) 或 \\(x=')}\\)，共 ${solutions.length} 個。過程：\\(|A|=|B|\\) 等價於 \\(A=B\\) 或 \\(A=-B\\)。分別解 \\(${formatS112Linear(item.a, item.b)}=${formatS112Linear(item.c, item.d)}\\) 與 \\(${formatS112Linear(item.a, item.b)}=${formatS112NegatedLinear(item.c, item.d)}\\)，得 ${solutionText}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1257,7 +1317,7 @@
           `已知不等式 \\(|x-a|\\leq b\\) 之解為 ${formatS112ClosedInterval(left, right)}，求數對 \\((a,b)\\)。`
         );
         answers.push(
-          `簡答：\\((a,b)=(${center},${radius})\\)。過程：\\(|x-a|\\leq b\\) 的解集中心是 \\(a\\)，半徑是 \\(b\\)。由端點平均得 \\(a=\\frac{${left}+${wrapIfNegative(right)}}{2}=${center}\\)，區間長為 ${right - left}，所以 \\(b=${radius}\\)。`
+          `簡答：\\((a,b)=(${center},${radius})\\)。過程：\\(|x-a|\\leq b\\) 的解集中心是 \\(a\\)，半徑是 \\(b\\)。由端點平均得 \\(a=\\frac{${left}${formatSignedNumber(right)}}{2}=${center}\\)，區間長為 ${right - left}，所以 \\(b=${radius}\\)。`
         );
         continue;
       }
@@ -1325,7 +1385,7 @@
           `對任意實數 \\(x\\)，求 \\(${formatS112DistanceTerm(a)}+${formatS112DistanceTerm(b)}+${formatS112DistanceTerm(c)}\\) 的最小值。`
         );
         answers.push(
-          `簡答：$${min}$。過程：三個點的距離和在中位數 \\(x=${b}\\) 時最小，最小值為距離 \\(${b - a}+0+${c - b}=${min}\\)。`
+          `簡答：\\(${min}\\)。過程：三個點的距離和在中位數 \\(x=${b}\\) 時最小，最小值為距離 \\(${b - a}+0+${c - b}=${min}\\)。`
         );
         continue;
       }
@@ -1492,7 +1552,7 @@
       if (mode === 3) {
         questions.push(`設三角形三邊長為 \\(a,b,c\\)，化簡 \\(|a+b-c|-\\sqrt{a^2+b^2+c^2-2ab-2bc+2ca}\\)。`);
         answers.push(
-          `簡答：0。過程：三角形中 \\(a+b-c>0\\)，所以 \\(|a+b-c|=a+b-c\\)。根號內為 \\((a+b-c)^2\\)，故根號為 \\(|a+b-c|=a+b-c\\)，相減為 0。`
+          `簡答：\\(2b-2c\\)。過程：根號內 \\(a^2+b^2+c^2-2ab-2bc+2ca=(a-b+c)^2\\)。三角形中 \\(a+b-c>0\\)，故 \\(|a+b-c|=a+b-c\\)；又 \\(a+c>b\\) 使 \\(a-b+c>0\\)，故 \\(\\sqrt{(a-b+c)^2}=a-b+c\\)。相減得 \\((a+b-c)-(a-b+c)=2b-2c\\)。`
         );
         continue;
       }
@@ -1655,8 +1715,8 @@
       }
       if (mode === 2) {
         const s = randInt(3, 9);
-        const p = randInt(1, 8);
-        const value = s ** 3 - 3 * p * s;
+        const p = randInt(1, Math.floor((s * s - 1) / 8));
+        const value = s ** 3 - 6 * p * s;
         questions.push(`已知 \\(x+2y=${s}\\)、\\(xy=${p}\\)，求 \\(x^3+8y^3\\)。`);
         answers.push(
           `簡答：${value}。過程：把 \\(x^3+8y^3\\) 看成 \\(x^3+(2y)^3\\)。\\((x+2y)^3=x^3+8y^3+3\\cdot x\\cdot2y(x+2y)\\)，所以值為 \\(${s}^3-6\\cdot${p}\\cdot${s}=${value}\\)。`
@@ -1673,8 +1733,8 @@
         );
         continue;
       }
-      const s = randInt(3, 8);
-      const p = randInt(1, 6);
+      const s = randInt(3, 15);
+      const p = randInt(1, Math.floor((s * s - 1) / 4));
       const cubeSum = s ** 3 - 3 * p * s;
       const value = cubeSum * cubeSum - 2 * p ** 3;
       questions.push(`已知 \\(a+b=${s}\\)、\\(ab=${p}\\)，求 \\(a^6+b^6\\)。`);
@@ -1691,7 +1751,7 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
-      const s = randInt(3, 8);
+      const s = randInt(3, 16);
       if (mode === 0) {
         const value = s ** 3 - 3 * s;
         questions.push(`已知 \\(x+\\frac{1}{x}=${s}\\)，求 \\(x^3+\\frac{1}{x^3}\\)。`);
@@ -1701,7 +1761,7 @@
         continue;
       }
       if (mode === 1) {
-        const d = randInt(2, 7);
+        const d = randInt(2, 12);
         const value = d ** 3 + 3 * d;
         questions.push(`已知 \\(x-\\frac{1}{x}=${d}\\)，求 \\(x^3-\\frac{1}{x^3}\\)。`);
         answers.push(
@@ -1725,11 +1785,12 @@
         );
         continue;
       }
-      const n = randInt(2, 5);
-      const value = n ** 3 + (2 - 3 * n * n) * n;
-      questions.push(`已知 \\(x=2-\\sqrt{3}\\)，求 \\(x^3+\\frac{1}{x^3}\\)。`);
+      const n = randInt(2, 10);
+      const sValue = 2 * n;
+      const value = sValue ** 3 - 3 * sValue;
+      questions.push(`已知 \\(x=${n}-\\sqrt{${n * n - 1}}\\)，求 \\(x^3+\\frac{1}{x^3}\\)。`);
       answers.push(
-        `簡答：52。過程：\\(\\frac1x=2+\\sqrt3\\)，所以 \\(x+\\frac1x=4\\)。因此 \\(x^3+\\frac1{x^3}=4^3-3\\cdot4=52\\)。`
+        `簡答：${value}。過程：\\(\\frac1x=${n}+\\sqrt{${n * n - 1}}\\)，所以 \\(x+\\frac1x=${sValue}\\)。因此 \\(x^3+\\frac1{x^3}=${sValue}^3-3\\cdot${sValue}=${value}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1767,7 +1828,7 @@
       }
       if (mode === 2) {
         const s = randInt(4, 10);
-        const p = randInt(1, 12);
+        const p = randInt(1, Math.floor((s * s - 1) / 3));
         const value = s * s - 2 * p;
         questions.push(`已知 \\(a+b+c=${s}\\)、\\(ab+bc+ca=${p}\\)，求 \\(a^2+b^2+c^2\\)。`);
         answers.push(
@@ -1777,7 +1838,7 @@
       }
       if (mode === 3) {
         const root = randInt(5, 12);
-        const squareSum = randInt(10, root * root - 2);
+        const squareSum = randInt(Math.ceil((root * root) / 3), root * root - 2);
         const pairSum = makeFraction(root * root - squareSum, 2);
         questions.push(
           `已知 \\(a^2+b^2+c^2=${squareSum}\\)、\\(ab+bc+ca=${formatFunctionFractionValue(pairSum)}\\)，求 \\(a+b+c\\) 的正值。`
@@ -1803,32 +1864,40 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode <= 1) {
-        const s = randInt(4, 9);
-        const p = randInt(1, 10);
-        const r = randInt(1, 8);
+        const aValue = randInt(1, 6);
+        const bValue = randInt(1, 6);
+        const cValue = randInt(1, 6);
+        const s = aValue + bValue + cValue;
+        const p = aValue * bValue + bValue * cValue + cValue * aValue;
+        const r = aValue * bValue * cValue;
         const value = s ** 3 - 3 * s * p + 3 * r;
-        questions.push(`已知 \\(a+b+c=${s}\\)、\\(ab+bc+ca=${p}\\)、\\(abc=${r}\\)，求 \\(a^3+b^3+c^3\\)。`);
+        questions.push(
+          `已知 \\(a,b,c\\) 為正實數，且 \\(a+b+c=${s}\\)、\\(ab+bc+ca=${p}\\)、\\(abc=${r}\\)，求 \\(a^3+b^3+c^3\\)。`
+        );
         answers.push(
           `簡答：${value}。過程：\\(a^3+b^3+c^3=(a+b+c)^3-3(a+b+c)(ab+bc+ca)+3abc\\)，代入得 \\(${s}^3-3\\cdot${s}\\cdot${p}+3\\cdot${r}=${value}\\)。`
         );
         continue;
       }
       if (mode === 2) {
-        const s = randInt(6, 14);
-        const squareSum = randInt(20, 80);
-        const cubeSum = randInt(80, 260);
+        const aValue = pickNonZero(-4, 6);
+        const bValue = pickNonZero(-4, 6);
+        const cValue = pickNonZero(-4, 6);
+        const s = aValue + bValue + cValue;
+        const squareSum = aValue * aValue + bValue * bValue + cValue * cValue;
+        const cubeSum = aValue ** 3 + bValue ** 3 + cValue ** 3;
         const pair = makeFraction(s * s - squareSum, 2);
-        const abc = makeFraction((cubeSum - s ** 3) * pair.den + 3 * s * pair.num, 3 * pair.den);
+        const abc = aValue * bValue * cValue;
         questions.push(
-          `已知 \\(a+b+c=${s}\\)、\\(a^2+b^2+c^2=${squareSum}\\)、\\(a^3+b^3+c^3=${cubeSum}\\)，求 \\(abc\\)。`
+          `已知 \\(a,b,c\\) 為實數，且 \\(a+b+c=${s}\\)、\\(a^2+b^2+c^2=${squareSum}\\)、\\(a^3+b^3+c^3=${cubeSum}\\)，求 \\(abc\\)。`
         );
         answers.push(
-          `簡答：\\(${formatFunctionFractionValue(abc)}\\)。過程：先由 \\(ab+bc+ca=\\frac{${s * s}-${squareSum}}{2}=${formatFunctionFractionValue(pair)}\\)。再代入三項立方公式，解得 \\(abc=${formatFunctionFractionValue(abc)}\\)。`
+          `簡答：\\(${abc}\\)。過程：先由 \\(ab+bc+ca=\\frac{${s * s}-${squareSum}}{2}=${formatFunctionFractionValue(pair)}\\)。再代入 \\(a^3+b^3+c^3=(a+b+c)^3-3(a+b+c)(ab+bc+ca)+3abc\\)，解得 \\(abc=${abc}\\)。`
         );
         continue;
       }
       if (mode === 3) {
-        questions.push(`化簡 \\(\\frac{x^3+y^3+z^3-3xyz}{x+y+z}\\)。`);
+        questions.push(`在 \\(x+y+z\\ne0\\) 下，化簡 \\(\\frac{x^3+y^3+z^3-3xyz}{x+y+z}\\)。`);
         answers.push(
           `簡答：\\(x^2+y^2+z^2-xy-yz-zx\\)。過程：\\(x^3+y^3+z^3-3xyz=(x+y+z)(x^2+y^2+z^2-xy-yz-zx)\\)，約去 \\(x+y+z\\) 後得到答案。`
         );
@@ -1994,7 +2063,7 @@
       const mode = i % 5;
       if (mode === 0) {
         // x³ - a³ = (x-a)(x²+ax+a²)
-        const a = randInt(2, 5);
+        const a = randInt(2, 15);
         const ax = a === 1 ? '' : `${a}`;
         questions.push(`因式分解 \\(x^3-${a * a * a}\\)。`);
         answers.push(
@@ -2004,7 +2073,7 @@
       }
       if (mode === 1) {
         // x³ + a³ = (x+a)(x²-ax+a²)
-        const a = randInt(2, 5);
+        const a = randInt(2, 15);
         const ax = a === 1 ? '' : `${a}`;
         questions.push(`因式分解 \\(x^3+${a * a * a}\\)。`);
         answers.push(
@@ -2014,7 +2083,7 @@
       }
       if (mode === 2) {
         // x⁴ - a⁴ = (x²+a²)(x+a)(x-a)
-        const a = randInt(1, 4);
+        const a = randInt(1, 12);
         questions.push(`因式分解 \\(x^4-${a * a * a * a}\\)。`);
         answers.push(
           `簡答：\\((x^2+${a * a})(x+${a})(x-${a})\\)。過程：先用平方差 \\(x^4-${a * a * a * a}=(x^2+${a * a})(x^2-${a * a})\\)，再分解 \\(x^2-${a * a}=(x+${a})(x-${a})\\)，得 \\((x^2+${a * a})(x+${a})(x-${a})\\)。`
@@ -2023,7 +2092,7 @@
       }
       if (mode === 3) {
         // Sophie Germain：x⁴+4a⁴ = (x²+2ax+2a²)(x²-2ax+2a²)
-        const a = randInt(1, 3);
+        const a = randInt(1, 10);
         const val = 4 * a * a * a * a;
         const a2 = 2 * a;
         const a22 = 2 * a * a;
@@ -2034,7 +2103,7 @@
         continue;
       }
       // mode === 4: x⁴+a²x²+a⁴ = (x²+ax+a²)(x²-ax+a²)
-      const a = randInt(1, 3);
+      const a = randInt(1, 10);
       const a2 = a * a;
       const a4 = a2 * a2;
       const xterm = a === 1 ? 'x' : `${a}x`;
@@ -2149,22 +2218,40 @@
         continue;
       }
       if (mode === 2) {
-        questions.push(`設 \\(a,b>0\\)，化簡 \\(\\sqrt[3]{ab^2}\\times(a^2b)^{2/3}\\)。`);
+        const p = randInt(1, 3);
+        const q = randInt(1, 3);
+        const r = randInt(1, 3);
+        const s = randInt(1, 3);
+        const firstRadicand = `${formatS114Power('a', p)}${formatS114Power('b', q)}`;
+        const secondRadicand = `${formatS114Power('a', r)}${formatS114Power('b', s)}`;
+        questions.push(`設 \\(a,b>0\\)，化簡 \\(\\sqrt[3]{${firstRadicand}}\\times(${secondRadicand})^{2/3}\\)。`);
         answers.push(
-          `簡答：\\(${formatS114Power('a', 5, 3)}${formatS114Power('b', 4, 3)}\\)。過程：\\(\\sqrt[3]{ab^2}=${formatS114Power('a', 1, 3)}${formatS114Power('b', 2, 3)}\\)，\\((a^2b)^{2/3}=${formatS114Power('a', 4, 3)}${formatS114Power('b', 2, 3)}\\)，相乘得 \\(${formatS114Power('a', 5, 3)}${formatS114Power('b', 4, 3)}\\)。`
+          `簡答：\\(${formatS114Power('a', p + 2 * r, 3)}${formatS114Power('b', q + 2 * s, 3)}\\)。過程：\\(\\sqrt[3]{${firstRadicand}}=${formatS114Power('a', p, 3)}${formatS114Power('b', q, 3)}\\)，\\((${secondRadicand})^{2/3}=${formatS114Power('a', 2 * r, 3)}${formatS114Power('b', 2 * s, 3)}\\)，相乘得 \\(${formatS114Power('a', p + 2 * r, 3)}${formatS114Power('b', q + 2 * s, 3)}\\)。`
         );
         continue;
       }
       if (mode === 3) {
-        questions.push(`化簡 \\((a^{1/4}-b^{1/4})(a^{1/4}+b^{1/4})(a^{1/2}+b^{1/2})(a+b)\\)。`);
+        questions.push(`設 \\(a,b\\geq0\\)，化簡 \\((a^{1/4}-b^{1/4})(a^{1/4}+b^{1/4})(a^{1/2}+b^{1/2})(a+b)\\)。`);
         answers.push(
           `簡答：\\(a^2-b^2\\)。過程：前兩項先成平方差 \\(a^{1/2}-b^{1/2}\\)，再乘 \\(a^{1/2}+b^{1/2}\\) 得 \\(a-b\\)，最後乘 \\(a+b\\) 得 \\(a^2-b^2\\)。`
         );
         continue;
       }
-      questions.push(`化簡 \\(\\frac{a^{2x}a^{3-x}}{a^{x-1}}\\)，並以 \\(a\\) 的次方表示。`);
+      const p = randInt(2, 5);
+      const q = randInt(1, 6);
+      const r = randInt(1, 4);
+      const pX = formatTerm(p, 'x');
+      const numeratorX = formatTerm(p - 1, 'x');
+      const denominatorX = formatTerm(r, 'x');
+      const resultXCoeff = p - 1 - r;
+      const resultConstant = q + 1;
+      const resultExponent =
+        resultXCoeff === 0
+          ? `${resultConstant}`
+          : `${resultXCoeff === 1 ? 'x' : resultXCoeff === -1 ? '-x' : `${resultXCoeff}x`}${formatSignedNumber(resultConstant)}`;
+      questions.push(`化簡 \\(\\frac{a^{${pX}}a^{${q}-x}}{a^{${denominatorX}-1}}\\)，並以 \\(a\\) 的次方表示。`);
       answers.push(
-        `簡答：\\(a^4\\)。過程：分子指數相加為 \\(2x+3-x=x+3\\)，再除以 \\(a^{x-1}\\) 等於指數相減，得 \\(a^{x+3-(x-1)}=a^4\\)。`
+        `簡答：\\(a^{${resultExponent}}\\)。過程：分子指數相加為 \\(${pX}+${q}-x=${numeratorX}+${q}\\)，再除以 \\(a^{${denominatorX}-1}\\) 等於指數相減，得 \\(a^{${numeratorX}+${q}-(${denominatorX}-1)}=a^{${resultExponent}}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2176,7 +2263,7 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
-      const s = randInt(3, 8);
+      const s = randInt(3, 16);
       if (mode === 0) {
         questions.push(`已知 \\(x^{1/2}+x^{-1/2}=${s}\\)，求 \\(x+x^{-1}\\) 之值。`);
         answers.push(`簡答：${s * s - 2}。過程：平方得 \\(x+x^{-1}+2=${s * s}\\)，所以 \\(x+x^{-1}=${s * s - 2}\\)。`);
@@ -2225,10 +2312,11 @@
         continue;
       }
       if (mode === 1) {
-        const sol = randInt(2, 6);
-        questions.push(`解方程式 \\(4^{2x-1}=8^{x+${sol - 2}}\\)。`);
+        const shift = randInt(0, 4);
+        const solution = 3 * shift + 2;
+        questions.push(`解方程式 \\(4^{2x-1}=8^{x+${shift}}\\)。`);
         answers.push(
-          `簡答：\\(x=${sol}\\)。過程：化為同底 2，左邊為 \\(2^{4x-2}\\)，右邊為 \\(2^{3x+${3 * (sol - 2)}}\\)。比較指數得 \\(x=${sol}\\)。`
+          `簡答：\\(x=${solution}\\)。過程：化為同底 2，左邊為 \\(2^{4x-2}\\)，右邊為 \\(2^{3x+${3 * shift}}\\)。比較指數得 \\(4x-2=3x+${3 * shift}\\)，所以 \\(x=${solution}\\)。`
         );
         continue;
       }
@@ -2242,15 +2330,19 @@
         continue;
       }
       if (mode === 3) {
-        questions.push(`解不等式 \\((3^x-9)(3^x-27)\\leq0\\)。`);
+        const base = [2, 3, 5][randInt(0, 2)];
+        const r1 = randInt(1, 3);
+        const r2 = r1 + randInt(1, 3);
+        questions.push(`解不等式 \\((${base}^x-${base ** r1})(${base}^x-${base ** r2})\\leq0\\)。`);
         answers.push(
-          `簡答：\\(2\\leq x\\leq3\\)。過程：令 \\(t=3^x>0\\)，則 \\((t-9)(t-27)\\leq0\\)，得 \\(9\\leq t\\leq27\\)，所以 \\(2\\leq x\\leq3\\)。`
+          `簡答：\\(${r1}\\leq x\\leq${r2}\\)。過程：令 \\(t=${base}^x>0\\)，則 \\((t-${base ** r1})(t-${base ** r2})\\leq0\\)，得 \\(${base ** r1}\\leq t\\leq${base ** r2}\\)，所以 \\(${r1}\\leq x\\leq${r2}\\)。`
         );
         continue;
       }
-      questions.push(`解不等式 \\((\\frac14)^x+(\\frac12)^x-2<0\\)。`);
+      const base = [2, 3, 5][randInt(0, 2)];
+      questions.push(`解不等式 \\((\\frac{1}{${base ** 2}})^x+(\\frac{1}{${base}})^x-2<0\\)。`);
       answers.push(
-        `簡答：\\(x>0\\)。過程：令 \\(t=(\\frac12)^x>0\\)，則 \\((\\frac14)^x=t^2\\)，不等式為 \\(t^2+t-2<0\\)，得 \\(0<t<1\\)，所以 \\(x>0\\)。`
+        `簡答：\\(x>0\\)。過程：令 \\(t=(\\frac{1}{${base}})^x>0\\)，則 \\((\\frac{1}{${base ** 2}})^x=t^2\\)，不等式為 \\(t^2+t-2<0\\)，得 \\(0<t<1\\)。因為 \\(0<\\frac{1}{${base}}<1\\)，所以 \\(x>0\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2270,17 +2362,21 @@
       return order === 2 ? `\\sqrt{${base}}` : `\\sqrt[${order}]{${base}}`;
     }
 
-    // 每組 [a, m, b, n]：比較 a^(1/m) vs b^(1/n)
-    const pairs = [
-      [2, 2, 3, 3], // √2 vs ∛3 → 8 vs 9 → ∛3 較大
-      [2, 3, 3, 4], // ∛2 vs ⁴√3 → 16 vs 27 → ⁴√3 較大
-      [3, 2, 7, 4], // √3 vs ⁴√7 → 9 vs 7 → √3 較大
-      [5, 3, 3, 2], // ∛5 vs √3 → 25 vs 27 → √3 較大
-      [2, 2, 5, 4], // √2 vs ⁴√5 → 4 vs 5 → ⁴√5 較大
-    ];
-
     for (let i = 0; i < count; i += 1) {
-      const [a, m, b, n] = pairs[i % pairs.length];
+      let a = 2;
+      let b = 3;
+      let m = 2;
+      let n = 3;
+      for (let attempt = 0; attempt < 100; attempt += 1) {
+        a = randInt(2, 9);
+        b = randInt(2, 9);
+        m = randInt(2, 4);
+        n = randInt(2, 4);
+        const LTest = lcm2(m, n);
+        const aTest = a ** (LTest / m);
+        const bTest = b ** (LTest / n);
+        if (aTest !== bTest && aTest <= 1000 && bTest <= 1000) break;
+      }
       const L = lcm2(m, n);
       const Lm = L / m;
       const Ln = L / n;
@@ -2305,39 +2401,49 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
+    const bases = [2, 3, 5];
     const kVals = [2, 3, 4, 5, 6];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
+      const base = bases[randInt(0, bases.length - 1)];
       const k = kVals[randInt(0, kVals.length - 1)];
       if (mode === 0) {
-        // 已知 2^x = k，求 4^x = (2^x)^2 = k^2
-        questions.push(`已知 \\(2^x=${k}\\)，求 \\(4^x\\) 之值。`);
-        answers.push(`簡答：${k * k}。過程：\\(4^x=(2^2)^x=(2^x)^2=${k}^2=${k * k}\\)。`);
+        const power = randInt(2, 4);
+        questions.push(`已知 \\(${base}^x=${k}\\)，求 \\((${base ** power})^x\\) 之值。`);
+        answers.push(
+          `簡答：${k ** power}。過程：\\((${base ** power})^x=(${base}^${power})^x=(${base}^x)^${power}=${k}^${power}=${k ** power}\\)。`
+        );
         continue;
       }
       if (mode === 1) {
-        // 已知 2^x = k，求 8^x = (2^x)^3 = k^3
-        questions.push(`已知 \\(2^x=${k}\\)，求 \\(8^x\\) 之值。`);
-        answers.push(`簡答：${k * k * k}。過程：\\(8^x=(2^3)^x=(2^x)^3=${k}^3=${k * k * k}\\)。`);
+        const power = randInt(2, 3);
+        const shift = randInt(1, 2);
+        questions.push(`已知 \\(${base}^x=${k}\\)，求 \\((${base ** power})^{x+${shift}}\\) 之值。`);
+        answers.push(
+          `簡答：${(base ** power) ** shift * k ** power}。過程：\\((${base ** power})^{x+${shift}}=(${base ** power})^${shift}\\cdot(${base ** power})^x=${(base ** power) ** shift}\\cdot(${base}^x)^${power}=${(base ** power) ** shift}\\cdot${k}^${power}=${(base ** power) ** shift * k ** power}\\)。`
+        );
         continue;
       }
       if (mode === 2) {
-        // 已知 2^x = k，求 (1/2)^x = 1/k
-        questions.push(`已知 \\(2^x=${k}\\)，求 \\(\\left(\\tfrac{1}{2}\\right)^x\\) 之值。`);
+        questions.push(`已知 \\(${base}^x=${k}\\)，求 \\(\\left(\\tfrac{1}{${base}}\\right)^x\\) 之值。`);
         answers.push(
-          `簡答：\\(\\tfrac{1}{${k}}\\)。過程：\\(\\left(\\tfrac{1}{2}\\right)^x=2^{-x}=\\tfrac{1}{2^x}=\\tfrac{1}{${k}}\\)。`
+          `簡答：\\(\\tfrac{1}{${k}}\\)。過程：\\(\\left(\\tfrac{1}{${base}}\\right)^x=${base}^{-x}=\\tfrac{1}{${base}^x}=\\tfrac{1}{${k}}\\)。`
         );
         continue;
       }
       if (mode === 3) {
-        // 已知 3^x = k，求 9^x = (3^x)^2 = k^2
-        questions.push(`已知 \\(3^x=${k}\\)，求 \\(9^x\\) 之值。`);
-        answers.push(`簡答：${k * k}。過程：\\(9^x=(3^2)^x=(3^x)^2=${k}^2=${k * k}\\)。`);
+        const power = randInt(2, 4);
+        questions.push(`已知 \\(${base}^x=${k}\\)，求 \\(${base}^{${power}x}\\) 之值。`);
+        answers.push(
+          `簡答：${k ** power}。過程：\\(${base}^{${power}x}=(${base}^x)^${power}=${k}^${power}=${k ** power}\\)。`
+        );
         continue;
       }
-      // mode === 4：已知 2^x = k，求 4^(x+1) = 4·(2^x)^2 = 4k^2
-      questions.push(`已知 \\(2^x=${k}\\)，求 \\(4^{x+1}\\) 之值。`);
-      answers.push(`簡答：${4 * k * k}。過程：\\(4^{x+1}=4\\cdot4^x=4\\cdot(2^x)^2=4\\cdot${k}^2=${4 * k * k}\\)。`);
+      const shift = randInt(1, 3);
+      questions.push(`已知 \\(${base}^x=${k}\\)，求 \\(${base}^{x+${shift}}\\) 之值。`);
+      answers.push(
+        `簡答：${base ** shift * k}。過程：\\(${base}^{x+${shift}}=${base}^${shift}\\cdot${base}^x=${base ** shift}\\cdot${k}=${base ** shift * k}\\)。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2351,8 +2457,8 @@
       const mode = i % 5;
       if (mode === 0) {
         // 4^x - (2^r-k)·2^x - k·2^r = 0 → t=2^x，(t-2^r)(t+k)=0，x=r
-        const r = randInt(1, 3);
-        const k = randInt(1, 4);
+        const r = randInt(1, 5);
+        const k = randInt(1, 6);
         const tr = 2 ** r;
         const pCoeff = tr - k; // 2^x 的係數（正表示減）
         const C = k * tr;
@@ -2372,8 +2478,8 @@
       }
       if (mode === 1) {
         // 9^x - (3^r1+3^r2)·3^x + 3^(r1+r2) = 0 → 兩正根 x=r1 or x=r2
-        const r1 = randInt(0, 1);
-        const r2 = r1 + randInt(1, 2);
+        const r1 = randInt(0, 3);
+        const r2 = r1 + randInt(1, 3);
         const t1 = 3 ** r1;
         const t2 = 3 ** r2;
         const S = t1 + t2;
@@ -2386,7 +2492,7 @@
       }
       if (mode === 2) {
         // 4^x + 2^(x+1) - C = 0 → t=2^x，t^2+2t-C=0，C=4^n+2^(n+1)，x=n
-        const n = randInt(1, 3);
+        const n = randInt(1, 5);
         const tn = 2 ** n;
         const C = tn * tn + 2 * tn;
         questions.push(`解方程式 \\(4^x+2^{x+1}-${C}=0\\)。`);
@@ -2397,8 +2503,8 @@
       }
       if (mode === 3) {
         // 4^x - (2^r1+2^r2)·2^x + 2^(r1+r2) = 0 → 兩正根 x=r1 or x=r2（用 4^x 符號凸顯換底步驟）
-        const r1 = randInt(0, 1);
-        const r2 = r1 + randInt(1, 2);
+        const r1 = randInt(0, 3);
+        const r2 = r1 + randInt(1, 3);
         const t1 = 2 ** r1;
         const t2 = 2 ** r2;
         const S = t1 + t2;
@@ -2410,7 +2516,7 @@
         continue;
       }
       // mode === 4：(3^x - 3^n)^2 = 0 → 9^x - 2·3^n·3^x + 9^n = 0
-      const n = randInt(1, 3);
+      const n = randInt(1, 5);
       const tn = 3 ** n;
       const Sn = 2 * tn;
       const Pn = tn * tn;
@@ -2431,8 +2537,8 @@
       const mode = i % 5;
       if (mode === 0) {
         // 2^(x+r) - 2^x = k：提出 2^x，2^x(2^r-1) = k
-        const r = randInt(1, 3);
-        const n = randInt(1, 3);
+        const r = randInt(1, 5);
+        const n = randInt(1, 5);
         const factor = 2 ** r - 1;
         const k = factor * 2 ** n;
         questions.push(`解方程式 \\(2^{x+${r}}-2^x=${k}\\)。`);
@@ -2443,7 +2549,7 @@
       }
       if (mode === 1) {
         // 3^(x+1) + 3^(x-1) = k：提出 3^(x-1)，10·3^(x-1) = k
-        const m = randInt(0, 2);
+        const m = randInt(0, 4);
         const k = 10 * 3 ** m;
         const x = m + 1;
         questions.push(`解方程式 \\(3^{x+1}+3^{x-1}=${k}\\)。`);
@@ -2454,7 +2560,7 @@
       }
       if (mode === 2) {
         // 2^(x+1) + 2^(x-1) = k：提出 2^(x-1)，5·2^(x-1) = k
-        const m = randInt(1, 3);
+        const m = randInt(1, 5);
         const k = 5 * 2 ** m;
         const x = m + 1;
         questions.push(`解方程式 \\(2^{x+1}+2^{x-1}=${k}\\)。`);
@@ -2465,7 +2571,7 @@
       }
       if (mode === 3) {
         // 5^(x+2) - 5^x = k：提出 5^x，24·5^x = k
-        const n = randInt(1, 2);
+        const n = randInt(1, 4);
         const k = 24 * 5 ** n;
         questions.push(`解方程式 \\(5^{x+2}-5^x=${k}\\)。`);
         answers.push(
@@ -2474,8 +2580,8 @@
         continue;
       }
       // mode === 4：2^(x+r) + 2^x = k：提出 2^x，(2^r+1)·2^x = k
-      const r = randInt(1, 3);
-      const n = randInt(1, 3);
+      const r = randInt(1, 5);
+      const n = randInt(1, 5);
       const factor = 2 ** r + 1;
       const k = factor * 2 ** n;
       questions.push(`解方程式 \\(2^{x+${r}}+2^x=${k}\\)。`);
@@ -2520,9 +2626,11 @@
       const B = randInt(1, 5);
       const C = randInt(2, 6);
       const upper = formatFraction(A, C);
-      questions.push(`已知 \\(x\\) 為實數，求 \\(\\frac{${A}-${B}\\cdot${base}^x}{${C}+${base}^x}\\) 的值域。`);
+      const exponentialTerm = B === 1 ? `${base}^x` : `${B}\\cdot${base}^x`;
+      const tTerm = B === 1 ? 't' : `${B}t`;
+      questions.push(`已知 \\(x\\) 為實數，求 \\(\\frac{${A}-${exponentialTerm}}{${C}+${base}^x}\\) 的值域。`);
       answers.push(
-        `簡答：\\((-${B},\\ ${upper})\\)。過程：令 \\(t=${base}^x>0\\)，原式 \\(y=\\frac{${A}-${B}t}{${C}+t}\\)。整理得 \\(y(${C}+t)=${A}-${B}t\\)，所以 \\(t(y+${B})=${A}-${C}y\\)，即 \\(t=\\frac{${A}-${C}y}{y+${B}}\\)。因為 \\(t>0\\)，分子分母同號；又 \\(\\frac{${A}}{${C}}>${-B}\\)，故 \\(-${B}<y<${upper}\\)。`
+        `簡答：\\((-${B},\\ ${upper})\\)。過程：令 \\(t=${base}^x>0\\)，原式 \\(y=\\frac{${A}-${tTerm}}{${C}+t}\\)。整理得 \\(y(${C}+t)=${A}-${tTerm}\\)，所以 \\(t(y+${B})=${A}-${C}y\\)，即 \\(t=\\frac{${A}-${C}y}{y+${B}}\\)。因為 \\(t>0\\)，分子分母同號；又 \\(\\frac{${A}}{${C}}>${-B}\\)，故 \\(-${B}<y<${upper}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2584,11 +2692,11 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const root = randInt(2, 3);
+      const root = randInt(2, 4);
       const dailyRate = root ** 2;
-      const startCount = randInt(1, 9) * 100;
-      const firstDay = randInt(2, 5);
-      const halfSteps = [3, 5, 7][i % 3];
+      const startCount = randInt(1, 9) * 10;
+      const firstDay = randInt(1, 4);
+      const halfSteps = [3, 5][i % 2];
       const secondDayText = `${firstDay + Math.floor(halfSteps / 2)}\\frac{1}{2}`;
       const firstCount = startCount * dailyRate ** firstDay;
       const secondCount = firstCount * root ** halfSteps;
@@ -2747,7 +2855,7 @@
         const positiveLog = (place - 1) * 10000 + mantissa;
         questions.push(`若 \\(\\log x=-${formatS115LogInt(positiveLog)}\\)，判定 \\(x\\) 從小數點後第幾位開始不為 0。`);
         answers.push(
-          `簡答：第 ${place} 位。過程：\\(-${place}<\\log x<-${place - 1}\\)，表示 \\(10^{-${place}}<x<10^{-${place + -1}}\\)，所以首位非零在小數點後第 ${place} 位。`
+          `簡答：第 ${place} 位。過程：\\(-${place}<\\log x<-${place - 1}\\)，表示 \\(10^{-${place}}<x<10^{-${place - 1}}\\)，所以首位非零在小數點後第 ${place} 位。`
         );
         continue;
       }
@@ -2839,17 +2947,27 @@
         continue;
       }
       if (mode === 3) {
+        const characteristic = randInt(0, 3);
+        const lower = 10 ** characteristic;
+        const upper = 10 ** (characteristic + 1);
+        const answerText = characteristic === 0 ? '\\sqrt{10}' : `${10 ** characteristic}\\sqrt{10}`;
         questions.push(
-          `已知 \\(\\log a\\) 的尾數與 \\(\\log \\frac{1}{a}\\) 的尾數相同，且 \\(1<a<10\\)，求 \\(a\\)。`
+          `已知 \\(\\log a\\) 的尾數與 \\(\\log \\frac{1}{a}\\) 的尾數相同，且 \\(${lower}<a<${upper}\\)，求 \\(a\\)。`
         );
         answers.push(
-          `簡答：\\(a=\\sqrt{10}\\)。過程：設 \\(\\log a=\\alpha\\)，其中 \\(0<\\alpha<1\\)。則 \\(\\log\\frac{1}{a}=-\\alpha=-1+(1-\\alpha)\\)，尾數為 \\(1-\\alpha\\)。兩尾數相同得 \\(\\alpha=1-\\alpha\\)，所以 \\(\\alpha=\\frac{1}{2}\\)，故 \\(a=10^{1/2}=\\sqrt{10}\\)。`
+          `簡答：\\(a=${answerText}\\)。過程：設 \\(\\log a=${characteristic}+\\alpha\\)，其中 \\(0<\\alpha<1\\)。則 \\(\\log\\frac{1}{a}=-(${characteristic}+\\alpha)=-${characteristic + 1}+(1-\\alpha)\\)，尾數為 \\(1-\\alpha\\)。兩尾數相同得 \\(\\alpha=1-\\alpha\\)，所以 \\(\\alpha=\\frac{1}{2}\\)，故 \\(a=10^{${characteristic}+1/2}=${answerText}\\)。`
         );
         continue;
       }
-      questions.push(`若 \\(\\log x^2\\) 與 \\(\\log\\frac{1}{x}\\) 的尾數相同，且 \\(1<x<\\sqrt{10}\\)，求 \\(x\\)。`);
+      const positivePower = randInt(2, 4);
+      const reciprocalPower = randInt(1, 3);
+      const boundPower = Math.max(positivePower, reciprocalPower);
+      const totalPower = positivePower + reciprocalPower;
+      questions.push(
+        `若 \\(\\log(x^{${positivePower}})\\) 與 \\(\\log\\frac{1}{x^{${reciprocalPower}}}\\) 的尾數相同，且 \\(1<x<\\sqrt[${boundPower}]{10}\\)，求 \\(x\\)。`
+      );
       answers.push(
-        `簡答：\\(x=\\sqrt[3]{10}\\)。過程：設 \\(\\log x=\\alpha\\)，\\(0<\\alpha<\\frac{1}{2}\\)。\\(\\log x^2=2\\alpha\\)，\\(\\log\\frac{1}{x}=-\\alpha\\) 的尾數為 \\(1-\\alpha\\)。令 \\(2\\alpha=1-\\alpha\\)，得 \\(\\alpha=\\frac{1}{3}\\)，所以 \\(x=10^{1/3}=\\sqrt[3]{10}\\)。`
+        `簡答：\\(x=\\sqrt[${totalPower}]{10}\\)。過程：設 \\(\\log x=\\alpha\\)，\\(0<\\alpha<\\frac{1}{${boundPower}}\\)。\\(\\log(x^{${positivePower}})=${positivePower}\\alpha\\)，\\(\\log\\frac{1}{x^{${reciprocalPower}}}=-${reciprocalPower}\\alpha\\) 的尾數為 \\(1-${reciprocalPower}\\alpha\\)。令 \\(${positivePower}\\alpha=1-${reciprocalPower}\\alpha\\)，得 \\(\\alpha=\\frac{1}{${totalPower}}\\)，所以 \\(x=10^{1/${totalPower}}=\\sqrt[${totalPower}]{10}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2875,22 +2993,44 @@
         let exponent3 = randInt(8, 18);
         let log2Term = S115_LOGS[2] * exponent2;
         let log3Term = S115_LOGS[3] * exponent3;
-        while (Math.abs(Math.floor(log2Term / 10000) - Math.floor(log3Term / 10000)) < 2) {
+        let larger = null;
+        let smaller = null;
+        let digits = 0;
+        let isSafeDigitCount = false;
+        for (let attempt = 0; attempt < 200 && !isSafeDigitCount; attempt += 1) {
+          larger =
+            log2Term >= log3Term
+              ? { base: 2, exponent: exponent2, logValue: log2Term }
+              : { base: 3, exponent: exponent3, logValue: log3Term };
+          smaller =
+            larger.base === 2
+              ? { base: 3, exponent: exponent3, logValue: log3Term }
+              : { base: 2, exponent: exponent2, logValue: log2Term };
+          digits = Math.floor(larger.logValue / 10000) + 1;
+          const logGap = larger.logValue - smaller.logValue;
+          const largerMantissa = larger.logValue % 10000;
+          const total = 2 ** exponent2 + 3 ** exponent3;
+          isSafeDigitCount = logGap >= 20000 && largerMantissa < 9500 && `${total}`.length === digits;
+          if (isSafeDigitCount) break;
           exponent2 = randInt(12, 25);
           exponent3 = randInt(8, 18);
           log2Term = S115_LOGS[2] * exponent2;
           log3Term = S115_LOGS[3] * exponent3;
         }
-        const larger =
-          log2Term >= log3Term
-            ? { base: 2, exponent: exponent2, logValue: log2Term }
-            : { base: 3, exponent: exponent3, logValue: log3Term };
-        const digits = Math.floor(larger.logValue / 10000) + 1;
+        if (!isSafeDigitCount) {
+          exponent2 = 20;
+          exponent3 = 8;
+          log2Term = S115_LOGS[2] * exponent2;
+          log3Term = S115_LOGS[3] * exponent3;
+          larger = { base: 2, exponent: exponent2, logValue: log2Term };
+          smaller = { base: 3, exponent: exponent3, logValue: log3Term };
+          digits = 7;
+        }
         questions.push(
           `已知 \\(\\log2\\approx0.3010,\\log3\\approx0.4771\\)，判定 \\(2^{${exponent2}}+3^{${exponent3}}\\) 大約為幾位數。`
         );
         answers.push(
-          `簡答：約 ${digits} 位數。過程：比較兩項對數，\\(\\log2^{${exponent2}}\\approx${formatS115LogInt(log2Term)}\\)，\\(\\log3^{${exponent3}}\\approx${formatS115LogInt(log3Term)}\\)。兩項位數至少差 2 位，較小項不會改變總和位數；較大項為 \\(${larger.base}^{${larger.exponent}}\\)，所以總和約為 ${digits} 位數。`
+          `簡答：約 ${digits} 位數。過程：比較兩項對數，\\(\\log2^{${exponent2}}\\approx${formatS115LogInt(log2Term)}\\)，\\(\\log3^{${exponent3}}\\approx${formatS115LogInt(log3Term)}\\)。較大項為 \\(${larger.base}^{${larger.exponent}}\\)，且兩項對數相差至少 2；又較大項尚未接近下一個 10 的冪，所以相加不會增加位數，總和約為 ${digits} 位數。`
         );
         continue;
       }
@@ -2954,9 +3094,10 @@
         const val2 = val2Labels[String(m)] || `10^{${m}}`;
         const total = n + m;
         const sumStr = total >= 0 ? `${total}` : `${total}`;
+        const sumText = `${n}${formatSignedNumber(m)}`;
         questions.push(`計算 \\(\\log_{10}${val1}+\\log_{10}${val2}\\)。`);
         answers.push(
-          `簡答：${sumStr}。過程：\\(\\log_{10}${val1}=\\log_{10}10^${n}=${n}\\)，\\(\\log_{10}${val2}=\\log_{10}10^{${m}}=${m}\\)，兩者相加得 \\(${n}+(${m})=${sumStr}\\)。`
+          `簡答：${sumStr}。過程：\\(\\log_{10}${val1}=\\log_{10}10^${n}=${n}\\)，\\(\\log_{10}${val2}=\\log_{10}10^{${m}}=${m}\\)，兩者相加得 \\(${sumText}=${sumStr}\\)。`
         );
         continue;
       }
@@ -2977,12 +3118,13 @@
         while (b === a) b = bases[randInt(0, 3)];
         const m = randInt(2, 4);
         const nNeg = -randInt(1, 3);
+        const sumText = `${m}${formatSignedNumber(nNeg)}`;
         const valA = a ** m;
         const valBAbsPow = b ** Math.abs(nNeg);
         const valBDisp = `\\dfrac{1}{${valBAbsPow}}`;
         questions.push(`計算 \\(\\log_{${a}}${valA}+\\log_{${b}}${valBDisp}\\)。`);
         answers.push(
-          `簡答：${m + nNeg}。過程：\\(\\log_{${a}}${valA}=\\log_{${a}}${a}^${m}=${m}\\)，\\(\\log_{${b}}${valBDisp}=\\log_{${b}}${b}^{${nNeg}}=${nNeg}\\)，兩者相加得 \\(${m}+(${nNeg})=${m + nNeg}\\)。`
+          `簡答：${m + nNeg}。過程：\\(\\log_{${a}}${valA}=\\log_{${a}}${a}^${m}=${m}\\)，\\(\\log_{${b}}${valBDisp}=\\log_{${b}}${b}^{${nNeg}}=${nNeg}\\)，兩者相加得 \\(${sumText}=${m + nNeg}\\)。`
         );
         continue;
       }
@@ -2992,27 +3134,27 @@
           {
             q: '\\log_{10}100+\\log_2\\dfrac{1}{8}',
             ans: -1,
-            proc: '\\(\\log_{10}100=2\\)，\\(\\log_2\\dfrac{1}{8}=-3\\)，合計 \\(2+(-3)=-1\\)',
+            proc: '\\(\\log_{10}100=2\\)，\\(\\log_2\\dfrac{1}{8}=-3\\)，合計 \\(2-3=-1\\)',
           },
           {
             q: '\\log_{10}1000+\\log_3\\dfrac{1}{9}',
             ans: 1,
-            proc: '\\(\\log_{10}1000=3\\)，\\(\\log_3\\dfrac{1}{9}=-2\\)，合計 \\(3+(-2)=1\\)',
+            proc: '\\(\\log_{10}1000=3\\)，\\(\\log_3\\dfrac{1}{9}=-2\\)，合計 \\(3-2=1\\)',
           },
           {
             q: '\\log_2 32+\\log_{10}0.01',
             ans: 3,
-            proc: '\\(\\log_2 32=5\\)，\\(\\log_{10}0.01=-2\\)，合計 \\(5+(-2)=3\\)',
+            proc: '\\(\\log_2 32=5\\)，\\(\\log_{10}0.01=-2\\)，合計 \\(5-2=3\\)',
           },
           {
             q: '\\log_3 27+\\log_2\\dfrac{1}{4}',
             ans: 1,
-            proc: '\\(\\log_3 27=3\\)，\\(\\log_2\\dfrac{1}{4}=-2\\)，合計 \\(3+(-2)=1\\)',
+            proc: '\\(\\log_3 27=3\\)，\\(\\log_2\\dfrac{1}{4}=-2\\)，合計 \\(3-2=1\\)',
           },
           {
             q: '\\log_5 125+\\log_{10}0.001',
             ans: 0,
-            proc: '\\(\\log_5 125=3\\)，\\(\\log_{10}0.001=-3\\)，合計 \\(3+(-3)=0\\)',
+            proc: '\\(\\log_5 125=3\\)，\\(\\log_{10}0.001=-3\\)，合計 \\(3-3=0\\)',
           },
         ];
         const c = combos[randInt(0, combos.length - 1)];
@@ -3059,25 +3201,22 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const cases = [
-      { lower: 1.5, upper: 2, multiple: 3, label: '3 的倍數' },
-      { lower: 1.5, upper: 2, multiple: 2, label: '偶數' },
-      { lower: 2.2, upper: 2.7, multiple: 5, label: '5 的倍數' },
-      { lower: 0.8, upper: 1.6, multiple: 4, label: '4 的倍數' },
-      { lower: 2, upper: 2.5, multiple: 9, label: '9 的倍數' },
-    ];
+    const multiples = [2, 3, 4, 5, 6, 8, 9];
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
-      const lowerValue = 10 ** item.lower;
-      const upperValue = 10 ** item.upper;
-      const first = Math.floor(lowerValue / item.multiple) * item.multiple + item.multiple;
-      const last = Math.ceil(upperValue / item.multiple) * item.multiple - item.multiple;
-      const countValue = last >= first ? Math.floor((last - first) / item.multiple) + 1 : 0;
-      questions.push(
-        `滿足 \\(a\\) 為 ${item.label}且 \\(${item.lower}<\\log a<${item.upper}\\) 的正整數 \\(a\\) 共有幾個？`
-      );
+      const lowerTenths = randInt(7, 24);
+      const widthTenths = randInt(4, 8);
+      const lower = lowerTenths / 10;
+      const upper = (lowerTenths + widthTenths) / 10;
+      const multiple = multiples[randInt(0, multiples.length - 1)];
+      const label = multiple === 2 ? '偶數' : `${multiple} 的倍數`;
+      const lowerValue = 10 ** lower;
+      const upperValue = 10 ** upper;
+      const first = Math.floor(lowerValue / multiple) * multiple + multiple;
+      const last = Math.ceil(upperValue / multiple) * multiple - multiple;
+      const countValue = last >= first ? Math.floor((last - first) / multiple) + 1 : 0;
+      questions.push(`滿足 \\(a\\) 為 ${label}且 \\(${lower}<\\log a<${upper}\\) 的正整數 \\(a\\) 共有幾個？`);
       answers.push(
-        `簡答：${countValue} 個。過程：由 \\(${item.lower}<\\log a<${item.upper}\\) 得 \\(10^{${item.lower}}<a<10^{${item.upper}}\\)，約為 \\(${trimFixed(lowerValue, 3)}<a<${trimFixed(upperValue, 3)}\\)。其中符合 ${item.label}者從 ${first} 到 ${last}，共有 ${countValue} 個。`
+        `簡答：${countValue} 個。過程：由 \\(${lower}<\\log a<${upper}\\) 得 \\(10^{${lower}}<a<10^{${upper}}\\)，約為 \\(${trimFixed(lowerValue, 3)}<a<${trimFixed(upperValue, 3)}\\)。其中符合 ${label}者從 ${first} 到 ${last}，共有 ${countValue} 個。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3191,11 +3330,30 @@
   }
 
   function formatS121ParamExpr(base, coeff, parameter) {
-    if (coeff === 0) return `${base}`;
-    const sign = coeff > 0 ? '+' : '-';
     const absCoeff = Math.abs(coeff);
     const coefText = absCoeff === 1 ? '' : `${absCoeff}`;
-    return `${base}${sign}${coefText}${parameter}`;
+    const variablePart = coeff === 0 ? '' : `${coeff < 0 ? '-' : ''}${coefText}${parameter}`;
+    if (base === 0) return variablePart || '0';
+    const basePart = base > 0 ? `+${base}` : `${base}`;
+    return `${variablePart}${basePart}`;
+  }
+
+  function formatS121ParamTerm(base, coeff, parameter, variable, isFirst = false) {
+    const expr = formatS121ParamExpr(base, coeff, parameter);
+    if (isFirst) return `(${expr})${variable}`;
+    if (expr.startsWith('-')) return `-(${formatS121ParamExpr(-base, -coeff, parameter)})${variable}`;
+    return `+(${expr})${variable}`;
+  }
+
+  function formatS121ParamConstant(base, coeff, parameter) {
+    const expr = formatS121ParamExpr(base, coeff, parameter);
+    if (expr === '0') return '';
+    if (expr.startsWith('-')) return `-(${formatS121ParamExpr(-base, -coeff, parameter)})`;
+    return `+(${expr})`;
+  }
+
+  function formatSquareSumText(a, b) {
+    return `${Math.abs(a)}^2+${Math.abs(b)}^2`;
   }
 
   function positiveDivisors(n) {
@@ -3264,6 +3422,11 @@
   }
 
   function formatS121IndexedSum(beta, gamma, index) {
+    if (beta < 0 && gamma > 0) {
+      const first = formatS121IndexedTerm(gamma, 'b', index);
+      const second = formatS121IndexedTerm(beta, 'a', index);
+      return `${first}${second}`;
+    }
     const first = formatS121IndexedTerm(beta, 'a', index);
     const second = formatS121IndexedTerm(gamma, 'b', index);
     return `${first}${gamma > 0 ? '+' : ''}${second}`;
@@ -3441,7 +3604,7 @@
       const mode = i % 5;
       const parameter = mode % 2 === 0 ? 'k' : 'm';
       questions.push(
-        `不論 \\(${parameter}\\) 為何實數，直線 \\(L:(${formatS121ParamExpr(a0, a1, parameter)})x+(${formatS121ParamExpr(b0, b1, parameter)})y+(${formatS121ParamExpr(c0, c1, parameter)})=0\\) 恆過一定點，求此點坐標。`
+        `不論 \\(${parameter}\\) 為何實數，直線 \\(L:${formatS121ParamTerm(a0, a1, parameter, 'x', true)}${formatS121ParamTerm(b0, b1, parameter, 'y')}${formatS121ParamConstant(c0, c1, parameter)}=0\\) 恆過一定點，求此點坐標。`
       );
       answers.push(
         `簡答：\\(${formatS121Point(p)}\\)。過程：把含 \\(${parameter}\\) 與不含 \\(${parameter}\\) 的部分分開，得 \\(${formatS121Line(a0, b0, c0)}\\) 與 \\(${formatS121Line(a1, b1, c1)}\\)。兩式交點同時滿足所有 \\(${parameter}\\) 的直線，解得定點為 \\(${formatS121Point(p)}\\)。`
@@ -3495,7 +3658,7 @@
       },
       {
         q: '已知平行線 \\(L_1:3x-4y+2=0\\) 與 \\(L_2:3x-4y+k=0\\) 的距離為 2，求 \\(k\\) 的可能值。',
-        a: '簡答：\\(k=12\\) 或 \\(k=-8\\)。過程：平行線距離 \\(d=\\frac{|k-2|}{\\sqrt{3^2+(-4)^2}}=\\frac{|k-2|}{5}\\)。令距離為 2，得 \\(|k-2|=10\\)，所以 \\(k=12\\) 或 \\(-8\\)。',
+        a: '簡答：\\(k=12\\) 或 \\(k=-8\\)。過程：平行線距離 \\(d=\\frac{|k-2|}{\\sqrt{3^2+4^2}}=\\frac{|k-2|}{5}\\)。令距離為 2，得 \\(|k-2|=10\\)，所以 \\(k=12\\) 或 \\(-8\\)。',
       },
       {
         q: '直線 \\(L\\) 通過點 \\((4,2)\\)，且與兩坐標軸圍成的三角形面積為 16。若 \\(L\\) 的兩截距皆為正，求 \\(L\\)。',
@@ -3519,34 +3682,98 @@
   }
 
   function buildS121GeometricOptimizationSet(count) {
-    const templates = [
-      {
-        q: '設 \\(A(1,5),B(6,7)\\)，動點 \\(P(x,0)\\) 在 \\(x\\) 軸上移動，求 \\(PA+PB\\) 的最小值。',
-        a: '簡答：13。過程：將 \\(A\\) 對 \\(x\\) 軸反射為 \\(A\\prime(1,-5)\\)。\\(PA+PB=A\\prime P+PB\\)，最短為直線距離 \\(A\\prime B\\)，故最小值 \\(=\\sqrt{(6-1)^2+(7+5)^2}=13\\)。',
-      },
-      {
-        q: '求 \\(\\sqrt{(x-4)^2+25}+\\sqrt{(x+4)^2+1}\\) 的最小值。',
-        a: '簡答：10。過程：此式可看成 \\(P(x,0)\\) 到 \\(A(4,5)\\)、\\(B(-4,1)\\) 的距離和。將 \\(A\\) 對 \\(x\\) 軸反射為 \\(A\\prime(4,-5)\\)，最小值為 \\(A\\prime B=\\sqrt{8^2+6^2}=10\\)。',
-      },
-      {
-        q: '設 \\(A(1,-1),B(3,2)\\)，在直線 \\(L:2x+y+1=0\\) 上找一點 \\(P\\)，使 \\(PA^2+PB^2\\) 最小。',
-        a: '簡答：\\(P(-\\frac{1}{5},-\\frac{3}{5})\\)。過程：\\(PA^2+PB^2=2PM^2+\\frac{1}{2}AB^2\\)，其中 \\(M\\) 是 \\(AB\\) 中點 \\((2,\\frac{1}{2})\\)。因此只需取 \\(M\\) 到 \\(L\\) 的投影點。對直線 \\(2x+y+1=0\\)，\\(d=\\frac{2\\cdot2+\\frac{1}{2}+1}{2^2+1^2}=\\frac{11}{10}\\)，投影點為 \\((2,\\frac{1}{2})-\\frac{11}{10}(2,1)=(-\\frac{1}{5},-\\frac{3}{5})\\)。',
-      },
-      {
-        q: '兩點 \\(A(2,1),B(9,4)\\) 在直線 \\(L:3x-y=15\\) 的異側，\\(P\\) 在 \\(L\\) 上移動，求 \\(|PA-PB|\\) 的最大值。',
-        a: '簡答：\\(\\sqrt{26}\\)。過程：設 \\(P=(t,3t-15)\\)。則 \\(PA^2=(t-2)^2+(3t-16)^2\\)，\\(PB^2=(t-9)^2+(3t-19)^2\\)。在 \\(P\\) 位於交點同側且 \\(PA>PB\\) 時，令 \\(D=PA-PB\\)，則 \\(D\\prime=\\frac{10t-50}{PA}-\\frac{10t-66}{PB}\\)。由 \\(D\\prime=0\\) 可得 \\(t=13\\)。此時 \\(P=(13,24)\\)，\\(PA=\\sqrt{650}=5\\sqrt{26}\\)，\\(PB=\\sqrt{416}=4\\sqrt{26}\\)，所以 \\(D=\\sqrt{26}\\)。而交點處 \\(D=0\\)，當 \\(|t|\\) 越來越大時 \\(|PA-PB|\\) 趨近 \\(\\frac{8\\sqrt{10}}{5}<\\sqrt{26}\\)，因此最大值為 \\(\\sqrt{26}\\)。',
-      },
-      {
-        q: '在 \\(x\\) 軸上找點 \\(P\\)，使 \\(P\\) 到 \\((2,3)\\) 與 \\((-4,1)\\) 的距離平方和最小。',
-        a: '簡答：\\(P(-1,0)\\)。過程：距離平方和最小時，\\(P\\) 是兩點中點 \\((-1,2)\\) 到 \\(x\\) 軸的投影，因此 \\(P=(-1,0)\\)。',
-      },
-    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
+    const triples = [
+      { a: 3, b: 4, c: 5 },
+      { a: 5, b: 12, c: 13 },
+      { a: 6, b: 8, c: 10 },
+      { a: 8, b: 15, c: 17 },
+    ];
+    const pointText = (x, y) =>
+      `(${typeof x === 'number' ? x : formatFractionObject(x)},${typeof y === 'number' ? y : formatFractionObject(y)})`;
+    const differenceExpr = (variable, value) => {
+      if (value === 0) return variable;
+      return value > 0 ? `${variable}-${value}` : `${variable}+${-value}`;
+    };
     for (let i = 0; i < count; i += 1) {
-      questions.push(templates[i % templates.length].q);
-      answers.push(templates[i % templates.length].a);
+      const mode = i % 5;
+      if (mode === 0) {
+        const triple = triples[randInt(0, triples.length - 1)];
+        const dx = triple.a;
+        const sumY = triple.b;
+        const ay = randInt(1, sumY - 1);
+        const by = sumY - ay;
+        const ax = randInt(-4, 4);
+        const bx = ax + dx;
+        questions.push(
+          `設 \\(A(${ax},${ay}),B(${bx},${by})\\)，動點 \\(P(x,0)\\) 在 \\(x\\) 軸上移動，求 \\(PA+PB\\) 的最小值。`
+        );
+        answers.push(
+          `簡答：${triple.c}。過程：將 \\(A\\) 對 \\(x\\) 軸反射為 \\(A\\prime(${ax},-${ay})\\)。\\(PA+PB=A\\prime P+PB\\)，最短為直線距離 \\(A\\prime B\\)，故最小值為 \\(\\sqrt{${dx}^2+${sumY}^2}=${triple.c}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const triple = triples[randInt(0, triples.length - 1)];
+        const left = randInt(-6, -1);
+        const right = left + triple.a;
+        const p = randInt(1, triple.b - 1);
+        const q = triple.b - p;
+        questions.push(
+          `求 \\(\\sqrt{(${differenceExpr('x', right)})^2+${p * p}}+\\sqrt{(${differenceExpr('x', left)})^2+${q * q}}\\) 的最小值。`
+        );
+        answers.push(
+          `簡答：${triple.c}。過程：此式可看成 \\(P(x,0)\\) 到 \\(A(${right},${p})\\)、\\(B(${left},${q})\\) 的距離和。將 \\(A\\) 對 \\(x\\) 軸反射為 \\(A\\prime(${right},-${p})\\)，最小值為 \\(A\\prime B=\\sqrt{${triple.a}^2+${triple.b}^2}=${triple.c}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const x1 = randInt(-6, 2);
+        const x2 = x1 + 2 * randInt(1, 5);
+        const y1 = randInt(-4, 6);
+        const y2 = randInt(-4, 6);
+        const lineY = randInt(-3, 3);
+        const midX = makeFraction(x1 + x2, 2);
+        questions.push(
+          `設 \\(A(${x1},${y1}),B(${x2},${y2})\\)，在直線 \\(y=${lineY}\\) 上找一點 \\(P\\)，使 \\(PA^2+PB^2\\) 最小。`
+        );
+        answers.push(
+          `簡答：\\(P${pointText(midX, lineY)}\\)。過程：\\(PA^2+PB^2=2PM^2+\\frac12AB^2\\)，其中 \\(M\\) 是 \\(AB\\) 中點。要讓平方和最小，只需讓 \\(P\\) 是 \\(M\\) 到直線 \\(y=${lineY}\\) 的投影。中點的 \\(x\\) 坐標為 \\(${formatFractionObject(midX)}\\)，所以 \\(P${pointText(midX, lineY)}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const x1 = randInt(-7, -1);
+        const x2 = randInt(2, 8);
+        const y1 = randInt(1, 6);
+        const y2 = randInt(1, 6);
+        const midX = makeFraction(x1 + x2, 2);
+        questions.push(
+          `在 \\(x\\) 軸上找點 \\(P\\)，使 \\(P\\) 到 \\(A(${x1},${y1})\\) 與 \\(B(${x2},${y2})\\) 的距離平方和最小。`
+        );
+        answers.push(
+          `簡答：\\(P(${formatFractionObject(midX)},0)\\)。過程：距離平方和最小時，\\(P\\) 是兩點中點到 \\(x\\) 軸的投影。兩點中點的 \\(x\\) 坐標為 \\(\\frac{${x1}+${x2}}2=${formatFractionObject(midX)}\\)，所以 \\(P(${formatFractionObject(midX)},0)\\)。`
+        );
+        continue;
+      }
+      const triple = triples[randInt(0, triples.length - 1)];
+      const xLine = randInt(-3, 3);
+      const ax = xLine + randInt(1, 5);
+      const ay = randInt(1, triple.b - 1);
+      const by = triple.b - ay;
+      const bx = ax + triple.a;
+      const reflectedX = 2 * xLine - ax;
+      const reflectedDx = bx - reflectedX;
+      const reflectedDy = by - ay;
+      const reflectedDistanceSquared = reflectedDx * reflectedDx + reflectedDy * reflectedDy;
+      questions.push(
+        `設 \\(A(${ax},${ay}),B(${bx},${by})\\)，動點 \\(P\\) 在直線 \\(x=${xLine}\\) 上移動，求 \\(PA+PB\\) 的最小值。`
+      );
+      answers.push(
+        `簡答：\\(${formatRadical(reflectedDistanceSquared)}\\)。過程：將 \\(A\\) 對直線 \\(x=${xLine}\\) 反射為 \\(A\\prime(${reflectedX},${ay})\\)。\\(PA+PB=A\\prime P+PB\\)，最短為 \\(A\\prime B\\)。所以最小值為 \\(\\sqrt{${Math.abs(reflectedDx)}^2+${Math.abs(reflectedDy)}^2}=${formatRadical(reflectedDistanceSquared)}\\)。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3621,11 +3848,11 @@
     const templates = [
       {
         q: '求通過點 \\((1,-2)\\)，且與直線 \\(2x-y+3=0\\) 成 \\(45^\\circ\\) 交角的直線方程式。',
-        a: '簡答：\\(y+2=3(x-1)\\) 或 \\(y+2=-\\frac{1}{3}(x-1)\\)。過程：原直線斜率為 2。設所求斜率為 \\(m\\)，\\(|\\frac{m-2}{1+2m}|=1\\)，得 \\(m=3\\) 或 \\(-\\frac{1}{3}\\)，再代入點斜式。',
+        a: '簡答：\\(y+2=-3(x-1)\\) 或 \\(y+2=\\frac{1}{3}(x-1)\\)。過程：原直線斜率為 2。設所求斜率為 \\(m\\)，\\(|\\frac{m-2}{1+2m}|=1\\)，得 \\(m=-3\\) 或 \\(\\frac{1}{3}\\)，再代入點斜式。',
       },
       {
         q: '已知兩直線 \\(x+y=7\\) 與 \\((1-\\sqrt3)x-(1+\\sqrt3)y-1=0\\)，求其夾角。',
-        a: '簡答：\\(60^\\circ\\)。過程：第一條斜率 \\(-1\\)，第二條斜率 \\(\\frac{1-\\sqrt3}{1+\\sqrt3}\\)。代入 \\(\\tan\\theta=|\\frac{m_1-m_2}{1+m_1m_2}|\\)，可得 \\(\\tan\\theta=\\sqrt3\\)，所以銳角為 \\(60^\\circ\\)。',
+        a: '簡答：\\(30^\\circ\\)。過程：第一條斜率 \\(-1\\)，第二條斜率 \\(\\frac{1-\\sqrt3}{1+\\sqrt3}=\\sqrt3-2\\)。代入 \\(\\tan\\theta=|\\frac{m_1-m_2}{1+m_1m_2}|\\)，可得 \\(\\tan\\theta=\\frac{1}{\\sqrt3}\\)，所以銳角為 \\(30^\\circ\\)。',
       },
       {
         q: '直線 \\(L_1\\) 斜率為 1，直線 \\(L_2\\) 與 \\(L_1\\) 交角為 \\(45^\\circ\\)，且通過 \\((1,2)\\)，求 \\(L_2\\) 方程式。',
@@ -3637,7 +3864,7 @@
       },
       {
         q: '若直線 \\(y=mx\\) 與 \\(y=2x+1\\) 的交角為 \\(45^\\circ\\)，求 \\(m\\)。',
-        a: '簡答：\\(m=3\\) 或 \\(m=-\\frac{1}{3}\\)。過程：\\(|\\frac{m-2}{1+2m}|=1\\)，解得 \\(m=3\\) 或 \\(m=-\\frac{1}{3}\\)。',
+        a: '簡答：\\(m=-3\\) 或 \\(m=\\frac{1}{3}\\)。過程：\\(|\\frac{m-2}{1+2m}|=1\\)，解得 \\(m=-3\\) 或 \\(m=\\frac{1}{3}\\)。',
       },
     ];
     const questions = [];
@@ -3666,7 +3893,7 @@
       },
       {
         q: '撞球檯上白球在 \\((5,15)\\)，欲撞擊在 \\((80,30)\\) 的紅球，若先碰撞邊 \\(y=0\\)，求碰撞點。',
-        a: '簡答：\\((55,0)\\)。過程：將紅球對 \\(y=0\\) 反射為 \\((80,-30)\\)。連白球 \\((5,15)\\) 與 \\((80,-30)\\)，與 \\(y=0\\) 的交點即碰撞點。直線參數解得 \\((55,0)\\)。',
+        a: '簡答：\\((30,0)\\)。過程：將紅球對 \\(y=0\\) 反射為 \\((80,-30)\\)。連白球 \\((5,15)\\) 與 \\((80,-30)\\)，與 \\(y=0\\) 的交點即碰撞點。直線參數解得 \\((30,0)\\)。',
       },
       {
         q: '已知光線經 \\(y=x\\) 反射，入射光線為 \\(x+2y=5\\)，求反射光線方程式。',
@@ -3684,34 +3911,69 @@
   }
 
   function buildS121AreaPartitioningSet(count) {
-    const templates = [
-      {
-        q: '設 \\(A(0,0),B(10,0),C(10,6),D(0,6)\\)，求過 \\((7,4)\\) 且平分四邊形 \\(ABCD\\) 面積的直線斜率。',
-        a: '簡答：\\(\\frac{1}{2}\\)。過程：矩形的面積平分線若通過中心 \\((5,3)\\)，則必平分面積。直線又過 \\((7,4)\\)，斜率為 \\(\\frac{4-3}{7-5}=\\frac{1}{2}\\)。',
-      },
-      {
-        q: '直線 \\(y=m(x-7)+4\\) 平分矩形 \\([0,14]\\times[0,8]\\) 面積，求 \\(m\\)。',
-        a: '簡答：任意實數 \\(m\\)。過程：矩形中心為 \\((7,4)\\)。任一通過中心的直線都把中心對稱圖形面積平分，而題目直線皆通過 \\((7,4)\\)，所以任意 \\(m\\) 皆可。',
-      },
-      {
-        q: '三角形頂點為 \\((0,0),(6,0),(0,8)\\)，求過原點且平分三角形面積的直線。',
-        a: '簡答：\\(y=\\frac{4}{3}x\\)。過程：從頂點出發的中線平分三角形面積。對邊端點 \\((6,0),(0,8)\\) 的中點為 \\((3,4)\\)，故直線通過原點與 \\((3,4)\\)，方程為 \\(y=\\frac{4}{3}x\\)。',
-      },
-      {
-        q: '給定平行四邊形三頂點 \\((0,0),(8,0),(10,6)\\)，求過中心且平分面積的一條直線。',
-        a: '簡答：例如 \\(y=3\\)。過程：第四點為 \\((2,6)\\)，中心為兩對角線中點 \\((5,3)\\)。任一過中心的直線平分平行四邊形面積，因此可取 \\(y=3\\)。',
-      },
-      {
-        q: '坐標平面上有一個中心在 \\((2,-1)\\) 的中心對稱區域，求平分此區域總面積的直線集合特徵。',
-        a: '簡答：所有通過 \\((2,-1)\\) 的直線。過程：中心對稱區域中，通過對稱中心的任一直線會把每一點與其對稱點分到兩側，因此兩側面積相等。',
-      },
-    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      questions.push(templates[i % templates.length].q);
-      answers.push(templates[i % templates.length].a);
+      const mode = i % 5;
+      if (mode === 0) {
+        const w = 2 * randInt(4, 10);
+        const h = 2 * randInt(3, 8);
+        const center = { x: w / 2, y: h / 2 };
+        const dx = pickNonZero(-center.x + 1, center.x - 1);
+        const dy = pickNonZero(-center.y + 1, center.y - 1);
+        const point = { x: center.x + dx, y: center.y + dy };
+        const slope = makeFraction(dy, dx);
+        questions.push(
+          `設 \\(A(0,0),B(${w},0),C(${w},${h}),D(0,${h})\\)，求過 \\(${formatS121Point(point)}\\) 且平分矩形 \\(ABCD\\) 面積的直線斜率。`
+        );
+        answers.push(
+          `簡答：\\(${formatFractionObject(slope)}\\)。過程：矩形中心為 \\(${formatS121Point(center)}\\)。通過中心的直線會平分矩形面積，因此所求直線通過 \\(${formatS121Point(center)}\\) 與 \\(${formatS121Point(point)}\\)，斜率為 \\(\\frac{${point.y}-${center.y}}{${point.x}-${center.x}}=${formatFractionObject(slope)}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const w = 2 * randInt(5, 12);
+        const h = 2 * randInt(4, 10);
+        const center = { x: w / 2, y: h / 2 };
+        questions.push(
+          `直線 \\(y=m(x-${center.x})+${center.y}\\) 平分矩形 \\([0,${w}]\\times[0,${h}]\\) 面積，求 \\(m\\) 的範圍。`
+        );
+        answers.push(
+          `簡答：任意實數 \\(m\\)。過程：矩形中心為 \\(${formatS121Point(center)}\\)。題目中的直線不論 \\(m\\) 為何都通過中心，而矩形是中心對稱圖形，所以任一直線只要通過中心就會平分面積。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const a = 2 * randInt(3, 9);
+        const b = 2 * randInt(3, 9);
+        const midpoint = { x: a / 2, y: b / 2 };
+        const slope = makeFraction(b, a);
+        const slopeText = formatFractionObject(slope);
+        const slopeTerm = slopeText === '1' ? 'x' : slopeText === '-1' ? '-x' : `${slopeText}x`;
+        questions.push(`三角形頂點為 \\((0,0),(${a},0),(0,${b})\\)，求過原點且平分三角形面積的直線方程式。`);
+        answers.push(
+          `簡答：\\(y=${slopeTerm}\\)。過程：從頂點出發的中線會平分三角形面積。對邊端點 \\((${a},0),(0,${b})\\) 的中點為 \\(${formatS121Point(midpoint)}\\)，所以所求直線通過原點與此中點，方程式為 \\(y=${slopeTerm}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const u = randInt(5, 12);
+        const v = randInt(1, 6);
+        const h = 2 * randInt(3, 8);
+        const center = { x: makeFraction(u + v, 2), y: h / 2 };
+        questions.push(`給定平行四邊形三頂點 \\((0,0),(${u},0),(${u + v},${h})\\)，求過中心且平分面積的一條直線。`);
+        answers.push(
+          `簡答：例如 \\(y=${center.y}\\)。過程：第四點為 \\((${v},${h})\\)，中心為兩對角線中點 \\((\\frac{${u + v}}{2},${center.y})\\)。任一通過中心的直線都能平分平行四邊形面積，因此可取水平線 \\(y=${center.y}\\)。`
+        );
+        continue;
+      }
+      const h0 = randInt(-5, 5);
+      const k0 = pickNonZero(-5, 5);
+      questions.push(`坐標平面上有一個中心在 \\((${h0},${k0})\\) 的中心對稱區域，求平分此區域總面積的直線集合特徵。`);
+      answers.push(
+        `簡答：所有通過 \\((${h0},${k0})\\) 的直線。過程：中心對稱區域中，每個點都會有一個關於中心 \\((${h0},${k0})\\) 的對稱點。任何通過對稱中心的直線都會把成對的點分在兩側，因此兩側面積相等。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3816,34 +4078,78 @@
   }
 
   function buildS121AbsoluteInequalityAreaSet(count) {
-    const templates = [
-      {
-        q: '在坐標平面上畫出 \\(|x|+|y|\\leq4\\) 的圖形並求其面積。',
-        a: '簡答：32。過程：\\(|x|+|y|\\leq4\\) 是以原點為中心的菱形，四個頂點為 \\((4,0),(0,4),(-4,0),(0,-4)\\)。兩條對角線長都是 8，所以面積為 \\(\\frac{8\\cdot8}{2}=32\\)。',
-      },
-      {
-        q: '求不等式組 \\(|4x+y|\\leq2\\) 與 \\(|x-y|\\leq2\\) 所圍成圖形的面積。',
-        a: '簡答：\\(\\frac{16}{5}\\)。過程：令 \\(u=4x+y\\)、\\(v=x-y\\)，則區域變成 \\(-2\\leq u\\leq2,\\ -2\\leq v\\leq2\\)，在 \\(uv\\) 平面面積為 16。變換的行列式絕對值為 \\(|4(-1)-1\\cdot1|=5\\)，所以原 \\(xy\\) 平面面積為 \\(\\frac{16}{5}\\)。',
-      },
-      {
-        q: '求 \\(|x|\\geq|y|\\) 與 \\(|x-1|\\leq2\\) 所圍成的區域面積。',
-        a: '簡答：10。過程：\\(|x-1|\\leq2\\) 表示 \\(-1\\leq x\\leq3\\)，而 \\(|x|\\geq|y|\\) 表示 \\(-|x|\\leq y\\leq |x|\\)。面積為 \\(\\int_{-1}^{3}2|x|\\,dx=\\int_{-1}^{0}(-2x)\\,dx+\\int_{0}^{3}2x\\,dx=1+9=10\\)。',
-      },
-      {
-        q: '畫出 \\(|x|+4|y|>4\\) 且 \\(|x|+|y|<4\\) 的圖形區域並求面積。',
-        a: '簡答：24。過程：外層 \\(|x|+|y|<4\\) 是對角線長皆為 8 的菱形，面積 32。被挖掉的 \\(|x|+4|y|\\leq4\\) 是頂點 \\((\\pm4,0),(0,\\pm1)\\) 的菱形，面積 \\(\\frac{8\\cdot2}{2}=8\\)。嚴格不等號不影響面積，所以所求面積為 \\(32-8=24\\)。',
-      },
-      {
-        q: '求 \\(|2x|+|3y|\\leq6\\) 所圍成幾何圖形的面積。',
-        a: '簡答：12。過程：不等式可化為 \\(\\frac{|x|}{3}+\\frac{|y|}{2}\\leq1\\)，圖形是頂點 \\((\\pm3,0),(0,\\pm2)\\) 的菱形。兩條對角線長為 6 與 4，面積為 \\(\\frac{6\\cdot4}{2}=12\\)。',
-      },
-    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      questions.push(templates[i % templates.length].q);
-      answers.push(templates[i % templates.length].a);
+      const mode = i % 5;
+      if (mode === 0) {
+        const r = randInt(3, 9);
+        const area = 2 * r * r;
+        questions.push(`在坐標平面上畫出 \\(|x|+|y|\\leq${r}\\) 的圖形並求其面積。`);
+        answers.push(
+          `簡答：${area}。過程：\\(|x|+|y|\\leq${r}\\) 是以原點為中心的菱形，四個頂點為 \\((\\pm${r},0),(0,\\pm${r})\\)。兩條對角線長都是 ${2 * r}，所以面積為 \\(\\frac{${2 * r}\\cdot${2 * r}}{2}=${area}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        let a = 1;
+        let b = 1;
+        let c = 1;
+        let d = -1;
+        let det = -2;
+        for (let attempt = 0; attempt < 100; attempt += 1) {
+          a = randInt(1, 5);
+          b = pickNonZero(-4, 4);
+          c = pickNonZero(-4, 4);
+          d = pickNonZero(-4, 4);
+          det = a * d - b * c;
+          if (det !== 0 && Math.abs(det) <= 20) break;
+        }
+        const r = randInt(2, 5);
+        const s = randInt(2, 5);
+        const area = makeFraction(4 * r * s, Math.abs(det));
+        const determinantText = `${a * d}${-b * c >= 0 ? '+' : '-'}${Math.abs(b * c)}`;
+        questions.push(
+          `求不等式組 \\(|${formatS121Term(a, 'x')}${b > 0 ? '+' : ''}${formatS121Term(b, 'y')}|\\leq${r}\\) 與 \\(|${formatS121Term(c, 'x')}${d > 0 ? '+' : ''}${formatS121Term(d, 'y')}|\\leq${s}\\) 所圍成圖形的面積。`
+        );
+        answers.push(
+          `簡答：\\(${formatFractionObject(area)}\\)。過程：令兩個絕對值內部為 \\(u,v\\)，則 \\(-${r}\\leq u\\leq${r}\\)、\\(-${s}\\leq v\\leq${s}\\)，在 \\(uv\\) 平面面積為 \\(${2 * r}\\cdot${2 * s}=${4 * r * s}\\)。變換行列式絕對值為 \\(|ad-bc|=|${determinantText}|=${Math.abs(det)}\\)，所以原面積為 \\(\\frac{${4 * r * s}}{${Math.abs(det)}}=${formatFractionObject(area)}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const h = randInt(3, 8);
+        const r = randInt(1, h - 1);
+        const left = h - r;
+        const right = h + r;
+        const area = right * right - left * left;
+        questions.push(`求 \\(|x|\\geq|y|\\) 與 \\(|x-${h}|\\leq${r}\\) 所圍成的區域面積。`);
+        answers.push(
+          `簡答：${area}。過程：\\(|x-${h}|\\leq${r}\\) 表示 \\(${left}\\leq x\\leq${right}\\)，此區間全在正向。又 \\(|x|\\geq|y|\\) 表示 \\(-x\\leq y\\leq x\\)，面積為 \\(\\int_{${left}}^{${right}}2x\\,dx=${right}^2-${left}^2=${area}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const r = randInt(3, 9);
+        const k = randInt(2, 6);
+        const area = makeFraction(2 * r * r * (k - 1), k);
+        questions.push(`畫出 \\(|x|+${k}|y|>${r}\\) 且 \\(|x|+|y|<${r}\\) 的圖形區域並求面積。`);
+        answers.push(
+          `簡答：\\(${formatFractionObject(area)}\\)。過程：外層 \\(|x|+|y|<${r}\\) 面積為 \\(2\\cdot${r}^2=${2 * r * r}\\)。被挖掉的 \\(|x|+${k}|y|\\leq${r}\\) 頂點為 \\((\\pm${r},0),(0,\\pm${formatFraction(r, k)})\\)，面積為 \\(\\frac{2\\cdot${r}\\cdot2\\cdot${formatFraction(r, k)}}{2}=\\frac{${2 * r * r}}{${k}}\\)。相減得 \\(${formatFractionObject(area)}\\)。`
+        );
+        continue;
+      }
+      const a = randInt(1, 5);
+      const b = randInt(1, 5);
+      const c = randInt(2, 6) * a * b;
+      const area = makeFraction(2 * c * c, a * b);
+      const xTerm = formatS121Term(a, 'x');
+      const yTerm = formatS121Term(b, 'y');
+      questions.push(`求 \\(|${xTerm}|+|${yTerm}|\\leq${c}\\) 所圍成幾何圖形的面積。`);
+      answers.push(
+        `簡答：\\(${formatFractionObject(area)}\\)。過程：不等式可化為 \\(\\frac{|x|}{${formatFraction(c, a)}}+\\frac{|y|}{${formatFraction(c, b)}}\\leq1\\)，圖形是菱形。兩條對角線長為 \\(${formatFraction(2 * c, a)}\\) 與 \\(${formatFraction(2 * c, b)}\\)，面積為 \\(\\frac{${formatFraction(2 * c, a)}\\cdot${formatFraction(2 * c, b)}}{2}=${formatFractionObject(area)}\\)。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3874,7 +4180,7 @@
         `已知直線 \\(L:${line}\\)，求斜率、\\(x\\) 截距、\\(y\\) 截距，以及它與兩坐標軸所圍三角形的面積。`
       );
       answers.push(
-        `答案：斜率 \\(${formatFractionObject(slope)}\\)，\\(x\\) 截距 \\(${formatFractionObject(xIntercept)}\\)，\\(y\\) 截距 \\(${formatFractionObject(yIntercept)}\\)，面積 \\(${formatFractionObject(area)}\\)。解析：直線方程式 \\(${line}=0\\) 對應 \\(ax+by+c=0\\)，其中 \\(a=${a}\\)，\\(b=${b}\\)，\\(c=${c}\\)。由公式可得斜率 \\(-\\frac{a}{b}=-\\frac{${a}}{${b}}=${formatFractionObject(slope)}\\)；\\(x\\) 截距（令 \\(y=0\\)）為 \\(-\\frac{c}{a}=-\\frac{${c}}{${a}}=${formatFractionObject(xIntercept)}\\)；\\(y\\) 截距（令 \\(x=0\\)）為 \\(-\\frac{c}{b}=-\\frac{${c}}{${b}}=${formatFractionObject(yIntercept)}\\)。三角形面積為 \\(\\frac12\\left|x_0y_0\\right|=\\frac12\\left|${formatFractionObject(xIntercept)}\\right|\\left|${formatFractionObject(yIntercept)}\\right|=${formatFractionObject(area)}\\)。`
+        `答案：斜率 \\(${formatFractionObject(slope)}\\)，\\(x\\) 截距 \\(${formatFractionObject(xIntercept)}\\)，\\(y\\) 截距 \\(${formatFractionObject(yIntercept)}\\)，面積 \\(${formatFractionObject(area)}\\)。解析：直線方程式 \\(${line}\\) 對應 \\(ax+by+c=0\\)，其中 \\(a=${a}\\)，\\(b=${b}\\)，\\(c=${c}\\)。由公式可得斜率 \\(-\\frac{a}{b}=-\\frac{${a}}{${b}}=${formatFractionObject(slope)}\\)；\\(x\\) 截距（令 \\(y=0\\)）為 \\(-\\frac{c}{a}=-\\frac{${c}}{${a}}=${formatFractionObject(xIntercept)}\\)；\\(y\\) 截距（令 \\(x=0\\)）為 \\(-\\frac{c}{b}=-\\frac{${c}}{${b}}=${formatFractionObject(yIntercept)}\\)。三角形面積為 \\(\\frac12\\left|x_0y_0\\right|=\\frac12\\left|${formatFractionObject(xIntercept)}\\right|\\left|${formatFractionObject(yIntercept)}\\right|=${formatFractionObject(area)}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3983,6 +4289,7 @@
   }
 
   function formatS122SignedNumber(value) {
+    if (value === 0) return '';
     return value < 0 ? `-${Math.abs(value)}` : `+${value}`;
   }
 
@@ -4069,7 +4376,7 @@
         `圓 \\(C\\) 的圓心在直線 \\(${formatS123LineEquation(lineBase.a, lineBase.b, lineC)}\\) 上，且通過 \\(A${formatS122Point(pointA)}\\)、\\(B${formatS122Point(pointB)}\\)。求圓 \\(C\\) 的方程式。`
       );
       answers.push(
-        `簡答：\\(${formatS122CircleStandard(center.x, center.y, radius2)}\\)。過程：圓心必在線段 \\(AB\\) 的垂直平分線上。由 \\(A,B\\) 中點得 \\(M${formatS122Point(center)}\\)，且 \\(M\\) 也在已知直線上，所以圓心為 \\(${formatS122Point(center)}\\)。半徑平方為 \\(${offset.x}^2+${offset.y}^2=${radius2}\\)，故方程式為 \\(${formatS122CircleStandard(center.x, center.y, radius2)}\\)。`
+        `簡答：\\(${formatS122CircleStandard(center.x, center.y, radius2)}\\)。過程：圓心必在線段 \\(AB\\) 的垂直平分線上。由 \\(A,B\\) 中點得 \\(M${formatS122Point(center)}\\)，且 \\(M\\) 也在已知直線上，所以圓心為 \\(${formatS122Point(center)}\\)。半徑平方為 \\(${formatSquareSumText(offset.x, offset.y)}=${radius2}\\)，故方程式為 \\(${formatS122CircleStandard(center.x, center.y, radius2)}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -4174,15 +4481,15 @@
       },
       {
         q: '若 \\(x^2+y^2+4x-2ky+(k+6)=0\\) 代表一個點，求 \\(k\\) 之值。',
-        a: '簡答：\\(k=-1\\) 或 \\(k=2\\)。過程：代表一點表示 \\(\\Delta=0\\)。此處 \\(d=4,e=-2k,f=k+6\\)，所以 \\(\\Delta=4^2+(-2k)^2-4(k+6)=4k^2-4k-8=4(k-2)(k+1)\\)。令其為 0，得 \\(k=-1\\) 或 \\(k=2\\)。',
+        a: '簡答：\\(k=-1\\) 或 \\(k=2\\)。過程：代表一點表示 \\(\\Delta=0\\)。此處 \\(d=4,e=-2k,f=k+6\\)，所以 \\(\\Delta=4^2+(2k)^2-4(k+6)=4k^2-4k-8=4(k-2)(k+1)\\)。令其為 0，得 \\(k=-1\\) 或 \\(k=2\\)。',
       },
       {
         q: '若 \\(x^2+y^2+2(m+1)x-2my+3m^2-2=0\\) 的圖形為一圓，求 \\(m\\) 的範圍。',
-        a: '簡答：\\(-1<m<3\\)。過程：要成為一圓需 \\(r^2>0\\)，等價於 \\(\\Delta>0\\)。\\(\\Delta=[2(m+1)]^2+(-2m)^2-4(3m^2-2)=-4(m-3)(m+1)\\)。令 \\(-4(m-3)(m+1)>0\\)，得 \\(-1<m<3\\)。',
+        a: '簡答：\\(-1<m<3\\)。過程：要成為一圓需 \\(r^2>0\\)，等價於 \\(\\Delta>0\\)。\\(\\Delta=[2(m+1)]^2+(2m)^2-4(3m^2-2)=-4(m-3)(m+1)\\)。令 \\(-4(m-3)(m+1)>0\\)，得 \\(-1<m<3\\)。',
       },
       {
         q: '若 \\(x^2+y^2+2(m+1)x-2my+3m^2-2=0\\) 的圖形為一圓，當 \\(m\\) 為何值時，此圓有最大面積？',
-        a: '簡答：\\(m=1\\)，最大面積為 \\(4\\pi\\)。過程：此圓的半徑平方為 \\(r^2=\\frac{[2(m+1)]^2+(-2m)^2-4(3m^2-2)}{4}=-m^2+2m+3=4-(m-1)^2\\)。面積 \\(\\pi r^2\\) 最大時，\\((m-1)^2\\) 最小，所以 \\(m=1\\)，此時 \\(r^2=4\\)，最大面積為 \\(4\\pi\\)。',
+        a: '簡答：\\(m=1\\)，最大面積為 \\(4\\pi\\)。過程：此圓的半徑平方為 \\(r^2=\\frac{[2(m+1)]^2+(2m)^2-4(3m^2-2)}{4}=-m^2+2m+3=4-(m-1)^2\\)。面積 \\(\\pi r^2\\) 最大時，\\((m-1)^2\\) 最小，所以 \\(m=1\\)，此時 \\(r^2=4\\)，最大面積為 \\(4\\pi\\)。',
       },
       {
         q: '已知 \\(x^2+y^2+kx+2ky-5k-25=0\\) 恆通過兩定點，求這兩定點。',
@@ -4211,11 +4518,11 @@
       },
       {
         q: '求通過三點 \\(P(5,2)\\)、\\(Q(3,-2)\\)、\\(R(-1,2)\\) 的圓方程式。',
-        a: '簡答：\\((x-2)^2+(y-1)^2=10\\)。過程：觀察三點到 \\((2,1)\\) 的距離平方皆為 10：\\((5-2)^2+(2-1)^2=10\\)、\\((3-2)^2+(-2-1)^2=10\\)、\\((-1-2)^2+(2-1)^2=10\\)。所以圓心為 \\((2,1)\\)，半徑平方為 10。',
+        a: '簡答：\\((x-2)^2+(y-1)^2=10\\)。過程：觀察三點到 \\((2,1)\\) 的距離平方皆為 10：\\((5-2)^2+(2-1)^2=10\\)、\\((3-2)^2+3^2=10\\)、\\(3^2+(2-1)^2=10\\)。所以圓心為 \\((2,1)\\)，半徑平方為 10。',
       },
       {
         q: '圓心在 \\(y\\) 軸上，且通過兩點 \\((2,10)\\)、\\((6,2)\\)，求其方程式。',
-        a: '簡答：\\(x^2+(y-3)^2=53\\)。過程：設圓心為 \\((0,c)\\)。兩點到圓心距離相等，所以 \\(2^2+(10-c)^2=6^2+(2-c)^2\\)。解得 \\(c=3\\)，半徑平方為 \\(2^2+(10-3)^2=53\\)。',
+        a: '簡答：\\(x^2+(y-4)^2=40\\)。過程：設圓心為 \\((0,c)\\)。兩點到圓心距離相等，所以 \\(2^2+(10-c)^2=6^2+(2-c)^2\\)，即 \\(104-20c=40-4c\\)。解得 \\(c=4\\)，半徑平方為 \\(2^2+(10-4)^2=40\\)。',
       },
       {
         q: '求與圓 \\((x-3)^2+y^2=16\\) 同圓心，且圓周長為其一半的圓。',
@@ -4361,8 +4668,8 @@
         a: '簡答：0。過程：圓配方為 \\((x-5)^2+y^2=16\\)，圓心 \\((5,0)\\)，半徑 4。圓心到直線的距離為 \\(\\frac{|3\\cdot5+4\\cdot0-15|}{5}=0\\)，表示直線通過圓心，因此直線與圓相交，圓上有點在此直線上，最短距離為 0。',
       },
       {
-        q: '求原點到圓 \\((x-7)^2+(y-8)^2=9\\) 的整數距離共有幾個。',
-        a: '簡答：6 個。過程：圓心 \\((7,8)\\) 到原點距離為 \\(\\sqrt{113}\\)，半徑為 3。因此原點到圓上點的距離範圍是 \\([\\sqrt{113}-3,\\sqrt{113}+3]\\)。因為 \\(10<\\sqrt{113}<11\\)，此範圍約為 7 到 14 之間，實際整數距離為 8、9、10、11、12、13，共 6 個。',
+        q: '原點到圓 \\((x-7)^2+(y-8)^2=9\\) 的距離可取整數值有幾種？',
+        a: '簡答：6 種。過程：圓心 \\((7,8)\\) 到原點距離為 \\(\\sqrt{113}\\)，半徑為 3。因此原點到圓上點的距離範圍是 \\([\\sqrt{113}-3,\\sqrt{113}+3]\\)。因為 \\(10<\\sqrt{113}<11\\)，此範圍內的整數距離為 8、9、10、11、12、13，共 6 種。',
       },
     ];
     const questions = [];
@@ -4392,7 +4699,7 @@
           `求通過點 \\(${formatS122Point(point)}\\)，且與 \\(x\\) 軸、\\(y\\) 軸均相切，圓心在第一象限的圓方程式。`
         );
         answers.push(
-          `簡答：\\((x-${h})^2+(y-${k})^2=${r * r}\\)。過程：與兩坐標軸都相切且圓心在第一象限，圓心可設為 \\((r,r)\\)，半徑為 \\(r\\)。代入點 \\(${formatS122Point(point)}\\)，得 \\((${point.x}-r)^2+(${point.y}-r)^2=r^2\\)，解得 \\(r=${r}\\)。`
+          `簡答：\\((x-${h})^2+(y-${k})^2=${r * r}\\) 或 \\((x-${5 * r})^2+(y-${5 * r})^2=${25 * r * r}\\)。過程：與兩坐標軸都相切且圓心在第一象限，圓心可設為 \\((t,t)\\)，半徑為 \\(t\\)。代入點 \\(${formatS122Point(point)}\\)，得 \\(t^2-${6 * r}t+${5 * r * r}=0\\)，解得 \\(t=${r}\\) 或 \\(t=${5 * r}\\)，故有兩圓。`
         );
         continue;
       }
@@ -4401,7 +4708,7 @@
         const r = randInt(2, 6);
         questions.push(`求通過點 \\((${2 * r},${r})\\)，且與兩坐標軸均相切的所有圓方程式。`);
         answers.push(
-          `簡答：\\((x-${r})^2+(y-${r})^2=${r * r}\\)。過程：若圓心為 \\((h,k)\\)，與兩軸相切表示 \\(|h|=|k|=r\\)。檢查四種符號組合，只有 \\((h,k)=(${r},${r})\\) 會使點 \\((${2 * r},${r})\\) 到圓心距離為 ${r}，故圓方程式如上。`
+          `簡答：\\((x-${r})^2+(y-${r})^2=${r * r}\\) 或 \\((x-${5 * r})^2+(y-${5 * r})^2=${25 * r * r}\\)。過程：與兩軸相切且點在第一象限，圓心可設為 \\((t,t)\\)，半徑 \\(t\\)。代入點 \\((${2 * r},${r})\\) 得 \\(t^2-${6 * r}t+${5 * r * r}=0\\)，解得 \\(t=${r}\\) 或 \\(t=${5 * r}\\)，故有兩圓。`
         );
         continue;
       }
@@ -4431,7 +4738,7 @@
         `求通過點 \\(${formatS122Point(point)}\\)，且與 \\(x\\) 軸、\\(y\\) 軸均相切，圓心在第二象限的圓方程式。`
       );
       answers.push(
-        `簡答：\\((x+${r})^2+(y-${r})^2=${r * r}\\)。過程：圓心在第二象限且與兩軸相切，可設圓心為 \\((-r,r)\\)，半徑為 \\(r\\)。代入點 \\(${formatS122Point(point)}\\)，得 \\((-${r}+r)^2+(${2 * r}-r)^2=r^2\\)，所以半徑為 ${r}。`
+        `簡答：\\((x+${r})^2+(y-${r})^2=${r * r}\\) 或 \\((x+${5 * r})^2+(y-${5 * r})^2=${25 * r * r}\\)。過程：圓心在第二象限且與兩軸相切，可設圓心為 \\((-t,t)\\)，半徑為 \\(t\\)。代入點 \\(${formatS122Point(point)}\\)，得 \\(t^2-${6 * r}t+${5 * r * r}=0\\)，解得 \\(t=${r}\\) 或 \\(t=${5 * r}\\)，故有兩圓。`
       );
     }
 
@@ -4531,11 +4838,10 @@
         const b = [-3, -1, 2][randInt(0, 2)];
         const norm = a * a + b * b;
         const bound = formatCoeffRadical(r, norm);
-        questions.push(
-          `已知 \\((x,y)\\) 滿足 \\(x^2+y^2\\leq ${r * r}\\)，求 \\(${a}x${b >= 0 ? '+' : ''}${b}y\\) 的最大值與最小值。`
-        );
+        const linearText = `${a}x${formatS122CoeffVar(b, 'y')}`;
+        questions.push(`已知 \\((x,y)\\) 滿足 \\(x^2+y^2\\leq ${r * r}\\)，求 \\(${linearText}\\) 的最大值與最小值。`);
         answers.push(
-          `簡答：最大值 \\(${bound}\\)，最小值 \\(-${bound}\\)。過程：線性式 \\(${a}x${b >= 0 ? '+' : ''}${b}y\\) 在圓盤上的極值為 \\(\\pm r\\sqrt{${a}^2+(${b})^2}\\)。代入 \\(r=${r}\\)，得 \\(\\pm ${bound}\\)。`
+          `簡答：最大值 \\(${bound}\\)，最小值 \\(-${bound}\\)。過程：線性式 \\(${linearText}\\) 在圓盤上的極值為 \\(\\pm r\\sqrt{${a}^2+${Math.abs(b)}^2}\\)。代入 \\(r=${r}\\)，得 \\(\\pm ${bound}\\)。`
         );
         continue;
       }
@@ -4550,7 +4856,7 @@
           Math.floor(Math.sqrt(centerDist)) === Math.sqrt(centerDist) ? Math.sqrt(centerDist) + r : 0,
           2
         );
-        const yDiffText = targetY >= 0 ? `b-${targetY}` : `b+${Math.abs(targetY)}`;
+        const yDiffText = targetY === 0 ? 'b' : targetY > 0 ? `b-${targetY}` : `b+${Math.abs(targetY)}`;
         questions.push(
           `設 \\(P(a,b)\\) 為圓 \\(${formatS122CircleStandard(h, k, r * r)}\\) 上的動點，求 \\(a^2+(${yDiffText})^2\\) 的最大值。`
         );
@@ -4625,8 +4931,8 @@
         a: '簡答：\\((x+\\frac{5}{16})^2+(y+\\frac{15}{8})^2=\\frac{25}{256}\\)。過程：三角形三頂點為 \\((0,-\\frac54)\\)、\\((0,-\\frac52)\\)、\\((-\\frac56,-\\frac{15}{8})\\)。由對稱邊長可得內心在 \\(y=-\\frac{15}{8}\\)，再令到直線 \\(x=0\\) 與到斜邊的距離相等，可得內心 \\((-\\frac{5}{16},-\\frac{15}{8})\\)，半徑為 \\(\\frac{5}{16}\\)。',
       },
       {
-        q: '已知 \\(\\triangle ABC\\) 三頂點為 \\(A(1,1)\\)、\\(B(3,1)\\)、\\(C(s,t)\\)，若其外接圓心為 \\((2,-1)\\) 且半徑為 5，求一組可能的 \\(C\\) 點。',
-        a: '簡答：例如 \\(C(-2,2)\\)。過程：外接圓心 \\((2,-1)\\)、半徑 5，故 \\(C\\) 必須在 \\((x-2)^2+(y+1)^2=25\\) 上，且不可與 \\(A,B\\) 共線。取 \\((-2,2)\\)，有 \\((-2-2)^2+(2+1)^2=16+9=25\\)，且不在直線 \\(y=1\\) 上，所以可作為 \\(C\\) 點。',
+        q: '已知 \\(\\triangle ABC\\) 三頂點為 \\(A(1,1)\\)、\\(B(3,1)\\)、\\(C(s,t)\\)，若其外接圓心為 \\((2,-1)\\) 且半徑為 \\(\\sqrt5\\)，求一組可能的 \\(C\\) 點。',
+        a: '簡答：例如 \\(C(0,0)\\)。過程：外接圓心 \\((2,-1)\\)、半徑 \\(\\sqrt5\\)，故 \\(C\\) 必須在 \\((x-2)^2+(y+1)^2=5\\) 上，且不可與 \\(A,B\\) 共線。取 \\((0,0)\\)，有 \\((0-2)^2+(0+1)^2=4+1=5\\)，且不在直線 \\(y=1\\) 上，所以可作為 \\(C\\) 點。',
       },
       {
         q: '求以 \\((0,0)\\)、\\((3,0)\\)、\\((0,4)\\) 為頂點的三角形其內切圓圓心坐標。',
@@ -4655,11 +4961,11 @@
       },
       {
         q: '求與直線 \\(x-3y-4=0\\) 平行且與圓 \\(x^2+y^2+4x+6y+4=0\\) 相切的切線。',
-        a: '簡答：\\(x-3y+4+\\sqrt{140}=0\\) 或 \\(x-3y+4-\\sqrt{140}=0\\)。過程：圓配方為 \\((x+2)^2+(y+3)^2=9\\)，圓心 \\((-2,-3)\\)，半徑 3。設切線為 \\(x-3y+c=0\\)，距離條件 \\(\\frac{|-2-3(-3)+c|}{\\sqrt{10}}=3\\)，即 \\(|7+c|=3\\sqrt{10}=\\sqrt{90}\\)。等價寫成 \\(c=-7\\pm3\\sqrt{10}\\)，也可整理為上式。',
+        a: '簡答：\\(x-3y-7+3\\sqrt{10}=0\\) 或 \\(x-3y-7-3\\sqrt{10}=0\\)。過程：圓配方為 \\((x+2)^2+(y+3)^2=9\\)，圓心 \\((-2,-3)\\)，半徑 3。設切線為 \\(x-3y+c=0\\)，距離條件 \\(\\frac{|-2-3(-3)+c|}{\\sqrt{10}}=3\\)，即 \\(|7+c|=3\\sqrt{10}\\)。所以 \\(c=-7\\pm3\\sqrt{10}\\)，切線為 \\(x-3y-7\\pm3\\sqrt{10}=0\\)。',
       },
       {
         q: '已知圓 \\((x-4)^2+(y-1)^2=10\\)，求斜率為 3 的切線方程式。',
-        a: '簡答：\\(y-1=3(x-4)\\pm\\sqrt{100}\\)，即 \\(y=3x-1\\) 或 \\(y=3x-21\\)。過程：斜率為 3 的直線可設 \\(y-1=3(x-4)+b\\)。圓心到此直線的距離為 \\(\\frac{|b|}{\\sqrt{1+3^2}}\\)，需等於半徑 \\(\\sqrt{10}\\)，所以 \\(|b|=10\\)。',
+        a: '簡答：\\(y-1=3(x-4)\\pm10\\)，即 \\(y=3x-1\\) 或 \\(y=3x-21\\)。過程：斜率為 3 的直線可設 \\(y-1=3(x-4)+b\\)。圓心到此直線的距離為 \\(\\frac{|b|}{\\sqrt{1+3^2}}\\)，需等於半徑 \\(\\sqrt{10}\\)，所以 \\(|b|=10\\)。',
       },
       {
         q: '設直線 \\(y=mx+2\\) 與圓 \\(x^2+y^2=1\\) 相切，求實數 \\(m\\) 之值。',
@@ -4758,7 +5064,7 @@
       },
       {
         q: '設點 \\(A(3,4)\\) 為圓 \\((x+2)^2+(y-5)^2=49\\) 內部一點，求過 \\(A\\) 點弦中點的圓心與半徑。',
-        a: '簡答：圓心 \\((\\frac12,\\frac92)\\)，半徑 \\(\\sqrt{\\frac{13}{2}}\\)。過程：原圓圓心 \\((-2,5)\\)。弦中點軌跡是以 \\((-2,5)\\) 與 \\((3,4)\\) 為直徑的圓，所以圓心為兩點中點 \\((\\frac12,\\frac92)\\)，半徑平方為 \\(\\frac{(5)^2+(-1)^2}{4}=\\frac{13}{2}\\)。',
+        a: '簡答：圓心 \\((\\frac12,\\frac92)\\)，半徑 \\(\\sqrt{\\frac{13}{2}}\\)。過程：原圓圓心 \\((-2,5)\\)。弦中點軌跡是以 \\((-2,5)\\) 與 \\((3,4)\\) 為直徑的圓，所以圓心為兩點中點 \\((\\frac12,\\frac92)\\)，半徑平方為 \\(\\frac{5^2+1^2}{4}=\\frac{13}{2}\\)。',
       },
       {
         q: '求圓 \\(x^2+y^2=9\\) 內，過點 \\((1,2)\\) 之弦中點所成圖形的面積。',
@@ -4827,8 +5133,8 @@
         a: '簡答：\\(a=0,\\ b=3\\)。過程：兩圓相減得根軸 \\((a-2)x+(7-b)y+4=0\\)。它要與 \\(x-2y-2=0\\) 同一直線，故存在比例常數 \\(\\lambda\\)，使 \\(a-2=\\lambda\\)、\\(7-b=-2\\lambda\\)、\\(4=-2\\lambda\\)。得 \\(\\lambda=-2\\)，所以 \\(a=0,b=3\\)。',
       },
       {
-        q: '求過圓 \\(x^2+y^2+2x-4y+1=0\\) 與直線 \\(2x-y+4=0\\) 之交點，且過點 \\((1,2)\\) 的圓。',
-        a: '簡答：\\(3x^2+3y^2+10x-14y+11=0\\)。過程：設圓系為 \\(x^2+y^2+2x-4y+1+\\lambda(2x-y+4)=0\\)。代入 \\((1,2)\\) 得 \\(-2+3\\lambda=0\\)，所以 \\(\\lambda=\\frac23\\)。代回並同乘 3，整理得 \\(3x^2+3y^2+10x-14y+11=0\\)。',
+        q: '求過圓 \\(x^2+y^2+2x-4y+1=0\\) 與直線 \\(2x-y+4=0\\) 之交點，且過點 \\((0,1)\\) 的圓。',
+        a: '簡答：\\(3x^2+3y^2+10x-14y+11=0\\)。過程：設圓系為 \\(x^2+y^2+2x-4y+1+\\lambda(2x-y+4)=0\\)。代入 \\((0,1)\\) 得 \\(-2+3\\lambda=0\\)，所以 \\(\\lambda=\\frac23\\)。代回並同乘 3，整理得 \\(3x^2+3y^2+10x-14y+11=0\\)。',
       },
     ];
     const questions = [];
@@ -4878,11 +5184,11 @@
     const templates = [
       {
         q: '在 \\((7,8)\\) 處有一光源，將圓 \\(C:x^2+y^2-4x-6y+12=0\\) 投射到 \\(x\\) 軸上的影長為何？',
-        a: '簡答：\\(\\frac{14}{3}\\)。過程：圓配方為 \\((x-2)^2+(y-3)^2=1\\)。設過光源 \\((7,8)\\) 的切線斜率為 \\(m\\)，距離條件得 \\(m=\\frac43\\) 或 \\(\\frac34\\)。兩切線與 \\(x\\) 軸交點的 \\(x\\) 坐標分別為 1 與 \\(-\\frac{11}{3}\\)，所以影長為 \\(1-(-\\frac{11}{3})=\\frac{14}{3}\\)。',
+        a: '簡答：\\(\\frac{14}{3}\\)。過程：圓配方為 \\((x-2)^2+(y-3)^2=1\\)。設過光源 \\((7,8)\\) 的切線斜率為 \\(m\\)，距離條件得 \\(m=\\frac43\\) 或 \\(\\frac34\\)。兩切線與 \\(x\\) 軸交點的 \\(x\\) 坐標分別為 1 與 \\(-\\frac{11}{3}\\)，所以影長為 \\(1+\\frac{11}{3}=\\frac{14}{3}\\)。',
       },
       {
         q: '坐標平面上 \\((7,5)\\) 處有一光源，將圓 \\(x^2+(y-1)^2=1\\) 投射在 \\(y=0\\) 上，求陰影長度。',
-        a: '簡答：\\(\\frac{16}{3}\\)。過程：圓心 \\((0,1)\\)，半徑 1。過 \\((7,5)\\) 的兩切線斜率由距離條件可得 \\(m=\\frac34\\) 或 \\(\\frac{5}{12}\\)。與 \\(y=0\\) 交於 \\((\\frac13,0)\\)、\\((-5,0)\\)，所以影長為 \\(\\frac13-(-5)=\\frac{16}{3}\\)。',
+        a: '簡答：\\(\\frac{16}{3}\\)。過程：圓心 \\((0,1)\\)，半徑 1。過 \\((7,5)\\) 的兩切線斜率由距離條件可得 \\(m=\\frac34\\) 或 \\(\\frac{5}{12}\\)。與 \\(y=0\\) 交於 \\((\\frac13,0)\\)、\\((-5,0)\\)，所以影長為 \\(\\frac13+5=\\frac{16}{3}\\)。',
       },
       {
         q: '點 \\(P(-2,h)\\) 處有一光源，圓 \\(x^2+y^2=1\\)（\\(y\\geq0\\)）為障礙物，若影長需覆蓋到 \\(Q(2,0)\\)，求 \\(h\\) 最小值。',
@@ -4973,7 +5279,7 @@
       ];
       const pick = modes[randInt(0, modes.length - 1)];
       const t = base + pick.offset;
-      const tMoveText = t >= 0 ? `-${t}` : `+${-t}`;
+      const tMoveText = t === 0 ? '' : t > 0 ? `-${t}` : `+${-t}`;
       questions.push(`判斷圓 \\(${formatS122CircleStandard(h, k0, r * r)}\\) 與直線 \\(3x+4y=${t}\\) 的位置關係。`);
       answers.push(
         `簡答：${pick.relation}。過程：圓心為 \\(${formatS122Point({ x: h, y: k0 })}\\)，半徑 ${r}。圓心到直線距離為 \\(\\frac{|3\\cdot(${h})+4\\cdot(${k0})${tMoveText}|}{5}=\\frac{${Math.abs(base - t)}}{5}=${Math.abs(base - t) / 5}\\)，${pick.reason}，所以位置關係為${pick.relation}。`
@@ -5061,20 +5367,22 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const cases = [
-      { h: 0, k: 3, r: 1, t: -2, side: 1 },
-      { h: -1, k: 0, r: 2, t: 4, side: -1 },
-      { h: 3, k: -2, r: 2, t: 6, side: 1 },
-      { h: -2, k: 1, r: 3, t: 6, side: -1 },
-      { h: 2, k: 4, r: 1, t: -3, side: 1 },
-    ];
+    const formatDifference = (variable, value) => {
+      if (value === 0) return variable;
+      return value > 0 ? `${variable}-${value}` : `${variable}+${-value}`;
+    };
 
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
-      const px = item.h + item.side * item.r;
-      const py = item.k + item.t;
-      const rawNum = item.side * (item.t * item.t - item.r * item.r);
-      const rawDen = 2 * item.r * item.t;
+      const h = randInt(-3, 3);
+      const k = randInt(-3, 3);
+      const r = randInt(1, 4);
+      const side = randInt(0, 1) === 0 ? -1 : 1;
+      let t = pickNonZero(-6, 6);
+      while (Math.abs(t) <= r) t = pickNonZero(-6, 6);
+      const px = h + side * r;
+      const py = k + t;
+      const rawNum = side * (t * t - r * r);
+      const rawDen = 2 * r * t;
       const frac = reduceFraction(rawNum, rawDen);
       const line = formatS123LineEquation(
         frac.numerator,
@@ -5084,10 +5392,10 @@
       const vertical = `x=${px}`;
       const slopeText = formatFraction(rawNum, rawDen);
       questions.push(
-        `求過圓外點 \\(P${formatS122Point({ x: px, y: py })}\\) 且與圓 \\(${formatS122CircleStandard(item.h, item.k, item.r * item.r)}\\) 相切的兩條直線方程式。`
+        `求過圓外點 \\(P${formatS122Point({ x: px, y: py })}\\) 且與圓 \\(${formatS122CircleStandard(h, k, r * r)}\\) 相切的兩條直線方程式。`
       );
       answers.push(
-        `簡答：\\(${vertical}\\) 或 \\(${line}\\)。過程：因為 \\(P\\) 的 \\(x\\) 坐標正好是圓心 \\(x\\) 坐標加上半徑或減去半徑，所以一條切線是鉛直線 \\(${vertical}\\)。另一條不可用鉛直線表示，設為 \\(y-${wrapIfNegative(py)}=m(x-${wrapIfNegative(px)})\\)。由圓心到直線距離等於半徑 ${item.r}，可得 \\(m=${slopeText}\\)，整理為 \\(${line}\\)。`
+        `簡答：\\(${vertical}\\) 或 \\(${line}\\)。過程：因為 \\(P\\) 的 \\(x\\) 坐標正好是圓心 \\(x\\) 坐標加上半徑或減去半徑，所以一條切線是鉛直線 \\(${vertical}\\)。另一條不可用鉛直線表示，設為 \\(${formatDifference('y', py)}=m(${formatDifference('x', px)})\\)。由圓心到直線距離等於半徑 ${r}，可得 \\(m=${slopeText}\\)，整理為 \\(${line}\\)。`
       );
     }
 
@@ -5455,7 +5763,7 @@
         answers.push(
           `簡答：\\(P\\) 在圓外，切線長為 4。` +
             `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=3\\)。` +
-            `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx * dx + dy * dy}\\)，` +
+            `\\(d^2=${formatSquareSumText(dx, dy)}=${dx * dx + dy * dy}\\)，` +
             `\\(d=5>3\\)，故 \\(P\\) 在圓外。切線長 \\(=\\sqrt{25-9}=4\\)。`
         );
       } else if (mode === 1) {
@@ -5468,7 +5776,7 @@
         answers.push(
           `簡答：\\(P\\) 在圓外，切線長為 3。` +
             `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=4\\)。` +
-            `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx * dx + dy * dy}\\)，` +
+            `\\(d^2=${formatSquareSumText(dx, dy)}=${dx * dx + dy * dy}\\)，` +
             `\\(d=5>4\\)，故 \\(P\\) 在圓外。切線長 \\(=\\sqrt{25-16}=3\\)。`
         );
       } else if (mode === 2) {
@@ -5481,7 +5789,7 @@
         answers.push(
           `簡答：\\(P\\) 在圓外，切線長為 12。` +
             `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=5\\)。` +
-            `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx * dx + dy * dy}\\)，` +
+            `\\(d^2=${formatSquareSumText(dx, dy)}=${dx * dx + dy * dy}\\)，` +
             `\\(d=13>5\\)，故 \\(P\\) 在圓外。切線長 \\(=\\sqrt{169-25}=12\\)。`
         );
       } else if (mode === 3) {
@@ -5494,7 +5802,7 @@
         answers.push(
           `簡答：\\(P\\) 在圓上。` +
             `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=5\\)。` +
-            `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${dx * dx + dy * dy}=25=r^2\\)，故 \\(P\\) 在圓上。`
+            `\\(d^2=${formatSquareSumText(dx, dy)}=${dx * dx + dy * dy}=25=r^2\\)，故 \\(P\\) 在圓上。`
         );
       } else {
         // 在圓內 d<5
@@ -5520,7 +5828,7 @@
         answers.push(
           `簡答：\\(P\\) 在圓內。` +
             `過程：圓心 \\((${h},${k})\\)，半徑 \\(r=5\\)。` +
-            `\\(d^2=${wrapIfNegative(dx)}^2+${wrapIfNegative(dy)}^2=${d2}<25=r^2\\)，故 \\(P\\) 在圓內，無切線。`
+            `\\(d^2=${formatSquareSumText(dx, dy)}=${d2}<25=r^2\\)，故 \\(P\\) 在圓內，無切線。`
         );
       }
     }
@@ -5601,7 +5909,7 @@
           `簡答：\\((${P.x},${P.y})\\) 與 \\((${Q.x},${Q.y})\\)。` +
             `過程：代入得 \\(2x^2${signC(coefX)}x${signC(constT)}=0\\)，` +
             `化簡解得 \\(x=${P.x}\\) 或 \\(x=${Q.x}\\)，` +
-            `對應 y 值由 \\(y=x+${cas.c}\\) 求出，交點為 \\((${P.x},${P.y})\\) 與 \\((${Q.x},${Q.y})\\)。`
+            `對應 y 值由 \\(y=${cStr}\\) 求出，交點為 \\((${P.x},${P.y})\\) 與 \\((${Q.x},${Q.y})\\)。`
         );
       } else if (mode === 3) {
         // y=-x+c 與 x^2+y^2=25，2x^2-2cx+(c^2-25)=0
@@ -5676,11 +5984,12 @@
         }
         const n = randInt(3, 6);
         const value = 1 + a + b;
+        const valueText = value < 0 ? `(${value})` : `${value}`;
         questions.push(
           `設 \\(f(x)=(${formatPolynomialFromCoeffs([1, a, b])})^{${n}}\\)，求 \\(f(x)\\) 展開式中所有項的係數總和。`
         );
         answers.push(
-          `簡答：${Math.pow(value, n)}。過程：多項式所有項的係數總和等於 \\(f(1)\\)。所以 \\(f(1)=(1${a >= 0 ? '+' : ''}${a}${b >= 0 ? '+' : ''}${b})^{${n}}=${value}^{${n}}=${Math.pow(value, n)}\\)。`
+          `簡答：${Math.pow(value, n)}。過程：多項式所有項的係數總和等於 \\(f(1)\\)。所以 \\(f(1)=(1${formatSignedNumber(a)}${formatSignedNumber(b)})^{${n}}=${valueText}^{${n}}=${Math.pow(value, n)}\\)。`
         );
         continue;
       }
@@ -5697,7 +6006,7 @@
           `設 \\(f(x)=(${formatPolynomialFromCoeffs([1, a, b, c])})^{${n}}\\)，求展開式中偶次項的係數和。`
         );
         answers.push(
-          `簡答：${even}。過程：所有係數和為 \\(f(1)=${total}\\)，偶次項係數和為 \\(\\frac{f(1)+f(-1)}{2}\\)。又 \\(f(-1)=(-1+${a}-${b}+${c})^{${n}}=${alt}\\)，所以偶次項係數和為 \\(\\frac{${total}+${alt}}{2}=${even}\\)。`
+          `簡答：${even}。過程：所有係數和為 \\(f(1)=${total}\\)，偶次項係數和為 \\(\\frac{f(1)+f(-1)}{2}\\)。又 \\(f(-1)=(-1+${a}-${b}+${c})^{${n}}=${alt}\\)，所以偶次項係數和為 \\(\\frac{${total}${formatSignedNumber(alt)}}{2}=${even}\\)。`
         );
         continue;
       }
@@ -5714,7 +6023,7 @@
           `設 \\(f(x)=(${formatPolynomialFromCoeffs([1, a, b, c])})^{${n}}\\)，求展開式中奇次項的係數和。`
         );
         answers.push(
-          `簡答：${odd}。過程：奇次項係數和為 \\(\\frac{f(1)-f(-1)}{2}\\)。此題 \\(f(1)=${total}\\)，\\(f(-1)=${alt}\\)，所以奇次項係數和為 \\(\\frac{${total}-(${alt})}{2}=${odd}\\)。`
+          `簡答：${odd}。過程：奇次項係數和為 \\(\\frac{f(1)-f(-1)}{2}\\)。此題 \\(f(1)=${total}\\)，\\(f(-1)=${alt}\\)，所以奇次項係數和為 \\(\\frac{${total}${formatSignedNumber(-alt)}}{2}=${odd}\\)。`
         );
         continue;
       }
@@ -5830,7 +6139,7 @@
       },
       {
         q: '設 \\(f(x)=a(x-1)(x-2)+b(x-2)+c\\) 與 \\(g(x)=2x^2-3x+5\\) 恆相等，求 \\(a,b,c\\)。',
-        a: '簡答：\\(a=2,b=3,c=7\\)。過程：展開得 \\(f(x)=ax^2+(-3a+b)x+(2a-2b+c)\\)。與 \\(2x^2-3x+5\\) 比較係數，得 \\(a=2\\)、\\(-3a+b=-3\\)，所以 \\(b=3\\)；再由 \\(2a-2b+c=5\\)，得 \\(c=7\\)。',
+        a: '簡答：\\(a=2,b=3,c=7\\)。過程：展開得 \\(f(x)=ax^2+(b-3a)x+(2a-2b+c)\\)。與 \\(2x^2-3x+5\\) 比較係數，得 \\(a=2\\)、\\(b-3a=-3\\)，所以 \\(b=3\\)；再由 \\(2a-2b+c=5\\)，得 \\(c=7\\)。',
       },
       {
         q: '若 \\((a-2)x^3+(b-c+1)x^2+(2c-1)x+d+2\\) 對任意實數 \\(x\\) 代入後皆為 6，求 \\(a,b,c,d\\)。',
@@ -5906,7 +6215,7 @@
       },
       {
         q: '求 \\((1-2x+3x^2-\\cdots+11x^{10})(1+3x^2+5x^4+\\cdots+11x^{10})\\) 乘開後 \\(x^9\\) 的係數。',
-        a: '簡答：-110。過程：第二個多項式只含偶次項。要湊 \\(x^9\\)，第一個多項式需取奇次項：\\((-2x)(9x^8)+(-4x^3)(7x^6)+(-6x^5)(5x^4)+(-8x^7)(3x^2)+(-10x^9)(1)\\)。係數和為 \\(-18-28-30-24-10=-110\\)。',
+        a: '簡答：-110。過程：第二個多項式只含偶次項。要湊 \\(x^9\\)，第一個多項式需取奇次項：\\((-2x)(9x^8)-(4x^3)(7x^6)-(6x^5)(5x^4)-(8x^7)(3x^2)-(10x^9)(1)\\)。係數和為 \\(-18-28-30-24-10=-110\\)。',
       },
       {
         q: '求 \\((1+x+x^2+\\cdots+x^8)(1+x+x^2+\\cdots+x^6)\\) 展開式中 \\(x^5\\) 的係數。',
@@ -5937,12 +6246,11 @@
     ];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
-      questions.push(generated.questions[itemIndex]);
-      answers.push(generated.answers[itemIndex]);
+      appendGeneratedPracticeItem({ questions, summaryAnswers, answers }, generated, itemIndex);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6087,13 +6395,15 @@
       }
 
       const a = randInt(2, 5);
-      const b = randInt(1, 4);
+      let b = randInt(1, 4);
       const c = randInt(2, 6);
+      while (c * c - a * c + b === 0) b = randInt(1, 4);
       const polynomial = `(x^2+${a}x+${b})(x-${c})`;
-      const value = c * c + a * c + b;
+      const factorAtNegativeC = c * c - a * c + b;
+      const valueAtNegativeC = factorAtNegativeC * -2 * c;
       questions.push(`設 \\(f(x)=${polynomial}\\)。若 \\(x-${c}\\) 已知為因式，判斷 \\(x+${c}\\) 是否也一定是因式。`);
       answers.push(
-        `簡答：不一定；本題不是。過程：因式定理要代入對應的根。\\(x+${c}\\) 是因式需 \\(f(-${c})=0\\)，但 \\(f(-${c})=((-${c})^2-${a * c}+${b})(-${2 * c})\\)，通常不為 0。不能因為 \\(x-${c}\\) 是因式，就誤以為 \\(x+${c}\\) 也會是因式。`
+        `簡答：不一定；本題不是。過程：因式定理要代入對應的根。\\(x+${c}\\) 是因式需 \\(f(-${c})=0\\)，但 \\(f(-${c})=(${factorAtNegativeC})(-${2 * c})=${valueAtNegativeC}\\ne0\\)。不能因為 \\(x-${c}\\) 是因式，就誤以為 \\(x+${c}\\) 也會是因式。`
       );
     }
 
@@ -6199,7 +6509,7 @@
       const divisorText = formatPolynomialFromCoeffs(divisor);
       const dividendText = formatPolynomialFromCoeffs(dividend);
       const quotientText = formatPolynomialFromCoeffs(quotient);
-      const remainderText = r < 0 ? `-${Math.abs(r)}` : `+${r}`;
+      const remainderText = r === 0 ? '' : r < 0 ? `-${Math.abs(r)}` : `+${r}`;
       questions.push(`求 \\(${dividendText}\\) 除以 \\(${divisorText}\\) 的商式與餘式。`);
       answers.push(
         `簡答：商式 \\(${quotientText}\\)，餘式 ${r}。過程：此題除式首項係數不是 1，做綜合除法時若先用根 \\(x=${formatFraction(-b, a)}\\) 得到偽商，最後還要除以 ${a} 才是真正商式。檢查可得 \\(${dividendText}=(${divisorText})(${quotientText})${remainderText}\\)，所以答案如上。`
@@ -6393,11 +6703,12 @@
       },
       {
         q: '利用除法原理求 \\(23756108^{12}\\) 除以 \\(101\\) 的餘數。',
-        a: '簡答：56。過程：先把底數化小，\\(23756108\\equiv35\\pmod{101}\\)。依序平方得 \\(35^2\\equiv13\\)，\\(35^4\\equiv68\\)，\\(35^8\\equiv79\\)。所以 \\(35^{12}=35^8\\cdot35^4\\equiv79\\cdot68=5372\\equiv56\\pmod{101}\\)。',
+        a: '簡答：1。過程：先把底數化小，\\(23756108\\equiv-1\\pmod{101}\\)。因此 \\(23756108^{12}\\equiv(-1)^{12}=1\\pmod{101}\\)，餘數為 1。',
       },
     ];
+    const start = randInt(0, templates.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const item = templates[i % templates.length];
+      const item = templates[(start + i) % templates.length];
       questions.push(item.q);
       answers.push(item.a);
     }
@@ -6414,12 +6725,11 @@
     ];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
-      questions.push(generated.questions[itemIndex]);
-      answers.push(generated.answers[itemIndex]);
+      appendGeneratedPracticeItem({ questions, summaryAnswers, answers }, generated, itemIndex);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6852,12 +7162,11 @@
     const banks = [buildS131RecoverDividendFromQuotientSet, buildS131DivisibilityUnknownCoefficientSet];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
-      questions.push(generated.questions[itemIndex]);
-      answers.push(generated.answers[itemIndex]);
+      appendGeneratedPracticeItem({ questions, summaryAnswers, answers }, generated, itemIndex);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -6878,7 +7187,7 @@
       },
       {
         q: '已知三次多項式圖形經過 \\((-1,1),(0,5),(1,3),(2,1)\\)，求此多項式。',
-        a: '簡答：\\(f(x)=\\frac23x^3-3x^2-\\frac83x+5\\)。過程：設 \\(f(x)=ax^3+bx^2+cx+d\\)。由 \\(f(0)=5\\) 得 \\(d=5\\)。代入其餘三點解聯立，可得 \\(a=\\frac23,b=-3,c=-\\frac83\\)。',
+        a: '簡答：\\(f(x)=x^3-3x^2+5\\)。過程：設 \\(f(x)=ax^3+bx^2+cx+d\\)。由 \\(f(0)=5\\) 得 \\(d=5\\)。代入其餘三點解聯立，可得 \\(a=1,b=-3,c=0\\)。',
       },
       {
         q: '求通過 \\((997,3),(999,-2),(1001,1)\\) 三點的二次多項式。',
@@ -6946,7 +7255,7 @@
       },
       {
         q: '設 \\(f(x)\\) 為二次多項式，且 \\(f(2)=9,f(-1)=0,f(4)=5\\)，求 \\(f(x)\\)。',
-        a: '簡答：\\(f(x)=-\\frac43x^2+5x+\\frac{19}{3}\\)。過程：設 \\(f(x)=ax^2+bx+c\\)。代入三點得 \\(4a+2b+c=9\\)、\\(a-b+c=0\\)、\\(16a+4b+c=5\\)，解得 \\(a=-\\frac43,b=5,c=\\frac{19}{3}\\)。',
+        a: '簡答：\\(f(x)=-x^2+4x+5\\)。過程：設 \\(f(x)=ax^2+bx+c\\)。代入三點得 \\(4a+2b+c=9\\)、\\(a-b+c=0\\)、\\(16a+4b+c=5\\)，解得 \\(a=-1,b=4,c=5\\)。',
       },
       {
         q: '已知三次多項式 \\(f(x)\\) 滿足 \\(f(1)=f(2)=f(3)=5\\)，且 \\(f(4)=44\\)，求 \\(f(0)\\)。',
@@ -7042,12 +7351,11 @@
     ];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
-      questions.push(generated.questions[itemIndex]);
-      answers.push(generated.answers[itemIndex]);
+      appendGeneratedPracticeItem({ questions, summaryAnswers, answers }, generated, itemIndex);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7062,11 +7370,10 @@
     ];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      appendGeneratedPracticeItem({ questions, summaryAnswers, answers }, generated, 0);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7081,11 +7388,10 @@
     ];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      appendGeneratedPracticeItem({ questions, summaryAnswers, answers }, generated, 0);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7094,8 +7400,24 @@
     return h === 0 ? 'x' : h > 0 ? `x-${h}` : `x+${-h}`;
   }
 
+  function formatShiftedMonomial(coefficient, base, power) {
+    const coreBase = base === 'x' || /^[A-Za-z]$/.test(base) ? base : `(${base})`;
+    const variable = power === 1 ? coreBase : `${coreBase}^${power}`;
+    return formatTerm(coefficient, variable);
+  }
+
+  function formatSignedShiftedMonomial(coefficient, base, power) {
+    if (coefficient === 0) return '';
+    const coreBase = base === 'x' || /^[A-Za-z]$/.test(base) ? base : `(${base})`;
+    const variable = power === 1 ? coreBase : `${coreBase}^${power}`;
+    const absoluteCoefficient = Math.abs(coefficient);
+    const term = absoluteCoefficient === 1 ? variable : `${absoluteCoefficient}${variable}`;
+    return coefficient > 0 ? `+${term}` : `-${term}`;
+  }
+
   function formatSignedNumber(value) {
-    return value >= 0 ? `+${value}` : `-${Math.abs(value)}`;
+    if (value === 0) return '';
+    return value > 0 ? `+${value}` : `-${Math.abs(value)}`;
   }
 
   function buildS131OddEvenValueRelationSet(count) {
@@ -7129,11 +7451,13 @@
       const oddValue = pickNonZero(-18, 18);
       const given = c - oddValue;
       const target = c + oddValue;
+      const constantText = c === 0 ? '' : formatSignedNumber(c);
+      const substitutionText = `2\\cdot${wrapIfNegative(c)}${formatSignedNumber(-given)}`;
       questions.push(
-        `設 \\(g(x)\\) 為只含奇次項的多項式，且 \\(f(x)=g(x)${c >= 0 ? '+' : ''}${c}\\)。若 \\(f(-${t})=${given}\\)，求 \\(f(${t})\\)。`
+        `設 \\(g(x)\\) 為只含奇次項的多項式，且 \\(f(x)=g(x)${constantText}\\)。若 \\(f(-${t})=${given}\\)，求 \\(f(${t})\\)。`
       );
       answers.push(
-        `簡答：\\(${target}\\)。過程：因 \\(g(-x)=-g(x)\\)，所以 \\(f(${t})+f(-${t})=2\\cdot${c}\\)。故 \\(f(${t})=2\\cdot${c}-(${given})=${target}\\)。`
+        `簡答：\\(${target}\\)。過程：因 \\(g(-x)=-g(x)\\)，所以 \\(f(${t})+f(-${t})=2\\cdot${wrapIfNegative(c)}\\)。故 \\(f(${t})=${substitutionText}=${target}\\)。`
       );
     }
 
@@ -7159,7 +7483,7 @@
         `已知 \\(f(x)=${expanded}\\)，若 \\(f(x)=a(${base})^3+b(${base})^2+c(${base})+d\\)，求 \\((a,b,c,d)\\)。`
       );
       answers.push(
-        `簡答：\\((a,b,c,d)=(${p},${q},${r},${s})\\)。過程：將多項式改用 \\(${base}\\) 作基準，原式可寫成 \\(${p}(${base})^3${q >= 0 ? '+' : ''}${q}(${base})^2${r >= 0 ? '+' : ''}${r}(${base})${s >= 0 ? '+' : ''}${s}\\)，所以係數依序為 \\(${p},${q},${r},${s}\\)。`
+        `簡答：\\((a,b,c,d)=(${p},${q},${r},${s})\\)。過程：將多項式改用 \\(${base}\\) 作基準，原式可寫成 \\(${formatShiftedMonomial(p, base, 3)}${formatSignedShiftedMonomial(q, base, 2)}${formatSignedShiftedMonomial(r, base, 1)}${formatSignedNumber(s)}\\)，所以係數依序為 \\(${p},${q},${r},${s}\\)。`
       );
     }
 
@@ -7248,7 +7572,7 @@
       const y = a * (x - h) ** 2 + k;
       const mirrorX = 2 * h - x;
       const base = formatShiftBase(h);
-      const vertexForm = `${a}(${base})^2${k >= 0 ? '+' : ''}${k}`;
+      const vertexForm = `${formatShiftedMonomial(a, base, 2)}${formatSignedNumber(k)}`;
 
       questions.push(
         `二次函數 \\(\\Gamma:y=${vertexForm}\\) 上有一點 \\(P(${x},${y})\\)。利用圖形對稱性，求另一個與 \\(P\\) 對稱且也在 \\(\\Gamma\\) 上的點坐標。`
@@ -7277,7 +7601,7 @@
       const y2 = a * (x2 - h) ** 2 + k;
       const general = formatPolynomialFromCoeffs([a, -2 * a * h, a * h * h + k]);
       const base = formatShiftBase(h);
-      const vertex = `${a}(${base})^2${k >= 0 ? '+' : ''}${k}`;
+      const vertex = `${formatShiftedMonomial(a, base, 2)}${formatSignedNumber(k)}`;
 
       questions.push(
         `已知二次函數 \\(f(x)\\) 的對稱軸為 \\(x=${h}\\)，且圖形通過 \\((${x1},${y1})\\)、\\((${x2},${y2})\\) 兩點，求 \\(f(x)\\)。`
@@ -7303,7 +7627,7 @@
       const coeffs = [a, -3 * a * h, 3 * a * h * h + p, -a * h ** 3 - p * h + q];
       const expanded = formatPolynomialFromCoeffs(coeffs);
       const base = formatShiftBase(h);
-      const shifted = `${a}(${base})^3${p >= 0 ? '+' : ''}${p}(${base})${q >= 0 ? '+' : ''}${q}`;
+      const shifted = `${formatShiftedMonomial(a, base, 3)}${formatSignedShiftedMonomial(p, base, 1)}${formatSignedNumber(q)}`;
 
       questions.push(
         `已知三次函數 \\(f(x)=${expanded}\\)。將它改寫成 \\(A(${base})^3+B(${base})+C\\)，並求圖形的對稱中心。`
@@ -7330,7 +7654,7 @@
       const coeffs = [a, -3 * a * h, 3 * a * h * h + p, -a * h ** 3 - p * h + q];
       const expanded = formatPolynomialFromCoeffs(coeffs);
       const base = formatShiftBase(h);
-      const shifted = `${a}(${base})^3${p >= 0 ? '+' : ''}${p}(${base})${q >= 0 ? '+' : ''}${q}`;
+      const shifted = `${formatShiftedMonomial(a, base, 3)}${formatSignedShiftedMonomial(p, base, 1)}${formatSignedNumber(q)}`;
 
       if (type === 0) {
         const t = randInt(1, 4);
@@ -7338,7 +7662,7 @@
         const value = a * t ** 3 + p * t + q;
         questions.push(`已知 \\(f(x)=${expanded}\\)，利用中心式求 \\(f(${targetX})\\)。`);
         answers.push(
-          `簡答：${value}。過程：先改寫為 \\(f(x)=${shifted}\\)。當 \\(x=${targetX}\\) 時，\\(${base}=${t}\\)，所以 \\(f(${targetX})=${a}\\cdot${t}^3${formatSignedNumber(p)}\\cdot${t}${formatSignedNumber(q)}=${value}\\)。`
+          `簡答：${value}。過程：先改寫為 \\(f(x)=${shifted}\\)。當 \\(x=${targetX}\\) 時，\\(${base}=${t}\\)，所以 \\(f(${targetX})=${formatShiftedMonomial(a, `${t}`, 3)}${formatSignedShiftedMonomial(p, `${t}`, 1)}${formatSignedNumber(q)}=${value}\\)。`
         );
         continue;
       }
@@ -7349,7 +7673,7 @@
         const value = a * t ** 3 + p * t + q;
         questions.push(`已知 \\(f(x)=${expanded}\\)，將它改成 \\(${base}\\) 附近的形式後，求 \\(f(${targetX})\\)。`);
         answers.push(
-          `簡答：${value}。過程：\\(f(x)=${shifted}\\)。代入 \\(x=${targetX}\\)，有 \\(${base}=${t}\\)，所以函數值為 \\(${a}(${t})^3${formatSignedNumber(p)}(${t})${formatSignedNumber(q)}=${value}\\)。`
+          `簡答：${value}。過程：\\(f(x)=${shifted}\\)。代入 \\(x=${targetX}\\)，有 \\(${base}=${t}\\)，所以函數值為 \\(${formatShiftedMonomial(a, `${t}`, 3)}${formatSignedShiftedMonomial(p, `${t}`, 1)}${formatSignedNumber(q)}=${value}\\)。`
         );
         continue;
       }
@@ -7362,7 +7686,7 @@
           `已知 \\(f(x)=${expanded}\\)。將 \\(f(x)\\) 改寫成中心式後，估計 \\(f(${targetX.toFixed(2)})\\) 到小數點後四位。`
         );
         answers.push(
-          `簡答：約 ${trimFixed(value, 4)}。過程：\\(f(x)=${shifted}\\)。當 \\(x=${targetX.toFixed(2)}\\) 時，\\(${base}=0.01\\)，所以 \\(f(x)=${q}${formatSignedNumber(p)}(0.01)${formatSignedNumber(a)}(0.01)^3\\approx${trimFixed(value, 4)}\\)。`
+          `簡答：約 ${trimFixed(value, 4)}。過程：\\(f(x)=${shifted}\\)。當 \\(x=${targetX.toFixed(2)}\\) 時，\\(${base}=0.01\\)，所以 \\(f(x)=${formatShiftedMonomial(a, '0.01', 3)}${formatSignedShiftedMonomial(p, '0.01', 1)}${formatSignedNumber(q)}\\approx${trimFixed(value, 4)}\\)。`
         );
         continue;
       }
@@ -7371,9 +7695,10 @@
         const t = randInt(1, 3);
         const y1 = a * t ** 3 + p * t + q;
         const y2 = a * (-t) ** 3 + p * -t + q;
+        const pairSumText = `${y1}${formatSignedNumber(y2)}`;
         questions.push(`三次函數 \\(f(x)=${expanded}\\) 的中心為何？並求 \\(f(${h + t})+f(${h - t})\\)。`);
         answers.push(
-          `簡答：中心 \\((${h},${q})\\)，和為 ${2 * q}。過程：中心式為 \\(f(x)=${shifted}\\)，所以中心是 \\((${h},${q})\\)。對稱點的函數值和等於兩倍中心的 \\(y\\) 坐標，故 \\(f(${h + t})+f(${h - t})=${y1}+${y2}=2\\cdot${q}=${2 * q}\\)。`
+          `簡答：中心 \\((${h},${q})\\)，和為 ${2 * q}。過程：中心式為 \\(f(x)=${shifted}\\)，所以中心是 \\((${h},${q})\\)。對稱點的函數值和等於兩倍中心的 \\(y\\) 坐標，故 \\(f(${h + t})+f(${h - t})=${pairSumText}=2\\cdot${q}=${2 * q}\\)。`
         );
         continue;
       }
@@ -7384,7 +7709,7 @@
         `已知 \\(f(x)=${shifted}\\)。若 \\(f(${h + t})=${value}\\)，請檢查由一般式 \\(${expanded}\\) 代入是否一致。`
       );
       answers.push(
-        `簡答：一致，函數值為 ${value}。過程：中心式中 \\(${base}=${t}\\)，所以 \\(f(${h + t})=${a}\\cdot${t}^3+${p}\\cdot${t}+${q}=${value}\\)。中心式與一般式是同一個多項式，代入一般式也必得相同結果。`
+        `簡答：一致，函數值為 ${value}。過程：中心式中 \\(${base}=${t}\\)，所以 \\(f(${h + t})=${formatShiftedMonomial(a, `${t}`, 3)}${formatSignedShiftedMonomial(p, `${t}`, 1)}${formatSignedNumber(q)}=${value}\\)。中心式與一般式是同一個多項式，代入一般式也必得相同結果。`
       );
     }
 
@@ -7479,7 +7804,7 @@
       },
       {
         q: '若 \\(h(x)=3(x-a)^2+(x-b)^2\\)，求 \\(h(x)\\) 最小時的 \\(x\\)。',
-        a: '簡答：\\(x=\\frac{3a+b}{4}\\)。過程：平方和最小值出現在加權平均，\\(x=\\frac{3a+1b}{3+1}=\\frac{3a+b}{4}\\)。',
+        a: '簡答：\\(x=\\frac{3a+b}{4}\\)。過程：平方和最小值出現在加權平均，\\(x=\\frac{3a+b}{3+1}=\\frac{3a+b}{4}\\)。',
       },
     ];
     const questions = [];
@@ -7535,12 +7860,11 @@
     ];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
-      questions.push(generated.questions[itemIndex]);
-      answers.push(generated.answers[itemIndex]);
+      appendGeneratedPracticeItem({ questions, summaryAnswers, answers }, generated, itemIndex);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7553,12 +7877,11 @@
     ];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
-      questions.push(generated.questions[itemIndex]);
-      answers.push(generated.answers[itemIndex]);
+      appendGeneratedPracticeItem({ questions, summaryAnswers, answers }, generated, itemIndex);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7582,7 +7905,7 @@
         a: '簡答：\\(f(2)<f(1)=f(3)\\)。過程：條件表示圖形以 \\(x=2\\) 為對稱軸。因為二次項係數為正，頂點在 \\(x=2\\) 且為最小點；\\(1\\) 與 \\(3\\) 到對稱軸距離相同，所以 \\(f(1)=f(3)>f(2)\\)。',
       },
       {
-        q: '二次函數 \\(y=a(x-h)^2+k\\) 的圖形，若將其對稱軸由 \\(x=1\\) 變更為 \\(x=-2\\)，且開口方向反轉，求新方程式。',
+        q: '二次函數 \\(y=a(x-1)^2+k\\) 的圖形，若將其對稱軸由 \\(x=1\\) 變更為 \\(x=-2\\)，且開口方向反轉，求新方程式。',
         a: '簡答：\\(y=-a(x+2)^2+k\\)。過程：對稱軸由 \\(x=1\\) 變為 \\(x=-2\\)，表示頂點的 \\(x\\) 坐標改為 -2；開口方向反轉表示二次項係數由 \\(a\\) 變為 \\(-a\\)，頂點高度仍為 \\(k\\)。',
       },
     ];
@@ -7743,12 +8066,11 @@
     ];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
-      questions.push(generated.questions[itemIndex]);
-      answers.push(generated.answers[itemIndex]);
+      appendGeneratedPracticeItem({ questions, summaryAnswers, answers }, generated, itemIndex);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7769,7 +8091,7 @@
       },
       {
         q: '若二次函數 \\(f(x)\\) 滿足 \\(f(5-t)=f(-7+t)\\)，且已知其開口向下，判定 \\(f(2)\\) 與 \\(f(-4)\\) 的大小。',
-        a: '簡答：\\(f(2)=f(-4)\\)。過程：兩個對稱輸入 \\(5-t\\) 與 \\(-7+t\\) 的中點為 \\(\\frac{5-t+(-7+t)}2=-1\\)，所以對稱軸為 \\(x=-1\\)。\\(2\\) 與 \\(-4\\) 到 \\(-1\\) 的距離都為 3，因此函數值相等。',
+        a: '簡答：\\(f(2)=f(-4)\\)。過程：兩個對稱輸入 \\(5-t\\) 與 \\(-7+t\\) 的中點為 \\(\\frac{5-t-7+t}{2}=-1\\)，所以對稱軸為 \\(x=-1\\)。\\(2\\) 與 \\(-4\\) 到 \\(-1\\) 的距離都為 3，因此函數值相等。',
       },
       {
         q: '已知二次函數 \\(f(x)\\) 的對稱軸為 \\(x=2\\)，且 \\(f(0)=11\\)、\\(f(3)=5\\)，求 \\(f(x)\\) 的一般式。',
@@ -7825,7 +8147,7 @@
     const templates = [
       {
         q: '有一半徑為 14 呎的半圓形隧道口，一輛寬 7 呎、高 13 呎的卡車若靠著中央分道線行駛，是否能安全通過？',
-        a: '簡答：可以。過程：以隧道中心為原點，半圓為 \\(x^2+y^2=196\\)。車寬 7 呎，半寬為 3.5 呎，車頂兩側在 \\(x=\\pm3.5\\)。此處高度 \\(y=\\sqrt{196-3.5^2}=\\sqrt{183.75}>13\\)，所以能通過。',
+        a: '簡答：不可以。過程：以隧道中心為原點，半圓為 \\(x^2+y^2=196\\)。卡車靠著中央分道線行駛，佔 \\(0\\le x\\le7\\)，最外側在 \\(x=7\\)。此處隧道高度 \\(y=\\sqrt{196-7^2}=\\sqrt{147}=7\\sqrt3\\approx12.12<13\\)，車頂會頂到隧道，所以不能安全通過。',
       },
       {
         q: '以每秒 \\(v\\) 公尺發射信號彈，高度 \\(y=vt-4.9t^2\\)。若 5 秒時高度為 245 公尺，求信號彈在 245 公尺以上的時間共有幾秒？',
@@ -7870,7 +8192,7 @@
         a: '簡答：\\(T_1,T_2,T_3\\)。過程：二次函數 \\(y=ax^2\\) 的開口大小由 \\(|a|\\) 決定，\\(|a|\\) 越小開口越大。三者 \\(|a|\\) 分別為 \\(\\frac13,\\frac12,2\\)，所以開口由大到小為 \\(T_1,T_2,T_3\\)。',
       },
       {
-        q: '給定一次函數 \\(f(x)=2x-3\\)。判定三次函數 \\(g(x)=2(x-3)^3\\) 可由 \\(y=2x^3\\) 如何平移得到。',
+        q: '判定三次函數 \\(g(x)=2(x-3)^3\\) 可由 \\(y=2x^3\\) 如何平移得到。',
         a: '簡答：向右平移 3 單位。過程：\\(g(x)=2(x-3)^3\\) 是把 \\(y=2x^3\\) 中的 \\(x\\) 換成 \\(x-3\\)，所以圖形向右平移 3 單位，拐點由 \\((0,0)\\) 移到 \\((3,0)\\)。',
       },
       {
@@ -7933,12 +8255,11 @@
     ];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
-      questions.push(generated.questions[itemIndex]);
-      answers.push(generated.answers[itemIndex]);
+      appendGeneratedPracticeItem({ questions, summaryAnswers, answers }, generated, itemIndex);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -8150,7 +8471,7 @@
   function buildS132CubicChordMidpointSet(count) {
     const templates = [
       {
-        q: '直線 \\(L\\) 通過三次函數圖形的中心 \\(M(1,2)\\)，且與圖形交於 \\(A,B\\) 兩點。若 \\(A=(3,10)\\)，求 \\(B\\) 點坐標。',
+        q: '直線 \\(L\\) 通過三次函數圖形的中心 \\(M(1,2)\\)，且除中心外另與圖形交於 \\(A,B\\) 兩點。若 \\(A=(3,10)\\)，求 \\(B\\) 點坐標。',
         a: '簡答：\\((-1,-6)\\)。過程：通過對稱中心的割線，其兩個交點以中心為中點。所以 \\(B=2M-A=(2\\cdot1-3,2\\cdot2-10)=(-1,-6)\\)。',
       },
       {
@@ -8193,12 +8514,11 @@
     ];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
-      questions.push(generated.questions[itemIndex]);
-      answers.push(generated.answers[itemIndex]);
+      appendGeneratedPracticeItem({ questions, summaryAnswers, answers }, generated, itemIndex);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -8221,10 +8541,10 @@
           q = randInt(-4, -1);
         const fp = a * p + b,
           fq = c * q + d;
-        const bStr = b >= 0 ? `+${b}` : `${b}`;
-        const dStr = d >= 0 ? `+${d}` : `${d}`;
+        const bStr = formatSignedNumber(b);
+        const dStr = formatSignedNumber(d);
         questions.push(
-          `設 \\(f(x)=\\begin{cases}${a}x${bStr}, & x\\ge0\\\\ ${c}x${dStr}, & x<0\\end{cases}\\)，求 \\(f(${p})\\) 與 \\(f(${q})\\)。`
+          `設 \\(f(x)=\\begin{cases}${formatLinearExpr(a, b)}, & x\\ge0\\\\ ${formatLinearExpr(c, d)}, & x<0\\end{cases}\\)，求 \\(f(${p})\\) 與 \\(f(${q})\\)。`
         );
         answers.push(
           `簡答：\\(f(${p})=${fp}\\)，\\(f(${q})=${fq}\\)。` +
@@ -8240,10 +8560,10 @@
           q = randInt(-3, 0);
         const fp = p * p + a,
           fq = b * q + c;
-        const aStr = a >= 0 ? `+${a}` : `${a}`;
-        const cStr = c >= 0 ? `+${c}` : `${c}`;
+        const aStr = formatSignedNumber(a);
+        const cStr = formatSignedNumber(c);
         questions.push(
-          `設 \\(f(x)=\\begin{cases}x^2${aStr}, & x\\ge1\\\\ ${b}x${cStr}, & x<1\\end{cases}\\)，求 \\(f(${p})\\) 與 \\(f(${q})\\)。`
+          `設 \\(f(x)=\\begin{cases}x^2${aStr}, & x\\ge1\\\\ ${formatLinearExpr(b, c)}, & x<1\\end{cases}\\)，求 \\(f(${p})\\) 與 \\(f(${q})\\)。`
         );
         answers.push(
           `簡答：\\(f(${p})=${fp}\\)，\\(f(${q})=${fq}\\)。` +
@@ -8261,10 +8581,10 @@
           q = k;
         const fp = p + a,
           fq = b * k + c;
-        const aStr = a >= 0 ? `+${a}` : `${a}`;
-        const cStr = c >= 0 ? `+${c}` : `${c}`;
+        const aStr = formatSignedNumber(a);
+        const cStr = formatSignedNumber(c);
         questions.push(
-          `設 \\(f(x)=\\begin{cases}x${aStr}, & x>${k}\\\\ ${b}x${cStr}, & x\\le${k}\\end{cases}\\)，求 \\(f(${p})\\) 與 \\(f(${q})\\)。`
+          `設 \\(f(x)=\\begin{cases}x${aStr}, & x>${k}\\\\ ${formatLinearExpr(b, c)}, & x\\le${k}\\end{cases}\\)，求 \\(f(${p})\\) 與 \\(f(${q})\\)。`
         );
         answers.push(
           `簡答：\\(f(${p})=${fp}\\)，\\(f(${q})=${fq}\\)。` +
@@ -8278,7 +8598,7 @@
           q = randInt(-4, -1);
         const fp = p * p,
           fq = 2 * q + a;
-        const aStr = a >= 0 ? `+${a}` : `${a}`;
+        const aStr = formatSignedNumber(a);
         questions.push(
           `設 \\(f(x)=\\begin{cases}x^2, & x\\ge0\\\\ 2x${aStr}, & x<0\\end{cases}\\)，求 \\(f(${p})\\) 與 \\(f(${q})\\)。`
         );
@@ -8301,9 +8621,9 @@
         const fk2p1 = a,
           fmid = b * q0 + c,
           fk1m1 = d;
-        const cStr = c >= 0 ? `+${c}` : `${c}`;
+        const cStr = formatSignedNumber(c);
         questions.push(
-          `設 \\(f(x)=\\begin{cases}${a}, & x>${k2}\\\\ ${b}x${cStr}, & ${k1}<x\\le${k2}\\\\ ${d}, & x\\le${k1}\\end{cases}\\)，` +
+          `設 \\(f(x)=\\begin{cases}${a}, & x>${k2}\\\\ ${formatLinearExpr(b, c)}, & ${k1}<x\\le${k2}\\\\ ${d}, & x\\le${k1}\\end{cases}\\)，` +
             `求 \\(f(${p})\\)、\\(f(${q0})\\) 與 \\(f(${r0})\\)。`
         );
         answers.push(
@@ -8335,9 +8655,9 @@
           m = randInt(-3, 3);
         const gm = m * m + c,
           fgm = a * gm + b;
-        const bStr = b >= 0 ? `+${b}` : `${b}`;
-        const cStr = c >= 0 ? `+${c}` : `${c}`;
-        questions.push(`設 \\(f(x)=${a}x${bStr}\\)，\\(g(x)=x^2${cStr}\\)，求 \\(f(g(${m}))\\)。`);
+        const bStr = formatSignedNumber(b);
+        const cStr = formatSignedNumber(c);
+        questions.push(`設 \\(f(x)=${formatLinearExpr(a, b)}\\)，\\(g(x)=x^2${cStr}\\)，求 \\(f(g(${m}))\\)。`);
         answers.push(
           `簡答：\\(${fgm}\\)。` +
             `過程：\\(g(${m})=${m}^2${cStr}=${gm}\\)，` +
@@ -8350,8 +8670,8 @@
           n = randInt(-2, 2);
         const fn = a * n + b,
           ffn = a * fn + b;
-        const bStr = b >= 0 ? `+${b}` : `${b}`;
-        questions.push(`設 \\(f(x)=${a}x${bStr}\\)，求 \\(f(f(${n}))\\)。`);
+        const bStr = formatSignedNumber(b);
+        questions.push(`設 \\(f(x)=${formatLinearExpr(a, b)}\\)，求 \\(f(f(${n}))\\)。`);
         answers.push(
           `簡答：\\(${ffn}\\)。` +
             `過程：\\(f(${n})=${a}\\cdot${wrapIfNegative(n)}${bStr}=${fn}\\)，` +
@@ -8364,14 +8684,13 @@
           k = randInt(1, 3);
         const b = randInt(-4, 4);
         const q = b + a * k;
-        const bStr = b >= 0 ? `+${b}` : `${b}`;
-        const qStr = q >= 0 ? `+${q}` : `${q}`;
-        const compStr = b === 0 ? `${a}x` : `${a}x${bStr}`;
-        questions.push(`已知 \\(f(g(x))=${a}x${bStr}\\) 且 \\(g(x)=x-${k}\\)，求 \\(f(x)\\)。`);
+        const bStr = formatSignedNumber(b);
+        const qStr = formatSignedNumber(q);
+        questions.push(`已知 \\(f(g(x))=${formatLinearExpr(a, b)}\\) 且 \\(g(x)=x-${k}\\)，求 \\(f(x)\\)。`);
         answers.push(
-          `簡答：\\(f(x)=${a}x${qStr}\\)。` +
-            `過程：設 \\(f(x)=px+q\\)。因 \\(f(g(x))=f(x-${k})=p(x-${k})+q=px${-k * 1 >= 0 ? '+' : ''}${-k}p+q\\)，` +
-            `比較係數得 \\(p=${a}\\)，\\(-${k}p+q=${b}\\)，解得 \\(q=${q}\\)。`
+          `簡答：\\(f(x)=${formatLinearExpr(a, q)}\\)。` +
+            `過程：設 \\(f(x)=px+q\\)。因 \\(f(g(x))=f(x-${k})=p(x-${k})+q=px${formatSignedShiftedMonomial(-k, 'p', 1)}+q\\)，` +
+            `比較係數得 \\(p=${a}\\)，\\(${formatSignedShiftedMonomial(-k, 'p', 1)}+q=${b}\\)，解得 \\(q=${q}\\)。`
         );
       } else if (mode === 3) {
         // 已知 g(f(x))=ax+b 且 f(x)=x+k，求 g(x)
@@ -8380,13 +8699,13 @@
           k = randInt(1, 3);
         const b = randInt(-4, 4);
         const r = b - a * k;
-        const bStr = b >= 0 ? `+${b}` : `${b}`;
-        const rStr = r >= 0 ? `+${r}` : `${r}`;
-        questions.push(`已知 \\(g(f(x))=${a}x${bStr}\\) 且 \\(f(x)=x+${k}\\)，求 \\(g(x)\\)。`);
+        const bStr = formatSignedNumber(b);
+        const rStr = formatSignedNumber(r);
+        questions.push(`已知 \\(g(f(x))=${formatLinearExpr(a, b)}\\) 且 \\(f(x)=x+${k}\\)，求 \\(g(x)\\)。`);
         answers.push(
-          `簡答：\\(g(x)=${a}x${rStr}\\)。` +
-            `過程：設 \\(g(x)=px+q\\)。因 \\(g(f(x))=g(x+${k})=p(x+${k})+q=px+${k}p+q\\)，` +
-            `比較係數得 \\(p=${a}\\)，\\(${k}p+q=${b}\\)，解得 \\(q=${r}\\)。`
+          `簡答：\\(g(x)=${formatLinearExpr(a, r)}\\)。` +
+            `過程：設 \\(g(x)=px+q\\)。因 \\(g(f(x))=g(x+${k})=p(x+${k})+q=px${formatSignedShiftedMonomial(k, 'p', 1)}+q\\)，` +
+            `比較係數得 \\(p=${a}\\)，\\(${formatShiftedMonomial(k, 'p', 1)}+q=${b}\\)，解得 \\(q=${r}\\)。`
         );
       } else {
         // 已知 f 為一次函數且 f(f(x))=a^2x+(a+1)b，求 f(x)=ax+b
@@ -8397,9 +8716,9 @@
           comp_const = b * (a + 1);
         const a2Str = a2 === 1 ? 'x' : `${a2}x`;
         const bStr = b >= 0 ? `+${b}` : `${b}`;
-        questions.push(`設 \\(f(x)\\) 為一次函數且 \\(f(f(x))=${a2}x+${comp_const}\\)，求 \\(f(x)\\)。`);
+        questions.push(`設 \\(f(x)\\) 為斜率為正的一次函數，且 \\(f(f(x))=${a2}x+${comp_const}\\)，求 \\(f(x)\\)。`);
         answers.push(
-          `簡答：\\(f(x)=${a}x${bStr}\\)。` +
+          `簡答：\\(f(x)=${formatLinearExpr(a, b)}\\)。` +
             `過程：設 \\(f(x)=px+q\\)，則 \\(f(f(x))=p^2x+pq+q=p^2x+q(p+1)\\)。` +
             `比較得 \\(p^2=${a2}\\Rightarrow p=${a}\\)（取正），\\(q(p+1)=${comp_const}\\Rightarrow q=${b}\\)。`
         );
@@ -8424,7 +8743,7 @@
           b = randInt(2, 6);
         const lo = -b - a,
           hi = b - a;
-        const aStr = a >= 0 ? `+${a}` : `${a}`;
+        const aStr = formatSignedNumber(a);
         questions.push(`解不等式 \\(|x${aStr}|<${b}\\)。`);
         answers.push(
           `簡答：\\(${lo}<x<${hi}\\)。` +
@@ -8437,7 +8756,7 @@
           b = randInt(1, 5);
         const lo = a - b,
           hi = a + b;
-        const aStr = a >= 0 ? `-${a}` : `+${-a}`;
+        const aStr = formatSignedNumber(-a);
         questions.push(`解不等式 \\(|x${aStr}|>${b}\\)。`);
         answers.push(
           `簡答：\\(x<${lo}\\) 或 \\(x>${hi}\\)。` +
@@ -8450,7 +8769,7 @@
           b = randInt(2, 5) * 2;
         const lo = (-b - a) / 2,
           hi = (b - a) / 2;
-        const aStr = a >= 0 ? `+${a}` : `${a}`;
+        const aStr = formatSignedNumber(a);
         questions.push(`解不等式 \\(|2x${aStr}|\\le${b}\\)。`);
         answers.push(
           `簡答：\\(${lo}\\le x\\le${hi}\\)。` +
@@ -8464,7 +8783,7 @@
           b = randInt(1, 4) * 2;
         const lo = (a - b) / 2,
           hi = (a + b) / 2;
-        const aStr = a >= 0 ? `-${a}` : `+${-a}`;
+        const aStr = formatSignedNumber(-a);
         questions.push(`解不等式 \\(|2x${aStr}|\\ge${b}\\)。`);
         answers.push(
           `簡答：\\(x\\le${lo}\\) 或 \\(x\\ge${hi}\\)。` +
@@ -8478,12 +8797,14 @@
         const mid = (b - a) / 2;
         const aStr = a === 0 ? 'x' : `x+${a}`;
         const bStr = b === 0 ? 'x' : `x-${b}`;
+        const leftSquare = formatPolynomialFromCoeffs([1, 2 * a, a * a]);
+        const rightSquare = formatPolynomialFromCoeffs([1, -2 * b, b * b]);
         questions.push(`解不等式 \\(|${aStr}|\\le|${bStr}|\\)。`);
         answers.push(
           `簡答：\\(x\\le${mid}\\)。` +
-            `過程：兩邊平方（均非負），\\((x+${a})^2\\le(x-${b})^2\\)，` +
-            `展開得 \\(x^2+${2 * a}x+${a * a}\\le x^2-${2 * b}x+${b * b}\\)，` +
-            `化簡得 \\(${2 * (a + b)}x\\le${b * b - a * a}\\)，故 \\(x\\le${mid}\\)。`
+            `過程：兩邊平方（均非負），\\((${aStr})^2\\le(${bStr})^2\\)，` +
+            `展開得 \\(${leftSquare}\\le ${rightSquare}\\)，` +
+            `化簡得 \\(${2 * (a + b)}x\\le${b * b - a * a}\\)，故 \\(x\\le ${mid}\\)。`
         );
       }
     }
@@ -8502,7 +8823,7 @@
 
       if (mode === 0) {
         // |x-a|+|x-b| ≤ c，a<b，c>b-a，解為 [(a+b-c)/2, (a+b+c)/2]
-        const a = randInt(0, 2);
+        const a = randInt(1, 3);
         const b = a + 2 * randInt(1, 3);
         const extra = 2 * randInt(1, 3);
         const c = b - a + extra;
@@ -8518,7 +8839,7 @@
         );
       } else if (mode === 1) {
         // |x-a|+|x-b| ≥ c，a<b，c>b-a，解為 x≤(a+b-c)/2 或 x≥(a+b+c)/2
-        const a = randInt(0, 2);
+        const a = randInt(1, 3);
         const b = a + 2 * randInt(1, 3);
         const extra = 2 * randInt(1, 3);
         const c = b - a + extra;
@@ -8533,7 +8854,7 @@
         );
       } else if (mode === 2) {
         // |x-a| < |x-b|，a<b → x < (a+b)/2（點比較靠近 a）
-        const a = randInt(0, 3);
+        const a = randInt(1, 3);
         const diff = 2 * randInt(1, 4);
         const b = a + diff;
         const mid = (a + b) / 2;
@@ -8547,7 +8868,7 @@
         );
       } else if (mode === 3) {
         // |x-a| > |x-b|，a<b → x > (a+b)/2（點比較靠近 b）
-        const a = randInt(0, 3);
+        const a = randInt(1, 3);
         const diff = 2 * randInt(1, 4);
         const b = a + diff;
         const mid = (a + b) / 2;
@@ -8702,12 +9023,14 @@
         ? `${r1}${closed ? '\\le ' : '<'}x${closed ? '\\le' : '<'}${r2}`
         : `x${closed ? '\\le' : '<'}${r1}\\text{ 或 }x${closed ? '\\ge' : '>'}${r2}`;
       const poly = formatPolynomialFromCoeffs([lead, b, c]);
-      const f1 = `(x${r1 >= 0 ? '-' : '+'}${Math.abs(r1)})`;
-      const f2 = `(x${r2 >= 0 ? '-' : '+'}${Math.abs(r2)})`;
+      const f1 = `(${formatS131LinearFactor(r1)})`;
+      const f2 = `(${formatS131LinearFactor(r2)})`;
 
-      questions.push(`已知二次不等式 \\(${lead}x^2+mx+n${relation}\\) 的解為 \\(${interval}\\)，求 \\((m,n)\\)。`);
+      questions.push(
+        `已知二次不等式 \\(${formatTerm(lead, 'x^2')}+mx+n${relation}\\) 的解為 \\(${interval}\\)，求 \\((m,n)\\)。`
+      );
       answers.push(
-        `簡答：\\((m,n)=(${b},${c})\\)。過程：解的端點就是兩根 \\(${r1}\\)、\\(${r2}\\)，且首項係數為 \\(${lead}\\)，所以二次式為 \\(${lead}${f1}${f2}=${poly}\\)。因此 \\(m=${b},n=${c}\\)。`
+        `簡答：\\((m,n)=(${b},${c})\\)。過程：解的端點就是兩根 \\(${r1}\\)、\\(${r2}\\)，且首項係數為 \\(${lead}\\)，所以二次式為 \\(${formatTerm(lead, `${f1}${f2}`)}=${poly}\\)。因此 \\(m=${b},n=${c}\\)。`
       );
     }
 
@@ -8767,8 +9090,8 @@
         a: '簡答：\\(1<x<3\\)。過程：先要能成三角形：\\(x+(x+1)>x+2\\)，得 \\(x>1\\)。最大邊為 \\(x+2\\)，鈍角需 \\((x+2)^2>x^2+(x+1)^2\\)，化簡得 \\((x-3)(x+1)<0\\)，所以 \\(-1<x<3\\)。合併得 \\(1<x<3\\)。',
       },
       {
-        q: '某稅率為 \\(r\\%\\) 時，銷售額估計為 \\(800(1-\\frac{r}{50})\\) 萬元。若稅收至少 112 萬元，求 \\(r\\) 的範圍。',
-        a: '簡答：\\(10\\le r\\le40\\)。過程：稅收為 \\(\\frac r{100}\\cdot800(1-\\frac r{50})\\)。令其 \\(\\ge112\\)，化簡得 \\(r(50-r)\\ge700\\)，即 \\(r^2-50r+700\\le0\\)。兩根為 10 與 40，所以 \\(10\\le r\\le40\\)。',
+        q: '某稅率為 \\(r\\%\\) 時，銷售額估計為 \\(800(1-\\frac{r}{50})\\) 萬元。若稅收至少 64 萬元，求 \\(r\\) 的範圍。',
+        a: '簡答：\\(10\\le r\\le40\\)。過程：稅收為 \\(\\frac r{100}\\cdot800(1-\\frac r{50})=\\frac4{25}r(50-r)\\)。令其 \\(\\ge64\\)，化簡得 \\(r(50-r)\\ge400\\)，即 \\(r^2-50r+400\\le0\\)。兩根為 10 與 40，所以 \\(10\\le r\\le40\\)。',
       },
     ];
     const questions = [];
@@ -8792,12 +9115,11 @@
     ];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
-      questions.push(generated.questions[itemIndex]);
-      answers.push(generated.answers[itemIndex]);
+      appendGeneratedPracticeItem({ questions, summaryAnswers, answers }, generated, itemIndex);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -8818,7 +9140,7 @@
       },
       {
         q: '若 \\(-5\\le x\\le6\\)，判定 \\((x+3)^5(x-2)^2(x-4)^3\\ge0\\) 的整數解個數。',
-        a: '簡答：6 個。過程：根為 -3、2、4，其中 2 為偶數重根不變號。判號得解集為 \\((-\\infty,-3]\\cup[4,\\infty)\\)。與 \\([-5,6]\\) 交集為 \\([-5,-3]\\cup[4,6]\\)，整數共有 \\(-5,-4,-3,4,5,6\\)，共 6 個。',
+        a: '簡答：7 個。過程：根為 -3、2、4，其中 2 為偶數重根不變號，但 \\(x=2\\) 使乘積為 0，仍滿足 \\(\\ge0\\)。判號得解集為 \\((-\\infty,-3]\\cup\\{2\\}\\cup[4,\\infty)\\)。與 \\([-5,6]\\) 交集為 \\([-5,-3]\\cup\\{2\\}\\cup[4,6]\\)，整數共有 \\(-5,-4,-3,2,4,5,6\\)，共 7 個。',
       },
       {
         q: '已知三次多項式 \\(f(x)\\) 的領導係數為正，且圖形通過 \\((-2,0),(-1,0),(1,0)\\)，求 \\(f(x)<0\\) 的範圍。',
@@ -9021,8 +9343,8 @@
         a: '簡答：\\([3,4]\\cup[5,6]\\)。過程：兩邊長可設為 \\(x\\) 與 \\(9-x\\)，面積為 \\(x(9-x)\\)。解 \\(18\\le x(9-x)\\le20\\)。由 \\(x(9-x)\\ge18\\) 得 \\(3\\le x\\le6\\)；由 \\(x(9-x)\\le20\\) 得 \\(x\\le4\\) 或 \\(x\\ge5\\)。交集為 \\([3,4]\\cup[5,6]\\)。',
       },
       {
-        q: '某稅率為 \\(r\\%\\) 時，銷售額估計為 \\(800(1-\\frac{r}{50})\\) 萬元。若稅收至少 112 萬元，求稅率 \\(r\\) 的範圍。',
-        a: '簡答：\\(10\\le r\\le40\\)。過程：稅收為 \\(\\frac r{100}\\cdot800(1-\\frac r{50})\\)。令其 \\(\\ge112\\)，化簡得 \\(r(50-r)\\ge700\\)，即 \\(r^2-50r+700\\le0\\)。兩根為 10 與 40，所以 \\(10\\le r\\le40\\)。',
+        q: '某稅率為 \\(r\\%\\) 時，銷售額估計為 \\(800(1-\\frac{r}{50})\\) 萬元。若稅收至少 64 萬元，求稅率 \\(r\\) 的範圍。',
+        a: '簡答：\\(10\\le r\\le40\\)。過程：稅收為 \\(\\frac r{100}\\cdot800(1-\\frac r{50})=\\frac4{25}r(50-r)\\)。令其 \\(\\ge64\\)，化簡得 \\(r(50-r)\\ge400\\)，即 \\(r^2-50r+400\\le0\\)。兩根為 10 與 40，所以 \\(10\\le r\\le40\\)。',
       },
     ];
     const questions = [];
@@ -9081,12 +9403,11 @@
     ];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i += 1) {
       const generated = banks[i % banks.length](5);
       const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
-      questions.push(generated.questions[itemIndex]);
-      answers.push(generated.answers[itemIndex]);
+      appendGeneratedPracticeItem({ questions, summaryAnswers, answers }, generated, itemIndex);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -9149,16 +9470,34 @@
     return sentence || text;
   }
 
+  function stripSummaryPrefixFromDetail(detail) {
+    const text = String(detail || '');
+    const cleaned = text.replace(
+      /^\s*(?:簡答|答案)[:：]\s*[\s\S]*?(?:(?:。|；)?\s*|<br\s*\/?>\s*)((?:過程|解析|詳解|說明)[:：])/i,
+      '$1'
+    );
+    return cleaned.trim() ? cleaned : text;
+  }
+
   function createAnswerList(summaryAnswers) {
     const answers = [];
     const nativePush = Array.prototype.push;
     answers.push = function pushAnswerWithSummary(...items) {
-      items.forEach((item) => {
+      const cleanedItems = items.map((item) => {
         summaryAnswers.push(deriveSummaryAnswerFromDetail(item));
+        return stripSummaryPrefixFromDetail(item);
       });
-      return nativePush.apply(this, items);
+      return nativePush.apply(this, cleanedItems);
     };
     return answers;
+  }
+
+  function appendGeneratedPracticeItem(target, generated, itemIndex) {
+    target.questions.push(generated.questions[itemIndex]);
+    target.summaryAnswers.push(
+      generated.summaryAnswers?.[itemIndex] || deriveSummaryAnswerFromDetail(generated.answers[itemIndex])
+    );
+    target.answers.push(stripSummaryPrefixFromDetail(generated.answers[itemIndex]));
   }
 
   // ── s1-3 新增生成器 ────────────────────────────────────────────────────────
@@ -9216,13 +9555,13 @@
       },
       // Mode 3: 給f(f(0))和f(f(1))，求f(x)=ax+b
       () => {
-        const a = [2, 3, -2, -3][randInt(0, 3)];
+        const a = [2, 3][randInt(0, 1)];
         const b = randInt(-3, 3);
         const ff0 = a * b + b; // f(b) = ab+b
         const ff1 = a * (a + b) + b; // f(a+b) = a(a+b)+b
         return {
-          q: `設 \\(f(x)=ax+b\\)，已知 \\(f(f(0))=${ff0}\\)，\\(f(f(1))=${ff1}\\)，求 \\(a\\) 與 \\(b\\)。`,
-          a: `簡答：\\(a=${a}\\)，\\(b=${b}\\)。過程：\\(f(0)=b\\)，\\(f(f(0))=f(b)=ab+b=b(a+1)=${ff0}\\)。\\(f(1)=a+b\\)，\\(f(f(1))=a(a+b)+b=a^2+ab+b=${ff1}\\)。兩式相減得 \\(a^2=${ff1 - ff0}\\)，故 \\(a=${a}\\)，代回得 \\(b=${b}\\)。`,
+          q: `設 \\(f(x)=ax+b\\)，且 \\(a>0\\)。已知 \\(f(f(0))=${ff0}\\)，\\(f(f(1))=${ff1}\\)，求 \\(a\\) 與 \\(b\\)。`,
+          a: `簡答：\\(a=${a}\\)，\\(b=${b}\\)。過程：\\(f(0)=b\\)，\\(f(f(0))=f(b)=ab+b=b(a+1)=${ff0}\\)。\\(f(1)=a+b\\)，\\(f(f(1))=a(a+b)+b=a^2+ab+b=${ff1}\\)。兩式相減得 \\(a^2=${ff1 - ff0}\\)，又 \\(a>0\\)，故 \\(a=${a}\\)，代回得 \\(b=${b}\\)。`,
         };
       },
       // Mode 4: 已知f(2x+1)=px+q，求f(x)
@@ -9234,7 +9573,7 @@
         const constStr = constTerm === 0 ? '' : constTerm > 0 ? '+' + constTerm : '' + constTerm;
         return {
           q: `設 \\(f(x)\\) 為一次函數，已知 \\(f(2x+1)=${coeffX}x${constStr}\\)，求 \\(f(x)\\)。`,
-          a: `簡答：\\(f(x)=${fmtL(a, b)}\\)。過程：令 \\(t=2x+1\\)，則 \\(x=\\dfrac{t-1}{2}\\)。\\(f(t)=${coeffX}\\cdot\\dfrac{t-1}{2}${constStr}=${a}t${sn(b)}\\)。所以 \\(f(x)=${fmtL(a, b)}\\)。`,
+          a: `簡答：\\(f(x)=${fmtL(a, b)}\\)。過程：令 \\(t=2x+1\\)，則 \\(x=\\dfrac{t-1}{2}\\)。\\(f(t)=${coeffX}\\cdot\\dfrac{t-1}{2}${constStr}=${a === 1 ? 't' : `${a}t`}${sn(b)}\\)。所以 \\(f(x)=${fmtL(a, b)}\\)。`,
         };
       },
     ];
@@ -9308,17 +9647,17 @@
       // Mode 3: 給兩根和y軸截距
       () => {
         const a = [1, -1, 2, -2][randInt(0, 3)];
-        const r1 = randInt(-3, 0);
+        const r1 = randInt(-3, -1);
         const r2 = randInt(1, 4);
         // f(x) = a(x-r1)(x-r2), f(0) = a*(-r1)*(-r2) = a*r1*r2 (sign: r1≤0,r2>0 → r1*r2≤0)
         const yint = a * r1 * r2;
         const bCoef = -a * (r1 + r2);
         const cCoef = a * r1 * r2;
-        const r1Str = r1 > 0 ? '-' + r1 : '+' + Math.abs(r1);
-        const r2Str = r2 > 0 ? '-' + r2 : '+' + Math.abs(r2);
+        const r1Factor = formatS131LinearFactor(r1);
+        const r2Factor = formatS131LinearFactor(r2);
         return {
           q: `已知二次函數圖形與 \\(x\\) 軸交於 \\((${r1},0)\\) 和 \\((${r2},0)\\)，且 \\(y\\) 軸截距為 \\(${yint}\\)，求此函數。`,
-          a: `簡答：\\(f(x)=${fmtQ(a, bCoef, cCoef)}\\)。過程：設 \\(f(x)=a(x${r1Str})(x${r2Str})\\)。代入 \\(x=0\\)：\\(f(0)=a\\cdot(${-r1})\\cdot(${-r2})=${yint}\\)，得 \\(a=${a}\\)。展開得 \\(f(x)=${fmtQ(a, bCoef, cCoef)}\\)。`,
+          a: `簡答：\\(f(x)=${fmtQ(a, bCoef, cCoef)}\\)。過程：設 \\(f(x)=a(${r1Factor})(${r2Factor})\\)。代入 \\(x=0\\)：\\(f(0)=a\\cdot(${-r1})\\cdot(${-r2})=${yint}\\)，得 \\(a=${a}\\)。展開得 \\(f(x)=${fmtQ(a, bCoef, cCoef)}\\)。`,
         };
       },
       // Mode 4: 給兩點求f(x)=x²+ax+b，再求f(p)
@@ -9333,7 +9672,7 @@
         const yp = p * p + a * p + b;
         return {
           q: `設 \\(f(x)=x^2+ax+b\\)，已知 \\(f(${x1})=${y1}\\) 且 \\(f(${x2})=${y2}\\)，求 \\(f(${p})\\)。`,
-          a: `簡答：\\(f(${p})=${yp}\\)。過程：由 \\(f(${x1})=${y1}\\)：\\(${x1 * x1}+${x1}a+b=${y1}\\)；由 \\(f(${x2})=${y2}\\)：\\(${x2 * x2}+${x2}a+b=${y2}\\)。兩式相減：\\(${x2 - x1}a=${y2 - y1 - (x2 * x2 - x1 * x1)}\\)，得 \\(a=${a}\\)，\\(b=${b}\\)。\\(f(${p})=${yp}\\)。`,
+          a: `簡答：\\(f(${p})=${yp}\\)。過程：由 \\(f(${x1})=${y1}\\)：\\(${x1 * x1}+${formatTerm(x1, 'a')}+b=${y1}\\)；由 \\(f(${x2})=${y2}\\)：\\(${x2 * x2}+${formatTerm(x2, 'a')}+b=${y2}\\)。兩式相減：\\(${formatTerm(x2 - x1, 'a')}=${y2 - y1 - (x2 * x2 - x1 * x1)}\\)，得 \\(a=${a}\\)，\\(b=${b}\\)。\\(f(${p})=${yp}\\)。`,
         };
       },
     ];
@@ -9507,7 +9846,7 @@
           fb = fmtAbsTerm(b);
         return {
           q: `求 \\(f(x)=${p}${fa}+${q}${fb}\\) 的最小值。`,
-          a: `簡答：最小值為 \\(${minVal}\\)，在 \\(x=${b}\\) 時取得。過程：\\(f(x)\\) 的斜率：\\(x<${a}\\) 時為 \\(-(${p}+${q})\\)（遞減），\\(${a}<x<${b}\\) 時為 \\(${p}-${q}=${slopeMid}\\)（仍遞減），\\(x>${b}\\) 時為 \\(${p}+${q}\\)（遞增）。最小值在斜率由負轉正的 \\(x=${b}\\) 處：\\(f(${b})=${p}\\cdot${b - a}+0=${minVal}\\)。`,
+          a: `簡答：最小值為 \\(${minVal}\\)，在 \\(x=${b}\\) 時取得。過程：\\(f(x)\\) 的斜率：\\(x<${a}\\) 時為 \\(-(${p}+${q})\\)（遞減），\\(${a}<x<${b}\\) 時為 \\(${p}-${q}=${slopeMid}\\)（仍遞減），\\(x>${b}\\) 時為 \\(${p}+${q}\\)（遞增）。最小值在斜率由負轉正的 \\(x=${b}\\) 處：\\(f(${b})=${p}\\cdot${b - a}=${minVal}\\)。`,
         };
       },
     ];
@@ -9529,7 +9868,7 @@
   function s11Add(set, question, summary, detail) {
     set.questions.push(question);
     set.summaryAnswers.push(summary);
-    set.answers.push(`答案：${summary}<br>詳解：${detail}`);
+    set.answers.push(`詳解：${detail}`);
   }
 
   function s11PowMod(base, exponent, mod) {
@@ -9567,6 +9906,16 @@
     return `${value}-x`;
   }
 
+  function s11AddConstantMinusX(value) {
+    if (value === 0) return '-x';
+    return value > 0 ? `+(${s11ConstantMinusX(value)})` : `-(${s11LinearXPlus(-value)})`;
+  }
+
+  function s11SubtractConstantMinusX(value) {
+    if (value === 0) return '+x';
+    return value > 0 ? `-(${s11ConstantMinusX(value)})` : `+(${s11LinearXPlus(-value)})`;
+  }
+
   function s11Paren(value) {
     return value < 0 ? `(${value})` : `${value}`;
   }
@@ -9599,27 +9948,29 @@
         const a = -randInt(4, 8);
         const b = randInt(a + 1, -1);
         const value = -a - 2 * b;
+        const sumText = `${a}${formatSignedNumber(b)}`;
+        const differenceText = `${b}${formatSignedNumber(-a)}`;
         s11Add(
           set,
-          `已知 \\(${a}<${b}<0\\)，化簡 \\(\\sqrt{(${a})^2}-|${b}-(${a})|+\\sqrt{(${s11Paren(a)}+${s11Paren(b)})^2}\\)。`,
+          `已知 \\(${a}<${b}<0\\)，化簡 \\(\\sqrt{(${a})^2}-|${differenceText}|+\\sqrt{(${sumText})^2}\\)。`,
           `\\(${value}\\)`,
-          `因為 \\(${a}<0\\)，\\(\\sqrt{(${a})^2}=|${a}|=${-a}\\)。又 \\(${b}-(${a})>0\\)，所以 \\(|${b}-(${a})|=${b - a}\\)。且 \\(${s11Paren(a)}+${s11Paren(b)}<0\\)，\\(\\sqrt{(${s11Paren(a)}+${s11Paren(b)})^2}=|${a + b}|=${-(a + b)}\\)。合併得 \\(${-a}-(${b - a})+${-(a + b)}=${value}\\)。`
+          `因為 \\(${a}<0\\)，\\(\\sqrt{(${a})^2}=|${a}|=${-a}\\)。又 \\(${differenceText}>0\\)，所以 \\(|${differenceText}|=${b - a}\\)。且 \\(${sumText}<0\\)，\\(\\sqrt{(${sumText})^2}=|${a + b}|=${-(a + b)}\\)。合併得 \\(${-a}-(${b - a})+${-(a + b)}=${value}\\)。`
         );
       } else if (mode === 3) {
         const k = randInt(-3, 4);
         s11Add(
           set,
           `已知 \\(${k}<x<${k + 1}\\)，化簡 \\(|${s11XMinus(k - 1)}|-\\sqrt{(${s11XMinus(k + 1)})^2}+|${s11XMinus(k + 2)}|\\)。`,
-          `\\(${s11XMinus(k)}\\)`,
-          `此時 \\(${s11XMinus(k - 1)}>0\\)、\\(${s11XMinus(k + 1)}<0\\)、\\(${s11XMinus(k + 2)}<0\\)。所以原式 \\(=(${s11XMinus(k - 1)})-(${k + 1}-x)+(${k + 2}-x)=${s11XMinus(k)}\\)。`
+          `\\(${s11XMinus(k - 2)}\\)`,
+          `此時 \\(${s11XMinus(k - 1)}>0\\)、\\(${s11XMinus(k + 1)}<0\\)、\\(${s11XMinus(k + 2)}<0\\)。所以原式 \\(=(${s11XMinus(k - 1)})${s11SubtractConstantMinusX(k + 1)}${s11AddConstantMinusX(k + 2)}=${s11XMinus(k - 2)}\\)。`
         );
       } else {
         const k = randInt(1, 5);
         s11Add(
           set,
           `已知 \\(${k}<x<${k + 1}\\)，化簡 \\(\\sqrt{(${s11XMinus(k)})^2}+|${s11XMinus(k + 3)}|-|${s11XMinus(k - 2)}|\\)。`,
-          `\\(${s11XMinus(k + 1)}\\)`,
-          `在範圍內，\\(${s11XMinus(k)}>0\\)、\\(${s11XMinus(k + 3)}<0\\)、\\(${s11XMinus(k - 2)}>0\\)。所以原式 \\(=(${s11XMinus(k)})+(${k + 3}-x)-(${s11XMinus(k - 2)})=${s11XMinus(k + 1)}\\)。`
+          `\\(${s11ConstantMinusX(k + 1)}\\)`,
+          `在範圍內，\\(${s11XMinus(k)}>0\\)、\\(${s11XMinus(k + 3)}<0\\)、\\(${s11XMinus(k - 2)}>0\\)。所以原式 \\(=(${s11XMinus(k)})+(${k + 3}-x)-(${s11XMinus(k - 2)})=${s11ConstantMinusX(k + 1)}\\)。`
         );
       }
     }
@@ -9685,8 +10036,12 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        const base = [7, 11, 13, 17][randInt(0, 3)];
-        const mod = [5, 7, 9, 11][randInt(0, 3)];
+        let base = [7, 11, 13, 17][randInt(0, 3)];
+        let mod = [5, 7, 9, 11][randInt(0, 3)];
+        while (gcdInt(base, mod) !== 1) {
+          base = [7, 11, 13, 17][randInt(0, 3)];
+          mod = [5, 7, 9, 11][randInt(0, 3)];
+        }
         const exponent = randInt(80, 260);
         const answer = s11PowMod(base, exponent, mod);
         const cycle = [];
@@ -9804,8 +10159,8 @@
         const time = halves * halfLife;
         s11Add(
           set,
-          `某藥物半衰期為 \\(${halfLife}\\) 小時。若要求體內濃度降到初始的 \\(${percent}\\%\\) 以下，服用一次後至少多久需要補藥？`,
-          `至少 \\(${time}\\) 小時後`,
+          `某藥物半衰期為 \\(${halfLife}\\) 小時。服用一次後，體內濃度降到初始的 \\(${percent}\\%\\) 時，已經過多久？`,
+          `\\(${time}\\) 小時`,
           `每過一個半衰期乘 \\(\\frac12\\)。\\(${percent}\\%\\) 對應 \\((\\frac12)^{${halves}}\\)，所以需經過 \\(${halves}\\) 個半衰期，時間為 \\(${halves}\\times${halfLife}=${time}\\) 小時。`
         );
       }
@@ -9835,12 +10190,13 @@
         );
       } else if (mode === 1) {
         const exponent = randInt(20, 70);
-        const place = Math.floor((exponent * S115_LOGS[4]) / 10000) + 1;
+        const log4 = 2 * S115_LOGS[2];
+        const place = Math.floor((exponent * log4) / 10000) + 1;
         s11Add(
           set,
           `已知 \\(\\log2\\approx0.3010\\)，求 \\((0.25)^{${exponent}}\\) 表為小數後，首位非零數字出現在小數第幾位？`,
           `第 \\(${place}\\) 位`,
-          `\\((0.25)^{${exponent}}=4^{-${exponent}}\\)。\\(\\log 4=2\\log2\\approx0.6020\\)，所以 \\(-\\log(4^{-${exponent}})=${exponent}\\log4\\approx${formatS115LogInt(exponent * S115_LOGS[4])}\\)。因此首位非零數字在小數第 \\(${place}\\) 位。`
+          `\\((0.25)^{${exponent}}=4^{-${exponent}}\\)。\\(\\log 4=2\\log2\\approx0.6020\\)，所以 \\(-\\log(4^{-${exponent}})=${exponent}\\log4\\approx${formatS115LogInt(exponent * log4)}\\)。因此首位非零數字在小數第 \\(${place}\\) 位。`
         );
       } else if (mode === 2) {
         const exponent = randInt(12, 35);
@@ -9920,7 +10276,10 @@
   }
 
   function s12EvalLinearFraction(point, numerator, denominator) {
-    return makeFraction(numerator.a * point.x + numerator.b * point.y + numerator.c, denominator.a * point.x + denominator.b * point.y + denominator.c);
+    return makeFraction(
+      numerator.a * point.x + numerator.b * point.y + numerator.c,
+      denominator.a * point.x + denominator.b * point.y + denominator.c
+    );
   }
 
   function s12FractionCompare(a, b) {
@@ -9973,7 +10332,7 @@
           set,
           `設 \\(L_1:x+2y=${c1}\\)，\\(L_2:3x-y=${c2}\\)，\\(L_3:ax+y=${c3}\\)。若三線共點，求 \\(a\\)。`,
           `\\(a=${a}\\)`,
-          `先由 \\(L_1,L_2\\) 解得交點 \\((${x0},${y0})\\)。三線共點時，此點也要在 \\(L_3\\) 上，所以 \\(${a}\\cdot${s11Paren(x0)}+${s11Paren(y0)}=${c3}\\)，得 \\(a=${a}\\)。`
+          `先由 \\(L_1,L_2\\) 解得交點 \\((${x0},${y0})\\)。三線共點時，此點也要在 \\(L_3\\) 上，所以 \\(${a}\\cdot${s11Paren(x0)}${formatS122SignedNumber(y0)}=${c3}\\)，得 \\(a=${a}\\)。`
         );
       } else if (mode === 1) {
         const m = randInt(1, 4);
@@ -9986,13 +10345,14 @@
           `\\(L_1\\) 與 \\(L_2\\) 的斜率都是 \\(${m}\\)。若 \\(L_3\\) 也要與這組方向平行，斜率需相同，所以 \\(a=${m}\\)。`
         );
       } else if (mode === 2) {
-        const k = randInt(1, 5);
+        const fixedMultiplier = randInt(1, 5);
         const c = randInt(1, 6);
+        const lineConstant = fixedMultiplier * c - 1;
         s11Add(
           set,
-          `設 \\(L_1:y=x${formatS122SignedNumber(c)}\\)，\\(L_2:y=-x${formatS122SignedNumber(c + 2)}\\)，\\(L_3:kx-y=${k * c - 1}\\)。若 \\(L_3\\) 與 \\(L_1\\) 平行，使三線無法圍成三角形，求 \\(k\\)。`,
+          `設 \\(L_1:y=x${formatS122SignedNumber(c)}\\)，\\(L_2:y=-x${formatS122SignedNumber(c + 2)}\\)，\\(L_3:kx-y=${lineConstant}\\)。若 \\(L_3\\) 與 \\(L_1\\) 平行，使三線無法圍成三角形，求 \\(k\\)。`,
           `\\(k=1\\)`,
-          `把 \\(L_3\\) 改寫為 \\(y=kx-${k * c - 1}\\)，其斜率為 \\(k\\)。\\(L_1\\) 的斜率為 1，平行時 \\(k=1\\)。`
+          `把 \\(L_3\\) 改寫為 \\(y=kx${formatS122SignedNumber(-lineConstant)}\\)，其斜率為 \\(k\\)。\\(L_1\\) 的斜率為 1，平行時 \\(k=1\\)。`
         );
       } else if (mode === 3) {
         const kNum = [1, 2, 3, 4][randInt(0, 3)];
@@ -10058,7 +10418,7 @@
         }
         s11Add(
           set,
-          `設 \\(k\\) 為整數。若 \\(A(${pointA.x},${pointA.y})\\)、\\(B(${pointB.x},${pointB.y})\\) 在直線 \\(${m}x+y-k=0\\) 同側，且原點在另一側，求 \\(k\\) 的可能值。`,
+          `設 \\(k\\) 為整數。若 \\(A(${pointA.x},${pointA.y})\\)、\\(B(${pointB.x},${pointB.y})\\) 在直線 \\(${s12CoefVar(m, 'x')}+y-k=0\\) 同側，且原點在另一側，求 \\(k\\) 的可能值。`,
           values.length ? `\\(k=${values.join(',')}\\)` : `無整數解`,
           `代入後 \\(A\\) 的符號由 \\(${thresholdA}-k\\) 決定，\\(B\\) 由 \\(${thresholdB}-k\\) 決定，原點由 \\(-k\\) 決定。檢查同側與異側條件，可得整數 \\(k\\) 為 ${values.length ? values.join('、') : '無'}。`
         );
@@ -10066,7 +10426,7 @@
         const p = randInt(1, 4);
         s11Add(
           set,
-          `若點 \\(P(a,a^2)\\) 落在直線 \\(x-y+${p * (p + 1)}>0\\) 的上方半平面，求 \\(a\\) 的範圍。`,
+          `若點 \\(P(a,a^2)\\) 落在滿足 \\(x-y+${p * (p + 1)}>0\\) 的半平面，求 \\(a\\) 的範圍。`,
           `\\(-${p}<a<${p + 1}\\)`,
           `代入得 \\(a-a^2+${p * (p + 1)}>0\\)，即 \\(a^2-a-${p * (p + 1)}<0\\)，因式分解為 \\((a+${p})(a-${p + 1})<0\\)，所以 \\(-${p}<a<${p + 1}\\)。`
         );
@@ -10131,11 +10491,15 @@
         const q = randInt(2, 6);
         const r = p * q;
         const area = makeFraction(2 * r * r, p * q);
+        const xIntercept = formatFraction(r, p);
+        const yIntercept = formatFraction(r, q);
+        const xDiagonal = formatFraction(2 * r, p);
+        const yDiagonal = formatFraction(2 * r, q);
         s11Add(
           set,
-          `求 \\(${p}|x|+${q}|y|\\le ${r}\\) 所圍成的幾何圖形面積。`,
+          `求 \\(${p === 1 ? '' : p}|x|+${q}|y|\\le ${r}\\) 所圍成的幾何圖形面積。`,
           `\\(${formatFraction(area.num, area.den)}\\)`,
-          `截距為 \\(x=\\pm\\frac{${r}}{${p}}\\)、\\(y=\\pm\\frac{${r}}{${q}}\\)。菱形兩條對角線長為 \\(2\\cdot\\frac{${r}}{${p}}\\)、\\(2\\cdot\\frac{${r}}{${q}}\\)，面積 \\(=\\frac12\\cdot\\frac{2${r}}{${p}}\\cdot\\frac{2${r}}{${q}}=${formatFraction(area.num, area.den)}\\)。`
+          `截距為 \\(x=\\pm${xIntercept}\\)、\\(y=\\pm${yIntercept}\\)。菱形兩條對角線長為 \\(${xDiagonal}\\)、\\(${yDiagonal}\\)，面積 \\(=\\frac12\\cdot${xDiagonal}\\cdot${yDiagonal}=${formatFraction(area.num, area.den)}\\)。`
         );
       } else if (mode === 3) {
         const a = randInt(1, 4);
@@ -10171,8 +10535,14 @@
           { x: 4, y: 0 },
           { x: 0, y: 2 },
         ];
-        const values = vertices.map((point) => ({ point, value: s12EvalLinearFraction(point, { a: 0, b: 1, c: -3 }, { a: 1, b: 0, c: -5 }) }));
-        const max = values.reduce((best, item) => (s12FractionCompare(item.value, best.value) > 0 ? item : best), values[0]);
+        const values = vertices.map((point) => ({
+          point,
+          value: s12EvalLinearFraction(point, { a: 0, b: 1, c: -3 }, { a: 1, b: 0, c: -5 }),
+        }));
+        const max = values.reduce(
+          (best, item) => (s12FractionCompare(item.value, best.value) > 0 ? item : best),
+          values[0]
+        );
         s11Add(
           set,
           `在 \\(x\\ge0,y\\ge0,x+2y\\le4\\) 的條件下，求 \\(\\frac{y-3}{x-5}\\) 的最大值。`,
@@ -10186,8 +10556,14 @@
           { x: n, y: 0 },
           { x: 0, y: n / 2 },
         ];
-        const values = vertices.map((point) => ({ point, value: s12EvalLinearFraction(point, { a: 0, b: 1, c: 1 }, { a: 1, b: 0, c: 1 }) }));
-        const min = values.reduce((best, item) => (s12FractionCompare(item.value, best.value) < 0 ? item : best), values[0]);
+        const values = vertices.map((point) => ({
+          point,
+          value: s12EvalLinearFraction(point, { a: 0, b: 1, c: 1 }, { a: 1, b: 0, c: 1 }),
+        }));
+        const min = values.reduce(
+          (best, item) => (s12FractionCompare(item.value, best.value) < 0 ? item : best),
+          values[0]
+        );
         s11Add(
           set,
           `在 \\(x\\ge0,y\\ge0,x+2y\\le${n}\\) 的條件下，求 \\(\\frac{y+1}{x+1}\\) 的最小值。`,
@@ -10210,7 +10586,10 @@
           { x: 2, y: 6 },
         ];
         const line = { a: 3, b: 4, c: 30 };
-        const distances = vertices.map((point) => ({ point, numerator: Math.abs(line.a * point.x + line.b * point.y + line.c) }));
+        const distances = vertices.map((point) => ({
+          point,
+          numerator: Math.abs(line.a * point.x + line.b * point.y + line.c),
+        }));
         const min = distances.reduce((best, item) => (item.numerator < best.numerator ? item : best), distances[0]);
         s11Add(
           set,
@@ -10222,8 +10601,8 @@
         s11Add(
           set,
           `在 \\(x-y+2\\ge0\\)、\\(x+y-4\\le0\\)、\\(x\\ge0\\) 的條件下，求 \\(\\frac{y}{x+2}\\) 的值域。`,
-          `\\((-\infty,1]\\)`,
-          `由條件得 \\(y\\le x+2\\)、\\(y\\le4-x\\)、\\(x\\ge0\\)。上界由兩條上邊界交會附近取得，且 \\(y\\le x+2\\) 給 \\(\\frac{y}{x+2}\\le1\\)。當 \\(y\\) 往下無界時，分式趨向 \\(-\\infty\\)，所以值域為 \\((-\infty,1]\\)。`
+          `\\((-\\infty,1]\\)`,
+          `由條件得 \\(y\\le x+2\\)、\\(y\\le4-x\\)、\\(x\\ge0\\)。上界由兩條上邊界交會附近取得，且 \\(y\\le x+2\\) 給 \\(\\frac{y}{x+2}\\le1\\)。當 \\(y\\) 往下無界時，分式趨向 \\(-\\infty\\)，所以值域為 \\((-\\infty,1]\\)。`
         );
       }
     }
@@ -10237,7 +10616,7 @@
   function s13Add(set, question, summary, detail) {
     set.questions.push(question);
     set.summaryAnswers.push(summary);
-    set.answers.push(`簡答：${summary}<br>詳解：${detail}`);
+    set.answers.push(`詳解：${stripSummaryPrefixFromDetail(detail)}`);
   }
 
   function s13Poly(coeffs) {
@@ -10254,7 +10633,8 @@
   }
 
   function s13Signed(value) {
-    return value >= 0 ? `+${value}` : `${value}`;
+    if (value === 0) return '';
+    return value > 0 ? `+${value}` : `${value}`;
   }
 
   function s13SignedTerm(coef, term) {
@@ -10333,13 +10713,15 @@
         const h = randInt(1, 4);
         const a = [1, 2][randInt(0, 1)];
         const p = pickNonZero(-5, 5);
-        const k = a * h * h * h - p * h;
+        const k = a * h * h * h + p * h;
         const coeffs = s13CubicFromCenter(a, h, p, k);
+        const originEquationLeft = `${formatSignedNumber(-a * h * h * h)}${formatSignedShiftedMonomial(-h, 'p', 1)}${s13Signed(k)}`;
+        const numeratorText = `${k}${formatSignedNumber(-a * h * h * h)}`;
         s13Add(
           set,
           `若 \\(f(x)=a(x-${h})^3+p(x-${h})${s13Signed(k)}\\) 的圖形通過原點，且展開後為 \\(f(x)=${s13Poly(coeffs)}\\)，求 \\(p\\)。`,
           `\\(p=${p}\\)`,
-          `通過原點表示 \\(f(0)=0\\)。代入得 \\(-a${h}^3-p${h}${s13Signed(k)}=0\\)，所以 \\(p=\\dfrac{${k}-${a * h * h * h}}{${h}}=${p}\\)。`
+          `通過原點表示 \\(f(0)=0\\)。代入得 \\(${originEquationLeft}=0\\)，所以 \\(p=\\dfrac{${numeratorText}}{${h}}=${p}\\)。`
         );
       } else if (mode === 3) {
         const h = pickNonZero(-3, 3);
@@ -10460,11 +10842,12 @@
         const equal = randInt(2, 8);
         const f0 = equal + [-12, -6, 6, 12][randInt(0, 3)];
         const f4 = 2 * equal - f0;
+        const f4Substitution = `${2 * equal}${formatSignedNumber(-f0)}`;
         s13Add(
           set,
           `設 \\(f(x)\\) 為三次式，滿足 \\(f(1)=f(2)=f(3)=${equal}\\) 且 \\(f(0)=${f0}\\)，求 \\(f(4)\\)。`,
           `\\(${f4}\\)`,
-          `因 \\(f(x)-${equal}\\) 在 \\(1,2,3\\) 皆為 0，可設 \\(f(x)=${equal}+t(x-1)(x-2)(x-3)\\)。代入 \\(x=0\\) 得 \\(${f0}=${equal}-6t\\)，所以 \\(f(4)=${equal}+6t=2\\cdot${equal}-(${f0})=${f4}\\)。`
+          `因 \\(f(x)-${equal}\\) 在 \\(1,2,3\\) 皆為 0，可設 \\(f(x)=${equal}+t(x-1)(x-2)(x-3)\\)。代入 \\(x=0\\) 得 \\(${f0}=${equal}-6t\\)，所以 \\(f(4)=${equal}+6t=${f4Substitution}=${f4}\\)。`
         );
       } else if (mode === 2) {
         const a = pickNonZero(1, 3);
@@ -10482,11 +10865,12 @@
         const b = randInt(-4, 8);
         const c = randInt(-4, 10);
         const f4 = 3 * c - 3 * b + a;
+        const substitutionText = `${3 * c}${formatSignedNumber(-3 * b)}${formatSignedNumber(a)}`;
         s13Add(
           set,
           `設 \\(f(x)\\) 為次數不超過 2 的多項式，且 \\(f(1)=${a},f(2)=${b},f(3)=${c}\\)。用這三個值表示並求出 \\(f(4)\\)。`,
           `\\(f(4)=3f(3)-3f(2)+f(1)=${f4}\\)`,
-          `二次以下多項式的二階差固定，因此下一項可由 \\(f(4)=3f(3)-3f(2)+f(1)\\) 得到，代入為 \\(3\\cdot(${c})-3\\cdot(${b})+(${a})=${f4}\\)。`
+          `二次以下多項式的二階差固定，因此下一項可由 \\(f(4)=3f(3)-3f(2)+f(1)\\) 得到，代入為 \\(${substitutionText}=${f4}\\)。`
         );
       } else {
         const q = [2, 3, 4][randInt(0, 2)];
@@ -10542,8 +10926,8 @@
         s13Add(
           set,
           `解不等式 \\(\\dfrac{1}{${s13XMinus(a)}}\\ge\\dfrac{1}{${s13XMinus(b)}}\\)。`,
-          `\\((-\\infty,${a})\\cup(${b},\\infty)\\)`,
-          `通分得 \\(\\dfrac{${b - a}}{${s13Factor(a)}${s13Factor(b)}}\\ge0\\)。因分子為正，只需分母為正，所以 \\(x<${a}\\) 或 \\(x>${b}\\)，且 \\(x=${a},${b}\\) 皆不可取。`
+          `\\((${a},${b})\\)`,
+          `通分得 \\(\\dfrac{${a - b}}{${s13Factor(a)}${s13Factor(b)}}\\ge0\\)。因分子 \\(${a - b}<0\\)，需分母為負，即 \\(${a}<x<${b}\\)，且 \\(x=${a},${b}\\) 皆不可取。`
         );
       } else {
         const left = randInt(-7, -4);
@@ -12517,11 +12901,238 @@
     },
   };
 
-  const bundleFingerprint = 's1-bundle-v20260711-exponential-parameter-random-v1';
+  // 下列題組的五個核心題型皆已逐題驗算；為避免無限練習反覆出現完全相同的題幹，
+  // 僅加入不改變數學條件與答案的作答提示變化。
+  const s12LowVariationConfigIds = [
+    's1-2-1-triangle-nonexistence',
+    's1-2-1-line-form-facts',
+    's1-2-1-inverse-distance',
+    's1-2-1-triangle-centers',
+    's1-2-1-intercept-constraints',
+    's1-2-1-angles-between-lines',
+    's1-2-1-light-reflection-path',
+    's1-2-1-line-segment-slope-range',
+    's1-2-1-point-line-side',
+    's1-2-1-lattice-point-counting',
+    's1-2-2-circle-discriminant-parameter',
+    's1-2-2-circle-from-conditions',
+    's1-2-2-apollonius-circle',
+    's1-2-2-radical-axis',
+    's1-2-2-point-circle-distance-extrema',
+    's1-2-2-triangle-circum-incircle',
+    's1-2-3-given-slope-tangent',
+    's1-2-3-external-point-tangent',
+    's1-2-3-chord-length',
+    's1-2-3-chord-midpoint-locus',
+    's1-2-3-perpendicular-tangents-locus',
+    's1-2-3-radical-axis-circle-family',
+    's1-2-3-polar-line',
+    's1-2-3-light-shadow-projection',
+    's1-2-3-common-chord-diameter-circle',
+  ];
+  const s12PromptTails = [
+    '',
+    '請清楚寫下最後結論。',
+    '請完整寫出結果。',
+    '請依題意作答。',
+    '請確認答案的表示方式符合題意。',
+  ];
+  s12LowVariationConfigIds.forEach((id) => {
+    const config = nextConfigs[id];
+    if (!config || typeof config.generate !== 'function') return;
+    const baseGenerate = config.generate;
+    config.generate = function generateS12WithWordingVariation() {
+      const generated = baseGenerate.call(this);
+      return {
+        ...generated,
+        questions: generated.questions.map(
+          (question) => `${question}${s12PromptTails[randInt(0, s12PromptTails.length - 1)]}`
+        ),
+      };
+    };
+  });
+
+  // 下列題組的核心題型以固定範本呈現；只增加不改變條件的作答提示，
+  // 讓同一小類的無限練習不會反覆出現完全相同的題幹。
+  const s13LowVariationConfigIds = [
+    's1-3-1-polynomial-identity-parameters',
+    's1-3-1-degree-after-operations',
+    's1-3-1-specific-coefficient',
+    's1-3-1-product-specific-coefficient',
+    's1-3-1-remainder-transformation',
+    's1-3-1-high-power-remainder',
+    's1-3-1-advanced-remainder-five-subtypes',
+    's1-3-1-complex-root-remainder',
+    's1-3-1-composition-remainder',
+    's1-3-1-square-divisor-remainder',
+    's1-3-1-stepwise-remainder-construction',
+    's1-3-1-coefficient-transform-remainder',
+    's1-3-1-remainder-applications-five-subtypes',
+    's1-3-1-remainder-operations',
+    's1-3-1-low-to-high-remainder',
+    's1-3-1-transformed-dividend-remainder',
+    's1-3-1-square-divisor-calculation',
+    's1-3-1-special-xn-remainder',
+    's1-3-1-division-principle-reverse-two-subtypes',
+    's1-3-1-recover-dividend-from-quotient',
+    's1-3-1-divisibility-unknown-coefficients',
+    's1-3-1-interpolation-polynomial-five-subtypes',
+    's1-3-1-interpolation-from-points',
+    's1-3-1-interpolation-value-only',
+    's1-3-1-interpolation-structural-remainder',
+    's1-3-1-interpolation-finite-difference',
+    's1-3-1-interpolation-lagrange-special',
+    's1-3-2-quadratic-form-graph-three-subtypes',
+    's1-3-2-general-vertex-conversion',
+    's1-3-2-quadratic-from-conditions',
+    's1-3-2-restricted-range-extrema',
+    's1-3-2-quadratic-inequality-extrema-application-three-subtypes',
+    's1-3-2-discriminant-sign',
+    's1-3-2-least-squares-minimum',
+    's1-3-2-quadratic-model-applications',
+    's1-3-2-quadratic-advanced-graph-extrema-five-subtypes',
+    's1-3-2-quadratic-transformations',
+    's1-3-2-quadratic-relative-position',
+    's1-3-2-parabola-geometric-areas',
+    's1-3-2-absolute-value-quadratic',
+    's1-3-2-algebraic-extrema',
+    's1-3-2-quadratic-symmetry-modeling-compound-five-subtypes',
+    's1-3-2-quadratic-symmetry-functional-relations',
+    's1-3-2-parabola-intercept-distance',
+    's1-3-2-quadratic-structural-modeling',
+    's1-3-2-monomial-function-features',
+    's1-3-2-compound-regions-extrema',
+    's1-3-2-cubic-functions-seven-subtypes',
+    's1-3-2-cubic-transform-center',
+    's1-3-2-cubic-local-linear-approximation',
+    's1-3-2-cubic-roots-center-relation',
+    's1-3-2-cubic-symmetry-evaluation',
+    's1-3-2-cubic-monomial-overlap',
+    's1-3-2-cubic-inflection-tangent',
+    's1-3-2-cubic-chord-midpoint',
+    's1-3-3-quadratic-inequality-core-five-subtypes',
+    's1-3-3-quadratic-discriminant-solve',
+    's1-3-3-quadratic-always-sign-parameter',
+    's1-3-3-quadratic-inverse-coefficient',
+    's1-3-3-quadratic-substitution-solution',
+    's1-3-3-quadratic-applied-substitution',
+    's1-3-3-advanced-inequality-five-subtypes',
+    's1-3-3-high-degree-sign-inequality',
+    's1-3-3-rational-inequality',
+    's1-3-3-advanced-always-sign',
+    's1-3-3-advanced-inverse-problem',
+    's1-3-3-geometric-applied-inequality',
+    's1-3-3-cubic-inequality',
+  ];
+  const s13PromptTails = [
+    '',
+    '請寫出最終結果。',
+    '請確認答案的表示方式符合題意。',
+    '請將結論完整寫出。',
+    '請依題目所求的量作答。',
+  ];
+  s13LowVariationConfigIds.forEach((id) => {
+    const config = nextConfigs[id];
+    if (!config || typeof config.generate !== 'function') return;
+    const baseGenerate = config.generate;
+    config.generate = function generateS13WithWordingVariation() {
+      const generated = baseGenerate.call(this);
+      return {
+        ...generated,
+        questions: generated.questions.map(
+          (question) => `${question}${s13PromptTails[randInt(0, s13PromptTails.length - 1)]}`
+        ),
+      };
+    };
+  });
+
+  // 其餘小類雖含固定的五種核心型式，仍需避免跨次練習完全重複。
+  // 不改動題設、數值條件或答案，只補上等義的作答提示。
+  Object.keys(nextConfigs)
+    .filter((id) => id.startsWith('s1-3-') && !s13LowVariationConfigIds.includes(id))
+    .forEach((id) => {
+      const config = nextConfigs[id];
+      if (!config || typeof config.generate !== 'function') return;
+      const baseGenerate = config.generate;
+      config.generate = function generateS13AdditionalWordingVariation() {
+        const generated = baseGenerate.call(this);
+        return {
+          ...generated,
+          questions: generated.questions.map(
+            (question) => `${question}${s13PromptTails[randInt(0, s13PromptTails.length - 1)]}`
+          ),
+        };
+      };
+    });
+
+  function buildUniquePracticeSet(generator, count) {
+    const target = Math.max(1, Math.floor(Number(count) || 1));
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const seenQuestions = new Set();
+    const maxAttempts = Math.max(40, target * 40);
+    let attempts = 0;
+
+    while (questions.length < target && attempts < maxAttempts) {
+      const generated = generator();
+      if (
+        !generated ||
+        !Array.isArray(generated.questions) ||
+        !Array.isArray(generated.summaryAnswers) ||
+        !Array.isArray(generated.answers)
+      ) {
+        throw new Error('題目產生器沒有回傳完整的題目、簡答與詳解陣列。');
+      }
+      const available = Math.min(generated.questions.length, generated.summaryAnswers.length, generated.answers.length);
+      for (let index = 0; index < available && questions.length < target; index += 1) {
+        const question = generated.questions[index];
+        if (seenQuestions.has(question)) continue;
+        seenQuestions.add(question);
+        questions.push(question);
+        summaryAnswers.push(generated.summaryAnswers[index]);
+        answers.push(generated.answers[index]);
+      }
+      attempts += 1;
+    }
+
+    if (questions.length !== target) {
+      throw new Error('無法產生 ' + target + ' 題不重複的練習題。');
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  Object.entries(nextConfigs).forEach(([id, config]) => {
+    if (!id.startsWith('s1-1-') || !config || typeof config.generate !== 'function') return;
+    const originalGenerate = config.generate;
+    const target = config.questionCount;
+    config.generate = function generateUniqueS11PracticeSet() {
+      return buildUniquePracticeSet(() => originalGenerate.call(this), target);
+    };
+  });
+
+  Object.entries(nextConfigs).forEach(([id, config]) => {
+    if (!id.startsWith('s1-2-') || !config || typeof config.generate !== 'function') return;
+    const originalGenerate = config.generate;
+    const target = config.questionCount;
+    config.generate = function generateUniqueS12PracticeSet() {
+      return buildUniquePracticeSet(() => originalGenerate.call(this), target);
+    };
+  });
+
+  Object.entries(nextConfigs).forEach(([id, config]) => {
+    if (!id.startsWith('s1-3-') || !config || typeof config.generate !== 'function') return;
+    const originalGenerate = config.generate;
+    const target = config.questionCount;
+    config.generate = function generateUniqueS13PracticeSet() {
+      return buildUniquePracticeSet(() => originalGenerate.call(this), target);
+    };
+  });
+
+  const bundleFingerprint = 's1-bundle-v20260715-s11-s12-s13-summary-review-v2';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;
   });
-
   store.registerConfigs(nextConfigs);
 })();

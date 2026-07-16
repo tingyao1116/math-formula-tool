@@ -1,7 +1,7 @@
 // AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
 // Source: program-db/database/practice-custom-theme-db.json（GUI 自訂主題串）
 // 主題串數：156
-// 最後更新：2026-07-12T03:08:59.224486+00:00
+// 最後更新：2026-07-13T07:00:05.317948+00:00
 window.practiceCustomThemeChainData = [
   {
     "id": "review-junior-book-1-essential",
@@ -165,7 +165,7 @@ window.practiceCustomThemeChainData = [
     ],
     "questionCount": 5,
     "enabled": true,
-    "updatedAt": "2026-07-12T03:08:59.224454+00:00"
+    "updatedAt": "2026-07-13T07:00:05.317910+00:00"
   },
   {
     "id": "review-junior-book-2-essential",

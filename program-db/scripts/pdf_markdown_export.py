@@ -372,7 +372,7 @@ def build_practice_set_question_md(question_text, index: int) -> str:
     questions are effectively single statements, but this still goes through
     ``render_rich_line_md`` so ``[圖:...]`` markers and math delimiters are handled
     the same way as everywhere else."""
-    return f"{index}. {render_rich_line_md(question_text)}"
+    return f"**{index}.** {render_rich_line_md(question_text)}"
 
 
 def build_practice_set_answer_md(summary_answer, detail_answer, index: int, answer_mode: str = "detail") -> list[str]:
@@ -393,13 +393,13 @@ def build_practice_set_answer_md(summary_answer, detail_answer, index: int, answ
     """
     if answer_mode == "simple":
         text = collapse_to_one_line(summary_answer) or extract_simple_answer(detail_answer) or "（未填）"
-        return [f"{index}. {text}"]
+        return [f"**{index}.** {text}"]
     if answer_mode == "both":
         simple_text = collapse_to_one_line(summary_answer) or extract_simple_answer(detail_answer) or "（未填）"
         detail_text = extract_explanation_only(detail_answer) or "（未填）"
-        return [f"{index}. **簡答：** {simple_text}　　**詳解：** {detail_text}"]
+        return [f"**{index}.** **簡答：** {simple_text}　　**詳解：** {detail_text}"]
     detail = render_rich_multiline_md(detail_answer) or collapse_to_one_line(summary_answer) or "（未填）"
-    return [f"{index}. {detail}"]
+    return [f"**{index}.** {detail}"]
 
 
 # Math commands that are only valid inside LaTeX math mode. If any of these show
@@ -517,16 +517,32 @@ def build_practice_sets_markdown(
             lines.append(build_practice_set_question_md(q, idx))
             if gap_mm > 0:
                 lines.append(f"`\\vspace{{{gap_mm}mm}}`{{=latex}}")
-                lines.append("")
+            lines.append("")
 
     def push_answers(practice_set: dict):
         summaries = practice_set.get("summaryAnswers", []) or []
         details = practice_set.get("answers", []) or []
         count = max(len(summaries), len(details))
+        if answer_mode == "simple":
+            inline_parts = []
+            for idx in range(count):
+                summary = summaries[idx] if idx < len(summaries) else ""
+                detail = details[idx] if idx < len(details) else ""
+                answer_line = build_practice_set_answer_md(summary, detail, idx + 1, answer_mode)[0]
+                prefixes = (f"**{idx + 1}.** ", f"{idx + 1}. ")
+                answer_text = answer_line
+                for prefix in prefixes:
+                    if answer_text.startswith(prefix):
+                        answer_text = answer_text[len(prefix):]
+                        break
+                inline_parts.append(f"**{idx + 1}.** {answer_text}")
+            lines.append("　　".join(inline_parts) if inline_parts else "（目前沒有答案）")
+            return
         for idx in range(count):
             summary = summaries[idx] if idx < len(summaries) else ""
             detail = details[idx] if idx < len(details) else ""
             lines.extend(build_practice_set_answer_md(summary, detail, idx + 1, answer_mode))
+            lines.append("")
 
     if export_order == "interleaved":
         for practice_set in generated_sets:

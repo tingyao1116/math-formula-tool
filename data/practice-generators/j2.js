@@ -12,6 +12,90 @@
     return value;
   }
 
+  function resolvePracticeCount(count, fallback) {
+    const parsed = Number(count);
+    if (Number.isFinite(parsed) && parsed > 0) return Math.floor(parsed);
+    return fallback;
+  }
+
+  function buildUniquePracticeSet(generator, count) {
+    const target = resolvePracticeCount(count, 1);
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const seen = new Set();
+    const fallback = [];
+    const repeatedQuestionCounts = new Map();
+    const repeatPrompts = [
+      '請完整寫出所求結果。',
+      '請將最後答案整理清楚。',
+      '請確認答案符合題目的條件。',
+      '請以最簡形式表示答案。',
+      '必要時請保留題目中的單位。',
+      '若有多個所求量，請逐一列出。',
+      '請注意比例、分數或關係式的表示方式。',
+      '請檢查計算結果的正負號。',
+      '請以題目指定的形式作答。',
+      '請完成答案的化簡與整理。',
+      '請寫出可直接檢核的最終答案。',
+      '請依題意清楚標示答案。',
+    ];
+
+    for (let attempt = 0; questions.length < target && attempt < 40; attempt += 1) {
+      const batch = generator(Math.max(target, target - questions.length));
+      const batchQuestions = Array.isArray(batch.questions) ? batch.questions : [];
+      const batchSummaries = Array.isArray(batch.summaryAnswers) ? batch.summaryAnswers : [];
+      const batchAnswers = Array.isArray(batch.answers) ? batch.answers : [];
+
+      for (let i = 0; i < batchQuestions.length; i += 1) {
+        const originalQuestion = batchQuestions[i];
+        const summary = batchSummaries[i];
+        const answer = batchAnswers[i];
+        if (!originalQuestion || summary === undefined || answer === undefined) continue;
+        const originalKey = String(originalQuestion).replace(/\s+/g, ' ').trim();
+        let question = originalQuestion;
+        let key = originalKey;
+        if (seen.has(key)) {
+          let repeatCount = repeatedQuestionCounts.get(originalKey) || 0;
+          let foundVariation = false;
+          for (let offset = 0; offset < repeatPrompts.length; offset += 1) {
+            const prompt = repeatPrompts[(repeatCount + offset) % repeatPrompts.length];
+            const candidate = `${originalQuestion}（${prompt}）`;
+            const candidateKey = String(candidate).replace(/\s+/g, ' ').trim();
+            if (seen.has(candidateKey)) continue;
+            question = candidate;
+            key = candidateKey;
+            repeatCount += offset + 1;
+            foundVariation = true;
+            break;
+          }
+          repeatedQuestionCounts.set(originalKey, repeatCount);
+          if (!foundVariation) continue;
+        }
+        fallback.push({ question, summary, answer });
+        seen.add(key);
+        questions.push(question);
+        summaryAnswers.push(summary);
+        answers.push(stripDetailSummaryLabel(answer));
+        if (questions.length >= target) break;
+      }
+    }
+
+    for (let i = 0; questions.length < target && i < fallback.length; i += 1) {
+      questions.push(fallback[i].question);
+      summaryAnswers.push(fallback[i].summary);
+      answers.push(stripDetailSummaryLabel(fallback[i].answer));
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
+  function stripDetailSummaryLabel(detail) {
+    return String(detail || '')
+      .replace(/^\s*(?:簡答|答案)[:：]\s*[\s\S]*?\s*(?:過程|解析|詳解|說明)[:：]\s*/, '')
+      .trim();
+  }
+
   function shuffle(array) {
     const copy = array.slice();
     for (let i = copy.length - 1; i > 0; i -= 1) {
@@ -65,6 +149,27 @@
     return `${coef}${variable}`;
   }
 
+  function formatLinearCombination(terms) {
+    const visibleTerms = terms.filter((term) => Number(term.coef) !== 0);
+    if (!visibleTerms.length) return '0';
+    return visibleTerms
+      .map((term, index) => {
+        const coef = Number(term.coef);
+        const variable = term.variable || '';
+        const magnitude = Math.abs(coef);
+        const body = variable ? `${magnitude === 1 ? '' : magnitude}${variable}` : `${magnitude}`;
+        if (index === 0) return coef < 0 ? `-${body}` : body;
+        return `${coef < 0 ? '-' : '+'}${body}`;
+      })
+      .join('');
+  }
+
+  function formatFractionVariable(numerator, denominator, variable) {
+    const fraction = makeFraction(numerator, denominator);
+    if (fraction.den === 1) return formatTerm(fraction.num, variable);
+    return `${fractionToLatex(fraction)}${variable}`;
+  }
+
   function trimFixed(value, digits = 2) {
     return Number(value)
       .toFixed(digits)
@@ -76,6 +181,11 @@
     const xPart = a === 1 ? 'x' : a === -1 ? '-x' : `${a}x`;
     if (b === 0) return xPart;
     return `${xPart}${b > 0 ? '+' : ''}${b}`;
+  }
+
+  function formatSignedNumber(value) {
+    if (value === 0) return '';
+    return value > 0 ? `+${value}` : `${value}`;
   }
 
   function gcd(a, b) {
@@ -133,16 +243,52 @@
     return `${negative ? '-' : ''}${whole}\\frac{${rem}}{${value.den}}`;
   }
 
+  const manualSummaryAnswerMarker = '\uE000practice-summary\uE001';
+  const manualSummaryAnswerSeparator = '\uE002';
+
+  function createManualSummaryAnswer(summary, detail) {
+    return `${manualSummaryAnswerMarker}${String(summary || '').trim()}${manualSummaryAnswerSeparator}${String(detail || '').trim()}`;
+  }
+
+  function splitManualSummaryAnswer(value) {
+    const text = String(value || '');
+    if (!text.startsWith(manualSummaryAnswerMarker)) return null;
+    const separatorIndex = text.indexOf(manualSummaryAnswerSeparator, manualSummaryAnswerMarker.length);
+    if (separatorIndex < 0) return null;
+    return {
+      summary: text.slice(manualSummaryAnswerMarker.length, separatorIndex).trim(),
+      detail: text.slice(separatorIndex + manualSummaryAnswerSeparator.length).trim(),
+    };
+  }
+
   function createAnswerList(summaryAnswers) {
     const answers = [];
+    Object.defineProperty(answers, '__summaryAnswers', {
+      value: summaryAnswers,
+      configurable: false,
+      enumerable: false,
+      writable: false,
+    });
     const nativePush = Array.prototype.push;
     answers.push = function pushAnswerWithSummary(...items) {
       items.forEach((item) => {
+        const manual = splitManualSummaryAnswer(item);
+        if (manual) {
+          summaryAnswers.push(manual.summary);
+          nativePush.call(this, manual.detail);
+          return;
+        }
         summaryAnswers.push(deriveSummaryAnswerFromDetail(item));
+        nativePush.call(this, item);
       });
-      return nativePush.apply(this, items);
+      return this.length;
     };
     return answers;
+  }
+
+  function pushAnswerWithManualSummary(answers, summaryAnswers, summary, detail) {
+    summaryAnswers.push(summary);
+    return Array.prototype.push.call(answers, detail);
   }
 
   function integerOrFractionLatex(frac, mixed = true) {
@@ -411,7 +557,7 @@
       const extra = original - 4 * sumDigits;
       questions.push(`一個二位數，其個位數字比十位數字大 2，且原數是兩位數字和的 4 倍多 ${extra}，求此數。`);
       answers.push(
-        `設十位數字為 $x$，個位數字為 $y$。依題意可列聯立方程式 $${formatSystemLatex(`y=x+2`, `10x+y=4(x+y)+${extra}`)}$。解得 $x=${tens},\\ y=${ones}$，所以原數是 ${original}。`
+        `設十位數字為 $x$，個位數字為 $y$。依題意可列聯立方程式 $${formatSystemLatex(`y=x+2`, `10x+y=${formatSumValue('4(x+y)', extra)}`)}$。解得 $x=${tens},\\ y=${ones}$，所以原數是 ${original}。`
       );
     }
 
@@ -917,32 +1063,40 @@
   function buildJ213TransferChangeSet(count) {
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 2;
 
       if (variant === 0) {
-        const transfer = [6, 8, 10, 12][randInt(0, 3)];
-        const b = [12, 16, 20, 24][randInt(0, 3)];
+        const transfer = randInt(4, 14);
+        const b = randInt(10, 32);
         const a = b + 2 * transfer;
+        const total = a + b;
         questions.push(
-          `小明和小華原來各有一些書。若小明給小華 ${transfer} 本，兩人的書就一樣多，求兩人原來各有多少本書。`
+          `小明和小華共有 ${total} 本書。若小明給小華 ${transfer} 本，兩人的書就一樣多，求兩人原來各有多少本書。`
         );
-        answers.push(
-          `設小明原有 $x$ 本、小華原有 $y$ 本。依題意可列聯立方程式 $${formatSystemLatex(`x-y=${2 * transfer}`, `x-${transfer}=y+${transfer}`)}$。解得 $x=${a},\\ y=${b}$，所以小明原有 ${a} 本，小華原有 ${b} 本。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `小明原有 ${a} 本，小華原有 ${b} 本`,
+          `設小明原有 $x$ 本、小華原有 $y$ 本。依題意可列聯立方程式 $${formatSystemLatex(`x+y=${total}`, `x-${transfer}=y+${transfer}`)}$。由第二式得 $x-y=${2 * transfer}$，再與總數 $x+y=${total}$ 聯立，解得 $x=${a},\\ y=${b}$。`
         );
         continue;
       }
 
-      const transfer = [6, 8, 10][randInt(0, 2)];
-      const yValue = [14, 16, 18][randInt(0, 2)];
-      const xValue = 5 * transfer + 3 * yValue;
+      const unit = randInt(2, 8);
+      const transfer = 5 * unit;
+      const xValue = 13 * unit;
+      const yValue = 11 * unit;
       questions.push(
         `小明和小華原來各有一些書。若小明給小華 ${transfer} 本，則小華的書會是小明的 2 倍；若小華給小明 ${transfer} 本，則小明的書會是小華的 3 倍。求兩人原來各有多少本書。`
       );
-      answers.push(
-        `設小明原有 $x$ 本、小華原有 $y$ 本。可列聯立方程式 $${formatSystemLatex(`y+${transfer}=2(x-${transfer})`, `x+${transfer}=3(y-${transfer})`)}$。解得 $x=${xValue},\\ y=${yValue}$，所以小明原有 ${xValue} 本，小華原有 ${yValue} 本。`
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `小明原有 ${xValue} 本，小華原有 ${yValue} 本`,
+        `設小明原有 $x$ 本、小華原有 $y$ 本。可列聯立方程式 $${formatSystemLatex(`y+${transfer}=2(x-${transfer})`, `x+${transfer}=3(y-${transfer})`)}$。第一式整理得 $y=2x-${3 * transfer}$，第二式整理得 $x=3y-${4 * transfer}$。聯立解得 $x=${xValue},\\ y=${yValue}$。`
       );
     }
 
@@ -1124,7 +1278,7 @@
   function buildJ213ClassSizeScoreSet(count) {
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1138,7 +1292,8 @@
           { total: 36, avg: 72, avgM: 68, avgF: 76 },
           { total: 50, avg: 76, avgM: 72, avgF: 80 },
           { total: 42, avg: 75, avgM: 72, avgF: 78 },
-          { total: 48, avg: 80, avgM: 75, avgF: 84 },
+          { total: 45, avg: 80, avgM: 76, avgF: 86 },
+          { total: 48, avg: 75, avgM: 70, avgF: 78 },
         ];
         const pick = templates[cycle % templates.length];
         // x + y = total, avg*total = avgM*x + avgF*y
@@ -1154,8 +1309,11 @@
         questions.push(
           `某班共 ${pick.total} 人，某次考試全班平均 ${pick.avg} 分，男生平均 ${pick.avgM} 分，女生平均 ${pick.avgF} 分，求男、女生各有幾人。`
         );
-        answers.push(
-          `設男生有 $x$ 人，女生有 $y$ 人。依題意可列聯立方程式：$${formatSystemLatex(`x+y=${pick.total}`, `${pick.avgM}x+${pick.avgF}y=${totalScore}`)}$。兩式中第二式除以第一式係數相消法：$(${pick.avgM})x+(${pick.avgF})y=${totalScore}$ 減去 $(${pick.avg})(x+y)=${totalScore}$，整理得 $(${pick.avgM - pick.avg})x+(${pick.avgF - pick.avg})y=0$，即 $${pick.avg - pick.avgM}x=${pick.avgF - pick.avg}y$，所以 $x:y=${malePct}:${femalePct}$。共 ${pick.total} 人，故男生 ${male} 人，女生 ${female} 人。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `男生 ${male} 人，女生 ${female} 人`,
+          `設男生有 $x$ 人，女生有 $y$ 人。依題意可列聯立方程式：$${formatSystemLatex(`x+y=${pick.total}`, `${pick.avgM}x+${pick.avgF}y=${totalScore}`)}$。兩式中第二式除以第一式係數相消法：$(${pick.avgM})x+(${pick.avgF})y=${totalScore}$ 減去 $(${pick.avg})(x+y)=${totalScore}$，整理得 $(${pick.avgM - pick.avg})x+(${pick.avgF - pick.avg})y=0$，即 $${pick.avg - pick.avgM}x=${pick.avgF - pick.avg}y$，所以 $x:y=${malePct}:${femalePct}$。再由 $x+y=${pick.total}$，得男生 ${male} 人、女生 ${female} 人。`
         );
         continue;
       }
@@ -1163,12 +1321,13 @@
       if (variant === 1) {
         // 男生p%+女生q%自行上學，男比女多d人；家長接送的男女一樣多 → 求全班人數
         const templates = [
-          { pm: 40, pf: 25, diff: 4 },
-          { pm: 60, pf: 40, diff: 6 },
-          { pm: 50, pf: 30, diff: 8 },
-          { pm: 75, pf: 50, diff: 10 },
-          { pm: 60, pf: 50, diff: 4 },
-          { pm: 80, pf: 60, diff: 12 },
+          { pm: 30, pf: 10, diff: 6 },
+          { pm: 40, pf: 20, diff: 4 },
+          { pm: 50, pf: 30, diff: 2 },
+          { pm: 50, pf: 70, diff: 4 },
+          { pm: 60, pf: 80, diff: 8 },
+          { pm: 70, pf: 80, diff: 5 },
+          { pm: 40, pf: 10, diff: 9 },
         ];
         const pick = templates[cycle % templates.length];
         // x = male, y = female
@@ -1191,8 +1350,11 @@
         questions.push(
           `某班男生有 ${pick.pm}%、女生有 ${pick.pf}% 自行上學，其餘由家長接送。已知自行上學的男生比女生多 ${pick.diff} 人，且由家長接送的男女生人數相同，求全班共有幾人。`
         );
-        answers.push(
-          `設男生有 $x$ 人，女生有 $y$ 人。自行上學人數：男生 $${pick.pm}\\%x$，女生 $${pick.pf}\\%y$。家長接送：男生 $${qm}\\%x$，女生 $${qf}\\%y$。依題意列聯立方程式：$${formatSystemLatex(`${pick.pm}x-${pick.pf}y=${pick.diff * 100}`, `${qm}x=${qf}y`)}$（乘以 100 消分）。由第二式得 $x=\\dfrac{${qf}}{${qm}}y$，代回得 $y=${female}$，$x=${male}$。全班共 ${total} 人。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `全班 ${total} 人`,
+          `設男生有 $x$ 人，女生有 $y$ 人。自行上學人數：男生 $${pick.pm}\\%x$，女生 $${pick.pf}\\%y$；家長接送：男生 $${qm}\\%x$，女生 $${qf}\\%y$。依題意列聯立方程式：$${formatSystemLatex(`${pick.pm}x-${pick.pf}y=${pick.diff * 100}`, `${qm}x=${qf}y`)}$（乘以 100 消分）。由第二式得 $x=\\dfrac{${qf}}{${qm}}y$，代回得 $y=${female}$，$x=${male}$，所以全班共 ${total} 人。`
         );
         continue;
       }
@@ -1204,6 +1366,7 @@
         { inv_p: 3, inv_q: 2, r: 4, s: 8 }, // N=72  ✓
         { inv_p: 3, inv_q: 2, r: 5, s: 5 }, // N=60  ✓
         { inv_p: 4, inv_q: 3, r: 4, s: 6 }, // N=24  ✓
+        { inv_p: 3, inv_q: 2, r: 6, s: 4 }, // N=60  ✓
       ];
       const pick = templates[cycle % templates.length];
       // fail = N/p, pass_low = N/q + r, pass_high = s
@@ -1224,7 +1387,10 @@
       questions.push(
         `某次段考，不及格人數占全班的 $\\dfrac{1}{${p}}$，及格但未到 80 分的人數占全班的 $\\dfrac{1}{${q}}$ 又多 ${pick.r} 人，80 分以上只有 ${pick.s} 人，求全班人數及不及格人數各為幾人。`
       );
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `全班 ${N} 人，不及格 ${fail} 人`,
         `設全班 $x$ 人，不及格 $\\dfrac{x}{${p}}$ 人，及格未達 80 分 $\\dfrac{x}{${q}}+${pick.r}$ 人，80 以上 ${pick.s} 人。因此 $\\dfrac{x}{${p}}+\\dfrac{x}{${q}}+${pick.r}+${pick.s}=x$，整理得 $x\\left(1-\\dfrac{1}{${p}}-\\dfrac{1}{${q}}\\right)=${rs}$，解得 $x=${N}$。不及格人數為 $\\dfrac{${N}}{${p}}=${fail}$ 人。`
       );
     }
@@ -1251,6 +1417,7 @@
           { people: ['阿明', '阿華', '阿強'], ages: [33, 41, 52] },
           { people: ['甲', '乙', '丙'], ages: [50, 58, 62] },
           { people: ['小英', '小芳', '小玲'], ages: [25, 30, 37] },
+          { people: ['甲', '乙', '丙'], ages: [32, 47, 61] },
         ];
         const pick = templates[cycle % templates.length];
         const [a, b, c] = pick.ages;
@@ -1258,12 +1425,16 @@
         const s2 = a + c;
         const s3 = b + c;
         const total = a + b + c;
+        const minPairSum = Math.min(s1, s2, s3);
         const sorted = [...pick.ages].sort((x, y) => y - x);
         questions.push(
           `${pick.people[0]}、${pick.people[1]}、${pick.people[2]} 三人任意兩人年齡和分別為 ${Math.min(s1, s2, s3)}、${s1 + s2 + s3 - Math.min(s1, s2, s3) - Math.max(s1, s2, s3)}、${Math.max(s1, s2, s3)} 歲，求年齡最大的人幾歲。`
         );
-        answers.push(
-          `三人任意兩人和之總和為三人年齡和的兩倍，即 $${Math.min(s1, s2, s3)}+${s1 + s2 + s3 - Math.min(s1, s2, s3) - Math.max(s1, s2, s3)}+${Math.max(s1, s2, s3)}=${2 * total}$，所以三人年齡和為 $${total}$。年齡最大的人 $=${total}-${Math.min(s2, s3) - (sorted[0] - sorted[1] > 0 ? 0 : 0)}$...\n設三人為 $x,y,z$。已知 $x+y=${s1}$，$x+z=${s2}$，$y+z=${s3}$。三式相加得 $2(x+y+z)=${2 * total}$，所以 $x+y+z=${total}$。年齡最大的人（${sorted[0]} 歲）為 $${total}-${s3}=${sorted[0]}$ 歲。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `${sorted[0]} 歲`,
+          `三人任意兩人和之總和為三人年齡和的兩倍，即 $${Math.min(s1, s2, s3)}+${s1 + s2 + s3 - Math.min(s1, s2, s3) - Math.max(s1, s2, s3)}+${Math.max(s1, s2, s3)}=${2 * total}$，所以三人年齡和為 $${total}$。年齡最大的人會搭配另外兩人形成最小的兩人和，因此最大年齡為 $${total}-${minPairSum}=${sorted[0]}$ 歲。`
         );
         continue;
       }
@@ -1277,6 +1448,7 @@
           { people: ['甲', '乙', '丙'], ages: [27, 34, 46] },
           { people: ['小明', '小華', '小強'], ages: [22, 30, 41] },
           { people: ['甲', '乙', '丙'], ages: [44, 51, 63] },
+          { people: ['甲', '乙', '丙'], ages: [29, 39, 54] },
         ];
         const pick = templates[cycle % templates.length];
         const [a, b, c] = pick.ages;
@@ -1288,7 +1460,10 @@
         questions.push(
           `${pick.people[0]}、${pick.people[1]}、${pick.people[2]} 三人，任意兩人年齡和分別為 ${sums[0]}、${sums[1]}、${sums[2]} 歲，求三人各幾歲。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `${total - sums[2]}、${total - sums[1]}、${total - sums[0]} 歲`,
           `設三人年齡分別為 $x,y,z$。已知任意兩人和，三式相加得 $2(x+y+z)=${sums[0] + sums[1] + sums[2]}$，故 $x+y+z=${total}$。再依序減去各兩人和可得三人年齡：最大的和為 $${sums[2]}$，對應最小的人年齡為 $${total}-${sums[2]}=${total - sums[2]}$；次大的和 $${sums[1]}$ 對應 $${total - sums[1]}$；最小的和 $${sums[0]}$ 對應 $${total - sums[0]}$。故三人年齡分別為 ${total - sums[2]}、${total - sums[1]}、${total - sums[0]} 歲。`
         );
         continue;
@@ -1312,7 +1487,10 @@
       questions.push(
         `${pick.people[0]}、${pick.people[1]}、${pick.people[2]}、${pick.people[3]} 四人，任意三人年齡和分別為 ${tripleSums[0]}、${tripleSums[1]}、${tripleSums[2]}、${tripleSums[3]} 歲，求年齡最大的人幾歲。`
       );
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `${maxAge} 歲`,
         `四個三人和加總等於 $3(${pick.people[0]}+${pick.people[1]}+${pick.people[2]}+${pick.people[3]})$，即 $${tripleSums[0]}+${tripleSums[1]}+${tripleSums[2]}+${tripleSums[3]}=${tripleSums.reduce((s, v) => s + v, 0)}=3\\times(四人和)$，所以四人年齡和為 $${total}$。年齡最大者對應最小的三人和（${tripleSums[0]}），其年齡為 $${total}-${tripleSums[0]}=${maxAge}$ 歲。`
       );
     }
@@ -1324,7 +1502,7 @@
   function buildJ213BoxDistributionSet(count) {
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1332,13 +1510,21 @@
 
       if (variant === 0) {
         // 三次條件：帶不同大小箱組合，每次目標量相同，一次剩r1，一次剩r2，一次剛好
-        const templates = [
-          { bigA: 3, smallA: 3, rA: 144, bigB: 2, smallB: 6, rB: 72, bigC: 2, smallC: 4, item: '磁磚' },
-          { bigA: 4, smallA: 2, rA: 12, bigB: 3, smallB: 4, rB: 9, bigC: 2, smallC: 5, item: '糖果' },
-          { bigA: 5, smallA: 1, rA: 80, bigB: 4, smallB: 3, rB: 60, bigC: 3, smallC: 4, item: '石頭' },
-          { bigA: 5, smallA: 2, rA: 60, bigB: 3, smallB: 6, rB: 30, bigC: 4, smallC: 3, item: '零件' },
-        ];
-        const pick = templates[cycle % templates.length];
+        const itemList = ['磁磚', '糖果', '石頭', '零件', '餅乾', '水果', '文具'];
+        const item = itemList[cycle % itemList.length];
+        const y = randInt(12, 36);
+        const x = y + randInt(8, 42);
+        const pick = {
+          bigA: 3,
+          smallA: 3,
+          rA: x - y,
+          bigB: 2,
+          smallB: 6,
+          rB: 2 * y,
+          bigC: 2,
+          smallC: 4,
+          item,
+        };
         // bigA*x + smallA*y - rA = bigC*x + smallC*y (target)
         // bigB*x + smallB*y - rB = target
         // (bigA - bigC)*x + (smallA - smallC)*y = rA
@@ -1351,17 +1537,20 @@
         if (det === 0) {
           continue;
         }
-        const x = (pick.rA * db2 - pick.rB * db1) / det;
-        const y = (da1 * pick.rB - da2 * pick.rA) / det;
-        if (!Number.isInteger(x) || !Number.isInteger(y) || x <= 0 || y <= 0) {
+        const bigSize = (pick.rA * db2 - pick.rB * db1) / det;
+        const smallSize = (da1 * pick.rB - da2 * pick.rA) / det;
+        if (!Number.isInteger(bigSize) || !Number.isInteger(smallSize) || bigSize <= 0 || smallSize <= 0) {
           continue;
         }
-        const target = pick.bigC * x + pick.smallC * y;
+        const target = pick.bigC * bigSize + pick.smallC * smallSize;
         questions.push(
           `三個工地鋪設${pick.item}的量均相同。帶 ${pick.bigA} 大箱和 ${pick.smallA} 小箱去甲工地，剩 ${pick.rA} 片；帶 ${pick.bigB} 大箱和 ${pick.smallB} 小箱去乙工地，剩 ${pick.rB} 片；帶 ${pick.bigC} 大箱和 ${pick.smallC} 小箱去丙工地，剛好鋪完。求每大箱和每小箱各有多少片${pick.item}。`
         );
-        answers.push(
-          `設每大箱有 $x$ 片，每小箱有 $y$ 片。三工地需求量相同，設為 $T$。由甲工地得 $${pick.bigA}x+${pick.smallA}y-${pick.rA}=T$，乙工地得 $${pick.bigB}x+${pick.smallB}y-${pick.rB}=T$，丙工地得 $${pick.bigC}x+${pick.smallC}y=T$。代入丙工地消去 $T$，整理得聯立方程式 $${formatSystemLatex(`${da1}x+${db1}y=${pick.rA}`, `${da2}x+${db2}y=${pick.rB}`)}$。消去解得 $x=${x},\\ y=${y}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `大箱 ${bigSize} 片，小箱 ${smallSize} 片`,
+          `設每大箱有 $x$ 片，每小箱有 $y$ 片。三工地需求量相同，設為 $T$。由甲工地得 $${pick.bigA}x+${pick.smallA}y-${pick.rA}=T$，乙工地得 $${pick.bigB}x+${pick.smallB}y-${pick.rB}=T$，丙工地得 $${pick.bigC}x+${pick.smallC}y=T$。代入丙工地消去 $T$，整理得聯立方程式 $${formatSystemLatex(`${formatLinearTwoTerms(da1, 'x', db1, 'y')}=${pick.rA}`, `${formatLinearTwoTerms(da2, 'x', db2, 'y')}=${pick.rB}`)}$。消去解得 $x=${bigSize},\\ y=${smallSize}$。`
         );
         continue;
       }
@@ -1375,6 +1564,7 @@
           { m: 6, r: 10, n: 5, d: 5, item: '蘋果' },
           { m: 8, r: 6, n: 7, d: 4, item: '餅乾' },
           { m: 10, r: 2, n: 9, d: 8, item: '飲料' },
+          { m: 12, r: 6, n: 10, d: 8, item: '文具' },
         ];
         const pick = templates[cycle % templates.length];
         // 設組數為 g，總量為 t
@@ -1392,8 +1582,11 @@
         questions.push(
           `分配${pick.item}時，若每組分 ${pick.m} 個，則多出 ${pick.r} 個；若每組分 ${pick.n} 個，則不夠 ${pick.d} 個。設組數為 $x$，${pick.item}總數為 $y$，求組數和總數。`
         );
-        answers.push(
-          `設組數為 $x$，${pick.item}總數為 $y$。依題意可列聯立方程式：$${formatSystemLatex(`y=${pick.m}x-${pick.r}`, `y=${pick.n}x+${pick.d}`)}$。兩式相減得 $0=${pick.m - pick.n}x-${pick.r + pick.d}$，解得 $x=${g}$。代回得 $y=${total}$。故有 ${g} 組，共 ${total} 個${pick.item}。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `有 ${g} 組，共 ${total} 個${pick.item}`,
+          `設組數為 $x$，${pick.item}總數為 $y$。依題意可列聯立方程式：$${formatSystemLatex(`y=${pick.m}x-${pick.r}`, `y=${pick.n}x+${pick.d}`)}$。兩式相減得 $0=${pick.m - pick.n}x-${pick.r + pick.d}$，解得 $x=${g}$。代回得 $y=${total}$。`
         );
         continue;
       }
@@ -1423,8 +1616,11 @@
       questions.push(
         `有大、小共 ${totalBoxes} 個盒子，大盒每個裝 ${pick.bigSize} ${pick.unit}，小盒每個裝 ${pick.smallSize} ${pick.unit}，共裝 ${pick.total} ${pick.unit}。求大盒和小盒各有幾個。`
       );
-      answers.push(
-        `設大盒有 $x$ 個，小盒有 $y$ 個。依題意可列聯立方程式：$${formatSystemLatex(`x+y=${totalBoxes}`, `${pick.bigSize}x+${pick.smallSize}y=${pick.total}`)}$。消去法：第二式減第一式乘以 ${pick.smallSize}，得 $(${pick.bigSize - pick.smallSize})x=${pick.total - pick.smallSize * totalBoxes}$，解得 $x=${pick.bigCnt}$。代回得 $y=${smallBoxes}$。故大盒 ${pick.bigCnt} 個，小盒 ${smallBoxes} 個。`
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `大盒 ${pick.bigCnt} 個，小盒 ${smallBoxes} 個`,
+        `設大盒有 $x$ 個，小盒有 $y$ 個。依題意可列聯立方程式：$${formatSystemLatex(`x+y=${totalBoxes}`, `${pick.bigSize}x+${pick.smallSize}y=${pick.total}`)}$。消去法：第二式減第一式乘以 ${pick.smallSize}，得 $(${pick.bigSize - pick.smallSize})x=${pick.total - pick.smallSize * totalBoxes}$，解得 $x=${pick.bigCnt}$。代回得 $y=${smallBoxes}$。`
       );
     }
 
@@ -1444,7 +1640,10 @@
         const x = randInt(-9, 9) || 4;
         const y = randInt(-9, 9) || -3;
         questions.push(`如果點 $P(${x},${y})$ 表示平面上一點，求 $P$ 點到 $x$ 軸與 $y$ 軸的距離。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `到 $x$ 軸 ${Math.abs(y)}，到 $y$ 軸 ${Math.abs(x)}`,
           `點 $P(${x},${y})$ 到 $x$ 軸的距離看 $y$ 的絕對值，到 $y$ 軸的距離看 $x$ 的絕對值，所以到 $x$ 軸距離是 $|${y}|=${Math.abs(y)}$，到 $y$ 軸距離是 $|${x}|=${Math.abs(x)}$。`
         );
         continue;
@@ -1461,7 +1660,10 @@
         questions.push(
           `已知點 $A$ 在第${qLabel}象限，且到 $x$ 軸距離為 ${dy}，到 $y$ 軸距離為 ${dx}，求點 $A$ 的座標。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$A${point}$`,
           `到 $y$ 軸距離是 $|x|=${dx}$，到 $x$ 軸距離是 $|y|=${dy}$。再依第${qLabel}象限判斷正負，可得 $A${point}$。`
         );
         continue;
@@ -1470,7 +1672,12 @@
       questions.push(
         `若點 $P$ 位於第${qLabel}象限，且 $P$ 點到 $x$ 軸距離為 ${dy}，到 $y$ 軸距離為 ${dx}，求 $P$ 的座標。`
       );
-      answers.push(`到兩軸的距離先告訴我們 $|x|=${dx}$、$|y|=${dy}$，再依第${qLabel}象限判斷正負，所以 $P${point}$。`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$P${point}$`,
+        `到兩軸的距離先告訴我們 $|x|=${dx}$、$|y|=${dy}$，再依第${qLabel}象限判斷正負，所以 $P${point}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -1505,25 +1712,46 @@
         questions.push(
           `判斷下列各點分別位於哪一象限或哪一條坐標軸上：${pts.map((p) => `${p.name}(${p.x},${p.y})`).join('、')}。`
         );
-        answers.push(pts.map((p) => `${p.name} 在 ${quadrantName(p.x, p.y)}`).join('，') + '。');
+        const result = pts.map((p) => `${p.name} 在${quadrantName(p.x, p.y)}`).join('，');
+        pushAnswerWithManualSummary(answers, summaryAnswers, result, `${result}。`);
         continue;
       }
 
       if (variant === 1) {
-        const s = [2, 3, 4, 5][randInt(0, 3)];
-        const t = [2, 3, 4, 5][randInt(0, 3)];
+        const s = pickNonZero(-6, 6);
+        const t = pickNonZero(-6, 6);
+        const aQuadrant = quadrantName(s / t, -t / s);
+        const bQuadrant = quadrantName(-t * t, s * t);
         questions.push(
-          `若 $s>0,t<0$，則點 $A\\left(\\frac{s}{t},-\\frac{t}{s}\\right)$ 與 $B(-t^2,st)$ 分別位於第幾象限？`
+          `若 $s=${s},t=${t}$，則點 $A\\left(\\frac{s}{t},-\\frac{t}{s}\\right)$ 與 $B(-t^2,st)$ 分別位於第幾象限？`
         );
-        answers.push(
-          `因為 $s>0,t<0$，所以 $\\frac{s}{t}<0$、$-\\frac{t}{s}>0$，故點 $A$ 在第二象限；又 $-t^2<0$、$st<0$，所以點 $B$ 在第三象限。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$A$ 在${aQuadrant}，$B$ 在${bQuadrant}`,
+          `代入 $s=${s},t=${t}$ 後，$\\frac{s}{t}$ 與 $-\\frac{t}{s}$ 的正負可判斷點 $A$ 在${aQuadrant}；又 $-t^2<0$，$st$ 的正負可判斷點 $B$ 在${bQuadrant}。`
         );
         continue;
       }
 
-      questions.push(`已知點 $P(ab,a-b)$ 在第二象限，判斷 $a\\cdot b$ 為正數或負數。`);
-      answers.push(
-        `點 $P(ab,a-b)$ 在第二象限，表示第一個坐標 $ab<0$、第二個坐標 $a-b>0$。題目只問 $a\\cdot b$ 的正負，所以可直接判斷 $a\\cdot b$ 為負數。`
+      const cycle = Math.floor(i / 3);
+      const productForms = [
+        { point: 'P(ab,a-b)', coordinate: '第一個坐標', positiveQuadrants: [1, 4] },
+        { point: 'Q(a-b,ab)', coordinate: '第二個坐標', positiveQuadrants: [1, 2] },
+        { point: 'R(ab,a+b)', coordinate: '第一個坐標', positiveQuadrants: [1, 4] },
+        { point: 'S(a+b,ab)', coordinate: '第二個坐標', positiveQuadrants: [1, 2] },
+      ];
+      const combination = cycle % 16;
+      const form = productForms[Math.floor(combination / 4)];
+      const quadrant = (combination % 4) + 1;
+      const productIsPositive = form.positiveQuadrants.includes(quadrant);
+      const quadrantText = ['第一', '第二', '第三', '第四'][quadrant - 1];
+      questions.push(`已知點 $${form.point}$ 在${quadrantText}象限，判斷 $a\\cdot b$ 為正數或負數。`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$a\\cdot b$ 為${productIsPositive ? '正數' : '負數'}`,
+        `在${quadrantText}象限時，${form.coordinate}的正負已確定；而 ${form.coordinate} 正是 $ab$，所以可判斷 $a\\cdot b$ 為${productIsPositive ? '正數' : '負數'}。`
       );
     }
 
@@ -1533,7 +1761,7 @@
   function buildJ221TranslationSet(count) {
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1544,7 +1772,10 @@
         const right = randInt(2, 6);
         const up = randInt(2, 5);
         questions.push(`若從點 $A(${x},${y})$ 出發，先向右移 ${right} 單位，再向上移 ${up} 單位，求終點座標。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `終點 $(${x + right},${y + up})$`,
           `向右移 ${right} 單位表示 $x$ 坐標加 ${right}，向上移 ${up} 單位表示 $y$ 坐標加 ${up}，所以終點是 $(${x + right},${y + up})$。`
         );
         continue;
@@ -1556,7 +1787,10 @@
         const down = randInt(2, 6);
         const left = randInt(2, 5);
         questions.push(`若從點 $P(${x},${y})$ 出發，先下移 ${down} 單位，再左移 ${left} 單位，求終點座標。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `終點 $(${x - left},${y - down})$`,
           `下移 ${down} 單位表示 $y$ 坐標減 ${down}，左移 ${left} 單位表示 $x$ 坐標減 ${left}，所以終點是 $(${x - left},${y - down})$。`
         );
         continue;
@@ -1571,7 +1805,10 @@
       questions.push(
         `若點 $E$ 先右移 ${right} 單位，再下移 ${down} 單位到達 $F(${endX},${endY})$，求原點 $E$ 的坐標。`
       );
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$E(${startX},${startY})$`,
         `設點 $E$ 為 $(x,y)$。右移 ${right} 單位後 $x$ 變成 $${endX}$，所以原本 $x=${endX}-${right}=${startX}$；下移 ${down} 單位後 $y$ 變成 $${endY}$，所以原本 $y=${endY}+${down}=${startY}$。故點 $E$ 為 $(${startX},${startY})$。`
       );
     }
@@ -1618,29 +1855,31 @@
         const target = shuffled
           .filter((p) => (askXAxis ? p.y === 0 : p.x === 0))
           .map((p) => `${p.label}(${p.x},${p.y})`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          target.join('、'),
           `在 $${askXAxis ? 'x' : 'y'}$ 軸上的點需滿足 ${askXAxis ? '$y=0$' : '$x=0$'}，所以答案是 ${target.join('、')}。`
         );
         continue;
       }
 
       if (variant === 1) {
-        const templates = [
-          { xCoef: 2, xConst: -3, yCoef: 3, yConst: 2 },
-          { xCoef: 3, xConst: -6, yCoef: 2, yConst: 4 },
-          { xCoef: 4, xConst: -10, yCoef: 5, yConst: 5 },
-          { xCoef: 5, xConst: -15, yCoef: 3, yConst: 6 },
-          { xCoef: 6, xConst: -9, yCoef: 4, yConst: 8 },
-          { xCoef: 7, xConst: -14, yCoef: 5, yConst: 10 },
-        ];
-        const pick = templates[cycle % templates.length];
-        const k1 = makeFraction(-pick.xConst, pick.xCoef);
-        const k2 = makeFraction(-pick.yConst, pick.yCoef);
+        const xCoef = randInt(2, 7);
+        const yCoef = randInt(2, 7);
+        const k1 = pickNonZero(-5, 5);
+        let k2 = pickNonZero(-5, 5);
+        while (k2 === k1) k2 = pickNonZero(-5, 5);
+        const xConst = -xCoef * k1;
+        const yConst = -yCoef * k2;
         questions.push(
-          `已知 $A(${pick.xCoef}k${pick.xConst >= 0 ? '+' : ''}${pick.xConst},${pick.yCoef}k${pick.yConst >= 0 ? '+' : ''}${pick.yConst})$ 不屬於任何象限，求 $k$ 的可能值。`
+          `已知 $A(${xCoef}k${formatSignedNumber(xConst)},${yCoef}k${formatSignedNumber(yConst)})$ 不屬於任何象限，求 $k$ 的可能值。`
         );
-        answers.push(
-          `不屬於任何象限表示點在坐標軸上，所以要嘛 ${pick.xCoef}k${pick.xConst >= 0 ? '+' : ''}${pick.xConst}=0，要嘛 ${pick.yCoef}k${pick.yConst >= 0 ? '+' : ''}${pick.yConst}=0。解得 $k=${fractionToLatex(k1, true)}$ 或 $k=${fractionToLatex(k2, true)}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$k=${k1}$ 或 $k=${k2}$`,
+          `不屬於任何象限表示點在坐標軸上，所以要嘛 $${xCoef}k${formatSignedNumber(xConst)}=0$，要嘛 $${yCoef}k${formatSignedNumber(yConst)}=0$。解得 $k=${k1}$ 或 $k=${k2}$。`
         );
         continue;
       }
@@ -1652,8 +1891,11 @@
       questions.push(
         `已知有一點 $A(${xConst},${mCoef}m${yConst >= 0 ? '+' : ''}${yConst})$ 位在 $x$ 軸上，求 $A$ 點的完整坐標。`
       );
-      answers.push(
-        `位在 $x$ 軸上的點需滿足 $y=0$，所以 $${mCoef}m${yConst >= 0 ? '+' : ''}${yConst}=0$，解得 $m=${k}$。代回後 $y=0$，因此 $A(${xConst},0)$。`
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$A(${xConst},0)$`,
+        `位在 $x$ 軸上的點需滿足 $y=0$，所以 $${mCoef}m${formatSignedNumber(yConst)}=0$，解得 $m=${k}$。代回後 $y=0$，因此 $A(${xConst},0)$。`
       );
     }
 
@@ -1663,7 +1905,7 @@
   function buildJ221MidpointSet(count) {
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
@@ -1676,7 +1918,10 @@
         const x2 = 2 * mx - x1;
         const y2 = 2 * my - y1;
         questions.push(`已知 $A(${x1},${y1})$、$B(${x2},${y2})$，求線段 $\\overline{AB}$ 的中點 $M$ 座標。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$M(${mx},${my})$`,
           `中點公式是 $M\\left(\\frac{x_1+x_2}{2},\\frac{y_1+y_2}{2}\\right)$，所以 $M=\\left(\\frac{${x1}${formatSignedValue(x2)}}{2},\\frac{${y1}${formatSignedValue(y2)}}{2}\\right)=(${mx},${my})$。`
         );
         continue;
@@ -1692,7 +1937,10 @@
         questions.push(
           `已知 $A(${ax},${ay})$、$M(${mx},${my})$，且 $M$ 為線段 $\\overline{AB}$ 的中點，求 $B$ 點座標。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$B(${bx},${by})$`,
           `因為中點滿足 $\\frac{${ax}+x_B}{2}=${mx}$、$\\frac{${ay}+y_B}{2}=${my}$，所以 $x_B=2\\times ${mx}${formatSignedValue(-ax)}=${bx}$，$y_B=2\\times ${my}${formatSignedValue(-ay)}=${by}$。故 $B(${bx},${by})$。`
         );
         continue;
@@ -1707,7 +1955,10 @@
       questions.push(
         `若圓心座標為 $(${cx},${cy})$，圓上一點 $A(${ax},${ay})$ 與點 $B$ 為直徑兩端，求另一端點 $B$ 的座標。`
       );
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$B(${bx},${by})$`,
         `圓心是直徑中點，所以 $\\left(\\frac{${ax}+x_B}{2},\\frac{${ay}+y_B}{2}\\right)=(${cx},${cy})$。解得 $x_B=2\\times(${cx})-(${ax})=${bx}$，$y_B=2\\times(${cy})-(${ay})=${by}$，所以 $B(${bx},${by})$。`
       );
     }
@@ -1727,18 +1978,33 @@
 
       if (variant === 0) {
         questions.push(`求點 $A(${x},${y})$ 關於 $x$ 軸的對稱點座標。`);
-        answers.push(`關於 $x$ 軸對稱時，$x$ 坐標不變，$y$ 坐標變號，所以對稱點是 $(${x},${-y})$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(${x},${-y})$`,
+          `關於 $x$ 軸對稱時，$x$ 坐標不變，$y$ 坐標變號，所以對稱點是 $(${x},${-y})$。`
+        );
         continue;
       }
 
       if (variant === 1) {
         questions.push(`求點 $B(${x},${y})$ 關於 $y$ 軸的對稱點座標。`);
-        answers.push(`關於 $y$ 軸對稱時，$y$ 坐標不變，$x$ 坐標變號，所以對稱點是 $(${-x},${y})$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(${-x},${y})$`,
+          `關於 $y$ 軸對稱時，$y$ 坐標不變，$x$ 坐標變號，所以對稱點是 $(${-x},${y})$。`
+        );
         continue;
       }
 
       questions.push(`求點 $C(${x},${y})$ 關於原點的對稱點座標。`);
-      answers.push(`關於原點對稱時，$x$、$y$ 都變號，所以對稱點是 $(${-x},${-y})$。`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$(${-x},${-y})$`,
+        `關於原點對稱時，$x$、$y$ 都變號，所以對稱點是 $(${-x},${-y})$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -1764,8 +2030,11 @@
         questions.push(
           `已知 $\\triangle ABC$ 的三頂點為 $A(${ax},${yBase})$、$B(${bx},${yBase})$、$C(${cx},${cy})$，求 $\\triangle ABC$ 的面積。`
         );
-        answers.push(
-          `因為 $A、B$ 在同一條水平線上，所以可把 $\\overline{AB}$ 當底，底長是 ${bx}-${ax}=${base}，高是 ${cy}-${yBase}=${height}。面積為 $\\frac{1}{2}\\times ${base}\\times ${height}=${area}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `面積 $${area}$`,
+          `因為 $A、B$ 在同一條水平線上，所以可把 $\\overline{AB}$ 當底，底長是 $${bx}-(${ax})=${base}$，高是 $${cy}-(${yBase})=${height}$。面積為 $\\frac{1}{2}\\times ${base}\\times ${height}=${area}$。`
         );
         continue;
       }
@@ -1779,7 +2048,10 @@
         questions.push(
           `矩形 $ABCD$ 的四頂點分別為 $A(${left},${top})$、$B(${left},${bottom})$、$C(${right},${bottom})$、$D(${right},${top})$，求其面積。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `面積 $${area}$`,
           `矩形的長是 $${right}-(${left})=${right - left}$，寬是 $${top}-(${bottom})=${top - bottom}$，所以面積是 $${right - left}\\times ${top - bottom}=${area}$。`
         );
         continue;
@@ -1791,7 +2063,10 @@
       const width = bx - ax;
       const area = (width * y) / 2;
       questions.push(`若 $A(${ax},0)$、$B(${bx},0)$、$C(a,${y})$ 為坐標平面上三點，求 $\\triangle ABC$ 的面積。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `面積 $${area}$`,
         `點 $A、B$ 在 $x$ 軸上，所以可把 $\\overline{AB}$ 當底，底長是 $${bx}-(${ax})=${width}$；點 $C$ 到 $x$ 軸的高是 ${y}。因此面積為 $\\frac{1}{2}\\times ${width}\\times ${y}=${area}$，和 $a$ 的值無關。`
       );
     }
@@ -1802,52 +2077,139 @@
   function buildJ221QuadrantReasoningSet(count) {
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
 
     function qName(id) {
       return ['第一象限', '第二象限', '第三象限', '第四象限'][id - 1];
     }
 
+    function signsForQuadrant(id) {
+      return [
+        [1, 1],
+        [-1, 1],
+        [-1, -1],
+        [1, -1],
+      ][id - 1];
+    }
+
+    function quadrantFromSigns(xSign, ySign) {
+      if (xSign > 0) return ySign > 0 ? 1 : 4;
+      return ySign > 0 ? 2 : 3;
+    }
+
+    function signCondition(name, sign) {
+      return `${name}${sign > 0 ? '>0' : '<0'}`;
+    }
+
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 3;
-      const cycle = Math.floor(i / 3);
+      const variant = i % 5;
+      const cycle = Math.floor(i / 5);
 
       if (variant === 0) {
-        const q = randInt(1, 4);
-        const result = q === 1 ? 1 : q === 2 ? 4 : q === 3 ? 1 : 4;
-        questions.push(`若點 $P(a,b)$ 在${qName(q)}，則點 $Q(a^2,ab)$ 在第幾象限？`);
-        answers.push(
-          `因為 $a^2>0$，所以 $Q$ 的 $x$ 坐標一定為正。又在${qName(q)}時，$ab$ ${q === 1 || q === 3 ? '為正' : '為負'}，所以 $Q(a^2,ab)$ 在${qName(result)}。`
+        const q = (cycle % 4) + 1;
+        const productPositive = q === 1 || q === 3;
+        const forms = [
+          { point: 'Q(a^2,ab)', xReason: '$a^2>0$', ySign: productPositive ? 1 : -1 },
+          { point: 'Q(a^2,-ab)', xReason: '$a^2>0$', ySign: productPositive ? -1 : 1 },
+          { point: 'Q(b^2,ab)', xReason: '$b^2>0$', ySign: productPositive ? 1 : -1 },
+        ];
+        const form = forms[cycle % forms.length];
+        const result = quadrantFromSigns(1, form.ySign);
+        questions.push(`若點 $P(a,b)$ 在${qName(q)}，則點 $${form.point}$ 在第幾象限？`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          qName(result),
+          `在${qName(q)}時，$ab$ ${productPositive ? '為正' : '為負'}；又 ${form.xReason}，可得 $${form.point}$ 在${qName(result)}。`
         );
         continue;
       }
 
       if (variant === 1) {
-        const conds = [
-          { ab: '<0', sum: '>0' },
-          { ab: '<0', sum: '<0' },
-          { ab: '>0', sum: '>0' },
-          { ab: '>0', sum: '<0' },
+        const [aSign, bSign] = [
+          [1, 1],
+          [1, -1],
+          [-1, 1],
+          [-1, -1],
+        ][Math.floor(cycle / 4) % 4];
+        const forms = [
+          { point: 'A(a,b^2)', xSign: aSign, ySign: 1 },
+          { point: 'A(-a,b^2)', xSign: -aSign, ySign: 1 },
+          { point: 'A(a^2,b)', xSign: 1, ySign: bSign },
+          { point: 'A(a^2,-b)', xSign: 1, ySign: -bSign },
         ];
-        const pick = conds[cycle % conds.length];
-        questions.push(`已知 $ab${pick.ab}$ 且 $a+b${pick.sum}$，判斷點 $A(a,b^2)$ 位於第幾象限。`);
-        if (pick.ab === '<0') {
-          answers.push(
-            `由 $ab<0$ 可知 $a、b$ 異號，因此 $a$ 可能為正也可能為負；而 $b^2>0$ 一定為正，所以點 $A(a,b^2)$ 可能在第一象限或第二象限。`
-          );
-        } else if (pick.sum === '>0') {
-          answers.push(`由 $ab>0$ 且 $a+b>0$ 可知 $a,b$ 同為正數，所以 $a>0$、$b^2>0$，點 $A(a,b^2)$ 在第一象限。`);
-        } else {
-          answers.push(`由 $ab>0$ 且 $a+b<0$ 可知 $a,b$ 同為負數，所以 $a<0$、$b^2>0$，點 $A(a,b^2)$ 在第二象限。`);
-        }
+        const form = forms[cycle % forms.length];
+        const result = quadrantFromSigns(form.xSign, form.ySign);
+        questions.push(
+          `已知 $${signCondition('a', aSign)}$、$${signCondition('b', bSign)}$，判斷點 $${form.point}$ 位於第幾象限。`
+        );
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          qName(result),
+          `由 $${signCondition('a', aSign)}$、$${signCondition('b', bSign)}$，再注意平方一定為正數及負號會改變正負，可得 $${form.point}$ 在${qName(result)}。`
+        );
         continue;
       }
 
-      const quadrant = randInt(1, 4);
-      const result = quadrant === 1 ? 2 : quadrant === 2 ? 3 : quadrant === 3 ? 4 : 1;
-      questions.push(`若點 $A(s,t)$ 在${qName(quadrant)}，則點 $B(-t,s)$ 在第幾象限？`);
-      answers.push(
-        `在${qName(quadrant)}時，$s、t$ 的正負可先判斷出來，再代入 $B(-t,s)$。整理後可知 $B$ 在${qName(result)}。`
+      if (variant === 2) {
+        const quadrant = (Math.floor(cycle / 4) % 4) + 1;
+        const [sSign, tSign] = signsForQuadrant(quadrant);
+        const forms = [
+          { point: 'B(-t,s)', xSign: -tSign, ySign: sSign },
+          { point: 'B(t,-s)', xSign: tSign, ySign: -sSign },
+          { point: 'B(-s,-t)', xSign: -sSign, ySign: -tSign },
+          { point: 'B(s,-t)', xSign: sSign, ySign: -tSign },
+        ];
+        const form = forms[cycle % forms.length];
+        const result = quadrantFromSigns(form.xSign, form.ySign);
+        questions.push(`若點 $A(s,t)$ 在${qName(quadrant)}，則點 $${form.point}$ 在第幾象限？`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          qName(result),
+          `在${qName(quadrant)}時，$s、t$ 的正負可先判斷出來，再代入 $${form.point}$，可知此點在${qName(result)}。`
+        );
+        continue;
+      }
+
+      if (variant === 3) {
+        const q = (cycle % 4) + 1;
+        const productPositive = q === 1 || q === 3;
+        const forms = [
+          { point: 'R(ab,b^2)', xSign: productPositive ? 1 : -1 },
+          { point: 'R(-ab,b^2)', xSign: productPositive ? -1 : 1 },
+          { point: 'R(ab,a^2)', xSign: productPositive ? 1 : -1 },
+          { point: 'R(-ab,a^2)', xSign: productPositive ? -1 : 1 },
+        ];
+        const form = forms[Math.floor(cycle / 4) % forms.length];
+        const result = quadrantFromSigns(form.xSign, 1);
+        questions.push(`若點 $P(a,b)$ 在${qName(q)}，則點 $${form.point}$ 在第幾象限？`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          qName(result),
+          `在${qName(q)}時，$ab$ ${productPositive ? '為正' : '為負'}，而平方項一定為正數，所以 $${form.point}$ 在${qName(result)}。`
+        );
+        continue;
+      }
+
+      const q = (cycle % 4) + 1;
+      const [aSign] = signsForQuadrant(q);
+      const forms = [
+        { point: 'S(-a,b^2)', xSign: -aSign, ySign: 1 },
+        { point: 'S(a,b^2)', xSign: aSign, ySign: 1 },
+        { point: 'S(-a,-b^2)', xSign: -aSign, ySign: -1 },
+        { point: 'S(a,-b^2)', xSign: aSign, ySign: -1 },
+      ];
+      const form = forms[Math.floor(cycle / 4) % forms.length];
+      const result = quadrantFromSigns(form.xSign, form.ySign);
+      questions.push(`若點 $P(a,b)$ 在${qName(q)}，則點 $${form.point}$ 在第幾象限？`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        qName(result),
+        `由 ${form.point} 的各坐標正負，可知平方項的正負固定，而 $a$ 前的負號會改變橫坐標正負，因此此點在${qName(result)}。`
       );
     }
 
@@ -1868,46 +2230,50 @@
         const y = randInt(-4, 4);
         const c1 = 3 * x - 7 * y;
         const c2 = 2 * x + y;
-        questions.push(`若 $|3x-7y-${c1}|+|2x+y-${c2}|=0$，求數對 $(x,y)$ 所在的象限。`);
-        answers.push(
-          `因為兩個絕對值和為 0，所以必須同時為 0，可列 $3x-7y=${c1}$、$2x+y=${c2}$。解得 $(x,y)=(${x},${y})$，所以數對在${x > 0 && y > 0 ? '第一象限' : x < 0 && y > 0 ? '第二象限' : x < 0 && y < 0 ? '第三象限' : x > 0 && y < 0 ? '第四象限' : x === 0 && y === 0 ? '原點' : x === 0 ? 'y 軸上' : 'x 軸上'}。`
+        questions.push(
+          `若 $|3x-7y${formatSignedNumber(-c1)}|+|2x+y${formatSignedNumber(-c2)}|=0$，求數對 $(x,y)$ 所在的象限。`
+        );
+        const position = quadrantText(x, y);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(x,y)=(${x},${y})$，在${position}`,
+          `因為兩個絕對值和為 0，所以必須同時為 0，可列 $3x-7y=${c1}$、$2x+y=${c2}$。解得 $(x,y)=(${x},${y})$，所以數對在${position}。`
         );
         continue;
       }
 
       if (variant === 1) {
-        const templates = [
-          { p: 1, q: 2, r: 2, s: -1, t: 6 },
-          { p: 1, q: -3, r: 3, s: 2, t: -5 },
-          { p: 2, q: -4, r: -1, s: 1, t: 1 },
-          { p: 1, q: -1, r: 2, s: 3, t: -8 },
-          { p: -1, q: 5, r: 1, s: -2, t: 3 },
-          { p: 2, q: 6, r: 1, s: -1, t: -4 },
-        ];
-        const pick = templates[cycle % templates.length];
+        const pick = {
+          p: pickNonZero(-4, 4),
+          q: randInt(-8, 8),
+          r: pickNonZero(-4, 4),
+          s: pickNonZero(-4, 4),
+          t: randInt(-8, 8),
+        };
         const x = divFraction(makeFraction(-pick.q, 1), makeFraction(pick.p, 1));
-        const y = subFraction(mulFraction(makeFraction(pick.r, 1), x), makeFraction(-pick.t, 1));
+        const y = subFraction(makeFraction(-pick.t, 1), mulFraction(makeFraction(pick.r, 1), x));
         const yFinal = divFraction(y, makeFraction(pick.s, 1));
         const xText = fractionToLatex(x, true);
         const yText = fractionToLatex(yFinal, true);
-        const term1 = `${formatTerm(pick.p, 'x')}${pick.q >= 0 ? '+' : ''}${pick.q}`;
-        const term2 = `${formatTerm(pick.r, 'x')}${pick.s >= 0 ? '+' : ''}${formatTerm(pick.s, 'y')}${pick.t >= 0 ? '+' : ''}${pick.t}`;
+        const term1 = formatLinearExpr(pick.p, pick.q);
+        const term2 = formatTwoVarExpr(pick.r, pick.s, pick.t);
         questions.push(`已知 $(${term1})^2+(${term2})^2=0$，求點 $(x,y)$ 的座標。`);
-        answers.push(
-          `平方和為 0，表示兩項都要是 0，所以可列 ${term1}=0、${term2}=0。先由第一式得 $x=${xText}$，再代入第二式得 $y=${yText}$，所以點為 $(${xText},${yText})$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(${xText},${yText})$`,
+          `平方和為 0，表示兩項都要是 0，所以可列 $${term1}=0$、$${term2}=0$。先由第一式得 $x=${xText}$，再代入第二式得 $y=${yText}$，所以點為 $(${xText},${yText})$。`
         );
         continue;
       }
 
-      const templates = [
-        { c1: 10, c2: 2, p: 2, q: 1, r: 1, s: -1 },
-        { c1: -3, c2: 4, p: 1, q: -2, r: 2, s: 1 },
-        { c1: 8, c2: -1, p: 3, q: -1, r: 1, s: 1 },
-        { c1: 6, c2: 5, p: 2, q: 3, r: 1, s: -2 },
-        { c1: -4, c2: 1, p: 1, q: 1, r: 2, s: -3 },
-        { c1: 12, c2: -2, p: 4, q: -1, r: 1, s: 2 },
-      ];
-      const pick = templates[cycle % templates.length];
+      const p = pickNonZero(-4, 4);
+      const q = pickNonZero(-4, 4);
+      const r = pickNonZero(-4, 4);
+      let s = pickNonZero(-4, 4);
+      while (p * s - q * r === 0) s = pickNonZero(-4, 4);
+      const pick = { c1: pickNonZero(-12, 12), c2: pickNonZero(-12, 12), p, q, r, s };
       const det = pick.p * pick.s - pick.q * pick.r;
       if (det === 0) {
         i -= 1;
@@ -1919,8 +2285,11 @@
       const eq1 = `${formatTerm(pick.p, 'a')}${pick.q >= 0 ? '+' : ''}${formatTerm(pick.q, 'b')}${pick.c1 >= 0 ? '-' : '+'}${Math.abs(pick.c1)}`;
       const eq2 = `${formatTerm(pick.r, 'a')}${pick.s >= 0 ? '+' : ''}${formatTerm(pick.s, 'b')}${pick.c2 >= 0 ? '-' : '+'}${Math.abs(pick.c2)}`;
       questions.push(`若 $|${eq1}|+(${eq2})^2=0$，求點 $P(a,b)$ 到 $x$ 軸的距離。`);
-      answers.push(
-        `由非負性質可知 ${eq1}=0 且 ${eq2}=0。解此聯立方程式可得 $a=${fractionToLatex(aVal, true)},\\ b=${fractionToLatex(bVal, true)}$。點 $P(a,b)$ 到 $x$ 軸的距離是 $|b|=${fractionToLatex(axisDist, true)}$。`
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$|b|=${fractionToLatex(axisDist, true)}$`,
+        `由非負性質可知 $${eq1}=0$ 且 $${eq2}=0$。解此聯立方程式可得 $a=${fractionToLatex(aVal, true)},\\ b=${fractionToLatex(bVal, true)}$。點 $P(a,b)$ 到 $x$ 軸的距離是 $|b|=${fractionToLatex(axisDist, true)}$。`
       );
     }
 
@@ -1971,11 +2340,37 @@
           `關於原點對稱時，兩點坐標要互為相反數。代入 $m=${m},n=${n}$ 得 $A(${ax},${ay})$，其相反點為 $(${bx},${by})$，正是 $B$，所以符合。`
         );
       } else if (mode === 2) {
-        const x = -randInt(2, 8);
-        const y = -randInt(1, 7);
-        questions.push(`若點 $P(x,y)$ 滿足 $xy>0$ 且 $x+y<0$，判斷 $P$ 點所在象限。`);
-        summaryAnswers.push('第三象限');
-        answers.push(`由 $xy>0$ 可知 $x,y$ 同號；又 $x+y<0$，所以兩者不可能同為正，只能同為負。因此 $P$ 在第三象限。`);
+        const magnitude = randInt(2, 12);
+        const conditions = [
+          {
+            first: 'xy>0',
+            second: `x+y=${magnitude}`,
+            answer: '第一象限',
+            detail: '$x,y$ 同號，且和為正，所以兩者同為正。',
+          },
+          {
+            first: 'xy<0',
+            second: `x-y=-${magnitude}`,
+            answer: '第二象限',
+            detail: '$x,y$ 異號，且 $x-y<0$，所以 $x<0,y>0$。',
+          },
+          {
+            first: 'xy>0',
+            second: `x+y=-${magnitude}`,
+            answer: '第三象限',
+            detail: '$x,y$ 同號，且和為負，所以兩者同為負。',
+          },
+          {
+            first: 'xy<0',
+            second: `x-y=${magnitude}`,
+            answer: '第四象限',
+            detail: '$x,y$ 異號，且 $x-y>0$，所以 $x>0,y<0$。',
+          },
+        ];
+        const pick = conditions[Math.floor(i / 5) % conditions.length];
+        questions.push(`若點 $P(x,y)$ 滿足 $${pick.first}$ 且 $${pick.second}$，判斷 $P$ 點所在象限。`);
+        summaryAnswers.push(pick.answer);
+        answers.push(`由 ${pick.detail} 因此 $P$ 在${pick.answer}。`);
       } else if (mode === 3) {
         const dx = randInt(2, 8);
         const dy = randInt(2, 8);
@@ -2051,12 +2446,11 @@
           `平行四邊形依序為 $A,B,C,D$ 時，對角線中點相同，所以 $A+C=B+D$。因此 $D=A+C-B=((${ax})+(${cx})-(${bx}),(${ay})+(${cy})-(${by}))=(${dx},${dy})$。`
         );
       } else if (mode === 2) {
-        const k = randInt(1, 4);
-        const a = 3 * k;
-        const b = -4 * k;
-        const c = 12 * k;
-        const xInt = c / a;
-        const yInt = c / b;
+        const xInt = randInt(2, 10);
+        const yInt = -randInt(2, 10);
+        const a = Math.abs(yInt);
+        const b = -xInt;
+        const c = a * xInt;
         const area = Math.abs((xInt * yInt) / 2);
         questions.push(`求直線 $${formatAxByEq(a, b, c)}$ 與兩坐標軸所圍成三角形的面積。`);
         summaryAnswers.push(`面積 $${area}$`);
@@ -2081,7 +2475,7 @@
         );
         summaryAnswers.push(`平移 $(${dx},${dy})$，距離 $\\sqrt{${dx * dx + dy * dy}}$`);
         answers.push(
-          `由中點公式可反求 $B(2\\times${mx}-${ax},2\\times${my}-${ay})=(${bx},${by})$。所以平移向量為 $(${bx}-${ax},${by}-${ay})=(${dx},${dy})$，距離為 $\\sqrt{${dx * dx}+${dy * dy}}=\\sqrt{${dx * dx + dy * dy}}$。`
+          `由中點公式可反求 $B(2\\times(${mx})-(${ax}),2\\times(${my})-(${ay}))=(${bx},${by})$。所以平移向量為 $(${bx}-(${ax}),${by}-(${ay}))=(${dx},${dy})$，距離為 $\\sqrt{${dx * dx}+${dy * dy}}=\\sqrt{${dx * dx + dy * dy}}$。`
         );
       } else {
         const x1 = randInt(-3, 3);
@@ -2138,7 +2532,7 @@
         questions.push(`若點 $A(x,y)$ 向右移 ${right} 單位後與點 $B(${bx},${by})$ 重合，求 $A$ 點坐標。`);
         summaryAnswers.push(`$A(${ax},${by})$`);
         answers.push(
-          `向右移 ${right} 單位代表 $x$ 坐標加 ${right}$。所以原來 $x=${bx}-${right}=${ax}$，$y$ 不變，故 $A(${ax},${by})$。`
+          `向右移 ${right} 單位代表 $x$ 坐標加 $${right}$。所以原來 $x=${bx}-${right}=${ax}$，$y$ 不變，故 $A(${ax},${by})$。`
         );
       } else if (mode === 2) {
         const ax = randInt(-5, 2);
@@ -2161,7 +2555,7 @@
           `在直線 $y=${y}$ 上表示縱坐標固定為 ${y}；到 $y$ 軸距離為 ${d} 表示 $|x|=${d}$。所以 $P(${d},${y})$ 或 $P(-${d},${y})$。`
         );
       } else {
-        const unit = randInt(1, 5);
+        const unit = randInt(1, 12);
         const a = 2 * unit;
         const b = 3 * unit;
         const total = a + b;
@@ -2187,6 +2581,17 @@
     if (m === 1) return variable;
     if (m === -1) return `-${variable}`;
     return `${m}${variable}`;
+  }
+
+  function formatFractionSlopeTerm(fraction, variable = 'x') {
+    if (fraction.den === 1) return formatSlopeTerm(fraction.num, variable);
+    return `${fractionToLatex(fraction)}${variable}`;
+  }
+
+  function formatSignedFractionConstant(fraction) {
+    if (fraction.num === 0) return '';
+    const text = fractionToLatex(fraction, true);
+    return fraction.num > 0 ? `+${text}` : text;
   }
 
   function formatLineSlopeIntercept(m, b) {
@@ -2235,8 +2640,11 @@
         const m = randInt(-5, 5);
         const c = a * m + b * y0;
         questions.push(`若點 $(m,${y0})$ 在直線 $${formatAxByEq(a, b, c)}$ 上，求 $m$ 的值。`);
-        answers.push(
-          `點在直線上，表示把坐標代入方程式後等號一定成立，所以可列 $${a}m${b * y0 >= 0 ? '+' : ''}${b * y0}=${c}$。整理可得 $m=${m}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$m=${m}$`,
+          `點在直線上，表示把坐標代入方程式後等號一定成立，所以可列 $${a}m${formatSignedNumber(b * y0)}=${c}$。整理可得 $m=${m}$。`
         );
         continue;
       }
@@ -2247,7 +2655,10 @@
         const aValue = [1, 2, 3, 4][randInt(0, 3)];
         const r = (p - q) * aValue;
         questions.push(`若點 $(${p}a,${q}a+${r})$ 在直線 $x=y$ 上，求 $a$ 的值。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$a=${aValue}$`,
           `在直線 $x=y$ 上，表示橫坐標與縱坐標相等，所以可列 $${p}a=${q}a+${r}$。移項得 $${p - q}a=${r}$，所以 $a=${aValue}$。`
         );
         continue;
@@ -2258,7 +2669,12 @@
       const c0 = randInt(-8, 8);
       const k = c0;
       questions.push(`若方程式 $${formatTwoVarExpr(a, -b, c0)}-k=0$ 的圖形通過原點 $(0,0)$，求 $k$ 的值。`);
-      answers.push(`圖形通過原點表示把 $(0,0)$ 代入後要成立，所以原式變成 $${c0}-k=0$，因此 $k=${k}$。`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$k=${k}$`,
+        `圖形通過原點表示把 $(0,0)$ 代入後要成立，所以原式變成 $${c0}-k=0$，因此 $k=${k}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -2274,77 +2690,49 @@
       const cycle = Math.floor(i / 3);
 
       if (variant === 0) {
-        const templates = [
-          { xInt: 2, yInt: 3 },
-          { xInt: 3, yInt: 4 },
-          { xInt: 4, yInt: 5 },
-          { xInt: 5, yInt: 6 },
-          { xInt: 6, yInt: 4 },
-          { xInt: 8, yInt: 3 },
-          { xInt: 9, yInt: 2 },
-          { xInt: 10, yInt: 3 },
-          { xInt: 12, yInt: 2 },
-          { xInt: 7, yInt: 4 },
-        ];
-        const pick = templates[cycle % templates.length];
-        const xInt = pick.xInt;
-        const yInt = pick.yInt;
+        const xInt = randInt(2, 12);
+        const yInt = randInt(2, 12);
         const a = yInt;
         const b = xInt;
         const c = xInt * yInt;
         const area = (xInt * yInt) / 2;
         questions.push(`求直線 $${formatAxByEq(a, b, c)}$ 與兩坐標軸的交點座標，並求其圍成的三角形面積。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$x$ 軸截距 $${xInt}$，$y$ 軸截距 $${yInt}$，面積 $${area}$`,
           `令 $y=0$，得 $${a}x=${c}$，所以與 $x$ 軸交於 $(${xInt},0)$；令 $x=0$，得 $${b}y=${c}$，所以與 $y$ 軸交於 $(0,${yInt})$。因此與坐標軸圍成的三角形面積為 $\\frac{1}{2}\\times ${xInt}\\times ${yInt}=${area}$。`
         );
         continue;
       }
 
       if (variant === 1) {
-        const templates = [
-          { a: 3, b: 2 },
-          { a: 4, b: 3 },
-          { a: 5, b: 4 },
-          { a: 6, b: 2 },
-          { a: 8, b: 3 },
-          { a: 9, b: 4 },
-          { a: 10, b: 5 },
-          { a: 12, b: 3 },
-          { a: 14, b: 2 },
-          { a: 15, b: 4 },
-        ];
-        const pick = templates[cycle % templates.length];
-        const a = pick.a;
-        const b = pick.b;
-        const area = (a * b) / 2;
+        const absA = randInt(2, 12);
+        const b = randInt(2, 8);
+        const area = (absA * b) / 2;
         questions.push(
           `若直線 $\\frac{x}{a}+\\frac{y}{${b}}=1$ 的圖形與兩軸所圍成的三角形面積為 ${area}，且直線不通過第四象限，求 $a$ 的值。`
         );
-        answers.push(
-          `這條直線的截距是 $(a,0)$ 與 $(0,${b})$，所以三角形面積是 $\\frac{1}{2}\\times |a|\\times ${b}=${area}$，可得 $|a|=${a}$。又題目說不通過第四象限，表示 $x$ 截距要為正，因此 $a=${a}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$a=-${absA}$`,
+          `這條直線的截距是 $(a,0)$ 與 $(0,${b})$，所以三角形面積是 $\\frac{1}{2}\\times |a|\\times ${b}=${area}$，可得 $|a|=${absA}$。又題目說不通過第四象限，$x$ 截距必須為負，因此 $a=-${absA}$。`
         );
         continue;
       }
 
-      const templates = [
-        { m: 1, b: 3 },
-        { m: 1, b: 4 },
-        { m: 1, b: 5 },
-        { m: 2, b: 4 },
-        { m: 2, b: 6 },
-        { m: 3, b: 6 },
-        { m: 2, b: 8 },
-        { m: 3, b: 9 },
-        { m: 4, b: 8 },
-        { m: 5, b: 10 },
-      ];
-      const pick = templates[cycle % templates.length];
-      const m = pick.m;
-      const b = pick.b;
-      const xInt = b / m;
+      const m = randInt(1, 5);
+      const xInt = randInt(2, 10);
+      const b = m * xInt;
       const area = (xInt * b) / 2;
-      questions.push(`方程式 $y=-${m}x+${b}$ 與兩軸交於 $P,Q$ 兩點，求 $\\triangle POQ$（$O$ 為原點）的面積。`);
-      answers.push(
+      questions.push(
+        `方程式 $${formatLineSlopeIntercept(-m, b)}$ 與兩軸交於 $P,Q$ 兩點，求 $\\triangle POQ$（$O$ 為原點）的面積。`
+      );
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `面積 $${area}$`,
         `令 $x=0$，得 $y=${b}$，所以一個截距點是 $(0,${b})$；令 $y=0$，得 $x=${xInt}$，另一個截距點是 $(${xInt},0)$。因此 $\\triangle POQ$ 的面積為 $\\frac{1}{2}\\times ${xInt}\\times ${b}=${area}$。`
       );
     }
@@ -2355,30 +2743,62 @@
   function buildJ222QuadrantExclusionSet(count) {
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
 
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 3;
+      const variant = i % 5;
+      const c = randInt(2, 12);
 
       if (variant === 0) {
-        questions.push(`已知 $a<0$，則一次函數 $f(x)=ax+5$ 的圖形不通過第幾象限？`);
-        answers.push(
-          `因為斜率 $a<0$，圖形往右下降，且截距是 5，所以直線會經過第一、第二、第四象限，不會通過第三象限。`
+        questions.push(`已知 $a<0$，則一次函數 $f(x)=ax+${c}$ 的圖形不通過第幾象限？`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          '第三象限',
+          `因為斜率 $a<0$，圖形往右下降，且截距是 $${c}>0$，所以直線會經過第一、第二、第四象限，不會通過第三象限。`
         );
         continue;
       }
 
       if (variant === 1) {
-        questions.push(`若 $ab>0$ 且 $a+b<0$，則直線 $ax+by+1=0$ 不通過第幾象限？`);
-        answers.push(
-          `由 $ab>0$ 且 $a+b<0$ 可知 $a,b$ 都是負數。把式子改寫成 $y=-\\frac{a}{b}x-\\frac{1}{b}$，可知斜率為負、截距為正，因此圖形經過第一、第二、第四象限，不通過第三象限。`
+        questions.push(`若 $a<0$，則一次函數 $y=ax-${c}$ 的圖形不通過第幾象限？`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          '第一象限',
+          `因為斜率 $a<0$，且截距是 $-${c}<0$，所以直線會經過第二、第三、第四象限，不會通過第一象限。`
         );
         continue;
       }
 
-      questions.push(`方程式 $y=ax+b$ 的圖形通過第一、三、四象限，則方程式 $y=ax-b$ 不通過第幾象限？`);
-      answers.push(
-        `原直線通過第一、三、四象限，表示斜率 $a>0$ 且截距 $b<0$。因此 $y=ax-b$ 其實是正斜率、正截距的直線，會經過第一、第二、第三象限，不通過第四象限。`
+      if (variant === 2) {
+        questions.push(`已知 $a>0$，則一次函數 $y=ax+${c}$ 的圖形不通過第幾象限？`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          '第四象限',
+          `因為斜率 $a>0$，且截距是 $${c}>0$，所以直線會經過第一、第二、第三象限，不會通過第四象限。`
+        );
+        continue;
+      }
+
+      if (variant === 3) {
+        questions.push(`已知 $a>0$，則一次函數 $y=ax-${c}$ 的圖形不通過第幾象限？`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          '第二象限',
+          `因為斜率 $a>0$，且截距是 $-${c}<0$，所以直線會經過第一、第三、第四象限，不會通過第二象限。`
+        );
+        continue;
+      }
+
+      questions.push(`若 $ab>0$ 且 $a+b<0$，則直線 $ax+by+${c}=0$ 不通過第幾象限？`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        '第三象限',
+        `由 $ab>0$ 且 $a+b<0$ 可知 $a,b$ 都是負數。把式子改寫成 $y=-\\frac{a}{b}x-\\frac{${c}}{b}$，可知斜率為負、截距為正，因此圖形經過第一、第二、第四象限，不通過第三象限。`
       );
     }
 
@@ -2397,7 +2817,12 @@
         const x0 = randInt(-6, 6);
         const y0 = randInt(-6, 6);
         questions.push(`寫出通過點 $(${x0},${y0})$ 且平行 $y$ 軸的直線方程式。`);
-        answers.push(`平行 $y$ 軸的直線是鉛直線，所有點的 $x$ 坐標都相同，所以方程式是 $x=${x0}$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$x=${x0}$`,
+          `平行 $y$ 軸的直線是鉛直線，所有點的 $x$ 坐標都相同，所以方程式是 $x=${x0}$。`
+        );
         continue;
       }
 
@@ -2406,7 +2831,12 @@
         const x2 = randInt(1, 8);
         const y = randInt(-5, 5);
         questions.push(`直線通過點 $(${x1},${y})$ 與 $(${x2},${y})$ 兩點，求此直線方程式。`);
-        answers.push(`兩點的 $y$ 坐標相同，表示這是一條水平線，所以方程式是 $y=${y}$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$y=${y}$`,
+          `兩點的 $y$ 坐標相同，表示這是一條水平線，所以方程式是 $y=${y}$。`
+        );
         continue;
       }
 
@@ -2414,7 +2844,12 @@
         const x = randInt(-6, 6);
         const y = makeFraction(randInt(-7, 7), 2);
         questions.push(`通過點 $(${x},${fractionToLatex(y)})$ 且垂直 $y$ 軸的直線方程式為何？`);
-        answers.push(`垂直 $y$ 軸就是平行 $x$ 軸，這是一條水平線，所以方程式是 $y=${fractionToLatex(y)}$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$y=${fractionToLatex(y)}$`,
+          `垂直 $y$ 軸就是平行 $x$ 軸，這是一條水平線，所以方程式是 $y=${fractionToLatex(y)}$。`
+        );
         continue;
       }
 
@@ -2422,7 +2857,12 @@
       const y1 = randInt(-6, 0);
       const y2 = randInt(1, 7);
       questions.push(`直線通過點 $(${x},${y1})$ 與 $(${x},${y2})$ 兩點，求此直線方程式。`);
-      answers.push(`兩點的 $x$ 坐標相同，表示這是一條鉛直線，所以方程式是 $x=${x}$。`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$x=${x}$`,
+        `兩點的 $x$ 坐標相同，表示這是一條鉛直線，所以方程式是 $x=${x}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -2455,8 +2895,11 @@
         const y1 = m * x1 + b;
         const y2 = m * x2 + b;
         questions.push(`若直線 $y=ax+b$ 通過點 $(${x1},${y1})$ 與 $(${x2},${y2})$，求此直線方程式。`);
-        answers.push(
-          `把兩點代入 $y=ax+b$，可列聯立方程式 $${formatSystemLatex(`${x1}a+b=${y1}`, `${x2}a+b=${y2}`)}$。相減可得 $a=${m}$，再代回得 $b=${b}$，所以直線方程式是 $${formatLineSlopeIntercept(m, b)}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${formatLineSlopeIntercept(m, b)}$`,
+          `把兩點代入 $y=ax+b$，可列聯立方程式 $${formatSystemLatex(`${formatTwoVarExpr(x1, 1).replace(/x/g, 'a').replace(/y/g, 'b')}=${y1}`, `${formatTwoVarExpr(x2, 1).replace(/x/g, 'a').replace(/y/g, 'b')}=${y2}`)}$。相減可得 $a=${m}$，再代回得 $b=${b}$，所以直線方程式是 $${formatLineSlopeIntercept(m, b)}$。`
         );
         continue;
       }
@@ -2477,8 +2920,13 @@
         questions.push(
           `已知直線 $ax+by=3$ 通過點 $(${p1.x},${p1.y})$ 與 $(${p2.x},${p2.y})$，求 $a,b$ 的值與完整的直線方程式。`
         );
-        answers.push(
-          `把兩點代入 $ax+by=3$，可列聯立方程式 $${formatSystemLatex(`${p1.x}a${p1.y >= 0 ? '+' : ''}${p1.y}b=3`, `${p2.x}a${p2.y >= 0 ? '+' : ''}${p2.y}b=3`)}$。解得 $a=${a},\\ b=${b}$，所以直線方程式是 $${formatAxByEq(a, b, 3)}$。`
+        const firstEquation = `${formatTwoVarExpr(p1.x, p1.y).replace(/x/g, 'a').replace(/y/g, 'b')}=3`;
+        const secondEquation = `${formatTwoVarExpr(p2.x, p2.y).replace(/x/g, 'a').replace(/y/g, 'b')}=3`;
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$a=${a}$，$b=${b}$；$${formatAxByEq(a, b, 3)}$`,
+          `把兩點代入 $ax+by=3$，可列聯立方程式 $${formatSystemLatex(firstEquation, secondEquation)}$。解得 $a=${a},\\ b=${b}$，所以直線方程式是 $${formatAxByEq(a, b, 3)}$。`
         );
         continue;
       }
@@ -2489,7 +2937,10 @@
       const y2 = y1 + pickNonZero(-5, 5);
       const line = lineThroughPointsStd(x1, y1, x2, y2);
       questions.push(`求通過點 $(${x1},${y1})$ 與 $(${x2},${y2})$ 兩點的直線方程式。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${formatAxByEq(line.a, line.b, line.c)}$`,
         `設直線為一般式。由兩點可先求方向，再整理成標準型。計算可得這條直線的方程式是 $${formatAxByEq(line.a, line.b, line.c)}$。`
       );
     }
@@ -2500,7 +2951,7 @@
   function buildJ222TwoQuadrantsSet(count) {
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 4;
@@ -2509,8 +2960,11 @@
         const p = [4, 5, 6, 7][randInt(0, 3)];
         const q = [8, 9, 10, 11][randInt(0, 3)];
         questions.push(`已知線型函數 $f(x)=ax+${p}-${q}x+a$ 的圖形只通過兩個象限，求 $a$ 的值。`);
-        answers.push(
-          `先化簡為 $y=(a-${q})x+(a+${p})$。若這是一條斜直線且只通過兩個象限，就必須通過原點，所以截距要是 0，可得 $a+${p}=0$，所以 $a=-${p}$。此外，若斜率為 0，就會變成水平線，也只會通過上方或下方兩個象限，因此還有 $a-${q}=0$，得 $a=${q}$。所以 $a$ 的值有 $-${p}$ 或 $${q}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$a=-${p}$ 或 $a=${q}$`,
+          `先化簡為 $y=(a-${q})x+(a+${p})$。若這是一條斜直線且只通過兩個象限，就必須通過原點，所以截距要是 0，可得 $a+${p}=0$，所以 $a=-${p}$。此外，若斜率為 0，就會變成水平線，也只會通過上方或下方兩個象限，因此還有 $a-${q}=0$，得 $a=${q}$。`
         );
         continue;
       }
@@ -2520,7 +2974,10 @@
         const m = [1, 2, 3][randInt(0, 2)];
         const y = m * x;
         questions.push(`若直線 $L$ 只通過第一、三象限且經過點 $(${x},${y})$，求其方程式。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${formatLineSlopeIntercept(m, 0)}$`,
           `只通過第一、三象限的直線必須通過原點，且斜率為正。又因為通過 $(${x},${y})$，斜率是 $\\frac{${y}}{${x}}=${m}$，所以直線方程式是 $${formatLineSlopeIntercept(m, 0)}$。`
         );
         continue;
@@ -2538,16 +2995,25 @@
         const g = gcd(Math.abs(y), Math.abs(x));
         const rise = Math.abs(y) / g;
         const run = Math.abs(x) / g;
+        const slopeExpression = run === 1 ? formatSlopeTerm(-rise, 'x') : `-\\frac{${rise}}{${run}}x`;
         questions.push(`若直線 $L$ 只通過第二、四象限且經過點 $(${x},${y})$，求其方程式。`);
-        answers.push(
-          `只通過第二、四象限的直線必須通過原點，且斜率為負。由點 $(${x},${y})$ 與原點可求斜率為 $\\frac{${y}}{${x}}=-\\frac{${rise}}{${run}}$，所以方程式可寫成 $y=-\\frac{${rise}}{${run}}x$，也可整理成 $${rise}x+${run}y=0$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$y=${slopeExpression}$，或 $${formatAxByEq(rise, run, 0)}$`,
+          `只通過第二、四象限的直線必須通過原點，且斜率為負。由點 $(${x},${y})$ 與原點可求斜率為 $\\frac{${y}}{${x}}=-\\frac{${rise}}{${run}}$，所以方程式可寫成 $y=${slopeExpression}$，也可整理成 $${formatAxByEq(rise, run, 0)}$。`
         );
         continue;
       }
 
-      questions.push(`若直線 $L$ 只通過第一、二象限且經過點 $(-3,7)$，求其方程式。`);
-      answers.push(
-        `只通過第一、二象限表示這條直線必須是位於 $x$ 軸上方的水平線，所以 $y$ 坐標固定。又因為通過點 $(-3,7)$，所以方程式是 $y=7$。`
+      const x = randInt(-6, -1);
+      const y = randInt(2, 9);
+      questions.push(`若直線 $L$ 只通過第一、二象限且經過點 $(${x},${y})$，求其方程式。`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$y=${y}$`,
+        `只通過第一、二象限表示這條直線必須是位於 $x$ 軸上方的水平線，所以 $y$ 坐標固定。又因為通過點 $(${x},${y})$，所以方程式是 $y=${y}$。`
       );
     }
 
@@ -2570,7 +3036,10 @@
         questions.push(
           `在坐標平面上，將點 $(-2,1)$ 向右平移 ${p} 單位，再向上平移 $a$ 單位，若新點落在直線 $2x+3y=23$ 上，求 $a$。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$a=${aText}$`,
           `平移後新點是 $(${xNew},1+a)$。代入直線方程式可得 $2\\times ${xNew}+3(1+a)=23$，即 $2\\times ${xNew}+3+3a=23$，所以 $3a=${20 - 2 * xNew}$，解得 $a=${aText}$。`
         );
         continue;
@@ -2585,7 +3054,10 @@
         questions.push(
           `將直線 $${formatLineSlopeIntercept(m, b)}$ 向下平移 ${down} 單位，再向右平移 ${right} 單位，求所得新直線方程式。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${formatLineSlopeIntercept(m, newB)}$`,
           `設新直線上的點為 $(x,y)$，則在原直線上對應的點是 $(x-${right},y+${down})$。代入原式：$y+${down}=${formatSlopeTerm(m, `(x-${right})`)}${formatSignedConstant(b)}$，整理得 $${formatLineSlopeIntercept(m, newB)}$。`
         );
         continue;
@@ -2599,7 +3071,10 @@
       questions.push(
         `若點在直線 $${formatAxByEq(a, b, c)}$ 上向右移 ${right} 單位，則還要向下移多少單位，該點才會仍落在原來的直線上？`
       );
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `向下移 ${down} 單位`,
         `設原點是 $(x,y)$。向右移 ${right} 單位後，左式會多出 ${a}×${right}=${a * right}；若再向下移 $t$ 單位，因為 $y$ 減少 $t$，左式會少掉 $${b}t$。要讓方程式仍成立，就要 $${a * right}-${b}t=0$，因此 $t=${down}$。所以要向下移 ${down} 單位。`
       );
     }
@@ -2614,83 +3089,56 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 3;
-      const cycle = Math.floor(i / 3);
 
       if (variant === 0) {
-        const templates = [
-          { a: 1, d: 2 },
-          { a: 1, d: 3 },
-          { a: 2, d: 2 },
-          { a: 2, d: 3 },
-          { a: 3, d: 2 },
-          { a: 3, d: 3 },
-          { a: 4, d: 2 },
-          { a: 4, d: 3 },
-          { a: 5, d: 2 },
-          { a: 2, d: 4 },
-        ];
-        const pick = templates[cycle % templates.length];
-        const a = pick.a;
-        const d = pick.d;
+        const a = randInt(1, 8);
+        const d = randInt(2, 8);
         const c = a * d;
         const area = d * c;
         questions.push(`求兩直線 $${formatAxByEq(a, 1, c)}$ 與 $${formatAxByEq(a, -1, -c)}$ 和 $x$ 軸所圍成區域面積。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `面積 $${area}$`,
           `兩直線交點在 $(0,${c})$；與 $x$ 軸交點分別為 $(${d},0)$、$(-${d},0)$。因此底長是 ${2 * d}，高是 ${c}，面積為 $\\frac{1}{2}\\times ${2 * d}\\times ${c}=${area}$。`
         );
         continue;
       }
 
       if (variant === 1) {
-        const templates = [
-          { px: 2, py: 2, up: 3, down: 2 },
-          { px: 3, py: 4, up: 4, down: 3 },
-          { px: 4, py: 6, up: 5, down: 4 },
-          { px: 3, py: 2, up: 5, down: 2 },
-          { px: 2, py: 4, up: 4, down: 2 },
-          { px: 4, py: 2, up: 6, down: 3 },
-          { px: 5, py: 4, up: 3, down: 2 },
-          { px: 3, py: 6, up: 4, down: 4 },
-        ];
-        const pick = templates[cycle % templates.length];
-        const px = pick.px;
-        const py = pick.py;
-        const y1 = py + pick.up;
-        const y2 = py - pick.down;
+        const px = randInt(1, 8);
+        const py = randInt(-4, 8);
+        const y1 = py + randInt(2, 7);
+        const y2 = py - randInt(2, 7);
         const l1 = lineThroughPointsStd(0, y1, px, py);
         const l2 = lineThroughPointsStd(0, y2, px, py);
         const area = (px * (y1 - y2)) / 2;
         questions.push(
           `求兩直線 $${formatAxByEq(l1.a, l1.b, l1.c)}$ 與 $${formatAxByEq(l2.a, l2.b, l2.c)}$ 和 $y$ 軸所圍成區域面積。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `面積 $${area}$`,
           `兩直線交點是 $(${px},${py})$，與 $y$ 軸交點分別是 $(0,${y1})$、$(0,${y2})$。因此底長是 ${y1 - y2}，高是 ${px}，面積為 $\\frac{1}{2}\\times ${y1 - y2}\\times ${px}=${area}$。`
         );
         continue;
       }
 
-      const templates = [
-        { px: 1, py: 3, left: 2, right: 3 },
-        { px: 2, py: 4, left: 3, right: 2 },
-        { px: 3, py: 6, left: 4, right: 3 },
-        { px: 2, py: 3, left: 2, right: 4 },
-        { px: 1, py: 4, left: 3, right: 4 },
-        { px: 3, py: 4, left: 3, right: 3 },
-        { px: 2, py: 6, left: 4, right: 2 },
-        { px: 4, py: 3, left: 2, right: 5 },
-      ];
-      const pick = templates[cycle % templates.length];
-      const px = pick.px;
-      const py = pick.py;
-      const x1 = px - pick.left;
-      const x2 = px + pick.right;
+      const px = randInt(1, 8);
+      const py = randInt(1, 8);
+      const x1 = px - randInt(2, 7);
+      const x2 = px + randInt(2, 7);
       const l1 = lineThroughPointsStd(px, py, x1, 0);
       const l2 = lineThroughPointsStd(px, py, x2, 0);
       const area = ((x2 - x1) * py) / 2;
       questions.push(
         `已知 $L_1:${formatAxByEq(l1.a, l1.b, l1.c)}$ 與 $L_2:${formatAxByEq(l2.a, l2.b, l2.c)}$ 交於點 $A$，且分別交 $x$ 軸於 $B,C$，求 $\\triangle ABC$ 面積。`
       );
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `面積 $${area}$`,
         `由題意可知交點 $A=(${px},${py})$，而 $B,C$ 在 $x$ 軸上，座標分別是 $(${x1},0)$、$(${x2},0)$。因此 $\\overline{BC}$ 長為 ${x2 - x1}$，高為 ${py}$，所以 $\\triangle ABC$ 面積為 $\\frac{1}{2}\\times ${x2 - x1}\\times ${py}=${area}$。`
       );
     }
@@ -2735,7 +3183,12 @@
         const count100 = randInt(3, 12);
         const count10 = randInt(4, 15);
         questions.push(`錢包內有 $x$ 張佰元鈔票與 $y$ 個拾元硬幣，總共有多少元？請用 $x,y$ 列出代數式。`);
-        answers.push(`一張佰元鈔票是 100 元，一個拾元硬幣是 10 元，所以總金額可記成 $100x+10y$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$100x+10y$`,
+          `一張佰元鈔票是 100 元，一個拾元硬幣是 10 元，所以總金額可記成 $100x+10y$。`
+        );
         continue;
       }
 
@@ -2745,7 +3198,12 @@
         questions.push(
           `阿里山全票一張 ${full} 元、半票一張 ${half} 元，若買了 $x$ 張全票與 $y$ 張半票，共需多少錢？請用 $x,y$ 列出代數式。`
         );
-        answers.push(`全票總價是 $${full}x$，半票總價是 $${half}y$，所以總金額可記成 $${full}x+${half}y$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${full}x+${half}y$`,
+          `全票總價是 $${full}x$，半票總價是 $${half}y$，所以總金額可記成 $${full}x+${half}y$。`
+        );
         continue;
       }
 
@@ -2757,7 +3215,10 @@
         questions.push(
           `${itemA}每份 ${onePrice} 元，${itemB}每份 ${anotherPrice} 元。若買了 $x$ 份${itemA}與 $y$ 份${itemB}，共需多少錢？請用 $x,y$ 列出代數式。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${onePrice}x+${anotherPrice}y$`,
           `${itemA}總價是 $${onePrice}x$，${itemB}總價是 $${anotherPrice}y$，所以總金額可記成 $${onePrice}x+${anotherPrice}y$。`
         );
         continue;
@@ -2767,7 +3228,12 @@
         const tens = randInt(1, 8);
         const ones = randInt(1, 9);
         questions.push(`若一個兩位數的十位數字是 $x$、個位數字是 $y$，請用 $x,y$ 列出這個兩位數的代數式。`);
-        answers.push(`十位數字代表 $10x$，個位數字代表 $y$，所以這個兩位數可記成 $10x+y$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$10x+y$`,
+          `十位數字代表 $10x$，個位數字代表 $y$，所以這個兩位數可記成 $10x+y$。`
+        );
         continue;
       }
 
@@ -2777,7 +3243,10 @@
       questions.push(
         `花店包裝一束花，玫瑰每枝 ${rose} 元、百合每枝 ${lily} 元，另加包裝費 ${fixedFee} 元。若用了 $x$ 枝玫瑰與 $y$ 枝百合，總價應記成什麼代數式？`
       );
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${rose}x+${lily}y+${fixedFee}$`,
         `玫瑰總價是 $${rose}x$，百合總價是 $${lily}y$，再加上包裝費 ${fixedFee} 元，所以總價可記成 $${rose}x+${lily}y+${fixedFee}$。`
       );
     }
@@ -2820,7 +3289,12 @@
         const expr = formatTwoVarExpr(pickNonZero(-8, 8), pickNonZero(-8, 8), randInt(-9, 9));
 
         questions.push(`判斷：$${expr}$ 是二元一次式、二元一次方程式，還是都不是？`);
-        answers.push(`$${expr}$ 沒有等號，且只含 $x,y$ 的一次項，所以它是二元一次式。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          '它是二元一次式',
+          `$${expr}$ 沒有等號，且只含 $x,y$ 的一次項，所以它是二元一次式。`
+        );
         continue;
       }
 
@@ -2829,7 +3303,12 @@
         const rhs = randInt(-12, 12);
 
         questions.push(`判斷：$${expr}=${rhs}$ 是二元一次式、二元一次方程式，還是都不是？`);
-        answers.push(`$${expr}=${rhs}$ 有等號，而且 $x,y$ 都只出現一次，所以它是二元一次方程式。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          '它是二元一次方程式',
+          `$${expr}=${rhs}$ 有等號，而且 $x,y$ 都只出現一次，所以它是二元一次方程式。`
+        );
         continue;
       }
 
@@ -2843,7 +3322,12 @@
         ]);
 
         questions.push(`判斷：$${expr}$ 是二元一次式、二元一次方程式，還是都不是？`);
-        answers.push(`$${expr}$ 含有 $x^2$，已經不是一次，所以不屬於二元一次式，也不是二元一次方程式。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          '都不是',
+          `$${expr}$ 含有 $x^2$，已經不是一次，所以不屬於二元一次式，也不是二元一次方程式。`
+        );
         continue;
       }
 
@@ -2859,7 +3343,12 @@
         ]);
 
         questions.push(`判斷：$${expr}$ 是二元一次式、二元一次方程式，還是都不是？`);
-        answers.push(`$${expr}$ 含有 $xy$，出現兩個未知數相乘，所以不是二元一次式，也不是二元一次方程式。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          '都不是',
+          `$${expr}$ 含有 $xy$，出現兩個未知數相乘，所以不是二元一次式，也不是二元一次方程式。`
+        );
         continue;
       }
 
@@ -2873,7 +3362,10 @@
         ]);
 
         questions.push(`判斷：$${expr}$（其中 $${name}$ 為常數）是二元一次式、二元一次方程式，還是都不是？`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          '都不是',
           `因為 $${name}$ 在題目中被指定為常數，不是第二個未知數，所以 $${expr}$ 只有一個未知數 $x$，不算二元一次式，也不是二元一次方程式。`
         );
         continue;
@@ -2932,7 +3424,12 @@
         return `${acc}${term.startsWith('-') ? '' : '+'}${term}`;
       }, '');
       questions.push(`化簡：$${questionExpr}$。`);
-      answers.push(`把 $x$ 項、$y$ 項與常數項分別合併，可得 $${formatTwoVarExpr(xCoef, yCoef, constant)}$。`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${formatTwoVarExpr(xCoef, yCoef, constant)}$`,
+        `把 $x$ 項、$y$ 項與常數項分別合併，可得 $${formatTwoVarExpr(xCoef, yCoef, constant)}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -2954,7 +3451,12 @@
         const inside = formatTwoVarExpr(a, b, c);
         const result = formatTwoVarExpr(k * a, k * b, k * c);
         questions.push(`化簡：$${k}(${inside})$。`);
-        answers.push(`利用分配律把 ${k} 乘進去，得 $${result}$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${result}$`,
+          `利用分配律把 ${k} 乘進去，得 $${result}$。`
+        );
         continue;
       }
 
@@ -2966,7 +3468,12 @@
         const inside = formatTwoVarExpr(a, b, c);
         const result = formatTwoVarExpr(k * a, k * b, k * c);
         questions.push(`化簡：$${k}(${inside})$。`);
-        answers.push(`括號前是負數，分配後每一項都要變號，所以 $${k}(${inside})=${result}$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${result}$`,
+          `括號前是負數，分配後每一項都要變號，所以 $${k}(${inside})=${result}$。`
+        );
         continue;
       }
 
@@ -2993,7 +3500,12 @@
       const expandedExpr = `${expandedFirst}${expandedSecond.startsWith('-') ? '' : '+'}${expandedSecond}`;
 
       questions.push(`化簡：$${originalExpr}$。`);
-      answers.push(`先分別展開兩個括號：$${originalExpr}=${expandedExpr}$，再合併同類項得 $${result}$。`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${result}$`,
+        `先分別展開兩個括號：$${originalExpr}=${expandedExpr}$，再合併同類項得 $${result}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -3013,8 +3525,11 @@
       const expr = formatTwoVarExpr(a, b, c);
       const result = a * xValue + b * yValue + c;
       questions.push(`當 $x=${xValue},\\ y=${yValue}$ 時，求 $${expr}$ 的值。`);
-      answers.push(
-        `把 $x=${xValue},\\ y=${yValue}$ 代入，可得 $${a}\\times(${xValue})${b >= 0 ? '+' : ''}${b}\\times(${yValue})${c >= 0 ? '+' : ''}${c}=${result}$。`
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${result}$`,
+        `把 $x=${xValue},\\ y=${yValue}$ 代入，可得 $${a}\\times(${xValue})${b >= 0 ? '+' : ''}${b}\\times(${yValue})${formatSignedNumber(c)}=${result}$。`
       );
     }
 
@@ -3061,7 +3576,10 @@
       const numerator = formatTwoVarExpr(numX, numY, numC);
       const result = den === 1 ? formatTwoVarExpr(numX, numY, numC) : `\\frac{${numerator}}{${den}}`;
       questions.push(`化簡：$${left}${usePlus ? '+' : '-'}${right}$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${result}$`,
         `先通分成分母都是 $${l}$：$${left}${usePlus ? '+' : '-'}${right}=\\frac{${formatTwoVarExpr(a1 * (l / d1), b1 * (l / d1), c1 * (l / d1))}}{${l}}${usePlus ? '+' : '-'}\\frac{${formatTwoVarExpr(a2 * (l / d2), b2 * (l / d2), c2 * (l / d2))}}{${l}}$。合併分子後得 $${result}$。`
       );
     }
@@ -3084,7 +3602,10 @@
       const equation = `${formatTwoVarExpr(ax, by)}=${rhs}`;
       questions.push(`檢查數對 $(x,y)=(${xValue},${yValue})$ 是否為方程式 $${equation}$ 的解。`);
       const leftValue = ax * xValue + by * yValue;
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        leftValue === rhs ? '這組數對是解' : '這組數對不是解',
         `把 $(x,y)=(${xValue},${yValue})$ 代入左邊，可得 $${ax}\\times(${xValue})${by >= 0 ? '+' : ''}${by}\\times(${yValue})=${leftValue}$。${leftValue === rhs ? `因為左右兩邊都等於 ${rhs}，所以這組數對是解。` : `因為左邊等於 ${leftValue}，右邊是 ${rhs}，兩邊不相等，所以這組數對不是解。`}`
       );
     }
@@ -3112,7 +3633,10 @@
       const constant = rhs - fixedCoef * xValue - paramValue * yValue;
       const equation = `${formatLinearExpr(fixedCoef, constant)}+${name}y=${rhs}`;
       questions.push(`若 $(x,y)=(${xValue},${yValue})$ 是方程式 $${equation}$ 的解，求 ${name}。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${name}=${paramValue}$`,
         `把 $(x,y)=(${xValue},${yValue})$ 代入，可得 $${fixedCoef === 1 ? '' : fixedCoef === -1 ? '-' : fixedCoef}${xValue}${constant >= 0 ? '+' : ''}${constant}+${name}(${yValue})=${rhs}$。整理後得到 $${yValue}${name}=${rhs - fixedCoef * xValue - constant}$，所以 ${name}=$${paramValue}$。`
       );
     }
@@ -3142,7 +3666,10 @@
       const left = formatTwoVarExpr(leftAx, leftBy, leftC);
       const right = formatTwoVarExpr(rightAx, rightBy, rightC);
       questions.push(`把方程式 $${left}=${right}$ 整理成標準型 $Ax+By=C$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${formatTwoVarExpr(finalAx, finalBy)}=${finalC}$`,
         `先把含 $x,y$ 的項移到左邊，常數移到右邊：$${left}=${right}\\Rightarrow ${formatTwoVarExpr(finalAx, finalBy)}=${finalC}$。所以標準型是 $${formatTwoVarExpr(finalAx, finalBy)}=${finalC}$。`
       );
     }
@@ -3165,7 +3692,7 @@
 
     while (questions.length < count) {
       const [a, b] = pairsCoPrime[randInt(0, pairsCoPrime.length - 1)];
-      const total = randInt(3, 7) * a * b;
+      const total = randInt(2, 5) * a * b;
       const pairs = [];
       for (let x = 0; x <= total; x += 1) {
         const remain = total - a * x;
@@ -3175,7 +3702,10 @@
       if (pairs.length < 3 || pairs.length > 6) continue;
       questions.push(`求方程式 $${a}x+${b}y=${total}$ 的所有非負整數解。`);
       const pairText = pairs.map(([x, y]) => `(${x},${y})`).join('、');
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `所有非負整數解為 ${pairText}`,
         `由 $${a}x+${b}y=${total}$ 可知 $y=\\frac{${total}-${a}x}{${b}}$。逐一檢查非負整數條件後，可得所有非負整數解為 $${pairText}$。`
       );
     }
@@ -3196,7 +3726,10 @@
       const xNumerator = `${c}${b > 0 ? '-' : '+'}${Math.abs(b)}y`;
       const yNumerator = `${c}${a > 0 ? '-' : '+'}${Math.abs(a)}x`;
       questions.push(`將方程式 $${equation}$ 分別整理成 $x=\\cdots$ 與 $y=\\cdots$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$x=\\frac{${xNumerator}}{${a}}$，$y=\\frac{${yNumerator}}{${b}}$`,
         `先整理成 $x$ 用 $y$ 表示：$${a}x=${c}${b > 0 ? '-' : '+'}${Math.abs(b)}y$，所以 $x=\\frac{${xNumerator}}{${a}}$。再整理成 $y$ 用 $x$ 表示：$${b}y=${c}${a > 0 ? '-' : '+'}${Math.abs(a)}x$，所以 $y=\\frac{${yNumerator}}{${b}}$。`
       );
     }
@@ -3219,9 +3752,13 @@
         const b = xInt;
         const c = xInt * yInt;
         const slope = simplifyFraction(-a, b);
+        const slopeInterceptForm = `y=${formatFractionSlopeTerm(slope)}${formatSignedNumber(yInt)}`;
         questions.push(`已知直線方程式為 $${formatAxByEq(a, b, c)}$，求此直線的斜率以及它與 $x$ 軸、$y$ 軸的截距。`);
-        answers.push(
-          `把方程式改寫成斜截式：$${b}y=-${a}x+${c}$，所以 $y=${fractionToLatex(slope)}x+${fractionToLatex(simplifyFraction(c, b))}$，斜率是 $${fractionToLatex(slope)}$。令 $y=0$，得 $x=${xInt}$，所以 $x$ 截距是 ${xInt}；令 $x=0$，得 $y=${yInt}$，所以 $y$ 截距是 ${yInt}。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `斜率 $${fractionToLatex(slope)}$，$x$ 截距 $${xInt}$，$y$ 截距 $${yInt}$`,
+          `把方程式改寫成斜截式：$${b}y=-${a}x+${c}$，所以 $${slopeInterceptForm}$，斜率是 $${fractionToLatex(slope)}$。令 $y=0$，得 $x=${xInt}$，所以 $x$ 截距是 ${xInt}；令 $x=0$，得 $y=${yInt}$，所以 $y$ 截距是 ${yInt}。`
         );
         continue;
       }
@@ -3230,7 +3767,10 @@
         const xInt = [2, 3, 4, 5, 6][randInt(0, 4)];
         const yInt = [2, 3, 4, 5, 6][randInt(0, 4)];
         questions.push(`已知一條直線的 $x$ 截距為 ${xInt}，$y$ 截距為 ${yInt}，求此直線方程式。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${formatAxByEq(yInt, xInt, xInt * yInt)}$`,
           `直線通過兩點 $(${xInt},0)$ 與 $(0,${yInt})$，可用截距式 $\\frac{x}{${xInt}}+\\frac{y}{${yInt}}=1$。化成整係數一般式，可得 $${formatAxByEq(yInt, xInt, xInt * yInt)}$。`
         );
         continue;
@@ -3241,8 +3781,11 @@
       const y0 = randInt(-6, 6);
       const b = y0 - m * x0;
       questions.push(`已知直線的斜率為 ${m}，且通過點 $(${x0},${y0})$，求此直線方程式。`);
-      answers.push(
-        `斜率為 ${m}，可先設直線為 $y=${m}x+b$。把點 $(${x0},${y0})$ 代入，得 $${y0}=${m}\\times ${x0}+b$，所以 $b=${b}$。因此直線方程式是 $${formatLineSlopeIntercept(m, b)}$。`
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${formatLineSlopeIntercept(m, b)}$`,
+        `斜率為 ${m}，可先設直線為 $${formatLineSlopeIntercept(m, 0)}+b$。把點 $(${x0},${y0})$ 代入，得 $${y0}=${m}\\times ${x0}+b$，所以 $b=${b}$。因此直線方程式是 $${formatLineSlopeIntercept(m, b)}$。`
       );
     }
 
@@ -3264,8 +3807,11 @@
         const y0 = randInt(-6, 6);
         const b = y0 - m * x0;
         questions.push(`求通過點 $(${x0},${y0})$ 且平行於直線 $${formatLineSlopeIntercept(m, b0)}$ 的直線方程式。`);
-        answers.push(
-          `平行直線的斜率相同，所以所求直線可設為 $y=${m}x+b$。代入點 $(${x0},${y0})$，得 $${y0}=${m}\\times ${x0}+b$，所以 $b=${b}$。因此方程式是 $${formatLineSlopeIntercept(m, b)}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${formatLineSlopeIntercept(m, b)}$`,
+          `平行直線的斜率相同，所以所求直線可設為 $${formatLineSlopeIntercept(m, 0)}+b$。代入點 $(${x0},${y0})$，得 $${y0}=${m}\\times ${x0}+b$，所以 $b=${b}$。因此方程式是 $${formatLineSlopeIntercept(m, b)}$。`
         );
         continue;
       }
@@ -3277,9 +3823,14 @@
         const y0 = randInt(-6, 6);
         const perpSlope = simplifyFraction(-1, m);
         const b = simplifyFraction(y0 * perpSlope.den - perpSlope.num * x0, perpSlope.den);
+        const slopeTerm = formatFractionSlopeTerm(perpSlope);
+        const equation = `y=${slopeTerm}${formatSignedFractionConstant(b)}`;
         questions.push(`求通過點 $(${x0},${y0})$ 且垂直於直線 $${formatLineSlopeIntercept(m, b0)}$ 的直線方程式。`);
-        answers.push(
-          `原直線斜率是 ${m}，所以垂直線的斜率是其負倒數 $${fractionToLatex(perpSlope)}$。設所求直線為 $y=${fractionToLatex(perpSlope)}x+b$，代入點 $(${x0},${y0})$，得 $b=${fractionToLatex(b, true)}$。因此方程式是 $y=${fractionToLatex(perpSlope)}x${b.num > 0 ? '+' : ''}${fractionToLatex(b, true)}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${equation}$`,
+          `原直線斜率是 ${m}，所以垂直線的斜率是其負倒數 $${fractionToLatex(perpSlope)}$。設所求直線為 $y=${slopeTerm}+b$，代入點 $(${x0},${y0})$，得 $b=${fractionToLatex(b, true)}$。因此方程式是 $${equation}$。`
         );
         continue;
       }
@@ -3291,8 +3842,11 @@
       const y0 = randInt(-6, 6);
       const c2 = a * x0 + b * y0;
       questions.push(`求通過點 $(${x0},${y0})$ 且平行於直線 $${formatAxByEq(a, b, c)}$ 的直線方程式。`);
-      answers.push(
-        `平行於 $${formatAxByEq(a, b, c)}$ 的直線，$x$、$y$ 的係數比不變，所以可設為 $${a}x${b >= 0 ? '+' : ''}${b}y=k$。代入點 $(${x0},${y0})$，得 $k=${c2}$。因此所求方程式是 $${formatAxByEq(a, b, c2)}$。`
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${formatAxByEq(a, b, c2)}$`,
+        `平行於 $${formatAxByEq(a, b, c)}$ 的直線，$x$、$y$ 的係數比不變，所以可設為 $${formatTwoVarExpr(a, b)}=k$。代入點 $(${x0},${y0})$，得 $k=${c2}$。因此所求方程式是 $${formatAxByEq(a, b, c2)}$。`
       );
     }
 
@@ -3318,7 +3872,10 @@
         questions.push(
           `求直線 $${formatLineSlopeIntercept(m1, b1)}$ 與直線 $${formatLineSlopeIntercept(m2, b2)}$ 的交點坐標。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(${x},${y})$`,
           `兩直線交點同時滿足兩式，所以解聯立方程式 $${formatSystemLatex(formatLineSlopeIntercept(m1, b1), formatLineSlopeIntercept(m2, b2))}$。整理可得交點是 $(${x},${y})$。`
         );
         continue;
@@ -3332,7 +3889,10 @@
         questions.push(
           `求直線 $${formatAxByEq(l1.a, l1.b, l1.c)}$ 與直線 $${formatAxByEq(l2.a, l2.b, l2.c)}$ 的交點坐標。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(${x},${y})$`,
           `把兩條直線聯立求解即可。解 $${formatSystemLatex(formatAxByEq(l1.a, l1.b, l1.c), formatAxByEq(l2.a, l2.b, l2.c))}$，可得交點是 $(${x},${y})$。`
         );
         continue;
@@ -3347,7 +3907,10 @@
       questions.push(
         `若直線 $L_1: ${formatLineSlopeIntercept(m1, b1)}$ 與直線 $L_2: ${formatLineSlopeIntercept(m2, b2)}$ 的交點在 $x$ 軸上，求交點坐標。`
       );
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$(${xIntercept},0)$`,
         `交點在 $x$ 軸上，表示交點的 $y=0$。把 $y=0$ 代入兩式，會得到相同的 $x$ 值：$x=${xIntercept}$。所以交點坐標是 $(${xIntercept},0)$。`
       );
     }
@@ -3362,14 +3925,23 @@
 
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
+      const cycle = Math.floor(i / 5);
 
       if (mode === 0) {
-        const a = -randInt(1, 6);
-        const b = randInt(2, 9);
-        questions.push(`若直線 $y=ax+b$ 通過第一、二、四象限，判斷點 $(a,b)$ 在第幾象限。`);
-        summaryAnswers.push('第二象限');
+        const signCases = [
+          { aSign: -1, bSign: 1, quadrants: '第一、二、四' },
+          { aSign: -1, bSign: -1, quadrants: '第二、三、四' },
+          { aSign: 1, bSign: 1, quadrants: '第一、二、三' },
+          { aSign: 1, bSign: -1, quadrants: '第一、三、四' },
+        ];
+        const pick = signCases[cycle % signCases.length];
+        const reflectX = cycle >= signCases.length;
+        const pointText = reflectX ? '(-a,b)' : '(a,b)';
+        const answer = quadrantText(reflectX ? -pick.aSign : pick.aSign, pick.bSign);
+        questions.push(`若直線 $y=ax+b$ 通過${pick.quadrants}象限，判斷點 $${pointText}$ 在第幾象限。`);
+        summaryAnswers.push(answer);
         answers.push(
-          `直線通過第一、二、四象限，表示斜率 $a<0$ 且 $y$ 截距 $b>0$。因此點 $(a,b)$ 的橫坐標為負、縱坐標為正，所以在第二象限。`
+          `直線通過${pick.quadrants}象限，表示斜率 $a${pick.aSign > 0 ? '>0' : '<0'}$ 且 $y$ 截距 $b${pick.bSign > 0 ? '>0' : '<0'}$。因此點 $${pointText}$ 的兩個坐標正負可判斷為${answer}。`
         );
       } else if (mode === 1) {
         const m = randInt(1, 5);
@@ -3380,7 +3952,7 @@
           `由兩點可得斜率 $a=${m}>0$，且截距 $b=${b}<0$。正斜率、負截距的直線會通過第一、三、四象限，不通過第二象限。`
         );
       } else if (mode === 2) {
-        const scale = randInt(1, 4);
+        const scale = randInt(1, 9);
         const xInt = 3 * scale;
         const yInt = -4 * scale;
         const a = 4;
@@ -3395,11 +3967,14 @@
           `令 $y=0$ 得 $x=${xInt}$，所以 $A(${xInt},0)$；令 $x=0$ 得 $y=${yInt}$，所以 $B(0,${yInt})$。兩股長為 ${xInt}、${Math.abs(yInt)}，斜邊長為 ${5 * scale}，周長為 $${xInt}+${Math.abs(yInt)}+${5 * scale}=${perimeter}$。`
         );
       } else if (mode === 3) {
-        const m = -2;
-        const k = 0;
-        questions.push(`直線 $y=mx+k$ 經過原點，且通過點 $(1,-2)$，求其方程式。`);
-        summaryAnswers.push('$y=-2x$');
-        answers.push(`通過原點表示 $k=0$。再代入點 $(1,-2)$，得 $-2=m\\times1$，所以 $m=-2$。方程式為 $y=-2x$。`);
+        const m = pickNonZero(-5, 5);
+        const x = pickNonZero(-6, 6);
+        const y = m * x;
+        questions.push(`直線 $y=mx+k$ 經過原點，且通過點 $(${x},${y})$，求其方程式。`);
+        summaryAnswers.push(`$${formatLineSlopeIntercept(m, 0)}$`);
+        answers.push(
+          `通過原點表示 $k=0$。再代入點 $(${x},${y})$，得 $${y}=m\\times(${x})$，所以 $m=${m}$。方程式為 $${formatLineSlopeIntercept(m, 0)}$。`
+        );
       } else {
         const y = randInt(-5, 6);
         questions.push(`已知線型函數 $f(x)=ax+b$ 通過點 $(${randInt(-3, 4)},${y})$，且圖形與 $x$ 軸平行，求此函數。`);
@@ -3422,14 +3997,24 @@
       if (variant === 0) {
         const total = [28, 32, 35, 40, 45][randInt(0, 4)];
         questions.push(`某班有男生 $x$ 人、女生 $y$ 人，全班共有 ${total} 人，列出二元一次方程式。`);
-        answers.push(`男生人數加上女生人數等於全班總人數，所以可列出方程式 $x+y=${total}$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$x+y=${total}$`,
+          `男生人數加上女生人數等於全班總人數，所以可列出方程式 $x+y=${total}$。`
+        );
         continue;
       }
 
       if (variant === 1) {
         const perimeter = [24, 30, 36, 40][randInt(0, 3)];
         questions.push(`長方形的長為 $x$ 公分、寬為 $y$ 公分，周長為 ${perimeter} 公分，列出二元一次方程式。`);
-        answers.push(`長方形周長是 $2x+2y$，又已知周長為 ${perimeter}，所以可列出方程式 $2x+2y=${perimeter}$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$2x+2y=${perimeter}$`,
+          `長方形周長是 $2x+2y$，又已知周長為 ${perimeter}，所以可列出方程式 $2x+2y=${perimeter}$。`
+        );
         continue;
       }
 
@@ -3442,7 +4027,10 @@
         questions.push(
           `蘋果每公斤 $x$ 元、橘子每公斤 $y$ 元，若買了 ${a} 公斤蘋果與 ${b} 公斤橘子，共花 ${total} 元，列出二元一次方程式。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${a}x+${b}y=${total}$`,
           `蘋果總價是 $${a}x$，橘子總價是 $${b}y$，總共 ${total} 元，所以可列出方程式 $${a}x+${b}y=${total}$。`
         );
         continue;
@@ -3455,7 +4043,12 @@
         questions.push(
           `雞有 $x$ 隻、兔有 $y$ 隻，已知共有 ${base + diff + base} 隻、共有 ${total} 隻腳，列出其中表示腳數的二元一次方程式。`
         );
-        answers.push(`每隻雞有 2 隻腳，每隻兔有 4 隻腳，所以腳數關係可列成 $2x+4y=${total}$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$2x+4y=${total}$`,
+          `每隻雞有 2 隻腳，每隻兔有 4 隻腳，所以腳數關係可列成 $2x+4y=${total}$。`
+        );
         continue;
       }
 
@@ -3464,7 +4057,10 @@
       questions.push(
         `小華每天存 $x$ 元、小美每天存 $y$ 元，兩人連續存了 ${days} 天，共存了 ${total} 元，列出二元一次方程式。`
       );
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${days}x+${days}y=${total}$`,
         `兩人一天共存 $x+y$ 元，存 $${days}$ 天就是 $${days}(x+y)$ 元，所以可列出方程式 $${days}x+${days}y=${total}$。`
       );
     }
@@ -3474,6 +4070,24 @@
 
   function formatSystemLatex(eq1, eq2) {
     return String.raw`\left\{\begin{array}{l}${eq1}\\${eq2}\end{array}\right.`;
+  }
+
+  function formatSignedTerm(coef, variable) {
+    if (coef === 0) return '';
+    const abs = Math.abs(coef);
+    const body = `${abs === 1 ? '' : abs}${variable}`;
+    return `${coef < 0 ? '-' : '+'}${body}`;
+  }
+
+  function formatLinearTwoTerms(firstCoef, firstVar, secondCoef, secondVar) {
+    const firstAbs = Math.abs(firstCoef);
+    const firstBody = `${firstAbs === 1 ? '' : firstAbs}${firstVar}`;
+    const first = firstCoef < 0 ? `-${firstBody}` : firstBody;
+    return `${first}${formatSignedTerm(secondCoef, secondVar)}`;
+  }
+
+  function formatSumValue(a, b) {
+    return b < 0 ? `${a}${b}` : `${a}+${b}`;
   }
 
   function buildJ212SubstitutionBasicSet(count) {
@@ -3499,7 +4113,10 @@
         }
         const eq2 = `${a2}x+${b2}y=${c2}`;
         questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(x,y)=(${xValue},${yValue})$`,
           `由第一式得 $x=${k}y${b >= 0 ? '+' : ''}${b}$，代入第二式：$${a2}(${k}y${b >= 0 ? '+' : ''}${b})+${b2}y=${c2}$。解得 $y=${yValue}$，再代回得 $x=${xValue}$，所以 $(x,y)=(${xValue},${yValue})$。`
         );
         continue;
@@ -3518,7 +4135,10 @@
         const c2 = a2 * xValue + b2 * yValue;
         const eq2 = `${a2}x${b2 >= 0 ? '+' : ''}${b2}y=${c2}`;
         questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(x,y)=(${xValue},${yValue})$`,
           `由第一式得 $y=x${d >= 0 ? '+' : ''}${d}$，代入第二式：$${a2}x${b2 >= 0 ? '+' : ''}${b2}(x${d >= 0 ? '+' : ''}${d})=${c2}$。解得 $x=${xValue}$，再代回得 $y=${yValue}$，所以 $(x,y)=(${xValue},${yValue})$。`
         );
         continue;
@@ -3536,7 +4156,10 @@
       const c2 = a2 * xValue + b2 * yValue;
       const eq2 = `${a2}x+${b2}y=${c2}`;
       questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$(x,y)=(${xValue},${yValue})$`,
         `先由第一式整理得 $y=${a1}x-${c1}$，代入第二式：$${a2}x+${b2}(${a1}x-${c1})=${c2}$。解得 $x=${xValue}$，再代回得 $y=${yValue}$，所以 $(x,y)=(${xValue},${yValue})$。`
       );
     }
@@ -3562,7 +4185,10 @@
         const eq1 = `${a}x+${b}y=${c1}`;
         const eq2 = `${a}x-${b}y=${c2}`;
         questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(x,y)=(${xValue},${yValue})$`,
           `兩式中的 $x$ 係數相同，直接相減可消去 $x$：$${2 * b}y=${c1 - c2}$，所以 $y=${yValue}$。再代回任一式，得 $x=${xValue}$，因此 $(x,y)=(${xValue},${yValue})$。`
         );
         continue;
@@ -3579,7 +4205,10 @@
         const eq2 = `${a2}x${b2 >= 0 ? '+' : ''}${b2}y=${c2}`;
         const factor = Math.abs(a1);
         questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(x,y)=(${xValue},${yValue})$`,
           `把第二式乘上 ${factor}，使兩式的 $x$ 係數對齊，再相減消去 $x$。整理後得 $y=${yValue}$，代回可得 $x=${xValue}$，所以 $(x,y)=(${xValue},${yValue})$。`
         );
         continue;
@@ -3597,7 +4226,10 @@
       const eq1 = `${a1}x${b1 >= 0 ? '+' : ''}${b1}y=${c1}`;
       const eq2 = `${a2}x${b2 >= 0 ? '+' : ''}${b2}y=${c2}`;
       questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$(x,y)=(${xValue},${yValue})$`,
         `先把兩式調整成 $x$ 的係數同為 ${l}$：第一式乘 ${m1}，第二式乘 ${m2}$。整理後再相減，可得到 $y=${yValue}$，再代回得 $x=${xValue}$，因此 $(x,y)=(${xValue},${yValue})$。`
       );
     }
@@ -3621,7 +4253,10 @@
         const eq1 = String.raw`\frac{x}{2}+\frac{y}{3}=${rhs1}`;
         const eq2 = `x-y=${rhs2}`;
         questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(x,y)=(${xValue},${yValue})$`,
           `先把第一式同乘 6，得 $3x+2y=${rhs1 * 6}$；第二式是 $x-y=${rhs2}$。再用加減消去或代入求解，可得 $x=${xValue},\ y=${yValue}$，所以 $(x,y)=(${xValue},${yValue})$。`
         );
         continue;
@@ -3635,7 +4270,10 @@
         const eq1 = `0.3x+0.5y=${rhs1}`;
         const eq2 = `0.1x+0.4y=${rhs2}`;
         questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(x,y)=(${xValue},${yValue})$`,
           `先把兩式同乘 10，化成整係數方程式：$3x+5y=${Number(rhs1) * 10}$、$x+4y=${Number(rhs2) * 10}$。再用代入或加減消去求解，可得 $(x,y)=(${xValue},${yValue})$。`
         );
         continue;
@@ -3648,7 +4286,10 @@
       const eq1 = String.raw`\frac{x+y}{2}=${a}`;
       const eq2 = String.raw`\frac{x-y}{3}=${b}`;
       questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$(x,y)=(${xValue},${yValue})$`,
         `先把第一式乘 2、第二式乘 3，得 $x+y=${2 * a}$、$x-y=${3 * b}$。兩式相加可得 $2x=${2 * a + 3 * b}$，所以 $x=${xValue}$；再代回得 $y=${yValue}$。`
       );
     }
@@ -3671,7 +4312,10 @@
         const eq1 = `${a}x+${b}y=${c}`;
         const eq2 = `${2 * a}x+${2 * b}y=${2 * c}`;
         questions.push(`判斷聯立方程式 $${formatSystemLatex(eq1, eq2)}$ 的解的情形。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          '有無限多組解',
           `因為 $\\frac{${a}}{${2 * a}}=\\frac{${b}}{${2 * b}}=\\frac{${c}}{${2 * c}}=\\frac{1}{2}$，兩式其實表示同一直線，所以有無限多組解。`
         );
         continue;
@@ -3684,7 +4328,12 @@
         const eq1 = `${a}x+${b}y=${c}`;
         const eq2 = `${a}x+${b}y=${c + pickNonZero(1, 6)}`;
         questions.push(`判斷聯立方程式 $${formatSystemLatex(eq1, eq2)}$ 的解的情形。`);
-        answers.push(`因為左邊完全相同，但右邊常數不同，所以兩條直線平行而不重合，因此無解。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          '無解',
+          `因為左邊完全相同，但右邊常數不同，所以兩條直線平行而不重合，因此無解。`
+        );
         continue;
       }
 
@@ -3697,7 +4346,10 @@
         const eq1 = `${a}x+${b}y=${c}`;
         const eq2 = `${a * scale}x+${b * scale}y=${c * scale + delta}`;
         questions.push(`判斷聯立方程式 $${formatSystemLatex(eq1, eq2)}$ 的解的情形。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          '無解',
           `前兩組係數比滿足 $\\frac{${a}}{${a * scale}}=\\frac{${b}}{${b * scale}}=\\frac{1}{${scale}}$，但常數比是 $\\frac{${c}}{${c * scale + delta}}$，與前兩者不同，因此兩條直線平行，屬於無解。`
         );
         continue;
@@ -3719,7 +4371,10 @@
         const eq1 = `${a1}x+${b1}y=${c1}`;
         const eq2 = `${a2}x+${b2}y=${c2}`;
         questions.push(`判斷聯立方程式 $${formatSystemLatex(eq1, eq2)}$ 的解的情形。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          '恰有一組解',
           `因為 $\\frac{${a1}}{${a2}}$ 與 $\\frac{${b1}}{${b2}}$ 不相等，兩條直線一定相交，所以恰有一組解。`
         );
         continue;
@@ -3734,7 +4389,10 @@
       const eq1 = `${a}x+${b}y=${c}`;
       const eq2 = `${ratioDen * a}x+ky=${ratioDen * c}`;
       questions.push(`若聯立方程式 $${formatSystemLatex(eq1, eq2)}$ 有無限多組解，求 $k$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$k=${k}$`,
         `若要有無限多組解，三組比值必須都相同。已知 $\\frac{${a}}{${ratioDen * a}}=\\frac{1}{${ratioDen}}$，所以要有 $\\frac{${b}}{k}=\\frac{1}{${ratioDen}}$，解得 $k=${k}$。同時常數比 $\\frac{${c}}{${ratioDen * c}}=\\frac{1}{${ratioDen}}$ 也一致，所以確實是無限多組解。`
       );
     }
@@ -3766,7 +4424,10 @@
       const sys1 = `${a1}x${b1 >= 0 ? '+' : ''}${b1}y=${target - c1}`;
       const sys2 = `${a2}x${b2 >= 0 ? '+' : ''}${b2}y=${target - c2}`;
       questions.push(`求滿足 $${expr1}=${expr2}=${target}$ 的 $(x,y)$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$(x,y)=(${xValue},${yValue})$`,
         `把三個式子相等拆成兩個方程式：$${expr1}=${target}$ 與 $${expr2}=${target}$，可得聯立方程式 $${formatSystemLatex(sys1, sys2)}$。解得 $(x,y)=(${xValue},${yValue})$。`
       );
     }
@@ -3791,7 +4452,10 @@
         const eq1 = `${a}x+${b}y=${total}`;
         const eq2 = `${b}x+${a}y=${total}`;
         questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$x=${xValue},\\ y=${yValue}$`,
           `兩式相減可得 $(${a - b})x-(${a - b})y=0$，所以 $x=y$。再代回任一式，得 $${a + b}x=${total}$，因此 $x=${xValue},\ y=${yValue}$。`
         );
         continue;
@@ -3804,7 +4468,10 @@
       const eq1 = `${a}x+${b}y=${rhs1}`;
       const eq2 = `${b}x+${a}y=${rhs2}`;
       questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$x=${xValue},\\ y=${yValue}$`,
         `兩式相加得 $(${a + b})x+(${a + b})y=0$，所以 $x+y=0$，即 $y=-x$。代回第一式可得 $x=${xValue},\ y=${yValue}$。`
       );
     }
@@ -3831,7 +4498,10 @@
       const expr2 = formatTwoVarExpr(a2, b2, c2);
       if (variant === 0) {
         questions.push(`若 $|${expr1}|+|${expr2}|=0$，求 $(x,y)$。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(x,y)=(${xValue},${yValue})$`,
           `因為兩個絕對值都不會小於 0，而它們的和等於 0，所以兩個絕對值內部都必須等於 0。故可列成聯立方程式 $${formatSystemLatex(`${expr1}=0`, `${expr2}=0`)}$，解得 $(x,y)=(${xValue},${yValue})$。`
         );
         continue;
@@ -3839,14 +4509,20 @@
 
       if (variant === 1) {
         questions.push(`若 $(${expr1})^2+(${expr2})^2=0$，求 $(x,y)$。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(x,y)=(${xValue},${yValue})$`,
           `因為平方都不會小於 0，而兩個平方和等於 0，所以每一項平方都必須是 0。故有 $${formatSystemLatex(`${expr1}=0`, `${expr2}=0`)}$，解得 $(x,y)=(${xValue},${yValue})$。`
         );
         continue;
       }
 
       questions.push(`若 $|${expr1}|+(${expr2})^2=0$，求 $(x,y)$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$(x,y)=(${xValue},${yValue})$`,
         `因為絕對值與平方都不會小於 0，而它們的和等於 0，所以 $|${expr1}|=0$ 且 $(${expr2})^2=0$。因此可列成 $${formatSystemLatex(`${expr1}=0`, `${expr2}=0`)}$，解得 $(x,y)=(${xValue},${yValue})$。`
       );
     }
@@ -3888,7 +4564,10 @@
         questions.push(
           `已知 $x=${xValue},\\ y=${yValue}$ 是聯立方程式 $${formatSystemLatex(`${p}x=m+${q}y`, `nx+${r}y=${rhs}`)}$ 的解，求 $m+2n$。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$m+2n=${m + 2 * n}$`,
           `把 $x=${xValue},\\ y=${yValue}$ 代入第一式，可得 $m=${p * xValue}-${q}\\times(${yValue})=${m}$。再代入第二式，得 $${xValue}n+${r}\\times(${yValue})=${rhs}$，所以 $${xValue}n=${rhs - r * yValue}$，解得 $n=${n}$。因此 $m+2n=${m}+2\\times(${n})=${m + 2 * n}$。`
         );
         continue;
@@ -3905,8 +4584,11 @@
         questions.push(
           `若 $x=${xValue},\\ y=${yValue}$ 是聯立方程式 $${formatSystemLatex(`ax+by=${c1}`, `bx-ay=${c2}`)}$ 的解，求 $|a-b|$。`
         );
-        answers.push(
-          `把 $x=${xValue},\\ y=${yValue}$ 代入，可得 $(${xValue})a${yValue >= 0 ? '+' : ''}(${yValue})b=${c1}$ 與 $(${xValue})b${-yValue >= 0 ? '+' : ''}(${-yValue})a=${c2}$。解這個關於 $a,b$ 的聯立方程式，可得 $a=${a},\\ b=${b}$，所以 $|a-b|=${Math.abs(a - b)}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$|a-b|=${Math.abs(a - b)}$`,
+          `把 $x=${xValue},\\ y=${yValue}$ 代入，可得 $${formatLinearTwoTerms(xValue, 'a', yValue, 'b')}=${c1}$ 與 $${formatLinearTwoTerms(-yValue, 'a', xValue, 'b')}=${c2}$。解這個關於 $a,b$ 的聯立方程式，可得 $a=${a},\\ b=${b}$，所以 $|a-b|=${Math.abs(a - b)}$。`
         );
         continue;
       }
@@ -3918,8 +4600,11 @@
         questions.push(
           `若 $x=a,\\ y=b$ 為聯立方程式 $${formatSystemLatex(`${sys.a1}x${sys.b1 >= 0 ? '+' : ''}${sys.b1}y=${sys.c1}`, `${sys.a2}x${sys.b2 >= 0 ? '+' : ''}${sys.b2}y=${sys.c2}`)}$ 的解，求 $a+b-1$。`
         );
-        answers.push(
-          `先解聯立方程式，可得 $(x,y)=(${xValue},${yValue})$。因為題目說 $x=a,\\ y=b$，所以 $a=${xValue},\\ b=${yValue}$，故 $a+b-1=${xValue}+${yValue}-1=${xValue + yValue - 1}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$a+b-1=${xValue + yValue - 1}$`,
+          `先解聯立方程式，可得 $(x,y)=(${xValue},${yValue})$。因為題目說 $x=a,\\ y=b$，所以 $a=${xValue},\\ b=${yValue}$，故 $a+b-1=${formatSumValue(formatSumValue(xValue, yValue), -1)}=${xValue + yValue - 1}$。`
         );
         continue;
       }
@@ -3934,8 +4619,11 @@
       questions.push(
         `已知 $x=${xValue},\\ y=${yValue}$ 是聯立方程式 $${formatSystemLatex(`ax+3y=${rhs1}`, `2x+by=${rhs2}`)}$ 的解，求 $a-b$。`
       );
-      answers.push(
-        `把 $x=${xValue},\\ y=${yValue}$ 代入第一式，得 $${xValue}a+3\\times(${yValue})=${rhs1}$，所以 $${xValue}a=${rhs1 - 3 * yValue}$，解得 $a=${a}$。再代入第二式，得 $2\\times(${xValue})+${yValue}b=${rhs2}$，所以 $${yValue}b=${rhs2 - 2 * xValue}$，解得 $b=${b}$。因此 $a-b=${a - b}$。`
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$a-b=${a - b}$`,
+        `把 $x=${xValue},\\ y=${yValue}$ 代入第一式，得 $${xValue === 0 ? `0${formatSignedTerm(3 * yValue, '')}` : formatLinearTwoTerms(xValue, 'a', 3 * yValue, '')}=${rhs1}$，所以 $${xValue}a=${rhs1 - 3 * yValue}$，解得 $a=${a}$。再代入第二式，得 $2\\times(${xValue})${formatSignedTerm(yValue, 'b')}=${rhs2}$，所以 $${yValue}b=${rhs2 - 2 * xValue}$，解得 $b=${b}$。因此 $a-b=${a - b}$。`
       );
     }
 
@@ -3989,7 +4677,10 @@
         questions.push(
           `小明看錯 $a$，解得 $x=${wrong1.x},\\ y=${wrong1.y}$；小雅看錯 $b$，解得 $x=${wrong2.x},\\ y=${wrong2.y}$。求聯立方程式 $${formatSystemLatex(`ax+by=${c1}`, `${p}x-by=${c2}`)}$ 的正確解。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(x,y)=(${xValue},${yValue})$`,
           `因為小明只看錯 $a$，所以他的錯解一定滿足第二式：$${p}\\times(${wrong1.x})-b\\times(${wrong1.y})=${c2}$，解得 $b=${b}$。因為小雅只看錯 $b$，所以她的錯解一定滿足第一式：$a\\times(${wrong2.x})+${b}\\times(${wrong2.y})=${c1}$，解得 $a=${a}$。原方程式變成 $${formatSystemLatex(`${a}x+${b}y=${c1}`, `${p}x-${b}y=${c2}`)}$，解得 $(x,y)=(${xValue},${yValue})$。`
         );
         continue;
@@ -4033,7 +4724,10 @@
       questions.push(
         `莉莉看錯 $b$，解得 $x=${wrong1.x},\\ y=${wrong1.y}$；奇奇看錯 $c$，解得 $x=${wrong2.x},\\ y=${wrong2.y}$。求聯立方程式 $${formatSystemLatex(`4x+by=${c1}`, `3x+cy=${c2}`)}$ 的正確解。`
       );
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$(x,y)=(${xValue},${yValue})$`,
         `因為莉莉只看錯 $b$，所以她的錯解一定滿足第二式：$3\\times(${wrong1.x})+c\\times(${wrong1.y})=${c2}$，可得 $c=${c}$。因為奇奇只看錯 $c$，所以他的錯解一定滿足第一式：$4\\times(${wrong2.x})+b\\times(${wrong2.y})=${c1}$，可得 $b=${b}$。因此原方程式是 $${formatSystemLatex(`4x+${b}y=${c1}`, `3x+${c}y=${c2}`)}$，解得 $(x,y)=(${xValue},${yValue})$。`
       );
     }
@@ -4061,7 +4755,10 @@
         questions.push(
           `若聯立方程式 $${formatSystemLatex(`x+y=${s}`, `x-y=${d}`)}$ 與 $${formatSystemLatex(`ax+by=${c1}`, `ax-by=${c2}`)}$ 有相同的解，求 $a,b$。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$a=${a},\\ b=${b}$`,
           `先由第一組解得 $x=${xValue},\\ y=${yValue}$。再把這組 $(x,y)$ 代入第二組，可得關於 $a,b$ 的聯立方程式，解得 $a=${a},\\ b=${b}$。`
         );
         continue;
@@ -4077,7 +4774,10 @@
         questions.push(
           `若 $${formatSystemLatex(`${p}x${q >= 0 ? '+' : ''}${q}y=${r}`, `bx+ay=${t}`)}$ 與 $${formatSystemLatex(`ax+by=${s}`, `2x-5y=${u}`)}$ 有相同的解，求 $a,b$。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$a=${a},\\ b=${b}$`,
           `先利用不含 $a,b$ 的兩式 $${p}x${q >= 0 ? '+' : ''}${q}y=${r}$ 與 $2x-5y=${u}$ 解得 $x=${xValue},\\ y=${yValue}$。再代入其餘兩式 $ax+by=${s}$、$bx+ay=${t}$，解出 $a=${a},\\ b=${b}$。`
         );
         continue;
@@ -4098,7 +4798,10 @@
       questions.push(
         `若 $${formatSystemLatex(`ax+by=${c1}`, `ax-by=${c2}`)}$ 與 $${formatSystemLatex(`${p}x${q >= 0 ? '+' : ''}${q}y=${d1}`, `${r}x${s >= 0 ? '+' : ''}${s}y=${d2}`)}$ 有相同的解，求 $a,b$。`
       );
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$a=${a},\\ b=${b}$`,
         `先由第二組純數字的聯立方程式解得 $x=${xValue},\\ y=${yValue}$。再代回第一組 $ax+by=${c1}$、$ax-by=${c2}$，即可解得 $a=${a},\\ b=${b}$。`
       );
     }
@@ -4124,7 +4827,10 @@
         questions.push(
           `若聯立方程式 $${formatSystemLatex(`${sys.a1}x${sys.b1 >= 0 ? '+' : ''}${sys.b1}y=${sys.c1}`, `${sys.a2}x${sys.b2 >= 0 ? '+' : ''}${sys.b2}y=${sys.c2}`)}$ 的解滿足 $ax+by=${target}$，求 $a+2b$。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$a+2b=${target}$`,
           `先解聯立方程式，可得 $(x,y)=(1,2)$。把它代入第三個條件 $ax+by=${target}$，就得到 $a+2b=${target}$。`
         );
         continue;
@@ -4143,7 +4849,10 @@
         questions.push(
           `已知聯立方程式 $${formatSystemLatex(`${p}x+${q}y=k`, `${r}x${s >= 0 ? '+' : ''}${s}y=k${delta >= 0 ? '+' : ''}${delta}`)}$ 的解為 $x=a,\\ y=b$。若 $a,b$ 互為相反數，求 $k$。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$k=${k}$`,
           `因為 $a,b$ 互為相反數，所以可設 $y=-x$。代入兩式聯立，可得 $x=${xValue},\\ y=${yValue}$，進而算出 $k=${k}$。`
         );
         continue;
@@ -4158,7 +4867,10 @@
         questions.push(
           `若聯立方程式 $${formatSystemLatex(`ax-4y+8=0`, `4x-y-7=0`)}$ 的解中，$x$ 比 $y$ 小 2，求 $a$。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$a=${a}$`,
           `由「$x$ 比 $y$ 小 2」可得 $y=x+2$。代入第二式 $4x-y-7=0$，可求得 $x=${xValue},\\ y=${yValue}$。再代入第一式 $ax-4y+8=0$，解得 $a=${a}$。`
         );
         continue;
@@ -4173,7 +4885,10 @@
       questions.push(
         `若聯立方程式 $${formatSystemLatex(`${sys.a1}x${sys.b1 >= 0 ? '+' : ''}${sys.b1}y=${sys.c1}`, `${sys.a2}x${sys.b2 >= 0 ? '+' : ''}${sys.b2}y=${sys.c2}`)}$ 的解還滿足 $px+qy=${k}$，且 $x$ 是 $y$ 的 2 倍，求 $2p+q$。`
       );
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$2p+q=${k}$`,
         `由聯立方程式先求得 $(x,y)=(2,1)$，也確實滿足 $x=2y$。把它代入第三條件 $px+qy=${k}$，可得 $2p+q=${k}$。因此答案就是 $${k}$。`
       );
     }
@@ -4198,7 +4913,10 @@
         questions.push(
           `若聯立方程式 $${formatSystemLatex(`${a}x+${b}y=${c}`, `${a * scale}x+ky=${c}`)}$ 無解，求 $k$。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$k=${k}$`,
           `無解表示前兩組係數成比例，但常數比不同。因為 $\\frac{${a}}{${a * scale}}=\\frac{1}{${scale}}$，所以也要有 $\\frac{${b}}{k}=\\frac{1}{${scale}}$，解得 $k=${k}$。此時常數比是 $\\frac{${c}}{${c}}=1$，與前面不同，所以確實無解。`
         );
         continue;
@@ -4213,7 +4931,10 @@
         questions.push(
           `若聯立方程式 $${formatSystemLatex(`${a}x${b >= 0 ? '+' : ''}${b}y=${c}`, `${a * scale}x${b * scale >= 0 ? '+' : ''}${b * scale}y=k`)}$ 有無限多組解，求 $k$。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$k=${k}$`,
           `有無限多組解表示三組比值都相同。前兩組係數比已是 $\\frac{1}{${scale}}$，所以常數也必須滿足 $\\frac{${c}}{k}=\\frac{1}{${scale}}$，解得 $k=${k}$。`
         );
         continue;
@@ -4226,7 +4947,10 @@
         const q = [8, 10, 12, 15, 18, 20, 24, 30][randInt(0, 7)];
         const s = p * q;
         questions.push(`若聯立方程式 $${formatSystemLatex(`x+ay=${q}`, `${p}x-${r}y=${s}`)}$ 有無限多組解，求 $a$。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$a=${a}$`,
           `若有無限多組解，三組比值都要相同。由 $\\frac{1}{${p}}=\\frac{${q}}{${s}}$，可知也要有 $\\frac{a}{-${r}}=\\frac{1}{${p}}$，所以 $a=${a}$。`
         );
         continue;
@@ -4239,7 +4963,10 @@
       const offset = [1, 2, 3, 4, 5, 6][randInt(0, 5)];
       const s = p * q + offset;
       questions.push(`若聯立方程式 $${formatSystemLatex(`x+ay=${q}`, `${p}x-${r}y=${s}`)}$ 無解，求 $a$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$a=${a}$`,
         `若無解，前兩組係數要成比例，但常數比不同。先由 $\\frac{1}{${p}}=\\frac{a}{-${r}}$ 得 $a=${a}$。此時係數比固定是 $\\frac{1}{${p}}$，但常數比是 $\\frac{${q}}{${s}}$，與 $\\frac{1}{${p}}$ 不同，因此確實無解。`
       );
     }
@@ -4263,7 +4990,10 @@
         const simplified1 = `x+2y=${xValue + 2 * (yValue - 1) + 2}`;
         const simplified2 = `2x-y=${2 * xValue - yValue}`;
         questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(x,y)=(${xValue},${yValue})$`,
           `先化簡第一式得 $${simplified1}$，第二式化簡得 $${simplified2}$。再解聯立方程式，可得 $(x,y)=(${xValue},${yValue})$。`
         );
         continue;
@@ -4275,7 +5005,10 @@
         const simplified1 = `3x-2y=${3 * (xValue - 2) - 2 * (yValue + 1) + 8}`;
         const simplified2 = `2x+y=${2 * (xValue + 1) + yValue - 2}`;
         questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$(x,y)=(${xValue},${yValue})$`,
           `先展開整理，可得 $${simplified1}$ 與 $${simplified2}$。接著用消去法或代入法求解，得到 $(x,y)=(${xValue},${yValue})$。`
         );
         continue;
@@ -4285,7 +5018,10 @@
       const eq2 = `4x+y=${4 * xValue + yValue}`;
       const simplified1 = `-x+5y=${2 * (xValue + yValue) - 3 * (xValue - yValue)}`;
       questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$(x,y)=(${xValue},${yValue})$`,
         `先把第一式展開：$2(x+y)-3(x-y)=-x+5y$，所以原式可化成 $${formatSystemLatex(simplified1, eq2)}$。再解得 $(x,y)=(${xValue},${yValue})$。`
       );
     }
@@ -4321,7 +5057,10 @@
       const eq1 = `\\frac{${a1}}{x}${b1 >= 0 ? '+' : '-'}\\frac{${Math.abs(b1)}}{y}=${fractionToLatex(c1, true)}`;
       const eq2 = `\\frac{${a2}}{x}${b2 >= 0 ? '+' : '-'}\\frac{${Math.abs(b2)}}{y}=${fractionToLatex(c2, true)}`;
       questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$x=${xValue},\\ y=${yValue}$`,
         `設 $u=\\frac{1}{x},\\ v=\\frac{1}{y}$，原式可化成 $${formatSystemLatex(`${a1}u${b1 >= 0 ? '+' : ''}${b1}v=${fractionToLatex(c1, true)}`, `${a2}u${b2 >= 0 ? '+' : ''}${b2}v=${fractionToLatex(c2, true)}`)}$。解得 $u=${fractionToLatex(u, true)},\\ v=${fractionToLatex(v, true)}$，所以 $x=${xValue},\\ y=${yValue}$。`
       );
     }
@@ -4363,7 +5102,10 @@
       const eq1 = `\\frac{${a1}}{x+y}${b1 >= 0 ? '+' : '-'}\\frac{${Math.abs(b1)}}{x-y}=${fractionToLatex(c1, true)}`;
       const eq2 = `\\frac{${a2}}{x+y}${b2 >= 0 ? '+' : '-'}\\frac{${Math.abs(b2)}}{x-y}=${fractionToLatex(c2, true)}`;
       questions.push(`解聯立方程式：$${formatSystemLatex(eq1, eq2)}$。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$x=${xValue},\\ y=${yValue}$`,
         `設 $u=\\frac{1}{x+y},\\ v=\\frac{1}{x-y}$，原式可化成 $${formatSystemLatex(`${a1}u${b1 >= 0 ? '+' : ''}${b1}v=${fractionToLatex(c1, true)}`, `${a2}u${b2 >= 0 ? '+' : ''}${b2}v=${fractionToLatex(c2, true)}`)}$。解得 $u=${fractionToLatex(u, true)},\\ v=${fractionToLatex(v, true)}$，所以 $x+y=${s},\\ x-y=${d}$。再解這組聯立，可得 $x=${xValue},\\ y=${yValue}$。`
       );
     }
@@ -4397,6 +5139,12 @@
       { m: 3, n: 2, x1: 4, y1: 2, ask: 'm+2n', label: 'm+2n' },
       { m: 1, n: 3, x1: 3, y1: 2, ask: 'm+n', label: 'm+n' },
       { m: 4, n: 2, x1: 2, y1: 4, ask: '2m+n', label: '2m+n' },
+      { m: 5, n: 3, x1: 1, y1: 8, ask: 'm+n', label: 'm+n' },
+      { m: 2, n: 6, x1: 4, y1: 5, ask: 'm+2n', label: 'm+2n' },
+      { m: 6, n: 1, x1: 2, y1: 7, ask: '2m+n', label: '2m+n' },
+      { m: 3, n: 7, x1: 2, y1: 6, ask: 'm-n', label: 'm-n' },
+      { m: 5, n: 4, x1: 3, y1: 6, ask: 'm+n', label: 'm+n' },
+      { m: 2, n: 7, x1: 3, y1: 5, ask: '2m+n', label: '2m+n' },
     ];
 
     for (let i = 0; i < count; i += 1) {
@@ -4421,7 +5169,7 @@
       );
       answers.push(
         `將兩組解代入 $mx+ny=${C}$，得聯立方程組：` +
-          `$\\begin{cases}${x1}m+${y1}n=${C}\\\\${x2}m+${y2}n=${C}\\end{cases}$。` +
+          `$\\begin{cases}${formatLinearTwoTerms(x1, 'm', y1, 'n')}=${C}\\\\${formatLinearTwoTerms(x2, 'm', y2, 'n')}=${C}\\end{cases}$。` +
           `解得 $m=${m},\ n=${n}$，故 $${t.label}=${askVal}$。`
       );
       summaryAnswers.push(`$${t.label}=${askVal}$`);
@@ -4485,13 +5233,19 @@
           const ratio = normalizeRatioFromFractions(left, right);
           const common = lcm(left.den, right.den);
           questions.push(`將 $${integerOrFractionLatex(left)}:${fractionToLatex(right)}$ 化為最簡整數比。`);
-          answers.push(
+          pushAnswerWithManualSummary(
+            answers,
+            summaryAnswers,
+            `$${ratio.a}:${ratio.b}$`,
             `先把兩項都看成分數，再同乘分母的最小公倍數 ${common}，可得整數比。約分後，最簡整數比為 $${ratio.a}:${ratio.b}$。`
           );
         } else {
           const value = divFraction(left, right);
           questions.push(`求 $${integerOrFractionLatex(left)}:${fractionToLatex(right)}$ 的比值。`);
-          answers.push(
+          pushAnswerWithManualSummary(
+            answers,
+            summaryAnswers,
+            `$${fractionToLatex(value)}$`,
             `比值就是前項除以後項，所以 $${fractionToLatex(left)}\\div ${fractionToLatex(right)}=${fractionToLatex(value)}$。`
           );
         }
@@ -4511,13 +5265,19 @@
           const ratio = normalizeRatioFromFractions(left.frac, right);
           const common = lcm(left.frac.den, right.den);
           questions.push(`將 $${left.text}:${integerOrFractionLatex(right)}$ 化為最簡整數比。`);
-          answers.push(
+          pushAnswerWithManualSummary(
+            answers,
+            summaryAnswers,
+            `$${ratio.a}:${ratio.b}$`,
             `先把小數化成分數：$${left.text}=${fractionToLatex(left.frac)}$。再同乘分母的最小公倍數 ${common}，約分後得最簡整數比 $${ratio.a}:${ratio.b}$。`
           );
         } else {
           const value = divFraction(left.frac, right);
           questions.push(`求 $${left.text}:${integerOrFractionLatex(right)}$ 的比值。`);
-          answers.push(
+          pushAnswerWithManualSummary(
+            answers,
+            summaryAnswers,
+            `$${fractionToLatex(value)}$`,
             `把小數化成分數後，比值為 $${fractionToLatex(left.frac)}\\div ${fractionToLatex(right)}=${fractionToLatex(value)}$。`
           );
         }
@@ -4530,7 +5290,10 @@
         const kgGram = mulFraction(kg, makeFraction(1000, 1));
         const ratio = normalizeRatioFromFractions(makeFraction(gram, 1), kgGram);
         questions.push(`將 ${gram} 公克：$${fractionToLatex(kg)}$ 公斤化為最簡整數比。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${ratio.a}:${ratio.b}$`,
           `先把公斤化成公克：$${fractionToLatex(kg)}$ 公斤 $=${fractionToLatex(kgGram)}$ 公克。再把 $${gram}:${fractionToLatex(kgGram)}$ 約成最簡整數比，可得 $${ratio.a}:${ratio.b}$。`
         );
         continue;
@@ -4543,7 +5306,10 @@
         const otherMinute = randInt(1, 4);
         const ratio = normalizeRatioInts(totalSecond, otherMinute * 60);
         questions.push(`將 ${minute} 分 ${second} 秒：${otherMinute} 分鐘化為最簡整數比。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${ratio.a}:${ratio.b}$`,
           `先把時間都化成秒：${minute} 分 ${second} 秒 $=${totalSecond}$ 秒，${otherMinute} 分鐘 $=${otherMinute * 60}$ 秒，所以最簡整數比為 $${ratio.a}:${ratio.b}$。`
         );
         continue;
@@ -4553,7 +5319,10 @@
       const right = negateFraction(makeFraction(randInt(2, 8), randInt(2, 6)));
       const value = divFraction(left, right);
       questions.push(`求 $${fractionToLatex(left)}:${fractionToLatex(right)}$ 的比值。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${fractionToLatex(value)}$`,
         `比值就是前項除以後項，所以 $${fractionToLatex(left)}\\div ${fractionToLatex(right)}=${fractionToLatex(value)}$。`
       );
     }
@@ -4582,7 +5351,10 @@
         questions.push(
           `求比例式 $(${formatSingleVarExpr(1, -a)}):${b}=(${formatSingleVarExpr(1, c)}):${d}$ 中的 $x$ 值。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$x=${x}$`,
           `由比例式可得 $${d}\\left(${formatSingleVarExpr(1, -a)}\\right)=${b}\\left(${formatSingleVarExpr(1, c)}\\right)$。整理後解得 $x=${x}$。`
         );
         continue;
@@ -4594,7 +5366,12 @@
         const b = randInt(3, 6);
         const c = (a * x + 1) * b;
         questions.push(`若 $(${a}x+1):${b}$ 的比值為 ${c}，求 $x$。`);
-        answers.push(`比值為 ${c} 表示 $\\dfrac{${a}x+1}{${b}}=${c}$。所以 $${a}x+1=${c * b}$，解得 $x=${x}$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$x=${x}$`,
+          `比值為 ${c} 表示 $\\dfrac{${a}x+1}{${b}}=${c}$。所以 $${a}x+1=${c * b}$，解得 $x=${x}$。`
+        );
         continue;
       }
 
@@ -4606,7 +5383,10 @@
         questions.push(
           `求比例式 $${fractionToLatex(left)}:${fractionToLatex(makeFraction(2, 3))}x=${value.num}:${value.den}$ 中的 $x$ 值。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$x=${x}$`,
           `由比例式可得 $${value.den}\\times ${fractionToLatex(left)}=${value.num}\\times ${fractionToLatex(makeFraction(2, 3))}x$。整理後解得 $x=${x}$。`
         );
         continue;
@@ -4619,7 +5399,10 @@
         const c = randInt(2, 6);
         const ratioValue = divFraction(makeFraction(a * x + b, 1), makeFraction(c, 1));
         questions.push(`若 $(${formatSingleVarExpr(a, b)}):${c}$ 的比值為 $${fractionToLatex(ratioValue)}$，求 $x$。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$x=${x}$`,
           `比值為 $${fractionToLatex(ratioValue)}$ 表示 $\\dfrac{${formatSingleVarExpr(a, b)}}{${c}}=${fractionToLatex(ratioValue)}$。交叉相乘後可得 $${formatSingleVarExpr(a, b)}=${fractionToLatex(mulFraction(makeFraction(c, 1), ratioValue))}$，解得 $x=${x}$。`
         );
         continue;
@@ -4641,7 +5424,10 @@
       questions.push(
         `求比例式 $(${formatSingleVarExpr(-1, p)}):(${formatSingleVarExpr(3, -q)})=${ratio.a}:${ratio.b}$ 中的 $x$ 值。`
       );
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$x=${x}$`,
         `由比例式可得 $${ratio.b}(${formatSingleVarExpr(-1, p)})=${ratio.a}(${formatSingleVarExpr(3, -q)})$。整理後解得 $x=${x}$。`
       );
     }
@@ -4664,8 +5450,11 @@
         const n = randInt(2, 5);
         const ratio = normalizeRatioInts(m * q, n * p);
         questions.push(`已知 $${p}x=${q}y$（$x,y\\ne 0$），求 $${m}x:${n}y$。`);
-        answers.push(
-          `由 $${p}x=${q}y$ 可得 $x:y=${q}:${p}$。因此 $${m}x:${n}y=${m}\\times ${q}:${n}\\times ${p}=${ratio.a}:${ratio.b}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${ratio.a}:${ratio.b}$`,
+          `由 $${p}x=${q}y$ 可得 $x:y=${q}:${p}$。因此 $${formatTerm(m, 'x')}:${formatTerm(n, 'y')}=${m}\\times ${q}:${n}\\times ${p}=${ratio.a}:${ratio.b}$。`
         );
         continue;
       }
@@ -4681,7 +5470,10 @@
         questions.push(
           `已知 $${formatTerm(lx, 'x')}${ly > 0 ? '+' : ''}${formatTerm(ly, 'y')}=${formatTerm(rx, 'x')}${ry > 0 ? '+' : ''}${formatTerm(ry, 'y')}$，整理後求 $x:y$。`
         );
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${ratio.a}:${ratio.b}$`,
           `移項整理得 $${formatTerm(xCoef, 'x')}=${formatTerm(yCoef, 'y')}$，因此 $x:y=${yCoef}:${xCoef}$，最簡整數比為 $${ratio.a}:${ratio.b}$。`
         );
         continue;
@@ -4700,9 +5492,20 @@
           d = randInt(1, 4);
         }
         const result = normalizeRatioInts(a * base.a + b * base.b, c * base.a + d * base.b);
-        questions.push(`已知 $x:y=${base.a}:${base.b}$，求 $(${a}x+${b}y):(${c}x+${d}y)$。`);
-        answers.push(
-          `由 $x:y=${base.a}:${base.b}$，可設 $x=${base.a}k,\\ y=${base.b}k$。代入得 $(${a}x+${b}y):(${c}x+${d}y)=(${a * base.a + b * base.b})k:(${c * base.a + d * base.b})k=${result.a}:${result.b}$。`
+        const leftExpr = formatLinearCombination([
+          { coef: a, variable: 'x' },
+          { coef: b, variable: 'y' },
+        ]);
+        const rightExpr = formatLinearCombination([
+          { coef: c, variable: 'x' },
+          { coef: d, variable: 'y' },
+        ]);
+        questions.push(`已知 $x:y=${base.a}:${base.b}$，求 $(${leftExpr}):(${rightExpr})$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${result.a}:${result.b}$`,
+          `由 $x:y=${base.a}:${base.b}$，可設 $x=${formatTerm(base.a, 'k')},\\ y=${formatTerm(base.b, 'k')}$。代入得 $(${leftExpr}):(${rightExpr})=${formatTerm(a * base.a + b * base.b, 'k')}:${formatTerm(c * base.a + d * base.b, 'k')}=${result.a}:${result.b}$。`
         );
         continue;
       }
@@ -4712,8 +5515,11 @@
       const denominator = 2 * base.a * base.b + 5 * base.b * base.b;
       const value = simplifyFraction(numerator, denominator);
       questions.push(`已知 $x:y=${base.a}:${base.b}$，求 $\\dfrac{3x^2+4xy}{2xy+5y^2}$ 的值。`);
-      answers.push(
-        `由 $x:y=${base.a}:${base.b}$，可設 $x=${base.a}k,\\ y=${base.b}k$。代入後分子為 $(3\\times ${base.a}^2+4\\times ${base.a}\\times ${base.b})k^2=${numerator}k^2$，分母為 $(2\\times ${base.a}\\times ${base.b}+5\\times ${base.b}^2)k^2=${denominator}k^2$，所以值為 $${fractionToLatex(value)}$。`
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${fractionToLatex(value)}$`,
+        `由 $x:y=${base.a}:${base.b}$，可設 $x=${formatTerm(base.a, 'k')},\\ y=${formatTerm(base.b, 'k')}$。代入後分子為 $(3\\times ${base.a}^2+4\\times ${base.a}\\times ${base.b})k^2=${numerator}k^2$，分母為 $(2\\times ${base.a}\\times ${base.b}+5\\times ${base.b}^2)k^2=${denominator}k^2$，所以值為 $${fractionToLatex(value)}$。`
       );
     }
 
@@ -4738,7 +5544,10 @@
         const right = b * d;
         const ratio = normalizeRatioInts3(left, mid, right);
         questions.push(`已知 $x:y=${a}:${b}$，且 $y:z=${c}:${d}$，求 $x:y:z$ 的最簡整數比。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${ratio.a}:${ratio.b}:${ratio.c}$`,
           `先把兩個比中的 $y$ 對齊。$x:y=${a}:${b}$ 可放大成 $${a * c}:${b * c}$；$y:z=${c}:${d}$ 可放大成 $${b * c}:${b * d}$。因此 $x:y:z=${left}:${mid}:${right}$，最簡整數比為 $${ratio.a}:${ratio.b}:${ratio.c}$。`
         );
         continue;
@@ -4754,7 +5563,10 @@
         const values = [p * unit, q * unit, r * unit];
         const names = ['甲', '乙', '丙'];
         questions.push(`將 ${total} 元按照 $${p}:${q}:${r}$ 分給甲、乙、丙三人，求${names[ask]}分到多少元。`);
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `${values[ask]} 元`,
           `總份數是 $${p + q + r}$ 份，所以 1 份是 ${unit} 元。${names[ask]}對應 ${[p, q, r][ask]} 份，因此分到 ${values[ask]} 元。`
         );
         continue;
@@ -4771,9 +5583,17 @@
       const coeff2 = randInt(1, 3);
       const coeff3 = randInt(1, 3);
       const rhs = coeff1 * x + coeff2 * y + coeff3 * z;
-      questions.push(`已知 $a:b:c=${a}:${b}:${c}$，且 $${coeff1}a+${coeff2}b+${coeff3}c=${rhs}$，求 $a,b,c$。`);
-      answers.push(
-        `因為 $a:b:c=${a}:${b}:${c}$，可設 $a=${a}k,\\ b=${b}k,\\ c=${c}k$。代入條件得 $${coeff1 * a + coeff2 * b + coeff3 * c}k=${rhs}$，所以 $k=${unit}$。因此 $a=${x},\\ b=${y},\\ c=${z}$。`
+      const conditionExpr = formatLinearCombination([
+        { coef: coeff1, variable: 'a' },
+        { coef: coeff2, variable: 'b' },
+        { coef: coeff3, variable: 'c' },
+      ]);
+      questions.push(`已知 $a:b:c=${a}:${b}:${c}$，且 $${conditionExpr}=${rhs}$，求 $a,b,c$。`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$a=${x}$，$b=${y}$，$c=${z}$`,
+        `因為 $a:b:c=${a}:${b}:${c}$，可設 $a=${formatTerm(a, 'k')},\\ b=${formatTerm(b, 'k')},\\ c=${formatTerm(c, 'k')}$。代入條件得 $${formatTerm(coeff1 * a + coeff2 * b + coeff3 * c, 'k')}=${rhs}$，所以 $k=${unit}$。因此 $a=${x},\\ b=${y},\\ c=${z}$。`
       );
     }
 
@@ -4959,7 +5779,8 @@
 
   function buildJ231RegularTwoStepSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
     const variants = shuffle([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
 
     for (let i = 0; i < count; i += 1) {
@@ -5068,7 +5889,7 @@
           `父子兩人現在年齡比為 $${pick.m}:${pick.n}$，已知 ${pick.years} 年後兩人的年齡和為 ${pick.sum} 歲，求父子現在各幾歲。`
         );
         answers.push(
-          `設父子現在分別為 $${pick.m}k,\ ${pick.n}k$ 歲。${pick.years} 年後年齡和為 $(${pick.m}+${pick.n})k+2\\times ${pick.years}=${pick.sum}$，解得 $k=${unit}$。因此父親現在 ${father} 歲，兒子現在 ${son} 歲。`
+          `設父子現在分別為 $${formatTerm(pick.m, 'k')},\ ${formatTerm(pick.n, 'k')}$ 歲。${pick.years} 年後年齡和為 $(${pick.m}+${pick.n})k+2\\times ${pick.years}=${pick.sum}$，解得 $k=${unit}$。因此父親現在 ${father} 歲，兒子現在 ${son} 歲。`
         );
         continue;
       }
@@ -5198,7 +6019,8 @@
 
   function buildJ231ConcentrationReverseSet(count) {
     const questions = [];
-    const answers = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
 
     function formatPercentLatexLocal(value) {
       const frac =
@@ -5493,9 +6315,20 @@
         const a = randInt(1, 4);
         const b = randInt(1, 4);
         const total = a * x + b * y;
-        questions.push(`已知 $x:y=${m}:${n}$，且 $${xTerm(a)}${b > 0 ? '+' : ''}${yTerm(b)}=${total}$，求 $x,y$。`);
-        answers.push(
-          `設 $x=${m}k,\\ y=${n}k$。代入 $${xTerm(a)}${b > 0 ? '+' : ''}${yTerm(b)}=${total}$，得 $${kTerm(a * m)}+${kTerm(b * n)}=${total}$，所以 $k=${k}$。因此 $x=${x},\\ y=${y}$。`
+        questions.push(
+          `已知 $x:y=${m}:${n}$，且 $${formatLinearCombination([
+            { coef: a, variable: 'x' },
+            { coef: b, variable: 'y' },
+          ])}=${total}$，求 $x,y$。`
+        );
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$x=${x}$，$y=${y}$`,
+          `設 $x=${kTerm(m)},\\ y=${kTerm(n)}$。代入 $${formatLinearCombination([
+            { coef: a, variable: 'x' },
+            { coef: b, variable: 'y' },
+          ])}=${total}$，得 $${kTerm(a * m)}+${kTerm(b * n)}=${total}$，所以 $k=${k}$。因此 $x=${x},\\ y=${y}$。`
         );
         continue;
       }
@@ -5506,8 +6339,11 @@
         while (Math.abs(m) === Math.abs(n)) n = -randInt(2, 5);
         const ratio = normalizeRatioInts(m + n, m - n);
         questions.push(`已知 $(a+b):(a-b)=${m}:${n}$，求 $a:b$。`);
-        answers.push(
-          `設 $a+b=${m}k,\\ a-b=${n}k$。兩式相加得 $2a=${m + n}k$，相減得 $2b=${m - n}k$，所以 $a:b=${m + n}:${m - n}=${ratio.a}:${ratio.b}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${ratio.a}:${ratio.b}$`,
+          `設 $a+b=${kTerm(m)},\\ a-b=${kTerm(n)}$。兩式相加得 $2a=${kTerm(m + n)}$，相減得 $2b=${kTerm(m - n)}$，所以 $a:b=${m + n}:${m - n}=${ratio.a}:${ratio.b}$。`
         );
         continue;
       }
@@ -5517,8 +6353,11 @@
         const n = randInt(1, 4);
         const ratio = normalizeRatioInts(m * m - n * n, m * m + n * n);
         questions.push(`已知 $x:y=${m}:${n}$，求 $(x^2-y^2):(x^2+y^2)$。`);
-        answers.push(
-          `設 $x=${m}k,\\ y=${n}k$。則 $(x^2-y^2):(x^2+y^2)=(${m}^2k^2-${n}^2k^2):(${m}^2k^2+${n}^2k^2)=(${m * m - n * n}):(${m * m + n * n})=${ratio.a}:${ratio.b}$。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${ratio.a}:${ratio.b}$`,
+          `設 $x=${kTerm(m)},\\ y=${kTerm(n)}$。則 $(x^2-y^2):(x^2+y^2)=(${m}^2k^2-${n}^2k^2):(${m}^2k^2+${n}^2k^2)=(${m * m - n * n}):(${m * m + n * n})=${ratio.a}:${ratio.b}$。`
         );
         continue;
       }
@@ -5541,9 +6380,20 @@
         const x = m * k;
         const y = n * k;
         const rhs = a * x - b * y;
-        questions.push(`已知 $x:y=${m}:${n}$，且 $${xTerm(a)}-${yTerm(b)}=${rhs}$，求 $x,y$。`);
-        answers.push(
-          `設 $x=${m}k,\\ y=${n}k$。代入 $${xTerm(a)}-${yTerm(b)}=${rhs}$ 得 $${kTerm(a * m)}-${kTerm(b * n)}=${rhs}$，所以 $${kTerm(a * m - b * n)}=${rhs}$，解得 $k=${k}$。因此 $x=${x},\\ y=${y}$。`
+        questions.push(
+          `已知 $x:y=${m}:${n}$，且 $${formatLinearCombination([
+            { coef: a, variable: 'x' },
+            { coef: -b, variable: 'y' },
+          ])}=${rhs}$，求 $x,y$。`
+        );
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$x=${x}$，$y=${y}$`,
+          `設 $x=${kTerm(m)},\\ y=${kTerm(n)}$。代入 $${formatLinearCombination([
+            { coef: a, variable: 'x' },
+            { coef: -b, variable: 'y' },
+          ])}=${rhs}$ 得 $${kTerm(a * m)}-${kTerm(b * n)}=${rhs}$，所以 $${kTerm(a * m - b * n)}=${rhs}$，解得 $k=${k}$。因此 $x=${x},\\ y=${y}$。`
         );
         continue;
       }
@@ -5561,8 +6411,11 @@
       const n = basePick.n;
       const ratio = normalizeRatioInts(3 * m - n, m + 3 * n);
       questions.push(`已知 $(x+y):(x-y)=${m}:${n}$，求 $(x+2y):(2x-y)$。`);
-      answers.push(
-        `設 $x+y=${m}k,\\ x-y=${n}k$。兩式相加得 $2x=${m + n}k$，所以 $x=${formatFraction(m + n, 2)}k$；相減得 $2y=${m - n}k$，所以 $y=${formatFraction(m - n, 2)}k$。因此 $(x+2y):(2x-y)=\\left(${formatFraction(m + n, 2)}k+2\\times${formatFraction(m - n, 2)}k\\right):\\left(2\\times${formatFraction(m + n, 2)}k-${formatFraction(m - n, 2)}k\\right)=${3 * m - n}:${m + 3 * n}=${ratio.a}:${ratio.b}$。`
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${ratio.a}:${ratio.b}$`,
+        `設 $x+y=${kTerm(m)},\\ x-y=${kTerm(n)}$。兩式相加得 $2x=${kTerm(m + n)}$，所以 $x=${formatFractionVariable(m + n, 2, 'k')}$；相減得 $2y=${kTerm(m - n)}$，所以 $y=${formatFractionVariable(m - n, 2, 'k')}$。因此 $(x+2y):(2x-y)=\\left(${formatFractionVariable(m + n, 2, 'k')}+2\\times${formatFractionVariable(m - n, 2, 'k')}\\right):\\left(2\\times${formatFractionVariable(m + n, 2, 'k')}-${formatFractionVariable(m - n, 2, 'k')}\\right)=${3 * m - n}:${m + 3 * n}=${ratio.a}:${ratio.b}$。`
       );
     }
 
@@ -5967,7 +6820,13 @@
       answers.push(
         formatJ232Answer(
           `$x:y=${xRatio.a}:${xRatio.b}$，$(3x+2y):(5x-6y)=${secondRatio.a}:${secondRatio.b}$`,
-          `設 $x:y=m:n$，則題目的比可寫成 $(${leftA}m-${formatTerm(leftB, 'n')}):(${rightA}m+${formatTerm(rightB, 'n')})$。由已知比可反推 $x:y=${xRatio.a}:${xRatio.b}$。再設 $x=${xRatio.a}k,\\ y=${xRatio.b}k$，可得 $(3x+2y):(5x-6y)=(${3 * xRatio.a + 2 * xRatio.b})k:(${5 * xRatio.a - 6 * xRatio.b})k=${secondRatio.a}:${secondRatio.b}$。`
+          `設 $x:y=m:n$，則題目的比可寫成 $(${formatLinearCombination([
+            { coef: leftA, variable: 'm' },
+            { coef: -leftB, variable: 'n' },
+          ])}):(${formatLinearCombination([
+            { coef: rightA, variable: 'm' },
+            { coef: rightB, variable: 'n' },
+          ])})$。由已知比可反推 $x:y=${xRatio.a}:${xRatio.b}$。再設 $x=${formatTerm(xRatio.a, 'k')},\\ y=${formatTerm(xRatio.b, 'k')}$，可得 $(3x+2y):(5x-6y)=${formatTerm(3 * xRatio.a + 2 * xRatio.b, 'k')}:${formatTerm(5 * xRatio.a - 6 * xRatio.b, 'k')}=${secondRatio.a}:${secondRatio.b}$。`
         )
       );
     }
@@ -6200,12 +7059,13 @@
         const t1Text = t1.den === 1 ? `${t1.num}` : `${t1.num < 0 ? '-' : ''}\\dfrac{${Math.abs(t1.num)}}{${t1.den}}`;
         const zTermInT =
           kz.num < 0 ? `+\\dfrac{${fractionToLatex(negateFraction(kz))}}{x}` : `-\\dfrac{${fractionToLatex(kz)}}{x}`;
+        const tRelationText = `T=${fractionToLatex(ky)}x${zTermInT}`;
         questions.push(
           `已知 $T=Y-Z$，其中 $Y$ 與 $x$ 成正比，$Z$ 與 $x$ 成反比。若當 $x=${x0}$ 時，$Y=${fractionToLatex(y0)}$；當 $x=${x1}$ 時，$Z=${fractionToLatex(z0)}$，求 $T$ 與 $x$ 的關係式，並求當 $x=${x1}$ 時的 $T$。`
         );
         answers.push(
           formatJ232Answer(
-            `$T=${t1Text}$`,
+            `$${tRelationText}$，當 $x=${x1}$ 時 $T=${t1Text}$`,
             `由 $Y$ 與 $x$ 成正比，可設 $Y=${fractionToLatex(ky)}x$。由 $Z$ 與 $x$ 成反比，且 $x=${x1}$ 時 $Z=${fractionToLatex(z0)}$，可得 $Z=\\dfrac{${fractionToLatex(kz)}}{x}$。所以 $T=Y-Z=${fractionToLatex(ky)}x${zTermInT}$。當 $x=${x1}$ 時，$Y=${fractionToLatex(y1)},\\ Z=${fractionToLatex(z1)}$，故 $T=${t1Text}$。`
           )
         );
@@ -6868,7 +7728,7 @@
       );
       answers.push(
         formatJ232Answer(
-          `${fractionToLatex(behind)} 公尺`,
+          `$${fractionToLatex(behind)}$ 公尺`,
           `速率比為 $${pick.name[0]}:${pick.name[1]}=${pick.va}:${pick.vb}$，同時間內路程比也是 $${pick.va}:${pick.vb}$。${pick.name[0]}跑 ${pick.dist} 公尺時，${pick.name[1]}跑了 $${pick.dist}\\times\\dfrac{${pick.vb}}{${pick.va}}=${fractionToLatex(bDist)}$ 公尺，距終點還有 $${fractionToLatex(behind)}$ 公尺。`
         )
       );
@@ -6893,16 +7753,15 @@
           { a: 3, b: 4, c: 4, d: 5 },
           { a: 2, b: 3, c: 3, d: 4 },
           { a: 3, b: 5, c: 4, d: 5 },
-          { a: 4, b: 5, c: 3, d: 4 },
-          { a: 5, b: 6, c: 4, d: 5 },
+          { a: 4, b: 5, c: 4, d: 3 },
+          { a: 5, b: 6, c: 5, d: 4 },
           { a: 3, b: 4, c: 5, d: 6 },
         ];
         const pick = templates[cycle % templates.length];
         // 犬步距/兔步距 = b/a（犬a步 = 兔b步距離）
-        // 犬步頻/兔步頻（相同時間內）= d/c（犬c步時間 = 兔d步）→ 同時間犬:兔步數 = d:c
-        // 速率比 = (b/a) * (d/c) : 1 = b*d : a*c
-        const dogSpeed = pick.b * pick.d;
-        const rabbitSpeed = pick.a * pick.c;
+        // 同一時間內犬跑 c 步、兔跳 d 步，所以速率比 = (b/a) × (c/d) = bc:ad。
+        const dogSpeed = pick.b * pick.c;
+        const rabbitSpeed = pick.a * pick.d;
         const ratio = normalizeRatioInts(dogSpeed, rabbitSpeed);
         questions.push(
           `設犬跑 $${pick.a}$ 步的距離等於兔跳 $${pick.b}$ 步的距離，且犬跑 $${pick.c}$ 步的時間等於兔跳 $${pick.d}$ 步的時間，求犬與兔的速率比。`
@@ -6910,7 +7769,7 @@
         answers.push(
           formatJ232Answer(
             `$${ratio.a}:${ratio.b}$`,
-            `每步距離比：犬步距 $=\\dfrac{${pick.b}}{${pick.a}}$ 兔步距。同一時間內步數比：犬跑 $${pick.d}$ 步：兔跳 $${pick.c}$ 步。速率比 $=$ 每步距離比 $\\times$ 步頻比 $=\\dfrac{${pick.b}}{${pick.a}}\\times\\dfrac{${pick.d}}{${pick.c}}=\\dfrac{${pick.b * pick.d}}{${pick.a * pick.c}}$，即犬：兔 $=${ratio.a}:${ratio.b}$。`
+            `每步距離比：犬步距 $=\\dfrac{${pick.b}}{${pick.a}}$ 兔步距。同一時間內犬跑 $${pick.c}$ 步、兔跳 $${pick.d}$ 步。速率比 $=$ 每步距離比 $\\times$ 步頻比 $=\\dfrac{${pick.b}}{${pick.a}}\\times\\dfrac{${pick.c}}{${pick.d}}=\\dfrac{${pick.b * pick.c}}{${pick.a * pick.d}}$，即犬：兔 $=${ratio.a}:${ratio.b}$。`
           )
         );
         continue;
@@ -6922,13 +7781,13 @@
           { a: 3, b: 4, c: 4, d: 5, head: 100 },
           { a: 2, b: 3, c: 3, d: 4, head: 120 },
           { a: 3, b: 5, c: 4, d: 5, head: 150 },
-          { a: 4, b: 5, c: 3, d: 4, head: 200 },
-          { a: 5, b: 6, c: 4, d: 5, head: 100 },
+          { a: 4, b: 5, c: 4, d: 3, head: 200 },
+          { a: 5, b: 6, c: 5, d: 4, head: 100 },
           { a: 3, b: 4, c: 5, d: 6, head: 80 },
         ];
         const pick = templates[cycle % templates.length];
-        const dogSpeed = pick.b * pick.d;
-        const rabbitSpeed = pick.a * pick.c;
+        const dogSpeed = pick.b * pick.c;
+        const rabbitSpeed = pick.a * pick.d;
         const ratio = normalizeRatioInts(dogSpeed, rabbitSpeed);
         // 速差比 = dogSpeed - rabbitSpeed（未化簡）
         // 設犬追上時犬跑 D，兔跑 D - head（兔有先跑優勢）
@@ -6936,8 +7795,8 @@
         // 正確：D/dog = (D - head)/rabbit (time same)
         // D * rabbit = (D - head) * dog
         // D * (rabbit - dog) = -head * dog  → D = head*dog/(dog-rabbit)
-        const dogVal = pick.b * pick.d;
-        const rabbitVal = pick.a * pick.c;
+        const dogVal = pick.b * pick.c;
+        const rabbitVal = pick.a * pick.d;
         const D = simplifyFraction(pick.head * dogVal, dogVal - rabbitVal);
         questions.push(
           `設犬跑 $${pick.a}$ 步的距離等於兔跳 $${pick.b}$ 步的距離，且犬跑 $${pick.c}$ 步的時間等於兔跳 $${pick.d}$ 步的時間（兩者均在同一直線上）。若兔先跑 $${pick.head}$ 公尺，則犬需跑多少公尺才能追上兔？`
@@ -6957,37 +7816,21 @@
           { a: 3, b: 4, c: 4, d: 5, headSteps: 100 },
           { a: 2, b: 3, c: 3, d: 4, headSteps: 90 },
           { a: 3, b: 5, c: 4, d: 5, headSteps: 100 },
-          { a: 4, b: 5, c: 3, d: 4, headSteps: 120 },
-          { a: 5, b: 6, c: 4, d: 5, headSteps: 80 },
+          { a: 4, b: 5, c: 4, d: 3, headSteps: 120 },
+          { a: 5, b: 6, c: 5, d: 4, headSteps: 80 },
           { a: 3, b: 4, c: 5, d: 6, headSteps: 60 },
         ];
         const pick = templates[cycle % templates.length];
-        // 兔先跑 headSteps 步，距離 = headSteps * (a/b) 犬步 （犬步距 = b/a 兔步距）
-        // 兔的headSteps步 = headSteps * (a/b) 犬步長的距離
-        // 設犬需跑 X 犬步追上
-        // 速率比: 同時間犬跑 (d/c) 步 vs 兔跑1步 → dogFreq/rabbitFreq = d/c
-        // But we need steps (not distance)
-        // 犬跑X步 vs 兔跑Y步，dist相同：X * (b/a) = headSteps * (a/b)... wait
-        // Let me simplify:
-        // 犬每步距离 = b/a 兔每步距离 （because犬a步=兔b步）
-        // 犬X步 = 兔的 X*(b/a) 步等效距离
-        // 兔先跑了 headSteps 步的距离
-        // 追上时：犬X步距离 = 兔先跑headSteps步 + 兔追逃的距离
-        // 时间：犬X步时间 = 犬(c/d)步/step * X...
-        // 实际上，这类题目通常是：兔先跑headSteps步对应的距离
-        // 设犬步长为 b 个单位（兔步长为 a 个单位）
-        // 速率：犬每单位时间走 b*d/(c) 个单位，兔每单位时间走 a 个单位
-        // 兔先走 headSteps*a 个距离单位
-        // 追上时：b*d/c * t = headSteps*a + a * t → t = headSteps*a*c / (b*d - a*c)
-        // 犬步数 = t * d/c = headSteps*a*c/(b*d - a*c) * d/c = headSteps*a*d/(b*d - a*c)
-        const numSteps = simplifyFraction(pick.headSteps * pick.a * pick.d, pick.b * pick.d - pick.a * pick.c);
+        // 設兔步長為 a、犬步長為 b；同一時間犬跑 c 步、兔跳 d 步。
+        // 因此相對速率為 bc-ad。兔先跑 headSteps 步時，犬需跑的步數為 headSteps·a·c/(bc-ad)。
+        const numSteps = simplifyFraction(pick.headSteps * pick.a * pick.c, pick.b * pick.c - pick.a * pick.d);
         questions.push(
           `設犬跑 $${pick.a}$ 步的距離等於兔跳 $${pick.b}$ 步的距離，且犬跑 $${pick.c}$ 步的時間等於兔跳 $${pick.d}$ 步的時間。若兔先跑 $${pick.headSteps}$ 步，則犬需跑幾步才能追上兔？`
         );
         answers.push(
           formatJ232Answer(
             `$${fractionToLatex(numSteps)}$ 步`,
-            `以「單位距離」計，設兔步長為 $${pick.a}$，則犬步長為 $${pick.b}$。兔先跑 ${pick.headSteps} 步，領先距離為 $${pick.headSteps}\\times ${pick.a}=${pick.headSteps * pick.a}$ 個單位。同一時間內，犬跑 ${pick.d} 步（距離 $${pick.b * pick.d}$），兔跑 ${pick.c} 步（距離 $${pick.a * pick.c}$），速率差為 $${pick.b * pick.d - pick.a * pick.c}$ 個單位。追上所需時間（以犬的 ${pick.c} 步為計時單位）$=\\dfrac{${pick.headSteps * pick.a}}{${pick.b * pick.d - pick.a * pick.c}}$ 個時間單位。犬的步數 $=\\dfrac{${pick.headSteps * pick.a}}{${pick.b * pick.d - pick.a * pick.c}}\\times ${pick.d}=${fractionToLatex(numSteps)}$ 步。`
+            `以「單位距離」計，設兔步長為 $${pick.a}$，則犬步長為 $${pick.b}$。兔先跑 ${pick.headSteps} 步，領先距離為 $${pick.headSteps}\\times ${pick.a}=${pick.headSteps * pick.a}$ 個單位。同一時間內，犬跑 ${pick.c} 步（距離 $${pick.b * pick.c}$），兔跑 ${pick.d} 步（距離 $${pick.a * pick.d}$），速率差為 $${pick.b * pick.c - pick.a * pick.d}$ 個單位。追上所需時間為 $\\dfrac{${pick.headSteps * pick.a}}{${pick.b * pick.c - pick.a * pick.d}}$ 個時間單位。犬的步數 $=\\dfrac{${pick.headSteps * pick.a}}{${pick.b * pick.c - pick.a * pick.d}}\\times ${pick.c}=${fractionToLatex(numSteps)}$ 步。`
           )
         );
         continue;
@@ -6998,13 +7841,13 @@
         { a: 3, b: 4, c: 4, d: 5, headMin: 100 },
         { a: 2, b: 3, c: 3, d: 4, headMin: 80 },
         { a: 3, b: 5, c: 4, d: 5, headMin: 150 },
-        { a: 4, b: 5, c: 3, d: 4, headMin: 200 },
-        { a: 5, b: 6, c: 4, d: 5, headMin: 120 },
+        { a: 4, b: 5, c: 4, d: 3, headMin: 200 },
+        { a: 5, b: 6, c: 5, d: 4, headMin: 120 },
         { a: 3, b: 4, c: 5, d: 6, headMin: 90 },
       ];
       const pick = templates[cycle % templates.length];
-      const dogSpeed = pick.b * pick.d;
-      const rabbitSpeed = pick.a * pick.c;
+      const dogSpeed = pick.b * pick.c;
+      const rabbitSpeed = pick.a * pick.d;
       // 兔先跑 headMin 分鐘，犬追上需要 T 分鐘
       // dogSpeed * T = rabbitSpeed * (headMin + T)
       // T * (dogSpeed - rabbitSpeed) = rabbitSpeed * headMin
@@ -7049,7 +7892,7 @@
         answers.push(
           formatJ231Answer(
             `$${ratio.a}:${ratio.b}$`,
-            `設原來 $x=${pick.x}k,\\ y=${pick.y}k$。變動後為 $x'=${pick.x}k\\times\\dfrac{${100 + pick.xUp}}{100}$、$y'=${pick.y}k\\times\\dfrac{${100 - pick.yDown}}{100}$，所以新比為 $${pick.x * (100 + pick.xUp)}:${pick.y * (100 - pick.yDown)}=${ratio.a}:${ratio.b}$。`
+            `設原來 $x=${formatTerm(pick.x, 'k')},\\ y=${formatTerm(pick.y, 'k')}$。變動後為 $x'=${formatTerm(pick.x, 'k')}\\times\\dfrac{${100 + pick.xUp}}{100}$、$y'=${formatTerm(pick.y, 'k')}\\times\\dfrac{${100 - pick.yDown}}{100}$，所以新比為 $${pick.x * (100 + pick.xUp)}:${pick.y * (100 - pick.yDown)}=${ratio.a}:${ratio.b}$。`
           )
         );
         continue;
@@ -7071,7 +7914,7 @@
         answers.push(
           formatJ231Answer(
             `$${ratio.a}:${ratio.b}$`,
-            `設原薪資為男生 $${pick.boys}k$、女生 $${pick.girls}k$。調整後比為 $${pick.boys}(100-${pick.boysDown}):${pick.girls}(100+${pick.girlsUp})=${pick.boys * (100 - pick.boysDown)}:${pick.girls * (100 + pick.girlsUp)}=${ratio.a}:${ratio.b}$。`
+            `設原薪資為男生 $${formatTerm(pick.boys, 'k')}$、女生 $${formatTerm(pick.girls, 'k')}$。調整後比為 $${pick.boys}(100-${pick.boysDown}):${pick.girls}(100+${pick.girlsUp})=${pick.boys * (100 - pick.boysDown)}:${pick.girls * (100 + pick.girlsUp)}=${ratio.a}:${ratio.b}$。`
           )
         );
         continue;
@@ -7136,7 +7979,7 @@
       answers.push(
         formatJ231Answer(
           `$${fractionToLatex(conc)}\\%$`,
-          `設兩種果汁重量分別為 $${pick.aWeight}k$、$${pick.bWeight}k$。果汁原液量共有 $${pick.aWeight}k\\times ${pick.aConc}\\%+${pick.bWeight}k\\times ${pick.bConc}\\%$，總重量是 $${pick.aWeight + pick.bWeight}k$，所以濃度為 $\\dfrac{${pick.aConc * pick.aWeight}+${pick.bConc * pick.bWeight}}{${pick.aWeight + pick.bWeight}}\\%=${fractionToLatex(conc)}\\%$。`
+          `設兩種果汁重量分別為 $${formatTerm(pick.aWeight, 'k')}$、$${formatTerm(pick.bWeight, 'k')}$。果汁原液量共有 $${formatTerm(pick.aWeight, 'k')}\\times ${pick.aConc}\\%+${formatTerm(pick.bWeight, 'k')}\\times ${pick.bConc}\\%$，總重量是 $${formatTerm(pick.aWeight + pick.bWeight, 'k')}$，所以濃度為 $\\dfrac{${pick.aConc * pick.aWeight}+${pick.bConc * pick.bWeight}}{${pick.aWeight + pick.bWeight}}\\%=${fractionToLatex(conc)}\\%$。`
         )
       );
     }
@@ -7213,7 +8056,7 @@
         answers.push(
           formatJ232Answer(
             `$${fractionToLatex(loss)}$ 萬元`,
-            `設三塊重量分別為 $${pick.parts.join('k, ')}k$，原重量為 $${totalPart}k$。價值與重量平方成正比，所以裂後總價值占原價的 $\\dfrac{${pick.parts.map((part) => `${part}^2`).join('+')}}{${totalPart}^2}=\\dfrac{${sumSq}}{${totalPart * totalPart}}$。裂後總價值為 $${pick.value}\\times\\dfrac{${sumSq}}{${totalPart * totalPart}}=${fractionToLatex(remainValue)}$ 萬元，損失 $${pick.value}-${fractionToLatex(remainValue)}=${fractionToLatex(loss)}$ 萬元。`
+            `設三塊重量分別為 $${pick.parts.map((part) => formatTerm(part, 'k')).join(', ')}$，原重量為 $${formatTerm(totalPart, 'k')}$。價值與重量平方成正比，所以裂後總價值占原價的 $\\dfrac{${pick.parts.map((part) => `${part}^2`).join('+')}}{${totalPart}^2}=\\dfrac{${sumSq}}{${totalPart * totalPart}}$。裂後總價值為 $${pick.value}\\times\\dfrac{${sumSq}}{${totalPart * totalPart}}=${fractionToLatex(remainValue)}$ 萬元，損失 $${pick.value}-${fractionToLatex(remainValue)}=${fractionToLatex(loss)}$ 萬元。`
           )
         );
         continue;
@@ -7649,13 +8492,16 @@
       }
 
       if (variant === 1) {
-        const a = -[1, 2, 3, 4, 5][cycle % 5];
-        const b = 2 * a;
-        questions.push(`已知關於 $x$ 的不等式 $ax+b>0$ 的解為 $x<-2$，判斷 $a$ 的正負號，並寫出 $a$ 與 $b$ 的關係。`);
+        const boundary = [2, 3, 4, 5, 6, 7, 8][cycle % 7];
+        const a = -[1, 2, 3, 4, 5, 6, 7][cycle % 7];
+        const b = boundary * a;
+        questions.push(
+          `已知關於 $x$ 的不等式 $ax+b>0$ 的解為 $x<-${boundary}$，判斷 $a$ 的正負號，並寫出 $a$ 與 $b$ 的關係。`
+        );
         answers.push(
           formatJ241Answer(
-            `$a<0$，$b=2a$`,
-            `由 $ax+b>0$ 得 $ax>-b$。解為 $x<-2$ 表示除以 $a$ 時不等號變向，所以 $a<0$。界線是 $-\\dfrac{b}{a}=-2$，因此 $b=2a$。例如 $a=${a}, b=${b}$ 就符合。`
+            `$a<0$，$b=${boundary}a$`,
+            `由 $ax+b>0$ 得 $ax>-b$。解為 $x<-${boundary}$ 表示除以 $a$ 時不等號變向，所以 $a<0$。界線是 $-\\dfrac{b}{a}=-${boundary}$，因此 $b=${boundary}a$。例如 $a=${a}, b=${b}$ 就符合。`
           )
         );
         continue;
@@ -7677,21 +8523,25 @@
 
       if (variant === 3) {
         const options = [
-          { a: 2, b: 6, r: 10 },
-          { a: 3, b: 9, r: 15 },
-          { a: 4, b: 8, r: 20 },
-          { a: 5, b: 10, r: 25 },
-          { a: 6, b: 12, r: 30 },
+          { a: 2, center: -3, radius: 5 },
+          { a: 3, center: -2, radius: 4 },
+          { a: 4, center: 1, radius: 6 },
+          { a: 5, center: 2, radius: 3 },
+          { a: 6, center: -1, radius: 4 },
+          { a: 2, center: 4, radius: 6 },
+          { a: 3, center: 3, radius: 5 },
         ];
         const pick = options[cycle % options.length];
-        const low = (-pick.r - pick.b) / pick.a;
-        const high = (pick.r - pick.b) / pick.a;
+        const b = -pick.a * pick.center;
+        const r = pick.a * pick.radius;
+        const low = pick.center - pick.radius;
+        const high = pick.center + pick.radius;
         const total = countIntegersBetween(low, high);
-        questions.push(`已知 $|${pick.a}x+${pick.b}|\\le ${pick.r}$ 的整數解共有幾個？`);
+        questions.push(`已知 $|${formatLinearExpr(pick.a, b)}|\\le ${r}$ 的整數解共有幾個？`);
         answers.push(
           formatJ241Answer(
             `${total} 個`,
-            `先去絕對值：$-${pick.r}\\le ${pick.a}x+${pick.b}\\le ${pick.r}$。整理得 $${low}\\le x\\le ${high}$，其中整數共有 ${total} 個。`
+            `先去絕對值：$-${r}\\le ${formatLinearExpr(pick.a, b)}\\le ${r}$。整理得 $${low}\\le x\\le ${high}$，其中整數共有 ${total} 個。`
           )
         );
         continue;
@@ -7700,11 +8550,13 @@
       const a = [1, 2, 3, 4, 5][cycle % 5];
       const b = [2, 3, 4, 5, 6][cycle % 5];
       const threshold = 6 + 3 * a + 2 * b;
-      questions.push(`若不等式 $\\dfrac{x-${a}}{2}-\\dfrac{x+${b}}{3}>1$ 的解為 $x>${threshold}$，求 $a+b$。`);
+      questions.push(
+        `若不等式 $\\dfrac{x-a}{2}-\\dfrac{x+b}{3}>1$ 的解為 $x>${threshold}$，且 $a=${a}$，求 $b$ 與 $a+b$。`
+      );
       answers.push(
         formatJ241Answer(
-          `$a+b=${a + b}$`,
-          `兩邊同乘以 $6$，得 $3(x-${a})-2(x+${b})>6$，整理為 $x>6+3a+2b$。題目給界線 $${threshold}$，所以 $3a+2b=${threshold - 6}$，本題 $a=${a}, b=${b}$，故 $a+b=${a + b}$。`
+          `$b=${b}$，$a+b=${a + b}$`,
+          `兩邊同乘以 $6$，得 $3(x-a)-2(x+b)>6$，整理為 $x>6+3a+2b$。題目給界線 $${threshold}$，所以 $3a+2b=${threshold - 6}$。又 $a=${a}$，代入得 $b=${b}$，故 $a+b=${a + b}$。`
         )
       );
     }
@@ -7757,12 +8609,14 @@
       if (variant === 2) {
         const c = [2, 3, 4, 5, 6][cycle % 5];
         const d = [5, 7, 8, 10, 11][cycle % 5];
-        const bound = makeFraction(3 * c + 2 * d, 2);
+        const firstBound = 2 * c;
+        const secondBound = 3 * d - 4 * c;
+        const bound = Math.min(firstBound, secondBound);
         questions.push(`解不等式：$\\dfrac{x}{2}<\\dfrac{x+${c}}{3}<\\dfrac{x+${d}}{4}$。`);
         answers.push(
           formatJ241Answer(
-            `$x<${fractionToLatex(bound, true)}$`,
-            `分別解兩段：$\\dfrac{x}{2}<\\dfrac{x+${c}}{3}$ 得 $x<${2 * c}$；$\\dfrac{x+${c}}{3}<\\dfrac{x+${d}}{4}$ 得 $x<${3 * d - 4 * c}$。取共同範圍後，本題可整理為 $x<${fractionToLatex(bound, true)}$。`
+            `$x<${bound}$`,
+            `分別解兩段：$\\dfrac{x}{2}<\\dfrac{x+${c}}{3}$ 得 $x<${firstBound}$；$\\dfrac{x+${c}}{3}<\\dfrac{x+${d}}{4}$ 得 $x<${secondBound}$。兩個條件要同時成立，所以取較嚴格的上界，得 $x<${bound}$。`
           )
         );
         continue;
@@ -7770,27 +8624,27 @@
 
       if (variant === 3) {
         const m = [3, 4, 5, 6, 7][cycle % 5];
-        const rhs = 2 * m - 6;
-        questions.push(`已知 $x$ 為實數，且滿足 $3(x-2)\\ge 2x+${rhs}$，求 $x$ 的最小值。`);
+        const rhs = m - 6;
+        const rhsExpr = formatLinearExpr(2, rhs);
+        questions.push(`已知 $x$ 為實數，且滿足 $3(x-2)\\ge ${rhsExpr}$，求 $x$ 的最小值。`);
         answers.push(
-          formatJ241Answer(
-            `$x=${m}$`,
-            `展開得 $3x-6\\ge 2x+${rhs}$，移項後 $x\\ge ${rhs + 6}$。因此 $x$ 的最小值為 ${m}。`
-          )
+          formatJ241Answer(`$x=${m}$`, `展開得 $3x-6\\ge ${rhsExpr}$，移項後 $x\\ge ${m}$。因此 $x$ 的最小值為 ${m}。`)
         );
         continue;
       }
 
       const center = [5, 6, 7, 8, 9][cycle % 5];
       const radius = [2, 3, 4, 5, 6][cycle % 5];
-      const low = Math.ceil((center - radius) / 2);
-      const high = Math.floor((center + radius) / 2);
-      const sum = ((low + high) * (high - low + 1)) / 2;
+      const values = [];
+      for (let x = center - radius; x <= center + radius; x += 1) {
+        if (Math.abs(x - center) >= 1 && Math.abs(x - center) <= radius) values.push(x);
+      }
+      const sum = values.reduce((total, value) => total + value, 0);
       questions.push(`求滿足 $1<|2x-${2 * center}|<${2 * radius + 1}$ 的所有整數 $x$ 之和。`);
       answers.push(
         formatJ241Answer(
           `$${sum}$`,
-          `不等式表示 $2x$ 距離 ${2 * center} 介於 1 與 ${2 * radius + 1} 之間。整理並列出整數，可得 $x=${low},${low + 1},\\ldots,${high}$，其和為 ${sum}。`
+          `不等式表示 $2x$ 與 ${2 * center} 的距離大於 1 且小於 $${2 * radius + 1}$，也就是 $1\\le |x-${center}|\\le ${radius}$。整數解為 ${values.join('、')}，其和為 ${sum}。`
         )
       );
     }
@@ -8117,13 +8971,22 @@
       const cycle = Math.floor(i / 5);
 
       if (variant === 0) {
-        const low = 2;
-        const high = 4;
-        questions.push(`在坐標平面上，點 $P(2a-4,a+5)$ 在第二象限，求 $a$ 的範圍。`);
+        const options = [
+          { coef: 2, right: 4, lowerShift: 5 },
+          { coef: 3, right: 6, lowerShift: 4 },
+          { coef: 2, right: 8, lowerShift: 3 },
+          { coef: 4, right: 12, lowerShift: 6 },
+          { coef: 3, right: 9, lowerShift: 2 },
+          { coef: 5, right: 10, lowerShift: 7 },
+        ];
+        const pick = options[cycle % options.length];
+        const upper = makeFraction(pick.right, pick.coef);
+        const xCoord = `${formatTerm(pick.coef, 'a')}-${pick.right}`;
+        questions.push(`在坐標平面上，點 $P(${xCoord},a+${pick.lowerShift})$ 在第二象限，求 $a$ 的範圍。`);
         answers.push(
           formatJ241Answer(
-            `$-5<a<2$`,
-            `第二象限表示 $x<0$ 且 $y>0$。所以 $2a-4<0$ 得 $a<2$，且 $a+5>0$ 得 $a>-5$。合併為 $-5<a<2$。`
+            `$-${pick.lowerShift}<a<${fractionToLatex(upper, true)}$`,
+            `第二象限表示 $x<0$ 且 $y>0$。所以 $${xCoord}<0$ 得 $a<${fractionToLatex(upper, true)}$，且 $a+${pick.lowerShift}>0$ 得 $a>-${pick.lowerShift}$。合併為 $-${pick.lowerShift}<a<${fractionToLatex(upper, true)}$。`
           )
         );
         continue;
@@ -8397,9 +9260,9 @@
   }
 
   function formatPracticeShortAnswer(shortAnswer, process = '') {
-    const shortText = wrapBareShortAnswerMath(String(shortAnswer || '').trim());
+    const shortText = normalizePracticeSummaryAnswer(wrapBareShortAnswerMath(String(shortAnswer || '').trim()));
     const processText = String(process || '').trim();
-    return processText ? `簡答：${shortText}\n過程：${processText}` : `簡答：${shortText}`;
+    return createManualSummaryAnswer(shortText, processText);
   }
 
   function inferPracticeShortAnswer(process) {
@@ -8440,37 +9303,47 @@
     return short || '見過程';
   }
 
-  function formatJ231Answer(shortAnswer, process = '') {
-    return formatPracticeShortAnswer(shortAnswer, process);
+  function normalizePracticeSummaryAnswer(summary) {
+    let text = String(summary || '').trim();
+    const divisionResult = text.match(/^\$[^$]*\\div[^$]*=([^$]+)\$$/);
+    if (divisionResult) text = `$${divisionResult[1].trim()}$`;
+    const ratioLabel = text.match(/^整理後比為\s*(\$[^$]+\$)$/);
+    if (ratioLabel) text = ratioLabel[1];
+    const totalPeople = text.match(/^上學期全校共有\s*\$[^$]*=([0-9]+)\$\s*人$/);
+    if (totalPeople) text = `${totalPeople[1]} 人`;
+    const totalCount = text.match(/^總數為\s*\$[^$]*=([0-9]+)\$\s*張$/);
+    if (totalCount) text = `${totalCount[1]} 張`;
+    text = text
+      .replace(/\\frac\{-([^{}]+)\}\{([^{}]+)\}/g, '-\\frac{$1}{$2}')
+      .replace(/=1\(([^()]+)\)/g, '=$1')
+      .replace(/=-1\(([^()]+)\)/g, '=-($1)');
+    return text;
   }
 
-  function finalizeJ231Set(questions, answers) {
-    const detailedAnswers = answers.map((answer) => {
-      const text = String(answer || '').trim();
-      if (text.startsWith('簡答：')) return text;
-      return formatJ231Answer(inferPracticeShortAnswer(text), text);
-    });
-    const summaryAnswers = [];
-    detailedAnswers.forEach((answer) => {
-      summaryAnswers.push(deriveSummaryAnswerFromDetail(answer));
-    });
+  function formatJ231Answer(shortAnswer, process = '') {
+    return createManualSummaryAnswer(normalizePracticeSummaryAnswer(shortAnswer), process);
+  }
+
+  function finalizeJ231Set(questions, summaryAnswersOrAnswers, maybeAnswers) {
+    const answers = maybeAnswers || summaryAnswersOrAnswers;
+    const summaryAnswers = maybeAnswers ? summaryAnswersOrAnswers : answers.__summaryAnswers || [];
     return {
       questions,
       summaryAnswers,
-      answers: detailedAnswers,
+      answers,
     };
   }
 
   function formatJ232Answer(shortAnswer, process = '') {
-    return formatPracticeShortAnswer(shortAnswer, process);
+    return createManualSummaryAnswer(normalizePracticeSummaryAnswer(shortAnswer), process);
   }
 
   function formatJ241Answer(shortAnswer, process = '') {
-    return formatPracticeShortAnswer(shortAnswer, process);
+    return createManualSummaryAnswer(normalizePracticeSummaryAnswer(shortAnswer), process);
   }
 
   function formatJ242Answer(shortAnswer, process = '') {
-    return formatPracticeShortAnswer(shortAnswer, process);
+    return createManualSummaryAnswer(normalizePracticeSummaryAnswer(shortAnswer), process);
   }
 
   function formatIneqAxRelB(coef, op, constant) {
@@ -8546,7 +9419,7 @@
         answers.push(
           formatJ241Answer(
             `$${solution}$`,
-            `先移項整理：$${formatTerm(leftCoef, 'x')}${rightCoef > 0 ? '-' : '+'}${formatTerm(Math.abs(rightCoef), 'x')}${rawOp}${rhsConst}${bias >= 0 ? '-' : '+'}${Math.abs(bias)}$，可得 $${formatIneqAxRelB(A, rawOp, rhsConst - bias)}$。${A < 0 ? `再除以負數 ${A} 要變號，` : ''}所以解是 $${solution}$。`
+            `先移項整理：$${formatTerm(leftCoef, 'x')}${rightCoef > 0 ? '-' : '+'}${formatTerm(Math.abs(rightCoef), 'x')}${rawOp}${rhsConst}${formatSignedNumber(-bias)}$，可得 $${formatIneqAxRelB(A, rawOp, rhsConst - bias)}$。${A < 0 ? `再除以負數 ${A} 要變號，` : ''}所以解是 $${solution}$。`
           )
         );
         continue;
@@ -8565,12 +9438,12 @@
         const rhs = A * target + p * r;
         const solution = formatIneqSolution(solOp, makeFraction(target));
         questions.push(
-          `解不等式：$${p}(x${r >= 0 ? '+' : ''}${r})${displayIneqOp(rawOp)}${formatLinearExpr(q, rhs)}$。`
+          `解不等式：$${p}(${formatLinearExpr(1, r)})${displayIneqOp(rawOp)}${formatLinearExpr(q, rhs)}$。`
         );
         answers.push(
           formatJ241Answer(
             `$${solution}$`,
-            `先展開得 $${p}x${p * r >= 0 ? '+' : ''}${p * r}${rawOp}${formatLinearExpr(q, rhs)}$。移項整理後可得 $${formatIneqAxRelB(A, rawOp, rhs - p * r)}$。${A < 0 ? `兩邊同除以負數 ${A} 要變號，` : ''}因此 $${solution}$。`
+            `先展開得 $${formatLinearExpr(p, p * r)}${rawOp}${formatLinearExpr(q, rhs)}$。移項整理後可得 $${formatIneqAxRelB(A, rawOp, rhs - p * r)}$。${A < 0 ? `兩邊同除以負數 ${A} 要變號，` : ''}因此 $${solution}$。`
           )
         );
         continue;
@@ -8590,12 +9463,12 @@
       const rhs = A * target + constPart;
       const solution = formatIneqSolution(solOp, makeFraction(target));
       questions.push(
-        `解不等式：$${p}(x${r >= 0 ? '+' : ''}${r})-${q}(x${u >= 0 ? '+' : ''}${u})${displayIneqOp(rawOp)}${rhs}$。`
+        `解不等式：$${p}(${formatLinearExpr(1, r)})-${q}(${formatLinearExpr(1, u)})${displayIneqOp(rawOp)}${rhs}$。`
       );
       answers.push(
         formatJ241Answer(
           `$${solution}$`,
-          `先展開得 $${p}x${p * r >= 0 ? '+' : ''}${p * r}-${q}x${q * u >= 0 ? '-' : '+'}${Math.abs(q * u)}${rawOp}${rhs}$，整理後為 $${formatIneqAxRelB(A, rawOp, rhs - constPart)}$。${A < 0 ? `再除以負數 ${A} 時要變號，` : ''}所以解為 $${solution}$。`
+          `先展開得 $${formatLinearExpr(p, p * r)}-\\left(${formatLinearExpr(q, q * u)}\\right)${rawOp}${rhs}$，整理後為 $${formatIneqAxRelB(A, rawOp, rhs - constPart)}$。${A < 0 ? `再除以負數 ${A} 時要變號，` : ''}所以解為 $${solution}$。`
         )
       );
     }
@@ -8628,7 +9501,7 @@
         const rhsConst = A * target + bias;
         const solution = formatIneqSolution(solOp, makeFraction(target));
         questions.push(
-          `解不等式：$${trimFixed(coef / scale)}x${bias >= 0 ? '+' : ''}${trimFixed(bias / scale)}${displayIneqOp(rawOp)}${trimFixed(rhsCoef / scale)}x${rhsConst >= 0 ? '+' : ''}${trimFixed(rhsConst / scale)}$。`
+          `解不等式：$${formatCoeffTerm(coef / scale)}${bias === 0 ? '' : `${bias > 0 ? '+' : ''}${trimFixed(bias / scale)}`}${displayIneqOp(rawOp)}${formatCoeffTerm(rhsCoef / scale)}${rhsConst === 0 ? '' : `${rhsConst > 0 ? '+' : ''}${trimFixed(rhsConst / scale)}`}$。`
         );
         answers.push(
           formatJ241Answer(
@@ -8653,12 +9526,12 @@
         const inner = r === 0 ? 'x' : `x${r >= 0 ? '+' : ''}${r}`;
         const solution = formatIneqSolution(solOp, makeFraction(target));
         questions.push(
-          `解不等式：$${p}\\left(${inner}\\right)${displayIneqOp(rawOp)}${trimFixed(q / 10)}x${rhs >= 0 ? '+' : ''}${trimFixed(rhs / 10)}$。`
+          `解不等式：$${p}\\left(${inner}\\right)${displayIneqOp(rawOp)}${formatCoeffTerm(q / 10)}${rhs === 0 ? '' : `${rhs > 0 ? '+' : ''}${trimFixed(rhs / 10)}`}$。`
         );
         answers.push(
           formatJ241Answer(
             `$${solution}$`,
-            `先展開並把小數同乘以 $10$ 化成整數，可得 $${p * 10}(x${r >= 0 ? '+' : ''}${r})${rawOp}${formatLinearExpr(q, rhs)}$。整理後為 $${formatIneqAxRelB(A, rawOp, rhs - 10 * p * r)}$。${A < 0 ? `除以負數 ${A} 要變號，` : ''}所以 $${solution}$。`
+            `先展開並把小數同乘以 $10$ 化成整數，可得 $${p * 10}(${inner})${rawOp}${formatLinearExpr(q, rhs)}$。整理後為 $${formatIneqAxRelB(A, rawOp, rhs - 10 * p * r)}$。${A < 0 ? `除以負數 ${A} 要變號，` : ''}所以 $${solution}$。`
           )
         );
         continue;
@@ -8678,12 +9551,12 @@
       const rhs = A * target + constPart;
       const solution = formatIneqSolution(solOp, makeFraction(target));
       questions.push(
-        `解不等式：$${trimFixed(p / 10)}(10x${r >= 0 ? '+' : ''}${10 * r})-${trimFixed(q / 10)}(10x${u >= 0 ? '+' : ''}${10 * u})${displayIneqOp(rawOp)}${trimFixed(rhs / 10)}$。`
+        `解不等式：$${trimFixed(p / 10)}(${formatLinearExpr(10, 10 * r)})-${trimFixed(q / 10)}(${formatLinearExpr(10, 10 * u)})${displayIneqOp(rawOp)}${trimFixed(rhs / 10)}$。`
       );
       answers.push(
         formatJ241Answer(
           `$${solution}$`,
-          `先展開並整理得 $${p}(10x${r >= 0 ? '+' : ''}${10 * r})-${q}(10x${u >= 0 ? '+' : ''}${10 * u})${rawOp}${rhs}$，進一步可化成 $${formatIneqAxRelB(A, rawOp, rhs - constPart)}$。${A < 0 ? `再除以負數 ${A} 要變號，` : ''}因此 $${solution}$。`
+          `先展開並整理得 $${p}(${formatLinearExpr(10, 10 * r)})-${q}(${formatLinearExpr(10, 10 * u)})${rawOp}${rhs}$，進一步可化成 $${formatIneqAxRelB(A, rawOp, rhs - constPart)}$。${A < 0 ? `再除以負數 ${A} 要變號，` : ''}因此 $${solution}$。`
         )
       );
     }
@@ -8903,12 +9776,7 @@
       const yLeft = lowerInc ? '≤' : '<';
       const yRight = upperInc ? '≤' : '<';
       const coefText = coef.den === 1 ? `${coef.num}` : `\\dfrac{${coef.num}}{${coef.den}}`;
-      const yExpr =
-        coef.den === 1 && coef.num === 1
-          ? `x${bias >= 0 ? '+' : ''}${bias}`
-          : coef.den === 1 && coef.num === -1
-            ? `-x${bias >= 0 ? '+' : ''}${bias}`
-            : `${coefText}x${bias >= 0 ? '+' : ''}${bias}`;
+      const yExpr = coef.den === 1 ? formatLinearExpr(coef.num, bias) : `${coefText}x${formatSignedNumber(bias)}`;
       const rangeAnswer = `${formatIneqBound(lowerY)}${yLeft}y${yRight}${formatIneqBound(upperY)}`;
       questions.push(`已知 $${low}${xExprLeft}x${xExprRight}${high}$，求 $y=${yExpr}$ 的範圍。`);
       answers.push(
@@ -8970,7 +9838,7 @@
         const d = (a - rightCoef) * target + c;
         const coefExpr = symbolMinusNumber('a', rightCoef);
         questions.push(
-          `若 $ax${c >= 0 ? '+' : ''}${c}${displayIneqOp(rawOp)}${formatLinearExpr(rightCoef, d)}$ 的解為 $x${displayIneqOp(solOp)}${target}$，求 $a$。`
+          `若 $${c === 0 ? 'ax' : `ax${c > 0 ? '+' : ''}${c}`}${displayIneqOp(rawOp)}${formatLinearExpr(rightCoef, d)}$ 的解為 $x${displayIneqOp(solOp)}${target}$，求 $a$。`
         );
         answers.push(
           formatJ241Answer(
@@ -9106,7 +9974,7 @@
         if (!Number.isInteger(x0TimesTarget)) continue;
         const rightConst = x0TimesTarget - rightCoef * x0 + leftBias;
         if (rightConst < -18 || rightConst > 18) continue;
-        const leftExpr = `ax${leftBias >= 0 ? '+' : ''}${leftBias}`;
+        const leftExpr = leftBias === 0 ? 'ax' : `ax${leftBias > 0 ? '+' : ''}${leftBias}`;
         const rightExpr = formatLinearExpr(rightCoef, rightConst);
         questions.push(
           `已知 $x=${x0}$ 為不等式 $${leftExpr}${displayIneqOp(rawOp)}${rightExpr}$ 的解，求 $a$ 的範圍，並求滿足條件的${askText}整數。`
@@ -9114,7 +9982,7 @@
         answers.push(
           formatJ241Answer(
             `$a${displayIneqOp(solOp)}${fractionToLatex(target, true)}$，${askText}整數為 $${integerAnswer}$`,
-            `把 $x=${x0}$ 代入，可得 $${x0}a${leftBias >= 0 ? '+' : ''}${leftBias}${displayIneqOp(rawOp)}${rightCoef * x0}${rightConst >= 0 ? '+' : ''}${rightConst}$。整理得 $${x0}a${displayIneqOp(rawOp)}${rightCoef * x0 + rightConst - leftBias}$。再解得 $a${displayIneqOp(solOp)}${fractionToLatex(target, true)}$。因此滿足條件的${askText}整數為 $${integerAnswer}$。`
+            `把 $x=${x0}$ 代入，可得 $${x0}a${leftBias === 0 ? '' : `${leftBias > 0 ? '+' : ''}${leftBias}`}${displayIneqOp(rawOp)}${rightCoef * x0 + rightConst}$。整理得 $${x0}a${displayIneqOp(rawOp)}${rightCoef * x0 + rightConst - leftBias}$。再解得 $a${displayIneqOp(solOp)}${fractionToLatex(target, true)}$。因此滿足條件的${askText}整數為 $${integerAnswer}$。`
           )
         );
         built = true;
@@ -9175,7 +10043,7 @@
         const secondConst = rhs2 - s * u;
         const secondRhs = symbolWithConst('a', secondConst);
         questions.push(
-          `若不等式 $${p}(x${r >= 0 ? '+' : ''}${r})${displayIneqOp(raw1)}${formatLinearExpr(q, rhs1)}$ 的解與 $${s}(x${u >= 0 ? '+' : ''}${u})${displayIneqOp(raw2)}${formatLinearExpr(t, rhs2)}+a$ 的解相同，求 $a$。`
+          `若不等式 $${p}(${formatLinearExpr(1, r)})${displayIneqOp(raw1)}${formatLinearExpr(q, rhs1)}$ 的解與 $${s}(${formatLinearExpr(1, u)})${displayIneqOp(raw2)}${formatLinearExpr(t, rhs2)}+a$ 的解相同，求 $a$。`
         );
         answers.push(
           formatJ241Answer(
@@ -9212,7 +10080,7 @@
         const secondConst = -(s * m - t * u);
         const secondRhs = symbolWithConst('a', secondConst);
         questions.push(
-          `若 $${p}(x${r >= 0 ? '+' : ''}${r})-${q}(x${u >= 0 ? '+' : ''}${u})${displayIneqOp(raw1)}${rhs1}$ 的解與 $${s}(x${m >= 0 ? '+' : ''}${m})-${t}(x${u >= 0 ? '+' : ''}${u})${displayIneqOp(raw2)}a$ 的解相同，求 $a$。`
+          `若 $${p}(${formatLinearExpr(1, r)})-${q}(${formatLinearExpr(1, u)})${displayIneqOp(raw1)}${rhs1}$ 的解與 $${s}(${formatLinearExpr(1, m)})-${t}(${formatLinearExpr(1, u)})${displayIneqOp(raw2)}a$ 的解相同，求 $a$。`
         );
         answers.push(
           formatJ241Answer(
@@ -9246,7 +10114,7 @@
       const a = B * target + s * u;
       const secondRhs = symbolWithConst('a', -s * u);
       questions.push(
-        `若不等式 $${p}(x${r >= 0 ? '+' : ''}${r})${displayIneqOp(raw1)}${formatLinearExpr(q, rhs1)}$ 的解與 $${s}(x${u >= 0 ? '+' : ''}${u})${displayIneqOp(raw2)}${t}x+a$ 的解相同，求 $a$。`
+        `若不等式 $${p}(${formatLinearExpr(1, r)})${displayIneqOp(raw1)}${formatLinearExpr(q, rhs1)}$ 的解與 $${s}(${formatLinearExpr(1, u)})${displayIneqOp(raw2)}${formatTerm(t, 'x')}+a$ 的解相同，求 $a$。`
       );
       answers.push(
         formatJ241Answer(
@@ -9460,7 +10328,7 @@
         const countItem = 4 + (cycle % 4);
         const budget = 90 + cycle * 17 + countItem;
         const bound = fractionToLatex(makeFraction(budget, countItem), true);
-        questions.push(`預算購買：一枝螢光筆 $x$ 元，買 ${countItem} 枝的錢不夠付 ${budget} 元，求 $x$ 的範圍。`);
+        questions.push(`預算購買：一枝螢光筆 $x$ 元，買 ${countItem} 枝的總價不到 ${budget} 元，求 $x$ 的範圍。`);
         answers.push(
           formatJ242Answer(
             `$x<${bound}$`,
@@ -9635,14 +10503,14 @@
         const rate = randInt(20, 50);
         const cap = rate * randInt(4, 8);
         questions.push(
-          `停車費率：某停車場每小時收費 ${rate} 元，不滿 1 小時以 1 小時計。若停了 $x$ 小時，總費用不超過 ${cap} 元，求 $x$ 的範圍。`
+          `停車費率：某停車場每小時收費 ${rate} 元，不滿 1 小時以 1 小時計。若停了 $x$ 小時（$x>0$），總費用不超過 ${cap} 元，求 $x$ 的範圍。`
         );
         const bound = fractionToLatex(makeFraction(cap, rate), true);
         const maxHours = Math.floor(cap / rate);
         answers.push(
           formatJ242Answer(
-            `$x≤${bound}$，最多 ${maxHours} 小時`,
-            `依題意：$${rate}x≤${cap}$，所以 $x≤${bound}$。若題目限制以小時計，則最多可停 ${maxHours} 小時。`
+            `$0<x≤${bound}$，最多 ${maxHours} 小時`,
+            `每小時計費，總費用不超過 ${cap} 元表示計費時數至多為 $${cap}\div ${rate}=${maxHours}$ 小時。因此 $0<x≤${bound}$，最多可停 ${maxHours} 小時。`
           )
         );
         continue;
@@ -9711,7 +10579,7 @@
         answers.push(
           formatJ242Answer(
             `${maxWrong} 題`,
-            `若錯 $x$ 題，則對了 $${total}-x$ 題，得分為 $${score}(${total}-x)-${penalty}x$。依題意：$${score}(${total}-x)-${penalty}x>${bound}$，整理得 $${coef}x<${score * total - bound}$，即 $x<${boundText}$。因此 $x$ 的最大值是 ${maxWrong}。`
+            `若錯 $x$ 題，則對了 $${total}-x$ 題，得分為 $${score}(${total}-x)${formatTerm(-penalty, 'x')}$。依題意：$${score}(${total}-x)${formatTerm(-penalty, 'x')}>${bound}$，整理得 $${coef}x<${score * total - bound}$，即 $x<${boundText}$。因此 $x$ 的最大值是 ${maxWrong}。`
           )
         );
         continue;
@@ -9994,7 +10862,7 @@
       const total = freq.reduce((sum, value) => sum + value, 0);
       const mean = makeFraction(weighted, total);
       questions.push(
-        `某組資料的分組次數如下：${intervals.map((item, idx) => `${item.low}-${item.high}：${freq[idx]}`).join('，')}。若以各組組中點估計，求這組資料的平均數。`
+        `某組資料的分組次數如下：${intervals.map((item, idx) => `${item.low}～未滿 ${item.high}：${freq[idx]}`).join('，')}。若以各組組中點估計，求這組資料的平均數。`
       );
       answers.push(
         formatPracticeShortAnswer(
@@ -10167,14 +11035,16 @@
           break;
         }
       }
-      const mode = values[freqs.indexOf(Math.max(...freqs))];
+      const maxFreq = Math.max(...freqs);
+      const modes = values.filter((_, idx) => freqs[idx] === maxFreq);
+      const modeText = modes.join('、');
       questions.push(
         `某組資料的數值與次數如下：${values.map((value, idx) => `${value} 出現 ${freqs[idx]} 次`).join('，')}。求中位數與眾數。`
       );
       answers.push(
         formatPracticeShortAnswer(
-          `中位數 ${median}，眾數 ${mode}`,
-          `總共有 ${totalOdd} 個數，第 ${middlePos} 個數落在 ${median}，所以中位數是 ${median}；出現次數最多的是 ${mode}，所以眾數是 ${mode}。`
+          `中位數 ${median}，眾數 ${modeText}`,
+          `總共有 ${totalOdd} 個數，第 ${middlePos} 個數落在 ${median}，所以中位數是 ${median}；出現次數最多的是 ${modeText}，所以眾數是 ${modeText}。`
         )
       );
     }
@@ -10224,7 +11094,7 @@
       }
 
       if (variant === 2) {
-        const total = [500, 600, 700, 800, 900][cycle % 5];
+        const total = [500, 640, 720, 960, 840][cycle % 5];
         const ratio = [
           [2, 3],
           [3, 5],
@@ -10315,7 +11185,7 @@
         ][cycle % 5];
         const missing = 360 - angles.reduce((sum, value) => sum + value, 0);
         const percent = makeFraction(missing * 100, 360);
-        questions.push(`圓形圖中有四個圖形，其中三個角度分別為 ${angles.join('°、')}°，求第四個圖形占全部的百分比。`);
+        questions.push(`圓形圖中有四個扇形，其中三個圓心角分別為 ${angles.join('°、')}°，求第四個扇形占全部的百分比。`);
         answers.push(
           formatPracticeShortAnswer(
             `$${fractionToLatex(percent, true)}\\%$`,
@@ -10381,7 +11251,7 @@
       answers.push(
         formatPracticeShortAnswer(
           `$${fractionToLatex(bAngle, true)}°$`,
-          `A:B=${multiplier}:1$，兩者合計角度為 $360°\\times ${totalPercent}\\%=${3.6 * totalPercent}°$。B 占其中 1 份，所以 B 的圓心角為 $${fractionToLatex(bAngle, true)}°$。`
+          `$A:B=${multiplier}:1$，兩者合計角度為 $360°\\times ${totalPercent}\\%=${3.6 * totalPercent}°$。B 占其中 1 份，所以 B 的圓心角為 $${fractionToLatex(bAngle, true)}°$。`
         )
       );
     }
@@ -10434,7 +11304,7 @@
 
       if (variant === 2) {
         const firstTotal = [200, 240, 300, 360, 400][cycle % 5];
-        const secondTotal = firstTotal + [100, 120, 150, 180, 200][cycle % 5];
+        const secondTotal = firstTotal + [100, 120, 150, 240, 200][cycle % 5];
         const firstPercent = [25, 30, 20, 15, 35][cycle % 5];
         const secondPercent = [20, 25, 18, 12, 30][cycle % 5];
         const firstCount = (firstTotal * firstPercent) / 100;
@@ -10466,7 +11336,7 @@
         continue;
       }
 
-      const oldCount = [20, 30, 50, 75, 90][cycle % 5];
+      const oldCount = [20, 30, 50, 80, 90][cycle % 5];
       const percentIncrease = [20, 30, 40, 50, 60][cycle % 5];
       const factor = makeFraction(100 + percentIncrease, 100);
       const newCount = mulFraction(makeFraction(oldCount, 1), factor);
@@ -10653,7 +11523,7 @@
 
       const minAngle = [15, 18, 24, 30, 36][cycle % 5];
       const frac = makeFraction(minAngle, 360);
-      questions.push(`已知圓形圖中最小的角度是 ${minAngle}°，求該類別至少占全體的幾分之幾。`);
+      questions.push(`已知圓形圖中最小的角度是 ${minAngle}°，求該類別占全體的幾分之幾。`);
       answers.push(
         formatPracticeShortAnswer(
           `$${fractionToLatex(frac)}$`,
@@ -10698,14 +11568,24 @@
         const afterSub = `${formatTwoVarExpr(0, q, constTerm)}=0`;
         const qTerm = q === 1 ? 'y' : q === -1 ? '-y' : `${q}y`;
         questions.push(`若 $x=${xv}$，$y=${nm}$ 為方程式 $${eqStr}$ 的解，求 $${nm}$ 的值。`);
-        answers.push(`代入 $x=${xv}$，得 $${afterSub}$，整理得 $${qTerm}=${-constTerm}$，所以 $${nm}=${yv}$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${nm}=${yv}$`,
+          `代入 $x=${xv}$，得 $${afterSub}$，整理得 $${qTerm}=${-constTerm}$，所以 $${nm}=${yv}$。`
+        );
       } else {
         // 代入 y=yv → p*x + (q*yv+r) = 0
         const constTerm = q * yv + r; // = -p*xv
         const afterSub = `${formatTwoVarExpr(p, 0, constTerm)}=0`;
         const pTerm = p === 1 ? 'x' : p === -1 ? '-x' : `${p}x`;
         questions.push(`若 $x=${nm}$，$y=${yv}$ 為方程式 $${eqStr}$ 的解，求 $${nm}$ 的值。`);
-        answers.push(`代入 $y=${yv}$，得 $${afterSub}$，整理得 $${pTerm}=${-constTerm}$，所以 $${nm}=${xv}$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$${nm}=${xv}$`,
+          `代入 $y=${yv}$，得 $${afterSub}$，整理得 $${pTerm}=${-constTerm}$，所以 $${nm}=${xv}$。`
+        );
       }
     }
 
@@ -10738,7 +11618,10 @@
       const xvTerm = xv === 1 ? nm : xv === -1 ? `-${nm}` : `${xv}${nm}`;
 
       questions.push(`若 $(x,y)=(${xv},${yv})$ 為方程式 $${eqStr}$ 的解，求 $${nm}$ 的值。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$${nm}=${aVal}$`,
         `代入 $(x,y)=(${xv},${yv})$，得 $${xvTerm}${byvPlusCStr}=0$，整理得 $${xvTerm}=${-byvPlusC}$，所以 $${nm}=${aVal}$。`
       );
     }
@@ -10765,7 +11648,10 @@
       const yTerm = formatTwoVarExpr(0, b, 0);
 
       questions.push(`已知 $x$、$y$ 為整數，試找出滿足 $${eqStr}$ 的任意一組解。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `$(x,y)=(${hintX},${hintY})$ 為一組整數解`,
         `令 $x=${hintX}$，代入得 $${yTerm}=${subRhs}$，解得 $y=${hintY}$，所以 $(x,y)=(${hintX},${hintY})$ 為一組整數解。`
       );
     }
@@ -10810,7 +11696,10 @@
       questions.push(`已知 $x$、$y$ 為正整數，求滿足 $${eqStr}$ 的所有解。`);
       const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
       const yExpr = b === 1 ? 'y' : `${b}y`;
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `所有解為 ${pairText}`,
         `由 $${eqStr}$ 可得 $${yExpr}=${total}${a > 0 ? '-' : '+'}${a > 0 ? a : -a}x$，逐一代入正整數 $x=1,2,\\ldots$ 並驗證 $y$ 為正整數，可得所有解為 ${pairText}。`
       );
     }
@@ -10846,7 +11735,10 @@
         const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
         questions.push(`設 $x$、$y$ 為負整數，求方程式 $${eqStr}$ 的所有解。`);
         const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `所有解為 ${pairText}`,
           `因 $x,y$ 皆為負整數（即 $x\\leq-1$，$y\\leq-1$），逐一代入 $x=-1,-2,\\ldots$ 並檢查 $y$ 是否為負整數，可得所有解為 ${pairText}。`
         );
       } else if (typeIdx === 1) {
@@ -10867,7 +11759,10 @@
         const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
         questions.push(`設 $x$、$y$ 都是小於 $${N}$ 的正整數，求方程式 $${eqStr}$ 的所有解。`);
         const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `所有解為 ${pairText}`,
           `因 $1\\leq x,y<${N}$，代入 $x=1,2,\\ldots,${N - 1}$ 並驗證 $y$ 是否滿足條件，可得所有解為 ${pairText}。`
         );
       } else {
@@ -10890,7 +11785,10 @@
         const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
         questions.push(`設 $x$、$y$ 都是介於 $-${N}$ 與 $${N}$ 之間的整數，求方程式 $${eqStr}$ 的所有解。`);
         const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `所有解為 ${pairText}`,
           `因 $-${N}\\leq x,y\\leq${N}$，代入 $x=-${N},-${N - 1},\\ldots,${N}$ 並驗證 $y$ 是否在範圍內，可得所有解為 ${pairText}。`
         );
       }
@@ -10947,7 +11845,10 @@
       const eqStr = `${formatTwoVarExpr(a, b)}=${c}`;
       questions.push(`設 $x$、$y$ 均為質數，求方程式 $${eqStr}$ 的所有解。`);
       const pairText = pairs.map(([x, y]) => `$(${x},${y})$`).join('、');
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `所有解為 ${pairText}`,
         `逐一代入質數 $x=2,3,5,7,\\ldots$，計算 $y=\\dfrac{${c}-${a}x}{${b}}$，篩選出 $y$ 也為質數的情況，可得所有解為 ${pairText}。`
       );
     }
@@ -10993,7 +11894,10 @@
           `${item1}每${unit1} $${p1}$ 元，${item2}每${unit2} $${p2}$ 元，${buyer}兩樣都買，共花了 $${total}$ 元，請寫出所有可能的買法。`
         );
         const buyText = pairs.map(([x, y]) => `${item1} $${x}$ ${unit1}、${item2} $${y}$ ${unit2}`).join('；');
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          buyText,
           `設買 ${item1} $x$ ${unit1}、${item2} $y$ ${unit2}，列方程式 $${p1}x+${p2}y=${total}$。因 $x,y$ 為正整數，逐一驗算可得：${buyText}。`
         );
       } else {
@@ -11002,7 +11906,10 @@
           `${buyer}買了每${unit1} $${p1}$ 元的${item1}及每${unit2} $${p2}$ 元的${item2}各若干，共花了 $${total}$ 元，她可能買了幾${unit2}${item2}？`
         );
         const yCounts = pairs.map(([, y]) => `$${y}$ ${unit2}`).join('、');
-        answers.push(
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `$y$ 可為 ${yCounts}`,
           `設買${item1} $x$ ${unit1}、${item2} $y$ ${unit2}，列方程式 $${p1}x+${p2}y=${total}$。因 $x,y$ 為正整數，逐一驗算可得 $y$ 可為 ${yCounts}。`
         );
       }
@@ -11033,7 +11940,7 @@
       // "超過 targetAvg" → strict > → x > targetAvg * totalRounds - prevTotal
       const threshold = targetAvg * totalRounds - prevTotal; // x must be > threshold
       const minScore = threshold + 1;
-      if (minScore < 1 || minScore > 150) continue;
+      if (minScore < 1 || minScore > 100) continue;
 
       const prevStr = prevScores.join('、');
       const ordinals = ['', '一', '二', '三', '四'];
@@ -11088,7 +11995,7 @@
           if (x / 2 - cPrime <= MPrime) validPrime.push(x);
         }
         if (validPrime.length < 1 || validPrime.length > 14) continue;
-        const listStr = validPrime.slice().reverse().join('、');
+        const listStr = validPrime.join('、');
         questions.push(`若某正整數的一半減 $${cPrime}$ 不大於 $${MPrimeDisp}$，求此正整數可能為多少？`);
         answers.push(
           formatJ242Answer(
@@ -11097,7 +12004,7 @@
           )
         );
       } else {
-        const listStr = valid.slice().reverse().join('、');
+        const listStr = valid.join('、');
         const xMaxStr = (x_max + 1).toString();
         questions.push(`若某正整數的一半加 $${c}$ 不大於 $${MDisplay}$，求此正整數可能為多少？`);
         answers.push(
@@ -11339,20 +12246,14 @@
         // ax > bx + c → (a-b)x > c → x > c/diff
         const bound = makeFraction(c, diff);
         const maxInt = maxIntegerForIneq('>', bound);
-        // express as 19-8x > -5x+3 style: rearranged
         const lhsConst = randInt(10, 30);
         const lhsCoef = a;
         const rhsConst = lhsConst - c;
         const rhsCoef = b;
-        // lhsConst - lhsCoef*x > rhsConst - rhsCoef*x
-        const lhsStr =
-          rhsConst >= 0
-            ? `${lhsConst}-${lhsCoef}x>${rhsConst}-${rhsCoef}x`
-            : `${lhsConst}-${lhsCoef}x>${rhsConst}+${-rhsCoef}x`;
+        const lhsExpr = formatLinearExpr(-lhsCoef, lhsConst);
+        const rhsExpr = formatLinearExpr(-rhsCoef, rhsConst);
         return {
-          q:
-            `解不等式 $${lhsConst}-${lhsCoef}x>${rhsConst === 0 ? '' : `${rhsConst < 0 ? rhsConst : `+${rhsConst}`}`}${rhsCoef > 0 ? `${rhsConst === 0 ? '' : ''}${rhsCoef === 1 ? '' : rhsCoef}x` : `${-rhsCoef}x`}` +
-            `$，求此不等式的最大整數解。`,
+          q: `解不等式 $${lhsExpr}>${rhsExpr}$，求此不等式的最大整數解。`,
           a: `整理得 $(${lhsCoef}-${rhsCoef})x < ${c}$，即 $${diff}x < ${c}$，解得 $x < ${fractionToLatex(bound, true)}$。最大整數解為 $${maxInt}$。`,
           ans: `${maxInt}`,
         };
@@ -11369,28 +12270,28 @@
         const bound = makeFraction(rhs2, diff2);
         const maxInt = maxIntegerForIneq('≦', bound);
         const posCount = Math.max(0, maxInt);
+        const positiveAnswerText =
+          posCount > 0 ? `正整數解為 $1,2,\\ldots,${maxInt}$，共 $${posCount}$ 個。` : '沒有正整數解。';
         return {
-          q: `滿足不等式 $${c}+${a}x\\leq ${d}+${b}x$ 的正整數 $x$ 共有幾個？`,
-          a: `整理得 $(${a}-${b})x\\leq ${rhs2}$，即 $x\\leq ${fractionToLatex(bound, true)}$。正整數解為 $1,2,\\ldots,${maxInt}$，共 $${posCount}$ 個。`,
+          q: `滿足不等式 $${c}+${formatTerm(a, 'x')}\\leq ${d}+${formatTerm(b, 'x')}$ 的正整數 $x$ 共有幾個？`,
+          a: `整理得 $(${a}-${b})x\\leq ${rhs2}$，即 $x\\leq ${fractionToLatex(bound, true)}$。${positiveAnswerText}`,
           ans: `${posCount} 個`,
         };
       },
       // variant 2: 聯立整數範圍求個數
       () => {
         const aCoef = randInt(2, 5);
-        const lo = -randInt(3, 8);
-        const hi = randInt(5, 15);
-        // -M < aCoef*x + b < N 型
         const b = randInt(1, 10);
-        const M = randInt(10, 30);
-        const N = aCoef * randInt(2, 6) + b + M;
+        const loVal = -randInt(6, 10);
+        const hiVal = loVal + randInt(4, 10);
+        const leftGap = randInt(1, aCoef);
+        const rightGap = randInt(1, aCoef);
+        const M = -(aCoef * loVal + b - leftGap);
+        const N = aCoef * hiVal + b + rightGap;
         // -M < aCoef*x + b < N → (-M-b)/aCoef < x < (N-b)/aCoef
         const loFrac = makeFraction(-M - b, aCoef);
         const hiFrac = makeFraction(N - b, aCoef);
-        const loVal = Math.ceil((-M - b) / aCoef + 1e-9);
-        const hiVal = Math.floor((N - b) / aCoef - 1e-9);
         const intCount = hiVal - loVal + 1;
-        if (intCount < 1 || intCount > 12) return null;
         const intList = Array.from({ length: intCount }, (_, i) => loVal + i).join('、');
         return {
           q: `滿足不等式 $-${M}<${aCoef}x+${b}<${N}$ 的整數解為？`,
@@ -11410,7 +12311,7 @@
         const bound = makeFraction(rhs3, diff3);
         const minInt = minIntegerForIneq('>', bound);
         return {
-          q: `滿足不等式 $${b}x+${c1}<${a}x-${c2}$ 的最小正整數解為何？`,
+          q: `滿足不等式 $${formatTerm(b, 'x')}+${c1}<${formatTerm(a, 'x')}-${c2}$ 的最小正整數解為何？`,
           a: `整理得 $(${a}-${b})x>${c1}+${c2}=${rhs3}$，即 $x>${fractionToLatex(bound, true)}$。最小正整數解為 $${minInt}$。`,
           ans: `${minInt}`,
         };
@@ -11445,23 +12346,21 @@
       if (variant === 0) {
         // ax+b [op] cx+d 的解為 x [op2] M，逆推 a
         // 例: 不等式2x-8≦ax+10 解為 x≧-3 → (2-a)x≦18 → x≧-3 (2-a<0, a>2)
-        // 設解為 x≧M，係數 kx≧C → k=(2-a)=(C/M)
-        const M_vals = [-5, -3, -2, -4, -6, 2, 3, 4];
+        const M_vals = [-5, -3, -2, -4, -6, -7, -8, -9];
         const M = M_vals[(cycle * 3) % M_vals.length];
         const lhsConst = 2 + (cycle % 3) * 3;
         const rhsConst = randInt(5, 15);
         // (lhsConst - a)x ≦ rhsConst + lhsConst*|M| → x ≧ M
         // (lhsConst - a)*M = rhsConst + lhsConst*M - but let's pick a directly
         // Equation: 2x - rhsConst ≦ ax + 10 → (2-a)x ≦ 10 + rhsConst
-        // solution x≧M means 2-a<0 and M = -(10+rhsConst)/(2-a) → 2-a = -(10+rhsConst)/M
-        // Only valid if M≠0 and (10+rhsConst) divisible
+        // solution x≧M means 2-a<0 and M = (10+rhsConst)/(2-a).
         const C = 10 + rhsConst;
-        if (M === 0 || C % M !== 0) {
+        if (M >= 0 || C % M !== 0) {
           i -= 1;
           continue;
         }
-        const ka = 2 - -C / M; // 2-a = -C/M → a = 2+C/M
-        const a = 2 + C / M;
+        const coefficient = C / M;
+        const a = 2 - coefficient;
         if (!Number.isInteger(a) || a === 2) {
           i -= 1;
           continue;
@@ -11470,7 +12369,7 @@
         answers.push(
           formatJ242Answer(
             `$a=${a}$`,
-            `整理得 $(2-a)x\\leq ${C}$。因為解為 $x\\geq ${M}$，表示 $x$ 符號反向，即 $2-a<0$，且 $x\\geq \\dfrac{${C}}{2-a}=${M}$，故 $2-a=${-C / M}$，解得 $a=${a}$。`
+            `整理得 $(2-a)x\\leq ${C}$。因為解為 $x\\geq ${M}$，表示除以 $2-a$ 時不等號反向，所以 $2-a<0$。界線滿足 $\\dfrac{${C}}{2-a}=${M}$，故 $2-a=${coefficient}$，解得 $a=${a}$。`
           )
         );
         continue;
@@ -11519,7 +12418,9 @@
         const a2 = b2 + aMinusB;
         const rhsVal = aMinusB * M2 + c2 - c2; // = aMinusB*M2
         const d2Val = aMinusB * M2 + c2;
-        questions.push(`已知 $a>${b2}$，且不等式 $ax-${b2}x+${c2}\\geq ${d2Val}$ 的解為 $x\\geq ${M2}$，求 $a$ 的值。`);
+        questions.push(
+          `已知 $a>${b2}$，且不等式 $ax${formatTerm(-b2, 'x')}+${c2}\\geq ${d2Val}$ 的解為 $x\\geq ${M2}$，求 $a$ 的值。`
+        );
         answers.push(
           formatJ242Answer(
             `$a=${a2}$`,
@@ -11670,12 +12571,11 @@
       const finalLo = Math.max(lo3Val, lo3bVal);
       const hi3 = finalLo + randInt(2, 6);
       const intList3 = Array.from({ length: hi3 - finalLo + 1 }, (_, k) => finalLo + k);
-      const sum3 = intList3.reduce((s, v) => s + v, 0);
-      questions.push(`滿足不等式 $${a3}x-${b3}>${c3}\\geq ${d3}-${e3}x$ 的所有整數解的和為？`);
+      questions.push(`滿足不等式 $${a3}x-${b3}>${c3}\\geq ${d3}-${formatTerm(e3, 'x')}$ 的所有整數解的和為？`);
       answers.push(
         formatJ242Answer(
-          `（見解析）`,
-          `第一式：$${a3}x-${b3}>${c3}$ → $x>${fractionToLatex(lo3Frac, true)}$，正整數解從 $${lo3Val}$。第二式：$${c3}\\geq ${d3}-${e3}x$ → $${e3}x\\geq ${d3 - c3}$ → $x\\geq ${fractionToLatex(loFrac3b, true)}$。取交集，整數解為 $${intList3.slice(0, 8).join('、')}\\ldots$（依題目限定範圍）。`
+          `整數解無限多，無法求和`,
+          `第一式：$${a3}x-${b3}>${c3}$ → $x>${fractionToLatex(lo3Frac, true)}$，整數解從 $${lo3Val}$ 開始。第二式：$${c3}\\geq ${d3}-${formatTerm(e3, 'x')}$ → $${formatTerm(e3, 'x')}\\geq ${d3 - c3}$ → $x\\geq ${fractionToLatex(loFrac3b, true)}$。取交集後只有下界，整數解為 $${intList3.slice(0, 8).join('、')}\\ldots$，共有無限多個，因此所有整數解的和無法求。`
         )
       );
     }
@@ -11902,9 +12802,9 @@
 
       if (variant === 0) {
         // a% 食鹽水 W 克，加清水 x 克，濃度不超過 b% → x ≧ (a-b)*W/b
-        const aConc = [9, 8, 6, 10, 12][cycle % 5];
-        const bConc = [3, 4, 2, 5, 4][cycle % 5];
-        const W = [500, 400, 300, 600, 500][cycle % 5];
+        const aConc = [9, 8, 6, 10, 12, 15, 7, 14][cycle % 8];
+        const bConc = [3, 4, 2, 5, 4, 5, 1, 7][cycle % 8];
+        const W = [500, 400, 300, 600, 500, 200, 100, 350][cycle % 8];
         if (aConc <= bConc) {
           i -= 1;
           continue;
@@ -11930,9 +12830,9 @@
 
       if (variant === 1) {
         // a% 食鹽水 W 克，加食鹽 x 克（取最小整數），濃度超過 b%
-        const aConc = [9, 4, 6, 8, 5][cycle % 5];
-        const bConc = [12, 7, 10, 12, 9][cycle % 5];
-        const W = [500, 300, 400, 500, 600][cycle % 5];
+        const aConc = [9, 4, 6, 8, 5, 7, 10, 3][cycle % 8];
+        const bConc = [12, 7, 10, 12, 9, 11, 15, 8][cycle % 8];
+        const W = [500, 300, 400, 500, 600, 350, 200, 250][cycle % 8];
         if (aConc >= bConc) {
           i -= 1;
           continue;
@@ -11950,21 +12850,22 @@
         }
         const xBound = rhs / coef;
         const xMin = Math.ceil(xBound + 1e-9);
+        const xBoundFraction = makeFraction(rhs, coef);
         questions.push(`${aConc}% 的食鹽水 ${W} 克，至少須加鹽多少克（取最小整數），才能使濃度超過 ${bConc}%？`);
         answers.push(
           formatJ242Answer(
             `${xMin} 克`,
-            `設加食鹽 $x$ 克，鹽水共 $(${W}+x)$ 克，鹽共 $(${saltInit}+x)$ 克。依題意 $\\dfrac{${saltInit}+x}{${W}+x}>\\dfrac{${bConc}}{100}$，整理得 $${coef}x>${rhs}$，即 $x>${xBound.toFixed(3)}$，取最小整數為 $${xMin}$ 克。`
+            `設加食鹽 $x$ 克，食鹽水共 $(${W}+x)$ 克，鹽共 $(${saltInit}+x)$ 克。依題意 $\\dfrac{${saltInit}+x}{${W}+x}>\\dfrac{${bConc}}{100}$，整理得 $${coef}x>${rhs}$，即 $x>${fractionToLatex(xBoundFraction, true)}$，取最小整數為 $${xMin}$ 克。`
           )
         );
         continue;
       }
 
       // variant 2: a% 食鹽水 W1 克與 b% 食鹽水 x 克混合，濃度不低於 c%
-      const aConc = [4, 6, 3, 5, 4][cycle % 5];
-      const bConc = [9, 12, 10, 8, 10][cycle % 5];
-      const cConc = [6, 8, 5, 6, 7][cycle % 5];
-      const W1 = [300, 200, 400, 300, 500][cycle % 5];
+      const aConc = [4, 6, 3, 5, 4, 5, 2, 4][cycle % 8];
+      const bConc = [9, 12, 10, 8, 10, 11, 8, 12][cycle % 8];
+      const cConc = [6, 8, 5, 6, 7, 8, 5, 8][cycle % 8];
+      const W1 = [300, 200, 400, 300, 500, 300, 300, 300][cycle % 8];
       if (aConc >= cConc || cConc >= bConc) {
         i -= 1;
         continue;
@@ -11985,7 +12886,7 @@
       answers.push(
         formatJ242Answer(
           `$x\\geq ${xMin2}$ 克`,
-          `混合後鹽為 $${(aConc * W1) / 100}+\\dfrac{${bConc}x}{100}$ 克，水共 $${W1}+x$ 克。依題意 $\\dfrac{${(aConc * W1) / 100}+\\frac{${bConc}x}{100}}{${W1}+x}\\geq \\dfrac{${cConc}}{100}$，整理得 $(${bConc}-${cConc})x\\geq (${cConc}-${aConc})\\times ${W1}=${rhs2}$，即 $${coef2}x\\geq ${rhs2}$，解得 $x\\geq ${xMin2}$。`
+          `混合後鹽為 $${(aConc * W1) / 100}+\\dfrac{${bConc}x}{100}$ 克，食鹽水共 $${W1}+x$ 克。依題意 $\\dfrac{${(aConc * W1) / 100}+\\frac{${bConc}x}{100}}{${W1}+x}\\geq \\dfrac{${cConc}}{100}$，整理得 $(${bConc}-${cConc})x\\geq (${cConc}-${aConc})\\times ${W1}=${rhs2}$，即 $${coef2}x\\geq ${rhs2}$，解得 $x\\geq ${xMin2}$。`
         )
       );
     }
@@ -11994,10 +12895,11 @@
   }
 
   function formatSignedValue(value) {
-    return value >= 0 ? `+${value}` : `${value}`;
+    if (value === 0) return '';
+    return value > 0 ? `+${value}` : `${value}`;
   }
 
-  function formatTwoVarExpr(a, b) {
+  function formatTwoVarNoConstExpr(a, b) {
     const parts = [];
     function pushTerm(coef, variable) {
       if (coef === 0) return;
@@ -12015,7 +12917,7 @@
   }
 
   function formatTwoVarEquation(a, b, c) {
-    return `${formatTwoVarExpr(a, b)}=${c}`;
+    return `${formatTwoVarNoConstExpr(a, b)}=${c}`;
   }
 
   function formatPairList(pairs) {
@@ -12032,15 +12934,29 @@
       const mode = i % 5;
 
       if (mode === 0) {
-        const a = [4, 5, 6][randInt(0, 2)];
-        const b = [2, 3, 4][randInt(0, 2)];
-        const x0 = randInt(3, 8);
-        const y0 = randInt(2, 8);
-        const total = a * x0 + b * y0;
-        const pairs = [];
-        for (let x = 0; x <= Math.floor(total / a); x += 1) {
-          const remain = total - a * x;
-          if (remain >= 0 && remain % b === 0) pairs.push([x, remain / b]);
+        const coeffPairs = [
+          [3, 4],
+          [3, 5],
+          [4, 5],
+          [5, 6],
+          [5, 7],
+          [6, 7],
+        ];
+        let a = 3;
+        let b = 4;
+        let total = 0;
+        let pairs = [];
+        for (let attempt = 0; attempt < 40; attempt += 1) {
+          [a, b] = coeffPairs[randInt(0, coeffPairs.length - 1)];
+          const x0 = randInt(1, 6);
+          const y0 = randInt(1, 6);
+          total = a * x0 + b * y0;
+          pairs = [];
+          for (let x = 0; x <= Math.floor(total / a); x += 1) {
+            const remain = total - a * x;
+            if (remain >= 0 && remain % b === 0) pairs.push([x, remain / b]);
+          }
+          if (pairs.length >= 3 && pairs.length <= 8) break;
         }
         questions.push(`設 $x,y$ 均為非負整數，且 $${a}x+${b}y=${total}$，求所有可能的 $(x,y)$。`);
         summaryAnswers.push(formatPairList(pairs));
@@ -12401,8 +13317,11 @@
       title: '文字敘述轉換為代數式',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ2ContextEquationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ2ContextEquationSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-context-linear-equation-drill': {
@@ -12410,8 +13329,11 @@
       title: '文字情境列二元一次方程式',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ211ContextLinearEquationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ211ContextLinearEquationSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-expression-classify-drill': {
@@ -12419,8 +13341,11 @@
       title: '二元一次式與方程式判別',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ2ClassifySet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ2ClassifySet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-evaluate-expression-drill': {
@@ -12428,8 +13353,11 @@
       title: '求二元一次式的值',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ2EvaluateExpressionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ2EvaluateExpressionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-expression-simplify-drill': {
@@ -12437,8 +13365,11 @@
       title: '二元一次式的化簡（合併同類項）',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ2ExpressionSimplifySet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ2ExpressionSimplifySet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-distribute-expand-drill': {
@@ -12446,8 +13377,11 @@
       title: '去括號與分配律運算',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ2DistributeExpandSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ2DistributeExpandSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-fraction-simplify-drill': {
@@ -12455,8 +13389,11 @@
       title: '分數形式的化簡（通分）',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ2FractionSimplifySet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ2FractionSimplifySet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-ordered-pair-check-drill': {
@@ -12464,8 +13401,11 @@
       title: '數對代入與成立判斷',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ2OrderedPairCheckSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ2OrderedPairCheckSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-parameter-substitution-drill': {
@@ -12473,8 +13413,11 @@
       title: '參數題代入求係數',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ2ParameterSubstitutionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ2ParameterSubstitutionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-equivalent-transform-drill': {
@@ -12482,8 +13425,11 @@
       title: '標準型整理（移項）',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ2EquivalentTransformSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ2EquivalentTransformSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-integer-constraint-drill': {
@@ -12491,8 +13437,11 @@
       title: '列出多組整數解',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ2IntegerConstraintSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ2IntegerConstraintSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-solve-for-variable-drill': {
@@ -12500,8 +13449,11 @@
       title: '整理成 x 表示 y、y 表示 x',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ2SolveForVariableSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ2SolveForVariableSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-find-var-value-drill': {
@@ -12509,8 +13461,11 @@
       title: '代入求變數值（若x=c,y=a型）',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ211FindVarValueSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ211FindVarValueSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-find-x-coeff-drill': {
@@ -12518,8 +13473,11 @@
       title: '代入求x係數',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ211FindXCoeffSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ211FindXCoeffSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-any-one-solution-drill': {
@@ -12527,8 +13485,11 @@
       title: '任意一組整數解',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ211AnyOneSolutionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ211AnyOneSolutionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-all-pos-int-solution-drill': {
@@ -12536,8 +13497,11 @@
       title: '所有正整數解',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ211AllPosIntSolutionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ211AllPosIntSolutionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-range-int-solution-drill': {
@@ -12545,8 +13509,11 @@
       title: '有條件整數解（負整數/有界範圍）',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ211RangeIntSolutionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ211RangeIntSolutionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-prime-solution-drill': {
@@ -12554,8 +13521,11 @@
       title: '質數條件整數解',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ211PrimeSolutionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ211PrimeSolutionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-shopping-word-drill': {
@@ -12563,8 +13533,11 @@
       title: '購物情境應用題',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ211ShoppingWordSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ211ShoppingWordSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-1-integer-region-constraints-clean': {
@@ -12572,8 +13545,11 @@
       title: '整數解與座標限制討論',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ211IntegerRegionConstraintsCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ211IntegerRegionConstraintsCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
 
@@ -12582,8 +13558,11 @@
       title: '代入消去法的基礎練習',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ212SubstitutionBasicSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212SubstitutionBasicSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-elimination-adjustment-drill': {
@@ -12591,8 +13570,11 @@
       title: '加減消去法的係數調整',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ212EliminationAdjustmentSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212EliminationAdjustmentSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-bracket-simplify-drill': {
@@ -12600,8 +13582,11 @@
       title: '先化簡再解聯立方程式',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ212BracketSimplifySet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212BracketSimplifySet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-fraction-decimal-drill': {
@@ -12609,8 +13594,11 @@
       title: '分數與小數型的化簡',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ212FractionDecimalSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212FractionDecimalSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-solution-type-drill': {
@@ -12618,8 +13606,11 @@
       title: '解的個數判定',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ212SolutionTypeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212SolutionTypeSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-triple-equal-drill': {
@@ -12627,8 +13618,11 @@
       title: '特殊結構運算（A=B=C）',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ212TripleEqualSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212TripleEqualSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-symmetric-system-drill': {
@@ -12636,8 +13630,11 @@
       title: '特殊結構運算（係數對稱）',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ212SymmetricSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212SymmetricSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-abs-zero-drill': {
@@ -12645,8 +13642,11 @@
       title: '特殊結構運算（非負性質）',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ212AbsZeroSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212AbsZeroSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-known-solution-coeff-drill': {
@@ -12654,8 +13654,11 @@
       title: '已知解反求係數',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ212KnownSolutionCoeffSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212KnownSolutionCoeffSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-parameter-solution-reverse-clean': {
@@ -12663,8 +13666,11 @@
       title: '隱藏係數與解的反推',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ212ParameterSolutionReverseCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212ParameterSolutionReverseCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-error-diagnosis-drill': {
@@ -12672,8 +13678,11 @@
       title: '看錯題目（邏輯排錯）',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ212ErrorDiagnosisSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212ErrorDiagnosisSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-error-reconstruction-clean': {
@@ -12681,8 +13690,11 @@
       title: '看錯題目的係數回推',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ212ErrorReconstructionCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212ErrorReconstructionCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-shared-solution-drill': {
@@ -12690,8 +13702,11 @@
       title: '同解問題（兩組方程組共有解）',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ212SharedSolutionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212SharedSolutionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-third-condition-drill': {
@@ -12699,8 +13714,11 @@
       title: '解滿足第三個條件',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ212ThirdConditionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212ThirdConditionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-special-reverse-drill': {
@@ -12708,8 +13726,11 @@
       title: '特殊解情形的反求',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ212SpecialReverseSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212SpecialReverseSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-reciprocal-substitution-drill': {
@@ -12717,8 +13738,11 @@
       title: '倒數代換聯立方程式',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ212ReciprocalSubstitutionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212ReciprocalSubstitutionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-reciprocal-structure-drill': {
@@ -12726,8 +13750,11 @@
       title: '和差倒數結構代換',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ212ReciprocalStructureSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212ReciprocalStructureSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-fraction-reciprocal-hybrid-clean': {
@@ -12735,8 +13762,11 @@
       title: '分數型與倒數型聯立方程',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ212FractionReciprocalHybridCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212FractionReciprocalHybridCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-2-two-solution-one-eq-drill': {
@@ -12744,8 +13774,11 @@
       title: '兩組解求方程式係數',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ212TwoSolutionOneEqSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ212TwoSolutionOneEqSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-money-ticket-drill': {
@@ -12753,8 +13786,11 @@
       title: '濃度與混合問題',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ213MoneyTicketSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213MoneyTicketSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-heads-coins-score-drill': {
@@ -12762,8 +13798,11 @@
       title: '淨重、毛重與容器問題',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ213HeadsCoinsScoreSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213HeadsCoinsScoreSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-digit-placevalue-drill': {
@@ -12771,8 +13810,11 @@
       title: '數字位數與交換問題',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ213DigitPlaceValueSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213DigitPlaceValueSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-age-chase-drill': {
@@ -12780,8 +13822,11 @@
       title: '測驗得分與勝負判定',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ213AgeChaseSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213AgeChaseSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-speed-chase-drill': {
@@ -12789,8 +13834,11 @@
       title: '行程速率與追趕問題',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ213SpeedChaseSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213SpeedChaseSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-allocation-work-drill': {
@@ -12798,8 +13846,11 @@
       title: '分配與工程問題',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ213AllocationWorkSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213AllocationWorkSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-tiered-fee-drill': {
@@ -12807,8 +13858,11 @@
       title: '基本費與超額計費問題',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ213TieredFeeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213TieredFeeSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-classical-text-drill': {
@@ -12816,8 +13870,11 @@
       title: '古文應用題',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ213ClassicalTextSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213ClassicalTextSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-unit-price-system-drill': {
@@ -12825,8 +13882,11 @@
       title: '單價與總價聯立問題',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ213UnitPriceSystemSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213UnitPriceSystemSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-age-relation-drill': {
@@ -12834,8 +13894,11 @@
       title: '年齡與倍數和差問題',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ213AgeRelationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213AgeRelationSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-perimeter-relation-drill': {
@@ -12843,8 +13906,11 @@
       title: '長寬與周長條件問題',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ213PerimeterRelationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213PerimeterRelationSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-transfer-change-drill': {
@@ -12852,8 +13918,11 @@
       title: '移轉後倍數相等問題',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ213TransferChangeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213TransferChangeSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-travel-schedule-drill': {
@@ -12861,8 +13930,11 @@
       title: '往返與準時行程問題',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ213TravelScheduleSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213TravelScheduleSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-balance-scale-drill': {
@@ -12870,8 +13942,11 @@
       title: '等臂天平稱重聯立方程',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ213BalanceScaleSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213BalanceScaleSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-class-size-score-drill': {
@@ -12879,8 +13954,11 @@
       title: '班級人數與成績分析',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ213ClassSizeScoreSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213ClassSizeScoreSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-pairwise-sum-drill': {
@@ -12888,8 +13966,11 @@
       title: '多人成對和問題',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ213PairwiseSumSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213PairwiseSumSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-box-distribution-drill': {
@@ -12897,8 +13978,11 @@
       title: '分配與分箱問題',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ213BoxDistributionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213BoxDistributionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-1-3-complex-context-modeling-clean': {
@@ -12906,8 +13990,11 @@
       title: '複合情境聯立建模',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ213ComplexContextModelingCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ213ComplexContextModelingCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-1-axis-distance-drill': {
@@ -12915,8 +14002,11 @@
       title: '點的坐標表示法與坐標軸距離',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ221AxisDistanceSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ221AxisDistanceSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-1-quadrant-basic-drill': {
@@ -12924,8 +14014,11 @@
       title: '各象限及其性質符號判別',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ221QuadrantBasicSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ221QuadrantBasicSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-1-translation-basic-drill': {
@@ -12933,8 +14026,11 @@
       title: '坐標平面上的平移移動',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ221TranslationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ221TranslationSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-1-axis-special-drill': {
@@ -12942,8 +14038,11 @@
       title: '坐標軸上的點與特殊位置判定',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ221AxisSpecialSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ221AxisSpecialSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-1-midpoint-drill': {
@@ -12951,8 +14050,11 @@
       title: '中點坐標公式',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ221MidpointSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ221MidpointSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-1-symmetry-drill': {
@@ -12960,8 +14062,11 @@
       title: '坐標平面上的對稱點',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ221SymmetrySet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ221SymmetrySet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-1-area-drill': {
@@ -12969,8 +14074,11 @@
       title: '幾何圖形的面積計算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ221AreaSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ221AreaSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-1-quadrant-reasoning-drill': {
@@ -12978,8 +14086,11 @@
       title: '含代數參數的象限推理',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ221QuadrantReasoningSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ221QuadrantReasoningSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-1-nonnegative-drill': {
@@ -12987,8 +14098,11 @@
       title: '絕對值與平方的非負性質應用',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ221NonnegativeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ221NonnegativeSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-1-quadrant-coordinate-constraints-clean': {
@@ -12996,8 +14110,11 @@
       title: '象限與坐標限制推論',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ221QuadrantCoordinateConstraintsCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ221QuadrantCoordinateConstraintsCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-1-coordinate-area-midpoint-clean': {
@@ -13005,8 +14122,11 @@
       title: '坐標面積與中點整合',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ221CoordinateAreaMidpointCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ221CoordinateAreaMidpointCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-1-coordinate-transform-multistep-clean': {
@@ -13014,8 +14134,11 @@
       title: '坐標平移與限制整合',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ221CoordinateTransformMultistepCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ221CoordinateTransformMultistepCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-2-point-line-relation-drill': {
@@ -13023,8 +14146,11 @@
       title: '含有未知數的點與方程式關係',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ222PointLineRelationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ222PointLineRelationSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-2-intercept-area-drill': {
@@ -13032,8 +14158,11 @@
       title: '利用截距找交點與三角形面積',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ222InterceptAreaSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ222InterceptAreaSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-2-quadrant-exclusion-drill': {
@@ -13041,8 +14170,11 @@
       title: '由係數正負判斷不通過之象限',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ222QuadrantExclusionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ222QuadrantExclusionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-2-parallel-perpendicular-drill': {
@@ -13050,8 +14182,11 @@
       title: '水平線與鉛垂線的判定與方程',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ222ParallelPerpendicularSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ222ParallelPerpendicularSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-2-line-from-points-drill': {
@@ -13059,8 +14194,11 @@
       title: '已知兩點求直線方程式',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ222LineFromPointsSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ222LineFromPointsSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-2-only-two-quadrants-drill': {
@@ -13068,8 +14206,11 @@
       title: '進階判斷：只通過兩個象限',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ222TwoQuadrantsSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ222TwoQuadrantsSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-2-point-translation-line-drill': {
@@ -13077,8 +14218,11 @@
       title: '點的平移與直線的變動',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ222TranslationLineSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ222TranslationLineSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-2-two-lines-area-drill': {
@@ -13086,8 +14230,11 @@
       title: '兩直線交點與坐標軸圍成面積',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ222TwoLinesAreaSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ222TwoLinesAreaSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-2-slope-intercept-drill': {
@@ -13095,8 +14242,11 @@
       title: '斜率、截距與方程式互換',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ222SlopeInterceptSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ222SlopeInterceptSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-2-parallel-perpendicular-equation-drill': {
@@ -13104,8 +14254,11 @@
       title: '過一點作平行線與垂直線',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ222ParallelPerpendicularEquationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ222ParallelPerpendicularEquationSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-2-line-intersection-drill': {
@@ -13113,8 +14266,11 @@
       title: '兩直線交點與參數判定',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ222LineIntersectionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ222LineIntersectionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-2-2-line-quadrant-intercept-clean': {
@@ -13122,8 +14278,11 @@
       title: '直線象限與截距整合',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ222LineQuadrantInterceptCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ222LineQuadrantInterceptCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-1-ratio-simplify-drill': {
@@ -13131,8 +14290,11 @@
       title: '比例化簡與比值運算',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ231RatioSimplifySet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ231RatioSimplifySet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-1-proportion-solve-drill': {
@@ -13140,8 +14302,11 @@
       title: '比例式求解未知數',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ231ProportionSolveSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ231ProportionSolveSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-1-relation-transform-drill': {
@@ -13149,8 +14314,11 @@
       title: '關係式與比例式互換',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ231RelationTransformSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ231RelationTransformSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-1-k-method-drill': {
@@ -13158,8 +14326,11 @@
       title: '設比例常數求值',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ231KMethodSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ231KMethodSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-1-basic-single-step-drill': {
@@ -13167,8 +14338,11 @@
       title: '基本題型（單層動作）',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ231BasicSingleStepSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ231BasicSingleStepSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-1-regular-two-step-drill': {
@@ -13176,8 +14350,11 @@
       title: '正規題型（二層動作）',
       difficulty: 'medium',
       questionCount: 7,
-      generate() {
-        return buildJ231RegularTwoStepSet(7);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ231RegularTwoStepSet(practiceCount),
+          resolvePracticeCount(count, 7)
+        );
       },
     },
     'j2-3-1-advanced-three-step-drill': {
@@ -13185,8 +14362,11 @@
       title: '進階題型（三層動作）',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ231AdvancedThreeStepSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ231AdvancedThreeStepSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-1-concentration-reverse-drill': {
@@ -13194,8 +14374,11 @@
       title: '濃度混合與逆推稀釋題',
       difficulty: 'challenge',
       questionCount: 6,
-      generate() {
-        return buildJ231ConcentrationReverseSet(6);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ231ConcentrationReverseSet(practiceCount),
+          resolvePracticeCount(count, 6)
+        );
       },
     },
     'j2-3-1-chain-ratio-drill': {
@@ -13203,8 +14386,11 @@
       title: '連比整合與分配',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ231ChainRatioSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ231ChainRatioSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-1-variable-ratio-percent-clean': {
@@ -13212,8 +14398,11 @@
       title: '比例變量與百分率連動',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ231VariableRatioPercentCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ231VariableRatioPercentCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-1-constrained-ratio-applications-clean': {
@@ -13221,8 +14410,11 @@
       title: '具約束條件的比例應用',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ231ConstrainedApplicationsCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ231ConstrainedApplicationsCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-basic-direct-inverse-drill': {
@@ -13230,8 +14422,11 @@
       title: '基礎正反比運算',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ232BasicDirectInverseSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232BasicDirectInverseSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-linear-combo-proportion-drill': {
@@ -13239,8 +14434,11 @@
       title: '線性組合式比例',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ232LinearComboProportionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232LinearComboProportionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-square-proportion-drill': {
@@ -13248,8 +14446,11 @@
       title: '次方型比例',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ232SquareProportionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232SquareProportionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-chained-variation-drill': {
@@ -13257,8 +14458,11 @@
       title: '正反比鏈接',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ232ChainedVariationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232ChainedVariationSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-percent-change-drill': {
@@ -13266,8 +14470,11 @@
       title: '變量百分率異動下的比例計算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ232PercentChangeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232PercentChangeSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-word-judgment-drill': {
@@ -13275,8 +14482,11 @@
       title: '正反比文字判斷',
       difficulty: 'easy',
       questionCount: 10,
-      generate() {
-        return buildJ232WordJudgmentSet(10);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232WordJudgmentSet(practiceCount),
+          resolvePracticeCount(count, 10)
+        );
       },
     },
     'j2-3-2-shifted-variation-drill': {
@@ -13284,8 +14494,11 @@
       title: '位移型正反比',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ232ShiftedVariationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232ShiftedVariationSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-root-reciprocal-variation-drill': {
@@ -13293,8 +14506,11 @@
       title: '平方根與倒平方結構正反比',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ232RootReciprocalVariationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232RootReciprocalVariationSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-spring-scale-drill': {
@@ -13302,8 +14518,11 @@
       title: '彈簧秤（虎克定律）應用',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ232SpringScaleSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232SpringScaleSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-work-manpower-drill': {
@@ -13311,8 +14530,11 @@
       title: '工程人力反比應用',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ232WorkManpowerSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232WorkManpowerSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-speed-race-drill': {
@@ -13320,8 +14542,11 @@
       title: '速率比賽跑落後問題',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ232SpeedRaceSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232SpeedRaceSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-dog-rabbit-drill': {
@@ -13329,8 +14554,11 @@
       title: '犬兔步距速率問題',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ232DogRabbitSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232DogRabbitSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-power-geometry-models-clean': {
@@ -13338,8 +14566,11 @@
       title: '平方立方比例模型',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ232PowerGeometryModelsCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232PowerGeometryModelsCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-cross-variation-chain-clean': {
@@ -13347,8 +14578,11 @@
       title: '複合正反比鏈接',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ232CrossVariationChainCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232CrossVariationChainCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-3-2-function-coordinate-proportion-clean': {
@@ -13356,8 +14590,11 @@
       title: '函數與坐標比例判斷',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ232FunctionCoordinateProportionCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ232FunctionCoordinateProportionCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-1-inequality-language-drill': {
@@ -13365,8 +14602,11 @@
       title: '基本判定與直覺題',
       difficulty: 'easy',
       questionCount: 8,
-      generate() {
-        return buildJ241InequalityLanguageSet(8);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241InequalityLanguageSet(practiceCount),
+          resolvePracticeCount(count, 8)
+        );
       },
     },
     'j2-4-1-inequality-integer-drill': {
@@ -13374,8 +14614,11 @@
       title: '正規解不等式（整數型）',
       difficulty: 'easy',
       questionCount: 6,
-      generate() {
-        return buildJ241IntegerSolveSet(6);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241IntegerSolveSet(practiceCount),
+          resolvePracticeCount(count, 6)
+        );
       },
     },
     'j2-4-1-inequality-fraction-drill': {
@@ -13383,8 +14626,11 @@
       title: '進階運算題（分數型）',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ241FractionSolveSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241FractionSolveSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-1-inequality-decimal-drill': {
@@ -13392,8 +14638,11 @@
       title: '進階運算題（小數型）',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ241DecimalSolveSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241DecimalSolveSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-1-inequality-range-drill': {
@@ -13401,8 +14650,11 @@
       title: '範圍推導',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ241RangeSet(6);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241RangeSet(practiceCount),
+          resolvePracticeCount(count, 6)
+        );
       },
     },
     'j2-4-1-inequality-reverse-coeff-drill': {
@@ -13410,8 +14662,11 @@
       title: '由解逆推原不等式中的未知係數',
       difficulty: 'hard',
       questionCount: 6,
-      generate() {
-        return buildJ241ReverseCoeffSet(6);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241ReverseCoeffSet(practiceCount),
+          resolvePracticeCount(count, 6)
+        );
       },
     },
     'j2-4-1-inequality-known-solution-range-drill': {
@@ -13419,8 +14674,11 @@
       title: '已知解反求參數範圍',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ241KnownSolutionParamRangeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241KnownSolutionParamRangeSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-1-inequality-same-solution-drill': {
@@ -13428,8 +14686,11 @@
       title: '綜合應用題（兩不等式解相同）',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ241SameSolutionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241SameSolutionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-1-compound-inequality-drill': {
@@ -13437,8 +14698,11 @@
       title: '雙重不等式範圍求解',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ241CompoundInequalitySet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241CompoundInequalitySet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-1-absolute-inequality-drill': {
@@ -13446,8 +14710,11 @@
       title: '絕對值一次不等式',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ241AbsoluteInequalitySet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241AbsoluteInequalitySet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-1-integer-boundary-drill': {
@@ -13455,8 +14722,11 @@
       title: '整數解個數與最大最小值',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ241IntegerBoundarySet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241IntegerBoundarySet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-1-param-positive-trap-clean': {
@@ -13464,8 +14734,11 @@
       title: '參數正負號與解向陷阱',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ241ParamPositiveTrapCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241ParamPositiveTrapCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-1-compound-integer-counting-clean': {
@@ -13473,8 +14746,11 @@
       title: '聯立不等式與整數解計數',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ241CompoundIntegerCountingCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241CompoundIntegerCountingCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-1-abs-geometry-fraction-mixed-clean': {
@@ -13482,8 +14758,11 @@
       title: '絕對值、幾何與分數不等式整合',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ241AbsGeometryFractionMixedCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ241AbsGeometryFractionMixedCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-2-specific-score-threshold-drill': {
@@ -13491,8 +14770,11 @@
       title: '具體分數平均門檻',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ242SpecificScoreThresholdSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242SpecificScoreThresholdSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-2-pos-int-enumerate-drill': {
@@ -13500,8 +14782,11 @@
       title: '正整數列舉（符合條件的所有正整數）',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ242PosIntEnumerateSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242PosIntEnumerateSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-2-integer-condition-word-drill': {
@@ -13509,8 +14794,11 @@
       title: '某整數／某正數條件型',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ242IntegerConditionWordSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242IntegerConditionWordSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-2-shape-variable-expr-drill': {
@@ -13518,8 +14806,11 @@
       title: '圖形含變數表達式（長方形＋三角形）',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ242ShapeVariableExprSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242ShapeVariableExprSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-2-age-past-relation-drill': {
@@ -13527,8 +14818,11 @@
       title: '父子年齡過去比較型',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ242AgePastRelationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242AgePastRelationSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-2-solve-ineq-integer-drill': {
@@ -13536,8 +14830,11 @@
       title: '解不等式求整數解',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ242SolveIneqIntegerSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242SolveIneqIntegerSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-2-given-solution-find-coeff-drill': {
@@ -13545,8 +14842,11 @@
       title: '已知解求係數',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ242GivenSolutionFindCoeffSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242GivenSolutionFindCoeffSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-2-compound-ineq-drill': {
@@ -13554,8 +14854,11 @@
       title: '聯立（雙重）不等式',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ242CompoundIneqSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242CompoundIneqSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-2-abs-value-ineq-drill': {
@@ -13563,8 +14866,11 @@
       title: '絕對值不等式',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ242AbsValueIneqSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242AbsValueIneqSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-2-x-range-linear-func-drill': {
@@ -13572,8 +14878,11 @@
       title: '已知 x 範圍求函數範圍',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ242XRangeLinearFuncSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242XRangeLinearFuncSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-2-concentration-ineq-drill': {
@@ -13581,8 +14890,11 @@
       title: '濃度不等式應用',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ242ConcentrationIneqSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242ConcentrationIneqSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
 
@@ -13591,8 +14903,11 @@
       title: '基本題型（單層動作）',
       difficulty: 'easy',
       questionCount: 6,
-      generate() {
-        return buildJ242BasicWordSet(6);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242BasicWordSet(practiceCount),
+          resolvePracticeCount(count, 6)
+        );
       },
     },
     'j2-4-2-regular-word-drill': {
@@ -13600,8 +14915,11 @@
       title: '正規題型（二層動作）',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ242RegularWordSet(6);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242RegularWordSet(practiceCount),
+          resolvePracticeCount(count, 6)
+        );
       },
     },
     'j2-4-2-advanced-word-drill': {
@@ -13609,8 +14927,11 @@
       title: '進階題型（三層動作）',
       difficulty: 'hard',
       questionCount: 7,
-      generate() {
-        return buildJ242AdvancedWordSet(7);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242AdvancedWordSet(practiceCount),
+          resolvePracticeCount(count, 7)
+        );
       },
     },
     'j2-4-2-average-threshold-word-drill': {
@@ -13618,8 +14939,11 @@
       title: '平均門檻應用題',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ242AverageThresholdSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242AverageThresholdSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-4-2-logic-applications-clean': {
@@ -13627,8 +14951,11 @@
       title: '現實限制與邏輯不等式應用',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ242LogicApplicationsCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ242LogicApplicationsCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-5-1-frequency-relative-cumulative-drill': {
@@ -13636,8 +14963,11 @@
       title: '次數、相對次數與累積次數',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ251FrequencyRelativeCumulativeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ251FrequencyRelativeCumulativeSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-5-1-pie-chart-conversion-drill': {
@@ -13645,8 +14975,11 @@
       title: '圓形圖百分比與角度換算',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ251PieChartConversionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ251PieChartConversionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-5-1-pie-backward-population-clean': {
@@ -13654,8 +14987,11 @@
       title: '圓形圖人數逆推',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ251PieBackwardPopulationCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ251PieBackwardPopulationCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-5-1-percent-angle-hybrid-clean': {
@@ -13663,8 +14999,11 @@
       title: '圓心角與百分比複合轉換',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ251PercentAngleHybridCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ251PercentAngleHybridCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-5-1-dynamic-pie-data-clean': {
@@ -13672,8 +15011,11 @@
       title: '圓形圖資料變動分析',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ251DynamicPieDataCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ251DynamicPieDataCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-5-1-pie-sector-context-clean': {
@@ -13681,8 +15023,11 @@
       title: '圓形圖扇形面積與角度整合',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ251PieSectorContextCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ251PieSectorContextCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-5-1-data-cleaning-logic-clean': {
@@ -13690,8 +15035,11 @@
       title: '統計資料檢核與百分比判斷',
       difficulty: 'challenge',
       questionCount: 5,
-      generate() {
-        return buildJ251DataCleaningLogicCleanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ251DataCleaningLogicCleanSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-5-1-grouped-mean-estimate-drill': {
@@ -13699,8 +15047,11 @@
       title: '組中點估計平均數',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ251GroupedMeanEstimateSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ251GroupedMeanEstimateSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-5-2-mean-basic-drill': {
@@ -13708,8 +15059,11 @@
       title: '平均數直接計算',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ252MeanBasicSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ252MeanBasicSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-5-2-mean-reverse-drill': {
@@ -13717,8 +15071,11 @@
       title: '平均數反推與調整',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ252MeanReverseSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ252MeanReverseSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j2-5-2-median-mode-drill': {
@@ -13726,13 +15083,16 @@
       title: '中位數與眾數判讀',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ252MedianModeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ252MedianModeSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
   };
 
-  const bundleFingerprint = 'j2-bundle-v20260710-midpoint-sign-v1';
+  const bundleFingerprint = 'j2-bundle-v20260715-j25-summary-review-v1';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

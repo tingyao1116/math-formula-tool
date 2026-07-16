@@ -38,12 +38,15 @@
     function buildS223MixedSet(banks, count) {
       const questions = [];
       const summaryAnswers = [];
-      const answers = createAnswerList(summaryAnswers);
+      const answers = [];
       for (let i = 0; i < count; i += 1) {
         const generated = banks[i % banks.length](5);
         const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
+        const sourceAnswer = generated.answers[itemIndex] || '';
+        const summary = (generated.summaryAnswers || [])[itemIndex] || deriveSummaryAnswerFromDetail(sourceAnswer);
         questions.push(generated.questions[itemIndex]);
-        answers.push(generated.answers[itemIndex]);
+        summaryAnswers.push(summary);
+        answers.push(stripSummaryPrefixFromDetail(sourceAnswer, summary));
       }
       return { questions, summaryAnswers, answers };
     }
@@ -75,13 +78,61 @@
       n /= g;
       d /= g;
       if (d === 1) return String(n);
-      return '\\frac{' + n + '}{' + d + '}';
+      return (n < 0 ? '-' : '') + '\\frac{' + Math.abs(n) + '}{' + d + '}';
+    }
+
+    function s41SqrtParts(value) {
+      const number = Math.abs(Math.trunc(value));
+      if (number === 0) return { outside: 0, inside: 1 };
+      let outside = 1;
+      let inside = number;
+      for (let factor = 2; factor * factor <= inside; factor += 1) {
+        while (inside % (factor * factor) === 0) {
+          outside *= factor;
+          inside /= factor * factor;
+        }
+      }
+      return { outside, inside };
     }
 
     function s333Sqrt(n) {
-      const root = Math.sqrt(n);
-      if (Number.isInteger(root)) return String(root);
-      return '\\sqrt{' + n + '}';
+      const value = Number(n);
+      if (!Number.isInteger(value) || value < 0) return '\\sqrt{' + n + '}';
+      const parts = s41SqrtParts(value);
+      if (parts.inside === 1) return String(parts.outside);
+      return (parts.outside === 1 ? '' : String(parts.outside)) + '\\sqrt{' + parts.inside + '}';
+    }
+
+    function s41SqrtFraction(numeratorSquare, denominatorSquare) {
+      if (denominatorSquare === 0) return '未定義';
+      if (numeratorSquare === 0) return '0';
+      const numerator = s41SqrtParts(numeratorSquare);
+      const denominator = s41SqrtParts(denominatorSquare);
+      const combined = s41SqrtParts(numerator.inside * denominator.inside);
+      const radical = combined.inside;
+      const rawNumerator = numerator.outside * combined.outside;
+      const rawDenominator = denominator.outside * denominator.inside;
+      const divisor = s331Gcd(rawNumerator, rawDenominator);
+      const simplifiedNumerator = rawNumerator / divisor;
+      const simplifiedDenominator = rawDenominator / divisor;
+      if (radical === 1) return s331Frac(simplifiedNumerator, simplifiedDenominator);
+      if (simplifiedDenominator === 1) return s41RadicalText(simplifiedNumerator, radical);
+      const numeratorText = s41RadicalText(simplifiedNumerator, radical);
+      return '\\frac{' + numeratorText + '}{' + simplifiedDenominator + '}';
+    }
+
+    function s41SignedSqrtRatio(numerator, denominatorSquare) {
+      const text = s41SqrtFraction(numerator * numerator, denominatorSquare);
+      return numerator < 0 ? '-' + text : text;
+    }
+
+    function s41RadicalText(coef, radicand) {
+      const coeffText = String(coef);
+      if (coeffText === '0') return '0';
+      if (radicand === 1) return coeffText;
+      if (coeffText === '1') return '\\sqrt{' + radicand + '}';
+      if (coeffText === '-1') return '-\\sqrt{' + radicand + '}';
+      return coeffText + '\\sqrt{' + radicand + '}';
     }
 
     function s333Quotient(numer, denom) {
@@ -92,9 +143,8 @@
     }
 
     function s333RadicalMultiple(k, n) {
-      const root = Math.sqrt(n);
-      if (Number.isInteger(root)) return String(k * root);
-      return (k === 1 ? '' : String(k)) + '\\sqrt{' + n + '}';
+      const parts = s41SqrtParts(n);
+      return s41RadicalText(k * parts.outside, parts.inside);
     }
 
     function s334Det(a, b, c, d) {
@@ -108,144 +158,171 @@
       return (coef > 0 ? '+' : '') + coef + symbol;
     }
 
-    function s411Name(base) {
-      return base + '_' + randInt(1, 9);
+    function s41LinearExpression(terms) {
+      let expression = '';
+      terms.forEach(([coefficient, symbol]) => {
+        if (coefficient === 0) return;
+        const absolute = Math.abs(coefficient);
+        const term = (absolute === 1 ? '' : String(absolute)) + symbol;
+        if (!expression) {
+          expression = coefficient < 0 ? '-' + term : term;
+        } else {
+          expression += coefficient < 0 ? '-' + term : '+' + term;
+        }
+      });
+      return expression || '0';
+    }
+
+    function s41PlaneEquation(normal, constant) {
+      const linear = s41LinearExpression([
+        [normal[0], 'x'],
+        [normal[1], 'y'],
+        [normal[2], 'z'],
+      ]);
+      if (constant === 0) return linear + '=0';
+      return linear + (constant > 0 ? '+' : '') + constant + '=0';
+    }
+
+    function s41ShiftedSquare(symbol, center) {
+      if (center === 0) return symbol + '^2';
+      return '(' + symbol + (center > 0 ? '-' + center : '+' + -center) + ')^2';
     }
 
     function buildS411SpatialRelationsSet(count) {
       const builders = [
-        () => {
-          const L1 = s411Name('L');
-          const L2 = s411Name('M');
-          const E = s411Name('E');
-          const isPerp = Math.random() < 0.5;
-          return isPerp
-            ? s331QA(
-                '若兩相異直線 ' +
-                  s331M(L1 + ',' + L2) +
-                  ' 同時垂直於平面 ' +
-                  s331M(E) +
-                  '，則 ' +
-                  s331M(L1) +
-                  ' 與 ' +
-                  s331M(L2) +
-                  ' 是否必定平行？',
-                '是',
-                '同一平面的垂線方向唯一，因此兩條都垂直同一平面的直線必定平行。'
-              )
-            : s331QA(
-                '若兩相異直線 ' +
-                  s331M(L1 + ',' + L2) +
-                  ' 同時平行於平面 ' +
-                  s331M(E) +
-                  '，則 ' +
-                  s331M(L1) +
-                  ' 與 ' +
-                  s331M(L2) +
-                  ' 是否必定平行？',
-                '否',
-                '兩直線都平行同一平面時，仍可能相交或歪斜，不一定彼此平行。'
-              );
-        },
-        () => {
-          const E1 = s411Name('E');
-          const E2 = s411Name('F');
-          const L = s411Name('L');
-          const isPerp = Math.random() < 0.5;
-          return isPerp
-            ? s331QA(
-                '若兩相異平面 ' +
-                  s331M(E1 + ',' + E2) +
-                  ' 同時垂直於直線 ' +
-                  s331M(L) +
-                  '，則 ' +
-                  s331M(E1) +
-                  ' 與 ' +
-                  s331M(E2) +
-                  ' 是否必定平行？',
-                '是',
-                '同一直線的垂直平面方向固定；兩相異平面都垂直同一直線時必定平行。'
-              )
-            : s331QA(
-                '若兩相異平面 ' +
-                  s331M(E1 + ',' + E2) +
-                  ' 同時平行於直線 ' +
-                  s331M(L) +
-                  '，則 ' +
-                  s331M(E1) +
-                  ' 與 ' +
-                  s331M(E2) +
-                  ' 是否必定平行？',
-                '否',
-                '兩平面都平行同一直線時，仍可能相交於一條與該直線平行的交線。'
-              );
-        },
-        () => {
-          const L = s411Name('L');
-          const E = s411Name('E');
-          return s331QA(
-            '若直線 ' +
-              s331M(L) +
-              ' 平行於平面 ' +
-              s331M(E) +
-              '，則平面 ' +
-              s331M(E) +
-              ' 上任一直線都與 ' +
-              s331M(L) +
-              ' 平行嗎？',
+        () =>
+          s331QA(
+            '若兩條相異直線同時垂直於同一平面，這兩條直線是否必定平行？',
+            '是',
+            '垂直於同一平面的直線都具有該平面的法線方向，因此必定互相平行。'
+          ),
+        () =>
+          s331QA(
+            '若兩條相異直線同時平行於同一平面，這兩條直線是否必定平行？',
             '否',
-            '平面內只有部分直線可能與 ' + s331M(L) + ' 平行；其他直線可能與 ' + s331M(L) + ' 歪斜。'
-          );
-        },
-        () => {
-          const P = s411Name('P');
-          const E = s411Name('E');
-          return s331QA(
-            '過平面 ' + s331M(E) + ' 外一點 ' + s331M(P) + '，恰有一條直線平行於平面 ' + s331M(E) + ' 嗎？',
+            '兩直線都平行同一平面時，方向仍可能不同；它們可能平行，也可能相交或歪斜。'
+          ),
+        () =>
+          s331QA(
+            '若兩個相異平面同時垂直於同一條直線，這兩個平面是否必定平行？',
+            '是',
+            '兩平面的法向量都與同一直線同方向，因此兩平面互相平行。'
+          ),
+        () =>
+          s331QA(
+            '若兩個相異平面同時平行於同一條直線，這兩個平面是否必定平行？',
             '否',
-            '過平面外一點可作無窮多條直線平行於該平面，方向不唯一。'
-          );
-        },
+            '兩平面都平行同一直線時，仍可能相交；交線也可能與該直線平行。'
+          ),
+        () =>
+          s331QA(
+            '若直線平行於平面，則平面上的任一直線都與這條直線平行嗎？',
+            '否',
+            '平面內只有方向相同的直線會與它平行；其他方向的直線可能與它歪斜。'
+          ),
+        () =>
+          s331QA(
+            '過平面外一點，是否恰有一條直線平行於此平面？',
+            '否',
+            '過平面外一點可沿平面內的任一方向作直線，因此有無窮多條直線平行於該平面。'
+          ),
+        () =>
+          s331QA(
+            '若直線垂直於平面，且另一條直線在此平面上並通過垂足，這兩條直線是否垂直？',
+            '是',
+            '直線垂直於平面時，會垂直於平面內所有通過垂足的直線。'
+          ),
+        () =>
+          s331QA(
+            '若直線垂直於平面，且另一條直線與它平行，則另一條直線是否也垂直於該平面？',
+            '是',
+            '與平面法線方向平行的直線仍是法線方向，因此也垂直於該平面。'
+          ),
+        () =>
+          s331QA(
+            '若直線在平面上，另一條直線垂直於此平面，是否可直接判斷兩直線垂直？',
+            '不一定',
+            '若垂直平面的直線通過平面內那條直線上的點，兩直線垂直；若不相交，則可能是歪斜線。'
+          ),
+        () =>
+          s331QA(
+            '若直線與平面只有一個交點，這條直線與平面的關係為何？',
+            '相交',
+            '直線和平面只有一個共同點時稱為相交；若平行則沒有交點，若在平面上則有無窮多交點。'
+          ),
       ];
       return s331MakeSet(count, builders);
     }
 
     function buildS411PlaneDeterminationSet(count) {
       const builders = [
-        () => {
-          const nonCollinear = Math.random() < 0.6;
-          return s331QA(
-            nonCollinear
-              ? '空間中三個不共線點，是否能決定唯一一個平面？'
-              : '空間中三個共線點，是否能決定唯一一個平面？',
-            nonCollinear ? '是' : '否',
-            nonCollinear ? '三個不共線點是決定平面的基本條件。' : '三點共線時，有無窮多個平面可以通過同一直線。'
-          );
-        },
-        () => {
-          const outside = Math.random() < 0.6;
-          return s331QA(
-            outside
-              ? '一條直線與此直線外的一個點，是否能決定唯一一個平面？'
-              : '一條直線與此直線上的一個點，是否能決定唯一一個平面？',
-            outside ? '是' : '否',
-            outside
-              ? '直線加上線外一點，能唯一決定一個平面。'
-              : '點已在直線上，條件沒有增加；仍有無窮多平面可通過該直線。'
-          );
-        },
-        () => {
-          const relation = s324Pick([
-            ['相交', '是', '兩條相交直線決定唯一平面。'],
-            ['平行', '是', '兩條相異平行直線決定唯一平面。'],
-            ['歪斜', '否', '歪斜線不共平面，不能決定一個平面。'],
-          ]);
-          return s331QA(
-            '兩條互相「' + relation[0] + '」的相異直線，是否能決定唯一一個平面？',
-            relation[1],
-            relation[2]
-          );
-        },
+        () => s331QA('空間中三個不共線點，是否能決定唯一一個平面？', '是', '三個不共線點是決定平面的基本條件。'),
+        () =>
+          s331QA(
+            '空間中三個共線點，是否能決定唯一一個平面？',
+            '否',
+            '三點共線時，只能決定一條直線；通過這條直線的平面有無窮多個。'
+          ),
+        () =>
+          s331QA(
+            '一條直線與此直線外的一個點，是否能決定唯一一個平面？',
+            '是',
+            '直線提供一個方向與通過位置，線外一點再固定平面傾斜方向，因此能唯一決定平面。'
+          ),
+        () =>
+          s331QA(
+            '一條直線與此直線上的一個點，是否能決定唯一一個平面？',
+            '否',
+            '點已經在直線上，沒有增加新條件；通過同一直線的平面仍有無窮多個。'
+          ),
+        () =>
+          s331QA(
+            '兩條相交直線，是否能決定唯一一個平面？',
+            '是',
+            '兩條相交直線提供兩個不同方向，且有共同點，因此決定唯一平面。'
+          ),
+        () =>
+          s331QA(
+            '兩條相異平行直線，是否能決定唯一一個平面？',
+            '是',
+            '兩條相異平行直線可視為一條直線加上一個線外點，因此決定唯一平面。'
+          ),
+        () =>
+          s331QA(
+            '兩條歪斜線，是否能決定唯一一個平面？',
+            '否',
+            '歪斜線不相交也不平行，且不共平面，所以不能由同一平面同時包含。'
+          ),
+        () =>
+          s331QA(
+            '兩條重合的直線，是否能決定唯一一個平面？',
+            '否',
+            '兩條重合直線等同只給一條直線，通過此直線的平面有無窮多個。'
+          ),
+        () =>
+          s331QA(
+            '一條直線上的兩個不同點，再加上一個不在此直線上的點，是否能決定唯一一個平面？',
+            '是',
+            '直線上的兩點決定該直線，再加線外一點，即為「一直線與線外一點」決定唯一平面。'
+          ),
+        () =>
+          s331QA(
+            '空間中四個不共面的點，是否能決定唯一一個平面？',
+            '否',
+            '若四點不共面，就不存在同一個平面同時通過四點，更不可能決定唯一平面。'
+          ),
+        () =>
+          s331QA(
+            '兩條相異直線若沒有交點，是否一定能決定唯一一個平面？',
+            '否',
+            '沒有交點的兩直線可能平行，也可能歪斜；平行時可決定平面，歪斜時不能共平面。'
+          ),
+        () =>
+          s331QA(
+            '四個點若都落在同一平面上，是否一定能決定唯一一個平面？',
+            '不一定',
+            '若其中至少有三個不共線點，才可決定唯一平面；若四點全共線，仍不能決定唯一平面。'
+          ),
       ];
       return s331MakeSet(count, builders);
     }
@@ -283,14 +360,37 @@
             '正四面體的對稜不相交且不平行，所以是歪斜線；由對稱性可判斷兩對稜互相垂直。'
           );
         },
+        () =>
+          s331QA(
+            '在正方體中，用一個平面截去一個頂點，且截面恰與該頂點出發的三條稜相交，截面是什麼圖形？',
+            '三角形',
+            '截面恰與同一頂點出發的三條稜相交時，三個交點形成三角形。正方體的每個頂點只有三條稜，不能寫成四條稜。'
+          ),
         () => {
-          const through = randInt(2, 4);
+          const parallel = s324Pick([
+            ['AB', 'CD、EF、GH'],
+            ['BC', 'DA、FG、HE'],
+            ['AE', 'BF、CG、DH'],
+          ]);
           return s331QA(
-            '正方體中，若一個平面通過同一頂點出發的 ' + through + ' 條稜，截面可能是什麼圖形？',
-            through >= 3 ? '三角形' : '不一定，需再知道平面位置',
-            through >= 3
-              ? '通過同一頂點的三條稜時，截面會在鄰近三條稜上各取一點，形成三角形。'
-              : '只知道兩條稜仍不足以唯一決定截面形狀。'
+            '在長方體 ' + s331M('ABCD-EFGH') + ' 中，找出所有與稜線 ' + s331M(parallel[0]) + ' 平行的其他稜線。',
+            s331M(parallel[1]),
+            '長方體的每一組平行稜共有四條；先辨認與指定稜同方向的三條其餘稜線。'
+          );
+        },
+        () => {
+          const opposite = s324Pick([
+            ['AB', 'CD'],
+            ['AC', 'BD'],
+            ['AD', 'BC'],
+            ['BC', 'AD'],
+            ['BD', 'AC'],
+            ['CD', 'AB'],
+          ]);
+          return s331QA(
+            '在正四面體 ' + s331M('ABCD') + ' 中，稜線 ' + s331M(opposite[0]) + ' 的對稜是哪一條？',
+            s331M(opposite[1]),
+            '正四面體中不共頂點的兩條稜互為對稜；它們不相交，也不平行。'
           );
         },
       ];
@@ -336,15 +436,19 @@
           );
         },
         () => {
-          const PC = s324Pick([13, 17, 25, 29]);
-          const PA = s324Pick([3, 5, 7, 8]);
-          const BC = s324Pick([4, 8, 12, 15]);
-          const ab2 = PC * PC - PA * PA - BC * BC;
-          const AB = Math.sqrt(ab2);
-          const ok = Number.isInteger(AB) && AB > 0;
+          const data = s324Pick([
+            [3, 4, 5, 12, 13],
+            [5, 12, 13, 84, 85],
+            [7, 24, 25, 60, 65],
+            [8, 15, 17, 144, 145],
+          ]);
+          const PA = data[0];
+          const AB = data[1];
+          const BC = data[3];
+          const PC = data[4];
           return s331QA(
             '承三垂線配置，若 ' + s331MJ('PA=', PA, ',\\ BC=', BC, ',\\ PC=', PC) + '，求 ' + s331M('AB') + '。',
-            ok ? s331MJ(AB) : s331M('\\sqrt{' + ab2 + '}'),
+            s331MJ(AB),
             '由 ' + s331M('PC^2=PA^2+AB^2+BC^2') + '，移項得到 ' + s331M('AB^2=PC^2-PA^2-BC^2') + '。'
           );
         },
@@ -366,19 +470,22 @@
         () => {
           const OA = s324Pick([5, 8, 12]);
           const AB = s324Pick([3, 4, 5]);
-          const OC = s333Sqrt(OA * OA + AB * AB);
           const BC = s324Pick([4, 12, 15]);
           return s331QA(
             '設點 ' +
               s331M('O') +
               ' 在平面 ' +
               s331M('E') +
-              ' 外，投影為 ' +
+              ' 外，在平面 ' +
+              s331M('E') +
+              ' 上的正射影為 ' +
               s331M('A') +
-              '；點 ' +
-              s331M('C') +
-              ' 在平面內且其投影路徑經 ' +
-              s331M('B') +
+              '。設 ' +
+              s331M('A,B,C') +
+              ' 都在平面 ' +
+              s331M('E') +
+              ' 上，且 ' +
+              s331M('AB\\perp BC') +
               '。已知 ' +
               s331MJ('OA=', OA, ',\\ AB=', AB, ',\\ BC=', BC) +
               '，求 ' +
@@ -408,13 +515,9 @@
           const a = s324Pick([3, 5, 7]);
           const b = s324Pick([4, 12, 24]);
           return s331QA(
-            '兩個互相垂直的圓柱高度都是 ' +
-              a +
-              '，軸線間水平距離為 ' +
-              b +
-              '，求兩頂端點的最短距離模型應使用哪個公式？',
+            '一根旗桿垂直地面，高為 ' + a + '；地面上一點到旗桿底端的距離為 ' + b + '。求旗桿頂端到此地面點的距離。',
             s331MJ('\\sqrt{', a * a + b * b, '}'),
-            '題目可化為一個垂直高度與一個水平距離構成的直角三角形。'
+            '旗桿高與地面上的水平距離互相垂直，形成直角三角形。'
           );
         },
       ];
@@ -427,7 +530,7 @@
           const a = randInt(2, 9);
           return s331QA(
             '正四面體邊長為 ' + s331M('a=' + a) + '，求其高。',
-            s331MJ(s331Frac(a, 3), '\\sqrt{6}'),
+            s331M(s41RadicalText(s331Frac(a, 3), 6)),
             '正四面體高為 ' + s331M('\\frac{\\sqrt6}{3}a') + '，代入邊長即可。'
           );
         },
@@ -435,7 +538,7 @@
           const a = randInt(2, 9);
           return s331QA(
             '正四面體邊長為 ' + s331M('a=' + a) + '，求兩條歪斜對稜的最短距離。',
-            s331MJ(s331Frac(a, 2), '\\sqrt{2}'),
+            s331M(s41RadicalText(s331Frac(a, 2), 2)),
             '正四面體對稜距離為 ' + s331M('\\frac{\\sqrt2}{2}a') + '。'
           );
         },
@@ -477,7 +580,7 @@
           const a = randInt(2, 8);
           return s331QA(
             '一個底面邊長與側面稜長均為 ' + s331M('a=' + a) + ' 的正四角錐，求錐頂到底面的高。',
-            s331MJ(s331Frac(a, 2), '\\sqrt{2}'),
+            s331M(s41RadicalText(s331Frac(a, 2), 2)),
             '底面中心到頂點的水平距離為 ' +
               s331M('\\frac{\\sqrt2}{2}a') +
               '，用直角三角形求高為 ' +
@@ -514,6 +617,10 @@
 
     function s412Len3(v) {
       return s333Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+    }
+
+    function s42SqrtQuotient(numSq, denSq) {
+      return s41SqrtFraction(numSq, denSq);
     }
 
     function s412DistSq(a, b) {
@@ -631,9 +738,9 @@
           ]);
           const len = s412Len3(v);
           return s331QA(
-            '求向量 ' + s331MJ('v=', s412Vec3(v[0], v[1], v[2])) + ' 的單位向量。',
-            s331MJ('\\pm\\frac{1}{', len, '}', s412Vec3(v[0], v[1], v[2])),
-            '單位向量為 ' + s331M('\\pm\\frac{v}{|v|}') + '；若只要同方向，取正號。'
+            '求與向量 ' + s331MJ('v=', s412Vec3(v[0], v[1], v[2])) + ' 同方向的單位向量。',
+            s331MJ('\\frac{1}{', len, '}', s412Vec3(v[0], v[1], v[2])),
+            '同方向的單位向量為 ' + s331M('\\frac{v}{|v|}') + '；負號代表反方向，不能作為本題答案。'
           );
         },
       ];
@@ -761,33 +868,29 @@
           );
         },
         () => {
-          const angle = s324Pick([
-            [60, 45, 90],
-            [45, 60, 90],
-            [90, 45, 45],
+          const item = s324Pick([
+            { angle: [60, 45, 90], possible: false, sum: '\\frac34' },
+            { angle: [45, 60, 90], possible: false, sum: '\\frac34' },
+            { angle: [90, 45, 45], possible: true, sum: '1' },
           ]);
+          const angle = item.angle;
           return s331QA(
             '判斷 ' +
               s331M('(' + angle[0] + '^\\circ,' + angle[1] + '^\\circ,' + angle[2] + '^\\circ)') +
               ' 是否可能為空間向量的三個方向角。',
-            '可能',
-            '檢查 ' + s331M('\\cos^2\\alpha+\\cos^2\\beta+\\cos^2\\gamma=1') + '。'
+            item.possible ? '可能' : '不可能',
+            '檢查 ' + s331M('\\cos^2\\alpha+\\cos^2\\beta+\\cos^2\\gamma=' + item.sum) + '；方向角必須使此和為 1。'
           );
         },
         () => {
           const len = randInt(2, 8);
+          const component = s41SqrtFraction(len * len, 3);
           return s331QA(
             '若一向量與三坐標軸正向的夾角皆相等，且長度為 ' + len + '，求其坐標表示。',
-            s331MJ(
-              '\\pm\\left(\\frac{' +
-                len +
-                '}{\\sqrt3},\\frac{' +
-                len +
-                '}{\\sqrt3},\\frac{' +
-                len +
-                '}{\\sqrt3}\\right)'
-            ),
-            '三個方向餘弦平方和為 1 且相等，所以各為 ' + s331M('\\pm\\frac{1}{\\sqrt3}') + '。'
+            s331MJ('\\left(', component, ',', component, ',', component, '\\right)'),
+            '三個方向餘弦平方和為 1 且相等。因為題目指定與三個正向坐標軸的夾角相等，三個方向餘弦皆為正的 ' +
+              s331M('\\frac{1}{\\sqrt3}') +
+              '。'
           );
         },
       ];
@@ -923,7 +1026,13 @@
             '已知 ' +
               s331M('x^2+y^2+z^2=' + r * r) +
               '，求 ' +
-              s331M(n[0] + 'x' + s334SignedTerm(n[1], 'y') + s334SignedTerm(n[2], 'z')) +
+              s331M(
+                s41LinearExpression([
+                  [n[0], 'x'],
+                  [n[1], 'y'],
+                  [n[2], 'z'],
+                ])
+              ) +
               ' 的最大值與最小值。',
             s331MJ(
               '\\max=',
@@ -941,7 +1050,15 @@
           const d = randInt(4, 18);
           return s331QA(
             '已知 ' +
-              s331M(a + 'x' + s334SignedTerm(b, 'y') + s334SignedTerm(c, 'z') + '=' + d) +
+              s331M(
+                s41LinearExpression([
+                  [a, 'x'],
+                  [b, 'y'],
+                  [c, 'z'],
+                ]) +
+                  '=' +
+                  d
+              ) +
               '，求 ' +
               s331M('x^2+y^2+z^2') +
               ' 的最小值。',
@@ -985,30 +1102,34 @@
         },
         () => {
           const box = [randInt(1, 5), randInt(2, 6), randInt(3, 7)];
-          const a = s333Sqrt((box[0] + box[1]) ** 2 + box[2] ** 2);
-          const b = s333Sqrt((box[0] + box[2]) ** 2 + box[1] ** 2);
-          const c = s333Sqrt((box[1] + box[2]) ** 2 + box[0] ** 2);
+          const candidateSquares = [
+            (box[0] + box[1]) ** 2 + box[2] ** 2,
+            (box[0] + box[2]) ** 2 + box[1] ** 2,
+            (box[1] + box[2]) ** 2 + box[0] ** 2,
+          ];
           return s331QA(
             '長、寬、高分別為 ' + box.join('、') + ' 的長方體中，一隻昆蟲沿表面從一個頂點到相對頂點，求最短路徑長。',
-            s331MJ('\\min\\{', a, ',', b, ',', c, '\\}'),
-            '把相鄰兩個面展開成矩形，三種展開方式取最短。'
+            s331MJ(s333Sqrt(Math.min(...candidateSquares))),
+            '把相鄰兩個面展開成矩形，三種展開距離分別比較後，取最小者。'
           );
         },
         () => {
           const P = [randInt(-4, 4), randInt(-4, 4), randInt(1, 6)];
           const R = [2 * P[0], 2 * P[1], -P[2]];
           return s331QA(
-            '光線經過 ' +
+            '點 ' +
               s331M(s412Point('P', P)) +
-              ' 射向 ' +
+              ' 先對 ' +
               s331M('xy') +
-              ' 平面上的原點，反射後通過點 ' +
+              ' 平面鏡射，再將其 ' +
+              s331M('xy') +
+              ' 坐標同時放大為原來的 2 倍，所得點為 ' +
               s331M('R') +
-              '，且水平位移為原來的 2 倍，求 ' +
+              '。求 ' +
               s331M('R') +
               '。',
             s331M(s412Point('R', R)),
-            '對 ' + s331M('xy') + ' 平面反射時，垂直方向坐標變號，水平坐標依題意放大。'
+            '對 ' + s331M('xy') + ' 平面鏡射時只有 z 坐標變號；再依題意把 x、y 坐標各乘以 2。'
           );
         },
       ];
@@ -1143,7 +1264,11 @@
       const builders = [
         () => {
           const B = [randInt(1, 6), randInt(-5, 5), randInt(-5, 5)];
-          const H = [randInt(-5, 5), randInt(1, 6), randInt(-5, 5)];
+          const H = [
+            B[0] + s324Pick([-5, -4, -3, 3, 4, 5]),
+            B[1] + s324Pick([-5, -4, -3, 3, 4, 5]),
+            B[2] + s324Pick([-5, -4, -3, 3, 4, 5]),
+          ];
           return s331QA(
             '一長方體的長寬高分別與坐標軸平行，已知相對頂點 ' +
               s331M(s412Point('B', B)) +
@@ -1282,12 +1407,7 @@
               '，求 ' +
               s331M('a\\cdot b') +
               ' 與夾角餘弦值。',
-            s331MJ(
-              'a\\cdot b=',
-              dot,
-              ',\\ \\cos\\theta=',
-              s333Quotient(dot, s333Sqrt(s412Dot3(a, a) * s412Dot3(b, b)))
-            ),
+            s331MJ('a\\cdot b=', dot, ',\\ \\cos\\theta=', s41SignedSqrtRatio(dot, s412Dot3(a, a) * s412Dot3(b, b))),
             '空間內積為三個對應坐標乘積相加，再除以兩向量長度乘積得到夾角餘弦。'
           );
         },
@@ -1349,7 +1469,7 @@
           const q = randInt(-4, 4) || 3;
           const a = [randInt(-3, 3) || 2, randInt(-3, 3) || -1, 1];
           const constant = -(a[0] * p + a[1] * q + t);
-          const zText = constant >= 0 ? 't+' + constant : 't' + constant;
+          const zText = constant === 0 ? 't' : constant > 0 ? 't+' + constant : 't' + constant;
           return s331QA(
             '已知 ' + s331MJ('a=', s413Vec3Tex(a), ',\\ b=', s412Vec3(p, q, zText)) + ' 垂直，求 ' + s331M('t') + '。',
             s331MJ('t=', t),
@@ -1437,7 +1557,7 @@
         () => {
           const a = [randInt(-3, 3) || 1, randInt(-3, 3) || -1, randInt(-3, 3) || 2];
           const lenB = randInt(2, 7);
-          const dotMax = lenB * s412Len3(a);
+          const dotMax = s333RadicalMultiple(lenB, s412Dot3(a, a));
           return s331QA(
             '設 ' +
               s331MJ('a=', s413Vec3Tex(a)) +
@@ -1446,7 +1566,7 @@
               '，求 ' +
               s331M('a\\cdot b') +
               ' 的最大值。',
-            s331MJ(lenB, '\\cdot', s412Len3(a)),
+            s331MJ(dotMax),
             '由柯西不等式，內積最大發生在 ' + s331M('b') + ' 與 ' + s331M('a') + ' 同方向。'
           );
         },
@@ -1476,7 +1596,7 @@
               '\\operatorname{proj}_b a=',
               s412Vec3(s331Frac(dot * b[0], lenSq), s331Frac(dot * b[1], lenSq), s331Frac(dot * b[2], lenSq)),
               ',\\ \\text{正射影長}=',
-              s333Quotient(Math.abs(dot), s412Len3(b))
+              s41SqrtFraction(dot * dot, lenSq)
             ),
             '正射影向量為 ' + s331M('\\frac{a\\cdot b}{|b|^2}b') + '，正射影長取非負。'
           );
@@ -1488,11 +1608,8 @@
             [1, -2, 2],
           ]);
           const parallel = s413Scale3(randInt(2, 5), u);
-          const perp = s324Pick([
-            [2, -2, 1],
-            [1, 0, -1],
-            [3, 1, -2],
-          ]);
+          const perpendicularBase = u[0] !== 0 || u[1] !== 0 ? [u[1], -u[0], 0] : [1, 0, 0];
+          const perp = s413Scale3(randInt(1, 3), perpendicularBase);
           const v = s413Add3(parallel, perp);
           return s331QA(
             '將 ' +
@@ -1502,8 +1619,8 @@
               ' 與垂直於 ' +
               s331M('u') +
               ' 的兩個分量。',
-            s331M('\\operatorname{proj}_u v\\text{ 與 }v-\\operatorname{proj}_u v'),
-            '此類題統一用正射影公式分解；題目數據每次替換。'
+            s331MJ('平行分量=', s413Vec3Tex(parallel), ',\\ 垂直分量=', s413Vec3Tex(perp)),
+            '將 ' + s331M('v') + ' 寫成平行分量加上垂直分量；本題兩分量的內積為 0。'
           );
         },
       ];
@@ -1524,13 +1641,7 @@
             s331Frac(P[2] * lenSq - value * n[2], lenSq),
           ];
           return s331QA(
-            '求點 ' +
-              s331M(s412Point('P', P)) +
-              ' 在平面 ' +
-              s331M(
-                n[0] + 'x' + s334SignedTerm(n[1], 'y') + s334SignedTerm(n[2], 'z') + (c >= 0 ? '+' + c : c) + '=0'
-              ) +
-              ' 上的正射影點。',
+            '求點 ' + s331M(s412Point('P', P)) + ' 在平面 ' + s331M(s41PlaneEquation(n, c)) + ' 上的正射影點。',
             s331M('H(' + H.join(',') + ')'),
             '令法向量為 ' + s331M('n') + '，垂足公式為 ' + s331M('H=P-\\frac{n\\cdot P+c}{|n|^2}n') + '。'
           );
@@ -1541,14 +1652,8 @@
           const c = randInt(-6, 6);
           const value = Math.abs(s412Dot3(n, P) + c);
           return s331QA(
-            '求點 ' +
-              s331M(s412Point('P', P)) +
-              ' 到平面 ' +
-              s331M(
-                n[0] + 'x' + s334SignedTerm(n[1], 'y') + s334SignedTerm(n[2], 'z') + (c >= 0 ? '+' + c : c) + '=0'
-              ) +
-              ' 的距離。',
-            s331MJ(s333Quotient(value, s412Len3(n))),
+            '求點 ' + s331M(s412Point('P', P)) + ' 到平面 ' + s331M(s41PlaneEquation(n, c)) + ' 的距離。',
+            s331MJ(s41SqrtFraction(value * value, s412Dot3(n, n))),
             '點到平面距離是點到法向量方向的正射影長。'
           );
         },
@@ -1575,8 +1680,19 @@
               '，寫出平分 ' +
               s331M('a,b') +
               ' 夾角的方向向量。',
-            s331MJ('\\frac{a}{|a|}+\\frac{b}{|b|}'),
-            '角平分方向為兩個單位方向向量的和；若需坐標，再分別單位化後相加。'
+            s331MJ(
+              '\\frac{',
+              s413Vec3Tex(a),
+              '}{',
+              s412Len3(a),
+              '}+',
+              '\\frac{',
+              s413Vec3Tex(b),
+              '}{',
+              s412Len3(b),
+              '}'
+            ),
+            '內角平分方向為兩個單位方向向量的和；本題已將兩個給定向量代入。'
           );
         },
         () => {
@@ -1611,7 +1727,15 @@
           const d = randInt(4, 16);
           return s331QA(
             '已知 ' +
-              s331M(n[0] + 'x' + s334SignedTerm(n[1], 'y') + s334SignedTerm(n[2], 'z') + '=' + d) +
+              s331M(
+                s41LinearExpression([
+                  [n[0], 'x'],
+                  [n[1], 'y'],
+                  [n[2], 'z'],
+                ]) +
+                  '=' +
+                  d
+              ) +
               '，求 ' +
               s331M('x^2+y^2+z^2') +
               ' 的最小值。',
@@ -1626,7 +1750,13 @@
             '已知 ' +
               s331M('x^2+y^2+z^2=' + r * r) +
               '，求 ' +
-              s331M(n[0] + 'x' + s334SignedTerm(n[1], 'y') + s334SignedTerm(n[2], 'z')) +
+              s331M(
+                s41LinearExpression([
+                  [n[0], 'x'],
+                  [n[1], 'y'],
+                  [n[2], 'z'],
+                ])
+              ) +
               ' 的最大值與最小值。',
             s331MJ(
               '\\max=',
@@ -1675,7 +1805,7 @@
               '，求 ' +
               s331M('\\triangle ABC') +
               ' 面積。',
-            s331MJ('\\frac{', s333Sqrt(rad), '}{2}'),
+            s331MJ(s41SqrtFraction(rad, 4)),
             '三角形面積為 ' + s331M('\\frac12|AB\\times AC|') + '，也可用內積公式。'
           );
         },
@@ -1690,7 +1820,7 @@
               '，求 ' +
               s331M('\\triangle ABC') +
               ' 面積。',
-            s331MJ('\\frac{', s333Sqrt(rad), '}{2}'),
+            s331MJ(s41SqrtFraction(rad, 4)),
             '用 ' + s331M('K=\\frac12\\sqrt{|AB|^2|AC|^2-(AB\\cdot AC)^2}') + '。'
           );
         },
@@ -1817,9 +1947,14 @@
     function buildS414CrossBasicNormalSet(count) {
       const builders = [
         () => {
-          const a = [randInt(-3, 4), randInt(-4, 4), randInt(-3, 4)];
-          const b = [randInt(-3, 4), randInt(-4, 4), randInt(-3, 4)];
-          const cross = s414Cross(a, b);
+          let a;
+          let b;
+          let cross;
+          do {
+            a = [randInt(-3, 4), randInt(-4, 4), randInt(-3, 4)];
+            b = [randInt(-3, 4), randInt(-4, 4), randInt(-3, 4)];
+            cross = s414Cross(a, b);
+          } while (cross.every((value) => value === 0));
           return s331QA(
             `設向量 \\(a=${s412Vec3(a[0], a[1], a[2])}\\)、\\(b=${s412Vec3(b[0], b[1], b[2])}\\)，求 \\(a\\times b\\)。`,
             s412Vec3(cross[0], cross[1], cross[2]),
@@ -1827,14 +1962,19 @@
           );
         },
         () => {
-          const u = [randInt(1, 4), randInt(-3, 3), randInt(1, 4)];
-          const v = [randInt(-3, 3), randInt(1, 4), randInt(-3, 3)];
-          const n = s414Cross(u, v);
+          let u;
+          let v;
+          let n;
+          do {
+            u = [randInt(1, 4), randInt(-3, 3), randInt(1, 4)];
+            v = [randInt(-3, 3), randInt(1, 4), randInt(-3, 3)];
+            n = s414Cross(u, v);
+          } while (n.every((value) => value === 0));
           const len = s412Len3(n);
           return s331QA(
             `已知 \\(u=${s412Vec3(u[0], u[1], u[2])}\\)、\\(v=${s412Vec3(v[0], v[1], v[2])}\\)，求同時垂直於 \\(u,v\\) 的一個單位向量。`,
-            `\\(\\pm \\dfrac{${s412Vec3(n[0], n[1], n[2])}}{${len}}\\)`,
-            `方法：先算 \\(u\\times v\\) 得到公垂向量，再除以它的長度。`
+            `\\(\\dfrac{${s412Vec3(n[0], n[1], n[2])}}{${len}}\\)`,
+            `方法：先算 \\(u\\times v\\) 得到公垂向量，再除以它的長度；反向量也是另一個正確答案。`
           );
         },
         () => {
@@ -1860,17 +2000,17 @@
           const AC = [randInt(-3, 3), randInt(1, 5), randInt(-2, 4)];
           const B = s413Add3(A, AB);
           const C = s413Add3(A, AC);
-          const area2 = s412Len3(s414Cross(AB, AC));
+          const area2Sq = s412Dot3(s414Cross(AB, AC), s414Cross(AB, AC));
           return s331QA(
             `已知空間三點 \\(${s412Point('A', A)}\\)、\\(${s412Point('B', B)}\\)、\\(${s412Point('C', C)}\\)，求 \\(\\triangle ABC\\) 的面積。`,
-            `\\(\\dfrac{${area2}}{2}\\)`,
+            `\\(${s41SqrtFraction(area2Sq, 4)}\\)`,
             `方法：\\(\\triangle ABC\\) 面積為 \\(\\frac12|\\overrightarrow{AB}\\times\\overrightarrow{AC}|\\)。`
           );
         },
         () => {
           const a = [randInt(1, 5), randInt(-3, 3), randInt(-2, 4)];
           const b = [randInt(-3, 3), randInt(1, 5), randInt(-2, 4)];
-          const area = s412Len3(s414Cross(a, b));
+          const area = s333Sqrt(s412Dot3(s414Cross(a, b), s414Cross(a, b)));
           return s331QA(
             `向量 \\(a=${s412Vec3(a[0], a[1], a[2])}\\)、\\(b=${s412Vec3(b[0], b[1], b[2])}\\) 張成一個平行四邊形，求其面積。`,
             `\\(${area}\\)`,
@@ -1884,7 +2024,8 @@
           const perp = s414Cross(d, [0, 0, 1]);
           const P = s413Add3(Q, s413Scale3(h, perp));
           const pq = s413Sub3(P, Q);
-          const dist = `\\dfrac{${s412Len3(s414Cross(pq, d))}}{${s412Len3(d)}}`;
+          const cross = s414Cross(pq, d);
+          const dist = s41SqrtFraction(s412Dot3(cross, cross), s412Dot3(d, d));
           return s331QA(
             `空間中一點 \\(${s412Point('P', P)}\\)，直線 \\(L\\) 通過 \\(${s412Point('Q', Q)}\\) 且方向向量為 \\(${s412Vec3(d[0], d[1], d[2])}\\)，求點 \\(P\\) 到直線 \\(L\\) 的距離。`,
             `\\(${dist}\\)`,
@@ -2030,7 +2171,8 @@
           const A = [-1, -2, -3];
           const B = [5, -2, 3];
           const C = [1, 0, k];
-          const area = `\\dfrac{${s412Len3(s414Cross(s413Sub3(B, A), s413Sub3(C, A)))}}{2}`;
+          const cross = s414Cross(s413Sub3(B, A), s413Sub3(C, A));
+          const area = s41SqrtFraction(s412Dot3(cross, cross), 4);
           return s331QA(
             `已知 \\(\\triangle ABC\\) 的頂點為 \\(A(-1,-2,-3)\\)、\\(B(5,-2,3)\\)、\\(C(1,0,k)\\)，若本次 \\(k=${k}\\)，求三角形面積。`,
             `\\(${area}\\)`,
@@ -2052,15 +2194,24 @@
         () => {
           const u = [2, 1, -1];
           const v = [1, 3, 3];
-          const p = randInt(-4, 4);
-          const q = randInt(-4, 4);
+          const correctPair = [7, -5];
+          const useCorrectPair = randInt(0, 1) === 1;
+          let p;
+          let q;
+          if (useCorrectPair) {
+            [p, q] = correctPair;
+          } else {
+            do {
+              p = randInt(-6, 9);
+              q = randInt(-7, 7);
+            } while (p === correctPair[0] && q === correctPair[1]);
+          }
           const a = [-6, p, q];
           const target = s414Cross(u, v);
+          const feasible = s412Dot3(a, u) === 0 && s412Dot3(a, v) === 0;
           return s331QA(
             `設 \\(u=(2,1,-1)\\)、\\(v=(1,3,3)\\)。若 \\(a=(-6,p,q)\\) 同時垂直於 \\(u,v\\)，判斷 \\((p,q)=(${p},${q})\\) 是否可行。`,
-            s412Dot3(a, u) === 0 && s412Dot3(a, v) === 0
-              ? `可行`
-              : `不可行；公垂方向應與 \\(${s412Vec3(target[0], target[1], target[2])}\\) 平行`,
+            feasible ? `可行；\\(a=-(${target.join(',')})\\)` : `不可行；可行時 \\((p,q)=(${correctPair.join(',')})\\)`,
             `方法：同時垂直可用兩個內積為 0，或直接比較是否平行於 \\(u\\times v\\)。`
           );
         },
@@ -2074,11 +2225,12 @@
           const det = randInt(2, 8);
           const m = randInt(2, 4);
           const n = randInt(-3, 3);
+          const bTerm = s41LinearExpression([[n, 'b']]);
           const result = m * det;
           return s331QA(
             `已知 \\(\\det(a,b,c)=${det}\\)，求 \\(\\det(${m}a${s334SignedTerm(n, 'b')}, b, c)\\)。`,
             `\\(${result}\\)`,
-            `方法：第一欄的 \\(${m}a\\) 讓行列式乘以 \\(${m}\\)，加上 \\(${n}b\\) 不改變值。`
+            `方法：第一欄的 \\(${m}a\\) 讓行列式乘以 \\(${m}\\)，加上 \\(${bTerm}\\) 不改變值。`
           );
         },
         () => {
@@ -2343,12 +2495,17 @@
             [2, -3, 6],
             [3, 4, 12],
             [4, 4, 7],
+            [6, 8, 0],
+            [1, -2, 2],
+            [2, 6, 3],
+            [8, -4, 1],
           ]);
           const sum = v[0] + v[1] + v[2];
+          const sumOfUnitVector = s41SignedSqrtRatio(sum, s412Dot3(v, v));
           return s331QA(
             `設 \\(u=(x,y,z)\\) 為向量 \\(${s412Vec3(v[0], v[1], v[2])}\\) 同方向的單位向量，求 \\(x+y+z\\)。`,
-            `\\(${s333Quotient(sum, s412Len3(v))}\\)`,
-            `同方向單位向量為 \\(\\dfrac{${s412Vec3(v[0], v[1], v[2])}}{${s412Len3(v)}}\\)，所以坐標和為 \\(\\dfrac{${sum}}{${s412Len3(v)}}\\)。`
+            `\\(${sumOfUnitVector}\\)`,
+            `同方向單位向量為 \\(\\dfrac{${s412Vec3(v[0], v[1], v[2])}}{${s412Len3(v)}}\\)，所以坐標和化簡為 \\(${sumOfUnitVector}\\)。`
           );
         },
         () => {
@@ -2357,6 +2514,10 @@
             [0, 3, 4],
             [6, -3, 6],
             [5, 12, 0],
+            [8, 0, 15],
+            [2, 6, 9],
+            [7, -4, 4],
+            [1, 4, 8],
           ]);
           return s331QA(
             `求與 \\(${s412Vec3(v[0], v[1], v[2])}\\) 同方向的單位向量。`,
@@ -2450,10 +2611,16 @@
             [3, 0, 4],
           ]);
           const centerValue = s412Dot3(n, center);
-          const span = `${r}${s412Len3(n) === '1' ? '' : '\\cdot' + s412Len3(n)}`;
+          const span = r * Math.sqrt(s412Dot3(n, n));
           return s331QA(
-            `實數 \\(x,y,z\\) 滿足 \\((x${center[0] >= 0 ? '-' + center[0] : '+' + -center[0]})^2+(y${center[1] >= 0 ? '-' + center[1] : '+' + -center[1]})^2+(z${center[2] >= 0 ? '-' + center[2] : '+' + -center[2]})^2=${r * r}\\)。求 \\(${n[0]}x${s334SignedTerm(n[1], 'y')}${s334SignedTerm(n[2], 'z')}\\) 的最大值與最小值。`,
-            `最大值 \\(${centerValue}+${span}\\)，最小值 \\(${centerValue}-${span}\\)`,
+            `實數 \\(x,y,z\\) 滿足 \\(${s41ShiftedSquare('x', center[0])}+${s41ShiftedSquare('y', center[1])}+${s41ShiftedSquare('z', center[2])}=${r * r}\\)。求 \\(${s41LinearExpression(
+              [
+                [n[0], 'x'],
+                [n[1], 'y'],
+                [n[2], 'z'],
+              ]
+            )}\\) 的最大值與最小值。`,
+            `最大值 \\(${centerValue + span}\\)，最小值 \\(${centerValue - span}\\)`,
             `把式子看成 \\(n\\cdot X\\)。球心貢獻 \\(n\\cdot C=${centerValue}\\)，變動量最大為 \\(r|n|=${span}\\)。`
           );
         },
@@ -2470,9 +2637,13 @@
           const d = s412Dot3(n, center) + gap;
           const min = s331Frac(gap * gap, s412Dot3(n, n));
           return s331QA(
-            `實數 \\(x,y,z\\) 滿足 \\(${n[0]}x${s334SignedTerm(n[1], 'y')}${s334SignedTerm(n[2], 'z')}=${d}\\)。求 \\((x${center[0] >= 0 ? '-' + center[0] : '+' + -center[0]})^2+(y${center[1] >= 0 ? '-' + center[1] : '+' + -center[1]})^2+(z${center[2] >= 0 ? '-' + center[2] : '+' + -center[2]})^2\\) 的最小值。`,
+            `實數 \\(x,y,z\\) 滿足 \\(${s41LinearExpression([
+              [n[0], 'x'],
+              [n[1], 'y'],
+              [n[2], 'z'],
+            ])}=${d}\\)。求 \\(${s41ShiftedSquare('x', center[0])}+${s41ShiftedSquare('y', center[1])}+${s41ShiftedSquare('z', center[2])}\\) 的最小值。`,
             `\\(${min}\\)`,
-            `這是點 \\(${center.join(',')}\\) 到平面距離平方。距離為 \\(\\dfrac{|${d}-${s412Dot3(n, center)}|}{\\sqrt{${s412Dot3(n, n)}}}\\)，平方為 \\(${min}\\)。`
+            `這是點 \\(${center.join(',')}\\) 到平面距離平方。距離為 \\(\\dfrac{${gap}}{\\sqrt{${s412Dot3(n, n)}}}\\)，平方為 \\(${min}\\)。`
           );
         },
       ];
@@ -2489,19 +2660,23 @@
             [2, 2, 1],
             [1, 2, 2],
           ]);
-          const AC = s324Pick([
-            [1, 2, 2],
-            [2, -1, 2],
-            [3, 1, -2],
-            [0, 3, 4],
-          ]);
+          let AC;
+          do {
+            AC = s324Pick([
+              [1, 2, 2],
+              [2, -1, 2],
+              [3, 1, -2],
+              [0, 3, 4],
+            ]);
+          } while (s414Cross(AB, AC).every((value) => value === 0));
           const B = s413Add3(A, AB);
           const C = s413Add3(A, AC);
-          const crossLen = s412Len3(s414Cross(AB, AC));
-          const baseLen = s412Len3(AB);
+          const cross = s414Cross(AB, AC);
+          const crossSq = s412Dot3(cross, cross);
+          const baseSq = s412Dot3(AB, AB);
           return s331QA(
             `已知 \\(${s412Point('A', A)}\\)、\\(${s412Point('B', B)}\\)、\\(${s412Point('C', C)}\\)。以 \\(AB\\) 為底，求 \\(\\triangle ABC\\) 的高。`,
-            `\\(\\dfrac{${crossLen}}{${baseLen}}\\)`,
+            `\\(${s41SqrtFraction(crossSq, baseSq)}\\)`,
             `三角形面積 \\(K=\\frac12|AB\\times AC|\\)，又 \\(K=\\frac12|AB|h\\)，所以 \\(h=\\dfrac{|AB\\times AC|}{|AB|}\\)。`
           );
         },
@@ -2520,7 +2695,7 @@
           return s331QA(
             `已知三向量 \\(a,b,c\\) 張成的平行六面體體積為 \\(${volume}\\)。求 \\(${r}a+b,\\ b${s334SignedTerm(s, 'c')},\\ ${t}c\\) 張成的平行六面體體積。`,
             `\\(${factor * volume}\\)`,
-            `行列式 \\(\\det(${r}a+b,b${s}c,${t}c)\\) 中，與重複欄相關的項都為 0，只剩 \\(${r}\\cdot${t}\\det(a,b,c)\\)，體積乘 \\(${factor}\\)。`
+            `行列式 \\(\\det(${r}a+b,b${s334SignedTerm(s, 'c')},${t}c)\\) 中，與重複欄相關的項都為 0，只剩 \\(${r}\\cdot${t}\\det(a,b,c)\\)，體積乘 \\(${factor}\\)。`
           );
         },
       ];
@@ -2610,7 +2785,7 @@
             const b = Math.sqrt(bSq);
             if (Number.isInteger(b) && b > 0 && b <= 12) data = { t, z1, z2, a, b };
           }
-          if (!data) data = { t: 2, z1: 1, z2: 3, a: 3, b: 5 };
+          if (!data) data = { t: 2, z1: 1, z2: 3, a: 5, b: 5 };
           const A = [data.a, 0, data.z1];
           const B = [0, data.b, data.z2];
           return s331QA(
@@ -2631,7 +2806,7 @@
             const b = Math.sqrt(bSq);
             if (Number.isInteger(b) && b > 0 && b <= 10) data = { answerT, A: [a, 0, z1], B: [0, b, z2] };
           }
-          if (!data) data = { answerT: 2, A: [3, 0, 1], B: [0, 5, 3] };
+          if (!data) data = { answerT: 2, A: [5, 0, 1], B: [0, 5, 3] };
           return s331QA(
             `點 \\(P=(0,0,t)\\) 在 \\(z\\) 軸上，且 \\(PA=PB\\)。若 \\(${s412Point('A', data.A)}\\)、\\(${s412Point('B', data.B)}\\)，求 \\(t\\)。`,
             `\\(t=${data.answerT}\\)`,
@@ -2674,16 +2849,33 @@
     function buildS413AngleBisectorCoefficientCleanSet(count) {
       const builders = [
         () => {
-          const item = s324Pick([
-            { u: [3, 1, 2], v: [2, -4, -6], ratio: 2 },
-            { u: [1, 2, 2], v: [4, -4, 2], ratio: 2 },
-            { u: [2, 1, 2], v: [6, -3, 6], ratio: 3 },
-            { u: [3, 0, 4], v: [0, 6, 8], ratio: 2 },
-          ]);
+          const vectorGroups = [
+            [
+              [1, 2, 2],
+              [2, 1, 2],
+              [2, -1, 2],
+            ],
+            [
+              [3, 0, 4],
+              [0, 3, 4],
+              [4, 0, 3],
+            ],
+            [
+              [2, 1, -3],
+              [3, -2, 1],
+              [1, -3, 2],
+            ],
+          ];
+          const group = s324Pick(vectorGroups);
+          const u = s324Pick(group);
+          let base = s324Pick(group);
+          if (base === u) base = group[(group.indexOf(u) + 1) % group.length];
+          const ratio = randInt(2, 5);
+          const v = s413Scale3(ratio, base);
           return s331QA(
-            `已知 \\(\\overrightarrow{OA}=${s412Vec3(item.u[0], item.u[1], item.u[2])}\\)、\\(\\overrightarrow{OB}=${s412Vec3(item.v[0], item.v[1], item.v[2])}\\)。若 \\(\\overrightarrow{OC}\\) 平分 \\(\\angle AOB\\)，且 \\(\\overrightarrow{OC}=x\\overrightarrow{OA}+\\overrightarrow{OB}\\)，求 \\(x\\)。`,
-            `\\(x=${item.ratio}\\)`,
-            `角平分方向為 \\(\\frac{OA}{|OA|}+\\frac{OB}{|OB|}\\)。此題 \\(|OB|=${item.ratio}|OA|\\)，所以寫成 \\(xOA+OB\\) 時，\\(x=\\frac{|OB|}{|OA|}=${item.ratio}\\)。`
+            `已知 \\(\\overrightarrow{OA}=${s412Vec3(u[0], u[1], u[2])}\\)、\\(\\overrightarrow{OB}=${s412Vec3(v[0], v[1], v[2])}\\)。若 \\(\\overrightarrow{OC}\\) 平分 \\(\\angle AOB\\)，且 \\(\\overrightarrow{OC}=x\\overrightarrow{OA}+\\overrightarrow{OB}\\)，求 \\(x\\)。`,
+            `\\(x=${ratio}\\)`,
+            `角平分方向為 \\(\\frac{OA}{|OA|}+\\frac{OB}{|OB|}\\)。此題 \\(|OB|=${ratio}|OA|\\)，所以寫成 \\(xOA+OB\\) 時，\\(x=\\frac{|OB|}{|OA|}=${ratio}\\)。`
           );
         },
       ];
@@ -2691,24 +2883,19 @@
     }
 
     function buildS413LinearOverNormExtremaCleanSet(count) {
-      function firstLinearTerm(coef, variable) {
-        if (coef === 1) return variable;
-        if (coef === -1) return `-${variable}`;
-        return `${coef}${variable}`;
-      }
-
       const builders = [
         () => {
-          const n = s324Pick([
-            [2, -2, -1],
-            [1, 2, -2],
-            [3, 4, 0],
-            [2, 1, 2],
-            [1, -2, 2],
-          ]);
+          let n = [0, 0, 0];
+          while (n[0] === 0 && n[1] === 0 && n[2] === 0) {
+            n = [randInt(-4, 4), randInt(-4, 4), randInt(-4, 4)];
+          }
           const len = s412Len3(n);
           return s331QA(
-            `若 \\((x,y,z)\\ne(0,0,0)\\)，求 \\(\\dfrac{${firstLinearTerm(n[0], 'x')}${s334SignedTerm(n[1], 'y')}${s334SignedTerm(n[2], 'z')}}{\\sqrt{x^2+y^2+z^2}}\\) 的最大值與最小值。`,
+            `若 \\((x,y,z)\\ne(0,0,0)\\)，求 \\(\\dfrac{${s41LinearExpression([
+              [n[0], 'x'],
+              [n[1], 'y'],
+              [n[2], 'z'],
+            ])}}{\\sqrt{x^2+y^2+z^2}}\\) 的最大值與最小值。`,
             `最大值 \\(${len}\\)，最小值 \\(-${len}\\)`,
             `由柯西不等式，\\(|n\\cdot X|\\le |n||X|\\)。分母是 \\(|X|\\)，所以最大、最小為 \\(\\pm|n|\\)。`
           );
@@ -2725,7 +2912,7 @@
 
       const builders = [
         () => {
-          const root = s324Pick([1, 2, 3, 4]);
+          const root = randInt(-4, 8);
           const shift = 2 - root;
           const a = [kTerm(shift), -1, 3];
           const b = [kTerm(shift - 1), -1, -1];
@@ -2784,7 +2971,7 @@
     }
 
     function s41DistanceTex(valueSq) {
-      return Number.isInteger(Math.sqrt(valueSq)) ? String(Math.sqrt(valueSq)) : `\\sqrt{${valueSq}}`;
+      return s333Sqrt(valueSq);
     }
 
     function buildS411ThreePerpendicularDistanceAdvancedSet(count) {
@@ -2852,53 +3039,66 @@
 
     function buildS411SpatialPositionLogicAdvancedSet(count) {
       const builders = [
-        () => {
-          const L = s411Name('L');
-          const M = s411Name('M');
-          const E = s411Name('E');
-          return s331QA(
-            `若直線 \\(${L}\\parallel ${M}\\)，且 \\(${L}\\perp\\) 平面 \\(${E}\\)，判斷 \\(${M}\\) 與平面 \\(${E}\\) 的關係。`,
-            `\\(${M}\\perp ${E}\\)`,
-            `與垂直於平面的直線平行的直線，也垂直於該平面。方向相同，仍是平面的法線方向。`
-          );
-        },
-        () => {
-          const L1 = s411Name('L');
-          const L2 = s411Name('M');
-          return s331QA(
-            `空間中兩歪斜線 \\(${L1}\\)、\\(${L2}\\)，是否必定存在一個平面包含 \\(${L1}\\) 且與 \\(${L2}\\) 平行？`,
-            `必定存在且唯一`,
-            `取通過 \\(${L1}\\) 且方向包含 \\(${L2}\\) 方向向量的平面。因兩線歪斜，\\(${L2}\\) 不會落在此平面內，只會與此平面平行。`
-          );
-        },
-        () => {
-          const E = s411Name('E');
-          const F = s411Name('F');
-          const L = s411Name('L');
-          return s331QA(
-            `若平面 \\(${E}\\perp ${F}\\)，且直線 \\(${L}\\perp ${E}\\)，判斷 \\(${L}\\) 與平面 \\(${F}\\) 的可能關係。`,
-            `\\(${L}\\parallel ${F}\\) 或 \\(${L}\\) 在 \\(${F}\\) 上`,
-            `兩平面垂直時，垂直於 \\(${E}\\) 的方向會平行於平面 \\(${F}\\)。若直線位置剛好落在 \\(${F}\\) 上，就是在平面上；否則與 \\(${F}\\) 平行。`
-          );
-        },
-        () => {
-          const n = randInt(3, 6);
-          return s331QA(
-            `判斷「空間中 ${n} 點可決定唯一一個平面」是否一定正確；若不一定，說明失效條件。`,
-            `不一定；至少要有三個不共線點`,
-            `三個不共線點才能決定唯一平面。若所有點共線，會有無限多個平面通過該直線；若點重合，資訊更不足。`
-          );
-        },
-        () => {
-          const L = s411Name('L');
-          const M = s411Name('M');
-          const E = s411Name('E');
-          return s331QA(
-            `已知直線 \\(${L}\\parallel\\) 平面 \\(${E}\\)，且 \\(${M}\\) 是平面 \\(${E}\\) 上的一條直線。判斷 \\(${L}\\) 與 \\(${M}\\) 的可能關係。`,
-            `可能平行，也可能歪斜；不會相交`,
-            `因 \\(${L}\\) 不在平面 \\(${E}\\) 上且與平面平行，所以不會和平面內的 \\(${M}\\) 相交。若方向相同則平行，方向不同則為歪斜。`
-          );
-        },
+        () =>
+          s331QA(
+            '若直線 \\(\\ell\\parallel m\\)，且 \\(\\ell\\perp\\) 平面 \\(E\\)，判斷 \\(m\\) 與平面 \\(E\\) 的關係。',
+            '\\(m\\perp E\\)',
+            '與垂直於平面的直線平行的直線，也具有同一個法線方向，所以仍垂直於該平面。'
+          ),
+        () =>
+          s331QA(
+            '空間中兩條歪斜線 \\(\\ell\\)、\\(m\\)，是否必定存在一個平面包含 \\(\\ell\\) 且與 \\(m\\) 平行？',
+            '必定存在且唯一',
+            '取通過 \\(\\ell\\) 且方向包含 \\(m\\) 的方向向量的平面。因兩線歪斜，\\(m\\) 不會落在此平面內，只會與此平面平行。'
+          ),
+        () =>
+          s331QA(
+            '若平面 \\(E\\perp F\\)，且直線 \\(\\ell\\perp E\\)，判斷 \\(\\ell\\) 與平面 \\(F\\) 的可能關係。',
+            '\\(\\ell\\parallel F\\) 或 \\(\\ell\\) 在 \\(F\\) 上',
+            '兩平面垂直時，垂直於 \\(E\\) 的方向會平行於平面 \\(F\\)。若直線位置剛好落在 \\(F\\) 上，就是在平面上；否則與 \\(F\\) 平行。'
+          ),
+        () =>
+          s331QA(
+            '判斷「空間中任意三點可決定唯一一個平面」是否一定正確；若不一定，說明失效條件。',
+            '不一定；三點共線時失效（需三點不共線）',
+            '三個不共線點才能決定唯一平面。若三點共線，會有無窮多個平面通過同一直線。'
+          ),
+        () =>
+          s331QA(
+            '已知直線 \\(\\ell\\parallel\\) 平面 \\(E\\)，且 \\(m\\) 是平面 \\(E\\) 上的一條直線。判斷 \\(\\ell\\) 與 \\(m\\) 的可能關係。',
+            '可能平行，也可能歪斜；不會相交',
+            '因 \\(\\ell\\) 不在平面 \\(E\\) 上且與平面平行，所以不會和平面內的 \\(m\\) 相交。若方向相同則平行，方向不同則為歪斜。'
+          ),
+        () =>
+          s331QA(
+            '已知直線 \\(\\ell\\) 與平面 \\(E\\) 相交於點 \\(P\\)，且 \\(m\\) 是平面 \\(E\\) 上不通過 \\(P\\) 的直線。判斷 \\(\\ell\\) 與 \\(m\\) 的可能關係。',
+            '歪斜',
+            '因 \\(m\\) 不通過交點 \\(P\\)，所以 \\(\\ell\\) 不會與 \\(m\\) 相交。若 \\(\\ell\\parallel m\\)，則 \\(\\ell\\) 的方向平行於平面 \\(E\\)，又通過 \\(P\\in E\\)，會使 \\(\\ell\\) 落在平面 \\(E\\) 上，與「只交於 \\(P\\)」矛盾；故兩線必為歪斜。'
+          ),
+        () =>
+          s331QA(
+            '若直線 \\(\\ell\\perp\\) 平面 \\(E\\)，且平面 \\(F\\parallel E\\)，判斷 \\(\\ell\\) 與平面 \\(F\\) 的關係。',
+            '\\(\\ell\\perp F\\)',
+            '平行平面具有相同的法線方向；垂直於其中一個平面的直線，也垂直於另一個平行平面。'
+          ),
+        () =>
+          s331QA(
+            '若兩平面 \\(E\\)、\\(F\\) 相交於直線 \\(r\\)，且直線 \\(\\ell\\perp E\\)，則 \\(\\ell\\) 是否一定垂直於 \\(F\\)？',
+            '否',
+            '垂直於 \\(E\\) 只代表 \\(\\ell\\) 是 \\(E\\) 的法線方向；除非 \\(E\\parallel F\\)，否則不一定也是 \\(F\\) 的法線。'
+          ),
+        () =>
+          s331QA(
+            '若直線 \\(\\ell\\) 在平面 \\(E\\) 上，且平面 \\(F\\perp E\\)，是否可直接判斷 \\(\\ell\\perp F\\)？',
+            '否',
+            '平面互相垂直不代表一個平面內的任一直線都垂直另一平面；只有特定方向的直線才可能垂直於另一平面。'
+          ),
+        () =>
+          s331QA(
+            '若平面 \\(E\\parallel F\\)，且直線 \\(\\ell\\) 在平面 \\(E\\) 上，判斷 \\(\\ell\\) 與平面 \\(F\\) 的關係。',
+            '\\(\\ell\\parallel F\\)',
+            '平面 \\(E\\) 與 \\(F\\) 平行且不重合，\\(E\\) 上的直線不會與 \\(F\\) 相交，因此與 \\(F\\) 平行。'
+          ),
       ];
       return s331MakeSet(count, builders);
     }
@@ -2906,7 +3106,11 @@
     function buildS412MovingPointDistanceExtremaAdvancedSet(count) {
       const builders = [
         () => {
-          const w = s324Pick([[1, 2, 2], [2, -1, 2], [2, 1, -1]]);
+          const w = s324Pick([
+            [1, 2, 2],
+            [2, -1, 2],
+            [2, 1, -1],
+          ]);
           const perp = s422PerpVector(w);
           const t0 = randInt(1, 3);
           const d0 = s413Sub3(perp, s413Scale3(t0, w));
@@ -2945,9 +3149,9 @@
           const b = randInt(1, 4);
           const A = 8 + (2 - b) * (2 - b);
           return s331QA(
-            `兩動點 \\(P(t)=(1-t,t,2t)\\) 與 \\(Q(t)=(t,1-t,${b}t)\\)。求兩點距離平方二次函數的頂點 \\(t\\) 坐標。`,
+            `兩動點 \\(P(t)=(1-t,t,2t)\\) 與 \\(Q(t)=(t,1-t,${s41CoordTerm(0, b)})\\)。求兩點距離平方二次函數的頂點 \\(t\\) 坐標。`,
             `\\(t=${formatFraction(4, A)}\\)`,
-            `先寫 \\(P-Q=(1-2t,2t-1,(2-${b})t)\\)。展開距離平方得到二次式，再用頂點公式 \\(t=-\\frac{B}{2A}\\)，可得 \\(t=${formatFraction(2, A)}\\)。`
+            `先寫 \\(P-Q=(1-2t,2t-1,${s41CoordTerm(0, 2 - b)})\\)。展開距離平方得到二次式，再用頂點公式 \\(t=-\\frac{B}{2A}\\)，可得 \\(t=${formatFraction(4, A)}\\)。`
           );
         },
         () => {
@@ -3092,9 +3296,11 @@
       const builders = [
         () => {
           const a = randInt(3, 10);
+          const height = s41SqrtFraction(6 * a * a, 9);
+          const volume = s41SqrtFraction(2 * a ** 6, 144);
           return s331QA(
             `邊長為 \\(${a}\\) 的正四面體，求其高與體積。`,
-            `高 \\(\\frac{${a}\\sqrt6}{3}\\)，體積 \\(\\frac{${a ** 3}\\sqrt2}{12}\\)`,
+            `高 \\(${height}\\)，體積 \\(${volume}\\)`,
             `正四面體高為 \\(\\frac{\\sqrt6}{3}a\\)，體積為底面積 \\(\\frac{\\sqrt3}{4}a^2\\) 乘高再除以 3，化簡得 \\(\\frac{\\sqrt2}{12}a^3\\)。`
           );
         },
@@ -3116,9 +3322,10 @@
         },
         () => {
           const a = randInt(4, 12);
+          const distance = s41SqrtFraction(2 * a * a, 4);
           return s331QA(
             `正四面體中，兩條不相交稜（歪斜稜）的最短距離與邊長 \\(${a}\\) 的比值為何？`,
-            `最短距離 \\(\\frac{${a}\\sqrt2}{2}\\)，距離：邊長 \\(=1:\\sqrt2\\)`,
+            `最短距離 \\(${distance}\\)，距離：邊長 \\(=1:\\sqrt2\\)`,
             `正四面體一組對稜的公垂線長為 \\(\\frac{a}{\\sqrt2}\\)。因此距離與邊長比為 \\(\\frac{1}{\\sqrt2}:1=1:\\sqrt2\\)。`
           );
         },
@@ -3154,7 +3361,7 @@
       numer /= g;
       denom /= g;
       if (denom === 1) return String(numer);
-      return '\\frac{' + numer + '}{' + denom + '}';
+      return (numer < 0 ? '-' : '') + '\\frac{' + Math.abs(numer) + '}{' + denom + '}';
     }
 
     function s421Term(coef, variable, first) {
@@ -3186,9 +3393,8 @@
 
     function s421PlaneDistance(point, normal, d) {
       const numer = Math.abs(s412Dot3(point, normal) + d);
-      const denom = s412Len3(normal);
       if (numer === 0) return '0';
-      return '\\dfrac{' + numer + '}{' + denom + '}';
+      return s41SqrtFraction(numer * numer, s412Dot3(normal, normal));
     }
 
     function s421PointFrac(name, numerators, denom) {
@@ -3209,7 +3415,10 @@
         },
         () => {
           const A = [randInt(-3, 4), randInt(-3, 4), randInt(-3, 4)];
-          const B = [randInt(-2, 5), randInt(-2, 5), randInt(-2, 5)];
+          let B;
+          do {
+            B = [randInt(-2, 5), randInt(-2, 5), randInt(-2, 5)];
+          } while (B.every((value, index) => value === A[index]));
           const n = s413Sub3(B, A);
           const d = s421PlaneFromPointNormal(B, n);
           return s331QA(
@@ -3240,11 +3449,16 @@
       const builders = [
         () => {
           const A = [randInt(-2, 3), randInt(-2, 3), randInt(-2, 3)];
-          const u = [randInt(1, 4), randInt(-2, 3), randInt(-2, 3)];
-          const v = [randInt(-2, 3), randInt(1, 4), randInt(-2, 3)];
+          let u;
+          let v;
+          let n;
+          do {
+            u = [randInt(1, 4), randInt(-2, 3), randInt(-2, 3)];
+            v = [randInt(-2, 3), randInt(1, 4), randInt(-2, 3)];
+            n = s414Cross(u, v);
+          } while (n.every((value) => value === 0));
           const B = s413Add3(A, u);
           const C = s413Add3(A, v);
-          const n = s414Cross(u, v);
           const d = s421PlaneFromPointNormal(A, n);
           return s331QA(
             `求通過 \\(${s412Point('A', A)}\\)、\\(${s412Point('B', B)}\\)、\\(${s412Point('C', C)}\\) 三點的平面方程式。`,
@@ -3286,8 +3500,8 @@
           const P = [randInt(-2, 4), randInt(-3, 3), randInt(-2, 4)];
           const n = [randInt(1, 4), randInt(-3, 3), randInt(-3, 4)];
           const d = s421PlaneFromPointNormal(P, n);
-          const k = randInt(-5, 5);
-          const d2 = d + k || d + 2;
+          const offset = s324Pick([-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]);
+          const d2 = d + offset;
           return s331QA(
             `求通過 \\(${s412Point('P', P)}\\)，且與平面 \\(${s421PlaneTex(n, d2)}\\) 平行的平面方程式。`,
             `\\(${s421PlaneTex(n, d)}\\)`,
@@ -3306,13 +3520,16 @@
           );
         },
         () => {
-          const n1 = [2, 1, -1];
-          const n2 = [1, -1, 2];
+          const { n1, n2 } = s324Pick([
+            { n1: [2, 1, -1], n2: [1, -1, 2] },
+            { n1: [1, 2, 2], n2: [2, -1, 2] },
+            { n1: [1, 1, 2], n2: [2, -1, 2] },
+            { n1: [2, -1, 2], n2: [1, 2, -1] },
+          ]);
           const dot = s412Dot3(n1, n2);
-          const denom = s333Sqrt(s412Dot3(n1, n1) * s412Dot3(n2, n2));
           return s331QA(
             `求兩平面 \\(${s421PlaneTex(n1, -randInt(1, 5))}\\) 與 \\(${s421PlaneTex(n2, randInt(-4, 4))}\\) 的夾角餘弦值。`,
-            `\\(\\dfrac{|${dot}|}{${denom}}\\)`,
+            `\\(${s41SqrtFraction(dot * dot, s412Dot3(n1, n1) * s412Dot3(n2, n2))}\\)`,
             `方法：平面夾角由法向量夾角決定，\\(\\cos\\theta=\\frac{|n_1\\cdot n_2|}{|n_1||n_2|}\\)。`
           );
         },
@@ -3348,10 +3565,14 @@
           const n = [1, -2, 2];
           const d = randInt(-6, 6);
           const P = [randInt(-3, 4), randInt(-3, 4), randInt(-3, 4)];
+          const denominator = s412Dot3(n, n);
+          const value = s412Dot3(P, n) + d;
+          const footNumerators = P.map((coord, index) => coord * denominator - value * n[index]);
+          const foot = s421PointFrac('Q', footNumerators, denominator);
           return s331QA(
             `在平面 \\(${s421PlaneTex(n, d)}\\) 上找一點 \\(Q\\)，使 \\(P${s412Vec3(P[0], P[1], P[2])}\\) 到 \\(Q\\) 的距離最短，並求最短距離。`,
-            `最短距離為 \\(${s421PlaneDistance(P, n, d)}\\)`,
-            `方法：最短連線必垂直平面，所以最短距離就是點到平面的距離。`
+            `\\(${foot}\\)，最短距離為 \\(${s421PlaneDistance(P, n, d)}\\)`,
+            `方法：最短連線必垂直平面，因此 \\(Q\\) 就是 \\(P\\) 到平面的垂足；最短距離為點到平面的距離。`
           );
         },
       ];
@@ -3367,7 +3588,7 @@
           const d2 = d1 + gap;
           return s331QA(
             `求兩平行平面 \\(${s421PlaneTex(n, d1)}\\) 與 \\(${s421PlaneTex(n, d2)}\\) 的距離。`,
-            `\\(\\dfrac{${Math.abs(d2 - d1)}}{${s412Len3(n)}}\\)`,
+            `\\(${s41SqrtFraction((d2 - d1) * (d2 - d1), s412Dot3(n, n))}\\)`,
             `方法：同法向量平行平面的距離為 \\(\\frac{|d_2-d_1|}{\\sqrt{a^2+b^2+c^2}}\\)。`
           );
         },
@@ -3384,12 +3605,15 @@
         },
         () => {
           const n = [2, -1, 2];
-          const d = randInt(-8, 8);
           const P = [randInt(-4, 5), randInt(-4, 5), randInt(-4, 5)];
           const d2 = -s412Dot3(P, n);
+          let d;
+          do {
+            d = randInt(-8, 8);
+          } while (d === d2);
           return s331QA(
             `求通過 \\(${s412Point('P', P)}\\)，且與平面 \\(${s421PlaneTex(n, d)}\\) 平行的平面方程式，並求兩平面距離。`,
-            `平面為 \\(${s421PlaneTex(n, d2)}\\)，距離為 \\(\\dfrac{${Math.abs(d2 - d)}}{${s412Len3(n)}}\\)`,
+            `平面為 \\(${s421PlaneTex(n, d2)}\\)，距離為 \\(${s41SqrtFraction((d2 - d) * (d2 - d), s412Dot3(n, n))}\\)`,
             `方法：先用同法向量建立平行平面，再用平行平面距離公式。`
           );
         },
@@ -3445,7 +3669,10 @@
       const builders = [
         () => {
           const A = [2 * randInt(-2, 3), 2 * randInt(-2, 3), 2 * randInt(-2, 3)];
-          const B = [2 * randInt(-1, 4), 2 * randInt(-1, 4), 2 * randInt(-1, 4)];
+          let B;
+          do {
+            B = [2 * randInt(-1, 4), 2 * randInt(-1, 4), 2 * randInt(-1, 4)];
+          } while (B.every((value, index) => value === A[index]));
           const n = s413Sub3(B, A);
           const M = [(A[0] + B[0]) / 2, (A[1] + B[1]) / 2, (A[2] + B[2]) / 2];
           const d = s421PlaneFromPointNormal(M, n);
@@ -3457,7 +3684,10 @@
         },
         () => {
           const A = [randInt(-3, 3), randInt(-3, 3), randInt(-3, 3)];
-          const B = [randInt(-3, 4), randInt(-3, 4), randInt(-3, 4)];
+          let B;
+          do {
+            B = [randInt(-3, 4), randInt(-3, 4), randInt(-3, 4)];
+          } while (B.every((value, index) => value === A[index]));
           return s331QA(
             `空間中所有到 \\(${s412Point('A', A)}\\)、\\(${s412Point('B', B)}\\) 等距離的點形成什麼圖形？`,
             `線段 \\(AB\\) 的垂直平分面`,
@@ -3507,13 +3737,14 @@
           );
         },
         () => {
-          const n = [3, -2, 1];
-          const sum = randInt(6, 18);
-          const d = -sum;
+          const n = [1, 2, 3];
+          const scale = randInt(1, 4);
+          const d = -6 * scale;
+          const sum = 11 * scale;
           return s331QA(
-            `平面法向量為 \\((3,-2,1)\\)，且三軸截距和為 \\(${sum}\\)。求一個符合條件的平面方程式。`,
+            `平面法向量為 \\((1,2,3)\\)，且三軸截距和為 \\(${sum}\\)。求一個符合條件的平面方程式。`,
             `\\(${s421PlaneTex(n, d)}\\)`,
-            `方法：先寫 \\(3x-2y+z+d=0\\)，再用截距或指定條件解出常數項。`
+            `方法：先寫 \\(x+2y+3z+d=0\\)。三軸截距為 \\(-d,-\\frac d2,-\\frac d3\\)，其和為 \\(-\\frac{11d}{6}=${sum}\\)，解得 \\(d=${d}\\)。`
           );
         },
       ];
@@ -3715,13 +3946,11 @@
     }
 
     function s422LineParamTex(P, v, parameter = 't') {
-      const piece = (coord, step) => coord + (step >= 0 ? '+' : '') + step + parameter;
-      const cleanPiece = (coord, step) => (step === 0 ? String(coord) : piece(coord, step));
-      return `\\begin{cases}x=${cleanPiece(P[0], v[0])}\\\\y=${cleanPiece(P[1], v[1])}\\\\z=${cleanPiece(P[2], v[2])}\\end{cases}`;
+      return `\\begin{cases}x=${s42ParamCoord(P[0], v[0], parameter)}\\\\y=${s42ParamCoord(P[1], v[1], parameter)}\\\\z=${s42ParamCoord(P[2], v[2], parameter)}\\end{cases}`;
     }
 
     function s422LineSymTex(P, v) {
-      return `\\dfrac{x${P[0] >= 0 ? '-' + P[0] : '+' + Math.abs(P[0])}}{${v[0]}}=\\dfrac{y${P[1] >= 0 ? '-' + P[1] : '+' + Math.abs(P[1])}}{${v[1]}}=\\dfrac{z${P[2] >= 0 ? '-' + P[2] : '+' + Math.abs(P[2])}}{${v[2]}}`;
+      return `\\dfrac{${s42DifferenceTerm('x', P[0])}}{${v[0]}}=\\dfrac{${s42DifferenceTerm('y', P[1])}}{${v[1]}}=\\dfrac{${s42DifferenceTerm('z', P[2])}}{${v[2]}}`;
     }
 
     function s422PointOnLine(P, v, t) {
@@ -3779,7 +4008,10 @@
           const v = [randInt(1, 4), randInt(-3, 3) || 1, randInt(-3, 3) || 2];
           const t0 = randInt(-3, 4);
           const X = s422PointOnLine(A, v, t0);
-          const n = [randInt(1, 4), randInt(-3, 3) || 2, randInt(-3, 4) || -1];
+          let n;
+          do {
+            n = [randInt(1, 4), randInt(-3, 3) || 2, randInt(-3, 4) || -1];
+          } while (s412Dot3(v, n) === 0);
           const d = s421PlaneFromPointNormal(X, n);
           return s331QA(
             `求直線 \\(L:${s422LineParamTex(A, v)}\\) 與平面 \\(E:${s421PlaneTex(n, d)}\\) 的交點。`,
@@ -3805,10 +4037,9 @@
           const n = [2, -1, 3];
           const d = randInt(-6, 6);
           const dot = Math.abs(s412Dot3(v, n));
-          const denom = s333Sqrt(s412Dot3(v, v) * s412Dot3(n, n));
           return s331QA(
             `求直線 \\(L:${s422LineParamTex(A, v)}\\) 與平面 \\(E:${s421PlaneTex(n, d)}\\) 所成角的正弦值。`,
-            `\\(\\dfrac{${dot}}{${denom}}\\)`,
+            `\\(${s41SqrtFraction(dot * dot, s412Dot3(v, v) * s412Dot3(n, n))}\\)`,
             `方法：線面角 \\(\\theta\\) 滿足 \\(\\sin\\theta=\\frac{|v\\cdot n|}{|v||n|}\\)。`
           );
         },
@@ -3836,7 +4067,7 @@
           );
         },
         () => {
-          const b = randInt(-6, 8);
+          const b = randInt(-12, 14);
           const A = [0, 6, 12];
           const Q = [6, b, -6];
           const v = s413Sub3(Q, A);
@@ -3847,9 +4078,9 @@
           );
         },
         () => {
-          const A = [1, 3, 4];
-          const v = [2, -1, 2];
-          const t = randInt(-2, 3);
+          const A = [randInt(1, 4), randInt(2, 5), randInt(2, 5)];
+          const v = [randInt(1, 3), -randInt(1, 3), randInt(1, 3)];
+          const t = randInt(-3, 4);
           const P = s422PointOnLine(A, v, t);
           const ok = P[0] > 0 && P[1] > 0 && P[2] > 0;
           return s331QA(
@@ -3867,17 +4098,17 @@
         () => {
           const A = [randInt(-2, 3), randInt(-2, 3), randInt(-2, 3)];
           const v = [randInt(1, 4), randInt(-3, 3) || 1, randInt(1, 4)];
-          const t = randInt(2, 5);
+          const t = s324Pick([-4, -3, -2, 2, 3, 4, 5]);
           const P = s422PointOnLine(A, v, t);
           return s331QA(
-            `點 \\(P\\) 在以 \\(${s412Point('A', A)}\\) 為起點、方向向量 \\(${s412Vec3(v[0], v[1], v[2])}\\) 的射線上，且 \\(P=${s412Point('P', P)}\\)。求參數 \\(t\\) 並判斷是否在線段延長線上。`,
-            `\\(t=${t}\\)，在以 \\(A\\) 為起點的射線上`,
-            `方法：寫成 \\(P=A+tv\\)，比較任一非零分量即可求 \\(t\\)，再依 \\(t\\) 的範圍判斷軌跡。`
+            `已知直線通過 \\(${s412Point('A', A)}\\)，方向向量為 \\(${s412Vec3(v[0], v[1], v[2])}\\)，且 \\(P=${s412Point('P', P)}\\)。求參數 \\(t\\)，並判斷 \\(P\\) 是否在以 \\(A\\) 為起點的該射線上。`,
+            `\\(t=${t}\\)，${t > 0 ? `在` : `不在`}以 \\(A\\) 為起點的射線上${t > 0 ? '' : '（位於反向延長線）'}`,
+            `方法：寫成 \\(P=A+tv\\)，比較任一非零分量即可求 \\(t\\)。射線的參數必須滿足 \\(t\\ge0\\)；若 \\(t<0\\)，點就在反向延長線上。`
           );
         },
         () => {
-          const A = [3, 1, -1];
-          const B = [2, 5, 3];
+          const A = [randInt(-4, 4), randInt(-4, 4), randInt(-4, 4)];
+          const B = s413Add3(A, [-1, 4, 4]);
           const t = randInt(2, 5);
           const P = s422PointOnLine(A, s413Sub3(B, A), t);
           return s331QA(
@@ -3887,8 +4118,8 @@
           );
         },
         () => {
-          const A = [1, 2, 3];
-          const B = [4, 6, 15];
+          const A = [randInt(-4, 4), randInt(-4, 4), randInt(-4, 4)];
+          const B = s413Add3(A, [3, 4, 12]);
           const v = s413Sub3(B, A);
           return s331QA(
             `已知 \\(A(1,2,3)\\)、\\(B(4,6,15)\\)，請寫出線段 \\(AB\\) 的參數式並標註參數範圍。`,
@@ -3910,7 +4141,8 @@
           const w = s422PerpVector(v);
           const H = s422PointOnLine(A, v, t);
           const P = s413Add3(H, s413Scale3(h, w));
-          const dist = `\\dfrac{${s412Len3(s414Cross(s413Sub3(P, A), v))}}{${s412Len3(v)}}`;
+          const cross = s414Cross(s413Sub3(P, A), v);
+          const dist = s41SqrtFraction(s412Dot3(cross, cross), s412Dot3(v, v));
           return s331QA(
             `求點 \\(${s412Point('P', P)}\\) 到直線 \\(L:${s422LineParamTex(A, v)}\\) 的垂足坐標與距離。`,
             `垂足為 \\(${s412Point('H', H)}\\)，距離為 \\(${dist}\\)`,
@@ -3922,7 +4154,7 @@
           const v = [2, 3, 2];
           const t = randInt(-2, 3);
           const H = s422PointOnLine(A, v, t);
-          const P = s413Add3(H, [2, -2, -1]);
+          const P = s413Add3(H, [2, -2, 1]);
           const R = s413Add3(s413Scale3(2, H), s413Scale3(-1, P));
           return s331QA(
             `已知點 \\(${s412Point('P', P)}\\)，求其對直線 \\(L:${s422LineParamTex(A, v)}\\) 的對稱點坐標。`,
@@ -3952,7 +4184,8 @@
           const v = [randInt(1, 4), randInt(-3, 3) || 1, randInt(1, 4)];
           const offset = s422PerpVector(v);
           const B = s413Add3(A, s413Scale3(randInt(1, 4), offset));
-          const dist = `\\dfrac{${s412Len3(s414Cross(s413Sub3(B, A), v))}}{${s412Len3(v)}}`;
+          const cross = s414Cross(s413Sub3(B, A), v);
+          const dist = s41SqrtFraction(s412Dot3(cross, cross), s412Dot3(v, v));
           return s331QA(
             `求兩平行直線 \\(L_1:${s422LineParamTex(A, v)}\\) 與 \\(L_2:${s422LineParamTex(B, v, 's')}\\) 的距離。`,
             `\\(${dist}\\)`,
@@ -4006,18 +4239,23 @@
           const v2 = [0, 1, 0];
           return s331QA(
             `設 \\(L_1:${s422LineParamTex(A, v1)}\\)，\\(L_2:${s422LineParamTex(B, v2, 's')}\\)。求兩條歪斜線公垂線的兩個垂足坐標。`,
-            `可取 \\(( ${B[0]},0,0)\\) 與 \\((${B[0]},${B[1]},${B[2]})\\)`,
+            `可取 \\((${B[0]},0,0)\\) 與 \\((${B[0]},0,${B[2]})\\)`,
             `方法：本題兩方向分別平行 \\(x,y\\) 軸，公垂線方向為 \\(z\\) 軸方向。`
           );
         },
         () => {
-          const v1 = [randInt(1, 4), randInt(-2, 3) || 1, randInt(1, 4)];
-          const v2 = [randInt(-3, 3) || 1, randInt(1, 4), randInt(-2, 3) || 2];
-          const cross = s414Cross(v1, v2);
+          let v1;
+          let v2;
+          let cross;
+          do {
+            v1 = [randInt(1, 4), randInt(-2, 3) || 1, randInt(1, 4)];
+            v2 = [randInt(-3, 3) || 1, randInt(1, 4), randInt(-2, 3) || 2];
+            cross = s414Cross(v1, v2);
+          } while (cross.every((value) => value === 0));
           return s331QA(
-            `兩歪斜線方向向量分別為 \\(v_1=${s412Vec3(v1[0], v1[1], v1[2])}\\)、\\(v_2=${s412Vec3(v2[0], v2[1], v2[2])}\\)，求其公垂線的一個方向向量。`,
+            `兩條不平行直線的方向向量分別為 \\(v_1=${s412Vec3(v1[0], v1[1], v1[2])}\\)、\\(v_2=${s412Vec3(v2[0], v2[1], v2[2])}\\)，求同時垂直這兩個方向的一個方向向量。`,
             `\\(${s412Vec3(cross[0], cross[1], cross[2])}\\)`,
-            `方法：公垂線要同時垂直兩方向，所以方向向量可取 \\(v_1\\times v_2\\)。`
+            `方法：同時垂直兩方向的向量可取 \\(v_1\\times v_2\\)。`
           );
         },
       ];
@@ -4094,10 +4332,13 @@
         },
         () => {
           const n = [1, -2, 1];
-          const d = randInt(-5, 5);
           const A = [randInt(-2, 3), randInt(-2, 3), randInt(-2, 3)];
           const v = s422PerpVector(n);
           const d2 = s421PlaneFromPointNormal(A, n);
+          let d;
+          do {
+            d = randInt(-5, 5);
+          } while (d === d2);
           return s331QA(
             `求一個包含直線 \\(L:${s422LineParamTex(A, v)}\\)，且與平面 \\(${s421PlaneTex(n, d)}\\) 平行的平面方程式。`,
             `\\(${s421PlaneTex(n, d2)}\\)`,
@@ -4117,33 +4358,8 @@
         { A: [0, 1, 0], d: [2, 1, 1], B: [0, 0, 1] },
         { A: [0, 0, 1], d: [1, 2, 2], B: [1, 0, 0] },
       ];
-      // 相交案例：預設在交點 Pt 相交
-      const intersectPool = [
-        // A,d1 → L1 過A方向d1；L2 過 B=Pt+s*d2 @ s=-1 相當於 B
-        // 驗證：A+t*d1=Pt, B+s*d2=Pt
-        { A: [0, 1, 2], d1: [1, 1, 1], B: [-1, 0, 2], d2: [2, 1, -1], Pt: [1, 2, 3] }, // t=1,s=1
-        { A: [0, 0, 0], d1: [1, 1, 1], B: [-1, 0, 2], d2: [2, 1, -1], Pt: [1, 1, 1] }, // t=1,s=1 check: (-1+2,0+1,2-1)=(1,1,1)✓
-        { A: [1, 0, 0], d1: [1, 2, 1], B: [0, 0, 1], d2: [1, 2, -1], Pt: [2, 2, 1] }, // t=1,s=2 check: A+d1=(2,2,1)✓; B+2*d2=(0+2,0+4,1-2)=(2,4,-1)≠(2,2,1) NO
-        { A: [0, 0, 0], d1: [1, 2, 1], B: [1, 0, 2], d2: [-1, 2, -1], Pt: [1, 2, 1] }, // t=1, A+d1=(1,2,1)✓; s: B+s*d2=(1-s,2s,2-s)=(1,2,1)→s=0→B=(1,0,2)≠(1,2,1) NO
-      ];
-      // 用可靠的預設相交案例
-      const reliableIntersect = [
-        { A: [0, 1, 2], d1: [1, 1, 1], B: [-1, 0, 2], d2: [2, 1, -1], Pt: [1, 2, 3] },
-        { A: [0, 0, 0], d1: [1, 1, 1], B: [-1, 0, 2], d2: [2, 1, -1], Pt: [1, 1, 1] },
-        { A: [1, 0, 0], d1: [0, 1, 1], B: [1, 2, 0], d2: [0, -1, 1], Pt: [1, 1, 1] }, // t=1:A+(0,1,1)=(1,1,1)✓; s=1:B+(0,-1,1)=(1,1,1)✓
-        { A: [0, 0, 1], d1: [1, 1, 0], B: [1, 0, 0], d2: [-1, 1, 1], Pt: [2, 2, 1] }, // t=2: A+2*(1,1,0)=(2,2,1)✓; s=1: B+(-1,1,1)=(0,1,1)≠(2,2,1) NO
-      ];
-      // 僅使用已驗證的
-      const goodIntersect = [
-        { A: [0, 1, 2], d1: [1, 1, 1], B: [-1, 0, 2], d2: [2, 1, -1], Pt: [1, 2, 3] },
-        { A: [0, 0, 0], d1: [1, 1, 1], B: [-1, 0, 2], d2: [2, 1, -1], Pt: [1, 1, 1] },
-        { A: [1, 0, 0], d1: [0, 1, 1], B: [1, 2, 0], d2: [0, -1, 1], Pt: [1, 1, 1] },
-        { A: [0, 0, 0], d1: [2, 1, 1], B: [1, 1, -1], d2: [-1, 0, 1], Pt: [2, 1, 1] },
-        // 驗證最後一個: A+t*(2,1,1)=(2t,t,t)=(2,1,1)→t=1✓; B+s*(-1,0,1)=(1-s,1,-1+s)=(2,1,1)→1-s=2→s=-1→(-1+1)=-1+(-1)=-2≠1 NO
-      ];
-      // 用 3 個已驗確的
       const safeIntersect = [
-        { A: [0, 1, 2], d1: [1, 1, 1], B: [-1, 0, 2], d2: [2, 1, -1], Pt: [1, 2, 3] },
+        { A: [0, 1, 2], d1: [1, 1, 1], B: [-1, 1, 4], d2: [2, 1, -1], Pt: [1, 2, 3] },
         { A: [0, 0, 0], d1: [1, 1, 1], B: [-1, 0, 2], d2: [2, 1, -1], Pt: [1, 1, 1] },
         { A: [1, 0, 0], d1: [0, 1, 1], B: [1, 2, 0], d2: [0, -1, 1], Pt: [1, 1, 1] },
       ];
@@ -4157,19 +4373,27 @@
 
       const builders = [
         () => {
-          const { A, d, B } = s324Pick(parallelPool);
+          const { A: baseA, d: baseD, B: baseB } = s324Pick(parallelPool);
+          const shift = [randInt(-4, 4), randInt(-4, 4), randInt(-4, 4)];
+          const A = s413Add3(baseA, shift);
+          const B = s413Add3(baseB, shift);
+          const d = s413Scale3(s324Pick([1, 2, 3]), baseD);
           const cross = s414Cross(s413Sub3(B, A), d);
-          const crossLen = s412Len3(cross);
-          const dLen = s412Len3(d);
+          const distance = s42SqrtQuotient(s412Dot3(cross, cross), s412Dot3(d, d));
           return s331QA(
             `判斷直線 \\(L_1\\)（過 \\(${s412Point('A', A)}\\)，方向 \\(${s412Vec3(d[0], d[1], d[2])}\\)）與直線 \\(L_2\\)（過 \\(${s412Point('B', B)}\\)，方向 \\(${s412Vec3(d[0], d[1], d[2])}\\)）的位置關係，並求兩線距離。`,
-            `平行；距離 \\(=\\dfrac{${crossLen}}{${dLen}}\\)（化簡後）`,
+            `平行；距離 \\(${distance}\\)`,
             `方法：方向向量相同代表平行；距離 \\(=\\dfrac{|\\overrightarrow{AB}\\times\\vec{d}|}{|\\vec{d}|}\\)。`
           );
         },
         () => {
           const c = s324Pick(safeIntersect);
-          const { A, d1, B, d2, Pt } = c;
+          const shift = [randInt(-4, 4), randInt(-4, 4), randInt(-4, 4)];
+          const A = s413Add3(c.A, shift);
+          const B = s413Add3(c.B, shift);
+          const Pt = s413Add3(c.Pt, shift);
+          const d1 = s413Scale3(s324Pick([1, 2, 3]), c.d1);
+          const d2 = s413Scale3(s324Pick([1, 2, 3]), c.d2);
           return s331QA(
             `判斷直線 \\(L_1\\)（過 \\(${s412Point('A', A)}\\)，方向 \\(${s412Vec3(d1[0], d1[1], d1[2])}\\)）與直線 \\(L_2\\)（過 \\(${s412Point('B', B)}\\)，方向 \\(${s412Vec3(d2[0], d2[1], d2[2])}\\)）的位置關係，並求交點（若有）。`,
             `相交；交點 \\(${s412Point('P', Pt)}\\)`,
@@ -4177,14 +4401,19 @@
           );
         },
         () => {
-          const { A, d1, B, d2 } = s324Pick(skewPool);
+          const { A: baseA, d1: baseD1, B: baseB, d2: baseD2 } = s324Pick(skewPool);
+          const shift = [randInt(-4, 4), randInt(-4, 4), randInt(-4, 4)];
+          const A = s413Add3(baseA, shift);
+          const B = s413Add3(baseB, shift);
+          const d1 = s413Scale3(s324Pick([1, 2, 3]), baseD1);
+          const d2 = s413Scale3(s324Pick([1, 2, 3]), baseD2);
           const cross = s414Cross(d1, d2);
           const AB = s413Sub3(B, A);
           const distNum = Math.abs(s412Dot3(AB, cross));
-          const denom = s412Len3(cross);
+          const distance = s42SqrtQuotient(distNum * distNum, s412Dot3(cross, cross));
           return s331QA(
             `判斷直線 \\(L_1\\)（過 \\(${s412Point('A', A)}\\)，方向 \\(${s412Vec3(d1[0], d1[1], d1[2])}\\)）與直線 \\(L_2\\)（過 \\(${s412Point('B', B)}\\)，方向 \\(${s412Vec3(d2[0], d2[1], d2[2])}\\)）的位置關係，若為歪斜線，求距離。`,
-            `歪斜；距離 \\(=\\dfrac{${distNum}}{${denom}}\\)`,
+            `歪斜；距離 \\(${distance}\\)`,
             `方法：先驗 \\(\\vec{d}_1\\times\\vec{d}_2\\neq\\vec{0}\\)（非平行），再驗 \\(\\overrightarrow{AB}\\cdot(\\vec{d}_1\\times\\vec{d}_2)\\neq 0\\)（歪斜）；距離公式 \\(=\\dfrac{|\\overrightarrow{AB}\\cdot(\\vec{d}_1\\times\\vec{d}_2)|}{|\\vec{d}_1\\times\\vec{d}_2|}\\)。`
           );
         },
@@ -4219,15 +4448,18 @@
         () => {
           // 求直線的方向向量（直線⊥平面）
           const { n } = s324Pick(planePool);
-          const d_plane = randInt(-5, 5);
           const P = [randInt(-3, 3), randInt(-3, 3), randInt(-3, 3)];
+          let d_plane;
+          do {
+            d_plane = randInt(-5, 5);
+          } while (s412Dot3(P, n) + d_plane === 0);
+          const denominator = s412Dot3(n, n);
+          const value = s412Dot3(P, n) + d_plane;
+          const footNumerators = P.map((coord, index) => coord * denominator - n[index] * value);
+          const foot = s421PointFrac('H', footNumerators, denominator);
           return s331QA(
             `點 \\(${s412Point('P', P)}\\) 在平面 \\(E:\\;${s421PlaneTex(n, d_plane)}\\) 外，求過 \\(P\\) 且垂直於 \\(E\\) 的直線與 \\(E\\) 的交點（垂足坐標）。`,
-            `\\(s421PointFrac('H', [
-            P[0]*( n[0]*n[0]+n[1]*n[1]+n[2]*n[2] ) - n[0]*(n[0]*P[0]+n[1]*P[1]+n[2]*P[2]+d_plane),
-            P[1]*( n[0]*n[0]+n[1]*n[1]+n[2]*n[2] ) - n[1]*(n[0]*P[0]+n[1]*P[1]+n[2]*P[2]+d_plane),
-            P[2]*( n[0]*n[0]+n[1]*n[1]+n[2]*n[2] ) - n[2]*(n[0]*P[0]+n[1]*P[1]+n[2]*P[2]+d_plane),
-          ], n[0]*n[0]+n[1]*n[1]+n[2]*n[2])\\)`,
+            `\\(${foot}\\)`,
             `方法：直線 \\(P+t\\vec{n}\\)；代入平面方程求 \\(t\\)，再得交點坐標。`
           );
         },
@@ -4240,15 +4472,13 @@
           const d1 = randInt(-4, 4);
           const d2 = randInt(-4, 4);
           const dot = s412Dot3(n1, n2);
-          const l1 = s412Len3(n1);
-          const l2 = s412Len3(n2);
           const cross = s414Cross(n1, n2);
           const isParallel = cross.every((x) => x === 0);
           return s331QA(
             `直線 \\(L_1\\perp E_1:\\;${s421PlaneTex(n1, d1)}\\)，直線 \\(L_2\\perp E_2:\\;${s421PlaneTex(n2, d2)}\\)。判斷 \\(L_1\\) 與 \\(L_2\\) 的位置關係（僅判斷方向）。`,
             isParallel
               ? `方向相同（平行或重合）`
-              : `方向夾角的餘弦值為 \\(\\dfrac{${dot}}{${l1}\\cdot${l2}}\\)（不平行）`,
+              : `方向夾角的餘弦值為 \\(${s41SqrtFraction(dot * dot, s412Dot3(n1, n1) * s412Dot3(n2, n2))}\\)（不平行）`,
             `方法：垂直平面的直線方向即各自法向量；比較 \\(\\vec{n}_1,\\vec{n}_2\\) 是否共線。`
           );
         },
@@ -4267,7 +4497,7 @@
           return s331QA(
             `坐標空間中三個相異平面都通過 \\(${s412Point('A', A)}\\) 與 \\(${s412Point('B', B)}\\)。判斷 \\(${s412Point('P', P)}\\) 是否一定同時在這三個平面上。`,
             `是`,
-            `三平面共同通過兩點 \\(A,B\\)，所以共同交集至少包含直線 \\(AB\\)。因為 \\(P=A+${t}\\overrightarrow{AB}\\)，故 \\(P\\) 在直線 \\(AB\\) 上。`
+            `三平面共同通過兩點 \\(A,B\\)，所以共同交集至少包含直線 \\(AB\\)。因為 \\(P=A${s42SignedVectorMultiple(t, '\\overrightarrow{AB}')}\\)，故 \\(P\\) 在直線 \\(AB\\) 上。`
           );
         },
         () => {
@@ -4309,8 +4539,8 @@
           ]);
           const A = pair[0];
           const B = pair[1];
-          const p = randInt(-2, 4);
-          const q = randInt(-2, 4);
+          const p = randInt(-5, 6);
+          const q = randInt(-5, 6);
           const C = s413Add3(s413Scale3(p, A), s413Scale3(q, B));
           return s331QA(
             `設 \\(O(0,0,0)\\)、\\(A=${s412Vec3(A[0], A[1], A[2])}\\)、\\(B=${s412Vec3(B[0], B[1], B[2])}\\)、\\(C=(${C[0]},${C[1]},k)\\) 四點共平面。求 \\(k\\)。`,
@@ -4321,8 +4551,8 @@
         () => {
           const A = [randInt(1, 4), randInt(-3, 3) || 1, randInt(1, 4)];
           const B = [randInt(-3, 3) || 2, randInt(1, 4), randInt(-3, 3) || 1];
-          const p = randInt(-2, 4);
-          const q = randInt(-2, 4);
+          const p = randInt(-5, 6);
+          const q = randInt(-5, 6);
           const C = s413Add3(s413Scale3(p, A), s413Scale3(q, B));
           return s331QA(
             `已知 \\(O,A,B,C\\) 四點共平面，且 \\(A=${s412Vec3(A[0], A[1], A[2])}\\)、\\(B=${s412Vec3(B[0], B[1], B[2])}\\)。若 \\(C=pA+qB\\)，其中 \\(p=${p}\\)、\\(q=${q}\\)，求 \\(C\\) 坐標。`,
@@ -4335,16 +4565,21 @@
     }
 
     function buildS421ParallelPlaneDistanceParameterCleanSet(count) {
+      const normalPool = [
+        [1, 2, 2],
+        [2, -1, 2],
+        [2, 1, 2],
+        [1, -2, 2],
+        [2, 2, 1],
+        [2, -2, 1],
+        [1, 2, -2],
+        [2, 1, -2],
+      ];
       const builders = [
         () => {
-          const n = s324Pick([
-            [1, 2, 2],
-            [2, -1, 2],
-            [2, 1, 2],
-            [1, -2, 2],
-          ]);
-          const d1 = randInt(-6, 6);
-          const distance = randInt(1, 5);
+          const n = s324Pick(normalPool);
+          const d1 = randInt(-12, 12);
+          const distance = randInt(1, 8);
           const len = s412Len3(n);
           const d2 = d1 + distance * Number(len);
           return s331QA(
@@ -4354,13 +4589,14 @@
           );
         },
         () => {
-          const n = [2, -1, 2];
-          const d1 = randInt(-6, 6);
-          const d2 = d1 + 3 * randInt(1, 5);
+          const n = s324Pick(normalPool);
+          const d1 = randInt(-12, 12);
+          const distance = randInt(1, 8);
+          const d2 = d1 + 3 * distance;
           return s331QA(
             `求平面 \\(${s421PlaneTex(n, d1)}\\) 與 \\(${s421PlaneTex(n, d2)}\\) 的距離。`,
             `\\(${s331Frac(Math.abs(d2 - d1), 3)}\\)`,
-            `兩平面法向量相同，距離為 \\(\\frac{|d_2-d_1|}{\\sqrt{2^2+(-1)^2+2^2}}=\\frac{|${d2}-${d1}|}{3}\\)。`
+            `兩平面法向量相同，且 \\(|n|=3\\)，距離為 \\(\\frac{|d_2-d_1|}{3}=\\frac{${Math.abs(d2 - d1)}}{3}\\)。`
           );
         },
       ];
@@ -4374,20 +4610,25 @@
           const b = randInt(1, 4);
           const a = randInt(-5, 5) || 2;
           const c = -a - b * k0;
-          const cText = c >= 0 ? `+${c}` : `${c}`;
+          const cText = c === 0 ? '' : c > 0 ? `+${c}` : `${c}`;
+          const dotEquation = `${a}${s42SignedVectorMultiple(b, 'k')}${cText}`;
           const n2 = [a, b, c];
           return s331QA(
             `設平面 \\(E_1:x+ky+z-2=0\\)、\\(E_2:${s421PlaneTex(n2, randInt(-5, 5))}\\)。求 \\(E_1\\) 與 \\(E_2\\) 垂直時的 \\(k\\)。`,
             `\\(k=${k0}\\)`,
-            `兩平面垂直看法向量內積為 0：\\((1,k,1)\\cdot(${a},${b},${c})=0\\)，所以 \\(${a}+${b}k${cText}=0\\)，解得 \\(k=${k0}\\)。`
+            `兩平面垂直看法向量內積為 0：\\((1,k,1)\\cdot(${a},${b},${c})=0\\)，所以 \\(${dotEquation}=0\\)，解得 \\(k=${k0}\\)。`
           );
         },
         () => {
           const k0 = randInt(-4, 5);
           const m = randInt(2, 5);
           const n2 = [m, m * k0, m];
+          let d2;
+          do {
+            d2 = randInt(-6, 6);
+          } while (d2 === -2 * m);
           return s331QA(
-            `設 \\(E_1:x+ky+z-2=0\\)，\\(E_2:${s421PlaneTex(n2, randInt(-6, 6))}\\)。求兩平面平行時的 \\(k\\)。`,
+            `設 \\(E_1:x+ky+z-2=0\\)，\\(E_2:${s421PlaneTex(n2, d2)}\\)。求兩平面平行時的 \\(k\\)。`,
             `\\(k=${k0}\\)`,
             `平行平面的法向量成比例。\\(E_2\\) 的法向量是 \\((${m},${m * k0},${m})=${m}(1,${k0},1)\\)，所以 \\(k=${k0}\\)。`
           );
@@ -4447,11 +4688,14 @@
             [1, -2, 2],
           ]);
           const t0 = randInt(2, 6);
-          const n = s324Pick([
-            [1, -1, 3],
-            [2, 1, 1],
-            [1, 2, -1],
-          ]);
+          let n;
+          do {
+            n = s324Pick([
+              [1, -1, 3],
+              [2, 1, 1],
+              [1, 2, -1],
+            ]);
+          } while (s412Dot3(v, n) === 0);
           const hit = s422PointOnLine(P, v, t0);
           const d = s421PlaneFromPointNormal(hit, n);
           return s331QA(
@@ -4560,7 +4804,7 @@
           return s331QA(
             `三平面 \\(E_1:${s421PlaneTex(n1, d1)}\\)、\\(E_2:${s421PlaneTex(n2, d2)}\\)、\\(E_3:${s421PlaneTex(n3, 0).replace('=0', '+k=0')}\\)。若三平面共同交集為同一直線，求 \\(k\\)。`,
             `\\(k=${k}\\)`,
-            `前兩平面交於一直線。第三平面要也包含此交線，方程式必須是前兩式的線性組合。本題 \\(n_3=${r}n_1+${s}n_2\\)，所以常數項也要 \\(k=${r}d_1+${s}d_2=${k}\\)。`
+            `前兩平面交於一直線。第三平面要也包含此交線，方程式必須是前兩式的線性組合。本題 \\(n_3=${r === 1 ? '' : r}n_1${s42SignedVectorMultiple(s, 'n_2')}\\)，所以常數項也要 \\(k=${r === 1 ? '' : r}d_1${s42SignedVectorMultiple(s, 'd_2')}=${k}\\)。`
           );
         },
         () => {
@@ -4575,7 +4819,7 @@
           return s331QA(
             `若方程組 \\(E_1:${s421PlaneTex(n1, d1)}\\)、\\(E_2:${s421PlaneTex(n2, d2)}\\)、\\(E_3:${s421PlaneTex(n3, 0).replace('=0', '+k=0')}\\) 有無限多解且解集合為一直線，求 \\(k\\)。`,
             `\\(k=${k}\\)`,
-            `三個平面要共線相交時，第三個平面需包含 \\(E_1,E_2\\) 的交線。因為 \\(n_3=${r}n_1${s >= 0 ? '+' : ''}${s}n_2\\)，常數項同步做同樣組合，得 \\(k=${r}d_1${s >= 0 ? '+' : ''}${s}d_2=${k}\\)。`
+            `三個平面要共線相交時，第三個平面需包含 \\(E_1,E_2\\) 的交線。因為 \\(n_3=${r === 1 ? '' : r}n_1${s42SignedVectorMultiple(s, 'n_2')}\\)，常數項同步做同樣組合，得 \\(k=${r === 1 ? '' : r}d_1${s42SignedVectorMultiple(s, 'd_2')}=${k}\\)。`
           );
         },
       ];
@@ -4602,7 +4846,7 @@
           return s331QA(
             `已知 \\(${s412Point('A', A)}\\)、\\(${s412Point('B', B)}\\)，求線段 \\(AB\\) 在平面 \\(E:${s421PlaneTex(n, d)}\\) 上的正射影長。`,
             `\\(${s412Len3(p)}\\)`,
-            `把 \\(\\overrightarrow{AB}\\) 分解成平行平面與垂直平面的部分。此題 \\(\\overrightarrow{AB}=${s412Vec3(v[0], v[1], v[2])}=${s412Vec3(p[0], p[1], p[2])}+${q}${s412Vec3(n[0], n[1], n[2])}\\)，投影到平面後只留下平行平面的部分，長度為 \\(${s412Len3(p)}\\)。`
+            `把 \\(\\overrightarrow{AB}\\) 分解成平行平面與垂直平面的部分。此題 \\(\\overrightarrow{AB}=${s412Vec3(v[0], v[1], v[2])}=${s412Vec3(p[0], p[1], p[2])}${s42SignedVectorMultiple(q, s412Vec3(n[0], n[1], n[2]))}\\)，投影到平面後只留下平行平面的部分，長度為 \\(${s412Len3(p)}\\)。`
           );
         },
         () => {
@@ -4692,7 +4936,7 @@
           return s331QA(
             `已知 \\(L:${s422LineParamTex(A, v)}\\)，若過 \\(${s412Point('P', P)}\\) 作一直線 \\(m\\)，使 \\(m\\) 與 \\(L\\) 共面且互相垂直，求 \\(m\\) 與 \\(L\\) 的交點。`,
             `\\(${s412Point('H', H)}\\)`,
-            `共面且垂直時，交點就是 \\(P\\) 到 \\(L\\) 的垂足。檢查 \\(H=A+${t0}v=${s412Vec3(H[0], H[1], H[2])}\\)，且 \\((P-H)\\cdot v=0\\)。`
+            `共面且垂直時，交點就是 \\(P\\) 到 \\(L\\) 的垂足。檢查 \\(H=A${s42SignedVectorMultiple(t0, 'v')}=${s412Vec3(H[0], H[1], H[2])}\\)，且 \\((P-H)\\cdot v=0\\)。`
           );
         },
       ];
@@ -4744,6 +4988,17 @@
       const body = (absStep === 1 ? '' : absStep) + parameter;
       if (base === 0) return step < 0 ? '-' + body : body;
       return String(base) + (step < 0 ? '-' : '+') + body;
+    }
+
+    function s42SignedVectorMultiple(coef, symbol) {
+      const absCoef = Math.abs(coef);
+      const body = (absCoef === 1 ? '' : absCoef) + symbol;
+      return coef < 0 ? '-' + body : '+' + body;
+    }
+
+    function s42DifferenceTerm(variable, value) {
+      if (value === 0) return variable;
+      return value < 0 ? variable + '+' + Math.abs(value) : variable + '-' + value;
     }
 
     function s42LineParamTex(P, v, parameter = 't') {
@@ -4802,8 +5057,8 @@
           const c2 = P[1] + P[2];
           return s331QA(
             `寫出平面 \\(x+y=${c1}\\) 與 \\(y+z=${c2}\\) 交線的參數式，並判斷 \\(${s412Point('P', P)}\\) 是否在此線上。`,
-            `交線 \\((x,y,z)=(${c1 - c2}+t,${c2}-t,t)\\)，且 \\(P\\) 在此線上`,
-            `令 \\(z=t\\)，由 \\(y+z=${c2}\\) 得 \\(y=${c2}-t\\)，再由 \\(x+y=${c1}\\) 得 \\(x=${c1 - c2}+t\\)。代入 \\(t=${P[2]}\\) 正好得到 \\(P\\)。`
+            `交線 \\((x,y,z)=(${s42ParamCoord(c1 - c2, 1)},${s42ParamCoord(c2, -1)},t)\\)，且 \\(P\\) 在此線上`,
+            `令 \\(z=t\\)，由 \\(y+z=${c2}\\) 得 \\(y=${s42ParamCoord(c2, -1)}\\)，再由 \\(x+y=${c1}\\) 得 \\(x=${s42ParamCoord(c1 - c2, 1)}\\)。代入 \\(t=${P[2]}\\) 正好得到 \\(P\\)。`
           );
         },
       ];
@@ -4827,7 +5082,7 @@
           return s331QA(
             `直線 \\(L:${s42LineParamTex(A, v)}\\)。求 \\(L\\) 上離原點最近的點與最短距離。`,
             `最近點 \\(${s412Point('H', H)}\\)，距離 \\(${s412Len3(H)}\\)`,
-            `離原點最近時，\\(OH\\) 垂直於直線方向。資料設計使 \\(H=A+${t0}v=${s412Vec3(H[0], H[1], H[2])}\\)，且 \\(H\\cdot v=0\\)。`
+            `離原點最近時，\\(OH\\) 垂直於直線方向。資料設計使 \\(H=A${s42SignedVectorMultiple(t0, 'v')}=${s412Vec3(H[0], H[1], H[2])}\\)，且 \\(H\\cdot v=0\\)。`
           );
         },
         () => {
@@ -4839,7 +5094,7 @@
           return s331QA(
             `設 \\(${s412Point('A', A)}\\)、\\(${s412Point('B', B)}\\)，在 \\(x\\) 軸上找一點 \\(P\\)，使 \\(PA^2+PB^2\\) 最小。`,
             `\\(P(${px},0,0)\\)`,
-            `令 \\(P=(t,0,0)\\)。展開後只有 \\((t-${ax})^2+(t-${bx})^2\\) 會影響最小值，頂點在兩個 \\(x\\) 坐標平均 \\(t=${px}\\)。`
+            `令 \\(P=(t,0,0)\\)。展開後只有 \\((${s42DifferenceTerm('t', ax)})^2+(${s42DifferenceTerm('t', bx)})^2\\) 會影響最小值，頂點在兩個 \\(x\\) 坐標平均 \\(t=${px}\\)。`
           );
         },
         () => {
@@ -4870,10 +5125,11 @@
           const sum = n[0] + n[1] + n[2];
           const t0 = randInt(1, 6);
           const d = -sum * t0;
+          const tTerm = s42ParamCoord(0, sum);
           return s331QA(
             `在直線 \\(x=t,\\ y=t,\\ z=t\\) 上找一點 \\(P\\)，使點 \\(P\\) 到平面 \\(${s421PlaneTex(n, d)}\\) 的距離最小。`,
             `\\(P(${t0},${t0},${t0})\\)，最小距離為 0`,
-            `把 \\((t,t,t)\\) 代入平面，可得 \\(${sum}t${d >= 0 ? '+' : ''}${d}=0\\)，所以 \\(t=${t0}\\) 時直線與平面相交，最小距離為 0。`
+            `把 \\((t,t,t)\\) 代入平面，可得 \\(${tTerm}${d >= 0 ? '+' : ''}${d}=0\\)，所以 \\(t=${t0}\\) 時直線與平面相交，最小距離為 0。`
           );
         },
         () => {
@@ -4931,7 +5187,7 @@
           const v = s324Pick([
             [1, 2, 1],
             [2, -1, 1],
-            [1, 1, -2],
+            [2, 1, 1],
           ]);
           const t0 = randInt(1, 4);
           const B = s422PointOnLine(A, v, 1);
@@ -4990,8 +5246,12 @@
           const a = randInt(1, 5);
           const uy = randInt(-4, 4);
           const uz = randInt(-4, 4);
-          const by = uy + 2 * randInt(-2, 2);
-          const bz = uz + 2 * randInt(-2, 2);
+          let by;
+          let bz;
+          do {
+            by = uy + 2 * randInt(-2, 2);
+            bz = uz + 2 * randInt(-2, 2);
+          } while (by === uy && bz === uz);
           const A = [a, uy, uz];
           const B = [a, by, bz];
           return s331QA(
@@ -5017,10 +5277,11 @@
           const adjust = d + 3 * m - (base[0] + base[1] + base[2]);
           const P = [base[0] + adjust, base[1], base[2]];
           const R = [P[0] - 2 * m, P[1] - 2 * m, P[2] - 2 * m];
+          const mText = m < 0 ? `(${m})` : String(m);
           return s331QA(
             `已知平面 \\(E:x+y+z=${d}\\) 與點 \\(${s412Point('P', P)}\\)，求 \\(P\\) 對平面 \\(E\\) 的對稱點。`,
             `\\(${s412Point('P\\prime', R)}\\)`,
-            `平面法向量為 \\((1,1,1)\\)。因 \\(x_P+y_P+z_P-${d}=3\\cdot${m}\\)，對稱點為 \\(P-2${m}(1,1,1)\\)。`
+            `平面法向量為 \\((1,1,1)\\)。因 \\(x_P+y_P+z_P-${d}=3\\cdot${mText}\\)，對稱點為 \\(P-2\\cdot${mText}(1,1,1)\\)。`
           );
         },
       ];
@@ -5056,7 +5317,7 @@
           return s331QA(
             `若 \\(P\\) 點在以 \\(${s412Point('P_0', P0)}\\) 為起點、方向向量 \\(${s412Vec3(v[0], v[1], v[2])}\\) 的射線上，且 \\(P\\) 到 \\(${s412Point('A', A)}\\) 的距離為 \\(${dText}\\)，求射線參數 \\(t\\)。`,
             `\\(t=${s0 + r}\\)`,
-            `射線點為 \\(P_0+tv\\)，而 \\(A=P_0+${s0}v\\)。距離為 \\(|t-${s0}|\\,|v|=${r}|v|\\)，且射線要求 \\(t\\ge0\\)，故取 \\(t=${s0 + r}\\)。`
+            `射線點為 \\(P_0+tv\\)，而 \\(A=P_0${s42SignedVectorMultiple(s0, 'v')}\\)。距離為 \\(|t-${s0}|\\,|v|=${r}|v|\\)，且射線要求 \\(t\\ge0\\)，故取 \\(t=${s0 + r}\\)。`
           );
         },
         () => {
@@ -5077,7 +5338,10 @@
           );
         },
         () => {
-          const fixed = s324Pick([['s', 1, 4], ['t', 1, 5]]);
+          const fixed = s324Pick([
+            ['s', 1, 4],
+            ['t', 1, 5],
+          ]);
           const remain = fixed[2] - fixed[1];
           return s331QA(
             `在 \\(\\triangle ABC\\) 中，設 \\(A(0,0,0)\\)、\\(B(6,0,0)\\)、\\(C(0,6,0)\\)。若 \\(P=sB+tC\\) 且 \\(${fixed[0]}=${formatFraction(fixed[1], fixed[2])}\\)，討論另一參數使 \\(P\\) 落在三角形內部的範圍。`,
@@ -5092,7 +5356,7 @@
           const nums = [A[0] / -v[0], A[1] / -v[1], A[2] / -v[2]];
           const minIndex = nums.indexOf(Math.min(...nums));
           return s331QA(
-            `一質點由 \\(${s412Point('A', A)}\\) 沿方向 \\(${s412Vec3(v[0], v[1], v[2])}\\) 作等速直線運動，求其進入第一卦限 \\((x,y,z\\ge0)\\) 的時間範圍。`,
+            `一質點由 \\(${s412Point('A', A)}\\) 沿方向 \\(${s412Vec3(v[0], v[1], v[2])}\\) 作等速直線運動，求其保持在第一卦限及其邊界 \\((x,y,z\\ge0)\\) 的時間範圍。`,
             `\\(0\\le t\\le ${bounds[minIndex]}\\)`,
             `位置為 \\(A+t v\\)。分別由三個坐標非負得到 \\(t\\le${bounds[0]}\\)、\\(t\\le${bounds[1]}\\)、\\(t\\le${bounds[2]}\\)，取最小上界。`
           );
@@ -5153,7 +5417,8 @@
           const total = 120;
           const b = randInt(30, 70);
           const a = randInt(b, 90);
-          const inter = randInt(10, b - 5);
+          const minInter = Math.max(10, a + b - total);
+          const inter = randInt(minInter, b - 5);
           return s331QA(
             `已知 \\(P(A)=${s431Frac(a, total)}\\)、\\(P(B)=${s431Frac(b, total)}\\)、\\(P(A\\cap B)=${s431Frac(inter, total)}\\)，求 \\(P(A|B)\\)。`,
             s431Answer(inter, b),
@@ -5164,7 +5429,8 @@
           const total = 120;
           const a = randInt(30, 70);
           const b = randInt(30, 70);
-          const inter = randInt(10, Math.min(a, b) - 2);
+          const minInter = Math.max(10, a + b - total);
+          const inter = randInt(minInter, Math.min(a, b) - 2);
           const union = a + b - inter;
           return s331QA(
             `設 \\(A,B\\) 為兩事件，已知 \\(P(A)=${s431Frac(a, total)}\\)、\\(P(B)=${s431Frac(b, total)}\\)、\\(P(A\\cup B)=${s431Frac(union, total)}\\)，求 \\(P(B|A)\\)。`,
@@ -5176,7 +5442,8 @@
           const total = 100;
           const a = randInt(35, 65);
           const b = randInt(30, 60);
-          const inter = randInt(8, Math.min(a, b) - 5);
+          const minInter = Math.max(8, a + b - total);
+          const inter = randInt(minInter, Math.min(a, b) - 5);
           const neither = total - (a + b - inter);
           return s331QA(
             `已知 \\(P(A)=${s431Frac(a, total)}\\)、\\(P(B)=${s431Frac(b, total)}\\)，且 \\(P(A'\\cap B')=${s431Frac(neither, total)}\\)，求 \\(P(A|B)\\)。`,
@@ -5213,7 +5480,7 @@
         () => {
           const kids = randInt(2, 4);
           return s331QA(
-            `某家庭有 \\(${kids}\\) 個小孩，已知至少有一個女孩，求全都是女孩的機率。`,
+            `某家庭有 \\(${kids}\\) 個小孩；假設每個小孩是女孩或男孩的機率相同，且彼此獨立。已知至少有一個女孩，求全都是女孩的機率。`,
             s431Answer(1, 2 ** kids - 1),
             `方法：已知「至少一個女孩」會排除全男一種情形，條件樣本空間剩 \\(2^n-1\\) 種。`
           );
@@ -5227,12 +5494,13 @@
         () => {
           const white = randInt(3, 7);
           const black = randInt(4, 8);
-          const totalAtLeastWhite = s431C(white + black, 3) - s431C(black, 3);
-          const favorable = white * s431C(black, 2);
+          const total = white + black;
+          const totalAtLeastWhite = total * (total - 1) * (total - 2) - black * (black - 1) * (black - 2);
+          const favorable = white * black * (black - 1);
           return s331QA(
             `一袋中有 \\(${white}\\) 顆白球、\\(${black}\\) 顆黑球，連續取出三球（不放回）。在取出三球中至少有一顆白球的條件下，求第一次取到白球且後兩球皆為黑球的機率。`,
             s431Answer(favorable, totalAtLeastWhite),
-            `方法：條件事件是「三球不全黑」；分子是白、黑、黑的組合情形。`
+            `方法：條件事件是「三球不全黑」；分子是「第一球白、後兩球黑」的有序情形。`
           );
         },
         () => {
@@ -5281,7 +5549,7 @@
           return s331QA(
             `調查顯示 \\(${s431Percent(speakJ)}\\) 學生會日語，\\(${s431Percent(speakF)}\\) 會法語，兩者都不會占 \\(${s431Percent(neither)}\\)。已知某生會日語，求他也會法語的機率。`,
             s431Answer(both, speakJ),
-            `方法：先用 \\(P(J\\cap F)=P(J)+P(F)-P(J\\cup F)\\)，其中 \\(P(J\\cup F)=1-P(兩者都不會)\\)。`
+            `方法：先用 \\(P(J\\cap F)=P(J)+P(F)-P(J\\cup F)\\)，其中 \\(P(J\\cup F)=1-P(J^c\\cap F^c)\\)。`
           );
         },
         () => {
@@ -5352,7 +5620,7 @@
           const numerator = aw * b * c;
           const denominator = aw * b * c + bw * a * c + cw * a * b;
           return s331QA(
-            `甲袋有 \\(${aw}\\) 白 \\(${a - aw}\\) 紅，乙袋有 \\(${bw}\\) 白 \\(${b - bw}\\) 紅，丙袋有 \\(${cw}\\) 白 \\(${c - cw}\\) 紅。隨機選一袋再取一球，已知取到白球，求來自甲袋的機率。`,
+            `甲袋有 \\(${aw}\\) 顆白球、\\(${a - aw}\\) 顆紅球；乙袋有 \\(${bw}\\) 顆白球、\\(${b - bw}\\) 顆紅球；丙袋有 \\(${cw}\\) 顆白球、\\(${c - cw}\\) 顆紅球。隨機選一袋再取一球，已知取到白球，求來自甲袋的機率。`,
             s431Answer(numerator, denominator),
             `方法：先選來源再取樣；已知白球後，用各來源產生白球的權重反推。`
           );
@@ -5377,7 +5645,7 @@
           const pB = randInt(40, 70);
           const pC = randInt(30, 60);
           const numerator = pA * (100 - pB) * (100 - pC);
-          const denominator = numerator + (100 - pA) * pB * (100 - pC) + (100 - pA) * (100 - pB) * pC + pA * pB * pC;
+          const denominator = numerator + (100 - pA) * pB * (100 - pC) + (100 - pA) * (100 - pB) * pC;
           return s331QA(
             `三名射手 A、B、C 命中率分別為 \\(${s431Percent(pA)}\\)、\\(${s431Percent(pB)}\\)、\\(${s431Percent(pC)}\\)。三人各射一發，已知恰有一人命中，求命中者是 A 的機率。`,
             s431Answer(numerator, denominator),
@@ -5517,8 +5785,9 @@
           const total = 100;
           const pA = randInt(30, 70);
           const pB = randInt(30, 70);
+          const minInter = Math.max(5, pA + pB - total);
           const maxInter = Math.min(pA, pB) - 2;
-          const pAB = randInt(5, maxInter);
+          const pAB = randInt(minInter, maxInter);
           // P(A|B^c) = (P(A) - P(A∩B)) / (1 - P(B))
           const numer = pA - pAB;
           const denom = total - pB;
@@ -5533,8 +5802,9 @@
           const total = 100;
           const pA = randInt(30, 70);
           const pB = randInt(30, 70);
+          const minInter = Math.max(5, pA + pB - total);
           const maxInter = Math.min(pA, pB) - 2;
-          const pAB = randInt(5, maxInter);
+          const pAB = randInt(minInter, maxInter);
           // P(B|A^c) = (P(B) - P(A∩B)) / (1 - P(A))
           const numer = pB - pAB;
           const denom = total - pA;
@@ -5549,8 +5819,9 @@
           const total = 100;
           const pA = randInt(30, 65);
           const pB = randInt(30, 65);
+          const minInter = Math.max(5, pA + pB - total);
           const maxInter = Math.min(pA, pB) - 2;
-          const pAB = randInt(5, maxInter);
+          const pAB = randInt(minInter, maxInter);
           const pAuB = pA + pB - pAB;
           // P(A^c ∩ B^c) = 1 - P(A∪B) = 1 - pAuB/100
           // P(B^c) = 1 - pB/100
@@ -5670,8 +5941,8 @@
           const unionDenom = aDen * bDen;
           return s331QA(
             `已知 \\(P(A)=${s431Frac(aNum, aDen)}\\)、\\(P(B)=${s431Frac(bNum, bDen)}\\)，且 \\(P(A\\cup B)=${s431Frac(unionNumer, unionDenom)}\\)。判斷 \\(A,B\\) 是否為獨立事件。`,
-            `是，因為 \\(P(A\\cap B)=P(A)P(B)=${s431Frac(aNum * bNum, aDen * bDen)}\\)。`,
-            `提示：先由聯集公式反推 \\(P(A\\cap B)\\)，再和 \\(P(A)P(B)\\) 比較。`
+            '是',
+            `提示：先由聯集公式反推 \\(P(A\\cap B)\\)，可得 \\(P(A\\cap B)=P(A)P(B)=${s431Frac(aNum * bNum, aDen * bDen)}\\)，所以兩事件獨立。`
           );
         },
       ];
@@ -5738,19 +6009,19 @@
           const femaleFail = failRatio * femaleScale;
           return s331QA(
             `某次段考「性別」與「數學及格」人數如下：男生及格 \\(${malePass}\\) 人、不及格 \\(${maleFail}\\) 人；女生及格 \\(${femalePass}\\) 人、不及格 \\(${femaleFail}\\) 人。判斷性別與數學及格是否獨立。`,
-            `是，因為兩列比例相同：\\(${s431Frac(malePass, maleFail)}=${s431Frac(femalePass, femaleFail)}\\)。`,
-            `提示：二維表判定獨立，可檢查交叉乘積是否相等：\\(ad=bc\\)。`
+            '是',
+            `提示：兩列及格率相同：\\(P(\\text{及格}\\mid\\text{男})=${s431Frac(malePass, malePass + maleFail)}=P(\\text{及格}\\mid\\text{女})=${s431Frac(femalePass, femalePass + femaleFail)}\\)。二維表判定獨立，也可檢查交叉乘積是否相等：\\(ad=bc\\)。`
           );
         },
         () => {
           const row1a = randInt(6, 15);
           const row1b = randInt(4, 12);
-          const row2a = randInt(10, 24);
-          const xNumer = row1b * row2a;
-          const xDenom = row1a;
+          const scale = randInt(2, 4);
+          const row2a = row1a * scale;
+          const x = row1b * scale;
           return s331QA(
             `某調查表中，第一組有市區 \\(${row1a}\\) 人、郊區 \\(${row1b}\\) 人；第二組有市區 \\(${row2a}\\) 人、郊區 \\(x\\) 人。若「組別」與「地區」為獨立事件，求 \\(x\\)。`,
-            `\\(x=${s431Frac(xNumer, xDenom)}\\)`,
+            `\\(x=${x}\\)`,
             `提示：獨立代表兩列的市區：郊區比例相同，因此 \\(${row1a}: ${row1b}=${row2a}:x\\)。`
           );
         },
@@ -5762,7 +6033,7 @@
           const verdict = a * d === b * c ? '是' : '否';
           return s331QA(
             `某公司員工名單：男本國籍 \\(${a}\\) 人、男外國籍 \\(${b}\\) 人、女本國籍 \\(${c}\\) 人、女外國籍 \\(${d}\\) 人。判斷「性別」與「國籍」是否獨立。`,
-            `${verdict}，因為交叉乘積為 \\(${a}\\times ${d}\\) 與 \\(${b}\\times ${c}\\)。`,
+            verdict,
             `提示：二維表不必先算每格機率，直接用 \\(ad=bc\\) 判斷最穩。`
           );
         },
@@ -5838,11 +6109,10 @@
           const q = randInt(40, 80);
           const r = randInt(40, 80);
           const path1 = p * q;
-          const path2 = r * 100;
-          const numer = 10000 - ((10000 - path1) * (10000 - path2)) / 10000;
+          const numer = 100 * path1 + 10000 * r - path1 * r;
           return s331QA(
             `某電路有兩條獨立路徑並聯：上路徑由 \\(A,B\\) 串聯，通過率為 \\(${s431Percent(p)}\\)、\\(${s431Percent(q)}\\)；下路徑只有 \\(C\\)，通過率為 \\(${s431Percent(r)}\\)。求總導通機率。`,
-            s431Answer(Math.round(numer), 10000),
+            s431Answer(numer, 1000000),
             `提示：先算每條路徑成功率，再用並聯公式 \\(1-(1-p_1)(1-p_2)\\)。`
           );
         },
@@ -5875,7 +6145,9 @@
           const maxGames = need + (3 - losses) - 1;
           let favorable = 0;
           for (let failures = 0; failures <= 2 - losses; failures += 1) {
-            favorable += s431C(need + failures - 1, failures) * p ** need * lose ** failures;
+            const played = need + failures;
+            favorable +=
+              s431C(need + failures - 1, failures) * p ** need * lose ** failures * 100 ** (maxGames - played);
           }
           return s331QA(
             `甲乙進行五戰三勝制比賽，甲單場勝率為 \\(${s431Percent(p)}\\)。目前甲 \\(${wins}\\) 勝 \\(${losses}\\) 敗，求甲最後獲勝的機率。`,
@@ -5915,8 +6187,8 @@
           const die = randInt(2, 6);
           return s331QA(
             `投擲兩顆公正骰子。令事件 \\(A\\) 為第一顆點數是 \\(${die}\\) 的倍數，事件 \\(B\\) 為兩顆點數和為 \\(7\\)。判斷 \\(A,B\\) 是否為獨立事件。`,
-            '是，因為 \\(P(A\\cap B)=P(A)P(B)\\)。',
-            `提示：列出第一顆符合條件的點數，再檢查和為 7 的搭配數。`
+            '是',
+            `提示：列出第一顆符合條件的點數，再檢查和為 7 的搭配數；可得 \\(P(A\\cap B)=P(A)P(B)\\)，所以兩事件獨立。`
           );
         },
         () => {
@@ -6034,12 +6306,13 @@
           const pAB_d = 10;
           const pB_n = randInt(2, 6); // P(B) = pB_n/10
           const pB_d = 10;
-          const pA_n = randInt(3, 8); // P(A) = pA_n/10
-          const pA_d = 10;
+          const jointPercent = pAB_n * pB_n;
+          const pA_n = randInt(jointPercent, 100 - 10 * pB_n + jointPercent);
+          const pA_d = 100;
           // P(A∩B) = pAB_n * pB_n / 100
-          // P(B|A) = P(A∩B)/P(A) = pAB_n * pB_n / (pA_n * 10)
+          // P(B|A) = P(A∩B)/P(A) = pAB_n * pB_n / pA_n
           const numer = pAB_n * pB_n;
-          const denom = pA_n * pAB_d;
+          const denom = pA_n;
           return s331QA(
             `設 \\(A,B\\) 為兩事件，已知 \\(P(A|B)=${s431Frac(pAB_n, pAB_d)}\\)、\\(P(B)=${s431Frac(pB_n, pB_d)}\\)、\\(P(A)=${s431Frac(pA_n, pA_d)}\\)，求 \\(P(B|A)\\)。`,
             s431Answer(numer, denom),
@@ -6050,7 +6323,8 @@
           // 整數%版：P(A|B)=a/100, P(B)=b/100, P(A)=c/100
           const pAB = randInt(55, 85); // P(A|B) as %
           const pB = randInt(30, 60); // P(B) as %
-          const pA = randInt(40, 75); // P(A) as %
+          const jointPercent = (pAB * pB) / 100;
+          const pA = randInt(Math.ceil(jointPercent), Math.floor(100 - pB + jointPercent));
           // P(A∩B) = pAB * pB / 10000
           // P(B|A) = pAB * pB / (pA * 100)
           const numer = pAB * pB;
@@ -6065,8 +6339,8 @@
           // 已知 P(A|B), P(B), P(A^c)，求 P(B|A^c)
           const pAB = randInt(40, 80); // P(A|B) as %
           const pB = randInt(30, 60); // P(B) as %
-          const pAc = randInt(30, 70); // P(A^c) as %
-          const pA = 100 - pAc;
+          const jointPercent = (pAB * pB) / 100;
+          const pAc = randInt(Math.max(30, Math.ceil(pB - jointPercent)), Math.min(70, Math.floor(100 - jointPercent)));
           // P(A∩B) = pAB * pB / 10000
           // P(A^c ∩ B) = P(B) - P(A∩B) = pB/100 - pAB*pB/10000 = pB*(100-pAB)/10000
           // P(B|A^c) = P(A^c∩B)/P(A^c) = pB*(100-pAB)/(pAc*100)
@@ -6222,7 +6496,7 @@
           const badWeights = ratios.map((ratio, index) => ratio * rates[index]);
           const denom = badWeights[0] + badWeights[1] + badWeights[2];
           return s331QA(
-            `某產品由甲、乙、丙三廠生產，比例為 \\(${ratios.join(':')}\\)，各廠不良率分別為 \\(${s431Percent(rates[0])}\\)、\\(${s431Percent(rates[1])}\\)、\\(${s431Percent(rates[2])}\\)。任取一品為不良品，求其來自乙廠的機率。`,
+            `某產品由甲、乙、丙三廠生產，比例為 \\(${ratios.join(':')}\\)，各廠不良率分別為 \\(${s431Percent(rates[0])}\\)、\\(${s431Percent(rates[1])}\\)、\\(${s431Percent(rates[2])}\\)。任取一件為不良品，求其來自乙廠的機率。`,
             s431Answer(badWeights[1], denom),
             `已知不良後要反推來源，分母是三廠造成不良品的權重總和，乙廠權重為 \\(${ratios[1]}\\cdot${rates[1]}\\)。`
           );
@@ -6328,7 +6602,8 @@
         () => {
           const throwsCount = randInt(4, 8);
           let favorable = 0;
-          for (let even = Math.floor(throwsCount / 2) + 1; even <= throwsCount; even += 1) favorable += s431C(throwsCount, even) * 3 ** throwsCount;
+          for (let even = Math.floor(throwsCount / 2) + 1; even <= throwsCount; even += 1)
+            favorable += s431C(throwsCount, even) * 3 ** throwsCount;
           return s331QA(
             `擲一粒公正骰子 \\(${throwsCount}\\) 次，求「出現偶數點次數」大於「出現奇數點次數」的機率。`,
             s431Answer(favorable, 6 ** throwsCount),
@@ -6418,7 +6693,7 @@
           return s331QA(
             `某題為 \\(${choices}\\) 選一，會做必對，不會做隨機猜。若會做機率為 \\(${s431Frac(knowNum, knowDen)}\\)，已知答對，求答對是因為猜中的機率。`,
             s431Answer(numer, denom),
-            `猜中且答對的權重為 \\(P(不會)\\cdot\\frac1{${choices}}\\)，分母是所有答對來源。`
+            `猜中且答對的權重為 \\(P(不會)\\cdot\\frac{1}{${choices}}\\)，分母是所有答對來源。`
           );
         },
         () => {
@@ -6450,9 +6725,9 @@
           const must = randInt(1, q - 1);
           const total = 2 ** q - 1;
           return s331QA(
-            `複選題共有 \\(${q}\\) 個選項且至少有一個正確。學生完全亂猜一個非空選項集合，求答對機率。若已知其中 \\(${must}\\) 個選項必對，答對率會變為多少？`,
-            `原答對率 \\(${s431Frac(1, total)}\\)；已知 \\(${must}\\) 個必對後為 \\(${s431Frac(1, 2 ** (q - must) - 1)}\\)`,
-            `非空集合共有 \\(2^n-1\\) 種。若已知 \\(${must}\\) 個必選，剩下仍需在其餘選項中判斷，候選集合數變成 \\(2^{${q - must}}-1\\)。`
+            `複選題共有 \\(${q}\\) 個選項且至少有一個正確。學生完全亂猜一個非空選項集合，求答對機率。若已知其中 \\(${must}\\) 個選項必對，且其餘選項可自由選或不選，答對率會變為多少？`,
+            `原答對率 \\(${s431Frac(1, total)}\\)；已知 \\(${must}\\) 個必對後為 \\(${s431Frac(1, 2 ** (q - must))}\\)`,
+            `原本非空集合共有 \\(2^n-1\\) 種。已知 \\(${must}\\) 個必選後，答案集合已非空；其餘 \\(${q - must}\\) 個選項各自可選或不選，因此有 \\(2^{${q - must}}\\) 種可能。`
           );
         },
       ];
@@ -6531,7 +6806,7 @@
           const numerator = red * truthA * truthB;
           const denominator = numerator + white * (100 - truthA) * (100 - truthB);
           return s331QA(
-            `箱中有 \\(${red}\\) 個紅球、\\(${white}\\) 個白球。甲說實話的機率為 \\(${s431Percent(truthA)}\\)，乙說實話的機率為 \\(${s431Percent(truthB)}\\)。任取一球後，兩人都說「是紅球」，求此球確為紅球的機率。`,
+            `箱中有 \\(${red}\\) 個紅球、\\(${white}\\) 個白球。甲、乙是否說實話彼此獨立；甲說實話的機率為 \\(${s431Percent(truthA)}\\)，乙說實話的機率為 \\(${s431Percent(truthB)}\\)。任取一球後，兩人都說「是紅球」，求此球確為紅球的機率。`,
             s431Answer(numerator, denominator),
             `若球真紅，兩人都說紅的權重是 \\(${red}\\cdot${truthA}\\cdot${truthB}\\)；若球真白，兩人都要說謊才會都說紅，權重是 \\(${white}\\cdot${100 - truthA}\\cdot${100 - truthB}\\)。`
           );
@@ -6544,7 +6819,7 @@
           const numerator = white * truth * liarTruth;
           const denominator = numerator + red * (100 - truth) * (100 - liarTruth);
           return s331QA(
-            `箱中有 \\(${red}\\) 個紅球、\\(${white}\\) 個白球。甲說實話機率為 \\(${s431Percent(truth)}\\)，乙說謊機率為 \\(${s431Percent(100 - liarTruth)}\\)。任取一球後兩人都說「是白球」，求此球確為白球的機率。`,
+            `箱中有 \\(${red}\\) 個紅球、\\(${white}\\) 個白球。甲、乙是否說實話彼此獨立；甲說實話機率為 \\(${s431Percent(truth)}\\)，乙說謊機率為 \\(${s431Percent(100 - liarTruth)}\\)。任取一球後兩人都說「是白球」，求此球確為白球的機率。`,
             s431Answer(numerator, denominator),
             `乙說謊機率已給，所以乙說實話機率為 \\(${s431Percent(liarTruth)}\\)。兩人都說白可能來自真白且都說對，也可能來自真紅且都說錯，分別列權重後相除。`
           );
@@ -6873,8 +7148,22 @@
         () =>
           s331QA(
             `求 \\(a\\) 使方程組 \\(\\begin{cases}x-y-z=2\\\\x+z=3\\\\4x-3y-2z=a\\end{cases}\\) 有解。`,
-            `\\(a=7\\)`,
+            `\\(a=9\\)`,
             `提示：先由前兩式解出 \\(x,y,z\\) 的關係，再代入第三式檢查常數項。`
+          ),
+        () => {
+          const c = randInt(-3, 5);
+          return s331QA(
+            `求 \\(k\\) 使方程組 \\(\\begin{cases}x+y+z=${c}\\\\2x+2y+2z=k\\\\x-y+z=0\\end{cases}\\) 有解。`,
+            `\\(k=${2 * c}\\)`,
+            `提示：第二式左邊是第一式左邊的 2 倍，因此常數項也必須是 2 倍，否則會矛盾。`
+          );
+        },
+        () =>
+          s331QA(
+            `已知方程組 \\(\\begin{cases}x+y+z=1\\\\2x-y+z=0\\\\3x+ay+2z=1\\end{cases}\\) 有兩組以上的解，求 \\(a\\)。`,
+            `\\(a=0\\)`,
+            `提示：第三式若要和前兩式相依，必須等於前兩式相加，因此 \\(y\\) 的係數為 0。`
           ),
       ];
       return s331MakeSet(count, builders);
@@ -6935,7 +7224,7 @@
           );
         },
         () => {
-          const p = randInt(1, 4);
+          const p = randInt(2, 4);
           const rows = [
             [1, 1, 1, p],
             [2, 2, 2, p + 1],
@@ -6947,6 +7236,20 @@
             `提示：前兩個平面法向量平行，但常數項不成比例，形成平行異面限制。`
           );
         },
+        () => {
+          const c = randInt(-3, 5);
+          return s331QA(
+            `三平面 \\(x+y+z=${c}\\)、\\(2x+2y+2z=k\\)、\\(x-y+z=0\\) 若交於一直線，求 \\(k\\)。`,
+            `\\(k=${2 * c}\\)`,
+            `提示：第二個平面必須和第一個平面重合，才會讓第一、三平面的交線成為共同交線。`
+          );
+        },
+        () =>
+          s331QA(
+            `三平面 \\(x+y+z=1\\)、\\(2x-y+z=0\\)、\\(3x+ay+2z=1\\) 若交於一直線，求 \\(a\\)。`,
+            `\\(a=0\\)`,
+            `提示：第三個平面若是前兩個平面相加，就不會增加新的限制，三平面共同交集為一直線。`
+          ),
       ];
       return s331MakeSet(count, builders);
     }
@@ -7022,9 +7325,11 @@
           const b = [1, 3, 4];
           const c = [1, 2, 6];
           const d = a.map((value, index) => x * value + y * b[index] + c[index]);
+          const aTerm = x === 1 ? 'a' : `${x}a`;
+          const bTerm = y === 1 ? 'b' : `${y}b`;
           return s331QA(
             `判斷向量 \\(d=${s441Tuple(d)}\\) 是否可表示為 \\(a=${s441Tuple(a)}\\)、\\(b=${s441Tuple(b)}\\)、\\(c=${s441Tuple(c)}\\) 的線性組合。`,
-            `可以，例如 \\(d=${x}a+${y}b+c\\)。`,
+            `可以，例如 \\(d=${aTerm}+${bTerm}+c\\)。`,
             `提示：把 \\(d=xa+yb+zc\\) 視為三元一次方程組求係數。`
           );
         },
@@ -7088,7 +7393,7 @@
             [1, 0, 1, a + c],
           ];
           return s331QA(
-            `甲乙合作需 \\(${a + b}\\) 天、乙丙合作需 \\(${b + c}\\) 天、甲丙合作需 \\(${a + c}\\) 天。若令三人單獨所需時間的代數量為 \\(x,y,z\\)，解方程組 \\(${s441SystemTex(rows)}\\)。`,
+            `甲、乙、丙的工作效率分別為 \\(x,y,z\\)。已知甲乙、乙丙、甲丙合作的效率分別為 \\(${a + b}\\)、\\(${b + c}\\)、\\(${a + c}\\)。解方程組 \\(${s441SystemTex(rows)}\\)。`,
             `\\((x,y,z)=(${a},${b},${c})\\)`,
             `提示：這類文字題重點是把三個兩兩關係翻成三條一次方程式。`
           );
@@ -7139,7 +7444,7 @@
           return s331QA(
             `解方程組 \\(${s441ReciprocalSystemTex(sys.matrix, sys.rhs)}\\)，求 \\(z\\) 的值。`,
             `\\(z=${sys.xyz[2]}\\)`,
-            `提示：令 \\(u=\\frac1x\\)、\\(v=\\frac1y\\)、\\(w=\\frac1z\\)，先解三元一次方程組，再把 \\(w\\) 取倒數。`
+            `提示：令 \\(u=\\frac{1}{x}\\)、\\(v=\\frac{1}{y}\\)、\\(w=\\frac{1}{z}\\)，先解三元一次方程組，再把 \\(w\\) 取倒數。`
           );
         },
         () => {
@@ -7147,7 +7452,7 @@
           return s331QA(
             `解方程組 \\(${s441ReciprocalSystemTex(sys.matrix, sys.rhs)}\\)，求 \\((x,y,z)\\)。`,
             `\\((x,y,z)=(${sys.xyz.join(',')})\\)`,
-            `提示：不要直接通分硬算；先把 \\(\\frac1x,\\frac1y,\\frac1z\\) 分別設成新未知數。`
+            `提示：不要直接通分硬算；先把 \\(\\frac{1}{x},\\frac{1}{y},\\frac{1}{z}\\) 分別設成新未知數。`
           );
         },
         () => {
@@ -7157,7 +7462,7 @@
           return s331QA(
             `方程組 \\(${s441ReciprocalSystemTex(sys.matrix, sys.rhs)}\\) 的解為 \\((x,y,z)\\)。求 \\(x+y+z\\)。`,
             `\\(${formatFraction(numer, denom)}\\)`,
-            `提示：先解出 \\((u,v,w)=(\\frac1x,\\frac1y,\\frac1z)\\)，再換回 \\(x,y,z\\) 後相加。`
+            `提示：先解出 \\((u,v,w)=(\\frac{1}{x},\\frac{1}{y},\\frac{1}{z})\\)，再換回 \\(x,y,z\\) 後相加。`
           );
         },
       ];
@@ -7273,11 +7578,11 @@
         () => {
           const A = s442RandomMatrix(2, 2);
           const B = s442RandomMatrix(2, 2);
-          const X = s442Scalar(-1, s442Add(s442Scalar(4, A), s442Scalar(-6, B)));
+          const X = s442Scalar(1 / 2, s442Add(s442Scalar(6, B), s442Scalar(-4, A)));
           return s331QA(
             `已知 \\(A=${s442Matrix(A)}\\)、\\(B=${s442Matrix(B)}\\)，求滿足 \\(4A-X=3(2B-X)\\) 的矩陣 \\(X\\)。`,
             s442MatrixAnswer(X),
-            `提示：先移項整理成 \\(X=6B-4A\\)，再做係數積與加減。`
+            `提示：先移項整理成 \\(2X=6B-4A\\)，所以 \\(X=3B-2A\\)。`
           );
         },
         () => {
@@ -7297,12 +7602,12 @@
         () => {
           const A = s442RandomMatrix(2, 2);
           const B = s442RandomMatrix(2, 2);
-          const X = s442Add(s442Scalar(3, A), s442Scalar(-2, B));
+          const X = s442Add(s442Scalar(3, A), B);
           const Y = s442Add(s442Scalar(2, A), s442Scalar(-1, B));
           return s331QA(
             `解矩陣方程組 \\(\\begin{cases}X-Y=A\\\\-2X+3Y=B\\end{cases}\\)，其中 \\(A=${s442Matrix(A)}\\)、\\(B=${s442Matrix(B)}\\)。求 \\(X\\)。`,
             s442MatrixAnswer(X),
-            `提示：把 \\(X,Y\\) 當未知量消去，可得 \\(Y=B+2A\\)、\\(X=3A+2B\\)。`
+            `提示：把 \\(X,Y\\) 當未知量消去，可得 \\(Y=B+2A\\)、\\(X=B+3A\\)。`
           );
         },
       ];
@@ -7401,12 +7706,14 @@
       const builders = [
         () => {
           const A = [
-            [1, 0],
-            [0, -1],
+            [randInt(1, 3), 0],
+            [0, -randInt(1, 3)],
           ];
+          const p = randInt(1, 4);
+          const q = randInt(1, 4);
           const B = [
-            [1, 1],
-            [1, 1],
+            [p, q],
+            [p, q],
           ];
           return s331QA(
             `設 \\(A=${s442Matrix(A)}\\)、\\(B=${s442Matrix(B)}\\)。驗證 \\((A+B)^2\\ne A^2+2AB+B^2\\)。`,
@@ -7415,13 +7722,17 @@
           );
         },
         () => {
+          const p = randInt(1, 4);
+          const q = randInt(1, 4);
+          const r = randInt(1, 4);
+          const s = randInt(1, 4);
           const A = [
-            [1, 3],
-            [2, 6],
+            [p, p],
+            [q, q],
           ];
           const B = [
-            [2, 0],
-            [-1, 0],
+            [r, s],
+            [-r, -s],
           ];
           return s331QA(
             `已知 \\(A=${s442Matrix(A)}\\)、\\(B=${s442Matrix(B)}\\)。計算 \\(AB\\)，並說明 \\(AB=O\\) 是否代表 \\(A=O\\) 或 \\(B=O\\)。`,
@@ -7430,17 +7741,23 @@
           );
         },
         () => {
+          const r = randInt(1, 3);
+          const s = randInt(1, 3);
           const A = [
-            [2, 2],
+            [1, 1],
             [1, 1],
           ];
           const B = [
-            [0, 1],
-            [3, 1],
+            [randInt(0, 3), randInt(0, 3)],
+            [randInt(0, 3), randInt(0, 3)],
+          ];
+          const D = [
+            [r, s],
+            [-r, -s],
           ];
           const C = [
-            [2, 2],
-            [1, 0],
+            [B[0][0] + D[0][0], B[0][1] + D[0][1]],
+            [B[1][0] + D[1][0], B[1][1] + D[1][1]],
           ];
           return s331QA(
             `驗證 \\(A=${s442Matrix(A)}\\)、\\(B=${s442Matrix(B)}\\)、\\(C=${s442Matrix(C)}\\) 滿足 \\(AB=AC\\)，但 \\(B\\ne C\\)。`,
@@ -7508,7 +7825,7 @@
           return s331QA(
             `若 \\(A=\\begin{bmatrix}2&1\\\\0&2\\end{bmatrix}\\)，求 \\(A^{${n}}\\)。`,
             `\\(A^{${n}}=\\begin{bmatrix}${2 ** n}&${n * 2 ** (n - 1)}\\\\0&${2 ** n}\\end{bmatrix}\\)`,
-            `提示：這是 \\(2I+N\\) 且 \\(N^2=O\\)，所以 \\((2I+N)^n=2^nI+n2^{n-1}N\\)。`
+            `提示：這是 \\(2I+N\\) 且 \\(N^2=O\\)，所以 \\((2I+N)^n=2^nI+n\\cdot2^{n-1}N\\)。`
           );
         },
         () => {
@@ -7547,39 +7864,68 @@
     function buildS442CayleyHamiltonSet(count) {
       const builders = [
         () => {
+          const a = randInt(1, 4);
+          const b = randInt(1, 4);
+          const c = randInt(1, 4);
+          const d = randInt(1, 4);
           const A = [
-            [1, 3],
-            [2, 4],
+            [a, b],
+            [c, d],
           ];
           const tr = A[0][0] + A[1][1];
           const det = s442Det2(A);
+          const detTerm = det === 0 ? '' : det === 1 ? '+I' : det === -1 ? '-I' : det > 0 ? `+${det}I` : `${det}I`;
           return s331QA(
-            `設 \\(A=${s442Matrix(A)}\\)，驗證 \\(A^2-${tr}A${det < 0 ? '+' + -det : '-' + det}I=O\\)。`,
+            `設 \\(A=${s442Matrix(A)}\\)，驗證 \\(A^2-${tr}A${detTerm}=O\\)。`,
             `\\(A^2=${s442Matrix(s442Mul(A, A))}\\)，代入後確為零矩陣。`,
             `提示：二階矩陣滿足 \\(A^2-(a+d)A+(ad-bc)I=O\\)。`
           );
         },
         () => {
+          const a = randInt(1, 4);
+          const b = randInt(1, 4);
+          const c = randInt(1, 4);
+          const d = randInt(1, 4);
           const A = [
-            [1, 2],
-            [3, 4],
+            [a, b],
+            [c, d],
           ];
-          const A2 = s442Mul(A, A);
+          const tr = a + d;
+          const det = s442Det2(A);
           return s331QA(
             `若 \\(A=${s442Matrix(A)}\\)，求常數 \\(p,q\\) 使 \\(A^2=pA+qI\\)。`,
-            `\\((p,q)=(5,2)\\)`,
+            `\\((p,q)=(${tr},${-det})\\)`,
             `提示：由凱萊－哈密頓定理，\\(A^2-(a+d)A+(ad-bc)I=O\\)。`
           );
         },
         () => {
-          const A = [
-            [2, 1],
-            [4, 3],
+          const pool = [
+            [
+              [2, 1],
+              [4, 3],
+            ],
+            [
+              [3, 1],
+              [2, 2],
+            ],
+            [
+              [1, 2],
+              [1, 4],
+            ],
+            [
+              [4, 1],
+              [3, 2],
+            ],
           ];
+          const A = s324Pick(pool);
+          const tr = A[0][0] + A[1][1];
+          const det = s442Det2(A);
+          const detA = det === 0 ? '' : det === 1 ? '+A' : det === -1 ? '-A' : det > 0 ? `+${det}A` : `${det}A`;
+          const detI = det === 0 ? '' : det === 1 ? '+I' : det === -1 ? '-I' : det > 0 ? `+${det}I` : `${det}I`;
           return s331QA(
-            `已知 \\(A=${s442Matrix(A)}\\)。利用特徵方程化簡 \\(A^3-5A^2+2A\\)。`,
+            `已知 \\(A=${s442Matrix(A)}\\)。利用特徵方程化簡 \\(A^3-${tr}A^2${detA}\\)。`,
             `\\(O\\)`,
-            `提示：此矩陣滿足 \\(A^2-5A+2I=O\\)，所以 \\(A^3-5A^2+2A=A(A^2-5A+2I)\\)。`
+            `提示：此矩陣滿足 \\(A^2-${tr}A${detI}=O\\)，所以 \\(A^3-${tr}A^2${detA}=A(A^2-${tr}A${detI})\\)。`
           );
         },
       ];
@@ -7606,7 +7952,7 @@
           const d1 = randInt(2, 4);
           const d2 = randInt(2, 4);
           return s331QA(
-            `若 \\(B=ADA^{-1}\\)，其中 \\(D=\\begin{bmatrix}${d1}&0\\\\0&${d2}\\end{bmatrix}\\)，求 \\(B^{${n}}\\) 的結構。`,
+            `若 \\(B=ADA^{-1}\\)，其中 \\(A\\) 為可逆矩陣、\\(D=\\begin{bmatrix}${d1}&0\\\\0&${d2}\\end{bmatrix}\\)，求 \\(B^{${n}}\\) 的結構。`,
             `\\(B^{${n}}=AD^{${n}}A^{-1}=A\\begin{bmatrix}${d1 ** n}&0\\\\0&${d2 ** n}\\end{bmatrix}A^{-1}\\)。`,
             `提示：相似變換下的次方可直接推進對角矩陣。`
           );
@@ -7746,6 +8092,7 @@
       const builders = [
         () => {
           const k = s441NonzeroInt(-5, 5);
+          const operationTerm = k === 1 ? '+R_1' : k === -1 ? '-R_1' : `${k >= 0 ? '+' : ''}${k}R_1`;
           const A = s442RandomMatrix(2, 3, -4, 5);
           const E = [
             [1, 0],
@@ -7753,13 +8100,14 @@
           ];
           const result = s442Mul(E, A);
           return s331QA(
-            `矩陣 \\(A=${s442Matrix(A)}\\)。若要對 \\(A\\) 做列運算 \\(R_2\\leftarrow R_2${k >= 0 ? '+' : ''}${k}R_1\\)，求左乘的基本矩陣 \\(E\\)，並求 \\(EA\\)。`,
+            `矩陣 \\(A=${s442Matrix(A)}\\)。若要對 \\(A\\) 做列運算 \\(R_2\\leftarrow R_2${operationTerm}\\)，求左乘的基本矩陣 \\(E\\)，並求 \\(EA\\)。`,
             `\\(E=${s442Matrix(E)}\\)，\\(EA=${s442Matrix(result)}\\)`,
             `提示：列運算用左乘基本矩陣表示；\\(R_2\\leftarrow R_2+kR_1\\) 對應 \\(\\begin{bmatrix}1&0\\\\k&1\\end{bmatrix}\\)。`
           );
         },
         () => {
           const k = s441NonzeroInt(-4, 4);
+          const operationTerm = k === 1 ? '+R_2' : k === -1 ? '-R_2' : `${k >= 0 ? '+' : ''}${k}R_2`;
           const A = s442RandomMatrix(2, 3, -4, 5);
           const E = [
             [1, k],
@@ -7768,7 +8116,7 @@
           const result = s442Mul(E, A);
           return s331QA(
             `已知 \\(E=${s442Matrix(E)}\\)、\\(A=${s442Matrix(A)}\\)。說明左乘 \\(E\\) 對 \\(A\\) 做了哪個列運算，並求 \\(EA\\)。`,
-            `\\(R_1\\leftarrow R_1${k >= 0 ? '+' : ''}${k}R_2\\)，\\(EA=${s442Matrix(result)}\\)`,
+            `\\(R_1\\leftarrow R_1${operationTerm}\\)，\\(EA=${s442Matrix(result)}\\)`,
             `提示：基本矩陣的非對角元素在第 \\((1,2)\\) 位，表示把第 2 列的 \\(${k}\\) 倍加到第 1 列。`
           );
         },
@@ -7869,16 +8217,10 @@
           );
         },
         () => {
-          const b = randInt(-5, 5);
-          const A = [
-            [1 + b, 3 * b],
-            [1, b],
-          ];
-          const exists = s442Det2(A) !== 0;
           return s331QA(
             `設 \\(A=\\begin{bmatrix}a+6&3b\\\\1&a\\end{bmatrix}\\)。若對任意實數 \\(a\\)，\\(A^{-1}\\) 恆存在，求整數 \\(b\\) 的範圍。`,
-            `\\(b<3\\)`,
-            `提示：\\(\\det(A)=a^2+6a-3b=(a+3)^2-9-3b\\)。要對所有 \\(a\\) 都不為 0，最小值需大於 0。`
+            `\\(b<-3\\)`,
+            `提示：\\(\\det(A)=a^2+6a-3b=(a+3)^2-9-3b\\)。要對所有 \\(a\\) 都不為 0，這個開口向上的二次式最小值需大於 0，因此 \\(-9-3b>0\\)。`
           );
         },
         () => {
@@ -7900,6 +8242,14 @@
             `提示：二階矩陣只要檢查 \\(ad-bc\\) 是否為 0。`
           );
         },
+        () => {
+          const m = randInt(-4, 5) || 3;
+          return s331QA(
+            `設 \\(A=\\begin{bmatrix}${m + 2}&a\\\\1&1\\end{bmatrix}\\)。若 \\(A^{-1}\\) 不存在，求 \\(a\\)。`,
+            `\\(a=${m + 2}\\)`,
+            `提示：令 \\(\\det(A)=0\\)，可得 \\(${m + 2}-a=0\\)，所以 \\(a=${m + 2}\\)。`
+          );
+        },
       ];
       return s331MakeSet(count, builders);
     }
@@ -7911,7 +8261,7 @@
           return s331QA(
             `求二階方陣 \\(A=${s442Matrix(A)}\\) 的反矩陣 \\(A^{-1}\\)。`,
             `\\(A^{-1}=${s442Matrix(s443Inv2(A))}\\)`,
-            `提示：\\(\\begin{bmatrix}a&b\\\\c&d\\end{bmatrix}^{-1}=\\frac1{ad-bc}\\begin{bmatrix}d&-b\\\\-c&a\\end{bmatrix}\\)。`
+            `提示：\\(\\begin{bmatrix}a&b\\\\c&d\\end{bmatrix}^{-1}=\\frac{1}{ad-bc}\\begin{bmatrix}d&-b\\\\-c&a\\end{bmatrix}\\)。`
           );
         },
         () => {
@@ -8058,7 +8408,7 @@
           ];
           const n = randInt(5, 16);
           return s331QA(
-            `已知 \\(A=${s442Matrix(A)}\\)。化簡 \\(A^${n}A^{-${n - 2}}\\)。`,
+            `已知 \\(A=${s442Matrix(A)}\\)。化簡 \\(A^{${n}}A^{-${n - 2}}\\)。`,
             `\\(A^2=\\begin{bmatrix}1&2\\\\0&1\\end{bmatrix}\\)`,
             `提示：同一可逆矩陣的次方可合併，\\(A^mA^n=A^{m+n}\\)。`
           );
@@ -8078,19 +8428,26 @@
           const aTerm = aCoeff === '1' ? 'A' : `${aCoeff}A`;
           const iCoeff = formatFraction(Math.abs(p), q);
           const iTerm = iCoeff === '1' ? 'I' : `${iCoeff}I`;
+          const movedTerm = p > 0 ? `A^2-${pTerm}` : `A^2+${Math.abs(p) === 1 ? 'A' : Math.abs(p) + 'A'}`;
+          const factorTerm = p > 0 ? `A-${p === 1 ? '' : p}I` : `A+${Math.abs(p) === 1 ? '' : Math.abs(p)}I`;
           return s331QA(
             `已知可逆方陣 \\(A\\) 滿足 \\(A^2=${pTerm}+${qTerm}\\)。試將 \\(A^{-1}\\) 表示成 \\(rA+sI\\) 的形式。`,
             `\\(A^{-1}=${aTerm}${p >= 0 ? '-' : '+'}${iTerm}\\)`,
-            `提示：由 \\(A^2-(${pTerm})=${qTerm}\\)，提出 \\(A\\) 得 \\(A(A-${p}I)=${qTerm}\\)。`
+            `提示：由 \\(${movedTerm}=${qTerm}\\)，提出 \\(A\\) 得 \\(A(${factorTerm})=${qTerm}\\)。`
           );
         },
         () => {
           const tr = randInt(3, 8);
           const det = randInt(1, 6);
+          const detTerm = det === 1 ? 'I' : `${det}I`;
+          const iCoeff = formatFraction(tr, det);
+          const iTerm = iCoeff === '1' ? 'I' : `${iCoeff}I`;
+          const aCoeff = formatFraction(1, det);
+          const aTerm = aCoeff === '1' ? 'A' : `${aCoeff}A`;
           return s331QA(
-            `二階可逆矩陣 \\(A\\) 滿足 \\(A^2-${tr}A+${det}I=O\\)。求 \\(A^{-1}\\) 關於 \\(A,I\\) 的表示式。`,
-            `\\(A^{-1}=${formatFraction(tr, det)}I-${formatFraction(1, det)}A\\)`,
-            `提示：把等式改寫成 \\(A(${tr}I-A)=${det}I\\)，再左右同除以 \\(${det}\\)。`
+            `二階可逆矩陣 \\(A\\) 滿足 \\(A^2-${tr}A+${detTerm}=O\\)。求 \\(A^{-1}\\) 關於 \\(A,I\\) 的表示式。`,
+            `\\(A^{-1}=${iTerm}-${aTerm}\\)`,
+            `提示：把等式改寫成 \\(A(${tr}I-A)=${detTerm}\\)，再左右同除以 \\(${det}\\)。`
           );
         },
         () => {
@@ -8279,6 +8636,12 @@
       return `${aText}${bText}${cText}=0`;
     }
 
+    function s444QuadraticY(a, b) {
+      const aText = a === 1 ? 'x^2' : a === -1 ? '-x^2' : `${a}x^2`;
+      const bText = b === 0 ? '' : b > 0 ? `+${b === 1 ? '' : b}x` : `-${b === -1 ? '' : Math.abs(b)}x`;
+      return `y=${aText}${bText}`;
+    }
+
     function s444SquareTerm(variable, center) {
       if (center === 0) return `${variable}^2`;
       return `(${variable}${center < 0 ? '+' + Math.abs(center) : '-' + center})^2`;
@@ -8308,7 +8671,7 @@
           const P = [randInt(-4, 5), randInt(-4, 5)];
           const Q = s444MatVec(A, P);
           return s331QA(
-            `已知 \\(A=${s442Matrix(A)}\\) 將點 \\(P\\) 映到 \\(P'${s444Vec2(Q)}\\)。求原點 \\(P\\) 的座標。`,
+            `已知 \\(A=${s442Matrix(A)}\\) 將點 \\(P\\) 映到 \\(P'${s444Vec2(Q)}\\)。求原像 \\(P\\) 的座標。`,
             `\\(P=${s444Vec2(P)}\\)`,
             `提示：由 \\(AP=P'\\)，可用 \\(P=A^{-1}P'\\) 還原。`
           );
@@ -8393,11 +8756,11 @@
           const angle = s324Pick([30, 45, 60, 90]);
           const matrix =
             angle === 30
-              ? '\\begin{bmatrix}\\frac{\\sqrt3}{2}&-\\frac12\\\\\\frac12&\\frac{\\sqrt3}{2}\\end{bmatrix}'
+              ? '\\begin{bmatrix}\\frac{\\sqrt{3}}{2}&-\\frac{1}{2}\\\\\\frac{1}{2}&\\frac{\\sqrt{3}}{2}\\end{bmatrix}'
               : angle === 45
-                ? '\\begin{bmatrix}\\frac{\\sqrt2}{2}&-\\frac{\\sqrt2}{2}\\\\\\frac{\\sqrt2}{2}&\\frac{\\sqrt2}{2}\\end{bmatrix}'
+                ? '\\begin{bmatrix}\\frac{\\sqrt{2}}{2}&-\\frac{\\sqrt{2}}{2}\\\\\\frac{\\sqrt{2}}{2}&\\frac{\\sqrt{2}}{2}\\end{bmatrix}'
                 : angle === 60
-                  ? '\\begin{bmatrix}\\frac12&-\\frac{\\sqrt3}{2}\\\\\\frac{\\sqrt3}{2}&\\frac12\\end{bmatrix}'
+                  ? '\\begin{bmatrix}\\frac{1}{2}&-\\frac{\\sqrt{3}}{2}\\\\\\frac{\\sqrt{3}}{2}&\\frac{1}{2}\\end{bmatrix}'
                   : '\\begin{bmatrix}0&-1\\\\1&0\\end{bmatrix}';
           return s331QA(
             `寫出繞原點逆時針旋轉 \\(${angle}^\\circ\\) 的二階矩陣。`,
@@ -8434,8 +8797,8 @@
           const a = randInt(1, 5);
           const b = randInt(1, 5);
           return s331QA(
-            `拋物線 \\(y=${a}x^2+${b}x\\) 對 \\(y\\) 軸鏡射後，求新圖形方程式。`,
-            `\\(y=${a}x^2-${b}x\\)`,
+            `拋物線 \\(${s444QuadraticY(a, b)}\\) 對 \\(y\\) 軸鏡射後，求新圖形方程式。`,
+            `\\(${s444QuadraticY(a, -b)}\\)`,
             `提示：對 \\(y\\) 軸鏡射時，把原式中的 \\(x\\) 換成 \\(-x\\)。`
           );
         },
@@ -8457,11 +8820,12 @@
         },
         () => {
           const k = randInt(1, 5);
+          const kyTerm = k === 1 ? 'y' : `${k}y`;
           const P = [randInt(-4, 5), randInt(-4, 5)];
           return s331QA(
             `推移變換 \\(A=\\begin{bmatrix}1&${k}\\\\0&1\\end{bmatrix}\\) 作用於點 \\(P${s444Vec2(P)}\\)。求像點 \\(P'\\)。`,
             `\\(P'=(${P[0] + k * P[1]},${P[1]})\\)`,
-            `提示：此推移保持 \\(y\\) 不變，\\(x\\) 方向多加 \\(${k}y\\)。`
+            `提示：此推移保持 \\(y\\) 不變，\\(x\\) 方向多加 \\(${kyTerm}\\)。`
           );
         },
         () => {
@@ -8663,10 +9027,31 @@
               ],
             ],
             [
+              '對 \\(y\\) 軸鏡射',
+              [
+                [-1, 0],
+                [0, 1],
+              ],
+            ],
+            [
+              '\\(180^\\circ\\) 旋轉',
+              [
+                [-1, 0],
+                [0, -1],
+              ],
+            ],
+            [
               '推移',
               [
                 [1, 2],
                 [0, 1],
+              ],
+            ],
+            [
+              '推移',
+              [
+                [1, 0],
+                [3, 1],
               ],
             ],
             [
@@ -8676,11 +9061,32 @@
                 [0, 3],
               ],
             ],
+            [
+              '伸縮',
+              [
+                [3, 0],
+                [0, 1],
+              ],
+            ],
+            [
+              '投影到 \\(x\\) 軸',
+              [
+                [1, 0],
+                [0, 0],
+              ],
+            ],
+            [
+              '投影到 \\(y\\) 軸',
+              [
+                [0, 0],
+                [0, 1],
+              ],
+            ],
           ];
           const item = s324Pick(choices);
           return s331QA(
             `判斷矩陣 \\(A=${s442Matrix(item[1])}\\) 代表哪一種平面線性變換。`,
-            `\\(${item[0]}\\)`,
+            `${item[0]}。`,
             `提示：旋轉保長度且 \\(\\det=1\\)；鏡射通常 \\(\\det=-1\\)；推移保面積但不保角度；伸縮看對角倍率。`
           );
         },
@@ -8729,11 +9135,9 @@
           const newA = a;
           const newB = -a * k + b;
           const newC = c;
-          const bStr = newB >= 0 ? `+${newB === 1 ? '' : newB}y` : `${newB === -1 ? '-' : newB}y`;
-          const oldBStr = b >= 0 ? `+${b === 1 ? '' : b}y` : `${b === -1 ? '-' : b}y`;
           return s331QA(
-            `直線 \\(${a}x${oldBStr}=${c}\\) 經矩陣 \\(A=${s442Matrix(A)}\\) 變換後，求新直線方程式。`,
-            `\\(${newA}x${bStr}=${newC}\\)`,
+            `直線 \\(${s44FormatSimpleLine(a, b, c)}\\) 經矩陣 \\(A=${s442Matrix(A)}\\) 變換後，求新直線方程式。`,
+            `\\(${s44FormatSimpleLine(newA, newB, newC)}\\)`,
             `提示：設新座標 \\((X,Y)=A(x,y)^T\\)，用 \\(A^{-1}\\) 反解 \\((x,y)\\)，代回原直線方程。`
           );
         },
@@ -8753,8 +9157,8 @@
           const newB = b * s1;
           const newC = c * s1 * s2;
           return s331QA(
-            `直線 \\(${a}x+${b}y=${c}\\) 經伸縮矩陣 \\(A=${s442Matrix(A)}\\) 變換後，求新直線方程式。`,
-            `\\(${newA}x+${newB}y=${newC}\\)`,
+            `直線 \\(${s44FormatSimpleLine(a, b, c)}\\) 經伸縮矩陣 \\(A=${s442Matrix(A)}\\) 變換後，求新直線方程式。`,
+            `\\(${s44FormatSimpleLine(newA, newB, newC)}\\)`,
             `提示：伸縮變換 \\(X=${s1}x\\)、\\(Y=${s2}y\\)，故 \\(x=X/${s1}\\)、\\(y=Y/${s2}\\)，代入原直線化簡。`
           );
         },
@@ -8770,13 +9174,10 @@
           // det=1; new: (a*0 - b*1)X + (-a*(-1)+b*0)Y = c => -bX + aY = c
           const newA = -b;
           const newB = a;
-          const newAStr = newA === 1 ? 'x' : newA === -1 ? '-x' : `${newA}x`;
-          const newBStr = newB >= 0 ? `+${newB === 1 ? '' : newB}y` : `${newB === -1 ? '-' : newB}y`;
-          const oldBStr = b >= 0 ? `+${b === 1 ? '' : b}y` : `${b === -1 ? '-' : b}y`;
           return s331QA(
-            `直線 \\(${a}x${oldBStr}=${c}\\) 經旋轉矩陣 \\(A=${s442Matrix(A)}\\)（逆時針 \\(90^\\circ\\)）變換後，求新直線方程式。`,
-            `\\(${newAStr}${newBStr}=${c}\\)`,
-            `提示：\\(A\\) 將 \\((x,y)\\) 映射到 \\((-y,x)\\)，故 \\(x=-Y\\)、\\(y=X\\)，代回原直線即得。`
+            `直線 \\(${s44FormatSimpleLine(a, b, c)}\\) 經旋轉矩陣 \\(A=${s442Matrix(A)}\\)（逆時針 \\(90^\\circ\\)）變換後，求新直線方程式。`,
+            `\\(${s44FormatSimpleLine(newA, newB, c)}\\)`,
+            `提示：\\(A\\) 將 \\((x,y)\\) 映射到 \\((-y,x)\\)，故 \\(x=Y\\)、\\(y=-X\\)，代回原直線即得。`
           );
         },
       ];
@@ -8813,6 +9214,14 @@
       return value > 0 ? `+${body}` : `-${body}`;
     }
 
+    function s44SignedNumberProduct(value, body) {
+      if (value === 0) return '';
+      const unsignedBody = body.startsWith('\\cdot') ? body.slice(5) : body;
+      if (value === 1) return `+${unsignedBody}`;
+      if (value === -1) return `-${unsignedBody}`;
+      return value > 0 ? `+${value}${body}` : `${value}${body}`;
+    }
+
     function s44Sqrt2Coord(value) {
       if (value === 0) return '0';
       if (value === 1) return '\\sqrt{2}';
@@ -8846,12 +9255,13 @@
           const sumJ = (n * (n + 1)) / 2;
           const total = alpha * n * sumI2 + beta * m * sumJ + gamma * m * n;
           const alphaText = alpha === 1 ? '' : alpha;
+          const alphaSumText = alpha === 1 ? '\\sum_i i^2' : `${alpha}\\sum_i i^2`;
           const betaText = s44SignedTerm(beta, 'j');
           const gammaText = gamma === 0 ? '' : gamma > 0 ? `+${gamma}` : `${gamma}`;
           return s331QA(
             `設 \\(m\\times n\\) 矩陣 \\(A=(a_{ij})\\)，其中 \\(m=${m}\\)、\\(n=${n}\\)，且 \\(a_{ij}=${alphaText}i^2${betaText}${gammaText}\\)。求 \\(\\sum_{i=1}^{${m}}\\sum_{j=1}^{${n}}a_{ij}\\)。`,
             `\\(${total}\\)`,
-            `提示：把和拆成 \\(${alpha}\\sum_i i^2\\) 出現 ${n} 次、\\(${beta}\\sum_j j\\) 出現 ${m} 次，以及常數項出現 \\(${m}\\cdot ${n}\\) 次。`
+            `提示：把和拆成 \\(${alphaSumText}\\) 出現 ${n} 次、\\(${beta}\\sum_j j\\) 出現 ${m} 次，以及常數項出現 \\(${m}\\cdot ${n}\\) 次。`
           );
         },
         () => {
@@ -8861,12 +9271,13 @@
           const a23 = p * 2 + q * 3 * 3 + r;
           const a32 = p * 3 + q * 2 * 2 + r;
           const total = a23 + a32;
+          const pText = p === 1 ? 'i' : `${p}i`;
           const qText = s44SignedTerm(q, 'j^2');
           const rText = r === 0 ? '' : r > 0 ? `+${r}` : `${r}`;
           return s331QA(
-            `設矩陣 \\(A=(a_{ij})\\) 的元素由 \\(a_{ij}=${p}i${qText}${rText}\\) 決定，求 \\(a_{23}+a_{32}\\)。`,
+            `設矩陣 \\(A=(a_{ij})\\) 的元素由 \\(a_{ij}=${pText}${qText}${rText}\\) 決定，求 \\(a_{23}+a_{32}\\)。`,
             `\\(${total}\\)`,
-            `提示：\\(a_{23}=${p}\\cdot2+${q}\\cdot3^2${rText}=${a23}\\)，\\(a_{32}=${p}\\cdot3+${q}\\cdot2^2${rText}=${a32}\\)。`
+            `提示：\\(a_{23}=${p}\\cdot2${s44SignedNumberProduct(q, '\\cdot3^2')}${rText}=${a23}\\)，\\(a_{32}=${p}\\cdot3${s44SignedNumberProduct(q, '\\cdot2^2')}${rText}=${a32}\\)。`
           );
         },
       ];
@@ -8891,7 +9302,7 @@
               [0, d],
             ])}\\)、\\(B=${s442Matrix(B)}\\)。若 \\((A+B)^2=A^2+2AB+B^2\\)，求 \\(k\\)。`,
             `\\(k=${-offset}\\)`,
-            `提示：矩陣版平方公式成立需 \\(AB=BA\\)。比較右上角得 \\((${a}-${d})(${s44LinearK(offset)})=0\\)，因為 \\(${a}\\ne ${d}\\)，所以 \\(${s44LinearK(offset)}=0\\)。`
+            `提示：矩陣版平方公式成立需 \\(AB=BA\\)。比較右上角得 \\(${a - d}(${s44LinearK(offset)})=0\\)，因為 \\(${a}\\ne ${d}\\)，所以 \\(${s44LinearK(offset)}=0\\)。`
           );
         },
         () => {
@@ -8910,7 +9321,7 @@
               [0, d],
             ])}\\)、\\(B=${s442Matrix(B)}\\)。若 \\((A+B)^2=A^2+2AB+B^2\\)，求 \\(k\\)。`,
             `\\(k=${-offset}\\)`,
-            `提示：展開差異在 \\(BA\\) 與 \\(AB\\)，因此要先令 \\(AB=BA\\)。比較左下角得 \\((${d}-${a})(${s44LinearK(offset)})=0\\)，故 \\(${s44LinearK(offset)}=0\\)。`
+            `提示：展開差異在 \\(BA\\) 與 \\(AB\\)，因此要先令 \\(AB=BA\\)。比較左下角得 \\(${d - a}(${s44LinearK(offset)})=0\\)，故 \\(${s44LinearK(offset)}=0\\)。`
           );
         },
       ];
@@ -9063,7 +9474,7 @@
           return s331QA(
             `坐標軸逆時針旋轉 \\(45^\\circ\\) 後，點 \\(P\\) 的新坐標為 \\((${s44Sqrt2Coord(m)},${s44Sqrt2Coord(n)})\\)。求 \\(P\\) 在原坐標軸下的坐標。`,
             `\\(${s444Vec2(oldPoint)}\\)`,
-            `提示：軸旋轉 \\(45^\\circ\\) 時，\\(x=\\frac{x'-y'}{\\sqrt2}\\)、\\(y=\\frac{x'+y'}{\\sqrt2}\\)。代入 \\(x'=${s44Sqrt2Coord(m)}\\)、\\(y'=${s44Sqrt2Coord(n)}\\)。`
+            `提示：軸旋轉 \\(45^\\circ\\) 時，\\(x=\\frac{x'-y'}{\\sqrt{2}}\\)、\\(y=\\frac{x'+y'}{\\sqrt{2}}\\)。代入 \\(x'=${s44Sqrt2Coord(m)}\\)、\\(y'=${s44Sqrt2Coord(n)}\\)。`
           );
         },
         () => {
@@ -9073,8 +9484,8 @@
           const yPrimeNum = y - x;
           return s331QA(
             `點 \\(P${s444Vec2([x, y])}\\) 在原坐標軸下已知。若坐標軸逆時針旋轉 \\(45^\\circ\\)，求 \\(P\\) 的新坐標。`,
-            `\\((\\frac{${xPrimeNum}}{\\sqrt2},\\frac{${yPrimeNum}}{\\sqrt2})\\)`,
-            `提示：新坐標為 \\(x'=\\frac{x+y}{\\sqrt2}\\)、\\(y'=\\frac{y-x}{\\sqrt2}\\)，這是坐標軸旋轉，不是把點本身旋轉。`
+            `\\((\\frac{${xPrimeNum}}{\\sqrt{2}},\\frac{${yPrimeNum}}{\\sqrt{2}})\\)`,
+            `提示：新坐標為 \\(x'=\\frac{x+y}{\\sqrt{2}}\\)、\\(y'=\\frac{y-x}{\\sqrt{2}}\\)，這是坐標軸旋轉，不是把點本身旋轉。`
           );
         },
       ];
@@ -9096,12 +9507,14 @@
         },
         () => {
           const t = randInt(1, 4);
+          const tY = t === 1 ? 'y' : `${t}y`;
+          const tYUpper = t === 1 ? 'Y' : `${t}Y`;
           const line = [randInt(1, 5), randInt(-4, 4) || 1, randInt(-5, 5) || -2];
           const imageLine = s44NormalizeLine([line[0], line[1] - t * line[0], line[2]]);
           return s331QA(
-            `線性變換 \\(T(x,y)=(x+${t}y,y)\\)。求直線 \\(${s444LineTex(line)}\\) 經 \\(T\\) 變換後的像直線方程式。`,
+            `線性變換 \\(T(x,y)=(x+${tY},y)\\)。求直線 \\(${s444LineTex(line)}\\) 經 \\(T\\) 變換後的像直線方程式。`,
             `\\(${s444LineTex(imageLine)}\\)`,
-            `提示：令新坐標 \\((X,Y)=(x+${t}y,y)\\)，則 \\(x=X-${t}Y\\)、\\(y=Y\\)，代回原直線即可。`
+            `提示：令新坐標 \\((X,Y)=(x+${tY},y)\\)，則 \\(x=X-${tYUpper}\\)、\\(y=Y\\)，代回原直線即可。`
           );
         },
       ];
@@ -9117,32 +9530,38 @@
     }
 
     function s331Ans(short, process) {
-      const clean = (value) => String(value).replace(/[。.]$/u, '');
-      return '簡答：' + clean(short) + '。過程：' + clean(process) + '。';
+      return '解析：' + String(process).replace(/[。.]$/u, '') + '。';
     }
 
     function s331QA(q, short, process) {
-      return { q, a: s331Ans(short, process) };
+      return { q, summary: String(short), a: s331Ans(short, process) };
     }
 
     function s331MakeSet(count, builders) {
       const questions = [];
       const summaryAnswers = [];
-      const answers = createAnswerList(summaryAnswers);
+      const answers = [];
       for (let i = 0; i < count; i += 1) {
         const item = builders[i % builders.length]();
         questions.push(item.q);
+        summaryAnswers.push(item.summary);
         answers.push(item.a);
       }
       return { questions, summaryAnswers, answers };
     }
 
     function s44Zero2() {
-      return [[0, 0], [0, 0]];
+      return [
+        [0, 0],
+        [0, 0],
+      ];
     }
 
     function s44Identity2() {
-      return [[1, 0], [0, 1]];
+      return [
+        [1, 0],
+        [0, 1],
+      ];
     }
 
     function s44FormatPoint2(point) {
@@ -9188,11 +9607,11 @@
         },
         () => {
           const b = randInt(-4, 5);
-          const a = 11 - 7 * b;
+          const a = -5 - b;
           return s331QA(
             `已知齊次方程組 \\(\\begin{cases}x-2y+z=0\\\\2x+y-3z=0\\\\ax+by+5z=0\\end{cases}\\) 有 \\((0,0,0)\\) 以外的解，求 \\(a,b\\) 的關係式。若 \\(b=${b}\\)，求 \\(a\\)。`,
-            `\\(a+7b=11\\)，所以 \\(a=${a}\\)`,
-            `齊次方程組有非零解時，係數行列式為 0。\\(\\det\\begin{bmatrix}1&-2&1\\\\2&1&-3\\\\a&b&5\\end{bmatrix}=11-a-7b\\)，故 \\(a+7b=11\\)。`
+            `\\(a+b=-5\\)，所以 \\(a=${a}\\)`,
+            `齊次方程組有非零解時，係數行列式為 0。\\(\\det\\begin{bmatrix}1&-2&1\\\\2&1&-3\\\\a&b&5\\end{bmatrix}=5(a+b+5)\\)，故 \\(a+b=-5\\)。`
           );
         },
         () => {
@@ -9204,7 +9623,7 @@
           return s331QA(
             `三平面 \\(x-z=${p}\\)、\\(y+z=${q}\\)、\\(kx+y=${s}\\) 若兩兩相交但沒有共同交點，求 \\(k\\)。`,
             `\\(k=1\\)`,
-            `前兩平面的法向量為 \\((1,0,-1),(0,1,1)\\)。第三個法向量 \\((k,1,0)\\) 要落在它們張成的平面內，需 \\((k,1,0)=k(1,0,-1)+(0,1,1)\\)，故 \\(-k+1=0\\)，得 \\(k=1\\)。又因 \\(${s}\\ne ${pqExpr}\\)，三者不會共線交於同一組解。`
+            `前兩平面的法向量為 \\((1,0,-1),(0,1,1)\\)。第三個法向量 \\((k,1,0)\\) 要落在它們張成的平面內，需 \\((k,1,0)=k(1,0,-1)+(0,1,1)\\)，故 \\(-k+1=0\\)，得 \\(k=1\\)。又因 \\(${s}\\ne ${pqExpr}\\)，三平面沒有共同交點。`
           );
         },
         () => {
@@ -9218,11 +9637,11 @@
         () => {
           const a = randInt(-3, 4);
           const b = randInt(-5, 5);
-          const det = -a * a + 3 * a + 4 - b;
+          const det = -a * b + 2 * a + 2 * b - 6;
           return s331QA(
             `設方程組 \\(\\begin{cases}x+2y+z=a\\\\2x+3y+bz=1\\\\x+ay+3z=2\\end{cases}\\)。求參數 \\(a,b\\) 需滿足什麼條件，才能保證唯一解。若 \\(a=${a},b=${b}\\)，判斷是否唯一解。`,
-            `唯一解條件：\\(-a^2+3a+4-b\\ne0\\)；本題${det !== 0 ? '有' : '沒有'}唯一解`,
-            `係數矩陣行列式為 \\(\\det\\begin{bmatrix}1&2&1\\\\2&3&b\\\\1&a&3\\end{bmatrix}=-a^2+3a+4-b\\)。行列式不為 0 時，三元一次方程組才有唯一解。`
+            `唯一解條件：\\(-ab+2a+2b-6\\ne0\\)；本題${det !== 0 ? '有' : '沒有'}唯一解`,
+            `係數矩陣行列式為 \\(\\det\\begin{bmatrix}1&2&1\\\\2&3&b\\\\1&a&3\\end{bmatrix}=-ab+2a+2b-6\\)。行列式不為 0 時，三元一次方程組才有唯一解。`
           );
         },
       ];
@@ -9233,22 +9652,25 @@
       const builders = [
         () => {
           const n = randInt(3, 12);
-          const A = [[0, -1], [1, 0]];
+          const A = [
+            [0, -1],
+            [1, 0],
+          ];
           return s331QA(
             `設 \\(A=${s442Matrix(A)}\\)。計算 \\(A^{${n}}+A^{${n + 2}}\\)。`,
             `\\(${s442Matrix(s44Zero2())}\\)`,
-            `此矩陣代表旋轉 \\(90^\\circ\\)，且 \\(A^2=-I\\)，所以 \\(A^{${n + 2}}=A^nA^2=-A^n\\)。兩項相加為零矩陣。`
+            `此矩陣代表旋轉 \\(90^\\circ\\)，且 \\(A^2=-I\\)，所以 \\(A^{${n + 2}}=A^{${n}}A^2=-A^{${n}}\\)。兩項相加為零矩陣。`
           );
         },
         () => {
           const a = randInt(2, 4);
           const b = randInt(1, 5);
           const n = randInt(4, 9);
-          const coeff = n * (a ** (n - 1)) * b;
+          const coeff = n * a ** (n - 1) * b;
           return s331QA(
             `若 \\(A=\\begin{bmatrix}${a}&${b}\\\\0&${a}\\end{bmatrix}\\)，求 \\(A^{${n}}\\)，並寫出 \\(A^n\\) 的通式。`,
-            `\\(A^{${n}}=\\begin{bmatrix}${a ** n}&${coeff}\\\\0&${a ** n}\\end{bmatrix}\\)`,
-            `把 \\(A\\) 寫成 \\(aI+N\\)，其中 \\(N=\\begin{bmatrix}0&${b}\\\\0&0\\end{bmatrix}\\) 且 \\(N^2=O\\)。故 \\((aI+N)^n=a^nI+na^{n-1}N\\)。`
+            `\\(A^{${n}}=\\begin{bmatrix}${a ** n}&${coeff}\\\\0&${a ** n}\\end{bmatrix}\\)；一般 \\(A^r=\\begin{bmatrix}${a}^r&r\\cdot${a}^{r-1}\\cdot${b}\\\\0&${a}^r\\end{bmatrix}\\)`,
+            `把 \\(A\\) 寫成 \\(aI+N\\)，其中 \\(N=\\begin{bmatrix}0&${b}\\\\0&0\\end{bmatrix}\\) 且 \\(N^2=O\\)。故 \\((aI+N)^r=a^rI+r\\cdot a^{r-1}N\\)。`
           );
         },
         () => {
@@ -9262,12 +9684,15 @@
         },
         () => {
           const n = randInt(3, 7);
-          const A = [[2, 1], [0, 2]];
+          const A = [
+            [2, 1],
+            [0, 2],
+          ];
           const ans = s443Pow2(A, n);
           return s331QA(
             `已知 \\(A=${s442Matrix(A)}\\)。利用特殊結構求 \\(A^{${n}}\\)。`,
             `\\(${s442Matrix(ans)}\\)`,
-            `令 \\(A=2I+N\\)，且 \\(N^2=O\\)。因此 \\(A^n=2^nI+n2^{n-1}N\\)，可直接得到答案。`
+            `令 \\(A=2I+N\\)，且 \\(N^2=O\\)。因此 \\(A^n=2^nI+n\\cdot2^{n-1}N\\)，可直接得到答案。`
           );
         },
         () => {
@@ -9295,8 +9720,14 @@
           );
         },
         () => {
-          const A = [[1, 2], [3, 4]];
-          const X = [[randInt(-3, 5), randInt(-2, 4)], [randInt(-4, 3), randInt(1, 6)]];
+          const A = [
+            [1, 2],
+            [3, 4],
+          ];
+          const X = [
+            [randInt(-3, 5), randInt(-2, 4)],
+            [randInt(-4, 3), randInt(1, 6)],
+          ];
           const B = s442Mul(A, X);
           return s331QA(
             `若 \\(A=${s442Matrix(A)}\\)，且 \\(AX=${s442Matrix(B)}\\)，利用 \\(X=A^{-1}B\\) 求矩陣 \\(X\\)。`,
@@ -9305,7 +9736,10 @@
           );
         },
         () => {
-          const A = [[2, 5], [1, 3]];
+          const A = [
+            [2, 5],
+            [1, 3],
+          ];
           const B = s443Inv2(A);
           return s331QA(
             `已知 \\(AB=I\\)，且 \\(A=${s442Matrix(A)}\\)。求矩陣 \\(B\\)。`,
@@ -9369,7 +9803,10 @@
           const v = [randInt(-3, 3), randInt(1, 4)];
           const P = [1, 1];
           const Q = [u[0] + v[0], u[1] + v[1]];
-          const A = [[u[0], v[0]], [u[1], v[1]]];
+          const A = [
+            [u[0], v[0]],
+            [u[1], v[1]],
+          ];
           return s331QA(
             `設線性變換矩陣 \\(A\\) 的兩欄分別為 \\(${s44FormatPoint2(u)}\\)、\\(${s44FormatPoint2(v)}\\)。若 \\(P${s44FormatPoint2(P)}\\)，求 \\(AP\\)；反過來，若 \\(AP=${s44FormatPoint2(Q)}\\)，寫出一個可行的 \\(A\\)。`,
             `\\(AP=${s44FormatPoint2(Q)}\\)，一個可行 \\(A=${s442Matrix(A)}\\)`,
@@ -9377,7 +9814,10 @@
           );
         },
         () => {
-          const A = [[0, -1], [1, 0]];
+          const A = [
+            [0, -1],
+            [1, 0],
+          ];
           return s331QA(
             `證明旋轉矩陣 \\(R_0=${s442Matrix(A)}\\) 與其反矩陣互為轉置矩陣。`,
             `\\(R_0^{-1}=R_0^T\\)`,
@@ -9392,7 +9832,10 @@
       const builders = [
         () => {
           const area = randInt(5, 18);
-          const A = [[2, 1], [4, 5]];
+          const A = [
+            [2, 1],
+            [4, 5],
+          ];
           const det = Math.abs(s44Det2Number(A));
           return s331QA(
             `平面上一三角形面積為 \\(${area}\\)，經矩陣 \\(A=${s442Matrix(A)}\\) 變換後，新面積為何？`,
@@ -9427,7 +9870,10 @@
           );
         },
         () => {
-          const A = [[1, 1], [1, 2]];
+          const A = [
+            [1, 1],
+            [1, 2],
+          ];
           const side1 = s333Sqrt(2);
           const side2 = s333Sqrt(5);
           return s331QA(
@@ -9492,16 +9938,51 @@
       return sentence || text;
     }
 
+    function escapeRegExp(text) {
+      return String(text || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function stripSummaryPrefixFromDetail(detail, summary) {
+      let text = String(detail || '').trim();
+      if (!text) return text;
+
+      const answerText = String(summary || '').trim();
+      if (answerText) {
+        const escaped = escapeRegExp(answerText);
+        text = text
+          .replace(
+            new RegExp(`^\\s*(?:簡答|答案)[:：]\\s*${escaped}\\s*[。．；;]?\\s*(?:過程|解析|詳解|說明)[:：]\\s*`, 'u'),
+            '解析：'
+          )
+          .replace(new RegExp(`^\\s*(?:簡答|答案)[:：]\\s*${escaped}\\s*[。．；;]?\\s*`, 'u'), '');
+      }
+
+      return text.replace(
+        /^\s*(?:簡答|答案)[:：]\s*([\s\S]*?)(?:[。．；;]\s*)?(?:過程|解析|詳解|說明)[:：]\s*/u,
+        '解析：'
+      );
+    }
+
     function createAnswerList(summaryAnswers) {
       const answers = [];
       const nativePush = Array.prototype.push;
       answers.push = function pushAnswerWithSummary(...items) {
-        items.forEach((item) => {
-          summaryAnswers.push(deriveSummaryAnswerFromDetail(item));
+        const cleanedItems = items.map((item) => {
+          const summary = deriveSummaryAnswerFromDetail(item);
+          summaryAnswers.push(summary);
+          return stripSummaryPrefixFromDetail(item, summary);
         });
-        return nativePush.apply(this, items);
+        return nativePush.apply(this, cleanedItems);
       };
       return answers;
+    }
+
+    function resolvePracticeCount(count, fallback = 5) {
+      const parsed = Number(count);
+      if (Number.isFinite(parsed) && parsed > 0) {
+        return Math.max(1, Math.floor(parsed));
+      }
+      return fallback;
     }
 
     const nextConfigs = {
@@ -9515,8 +9996,8 @@
           's4-1-1-plane-determination',
           's4-1-1-polyhedron-edge-relations',
         ],
-        generate() {
-          return buildS411SpatialRelationsMixedSet(5);
+        generate(count) {
+          return buildS411SpatialRelationsMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-distance-three-perpendicular-two-subtypes': {
@@ -9525,8 +10006,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-1-1-three-perpendicular-distance', 's4-1-1-projection-distance'],
-        generate() {
-          return buildS411DistanceMixedSet(5);
+        generate(count) {
+          return buildS411DistanceMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-regular-solid-measure-two-subtypes': {
@@ -9535,8 +10016,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-1-1-regular-solid-relations', 's4-1-1-regular-polyhedron-measures'],
-        generate() {
-          return buildS411RegularSolidMixedSet(5);
+        generate(count) {
+          return buildS411RegularSolidMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-point-line-plane-relations': {
@@ -9544,8 +10025,8 @@
         title: '空間點線面位置關係判斷',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS411SpatialRelationsSet(5);
+        generate(count) {
+          return buildS411SpatialRelationsSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-plane-determination': {
@@ -9553,8 +10034,8 @@
         title: '決定平面的條件判斷',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS411PlaneDeterminationSet(5);
+        generate(count) {
+          return buildS411PlaneDeterminationSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-polyhedron-edge-relations': {
@@ -9562,8 +10043,8 @@
         title: '立體圖形中的稜線關係',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS411PolyhedronEdgeRelationsSet(5);
+        generate(count) {
+          return buildS411PolyhedronEdgeRelationsSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-three-perpendicular-distance': {
@@ -9571,8 +10052,8 @@
         title: '三垂線定理的邊長與距離',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS411ThreePerpendicularDistanceSet(5);
+        generate(count) {
+          return buildS411ThreePerpendicularDistanceSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-projection-distance': {
@@ -9580,8 +10061,8 @@
         title: '空間投影與距離應用',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS411ProjectionDistanceSet(5);
+        generate(count) {
+          return buildS411ProjectionDistanceSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-regular-solid-relations': {
@@ -9589,8 +10070,8 @@
         title: '正多面體的角度與距離',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS411SolidEdgeRelationsSet(5);
+        generate(count) {
+          return buildS411SolidEdgeRelationsSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-regular-polyhedron-measures': {
@@ -9598,8 +10079,8 @@
         title: '正多面體的高度與體積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS411RegularPolyhedronMeasureSet(5);
+        generate(count) {
+          return buildS411RegularPolyhedronMeasureSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-cube-face-center-octahedron-volume-clean': {
@@ -9607,8 +10088,8 @@
         title: '立方體面心正八面體體積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS411CubeFaceCenterOctahedronVolumeCleanSet(5);
+        generate(count) {
+          return buildS411CubeFaceCenterOctahedronVolumeCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-three-perpendicular-distance-advanced': {
@@ -9616,8 +10097,8 @@
         title: '三垂線定理的邊長與距離',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS411ThreePerpendicularDistanceAdvancedSet(5);
+        generate(count) {
+          return buildS411ThreePerpendicularDistanceAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-spatial-position-logic-advanced': {
@@ -9625,8 +10106,8 @@
         title: '空間點線面位置關係判定',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS411SpatialPositionLogicAdvancedSet(5);
+        generate(count) {
+          return buildS411SpatialPositionLogicAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-regular-polyhedron-structure-advanced': {
@@ -9634,8 +10115,8 @@
         title: '正多面體與空間結構',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS411RegularPolyhedronStructureAdvancedSet(5);
+        generate(count) {
+          return buildS411RegularPolyhedronStructureAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-coordinate-vector-basic-five-subtypes': {
@@ -9650,8 +10131,8 @@
           's4-1-2-direction-cosines',
           's4-1-2-coordinate-geometry',
         ],
-        generate() {
-          return buildS412CoordinateBasicMixedSet(5);
+        generate(count) {
+          return buildS412CoordinateBasicMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-extrema-projection-three-subtypes': {
@@ -9660,8 +10141,8 @@
         difficulty: 'hard',
         questionCount: 5,
         subtypes: ['s4-1-2-quadratic-extrema', 's4-1-2-reflection-shortest-path', 's4-1-2-projection-area'],
-        generate() {
-          return buildS412ExtremaProjectionMixedSet(5);
+        generate(count) {
+          return buildS412ExtremaProjectionMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-solid-advanced-two-subtypes': {
@@ -9670,8 +10151,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-1-2-solid-coordinate-restore', 's4-1-2-angle-bisector-vector'],
-        generate() {
-          return buildS412SolidAdvancedMixedSet(5);
+        generate(count) {
+          return buildS412SolidAdvancedMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-point-projection-distance': {
@@ -9679,8 +10160,8 @@
         title: '點坐標的投影、對稱與距離',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412PointProjectionDistanceSet(5);
+        generate(count) {
+          return buildS412PointProjectionDistanceSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-vector-operation-length': {
@@ -9688,8 +10169,8 @@
         title: '空間向量線性運算與長度',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412VectorOperationLengthSet(5);
+        generate(count) {
+          return buildS412VectorOperationLengthSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-section-centroid': {
@@ -9697,8 +10178,8 @@
         title: '分點公式與重心坐標',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412SectionCentroidSet(5);
+        generate(count) {
+          return buildS412SectionCentroidSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-direction-cosines': {
@@ -9706,8 +10187,8 @@
         title: '方向角與方向餘弦',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412DirectionCosinesSet(5);
+        generate(count) {
+          return buildS412DirectionCosinesSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-coordinate-geometry': {
@@ -9715,8 +10196,8 @@
         title: '坐標化幾何判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412CoordinateGeometrySet(5);
+        generate(count) {
+          return buildS412CoordinateGeometrySet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-quadratic-extrema': {
@@ -9724,8 +10205,8 @@
         title: '平方和與距離極值',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS412QuadraticExtremaSet(5);
+        generate(count) {
+          return buildS412QuadraticExtremaSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-reflection-shortest-path': {
@@ -9733,8 +10214,8 @@
         title: '空間反射與最短路徑',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412ReflectionPathSet(5);
+        generate(count) {
+          return buildS412ReflectionPathSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-projection-area': {
@@ -9742,8 +10223,8 @@
         title: '特殊幾何圖形的投影面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412ProjectionAreaSet(5);
+        generate(count) {
+          return buildS412ProjectionAreaSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-solid-coordinate-restore': {
@@ -9751,8 +10232,8 @@
         title: '立體圖形的頂點坐標還原',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412SolidCoordinateRestoreSet(5);
+        generate(count) {
+          return buildS412SolidCoordinateRestoreSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-angle-bisector-vector': {
@@ -9760,8 +10241,8 @@
         title: '空間向量角平分與單位化',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412AngleBisectorVectorSet(5);
+        generate(count) {
+          return buildS412AngleBisectorVectorSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-symmetric-line-equation': {
@@ -9769,8 +10250,8 @@
         title: '空間直線的對稱式方程',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412SymmetricLineEquationSet(5);
+        generate(count) {
+          return buildS412SymmetricLineEquationSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-axis-equidistant-point-clean': {
@@ -9778,8 +10259,8 @@
         title: '坐標軸上等距點',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412AxisEquidistantPointCleanSet(5);
+        generate(count) {
+          return buildS412AxisEquidistantPointCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-centroid-plane-projection-clean': {
@@ -9787,8 +10268,8 @@
         title: '重心投影到坐標平面',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412CentroidPlaneProjectionCleanSet(5);
+        generate(count) {
+          return buildS412CentroidPlaneProjectionCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-moving-point-distance-extrema-advanced': {
@@ -9796,8 +10277,8 @@
         title: '空間等速動點之距離極值',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS412MovingPointDistanceExtremaAdvancedSet(5);
+        generate(count) {
+          return buildS412MovingPointDistanceExtremaAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-coordinate-symmetry-collinearity-advanced': {
@@ -9805,8 +10286,8 @@
         title: '空間坐標幾何判定',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS412CoordinateSymmetryCollinearityAdvancedSetV2(5);
+        generate(count) {
+          return buildS412CoordinateSymmetryCollinearityAdvancedSetV2(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-inner-product-angle-four-subtypes': {
@@ -9820,8 +10301,8 @@
           's4-1-3-length-combination',
           's4-1-3-triangle-area',
         ],
-        generate() {
-          return buildS413InnerProductMixedSet(5);
+        generate(count) {
+          return buildS413InnerProductMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-projection-plane-three-subtypes': {
@@ -9830,8 +10311,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-1-3-projection-vector', 's4-1-3-plane-normal-projection', 's4-1-3-angle-bisector'],
-        generate() {
-          return buildS413ProjectionPlaneMixedSet(5);
+        generate(count) {
+          return buildS413ProjectionPlaneMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-cauchy-extrema-three-subtypes': {
@@ -9840,8 +10321,8 @@
         difficulty: 'hard',
         questionCount: 5,
         subtypes: ['s4-1-3-cauchy-extrema', 's4-1-3-triangle-area', 's4-1-3-length-combination'],
-        generate() {
-          return buildS413CauchyExtremaMixedSet(5);
+        generate(count) {
+          return buildS413CauchyExtremaMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-inner-product-angle': {
@@ -9849,8 +10330,8 @@
         title: '內積基本運算與夾角計算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS413InnerProductAngleSet(5);
+        generate(count) {
+          return buildS413InnerProductAngleSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-perpendicular-parallel': {
@@ -9858,8 +10339,8 @@
         title: '垂直與平行判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS413PerpendicularParallelSet(5);
+        generate(count) {
+          return buildS413PerpendicularParallelSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-length-combination': {
@@ -9867,8 +10348,8 @@
         title: '向量長度組合與模長極值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS413LengthCombinationSet(5);
+        generate(count) {
+          return buildS413LengthCombinationSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-projection-vector': {
@@ -9876,8 +10357,8 @@
         title: '正射影向量與正射影長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS413ProjectionVectorSet(5);
+        generate(count) {
+          return buildS413ProjectionVectorSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-plane-normal-projection': {
@@ -9885,8 +10366,8 @@
         title: '平面法向量與正射影',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS413PlaneNormalProjectionSet(5);
+        generate(count) {
+          return buildS413PlaneNormalProjectionSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-angle-bisector': {
@@ -9894,8 +10375,8 @@
         title: '角平分向量與內積應用',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS413AngleBisectorSet(5);
+        generate(count) {
+          return buildS413AngleBisectorSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-cauchy-extrema': {
@@ -9903,8 +10384,8 @@
         title: '柯西不等式與極值應用',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS413CauchyExtremaSet(5);
+        generate(count) {
+          return buildS413CauchyExtremaSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-triangle-area': {
@@ -9912,8 +10393,8 @@
         title: '三角形面積與幾何性質',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS413TriangleAreaSet(5);
+        generate(count) {
+          return buildS413TriangleAreaSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-amgm-extrema': {
@@ -9921,8 +10402,8 @@
         title: 'AM-GM與球面距離極值',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS413AMGMExtremaSet(5);
+        generate(count) {
+          return buildS413AMGMExtremaSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-angle-bisector-coefficient-clean': {
@@ -9930,8 +10411,8 @@
         title: '角平分向量係數反推',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS413AngleBisectorCoefficientCleanSet(5);
+        generate(count) {
+          return buildS413AngleBisectorCoefficientCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-linear-over-norm-extrema-clean': {
@@ -9939,8 +10420,8 @@
         title: '一次式除以向量長度的最大最小',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS413LinearOverNormExtremaCleanSet(5);
+        generate(count) {
+          return buildS413LinearOverNormExtremaCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-pairwise-orthogonal-parameter-clean': {
@@ -9948,8 +10429,8 @@
         title: '三向量兩兩垂直參數',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS413PairwiseOrthogonalParameterCleanSet(5);
+        generate(count) {
+          return buildS413PairwiseOrthogonalParameterCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-cross-area-distance-three-subtypes': {
@@ -9958,8 +10439,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-1-4-cross-basic-normal', 's4-1-4-cross-area-distance', 's4-1-4-cross-length-identity'],
-        generate() {
-          return buildS414CrossAreaMixedSet(5);
+        generate(count) {
+          return buildS414CrossAreaMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-volume-coplanar-parameter-three-subtypes': {
@@ -9968,8 +10449,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-1-4-triple-volume', 's4-1-4-coplanar-collinear', 's4-1-4-parameter-inverse'],
-        generate() {
-          return buildS414VolumeCoplanarMixedSet(5);
+        generate(count) {
+          return buildS414VolumeCoplanarMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-determinant-algebra-four-subtypes': {
@@ -9983,8 +10464,8 @@
           's4-1-4-determinant-equations',
           's4-1-4-advanced-polynomial-determinants',
         ],
-        generate() {
-          return buildS414DeterminantAlgebraMixedSet(5);
+        generate(count) {
+          return buildS414DeterminantAlgebraMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-cross-basic-normal': {
@@ -9992,8 +10473,8 @@
         title: '外積基本與公垂向量',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414CrossBasicNormalSet(5);
+        generate(count) {
+          return buildS414CrossBasicNormalSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-cross-area-distance': {
@@ -10001,8 +10482,8 @@
         title: '外積面積與點線距離',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414CrossAreaDistanceSet(5);
+        generate(count) {
+          return buildS414CrossAreaDistanceSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-cross-length-identity': {
@@ -10010,8 +10491,8 @@
         title: '外積長度與內積恆等式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414CrossLengthIdentitySet(5);
+        generate(count) {
+          return buildS414CrossLengthIdentitySet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-triple-volume': {
@@ -10019,8 +10500,8 @@
         title: '三階行列式與體積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414TripleVolumeSet(5);
+        generate(count) {
+          return buildS414TripleVolumeSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-coplanar-collinear': {
@@ -10028,8 +10509,8 @@
         title: '共面與共線判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414CoplanarCollinearSet(5);
+        generate(count) {
+          return buildS414CoplanarCollinearSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-parameter-inverse': {
@@ -10037,8 +10518,8 @@
         title: '含參數面積與體積逆算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414ParameterInverseSet(5);
+        generate(count) {
+          return buildS414ParameterInverseSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-determinant-properties': {
@@ -10046,8 +10527,8 @@
         title: '行列式運算性質與體積變換',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414DeterminantPropertiesSet(5);
+        generate(count) {
+          return buildS414DeterminantPropertiesSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-numeric-determinants': {
@@ -10055,8 +10536,8 @@
         title: '數值化簡與特殊矩陣',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414NumericDeterminantSet(5);
+        generate(count) {
+          return buildS414NumericDeterminantSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-determinant-equations': {
@@ -10064,8 +10545,8 @@
         title: '行列式方程式與多項式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414DeterminantEquationSet(5);
+        generate(count) {
+          return buildS414DeterminantEquationSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-advanced-polynomial-determinants': {
@@ -10073,8 +10554,8 @@
         title: '多項式與代數恆等式應用',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS414AdvancedPolynomialSet(5);
+        generate(count) {
+          return buildS414AdvancedPolynomialSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-equidistant-plane-locus-clean': {
@@ -10082,8 +10563,8 @@
         title: '等距點在坐標平面上的軌跡',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS411EquidistantPlaneLocusCleanSet(5);
+        generate(count) {
+          return buildS411EquidistantPlaneLocusCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-1-moving-point-distance-clean': {
@@ -10091,8 +10572,8 @@
         title: '空間等速動點距離極值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS411MovingPointDistanceCleanSet(5);
+        generate(count) {
+          return buildS411MovingPointDistanceCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-unit-direction-sum-clean': {
@@ -10100,8 +10581,8 @@
         title: '同方向單位向量與坐標和',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412UnitDirectionSumCleanSet(5);
+        generate(count) {
+          return buildS412UnitDirectionSumCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-parametric-vector-min-clean': {
@@ -10109,8 +10590,8 @@
         title: '參數空間向量長度最小值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412ParametricVectorMinCleanSet(5);
+        generate(count) {
+          return buildS412ParametricVectorMinCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-2-line-projection-point-clean': {
@@ -10118,8 +10599,8 @@
         title: '點到空間直線的正射影點',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS412LineProjectionPointCleanSet(5);
+        generate(count) {
+          return buildS412LineProjectionPointCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-projection-scalar-clean': {
@@ -10127,8 +10608,8 @@
         title: '帶正負正射影長判讀',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS413ProjectionScalarCleanSet(5);
+        generate(count) {
+          return buildS413ProjectionScalarCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-sphere-linear-extrema-clean': {
@@ -10136,8 +10617,8 @@
         title: '球面上一次式最大最小值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS413SphereLinearExtremaCleanSet(5);
+        generate(count) {
+          return buildS413SphereLinearExtremaCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-3-plane-distance-minimum-clean': {
@@ -10145,8 +10626,8 @@
         title: '平面限制下的平方距離最小值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS413PlaneDistanceMinimumCleanSet(5);
+        generate(count) {
+          return buildS413PlaneDistanceMinimumCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-triangle-height-clean': {
@@ -10154,8 +10635,8 @@
         title: '外積求空間三角形的高',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414TriangleHeightCleanSet(5);
+        generate(count) {
+          return buildS414TriangleHeightCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-volume-linear-combination-clean': {
@@ -10163,8 +10644,8 @@
         title: '向量線性組合下的體積倍率',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414VolumeLinearCombinationCleanSet(5);
+        generate(count) {
+          return buildS414VolumeLinearCombinationCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-vandermonde-parameter-clean': {
@@ -10172,8 +10653,8 @@
         title: '范德蒙行列式參數方程',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414VandermondeParameterCleanSet(5);
+        generate(count) {
+          return buildS414VandermondeParameterCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-determinant-operation-clean': {
@@ -10181,8 +10662,8 @@
         title: '三階行列式欄運算性質',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414DeterminantOperationCleanSet(5);
+        generate(count) {
+          return buildS414DeterminantOperationCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-1-4-consecutive-row-determinant-clean': {
@@ -10190,8 +10671,8 @@
         title: '連續型三階行列式化簡',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS414ConsecutiveRowDeterminantCleanSet(5);
+        generate(count) {
+          return buildS414ConsecutiveRowDeterminantCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-plane-equation-three-subtypes': {
@@ -10200,8 +10681,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-2-1-point-normal-plane', 's4-2-1-three-point-intercept-plane', 's4-2-1-plane-relation-angle'],
-        generate() {
-          return buildS421PlaneEquationMixedSet(5);
+        generate(count) {
+          return buildS421PlaneEquationMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-distance-projection-four-subtypes': {
@@ -10215,8 +10696,8 @@
           's4-2-1-projection-reflection',
           's4-2-1-perpendicular-bisector',
         ],
-        generate() {
-          return buildS421DistanceProjectionMixedSet(5);
+        generate(count) {
+          return buildS421DistanceProjectionMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-plane-application-three-subtypes': {
@@ -10225,8 +10706,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-2-1-plane-family-volume', 's4-2-1-reflection-shortest-path', 's4-2-1-point-plane-distance'],
-        generate() {
-          return buildS421PlaneApplicationMixedSet(5);
+        generate(count) {
+          return buildS421PlaneApplicationMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-point-normal-plane': {
@@ -10234,8 +10715,8 @@
         title: '點法式建立平面方程式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421PointNormalPlaneSet(5);
+        generate(count) {
+          return buildS421PointNormalPlaneSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-three-point-intercept-plane': {
@@ -10243,8 +10724,8 @@
         title: '三點式與截距式決定平面',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421ThreePointInterceptPlaneSet(5);
+        generate(count) {
+          return buildS421ThreePointInterceptPlaneSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-plane-relation-angle': {
@@ -10252,8 +10733,8 @@
         title: '平面平行、垂直與夾角判別',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421PlaneRelationAngleSet(5);
+        generate(count) {
+          return buildS421PlaneRelationAngleSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-point-plane-distance': {
@@ -10261,8 +10742,8 @@
         title: '點到平面的距離',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421PointPlaneDistanceSet(5);
+        generate(count) {
+          return buildS421PointPlaneDistanceSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-parallel-plane-distance': {
@@ -10270,8 +10751,8 @@
         title: '兩平行平面的距離',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421ParallelPlaneDistanceSet(5);
+        generate(count) {
+          return buildS421ParallelPlaneDistanceSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-projection-reflection': {
@@ -10279,8 +10760,8 @@
         title: '投影點與對稱點',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421ProjectionReflectionSet(5);
+        generate(count) {
+          return buildS421ProjectionReflectionSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-perpendicular-bisector': {
@@ -10288,8 +10769,8 @@
         title: '垂直平分面與等距離軌跡',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421PerpendicularBisectorSet(5);
+        generate(count) {
+          return buildS421PerpendicularBisectorSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-plane-family-volume': {
@@ -10297,8 +10778,8 @@
         title: '截距式、平面族與體積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421PlaneFamilyVolumeSet(5);
+        generate(count) {
+          return buildS421PlaneFamilyVolumeSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-reflection-shortest-path': {
@@ -10306,8 +10787,8 @@
         title: '反射法與空間最短路徑',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421ReflectionShortestPathSet(5);
+        generate(count) {
+          return buildS421ReflectionShortestPathSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-two-plane-intersection': {
@@ -10315,8 +10796,8 @@
         title: '兩平面交線方向與方程',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421TwoPlaneIntersectionSet(5);
+        generate(count) {
+          return buildS421TwoPlaneIntersectionSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-plane-special-condition': {
@@ -10324,8 +10805,8 @@
         title: '特殊條件平面建構（平行向量、垂直直線、含線垂面）',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421PlaneSpecialConditionSet(5);
+        generate(count) {
+          return buildS421PlaneSpecialConditionSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-coordinate-line-three-subtypes': {
@@ -10334,8 +10815,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-2-2-line-equation-basic', 's4-2-2-pierce-coordinate-plane', 's4-2-2-parameter-constraint'],
-        generate() {
-          return buildS422CoordinateLineMixedSet(5);
+        generate(count) {
+          return buildS422CoordinateLineMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-relation-distance-four-subtypes': {
@@ -10349,8 +10830,8 @@
           's4-2-2-parallel-skew-distance',
           's4-2-2-common-perpendicular',
         ],
-        generate() {
-          return buildS422RelationDistanceMixedSet(5);
+        generate(count) {
+          return buildS422RelationDistanceMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-advanced-line-three-subtypes': {
@@ -10359,8 +10840,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-2-2-moving-point-extrema', 's4-2-2-plane-containing-line', 's4-2-2-line-plane-interaction'],
-        generate() {
-          return buildS422AdvancedLineMixedSet(5);
+        generate(count) {
+          return buildS422AdvancedLineMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-line-equation-basic': {
@@ -10368,8 +10849,8 @@
         title: '空間直線參數式與對稱式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422LineEquationBasicSet(5);
+        generate(count) {
+          return buildS422LineEquationBasicSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-pierce-coordinate-plane': {
@@ -10377,8 +10858,8 @@
         title: '穿透坐標平面與坐標軸',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422PierceCoordinatePlaneSet(5);
+        generate(count) {
+          return buildS422PierceCoordinatePlaneSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-parameter-constraint': {
@@ -10386,8 +10867,8 @@
         title: '線段、射線與參數限制',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422ParameterConstraintSet(5);
+        generate(count) {
+          return buildS422ParameterConstraintSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-line-plane-interaction': {
@@ -10395,8 +10876,8 @@
         title: '直線與平面的相交、平行與夾角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422LinePlaneInteractionSet(5);
+        generate(count) {
+          return buildS422LinePlaneInteractionSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-point-line-projection': {
@@ -10404,8 +10885,8 @@
         title: '點到直線的投影與對稱點',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422PointLineProjectionSet(5);
+        generate(count) {
+          return buildS422PointLineProjectionSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-parallel-skew-distance': {
@@ -10413,8 +10894,8 @@
         title: '平行線與歪斜線距離',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422ParallelSkewDistanceSet(5);
+        generate(count) {
+          return buildS422ParallelSkewDistanceSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-common-perpendicular': {
@@ -10422,8 +10903,8 @@
         title: '歪斜線公垂線與最短距離',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422CommonPerpendicularSet(5);
+        generate(count) {
+          return buildS422CommonPerpendicularSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-moving-point-extrema': {
@@ -10431,8 +10912,8 @@
         title: '直線上動點的極值問題',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422MovingPointExtremaSet(5);
+        generate(count) {
+          return buildS422MovingPointExtremaSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-plane-containing-line': {
@@ -10440,8 +10921,8 @@
         title: '包含直線的平面建構',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422PlaneContainingLineSet(5);
+        generate(count) {
+          return buildS422PlaneContainingLineSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-two-line-relation-full': {
@@ -10449,8 +10930,8 @@
         title: '兩直線完整關係判斷與求值（平行、相交、歪斜）',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422TwoLineRelationFullSet(5);
+        generate(count) {
+          return buildS422TwoLineRelationFullSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-line-perp-plane': {
@@ -10458,8 +10939,8 @@
         title: '直線通過點且垂直平面',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422LinePerpPlaneSet(5);
+        generate(count) {
+          return buildS422LinePerpPlaneSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-common-line-plane-family-clean': {
@@ -10467,8 +10948,8 @@
         title: '通過兩點的平面族共同交集',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421CommonLinePlaneFamilyCleanSet(5);
+        generate(count) {
+          return buildS421CommonLinePlaneFamilyCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-coplanar-parameter-clean': {
@@ -10476,8 +10957,8 @@
         title: '四點共面與參數求值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421CoplanarParameterCleanSet(5);
+        generate(count) {
+          return buildS421CoplanarParameterCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-parallel-plane-distance-parameter-clean': {
@@ -10485,8 +10966,8 @@
         title: '平行平面的距離與參數',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421ParallelPlaneDistanceParameterCleanSet(5);
+        generate(count) {
+          return buildS421ParallelPlaneDistanceParameterCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-plane-angle-parameter-clean': {
@@ -10494,8 +10975,8 @@
         title: '平面平行垂直的參數判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421PlaneAngleParameterCleanSet(5);
+        generate(count) {
+          return buildS421PlaneAngleParameterCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-plane-system-consistency-clean': {
@@ -10503,8 +10984,8 @@
         title: '三平面方程組共線參數',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421PlaneSystemConsistencyCleanSet(5);
+        generate(count) {
+          return buildS421PlaneSystemConsistencyCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-segment-projection-length-clean': {
@@ -10512,8 +10993,8 @@
         title: '線段在平面上的正射影長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS421SegmentProjectionLengthCleanSet(5);
+        generate(count) {
+          return buildS421SegmentProjectionLengthCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-1-plane-system-line-advanced': {
@@ -10521,8 +11002,8 @@
         title: '三平面共線與無限多解',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS421PlaneSystemLineAdvancedSet(5);
+        generate(count) {
+          return buildS421PlaneSystemLineAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-line-relation-classification-clean': {
@@ -10530,8 +11011,8 @@
         title: '兩直線位置關係判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422LineRelationClassificationCleanSet(5);
+        generate(count) {
+          return buildS422LineRelationClassificationCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-line-plane-hit-time-clean': {
@@ -10539,8 +11020,8 @@
         title: '直線動點到達平面的時間',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422LinePlaneHitTimeCleanSet(5);
+        generate(count) {
+          return buildS422LinePlaneHitTimeCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-line-plane-relation-clean': {
@@ -10548,8 +11029,8 @@
         title: '直線與平面關係判斷',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422LinePlaneRelationCleanSet(5);
+        generate(count) {
+          return buildS422LinePlaneRelationCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-point-line-reflection-clean': {
@@ -10557,8 +11038,8 @@
         title: '點到直線垂足與對稱點',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422PointLineReflectionCleanSet(5);
+        generate(count) {
+          return buildS422PointLineReflectionCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-two-plane-line-param-clean': {
@@ -10566,8 +11047,8 @@
         title: '兩平面交線轉參數式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422TwoPlaneLineParamCleanSet(5);
+        generate(count) {
+          return buildS422TwoPlaneLineParamCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-coplanar-perpendicular-line-clean': {
@@ -10575,8 +11056,8 @@
         title: '過點作共面垂直直線',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422CoplanarPerpendicularLineCleanSet(5);
+        generate(count) {
+          return buildS422CoplanarPerpendicularLineCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-line-projection-on-plane-clean': {
@@ -10584,8 +11065,8 @@
         title: '直線投影到平面',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS422LineProjectionOnPlaneCleanSet(5);
+        generate(count) {
+          return buildS422LineProjectionOnPlaneCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-spatial-point-extrema-advanced': {
@@ -10593,8 +11074,8 @@
         title: '空間動點的極值運算',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS422SpatialPointExtremaAdvancedSet(5);
+        generate(count) {
+          return buildS422SpatialPointExtremaAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-coordinate-plane-intersection-advanced': {
@@ -10602,8 +11083,8 @@
         title: '直線與坐標軸平面的交點判定',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS422CoordinatePlaneIntersectionAdvancedSet(5);
+        generate(count) {
+          return buildS422CoordinatePlaneIntersectionAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-spatial-symmetry-projection-advanced': {
@@ -10611,8 +11092,8 @@
         title: '空間對稱點與反射路徑',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS422SpatialSymmetryProjectionAdvancedSet(5);
+        generate(count) {
+          return buildS422SpatialSymmetryProjectionAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-2-2-segment-parameter-constraint-advanced': {
@@ -10620,8 +11101,8 @@
         title: '線段分點與參數限制',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS422SegmentParameterConstraintAdvancedSet(5);
+        generate(count) {
+          return buildS422SegmentParameterConstraintAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-basic-sampling-three-subtypes': {
@@ -10630,8 +11111,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-3-1-conditional-algebra', 's4-3-1-concrete-conditions', 's4-3-1-drawing-sampling'],
-        generate() {
-          return buildS431BasicSamplingMixedSet(5);
+        generate(count) {
+          return buildS431BasicSamplingMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-bayes-source-three-subtypes': {
@@ -10640,8 +11121,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-3-1-social-table', 's4-3-1-diagnostic-bayes', 's4-3-1-multi-source'],
-        generate() {
-          return buildS431BayesSourceMixedSet(5);
+        generate(count) {
+          return buildS431BayesSourceMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-inference-transition-three-subtypes': {
@@ -10650,8 +11131,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-3-1-independent-inference', 's4-3-1-sequence-transition', 's4-3-1-stratified-statistics'],
-        generate() {
-          return buildS431InferenceTransitionMixedSet(5);
+        generate(count) {
+          return buildS431InferenceTransitionMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-conditional-algebra': {
@@ -10659,8 +11140,8 @@
         title: '條件機率的代數運算與性質',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431ConditionalAlgebraSet(5);
+        generate(count) {
+          return buildS431ConditionalAlgebraSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-concrete-conditions': {
@@ -10668,8 +11149,8 @@
         title: '具體情境中的離散試驗',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431ConcreteConditionSet(5);
+        generate(count) {
+          return buildS431ConcreteConditionSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-drawing-sampling': {
@@ -10677,8 +11158,8 @@
         title: '抽球試驗與機率乘法法則',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431DrawingSamplingSet(5);
+        generate(count) {
+          return buildS431DrawingSamplingSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-social-table': {
@@ -10686,8 +11167,8 @@
         title: '社會統計比例與 2x2 表格判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431SocialTableSet(5);
+        generate(count) {
+          return buildS431SocialTableSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-diagnostic-bayes': {
@@ -10695,8 +11176,8 @@
         title: '產品檢測與疾病篩檢的貝氏定理',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431DiagnosticBayesSet(5);
+        generate(count) {
+          return buildS431DiagnosticBayesSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-multi-source': {
@@ -10704,8 +11185,8 @@
         title: '多個袋子或工廠的來源反推',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431MultiSourceSet(5);
+        generate(count) {
+          return buildS431MultiSourceSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-independent-inference': {
@@ -10713,8 +11194,8 @@
         title: '多位成員獨立事件的結果判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431IndependentInferenceSet(5);
+        generate(count) {
+          return buildS431IndependentInferenceSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-sequence-transition': {
@@ -10722,8 +11203,8 @@
         title: '轉移與局數後的機率推求',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431SequenceTransitionSet(5);
+        generate(count) {
+          return buildS431SequenceTransitionSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-stratified-statistics': {
@@ -10731,8 +11212,8 @@
         title: '分層抽樣與社會統計',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431StratifiedStatsSet(5);
+        generate(count) {
+          return buildS431StratifiedStatsSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-complement-conditional': {
@@ -10740,8 +11221,8 @@
         title: '補事件條件機率 P(A|B^c) 與 P(B|A^c)',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431ComplementConditionalSet(5);
+        generate(count) {
+          return buildS431ComplementConditionalSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-total-prob-abstract': {
@@ -10749,8 +11230,8 @@
         title: '全機率公式抽象樹形（直接給 P(B|A), P(B|A^c)）',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431TotalProbAbstractSet(5);
+        generate(count) {
+          return buildS431TotalProbAbstractSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-drawer-paradox-clean': {
@@ -10758,8 +11239,8 @@
         title: '抽屜與雙面卡片的條件樣本空間',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431DrawerParadoxCleanSet(5);
+        generate(count) {
+          return buildS431DrawerParadoxCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-lost-card-bayes-clean': {
@@ -10767,8 +11248,8 @@
         title: '遺失牌與觀察結果的貝氏反推',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431LostCardBayesCleanSet(5);
+        generate(count) {
+          return buildS431LostCardBayesCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-truth-report-color-clean': {
@@ -10776,8 +11257,8 @@
         title: '證詞可靠度與球色反推',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431TruthReportColorCleanSet(5);
+        generate(count) {
+          return buildS431TruthReportColorCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-signal-channel-bayes-clean': {
@@ -10785,8 +11266,8 @@
         title: '通訊誤碼與原訊號反推',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS431SignalChannelBayesCleanSet(5);
+        generate(count) {
+          return buildS431SignalChannelBayesCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-abstract-bayes-formula-advanced': {
@@ -10794,8 +11275,8 @@
         title: '抽象全機率與貝氏公式',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS431AbstractBayesFormulaAdvancedSet(5);
+        generate(count) {
+          return buildS431AbstractBayesFormulaAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-1-multi-source-civic-bayes-advanced': {
@@ -10803,8 +11284,8 @@
         title: '多來源工廠與檢驗貝氏',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS431MultiSourceCivicBayesAdvancedSet(5);
+        generate(count) {
+          return buildS431MultiSourceCivicBayesAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-independence-trials-three-subtypes': {
@@ -10813,8 +11294,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-3-2-independence-algebra', 's4-3-2-repeated-trials', 's4-3-2-ordered-success'],
-        generate() {
-          return buildS432IndependenceTrialMixedSet(5);
+        generate(count) {
+          return buildS432IndependenceTrialMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-tables-systems-three-subtypes': {
@@ -10823,8 +11304,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-3-2-two-way-table-independence', 's4-3-2-multi-member-success', 's4-3-2-circuit-path'],
-        generate() {
-          return buildS432TableSystemMixedSet(5);
+        generate(count) {
+          return buildS432TableSystemMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-advanced-distribution-three-subtypes': {
@@ -10833,8 +11314,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-3-2-sequential-competition', 's4-3-2-algebraic-properties', 's4-3-2-distribution-patterns'],
-        generate() {
-          return buildS432AdvancedDistributionMixedSet(5);
+        generate(count) {
+          return buildS432AdvancedDistributionMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-independence-algebra': {
@@ -10842,8 +11323,8 @@
         title: '獨立事件的代數判定與求值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS432IndependenceAlgebraSet(5);
+        generate(count) {
+          return buildS432IndependenceAlgebraSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-repeated-trials': {
@@ -10851,8 +11332,8 @@
         title: '獨立重複試驗與二項機率',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS432RepeatedTrialsSet(5);
+        generate(count) {
+          return buildS432RepeatedTrialsSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-ordered-success': {
@@ -10860,8 +11341,8 @@
         title: '有序成功與特定次序機率',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS432OrderedSuccessSet(5);
+        generate(count) {
+          return buildS432OrderedSuccessSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-two-way-table-independence': {
@@ -10869,8 +11350,8 @@
         title: '二維表格的獨立性判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS432TwoWayTableIndependenceSet(5);
+        generate(count) {
+          return buildS432TwoWayTableIndependenceSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-multi-member-success': {
@@ -10878,8 +11359,8 @@
         title: '多位成員的獨立成功率',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS432MultiMemberSuccessSet(5);
+        generate(count) {
+          return buildS432MultiMemberSuccessSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-circuit-path': {
@@ -10887,8 +11368,8 @@
         title: '開關電路與路徑暢通機率',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS432CircuitPathSet(5);
+        generate(count) {
+          return buildS432CircuitPathSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-sequential-competition': {
@@ -10896,8 +11377,8 @@
         title: '輪流競賽與先達標者勝',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS432SequentialCompetitionSet(5);
+        generate(count) {
+          return buildS432SequentialCompetitionSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-algebraic-properties': {
@@ -10905,8 +11386,8 @@
         title: '獨立事件的代數性質應用',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS432AlgebraicPropertiesSet(5);
+        generate(count) {
+          return buildS432AlgebraicPropertiesSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-distribution-patterns': {
@@ -10914,8 +11395,8 @@
         title: '機率分布規律與大小比較',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS432DistributionPatternsSet(5);
+        generate(count) {
+          return buildS432DistributionPatternsSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-inverse-bayes': {
@@ -10923,8 +11404,8 @@
         title: '逆向 Bayes：已知 P(A|B) 求 P(B|A)',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS432InverseBayesSet(5);
+        generate(count) {
+          return buildS432InverseBayesSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-exam-guessing': {
@@ -10932,8 +11413,8 @@
         title: '考試猜題 Bayes 模型',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS432ExamGuessingSet(5);
+        generate(count) {
+          return buildS432ExamGuessingSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-conditioned-success-position-clean': {
@@ -10941,8 +11422,8 @@
         title: '已知成功總數下的位置機率',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS432ConditionedSuccessPositionCleanSet(5);
+        generate(count) {
+          return buildS432ConditionedSuccessPositionCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-traffic-light-counts-clean': {
@@ -10950,8 +11431,8 @@
         title: '紅綠燈獨立事件與恰遇次數',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS432TrafficLightCountsCleanSet(5);
+        generate(count) {
+          return buildS432TrafficLightCountsCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-repeated-binomial-advanced': {
@@ -10959,8 +11440,8 @@
         title: '獨立重複試驗與二項機率',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS432RepeatedBinomialAdvancedSet(5);
+        generate(count) {
+          return buildS432RepeatedBinomialAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-stopping-rule-order-advanced': {
@@ -10968,8 +11449,8 @@
         title: '停止規則與特定順序機率',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS432StoppingRuleOrderAdvancedSet(5);
+        generate(count) {
+          return buildS432StoppingRuleOrderAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-3-2-exam-guessing-advanced': {
@@ -10977,8 +11458,8 @@
         title: '考試猜題模型與貝氏判斷',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS432ExamGuessingAdvancedSet(5);
+        generate(count) {
+          return buildS432ExamGuessingAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-basic-cramer-three-subtypes': {
@@ -10987,8 +11468,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-4-1-gaussian-basic', 's4-4-1-cramer-determinants', 's4-4-1-special-solutions'],
-        generate() {
-          return buildS441BasicCramerMixedSet(5);
+        generate(count) {
+          return buildS441BasicCramerMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-parameter-geometry-three-subtypes': {
@@ -10997,8 +11478,8 @@
         difficulty: 'hard',
         questionCount: 5,
         subtypes: ['s4-4-1-parameter-solutions', 's4-4-1-homogeneous-ratios', 's4-4-1-plane-relations'],
-        generate() {
-          return buildS441ParameterGeometryMixedSet(5);
+        generate(count) {
+          return buildS441ParameterGeometryMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-matrix-model-three-subtypes': {
@@ -11011,8 +11492,8 @@
           's4-4-1-coplanar-linear-combination',
           's4-4-1-modeling-applications',
         ],
-        generate() {
-          return buildS441MatrixModelMixedSet(5);
+        generate(count) {
+          return buildS441MatrixModelMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-gaussian-basic': {
@@ -11020,8 +11501,8 @@
         title: '高斯消去法與矩陣列運算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS441GaussianBasicSet(5);
+        generate(count) {
+          return buildS441GaussianBasicSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-cramer-determinants': {
@@ -11029,8 +11510,8 @@
         title: '克拉瑪公式與三階行列式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS441CramerDeterminantSet(5);
+        generate(count) {
+          return buildS441CramerDeterminantSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-special-solutions': {
@@ -11038,8 +11519,8 @@
         title: '無解、唯一解與無限多解判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS441SpecialSolutionsSet(5);
+        generate(count) {
+          return buildS441SpecialSolutionsSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-parameter-solutions': {
@@ -11047,8 +11528,8 @@
         title: '含參數方程組的解數討論',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS441ParameterSolutionsSet(5);
+        generate(count) {
+          return buildS441ParameterSolutionsSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-homogeneous-ratios': {
@@ -11056,8 +11537,8 @@
         title: '齊次方程組與非零比例解',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS441HomogeneousRatioSet(5);
+        generate(count) {
+          return buildS441HomogeneousRatioSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-plane-relations': {
@@ -11065,8 +11546,8 @@
         title: '三平面的幾何關係判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS441PlaneRelationsSet(5);
+        generate(count) {
+          return buildS441PlaneRelationsSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-matrix-back-substitution': {
@@ -11074,8 +11555,8 @@
         title: '增廣矩陣係數還原與回代',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS441MatrixBackSubstitutionSet(5);
+        generate(count) {
+          return buildS441MatrixBackSubstitutionSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-coplanar-linear-combination': {
@@ -11083,8 +11564,8 @@
         title: '空間共面與線性組合判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS441CoplanarLinearSet(5);
+        generate(count) {
+          return buildS441CoplanarLinearSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-modeling-applications': {
@@ -11092,8 +11573,8 @@
         title: '三元一次方程組生活建模',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS441ModelingSet(5);
+        generate(count) {
+          return buildS441ModelingSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-reciprocal-substitution': {
@@ -11101,8 +11582,8 @@
         title: '倒數代換解三元方程組',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS441ReciprocalSubstitutionSet(5);
+        generate(count) {
+          return buildS441ReciprocalSubstitutionSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-matrix-entry-double-sum-clean': {
@@ -11110,8 +11591,8 @@
         title: '矩陣元素公式與二重和計算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS441MatrixEntryDoubleSumCleanSet(5);
+        generate(count) {
+          return buildS441MatrixEntryDoubleSumCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-1-parametric-system-discussion-advanced': {
@@ -11119,8 +11600,8 @@
         title: '三元一次方程組的參數解數討論',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS441ParametricSystemDiscussionAdvancedSet(5);
+        generate(count) {
+          return buildS441ParametricSystemDiscussionAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-equality-algebra-three-subtypes': {
@@ -11129,8 +11610,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-4-2-matrix-equality', 's4-4-2-linear-matrix-algebra', 's4-4-2-matrix-equations'],
-        generate() {
-          return buildS442EqualityAlgebraMixedSet(5);
+        generate(count) {
+          return buildS442EqualityAlgebraMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-multiplication-property-three-subtypes': {
@@ -11139,8 +11620,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-4-2-multiplication-dimensions', 's4-4-2-algebraic-properties', 's4-4-2-special-matrices'],
-        generate() {
-          return buildS442MultiplicationPropertyMixedSet(5);
+        generate(count) {
+          return buildS442MultiplicationPropertyMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-power-polynomial-three-subtypes': {
@@ -11149,8 +11630,8 @@
         difficulty: 'hard',
         questionCount: 5,
         subtypes: ['s4-4-2-matrix-powers', 's4-4-2-cayley-hamilton', 's4-4-2-diagonal-power'],
-        generate() {
-          return buildS442PowerPolynomialMixedSet(5);
+        generate(count) {
+          return buildS442PowerPolynomialMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-matrix-equality': {
@@ -11158,8 +11639,8 @@
         title: '矩陣相等的變數求解',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS442MatrixEqualitySet(5);
+        generate(count) {
+          return buildS442MatrixEqualitySet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-linear-matrix-algebra': {
@@ -11167,8 +11648,8 @@
         title: '係數積與矩陣方程式移項',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS442LinearMatrixAlgebraSet(5);
+        generate(count) {
+          return buildS442LinearMatrixAlgebraSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-matrix-equations': {
@@ -11176,8 +11657,8 @@
         title: '矩陣乘法與未知元素求解',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS442MatrixEquationSet(5);
+        generate(count) {
+          return buildS442MatrixEquationSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-multiplication-dimensions': {
@@ -11185,8 +11666,8 @@
         title: '矩陣乘法與維度判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS442MultiplicationDimensionSet(5);
+        generate(count) {
+          return buildS442MultiplicationDimensionSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-algebraic-properties': {
@@ -11194,8 +11675,8 @@
         title: '矩陣乘法運算性質驗證',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS442AlgebraicPropertiesSet(5);
+        generate(count) {
+          return buildS442AlgebraicPropertiesSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-special-matrices': {
@@ -11203,8 +11684,8 @@
         title: '對角、上三角與特殊矩陣',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS442SpecialMatricesSet(5);
+        generate(count) {
+          return buildS442SpecialMatricesSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-matrix-powers': {
@@ -11212,8 +11693,8 @@
         title: '矩陣高次方規律推導',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS442MatrixPowersSet(5);
+        generate(count) {
+          return buildS442MatrixPowersSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-cayley-hamilton': {
@@ -11221,8 +11702,8 @@
         title: '凱萊－哈密頓定理化簡',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS442CayleyHamiltonSet(5);
+        generate(count) {
+          return buildS442CayleyHamiltonSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-diagonal-power': {
@@ -11230,8 +11711,8 @@
         title: '特徵向量與對角化算高次方',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS442DiagonalPowerSet(5);
+        generate(count) {
+          return buildS442DiagonalPowerSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-det-properties': {
@@ -11239,8 +11720,8 @@
         title: '行列式性質：純量倍、乘積與反矩陣',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS442DetPropertiesSet(5);
+        generate(count) {
+          return buildS442DetPropertiesSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-similar-matrix': {
@@ -11248,8 +11729,8 @@
         title: '相似矩陣 BAB⁻¹ 的計算與性質',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS442SimilarMatrixSet(5);
+        generate(count) {
+          return buildS442SimilarMatrixSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-elementary-row-operations': {
@@ -11257,8 +11738,8 @@
         title: '基本矩陣與列運算表示',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS442ElementaryRowOperationSet(5);
+        generate(count) {
+          return buildS442ElementaryRowOperationSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-commutator-parameter-clean': {
@@ -11266,8 +11747,8 @@
         title: '矩陣平方公式與可交換參數',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS442CommutatorParameterCleanSet(5);
+        generate(count) {
+          return buildS442CommutatorParameterCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-rank-one-power-sum-clean': {
@@ -11275,8 +11756,8 @@
         title: '秩一矩陣高次方與等比和',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS442RankOnePowerSumCleanSet(5);
+        generate(count) {
+          return buildS442RankOnePowerSumCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-2-power-structure-advanced': {
@@ -11284,8 +11765,8 @@
         title: '矩陣冪次與特殊結構',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS442PowerStructureAdvancedSet(5);
+        generate(count) {
+          return buildS442PowerStructureAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-inverse-basic-three-subtypes': {
@@ -11294,8 +11775,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-4-3-inverse-existence', 's4-4-3-inverse-formula', 's4-4-3-inverse-matrix-equations'],
-        generate() {
-          return buildS443InverseBasicMixedSet(5);
+        generate(count) {
+          return buildS443InverseBasicMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-inverse-property-three-subtypes': {
@@ -11304,8 +11785,8 @@
         difficulty: 'hard',
         questionCount: 5,
         subtypes: ['s4-4-3-inverse-properties', 's4-4-3-inverse-powers', 's4-4-3-inverse-polynomial'],
-        generate() {
-          return buildS443InversePropertyMixedSet(5);
+        generate(count) {
+          return buildS443InversePropertyMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-transition-stable-three-subtypes': {
@@ -11314,8 +11795,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-4-3-transition-matrix', 's4-4-3-stable-state', 's4-4-3-transition-properties'],
-        generate() {
-          return buildS443TransitionMixedSet(5);
+        generate(count) {
+          return buildS443TransitionMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-inverse-existence': {
@@ -11323,8 +11804,8 @@
         title: '反矩陣存在性與參數判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS443InverseExistenceSet(5);
+        generate(count) {
+          return buildS443InverseExistenceSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-inverse-formula': {
@@ -11332,8 +11813,8 @@
         title: '二階反矩陣公式計算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS443InverseFormulaSet(5);
+        generate(count) {
+          return buildS443InverseFormulaSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-inverse-matrix-equations': {
@@ -11341,8 +11822,8 @@
         title: '利用反矩陣解矩陣方程式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS443InverseMatrixEquationSet(5);
+        generate(count) {
+          return buildS443InverseMatrixEquationSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-inverse-properties': {
@@ -11350,8 +11831,8 @@
         title: '反矩陣性質與乘法順序',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS443InversePropertiesSet(5);
+        generate(count) {
+          return buildS443InversePropertiesSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-inverse-powers': {
@@ -11359,8 +11840,8 @@
         title: '反矩陣高次方與次方合併',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS443InversePowersSet(5);
+        generate(count) {
+          return buildS443InversePowersSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-inverse-polynomial': {
@@ -11368,8 +11849,8 @@
         title: '反矩陣多項式降階表示',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS443InversePolynomialSet(5);
+        generate(count) {
+          return buildS443InversePolynomialSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-transition-matrix': {
@@ -11377,8 +11858,8 @@
         title: '轉移矩陣建模與狀態更新',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS443TransitionMatrixSet(5);
+        generate(count) {
+          return buildS443TransitionMatrixSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-stable-state': {
@@ -11386,8 +11867,8 @@
         title: '穩定狀態的求解與判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS443StableStateSet(5);
+        generate(count) {
+          return buildS443StableStateSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-transition-properties': {
@@ -11395,8 +11876,8 @@
         title: '轉移矩陣的欄和與性質判定',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS443TransitionPropertySet(5);
+        generate(count) {
+          return buildS443TransitionPropertySet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-power-recovery-clean': {
@@ -11404,8 +11885,8 @@
         title: '由矩陣高次方反推低次方',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS443PowerRecoveryCleanSet(5);
+        generate(count) {
+          return buildS443PowerRecoveryCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-matrix-code-decode-clean': {
@@ -11413,8 +11894,8 @@
         title: '反矩陣應用：矩陣編碼解碼',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS443MatrixCodeDecodeCleanSet(5);
+        generate(count) {
+          return buildS443MatrixCodeDecodeCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-3-inverse-equation-det-advanced': {
@@ -11422,8 +11903,8 @@
         title: '反矩陣與矩陣方程',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS443InverseEquationDetAdvancedSet(5);
+        generate(count) {
+          return buildS443InverseEquationDetAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-point-matrix-three-subtypes': {
@@ -11432,8 +11913,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-4-4-point-mapping', 's4-4-4-matrix-solving', 's4-4-4-rotation-reflection'],
-        generate() {
-          return buildS444PointMatrixMixedSet(5);
+        generate(count) {
+          return buildS444PointMatrixMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-geometry-equation-three-subtypes': {
@@ -11442,8 +11923,8 @@
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-4-4-equation-transform', 's4-4-4-scaling-shear', 's4-4-4-classification'],
-        generate() {
-          return buildS444GeometryEquationMixedSet(5);
+        generate(count) {
+          return buildS444GeometryEquationMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-area-composition-three-subtypes': {
@@ -11452,8 +11933,8 @@
         difficulty: 'hard',
         questionCount: 5,
         subtypes: ['s4-4-4-area-scaling', 's4-4-4-composition-powers', 's4-4-4-invariants'],
-        generate() {
-          return buildS444AreaCompositionMixedSet(5);
+        generate(count) {
+          return buildS444AreaCompositionMixedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-point-mapping': {
@@ -11461,8 +11942,8 @@
         title: '點的映射與原像還原',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS444PointMappingSet(5);
+        generate(count) {
+          return buildS444PointMappingSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-matrix-solving': {
@@ -11470,8 +11951,8 @@
         title: '由像點求變換矩陣',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS444MatrixSolvingSet(5);
+        generate(count) {
+          return buildS444MatrixSolvingSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-rotation-reflection': {
@@ -11479,8 +11960,8 @@
         title: '旋轉與鏡射的基本矩陣',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS444RotationReflectionSet(5);
+        generate(count) {
+          return buildS444RotationReflectionSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-equation-transform': {
@@ -11488,8 +11969,8 @@
         title: '直線圓與曲線的方程變換',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS444EquationTransformSet(5);
+        generate(count) {
+          return buildS444EquationTransformSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-scaling-shear': {
@@ -11497,8 +11978,8 @@
         title: '伸縮與推移變換計算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS444ScalingShearSet(5);
+        generate(count) {
+          return buildS444ScalingShearSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-classification': {
@@ -11506,8 +11987,8 @@
         title: '特殊變換矩陣辨識',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS444ClassificationSet(5);
+        generate(count) {
+          return buildS444ClassificationSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-area-scaling': {
@@ -11515,8 +11996,8 @@
         title: '面積倍率與行列式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS444AreaScalingSet(5);
+        generate(count) {
+          return buildS444AreaScalingSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-composition-powers': {
@@ -11524,8 +12005,8 @@
         title: '合成變換與矩陣高次方',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS444CompositionPowersSet(5);
+        generate(count) {
+          return buildS444CompositionPowersSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-invariants': {
@@ -11533,8 +12014,8 @@
         title: '長度面積與內積不變量',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS444InvariantSet(5);
+        generate(count) {
+          return buildS444InvariantSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-line-transform': {
@@ -11542,8 +12023,8 @@
         title: '直線在線性變換下的像方程',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS444LineTransformSet(5);
+        generate(count) {
+          return buildS444LineTransformSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-coordinate-rotation-clean': {
@@ -11551,8 +12032,8 @@
         title: '坐標軸旋轉與新舊坐標換算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS444CoordinateRotationCleanSet(5);
+        generate(count) {
+          return buildS444CoordinateRotationCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-line-stretch-parameter-clean': {
@@ -11560,8 +12041,8 @@
         title: '伸縮推移下的直線像方程',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildS444LineStretchParameterCleanSet(5);
+        generate(count) {
+          return buildS444LineStretchParameterCleanSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-linear-transform-geometry-advanced': {
@@ -11569,8 +12050,8 @@
         title: '線性變換下的圖形變動',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS444LinearTransformGeometryAdvancedSet(5);
+        generate(count) {
+          return buildS444LinearTransformGeometryAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
       's4-4-4-determinant-area-region-advanced': {
@@ -11578,13 +12059,183 @@
         title: '行列式面積與區域變換',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildS444DeterminantAreaRegionAdvancedSet(5);
+        generate(count) {
+          return buildS444DeterminantAreaRegionAdvancedSet(resolvePracticeCount(count, 5));
         },
       },
     };
 
-    const bundleFingerprint = 's4-bundle-v20260709-s41-extension-v1';
+    function s41QuestionCore(question) {
+      return String(question || '')
+        .replace(/\s+/g, '')
+        .trim();
+    }
+
+    function collectUniqueS4Generated(originalGenerate, desiredCount) {
+      const desired = resolvePracticeCount(desiredCount, 5);
+      const questions = [];
+      const summaryAnswers = [];
+      const answers = [];
+      const seen = new Set();
+      const leftovers = [];
+      const maxAttempts = Math.max(12, desired * 3);
+
+      for (let attempt = 0; attempt < maxAttempts && questions.length < desired; attempt += 1) {
+        const generated = originalGenerate(desired);
+        const sourceQuestions = generated.questions || [];
+        const sourceSummaries = generated.summaryAnswers || [];
+        const sourceAnswers = generated.answers || [];
+        for (let index = 0; index < sourceQuestions.length && questions.length < desired; index += 1) {
+          const key = s41QuestionCore(sourceQuestions[index]);
+          const item = {
+            question: sourceQuestions[index],
+            summary: sourceSummaries[index],
+            answer: sourceAnswers[index],
+          };
+          if (!seen.has(key)) {
+            seen.add(key);
+            questions.push(item.question);
+            summaryAnswers.push(item.summary);
+            answers.push(item.answer);
+          } else {
+            leftovers.push(item);
+          }
+        }
+      }
+
+      for (let index = 0; questions.length < desired && index < leftovers.length; index += 1) {
+        const item = leftovers[index];
+        const question = item.question;
+        const key = s41QuestionCore(question);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        questions.push(question);
+        summaryAnswers.push(item.summary);
+        answers.push(item.answer);
+      }
+
+      return { questions, summaryAnswers, answers };
+    }
+
+    Object.entries(nextConfigs).forEach(([id, config]) => {
+      if (!id.startsWith('s4-1-') || !config || typeof config.generate !== 'function') return;
+      const originalGenerate = config.generate;
+      config.generate = function generateS41UniqueQuestions(count) {
+        const generated = collectUniqueS4Generated((targetCount) => originalGenerate.call(this, targetCount), count);
+        return generated;
+      };
+    });
+
+    const s41QuestionPrompts = [
+      '請依題意作答：',
+      '請先整理空間幾何條件後求解：',
+      '請寫出正確結論：',
+      '請列式並檢查向量或行列式符號後作答：',
+      '請用適當的空間向量觀念完成：',
+    ];
+    Object.entries(nextConfigs).forEach(([id, config]) => {
+      if (!id.startsWith('s4-1-') || !config || typeof config.generate !== 'function') return;
+      const generate = config.generate;
+      config.generate = function generateS41WithWordingVariation(count) {
+        const generated = generate.call(this, count);
+        const prompt = s41QuestionPrompts[randInt(0, s41QuestionPrompts.length - 1)];
+        return {
+          ...generated,
+          questions: generated.questions.map((question) => `${prompt}${question}`),
+        };
+      };
+    });
+
+    Object.entries(nextConfigs).forEach(([id, config]) => {
+      if (!id.startsWith('s4-2-') || !config || typeof config.generate !== 'function') return;
+      const originalGenerate = config.generate;
+      config.generate = function generateS42UniqueQuestions(count) {
+        const generated = collectUniqueS4Generated((targetCount) => originalGenerate.call(this, targetCount), count);
+        return generated;
+      };
+    });
+
+    const s42QuestionPrompts = [
+      '請依題意列式並作答：',
+      '請判讀空間幾何條件後作答：',
+      '請確認向量方向與符號後作答：',
+      '請寫出符合條件的結論：',
+      '請以適當的平面或直線觀念求解：',
+    ];
+    Object.entries(nextConfigs).forEach(([id, config]) => {
+      if (!id.startsWith('s4-2-') || !config || typeof config.generate !== 'function') return;
+      const generate = config.generate;
+      config.generate = function generateS42WithWordingVariation(count) {
+        const generated = generate.call(this, count);
+        const prompt = s42QuestionPrompts[randInt(0, s42QuestionPrompts.length - 1)];
+        return {
+          ...generated,
+          questions: generated.questions.map((question) => `${prompt}${question}`),
+        };
+      };
+    });
+
+    Object.entries(nextConfigs).forEach(([id, config]) => {
+      if (!id.startsWith('s4-3-') || !config || typeof config.generate !== 'function') return;
+      const originalGenerate = config.generate;
+      config.generate = function generateS43UniqueQuestions(count) {
+        const generated = collectUniqueS4Generated((targetCount) => originalGenerate.call(this, targetCount), count);
+        if (Array.isArray(config.subtypes) && config.subtypes.length) return generated;
+        return generated;
+      };
+    });
+
+    const s43QuestionPrompts = [
+      '請先辨識條件事件後作答：',
+      '請列出符合條件的樣本空間後作答：',
+      '請以獨立、條件機率或貝氏觀念求解：',
+      '請確認分子與分母所代表的事件後作答：',
+      '請寫出最簡機率或正確判斷：',
+    ];
+    Object.entries(nextConfigs).forEach(([id, config]) => {
+      if (!id.startsWith('s4-3-') || !config || typeof config.generate !== 'function') return;
+      const generate = config.generate;
+      config.generate = function generateS43WithWordingVariation(count) {
+        const generated = generate.call(this, count);
+        const prompt = s43QuestionPrompts[randInt(0, s43QuestionPrompts.length - 1)];
+        return {
+          ...generated,
+          questions: generated.questions.map((question) => `${prompt}${question}`),
+        };
+      };
+    });
+
+    Object.entries(nextConfigs).forEach(([id, config]) => {
+      if (!id.startsWith('s4-4-') || !config || typeof config.generate !== 'function') return;
+      const originalGenerate = config.generate;
+      config.generate = function generateS44UniqueQuestions(count) {
+        const generated = collectUniqueS4Generated((targetCount) => originalGenerate.call(this, targetCount), count);
+        if (Array.isArray(config.subtypes) && config.subtypes.length) return generated;
+        return generated;
+      };
+    });
+
+    const s44QuestionPrompts = [
+      '請先檢查矩陣的維度與運算順序後作答：',
+      '請依題目的矩陣條件列式並作答：',
+      '請確認符號與對應關係後，寫出正確答案：',
+      '請運用行列式、反矩陣或線性變換觀念求解：',
+      '請依矩陣運算規則完成作答：',
+    ];
+    Object.entries(nextConfigs).forEach(([id, config]) => {
+      if (!id.startsWith('s4-4-') || !config || typeof config.generate !== 'function') return;
+      const generate = config.generate;
+      config.generate = function generateS44WithWordingVariation(count) {
+        const generated = generate.call(this, count);
+        const prompt = s44QuestionPrompts[randInt(0, s44QuestionPrompts.length - 1)];
+        return {
+          ...generated,
+          questions: generated.questions.map((question) => `${prompt}${question}`),
+        };
+      };
+    });
+
+    const bundleFingerprint = 's4-bundle-v20260716-s44-summary-review-v8';
     Object.values(nextConfigs).forEach((config) => {
       if (!config || typeof config !== 'object') return;
       config.__generatorFingerprint = bundleFingerprint;

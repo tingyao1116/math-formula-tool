@@ -1,7 +1,7 @@
-(() => {
+﻿(() => {
   window.practiceGeneratorBundles = {
     e4: {
-      src: "data/practice-generators/e4.js?v=20260616-e424-split-v1",
+      src: "data/practice-generators/e4.js?v=20260715-e41-e42-summary-review-v1",
       chapterPrefixes: ["e4-"],
     },
     e5: {
@@ -10,57 +10,57 @@
       chapterPrefixes: ["e5-"],
     },
     e6: {
-      src: "data/practice-generators/e6.js?v=20260628-e6-real-bundle-v3",
+      src: "data/practice-generators/e6.js?v=20260715-e61-e62-reviewed-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["e6-"],
     },
     j1: {
-      src: "data/practice-generators/j1.js?v=20260707-j13-extension-v1",
+      src: "data/practice-generators/j1.js?v=20260715-j13-summary-review-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j1-"],
     },
     j2: {
-      src: "data/practice-generators/j2.js?v=20260710-midpoint-sign-v1",
+      src: "data/practice-generators/j2.js?v=20260715-j25-summary-review-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j2-"],
     },
     j3: {
-      src: "data/practice-generators/j3.js?v=20260710-sign-format-v1",
+      src: "data/practice-generators/j3.js?v=20260715-j33-summary-review-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j3-"],
     },
     j4: {
-      src: "data/practice-generators/j4.js?v=20260710-subscript-braces-v1",
+      src: "data/practice-generators/j4.js?v=20260716-j41-summary-review-v1",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j4-"],
     },
     j5: {
-      src: "data/practice-generators/j5.js?v=20260711-j531-proof-merged-v1",
+      src: "data/practice-generators/j5.js?v=20260716-j51-j52-j53-summary-review-v4",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j5-"],
     },
     j6: {
-      src: "data/practice-generators/j6.js?v=20260710-frequency-interval-text-v1",
+      src: "data/practice-generators/j6.js?v=20260716-j61-j62-j63-summary-review-v4",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["j6-"],
     },
     s1: {
-      src: "data/practice-generators/s1.js?v=20260711-exponential-parameter-random-v1",
+      src: "data/practice-generators/s1.js?v=20260715-s11-s12-s13-summary-review-v2",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["s1-"],
     },
     s2: {
-      src: "data/practice-generators/s2.js?v=20260708-s24-extension-v1",
+    src: "data/practice-generators/s2.js?v=20260715-s24-summary-review-v5",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["s2-"],
     },
     s3: {
-      src: "data/practice-generators/s3.js?v=20260709-s33-extension-v1",
+    src: "data/practice-generators/s3.js?v=20260716-s33-summary-review-v4",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["s3-"],
     },
     s4: {
-      src: "data/practice-generators/s4.js?v=20260709-s41-extension-v1",
+    src: "data/practice-generators/s4.js?v=20260716-s44-summary-review-v8",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["s4-"],
     },

@@ -1,6 +1,6 @@
 (() => {
   const store = window.formulaPracticeStore;
-  if (!store || typeof store.registerConfigs !== "function") return;
+  if (!store || typeof store.registerConfigs !== 'function') return;
 
   function randInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -36,11 +36,11 @@
       questions.push(`${n} 是質數還是合數？`);
       if (askPrime) {
         summaryAnswers.push('質數');
-        answers.push(`簡答：質數。過程：${n} 只有 1 和 ${n} 兩個正因數，所以是質數。`);
+        answers.push(`過程：${n} 只有 1 和 ${n} 兩個正因數，所以是質數。`);
       } else {
         const divisor = [2, 3, 5, 7].find((value) => n % value === 0 && value !== n) || 2;
         summaryAnswers.push('合數');
-        answers.push(`簡答：合數。過程：${n} 除了 1 和 ${n} 以外，還可以被 ${divisor} 整除，所以是合數。`);
+        answers.push(`過程：${n} 除了 1 和 ${n} 以外，還可以被 ${divisor} 整除，所以是合數。`);
       }
     }
     return { questions, summaryAnswers, answers };
@@ -58,7 +58,7 @@
       questions.push(`找出 ${n} 的質因數有哪些？`);
       summaryAnswers.push(factorText);
       answers.push(
-        `簡答：${factorText}。過程：${n} 的標準分解式是 $${formatPrimeFactorization(primeFactorize(n))}$，所以質因數是 ${factorText}。`
+        `過程：${n} 的標準分解式是 $${formatPrimeFactorization(primeFactorize(n))}$，所以質因數是 ${factorText}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -74,7 +74,7 @@
       const factorText = formatPrimeFactorization(primeFactorize(n));
       questions.push(`把 ${n} 做質因數分解，寫成標準分解式。`);
       summaryAnswers.push(`$${factorText}$`);
-      answers.push(`簡答：$${factorText}$。過程：把 ${n} 連續除以質數，整理後得到標準分解式 $${factorText}$。`);
+      answers.push(`過程：把 ${n} 連續除以質數，整理後得到標準分解式 $${factorText}$。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -100,7 +100,7 @@
       const g = gcd(a, b);
       questions.push(`找出 ${a} 和 ${b} 的最大公因數。`);
       summaryAnswers.push(`${g}`);
-      answers.push(`簡答：${g}。過程：${a} 和 ${b} 的公因數中最大的是 ${g}，所以最大公因數是 ${g}。`);
+      answers.push(`過程：${a} 和 ${b} 的公因數中最大的是 ${g}，所以最大公因數是 ${g}。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -127,7 +127,7 @@
       const common = formatPrimeFactorization(primeFactorize(g));
       questions.push(`已知 $${a}=${factorsA}$，$${b}=${factorsB}$，求 ${a} 和 ${b} 的最大公因數。`);
       summaryAnswers.push(`${g}`);
-      answers.push(`簡答：${g}。過程：共同的質因數取較小次方，可得 $${common}$，所以最大公因數是 ${g}。`);
+      answers.push(`過程：共同的質因數取較小次方，可得 $${common}$，所以最大公因數是 ${g}。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -159,10 +159,10 @@
       questions.push(`${a} 和 ${b} 是否互質？`);
       if (isCoprime) {
         summaryAnswers.push('是');
-        answers.push(`簡答：是。過程：${a} 和 ${b} 的最大公因數是 1，所以這兩數互質。`);
+        answers.push(`過程：${a} 和 ${b} 的最大公因數是 1，所以這兩數互質。`);
       } else {
         summaryAnswers.push(`否，公因數有 ${g}`);
-        answers.push(`簡答：否，公因數有 ${g}。過程：${a} 和 ${b} 的最大公因數是 ${g}，不是 1，所以不互質。`);
+        answers.push(`過程：${a} 和 ${b} 的最大公因數是 ${g}，不是 1，所以不互質。`);
       }
     }
     return { questions, summaryAnswers, answers };
@@ -194,7 +194,7 @@
       questions.push(`有 ${a}${unitA} 和 ${b}${unitB}，每一份都要一樣多，最多可以${askText}？`);
       summaryAnswers.push(`${g}`);
       answers.push(
-        `簡答：${g}。過程：要分成最多份，而且每份一樣多，就是求 ${a} 和 ${b} 的最大公因數，所以答案是 ${g}。`
+        `過程：要分成最多份，而且每份一樣多，就是求 ${a} 和 ${b} 的最大公因數，所以答案是 ${g}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -217,7 +217,7 @@
       const g = gcd(length, width);
       questions.push(`一張長 ${length} 公分、寬 ${width} 公分的長方形紙，剪成最大的正方形，邊長是多少公分？`);
       summaryAnswers.push(`${g} 公分`);
-      answers.push(`簡答：${g} 公分。過程：要剪成邊長最大的正方形，就是找長和寬的最大公因數，所以是 ${g} 公分。`);
+      answers.push(`過程：要剪成邊長最大的正方形，就是找長和寬的最大公因數，所以是 ${g} 公分。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -240,7 +240,7 @@
       const l = lcm(a, b);
       questions.push(`找出 ${a} 和 ${b} 的最小公倍數。`);
       summaryAnswers.push(`${l}`);
-      answers.push(`簡答：${l}。過程：${a} 和 ${b} 的公倍數中最小的是 ${l}，所以最小公倍數是 ${l}。`);
+      answers.push(`過程：${a} 和 ${b} 的公倍數中最小的是 ${l}，所以最小公倍數是 ${l}。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -265,7 +265,7 @@
       const factorText = formatPrimeFactorization(primeFactorize(l));
       questions.push(`已知 $${a}=${factorsA}$，$${b}=${factorsB}$，求 ${a} 和 ${b} 的最小公倍數。`);
       summaryAnswers.push(`${l}`);
-      answers.push(`簡答：${l}。過程：全部質因數取較大次方，可得 $${factorText}$，所以最小公倍數是 ${l}。`);
+      answers.push(`過程：全部質因數取較大次方，可得 $${factorText}$，所以最小公倍數是 ${l}。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -293,11 +293,11 @@
       questions.push(`利用數的關係，求 ${a} 和 ${b} 的最小公倍數。`);
       if (askCoprime) {
         summaryAnswers.push(`${l}`);
-        answers.push(`簡答：${l}。過程：${a} 和 ${b} 互質，所以最小公倍數等於兩數相乘：${a} × ${b} = ${l}。`);
+        answers.push(`過程：${a} 和 ${b} 互質，所以最小公倍數等於兩數相乘：${a} × ${b} = ${l}。`);
       } else {
         const larger = Math.max(a, b);
         summaryAnswers.push(`${l}`);
-        answers.push(`簡答：${l}。過程：${larger} 是另一數的倍數，所以最小公倍數就是較大的數 ${larger}。`);
+        answers.push(`過程：${larger} 是另一數的倍數，所以最小公倍數就是較大的數 ${larger}。`);
       }
     }
     return { questions, summaryAnswers, answers };
@@ -305,18 +305,32 @@
 
   function buildE611PeriodicSyncSet(count) {
     const contexts = [
-      ['公車', '15 分鐘一班', '公車', '25 分鐘一班', '下一次同時出現是幾分鐘後', '分鐘'],
-      ['跑步', '5 天一次', '跑步', '3 天一次', '下次同一天進行是幾天後', '天'],
-      ['噴水', '30 分鐘一次', '噴水', '45 分鐘一次', '下次同時噴水是多久後', '分鐘'],
-      ['閃燈', '15 分鐘閃一次', '閃燈', '25 分鐘閃一次', '下次同時閃爍是多久後', '分鐘'],
+      {
+        unit: '分鐘',
+        build: (a, b) => `甲公車每 ${a} 分鐘一班，乙公車每 ${b} 分鐘一班，若現在同時發車，下一次同時發車是幾分鐘後？`,
+      },
+      {
+        unit: '天',
+        build: (a, b) =>
+          `小安每 ${a} 天跑步一次，小美每 ${b} 天跑步一次，若今天兩人同一天跑步，下次同一天跑步是幾天後？`,
+      },
+      {
+        unit: '分鐘',
+        build: (a, b) =>
+          `甲噴泉每 ${a} 分鐘噴水一次，乙噴泉每 ${b} 分鐘噴水一次，若現在同時噴水，下次同時噴水是幾分鐘後？`,
+      },
+      {
+        unit: '秒',
+        build: (a, b) => `甲燈每 ${a} 秒閃一次，乙燈每 ${b} 秒閃一次，若現在同時閃，下次同時閃是幾秒後？`,
+      },
     ];
     const values = [
       [15, 25],
       [5, 3],
       [30, 45],
-      [15, 25],
       [4, 10],
       [4, 6],
+      [12, 18],
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -329,13 +343,15 @@
         questions.push(`每隔 ${a} 公尺種一棵樹，每隔 ${b} 公尺設一盞燈，起點後第一個同時有樹與燈的地方距離起點多遠？`);
         summaryAnswers.push(`${l} 公尺`);
         answers.push(
-          `簡答：${l} 公尺。過程：同時出現的位置要同時是 ${a} 和 ${b} 的倍數，所以找最小公倍數，答案是 ${l} 公尺。`
+          `過程：同時出現的位置要同時是 ${a} 和 ${b} 的倍數，所以找最小公倍數，答案是 ${l} 公尺。`
         );
       } else {
-        const [nameA, textA, nameB, textB, askText, unit] = pickFromList(contexts);
-        questions.push(`甲${nameA}${textA}，乙${nameB}${textB}，若現在同時開始，${askText}？`);
-        summaryAnswers.push(`${l} ${unit}`);
-        answers.push(`簡答：${l} ${unit}。過程：同時發生的間隔是 ${a} 和 ${b} 的最小公倍數，所以答案是 ${l} ${unit}。`);
+        const picked = pickFromList(contexts);
+        questions.push(picked.build(a, b));
+        summaryAnswers.push(`${l} ${picked.unit}`);
+        answers.push(
+          `過程：同時發生的間隔是 ${a} 和 ${b} 的最小公倍數，所以答案是 ${l} ${picked.unit}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -359,7 +375,7 @@
       questions.push(`用長 ${length} 公分、寬 ${width} 公分的長方形拼成正方形，最短邊長是多少公分？`);
       summaryAnswers.push(`${l} 公分`);
       answers.push(
-        `簡答：${l} 公分。過程：正方形邊長要同時是長 ${length} 和寬 ${width} 的倍數，所以取最小公倍數 ${l}。`
+        `過程：正方形邊長要同時是長 ${length} 和寬 ${width} 的倍數，所以取最小公倍數 ${l}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -387,7 +403,7 @@
       questions.push(`找出 ${start} 到 ${end} 之間，${a} 和 ${b} 的所有公倍數。`);
       summaryAnswers.push(values.join('、'));
       answers.push(
-        `簡答：${values.join('、')}。過程：先求 ${a} 和 ${b} 的最小公倍數為 ${step}，再從範圍內依序找它的倍數，所以答案是 ${values.join('、')}。`
+        `過程：先求 ${a} 和 ${b} 的最小公倍數為 ${step}，再從範圍內依序找它的倍數，所以答案是 ${values.join('、')}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -480,7 +496,7 @@
       questions.push(`將 \\(${num}/${den}\\) 化為最簡分數。`);
       summaryAnswers.push(`$${fractionToLatex(reduced, true)}$`);
       answers.push(
-        `簡答：$${fractionToLatex(reduced, true)}$。過程：分子與分母同除以最大公因數 ${gcd(num, den)}，得到最簡分數 $${fractionToLatex(reduced, true)}$。`
+        `過程：分子與分母同除以最大公因數 ${gcd(num, den)}，得到最簡分數 $${fractionToLatex(reduced, true)}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -505,7 +521,7 @@
       questions.push(`計算：\\(${fractionToLatex(left)}\\div${fractionToLatex(right)}\\)`);
       summaryAnswers.push(`$${fractionToLatex(result)}$`);
       answers.push(
-        `簡答：$${fractionToLatex(result)}$。過程：同分母分數相除，可先看成分子相除：${dividendNum} ÷ ${divisorNum} = ${q}，所以結果是 $${fractionToLatex(result)}$。`
+        `過程：同分母分數相除，可先看成分子相除：${dividendNum} ÷ ${divisorNum} = ${q}，所以結果是 $${fractionToLatex(result)}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -528,7 +544,7 @@
       questions.push(`計算：\\(${fractionToLatex(dividend)}\\div${fractionToLatex(divisor)}\\)`);
       summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
       answers.push(
-        `簡答：$${fractionToLatex(result, true)}$。過程：整數先看成分母是 1 的分數，再乘除數的倒數：\\(${fractionToLatex(dividend)}\\div${fractionToLatex(divisor)}=${fractionToLatex(dividend)}\\times\\frac{${divisor.den}}{${divisor.num}}=${fractionToLatex(result, true)}\\)。`
+        `過程：整數先看成分母是 1 的分數，再乘除數的倒數：\\(${fractionToLatex(dividend)}\\div${fractionToLatex(divisor)}=${fractionToLatex(dividend)}\\times\\frac{${divisor.den}}{${divisor.num}}=${fractionToLatex(result, true)}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -547,7 +563,7 @@
       questions.push(`計算：\\(${e612FractionQuestionText(left, right)}\\)`);
       summaryAnswers.push(`$${e612AnswerMixedText(result)}$`);
       answers.push(
-        `簡答：$${e612AnswerMixedText(result)}$。過程：除以分數等於乘它的倒數，所以 \\(${integerOrFractionLatex(left)}\\div${integerOrFractionLatex(right)}=${integerOrFractionLatex(left)}\\times\\frac{${right.den}}{${right.num}}=${e612AnswerMixedText(result)}\\)。`
+        `過程：除以分數等於乘它的倒數，所以 \\(${integerOrFractionLatex(left)}\\div${integerOrFractionLatex(right)}=${integerOrFractionLatex(left)}\\times\\frac{${right.den}}{${right.num}}=${e612AnswerMixedText(result)}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -573,9 +589,9 @@
       questions.push(
         `某物有 \\(${fractionToLatex(total, true)}\\) ${noun}，每 \\(${fractionToLatex(part, true)}\\) ${action}，可以分成幾${resultUnit}？`
       );
-      summaryAnswers.push(`$${fractionToLatex(result)}$`);
+      summaryAnswers.push(`$${fractionToLatex(result)}$ ${resultUnit}`);
       answers.push(
-        `簡答：$${fractionToLatex(result)}$ ${resultUnit}。過程：總量 ÷ 每一份 = \\(${fractionToLatex(total, true)}\\div${fractionToLatex(part, true)}=${fractionToLatex(result)}\\)，所以可分成 ${fractionToLatex(result)} ${resultUnit}。`
+        `過程：總量 ÷ 每一份 = \\(${fractionToLatex(total, true)}\\div${fractionToLatex(part, true)}=${fractionToLatex(result)}\\)，所以可分成 ${fractionToLatex(result)} ${resultUnit}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -610,7 +626,7 @@
       );
       summaryAnswers.push(larger);
       answers.push(
-        `簡答：${larger}。過程：${reason}。本題中 \\(${integerOrFractionLatex(base)}\\div${integerOrFractionLatex(divisor)}=${integerOrFractionLatex(quotient, true)}\\)，所以判斷為「${larger}」。`
+        `過程：${reason}。本題中 \\(${integerOrFractionLatex(base)}\\div${integerOrFractionLatex(divisor)}=${integerOrFractionLatex(quotient, true)}\\)，所以判斷為「${larger}」。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -639,7 +655,7 @@
       questions.push(`買 \\(${integerOrFractionLatex(quantity, true)}\\) ${leftText} ${totalCost.num} ${midText}？`);
       summaryAnswers.push(`${oneValue} ${unit}`);
       answers.push(
-        `簡答：${oneValue} ${unit}。過程：單位量 = 總價 ÷ 數量 = \\(${totalCost.num}\\div${integerOrFractionLatex(quantity, true)}=${oneValue}\\)，所以答案是 ${oneValue} ${unit}。`
+        `過程：單位量 = 總價 ÷ 數量 = \\(${totalCost.num}\\div${integerOrFractionLatex(quantity, true)}=${oneValue}\\)，所以答案是 ${oneValue} ${unit}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -662,9 +678,9 @@
         const fracSide = makeFraction(side * 3 + 1, 2); // x.5 or integer
         const perimeter = mulFraction(fracSide, makeFraction(4, 1));
         questions.push(`一個周長是 \\(${integerOrFractionLatex(perimeter, true)}\\) 公尺的正方形，邊長是多少公尺？`);
-        summaryAnswers.push(`$${integerOrFractionLatex(fracSide, true)}$`);
+        summaryAnswers.push(`$${integerOrFractionLatex(fracSide, true)}$ 公尺`);
         answers.push(
-          `簡答：$${integerOrFractionLatex(fracSide, true)}$ 公尺。過程：正方形邊長 = 周長 ÷ 4 = \\(${integerOrFractionLatex(perimeter, true)}\\div4=${integerOrFractionLatex(fracSide, true)}\\)。`
+          `過程：正方形邊長 = 周長 ÷ 4 = \\(${integerOrFractionLatex(perimeter, true)}\\div4=${integerOrFractionLatex(fracSide, true)}\\)。`
         );
       } else {
         const target = randInt(2, 6);
@@ -675,9 +691,9 @@
         questions.push(
           `${shape}${totalName}是 \\(${integerOrFractionLatex(total, true)}\\) ${totalUnit}，${knownSide}是 \\(${integerOrFractionLatex(divisor, true)}\\) ${sideUnit}，${askSide}是多少${sideUnit}？`
         );
-        summaryAnswers.push(`$${target}$`);
+        summaryAnswers.push(`$${target}$ ${sideUnit}`);
         answers.push(
-          `簡答：$${target}$ ${sideUnit}。過程：要求另一邊，就是用 ${totalName} ÷ 已知一邊：\\(${integerOrFractionLatex(total, true)}\\div${integerOrFractionLatex(divisor, true)}=${target}\\)。`
+          `過程：要求另一邊，就是用 ${totalName} ÷ 已知一邊：\\(${integerOrFractionLatex(total, true)}\\div${integerOrFractionLatex(divisor, true)}=${target}\\)。`
         );
       }
     }
@@ -729,7 +745,7 @@
       questions.push(picked.build(part, ratioText));
       summaryAnswers.push(`${whole.num} ${picked.unit}`);
       answers.push(
-        `簡答：${whole.num} ${picked.unit}。過程：整體量 = 部分量 ÷ 所占分率 = \\(${part}\\div${fractionToLatex(ratio)}=${whole.num}\\)，所以答案是 ${whole.num} ${picked.unit}。`
+        `過程：整體量 = 部分量 ÷ 所占分率 = \\(${part}\\div${fractionToLatex(ratio)}=${whole.num}\\)，所以答案是 ${whole.num} ${picked.unit}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -758,7 +774,7 @@
         );
         summaryAnswers.push(`$${integerOrFractionLatex(result, true)}$ ${answerUnit}`);
         answers.push(
-          `簡答：$${integerOrFractionLatex(result, true)}$ ${answerUnit}。過程：要求每 1 ${amountUnit} 需要多少${answerUnit}，要用時間（或份數）÷ 總量：\\(${integerOrFractionLatex(quantity, true)}\\div${integerOrFractionLatex(total, true)}=${integerOrFractionLatex(result, true)}\\)。`
+          `過程：要求每 1 ${amountUnit} 需要多少${answerUnit}，要用時間（或份數）÷ 總量：\\(${integerOrFractionLatex(quantity, true)}\\div${integerOrFractionLatex(total, true)}=${integerOrFractionLatex(result, true)}\\)。`
         );
       } else {
         const [name, amountUnit, answerUnit] = pickFromList([
@@ -772,13 +788,12 @@
         );
         summaryAnswers.push(`$${integerOrFractionLatex(result, true)}$ ${answerUnit}`);
         answers.push(
-          `簡答：$${integerOrFractionLatex(result, true)}$ ${answerUnit}。過程：要求每 1 小時可完成多少${amountUnit}，要用總量 ÷ 時間：\\(${integerOrFractionLatex(total, true)}\\div${integerOrFractionLatex(quantity, true)}=${integerOrFractionLatex(result, true)}\\)。`
+          `過程：要求每 1 小時可完成多少${amountUnit}，要用總量 ÷ 時間：\\(${integerOrFractionLatex(total, true)}\\div${integerOrFractionLatex(quantity, true)}=${integerOrFractionLatex(result, true)}\\)。`
         );
       }
     }
     return { questions, summaryAnswers, answers };
   }
-
 
   function buildE612RemainderCutSet(count) {
     const questions = [];
@@ -787,30 +802,55 @@
     // Each case: {total as [num,den], each as [num,den], pieces, remainder as [num,den]}
     // Verified: total = pieces×each + remainder, remainder < each
     const cases = [
-      { totalN: 7,  totalD: 2, eachN: 5, eachD: 8, pieces: 5, remN: 3,  remD: 8  }, // 3.5 ÷ 5/8
-      { totalN: 17, totalD: 4, eachN: 3, eachD: 8, pieces:11, remN: 1,  remD: 8  }, // 4.25 ÷ 3/8
-      { totalN: 11, totalD: 2, eachN: 3, eachD: 4, pieces: 7, remN: 1,  remD: 4  }, // 5.5 ÷ 3/4
-      { totalN: 8,  totalD: 3, eachN: 5, eachD: 6, pieces: 3, remN: 1,  remD: 6  }, // 2 2/3 ÷ 5/6
-      { totalN: 9,  totalD: 2, eachN: 5, eachD: 6, pieces: 5, remN: 1,  remD: 3  }, // 4.5 ÷ 5/6
-      { totalN: 13, totalD: 4, eachN: 5, eachD: 8, pieces: 5, remN: 1,  remD: 8  }, // 3.25 ÷ 5/8
-      { totalN: 14, totalD: 3, eachN: 3, eachD: 4, pieces: 6, remN: 1,  remD: 6  }, // 4 2/3 ÷ 3/4
-      { totalN: 13, totalD: 2, eachN: 3, eachD: 4, pieces: 8, remN: 1,  remD: 2  }, // 6.5 ÷ 3/4
+      { totalN: 7, totalD: 2, eachN: 5, eachD: 8, pieces: 5, remN: 3, remD: 8 }, // 3.5 ÷ 5/8
+      { totalN: 17, totalD: 4, eachN: 3, eachD: 8, pieces: 11, remN: 1, remD: 8 }, // 4.25 ÷ 3/8
+      { totalN: 11, totalD: 2, eachN: 3, eachD: 4, pieces: 7, remN: 1, remD: 4 }, // 5.5 ÷ 3/4
+      { totalN: 8, totalD: 3, eachN: 5, eachD: 6, pieces: 3, remN: 1, remD: 6 }, // 2 2/3 ÷ 5/6
+      { totalN: 9, totalD: 2, eachN: 5, eachD: 6, pieces: 5, remN: 1, remD: 3 }, // 4.5 ÷ 5/6
+      { totalN: 13, totalD: 4, eachN: 5, eachD: 8, pieces: 5, remN: 1, remD: 8 }, // 3.25 ÷ 5/8
+      { totalN: 14, totalD: 3, eachN: 3, eachD: 4, pieces: 6, remN: 1, remD: 6 }, // 4 2/3 ÷ 3/4
+      { totalN: 13, totalD: 2, eachN: 3, eachD: 4, pieces: 8, remN: 1, remD: 2 }, // 6.5 ÷ 3/4
+      { totalN: 5, totalD: 2, eachN: 3, eachD: 8, pieces: 6, remN: 1, remD: 4 }, // 2.5 ÷ 3/8
+      { totalN: 9, totalD: 4, eachN: 1, eachD: 2, pieces: 4, remN: 1, remD: 4 }, // 2.25 ÷ 1/2
+      { totalN: 7, totalD: 3, eachN: 4, eachD: 9, pieces: 5, remN: 1, remD: 9 }, // 2 1/3 ÷ 4/9
+      { totalN: 11, totalD: 4, eachN: 2, eachD: 5, pieces: 6, remN: 7, remD: 20 }, // 2.75 ÷ 2/5
+      { totalN: 10, totalD: 3, eachN: 3, eachD: 5, pieces: 5, remN: 1, remD: 3 }, // 3 1/3 ÷ 3/5
+      { totalN: 15, totalD: 4, eachN: 7, eachD: 8, pieces: 4, remN: 1, remD: 4 }, // 3.75 ÷ 7/8
+      { totalN: 8, totalD: 5, eachN: 3, eachD: 10, pieces: 5, remN: 1, remD: 10 }, // 1.6 ÷ 3/10
+      { totalN: 23, totalD: 4, eachN: 3, eachD: 4, pieces: 7, remN: 1, remD: 2 }, // 5.75 ÷ 3/4
     ];
     const ctxs = [
       ['緞帶', '公尺', '段', '公尺'],
       ['繩子', '公尺', '段', '公尺'],
       ['彩帶', '公尺', '段', '公尺'],
       ['鐵絲', '公尺', '段', '公尺'],
+      ['麻繩', '公尺', '段', '公尺'],
+      ['水管', '公尺', '段', '公尺'],
+      ['布條', '公尺', '段', '公尺'],
+      ['毛線', '公尺', '段', '公尺'],
     ];
+    const caseOffset = randInt(0, cases.length - 1);
+    const ctxOffset = randInt(0, ctxs.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
-      const [item, lengthUnit, pieceUnit, remUnit] = ctxs[i % ctxs.length];
-      const totalStr = c.totalD === 1 ? `${c.totalN}` : (c.totalN % c.totalD === 0 ? `${c.totalN / c.totalD}` : (c.totalN > c.totalD ? `${Math.floor(c.totalN/c.totalD)}\\frac{${c.totalN % c.totalD}}{${c.totalD}}` : `\\frac{${c.totalN}}{${c.totalD}}`));
+      const c = cases[(i + caseOffset) % cases.length];
+      const [item, lengthUnit, pieceUnit, remUnit] = ctxs[(i + ctxOffset) % ctxs.length];
+      const totalStr =
+        c.totalD === 1
+          ? `${c.totalN}`
+          : c.totalN % c.totalD === 0
+            ? `${c.totalN / c.totalD}`
+            : c.totalN > c.totalD
+              ? `${Math.floor(c.totalN / c.totalD)}\\frac{${c.totalN % c.totalD}}{${c.totalD}}`
+              : `\\frac{${c.totalN}}{${c.totalD}}`;
       const eachStr = `\\frac{${c.eachN}}{${c.eachD}}`;
-      const remStr = c.remN === 0 ? '0' : (c.remN === c.remD ? '1' : `\\frac{${c.remN}}{${c.remD}}`);
-      questions.push(`一條${item}長 $${totalStr}$ ${lengthUnit}，每 $${eachStr}$ ${lengthUnit}剪一段，最多可以剪幾段？剩下多少${remUnit}？`);
+      const remStr = c.remN === 0 ? '0' : c.remN === c.remD ? '1' : `\\frac{${c.remN}}{${c.remD}}`;
+      questions.push(
+        `一條${item}長 $${totalStr}$ ${lengthUnit}，每 $${eachStr}$ ${lengthUnit}剪一段，最多可以剪幾段？剩下多少${remUnit}？`
+      );
       summaryAnswers.push(`${c.pieces}段，餘$${remStr}$${remUnit}`);
-      answers.push(`簡答：${c.pieces}段，餘$${remStr}$${remUnit}。過程：$${totalStr}\\div${eachStr}=${c.pieces}$⋯餘$${remStr}$，所以最多剪${c.pieces}段，剩下$${remStr}$${remUnit}。`);
+      answers.push(
+        `過程：$${totalStr}\\div${eachStr}=${c.pieces}$⋯餘$${remStr}$，所以最多剪${c.pieces}段，剩下$${remStr}$${remUnit}。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -880,7 +920,7 @@
       {
         unit: '小時',
         build(total, known) {
-          return `一天共有 ${total} 小時，白天用了 ${known} 小時，夜晚有幾小時？`;
+          return `一項營隊活動共規劃 ${total} 小時，已經進行了 ${known} 小時，還剩下幾小時？`;
         },
       },
       {
@@ -905,7 +945,7 @@
       questions.push(picked.build(total, known));
       summaryAnswers.push(`${result} ${picked.unit}`);
       answers.push(
-        `簡答：${result} ${picked.unit}。過程：這類是和不變，已知量 + 未知量 = 總量，所以未知量 = ${total} - ${known} = ${result}。`
+        `過程：這類是和不變，已知量 + 未知量 = 總量，所以未知量 = ${total} - ${known} = ${result}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -937,7 +977,7 @@
         );
         summaryAnswers.push(`${result} 歲`);
         answers.push(
-          `簡答：${result} 歲。過程：兩人的年齡差 ${diff} 歲會保持不變，但經過 ${afterYears} 年兩人都一起增加 ${afterYears} 歲，所以 ${youngerName}是 ${youngerNow} + ${afterYears} = ${result} 歲。`
+          `過程：兩人的年齡差 ${diff} 歲會保持不變，但經過 ${afterYears} 年兩人都一起增加 ${afterYears} 歲，所以 ${youngerName}是 ${youngerNow} + ${afterYears} = ${result} 歲。`
         );
         continue;
       }
@@ -954,7 +994,7 @@
         );
         summaryAnswers.push(`${result} 歲`);
         answers.push(
-          `簡答：${result} 歲。過程：兩人的年齡差固定是 ${olderPast} - ${youngerPast} = ${diff} 歲，所以當 ${youngerName} ${youngerFuture} 歲時，${olderName}是 ${youngerFuture} + ${diff} = ${result} 歲。`
+          `過程：兩人的年齡差固定是 ${olderPast} - ${youngerPast} = ${diff} 歲，所以當 ${youngerName} ${youngerFuture} 歲時，${olderName}是 ${youngerFuture} + ${diff} = ${result} 歲。`
         );
         continue;
       }
@@ -965,13 +1005,13 @@
         questions.push(`民國 ${rocYear} 年是西元幾年？`);
         summaryAnswers.push(`${civilYear} 年`);
         answers.push(
-          `簡答：${civilYear} 年。過程：西元年和民國年的差固定是 1911，所以西元年 = 民國年 + 1911 = ${rocYear} + 1911 = ${civilYear}。`
+          `過程：西元年和民國年的差固定是 1911，所以西元年 = 民國年 + 1911 = ${rocYear} + 1911 = ${civilYear}。`
         );
       } else {
         questions.push(`西元 ${civilYear} 年是民國幾年？`);
         summaryAnswers.push(`民國 ${rocYear} 年`);
         answers.push(
-          `簡答：民國 ${rocYear} 年。過程：民國年和西元年的差固定是 1911，所以民國年 = 西元年 - 1911 = ${civilYear} - 1911 = ${rocYear}。`
+          `過程：民國年和西元年的差固定是 1911，所以民國年 = 西元年 - 1911 = ${civilYear} - 1911 = ${rocYear}。`
         );
       }
     }
@@ -1021,7 +1061,7 @@
       const resultText = picked === contexts[2] ? picked.answer(q2) : picked.answer(total2);
       summaryAnswers.push(resultText);
       answers.push(
-        `簡答：${resultText}。過程：這類是商不變，單價（或每日進度、兌換比）固定，所以總量 ÷ 數量 = ${unitValue}。依此可得答案。`
+        `過程：這類是商不變，單價（或每日進度、兌換比）固定，所以總量 ÷ 數量 = ${unitValue}。依此可得答案。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1066,7 +1106,7 @@
       questions.push(picked.build(total, each));
       summaryAnswers.push(`${factor} ${picked.unit}`);
       answers.push(
-        `簡答：${factor} ${picked.unit}。過程：這類是積不變，總量 = 每份量 × 份數，所以份數 = ${total} ÷ ${each} = ${factor}。`
+        `過程：這類是積不變，總量 = 每份量 × 份數，所以份數 = ${total} ÷ ${each} = ${factor}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1094,7 +1134,7 @@
       );
       summaryAnswers.push(`${result} ${picked.unit}`);
       answers.push(
-        `簡答：${result} ${picked.unit}。過程：規律是「第 1 個 + 增加量 × (個數 - 1)」，所以 ${base} + ${inc} × (${n} - 1) = ${result}。`
+        `過程：規律是「第 1 個 + 增加量 × (個數 - 1)」，所以 ${base} + ${inc} × (${n} - 1) = ${result}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1119,7 +1159,7 @@
         );
         summaryAnswers.push(`${result} 公分`);
         answers.push(
-          `簡答：${result} 公分。過程：每多 1 部就增加 ${second} - ${base} = ${inc} 公分，所以 ${n} 部長度是 ${base} + ${inc} × (${n} - 1) = ${result}。`
+          `過程：每多 1 部就增加 ${second} - ${base} = ${inc} 公分，所以 ${n} 部長度是 ${base} + ${inc} × (${n} - 1) = ${result}。`
         );
         continue;
       }
@@ -1131,7 +1171,7 @@
       questions.push(`${n1} 部推車接排長 ${len1} 公分，${n2} 部推車接排長 ${len2} 公分，求 1 部推車長幾公分？`);
       summaryAnswers.push(`${base} 公分`);
       answers.push(
-        `簡答：${base} 公分。過程：每多 ${n2 - n1} 部增加 ${len2 - len1} 公分，所以每多 1 部增加 ${(len2 - len1) / (n2 - n1)} 公分。再由 ${len1} 倒推，1 部長 ${base} 公分。`
+        `過程：每多 ${n2 - n1} 部增加 ${len2 - len1} 公分，所以每多 1 部增加 ${(len2 - len1) / (n2 - n1)} 公分。再由 ${len1} 倒推，1 部長 ${base} 公分。`
       );
     }
 
@@ -1154,7 +1194,7 @@
         questions.push(`一條長 ${length} 公尺的路，每隔 ${spacing} 公尺設一盞路燈，兩端都設，共需要幾盞？`);
         summaryAnswers.push(`${result} 盞`);
         answers.push(
-          `簡答：${result} 盞。過程：先算間隔數 = ${length} ÷ ${spacing} = ${intervals}，兩端都設時，物體數 = 間隔數 + 1，所以是 ${intervals} + 1 = ${result}。`
+          `過程：先算間隔數 = ${length} ÷ ${spacing} = ${intervals}，兩端都設時，物體數 = 間隔數 + 1，所以是 ${intervals} + 1 = ${result}。`
         );
         continue;
       }
@@ -1163,10 +1203,10 @@
         const intervals = randInt(10, 30);
         const length = spacing * intervals;
         const result = intervals - 1;
-        questions.push(`一段長 ${length} 公尺的道路，每隔 ${spacing} 公尺設一路燈，兩端都不設，共需要幾盞？`);
+        questions.push(`一段長 ${length} 公尺的道路，每隔 ${spacing} 公尺設一盞路燈，兩端都不設，共需要幾盞？`);
         summaryAnswers.push(`${result} 盞`);
         answers.push(
-          `簡答：${result} 盞。過程：間隔數 = ${length} ÷ ${spacing} = ${intervals}，兩端都不設時，物體數 = 間隔數 - 1，所以是 ${intervals} - 1 = ${result}。`
+          `過程：間隔數 = ${length} ÷ ${spacing} = ${intervals}，兩端都不設時，物體數 = 間隔數 - 1，所以是 ${intervals} - 1 = ${result}。`
         );
         continue;
       }
@@ -1176,7 +1216,7 @@
       questions.push(`圓形跑道周長 ${perimeter} 公尺，每隔 ${spacing} 公尺設一個標記，共設了幾個標記？`);
       summaryAnswers.push(`${countOnCircle} 個`);
       answers.push(
-        `簡答：${countOnCircle} 個。過程：圓形封閉時，標記數 = 間隔數，所以 ${perimeter} ÷ ${spacing} = ${countOnCircle}。`
+        `過程：圓形封閉時，標記數 = 間隔數，所以 ${perimeter} ÷ ${spacing} = ${countOnCircle}。`
       );
     }
 
@@ -1204,7 +1244,7 @@
       questions.push(`${noun}${spacingText}，第 ${start} 個到第 ${end} 個相距多少${unit === '排' ? unit : '公尺'}？`);
       summaryAnswers.push(`${result} ${unit === '排' ? unit : '公尺'}`);
       answers.push(
-        `簡答：${result} ${unit === '排' ? unit : '公尺'}。過程：中間有 ${end} - ${start} = ${end - start} 個間隔，所以距離是 ${end - start} × ${spacing} = ${result}。`
+        `過程：中間有 ${end} - ${start} = ${end - start} 個間隔，所以距離是 ${end - start} × ${spacing} = ${result}。`
       );
     }
 
@@ -1231,7 +1271,7 @@
       questions.push(`依照規律「${pattern.join('、')}」重複排列，第 ${n} 個是什麼？`);
       summaryAnswers.push(`${result}`);
       answers.push(
-        `簡答：${result}。過程：每 ${pattern.length} 個一循環，${n} - 1 = ${n - 1}，餘 ${remainder}，所以對應到第 ${remainder + 1} 個，是 ${result}。`
+        `過程：每 ${pattern.length} 個一循環，把 ${n} - 1 = ${n - 1} 除以 ${pattern.length}，餘 ${remainder}，所以對應到第 ${remainder + 1} 個，是 ${result}。`
       );
     }
 
@@ -1287,10 +1327,17 @@
       const bCount = randInt(2, 10);
       const totalCount = aCount + bCount;
       const totalAttr = aCount * picked.attrA + bCount * picked.attrB;
+      const assumeAFirst = picked.attrA <= picked.attrB;
+      const baseName = assumeAFirst ? picked.aName : picked.bName;
+      const otherName = assumeAFirst ? picked.bName : picked.aName;
+      const baseAttr = assumeAFirst ? picked.attrA : picked.attrB;
+      const otherAttr = assumeAFirst ? picked.attrB : picked.attrA;
+      const otherUnit = assumeAFirst ? picked.bUnit : picked.aUnit;
+      const otherCount = (totalAttr - totalCount * baseAttr) / (otherAttr - baseAttr);
       questions.push(picked.build(totalCount, totalAttr));
       summaryAnswers.push(`${picked.aName} ${aCount}${picked.aUnit}、${picked.bName} ${bCount}${picked.bUnit}`);
       answers.push(
-        `簡答：${picked.aName} ${aCount}${picked.aUnit}、${picked.bName} ${bCount}${picked.bUnit}。過程：先假設全部都是${picked.aName}，則會有 ${totalCount * picked.attrA}${picked.attrUnit}；和實際的 ${totalAttr}${picked.attrUnit} 相差 ${totalAttr - totalCount * picked.attrA}。每把 1 個${picked.aName}換成 1 個${picked.bName}，會多 ${picked.attrB - picked.attrA}${picked.attrUnit}，所以 ${picked.bName}有 ${(totalAttr - totalCount * picked.attrA) / (picked.attrB - picked.attrA)}${picked.bUnit}，再求得 ${picked.aName}有 ${aCount}${picked.aUnit}。`
+        `過程：先假設全部都是${baseName}，則會有 ${totalCount * baseAttr}${picked.attrUnit}；和實際的 ${totalAttr}${picked.attrUnit} 相差 ${totalAttr - totalCount * baseAttr}。每把 1 個${baseName}換成 1 個${otherName}，會多 ${otherAttr - baseAttr}${picked.attrUnit}，所以 ${otherName}有 ${otherCount}${otherUnit}，再求得另一種有 ${totalCount - otherCount}${assumeAFirst ? picked.aUnit : picked.bUnit}。`
       );
     }
 
@@ -1369,6 +1416,10 @@
     return trimDecimalString(value.toFixed(digits));
   }
 
+  function e614FixedDecimalText(frac, digits) {
+    return (frac.num / frac.den).toFixed(digits);
+  }
+
   function e614CompareFraction(a, b) {
     return a.num * b.den - b.num * a.den;
   }
@@ -1411,7 +1462,7 @@
       questions.push(`計算：$${dividend.num}\\div${divisorText}$。`);
       summaryAnswers.push(`$${resultText}$`);
       answers.push(
-        `簡答：$${resultText}$。過程：先把除數變成整數，可視為同乘 10 或 100。原式 $=${dividend.num}\\div${divisorText}=${resultText}$。`
+        `過程：先把除數變成整數，可視為同乘 10 或 100。原式 $=${dividend.num}\\div${divisorText}=${resultText}$。`
       );
     }
 
@@ -1444,7 +1495,7 @@
       questions.push(`計算：$${dividendText}\\div${divisorText}$。`);
       summaryAnswers.push(`$${e614DecimalText(result)}$`);
       answers.push(
-        `簡答：$${e614DecimalText(result)}$。過程：把被除數和除數的小數點同步右移，使除數變成整數後再計算，結果是 $${e614DecimalText(result)}$。`
+        `過程：把被除數和除數的小數點同步右移，使除數變成整數後再計算，結果是 $${e614DecimalText(result)}$。`
       );
     }
 
@@ -1470,7 +1521,7 @@
       );
       summaryAnswers.push(`約 ${roundedText}`);
       answers.push(
-        `簡答：約 ${roundedText}。過程：先算商為 $${e614DecimalText(divFraction(dividend, divisor))}$，再四捨五入到${digits === 0 ? '個位' : '小數第一位'}，得到約 ${roundedText}。`
+        `過程：先算商為 $${e614DecimalText(divFraction(dividend, divisor))}$，再四捨五入到${digits === 0 ? '個位' : '小數第一位'}，得到約 ${roundedText}。`
       );
     }
 
@@ -1491,14 +1542,14 @@
         questions.push(`將 $${built.dividendText}\\div${built.divisorText}$ 化成除數為整數的算式。`);
         summaryAnswers.push(`$${built.scaledDividend}\\div${built.scaledDivisor}$`);
         answers.push(
-          `簡答：$${built.scaledDividend}\\div${built.scaledDivisor}$。過程：把被除數與除數同時乘 $10^{${built.shift}}$，商不變，所以可化成 $${built.scaledDividend}\\div${built.scaledDivisor}$。`
+          `過程：把被除數與除數同時乘 $10^{${built.shift}}$，商不變，所以可化成 $${built.scaledDividend}\\div${built.scaledDivisor}$。`
         );
       } else {
         questions.push(
           `判斷：$${built.dividendText}\\div${built.divisorText}$ 是否等於 $${built.scaledDividend}\\div${built.scaledDivisor}$？`
         );
         summaryAnswers.push('是');
-        answers.push(`簡答：是。過程：被除數與除數同時乘 $10^{${built.shift}}$，商不變，所以兩式相等。`);
+        answers.push(`過程：被除數與除數同時乘 $10^{${built.shift}}$，商不變，所以兩式相等。`);
       }
     }
 
@@ -1536,7 +1587,7 @@
       );
       summaryAnswers.push(symbol);
       answers.push(
-        `簡答：$${symbol}$。過程：${reason}，所以 $${e614DecimalText(dividend)}\\div${e614DecimalText(divisor)} ${symbol} ${e614DecimalText(dividend)}$。`
+        `過程：${reason}，所以 $${e614DecimalText(dividend)}\\div${e614DecimalText(divisor)} ${symbol} ${e614DecimalText(dividend)}$。`
       );
     }
 
@@ -1565,7 +1616,7 @@
         `不先計算，判斷：$${e614DecimalText(dividend)}\\div${e614DecimalText(divisorA)}\\square${e614DecimalText(dividend)}\\div${e614DecimalText(divisorB)}$，應填入 $>$ 還是 $<$？`
       );
       summaryAnswers.push(symbol);
-      answers.push(`簡答：$${symbol}$。過程：被除數相同時，除數較小，商反而較大。${reason}，所以應填 $${symbol}$。`);
+      answers.push(`過程：被除數相同時，除數較小，商反而較大。${reason}，所以應填 $${symbol}$。`);
     }
 
     return { questions, summaryAnswers, answers };
@@ -1594,7 +1645,7 @@
       );
       summaryAnswers.push(`${pieces}${resultUnit}`);
       answers.push(
-        `簡答：${pieces}${resultUnit}。過程：總量 ÷ 每份量 = $${totalText}\\div${e614DecimalText(each)}=${pieces}$，所以可以裝 ${pieces}${resultUnit}。`
+        `過程：總量 ÷ 每份量 = $${totalText}\\div${e614DecimalText(each)}=${pieces}$，所以可以裝 ${pieces}${resultUnit}。`
       );
     }
 
@@ -1622,7 +1673,7 @@
       questions.push(`買 $${e614DecimalText(quantity)}$ ${leftText} $${totalText}$ ${rightText}？`);
       summaryAnswers.push(`${unitValue}${unit}`);
       answers.push(
-        `簡答：${unitValue}${unit}。過程：求 1 單位的量，要用總量 ÷ 數量，所以 $${totalText}\\div${e614DecimalText(quantity)}=${unitValue}$。`
+        `過程：求 1 單位的量，要用總量 ÷ 數量，所以 $${totalText}\\div${e614DecimalText(quantity)}=${unitValue}$。`
       );
     }
 
@@ -1651,7 +1702,7 @@
       );
       summaryAnswers.push(`${e614DecimalText(answer)}${sideUnit}`);
       answers.push(
-        `簡答：${e614DecimalText(answer)}${sideUnit}。過程：要求另一邊，用 ${totalName} ÷ 已知邊長：$${totalText}\\div${e614DecimalText(known)}=${e614DecimalText(answer)}$。`
+        `過程：要求另一邊，用 ${totalName} ÷ 已知邊長：$${totalText}\\div${e614DecimalText(known)}=${e614DecimalText(answer)}$。`
       );
     }
 
@@ -1669,10 +1720,10 @@
         const hit = randInt(1, total - 1);
         const percent = (hit * 100) / total;
         const rounded = trimDecimalString(String(Math.round(percent)));
-        questions.push(`共投了 ${total} 球，投進 ${hit} 球，進球率約是多少\\%？（四捨五入到百分率個位）`);
-        summaryAnswers.push(`約${rounded}\\%`);
+        questions.push(`共投了 ${total} 球，投進 ${hit} 球，進球率約是多少 %？（四捨五入到百分率個位）`);
+        summaryAnswers.push(`約${rounded}%`);
         answers.push(
-          `簡答：約${rounded}\\%。過程：進球率 = 成功次數 ÷ 總次數 × 100\\% = ${hit} ÷ ${total} × 100\\% = ${trimDecimalString(percent.toFixed(2))}\\%，四捨五入後約為 ${rounded}\\%。`
+          `過程：進球率 = 成功次數 ÷ 總次數 × 100% = ${hit} ÷ ${total} × 100% = ${trimDecimalString(percent.toFixed(2))}%，四捨五入後約為 ${rounded}%。`
         );
       } else {
         const unitRate = e614PickPositiveDecimal({ minInt: 0, maxInt: 4, places: [1, 2], allowInteger: false });
@@ -1680,10 +1731,11 @@
         const total = mulFraction(unitRate, makeFraction(area, 1));
         const totalText = e614DecimalText(total);
         if (e614DecimalPlaces(totalText) > 3) continue;
+        const unitRateText = e614FixedDecimalText(unitRate, 2);
         questions.push(`${area} 平方公尺的田地產出 $${totalText}$ 公斤稻米，1 平方公尺可產幾公斤？（取到小數第二位）`);
-        summaryAnswers.push(`${e614RoundFractionText(divFraction(total, makeFraction(area, 1)), 2)}公斤`);
+        summaryAnswers.push(`${unitRateText}公斤`);
         answers.push(
-          `簡答：${e614RoundFractionText(divFraction(total, makeFraction(area, 1)), 2)}公斤。過程：單位產量 = 總產量 ÷ 面積 = $${totalText}\\div${area}=${e614DecimalText(unitRate)}$，取到小數第二位為 ${e614RoundFractionText(unitRate, 2)}。`
+          `過程：單位產量 = 總產量 ÷ 面積 = $${totalText}\\div${area}=${e614DecimalText(unitRate)}$，取到小數第二位為 ${unitRateText}。`
         );
       }
     }
@@ -1720,83 +1772,112 @@
       );
       summaryAnswers.push(`${q}${resultUnit}，餘${e614DecimalText(remainder)}${remainUnit}`);
       answers.push(
-        `簡答：${q}${resultUnit}，餘${e614DecimalText(remainder)}${remainUnit}。過程：$${totalText}\\div${eachText}=${q}$，剩下 $${e614DecimalText(remainder)}$ ${remainUnit}。餘數要比每一份 ${eachText} 小，且單位要和原量對齊。`
+        `過程：$${totalText}\\div${eachText}=${q}\\text{⋯⋯餘}${e614DecimalText(remainder)}$，所以可分成 ${q}${resultUnit}，剩下 $${e614DecimalText(remainder)}$ ${remainUnit}。餘數要比每一份 ${eachText} 小，且單位要和原量對齊。`
       );
     }
 
     return { questions, summaryAnswers, answers };
   }
 
+  function e614CleanNumberText(value) {
+    return trimDecimalString(Number(value.toFixed(4)).toString());
+  }
 
   function buildE614MixedComputationSet(count) {
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
     // Pre-verified clean cases, 4 modes
-    const mode0 = [ // a÷b + c
-      { a: '8.4',  b: '2.1', q: 4, c: '3.6', r: '7.6'  },
-      { a: '15.2', b: '0.8', q:19, c: '5.5', r: '13.5' },
-      { a: '12.6', b: '3.5', q: 3.6, c: '2.5', r: '6.1', rStr: '6.1' },
-      { a: '20',   b: '1.25',q:16, c: '4',   r: '20'   },
-      { a: '35',   b: '2.5', q:14, c: '6',   r: '20'   },
-      { a: '7.2',  b: '1.2', q: 6, c: '3.8', r: '9.8'  },
+    const mode0 = [
+      // a÷b + c
+      { a: '8.4', b: '2.1', c: '3.6' },
+      { a: '15.2', b: '0.8', c: '5.5' },
+      { a: '12.6', b: '3.5', c: '2.5' },
+      { a: '20', b: '1.25', c: '4' },
+      { a: '35', b: '2.5', c: '6' },
+      { a: '7.2', b: '1.2', c: '3.8' },
+      { a: '14.4', b: '1.2', c: '2.8' },
+      { a: '9.6', b: '0.4', c: '1.5' },
+      { a: '18', b: '2.4', c: '3.3' },
+      { a: '13.2', b: '2.2', c: '4.6' },
     ];
-    const mode1 = [ // a×b - c÷d
-      { a: '3.6',  b: '2.5', ab: '9',  c: '12.8', d: '3.2', cd: '4',  r: '5'   },
-      { a: '4.5',  b: '1.2', ab: '5.4',c: '2.7',  d: '0.9', cd: '3',  r: '2.4' },
-      { a: '2.8',  b: '1.5', ab: '4.2',c: '6.4',  d: '0.8', cd: '8',  r: '-3.8', rStr: '4.2-8=-3.8', display: 'need-reorder'},
-      { a: '5',    b: '1.4', ab: '7',  c: '3.6',  d: '1.2', cd: '3',  r: '4'   },
-      { a: '1.5',  b: '2.4', ab: '3.6',c: '4.8',  d: '3.2', cd: '1.5',r: '2.1' },
+    const mode1 = [
+      // a×b - c÷d（結果皆為正）
+      { a: '3.6', b: '2.5', c: '12.8', d: '3.2' },
+      { a: '4.5', b: '1.2', c: '2.7', d: '0.9' },
+      { a: '2.8', b: '1.5', c: '2.4', d: '0.8' },
+      { a: '5', b: '1.4', c: '3.6', d: '1.2' },
+      { a: '1.5', b: '2.4', c: '4.8', d: '3.2' },
+      { a: '2.4', b: '3.5', c: '5.4', d: '1.8' },
+      { a: '6', b: '1.5', c: '4.2', d: '1.4' },
+      { a: '3.2', b: '2.5', c: '6.3', d: '0.9' },
+      { a: '4.8', b: '1.5', c: '5.5', d: '2.2' },
     ];
-    const mode2 = [ // (a+b) ÷ c
-      { a: '5.2', b: '3.8', sum: '9',  c: '0.5', r: '18', rStr: '18' },
-      { a: '2.5', b: '7.5', sum: '10', c: '2.5', r: '4',  rStr: '4'  },
-      { a: '3.8', b: '1.2', sum: '5',  c: '1.25',r: '4',  rStr: '4'  },
-      { a: '4.5', b: '0.5', sum: '5',  c: '0.4', r: '12.5',rStr: '12.5' },
-      { a: '6.3', b: '0.7', sum: '7',  c: '1.4', r: '5',  rStr: '5'  },
+    const mode2 = [
+      // (a+b) ÷ c
+      { a: '5.2', b: '3.8', c: '0.5' },
+      { a: '2.5', b: '7.5', c: '2.5' },
+      { a: '3.8', b: '1.2', c: '1.25' },
+      { a: '4.5', b: '0.5', c: '0.4' },
+      { a: '6.3', b: '0.7', c: '1.4' },
+      { a: '1.6', b: '2.4', c: '1.6' },
+      { a: '5.5', b: '2.5', c: '1.6' },
+      { a: '7.2', b: '4.8', c: '2.4' },
+      { a: '3.4', b: '2.6', c: '1.5' },
     ];
-    const mode3 = [ // a ÷ b × c
-      { a: '12.6', b: '3.5', q: '3.6', c: '2.5', r: '9'   },
-      { a: '7.5',  b: '0.25',q: '30',  c: '0.4', r: '12'  },
-      { a: '25.2', b: '3.6', q: '7',   c: '1.4', r: '9.8' },
-      { a: '4.8',  b: '1.2', q: '4',   c: '2.5', r: '10'  },
-      { a: '6.4',  b: '0.8', q: '8',   c: '1.5', r: '12'  },
+    const mode3 = [
+      // a ÷ b × c
+      { a: '12.6', b: '3.5', c: '2.5' },
+      { a: '7.5', b: '0.25', c: '0.4' },
+      { a: '25.2', b: '3.6', c: '1.4' },
+      { a: '4.8', b: '1.2', c: '2.5' },
+      { a: '6.4', b: '0.8', c: '1.5' },
+      { a: '9.6', b: '2.4', c: '1.5' },
+      { a: '13.5', b: '4.5', c: '2.6' },
+      { a: '8.1', b: '2.7', c: '3.5' },
+      { a: '14.4', b: '4.8', c: '2.5' },
+    ];
+    const offsets = [
+      randInt(0, mode0.length - 1),
+      randInt(0, mode1.length - 1),
+      randInt(0, mode2.length - 1),
+      randInt(0, mode3.length - 1),
     ];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 4;
       if (mode === 0) {
-        const c = mode0[i % mode0.length];
-        const res = trimDecimalString(String(parseFloat(c.a)/parseFloat(c.b) + parseFloat(c.c)));
-        questions.push(`計算 $${c.a}\div${c.b}+${c.c}=$？`);
+        const c = mode0[(Math.floor(i / 4) + offsets[0]) % mode0.length];
+        const quotient = e614CleanNumberText(parseFloat(c.a) / parseFloat(c.b));
+        const res = e614CleanNumberText(parseFloat(c.a) / parseFloat(c.b) + parseFloat(c.c));
+        questions.push(`計算 $${c.a}\\div${c.b}+${c.c}=$？`);
         summaryAnswers.push(`$${res}$`);
-        answers.push(`簡答：$${res}$。過程：先算除法 $${c.a}\div${c.b}=${trimDecimalString(String(parseFloat(c.a)/parseFloat(c.b)))}$，再加 ${c.c}，得 ${res}。`);
+        answers.push(`過程：先算除法 $${c.a}\\div${c.b}=${quotient}$，再加 ${c.c}，得 ${res}。`);
       } else if (mode === 1) {
-        const c = mode1[Math.floor(i/4) % mode1.length];
-        if (c.display === 'need-reorder') {
-          // swap to avoid negative: use c÷d - a×b order or pick safe case
-          const safe = mode1[0];
-          const res = trimDecimalString(String(parseFloat(safe.a)*parseFloat(safe.b) - parseFloat(safe.c)/parseFloat(safe.d)));
-          questions.push(`計算 $${safe.a}\times${safe.b}-${safe.c}\div${safe.d}=$？`);
-          summaryAnswers.push(`$${res}$`);
-          answers.push(`簡答：$${res}$。過程：先算 $${safe.a}\times${safe.b}=${safe.ab}$ 和 $${safe.c}\div${safe.d}=${safe.cd}$，再相減，得 ${res}。`);
-        } else {
-          const res = trimDecimalString(String(parseFloat(c.a)*parseFloat(c.b) - parseFloat(c.c)/parseFloat(c.d)));
-          questions.push(`計算 $${c.a}\times${c.b}-${c.c}\div${c.d}=$？`);
-          summaryAnswers.push(`$${res}$`);
-          answers.push(`簡答：$${res}$。過程：先算 $${c.a}\times${c.b}=${c.ab}$ 和 $${c.c}\div${c.d}=${c.cd}$，再相減，得 ${res}。`);
-        }
+        const c = mode1[(Math.floor(i / 4) + offsets[1]) % mode1.length];
+        const product = e614CleanNumberText(parseFloat(c.a) * parseFloat(c.b));
+        const quotient = e614CleanNumberText(parseFloat(c.c) / parseFloat(c.d));
+        const res = e614CleanNumberText(parseFloat(c.a) * parseFloat(c.b) - parseFloat(c.c) / parseFloat(c.d));
+        questions.push(`計算 $${c.a}\\times${c.b}-${c.c}\\div${c.d}=$？`);
+        summaryAnswers.push(`$${res}$`);
+        answers.push(
+          `過程：先算 $${c.a}\\times${c.b}=${product}$ 和 $${c.c}\\div${c.d}=${quotient}$，再相減，得 ${res}。`
+        );
       } else if (mode === 2) {
-        const c = mode2[Math.floor(i/4) % mode2.length];
-        const res = trimDecimalString(String((parseFloat(c.a)+parseFloat(c.b)) / parseFloat(c.c)));
-        questions.push(`計算 $(${c.a}+${c.b})\div${c.c}=$？`);
+        const c = mode2[(Math.floor(i / 4) + offsets[2]) % mode2.length];
+        const sum = e614CleanNumberText(parseFloat(c.a) + parseFloat(c.b));
+        const res = e614CleanNumberText((parseFloat(c.a) + parseFloat(c.b)) / parseFloat(c.c));
+        questions.push(`計算 $(${c.a}+${c.b})\\div${c.c}=$？`);
         summaryAnswers.push(`$${res}$`);
-        answers.push(`簡答：$${res}$。過程：先算括號 $${c.a}+${c.b}=${c.sum}$，再除以 ${c.c}，得 ${res}。`);
+        answers.push(`過程：先算括號 $${c.a}+${c.b}=${sum}$，再除以 ${c.c}，得 ${res}。`);
       } else {
-        const c = mode3[Math.floor(i/4) % mode3.length];
-        const res = trimDecimalString(String(parseFloat(c.a)/parseFloat(c.b)*parseFloat(c.c)));
-        questions.push(`計算 $${c.a}\div${c.b}\times${c.c}=$？`);
+        const c = mode3[(Math.floor(i / 4) + offsets[3]) % mode3.length];
+        const quotient = e614CleanNumberText(parseFloat(c.a) / parseFloat(c.b));
+        const res = e614CleanNumberText((parseFloat(c.a) / parseFloat(c.b)) * parseFloat(c.c));
+        questions.push(`計算 $${c.a}\\div${c.b}\\times${c.c}=$？`);
         summaryAnswers.push(`$${res}$`);
-        answers.push(`簡答：$${res}$。過程：從左到右依序計算，$${c.a}\div${c.b}=${c.q}$，再 $${c.q}\times${c.c}=${res}$。`);
+        answers.push(
+          `過程：從左到右依序計算，$${c.a}\\div${c.b}=${quotient}$，再 $${quotient}\\times${c.c}=${res}$。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -1907,7 +1988,7 @@
       questions.push(`求比 $${e615RatioText(left, right)}$ 的比值。`);
       summaryAnswers.push(`$${e615FractionText(value)}$`);
       answers.push(
-        `簡答：$${e615FractionText(value)}$。過程：比值就是前項 ÷ 後項，所以 $${e615FractionText(left)}\\div${e615FractionText(right)}=${e615FractionText(value)}$。`
+        `過程：比值就是前項 ÷ 後項，所以 $${e615FractionText(left)}\\div${e615FractionText(right)}=${e615FractionText(value)}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1923,7 +2004,7 @@
       questions.push(`把 $${e615RatioText(left, right)}$ 化成最簡整數比。`);
       summaryAnswers.push(`$${a}:${b}$`);
       answers.push(
-        `簡答：$${a}:${b}$。過程：先同乘分母公倍數，把比化成整數比，再同除最大公因數，得到最簡整數比 $${a}:${b}$。`
+        `過程：先同乘分母公倍數，把比化成整數比，再同除最大公因數，得到最簡整數比 $${a}:${b}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1942,12 +2023,12 @@
         const c = a * scale;
         questions.push(`已知 $${a}:${b}=(${c}):\\square$，求空格中的數。`);
         summaryAnswers.push(`$${b * scale}$`);
-        answers.push(`簡答：$${b * scale}$。過程：前項乘上 ${scale}，後項也要乘上 ${scale}，所以空格是 ${b * scale}。`);
+        answers.push(`過程：前項乘上 ${scale}，後項也要乘上 ${scale}，所以空格是 ${b * scale}。`);
       } else {
         const d = b * scale;
         questions.push(`已知 $${a}:${b}=\\square:${d}$，求空格中的數。`);
         summaryAnswers.push(`$${a * scale}$`);
-        answers.push(`簡答：$${a * scale}$。過程：後項乘上 ${scale}，前項也要乘上 ${scale}，所以空格是 ${a * scale}。`);
+        answers.push(`過程：後項乘上 ${scale}，前項也要乘上 ${scale}，所以空格是 ${a * scale}。`);
       }
     }
     return { questions, summaryAnswers, answers };
@@ -1957,29 +2038,41 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const itemNames = ['蘋果', '白米', '果汁', '牛奶', '文具'];
-    const unitNames = ['公斤', '公升', '本', '支'];
+    const itemContexts = [
+      ['蘋果', '公斤'],
+      ['白米', '公斤'],
+      ['果汁', '公升'],
+      ['牛奶', '公升'],
+      ['參考書', '本'],
+      ['鉛筆', '支'],
+    ];
     for (let i = 0; i < count; i += 1) {
-      const item = pickFromList(itemNames);
-      const unit = i % 2 === 0 ? '公斤' : pickFromList(unitNames);
+      const [item, unit] = pickFromList(itemContexts);
       const brandA = ['甲店', '乙店', '丙店'];
       const offers = [];
+      const usedPrices = [];
       for (let j = 0; j < 3; j += 1) {
-        const quantity = makeFraction(randInt(2, 10) * (j + 2), randInt(1, 2));
-        const unitPrice = randInt(12, 40);
-        const total = mulFraction(quantity, makeFraction(unitPrice, 1));
+        let quantity;
+        let unitPrice;
+        let total;
+        do {
+          quantity = makeFraction(randInt(2, 10) * (j + 2), randInt(1, 2));
+          unitPrice = randInt(12, 40);
+          total = mulFraction(quantity, makeFraction(unitPrice, 1));
+        } while (total.den !== 1 || usedPrices.includes(unitPrice));
+        usedPrices.push(unitPrice);
         offers.push({ brand: brandA[j], quantity, total, unitPrice });
       }
       const best = offers.reduce((acc, itemRow) => (itemRow.unitPrice < acc.unitPrice ? itemRow : acc), offers[0]);
       questions.push(
-        `${offers.map((row) => `${row.brand}${e615FractionText(row.quantity)}${unit}賣 ${row.total.num / row.total.den} 元`).join('，')}，哪一家平均每 1 ${unit} 最便宜？`
+        `${offers.map((row) => `${row.brand} $${e615FractionText(row.quantity)}$ ${unit}賣 ${row.total.num / row.total.den} 元`).join('，')}，哪一家平均每 1 ${unit}最便宜？`
       );
       summaryAnswers.push(best.brand);
       answers.push(
-        `簡答：${best.brand}。過程：分別求單位量的價格：${offers
+        `過程：分別求單位量的價格：${offers
           .map(
             (row) =>
-              `${row.brand} 為 ${row.total.num / row.total.den}÷${e615FractionText(row.quantity)}=${row.unitPrice}`
+              `${row.brand} 為 $${row.total.num / row.total.den}\\div${e615FractionText(row.quantity)}=${row.unitPrice}$`
           )
           .join('，')}，單價最小的是 ${best.brand}。`
       );
@@ -1992,10 +2085,10 @@
     const summaryAnswers = [];
     const answers = [];
     const scenarios = [
-      { left: '張獎勵貼紙', right: '張榮譽卡', object: '榮譽卡', rightUnit: '張', leftUnit: '張' },
-      { left: '張點數券', right: '枝飛鏢', object: '飛鏢', rightUnit: '枝', leftUnit: '張' },
-      { left: '顆電池', right: '個布丁', object: '布丁', rightUnit: '個', leftUnit: '顆' },
-      { left: '元新臺幣', right: '美元', object: '美元', rightUnit: '元', leftUnit: '元' },
+      { left: '張獎勵貼紙', right: '張榮譽卡', target: '張榮譽卡', leftUnit: '張' },
+      { left: '張點數券', right: '枝飛鏢', target: '枝飛鏢', leftUnit: '張' },
+      { left: '顆電池', right: '個布丁', target: '個布丁', leftUnit: '顆' },
+      { left: '枚遊戲代幣', right: '張兌換券', target: '張兌換券', leftUnit: '枚' },
     ];
     for (let i = 0; i < count; i += 1) {
       const s = scenarios[randInt(0, scenarios.length - 1)];
@@ -2004,11 +2097,11 @@
       const wanted = randInt(3, 12) * b;
       const answer = (wanted / b) * a;
       questions.push(
-        `若 $${a}$ ${s.left} 可以換 $${b}$ ${s.right}，要換到 $${wanted}$ ${s.rightUnit}${s.object}，需要多少${s.left}？`
+        `若 $${a}$ ${s.left} 可以換 $${b}$ ${s.right}，要換到 $${wanted}$ ${s.target}，需要多少${s.left}？`
       );
       summaryAnswers.push(`${answer}${s.leftUnit}`);
       answers.push(
-        `簡答：${answer}${s.leftUnit}。過程：先看比是 $${a}:${b}$，${wanted} 是 ${b} 的 ${wanted / b} 倍，所以前項也乘上 ${wanted / b}，得到 ${answer}${s.leftUnit}。`
+        `過程：先看比是 $${a}:${b}$，${wanted} 是 ${b} 的 ${wanted / b} 倍，所以前項也乘上 ${wanted / b}，得到 ${answer}${s.leftUnit}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2018,19 +2111,27 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const itemPairs = [
+      ['男生', '全班人數'],
+      ['白米', '總重'],
+      ['小說類', '全部藏書'],
+      ['草蝦', '池中總蝦數'],
+      ['雞蛋', '總顆數'],
+    ];
     for (let i = 0; i < count; i += 1) {
-      const total = randInt(60, 180) * 5;
       const part = randInt(1, 4);
-      const whole = randInt(part + 1, 8);
-      const value = Math.floor((total * part) / whole);
-      const itemA = pickFromList(['男生', '白米', '小說類', '草蝦', '雞蛋']);
-      const itemB = pickFromList(['全班', '總重', '全部書', '池中總蝦數', '總顆數']);
+      let whole = randInt(part + 1, 8);
+      while (gcd(part, whole) !== 1) whole = randInt(part + 1, 8);
+      const unitAmount = randInt(40, 120);
+      const total = whole * unitAmount;
+      const value = part * unitAmount;
+      const [itemA, itemB] = pickFromList(itemPairs);
       questions.push(
         `已知 ${itemA} 與 ${itemB} 的比是 $${part}:${whole}$，若 ${itemB} 對應的總量是 ${total}，則 ${itemA} 對應多少？`
       );
       summaryAnswers.push(`${value}`);
       answers.push(
-        `簡答：${value}。過程：部分量 ÷ 全體量 = ${part}/${whole}，所以部分量 = $${total}\\times\\frac{${part}}{${whole}}=${value}$。`
+        `過程：部分量 ÷ 全體量 = ${part}/${whole}，所以部分量 = $${total}\\times\\frac{${part}}{${whole}}=${value}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2059,7 +2160,7 @@
       );
       summaryAnswers.push(`${leftName}${leftValue}，${rightName}${rightValue}`);
       answers.push(
-        `簡答：${leftName}${leftValue}，${rightName}${rightValue}。過程：總份數是 ${a + b} 份，每 1 份是 ${total}÷${a + b}=${totalUnits}，所以分別是 ${a}×${totalUnits}=${leftValue}、${b}×${totalUnits}=${rightValue}。`
+        `過程：總份數是 ${a + b} 份，每 1 份是 ${total}÷${a + b}=${totalUnits}，所以分別是 ${a}×${totalUnits}=${leftValue}、${b}×${totalUnits}=${rightValue}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2088,7 +2189,7 @@
         );
         summaryAnswers.push(`${knownRight}${theme.unit}`);
         answers.push(
-          `簡答：${knownRight}${theme.unit}。過程：前項 ${a} 份變成 ${knownLeft}，放大倍數是 ${knownLeft / a}，所以後項也乘上同樣倍數，得到 ${knownRight}。`
+          `過程：前項 ${a} 份變成 ${knownLeft}，放大倍數是 ${knownLeft / a}，所以後項也乘上同樣倍數，得到 ${knownRight}。`
         );
       } else {
         questions.push(
@@ -2096,7 +2197,7 @@
         );
         summaryAnswers.push(`${knownLeft}${theme.unit}`);
         answers.push(
-          `簡答：${knownLeft}${theme.unit}。過程：後項 ${b} 份變成 ${knownRight}，放大倍數是 ${knownRight / b}，所以前項也乘上同樣倍數，得到 ${knownLeft}。`
+          `過程：後項 ${b} 份變成 ${knownRight}，放大倍數是 ${knownRight / b}，所以前項也乘上同樣倍數，得到 ${knownLeft}。`
         );
       }
     }
@@ -2117,7 +2218,7 @@
         questions.push(`商品打 ${ratioNum} 折後售價是 ${paid} 元，原價是多少元？`);
         summaryAnswers.push(`${original}元`);
         answers.push(
-          `簡答：${original}元。過程：售價：原價 = ${ratioNum}:10，所以原價 = ${paid}÷${ratioNum}×10=${original}。`
+          `過程：售價：原價 = ${ratioNum}:10，所以原價 = ${paid}÷${ratioNum}×10=${original}。`
         );
         continue;
       }
@@ -2126,7 +2227,7 @@
         const paid = Math.floor(meal * 1.1);
         questions.push(`結帳時加收一成服務費，共付 ${paid} 元，未加服務費前是多少元？`);
         summaryAnswers.push(`${meal}元`);
-        answers.push(`簡答：${meal}元。過程：總付金額：原價 = 11:10，所以原價 = ${paid}÷11×10=${meal}。`);
+        answers.push(`過程：總付金額：原價 = 11:10，所以原價 = ${paid}÷11×10=${meal}。`);
         continue;
       }
       if (mode === 'markup') {
@@ -2136,7 +2237,7 @@
         questions.push(`定價是成本的 $${e615FractionText(ratio, false)}$ 倍，若成本是 ${cost} 元，定價是多少元？`);
         summaryAnswers.push(`${price.num / price.den}元`);
         answers.push(
-          `簡答：${price.num / price.den}元。過程：定價：成本 = ${e615FractionText(ratio, false)}:1，所以定價 = ${cost}×${e615FractionText(ratio, false)}=${price.num / price.den}。`
+          `過程：定價：成本 $= ${e615FractionText(ratio, false)}:1$，所以定價 $= ${cost}×${e615FractionText(ratio, false)}=${price.num / price.den}$。`
         );
         continue;
       }
@@ -2146,7 +2247,7 @@
       questions.push(`把薪水的 ${saveNum} 成存起來，這個月花了 ${spent} 元，這個月薪水是多少元？`);
       summaryAnswers.push(`${salary}元`);
       answers.push(
-        `簡答：${salary}元。過程：花費：薪水 = ${10 - saveNum}:10，所以薪水 = ${spent}÷${10 - saveNum}×10=${salary}。`
+        `過程：花費：薪水 = ${10 - saveNum}:10，所以薪水 = ${spent}÷${10 - saveNum}×10=${salary}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2166,7 +2267,7 @@
         questions.push(`螢幕長：寬 = ${scaleA}:${scaleB}，若寬是 ${width} 公分，長是多少公分？`);
         summaryAnswers.push(`${length}公分`);
         answers.push(
-          `簡答：${length}公分。過程：長：寬 = ${scaleA}:${scaleB}，寬 ${width} 對應 ${scaleB} 份，所以每份是 ${width}÷${scaleB}，長是 ${scaleA} 份，得到 ${length}。`
+          `過程：長：寬 = ${scaleA}:${scaleB}，寬 ${width} 對應 ${scaleB} 份，所以每份是 ${width}÷${scaleB}，長是 ${scaleA} 份，得到 ${length}。`
         );
         continue;
       }
@@ -2178,7 +2279,7 @@
         questions.push(`在比例尺 $1:${ratioB}$ 的地圖上，長 ${mapLen} 公分代表實際多少公分？`);
         summaryAnswers.push(`${actual}公分`);
         answers.push(
-          `簡答：${actual}公分。過程：圖上：實際 = 1:${ratioB}，圖上 ${mapLen} 公分就代表實際 ${mapLen}×${ratioB}=${actual} 公分。`
+          `過程：圖上：實際 = 1:${ratioB}，圖上 ${mapLen} 公分就代表實際 ${mapLen}×${ratioB}=${actual} 公分。`
         );
         continue;
       }
@@ -2190,9 +2291,9 @@
         questions.push(
           `同一時間下，身高 ${personHeight} 公分的人影長 ${personShadow} 公分；若另一物體影長 ${objectShadow} 公分，它的高度是多少公分？`
         );
-        summaryAnswers.push(`${e615FractionText(objectHeight)}公分`);
+        summaryAnswers.push(`$${e615FractionText(objectHeight)}$公分`);
         answers.push(
-          `簡答：${e615FractionText(objectHeight)}公分。過程：同時測量時，高：影長比相同，所以 $${personHeight}:${personShadow}=x:${objectShadow}$，解得 $x=${e615FractionText(objectHeight)}$。`
+          `過程：同時測量時，高：影長比相同，所以 $${personHeight}:${personShadow}=x:${objectShadow}$，解得 $x=${e615FractionText(objectHeight)}$。`
         );
         continue;
       }
@@ -2209,7 +2310,7 @@
       questions.push(`長方形長是 ${length} 公分，長與寬的比是 ${ratioL}:${ratioW}，面積是多少平方公分？`);
       summaryAnswers.push(`${area}平方公分`);
       answers.push(
-        `簡答：${area}平方公分。過程：長 ${length} 對應 ${ratioL} 份，所以 1 份是 ${scale}，寬是 ${ratioW}×${scale}=${width}，面積是 ${length}×${width}=${area}。`
+        `過程：長 ${length} 對應 ${ratioL} 份，所以 1 份是 ${scale}，寬是 ${ratioW}×${scale}=${width}，面積是 ${length}×${width}=${area}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2223,10 +2324,11 @@
       const mode = i % 3;
       if (mode === 0) {
         const k = pickFromList([makeFraction(3, 2), makeFraction(5, 2), makeFraction(5, 4), makeFraction(7, 4)]);
+        const ratio = e615ScaleRatioToIntegers(k, makeFraction(1, 1));
         questions.push(`甲數是乙數的 $${e615FractionText(k, false)}$ 倍，甲對乙的比怎麼寫？比值是多少？`);
-        summaryAnswers.push(`$${e615FractionText(k, false)}:1$，$${e615FractionText(k)}$`);
+        summaryAnswers.push(`$${ratio[0]}:${ratio[1]}$，$${e615FractionText(k)}$`);
         answers.push(
-          `簡答：$${e615FractionText(k, false)}:1$，比值是 $${e615FractionText(k)}$。過程：幾倍就是前項 ÷ 後項的結果，所以甲：乙 = ${e615FractionText(k, false)}:1。`
+          `過程：甲是乙的 $${e615FractionText(k, false)}$ 倍，先寫成 $${e615FractionText(k, false)}:1$，再同乘分母化成最簡整數比 $${ratio[0]}:${ratio[1]}$；比值是 $${e615FractionText(k)}$。`
         );
         continue;
       }
@@ -2235,20 +2337,20 @@
         questions.push(`打 ${num} 折表示「售價：原價」的比是多少？比值是多少？`);
         summaryAnswers.push(`$${num}:10$，$${e615FractionText(makeFraction(num, 10))}$`);
         answers.push(
-          `簡答：$${num}:10$，比值是 $${e615FractionText(makeFraction(num, 10))}$。過程：${num} 折就是原價的 ${num}/10，所以售價：原價 = ${num}:10。`
+          `過程：${num} 折就是原價的 ${num}/10，所以售價：原價 = ${num}:10。`
         );
         continue;
       }
       const ratio = pickFromList([makeFraction(5, 4), makeFraction(3, 2), makeFraction(8, 5)]);
+      const integerRatio = e615ScaleRatioToIntegers(ratio, makeFraction(1, 1));
       questions.push(`定價是成本的 $${e615FractionText(ratio, false)}$ 倍，定價對成本的比怎麼寫？比值是多少？`);
-      summaryAnswers.push(`$${e615FractionText(ratio, false)}:1$，$${e615FractionText(ratio)}$`);
+      summaryAnswers.push(`$${integerRatio[0]}:${integerRatio[1]}$，$${e615FractionText(ratio)}$`);
       answers.push(
-        `簡答：$${e615FractionText(ratio, false)}:1$，比值是 $${e615FractionText(ratio)}$。過程：若 A 是 B 的幾倍，就表示 $A:B=幾倍:1$。`
+        `過程：先寫成 $${e615FractionText(ratio, false)}:1$，再同乘分母化成最簡整數比 $${integerRatio[0]}:${integerRatio[1]}$；比值是 $${e615FractionText(ratio)}$。`
       );
     }
     return { questions, summaryAnswers, answers };
   }
-
 
   function buildE615ChainRatioSet(count) {
     const questions = [];
@@ -2256,41 +2358,61 @@
     const answers = [];
     // Cases where B term already matches
     const directCases = [
-      { a: '甲', b: '乙', c: '丙', ab: [1,2], bc: [2,3], abc: [1,2,3] },
-      { a: '甲', b: '乙', c: '丙', ab: [2,3], bc: [3,4], abc: [2,3,4] },
-      { a: 'A',  b: 'B',  c: 'C',  ab: [1,3], bc: [3,5], abc: [1,3,5] },
-      { a: 'A',  b: 'B',  c: 'C',  ab: [4,5], bc: [5,6], abc: [4,5,6] },
-      { a: '甲', b: '乙', c: '丙', ab: [3,5], bc: [5,7], abc: [3,5,7] },
+      { a: '甲', b: '乙', c: '丙', ab: [1, 2], bc: [2, 3], abc: [1, 2, 3] },
+      { a: '甲', b: '乙', c: '丙', ab: [2, 3], bc: [3, 4], abc: [2, 3, 4] },
+      { a: 'A', b: 'B', c: 'C', ab: [1, 3], bc: [3, 5], abc: [1, 3, 5] },
+      { a: 'A', b: 'B', c: 'C', ab: [4, 5], bc: [5, 6], abc: [4, 5, 6] },
+      { a: '甲', b: '乙', c: '丙', ab: [3, 5], bc: [5, 7], abc: [3, 5, 7] },
     ];
     // Cases requiring LCM scaling
     const lcmCases = [
-      { a: 'A',  b: 'B',  c: 'C',  ab: [1,2], bc: [3,4], lcmB: 6,  mAB: 3, mBC: 2, abc: [3,6,8]    },
-      { a: '甲', b: '乙', c: '丙', ab: [2,3], bc: [4,5], lcmB: 12, mAB: 4, mBC: 3, abc: [8,12,15]  },
-      { a: 'A',  b: 'B',  c: 'C',  ab: [3,4], bc: [2,3], lcmB: 4,  mAB: 1, mBC: 2, abc: [3,4,6]    },
-      { a: '甲', b: '乙', c: '丙', ab: [2,5], bc: [3,4], lcmB: 15, mAB: 3, mBC: 5, abc: [6,15,20]  },
+      { a: 'A', b: 'B', c: 'C', ab: [1, 2], bc: [3, 4], lcmB: 6, mAB: 3, mBC: 2, abc: [3, 6, 8] },
+      { a: '甲', b: '乙', c: '丙', ab: [2, 3], bc: [4, 5], lcmB: 12, mAB: 4, mBC: 3, abc: [8, 12, 15] },
+      { a: 'A', b: 'B', c: 'C', ab: [3, 4], bc: [2, 3], lcmB: 4, mAB: 1, mBC: 2, abc: [3, 4, 6] },
+      { a: '甲', b: '乙', c: '丙', ab: [2, 5], bc: [3, 4], lcmB: 15, mAB: 3, mBC: 5, abc: [6, 15, 20] },
     ];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 3;
       if (mode === 0) {
         const c = directCases[i % directCases.length];
-        questions.push(`已知 ${c.a}:${c.b}=${c.ab[0]}:${c.ab[1]}，${c.b}:${c.c}=${c.bc[0]}:${c.bc[1]}，求 ${c.a}:${c.b}:${c.c}。`);
+        questions.push(
+          `已知 ${c.a}:${c.b}=${c.ab[0]}:${c.ab[1]}，${c.b}:${c.c}=${c.bc[0]}:${c.bc[1]}，求 ${c.a}:${c.b}:${c.c}。`
+        );
         const res = c.abc.join(':');
         summaryAnswers.push(res);
-        answers.push(`簡答：${res}。過程：兩個比中「${c.b}」的數值都是 ${c.ab[1]}，直接合併得 ${c.a}:${c.b}:${c.c}=${res}。`);
+        answers.push(
+          `過程：兩個比中「${c.b}」的數值都是 ${c.ab[1]}，直接合併得 ${c.a}:${c.b}:${c.c}=${res}。`
+        );
       } else if (mode === 1) {
         const c = lcmCases[i % lcmCases.length];
-        questions.push(`已知 ${c.a}:${c.b}=${c.ab[0]}:${c.ab[1]}，${c.b}:${c.c}=${c.bc[0]}:${c.bc[1]}，求 ${c.a}:${c.b}:${c.c}。`);
+        questions.push(
+          `已知 ${c.a}:${c.b}=${c.ab[0]}:${c.ab[1]}，${c.b}:${c.c}=${c.bc[0]}:${c.bc[1]}，求 ${c.a}:${c.b}:${c.c}。`
+        );
         const res = c.abc.join(':');
         summaryAnswers.push(res);
-        const s1a = c.ab[0]*c.mAB, s1b = c.ab[1]*c.mAB;
-        const s2b = c.bc[0]*c.mBC, s2c = c.bc[1]*c.mBC;
-        answers.push(`簡答：${res}。過程：把「${c.b}」化成相同的數。第一個比 ×${c.mAB} → ${s1a}:${s1b}，第二個比 ×${c.mBC} → ${s2b}:${s2c}，合併得 ${c.a}:${c.b}:${c.c}=${res}。`);
+        const s1a = c.ab[0] * c.mAB,
+          s1b = c.ab[1] * c.mAB;
+        const s2b = c.bc[0] * c.mBC,
+          s2c = c.bc[1] * c.mBC;
+        answers.push(
+          `過程：把「${c.b}」化成相同的數。第一個比 ×${c.mAB} → ${s1a}:${s1b}，第二個比 ×${c.mBC} → ${s2b}:${s2c}，合併得 ${c.a}:${c.b}:${c.c}=${res}。`
+        );
       } else {
         const c = directCases[i % directCases.length];
-        const ac0 = c.abc[0], ac1 = c.abc[2];
-        questions.push(`已知 ${c.a}:${c.b}=${c.ab[0]}:${c.ab[1]}，${c.b}:${c.c}=${c.bc[0]}:${c.bc[1]}，求 ${c.a}:${c.c}。`);
+        const rawAc0 = c.abc[0];
+        const rawAc1 = c.abc[2];
+        const g = gcd(rawAc0, rawAc1);
+        const ac0 = rawAc0 / g;
+        const ac1 = rawAc1 / g;
+        questions.push(
+          `已知 ${c.a}:${c.b}=${c.ab[0]}:${c.ab[1]}，${c.b}:${c.c}=${c.bc[0]}:${c.bc[1]}，求 ${c.a}:${c.c}。`
+        );
         summaryAnswers.push(`${ac0}:${ac1}`);
-        answers.push(`簡答：${ac0}:${ac1}。過程：先求連比 ${c.a}:${c.b}:${c.c}=${c.abc.join(':')}，首項與末項的比為 ${ac0}:${ac1}。`);
+        answers.push(
+          g === 1
+            ? `過程：先求連比 ${c.a}:${c.b}:${c.c}=${c.abc.join(':')}，首項與末項的比為 ${ac0}:${ac1}。`
+            : `過程：先求連比 ${c.a}:${c.b}:${c.c}=${c.abc.join(':')}，首項與末項的比為 ${rawAc0}:${rawAc1}，再同除以 ${g} 化成最簡整數比 ${ac0}:${ac1}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -2302,11 +2424,11 @@
     const answers = [];
     const items = ['上衣', '外套', '鞋子', '書包', '玩具', '運動鞋', '帽子'];
     const discountCases = [
-      { label: '8折',  rate: 0.8  },
+      { label: '8折', rate: 0.8 },
       { label: '85折', rate: 0.85 },
       { label: '75折', rate: 0.75 },
-      { label: '9折',  rate: 0.9  },
-      { label: '7折',  rate: 0.7  },
+      { label: '9折', rate: 0.9 },
+      { label: '7折', rate: 0.7 },
       { label: '95折', rate: 0.95 },
     ];
     const prices = [100, 200, 300, 400, 500, 600, 800, 1000, 1200, 1500, 2000];
@@ -2318,11 +2440,15 @@
       if (i % 2 === 0) {
         questions.push(`一件${item}原價 ${price} 元，打${dc.label}出售，售價是多少元？`);
         summaryAnswers.push(`${sale}元`);
-        answers.push(`簡答：${sale}元。過程：打${dc.label}表示售價是原價的 ${dc.rate}，所以 ${price} × ${dc.rate} = ${sale}。`);
+        answers.push(
+          `過程：打${dc.label}表示售價是原價的 ${dc.rate}，所以 ${price} × ${dc.rate} = ${sale}。`
+        );
       } else {
         questions.push(`一件${item}打${dc.label}後售價是 ${sale} 元，原價是多少元？`);
         summaryAnswers.push(`${price}元`);
-        answers.push(`簡答：${price}元。過程：打${dc.label}即售價 = 原價 × ${dc.rate}，所以原價 = ${sale} ÷ ${dc.rate} = ${price}。`);
+        answers.push(
+          `過程：打${dc.label}即售價 = 原價 × ${dc.rate}，所以原價 = ${sale} ÷ ${dc.rate} = ${price}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -2397,7 +2523,7 @@
       if (mode === 0) {
         questions.push('圓周長和直徑的比值，稱作什麼？');
         summaryAnswers.push('圓周率');
-        answers.push('簡答：圓周率。過程：圓周率就是「圓周長 ÷ 直徑」的固定比值。');
+        answers.push('過程：圓周率就是「圓周長 ÷ 直徑」的固定比值。');
         continue;
       }
       if (mode === 1) {
@@ -2405,7 +2531,7 @@
         const circumference = e616CircumferenceByDiameter(diameter);
         questions.push(`圓周長 ${e616FormatNumber(circumference)} 公分大約是直徑 ${diameter} 公分的幾倍？`);
         summaryAnswers.push('3.14 倍');
-        answers.push(`簡答：3.14 倍。過程：圓周長 ÷ 直徑 = ${e616FormatNumber(circumference)} ÷ ${diameter} = 3.14。`);
+        answers.push(`過程：圓周長 ÷ 直徑 = ${e616FormatNumber(circumference)} ÷ ${diameter} = 3.14。`);
         continue;
       }
       if (mode === 2) {
@@ -2413,19 +2539,19 @@
         questions.push(`若一個圓的直徑變成原來的 ${multiplier} 倍，圓周長會變成原來的幾倍？`);
         summaryAnswers.push(`${multiplier}倍`);
         answers.push(
-          `簡答：${multiplier}倍。過程：圓周長 = 直徑 × 3.14，直徑放大 ${multiplier} 倍，圓周長也跟著放大 ${multiplier} 倍。`
+          `過程：圓周長 = 直徑 × 3.14，直徑放大 ${multiplier} 倍，圓周長也跟著放大 ${multiplier} 倍。`
         );
         continue;
       }
       if (mode === 3) {
         questions.push('大圓和小圓的圓周率，哪一個比較大？');
         summaryAnswers.push('一樣大');
-        answers.push('簡答：一樣大。過程：圓周率是圓周長和直徑的固定比值，不會因為圓變大或變小而改變。');
+        answers.push('過程：圓周率是圓周長和直徑的固定比值，不會因為圓變大或變小而改變。');
         continue;
       }
       questions.push('圓周長大約是半徑的幾倍？');
       summaryAnswers.push('6.28 倍');
-      answers.push('簡答：6.28 倍。過程：圓周長 = 半徑 × 2 × 3.14 = 半徑 × 6.28。');
+      answers.push('過程：圓周長 = 半徑 × 2 × 3.14 = 半徑 × 6.28。');
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2441,7 +2567,7 @@
         questions.push(`一個直徑 ${diameter} 公分的圓，圓周長大約是多少公分？`);
         summaryAnswers.push(`${e616FormatNumber(circumference)}公分`);
         answers.push(
-          `簡答：${e616FormatNumber(circumference)}公分。過程：圓周長 = 直徑 × 3.14 = ${diameter} × 3.14 = ${e616FormatNumber(circumference)}。`
+          `過程：圓周長 = 直徑 × 3.14 = ${diameter} × 3.14 = ${e616FormatNumber(circumference)}。`
         );
       } else {
         const radius = pickFromList([3, 4, 5, 6, 8, 9, 10, 12, 15, 18]);
@@ -2449,7 +2575,7 @@
         questions.push(`一個半徑 ${radius} 公分的圓，圓周長大約是多少公分？`);
         summaryAnswers.push(`${e616FormatNumber(circumference)}公分`);
         answers.push(
-          `簡答：${e616FormatNumber(circumference)}公分。過程：圓周長 = 半徑 × 2 × 3.14 = ${radius} × 2 × 3.14 = ${e616FormatNumber(circumference)}。`
+          `過程：圓周長 = 半徑 × 2 × 3.14 = ${radius} × 2 × 3.14 = ${e616FormatNumber(circumference)}。`
         );
       }
     }
@@ -2467,7 +2593,7 @@
         questions.push(`一個圓的圓周長大約是 ${e616FormatNumber(circumference)} 公分，它的直徑大約是多少公分？`);
         summaryAnswers.push(`${diameter}公分`);
         answers.push(
-          `簡答：${diameter}公分。過程：直徑 = 圓周長 ÷ 3.14 = ${e616FormatNumber(circumference)} ÷ 3.14 = ${diameter}。`
+          `過程：直徑 = 圓周長 ÷ 3.14 = ${e616FormatNumber(circumference)} ÷ 3.14 = ${diameter}。`
         );
       } else {
         const radius = pickFromList([3, 5, 6, 8, 10, 12, 15, 18, 20, 25]);
@@ -2475,7 +2601,7 @@
         questions.push(`一個圓的圓周長大約是 ${e616FormatNumber(circumference)} 公分，它的半徑大約是多少公分？`);
         summaryAnswers.push(`${radius}公分`);
         answers.push(
-          `簡答：${radius}公分。過程：半徑 = 圓周長 ÷ 3.14 ÷ 2 = ${e616FormatNumber(circumference)} ÷ 3.14 ÷ 2 = ${radius}。`
+          `過程：半徑 = 圓周長 ÷ 3.14 ÷ 2 = ${e616FormatNumber(circumference)} ÷ 3.14 ÷ 2 = ${radius}。`
         );
       }
     }
@@ -2497,13 +2623,13 @@
         questions.push(`${name}半徑是 ${radius} 公分，轉了 ${rounds} 圈，大約前進了多少公分？`);
         summaryAnswers.push(`${e616FormatNumber(distance)}公分`);
         answers.push(
-          `簡答：${e616FormatNumber(distance)}公分。過程：一圈前進的距離就是圓周長，為 ${radius} × 2 × 3.14 = ${e616FormatNumber(circumference)}，所以前進 ${e616FormatNumber(circumference)} × ${rounds} = ${e616FormatNumber(distance)}。`
+          `過程：一圈前進的距離就是圓周長，為 ${radius} × 2 × 3.14 = ${e616FormatNumber(circumference)}，所以前進 ${e616FormatNumber(circumference)} × ${rounds} = ${e616FormatNumber(distance)}。`
         );
       } else {
         questions.push(`${name}半徑是 ${radius} 公分，若前進了 ${e616FormatNumber(distance)} 公分，大約轉了幾圈？`);
         summaryAnswers.push(`${rounds}圈`);
         answers.push(
-          `簡答：${rounds}圈。過程：先求一圈的圓周長 ${e616FormatNumber(circumference)} 公分，再用總距離 ÷ 一圈距離 = ${e616FormatNumber(distance)} ÷ ${e616FormatNumber(circumference)} = ${rounds}。`
+          `過程：先求一圈的圓周長 ${e616FormatNumber(circumference)} 公分，再用總距離 ÷ 一圈距離 = ${e616FormatNumber(distance)} ÷ ${e616FormatNumber(circumference)} = ${rounds}。`
         );
       }
     }
@@ -2531,7 +2657,7 @@
         );
         summaryAnswers.push(`${radius}公分`);
         answers.push(
-          `簡答：${radius}公分。過程：圓周長 = 步數 × 步長 = ${steps} × ${e616FormatNumber(stepLength)} = ${e616FormatNumber(circumference)}，半徑 = ${e616FormatNumber(circumference)} ÷ 3.14 ÷ 2 = ${radius}。`
+          `過程：圓周長 = 步數 × 步長 = ${steps} × ${e616FormatNumber(stepLength)} = ${e616FormatNumber(circumference)}，半徑 = ${e616FormatNumber(circumference)} ÷ 3.14 ÷ 2 = ${radius}。`
         );
       } else {
         const diameter = radius * 2;
@@ -2540,7 +2666,7 @@
         );
         summaryAnswers.push(`${diameter}公分`);
         answers.push(
-          `簡答：${diameter}公分。過程：圓周長 = ${steps} × ${e616FormatNumber(stepLength)} = ${e616FormatNumber(circumference)}，直徑 = ${e616FormatNumber(circumference)} ÷ 3.14 = ${diameter}。`
+          `過程：圓周長 = ${steps} × ${e616FormatNumber(stepLength)} = ${e616FormatNumber(circumference)}，直徑 = ${e616FormatNumber(circumference)} ÷ 3.14 = ${diameter}。`
         );
       }
     }
@@ -2561,7 +2687,7 @@
         questions.push(`半徑 ${radius} 公分、圓心角 ${angle}° 的扇形，周長大約是多少公分？`);
         summaryAnswers.push(`${e616FormatNumber(perimeter)}公分`);
         answers.push(
-          `簡答：${e616FormatNumber(perimeter)}公分。過程：弧長 = 圓周長 × ${angle}/360 = ${e616FormatNumber(arc)}，扇形周長 = 弧長 + 2 條半徑 = ${e616FormatNumber(arc)} + ${2 * radius} = ${e616FormatNumber(perimeter)}。`
+          `過程：弧長 = 圓周長 × ${angle}/360 = ${e616FormatNumber(arc)}，扇形周長 = 弧長 + 2 條半徑 = ${e616FormatNumber(arc)} + ${2 * radius} = ${e616FormatNumber(perimeter)}。`
         );
         continue;
       }
@@ -2581,7 +2707,7 @@
         );
         summaryAnswers.push(`${e616FormatNumber(perimeter)}公分`);
         answers.push(
-          `簡答：${e616FormatNumber(perimeter)}公分。過程：這一段弧長是整個圓周長的 $\\frac{${partNum}}{${partDen}}$，所以弧長為 ${e616FormatNumber(arc)}，再加上兩條半徑 ${2 * radius}，周長是 ${e616FormatNumber(perimeter)}。`
+          `過程：這一段弧長是整個圓周長的 $\\frac{${partNum}}{${partDen}}$，所以弧長為 ${e616FormatNumber(arc)}，再加上兩條半徑 ${2 * radius}，周長是 ${e616FormatNumber(perimeter)}。`
         );
         continue;
       }
@@ -2593,7 +2719,7 @@
       questions.push(`直徑 ${diameter} 公分、圓心角 ${angle}° 的扇形，周長大約是多少公分？`);
       summaryAnswers.push(`${e616FormatNumber(perimeter)}公分`);
       answers.push(
-        `簡答：${e616FormatNumber(perimeter)}公分。過程：半徑是 ${radius} 公分，弧長 = 圓周長 × ${angle}/360 = ${e616FormatNumber(arc)}，再加兩條半徑 ${diameter}，所以周長是 ${e616FormatNumber(perimeter)}。`
+        `過程：半徑是 ${radius} 公分，弧長 = 圓周長 × ${angle}/360 = ${e616FormatNumber(arc)}，再加兩條半徑 ${diameter}，所以周長是 ${e616FormatNumber(perimeter)}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2615,7 +2741,7 @@
         );
         summaryAnswers.push(`${e616FormatNumber(perimeter)}公分`);
         answers.push(
-          `簡答：${e616FormatNumber(perimeter)}公分。過程：弧長是整個圓周長的 ${angle}/360，所以弧長 = ${e616FormatNumber(wholeCircumference)} × ${angle}/360 = ${e616FormatNumber(arc)}；半徑由整個圓周長反推得 ${radius}，扇形周長 = ${e616FormatNumber(arc)} + ${2 * radius} = ${e616FormatNumber(perimeter)}。`
+          `過程：弧長是整個圓周長的 ${angle}/360，所以弧長 = ${e616FormatNumber(wholeCircumference)} × ${angle}/360 = ${e616FormatNumber(arc)}；半徑由整個圓周長反推得 ${radius}，扇形周長 = ${e616FormatNumber(arc)} + ${2 * radius} = ${e616FormatNumber(perimeter)}。`
         );
       } else {
         questions.push(
@@ -2623,7 +2749,7 @@
         );
         summaryAnswers.push(`${e616FormatNumber(arc)}公分`);
         answers.push(
-          `簡答：${e616FormatNumber(arc)}公分。過程：弧長 = 整個圓周長 × ${angle}/360 = ${e616FormatNumber(wholeCircumference)} × ${angle}/360 = ${e616FormatNumber(arc)}。`
+          `過程：弧長 = 整個圓周長 × ${angle}/360 = ${e616FormatNumber(wholeCircumference)} × ${angle}/360 = ${e616FormatNumber(arc)}。`
         );
       }
     }
@@ -2640,13 +2766,13 @@
       if (mode === 0) {
         questions.push(`甲圓的直徑是乙圓的 ${multiplier} 倍，甲圓周長是乙圓周長的幾倍？`);
         summaryAnswers.push(`${multiplier}倍`);
-        answers.push(`簡答：${multiplier}倍。過程：圓周長和直徑成正比，所以直徑幾倍，圓周長就是幾倍。`);
+        answers.push(`過程：圓周長和直徑成正比，所以直徑幾倍，圓周長就是幾倍。`);
         continue;
       }
       if (mode === 1) {
         questions.push(`甲圓的半徑是乙圓的 ${multiplier} 倍，甲圓周長是乙圓周長的幾倍？`);
         summaryAnswers.push(`${multiplier}倍`);
-        answers.push(`簡答：${multiplier}倍。過程：圓周長 = 半徑 × 2 × 3.14，所以半徑幾倍，圓周長也是幾倍。`);
+        answers.push(`過程：圓周長 = 半徑 × 2 × 3.14，所以半徑幾倍，圓周長也是幾倍。`);
         continue;
       }
       const diameterA = pickFromList([8, 10, 12, 15]);
@@ -2654,7 +2780,7 @@
       questions.push(`甲圓直徑 ${diameterA} 公分，乙圓直徑 ${diameterB} 公分，乙圓周長是甲圓周長的幾倍？`);
       summaryAnswers.push(`${multiplier}倍`);
       answers.push(
-        `簡答：${multiplier}倍。過程：乙圓直徑是甲圓的 ${multiplier} 倍，圓周長也跟著放大 ${multiplier} 倍。`
+        `過程：乙圓直徑是甲圓的 ${multiplier} 倍，圓周長也跟著放大 ${multiplier} 倍。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2665,7 +2791,7 @@
     const summaryAnswers = [];
     const answers = [];
     const scenes = [
-      ['花圃', '盆花', '盆'],
+      ['花圃', '花', '盆'],
       ['人造池', '告示牌', '個'],
       ['蛋糕邊緣', '奶油花', '朵'],
       ['跑道', '指標牌', '個'],
@@ -2682,7 +2808,7 @@
         );
         summaryAnswers.push(`${gap}公尺`);
         answers.push(
-          `簡答：${gap}公尺。過程：圓周上首尾相接，間隔數 = 物件數，所以每段距離 = 周長 ÷ ${countObj} = ${circumference} ÷ ${countObj} = ${gap}。`
+          `過程：圓周上首尾相接，間隔數 = 物件數，所以每段距離 = 周長 ÷ ${countObj} = ${circumference} ÷ ${countObj} = ${gap}。`
         );
       } else {
         questions.push(
@@ -2690,7 +2816,7 @@
         );
         summaryAnswers.push(`${circumference}公尺`);
         answers.push(
-          `簡答：${circumference}公尺。過程：圓周上首尾相接，間隔數 = 物件數，所以周長 = ${gap} × ${countObj} = ${circumference}。`
+          `過程：圓周上首尾相接，間隔數 = 物件數，所以周長 = ${gap} × ${countObj} = ${circumference}。`
         );
       }
     }
@@ -2731,39 +2857,40 @@
     return buildE616MixedSet([buildE616CircularIntervalSet], count);
   }
 
-
   function buildE616Pi22Over7Set(count) {
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const rCases = [3.5, 7, 10.5, 14, 17.5, 21];
-    const dCases = [7, 14, 21, 28, 35, 42];
+    const rCases = [3.5, 7, 10.5, 14, 17.5, 21, 24.5, 28, 31.5, 35];
+    const dCases = [7, 14, 21, 28, 35, 42, 49, 56, 63, 70];
+    const rOffset = randInt(0, rCases.length - 1);
+    const dOffset = randInt(0, dCases.length - 1);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 4;
       if (mode === 0) {
-        const r = rCases[i % rCases.length];
-        const c = 2 * r * 22 / 7;
+        const r = rCases[(i + rOffset) % rCases.length];
+        const c = (2 * r * 22) / 7;
         questions.push(`一個半徑 ${r} 公分的圓，圓周長大約是多少公分？（圓周率用 $\\frac{22}{7}$ 計算）`);
         summaryAnswers.push(`${c}公分`);
-        answers.push(`簡答：${c}公分。過程：圓周長 = 半徑 × 2 × $\\frac{22}{7}$ = ${r} × 2 × $\\frac{22}{7}$ = ${c}。`);
+        answers.push(`過程：圓周長 = 半徑 × 2 × $\\frac{22}{7}$ = ${r} × 2 × $\\frac{22}{7}$ = ${c}。`);
       } else if (mode === 1) {
-        const d = dCases[i % dCases.length];
-        const c = d * 22 / 7;
+        const d = dCases[(i + dOffset) % dCases.length];
+        const c = (d * 22) / 7;
         questions.push(`一個直徑 ${d} 公分的圓，圓周長大約是多少公分？（圓周率用 $\\frac{22}{7}$ 計算）`);
         summaryAnswers.push(`${c}公分`);
-        answers.push(`簡答：${c}公分。過程：圓周長 = 直徑 × $\\frac{22}{7}$ = ${d} × $\\frac{22}{7}$ = ${c}。`);
+        answers.push(`過程：圓周長 = 直徑 × $\\frac{22}{7}$ = ${d} × $\\frac{22}{7}$ = ${c}。`);
       } else if (mode === 2) {
-        const d = dCases[i % dCases.length];
-        const c = d * 22 / 7;
+        const d = dCases[(i + dOffset) % dCases.length];
+        const c = (d * 22) / 7;
         questions.push(`一個圓的圓周長是 ${c} 公分，它的直徑是多少公分？（圓周率用 $\\frac{22}{7}$ 計算）`);
         summaryAnswers.push(`${d}公分`);
-        answers.push(`簡答：${d}公分。過程：直徑 = 圓周長 ÷ $\\frac{22}{7}$ = ${c} × $\\frac{7}{22}$ = ${d}。`);
+        answers.push(`過程：直徑 = 圓周長 ÷ $\\frac{22}{7}$ = ${c} × $\\frac{7}{22}$ = ${d}。`);
       } else {
-        const r = rCases[i % rCases.length];
-        const c = 2 * r * 22 / 7;
+        const r = rCases[(i + rOffset) % rCases.length];
+        const c = (2 * r * 22) / 7;
         questions.push(`一個圓的圓周長是 ${c} 公分，它的半徑是多少公分？（圓周率用 $\\frac{22}{7}$ 計算）`);
         summaryAnswers.push(`${r}公分`);
-        answers.push(`簡答：${r}公分。過程：半徑 = 圓周長 ÷ $\\frac{22}{7}$ ÷ 2 = ${c} × $\\frac{7}{22}$ ÷ 2 = ${r}。`);
+        answers.push(`過程：半徑 = 圓周長 ÷ $\\frac{22}{7}$ ÷ 2 = ${c} × $\\frac{7}{22}$ ÷ 2 = ${r}。`);
       }
     }
     return { questions, summaryAnswers, answers };
@@ -2796,7 +2923,7 @@
         questions.push(`半徑 ${radius} 公分的圓，面積大約是多少平方公分？`);
         summaryAnswers.push(`${e617FormatNumber(area)}平方公分`);
         answers.push(
-          `簡答：${e617FormatNumber(area)}平方公分。過程：圓面積 = 半徑 × 半徑 × 3.14 = ${radius} × ${radius} × 3.14 = ${e617FormatNumber(area)}。`
+          `過程：圓面積 = 半徑 × 半徑 × 3.14 = ${radius} × ${radius} × 3.14 = ${e617FormatNumber(area)}。`
         );
       } else {
         const diameter = pickFromList([6, 8, 10, 12, 14, 16, 20, 24, 26, 30, 40]);
@@ -2805,7 +2932,7 @@
         questions.push(`直徑 ${diameter} 公分的圓，面積大約是多少平方公分？`);
         summaryAnswers.push(`${e617FormatNumber(area)}平方公分`);
         answers.push(
-          `簡答：${e617FormatNumber(area)}平方公分。過程：半徑 = ${diameter} ÷ 2 = ${radius}，圓面積 = ${radius} × ${radius} × 3.14 = ${e617FormatNumber(area)}。`
+          `過程：半徑 = ${diameter} ÷ 2 = ${radius}，圓面積 = ${radius} × ${radius} × 3.14 = ${e617FormatNumber(area)}。`
         );
       }
     }
@@ -2823,7 +2950,7 @@
       questions.push(`一個圓的圓周長大約是 ${e616FormatNumber(circumference)} 公分，它的面積大約是多少平方公分？`);
       summaryAnswers.push(`${e617FormatNumber(area)}平方公分`);
       answers.push(
-        `簡答：${e617FormatNumber(area)}平方公分。過程：先求半徑 = 圓周長 ÷ 3.14 ÷ 2 = ${e616FormatNumber(circumference)} ÷ 3.14 ÷ 2 = ${radius}，再算面積 ${radius} × ${radius} × 3.14 = ${e617FormatNumber(area)}。`
+        `過程：先求半徑 = 圓周長 ÷ 3.14 ÷ 2 = ${e616FormatNumber(circumference)} ÷ 3.14 ÷ 2 = ${radius}，再算面積 ${radius} × ${radius} × 3.14 = ${e617FormatNumber(area)}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2839,7 +2966,7 @@
         questions.push(`甲圓半徑是乙圓半徑的 ${multiplier} 倍，甲圓面積是乙圓面積的幾倍？`);
         summaryAnswers.push(`${multiplier * multiplier}倍`);
         answers.push(
-          `簡答：${multiplier * multiplier}倍。過程：圓面積和半徑平方成正比，所以半徑放大 ${multiplier} 倍，面積放大 ${multiplier}^2 = ${multiplier * multiplier} 倍。`
+          `過程：圓面積和半徑平方成正比，所以半徑放大 ${multiplier} 倍，面積放大 ${multiplier}^2 = ${multiplier * multiplier} 倍。`
         );
       } else {
         const radiusA = pickFromList([3, 4, 5, 6, 8]);
@@ -2847,7 +2974,7 @@
         questions.push(`甲圓半徑 ${radiusA} 公分，乙圓半徑 ${radiusB} 公分，乙圓面積是甲圓面積的幾倍？`);
         summaryAnswers.push(`${multiplier * multiplier}倍`);
         answers.push(
-          `簡答：${multiplier * multiplier}倍。過程：半徑比是 ${radiusB}:${radiusA} = ${multiplier}:1，所以面積比是 ${multiplier}^2:1 = ${multiplier * multiplier}:1。`
+          `過程：半徑比是 ${radiusB}:${radiusA} = ${multiplier}:1，所以面積比是 ${multiplier}^2:1 = ${multiplier * multiplier}:1。`
         );
       }
     }
@@ -2866,7 +2993,7 @@
       questions.push(`半徑 ${radius} 公分、圓心角 ${angle}° 的扇形，面積大約是多少平方公分？`);
       summaryAnswers.push(`${e617FormatNumber(area)}平方公分`);
       answers.push(
-        `簡答：${e617FormatNumber(area)}平方公分。過程：整個圓面積是 ${radius} × ${radius} × 3.14 = ${e617FormatNumber(wholeArea)}，扇形面積 = ${e617FormatNumber(wholeArea)} × ${angle}/360 = ${e617FormatNumber(area)}。`
+        `過程：整個圓面積是 ${radius} × ${radius} × 3.14 = ${e617FormatNumber(wholeArea)}，扇形面積 = ${e617FormatNumber(wholeArea)} × ${angle}/360 = ${e617FormatNumber(area)}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2890,7 +3017,7 @@
       questions.push(`半徑 ${radius} 公分的圓，取其中 $\\frac{${num}}{${den}}$ 圓形成扇形，面積大約是多少平方公分？`);
       summaryAnswers.push(`${e617FormatNumber(area)}平方公分`);
       answers.push(
-        `簡答：${e617FormatNumber(area)}平方公分。過程：整個圓面積是 ${e617FormatNumber(wholeArea)}，這個扇形占整圓的 $\\frac{${num}}{${den}}$，所以面積 = ${e617FormatNumber(wholeArea)} × $\\frac{${num}}{${den}}$ = ${e617FormatNumber(area)}。`
+        `過程：整個圓面積是 ${e617FormatNumber(wholeArea)}，這個扇形占整圓的 $\\frac{${num}}{${den}}$，所以面積 = ${e617FormatNumber(wholeArea)} × $\\frac{${num}}{${den}}$ = ${e617FormatNumber(area)}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2911,7 +3038,7 @@
         questions.push(`邊長 ${side} 公分的正方形中畫一個最大圓，剩餘部分面積大約是多少平方公分？`);
         summaryAnswers.push(`${e617FormatNumber(remain)}平方公分`);
         answers.push(
-          `簡答：${e617FormatNumber(remain)}平方公分。過程：正方形面積是 ${side} × ${side} = ${squareArea}，最大圓半徑是 ${radius}，圓面積是 ${e617FormatNumber(circleArea)}，剩餘面積 = ${squareArea} - ${e617FormatNumber(circleArea)} = ${e617FormatNumber(remain)}。`
+          `過程：正方形面積是 ${side} × ${side} = ${squareArea}，最大圓半徑是 ${radius}，圓面積是 ${e617FormatNumber(circleArea)}，剩餘面積 = ${squareArea} - ${e617FormatNumber(circleArea)} = ${e617FormatNumber(remain)}。`
         );
         continue;
       }
@@ -2926,7 +3053,7 @@
         );
         summaryAnswers.push(`${e617FormatNumber(remain)}平方公分`);
         answers.push(
-          `簡答：${e617FormatNumber(remain)}平方公分。過程：正方形面積是 ${squareArea}，$\\frac{1}{4}$ 圓面積是 ${e617FormatNumber(quarterArea)}，所以剩餘面積是 ${squareArea} - ${e617FormatNumber(quarterArea)} = ${e617FormatNumber(remain)}。`
+          `過程：正方形面積是 ${squareArea}，$\\frac{1}{4}$ 圓面積是 ${e617FormatNumber(quarterArea)}，所以剩餘面積是 ${squareArea} - ${e617FormatNumber(quarterArea)} = ${e617FormatNumber(remain)}。`
         );
         continue;
       }
@@ -2937,7 +3064,7 @@
         questions.push(`外圓半徑 ${outer} 公分、內圓半徑 ${inner} 公分的環形，面積大約是多少平方公分？`);
         summaryAnswers.push(`${e617FormatNumber(area)}平方公分`);
         answers.push(
-          `簡答：${e617FormatNumber(area)}平方公分。過程：環形面積 = 大圓面積 - 小圓面積 = ${e617FormatNumber(e617CircleAreaByRadius(outer))} - ${e617FormatNumber(e617CircleAreaByRadius(inner))} = ${e617FormatNumber(area)}。`
+          `過程：環形面積 = 大圓面積 - 小圓面積 = ${e617FormatNumber(e617CircleAreaByRadius(outer))} - ${e617FormatNumber(e617CircleAreaByRadius(inner))} = ${e617FormatNumber(area)}。`
         );
         continue;
       }
@@ -2954,7 +3081,7 @@
       questions.push(`長 ${rectL} 公分、寬 ${rectW} 公分的長方形中畫一個最大圓，剩餘面積大約是多少平方公分？`);
       summaryAnswers.push(`${e617FormatNumber(remain)}平方公分`);
       answers.push(
-        `簡答：${e617FormatNumber(remain)}平方公分。過程：長方形面積是 ${rectArea}，最大圓的直徑等於短邊 ${rectW}，半徑是 ${radius}，圓面積是 ${e617FormatNumber(circleArea)}，剩餘面積是 ${rectArea} - ${e617FormatNumber(circleArea)} = ${e617FormatNumber(remain)}。`
+        `過程：長方形面積是 ${rectArea}，最大圓的直徑等於短邊 ${rectW}，半徑是 ${radius}，圓面積是 ${e617FormatNumber(circleArea)}，剩餘面積是 ${rectArea} - ${e617FormatNumber(circleArea)} = ${e617FormatNumber(remain)}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2974,7 +3101,7 @@
       questions.push(`半徑 ${innerRadius} 公尺的${scene}，外圍再加寬 ${width} 公尺，新增部分面積大約是多少平方公尺？`);
       summaryAnswers.push(`${e617FormatNumber(area)}平方公尺`);
       answers.push(
-        `簡答：${e617FormatNumber(area)}平方公尺。過程：新增部分是環形面積 = 外圓面積 - 內圓面積 = ${e617FormatNumber(e617CircleAreaByRadius(outerRadius))} - ${e617FormatNumber(e617CircleAreaByRadius(innerRadius))} = ${e617FormatNumber(area)}。`
+        `過程：新增部分是環形面積 = 外圓面積 - 內圓面積 = ${e617FormatNumber(e617CircleAreaByRadius(outerRadius))} - ${e617FormatNumber(e617CircleAreaByRadius(innerRadius))} = ${e617FormatNumber(area)}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2992,11 +3119,11 @@
         const rope = width;
         const area = (e617CircleAreaByRadius(rope) * 3) / 4;
         questions.push(
-          `長 ${length} 公尺、寬 ${width} 公尺的倉庫旁拴羊，繩長 ${rope} 公尺，活動面積大約是多少平方公尺？（視為 $\\frac{3}{4}$ 圓）`
+          `在長 ${length} 公尺、寬 ${width} 公尺的倉庫外側角落拴羊，繩長 ${rope} 公尺，活動面積大約是多少平方公尺？（繩子無法穿過倉庫，視為 $\\frac{3}{4}$ 圓）`
         );
         summaryAnswers.push(`${e617FormatNumber(area)}平方公尺`);
         answers.push(
-          `簡答：${e617FormatNumber(area)}平方公尺。過程：活動範圍視為半徑 ${rope} 的 $\\frac{3}{4}$ 圓，整圓面積是 ${e617FormatNumber(e617CircleAreaByRadius(rope))}，所以活動面積是 ${e617FormatNumber(area)}。`
+          `過程：活動範圍視為半徑 ${rope} 的 $\\frac{3}{4}$ 圓，整圓面積是 ${e617FormatNumber(e617CircleAreaByRadius(rope))}，所以活動面積是 ${e617FormatNumber(area)}。`
         );
         continue;
       }
@@ -3004,52 +3131,58 @@
         const width = pickFromList([8, 10, 12, 15, 20]);
         const rope = width + pickFromList([2, 4, 5, 6, 8]);
         const quarterRadius = rope - width;
-        const baseArea = (e617CircleAreaByRadius(width) * 3) / 4;
+        const longSide = rope + pickFromList([2, 4, 6, 8]);
+        const baseArea = (e617CircleAreaByRadius(rope) * 3) / 4;
         const extraArea = e617CircleAreaByRadius(quarterRadius) / 4;
         const area = baseArea + extraArea;
         questions.push(
-          `一頭牛拴在長方形牛舍角落，短邊 ${width} 公尺，繩長 ${rope} 公尺，活動面積大約是多少平方公尺？（視為 $\\frac{3}{4}$ 圓加 $\\frac{1}{4}$ 圓）`
+          `一頭牛拴在長邊 ${longSide} 公尺、短邊 ${width} 公尺的長方形牛舍外側角落，繩長 ${rope} 公尺，活動面積大約是多少平方公尺？（繩長未達長邊，視為 $\\frac{3}{4}$ 圓加 $\\frac{1}{4}$ 圓）`
         );
         summaryAnswers.push(`${e617FormatNumber(area)}平方公尺`);
         answers.push(
-          `簡答：${e617FormatNumber(area)}平方公尺。過程：先有半徑 ${width} 的 $\\frac{3}{4}$ 圓，再多出半徑 ${quarterRadius} 的 $\\frac{1}{4}$ 圓，所以總面積 = ${e617FormatNumber(baseArea)} + ${e617FormatNumber(extraArea)} = ${e617FormatNumber(area)}。`
+          `過程：先有半徑 ${rope} 的 $\\frac{3}{4}$ 圓，再多出半徑 ${quarterRadius} 的 $\\frac{1}{4}$ 圓，所以總面積 = ${e617FormatNumber(baseArea)} + ${e617FormatNumber(extraArea)} = ${e617FormatNumber(area)}。`
         );
         continue;
       }
-      const wallLength = pickFromList([20, 24, 25, 30, 36]);
       const rope = pickFromList([10, 12, 15, 18]);
+      const wallLength = pickFromList([20, 24, 25, 30, 36].filter((length) => length >= rope * 2));
       const area = e617CircleAreaByRadius(rope) / 2;
       questions.push(
-        `把牛拴在長 ${wallLength} 公尺的牆壁中點，繩長 ${rope} 公尺，求活動面積大約是多少平方公尺。（提示：視為半圓）`
+        `把牛拴在長 ${wallLength} 公尺的牆壁中點，繩長 ${rope} 公尺（繩長不超過半個牆長），求活動面積大約是多少平方公尺。（提示：視為半圓）`
       );
       summaryAnswers.push(`${e617FormatNumber(area)}平方公尺`);
       answers.push(
-        `簡答：${e617FormatNumber(area)}平方公尺。過程：牆壁擋住一半，活動範圍視為半徑 ${rope} 的半圓，面積是 ${e617FormatNumber(e617CircleAreaByRadius(rope))} ÷ 2 = ${e617FormatNumber(area)}。`
+        `過程：牆壁擋住一半，活動範圍視為半徑 ${rope} 的半圓，面積是 ${e617FormatNumber(e617CircleAreaByRadius(rope))} ÷ 2 = ${e617FormatNumber(area)}。`
       );
     }
     return { questions, summaryAnswers, answers };
   }
-
 
   function buildE617AreaInverseSet(count) {
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
     const rCases = [2, 3, 4, 5, 6, 7, 8, 10, 12, 15, 20];
-    const itemNames = ['水池', '圓桌', '鏡子', '花圃', '操場', '燈泡底面'];
+    const itemNames = ['圓形杯墊', '圓形鏡子', '圓形貼紙', '圓形鐘面', '圓形餐盤', '圓形瓶蓋'];
+    const rOffset = randInt(0, rCases.length - 1);
+    const itemOffset = randInt(0, itemNames.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const r = rCases[i % rCases.length];
+      const r = rCases[(i + rOffset) % rCases.length];
       const area = r * r * 3.14;
       const areaStr = trimDecimalString(area.toFixed(2));
-      const item = itemNames[i % itemNames.length];
+      const item = itemNames[(i + itemOffset) % itemNames.length];
       if (i % 2 === 0) {
         questions.push(`一個${item}的面積大約是 ${areaStr} 平方公分，它的半徑大約是多少公分？（圓周率用 3.14）`);
         summaryAnswers.push(`${r}公分`);
-        answers.push(`簡答：${r}公分。過程：半徑² = 面積 ÷ 3.14 = ${areaStr} ÷ 3.14 = ${r*r}，半徑 = $\\sqrt{${r*r}}$ = ${r}。`);
+        answers.push(
+          `過程：半徑² = 面積 ÷ 3.14 = ${areaStr} ÷ 3.14 = ${r * r}，半徑 = $\\sqrt{${r * r}}$ = ${r}。`
+        );
       } else {
         questions.push(`一個${item}的面積大約是 ${areaStr} 平方公分，它的直徑大約是多少公分？（圓周率用 3.14）`);
-        summaryAnswers.push(`${r*2}公分`);
-        answers.push(`簡答：${r*2}公分。過程：半徑² = ${areaStr} ÷ 3.14 = ${r*r}，半徑 = ${r}，直徑 = ${r} × 2 = ${r*2}。`);
+        summaryAnswers.push(`${r * 2}公分`);
+        answers.push(
+          `過程：半徑² = ${areaStr} ÷ 3.14 = ${r * r}，半徑 = ${r}，直徑 = ${r} × 2 = ${r * 2}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -3187,7 +3320,7 @@
       );
       summaryAnswers.push(`${e618FormatNumber(speed)}${e618UnitText(mode.lengthUnit, mode.timeUnit)}`);
       answers.push(
-        `簡答：${e618FormatNumber(speed)}${e618UnitText(mode.lengthUnit, mode.timeUnit)}。過程：速率 = 距離 ÷ 時間 = ${e618FormatNumber(distance)} ÷ ${e618FormatNumber(time)} = ${e618FormatNumber(speed)}，所以速率是 ${e618FormatNumber(speed)}${e618UnitText(mode.lengthUnit, mode.timeUnit)}。`
+        `過程：速率 = 距離 ÷ 時間 = ${e618FormatNumber(distance)} ÷ ${e618FormatNumber(time)} = ${e618FormatNumber(speed)}，所以速率是 ${e618FormatNumber(speed)}${e618UnitText(mode.lengthUnit, mode.timeUnit)}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3222,7 +3355,7 @@
       );
       summaryAnswers.push(`${e618FormatNumber(distance)}${mode.lengthUnit}`);
       answers.push(
-        `簡答：${e618FormatNumber(distance)}${mode.lengthUnit}。過程：距離 = 速率 × 時間 = ${e618FormatNumber(speed)} × ${e618FormatNumber(time)} = ${e618FormatNumber(distance)}，所以距離是 ${e618FormatNumber(distance)}${mode.lengthUnit}。`
+        `過程：距離 = 速率 × 時間 = ${e618FormatNumber(speed)} × ${e618FormatNumber(time)} = ${e618FormatNumber(distance)}，所以距離是 ${e618FormatNumber(distance)}${mode.lengthUnit}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3252,7 +3385,7 @@
       );
       summaryAnswers.push(`${e618FormatNumber(time)}${mode.timeUnit}`);
       answers.push(
-        `簡答：${e618FormatNumber(time)}${mode.timeUnit}。過程：時間 = 距離 ÷ 速率 = ${e618FormatNumber(distance)} ÷ ${e618FormatNumber(speed)} = ${e618FormatNumber(time)}，所以需要 ${e618FormatNumber(time)}${mode.timeUnit}。`
+        `過程：時間 = 距離 ÷ 速率 = ${e618FormatNumber(distance)} ÷ ${e618FormatNumber(speed)} = ${e618FormatNumber(time)}，所以需要 ${e618FormatNumber(time)}${mode.timeUnit}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3276,7 +3409,7 @@
       );
       summaryAnswers.push(`${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.timeUnit)}`);
       answers.push(
-        `簡答：${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.timeUnit)}。過程：時間單位不變，只換長度單位。${mode.fromLength === '公里' ? '1公里 = 1000公尺' : '1公尺 = 100公分'}，所以 ${e618FormatNumber(value)}${e618UnitText(mode.fromLength, mode.timeUnit)} = ${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.timeUnit)}。`
+        `過程：時間單位不變，只換長度單位。${mode.fromLength === '公里' ? '1公里 = 1000公尺' : '1公尺 = 100公分'}，所以 ${e618FormatNumber(value)}${e618UnitText(mode.fromLength, mode.timeUnit)} = ${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.timeUnit)}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3318,7 +3451,7 @@
       );
       summaryAnswers.push(`${e618FormatNumber(converted)}${e618UnitText(mode.lengthUnit, mode.toTime)}`);
       answers.push(
-        `簡答：${e618FormatNumber(converted)}${e618UnitText(mode.lengthUnit, mode.toTime)}。過程：長度單位不變，只換時間單位。${mode.explain}，所以 ${e618FormatNumber(value)}${e618UnitText(mode.lengthUnit, mode.fromTime)} = ${e618FormatNumber(converted)}${e618UnitText(mode.lengthUnit, mode.toTime)}。`
+        `過程：長度單位不變，只換時間單位。${mode.explain}，所以 ${e618FormatNumber(value)}${e618UnitText(mode.lengthUnit, mode.fromTime)} = ${e618FormatNumber(converted)}${e618UnitText(mode.lengthUnit, mode.toTime)}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3348,7 +3481,7 @@
       );
       summaryAnswers.push(`${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.toTime)}`);
       answers.push(
-        `簡答：${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.toTime)}。過程：先把 ${mode.fromLength} 換成 ${mode.toLength}，再把 ${mode.fromTime} 換成 ${mode.toTime}，等同乘上對應換算倍數，所以得到 ${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.toTime)}。`
+        `過程：先把 ${mode.fromLength} 換成 ${mode.toLength}，再把 ${mode.fromTime} 換成 ${mode.toTime}，等同乘上對應換算倍數，所以得到 ${e618FormatNumber(converted)}${e618UnitText(mode.toLength, mode.toTime)}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3386,7 +3519,7 @@
         );
         summaryAnswers.push(`${faster}較快`);
         answers.push(
-          `簡答：${faster}較快。過程：先統一成公尺/秒，${leftLabel}是 ${e618FormatNumber(mpsA)}公尺/秒，${rightLabel}是 ${e618FormatNumber(mpsB)}公尺/秒，比較後可知 ${faster}較快。`
+          `過程：先統一成公尺/秒，${leftLabel}是 ${e618FormatNumber(mpsA)}公尺/秒，${rightLabel}是 ${e618FormatNumber(mpsB)}公尺/秒，比較後可知 ${faster}較快。`
         );
       } else {
         const base = [4, 5, 6, 8, 10, 12, 15];
@@ -3422,7 +3555,7 @@
         );
         summaryAnswers.push(order);
         answers.push(
-          `簡答：${order}。過程：先統一成公尺/秒，${shown.map((item) => `${item.label}=${e618FormatNumber(item.mps)}公尺/秒`).join('，')}，所以由快到慢是 ${order}。`
+          `過程：先統一成公尺/秒，${shown.map((item) => `${item.label}=${e618FormatNumber(item.mps)}公尺/秒`).join('，')}，所以由快到慢是 ${order}。`
         );
       }
     }
@@ -3442,7 +3575,7 @@
         questions.push(`速率固定：一輛車分速 ${speed} 公尺，時間從 1 分鐘變成 ${k} 分鐘，行駛距離會變為原來的幾倍？`);
         summaryAnswers.push(`${k}倍`);
         answers.push(
-          `簡答：${k}倍。過程：速率固定時，距離 = 速率 × 時間，所以時間變成 ${k} 倍，距離也跟著變成 ${k} 倍。`
+          `過程：速率固定時，距離 = 速率 × 時間，所以時間變成 ${k} 倍，距離也跟著變成 ${k} 倍。`
         );
         continue;
       }
@@ -3454,7 +3587,7 @@
         );
         summaryAnswers.push(`${k}倍`);
         answers.push(
-          `簡答：${k}倍。過程：時間固定時，距離和速率成正比。乙的速率是甲的 ${k} 倍，所以乙的距離也是甲的 ${k} 倍。`
+          `過程：時間固定時，距離和速率成正比。乙的速率是甲的 ${k} 倍，所以乙的距離也是甲的 ${k} 倍。`
         );
         continue;
       }
@@ -3462,7 +3595,7 @@
         const speed = pickFromList([4, 5, 6, 8, 10]);
         questions.push(`速率固定：機器人秒速 ${speed} 公尺，若行走距離變為原來的 ${k} 倍，所需時間會變為原來的幾倍？`);
         summaryAnswers.push(`${k}倍`);
-        answers.push(`簡答：${k}倍。過程：速率固定時，時間 = 距離 ÷ 速率，所以距離變成 ${k} 倍，時間也變成 ${k} 倍。`);
+        answers.push(`過程：速率固定時，時間 = 距離 ÷ 速率，所以距離變成 ${k} 倍，時間也變成 ${k} 倍。`);
         continue;
       }
       const time = pickFromList([1, 2, 3, 4]);
@@ -3472,7 +3605,7 @@
       );
       summaryAnswers.push(`${k}倍`);
       answers.push(
-        `簡答：${k}倍。過程：兩人散步時間相同，距離比就等於速率比。爸爸速率是爺爺的 ${k} 倍，所以距離也是 ${k} 倍。`
+        `過程：兩人散步時間相同，距離比就等於速率比。爸爸速率是爺爺的 ${k} 倍，所以距離也是 ${k} 倍。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3565,31 +3698,36 @@
         );
         summaryAnswers.push(`${scale}倍`);
         answers.push(
-          `簡答：${scale}倍。過程：對應邊長的倍數都是 ${length * scale} ÷ ${length} = ${scale}，所以這是 ${scale} 倍放大圖。`
+          `過程：對應邊長的倍數都是 ${length * scale} ÷ ${length} = ${scale}，所以這是 ${scale} 倍放大圖。`
         );
         continue;
       }
       if (mode === 1) {
         const den = pickFromList([2, 3, 4, 5]);
-        const grid = pickFromList([4, 6, 8, 10, 12]);
+        const grid = den * randInt(2, 4);
         questions.push(`甲圖在方格紙上橫向占 ${grid} 格，乙圖占 ${grid / den} 格，乙圖是甲圖的幾分之幾倍縮圖？`);
         summaryAnswers.push(`${e619ScaleText(1, den)}`);
         answers.push(
-          `簡答：${e619ScaleText(1, den)}。過程：乙圖與甲圖的對應長度比是 ${grid / den}:${grid} = 1:${den}，所以乙圖是甲圖的 ${e619ScaleText(1, den)} 縮圖。`
+          `過程：乙圖與甲圖的對應長度比是 ${grid / den}:${grid} = 1:${den}，所以乙圖是甲圖的 ${e619ScaleText(1, den)} 縮圖。`
         );
         continue;
       }
       if (mode === 2) {
         const scale = pickFromList([2, 3, 4]);
-        const a = pickFromList([3, 4, 5, 6]);
-        const b = pickFromList([4, 5, 6, 8]);
-        const c = pickFromList([5, 6, 7, 9]);
+        let a;
+        let b;
+        let c;
+        do {
+          a = pickFromList([3, 4, 5, 6]);
+          b = pickFromList([4, 5, 6, 8]);
+          c = pickFromList([5, 6, 7, 9]);
+        } while (a + b <= c || a + c <= b || b + c <= a);
         questions.push(
           `三角形三邊長為 ${a}、${b}、${c}，另一三角形對應邊為 ${a * scale}、${b * scale}、${c * scale}，後者是前者的幾倍放大圖？`
         );
         summaryAnswers.push(`${scale}倍`);
         answers.push(
-          `簡答：${scale}倍。過程：任一組對應邊比都相同，例如 ${a * scale} ÷ ${a} = ${scale}，所以後者是前者的 ${scale} 倍放大圖。`
+          `過程：任一組對應邊比都相同，例如 ${a * scale} ÷ ${a} = ${scale}，所以後者是前者的 ${scale} 倍放大圖。`
         );
         continue;
       }
@@ -3597,7 +3735,7 @@
       const radius = pickFromList([2, 3, 4, 5, 6]);
       questions.push(`半徑 ${radius} 公分的圓放大成半徑 ${radius * scale} 公分的圓，放大倍數是多少？`);
       summaryAnswers.push(`${scale}倍`);
-      answers.push(`簡答：${scale}倍。過程：半徑是對應長度，所以放大倍數 = ${radius * scale} ÷ ${radius} = ${scale}。`);
+      answers.push(`過程：半徑是對應長度，所以放大倍數 = ${radius * scale} ÷ ${radius} = ${scale}。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3614,7 +3752,7 @@
         questions.push(`甲圖邊長 AB 是 ${side} 公分，乙圖是甲圖的 ${scale} 倍放大圖，對應邊 DE 幾公分？`);
         summaryAnswers.push(`${side * scale}公分`);
         answers.push(
-          `簡答：${side * scale}公分。過程：放大 ${scale} 倍時，對應邊長也乘 ${scale}，所以 DE = ${side} × ${scale} = ${side * scale}。`
+          `過程：放大 ${scale} 倍時，對應邊長也乘 ${scale}，所以 DE = ${side} × ${scale} = ${side * scale}。`
         );
         continue;
       }
@@ -3626,7 +3764,7 @@
         );
         summaryAnswers.push(`${side * den}公分`);
         answers.push(
-          `簡答：${side * den}公分。過程：縮成 ${e619ScaleText(1, den)} 表示乙圖長度是甲圖的 $\\frac{1}{${den}}$，所以甲圖長度 = ${side} × ${den} = ${side * den}。`
+          `過程：縮成 ${e619ScaleText(1, den)} 表示乙圖長度是甲圖的 $\\frac{1}{${den}}$，所以甲圖長度 = ${side} × ${den} = ${side * den}。`
         );
         continue;
       }
@@ -3643,7 +3781,7 @@
       );
       summaryAnswers.push(`${mapped}公分`);
       answers.push(
-        `簡答：${mapped}公分。過程：縮放倍數是 ${e619ScaleText(scaleNum, scaleDen)}，所以對應邊長 = ${side} × ${scaleNum}/${scaleDen} = ${mapped}。`
+        `過程：縮放倍數是 ${e619ScaleText(scaleNum, scaleDen)}，所以對應邊長 = ${side} × ${scaleNum}/${scaleDen} = ${mapped}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3661,7 +3799,7 @@
         const scale = pickFromList([2, 3, 4, 5]);
         questions.push(`圖上原來的 ${angle}° 角，在 ${scale} 倍放大圖上的對應角是多少度？`);
         summaryAnswers.push(`${angle}°`);
-        answers.push(`簡答：${angle}°。過程：放大圖與縮圖只改變長度，不改變角度，所以對應角仍是 ${angle}°。`);
+        answers.push(`過程：放大圖與縮圖只改變長度，不改變角度，所以對應角仍是 ${angle}°。`);
         continue;
       }
       if (mode === 1) {
@@ -3670,7 +3808,7 @@
         const scale = pickFromList([2, 3, 4]);
         questions.push(`${shape}的一個角是 ${angle}°，把它畫成 ${scale} 倍放大圖後，對應角是多少度？`);
         summaryAnswers.push(`${angle}°`);
-        answers.push(`簡答：${angle}°。過程：相似放大時，對應角相等，所以放大前後的角度不變。`);
+        answers.push(`過程：相似放大時，對應角相等，所以放大前後的角度不變。`);
         continue;
       }
       const scale = pickFromList([2, 3, 4, 5]);
@@ -3679,7 +3817,7 @@
       questions.push(`某圖形放大 ${scale} 倍後，${objectName}由 ${segment} 公分變成多少公分？`);
       summaryAnswers.push(`${segment * scale}公分`);
       answers.push(
-        `簡答：${segment * scale}公分。過程：圖內所有對應線段都按相同倍數縮放，所以 ${objectName}也乘 ${scale}，得到 ${segment * scale} 公分。`
+        `過程：圖內所有對應線段都按相同倍數縮放，所以 ${objectName}也乘 ${scale}，得到 ${segment * scale} 公分。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3697,7 +3835,7 @@
         questions.push(`一個圖形放大成原圖的 ${scale} 倍，若原來周長是 ${perimeter} 公分，放大後周長是多少公分？`);
         summaryAnswers.push(`${perimeter * scale}公分`);
         answers.push(
-          `簡答：${perimeter * scale}公分。過程：周長屬於長度，會隨長度倍數等倍放大，所以 ${perimeter} × ${scale} = ${perimeter * scale}。`
+          `過程：周長屬於長度，會隨長度倍數等倍放大，所以 ${perimeter} × ${scale} = ${perimeter * scale}。`
         );
       } else {
         const scale = pickFromList([2, 3, 4, 5]);
@@ -3708,7 +3846,7 @@
         );
         summaryAnswers.push(`${multiple}公分`);
         answers.push(
-          `簡答：${multiple}公分。過程：周長隨長度同比例縮小，縮成 ${e619ScaleText(1, scale)} 時，周長也除以 ${scale}，所以 ${newPerimeter} ÷ ${scale} = ${multiple}。`
+          `過程：周長隨長度同比例縮小，縮成 ${e619ScaleText(1, scale)} 時，周長也除以 ${scale}，所以 ${newPerimeter} ÷ ${scale} = ${multiple}。`
         );
       }
     }
@@ -3726,7 +3864,7 @@
         questions.push(`一個圖形放大成原圖的 ${scale} 倍，面積會變成原圖的幾倍？`);
         summaryAnswers.push(`${scale * scale}倍`);
         answers.push(
-          `簡答：${scale * scale}倍。過程：面積會隨長度倍數的平方改變，所以面積倍數是 ${scale}^2 = ${scale * scale}。`
+          `過程：面積會隨長度倍數的平方改變，所以面積倍數是 ${scale}^2 = ${scale * scale}。`
         );
         continue;
       }
@@ -3737,7 +3875,7 @@
         questions.push(`一個圖形面積是 ${area} 平方公分，把邊長放大 ${scale} 倍後，面積變成多少平方公分？`);
         summaryAnswers.push(`${enlarged}平方公分`);
         answers.push(
-          `簡答：${enlarged}平方公分。過程：面積乘上 ${scale}^2 = ${scale * scale}，所以 ${area} × ${scale * scale} = ${enlarged}。`
+          `過程：面積乘上 ${scale}^2 = ${scale * scale}，所以 ${area} × ${scale * scale} = ${enlarged}。`
         );
         continue;
       }
@@ -3749,7 +3887,7 @@
       );
       summaryAnswers.push(`${reduced}平方公分`);
       answers.push(
-        `簡答：${reduced}平方公分。過程：面積要乘上縮放倍數的平方，所以縮圖面積 = ${area} × (1/${den})^2 = ${area} ÷ ${den * den} = ${reduced}。`
+        `過程：面積要乘上縮放倍數的平方，所以縮圖面積 = ${area} × (1/${den})^2 = ${area} ÷ ${den * den} = ${reduced}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3768,7 +3906,7 @@
         questions.push(`直徑 ${diameter} 公分的圓，畫成 ${e619ScaleText(1, den)} 縮圖後，圓周長大約是多少公分？`);
         summaryAnswers.push(`${e619FormatNumber(circumference)}公分`);
         answers.push(
-          `簡答：${e619FormatNumber(circumference)}公分。過程：圓周長屬於長度，縮圖後也縮成 ${e619ScaleText(1, den)}，原圓周長是 ${diameter} × 3.14 = ${e619FormatNumber(diameter * E616_PI)}，再除以 ${den} 得 ${e619FormatNumber(circumference)}。`
+          `過程：圓周長屬於長度，縮圖後也縮成 ${e619ScaleText(1, den)}，原圓周長是 ${diameter} × 3.14 = ${e619FormatNumber(diameter * E616_PI)}，再除以 ${den} 得 ${e619FormatNumber(circumference)}。`
         );
         continue;
       }
@@ -3778,7 +3916,7 @@
         questions.push(`方格紙中畫半徑 ${radius} 公分的圓，放大為 ${scale} 倍圖後，半徑變成幾公分？`);
         summaryAnswers.push(`${radius * scale}公分`);
         answers.push(
-          `簡答：${radius * scale}公分。過程：半徑是對應長度，放大 ${scale} 倍後，半徑也乘 ${scale}，得到 ${radius * scale} 公分。`
+          `過程：半徑是對應長度，放大 ${scale} 倍後，半徑也乘 ${scale}，得到 ${radius * scale} 公分。`
         );
         continue;
       }
@@ -3787,14 +3925,14 @@
         const scale = pickFromList([2, 3, 4]);
         questions.push(`圓心角 ${angle}° 的扇形，畫成 ${scale} 倍放大圖後，對應的圓心角是多少度？`);
         summaryAnswers.push(`${angle}°`);
-        answers.push(`簡答：${angle}°。過程：放大圖只改變長度，不改變角度，所以扇形的對應圓心角仍是 ${angle}°。`);
+        answers.push(`過程：放大圖只改變長度，不改變角度，所以扇形的對應圓心角仍是 ${angle}°。`);
         continue;
       }
       const scale = pickFromList([2, 3, 4, 5]);
       questions.push(`甲扇形是乙扇形的 ${e619ScaleText(1, scale)} 倍縮圖，甲的弧長是乙的幾分之幾？`);
       summaryAnswers.push(`${e619ScaleText(1, scale)}`);
       answers.push(
-        `簡答：${e619ScaleText(1, scale)}。過程：弧長屬於長度，縮放後會和邊長一樣按同倍數改變，所以甲的弧長是乙的 ${e619ScaleText(1, scale)}。`
+        `過程：弧長屬於長度，縮放後會和邊長一樣按同倍數改變，所以甲的弧長是乙的 ${e619ScaleText(1, scale)}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3813,7 +3951,7 @@
       questions.push(`求比例尺：實際長 ${actualMeters} 公尺，在圖上長 ${mapCm} 公分，比例尺用「比」表示是多少？`);
       summaryAnswers.push(e619RatioText(ratio.left, ratio.right));
       answers.push(
-        `簡答：${e619RatioText(ratio.left, ratio.right)}。過程：先把實際長換成公分，${actualMeters} 公尺 = ${actualCm} 公分，所以比例尺 = 圖上長 : 實際長 = ${mapCm}:${actualCm} = ${e619RatioText(ratio.left, ratio.right)}。`
+        `過程：先把實際長換成公分，${actualMeters} 公尺 = ${actualCm} 公分，所以比例尺 = 圖上長 : 實際長 = ${mapCm}:${actualCm} = ${e619RatioText(ratio.left, ratio.right)}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3834,13 +3972,13 @@
         questions.push(`求實際長度：在比例尺 1:${scale} 的地圖上，圖上長 ${mapCm} 公分，實際長度是多少公里？`);
         summaryAnswers.push(`${e619FormatNumber(km)}公里`);
         answers.push(
-          `簡答：${e619FormatNumber(km)}公里。過程：實際長 = 圖上長 × 比例尺 = ${mapCm} × ${scale} = ${e619FormatNumber(actualCm)} 公分 = ${e619FormatNumber(actualMeters)} 公尺 = ${e619FormatNumber(km)} 公里。`
+          `過程：實際長 = 圖上長 × 比例尺 = ${mapCm} × ${scale} = ${e619FormatNumber(actualCm)} 公分 = ${e619FormatNumber(actualMeters)} 公尺 = ${e619FormatNumber(km)} 公里。`
         );
       } else {
         questions.push(`求實際長度：在比例尺 1:${scale} 的地圖上，圖上長 ${mapCm} 公分，實際長度是多少公尺？`);
         summaryAnswers.push(`${e619FormatNumber(actualMeters)}公尺`);
         answers.push(
-          `簡答：${e619FormatNumber(actualMeters)}公尺。過程：實際長 = 圖上長 × 比例尺 = ${mapCm} × ${scale} = ${e619FormatNumber(actualCm)} 公分 = ${e619FormatNumber(actualMeters)} 公尺。`
+          `過程：實際長 = 圖上長 × 比例尺 = ${mapCm} × ${scale} = ${e619FormatNumber(actualCm)} 公分 = ${e619FormatNumber(actualMeters)} 公尺。`
         );
       }
     }
@@ -3853,20 +3991,27 @@
     const answers = [];
     const scales = [20, 100, 500, 1000, 2000, 10000, 20000, 100000];
     for (let i = 0; i < count; i += 1) {
-      const scale = pickFromList(scales);
       const actualUnit = i % 2 === 0 ? '公尺' : '公里';
       let actualValue;
       if (actualUnit === '公尺') {
-        actualValue = pickFromList([50, 120, 150, 300, 600, 750, 1200, 2345]);
+        actualValue = pickFromList([50, 120, 150, 300, 600, 750, 1200, 2340]);
       } else {
         actualValue = pickFromList([1.2, 2.4, 3.6, 4, 7.5, 15, 23.5]);
       }
       const actualCm = e619ToCm(actualValue, actualUnit);
-      const mapCm = actualCm / scale;
+      let scale = pickFromList(scales);
+      let mapCm = actualCm / scale;
+      // 圖上長需落在合理範圍且最多兩位小數，避免不合理的比例尺組合與被四捨五入的簡答
+      let guard = 0;
+      while ((mapCm > 100 || mapCm < 0.1 || Math.abs(mapCm * 100 - Math.round(mapCm * 100)) > 1e-6) && guard < 50) {
+        scale = pickFromList(scales);
+        mapCm = actualCm / scale;
+        guard += 1;
+      }
       questions.push(`求圖上長度：實際長 ${actualValue}${actualUnit}，在比例尺 1:${scale} 的圖上長幾公分？`);
       summaryAnswers.push(`${e619FormatNumber(mapCm)}公分`);
       answers.push(
-        `簡答：${e619FormatNumber(mapCm)}公分。過程：圖上長 = 實際長 ÷ 比例尺。先把實際長換成公分，得到 ${e619FormatNumber(actualCm)} 公分，再除以 ${scale}，所以圖上長是 ${e619FormatNumber(mapCm)} 公分。`
+        `過程：圖上長 = 實際長 ÷ 比例尺。先把實際長換成公分，得到 ${e619FormatNumber(actualCm)} 公分，再除以 ${scale}，所以圖上長是 ${e619FormatNumber(mapCm)} 公分。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3886,7 +4031,7 @@
         questions.push(`比例尺圖示為 0-${totalMeters}公尺（整段長 ${barCm} 公分），換成比例尺「比」是多少？`);
         summaryAnswers.push(e619RatioText(ratio.left, ratio.right));
         answers.push(
-          `簡答：${e619RatioText(ratio.left, ratio.right)}。過程：先求 1 公分代表 ${perCmMeters} 公尺，也就是 ${perCmMeters * 100} 公分，所以比例尺是 1:${perCmMeters * 100}。`
+          `過程：先求 1 公分代表 ${perCmMeters} 公尺，也就是 ${perCmMeters * 100} 公分，所以比例尺是 1:${perCmMeters * 100}。`
         );
       } else {
         const scale = pickFromList([1000, 2000, 5000, 6000, 10000, 25000]);
@@ -3894,7 +4039,7 @@
         questions.push(`比例尺是 1:${scale}，畫成圖示時，圖上 1 公分代表實際幾公尺？`);
         summaryAnswers.push(`${e619FormatNumber(perCmMeters)}公尺`);
         answers.push(
-          `簡答：${e619FormatNumber(perCmMeters)}公尺。過程：1:${scale} 表示圖上 1 公分代表實際 ${scale} 公分，換成公尺就是 ${scale} ÷ 100 = ${e619FormatNumber(perCmMeters)} 公尺。`
+          `過程：1:${scale} 表示圖上 1 公分代表實際 ${scale} 公分，換成公尺就是 ${scale} ÷ 100 = ${e619FormatNumber(perCmMeters)} 公尺。`
         );
       }
     }
@@ -3913,7 +4058,7 @@
         questions.push(`詳細度比較：比例尺 1:${small} 和 1:${large} 的兩張地圖，哪一張看得較詳細、範圍較小？`);
         summaryAnswers.push(`1:${small}`);
         answers.push(
-          `簡答：1:${small}。過程：比例尺分母越小，圖上同樣 1 公分代表的實際距離越短，所以看得較詳細、表示範圍也較小。`
+          `過程：比例尺分母越小，圖上同樣 1 公分代表的實際距離越短，所以看得較詳細、表示範圍也較小。`
         );
         continue;
       }
@@ -3923,14 +4068,16 @@
         const scaleB = scaleA * pickFromList([2, 3]);
         const mapA = (actualMeters * 100) / scaleA;
         const mapB = (actualMeters * 100) / scaleB;
+        const mapAText = e619FormatNumber(mapA);
+        const mapBText = e619FormatNumber(mapB);
         questions.push(
-          `同一段 ${actualMeters} 公尺的道路，在比例尺 1:${scaleA} 的圖上長多少公分？在比例尺 1:${scaleB} 的圖上又長多少公分？哪一張比較長？`
+          `同一段 ${actualMeters} 公尺的道路，在比例尺 1:${scaleA} 與 1:${scaleB} 的圖上各約長多少公分？（四捨五入到小數第二位）哪一張比較長？`
         );
         summaryAnswers.push(
-          `1:${scaleA} 的圖上較長，分別是 ${e619FormatNumber(mapA)}公分、${e619FormatNumber(mapB)}公分`
+          `1:${scaleA} 的圖上較長，分別約 ${mapAText}公分、${mapBText}公分`
         );
         answers.push(
-          `簡答：1:${scaleA} 的圖上較長，分別是 ${e619FormatNumber(mapA)}公分、${e619FormatNumber(mapB)}公分。過程：圖上長 = 實際長 ÷ 比例尺。因為 ${scaleA} 比 ${scaleB} 小，所以 1:${scaleA} 會畫得較長。`
+          `過程：圖上長 = 實際長 ÷ 比例尺。兩張圖上長分別約為 ${mapAText} 公分、${mapBText} 公分；因為 ${scaleA} 比 ${scaleB} 小，所以 1:${scaleA} 會畫得較長。`
         );
         continue;
       }
@@ -3944,7 +4091,7 @@
       );
       summaryAnswers.push(`乙圖`);
       answers.push(
-        `簡答：乙圖。過程：圖上長相同時，比例尺分母越大，代表的實際距離越長。甲圖是 ${e619FormatNumber(actualA)} 公尺，乙圖是 ${e619FormatNumber(actualB)} 公尺，所以乙圖代表的實際範圍較大。`
+        `過程：圖上長相同時，比例尺分母越大，代表的實際距離越長。甲圖是 ${e619FormatNumber(actualA)} 公尺，乙圖是 ${e619FormatNumber(actualB)} 公尺，所以乙圖代表的實際範圍較大。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3983,36 +4130,45 @@
     return buildE619MixedSet([buildE619ScaleRepresentationSet, buildE619ScaleComparisonSet], count);
   }
 
-
   function buildE619AreaRatioToScaleSet(count) {
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
     // n² times area → n times length
     const cases = [
-      { n: 2, nSq: 4  },
-      { n: 3, nSq: 9  },
+      { n: 2, nSq: 4 },
+      { n: 3, nSq: 9 },
       { n: 4, nSq: 16 },
       { n: 5, nSq: 25 },
+      { n: 6, nSq: 36 },
+      { n: 7, nSq: 49 },
+      { n: 10, nSq: 100 },
     ];
+    const caseOffset = randInt(0, cases.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = cases[(i + caseOffset) % cases.length];
       const mode = i % 3;
       if (mode === 0) {
         questions.push(`一個圖形的面積放大為原來的 $${c.nSq}$ 倍，邊長會變成原來的幾倍？`);
         summaryAnswers.push(`${c.n}倍`);
-        answers.push(`簡答：${c.n}倍。過程：面積倍數是邊長倍數的平方，$\\sqrt{${c.nSq}}=${c.n}$，所以邊長變成 ${c.n} 倍。`);
+        answers.push(
+          `過程：面積倍數是邊長倍數的平方，$\\sqrt{${c.nSq}}=${c.n}$，所以邊長變成 ${c.n} 倍。`
+        );
       } else if (mode === 1) {
         const side = pickFromList([3, 4, 5, 6, 8, 10]);
         questions.push(`一個正方形邊長 ${side} 公分，把面積擴大為原來的 $${c.nSq}$ 倍，新的邊長是多少公分？`);
         summaryAnswers.push(`${side * c.n}公分`);
-        answers.push(`簡答：${side * c.n}公分。過程：面積放大 ${c.nSq} 倍 → 邊長放大 $\\sqrt{${c.nSq}}=${c.n}$ 倍，新邊長 = ${side} × ${c.n} = ${side * c.n}。`);
+        answers.push(
+          `過程：面積放大 ${c.nSq} 倍 → 邊長放大 $\\sqrt{${c.nSq}}=${c.n}$ 倍，新邊長 = ${side} × ${c.n} = ${side * c.n}。`
+        );
       } else {
         const s1 = pickFromList([3, 4, 5, 6, 8, 10]);
         const s2 = s1 * c.n;
         questions.push(`甲正方形邊長 ${s1} 公分，乙正方形邊長 ${s2} 公分，乙的面積是甲的幾倍？`);
         summaryAnswers.push(`${c.nSq}倍`);
-        answers.push(`簡答：${c.nSq}倍。過程：邊長比 ${s2}:${s1}=${c.n}:1，面積比 = 邊長比的平方 = ${c.n}²=${c.nSq}，所以乙的面積是甲的 ${c.nSq} 倍。`);
+        answers.push(
+          `過程：邊長比 ${s2}:${s1}=${c.n}:1，面積比 = 邊長比的平方 = ${c.n}²=${c.nSq}，所以乙的面積是甲的 ${c.nSq} 倍。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -4024,26 +4180,35 @@
     const answers = [];
     // actual_area_m2 = mapArea_cm2 × scale² / 10000
     const cases = [
-      { scale: 100,  mapArea: 5,  actual: 5   },
-      { scale: 200,  mapArea: 3,  actual: 12  },
-      { scale: 500,  mapArea: 4,  actual: 100 },
-      { scale: 1000, mapArea: 2,  actual: 200 },
-      { scale: 2000, mapArea: 3,  actual: 1200},
-      { scale: 200,  mapArea: 5,  actual: 20  },
-      { scale: 500,  mapArea: 2,  actual: 50  },
-      { scale: 1000, mapArea: 5,  actual: 500 },
+      { scale: 100, mapArea: 5, actual: 5 },
+      { scale: 200, mapArea: 3, actual: 12 },
+      { scale: 500, mapArea: 4, actual: 100 },
+      { scale: 1000, mapArea: 2, actual: 200 },
+      { scale: 2000, mapArea: 3, actual: 1200 },
+      { scale: 200, mapArea: 5, actual: 20 },
+      { scale: 500, mapArea: 2, actual: 50 },
+      { scale: 1000, mapArea: 5, actual: 500 },
+      { scale: 100, mapArea: 8, actual: 8 },
+      { scale: 200, mapArea: 4, actual: 16 },
+      { scale: 500, mapArea: 6, actual: 150 },
+      { scale: 2000, mapArea: 2, actual: 800 },
     ];
+    const caseOffset = randInt(0, cases.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = cases[(i + caseOffset) % cases.length];
       const totalCmSq = c.mapArea * c.scale * c.scale;
       if (i % 2 === 0) {
         questions.push(`比例尺 1:${c.scale} 的地圖上，一塊地的面積是 ${c.mapArea} 平方公分，實際面積是多少平方公尺？`);
         summaryAnswers.push(`${c.actual}平方公尺`);
-        answers.push(`簡答：${c.actual}平方公尺。過程：實際面積 = 圖上面積 × 比例尺² = ${c.mapArea} × ${c.scale}² = ${totalCmSq} 平方公分 = ${c.actual} 平方公尺。`);
+        answers.push(
+          `過程：實際面積 = 圖上面積 × 比例尺² = ${c.mapArea} × ${c.scale}² = ${totalCmSq} 平方公分 = ${c.actual} 平方公尺。`
+        );
       } else {
         questions.push(`比例尺 1:${c.scale} 的地圖上，實際 ${c.actual} 平方公尺的土地在地圖上面積是多少平方公分？`);
         summaryAnswers.push(`${c.mapArea}平方公分`);
-        answers.push(`簡答：${c.mapArea}平方公分。過程：${c.actual} 平方公尺 = ${c.actual * 10000} 平方公分，圖上面積 = ${c.actual * 10000} ÷ ${c.scale}² = ${c.actual * 10000} ÷ ${c.scale * c.scale} = ${c.mapArea}。`);
+        answers.push(
+          `過程：${c.actual} 平方公尺 = ${c.actual * 10000} 平方公分，圖上面積 = ${c.actual * 10000} ÷ ${c.scale}² = ${c.actual * 10000} ÷ ${c.scale * c.scale} = ${c.mapArea}。`
+        );
       }
     }
     return { questions, summaryAnswers, answers };
@@ -4248,13 +4413,14 @@
     for (let i = 0; i < count; i += 1) {
       const denominator = pickFromList([2, 4, 5, 8, 10]);
       const fracTerm = makeFraction(randInt(1, denominator - 1), denominator);
+      const useAdd = randInt(0, 1) === 1;
+      // 減法時被減數至少為 1,避免出現負數結果
       const decTerm = e621PickTerminatingFraction({
-        minWhole: 0,
+        minWhole: useAdd ? 0 : 1,
         maxWhole: 3,
         forceFractionPart: true,
         denominatorChoices: [4, 5, 8, 10],
       });
-      const useAdd = randInt(0, 1) === 1;
       const result = useAdd ? addFraction(decTerm, fracTerm) : subFraction(decTerm, fracTerm);
       const decimalText = e621FractionToDecimalText(decTerm);
       questions.push(`計算：$${decimalText}${useAdd ? '+' : '-'}${fractionToLatex(fracTerm)}$。`);
@@ -4301,14 +4467,15 @@
         forceFractionPart: true,
         denominatorChoices: [4, 5, 8, 10],
       });
+      const op = randInt(0, 1) === 1 ? '+' : '-';
+      // 減法時 innerA 至少為 2 開頭,而 innerB 最大為 2,避免括號內出現負數
       const innerA = e621PickTerminatingFraction({
-        minWhole: 0,
+        minWhole: op === '-' ? 2 : 0,
         maxWhole: 2,
         forceFractionPart: true,
         denominatorChoices: [4, 5, 8, 10],
       });
       const innerB = makeFraction(randInt(1, 4), pickFromList([2, 4, 5, 8, 10]));
-      const op = randInt(0, 1) === 1 ? '+' : '-';
       const inner = op === '+' ? addFraction(innerA, innerB) : subFraction(innerA, innerB);
       const result = addFraction(left, inner);
       const leftText = e621FractionToDecimalText(left);
@@ -4335,13 +4502,22 @@
       });
       const b = makeFraction(randInt(1, 4), pickFromList([2, 4, 5]));
       const c = randInt(2, 5);
-      const d = e621PickTerminatingFraction({
+      const product = mulFraction(b, makeFraction(c, 1));
+      let d = e621PickTerminatingFraction({
         minWhole: 0,
         maxWhole: 2,
         forceFractionPart: true,
         denominatorChoices: [4, 5, 10],
       });
-      const product = mulFraction(b, makeFraction(c, 1));
+      // 避免結果為負或為零
+      while (subFraction(addFraction(a, product), d).num <= 0) {
+        d = e621PickTerminatingFraction({
+          minWhole: 0,
+          maxWhole: 2,
+          forceFractionPart: true,
+          denominatorChoices: [4, 5, 10],
+        });
+      }
       const result = subFraction(addFraction(a, product), d);
       const aText = e621FractionToDecimalText(a);
       const dText = e621FractionToDecimalText(d);
@@ -4371,7 +4547,8 @@
         forceFractionPart: true,
         denominatorChoices: [4, 5, 10],
       });
-      const leftB = subFraction(makeFraction(randInt(1, 4), 1), leftA);
+      const leftAValue = leftA.num / leftA.den;
+      const leftB = subFraction(makeFraction(randInt(Math.floor(leftAValue) + 1, 4), 1), leftA);
       const result = mulFraction(addFraction(leftA, leftB), common);
       const commonText = e621FractionToDecimalText(common);
       const leftAText = e621FractionToDecimalText(leftA);
@@ -4539,7 +4716,7 @@
   }
 
   function e622FormatNumber(value) {
-    return trimDecimalString(String(Number(value)));
+    return trimDecimalString(Number(value).toFixed(6));
   }
 
   function buildE622RateBasicSet(count) {
@@ -4779,9 +4956,54 @@
           return { left: this.leftValue / 60, right: this.rightValue, unit: '公里/分' };
         },
       },
+      {
+        leftName: '小杰',
+        leftValue: 90,
+        leftUnit: '公尺/分',
+        rightName: '小安',
+        rightValue: 1.6,
+        rightUnit: '公尺/秒',
+        convert() {
+          return { left: this.leftValue / 60, right: this.rightValue, unit: '公尺/秒' };
+        },
+      },
+      {
+        leftName: '獵豹',
+        leftValue: 1.8,
+        leftUnit: '公里/分',
+        rightName: '羚羊',
+        rightValue: 96,
+        rightUnit: '公里/時',
+        convert() {
+          return { left: this.leftValue, right: this.rightValue / 60, unit: '公里/分' };
+        },
+      },
+      {
+        leftName: '自強號',
+        leftValue: 120,
+        leftUnit: '公里/時',
+        rightName: '莒光號',
+        rightValue: 1800,
+        rightUnit: '公尺/分',
+        convert() {
+          return { left: (this.leftValue * 1000) / 60, right: this.rightValue, unit: '公尺/分' };
+        },
+      },
+      {
+        leftName: '媽媽',
+        leftValue: 4.2,
+        leftUnit: '公里/時',
+        rightName: '阿姨',
+        rightValue: 0.08,
+        rightUnit: '公里/分',
+        convert() {
+          return { left: this.leftValue / 60, right: this.rightValue, unit: '公里/分' };
+        },
+      },
     ];
+    const variantOffset = randInt(0, variants.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const item = variants[i % variants.length];
+      const item = variants[(i + variantOffset) % variants.length];
       const built = item.convert();
       const winner = built.left > built.right ? item.leftName : item.rightName;
       questions.push(
@@ -4831,9 +5053,14 @@
       { up: 4, down: 6, unit: '公尺/秒', distance: 12, avg: 4.8, scene: '折返跑' },
       { up: 60, down: 84, unit: '公尺/分', distance: 2800, avg: 70, scene: '來回公園' },
       { up: 3, down: 6, unit: '公里/時', distance: 9, avg: 4, scene: '原路來回' },
+      { up: 4, down: 12, unit: '公里/時', distance: 12, avg: 6, scene: '往返郵局' },
+      { up: 2, down: 6, unit: '公里/時', distance: 12, avg: 3, scene: '爬山來回' },
+      { up: 40, down: 60, unit: '公尺/分', distance: 1200, avg: 48, scene: '往返圖書館' },
+      { up: 6, down: 12, unit: '公尺/秒', distance: 36, avg: 8, scene: '折返衝刺' },
     ];
+    const pairOffset = randInt(0, pairs.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const item = pairs[i % pairs.length];
+      const item = pairs[(i + pairOffset) % pairs.length];
       const totalTime = item.distance / item.up + item.distance / item.down;
       const totalDistance = item.distance * 2;
       const avgText = e622FormatNumber(item.avg);
@@ -5014,9 +5241,40 @@
         fastRate: 100,
         targetGap: 1200,
       },
+      {
+        unit: '頁',
+        period: '每日',
+        action: '讀書',
+        fasterName: '哥哥',
+        slowerName: '弟弟',
+        slowRate: 18,
+        fastRate: 30,
+        targetGap: 96,
+      },
+      {
+        unit: '元',
+        period: '每月',
+        action: '存錢',
+        fasterName: '志明',
+        slowerName: '春嬌',
+        slowRate: 1750,
+        fastRate: 2500,
+        targetGap: 6000,
+      },
+      {
+        unit: '個',
+        period: '每分鐘',
+        action: '摺紙鶴',
+        fasterName: '小芳',
+        slowerName: '小婷',
+        slowRate: 6,
+        fastRate: 9,
+        targetGap: 45,
+      },
     ];
+    const scenarioOffset = randInt(0, scenarios.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const s = scenarios[i % scenarios.length];
+      const s = scenarios[(i + scenarioOffset) % scenarios.length];
       const time = s.targetGap / (s.fastRate - s.slowRate);
       questions.push(
         `${s.fasterName}${s.period}${s.action} $${s.fastRate}$ ${s.unit}，${s.slowerName}${s.period}${s.action} $${s.slowRate}$ ${s.unit}，多久後兩者總量會相差 $${s.targetGap}$ ${s.unit}？`
@@ -5079,11 +5337,11 @@
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const cases = [
-        { boat: 12, water: 2, distance: 50 },
-        { boat: 15, water: 3, distance: 48 },
-        { boat: 18, water: 2, distance: 64 },
-        { boat: 20, water: 4, distance: 48 },
-        { boat: 24, water: 3, distance: 84 },
+        { boat: 12, water: 2, distance: 56 },
+        { boat: 15, water: 3, distance: 54 },
+        { boat: 18, water: 2, distance: 60 },
+        { boat: 20, water: 4, distance: 72 },
+        { boat: 24, water: 4, distance: 84 },
       ];
       const { boat, water, distance } = cases[(i + randInt(0, cases.length - 1)) % cases.length];
       const downstreamTime = distance / (boat + water);
@@ -5105,9 +5363,10 @@
     const answers = [];
     for (let i = 0; i < count; i += 1) {
       const escalator = pickFromList([20, 24, 30, 36, 40]);
-      const person = pickFromList([30, 36, 40, 45, 48, 60]);
+      let person = pickFromList([30, 36, 40, 45, 48, 60]);
+      while (person <= escalator) person = pickFromList([30, 36, 40, 45, 48, 60]);
       const sameDirection = i % 2 === 0;
-      const speed = sameDirection ? escalator + person : Math.abs(person - escalator);
+      const speed = sameDirection ? escalator + person : person - escalator;
       questions.push(
         `電扶梯移動速度是 $${escalator}$ 公尺/分，人在平地行走速度是 $${person}$ 公尺/分。若人與電扶梯${sameDirection ? '同方向' : '反方向'}行走，每分鐘移動幾公尺？`
       );
@@ -5198,16 +5457,16 @@
     const summaryAnswers = [];
     const answers = [];
     const modes = [
-      { sound: 340, speedUnit: '公尺/秒', distanceUnit: '公尺', times: [1, 2.5, 4, 6, 8] },
-      { sound: 1500, speedUnit: '公尺/秒', distanceUnit: '公尺', times: [2, 4, 6, 8, 10] },
-      { sound: 1.5, speedUnit: '公里/秒', distanceUnit: '公里', times: [2, 4, 6, 8] },
+      { sound: 340, speedUnit: '公尺/秒', distanceUnit: '公尺', times: [1, 2.5, 4, 6, 8], medium: '在空氣中' },
+      { sound: 1500, speedUnit: '公尺/秒', distanceUnit: '公尺', times: [2, 4, 6, 8, 10], medium: '在水中' },
+      { sound: 1.5, speedUnit: '公里/秒', distanceUnit: '公里', times: [2, 4, 6, 8], medium: '在水中' },
     ];
     for (let i = 0; i < count; i += 1) {
       const mode = modes[i % modes.length];
       const time = pickFromList(mode.times);
       const distance = (mode.sound * time) / 2;
       questions.push(
-        `聲音傳播速度約為 $${e622FormatNumber(mode.sound)}$ ${mode.speedUnit}，發出聲音後經過 $${e622FormatNumber(time)}$ 秒聽到回聲，障礙物距離多遠？`
+        `聲音${mode.medium}的傳播速度約為 $${e622FormatNumber(mode.sound)}$ ${mode.speedUnit}，發出聲音後經過 $${e622FormatNumber(time)}$ 秒聽到回聲，障礙物距離多遠？`
       );
       summaryAnswers.push(`$${e622FormatNumber(distance)}$ ${mode.distanceUnit}`);
       answers.push(
@@ -5226,19 +5485,23 @@
     const cases = [
       { v1: 80, t1: 10, v2: 60, t2: 15, rest: 0 },
       { v1: 100, t1: 12, v2: 80, t2: 10, rest: 0 },
-      { v1: 90, t1: 8,  v2: 70, t2: 12, rest: 0 },
+      { v1: 90, t1: 8, v2: 70, t2: 12, rest: 0 },
       { v1: 120, t1: 5, v2: 90, t2: 10, rest: 5 },
       { v1: 80, t1: 15, v2: 60, t2: 20, rest: 10 },
       { v1: 100, t1: 8, v2: 70, t2: 15, rest: 0 },
+      { v1: 70, t1: 12, v2: 50, t2: 18, rest: 0 },
+      { v1: 110, t1: 6, v2: 85, t2: 8, rest: 5 },
     ];
     const contexts = ['小明', '小華', '小英', '小美'];
+    const twoSegOffset = randInt(0, cases.length - 1);
+    const nameOffset = randInt(0, contexts.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = cases[(i + twoSegOffset) % cases.length];
       const { v1, t1, v2, t2, rest } = c;
       const d1 = v1 * t1;
       const d2 = v2 * t2;
       const total = d1 + d2;
-      const name = contexts[i % contexts.length];
+      const name = contexts[(i + nameOffset) % contexts.length];
       const restPart = rest > 0 ? `，然後休息 $${rest}$ 分鐘` : '';
       questions.push(
         `${name}以每分鐘 $${v1}$ 公尺的速率走了 $${t1}$ 分鐘${restPart}，再以每分鐘 $${v2}$ 公尺的速率走了 $${t2}$ 分鐘，請問他總共走了多少公尺？`
@@ -5246,7 +5509,7 @@
       summaryAnswers.push(`$${total}$ 公尺`);
       answers.push(
         `第一段路程 $= ${v1} \\times ${t1} = ${d1}$ 公尺，第二段路程 $= ${v2} \\times ${t2} = ${d2}$ 公尺，` +
-        `總路程 $= ${d1} + ${d2} = ${total}$ 公尺。`
+          `總路程 $= ${d1} + ${d2} = ${total}$ 公尺。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -5257,15 +5520,18 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      { track: 400, fast: 5, slow: 3 },   // diff=2, t=200s
-      { track: 500, fast: 6, slow: 4 },   // diff=2, t=250s
-      { track: 600, fast: 7, slow: 5 },   // diff=2, t=300s
-      { track: 300, fast: 5, slow: 4 },   // diff=1, t=300s
-      { track: 400, fast: 8, slow: 6 },   // diff=2, t=200s
-      { track: 450, fast: 6, slow: 3 },   // diff=3, t=150s
+      { track: 400, fast: 5, slow: 3 }, // diff=2, t=200s
+      { track: 500, fast: 6, slow: 4 }, // diff=2, t=250s
+      { track: 600, fast: 7, slow: 5 }, // diff=2, t=300s
+      { track: 300, fast: 5, slow: 4 }, // diff=1, t=300s
+      { track: 400, fast: 8, slow: 6 }, // diff=2, t=200s
+      { track: 450, fast: 6, slow: 3 }, // diff=3, t=150s
+      { track: 600, fast: 8, slow: 5 }, // diff=3, t=200s
+      { track: 350, fast: 7, slow: 5 }, // diff=2, t=175s
     ];
+    const chaseOffset = randInt(0, cases.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = cases[(i + chaseOffset) % cases.length];
       const { track, fast, slow } = c;
       const diff = fast - slow;
       const time = track / diff;
@@ -5275,7 +5541,7 @@
       summaryAnswers.push(`$${e622FormatNumber(time)}$ 秒後`);
       answers.push(
         `同向出發，甲每秒比乙多跑 $${fast} - ${slow} = ${diff}$ 公尺，當甲多跑一圈（$${track}$ 公尺）時才能追上乙，` +
-        `所以追上時間 $= \\frac{${track}}{${diff}} = ${e622FormatNumber(time)}$ 秒。`
+          `所以追上時間 $= \\frac{${track}}{${diff}} = ${e622FormatNumber(time)}$ 秒。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -5288,22 +5554,28 @@
     // mode 0: 行駛 X 小時後，還剩 Y 公里，求全程
     // mode 1: 全程 D 公里，速率 S km/h，中途休息 R 分鐘，求總時間
     const mode0Cases = [
-      { speed: 80,  time: 3,   remaining: 40  },  // total=280km
-      { speed: 100, time: 2.5, remaining: 50  },  // total=300km
-      { speed: 60,  time: 4,   remaining: 60  },  // total=300km
-      { speed: 90,  time: 2,   remaining: 30  },  // total=210km
-      { speed: 80,  time: 2.5, remaining: 60  },  // total=260km
+      { speed: 80, time: 3, remaining: 40 }, // total=280km
+      { speed: 100, time: 2.5, remaining: 50 }, // total=300km
+      { speed: 60, time: 4, remaining: 60 }, // total=300km
+      { speed: 90, time: 2, remaining: 30 }, // total=210km
+      { speed: 80, time: 2.5, remaining: 60 }, // total=260km
+      { speed: 70, time: 3, remaining: 90 }, // total=300km
+      { speed: 50, time: 3.5, remaining: 25 }, // total=200km
     ];
     const mode1Cases = [
-      { dist: 480, speed: 80,  rest: 30  },  // 6+0.5=6.5h
-      { dist: 240, speed: 80,  rest: 30  },  // 3+0.5=3.5h
-      { dist: 300, speed: 100, rest: 60  },  // 3+1=4h
-      { dist: 180, speed: 60,  rest: 30  },  // 3+0.5=3.5h
-      { dist: 350, speed: 70,  rest: 30  },  // 5+0.5=5.5h
+      { dist: 480, speed: 80, rest: 30 }, // 6+0.5=6.5h
+      { dist: 240, speed: 80, rest: 30 }, // 3+0.5=3.5h
+      { dist: 300, speed: 100, rest: 60 }, // 3+1=4h
+      { dist: 180, speed: 60, rest: 30 }, // 3+0.5=3.5h
+      { dist: 350, speed: 70, rest: 30 }, // 5+0.5=5.5h
+      { dist: 420, speed: 60, rest: 30 }, // 7+0.5=7.5h
+      { dist: 540, speed: 90, rest: 30 }, // 6+0.5=6.5h
     ];
+    const mode0Offset = randInt(0, mode0Cases.length - 1);
+    const mode1Offset = randInt(0, mode1Cases.length - 1);
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
-        const c = mode0Cases[Math.floor(i / 2) % mode0Cases.length];
+        const c = mode0Cases[(Math.floor(i / 2) + mode0Offset) % mode0Cases.length];
         const { speed, time, remaining } = c;
         const total = speed * time + remaining;
         questions.push(
@@ -5314,7 +5586,7 @@
           `已行駛距離 $= ${speed} \\times ${e622FormatNumber(time)} = ${speed * time}$ 公里，全程 $= ${speed * time} + ${remaining} = ${total}$ 公里。`
         );
       } else {
-        const c = mode1Cases[Math.floor(i / 2) % mode1Cases.length];
+        const c = mode1Cases[(Math.floor(i / 2) + mode1Offset) % mode1Cases.length];
         const { dist, speed, rest } = c;
         const driveTime = dist / speed;
         const totalTime = driveTime + rest / 60;
@@ -5324,7 +5596,7 @@
         summaryAnswers.push(`$${e622FormatNumber(totalTime)}$ 小時`);
         answers.push(
           `行駛時間 $= \\frac{${dist}}{${speed}} = ${e622FormatNumber(driveTime)}$ 小時，休息 $${rest}$ 分 $= ${e622FormatNumber(rest / 60)}$ 小時，` +
-          `合計 $${e622FormatNumber(driveTime)} + ${e622FormatNumber(rest / 60)} = ${e622FormatNumber(totalTime)}$ 小時。`
+            `合計 $${e622FormatNumber(driveTime)} + ${e622FormatNumber(rest / 60)} = ${e622FormatNumber(totalTime)}$ 小時。`
         );
       }
     }
@@ -5780,6 +6052,7 @@
       { outerL: 9, outerW: 6, innerL: 7, innerW: 4, height: 12 },
       { outerL: 10, outerW: 8, innerL: 8, innerW: 6, height: 15 },
       { outerL: 12, outerW: 7, innerL: 10, innerW: 5, height: 9 },
+      { outerL: 14, outerW: 9, innerL: 12, innerW: 7, height: 11 },
     ];
     for (let i = 0; i < count; i += 1) {
       const { outerL, outerW, innerL, innerW, height } = cases[(i + randInt(0, cases.length - 1)) % cases.length];
@@ -5938,7 +6211,7 @@
         const rise = pickFromList([2, 3, 4, 5]);
         const volume = baseLength * baseWidth * rise;
         questions.push(
-          `一個長方體容器底面長 $${baseLength}$ 公分、寬 $${baseWidth}$ 公分，放入物體後水面上升 $${rise}$ 公分，求物體排開的體積。`
+          `一個長方體容器底面長 $${baseLength}$ 公分、寬 $${baseWidth}$ 公分，放入並完全浸入物體後水面上升 $${rise}$ 公分，求物體排開的體積。`
         );
         summaryAnswers.push(`$${volume}$ 立方公分`);
         answers.push(
@@ -5969,6 +6242,7 @@
       { rA: 5, hA: 12, rB: 7, hB: 8 },
       { rA: 8, hA: 6, rB: 4, hB: 20 },
       { rA: 3, hA: 18, rB: 6, hB: 10 },
+      { rA: 6, hA: 14, rB: 5, hB: 18 },
     ];
     for (let i = 0; i < count; i += 1) {
       const { rA, hA, rB, hB } = cases[(i + randInt(0, cases.length - 1)) % cases.length];
@@ -5992,18 +6266,16 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const edges = [4, 6, 8, 10];
+    const edges = [4, 6, 8, 10, 12, 14];
     for (let i = 0; i < count; i += 1) {
       const a = edges[i % edges.length];
       const r = a / 2;
       const V = e623FormatNumber(3.14 * r * r * a);
-      questions.push(
-        `有一個邊長為 $${a}$ 公分的正方體，將其削成一個最大的圓柱，求這個圓柱的體積。（圓周率取 $3.14$）`
-      );
+      questions.push(`有一個邊長為 $${a}$ 公分的正方體，將其削成一個最大的圓柱，求這個圓柱的體積。（圓周率取 $3.14$）`);
       summaryAnswers.push(`$${V}$ 立方公分`);
       answers.push(
         `最大圓柱的底面半徑 $= ${a} \\div 2 = ${r}$ 公分，高 $= ${a}$ 公分，` +
-        `體積 $= 3.14 \\times ${r} \\times ${r} \\times ${a} = ${V}$ 立方公分。`
+          `體積 $= 3.14 \\times ${r} \\times ${r} \\times ${a} = ${V}$ 立方公分。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -6018,11 +6290,11 @@
     // mode 2: 圓柱半徑增加 n 公分
     // mode 3: 圓柱高增加 n 公分
     const rectPctCases = [
-      { l: 8,  pct: 25, newL: 10, w: 6, h: 5 },
+      { l: 8, pct: 25, newL: 10, w: 6, h: 5 },
       { l: 12, pct: 25, newL: 15, w: 8, h: 5 },
       { l: 10, pct: 50, newL: 15, w: 4, h: 6 },
-      { l: 4,  pct: 50, newL: 6,  w: 3, h: 5 },
-      { l: 6,  pct: 50, newL: 9,  w: 4, h: 4 },
+      { l: 4, pct: 50, newL: 6, w: 3, h: 5 },
+      { l: 6, pct: 50, newL: 9, w: 4, h: 4 },
     ];
     const cylRCases = [
       { r: 2, dr: 1, h: 5 },
@@ -6043,9 +6315,9 @@
         const wList = [4, 5, 6];
         const hList = [3, 4, 5];
         const dlList = [2, 3, 4];
-        const l  = lList[i % lList.length];
-        const w  = wList[i % wList.length];
-        const h  = hList[i % hList.length];
+        const l = lList[i % lList.length];
+        const w = wList[i % wList.length];
+        const h = hList[i % hList.length];
         const dl = dlList[i % dlList.length];
         const vOld = l * w * h;
         const vInc = dl * w * h;
@@ -6056,8 +6328,8 @@
         summaryAnswers.push(`$${vInc}$ 立方公分`);
         answers.push(
           `原體積 $= ${l} \\times ${w} \\times ${h} = ${vOld}$ 立方公分，` +
-          `新體積 $= ${l + dl} \\times ${w} \\times ${h} = ${vNew}$ 立方公分，` +
-          `增加 $${vNew} - ${vOld} = ${vInc}$ 立方公分。`
+            `新體積 $= ${l + dl} \\times ${w} \\times ${h} = ${vNew}$ 立方公分，` +
+            `增加 $${vNew} - ${vOld} = ${vInc}$ 立方公分。`
         );
       } else if (mode === 1) {
         const c = rectPctCases[Math.floor(i / 4) % rectPctCases.length];
@@ -6071,8 +6343,8 @@
         summaryAnswers.push(`$${vInc}$ 立方公分`);
         answers.push(
           `長增加 $${pct}\\%$ 後變為 $${l} \\times (1 + ${pct}\\%) = ${newL}$ 公分，` +
-          `新體積 $= ${newL} \\times ${w} \\times ${h} = ${vNew}$ 立方公分，` +
-          `增加 $${vNew} - ${vOld} = ${vInc}$ 立方公分。`
+            `新體積 $= ${newL} \\times ${w} \\times ${h} = ${vNew}$ 立方公分，` +
+            `增加 $${vNew} - ${vOld} = ${vInc}$ 立方公分。`
         );
       } else if (mode === 2) {
         const c = cylRCases[Math.floor(i / 4) % cylRCases.length];
@@ -6087,7 +6359,7 @@
         summaryAnswers.push(`$${vInc}$ 立方公分`);
         answers.push(
           `新半徑 $= ${r} + ${dr} = ${rNew}$ 公分，原體積 $= 3.14 \\times ${r}^2 \\times ${h} = ${vOld}$ 立方公分，` +
-          `新體積 $= 3.14 \\times ${rNew}^2 \\times ${h} = ${vNew}$ 立方公分，增加 $${vInc}$ 立方公分。`
+            `新體積 $= 3.14 \\times ${rNew}^2 \\times ${h} = ${vNew}$ 立方公分，增加 $${vInc}$ 立方公分。`
         );
       } else {
         const c = cylHCases[Math.floor(i / 4) % cylHCases.length];
@@ -6285,7 +6557,10 @@
       { num: 3, den: 5 },
     ];
     for (let i = 0; i < count; i += 1) {
-      const ratio = ratios[i % ratios.length];
+      const ratio =
+        i % 2 === 0
+          ? pickFromList(ratios.filter((item) => item.num <= item.den))
+          : pickFromList(ratios.filter((item) => item.num > item.den));
       const { base, compare } = e624BuildScaledPair(ratio, [12, 18, 24, 30, 36]);
       if (i % 2 === 0) {
         questions.push(
@@ -6456,20 +6731,20 @@
     const summaryAnswers = [];
     const answers = [];
     const contexts = [
-      ['零用錢', '買書用掉'],
-      ['果汁', '喝掉'],
-      ['飼料', '用掉'],
-      ['存款', '先花掉'],
+      ['零用錢', '買書用掉', '元'],
+      ['果汁桶', '倒出', '公升'],
+      ['飼料', '用掉', '公斤'],
+      ['存款', '先花掉', '元'],
     ];
     for (let i = 0; i < count; i += 1) {
       const original = pickFromList([150, 200, 360, 450, 600, 1200, 4500]);
       const used = pickFromList([20, 25, 30, 35, 40, 46]);
       const remain = (original * (100 - used)) / 100;
-      const [label, action] = contexts[i % contexts.length];
-      questions.push(`${label}原有 $${original}$，${action} $${used}\\%$ 後，還剩多少？`);
-      summaryAnswers.push(`$${e624FormatNumber(remain)}$`);
+      const [label, action, unit] = contexts[i % contexts.length];
+      questions.push(`${label}原有 $${original}$ ${unit}，${action} $${used}\\%$ 後，還剩多少${unit}？`);
+      summaryAnswers.push(`$${e624FormatNumber(remain)}$ ${unit}`);
       answers.push(
-        `剩餘量 $=\\text{原量}\\times(1-\\text{用掉率})=${original}\\times(1-${used / 100})=${e624FormatNumber(remain)}$，所以還剩 $${e624FormatNumber(remain)}$。`
+        `剩餘量 $=\\text{原量}\\times(1-\\text{用掉率})=${original}\\times(1-${used / 100})=${e624FormatNumber(remain)}$，所以還剩 $${e624FormatNumber(remain)}$ ${unit}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -6486,7 +6761,7 @@
         { num: 4, den: 5 },
         { num: 5, den: 6 },
       ]);
-      const base = pickFromList([40, 60, 80, 100, 120, 150, 200]);
+      const base = ratio.den * pickFromList([8, 10, 12, 15, 16, 20]);
       const compare = (base * ratio.num) / ratio.den;
       const diff = base - compare;
       questions.push(`牧場有牛 $${base}$ 隻，羊是牛的 $${e624RatioLatex(ratio)}$ 倍，牛比羊多幾隻？`);
@@ -6604,7 +6879,7 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const scale = pickFromList([20, 25, 30, 40]);
+      const scale = pickFromList([20, 25, 30, 40, 50, 60]);
       const a = 3 * scale;
       const b = 2 * scale;
       const c = 4 * scale;
@@ -6651,8 +6926,17 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const squareSide = pickFromList([8, 9, 10, 12, 15]);
-      const pentSide = pickFromList([8, 10, 12, 15]);
+      // 只挑倍數為有限小數(至多兩位)的組合,避免簡答被四捨五入
+      const sidePairs = [
+        [10, 10],
+        [10, 12],
+        [10, 15],
+        [8, 8],
+        [8, 12],
+        [12, 12],
+        [15, 15],
+      ];
+      const [squareSide, pentSide] = pickFromList(sidePairs);
       const squarePerimeter = squareSide * 4;
       const pentPerimeter = pentSide * 5;
       const ratio = pentPerimeter / squarePerimeter;
@@ -6774,13 +7058,14 @@
       const transfer = pickFromList([5, 6, 7, 8, 10, 11, 12]);
       const smaller = pickFromList([24, 30, 36, 40, 45, 50, 60]);
       const bigger = smaller + 2 * transfer;
+      const sum = bigger + smaller;
       const [bigLabel, smallLabel, unit] = contexts[i % contexts.length];
       questions.push(
-        `${bigLabel}有 $${bigger}$ ${unit}，${smallLabel}有 $${smaller}$ ${unit}。若${bigLabel}拿出 $${transfer}$ ${unit}給${smallLabel}，兩人就一樣多。要問原來各有多少${unit}。`
+        `${bigLabel}和${smallLabel}合計 $${sum}$ ${unit}。若${bigLabel}拿出 $${transfer}$ ${unit}給${smallLabel}，兩人就會一樣多，求原來各有多少${unit}？`
       );
       summaryAnswers.push(`${bigLabel} $${bigger}$ ${unit}，${smallLabel} $${smaller}$ ${unit}`);
       answers.push(
-        `拿出 $${transfer}$ ${unit}後會相等，表示原來兩者相差 $2\\times${transfer}=${2 * transfer}$ ${unit}。已知較少的是 $${smaller}$ ${unit}，所以較多的是 $${smaller}+${2 * transfer}=${bigger}$ ${unit}。`
+        `拿出 $${transfer}$ ${unit}後會相等，表示原來兩者相差 $2\\times${transfer}=${2 * transfer}$ ${unit}。較少的是 $(${sum}-${2 * transfer})\\div2=${smaller}$ ${unit}，較多的是 $${smaller}+${2 * transfer}=${bigger}$ ${unit}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -6842,7 +7127,8 @@
       const years = pickFromList([1, 2, 3, 4, 5]);
       const childNow = childFuture - years;
       const adultNow = ratio * childFuture - years;
-      if (childNow <= 0) {
+      // 年齡差需至少 15 歲,且孩子現齡為正,否則情境不合理
+      if (childNow <= 0 || (ratio - 1) * childFuture < 15) {
         i -= 1;
         continue;
       }
@@ -6866,6 +7152,11 @@
       const years = pickFromList([2, 3, 4, 5, 6, 7]);
       const childNow = childPast + years;
       const adultNow = ratio * childPast + years;
+      // 兩人年齡差需至少 10 歲,否則情境不合理
+      if ((ratio - 1) * childPast < 10) {
+        i -= 1;
+        continue;
+      }
       questions.push(`叔叔今年 $${adultNow}$ 歲，小智 $${childNow}$ 歲，幾年前叔叔的年齡是小智的 $${ratio}$ 倍？`);
       summaryAnswers.push(`$${years}$ 年前`);
       answers.push(
@@ -6886,6 +7177,11 @@
       const childFuture = pickFromList([9, 10, 12, 15, 18]);
       const adultNow = ratio * childFuture - years;
       const childNow = childFuture - years;
+      // 年齡差需至少 15 歲,否則情境不合理
+      if ((ratio - 1) * childFuture < 15) {
+        i -= 1;
+        continue;
+      }
       questions.push(`爸爸今年 $${adultNow}$ 歲，$${years}$ 年後爸爸的年齡會是小雲的 $${ratio}$ 倍，小雲現在幾歲？`);
       summaryAnswers.push(`$${childNow}$ 歲`);
       answers.push(
@@ -6934,8 +7230,14 @@
         `某處有${aLabel}和${bLabel}共 $${totalCount}$ ${itemUnit}，合起來共有 $${totalFoot}$ ${totalUnit}，求${aLabel}與${bLabel}各有幾${itemUnit}？`
       );
       summaryAnswers.push(`${aLabel} $${aCount}$ ${itemUnit}，${bLabel} $${bCount}$ ${itemUnit}`);
+      const lowLabel = aUnit < bUnit ? aLabel : bLabel;
+      const highLabel = aUnit < bUnit ? bLabel : aLabel;
+      const lowValue = Math.min(aUnit, bUnit);
+      const highValue = Math.max(aUnit, bUnit);
+      const highCount = aUnit < bUnit ? bCount : aCount;
+      const lowCount = totalCount - highCount;
       answers.push(
-        `先全部假設成${aLabel}，則共有 $${totalCount}\\times${aUnit}=${totalCount * aUnit}$ ${totalUnit}。實際多出 $${totalFoot - totalCount * aUnit}$ ${totalUnit}，每把 1 ${aLabel}改成 1 ${bLabel} 會多 $${bUnit - aUnit}$ ${totalUnit}，所以 ${bLabel} 有 $(${totalFoot - totalCount * aUnit})\\div${bUnit - aUnit}=${bCount}$ ${itemUnit}，${aLabel} 有 $${totalCount}-${bCount}=${aCount}$ ${itemUnit}。`
+        `先全部假設成${lowLabel}，則共有 $${totalCount}\\times${lowValue}=${totalCount * lowValue}$ ${totalUnit}。實際多出 $${totalFoot - totalCount * lowValue}$ ${totalUnit}，每把 1 ${lowLabel}改成 1 ${highLabel} 會多 $${highValue - lowValue}$ ${totalUnit}，所以 ${highLabel} 有 $(${totalFoot - totalCount * lowValue})\\div${highValue - lowValue}=${highCount}$ ${itemUnit}，${lowLabel} 有 $${totalCount}-${highCount}=${lowCount}$ ${itemUnit}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -6960,8 +7262,14 @@
         `${aLabel}和${bLabel}共 $${totalCount}$ ${itemUnit}，合起來是 $${totalAmount}$ ${totalUnit}，求兩種各有幾${itemUnit}？`
       );
       summaryAnswers.push(`${aLabel} $${aCount}$ ${itemUnit}，${bLabel} $${bCount}$ ${itemUnit}`);
+      const lowLabel = aValue < bValue ? aLabel : bLabel;
+      const highLabel = aValue < bValue ? bLabel : aLabel;
+      const lowValue = Math.min(aValue, bValue);
+      const highValue = Math.max(aValue, bValue);
+      const highCount = aValue < bValue ? bCount : aCount;
+      const lowCount = totalCount - highCount;
       answers.push(
-        `先全部假設成${aLabel}，總金額會是 $${totalCount}\\times${aValue}=${totalCount * aValue}$ ${totalUnit}。實際多出 $${totalAmount - totalCount * aValue}$ ${totalUnit}，每把 1 ${aLabel}改成 1 ${bLabel} 會多 $${bValue - aValue}$ ${totalUnit}，所以 ${bLabel} 有 $(${totalAmount - totalCount * aValue})\\div${bValue - aValue}=${bCount}$ ${itemUnit}，${aLabel} 有 $${aCount}$ ${itemUnit}。`
+        `先全部假設成${lowLabel}，總金額會是 $${totalCount}\\times${lowValue}=${totalCount * lowValue}$ ${totalUnit}。實際多出 $${totalAmount - totalCount * lowValue}$ ${totalUnit}，每把 1 ${lowLabel}改成 1 ${highLabel} 會多 $${highValue - lowValue}$ ${totalUnit}，所以 ${highLabel} 有 $(${totalAmount - totalCount * lowValue})\\div${highValue - lowValue}=${highCount}$ ${itemUnit}，${lowLabel} 有 $${lowCount}$ ${itemUnit}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -6993,7 +7301,7 @@
       const higherCount = aValue < bValue ? bCount : aCount;
       const lowerCount = totalCount - higherCount;
       answers.push(
-        `先全部假設成${lowerLabel}，總量會是 $${totalCount}\\times${lowerValue}=${totalCount * lowerValue}$ ${totalUnit}。實際多出 $${totalAmount - totalCount * lowerValue}$ ${totalUnit}，每換成 1 個${higherLabel}會多 $${higherValue - lowerValue}$ ${totalUnit}，所以 ${higherLabel} 有 $(${totalAmount - totalCount * lowerValue})\\div${higherValue - lowerValue}=${higherCount}$ ${itemUnit}，${lowerLabel} 有 $${lowerCount}$ ${itemUnit}。`
+        `先全部假設成${lowerLabel}，總量會是 $${totalCount}\\times${lowerValue}=${totalCount * lowerValue}$ ${totalUnit}。實際多出 $${totalAmount - totalCount * lowerValue}$ ${totalUnit}，每把 1 ${lowerLabel} 換成 1 ${higherLabel}會多 $${higherValue - lowerValue}$ ${totalUnit}，所以 ${higherLabel} 有 $(${totalAmount - totalCount * lowerValue})\\div${higherValue - lowerValue}=${higherCount}$ ${itemUnit}，${lowerLabel} 有 $${lowerCount}$ ${itemUnit}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7026,7 +7334,11 @@
     for (let i = 0; i < count; i += 1) {
       const prevCount = 3;
       const prevAvg = pickFromList([600, 800, 900, 1000, 1100]);
-      const targetAvg = prevAvg - pickFromList([80, 100, 120, 150, 200]);
+      let targetAvg = prevAvg - pickFromList([80, 100, 120, 150, 200]);
+      // 第 4 次的值必須為正,否則情境不成立
+      while (targetAvg * 4 - prevAvg * prevCount <= 0) {
+        targetAvg = prevAvg - pickFromList([80, 100, 120, 150, 200]);
+      }
       const nextValue = targetAvg * 4 - prevAvg * prevCount;
       questions.push(
         `前 $${prevCount}$ 次平均是 $${prevAvg}$，若要讓前 $4$ 次平均變成 $${targetAvg}$，第 $4$ 次需要是多少？`
@@ -7153,9 +7465,9 @@
     const summaryAnswers = [];
     const answers = [];
     for (let i = 0; i < count; i += 1) {
-      const doors = pickFromList([4, 5, 6, 7]);
+      const doors = pickFromList([4, 5, 6, 7, 8, 9]);
       const total = doors * (doors - 1);
-      questions.push(`某地共有 $${doors}$ 個入口，從任一個口進入後，必須由其他出口離開，共有幾種進出方式？`);
+      questions.push(`某地共有 $${doors}$ 個出入口，從任一個出入口進入後，必須由其他出入口離開，共有幾種進出方式？`);
       summaryAnswers.push(`$${total}$ 種`);
       answers.push(
         `先選入口有 $${doors}$ 種，出口不能和入口相同，所以有 $${doors - 1}$ 種。依乘法原理共有 $${doors}\\times${doors - 1}=${total}$ 種。`
@@ -7169,61 +7481,36 @@
     const summaryAnswers = [];
     const answers = [];
     const cases = [
-      {
-        digits: [0, 1, 2, 3, 4, 5],
-        repeat: true,
-        ask: '偶數',
-        resultFn(set) {
-          return (set.length - 1) * 2 + (set.includes(0) ? 1 : 0);
-        },
-      },
-      {
-        digits: [0, 1, 2, 3, 4],
-        repeat: true,
-        ask: '奇數',
-        resultFn(set) {
-          return (set.length - 1) * 2;
-        },
-      },
-      {
-        digits: [0, 2, 3, 5],
-        repeat: false,
-        ask: '5 的倍數',
-        resultFn() {
-          return 5;
-        },
-      },
-      {
-        digits: [0, 2, 3, 5],
-        repeat: false,
-        ask: '小於 52',
-        resultFn() {
-          return 7;
-        },
-      },
+      { digits: [0, 1, 2, 3, 4, 5], repeat: true, ask: '偶數', total: 15,
+        proc: '個位要是偶數，可選 $0、2、4$ 共 3 種；十位不能是 0，有 5 種，所以共有 $5\\times3=15$ 種。' },
+      { digits: [0, 1, 2, 3, 4], repeat: true, ask: '奇數', total: 8,
+        proc: '個位要是奇數，可選 $1、3$ 共 2 種；十位不能是 0，有 4 種，所以共有 $4\\times2=8$ 種。' },
+      { digits: [0, 2, 3, 5], repeat: false, ask: '5 的倍數', total: 5,
+        proc: '個位是 0 時，十位可選 $2、3、5$ 共 3 種；個位是 5 時，十位可選 $2、3$ 共 2 種，所以共有 $3+2=5$ 種。' },
+      { digits: [0, 2, 3, 5], repeat: false, ask: '小於 52', total: 7,
+        proc: '十位是 2 時個位可選 $0、3、5$ 共 3 種；十位是 3 時個位可選 $0、2、5$ 共 3 種；十位是 5 時只有 $50$ 符合，所以共有 $3+3+1=7$ 種。' },
+      { digits: [0, 1, 3, 4, 5, 6], repeat: true, ask: '偶數', total: 15,
+        proc: '個位要是偶數，可選 $0、4、6$ 共 3 種；十位不能是 0，有 5 種，所以共有 $5\\times3=15$ 種。' },
+      { digits: [0, 2, 3, 5, 6], repeat: true, ask: '奇數', total: 8,
+        proc: '個位要是奇數，可選 $3、5$ 共 2 種；十位不能是 0，有 4 種，所以共有 $4\\times2=8$ 種。' },
+      { digits: [0, 2, 4, 5], repeat: false, ask: '5 的倍數', total: 5,
+        proc: '個位是 0 時，十位可選 $2、4、5$ 共 3 種；個位是 5 時，十位可選 $2、4$ 共 2 種，所以共有 $3+2=5$ 種。' },
+      { digits: [0, 1, 4, 5], repeat: false, ask: '小於 52', total: 8,
+        proc: '十位是 1 時個位可選 $0、4、5$ 共 3 種；十位是 4 時個位可選 $0、1、5$ 共 3 種；十位是 5 時 $50、51$ 符合共 2 種，所以共有 $3+3+2=8$ 種。' },
     ];
+    const caseOffset = randInt(0, cases.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
+      const item = cases[(i + caseOffset) % cases.length];
       const setText = item.digits.join('、');
-      if (item.ask === '偶數') {
-        const total = item.resultFn(item.digits);
-        questions.push(`用「${setText}」排出二位數，數字可以重複使用，可以排出幾種偶數？`);
-        summaryAnswers.push(`$${total}$ 種`);
-        answers.push(`個位要是偶數，可選 $0、2、4$ 共 3 種；十位不能是 0，所以分情況算得共有 $${total}$ 種。`);
-      } else if (item.ask === '奇數') {
-        const total = item.resultFn(item.digits);
-        questions.push(`用「${setText}」排出二位數，數字可以重複使用，可以排出幾種奇數？`);
-        summaryAnswers.push(`$${total}$ 種`);
-        answers.push(`個位要是奇數，可選 $1、3$ 共 2 種；十位不能是 0，有 4 種，所以共有 $4\\times2=${total}$ 種。`);
+      if (item.repeat) {
+        questions.push(`用「${setText}」排出二位數，數字可以重複使用，可以排出幾種${item.ask}？`);
       } else if (item.ask === '5 的倍數') {
         questions.push(`用「${setText}」排出數字不重複的二位數，是 $5$ 的倍數的有幾種？`);
-        summaryAnswers.push(`$5$ 種`);
-        answers.push(`二位數是 5 的倍數，個位只能是 0 或 5。分兩種情況列出後共有 $5$ 種。`);
       } else {
         questions.push(`用「${setText}」排出數字不重複的二位數，其中小於 $52$ 的有幾種？`);
-        summaryAnswers.push(`$7$ 種`);
-        answers.push(`先看十位能不能是 0，再依十位是 2、3、5 分類比較大小，整理後共有 $7$ 種。`);
       }
+      summaryAnswers.push(`$${item.total}$ 種`);
+      answers.push(item.proc);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -7292,6 +7579,10 @@
 
   // ── e6-2-5 新增練習：一元一次方程各類型 ─────────────────────────────────
 
+  function e625LinearTerm(coefficient) {
+    return coefficient === 1 ? 'x' : `${coefficient}x`;
+  }
+
   // 1. 整係數方程（ax+b=c 基礎；ax+b=cx+d 進階）
   function buildE625LinearIntCoefSet(count) {
     const questions = [];
@@ -7305,9 +7596,7 @@
         const c = a * x + b;
         questions.push(`解方程：$${a}x + ${b} = ${c}$`);
         summaryAnswers.push(`$x = ${x}$`);
-        answers.push(
-          `移項：$${a}x = ${c} - ${b} = ${a * x}$，兩邊除以 $${a}$，得 $x = ${x}$。`
-        );
+        answers.push(`移項：$${a}x = ${c} - ${b} = ${a * x}$，兩邊除以 $${a}$，得 $x = ${x}$。`);
       } else {
         const diffCoef = pickFromList([2, 3, 4]);
         const cCoef = pickFromList([1, 2, 3]);
@@ -7315,7 +7604,7 @@
         const x = pickFromList([2, 3, 4, 5, 6, 7]);
         const b = pickFromList([2, 3, 4, 5]);
         const d = b + diffCoef * x;
-        questions.push(`解方程：$${aCoef}x + ${b} = ${cCoef}x + ${d}$`);
+        questions.push(`解方程：$${e625LinearTerm(aCoef)} + ${b} = ${e625LinearTerm(cCoef)} + ${d}$`);
         summaryAnswers.push(`$x = ${x}$`);
         answers.push(
           `移項合併：$(${aCoef} - ${cCoef})x = ${d} - ${b}$，即 $${diffCoef}x = ${diffCoef * x}$，得 $x = ${x}$。`
@@ -7336,9 +7625,7 @@
       const b = pickFromList([2, 3, 4, 5, 6]);
       const c = b + diff;
       const x = q * diff;
-      questions.push(
-        `某數的 $\\frac{1}{${q}}$ 加上 $${b}$ 等於 $${c}$，求這個數。`
-      );
+      questions.push(`某數的 $\\frac{1}{${q}}$ 加上 $${b}$ 等於 $${c}$，求這個數。`);
       summaryAnswers.push(`$x = ${x}$`);
       answers.push(
         `設此數為 $x$。列式：$\\frac{1}{${q}}x + ${b} = ${c}$，移項：$\\frac{x}{${q}} = ${diff}$，所以 $x = ${q} \\times ${diff} = ${x}$。`
@@ -7362,9 +7649,7 @@
         const bUsed = raw > 0 ? b : 1;
         questions.push(`解方程：$\\frac{x + ${bUsed}}{${c}} = ${d}$`);
         summaryAnswers.push(`$x = ${x}$`);
-        answers.push(
-          `兩邊乘以 $${c}$：$x + ${bUsed} = ${c * d}$，移項得 $x = ${c * d} - ${bUsed} = ${x}$。`
-        );
+        answers.push(`兩邊乘以 $${c}$：$x + ${bUsed} = ${c * d}$，移項得 $x = ${c * d} - ${bUsed} = ${x}$。`);
       } else {
         // (2x - b)/c = d，需 c*d + b 為偶數 → c 取偶數，b 取偶數
         const c = pickFromList([2, 4, 6]);
@@ -7395,25 +7680,35 @@
       (a, b, total) =>
         `看一本書，第一天看了全書的 $\\frac{1}{${a}}$，第二天看了全書的 $\\frac{1}{${b}}$，兩天共看了 $${total}$ 頁。全書有多少頁？`,
       (a, b, total) =>
-        `一桶水，第一次用掉了 $\\frac{1}{${a}}$ 桶，第二次用掉了 $\\frac{1}{${b}}$ 桶，共用了 $${total}$ 公升。這桶水共有多少公升？`,
+        `一桶水，第一次用掉這桶水的 $\\frac{1}{${a}}$，第二次用掉這桶水的 $\\frac{1}{${b}}$，共用了 $${total}$ 公升。這桶水共有多少公升？`,
     ];
     const unitWords = ['公里', '頁', '公升'];
     for (let i = 0; i < count; i += 1) {
       let pa, pb, lcm, numA, numB, sumNum, total, x;
       if (i % 2 === 0) {
-        pa = 3; pb = 6; lcm = 6; numA = 2; numB = 1; sumNum = 3;
+        pa = 3;
+        pb = 6;
+        lcm = 6;
+        numA = 2;
+        numB = 1;
+        sumNum = 3;
         total = pickFromList([5, 6, 7, 8, 9, 10, 12]);
         x = 2 * total;
       } else {
-        pa = 2; pb = 6; lcm = 6; numA = 3; numB = 1; sumNum = 4;
+        pa = 2;
+        pb = 6;
+        lcm = 6;
+        numA = 3;
+        numB = 1;
+        sumNum = 4;
         total = pickFromList([4, 6, 8, 10, 12]);
-        x = 3 * total / 2;
+        x = (3 * total) / 2;
       }
       const unit = unitWords[i % unitWords.length];
       questions.push(ctxTemplates[i % ctxTemplates.length](pa, pb, total));
       summaryAnswers.push(`$${x}$ ${unit}`);
       answers.push(
-        `設全程（或總量）為 $x$ ${unit}。列式：$\\frac{x}{${pa}} + \\frac{x}{${pb}} = ${total}$，通分（公分母 $${lcm}$）：$\\frac{${numA}x + ${numB}x}{${lcm}} = ${total}$，化簡 $\\frac{${sumNum}x}{${lcm}} = ${total}$，解得 $x = ${total} \\times \\frac{${lcm}}{${sumNum}} = ${x}$。`
+        `設全程（或總量）為 $x$ ${unit}。列式：$\\frac{x}{${pa}} + \\frac{x}{${pb}} = ${total}$，通分（公分母 $${lcm}$）：$\\frac{${e625LinearTerm(numA)} + ${e625LinearTerm(numB)}}{${lcm}} = ${total}$，化簡 $\\frac{${e625LinearTerm(sumNum)}}{${lcm}} = ${total}$，解得 $x = ${total} \\times \\frac{${lcm}}{${sumNum}} = ${x}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7437,11 +7732,11 @@
       const T = a * x + r;
       const [itemLabel, groupLabel, perWord, perUnit, remainWord, remainUnit] = contexts[i % contexts.length];
       questions.push(
-        `有 $${T}$ ${itemLabel}，平均分給若干${groupLabel}，${perWord}分 $${a}$ ${perUnit}後${remainWord} $${r}$ ${remainUnit}。請問有幾個${groupLabel}？`
+        `有 $${T}$ ${itemLabel}，平均分給若干${groupLabel}，${perWord}分 $${a}$ ${perUnit}後${remainWord} $${r}$ ${remainUnit}。請問有幾${groupLabel}？`
       );
-      summaryAnswers.push(`$${x}$ 個${groupLabel}`);
+      summaryAnswers.push(`$${x}$ ${groupLabel}`);
       answers.push(
-        `設有 $x$ 個${groupLabel}。列式：$${a}x + ${r} = ${T}$，移項：$${a}x = ${T - r}$，所以 $x = ${T - r} \\div ${a} = ${x}$。共有 $${x}$ 個${groupLabel}。`
+        `設有 $x$ ${groupLabel}。列式：$${a}x + ${r} = ${T}$，移項：$${a}x = ${T - r}$，所以 $x = ${T - r} \\div ${a} = ${x}$。共有 $${x}$ ${groupLabel}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7452,7 +7747,13 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const items = ['鉛筆', '橡皮擦', '本子', '尺', '糖果'];
+    const items = [
+      { label: '鉛筆', unit: '支' },
+      { label: '橡皮擦', unit: '個' },
+      { label: '筆記本', unit: '本' },
+      { label: '尺', unit: '把' },
+      { label: '糖果', unit: '顆' },
+    ];
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
         // 買 n 個付 total 找 change，求單價 p
@@ -7461,12 +7762,10 @@
         const change = pickFromList([1, 2, 3, 4, 5]);
         const total = n * p + change;
         const item = items[i % items.length];
-        questions.push(
-          `小明買了 $${n}$ 支${item}，付了 $${total}$ 元，找回 $${change}$ 元。每支${item}多少元？`
-        );
-        summaryAnswers.push(`每支 $${p}$ 元`);
+        questions.push(`小明買了 $${n}$ ${item.unit}${item.label}，付了 $${total}$ 元，找回 $${change}$ 元。每${item.unit}${item.label}多少元？`);
+        summaryAnswers.push(`每${item.unit} $${p}$ 元`);
         answers.push(
-          `設每支${item} $x$ 元。實際花費 $${total} - ${change} = ${n * p}$ 元，列式：$${n}x = ${n * p}$，所以 $x = ${p}$。每支${item} $${p}$ 元。`
+          `設每${item.unit}${item.label} $x$ 元。實際花費 $${total} - ${change} = ${n * p}$ 元，列式：$${n}x = ${n * p}$，所以 $x = ${p}$。每${item.unit}${item.label} $${p}$ 元。`
         );
       } else {
         // 知道單價與總金額，求數量
@@ -7474,12 +7773,10 @@
         const n = pickFromList([3, 4, 5, 6, 7, 8]);
         const total = n * p;
         const item = items[(i + 1) % items.length];
-        questions.push(
-          `每支${item}售價 $${p}$ 元，小明共花了 $${total}$ 元買${item}。請問他買了幾支${item}？`
-        );
-        summaryAnswers.push(`$${n}$ 支`);
+        questions.push(`每${item.unit}${item.label}售價 $${p}$ 元，小明共花了 $${total}$ 元買${item.label}。請問他買了幾${item.unit}${item.label}？`);
+        summaryAnswers.push(`$${n}$ ${item.unit}`);
         answers.push(
-          `設買了 $x$ 支${item}。列式：$${p}x = ${total}$，所以 $x = ${total} \\div ${p} = ${n}$。共買了 $${n}$ 支。`
+          `設買了 $x$ ${item.unit}${item.label}。列式：$${p}x = ${total}$，所以 $x = ${total} \\div ${p} = ${n}$。共買了 $${n}$ ${item.unit}。`
         );
       }
     }
@@ -7554,10 +7851,17 @@
       ['水箱', '水', '公升', '用掉了'],
       ['糖果袋', '糖果', '顆', '吃掉了'],
       ['存錢筒', '零用錢', '元', '花掉了'],
-      ['書架上的', '書', '本', '借走了'],
+      ['書架', '書', '本', '借走了'],
     ];
     const fracList = [
-      [1, 3], [1, 4], [1, 5], [2, 5], [1, 6], [3, 5], [2, 3], [3, 4],
+      [1, 3],
+      [1, 4],
+      [1, 5],
+      [2, 5],
+      [1, 6],
+      [3, 5],
+      [2, 3],
+      [3, 4],
     ];
     for (let i = 0; i < count; i += 1) {
       const [p, q] = fracList[i % fracList.length];
@@ -7567,11 +7871,11 @@
       const x = rMultiple * q;
       const [container, thing, unit, verbUsed] = contexts[i % contexts.length];
       questions.push(
-        `${container}裡原來有一些${thing}，${verbUsed}了 $\\frac{${p}}{${q}}$ 後，還剩 $${r}$ ${unit}。原來有多少${unit}？`
+        `${container}裡原來有一些${thing}，${verbUsed} $\\frac{${p}}{${q}}$ 後，還剩 $${r}$ ${unit}。原來有多少${unit}？`
       );
       summaryAnswers.push(`$${x}$ ${unit}`);
       answers.push(
-        `設原來有 $x$ ${unit}。${verbUsed}了 $\\frac{${p}}{${q}}$，剩下 $\\left(1 - \\frac{${p}}{${q}}\\right)x = \\frac{${qMinusP}}{${q}}x = ${r}$，所以 $x = ${r} \\times \\frac{${q}}{${qMinusP}} = ${x}$。`
+        `設原來有 $x$ ${unit}。${verbUsed} $\\frac{${p}}{${q}}$，剩下 $\\left(1 - \\frac{${p}}{${q}}\\right)x = \\frac{${qMinusP}}{${q}}x = ${r}$，所以 $x = ${r} \\times \\frac{${q}}{${qMinusP}} = ${x}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7587,11 +7891,11 @@
   }
 
   function e626PercentText(value) {
-    return `${e626FormatNumber(value)}\\%`;
+    return `$${e626FormatNumber(value)}\\%$`;
   }
 
   function e626AngleText(value) {
-    return `${e626FormatNumber(value)}^\\circ`;
+    return `$${e626FormatNumber(value)}^\\circ$`;
   }
 
   function buildE626Distribution(labels, percents, total) {
@@ -7625,12 +7929,12 @@
       const total = pickFromList(totals.filter((n) => percents.every((p) => (n * p) % 100 === 0)));
       const items = buildE626Distribution(labels, percents, total);
       const text = items.map((item) => `${item.label} ${item.count}`).join('、');
-      const result = items.map((item) => `${item.label} ${item.percent}\\%`).join('，');
+      const result = items.map((item) => `${item.label} $${item.percent}\\%$`).join('，');
       questions.push(`某項統計共有 ${total} 筆資料，其中 ${text}，求各項百分率。`);
       summaryAnswers.push(result);
       answers.push(
-        `簡答：${result}。過程：先看總數是 ${total}，再用「部分量 ÷ 全部量 = 百分率」。${items
-          .map((item) => `${item.label}：${item.count} ÷ ${total} = ${item.percent}\\%`)
+        `過程：先看總數是 ${total}，再用「部分量 ÷ 全部量 = 百分率」。${items
+          .map((item) => `${item.label}：$${item.count}\\div${total}=${item.percent}\\%$`)
           .join('；')}。`
       );
     }
@@ -7640,7 +7944,7 @@
   function buildE626AmountToPercentSet(count) {
     const labelBanks = [
       ['餐飲費', '交通費', '文具費', '娛樂費'],
-      ['國語類', '社會類', '自然類', '藝術類'],
+      ['房租', '水電費', '伙食費', '雜支'],
       ['書籍', '遊戲', '運動用品', '旅行'],
     ];
     const patterns = [
@@ -7659,12 +7963,12 @@
       const total = pickFromList(totals);
       const items = buildE626Distribution(labels, percents, total);
       const text = items.map((item) => `${item.label} ${item.count} 元`).join('、');
-      const result = items.map((item) => `${item.label} ${item.percent}\\%`).join('，');
+      const result = items.map((item) => `${item.label} $${item.percent}\\%$`).join('，');
       questions.push(`某筆總金額為 ${total} 元，其中 ${text}，求各項所占百分率。`);
       summaryAnswers.push(result);
       answers.push(
-        `簡答：${result}。過程：總金額是 ${total} 元，所以各項百分率都用「該項金額 ÷ 總金額」。${items
-          .map((item) => `${item.label}：${item.count} ÷ ${total} = ${item.percent}\\%`)
+        `過程：總金額是 ${total} 元，所以各項百分率都用「該項金額 ÷ 總金額」。${items
+          .map((item) => `${item.label}：$${item.count}\\div${total}=${item.percent}\\%$`)
           .join('；')}。`
       );
     }
@@ -7691,15 +7995,15 @@
       const percents = pickFromList(patterns);
       const missingIndex = randInt(0, labels.length - 1);
       const known = labels
-        .map((label, index) => (index === missingIndex ? null : `${label} ${percents[index]}\\%`))
+        .map((label, index) => (index === missingIndex ? null : `${label} $${percents[index]}\\%$`))
         .filter(Boolean)
         .join('、');
       questions.push(`圓形圖共有四項，已知 ${known}，求 ${labels[missingIndex]} 的百分率。`);
-      summaryAnswers.push(`${labels[missingIndex]} ${percents[missingIndex]}\\%`);
+      summaryAnswers.push(`${labels[missingIndex]} $${percents[missingIndex]}\\%$`);
       answers.push(
-        `簡答：${labels[missingIndex]} ${percents[missingIndex]}\\%。過程：全部合起來是 100\\%，所以 ${labels[missingIndex]} = 100\\% - (${percents
+        `過程：全部合起來是 $100\\%$，所以 ${labels[missingIndex]} $=100\\%-(${percents
           .filter((_, index) => index !== missingIndex)
-          .join('\\% + ')}\\%) = ${percents[missingIndex]}\\%。`
+          .join('\\%+')}\\%)=${percents[missingIndex]}\\%$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7713,10 +8017,10 @@
     for (let i = 0; i < count; i += 1) {
       const percent = pickFromList(percents);
       const angle = (360 * percent) / 100;
-      questions.push(`圓形圖中某項占全體的 ${percent}\\%，求它的圓心角。`);
+      questions.push(`圓形圖中某項占全體的 $${percent}\\%$，求它的圓心角。`);
       summaryAnswers.push(`${e626AngleText(angle)}`);
       answers.push(
-        `簡答：${e626AngleText(angle)}。過程：圓心角 = 360^\\circ × 百分率 = 360^\\circ × ${percent}\\% = ${e626AngleText(angle)}。`
+        `過程：圓心角 $=360^\\circ\\times${percent}\\%=${e626FormatNumber(angle)}^\\circ$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7730,10 +8034,10 @@
     for (let i = 0; i < count; i += 1) {
       const angle = pickFromList(angles);
       const percent = (angle / 360) * 100;
-      questions.push(`圓形圖中某項的圓心角是 ${angle}^\\circ，求它占全體的百分率。`);
+      questions.push(`圓形圖中某項的圓心角是 $${angle}^\\circ$，求它占全體的百分率。`);
       summaryAnswers.push(`${e626PercentText(percent)}`);
       answers.push(
-        `簡答：${e626PercentText(percent)}。過程：百分率 = ${angle}^\\circ ÷ 360^\\circ × 100\\% = ${e626PercentText(percent)}。`
+        `過程：百分率 $=${angle}^\\circ\\div360^\\circ\\times100\\%=${e626FormatNumber(percent)}\\%$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7761,21 +8065,21 @@
         .map((label, index) => {
           if (index === askIndex) return null;
           return index % 2 === 0
-            ? `${label} ${percents[index]}\\%`
-            : `${label} ${(percents[index] * 360) / 100}^\\circ`;
+            ? `${label} $${percents[index]}\\%$`
+            : `${label} $${(percents[index] * 360) / 100}^\\circ$`;
         })
         .filter(Boolean)
         .join('、');
       const askAngle = askIndex % 2 === 1;
       const answerText = askAngle
-        ? `${labels[askIndex]} ${(percents[askIndex] * 360) / 100}^\\circ`
-        : `${labels[askIndex]} ${percents[askIndex]}\\%`;
+        ? `${labels[askIndex]} $${(percents[askIndex] * 360) / 100}^\\circ$`
+        : `${labels[askIndex]} $${percents[askIndex]}\\%$`;
       questions.push(
         `某圓形圖共有四項，已知 ${known}，求 ${labels[askIndex]} ${askAngle ? '的圓心角' : '所占百分率'}。`
       );
       summaryAnswers.push(answerText);
       answers.push(
-        `簡答：${answerText}。過程：先把已知資料都看成百分率，總百分率為 100\\%。已知三項合計為 ${100 - percents[askIndex]}\\%，所以 ${labels[askIndex]} 占 ${percents[askIndex]}\\%。${askAngle ? `再用 360^\\circ × ${percents[askIndex]}\\% = ${(percents[askIndex] * 360) / 100}^\\circ。` : ''}`
+        `過程：先把已知資料都看成百分率，總百分率為 $100\\%$。已知三項合計為 $${100 - percents[askIndex]}\\%$，所以 ${labels[askIndex]} 占 $${percents[askIndex]}\\%$。${askAngle ? `再用 $360^\\circ\\times${percents[askIndex]}\\%=${(percents[askIndex] * 360) / 100}^\\circ$。` : ''}`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7796,11 +8100,11 @@
       const askIndex = randInt(0, item.labels.length - 1);
       const part = (item.total * item.percents[askIndex]) / 100;
       questions.push(
-        `某資料總量是 ${item.total}${item.unit}，其中 ${item.labels[askIndex]} 占 ${item.percents[askIndex]}\\%，求 ${item.labels[askIndex]} 的數量。`
+        `某資料總量是 ${item.total}${item.unit}，其中 ${item.labels[askIndex]} 占 $${item.percents[askIndex]}\\%$，求 ${item.labels[askIndex]} 的數量。`
       );
       summaryAnswers.push(`${part}${item.unit}`);
       answers.push(
-        `簡答：${part}${item.unit}。過程：部分量 = 全部量 × 百分率 = ${item.total} × ${item.percents[askIndex]}\\% = ${part}，所以 ${item.labels[askIndex]} 是 ${part}${item.unit}。`
+        `過程：部分量 $=\\text{全部量}\\times\\text{百分率}=${item.total}\\times${item.percents[askIndex]}\\%=${part}$，所以 ${item.labels[askIndex]} 是 ${part}${item.unit}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7822,11 +8126,11 @@
       const angle = pickFromList(angles.filter((n) => (item.total * n) % 360 === 0));
       const part = (item.total * angle) / 360;
       questions.push(
-        `某圓形圖中，${item.label} 的圓心角是 ${angle}^\\circ，若全部量是 ${item.total}${item.unit}，求 ${item.label} 的數量。`
+        `某圓形圖中，${item.label} 的圓心角是 $${angle}^\\circ$，若全部量是 ${item.total}${item.unit}，求 ${item.label} 的數量。`
       );
       summaryAnswers.push(`${part}${item.unit}`);
       answers.push(
-        `簡答：${part}${item.unit}。過程：${item.label} 占全體的比率 = ${angle}^\\circ ÷ 360^\\circ = ${e626FormatNumber(angle / 360)}，所以數量 = ${item.total} × ${angle} ÷ 360 = ${part}。`
+        `過程：${item.label} 占全體的比率 $=${angle}^\\circ\\div360^\\circ=${e626FormatNumber(angle / 360)}$，所以數量 $=${item.total}\\times${angle}\\div360=${part}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7849,11 +8153,11 @@
       const partA = (item.total * item.percents[a]) / 100;
       const partB = (item.total * item.percents[b]) / 100;
       questions.push(
-        `某資料總量是 ${item.total}${item.unit}，其中 ${item.labels[a]} 占 ${item.percents[a]}\\%，${item.labels[b]} 占 ${item.percents[b]}\\%，求這兩項的數量。`
+        `某資料總量是 ${item.total}${item.unit}，其中 ${item.labels[a]} 占 $${item.percents[a]}\\%$，${item.labels[b]} 占 $${item.percents[b]}\\%$，求這兩項的數量。`
       );
       summaryAnswers.push(`${item.labels[a]} ${partA}${item.unit}，${item.labels[b]} ${partB}${item.unit}`);
       answers.push(
-        `簡答：${item.labels[a]} ${partA}${item.unit}，${item.labels[b]} ${partB}${item.unit}。過程：${item.labels[a]} = ${item.total} × ${item.percents[a]}\\% = ${partA}；${item.labels[b]} = ${item.total} × ${item.percents[b]}\\% = ${partB}。`
+        `過程：${item.labels[a]} $=${item.total}\\times${item.percents[a]}\\%=${partA}$；${item.labels[b]} $=${item.total}\\times${item.percents[b]}\\%=${partB}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7866,16 +8170,20 @@
       [5000, 3000],
       [40, 30],
       [20000, 50000],
+      [8000, 6400],
+      [60, 90],
     ];
-    const units = ['kg', '元', '瓶', '人', '元'];
+    const units = ['公斤', '元', '瓶', '人', '元', '元', '人'];
     const labels = [
-      ['上半年麥量', '下半年麥量', '麥'],
-      ['郁哲零用錢', '文全零用錢', '儲蓄'],
-      ['昨天進貨量', '今天進貨量', '果汁'],
-      ['甲班總人數', '乙班總人數', '男生'],
-      ['凱文家旅費', '海莉家旅費', '住宿費'],
+      ['甲倉庫', '乙倉庫', '總存量', '小麥'],
+      ['郁哲', '文全', '零用錢', '儲蓄'],
+      ['大賣場昨天', '大賣場今天', '進貨量', '果汁'],
+      ['甲班', '乙班', '總人數', '男生'],
+      ['凱文家', '海莉家', '旅費', '住宿費'],
+      ['大明', '小華', '壓歲錢', '儲蓄'],
+      ['A隊', 'B隊', '總人數', '女生'],
     ];
-    const percents = [25, 30, 16, 40, 50];
+    const percents = [25, 30, 16, 40, 50, 25, 30];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
@@ -7887,14 +8195,15 @@
       const valueA = (totalA * percent) / 100;
       const valueB = (totalB * percent) / 100;
       const unit = units[idx];
-      const [nameA, nameB, target] = labels[idx];
-      const answerText = valueA === valueB ? '一樣多' : valueA > valueB ? `${nameA}較多` : `${nameB}較多`;
+      const [nameA, nameB, totalLabel, target] = labels[idx];
+      const answerText =
+        valueA === valueB ? `${target}一樣多` : valueA > valueB ? `${nameA}的${target}較多` : `${nameB}的${target}較多`;
       questions.push(
-        `${nameA}為 ${totalA}${unit}、${nameB}為 ${totalB}${unit}，兩者的 ${target} 都占 ${percent}\\%，請問實際數量誰比較多？`
+        `${nameA}的${totalLabel}為 ${totalA} ${unit}、${nameB}的${totalLabel}為 ${totalB} ${unit}，兩者的${target}都占 $${percent}\\%$，請問實際數量誰比較多？`
       );
       summaryAnswers.push(answerText);
       answers.push(
-        `簡答：${answerText}。過程：${nameA} 的 ${target} 是 ${totalA} × ${percent}\\% = ${valueA}${unit}；${nameB} 的 ${target} 是 ${totalB} × ${percent}\\% = ${valueB}${unit}。所以 ${answerText}。`
+        `過程：${nameA}的${target}是 $${totalA}\\times${percent}\\%=${valueA}$ ${unit}；${nameB}的${target}是 $${totalB}\\times${percent}\\%=${valueB}$ ${unit}。所以 ${answerText}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7918,12 +8227,13 @@
         aTotal: 5,
         aPercent: 40,
         bName: '乙箱',
-        bTotal: 7,
-        bPercent: 28.571428,
+        bTotal: 8,
+        bPercent: 25,
         label: '綠球',
         unit: '顆',
-        fixedB: 2,
       },
+      { aName: '甲袋', aTotal: 40, aPercent: 25, bName: '乙袋', bTotal: 50, bPercent: 22, label: '紅球', unit: '顆' },
+      { aName: '甲箱', aTotal: 60, aPercent: 30, bName: '乙箱', bTotal: 90, bPercent: 20, label: '蘋果', unit: '顆' },
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -7934,11 +8244,11 @@
       const valueB = item.fixedB != null ? item.fixedB : (item.bTotal * item.bPercent) / 100;
       const answerText = valueA === valueB ? '一樣多' : valueA > valueB ? `${item.aName}較多` : `${item.bName}較多`;
       questions.push(
-        `${item.aName} 的總量是 ${item.aTotal}${item.unit}，其中 ${item.label} 占 ${e626FormatNumber(item.aPercent)}\\%；${item.bName} 的總量是 ${item.bTotal}${item.unit}，其中 ${item.label} 占 ${e626FormatNumber(item.bPercent)}\\%。請問誰的 ${item.label} 實際數量較多？`
+        `${item.aName} 的總量是 ${item.aTotal}${item.unit}，其中 ${item.label} 占 ${e626PercentText(item.aPercent)}；${item.bName} 的總量是 ${item.bTotal}${item.unit}，其中 ${item.label} 占 ${e626PercentText(item.bPercent)}。請問誰的 ${item.label} 實際數量較多？`
       );
       summaryAnswers.push(answerText);
       answers.push(
-        `簡答：${answerText}。過程：${item.aName} 的 ${item.label} 為 ${e626FormatNumber(valueA)}${item.unit}；${item.bName} 的 ${item.label} 為 ${e626FormatNumber(valueB)}${item.unit}。比較後可知 ${answerText}。`
+        `過程：${item.aName} 的 ${item.label} 為 ${e626FormatNumber(valueA)}${item.unit}；${item.bName} 的 ${item.label} 為 ${e626FormatNumber(valueB)}${item.unit}。比較後可知 ${answerText}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7952,6 +8262,9 @@
       [1000, 30, 700, 40],
       [20000, 50, 50000, 40],
       [8000, 45, 6000, 30],
+      [12000, 25, 9000, 40],
+      [5000, 60, 8000, 35],
+      [15000, 20, 10000, 35],
     ];
     for (let i = 0; i < count; i += 1) {
       const [aTotal, aPercent, bTotal, bPercent] = pickFromList(totals);
@@ -7959,11 +8272,11 @@
       const bValue = (bTotal * bPercent) / 100;
       const answerText = aValue === bValue ? '一樣多' : aValue > bValue ? '甲較多' : '乙較多';
       questions.push(
-        `甲有 ${aTotal} 元，其中儲蓄 ${aPercent}\\%；乙有 ${bTotal} 元，其中儲蓄 ${bPercent}\\%。請問誰儲蓄的錢比較多？`
+        `甲有 ${aTotal} 元，其中儲蓄 $${aPercent}\\%$；乙有 ${bTotal} 元，其中儲蓄 $${bPercent}\\%$。請問誰儲蓄的錢比較多？`
       );
       summaryAnswers.push(answerText);
       answers.push(
-        `簡答：${answerText}。過程：甲儲蓄 ${aTotal} × ${aPercent}\\% = ${aValue} 元；乙儲蓄 ${bTotal} × ${bPercent}\\% = ${bValue} 元。比較後可知 ${answerText}。`
+        `過程：甲儲蓄 $${aTotal}\\times${aPercent}\\%=${aValue}$ 元；乙儲蓄 $${bTotal}\\times${bPercent}\\%=${bValue}$ 元。比較後可知 ${answerText}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7977,6 +8290,9 @@
       ['觀察歷年學生總人數的增減趨勢', '折線圖'],
       ['表示不同職業人數所占全體的比例', '圓形圖'],
       ['比較四個班級回收量的多寡', '長條圖'],
+      ['觀察植物每週長高的變化', '折線圖'],
+      ['表示班費各項支出所占的比例', '圓形圖'],
+      ['比較五位同學跳遠成績的遠近', '長條圖'],
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -7986,7 +8302,7 @@
       questions.push(`要把「${scenario}」畫成統計圖，最適合用哪一種圖表？（長條圖、折線圖、圓形圖）`);
       summaryAnswers.push(chart);
       answers.push(
-        `簡答：${chart}。過程：先看資料重點。這題強調${chart === '折線圖' ? '變化趨勢' : chart === '長條圖' ? '數量比較' : '各部分占全體的比例'}，所以最適合用${chart}。`
+        `過程：先看資料重點。這題強調${chart === '折線圖' ? '變化趨勢' : chart === '長條圖' ? '數量比較' : '各部分占全體的比例'}，所以最適合用${chart}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7996,9 +8312,12 @@
     const banks = [
       { total: 150, good: 2, ask: '抽到 1000 元現金', result: '很不可能' },
       { total: 80, good: 70, ask: '抽到藍色紙', result: '很可能' },
-      { total: 10, good: 10, ask: '轉兩次的分數和大於 1', result: '一定' },
-      { total: 300, good: 0, ask: '點開爸爸照片', result: '一定不能' },
+      { total: 10, good: 10, ask: '轉盤指針停在有編號的區域', result: '一定' },
+      { total: 300, good: 0, ask: '抽到特別獎', result: '一定不能' },
       { total: 8, good: 5, ask: '抽到黑球', result: '比較可能' },
+      { total: 10, good: 9, ask: '抽到白球', result: '很可能' },
+      { total: 100, good: 100, ask: '抽到有數字的球', result: '一定' },
+      { total: 200, good: 3, ask: '抽中特獎', result: '很不可能' },
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -8010,7 +8329,7 @@
       );
       summaryAnswers.push(item.result);
       answers.push(
-        `簡答：${item.result}。過程：先看有利結果占全部量的比例是 ${item.good}/${item.total}。比例越接近 1 越可能，等於 1 就是一定，等於 0 就是一定不能，所以本題判為「${item.result}」。`
+        `過程：先看有利結果占全部量的比例是 ${item.good}/${item.total}。比例越接近 1 越可能，等於 1 就是一定，等於 0 就是一定不能，所以本題判為「${item.result}」。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -8026,15 +8345,15 @@
       const angle = (360 * percent) / 100;
       const askType = i % 2 === 0 ? 'angle' : 'percent';
       if (askType === 'angle') {
-        questions.push(`某項在圓形圖中占 ${percent}\\%，請問它的圓心角是多少度？`);
-        summaryAnswers.push(`${angle}^\\circ`);
-        answers.push(`簡答：${angle}^\\circ。過程：圓心角 = 360^\\circ × ${percent}\\% = ${angle}^\\circ。`);
+        questions.push(`某項在圓形圖中占 $${percent}\\%$，請問它的圓心角是多少度？`);
+        summaryAnswers.push(`$${angle}^\\circ$`);
+        answers.push(`過程：圓心角 $=360^\\circ\\times${percent}\\%=${angle}^\\circ$。`);
       } else {
         const part = (total * percent) / 100;
-        questions.push(`某項在圓形圖中的圓心角是 ${angle}^\\circ，全部量為 ${total}，求這一項的數量。`);
+        questions.push(`某項在圓形圖中的圓心角是 $${angle}^\\circ$，全部量為 ${total}，求這一項的數量。`);
         summaryAnswers.push(`${part}`);
         answers.push(
-          `簡答：${part}。過程：先把角度換成百分率：${angle}^\\circ ÷ 360^\\circ = ${percent}\\%，再算 ${total} × ${percent}\\% = ${part}。`
+          `過程：先把角度換成百分率：$${angle}^\\circ\\div360^\\circ=${percent}\\%$，再算 $${total}\\times${percent}\\%=${part}$。`
         );
       }
     }
@@ -8100,10 +8419,26 @@
     ];
     // 每組偏差列表，各組之和為 0，保證 avg+offset > 0（avg 至少 20）
     const deviationsByN = {
-      4: [[3, 5, -2, -6], [2, -3, 5, -4], [4, -2, -5, 3]],
-      5: [[5, 3, -2, -4, -2], [4, -3, 5, -2, -4], [-3, 6, 2, -4, -1]],
-      6: [[5, 3, -2, -4, -1, -1], [3, -2, 5, -4, 2, -4], [4, 2, -3, -1, 5, -7]],
-      7: [[4, -3, 5, -2, -1, 3, -6], [3, 2, -4, 5, -3, -1, -2], [5, -2, 3, -4, 1, -2, -1]],
+      4: [
+        [3, 5, -2, -6],
+        [2, -3, 5, -4],
+        [4, -2, -5, 3],
+      ],
+      5: [
+        [5, 3, -2, -4, -2],
+        [4, -3, 5, -2, -4],
+        [-3, 6, 2, -4, -1],
+      ],
+      6: [
+        [5, 3, -2, -4, -1, -1],
+        [3, -2, 5, -4, 2, -4],
+        [4, 2, -3, -1, 5, -7],
+      ],
+      7: [
+        [4, -3, 5, -2, -1, 3, -6],
+        [3, 2, -4, 5, -3, -1, -2],
+        [5, -2, 3, -4, 1, -2, -1],
+      ],
     };
     for (let i = 0; i < count; i += 1) {
       const ctx = contexts[i % contexts.length];
@@ -8125,2711 +8460,2752 @@
   }
 
   const nextConfigs = {
-      'e6-1-1-prime-composite-judge-drill': {
-        type: 'drill',
-        title: '質數與合數判別',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611PrimeCompositeJudgeSet(5);
-        },
-      },
-      'e6-1-1-prime-factor-list-drill': {
-        type: 'drill',
-        title: '找出一個數的質因數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611PrimeFactorListSet(5);
-        },
-      },
-      'e6-1-1-prime-factorization-drill': {
-        type: 'drill',
-        title: '質因數分解',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611PrimeFactorizationSet(5);
-        },
-      },
-      'e6-1-1-gcd-direct-drill': {
-        type: 'drill',
-        title: '直接求最大公因數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611GcdDirectSet(5);
-        },
-      },
-      'e6-1-1-gcd-factor-form-drill': {
-        type: 'drill',
-        title: '由標準分解式求最大公因數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611GcdFactorFormSet(5);
-        },
-      },
-      'e6-1-1-coprime-judge-drill': {
-        type: 'drill',
-        title: '判斷兩數是否互質',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611CoprimeJudgeSet(5);
-        },
-      },
-      'e6-1-1-grouping-drill': {
-        type: 'drill',
-        title: '平分與分組',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611GroupingSet(5);
-        },
-      },
-      'e6-1-1-cut-square-drill': {
-        type: 'drill',
-        title: '長方形裁切最大正方形',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611CutSquareSet(5);
-        },
-      },
-      'e6-1-1-lcm-direct-drill': {
-        type: 'drill',
-        title: '直接求最小公倍數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611LcmDirectSet(5);
-        },
-      },
-      'e6-1-1-lcm-factor-form-drill': {
-        type: 'drill',
-        title: '由標準分解式求最小公倍數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611LcmFactorFormSet(5);
-        },
-      },
-      'e6-1-1-lcm-relation-drill': {
-        type: 'drill',
-        title: '互質與倍數關係求最小公倍數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611LcmRelationSet(5);
-        },
-      },
-      'e6-1-1-periodic-sync-drill': {
-        type: 'drill',
-        title: '週期事件同步',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611PeriodicSyncSet(5);
-        },
-      },
-      'e6-1-1-assemble-square-drill': {
-        type: 'drill',
-        title: '長方形拼成最小正方形',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611AssembleSquareSet(5);
-        },
-      },
-      'e6-1-1-range-multiple-drill': {
-        type: 'drill',
-        title: '指定範圍內的公倍數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE611RangeMultipleSet(5);
-        },
-      },
-      'e6-1-1-foundation-three-subtypes': {
-        type: 'drill',
-        title: '質數與質因數分解三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611FoundationMixedSet(5);
-        },
-      },
-      'e6-1-1-gcd-basic-three-subtypes': {
-        type: 'drill',
-        title: '最大公因數基礎三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611GcdBasicMixedSet(5);
-        },
-      },
-      'e6-1-1-gcd-application-two-subtypes': {
-        type: 'drill',
-        title: '最大公因數應用二小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611GcdApplicationMixedSet(5);
-        },
-      },
-      'e6-1-1-lcm-basic-three-subtypes': {
-        type: 'drill',
-        title: '最小公倍數基礎三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE611LcmBasicMixedSet(5);
-        },
-      },
-      'e6-1-1-lcm-application-three-subtypes': {
-        type: 'drill',
-        title: '最小公倍數應用三小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE611LcmApplicationMixedSet(5);
-        },
-      },
-      'e6-1-2-simplify-fraction-drill': {
-        type: 'drill',
-        title: '化為最簡分數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE612SimplifyFractionSet(5);
-        },
-      },
-      'e6-1-2-same-denominator-division-drill': {
-        type: 'drill',
-        title: '同分母分數相除',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE612SameDenominatorDivisionSet(5);
-        },
-      },
-      'e6-1-2-integer-divide-fraction-drill': {
-        type: 'drill',
-        title: '整數除以分數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE612IntegerDivideFractionSet(5);
-        },
-      },
-      'e6-1-2-general-fraction-division-drill': {
-        type: 'drill',
-        title: '異分母與帶分數除法',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE612GeneralFractionDivisionSet(5);
-        },
-      },
-      'e6-1-2-partition-drill': {
-        type: 'drill',
-        title: '分裝與剪段問題',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE612PartitionSet(5);
-        },
-      },
-      'e6-1-2-comparison-drill': {
-        type: 'drill',
-        title: '商與原分數大小比較',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE612ComparisonSet(5);
-        },
-      },
-      'e6-1-2-unit-rate-drill': {
-        type: 'drill',
-        title: '求單位量與單價',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE612UnitRateSet(5);
-        },
-      },
-      'e6-1-2-geometry-inverse-drill': {
-        type: 'drill',
-        title: '幾何反推計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE612GeometryInverseSet(5);
-        },
-      },
-      'e6-1-2-part-to-whole-drill': {
-        type: 'drill',
-        title: '部分量求全體',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE612PartToWholeSet(5);
-        },
-      },
-      'e6-1-2-rate-application-drill': {
-        type: 'drill',
-        title: '速率與單位比例應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE612RateApplicationSet(5);
-        },
-      },
-      'e6-1-2-remainder-cut-drill': {
-        type: 'drill',
-        title: '有餘數的分數切割',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE612RemainderCutSet(5);
-        },
-      },
-      'e6-1-2-basics-four-subtypes': {
-        type: 'drill',
-        title: '約分與基礎除法四小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE612BasicsMixedSet(5);
-        },
-      },
-      'e6-1-2-comparison-one-subtype': {
-        type: 'drill',
-        title: '倍數關係判定',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE612ComparisonMixedSet(5);
-        },
-      },
-      'e6-1-2-unit-two-subtypes': {
-        type: 'drill',
-        title: '分裝與單位量二小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE612UnitMixedSet(5);
-        },
-      },
-      'e6-1-2-geometry-one-subtype': {
-        type: 'drill',
-        title: '幾何反推計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE612GeometryMixedSet(5);
-        },
-      },
-      'e6-1-2-whole-one-subtype': {
-        type: 'drill',
-        title: '部分量求全體',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE612WholeMixedSet(5);
-        },
-      },
-      'e6-1-2-rate-one-subtype': {
-        type: 'drill',
-        title: '速率與單位比例應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE612RateMixedSet(5);
-        },
-      },
-      'e6-1-3-sum-invariant-drill': {
-        type: 'drill',
-        title: '和不變',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE613SumInvariantSet(5);
-        },
-      },
-      'e6-1-3-difference-invariant-drill': {
-        type: 'drill',
-        title: '差不變',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE613DifferenceInvariantSet(5);
-        },
-      },
-      'e6-1-3-ratio-invariant-drill': {
-        type: 'drill',
-        title: '商不變',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613RatioInvariantSet(5);
-        },
-      },
-      'e6-1-3-product-invariant-drill': {
-        type: 'drill',
-        title: '積不變',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613ProductInvariantSet(5);
-        },
-      },
-      'e6-1-3-growth-basic-drill': {
-        type: 'drill',
-        title: '堆疊與排列表規律',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613GrowthBasicSet(5);
-        },
-      },
-      'e6-1-3-growth-inverse-drill': {
-        type: 'drill',
-        title: '由規律反推起點或第 n 項',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613GrowthInverseSet(5);
-        },
-      },
-      'e6-1-3-interval-basic-drill': {
-        type: 'drill',
-        title: '間隔問題基本型',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613IntervalBasicSet(5);
-        },
-      },
-      'e6-1-3-interval-index-drill': {
-        type: 'drill',
-        title: '指定序號的間距計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613IntervalIndexDistanceSet(5);
-        },
-      },
-      'e6-1-3-cycle-drill': {
-        type: 'drill',
-        title: '週期循環規律',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613CycleSet(5);
-        },
-      },
-      'e6-1-3-chicken-rabbit-drill': {
-        type: 'drill',
-        title: '雞兔問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613ChickenRabbitSet(5);
-        },
-      },
-      'e6-1-3-sum-one-subtype': {
-        type: 'drill',
-        title: '和不變',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE613SumMixedSet(5);
-        },
-      },
-      'e6-1-3-difference-one-subtype': {
-        type: 'drill',
-        title: '差不變',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE613DifferenceMixedSet(5);
-        },
-      },
-      'e6-1-3-ratio-one-subtype': {
-        type: 'drill',
-        title: '商不變',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613RatioMixedSet(5);
-        },
-      },
-      'e6-1-3-product-one-subtype': {
-        type: 'drill',
-        title: '積不變',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613ProductMixedSet(5);
-        },
-      },
-      'e6-1-3-growth-two-subtypes': {
-        type: 'drill',
-        title: '堆疊與數形規律二小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613GrowthMixedSet(5);
-        },
-      },
-      'e6-1-3-interval-two-subtypes': {
-        type: 'drill',
-        title: '間隔問題二小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613IntervalMixedSet(5);
-        },
-      },
-      'e6-1-3-cycle-one-subtype': {
-        type: 'drill',
-        title: '週期循環規律',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613CycleMixedSet(5);
-        },
-      },
-      'e6-1-3-chicken-rabbit-one-subtype': {
-        type: 'drill',
-        title: '雞兔問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE613ChickenRabbitMixedSet(5);
-        },
-      },
-      'e6-1-4-integer-divide-decimal-drill': {
-        type: 'drill',
-        title: '整數除以小數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE614IntegerDivideDecimalSet(5);
-        },
-      },
-      'e6-1-4-decimal-divide-decimal-drill': {
-        type: 'drill',
-        title: '小數除以小數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE614DecimalDivideDecimalSet(5);
-        },
-      },
-      'e6-1-4-estimate-quotient-drill': {
-        type: 'drill',
-        title: '求商的約數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE614EstimateQuotientSet(5);
-        },
-      },
-      'e6-1-4-equivalent-transform-drill': {
-        type: 'drill',
-        title: '等值變換與移位判斷',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE614EquivalentTransformSet(5);
-        },
-      },
-      'e6-1-4-compare-dividend-relation-drill': {
-        type: 'drill',
-        title: '商與被除數的大小關係',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE614CompareDividendRelationSet(5);
-        },
-      },
-      'e6-1-4-compare-same-dividend-drill': {
-        type: 'drill',
-        title: '同被除數的商大小比較',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE614CompareSameDividendSet(5);
-        },
-      },
-      'e6-1-4-packaging-drill': {
-        type: 'drill',
-        title: '容器分裝與分袋問題',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE614PackagingSet(5);
-        },
-      },
-      'e6-1-4-unit-rate-drill': {
-        type: 'drill',
-        title: '求單價與單位量',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE614UnitRateSet(5);
-        },
-      },
-      'e6-1-4-geometry-inverse-drill': {
-        type: 'drill',
-        title: '幾何面積反推邊長',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE614GeometryInverseSet(5);
-        },
-      },
-      'e6-1-4-rate-percent-drill': {
-        type: 'drill',
-        title: '率與百分率應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE614RatePercentSet(5);
-        },
-      },
-      'e6-1-4-remainder-division-drill': {
-        type: 'drill',
-        title: '有餘數的小數除法',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE614RemainderDivisionSet(5);
-        },
-      },
-      'e6-1-4-mixed-computation-drill': {
-        type: 'drill',
-        title: '混合四則運算（含小數除法）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE614MixedComputationSet(5);
-        },
-      },
-      'e6-1-4-basics-two-subtypes': {
-        type: 'drill',
-        title: '基礎小數除法二小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE614BasicsMixedSet(5);
-        },
-      },
-      'e6-1-4-judgement-four-subtypes': {
-        type: 'drill',
-        title: '商的判斷四小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE614JudgementMixedSet(5);
-        },
-      },
-      'e6-1-4-unit-two-subtypes': {
-        type: 'drill',
-        title: '分裝與單位量二小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE614UnitMixedSet(5);
-        },
-      },
-      'e6-1-4-inverse-two-subtypes': {
-        type: 'drill',
-        title: '反推與率應用二小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE614InverseMixedSet(5);
-        },
-      },
-      'e6-1-4-remainder-one-subtype': {
-        type: 'drill',
-        title: '有餘數的小數除法',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE614RemainderMixedSet(5);
-        },
-      },
-      'e6-1-5-ratio-value-drill': {
-        type: 'drill',
-        title: '求比值',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE615RatioValueSet(5);
-        },
-      },
-      'e6-1-5-simplest-ratio-drill': {
-        type: 'drill',
-        title: '化為最簡整數比',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE615SimplestRatioSet(5);
-        },
-      },
-      'e6-1-5-equivalent-ratio-drill': {
-        type: 'drill',
-        title: '尋找相等的比',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE615EquivalentRatioSet(5);
-        },
-      },
-      'e6-1-5-unit-comparison-drill': {
-        type: 'drill',
-        title: '異量比與單價效率比較',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE615UnitComparisonSet(5);
-        },
-      },
-      'e6-1-5-exchange-drill': {
-        type: 'drill',
-        title: '生活中的兌換與交易',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE615ExchangeSet(5);
-        },
-      },
-      'e6-1-5-part-whole-drill': {
-        type: 'drill',
-        title: '部分量與全體量',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE615PartWholeSet(5);
-        },
-      },
-      'e6-1-5-distribution-drill': {
-        type: 'drill',
-        title: '已知總量的比分配',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE615DistributionSet(5);
-        },
-      },
-      'e6-1-5-adjustment-drill': {
-        type: 'drill',
-        title: '配方與濃度的調整',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE615AdjustmentSet(5);
-        },
-      },
-      'e6-1-5-percent-application-drill': {
-        type: 'drill',
-        title: '基準量與比較量的百分率應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE615PercentApplicationSet(5);
-        },
-      },
-      'e6-1-5-geometry-ratio-drill': {
-        type: 'drill',
-        title: '幾何比例與生活尺規應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE615GeometrySet(5);
-        },
-      },
-      'e6-1-5-benchmark-drill': {
-        type: 'drill',
-        title: '基準量與倍數轉換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE615BenchmarkSet(5);
-        },
-      },
-      'e6-1-5-core-three-subtypes': {
-        type: 'drill',
-        title: '比值與相等的比三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE615CoreMixedSet(5);
-        },
-      },
-      'e6-1-5-compare-three-subtypes': {
-        type: 'drill',
-        title: '兌換與異量比較三小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE615CompareMixedSet(5);
-        },
-      },
-      'e6-1-5-distribution-two-subtypes': {
-        type: 'drill',
-        title: '部分與分配二小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE615DistributionMixedSet(5);
-        },
-      },
-      'e6-1-5-adjust-percent-two-subtypes': {
-        type: 'drill',
-        title: '調配與百分率二小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE615AdjustPercentMixedSet(5);
-        },
-      },
-      'e6-1-5-geometry-one-subtype': {
-        type: 'drill',
-        title: '幾何比例與生活尺規應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE615GeometryMixedSet(5);
-        },
-      },
-      'e6-1-5-chain-ratio-drill': {
-        type: 'drill',
-        title: '連比合併（A:B與B:C→A:B:C）',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE615ChainRatioSet(5);
-        },
-      },
-      'e6-1-5-discount-drill': {
-        type: 'drill',
-        title: '打折計算（正比應用）',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE615DiscountSet(5);
-        },
-      },
-      'e6-1-6-pi-concept-drill': {
-        type: 'drill',
-        title: '圓周率基本觀念判定',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE616PiConceptSet(5);
-        },
-      },
-      'e6-1-6-circumference-drill': {
-        type: 'drill',
-        title: '給直徑或半徑求圓周長',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE616CircumferenceSet(5);
-        },
-      },
-      'e6-1-6-inverse-circumference-drill': {
-        type: 'drill',
-        title: '已知圓周長反求直徑或半徑',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE616InverseSet(5);
-        },
-      },
-      'e6-1-6-rolling-distance-drill': {
-        type: 'drill',
-        title: '圈數與距離互推',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE616RollingDistanceSet(5);
-        },
-      },
-      'e6-1-6-step-radius-drill': {
-        type: 'drill',
-        title: '步長反推半徑或直徑',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE616StepSet(5);
-        },
-      },
-      'e6-1-6-sector-perimeter-drill': {
-        type: 'drill',
-        title: '扇形周長計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE616SectorPerimeterSet(5);
-        },
-      },
-      'e6-1-6-sector-from-whole-drill': {
-        type: 'drill',
-        title: '由整圓周長求扇形弧長或周長',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE616SectorFromWholeCircumferenceSet(5);
-        },
-      },
-      'e6-1-6-multiplier-drill': {
-        type: 'drill',
-        title: '圓周長的倍數比較',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE616MultiplierSet(5);
-        },
-      },
-      'e6-1-6-circular-interval-drill': {
-        type: 'drill',
-        title: '圓周上的間隔問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE616CircularIntervalSet(5);
-        },
-      },
-      'e6-1-6-foundation-three-subtypes': {
-        type: 'drill',
-        title: '圓周率與圓周長基礎三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE616FoundationMixedSet(5);
-        },
-      },
-      'e6-1-6-motion-two-subtypes': {
-        type: 'drill',
-        title: '滾動與步數二小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE616MotionMixedSet(5);
-        },
-      },
-      'e6-1-6-sector-two-subtypes': {
-        type: 'drill',
-        title: '扇形周長二小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE616SectorMixedSet(5);
-        },
-      },
-      'e6-1-6-multiplier-one-subtype': {
-        type: 'drill',
-        title: '圓周長的倍數比較',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE616MultiplierMixedSet(5);
-        },
-      },
-      'e6-1-6-interval-one-subtype': {
-        type: 'drill',
-        title: '圓周上的間隔問題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE616IntervalMixedSet(5);
-        },
-      },
-      'e6-1-6-pi-22-over-7-drill': {
-        type: 'drill',
-        title: '以 22/7 計算圓周長',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE616Pi22Over7Set(5);
-        },
-      },
-      'e6-1-7-circle-area-direct-drill': {
-        type: 'drill',
-        title: '基礎圓面積計算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE617CircleAreaDirectSet(5);
-        },
-      },
-      'e6-1-7-circle-area-from-circumference-drill': {
-        type: 'drill',
-        title: '由圓周長反求圓面積',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE617CircleAreaFromCircumferenceSet(5);
-        },
-      },
-      'e6-1-7-area-multiplier-drill': {
-        type: 'drill',
-        title: '面積倍數關係',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE617AreaMultiplierSet(5);
-        },
-      },
-      'e6-1-7-sector-area-drill': {
-        type: 'drill',
-        title: '基礎扇形面積計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE617SectorAreaSet(5);
-        },
-      },
-      'e6-1-7-sector-fraction-drill': {
-        type: 'drill',
-        title: '由幾分之幾圓求扇形面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE617SectorFractionSet(5);
-        },
-      },
-      'e6-1-7-composite-area-drill': {
-        type: 'drill',
-        title: '複合圖形面積計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE617CompositeAreaSet(5);
-        },
-      },
-      'e6-1-7-ring-area-drill': {
-        type: 'drill',
-        title: '環形與外圍步道面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE617RingApplicationSet(5);
-        },
-      },
-      'e6-1-7-tether-area-drill': {
-        type: 'drill',
-        title: '拴繩活動範圍面積',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildE617TetherSet(5);
-        },
-      },
-      'e6-1-7-foundation-three-subtypes': {
-        type: 'drill',
-        title: '圓面積基礎三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE617FoundationThreeSet(5);
-        },
-      },
-      'e6-1-7-sector-two-subtypes': {
-        type: 'drill',
-        title: '扇形面積二小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE617SectorTwoSet(5);
-        },
-      },
-      'e6-1-7-composite-one-subtype': {
-        type: 'drill',
-        title: '複合圖形面積計算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE617CompositeOneSet(5);
-        },
-      },
-      'e6-1-7-ring-one-subtype': {
-        type: 'drill',
-        title: '環形與外圍步道面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE617RingOneSet(5);
-        },
-      },
-      'e6-1-7-tether-one-subtype': {
-        type: 'drill',
-        title: '拴繩活動範圍面積',
-        difficulty: 'hard',
-        questionCount: 5,
-        generate() {
-          return buildE617TetherOneSet(5);
-        },
-      },
-      'e6-1-7-area-inverse-drill': {
-        type: 'drill',
-        title: '由面積逆推半徑或直徑',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE617AreaInverseSet(5);
-        },
-      },
-      'e6-1-8-rate-basic-drill': {
-        type: 'drill',
-        title: '求速率',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE618RateBasicSet(5);
-        },
-      },
-      'e6-1-8-distance-basic-drill': {
-        type: 'drill',
-        title: '求距離',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE618DistanceBasicSet(5);
-        },
-      },
-      'e6-1-8-time-basic-drill': {
-        type: 'drill',
-        title: '求時間',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE618TimeBasicSet(5);
-        },
-      },
-      'e6-1-8-length-unit-convert-drill': {
-        type: 'drill',
-        title: '只換長度單位的速率換算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE618LengthUnitConvertSet(5);
-        },
-      },
-      'e6-1-8-time-unit-convert-drill': {
-        type: 'drill',
-        title: '只換時間單位的速率換算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE618TimeUnitConvertSet(5);
-        },
-      },
-      'e6-1-8-double-unit-convert-drill': {
-        type: 'drill',
-        title: '長度與時間同時換算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE618DoubleUnitConvertSet(5);
-        },
-      },
-      'e6-1-8-compare-speed-drill': {
-        type: 'drill',
-        title: '不同單位的快慢比較',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE618CompareSpeedSet(5);
-        },
-      },
-      'e6-1-8-proportionality-drill': {
-        type: 'drill',
-        title: '倍數關係與正比練習',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE618ProportionalSet(5);
-        },
-      },
-      'e6-1-8-basic-three-subtypes': {
-        type: 'drill',
-        title: '基礎速率三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE618BasicThreeSet(5);
-        },
-      },
-      'e6-1-8-convert-three-subtypes': {
-        type: 'drill',
-        title: '速率單位換算三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE618ConvertThreeSet(5);
-        },
-      },
-      'e6-1-8-compare-one-subtype': {
-        type: 'drill',
-        title: '不同單位的快慢比較',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE618CompareOneSet(5);
-        },
-      },
-      'e6-1-8-proportion-one-subtype': {
-        type: 'drill',
-        title: '倍數關係與正比練習',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE618ProportionOneSet(5);
-        },
-      },
-      'e6-1-9-scale-factor-drill': {
-        type: 'drill',
-        title: '辨識放大與縮小的倍數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE619ScaleFactorSet(5);
-        },
-      },
-      'e6-1-9-corresponding-side-drill': {
-        type: 'drill',
-        title: '對應邊長計算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE619CorrespondingSideSet(5);
-        },
-      },
-      'e6-1-9-angle-property-drill': {
-        type: 'drill',
-        title: '對應角與內部線段性質',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE619AnglePropertySet(5);
-        },
-      },
-      'e6-1-9-perimeter-scale-drill': {
-        type: 'drill',
-        title: '周長的倍數變化',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE619PerimeterScaleSet(5);
-        },
-      },
-      'e6-1-9-area-scale-drill': {
-        type: 'drill',
-        title: '面積的倍數變化',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE619AreaScaleSet(5);
-        },
-      },
-      'e6-1-9-curved-scale-drill': {
-        type: 'drill',
-        title: '圓與扇形的縮放',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE619CurvedScaleSet(5);
-        },
-      },
-      'e6-1-9-scale-from-map-drill': {
-        type: 'drill',
-        title: '求比例尺',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE619ScaleFromMapSet(5);
-        },
-      },
-      'e6-1-9-actual-length-drill': {
-        type: 'drill',
-        title: '求實際長度',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE619ActualLengthSet(5);
-        },
-      },
-      'e6-1-9-map-length-drill': {
-        type: 'drill',
-        title: '求圖上長度',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE619MapLengthSet(5);
-        },
-      },
-      'e6-1-9-scale-representation-drill': {
-        type: 'drill',
-        title: '比例尺的表示轉換',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE619ScaleRepresentationSet(5);
-        },
-      },
-      'e6-1-9-scale-comparison-drill': {
-        type: 'drill',
-        title: '比例尺大小與詳細度比較',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE619ScaleComparisonSet(5);
-        },
-      },
-      'e6-1-9-scale-core-three-subtypes': {
-        type: 'drill',
-        title: '縮放倍數與對應性質三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE619ScaleCoreThreeSet(5);
-        },
-      },
-      'e6-1-9-perimeter-area-curve-three-subtypes': {
-        type: 'drill',
-        title: '周長、面積與曲線縮放三小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE619PerimeterAreaCurveThreeSet(5);
-        },
-      },
-      'e6-1-9-scale-basic-three-subtypes': {
-        type: 'drill',
-        title: '比例尺基本換算三小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE619ScaleBasicThreeSet(5);
-        },
-      },
-      'e6-1-9-scale-applied-two-subtypes': {
-        type: 'drill',
-        title: '比例尺表示與比較二小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE619ScaleAppliedTwoSet(5);
-        },
-      },
-      'e6-1-9-area-ratio-to-scale-drill': {
-        type: 'drill',
-        title: '面積比與邊長比互推',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE619AreaRatioToScaleSet(5);
-        },
-      },
-      'e6-1-9-map-area-drill': {
-        type: 'drill',
-        title: '地圖面積換算實際面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE619MapAreaSet(5);
-        },
-      },
-      'e6-2-1-decimal-to-fraction-drill': {
-        type: 'drill',
-        title: '有限小數化最簡分數',
-        difficulty: 'easy',
-        questionCount: 6,
-        generate() {
-          return buildE621DecimalToFractionSet(6);
-        },
-      },
-      'e6-2-1-fraction-to-decimal-drill': {
-        type: 'drill',
-        title: '分數化成有限小數',
-        difficulty: 'easy',
-        questionCount: 6,
-        generate() {
-          return buildE621FractionToDecimalSet(6);
-        },
-      },
-      'e6-2-1-decimal-to-mixed-fraction-drill': {
-        type: 'drill',
-        title: '小數化成最簡帶分數',
-        difficulty: 'easy',
-        questionCount: 6,
-        generate() {
-          return buildE621DecimalToMixedFractionSet(6);
-        },
-      },
-      'e6-2-1-friendly-add-sub-drill': {
-        type: 'drill',
-        title: '分數與小數加減混合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildE621FriendlyAddSubSet(6);
-        },
-      },
-      'e6-2-1-friendly-mul-div-drill': {
-        type: 'drill',
-        title: '分數與小數乘除混合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildE621FriendlyMulDivSet(6);
-        },
-      },
-      'e6-2-1-bracket-mixed-drill': {
-        type: 'drill',
-        title: '含括號的分數小數混合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildE621BracketMixedSet(6);
-        },
-      },
-      'e6-2-1-cross-operation-drill': {
-        type: 'drill',
-        title: '三步驟四則混合運算',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildE621CrossOperationSet(6);
-        },
-      },
-      'e6-2-1-distributive-shortcut-drill': {
-        type: 'drill',
-        title: '分配律巧算',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildE621DistributiveShortcutSet(6);
-        },
-      },
-      'e6-2-1-associative-shortcut-drill': {
-        type: 'drill',
-        title: '結合律湊整計算',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildE621AssociativeShortcutSet(6);
-        },
-      },
-      'e6-2-1-rectangle-reverse-drill': {
-        type: 'drill',
-        title: '面積反求長或寬',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE621RectangleReverseSet(5);
-        },
-      },
-      'e6-2-1-remaining-quantity-drill': {
-        type: 'drill',
-        title: '剩餘量應用題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE621RemainingQuantitySet(5);
-        },
-      },
-      'e6-2-1-unit-amount-drill': {
-        type: 'drill',
-        title: '單位量與平均分裝',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE621UnitAmountSet(5);
-        },
-      },
-      'e6-2-1-conversion-three-subtypes': {
-        type: 'drill',
-        title: '分數與小數的互換三小類綜合',
-        difficulty: 'easy',
-        questionCount: 6,
-        generate() {
-          return buildE621ConversionMixedSet(6);
-        },
-      },
-      'e6-2-1-mixed-calc-four-subtypes': {
-        type: 'drill',
-        title: '分數與小數混合計算四小類綜合',
-        difficulty: 'medium',
-        questionCount: 8,
-        generate() {
-          return buildE621MixedCalcSet(8);
-        },
-      },
-      'e6-2-1-shortcut-two-subtypes': {
-        type: 'drill',
-        title: '運算性質與巧算二小類綜合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildE621ShortcutMixedSet(6);
-        },
-      },
-      'e6-2-1-application-three-subtypes': {
-        type: 'drill',
-        title: '生活應用與反求三小類綜合',
-        difficulty: 'medium',
-        questionCount: 6,
-        generate() {
-          return buildE621ApplicationMixedSet(6);
-        },
-      },
-      'e6-2-2-rate-basic-drill': {
-        type: 'drill',
-        title: '求速率',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE622RateBasicSet(5);
-        },
-      },
-      'e6-2-2-distance-basic-drill': {
-        type: 'drill',
-        title: '求距離',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE622DistanceBasicSet(5);
-        },
-      },
-      'e6-2-2-time-basic-drill': {
-        type: 'drill',
-        title: '求時間',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE622TimeBasicSet(5);
-        },
-      },
-      'e6-2-2-unit-convert-drill': {
-        type: 'drill',
-        title: '速率單位換算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE622UnitConvertSet(5);
-        },
-      },
-      'e6-2-2-compare-speed-drill': {
-        type: 'drill',
-        title: '不同單位的快慢比較',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE622CompareSpeedSet(5);
-        },
-      },
-      'e6-2-2-average-two-stage-drill': {
-        type: 'drill',
-        title: '兩段路平均速率',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622AverageTwoStageSet(5);
-        },
-      },
-      'e6-2-2-average-round-trip-drill': {
-        type: 'drill',
-        title: '來回與折返平均速率',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622AverageRoundTripSet(5);
-        },
-      },
-      'e6-2-2-average-segment-known-drill': {
-        type: 'drill',
-        title: '分段已知距離時間的平均速率',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622AverageSegmentKnownSet(5);
-        },
-      },
-      'e6-2-2-opposite-meet-time-drill': {
-        type: 'drill',
-        title: '相向而行求相遇時間',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622OppositeMeetTimeSet(5);
-        },
-      },
-      'e6-2-2-opposite-distance-drill': {
-        type: 'drill',
-        title: '反方向出發求相距距離',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622OppositeDistanceSet(5);
-        },
-      },
-      'e6-2-2-same-direction-gap-drill': {
-        type: 'drill',
-        title: '同方向前後距離',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622SameDirectionGapSet(5);
-        },
-      },
-      'e6-2-2-chase-time-drill': {
-        type: 'drill',
-        title: '已知領先距離的追趕',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622ChaseTimeSet(5);
-        },
-      },
-      'e6-2-2-delayed-chase-drill': {
-        type: 'drill',
-        title: '先出發再追趕',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622DelayedChaseSet(5);
-        },
-      },
-      'e6-2-2-lifestyle-gap-drill': {
-        type: 'drill',
-        title: '生活情境的距離差',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622LifestyleGapSet(5);
-        },
-      },
-      'e6-2-2-flow-direct-drill': {
-        type: 'drill',
-        title: '順流逆流直接求距離',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622FlowDirectSet(5);
-        },
-      },
-      'e6-2-2-flow-solve-water-drill': {
-        type: 'drill',
-        title: '由順逆流速度反求水速',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622FlowSolveWaterSet(5);
-        },
-      },
-      'e6-2-2-flow-round-trip-drill': {
-        type: 'drill',
-        title: '流水往返求回程時間',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622FlowRoundTripSet(5);
-        },
-      },
-      'e6-2-2-escalator-drill': {
-        type: 'drill',
-        title: '平面電扶梯合成速率',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE622EscalatorSet(5);
-        },
-      },
-      'e6-2-2-pass-pole-drill': {
-        type: 'drill',
-        title: '通過電線桿',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622PassPoleSet(5);
-        },
-      },
-      'e6-2-2-pass-bridge-drill': {
-        type: 'drill',
-        title: '通過橋',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622PassBridgeSet(5);
-        },
-      },
-      'e6-2-2-solve-obstacle-length-drill': {
-        type: 'drill',
-        title: '由通過時間反求橋長',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622SolveObstacleLengthSet(5);
-        },
-      },
-      'e6-2-2-echo-distance-drill': {
-        type: 'drill',
-        title: '回聲求距離',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622EchoDistanceSet(5);
-        },
-      },
-      'e6-2-2-two-seg-distance-drill': {
-        type: 'drill',
-        title: '分段行走求總路程',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE622TwoSegDistanceSet(5);
-        },
-      },
-      'e6-2-2-circular-chase-drill': {
-        type: 'drill',
-        title: '圓形跑道同向追及',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622CircularChaseSet(5);
-        },
-      },
-      'e6-2-2-partial-remain-drill': {
-        type: 'drill',
-        title: '行駛後剩餘或途中休息求全程時間',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622PartialRemainSet(5);
-        },
-      },
-      'e6-2-2-basic-five-subtypes': {
-        type: 'drill',
-        title: '距離、速率與時間的基本關係五小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE622BasicMixedSet(5);
-        },
-      },
-      'e6-2-2-average-three-subtypes': {
-        type: 'drill',
-        title: '平均速率三小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622AverageMixedSet(5);
-        },
-      },
-      'e6-2-2-relative-six-subtypes': {
-        type: 'drill',
-        title: '相遇、相距與追趕六小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622RelativeMixedSet(5);
-        },
-      },
-      'e6-2-2-flow-four-subtypes': {
-        type: 'drill',
-        title: '流水與平面電扶梯四小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622FlowMixedSet(5);
-        },
-      },
-      'e6-2-2-through-four-subtypes': {
-        type: 'drill',
-        title: '通過問題與隱藏距離四小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE622ThroughMixedSet(5);
-        },
-      },
-      'e6-2-3-polygon-prism-volume-drill': {
-        type: 'drill',
-        title: '多邊形柱體積',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE623PolygonPrismVolumeSet(5);
-        },
-      },
-      'e6-2-3-cylinder-volume-drill': {
-        type: 'drill',
-        title: '圓柱體積',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE623CylinderVolumeSet(5);
-        },
-      },
-      'e6-2-3-partial-cylinder-volume-drill': {
-        type: 'drill',
-        title: '半圓柱與扇形柱體積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623PartialCylinderVolumeSet(5);
-        },
-      },
-      'e6-2-3-polygon-prism-surface-drill': {
-        type: 'drill',
-        title: '多邊形柱表面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623PolygonPrismSurfaceSet(5);
-        },
-      },
-      'e6-2-3-cylinder-surface-drill': {
-        type: 'drill',
-        title: '圓柱表面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623CylinderSurfaceSet(5);
-        },
-      },
-      'e6-2-3-lateral-area-application-drill': {
-        type: 'drill',
-        title: '側面積應用',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623LateralAreaApplicationSet(5);
-        },
-      },
-      'e6-2-3-missing-face-surface-drill': {
-        type: 'drill',
-        title: '缺面與無蓋表面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623MissingFaceSurfaceSet(5);
-        },
-      },
-      'e6-2-3-reverse-base-area-drill': {
-        type: 'drill',
-        title: '反求底面積',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE623ReverseBaseAreaSet(5);
-        },
-      },
-      'e6-2-3-reverse-height-drill': {
-        type: 'drill',
-        title: '反求柱高',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE623ReverseHeightSet(5);
-        },
-      },
-      'e6-2-3-reverse-width-drill': {
-        type: 'drill',
-        title: '長方體反求寬',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE623ReverseWidthSet(5);
-        },
-      },
-      'e6-2-3-height-compare-drill': {
-        type: 'drill',
-        title: '同體積柱高比較',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623HeightCompareSet(5);
-        },
-      },
-      'e6-2-3-composite-prism-volume-drill': {
-        type: 'drill',
-        title: '複合形體體積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623CompositePrismVolumeSet(5);
-        },
-      },
-      'e6-2-3-hollow-rect-volume-drill': {
-        type: 'drill',
-        title: '空心長方柱材積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623HollowRectVolumeSet(5);
-        },
-      },
-      'e6-2-3-hollow-cylinder-volume-drill': {
-        type: 'drill',
-        title: '空心圓柱材積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623HollowCylinderVolumeSet(5);
-        },
-      },
-      'e6-2-3-drilled-solid-volume-drill': {
-        type: 'drill',
-        title: '挖空後剩餘體積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623DrilledSolidVolumeSet(5);
-        },
-      },
-      'e6-2-3-tank-capacity-drill': {
-        type: 'drill',
-        title: '容器容量',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE623TankCapacitySet(5);
-        },
-      },
-      'e6-2-3-label-wrap-drill': {
-        type: 'drill',
-        title: '標籤與包裝側面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623LabelWrapSet(5);
-        },
-      },
-      'e6-2-3-paint-area-application-drill': {
-        type: 'drill',
-        title: '粉刷面積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623PaintAreaApplicationSet(5);
-        },
-      },
-      'e6-2-3-water-rise-displacement-drill': {
-        type: 'drill',
-        title: '水位上升與排水體積',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623WaterRiseDisplacementSet(5);
-        },
-      },
-      'e6-2-3-package-compare-drill': {
-        type: 'drill',
-        title: '包裝面積比較',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623PackageCompareSet(5);
-        },
-      },
-      'e6-2-3-cube-to-max-cylinder-drill': {
-        type: 'drill',
-        title: '正方體削成最大圓柱',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623CubeToMaxCylinderSet(5);
-        },
-      },
-      'e6-2-3-dim-change-volume-drill': {
-        type: 'drill',
-        title: '維度增加求體積變化',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623DimChangeVolumeSet(5);
-        },
-      },
-      'e6-2-3-volume-basic-three-subtypes': {
-        type: 'drill',
-        title: '柱體體積基本計算三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE623VolumeBasicMixedSet(5);
-        },
-      },
-      'e6-2-3-surface-area-four-subtypes': {
-        type: 'drill',
-        title: '柱體表面積與側面積四小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623SurfaceAreaMixedSet(5);
-        },
-      },
-      'e6-2-3-reverse-compare-four-subtypes': {
-        type: 'drill',
-        title: '逆向求解與參數比較四小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE623ReverseCompareMixedSet(5);
-        },
-      },
-      'e6-2-3-composite-hollow-four-subtypes': {
-        type: 'drill',
-        title: '複合形體與空心柱體四小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623CompositeHollowMixedSet(5);
-        },
-      },
-      'e6-2-3-application-five-subtypes': {
-        type: 'drill',
-        title: '生活應用五小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE623ApplicationMixedSet(5);
-        },
-      },
-      'e6-2-4-find-ratio-drill': {
-        type: 'drill',
-        title: '求比值',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE624FindRatioSet(5);
-        },
-      },
-      'e6-2-4-find-compared-drill': {
-        type: 'drill',
-        title: '已知基準量求比較量',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE624FindComparedSet(5);
-        },
-      },
-      'e6-2-4-find-base-drill': {
-        type: 'drill',
-        title: '已知比較量求基準量',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE624FindBaseSet(5);
-        },
-      },
-      'e6-2-4-fraction-multiplier-drill': {
-        type: 'drill',
-        title: '分數倍與帶分數倍',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE624FractionMultiplierSet(5);
-        },
-      },
-      'e6-2-4-sum-pair-drill': {
-        type: 'drill',
-        title: '兩量和與倍數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624SumPairSet(5);
-        },
-      },
-      'e6-2-4-markup-total-drill': {
-        type: 'drill',
-        title: '加成後總量',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE624MarkupTotalSet(5);
-        },
-      },
-      'e6-2-4-interest-total-drill': {
-        type: 'drill',
-        title: '本利和',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE624InterestTotalSet(5);
-        },
-      },
-      'e6-2-4-exposed-total-drill': {
-        type: 'drill',
-        title: '露出部分與全長',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624ExposedTotalSet(5);
-        },
-      },
-      'e6-2-4-difference-pair-drill': {
-        type: 'drill',
-        title: '兩量差與倍數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624DifferencePairSet(5);
-        },
-      },
-      'e6-2-4-discount-saved-drill': {
-        type: 'drill',
-        title: '折扣省下多少',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE624DiscountSavedSet(5);
-        },
-      },
-      'e6-2-4-remaining-amount-drill': {
-        type: 'drill',
-        title: '剩餘量計算',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE624RemainingAmountSet(5);
-        },
-      },
-      'e6-2-4-difference-from-base-drill': {
-        type: 'drill',
-        title: '已知基準量求差額',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE624DifferenceFromBaseSet(5);
-        },
-      },
-      'e6-2-4-recover-original-from-remain-drill': {
-        type: 'drill',
-        title: '由剩餘量反求原量',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624RecoverOriginalFromRemainSet(5);
-        },
-      },
-      'e6-2-4-recover-original-from-discount-drill': {
-        type: 'drill',
-        title: '由省下金額反求原價',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624RecoverOriginalFromDiscountSet(5);
-        },
-      },
-      'e6-2-4-recover-cost-from-markup-drill': {
-        type: 'drill',
-        title: '由定價反求成本',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624RecoverCostFromMarkupSet(5);
-        },
-      },
-      'e6-2-4-recover-principal-from-final-drill': {
-        type: 'drill',
-        title: '由本利和反求本金',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624RecoverPrincipalFromFinalSet(5);
-        },
-      },
-      'e6-2-4-three-part-direct-drill': {
-        type: 'drill',
-        title: '三量比例直接求量',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624ThreePartDirectSet(5);
-        },
-      },
-      'e6-2-4-three-part-total-drill': {
-        type: 'drill',
-        title: '三量比例由總和反推',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624ThreePartTotalSet(5);
-        },
-      },
-      'e6-2-4-age-sum-multiple-drill': {
-        type: 'drill',
-        title: '年齡和與倍數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624AgeSumMultipleSet(5);
-        },
-      },
-      'e6-2-4-geometry-ratio-drill': {
-        type: 'drill',
-        title: '幾何量的倍數比較',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE624GeometryRatioSet(5);
-        },
-      },
-      'e6-2-4-basic-four-subtypes': {
-        type: 'drill',
-        title: '基礎比值與單步互求四小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE624BasicMixedSet(5);
-        },
-      },
-      'e6-2-4-sum-four-subtypes': {
-        type: 'drill',
-        title: '兩量之和與加成四小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624SumMixedSet(5);
-        },
-      },
-      'e6-2-4-difference-four-subtypes': {
-        type: 'drill',
-        title: '兩量之差與剩餘四小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624DifferenceMixedSet(5);
-        },
-      },
-      'e6-2-4-reverse-four-subtypes': {
-        type: 'drill',
-        title: '逆求基準量四小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624ReverseMixedSet(5);
-        },
-      },
-      'e6-2-4-application-four-subtypes': {
-        type: 'drill',
-        title: '多量比例與綜合應用四小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE624ApplicationMixedSet(5);
-        },
-      },
-      'e6-2-5-sum-diff-basic-drill': {
-        type: 'drill',
-        title: '和差求兩數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625SumDiffBasicSet(5);
-        },
-      },
-      'e6-2-5-transfer-equal-drill': {
-        type: 'drill',
-        title: '給予後相等',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625TransferEqualSet(5);
-        },
-      },
-      'e6-2-5-rectangle-sum-diff-drill': {
-        type: 'drill',
-        title: '長方形長寬和差',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625RectangleSumDiffSet(5);
-        },
-      },
-      'e6-2-5-balance-reverse-drill': {
-        type: 'drill',
-        title: '平衡反推原量',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625BalanceReverseSet(5);
-        },
-      },
-      'e6-2-5-age-future-multiple-drill': {
-        type: 'drill',
-        title: '幾年後變成幾倍',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625AgeFutureMultipleSet(5);
-        },
-      },
-      'e6-2-5-age-past-multiple-drill': {
-        type: 'drill',
-        title: '幾年前是幾倍',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625AgePastMultipleSet(5);
-        },
-      },
-      'e6-2-5-age-future-condition-drill': {
-        type: 'drill',
-        title: '已知未來條件求現在',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625AgeFutureConditionSet(5);
-        },
-      },
-      'e6-2-5-age-diff-multiple-drill': {
-        type: 'drill',
-        title: '已知差與倍數求現在',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625AgeDiffMultipleSet(5);
-        },
-      },
-      'e6-2-5-chicken-rabbit-leg-drill': {
-        type: 'drill',
-        title: '雞兔腳數型',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625ChickenRabbitLegSet(5);
-        },
-      },
-      'e6-2-5-chicken-rabbit-money-drill': {
-        type: 'drill',
-        title: '雞兔錢幣票數型',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625ChickenRabbitMoneySet(5);
-        },
-      },
-      'e6-2-5-chicken-rabbit-score-drill': {
-        type: 'drill',
-        title: '雞兔單價配分類',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625ChickenRabbitScoreSet(5);
-        },
-      },
-      'e6-2-5-average-missing-drill': {
-        type: 'drill',
-        title: '缺失值平均',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625AverageMissingSet(5);
-        },
-      },
-      'e6-2-5-average-target-drill': {
-        type: 'drill',
-        title: '目標平均反推',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625AverageTargetSet(5);
-        },
-      },
-      'e6-2-5-average-merge-drill': {
-        type: 'drill',
-        title: '合併平均反推',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625AverageMergeSet(5);
-        },
-      },
-      'e6-2-5-average-subject-drill': {
-        type: 'drill',
-        title: '多科平均反推',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625AverageSubjectSet(5);
-        },
-      },
-      'e6-2-5-addition-choice-drill': {
-        type: 'drill',
-        title: '分類單選加法原理',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625AdditionChoiceSet(5);
-        },
-      },
-      'e6-2-5-multiplication-pair-drill': {
-        type: 'drill',
-        title: '分步搭配乘法原理',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625MultiplicationPairSet(5);
-        },
-      },
-      'e6-2-5-route-drill': {
-        type: 'drill',
-        title: '路徑搭配',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625RouteSet(5);
-        },
-      },
-      'e6-2-5-entry-exit-drill': {
-        type: 'drill',
-        title: '進出限制',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625EntryExitSet(5);
-        },
-      },
-      'e6-2-5-digit-restriction-drill': {
-        type: 'drill',
-        title: '二位數排列限制',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625DigitRestrictionSet(5);
-        },
-      },
-      'e6-2-5-sum-diff-four-subtypes': {
-        type: 'drill',
-        title: '和差與平衡四小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625SumDiffMixedSet(5);
-        },
-      },
-      'e6-2-5-age-four-subtypes': {
-        type: 'drill',
-        title: '年齡問題四小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625AgeMixedSet(5);
-        },
-      },
-      'e6-2-5-chicken-rabbit-three-subtypes': {
-        type: 'drill',
-        title: '雞兔問題三小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625ChickenRabbitMixedSet(5);
-        },
-      },
-      'e6-2-5-average-four-subtypes': {
-        type: 'drill',
-        title: '平均數逆推四小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625AverageMixedSet(5);
-        },
-      },
-      'e6-2-5-principle-five-subtypes': {
-        type: 'drill',
-        title: '加法原理與乘法原理五小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625PrincipleMixedSet(5);
-        },
-      },
-      'e6-2-5-linear-int-coef-drill': {
-        type: 'drill',
-        title: '整數係數一元一次方程',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625LinearIntCoefSet(5);
-        },
-      },
-      'e6-2-5-linear-frac-coef-drill': {
-        type: 'drill',
-        title: '分數係數一元一次方程',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625LinearFracCoefSet(5);
-        },
-      },
-      'e6-2-5-linear-bracket-frac-drill': {
-        type: 'drill',
-        title: '括號與分數型方程式',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625LinearBracketFracSet(5);
-        },
-      },
-      'e6-2-5-linear-frac-merge-drill': {
-        type: 'drill',
-        title: '合併分數求未知數',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625LinearFracMergeSet(5);
-        },
-      },
-      'e6-2-5-distribute-remain-drill': {
-        type: 'drill',
-        title: '分配後剩餘型應用題',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625DistributeRemainSet(5);
-        },
-      },
-      'e6-2-5-price-change-drill': {
-        type: 'drill',
-        title: '買賣找零型應用題',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE625PriceChangeSet(5);
-        },
-      },
-      'e6-2-5-consume-then-share-drill': {
-        type: 'drill',
-        title: '消耗後平分型應用題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625ConsumeThenShareSet(5);
-        },
-      },
-      'e6-2-5-surplus-deficit-drill': {
-        type: 'drill',
-        title: '多一個少一個型應用題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625SurplusDeficitSet(5);
-        },
-      },
-      'e6-2-5-fraction-consume-drill': {
-        type: 'drill',
-        title: '分數消耗型應用題',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE625FractionConsumeSet(5);
-        },
-      },
-      'e6-2-6-count-to-percent-drill': {
-        type: 'drill',
-        title: '原始數據求各項百分率',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626CountToPercentSet(5);
-        },
-      },
-      'e6-2-6-amount-to-percent-drill': {
-        type: 'drill',
-        title: '金額分配求百分率',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626AmountToPercentSet(5);
-        },
-      },
-      'e6-2-6-missing-percent-drill': {
-        type: 'drill',
-        title: '缺少一項百分率補齊',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626MissingPercentSet(5);
-        },
-      },
-      'e6-2-6-percent-to-angle-drill': {
-        type: 'drill',
-        title: '百分率換圓心角',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626PercentToAngleSet(5);
-        },
-      },
-      'e6-2-6-angle-to-percent-drill': {
-        type: 'drill',
-        title: '圓心角換百分率',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626AngleToPercentSet(5);
-        },
-      },
-      'e6-2-6-mixed-angle-percent-drill': {
-        type: 'drill',
-        title: '百分率與圓心角混合補齊',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE626MixedAnglePercentSet(5);
-        },
-      },
-      'e6-2-6-part-from-percent-drill': {
-        type: 'drill',
-        title: '已知百分率求部分量',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626PartFromPercentSet(5);
-        },
-      },
-      'e6-2-6-part-from-angle-drill': {
-        type: 'drill',
-        title: '已知圓心角求部分量',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626PartFromAngleSet(5);
-        },
-      },
-      'e6-2-6-multi-part-amount-drill': {
-        type: 'drill',
-        title: '多項部分量推算',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE626MultiPartAmountSet(5);
-        },
-      },
-      'e6-2-6-same-percent-compare-drill': {
-        type: 'drill',
-        title: '同百分率不同總量比較',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE626SamePercentCompareSet(5);
-        },
-      },
-      'e6-2-6-different-percent-compare-drill': {
-        type: 'drill',
-        title: '不同百分率的實際量比較',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE626DifferentPercentCompareSet(5);
-        },
-      },
-      'e6-2-6-spend-compare-drill': {
-        type: 'drill',
-        title: '總量與百分率綜合比較',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE626SpendCompareSet(5);
-        },
-      },
-      'e6-2-6-chart-selection-drill': {
-        type: 'drill',
-        title: '統計圖表選用',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626ChartSelectionSet(5);
-        },
-      },
-      'e6-2-6-possibility-drill': {
-        type: 'drill',
-        title: '圓形圖中的可能性判讀',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626PossibilitySet(5);
-        },
-      },
-      'e6-2-6-mixed-reading-drill': {
-        type: 'drill',
-        title: '圓形圖綜合判讀',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE626MixedPieReadingSet(5);
-        },
-      },
-      'e6-2-6-percent-three-subtypes': {
-        type: 'drill',
-        title: '百分率與原始數據三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626PercentMixedSet(5);
-        },
-      },
-      'e6-2-6-angle-three-subtypes': {
-        type: 'drill',
-        title: '圓心角與百分率三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626AngleMixedSet(5);
-        },
-      },
-      'e6-2-6-part-three-subtypes': {
-        type: 'drill',
-        title: '比率求部分量三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626PartMixedSet(5);
-        },
-      },
-      'e6-2-6-compare-three-subtypes': {
-        type: 'drill',
-        title: '圓形圖比較判讀三小類綜合',
-        difficulty: 'medium',
-        questionCount: 5,
-        generate() {
-          return buildE626CompareMixedSet(5);
-        },
-      },
-      'e6-2-6-interpret-three-subtypes': {
-        type: 'drill',
-        title: '選圖與判讀三小類綜合',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626InterpretMixedSet(5);
-        },
-      },
-      'e6-2-6-average-from-data-drill': {
-        type: 'drill',
-        title: '從資料計算平均數',
-        difficulty: 'easy',
-        questionCount: 5,
-        generate() {
-          return buildE626AverageFromDataSet(5);
-        },
-      },
+    'e6-1-1-prime-composite-judge-drill': {
+      type: 'drill',
+      title: '質數與合數判別',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611PrimeCompositeJudgeSet(5);
+      },
+    },
+    'e6-1-1-prime-factor-list-drill': {
+      type: 'drill',
+      title: '找出一個數的質因數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611PrimeFactorListSet(5);
+      },
+    },
+    'e6-1-1-prime-factorization-drill': {
+      type: 'drill',
+      title: '質因數分解',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611PrimeFactorizationSet(5);
+      },
+    },
+    'e6-1-1-gcd-direct-drill': {
+      type: 'drill',
+      title: '直接求最大公因數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611GcdDirectSet(5);
+      },
+    },
+    'e6-1-1-gcd-factor-form-drill': {
+      type: 'drill',
+      title: '由標準分解式求最大公因數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611GcdFactorFormSet(5);
+      },
+    },
+    'e6-1-1-coprime-judge-drill': {
+      type: 'drill',
+      title: '判斷兩數是否互質',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611CoprimeJudgeSet(5);
+      },
+    },
+    'e6-1-1-grouping-drill': {
+      type: 'drill',
+      title: '平分與分組',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611GroupingSet(5);
+      },
+    },
+    'e6-1-1-cut-square-drill': {
+      type: 'drill',
+      title: '長方形裁切最大正方形',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611CutSquareSet(5);
+      },
+    },
+    'e6-1-1-lcm-direct-drill': {
+      type: 'drill',
+      title: '直接求最小公倍數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611LcmDirectSet(5);
+      },
+    },
+    'e6-1-1-lcm-factor-form-drill': {
+      type: 'drill',
+      title: '由標準分解式求最小公倍數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611LcmFactorFormSet(5);
+      },
+    },
+    'e6-1-1-lcm-relation-drill': {
+      type: 'drill',
+      title: '互質與倍數關係求最小公倍數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611LcmRelationSet(5);
+      },
+    },
+    'e6-1-1-periodic-sync-drill': {
+      type: 'drill',
+      title: '週期事件同步',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611PeriodicSyncSet(5);
+      },
+    },
+    'e6-1-1-assemble-square-drill': {
+      type: 'drill',
+      title: '長方形拼成最小正方形',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611AssembleSquareSet(5);
+      },
+    },
+    'e6-1-1-range-multiple-drill': {
+      type: 'drill',
+      title: '指定範圍內的公倍數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE611RangeMultipleSet(5);
+      },
+    },
+    'e6-1-1-foundation-three-subtypes': {
+      type: 'drill',
+      title: '質數與質因數分解三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611FoundationMixedSet(5);
+      },
+    },
+    'e6-1-1-gcd-basic-three-subtypes': {
+      type: 'drill',
+      title: '最大公因數基礎三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611GcdBasicMixedSet(5);
+      },
+    },
+    'e6-1-1-gcd-application-two-subtypes': {
+      type: 'drill',
+      title: '最大公因數應用二小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611GcdApplicationMixedSet(5);
+      },
+    },
+    'e6-1-1-lcm-basic-three-subtypes': {
+      type: 'drill',
+      title: '最小公倍數基礎三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE611LcmBasicMixedSet(5);
+      },
+    },
+    'e6-1-1-lcm-application-three-subtypes': {
+      type: 'drill',
+      title: '最小公倍數應用三小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE611LcmApplicationMixedSet(5);
+      },
+    },
+    'e6-1-2-simplify-fraction-drill': {
+      type: 'drill',
+      title: '化為最簡分數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE612SimplifyFractionSet(5);
+      },
+    },
+    'e6-1-2-same-denominator-division-drill': {
+      type: 'drill',
+      title: '同分母分數相除',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE612SameDenominatorDivisionSet(5);
+      },
+    },
+    'e6-1-2-integer-divide-fraction-drill': {
+      type: 'drill',
+      title: '整數除以分數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE612IntegerDivideFractionSet(5);
+      },
+    },
+    'e6-1-2-general-fraction-division-drill': {
+      type: 'drill',
+      title: '異分母與帶分數除法',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE612GeneralFractionDivisionSet(5);
+      },
+    },
+    'e6-1-2-partition-drill': {
+      type: 'drill',
+      title: '分裝與剪段問題',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE612PartitionSet(5);
+      },
+    },
+    'e6-1-2-comparison-drill': {
+      type: 'drill',
+      title: '商與原分數大小比較',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE612ComparisonSet(5);
+      },
+    },
+    'e6-1-2-unit-rate-drill': {
+      type: 'drill',
+      title: '求單位量與單價',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE612UnitRateSet(5);
+      },
+    },
+    'e6-1-2-geometry-inverse-drill': {
+      type: 'drill',
+      title: '幾何反推計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE612GeometryInverseSet(5);
+      },
+    },
+    'e6-1-2-part-to-whole-drill': {
+      type: 'drill',
+      title: '部分量求全體',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE612PartToWholeSet(5);
+      },
+    },
+    'e6-1-2-rate-application-drill': {
+      type: 'drill',
+      title: '速率與單位比例應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE612RateApplicationSet(5);
+      },
+    },
+    'e6-1-2-remainder-cut-drill': {
+      type: 'drill',
+      title: '有餘數的分數切割',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE612RemainderCutSet(5);
+      },
+    },
+    'e6-1-2-basics-four-subtypes': {
+      type: 'drill',
+      title: '約分與基礎除法四小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE612BasicsMixedSet(5);
+      },
+    },
+    'e6-1-2-comparison-one-subtype': {
+      type: 'drill',
+      title: '倍數關係判定',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE612ComparisonMixedSet(5);
+      },
+    },
+    'e6-1-2-unit-two-subtypes': {
+      type: 'drill',
+      title: '分裝與單位量二小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE612UnitMixedSet(5);
+      },
+    },
+    'e6-1-2-geometry-one-subtype': {
+      type: 'drill',
+      title: '幾何反推計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE612GeometryMixedSet(5);
+      },
+    },
+    'e6-1-2-whole-one-subtype': {
+      type: 'drill',
+      title: '部分量求全體',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE612WholeMixedSet(5);
+      },
+    },
+    'e6-1-2-rate-one-subtype': {
+      type: 'drill',
+      title: '速率與單位比例應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE612RateMixedSet(5);
+      },
+    },
+    'e6-1-3-sum-invariant-drill': {
+      type: 'drill',
+      title: '和不變',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE613SumInvariantSet(5);
+      },
+    },
+    'e6-1-3-difference-invariant-drill': {
+      type: 'drill',
+      title: '差不變',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE613DifferenceInvariantSet(5);
+      },
+    },
+    'e6-1-3-ratio-invariant-drill': {
+      type: 'drill',
+      title: '商不變',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613RatioInvariantSet(5);
+      },
+    },
+    'e6-1-3-product-invariant-drill': {
+      type: 'drill',
+      title: '積不變',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613ProductInvariantSet(5);
+      },
+    },
+    'e6-1-3-growth-basic-drill': {
+      type: 'drill',
+      title: '堆疊與排列表規律',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613GrowthBasicSet(5);
+      },
+    },
+    'e6-1-3-growth-inverse-drill': {
+      type: 'drill',
+      title: '由規律反推起點或第 n 項',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613GrowthInverseSet(5);
+      },
+    },
+    'e6-1-3-interval-basic-drill': {
+      type: 'drill',
+      title: '間隔問題基本型',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613IntervalBasicSet(5);
+      },
+    },
+    'e6-1-3-interval-index-drill': {
+      type: 'drill',
+      title: '指定序號的間距計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613IntervalIndexDistanceSet(5);
+      },
+    },
+    'e6-1-3-cycle-drill': {
+      type: 'drill',
+      title: '週期循環規律',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613CycleSet(5);
+      },
+    },
+    'e6-1-3-chicken-rabbit-drill': {
+      type: 'drill',
+      title: '雞兔問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613ChickenRabbitSet(5);
+      },
+    },
+    'e6-1-3-sum-one-subtype': {
+      type: 'drill',
+      title: '和不變',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE613SumMixedSet(5);
+      },
+    },
+    'e6-1-3-difference-one-subtype': {
+      type: 'drill',
+      title: '差不變',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE613DifferenceMixedSet(5);
+      },
+    },
+    'e6-1-3-ratio-one-subtype': {
+      type: 'drill',
+      title: '商不變',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613RatioMixedSet(5);
+      },
+    },
+    'e6-1-3-product-one-subtype': {
+      type: 'drill',
+      title: '積不變',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613ProductMixedSet(5);
+      },
+    },
+    'e6-1-3-growth-two-subtypes': {
+      type: 'drill',
+      title: '堆疊與數形規律二小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613GrowthMixedSet(5);
+      },
+    },
+    'e6-1-3-interval-two-subtypes': {
+      type: 'drill',
+      title: '間隔問題二小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613IntervalMixedSet(5);
+      },
+    },
+    'e6-1-3-cycle-one-subtype': {
+      type: 'drill',
+      title: '週期循環規律',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613CycleMixedSet(5);
+      },
+    },
+    'e6-1-3-chicken-rabbit-one-subtype': {
+      type: 'drill',
+      title: '雞兔問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE613ChickenRabbitMixedSet(5);
+      },
+    },
+    'e6-1-4-integer-divide-decimal-drill': {
+      type: 'drill',
+      title: '整數除以小數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE614IntegerDivideDecimalSet(5);
+      },
+    },
+    'e6-1-4-decimal-divide-decimal-drill': {
+      type: 'drill',
+      title: '小數除以小數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE614DecimalDivideDecimalSet(5);
+      },
+    },
+    'e6-1-4-estimate-quotient-drill': {
+      type: 'drill',
+      title: '求商的約數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE614EstimateQuotientSet(5);
+      },
+    },
+    'e6-1-4-equivalent-transform-drill': {
+      type: 'drill',
+      title: '等值變換與移位判斷',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE614EquivalentTransformSet(5);
+      },
+    },
+    'e6-1-4-compare-dividend-relation-drill': {
+      type: 'drill',
+      title: '商與被除數的大小關係',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE614CompareDividendRelationSet(5);
+      },
+    },
+    'e6-1-4-compare-same-dividend-drill': {
+      type: 'drill',
+      title: '同被除數的商大小比較',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE614CompareSameDividendSet(5);
+      },
+    },
+    'e6-1-4-packaging-drill': {
+      type: 'drill',
+      title: '容器分裝與分袋問題',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE614PackagingSet(5);
+      },
+    },
+    'e6-1-4-unit-rate-drill': {
+      type: 'drill',
+      title: '求單價與單位量',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE614UnitRateSet(5);
+      },
+    },
+    'e6-1-4-geometry-inverse-drill': {
+      type: 'drill',
+      title: '幾何面積反推邊長',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE614GeometryInverseSet(5);
+      },
+    },
+    'e6-1-4-rate-percent-drill': {
+      type: 'drill',
+      title: '率與百分率應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE614RatePercentSet(5);
+      },
+    },
+    'e6-1-4-remainder-division-drill': {
+      type: 'drill',
+      title: '有餘數的小數除法',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE614RemainderDivisionSet(5);
+      },
+    },
+    'e6-1-4-mixed-computation-drill': {
+      type: 'drill',
+      title: '混合四則運算（含小數除法）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE614MixedComputationSet(5);
+      },
+    },
+    'e6-1-4-basics-two-subtypes': {
+      type: 'drill',
+      title: '基礎小數除法二小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE614BasicsMixedSet(5);
+      },
+    },
+    'e6-1-4-judgement-four-subtypes': {
+      type: 'drill',
+      title: '商的判斷四小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE614JudgementMixedSet(5);
+      },
+    },
+    'e6-1-4-unit-two-subtypes': {
+      type: 'drill',
+      title: '分裝與單位量二小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE614UnitMixedSet(5);
+      },
+    },
+    'e6-1-4-inverse-two-subtypes': {
+      type: 'drill',
+      title: '反推與率應用二小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE614InverseMixedSet(5);
+      },
+    },
+    'e6-1-4-remainder-one-subtype': {
+      type: 'drill',
+      title: '有餘數的小數除法',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE614RemainderMixedSet(5);
+      },
+    },
+    'e6-1-5-ratio-value-drill': {
+      type: 'drill',
+      title: '求比值',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE615RatioValueSet(5);
+      },
+    },
+    'e6-1-5-simplest-ratio-drill': {
+      type: 'drill',
+      title: '化為最簡整數比',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE615SimplestRatioSet(5);
+      },
+    },
+    'e6-1-5-equivalent-ratio-drill': {
+      type: 'drill',
+      title: '尋找相等的比',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE615EquivalentRatioSet(5);
+      },
+    },
+    'e6-1-5-unit-comparison-drill': {
+      type: 'drill',
+      title: '異量比與單價效率比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE615UnitComparisonSet(5);
+      },
+    },
+    'e6-1-5-exchange-drill': {
+      type: 'drill',
+      title: '生活中的兌換與交易',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE615ExchangeSet(5);
+      },
+    },
+    'e6-1-5-part-whole-drill': {
+      type: 'drill',
+      title: '部分量與全體量',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE615PartWholeSet(5);
+      },
+    },
+    'e6-1-5-distribution-drill': {
+      type: 'drill',
+      title: '已知總量的比分配',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE615DistributionSet(5);
+      },
+    },
+    'e6-1-5-adjustment-drill': {
+      type: 'drill',
+      title: '配方與濃度的調整',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE615AdjustmentSet(5);
+      },
+    },
+    'e6-1-5-percent-application-drill': {
+      type: 'drill',
+      title: '基準量與比較量的百分率應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE615PercentApplicationSet(5);
+      },
+    },
+    'e6-1-5-geometry-ratio-drill': {
+      type: 'drill',
+      title: '幾何比例與生活尺規應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE615GeometrySet(5);
+      },
+    },
+    'e6-1-5-benchmark-drill': {
+      type: 'drill',
+      title: '基準量與倍數轉換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE615BenchmarkSet(5);
+      },
+    },
+    'e6-1-5-core-three-subtypes': {
+      type: 'drill',
+      title: '比值與相等的比三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE615CoreMixedSet(5);
+      },
+    },
+    'e6-1-5-compare-three-subtypes': {
+      type: 'drill',
+      title: '兌換與異量比較三小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE615CompareMixedSet(5);
+      },
+    },
+    'e6-1-5-distribution-two-subtypes': {
+      type: 'drill',
+      title: '部分與分配二小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE615DistributionMixedSet(5);
+      },
+    },
+    'e6-1-5-adjust-percent-two-subtypes': {
+      type: 'drill',
+      title: '調配與百分率二小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE615AdjustPercentMixedSet(5);
+      },
+    },
+    'e6-1-5-geometry-one-subtype': {
+      type: 'drill',
+      title: '幾何比例與生活尺規應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE615GeometryMixedSet(5);
+      },
+    },
+    'e6-1-5-chain-ratio-drill': {
+      type: 'drill',
+      title: '連比合併（A:B與B:C→A:B:C）',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE615ChainRatioSet(5);
+      },
+    },
+    'e6-1-5-discount-drill': {
+      type: 'drill',
+      title: '打折計算（正比應用）',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE615DiscountSet(5);
+      },
+    },
+    'e6-1-6-pi-concept-drill': {
+      type: 'drill',
+      title: '圓周率基本觀念判定',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE616PiConceptSet(5);
+      },
+    },
+    'e6-1-6-circumference-drill': {
+      type: 'drill',
+      title: '給直徑或半徑求圓周長',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE616CircumferenceSet(5);
+      },
+    },
+    'e6-1-6-inverse-circumference-drill': {
+      type: 'drill',
+      title: '已知圓周長反求直徑或半徑',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE616InverseSet(5);
+      },
+    },
+    'e6-1-6-rolling-distance-drill': {
+      type: 'drill',
+      title: '圈數與距離互推',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE616RollingDistanceSet(5);
+      },
+    },
+    'e6-1-6-step-radius-drill': {
+      type: 'drill',
+      title: '步長反推半徑或直徑',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE616StepSet(5);
+      },
+    },
+    'e6-1-6-sector-perimeter-drill': {
+      type: 'drill',
+      title: '扇形周長計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE616SectorPerimeterSet(5);
+      },
+    },
+    'e6-1-6-sector-from-whole-drill': {
+      type: 'drill',
+      title: '由整圓周長求扇形弧長或周長',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE616SectorFromWholeCircumferenceSet(5);
+      },
+    },
+    'e6-1-6-multiplier-drill': {
+      type: 'drill',
+      title: '圓周長的倍數比較',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE616MultiplierSet(5);
+      },
+    },
+    'e6-1-6-circular-interval-drill': {
+      type: 'drill',
+      title: '圓周上的間隔問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE616CircularIntervalSet(5);
+      },
+    },
+    'e6-1-6-foundation-three-subtypes': {
+      type: 'drill',
+      title: '圓周率與圓周長基礎三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE616FoundationMixedSet(5);
+      },
+    },
+    'e6-1-6-motion-two-subtypes': {
+      type: 'drill',
+      title: '滾動與步數二小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE616MotionMixedSet(5);
+      },
+    },
+    'e6-1-6-sector-two-subtypes': {
+      type: 'drill',
+      title: '扇形周長二小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE616SectorMixedSet(5);
+      },
+    },
+    'e6-1-6-multiplier-one-subtype': {
+      type: 'drill',
+      title: '圓周長的倍數比較',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE616MultiplierMixedSet(5);
+      },
+    },
+    'e6-1-6-interval-one-subtype': {
+      type: 'drill',
+      title: '圓周上的間隔問題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE616IntervalMixedSet(5);
+      },
+    },
+    'e6-1-6-pi-22-over-7-drill': {
+      type: 'drill',
+      title: '以 22/7 計算圓周長',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE616Pi22Over7Set(5);
+      },
+    },
+    'e6-1-7-circle-area-direct-drill': {
+      type: 'drill',
+      title: '基礎圓面積計算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE617CircleAreaDirectSet(5);
+      },
+    },
+    'e6-1-7-circle-area-from-circumference-drill': {
+      type: 'drill',
+      title: '由圓周長反求圓面積',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE617CircleAreaFromCircumferenceSet(5);
+      },
+    },
+    'e6-1-7-area-multiplier-drill': {
+      type: 'drill',
+      title: '面積倍數關係',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE617AreaMultiplierSet(5);
+      },
+    },
+    'e6-1-7-sector-area-drill': {
+      type: 'drill',
+      title: '基礎扇形面積計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE617SectorAreaSet(5);
+      },
+    },
+    'e6-1-7-sector-fraction-drill': {
+      type: 'drill',
+      title: '由幾分之幾圓求扇形面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE617SectorFractionSet(5);
+      },
+    },
+    'e6-1-7-composite-area-drill': {
+      type: 'drill',
+      title: '複合圖形面積計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE617CompositeAreaSet(5);
+      },
+    },
+    'e6-1-7-ring-area-drill': {
+      type: 'drill',
+      title: '環形與外圍步道面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE617RingApplicationSet(5);
+      },
+    },
+    'e6-1-7-tether-area-drill': {
+      type: 'drill',
+      title: '拴繩活動範圍面積',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildE617TetherSet(5);
+      },
+    },
+    'e6-1-7-foundation-three-subtypes': {
+      type: 'drill',
+      title: '圓面積基礎三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE617FoundationThreeSet(5);
+      },
+    },
+    'e6-1-7-sector-two-subtypes': {
+      type: 'drill',
+      title: '扇形面積二小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE617SectorTwoSet(5);
+      },
+    },
+    'e6-1-7-composite-one-subtype': {
+      type: 'drill',
+      title: '複合圖形面積計算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE617CompositeOneSet(5);
+      },
+    },
+    'e6-1-7-ring-one-subtype': {
+      type: 'drill',
+      title: '環形與外圍步道面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE617RingOneSet(5);
+      },
+    },
+    'e6-1-7-tether-one-subtype': {
+      type: 'drill',
+      title: '拴繩活動範圍面積',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate() {
+        return buildE617TetherOneSet(5);
+      },
+    },
+    'e6-1-7-area-inverse-drill': {
+      type: 'drill',
+      title: '由面積逆推半徑或直徑',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE617AreaInverseSet(5);
+      },
+    },
+    'e6-1-8-rate-basic-drill': {
+      type: 'drill',
+      title: '求速率',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE618RateBasicSet(5);
+      },
+    },
+    'e6-1-8-distance-basic-drill': {
+      type: 'drill',
+      title: '求距離',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE618DistanceBasicSet(5);
+      },
+    },
+    'e6-1-8-time-basic-drill': {
+      type: 'drill',
+      title: '求時間',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE618TimeBasicSet(5);
+      },
+    },
+    'e6-1-8-length-unit-convert-drill': {
+      type: 'drill',
+      title: '只換長度單位的速率換算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE618LengthUnitConvertSet(5);
+      },
+    },
+    'e6-1-8-time-unit-convert-drill': {
+      type: 'drill',
+      title: '只換時間單位的速率換算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE618TimeUnitConvertSet(5);
+      },
+    },
+    'e6-1-8-double-unit-convert-drill': {
+      type: 'drill',
+      title: '長度與時間同時換算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE618DoubleUnitConvertSet(5);
+      },
+    },
+    'e6-1-8-compare-speed-drill': {
+      type: 'drill',
+      title: '不同單位的快慢比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE618CompareSpeedSet(5);
+      },
+    },
+    'e6-1-8-proportionality-drill': {
+      type: 'drill',
+      title: '倍數關係與正比練習',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE618ProportionalSet(5);
+      },
+    },
+    'e6-1-8-basic-three-subtypes': {
+      type: 'drill',
+      title: '基礎速率三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE618BasicThreeSet(5);
+      },
+    },
+    'e6-1-8-convert-three-subtypes': {
+      type: 'drill',
+      title: '速率單位換算三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE618ConvertThreeSet(5);
+      },
+    },
+    'e6-1-8-compare-one-subtype': {
+      type: 'drill',
+      title: '不同單位的快慢比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE618CompareOneSet(5);
+      },
+    },
+    'e6-1-8-proportion-one-subtype': {
+      type: 'drill',
+      title: '倍數關係與正比練習',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE618ProportionOneSet(5);
+      },
+    },
+    'e6-1-9-scale-factor-drill': {
+      type: 'drill',
+      title: '辨識放大與縮小的倍數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE619ScaleFactorSet(5);
+      },
+    },
+    'e6-1-9-corresponding-side-drill': {
+      type: 'drill',
+      title: '對應邊長計算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE619CorrespondingSideSet(5);
+      },
+    },
+    'e6-1-9-angle-property-drill': {
+      type: 'drill',
+      title: '對應角與內部線段性質',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE619AnglePropertySet(5);
+      },
+    },
+    'e6-1-9-perimeter-scale-drill': {
+      type: 'drill',
+      title: '周長的倍數變化',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE619PerimeterScaleSet(5);
+      },
+    },
+    'e6-1-9-area-scale-drill': {
+      type: 'drill',
+      title: '面積的倍數變化',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE619AreaScaleSet(5);
+      },
+    },
+    'e6-1-9-curved-scale-drill': {
+      type: 'drill',
+      title: '圓與扇形的縮放',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE619CurvedScaleSet(5);
+      },
+    },
+    'e6-1-9-scale-from-map-drill': {
+      type: 'drill',
+      title: '求比例尺',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE619ScaleFromMapSet(5);
+      },
+    },
+    'e6-1-9-actual-length-drill': {
+      type: 'drill',
+      title: '求實際長度',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE619ActualLengthSet(5);
+      },
+    },
+    'e6-1-9-map-length-drill': {
+      type: 'drill',
+      title: '求圖上長度',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE619MapLengthSet(5);
+      },
+    },
+    'e6-1-9-scale-representation-drill': {
+      type: 'drill',
+      title: '比例尺的表示轉換',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE619ScaleRepresentationSet(5);
+      },
+    },
+    'e6-1-9-scale-comparison-drill': {
+      type: 'drill',
+      title: '比例尺大小與詳細度比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE619ScaleComparisonSet(5);
+      },
+    },
+    'e6-1-9-scale-core-three-subtypes': {
+      type: 'drill',
+      title: '縮放倍數與對應性質三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE619ScaleCoreThreeSet(5);
+      },
+    },
+    'e6-1-9-perimeter-area-curve-three-subtypes': {
+      type: 'drill',
+      title: '周長、面積與曲線縮放三小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE619PerimeterAreaCurveThreeSet(5);
+      },
+    },
+    'e6-1-9-scale-basic-three-subtypes': {
+      type: 'drill',
+      title: '比例尺基本換算三小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE619ScaleBasicThreeSet(5);
+      },
+    },
+    'e6-1-9-scale-applied-two-subtypes': {
+      type: 'drill',
+      title: '比例尺表示與比較二小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE619ScaleAppliedTwoSet(5);
+      },
+    },
+    'e6-1-9-area-ratio-to-scale-drill': {
+      type: 'drill',
+      title: '面積比與邊長比互推',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE619AreaRatioToScaleSet(5);
+      },
+    },
+    'e6-1-9-map-area-drill': {
+      type: 'drill',
+      title: '地圖面積換算實際面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE619MapAreaSet(5);
+      },
+    },
+    'e6-2-1-decimal-to-fraction-drill': {
+      type: 'drill',
+      title: '有限小數化最簡分數',
+      difficulty: 'easy',
+      questionCount: 6,
+      generate() {
+        return buildE621DecimalToFractionSet(6);
+      },
+    },
+    'e6-2-1-fraction-to-decimal-drill': {
+      type: 'drill',
+      title: '分數化成有限小數',
+      difficulty: 'easy',
+      questionCount: 6,
+      generate() {
+        return buildE621FractionToDecimalSet(6);
+      },
+    },
+    'e6-2-1-decimal-to-mixed-fraction-drill': {
+      type: 'drill',
+      title: '小數化成最簡帶分數',
+      difficulty: 'easy',
+      questionCount: 6,
+      generate() {
+        return buildE621DecimalToMixedFractionSet(6);
+      },
+    },
+    'e6-2-1-friendly-add-sub-drill': {
+      type: 'drill',
+      title: '分數與小數加減混合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildE621FriendlyAddSubSet(6);
+      },
+    },
+    'e6-2-1-friendly-mul-div-drill': {
+      type: 'drill',
+      title: '分數與小數乘除混合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildE621FriendlyMulDivSet(6);
+      },
+    },
+    'e6-2-1-bracket-mixed-drill': {
+      type: 'drill',
+      title: '含括號的分數小數混合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildE621BracketMixedSet(6);
+      },
+    },
+    'e6-2-1-cross-operation-drill': {
+      type: 'drill',
+      title: '三步驟四則混合運算',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildE621CrossOperationSet(6);
+      },
+    },
+    'e6-2-1-distributive-shortcut-drill': {
+      type: 'drill',
+      title: '分配律巧算',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildE621DistributiveShortcutSet(6);
+      },
+    },
+    'e6-2-1-associative-shortcut-drill': {
+      type: 'drill',
+      title: '結合律湊整計算',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildE621AssociativeShortcutSet(6);
+      },
+    },
+    'e6-2-1-rectangle-reverse-drill': {
+      type: 'drill',
+      title: '面積反求長或寬',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE621RectangleReverseSet(5);
+      },
+    },
+    'e6-2-1-remaining-quantity-drill': {
+      type: 'drill',
+      title: '剩餘量應用題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE621RemainingQuantitySet(5);
+      },
+    },
+    'e6-2-1-unit-amount-drill': {
+      type: 'drill',
+      title: '單位量與平均分裝',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE621UnitAmountSet(5);
+      },
+    },
+    'e6-2-1-conversion-three-subtypes': {
+      type: 'drill',
+      title: '分數與小數的互換三小類綜合',
+      difficulty: 'easy',
+      questionCount: 6,
+      generate() {
+        return buildE621ConversionMixedSet(6);
+      },
+    },
+    'e6-2-1-mixed-calc-four-subtypes': {
+      type: 'drill',
+      title: '分數與小數混合計算四小類綜合',
+      difficulty: 'medium',
+      questionCount: 8,
+      generate() {
+        return buildE621MixedCalcSet(8);
+      },
+    },
+    'e6-2-1-shortcut-two-subtypes': {
+      type: 'drill',
+      title: '運算性質與巧算二小類綜合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildE621ShortcutMixedSet(6);
+      },
+    },
+    'e6-2-1-application-three-subtypes': {
+      type: 'drill',
+      title: '生活應用與反求三小類綜合',
+      difficulty: 'medium',
+      questionCount: 6,
+      generate() {
+        return buildE621ApplicationMixedSet(6);
+      },
+    },
+    'e6-2-2-rate-basic-drill': {
+      type: 'drill',
+      title: '求速率',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE622RateBasicSet(5);
+      },
+    },
+    'e6-2-2-distance-basic-drill': {
+      type: 'drill',
+      title: '求距離',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE622DistanceBasicSet(5);
+      },
+    },
+    'e6-2-2-time-basic-drill': {
+      type: 'drill',
+      title: '求時間',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE622TimeBasicSet(5);
+      },
+    },
+    'e6-2-2-unit-convert-drill': {
+      type: 'drill',
+      title: '速率單位換算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE622UnitConvertSet(5);
+      },
+    },
+    'e6-2-2-compare-speed-drill': {
+      type: 'drill',
+      title: '不同單位的快慢比較',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE622CompareSpeedSet(5);
+      },
+    },
+    'e6-2-2-average-two-stage-drill': {
+      type: 'drill',
+      title: '兩段路平均速率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622AverageTwoStageSet(5);
+      },
+    },
+    'e6-2-2-average-round-trip-drill': {
+      type: 'drill',
+      title: '來回與折返平均速率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622AverageRoundTripSet(5);
+      },
+    },
+    'e6-2-2-average-segment-known-drill': {
+      type: 'drill',
+      title: '分段已知距離時間的平均速率',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622AverageSegmentKnownSet(5);
+      },
+    },
+    'e6-2-2-opposite-meet-time-drill': {
+      type: 'drill',
+      title: '相向而行求相遇時間',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622OppositeMeetTimeSet(5);
+      },
+    },
+    'e6-2-2-opposite-distance-drill': {
+      type: 'drill',
+      title: '反方向出發求相距距離',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622OppositeDistanceSet(5);
+      },
+    },
+    'e6-2-2-same-direction-gap-drill': {
+      type: 'drill',
+      title: '同方向前後距離',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622SameDirectionGapSet(5);
+      },
+    },
+    'e6-2-2-chase-time-drill': {
+      type: 'drill',
+      title: '已知領先距離的追趕',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622ChaseTimeSet(5);
+      },
+    },
+    'e6-2-2-delayed-chase-drill': {
+      type: 'drill',
+      title: '先出發再追趕',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622DelayedChaseSet(5);
+      },
+    },
+    'e6-2-2-lifestyle-gap-drill': {
+      type: 'drill',
+      title: '生活情境的距離差',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622LifestyleGapSet(5);
+      },
+    },
+    'e6-2-2-flow-direct-drill': {
+      type: 'drill',
+      title: '順流逆流直接求距離',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622FlowDirectSet(5);
+      },
+    },
+    'e6-2-2-flow-solve-water-drill': {
+      type: 'drill',
+      title: '由順逆流速度反求水速',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622FlowSolveWaterSet(5);
+      },
+    },
+    'e6-2-2-flow-round-trip-drill': {
+      type: 'drill',
+      title: '流水往返求回程時間',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622FlowRoundTripSet(5);
+      },
+    },
+    'e6-2-2-escalator-drill': {
+      type: 'drill',
+      title: '平面電扶梯合成速率',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE622EscalatorSet(5);
+      },
+    },
+    'e6-2-2-pass-pole-drill': {
+      type: 'drill',
+      title: '通過電線桿',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622PassPoleSet(5);
+      },
+    },
+    'e6-2-2-pass-bridge-drill': {
+      type: 'drill',
+      title: '通過橋',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622PassBridgeSet(5);
+      },
+    },
+    'e6-2-2-solve-obstacle-length-drill': {
+      type: 'drill',
+      title: '由通過時間反求橋長',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622SolveObstacleLengthSet(5);
+      },
+    },
+    'e6-2-2-echo-distance-drill': {
+      type: 'drill',
+      title: '回聲求距離',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622EchoDistanceSet(5);
+      },
+    },
+    'e6-2-2-two-seg-distance-drill': {
+      type: 'drill',
+      title: '分段行走求總路程',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE622TwoSegDistanceSet(5);
+      },
+    },
+    'e6-2-2-circular-chase-drill': {
+      type: 'drill',
+      title: '圓形跑道同向追及',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622CircularChaseSet(5);
+      },
+    },
+    'e6-2-2-partial-remain-drill': {
+      type: 'drill',
+      title: '行駛後剩餘或途中休息求全程時間',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622PartialRemainSet(5);
+      },
+    },
+    'e6-2-2-basic-five-subtypes': {
+      type: 'drill',
+      title: '距離、速率與時間的基本關係五小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE622BasicMixedSet(5);
+      },
+    },
+    'e6-2-2-average-three-subtypes': {
+      type: 'drill',
+      title: '平均速率三小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622AverageMixedSet(5);
+      },
+    },
+    'e6-2-2-relative-six-subtypes': {
+      type: 'drill',
+      title: '相遇、相距與追趕六小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622RelativeMixedSet(5);
+      },
+    },
+    'e6-2-2-flow-four-subtypes': {
+      type: 'drill',
+      title: '流水與平面電扶梯四小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622FlowMixedSet(5);
+      },
+    },
+    'e6-2-2-through-four-subtypes': {
+      type: 'drill',
+      title: '通過問題與隱藏距離四小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE622ThroughMixedSet(5);
+      },
+    },
+    'e6-2-3-polygon-prism-volume-drill': {
+      type: 'drill',
+      title: '多邊形柱體積',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE623PolygonPrismVolumeSet(5);
+      },
+    },
+    'e6-2-3-cylinder-volume-drill': {
+      type: 'drill',
+      title: '圓柱體積',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE623CylinderVolumeSet(5);
+      },
+    },
+    'e6-2-3-partial-cylinder-volume-drill': {
+      type: 'drill',
+      title: '半圓柱與扇形柱體積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623PartialCylinderVolumeSet(5);
+      },
+    },
+    'e6-2-3-polygon-prism-surface-drill': {
+      type: 'drill',
+      title: '多邊形柱表面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623PolygonPrismSurfaceSet(5);
+      },
+    },
+    'e6-2-3-cylinder-surface-drill': {
+      type: 'drill',
+      title: '圓柱表面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623CylinderSurfaceSet(5);
+      },
+    },
+    'e6-2-3-lateral-area-application-drill': {
+      type: 'drill',
+      title: '側面積應用',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623LateralAreaApplicationSet(5);
+      },
+    },
+    'e6-2-3-missing-face-surface-drill': {
+      type: 'drill',
+      title: '缺面與無蓋表面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623MissingFaceSurfaceSet(5);
+      },
+    },
+    'e6-2-3-reverse-base-area-drill': {
+      type: 'drill',
+      title: '反求底面積',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE623ReverseBaseAreaSet(5);
+      },
+    },
+    'e6-2-3-reverse-height-drill': {
+      type: 'drill',
+      title: '反求柱高',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE623ReverseHeightSet(5);
+      },
+    },
+    'e6-2-3-reverse-width-drill': {
+      type: 'drill',
+      title: '長方體反求寬',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE623ReverseWidthSet(5);
+      },
+    },
+    'e6-2-3-height-compare-drill': {
+      type: 'drill',
+      title: '同體積柱高比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623HeightCompareSet(5);
+      },
+    },
+    'e6-2-3-composite-prism-volume-drill': {
+      type: 'drill',
+      title: '複合形體體積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623CompositePrismVolumeSet(5);
+      },
+    },
+    'e6-2-3-hollow-rect-volume-drill': {
+      type: 'drill',
+      title: '空心長方柱材積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623HollowRectVolumeSet(5);
+      },
+    },
+    'e6-2-3-hollow-cylinder-volume-drill': {
+      type: 'drill',
+      title: '空心圓柱材積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623HollowCylinderVolumeSet(5);
+      },
+    },
+    'e6-2-3-drilled-solid-volume-drill': {
+      type: 'drill',
+      title: '挖空後剩餘體積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623DrilledSolidVolumeSet(5);
+      },
+    },
+    'e6-2-3-tank-capacity-drill': {
+      type: 'drill',
+      title: '容器容量',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE623TankCapacitySet(5);
+      },
+    },
+    'e6-2-3-label-wrap-drill': {
+      type: 'drill',
+      title: '標籤與包裝側面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623LabelWrapSet(5);
+      },
+    },
+    'e6-2-3-paint-area-application-drill': {
+      type: 'drill',
+      title: '粉刷面積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623PaintAreaApplicationSet(5);
+      },
+    },
+    'e6-2-3-water-rise-displacement-drill': {
+      type: 'drill',
+      title: '水位上升與排水體積',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623WaterRiseDisplacementSet(5);
+      },
+    },
+    'e6-2-3-package-compare-drill': {
+      type: 'drill',
+      title: '包裝面積比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623PackageCompareSet(5);
+      },
+    },
+    'e6-2-3-cube-to-max-cylinder-drill': {
+      type: 'drill',
+      title: '正方體削成最大圓柱',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623CubeToMaxCylinderSet(5);
+      },
+    },
+    'e6-2-3-dim-change-volume-drill': {
+      type: 'drill',
+      title: '維度增加求體積變化',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623DimChangeVolumeSet(5);
+      },
+    },
+    'e6-2-3-volume-basic-three-subtypes': {
+      type: 'drill',
+      title: '柱體體積基本計算三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE623VolumeBasicMixedSet(5);
+      },
+    },
+    'e6-2-3-surface-area-four-subtypes': {
+      type: 'drill',
+      title: '柱體表面積與側面積四小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623SurfaceAreaMixedSet(5);
+      },
+    },
+    'e6-2-3-reverse-compare-four-subtypes': {
+      type: 'drill',
+      title: '逆向求解與參數比較四小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE623ReverseCompareMixedSet(5);
+      },
+    },
+    'e6-2-3-composite-hollow-four-subtypes': {
+      type: 'drill',
+      title: '複合形體與空心柱體四小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623CompositeHollowMixedSet(5);
+      },
+    },
+    'e6-2-3-application-five-subtypes': {
+      type: 'drill',
+      title: '生活應用五小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE623ApplicationMixedSet(5);
+      },
+    },
+    'e6-2-4-find-ratio-drill': {
+      type: 'drill',
+      title: '求比值',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE624FindRatioSet(5);
+      },
+    },
+    'e6-2-4-find-compared-drill': {
+      type: 'drill',
+      title: '已知基準量求比較量',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE624FindComparedSet(5);
+      },
+    },
+    'e6-2-4-find-base-drill': {
+      type: 'drill',
+      title: '已知比較量求基準量',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE624FindBaseSet(5);
+      },
+    },
+    'e6-2-4-fraction-multiplier-drill': {
+      type: 'drill',
+      title: '分數倍與帶分數倍',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE624FractionMultiplierSet(5);
+      },
+    },
+    'e6-2-4-sum-pair-drill': {
+      type: 'drill',
+      title: '兩量和與倍數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624SumPairSet(5);
+      },
+    },
+    'e6-2-4-markup-total-drill': {
+      type: 'drill',
+      title: '加成後總量',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE624MarkupTotalSet(5);
+      },
+    },
+    'e6-2-4-interest-total-drill': {
+      type: 'drill',
+      title: '本利和',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE624InterestTotalSet(5);
+      },
+    },
+    'e6-2-4-exposed-total-drill': {
+      type: 'drill',
+      title: '露出部分與全長',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624ExposedTotalSet(5);
+      },
+    },
+    'e6-2-4-difference-pair-drill': {
+      type: 'drill',
+      title: '兩量差與倍數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624DifferencePairSet(5);
+      },
+    },
+    'e6-2-4-discount-saved-drill': {
+      type: 'drill',
+      title: '折扣省下多少',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE624DiscountSavedSet(5);
+      },
+    },
+    'e6-2-4-remaining-amount-drill': {
+      type: 'drill',
+      title: '剩餘量計算',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE624RemainingAmountSet(5);
+      },
+    },
+    'e6-2-4-difference-from-base-drill': {
+      type: 'drill',
+      title: '已知基準量求差額',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE624DifferenceFromBaseSet(5);
+      },
+    },
+    'e6-2-4-recover-original-from-remain-drill': {
+      type: 'drill',
+      title: '由剩餘量反求原量',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624RecoverOriginalFromRemainSet(5);
+      },
+    },
+    'e6-2-4-recover-original-from-discount-drill': {
+      type: 'drill',
+      title: '由省下金額反求原價',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624RecoverOriginalFromDiscountSet(5);
+      },
+    },
+    'e6-2-4-recover-cost-from-markup-drill': {
+      type: 'drill',
+      title: '由定價反求成本',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624RecoverCostFromMarkupSet(5);
+      },
+    },
+    'e6-2-4-recover-principal-from-final-drill': {
+      type: 'drill',
+      title: '由本利和反求本金',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624RecoverPrincipalFromFinalSet(5);
+      },
+    },
+    'e6-2-4-three-part-direct-drill': {
+      type: 'drill',
+      title: '三量比例直接求量',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624ThreePartDirectSet(5);
+      },
+    },
+    'e6-2-4-three-part-total-drill': {
+      type: 'drill',
+      title: '三量比例由總和反推',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624ThreePartTotalSet(5);
+      },
+    },
+    'e6-2-4-age-sum-multiple-drill': {
+      type: 'drill',
+      title: '年齡和與倍數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624AgeSumMultipleSet(5);
+      },
+    },
+    'e6-2-4-geometry-ratio-drill': {
+      type: 'drill',
+      title: '幾何量的倍數比較',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE624GeometryRatioSet(5);
+      },
+    },
+    'e6-2-4-basic-four-subtypes': {
+      type: 'drill',
+      title: '基礎比值與單步互求四小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE624BasicMixedSet(5);
+      },
+    },
+    'e6-2-4-sum-four-subtypes': {
+      type: 'drill',
+      title: '兩量之和與加成四小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624SumMixedSet(5);
+      },
+    },
+    'e6-2-4-difference-four-subtypes': {
+      type: 'drill',
+      title: '兩量之差與剩餘四小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624DifferenceMixedSet(5);
+      },
+    },
+    'e6-2-4-reverse-four-subtypes': {
+      type: 'drill',
+      title: '逆求基準量四小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624ReverseMixedSet(5);
+      },
+    },
+    'e6-2-4-application-four-subtypes': {
+      type: 'drill',
+      title: '多量比例與綜合應用四小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE624ApplicationMixedSet(5);
+      },
+    },
+    'e6-2-5-sum-diff-basic-drill': {
+      type: 'drill',
+      title: '和差求兩數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625SumDiffBasicSet(5);
+      },
+    },
+    'e6-2-5-transfer-equal-drill': {
+      type: 'drill',
+      title: '給予後相等',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625TransferEqualSet(5);
+      },
+    },
+    'e6-2-5-rectangle-sum-diff-drill': {
+      type: 'drill',
+      title: '長方形長寬和差',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625RectangleSumDiffSet(5);
+      },
+    },
+    'e6-2-5-balance-reverse-drill': {
+      type: 'drill',
+      title: '平衡反推原量',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625BalanceReverseSet(5);
+      },
+    },
+    'e6-2-5-age-future-multiple-drill': {
+      type: 'drill',
+      title: '幾年後變成幾倍',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625AgeFutureMultipleSet(5);
+      },
+    },
+    'e6-2-5-age-past-multiple-drill': {
+      type: 'drill',
+      title: '幾年前是幾倍',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625AgePastMultipleSet(5);
+      },
+    },
+    'e6-2-5-age-future-condition-drill': {
+      type: 'drill',
+      title: '已知未來條件求現在',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625AgeFutureConditionSet(5);
+      },
+    },
+    'e6-2-5-age-diff-multiple-drill': {
+      type: 'drill',
+      title: '已知差與倍數求現在',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625AgeDiffMultipleSet(5);
+      },
+    },
+    'e6-2-5-chicken-rabbit-leg-drill': {
+      type: 'drill',
+      title: '雞兔腳數型',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625ChickenRabbitLegSet(5);
+      },
+    },
+    'e6-2-5-chicken-rabbit-money-drill': {
+      type: 'drill',
+      title: '雞兔錢幣票數型',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625ChickenRabbitMoneySet(5);
+      },
+    },
+    'e6-2-5-chicken-rabbit-score-drill': {
+      type: 'drill',
+      title: '雞兔單價配分類',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625ChickenRabbitScoreSet(5);
+      },
+    },
+    'e6-2-5-average-missing-drill': {
+      type: 'drill',
+      title: '缺失值平均',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625AverageMissingSet(5);
+      },
+    },
+    'e6-2-5-average-target-drill': {
+      type: 'drill',
+      title: '目標平均反推',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625AverageTargetSet(5);
+      },
+    },
+    'e6-2-5-average-merge-drill': {
+      type: 'drill',
+      title: '合併平均反推',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625AverageMergeSet(5);
+      },
+    },
+    'e6-2-5-average-subject-drill': {
+      type: 'drill',
+      title: '多科平均反推',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625AverageSubjectSet(5);
+      },
+    },
+    'e6-2-5-addition-choice-drill': {
+      type: 'drill',
+      title: '分類單選加法原理',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625AdditionChoiceSet(5);
+      },
+    },
+    'e6-2-5-multiplication-pair-drill': {
+      type: 'drill',
+      title: '分步搭配乘法原理',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625MultiplicationPairSet(5);
+      },
+    },
+    'e6-2-5-route-drill': {
+      type: 'drill',
+      title: '路徑搭配',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625RouteSet(5);
+      },
+    },
+    'e6-2-5-entry-exit-drill': {
+      type: 'drill',
+      title: '進出限制',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625EntryExitSet(5);
+      },
+    },
+    'e6-2-5-digit-restriction-drill': {
+      type: 'drill',
+      title: '二位數排列限制',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625DigitRestrictionSet(5);
+      },
+    },
+    'e6-2-5-sum-diff-four-subtypes': {
+      type: 'drill',
+      title: '和差與平衡四小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625SumDiffMixedSet(5);
+      },
+    },
+    'e6-2-5-age-four-subtypes': {
+      type: 'drill',
+      title: '年齡問題四小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625AgeMixedSet(5);
+      },
+    },
+    'e6-2-5-chicken-rabbit-three-subtypes': {
+      type: 'drill',
+      title: '雞兔問題三小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625ChickenRabbitMixedSet(5);
+      },
+    },
+    'e6-2-5-average-four-subtypes': {
+      type: 'drill',
+      title: '平均數逆推四小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625AverageMixedSet(5);
+      },
+    },
+    'e6-2-5-principle-five-subtypes': {
+      type: 'drill',
+      title: '加法原理與乘法原理五小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625PrincipleMixedSet(5);
+      },
+    },
+    'e6-2-5-linear-int-coef-drill': {
+      type: 'drill',
+      title: '整數係數一元一次方程',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625LinearIntCoefSet(5);
+      },
+    },
+    'e6-2-5-linear-frac-coef-drill': {
+      type: 'drill',
+      title: '分數係數一元一次方程',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625LinearFracCoefSet(5);
+      },
+    },
+    'e6-2-5-linear-bracket-frac-drill': {
+      type: 'drill',
+      title: '括號與分數型方程式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625LinearBracketFracSet(5);
+      },
+    },
+    'e6-2-5-linear-frac-merge-drill': {
+      type: 'drill',
+      title: '合併分數求未知數',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625LinearFracMergeSet(5);
+      },
+    },
+    'e6-2-5-distribute-remain-drill': {
+      type: 'drill',
+      title: '分配後剩餘型應用題',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625DistributeRemainSet(5);
+      },
+    },
+    'e6-2-5-price-change-drill': {
+      type: 'drill',
+      title: '買賣找零型應用題',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE625PriceChangeSet(5);
+      },
+    },
+    'e6-2-5-consume-then-share-drill': {
+      type: 'drill',
+      title: '消耗後平分型應用題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625ConsumeThenShareSet(5);
+      },
+    },
+    'e6-2-5-surplus-deficit-drill': {
+      type: 'drill',
+      title: '多一個少一個型應用題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625SurplusDeficitSet(5);
+      },
+    },
+    'e6-2-5-fraction-consume-drill': {
+      type: 'drill',
+      title: '分數消耗型應用題',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE625FractionConsumeSet(5);
+      },
+    },
+    'e6-2-6-count-to-percent-drill': {
+      type: 'drill',
+      title: '原始數據求各項百分率',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626CountToPercentSet(5);
+      },
+    },
+    'e6-2-6-amount-to-percent-drill': {
+      type: 'drill',
+      title: '金額分配求百分率',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626AmountToPercentSet(5);
+      },
+    },
+    'e6-2-6-missing-percent-drill': {
+      type: 'drill',
+      title: '缺少一項百分率補齊',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626MissingPercentSet(5);
+      },
+    },
+    'e6-2-6-percent-to-angle-drill': {
+      type: 'drill',
+      title: '百分率換圓心角',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626PercentToAngleSet(5);
+      },
+    },
+    'e6-2-6-angle-to-percent-drill': {
+      type: 'drill',
+      title: '圓心角換百分率',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626AngleToPercentSet(5);
+      },
+    },
+    'e6-2-6-mixed-angle-percent-drill': {
+      type: 'drill',
+      title: '百分率與圓心角混合補齊',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE626MixedAnglePercentSet(5);
+      },
+    },
+    'e6-2-6-part-from-percent-drill': {
+      type: 'drill',
+      title: '已知百分率求部分量',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626PartFromPercentSet(5);
+      },
+    },
+    'e6-2-6-part-from-angle-drill': {
+      type: 'drill',
+      title: '已知圓心角求部分量',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626PartFromAngleSet(5);
+      },
+    },
+    'e6-2-6-multi-part-amount-drill': {
+      type: 'drill',
+      title: '多項部分量推算',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE626MultiPartAmountSet(5);
+      },
+    },
+    'e6-2-6-same-percent-compare-drill': {
+      type: 'drill',
+      title: '同百分率不同總量比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE626SamePercentCompareSet(5);
+      },
+    },
+    'e6-2-6-different-percent-compare-drill': {
+      type: 'drill',
+      title: '不同百分率的實際量比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE626DifferentPercentCompareSet(5);
+      },
+    },
+    'e6-2-6-spend-compare-drill': {
+      type: 'drill',
+      title: '總量與百分率綜合比較',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE626SpendCompareSet(5);
+      },
+    },
+    'e6-2-6-chart-selection-drill': {
+      type: 'drill',
+      title: '統計圖表選用',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626ChartSelectionSet(5);
+      },
+    },
+    'e6-2-6-possibility-drill': {
+      type: 'drill',
+      title: '圓形圖中的可能性判讀',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626PossibilitySet(5);
+      },
+    },
+    'e6-2-6-mixed-reading-drill': {
+      type: 'drill',
+      title: '圓形圖綜合判讀',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE626MixedPieReadingSet(5);
+      },
+    },
+    'e6-2-6-percent-three-subtypes': {
+      type: 'drill',
+      title: '百分率與原始數據三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626PercentMixedSet(5);
+      },
+    },
+    'e6-2-6-angle-three-subtypes': {
+      type: 'drill',
+      title: '圓心角與百分率三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626AngleMixedSet(5);
+      },
+    },
+    'e6-2-6-part-three-subtypes': {
+      type: 'drill',
+      title: '比率求部分量三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626PartMixedSet(5);
+      },
+    },
+    'e6-2-6-compare-three-subtypes': {
+      type: 'drill',
+      title: '圓形圖比較判讀三小類綜合',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate() {
+        return buildE626CompareMixedSet(5);
+      },
+    },
+    'e6-2-6-interpret-three-subtypes': {
+      type: 'drill',
+      title: '選圖與判讀三小類綜合',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626InterpretMixedSet(5);
+      },
+    },
+    'e6-2-6-average-from-data-drill': {
+      type: 'drill',
+      title: '從資料計算平均數',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate() {
+        return buildE626AverageFromDataSet(5);
+      },
+    },
   };
 
-  const bundleFingerprint = "e6-bundle-v20260628-v3";
+  function buildUniquePracticeSet(generator, count) {
+    const target = Math.max(1, Math.floor(Number(count) || 1));
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const seenQuestions = new Set();
+    const maxAttempts = Math.max(40, target * 40);
+    let attempts = 0;
+
+    while (questions.length < target && attempts < maxAttempts) {
+      const generated = generator();
+      if (!generated || !Array.isArray(generated.questions) || !Array.isArray(generated.summaryAnswers) || !Array.isArray(generated.answers)) {
+        throw new Error('題目產生器沒有回傳完整的題目、簡答與詳解陣列。');
+      }
+      const available = Math.min(generated.questions.length, generated.summaryAnswers.length, generated.answers.length);
+      for (let index = 0; index < available && questions.length < target; index += 1) {
+        const question = generated.questions[index];
+        if (seenQuestions.has(question)) continue;
+        seenQuestions.add(question);
+        questions.push(question);
+        summaryAnswers.push(generated.summaryAnswers[index]);
+        answers.push(generated.answers[index]);
+      }
+      attempts += 1;
+    }
+
+    if (questions.length !== target) {
+      throw new Error(`無法產生 ${target} 題不重複的練習題。`);
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  Object.entries(nextConfigs).forEach(([id, config]) => {
+    if (!(id.startsWith('e6-1-') || id.startsWith('e6-2-')) || !config || typeof config.generate !== 'function') return;
+    const originalGenerate = config.generate;
+    const target = config.questionCount;
+    config.generate = function generateUniqueE6PracticeSet() {
+      return buildUniquePracticeSet(originalGenerate, target);
+    };
+  });
+
+  const bundleFingerprint = 'e6-bundle-v20260715-e61-e62-reviewed-v1';
   Object.values(nextConfigs).forEach((config) => {
-    if (!config || typeof config !== "object") return;
+    if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;
   });
 

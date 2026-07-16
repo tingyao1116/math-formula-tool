@@ -2457,15 +2457,15 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             group = []
             if show_answer and answer_mode == "simple":
                 line = "　　".join(
-                    f"{idx}. {inline_answer_text(value)}"
+                    f"<b>{idx}.</b> {escape(inline_answer_text(value))}"
                     for idx, value in enumerate(values, 1)
                     if inline_answer_text(value)
                 )
-                group.append(Paragraph(paragraph_text(line or "目前沒有內容。", body_style), body_style))
+                group.append(Paragraph(line or paragraph_text("目前沒有內容。", body_style), body_style))
                 group.append(Spacer(1, spacing_pt))
             else:
                 for idx, value in enumerate(values, 1):
-                    group.append(Paragraph(paragraph_text(f"{idx}. {value}", body_style), body_style))
+                    group.append(Paragraph(f"<b>{idx}.</b> {paragraph_text(value, body_style)}", body_style))
                     group.append(Spacer(1, spacing_pt))
             story.append(KeepTogether(group))
             story.append(Spacer(1, 4))
@@ -3656,26 +3656,75 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         dialog.wait_window()
         return result["format"]
 
-    def _open_practice_batch_pdf_options_dialog(self, chain_count: int):
+    def _open_practice_batch_pdf_options_dialog(
+        self,
+        chain_count: int,
+        subject_label: str = "自訂主題串",
+        scope_options: dict | None = None,
+    ):
         result = {"options": None}
         dialog = tk.Toplevel(self.root)
-        dialog.title("批次匯出自訂主題串 PDF")
+        subject_label = str(subject_label or "主題串").strip() or "主題串"
+        dialog.title(f"批次匯出{subject_label} PDF")
         dialog.transient(self.root)
         dialog.grab_set()
-        dialog.geometry("560x360")
+        dialog.geometry("620x450" if scope_options else "560x360")
         dialog.resizable(False, False)
 
         count_var = tk.StringVar(value="10")
         export_order_var = tk.StringVar(value="interleaved")
         answer_mode_var = tk.StringVar(value="both")
         question_gap_mm_var = tk.StringVar(value="10")
+        scope_mode_var = tk.StringVar(value="all")
+        scope_target_var = tk.StringVar(value="")
 
         body = ttk.Frame(dialog, padding=14)
         body.pack(fill="both", expand=True)
         ttk.Label(
             body,
-            text=f"將匯出 {max(0, int(chain_count or 0))} 份自訂主題串；每一串會各自生成一個 PDF。",
+            text=f"將匯出 {max(0, int(chain_count or 0))} 份{subject_label}；每一串會各自生成一個 PDF。",
         ).pack(anchor="w", pady=(0, 10))
+
+        scope_rows = scope_options if isinstance(scope_options, dict) else {}
+        semester_rows = list(scope_rows.get("semesters") or [])
+        chapter_rows = list(scope_rows.get("chapters") or [])
+        semester_by_label = {str(row.get("label", "")).strip(): row for row in semester_rows}
+        chapter_by_label = {str(row.get("label", "")).strip(): row for row in chapter_rows}
+        if scope_rows:
+            scope_box = ttk.LabelFrame(body, text="匯出範圍", padding=10)
+            scope_box.pack(fill="x", pady=(0, 10))
+            scope_top = ttk.Frame(scope_box)
+            scope_top.pack(fill="x")
+            ttk.Radiobutton(scope_top, text="全部", variable=scope_mode_var, value="all").pack(side="left")
+            ttk.Radiobutton(scope_top, text="一個學期", variable=scope_mode_var, value="semester").pack(side="left", padx=(14, 0))
+            ttk.Radiobutton(scope_top, text="一整章", variable=scope_mode_var, value="chapter").pack(side="left", padx=(14, 0))
+
+            scope_pick_row = ttk.Frame(scope_box)
+            scope_pick_row.pack(fill="x", pady=(8, 0))
+            scope_pick_label = ttk.Label(scope_pick_row, text="選擇")
+            scope_pick_label.pack(side="left")
+            scope_target_combo = ttk.Combobox(scope_pick_row, textvariable=scope_target_var, state="readonly", width=48)
+            scope_target_combo.pack(side="left", fill="x", expand=True, padx=(8, 0))
+
+            def refresh_scope_targets(*_args):
+                mode = scope_mode_var.get()
+                if mode == "semester":
+                    values = [str(row.get("label", "")).strip() for row in semester_rows if str(row.get("label", "")).strip()]
+                    scope_target_combo.configure(state="readonly")
+                    scope_pick_label.configure(text="學期")
+                elif mode == "chapter":
+                    values = [str(row.get("label", "")).strip() for row in chapter_rows if str(row.get("label", "")).strip()]
+                    scope_target_combo.configure(state="readonly")
+                    scope_pick_label.configure(text="章")
+                else:
+                    values = []
+                    scope_target_combo.configure(state="disabled")
+                    scope_pick_label.configure(text="選擇")
+                scope_target_combo["values"] = values
+                scope_target_var.set(values[0] if values else "")
+
+            scope_mode_var.trace_add("write", refresh_scope_targets)
+            refresh_scope_targets()
 
         count_row = ttk.Frame(body)
         count_row.pack(fill="x", pady=(0, 10))
@@ -3726,11 +3775,29 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                     raise ValueError
             except ValueError:
                 return messagebox.showerror("間距錯誤", "每題下方留白請填 0～80 的數字（mm）。", parent=dialog)
+            scope_mode = scope_mode_var.get() if scope_rows else "all"
+            scope_key = ""
+            scope_label = ""
+            if scope_mode == "semester":
+                picked = semester_by_label.get(scope_target_var.get())
+                if not picked:
+                    return messagebox.showerror("範圍錯誤", "請選擇要匯出的學期。", parent=dialog)
+                scope_key = str(picked.get("key", "")).strip()
+                scope_label = str(picked.get("label", "")).strip()
+            elif scope_mode == "chapter":
+                picked = chapter_by_label.get(scope_target_var.get())
+                if not picked:
+                    return messagebox.showerror("範圍錯誤", "請選擇要匯出的整章。", parent=dialog)
+                scope_key = str(picked.get("key", "")).strip()
+                scope_label = str(picked.get("label", "")).strip()
             result["options"] = {
                 "question_count": question_count,
                 "export_order": export_order_var.get() if export_order_var.get() in {"separate", "interleaved"} else "interleaved",
                 "answer_mode": answer_mode_var.get() if answer_mode_var.get() in {"simple", "detail", "both"} else "both",
                 "question_gap_mm": question_gap_mm,
+                "scope_mode": scope_mode,
+                "scope_key": scope_key,
+                "scope_label": scope_label,
             }
             dialog.destroy()
 
@@ -4301,6 +4368,22 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                 flat.extend(unit["children"])
             return flat
 
+        def records_for_chain(chain: dict, ordered_ids: list[str] | None = None):
+            ids = list(ordered_ids or [])
+            if not ids:
+                chapter_code = str(chain.get("chapterCode", "")).strip()
+                ids = self._chapter_practice_ids_in_theme_order(chapter_code, practice_by_id)
+            if not ids:
+                ids = [str(pid).strip() for pid in chain.get("practiceIds", []) if str(pid).strip()]
+            records = []
+            for pid in ids:
+                row = practice_by_id.get(pid)
+                if row:
+                    records.append(row)
+                else:
+                    records.append({"id": pid, "title": pid, "questionCount": chain.get("questionCount", 5)})
+            return records
+
         def row_practice_id(row_index):
             if not (0 <= row_index < len(state["rows"])):
                 return ""
@@ -4433,13 +4516,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             chain = state["chain"]
             if not chain:
                 return messagebox.showwarning("提醒", "請先選擇主題串。", parent=dialog)
-            records = []
-            for pid in flatten_units():
-                row = practice_by_id.get(pid)
-                if row:
-                    records.append(row)
-                else:
-                    records.append({"id": pid, "title": pid, "questionCount": chain.get("questionCount", 5)})
+            records = records_for_chain(chain, flatten_units())
             if not records:
                 return messagebox.showwarning("提醒", "這個主題串沒有任何題型。", parent=dialog)
             title = str(chain.get("title", "")).strip() or "主題串"
@@ -4452,6 +4529,175 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                 except Exception:
                     pass
 
+        def export_all_chapter_pdfs():
+            export_chains = [
+                chain for chain in chains
+                if isinstance(chain, dict)
+                and chain.get("enabled", True) is not False
+                and (str(chain.get("chapterCode", "")).strip() or str(chain.get("id", "")).strip())
+            ]
+            if not export_chains:
+                return messagebox.showwarning("提醒", "目前沒有可匯出的章節主題串。", parent=dialog)
+
+            def chain_chapter_code(chain: dict) -> str:
+                return str(chain.get("chapterCode", "") or "").strip()
+
+            def semester_label_for_code(code: str) -> str:
+                code = str(code or "").strip()
+                meta = _load_chapter_code_stage_grade_map().get(code) or infer_stage_grade_term_from_code(code)
+                grade = str(meta.get("grade", "") or "").strip()
+                term = str(meta.get("term", "") or "").strip()
+                if grade and term.startswith("上"):
+                    return f"{grade}上"
+                if grade and term.startswith("下"):
+                    return f"{grade}下"
+                if grade:
+                    return grade
+                return code.split("-", 1)[0] if code else "未分類"
+
+            def chapter_group_key(code: str) -> str:
+                parts = str(code or "").strip().split("-")
+                if len(parts) >= 2:
+                    return f"{parts[0]}-{parts[1]}"
+                return str(code or "").strip() or "未分類"
+
+            semester_map: dict[str, list[dict]] = {}
+            chapter_map: dict[str, list[dict]] = {}
+            for chain in export_chains:
+                code = chain_chapter_code(chain)
+                semester_map.setdefault(semester_label_for_code(code), []).append(chain)
+                chapter_map.setdefault(chapter_group_key(code), []).append(chain)
+
+            semester_rows = [
+                {
+                    "key": label,
+                    "label": f"{label}（{len(rows)} 小節）",
+                    "match_label": label,
+                    "sort": self._chapter_code_sort_key(chain_chapter_code(rows[0]) if rows else ""),
+                }
+                for label, rows in semester_map.items()
+            ]
+            semester_rows.sort(key=lambda row: (row["sort"], row["label"]))
+            chapter_rows = [
+                {
+                    "key": key,
+                    "label": f"{key}（{len(rows)} 小節）",
+                    "match_label": key,
+                    "sort": self._chapter_code_sort_key(key),
+                }
+                for key, rows in chapter_map.items()
+            ]
+            chapter_rows.sort(key=lambda row: (row["sort"], row["label"]))
+
+            options = self._open_practice_batch_pdf_options_dialog(
+                len(export_chains),
+                subject_label="章節主題串",
+                scope_options={"semesters": semester_rows, "chapters": chapter_rows},
+            )
+            if not options:
+                return
+
+            scope_mode = options.get("scope_mode", "all")
+            scope_key = str(options.get("scope_key", "") or "").strip()
+            scope_label = str(options.get("scope_label", "") or "").strip()
+            if scope_mode == "semester":
+                export_chains = [chain for chain in export_chains if semester_label_for_code(chain_chapter_code(chain)) == scope_key]
+            elif scope_mode == "chapter":
+                export_chains = [chain for chain in export_chains if chapter_group_key(chain_chapter_code(chain)) == scope_key]
+            if not export_chains:
+                return messagebox.showwarning("提醒", "這個範圍目前沒有可匯出的章節主題串。", parent=dialog)
+
+            toolchain = pdf_markdown_export.check_pdf_toolchain()
+            if not toolchain["ok"]:
+                return messagebox.showerror("找不到排版工具", toolchain["reason"], parent=dialog)
+
+            out_dir = filedialog.askdirectory(title="選擇全部章節主題串 PDF 輸出資料夾", parent=dialog)
+            if not out_dir:
+                return
+            out_dir = Path(out_dir)
+
+            if not messagebox.askyesno(
+                "確認批次匯出",
+                f"即將依章節輸出 {len(export_chains)} 份 PDF 到：\n{out_dir}\n\n"
+                f"範圍：{scope_label or '全部'}\n"
+                "每個小章節會是一份獨立 PDF，確定開始？",
+                parent=dialog,
+            ):
+                return
+
+            question_count = int(options.get("question_count", 10) or 10)
+            export_order = options.get("export_order", "interleaved")
+            answer_mode = options.get("answer_mode", "both")
+            question_gap_mm = float(options.get("question_gap_mm", 10) or 0)
+            date_prefix = datetime.now().strftime("%Y%m%d_%H%M%S")
+            written = []
+            failures = []
+
+            dialog.grab_release()
+            try:
+                for index, chain in enumerate(export_chains, start=1):
+                    title = str(chain.get("title", "")).strip() or str(chain.get("chapterCode", "")).strip() or str(chain.get("id", "")).strip() or f"章節主題串{index}"
+                    records = records_for_chain(chain)
+                    if not records:
+                        failures.append(f"{title}：沒有可匯出的題型")
+                        continue
+
+                    counts = {
+                        str(record.get("id", "")).strip(): question_count
+                        for record in records
+                        if str(record.get("id", "")).strip()
+                    }
+                    combined_title = f"{title} 題目與答案"
+                    seed = f"theme-chain-batch-pdf|{date_prefix}|{index}|{chain.get('id', '') or chain.get('chapterCode', '')}"
+                    markdown_result = self._generate_practice_export_markdown(
+                        records,
+                        counts,
+                        combined_title,
+                        export_order,
+                        answer_mode,
+                        question_gap_mm,
+                        seed,
+                    )
+                    if not markdown_result.get("ok"):
+                        failures.append(f"{title}：{markdown_result.get('reason', '未知錯誤')}")
+                        continue
+
+                    base_name = self._safe_filename(f"{date_prefix}_{index:03d}_{title}")
+                    pdf_path = out_dir / f"{base_name}_題目與答案.pdf"
+                    pdf_result = pdf_markdown_export.convert_markdown_to_pdf(
+                        markdown_result.get("markdown", ""),
+                        pdf_path,
+                        title=combined_title,
+                    )
+                    if not pdf_result.get("ok"):
+                        failures.append(f"{title}：{pdf_result.get('reason', '') or 'PDF 轉換失敗'}")
+                        continue
+
+                    written.append(pdf_path)
+                    info_var.set(f"批次匯出中：{index}/{len(export_chains)}，已完成 {len(written)} 份。")
+                    self.status_var.set(info_var.get())
+                    dialog.update_idletasks()
+            finally:
+                try:
+                    dialog.grab_set()
+                except Exception:
+                    pass
+
+            if failures:
+                preview = "\n".join(failures[:12])
+                more = "" if len(failures) <= 12 else f"\n...另有 {len(failures) - 12} 筆失敗"
+                self.status_var.set(f"章節主題串批次匯出部分完成：成功 {len(written)} 份，失敗 {len(failures)} 份。")
+                info_var.set(self.status_var.get())
+                return messagebox.showwarning(
+                    "部分完成",
+                    f"已輸出 {len(written)} 份 PDF 到：\n{out_dir}\n\n失敗 {len(failures)} 份：\n{preview}{more}",
+                    parent=dialog,
+                )
+
+            self.status_var.set(f"章節主題串批次 PDF 匯出完成：{len(written)} 份。")
+            info_var.set(self.status_var.get())
+            return messagebox.showinfo("完成", f"已輸出 {len(written)} 份 PDF 到：\n{out_dir}", parent=dialog)
+
         button_bar = ttk.Frame(dialog, padding=12)
         button_bar.pack(fill="x")
         ttk.Button(button_bar, text="上移", style="Compact.TButton", command=lambda: move_selected(-1)).pack(side="left")
@@ -4460,6 +4706,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         ttk.Button(button_bar, text="儲存順序", style="Compact.TButton", command=save_order).pack(side="left", padx=(12, 0))
         ttk.Button(button_bar, text="關閉", style="Compact.TButton", command=dialog.destroy).pack(side="right")
         ttk.Button(button_bar, text="匯出 PDF/MD", style="Compact.TButton", command=export_pdf).pack(side="right", padx=(0, 8))
+        ttk.Button(button_bar, text="匯出全部章節PDF", style="Compact.TButton", command=export_all_chapter_pdfs).pack(side="right", padx=(0, 8))
 
         display_chains()
         if visible_chains["rows"]:

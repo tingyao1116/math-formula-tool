@@ -50,7 +50,7 @@
   function fractionToLatex(frac, mixed = false) {
     const value = makeFraction(frac.num, frac.den);
     if (value.den === 1) return `${value.num}`;
-    if (!mixed) return `\\frac{${value.num}}{${value.den}}`;
+    if (!mixed) return value.num < 0 ? `-\\frac{${Math.abs(value.num)}}{${value.den}}` : `\\frac{${value.num}}{${value.den}}`;
     const negative = value.num < 0;
     const absNum = Math.abs(value.num);
     const whole = Math.floor(absNum / value.den);
@@ -75,6 +75,10 @@
     return `y=${formatJ611Coefficient(frac)}x^2`;
   }
 
+  function formatJ611IntegerQuadraticTerm(value) {
+    return `${formatJ611Coefficient(makeFraction(value))}x^2`;
+  }
+
   function formatJ611Abs(frac) {
     const value = absFraction(frac);
     return fractionToLatex(value);
@@ -96,9 +100,34 @@
     return `${sign}${abs === 1 ? '' : abs}x`;
   }
 
+  function formatJ611LinearTerm(coeff) {
+    if (coeff === 1) return 'x';
+    if (coeff === -1) return '-x';
+    return `${coeff}x`;
+  }
+
+  function formatJ611SignedQuadraticTerm(coeff) {
+    if (coeff === 0) return '';
+    const sign = coeff > 0 ? '+' : '-';
+    const abs = Math.abs(coeff);
+    return `${sign}${abs === 1 ? '' : abs}x^2`;
+  }
+
   function formatJ611SignedConstant(constant) {
     if (constant === 0) return '';
     return `${constant > 0 ? '+' : '-'}${Math.abs(constant)}`;
+  }
+
+  function formatAddTerm(value) {
+    return value < 0 ? `-${Math.abs(value)}` : `+${value}`;
+  }
+
+  function formatSubTerm(value) {
+    return value < 0 ? `+${Math.abs(value)}` : `-${value}`;
+  }
+
+  function formatCoordinateDelta(to, from) {
+    return `${to}${formatSubTerm(from)}`;
   }
 
   function formatJ611GeneralQuadratic(a, b, c) {
@@ -129,7 +158,7 @@
       if (mode === 1) {
         const m = pickNonZero(-8, 8);
         const c = randInt(-9, 9);
-        questions.push(`判斷 \\(y=${m}x${formatJ611SignedConstant(c)}\\) 是否為二次函數？`);
+        questions.push(`判斷 \\(y=${formatJ611LinearTerm(m)}${formatJ611SignedConstant(c)}\\) 是否為二次函數？`);
         answers.push('簡答：不是。過程：最高次只有一次，沒有非零的 \\(x^2\\) 項，所以不是二次函數。');
         continue;
       }
@@ -142,14 +171,16 @@
       if (mode === 3) {
         const a = pickNonZero(-5, 5);
         const c = randInt(-6, 6);
-        questions.push(`判斷 \\(y=${a}x^2${formatJ611SignedLinearTerm(c)}-${a}x^2\\) 化簡後是否為二次函數？`);
+        const firstTerm = `${formatJ611Coefficient(makeFraction(a))}x^2`;
+        const cancelTerm = formatJ611SignedQuadraticTerm(-a);
+        questions.push(`判斷 \\(y=${firstTerm}${cancelTerm}${formatJ611SignedLinearTerm(c)}\\) 化簡後是否為二次函數？`);
         answers.push(
-          `簡答：不是。過程：\\(${a}x^2-${a}x^2=0\\)，二次項被消掉，化簡後只剩一次項或常數，所以不是二次函數。`
+          `簡答：不是。過程：\\(${firstTerm}${cancelTerm}=0\\)，二次項被消掉，化簡後只剩一次項或常數，所以不是二次函數。`
         );
         continue;
       }
       const a = randInt(1, 6);
-      questions.push(`判斷 \\(y=|${a}x^2-1|\\) 是否為二次函數？`);
+      questions.push(`判斷 \\(y=|${formatJ611IntegerQuadraticTerm(a)}-1|\\) 是否為二次函數？`);
       answers.push(
         '簡答：不是。過程：雖然絕對值內有 \\(x^2\\)，但整個式子含有絕對值，不能化成固定的 \\(ax^2+bx+c\\) 形式。'
       );
@@ -217,12 +248,12 @@
       if (i % 2 === 0) {
         questions.push(`${descriptions}，請依開口由小到大排列。`);
         answers.push(
-          `簡答：${narrowToWide.map((item) => item.label).join('、')}。過程：\\(|a|\\) 越大，開口越小；\\(|a|\\) 越小，開口越大。各式的 \\(|a|\\) 分別為 $${list.map((a, idx) => `${labels[idx]}:${formatJ611Abs(a)}`).join('、')}$，所以由小到大為 ${narrowToWide.map((item) => item.label).join('、')}。`
+          `簡答：${narrowToWide.map((item) => item.label).join('、')}。過程：\\(|a|\\) 越大，開口越小；\\(|a|\\) 越小，開口越大。各式的 \\(|a|\\) 分別為 \\(${list.map((a, idx) => `${labels[idx]}:${formatJ611Abs(a)}`).join('、')}\\)，所以由小到大為 ${narrowToWide.map((item) => item.label).join('、')}。`
         );
       } else {
         questions.push(`${descriptions}，請依開口由大到小排列。`);
         answers.push(
-          `簡答：${wideToNarrow.map((item) => item.label).join('、')}。過程：\\(|a|\\) 越小，開口越大；\\(|a|\\) 越大，開口越小。各式的 \\(|a|\\) 分別為 $${list.map((a, idx) => `${labels[idx]}:${formatJ611Abs(a)}`).join('、')}$，所以由大到小為 ${wideToNarrow.map((item) => item.label).join('、')}。`
+          `簡答：${wideToNarrow.map((item) => item.label).join('、')}。過程：\\(|a|\\) 越小，開口越大；\\(|a|\\) 越大，開口越小。各式的 \\(|a|\\) 分別為 \\(${list.map((a, idx) => `${labels[idx]}:${formatJ611Abs(a)}`).join('、')}\\)，所以由大到小為 ${wideToNarrow.map((item) => item.label).join('、')}。`
         );
       }
     }
@@ -338,10 +369,10 @@
       const k = a * x0 * x0;
       const length = 2 * x0;
       questions.push(
-        `二次函數 \\(y=${a}x^2\\) 與水平直線 \\(y=${k}\\) 交於 \\(A,B\\) 兩點，求 \\(\\overline{AB}\\) 的長度。`
+        `二次函數 \\(${formatJ611Parabola(makeFraction(a))}\\) 與水平直線 \\(y=${k}\\) 交於 \\(A,B\\) 兩點，求 \\(\\overline{AB}\\) 的長度。`
       );
       answers.push(
-        `簡答：\\(${length}\\)。過程：聯立 \\(${k}=${a}x^2\\)，得 \\(x^2=${x0 * x0}\\)，所以交點的 \\(x\\) 坐標為 \\(\\pm${x0}\\)。水平弦長為 \\(${x0}-(-${x0})=${length}\\)。`
+        `簡答：\\(${length}\\)。過程：聯立 \\(${k}=${formatJ611IntegerQuadraticTerm(a)}\\)，得 \\(x^2=${x0 * x0}\\)，所以交點的 \\(x\\) 坐標為 \\(\\pm${x0}\\)。水平弦長為 \\(${x0}-(-${x0})=${length}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -357,10 +388,10 @@
       const k = a * x0 * x0;
       const area = x0 * k;
       questions.push(
-        `直線 \\(y=${k}\\) 與二次函數 \\(y=${a}x^2\\) 交於 \\(A,B\\) 兩點，\\(O\\) 為原點，求 \\(\\triangle AOB\\) 的面積。`
+        `直線 \\(y=${k}\\) 與二次函數 \\(${formatJ611Parabola(makeFraction(a))}\\) 交於 \\(A,B\\) 兩點，\\(O\\) 為原點，求 \\(\\triangle AOB\\) 的面積。`
       );
       answers.push(
-        `簡答：\\(${area}\\)。過程：由 \\(${k}=${a}x^2\\) 得 \\(x=\\pm${x0}\\)，所以 \\(AB=${2 * x0}\\)。\\(O\\) 到直線 \\(y=${k}\\) 的距離為 \\(${k}\\)，故面積 \\(=\\frac12\\cdot${2 * x0}\\cdot${k}=${area}\\)。`
+        `簡答：\\(${area}\\)。過程：由 \\(${k}=${formatJ611IntegerQuadraticTerm(a)}\\) 得 \\(x=\\pm${x0}\\)，所以 \\(AB=${2 * x0}\\)。\\(O\\) 到直線 \\(y=${k}\\) 的距離為 \\(${k}\\)，故面積 \\(=\\frac12\\cdot${2 * x0}\\cdot${k}=${area}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -379,10 +410,10 @@
         countPoints += m - a * x * x + 1;
       }
       questions.push(
-        `在坐標平面上，求直線 \\(y=${m}\\) 與拋物線 \\(y=${a}x^2\\) 所圍區域內（含邊界）且坐標皆為整數的格子點共有幾個？`
+        `在坐標平面上，求直線 \\(y=${m}\\) 與拋物線 \\(${formatJ611Parabola(makeFraction(a))}\\) 所圍區域內（含邊界）且坐標皆為整數的格子點共有幾個？`
       );
       answers.push(
-        `簡答：\\(${countPoints}\\) 個。過程：區域內需滿足 \\(${a}x^2\\le y\\le ${m}\\)。整數 \\(x\\) 需滿足 \\(${a}x^2\\le ${m}\\)，所以 \\(|x|\\le${limit}\\)。再逐一計算每個整數 \\(x\\) 可搭配的整數 \\(y\\) 數量並相加，得到 \\(${countPoints}\\) 個。`
+        `簡答：\\(${countPoints}\\) 個。過程：區域內需滿足 \\(${formatJ611IntegerQuadraticTerm(a)}\\le y\\le ${m}\\)。整數 \\(x\\) 需滿足 \\(${formatJ611IntegerQuadraticTerm(a)}\\le ${m}\\)，所以 \\(|x|\\le${limit}\\)。再逐一計算每個整數 \\(x\\) 可搭配的整數 \\(y\\) 數量並相加，得到 \\(${countPoints}\\) 個。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -404,7 +435,7 @@
         `一個拋物線形河道以最低處為原點，截面可設為 \\(y=ax^2\\)。若水深 \\(${depth}\\) 公尺時水面寬 \\(${width}\\) 公尺，當水位下降 \\(${lower}\\) 公尺時，水面寬為多少公尺？`
       );
       answers.push(
-        `簡答：\\(${2 * newHalf}\\) 公尺。過程：水深 \\(${depth}\\) 時半寬為 \\(${half}\\)，代入 \\(y=ax^2\\) 得 \\(${depth}=a\\cdot${half}^2\\)，所以 \\(a=${aInt}\\)。下降 \\(${lower}\\) 公尺後水深為 \\(${newDepth}\\)，解 \\(${newDepth}=${aInt}x^2\\)，得 \\(x=${newHalf}\\)，故水面寬為 \\(${2 * newHalf}\\) 公尺。`
+        `簡答：\\(${2 * newHalf}\\) 公尺。過程：水深 \\(${depth}\\) 時半寬為 \\(${half}\\)，代入 \\(y=ax^2\\) 得 \\(${depth}=a\\cdot${half}^2\\)，所以 \\(a=${aInt}\\)。下降 \\(${lower}\\) 公尺後水深為 \\(${newDepth}\\)，解 \\(${newDepth}=${formatJ611IntegerQuadraticTerm(aInt)}\\)，得 \\(x=${newHalf}\\)，故水面寬為 \\(${2 * newHalf}\\) 公尺。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -422,9 +453,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -551,15 +580,15 @@
       const kind = a > 0 ? '最小' : '最大';
       if (i % 2 === 0) {
         questions.push(
-          `已知二次函數 \\(y=${a}x^2${formatJ611SignedLinearTerm(b)}+k\\) 在 \\(x=${h}\\) 時有${kind}值 \\(${extreme}\\)，求 \\(k\\)。`
+          `已知二次函數 \\(y=${formatJ611IntegerQuadraticTerm(a)}${formatJ611SignedLinearTerm(b)}+k\\) 在 \\(x=${h}\\) 時有${kind}值 \\(${extreme}\\)，求 \\(k\\)。`
         );
         answers.push(
-          `簡答：\\(k=${c}\\)。過程：此式的頂點 \\(x\\) 坐標為 \\(-\\frac{b}{2a}=${h}\\)。因為在 \\(x=${h}\\) 時函數值為 \\(${extreme}\\)，所以 \\(${extreme}=${a}\\cdot(${h})^2+${b}\\cdot(${h})+k\\)，解得 \\(k=${c}\\)。`
+          `簡答：\\(k=${c}\\)。過程：此式的頂點 \\(x\\) 坐標為 \\(-\\frac{b}{2a}=${h}\\)。因為在 \\(x=${h}\\) 時函數值為 \\(${extreme}\\)，所以 \\(${extreme}=${a}\\cdot(${h})^2${formatAddTerm(b)}\\cdot(${h})+k\\)，解得 \\(k=${c}\\)。`
         );
         continue;
       }
       questions.push(
-        `已知二次函數 \\(y=${a}x^2+bx${formatJ611SignedConstant(c)}\\) 在 \\(x=${h}\\) 時有${kind}值 \\(${extreme}\\)，求 \\(b\\)。`
+        `已知二次函數 \\(y=${formatJ611IntegerQuadraticTerm(a)}+bx${formatJ611SignedConstant(c)}\\) 在 \\(x=${h}\\) 時有${kind}值 \\(${extreme}\\)，求 \\(b\\)。`
       );
       answers.push(
         `簡答：\\(b=${b}\\)。過程：二次函數 \\(y=ax^2+bx+c\\) 的頂點 \\(x\\) 坐標為 \\(-\\frac{b}{2a}\\)。本題 \\(-\\frac{b}{2\\cdot${a}}=${h}\\)，所以 \\(b=${b}\\)。`
@@ -579,9 +608,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -641,7 +668,7 @@
         `\\(${j612FormatVertexEquation(a, h1, k1)}\\) 的圖形經過平移後變成 \\(${j612FormatVertexEquation(a, h2, k2)}\\)，請問向哪個方向平移各幾單位？`
       );
       answers.push(
-        `簡答：${j612MoveText(dx, dy)}。過程：比較頂點，原頂點為 \\((${h1},${k1})\\)，新頂點為 \\((${h2},${k2})\\)，位移量為 \\((${h2}-${h1},${k2}-${k1})=(${dx},${dy})\\)。`
+        `簡答：${j612MoveText(dx, dy)}。過程：比較頂點，原頂點為 \\((${h1},${k1})\\)，新頂點為 \\((${h2},${k2})\\)，位移量為 \\((${formatCoordinateDelta(h2, h1)},${formatCoordinateDelta(k2, k1)})=(${dx},${dy})\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -685,7 +712,7 @@
       const dy = pickNonZero(-7, 7);
       questions.push(`圖形上的點 \\((${x},${y})\\) 隨函數圖形${j612MoveText(dx, dy)}，求移動後此點的坐標。`);
       answers.push(
-        `簡答：\\((${x + dx},${y + dy})\\)。過程：圖形平移時，圖形上每一點都跟著加上相同位移量；所以 \\((x,y)\\to(x+${dx},y+${dy})\\)。`
+        `簡答：\\((${x + dx},${y + dy})\\)。過程：圖形平移時，圖形上每一點都跟著加上相同位移量；所以 \\((x,y)\\to(x${formatAddTerm(dx)},y${formatAddTerm(dy)})\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -703,9 +730,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -724,7 +749,7 @@
       const x2 = h + r;
       questions.push(`求二次函數 \\(${eq}\\) 與 \\(x\\) 軸的交點坐標。`);
       answers.push(
-        `簡答：\\((${x1},0)\\)、\\((${x2},0)\\)。過程：令 \\(y=0\\)，得 \\(0=${fractionToLatex(a)}${j612FormatShiftedX(h)}^2${formatJ611SignedConstant(k)}\\)，所以 \\(${j612FormatShiftedX(h)}^2=${r * r}\\)，\\(x=${x1}\\) 或 \\(x=${x2}\\)。`
+        `簡答：\\((${x1},0)\\)、\\((${x2},0)\\)。過程：令 \\(y=0\\)，得 \\(0=${formatJ611Coefficient(a)}${j612FormatShiftedX(h)}^2${formatJ611SignedConstant(k)}\\)，所以 \\(${j612FormatShiftedX(h)}^2=${r * r}\\)，\\(x=${x1}\\) 或 \\(x=${x2}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -811,9 +836,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -866,7 +889,7 @@
           `已知數線上兩點 \\(A(${a})\\)、\\(B(${b})\\)，找一點 \\(P(x)\\) 使 \\(PA^2+PB^2\\) 的值最小，並求最小值。`
         );
         answers.push(
-          `簡答：\\(P\\) 在 \\(x=${midpointText}\\)，最小值為 \\(${minText}\\)。過程：\\(PA^2+PB^2=(x-${a})^2+(x-${b})^2\\)，其頂點在兩定點的中點。`
+          `簡答：\\(P\\) 在 \\(x=${midpointText}\\)，最小值為 \\(${minText}\\)。過程：\\(PA^2+PB^2=(x${formatSubTerm(a)})^2+(x${formatSubTerm(b)})^2\\)，其頂點在兩定點的中點。`
         );
       } else {
         const c = randInt(b + 2, b + 8);
@@ -876,7 +899,7 @@
           `已知數線上三點 \\(A(${a})\\)、\\(B(${b})\\)、\\(C(${c})\\)，找一點 \\(X(x)\\) 使 \\(XA^2+XB^2+XC^2\\) 最小。`
         );
         answers.push(
-          `簡答：\\(x=${avgText}\\)。過程：多個距離平方和的最小點在坐標平均值，故 \\(x=\\dfrac{${a}+${b}+${c}}{3}=${avgText}\\)。`
+          `簡答：\\(x=${avgText}\\)。過程：多個距離平方和的最小點在坐標平均值，故 \\(x=\\dfrac{${a}${formatAddTerm(b)}${formatAddTerm(c)}}{3}=${avgText}\\)。`
         );
       }
     }
@@ -1016,9 +1039,9 @@
         continue;
       }
       const opening = randInt(2, 8) * 2;
-      const totalPerimeter = randInt(8, 25) * 4;
+      const side = randInt(opening + 1, 25);
+      const totalPerimeter = 4 * side;
       const fence = totalPerimeter - opening;
-      const side = totalPerimeter / 4;
       const area = side * side;
       questions.push(
         `用長 \\(${fence}\\) 公尺的圍籬圍成一個矩形停車場，其中一邊保留 \\(${opening}\\) 公尺作為出入口不圍。求可圍出的最大面積。`
@@ -1113,14 +1136,11 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const basePeople = randInt(20, 80);
-      const basePrice = randInt(20, 80) * 100;
+      const extraPeople = [2, 3, 4, 5, 6, 8, 10][randInt(0, 6)];
+      const basePeople = extraPeople * randInt(8, 18);
       const priceStep = randInt(1, 5) * 100;
-      const extraPeople = randInt(2, 12);
-      const bestX = Math.max(
-        0,
-        Math.round((basePrice * extraPeople - basePeople * priceStep) / (2 * priceStep * extraPeople))
-      );
+      const bestX = randInt(1, 8);
+      const basePrice = priceStep * (basePeople / extraPeople + 2 * bestX);
       const bestPrice = basePrice - priceStep * bestX;
       const bestPeople = basePeople + extraPeople * bestX;
       const bestRevenue = bestPrice * bestPeople;
@@ -1128,7 +1148,7 @@
         `某活動原票價 \\(${basePrice}\\) 元時有 \\(${basePeople}\\) 人參加；票價每降 \\(${priceStep}\\) 元，會增加 \\(${extraPeople}\\) 人。若最多降價到票價仍為正，求票價定為多少時收入最大。`
       );
       answers.push(
-        `簡答：定為 \\(${bestPrice}\\) 元時收入最大。過程：設降價 \\(x\\) 次，收入 \\(R=(${basePrice}-${priceStep}x)(${basePeople}+${extraPeople}x)\\)，這是開口向下的二次函數，取頂點附近的整數 \\(x=${bestX}\\)。`
+        `簡答：定為 \\(${bestPrice}\\) 元時收入最大。過程：設降價 \\(x\\) 次，收入 \\(R=(${basePrice}${formatJ611SignedLinearTerm(-priceStep)})(${basePeople}${formatJ611SignedLinearTerm(extraPeople)})\\)，這是開口向下的二次函數，取頂點附近的整數 \\(x=${bestX}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1140,21 +1160,18 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const cost = randInt(20, 90);
-      const basePrice = cost + randInt(20, 80);
-      const baseSales = randInt(30, 120);
       const step = randInt(1, 5);
-      const salesGain = randInt(3, 15);
-      const bestX = Math.max(
-        0,
-        Math.round(((basePrice - cost) * salesGain - baseSales * step) / (2 * step * salesGain))
-      );
+      const salesGain = [3, 4, 5, 6, 8, 10, 12][randInt(0, 6)];
+      const baseSales = salesGain * randInt(8, 16);
+      const bestX = randInt(1, 8);
+      const basePrice = cost + (baseSales * step) / salesGain + 2 * step * bestX;
       const bestPrice = basePrice - step * bestX;
       const bestProfit = (bestPrice - cost) * (baseSales + salesGain * bestX);
       questions.push(
         `某商品成本 \\(${cost}\\) 元，定價 \\(${basePrice}\\) 元時可賣 \\(${baseSales}\\) 件；每降價 \\(${step}\\) 元可多賣 \\(${salesGain}\\) 件。求定價多少元時利潤最大。`
       );
       answers.push(
-        `簡答：定為 \\(${bestPrice}\\) 元時利潤最大。過程：設降價 \\(x\\) 次，利潤 \\(P=(${basePrice}-${step}x-${cost})(${baseSales}+${salesGain}x)\\)，配方或用頂點判斷最大值位置。`
+        `簡答：定為 \\(${bestPrice}\\) 元時利潤最大。過程：設降價 \\(x\\) 次，利潤 \\(P=(${basePrice}${formatJ611SignedLinearTerm(-step)}-${cost})(${baseSales}${formatJ611SignedLinearTerm(salesGain)})\\)，配方或用頂點判斷最大值位置。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1166,16 +1183,16 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const trees = randInt(20, 80);
-      const yieldPerTree = randInt(200, 1200);
       const drop = randInt(5, 30);
-      const bestAdd = Math.max(0, Math.round((yieldPerTree - trees * drop) / (2 * drop)));
+      const bestAdd = randInt(1, 10);
+      const yieldPerTree = drop * (trees + 2 * bestAdd);
       const bestTrees = trees + bestAdd;
       const bestTotal = bestTrees * (yieldPerTree - drop * bestAdd);
       questions.push(
         `果園原有 \\(${trees}\\) 棵果樹，每棵產量 \\(${yieldPerTree}\\) 顆；每多種一棵，平均每棵產量減少 \\(${drop}\\) 顆。求總產量最大時應加種幾棵。`
       );
       answers.push(
-        `簡答：約加種 \\(${bestAdd}\\) 棵，總產量 \\(${bestTotal}\\) 顆。過程：設加種 \\(x\\) 棵，總產量 \\(T=(${trees}+x)(${yieldPerTree}-${drop}x)\\)，為開口向下的二次函數，最大值在頂點附近。`
+        `簡答：加種 \\(${bestAdd}\\) 棵，總產量 \\(${bestTotal}\\) 顆。過程：設加種 \\(x\\) 棵，總產量 \\(T=(${trees}+x)(${yieldPerTree}${formatJ611SignedLinearTerm(-drop)})\\)，為開口向下的二次函數，最大值在頂點。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1201,7 +1218,7 @@
     const add = (question, summary, detail) => {
       questions.push(question);
       summaryAnswers.push(summary);
-      answers.push(`簡答：${summary}。詳解：${detail}`);
+      answers.push(`詳解：${detail}`);
     };
     return { questions, summaryAnswers, answers, add };
   }
@@ -1217,7 +1234,17 @@
   function j61SqrtText(value) {
     const root = Math.sqrt(value);
     if (Number.isInteger(root)) return `${root}`;
-    return `\\sqrt{${value}}`;
+    let outside = 1;
+    let inside = value;
+    for (let factor = Math.floor(Math.sqrt(value)); factor >= 2; factor -= 1) {
+      const square = factor * factor;
+      if (value % square === 0) {
+        outside = factor;
+        inside = value / square;
+        break;
+      }
+    }
+    return outside === 1 ? `\\sqrt{${inside}}` : `${outside}\\sqrt{${inside}}`;
   }
 
   function j61VertexEquation(a, h, k) {
@@ -1262,7 +1289,7 @@
         const b = -a;
         const x = randInt(2, 5);
         add(
-          `已知兩拋物線 \\(y=${a}x^2\\) 與 \\(y=${b}x^2\\)。若對相同且非零的 \\(x\\) 值，兩者的 \\(y\\) 座標互為相反數，證明 \\(|${a}|=|${b}|\\)。`,
+          `已知兩拋物線 \\(${formatJ611Parabola(makeFraction(a))}\\) 與 \\(${formatJ611Parabola(makeFraction(b))}\\)。若對相同且非零的 \\(x\\) 值，兩者的 \\(y\\) 座標互為相反數，證明 \\(|${a}|=|${b}|\\)。`,
           `成立`,
           `設兩式係數分別為 \\(a_1=${a}\\)、\\(a_2=${b}\\)。同一個非零 \\(x\\) 代入後，\\(y\\) 值互為相反數，表示 \\(a_1x^2+a_2x^2=0\\)。因為 \\(x^2>0\\)，所以 \\(a_1+a_2=0\\)，也就是 \\(a_1=-a_2\\)，故兩係數絕對值相等。`
         );
@@ -1275,26 +1302,26 @@
         const m = -x;
         const sum = m + y;
         add(
-          `若點 \\(A(${x},${y})\\) 與 \\(B(m,n)\\) 都在 \\(y=${a}x^2\\) 上，且 \\(\\overline{AB}\\parallel x\\) 軸、\\(A\\ne B\\)，求 \\(m+n\\)。`,
+          `若點 \\(A(${x},${y})\\) 與 \\(B(m,n)\\) 都在 \\(${formatJ611Parabola(makeFraction(a))}\\) 上，且 \\(\\overline{AB}\\parallel x\\) 軸、\\(A\\ne B\\)，求 \\(m+n\\)。`,
           `\\(${sum}\\)`,
-          `因為 \\(AB\\parallel x\\) 軸，所以兩點 \\(y\\) 座標相同，\\(n=${y}\\)。在 \\(y=${a}x^2\\) 上同一個 \\(y\\) 值對應的 \\(x\\) 互為相反數，所以 \\(m=-${x}\\)。因此 \\(m+n=${m}+${y}=${sum}\\)。`
+          `因為 \\(AB\\parallel x\\) 軸，所以兩點 \\(y\\) 座標相同，\\(n=${y}\\)。在 \\(${formatJ611Parabola(makeFraction(a))}\\) 上同一個 \\(y\\) 值對應的 \\(x\\) 互為相反數，所以 \\(m=-${x}\\)。因此 \\(m+n=${m}+${y}=${sum}\\)。`
         );
         continue;
       }
       if (mode === 3) {
         const a = randInt(2, 6);
         add(
-          `判斷點 \\(P(k,${a}k^2)\\) 是否對所有實數 \\(k\\) 都在二次函數 \\(y=${a}x^2\\) 的圖形上。`,
+          `判斷點 \\(P(k,${formatJ611IntegerQuadraticTerm(a).replace('x', 'k')})\\) 是否對所有實數 \\(k\\) 都在二次函數 \\(${formatJ611Parabola(makeFraction(a))}\\) 的圖形上。`,
           `是`,
-          `點 \\(P\\) 的 \\(x\\) 座標是 \\(k\\)。代入 \\(y=${a}x^2\\) 得 \\(y=${a}k^2\\)，正好等於點 \\(P\\) 的 \\(y\\) 座標，所以所有實數 \\(k\\) 都成立。`
+          `點 \\(P\\) 的 \\(x\\) 座標是 \\(k\\)。代入 \\(${formatJ611Parabola(makeFraction(a))}\\) 得 \\(y=${formatJ611IntegerQuadraticTerm(a).replace('x', 'k')}\\)，正好等於點 \\(P\\) 的 \\(y\\) 座標，所以所有實數 \\(k\\) 都成立。`
         );
         continue;
       }
       const a = randInt(1, 6);
       add(
-        `若二次函數 \\(y=${a}x^2\\) 的圖形開口向上，且通過第四象限，這是否可能？請說明理由。`,
+        `若二次函數 \\(${formatJ611Parabola(makeFraction(a))}\\) 的圖形開口向上，且通過第四象限，這是否可能？請說明理由。`,
         `不可能`,
-        `當 \\(a>0\\) 時，對所有實數 \\(x\\)，\\(y=${a}x^2\\ge0\\)。第四象限需要 \\(x>0\\) 且 \\(y<0\\)，與 \\(y\\ge0\\) 矛盾，所以不可能。`
+        `當 \\(a>0\\) 時，對所有實數 \\(x\\)，\\(y=${formatJ611IntegerQuadraticTerm(a)}\\ge0\\)。第四象限需要 \\(x>0\\) 且 \\(y<0\\)，與 \\(y\\ge0\\) 矛盾，所以不可能。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1313,7 +1340,7 @@
         const newH = h + dx;
         const newK = k + dy;
         add(
-          `將 \\(${j61VertexEquation(a, h, k)}\\) 先水平平移 \\(${dx}\\) 單位，再鉛直平移 \\(${dy}\\) 單位，求新函數與新頂點。`,
+          `將 \\(${j61VertexEquation(a, h, k)}\\) 先${j612MoveText(dx, 0)}，再${j612MoveText(0, dy)}，求新函數與新頂點。`,
           `\\(${j61VertexEquation(a, newH, newK)}\\)，頂點 \\((${newH},${newK})\\)`,
           `平移只改變頂點，不改變 \\(a\\)。原頂點為 \\((${h},${k})\\)，平移後為 \\((${newH},${newK})\\)，所以新函數為 \\(${j61VertexEquation(a, newH, newK)}\\)。`
         );
@@ -1338,7 +1365,7 @@
         const b = randInt(-5, 5);
         const k = m * h + b;
         add(
-          `已知二次函數 \\(y=a(x-h)^2+k\\) 的頂點在直線 \\(y=${m}x${j61SignedConstant(b)}\\) 上，且 \\(a=${a}\\)、\\(h=${h}\\)，求此二次函數。`,
+          `已知二次函數 \\(y=a(x-h)^2+k\\) 的頂點在直線 \\(y=${formatJ611LinearTerm(m)}${j61SignedConstant(b)}\\) 上，且 \\(a=${a}\\)、\\(h=${h}\\)，求此二次函數。`,
           `\\(${j61VertexEquation(a, h, k)}\\)`,
           `頂點為 \\((h,k)\\)，且在直線上，所以 \\(k=${m}\\cdot${h}${j61SignedConstant(b)}=${k}\\)。代回頂點式得 \\(${j61VertexEquation(a, h, k)}\\)。`
         );
@@ -1352,7 +1379,7 @@
         const distance2 = h * h + k * k;
         const direction = `${h > 0 ? '向右' : '向左'} ${Math.abs(h)} 單位，${k > 0 ? '向上' : '向下'} ${Math.abs(k)} 單位`;
         add(
-          `將 \\(y=${a}x^2\\) 平移後得到 \\(${j61GeneralEquation(expanded.a, expanded.b, expanded.c)}\\)。求平移方向與頂點移動距離。`,
+          `將 \\(${formatJ611Parabola(makeFraction(a))}\\) 平移後得到 \\(${j61GeneralEquation(expanded.a, expanded.b, expanded.c)}\\)。求平移方向與頂點移動距離。`,
           `${direction}；距離 \\(${j61SqrtText(distance2)}\\)`,
           `把新函數改寫成頂點式為 \\(${j61VertexEquation(a, h, k)}\\)，所以頂點由 \\((0,0)\\) 移到 \\((${h},${k})\\)。方向為 ${direction}，距離為 \\(\\sqrt{${h * h}+${k * k}}=${j61SqrtText(distance2)}\\)。`
         );
@@ -1380,7 +1407,7 @@
         add(
           `若二次函數 \\(y=x^2${formatJ611SignedLinearTerm(-2 * h)}+k\\) 與 \\(x\\) 軸只有一個交點，求 \\(k\\)。`,
           `\\(k=${k}\\)`,
-          `與 \\(x\\) 軸只有一個交點表示頂點剛好在 \\(x\\) 軸上。因為 \\(x^2${formatJ611SignedLinearTerm(-2 * h)}+k=${j612FormatShiftedX(h)}^2+k-${k}\\)，所以需 \\(k-${k}=0\\)，得 \\(k=${k}\\)。`
+          `與 \\(x\\) 軸只有一個交點表示頂點剛好在 \\(x\\) 軸上。配方得 \\(x^2${formatJ611SignedLinearTerm(-2 * h)}+k=${j612FormatShiftedX(h)}^2+(k-${k})\\)。因此頂點的 \\(y\\) 座標要為 0，即 \\(k-${k}=0\\)，得 \\(k=${k}\\)。`
         );
         continue;
       }
@@ -1389,22 +1416,22 @@
         const c = randInt(2, 8);
         const limit = Math.ceil(Math.sqrt(4 * a * c)) - 1;
         add(
-          `已知 \\(y=-${a}x^2+bx-${c}\\) 的圖形完全在 \\(x\\) 軸下方，求整數 \\(b\\) 的範圍。`,
+          `已知 \\(y=${formatJ611IntegerQuadraticTerm(-a)}+bx-${c}\\) 的圖形完全在 \\(x\\) 軸下方，求整數 \\(b\\) 的範圍。`,
           `\\(-${limit}\\le b\\le ${limit}\\)`,
           `開口向下，若要完全在 \\(x\\) 軸下方，就不能與 \\(x\\) 軸相交，因此判別式小於 0。\\(D=b^2-4\\cdot${a}\\cdot${c}<0\\)，所以 \\(b^2<${4 * a * c}\\)。整數 \\(b\\) 的範圍為 \\(-${limit}\\le b\\le ${limit}\\)。`
         );
         continue;
       }
-      if (mode === 2) {
-        let r1 = randInt(-5, 1);
-        let r2 = randInt(2, 6);
-        if (r1 === r2) r2 += 1;
-        const m = r1 + r2;
+        if (mode === 2) {
+          let r1 = randInt(-5, 1);
+          let r2 = randInt(2, 6);
+          while (r1 + r2 === 0) r2 = randInt(2, 6);
+          const m = r1 + r2;
         const b = -r1 * r2;
         add(
-          `求拋物線 \\(y=x^2\\) 與一次函數 \\(y=${m}x${j61SignedConstant(b)}\\) 的交點座標。`,
+          `求拋物線 \\(y=x^2\\) 與一次函數 \\(y=${formatJ611LinearTerm(m)}${j61SignedConstant(b)}\\) 的交點座標。`,
           `\\((${r1},${r1 * r1})\\)、\\((${r2},${r2 * r2})\\)`,
-          `令兩式相等，得 \\(x^2=${m}x${j61SignedConstant(b)}\\)，整理為 \\(x^2${formatJ611SignedLinearTerm(-m)}${j61SignedConstant(-b)}=0\\)，可分解為 \\(${j61FactorFromRoot(r1)}${j61FactorFromRoot(r2)}=0\\)。所以交點為 \\((${r1},${r1 * r1})\\)、\\((${r2},${r2 * r2})\\)。`
+          `令兩式相等，得 \\(x^2=${formatJ611LinearTerm(m)}${j61SignedConstant(b)}\\)，整理為 \\(x^2${formatJ611SignedLinearTerm(-m)}${j61SignedConstant(-b)}=0\\)，可分解為 \\(${j61FactorFromRoot(r1)}${j61FactorFromRoot(r2)}=0\\)。所以交點為 \\((${r1},${r1 * r1})\\)、\\((${r2},${r2 * r2})\\)。`
         );
         continue;
       }
@@ -1422,9 +1449,9 @@
       const d = randInt(2, 7);
       const c = a * d * d;
       add(
-        `直線 \\(y=${c}\\) 與拋物線 \\(y=${a}x^2\\) 交於 \\(A,B\\) 兩點，求線段 \\(AB\\) 的長度。`,
+          `直線 \\(y=${c}\\) 與拋物線 \\(${formatJ611Parabola(makeFraction(a))}\\) 交於 \\(A,B\\) 兩點，求線段 \\(AB\\) 的長度。`,
         `\\(${2 * d}\\)`,
-        `交點滿足 \\(${a}x^2=${c}\\)，所以 \\(x^2=${d * d}\\)，得 \\(x=\\pm${d}\\)。兩點在同一水平線上，距離為 \\(${d}-(-${d})=${2 * d}\\)。`
+          `交點滿足 \\(${formatJ611IntegerQuadraticTerm(a)}=${c}\\)，所以 \\(x^2=${d * d}\\)，得 \\(x=\\pm${d}\\)。兩點在同一水平線上，距離為 \\(${d}-(-${d})=${2 * d}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1489,9 +1516,9 @@
       const maxY = (b * b) / (4 * a);
       const landing = b / a;
       add(
-        `小明踢球的路徑為 \\(y=-${a}x^2+${b}x\\)，其中 \\(x\\) 為水平距離、\\(y\\) 為高度。求球的最大高度與落地點。`,
+        `小明踢球的路徑為 \\(y=${formatJ611IntegerQuadraticTerm(-a)}+${b}x\\)，其中 \\(x\\) 為水平距離、\\(y\\) 為高度。求球的最大高度與落地點。`,
         `最大高度 \\(${maxY}\\)，落地點 \\(x=${landing}\\)`,
-        `拋物線開口向下，最高點在 \\(x=-\\frac{b}{2a}=\\frac{${b}}{2\\cdot${a}}=${maxX}\\)。代入得最大高度 \\(${maxY}\\)。落地時 \\(y=0\\)，\\(x(-${a}x+${b})=0\\)，非起點落地點為 \\(x=${landing}\\)。`
+        `拋物線開口向下，最高點在 \\(x=-\\frac{b}{2a}=\\frac{${b}}{2\\cdot${a}}=${maxX}\\)。代入得最大高度 \\(${maxY}\\)。落地時 \\(y=0\\)，\\(x(${formatJ611LinearTerm(-a)}+${b})=0\\)，非起點落地點為 \\(x=${landing}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1518,18 +1545,19 @@
         const half = sum / 2;
         const minValue = 2 * half * half;
         add(
-          `將 \\(${sum}\\) 分成兩個正數，求其中一數與另一數平方和的最小值。`,
+          `將 \\(${sum}\\) 分成兩個正數，求兩數平方和的最小值。`,
           `\\(${minValue}\\)`,
           `設兩數為 \\(x\\) 與 \\(${sum}-x\\)，平方和 \\(S=x^2+(${sum}-x)^2=2(x-${half})^2+${minValue}\\)。因此兩數相等時最小，最小值為 \\(${minValue}\\)。`
         );
         continue;
       }
       if (mode === 2) {
-        const price = 100;
-        const quantity = 500;
-        const increase = 5;
-        const drop = 10;
-        const bestRaise = (increase * quantity - drop * price) / (2 * increase * drop);
+        const increase = 5 * randInt(1, 6);
+        const drop = 5 * randInt(1, 8);
+        const bestRaise = randInt(2, 10);
+        const scale = randInt(2 * bestRaise + 8, 2 * bestRaise + 30);
+        const price = increase * (scale - 2 * bestRaise);
+        const quantity = drop * scale;
         const bestPrice = price + increase * bestRaise;
         const bestQuantity = quantity - drop * bestRaise;
         const bestRevenue = bestPrice * bestQuantity;
@@ -1541,7 +1569,7 @@
         continue;
       }
       if (mode === 3) {
-        const t = randInt(1, 2);
+        const t = randInt(1, 4);
         const q = 2 * t * t * t + t;
         const minValue = t * t * t * t + 4 * t * t * t * t * t * t;
         add(
@@ -1568,28 +1596,43 @@
 
   function j621SqrtText(value) {
     const root = Math.sqrt(value);
-    return Number.isInteger(root) ? `${root}` : `\\sqrt{${value}}`;
+    if (Number.isInteger(root)) return `${root}`;
+    let outside = 1;
+    let inside = value;
+    for (let factor = Math.floor(Math.sqrt(value)); factor >= 2; factor -= 1) {
+      const square = factor * factor;
+      if (value % square === 0) {
+        outside = factor;
+        inside = value / square;
+        break;
+      }
+    }
+    return outside === 1 ? `\\sqrt{${inside}}` : `${outside}\\sqrt{${inside}}`;
   }
 
   function j621SquareTerm(value) {
     return `${value}^2`;
   }
 
+  function j62RadicalFractionText(coefficient, radicand, denominator) {
+    const root = Math.sqrt(radicand);
+    if (Number.isInteger(root)) return j61FractionText(coefficient * root, denominator);
+    const reduced = makeFraction(coefficient, denominator);
+    const radicalText = j621SqrtText(radicand);
+    if (reduced.den === 1) return reduced.num === 1 ? radicalText : `${reduced.num}${radicalText}`;
+    return reduced.num === 1
+      ? `\\frac{${radicalText}}{${reduced.den}}`
+      : `\\frac{${reduced.num}${radicalText}}{${reduced.den}}`;
+  }
+
   function buildJ621CuboidSpaceDiagonalSet(count) {
-    const triples = [
-      [3, 4, 12],
-      [4, 6, 12],
-      [5, 6, 10],
-      [6, 8, 10],
-      [6, 8, 24],
-      [8, 9, 12],
-      [9, 12, 20],
-    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const [length, width, height] = triples[randInt(0, triples.length - 1)];
+      const length = randInt(3, 14);
+      const width = randInt(4, 16);
+      const height = randInt(6, 24);
       const diagonalSquared = length * length + width * width + height * height;
       questions.push(
         `長方體的長、寬、高分別為 \\(${length}\\)、\\(${width}\\)、\\(${height}\\) 公分，求其體對角線長。`
@@ -1602,7 +1645,7 @@
   }
 
   function buildJ621LinePlaneDistanceSet(count) {
-    const triples = [
+    const baseTriples = [
       [3, 4, 5],
       [5, 12, 13],
       [6, 8, 10],
@@ -1614,7 +1657,12 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const [height, planeDistance, slant] = triples[randInt(0, triples.length - 1)];
+      const [legA, legB, hyp] = baseTriples[randInt(0, baseTriples.length - 1)];
+      const scale = randInt(1, 4);
+      const swap = i % 2 === 1;
+      const height = (swap ? legB : legA) * scale;
+      const planeDistance = (swap ? legA : legB) * scale;
+      const slant = hyp * scale;
       questions.push(
         `直線 \\(AB\\) 垂直平面 \\(S\\) 於 \\(B\\)，點 \\(C\\) 在平面 \\(S\\) 上。若 \\(AB=${height}\\)、\\(AC=${slant}\\)，求 \\(BC\\) 的長度。`
       );
@@ -1626,19 +1674,13 @@
   }
 
   function buildJ621ThreePerpendicularDistanceSet(count) {
-    const cases = [
-      [3, 4, 12],
-      [4, 6, 12],
-      [5, 12, 12],
-      [6, 8, 15],
-      [8, 9, 12],
-      [9, 12, 20],
-    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const [height, first, second] = cases[randInt(0, cases.length - 1)];
+      const height = randInt(3, 12);
+      const first = randInt(4, 15);
+      const second = randInt(5, 22);
       const distanceSquared = height * height + first * first + second * second;
       questions.push(
         `直線 \\(L\\) 垂直平面 \\(S\\) 於 \\(P\\)。平面 \\(S\\) 上有 \\(PQ\\perp QR\\)，且 \\(LP=${height}\\)、\\(PQ=${first}\\)、\\(QR=${second}\\)，求 \\(LR\\) 的長度。`
@@ -1767,9 +1809,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1931,11 +1971,11 @@
         continue;
       }
       if (mode === 3) {
-        const a = randInt(2, 9);
+        const edge = randInt(2, 9);
         add(
-          `已知 \\(LP=PQ=QR=a\\)，且 \\(LP\\perp\\) 平面 \\(PQR\\)、\\(PQ\\perp QR\\)。若 \\(LR=${a}\\sqrt3\\)，求 \\(a\\)。`,
-          `\\(${a}\\)`,
-          `三段互相垂直時，\\(LR^2=LP^2+PQ^2+QR^2=3a^2\\)，所以 \\(LR=a\\sqrt3\\)。題目已給 \\(LR=${a}\\sqrt3\\)，因此 \\(a=${a}\\)。`
+          `已知 \\(LP=PQ=QR=a\\)，且 \\(LP\\perp\\) 平面 \\(PQR\\)、\\(PQ\\perp QR\\)。若 \\(LR=${edge}\\sqrt3\\)，求 \\(a\\)。`,
+          `\\(${edge}\\)`,
+          `三段互相垂直時，\\(LR^2=LP^2+PQ^2+QR^2=3a^2\\)，所以 \\(LR=a\\sqrt3\\)。由 \\(a\\sqrt3=${edge}\\sqrt3\\)，得 \\(a=${edge}\\)。`
         );
         continue;
       }
@@ -2074,7 +2114,7 @@
       const qr = randInt(6, 15);
       const lpqArea = (lp * pq) / 2;
       const lq2 = lp * lp + pq * pq;
-      const lqrAreaText = j61FractionText(qr, 2) === `${qr / 2}` ? `${(qr / 2)}${j61SqrtText(lq2)}` : `\\frac{${qr}${j61SqrtText(lq2)}}{2}`;
+      const lqrAreaText = j62RadicalFractionText(qr, lq2, 2);
       add(
         `在三垂線配置中，\\(LP=${lp}\\)、\\(PQ=${pq}\\)、\\(QR=${qr}\\)，且 \\(LP\\perp\\) 平面、\\(PQ\\perp QR\\)。求 \\(\\triangle LPQ\\) 與 \\(\\triangle LQR\\) 的面積。`,
         `\\([LPQ]=${j61FractionText(lp * pq, 2)}\\)，\\([LQR]=${lqrAreaText}\\)`,
@@ -2122,11 +2162,11 @@
         const pole = randInt(8, 18);
         const attach = randInt(3, pole - 2);
         const horizontal = randInt(5, 16);
-        const len2 = (pole - attach) ** 2 + horizontal * horizontal;
+        const len2 = attach * attach + horizontal * horizontal;
         add(
           `電線桿高 \\(${pole}\\) 公尺，支架固定在離地 \\(${attach}\\) 公尺處，斜拉線連到地面錨點，錨點與電線桿水平距離 \\(${horizontal}\\) 公尺。求斜拉線長度。`,
           `\\(${j61SqrtText(len2)}\\) 公尺`,
-          `斜拉線、水平距離與高度差形成直角三角形。高度差為 \\(${pole}-${attach}=${pole - attach}\\)，所以長度為 \\(\\sqrt{${pole - attach}^2+${horizontal}^2}=${j61SqrtText(len2)}\\)。`
+          `斜拉線、水平距離與支架的離地高度形成直角三角形。垂直邊為 \\(${attach}\\)，所以長度為 \\(\\sqrt{${attach}^2+${horizontal}^2}=${j61SqrtText(len2)}\\)。`
         );
         continue;
       }
@@ -2160,25 +2200,26 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        const lp = randInt(3, 9);
-        const pq = randInt(4, 12);
-        const qr = randInt(2, 10);
-        const rs = randInt(3, 11);
-        const ls2 = lp * lp + pq * pq + qr * qr + rs * rs;
-        add(
-          `若 \\(LP\\perp\\) 平面，且平面上的折線滿足 \\(PQ\\perp QR\\)、\\(QR\\perp RS\\)。已知 \\(LP=${lp}\\)、\\(PQ=${pq}\\)、\\(QR=${qr}\\)、\\(RS=${rs}\\)，求 \\(LS\\)。`,
+      const lp = randInt(3, 9);
+      const pq = randInt(4, 12);
+      const qr = randInt(2, 10);
+      const rs = randInt(3, 11);
+      const planeForward = pq + rs;
+      const ls2 = lp * lp + planeForward * planeForward + qr * qr;
+      add(
+          `若 \\(LP\\perp\\) 平面，且平面上的折線滿足 \\(PQ\\perp QR\\)、\\(RS\\perp QR\\)，且 \\(PQ\\) 與 \\(RS\\) 方向相同。已知 \\(LP=${lp}\\)、\\(PQ=${pq}\\)、\\(QR=${qr}\\)、\\(RS=${rs}\\)，求 \\(LS\\)。`,
           `\\(${j61SqrtText(ls2)}\\)`,
-          `每一段都沿互相垂直的方向累加，因此距離平方為四段平方和：\\(LS^2=${lp * lp}+${pq * pq}+${qr * qr}+${rs * rs}=${ls2}\\)。`
+          `平面投影中，與 \\(QR\\) 垂直的方向總長為 \\(${pq}+${rs}=${planeForward}\\)，另一方向為 \\(${qr}\\)，所以 \\(PS^2=${planeForward}^2+${qr}^2\\)。再加上垂直高度 \\(LP\\)，得 \\(LS^2=${lp * lp}+${planeForward * planeForward}+${qr * qr}=${ls2}\\)。`
         );
         continue;
       }
       if (mode === 1) {
         const s = randInt(3, 12);
-        const answer = `${s}\\sqrt6/3`;
+        const answer = j62RadicalFractionText(s, 6, 3);
         add(
           `正方體 \\(ABCD-EFGH\\) 的邊長為 \\(${s}\\)。求頂點 \\(A\\) 到空間對角線 \\(BH\\) 的最短距離。`,
           `\\(${answer}\\)`,
-          `設 \\(A(0,0,0)\\)、\\(B(${s},0,0)\\)、\\(H(0,${s},${s})\\)。點到直線距離可由垂足或向量計算，結果為 \\(\\sqrt{${2 * s * s}/3}=\\frac{${s}\\sqrt6}{3}\\)。`
+          `設 \\(A(0,0,0)\\)、\\(B(${s},0,0)\\)、\\(H(0,${s},${s})\\)。點到直線距離可由垂足或向量計算，結果為 \\(\\sqrt{${2 * s * s}/3}=\\frac{${s}\\sqrt6}{3}=${answer}\\)。`
         );
         continue;
       }
@@ -2210,7 +2251,7 @@
       add(
         `空間中四點 \\(L,P,Q,R\\) 滿足 \\(LP=PQ=QR=${a}\\)，且三段方向兩兩垂直。求 \\(LR\\)。`,
         `\\(${a}\\sqrt3\\)`,
-        `三段等長且兩兩垂直，因此 \\(LR^2=${a}^2+${a}^2+${a}^2=3${a * a}\\)，所以 \\(LR=${a}\\sqrt3\\)。`
+        `三段等長且兩兩垂直，因此 \\(LR^2=${a}^2+${a}^2+${a}^2=${3 * a * a}\\)，所以 \\(LR=${a}\\sqrt3\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2403,12 +2444,13 @@
       } else {
         const radiusScale = randInt(2, 4);
         const heightDen = randInt(2, 5);
+        const volumeRatio = makeFraction(radiusScale * radiusScale, heightDen);
         const ratio = j621RatioText(radiusScale * radiusScale, heightDen);
         questions.push(
           `圓柱的底面半徑變為原來的 \\(${radiusScale}\\) 倍，高變為原來的 \\(\\frac{1}{${heightDen}}\\)，則新體積與原體積的比值為何？`
         );
         answers.push(
-          `簡答：\\(${ratio}:1\\)。過程：圓柱體積倍率為 \\(r^2h\\) 的倍率，故為 \\(${radiusScale}^2\\cdot\\frac{1}{${heightDen}}=${ratio}\\)。`
+          `簡答：\\(${volumeRatio.num}:${volumeRatio.den}\\)。過程：圓柱體積倍率為 \\(r^2h\\) 的倍率，故為 \\(${radiusScale}^2\\cdot\\frac{1}{${heightDen}}=${ratio}\\)，所以新：原為 \\(${volumeRatio.num}:${volumeRatio.den}\\)。`
         );
       }
     }
@@ -2513,9 +2555,12 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const vertices = randInt(6, 20);
-      const faces = randInt(5, 14);
-      const edges = vertices + faces - 2;
+      // 取自實際的 n 角柱或 n 角錐，避免只符合尤拉公式卻不存在的凸多面體資料。
+      const n = randInt(3, 12);
+      const isPrism = i % 2 === 0;
+      const vertices = isPrism ? 2 * n : n + 1;
+      const faces = isPrism ? n + 2 : n + 1;
+      const edges = isPrism ? 3 * n : 2 * n;
       if (i % 2 === 0) {
         questions.push(`某凸多面體有 \\(${vertices}\\) 個頂點、\\(${faces}\\) 個面，求其邊數。`);
         answers.push(
@@ -2929,9 +2974,11 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const vertices = randInt(5, 20);
-      const faces = randInt(5, 16);
-      const edges = vertices + faces - 2;
+      // 以 n 角錐建立數值，確保頂點、邊、面能對應真實的凸多面體。
+      const n = randInt(3, 18);
+      const vertices = n + 1;
+      const faces = n + 1;
+      const edges = 2 * n;
       if (i % 2 === 0) {
         questions.push(`某凸多面體有 \\(${vertices}\\) 個頂點與 \\(${faces}\\) 個面，求其邊數。`);
         answers.push(
@@ -3247,20 +3294,138 @@
       for (let a = 1; a <= 6; a += 1) {
         for (let b = 1; b <= 6; b += 1) pairs.push([a, b]);
       }
-      if (i % 2 === 0) {
+      const mode = i % 5;
+      if (mode === 0) {
         const k = randInt(7, 11);
         const hit = pairs.filter(([a, b]) => a + b >= k).length;
         questions.push(`投擲兩顆公正骰子，點數分別為 \\(a,b\\)。點 \\((a,b)\\) 滿足 \\(a+b\\ge ${k}\\) 的機率為何？`);
         answers.push(
           `簡答：\\(${j623ProbabilityText(hit, 36)}\\)。過程：共有 36 個有序點數對，其中滿足 \\(a+b\\ge ${k}\\) 的有 \\(${hit}\\) 個。`
         );
-      } else {
-        const hit = pairs.filter(([a, b]) => a < b).length;
-        questions.push('投擲兩顆公正骰子，點數分別為 \\(a,b\\)。點 \\((a,b)\\) 滿足 \\(a<b\\) 的機率為何？');
+      } else if (mode === 1) {
+        const relation = i % 10 === 1 ? '<' : '>';
+        const hit = pairs.filter(([a, b]) => (relation === '<' ? a < b : a > b)).length;
+        questions.push(`投擲兩顆公正骰子，點數分別為 \\(a,b\\)。點 \\((a,b)\\) 滿足 \\(a${relation}b\\) 的機率為何？`);
         answers.push(
-          `簡答：\\(${j623ProbabilityText(hit, 36)}\\)。過程：\\(a<b\\) 的有序點數對共有 \\(${hit}\\) 個，所以機率為 \\(${j623ProbabilityText(hit, 36)}\\)。`
+          `簡答：\\(${j623ProbabilityText(hit, 36)}\\)。過程：\\(a${relation}b\\) 的有序點數對共有 \\(${hit}\\) 個，所以機率為 \\(${j623ProbabilityText(hit, 36)}\\)。`
+        );
+      } else if (mode === 2) {
+        const k = randInt(4, 8);
+        const hit = pairs.filter(([a, b]) => a + b <= k).length;
+        questions.push(`投擲兩顆公正骰子，點數分別為 \\(a,b\\)。點 \\((a,b)\\) 滿足 \\(a+b\\le ${k}\\) 的機率為何？`);
+        answers.push(
+          `簡答：\\(${j623ProbabilityText(hit, 36)}\\)。過程：共有 36 個有序點數對，其中滿足 \\(a+b\\le ${k}\\) 的有 \\(${hit}\\) 個。`
+        );
+      } else if (mode === 3) {
+        const d = randInt(2, 5);
+        const hit = pairs.filter(([a, b]) => Math.abs(a - b) >= d).length;
+        questions.push(`投擲兩顆公正骰子，點數分別為 \\(a,b\\)。點 \\((a,b)\\) 滿足 \\(|a-b|\\ge ${d}\\) 的機率為何？`);
+        answers.push(
+          `簡答：\\(${j623ProbabilityText(hit, 36)}\\)。過程：逐一計算兩點數差至少 \\(${d}\\) 的有序點數對，共 \\(${hit}\\) 個。`
+        );
+      } else {
+        const divisor = [2, 3, 4, 5][randInt(0, 3)];
+        const hit = pairs.filter(([a, b]) => (a * b) % divisor === 0).length;
+        questions.push(`投擲兩顆公正骰子，點數分別為 \\(a,b\\)。點 \\((a,b)\\) 滿足 \\(ab\\) 為 \\(${divisor}\\) 的倍數之機率為何？`);
+        answers.push(
+          `簡答：\\(${j623ProbabilityText(hit, 36)}\\)。過程：共有 36 個有序點數對，其中 \\(ab\\) 為 \\(${divisor}\\) 的倍數者有 \\(${hit}\\) 個。`
         );
       }
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ623RockPaperScissorsSet(count) {
+    const players = ['甲', '乙', '丙', '丁', '小安', '小芸', '小柏', '小晴'];
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
+    for (let i = 0; i < count; i += 1) {
+      const [a, b, c, d] = shuffle(players).slice(0, 4);
+      const mode = randInt(0, 5);
+      if (mode === 0) {
+        questions.push(`${a}、${b}兩人猜拳一次，求${a}獲勝的機率。`);
+        answers.push(
+          '簡答：\\(\\frac13\\)。過程：共有 \\(3\\times3=9\\) 種等可能結果，指定一方獲勝有 3 種，所以機率為 \\(\\frac39=\\frac13\\)。'
+        );
+      } else if (mode === 1) {
+        questions.push(`${a}、${b}兩人猜拳一次，求兩人平手的機率。`);
+        answers.push('簡答：\\(\\frac13\\)。過程：平手為兩人同出剪刀、石頭或布，共 3 種，總結果 9 種。');
+      } else if (mode === 2) {
+        const rounds = randInt(2, 4);
+        const total = 3 ** rounds;
+        questions.push(`${a}、${b}兩人連續猜拳 \\(${rounds}\\) 次，求${a}每次都獲勝的機率。`);
+        answers.push(
+          `簡答：\\(${j623ProbabilityText(1, total)}\\)。過程：單次指定一方獲勝機率為 \\(\\frac13\\)，\\(${rounds}\\) 次結果互相獨立，所以機率為 \\(\\left(\\frac13\\right)^{${rounds}}=${j623ProbabilityText(1, total)}\\)。`
+        );
+      } else if (mode === 3) {
+        const rounds = randInt(2, 4);
+        const total = 3 ** rounds;
+        const noDraw = 2 ** rounds;
+        questions.push(`${a}、${b}兩人連續猜拳 \\(${rounds}\\) 次，求至少有一次平手的機率。`);
+        answers.push(
+          `簡答：\\(${j623ProbabilityText(total - noDraw, total)}\\)。過程：用反面計算，\\(${rounds}\\) 次都不平手的機率為 \\(\\left(\\frac23\\right)^{${rounds}}=\\frac{${noDraw}}{${total}}\\)，所以至少一次平手為 \\(1-\\frac{${noDraw}}{${total}}=${j623ProbabilityText(total - noDraw, total)}\\)。`
+        );
+      } else if (mode === 4) {
+        const playerCount = randInt(3, 4);
+        const people = playerCount === 3 ? [a, b, c] : [a, b, c, d];
+        const total = 3 ** playerCount;
+        questions.push(`${people.join('、')}共 \\(${playerCount}\\) 人猜拳一次，求所有人出拳完全相同的機率。`);
+        answers.push(
+          `簡答：\\(${j623ProbabilityText(3, total)}\\)。過程：共有 \\(3^{${playerCount}}=${total}\\) 種等可能結果，所有人全同只有「全剪刀、全石頭、全布」3 種，所以機率為 \\(\\frac3{${total}}=${j623ProbabilityText(3, total)}\\)。`
+        );
+      } else {
+        questions.push(`${a}、${b}、${c}三人猜拳一次，求三人平手的機率。（全同或全不同皆視為平手）`);
+        answers.push(
+          '簡答：\\(\\frac13\\)。過程：總結果 \\(3^3=27\\) 種；全同 3 種，全不同 \\(3!=6\\) 種，共 9 種，所以機率為 \\(\\frac9{27}=\\frac13\\)。'
+        );
+      }
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ623ProbabilitySingleMixedSet(count) {
+    const banks = [
+      buildJ623SingleTrialProbabilitySet,
+      buildJ623CoinTreeProbabilitySet,
+      buildJ623DiceSumProductSet,
+      buildJ623NumberArrangementProbabilitySet,
+    ];
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
+    for (let i = 0; i < count; i += 1) {
+      pushGeneratedBankItem(questions, answers, banks, i);
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ623ProbabilityCompoundMixedSet(count) {
+    const banks = [
+      buildJ623SamplingWithWithoutReplacementSet,
+      buildJ623TwoBagCombinationSet,
+      buildJ623AlgebraConditionProbabilitySet,
+    ];
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
+    for (let i = 0; i < count; i += 1) {
+      pushGeneratedBankItem(questions, answers, banks, i);
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
+  function buildJ623ProbabilityGameMixedSet(count) {
+    const banks = [buildJ623RockPaperScissorsSet, buildJ623CoinTreeProbabilitySet, buildJ623DiceSumProductSet];
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
+    for (let i = 0; i < count; i += 1) {
+      const bankIndex = i % banks.length;
+      const generated = banks[bankIndex](Math.floor(i / banks.length) + 1);
+      const itemIndex = generated.questions.length - 1;
+      questions.push(generated.questions[itemIndex]);
+      answers.push(generated.answers[itemIndex]);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3315,78 +3480,6 @@
     return { questions, summaryAnswers, answers };
   }
 
-  function buildJ623RockPaperScissorsSet(count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
-    for (let i = 0; i < count; i += 1) {
-      if (i % 3 === 0) {
-        questions.push('甲、乙兩人猜拳一次，求甲獲勝的機率。');
-        answers.push(
-          '簡答：\\(\\frac13\\)。過程：共有 \\(3\\times3=9\\) 種等可能結果，甲勝有 3 種，所以機率為 \\(\\frac39=\\frac13\\)。'
-        );
-      } else if (i % 3 === 1) {
-        questions.push('甲、乙兩人猜拳一次，求兩人平手的機率。');
-        answers.push('簡答：\\(\\frac13\\)。過程：平手為兩人同出剪刀、石頭或布，共 3 種，總結果 9 種。');
-      } else {
-        questions.push('甲、乙、丙三人猜拳一次，求三人平手的機率。（全同或全不同皆視為平手）');
-        answers.push(
-          '簡答：\\(\\frac13\\)。過程：總結果 \\(3^3=27\\) 種；全同 3 種，全不同 \\(3!=6\\) 種，共 9 種，所以機率為 \\(\\frac9{27}=\\frac13\\)。'
-        );
-      }
-    }
-    return { questions, summaryAnswers, answers };
-  }
-
-  function buildJ623ProbabilitySingleMixedSet(count) {
-    const banks = [
-      buildJ623SingleTrialProbabilitySet,
-      buildJ623CoinTreeProbabilitySet,
-      buildJ623DiceSumProductSet,
-      buildJ623NumberArrangementProbabilitySet,
-    ];
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
-    for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
-    }
-    return { questions, summaryAnswers, answers };
-  }
-
-  function buildJ623ProbabilityCompoundMixedSet(count) {
-    const banks = [
-      buildJ623SamplingWithWithoutReplacementSet,
-      buildJ623TwoBagCombinationSet,
-      buildJ623AlgebraConditionProbabilitySet,
-      buildJ623ComplementProbabilitySet,
-    ];
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
-    for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
-    }
-    return { questions, summaryAnswers, answers };
-  }
-
-  function buildJ623ProbabilityGameMixedSet(count) {
-    const banks = [buildJ623RockPaperScissorsSet, buildJ623CoinTreeProbabilitySet, buildJ623DiceSumProductSet];
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
-    for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
-    }
-    return { questions, summaryAnswers, answers };
-  }
-
   function j631PercentText(numerator, denominator) {
     const percent = (numerator * 100) / denominator;
     return Number.isInteger(percent) ? `${percent}\\%` : `${percent.toFixed(1)}\\%`;
@@ -3405,7 +3498,11 @@
     for (let i = 0; i < count; i += 1) {
       const total = totals[randInt(0, totals.length - 1)];
       if (i % 3 === 0) {
-        const frequency = randInt(4, Math.floor(total / 2));
+        let frequency = randInt(4, Math.floor(total / 2));
+        // 百分率在本題保留到小數第一位時仍須是精確值，避免未說明的四捨五入。
+        while (!Number.isInteger((frequency * 1000) / total)) {
+          frequency = randInt(4, Math.floor(total / 2));
+        }
         questions.push(`某班共有 \\(${total}\\) 人，其中某分數區間有 \\(${frequency}\\) 人，求此組的相對次數。`);
         answers.push(
           `簡答：\\(${j631PercentText(frequency, total)}\\)。過程：相對次數 \\(=\\frac{\\text{該組次數}}{\\text{總次數}}\\times100\\%=\\frac{${frequency}}{${total}}\\times100\\%=${j631PercentText(frequency, total)}\\)。`
@@ -3464,11 +3561,13 @@
         );
       } else {
         const below = cumulative[groupIndex];
+        const above = total - below;
+        const percentText = j631PercentText(above, total);
         questions.push(
-          `某班共有 \\(${total}\\) 人，未滿某分數的人數累積為 \\(${below}\\) 人，求達到該分數以上的人數與相對次數。`
+          `某班共有 \\(${total}\\) 人，未滿某分數的人數累積為 \\(${below}\\) 人，求達到該分數以上的人數與相對次數（百分率四捨五入到小數第一位）。`
         );
         answers.push(
-          `簡答：\\(${total - below}\\) 人，\\(${j631PercentText(total - below, total)}\\)。過程：達到該分數以上人數為 \\(${total}-${below}=${total - below}\\)，相對次數為 \\(\\frac{${total - below}}{${total}}\\times100\\%=${j631PercentText(total - below, total)}\\)。`
+          `簡答：\\(${above}\\) 人，約 \\(${percentText}\\)。過程：達到該分數以上人數為 \\(${total}-${below}=${above}\\)，相對次數為 \\(\\frac{${above}}{${total}}\\times100\\%\\approx${percentText}\\)。`
         );
       }
     }
@@ -3519,13 +3618,14 @@
       const markedTotal = randInt(10, 40);
       const sample = randInt(50, 160);
       const markedInSample = randInt(4, Math.min(markedTotal, 20));
-      const estimate = makeFraction(markedTotal * sample, markedInSample);
-      const estimateText = estimate.den === 1 ? `${estimate.num}` : fractionToLatex(estimate);
+      const exactEstimate = makeFraction(markedTotal * sample, markedInSample);
+      const exactText = exactEstimate.den === 1 ? `${exactEstimate.num}` : fractionToLatex(exactEstimate);
+      const estimateText = `${Math.round((markedTotal * sample) / markedInSample)}`;
       questions.push(
         `池塘中先標記 \\(${markedTotal}\\) 條魚後放回，再隨機捕撈 \\(${sample}\\) 條，發現其中 \\(${markedInSample}\\) 條有標記。估計池塘中魚的總數。`
       );
       answers.push(
-        `簡答：約 \\(${estimateText}\\) 條。過程：用比例 \\(\\frac{\\text{標記總數}}{\\text{魚總數}}\\approx\\frac{\\text{樣本中標記數}}{\\text{樣本數}}\\)，所以魚總數 \\(\\approx\\frac{${markedTotal}\\cdot${sample}}{${markedInSample}}=${estimateText}\\)。`
+        `簡答：約 \\(${estimateText}\\) 條。過程：用比例 \\(\\frac{\\text{標記總數}}{\\text{魚總數}}\\approx\\frac{\\text{樣本中標記數}}{\\text{樣本數}}\\)，所以魚總數 \\(\\approx\\frac{${markedTotal}\\cdot${sample}}{${markedInSample}}=${exactText}\\approx${estimateText}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3596,21 +3696,26 @@
     for (let i = 0; i < count; i += 1) {
       const context = contexts[randInt(0, contexts.length - 1)];
       const start = context.unit === '度' ? randInt(18, 25) : randInt(20, 60) * 10;
-      const steps = Array.from({ length: 5 }, () => randInt(-3, 6) * (context.unit === '度' ? 1 : 10));
-      const values = steps.reduce(
-        (list, step) => {
-          const next = Math.max(context.unit === '度' ? 10 : 50, list[list.length - 1] + step);
-          list.push(next);
-          return list;
-        },
-        [start]
-      );
+      let values = [];
+      let changes = [];
+      let maxChangeIndex = 0;
+      do {
+        const steps = Array.from({ length: 5 }, () => randInt(-3, 6) * (context.unit === '度' ? 1 : 10));
+        values = steps.reduce(
+          (list, step) => {
+            const next = Math.max(context.unit === '度' ? 10 : 50, list[list.length - 1] + step);
+            list.push(next);
+            return list;
+          },
+          [start]
+        );
+        changes = values.slice(1).map((value, index) => value - values[index]);
+        maxChangeIndex = changes.reduce(
+          (best, value, index) => (Math.abs(value) > Math.abs(changes[best]) ? index : best),
+          0
+        );
+      } while (changes.filter((value) => Math.abs(value) === Math.abs(changes[maxChangeIndex])).length !== 1);
       const labels = ['第1期', '第2期', '第3期', '第4期', '第5期', '第6期'];
-      const changes = values.slice(1).map((value, index) => value - values[index]);
-      const maxChangeIndex = changes.reduce(
-        (best, value, index) => (Math.abs(value) > Math.abs(changes[best]) ? index : best),
-        0
-      );
       if (i % 3 === 0) {
         const from = randInt(0, 3);
         const to = randInt(from + 1, 5);
@@ -3632,11 +3737,14 @@
         const last = values[5];
         const percent = ((last - first) * 100) / first;
         const percentText = Number.isInteger(percent) ? `${percent}\\%` : `${percent.toFixed(1)}\\%`;
+        const absolutePercent = Math.abs(percent);
+        const absolutePercentText = Number.isInteger(absolutePercent) ? `${absolutePercent}\\%` : `${absolutePercent.toFixed(1)}\\%`;
+        const rateText = percent > 0 ? `成長 ${absolutePercentText}` : percent < 0 ? `減少 ${absolutePercentText}` : '沒有變化（0\\%）';
         questions.push(
           `${context.label}第1期為 \\(${first}\\)，第6期為 \\(${last}\\)。求第6期相對於第1期的成長率或減少率。（百分率四捨五入到小數第一位）`
         );
         answers.push(
-          `簡答：\\(${percentText}\\)。過程：變化百分率 \\(=\\frac{${last}-${first}}{${first}}\\times100\\%=${percentText}\\)。正值表示成長，負值表示減少。`
+          `簡答：${rateText}。過程：變化百分率 \\(=\\frac{${last}-${first}}{${first}}\\times100\\%=${percentText}\\)。正值表示成長，負值表示減少。`
         );
       }
     }
@@ -3695,9 +3803,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3717,10 +3823,10 @@
         );
       } else {
         const angle = angles[randInt(0, angles.length - 1)];
-        const percent = angle / 3.6;
+        const percentText = j631PercentText(angle, 360);
         questions.push(`圓餅圖中某項目的圓心角為 \\(${angle}^\\circ\\)，求它占全體的百分比。`);
         answers.push(
-          `簡答：\\(${percent}\\%\\)。過程：百分比 \\(=\\frac{${angle}^\\circ}{360^\\circ}\\times100\\%=${percent}\\%\\)。`
+          `簡答：\\(${percentText}\\)。過程：百分比 \\(=\\frac{${angle}^\\circ}{360^\\circ}\\times100\\%=${percentText}\\)。`
         );
       }
     }
@@ -3834,9 +3940,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3971,14 +4075,16 @@
       const countValue = randInt(20, 45);
       const oldMean = randInt(45, 80);
       const wrong = randInt(40, 90);
-      const delta = randInt(-3, 3) * countValue || countValue;
-      const correct = wrong + delta;
-      const newMean = oldMean + delta / countValue;
+      let correct = randInt(40, 95);
+      if (correct === wrong) correct = Math.min(100, correct + 5);
+      const delta = correct - wrong;
+      const newMean = makeFraction(oldMean * countValue + delta, countValue);
+      const deltaMean = makeFraction(delta, countValue);
       questions.push(
         `某班 \\(${countValue}\\) 位學生的平均為 \\(${oldMean}\\) 分。後來發現其中一筆成績 \\(${wrong}\\) 分應改為 \\(${correct}\\) 分，求修正後的平均數。`
       );
       answers.push(
-        `簡答：\\(${newMean}\\) 分。過程：只需修正總和的差，平均數改變 \\(\\frac{${correct}-${wrong}}{${countValue}}=${delta / countValue}\\)，所以新平均為 \\(${oldMean}+${delta / countValue}=${newMean}\\)。`
+        `簡答：\\(${j632StatText(newMean)}\\) 分。過程：只需修正總和的差，平均數改變 \\(\\frac{${correct}-${wrong}}{${countValue}}=${j632StatText(deltaMean)}\\)，所以新平均為 \\(\\frac{${oldMean * countValue}${formatAddTerm(delta)}}{${countValue}}=${j632StatText(newMean)}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -4071,7 +4177,12 @@
     const labels = ['40～50', '50～60', '60～70', '70～80', '80～90'];
     const labelText = labels.join('、');
     for (let i = 0; i < count; i += 1) {
-      const counts = [randInt(3, 8), randInt(5, 12), randInt(8, 16), randInt(5, 12), randInt(3, 8)];
+      const counts = [randInt(3, 8), randInt(5, 12), randInt(8, 16), randInt(5, 12)];
+      let lastCount = randInt(3, 8);
+      while ((counts.reduce((sum, value) => sum + value, 0) + lastCount) % 4 !== 0) {
+        lastCount = randInt(3, 8);
+      }
+      counts.push(lastCount);
       const countText = counts.join('、');
       const total = counts.reduce((sum, value) => sum + value, 0);
       const targetName = ['Q_1', 'Q_2', 'Q_3'][i % 3];
@@ -4101,10 +4212,11 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const min = randInt(10, 30);
-      const q1 = min + randInt(4, 12);
-      const q2 = q1 + randInt(4, 12);
-      const q3 = q2 + randInt(4, 12);
-      const max = q3 + randInt(4, 12);
+      const gapValues = shuffle([4, 5, 6, 7, 8, 9, 10, 11, 12]).slice(0, 4);
+      const q1 = min + gapValues[0];
+      const q2 = q1 + gapValues[1];
+      const q3 = q2 + gapValues[2];
+      const max = q3 + gapValues[3];
       const gaps = [
         { name: '最小值到 \\(Q_1\\)', value: q1 - min },
         { name: '\\(Q_1\\) 到 \\(Q_2\\)', value: q2 - q1 },
@@ -4224,7 +4336,7 @@
   function j63Add(set, question, summary, detail) {
     set.questions.push(question);
     set.summaryAnswers.push(summary);
-    set.answers.push(`答案：${summary}<br>詳解：${detail}`);
+    set.answers.push(`詳解：${detail}`);
   }
 
   function j63SignedPercent(value) {
@@ -4361,7 +4473,7 @@
           `四分位數會跟著同樣線性變換：新 \\(Q_1=${q1}\\times${multiple}+${add}=${newQ1}\\)，新 \\(Q_3=${q3}\\times${multiple}+${add}=${newQ3}\\)。四分位距只受乘法影響，\\((Q_3-Q_1)\\times${multiple}=(${q3}-${q1})\\times${multiple}=${newIqr}\\)。`
         );
       } else if (mode === 2) {
-        const labels = ['40-50', '50-60', '60-70', '70-80', '80-90'];
+        const labels = ['40～50', '50～60', '60～70', '70～80', '80～90'];
         const counts = [randInt(2, 6), randInt(4, 9), randInt(8, 14), randInt(6, 12), randInt(2, 7)];
         const total = counts.reduce((sum, value) => sum + value, 0);
         const target = Math.ceil(total * 0.5);
@@ -4543,7 +4655,8 @@
         const marks = [65, 75, 85];
         const left = randInt(4, 10);
         const missing = randInt(5, 14);
-        const right = randInt(3, 9);
+        let right = randInt(3, 9);
+        while (right === left) right = randInt(3, 9);
         const total = left + missing + right;
         const weightedSum = marks[0] * left + marks[1] * missing + marks[2] * right;
         j63Add(
@@ -4555,12 +4668,12 @@
       } else if (mode === 1) {
         const range = [35, 45, 52, 67][randInt(0, 3)];
         const width = [5, 10, 12][randInt(0, 2)];
-        const groups = Math.ceil(range / width);
+        const groups = Math.floor(range / width) + 1;
         j63Add(
           set,
           `在「含下限、不含上限」的分組中，一組資料全距為 \\(${range}\\)，組距為 \\(${width}\\)。最少需要分成幾組？`,
           `\\(${groups}\\) 組`,
-          `最少組數要讓所有組距加起來能覆蓋全距，所以用無條件進位：\\(\\lceil ${range}/${width}\\rceil=${groups}\\)。含下限、不含上限時，端點資料也要確認被放進最後一組。`
+          `第一組從最小值開始時，最大值距最小值為 \\(${range}\\)，且最後一組不含上限，所以組數為 \\(\\lfloor ${range}/${width}\\rfloor+1=${groups}\\)。`
         );
       } else if (mode === 2) {
         const marks = [55, 65, 75, 85];
@@ -4586,9 +4699,9 @@
           `中間組百分比為 \\(100\\%-${belowPercent}\\%-${abovePercent}\\%=${middlePercent}\\%\\)。所以人數 \\(=${total}\\times${middlePercent}\\%=${middle}\\)。`
         );
       } else {
-        const labels = ['50-60', '60-70', '70-80', '80-90'];
-        const aCounts = [randInt(3, 8), randInt(8, 14), randInt(12, 20), randInt(4, 10)];
-        const bCounts = [randInt(4, 10), randInt(12, 20), randInt(8, 14), randInt(3, 8)];
+        const labels = ['50～60', '60～70', '70～80', '80～90'];
+        const aCounts = [randInt(3, 8), randInt(8, 14), randInt(15, 20), randInt(4, 10)];
+        const bCounts = [randInt(4, 10), randInt(15, 20), randInt(8, 14), randInt(3, 8)];
         const aMode = labels[j63IndexOfMax(aCounts)];
         const bMode = labels[j63IndexOfMax(bCounts)];
         j63Add(
@@ -4661,14 +4774,78 @@
     return answers;
   }
 
+  function resolvePracticeCount(count, fallback) {
+    const parsed = Number(count);
+    if (Number.isFinite(parsed) && parsed > 0) return Math.floor(parsed);
+    return fallback;
+  }
+
+  function pushGeneratedBankItem(questions, answers, banks, index) {
+    const bankIndex = index % banks.length;
+    const generated = banks[bankIndex](Math.floor(index / banks.length) + 1);
+    const itemIndex = generated.questions.length - 1;
+    questions.push(generated.questions[itemIndex]);
+    answers.push(generated.answers[itemIndex]);
+  }
+
+  function stripDetailSummaryLabel(detail) {
+    const text = String(detail || '');
+    const withoutLabeledSummary = text.replace(
+      /^\s*(?:簡答|答案)[:：]\s*[\s\S]*?\s*(?:過程|解析|詳解|說明)[:：]\s*/,
+      ''
+    );
+    if (withoutLabeledSummary !== text) return withoutLabeledSummary.trim();
+    return text.replace(/^\s*(?:簡答|答案)[:：]\s*/, '').trim();
+  }
+
+  function buildUniquePracticeSet(generator, count) {
+    const target = resolvePracticeCount(count, 1);
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const seen = new Set();
+    const fallback = [];
+
+    for (let attempt = 0; questions.length < target && attempt < 40; attempt += 1) {
+      const batch = generator(Math.max(target, target - questions.length));
+      const batchQuestions = Array.isArray(batch.questions) ? batch.questions : [];
+      const batchSummaries = Array.isArray(batch.summaryAnswers) ? batch.summaryAnswers : [];
+      const batchAnswers = Array.isArray(batch.answers) ? batch.answers : [];
+
+      for (let i = 0; i < batchQuestions.length; i += 1) {
+        const question = batchQuestions[i];
+        const summary = batchSummaries[i];
+        const answer = batchAnswers[i];
+        const key = String(question).replace(/\s+/g, ' ').trim();
+        if (!question || summary === undefined || answer === undefined) continue;
+        fallback.push({ question, summary, answer });
+        if (seen.has(key)) continue;
+        seen.add(key);
+        questions.push(question);
+        summaryAnswers.push(summary);
+        answers.push(stripDetailSummaryLabel(answer));
+        if (questions.length >= target) break;
+      }
+    }
+
+    for (let i = 0; questions.length < target && i < fallback.length; i += 1) {
+      const item = fallback[i];
+      questions.push(item.question);
+      summaryAnswers.push(item.summary);
+      answers.push(stripDetailSummaryLabel(item.answer));
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
   const nextConfigs = {
     'j6-1-1-parabola-ax2-four-subtypes': {
       type: 'drill',
       title: '二次函數 y=ax^2 基本圖形判讀綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ611ParabolaAx2FourSubtypeMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611ParabolaAx2FourSubtypeMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-1-1-quadratic-definition': {
@@ -4676,8 +4853,8 @@
       title: '二次函數的定義判別',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ611QuadraticDefinitionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611QuadraticDefinitionSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-1-opening-vertex-axis': {
@@ -4685,8 +4862,8 @@
       title: '開口方向與頂點特徵快問快答',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ611OpeningDirectionVertexAxisSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611OpeningDirectionVertexAxisSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-1-opening-width-order': {
@@ -4694,8 +4871,8 @@
       title: '開口大小的排序練習',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ611OpeningWidthOrderSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611OpeningWidthOrderSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-1-find-coefficient-from-point': {
@@ -4703,8 +4880,8 @@
       title: '已知圖形通過點求係數 a',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ611FindCoefficientFromPointSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611FindCoefficientFromPointSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-1-yaxis-reflection': {
@@ -4712,8 +4889,8 @@
       title: '圖形對稱點推算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ611YAxisReflectionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611YAxisReflectionSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-1-quadrant-location': {
@@ -4721,8 +4898,8 @@
       title: '圖形所在象限判定',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ611QuadrantLocationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611QuadrantLocationSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-1-parabola-applications-five-subtypes': {
@@ -4730,8 +4907,8 @@
       title: '二次函數圖形的坐標幾何與建模綜合',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ611ParabolaApplicationsFiveSubtypeMixedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611ParabolaApplicationsFiveSubtypeMixedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-1-square-in-parabola': {
@@ -4739,8 +4916,8 @@
       title: '拋物線內嵌正方形',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ611SquareInParabolaSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611SquareInParabolaSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-1-horizontal-chord-length': {
@@ -4748,8 +4925,8 @@
       title: '水平弦長與距離計算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ611HorizontalChordLengthSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611HorizontalChordLengthSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-1-triangle-area-on-parabola': {
@@ -4757,8 +4934,8 @@
       title: '拋物線上的三角形面積',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ611TriangleAreaOnParabolaSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611TriangleAreaOnParabolaSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-1-line-parabola-grid-points': {
@@ -4766,8 +4943,8 @@
       title: '多個函數的格子點判讀',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ611LineParabolaGridPointSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611LineParabolaGridPointSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-1-parabola-modeling': {
@@ -4775,8 +4952,8 @@
       title: '二次函數的實際建模',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ611ParabolaModelingSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611ParabolaModelingSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-1-quadratic-property-logic-advanced': {
@@ -4784,8 +4961,8 @@
       title: '二次函數性質的綜合逆推',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ611QuadraticPropertyLogicAdvancedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ611QuadraticPropertyLogicAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-vertex-form-extrema-three-subtypes': {
@@ -4793,8 +4970,8 @@
       title: '頂點式、配方法與極值判定綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ612VertexFormExtremaMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612VertexFormExtremaMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-1-2-vertex-form-read': {
@@ -4802,8 +4979,8 @@
       title: '頂點式參數的直覺讀取',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ612VertexFormReadSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612VertexFormReadSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-completing-square-extreme': {
@@ -4811,8 +4988,8 @@
       title: '配方法轉換與極值判定',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ612CompletingSquareExtremeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612CompletingSquareExtremeSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-function-from-vertex-point': {
@@ -4820,8 +4997,8 @@
       title: '給定頂點與通過點反求函數式',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ612FunctionFromVertexPointSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612FunctionFromVertexPointSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-extreme-parameter-from-condition': {
@@ -4829,8 +5006,8 @@
       title: '由極值條件反求參數',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ612ExtremeParameterFromConditionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612ExtremeParameterFromConditionSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-translation-graph-five-subtypes': {
@@ -4838,8 +5015,8 @@
       title: '平移變換與圖形重合綜合',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ612TranslationGraphMixedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612TranslationGraphMixedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-basic-translation-equation': {
@@ -4847,8 +5024,8 @@
       title: '基礎平移寫出新函數式',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ612BasicTranslationEquationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612BasicTranslationEquationSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-vertex-axis-translation': {
@@ -4856,8 +5033,8 @@
       title: '頂點坐標與對稱軸的位移追蹤',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ612VertexAxisTranslationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612VertexAxisTranslationSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-translation-reverse': {
@@ -4865,8 +5042,8 @@
       title: '平移關係判定與反求位移',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ612TranslationReverseSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612TranslationReverseSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-congruence-same-a': {
@@ -4874,8 +5051,8 @@
       title: '圖形重合判定與相同 a 值',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ612CongruenceSameASet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612CongruenceSameASet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-point-after-translation': {
@@ -4883,8 +5060,8 @@
       title: '圖形上特定點的坐標變化',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ612PointAfterTranslationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612PointAfterTranslationSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-advanced-translation-vertex-track': {
@@ -4892,8 +5069,8 @@
       title: '多重平移與頂點軌跡',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ612AdvancedTranslationVertexTrackSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612AdvancedTranslationVertexTrackSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-x-axis-intersection-three-subtypes': {
@@ -4901,8 +5078,8 @@
       title: '與 x 軸交點與判別式綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ612XAxisIntersectionMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612XAxisIntersectionMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-1-2-x-intercepts-coordinate': {
@@ -4910,8 +5087,8 @@
       title: '計算二次函數與 x 軸交點坐標',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ612XInterceptsCoordinateSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612XInterceptsCoordinateSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-discriminant-count': {
@@ -4919,8 +5096,8 @@
       title: '用判別式判斷與 x 軸交點個數',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ612DiscriminantCountSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612DiscriminantCountSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-vertex-position-intersection': {
@@ -4928,8 +5105,8 @@
       title: '結合頂點位置與開口判斷交點個數',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ612VertexPositionIntersectionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612VertexPositionIntersectionSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-2-intersection-constraint-advanced': {
@@ -4937,8 +5114,8 @@
       title: '判別式與交點關係',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ612IntersectionConstraintAdvancedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ612IntersectionConstraintAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-algebra-extrema-three-subtypes': {
@@ -4946,8 +5123,8 @@
       title: '代數限制與距離平方極值綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ613AlgebraExtremaMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613AlgebraExtremaMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-1-3-number-sum-square-extrema': {
@@ -4955,8 +5132,8 @@
       title: '數字與平方和極值問題',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ613NumberSumSquareExtremaSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613NumberSumSquareExtremaSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-line-distance-square': {
@@ -4964,8 +5141,8 @@
       title: '數線上的距離平方和極值',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ613LineDistanceSquareSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613LineDistanceSquareSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-linear-constraint-extrema': {
@@ -4973,8 +5150,8 @@
       title: '代數約束下的極值計算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ613LinearConstraintExtremaSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613LinearConstraintExtremaSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-interval-extrema': {
@@ -4982,8 +5159,8 @@
       title: '限制區間內的最大值與最小值',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ613IntervalExtremaSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613IntervalExtremaSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-geometry-modeling-four-subtypes': {
@@ -4991,8 +5168,8 @@
       title: '幾何面積、通行限制與拋物線建模綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ613GeometryModelingMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613GeometryModelingMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-1-3-rectangle-perimeter-area': {
@@ -5000,8 +5177,8 @@
       title: '幾何圖形面積與周長極值',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ613RectanglePerimeterAreaSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613RectanglePerimeterAreaSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-fencing-variations': {
@@ -5009,8 +5186,8 @@
       title: '圍籬、河邊與出入口面積最大化',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ613FencingVariationsSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613FencingVariationsSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-split-squares-minimum': {
@@ -5018,8 +5195,8 @@
       title: '鐵絲分段圍正方形的面積最小',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ613SplitSquaresMinimumSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613SplitSquaresMinimumSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-parabola-clearance': {
@@ -5027,8 +5204,8 @@
       title: '拋物線建模與通行高度判定',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ613ParabolaClearanceSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613ParabolaClearanceSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-water-channel-width': {
@@ -5036,8 +5213,8 @@
       title: '拋物線河道與水面寬度變化',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ613WaterChannelWidthSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613WaterChannelWidthSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-parabolic-modeling-advanced': {
@@ -5045,8 +5222,8 @@
       title: '拋物線幾何建模',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ613ParabolicModelingAdvancedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613ParabolicModelingAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-business-production-three-subtypes': {
@@ -5054,8 +5231,8 @@
       title: '利潤策略、票價收入與產量決策綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ613BusinessProductionMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613BusinessProductionMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-1-3-ticket-revenue': {
@@ -5063,8 +5240,8 @@
       title: '票價調整與最高收入',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ613TicketRevenueSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613TicketRevenueSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-price-profit': {
@@ -5072,8 +5249,8 @@
       title: '商品定價與最大利潤',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ613PriceProfitSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613PriceProfitSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-orchard-yield': {
@@ -5081,8 +5258,8 @@
       title: '果園產量與植樹密度問題',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ613OrchardYieldSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613OrchardYieldSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-optimization-constraint-advanced': {
@@ -5090,8 +5267,8 @@
       title: '約束條件下的極值應用',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ613OptimizationConstraintAdvancedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ613OptimizationConstraintAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-spatial-distance-four-subtypes': {
@@ -5099,8 +5276,8 @@
       title: '空間距離與垂直性質綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ621SpatialDistanceMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621SpatialDistanceMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-2-1-cuboid-space-diagonal': {
@@ -5108,8 +5285,8 @@
       title: '長方體體對角線與三維畢氏',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ621CuboidSpaceDiagonalSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621CuboidSpaceDiagonalSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-line-plane-distance': {
@@ -5117,8 +5294,8 @@
       title: '直線垂直平面形成的距離計算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ621LinePlaneDistanceSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621LinePlaneDistanceSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-three-perpendicular-distance': {
@@ -5126,8 +5303,8 @@
       title: '三垂線配置中的空間距離',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ621ThreePerpendicularDistanceSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621ThreePerpendicularDistanceSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-cube-face-center-distance': {
@@ -5135,8 +5312,8 @@
       title: '正方體相鄰面中心距離',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ621CubeFaceCenterDistanceSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621CubeFaceCenterDistanceSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-spatial-logic-two-subtypes': {
@@ -5144,8 +5321,8 @@
       title: '空間線面關係與邏輯判定',
       difficulty: 'easy',
       questionCount: 6,
-      generate() {
-        return buildJ621SpatialLogicMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621SpatialLogicMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-2-1-line-plane-perpendicular-logic': {
@@ -5153,8 +5330,8 @@
       title: '線垂直平面的性質判斷',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ621LinePlanePerpendicularLogicSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621LinePlanePerpendicularLogicSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-parallel-perpendicular-relations': {
@@ -5162,8 +5339,8 @@
       title: '平行與垂直關係的反例判斷',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ621ParallelPerpendicularRelationsSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621ParallelPerpendicularRelationsSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-solid-volume-ratio-three-subtypes': {
@@ -5171,8 +5348,8 @@
       title: '立體體積比例與旋轉建模綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ621SolidVolumeRatioMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621SolidVolumeRatioMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-2-1-solid-scaling-ratio': {
@@ -5180,8 +5357,8 @@
       title: '相似立體與圓柱體積倍率',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ621SolidScalingRatioSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621SolidScalingRatioSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-cylinder-volume-model': {
@@ -5189,8 +5366,8 @@
       title: '圓柱體積與體積比計算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ621CylinderVolumeModelSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621CylinderVolumeModelSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-composite-solid-volume': {
@@ -5198,8 +5375,8 @@
       title: '挖孔與旋轉形成的複合體積',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ621CompositeSolidVolumeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621CompositeSolidVolumeSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-inverse-spatial-distance-advanced': {
@@ -5207,8 +5384,8 @@
       title: '空間距離的逆向推導',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ621InverseSpatialDistanceAdvancedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621InverseSpatialDistanceAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-coordinate-spatial-hybrid': {
@@ -5216,8 +5393,8 @@
       title: '座標平面與空間點位的結合',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ621CoordinateSpatialHybridSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621CoordinateSpatialHybridSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-spatial-area-trig-advanced': {
@@ -5225,8 +5402,8 @@
       title: '空間圖形的面積與角度判定',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ621SpatialAreaTrigAdvancedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621SpatialAreaTrigAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-real-world-box-geometry': {
@@ -5234,8 +5411,8 @@
       title: '生活情境與建模',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ621RealWorldBoxGeometrySet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621RealWorldBoxGeometrySet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-1-complex-perpendicular-paths': {
@@ -5243,8 +5420,8 @@
       title: '多重垂直與複合路徑',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ621ComplexPerpendicularPathsSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ621ComplexPerpendicularPathsSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-2-basic-surface-volume-three-subtypes': {
@@ -5252,8 +5429,8 @@
       title: '柱體表面積與體積基本計算',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ622BasicSurfaceVolumeMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622BasicSurfaceVolumeMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-2-2-triangular-prism-volume': {
@@ -5261,8 +5438,8 @@
       title: '直角三角柱體積計算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ622TriangularPrismVolumeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622TriangularPrismVolumeSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-2-rect-prism-surface-volume': {
@@ -5270,8 +5447,8 @@
       title: '長方體表面積與體積',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ622RectPrismSurfaceVolumeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622RectPrismSurfaceVolumeSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-2-cylinder-surface-volume': {
@@ -5279,8 +5456,8 @@
       title: '圓柱體積與表面積',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ622CylinderSurfaceVolumeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622CylinderSurfaceVolumeSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-2-composite-scaling-three-subtypes': {
@@ -5288,8 +5465,8 @@
       title: '複合立體與比例變化綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ622CompositeScalingMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622CompositeScalingMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-2-2-hollow-cylinder-volume': {
@@ -5297,8 +5474,8 @@
       title: '空心圓柱材料體積',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ622HollowCylinderVolumeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622HollowCylinderVolumeSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-2-prism-cylinder-composite': {
@@ -5306,8 +5483,8 @@
       title: '挖孔與複合柱體體積',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ622PrismCylinderCompositeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622PrismCylinderCompositeSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-2-solid-scaling-ratio': {
@@ -5315,8 +5492,8 @@
       title: '立體比例變化與倍率',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ622SolidScalingSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622SolidScalingSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-2-surface-shortest-path-two-subtypes': {
@@ -5324,8 +5501,8 @@
       title: '立體展開圖與表面最短路徑',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ622SurfaceShortestPathMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622SurfaceShortestPathMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-2-2-cuboid-surface-shortest-path': {
@@ -5333,8 +5510,8 @@
       title: '長方體表面最短路徑',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ622CuboidSurfaceShortestPathSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622CuboidSurfaceShortestPathSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-2-cylinder-surface-shortest-path': {
@@ -5342,8 +5519,8 @@
       title: '圓柱側面展開最短路徑',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ622CylinderSurfaceShortestPathSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622CylinderSurfaceShortestPathSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-2-prism-euler-two-subtypes': {
@@ -5351,8 +5528,8 @@
       title: '角柱數量規律與尤拉公式',
       difficulty: 'easy',
       questionCount: 6,
-      generate() {
-        return buildJ622PrismEulerMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622PrismEulerMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-2-2-prism-counting': {
@@ -5360,8 +5537,8 @@
       title: '角柱頂點邊面數量規律',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ622PrismCountingSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622PrismCountingSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-2-euler-formula': {
@@ -5369,8 +5546,8 @@
       title: '尤拉公式的應用與反推',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ622EulerFormulaSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622EulerFormulaSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-2-container-water-two-subtypes': {
@@ -5378,8 +5555,8 @@
       title: '容器水位與排水體積',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ622ContainerWaterMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622ContainerWaterMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-2-2-water-displacement': {
@@ -5387,8 +5564,8 @@
       title: '水位上升與排開體積',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ622WaterDisplacementSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622WaterDisplacementSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-2-water-pipe-volume': {
@@ -5396,8 +5573,8 @@
       title: '圓柱形水管容量計算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ622WaterPipeVolumeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ622WaterPipeVolumeSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-3-sphere-section-four-subtypes': {
@@ -5405,8 +5582,8 @@
       title: '球截面半徑、面積與大圓綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ623SphereSectionMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623SphereSectionMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-2-3-sphere-section-radius-distance': {
@@ -5414,8 +5591,8 @@
       title: '球截面半徑與球心距離',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623SphereSectionRadiusDistanceSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623SphereSectionRadiusDistanceSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-3-sphere-section-circle-measure': {
@@ -5423,8 +5600,8 @@
       title: '截圓面積與周長計算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623SphereSectionCircleMeasureSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623SphereSectionCircleMeasureSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-3-sphere-section-reverse': {
@@ -5432,8 +5609,8 @@
       title: '由截圓資訊反求球半徑',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623SphereSectionReverseSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623SphereSectionReverseSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-3-sphere-great-circle': {
@@ -5441,8 +5618,8 @@
       title: '大圓與最大截面判定',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ623SphereGreatCircleSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623SphereGreatCircleSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-3-cone-surface-four-subtypes': {
@@ -5450,8 +5627,8 @@
       title: '圓錐展開、母線與表面積綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ623ConeSurfaceMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623ConeSurfaceMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-2-3-cone-sector-angle-arc': {
@@ -5459,8 +5636,8 @@
       title: '圓錐展開扇形圓心角',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623ConeSectorAngleArcSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623ConeSectorAngleArcSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-3-cone-pythagorean': {
@@ -5468,8 +5645,8 @@
       title: '圓錐高、半徑與母線',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623ConePythagoreanSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623ConePythagoreanSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-3-cone-surface-area': {
@@ -5477,8 +5654,8 @@
       title: '圓錐側面積與表面積',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623ConeSurfaceAreaSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623ConeSurfaceAreaSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-3-cone-area-ratio': {
@@ -5486,8 +5663,8 @@
       title: '圓錐側面積與底面積比',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623ConeAreaRatioSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623ConeAreaRatioSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-3-pyramid-counting-three-subtypes': {
@@ -5495,8 +5672,8 @@
       title: '角錐數量規律與尤拉公式綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ623PyramidCountingMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623PyramidCountingMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-2-3-pyramid-counting': {
@@ -5504,8 +5681,8 @@
       title: 'n 角錐頂點邊面數量規律',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ623PyramidCountingSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623PyramidCountingSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-3-pyramid-euler': {
@@ -5513,8 +5690,8 @@
       title: '尤拉公式與多面體反推',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623PyramidEulerSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623PyramidEulerSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-2-3-pyramid-reverse': {
@@ -5522,8 +5699,8 @@
       title: '角錐 n 值反向推算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623PyramidReverseSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623PyramidReverseSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-3-probability-single-mixed': {
@@ -5531,8 +5708,8 @@
       title: '單一試驗與古典機率綜合',
       difficulty: 'easy',
       questionCount: 6,
-      generate() {
-        return buildJ623ProbabilitySingleMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623ProbabilitySingleMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-3-3-single-trial-probability': {
@@ -5540,8 +5717,8 @@
       title: '單一隨機試驗的機率',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ623SingleTrialProbabilitySet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623SingleTrialProbabilitySet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-3-coin-tree-probability': {
@@ -5549,8 +5726,8 @@
       title: '硬幣與性別樹狀圖機率',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ623CoinTreeProbabilitySet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623CoinTreeProbabilitySet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-3-dice-sum-product': {
@@ -5558,8 +5735,8 @@
       title: '兩顆骰子的點數運算機率',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623DiceSumProductSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623DiceSumProductSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-3-number-arrangement-probability': {
@@ -5567,8 +5744,8 @@
       title: '數字排列與倍數條件機率',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623NumberArrangementProbabilitySet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623NumberArrangementProbabilitySet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-3-probability-compound-mixed': {
@@ -5576,8 +5753,8 @@
       title: '兩步試驗、抽樣與互補事件綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ623ProbabilityCompoundMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623ProbabilityCompoundMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-3-3-sampling-with-without-replacement': {
@@ -5585,8 +5762,8 @@
       title: '放回與不放回抽球機率',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623SamplingWithWithoutReplacementSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623SamplingWithWithoutReplacementSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-3-two-bag-combination': {
@@ -5594,8 +5771,8 @@
       title: '兩袋各取一球的組合機率',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623TwoBagCombinationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623TwoBagCombinationSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-3-algebra-condition-probability': {
@@ -5603,8 +5780,8 @@
       title: '骰子點數與代數條件機率',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623AlgebraConditionProbabilitySet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623AlgebraConditionProbabilitySet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-3-complement-probability': {
@@ -5612,8 +5789,8 @@
       title: '互補事件與至少一次機率',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623ComplementProbabilitySet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623ComplementProbabilitySet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-3-probability-game-mixed': {
@@ -5621,8 +5798,8 @@
       title: '猜拳、骰子與遊戲機率綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ623ProbabilityGameMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623ProbabilityGameMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-3-3-rock-paper-scissors': {
@@ -5630,8 +5807,8 @@
       title: '猜拳樣本空間與勝負機率',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ623RockPaperScissorsSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ623RockPaperScissorsSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-3-probability-complements-advanced': {
@@ -5639,8 +5816,8 @@
       title: '互補事件與至少一次的連鎖邏輯',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ633ProbabilityComplementsAdvancedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ633ProbabilityComplementsAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-3-compound-experiments-advanced': {
@@ -5648,8 +5825,8 @@
       title: '兩步試驗與幾何機率',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ633CompoundExperimentsAdvancedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ633CompoundExperimentsAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-frequency-distribution-eight-subtypes': {
@@ -5657,8 +5834,8 @@
       title: '次數分配、統計圖表與抽樣估計綜合',
       difficulty: 'medium',
       questionCount: 8,
-      generate() {
-        return buildJ631FrequencyDistributionMixedSet(8);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631FrequencyDistributionMixedSet(practiceCount), resolvePracticeCount(count, 8));
       },
     },
     'j6-3-1-relative-frequency': {
@@ -5666,8 +5843,8 @@
       title: '相對次數與總次數互換',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ631RelativeFrequencySet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631RelativeFrequencySet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-cumulative-frequency': {
@@ -5675,8 +5852,8 @@
       title: '累積次數與原始次數推算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ631CumulativeFrequencySet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631CumulativeFrequencySet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-class-interval-rule': {
@@ -5684,8 +5861,8 @@
       title: '組距範圍與組中點判定',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ631ClassIntervalRuleSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631ClassIntervalRuleSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-mark-recapture-estimation': {
@@ -5693,8 +5870,8 @@
       title: '抽樣調查與母體數估計',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ631MarkRecaptureSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631MarkRecaptureSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-data-sorting-count': {
@@ -5702,8 +5879,8 @@
       title: '資料排序與區間計數',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ631DataSortingCountSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631DataSortingCountSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-missing-frequency': {
@@ -5711,8 +5888,8 @@
       title: '缺漏次數與累積次數補齊',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ631MissingFrequencySet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631MissingFrequencySet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-chart-trend-reading': {
@@ -5720,8 +5897,8 @@
       title: '折線圖與統計表增減判讀',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ631ChartTrendReadingSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631ChartTrendReadingSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-sampling-estimated-total': {
@@ -5729,8 +5906,8 @@
       title: '抽樣比例估計總量',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ631SamplingEstimatedTotalSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631SamplingEstimatedTotalSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-pie-chart-five-subtypes': {
@@ -5738,8 +5915,8 @@
       title: '圓餅圖百分比、圓心角與人數綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ631PieChartMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631PieChartMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-3-1-pie-angle-percent': {
@@ -5747,8 +5924,8 @@
       title: '圓餅圖百分比與圓心角互換',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ631PieAnglePercentSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631PieAnglePercentSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-pie-partial-quantity': {
@@ -5756,8 +5933,8 @@
       title: '圓餅圖部分人數與總數推算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ631PiePartialQuantitySet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631PiePartialQuantitySet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-pie-compare-difference': {
@@ -5765,8 +5942,8 @@
       title: '圓餅圖類別人數差距比較',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ631PieCompareDifferenceSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631PieCompareDifferenceSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-pie-missing-allocation': {
@@ -5774,8 +5951,8 @@
       title: '圓餅圖缺失項目補齊',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ631PieMissingAllocationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631PieMissingAllocationSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-pie-percentile-position': {
@@ -5783,8 +5960,8 @@
       title: '百分位數與圓餅圖分組定位',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ631PiePercentilePositionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631PiePercentilePositionSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-1-data-visualization-logic-advanced': {
@@ -5792,8 +5969,8 @@
       title: '圓餅圖與折線圖的動態邏輯',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ631DataVisualizationLogicAdvancedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ631DataVisualizationLogicAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-central-tendency-six-subtypes': {
@@ -5801,8 +5978,8 @@
       title: '平均數、中位數、眾數與加權平均綜合',
       difficulty: 'medium',
       questionCount: 6,
-      generate() {
-        return buildJ632CentralTendencyMixedSet(6);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632CentralTendencyMixedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-3-2-raw-mean-median-mode': {
@@ -5810,8 +5987,8 @@
       title: '未分組資料的平均數、中位數與眾數',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ632RawMeanMedianModeSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632RawMeanMedianModeSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-linear-transform-statistics': {
@@ -5819,8 +5996,8 @@
       title: '統計量的加減與倍數變換',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ632LinearTransformStatisticsSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632LinearTransformStatisticsSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-weighted-average': {
@@ -5828,8 +6005,8 @@
       title: '混合組別的加權平均',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ632WeightedAverageSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632WeightedAverageSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-mean-missing-value': {
@@ -5837,8 +6014,8 @@
       title: '已知平均數反求未知數',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ632MeanMissingValueSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632MeanMissingValueSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-data-correction-effect': {
@@ -5846,8 +6023,8 @@
       title: '資料修正對平均數的影響',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ632DataCorrectionEffectSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632DataCorrectionEffectSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-arithmetic-sequence-statistics': {
@@ -5855,8 +6032,8 @@
       title: '等差資料的統計量規律',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ632ArithmeticSequenceStatisticsSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632ArithmeticSequenceStatisticsSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-quartile-boxplot-seven-subtypes': {
@@ -5864,8 +6041,8 @@
       title: '四分位數、盒狀圖與百分位數綜合',
       difficulty: 'medium',
       questionCount: 7,
-      generate() {
-        return buildJ632QuartileBoxplotMixedSet(7);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632QuartileBoxplotMixedSet(practiceCount), resolvePracticeCount(count, 7));
       },
     },
     'j6-3-2-quartile-analysis-advanced': {
@@ -5873,8 +6050,8 @@
       title: '四分位數與百分位數的深度應用',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ632QuartileAnalysisAdvancedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632QuartileAnalysisAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-five-number-range-iqr': {
@@ -5882,8 +6059,8 @@
       title: '五數摘要的全距與四分位距',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildJ632FiveNumberRangeIqrSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632FiveNumberRangeIqrSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-raw-quartile-calculation': {
@@ -5891,8 +6068,8 @@
       title: '未分組資料的四分位數計算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ632RawQuartileCalculationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632RawQuartileCalculationSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-frequency-quartile-position': {
@@ -5900,8 +6077,8 @@
       title: '次數分配表中的四分位數定位',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ632FrequencyQuartilePositionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632FrequencyQuartilePositionSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-boxplot-five-number-summary': {
@@ -5909,8 +6086,8 @@
       title: '盒狀圖五數摘要與集中程度',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ632BoxplotFiveNumberSummarySet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632BoxplotFiveNumberSummarySet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-boxplot-comparison': {
@@ -5918,8 +6095,8 @@
       title: '盒狀圖比較與邏輯判讀',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ632BoxplotComparisonSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632BoxplotComparisonSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-percentile-rank-conversion': {
@@ -5927,8 +6104,8 @@
       title: '百分位數與名次逆向推算',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ632PercentileRankConversionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632PercentileRankConversionSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-sorted-data-percentile': {
@@ -5936,8 +6113,8 @@
       title: '排序資料中的百分位定位',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ632SortedDataPercentileSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632SortedDataPercentileSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-3-2-grouped-statistics-advanced': {
@@ -5945,13 +6122,81 @@
       title: '分組資料與統計測量',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildJ632GroupedStatisticsAdvancedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildJ632GroupedStatisticsAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
   };
 
-  const bundleFingerprint = 'j6-bundle-v20260710-frequency-interval-text-v1';
+  const j61QuestionPrompts = [
+    '請依題意作答：',
+    '請先整理二次函數的條件後作答：',
+    '請確認代入、對稱或極值關係後作答：',
+    '請寫出正確的函數式、坐標或數值：',
+    '請檢查圖形與數量關係後完成作答：',
+  ];
+  Object.entries(nextConfigs).forEach(([id, config]) => {
+    if (!id.startsWith('j6-1-') || !config || typeof config.generate !== 'function') return;
+    const generate = config.generate;
+    config.generate = function generateJ61WithWordingVariation(count) {
+      const generated = generate.call(this, count);
+      const prompt = j61QuestionPrompts[randInt(0, j61QuestionPrompts.length - 1)];
+      return {
+        ...generated,
+        questions: generated.questions.map((question) => `${prompt}${question}`),
+      };
+    };
+  });
+
+  const j62QuestionPrompts = [
+    '請依空間圖形的條件作答：',
+    '請先辨識垂直、平行或截面關係後作答：',
+    '請列出距離、面積或體積關係後求解：',
+    '請確認展開圖與幾何量的對應後作答：',
+    '請寫出正確的長度、面積、體積或結論：',
+  ];
+  Object.entries(nextConfigs).forEach(([id, config]) => {
+    if (!id.startsWith('j6-2-') || !config || typeof config.generate !== 'function') return;
+    const generate = config.generate;
+    config.generate = function generateJ62WithWordingVariation(count) {
+      const generated = generate.call(this, count);
+      const prompt = j62QuestionPrompts[randInt(0, j62QuestionPrompts.length - 1)];
+      return {
+        ...generated,
+        questions: generated.questions.map((question) => `${prompt}${question}`),
+      };
+    };
+  });
+
+  const j6312QuestionPrompts = [
+    '請先整理資料與統計條件後作答：',
+    '請依資料的次數、比例或位置關係作答：',
+    '請確認累積次數、平均數或四分位數後求解：',
+    '請辨識圖表或排序資料所表示的統計量：',
+    '請寫出正確的統計量或判斷：',
+  ];
+  const j633QuestionPrompts = [
+    '請先辨識樣本空間與有利結果後作答：',
+    '請依題意選用乘法、加法或互補事件求解：',
+    '請確認事件是否獨立或是否放回後作答：',
+    '請列出正確的機率式並化簡：',
+    '請寫出正確的機率：',
+  ];
+  Object.entries(nextConfigs).forEach(([id, config]) => {
+    if (!id.startsWith('j6-3-') || !config || typeof config.generate !== 'function') return;
+    const generate = config.generate;
+    config.generate = function generateJ63WithWordingVariation(count) {
+      const generated = generate.call(this, count);
+      const prompts = id.startsWith('j6-3-3-') ? j633QuestionPrompts : j6312QuestionPrompts;
+      const prompt = prompts[randInt(0, prompts.length - 1)];
+      return {
+        ...generated,
+        questions: generated.questions.map((question) => `${prompt}${question}`),
+      };
+    };
+  });
+
+  const bundleFingerprint = 'j6-bundle-v20260716-j61-j62-j63-summary-review-v4';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

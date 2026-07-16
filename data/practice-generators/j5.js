@@ -71,6 +71,13 @@
     return `\\frac{${numerator}}{${denominator}}`;
   }
 
+  function formatLinearTerm(coefficient, variable, includeLeadingSign = false) {
+    const absoluteCoefficient = Math.abs(coefficient);
+    const magnitude = absoluteCoefficient === 1 ? variable : `${absoluteCoefficient}${variable}`;
+    if (includeLeadingSign) return coefficient < 0 ? `-${magnitude}` : `+${magnitude}`;
+    return coefficient < 0 ? `-${magnitude}` : magnitude;
+  }
+
   function buildJ511MergeSharedTermSet(count) {
     const questions = [];
     const summaryAnswers = [];
@@ -197,10 +204,10 @@
         coefficientSum = coeffs[0] * ratio[0] + coeffs[1] * ratio[1] + coeffs[2] * ratio[2];
       }
       const value = coefficientSum * t;
-      const expression = `${coeffs[0]}x+${coeffs[1]}y${coeffs[2] < 0 ? `${coeffs[2]}z` : `+${coeffs[2]}z`}`;
+      const expression = `${formatLinearTerm(coeffs[0], 'x')}${formatLinearTerm(coeffs[1], 'y', true)}${formatLinearTerm(coeffs[2], 'z', true)}`;
       questions.push(`已知 \\(x:y:z=${ratioTex(ratio)}\\)，且 \\(${expression}=${value}\\)，求 \\(x,y,z\\) 的值。`);
       answers.push(
-        `簡答：\\((x,y,z)=(${ratio[0] * t},${ratio[1] * t},${ratio[2] * t})\\)。過程：設 \\(x=${ratio[0]}r\\)，\\(y=${ratio[1]}r\\)，\\(z=${ratio[2]}r\\)。代入得 \\(${coefficientSum}r=${value}\\)，所以 \\(r=${t}\\)，答案為 \\((x,y,z)=(${ratio[0] * t},${ratio[1] * t},${ratio[2] * t})\\)。`
+        `簡答：\\((x,y,z)=(${ratio[0] * t},${ratio[1] * t},${ratio[2] * t})\\)。過程：設 \\(x=${formatLinearTerm(ratio[0], 'r')}\\)，\\(y=${formatLinearTerm(ratio[1], 'r')}\\)，\\(z=${formatLinearTerm(ratio[2], 'r')}\\)。代入得 \\(${formatLinearTerm(coefficientSum, 'r')}=${value}\\)，所以 \\(r=${t}\\)，答案為 \\((x,y,z)=(${ratio[0] * t},${ratio[1] * t},${ratio[2] * t})\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -218,13 +225,13 @@
         const result = reduceRatioTriple([ratio[0] + ratio[1], ratio[1] + ratio[2], ratio[2] + ratio[0]]);
         questions.push(`若 \\(x:y:z=${ratioTex(ratio)}\\)，求 \\((x+y):(y+z):(z+x)\\) 的最簡整數連比。`);
         answers.push(
-          `簡答：\\(${ratioTex(result)}\\)。過程：設 \\((x,y,z)=(${ratio[0]}r,${ratio[1]}r,${ratio[2]}r)\\)，代入後約去 \\(r\\)，得 \\(${ratioTex(result)}\\)。`
+          `簡答：\\(${ratioTex(result)}\\)。過程：設 \\((x,y,z)=(${formatLinearTerm(ratio[0], 'r')},${formatLinearTerm(ratio[1], 'r')},${formatLinearTerm(ratio[2], 'r')})\\)，代入後約去 \\(r\\)，得 \\(${ratioTex(result)}\\)。`
         );
       } else if (mode === 'linearPair') {
         const result = reduceRatioTriple([2 * ratio[0] + ratio[1], 3 * ratio[2] - ratio[0]]);
         questions.push(`若 \\(x:y:z=${ratioTex(ratio)}\\)，求 \\((2x+y):(3z-x)\\) 的最簡整數比。`);
         answers.push(
-          `簡答：\\(${ratioTex(result)}\\)。過程：代入 \\((x,y,z)=(${ratio[0]}r,${ratio[1]}r,${ratio[2]}r)\\)，得 \\(${2 * ratio[0] + ratio[1]}r:${3 * ratio[2] - ratio[0]}r=${ratioTex(result)}\\)。`
+          `簡答：\\(${ratioTex(result)}\\)。過程：代入 \\((x,y,z)=(${formatLinearTerm(ratio[0], 'r')},${formatLinearTerm(ratio[1], 'r')},${formatLinearTerm(ratio[2], 'r')})\\)，得 \\(${formatLinearTerm(2 * ratio[0] + ratio[1], 'r')}:${formatLinearTerm(3 * ratio[2] - ratio[0], 'r')}=${ratioTex(result)}\\)。`
         );
       } else {
         const result = reduceRatioTriple([ratio[0] * ratio[0] + ratio[1] * ratio[1], ratio[2] * ratio[2]]);
@@ -272,7 +279,7 @@
         `已知 \\((x+${shiftX}):(y-${shiftY}):z=${ratioTex(ratio)}\\)，且 \\(x+y+z=${total}\\)，求 \\(${i % 2 === 0 ? 'x-y' : 'x+z'}\\) 的值。`
       );
       answers.push(
-        `簡答：\\(${i % 2 === 0 ? 'x-y' : 'x+z'}=${target}\\)。過程：設 \\(x+${shiftX}=${ratio[0]}r\\)、\\(y-${shiftY}=${ratio[1]}r\\)、\\(z=${ratio[2]}r\\)，則 \\(x=${ratio[0]}r-${shiftX}\\)、\\(y=${ratio[1]}r+${shiftY}\\)、\\(z=${ratio[2]}r\\)。代入總和得 \\(${ratio.reduce((sum, value) => sum + value, 0)}r${shiftY - shiftX >= 0 ? `+${shiftY - shiftX}` : shiftY - shiftX}=${total}\\)，所以 \\(r=${unit}\\)，再代回可得答案。`
+        `簡答：\\(${i % 2 === 0 ? 'x-y' : 'x+z'}=${target}\\)。過程：設 \\(x+${shiftX}=${formatLinearTerm(ratio[0], 'r')}\\)、\\(y-${shiftY}=${formatLinearTerm(ratio[1], 'r')}\\)、\\(z=${formatLinearTerm(ratio[2], 'r')}\\)，則 \\(x=${formatLinearTerm(ratio[0], 'r')}-${shiftX}\\)、\\(y=${formatLinearTerm(ratio[1], 'r')}+${shiftY}\\)、\\(z=${formatLinearTerm(ratio[2], 'r')}\\)。代入總和得 \\(${formatLinearTerm(ratio.reduce((sum, value) => sum + value, 0), 'r')}${shiftY - shiftX >= 0 ? `+${shiftY - shiftX}` : shiftY - shiftX}=${total}\\)，所以 \\(r=${unit}\\)，再代回可得答案。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -300,18 +307,19 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const triples = [
-      [1, 2, 3],
-      [2, 3, 4],
-      [3, 4, 5],
-      [1, 1, 2],
-      [2, 5, 3],
-      [4, 5, 6],
-    ];
     for (let i = 0; i < count; i += 1) {
-      const ratio = triples[randInt(0, triples.length - 1)];
-      const sum = ratio.reduce((acc, value) => acc + value, 0);
-      const unit = 180 / sum;
+      const ratio = [];
+      let sum = 0;
+      while (ratio.length === 0 || sum <= 0 || 180 % sum !== 0) {
+        const a = randInt(1, 5);
+        const b = randInt(1, 6);
+        const c = randInt(2, 7);
+        const reduced = reduceRatioTriple([a, b, c]);
+        sum = reduced.reduce((acc, value) => acc + value, 0);
+        if (sum >= 6 && sum <= 18 && 180 % sum === 0) ratio.push(...reduced);
+      }
+      const angleSum = ratio.reduce((acc, value) => acc + value, 0);
+      const unit = 180 / angleSum;
       const angles = ratio.map((value) => value * unit);
       questions.push(
         `若 \\(\\triangle ABC\\) 的三內角比 \\(\\angle A:\\angle B:\\angle C=${ratioTex(ratio)}\\)，求三內角的度數。`
@@ -335,6 +343,14 @@
       [5, 12, 13],
       [8, 15, 17],
       [7, 10, 12],
+      [6, 7, 8],
+      [7, 8, 9],
+      [9, 10, 11],
+      [9, 12, 13],
+      [10, 10, 12],
+      [10, 13, 16],
+      [11, 13, 17],
+      [12, 16, 18],
     ];
     for (let i = 0; i < count; i += 1) {
       const sides = validSideRatios[randInt(0, validSideRatios.length - 1)];
@@ -367,7 +383,10 @@
     for (let i = 0; i < count; i += 1) {
       const mode = modes[i % modes.length];
       if (mode === 'perimeter') {
-        const ratio = reduceRatioTriple([randInt(2, 6), randInt(3, 8), randInt(4, 9)]);
+        let ratio = [];
+        while (ratio.length === 0 || ratio[0] + ratio[1] <= ratio[2] || ratio[0] + ratio[2] <= ratio[1] || ratio[1] + ratio[2] <= ratio[0]) {
+          ratio = reduceRatioTriple([randInt(2, 6), randInt(3, 8), randInt(4, 9)]);
+        }
         const unit = randInt(4, 12);
         const perimeter = ratio.reduce((sum, value) => sum + value, 0) * unit;
         const shortest = Math.min(...ratio) * unit;
@@ -390,7 +409,7 @@
           `長方體的長、寬、高比為 \\(${ratioTex(ratio)}\\)，體積為 \\(${volume}\\) 立方公分，求長、寬、高。`
         );
         answers.push(
-          `簡答：長、寬、高為 \\(${ratio[0] * scale},${ratio[1] * scale},${ratio[2] * scale}\\) 公分。過程：設長、寬、高為 \\(${ratio[0]}r,${ratio[1]}r,${ratio[2]}r\\)，則 \\(${ratio[0] * ratio[1] * ratio[2]}r^3=${volume}\\)，得 \\(r=${scale}\\)。`
+          `簡答：長、寬、高為 \\(${ratio[0] * scale},${ratio[1] * scale},${ratio[2] * scale}\\) 公分。過程：設長、寬、高為 \\(${formatLinearTerm(ratio[0], 'r')},${formatLinearTerm(ratio[1], 'r')},${formatLinearTerm(ratio[2], 'r')}\\)，則 \\(${formatLinearTerm(ratio[0] * ratio[1] * ratio[2], 'r')}^3=${volume}\\)，得 \\(r=${scale}\\)。`
         );
       }
     }
@@ -676,15 +695,21 @@
           );
         }
       } else if (type === 'triangleAlgebra') {
-        const x = randInt(2, 8);
         const ad = randInt(2, 5);
-        const dbBase = randInt(1, 5);
-        const ec = x * (x + dbBase);
+        const db = randInt(1, 5);
+        const scale = randInt(2, 8);
+        const ae = ad * scale;
+        const ec = db * scale;
+        const offset = randInt(1, ae - 1);
+        const x = ae - offset;
         questions.push(
-          `在 \\(\\triangle ABC\\) 中，\\(D\\) 在 \\(AB\\) 上，\\(E\\) 在 \\(AC\\) 上，且 \\(DE\\parallel BC\\)。若 \\(AD=${ad}\\)、\\(DB=x+${dbBase}\\)、\\(AE=${ad}x\\)、\\(EC=${ec}\\)，求 \\(x\\)。`
+          `在 \\(\\triangle ABC\\) 中，\\(D\\) 在 \\(AB\\) 上，\\(E\\) 在 \\(AC\\) 上，且 \\(DE\\parallel BC\\)。若 \\(AD=${ad}\\)、\\(DB=${db}\\)、\\(AE=x+${offset}\\)、\\(EC=${ec}\\)，求 \\(x\\)。`
         );
-        answers.push(
-          `簡答：\\(x=${x}\\)。過程：由平行截線得 \\(AD:DB=AE:EC\\)，所以 \\(${ad}:(x+${dbBase})=${ad}x:${ec}\\)。交叉相乘得 \\(${ec}=x(x+${dbBase})\\)，解得正數解 \\(x=${x}\\)。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `\\(x=${x}\\)`,
+          `由平行截線得 \\(AD:DB=AE:EC\\)，所以 \\(${ad}:${db}=(x+${offset}):${ec}\\)。交叉相乘得 \\(${db}(x+${offset})=${ad}\\times${ec}\\)，因此 \\(x+${offset}=${ae}\\)，解得 \\(x=${x}\\)。`
         );
       } else if (type === 'triangleConverse') {
         const [p, q] = coprimePair(2, 7);
@@ -693,7 +718,7 @@
         const ad = p * scale1;
         const db = q * scale1;
         const ae = p * scale2;
-        const ec = q * scale2;
+        const ec = (i % 2 === 0 ? q : q + 1) * scale2;
         const isParallel = ad * ec === db * ae;
         questions.push(
           `在 \\(\\triangle ABC\\) 中，點 \\(D\\) 在 \\(AB\\) 上，點 \\(E\\) 在 \\(AC\\) 上。已知 \\(AD=${ad}\\)、\\(DB=${db}\\)、\\(AE=${ae}\\)、\\(EC=${ec}\\)，判斷 \\(DE\\) 是否平行 \\(BC\\)。`
@@ -755,7 +780,7 @@
             `梯形 \\(ABCD\\) 中，\\(AD\\parallel EF\\parallel BC\\)，且 \\(AE:EB=${m}:${n}\\)。若 \\(AD=x\\)、\\(BC=${bc}\\)、\\(EF=${efValue}\\)，求 \\(x\\)。`
           );
           answers.push(
-            `簡答：\\(x=${x}\\)。過程：代入分點截線公式 \\(EF=\\dfrac{${n}x+${m}\\cdot ${bc}}{${m}+${n}}\\)，解得 \\(x=${x}\\)。`
+            `簡答：\\(x=${x}\\)。過程：代入分點截線公式 \\(EF=\\dfrac{${formatLinearTerm(n, 'x')}+${m}\\cdot ${bc}}{${m}+${n}}\\)，解得 \\(x=${x}\\)。`
           );
         }
       } else if (type === 'trapezoidMidline') {
@@ -992,8 +1017,8 @@
           `簡答：\\(${areaB}\\)。過程：相似圖形面積比等於邊長比平方，所以 \\([ABC]:[DEF]=${p * p}:${q * q}\\)。故 \\([DEF]=${areaA}\\times\\dfrac{${q * q}}{${p * p}}=${areaB}\\)。`
         );
       } else if (type === 'scaleArea') {
-        const baseScale = randInt(2, 5);
-        const heightDen = randInt(2, 5);
+        const baseScale = randInt(2, 12);
+        const heightDen = randInt(2, 12);
         const areaRatio = reduceRatioTriple([baseScale, heightDen]);
         questions.push(
           `將一個三角形的底邊放大為原來的 \\(${baseScale}\\) 倍，高縮小為原來的 \\(\\dfrac{1}{${heightDen}}\\)。求新三角形面積與原三角形面積的比。`
@@ -1026,12 +1051,19 @@
           `簡答：原邊長為 \\(${original}\\)。過程：縮放後長度 \\(=\\) 原長度 \\(\\times\\dfrac{${numerator}}{${denominator}}\\)，所以原長度 \\(=${scaled}\\div\\dfrac{${numerator}}{${denominator}}=${original}\\)。`
         );
       } else if (type === 'areaScaleFactor') {
-        const scale = randInt(2, 5);
+        const scale = randInt(2, 20);
         const areaMultiplier = scale * scale;
-        questions.push(`一個圖形等比例放大 \\(${scale}\\) 倍後，面積變為原來的幾倍？`);
-        answers.push(
-          `簡答：\\(${areaMultiplier}\\) 倍。過程：等比例縮放時，面積倍率是長度倍率的平方，所以面積變為 \\(${scale}^2=${areaMultiplier}\\) 倍。`
-        );
+        if (i % 2 === 0) {
+          questions.push(`一個圖形等比例放大 \\(${scale}\\) 倍後，面積變為原來的幾倍？`);
+          answers.push(
+            `簡答：\\(${areaMultiplier}\\) 倍。過程：等比例縮放時，面積倍率是長度倍率的平方，所以面積變為 \\(${scale}^2=${areaMultiplier}\\) 倍。`
+          );
+        } else {
+          questions.push(`一個圖形等比例縮小到原來的 \\(\\frac{1}{${scale}}\\)，面積變為原來的幾分之幾？`);
+          answers.push(
+            `簡答：\\(\\frac{1}{${areaMultiplier}}\\)。過程：面積倍率是長度倍率的平方，所以 \\((\\frac{1}{${scale}})^2=\\frac{1}{${areaMultiplier}}\\)。`
+          );
+        }
       } else if (type === 'angleInvariant') {
         const angle = randInt(25, 75);
         const scale = randInt(2, 5);
@@ -1063,10 +1095,11 @@
           `簡答：\\(OB=${ob}\\)。過程：\\(\\triangle OAB\\sim\\triangle ODC\\)，所以 \\(OA:OD=OB:OC\\)。代入 \\(${oa}:${od}=OB:${oc}\\)，得 \\(OB=${ob}\\)。`
         );
       } else if (type === 'rightAltitude') {
-        const [m, n] = coprimePair(2, 5);
-        const bd = m * m;
-        const dc = n * n;
-        const ad = m * n;
+        const [m, n] = coprimePair(2, 9);
+        const scale = randInt(1, 4);
+        const bd = m * m * scale;
+        const dc = n * n * scale;
+        const ad = m * n * scale;
         questions.push(
           `直角 \\(\\triangle ABC\\) 中，\\(\\angle A=90^\\circ\\)，高 \\(AD\\perp BC\\)。若 \\(BD=${bd}\\)、\\(DC=${dc}\\)，求斜邊上的高 \\(AD\\)。`
         );
@@ -1077,6 +1110,12 @@
         const rightLegTriples = [
           [3, 4, 5],
           [4, 3, 5],
+          [5, 12, 13],
+          [12, 5, 13],
+          [8, 15, 17],
+          [15, 8, 17],
+          [7, 24, 25],
+          [24, 7, 25],
         ];
         const [legA, legB, hypotenuse] = rightLegTriples[randInt(0, rightLegTriples.length - 1)];
         const scale = randInt(1, 6);
@@ -1180,16 +1219,16 @@
           `簡答：\\(${imageHeight}\\) 公分。過程：針孔成像中，影像高度與物體高度之比等於屏幕距離與物體距離之比，所以影像高度 \\(=${insectHeight}\\times\\dfrac{${screenDistance}}{${pinholeDistance}}=${imageHeight}\\) 公分。`
         );
       } else if (type === 'riverMeasure') {
-        const ce = randInt(3, 9);
+        const dc = randInt(3, 9);
         const de = randInt(2, 6);
         const scale = randInt(3, 8);
-        const bc = ce * scale;
+        const bc = dc * scale;
         const ab = de * scale;
         questions.push(
-          `為測河寬 \\(AB\\)，在岸邊取點 \\(C\\)，使 \\(AB\\perp BC\\)。再在岸邊取點 \\(D\\)，作 \\(DE\\perp BC\\)，且 \\(A,C,E\\) 三點共線。若 \\(BC=${bc}\\) 公尺、\\(CE=${ce}\\) 公尺、\\(DE=${de}\\) 公尺，求河寬 \\(AB\\)。`
+          `為測河寬 \\(AB\\)，在岸邊取點 \\(C\\)，使 \\(AB\\perp BC\\)。再在直線 \\(BC\\) 上取點 \\(D\\)，作 \\(DE\\perp BC\\)，且 \\(A,C,E\\) 三點共線。若 \\(BC=${bc}\\) 公尺、\\(DC=${dc}\\) 公尺、\\(DE=${de}\\) 公尺，求河寬 \\(AB\\)。`
         );
         answers.push(
-          `簡答：\\(AB=${ab}\\) 公尺。過程：\\(\\triangle ABC\\sim\\triangle EDC\\)，所以 \\(AB:DE=BC:CE\\)。代入得 \\(AB:${de}=${bc}:${ce}\\)，故 \\(AB=${ab}\\) 公尺。`
+          `簡答：\\(AB=${ab}\\) 公尺。過程：\\(\\triangle ABC\\sim\\triangle EDC\\)，所以 \\(AB:DE=BC:DC\\)。代入得 \\(AB:${de}=${bc}:${dc}\\)，故 \\(AB=${ab}\\) 公尺。`
         );
       }
     }
@@ -1212,6 +1251,9 @@
       [5, 12, 13],
       [8, 15, 17],
       [7, 24, 25],
+      [9, 40, 41],
+      [20, 21, 29],
+      [12, 35, 37],
     ];
     const specialTriangles = [
       { angle: 30, short: 1, long: '\\sqrt{3}', hyp: 2 },
@@ -1248,12 +1290,13 @@
         const near = randInt(2, 6);
         const scale = randInt(2, 6);
         const far = near * scale;
-        const tree = eye + (pole - eye) * scale;
+        const totalDist = far + near;
+        const tree = eye + (pole - eye) * (totalDist / near);
         questions.push(
           `小羽要測樹高，離樹 \\(${far}\\) 公尺處立一根 \\(${formatFraction(pole, 100)}\\) 公尺標竿。他後退到距標竿 \\(${near}\\) 公尺處，眼睛、標竿頂端、樹頂共線。若眼睛離地 \\(${formatFraction(eye, 100)}\\) 公尺，求樹高。`
         );
         answers.push(
-          `簡答：\\(${formatFraction(tree, 100)}\\) 公尺。過程：高出眼睛的部分成比例，\\((樹高-眼高):(標竿高-眼高)=${far}:${near}\\)。所以樹高 \\(=${formatFraction(eye, 100)}+(${formatFraction(pole, 100)}-${formatFraction(eye, 100)})\\times\\dfrac{${far}}{${near}}=${formatFraction(tree, 100)}\\)。`
+          `簡答：\\(${formatFraction(tree, 100)}\\) 公尺。過程：眼睛到樹的水平距離為 \\(${far}+${near}=${totalDist}\\) 公尺，高出眼睛的部分成比例，\\((樹高-眼高):(標竿高-眼高)=${totalDist}:${near}\\)。所以樹高 \\(=${formatFraction(eye, 100)}+(${formatFraction(pole, 100)}-${formatFraction(eye, 100)})\\times\\dfrac{${totalDist}}{${near}}=${formatFraction(tree, 100)}\\)。`
         );
       } else if (type === 'mirrorHeight') {
         const eye = randInt(140, 180);
@@ -1280,16 +1323,16 @@
           `簡答：\\(${imageHeight}\\) 公分。過程：像高:物高=屏幕距離:物體距離，所以像高 \\(=${objectHeight}\\times\\dfrac{${screenDist}}{${objectDist}}=${imageHeight}\\)。`
         );
       } else if (type === 'riverWidth') {
-        const ce = randInt(3, 9);
+        const dc = randInt(3, 9);
         const de = randInt(2, 7);
         const scale = randInt(3, 8);
-        const bc = ce * scale;
+        const bc = dc * scale;
         const ab = de * scale;
         questions.push(
-          `為測河寬 \\(AB\\)，在岸邊取點 \\(C\\)，使 \\(AB\\perp BC\\)。再取點 \\(D\\) 作 \\(DE\\perp BC\\)，且 \\(A,C,E\\) 三點共線。若 \\(BC=${bc}\\) 公尺、\\(CE=${ce}\\) 公尺、\\(DE=${de}\\) 公尺，求 \\(AB\\)。`
+          `為測河寬 \\(AB\\)，在岸邊取點 \\(C\\)，使 \\(AB\\perp BC\\)。再在直線 \\(BC\\) 上取點 \\(D\\)，作 \\(DE\\perp BC\\)，且 \\(A,C,E\\) 三點共線。若 \\(BC=${bc}\\) 公尺、\\(DC=${dc}\\) 公尺、\\(DE=${de}\\) 公尺，求 \\(AB\\)。`
         );
         answers.push(
-          `簡答：\\(AB=${ab}\\) 公尺。過程：\\(\\triangle ABC\\sim\\triangle EDC\\)，所以 \\(AB:DE=BC:CE\\)。代入 \\(AB:${de}=${bc}:${ce}\\)，得 \\(AB=${ab}\\)。`
+          `簡答：\\(AB=${ab}\\) 公尺。過程：\\(\\triangle ABC\\sim\\triangle EDC\\)，所以 \\(AB:DE=BC:DC\\)。代入 \\(AB:${de}=${bc}:${dc}\\)，得 \\(AB=${ab}\\)。`
         );
       } else if (type === 'perimeterSide') {
         const [p, q] = coprimePair(2, 7);
@@ -1304,7 +1347,7 @@
           `簡答：\\(DE=${sideB}\\)。過程：相似三角形周長比等於對應邊長比，故 \\(AB:DE=${perimeterA}:${perimeterB}=${p}:${q}\\)，所以 \\(DE=${sideB}\\)。`
         );
       } else if (type === 'areaToLength') {
-        const [p, q] = coprimePair(2, 8);
+        const [p, q] = coprimePair(2, 12);
         const lengthA = p * randInt(3, 9);
         const lengthB = formatFraction(lengthA * q, p);
         questions.push(
@@ -1324,17 +1367,18 @@
           `簡答：\\(${small}\\)。過程：\\(\\triangle ADE\\sim\\triangle ABC\\)，邊長比 \\(AD:AB=${p}:${p + q}\\)，面積比為 \\(${p * p}:${(p + q) * (p + q)}\\)。所以 \\([ADE]=${total}\\times\\dfrac{${p * p}}{${(p + q) * (p + q)}}=${small}\\)。`
         );
       } else if (type === 'scaleArea') {
-        const [p, q] = coprimePair(2, 8);
-        const areaRatio = reduceRatioTriple([p * p, q * q]);
+        const [p, q] = coprimePair(2, 20);
+        const areaRatio = reduceRatioTriple([q * q, p * p]);
         questions.push(`若一個圖形相似放大，對應邊長由 \\(${p}\\) 變為 \\(${q}\\)。求放大後圖形與原圖形的面積比。`);
         answers.push(
-          `簡答：\\(${ratioTex(areaRatio)}\\)。過程：相似放大時面積比為邊長比平方，所以面積比為 \\(${p}^2:${q}^2=${ratioTex(areaRatio)}\\)。`
+          `簡答：\\(${ratioTex(areaRatio)}\\)。過程：題目問放大後圖形與原圖形的面積比，邊長比為 \\(${q}:${p}\\)，所以面積比為 \\(${q}^2:${p}^2=${ratioTex(areaRatio)}\\)。`
         );
       } else if (type === 'rightAltitude') {
-        const [m, n] = coprimePair(2, 6);
-        const bd = m * m;
-        const dc = n * n;
-        const ad = m * n;
+        const [m, n] = coprimePair(2, 9);
+        const scale = randInt(1, 4);
+        const bd = m * m * scale;
+        const dc = n * n * scale;
+        const ad = m * n * scale;
         questions.push(
           `直角 \\(\\triangle ABC\\) 中，\\(\\angle A=90^\\circ\\)，高 \\(AD\\perp BC\\)。若 \\(BD=${bd}\\)、\\(DC=${dc}\\)，求 \\(AD\\)。`
         );
@@ -1372,7 +1416,11 @@
           `簡答：\\(${area / 2}\\)。過程：四邊中點依序連接會形成平行四邊形，面積為原四邊形的一半，所以 \\([EFGH]=${area / 2}\\)。`
         );
       } else if (type === 'trigFromSides') {
-        const [legA, legB, hyp] = triples[randInt(0, triples.length - 1)];
+        const [baseLegA, baseLegB, baseHyp] = triples[randInt(0, triples.length - 1)];
+        const scale = randInt(1, 6);
+        const legA = baseLegA * scale;
+        const legB = baseLegB * scale;
+        const hyp = baseHyp * scale;
         const asks = [
           { tex: '\\sin A', value: formatFraction(legB, hyp) },
           { tex: '\\cos A', value: formatFraction(legA, hyp) },
@@ -1418,7 +1466,11 @@
           );
         }
       } else if (type === 'minAngleCos') {
-        const [a, b, c] = triples[randInt(0, triples.length - 1)];
+        const [baseA, baseB, baseC] = triples[randInt(0, triples.length - 1)];
+        const scale = randInt(1, 5);
+        const a = baseA * scale;
+        const b = baseB * scale;
+        const c = baseC * scale;
         const cosValue = formatFraction(Math.max(a, b), c);
         questions.push(
           `一個直角三角形兩股長為 \\(${a}\\) 與 \\(${b}\\)，斜邊長為 \\(${c}\\)。求最小銳角的 \\(\\cos\\) 值。`
@@ -1757,11 +1809,18 @@
     const degree = (value) => `${value}^\\circ`;
     const arc = (name) => `\\overset{\\frown}{${name}}`;
     const ratioParts = [
-      [2, 3, 4],
-      [3, 4, 5],
       [1, 2, 3],
+      [1, 3, 4],
+      [2, 3, 4],
+      [2, 3, 5],
       [2, 5, 3],
+      [3, 4, 5],
       [3, 5, 7],
+      [4, 5, 6],
+      [5, 7, 6],
+      [5, 8, 7],
+      [7, 8, 9],
+      [8, 10, 12],
     ];
     for (let i = 0; i < count; i += 1) {
       const type = selected[i % selected.length];
@@ -1836,7 +1895,7 @@
           `簡答：\\(${degree(angle)}\\)。過程：弦切角等於同弧所對的圓周角，所以 \\(\\angle PAB=\\frac{1}{2}\\times${degree(arcMeasure)}=${degree(angle)}\\)。`
         );
       } else if (type === 'parallelChordAngle') {
-        const sideArc = [40, 50, 60, 70, 80, 100][randInt(0, 5)];
+        const sideArc = 10 * randInt(3, 15);
         const angle = sideArc / 2;
         questions.push(
           `圓內兩弦 \\(AB\\parallel CD\\)。若弧 \\(${arc('AC')}\\) 的度數為 \\(${degree(sideArc)}\\)，求弧 \\(${arc('BD')}\\) 所對的圓周角度數。`
@@ -1860,6 +1919,16 @@
           [3, 2],
           [4, 5],
           [5, 4],
+          [1, 3],
+          [3, 1],
+          [1, 4],
+          [4, 1],
+          [1, 5],
+          [5, 1],
+          [2, 7],
+          [7, 2],
+          [7, 8],
+          [8, 7],
         ];
         const [p, q] = pairs[randInt(0, pairs.length - 1)];
         const angleB = (180 * p) / (p + q);
@@ -1868,7 +1937,7 @@
           `圓內接四邊形 \\(ABCD\\) 中，\\(\\angle B:\\angle D=${p}:${q}\\)。求 \\(\\angle B\\) 與 \\(\\angle D\\)。`
         );
         answers.push(
-          `簡答：\\(\\angle B=${degree(angleB)}\\)，\\(\\angle D=${degree(angleD)}\\)。過程：對角互補，設 \\(\\angle B=${p}k\\)、\\(\\angle D=${q}k\\)，則 \\((${p}+${q})k=180\\)，可得兩角。`
+          `簡答：\\(\\angle B=${degree(angleB)}\\)，\\(\\angle D=${degree(angleD)}\\)。過程：對角互補，設 \\(\\angle B=${formatLinearTerm(p, 'k')}\\)、\\(\\angle D=${formatLinearTerm(q, 'k')}\\)，則 \\((${p}+${q})k=180\\)，可得兩角。`
         );
       } else if (type === 'cyclicExteriorAngle') {
         const exterior = randInt(55, 125);
@@ -1879,14 +1948,26 @@
           `簡答：\\(${degree(exterior)}\\)。過程：圓內接四邊形的一個外角等於其對內角，所以 \\(\\angle C=${degree(exterior)}\\)。`
         );
       } else if (type === 'cyclicLinearEquation') {
-        const x = randInt(8, 24);
-        const a = randInt(2, 4);
-        const c = randInt(2, 4);
-        let b = randInt(5, 30);
+        let a = 2;
+        let c = 3;
+        let x = 16;
+        let b = 14;
         let d = 180 - (a + c) * x - b;
-        while (d < 5) {
-          b = randInt(5, 20);
-          d = 180 - (a + c) * x - b;
+        for (let attempt = 0; attempt < 30; attempt += 1) {
+          const nextA = randInt(2, 4);
+          const nextC = randInt(2, 4);
+          const maxX = Math.max(8, Math.floor(145 / (nextA + nextC)));
+          const nextX = randInt(8, Math.min(24, maxX));
+          const nextB = randInt(5, 30);
+          const nextD = 180 - (nextA + nextC) * nextX - nextB;
+          if (nextD >= 5) {
+            a = nextA;
+            c = nextC;
+            x = nextX;
+            b = nextB;
+            d = nextD;
+            break;
+          }
         }
         const angleA = a * x + b;
         const angleC = c * x + d;
@@ -1925,7 +2006,7 @@
           `簡答：\\(${degree(angle)}\\)。過程：圓外角 \\(=\\frac{大弧-小弧}{2}=\\frac{${largeArc}-${smallArc}}{2}=${degree(angle)}\\)。`
         );
       } else if (type === 'twoTangentsAngle') {
-        const minorArc = [60, 70, 80, 90, 100, 120][randInt(0, 5)];
+        const minorArc = 10 * randInt(5, 14);
         const angle = 180 - minorArc;
         questions.push(
           `圓外一點 \\(P\\) 作兩切線 \\(PA\\)、\\(PB\\)，若劣弧 \\(${arc('AB')}=${degree(minorArc)}\\)，求 \\(\\angle APB\\)。`
@@ -1969,7 +2050,8 @@
           `簡答：\\(${degree(angle)}\\)。過程：每格弧為 \\(360^\\circ\\div${n}=${degree(360 / n)}\\)，相隔 \\(${steps}\\) 格的弧為 \\(${degree(arcMeasure)}\\)，圓周角為 \\(${degree(angle)}\\)。`
         );
       } else if (type === 'regularPolygonTangentAngle') {
-        const n = [5, 6, 8, 9, 10, 12][randInt(0, 5)];
+        const sideChoices = [4, 5, 6, 8, 9, 10, 12, 15, 18, 20, 24, 30];
+        const n = sideChoices[randInt(0, sideChoices.length - 1)];
         const arcMeasure = 360 / n;
         const angle = arcMeasure / 2;
         questions.push(`正 \\(${n}\\) 邊形內接於圓，過頂點 \\(A\\) 作圓的切線。求此切線與邊 \\(AB\\) 所成的銳角。`);
@@ -1977,7 +2059,7 @@
           `簡答：\\(${degree(angle)}\\)。過程：相鄰頂點所對弧為 \\(360^\\circ\\div${n}=${degree(arcMeasure)}\\)。弦切角等於同弧圓周角，所以角度為 \\(${degree(angle)}\\)。`
         );
       } else if (type === 'majorMinorInscribedAngle') {
-        const majorArc = [220, 240, 250, 260, 280, 300][randInt(0, 5)];
+        const majorArc = 10 * randInt(19, 32);
         const minorArc = 360 - majorArc;
         const angle = minorArc / 2;
         questions.push(
@@ -2050,18 +2132,56 @@
       [9, 12, 15],
     ];
     const pickTriple = () => triples[randInt(0, triples.length - 1)];
-    const segmentPairs = [
-      [4, 9, 6],
-      [3, 12, 6],
-      [5, 8, 4],
-      [6, 10, 12],
-      [8, 18, 12],
-    ];
+    const makeIntersectingChordSegments = () => {
+      for (let attempt = 0; attempt < 30; attempt += 1) {
+        const pc = randInt(3, 12);
+        const pd = randInt(4, 18);
+        const product = pc * pd;
+        const divisors = [];
+        for (let candidate = 2; candidate <= Math.min(18, Math.floor(Math.sqrt(product))); candidate += 1) {
+          if (product % candidate === 0) {
+            const partner = product / candidate;
+            if (partner >= 3 && partner <= 30 && candidate !== pc) divisors.push([candidate, partner]);
+          }
+        }
+        if (divisors.length) {
+          const [pa, pb] = divisors[randInt(0, divisors.length - 1)];
+          return [pa, pb, pc, pd];
+        }
+      }
+      return [4, 9, 6, 6];
+    };
+    const makeTangentSecantAlgebra = () => {
+      const rootA = randInt(2, 7);
+      const rootB = rootA + randInt(1, 4);
+      const x = rootA * rootA;
+      const offset = rootB * rootB - x;
+      const pt = rootA * rootB;
+      return { x, offset, pt };
+    };
+    const makeExternalSecantsAlgebra = () => {
+      for (let attempt = 0; attempt < 30; attempt += 1) {
+        const x = randInt(3, 12);
+        const offset = randInt(2, 10);
+        const product = x * (x + offset);
+        const divisors = [];
+        for (let candidate = 2; candidate <= Math.min(16, Math.floor(Math.sqrt(product))); candidate += 1) {
+          if (product % candidate === 0) {
+            const partner = product / candidate;
+            if (partner > candidate && partner <= 90) divisors.push([candidate, partner]);
+          }
+        }
+        if (divisors.length) {
+          const [pc, pd] = divisors[randInt(0, divisors.length - 1)];
+          return { x, offset, pc, pd };
+        }
+      }
+      return { x: 4, offset: 2, pc: 3, pd: 8 };
+    };
     for (let i = 0; i < count; i += 1) {
       const type = selected[i % selected.length];
       if (type === 'intersectingChordsSegment') {
-        const [pa, pb, pc] = segmentPairs[randInt(0, segmentPairs.length - 1)];
-        const pd = (pa * pb) / pc;
+        const [pa, pb, pc, pd] = makeIntersectingChordSegments();
         questions.push(
           `圓內兩弦 \\(AB\\)、\\(CD\\) 相交於 \\(P\\)。若 \\(PA=${pa}\\)、\\(PB=${pb}\\)、\\(PC=${pc}\\)，求 \\(PD\\) 的長度。`
         );
@@ -2128,13 +2248,7 @@
           `簡答：\\(x=${x}\\)。過程：由 \\(PA\\times PB=PC\\times PD\\)，得 \\(x(x+${offset})=${factor}\\times${other}=${product}\\)，解得正值 \\(x=${x}\\)。`
         );
       } else if (type === 'algebraTangentSecant') {
-        const choices = [
-          [4, 5, 6],
-          [9, 7, 12],
-          [5, 4, 5],
-          [16, 9, 20],
-        ];
-        const [x, offset, pt] = choices[randInt(0, choices.length - 1)];
+        const { x, offset, pt } = makeTangentSecantAlgebra();
         questions.push(
           `自圓外一點 \\(P\\) 作切線 \\(PT\\) 與割線 \\(PAB\\)。若 \\(PT=${pt}\\)、\\(PA=x\\)、\\(PB=x+${offset}\\)，求 \\(x\\)。`
         );
@@ -2142,13 +2256,7 @@
           `簡答：\\(x=${x}\\)。過程：切割線定理 \\(PT^2=PA\\times PB\\)，所以 \\(${pt}^2=x(x+${offset})\\)，解得正值 \\(x=${x}\\)。`
         );
       } else if (type === 'algebraExternalSecants') {
-        const choices = [
-          [4, 2, 3, 8],
-          [6, 3, 2, 27],
-          [5, 7, 4, 15],
-          [8, 4, 6, 16],
-        ];
-        const [x, offset, pc, pd] = choices[randInt(0, choices.length - 1)];
+        const { x, offset, pc, pd } = makeExternalSecantsAlgebra();
         questions.push(
           `圓外一點 \\(P\\) 作兩割線 \\(PAB\\)、\\(PCD\\)。若 \\(PA=x\\)、\\(PB=x+${offset}\\)、\\(PC=${pc}\\)、\\(PD=${pd}\\)，求 \\(x\\)。`
         );
@@ -2170,7 +2278,7 @@
           `圓內兩弦 \\(AB\\)、\\(CD\\) 相交於 \\(P\\)。若 \\(P\\) 將 \\(AB\\) 分成 \\(m:n=${m}:${n}\\)，且 \\(PC=${pc}\\)、\\(PD=${pd}\\)，求 \\(AB\\) 全長。`
         );
         answers.push(
-          `簡答：\\(AB=${total}\\)。過程：設 \\(PA=${m}k\\)、\\(PB=${n}k\\)。由 \\(PA\\times PB=PC\\times PD\\)，得 \\(${m * n}k^2=${pc}\\times${pd}\\)，所以 \\(k=${k}\\)，\\(AB=(${m}+${n})k=${total}\\)。`
+          `簡答：\\(AB=${total}\\)。過程：設 \\(PA=${formatLinearTerm(m, 'k')}\\)、\\(PB=${formatLinearTerm(n, 'k')}\\)。由 \\(PA\\times PB=PC\\times PD\\)，得 \\(${m * n}k^2=${pc}\\times${pd}\\)，所以 \\(k=${k}\\)，\\(AB=(${m}+${n})k=${total}\\)。`
         );
       } else if (type === 'ratioTangentSecant') {
         const m = randInt(1, 3);
@@ -2250,12 +2358,9 @@
         const half = halfChord * scale;
         const r = radius * scale;
         const product = r * r - d * d;
-        const cm = randInt(2, 8);
-        if (product % cm !== 0) {
-          i -= 1;
-          continue;
-        }
-        const md = product / cm;
+        const throughCenter = i % 2 === 0;
+        const cm = throughCenter ? r - d : half;
+        const md = throughCenter ? r + d : half;
         questions.push(
           `圓 \\(O\\) 半徑為 \\(${r}\\)，弦 \\(AB\\) 的弦心距為 \\(${d}\\)，且 \\(M\\) 為 \\(AB\\) 的中點。另一弦 \\(CD\\) 過 \\(M\\)，若 \\(CM=${cm}\\)，求 \\(MD\\)。`
         );
@@ -2290,10 +2395,10 @@
         const totalC = product / outsideC;
         const chordC = totalC - outsideC;
         questions.push(
-          `兩平行弦 \\(AB\\)、\\(CD\\) 延長後交於圓外點 \\(P\\)。若 \\(PA=${outsideA}\\)、\\(AB=${chordA}\\)、\\(PC=${outsideC}\\)，求 \\(CD\\) 的長度。`
+          `兩弦 \\(AB\\)、\\(CD\\) 所在直線延長後交於圓外點 \\(P\\)。若 \\(PA=${outsideA}\\)、\\(AB=${chordA}\\)、\\(PC=${outsideC}\\)，求 \\(CD\\) 的長度。`
         );
         answers.push(
-          `簡答：\\(CD=${chordC}\\)。過程：雖然題目提到平行弦，但從同一外點引兩割線仍滿足 \\(PA\\times PB=PC\\times PD\\)。\\(PB=${totalA}\\)，所以 \\(${outsideA}\\times${totalA}=${outsideC}\\times PD\\)，得 \\(PD=${totalC}\\)，故 \\(CD=${chordC}\\)。`
+          `簡答：\\(CD=${chordC}\\)。過程：從同一圓外點引兩割線，滿足 \\(PA\\times PB=PC\\times PD\\)。\\(PB=${totalA}\\)，所以 \\(${outsideA}\\times${totalA}=${outsideC}\\times PD\\)，得 \\(PD=${totalC}\\)，故 \\(CD=${chordC}\\)。`
         );
       } else if (type === 'perpendicularChordLength') {
         const [distance, halfChord, radius] = pickTriple();
@@ -2318,7 +2423,7 @@
           `圓內兩弦相交於 \\(P\\)。若 \\(P\\) 將 \\(AB\\) 分成 \\(${m}:${n}\\)，且另一弦被 \\(P\\) 截成兩段的乘積為 \\(${product}\\)，求 \\(AB\\) 全長。`
         );
         answers.push(
-          `簡答：\\(AB=${total}\\)。過程：設 \\(PA=${m}k\\)、\\(PB=${n}k\\)，則 \\(PA\\times PB=${m * n}k^2=${product}\\)，得 \\(k=${k}\\)，所以 \\(AB=(${m}+${n})k=${total}\\)。`
+          `簡答：\\(AB=${total}\\)。過程：設 \\(PA=${formatLinearTerm(m, 'k')}\\)、\\(PB=${formatLinearTerm(n, 'k')}\\)，則 \\(PA\\times PB=${m * n}k^2=${product}\\)，得 \\(k=${k}\\)，所以 \\(AB=(${m}+${n})k=${total}\\)。`
         );
       } else if (type === 'ratioExternalSecantLength') {
         const m = randInt(1, 3);
@@ -2341,6 +2446,10 @@
           continue;
         }
         const pb = product / pa;
+        if (pb <= pa) {
+          i -= 1;
+          continue;
+        }
         questions.push(
           `由同一圓外點 \\(P\\) 作兩割線。已知第一條割線的 \\(PA\\times PB=${product}\\)，第二條割線的外部段為 \\(${pa}\\)，求第二條割線的全長。`
         );
@@ -2364,6 +2473,10 @@
           continue;
         }
         const pb = product / pa;
+        if (pb <= pa) {
+          i -= 1;
+          continue;
+        }
         questions.push(
           `圓外點 \\(P\\) 對圓作切線 \\(PT\\)，且 \\(PT=${pt}\\)。若另一割線 \\(PAB\\) 滿足 \\(PA=${pa}\\)，求 \\(PB\\)。`
         );
@@ -2417,8 +2530,23 @@
     for (let i = 0; i < count; i += 1) {
       const type = selected[i % selected.length];
       if (type === 'paritySum') {
-        const evenVar = ['a', 'm', 'p'][i % 3];
-        const oddVar = ['b', 'n', 'q'][i % 3];
+        const variablePairs = [
+          ['a', 'b'],
+          ['m', 'n'],
+          ['p', 'q'],
+          ['x', 'y'],
+          ['r', 's'],
+          ['u', 'v'],
+          ['A', 'B'],
+          ['M', 'N'],
+          ['X', 'Y'],
+          ['R', 'T'],
+          ['c', 'd'],
+          ['e', 'f'],
+          ['g', 'h'],
+          ['P', 'Q'],
+        ];
+        const [evenVar, oddVar] = variablePairs[randInt(0, variablePairs.length - 1)];
         questions.push(
           `已知 \\(${evenVar}\\) 為偶數，\\(${oddVar}\\) 為奇數。證明 \\(${evenVar}+${oddVar}\\) 必為奇數。`
         );
@@ -2426,39 +2554,72 @@
           `簡答：必為奇數。過程：設 \\(${evenVar}=2r\\)、\\(${oddVar}=2s+1\\)，則 \\(${evenVar}+${oddVar}=2r+2s+1=2(r+s)+1\\)，符合奇數形式。`
         );
       } else if (type === 'oddProduct') {
-        questions.push(`已知 \\(a\\)、\\(b\\) 均為奇數。證明 \\(ab\\) 必為奇數。`);
+        const variablePairs = [
+          ['a', 'b'],
+          ['m', 'n'],
+          ['p', 'q'],
+          ['x', 'y'],
+          ['r', 's'],
+          ['u', 'v'],
+          ['c', 'd'],
+          ['e', 'f'],
+          ['g', 'h'],
+          ['A', 'B'],
+          ['M', 'N'],
+          ['P', 'Q'],
+        ];
+        const [first, second] = variablePairs[randInt(0, variablePairs.length - 1)];
+        questions.push(`已知 \\(${first}\\)、\\(${second}\\) 均為奇數。證明 \\(${first}${second}\\) 必為奇數。`);
         answers.push(
-          `簡答：\\(ab\\) 必為奇數。過程：設 \\(a=2m+1\\)、\\(b=2n+1\\)，則 \\(ab=(2m+1)(2n+1)=2(2mn+m+n)+1\\)，所以為奇數。`
+          `簡答：\\(${first}${second}\\) 必為奇數。過程：設 \\(${first}=2m+1\\)、\\(${second}=2n+1\\)，則 \\(${first}${second}=(2m+1)(2n+1)=2(2mn+m+n)+1\\)，所以為奇數。`
         );
       } else if (type === 'squareParity') {
-        const parity = i % 2 === 0 ? '奇數' : '偶數';
+        const variable = ['n', 'm', 'a', 'x', 'p', 'q', 'r', 's', 'u', 'v', 'A', 'B'][randInt(0, 11)];
+        const parity = randInt(0, 1) === 0 ? '奇數' : '偶數';
         const form = parity === '奇數' ? '2k+1' : '2k';
-        questions.push(`已知 \\(n\\) 為${parity}。證明 \\(n^2\\) 必為${parity}。`);
+        questions.push(`已知 \\(${variable}\\) 為${parity}。證明 \\(${variable}^2\\) 必為${parity}。`);
         if (parity === '奇數') {
           answers.push(
-            `簡答：\\(n^2\\) 必為奇數。過程：設 \\(n=${form}\\)，則 \\(n^2=(2k+1)^2=4k^2+4k+1=2(2k^2+2k)+1\\)。`
+            `簡答：\\(${variable}^2\\) 必為奇數。過程：設 \\(${variable}=${form}\\)，則 \\(${variable}^2=(2k+1)^2=4k^2+4k+1=2(2k^2+2k)+1\\)。`
           );
         } else {
-          answers.push(`簡答：\\(n^2\\) 必為偶數。過程：設 \\(n=${form}\\)，則 \\(n^2=(2k)^2=4k^2=2(2k^2)\\)。`);
+          answers.push(`簡答：\\(${variable}^2\\) 必為偶數。過程：設 \\(${variable}=${form}\\)，則 \\(${variable}^2=(2k)^2=4k^2=2(2k^2)\\)。`);
         }
       } else if (type === 'linearParity') {
-        const c = randInt(1, 9);
+        const variable = ['n', 'm', 'x', 'p', 'q'][randInt(0, 4)];
+        const c = randInt(1, 30);
         const parity = c % 2 === 0 ? '偶數' : '奇數';
-        questions.push(`已知 \\(n\\) 為偶數。判斷並證明 \\(n+${c}\\) 的奇偶性。`);
+        questions.push(`已知 \\(${variable}\\) 為偶數。判斷並證明 \\(${variable}+${c}\\) 的奇偶性。`);
         answers.push(
-          `簡答：\\(n+${c}\\) 為${parity}。過程：設 \\(n=2k\\)，則 \\(n+${c}=2k+${c}\\)。因為 \\(${c}\\) 為${parity}，所以 \\(n+${c}\\) 為${parity}。`
+          `簡答：\\(${variable}+${c}\\) 為${parity}。過程：設 \\(${variable}=2k\\)，則 \\(${variable}+${c}=2k+${c}\\)。因為 \\(${c}\\) 為${parity}，所以 \\(${variable}+${c}\\) 為${parity}。`
         );
       } else if (type === 'oddSquaresSum') {
+        const variablePairs = [
+          ['a', 'b'],
+          ['m', 'n'],
+          ['p', 'q'],
+          ['x', 'y'],
+          ['r', 's'],
+          ['u', 'v'],
+          ['c', 'd'],
+          ['e', 'f'],
+          ['g', 'h'],
+          ['A', 'B'],
+          ['M', 'N'],
+          ['P', 'Q'],
+        ];
+        const [first, second] = variablePairs[randInt(0, variablePairs.length - 1)];
         questions.push(
-          `已知 \\(a\\)、\\(b\\) 均為奇數。證明 \\(a^2+b^2\\) 必為 \\(2\\) 的倍數但不一定是 \\(4\\) 的倍數。`
+          `已知 \\(${first}\\)、\\(${second}\\) 均為奇數。證明 \\(${first}^2+${second}^2\\) 必為 \\(2\\) 的倍數且不是 \\(4\\) 的倍數。`
         );
         answers.push(
-          `簡答：必為 \\(2\\) 的倍數，且不是 \\(4\\) 的倍數。過程：奇數平方除以 \\(4\\) 的餘數為 \\(1\\)，所以 \\(a^2+b^2\\equiv1+1\\equiv2\\pmod 4\\)。因此它是偶數，但不是 \\(4\\) 的倍數。`
+          `簡答：必為 \\(2\\) 的倍數，且不是 \\(4\\) 的倍數。過程：奇數平方除以 \\(4\\) 的餘數為 \\(1\\)，所以 \\(${first}^2+${second}^2\\equiv1+1\\equiv2\\pmod 4\\)。因此它是偶數，但不是 \\(4\\) 的倍數。`
         );
       } else if (type === 'consecutiveProductDivisible') {
-        const length = [2, 3, 4][i % 3];
+        const length = [2, 3, 4][randInt(0, 2)];
+        const start = randInt(0, 8);
         const divisor = length === 2 ? 2 : length === 3 ? 6 : 24;
-        const factors = Array.from({ length }, (_, idx) => `n+${idx}`)
+        const factors = Array.from({ length }, (_, idx) => `n+${start + idx}`)
           .map((text) => text.replace('+0', ''))
           .join(')(');
         questions.push(`證明任意 \\(${length}\\) 個連續整數的乘積 \\((${factors})\\) 必為 \\(${divisor}\\) 的倍數。`);
@@ -2466,7 +2627,7 @@
           `簡答：必為 \\(${divisor}\\) 的倍數。過程：\\(${length}\\) 個連續整數中必含有足夠的因數：${length === 2 ? '至少一個偶數，所以含因數 2' : length === 3 ? '至少一個 3 的倍數且至少一個偶數，所以含因數 6' : '必含 4 的倍數、3 的倍數與另一個偶因數，所以含因數 24'}。`
         );
       } else if (type === 'differenceSquaresDivisible') {
-        const gap = [2, 3, 4, 5][i % 4];
+        const gap = randInt(2, 18);
         questions.push(
           `已知 \\(a\\)、\\(b\\) 為整數且 \\(a-b=${gap}\\)。證明 \\(a^2-b^2\\) 必為 \\(${gap}\\) 的倍數。`
         );
@@ -2474,23 +2635,23 @@
           `簡答：必為 \\(${gap}\\) 的倍數。過程：\\(a^2-b^2=(a-b)(a+b)=${gap}(a+b)\\)，因此含有因數 \\(${gap}\\)。`
         );
       } else if (type === 'shiftedSquareMultiple') {
-        const shift = randInt(1, 6);
+        const shift = randInt(1, 20);
         questions.push(`已知 \\(k\\) 為正整數。證明 \\((k+${shift})^2-k^2\\) 必為 \\(${shift}\\) 的倍數。`);
         answers.push(
           `簡答：必為 \\(${shift}\\) 的倍數。過程：\\((k+${shift})^2-k^2=${shift}(2k+${shift})\\)，所以此式含因數 \\(${shift}\\)。`
         );
       } else if (type === 'quadraticCompletionMultiple') {
-        const divisor = [4, 9, 16, 25][i % 4];
-        const root = Math.sqrt(divisor);
-        const multiplier = [2, 3, 4, 5][i % 4];
+        const root = randInt(2, 12);
+        const divisor = root * root;
+        const multiplier = root * randInt(1, 5);
         questions.push(
-          `已知 \\(n\\) 為整數，證明 \\((${multiplier}n+${root})^2-2${root}(${multiplier}n+${root})+${divisor}\\) 必為 \\(${divisor}\\) 的倍數。`
+          `已知 \\(n\\) 為整數，證明 \\((${multiplier}n+${root})^2-${2 * root}(${multiplier}n+${root})+${divisor}\\) 必為 \\(${divisor}\\) 的倍數。`
         );
         answers.push(
-          `簡答：必為 \\(${divisor}\\) 的倍數。過程：令 \\(x=${multiplier}n+${root}\\)，原式 \\(=x^2-2${root}x+${divisor}=(x-${root})^2=(${multiplier}n)^2=${multiplier * multiplier}n^2\\)，可看出含有因數 \\(${divisor}\\)。`
+          `簡答：必為 \\(${divisor}\\) 的倍數。過程：令 \\(x=${multiplier}n+${root}\\)，原式 \\(=x^2-${2 * root}x+${divisor}=(x-${root})^2=(${multiplier}n)^2=${multiplier * multiplier}n^2\\)，可看出含有因數 \\(${divisor}\\)。`
         );
       } else if (type === 'factorSubstitutionMultiple') {
-        const ratio = randInt(2, 5);
+        const ratio = randInt(2, 12);
         const divisor = ratio * ratio + 1;
         questions.push(
           `已知 \\(a\\)、\\(b\\) 為正整數且 \\(a=${ratio}b\\)。證明 \\(a^2+b^2\\) 必為 \\(${divisor}\\) 的倍數。`
@@ -2499,7 +2660,7 @@
           `簡答：必為 \\(${divisor}\\) 的倍數。過程：代入 \\(a=${ratio}b\\)，得 \\(a^2+b^2=(${ratio}b)^2+b^2=${divisor}b^2\\)，所以為 \\(${divisor}\\) 的倍數。`
         );
       } else if (type === 'squareRemainder') {
-        const divisor = [4, 5, 6, 7][i % 4];
+        const divisor = [4, 5, 6, 7][randInt(0, 3)];
         const remainder = randInt(1, divisor - 1);
         const squareRemainderValue = (remainder * remainder) % divisor;
         questions.push(
@@ -2509,8 +2670,9 @@
           `簡答：餘數為 \\(${squareRemainderValue}\\)。過程：設 \\(n=${divisor}q+${remainder}\\)，則 \\(n^2\\equiv ${remainder}^2\\equiv ${squareRemainderValue}\\pmod{${divisor}}\\)。`
         );
       } else if (type === 'remainderParity') {
-        const divisor = [4, 6, 8][i % 3];
-        const remainder = [1, 3, 5][i % 3];
+        const divisor = [4, 6, 8, 10, 12, 14][randInt(0, 5)];
+        const oddRemainders = Array.from({ length: divisor - 1 }, (_, idx) => idx + 1).filter((value) => value % 2 === 1);
+        const remainder = oddRemainders[randInt(0, oddRemainders.length - 1)];
         questions.push(
           `若 \\(a\\) 除以 \\(${divisor}\\) 的餘數為 \\(${remainder}\\)，判斷 \\(a\\) 的奇偶性並說明理由。`
         );
@@ -2518,7 +2680,7 @@
           `簡答：\\(a\\) 為奇數。過程：\\(${divisor}\\) 是偶數，\\(a=${divisor}q+${remainder}\\)。偶數倍加奇數仍為奇數，所以 \\(a\\) 為奇數。`
         );
       } else if (type === 'expressionRemainder') {
-        const divisor = [4, 5, 7][i % 3];
+        const divisor = [4, 5, 7][randInt(0, 2)];
         const remainder = randInt(1, divisor - 1);
         const constant = randInt(1, 8);
         const result = ((remainder + constant) * (remainder + constant)) % divisor;
@@ -2540,82 +2702,129 @@
           `簡答：餘數為 \\(${result}\\)。過程：若兩年齡分別為 \\(x\\)、\\(y\\)，則 \\(x^2+y^2\\equiv${r1}^2+${r2}^2\\equiv${result}\\pmod 7\\)。`
         );
       } else if (type === 'notDivisibleClaim') {
-        const remainder = [1, 2, 3][i % 3];
+        const divisor = [4, 6, 8, 10][randInt(0, 3)];
+        const remainder = randInt(1, divisor - 1);
         questions.push(
-          `若 \\(n\\) 為正整數且 \\(n\\) 不被 \\(4\\) 整除，且 \\(n\\) 除以 \\(4\\) 的餘數為 \\(${remainder}\\)。判斷 \\(n^2+n\\) 是否一定為 \\(4\\) 的倍數。`
+          `若 \\(n\\) 為正整數且 \\(n\\) 除以 \\(${divisor}\\) 的餘數為 \\(${remainder}\\)。判斷 \\(n^2+n\\) 是否一定為 \\(${divisor}\\) 的倍數。`
         );
-        const result = (remainder * remainder + remainder) % 4;
+        const result = (remainder * remainder + remainder) % divisor;
         const verdict = result === 0 ? '是' : '否';
         answers.push(
-          `簡答：${verdict}。過程：只需看餘數，\\(n^2+n\\equiv${remainder}^2+${remainder}\\equiv${result}\\pmod 4\\)。${result === 0 ? '因此一定是 4 的倍數。' : '餘數不為 0，因此不一定是 4 的倍數。'}`
+          `簡答：${verdict}。過程：只需看餘數，\\(n^2+n\\equiv${remainder}^2+${remainder}\\equiv${result}\\pmod{${divisor}}\\)。${result === 0 ? `因此一定是 ${divisor} 的倍數。` : `餘數不為 0，因此不會是 ${divisor} 的倍數。`}`
         );
       } else if (type === 'threeConsecutiveProductSix') {
-        questions.push(`證明任意三個連續整數 \\(n\\)、\\(n+1\\)、\\(n+2\\) 的乘積必為 \\(6\\) 的倍數。`);
+        const start = randInt(0, 24);
+        const terms = [0, 1, 2].map((offset) => `n+${start + offset}`.replace('+0', '')).join('、');
+        questions.push(`證明任意三個連續整數 \\(${terms}\\) 的乘積必為 \\(6\\) 的倍數。`);
         answers.push(
           `簡答：必為 \\(6\\) 的倍數。過程：三個連續整數中必有一個是 \\(3\\) 的倍數，也必有一個是偶數，因此乘積同時含因數 \\(3\\) 與 \\(2\\)，所以為 \\(6\\) 的倍數。`
         );
       } else if (type === 'consecutiveSumMultiple') {
-        const countN = [3, 5, 7][i % 3];
+        const countN = [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25][randInt(0, 11)];
         questions.push(`證明任意 \\(${countN}\\) 個連續整數的和必為 \\(${countN}\\) 的倍數。`);
         answers.push(
           `簡答：必為 \\(${countN}\\) 的倍數。過程：設中間數為 \\(m\\)，這 \\(${countN}\\) 個數可左右配對，總和為 \\(${countN}m\\)，所以為 \\(${countN}\\) 的倍數。`
         );
       } else if (type === 'consecutiveOddSquaresEight') {
-        questions.push(`證明任意兩個連續奇數的平方差必為 \\(8\\) 的倍數。`);
+        const shift = randInt(0, 24);
+        questions.push(`證明兩個連續奇數 \\(2k+${2 * shift + 1}\\)、\\(2k+${2 * shift + 3}\\) 的平方差必為 \\(8\\) 的倍數。`);
         answers.push(
-          `簡答：必為 \\(8\\) 的倍數。過程：設兩連續奇數為 \\(2k+1\\)、\\(2k+3\\)，平方差為 \\((2k+3)^2-(2k+1)^2=8k+8=8(k+1)\\)。`
+          `簡答：必為 \\(8\\) 的倍數。過程：平方差為 \\((2k+${2 * shift + 3})^2-(2k+${2 * shift + 1})^2=8(k+${shift + 1})\\)，所以必為 \\(8\\) 的倍數。`
         );
       } else if (type === 'twoConsecutiveEvenProduct') {
-        questions.push(`證明任意兩個連續偶數的乘積必為 \\(8\\) 的倍數。`);
+        const shift = randInt(0, 24);
+        const firstTerm = shift === 0 ? '2k' : `2k+${2 * shift}`;
+        questions.push(`證明兩個連續偶數 \\(${firstTerm}\\)、\\(2k+${2 * shift + 2}\\) 的乘積必為 \\(8\\) 的倍數。`);
         answers.push(
-          `簡答：必為 \\(8\\) 的倍數。過程：設兩連續偶數為 \\(2k\\)、\\(2k+2\\)，乘積為 \\(2k(2k+2)=4k(k+1)\\)。因為 \\(k\\)、\\(k+1\\) 必有一個偶數，所以整體含因數 \\(8\\)。`
+          `簡答：必為 \\(8\\) 的倍數。過程：令 \\(m=k+${shift}\\)，兩數為 \\(2m\\)、\\(2m+2\\)，乘積為 \\(4m(m+1)\\)。因為 \\(m\\)、\\(m+1\\) 必有一個偶數，所以整體含因數 \\(8\\)。`
         );
       } else if (type === 'consecutiveWeightedSumFour') {
+        const variableTriples = [
+          ['a', 'b', 'c'],
+          ['x', 'y', 'z'],
+          ['p', 'q', 'r'],
+          ['m', 'n', 's'],
+          ['A', 'B', 'C'],
+          ['P', 'Q', 'R'],
+          ['u', 'v', 'w'],
+          ['r', 's', 't'],
+          ['c', 'd', 'e'],
+          ['f', 'g', 'h'],
+          ['M', 'N', 'P'],
+          ['X', 'Y', 'Z'],
+        ];
+        const [first, middle, last] = variableTriples[randInt(0, variableTriples.length - 1)];
         questions.push(
-          `已知 \\(a\\)、\\(b\\)、\\(c\\) 是三個連續整數，且 \\(a<b<c\\)。證明 \\(a+2b+c\\) 必為 \\(4\\) 的倍數。`
+          `已知 \\(${first}\\)、\\(${middle}\\)、\\(${last}\\) 是三個連續整數，且 \\(${first}<${middle}<${last}\\)。證明 \\(${first}+2${middle}+${last}\\) 必為 \\(4\\) 的倍數。`
         );
         answers.push(
-          `簡答：必為 \\(4\\) 的倍數。過程：設 \\(a=n\\)、\\(b=n+1\\)、\\(c=n+2\\)，則 \\(a+2b+c=n+2(n+1)+(n+2)=4n+4=4(n+1)\\)。`
+          `簡答：必為 \\(4\\) 的倍數。過程：設 \\(${first}=n\\)、\\(${middle}=n+1\\)、\\(${last}=n+2\\)，則 \\(${first}+2${middle}+${last}=n+2(n+1)+(n+2)=4n+4=4(n+1)\\)。`
         );
       } else if (type === 'positiveSquareOrder') {
-        questions.push(`已知 \\(a>b>0\\)。證明 \\(a^2>b^2\\)。`);
+        const variablePairs = [['a', 'b'], ['x', 'y'], ['m', 'n'], ['p', 'q'], ['r', 's'], ['u', 'v'], ['A', 'B'], ['M', 'N'], ['c', 'd'], ['e', 'f'], ['g', 'h'], ['X', 'Y']];
+        const [larger, smaller] = variablePairs[randInt(0, variablePairs.length - 1)];
+        questions.push(`已知 \\(${larger}>${smaller}>0\\)。證明 \\(${larger}^2>${smaller}^2\\)。`);
         answers.push(
-          `簡答：\\(a^2>b^2\\)。過程：\\(a^2-b^2=(a-b)(a+b)\\)。因為 \\(a-b>0\\)、\\(a+b>0\\)，所以 \\(a^2-b^2>0\\)。`
+          `簡答：\\(${larger}^2>${smaller}^2\\)。過程：\\(${larger}^2-${smaller}^2=(${larger}-${smaller})(${larger}+${smaller})\\)。因為 \\(${larger}-${smaller}>0\\)、\\(${larger}+${smaller}>0\\)，所以 \\(${larger}^2-${smaller}^2>0\\)。`
         );
       } else if (type === 'negativeSquareReverse') {
-        questions.push(`已知 \\(a<b<0\\)。證明 \\(a^2>b^2\\)。`);
-        answers.push(`簡答：\\(a^2>b^2\\)。過程：由 \\(a<b<0\\) 可知 \\(|a|>|b|\\)，兩邊平方得 \\(a^2>b^2\\)。`);
+        const variablePairs = [['a', 'b'], ['x', 'y'], ['m', 'n'], ['p', 'q'], ['r', 's'], ['u', 'v'], ['A', 'B'], ['M', 'N'], ['c', 'd'], ['e', 'f'], ['g', 'h'], ['X', 'Y']];
+        const [smaller, larger] = variablePairs[randInt(0, variablePairs.length - 1)];
+        questions.push(`已知 \\(${smaller}<${larger}<0\\)。證明 \\(${smaller}^2>${larger}^2\\)。`);
+        answers.push(`簡答：\\(${smaller}^2>${larger}^2\\)。過程：由 \\(${smaller}<${larger}<0\\) 可知 \\(|${smaller}|>|${larger}|\\)，兩邊平方得 \\(${smaller}^2>${larger}^2\\)。`);
       } else if (type === 'positiveReciprocalReverse') {
-        questions.push(`已知 \\(a>b>0\\)。證明 \\(\\frac{1}{a}<\\frac{1}{b}\\)。`);
+        const variablePairs = [['a', 'b'], ['x', 'y'], ['m', 'n'], ['p', 'q'], ['r', 's'], ['u', 'v'], ['A', 'B'], ['M', 'N'], ['c', 'd'], ['e', 'f'], ['g', 'h'], ['X', 'Y']];
+        const [larger, smaller] = variablePairs[randInt(0, variablePairs.length - 1)];
+        questions.push(`已知 \\(${larger}>${smaller}>0\\)。證明 \\(\\frac{1}{${larger}}<\\frac{1}{${smaller}}\\)。`);
         answers.push(
-          `簡答：\\(\\frac{1}{a}<\\frac{1}{b}\\)。過程：\\(\\frac{1}{b}-\\frac{1}{a}=\\frac{a-b}{ab}\\)。因為 \\(a-b>0\\)、\\(ab>0\\)，所以差為正。`
+          `簡答：\\(\\frac{1}{${larger}}<\\frac{1}{${smaller}}\\)。過程：\\(\\frac{1}{${smaller}}-\\frac{1}{${larger}}=\\frac{${larger}-${smaller}}{${larger}${smaller}}\\)。因為 \\(${larger}-${smaller}>0\\)、\\(${larger}${smaller}>0\\)，所以差為正。`
         );
       } else if (type === 'negativeReciprocalReverse') {
-        questions.push(`已知 \\(a<b<0\\)。判斷 \\(\\frac{1}{a}\\) 與 \\(\\frac{1}{b}\\) 的大小並證明。`);
+        const variablePairs = [['a', 'b'], ['x', 'y'], ['m', 'n'], ['p', 'q'], ['r', 's'], ['u', 'v'], ['A', 'B'], ['M', 'N'], ['c', 'd'], ['e', 'f'], ['g', 'h'], ['X', 'Y']];
+        const [smaller, larger] = variablePairs[randInt(0, variablePairs.length - 1)];
+        questions.push(`已知 \\(${smaller}<${larger}<0\\)。判斷 \\(\\frac{1}{${smaller}}\\) 與 \\(\\frac{1}{${larger}}\\) 的大小並證明。`);
         answers.push(
-          `簡答：\\(\\frac{1}{a}>\\frac{1}{b}\\)。過程：\\(\\frac{1}{a}-\\frac{1}{b}=\\frac{b-a}{ab}\\)。因為 \\(b-a>0\\)、\\(ab>0\\)，所以差為正。`
+          `簡答：\\(\\frac{1}{${smaller}}>\\frac{1}{${larger}}\\)。過程：\\(\\frac{1}{${smaller}}-\\frac{1}{${larger}}=\\frac{${larger}-${smaller}}{${smaller}${larger}}\\)。因為 \\(${larger}-${smaller}>0\\)、\\(${smaller}${larger}>0\\)，所以差為正。`
         );
       } else if (type === 'multiplyByNegative') {
-        questions.push(`已知 \\(a>b\\) 且 \\(c<0\\)。證明 \\(ac<bc\\)。`);
+        const variableTriples = [['a', 'b', 'c'], ['x', 'y', 'k'], ['m', 'n', 'r'], ['p', 'q', 's'], ['A', 'B', 't'], ['M', 'N', 'u'], ['r', 's', 'v'], ['c', 'd', 'w'], ['P', 'Q', 'h'], ['X', 'Y', 'g']];
+        const [larger, smaller, negative] = variableTriples[randInt(0, variableTriples.length - 1)];
+        questions.push(`已知 \\(${larger}>${smaller}\\) 且 \\(${negative}<0\\)。證明 \\(${larger}${negative}<${smaller}${negative}\\)。`);
         answers.push(
-          `簡答：\\(ac<bc\\)。過程：由 \\(a-b>0\\)、\\(c<0\\)，得 \\(c(a-b)<0\\)，也就是 \\(ac-bc<0\\)，所以 \\(ac<bc\\)。`
+          `簡答：\\(${larger}${negative}<${smaller}${negative}\\)。過程：由 \\(${larger}-${smaller}>0\\)、\\(${negative}<0\\)，得 \\(${negative}(${larger}-${smaller})<0\\)，也就是 \\(${larger}${negative}-${smaller}${negative}<0\\)，所以 \\(${larger}${negative}<${smaller}${negative}\\)。`
         );
       } else if (type === 'amGmTwoNumbers') {
-        questions.push(`已知 \\(a\\)、\\(b\\) 為正數。證明 \\(\\frac{a+b}{2}\\ge \\sqrt{ab}\\)。`);
+        const variablePairs = [['a', 'b'], ['x', 'y'], ['m', 'n'], ['p', 'q'], ['r', 's'], ['u', 'v'], ['A', 'B'], ['M', 'N'], ['c', 'd'], ['e', 'f'], ['g', 'h'], ['X', 'Y']];
+        const [first, second] = variablePairs[randInt(0, variablePairs.length - 1)];
+        questions.push(`已知 \\(${first}\\)、\\(${second}\\) 為正數。證明 \\(\\frac{${first}+${second}}{2}\\ge \\sqrt{${first}${second}}\\)。`);
         answers.push(
-          `簡答：成立。過程：\\((\\sqrt a-\\sqrt b)^2\\ge0\\)，展開得 \\(a+b-2\\sqrt{ab}\\ge0\\)，所以 \\(\\frac{a+b}{2}\\ge\\sqrt{ab}\\)。`
+          `簡答：成立。過程：\\((\\sqrt{${first}}-\\sqrt{${second}})^2\\ge0\\)，展開得 \\(${first}+${second}-2\\sqrt{${first}${second}}\\ge0\\)，所以 \\(\\frac{${first}+${second}}{2}\\ge\\sqrt{${first}${second}}\\)。`
         );
       } else if (type === 'radicalOrder') {
-        questions.push(`已知 \\(0<a<1\\)。證明 \\(\\sqrt a>a\\)。`);
+        const variable = ['a', 'x', 't', 'm', 'n', 'p', 'q', 'r', 'u', 'v', 'A', 'B'][randInt(0, 11)];
+        questions.push(`已知 \\(0<${variable}<1\\)。證明 \\(\\sqrt{${variable}}>${variable}\\)。`);
         answers.push(
-          `簡答：\\(\\sqrt a>a\\)。過程：因為 \\(0<a<1\\)，所以 \\(0<\\sqrt a<1\\)。兩邊同乘正數 \\(\\sqrt a\\)，得 \\(a<\\sqrt a\\)。`
+          `簡答：\\(\\sqrt{${variable}}>${variable}\\)。過程：因為 \\(0<${variable}<1\\)，所以 \\(0<\\sqrt{${variable}}<1\\)。兩邊同乘正數 \\(\\sqrt{${variable}}\\)，得 \\(${variable}<\\sqrt{${variable}}\\)。`
         );
       } else if (type === 'sameSignProductInequality') {
+        const variables = [
+          ['a', 'b', 'c', 'd'],
+          ['p', 'q', 'r', 's'],
+          ['w', 'x', 'y', 'z'],
+          ['m', 'n', 'r', 't'],
+          ['A', 'B', 'C', 'D'],
+          ['P', 'Q', 'R', 'T'],
+          ['u', 'v', 's', 'h'],
+          ['e', 'f', 'g', 'h'],
+          ['L', 'M', 'N', 'P'],
+          ['X', 'Y', 'Z', 'W'],
+        ][randInt(0, 9)];
+        const [first, second, third, fourth] = variables;
         questions.push(
-          `已知 \\(ab<0\\)、\\(bc>0\\)、\\(cd<0\\)。判斷 \\(a\\)、\\(d\\) 是否同號，並證明 \\(abcd>0\\)。`
+          `已知 \\(${first}${second}<0\\)、\\(${second}${third}>0\\)、\\(${third}${fourth}<0\\)。判斷 \\(${first}\\)、\\(${fourth}\\) 是否同號，並證明 \\(${first}${second}${third}${fourth}>0\\)。`
         );
         answers.push(
-          `簡答：\\(a\\)、\\(d\\) 同號，且 \\(abcd>0\\)。過程：\\(ab<0\\) 表示 \\(a\\)、\\(b\\) 異號；\\(bc>0\\) 表示 \\(b\\)、\\(c\\) 同號；\\(cd<0\\) 表示 \\(c\\)、\\(d\\) 異號，所以 \\(a\\)、\\(d\\) 同號。又 \\((ab)(cd)>0\\)，故 \\(abcd>0\\)。`
+          `簡答：\\(${first}\\)、\\(${fourth}\\) 同號，且 \\(${first}${second}${third}${fourth}>0\\)。過程：\\(${first}${second}<0\\) 表示 \\(${first}\\)、\\(${second}\\) 異號；\\(${second}${third}>0\\) 表示 \\(${second}\\)、\\(${third}\\) 同號；\\(${third}${fourth}<0\\) 表示 \\(${third}\\)、\\(${fourth}\\) 異號，所以 \\(${first}\\)、\\(${fourth}\\) 同號。又 \\((${first}${second})(${third}${fourth})>0\\)，故 \\(${first}${second}${third}${fourth}>0\\)。`
         );
       }
     }
@@ -2668,11 +2877,33 @@
       ['A', 'B', 'C'],
       ['P', 'Q', 'R'],
       ['X', 'Y', 'Z'],
+      ['D', 'E', 'F'],
+      ['L', 'M', 'N'],
+      ['R', 'S', 'T'],
+      ['U', 'V', 'W'],
+      ['H', 'I', 'J'],
+      ['A', 'D', 'E'],
+      ['M', 'P', 'Q'],
+    ];
+    const quadrilaterals = ['ABCD', 'PQRS', 'WXYZ', 'DEFG', 'LMNO', 'RSTU', 'HIJK', 'UVWX', 'MNOP', 'EFGH', 'JKLM', 'STUV'];
+    const arcLabels = [
+      ['AB', 'CD', 'AC', 'BD'],
+      ['PQ', 'RS', 'PR', 'QS'],
+      ['WX', 'YZ', 'WY', 'XZ'],
+      ['DE', 'FG', 'DF', 'EG'],
+      ['HI', 'JK', 'HJ', 'IK'],
+      ['LM', 'NO', 'LN', 'MO'],
+      ['RS', 'TU', 'RT', 'SU'],
+      ['UV', 'WX', 'UW', 'VX'],
+      ['MN', 'PQ', 'MP', 'NQ'],
+      ['EF', 'GH', 'EG', 'FH'],
+      ['JK', 'LM', 'JL', 'KM'],
+      ['ST', 'VW', 'SV', 'TW'],
     ];
     const arc = (name) => `\\overset{\\frown}{${name}}`;
     for (let i = 0; i < count; i += 1) {
       const type = selected[i % selected.length];
-      const [a, b, c] = letters[i % letters.length];
+      const [a, b, c] = letters[randInt(0, letters.length - 1)];
       if (type === 'circumcenterEqualDistance') {
         questions.push(`已知 \\(O\\) 為 \\(\\triangle ${a}${b}${c}\\) 的外心。證明 \\(O${a}=O${b}=O${c}\\)。`);
         answers.push(
@@ -2724,25 +2955,66 @@
           `簡答：\\(P${a}=P${b}\\)。過程：垂直平分線上的任一點到線段兩端距離相等。也可連接 \\(P${a}\\)、\\(P${b}\\)，用兩個直角三角形的共用邊與半段相等證明全等。`
         );
       } else if (type === 'angleBisectorSymmetry') {
+        const labels = [
+          ['A', 'P', 'Q', 'D'],
+          ['B', 'O', 'R', 'E'],
+          ['M', 'Q', 'S', 'N'],
+          ['C', 'T', 'U', 'F'],
+          ['D', 'I', 'V', 'G'],
+          ['E', 'J', 'W', 'H'],
+          ['L', 'K', 'N', 'M'],
+          ['R', 'S', 'T', 'U'],
+          ['X', 'Y', 'Z', 'W'],
+          ['F', 'G', 'H', 'I'],
+          ['P', 'R', 'S', 'Q'],
+          ['U', 'V', 'M', 'N'],
+        ][randInt(0, 11)];
+        const [left, vertex, point, right] = labels;
         questions.push(
-          `已知 \\(\\angle APQ=\\angle QPD\\)，且 \\(QA\\perp PA\\)、\\(QD\\perp PD\\)。證明 \\(QA=QD\\)。`
+          `已知 \\(\\angle ${left}${vertex}${point}=\\angle ${point}${vertex}${right}\\)，且 \\(${point}${left}\\perp ${vertex}${left}\\)、\\(${point}${right}\\perp ${vertex}${right}\\)。證明 \\(${point}${left}=${point}${right}\\)。`
         );
         answers.push(
-          `簡答：\\(QA=QD\\)。過程：點 \\(Q\\) 在角平分線上。角平分線上的點到角兩邊距離相等，因此 \\(QA=QD\\)。`
+          `簡答：\\(${point}${left}=${point}${right}\\)。過程：點 \\(${point}\\) 在角平分線上。角平分線上的點到角兩邊距離相等，因此 \\(${point}${left}=${point}${right}\\)。`
         );
       } else if (type === 'squareSharedVertex') {
+        const labels = [
+          ['ABCD', 'AEFG', 'ABE', 'ADG', 'BE', 'DG'],
+          ['PQRS', 'PTUV', 'PQT', 'PSV', 'QT', 'SV'],
+          ['WXYZ', 'WABC', 'WXA', 'WZC', 'XA', 'ZC'],
+          ['DEFG', 'DHIJ', 'DEH', 'DGJ', 'EH', 'GJ'],
+          ['LMNO', 'LPQR', 'LMP', 'LOR', 'MP', 'OR'],
+          ['RSTU', 'RVWX', 'RSV', 'RUX', 'SV', 'UX'],
+          ['HIJK', 'HLMN', 'HIL', 'HKN', 'IL', 'KN'],
+          ['UVWX', 'UABC', 'UVA', 'UXC', 'VA', 'XC'],
+          ['MNOP', 'MSTU', 'MNS', 'MPU', 'NS', 'PU'],
+          ['EFGH', 'EJKL', 'EFJ', 'EHL', 'FJ', 'HL'],
+        ][randInt(0, 9)];
+        const [sq1, sq2, tri1, tri2, side1, side2] = labels;
         questions.push(
-          `正方形 \\(ABCD\\) 與 \\(AEFG\\) 共用頂點 \\(A\\)。證明 \\(\\triangle ABE\\cong\\triangle ADG\\)，並推出 \\(BE=DG\\)。`
+          `正方形 \\(${sq1}\\) 與 \\(${sq2}\\) 共用頂點 \\(${sq1[0]}\\)，且 \\(\\angle ${tri1[1]}${tri1[0]}${tri1[2]}=\\angle ${tri2[1]}${tri2[0]}${tri2[2]}\\)。證明 \\(\\triangle ${tri1}\\cong\\triangle ${tri2}\\)，並推出 \\(${side1}=${side2}\\)。`
         );
         answers.push(
-          `簡答：\\(\\triangle ABE\\cong\\triangle ADG\\)，所以 \\(BE=DG\\)。過程：正方形給 \\(AB=AD\\)、\\(AE=AG\\)，且 \\(\\angle BAE\\) 與 \\(\\angle DAG\\) 都由一個共同角加上 \\(90^\\circ\\) 組成，故相等。由 SAS 全等，得對應邊 \\(BE=DG\\)。`
+          `簡答：\\(\\triangle ${tri1}\\cong\\triangle ${tri2}\\)，所以 \\(${side1}=${side2}\\)。過程：兩個正方形給出 \\(${tri1[0]}${tri1[1]}=${tri2[0]}${tri2[1]}\\)、\\(${tri1[0]}${tri1[2]}=${tri2[0]}${tri2[2]}\\)，且夾角由題設相等。由 SAS 全等，得對應邊 \\(${side1}=${side2}\\)。`
         );
       } else if (type === 'equilateralSharedVertex') {
+        const labels = [
+          ['ABC', 'ADE', 'BD', 'CE'],
+          ['PQR', 'PST', 'QS', 'RT'],
+          ['XYZ', 'XUV', 'YU', 'ZV'],
+          ['DEF', 'DGH', 'EG', 'FH'],
+          ['LMN', 'LPQ', 'MP', 'NQ'],
+          ['RST', 'RUV', 'SU', 'TV'],
+          ['HIJ', 'HKL', 'IK', 'JL'],
+          ['UVW', 'UXY', 'VX', 'WY'],
+          ['MNO', 'MPQ', 'NP', 'OQ'],
+          ['EFG', 'EHI', 'FH', 'GI'],
+        ][randInt(0, 9)];
+        const [tri1, tri2, side1, side2] = labels;
         questions.push(
-          `\\(\\triangle ABC\\) 與 \\(\\triangle ADE\\) 皆為正三角形，且共用頂點 \\(A\\)。證明 \\(BD=CE\\)。`
+          `\\(\\triangle ${tri1}\\) 與 \\(\\triangle ${tri2}\\) 皆為正三角形，且共用頂點 \\(${tri1[0]}\\)，並滿足 \\(\\angle ${tri1[1]}${tri1[0]}${tri2[1]}=\\angle ${tri1[2]}${tri1[0]}${tri2[2]}\\)。證明 \\(${side1}=${side2}\\)。`
         );
         answers.push(
-          `簡答：\\(BD=CE\\)。過程：正三角形給 \\(AB=AC\\)、\\(AD=AE\\)，且 \\(\\angle BAD=\\angle CAE\\)（同為共同角加 \\(60^\\circ\\) 或相減 \\(60^\\circ\\)）。由 SAS 全等 \\(\\triangle BAD\\cong\\triangle CAE\\)，所以 \\(BD=CE\\)。`
+          `簡答：\\(${side1}=${side2}\\)。過程：正三角形給出 \\(${tri1[0]}${tri1[1]}=${tri1[0]}${tri1[2]}\\)、\\(${tri2[0]}${tri2[1]}=${tri2[0]}${tri2[2]}\\)。由題設兩夾角相等，兩個由共用頂點組成的三角形可用 SAS 判定全等，故 \\(${side1}=${side2}\\)。`
         );
       } else if (type === 'parallelLineSimilarity') {
         const ratio = randInt(2, 5);
@@ -2762,69 +3034,149 @@
           `簡答：\\(AD^2=${bd * dc}\\)。過程：斜邊上的高會形成三個相似直角三角形，得 \\(\\triangle ABD\\sim\\triangle CAD\\)。由對應邊比例可得 \\(\\frac{BD}{AD}=\\frac{AD}{DC}\\)，所以 \\(AD^2=BD\\times DC=${bd}\\times${dc}=${bd * dc}\\)。`
         );
       } else if (type === 'butterflySimilarity') {
+        const labels = [
+          ['AB', 'CD', 'AD', 'BC', 'O', 'AOB', 'DOC', 'OA', 'OC', 'OB', 'OD'],
+          ['PQ', 'RS', 'PR', 'QS', 'T', 'PTQ', 'RTS', 'TP', 'TS', 'TQ', 'TR'],
+          ['WX', 'YZ', 'WY', 'XZ', 'O', 'WOX', 'YOZ', 'OW', 'OZ', 'OX', 'OY'],
+          ['DE', 'FG', 'DF', 'EG', 'P', 'DPE', 'FPG', 'PD', 'PG', 'PE', 'PF'],
+          ['LM', 'NO', 'LO', 'MN', 'Q', 'LQM', 'OQN', 'QL', 'QN', 'QM', 'QO'],
+          ['RS', 'TU', 'RT', 'SU', 'V', 'RVS', 'TVU', 'VR', 'VU', 'VS', 'VT'],
+          ['HI', 'JK', 'HJ', 'IK', 'L', 'HLI', 'JLK', 'LH', 'LK', 'LI', 'LJ'],
+          ['UV', 'WX', 'UW', 'VX', 'Y', 'UYV', 'WYX', 'YU', 'YX', 'YV', 'YW'],
+          ['MN', 'PQ', 'MP', 'NQ', 'R', 'MRN', 'PRQ', 'RM', 'RQ', 'RN', 'RP'],
+          ['EF', 'GH', 'EG', 'FH', 'I', 'EIF', 'GIH', 'IE', 'IH', 'IF', 'IG'],
+        ][randInt(0, 9)];
+        const [parallel1, parallel2, diag1, diag2, meet, tri1, tri2, p1, p2, p3, p4] = labels;
         questions.push(
-          `已知 \\(AB\\parallel CD\\)，且 \\(AD\\) 與 \\(BC\\) 交於 \\(O\\)。證明 \\(\\triangle AOB\\sim\\triangle DOC\\)，並推出 \\(OA\\times OC=OB\\times OD\\)。`
+          `已知 \\(${parallel1}\\parallel ${parallel2}\\)，且 \\(${diag1}\\) 與 \\(${diag2}\\) 交於 \\(${meet}\\)。證明 \\(\\triangle ${tri1}\\sim\\triangle ${tri2}\\)，並推出 \\(${p1}\\times ${p2}=${p3}\\times ${p4}\\)。`
         );
-        answers.push(
-          `簡答：相似且 \\(OA\\times OC=OB\\times OD\\)。過程：因 \\(AB\\parallel CD\\)，內錯角相等；又 \\(\\angle AOB=\\angle DOC\\) 為對頂角，所以 \\(\\triangle AOB\\sim\\triangle DOC\\)。由比例 \\(OA:OD=OB:OC\\)，交叉相乘得 \\(OA\\times OC=OB\\times OD\\)。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `相似且 \\(${p1}\\times ${p2}=${p3}\\times ${p4}\\)`,
+          `因平行線形成內錯角相等，又交點處有對頂角相等，所以兩三角形相似。由對應邊比例交叉相乘，可得 \\(${p1}\\times ${p2}=${p3}\\times ${p4}\\)。`
         );
       } else if (type === 'angleBisectorRatio') {
         const ab = randInt(4, 12);
         const ac = randInt(4, 12);
+        const commonDivisor = gcdInt(ab, ac);
+        const ratioText = `${ab / commonDivisor}:${ac / commonDivisor}`;
+        const ratioDetailText = ratioText === `${ab}:${ac}` ? ratioText : `${ab}:${ac}=${ratioText}`;
         questions.push(
           `在 \\(\\triangle ABC\\) 中，\\(AD\\) 平分 \\(\\angle BAC\\) 且交 \\(BC\\) 於 \\(D\\)。若 \\(AB=${ab}\\)、\\(AC=${ac}\\)，求 \\(BD:DC\\) 並說明理由。`
         );
         answers.push(
-          `簡答：\\(BD:DC=${ab}:${ac}\\)。過程：角平分線定理指出，內角平分線把對邊分成的兩段，長度比等於夾該角兩邊的長度比，所以 \\(BD:DC=AB:AC=${ab}:${ac}\\)。`
+          `簡答：\\(BD:DC=${ratioText}\\)。過程：角平分線定理指出，內角平分線把對邊分成的兩段，長度比等於夾該角兩邊的長度比，所以 \\(BD:DC=AB:AC=${ratioDetailText}\\)。`
         );
       } else if (type === 'altitudeCircumcircleProduct') {
+        const labels = [
+          ['ABC', 'AD', 'AH', 'BC', 'AB', 'AC'],
+          ['PQR', 'PS', 'PT', 'QR', 'PQ', 'PR'],
+          ['XYZ', 'XU', 'XV', 'YZ', 'XY', 'XZ'],
+          ['DEF', 'DG', 'DH', 'EF', 'DE', 'DF'],
+          ['LMN', 'LP', 'LQ', 'MN', 'LM', 'LN'],
+          ['RST', 'RU', 'RV', 'ST', 'RS', 'RT'],
+          ['HIJ', 'HK', 'HL', 'IJ', 'HI', 'HJ'],
+          ['UVW', 'UX', 'UY', 'VW', 'UV', 'UW'],
+          ['MNO', 'MP', 'MQ', 'NO', 'MN', 'MO'],
+          ['EFG', 'EH', 'EI', 'FG', 'EF', 'EG'],
+        ][randInt(0, 9)];
+        const [tri, diameter, height, base, side1, side2] = labels;
         questions.push(
-          `已知 \\(\\triangle ABC\\) 的外接圓直徑為 \\(AD\\)，且 \\(AH\\perp BC\\)。證明 \\(AB\\times AC=AD\\times AH\\)。`
+          `已知 \\(\\triangle ${tri}\\) 的外接圓直徑為 \\(${diameter}\\)，且 \\(${height}\\perp ${base}\\)。證明 \\(${side1}\\times ${side2}=${diameter}\\times ${height}\\)。`
         );
         answers.push(
-          `簡答：\\(AB\\times AC=AD\\times AH\\)。過程：因 \\(AD\\) 為外接圓直徑，可利用同弧角與直角建立相似三角形，得到 \\(\\frac{AB}{AD}=\\frac{AH}{AC}\\)。交叉相乘即得 \\(AB\\times AC=AD\\times AH\\)。`
+          `簡答：\\(${side1}\\times ${side2}=${diameter}\\times ${height}\\)。過程：因 \\(${diameter}\\) 為外接圓直徑，可利用同弧角與直角建立相似三角形，得到對應邊比例。交叉相乘即得 \\(${side1}\\times ${side2}=${diameter}\\times ${height}\\)。`
         );
       } else if (type === 'parallelChordsEqualArcs') {
+        const [chord1, chord2, arc1, arc2] = arcLabels[randInt(0, arcLabels.length - 1)];
+        const circularOrder = `${chord1[0]}、${chord1[1]}、${chord2[1]}、${chord2[0]}`;
         questions.push(
-          `在同一圓中，若弦 \\(AB\\parallel CD\\)。證明弧 \\(${arc('AC')}\\) 與弧 \\(${arc('BD')}\\) 度數相等。`
+          `在同一圓中，圓周上四點依序為 \\(${circularOrder}\\)。若弦 \\(${chord1}\\parallel ${chord2}\\)，證明弧 \\(${arc(arc1)}\\) 與弧 \\(${arc(arc2)}\\) 度數相等。`
         );
         answers.push(
-          `簡答：弧 \\(${arc('AC')}\\) 與弧 \\(${arc('BD')}\\) 相等。過程：平行弦造成相等的內錯角，而這些角分別對應兩段弧。由圓周角相等可推出所對弧相等。`
+          `簡答：弧 \\(${arc(arc1)}\\) 與弧 \\(${arc(arc2)}\\) 相等。過程：平行弦造成相等的內錯角，而這些角分別對應兩段弧。由圓周角相等可推出所對弧相等。`
         );
       } else if (type === 'tangentSegmentsEqual') {
-        questions.push(`自圓外一點 \\(P\\) 引兩切線 \\(PA\\)、\\(PB\\)。證明 \\(PA=PB\\)。`);
+        const labels = [
+          ['P', 'A', 'B', 'O'],
+          ['Q', 'C', 'D', 'I'],
+          ['T', 'M', 'N', 'O'],
+          ['R', 'X', 'Y', 'S'],
+          ['S', 'E', 'F', 'C'],
+          ['U', 'G', 'H', 'O'],
+          ['V', 'J', 'K', 'I'],
+          ['W', 'L', 'M', 'P'],
+          ['X', 'N', 'Q', 'O'],
+          ['Y', 'R', 'S', 'T'],
+          ['Z', 'U', 'V', 'O'],
+          ['A', 'M', 'N', 'C'],
+        ][randInt(0, 11)];
+        const [point, t1, t2, center] = labels;
+        questions.push(`自圓 \\(${center}\\) 外一點 \\(${point}\\) 引兩切線 \\(${point}${t1}\\)、\\(${point}${t2}\\)。證明 \\(${point}${t1}=${point}${t2}\\)。`);
         answers.push(
-          `簡答：\\(PA=PB\\)。過程：連接圓心 \\(O\\) 至切點 \\(A\\)、\\(B\\)。半徑垂直切線，故 \\(\\triangle OAP\\)、\\(\\triangle OBP\\) 為直角三角形；又 \\(OA=OB\\)、\\(OP\\) 共用，由 RHS 全等得 \\(PA=PB\\)。`
+          `簡答：\\(${point}${t1}=${point}${t2}\\)。過程：連接圓心 \\(${center}\\) 至兩切點。半徑垂直切線，兩個直角三角形又有半徑相等與公共邊，由 RHS 全等得兩切線段相等。`
         );
       } else if (type === 'cyclicOppositeAngles') {
-        questions.push(`四邊形 \\(ABCD\\) 內接於一圓。證明 \\(\\angle A+\\angle C=180^\\circ\\)。`);
+        const quad = quadrilaterals[randInt(0, quadrilaterals.length - 1)];
+        questions.push(`四邊形 \\(${quad}\\) 內接於一圓。證明 \\(\\angle ${quad[0]}+\\angle ${quad[2]}=180^\\circ\\)。`);
         answers.push(
-          `簡答：\\(\\angle A+\\angle C=180^\\circ\\)。過程：\\(\\angle A\\) 與 \\(\\angle C\\) 分別對應互補的兩段弧，兩段弧合為整圓 \\(360^\\circ\\)。圓周角為所對弧的一半，所以兩角和為 \\(180^\\circ\\)。`
+          `簡答：\\(\\angle ${quad[0]}+\\angle ${quad[2]}=180^\\circ\\)。過程：內接四邊形的對角分別對應互補的兩段弧，兩段弧合為整圓 \\(360^\\circ\\)。圓周角為所對弧的一半，所以兩角和為 \\(180^\\circ\\)。`
         );
       } else if (type === 'tangentChordSimilarity') {
+        const labels = [
+          ['P', 'A', 'B', 'C', 'PAB', 'PCA'],
+          ['Q', 'D', 'E', 'F', 'QDE', 'QFD'],
+          ['T', 'M', 'N', 'R', 'TMN', 'TRM'],
+          ['S', 'X', 'Y', 'Z', 'SXY', 'SZX'],
+          ['U', 'G', 'H', 'I', 'UGH', 'UIG'],
+          ['V', 'J', 'K', 'L', 'VJK', 'VLJ'],
+          ['W', 'M', 'N', 'O', 'WMN', 'WOM'],
+          ['X', 'Q', 'R', 'S', 'XQR', 'XSQ'],
+          ['Y', 'T', 'U', 'V', 'YTU', 'YVT'],
+          ['Z', 'A', 'B', 'C', 'ZAB', 'ZCA'],
+        ][randInt(0, 9)];
+        const [point, t, near, far, tri1, tri2] = labels;
         questions.push(
-          `自圓外點 \\(P\\) 作切線 \\(PA\\) 與割線 \\(PBC\\)。證明 \\(\\triangle PAB\\sim\\triangle PCA\\)。`
+          `自圓外點 \\(${point}\\) 作切線 \\(${point}${t}\\) 與割線 \\(${point}${near}${far}\\)。證明 \\(\\triangle ${tri1}\\sim\\triangle ${tri2}\\)。`
         );
         answers.push(
-          `簡答：\\(\\triangle PAB\\sim\\triangle PCA\\)。過程：\\(\\angle APB\\) 與 \\(\\angle CPA\\) 是同一角；弦切角 \\(\\angle PAB\\) 等於同弧所對圓周角 \\(\\angle PCA\\)。兩角相等，所以兩三角形相似。`
+          `簡答：\\(\\triangle ${tri1}\\sim\\triangle ${tri2}\\)。過程：外點形成一組共同角；弦切角等於同弧所對圓周角。兩角相等，所以兩三角形相似。`
         );
       } else if (type === 'sameArcAngleEqual') {
+        const labels = [
+          ['ACB', 'PAB', 'AB'],
+          ['PRQ', 'TPQ', 'PQ'],
+          ['XYZ', 'WXY', 'XY'],
+          ['DFE', 'GDE', 'DE'],
+          ['HJI', 'KHI', 'HI'],
+          ['LNM', 'OLM', 'LM'],
+          ['RTS', 'URS', 'RS'],
+          ['VWX', 'UVW', 'VW'],
+          ['NPM', 'QNM', 'NM'],
+          ['FEG', 'HFG', 'FG'],
+        ][randInt(0, 9)];
+        const [angle1, angle2, sameArc] = labels;
+        const tangentExternal = angle2[0];
+        const tangentPoint = angle2[1];
         questions.push(
-          `在同一圓中，圓周角 \\(\\angle ACB\\) 與弦切角 \\(\\angle PAB\\) 對同一弧 \\(${arc('AB')}\\)。證明 \\(\\angle ACB=\\angle PAB\\)。`
+          `在同一圓中，直線 \\(${tangentExternal}${tangentPoint}\\) 在 \\(${tangentPoint}\\) 點與圓相切。圓周角 \\(\\angle ${angle1}\\) 與弦切角 \\(\\angle ${angle2}\\) 對同一弧 \\(${arc(sameArc)}\\)。證明 \\(\\angle ${angle1}=\\angle ${angle2}\\)。`
         );
         answers.push(
-          `簡答：兩角相等。過程：圓周角等於所對弧的一半，弦切角也等於同弧所對圓周角。因此同對弧 \\(${arc('AB')}\\) 的 \\(\\angle ACB\\) 與 \\(\\angle PAB\\) 相等。`
+          `簡答：兩角相等。過程：圓周角等於所對弧的一半，弦切角也等於同弧所對圓周角。因此同對弧 \\(${arc(sameArc)}\\) 的兩角相等。`
         );
       } else if (type === 'centroidThreeTrianglesArea') {
+        const [ta, tb, tc] = letters[randInt(0, letters.length - 1)];
         questions.push(
-          `已知 \\(G\\) 為 \\(\\triangle ABC\\) 的重心。證明 \\(\\triangle GAB\\)、\\(\\triangle GBC\\)、\\(\\triangle GCA\\) 面積相等。`
+          `已知 \\(G\\) 為 \\(\\triangle ${ta}${tb}${tc}\\) 的重心。證明 \\(\\triangle G${ta}${tb}\\)、\\(\\triangle G${tb}${tc}\\)、\\(\\triangle G${tc}${ta}\\) 面積相等。`
         );
         answers.push(
           `簡答：三個面積相等。過程：三條中線交於重心，且每條中線都把三角形分成等面積兩半。由三條中線共同分割，可得以重心連三頂點形成的三個三角形面積相等。`
         );
       } else if (type === 'medianSixEqualAreas') {
+        const [ta, tb, tc] = letters[randInt(0, letters.length - 1)];
         questions.push(
-          `已知 \\(\\triangle ABC\\) 的三條中線交於重心 \\(G\\)。證明三條中線把 \\(\\triangle ABC\\) 分成六個面積相等的小三角形。`
+          `已知 \\(\\triangle ${ta}${tb}${tc}\\) 的三條中線交於重心 \\(G\\)。證明三條中線把 \\(\\triangle ${ta}${tb}${tc}\\) 分成六個面積相等的小三角形。`
         );
         answers.push(
           `簡答：六個小三角形面積相等。過程：中線平分底邊，所以同高的三角形面積相等；三條中線交於重心後，各小三角形可透過同底或同高逐步比較，得到六個面積相等。`
@@ -2838,14 +3190,27 @@
           `簡答：\\(${area / 6}\\)。過程：三條中線把三角形分成六個面積相等的小三角形，\\(\\triangle GBD\\) 是其中一個，所以面積為 \\(${area}\\div6=${area / 6}\\)。`
         );
       } else if (type === 'parallelogramCentroidPoint') {
+        const labels = [
+          ['ABCD', 'O', 'E', 'CD', 'AE', 'BD', 'M', 'ACD', 'DO'],
+          ['PQRS', 'O', 'T', 'RS', 'PT', 'QS', 'M', 'PRS', 'SO'],
+          ['WXYZ', 'O', 'P', 'YZ', 'WP', 'ZO', 'N', 'WYZ', 'ZO'],
+          ['DEFG', 'O', 'H', 'FG', 'DH', 'EG', 'P', 'DFG', 'GO'],
+          ['LMNO', 'P', 'Q', 'NO', 'LQ', 'MO', 'R', 'LNO', 'OP'],
+          ['RSTU', 'O', 'V', 'TU', 'RV', 'SU', 'W', 'RTU', 'UO'],
+          ['HIJK', 'O', 'L', 'JK', 'HL', 'IK', 'M', 'HJK', 'KO'],
+          ['UVWX', 'O', 'Y', 'WX', 'UY', 'VX', 'Z', 'UWX', 'XO'],
+          ['MNOP', 'Q', 'R', 'OP', 'MR', 'NP', 'S', 'MOP', 'PQ'],
+          ['EFGH', 'O', 'I', 'GH', 'EI', 'FH', 'J', 'EGH', 'HO'],
+        ][randInt(0, 9)];
+        const [para, center, midpoint, side, line1, line2, meet, tri, median] = labels;
         questions.push(
-          `平行四邊形 \\(ABCD\\) 中，\\(O\\) 為對角線交點，\\(E\\) 為 \\(CD\\) 中點，\\(AE\\) 交 \\(BD\\) 於 \\(M\\)。證明 \\(M\\) 為 \\(\\triangle ACD\\) 的重心。`
+          `平行四邊形 \\(${para}\\) 中，\\(${center}\\) 為對角線交點，\\(${midpoint}\\) 為 \\(${side}\\) 中點，\\(${line1}\\) 交 \\(${line2}\\) 於 \\(${meet}\\)。證明 \\(${meet}\\) 為 \\(\\triangle ${tri}\\) 的重心。`
         );
         answers.push(
-          `簡答：\\(M\\) 為 \\(\\triangle ACD\\) 的重心。過程：平行四邊形對角線互相平分，所以 \\(O\\) 是 \\(AC\\) 的中點；\\(E\\) 是 \\(CD\\) 的中點。於 \\(\\triangle ACD\\) 中，\\(DO\\) 與 \\(AE\\) 是兩條中線，其交點 \\(M\\) 即為重心。`
+          `簡答：\\(${meet}\\) 為 \\(\\triangle ${tri}\\) 的重心。過程：平行四邊形對角線互相平分，所以 \\(${center}\\) 是對應邊的中點；\\(${midpoint}\\) 也是題設中點。於 \\(\\triangle ${tri}\\) 中，\\(${median}\\) 與 \\(${line1}\\) 是兩條中線，其交點 \\(${meet}\\) 即為重心。`
         );
       } else if (type === 'centroidMedianLength') {
-        const gm = randInt(2, 8);
+        const gm = randInt(2, 24);
         questions.push(
           `已知 \\(G\\) 為 \\(\\triangle ABC\\) 的重心，\\(AD\\) 為中線且 \\(GD=${gm}\\)。求 \\(AD\\) 的長度。`
         );
@@ -2922,14 +3287,22 @@
       ],
     };
     const selected = kinds[kind] || [kind];
-    const triples = [
+    const baseTriples = [
       [3, 4, 5],
       [5, 12, 13],
-      [6, 8, 10],
       [8, 15, 17],
       [7, 24, 25],
-      [9, 12, 15],
+      [9, 40, 41],
+      [11, 60, 61],
+      [12, 35, 37],
+      [20, 21, 29],
     ];
+    const triples = [];
+    baseTriples.forEach((triple) => {
+      for (let scale = 1; scale <= 4; scale += 1) {
+        triples.push(triple.map((value) => value * scale));
+      }
+    });
     const pickTriple = () => triples[randInt(0, triples.length - 1)];
     const piTerm = (coeff) => {
       if (coeff === 1) return '\\pi';
@@ -2939,7 +3312,7 @@
     for (let i = 0; i < count; i += 1) {
       const type = selected[i % selected.length];
       if (type === 'circumcenterAngle') {
-        const angleA = [35, 40, 45, 50, 60, 65, 70][randInt(0, 6)];
+        const angleA = 25 + 5 * randInt(0, 11);
         const boc = 2 * angleA;
         questions.push(
           `銳角 \\(\\triangle ABC\\) 中，\\(O\\) 為外心。若 \\(\\angle A=${angleA}^\\circ\\)，求 \\(\\angle BOC\\) 的度數。`
@@ -2960,14 +3333,14 @@
           `簡答：\\(R=${formatFraction(c, 2)}\\)。過程：直角三角形外心在斜邊中點，外接圓半徑為斜邊一半。斜邊 \\(=${c}\\)，所以 \\(R=${formatFraction(c, 2)}\\)。`
         );
       } else if (type === 'equilateralCircumradius') {
-        const side = 3 * randInt(2, 8);
+        const side = 3 * randInt(2, 18);
         const radiusText = `${side / 3}\\sqrt{3}`;
         questions.push(`正三角形邊長為 \\(${side}\\)。求外心到頂點的距離，也就是外接圓半徑 \\(R\\)。`);
         answers.push(
           `簡答：\\(${radiusText}\\)。過程：正三角形外心、內心、重心合一，高為 \\(\\frac{${side}\\sqrt3}{2}\\)，重心到頂點為高的 \\(\\frac{2}{3}\\)，所以 \\(R=${radiusText}\\)。`
         );
       } else if (type === 'obtuseCircumcenterAngle') {
-        const angleA = [100, 105, 110, 120, 125][randInt(0, 4)];
+        const angleA = 95 + 5 * randInt(0, 10);
         const boc = 360 - 2 * angleA;
         questions.push(
           `鈍角 \\(\\triangle ABC\\) 中，\\(O\\) 為外心。若 \\(\\angle A=${angleA}^\\circ\\)，求較小的 \\(\\angle BOC\\)。`
@@ -2992,7 +3365,7 @@
           `簡答：\\(${piTerm(radius * radius)}\\)。過程：外心到頂點距離為外接圓半徑，所以 \\(R=OA=${radius}\\)。外接圓面積為 \\(\\pi R^2=${piTerm(radius * radius)}\\)。`
         );
       } else if (type === 'incenterAngle') {
-        const angleA = [40, 50, 60, 70, 80, 90, 100][randInt(0, 6)];
+        const angleA = 30 + 10 * randInt(0, 10);
         const bic = 90 + angleA / 2;
         questions.push(
           `在 \\(\\triangle ABC\\) 中，\\(I\\) 為內心。若 \\(\\angle A=${angleA}^\\circ\\)，求 \\(\\angle BIC\\)。`
@@ -3001,7 +3374,7 @@
           `簡答：\\(${bic}^\\circ\\)。過程：內心角公式 \\(\\angle BIC=90^\\circ+\\frac{1}{2}\\angle A\\)，所以 \\(\\angle BIC=90^\\circ+${angleA / 2}^\\circ=${bic}^\\circ\\)。`
         );
       } else if (type === 'incenterAngleInverse') {
-        const angleA = [40, 60, 80, 100, 120][randInt(0, 4)];
+        const angleA = 30 + 10 * randInt(0, 12);
         const bic = 90 + angleA / 2;
         questions.push(
           `在 \\(\\triangle ABC\\) 中，\\(I\\) 為內心。若 \\(\\angle BIC=${bic}^\\circ\\)，求 \\(\\angle A\\)。`
@@ -3032,16 +3405,28 @@
           [5, 7, 9],
           [6, 8, 10],
           [4, 5, 7],
-        ][randInt(0, 3)];
+          [7, 9, 11],
+          [8, 13, 15],
+          [9, 10, 17],
+          [10, 11, 13],
+          [11, 13, 20],
+          [12, 13, 15],
+          [13, 14, 15],
+          [9, 14, 17],
+          [10, 17, 21],
+          [14, 15, 25],
+        ][randInt(0, 13)];
+        const commonDivisor = gcdInt(gcdInt(sides[0], sides[1]), sides[2]);
+        const ratioText = sides.map((side) => side / commonDivisor).join(':');
         questions.push(
           `若 \\(I\\) 為 \\(\\triangle ABC\\) 的內心，且 \\(AB=${sides[0]}\\)、\\(BC=${sides[1]}\\)、\\(CA=${sides[2]}\\)。求 \\(\\triangle AIB:\\triangle BIC:\\triangle CIA\\) 的面積比。`
         );
         answers.push(
-          `簡答：\\(${sides[0]}:${sides[1]}:${sides[2]}\\)。過程：內心到三邊距離皆為內切圓半徑 \\(r\\)，三個小三角形的高相同，因此面積比等於對應底邊比 \\(AB:BC:CA=${sides[0]}:${sides[1]}:${sides[2]}\\)。`
+          `簡答：\\(${ratioText}\\)。過程：內心到三邊距離皆為內切圓半徑 \\(r\\)，三個小三角形的高相同，因此面積比等於對應底邊比 \\(AB:BC:CA=${sides[0]}:${sides[1]}:${sides[2]}=${ratioText}\\)。`
         );
       } else if (type === 'equilateralInradius') {
-        const side = 6 * randInt(1, 6);
-        const rText = `${side / 6}\\sqrt{3}`;
+        const side = 6 * randInt(1, 15);
+        const rText = formatLinearTerm(side / 6, '\\sqrt{3}');
         questions.push(`正三角形邊長為 \\(${side}\\)。求內切圓半徑 \\(r\\)。`);
         answers.push(
           `簡答：\\(${rText}\\)。過程：正三角形高為 \\(\\frac{${side}\\sqrt3}{2}\\)，內心到邊距離是高的 \\(\\frac{1}{3}\\)，所以 \\(r=${rText}\\)。`
@@ -3052,7 +3437,12 @@
           [5, 12, 13],
           [4, 5, 6],
           [5, 7, 9],
-        ][randInt(0, 3)];
+          [6, 8, 11],
+          [7, 9, 10],
+          [8, 15, 17],
+          [9, 10, 13],
+          [10, 13, 17],
+        ][randInt(0, 8)];
         const smallArea = randInt(3, 12);
         const totalArea = (smallArea * (ratios[0] + ratios[1] + ratios[2])) / ratios[0];
         questions.push(
@@ -3072,7 +3462,7 @@
           `簡答：\\(${formatFraction(areaTwice, 2)}\\)。過程：內心為 \\((r,r)\\)，其中 \\(r=\\frac{${a}+${b}-${c}}{2}=${r}\\)。用坐標面積公式，\\(\\triangle AIB\\) 面積 \\(=\\frac{${a}\\times${b}-${r}(${a}+${b})}{2}=${formatFraction(areaTwice, 2)}\\)。`
         );
       } else if (type === 'centroidMedianLength') {
-        const median = 3 * randInt(4, 12);
+        const median = 3 * randInt(4, 24);
         questions.push(
           `在 \\(\\triangle ABC\\) 中，\\(AD\\) 為中線，\\(G\\) 為重心。若 \\(AD=${median}\\)，求 \\(AG\\) 與 \\(GD\\)。`
         );
@@ -3080,7 +3470,7 @@
           `簡答：\\(AG=${(2 * median) / 3}\\)，\\(GD=${median / 3}\\)。過程：重心把中線分成 \\(AG:GD=2:1\\)，所以 \\(AG=\\frac{2}{3}AD=${(2 * median) / 3}\\)，\\(GD=\\frac{1}{3}AD=${median / 3}\\)。`
         );
       } else if (type === 'centroidMedianInverse') {
-        const gd = randInt(2, 9);
+        const gd = randInt(2, 24);
         questions.push(
           `在 \\(\\triangle ABC\\) 中，\\(AD\\) 為中線，\\(G\\) 為重心。若 \\(GD=${gd}\\)，求 \\(AD\\) 與 \\(AG\\)。`
         );
@@ -3088,12 +3478,20 @@
           `簡答：\\(AD=${3 * gd}\\)，\\(AG=${2 * gd}\\)。過程：重心分中線為 \\(2:1\\)，且 \\(GD\\) 是較短段，所以 \\(AD=3GD=${3 * gd}\\)，\\(AG=2GD=${2 * gd}\\)。`
         );
       } else if (type === 'centroidCoordinate') {
-        const x1 = randInt(-6, 8);
-        const y1 = randInt(-6, 8);
-        const x2 = randInt(-6, 8);
-        const y2 = randInt(-6, 8);
-        const x3 = randInt(-6, 8);
-        const y3 = randInt(-6, 8);
+        let x1;
+        let y1;
+        let x2;
+        let y2;
+        let x3;
+        let y3;
+        do {
+          x1 = randInt(-6, 8);
+          y1 = randInt(-6, 8);
+          x2 = randInt(-6, 8);
+          y2 = randInt(-6, 8);
+          x3 = randInt(-6, 8);
+          y3 = randInt(-6, 8);
+        } while ((x2 - x1) * (y3 - y1) === (y2 - y1) * (x3 - x1));
         const gxText = formatFraction(x1 + x2 + x3, 3);
         const gyText = formatFraction(y1 + y2 + y3, 3);
         questions.push(
@@ -3103,14 +3501,24 @@
           `簡答：\\(G(${gxText},${gyText})\\)。過程：重心坐標是三頂點坐標平均，\\(G=(\\frac{x_1+x_2+x_3}{3},\\frac{y_1+y_2+y_3}{3})=(${gxText},${gyText})\\)。`
         );
       } else if (type === 'missingVertexFromCentroid') {
-        const x1 = randInt(-4, 6);
-        const y1 = randInt(-4, 6);
-        const x2 = randInt(-4, 6);
-        const y2 = randInt(-4, 6);
-        const gx = randInt(-3, 5);
-        const gy = randInt(-3, 5);
-        const x3 = 3 * gx - x1 - x2;
-        const y3 = 3 * gy - y1 - y2;
+        let x1;
+        let y1;
+        let x2;
+        let y2;
+        let gx;
+        let gy;
+        let x3;
+        let y3;
+        do {
+          x1 = randInt(-4, 6);
+          y1 = randInt(-4, 6);
+          x2 = randInt(-4, 6);
+          y2 = randInt(-4, 6);
+          gx = randInt(-3, 5);
+          gy = randInt(-3, 5);
+          x3 = 3 * gx - x1 - x2;
+          y3 = 3 * gy - y1 - y2;
+        } while ((x2 - x1) * (y3 - y1) === (y2 - y1) * (x3 - x1));
         questions.push(
           `已知 \\(\\triangle ABC\\) 的重心為 \\(G(${gx},${gy})\\)，且 \\(A(${x1},${y1})\\)、\\(B(${x2},${y2})\\)。若第三頂點為 \\(C(x,y)\\)，求 \\(C\\) 的坐標。`
         );
@@ -3139,11 +3547,12 @@
         const ge = x + shortOffset;
         const bg = 2 * ge;
         const constant = bg - 3 * x;
+        const bgText = constant === 0 ? '3x' : `3x${constant < 0 ? constant : `+${constant}`}`;
         questions.push(
-          `在 \\(\\triangle ABC\\) 中，\\(BE\\) 為中線，\\(G\\) 為重心。若 \\(GE=x+${shortOffset}\\)、\\(BG=3x${constant < 0 ? constant : `+${constant}`}\\)，求 \\(x\\)。`
+          `在 \\(\\triangle ABC\\) 中，\\(BE\\) 為中線，\\(G\\) 為重心。若 \\(GE=x+${shortOffset}\\)、\\(BG=${bgText}\\)，求 \\(x\\)。`
         );
         answers.push(
-          `簡答：\\(x=${x}\\)。過程：重心分中線滿足 \\(BG:GE=2:1\\)，所以 \\(3x${constant < 0 ? constant : `+${constant}`}=2(x+${shortOffset})\\)，解得 \\(x=${x}\\)。`
+          `簡答：\\(x=${x}\\)。過程：重心分中線滿足 \\(BG:GE=2:1\\)，所以 \\(${bgText}=2(x+${shortOffset})\\)，解得 \\(x=${x}\\)。`
         );
       } else if (type === 'centroidAreaFromOneSmall') {
         const smallArea = randInt(2, 12);
@@ -3154,7 +3563,7 @@
           `簡答：\\(${6 * smallArea}\\)。過程：三條中線交於重心後，會分成六個等面積小三角形，所以總面積為 \\(6\\times${smallArea}=${6 * smallArea}\\)。`
         );
       } else if (type === 'parallelogramHiddenCentroidLength') {
-        const om = randInt(2, 10);
+        const om = randInt(2, 24);
         questions.push(
           `平行四邊形 \\(ABCD\\) 中，\\(O\\) 為對角線交點，\\(E\\) 為 \\(BC\\) 的中點，\\(AE\\) 交 \\(BD\\) 於 \\(M\\)。若 \\(OM=${om}\\)，求 \\(BD\\) 的長度。`
         );
@@ -3183,15 +3592,18 @@
           `平行四邊形 \\(ABCD\\) 中，\\(P\\)、\\(Q\\) 分別為 \\(\\triangle ABC\\) 與 \\(\\triangle ADC\\) 的重心。若 \\(BD=${bd}\\)，求 \\(PQ\\) 的長度。`
         );
         answers.push(
-          `簡答：\\(PQ=${bd / 3}\\)。過程：設對角線交點為 \\(O\\)。兩個三角形的重心都落在與 \\(BD\\) 平行的重心連線上，且相對位置相差對角線 \\(BD\\) 的 \\(\\frac13\\)。因此 \\(PQ=\\frac13BD=\\frac13\\times${bd}=${bd / 3}\\)。`
+          `簡答：\\(PQ=${bd / 3}\\)。過程：兩個三角形的重心 \\(P\\)、\\(Q\\) 都在對角線 \\(BD\\) 上，且 \\(BP:PQ:QD=1:1:1\\)。因此 \\(PQ=\\frac13BD=\\frac13\\times${bd}=${bd / 3}\\)。`
         );
       } else if (type === 'parallelogramMidpointTriangleArea') {
         const smallArea = randInt(2, 12);
         questions.push(
           `平行四邊形 \\(ABCD\\) 的面積為 \\(S\\)。對角線交於 \\(O\\)，且 \\(E\\) 為 \\(BC\\) 的中點。若 \\(\\triangle ODE\\) 面積為 \\(${smallArea}\\)，求 \\(S\\)。`
         );
-        answers.push(
-          `簡答：\\(S=${12 * smallArea}\\)。過程：對角線交點與邊中點會切出固定比例的小三角形，\\(\\triangle ODE\\) 面積為平行四邊形面積的 \\(\\frac1{12}\\)。所以 \\(S=12\\times${smallArea}=${12 * smallArea}\\)。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `\\(S=${8 * smallArea}\\)`,
+          `設平行四邊形的兩鄰邊向量為 \\(\\vec u\\)、\\(\\vec v\\)。由 \\(O\\) 是對角線中點、\\(E\\) 是 \\(BC\\) 中點，可得 \\(\\triangle ODE\\) 面積為平行四邊形面積的 \\(\\frac18\\)。所以 \\(S=8\\times${smallArea}=${8 * smallArea}\\)。`
         );
       } else if (type === 'parallelogramCentroidSegmentEquation') {
         const x = randInt(1, 8);
@@ -3199,10 +3611,10 @@
         const segment = x + offset;
         const diagonal = 3 * segment;
         questions.push(
-          `平行四邊形的一條對角線被兩個相關三角形的重心分成三段等長。若其中一段長為 \\(x+${offset}\\)，且整條對角線長為 \\(${diagonal}\\)，求 \\(x\\)。`
+          `平行四邊形 \\(ABCD\\) 中，\\(P\\)、\\(Q\\) 分別為 \\(\\triangle ABC\\)、\\(\\triangle ADC\\) 的重心。\\(P\\)、\\(Q\\) 將對角線 \\(BD\\) 分成三段等長。若 \\(BP=x+${offset}\\)，且 \\(BD=${diagonal}\\)，求 \\(x\\)。`
         );
         answers.push(
-          `簡答：\\(x=${x}\\)。過程：兩個重心會把對角線分成三段等長，所以每段長為 \\(\\frac{${diagonal}}3=${segment}\\)。令 \\(x+${offset}=${segment}\\)，得 \\(x=${x}\\)。`
+          `簡答：\\(x=${x}\\)。過程：兩個重心把對角線 \\(BD\\) 分成三段等長，所以 \\(BP=\\frac{${diagonal}}3=${segment}\\)。令 \\(x+${offset}=${segment}\\)，得 \\(x=${x}\\)。`
         );
       } else if (type === 'isoscelesAreaFromCentroidDistance') {
         const choices = [
@@ -3210,6 +3622,14 @@
           [6, 8, 10],
           [5, 12, 13],
           [9, 12, 15],
+          [12, 16, 20],
+          [10, 24, 26],
+          [7, 24, 25],
+          [15, 20, 25],
+          [16, 30, 34],
+          [20, 21, 29],
+          [18, 24, 30],
+          [24, 32, 40],
         ];
         const [halfBase, height, equalSide] = choices[randInt(0, choices.length - 1)];
         const agText = formatFraction(2 * height, 3);
@@ -3230,12 +3650,20 @@
           `簡答：\\(O(${a / 2},${b / 2})\\)，\\(R^2=${(a * a + b * b) / 4}\\)。過程：直角三角形外心是斜邊中點，所以 \\(O(${a / 2},${b / 2})\\)。半徑平方為 \\((\\frac{${a}}2)^2+(\\frac{${b}}2)^2=${(a * a + b * b) / 4}\\)。`
         );
       } else if (type === 'threePointCentroidCoordinate') {
-        const x1 = randInt(-5, 5);
-        const y1 = randInt(-5, 5);
-        const x2 = randInt(-5, 5);
-        const y2 = randInt(-5, 5);
-        const x3 = randInt(-5, 5);
-        const y3 = randInt(-5, 5);
+        let x1;
+        let y1;
+        let x2;
+        let y2;
+        let x3;
+        let y3;
+        do {
+          x1 = randInt(-5, 5);
+          y1 = randInt(-5, 5);
+          x2 = randInt(-5, 5);
+          y2 = randInt(-5, 5);
+          x3 = randInt(-5, 5);
+          y3 = randInt(-5, 5);
+        } while ((x2 - x1) * (y3 - y1) === (y2 - y1) * (x3 - x1));
         questions.push(
           `三點 \\(A(${x1},${y1})\\)、\\(B(${x2},${y2})\\)、\\(C(${x3},${y3})\\) 構成三角形。求重心坐標。`
         );
@@ -3261,15 +3689,27 @@
         );
       } else if (type === 'circumcenterPointCheck') {
         const r = randInt(3, 8);
-        const x = [r, 0, -r, 3, 4][i % 5];
-        const y = x === 3 && r === 5 ? 4 : x === 4 && r === 5 ? 3 : 0;
+        const pointModes = [
+          [r, 0],
+          [0, r],
+          [-r, 0],
+          [0, -r],
+          [r - 1, 1],
+          [r + 1, 0],
+          [3, 4],
+          [4, 3],
+        ];
+        const [x, y] = pointModes[randInt(0, pointModes.length - 1)];
         const distanceSquared = x * x + y * y;
         const isOn = distanceSquared === r * r;
         questions.push(
           `圓心在原點、半徑為 \\(${r}\\) 的圓。判斷點 \\(P(${x},${y})\\) 是否可作為某個內接三角形的頂點。`
         );
-        answers.push(
-          `簡答：${isOn ? '可以' : '不一定，因為不在此圓上'}。過程：內接三角形頂點必在外接圓上。計算 \\(OP^2=${distanceSquared}\\)，而 \\(r^2=${r * r}\\)。${isOn ? '兩者相等，所以可以。' : '兩者不相等，所以不能直接作為此圓上的頂點。'}`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          isOn ? '可以' : '不可以，因為不在此圓上',
+          `內接三角形頂點必在外接圓上。計算 \\(OP^2=${distanceSquared}\\)，而 \\(r^2=${r * r}\\)。${isOn ? '兩者相等，所以可以。' : '兩者不相等，所以不能作為此圓上的頂點。'}`
         );
       } else if (type === 'circumcenterCoordinateGeneral') {
         const h = randInt(-4, 5);
@@ -3295,8 +3735,12 @@
       } else if (type === 'eulerLineOrthocenterCoordinate') {
         const ox = randInt(-4, 4);
         const oy = randInt(-4, 4);
-        const gx = randInt(-3, 5);
-        const gy = randInt(-3, 5);
+        let gx = randInt(-3, 5);
+        let gy = randInt(-3, 5);
+        while (gx === ox && gy === oy) {
+          gx = randInt(-3, 5);
+          gy = randInt(-3, 5);
+        }
         const hx = 3 * gx - 2 * ox;
         const hy = 3 * gy - 2 * oy;
         questions.push(
@@ -3306,19 +3750,20 @@
           `簡答：\\(H(${hx},${hy})\\)。過程：尤拉線上 \\(G\\) 把 \\(HO\\) 分成 \\(HG:GO=2:1\\)，所以 \\(G=\\frac{H+2O}{3}\\)。因此 \\(H=3G-2O=(${3 * gx},${3 * gy})-(${2 * ox},${2 * oy})=(${hx},${hy})\\)。`
         );
       } else if (type === 'equilateralRadiiRatio') {
-        questions.push(`正三角形的外接圓半徑為 \\(R\\)，內切圓半徑為 \\(r\\)。求 \\(R:r\\)。`);
+        const side = 6 * randInt(2, 15);
+        questions.push(`正三角形邊長為 \\(${side}\\)，外接圓半徑為 \\(R\\)，內切圓半徑為 \\(r\\)。求 \\(R:r\\)。`);
         answers.push(
           `簡答：\\(R:r=2:1\\)。過程：正三角形三心合一，重心到頂點為高的 \\(\\frac23\\)，到邊為高的 \\(\\frac13\\)，因此 \\(R:r=\\frac23:\\frac13=2:1\\)。`
         );
       } else if (type === 'equilateralAreaFromInradius') {
-        const r = randInt(2, 8);
+        const r = randInt(2, 15);
         const areaCoeff = 3 * r * r;
         questions.push(`正三角形的內切圓半徑為 \\(${r}\\)。求此正三角形面積。`);
         answers.push(
           `簡答：\\(${areaCoeff}\\sqrt3\\)。過程：正三角形邊長 \\(a=2\\sqrt3 r=2\\sqrt3\\times${r}\\)。面積 \\(=\\frac{\\sqrt3}{4}a^2=${areaCoeff}\\sqrt3\\)。`
         );
       } else if (type === 'equilateralAreaFromCircumradius') {
-        const radius = 2 * randInt(2, 8);
+        const radius = 2 * randInt(2, 15);
         const areaCoeff = (3 * radius * radius) / 4;
         questions.push(`正三角形的外接圓半徑為 \\(${radius}\\)。求此正三角形面積。`);
         answers.push(
@@ -3341,28 +3786,33 @@
           `簡答：\\(R=${formatFraction(c, 2)}\\)，\\(r=${formatFraction(a + b - c, 2)}\\)，周長 \\(${perimeter}\\)。過程：直角三角形 \\(R=\\frac{c}{2}\\)，\\(r=\\frac{a+b-c}{2}\\)，周長為三邊和。`
         );
       } else if (type === 'rightTriangleHypotenuseFromOG') {
-        const og = randInt(2, 10);
+        const og = randInt(2, 24);
         questions.push(`直角三角形中，\\(O\\) 為外心，\\(G\\) 為重心。若 \\(OG=${og}\\)，求斜邊長與外接圓面積。`);
         answers.push(
           `簡答：斜邊長 \\(${6 * og}\\)，外接圓面積 \\(${piTerm(9 * og * og)}\\)。過程：直角三角形中 \\(OG=\\frac16\\) 斜邊，所以斜邊長為 \\(6\\times${og}=${6 * og}\\)。外接圓半徑為斜邊一半 \\(R=${3 * og}\\)，面積為 \\(\\pi R^2=${piTerm(9 * og * og)}\\)。`
         );
       } else if (type === 'rightTrianglePerimeterFromRr') {
-        const radius = randInt(4, 12);
-        const inradius = randInt(1, radius - 1);
+        const [a, b, c] = pickTriple();
+        const radius = formatFraction(c, 2);
+        const inradius = formatFraction(a + b - c, 2);
+        const perimeter = a + b + c;
         questions.push(
           `直角三角形的外接圓半徑為 \\(R=${radius}\\)，內切圓半徑為 \\(r=${inradius}\\)。求此直角三角形的周長。`
         );
-        answers.push(
-          `簡答：\\(${4 * radius + 2 * inradius}\\)。過程：直角三角形斜邊 \\(c=2R\\)，且 \\(r=\\frac{a+b-c}{2}\\)，所以 \\(a+b=c+2r=2R+2r\\)。周長 \\(P=a+b+c=4R+2r=4\\times${radius}+2\\times${inradius}=${4 * radius + 2 * inradius}\\)。`
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `\\(${perimeter}\\)`,
+          `此題由兩股為 \\(${a}\\)、\\(${b}\\)、斜邊為 \\(${c}\\) 的直角三角形產生。直角三角形斜邊 \\(c=2R\\)，且 \\(r=\\frac{a+b-c}{2}\\)，所以 \\(P=a+b+c=4R+2r=${perimeter}\\)。`
         );
       } else if (type === 'equilateralHeightFromCircumradius') {
-        const radius = 2 * randInt(2, 9);
+        const radius = 2 * randInt(2, 16);
         questions.push(`正三角形的外接圓半徑為 \\(${radius}\\)。求此正三角形的高。`);
         answers.push(
           `簡答：\\(${(3 * radius) / 2}\\)。過程：正三角形三心合一，外心到頂點距離是高的 \\(\\frac23\\)，所以 \\(R=\\frac23h\\)，\\(h=\\frac32R=\\frac32\\times${radius}=${(3 * radius) / 2}\\)。`
         );
       } else if (type === 'equilateralIncircleCircumcircleAreaRatio') {
-        const scale = randInt(2, 9);
+        const scale = randInt(2, 20);
         questions.push(
           `正三角形的內切圓半徑為 \\(${scale}\\)，外接圓半徑為 \\(${2 * scale}\\)。求內切圓面積與外接圓面積的比。`
         );
@@ -3440,64 +3890,96 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        const coeffs = [2, 3, 6];
-        const values = coeffs.map((c) => 1 / c);
-        const scale = 180 / values.reduce((sum, value) => sum + value, 0);
-        const angles = values.map((value) => Math.round(value * scale));
+        const coeffOptions = [
+          [2, 3, 6],
+          [4, 6, 12],
+          [3, 5, 15],
+          [4, 5, 20],
+          [2, 4, 4],
+        ];
+        const coeffs = coeffOptions[randInt(0, coeffOptions.length - 1)];
+        const common = lcmArray(coeffs);
+        const ratio = reduceRatioTriple(coeffs.map((c) => common / c));
+        const unit = 180 / ratio.reduce((sum, value) => sum + value, 0);
+        const angles = ratio.map((value) => value * unit);
         add(
-          `已知 \\(2\\angle A=3\\angle B=6\\angle C\\)，求三內角各為多少度。`,
+          `已知 \\(${coeffs[0]}\\angle A=${coeffs[1]}\\angle B=${coeffs[2]}\\angle C\\)，求三內角各為多少度。`,
           `\\(\\angle A=${angles[0]}^\\circ\\)、\\(\\angle B=${angles[1]}^\\circ\\)、\\(\\angle C=${angles[2]}^\\circ\\)`,
-          `令共同值為 \\(k\\)，則 \\(A:B:C=\\frac{1}{2}:\\frac{1}{3}:\\frac{1}{6}=3:2:1\\)。三角形內角和為 \\(180^\\circ\\)，所以一份為 \\(180\\div6=30^\\circ\\)。`
+          `令共同值為 \\(k\\)，則 \\(A:B:C=\\frac{1}{${coeffs[0]}}:\\frac{1}{${coeffs[1]}}:\\frac{1}{${coeffs[2]}}=${ratioTex(ratio)}\\)。再用三角形內角和 \\(180^\\circ\\) 分配。`
         );
         continue;
       }
       if (mode === 1) {
-        const unit = randInt(12, 24);
-        const ratios = [2, 3, 4];
+        const ratioOptions = [
+          [2, 3, 4],
+          [1, 2, 3],
+          [2, 3, 5],
+          [3, 4, 5],
+          [4, 5, 6],
+        ];
+        const ratios = ratioOptions[randInt(0, ratioOptions.length - 1)];
+        const unit = 180 / ratios.reduce((sum, value) => sum + value, 0);
         const angles = ratios.map((r) => r * unit);
-        if (angles.reduce((a, b) => a + b, 0) !== 180) {
-          i -= 1;
-          continue;
-        }
         add(
-          `已知 \\(\\angle A:2=\\angle B:3=\\angle C:4\\)，求最大角與最小角的差。`,
-          `\\(${angles[2] - angles[0]}^\\circ\\)`,
-          `設共同值為 \\(t\\)，則 \\(A:B:C=2:3:4\\)。因為總份數為 9，且三角形內角和為 \\(180^\\circ\\)，一份為 \\(20^\\circ\\)，所以最大角與最小角差為 \\((4-2)\\times20=40^\\circ\\)。`
+          `已知 \\(\\angle A:${ratios[0]}=\\angle B:${ratios[1]}=\\angle C:${ratios[2]}\\)，求最大角與最小角的差。`,
+          `\\(${Math.max(...angles) - Math.min(...angles)}^\\circ\\)`,
+          `設共同值為 \\(t\\)，則 \\(A:B:C=${ratioTex(ratios)}\\)。總份數為 ${ratios.reduce((sum, value) => sum + value, 0)}，一份為 \\(${unit}^\\circ\\)，所以最大角與最小角差為 \\(${Math.max(...angles) - Math.min(...angles)}^\\circ\\)。`
         );
         continue;
       }
       if (mode === 2) {
-        const ratio = [4, 3, 2];
-        const unit = 20;
+        const targetRatios = [
+          [4, 3, 2],
+          [5, 4, 3],
+          [3, 2, 1],
+          [6, 5, 4],
+          [2, 3, 4],
+        ];
+        const targetRatio = targetRatios[randInt(0, targetRatios.length - 1)];
+        const [p, q, r, s] = [targetRatio[1], targetRatio[0], targetRatio[2], targetRatio[1]];
+        const ratio = reduceRatioTriple([q * s, p * s, p * r]);
+        const unit = 180 / ratio.reduce((sum, value) => sum + value, 0);
         add(
-          `若 \\(3\\angle A=4\\angle B\\) 且 \\(2\\angle B=3\\angle C\\)，求 \\(\\angle A:\\angle B:\\angle C\\)。`,
-          `\\(4:3:2\\)`,
-          `由 \\(3A=4B\\) 得 \\(A:B=4:3\\)，由 \\(2B=3C\\) 得 \\(B:C=3:2\\)。把共同的 \\(B\\) 對齊，可得 \\(A:B:C=4:3:2\\)。若代入角度則為 ${ratio.map((r) => r * unit).join('、')} 度。`
+          `若 \\(${p}\\angle A=${q}\\angle B\\) 且 \\(${r}\\angle B=${s}\\angle C\\)，求 \\(\\angle A:\\angle B:\\angle C\\)。`,
+          `\\(${ratioTex(ratio)}\\)`,
+          `由第一式得 \\(A:B=${q}:${p}\\)，由第二式得 \\(B:C=${s}:${r}\\)。把共同的 \\(B\\) 對齊，可得 \\(A:B:C=${ratioTex(ratio)}\\)。若代入角度則為 ${ratio.map((value) => value * unit).join('、')} 度。`
         );
         continue;
       }
       if (mode === 3) {
-        const parts = [5, 6, 7];
-        const unit = 10;
-        const angles = parts.map((r) => r * unit);
+        const angleOptions = [
+          [60, 40, 80],
+          [50, 60, 70],
+          [40, 80, 60],
+          [70, 50, 60],
+        ];
+        const angles = angleOptions[randInt(0, angleOptions.length - 1)];
+        const parts = [angles[0] + angles[1], angles[1] + angles[2], angles[2] + angles[0]];
+        const reducedParts = reduceRatioTriple(parts);
         add(
-          `已知 \\((\\angle A+\\angle B):(\\angle B+\\angle C):(\\angle C+\\angle A)=5:6:7\\)，求三內角度數。`,
-          `\\(\\angle A=60^\\circ\\)、\\(\\angle B=40^\\circ\\)、\\(\\angle C=80^\\circ\\)`,
-          `設三個和為 \\(5t,6t,7t\\)。三式相加為 \\(2(A+B+C)=360^\\circ\\)，所以 \\(18t=360\\)，得 \\(t=20\\)。再用 \\(A=\\frac{(A+B)+(A+C)-(B+C)}{2}\\)，可得 \\(A=60^\\circ,B=40^\\circ,C=80^\\circ\\)。`
+          `已知 \\((\\angle A+\\angle B):(\\angle B+\\angle C):(\\angle C+\\angle A)=${ratioTex(reducedParts)}\\)，求三內角度數。`,
+          `\\(\\angle A=${angles[0]}^\\circ\\)、\\(\\angle B=${angles[1]}^\\circ\\)、\\(\\angle C=${angles[2]}^\\circ\\)`,
+          `三式相加為 \\(2(A+B+C)=360^\\circ\\)。再用 \\(A=\\frac{(A+B)+(A+C)-(B+C)}{2}\\)、\\(B=\\frac{(A+B)+(B+C)-(A+C)}{2}\\) 可求得三角。`
         );
         continue;
       }
-      const denominators = [2, 3, 5];
+      const denominatorOptions = [
+        [2, 3, 5],
+        [3, 4, 5],
+        [2, 4, 6],
+        [3, 5, 7],
+      ];
+      const denominators = denominatorOptions[randInt(0, denominatorOptions.length - 1)];
       const ratio = denominators.slice();
       const unit = 180 / ratio.reduce((sum, value) => sum + value, 0);
       const angles = ratio.map((r) => r * unit);
+      const maxAngle = Math.max(...angles);
+      const shape = maxAngle === 90 ? '直角三角形' : maxAngle > 90 ? '鈍角三角形' : '銳角三角形';
       add(
-        `若 \\(\\frac{1}{2}\\angle A=\\frac{1}{3}\\angle B=\\frac{1}{5}\\angle C\\)，判斷此三角形形狀。`,
-        `鈍角三角形`,
-        `令共同值為 \\(k\\)，則 \\(A:B:C=2:3:5\\)。三內角為 \\(${angles[0]}^\\circ,${angles[1]}^\\circ,${angles[2]}^\\circ\\)，最大角為 \\(90^\\circ\\)，所以是直角三角形。`
+        `若 \\(\\frac{1}{${denominators[0]}}\\angle A=\\frac{1}{${denominators[1]}}\\angle B=\\frac{1}{${denominators[2]}}\\angle C\\)，判斷此三角形形狀。`,
+        shape,
+        `令共同值為 \\(k\\)，則 \\(A:B:C=${ratioTex(ratio)}\\)。三內角為 \\(${angles[0]}^\\circ,${angles[1]}^\\circ,${angles[2]}^\\circ\\)，最大角為 \\(${maxAngle}^\\circ\\)，所以是${shape}。`
       );
-      summaryAnswers[summaryAnswers.length - 1] = `直角三角形`;
-      answers[answers.length - 1] = answers[answers.length - 1].replace('簡答：鈍角三角形。', '簡答：直角三角形。');
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3514,40 +3996,52 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        const x = 2;
-        const y = 3;
-        const z = 15 / 4;
-        const total = 140;
-        const unit = total / (x + y + z);
+        const firstRatios = [[2, 3], [3, 4], [3, 5], [4, 5], [5, 7]];
+        const secondRatios = [[2, 3], [3, 4], [3, 5], [4, 5], [5, 6]];
+        const [a, b] = firstRatios[randInt(0, firstRatios.length - 1)];
+        const [c, d] = secondRatios[randInt(0, secondRatios.length - 1)];
+        const common = lcmInt(b, c);
+        const ratio = reduceRatioTriple([a * (common / b), common, d * (common / c)]);
+        const unit = randInt(2, 10);
+        const total = ratio.reduce((sum, value) => sum + value, 0) * unit;
+        const yValue = ratio[1] * unit;
         add(
-          `若 \\(x:y=2:3\\)，\\(y:z=4:5\\)，求 \\(x:y:z\\)，並計算當 \\(x+y+z=140\\) 時的 \\(y\\) 值。`,
-          `\\(x:y:z=8:12:15\\)，\\(y=48\\)`,
-          `先把共同的 \\(y\\) 對齊：\\(x:y=8:12\\)，\\(y:z=12:15\\)，所以 \\(x:y:z=8:12:15\\)。總份數為 35，\\(140\\div35=4\\)，故 \\(y=12\\times4=48\\)。`
+          `若 \\(x:y=${a}:${b}\\)，\\(y:z=${c}:${d}\\)，求 \\(x:y:z\\)，並計算當 \\(x+y+z=${total}\\) 時的 \\(y\\) 值。`,
+          `\\(x:y:z=${ratioTex(ratio)}\\)，\\(y=${yValue}\\)`,
+          `先把共同的 \\(y\\) 對齊為 ${common}，得 \\(x:y:z=${ratioTex(ratio)}\\)。總份數為 ${ratio.reduce((sum, value) => sum + value, 0)}，每份為 \\(${total}\\div${ratio.reduce((sum, value) => sum + value, 0)}=${unit}\\)，故 \\(y=${ratio[1]}\\times${unit}=${yValue}\\)。`
         );
         continue;
       }
       if (mode === 1) {
-        const denoms = [2, 3, 4, 5];
-        const lcm = lcmArray(denoms);
-        const ratio = denoms.map((d) => lcm / d);
-        add(
-          `已知 \\(a:b=\\frac{1}{2}:\\frac{1}{3}\\)，\\(b:c=\\frac{1}{4}:\\frac{1}{5}\\)，將 \\(a:b:c\\) 化為最簡整數比。`,
-          `\\(a:b:c=6:4:5\\)`,
-          `先化 \\(a:b=3:2\\)，\\(b:c=5:4\\)。把共同的 \\(b\\) 對齊成 10，可得 \\(a:b:c=15:10:8\\)。題目中的分數比若直接通分也要先分段處理，不能把四個分母一次混在一起。`
+        const denominatorSets = [[2, 3, 4, 5], [2, 5, 3, 4], [3, 4, 2, 5], [3, 5, 4, 7], [4, 5, 3, 7]];
+        const [p, q, r, s] = denominatorSets[randInt(0, denominatorSets.length - 1)];
+        const common = lcmInt(p, s);
+        const ratio = reduceRatioTriple([q * (common / p), common, r * (common / s)]);
+        questions.push(
+          `已知 \\(a:b=\\frac{1}{${p}}:\\frac{1}{${q}}\\)，\\(b:c=\\frac{1}{${r}}:\\frac{1}{${s}}\\)，將 \\(a:b:c\\) 化為最簡整數比。`
         );
-        summaryAnswers[summaryAnswers.length - 1] = `\\(a:b:c=15:10:8\\)`;
-        answers[answers.length - 1] = answers[answers.length - 1].replace('簡答：\\(a:b:c=6:4:5\\)。', '簡答：\\(a:b:c=15:10:8\\)。');
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `\\(a:b:c=${ratioTex(ratio)}\\)`,
+          `先化 \\(a:b=${q}:${p}\\)，\\(b:c=${s}:${r}\\)。把共同的 \\(b\\) 對齊為 ${common}，可得 \\(a:b:c=${ratioTex(ratio)}\\)。分數比要先分段處理，不能把四個分母一次混在一起。`
+        );
         continue;
       }
       if (mode === 2) {
-        const ratio = [8, 12, 9];
-        add(
-          `若 \\(3x=2y\\)，\\(4y=5z\\)，求 \\(x:y:z\\)。`,
-          `\\(x:y:z=8:12:9\\)`,
-          `由 \\(3x=2y\\) 得 \\(x:y=2:3\\)，由 \\(4y=5z\\) 得 \\(y:z=5:4\\)。把 \\(y\\) 對齊為 15，可得 \\(x:y:z=10:15:12\\)。`
+        const coefficientSets = [[3, 2, 4, 5], [2, 3, 5, 4], [4, 3, 2, 5], [5, 2, 3, 4], [3, 5, 4, 7]];
+        const [p, q, r, s] = coefficientSets[randInt(0, coefficientSets.length - 1)];
+        const common = lcmInt(p, s);
+        const ratio = reduceRatioTriple([q * (common / p), common, r * (common / s)]);
+        questions.push(
+          `若 \\(${p}x=${q}y\\)，\\(${r}y=${s}z\\)，求 \\(x:y:z\\)。`
         );
-        summaryAnswers[summaryAnswers.length - 1] = `\\(x:y:z=10:15:12\\)`;
-        answers[answers.length - 1] = answers[answers.length - 1].replace('簡答：\\(x:y:z=8:12:9\\)。', '簡答：\\(x:y:z=10:15:12\\)。');
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `\\(x:y:z=${ratioTex(ratio)}\\)`,
+          `由 \\(${p}x=${q}y\\) 得 \\(x:y=${q}:${p}\\)，由 \\(${r}y=${s}z\\) 得 \\(y:z=${s}:${r}\\)。把 \\(y\\) 對齊為 ${common}，可得 \\(x:y:z=${ratioTex(ratio)}\\)。`
+        );
         continue;
       }
       if (mode === 3) {
@@ -3562,10 +4056,16 @@
         );
         continue;
       }
+      const pairSumOptions = [[3, 4, 5], [3, 5, 4], [4, 5, 7], [5, 7, 8], [5, 8, 7], [7, 8, 9]];
+      const [xy, yz, zx] = pairSumOptions[randInt(0, pairSumOptions.length - 1)];
+      const xRatio = (xy + zx - yz) / 2;
+      const yRatio = (xy + yz - zx) / 2;
+      const zRatio = (yz + zx - xy) / 2;
+      const ratio = reduceRatioTriple([xRatio, yRatio, zRatio]);
       add(
-        `若 \\((x+y):(y+z):(z+x)=3:4:5\\)，求 \\(x:y:z\\)。`,
-        `\\(x:y:z=2:1:3\\)`,
-        `設 \\(x+y=3k,y+z=4k,z+x=5k\\)。相加得 \\(2(x+y+z)=12k\\)，所以 \\(x+y+z=6k\\)。因此 \\(x=6k-(y+z)=2k\\)，\\(y=6k-(z+x)=k\\)，\\(z=6k-(x+y)=3k\\)。`
+        `若 \\((x+y):(y+z):(z+x)=${xy}:${yz}:${zx}\\)，求 \\(x:y:z\\)。`,
+        `\\(x:y:z=${ratioTex(ratio)}\\)`,
+        `設 \\(x+y=${xy}k,y+z=${yz}k,z+x=${zx}k\\)。兩兩相加後相減，可得 \\(x:y:z=${ratioTex(ratio)}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3583,48 +4083,62 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        const ratio = [2, 3];
-        const small = 180 / (2 * ratio[0] + ratio[1]);
+        const ratioOptions = [[1, 4], [1, 5], [2, 3], [2, 7], [3, 7], [4, 5]];
+        const ratio = ratioOptions[randInt(0, ratioOptions.length - 1)];
+        const unit = 90 / (ratio[0] + ratio[1]);
+        const small = ratio[0] * unit;
         add(
-          `直角三角形中，兩個銳角的比為 \\(2:3\\)，求較小角的度數。`,
-          `\\(36^\\circ\\)`,
-          `兩銳角和為 \\(90^\\circ\\)，總份數為 5，一份為 \\(18^\\circ\\)，較小角為 \\(2\\times18=36^\\circ\\)。`
+          `直角三角形中，兩個銳角的比為 \\(${ratioTex(ratio)}\\)，求較小角的度數。`,
+          `\\(${small}^\\circ\\)`,
+          `兩銳角和為 \\(90^\\circ\\)，總份數為 ${ratio[0] + ratio[1]}，一份為 \\(${unit}^\\circ\\)，較小角為 \\(${ratio[0]}\\times${unit}=${small}^\\circ\\)。`
         );
         continue;
       }
       if (mode === 1) {
+        const apexPartOptions = [2, 3, 4, 7, 8, 10];
+        const apexPart = apexPartOptions[randInt(0, apexPartOptions.length - 1)];
+        const unit = 180 / (apexPart + 2);
+        const apex = apexPart * unit;
         add(
-          `等腰三角形的一個頂角與一個底角的比為 \\(4:1\\)，求頂角的度數。`,
-          `\\(120^\\circ\\)`,
-          `等腰三角形兩底角相等。設頂角為 \\(4k\\)，每個底角為 \\(k\\)，則 \\(4k+k+k=180\\)，得 \\(k=30\\)，頂角為 \\(120^\\circ\\)。`
+          `等腰三角形的一個頂角與一個底角的比為 \\(${apexPart}:1\\)，求頂角的度數。`,
+          `\\(${apex}^\\circ\\)`,
+          `等腰三角形兩底角相等。設頂角為 \\(${apexPart}k\\)，每個底角為 \\(k\\)，則 \\(${apexPart}k+k+k=180\\)，得 \\(k=${unit}\\)，頂角為 \\(${apex}^\\circ\\)。`
         );
         continue;
       }
       if (mode === 2) {
-        const exterior = 120;
+        const sides = randInt(3, 10);
+        const ratio = reduceRatioTriple([sides - 2, 2]);
+        const interiorSum = (sides - 2) * 180;
         add(
-          `一個多邊形的內角和與外角和之比為 \\(2:3\\)，求此多邊形是幾邊形。`,
-          `不存在`,
-          `任意多邊形外角和為 \\(360^\\circ\\)。若內角和 : 外角和 = \\(2:3\\)，則內角和為 \\(240^\\circ\\)，但多邊形內角和 \\((n-2)180\\) 不可能等於 240，因此不存在。`
+          `一個多邊形的內角和與外角和之比為 \\(${ratioTex(ratio)}\\)，求此多邊形是幾邊形。`,
+          `${sides} 邊形`,
+          `任意多邊形外角和為 \\(360^\\circ\\)。由比例可知內角和為 \\(${interiorSum}^\\circ\\)，令 \\((n-2)180=${interiorSum}\\)，得 \\(n=${sides}\\)。`
         );
         continue;
       }
       if (mode === 3) {
+        const tripleOptions = [[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25]];
         const scale = randInt(3, 8);
-        const sides = [3, 4, 5].map((v) => v * scale);
+        const baseSides = tripleOptions[randInt(0, tripleOptions.length - 1)];
+        const sides = baseSides.map((value) => value * scale);
         const perimeter = sides.reduce((a, b) => a + b, 0);
         const area = (sides[0] * sides[1]) / 2;
         add(
-          `已知三角形三邊長的比為 \\(3:4:5\\)，若周長為 ${perimeter}，求其面積。`,
+          `已知三角形三邊長的比為 \\(${ratioTex(baseSides)}\\)，若周長為 ${perimeter}，求其面積。`,
           `\\(${area}\\)`,
-          `設三邊為 \\(3k,4k,5k\\)。周長 \\(12k=${perimeter}\\)，所以 \\(k=${scale}\\)。這是直角三角形，面積為 \\(\\frac{${sides[0]}\\times${sides[1]}}{2}=${area}\\)。`
+          `設三邊為 \\(${baseSides[0]}k,${baseSides[1]}k,${baseSides[2]}k\\)。周長 \\(${baseSides.reduce((sum, value) => sum + value, 0)}k=${perimeter}\\)，所以 \\(k=${scale}\\)。這是直角三角形，面積為 \\(\\frac{${sides[0]}\\times${sides[1]}}{2}=${area}\\)。`
         );
         continue;
       }
+      const heightRatioOptions = [[2, 3, 4], [3, 3, 4], [3, 4, 5], [3, 5, 5], [4, 4, 5], [4, 5, 6], [5, 5, 6], [5, 6, 7]];
+      const heights = heightRatioOptions[randInt(0, heightRatioOptions.length - 1)];
+      const common = lcmArray(heights);
+      const sideRatio = reduceRatioTriple(heights.map((value) => common / value));
       add(
-        `三角形三高之比為 \\(2:3:4\\)，求其三邊長之比。`,
-        `\\(6:4:3\\)`,
-        `同一三角形面積固定，邊長與對應高成反比，所以三邊比為 \\(\\frac{1}{2}:\\frac{1}{3}:\\frac{1}{4}\\)。同乘 12 得 \\(6:4:3\\)。`
+        `三角形三高之比為 \\(${ratioTex(heights)}\\)，求其三邊長之比。`,
+        `\\(${ratioTex(sideRatio)}\\)`,
+        `同一三角形面積固定，邊長與對應高成反比，所以把 \\(${ratioTex(heights)}\\) 取倒數後同乘 ${common}，得 \\(${ratioTex(sideRatio)}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3642,45 +4156,75 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        add(
-          `若 \\(\\angle A\\) 增加 \\(20\\%\\)，\\(\\angle B\\) 減少 \\(10\\%\\)，且原比例為 \\(1:1:1\\)，求變動後的新角度。`,
-          `\\(72^\\circ,54^\\circ,54^\\circ\\)`,
-          `原本三角形為等角三角形，每角 \\(60^\\circ\\)。變動後暫為 \\(72^\\circ,54^\\circ,60^\\circ\\)，總和為 \\(186^\\circ\\)，不符合三角形內角和。若要求仍為三角形，需把第三角調成 \\(180-72-54=54^\\circ\\)。`
+        const changeOptions = [[10, 20], [20, 10], [30, 10], [10, 30]];
+        const [increase, decrease] = changeOptions[randInt(0, changeOptions.length - 1)];
+        const angleA = 60 * (100 + increase) / 100;
+        const angleB = 60 * (100 - decrease) / 100;
+        const angleSum = angleA + angleB + 60;
+        questions.push(
+          `若 \\(\\angle A\\) 增加 \\(${increase}\\%\\)，\\(\\angle B\\) 減少 \\(${decrease}\\%\\)，且原比例為 \\(1:1:1\\)，判斷變動後三角形是否仍能成立。`
+        );
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `否，三內角和為 \\(${angleSum}^\\circ\\)`,
+          `原本三角形為等角三角形，每角 \\(60^\\circ\\)。變動後三角為 \\(${angleA}^\\circ,${angleB}^\\circ,60^\\circ\\)，其和為 \\(${angleSum}^\\circ\\)，不符合三角形內角和 \\(180^\\circ\\)，所以無法形成三角形。`
         );
         continue;
       }
       if (mode === 1) {
+        const ratioOptions = [[2, 3, 4], [3, 4, 5], [2, 5, 6], [3, 5, 7], [4, 5, 6]];
+        const ratio = ratioOptions[randInt(0, ratioOptions.length - 1)];
+        const unit = randInt(2, 8);
+        const increase = randInt(1, 6);
+        const original = ratio.map((value) => value * unit);
+        const after = [original[0] + increase, original[1], original[2]];
+        const afterRatio = reduceRatioTriple(after);
+        const afterUnit = after[1] / afterRatio[1];
         add(
-          `已知 \\(x:y:z=2:3:4\\)。若 \\(x\\) 增加 4 後，比例變為 \\(4:3:4\\)，求原來的三數。`,
-          `\\(4,6,8\\)`,
-          `設原來為 \\(2k,3k,4k\\)。增加後 \\(2k+4:3k:4k=4:3:4\\)，由 \\(3k\\) 對應 3 份得一份為 \\(k\\)，所以 \\(2k+4=4k\\)，得 \\(k=2\\)。`
+          `已知 \\(x:y:z=${ratioTex(ratio)}\\)。若 \\(x\\) 增加 ${increase} 後，比例變為 \\(${ratioTex(afterRatio)}\\)，求原來的三數。`,
+          `\\(${original.join(',')}\\)`,
+          `設原來為 \\(${ratio[0]}k,${ratio[1]}k,${ratio[2]}k\\)。增加後第二、三項不變；由新比的第二項可知一份為 ${afterUnit}，故 \\(${ratio[1]}k=${afterRatio[1]}\\times${afterUnit}=${original[1]}\\)，得 \\(k=${unit}\\)。所以原來三數為 \\(${original.join(',')}\\)。`
         );
         continue;
       }
       if (mode === 2) {
+        const ratioOptions = [[2, 3, 4], [2, 5, 6], [3, 4, 5], [3, 5, 7], [4, 5, 6]];
+        const ratio = ratioOptions[randInt(0, ratioOptions.length - 1)];
+        const common = lcmArray(ratio);
+        const reciprocal = reduceRatioTriple(ratio.map((value) => common / value));
         add(
-          `若 \\(a:b:c=2:3:4\\)，求 \\(\\frac{1}{a}:\\frac{1}{b}:\\frac{1}{c}\\) 的最簡整數比。`,
-          `\\(6:4:3\\)`,
-          `倒數比會反向。\\(\\frac{1}{2}:\\frac{1}{3}:\\frac{1}{4}\\) 同乘 12，得 \\(6:4:3\\)。`
+          `若 \\(a:b:c=${ratioTex(ratio)}\\)，求 \\(\\frac{1}{a}:\\frac{1}{b}:\\frac{1}{c}\\) 的最簡整數比。`,
+          `\\(${ratioTex(reciprocal)}\\)`,
+          `倒數比會反向。\\(\\frac{1}{${ratio[0]}}:\\frac{1}{${ratio[1]}}:\\frac{1}{${ratio[2]}}\\) 同乘 ${common}，得 \\(${ratioTex(reciprocal)}\\)。`
         );
         continue;
       }
       if (mode === 3) {
+        const ratioOptions = [[2, 3, 5], [3, 4, 7], [2, 5, 7], [3, 5, 8]];
+        const parts = ratioOptions[randInt(0, ratioOptions.length - 1)];
         const unit = randInt(6, 15);
-        const a = 2 * unit;
-        const b = 3 * unit;
-        const diff = b - a + 30;
+        const b = parts[1] * unit;
+        const difference = (parts[2] - parts[0]) * unit;
         add(
-          `將 \\(x\\) 顆糖果按 \\(2:3:5\\) 分給甲乙丙，若丙比甲多 ${3 * unit} 顆，求乙得幾顆。`,
+          `將 \\(x\\) 顆糖果按 \\(${ratioTex(parts)}\\) 分給甲乙丙，若丙比甲多 ${difference} 顆，求乙得幾顆。`,
           `\\(${b}\\) 顆`,
-          `丙與甲相差 \\(5-2=3\\) 份，已知相差 ${3 * unit} 顆，所以一份為 ${unit} 顆。乙為 3 份，得到 ${b} 顆。`
+          `丙與甲相差 \\(${parts[2]}-${parts[0]}=${parts[2] - parts[0]}\\) 份，已知相差 ${difference} 顆，所以一份為 ${unit} 顆。乙為 ${parts[1]} 份，得到 ${b} 顆。`
         );
         continue;
       }
+      const afterRatioOptions = [[2, 3, 4], [3, 4, 5], [3, 5, 7], [4, 5, 6]];
+      const afterRatio = afterRatioOptions[randInt(0, afterRatioOptions.length - 1)];
+      const unit = randInt(100, 300);
+      const transfer = [50, 100, 150][randInt(0, 2)];
+      const afterValues = afterRatio.map((value) => value * unit);
+      const originalA = afterValues[0] + transfer;
+      const originalB = afterValues[1] - transfer;
+      const total = afterValues.reduce((sum, value) => sum + value, 0);
       add(
-        `甲、乙、丙三人共有 1200 元，若甲給乙 100 元後，三人的錢數比變為 \\(3:4:5\\)，求原本三人各有多少錢。`,
-        `甲 400 元、乙 300 元、丙 500 元`,
-        `變動後總額仍為 1200 元，\\(3+4+5=12\\) 份，一份 100 元，所以變動後為 300、400、500。因甲給乙 100 元，原本甲為 400，乙為 300，丙不變為 500。`
+        `甲、乙、丙三人共有 ${total} 元，若甲給乙 ${transfer} 元後，三人的錢數比變為 \\(${ratioTex(afterRatio)}\\)，求原本三人各有多少錢。`,
+        `甲 ${originalA} 元、乙 ${originalB} 元、丙 ${afterValues[2]} 元`,
+        `變動後總額仍為 ${total} 元，\\(${afterRatio.join('+')}=${afterRatio.reduce((sum, value) => sum + value, 0)}\\) 份，一份 ${unit} 元，所以變動後為 ${afterValues.join('、')} 元。因甲給乙 ${transfer} 元，原本甲為 ${originalA}，乙為 ${originalB}，丙不變為 ${afterValues[2]}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3698,43 +4242,64 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
+        const ratios = [
+          [1, 2, 4],
+          [2, 3, 5],
+          [1, 3, 4],
+          [3, 4, 6],
+        ];
+        const ratio = ratios[randInt(0, ratios.length - 1)];
+        const sum = ratio.reduce((acc, value) => acc + value, 0);
+        const maxAngle = (180 * Math.max(...ratio)) / sum;
         add(
-          `若 \\(\\triangle ABC\\) 三內角比為 \\(1:2:4\\)，請問是否可能為直角三角形？`,
-          `否`,
-          `總份數為 7，一份為 \\(\\frac{180}{7}^\\circ\\)，最大角為 \\(\\frac{720}{7}^\\circ\\)，不是 \\(90^\\circ\\)，所以不是直角三角形。`
+          `若 \\(\\triangle ABC\\) 三內角比為 \\(${ratioTex(ratio)}\\)，請問是否可能為直角三角形？`,
+          maxAngle === 90 ? `是` : `否`,
+          `總份數為 ${sum}，最大角為 \\(180\\times\\frac{${Math.max(...ratio)}}{${sum}}=${formatFraction(180 * Math.max(...ratio), sum)}^\\circ\\)。${maxAngle === 90 ? '最大角為直角，所以是直角三角形。' : '最大角不是直角，所以不是直角三角形。'}`
         );
         continue;
       }
       if (mode === 1) {
+        const specialOptions = [
+          { sides: '1:\\sqrt3:2', angles: '30^\\circ,60^\\circ,90^\\circ' },
+          { sides: '1:1:\\sqrt2', angles: '45^\\circ,45^\\circ,90^\\circ' },
+        ];
+        const item = specialOptions[randInt(0, specialOptions.length - 1)];
         add(
-          `已知 \\(a:b:c=1:\\sqrt3:2\\)，求此三角形之三內角度數。`,
-          `\\(30^\\circ,60^\\circ,90^\\circ\\)`,
-          `國中幾何中小寫 \\(a,b,c\\) 通常代表三邊長。\\(1:\\sqrt3:2\\) 是特殊直角三角形的邊長比，對應角為 \\(30^\\circ,60^\\circ,90^\\circ\\)。`
+          `已知三角形三邊長比 \\(a:b:c=${item.sides}\\)，求此三角形之三內角度數。`,
+          `\\(${item.angles}\\)`,
+          `國中幾何中小寫 \\(a,b,c\\) 通常代表三邊長。\\(${item.sides}\\) 是特殊直角三角形的邊長比，對應角為 \\(${item.angles}\\)。`
         );
         continue;
       }
       if (mode === 2) {
+        const diff = [10, 15, 20, 25][randInt(0, 3)];
         add(
-          `若三內角滿足 \\(\\angle A-\\angle B=\\angle B-\\angle C=20^\\circ\\)，求三角形之邊比。`,
+          `若三內角滿足 \\(\\angle A-\\angle B=\\angle B-\\angle C=${diff}^\\circ\\)，求三角形之邊比。`,
           `無法由本節比例直接求邊比`,
-          `可先求角為 \\(80^\\circ,60^\\circ,40^\\circ\\)，但角度比不等於邊長比；若未學正弦定理，不能把邊比寫成 \\(80:60:40\\)。`
+          `可先由等差關係求出角度，但角度比不等於邊長比；若未學正弦定理，不能把邊比直接寫成角度比。`
         );
         continue;
       }
       if (mode === 3) {
+        const ratioOptions = [
+          [5, 2, 3],
+          [7, 3, 4],
+          [9, 4, 5],
+        ];
+        const ratio = ratioOptions[randInt(0, ratioOptions.length - 1)];
         add(
-          `已知一個三角形的一個外角與兩個不相鄰內角的比為 \\(5:2:3\\)，求此三角形最小內角。`,
-          `\\(40^\\circ\\)`,
-          `外角等於兩個不相鄰內角和。若外角 : 兩不相鄰內角 = \\(5:2:3\\)，設為 \\(5k,2k,3k\\)，確實滿足 \\(5k=2k+3k\\)。此外角的鄰內角為 \\(180-5k\\)。三角形三內角為 \\(2k,3k,180-5k\\)，總和給不出唯一 \\(k\\)，題目條件不足。`
+          `已知一個三角形的一個外角與兩個不相鄰內角的比為 \\(${ratioTex(ratio)}\\)，求此三角形最小內角。`,
+          `條件不足，無法唯一決定`,
+          `外角等於兩個不相鄰內角和。若外角與兩不相鄰內角比為 \\(${ratioTex(ratio)}\\)，只表示外角可寫成另外兩角的和，仍無法決定比例常數，所以最小內角不唯一。`
         );
-        summaryAnswers[summaryAnswers.length - 1] = `條件不足，無法唯一決定`;
-        answers[answers.length - 1] = answers[answers.length - 1].replace('簡答：\\(40^\\circ\\)。', '簡答：條件不足，無法唯一決定。');
         continue;
       }
+      const wrongTargets = ['對應角之比也為 \\(a:b:c\\)', '三角形面積比也一定為 \\(a:b:c\\)', '三角形高的比也為 \\(a:b:c\\)'];
+      const target = wrongTargets[randInt(0, wrongTargets.length - 1)];
       add(
-        `判斷正誤：若三角形三邊長之比為 \\(a:b:c\\)，則對應角之比也為 \\(a:b:c\\)。`,
+        `判斷正誤：若三角形三邊長之比為 \\(a:b:c\\)，則${target}。`,
         `錯`,
-        `邊越長對角越大，但「大小順序」不代表「比例相同」。除非有更高階定理與特定條件，不能把邊長比直接當角度比。`
+        `比例題最常錯在把「大小順序」直接當成「比例相同」。邊、角、高或面積各有自己的關係，不能未經推導就沿用同一組比。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3767,7 +4332,7 @@
     const add = (question, summary, detail) => {
       questions.push(question);
       summaryAnswers.push(summary);
-      answers.push(`簡答：${summary}。詳解：${detail}`);
+      answers.push(detail);
     };
     const triples = [
       [3, 4, 5],
@@ -3844,7 +4409,7 @@
     const add = (question, summary, detail) => {
       questions.push(question);
       summaryAnswers.push(summary);
-      answers.push(`簡答：${summary}。詳解：${detail}`);
+      answers.push(detail);
     };
     const tangentTriples = [
       { r: 5, d: 13, t: 12 },
@@ -3852,11 +4417,11 @@
       { r: 8, d: 17, t: 15 },
       { r: 7, d: 25, t: 24 },
     ];
+    const ratioPairs = [[1, 2], [1, 3], [1, 4], [1, 5], [2, 3], [2, 5], [3, 4], [3, 5]];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        const m = randInt(1, 3);
-        const n = randInt(2, 5);
+        const [m, n] = ratioPairs[randInt(0, ratioPairs.length - 1)];
         const scale = randInt(2, 5);
         const pa = m * scale;
         const ab = n * scale;
@@ -3866,7 +4431,7 @@
         add(
           `圓外一點 \\(P\\) 作切線 \\(PT\\) 與割線 \\(PAB\\)。若 \\(PA:AB=${m}:${n}\\)，且 \\(PT=${pt}\\)，求割線全長 \\(PB\\)。`,
           `\\(PB=${pb}\\)`,
-          `設 \\(PA=${m}k\\)、\\(AB=${n}k\\)，則 \\(PB=${m + n}k\\)。由切割線定理 \\(PT^2=PA\\cdot PB\\)，得 \\(${pt2}=${m}k\\cdot${m + n}k\\)，所以 \\(k=${scale}\\)，因此 \\(PB=${pb}\\)。`
+          `設 \\(PA=${formatLinearTerm(m, 'k')}\\)、\\(AB=${formatLinearTerm(n, 'k')}\\)，則 \\(PB=${formatLinearTerm(m + n, 'k')}\\)。由切割線定理 \\(PT^2=PA\\cdot PB\\)，得 \\(${pt2}=${m * (m + n)}k^2\\)，所以 \\(k=${scale}\\)，因此 \\(PB=${pb}\\)。`
         );
         continue;
       }
@@ -3921,7 +4486,7 @@
     const add = (question, summary, detail) => {
       questions.push(question);
       summaryAnswers.push(summary);
-      answers.push(`簡答：${summary}。詳解：${detail}`);
+      answers.push(detail);
     };
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -3989,7 +4554,7 @@
     const add = (question, summary, detail) => {
       questions.push(question);
       summaryAnswers.push(summary);
-      answers.push(`簡答：${summary}。詳解：${detail}`);
+      answers.push(detail);
     };
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -4064,7 +4629,7 @@
     const add = (question, summary, detail) => {
       questions.push(question);
       summaryAnswers.push(summary);
-      answers.push(`簡答：${summary}。詳解：${detail}`);
+      answers.push(detail);
     };
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -4167,18 +4732,24 @@
     const add = (question, summary, detail) => {
       questions.push(question);
       summaryAnswers.push(summary);
-      answers.push(`簡答：${summary}。詳解：${detail}`);
+      answers.push(detail);
     };
     const factorials = { 3: 6, 4: 24, 5: 120 };
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
         const length = [3, 4, 5][randInt(0, 2)];
-        const terms = Array.from({ length }, (_, index) => (index === 0 ? '\\(n\\)' : `\\(n+${index}\\)`)).join('、');
+        const start = randInt(-6, 6);
+        const term = (offset) => {
+          const value = start + offset;
+          if (value === 0) return 'n';
+          return value > 0 ? `n+${value}` : `n-${Math.abs(value)}`;
+        };
+        const terms = Array.from({ length }, (_, index) => `\\(${term(index)}\\)`).join('、');
         add(
           `證明任意 ${length} 個連續整數 ${terms} 的乘積必為 \\(${factorials[length]}\\) 的倍數。`,
           `成立`,
-          `${length} 個連續整數中一定可組成 \\(${length}!\\) 的整除因子；也可看成 \\(\\frac{n(n+1)\\cdots(n+${length - 1})}{${length}!}\\) 是從連續整數中取組合數，必為整數，所以原乘積必為 \\(${factorials[length]}\\) 的倍數。`
+          `令 \\(m=${term(0)}\\)，原乘積可寫成 \\(m(m+1)\\cdots(m+${length - 1})\\)。又 \\(\\frac{m(m+1)\\cdots(m+${length - 1})}{${length}!}\\) 為整數，因此原乘積必為 \\(${length}! = ${factorials[length]}\\) 的倍數。`
         );
         continue;
       }
@@ -4214,7 +4785,7 @@
           add(
             `已知 \\(n\\) 為奇數，證明 \\(n^2-1\\) 必為 24 的倍數不一定成立，並說明正確的必然整除結論。`,
             `不一定；必為 8 的倍數`,
-            `奇數平方減 1 一定可證為 8 的倍數，但不一定是 24 的倍數。例如 \\(n=5\\)，\\(n^2-1=24\\) 成立；但 \\(n=7\\)，\\(48\\) 不是 24 的倍數。穩定結論是必為 8 的倍數。`
+            `奇數平方減 1 一定可證為 8 的倍數，但不一定是 24 的倍數。例如 \\(n=3\\) 時，\\(n^2-1=8\\)，不是 24 的倍數。穩定結論是必為 8 的倍數。`
           );
         }
         continue;
@@ -4236,12 +4807,12 @@
     const add = (question, summary, detail) => {
       questions.push(question);
       summaryAnswers.push(summary);
-      answers.push(`簡答：${summary}。詳解：${detail}`);
+      answers.push(detail);
     };
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        const a = randInt(2, 6);
+        const a = randInt(2, 12);
         add(
           `證明 \\((${a}n+1)^2-(${a}n-1)^2\\) 必為 \\(${4 * a}\\) 的倍數。`,
           `成立`,
@@ -4262,7 +4833,7 @@
         const k = randInt(3, 8);
         const remainder = 14 % k;
         add(
-          `求證 \\(( ${k}n+1)^2+(${k}n+2)^2+(${k}n+3)^2\\) 除以 \\(${k}\\) 的餘數固定，並求此餘數。`,
+          `求證 \\((${k}n+1)^2+(${k}n+2)^2+(${k}n+3)^2\\) 除以 \\(${k}\\) 的餘數固定，並求此餘數。`,
           `餘數 \\(${remainder}\\)`,
           `展開後含 \\(${k}n\\) 的項都可被 \\(${k}\\) 整除，只要看常數平方和：\\(1^2+2^2+3^2=14\\)。所以餘數為 \\(14\\) 除以 \\(${k}\\) 的餘數，即 \\(${remainder}\\)。`
         );
@@ -4295,12 +4866,19 @@
     const add = (question, summary, detail) => {
       questions.push(question);
       summaryAnswers.push(summary);
-      answers.push(`簡答：${summary}。詳解：${detail}`);
+      answers.push(detail);
     };
     const variableSets = [
       ['a', 'b', 'c', 'd'],
       ['p', 'q', 'r', 's'],
       ['x', 'y', 'z', 'w'],
+      ['m', 'n', 'r', 't'],
+      ['u', 'v', 'w', 'x'],
+      ['A', 'B', 'C', 'D'],
+      ['P', 'Q', 'R', 'S'],
+      ['M', 'N', 'O', 'T'],
+      ['e', 'f', 'g', 'h'],
+      ['L', 'M', 'N', 'P'],
     ];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -4330,10 +4908,13 @@
         continue;
       }
       if (mode === 3) {
+        const secondQuadrant = randInt(0, 1) === 0;
+        const firstSign = secondQuadrant ? '<0' : '>0';
+        const secondSign = secondQuadrant ? '>0' : '<0';
         add(
-          `若 \\(x^2y<0\\) 且 \\(y^2x>0\\)，判斷點 \\((y,x)\\) 在第幾象限。`,
-          `第二象限`,
-          `因為 \\(x^2>0\\)，由 \\(x^2y<0\\) 得 \\(y<0\\)。又 \\(y^2>0\\)，由 \\(y^2x>0\\) 得 \\(x>0\\)。所以點 \\((y,x)\\) 的橫坐標為負、縱坐標為正，在第二象限。`
+          `若 \\(${a}^2${b}${firstSign}\\) 且 \\(${b}^2${a}${secondSign}\\)，判斷點 \\((${b},${a})\\) 在第幾象限。`,
+          secondQuadrant ? `第二象限` : `第四象限`,
+          `因為 \\(${a}^2>0\\)，由 \\(${a}^2${b}${firstSign}\\) 得 \\(${b}${firstSign}0\\)。又 \\(${b}^2>0\\)，由 \\(${b}^2${a}${secondSign}\\) 得 \\(${a}${secondSign}0\\)。所以點 \\((${b},${a})\\) 的橫坐標${secondQuadrant ? '為負、縱坐標為正，在第二象限' : '為正、縱坐標為負，在第四象限'}。`
         );
         continue;
       }
@@ -4353,7 +4934,7 @@
     const add = (question, summary, detail) => {
       questions.push(question);
       summaryAnswers.push(summary);
-      answers.push(`簡答：${summary}。詳解：${detail}`);
+      answers.push(detail);
     };
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -4416,7 +4997,7 @@
     const add = (question, summary, detail) => {
       questions.push(question);
       summaryAnswers.push(summary);
-      answers.push(`簡答：${summary}。詳解：${detail}`);
+      answers.push(detail);
     };
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -4505,6 +5086,67 @@
     return answers;
   }
 
+  function pushAnswerWithManualSummary(answers, summaryAnswers, summary, detail) {
+    summaryAnswers.push(summary);
+    return Array.prototype.push.call(answers, detail);
+  }
+
+  function resolvePracticeCount(count, fallback) {
+    const parsed = Number(count);
+    if (Number.isFinite(parsed) && parsed > 0) return Math.floor(parsed);
+    return fallback;
+  }
+
+  function stripDetailSummaryLabel(detail) {
+    const text = String(detail || '');
+    const withoutLabeledSummary = text.replace(
+      /^\s*(?:簡答|答案)[:：]\s*[\s\S]*?\s*(?:過程|解析|詳解|說明)[:：]\s*/,
+      ''
+    );
+    if (withoutLabeledSummary !== text) return withoutLabeledSummary.trim();
+    return text.replace(/^\s*(?:簡答|答案)[:：]\s*/, '').trim();
+  }
+
+  function buildUniquePracticeSet(generator, count) {
+    const target = resolvePracticeCount(count, 1);
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = [];
+    const seen = new Set();
+    const fallback = [];
+
+    for (let attempt = 0; questions.length < target && attempt < 40; attempt += 1) {
+      const batch = generator(Math.max(target, target - questions.length));
+      const batchQuestions = Array.isArray(batch.questions) ? batch.questions : [];
+      const batchSummaries = Array.isArray(batch.summaryAnswers) ? batch.summaryAnswers : [];
+      const batchAnswers = Array.isArray(batch.answers) ? batch.answers : [];
+
+      for (let i = 0; i < batchQuestions.length; i += 1) {
+        const question = batchQuestions[i];
+        const summary = batchSummaries[i];
+        const answer = batchAnswers[i];
+        const key = String(question).replace(/\s+/g, ' ').trim();
+        if (!question || summary === undefined || answer === undefined) continue;
+        fallback.push({ question, summary, answer });
+        if (seen.has(key)) continue;
+        seen.add(key);
+        questions.push(question);
+        summaryAnswers.push(summary);
+        answers.push(stripDetailSummaryLabel(answer));
+        if (questions.length >= target) break;
+      }
+    }
+
+    for (let i = 0; questions.length < target && i < fallback.length; i += 1) {
+      const item = fallback[i];
+      questions.push(item.question);
+      summaryAnswers.push(item.summary);
+      answers.push(stripDetailSummaryLabel(item.answer));
+    }
+
+    return { questions, summaryAnswers, answers };
+  }
+
   // ─── j5-1/2/3 文件補充 generators ──────────────────────────────────────
 
   // 矩形相似判別（j5-1-2）
@@ -4520,16 +5162,17 @@
       const g = gcd(l, w);
       const ln = l / g, wn = w / g;
       // Generate 4 candidate rectangles: exactly one is similar
-      const similar = [l * randInt(2, 4), w * randInt(2, 4)];
-      const scale2 = similar[0] / similar[1];
+      const scale = randInt(2, 4);
+      const similar = [l * scale, w * scale];
       // three decoy candidates that are NOT similar
       const decoys = [];
       let tries = 0;
       while (decoys.length < 3 && tries < 100) {
         tries++;
-        const a = randInt(2, 20), b = randInt(2, 20);
+        const a = randInt(3, 20);
+        const b = randInt(2, a - 1);
         const gab = gcd(a, b);
-        if (a / gab === ln && b / gab === wn) continue;
+        if ((a / gab === ln && b / gab === wn) || (a / gab === wn && b / gab === ln)) continue;
         if (decoys.some(([da, db]) => da === a && db === b)) continue;
         decoys.push([a, b]);
       }
@@ -4543,8 +5186,11 @@
       const simIdx = opts.findIndex(([a, b]) => a === similar[0] && b === similar[1]);
       const optStr = opts.map(([a, b], idx) => `${labels[idx]} 長 ${a} 寬 ${b}`).join('　');
       questions.push(`長方形的長為 ${l}，寬為 ${w}。下列哪一個長方形與它相似？${optStr}`);
-      answers.push(
-        `簡答：${labels[simIdx]} 長 ${similar[0]} 寬 ${similar[1]}。過程：原長方形長寬比 \\(${l}:${w}=${ln}:${wn}\\)。選項${labels[simIdx]}的長寬比 \\(${similar[0]}:${similar[1]}=${ln}:${wn}\\)，比值相同，故相似。`
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `${labels[simIdx]} 長 ${similar[0]} 寬 ${similar[1]}`,
+        `原長方形長寬比 \\(${l}:${w}=${ln}:${wn}\\)。選項${labels[simIdx]}的長寬比 \\(${similar[0]}:${similar[1]}=${ln}:${wn}\\)，比值相同，故相似。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -4676,38 +5322,33 @@
   function buildChordSagittaRadiusSet(count) {
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     // r = (c²/(8h) + h/2) where c = chord, h = sagitta
     // Use Pythagorean: r² = (c/2)² + (r-h)² → r = (c²/4 + h²) / (2h)
-    const cases = [
-      { c: 6, h: 1 },  // r = (9+1)/2 = 5... wait: (36/4+1)/2 = (9+1)/2 = 5 ✓ wait: c=6 → c/2=3, (9+h²)/(2h) with h=1 → (9+1)/2=5 ✓
-      { c: 8, h: 2 },  // (16+4)/4 = 5
-      { c: 6, h: 3 },  // (9+9)/6 = 3
-      { c: 8, h: 4 },  // (16+16)/8 = 4
-      { c: 10, h: 2 }, // (25+4)/4 = 7.25 — not integer, skip
-      { c: 12, h: 3 }, // (36+9)/6 = 7.5 — skip
-      { c: 6, h: 2 },  // (9+4)/4 = 3.25 — skip
-      { c: 8, h: 1 },  // (16+1)/2 = 8.5 — skip
-      { c: 10, h: 5 }, // (25+25)/10 = 5
-      { c: 12, h: 4 }, // (36+16)/8 = 6.5 — skip
-      { c: 12, h: 6 }, // (36+36)/12 = 6
-      { c: 16, h: 4 }, // (64+16)/8 = 10
-      { c: 16, h: 8 }, // (64+64)/16 = 8
-      { c: 14, h: 7 }, // (49+49)/14 = 7
-    ].filter(({ c, h }) => {
-      const num = (c * c) / 4 + h * h;
-      const denom = 2 * h;
-      return Number.isInteger(num / denom);
+    const baseCases = [
+      { c: 6, h: 1 },
+      { c: 8, h: 2 },
+      { c: 10, h: 5 },
+      { c: 14, h: 7 },
+      { c: 16, h: 4 },
+      { c: 18, h: 3 },
+    ];
+    const cases = [];
+    baseCases.forEach(({ c, h }) => {
+      for (let scale = 1; scale <= 4; scale += 1) {
+        cases.push({ c: c * scale, h: h * scale });
+      }
     });
     for (let i = 0; i < count; i++) {
-      const { c, h } = cases[i % cases.length];
+      const { c, h } = cases[randInt(0, cases.length - 1)];
       const r = ((c * c) / 4 + h * h) / (2 * h);
       const half = c / 2;
       questions.push(
-        `一段圓弧（弓形），弦長為 \\(${c}\\) 公分，弦的中垂線（矢高）長為 \\(${h}\\) 公分，則此圓的半徑是多少公分？`
+        `一段圓弧（弓形）的弦長為 \\(${c}\\) 公分，弦中點到圓弧的距離（矢高）為 \\(${h}\\) 公分，則此圓的半徑是多少公分？`
       );
+      summaryAnswers.push(`\\(${r}\\) 公分`);
       answers.push(
-        `簡答：\\(${r}\\) 公分。過程：設半徑為 \\(r\\)，弦長 \\(${c}\\) 的一半是 \\(${half}\\)，矢高 \\(${h}\\)，由勾股定理 \\(r^2=${half}^2+(r-${h})^2\\)，展開得 \\(r=\\frac{${half}^2+${h}^2}{2\\times${h}}=\\frac{${(half * half) + (h * h)}}{${2 * h}}=${r}\\) 公分。`
+        `設半徑為 \\(r\\)，弦長 \\(${c}\\) 的一半是 \\(${half}\\)，矢高為 \\(${h}\\)。由勾股定理 \\(r^2=${half}^2+(r-${h})^2\\)，展開得 \\(r=\\frac{${half}^2+${h}^2}{2\\times${h}}=\\frac{${(half * half) + (h * h)}}{${2 * h}}=${r}\\) 公分。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -4717,40 +5358,42 @@
   function buildSemicircleChordWidthSet(count) {
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
+    const waterCases = [
+      { r: 5, h: 1, halfWidth: 3 }, { r: 5, h: 2, halfWidth: 4 },
+      { r: 10, h: 2, halfWidth: 6 }, { r: 10, h: 4, halfWidth: 8 },
+      { r: 13, h: 1, halfWidth: 5 }, { r: 13, h: 8, halfWidth: 12 },
+      { r: 15, h: 3, halfWidth: 9 }, { r: 15, h: 6, halfWidth: 12 },
+      { r: 17, h: 2, halfWidth: 8 }, { r: 17, h: 9, halfWidth: 15 },
+      { r: 20, h: 4, halfWidth: 12 }, { r: 20, h: 8, halfWidth: 16 },
+      { r: 25, h: 1, halfWidth: 7 }, { r: 25, h: 18, halfWidth: 24 },
+      { r: 26, h: 2, halfWidth: 10 }, { r: 26, h: 16, halfWidth: 24 },
+    ];
     for (let i = 0; i < count; i++) {
       const mode = i % 2;
       // Half-circle container radius r, water depth h → chord width = 2√(r²-(r-h)²) = 2√(2rh-h²)
       if (mode === 0) {
         // Given r and h, find width
-        const r = [5, 6, 8, 10, 13][randInt(0, 4)];
-        const h = randInt(1, r - 1);
-        const w2 = 2 * r * h - h * h;
-        const w = Math.sqrt(w2);
-        if (!Number.isInteger(w) || w <= 0) { i--; continue; }
+        const { r, h, halfWidth } = waterCases[randInt(0, waterCases.length - 1)];
+        const w2 = halfWidth * halfWidth;
+        const w = 2 * halfWidth;
         questions.push(
-          `一半圓形容器，半徑為 \\(${r}\\) 公分，現裝有飲料，水面高度為 \\(${h}\\) 公分，則水面的寬度是多少公分？`
+          `半圓形容器的半徑為 \\(${r}\\) 公分，現裝有飲料，由容器底部量起的水深為 \\(${h}\\) 公分，則水面的寬度是多少公分？`
         );
+        summaryAnswers.push(`\\(${w}\\) 公分`);
         answers.push(
-          `簡答：\\(${2 * w}\\) 公分。過程：設水面寬為 \\(2t\\)，由弦長公式 \\(t^2=r^2-(r-h)^2=2rh-h^2=${2 * r * h}-${h * h}=${w2}\\)，所以 \\(t=${w}\\)，水面寬 \\(=2\\times${w}=${2 * w}\\) 公分。`
+          `設水面寬為 \\(2t\\)，由弦長公式 \\(t^2=r^2-(r-h)^2=2rh-h^2=${2 * r * h}-${h * h}=${w2}\\)，所以 \\(t=${halfWidth}\\)，水面寬 \\(=2\\times${halfWidth}=${w}\\) 公分。`
         );
       } else {
         // Given r and chord width, find depth h (solve quadratic h²-2rh+w²/4=0 → h = r - √(r²-w²/4))
-        const r = [5, 6, 10, 13][randInt(0, 3)];
-        const wOpts = [];
-        for (let w2h = 1; w2h < r; w2h++) {
-          const w2 = 2 * r * w2h - w2h * w2h;
-          if (Number.isInteger(Math.sqrt(w2)) && Math.sqrt(w2) > 0) {
-            wOpts.push({ w: 2 * Math.sqrt(w2), h: w2h });
-          }
-        }
-        if (wOpts.length === 0) { i--; continue; }
-        const { w, h } = wOpts[randInt(0, wOpts.length - 1)];
+        const { r, h, halfWidth } = waterCases[randInt(0, waterCases.length - 1)];
+        const w = 2 * halfWidth;
         questions.push(
-          `一半圓形容器，半徑為 \\(${r}\\) 公分，若水面寬度為 \\(${w}\\) 公分，則水深為多少公分？`
+          `半圓形容器的半徑為 \\(${r}\\) 公分，若水面寬度為 \\(${w}\\) 公分，則由容器底部量起的水深為多少公分？`
         );
+        summaryAnswers.push(`\\(${h}\\) 公分`);
         answers.push(
-          `簡答：\\(${h}\\) 公分。過程：設水深為 \\(h\\)，水面半寬 \\(=${w / 2}\\)，由圓弧關係 \\((${w / 2})^2=r^2-(r-h)^2=2rh-h^2\\)，整理解得 \\(h=${h}\\) 公分。`
+          `設水深為 \\(h\\)，水面半寬為 \\(${halfWidth}\\)。由圓弧關係 \\(${halfWidth}^2=r^2-(r-h)^2=2rh-h^2\\)，整理解得 \\(h=${h}\\) 公分。`
         );
       }
     }
@@ -4761,7 +5404,7 @@
   function buildTangentCombinedAngleSet(count) {
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
     for (let i = 0; i < count; i++) {
       const mode = i % 3;
       if (mode === 0) {
@@ -4769,7 +5412,6 @@
         const p = randInt(20, 70);
         const arcAB = 180 - p;         // minor arc AB
         const majorAB = 180 + p;       // major arc AB
-        const insAngle = majorAB / 2;  // inscribed angle on major arc = half of minor arc... wait
         // ∠P = (major arc - minor arc)/2 = (360-arcAB-arcAB)/2 ... let me redo:
         // Two tangents from P: ∠P = |arc_major - arc_minor| / 2
         // arc_major + arc_minor = 360, so arc_minor = 180 - p, arc_major = 180 + p
@@ -4781,8 +5423,9 @@
         questions.push(
           `直線 \\(PA\\)、\\(PB\\) 分別切圓 \\(O\\) 於 \\(A\\)、\\(B\\)，若 \\(\\angle P=${p}°\\)，則圓弧 \\(AB\\)（優弧側）上一點 \\(C\\) 所張的圓周角 \\(\\angle ACB=\\)?`
         );
+        summaryAnswers.push(`\\(\\angle ACB=${angMinor}°\\)`);
         answers.push(
-          `簡答：\\(\\angle ACB=${angMajor}°\\)。過程：兩切線夾角 \\(\\angle P=\\frac{\\text{優弧}-\\text{劣弧}}{2}\\)，劣弧 \\(\\widehat{AB}=180°-${p}°=${180 - p}°\\)，優弧 \\(=180°+${p}°=${180 + p}°\\)。\\(C\\) 在優弧上時，\\(\\angle ACB=\\frac{\\text{劣弧}}{2}=\\frac{${180 - p}}{2}=${angMinor}°\\)；\\(C\\) 在劣弧上時（另一側），\\(\\angle ACB=\\frac{\\text{優弧}}{2}=${angMajor}°\\)。`
+          `兩切線夾角 \\(\\angle P=\\frac{\\text{優弧}-\\text{劣弧}}{2}\\)，劣弧 \\(\\widehat{AB}=180°-${p}°=${180 - p}°\\)，優弧 \\(=180°+${p}°=${180 + p}°\\)。\\(C\\) 在優弧上時，\\(\\angle ACB\\) 所對的是劣弧 \\(AB\\)，所以 \\(\\angle ACB=\\frac{\\text{劣弧}}{2}=\\frac{${180 - p}}{2}=${angMinor}°\\)；若 \\(C\\) 在劣弧上，才會得到 \\(\\frac{\\text{優弧}}{2}=${angMajor}°\\)。`
         );
       } else if (mode === 1) {
         // 切線弦角：PA切圓於A，∠PAB=α°，求對應弦切角∠ACD
@@ -4790,10 +5433,11 @@
         const arcAB = 2 * alpha;  // tangent-chord angle = half arc AB → arc AB = 2α
         const inscribed = alpha;   // inscribed angle on same arc = arc/2 = α
         questions.push(
-          `直線 \\(PA\\) 切圓 \\(O\\) 於 \\(A\\)，\\(B\\) 為圓上另一點，若弦切角 \\(\\angle PAB=${alpha}°\\)，則 \\(AB\\) 所對的弧上一點 \\(C\\) 的圓周角 \\(\\angle ACB=\\)?`
+          `直線 \\(PA\\) 切圓 \\(O\\) 於 \\(A\\)，\\(B\\) 為圓上另一點。若弦切角 \\(\\angle PAB=${alpha}°\\)，且 \\(C\\) 位於 \\(AB\\) 的優弧上，求圓周角 \\(\\angle ACB\\)。`
         );
+        summaryAnswers.push(`\\(\\angle ACB=${inscribed}°\\)`);
         answers.push(
-          `簡答：\\(\\angle ACB=${inscribed}°\\)。過程：弦切角 \\(\\angle PAB=${alpha}°=\\frac{1}{2}\\widehat{AB}\\)，所以 \\(\\widehat{AB}=${arcAB}°\\)。圓弧 \\(AB\\) 上的圓周角 \\(\\angle ACB=\\frac{1}{2}\\widehat{AB}=${alpha}°\\)，與弦切角相等。`
+          `弦切角 \\(\\angle PAB=${alpha}°=\\frac{1}{2}\\widehat{AB}\\)，所以劣弧 \\(\\widehat{AB}=${arcAB}°\\)。\\(C\\) 位於優弧時，\\(\\angle ACB\\) 截得劣弧 \\(AB\\)，故 \\(\\angle ACB=\\frac{1}{2}\\widehat{AB}=${alpha}°\\)，與弦切角相等。`
         );
       } else {
         // ∠ABD弦切角 + ∠BCD圓周角 組合
@@ -4802,18 +5446,14 @@
         const arcAB = chord1, arcBC = chord2;
         const remainArc = 360 - arcAB - arcBC;
         if (remainArc < 60) { i--; continue; }
-        const tanChordAngle = (arcAB + remainArc) / 2; // tangent at B, chord BA → half of major arc = half(arcBC+remain)
-        // Actually: tangent at B, chord AB → angle = half arc AB (not containing tangent point approach)
-        // Simpler: ∠CBD (tangent at B, chord BC) = half arc BC = chord2/2
         if (!Number.isInteger(chord2 / 2)) { i--; continue; }
         const tanAng = chord2 / 2;
-        const insAng = (arcAB + remainArc) / 2;
-        if (!Number.isInteger(insAng)) { i--; continue; }
         questions.push(
-          `圓上四點 \\(A\\)、\\(B\\)、\\(C\\)、\\(D\\)，\\(\\widehat{AB}=${arcAB}°\\)，\\(\\widehat{BC}=${arcBC}°\\)，其餘弧 \\(\\widehat{CDA}=${remainArc}°\\)。若直線在 \\(B\\) 點切圓，切線與弦 \\(BC\\) 的夾角為多少度？`
+          `圓上四點 \\(A\\)、\\(B\\)、\\(C\\)、\\(D\\)，\\(\\widehat{AB}=${arcAB}°\\)，\\(\\widehat{BC}=${arcBC}°\\)，其餘弧 \\(\\widehat{CDA}=${remainArc}°\\)。若直線在 \\(B\\) 點切圓，求切線與弦 \\(BC\\) 所成的較小角。`
         );
+        summaryAnswers.push(`\\(${tanAng}°\\)`);
         answers.push(
-          `簡答：\\(${tanAng}°\\)。過程：弦切角 \\(=\\frac{1}{2}\\widehat{BC}=\\frac{${arcBC}}{2}=${tanAng}°\\)。`
+          `弦切角等於所對劣弧的一半，所以所成的較小角為 \\(\\frac{1}{2}\\widehat{BC}=\\frac{${arcBC}}{2}=${tanAng}°\\)。`
         );
       }
     }
@@ -4825,62 +5465,52 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
+    const rightTriples = [
+      [3, 4, 5],
+      [5, 12, 13],
+      [6, 8, 10],
+      [8, 15, 17],
+      [9, 12, 15],
+      [7, 24, 25],
+      [10, 24, 26],
+      [12, 16, 20],
+      [15, 20, 25],
+      [20, 21, 29],
+    ];
     for (let i = 0; i < count; i++) {
       const mode = i % 3;
       if (mode === 0) {
-        // 中垂線過頂點：L是AB中垂線且過C，已知AB=c、BC=a，求△ABC周長
-        const c = randInt(4, 14) * 2;  // AB
-        const a = randInt(3, 12);       // BC
-        // CA = CB (since C is on perp bisector of AB) so CA = a
-        // Perimeter = a + a + c = 2a + c
-        const perim = 2 * a + c;
+        // 中垂線過頂點時，△ABC 為等腰三角形；用半底、頂高、腰長三元組保證可作圖。
+        const [halfBase, , side] = rightTriples[randInt(0, rightTriples.length - 1)];
+        const ab = 2 * halfBase;
+        const perim = 2 * side + ab;
         questions.push(
-          `在 \\(\\triangle ABC\\) 中，已知 \\(AB\\) 的垂直平分線恰好通過頂點 \\(C\\)，\\(AB=${c}\\)，\\(BC=${a}\\)，則 \\(\\triangle ABC\\) 的周長是多少？`
+          `在 \\(\\triangle ABC\\) 中，已知 \\(AB\\) 的垂直平分線恰好通過頂點 \\(C\\)，\\(AB=${ab}\\)，\\(BC=${side}\\)，則 \\(\\triangle ABC\\) 的周長是多少？`
         );
         answers.push(
-          `簡答：\\(${perim}\\)。過程：\\(C\\) 在 \\(AB\\) 的中垂線上，所以 \\(CA=CB=${a}\\)。周長 \\(=CA+CB+AB=${a}+${a}+${c}=${perim}\\)。`
+          `簡答：\\(${perim}\\)。過程：\\(C\\) 在 \\(AB\\) 的中垂線上，所以 \\(CA=CB=${side}\\)。周長 \\(=CA+CB+AB=${side}+${side}+${ab}=${perim}\\)。`
         );
       } else if (mode === 1) {
-        // L是AB中垂線，交AC於D，已知BC=b，DC=dc，求△BDC周長
-        const b = randInt(5, 15);       // BC
-        const dc = randInt(2, b - 2);   // DC
-        // Since D on perp bisector of AB, DA = DB → BD = DA
-        // But DA = AC - DC, hmm, this gets complex. Use simpler case:
-        // △BCD周長 = BC + DC + BD, where BD = DA = AC - DC
-        // Let AC = ac, DA = ac - dc = DB
-        const ac = randInt(dc + 2, dc + 12); // AC > DC
-        const da = ac - dc;  // = DB
-        const perim = b + dc + da;
+        // D 在 AB 中垂線上，所以 DA=DB；先選合法的 △BDC，再令 AC=AD+DC。
+        const [dc, da, bc] = rightTriples[randInt(0, rightTriples.length - 1)];
+        const ac = da + dc;
+        const perim = bc + dc + da;
         questions.push(
-          `在 \\(\\triangle ABC\\) 中，\\(AB\\) 的垂直平分線交 \\(AC\\) 於 \\(D\\) 點，已知 \\(BC=${b}\\)，\\(AC=${ac}\\)，\\(DC=${dc}\\)，則 \\(\\triangle BDC\\) 的周長是多少？`
+          `在 \\(\\triangle ABC\\) 中，\\(AB\\) 的垂直平分線交 \\(AC\\) 於 \\(D\\) 點，已知 \\(BC=${bc}\\)，\\(AC=${ac}\\)，\\(DC=${dc}\\)，則 \\(\\triangle BDC\\) 的周長是多少？`
         );
         answers.push(
-          `簡答：\\(${perim}\\)。過程：\\(D\\) 在 \\(AB\\) 中垂線上，所以 \\(DA=DB=${da}\\)。\\(\\triangle BDC\\) 周長 \\(=BC+DC+DB=${b}+${dc}+${da}=${perim}\\)。`
+          `簡答：\\(${perim}\\)。過程：\\(D\\) 在 \\(AB\\) 中垂線上，所以 \\(DA=DB=AC-DC=${ac}-${dc}=${da}\\)。\\(\\triangle BDC\\) 周長 \\(=BC+DC+DB=${bc}+${dc}+${da}=${perim}\\)。`
         );
       } else {
-        // 等腰△中，已知腰長=w，中垂線過D點，△ABD周長
-        const w = randInt(5, 15);  // 腰 = CA = CB
-        const ab = randInt(4, 2 * w - 2);  // base AB < CA+CB
-        // D on mid perp of AB → DA = DB, where D = midpoint of AB (actually could be any point on the perp bisector)
-        // Let D be foot of perpendicular from C to AB (which is also on perp bisector since isosceles)
-        // DA = DB = ab/2
-        if (ab % 2 !== 0) { i--; continue; }
-        const half = ab / 2;
-        const perim = w + half + half; // CA + DA + DB... wait, △ABD = A,B,D — not a real problem
-        // Better: L is perp bisector of AB, crosses CB at E. Find △ABE perimeter
-        // CE = CD (on perp bisector of AB: EA=EB). Hmm, complex. Let's do simpler version.
-        // Direct: △ABC isosceles CA=CB=w, base AB=ab. E on CB, AE is perp bisector of AB.
-        // Since AE perp bisects AB, EA=EB. Let BE=x, CE=w-x.
-        // This is getting complex — use a simpler version instead.
-        const bc = randInt(5, 14); // BC
-        const dc2 = randInt(2, bc - 2);
-        const db = bc - dc2;
-        const perimBDC = bc + dc2 + db;
+        // 等腰三角形中，頂點到底邊中點的連線也是高；用畢氏三元組避免題目數據彼此矛盾。
+        const [half, dc2, bc] = rightTriples[randInt(0, rightTriples.length - 1)];
+        const ab = 2 * half;
+        const perimBDC = bc + dc2 + half;
         questions.push(
           `\\(\\triangle ABC\\) 為等腰三角形，\\(CA=CB\\)，\\(D\\) 為 \\(AB\\) 中點，連結 \\(CD\\)，已知 \\(AB=${ab}\\)，\\(BC=${bc}\\)，\\(DC=${dc2}\\)，則 \\(\\triangle BDC\\) 的周長為多少？`
         );
         answers.push(
-          `簡答：\\(${perimBDC}\\)。過程：\\(D\\) 為 \\(AB\\) 中點，\\(BD=\\frac{AB}{2}=${half}\\)，\\(\\triangle BDC\\) 周長 \\(=BC+DC+BD=${bc}+${dc2}+${half}=${bc + dc2 + half}\\)。`
+          `簡答：\\(${perimBDC}\\)。過程：\\(D\\) 為 \\(AB\\) 中點，\\(BD=\\frac{AB}{2}=${half}\\)，\\(\\triangle BDC\\) 周長 \\(=BC+DC+BD=${bc}+${dc2}+${half}=${perimBDC}\\)。`
         );
       }
     }
@@ -4899,7 +5529,7 @@
       [10,12,14],[7,8,9],[6,7,9],[8,10,12],[5,7,8],[10,14,18],
     ].filter(([a,b,c]) => a+b>c && b+c>a && a+c>b); // valid triangles
     for (let i = 0; i < count; i++) {
-      const [a, b, c] = sideTriples[i % sideTriples.length];
+      const [a, b, c] = sideTriples[randInt(0, sideTriples.length - 1)];
       const sDouble = a + b + c; // 2s
       const s = sDouble / 2;
       const fromA = s - a;  // tangent length from A
@@ -4939,31 +5569,27 @@
     const answers = createAnswerList(summaryAnswers);
     // Median from A to BC: m_a² = (2b²+2c²-a²)/4
     // where a=BC, b=CA, c=AB
-    const cases = [
-      { a:6, b:5, c:5 },   // ma² = (50+50-36)/4 = 16, ma=4
-      { a:8, b:5, c:5 },   // ma² = (50+50-64)/4 = 9, ma=3
-      { a:6, b:8, c:10 },  // mc² = (128+100-36)/4=48 — not integer
-      { a:10, b:6, c:8 },  // ma² = (72+128-100)/4 = 25, ma=5
-      { a:6, b:10, c:10 }, // ma² = (200+200-36)/4 = 91 — skip
-      { a:4, b:5, c:7 },   // ma² = (50+98-16)/4 = 33 — skip
-      { a:4, b:6, c:8 },   // ma² = (72+128-16)/4 = 46 — skip
-      { a:10, b:13, c:13 }, // ma² = (338+338-100)/4 = 144, ma=12
-      { a:8, b:10, c:10 }, // ma² = (200+200-64)/4 = 84 — skip
-      { a:10, b:10, c:12 }, // mc² = (200+200-144)/4=64, mc=8 (median to AB=c=12)
-      { a:12, b:10, c:10 }, // ma² = (200+200-144)/4=64, ma=8
-      { a:16, b:10, c:10 }, // ma² = (200+200-256)/4=36, ma=6
-      { a:6, b:9, c:9 },   // ma² = (162+162-36)/4=72 — skip
-      { a:4, b:3, c:5 },   // mc² = (18+50-16)/4=13 — skip; mb² = (32+18-25)/4=6.25 — skip; ma² = (18+50-16)/4 = 13 — skip
-      { a:6, b:4, c:4 },   // ma² = (32+32-36)/4 = 7 — skip
-      { a:8, b:6, c:6 },   // ma² = (72+72-64)/4 = 20 — skip
-    ].filter(({ a, b, c }) => {
-      // Check median from A: m_a² = (2b²+2c²-a²)/4
-      const ma2 = (2*b*b + 2*c*c - a*a) / 4;
-      return Number.isInteger(ma2) && ma2 > 0 && Number.isInteger(Math.sqrt(ma2));
+    const baseTriples = [
+      [3, 4, 5],
+      [5, 12, 13],
+      [8, 15, 17],
+      [7, 24, 25],
+      [20, 21, 29],
+      [12, 35, 37],
+    ];
+    const cases = [];
+    baseTriples.forEach(([halfBase, median, equalSide]) => {
+      for (let scale = 1; scale <= 4; scale += 1) {
+        cases.push({
+          a: 2 * halfBase * scale,
+          b: equalSide * scale,
+          c: equalSide * scale,
+        });
+      }
     });
 
     for (let i = 0; i < count; i++) {
-      const c = cases[i % cases.length];
+      const c = cases[randInt(0, cases.length - 1)];
       const { a, b } = c;
       const cv = c.c;  // renamed to avoid conflict
       const ma2 = (2 * b * b + 2 * cv * cv - a * a) / 4;
@@ -5001,8 +5627,10 @@
         title: '連比合併與格式轉換綜合',
         difficulty: 'easy',
         questionCount: 6,
-        generate() {
-          return buildJ511RatioConversionMixedSet(6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511RatioConversionMixedSet(practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-1-merge-shared-term': {
@@ -5010,8 +5638,10 @@
         title: '共同項合併成三項連比',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ511MergeSharedTermSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511MergeSharedTermSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-equation-to-ratio': {
@@ -5019,8 +5649,10 @@
         title: '乘積等式轉連比',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ511EquationToRatioSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511EquationToRatioSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-fraction-form-ratio': {
@@ -5028,8 +5660,10 @@
         title: '分式等式轉連比',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ511FractionFormRatioSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511FractionFormRatioSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-reciprocal-ratio': {
@@ -5037,8 +5671,10 @@
         title: '倒數連比與最簡整數比',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ511ReciprocalRatioSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511ReciprocalRatioSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-fraction-statement-ratio': {
@@ -5046,8 +5682,10 @@
         title: '文字分數條件轉連比',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ511FractionStatementRatioSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511FractionStatementRatioSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-ratio-algebra-three-subtypes': {
@@ -5055,8 +5693,10 @@
         title: '參數法、式子變換與平移比例綜合',
         difficulty: 'medium',
         questionCount: 8,
-        generate() {
-          return buildJ511RatioAlgebraMixedSet(8);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511RatioAlgebraMixedSet(practiceCount), resolvePracticeCount(count, 8));
+
         },
       },
       'j5-1-1-parametric-linear-equation': {
@@ -5064,8 +5704,10 @@
         title: '連比參數法解一次式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ511ParametricLinearEquationSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511ParametricLinearEquationSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-ratio-expression-transform': {
@@ -5073,8 +5715,10 @@
         title: '連比代數式比例化簡',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ511RatioExpressionTransformSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511RatioExpressionTransformSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-reverse-value-from-ratio': {
@@ -5082,8 +5726,10 @@
         title: '已知總量反求各部分',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ511ReverseValueFromRatioSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511ReverseValueFromRatioSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-shifted-variable-ratio': {
@@ -5091,8 +5737,10 @@
         title: '變數平移與比例式求值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ511ShiftedVariableRatioSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511ShiftedVariableRatioSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-triangle-angle-algebra-ratio': {
@@ -5100,8 +5748,10 @@
         title: '代數係數型三角角度比例',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ511TriangleAngleAlgebraRatioSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511TriangleAngleAlgebraRatioSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-linked-ratio-advanced': {
@@ -5109,8 +5759,10 @@
         title: '連續比例鏈接與跨項轉換',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ511LinkedRatioAdvancedSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511LinkedRatioAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-geometry-ratio-property-advanced': {
@@ -5118,8 +5770,10 @@
         title: '幾何性質結合型比例',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ511GeometryRatioPropertyAdvancedSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511GeometryRatioPropertyAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-geometry-ratio-three-subtypes': {
@@ -5127,8 +5781,10 @@
         title: '三角形與幾何量的連比應用',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ511GeometryRatioMixedSet(6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511GeometryRatioMixedSet(practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-1-triangle-angle-ratio': {
@@ -5136,8 +5792,10 @@
         title: '三角形內角連比',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ511TriangleAngleRatioSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511TriangleAngleRatioSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-triangle-side-height-ratio': {
@@ -5145,8 +5803,10 @@
         title: '三角形邊長與高的反比',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ511TriangleSideHeightRatioSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511TriangleSideHeightRatioSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-geometry-perimeter-area': {
@@ -5154,8 +5814,10 @@
         title: '幾何周長面積體積連比',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ511GeometryPerimeterAreaSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511GeometryPerimeterAreaSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-life-ratio-five-subtypes': {
@@ -5163,8 +5825,10 @@
         title: '生活情境中的連比分配、反比與混合',
         difficulty: 'medium',
         questionCount: 8,
-        generate() {
-          return buildJ511LifeRatioMixedSet(8);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511LifeRatioMixedSet(practiceCount), resolvePracticeCount(count, 8));
+
         },
       },
       'j5-1-1-money-profit-sharing': {
@@ -5172,8 +5836,10 @@
         title: '金錢與利潤分配',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ511MoneyProfitSharingSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511MoneyProfitSharingSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-mixture-ratio': {
@@ -5181,8 +5847,10 @@
         title: '混合物與濃度配比',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ511MixtureRatioSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511MixtureRatioSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-population-ratio-change': {
@@ -5190,8 +5858,10 @@
         title: '人數比例變動',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ511PopulationRatioChangeSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511PopulationRatioChangeSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-work-rate-speed': {
@@ -5199,8 +5869,10 @@
         title: '工作效率與速率反比',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ511WorkRateSpeedSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511WorkRateSpeedSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-work-efficiency-applied': {
@@ -5208,8 +5880,10 @@
         title: '工程效率問題',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ511WorkEfficiencyAppliedSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511WorkEfficiencyAppliedSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-coin-denomination-ratio': {
@@ -5217,8 +5891,10 @@
         title: '錢幣枚數與總金額',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ511CoinDenominationRatioSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511CoinDenominationRatioSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-mixture-shared-term': {
@@ -5226,8 +5902,10 @@
         title: '混合物成分比例連鎖推導',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ511MixtureSharedTermSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511MixtureSharedTermSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-ratio-change-dynamic': {
@@ -5235,8 +5913,10 @@
         title: '百分率與分數變動的動態比例',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ511RatioChangeDynamicSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511RatioChangeDynamicSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-1-ratio-logic-trap': {
@@ -5244,8 +5924,10 @@
         title: '異常邏輯判斷與比例陷阱',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ511RatioLogicTrapSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ511RatioLogicTrapSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-2-triangle-parallel-five-subtypes': {
@@ -5253,8 +5935,10 @@
         title: '三角形平行截線與中點連線綜合',
         difficulty: 'medium',
         questionCount: 8,
-        generate() {
-          return buildJ512Set('triangleMixed', 8);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ512Set('triangleMixed', practiceCount), resolvePracticeCount(count, 8));
+
         },
       },
       'j5-1-2-parallel-core-five-subtypes': {
@@ -5262,8 +5946,10 @@
         title: '平行線截比例線段五小類綜合',
         difficulty: 'medium',
         questionCount: 10,
-        generate() {
-          return buildJ512Set('parallelMixed', 10);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ512Set('parallelMixed', practiceCount), resolvePracticeCount(count, 10));
+
         },
       },
       'j5-1-2-triangle-parallel-proportional-segments': {
@@ -5271,8 +5957,10 @@
         title: '三角形平行截線比例運算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ512Set('triangleFullProportion', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ512Set('triangleFullProportion', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-2-triangle-parallel-side-ratio': {
@@ -5280,8 +5968,10 @@
         title: '三角形截線邊段比',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ512Set('triangleSide', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ512Set('triangleSide', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-2-triangle-parallel-segment-length': {
@@ -5289,8 +5979,10 @@
         title: '三角形截線求線段長',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ512Set('triangleSegment', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ512Set('triangleSegment', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-2-triangle-parallel-algebra': {
@@ -5298,8 +5990,10 @@
         title: '三角形截線代數求值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ512Set('triangleAlgebra', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ512Set('triangleAlgebra', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-2-triangle-parallel-converse': {
@@ -5307,8 +6001,10 @@
         title: '平行截線逆定理判斷',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ512Set('triangleConverse', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ512Set('triangleConverse', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-2-midpoint-segment': {
@@ -5316,8 +6012,10 @@
         title: '三角形中點連線',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ512Set('midpoint', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ512Set('midpoint', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-2-trapezoid-parallel-three-subtypes': {
@@ -5325,8 +6023,10 @@
         title: '梯形與多平行線三小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ512Set('trapezoidMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ512Set('trapezoidMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-2-trapezoid-parallel-segment': {
@@ -5334,8 +6034,10 @@
         title: '梯形側邊分點截線',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ512Set('trapezoidWeighted', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ512Set('trapezoidWeighted', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-2-trapezoid-midline': {
@@ -5343,8 +6045,10 @@
         title: '梯形中線長度',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ512Set('trapezoidMidline', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ512Set('trapezoidMidline', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-2-multi-parallel-intercepts': {
@@ -5352,8 +6056,10 @@
         title: '多條平行線截比例',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ512Set('multiParallel', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ512Set('multiParallel', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-similarity-criteria-five-subtypes': {
@@ -5361,8 +6067,10 @@
         title: '相似判別與基本比例五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ513Set('criteriaMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('criteriaMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-3-aa-criterion': {
@@ -5370,8 +6078,10 @@
         title: 'AA 相似判別',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('aaCriterion', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('aaCriterion', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-sss-criterion': {
@@ -5379,8 +6089,10 @@
         title: 'SSS 相似判別',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('sssCriterion', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('sssCriterion', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-sas-criterion': {
@@ -5388,8 +6100,10 @@
         title: 'SAS 相似判別',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('sasCriterion', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('sasCriterion', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-parallel-basic-length': {
@@ -5397,8 +6111,10 @@
         title: '平行線小大三角形求長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('parallelBasic', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('parallelBasic', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-butterfly-parallel-length': {
@@ -5406,8 +6122,10 @@
         title: '蝴蝶形平行線比例',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('butterflyBasic', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('butterflyBasic', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-ratio-area-four-subtypes': {
@@ -5415,8 +6133,10 @@
         title: '相似三角形線段、周長與面積比綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ513Set('ratioMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('ratioMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-3-corresponding-elements': {
@@ -5424,8 +6144,10 @@
         title: '對應高、中線、角平分線長度比',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('correspondingElement', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('correspondingElement', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-area-to-side-perimeter': {
@@ -5433,8 +6155,10 @@
         title: '由面積比反推邊長與周長比',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('areaToSide', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('areaToSide', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-area-from-side-ratio': {
@@ -5442,8 +6166,10 @@
         title: '由邊長比求面積比與面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('areaFromSide', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('areaFromSide', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-scale-area-change': {
@@ -5451,8 +6177,10 @@
         title: '縮放後面積倍率',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('scaleArea', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('scaleArea', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-scaling-five-subtypes': {
@@ -5460,8 +6188,10 @@
         title: '圖形縮放與等率運算綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ513Set('scalingMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('scalingMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-3-figure-scale-length': {
@@ -5469,8 +6199,10 @@
         title: '等比例縮放求邊長',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('figureScaleLength', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('figureScaleLength', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-scale-back-length': {
@@ -5478,8 +6210,10 @@
         title: '縮放後反求原邊長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('scaleBackLength', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('scaleBackLength', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-area-scale-factor': {
@@ -5487,8 +6221,10 @@
         title: '縮放倍率與面積倍率',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('areaScaleFactor', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('areaScaleFactor', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-angle-invariant-scale': {
@@ -5496,8 +6232,10 @@
         title: '相似縮放角度不變',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('angleInvariant', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('angleInvariant', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-butterfly-three-subtypes': {
@@ -5505,8 +6243,10 @@
         title: '蝴蝶形與平行線相似比例綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ513Set('butterflyMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('butterflyMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-3-butterfly-area-ratio': {
@@ -5514,8 +6254,10 @@
         title: '蝴蝶形相似面積比',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('butterflyAreaRatio', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('butterflyAreaRatio', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-butterfly-segment-ratio': {
@@ -5523,8 +6265,10 @@
         title: '蝴蝶形交點線段比',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('butterflySegmentRatio', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('butterflySegmentRatio', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-right-altitude-three-subtypes': {
@@ -5532,8 +6276,10 @@
         title: '直角三角形母子相似三小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ513Set('rightMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('rightMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-3-right-altitude': {
@@ -5541,8 +6287,10 @@
         title: '斜邊高平方公式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('rightAltitude', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('rightAltitude', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-right-legs-from-projections': {
@@ -5550,8 +6298,10 @@
         title: '由斜邊投影求兩股',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('rightLegs', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('rightLegs', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-right-projection-unknown': {
@@ -5559,8 +6309,10 @@
         title: '斜邊高與投影段求未知數',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('rightProjection', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('rightProjection', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-measurement-four-subtypes': {
@@ -5568,8 +6320,10 @@
         title: '相似測量與投影四小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ513Set('measurementMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('measurementMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-3-shadow-measurement': {
@@ -5577,8 +6331,10 @@
         title: '影子法測高',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('shadowMeasure', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('shadowMeasure', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-mirror-measurement': {
@@ -5586,8 +6342,10 @@
         title: '鏡面反射測高',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('mirrorMeasure', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('mirrorMeasure', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-pinhole-projection': {
@@ -5595,8 +6353,10 @@
         title: '針孔成像比例',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('pinholeMeasure', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('pinholeMeasure', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-3-river-width-measurement': {
@@ -5604,8 +6364,10 @@
         title: '河寬測量相似三角形',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ513Set('riverMeasure', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ513Set('riverMeasure', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-measurement-five-subtypes': {
@@ -5613,8 +6375,10 @@
         title: '簡易測量與投影五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ514Set('measurementMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('measurementMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-4-shadow-height': {
@@ -5622,8 +6386,10 @@
         title: '影子法測高',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('shadowHeight', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('shadowHeight', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-standard-pole-height': {
@@ -5631,8 +6397,10 @@
         title: '標竿視線法測高',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('standardPole', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('standardPole', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-mirror-height': {
@@ -5640,8 +6408,10 @@
         title: '鏡面反射測高',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('mirrorHeight', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('mirrorHeight', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-pinhole-image': {
@@ -5649,8 +6419,10 @@
         title: '針孔成像像高',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('pinholeImage', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('pinholeImage', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-river-width': {
@@ -5658,8 +6430,10 @@
         title: '視線對齊測河寬',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('riverWidth', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('riverWidth', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-ratio-area-four-subtypes': {
@@ -5667,8 +6441,10 @@
         title: '相似圖形周長與面積比例四小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ514Set('ratioMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('ratioMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-4-perimeter-side': {
@@ -5676,8 +6452,10 @@
         title: '由周長比求對應邊',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('perimeterSide', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('perimeterSide', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-area-to-length': {
@@ -5685,8 +6463,10 @@
         title: '由面積比反推線段長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('areaToLength', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('areaToLength', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-parallel-area-split': {
@@ -5694,8 +6474,10 @@
         title: '平行線分割面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('parallelAreaSplit', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('parallelAreaSplit', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-scale-area': {
@@ -5703,8 +6485,10 @@
         title: '相似放大面積比',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('scaleArea', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('scaleArea', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-right-midpoint-four-subtypes': {
@@ -5712,8 +6496,10 @@
         title: '直角母子相似與中點分割四小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ514Set('rightMidMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('rightMidMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-4-right-altitude': {
@@ -5721,8 +6507,10 @@
         title: '斜邊高平方公式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('rightAltitude', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('rightAltitude', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-right-legs': {
@@ -5730,8 +6518,10 @@
         title: '由斜邊投影求兩股',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('rightLegs', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('rightLegs', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-midpoint-triangle-area': {
@@ -5739,8 +6529,10 @@
         title: '中點三角形面積',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('midpointTriangleArea', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('midpointTriangleArea', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-midpoint-quadrilateral': {
@@ -5748,8 +6540,10 @@
         title: '四邊形中點平行四邊形面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('midpointQuadrilateral', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('midpointQuadrilateral', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-trig-basic-four-subtypes': {
@@ -5757,8 +6551,10 @@
         title: '基本三角比四小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ514Set('trigBasicMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('trigBasicMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-4-trig-from-sides': {
@@ -5766,8 +6562,10 @@
         title: '由三邊求 sin、cos、tan',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('trigFromSides', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('trigFromSides', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-side-from-trig': {
@@ -5775,8 +6573,10 @@
         title: '由三角比求邊長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('sideFromTrig', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('sideFromTrig', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-special-angle': {
@@ -5784,8 +6584,10 @@
         title: '特殊角邊長比例',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('specialAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('specialAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-min-angle-cos': {
@@ -5793,8 +6595,10 @@
         title: '最小銳角 cos 值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('minAngleCos', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('minAngleCos', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-trig-application-four-subtypes': {
@@ -5802,8 +6606,10 @@
         title: '坡度與三角比應用四小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ514Set('trigAppMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('trigAppMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-1-4-slope-percent': {
@@ -5811,8 +6617,10 @@
         title: '坡度百分比換算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('slopePercent', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('slopePercent', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-ladder-angle': {
@@ -5820,8 +6628,10 @@
         title: '梯子仰角求高度',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('ladderAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('ladderAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-trig-area': {
@@ -5829,8 +6639,10 @@
         title: 'tan 與直角三角形面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('trigArea', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('trigArea', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-1-4-similar-trig-transfer': {
@@ -5838,8 +6650,10 @@
         title: '相似三角形三角比轉移',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ514Set('similarTrigTransfer', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ514Set('similarTrigTransfer', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-point-line-circle-three-subtypes': {
@@ -5847,8 +6661,10 @@
         title: '點、直線與圓位置三小類綜合',
         difficulty: 'easy',
         questionCount: 6,
-        generate() {
-          return buildJ521Set('positionMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('positionMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-1-point-circle-position': {
@@ -5856,8 +6672,10 @@
         title: '點與圓的位置判斷',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('pointCirclePosition', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('pointCirclePosition', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-line-circle-position': {
@@ -5865,8 +6683,10 @@
         title: '直線與圓的位置判斷',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('lineCirclePosition', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('lineCirclePosition', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-tangent-length-from-point': {
@@ -5874,8 +6694,10 @@
         title: '圓外一點切線長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('tangentLength', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('tangentLength', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-chord-distance-four-subtypes': {
@@ -5883,8 +6705,10 @@
         title: '弦、弦心距與半徑四小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ521Set('chordMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('chordMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-1-chord-center-distance': {
@@ -5892,8 +6716,10 @@
         title: '已知半徑與弦求弦心距',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('chordDistance', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('chordDistance', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-chord-length': {
@@ -5901,8 +6727,10 @@
         title: '已知半徑與弦心距求弦長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('chordLength', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('chordLength', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-radius-from-chord': {
@@ -5910,8 +6738,10 @@
         title: '已知弦與弦心距求半徑',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('radiusFromChord', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('radiusFromChord', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-concentric-annulus': {
@@ -5919,8 +6749,10 @@
         title: '同心圓弦切小圓面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('concentricAnnulus', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('concentricAnnulus', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-two-circle-tangent-four-subtypes': {
@@ -5928,8 +6760,10 @@
         title: '兩圓位置與公切線四小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ521Set('twoCircleMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('twoCircleMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-1-two-circle-position': {
@@ -5937,8 +6771,10 @@
         title: '兩圓位置關係判斷',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('twoCirclePosition', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('twoCirclePosition', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-radii-from-tangencies': {
@@ -5946,8 +6782,10 @@
         title: '由外切內切連心線求半徑',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('radiiFromTangencies', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('radiiFromTangencies', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-external-common-tangent': {
@@ -5955,8 +6793,10 @@
         title: '外公切線長度',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('externalCommonTangent', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('externalCommonTangent', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-internal-common-tangent': {
@@ -5964,8 +6804,10 @@
         title: '內公切線長度',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('internalCommonTangent', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('internalCommonTangent', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-tangent-polygon-three-subtypes': {
@@ -5973,8 +6815,10 @@
         title: '切線段與圓外切四邊形三小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ521Set('tangentPolygonMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('tangentPolygonMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-1-tangent-segments': {
@@ -5982,8 +6826,10 @@
         title: '同一外點兩切線段相等',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('tangentSegments', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('tangentSegments', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-circumscribed-quadrilateral': {
@@ -5991,8 +6837,10 @@
         title: '圓外切四邊形求邊長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('circumscribedQuadrilateral', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('circumscribedQuadrilateral', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-tangent-quad-perimeter': {
@@ -6000,8 +6848,10 @@
         title: '圓外切四邊形求周長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('tangentQuadPerimeter', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('tangentQuadPerimeter', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-coordinate-circle-five-subtypes': {
@@ -6009,8 +6859,10 @@
         title: '坐標平面上的圓五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ521Set('coordinateMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('coordinateMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-1-diameter-endpoint-circle': {
@@ -6018,8 +6870,10 @@
         title: '直徑端點求圓心半徑',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('diameterEndpointCircle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('diameterEndpointCircle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-axis-line-circle-relation': {
@@ -6027,8 +6881,10 @@
         title: '坐標軸平行線與圓位置',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('axisLineCircleRelation', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('axisLineCircleRelation', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-coordinate-point-position': {
@@ -6036,8 +6892,10 @@
         title: '坐標點與圓位置判斷',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('coordinatePointPosition', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('coordinatePointPosition', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-coordinate-tangent-radius': {
@@ -6045,8 +6903,10 @@
         title: '坐標點到圓切線長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('coordinateTangentRadius', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('coordinateTangentRadius', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-point-distance-to-circle': {
@@ -6054,8 +6914,10 @@
         title: '點到圓周最短最長距離',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ521Set('pointDistanceToCircle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521Set('pointDistanceToCircle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-coordinate-tangent-integration-advanced': {
@@ -6063,8 +6925,10 @@
         title: '座標幾何與切線長整合',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ521CoordinateTangentIntegrationAdvancedSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521CoordinateTangentIntegrationAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-two-circle-position-parameter': {
@@ -6072,8 +6936,10 @@
         title: '兩圓位置關係的參數逆推',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ521TwoCirclePositionParameterSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521TwoCirclePositionParameterSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-1-tangent-pythagorean-integration': {
@@ -6081,8 +6947,10 @@
         title: '切線長與勾股定理的複合應用',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ521TangentPythagoreanIntegrationSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ521TangentPythagoreanIntegrationSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-central-arc-sector-four-subtypes': {
@@ -6090,8 +6958,10 @@
         title: '圓心角、弧長與扇形四小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ522Set('centralMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('centralMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-2-central-arc-degree': {
@@ -6099,8 +6969,10 @@
         title: '圓心角與弧度數換算',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('centralArcDegree', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('centralArcDegree', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-arc-length-from-angle': {
@@ -6108,8 +6980,10 @@
         title: '由半徑與圓心角求弧長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('arcLengthFromAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('arcLengthFromAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-angle-from-arc-length': {
@@ -6117,8 +6991,10 @@
         title: '由弧長與半徑求圓心角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('angleFromArcLength', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('angleFromArcLength', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-sector-area': {
@@ -6126,8 +7002,10 @@
         title: '扇形面積計算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('sectorArea', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('sectorArea', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-inscribed-angle-five-subtypes': {
@@ -6135,8 +7013,10 @@
         title: '圓周角與弦切角五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ522Set('inscribedMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('inscribedMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-2-inscribed-angle-from-arc': {
@@ -6144,8 +7024,10 @@
         title: '由弧度數求圓周角',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('inscribedAngleFromArc', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('inscribedAngleFromArc', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-arc-from-inscribed-angle': {
@@ -6153,8 +7035,10 @@
         title: '由圓周角求所對弧',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('arcFromInscribedAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('arcFromInscribedAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-diameter-inscribed-angle': {
@@ -6162,8 +7046,10 @@
         title: '直徑所對圓周角',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('diameterInscribedAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('diameterInscribedAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-tangent-chord-angle': {
@@ -6171,8 +7057,10 @@
         title: '弦切角與同弧圓周角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('tangentChordAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('tangentChordAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-parallel-chord-angle': {
@@ -6180,8 +7068,10 @@
         title: '平行弦夾弧求角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('parallelChordAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('parallelChordAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-cyclic-quadrilateral-four-subtypes': {
@@ -6189,8 +7079,10 @@
         title: '圓內接四邊形四小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ522Set('cyclicMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('cyclicMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-2-cyclic-opposite-angle': {
@@ -6198,8 +7090,10 @@
         title: '圓內接四邊形對角互補',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('cyclicOppositeAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('cyclicOppositeAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-cyclic-ratio-angles': {
@@ -6207,8 +7101,10 @@
         title: '圓內接四邊形角度比',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('cyclicRatioAngles', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('cyclicRatioAngles', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-cyclic-exterior-angle': {
@@ -6216,8 +7112,10 @@
         title: '圓內接四邊形外角',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('cyclicExteriorAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('cyclicExteriorAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-cyclic-linear-equation': {
@@ -6225,8 +7123,10 @@
         title: '圓內接四邊形一次式求角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('cyclicLinearEquation', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('cyclicLinearEquation', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-interior-exterior-angle-five-subtypes': {
@@ -6234,8 +7134,10 @@
         title: '圓內角與圓外角五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ522Set('interiorExteriorMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('interiorExteriorMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-2-interior-angle-two-chords': {
@@ -6243,8 +7145,10 @@
         title: '兩弦圓內角計算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('interiorAngleTwoChords', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('interiorAngleTwoChords', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-arc-from-interior-angle': {
@@ -6252,8 +7156,10 @@
         title: '由圓內角反推弧度數',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('arcFromInteriorAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('arcFromInteriorAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-exterior-angle-two-secants': {
@@ -6261,8 +7167,10 @@
         title: '兩割線圓外角計算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('exteriorAngleTwoSecants', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('exteriorAngleTwoSecants', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-two-tangents-angle': {
@@ -6270,8 +7178,10 @@
         title: '兩切線夾角計算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('twoTangentsAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('twoTangentsAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-parameter-exterior-angle': {
@@ -6279,8 +7189,10 @@
         title: '圓外角一次式求值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('parameterExteriorAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('parameterExteriorAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-arc-distribution-five-subtypes': {
@@ -6288,8 +7200,10 @@
         title: '弧度比例與多邊形角度五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ522Set('arcDistributionMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('arcDistributionMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-2-arc-ratio-angle': {
@@ -6297,8 +7211,10 @@
         title: '弧長比例分配求圓周角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('arcRatioAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('arcRatioAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-equal-division-angle': {
@@ -6306,8 +7222,10 @@
         title: '等分圓周求圓周角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('equalDivisionAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('equalDivisionAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-regular-polygon-tangent-angle': {
@@ -6315,8 +7233,10 @@
         title: '正多邊形弦切角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('regularPolygonTangentAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('regularPolygonTangentAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-major-minor-inscribed-angle': {
@@ -6324,8 +7244,10 @@
         title: '優弧劣弧與圓周角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('majorMinorInscribedAngle', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('majorMinorInscribedAngle', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-2-central-arc-equation': {
@@ -6333,8 +7255,10 @@
         title: '同弧圓心角圓周角一次式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ522Set('centralArcEquation', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ522Set('centralArcEquation', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-power-basic-four-subtypes': {
@@ -6342,8 +7266,10 @@
         title: '圓內外乘冪基本四小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ523Set('powerBasicMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('powerBasicMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-3-intersecting-chords-segment': {
@@ -6351,8 +7277,10 @@
         title: '圓內兩弦相交求線段',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('intersectingChordsSegment', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('intersectingChordsSegment', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-external-secants-segment': {
@@ -6360,8 +7288,10 @@
         title: '圓外兩割線求線段',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('externalSecantsSegment', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('externalSecantsSegment', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-tangent-secant-tangent': {
@@ -6369,8 +7299,10 @@
         title: '切割線定理求切線長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('tangentSecantTangent', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('tangentSecantTangent', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-tangent-secant-segment': {
@@ -6378,8 +7310,10 @@
         title: '切割線定理求割線段',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('tangentSecantSecantSegment', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('tangentSecantSecantSegment', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-algebra-five-subtypes': {
@@ -6387,8 +7321,10 @@
         title: '乘冪定理代數式五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ523Set('algebraMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('algebraMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-3-secant-tangent-quadratic-model': {
@@ -6396,8 +7332,10 @@
         title: '比例與二次方程結合',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ523SecantTangentQuadraticModelSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523SecantTangentQuadraticModelSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-algebra-intersecting-chords': {
@@ -6405,8 +7343,10 @@
         title: '兩弦乘冪一次式求值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('algebraIntersectingChords', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('algebraIntersectingChords', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-algebra-tangent-secant': {
@@ -6414,8 +7354,10 @@
         title: '切割線乘冪一次式求值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('algebraTangentSecant', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('algebraTangentSecant', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-algebra-external-secants': {
@@ -6423,8 +7365,10 @@
         title: '兩割線乘冪一次式求值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('algebraExternalSecants', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('algebraExternalSecants', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-ratio-intersecting-chords': {
@@ -6432,8 +7376,10 @@
         title: '兩弦比例分段求全長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('ratioIntersectingChords', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('ratioIntersectingChords', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-ratio-tangent-secant': {
@@ -6441,8 +7387,10 @@
         title: '切割線比例求乘冪值',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('ratioTangentSecant', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('ratioTangentSecant', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-radius-power-five-subtypes': {
@@ -6450,8 +7398,10 @@
         title: '圓心距與圓冪值五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ523Set('radiusPowerMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('radiusPowerMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-3-inside-power-product': {
@@ -6459,8 +7409,10 @@
         title: '圓內點圓冪乘積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('insidePowerProduct', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('insidePowerProduct', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-tangent-from-distance': {
@@ -6468,8 +7420,10 @@
         title: '由圓心距與半徑求切線長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('tangentFromDistance', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('tangentFromDistance', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-radius-from-tangent-distance': {
@@ -6477,8 +7431,10 @@
         title: '由切線長與圓心距求半徑',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('radiusFromTangentDistance', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('radiusFromTangentDistance', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-shortest-chord-through-point': {
@@ -6486,8 +7442,10 @@
         title: '圓內點最短弦長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('shortestChordThroughPoint', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('shortestChordThroughPoint', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-diameter-secant-product': {
@@ -6495,8 +7453,10 @@
         title: '通過圓心割線乘積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('diameterSecantProduct', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('diameterSecantProduct', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-chord-distance-four-subtypes': {
@@ -6504,8 +7464,10 @@
         title: '弦心距與乘冪轉換四小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ523Set('chordDistanceMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('chordDistanceMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-3-chord-distance-power-transfer': {
@@ -6513,8 +7475,10 @@
         title: '弦心距轉乘冪求段長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('chordDistancePowerTransfer', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('chordDistancePowerTransfer', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-midpoint-chord-product': {
@@ -6522,8 +7486,10 @@
         title: '中點弦乘冪求弦長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('midpointChordProduct', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('midpointChordProduct', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-parallel-chord-product': {
@@ -6531,8 +7497,10 @@
         title: '平行弦延長兩割線',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('parallelChordProduct', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('parallelChordProduct', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-perpendicular-chord-length': {
@@ -6540,8 +7508,10 @@
         title: '垂徑定理求弦長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('perpendicularChordLength', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('perpendicularChordLength', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-ratio-composite-five-subtypes': {
@@ -6549,8 +7519,10 @@
         title: '比例關係與乘冪綜合五小類',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ523Set('ratioCompositeMixed', 6);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('ratioCompositeMixed', practiceCount), resolvePracticeCount(count, 6));
+
         },
       },
       'j5-2-3-ratio-internal-chord-total': {
@@ -6558,8 +7530,10 @@
         title: '圓內弦比例分段求全長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('ratioInternalChordTotal', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('ratioInternalChordTotal', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-ratio-external-secant-length': {
@@ -6567,8 +7541,10 @@
         title: '圓外割線比例求全長',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('ratioExternalSecantLength', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('ratioExternalSecantLength', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-two-secants-same-point-ratio': {
@@ -6576,8 +7552,10 @@
         title: '同外點兩割線乘積相等',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('twoSecantsSamePointRatio', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('twoSecantsSamePointRatio', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-two-tangent-equal-power': {
@@ -6585,8 +7563,10 @@
         title: '同外點兩切線與乘冪',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('twoTangentEqualPower', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('twoTangentEqualPower', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-common-tangent-power': {
@@ -6594,8 +7574,10 @@
         title: '切線乘冪轉割線全長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ523Set('commonTangentPower', 5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523Set('commonTangentPower', practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-2-3-power-similarity-advanced': {
@@ -6603,8 +7585,10 @@
         title: '冪性質與相似三角形',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ523PowerSimilarityAdvancedSet(5);
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildJ523PowerSimilarityAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
+
         },
       },
       'j5-3-1-parity-five-subtypes': {
@@ -6612,8 +7596,8 @@
         title: '奇偶性質證明五小類綜合',
         difficulty: 'easy',
         questionCount: 6,
-        generate() {
-          return buildJ531Set('parityMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('parityMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-1-parity-sum': {
@@ -6621,8 +7605,8 @@
         title: '偶數加奇數證明',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('paritySum', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('paritySum', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-odd-product': {
@@ -6630,8 +7614,8 @@
         title: '奇數乘奇數證明',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('oddProduct', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('oddProduct', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-square-parity': {
@@ -6639,8 +7623,8 @@
         title: '平方保留奇偶性',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('squareParity', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('squareParity', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-linear-parity': {
@@ -6648,8 +7632,8 @@
         title: '偶數加常數奇偶判斷',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('linearParity', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('linearParity', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-odd-squares-sum': {
@@ -6657,8 +7641,8 @@
         title: '兩奇數平方和奇偶證明',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('oddSquaresSum', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('oddSquaresSum', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-divisibility-five-subtypes': {
@@ -6666,8 +7650,8 @@
         title: '整除與因式證明五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ531Set('divisibilityMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('divisibilityMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-1-consecutive-product-divisible': {
@@ -6675,8 +7659,8 @@
         title: '連續整數乘積整除',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('consecutiveProductDivisible', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('consecutiveProductDivisible', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-difference-squares-divisible': {
@@ -6684,8 +7668,8 @@
         title: '平方差因式整除',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('differenceSquaresDivisible', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('differenceSquaresDivisible', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-shifted-square-multiple': {
@@ -6693,8 +7677,8 @@
         title: '平移平方差整除',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('shiftedSquareMultiple', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('shiftedSquareMultiple', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-quadratic-completion-multiple': {
@@ -6702,8 +7686,8 @@
         title: '配方後判斷倍數',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('quadraticCompletionMultiple', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('quadraticCompletionMultiple', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-factor-substitution-multiple': {
@@ -6711,8 +7695,8 @@
         title: '代入倍數關係證明',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('factorSubstitutionMultiple', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('factorSubstitutionMultiple', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-remainder-five-subtypes': {
@@ -6720,8 +7704,8 @@
         title: '除法餘數推理五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ531Set('remainderMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('remainderMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-1-square-remainder': {
@@ -6729,8 +7713,8 @@
         title: '平方的餘數推理',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('squareRemainder', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('squareRemainder', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-remainder-parity': {
@@ -6738,8 +7722,8 @@
         title: '由餘數判斷奇偶',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('remainderParity', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('remainderParity', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-expression-remainder': {
@@ -6747,8 +7731,8 @@
         title: '代數式餘數運算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('expressionRemainder', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('expressionRemainder', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-age-squares-remainder': {
@@ -6756,8 +7740,8 @@
         title: '生活情境平方餘數',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('ageSquaresRemainder', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('ageSquaresRemainder', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-not-divisible-claim': {
@@ -6765,8 +7749,8 @@
         title: '反例型整除判斷',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('notDivisibleClaim', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('notDivisibleClaim', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-consecutive-five-subtypes': {
@@ -6774,8 +7758,8 @@
         title: '連續整數性質證明五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ531Set('consecutiveMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('consecutiveMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-1-three-consecutive-product-six': {
@@ -6783,8 +7767,8 @@
         title: '三連續整數乘積為六倍數',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('threeConsecutiveProductSix', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('threeConsecutiveProductSix', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-consecutive-sum-multiple': {
@@ -6792,8 +7776,8 @@
         title: '奇數個連續整數和',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('consecutiveSumMultiple', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('consecutiveSumMultiple', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-consecutive-odd-squares-eight': {
@@ -6801,8 +7785,8 @@
         title: '連續奇數平方差',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('consecutiveOddSquaresEight', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('consecutiveOddSquaresEight', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-two-consecutive-even-product': {
@@ -6810,8 +7794,8 @@
         title: '連續偶數乘積整除',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('twoConsecutiveEvenProduct', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('twoConsecutiveEvenProduct', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-consecutive-weighted-sum-four': {
@@ -6819,8 +7803,8 @@
         title: '三連續整數加權和',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('consecutiveWeightedSumFour', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('consecutiveWeightedSumFour', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-inequality-eight-subtypes': {
@@ -6828,8 +7812,8 @@
         title: '代數不等式證明八小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ531Set('inequalityMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('inequalityMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-1-positive-square-order': {
@@ -6837,8 +7821,8 @@
         title: '正數平方保序',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('positiveSquareOrder', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('positiveSquareOrder', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-negative-square-reverse': {
@@ -6846,8 +7830,8 @@
         title: '負數平方倒向比較',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('negativeSquareReverse', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('negativeSquareReverse', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-positive-reciprocal-reverse': {
@@ -6855,8 +7839,8 @@
         title: '正數倒數倒向',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('positiveReciprocalReverse', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('positiveReciprocalReverse', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-negative-reciprocal-reverse': {
@@ -6864,8 +7848,8 @@
         title: '負數倒數比較',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('negativeReciprocalReverse', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('negativeReciprocalReverse', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-multiply-by-negative': {
@@ -6873,8 +7857,8 @@
         title: '乘負數不等號換向',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('multiplyByNegative', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('multiplyByNegative', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-am-gm-two-numbers': {
@@ -6882,8 +7866,8 @@
         title: '算術幾何平均不等式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('amGmTwoNumbers', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('amGmTwoNumbers', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-radical-order': {
@@ -6891,8 +7875,8 @@
         title: '根號與原數大小',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('radicalOrder', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('radicalOrder', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-same-sign-product-inequality': {
@@ -6900,8 +7884,8 @@
         title: '符號連鎖與乘積正負',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ531Set('sameSignProductInequality', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('sameSignProductInequality', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-advanced-consecutive-integers': {
@@ -6909,8 +7893,8 @@
         title: '連續整數性質的擴展',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ531AdvancedConsecutiveIntegersSet(5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531AdvancedConsecutiveIntegersSet(practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-polynomial-divisibility': {
@@ -6918,8 +7902,8 @@
         title: '代數式變形的整除判定',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ531PolynomialDivisibilitySet(5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531PolynomialDivisibilitySet(practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-multi-variable-sign-logic': {
@@ -6927,8 +7911,8 @@
         title: '多變數符號邏輯推導',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ531MultiVariableSignLogicSet(5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531MultiVariableSignLogicSet(practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-inequality-proofs-composite': {
@@ -6936,8 +7920,8 @@
         title: '倒數與不等式的複合變形',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ531InequalityProofsCompositeSet(5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531InequalityProofsCompositeSet(practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-algebra-geometry-proof-bridge': {
@@ -6945,8 +7929,8 @@
         title: '配方法與幾何證明的銜接',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ531AlgebraGeometryProofBridgeSet(5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531AlgebraGeometryProofBridgeSet(practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-proof-reasoning-mixed': {
@@ -6954,8 +7938,8 @@
         title: '證明推理綜合',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ531ProofReasoningMixedSet(5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531ProofReasoningMixedSet(practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-centers-five-subtypes': {
@@ -6963,8 +7947,8 @@
         title: '三心基本性質證明五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ532Set('centersMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('centersMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-2-circumcenter-equal-distance': {
@@ -6972,8 +7956,8 @@
         title: '外心到三頂點等距',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('circumcenterEqualDistance', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('circumcenterEqualDistance', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-incenter-equal-distance': {
@@ -6981,8 +7965,8 @@
         title: '內心到三邊等距',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('incenterEqualDistance', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('incenterEqualDistance', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-centroid-median-ratio': {
@@ -6990,8 +7974,8 @@
         title: '重心分中線比例',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('centroidMedianRatio', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('centroidMedianRatio', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-right-triangle-circumcenter': {
@@ -6999,8 +7983,8 @@
         title: '直角三角形外心',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('rightTriangleCircumcenter', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('rightTriangleCircumcenter', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-isosceles-centers-line': {
@@ -7008,8 +7992,8 @@
         title: '等腰三角形三心共線',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('isoscelesCentersLine', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('isoscelesCentersLine', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-congruence-five-subtypes': {
@@ -7017,8 +8001,8 @@
         title: '全等性質證明五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ532Set('congruenceMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('congruenceMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-2-isosceles-altitude-bisects': {
@@ -7026,8 +8010,8 @@
         title: '等腰三角形高平分頂角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('isoscelesAltitudeBisects', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('isoscelesAltitudeBisects', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-perpendicular-bisector-point': {
@@ -7035,8 +8019,8 @@
         title: '垂直平分線等距',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('perpendicularBisectorPoint', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('perpendicularBisectorPoint', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-angle-bisector-symmetry': {
@@ -7044,8 +8028,8 @@
         title: '角平分線到兩邊等距',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('angleBisectorSymmetry', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('angleBisectorSymmetry', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-square-shared-vertex': {
@@ -7053,8 +8037,8 @@
         title: '共頂點正方形全等',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('squareSharedVertex', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('squareSharedVertex', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-equilateral-shared-vertex': {
@@ -7062,8 +8046,8 @@
         title: '共頂點正三角形全等',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('equilateralSharedVertex', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('equilateralSharedVertex', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-similarity-five-subtypes': {
@@ -7071,8 +8055,8 @@
         title: '相似與比例證明五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ532Set('similarityMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('similarityMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-2-parallel-line-similarity': {
@@ -7080,8 +8064,8 @@
         title: '平行線截比例相似',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('parallelLineSimilarity', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('parallelLineSimilarity', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-right-altitude-geometric-mean': {
@@ -7089,8 +8073,8 @@
         title: '斜邊高平方公式證明',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('rightAltitudeGeometricMean', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('rightAltitudeGeometricMean', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-butterfly-similarity': {
@@ -7098,8 +8082,8 @@
         title: '蝴蝶相似乘積關係',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('butterflySimilarity', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('butterflySimilarity', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-angle-bisector-ratio': {
@@ -7107,8 +8091,8 @@
         title: '內角平分線比例',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('angleBisectorRatio', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('angleBisectorRatio', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-altitude-circumcircle-product': {
@@ -7116,8 +8100,8 @@
         title: '高與外接圓直徑乘積',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('altitudeCircumcircleProduct', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('altitudeCircumcircleProduct', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-circle-proof-five-subtypes': {
@@ -7125,8 +8109,8 @@
         title: '圓與角度證明五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ532Set('circleProofMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('circleProofMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-2-parallel-chords-equal-arcs': {
@@ -7134,8 +8118,8 @@
         title: '平行弦夾等弧',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('parallelChordsEqualArcs', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('parallelChordsEqualArcs', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-tangent-segments-equal': {
@@ -7143,8 +8127,8 @@
         title: '同外點兩切線相等',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('tangentSegmentsEqual', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('tangentSegmentsEqual', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-cyclic-opposite-angles': {
@@ -7152,8 +8136,8 @@
         title: '圓內接四邊形對角互補',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('cyclicOppositeAngles', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('cyclicOppositeAngles', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-tangent-chord-similarity': {
@@ -7161,8 +8145,8 @@
         title: '切割線相似證明',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('tangentChordSimilarity', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('tangentChordSimilarity', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-same-arc-angle-equal': {
@@ -7170,8 +8154,8 @@
         title: '同弧圓周角與弦切角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('sameArcAngleEqual', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('sameArcAngleEqual', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-centroid-area-five-subtypes': {
@@ -7179,8 +8163,8 @@
         title: '重心與面積比例五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ532Set('centroidAreaMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('centroidAreaMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-2-centroid-three-triangles-area': {
@@ -7188,8 +8172,8 @@
         title: '重心連三頂點面積相等',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('centroidThreeTrianglesArea', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('centroidThreeTrianglesArea', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-median-six-equal-areas': {
@@ -7197,8 +8181,8 @@
         title: '三中線六等面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('medianSixEqualAreas', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('medianSixEqualAreas', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-centroid-midpoint-area-ratio': {
@@ -7206,8 +8190,8 @@
         title: '重心小三角形面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('centroidMidpointAreaRatio', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('centroidMidpointAreaRatio', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-parallelogram-centroid-point': {
@@ -7215,8 +8199,8 @@
         title: '平行四邊形中的重心',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('parallelogramCentroidPoint', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('parallelogramCentroidPoint', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-centroid-median-length': {
@@ -7224,8 +8208,8 @@
         title: '重心中線長度計算',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ532Set('centroidMedianLength', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('centroidMedianLength', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-circumcenter-five-subtypes': {
@@ -7233,8 +8217,8 @@
         title: '外心角度距離與外接圓七小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ533Set('circumcenterMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('circumcenterMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-3-circumcenter-angle': {
@@ -7242,8 +8226,8 @@
         title: '銳角三角形外心角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('circumcenterAngle', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('circumcenterAngle', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-circumcenter-equal-radius': {
@@ -7251,8 +8235,8 @@
         title: '外心等距計算',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('circumcenterEqualRadius', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('circumcenterEqualRadius', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-right-circumradius': {
@@ -7260,8 +8244,8 @@
         title: '直角三角形外接半徑',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('rightCircumradius', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('rightCircumradius', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-equilateral-circumradius': {
@@ -7269,8 +8253,8 @@
         title: '正三角形外接半徑',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('equilateralCircumradius', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('equilateralCircumradius', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-obtuse-circumcenter-angle': {
@@ -7278,8 +8262,8 @@
         title: '鈍角三角形外心角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('obtuseCircumcenterAngle', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('obtuseCircumcenterAngle', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-isosceles-circumradius': {
@@ -7287,8 +8271,8 @@
         title: '等腰三角形外接半徑',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('isoscelesCircumradius', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('isoscelesCircumradius', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-circumcircle-area-from-radius': {
@@ -7296,8 +8280,8 @@
         title: '由外心半徑求外接圓面積',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('circumcircleAreaFromRadius', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('circumcircleAreaFromRadius', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-incenter-six-subtypes': {
@@ -7305,8 +8289,8 @@
         title: '內心角度半徑與面積八小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ533Set('incenterMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('incenterMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-3-incenter-angle': {
@@ -7314,8 +8298,8 @@
         title: '內心角公式換算',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('incenterAngle', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('incenterAngle', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-incenter-angle-inverse': {
@@ -7323,8 +8307,8 @@
         title: '由內心角反推頂角',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('incenterAngleInverse', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('incenterAngleInverse', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-inradius-from-area-perimeter': {
@@ -7332,8 +8316,8 @@
         title: '由面積周長求內切半徑',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('inradiusFromAreaPerimeter', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('inradiusFromAreaPerimeter', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-right-triangle-inradius': {
@@ -7341,8 +8325,8 @@
         title: '直角三角形內切半徑',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('rightTriangleInradius', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('rightTriangleInradius', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-incenter-area-ratio': {
@@ -7350,8 +8334,8 @@
         title: '內心分割面積比',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('incenterAreaRatio', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('incenterAreaRatio', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-equilateral-inradius': {
@@ -7359,8 +8343,8 @@
         title: '正三角形內切半徑',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('equilateralInradius', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('equilateralInradius', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-incenter-area-from-side-ratio': {
@@ -7368,8 +8352,8 @@
         title: '內心面積比反推全圖',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('incenterAreaFromSideRatio', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('incenterAreaFromSideRatio', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-axis-triangle-incenter-area': {
@@ -7377,8 +8361,8 @@
         title: '坐標軸直角三角形內心面積',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('axisTriangleIncenterArea', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('axisTriangleIncenterArea', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-centroid-six-subtypes': {
@@ -7386,8 +8370,8 @@
         title: '重心長度座標面積十五小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ533Set('centroidMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('centroidMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-3-centroid-median-length': {
@@ -7395,8 +8379,8 @@
         title: '由中線求重心分段',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('centroidMedianLength', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('centroidMedianLength', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-centroid-median-inverse': {
@@ -7404,8 +8388,8 @@
         title: '由重心短段求中線',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('centroidMedianInverse', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('centroidMedianInverse', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-centroid-coordinate': {
@@ -7413,8 +8397,8 @@
         title: '三點求重心坐標',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('centroidCoordinate', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('centroidCoordinate', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-missing-vertex-from-centroid': {
@@ -7422,8 +8406,8 @@
         title: '由重心反推第三頂點',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('missingVertexFromCentroid', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('missingVertexFromCentroid', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-centroid-area-sixth': {
@@ -7431,8 +8415,8 @@
         title: '重心六等面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('centroidAreaSixth', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('centroidAreaSixth', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-centroid-area-third': {
@@ -7440,8 +8424,8 @@
         title: '重心三等面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('centroidAreaThird', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('centroidAreaThird', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-centroid-median-equation': {
@@ -7449,8 +8433,8 @@
         title: '重心中線比例一次式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('centroidMedianEquation', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('centroidMedianEquation', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-centroid-area-from-one-small': {
@@ -7458,8 +8442,8 @@
         title: '由重心小三角形求全圖面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('centroidAreaFromOneSmall', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('centroidAreaFromOneSmall', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-parallelogram-hidden-centroid-length': {
@@ -7467,8 +8451,8 @@
         title: '平行四邊形隱藏重心求長度',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('parallelogramHiddenCentroidLength', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('parallelogramHiddenCentroidLength', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-parallelogram-centroid-area': {
@@ -7476,8 +8460,8 @@
         title: '平行四邊形隱藏重心求面積',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('parallelogramCentroidArea', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('parallelogramCentroidArea', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-centroid-quadrilateral-to-total-area': {
@@ -7485,8 +8469,8 @@
         title: '重心中點四邊形反推全圖面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('centroidQuadrilateralToTotalArea', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('centroidQuadrilateralToTotalArea', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-parallelogram-two-centroids-distance': {
@@ -7494,8 +8478,8 @@
         title: '平行四邊形兩重心距離',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('parallelogramTwoCentroidsDistance', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('parallelogramTwoCentroidsDistance', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-parallelogram-midpoint-triangle-area': {
@@ -7503,8 +8487,8 @@
         title: '平行四邊形中點小三角形面積',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('parallelogramMidpointTriangleArea', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('parallelogramMidpointTriangleArea', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-parallelogram-centroid-segment-equation': {
@@ -7512,8 +8496,8 @@
         title: '平行四邊形兩重心分段一次式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('parallelogramCentroidSegmentEquation', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('parallelogramCentroidSegmentEquation', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-isosceles-area-from-centroid-distance': {
@@ -7521,8 +8505,8 @@
         title: '等腰三角形由重心距求面積',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('isoscelesAreaFromCentroidDistance', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('isoscelesAreaFromCentroidDistance', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-coordinate-five-subtypes': {
@@ -7530,8 +8514,8 @@
         title: '座標平面三心八小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ533Set('coordinateMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('coordinateMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-3-right-triangle-circumcenter-coordinate': {
@@ -7539,8 +8523,8 @@
         title: '座標直角三角形外心',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('rightTriangleCircumcenterCoordinate', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('rightTriangleCircumcenterCoordinate', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-three-point-centroid-coordinate': {
@@ -7548,8 +8532,8 @@
         title: '座標三點重心',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('threePointCentroidCoordinate', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('threePointCentroidCoordinate', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-axis-triangle-incenter': {
@@ -7557,8 +8541,8 @@
         title: '坐標軸直角三角形內心',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('axisTriangleIncenter', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('axisTriangleIncenter', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-right-triangle-og-distance': {
@@ -7566,8 +8550,8 @@
         title: '直角三角形外心重心距',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('rightTriangleOGDistance', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('rightTriangleOGDistance', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-circumcenter-point-check': {
@@ -7575,8 +8559,8 @@
         title: '判斷點是否在外接圓上',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('circumcenterPointCheck', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('circumcenterPointCheck', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-circumcenter-coordinate-general': {
@@ -7584,8 +8568,8 @@
         title: '三點共圓求外心與面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('circumcenterCoordinateGeneral', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('circumcenterCoordinateGeneral', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-right-triangle-coordinate-og': {
@@ -7593,8 +8577,8 @@
         title: '座標直角三角形求外心重心距',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('rightTriangleCoordinateOG', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('rightTriangleCoordinateOG', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-euler-line-orthocenter-coordinate': {
@@ -7602,8 +8586,8 @@
         title: '尤拉線由外心重心求垂心',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('eulerLineOrthocenterCoordinate', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('eulerLineOrthocenterCoordinate', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-special-five-subtypes': {
@@ -7611,8 +8595,8 @@
         title: '正三角形與直角三心十小類綜合',
         difficulty: 'medium',
         questionCount: 6,
-        generate() {
-          return buildJ533Set('specialMixed', 6);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('specialMixed', practiceCount), resolvePracticeCount(count, 6));
         },
       },
       'j5-3-3-equilateral-radii-ratio': {
@@ -7620,8 +8604,8 @@
         title: '正三角形內外半徑比',
         difficulty: 'easy',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('equilateralRadiiRatio', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('equilateralRadiiRatio', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-equilateral-area-from-inradius': {
@@ -7629,8 +8613,8 @@
         title: '由內切半徑求正三角形面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('equilateralAreaFromInradius', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('equilateralAreaFromInradius', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-equilateral-area-from-circumradius': {
@@ -7638,8 +8622,8 @@
         title: '由外接半徑求正三角形面積',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('equilateralAreaFromCircumradius', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('equilateralAreaFromCircumradius', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-right-triangle-go': {
@@ -7647,8 +8631,8 @@
         title: '直角三角形外心重心距公式',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('rightTriangleGO', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('rightTriangleGO', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-right-triangle-rr-perimeter': {
@@ -7656,8 +8640,8 @@
         title: '直角三角形內外半徑與周長',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('rightTriangleRrPerimeter', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('rightTriangleRrPerimeter', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-right-triangle-hypotenuse-from-og': {
@@ -7665,8 +8649,8 @@
         title: '由外心重心距反推斜邊與外接圓',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('rightTriangleHypotenuseFromOG', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('rightTriangleHypotenuseFromOG', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-right-triangle-perimeter-from-rr': {
@@ -7674,8 +8658,8 @@
         title: '由內外半徑反推直角三角形周長',
         difficulty: 'hard',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('rightTrianglePerimeterFromRr', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('rightTrianglePerimeterFromRr', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-equilateral-height-from-circumradius': {
@@ -7683,8 +8667,8 @@
         title: '由外接半徑求正三角形高',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('equilateralHeightFromCircumradius', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('equilateralHeightFromCircumradius', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-equilateral-incircle-circumcircle-area-ratio': {
@@ -7692,8 +8676,8 @@
         title: '正三角形內外圓面積比',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('equilateralIncircleCircumcircleAreaRatio', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('equilateralIncircleCircumcircleAreaRatio', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-3-centroid-to-vertex-sum': {
@@ -7701,49 +8685,211 @@
         title: '重心到三頂點距離和',
         difficulty: 'medium',
         questionCount: 5,
-        generate() {
-          return buildJ533Set('centroidToVertexSum', 5);
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('centroidToVertexSum', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-1-2-rectangle-similarity-check': {
         type: 'drill', title: '矩形相似判別', difficulty: 'easy', questionCount: 5,
-        generate() { return buildRectangleSimilarityCheckSet(5); },
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildRectangleSimilarityCheckSet(practiceCount), resolvePracticeCount(count, 5));
+
+        },
       },
       'j5-1-3-similar-polygon-angle': {
         type: 'drill', title: '相似多邊形角度計算', difficulty: 'medium', questionCount: 5,
-        generate() { return buildSimilarPolygonAngleSet(5); },
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildSimilarPolygonAngleSet(practiceCount), resolvePracticeCount(count, 5));
+
+        },
       },
       'j5-1-3-slope-position-height': {
         type: 'drill', title: '斜坡位置高度計算', difficulty: 'easy', questionCount: 5,
-        generate() { return buildSlopePositionHeightSet(5); },
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildSlopePositionHeightSet(practiceCount), resolvePracticeCount(count, 5));
+
+        },
       },
       'j5-2-1-chord-sagitta-radius': {
         type: 'drill', title: '弓形矢高求半徑', difficulty: 'medium', questionCount: 5,
-        generate() { return buildChordSagittaRadiusSet(5); },
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildChordSagittaRadiusSet(practiceCount), resolvePracticeCount(count, 5));
+
+        },
       },
       'j5-2-1-semicircle-chord-width': {
         type: 'drill', title: '圓形容器水面寬度', difficulty: 'medium', questionCount: 5,
-        generate() { return buildSemicircleChordWidthSet(5); },
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildSemicircleChordWidthSet(practiceCount), resolvePracticeCount(count, 5));
+
+        },
       },
       'j5-2-2-tangent-combined-angle': {
         type: 'drill', title: '切線弦角綜合計算', difficulty: 'medium', questionCount: 5,
-        generate() { return buildTangentCombinedAngleSet(5); },
+        generate(count) {
+
+          return buildUniquePracticeSet((practiceCount) => buildTangentCombinedAngleSet(practiceCount), resolvePracticeCount(count, 5));
+
+        },
       },
       'j5-3-2-perp-bisector-perimeter': {
         type: 'drill', title: '中垂線性質求周長', difficulty: 'easy', questionCount: 5,
-        generate() { return buildPerpBisectorPerimeterSet(5); },
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildPerpBisectorPerimeterSet(practiceCount), resolvePracticeCount(count, 5));
+        },
       },
       'j5-3-3-incircle-tangent-length': {
         type: 'drill', title: '內切圓切線段計算', difficulty: 'medium', questionCount: 5,
-        generate() { return buildIncircleTangentLengthSet(5); },
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildIncircleTangentLengthSet(practiceCount), resolvePracticeCount(count, 5));
+        },
       },
       'j5-3-3-median-length-formula': {
         type: 'drill', title: '中線長公式計算', difficulty: 'medium', questionCount: 5,
-        generate() { return buildMedianLengthFormulaSet(5); },
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildMedianLengthFormulaSet(practiceCount), resolvePracticeCount(count, 5));
+        },
       },
   };
 
-  const bundleFingerprint = "j5-bundle-v20260711-j531-proof-merged-v1";
+  const j511QuestionPrompts = [
+    '請先把各量設為同一份數後作答：',
+    '請確認比例的共同項或反比關係後作答：',
+    '請將比例化為最簡整數比，再完成作答：',
+    '請依比例分配與代數條件求解：',
+    '請寫出正確的比例或數值：',
+  ];
+  const j512QuestionPrompts = [
+    '請先標出平行線與對應線段後作答：',
+    '請依平行截線比例或中點性質求解：',
+    '請確認同位線段的比例關係後作答：',
+    '請先列出相似比，再求所需線段：',
+    '請寫出正確的線段長或判斷：',
+  ];
+  const j512RectangleQuestionPrompts = [
+    '請先比較各選項的長寬比後作答：',
+    '請將長寬比化簡後判斷是否相似：',
+    '請確認對應邊是否具有相同倍率：',
+    '請依長方形的相似條件作答：',
+    '請寫出正確的選項：',
+  ];
+  const j513QuestionPrompts = [
+    '請先確認相似圖形的對應元素後作答：',
+    '請依相似比、面積比或測量關係求解：',
+    '請辨識相似判別條件後完成作答：',
+    '請先畫出對應的相似三角形關係：',
+    '請寫出正確的相似判斷或幾何量：',
+  ];
+  const j514QuestionPrompts = [
+    '請先整理圖形條件與對應量後作答：',
+    '請依長度、面積或三角比關係求解：',
+    '請確認相似、平行或中點性質後作答：',
+    '請列式並寫出正確的幾何量：',
+    '請檢查單位與比例後完成作答：',
+  ];
+  Object.entries(nextConfigs).forEach(([id, config]) => {
+    if (!id.startsWith('j5-1-') || !config || typeof config.generate !== 'function') return;
+    const prompts = id.startsWith('j5-1-1-')
+      ? j511QuestionPrompts
+      : id.startsWith('j5-1-2-')
+        ? id === 'j5-1-2-rectangle-similarity-check'
+          ? j512RectangleQuestionPrompts
+          : j512QuestionPrompts
+        : id.startsWith('j5-1-3-')
+          ? j513QuestionPrompts
+          : j514QuestionPrompts;
+    const generate = config.generate;
+    config.generate = function generateJ51WithWordingVariation(count) {
+      const generated = generate.call(this, count);
+      const prompt = prompts[randInt(0, prompts.length - 1)];
+      return {
+        ...generated,
+        questions: generated.questions.map((question) => `${prompt}${question}`),
+      };
+    };
+  });
+
+  const j521QuestionPrompts = [
+    '請先依題意畫出圓心與半徑，再作答：',
+    '請先標出必要的直角或圓心距，再求所問量：',
+    '請先找出最直接可用的圓的性質，再作答：',
+    '請由題目的位置關係或長度關係逐步判斷：',
+  ];
+  const j522QuestionPrompts = [
+    '請先標出角所對的弧，再作答：',
+    '請分清楚劣弧與優弧後作答：',
+    '請先判斷圓心角、圓周角或弦切角的關係，再作答：',
+    '請依題圖的弧度數與角度關係逐步判斷：',
+  ];
+  const j523QuestionPrompts = [
+    '請先根據點與圓的位置，辨識適用的圓冪關係，再作答：',
+    '請先標示已知線段，再以圓冪定理列式：',
+    '請確認兩線段乘積或切線平方的來源，再作答：',
+    '請以圓冪定理逐步檢查對應關係後作答：',
+  ];
+  Object.entries(nextConfigs).forEach(([id, config]) => {
+    if (!id.startsWith('j5-2-') || !config || typeof config.generate !== 'function') return;
+    const prompts = id.startsWith('j5-2-1-')
+      ? j521QuestionPrompts
+      : id.startsWith('j5-2-2-')
+        ? j522QuestionPrompts
+        : j523QuestionPrompts;
+    const generate = config.generate;
+    config.generate = function generateJ52WithWordingVariation(count) {
+      const generated = generate.call(this, count);
+      const prompt = prompts[randInt(0, prompts.length - 1)];
+      return {
+        ...generated,
+        questions: generated.questions.map((question) => `${prompt}${question}`),
+      };
+    };
+  });
+
+  const j531QuestionPrompts = [
+    '請先把題目的條件轉成代數關係，再作答：',
+    '請先找出奇偶、因數、餘數或正負號的關鍵，再作答：',
+    '請以一般情況推理，不只代入一個數值：',
+    '請逐步寫出可驗證結論的理由：',
+    '請檢查推理是否對所有符合條件的數都成立：',
+  ];
+  const j532QuestionPrompts = [
+    '請先把題設中的幾何關係標記清楚，再作答：',
+    '請先找出可用的全等、相似或圓周角性質，再作答：',
+    '請確認對應的角、邊或線段後再作答：',
+    '請以幾何性質逐步說明結論：',
+    '請先確認結論所需的定義或定理，再作答：',
+  ];
+  const j533QuestionPrompts = [
+    '請先確認題目涉及的外心、內心、重心或座標關係，再作答：',
+    '請先標出已知長度與所求量，再選擇合適公式：',
+    '請檢查半徑、中線或面積比例後再作答：',
+    '請用圖形性質或座標關係逐步推理：',
+    '請先確認各中心的定義與位置關係，再作答：',
+  ];
+  Object.entries(nextConfigs).forEach(([id, config]) => {
+    if (!id.startsWith('j5-3-') || !config || typeof config.generate !== 'function') return;
+    const prompts = id.startsWith('j5-3-1-')
+      ? j531QuestionPrompts
+      : id.startsWith('j5-3-2-')
+        ? j532QuestionPrompts
+        : j533QuestionPrompts;
+    const generate = config.generate;
+    config.generate = function generateJ53WithWordingVariation(count) {
+      const generated = generate.call(this, count);
+      const prompt = prompts[randInt(0, prompts.length - 1)];
+      return {
+        ...generated,
+        questions: generated.questions.map((question) => `${prompt}${question}`),
+      };
+    };
+  });
+
+  const bundleFingerprint = "j5-bundle-v20260716-j51-j52-j53-summary-review-v4";
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== "object") return;
     config.__generatorFingerprint = bundleFingerprint;
