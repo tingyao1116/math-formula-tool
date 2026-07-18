@@ -550,39 +550,64 @@
       const type = i % 5;
 
       if (type === 0) {
-        const first = [2, 3, 5][randInt(0, 2)];
+        const first = [2, 3, 4, 5, 6, 7, 10][randInt(0, 6)];
         const r = [2, 3][randInt(0, 1)];
-        const last = first * powInt(r, 4);
+        const k = [3, 5][randInt(0, 1)]; // 插入 k 個數（k 為奇數，公比有 ± 兩解）
+        const power = k + 1;
+        const last = first * powInt(r, power);
+        const countText = k === 3 ? '三' : '五';
+        const midVars = k === 3 ? 'x,y,z' : 'x_1,x_2,x_3,x_4,x_5';
         questions.push(
-          `等差與等比數列的混合參數：在 ${first} 與 ${last} 之間插入三個實數 \\(x,y,z\\)，使五個數成等比數列，求此數列所有可能的公比。`
+          `等差與等比數列的混合參數：在 ${first} 與 ${last} 之間插入${countText}個實數 \\(${midVars}\\)，使這 ${k + 2} 個數成等比數列，求此數列所有可能的公比。`
         );
         answers.push(
-          `簡答：\\(r=${r}\\) 或 \\(r=-${r}\\)。過程：五項為 \\(${first},x,y,z,${last}\\)，所以 \\(${first}r^4=${last}\\)，得 \\(r^4=${powInt(r, 4)}\\)。因此實數公比為 \\(\\pm${r}\\)。`
+          `簡答：\\(r=${r}\\) 或 \\(r=-${r}\\)。過程：首末共 ${k + 2} 項，所以 \\(${first}r^{${power}}=${last}\\)，得 \\(r^{${power}}=${powInt(r, power)}\\)。因 ${power} 為偶數，實數公比為 \\(\\pm${r}\\)。`
         );
         continue;
       }
 
       if (type === 1) {
-        const d = 2 * randInt(1, 4);
-        const b = (d * d + 2 * d + 2) / 2;
+        // a-t,b-t,c+t 成等比；a,b,c 成遞增等差(公差 d)。b=[t^2+(d+t)^2]/(2t)。
+        let d = 2 * randInt(1, 8);
+        let t = randInt(1, 3);
+        let b = (t * t + (d + t) * (d + t)) / (2 * t);
+        for (let attempt = 0; !Number.isInteger(b) && attempt < 40; attempt += 1) {
+          d = 2 * randInt(1, 8);
+          t = randInt(1, 3);
+          b = (t * t + (d + t) * (d + t)) / (2 * t);
+        }
+        if (!Number.isInteger(b)) {
+          d = 2;
+          t = 1;
+          b = (t * t + (d + t) * (d + t)) / (2 * t);
+        }
         const a = b - d;
         const c = b + d;
         const sum = a + b + c;
         questions.push(
-          `等差與等比數列的混合參數：已知 \\(a,b,c\\) 成遞增等差數列且和為 ${sum}；若 \\(a-1,b-1,c+1\\) 成等比數列，求 \\((a,b,c)\\)。`
+          `等差與等比數列的混合參數：已知 \\(a,b,c\\) 成遞增等差數列且和為 ${sum}；若 \\(a-${t},b-${t},c+${t}\\) 成等比數列，求 \\((a,b,c)\\)。`
         );
         answers.push(
-          `簡答：\\((a,b,c)=(${a},${b},${c})\\)。過程：設三數為 \\(b-d,b,b+d\\)，由和為 ${sum} 得 \\(b=${b}\\)。又 \\((b-1)^2=(b-d-1)(b+d+1)\\)，解得 \\(d=${d}\\)，所以三數為 ${a},${b},${c}。`
+          `簡答：\\((a,b,c)=(${a},${b},${c})\\)。過程：設三數為 \\(b-d,b,b+d\\)，由和為 ${sum} 得 \\(b=${b}\\)。又 \\((b-${t})^2=(b-d-${t})(b+d+${t})\\)，解得 \\(d=${d}\\)，所以三數為 ${a},${b},${c}。`
         );
         continue;
       }
 
       if (type === 2) {
+        // a,g,b 成等比 => ab=g^2 ; a,m,b 成等差 => a+b=2m ; |a-b|=2√(m^2-g^2)
+        let g = 2;
+        let m = 5;
+        for (let attempt = 0; attempt < 20; attempt += 1) {
+          g = randInt(2, 6);
+          m = g + randInt(1, 6);
+          if (!isPerfectSquare(m * m - g * g)) break; // 避免答案退化為整數，保持根式練習
+        }
+        const inside = 4 * (m * m - g * g);
         questions.push(
-          `等差與等比數列的混合參數：已知 \\(a,2,b\\) 三數成等比數列，且 \\(a,5,b\\) 三數成等差數列，求 \\(|a-b|\\) 的值。`
+          `等差與等比數列的混合參數：已知 \\(a,${g},b\\) 三數成等比數列，且 \\(a,${m},b\\) 三數成等差數列，求 \\(|a-b|\\) 的值。`
         );
         answers.push(
-          `簡答：\\(2\\sqrt{21}\\)。過程：由等比中項得 \\(ab=2^2=4\\)；由等差中項得 \\(a+b=10\\)。因此 \\((a-b)^2=(a+b)^2-4ab=100-16=84\\)，所以 \\(|a-b|=${formatRadical(84)}\\)。`
+          `簡答：\\(${formatRadical(inside)}\\)。過程：由等比中項得 \\(ab=${g}^2=${g * g}\\)；由等差中項得 \\(a+b=${2 * m}\\)。因此 \\((a-b)^2=(a+b)^2-4ab=${4 * m * m}-${4 * g * g}=${inside}\\)，所以 \\(|a-b|=${formatRadical(inside)}\\)。`
         );
         continue;
       }
@@ -602,13 +627,24 @@
         continue;
       }
 
-      const d = pickNonZero(-4, 5);
-      questions.push(
-        `等差與等比數列的混合參數：已知 \\(${aTerm(1)},${aTerm(2)},${aTerm(3)},${aTerm(4)}\\) 成等差數列，公差為 \\(d\\)。設 \\(b_n=2^{a_n}\\)，證明 \\(b_n\\) 為等比數列並用 \\(d\\) 表示其公比。`
-      );
-      answers.push(
-        `簡答：\\(b_n\\) 為等比數列，公比為 \\(2^d\\)。過程：因為 \\(a_{n+1}=a_n+d\\)，所以 \\(\\frac{b_{n+1}}{b_n}=\\frac{2^{a_{n+1}}}{2^{a_n}}=2^{a_{n+1}-a_n}=2^d\\)。相鄰兩項比值固定，故 \\(b_n\\) 是等比數列。`
-      );
+      const base = [2, 3, 5, 7][randInt(0, 3)];
+      if (randInt(0, 1) === 0) {
+        questions.push(
+          `等差與等比數列的混合參數：已知 \\(${aTerm(1)},${aTerm(2)},${aTerm(3)},${aTerm(4)},\\ldots\\) 成等差數列，公差為 \\(d\\)。設 \\(b_n=${base}^{a_n}\\)，證明 \\(b_n\\) 為等比數列並用 \\(d\\) 表示其公比。`
+        );
+        answers.push(
+          `簡答：\\(b_n\\) 為等比數列，公比為 \\(${base}^d\\)。過程：因為 \\(a_{n+1}=a_n+d\\)，所以 \\(\\frac{b_{n+1}}{b_n}=\\frac{${base}^{a_{n+1}}}{${base}^{a_n}}=${base}^{a_{n+1}-a_n}=${base}^d\\)。相鄰兩項比值固定，故 \\(b_n\\) 是等比數列。`
+        );
+      } else {
+        const dVal = pickNonZero(-3, 4);
+        const ratioValue = dVal >= 0 ? `${powInt(base, dVal)}` : `\\frac{1}{${powInt(base, -dVal)}}`;
+        questions.push(
+          `等差與等比數列的混合參數：已知等差數列 \\(\\langle a_n\\rangle\\) 的公差為 \\(d=${dVal}\\)。設 \\(b_n=${base}^{a_n}\\)，證明 \\(b_n\\) 為等比數列並求其公比。`
+        );
+        answers.push(
+          `簡答：\\(b_n\\) 為等比數列，公比為 \\(${base}^{${dVal}}=${ratioValue}\\)。過程：因為 \\(a_{n+1}=a_n+d\\)，所以 \\(\\frac{b_{n+1}}{b_n}=${base}^{a_{n+1}-a_n}=${base}^{${dVal}}=${ratioValue}\\)。比值固定，故 \\(b_n\\) 為等比數列。`
+        );
+      }
     }
 
     return { questions, summaryAnswers, answers };
@@ -622,7 +658,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const type = i % 5;
-      const cycle = Math.floor(i / 5);
+      const cycle = randInt(0, 29);
 
       if (type === 0) {
         const group = 8 + cycle + randInt(0, 8);
@@ -1380,27 +1416,34 @@
         continue;
       }
       if (type === 1) {
-        const n = randInt(5, 12);
-        const value = makeFraction(1, (2 * n + 1) * (2 * n - 1));
-        questions.push(`給定前 \\(n\\) 項和公式求一般項。設 \\(S_n=\\frac{n}{2n+1}\\)，求 \\(${aTerm(n)}\\)。`);
+        const c = [2, 3, 4][randInt(0, 2)];
+        const e = [1, 2, 3, 5][randInt(0, 3)];
+        const n = randInt(5, 20);
+        // S_n = n/(cn+e) => a_n = e / [(cn+e)(c(n-1)+e)]
+        const value = makeFraction(e, (c * n + e) * (c * (n - 1) + e));
+        questions.push(
+          `給定前 \\(n\\) 項和公式求一般項。設 \\(S_n=\\frac{n}{${c}n+${e}}\\)，求 \\(${aTerm(n)}\\)。`
+        );
         answers.push(
-          `簡答：\\(${aTerm(n)}=${formatFraction(value.num, value.den)}\\)。過程：\\(a_n=S_n-S_{n-1}=\\frac{n}{2n+1}-\\frac{n-1}{2n-1}=\\frac{1}{(2n+1)(2n-1)}\\)。代入 \\(n=${n}\\)，得 \\(${aTerm(n)}=${formatFraction(value.num, value.den)}\\)。`
+          `簡答：\\(${aTerm(n)}=${formatFraction(value.num, value.den)}\\)。過程：\\(a_n=S_n-S_{n-1}=\\frac{n}{${c}n+${e}}-\\frac{n-1}{${c}n${formatSignedAdd(e - c)}}=\\frac{${e}}{(${c}n+${e})(${c}n${formatSignedAdd(e - c)})}\\)。代入 \\(n=${n}\\)，得 \\(${aTerm(n)}=${formatFraction(value.num, value.den)}\\)。`
         );
         continue;
       }
       if (type === 2) {
-        const n = randInt(6, 12);
-        const value = powInt(2, n - 1);
+        const r = [2, 3][randInt(0, 1)];
+        const n = randInt(6, 16);
+        const value = (r - 1) * powInt(r, n - 1);
+        const coefText = r - 1 === 1 ? '' : `${r - 1}\\cdot`;
         questions.push(
-          `給定前 \\(n\\) 項和公式求一般項。設 \\(S_n=2^n-1\\)，求 \\(${aTerm(n)}\\)，並判斷是否為等比數列。`
+          `給定前 \\(n\\) 項和公式求一般項。設 \\(S_n=${r}^n-1\\)，求 \\(${aTerm(n)}\\)，並判斷是否為等比數列。`
         );
         answers.push(
-          `簡答：\\(${aTerm(n)}=${value}\\)，此數列為等比數列。過程：\\(a_n=S_n-S_{n-1}=(2^n-1)-(2^{n-1}-1)=2^{n-1}\\)。相鄰兩項比值為 2，所以是等比數列。`
+          `簡答：\\(${aTerm(n)}=${value}\\)，此數列為等比數列。過程：\\(a_n=S_n-S_{n-1}=(${r}^n-1)-(${r}^{n-1}-1)=${coefText}${r}^{n-1}\\)。相鄰兩項比值為 ${r}，所以是等比數列。`
         );
         continue;
       }
       if (type === 3) {
-        const n = randInt(4, 9);
+        const n = randInt(4, 14);
         const value = n * (n + 1);
         questions.push(`給定前 \\(n\\) 項和公式求一般項。設 \\(S_n=\\frac13n(n+1)(n+2)\\)，求 \\(${aTerm(n)}\\)。`);
         answers.push(
@@ -1776,7 +1819,7 @@
       if (mode === 0) {
         const type = i % 5;
         if (type === 0) {
-          const upper = randInt(10, 25);
+          const upper = randInt(10, 32);
           const value = sumSquares(upper);
           questions.push(`標準公式與範圍變換。計算 \\(\\sum_{k=1}^{${upper}} k^2\\) 的值。`);
           answers.push(
@@ -1785,7 +1828,7 @@
           continue;
         }
         if (type === 1) {
-          const upper = randInt(6, 14);
+          const upper = randInt(6, 22);
           const value = sumCubes(upper) + upper;
           questions.push(`標準公式與範圍變換。求 \\(\\sum_{k=1}^{${upper}}(k^3+1)\\) 之總和。`);
           answers.push(
@@ -1804,7 +1847,7 @@
           continue;
         }
         if (type === 3) {
-          const upper = randInt(8, 18);
+          const upper = randInt(8, 26);
           const value = sumSquares(upper) + sumFirstN(upper);
           questions.push(`標準公式與範圍變換。計算 \\(\\sum_{k=1}^{${upper}} k(k+1)\\) 的值。`);
           answers.push(
@@ -1812,8 +1855,8 @@
           );
           continue;
         }
-        const m = randInt(5, 10);
-        const n = randInt(m + 3, m + 8);
+        const m = randInt(4, 14);
+        const n = randInt(m + 3, m + 10);
         const value = sumCubes(n) - sumCubes(m);
         questions.push(`標準公式與範圍變換。設 \\(f(n)=\\sum_{k=1}^{n}k^3\\)，求 \\(f(${n})-f(${m})\\)。`);
         answers.push(
@@ -1995,16 +2038,18 @@
 
       const type = i % 5;
       if (type === 0) {
-        const n = randInt(6, 14);
-        const value = powInt(2, n + 1) - 2 + sumFirstN(n);
-        questions.push(`多項式與指數混合型 Sigma。求 \\(\\sum_{k=1}^{${n}}(2^k+k)\\) 的值。`);
+        const r = [2, 3][randInt(0, 1)];
+        const n = randInt(6, 16);
+        const geo = (powInt(r, n + 1) - r) / (r - 1);
+        const value = geo + sumFirstN(n);
+        questions.push(`多項式與指數混合型 Sigma。求 \\(\\sum_{k=1}^{${n}}(${r}^k+k)\\) 的值。`);
         answers.push(
-          `簡答：${value}。過程：拆成 \\(\\sum2^k+\\sum k\\)。其中 \\(\\sum_{k=1}^{${n}}2^k=2^{${n + 1}}-2\\)，\\(\\sum k=${sumFirstN(n)}\\)，所以總和為 ${value}。`
+          `簡答：${value}。過程：拆成 \\(\\sum${r}^k+\\sum k\\)。其中 \\(\\sum_{k=1}^{${n}}${r}^k=\\dfrac{${r}^{${n + 1}}-${r}}{${r - 1}}=${geo}\\)，\\(\\sum k=${sumFirstN(n)}\\)，所以總和為 ${value}。`
         );
         continue;
       }
       if (type === 1) {
-        const n = randInt(5, 10);
+        const n = randInt(5, 13);
         const value = (powInt(3, n + 1) - 3) / 2 - 2 * sumFirstN(n) + n;
         questions.push(`多項式與指數混合型 Sigma。計算 \\(\\sum_{k=1}^{${n}}(3^k-2k+1)\\)。`);
         answers.push(
@@ -2013,9 +2058,9 @@
         continue;
       }
       if (type === 2) {
-        const n = randInt(4, 8);
-        const x = randInt(2, 5);
-        const y = randInt(1, 4);
+        const n = randInt(4, 9);
+        const x = randInt(2, 6);
+        const y = randInt(1, 5);
         const value = powInt(x + y, n);
         questions.push(
           `多項式與指數混合型 Sigma。計算 \\(\\sum_{k=0}^{${n}}\\binom{${n}}{k}${x}^{${n}-k}${y}^{k}\\)。`
@@ -2026,22 +2071,26 @@
         continue;
       }
       if (type === 3) {
-        const n = randInt(6, 12);
+        const c = randInt(3, 8);
+        const n = randInt(5, 14);
         const value = mulFraction(
-          makeFraction(5, 1),
+          makeFraction(c, 1),
           subFraction(makeFraction(1, 1), powFraction(makeFraction(1, 2), n))
         );
-        questions.push(`多項式與指數混合型 Sigma。求 \\(\\sum_{k=1}^{${n}}5\\cdot(\\frac12)^k\\) 的值。`);
+        questions.push(`多項式與指數混合型 Sigma。求 \\(\\sum_{k=1}^{${n}}${c}\\cdot(\\frac12)^k\\) 的值。`);
         answers.push(
-          `簡答：\\(${fractionText(value)}\\)。過程：這是首項 \\(\\frac52\\)、公比 \\(\\frac12\\) 的等比級數；或直接用公式 \\(5\\sum_{k=1}^{${n}}(\\frac12)^k=5(1-(\\frac12)^{${n}})=${fractionText(value)}\\)。`
+          `簡答：\\(${fractionText(value)}\\)。過程：這是首項 \\(\\frac{${c}}{2}\\)、公比 \\(\\frac12\\) 的等比級數；或直接用公式 \\(${c}\\sum_{k=1}^{${n}}(\\frac12)^k=${c}(1-(\\frac12)^{${n}})=${fractionText(value)}\\)。`
         );
         continue;
       }
-      const n = randInt(5, 10);
-      const value = n + 1;
-      questions.push(`多項式與指數混合型 Sigma。計算 \\(\\sum_{k=1}^{${n}}[(k+1)!-k!]\\)。`);
+      const s = randInt(0, 2);
+      const n = randInt(5, 13);
+      const hi = s + 1;
+      const loStr = s === 0 ? 'k' : `k+${s}`;
+      const endFact = n + s + 1;
+      questions.push(`多項式與指數混合型 Sigma。計算 \\(\\sum_{k=1}^{${n}}[(k+${hi})!-(${loStr})!]\\)。`);
       answers.push(
-        `簡答：\\(${n + 1}!-1\\)。過程：這是階乘型望遠鏡和，展開後 \\((2!-1!)+(3!-2!)+\\cdots+((${n}+1)!-${n}!)\\)，中間項抵消，剩下 \\((${n}+1)!-1!\\)，即 \\(${n + 1}!-1\\)。`
+        `簡答：\\(${endFact}!-${hi}!\\)。過程：階乘型望遠鏡和，展開後中間項全部抵消，剩下最大項 \\((${n}+${hi})!=${endFact}!\\) 減去最小項 \\(${hi}!\\)，即 \\(${endFact}!-${hi}!\\)。`
       );
     }
 
@@ -2440,9 +2489,9 @@
 
       if (mode === 0) {
         // AP S_n = n(2a1+(n-1)d)/2 = C, find n
-        const a1 = randInt(1, 5);
-        const d = [2, 3, 4][randInt(0, 2)];
-        const n0 = [8, 10, 12, 14, 15][randInt(0, 4)];
+        const a1 = randInt(1, 9);
+        const d = [2, 3, 4, 5, 6][randInt(0, 4)];
+        const n0 = randInt(7, 20);
         const C = (n0 * (2 * a1 + (n0 - 1) * d)) / 2;
         // quadratic: d*n^2 + (2a1-d)*n - 2C = 0
         const coefB = 2 * a1 - d;
@@ -2464,9 +2513,9 @@
 
       if (mode === 1) {
         // sum_{k=1}^{n}(ak+b) = a*n(n+1)/2 + b*n = C, find n
-        const a = [2, 3, 4][randInt(0, 2)];
-        const b = randInt(1, 4);
-        const n0 = [8, 9, 10, 11, 12][randInt(0, 4)];
+        const a = [2, 3, 4, 5, 6][randInt(0, 4)];
+        const b = randInt(1, 6);
+        const n0 = randInt(7, 15);
         const C = (a * n0 * (n0 + 1)) / 2 + b * n0;
         // a*n^2 + (a+2b)*n - 2C = 0 (after *2)
         const coefA = a;
@@ -2485,7 +2534,7 @@
 
       if (mode === 2) {
         // sum_{k=1}^{n}(2k-1) = n^2 = C, find n = sqrt(C)
-        const n0 = [9, 10, 12, 13, 15, 16, 20][randInt(0, 6)];
+        const n0 = randInt(9, 30);
         const C = n0 * n0;
         questions.push(`反求項數（奇數求和）。奇數數列 \\(1+3+5+\\cdots+(2n-1)=${C}\\)，求 \\(n\\)。`);
         answers.push(
@@ -2496,7 +2545,7 @@
 
       if (mode === 3) {
         // sum_{k=1}^{n}k = n(n+1)/2 = C, find n
-        const n0 = [9, 10, 12, 14, 15, 20][randInt(0, 5)];
+        const n0 = randInt(9, 30);
         const C = (n0 * (n0 + 1)) / 2;
         const discr = 1 + 8 * C;
         const sqrtD = Math.round(Math.sqrt(discr));
@@ -2508,8 +2557,8 @@
       }
 
       // mode === 4: GP sum: 1+r+r^2+...+r^{n-1} = (r^n-1)/(r-1) = C, find n
-      const r = [2, 3][randInt(0, 1)];
-      const n0 = [5, 6, 7][randInt(0, 2)];
+      const r = [2, 3, 5][randInt(0, 2)];
+      const n0 = [4, 5, 6, 7, 8][randInt(0, 4)];
       const C = (powInt(r, n0) - 1) / (r - 1);
       const rN0 = powInt(r, n0);
       questions.push(`反求項數（等比級數）。若 \\(1+${r}+${r}^2+\\cdots+${r}^{n-1}=${C}\\)，求 \\(n\\)。`);
@@ -2532,7 +2581,7 @@
       if (mode === 0) {
         // sum_{k=0}^{n} r^k = (r^{n+1}-1)/(r-1), lower bound is 0
         const r = [2, 3][randInt(0, 1)];
-        const n = randInt(5, 8);
+        const n = randInt(4, 12);
         const total = (powInt(r, n + 1) - 1) / (r - 1);
         questions.push(`非標準下界的 Sigma。計算 \\(\\sum_{k=0}^{${n}}${r}^k\\)。`);
         answers.push(
@@ -2543,10 +2592,10 @@
 
       if (mode === 1) {
         // sum_{k=m}^{n}(ak+b) with m >= 2
-        const a = [2, 3][randInt(0, 1)];
-        const b = randInt(1, 3);
-        const m = [2, 3][randInt(0, 1)];
-        const n = [10, 12, 15][randInt(0, 2)];
+        const a = [2, 3, 4, 5][randInt(0, 3)];
+        const b = randInt(1, 5);
+        const m = [2, 3, 4, 5][randInt(0, 3)];
+        const n = randInt(9, 18);
         // full sum: a*n(n+1)/2 + b*n
         const fullSum = (a * n * (n + 1)) / 2 + b * n;
         // prefix sum from 1 to m-1: a*(m-1)*m/2 + b*(m-1)
@@ -2563,7 +2612,7 @@
 
       if (mode === 2) {
         // sum_{k=n+1}^{2n} k = n(3n+1)/2
-        const n = [5, 8, 10, 12][randInt(0, 3)];
+        const n = randInt(5, 16);
         const result = (n * (3 * n + 1)) / 2;
         questions.push(
           `非標準上下界的 Sigma。計算 \\(\\sum_{k=${n + 1}}^{${2 * n}}k=${n + 1}+${n + 2}+\\cdots+${2 * n}\\)。`
@@ -2576,8 +2625,8 @@
 
       if (mode === 3) {
         // sum_{k=m+1}^{n}(3k-1) using formula g(n) = n(3n+1)/2
-        const m = [3, 4, 5][randInt(0, 2)];
-        const n = [12, 15, 20][randInt(0, 2)];
+        const m = [3, 4, 5, 6, 7, 8][randInt(0, 5)];
+        const n = randInt(12, 26);
         // g(n) = sum_{k=1}^{n}(3k-1) = 3n(n+1)/2 - n = n(3n+1)/2
         const gn = (n * (3 * n + 1)) / 2;
         const gm = (m * (3 * m + 1)) / 2;
@@ -2592,9 +2641,9 @@
       }
 
       // mode === 4: sum_{k=0}^{n-1}(ak+b) = a*(n-1)*n/2 + b*n (index from 0)
-      const a = [2, 3, 4][randInt(0, 2)];
-      const b = randInt(0, 3);
-      const n = [8, 10, 12, 15][randInt(0, 3)];
+      const a = [2, 3, 4, 5][randInt(0, 3)];
+      const b = randInt(0, 5);
+      const n = randInt(7, 16);
       // sum_{k=0}^{n-1}(ak+b) = a*(n-1)*n/2 + b*n
       const result = (a * (n - 1) * n) / 2 + b * n;
       const aStr = a === 1 ? 'k' : `${a}k`;
@@ -2690,51 +2739,70 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
 
-    function groupOfIndex(index) {
-      return Math.ceil((Math.sqrt(8 * index + 1) - 1) / 2);
-    }
+    // 一般化的分組數列：第 m 段連續出現 m 個「a+(m-1)d」。
+    // 當 a=1,d=1 時退化為經典的 (1,2,2,3,3,3,...)。
+    const triangular = (g) => (g * (g + 1)) / 2;
+    const blockSumThrough = (g, a, d) =>
+      a * ((g * (g + 1)) / 2) + d * (((g - 1) * g * (g + 1)) / 3); // 前 T(g) 項總和
 
     for (let i = 0; i < count; i += 1) {
       const mode = i % 4;
+      const a = randInt(1, 4);
+      const d = randInt(1, 4);
       const group = randInt(5, 14);
-      const left = (group * (group - 1)) / 2 + 1;
-      const right = (group * (group + 1)) / 2;
+      const left = triangular(group - 1) + 1;
+      const right = triangular(group);
+      const blockValue = (j) => a + (j - 1) * d;
+      const gv = blockValue(group);
+
+      const prefix = [];
+      for (let j = 1; j <= 4; j += 1) {
+        for (let c = 0; c < j; c += 1) prefix.push(blockValue(j));
+      }
+      const seqText = `(${prefix.join(',')},\\ldots)`;
+      const ruleText = `第 \\(m\\) 段連續出現 \\(m\\) 個 \\(${a}+(m-1)\\times${d}\\)`;
 
       if (mode === 0) {
         const index = randInt(left, right);
         questions.push(
-          `數列 \\(\\langle a_n\\rangle=(1,2,2,3,3,3,4,4,4,4,\\ldots)\\)，其中正整數 \\(m\\) 連續出現 \\(m\\) 次。求 \\(a_{${index}}\\)。`
+          `數列 \\(\\langle a_n\\rangle=${seqText}\\) 的構成規則為：${ruleText}。求 \\(a_{${index}}\\)。`
         );
         answers.push(
-          `簡答：\\(a_{${index}}=${group}\\)。過程：到 \\(${group - 1}\\) 為止共有 \\(1+2+\\cdots+${group - 1}=${left - 1}\\) 項；到 \\(${group}\\) 為止共有 \\(${right}\\) 項，所以第 ${index} 項落在數字 ${group} 的區段。`
+          `簡答：\\(a_{${index}}=${gv}\\)。過程：到第 ${group - 1} 段為止共有 \\(1+2+\\cdots+${group - 1}=${left - 1}\\) 項，到第 ${group} 段為止共有 ${right} 項，所以第 ${index} 項落在第 ${group} 段，其值為 \\(${a}+(${group}-1)\\times${d}=${gv}\\)。`
         );
         continue;
       }
 
       if (mode === 1) {
-        questions.push(`同一數列中，若 \\(a_n=${group}\\)，求所有可能的 \\(n\\) 範圍。`);
+        questions.push(
+          `分組數列 \\(${seqText}\\)（${ruleText}）中，若 \\(a_n=${gv}\\)，求所有可能的 \\(n\\) 範圍。`
+        );
         answers.push(
-          `簡答：\\(${left}\\le n\\le${right}\\)。過程：數字 ${group} 出現在第 \\(1+2+\\cdots+${group - 1}+1=${left}\\) 項到第 \\(1+2+\\cdots+${group}=${right}\\) 項。`
+          `簡答：\\(${left}\\le n\\le${right}\\)。過程：值 ${gv} 由 \\(${a}+(m-1)\\times${d}=${gv}\\) 解得為第 ${group} 段，佔第 ${left} 項到第 ${right} 項。`
         );
         continue;
       }
 
       if (mode === 2) {
-        const total = (group * (group + 1) * (2 * group + 1)) / 6;
-        questions.push(`同一數列中，求前 \\(${right}\\) 項的和。`);
+        const total = blockSumThrough(group, a, d);
+        questions.push(
+          `分組數列 \\(${seqText}\\)（${ruleText}）中，求前 \\(${right}\\) 項的和。`
+        );
         answers.push(
-          `簡答：${total}。過程：前 ${right} 項剛好到數字 ${group} 結束，總和為 \\(1^2+2^2+\\cdots+${group}^2=\\dfrac{${group}(${group}+1)(2\\cdot${group}+1)}{6}=${total}\\)。`
+          `簡答：${total}。過程：前 ${right} 項剛好到第 ${group} 段結束。以「每段的值乘以個數」求和：\\(\\sum_{j=1}^{${group}} j[${a}+(j-1)${d}]=${a}\\cdot\\dfrac{${group}(${group}+1)}{2}+${d}\\cdot\\dfrac{(${group}-1)${group}(${group}+1)}{3}=${total}\\)。`
         );
         continue;
       }
 
       const extra = randInt(1, group);
       const index = left + extra - 1;
-      const previousSum = ((group - 1) * group * (2 * group - 1)) / 6;
-      const partial = previousSum + extra * group;
-      questions.push(`同一數列中，求前 \\(${index}\\) 項的和。`);
+      const previousSum = blockSumThrough(group - 1, a, d);
+      const partial = previousSum + extra * gv;
+      questions.push(
+        `分組數列 \\(${seqText}\\)（${ruleText}）中，求前 \\(${index}\\) 項的和。`
+      );
       answers.push(
-        `簡答：${partial}。過程：先加完 \\(1\\) 到 \\(${group - 1}\\) 的完整區段，和為 \\(1^2+2^2+\\cdots+${group - 1}^2=${previousSum}\\)。第 ${index} 項在 ${group} 的區段內，多加 ${extra} 個 ${group}，故總和為 ${previousSum}+${extra}\\cdot${group}=${partial}。`
+        `簡答：${partial}。過程：先加完前 ${group - 1} 段（共 ${left - 1} 項），和為 ${previousSum}。第 ${index} 項落在第 ${group} 段，再加上 ${extra} 個 ${gv}，故總和為 \\(${previousSum}+${extra}\\times${gv}=${partial}\\)。`
       );
     }
 
@@ -2767,11 +2835,36 @@
     const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
-      const n = randInt(3, 12);
+      const variant = i % 3;
       const firstSum = randInt(5, 60);
       const rn = randInt(2, 8);
       const secondSum = firstSum * (1 + rn);
       const thirdSum = firstSum * (1 + rn + rn * rn);
+
+      if (variant === 1) {
+        // 已知 Sn、S2n，求 S4n
+        const fourthSum = firstSum * (1 + rn + rn * rn + rn * rn * rn);
+        questions.push(
+          `一等比級數的前 \\(n\\) 項和為 \\(S_n=${firstSum}\\)，前 \\(2n\\) 項和為 \\(S_{2n}=${secondSum}\\)。求前 \\(4n\\) 項和 \\(S_{4n}\\)。`
+        );
+        answers.push(
+          `簡答：\\(S_{4n}=${fourthSum}\\)。過程：由 \\(S_{2n}=S_n(1+r^n)\\)，即 ${secondSum}=${firstSum}(1+r^n)，得 \\(r^n=${rn}\\)。因此 \\(S_{4n}=S_n(1+r^n+r^{2n}+r^{3n})=${firstSum}(1+${rn}+${rn * rn}+${rn * rn * rn})=${fourthSum}\\)。`
+        );
+        continue;
+      }
+
+      if (variant === 2) {
+        // 已知 Sn、S2n，求第三段 a_{2n+1}+...+a_{3n}
+        const blockThree = firstSum * rn * rn;
+        questions.push(
+          `一等比級數的前 \\(n\\) 項和為 \\(S_n=${firstSum}\\)，前 \\(2n\\) 項和為 \\(S_{2n}=${secondSum}\\)。求第三段 \\(a_{2n+1}+a_{2n+2}+\\cdots+a_{3n}\\)。`
+        );
+        answers.push(
+          `簡答：${blockThree}。過程：由 \\(S_{2n}=S_n(1+r^n)\\) 得 \\(r^n=${rn}\\)。連續 \\(n\\) 項一段的和呈公比 \\(r^n\\) 的等比數列，第三段和 \\(=r^{2n}S_n=${rn * rn}\\times${firstSum}=${blockThree}\\)。`
+        );
+        continue;
+      }
+
       questions.push(
         `一等比級數的前 \\(n\\) 項和為 \\(S_n=${firstSum}\\)，前 \\(2n\\) 項和為 \\(S_{2n}=${secondSum}\\)。求前 \\(3n\\) 項和 \\(S_{3n}\\)。`
       );
@@ -2789,6 +2882,56 @@
     const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
+      const form = randInt(0, 3);
+
+      if (form === 1) {
+        // Σ (c·i^2 + p) = c·n(n+1)(2n+1)/6 + p·n
+        const c = randInt(1, 5);
+        const p = pickNonZero(-6, 9);
+        const cs = c === 1 ? '' : `${c}`;
+        const term = `${c === 1 ? 'i^2' : `${c}i^2`}${formatSignedAdd(p)}`;
+        const formula = `\\dfrac{${cs}n(n+1)(2n+1)}{6}${formatSignedAdd(p)}n`;
+        questions.push(
+          `用數學歸納法證明 \\(\\sum_{i=1}^{n}(${term})=${formula}\\)。若已假設 \\(n=k\\) 時成立，請完成 \\(n=k+1\\) 的關鍵推導。`
+        );
+        answers.push(
+          `簡答：\\(S_{k+1}=\\dfrac{${cs}(k+1)(k+2)(2k+3)}{6}${formatSignedAdd(p)}(k+1)\\)。過程：由歸納假設 \\(S_k=\\dfrac{${cs}k(k+1)(2k+1)}{6}${formatSignedAdd(p)}k\\)，加上第 \\(k+1\\) 項 \\(${cs}(k+1)^2${formatSignedAdd(p)}\\)。二次部分 \\(\\dfrac{${cs}k(k+1)(2k+1)}{6}+${cs}(k+1)^2=\\dfrac{${cs}(k+1)(k+2)(2k+3)}{6}\\)，常數部分 \\(${p}k${formatSignedAdd(p)}=${p}(k+1)\\)，合併即為公式中 \\(n\\) 換成 \\(k+1\\)。`
+        );
+        continue;
+      }
+
+      if (form === 2) {
+        // Σ (c·i^3 + p) = c·[n(n+1)/2]^2 + p·n
+        const c = randInt(1, 5);
+        const p = pickNonZero(-6, 9);
+        const cs = c === 1 ? '' : `${c}`;
+        const term = `${c === 1 ? 'i^3' : `${c}i^3`}${formatSignedAdd(p)}`;
+        const formula = `${cs}\\left[\\dfrac{n(n+1)}{2}\\right]^2${formatSignedAdd(p)}n`;
+        questions.push(
+          `用數學歸納法證明 \\(\\sum_{i=1}^{n}(${term})=${formula}\\)。若已假設 \\(n=k\\) 時成立，請完成 \\(n=k+1\\) 的關鍵推導。`
+        );
+        answers.push(
+          `簡答：\\(S_{k+1}=${cs}\\left[\\dfrac{(k+1)(k+2)}{2}\\right]^2${formatSignedAdd(p)}(k+1)\\)。過程：由歸納假設 \\(S_k=${cs}\\left[\\dfrac{k(k+1)}{2}\\right]^2${formatSignedAdd(p)}k\\)，加上第 \\(k+1\\) 項 \\(${cs}(k+1)^3${formatSignedAdd(p)}\\)。三次部分 \\(${cs}(k+1)^2\\left[\\dfrac{k^2}{4}+(k+1)\\right]=${cs}\\left[\\dfrac{(k+1)(k+2)}{2}\\right]^2\\)，常數部分 \\(${p}k${formatSignedAdd(p)}=${p}(k+1)\\)，合併即為公式中 \\(n\\) 換成 \\(k+1\\)。`
+        );
+        continue;
+      }
+
+      if (form === 3) {
+        // Σ (i(i+e) + p) = n(n+1)(2n+1+3e)/6 + p·n
+        const e = randInt(1, 5);
+        const p = pickNonZero(-6, 9);
+        const term = `i(i+${e})${formatSignedAdd(p)}`;
+        const formula = `\\dfrac{n(n+1)(2n${formatSignedAdd(1 + 3 * e)})}{6}${formatSignedAdd(p)}n`;
+        questions.push(
+          `用數學歸納法證明 \\(\\sum_{i=1}^{n}(${term})=${formula}\\)。若已假設 \\(n=k\\) 時成立，請完成 \\(n=k+1\\) 的關鍵推導。`
+        );
+        answers.push(
+          `簡答：\\(S_{k+1}=\\dfrac{(k+1)(k+2)(2k${formatSignedAdd(3 + 3 * e)})}{6}${formatSignedAdd(p)}(k+1)\\)。過程：由歸納假設 \\(S_k=\\dfrac{k(k+1)(2k${formatSignedAdd(1 + 3 * e)})}{6}${formatSignedAdd(p)}k\\)，加上第 \\(k+1\\) 項 \\((k+1)(k+1+${e})${formatSignedAdd(p)}\\)。乘積部分 \\(\\dfrac{(k+1)[k(2k${formatSignedAdd(1 + 3 * e)})+6(k+1+${e})]}{6}=\\dfrac{(k+1)(k+2)(2k${formatSignedAdd(3 + 3 * e)})}{6}\\)，常數部分 \\(${p}k${formatSignedAdd(p)}=${p}(k+1)\\)，合併即為公式中 \\(n\\) 換成 \\(k+1\\)。`
+        );
+        continue;
+      }
+
+      // form 0：一次型 Σ(ai+b)
       const a = randInt(2, 10);
       const b = randInt(-8, 10);
       const term = `${a}i${b >= 0 ? '+' : ''}${b}`;
@@ -2835,10 +2978,10 @@
     const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
-      const r = [2, 3][randInt(0, 1)];
-      const fixed = randInt(-8, 10);
-      let a1 = randInt(-8, 20);
-      while (a1 === fixed) a1 = randInt(-8, 20);
+      const r = [2, 3, 4, 5][randInt(0, 3)];
+      const fixed = randInt(-9, 12);
+      let a1 = randInt(-9, 24);
+      while (a1 === fixed) a1 = randInt(-9, 24);
       const c = (1 - r) * fixed;
       const coefficient = a1 - fixed;
       const formula = `${fixed}${coefficient >= 0 ? '+' : ''}${coefficient}\\cdot${r}^{n-1}`;
@@ -2959,8 +3102,8 @@
       }
 
       if (mode === 1) {
-        const center = randInt(4, 9);
-        const aCenter = [2, 3, 4, 6][randInt(0, 3)];
+        const center = randInt(4, 11);
+        const aCenter = [2, 3, 4, 5, 6, 7, 8, 9][randInt(0, 7)];
         const value = aCenter ** 2;
         questions.push(
           `正項等比數列中，若 \\(${aTerm(center - 2)}\\cdot ${aTerm(center + 2)}=${value}\\)，求 \\(${aTerm(center)}\\)。`
@@ -2972,9 +3115,9 @@
       }
 
       if (mode === 2) {
-        const n = [7, 9, 11][randInt(0, 2)];
+        const n = [7, 9, 11, 13][randInt(0, 3)];
         const center = (n + 1) / 2;
-        const midValue = [2, 3, 5][randInt(0, 2)];
+        const midValue = [2, 3, 4, 5][randInt(0, 3)];
         const product = midValue ** n;
         questions.push(
           `正項等比數列共有 ${n} 項，且中間項 \\(${aTerm(center)}=${midValue}\\)。求 \\(a_1 a_2\\cdots a_{${n}}\\)。`
@@ -2987,9 +3130,9 @@
 
       if (mode === 3) {
         const r = [2, 3][randInt(0, 1)];
-        const a1 = randInt(1, 4);
-        const m = randInt(5, 8);
-        const n = m + [2, 4][randInt(0, 1)];
+        const a1 = randInt(1, 5);
+        const m = randInt(4, 9);
+        const n = m + [2, 4, 6][randInt(0, 2)];
         const am = a1 * powInt(r, m - 1);
         const an = a1 * powInt(r, n - 1);
         const mid = (m + n) / 2;
@@ -3003,9 +3146,9 @@
         continue;
       }
 
-      const n = randInt(4, 8);
+      const n = randInt(4, 10);
       const r = [2, 3][randInt(0, 1)];
-      const a1 = randInt(1, 4);
+      const a1 = randInt(1, 5);
       const aN = a1 * powInt(r, n - 1);
       const product = a1 * aN;
       questions.push(
@@ -3364,7 +3507,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
-      const cycle = Math.floor(i / 5);
+      const cycle = randInt(0, 29);
 
       if (variant === 0) {
         const total = 46 + (cycle % 5) * 2;
@@ -3451,7 +3594,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
-      const cycle = Math.floor(i / 5);
+      const cycle = randInt(0, 29);
 
       if (variant === 0) {
         const aNow = cycle % 2 === 0 ? 2 : 1;
@@ -3520,7 +3663,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
-      const cycle = Math.floor(i / 5);
+      const cycle = randInt(0, 29);
 
       if (variant === 0) {
         const first = 2 + (cycle % 4);
@@ -3594,7 +3737,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
-      const cycle = Math.floor(i / 5);
+      const cycle = randInt(0, 29);
 
       if (variant === 0) {
         const digitCount = 5 + (cycle % 3);
@@ -3659,7 +3802,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
-      const cycle = Math.floor(i / 5);
+      const cycle = randInt(0, 29);
 
       if (variant === 0) {
         const n = [300, 500, 1000][cycle % 3];
@@ -3810,7 +3953,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
-      const cycle = Math.floor(i / 5);
+      const cycle = randInt(0, 29);
 
       if (variant === 0) {
         const sizes = [3 + (cycle % 2), 2 + (cycle % 2), 4 + (cycle % 3)];
@@ -3881,7 +4024,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
-      const cycle = Math.floor(i / 5);
+      const cycle = randInt(0, 29);
 
       if (variant === 0) {
         const n = [360, 540, 720][cycle % 3];
@@ -3954,7 +4097,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
-      const cycle = Math.floor(i / 5);
+      const cycle = randInt(0, 29);
 
       if (variant === 0) {
         const hats = 3 + (cycle % 3);
@@ -4032,7 +4175,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
-      const cycle = Math.floor(i / 5);
+      const cycle = randInt(0, 29);
 
       if (variant === 0) {
         const digitCount = 6 + (cycle % 4);
@@ -4107,7 +4250,7 @@
 
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
-      const cycle = Math.floor(i / 5);
+      const cycle = randInt(0, 29);
 
       if (variant === 0) {
         const colors = 4 + (cycle % 3);
@@ -4216,24 +4359,55 @@
   function buildS222PermutationEquationSet(count) {
     const templates = [
       {
-        q: '已知 \\(n\\) 為正整數，且 \\(P(n+1,3)=10P(n-1,2)\\)，求 \\(n\\) 之值。',
-        a: '簡答：\\(n=4\\) 或 \\(n=5\\)。過程：\\(P(n+1,3)=(n+1)n(n-1)\\)，\\(P(n-1,2)=(n-1)(n-2)\\)。因為 \\(n\\ge3\\)，可同除以 \\(n-1\\)，得 \\(n(n+1)=10(n-2)\\)，即 \\(n^2-9n+20=0\\)，所以 \\(n=4\\) 或 \\(5\\)。',
+        get q() {
+          const variant = s242Pick([
+            { k: 10, roots: '\\(n=4\\) 或 \\(n=5\\)', eq: 'n^2-9n+20=0', factor: '所以 \\(n=4\\) 或 \\(5\\)' },
+            { k: 12, roots: '\\(n=3\\) 或 \\(n=8\\)', eq: 'n^2-11n+24=0', factor: '所以 \\(n=3\\) 或 \\(8\\)' },
+          ]);
+          this._v = variant;
+          return `已知 \\(n\\) 為正整數，且 \\(P(n+1,3)=${variant.k}P(n-1,2)\\)，求 \\(n\\) 之值。`;
+        },
+        get a() {
+          const v = this._v || { k: 10, roots: '\\(n=4\\) 或 \\(n=5\\)', eq: 'n^2-9n+20=0', factor: '所以 \\(n=4\\) 或 \\(5\\)' };
+          return `簡答：${v.roots}。過程：\\(P(n+1,3)=(n+1)n(n-1)\\)，\\(P(n-1,2)=(n-1)(n-2)\\)。因為 \\(n\\ge3\\)，可同除以 \\(n-1\\)，得 \\(n(n+1)=${v.k}(n-2)\\)，即 \\(${v.eq}\\)，${v.factor}。`;
+        },
       },
       {
-        q: '解方程式 \\(P(n,4)=3024\\)。',
-        a: '簡答：\\(n=9\\)。過程：\\(P(n,4)=n(n-1)(n-2)(n-3)\\)。試算 \\(9\\cdot8\\cdot7\\cdot6=3024\\)，故 \\(n=9\\)。',
+        get q() {
+          const n = randInt(7, 10);
+          this._n = n;
+          return `解方程式 \\(P(n,4)=${n * (n - 1) * (n - 2) * (n - 3)}\\)。`;
+        },
+        get a() {
+          const n = this._n || 9;
+          return `簡答：\\(n=${n}\\)。過程：\\(P(n,4)=n(n-1)(n-2)(n-3)\\)。試算 \\(${n}\\cdot${n - 1}\\cdot${n - 2}\\cdot${n - 3}=${n * (n - 1) * (n - 2) * (n - 3)}\\)，故 \\(n=${n}\\)。`;
+        },
       },
       {
-        q: '已知 \\(P(n,3):P(n,2)=3:1\\)，求 \\(n\\)。',
-        a: '簡答：\\(n=5\\)。過程：\\(P(n,3)=n(n-1)(n-2)\\)，\\(P(n,2)=n(n-1)\\)，比值為 \\(n-2\\)。由 \\(n-2=3\\)，得 \\(n=5\\)。',
+        get q() {
+          const k = randInt(3, 9);
+          this._k = k;
+          return `已知 \\(P(n,3):P(n,2)=${k}:1\\)，求 \\(n\\)。`;
+        },
+        get a() {
+          const k = this._k || 3;
+          return `簡答：\\(n=${k + 2}\\)。過程：\\(P(n,3)=n(n-1)(n-2)\\)，\\(P(n,2)=n(n-1)\\)，比值為 \\(n-2\\)。由 \\(n-2=${k}\\)，得 \\(n=${k + 2}\\)。`;
+        },
       },
       {
         q: '若 \\(P(n+1,4)-10P(n-1,2)=4P(n,3)\\)，求 \\(n\\) 之值。',
         a: '簡答：\\(n=5\\)。過程：展開得 \\((n+1)n(n-1)(n-2)-10(n-1)(n-2)=4n(n-1)(n-2)\\)。同除非零因子 \\((n-1)(n-2)\\)，得 \\(n(n+1)-10=4n\\)，即 \\(n^2-3n-10=0\\)，正整數解為 \\(n=5\\)。',
       },
       {
-        q: '已知 \\(P(n,3)=12P(n,2)\\)，求 \\(n\\) 之值。',
-        a: '簡答：\\(n=14\\)。過程：\\(P(n,3)=n(n-1)(n-2)\\)，\\(P(n,2)=n(n-1)\\)。因為 \\(n\\ge3\\)，同除以 \\(n(n-1)\\)，得 \\(n-2=12\\)，所以 \\(n=14\\)。',
+        get q() {
+          const k = randInt(6, 15);
+          this._k = k;
+          return `已知 \\(P(n,3)=${k}P(n,2)\\)，求 \\(n\\) 之值。`;
+        },
+        get a() {
+          const k = this._k || 12;
+          return `簡答：\\(n=${k + 2}\\)。過程：\\(P(n,3)=n(n-1)(n-2)\\)，\\(P(n,2)=n(n-1)\\)。因為 \\(n\\ge3\\)，同除以 \\(n(n-1)\\)，得 \\(n-2=${k}\\)，所以 \\(n=${k + 2}\\)。`;
+        },
       },
     ];
     const questions = [];
@@ -4385,20 +4559,57 @@
         a: '簡答：840 種。過程：「ALGEBRA」共有 7 個字母，A 重複 2 個。全部不同排法為 \\(\\frac{7!}{2!}=2520\\)。三個母音 A、E、A 的相對位置共有 3 種可能，要求保持 A、E、A 表示 E 在兩個 A 中間，所以取其中一種，得 \\(2520\\div3=840\\) 種。',
       },
       {
-        q: '甲、乙、丙等 7 人排一列，若規定甲必須排在乙、丙、丁之左，則共有多少種排法？',
-        a: '簡答：1260 種。過程：在甲、乙、丙、丁四人的相對順序中，甲排最左的機率為 \\(\\frac14\\)。全部 7 人排列有 \\(7!\\) 種，所以符合者為 \\(\\frac{7!}{4}=1260\\)。',
+        get q() {
+          const n = randInt(6, 9);
+          const g = randInt(3, 4);
+          this._d = { n, g };
+          const others = ['乙', '丙', '丁', '戊'].slice(0, g).join('、');
+          return `甲、乙、丙等 ${n} 人排一列，若規定甲必須排在${others}之左，則共有多少種排法？`;
+        },
+        get a() {
+          const d = this._d || { n: 7, g: 3 };
+          const total = factorialInt(d.n) / (d.g + 1);
+          return `簡答：${total} 種。過程：在甲與另外 ${d.g} 人共 ${d.g + 1} 人的相對順序中，甲排最左的機率為 \\(\\frac1{${d.g + 1}}\\)。全部 ${d.n} 人排列有 \\(${d.n}!\\) 種，所以符合者為 \\(\\frac{${d.n}!}{${d.g + 1}}=${total}\\)。`;
+        },
       },
       {
-        q: '重排「ACCESS」一字，若限制 A 一定要排在 E 之前（不一定相鄰），共有幾種排法？',
-        a: '簡答：180 種。過程：「ACCESS」共有 6 個字母，S 重複 2 個，全部排法為 \\(\\frac{6!}{2!}=360\\)。A 與 E 的相對順序一半為 A 在 E 前，所以有 \\(360\\div2=180\\) 種。',
+        get q() {
+          const variant = s242Pick([
+            { word: 'ACCESS', total: 360, rep: 'S 重複 2 個，全部排法為 \\(\\frac{6!}{2!}=360\\)' },
+            { word: 'BALLOON', total: 1260, rep: 'L、O 各重複 2 個，全部排法為 \\(\\frac{7!}{2!2!}=1260\\)' },
+            { word: 'ORANGES', total: 5040, rep: '7 個字母皆相異，全部排法為 \\(7!=5040\\)' },
+          ]);
+          this._v = variant;
+          return `重排「${variant.word}」一字，若限制 A 一定要排在 E 之前（不一定相鄰），共有幾種排法？`;
+        },
+        get a() {
+          const v = this._v || { word: 'ACCESS', total: 360, rep: 'S 重複 2 個，全部排法為 \\(\\frac{6!}{2!}=360\\)' };
+          return `簡答：${v.total / 2} 種。過程：「${v.word}」${v.rep}。A 與 E 的相對順序一半為 A 在 E 前，所以有 \\(${v.total}\\div2=${v.total / 2}\\) 種。`;
+        },
       },
       {
-        q: '棒球隊 9 名球員排打擊順序，若教練規定 4 位內野手必須安排在前 4 棒，其餘 5 人排後 5 棒，共有幾種安排方式？',
-        a: '簡答：2880 種。過程：前 4 棒由 4 位內野手排列，有 \\(4!\\) 種；後 5 棒由其餘 5 人排列，有 \\(5!\\) 種。總數為 \\(4!5!=2880\\)。',
+        get q() {
+          const k = randInt(3, 5);
+          this._k = k;
+          return `棒球隊 9 名球員排打擊順序，若教練規定 ${k} 位內野手必須安排在前 ${k} 棒，其餘 ${9 - k} 人排後 ${9 - k} 棒，共有幾種安排方式？`;
+        },
+        get a() {
+          const k = this._k || 4;
+          const total = factorialInt(k) * factorialInt(9 - k);
+          return `簡答：${total} 種。過程：前 ${k} 棒由 ${k} 位內野手排列，有 \\(${k}!\\) 種；後 ${9 - k} 棒由其餘 ${9 - k} 人排列，有 \\(${9 - k}!\\) 種。總數為 \\(${k}!${9 - k}!=${total}\\)。`;
+        },
       },
       {
-        q: '將甲、乙、丙、丁 4 人排成一列，規定甲必須在乙之左方，且乙必須在丙之左方，共有多少種排列？',
-        a: '簡答：4 種。過程：甲、乙、丙三人的相對順序固定為甲在乙左、乙在丙左，可視為只固定三人的先後。四個位置中選 3 個放甲乙丙，其順序唯一，剩下位置放丁，所以有 \\(C(4,3)=4\\) 種。',
+        get q() {
+          const n = randInt(4, 6);
+          this._n = n;
+          return `將${['甲、乙、丙、丁', '甲、乙、丙、丁、戊', '甲、乙、丙、丁、戊、己'][n - 4]} ${n} 人排成一列，規定甲必須在乙之左方，且乙必須在丙之左方，共有多少種排列？`;
+        },
+        get a() {
+          const n = this._n || 4;
+          const total = factorialInt(n) / 6;
+          return `簡答：${total} 種。過程：甲、乙、丙三人的相對順序固定，${n} 人全排列中恰佔 \\(\\frac1{3!}\\)，所以有 \\(\\frac{${n}!}{3!}=${total}\\) 種。`;
+        },
       },
     ];
     const questions = [];
@@ -4415,24 +4626,69 @@
   function buildS222PositionConstraintSet(count) {
     const templates = [
       {
-        q: '男生 4 人與女生 3 人排成一列拍照，若要求女生 3 人完全不相鄰，共有多少種排列法？',
-        a: '簡答：1440 種。過程：先排 4 位男生有 \\(4!\\) 種，形成 5 個空位。選 3 個空位放女生並排列女生，有 \\(C(5,3)3!\\) 種，所以總數為 \\(4!C(5,3)3!=1440\\)。',
+        get q() {
+          const m = randInt(4, 6);
+          const w = randInt(3, Math.min(4, m));
+          this._d = { m, w };
+          return `男生 ${m} 人與女生 ${w} 人排成一列拍照，若要求女生 ${w} 人完全不相鄰，共有多少種排列法？`;
+        },
+        get a() {
+          const d = this._d || { m: 4, w: 3 };
+          const total = factorialInt(d.m) * combinationCount(d.m + 1, d.w) * factorialInt(d.w);
+          return `簡答：${total} 種。過程：先排 ${d.m} 位男生有 \\(${d.m}!\\) 種，形成 ${d.m + 1} 個空位。選 ${d.w} 個空位放女生並排列女生，有 \\(C(${d.m + 1},${d.w})${d.w}!\\) 種，所以總數為 \\(${d.m}!C(${d.m + 1},${d.w})${d.w}!=${total}\\)。`;
+        },
       },
       {
-        q: '男生 5 人與女生 4 人排成一列，若要求任意兩個女孩都不相鄰，共有多少種排列法？',
-        a: '簡答：43200 種。過程：先排 5 位男生有 \\(5!\\) 種，形成 6 個空位。選 4 個空位放女生並排列女生，有 \\(C(6,4)4!\\) 種，故共有 \\(5!C(6,4)4!=43200\\) 種。',
+        get q() {
+          const m = randInt(5, 7);
+          const w = randInt(4, 5);
+          this._d = { m, w };
+          return `男生 ${m} 人與女生 ${w} 人排成一列，若要求任意兩個女孩都不相鄰，共有多少種排列法？`;
+        },
+        get a() {
+          const d = this._d || { m: 5, w: 4 };
+          const total = factorialInt(d.m) * combinationCount(d.m + 1, d.w) * factorialInt(d.w);
+          return `簡答：${total} 種。過程：先排 ${d.m} 位男生有 \\(${d.m}!\\) 種，形成 ${d.m + 1} 個空位。選 ${d.w} 個空位放女生並排列女生，有 \\(C(${d.m + 1},${d.w})${d.w}!\\) 種，故共有 \\(${d.m}!C(${d.m + 1},${d.w})${d.w}!=${total}\\) 種。`;
+        },
       },
       {
-        q: '甲、乙、丙、丁、戊、己 6 人排成一列，規定甲不排首位且乙不排末位，共有多少種排列法？',
-        a: '簡答：504 種。過程：全部 \\(6!\\) 種。甲排首位有 \\(5!\\) 種，乙排末位有 \\(5!\\) 種，兩者同時發生有 \\(4!\\) 種。由容斥得 \\(6!-2\\cdot5!+4!=504\\)。',
+        get q() {
+          const n = randInt(5, 7);
+          this._n = n;
+          return `${['甲、乙、丙、丁、戊', '甲、乙、丙、丁、戊、己', '甲、乙、丙、丁、戊、己、庚'][n - 5]} ${n} 人排成一列，規定甲不排首位且乙不排末位，共有多少種排列法？`;
+        },
+        get a() {
+          const n = this._n || 6;
+          const total = factorialInt(n) - 2 * factorialInt(n - 1) + factorialInt(n - 2);
+          return `簡答：${total} 種。過程：全部 \\(${n}!\\) 種。甲排首位有 \\(${n - 1}!\\) 種，乙排末位有 \\(${n - 1}!\\) 種，兩者同時發生有 \\(${n - 2}!\\) 種。由容斥得 \\(${n}!-2\\cdot${n - 1}!+${n - 2}!=${total}\\)。`;
+        },
       },
       {
-        q: '將「庭院深深深幾許」七字全取排列，要求三個「深」字完全分開，共有多少種排法？',
-        a: '簡答：240 種。過程：先排 4 個非「深」字，有 \\(4!\\) 種，形成 5 個空位。選 3 個空位放三個相同的「深」，有 \\(C(5,3)\\) 種，所以共有 \\(4!C(5,3)=240\\) 種。',
+        get q() {
+          const d = randInt(4, 6);
+          this._d = d;
+          return d === 4
+            ? '將「庭院深深深幾許」七字全取排列，要求三個「深」字完全分開，共有多少種排法？'
+            : `將 ${d} 個相異物與 3 件相同物排成一列，要求相同物兩兩完全分開，共有多少種排法？`;
+        },
+        get a() {
+          const d = this._d || 4;
+          const total = factorialInt(d) * combinationCount(d + 1, 3);
+          const label = d === 4 ? '非「深」字' : '相異物';
+          return `簡答：${total} 種。過程：先排 ${d} 個${label}，有 \\(${d}!\\) 種，形成 ${d + 1} 個空位。選 3 個空位放相同物，有 \\(C(${d + 1},3)\\) 種，所以共有 \\(${d}!C(${d + 1},3)=${total}\\) 種。`;
+        },
       },
       {
-        q: '5 男 5 女排成一列，要求男女相間的排列數共有多少種？',
-        a: '簡答：28800 種。過程：性別位置可為男女交錯的兩種型態：男先或女先，共 2 種。男生內部有 \\(5!\\) 種，女生內部有 \\(5!\\) 種，所以共有 \\(2\\cdot5!\\cdot5!=28800\\) 種。',
+        get q() {
+          const n = randInt(3, 6);
+          this._n = n;
+          return `${n} 男 ${n} 女排成一列，要求男女相間的排列數共有多少種？`;
+        },
+        get a() {
+          const n = this._n || 5;
+          const total = 2 * factorialInt(n) * factorialInt(n);
+          return `簡答：${total} 種。過程：性別位置可為男女交錯的兩種型態：男先或女先，共 2 種。男生內部有 \\(${n}!\\) 種，女生內部有 \\(${n}!\\) 種，所以共有 \\(2\\cdot${n}!\\cdot${n}!=${total}\\) 種。`;
+        },
       },
     ];
     const questions = [];
@@ -4449,20 +4705,44 @@
   function buildS222DerangementPositionExclusionSet(count) {
     const templates = [
       {
-        q: '甲、乙、丙、丁、戊 5 人排成一列，若要求甲不排首位、乙不排第二位、丙不排第三位，共有多少種排列法？',
-        a: '簡答：64 種。過程：總數 \\(5!\\)。扣掉三個指定人坐到禁位的情形，用容斥：\\(5!-3\\cdot4!+3\\cdot3!-2!=64\\)。',
+        get q() {
+          const n = randInt(5, 7);
+          this._n = n;
+          return `${['甲、乙、丙、丁、戊', '甲、乙、丙、丁、戊、己', '甲、乙、丙、丁、戊、己、庚'][n - 5]} ${n} 人排成一列，若要求甲不排首位、乙不排第二位、丙不排第三位，共有多少種排列法？`;
+        },
+        get a() {
+          const n = this._n || 5;
+          const total = factorialInt(n) - 3 * factorialInt(n - 1) + 3 * factorialInt(n - 2) - factorialInt(n - 3);
+          return `簡答：${total} 種。過程：總數 \\(${n}!\\)。扣掉三個指定人坐到禁位的情形，用容斥：\\(${n}!-3\\cdot${n - 1}!+3\\cdot${n - 2}!-${n - 3}!=${total}\\)。`;
+        },
       },
       {
-        q: '有 5 封不同的信與 5 個寫好地址的信封，將信隨機放入，求恰有 4 封放錯的情形共有多少種？',
-        a: '簡答：45 種。過程：恰有 4 封放錯表示恰有 1 封放對。先選放對的信有 \\(C(5,1)\\) 種，其餘 4 封完全錯置有 \\(!4=9\\) 種，所以共有 \\(5\\cdot9=45\\) 種。',
+        get q() {
+          const n = randInt(4, 6);
+          this._n = n;
+          return `有 ${n} 封不同的信與 ${n} 個寫好地址的信封，將信隨機放入，求恰有 ${n - 1} 封放錯的情形共有多少種？`;
+        },
+        get a() {
+          const n = this._n || 5;
+          const der = [1, 0, 1, 2, 9, 44][n - 1];
+          return `簡答：${n * der} 種。過程：恰有 ${n - 1} 封放錯表示恰有 1 封放對。先選放對的信有 \\(C(${n},1)\\) 種，其餘 ${n - 1} 封完全錯置有 \\(!${n - 1}=${der}\\) 種，所以共有 \\(${n}\\cdot${der}=${n * der}\\) 種。`;
+        },
       },
       {
         q: '將 1、2、3、4、5 五個數字排成一列 \\((a_1,a_2,a_3,a_4,a_5)\\)，求滿足 \\((a_1-1)(a_2-2)(a_3-3)\\ne0\\) 的排列數。',
         a: '簡答：64 種。過程：條件表示第 1 位不可放 1、第 2 位不可放 2、第 3 位不可放 3。與三個禁位容斥相同，所以為 \\(5!-3\\cdot4!+3\\cdot3!-2!=64\\)。',
       },
       {
-        q: '10 位學生排成一列，若甲不可排首位，且乙不可排末位，共有多少種排列法？',
-        a: '簡答：2943360 種。過程：全部 \\(10!\\) 種。甲首位有 \\(9!\\) 種，乙末位有 \\(9!\\) 種，同時發生有 \\(8!\\) 種。故為 \\(10!-2\\cdot9!+8!=2943360\\)。',
+        get q() {
+          const n = randInt(8, 11);
+          this._n = n;
+          return `${n} 位學生排成一列，若甲不可排首位，且乙不可排末位，共有多少種排列法？`;
+        },
+        get a() {
+          const n = this._n || 10;
+          const total = factorialInt(n) - 2 * factorialInt(n - 1) + factorialInt(n - 2);
+          return `簡答：${total} 種。過程：全部 \\(${n}!\\) 種。甲首位有 \\(${n - 1}!\\) 種，乙末位有 \\(${n - 1}!\\) 種，同時發生有 \\(${n - 2}!\\) 種。故為 \\(${n}!-2\\cdot${n - 1}!+${n - 2}!=${total}\\)。`;
+        },
       },
       {
         q: '將 A、B、C、D、E 五人排成一列，規定 A 不在第 1 位、B 不在第 2 位、C 不在第 3 位，且 D 不在第 4 位，共有多少種排法？',
@@ -4483,24 +4763,56 @@
   function buildS222DistributionRepeatedSet(count) {
     const templates = [
       {
-        q: '將 5 封不同的信任意投入 4 個不同的郵筒，每一封信都有 4 種選擇，共有多少種投法？',
-        a: '簡答：1024 種。過程：每封信可獨立選 4 個郵筒之一，所以共有 \\(4^5=1024\\) 種。',
+        get q() {
+          const letters = randInt(4, 6);
+          const boxes = randInt(3, 5);
+          this._d = { letters, boxes };
+          return `將 ${letters} 封不同的信任意投入 ${boxes} 個不同的郵筒，每一封信都有 ${boxes} 種選擇，共有多少種投法？`;
+        },
+        get a() {
+          const d = this._d || { letters: 5, boxes: 4 };
+          return `簡答：${Math.pow(d.boxes, d.letters)} 種。過程：每封信可獨立選 ${d.boxes} 個郵筒之一，所以共有 \\(${d.boxes}^{${d.letters}}=${Math.pow(d.boxes, d.letters)}\\) 種。`;
+        },
       },
       {
-        q: '有 6 件相異玩具分給甲、乙、丙三位兒童，若每人所得不限（可兼得，亦可不得），共有多少種分法？',
-        a: '簡答：729 種。過程：每件玩具有 3 種歸屬選擇，6 件彼此獨立，所以共有 \\(3^6=729\\) 種。',
+        get q() {
+          const toys = randInt(5, 7);
+          const kids = randInt(3, 4);
+          this._d = { toys, kids };
+          return `有 ${toys} 件相異玩具分給${kids === 3 ? '甲、乙、丙三' : '甲、乙、丙、丁四'}位兒童，若每人所得不限（可兼得，亦可不得），共有多少種分法？`;
+        },
+        get a() {
+          const d = this._d || { toys: 6, kids: 3 };
+          return `簡答：${Math.pow(d.kids, d.toys)} 種。過程：每件玩具有 ${d.kids} 種歸屬選擇，${d.toys} 件彼此獨立，所以共有 \\(${d.kids}^{${d.toys}}=${Math.pow(d.kids, d.toys)}\\) 種。`;
+        },
       },
       {
         q: '一個四位數字密碼（第一位可為 0），每位數字可由 0 到 9 任選，若要求密碼中至少含兩個連續的「2」，共有多少組？',
         a: '簡答：280 組。過程：總密碼 \\(10^4\\)。至少出現一段「22」可由位置 12、23、34 做容斥。三段各有 100 組，兩段重疊或分離分別修正，最後得 280 組。',
       },
       {
-        q: '用 3 種不同獎品分給 5 位學生，每種獎品可給任一學生且可重複得獎，共有多少種頒發方式？',
-        a: '簡答：125 種。過程：每種獎品有 5 位學生可選，三種獎品彼此獨立，所以共有 \\(5^3=125\\) 種。',
+        get q() {
+          const prizes = randInt(3, 4);
+          const students = randInt(4, 7);
+          this._d = { prizes, students };
+          return `用 ${prizes} 種不同獎品分給 ${students} 位學生，每種獎品可給任一學生且可重複得獎，共有多少種頒發方式？`;
+        },
+        get a() {
+          const d = this._d || { prizes: 3, students: 5 };
+          return `簡答：${Math.pow(d.students, d.prizes)} 種。過程：每種獎品有 ${d.students} 位學生可選，${d.prizes} 種獎品彼此獨立，所以共有 \\(${d.students}^{${d.prizes}}=${Math.pow(d.students, d.prizes)}\\) 種。`;
+        },
       },
       {
-        q: '將 4 顆不同球放入 3 個不同盒子中，允許盒子為空，共有多少種放法？',
-        a: '簡答：81 種。過程：每顆球都有 3 個盒子可選，4 顆球獨立選擇，所以共有 \\(3^4=81\\) 種。',
+        get q() {
+          const balls = randInt(3, 5);
+          const boxes = randInt(3, 4);
+          this._d = { balls, boxes };
+          return `將 ${balls} 顆不同球放入 ${boxes} 個不同盒子中，允許盒子為空，共有多少種放法？`;
+        },
+        get a() {
+          const d = this._d || { balls: 4, boxes: 3 };
+          return `簡答：${Math.pow(d.boxes, d.balls)} 種。過程：每顆球都有 ${d.boxes} 個盒子可選，${d.balls} 顆球獨立選擇，所以共有 \\(${d.boxes}^{${d.balls}}=${Math.pow(d.boxes, d.balls)}\\) 種。`;
+        },
       },
     ];
     const questions = [];
@@ -4517,8 +4829,17 @@
   function buildS222GridPathSet(count) {
     const templates = [
       {
-        q: '在一個 \\(7\\times3\\) 的棋盤街道中，從 A 到 B 只能向右或向上走，共有多少種走法？',
-        a: '簡答：120 種。過程：需要向右 7 步、向上 3 步，共 10 步，選出其中 3 步向上即可，所以為 \\(C(10,3)=120\\)。',
+        get q() {
+          const m = randInt(5, 8);
+          const n = randInt(3, 4);
+          this._d = { m, n };
+          return `在一個 \\(${m}\\times${n}\\) 的棋盤街道中，從 A 到 B 只能向右或向上走，共有多少種走法？`;
+        },
+        get a() {
+          const d = this._d || { m: 7, n: 3 };
+          const total = combinationCount(d.m + d.n, d.n);
+          return `簡答：${total} 種。過程：需要向右 ${d.m} 步、向上 ${d.n} 步，共 ${d.m + d.n} 步，選出其中 ${d.n} 步向上即可，所以為 \\(C(${d.m + d.n},${d.n})=${total}\\)。`;
+        },
       },
       {
         q: '在一個 \\(7\\times3\\) 的棋盤街道中，從 A 到 B 只能向右或向上走；若途中必須經過 \\(C(3,1)\\) 點且不經過 \\(D(5,2)\\) 點，走法有多少種？',
@@ -4529,12 +4850,32 @@
         a: '簡答：93 種。過程：經 C 有 \\(C(3,1)C(6,3)=60\\) 種，經 D 有 \\(C(6,3)C(3,1)=60\\) 種，同時經 C 與 D 有 \\(C(3,1)C(3,2)C(3,1)=27\\) 種。取聯集為 \\(60+60-27=93\\)。',
       },
       {
-        q: '在棋盤街道中，從 A 到 B 需向右 6 步、向上 4 步，若不經過 \\((3,2)\\)，共有多少種走法？',
-        a: '簡答：110 種。過程：全部走法為 \\(C(10,4)=210\\)。經過 \\((3,2)\\) 的走法為 \\(C(5,2)C(5,2)=100\\)。所以不經過該點為 \\(210-100=110\\)。',
+        get q() {
+          const R = randInt(5, 7);
+          const U = randInt(3, 4);
+          const a = randInt(2, R - 2);
+          const b = randInt(1, U - 1);
+          this._d = { R, U, a, b };
+          return `在棋盤街道中，從 A 到 B 需向右 ${R} 步、向上 ${U} 步，若不經過 \\((${a},${b})\\)，共有多少種走法？`;
+        },
+        get a() {
+          const d = this._d || { R: 6, U: 4, a: 3, b: 2 };
+          const total = combinationCount(d.R + d.U, d.U);
+          const via = combinationCount(d.a + d.b, d.b) * combinationCount(d.R - d.a + d.U - d.b, d.U - d.b);
+          return `簡答：${total - via} 種。過程：全部走法為 \\(C(${d.R + d.U},${d.U})=${total}\\)。經過 \\((${d.a},${d.b})\\) 的走法為 \\(C(${d.a + d.b},${d.b})C(${d.R - d.a + d.U - d.b},${d.U - d.b})=${via}\\)。所以不經過該點為 \\(${total}-${via}=${total - via}\\)。`;
+        },
       },
       {
-        q: '在 \\(4\\times4\\) 棋盤街道中，從左下角到右上角，若必須經過中心點 \\((2,2)\\)，共有多少種捷徑走法？',
-        a: '簡答：36 種。過程：從起點到中心需右 2、上 2，有 \\(C(4,2)=6\\) 種；中心到終點同樣有 6 種，所以共有 \\(6\\times6=36\\) 種。',
+        get q() {
+          const k = randInt(2, 3);
+          this._k = k;
+          return `在 \\(${2 * k}\\times${2 * k}\\) 棋盤街道中，從左下角到右上角，若必須經過中心點 \\((${k},${k})\\)，共有多少種捷徑走法？`;
+        },
+        get a() {
+          const k = this._k || 2;
+          const half = combinationCount(2 * k, k);
+          return `簡答：${half * half} 種。過程：從起點到中心需右 ${k}、上 ${k}，有 \\(C(${2 * k},${k})=${half}\\) 種；中心到終點同樣有 ${half} 種，所以共有 \\(${half}\\times${half}=${half * half}\\) 種。`;
+        },
       },
     ];
     const questions = [];
@@ -4627,8 +4968,18 @@
         a: '簡答：45 種。過程：連串總數為 5，可能是 x 有 3 串、y 有 2 串，或 x 有 2 串、y 有 3 串。第一種有 \\(C(5,2)C(3,1)=30\\) 種；第二種有 \\(C(5,1)C(3,2)=15\\) 種，合計 45 種。',
       },
       {
-        q: '在數線上從原點出發移動 6 步（每步 +1 或 -1），若已知最後落在 +4 位置，共有多少種移動路徑？',
-        a: '簡答：6 種。過程：設向右步數為 \\(r\\)、向左為 \\(l\\)，則 \\(r+l=6\\)、\\(r-l=4\\)，解得 \\(r=5,l=1\\)。所以只要選出哪一步向左，有 \\(C(6,1)=6\\) 種。',
+        get q() {
+          const n = s242Pick([6, 8, 10]);
+          const l = randInt(1, n / 2 - 1);
+          this._d = { n, l };
+          return `在數線上從原點出發移動 ${n} 步（每步 +1 或 -1），若已知最後落在 +${n - 2 * l} 位置，共有多少種移動路徑？`;
+        },
+        get a() {
+          const d = this._d || { n: 6, l: 1 };
+          const t = d.n - 2 * d.l;
+          const total = combinationCount(d.n, d.l);
+          return `簡答：${total} 種。過程：設向右步數為 \\(r\\)、向左為 \\(l\\)，則 \\(r+l=${d.n}\\)、\\(r-l=${t}\\)，解得 \\(r=${d.n - d.l},l=${d.l}\\)。所以只要選出哪 ${d.l} 步向左，有 \\(C(${d.n},${d.l})=${total}\\) 種。`;
+        },
       },
       {
         q: '將 4 個 A 與 3 個 B 排成一列，要求 A 恰好分成 2 個連串，共有多少種排法？',
@@ -4649,8 +5000,19 @@
   function buildS222InternalOrderConstraintSet(count) {
     const templates = [
       {
-        q: '射擊氣球問題：用三串分別為 2、3、3 個的氣球當靶子，規定每一串必須從最底下的氣球開始射破。射破全部 8 個氣球的次序有多少種？',
-        a: '簡答：560 種。過程：每串內部順序固定，只需決定三串射擊動作在 8 個位置中的交錯方式，所以為 \\(\\frac{8!}{2!3!3!}=560\\)。',
+        get q() {
+          const a = randInt(2, 3);
+          const b = randInt(2, 4);
+          const c = randInt(2, 3);
+          this._d = { a, b, c };
+          return `射擊氣球問題：用三串分別為 ${a}、${b}、${c} 個的氣球當靶子，規定每一串必須從最底下的氣球開始射破。射破全部 ${a + b + c} 個氣球的次序有多少種？`;
+        },
+        get a() {
+          const d = this._d || { a: 2, b: 3, c: 3 };
+          const n = d.a + d.b + d.c;
+          const total = factorialInt(n) / (factorialInt(d.a) * factorialInt(d.b) * factorialInt(d.c));
+          return `簡答：${total} 種。過程：每串內部順序固定，只需決定三串射擊動作在 ${n} 個位置中的交錯方式，所以為 \\(\\frac{${n}!}{${d.a}!${d.b}!${d.c}!}=${total}\\)。`;
+        },
       },
       {
         q: '8 個身高互異的人排成一列，要求身高由左到右呈「低、高、低、高、低、高、低、高」的交錯型態，共有多少種排法？',
@@ -4770,6 +5132,19 @@
     return { questions, summaryAnswers, answers };
   }
 
+  // 動態版：templates 為函數陣列，每次呼叫產生隨機參數的 {q, a}。
+  function buildS223DynamicSet(builders, count) {
+    const questions = [];
+    const summaryAnswers = [];
+    const answers = createAnswerList(summaryAnswers);
+    for (let i = 0; i < count; i += 1) {
+      const item = builders[i % builders.length]();
+      questions.push(item.q);
+      answers.push(item.a);
+    }
+    return { questions, summaryAnswers, answers };
+  }
+
   function buildS223MixedSet(banks, count) {
     const questions = [];
     const summaryAnswers = [];
@@ -4786,8 +5161,19 @@
     return buildS223TemplateSet(
       [
         {
-          q: '求 \\((3x-2y)^6\\) 展開式中 \\(x^3y^3\\) 項的係數。',
-          a: '簡答：\\(-4320\\)。過程：取 3 個 \\(-2y\\) 與 3 個 \\(3x\\)，係數為 \\(C(6,3)3^3(-2)^3=20\\cdot27\\cdot(-8)=-4320\\)。',
+          get q() {
+            const a = randInt(2, 3);
+            const b = randInt(1, 3);
+            const n = randInt(5, 7);
+            const k = randInt(2, n - 2);
+            this._d = { a, b, n, k };
+            return `求 \\((${a}x-${b === 1 ? '' : b}y)^{${n}}\\) 展開式中 \\(x^{${k}}y^{${n - k}}\\) 項的係數。`;
+          },
+          get a() {
+            const d = this._d || { a: 3, b: 2, n: 6, k: 3 };
+            const coeff = combinationCount(d.n, d.k) * Math.pow(d.a, d.k) * Math.pow(-d.b, d.n - d.k);
+            return `簡答：\\(${coeff}\\)。過程：取 ${d.n - d.k} 個 \\(-${d.b === 1 ? '' : d.b}y\\) 與 ${d.k} 個 \\(${d.a}x\\)，係數為 \\(C(${d.n},${d.k})${d.a}^{${d.k}}(-${d.b})^{${d.n - d.k}}=${coeff}\\)。`;
+          },
         },
         {
           q: '求 \\((x^2+\\frac{2}{x})^6\\) 展開式中 \\(x^3\\) 項的係數。',
@@ -4818,8 +5204,17 @@
           a: '簡答：\\(\\frac{35}{8}\\)。過程：通項的 \\(x\\) 次方為 \\(8-k-k=8-2k\\)，令其為 0 得 \\(k=4\\)。常數項為 \\(C(8,4)2^4(-\\frac14)^4=\\frac{35}{8}\\)。',
         },
         {
-          q: '求 \\((x-\\frac{1}{x^2})^9\\) 展開式中的常數項。',
-          a: '簡答：\\(-84\\)。過程：通項的 \\(x\\) 次方為 \\(9-k-2k=9-3k\\)，令其為 0 得 \\(k=3\\)。常數項為 \\(C(9,3)(-1)^3=-84\\)。',
+          get q() {
+            const n = s242Pick([6, 9, 12]);
+            this._n = n;
+            return `求 \\((x-\\frac{1}{x^2})^{${n}}\\) 展開式中的常數項。`;
+          },
+          get a() {
+            const n = this._n || 9;
+            const k = n / 3;
+            const value = combinationCount(n, k) * Math.pow(-1, k);
+            return `簡答：\\(${value}\\)。過程：通項的 \\(x\\) 次方為 \\(${n}-k-2k=${n}-3k\\)，令其為 0 得 \\(k=${k}\\)。常數項為 \\(C(${n},${k})(-1)^{${k}}=${value}\\)。`;
+          },
         },
         {
           q: '求 \\((x^3+\\frac1x+1)^8\\) 展開式中的常數項。',
@@ -4898,12 +5293,26 @@
     return buildS223TemplateSet(
       [
         {
-          q: '計算 \\(C(50,0)+C(50,2)+C(50,4)+\\cdots+C(50,50)\\) 之值。',
-          a: '簡答：\\(2^{49}\\)。過程：偶數項係數和等於奇數項係數和，且全部係數和為 \\((1+1)^{50}=2^{50}\\)，所以偶數項和為 \\(2^{49}\\)。',
+          get q() {
+            const N = s242Pick([30, 40, 50, 60, 100]);
+            this._N = N;
+            return `計算 \\(C(${N},0)+C(${N},2)+C(${N},4)+\\cdots+C(${N},${N})\\) 之值。`;
+          },
+          get a() {
+            const N = this._N || 50;
+            return `簡答：\\(2^{${N - 1}}\\)。過程：偶數項係數和等於奇數項係數和，且全部係數和為 \\((1+1)^{${N}}=2^{${N}}\\)，所以偶數項和為 \\(2^{${N - 1}}\\)。`;
+          },
         },
         {
-          q: '若 \\(C(n,1)+2C(n,2)+4C(n,3)+\\cdots+2^{n-1}C(n,n)=3280\\)，求 \\(n\\)。',
-          a: '簡答：\\(n=8\\)。過程：左式為 \\(\\frac{(1+2)^n-1}{2}=\\frac{3^n-1}{2}\\)。令 \\(\\frac{3^n-1}{2}=3280\\)，得 \\(3^n=6561=3^8\\)，所以 \\(n=8\\)。',
+          get q() {
+            const n = randInt(6, 9);
+            this._n = n;
+            return `若 \\(C(n,1)+2C(n,2)+4C(n,3)+\\cdots+2^{n-1}C(n,n)=${(Math.pow(3, n) - 1) / 2}\\)，求 \\(n\\)。`;
+          },
+          get a() {
+            const n = this._n || 8;
+            return `簡答：\\(n=${n}\\)。過程：左式為 \\(\\frac{(1+2)^n-1}{2}=\\frac{3^n-1}{2}\\)。令 \\(\\frac{3^n-1}{2}=${(Math.pow(3, n) - 1) / 2}\\)，得 \\(3^n=${Math.pow(3, n)}=3^{${n}}\\)，所以 \\(n=${n}\\)。`;
+          },
         },
         {
           q: '計算 \\(C(11,0)+C(11,1)+C(11,2)+C(11,3)+C(11,4)+C(11,5)\\) 之值。',
@@ -4954,12 +5363,29 @@
     return buildS223TemplateSet(
       [
         {
-          q: '在一排 10 個座位中選取 3 個，要求這三個座位兩兩不相鄰，共有幾種選法？',
-          a: '簡答：56 種。過程：選 3 個不相鄰位置可用間隔法，等於 \\(C(10-3+1,3)=C(8,3)=56\\) 種。',
+          get q() {
+            const n = randInt(8, 13);
+            const k = randInt(3, 4);
+            this._d = { n, k };
+            return `在一排 ${n} 個座位中選取 ${k} 個，要求這${k === 3 ? '三' : '四'}個座位兩兩不相鄰，共有幾種選法？`;
+          },
+          get a() {
+            const d = this._d || { n: 10, k: 3 };
+            const total = combinationCount(d.n - d.k + 1, d.k);
+            return `簡答：${total} 種。過程：選 ${d.k} 個不相鄰位置可用間隔法，等於 \\(C(${d.n}-${d.k}+1,${d.k})=C(${d.n - d.k + 1},${d.k})=${total}\\) 種。`;
+          },
         },
         {
-          q: '一家公司計畫在 7 天中選擇 2 天停水，若要求停水的兩天不相連，共有幾種選擇？',
-          a: '簡答：15 種。過程：任選兩天有 \\(C(7,2)=21\\) 種，相鄰兩天有 6 種，所以不相鄰有 \\(21-6=15\\) 種。',
+          get q() {
+            const n = randInt(6, 10);
+            this._n = n;
+            return `一家公司計畫在 ${n} 天中選擇 2 天停水，若要求停水的兩天不相連，共有幾種選擇？`;
+          },
+          get a() {
+            const n = this._n || 7;
+            const total = combinationCount(n, 2) - (n - 1);
+            return `簡答：${total} 種。過程：任選兩天有 \\(C(${n},2)=${combinationCount(n, 2)}\\) 種，相鄰兩天有 ${n - 1} 種，所以不相鄰有 \\(${combinationCount(n, 2)}-${n - 1}=${total}\\) 種。`;
+          },
         },
         {
           q: '甲、乙、丙、丁 4 人在一排 14 個座位中就坐，若任意兩人之間至少有 2 個空位，坐法有多少種？',
@@ -5010,16 +5436,31 @@
     return buildS223TemplateSet(
       [
         {
-          q: '利用巴斯卡定理計算 \\(C(2,2)+C(3,2)+C(4,2)+\\cdots+C(99,2)\\) 的總和。',
-          a: '簡答：\\(C(100,3)=161700\\)。過程：曲棍球棒公式給出 \\(C(2,2)+C(3,2)+\\cdots+C(99,2)=C(100,3)\\)。',
+          get q() {
+            const N = s242Pick([49, 59, 79, 89, 99, 119]);
+            this._N = N;
+            return `利用巴斯卡定理計算 \\(C(2,2)+C(3,2)+C(4,2)+\\cdots+C(${N},2)\\) 的總和。`;
+          },
+          get a() {
+            const N = this._N || 99;
+            const total = combinationCount(N + 1, 3);
+            return `簡答：\\(C(${N + 1},3)=${total}\\)。過程：曲棍球棒公式給出 \\(C(2,2)+C(3,2)+\\cdots+C(${N},2)=C(${N + 1},3)\\)。`;
+          },
         },
         {
           q: '求級數和 \\(C(5,0)+C(6,1)+C(7,2)+\\cdots+C(100,95)\\) 的簡化結果。',
           a: '簡答：\\(C(101,6)\\)。過程：將各項改寫為 \\(C(5,5)+C(6,5)+\\cdots+C(100,5)\\)，由曲棍球棒公式得 \\(C(101,6)\\)。',
         },
         {
-          q: '計算 \\(C(3,3)+C(4,3)+C(5,3)+\\cdots+C(89,3)\\)。',
-          a: '簡答：\\(C(90,4)\\)。過程：由曲棍球棒公式，\\(\\sum_{r=3}^{89}C(r,3)=C(90,4)\\)。',
+          get q() {
+            const N = s242Pick([59, 69, 79, 89, 99]);
+            this._N = N;
+            return `計算 \\(C(3,3)+C(4,3)+C(5,3)+\\cdots+C(${N},3)\\)。`;
+          },
+          get a() {
+            const N = this._N || 89;
+            return `簡答：\\(C(${N + 1},4)\\)。過程：由曲棍球棒公式，\\(\\sum_{r=3}^{${N}}C(r,3)=C(${N + 1},4)\\)。`;
+          },
         },
         {
           q: '若 \\(C(3,3)+C(4,3)+\\cdots+C(m,3)=C(n,4)\\)，求 \\((m,n)\\) 的關係。',
@@ -5150,12 +5591,33 @@
     return buildS223TemplateSet(
       [
         {
-          q: '在 \\((x+y+z+u)^6\\) 展開式中，求 \\(x^3y^2u\\) 項的係數。',
-          a: '簡答：60。過程：由多項式定理，指定項 \\(x^3y^2u\\) 的係數為 \\(\\frac{6!}{3!2!1!}=60\\)。',
+          get q() {
+            const a = randInt(2, 3);
+            const b = randInt(1, 2);
+            const n = a + b + randInt(1, 3);
+            this._d = { n, a, b, d: n - a - b };
+            const term = `x^{${a}}y^{${b}}${this._d.d === 1 ? 'u' : `u^{${this._d.d}}`}`;
+            return `在 \\((x+y+z+u)^{${n}}\\) 展開式中，求 \\(${term}\\) 項的係數。`;
+          },
+          get a() {
+            const d = this._d || { n: 6, a: 3, b: 2, d: 1 };
+            const total = factorialInt(d.n) / (factorialInt(d.a) * factorialInt(d.b) * factorialInt(d.d));
+            return `簡答：${total}。過程：由多項式定理，該項的係數為 \\(\\frac{${d.n}!}{${d.a}!${d.b}!${d.d}!}=${total}\\)。`;
+          },
         },
         {
-          q: '求 \\((x+y+z)^{10}\\) 展開式中 \\(x^3y^2z^5\\) 項的係數。',
-          a: '簡答：2520。過程：由多項式定理，係數為 \\(\\frac{10!}{3!2!5!}=2520\\)。',
+          get q() {
+            const n = randInt(8, 10);
+            const a = randInt(2, 4);
+            const b = randInt(1, 3);
+            this._d = { n, a, b, c: n - a - b };
+            return `求 \\((x+y+z)^{${n}}\\) 展開式中 \\(x^{${a}}y^{${b}}z^{${this._d.c}}\\) 項的係數。`;
+          },
+          get a() {
+            const d = this._d || { n: 10, a: 3, b: 2, c: 5 };
+            const total = factorialInt(d.n) / (factorialInt(d.a) * factorialInt(d.b) * factorialInt(d.c));
+            return `簡答：${total}。過程：由多項式定理，係數為 \\(\\frac{${d.n}!}{${d.a}!${d.b}!${d.c}!}=${total}\\)。`;
+          },
         },
         {
           q: '求 \\((1+2x+3x^2)^4\\) 展開式中，\\(x^2\\) 項的係數。',
@@ -5234,8 +5696,16 @@
     return buildS223TemplateSet(
       [
         {
-          q: '設 \\(T=\\{1,2,3,4,5,6\\}\\)，求滿足 \\(\\varnothing\\subset A\\subset B\\subset T\\) 的有序對 \\((A,B)\\) 共有多少組？',
-          a: '簡答：540 組。過程：每個元素可在 \\(A\\)、在 \\(B\\setminus A\\)、或在 \\(T\\setminus B\\) 三類。三類都要非空，所以用容斥得 \\(3^6-3\\cdot2^6+3=540\\)。',
+          get q() {
+            const n = randInt(5, 7);
+            this._n = n;
+            return `設 \\(T=\\{1,2,\\ldots,${n}\\}\\)，求滿足 \\(\\varnothing\\subset A\\subset B\\subset T\\) 的有序對 \\((A,B)\\) 共有多少組？`;
+          },
+          get a() {
+            const n = this._n || 6;
+            const total = Math.pow(3, n) - 3 * Math.pow(2, n) + 3;
+            return `簡答：${total} 組。過程：每個元素可在 \\(A\\)、在 \\(B\\setminus A\\)、或在 \\(T\\setminus B\\) 三類。三類都要非空，所以用容斥得 \\(3^{${n}}-3\\cdot2^{${n}}+3=${total}\\)。`;
+          },
         },
         {
           q: '設 \\(U\\) 有 \\(n\\) 個元素，求滿足 \\(A\\subseteq B\\subseteq U\\) 且 \\(A\\ne B\\) 的集合組數。',
@@ -5478,12 +5948,29 @@
     return buildS223TemplateSet(
       [
         {
-          q: '將 12 本相異書平均分給 3 個人，每人各得 4 本，共有多少種分法？',
-          a: '簡答：34650 種。過程：3 個人是具名的，依序選書給三人，方法數為 \\(\\frac{12!}{4!4!4!}=34650\\) 種。',
+          get q() {
+            const k = randInt(3, 4);
+            this._k = k;
+            return `將 ${3 * k} 本相異書平均分給 3 個人，每人各得 ${k} 本，共有多少種分法？`;
+          },
+          get a() {
+            const k = this._k || 4;
+            const total = factorialInt(3 * k) / Math.pow(factorialInt(k), 3);
+            return `簡答：${total} 種。過程：3 個人是具名的，依序選書給三人，方法數為 \\(\\frac{${3 * k}!}{${k}!${k}!${k}!}=${total}\\) 種。`;
+          },
         },
         {
-          q: '將 6 件相異玩具平均分給甲、乙、丙三人，每人 2 件，共有多少種分法？',
-          a: '簡答：90 種。過程：甲得 2 件、乙得 2 件、丙得 2 件，方法數為 \\(\\frac{6!}{2!2!2!}=90\\) 種。',
+          get q() {
+            const p = randInt(3, 4);
+            const k = 2;
+            this._d = { p, k };
+            return `將 ${p * k} 件相異玩具平均分給${p === 3 ? '甲、乙、丙三' : '甲、乙、丙、丁四'}人，每人 ${k} 件，共有多少種分法？`;
+          },
+          get a() {
+            const d = this._d || { p: 3, k: 2 };
+            const total = factorialInt(d.p * d.k) / Math.pow(factorialInt(d.k), d.p);
+            return `簡答：${total} 種。過程：每人各得 ${d.k} 件依序選取，方法數為 \\(\\frac{${d.p * d.k}!}{${Array(d.p).fill(`${d.k}!`).join('')}}=${total}\\) 種。`;
+          },
         },
         {
           q: '將 9 顆相異球平均分給 3 個相異箱子，每箱 3 顆，共有多少種分法？',
@@ -5506,16 +5993,40 @@
     return buildS223TemplateSet(
       [
         {
-          q: '將 12 本相異書平均分成 3 堆，每堆 4 本，共有多少種分堆方法？',
-          a: '簡答：5775 種。過程：先按具名三堆分為 \\(\\frac{12!}{4!4!4!}\\)，但三堆無名稱，要再除以 \\(3!\\)，所以為 \\(\\frac{12!}{(4!)^3 3!}=5775\\) 種。',
+          get q() {
+            const k = randInt(3, 4);
+            this._k = k;
+            return `將 ${3 * k} 本相異書平均分成 3 堆，每堆 ${k} 本，共有多少種分堆方法？`;
+          },
+          get a() {
+            const k = this._k || 4;
+            const total = factorialInt(3 * k) / (Math.pow(factorialInt(k), 3) * 6);
+            return `簡答：${total} 種。過程：先按具名三堆分為 \\(\\frac{${3 * k}!}{${k}!${k}!${k}!}\\)，但三堆無名稱，要再除以 \\(3!\\)，所以為 \\(\\frac{${3 * k}!}{(${k}!)^3 3!}=${total}\\) 種。`;
+          },
         },
         {
-          q: '將 6 件相異物品平均分成 3 堆，每堆 2 個，共有多少種分堆方法？',
-          a: '簡答：15 種。過程：三堆無名稱，方法數為 \\(\\frac{6!}{(2!)^3 3!}=15\\) 種。',
+          get q() {
+            const k = randInt(2, 3);
+            this._k = k;
+            return `將 ${3 * k} 件相異物品平均分成 3 堆，每堆 ${k} 個，共有多少種分堆方法？`;
+          },
+          get a() {
+            const k = this._k || 2;
+            const total = factorialInt(3 * k) / (Math.pow(factorialInt(k), 3) * 6);
+            return `簡答：${total} 種。過程：三堆無名稱，方法數為 \\(\\frac{${3 * k}!}{(${k}!)^3 3!}=${total}\\) 種。`;
+          },
         },
         {
-          q: '將 10 位學生平均分成 2 組進行討論，每組 5 人，共有多少種分組方法？',
-          a: '簡答：126 種。過程：兩組無名稱，方法數為 \\(\\frac{10!}{5!5!2!}=126\\) 種。',
+          get q() {
+            const m = randInt(3, 6);
+            this._m = m;
+            return `將 ${2 * m} 位學生平均分成 2 組進行討論，每組 ${m} 人，共有多少種分組方法？`;
+          },
+          get a() {
+            const m = this._m || 5;
+            const total = factorialInt(2 * m) / (factorialInt(m) * factorialInt(m) * 2);
+            return `簡答：${total} 種。過程：兩組無名稱，方法數為 \\(\\frac{${2 * m}!}{${m}!${m}!2!}=${total}\\) 種。`;
+          },
         },
         {
           q: '將 9 本相異雜誌平均分成 3 堆，每堆 3 本，共有多少種分堆方法？',
@@ -5534,8 +6045,18 @@
     return buildS223TemplateSet(
       [
         {
-          q: '將 9 件相異玩具按 4 件、4 件、1 件分成三堆，共有多少種分法？',
-          a: '簡答：315 種。過程：堆沒有名稱，且兩堆大小同為 4，需除以 \\(2!\\)。方法數為 \\(\\frac{9!}{4!4!1!2!}=315\\) 種。',
+          get q() {
+            const k = randInt(2, 4);
+            const s = k === 2 ? 1 : randInt(1, 2);
+            this._d = { k, s };
+            return `將 ${2 * k + s} 件相異玩具按 ${k} 件、${k} 件、${s} 件分成三堆，共有多少種分法？`;
+          },
+          get a() {
+            const d = this._d || { k: 4, s: 1 };
+            const n = 2 * d.k + d.s;
+            const total = factorialInt(n) / (factorialInt(d.k) * factorialInt(d.k) * factorialInt(d.s) * 2);
+            return `簡答：${total} 種。過程：堆沒有名稱，且兩堆大小同為 ${d.k}，需除以 \\(2!\\)。方法數為 \\(\\frac{${n}!}{${d.k}!${d.k}!${d.s}!2!}=${total}\\) 種。`;
+          },
         },
         {
           q: '將 10 本相異書按 3 本、3 本、2 本、2 本分成四堆，共有多少種分法？',
@@ -5590,12 +6111,29 @@
     return buildS223TemplateSet(
       [
         {
-          q: '將 10 顆相同的球放入 4 個不同箱子，每箱球數不限，共有多少種放法？',
-          a: '簡答：286 種。過程：這是非負整數解 \\(x_1+x_2+x_3+x_4=10\\)，解數為 \\(C(13,3)=286\\) 種。',
+          get q() {
+            const n = randInt(8, 12);
+            const m = randInt(3, 4);
+            this._d = { n, m };
+            return `將 ${n} 顆相同的球放入 ${m} 個不同箱子，每箱球數不限，共有多少種放法？`;
+          },
+          get a() {
+            const d = this._d || { n: 10, m: 4 };
+            const total = combinationCount(d.n + d.m - 1, d.m - 1);
+            return `簡答：${total} 種。過程：這是非負整數解 \\(x_1+\\cdots+x_{${d.m}}=${d.n}\\)，解數為 \\(C(${d.n + d.m - 1},${d.m - 1})=${total}\\) 種。`;
+          },
         },
         {
-          q: '將 9 本相同的練習簿全部分給 4 個小朋友，每人可得 0 本或多本，共有多少種分法？',
-          a: '簡答：220 種。過程：求 \\(x_1+x_2+x_3+x_4=9\\) 的非負整數解，解數為 \\(C(12,3)=220\\)。',
+          get q() {
+            const n = randInt(7, 11);
+            this._n = n;
+            return `將 ${n} 本相同的練習簿全部分給 4 個小朋友，每人可得 0 本或多本，共有多少種分法？`;
+          },
+          get a() {
+            const n = this._n || 9;
+            const total = combinationCount(n + 3, 3);
+            return `簡答：${total} 種。過程：求 \\(x_1+x_2+x_3+x_4=${n}\\) 的非負整數解，解數為 \\(C(${n + 3},3)=${total}\\)。`;
+          },
         },
         {
           q: '將 5 枝相同紅筆與 4 枝相同藍筆全部分給 3 人，每人每色可得任意枝數，共有多少種分法？',
@@ -5655,12 +6193,30 @@
           a: '簡答：\\(\\frac{25}{216}\\)。過程：三粒骰子共有 \\(6^3=216\\) 種等可能結果。令三點數為 \\(x,y,z\\)，\\(x+y+z=12\\)，逐一計數可得 25 種，所以機率為 \\(\\frac{25}{216}\\)。',
         },
         {
-          q: '連續丟一個均勻硬幣 5 次，求恰好出現 3 次正面的機率。',
-          a: '簡答：\\(\\frac{5}{16}\\)。過程：5 次結果共有 \\(2^5=32\\) 種。恰好 3 次正面有 \\(C(5,3)=10\\) 種，因此機率為 \\(\\frac{10}{32}=\\frac{5}{16}\\)。',
+          get q() {
+            const n = randInt(4, 6);
+            const k = randInt(2, n - 2);
+            this._d = { n, k };
+            return `連續丟一個均勻硬幣 ${n} 次，求恰好出現 ${k} 次正面的機率。`;
+          },
+          get a() {
+            const d = this._d || { n: 5, k: 3 };
+            const ways = combinationCount(d.n, d.k);
+            const total = Math.pow(2, d.n);
+            return `簡答：\\(${formatFraction(ways, total)}\\)。過程：${d.n} 次結果共有 \\(2^{${d.n}}=${total}\\) 種。恰好 ${d.k} 次正面有 \\(C(${d.n},${d.k})=${ways}\\) 種，因此機率為 \\(\\frac{${ways}}{${total}}=${formatFraction(ways, total)}\\)。`;
+          },
         },
         {
-          q: '甲、乙兩人各擲一粒公正骰子一次，求甲的點數大於乙的點數之機率。',
-          a: '簡答：\\(\\frac{5}{12}\\)。過程：共有 36 種結果。甲大於乙的情形為 \\(1+2+3+4+5=15\\) 種，所以機率為 \\(\\frac{15}{36}=\\frac{5}{12}\\)。',
+          get q() {
+            const n = s242Pick([6, 8]);
+            this._n = n;
+            return `甲、乙兩人各擲一粒公正${n === 6 ? '骰子' : '八面骰'}一次（點數 1 到 ${n}），求甲的點數大於乙的點數之機率。`;
+          },
+          get a() {
+            const n = this._n || 6;
+            const fav = (n * (n - 1)) / 2;
+            return `簡答：\\(${formatFraction(fav, n * n)}\\)。過程：共有 ${n * n} 種結果。甲大於乙的情形為 \\(1+2+\\cdots+${n - 1}=${fav}\\) 種，所以機率為 \\(\\frac{${fav}}{${n * n}}=${formatFraction(fav, n * n)}\\)。`;
+          },
         },
         {
           q: '由 1 到 7 中任取相異四數，求四數之和為奇數的機率。',
@@ -5683,8 +6239,21 @@
           a: '簡答：\\(\\frac{1}{3}\\)。過程：至少一男的可能為男男、男女、女男，共 3 種等可能情形；其中另一個也是男孩只有男男 1 種，所以機率為 \\(\\frac{1}{3}\\)。',
         },
         {
-          q: '某疾病盛行率為 1%，篩檢對病人呈陽性的機率為 95%，對健康者誤判陽性的機率為 5%。若一人檢測為陽性，求其實際患病的機率。',
-          a: '簡答：\\(\\frac{19}{118}\\)。過程：由貝氏定理，機率為 \\(\\frac{0.01\\cdot0.95}{0.01\\cdot0.95+0.99\\cdot0.05}=\\frac{19}{118}\\)。',
+          get q() {
+            const prev = s242Pick([1, 2, 5]);
+            const sens = s242Pick([90, 95, 99]);
+            const fp = s242Pick([5, 10]);
+            this._d = { prev, sens, fp };
+            return `某疾病盛行率為 ${prev}%，篩檢對病人呈陽性的機率為 ${sens}%，對健康者誤判陽性的機率為 ${fp}%。若一人檢測為陽性，求其實際患病的機率。`;
+          },
+          get a() {
+            const d = this._d || { prev: 1, sens: 95, fp: 5 };
+            const numer = d.prev * d.sens;
+            const denom = d.prev * d.sens + (100 - d.prev) * d.fp;
+            const prevText = (d.prev / 100).toFixed(2);
+            const fpText = (d.fp / 100).toFixed(2);
+            return `簡答：\\(${formatFraction(numer, denom)}\\)。過程：由貝氏定理，機率為 \\(\\frac{${prevText}\\cdot0.${d.sens}}{${prevText}\\cdot0.${d.sens}+0.${100 - d.prev}\\cdot${fpText}}=\\frac{${numer}}{${denom}}=${formatFraction(numer, denom)}\\)。`;
+          },
         },
         {
           q: '某產品由甲、乙兩廠生產，甲廠占 60%、乙廠占 40%，不良率分別為 2%、5%。若抽中一件不良品，求它來自甲廠的機率。',
@@ -5707,16 +6276,35 @@
     return buildS223TemplateSet(
       [
         {
-          q: '甲、乙兩人射擊命中率分別為 0.4 與 0.5，且互不影響。兩人各射一發，求至少一人命中的機率。',
-          a: '簡答：\\(\\frac{7}{10}\\)。過程：至少一人命中可用反面事件。兩人都不中的機率為 \\(0.6\\cdot0.5=0.3\\)，故所求為 \\(1-0.3=0.7=\\frac{7}{10}\\)。',
+          get q() {
+            const a = s242Pick([3, 4, 6]);
+            const b = s242Pick([5, 7]);
+            this._d = { a, b };
+            return `甲、乙兩人射擊命中率分別為 0.${a} 與 0.${b}，且互不影響。兩人各射一發，求至少一人命中的機率。`;
+          },
+          get a() {
+            const d = this._d || { a: 4, b: 5 };
+            const missNumer = (10 - d.a) * (10 - d.b);
+            const hitNumer = 100 - missNumer;
+            return `簡答：\\(${formatFraction(hitNumer, 100)}\\)。過程：至少一人命中可用反面事件。兩人都不中的機率為 \\(0.${10 - d.a}\\cdot0.${10 - d.b}=\\frac{${missNumer}}{100}\\)，故所求為 \\(1-\\frac{${missNumer}}{100}=${formatFraction(hitNumer, 100)}\\)。`;
+          },
         },
         {
           q: '連續投擲一枚公正硬幣 \\(n\\) 次，若要「至少出現一次正面」的機率大於 0.999，求 \\(n\\) 的最小值。',
           a: '簡答：10。過程：至少一次正面的機率為 \\(1-(\\frac12)^n\\)。令 \\(1-(\\frac12)^n>0.999\\)，即 \\(2^n>1000\\)，最小正整數為 \\(n=10\\)。',
         },
         {
-          q: '一個電路有兩個開關串聯，兩個開關各自接通的機率為 0.8 與 0.7，且互相獨立。求電流能通過的機率。',
-          a: '簡答：\\(\\frac{14}{25}\\)。過程：串聯電路需兩個開關都接通，所以機率為 \\(0.8\\cdot0.7=0.56=\\frac{14}{25}\\)。',
+          get q() {
+            const a = s242Pick([6, 7, 8, 9]);
+            const b = s242Pick([5, 6, 7]);
+            this._d = { a, b };
+            return `一個電路有兩個開關串聯，兩個開關各自接通的機率為 0.${a} 與 0.${b}，且互相獨立。求電流能通過的機率。`;
+          },
+          get a() {
+            const d = this._d || { a: 8, b: 7 };
+            const numer = d.a * d.b;
+            return `簡答：\\(${formatFraction(numer, 100)}\\)。過程：串聯電路需兩個開關都接通，所以機率為 \\(0.${d.a}\\cdot0.${d.b}=\\frac{${numer}}{100}=${formatFraction(numer, 100)}\\)。`;
+          },
         },
         {
           q: '重複擲一粒公正骰子，求恰好在第 10 次出現第 3 個 6 點的機率。',
@@ -5735,16 +6323,34 @@
     return buildS223TemplateSet(
       [
         {
-          q: '袋中有 4 紅球、5 白球，每次取一球不放回，求紅球比白球先取完的機率。',
-          a: '簡答：\\(\\frac{5}{9}\\)。過程：哪一色先取完只看最後一球的顏色。若最後一球為白球，表示紅球先取完。最後一球是白球的機率為 \\(\\frac59\\)。',
+          get q() {
+            const r = randInt(3, 5);
+            const w = randInt(4, 7);
+            this._d = { r, w };
+            return `袋中有 ${r} 紅球、${w} 白球，每次取一球不放回，求紅球比白球先取完的機率。`;
+          },
+          get a() {
+            const d = this._d || { r: 4, w: 5 };
+            return `簡答：\\(${formatFraction(d.w, d.r + d.w)}\\)。過程：哪一色先取完只看最後一球的顏色。若最後一球為白球，表示紅球先取完。最後一球是白球的機率為 \\(${formatFraction(d.w, d.r + d.w)}\\)。`;
+          },
         },
         {
           q: '從 6 雙大小不同的鞋子中任取 4 隻，求 4 隻中恰有 2 隻成一雙的機率。',
           a: '簡答：\\(\\frac{16}{33}\\)。過程：全部取法為 \\(C(12,4)=495\\)。先選成雙的一雙有 6 種，再從其餘 5 雙選 2 雙並各取一隻，有 \\(C(5,2)2^2=40\\) 種，故機率為 \\(\\frac{6\\cdot40}{495}=\\frac{16}{33}\\)。',
         },
         {
-          q: '從 1 到 9 號球中任取 3 球，求所得號碼中位數為 6 的機率。',
-          a: '簡答：\\(\\frac{5}{28}\\)。過程：要中位數為 6，必須取到 6，且另取一個小於 6 與一個大於 6 的號碼。方法數為 \\(5\\cdot3=15\\)，全部為 \\(C(9,3)=84\\)，機率為 \\(\\frac{15}{84}=\\frac{5}{28}\\)。',
+          get q() {
+            const N = s242Pick([9, 11]);
+            const m = randInt(4, N - 3);
+            this._d = { N, m };
+            return `從 1 到 ${N} 號球中任取 3 球，求所得號碼中位數為 ${m} 的機率。`;
+          },
+          get a() {
+            const d = this._d || { N: 9, m: 6 };
+            const fav = (d.m - 1) * (d.N - d.m);
+            const total = combinationCount(d.N, 3);
+            return `簡答：\\(${formatFraction(fav, total)}\\)。過程：要中位數為 ${d.m}，必須取到 ${d.m}，且另取一個小於 ${d.m} 與一個大於 ${d.m} 的號碼。方法數為 \\(${d.m - 1}\\cdot${d.N - d.m}=${fav}\\)，全部為 \\(C(${d.N},3)=${total}\\)，機率為 \\(\\frac{${fav}}{${total}}=${formatFraction(fav, total)}\\)。`;
+          },
         },
         {
           q: '袋中有 5 紅球、3 白球，每次取一球不放回，連取 3 球，求至少取到 2 顆紅球的機率。',
@@ -5795,8 +6401,18 @@
           a: '簡答：\\(\\frac{17}{8}\\) 元。過程：期望獎金為 \\(5\\cdot\\frac18+3\\cdot\\frac38+1\\cdot\\frac38+0\\cdot\\frac18=\\frac{17}{8}\\)。公平入場費等於期望獎金。',
         },
         {
-          q: '摸彩箱有 50 張彩券，其中 100 元獎金 3 張、50 元 5 張，其餘為 20 元。求隨機抽一張所得獎金的期望值。',
-          a: '簡答：\\(\\frac{139}{5}\\) 元。過程：其餘 42 張為 20 元，期望為 \\(\\frac{3\\cdot100+5\\cdot50+42\\cdot20}{50}=\\frac{139}{5}\\)。',
+          get q() {
+            const a = randInt(2, 4);
+            const b = randInt(4, 6);
+            this._d = { a, b };
+            return `摸彩箱有 50 張彩券，其中 100 元獎金 ${a} 張、50 元 ${b} 張，其餘為 20 元。求隨機抽一張所得獎金的期望值。`;
+          },
+          get a() {
+            const d = this._d || { a: 3, b: 5 };
+            const rest = 50 - d.a - d.b;
+            const total = 100 * d.a + 50 * d.b + 20 * rest;
+            return `簡答：\\(${formatFraction(total, 50)}\\) 元。過程：其餘 ${rest} 張為 20 元，期望為 \\(\\frac{${d.a}\\cdot100+${d.b}\\cdot50+${rest}\\cdot20}{50}=${formatFraction(total, 50)}\\)。`;
+          },
         },
         {
           q: '某銀行對違約率 0.4 的客戶提供 21 萬元貸款。若未違約，一年後收回 21.5 萬元；若違約，貸款全損。求銀行此筆貸款的期望損益。',
@@ -5903,12 +6519,31 @@
     return buildS223TemplateSet(
       [
         {
-          q: '竊賊只有一人，50 名賓客受測。測謊器對說謊者顯示說謊率 99%，對誠實者誤判率 10%。若測謊器顯示某人說謊，求他真的是竊賊的機率。',
-          a: '簡答：\\(\\frac{99}{589}\\)。過程：先驗機率為 \\(\\frac1{50}\\)。由貝氏定理，所求為 \\(\\frac{\\frac1{50}\\cdot0.99}{\\frac1{50}\\cdot0.99+\\frac{49}{50}\\cdot0.10}=\\frac{99}{589}\\)。',
+          get q() {
+            const N = s242Pick([20, 50, 100]);
+            const sens = s242Pick([90, 99]);
+            const fp = 10;
+            this._d = { N, sens, fp };
+            return `竊賊只有一人，${N} 名賓客受測。測謊器對說謊者顯示說謊率 ${sens}%，對誠實者誤判率 ${fp}%。若測謊器顯示某人說謊，求他真的是竊賊的機率。`;
+          },
+          get a() {
+            const d = this._d || { N: 50, sens: 99, fp: 10 };
+            const numer = d.sens;
+            const denom = d.sens + (d.N - 1) * d.fp;
+            return `簡答：\\(${formatFraction(numer, denom)}\\)。過程：先驗機率為 \\(\\frac1{${d.N}}\\)。由貝氏定理，所求為 \\(\\frac{\\frac1{${d.N}}\\cdot0.${d.sens}}{\\frac1{${d.N}}\\cdot0.${d.sens}+\\frac{${d.N - 1}}{${d.N}}\\cdot0.${d.fp}}=${formatFraction(numer, denom)}\\)。`;
+          },
         },
         {
-          q: '班級 50 人（40 男 10 女）。老師以簡單隨機抽樣抽選 5 人，求某一位指定學生被抽中的機率。',
-          a: '簡答：\\(\\frac{1}{10}\\)。過程：簡單隨機抽樣中每位學生地位相同，被抽中的機率為 \\(\\frac{5}{50}=\\frac{1}{10}\\)。',
+          get q() {
+            const N = s242Pick([40, 50, 60]);
+            const k = s242Pick([4, 5, 6]);
+            this._d = { N, k };
+            return `班級 ${N} 人。老師以簡單隨機抽樣抽選 ${k} 人，求某一位指定學生被抽中的機率。`;
+          },
+          get a() {
+            const d = this._d || { N: 50, k: 5 };
+            return `簡答：\\(${formatFraction(d.k, d.N)}\\)。過程：簡單隨機抽樣中每位學生地位相同，被抽中的機率為 \\(\\frac{${d.k}}{${d.N}}=${formatFraction(d.k, d.N)}\\)。`;
+          },
         },
         {
           q: '某疾病盛行率 4%，陽性檢測準確率 97%，無病者誤檢陽性率 2%。若一人檢測呈陽性，求其確實患病的機率。',
@@ -7340,27 +7975,81 @@
   }
 
   function buildS231WeightedMeanSet(count) {
-    return buildS223TemplateSet(
+    return buildS223DynamicSet(
       [
-        {
-          q: '某生平時考成績占 30%，期中考占 20%，期末考占 50%。若成績分別為 80、85、90，求學期加權成績。',
-          a: '簡答：86 分。過程：加權平均為 \\(80\\cdot0.3+85\\cdot0.2+90\\cdot0.5=24+17+45=86\\)。',
+        () => {
+          const w = s242Pick([
+            [3, 2, 5],
+            [2, 3, 5],
+            [4, 2, 4],
+            [3, 3, 4],
+            [2, 4, 4],
+          ]);
+          let s1 = 5 * randInt(12, 19);
+          let s2 = 5 * randInt(12, 19);
+          let s3 = 5 * randInt(12, 19);
+          for (let retry = 0; retry < 20 && (w[0] * s1 + w[1] * s2 + w[2] * s3) % 10 !== 0; retry += 1) {
+            s3 = 5 * randInt(12, 19);
+          }
+          if ((w[0] * s1 + w[1] * s2 + w[2] * s3) % 10 !== 0) s2 += 5;
+          const total = (w[0] * s1 + w[1] * s2 + w[2] * s3) / 10;
+          return {
+            q: `某生平時考成績占 ${w[0] * 10}%，期中考占 ${w[1] * 10}%，期末考占 ${w[2] * 10}%。若成績分別為 ${s1}、${s2}、${s3}，求學期加權成績。`,
+            a: `簡答：${total} 分。過程：加權平均為 \\(${s1}\\cdot0.${w[0]}+${s2}\\cdot0.${w[1]}+${s3}\\cdot0.${w[2]}=${total}\\)。`,
+          };
         },
-        {
-          q: '自然組 280 人平均 60 分，社會組 120 人平均 50 分，求全校總平均。',
-          a: '簡答：57 分。過程：全校總分為 \\(280\\cdot60+120\\cdot50=22800\\)，總人數 400，所以總平均為 \\(22800/400=57\\)。',
+        () => {
+          const n1 = 20 * randInt(8, 18);
+          const n2 = 20 * randInt(4, 9);
+          let m1 = 5 * randInt(10, 17);
+          let m2 = 5 * randInt(8, 14);
+          for (let retry = 0; retry < 20 && (n1 * m1 + n2 * m2) % (n1 + n2) !== 0; retry += 1) {
+            m2 = 5 * randInt(8, 14);
+          }
+          const totalScore = n1 * m1 + n2 * m2;
+          const n = n1 + n2;
+          const avg = totalScore % n === 0 ? String(totalScore / n) : formatFraction(totalScore, n);
+          return {
+            q: `自然組 ${n1} 人平均 ${m1} 分，社會組 ${n2} 人平均 ${m2} 分，求全校總平均。`,
+            a: `簡答：${avg} 分。過程：全校總分為 \\(${n1}\\cdot${m1}+${n2}\\cdot${m2}=${totalScore}\\)，總人數 ${n}，所以總平均為 \\(${avg}\\)。`,
+          };
         },
-        {
-          q: '某鎮十年前人口 25 萬，現在 30 萬。假設每年成長率固定，求年平均成長率。',
-          a: '簡答：\\(\\sqrt[10]{\\frac65}-1\\)。過程：設年平均成長率為 \\(r\\)，則 \\(25(1+r)^{10}=30\\)。所以 \\((1+r)^{10}=\\frac65\\)，\\(r=\\sqrt[10]{\\frac65}-1\\)。',
+        () => {
+          const p0 = s242Pick([20, 25, 30, 40, 50]);
+          const p1 = p0 + s242Pick([5, 10, 15]);
+          const years = s242Pick([5, 10]);
+          const frac = formatFraction(p1, p0);
+          return {
+            q: `某鎮${years === 10 ? '十' : '五'}年前人口 ${p0} 萬，現在 ${p1} 萬。假設每年成長率固定，求年平均成長率。`,
+            a: `簡答：\\(\\sqrt[${years}]{${frac}}-1\\)。過程：設年平均成長率為 \\(r\\)，則 \\(${p0}(1+r)^{${years}}=${p1}\\)。所以 \\((1+r)^{${years}}=${frac}\\)，\\(r=\\sqrt[${years}]{${frac}}-1\\)。`,
+          };
         },
-        {
-          q: '已知三年的產值成長率分別為 10%、20%、30%，求三年的平均成長率。',
-          a: '簡答：\\(\\sqrt[3]{1.716}-1\\)。過程：平均成長率需用幾何平均，令 \\(1+r=\\sqrt[3]{1.1\\cdot1.2\\cdot1.3}=\\sqrt[3]{1.716}\\)，所以 \\(r=\\sqrt[3]{1.716}-1\\)。',
+        () => {
+          const rates = s242Pick([
+            [10, 20, 30],
+            [10, 30, 50],
+            [20, 30, 40],
+            [5, 15, 25],
+            [10, 25, 40],
+          ]);
+          const product = ((100 + rates[0]) * (100 + rates[1]) * (100 + rates[2])) / 1000000;
+          const pText = String(Math.round(product * 10000) / 10000);
+          return {
+            q: `已知三年的產值成長率分別為 ${rates[0]}%、${rates[1]}%、${rates[2]}%，求三年的平均成長率。`,
+            a: `簡答：\\(\\sqrt[3]{${pText}}-1\\)。過程：平均成長率需用幾何平均，令 \\(1+r=\\sqrt[3]{${(100 + rates[0]) / 100}\\cdot${(100 + rates[1]) / 100}\\cdot${(100 + rates[2]) / 100}}=\\sqrt[3]{${pText}}\\)，所以 \\(r=\\sqrt[3]{${pText}}-1\\)。`,
+          };
         },
-        {
-          q: '一組資料由 \\(k\\) 個 1 與 \\(n-k\\) 個 0 組成，求這組資料的算術平均數與標準差公式。',
-          a: '簡答：平均數 \\(\\frac{k}{n}\\)，標準差 \\(\\sqrt{\\frac{k}{n}(1-\\frac{k}{n})}\\)。過程：1 的比例為 \\(p=\\frac{k}{n}\\)，平均數為 \\(p\\)。二元資料平方後仍為自身，所以 \\(E(X^2)=p\\)，變異數為 \\(p-p^2=p(1-p)\\)。',
+        () => {
+          const [K, N] = s242Pick([
+            ['k', 'n'],
+            ['m', 'n'],
+            ['a', 'N'],
+            ['s', 'n'],
+          ]);
+          return {
+            q: `一組資料由 \\(${K}\\) 個 1 與 \\(${N}-${K}\\) 個 0 組成，求這組資料的算術平均數與標準差公式。`,
+            a: `簡答：平均數 \\(\\frac{${K}}{${N}}\\)，標準差 \\(\\sqrt{\\frac{${K}}{${N}}(1-\\frac{${K}}{${N}})}\\)。過程：1 的比例為 \\(p=\\frac{${K}}{${N}}\\)，平均數為 \\(p\\)。二元資料平方後仍為自身，所以 \\(E(X^2)=p\\)，變異數為 \\(p-p^2=p(1-p)\\)。`,
+          };
         },
       ],
       count
@@ -7425,27 +8114,90 @@
   }
 
   function buildS231BinaryDataSet(count) {
-    return buildS223TemplateSet(
+    return buildS223DynamicSet(
       [
-        {
-          q: '一組 10 筆數據中，有 4 個 1 與 6 個 0，求此組數據的平均數與標準差。',
-          a: '簡答：平均數 \\(\\frac25\\)，標準差 \\(\\frac{\\sqrt6}{5}\\)。過程：1 的比例為 \\(p=4/10=2/5\\)，平均數為 \\(p\\)。標準差為 \\(\\sqrt{p(1-p)}=\\sqrt{\\frac25\\cdot\\frac35}=\\frac{\\sqrt6}{5}\\)。',
+        () => {
+          const n = s242Pick([10, 20, 25, 50]);
+          const k = randInt(2, n - 2);
+          const meanText = formatFraction(k, n);
+          const stdText = `\\frac{${formatRadical(k * (n - k))}}{${n}}`;
+          return {
+            q: `一組 ${n} 筆數據中，有 ${k} 個 1 與 ${n - k} 個 0，求此組數據的平均數與標準差。`,
+            a: `簡答：平均數 \\(${meanText}\\)，標準差 \\(${stdText}\\)。過程：1 的比例為 \\(p=${k}/${n}=${meanText}\\)，平均數為 \\(p\\)。標準差為 \\(\\sqrt{p(1-p)}=\\sqrt{\\frac{${k}}{${n}}\\cdot\\frac{${n - k}}{${n}}}=${stdText}\\)。`,
+          };
         },
-        {
-          q: '證明一組由 \\(k\\) 個 1 與 \\(n-k\\) 個 0 組成的數據，其標準差公式為 \\(\\sqrt{\\frac{k}{n}(1-\\frac{k}{n})}\\)。',
-          a: '簡答：成立。過程：令 \\(p=\\frac{k}{n}\\)。平均數為 \\(p\\)，且因 \\(0^2=0,1^2=1\\)，所以 \\(E(X^2)=p\\)。變異數為 \\(p-p^2=p(1-p)\\)，標準差即為 \\(\\sqrt{p(1-p)}\\)。',
+        () => {
+          const [K, N] = s242Pick([
+            ['k', 'n'],
+            ['m', 'n'],
+            ['a', 'N'],
+          ]);
+          return {
+            q: `證明一組由 \\(${K}\\) 個 1 與 \\(${N}-${K}\\) 個 0 組成的數據，其標準差公式為 \\(\\sqrt{\\frac{${K}}{${N}}(1-\\frac{${K}}{${N}})}\\)。`,
+            a: `簡答：成立。過程：令 \\(p=\\frac{${K}}{${N}}\\)。平均數為 \\(p\\)，且因 \\(0^2=0,1^2=1\\)，所以 \\(E(X^2)=p\\)。變異數為 \\(p-p^2=p(1-p)\\)，標準差即為 \\(\\sqrt{p(1-p)}\\)。`,
+          };
         },
-        {
-          q: '若一組 0 與 1 組成的數據標準差為 0.5，求數據中 1 所佔的比例。',
-          a: '簡答：\\(\\frac12\\)。過程：令 1 的比例為 \\(p\\)，則標準差為 \\(\\sqrt{p(1-p)}\\)。若為 0.5，則 \\(p(1-p)=\\frac14\\)，得 \\(p=\\frac12\\)。',
+        () => {
+          const variant = s242Pick([
+            { std: '0.5', pAns: '\\frac12', why: '若為 0.5，則 \\(p(1-p)=\\frac14\\)，得 \\(p=\\frac12\\)。' },
+            {
+              std: '0.3',
+              pAns: '\\frac1{10} 或 \\frac9{10}',
+              why: '若為 0.3，則 \\(p(1-p)=0.09\\)，解得 \\(p=\\frac1{10}\\) 或 \\(\\frac9{10}\\)。',
+            },
+            {
+              std: '0.4',
+              pAns: '\\frac15 或 \\frac45',
+              why: '若為 0.4，則 \\(p(1-p)=0.16\\)，解得 \\(p=\\frac15\\) 或 \\(\\frac45\\)。',
+            },
+          ]);
+          return {
+            q: `若一組 0 與 1 組成的數據標準差為 ${variant.std}，求數據中 1 所佔的比例。`,
+            a: `簡答：\\(${variant.pAns}\\)。過程：令 1 的比例為 \\(p\\)，則標準差為 \\(\\sqrt{p(1-p)}\\)。${variant.why}`,
+          };
         },
-        {
-          q: '將含有 20 個 1 與 30 個 0 的數據進行線性變換 \\(y=10x+50\\)，求新數據的平均數與變異數。',
-          a: '簡答：平均數 54，變異數 24。過程：原資料 \\(p=20/50=2/5\\)，平均為 \\(2/5\\)，變異數為 \\(\\frac25\\cdot\\frac35=\\frac6{25}\\)。變換後平均為 \\(10\\cdot\\frac25+50=54\\)，變異數乘以 \\(10^2\\)，得 24。',
+        () => {
+          const pool = [
+            [50, 20],
+            [50, 10],
+            [40, 10],
+            [20, 5],
+            [25, 5],
+            [50, 30],
+          ];
+          let n = 50;
+          let k = 20;
+          let a = 10;
+          for (let retry = 0; retry < 30; retry += 1) {
+            const pair = pool[randInt(0, pool.length - 1)];
+            const cand = s242Pick([10, 20]);
+            if ((cand * pair[1]) % pair[0] === 0 && (cand * cand * pair[1] * (pair[0] - pair[1])) % (pair[0] * pair[0]) === 0) {
+              n = pair[0];
+              k = pair[1];
+              a = cand;
+              break;
+            }
+          }
+          const b = 10 * randInt(2, 6);
+          const mean = (a * k) / n + b;
+          const varNew = (a * a * k * (n - k)) / (n * n);
+          return {
+            q: `將含有 ${k} 個 1 與 ${n - k} 個 0 的數據進行線性變換 \\(y=${a}x+${b}\\)，求新數據的平均數與變異數。`,
+            a: `簡答：平均數 ${mean}，變異數 ${varNew}。過程：原資料 \\(p=${k}/${n}=${formatFraction(k, n)}\\)，平均為 \\(${formatFraction(k, n)}\\)，變異數為 \\(${formatFraction(k * (n - k), n * n)}\\)。變換後平均為 \\(${a}\\cdot${formatFraction(k, n)}+${b}=${mean}\\)，變異數乘以 \\(${a}^2\\)，得 ${varNew}。`,
+          };
         },
-        {
-          q: '兩組 0-1 數據合併後，已知總平均為 0.7。若第一組有 30 筆且其中 18 個 1，第二組有 20 筆，求第二組中 1 的個數。',
-          a: '簡答：17 個。過程：合併後共有 50 筆，1 的總數為 \\(0.7\\cdot50=35\\)。第一組已有 18 個 1，所以第二組有 \\(35-18=17\\) 個 1。',
+        () => {
+          const n1 = 10 * randInt(2, 5);
+          const n2 = 10 * randInt(1, 4);
+          const n = n1 + n2;
+          const tPick = s242Pick([0.5, 0.6, 0.7, 0.8]);
+          const ones = Math.round(tPick * n);
+          const k1 = randInt(Math.max(1, ones - n2), Math.min(n1, ones - 1));
+          const k2 = ones - k1;
+          return {
+            q: `兩組 0-1 數據合併後，已知總平均為 ${tPick}。若第一組有 ${n1} 筆且其中 ${k1} 個 1，第二組有 ${n2} 筆，求第二組中 1 的個數。`,
+            a: `簡答：${k2} 個。過程：合併後共有 ${n} 筆，1 的總數為 \\(${tPick}\\cdot${n}=${ones}\\)。第一組已有 ${k1} 個 1，所以第二組有 \\(${ones}-${k1}=${k2}\\) 個 1。`,
+          };
         },
       ],
       count
@@ -7453,27 +8205,86 @@
   }
 
   function buildS231MergeLossSet(count) {
-    return buildS223TemplateSet(
+    return buildS223DynamicSet(
       [
-        {
-          q: '10 個數值中，前 6 個平均數為 3、變異數為 9；後 4 個平均數為 8、變異數為 16。求全體 10 個數的平均數與變異數。',
-          a: '簡答：平均數 5，變異數 \\(\\frac{89}{5}\\)。過程：總平均為 \\(\\frac{6\\cdot3+4\\cdot8}{10}=5\\)。總平方和為 \\(6(9+3^2)+4(16+8^2)=108+320=428\\)，所以變異數為 \\(428/10-5^2=\\frac{89}{5}\\)。',
+        () => {
+          let n1 = 6;
+          let n2 = 4;
+          let m1 = 3;
+          let m2 = 8;
+          for (let retry = 0; retry < 30; retry += 1) {
+            n1 = randInt(4, 8);
+            n2 = randInt(3, 6);
+            m1 = randInt(2, 8);
+            m2 = m1 + randInt(2, 6);
+            if ((n1 * m1 + n2 * m2) % (n1 + n2) === 0) break;
+          }
+          if ((n1 * m1 + n2 * m2) % (n1 + n2) !== 0) {
+            n1 = 6;
+            n2 = 4;
+            m1 = 3;
+            m2 = 8;
+          }
+          const v1 = s242Pick([4, 9, 16]);
+          const v2 = s242Pick([9, 16, 25]);
+          const n = n1 + n2;
+          const mu = (n1 * m1 + n2 * m2) / n;
+          const ss = n1 * (v1 + m1 * m1) + n2 * (v2 + m2 * m2);
+          const varNumer = ss - n * mu * mu;
+          const varText = varNumer % n === 0 ? String(varNumer / n) : formatFraction(varNumer, n);
+          return {
+            q: `${n} 個數值中，前 ${n1} 個平均數為 ${m1}、變異數為 ${v1}；後 ${n2} 個平均數為 ${m2}、變異數為 ${v2}。求全體 ${n} 個數的平均數與變異數。`,
+            a: `簡答：平均數 ${mu}，變異數 \\(${varText}\\)。過程：總平均為 \\(\\frac{${n1}\\cdot${m1}+${n2}\\cdot${m2}}{${n}}=${mu}\\)。總平方和為 \\(${n1}(${v1}+${m1}^2)+${n2}(${v2}+${m2}^2)=${ss}\\)，所以變異數為 \\(${ss}/${n}-${mu}^2=${varText}\\)。`,
+          };
         },
-        {
-          q: '10 人參加考試，平均分數 56，標準差 4。已知其中 8 人的成績總和為 460，求剩餘 2 人的成績總和。',
-          a: '簡答：100。過程：10 人總分為 \\(10\\cdot56=560\\)，剩餘 2 人總分為 \\(560-460=100\\)。',
+        () => {
+          const n = s242Pick([10, 12, 15, 20]);
+          const mean = s242Pick([52, 56, 60, 64, 70]);
+          const total = n * mean;
+          const rest = 10 * randInt(8, 14);
+          const knownSum = total - rest;
+          return {
+            q: `${n} 人參加考試，平均分數 ${mean}，標準差 4。已知其中 ${n - 2} 人的成績總和為 ${knownSum}，求剩餘 2 人的成績總和。`,
+            a: `簡答：${rest}。過程：${n} 人總分為 \\(${n}\\cdot${mean}=${total}\\)，剩餘 2 人總分為 \\(${total}-${knownSum}=${rest}\\)。`,
+          };
         },
-        {
-          q: '已知 5 個數據成等差數列，且算術平均數為 6，標準差為 \\(2\\sqrt2\\)，求這 5 個數據。',
-          a: '簡答：\\(2,4,6,8,10\\)。過程：5 個等差數可設為 \\(6-2d,6-d,6,6+d,6+2d\\)。其變異數為 \\(\\frac{4d^2+d^2+d^2+4d^2}{5}=2d^2\\)，標準差為 \\(\\sqrt2|d|\\)。由 \\(\\sqrt2|d|=2\\sqrt2\\) 得 \\(|d|=2\\)，故資料為 \\(2,4,6,8,10\\)。',
+        () => {
+          const m = randInt(5, 12);
+          const d = randInt(1, 3);
+          const values = [m - 2 * d, m - d, m, m + d, m + 2 * d];
+          const stdText = d === 1 ? '\\sqrt2' : `${d}\\sqrt2`;
+          return {
+            q: `已知 5 個數據成等差數列，且算術平均數為 ${m}，標準差為 \\(${stdText}\\)，求這 5 個數據。`,
+            a: `簡答：\\(${values.join(',')}\\)。過程：5 個等差數可設為 \\(${m}-2d,${m}-d,${m},${m}+d,${m}+2d\\)。其變異數為 \\(\\frac{4d^2+d^2+d^2+4d^2}{5}=2d^2\\)，標準差為 \\(\\sqrt2|d|\\)。由 \\(\\sqrt2|d|=${stdText}\\) 得 \\(|d|=${d}\\)，故資料為 \\(${values.join(',')}\\)。`,
+          };
         },
-        {
-          q: '有 9 個數的算術平均為 12，標準差為 2。若新增兩個數 10 與 14，求此 11 個數的新標準差。',
-          a: '簡答：\\(2\\)。過程：原總和為 108，原平方和為 \\(9(2^2+12^2)=1332\\)。加入 10、14 後總和 132，平均仍為 12；平方和增加 \\(100+196=296\\)，新平方和為 1628。變異數為 \\(1628/11-12^2=4\\)，標準差為 2。',
+        () => {
+          const combo = s242Pick([
+            { n0: 9, mu: 12, sigma: 2, c: 2, newVarText: '4', newStdText: '2' },
+            { n0: 8, mu: 10, sigma: 3, c: 3, newVarText: '9', newStdText: '3' },
+            { n0: 10, mu: 15, sigma: 2, c: 4, newVarText: '6', newStdText: '\\sqrt6' },
+            { n0: 9, mu: 20, sigma: 3, c: 5, newVarText: '\\frac{131}{11}', newStdText: '\\sqrt{\\frac{131}{11}}' },
+          ]);
+          const a1 = combo.mu - combo.c;
+          const a2 = combo.mu + combo.c;
+          const oldSS = combo.n0 * (combo.sigma * combo.sigma + combo.mu * combo.mu);
+          const addSS = a1 * a1 + a2 * a2;
+          return {
+            q: `有 ${combo.n0} 個數的算術平均為 ${combo.mu}，標準差為 ${combo.sigma}。若新增兩個數 ${a1} 與 ${a2}，求此 ${combo.n0 + 2} 個數的新標準差。`,
+            a: `簡答：\\(${combo.newStdText}\\)。過程：原總和為 ${combo.n0 * combo.mu}，原平方和為 \\(${combo.n0}(${combo.sigma}^2+${combo.mu}^2)=${oldSS}\\)。加入 ${a1}、${a2} 後總和 ${(combo.n0 + 2) * combo.mu}，平均仍為 ${combo.mu}；平方和增加 \\(${a1 * a1}+${a2 * a2}=${addSS}\\)，新平方和為 ${oldSS + addSS}。變異數為 \\(${oldSS + addSS}/${combo.n0 + 2}-${combo.mu}^2=${combo.newVarText}\\)，標準差為 \\(${combo.newStdText}\\)。`,
+          };
         },
-        {
-          q: '一組 \\(n\\) 個數據中加入一個數 36 後平均多 2；若去掉一個數 20 後平均少 1，求原始個數 \\(n\\)。',
-          a: '簡答：13。過程：設原平均為 \\(\\mu\\)。加入 36 後 \\(\\frac{n\\mu+36}{n+1}=\\mu+2\\)，得 \\(36=2n+\\mu+2\\)，即 \\(\\mu+2n=34\\)。去掉 20 後 \\(\\frac{n\\mu-20}{n-1}=\\mu-1\\)，得 \\(20=\\mu+n-1\\)，即 \\(\\mu+n=21\\)。聯立得 \\(n=13\\)。',
+        () => {
+          const n = randInt(8, 16);
+          const mu = randInt(5, 14);
+          const u = randInt(1, 3);
+          const v = u === 1 ? 2 : 1;
+          const A = mu + u * (n + 1);
+          const B = mu + v * (n - 1);
+          return {
+            q: `一組 \\(n\\) 個數據中加入一個數 ${A} 後平均多 ${u}；若去掉一個數 ${B} 後平均少 ${v}，求原始個數 \\(n\\)。`,
+            a: `簡答：${n}。過程：設原平均為 \\(\\mu\\)。加入 ${A} 後 \\(\\frac{n\\mu+${A}}{n+1}=\\mu+${u}\\)，得 \\(\\mu+${u}n=${A - u}\\)。去掉 ${B} 後 \\(\\frac{n\\mu-${B}}{n-1}=\\mu-${v}\\)，得 \\(\\mu+${v}n=${B + v}\\)。聯立解得 \\(n=${n}\\)、\\(\\mu=${mu}\\)。`,
+          };
         },
       ],
       count
@@ -7481,27 +8292,68 @@
   }
 
   function buildS231DataRevisionSet(count) {
-    return buildS223TemplateSet(
+    return buildS223DynamicSet(
       [
-        {
-          q: '某班 10 位學生的數學成績平均為 60 分、標準差為 4 分。後來發現其中一人的成績「70 分」被誤植為「50 分」，求正確的平均數。',
-          a: '簡答：62 分。過程：原登錄總分為 \\(10\\cdot60=600\\)。修正時總分增加 \\(70-50=20\\)，正確總分為 620，所以正確平均為 62。',
+        () => {
+          const n = s242Pick([10, 20, 25]);
+          const mu = 5 * randInt(10, 16);
+          const d = randInt(1, 3);
+          const w = 5 * randInt(8, 12);
+          const r = w + n * d;
+          return {
+            q: `某班 ${n} 位學生的數學成績平均為 ${mu} 分、標準差為 4 分。後來發現其中一人的成績「${r} 分」被誤植為「${w} 分」，求正確的平均數。`,
+            a: `簡答：${mu + d} 分。過程：原登錄總分為 \\(${n}\\cdot${mu}=${n * mu}\\)。修正時總分增加 \\(${r}-${w}=${n * d}\\)，正確總分為 ${n * mu + n * d}，所以正確平均為 ${mu + d}。`,
+          };
         },
-        {
-          q: '某班 10 位學生的數學成績登錄平均為 60 分、標準差為 4 分。後來發現其中一人的成績「70 分」被誤植為「50 分」，求修正後的正確標準差。',
-          a: '簡答：\\(2\\sqrt3\\)。過程：原登錄平方和為 \\(10(4^2+60^2)=36160\\)。修正平方和增加 \\(70^2-50^2=2400\\)，得 38560。正確平均為 62，變異數為 \\(38560/10-62^2=12\\)，標準差為 \\(2\\sqrt3\\)。',
+        () => {
+          const combo = s242Pick([
+            { n: 10, mu: 60, sigma: 4, w: 50, r: 70, varText: '12', stdText: '2\\sqrt3' },
+            { n: 10, mu: 50, sigma: 6, w: 40, r: 60, varText: '32', stdText: '4\\sqrt2' },
+            { n: 20, mu: 30, sigma: 3, w: 25, r: 45, varText: '18', stdText: '3\\sqrt2' },
+            { n: 10, mu: 70, sigma: 5, w: 60, r: 80, varText: '21', stdText: '\\sqrt{21}' },
+          ]);
+          const oldSS = combo.n * (combo.sigma * combo.sigma + combo.mu * combo.mu);
+          const addSS = combo.r * combo.r - combo.w * combo.w;
+          const newMu = combo.mu + (combo.r - combo.w) / combo.n;
+          return {
+            q: `某班 ${combo.n} 位學生的數學成績登錄平均為 ${combo.mu} 分、標準差為 ${combo.sigma} 分。後來發現其中一人的成績「${combo.r} 分」被誤植為「${combo.w} 分」，求修正後的正確標準差。`,
+            a: `簡答：\\(${combo.stdText}\\)。過程：原登錄平方和為 \\(${combo.n}(${combo.sigma}^2+${combo.mu}^2)=${oldSS}\\)。修正平方和增加 \\(${combo.r}^2-${combo.w}^2=${addSS}\\)，得 ${oldSS + addSS}。正確平均為 ${newMu}，變異數為 \\(${oldSS + addSS}/${combo.n}-${newMu}^2=${combo.varText}\\)，標準差為 \\(${combo.stdText}\\)。`,
+          };
         },
-        {
-          q: '已知 20 筆數據的平均數為 15，標準差為 2。若剔除其中兩筆明顯錯誤的離群值 30 與 0，求剩餘 18 筆的新平均數。',
-          a: '簡答：15。過程：原總和為 \\(20\\cdot15=300\\)。剔除 30 與 0 後總和為 270，剩 18 筆，所以新平均為 \\(270/18=15\\)。',
+        () => {
+          const n = s242Pick([12, 15, 20, 25]);
+          const mu = randInt(10, 20);
+          const t = randInt(5, Math.min(15, mu));
+          const hi = mu + t;
+          const lo = mu - t;
+          return {
+            q: `已知 ${n} 筆數據的平均數為 ${mu}，標準差為 2。若剔除其中兩筆明顯錯誤的離群值 ${hi} 與 ${lo}，求剩餘 ${n - 2} 筆的新平均數。`,
+            a: `簡答：${mu}。過程：原總和為 \\(${n}\\cdot${mu}=${n * mu}\\)。剔除 ${hi} 與 ${lo} 後總和為 ${n * mu - hi - lo}，剩 ${n - 2} 筆，所以新平均為 \\(${n * mu - hi - lo}/${n - 2}=${mu}\\)。`,
+          };
         },
-        {
-          q: '一組 5 筆數據的平均為 10，標準差為 2。若新增兩筆數據分別為 10 與 10，求這 7 筆數據的新標準差。',
-          a: '簡答：\\(\\frac{2\\sqrt{35}}{7}\\)。過程：原離差平方和為 \\(5\\cdot2^2=20\\)。新增兩筆都等於原平均 10，因此新平均仍為 10，離差平方和不變。新變異數為 \\(20/7\\)，標準差為 \\(\\sqrt{20/7}=\\frac{2\\sqrt{35}}{7}\\)。',
+        () => {
+          const combo = s242Pick([
+            { n: 5, sigma: 2, varText: '\\frac{20}{7}', stdText: '\\frac{2\\sqrt{35}}{7}' },
+            { n: 6, sigma: 2, varText: '3', stdText: '\\sqrt3' },
+            { n: 8, sigma: 3, varText: '\\frac{36}{5}', stdText: '\\frac{6\\sqrt5}{5}' },
+            { n: 10, sigma: 3, varText: '\\frac{15}{2}', stdText: '\\frac{\\sqrt{30}}{2}' },
+          ]);
+          const mu = 5 * randInt(2, 8);
+          const devSS = combo.n * combo.sigma * combo.sigma;
+          return {
+            q: `一組 ${combo.n} 筆數據的平均為 ${mu}，標準差為 ${combo.sigma}。若新增兩筆數據分別為 ${mu} 與 ${mu}，求這 ${combo.n + 2} 筆數據的新標準差。`,
+            a: `簡答：\\(${combo.stdText}\\)。過程：原離差平方和為 \\(${combo.n}\\cdot${combo.sigma}^2=${devSS}\\)。新增兩筆都等於原平均 ${mu}，因此新平均仍為 ${mu}，離差平方和不變。新變異數為 \\(${devSS}/${combo.n + 2}=${combo.varText}\\)，標準差為 \\(${combo.stdText}\\)。`,
+          };
         },
-        {
-          q: '測量 10 戶家庭所得，平均 100 萬。若其中最高所得家庭 280 萬搬走，求剩餘 9 戶的平均所得。',
-          a: '簡答：80 萬。過程：原總所得為 \\(10\\cdot100=1000\\) 萬。搬走 280 萬後剩 720 萬，平均為 \\(720/9=80\\) 萬。',
+        () => {
+          const n = s242Pick([10, 12, 15]);
+          const mu = 10 * randInt(8, 15);
+          const k = 10 * randInt(1, 3);
+          const M = mu + k * (n - 1);
+          return {
+            q: `測量 ${n} 戶家庭所得，平均 ${mu} 萬。若其中最高所得家庭 ${M} 萬搬走，求剩餘 ${n - 1} 戶的平均所得。`,
+            a: `簡答：${mu - k} 萬。過程：原總所得為 \\(${n}\\cdot${mu}=${n * mu}\\) 萬。搬走 ${M} 萬後剩 ${n * mu - M} 萬，平均為 \\(${n * mu - M}/${n - 1}=${mu - k}\\) 萬。`,
+          };
         },
       ],
       count
@@ -7509,27 +8361,82 @@
   }
 
   function buildS231GroupMergingSet(count) {
-    return buildS223TemplateSet(
+    return buildS223DynamicSet(
       [
-        {
-          q: '男生 20 人平均 70 分，標準差 5 分；女生 30 人平均 80 分，標準差 10 分。求全校 50 人的加權平均數。',
-          a: '簡答：76 分。過程：加權平均為 \\(\\frac{20\\cdot70+30\\cdot80}{50}=76\\)。',
+        () => {
+          let n1 = 20;
+          let n2 = 30;
+          let m1 = 70;
+          let m2 = 80;
+          for (let retry = 0; retry < 30; retry += 1) {
+            n1 = 10 * randInt(2, 5);
+            n2 = 10 * randInt(2, 5);
+            m1 = 5 * randInt(12, 17);
+            m2 = 5 * randInt(13, 18);
+            if ((n1 * m1 + n2 * m2) % (n1 + n2) === 0) break;
+          }
+          const n = n1 + n2;
+          const total = n1 * m1 + n2 * m2;
+          const avg = total % n === 0 ? String(total / n) : formatFraction(total, n);
+          return {
+            q: `男生 ${n1} 人平均 ${m1} 分，標準差 5 分；女生 ${n2} 人平均 ${m2} 分，標準差 10 分。求全校 ${n} 人的加權平均數。`,
+            a: `簡答：${avg} 分。過程：加權平均為 \\(\\frac{${n1}\\cdot${m1}+${n2}\\cdot${m2}}{${n}}=${avg}\\)。`,
+          };
         },
-        {
-          q: '男生 20 人平均 70 分、標準差 5 分；女生 30 人平均 80 分、標準差 10 分。求全校 50 人的總標準差。',
-          a: '簡答：\\(\\sqrt{94}\\)。過程：全校平均為 \\(\\frac{20\\cdot70+30\\cdot80}{50}=76\\)。總平方和為 \\(20(5^2+70^2)+30(10^2+80^2)=293500\\)。變異數為 \\(293500/50-76^2=94\\)，所以標準差為 \\(\\sqrt{94}\\)。',
+        () => {
+          const combo = s242Pick([
+            { n1: 20, m1: 70, s1: 5, n2: 30, m2: 80, s2: 10, varText: '94', stdText: '\\sqrt{94}' },
+            { n1: 10, m1: 60, s1: 4, n2: 10, m2: 70, s2: 6, varText: '51', stdText: '\\sqrt{51}' },
+            { n1: 30, m1: 50, s1: 6, n2: 20, m2: 60, s2: 4, varText: '52', stdText: '2\\sqrt{13}' },
+            { n1: 25, m1: 80, s1: 6, n2: 25, m2: 90, s2: 8, varText: '75', stdText: '5\\sqrt3' },
+          ]);
+          const n = combo.n1 + combo.n2;
+          const mu = (combo.n1 * combo.m1 + combo.n2 * combo.m2) / n;
+          const ss = combo.n1 * (combo.s1 * combo.s1 + combo.m1 * combo.m1) + combo.n2 * (combo.s2 * combo.s2 + combo.m2 * combo.m2);
+          return {
+            q: `男生 ${combo.n1} 人平均 ${combo.m1} 分、標準差 ${combo.s1} 分；女生 ${combo.n2} 人平均 ${combo.m2} 分、標準差 ${combo.s2} 分。求全校 ${n} 人的總標準差。`,
+            a: `簡答：\\(${combo.stdText}\\)。過程：全校平均為 \\(\\frac{${combo.n1}\\cdot${combo.m1}+${combo.n2}\\cdot${combo.m2}}{${n}}=${mu}\\)。總平方和為 \\(${combo.n1}(${combo.s1}^2+${combo.m1}^2)+${combo.n2}(${combo.s2}^2+${combo.m2}^2)=${ss}\\)。變異數為 \\(${ss}/${n}-${mu}^2=${combo.varText}\\)，所以標準差為 \\(${combo.stdText}\\)。`,
+          };
         },
-        {
-          q: '甲班平均 65，標準差 6；乙班平均 65，標準差 8。若甲班 40 人、乙班 60 人，求合併後的標準差。',
-          a: '簡答：\\(\\frac{2\\sqrt{330}}{5}\\)。過程：兩班平均相同皆為 65，合併變異數為加權平均：\\(\\frac{40\\cdot6^2+60\\cdot8^2}{100}=\\frac{264}{5}\\)，所以標準差為 \\(\\sqrt{\\frac{264}{5}}=\\frac{2\\sqrt{330}}{5}\\)。',
+        () => {
+          const mu = 5 * randInt(10, 16);
+          const combo = s242Pick([
+            { n1: 40, s1: 6, n2: 60, s2: 8, varText: '\\frac{264}{5}', stdText: '\\frac{2\\sqrt{330}}{5}' },
+            { n1: 50, s1: 6, n2: 50, s2: 8, varText: '50', stdText: '5\\sqrt2' },
+            { n1: 30, s1: 4, n2: 70, s2: 6, varText: '\\frac{150}{5}'.replace('\\frac{150}{5}', '30'), stdText: '\\sqrt{30}' },
+            { n1: 20, s1: 3, n2: 80, s2: 6, varText: '\\frac{153}{5}', stdText: '\\sqrt{\\frac{153}{5}}' },
+          ]);
+          const n = combo.n1 + combo.n2;
+          return {
+            q: `甲班平均 ${mu}，標準差 ${combo.s1}；乙班平均 ${mu}，標準差 ${combo.s2}。若甲班 ${combo.n1} 人、乙班 ${combo.n2} 人，求合併後的標準差。`,
+            a: `簡答：\\(${combo.stdText}\\)。過程：兩班平均相同皆為 ${mu}，合併變異數為加權平均：\\(\\frac{${combo.n1}\\cdot${combo.s1}^2+${combo.n2}\\cdot${combo.s2}^2}{${n}}=${combo.varText}\\)，所以標準差為 \\(${combo.stdText}\\)。`,
+          };
         },
-        {
-          q: '有兩組數據 \\(X(n=10,\\mu=5,\\sigma=2)\\) 與 \\(Y(n=10,\\mu=15,\\sigma=4)\\)，求合併後 20 筆數據的變異數。',
-          a: '簡答：35。過程：合併平均為 \\(10\\)。總平方平均為 \\(\\frac{10(2^2+5^2)+10(4^2+15^2)}{20}=135\\)。變異數為 \\(135-10^2=35\\)。',
+        () => {
+          const n0 = s242Pick([10, 20]);
+          const m1 = randInt(4, 8);
+          const gap = 2 * randInt(3, 6);
+          const m2 = m1 + gap;
+          const s1 = randInt(2, 3);
+          const s2 = randInt(3, 5);
+          const mu = (m1 + m2) / 2;
+          const meanSq = (n0 * (s1 * s1 + m1 * m1) + n0 * (s2 * s2 + m2 * m2)) / (2 * n0);
+          const varAns = meanSq - mu * mu;
+          const varText = Number.isInteger(varAns) ? String(varAns) : formatFraction(Math.round(varAns * 2), 2);
+          return {
+            q: `有兩組數據 \\(X(n=${n0},\\mu=${m1},\\sigma=${s1})\\) 與 \\(Y(n=${n0},\\mu=${m2},\\sigma=${s2})\\)，求合併後 ${2 * n0} 筆數據的變異數。`,
+            a: `簡答：\\(${varText}\\)。過程：合併平均為 \\(${mu}\\)。總平方平均為 \\(\\frac{${n0}(${s1}^2+${m1}^2)+${n0}(${s2}^2+${m2}^2)}{${2 * n0}}=${meanSq}\\)。變異數為 \\(${meanSq}-${mu}^2=${varText}\\)。`,
+          };
         },
-        {
-          q: '已知兩組人數相同，第一組 \\(\\mu=10,\\sigma=3\\)，合併後總平均為 12，總標準差為 4。求第二組數據的平均數。',
-          a: '簡答：14。過程：兩組人數相同，合併平均是兩組平均的平均。設第二組平均為 \\(m\\)，則 \\(\\frac{10+m}{2}=12\\)，解得 \\(m=14\\)。',
+        () => {
+          const m1 = randInt(8, 15);
+          const d = randInt(1, 4);
+          const muAll = m1 + d;
+          const m2 = m1 + 2 * d;
+          return {
+            q: `已知兩組人數相同，第一組 \\(\\mu=${m1},\\sigma=3\\)，合併後總平均為 ${muAll}，總標準差為 4。求第二組數據的平均數。`,
+            a: `簡答：${m2}。過程：兩組人數相同，合併平均是兩組平均的平均。設第二組平均為 \\(m\\)，則 \\(\\frac{${m1}+m}{2}=${muAll}\\)，解得 \\(m=${m2}\\)。`,
+          };
         },
       ],
       count
@@ -7537,27 +8444,64 @@
   }
 
   function buildS231AlgebraVarianceSet(count) {
-    return buildS223TemplateSet(
+    return buildS223DynamicSet(
       [
-        {
-          q: '給定 40 筆數據，已知其總和 \\(\\sum x_i=800\\)，平方和 \\(\\sum x_i^2=16400\\)，求其標準差。',
-          a: '簡答：\\(\\sqrt{10}\\)。過程：平均為 \\(800/40=20\\)。變異數為 \\(\\frac{16400}{40}-20^2=410-400=10\\)。因此標準差為 \\(\\sqrt{10}\\)。',
+        () => {
+          const n = s242Pick([20, 25, 40, 50]);
+          const mu = s242Pick([10, 15, 20, 25]);
+          const v = s242Pick([5, 10, 15, 20]);
+          const S = n * mu;
+          const T = n * (v + mu * mu);
+          return {
+            q: `給定 ${n} 筆數據，已知其總和 \\(\\sum x_i=${S}\\)，平方和 \\(\\sum x_i^2=${T}\\)，求其標準差。`,
+            a: `簡答：\\(${formatRadical(v)}\\)。過程：平均為 \\(${S}/${n}=${mu}\\)。變異數為 \\(\\frac{${T}}{${n}}-${mu}^2=${v + mu * mu}-${mu * mu}=${v}\\)。因此標準差為 \\(${formatRadical(v)}\\)。`,
+          };
         },
-        {
-          q: '若 10 筆數據的平均數為 12，標準差為 3，求這 10 筆數據的平方和 \\(\\sum x_i^2\\)。',
-          a: '簡答：1530。過程：\\(\\sigma^2=\\frac1n\\sum x_i^2-\\mu^2\\)，所以 \\(9=\\frac1{10}\\sum x_i^2-144\\)，得 \\(\\sum x_i^2=1530\\)。',
+        () => {
+          const n = s242Pick([10, 20, 25]);
+          const mu = randInt(8, 16);
+          const sigma = randInt(2, 5);
+          const T = n * (sigma * sigma + mu * mu);
+          return {
+            q: `若 ${n} 筆數據的平均數為 ${mu}，標準差為 ${sigma}，求這 ${n} 筆數據的平方和 \\(\\sum x_i^2\\)。`,
+            a: `簡答：${T}。過程：\\(\\sigma^2=\\frac1n\\sum x_i^2-\\mu^2\\)，所以 \\(${sigma * sigma}=\\frac1{${n}}\\sum x_i^2-${mu * mu}\\)，得 \\(\\sum x_i^2=${T}\\)。`,
+          };
         },
-        {
-          q: '已知 \\(\\sum_{i=1}^{20}(x_i-10)=40\\) 且 \\(\\sum_{i=1}^{20}(x_i-10)^2=280\\)，求原始數據的平均數與標準差。',
-          a: '簡答：平均數 12，標準差 \\(\\sqrt{10}\\)。過程：令 \\(y_i=x_i-10\\)，則 \\(\\bar y=40/20=2\\)，所以 \\(\\bar x=12\\)。\\(y\\) 的變異數為 \\(280/20-2^2=10\\)，平移不改變標準差，所以標準差為 \\(\\sqrt{10}\\)。',
+        () => {
+          const n = s242Pick([10, 20, 25]);
+          const c = 5 * randInt(2, 4);
+          const ybar = randInt(1, 4);
+          const yvar = s242Pick([5, 10, 15]);
+          const S1 = n * ybar;
+          const S2 = n * (yvar + ybar * ybar);
+          return {
+            q: `已知 \\(\\sum_{i=1}^{${n}}(x_i-${c})=${S1}\\) 且 \\(\\sum_{i=1}^{${n}}(x_i-${c})^2=${S2}\\)，求原始數據的平均數與標準差。`,
+            a: `簡答：平均數 ${c + ybar}，標準差 \\(${formatRadical(yvar)}\\)。過程：令 \\(y_i=x_i-${c}\\)，則 \\(\\bar y=${S1}/${n}=${ybar}\\)，所以 \\(\\bar x=${c + ybar}\\)。\\(y\\) 的變異數為 \\(${S2}/${n}-${ybar}^2=${yvar}\\)，平移不改變標準差，所以標準差為 \\(${formatRadical(yvar)}\\)。`,
+          };
         },
-        {
-          q: '設 5 筆數據的平方和為 500，平均數為 8；若加入一筆數據 \\(x_6=8\\)，求這 6 筆數據的新標準差。',
-          a: '簡答：\\(\\sqrt{30}\\)。過程：原總和為 40，加入 8 後平均仍為 8，平方和變 564。新變異數為 \\(564/6-8^2=94-64=30\\)，所以標準差為 \\(\\sqrt{30}\\)。',
+        () => {
+          const n = s242Pick([5, 8, 11]);
+          const mu = s242Pick([6, 8, 10]);
+          const extra = s242Pick([120, 180, 240, 300]);
+          const T = n * mu * mu + extra;
+          const newVar = extra / (n + 1);
+          const varText = Number.isInteger(newVar) ? String(newVar) : formatFraction(extra, n + 1);
+          const stdText = Number.isInteger(newVar) ? formatRadical(newVar) : `\\sqrt{${formatFraction(extra, n + 1)}}`;
+          return {
+            q: `設 ${n} 筆數據的平方和為 ${T}，平均數為 ${mu}；若加入一筆數據 \\(x_{${n + 1}}=${mu}\\)，求這 ${n + 1} 筆數據的新標準差。`,
+            a: `簡答：\\(${stdText}\\)。過程：原總和為 ${n * mu}，加入 ${mu} 後平均仍為 ${mu}，平方和變 ${T + mu * mu}。新變異數為 \\(${T + mu * mu}/${n + 1}-${mu}^2=${varText}\\)，所以標準差為 \\(${stdText}\\)。`,
+          };
         },
-        {
-          q: '給定數據滿足 \\(\\sum_{i=1}^n x_i=S\\) 且 \\(\\sum_{i=1}^n x_i^2=T\\)，試寫出變異數以 \\(S,T,n\\) 表示的通式。',
-          a: '簡答：\\(\\sigma^2=\\frac{T}{n}-(\\frac{S}{n})^2\\)。過程：平均數 \\(\\mu=\\frac{S}{n}\\)，又變異數公式為 \\(\\sigma^2=\\frac1n\\sum x_i^2-\\mu^2\\)，代入即得 \\(\\frac{T}{n}-(\\frac{S}{n})^2\\)。',
+        () => {
+          const [Sv, Tv, Nv] = s242Pick([
+            ['S', 'T', 'n'],
+            ['A', 'B', 'n'],
+            ['P', 'Q', 'N'],
+          ]);
+          return {
+            q: `給定數據滿足 \\(\\sum_{i=1}^{${Nv}} x_i=${Sv}\\) 且 \\(\\sum_{i=1}^{${Nv}} x_i^2=${Tv}\\)，試寫出變異數以 \\(${Sv},${Tv},${Nv}\\) 表示的通式。`,
+            a: `簡答：\\(\\sigma^2=\\frac{${Tv}}{${Nv}}-(\\frac{${Sv}}{${Nv}})^2\\)。過程：平均數 \\(\\mu=\\frac{${Sv}}{${Nv}}\\)，又變異數公式為 \\(\\sigma^2=\\frac1n\\sum x_i^2-\\mu^2\\)，代入即得 \\(\\frac{${Tv}}{${Nv}}-(\\frac{${Sv}}{${Nv}})^2\\)。`,
+          };
         },
       ],
       count
@@ -7565,27 +8509,77 @@
   }
 
   function buildS231GeometricGrowthSet(count) {
-    return buildS223TemplateSet(
+    return buildS223DynamicSet(
       [
-        {
-          q: '已知連續三年的產值成長率分別為 10%、20%、30%，求這三年的平均成長率。',
-          a: '簡答：\\(\\sqrt[3]{1.716}-1\\)。過程：平均成長率不是算術平均，而是 \\((1+r)^3=1.1\\cdot1.2\\cdot1.3=1.716\\)，故 \\(r=\\sqrt[3]{1.716}-1\\)。',
+        () => {
+          const rates = s242Pick([
+            [10, 20, 30],
+            [10, 30, 50],
+            [20, 30, 40],
+            [5, 15, 25],
+            [10, 25, 40],
+            [15, 20, 45],
+          ]);
+          const product = ((100 + rates[0]) * (100 + rates[1]) * (100 + rates[2])) / 1000000;
+          const pText = String(Math.round(product * 10000) / 10000);
+          return {
+            q: `已知連續三年的產值成長率分別為 ${rates[0]}%、${rates[1]}%、${rates[2]}%，求這三年的平均成長率。`,
+            a: `簡答：\\(\\sqrt[3]{${pText}}-1\\)。過程：平均成長率不是算術平均，而是 \\((1+r)^3=${(100 + rates[0]) / 100}\\cdot${(100 + rates[1]) / 100}\\cdot${(100 + rates[2]) / 100}=${pText}\\)，故 \\(r=\\sqrt[3]{${pText}}-1\\)。`,
+          };
         },
-        {
-          q: '某鎮十年前人口為 25 萬，現在為 30 萬，假設每年成長率固定，預測十年後的人口數。',
-          a: '簡答：\\(36\\) 萬。過程：十年成長倍率為 \\(30/25=6/5\\)。再過十年倍率相同，二十年後為 \\(30\\cdot\\frac65=36\\) 萬。',
+        () => {
+          const combo = s242Pick([
+            { p0: 25, p1: 30, next: 36 },
+            { p0: 20, p1: 30, next: 45 },
+            { p0: 40, p1: 50, next: 62.5 },
+            { p0: 16, p1: 20, next: 25 },
+            { p0: 25, p1: 35, next: 49 },
+            { p0: 50, p1: 60, next: 72 },
+          ]);
+          const frac = formatFraction(combo.p1, combo.p0);
+          return {
+            q: `某鎮十年前人口為 ${combo.p0} 萬，現在為 ${combo.p1} 萬，假設每年成長率固定，預測十年後的人口數。`,
+            a: `簡答：\\(${combo.next}\\) 萬。過程：十年成長倍率為 \\(${combo.p1}/${combo.p0}=${frac}\\)。再過十年倍率相同，二十年後為 \\(${combo.p1}\\cdot${frac}=${combo.next}\\) 萬。`,
+          };
         },
-        {
-          q: '某項投資在四年內的獲利率分別為 -10%、20%、0%、50%，計算其四年平均獲利率。',
-          a: '簡答：\\(\\sqrt[4]{1.62}-1\\)。過程：總倍率為 \\(0.9\\cdot1.2\\cdot1\\cdot1.5=1.62\\)。令平均倍率為 \\(1+r\\)，則 \\((1+r)^4=1.62\\)，所以 \\(r=\\sqrt[4]{1.62}-1\\)。',
+        () => {
+          const rates = s242Pick([
+            [-10, 20, 0, 50],
+            [-20, 25, 0, 60],
+            [-10, 10, 0, 40],
+            [-25, 20, 0, 50],
+          ]);
+          const product = rates.reduce((acc, r) => (acc * (100 + r)) / 100, 1);
+          const pText = String(Math.round(product * 10000) / 10000);
+          return {
+            q: `某項投資在四年內的獲利率分別為 ${rates[0]}%、${rates[1]}%、${rates[2]}%、${rates[3]}%，計算其四年平均獲利率。`,
+            a: `簡答：\\(\\sqrt[4]{${pText}}-1\\)。過程：總倍率為 \\(${rates.map((r) => (100 + r) / 100).join('\\cdot')}=${pText}\\)。令平均倍率為 \\(1+r\\)，則 \\((1+r)^4=${pText}\\)，所以 \\(r=\\sqrt[4]{${pText}}-1\\)。`,
+          };
         },
-        {
-          q: '一細胞每小時分裂一次，數量加倍。若初始有 100 個，求 \\(n\\) 小時後的數量及平均增長率。',
-          a: '簡答：數量 \\(100\\cdot2^n\\)，平均每小時增長率 100%。過程：每小時倍率為 2，故 \\(n\\) 小時後為 \\(100\\cdot2^n\\)。平均增長倍率仍為 2，所以增長率為 \\(2-1=100\\%\\)。',
+        () => {
+          const init = s242Pick([50, 100, 200, 500]);
+          return {
+            q: `一細胞每小時分裂一次，數量加倍。若初始有 ${init} 個，求 \\(n\\) 小時後的數量及平均增長率。`,
+            a: `簡答：數量 \\(${init}\\cdot2^n\\)，平均每小時增長率 100%。過程：每小時倍率為 2，故 \\(n\\) 小時後為 \\(${init}\\cdot2^n\\)。平均增長倍率仍為 2，所以增長率為 \\(2-1=100\\%\\)。`,
+          };
         },
-        {
-          q: '若一組數據的幾何平均數為 6，已知前三數為 2、9、12，求第四個數之值。',
-          a: '簡答：6。過程：四個數的幾何平均為 6，故乘積為 \\(6^4=1296\\)。前三數乘積為 \\(2\\cdot9\\cdot12=216\\)，第四個數為 \\(1296/216=6\\)。',
+        () => {
+          const combo = s242Pick([
+            { g: 6, x4: 6, parts: [2, 9, 12] },
+            { g: 6, x4: 3, parts: [4, 4, 27] },
+            { g: 6, x4: 8, parts: [2, 9, 9] },
+            { g: 6, x4: 4, parts: [3, 4, 27] },
+            { g: 6, x4: 9, parts: [3, 6, 8] },
+            { g: 4, x4: 4, parts: [2, 4, 8] },
+            { g: 4, x4: 8, parts: [2, 2, 8] },
+            { g: 8, x4: 8, parts: [4, 8, 16] },
+          ]);
+          const target = combo.g ** 4;
+          const partial = combo.parts[0] * combo.parts[1] * combo.parts[2];
+          return {
+            q: `若一組數據的幾何平均數為 ${combo.g}，已知前三數為 ${combo.parts.join('、')}，求第四個數之值。`,
+            a: `簡答：${combo.x4}。過程：四個數的幾何平均為 ${combo.g}，故乘積為 \\(${combo.g}^4=${target}\\)。前三數乘積為 \\(${combo.parts.join('\\cdot')}=${partial}\\)，第四個數為 \\(${target}/${partial}=${combo.x4}\\)。`,
+          };
         },
       ],
       count
@@ -7593,27 +8587,56 @@
   }
 
   function buildS231DeviationMinimizationSet(count) {
-    return buildS223TemplateSet(
+    return buildS223DynamicSet(
       [
-        {
-          q: '給定數據 \\(\\{2,4,8,8,32\\}\\)，求使 \\(f(x)=\\sum (x_i-x)^2\\) 最小的 \\(x\\) 值。',
-          a: '簡答：\\(\\frac{54}{5}\\)。過程：平方離差和 \\(\\sum(x_i-x)^2\\) 在 \\(x\\) 等於平均數時最小。資料總和為 54、筆數 5，所以最小時 \\(x=54/5\\)。',
+        () => {
+          const values = [randInt(1, 5), randInt(2, 8), randInt(4, 10), randInt(6, 12), s242Pick([16, 20, 25, 32])].sort(
+            (a, b) => a - b
+          );
+          const sum = values.reduce((acc, v) => acc + v, 0);
+          const ansText = sum % 5 === 0 ? String(sum / 5) : formatFraction(sum, 5);
+          return {
+            q: `給定數據 \\(\\{${values.join(',')}\\}\\)，求使 \\(f(x)=\\sum (x_i-x)^2\\) 最小的 \\(x\\) 值。`,
+            a: `簡答：\\(${ansText}\\)。過程：平方離差和 \\(\\sum(x_i-x)^2\\) 在 \\(x\\) 等於平均數時最小。資料總和為 ${sum}、筆數 5，所以最小時 \\(x=${ansText}\\)。`,
+          };
         },
-        {
-          q: '求使 \\(f(x)=|x-1|+|x-3|+|x-7|+|x-9|\\) 產生最小值的 \\(x\\) 範圍及其最小值。',
-          a: '簡答：\\(3\\le x\\le7\\)，最小值 12。過程：絕對離差和在中位數處最小；偶數筆資料時，任取兩個中間數 3 與 7 之間皆可。最小值為 \\((3-1)+(7-3)+(9-7)=12\\)。',
+        () => {
+          const a = randInt(1, 3);
+          const b = a + randInt(2, 4);
+          const c = b + randInt(2, 5);
+          const d = c + randInt(2, 4);
+          const minVal = d + c - b - a;
+          return {
+            q: `求使 \\(f(x)=|x-${a}|+|x-${b}|+|x-${c}|+|x-${d}|\\) 產生最小值的 \\(x\\) 範圍及其最小值。`,
+            a: `簡答：\\(${b}\\le x\\le${c}\\)，最小值 ${minVal}。過程：絕對離差和在中位數處最小；偶數筆資料時，任取兩個中間數 ${b} 與 ${c} 之間皆可。最小值為 \\((${d}-${a})+(${c}-${b})=${minVal}\\)。`,
+          };
         },
-        {
-          q: '設 49 筆資料為 \\(1,2,3,\\ldots,49\\)，求使 \\(f(x)=\\sum_{k=1}^{49}|k-x|\\) 最小時的 \\(x\\) 值。',
-          a: '簡答：25。過程：絕對離差和在中位數時最小。49 筆資料的中位數是第 25 個數，因此最小時 \\(x=25\\)。',
+        () => {
+          const n = s242Pick([29, 35, 41, 49, 55, 61]);
+          const mid = (n + 1) / 2;
+          return {
+            q: `設 ${n} 筆資料為 \\(1,2,3,\\ldots,${n}\\)，求使 \\(f(x)=\\sum_{k=1}^{${n}}|k-x|\\) 最小時的 \\(x\\) 值。`,
+            a: `簡答：${mid}。過程：絕對離差和在中位數時最小。${n} 筆資料的中位數是第 ${mid} 個數，因此最小時 \\(x=${mid}\\)。`,
+          };
         },
-        {
-          q: '已知數據的算術平均數為 10，證明當 \\(k=10\\) 時，\\(\\sum (x_i-k)^2\\) 會小於當 \\(k=12\\) 時的結果。',
-          a: '簡答：成立。過程：平方離差和在 \\(k=\\mu\\) 時最小。此處 \\(\\mu=10\\)，且 \\(\\sum(x_i-12)^2=\\sum(x_i-10)^2+n(12-10)^2=\\sum(x_i-10)^2+4n\\)，因 \\(n>0\\)，所以 \\(k=10\\) 時嚴格小於 \\(k=12\\) 時的結果。',
+        () => {
+          const mu = s242Pick([8, 10, 12, 15]);
+          const k2 = mu + randInt(1, 4);
+          const diff = (k2 - mu) * (k2 - mu);
+          return {
+            q: `已知數據的算術平均數為 ${mu}，證明當 \\(k=${mu}\\) 時，\\(\\sum (x_i-k)^2\\) 會小於當 \\(k=${k2}\\) 時的結果。`,
+            a: `簡答：成立。過程：平方離差和在 \\(k=\\mu\\) 時最小。此處 \\(\\mu=${mu}\\)，且 \\(\\sum(x_i-${k2})^2=\\sum(x_i-${mu})^2+n(${k2}-${mu})^2=\\sum(x_i-${mu})^2+${diff}n\\)，因 \\(n>0\\)，所以 \\(k=${mu}\\) 時嚴格小於 \\(k=${k2}\\) 時的結果。`,
+          };
         },
-        {
-          q: '給定一組離散數據，判斷眾數、平均數、中位數中，哪一個最適合用於最小化誤差平方和。',
-          a: '簡答：平均數。過程：平方誤差和 \\(\\sum(x_i-a)^2\\) 的最小點是平均數；絕對誤差和的最小點是中位數；眾數則描述最常出現的值。',
+        () => {
+          const target = s242Pick([
+            { goal: '最小化誤差平方和', ans: '平均數' },
+            { goal: '最小化絕對誤差和', ans: '中位數' },
+          ]);
+          return {
+            q: `給定一組離散數據，判斷眾數、平均數、中位數中，哪一個最適合用於${target.goal}。`,
+            a: `簡答：${target.ans}。過程：平方誤差和 \\(\\sum(x_i-a)^2\\) 的最小點是平均數；絕對誤差和的最小點是中位數；眾數則描述最常出現的值。`,
+          };
         },
       ],
       count
@@ -7621,27 +8644,57 @@
   }
 
   function buildS231PercentileOutlierSet(count) {
-    return buildS223TemplateSet(
+    return buildS223DynamicSet(
       [
-        {
-          q: '給定 15 位同學的體重資料（已由小到大排列），求第 75 百分位數 \\(P_{75}\\) 的位置。',
-          a: '簡答：第 12 個資料。過程：位置可用 \\((n+1)\\times75\\%=16\\times0.75=12\\)，所以 \\(P_{75}\\) 位在第 12 個資料。',
+        () => {
+          const combo = s242Pick([
+            { n: 15, p: 75, pos: 12 },
+            { n: 19, p: 50, pos: 10 },
+            { n: 19, p: 75, pos: 15 },
+            { n: 24, p: 60, pos: 15 },
+            { n: 39, p: 25, pos: 10 },
+            { n: 15, p: 25, pos: 4 },
+            { n: 19, p: 80, pos: 16 },
+            { n: 29, p: 50, pos: 15 },
+          ]);
+          return {
+            q: `給定 ${combo.n} 位同學的體重資料（已由小到大排列），求第 ${combo.p} 百分位數 \\(P_{${combo.p}}\\) 的位置。`,
+            a: `簡答：第 ${combo.pos} 個資料。過程：位置可用 \\((n+1)\\times${combo.p}\\%=${combo.n + 1}\\times${combo.p / 100}=${combo.pos}\\)，所以 \\(P_{${combo.p}}\\) 位在第 ${combo.pos} 個資料。`,
+          };
         },
-        {
-          q: '一組數據的 \\(Q_1=40\\)、\\(Q_3=60\\)，求其四分位距 \\(IQR\\)。',
-          a: '簡答：20。過程：四分位距定義為 \\(IQR=Q_3-Q_1=60-40=20\\)。',
+        () => {
+          const q1 = 5 * randInt(4, 10);
+          const q3 = q1 + 5 * randInt(2, 8);
+          return {
+            q: `一組數據的 \\(Q_1=${q1}\\)、\\(Q_3=${q3}\\)，求其四分位距 \\(IQR\\)。`,
+            a: `簡答：${q3 - q1}。過程：四分位距定義為 \\(IQR=Q_3-Q_1=${q3}-${q1}=${q3 - q1}\\)。`,
+          };
         },
-        {
-          q: '根據 1.5 倍 \\(IQR\\) 規則，若 \\(Q_1=40\\)、\\(Q_3=60\\)，判斷數值 100 是否為離群值。',
-          a: '簡答：是。過程：\\(IQR=20\\)，上界為 \\(Q_3+1.5IQR=60+30=90\\)。因 100 大於 90，所以 100 是離群值。',
+        () => {
+          const q1 = 10 * randInt(3, 6);
+          const iqr = 2 * randInt(5, 15);
+          const q3 = q1 + iqr;
+          const upper = q3 + 1.5 * iqr;
+          const isOutlier = randInt(0, 1) === 0;
+          const value = isOutlier ? upper + 5 * randInt(1, 4) : upper - 5 * randInt(1, 3);
+          return {
+            q: `根據 1.5 倍 \\(IQR\\) 規則，若 \\(Q_1=${q1}\\)、\\(Q_3=${q3}\\)，判斷數值 ${value} 是否為離群值。`,
+            a: `簡答：${isOutlier ? '是' : '否'}。過程：\\(IQR=${iqr}\\)，上界為 \\(Q_3+1.5IQR=${q3}+${1.5 * iqr}=${upper}\\)。因 ${value} ${isOutlier ? '大於' : '不大於'} ${upper}，所以 ${value} ${isOutlier ? '是' : '不是'}離群值。`,
+          };
         },
-        {
-          q: '在 100 位同學的成績中，某生排名第 20 名（由高到低），求其所在的百分等級（PR 值）。',
-          a: '簡答：約 PR 80。過程：排名第 20 表示約有 80% 的同學在其後方或不高於他，因此可估為 PR 80。',
+        () => {
+          const rank = 5 * randInt(1, 8);
+          return {
+            q: `在 100 位同學的成績中，某生排名第 ${rank} 名（由高到低），求其所在的百分等級（PR 值）。`,
+            a: `簡答：約 PR ${100 - rank}。過程：排名第 ${rank} 表示約有 ${100 - rank}% 的同學在其後方或不高於他，因此可估為 PR ${100 - rank}。`,
+          };
         },
-        {
-          q: '給定累積次數分配曲線，要求第 60 百分位數 \\(P_{60}\\) 落在哪一個組距內，應如何判斷？',
-          a: '簡答：找累積次數首次達到總次數 60% 的組距。過程：先算 \\(0.6n\\) 的位置，再在累積次數表或曲線上找第一次超過或等於該位置的組距，該組距即包含 \\(P_{60}\\)。',
+        () => {
+          const p = s242Pick([40, 60, 70, 80]);
+          return {
+            q: `給定累積次數分配曲線，要求第 ${p} 百分位數 \\(P_{${p}}\\) 落在哪一個組距內，應如何判斷？`,
+            a: `簡答：找累積次數首次達到總次數 ${p}% 的組距。過程：先算 \\(${p / 100}n\\) 的位置，再在累積次數表或曲線上找第一次超過或等於該位置的組距，該組距即包含 \\(P_{${p}}\\)。`,
+          };
         },
       ],
       count
@@ -7652,12 +8705,26 @@
     return buildS223TemplateSet(
       [
         {
-          q: '全校 1000 人，編號 000 到 999。欲選取 10 人，若從 005 號開始每隔 100 號取一人，此為哪種抽樣方法？',
+          get q() {
+            const interval = s242Pick([50, 100, 200]);
+            const start = String(randInt(1, 9)).padStart(3, '0');
+            this._cached = `全校 1000 人，編號 000 到 999。欲選取 ${1000 / interval} 人，若從 ${start} 號開始每隔 ${interval} 號取一人，此為哪種抽樣方法？`;
+            return this._cached;
+          },
           a: '簡答：系統抽樣。過程：先決定起始點，再依固定間隔抽取樣本，這正是系統抽樣。',
         },
         {
-          q: '某校有高一 400 人、高二 300 人、高三 300 人，欲按比例抽取 100 人，求各年級應抽取的人數。',
-          a: '簡答：高一 40 人，高二 30 人，高三 30 人。過程：總人數 1000，抽樣比例為 \\(100/1000=1/10\\)。各層抽取人數為 400/10、300/10、300/10。',
+          get q() {
+            const a = 50 * randInt(6, 10);
+            const b = 50 * randInt(4, 8);
+            const c = 1000 - a - b;
+            this._parts = [a, b, c];
+            return `某校有高一 ${a} 人、高二 ${b} 人、高三 ${c} 人，欲按比例抽取 100 人，求各年級應抽取的人數。`;
+          },
+          get a() {
+            const [a, b, c] = this._parts || [400, 300, 300];
+            return `簡答：高一 ${a / 10} 人，高二 ${b / 10} 人，高三 ${c / 10} 人。過程：總人數 1000，抽樣比例為 \\(100/1000=1/10\\)。各層抽取人數為 ${a}/10、${b}/10、${c}/10。`;
+          },
         },
         {
           q: '判斷下列何者屬於簡單隨機抽樣：(A) 抽籤 (B) 隨機號碼表 (C) 街頭攔人採訪。',
@@ -7680,24 +8747,59 @@
     return buildS223TemplateSet(
       [
         {
-          q: '給定甲、乙兩班的累積次數分配曲線，若甲班曲線在左、乙班在右，判斷哪一班的中位數較大。',
-          a: '簡答：乙班較大。過程：累積曲線越往右，表示同一累積比例所對應的分數越高。中位數是累積比例 50% 的位置，因此曲線較右者中位數較大。',
+          get q() {
+            const leftIsA = randInt(0, 1) === 0;
+            this._leftIsA = leftIsA;
+            return leftIsA
+              ? '給定甲、乙兩班的累積次數分配曲線，若甲班曲線在左、乙班在右，判斷哪一班的中位數較大。'
+              : '給定甲、乙兩班的累積次數分配曲線，若乙班曲線在左、甲班在右，判斷哪一班的中位數較大。';
+          },
+          get a() {
+            const leftIsA = this._leftIsA !== undefined ? this._leftIsA : true;
+            const bigger = leftIsA ? '乙班' : '甲班';
+            return `簡答：${bigger}較大。過程：累積曲線越往右，表示同一累積比例所對應的分數越高。中位數是累積比例 50% 的位置，因此曲線較右者中位數較大。`;
+          },
         },
         {
           q: '從累積次數圖中觀察哪一個分數區間斜率最大，該區間代表什麼意義？',
           a: '簡答：該區間人數最多。過程：累積次數曲線在某區間上升越快，表示該區間累積增加的人數越多，也就是該組距的次數最大。',
         },
         {
-          q: '若甲班曲線較陡峭且集中於中間，乙班較平緩，判斷哪一班標準差較小。',
-          a: '簡答：甲班較小。過程：資料越集中，離散程度越小，標準差越小。累積曲線集中在中間且上升較陡，表示分數較集中。',
+          get q() {
+            const steepIsA = randInt(0, 1) === 0;
+            this._steepIsA = steepIsA;
+            return steepIsA
+              ? '若甲班曲線較陡峭且集中於中間，乙班較平緩，判斷哪一班標準差較小。'
+              : '若乙班曲線較陡峭且集中於中間，甲班較平緩，判斷哪一班標準差較小。';
+          },
+          get a() {
+            const steepIsA = this._steepIsA !== undefined ? this._steepIsA : true;
+            const smaller = steepIsA ? '甲班' : '乙班';
+            return `簡答：${smaller}較小。過程：資料越集中，離散程度越小，標準差越小。累積曲線集中在中間且上升較陡，表示分數較集中。`;
+          },
         },
         {
-          q: '給定 100 人的累積次數圖，預測第 25 百分位數 \\(Q_1\\) 落在哪一組距內，應先找哪個累積次數位置？',
-          a: '簡答：第 25 個位置。過程：\\(Q_1=P_{25}\\)，在 100 人資料中位置約為 \\(100\\times25\\%=25\\)。在累積次數圖中找累積次數達 25 的組距。',
+          get q() {
+            const n = s242Pick([80, 100, 120, 200]);
+            const p = s242Pick([25, 40, 60, 75]);
+            this._np = [n, p];
+            return `給定 ${n} 人的累積次數圖，預測第 ${p} 百分位數 \\(P_{${p}}\\) 落在哪一組距內，應先找哪個累積次數位置？`;
+          },
+          get a() {
+            const [n, p] = this._np || [100, 25];
+            return `簡答：第 ${(n * p) / 100} 個位置。過程：在 ${n} 人資料中位置約為 \\(${n}\\times${p}\\%=${(n * p) / 100}\\)。在累積次數圖中找累積次數達 ${(n * p) / 100} 的組距。`;
+          },
         },
         {
-          q: '從累積次數表中估計及格人數（60 分以上）占全體總人數的百分比，應如何計算？',
-          a: '簡答：\\(\\frac{總人數-未滿60分累積人數}{總人數}\\times100\\%\\)。過程：累積次數表通常可讀出低於 60 分的人數，用總人數扣除即為 60 分以上的人數，再除以總人數得百分比。',
+          get q() {
+            const cut = s242Pick([50, 60, 70]);
+            this._cut = cut;
+            return `從累積次數表中估計及格人數（${cut} 分以上）占全體總人數的百分比，應如何計算？`;
+          },
+          get a() {
+            const cut = this._cut || 60;
+            return `簡答：\\(\\frac{總人數-未滿${cut}分累積人數}{總人數}\\times100\\%\\)。過程：累積次數表通常可讀出低於 ${cut} 分的人數，用總人數扣除即為 ${cut} 分以上的人數，再除以總人數得百分比。`;
+          },
         },
       ],
       count
@@ -7708,12 +8810,23 @@
     return buildS223TemplateSet(
       [
         {
-          q: '已知 100 名學生考試成績的分組表（組距為 10），假設組內均勻分布，求算術平均數時應使用哪個代表值？',
+          get q() {
+            const n = s242Pick([50, 80, 100, 200]);
+            const w = s242Pick([5, 10]);
+            return `已知 ${n} 名學生考試成績的分組表（組距為 ${w}），假設組內均勻分布，求算術平均數時應使用哪個代表值？`;
+          },
           a: '簡答：各組組中點。過程：分組資料不知道每筆原始數據，估計平均數時以每組組中點代表該組資料，再用 \\(\\frac{\\sum f_i m_i}{\\sum f_i}\\) 計算。',
         },
         {
-          q: '利用插補法估計分組數據的中位數時，若共有 100 筆資料，應找第幾名與第幾名所在位置？',
-          a: '簡答：第 50 名與第 51 名附近。過程：偶數筆資料的中位數在第 \\(n/2\\) 與第 \\(n/2+1\\) 筆之間，因此 100 筆資料要看第 50、51 名所在組距。',
+          get q() {
+            const n = s242Pick([60, 80, 100, 120, 200]);
+            this._n = n;
+            return `利用插補法估計分組數據的中位數時，若共有 ${n} 筆資料，應找第幾名與第幾名所在位置？`;
+          },
+          get a() {
+            const n = this._n || 100;
+            return `簡答：第 ${n / 2} 名與第 ${n / 2 + 1} 名附近。過程：偶數筆資料的中位數在第 \\(n/2\\) 與第 \\(n/2+1\\) 筆之間，因此 ${n} 筆資料要看第 ${n / 2}、${n / 2 + 1} 名所在組距。`;
+          },
         },
         {
           q: '給定分組次數表，若以次數最高組的組中點作為該組數據的眾數估計值，這種估計的依據是什麼？',
@@ -7724,8 +8837,15 @@
           a: '簡答：通常估計會更精細，但需重新分組計算。過程：組距縮小後，組中點更接近原始資料位置，平均數估計通常較準；但若各組頻率重新分配不同，結果也可能改變。',
         },
         {
-          q: '從分組表中計算第 60 百分位數 \\(P_{60}\\) 的估計值時，第一步應做什麼？',
-          a: '簡答：先找第 \\(0.6n\\) 個資料落在哪一組。過程：百分位數要先定位。找出累積次數首次達到 \\(0.6n\\) 的組距，再在該組距內用插補法估計。',
+          get q() {
+            const p = s242Pick([30, 40, 60, 70, 80]);
+            this._p = p;
+            return `從分組表中計算第 ${p} 百分位數 \\(P_{${p}}\\) 的估計值時，第一步應做什麼？`;
+          },
+          get a() {
+            const p = this._p || 60;
+            return `簡答：先找第 \\(${p / 100}n\\) 個資料落在哪一組。過程：百分位數要先定位。找出累積次數首次達到 \\(${p / 100}n\\) 的組距，再在該組距內用插補法估計。`;
+          },
         },
       ],
       count
@@ -8516,27 +9636,83 @@
   }
 
   function buildS232CorrelationBasicSet(count) {
-    return buildS223TemplateSet(
+    return buildS223DynamicSet(
       [
-        {
-          q: '給定 5 筆數據 \\((x,y):(1,2),(2,4),(3,3),(4,5),(5,6)\\)，求其相關係數 \\(r\\)。',
-          a: '簡答：\\(r=\\frac{9}{10}\\)。過程：\\(\\bar x=3,\\bar y=4\\)。計算得 \\(S_{xx}=10\\)、\\(S_{yy}=10\\)、\\(S_{xy}=9\\)，所以 \\(r=\\frac{S_{xy}}{\\sqrt{S_{xx}S_{yy}}}=\\frac9{10}\\)。',
+        () => {
+          // 基底資料 (1,2),(2,4),(3,3),(4,5),(5,6)：Sxx=10, Syy=10, Sxy=9。
+          // 平移不改變離差；y 翻轉會使 r 變號。
+          const dx = randInt(0, 3);
+          const dy = randInt(0, 5);
+          const flip = randInt(0, 1) === 1;
+          const baseY = [2, 4, 3, 5, 6];
+          const ys = baseY.map((v) => (flip ? 8 - v : v) + dy);
+          const xs = [1, 2, 3, 4, 5].map((v) => v + dx);
+          const pts = xs.map((x, idx) => `(${x},${ys[idx]})`).join(',');
+          const xbar = 3 + dx;
+          const ybar = (flip ? 4 : 4) + dy;
+          const rText = flip ? '-\\frac{9}{10}' : '\\frac{9}{10}';
+          const sxyText = flip ? '-9' : '9';
+          return {
+            q: `給定 5 筆數據 \\((x,y):${pts}\\)，求其相關係數 \\(r\\)。`,
+            a: `簡答：\\(r=${rText}\\)。過程：\\(\\bar x=${xbar},\\bar y=${ybar}\\)。計算得 \\(S_{xx}=10\\)、\\(S_{yy}=10\\)、\\(S_{xy}=${sxyText}\\)，所以 \\(r=\\frac{S_{xy}}{\\sqrt{S_{xx}S_{yy}}}=${rText}\\)。`,
+          };
         },
-        {
-          q: '已知 \\(\\sum x_i=1250,\\sum y_i=800,\\sum x_i^2=158500,\\sum y_i^2=64810,\\sum x_iy_i=101080\\)，樣本數 \\(n=10\\)，求相關係數 \\(r\\)。',
-          a: '簡答：\\(r=\\frac45\\)。過程：\\(S_{xx}=158500-\\frac{1250^2}{10}=2250\\)，\\(S_{yy}=64810-\\frac{800^2}{10}=810\\)，\\(S_{xy}=101080-\\frac{1250\\cdot800}{10}=1080\\)。所以 \\(r=\\frac{1080}{\\sqrt{2250\\cdot810}}=\\frac45\\)。',
+        () => {
+          const combo = s242Pick([
+            { sxx: 2250, syy: 810, sxy: 1080, rText: '\\frac45' },
+            { sxx: 400, syy: 900, sxy: 360, rText: '\\frac35' },
+            { sxx: 1600, syy: 2500, sxy: 1200, rText: '\\frac35' },
+            { sxx: 900, syy: 1600, sxy: 840, rText: '\\frac7{10}' },
+            { sxx: 100, syy: 400, sxy: 180, rText: '\\frac9{10}' },
+          ]);
+          const n = 10;
+          const xbar = 5 * randInt(10, 25);
+          const ybar = 5 * randInt(8, 20);
+          const sx = n * xbar;
+          const sy = n * ybar;
+          const sx2 = combo.sxx + (sx * sx) / n;
+          const sy2 = combo.syy + (sy * sy) / n;
+          const sxy2 = combo.sxy + (sx * sy) / n;
+          return {
+            q: `已知 \\(\\sum x_i=${sx},\\sum y_i=${sy},\\sum x_i^2=${sx2},\\sum y_i^2=${sy2},\\sum x_iy_i=${sxy2}\\)，樣本數 \\(n=${n}\\)，求相關係數 \\(r\\)。`,
+            a: `簡答：\\(r=${combo.rText}\\)。過程：\\(S_{xx}=${sx2}-\\frac{${sx}^2}{${n}}=${combo.sxx}\\)，\\(S_{yy}=${sy2}-\\frac{${sy}^2}{${n}}=${combo.syy}\\)，\\(S_{xy}=${sxy2}-\\frac{${sx}\\cdot${sy}}{${n}}=${combo.sxy}\\)。所以 \\(r=\\frac{${combo.sxy}}{\\sqrt{${combo.sxx}\\cdot${combo.syy}}}=${combo.rText}\\)。`,
+          };
         },
-        {
-          q: '設 5 筆數據的離差平方和 \\(S_{xx}=100\\)、\\(S_{yy}=1600\\)，乘積和 \\(S_{xy}=290\\)，求其相關係數。',
-          a: '簡答：\\(r=\\frac{29}{40}\\)。過程：\\(r=\\frac{S_{xy}}{\\sqrt{S_{xx}S_{yy}}}=\\frac{290}{\\sqrt{100\\cdot1600}}=\\frac{290}{400}=\\frac{29}{40}\\)。',
+        () => {
+          const combo = s242Pick([
+            { sxx: 100, syy: 1600, sxy: 290, prod: 400, rText: '\\frac{29}{40}' },
+            { sxx: 400, syy: 900, sxy: 480, prod: 600, rText: '\\frac45' },
+            { sxx: 25, syy: 64, sxy: 30, prod: 40, rText: '\\frac34' },
+            { sxx: 49, syy: 100, sxy: 49, prod: 70, rText: '\\frac7{10}' },
+            { sxx: 225, syy: 400, sxy: -240, prod: 300, rText: '-\\frac45' },
+          ]);
+          return {
+            q: `設 5 筆數據的離差平方和 \\(S_{xx}=${combo.sxx}\\)、\\(S_{yy}=${combo.syy}\\)，乘積和 \\(S_{xy}=${combo.sxy}\\)，求其相關係數。`,
+            a: `簡答：\\(r=${combo.rText}\\)。過程：\\(r=\\frac{S_{xy}}{\\sqrt{S_{xx}S_{yy}}}=\\frac{${combo.sxy}}{\\sqrt{${combo.sxx}\\cdot${combo.syy}}}=\\frac{${combo.sxy}}{${combo.prod}}=${combo.rText}\\)。`,
+          };
         },
-        {
-          q: '若數據已標準化為 Z 分數 \\((x_i^{\\prime},y_i^{\\prime})\\)，且 \\(\\sum x_i^{\\prime}y_i^{\\prime}=7.5\\)、\\(n=10\\)，求相關係數 \\(r\\)。',
-          a: '簡答：\\(r=\\frac34\\)。過程：標準化後 \\(r=\\frac1n\\sum x_i^{\\prime}y_i^{\\prime}\\)，所以 \\(r=\\frac{7.5}{10}=0.75=\\frac34\\)。',
+        () => {
+          const combo = s242Pick([
+            { n: 10, sum: '7.5', rText: '\\frac34' },
+            { n: 10, sum: '8', rText: '\\frac45' },
+            { n: 20, sum: '12', rText: '\\frac35' },
+            { n: 20, sum: '18', rText: '\\frac9{10}' },
+            { n: 10, sum: '-6', rText: '-\\frac35' },
+          ]);
+          return {
+            q: `若數據已標準化為 Z 分數 \\((x_i^{\\prime},y_i^{\\prime})\\)，且 \\(\\sum x_i^{\\prime}y_i^{\\prime}=${combo.sum}\\)、\\(n=${combo.n}\\)，求相關係數 \\(r\\)。`,
+            a: `簡答：\\(r=${combo.rText}\\)。過程：標準化後 \\(r=\\frac1n\\sum x_i^{\\prime}y_i^{\\prime}\\)，所以 \\(r=\\frac{${combo.sum}}{${combo.n}}=${combo.rText}\\)。`,
+          };
         },
-        {
-          q: '從 1 到 5 的整數對 \\((x,y)\\) 中，滿足 \\(y=-x+6\\)。直接判定其相關係數。',
-          a: '簡答：\\(r=-1\\)。過程：所有資料點都落在斜率為負的同一直線上，且不是水平線或垂直線，因此完全負相關，\\(r=-1\\)。',
+        () => {
+          const m = s242Pick([-3, -2, -1, 2, 3]);
+          const c = randInt(1, 10);
+          const rAns = m < 0 ? '-1' : '1';
+          const mText = m === 1 ? '' : m === -1 ? '-' : String(m);
+          return {
+            q: `從 1 到 5 的整數對 \\((x,y)\\) 中，滿足 \\(y=${mText}x+${c}\\)。直接判定其相關係數。`,
+            a: `簡答：\\(r=${rAns}\\)。過程：所有資料點都落在斜率為${m < 0 ? '負' : '正'}的同一直線上，且不是水平線或垂直線，因此完全${m < 0 ? '負' : '正'}相關，\\(r=${rAns}\\)。`,
+          };
         },
       ],
       count
@@ -8547,7 +9723,10 @@
     return buildS223TemplateSet(
       [
         {
-          q: '給定五個散布圖，若要依相關係數 \\(|r|\\) 的大小排序，應優先觀察什麼特徵？',
+          get q() {
+            const n = s242Pick(['四', '五', '六']);
+            return `給定${n}個散布圖，若要依相關係數 \\(|r|\\) 的大小排序，應優先觀察什麼特徵？`;
+          },
           a: '簡答：觀察點群貼近直線的程度。過程：\\(|r|\\) 衡量線性相關強度，點越貼近某條直線，\\(|r|\\) 越大；斜率正負只影響 \\(r\\) 的正負，不影響 \\(|r|\\) 大小。',
         },
         {
@@ -8559,12 +9738,35 @@
           a: '簡答：(A)、(B)。過程：圓形分布與對稱拋物線可能有明顯非線性關係，但線性相關係數接近 0；水平直線則 \\(y\\) 無變異，相關係數通常不適用。',
         },
         {
-          q: '從散布圖觀察點群大致由左下往右上，判斷 \\(x,y\\) 之間是正相關、負相關還是零相關。',
-          a: '簡答：正相關。過程：由左下往右上表示 \\(x\\) 增加時 \\(y\\) 也大致增加，所以相關係數為正。',
+          get q() {
+            const up = randInt(0, 1) === 0;
+            this._up = up;
+            return `從散布圖觀察點群大致由${up ? '左下往右上' : '左上往右下'}，判斷 \\(x,y\\) 之間是正相關、負相關還是零相關。`;
+          },
+          get a() {
+            const up = this._up !== undefined ? this._up : true;
+            return up
+              ? '簡答：正相關。過程：由左下往右上表示 \\(x\\) 增加時 \\(y\\) 也大致增加，所以相關係數為正。'
+              : '簡答：負相關。過程：由左上往右下表示 \\(x\\) 增加時 \\(y\\) 大致減少，所以相關係數為負。';
+          },
         },
         {
-          q: '若所有散布點皆落在直線 \\(3x+2y=5\\) 上，且 \\(x\\) 值不全相同，求其相關係數。',
-          a: '簡答：\\(r=-1\\)。過程：直線可寫為 \\(y=-\\frac32x+\\frac52\\)，斜率為負且所有點完全共線，因此完全負相關，\\(r=-1\\)。',
+          get q() {
+            const a = randInt(1, 5);
+            const bAbs = randInt(1, 4);
+            const neg = randInt(0, 1) === 0;
+            const c = randInt(1, 9);
+            this._d = { a, bAbs, neg, c };
+            return neg
+              ? `若所有散布點皆落在直線 \\(${a}x+${bAbs}y=${c}\\) 上，且 \\(x\\) 值不全相同，求其相關係數。`
+              : `若所有散布點皆落在直線 \\(${a}x-${bAbs}y=${c}\\) 上，且 \\(x\\) 值不全相同，求其相關係數。`;
+          },
+          get a() {
+            const d = this._d || { a: 3, bAbs: 2, neg: true, c: 5 };
+            return d.neg
+              ? `簡答：\\(r=-1\\)。過程：直線可寫為 \\(y=-\\frac{${d.a}}{${d.bAbs}}x+\\frac{${d.c}}{${d.bAbs}}\\)，斜率為負且所有點完全共線，因此完全負相關，\\(r=-1\\)。`
+              : `簡答：\\(r=1\\)。過程：直線可寫為 \\(y=\\frac{${d.a}}{${d.bAbs}}x-\\frac{${d.c}}{${d.bAbs}}\\)，斜率為正且所有點完全共線，因此完全正相關，\\(r=1\\)。`;
+          },
         },
       ],
       count
@@ -8575,19 +9777,47 @@
     return buildS223TemplateSet(
       [
         {
-          q: '給定 5 筆數據 \\((1,3),(2,4),(4,5),(3,10),(10,12)\\)。若去掉一點後希望剩下 4 筆資料的相關係數絕對值最大，應去掉哪一點？',
-          a: '簡答：去掉 \\((3,10)\\)。過程：\\((3,10)\\) 明顯偏離其餘點的上升趨勢。移除後剩餘點較貼近上升直線，\\(|r|\\) 最大。',
+          get q() {
+            const dx = randInt(0, 4);
+            const dy = randInt(0, 5);
+            this._o = [3 + dx, 10 + dy];
+            const pts = [
+              [1 + dx, 3 + dy],
+              [2 + dx, 4 + dy],
+              [4 + dx, 5 + dy],
+              [3 + dx, 10 + dy],
+              [10 + dx, 12 + dy],
+            ]
+              .map((p) => `(${p[0]},${p[1]})`)
+              .join(',');
+            return `給定 5 筆數據 \\(${pts}\\)。若去掉一點後希望剩下 4 筆資料的相關係數絕對值最大，應去掉哪一點？`;
+          },
+          get a() {
+            const o = this._o || [3, 10];
+            return `簡答：去掉 \\((${o[0]},${o[1]})\\)。過程：\\((${o[0]},${o[1]})\\) 明顯偏離其餘點的上升趨勢。移除後剩餘點較貼近上升直線，\\(|r|\\) 最大。`;
+          },
         },
         {
           q: '在散布圖中，若某一點恰好落在原始數據的迴歸線上，移除該點後相關係數 \\(r\\) 的絕對值會如何變化？',
           a: '簡答：不一定。過程：該點在迴歸線上代表殘差為 0，但相關係數還受該點離平均點的遠近影響；移除後 \\(S_{xx},S_{yy},S_{xy}\\) 都會改變，因此 \\(|r|\\) 不一定變大或變小。',
         },
         {
-          q: '若一組數據的 \\(r=0.99\\)，現加入一個極端離群值且遠離原趨勢線，判斷新相關係數的變化趨勢。',
-          a: '簡答：\\(|r|\\) 通常會變小。過程：原本 \\(r=0.99\\) 表示高度線性；加入遠離趨勢線的離群值會增加殘差、降低線性貼合程度，所以相關係數絕對值通常下降。',
+          get q() {
+            const r = s242Pick(['0.9', '0.95', '0.99', '-0.95']);
+            this._r = r;
+            return `若一組數據的 \\(r=${r}\\)，現加入一個極端離群值且遠離原趨勢線，判斷新相關係數的變化趨勢。`;
+          },
+          get a() {
+            const r = this._r || '0.99';
+            return `簡答：\\(|r|\\) 通常會變小。過程：原本 \\(r=${r}\\) 表示高度線性；加入遠離趨勢線的離群值會增加殘差、降低線性貼合程度，所以相關係數絕對值通常下降。`;
+          },
         },
         {
-          q: '設 4 筆資料剛好構成正方形四個頂點，若在正方形中心增加第 5 個點，其相關係數如何改變？',
+          get q() {
+            const s = 2 * randInt(1, 4);
+            this._s = s;
+            return `設 4 筆資料剛好構成邊長為 ${s} 的正方形四個頂點，若在正方形中心增加第 5 個點，其相關係數如何改變？`;
+          },
           a: '簡答：仍為 0。過程：正方形四頂點關於中心對稱，\\(S_{xy}=0\\)。加入中心點後，該點對離差乘積沒有貢獻，仍保持 \\(S_{xy}=0\\)，因此 \\(r=0\\)。',
         },
         {
@@ -8603,20 +9833,62 @@
     return buildS223TemplateSet(
       [
         {
-          q: '若 \\(x,y\\) 的相關係數為 0.8，求 \\(z=2x+5\\) 與 \\(w=3y-2\\) 的相關係數。',
-          a: '簡答：0.8。過程：兩個變數都乘以正數再平移，不改變相關係數，所以 \\(r_{zw}=r_{xy}=0.8\\)。',
+          get q() {
+            const r = s242Pick(['0.5', '0.6', '0.7', '0.8', '0.9']);
+            const a = randInt(2, 5);
+            const b = randInt(2, 5);
+            const e = randInt(1, 9);
+            const f = randInt(1, 9);
+            this._r = r;
+            return `若 \\(x,y\\) 的相關係數為 ${r}，求 \\(z=${a}x+${e}\\) 與 \\(w=${b}y-${f}\\) 的相關係數。`;
+          },
+          get a() {
+            const r = this._r || '0.8';
+            return `簡答：${r}。過程：兩個變數都乘以正數再平移，不改變相關係數，所以 \\(r_{zw}=r_{xy}=${r}\\)。`;
+          },
         },
         {
-          q: '已知 \\(r(x,y)=0.6\\)，求 \\(r(-x+1,2y+3)\\) 之值。',
-          a: '簡答：\\(-0.6\\)。過程：平移不影響相關係數；乘以負數會改變符號，乘以正數不改變符號，所以新相關係數為 \\(-0.6\\)。',
+          get q() {
+            const r = s242Pick(['0.4', '0.5', '0.6', '0.7', '0.8']);
+            const b = randInt(2, 4);
+            const s = randInt(1, 5);
+            const t = randInt(1, 5);
+            this._r = r;
+            return `已知 \\(r(x,y)=${r}\\)，求 \\(r(-x+${s},${b}y+${t})\\) 之值。`;
+          },
+          get a() {
+            const r = this._r || '0.6';
+            return `簡答：\\(-${r}\\)。過程：平移不影響相關係數；乘以負數會改變符號，乘以正數不改變符號，所以新相關係數為 \\(-${r}\\)。`;
+          },
         },
         {
-          q: '設 \\(y\\) 對 \\(x\\) 的迴歸線斜率為 0.4。若將所有 \\(x\\) 乘以 2、所有 \\(y\\) 乘以 3，求新數據的迴歸線斜率。',
-          a: '簡答：\\(\\frac35\\)。過程：令 \\(X=2x,Y=3y\\)。新斜率為 \\(\\frac{3}{2}\\) 倍原斜率，所以為 \\(\\frac32\\cdot0.4=0.6=\\frac35\\)。',
+          get q() {
+            const combo = s242Pick([
+              { b0: '0.4', kx: 2, ky: 3, ans: '\\frac35', calc: '\\frac32\\cdot0.4=0.6=\\frac35' },
+              { b0: '0.5', kx: 2, ky: 3, ans: '\\frac34', calc: '\\frac32\\cdot0.5=0.75=\\frac34' },
+              { b0: '0.6', kx: 3, ky: 2, ans: '\\frac25', calc: '\\frac23\\cdot0.6=0.4=\\frac25' },
+              { b0: '0.8', kx: 4, ky: 3, ans: '\\frac35', calc: '\\frac34\\cdot0.8=0.6=\\frac35' },
+              { b0: '0.9', kx: 3, ky: 2, ans: '\\frac35', calc: '\\frac23\\cdot0.9=0.6=\\frac35' },
+            ]);
+            this._c = combo;
+            return `設 \\(y\\) 對 \\(x\\) 的迴歸線斜率為 ${combo.b0}。若將所有 \\(x\\) 乘以 ${combo.kx}、所有 \\(y\\) 乘以 ${combo.ky}，求新數據的迴歸線斜率。`;
+          },
+          get a() {
+            const c = this._c || { b0: '0.4', kx: 2, ky: 3, ans: '\\frac35', calc: '\\frac32\\cdot0.4=0.6=\\frac35' };
+            return `簡答：\\(${c.ans}\\)。過程：令 \\(X=${c.kx}x,Y=${c.ky}y\\)。新斜率為 \\(\\frac{${c.ky}}{${c.kx}}\\) 倍原斜率，所以為 \\(${c.calc}\\)。`;
+          },
         },
         {
-          q: '某班成績調整，新分數 \\(y=1.5x-10\\)。若原始分數與另一科 \\(z\\) 的相關係數為 \\(r\\)，求調整後分數 \\(y\\) 與 \\(z\\) 的相關係數。',
-          a: '簡答：\\(r\\)。過程：\\(y=1.5x-10\\) 是對 \\(x\\) 做正倍數線性變換，相關係數不變，因此 \\(r(y,z)=r(x,z)=r\\)。',
+          get q() {
+            const scale = s242Pick(['1.5', '1.2', '2', '0.8']);
+            const shift = randInt(5, 20);
+            this._s = scale;
+            return `某班成績調整，新分數 \\(y=${scale}x-${shift}\\)。若原始分數與另一科 \\(z\\) 的相關係數為 \\(r\\)，求調整後分數 \\(y\\) 與 \\(z\\) 的相關係數。`;
+          },
+          get a() {
+            const s = this._s || '1.5';
+            return `簡答：\\(r\\)。過程：\\(y=${s}x-\\text{常數}\\) 是對 \\(x\\) 做正倍數線性變換，相關係數不變，因此 \\(r(y,z)=r(x,z)=r\\)。`;
+          },
         },
         {
           q: '說明當 \\(x,y\\) 均標準化後，其迴歸直線必為 \\(y^{\\prime}=rx^{\\prime}\\)。',
@@ -8631,12 +9903,30 @@
     return buildS223TemplateSet(
       [
         {
-          q: '已知 \\(y\\) 對 \\(x\\) 的迴歸線斜率為 \\(m_1\\)，\\(x\\) 對 \\(y\\) 的迴歸線斜率為 \\(m_2\\)，說明 \\(m_1m_2=r^2\\)。',
-          a: '簡答：\\(m_1m_2=r^2\\)。過程：\\(m_1=r\\frac{\\sigma_y}{\\sigma_x}\\)，\\(m_2=r\\frac{\\sigma_x}{\\sigma_y}\\)，相乘得 \\(m_1m_2=r^2\\)。',
+          get q() {
+            const pair = s242Pick([
+              ['m_1', 'm_2'],
+              ['b_1', 'b_2'],
+              ['k_1', 'k_2'],
+            ]);
+            this._p = pair;
+            return `已知 \\(y\\) 對 \\(x\\) 的迴歸線斜率為 \\(${pair[0]}\\)，\\(x\\) 對 \\(y\\) 的迴歸線斜率為 \\(${pair[1]}\\)，說明 \\(${pair[0]}${pair[1]}=r^2\\)。`;
+          },
+          get a() {
+            const p = this._p || ['m_1', 'm_2'];
+            return `簡答：\\(${p[0]}${p[1]}=r^2\\)。過程：\\(${p[0]}=r\\frac{\\sigma_y}{\\sigma_x}\\)，\\(${p[1]}=r\\frac{\\sigma_x}{\\sigma_y}\\)，相乘得 \\(${p[0]}${p[1]}=r^2\\)。`;
+          },
         },
         {
-          q: '若 \\(y\\) 對 \\(x\\) 的迴歸線斜率為正，判斷 \\(x\\) 與 \\(y\\) 是否為正相關。',
-          a: '簡答：是。過程：迴歸斜率 \\(b=r\\frac{\\sigma_y}{\\sigma_x}\\)。標準差皆為正，所以斜率正代表 \\(r>0\\)，即正相關。',
+          get q() {
+            const pos = randInt(0, 1) === 0;
+            this._pos = pos;
+            return `若 \\(y\\) 對 \\(x\\) 的迴歸線斜率為${pos ? '正' : '負'}，判斷 \\(x\\) 與 \\(y\\) 是否為${pos ? '正' : '負'}相關。`;
+          },
+          get a() {
+            const pos = this._pos !== undefined ? this._pos : true;
+            return `簡答：是。過程：迴歸斜率 \\(b=r\\frac{\\sigma_y}{\\sigma_x}\\)。標準差皆為正，所以斜率${pos ? '正' : '負'}代表 \\(r${pos ? '>' : '<'}0\\)，即${pos ? '正' : '負'}相關。`;
+          },
         },
         {
           q: '給定兩組數據的平均數與標準差，且已知相關係數 \\(r\\)，計算迴歸直線時是否一定通過平均點？',
@@ -8647,8 +9937,19 @@
           a: '簡答：可能不同。過程：迴歸直線只固定平均點與斜率；相關係數還受 \\(\\sigma_x,\\sigma_y\\) 與點群貼近直線程度影響，因此同一直線仍可能有不同 \\(r\\)。',
         },
         {
-          q: '在迴歸直線 \\(y=a+bx\\) 中，已知 \\(b=r\\frac{\\sigma_y}{\\sigma_x}\\)。若 \\(\\sigma_x<\\sigma_y\\)，判斷 \\(|b|\\) 是否必大於 \\(|r|\\)。',
-          a: '簡答：不一定；當 \\(r\\ne0\\) 時才會大於。過程：\\(|b|=|r|\\frac{\\sigma_y}{\\sigma_x}\\)。因 \\(\\sigma_y>\\sigma_x\\)，若 \\(|r|>0\\)，則 \\(|b|>|r|\\)；但若 \\(r=0\\)，則 \\(|b|=|r|=0\\)，所以不能說必大於。',
+          get q() {
+            const less = randInt(0, 1) === 0;
+            this._less = less;
+            return less
+              ? '在迴歸直線 \\(y=a+bx\\) 中，已知 \\(b=r\\frac{\\sigma_y}{\\sigma_x}\\)。若 \\(\\sigma_x<\\sigma_y\\)，判斷 \\(|b|\\) 是否必大於 \\(|r|\\)。'
+              : '在迴歸直線 \\(y=a+bx\\) 中，已知 \\(b=r\\frac{\\sigma_y}{\\sigma_x}\\)。若 \\(\\sigma_x>\\sigma_y\\)，判斷 \\(|b|\\) 是否必小於 \\(|r|\\)。';
+          },
+          get a() {
+            const less = this._less !== undefined ? this._less : true;
+            return less
+              ? '簡答：不一定；當 \\(r\\ne0\\) 時才會大於。過程：\\(|b|=|r|\\frac{\\sigma_y}{\\sigma_x}\\)。因 \\(\\sigma_y>\\sigma_x\\)，若 \\(|r|>0\\)，則 \\(|b|>|r|\\)；但若 \\(r=0\\)，則 \\(|b|=|r|=0\\)，所以不能說必大於。'
+              : '簡答：不一定；當 \\(r\\ne0\\) 時才會小於。過程：\\(|b|=|r|\\frac{\\sigma_y}{\\sigma_x}\\)。因 \\(\\sigma_y<\\sigma_x\\)，若 \\(|r|>0\\)，則 \\(|b|<|r|\\)；但若 \\(r=0\\)，則 \\(|b|=|r|=0\\)，所以不能說必小於。';
+          },
         },
       ],
       count
@@ -8845,27 +10146,74 @@
   }
 
   function buildS232MeanPointSet(count) {
-    return buildS223TemplateSet(
+    return buildS223DynamicSet(
       [
-        {
-          q: '某組數據的迴歸線為 \\(y=2x+5\\)，已知 \\(\\mu_x=10\\)，求 \\(\\mu_y\\)。',
-          a: '簡答：25。過程：迴歸線必通過平均點，所以 \\(\\mu_y=2\\cdot10+5=25\\)。',
+        () => {
+          const m = randInt(2, 5);
+          const c = randInt(1, 9);
+          const mx = 5 * randInt(2, 8);
+          const my = m * mx + c;
+          return {
+            q: `某組數據的迴歸線為 \\(y=${m}x+${c}\\)，已知 \\(\\mu_x=${mx}\\)，求 \\(\\mu_y\\)。`,
+            a: `簡答：${my}。過程：迴歸線必通過平均點，所以 \\(\\mu_y=${m}\\cdot${mx}+${c}=${my}\\)。`,
+          };
         },
-        {
-          q: '已知 \\(\\mu_x=60,\\mu_y=70\\)，且迴歸線通過 \\((50,62)\\)，求該迴歸線方程式。',
-          a: '簡答：\\(y-70=\\frac{4}{5}(x-60)\\)。過程：迴歸線通過 \\((60,70)\\) 與 \\((50,62)\\)，斜率為 \\(\\frac{70-62}{60-50}=\\frac{4}{5}\\)，故方程式為 \\(y-70=\\frac{4}{5}(x-60)\\)。',
+        () => {
+          const mx = 10 * randInt(4, 8);
+          const my = 10 * randInt(4, 8);
+          const dxs = s242Pick([10, 20]);
+          const num = randInt(2, 9);
+          const px = mx - dxs;
+          const py = my - (num * dxs) / 10;
+          if (!Number.isInteger(py)) {
+            return {
+              q: `已知 \\(\\mu_x=60,\\mu_y=70\\)，且迴歸線通過 \\((50,62)\\)，求該迴歸線方程式。`,
+              a: `簡答：\\(y-70=\\frac{4}{5}(x-60)\\)。過程：迴歸線通過 \\((60,70)\\) 與 \\((50,62)\\)，斜率為 \\(\\frac{70-62}{60-50}=\\frac{4}{5}\\)，故方程式為 \\(y-70=\\frac{4}{5}(x-60)\\)。`,
+            };
+          }
+          const slopeText = formatFraction(my - py, mx - px);
+          return {
+            q: `已知 \\(\\mu_x=${mx},\\mu_y=${my}\\)，且迴歸線通過 \\((${px},${py})\\)，求該迴歸線方程式。`,
+            a: `簡答：\\(y-${my}=${slopeText}(x-${mx})\\)。過程：迴歸線通過 \\((${mx},${my})\\) 與 \\((${px},${py})\\)，斜率為 \\(\\frac{${my}-${py}}{${mx}-${px}}=${slopeText}\\)，故方程式為 \\(y-${my}=${slopeText}(x-${mx})\\)。`,
+          };
         },
-        {
-          q: '給定三筆數據 \\((2,4),(4,6),(a,b)\\)，若其迴歸線為 \\(y=x+2\\) 且 \\(\\mu_x=4\\)，求數對 \\((a,b)\\)。',
-          a: '簡答：\\((6,8)\\)。過程：\\(\\mu_x=(2+4+a)/3=4\\)，得 \\(a=6\\)。平均點在迴歸線上，所以 \\(\\mu_y=4+2=6\\)。因此 \\((4+6+b)/3=6\\)，得 \\(b=8\\)。',
+        () => {
+          const x1 = randInt(1, 3);
+          const x2 = x1 + 2;
+          const a = 3 * randInt(3, 5) - x1 - x2;
+          const mx = (x1 + x2 + a) / 3;
+          const m = randInt(1, 3);
+          const c = randInt(1, 4);
+          const y1 = m * x1 + c + 1;
+          const y2 = m * x2 + c - 1;
+          const my = m * mx + c;
+          const b = 3 * my - y1 - y2;
+          const mTextLine = m === 1 ? 'x' : `${m}x`;
+          return {
+            q: `給定三筆數據 \\((${x1},${y1}),(${x2},${y2}),(a,b)\\)，若其迴歸線為 \\(y=${mTextLine}+${c}\\) 且 \\(\\mu_x=${mx}\\)，求數對 \\((a,b)\\)。`,
+            a: `簡答：\\((${a},${b})\\)。過程：\\(\\mu_x=(${x1}+${x2}+a)/3=${mx}\\)，得 \\(a=${a}\\)。平均點在迴歸線上，所以 \\(\\mu_y=${m}\\cdot${mx}+${c}=${my}\\)。因此 \\((${y1}+${y2}+b)/3=${my}\\)，得 \\(b=${b}\\)。`,
+          };
         },
-        {
-          q: '設 \\(y\\) 對 \\(x\\) 的迴歸線為 \\(y=-3x+100\\)。試問該直線與 \\(y=x\\) 的交點是否可能為平均點？',
-          a: '簡答：可能。過程：交點由 \\(x=-3x+100\\) 得 \\((25,25)\\)。只要資料的平均點為 \\((25,25)\\)，迴歸線就會通過它，因此該交點可能是平均點。',
+        () => {
+          const k = randInt(2, 4);
+          const cross = 25 * randInt(1, 4);
+          const c = (k + 1) * cross;
+          return {
+            q: `設 \\(y\\) 對 \\(x\\) 的迴歸線為 \\(y=-${k}x+${c}\\)。試問該直線與 \\(y=x\\) 的交點是否可能為平均點？`,
+            a: `簡答：可能。過程：交點由 \\(x=-${k}x+${c}\\) 得 \\((${cross},${cross})\\)。只要資料的平均點為 \\((${cross},${cross})\\)，迴歸線就會通過它，因此該交點可能是平均點。`,
+          };
         },
-        {
-          q: '若數據經過平移後新平均點為 \\((0,0)\\)，且原迴歸線為 \\(y=0.5x+3\\)、\\(\\mu_x=4\\)，求新迴歸線方程式。',
-          a: '簡答：\\(Y=\\frac12X\\)。過程：原平均點在迴歸線上，故 \\(\\mu_y=0.5\\cdot4+3=5\\)。令 \\(X=x-4,Y=y-5\\)，代入原式得 \\(Y+5=0.5(X+4)+3\\)，化簡為 \\(Y=0.5X\\)。',
+        () => {
+          const mNum = s242Pick([1, 3]);
+          const mx = 2 * randInt(2, 5);
+          const c = randInt(1, 5);
+          const my = (mNum * mx) / 2 + c;
+          const mText = mNum === 1 ? '0.5' : '1.5';
+          const slopeFrac = mNum === 1 ? '\\frac12' : '\\frac32';
+          return {
+            q: `若數據經過平移後新平均點為 \\((0,0)\\)，且原迴歸線為 \\(y=${mText}x+${c}\\)、\\(\\mu_x=${mx}\\)，求新迴歸線方程式。`,
+            a: `簡答：\\(Y=${slopeFrac}X\\)。過程：原平均點在迴歸線上，故 \\(\\mu_y=${mText}\\cdot${mx}+${c}=${my}\\)。令 \\(X=x-${mx},Y=y-${my}\\)，代入原式得 \\(Y+${my}=${mText}(X+${mx})+${c}\\)，化簡為 \\(Y=${mText}X\\)。`,
+          };
         },
       ],
       count
@@ -8876,16 +10224,50 @@
     return buildS223TemplateSet(
       [
         {
-          q: '給定數據 \\((2,1),(3,2),(2,3)\\)，求實數 \\(a,b\\) 使 \\(D=\\sum_{i=1}^3(y_i-a-bx_i)^2\\) 最小。',
-          a: '簡答：\\(a=2,b=0\\)。過程：\\(\\bar x=\\frac73,\\bar y=2\\)。計算 \\(S_{xy}=0\\)，所以最小平方法斜率 \\(b=0\\)，截距 \\(a=\\bar y-b\\bar x=2\\)。',
+          get q() {
+            const x1 = randInt(2, 4);
+            const yMid = randInt(2, 4);
+            const t = randInt(1, 2);
+            this._d = { x1, yMid, t };
+            return `給定數據 \\((${x1},${yMid - t}),(${x1 + 1},${yMid}),(${x1},${yMid + t})\\)，求實數 \\(a,b\\) 使 \\(D=\\sum_{i=1}^3(y_i-a-bx_i)^2\\) 最小。`;
+          },
+          get a() {
+            const d = this._d || { x1: 2, yMid: 2, t: 1 };
+            return `簡答：\\(a=${d.yMid},b=0\\)。過程：\\(\\bar x=\\frac{${3 * d.x1 + 1}}{3},\\bar y=${d.yMid}\\)。兩個 \\(x=${d.x1}\\) 的點其 \\(y\\) 對稱於 \\(\\bar y\\)，計算 \\(S_{xy}=0\\)，所以最小平方法斜率 \\(b=0\\)，截距 \\(a=\\bar y-b\\bar x=${d.yMid}\\)。`;
+          },
         },
         {
-          q: '設 \\(g(a,b)=(a+b-1)^2+(a+2b-3)^2+(a+4b-7)^2+(a+5b-9)^2\\)，求使 \\(g(a,b)\\) 產生最小值的數對 \\((a,b)\\)。',
-          a: '簡答：\\((a,b)=(-1,2)\\)。過程：這等同用直線 \\(y=a+bx\\) 配適點 \\((1,1),(2,3),(4,7),(5,9)\\)。由 \\(\\bar x=3,\\bar y=5\\)，\\(S_{xx}=10,S_{xy}=20\\)，得 \\(b=2\\)，\\(a=5-2\\cdot3=-1\\)。',
+          get q() {
+            const b = randInt(2, 4);
+            const a0 = randInt(-3, 2);
+            const xs = [1, 2, 4, 5];
+            const devs = [1, -1, -1, 1];
+            const ys = xs.map((x, i) => a0 + b * x + devs[i]);
+            this._d = { b, a0, xs, ys };
+            const terms = xs.map((x, i) => `(a+${x === 1 ? '' : x}b-${ys[i]})^2`).join('+');
+            return `設 \\(g(a,b)=${terms}\\)，求使 \\(g(a,b)\\) 產生最小值的數對 \\((a,b)\\)。`;
+          },
+          get a() {
+            const d = this._d || { b: 2, a0: -1, xs: [1, 2, 4, 5], ys: [1, 3, 7, 9] };
+            const xbar = 3;
+            const ybar = (d.ys[0] + d.ys[1] + d.ys[2] + d.ys[3]) / 4;
+            const pts = d.xs.map((x, i) => `(${x},${d.ys[i]})`).join(',');
+            const sxy = d.xs.reduce((acc, x, i) => acc + (x - xbar) * (d.ys[i] - ybar), 0);
+            return `簡答：\\((a,b)=(${d.a0},${d.b})\\)。過程：這等同用直線 \\(y=a+bx\\) 配適點 \\(${pts}\\)。由 \\(\\bar x=3,\\bar y=${ybar}\\)，\\(S_{xx}=10,S_{xy}=${sxy}\\)，得 \\(b=${d.b}\\)，\\(a=${ybar}-${d.b}\\cdot3=${d.a0}\\)。`;
+          },
         },
         {
-          q: '已知三點 \\((1,2),(2,3),(3,k)\\)，若最小平方法所得迴歸線斜率為 1，求 \\(k\\)。',
-          a: '簡答：4。過程：\\(\\bar x=2\\)，\\(S_{xx}=2\\)。\\(\\bar y=\\frac{5+k}{3}\\)，\\(S_{xy}=(-1)(2-\\bar y)+0+(1)(k-\\bar y)=k-2\\)。斜率 \\(b=\\frac{S_{xy}}{S_{xx}}=\\frac{k-2}{2}=1\\)，得 \\(k=4\\)。',
+          get q() {
+            const y1 = randInt(1, 4);
+            const slope = randInt(1, 3);
+            this._d = { y1, slope };
+            return `已知三點 \\((1,${y1}),(2,${y1 + 1}),(3,k)\\)，若最小平方法所得迴歸線斜率為 ${slope}，求 \\(k\\)。`;
+          },
+          get a() {
+            const d = this._d || { y1: 2, slope: 1 };
+            const k = 2 * d.slope + d.y1;
+            return `簡答：${k}。過程：\\(\\bar x=2\\)，\\(S_{xx}=2\\)。\\(S_{xy}=(-1)(${d.y1}-\\bar y)+0+(1)(k-\\bar y)=k-${d.y1}\\)。斜率 \\(b=\\frac{S_{xy}}{S_{xx}}=\\frac{k-${d.y1}}{2}=${d.slope}\\)，得 \\(k=${k}\\)。`;
+          },
         },
         {
           q: '證明當 \\(y=a+bx\\) 為迴歸線時，\\(\\sum (y_i-\\mu_y)=b\\sum(x_i-\mu_x)\\) 恆成立。',
@@ -8901,27 +10283,66 @@
   }
 
   function buildS232TransformedRegressionSet(count) {
-    return buildS223TemplateSet(
+    return buildS223DynamicSet(
       [
-        {
-          q: '原數據 \\(y\\) 對 \\(x\\) 的迴歸線為 \\(y=0.5x+3\\)。若令 \\(x^{\\prime}=10x+2\\)、\\(y^{\\prime}=y-6\\)，求新數據 \\(y^{\\prime}\\) 對 \\(x^{\\prime}\\) 的迴歸線。',
-          a: '簡答：\\(y^{\\prime}=\\frac1{20}x^{\\prime}-\\frac{31}{10}\\)。過程：由 \\(x=\\frac{x^{\\prime}-2}{10}\\)、\\(y=y^{\\prime}+6\\)，代入 \\(y=0.5x+3\\)，得 \\(y^{\\prime}+6=\\frac12\\cdot\\frac{x^{\\prime}-2}{10}+3\\)，化簡即得。',
+        () => {
+          const mDen = 2;
+          const c = randInt(2, 6);
+          const k = s242Pick([5, 10]);
+          const s = randInt(1, 4);
+          const t = randInt(2, 8);
+          // y = x/2 + c；x' = kx + s，y' = y − t
+          const slopeText = formatFraction(1, 2 * k);
+          const constNumer = -s - 2 * k * (t - c);
+          const constText = formatFraction(constNumer, 2 * k);
+          return {
+            q: `原數據 \\(y\\) 對 \\(x\\) 的迴歸線為 \\(y=0.5x+${c}\\)。若令 \\(x^{\\prime}=${k}x+${s}\\)、\\(y^{\\prime}=y-${t}\\)，求新數據 \\(y^{\\prime}\\) 對 \\(x^{\\prime}\\) 的迴歸線。`,
+            a: `簡答：\\(y^{\\prime}=${slopeText}x^{\\prime}${constNumer >= 0 ? '+' : ''}${constText}\\)。過程：由 \\(x=\\frac{x^{\\prime}-${s}}{${k}}\\)、\\(y=y^{\\prime}+${t}\\)，代入 \\(y=0.5x+${c}\\)，得 \\(y^{\\prime}+${t}=\\frac12\\cdot\\frac{x^{\\prime}-${s}}{${k}}+${c}\\)，化簡即得。`,
+          };
         },
-        {
-          q: '已知身高 \\(x\\)（公分）與體重 \\(y\\)（公斤）的迴歸線為 \\(y=0.6x-50\\)。若將身高單位改為吋（1 吋 = 2.54 公分），求新的迴歸線斜率。',
-          a: '簡答：1.524。過程：若新變數 \\(X\\) 為吋，則原身高 \\(x=2.54X\\)。代入得 \\(y=0.6(2.54X)-50=1.524X-50\\)，斜率為 1.524。',
+        () => {
+          const b = s242Pick([0.4, 0.5, 0.6, 0.8]);
+          const c = 10 * randInt(3, 7);
+          const newSlope = Math.round(b * 2.54 * 1000) / 1000;
+          return {
+            q: `已知身高 \\(x\\)（公分）與體重 \\(y\\)（公斤）的迴歸線為 \\(y=${b}x-${c}\\)。若將身高單位改為吋（1 吋 = 2.54 公分），求新的迴歸線斜率。`,
+            a: `簡答：${newSlope}。過程：若新變數 \\(X\\) 為吋，則原身高 \\(x=2.54X\\)。代入得 \\(y=${b}(2.54X)-${c}=${newSlope}X-${c}\\)，斜率為 ${newSlope}。`,
+          };
         },
-        {
-          q: '設 \\(y\\) 對 \\(x\\) 的迴歸線為 \\(y=0.25x+0.13\\)。若將所有 \\(x_i\\) 均加上 10，所有 \\(y_i\\) 均加上 20，求迴歸線的斜率是否改變。',
-          a: '簡答：不改變，仍為 \\(0.25\\)。過程：平移資料只改變平均點與截距，不改變離差與斜率，因此新迴歸線斜率仍為 0.25。',
+        () => {
+          const b = s242Pick(['0.25', '0.4', '0.75', '1.2']);
+          const c = s242Pick(['0.13', '0.5', '1.4']);
+          const dx = 5 * randInt(1, 4);
+          const dy = 5 * randInt(2, 6);
+          return {
+            q: `設 \\(y\\) 對 \\(x\\) 的迴歸線為 \\(y=${b}x+${c}\\)。若將所有 \\(x_i\\) 均加上 ${dx}，所有 \\(y_i\\) 均加上 ${dy}，求迴歸線的斜率是否改變。`,
+            a: `簡答：不改變，仍為 \\(${b}\\)。過程：平移資料只改變平均點與截距，不改變離差與斜率，因此新迴歸線斜率仍為 ${b}。`,
+          };
         },
-        {
-          q: '若將數據標準化後所得迴歸線為 \\(y^{\\prime}=0.8x^{\\prime}\\)，已知 \\(\\mu_x=10,\\mu_y=20,\\sigma_x=2,\\sigma_y=5\\)，還原出原始數據的迴歸線。',
-          a: '簡答：\\(y=2x\\)。過程：標準化迴歸線斜率 0.8 即 \\(r=0.8\\)。原斜率為 \\(r\\frac{\\sigma_y}{\\sigma_x}=0.8\\cdot\\frac52=2\\)。通過平均點 \\((10,20)\\)，所以 \\(y-20=2(x-10)\\)，即 \\(y=2x\\)。',
+        () => {
+          const combo = s242Pick([
+            { r: '0.8', sx: 2, sy: 5, slope: 2 },
+            { r: '0.6', sx: 3, sy: 10, slope: 2 },
+            { r: '0.9', sx: 3, sy: 10, slope: 3 },
+            { r: '0.5', sx: 2, sy: 16, slope: 4 },
+          ]);
+          const mx = 5 * randInt(2, 6);
+          const my = combo.slope * mx;
+          return {
+            q: `若將數據標準化後所得迴歸線為 \\(y^{\\prime}=${combo.r}x^{\\prime}\\)，已知 \\(\\mu_x=${mx},\\mu_y=${my},\\sigma_x=${combo.sx},\\sigma_y=${combo.sy}\\)，還原出原始數據的迴歸線。`,
+            a: `簡答：\\(y=${combo.slope}x\\)。過程：標準化迴歸線斜率 ${combo.r} 即 \\(r=${combo.r}\\)。原斜率為 \\(r\\frac{\\sigma_y}{\\sigma_x}=${combo.r}\\cdot\\frac{${combo.sy}}{${combo.sx}}=${combo.slope}\\)。通過平均點 \\((${mx},${my})\\)，所以 \\(y-${my}=${combo.slope}(x-${mx})\\)，即 \\(y=${combo.slope}x\\)。`,
+          };
         },
-        {
-          q: '某公司統計廣告費 \\(x\\) 與營業額 \\(y\\) 的關係為 \\(\\hat y=3x-17\\)。若廣告費改以「增加 10% 後的數值」\\(x^{\\prime}=\\frac{11}{10}x\\) 表示，且營業額全面提升 5 單位，求新預測模型。',
-          a: '簡答：\\(\\hat y^{\\prime}=\\frac{30}{11}x^{\\prime}-12\\)。過程：新營業額 \\(y^{\\prime}=y+5\\)，且 \\(x=\\frac{10}{11}x^{\\prime}\\)。代入得 \\(\\hat y^{\\prime}=3\\cdot\\frac{10}{11}x^{\\prime}-17+5=\\frac{30}{11}x^{\\prime}-12\\)。',
+        () => {
+          const m = randInt(2, 5);
+          const c = randInt(10, 30);
+          const lift = randInt(3, 8);
+          const slopeText = `\\frac{${10 * m}}{11}`;
+          const newConst = c - lift;
+          return {
+            q: `某公司統計廣告費 \\(x\\) 與營業額 \\(y\\) 的關係為 \\(\\hat y=${m}x-${c}\\)。若廣告費改以「增加 10% 後的數值」\\(x^{\\prime}=\\frac{11}{10}x\\) 表示，且營業額全面提升 ${lift} 單位，求新預測模型。`,
+            a: `簡答：\\(\\hat y^{\\prime}=${slopeText}x^{\\prime}-${newConst}\\)。過程：新營業額 \\(y^{\\prime}=y+${lift}\\)，且 \\(x=\\frac{10}{11}x^{\\prime}\\)。代入得 \\(\\hat y^{\\prime}=${m}\\cdot\\frac{10}{11}x^{\\prime}-${c}+${lift}=${slopeText}x^{\\prime}-${newConst}\\)。`,
+          };
         },
       ],
       count
@@ -9135,7 +10556,8 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       if (i % 3 === 0) {
-        const angle = s241Pick([720, 810, 930, 1120, 1280, -250, -530, 2000]);
+        const sign = randInt(0, 1) === 0 ? 1 : -1;
+        const angle = sign * (360 + 5 * randInt(1, 216));
         const remainder = s241AngleMod(angle);
         const positive = remainder === 0 ? 360 : remainder;
         const negative = remainder === 0 ? -360 : remainder - 360;
@@ -9156,7 +10578,9 @@
           `簡答：${signs[quad]}。過程：依各象限座標 \\((x,y)\\) 的正負判斷：\\(\\cos\\theta\\) 看 \\(x\\)，\\(\\sin\\theta\\) 看 \\(y\\)，\\(\\tan\\theta=\\frac{y}{x}\\)。`
         );
       } else {
-        const angle = s241Pick([120, 210, 237, 315, -177, -350, 725]);
+        let angle = randInt(-720, 720);
+        for (let retry = 0; retry < 10 && angle % 90 === 0; retry += 1) angle = randInt(-720, 720);
+        if (angle % 90 === 0) angle += 37;
         const q = s241Quadrant(angle);
         questions.push(`判斷角 \\(${angle}^\\circ\\) 的終邊所在位置。`);
         answers.push(
@@ -9175,12 +10599,22 @@
       const theta = s241Pick([10, 20, 30, 40, 50, 60, 70, 80]);
       const type = i % 5;
       if (type === 0) {
-        questions.push(
-          `化簡 \\(\\sin(90^\\circ+\\theta)\\cos(90^\\circ+\\theta)-\\sin(180^\\circ-\\theta)\\cos(180^\\circ-\\theta)\\)。`
-        );
-        answers.push(
-          `簡答：0。過程：\\(\\sin(90^\\circ+\\theta)=\\cos\\theta\\)，\\(\\cos(90^\\circ+\\theta)=-\\sin\\theta\\)，第一項為 \\(-\\sin\\theta\\cos\\theta\\)。又 \\(\\sin(180^\\circ-\\theta)=\\sin\\theta\\)，\\(\\cos(180^\\circ-\\theta)=-\\cos\\theta\\)，第二項也為 \\(-\\sin\\theta\\cos\\theta\\)，相減得 0。`
-        );
+        const variant = s241Pick([
+          {
+            q: '\\sin(90^\\circ+\\theta)\\cos(90^\\circ+\\theta)-\\sin(180^\\circ-\\theta)\\cos(180^\\circ-\\theta)',
+            why: '\\(\\sin(90^\\circ+\\theta)=\\cos\\theta\\)，\\(\\cos(90^\\circ+\\theta)=-\\sin\\theta\\)，第一項為 \\(-\\sin\\theta\\cos\\theta\\)。又 \\(\\sin(180^\\circ-\\theta)=\\sin\\theta\\)，\\(\\cos(180^\\circ-\\theta)=-\\cos\\theta\\)，第二項也為 \\(-\\sin\\theta\\cos\\theta\\)，相減得 0。',
+          },
+          {
+            q: '\\sin(180^\\circ+\\theta)\\cos(180^\\circ+\\theta)-\\sin\\theta\\cos\\theta',
+            why: '\\(\\sin(180^\\circ+\\theta)=-\\sin\\theta\\)、\\(\\cos(180^\\circ+\\theta)=-\\cos\\theta\\)，第一項為 \\(\\sin\\theta\\cos\\theta\\)，與第二項相減得 0。',
+          },
+          {
+            q: '\\cos(360^\\circ-\\theta)\\cos(-\\theta)-\\cos^2\\theta',
+            why: '\\(\\cos(360^\\circ-\\theta)=\\cos\\theta\\)、\\(\\cos(-\\theta)=\\cos\\theta\\)，第一項為 \\(\\cos^2\\theta\\)，相減得 0。',
+          },
+        ]);
+        questions.push(`化簡 \\(${variant.q}\\)。`);
+        answers.push(`簡答：0。過程：${variant.why}`);
       } else if (type === 1) {
         questions.push(`計算 \\(\\cos${theta}^\\circ+\\cos${180 - theta}^\\circ\\) 之值。`);
         answers.push(
@@ -9646,9 +11080,14 @@
   function buildS242SineSideRatioSet(count) {
     const patterns = [
       { angles: [30, 60, 90], ratio: ['1', '\\sqrt{3}', '2'] },
+      { angles: [60, 30, 90], ratio: ['\\sqrt{3}', '1', '2'] },
+      { angles: [90, 30, 60], ratio: ['2', '1', '\\sqrt{3}'] },
       { angles: [45, 45, 90], ratio: ['1', '1', '\\sqrt{2}'] },
+      { angles: [90, 45, 45], ratio: ['\\sqrt{2}', '1', '1'] },
       { angles: [30, 75, 75], ratio: ['2', '\\sqrt{6}+\\sqrt{2}', '\\sqrt{6}+\\sqrt{2}'] },
       { angles: [60, 60, 60], ratio: ['1', '1', '1'] },
+      { angles: [120, 30, 30], ratio: ['\\sqrt{3}', '1', '1'] },
+      { angles: [30, 30, 120], ratio: ['1', '1', '\\sqrt{3}'] },
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -9771,11 +11210,18 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const b = s242Pick([8, 10, 12, 14, 16]);
+      const b = s242Pick([8, 10, 12, 14, 16, 18, 20]);
       const A = 30;
       const h = b / 2;
       const mode = i % 4;
-      const a = mode === 0 ? h - 1 : mode === 1 ? h : mode === 2 ? h + s242Pick([1, 2, 3]) : b + s242Pick([1, 2, 4]);
+      const a =
+        mode === 0
+          ? h - randInt(1, Math.max(1, h - 2))
+          : mode === 1
+            ? h
+            : mode === 2
+              ? h + randInt(1, h - 1)
+              : b + randInt(1, 8);
       const result = mode === 0 ? '無解' : mode === 1 ? '一解' : mode === 2 ? '兩解' : '一解';
       const reason =
         mode === 0
@@ -9839,10 +11285,16 @@
   function buildS242CosineSssAngleSet(count) {
     const triples = [
       { a: 5, b: 4, c: 3, angle: '90^\\circ', cos: '0' },
+      { a: 13, b: 12, c: 5, angle: '90^\\circ', cos: '0' },
       { a: 7, b: 5, c: 3, angle: '120^\\circ', cos: '-\\frac12' },
       { a: 13, b: 8, c: 7, angle: '120^\\circ', cos: '-\\frac12' },
       { a: 7, b: 8, c: 5, angle: '60^\\circ', cos: '\\frac12' },
       { a: 5, b: 5, c: 6, angle: '約 \\(53.1^\\circ\\)', cos: '\\frac{3}{5}' },
+      { a: 8, b: 7, c: 5, angle: '銳角', cos: '\\frac{1}{7}' },
+      { a: 9, b: 7, c: 5, angle: '鈍角', cos: '-\\frac{1}{10}' },
+      { a: 6, b: 5, c: 4, angle: '銳角', cos: '\\frac{1}{8}' },
+      { a: 11, b: 8, c: 7, angle: '鈍角', cos: '-\\frac{1}{14}' },
+      { a: 4, b: 5, c: 6, angle: '銳角', cos: '\\frac{3}{4}' },
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -9873,7 +11325,7 @@
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
       const letter = s242Pick(['A', 'B', 'C']);
-      const wording = s242Pick(['邊長關係', '代數條件']);
+      const wording = s242Pick(['邊長關係', '代數條件', '三邊長']);
       const pair = letter === 'A' ? ['b', 'c', 'a'] : letter === 'B' ? ['c', 'a', 'b'] : ['a', 'b', 'c'];
       const coefficient = item.k === 1 ? '' : String(item.k);
       questions.push(
@@ -10110,13 +11562,17 @@
       { hyp: 13, leg1: 5, leg2: 12, h: [60, 13] },
       { hyp: 17, leg1: 8, leg2: 15, h: [120, 17] },
       { hyp: 25, leg1: 7, leg2: 24, h: [168, 25] },
+      { hyp: 29, leg1: 20, leg2: 21, h: [420, 29] },
+      { hyp: 41, leg1: 9, leg2: 40, h: [360, 41] },
+      { hyp: 37, leg1: 12, leg2: 35, h: [420, 37] },
+      { hyp: 53, leg1: 28, leg2: 45, h: [1260, 53] },
     ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const item = s242Pick(cases);
-      const scale = s242Pick([1, 2, 3]);
+      const scale = s242Pick([1, 2, 3, 4, 5]);
       const hText = formatFraction(item.h[0] * scale, item.h[1]);
       questions.push(
         `直角 \\(\\triangle ABC\\) 中，\\(\\angle C=90^\\circ\\)，兩股長為 ${item.leg1 * scale} 與 ${item.leg2 * scale}，求斜邊上的高。`
@@ -10351,16 +11807,32 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const item = s242Pick(cases);
-      const scale = s242Pick([1, 2, 3]);
-      const base = item.base * scale;
-      const ans = item.answer(scale);
-      questions.push(
-        `岸邊取基線 \\(AB=${base}\\) 公尺，觀測對岸目標 \\(C\\)，已知 \\(\\angle CAB=${item.A}^\\circ\\)、\\(\\angle CBA=${item.B}^\\circ\\)，求${item.target}。`
-      );
-      answers.push(
-        `簡答：\\(${ans}\\) 公尺。過程：先得 \\(\\angle C=180^\\circ-${item.A}^\\circ-${item.B}^\\circ\\)。由正弦定理，所求邊可用 \\(\\frac{AB}{\\sin C}\\) 與對應角的正弦相乘；代入基線與兩端角即可得到 \\(${ans}\\)。`
-      );
+      // 一半機率取特殊角案例（答案可化簡），一半機率隨機角度（答案保留正弦式）。
+      if (randInt(0, 1) === 0) {
+        const item = s242Pick(cases);
+        const scale = s242Pick([1, 2, 3, 4]);
+        const base = item.base * scale;
+        const ans = item.answer(scale);
+        questions.push(
+          `岸邊取基線 \\(AB=${base}\\) 公尺，觀測對岸目標 \\(C\\)，已知 \\(\\angle CAB=${item.A}^\\circ\\)、\\(\\angle CBA=${item.B}^\\circ\\)，求${item.target}。`
+        );
+        answers.push(
+          `簡答：\\(${ans}\\) 公尺。過程：先得 \\(\\angle C=180^\\circ-${item.A}^\\circ-${item.B}^\\circ\\)。由正弦定理，所求邊可用 \\(\\frac{AB}{\\sin C}\\) 與對應角的正弦相乘；代入基線與兩端角即可得到 \\(${ans}\\)。`
+        );
+      } else {
+        const A = 5 * randInt(5, 14);
+        let B = 5 * randInt(5, 14);
+        for (let retry = 0; retry < 10 && A + B >= 155; retry += 1) B = 5 * randInt(5, 14);
+        if (A + B >= 155) B = 150 - A;
+        const base = 10 * randInt(5, 30);
+        const ans = `\\frac{${base}\\sin ${A}^\\circ}{\\sin ${A + B}^\\circ}`;
+        questions.push(
+          `岸邊取基線 \\(AB=${base}\\) 公尺，觀測對岸目標 \\(C\\)，已知 \\(\\angle CAB=${A}^\\circ\\)、\\(\\angle CBA=${B}^\\circ\\)，求目標 \\(C\\) 到右端觀測點 \\(B\\) 的距離。`
+        );
+        answers.push(
+          `簡答：\\(${ans}\\) 公尺。過程：先得 \\(\\angle C=180^\\circ-${A}^\\circ-${B}^\\circ=${180 - A - B}^\\circ\\)。由正弦定理 \\(\\frac{BC}{\\sin A}=\\frac{AB}{\\sin C}\\)，且 \\(\\sin(180^\\circ-${A + B}^\\circ)=\\sin ${A + B}^\\circ\\)，得 \\(BC=${ans}\\)。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -10490,17 +11962,29 @@
   }
 
   function buildS243CommonElevationCircumradiusSet(count) {
-    const cases = [
-      { triangle: '300、400、500', R: 250, theta: 30, h: '\\frac{250\\sqrt{3}}{3}' },
-      { triangle: '300、300、300', R: '100\\sqrt{3}', theta: 30, h: '100' },
-      { triangle: '3、4、5', R: '\\frac{5}{2}', theta: 60, h: '\\frac{5\\sqrt{3}}{2}' },
-      { triangle: '200、200、200', R: '\\frac{200\\sqrt{3}}{3}', theta: 60, h: '200' },
-    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const item = s242Pick(cases);
+      let item;
+      if (randInt(0, 1) === 0) {
+        // 3-4-5 直角三角形（外接圓半徑 = 斜邊一半）
+        const k = s242Pick([1, 2, 20, 40, 60, 100]);
+        const theta = s242Pick([30, 45, 60]);
+        const Rtext = k % 2 === 0 ? String((5 * k) / 2) : `\\frac{${5 * k}}{2}`;
+        let h;
+        if (theta === 30) h = k % 2 === 0 ? `\\frac{${(5 * k) / 2}\\sqrt{3}}{3}` : `\\frac{${5 * k}\\sqrt{3}}{6}`;
+        else if (theta === 45) h = Rtext;
+        else h = k % 2 === 0 ? `${(5 * k) / 2}\\sqrt{3}` : `\\frac{${5 * k}\\sqrt{3}}{2}`;
+        item = { triangle: `${3 * k}、${4 * k}、${5 * k}`, R: Rtext, theta, h };
+      } else {
+        // 正三角形（R = s√3/3）
+        const s = s242Pick([120, 150, 180, 210, 240, 300, 360]);
+        const theta = s242Pick([30, 60]);
+        const Rtext = `\\frac{${s}\\sqrt{3}}{3}`;
+        const h = theta === 60 ? String(s) : s % 3 === 0 ? String(s / 3) : `\\frac{${s}}{3}`;
+        item = { triangle: `${s}、${s}、${s}`, R: Rtext, theta, h };
+      }
       const target = s242Pick(['塔頂', '山頂標誌', '無線電塔頂', '觀測氣球']);
       questions.push(
         `地面三點 \\(A,B,C\\) 對同一${target}的仰角都為 \\(${item.theta}^\\circ\\)，且 \\(\\triangle ABC\\) 的三邊長為 ${item.triangle} 公尺。求${target}高度。`
@@ -10513,17 +11997,22 @@
   }
 
   function buildS243DepressionTwoTargetsSet(count) {
-    const cases = [
-      { h: 150, a: 45, b: 30, ans: '150(\\sqrt{3}-1)' },
-      { h: '100\\sqrt{3}', a: 60, b: 30, ans: '200' },
-      { h: 200, a: 45, b: 30, ans: '200(\\sqrt{3}-1)' },
-      { h: 2400, a: 45, b: 30, ans: '2400(\\sqrt{3}-1)' },
-    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const item = s242Pick(cases);
+      let item;
+      const template = randInt(0, 2);
+      if (template === 0) {
+        const n = s242Pick([100, 150, 200, 240, 300, 500, 1200, 2400]);
+        item = { h: String(n), a: 45, b: 30, ans: `${n}(\\sqrt{3}-1)` };
+      } else if (template === 1) {
+        const c = s242Pick([50, 100, 150, 200, 250]);
+        item = { h: `${c}\\sqrt{3}`, a: 60, b: 30, ans: String(2 * c) };
+      } else {
+        const c = s242Pick([60, 100, 120, 180, 240]);
+        item = { h: `${c}\\sqrt{3}`, a: 60, b: 45, ans: `${c}(\\sqrt{3}-1)` };
+      }
       const observer = s242Pick(['觀測點', '燈塔頂端', '觀景台', '高樓樓頂']);
       questions.push(
         `在高 \\(${item.h}\\) 公尺的${observer}，看到同一直線方向上的兩個地面目標，其俯角分別為 \\(${item.a}^\\circ\\)、\\(${item.b}^\\circ\\)。求兩目標間的水平距離。`
@@ -10584,16 +12073,24 @@
   }
 
   function buildS243SpatialMotionTrackingSet(count) {
-    const cases = [
-      { h: '500\\sqrt{3}', a: 60, b: 30, t: 5, v: '200' },
-      { h: '2400', a: 45, b: 30, t: 10, v: '240(\\sqrt{3}-1)' },
-      { h: '1000', a: 45, b: 30, t: 5, v: '200(\\sqrt{3}-1)' },
-    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const item = s242Pick(cases);
+      const t = s242Pick([4, 5, 8, 10]);
+      const m = s242Pick([40, 50, 60, 80, 100, 120]);
+      const template = randInt(0, 2);
+      let item;
+      if (template === 0) {
+        // 60°→30°：h=c√3 時 v=2c/t，取 c=t·m 使 v=2m。
+        item = { h: `${t * m}\\sqrt{3}`, a: 60, b: 30, t, v: String(2 * m) };
+      } else if (template === 1) {
+        // 45°→30°：h=n 時 v=n(√3−1)/t，取 n=t·m 使 v=m(√3−1)。
+        item = { h: String(t * m), a: 45, b: 30, t, v: `${m}(\\sqrt{3}-1)` };
+      } else {
+        // 60°→45°：水平距離差 h(1-1/√3)；取 h=t·m·√3，得 v=m(√3−1)。
+        item = { h: `${t * m}\\sqrt{3}`, a: 60, b: 45, t, v: `${m}(\\sqrt{3}-1)` };
+      }
       const object = s242Pick(['飛機', '無人機', '直升機', '觀測氣球']);
       questions.push(
         `${object}以固定高度沿通過觀測點與其地面投影的水平直線遠離觀測點，高度為 \\(${item.h}\\) 公尺，仰角由 \\(${item.a}^\\circ\\) 變為 \\(${item.b}^\\circ\\)，歷時 ${item.t} 秒。求${object}速率。`
@@ -11072,6 +12569,12 @@
       [5, 6, 7],
       [5, 7, 8],
       [6, 7, 9],
+      [4, 6, 7],
+      [5, 6, 8],
+      [6, 8, 9],
+      [7, 8, 10],
+      [4, 7, 9],
+      [5, 8, 9],
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -16386,7 +17889,7 @@
     };
   });
 
-  const fingerprint = 's2-bundle-v20260715-s24-summary-review-v5';
+  const fingerprint = 's2-bundle-v20260717-s22-s23-s24-parameterized-infinite-v8';
   if (window.__s2BundleFingerprint === fingerprint) return;
   window.__s2BundleFingerprint = fingerprint;
   window.formulaPracticeStore.registerConfigs(nextConfigs);

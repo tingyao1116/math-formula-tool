@@ -4108,22 +4108,23 @@
         },
         () => {
           const A = [randInt(-4, 4), randInt(-4, 4), randInt(-4, 4)];
-          const B = s413Add3(A, [-1, 4, 4]);
+          const d = [randInt(-3, 3) || -1, randInt(-3, 3) || 2, randInt(-3, 3) || 3];
+          const B = s413Add3(A, d);
           const t = randInt(2, 5);
           const P = s422PointOnLine(A, s413Sub3(B, A), t);
           return s331QA(
-            `已知 \\(A(3,1,-1)\\)、\\(B(2,5,3)\\)，若 \\(P\\) 滿足 \\(\\overrightarrow{AP}=${t}\\overrightarrow{AB}\\)，求 \\(P\\) 坐標。`,
+            `已知 \\(${s412Point('A', A)}\\)、\\(${s412Point('B', B)}\\)，若 \\(P\\) 滿足 \\(\\overrightarrow{AP}=${t}\\overrightarrow{AB}\\)，求 \\(P\\) 坐標。`,
             `\\(${s412Point('P', P)}\\)`,
             `方法：參數式 \\(P=A+t(B-A)\\)，\\(0\\le t\\le1\\) 在線段上，\\(t>1\\) 在延長線上。`
           );
         },
         () => {
           const A = [randInt(-4, 4), randInt(-4, 4), randInt(-4, 4)];
-          const B = s413Add3(A, [3, 4, 12]);
-          const v = s413Sub3(B, A);
+          const v = [randInt(1, 4), randInt(-4, 4) || 4, randInt(1, 5)];
+          const B = s413Add3(A, v);
           return s331QA(
-            `已知 \\(A(1,2,3)\\)、\\(B(4,6,15)\\)，請寫出線段 \\(AB\\) 的參數式並標註參數範圍。`,
-            `\\((x,y,z)=(1,2,3)+t${s412Vec3(v[0], v[1], v[2])}\\)，\\(0\\le t\\le1\\)`,
+            `已知 \\(${s412Point('A', A)}\\)、\\(${s412Point('B', B)}\\)，請寫出線段 \\(AB\\) 的參數式並標註參數範圍。`,
+            `\\((x,y,z)=(${A.join(',')})+t${s412Vec3(v[0], v[1], v[2])}\\)，\\(0\\le t\\le1\\)`,
             `方法：線段不是整條直線，必須加上 \\(0\\le t\\le1\\) 的參數限制。`
           );
         },
@@ -6267,7 +6268,7 @@
           return s331QA(
             `丟一枚均勻硬幣 \\(${trials}\\) 次，令 \\(p_n\\) 表示出現 \\(n\\) 次正面的機率。比較 \\(p_${r1}\\) 與 \\(p_${r2}\\) 的大小。`,
             verdict,
-            `提示：當 \\(p=\\frac12\\) 時，\\(p_n\\) 與組合數 \\(C_${trials}^n\\) 成正比，且左右對稱。`
+            `提示：當 \\(p=\\frac12\\) 時，\\(p_n\\) 與組合數 \\(C_{${trials}}^n\\) 成正比，且左右對稱。`
           );
         },
         () => {
@@ -10094,7 +10095,7 @@
       },
       's4-1-1-three-perpendicular-distance-advanced': {
         type: 'drill',
-        title: '三垂線定理的邊長與距離',
+        title: '三垂線定理綜合練習',
         difficulty: 'hard',
         questionCount: 5,
         generate(count) {
@@ -11437,7 +11438,7 @@
       },
       's4-3-2-repeated-binomial-advanced': {
         type: 'drill',
-        title: '獨立重複試驗與二項機率',
+        title: '二項機率進階應用',
         difficulty: 'hard',
         questionCount: 5,
         generate(count) {
@@ -12235,7 +12236,7 @@
       };
     });
 
-    const bundleFingerprint = 's4-bundle-v20260716-s44-summary-review-v8';
+    const bundleFingerprint = 's4-bundle-v20260717-title-dedupe-s422-random-fix-v1';
     Object.values(nextConfigs).forEach((config) => {
       if (!config || typeof config !== 'object') return;
       config.__generatorFingerprint = bundleFingerprint;

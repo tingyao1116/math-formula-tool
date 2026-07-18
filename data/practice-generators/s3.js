@@ -536,8 +536,14 @@
   function buildS311ReciprocalFromOneRatioSet(count) {
     const triples = [
       { s: [3, 5], c: [4, 5], t: [3, 4] },
+      { s: [4, 5], c: [3, 5], t: [4, 3] },
       { s: [5, 13], c: [12, 13], t: [5, 12] },
+      { s: [12, 13], c: [5, 13], t: [12, 5] },
       { s: [8, 17], c: [15, 17], t: [8, 15] },
+      { s: [15, 17], c: [8, 17], t: [15, 8] },
+      { s: [7, 25], c: [24, 25], t: [7, 24] },
+      { s: [20, 29], c: [21, 29], t: [20, 21] },
+      { s: [9, 41], c: [40, 41], t: [9, 40] },
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -574,9 +580,15 @@
         continue;
       }
       if (mode === 3) {
-        questions.push(`若 \\(\\cos\\theta=k\\)，試以 \\(k\\) 表示 \\(\\sec\\theta\\)。`);
+        const fnPair = s242Pick([
+          ['\\cos', '\\sec'],
+          ['\\sin', '\\csc'],
+          ['\\tan', '\\cot'],
+        ]);
+        const sym = s242Pick(['k', 'm', 't', 'p']);
+        questions.push(`若 \\(${fnPair[0]}\\theta=${sym}\\)，試以 \\(${sym}\\) 表示 \\(${fnPair[1]}\\theta\\)。`);
         answers.push(
-          `簡答：\\(\\sec\\theta=\\frac{1}{k}\\)。過程：\\(\\sec\\theta\\) 是 \\(\\cos\\theta\\) 的倒數，所以 \\(\\sec\\theta=\\frac{1}{\\cos\\theta}=\\frac{1}{k}\\)。`
+          `簡答：\\(${fnPair[1]}\\theta=\\frac{1}{${sym}}\\)。過程：\\(${fnPair[1]}\\theta\\) 是 \\(${fnPair[0]}\\theta\\) 的倒數，所以 \\(${fnPair[1]}\\theta=\\frac{1}{${fnPair[0]}\\theta}=\\frac{1}{${sym}}\\)。`
         );
         continue;
       }
@@ -596,7 +608,7 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const angles = [10, 20, 30, 40, 50, 60, 70];
+    const angles = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
@@ -616,27 +628,60 @@
         continue;
       }
       if (mode === 2) {
-        questions.push(`化簡 \\((\\sec\\theta+\\tan\\theta)(1-\\sin\\theta)\\)。`);
-        answers.push(
-          `簡答：\\(\\cos\\theta\\)。過程：\\(\\sec\\theta+\\tan\\theta=\\frac{1+\\sin\\theta}{\\cos\\theta}\\)，所以原式為 \\(\\frac{(1+\\sin\\theta)(1-\\sin\\theta)}{\\cos\\theta}=\\frac{1-\\sin^2\\theta}{\\cos\\theta}=\\cos\\theta\\)。`
-        );
+        const variant = s242Pick([
+          {
+            q: '(\\sec\\theta+\\tan\\theta)(1-\\sin\\theta)',
+            ans: '\\cos\\theta',
+            why: '\\(\\sec\\theta+\\tan\\theta=\\frac{1+\\sin\\theta}{\\cos\\theta}\\)，所以原式為 \\(\\frac{(1+\\sin\\theta)(1-\\sin\\theta)}{\\cos\\theta}=\\frac{1-\\sin^2\\theta}{\\cos\\theta}=\\cos\\theta\\)。',
+          },
+          {
+            q: '(\\csc\\theta+\\cot\\theta)(1-\\cos\\theta)',
+            ans: '\\sin\\theta',
+            why: '\\(\\csc\\theta+\\cot\\theta=\\frac{1+\\cos\\theta}{\\sin\\theta}\\)，所以原式為 \\(\\frac{(1+\\cos\\theta)(1-\\cos\\theta)}{\\sin\\theta}=\\frac{1-\\cos^2\\theta}{\\sin\\theta}=\\sin\\theta\\)。',
+          },
+        ]);
+        questions.push(`化簡 \\(${variant.q}\\)。`);
+        answers.push(`簡答：\\(${variant.ans}\\)。過程：${variant.why}`);
         continue;
       }
       if (mode === 3) {
-        const k = s242Pick([2, 3, 4, 5]);
+        const useSec = randInt(0, 1) === 0;
+        const k = randInt(2, 9);
         const ans = s311PlainFrac(1, k);
-        questions.push(`已知 \\(\\sec\\theta+\\tan\\theta=${k}\\)，求 \\(\\sec\\theta-\\tan\\theta\\)。`);
-        answers.push(
-          `簡答：\\(${ans}\\)。過程：因為 \\((\\sec\\theta+\\tan\\theta)(\\sec\\theta-\\tan\\theta)=\\sec^2\\theta-\\tan^2\\theta=1\\)，所以 \\(\\sec\\theta-\\tan\\theta=\\frac{1}{${k}}\\)。`
-        );
+        if (useSec) {
+          questions.push(`已知 \\(\\sec\\theta+\\tan\\theta=${k}\\)，求 \\(\\sec\\theta-\\tan\\theta\\)。`);
+          answers.push(
+            `簡答：\\(${ans}\\)。過程：因為 \\((\\sec\\theta+\\tan\\theta)(\\sec\\theta-\\tan\\theta)=\\sec^2\\theta-\\tan^2\\theta=1\\)，所以 \\(\\sec\\theta-\\tan\\theta=\\frac{1}{${k}}\\)。`
+          );
+        } else {
+          questions.push(`已知 \\(\\csc\\theta+\\cot\\theta=${k}\\)，求 \\(\\csc\\theta-\\cot\\theta\\)。`);
+          answers.push(
+            `簡答：\\(${ans}\\)。過程：因為 \\((\\csc\\theta+\\cot\\theta)(\\csc\\theta-\\cot\\theta)=\\csc^2\\theta-\\cot^2\\theta=1\\)，所以 \\(\\csc\\theta-\\cot\\theta=\\frac{1}{${k}}\\)。`
+          );
+        }
         continue;
       }
-      questions.push(
-        `證明或化簡 \\(\\sqrt{\\sec^2\\theta+\\csc^2\\theta}\\) 可表示為 \\(\\sec\\theta\\csc\\theta\\)（假設 \\(\\theta\\) 為銳角）。`
-      );
-      answers.push(
-        `簡答：\\(\\sqrt{\\sec^2\\theta+\\csc^2\\theta}=\\sec\\theta\\csc\\theta\\)。過程：平方根內為 \\(\\frac{1}{\\cos^2\\theta}+\\frac{1}{\\sin^2\\theta}=\\frac{\\sin^2\\theta+\\cos^2\\theta}{\\sin^2\\theta\\cos^2\\theta}=\\frac{1}{\\sin^2\\theta\\cos^2\\theta}\\)。銳角時取正，得 \\(\\frac{1}{\\sin\\theta\\cos\\theta}=\\sec\\theta\\csc\\theta\\)。`
-      );
+      {
+        const variant = s242Pick([
+          {
+            q: '證明或化簡 \\(\\sqrt{\\sec^2\\theta+\\csc^2\\theta}\\) 可表示為 \\(\\sec\\theta\\csc\\theta\\)（假設 \\(\\theta\\) 為銳角）。',
+            a: '\\(\\sqrt{\\sec^2\\theta+\\csc^2\\theta}=\\sec\\theta\\csc\\theta\\)',
+            why: '平方根內為 \\(\\frac{1}{\\cos^2\\theta}+\\frac{1}{\\sin^2\\theta}=\\frac{\\sin^2\\theta+\\cos^2\\theta}{\\sin^2\\theta\\cos^2\\theta}=\\frac{1}{\\sin^2\\theta\\cos^2\\theta}\\)。銳角時取正，得 \\(\\frac{1}{\\sin\\theta\\cos\\theta}=\\sec\\theta\\csc\\theta\\)。',
+          },
+          {
+            q: '化簡 \\((1-\\cos^2\\theta)(1+\\cot^2\\theta)\\)。',
+            a: '\\(1\\)',
+            why: '\\(1-\\cos^2\\theta=\\sin^2\\theta\\)、\\(1+\\cot^2\\theta=\\csc^2\\theta\\)，兩者相乘為 \\(\\sin^2\\theta\\cdot\\frac{1}{\\sin^2\\theta}=1\\)。',
+          },
+          {
+            q: '化簡 \\((\\sec^2\\theta-1)\\cot^2\\theta\\)。',
+            a: '\\(1\\)',
+            why: '\\(\\sec^2\\theta-1=\\tan^2\\theta\\)，再乘 \\(\\cot^2\\theta\\) 即 \\(\\tan^2\\theta\\cdot\\cot^2\\theta=1\\)。',
+          },
+        ]);
+        questions.push(variant.q);
+        answers.push(`簡答：${variant.a}。過程：${variant.why}`);
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -648,12 +693,9 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        const [a, b, c] = s242Pick([
-          [20, 40, 60],
-          [20, 50, 70],
-          [30, 50, 70],
-          [30, 60, 80],
-        ]);
+        const a = 10 * randInt(1, 4);
+        const b = a + 10 * randInt(1, 3);
+        const c = b + 10 * randInt(1, 3);
         questions.push(`比較 \\(\\sec ${a}^\\circ,\\sec ${b}^\\circ,\\sec ${c}^\\circ\\) 的大小。`);
         answers.push(
           `簡答：\\(\\sec ${a}^\\circ<\\sec ${b}^\\circ<\\sec ${c}^\\circ\\)。過程：在 \\(0^\\circ\\) 到 \\(90^\\circ\\) 內，\\(\\cos\\theta\\) 遞減，所以倒數 \\(\\sec\\theta\\) 遞增。`
@@ -671,7 +713,7 @@
         continue;
       }
       if (mode === 2) {
-        const a = s242Pick([20, 30, 40]);
+        const a = s242Pick([10, 20, 30, 40, 50, 60, 70, 80]);
         questions.push(`判斷 \\(\\sec ${a}^\\circ\\) 與 \\(\\csc ${a}^\\circ\\) 誰較大。`);
         const relation = a < 45 ? '\\csc' : a > 45 ? '\\sec' : '兩者相等';
         answers.push(
@@ -680,7 +722,7 @@
         continue;
       }
       if (mode === 3) {
-        const a = s242Pick([10, 20, 30]);
+        const a = s242Pick([10, 15, 20, 25, 30, 35, 40]);
         questions.push(
           `令 \\(a=\\cot ${a}^\\circ\\)、\\(b=\\sec ${a}^\\circ\\)、\\(c=\\csc ${a}^\\circ\\)，比較 \\(a,b,c\\) 的大小。`
         );
@@ -689,10 +731,20 @@
         );
         continue;
       }
-      questions.push(`已知 \\(0^\\circ<\\theta<45^\\circ\\)，判斷 \\(\\csc\\theta>\\sec\\theta\\) 是否恆成立。`);
-      answers.push(
-        `簡答：成立。過程：在 \\(0^\\circ<\\theta<45^\\circ\\) 時，\\(\\sin\\theta<\\cos\\theta\\)，取正倒數後不等號反向，故 \\(\\csc\\theta=\\frac1{\\sin\\theta}>\\frac1{\\cos\\theta}=\\sec\\theta\\)。`
-      );
+      {
+        const variant = s242Pick([
+          {
+            q: '已知 \\(0^\\circ<\\theta<45^\\circ\\)，判斷 \\(\\csc\\theta>\\sec\\theta\\) 是否恆成立。',
+            why: '在 \\(0^\\circ<\\theta<45^\\circ\\) 時，\\(\\sin\\theta<\\cos\\theta\\)，取正倒數後不等號反向，故 \\(\\csc\\theta=\\frac1{\\sin\\theta}>\\frac1{\\cos\\theta}=\\sec\\theta\\)。',
+          },
+          {
+            q: '已知 \\(45^\\circ<\\theta<90^\\circ\\)，判斷 \\(\\sec\\theta>\\csc\\theta\\) 是否恆成立。',
+            why: '在 \\(45^\\circ<\\theta<90^\\circ\\) 時，\\(\\cos\\theta<\\sin\\theta\\)，取正倒數後不等號反向，故 \\(\\sec\\theta=\\frac1{\\cos\\theta}>\\frac1{\\sin\\theta}=\\csc\\theta\\)。',
+          },
+        ]);
+        questions.push(variant.q);
+        answers.push(`簡答：成立。過程：${variant.why}`);
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -873,9 +925,14 @@
 
   const S312_TRIPLES = [
     { a: 3, b: 4, c: 5 },
+    { a: 4, b: 3, c: 5 },
     { a: 5, b: 12, c: 13 },
+    { a: 12, b: 5, c: 13 },
     { a: 8, b: 15, c: 17 },
+    { a: 15, b: 8, c: 17 },
     { a: 7, b: 24, c: 25 },
+    { a: 20, b: 21, c: 29 },
+    { a: 9, b: 40, c: 41 },
   ];
 
   function buildS312DoubleFromSingleSet(count) {
@@ -1147,41 +1204,51 @@
         continue;
       }
       if (mode === 1) {
+        const [P, Q] = s242Pick([
+          ['p', 'q'],
+          ['m', 'n'],
+          ['b', 'c'],
+          ['s', 't'],
+        ]);
         questions.push(
-          `已知方程式 \\(x^2+px+q=0\\) 的二根為 \\(\\sin\\theta,\\cos\\theta\\)，以 \\(p,q\\) 表示 \\(1+\\sin2\\theta\\)。`
+          `已知方程式 \\(x^2+${P}x+${Q}=0\\) 的二根為 \\(\\sin\\theta,\\cos\\theta\\)，以 \\(${P},${Q}\\) 表示 \\(1+\\sin2\\theta\\)。`
         );
         answers.push(
-          `簡答：\\(1+2q\\)。過程：二根積為 \\(q=\\sin\\theta\\cos\\theta\\)，所以 \\(1+\\sin2\\theta=1+2\\sin\\theta\\cos\\theta=1+2q\\)。`
+          `簡答：\\(1+2${Q}\\)。過程：二根積為 \\(${Q}=\\sin\\theta\\cos\\theta\\)，所以 \\(1+\\sin2\\theta=1+2\\sin\\theta\\cos\\theta=1+2${Q}\\)。`
         );
         continue;
       }
       if (mode === 2) {
+        const p = randInt(3, 9);
         questions.push(
-          `若 \\(\\tan\\alpha,\\tan\\beta\\) 為方程式 \\(x^2-5x+1=0\\) 的兩根，求 \\(\\tan(\\alpha+\\beta)\\)。`
+          `若 \\(\\tan\\alpha,\\tan\\beta\\) 為方程式 \\(x^2-${p}x+1=0\\) 的兩根，求 \\(\\tan(\\alpha+\\beta)\\)。`
         );
         answers.push(
-          `簡答：不存在。過程：兩根和為 5、積為 1，所以 \\(\\tan(\\alpha+\\beta)=\\frac{5}{1-1}\\)，分母為 0，表示 \\(\\alpha+\\beta\\) 對應垂直方向，正切值不存在。`
+          `簡答：不存在。過程：兩根和為 ${p}、積為 1，所以 \\(\\tan(\\alpha+\\beta)=\\frac{${p}}{1-1}\\)，分母為 0，表示 \\(\\alpha+\\beta\\) 對應垂直方向，正切值不存在。`
         );
         continue;
       }
       if (mode === 3) {
-        const root = s242Pick([
-          [1, 2],
-          [3, 4],
-          [4, 5],
+        const variant = s242Pick([
+          { eq: '4x^2+4x-3=0', s: '\\frac12', ssq: '\\frac14', cos2: '\\frac12' },
+          { eq: '9x^2+3x-2=0', s: '\\frac13', ssq: '\\frac19', cos2: '\\frac79' },
+          { eq: '8x^2-2x-3=0', s: '\\frac34', ssq: '\\frac9{16}', cos2: '-\\frac18' },
         ]);
         questions.push(
-          `設 \\(\\sin\\theta\\) 是 \\(4x^2+4x-3=0\\) 的一根，且 \\(\\theta\\) 為銳角，求 \\(\\cos2\\theta\\)。`
+          `設 \\(\\sin\\theta\\) 是 \\(${variant.eq}\\) 的一根，且 \\(\\theta\\) 為銳角，求 \\(\\cos2\\theta\\)。`
         );
         answers.push(
-          `簡答：\\(\\frac12\\)。過程：方程式正根為 \\(\\frac12\\)，所以 \\(\\sin\\theta=\\frac12\\)。由 \\(\\cos2\\theta=1-2\\sin^2\\theta\\)，得 \\(\\frac12\\)。`
+          `簡答：\\(${variant.cos2}\\)。過程：方程式正根為 \\(${variant.s}\\)，所以 \\(\\sin\\theta=${variant.s}\\)。由 \\(\\cos2\\theta=1-2\\sin^2\\theta=1-2\\cdot${variant.ssq}\\)，得 \\(${variant.cos2}\\)。`
         );
         continue;
       }
-      questions.push(`解三角方程式 \\(\\cos2x-5\\cos x+3=0\\)，令 \\(u=\\cos x\\) 化為二次式。`);
-      answers.push(
-        `簡答：\\(2u^2-5u+2=0\\)，所以 \\(u=\\frac12\\) 或 \\(u=2\\)，有效為 \\(\\cos x=\\frac12\\)。過程：\\(\\cos2x=2\\cos^2x-1\\)，代入後整理並排除不可能的 \\(\\cos x=2\\)。`
-      );
+      {
+        const k = randInt(2, 5);
+        questions.push(`解三角方程式 \\(\\cos2x-${2 * k + 1}\\cos x+${k + 1}=0\\)，令 \\(u=\\cos x\\) 化為二次式。`);
+        answers.push(
+          `簡答：\\(2u^2-${2 * k + 1}u+${k}=0\\)，所以 \\(u=\\frac12\\) 或 \\(u=${k}\\)，有效為 \\(\\cos x=\\frac12\\)。過程：\\(\\cos2x=2\\cos^2x-1\\)，代入後整理並排除不可能的 \\(\\cos x=${k}\\)。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1193,28 +1260,63 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        questions.push(`求 \\(\\cos20^\\circ\\cos40^\\circ\\cos80^\\circ\\) 的值。`);
-        answers.push(
-          `簡答：\\(\\frac18\\)。過程：同乘 \\(2\\sin20^\\circ\\)，利用 \\(2\\sin x\\cos x=\\sin2x\\) 連續倍角，可得 \\(2\\sin20^\\circ\\cos20^\\circ\\cos40^\\circ\\cos80^\\circ=\\sin160^\\circ=\\sin20^\\circ\\)，故原式為 \\(\\frac18\\)。`
-        );
+        const variant = s242Pick([
+          {
+            q: '\\cos20^\\circ\\cos40^\\circ\\cos80^\\circ',
+            ans: '\\frac18',
+            why: '同乘 \\(2\\sin20^\\circ\\)，利用 \\(2\\sin x\\cos x=\\sin2x\\) 連續倍角，可得 \\(2\\sin20^\\circ\\cos20^\\circ\\cos40^\\circ\\cos80^\\circ=\\sin160^\\circ=\\sin20^\\circ\\)，故原式為 \\(\\frac18\\)。',
+          },
+          {
+            q: '\\sin10^\\circ\\sin50^\\circ\\sin70^\\circ',
+            ans: '\\frac18',
+            why: '由 \\(\\sin3x=4\\sin x\\sin(60^\\circ-x)\\sin(60^\\circ+x)\\)，取 \\(x=10^\\circ\\)，得原式 \\(=\\frac{\\sin30^\\circ}{4}=\\frac18\\)。',
+          },
+          {
+            q: '\\cos10^\\circ\\cos50^\\circ\\cos70^\\circ',
+            ans: '\\frac{\\sqrt3}{8}',
+            why: '由 \\(\\cos3x=4\\cos x\\cos(60^\\circ-x)\\cos(60^\\circ+x)\\)，取 \\(x=10^\\circ\\)，得原式 \\(=\\frac{\\cos30^\\circ}{4}=\\frac{\\sqrt3}{8}\\)。',
+          },
+        ]);
+        questions.push(`求 \\(${variant.q}\\) 的值。`);
+        answers.push(`簡答：\\(${variant.ans}\\)。過程：${variant.why}`);
         continue;
       }
       if (mode === 1) {
-        questions.push(`求 \\(\\sin20^\\circ\\sin40^\\circ\\sin80^\\circ\\) 的值。`);
-        answers.push(
-          `簡答：\\(\\frac{\\sqrt3}{8}\\)。過程：由 \\(\\sin3x=4\\sin x\\sin(60^\\circ+x)\\sin(60^\\circ-x)\\)，取 \\(x=20^\\circ\\)。`
-        );
+        const variant = s242Pick([
+          {
+            q: '\\sin20^\\circ\\sin40^\\circ\\sin80^\\circ',
+            ans: '\\frac{\\sqrt3}{8}',
+            why: '由 \\(\\sin3x=4\\sin x\\sin(60^\\circ+x)\\sin(60^\\circ-x)\\)，取 \\(x=20^\\circ\\)，得 \\(\\frac{\\sin60^\\circ}{4}=\\frac{\\sqrt3}{8}\\)。',
+          },
+          {
+            q: '\\sin15^\\circ\\sin45^\\circ\\sin75^\\circ',
+            ans: '\\frac{\\sqrt2}{8}',
+            why: '由 \\(\\sin3x=4\\sin x\\sin(60^\\circ+x)\\sin(60^\\circ-x)\\)，取 \\(x=15^\\circ\\)，得 \\(\\frac{\\sin45^\\circ}{4}=\\frac{\\sqrt2}{8}\\)。',
+          },
+        ]);
+        questions.push(`求 \\(${variant.q}\\) 的值。`);
+        answers.push(`簡答：\\(${variant.ans}\\)。過程：${variant.why}`);
         continue;
       }
       if (mode === 2) {
-        questions.push(`計算 \\(\\cos\\frac{\\pi}{7}\\cos\\frac{2\\pi}{7}\\cos\\frac{4\\pi}{7}\\)。`);
-        answers.push(
-          `簡答：\\(-\\frac18\\)。過程：利用 \\(\\cos\\frac{\\pi}{7}\\cos\\frac{2\\pi}{7}\\cos\\frac{3\\pi}{7}=\\frac18\\)，再由 \\(\\cos\\frac{4\\pi}{7}=-\\cos\\frac{3\\pi}{7}\\)，可得原式為 \\(-\\frac18\\)。`
-        );
+        const variant = s242Pick([
+          {
+            q: '\\cos\\frac{\\pi}{7}\\cos\\frac{2\\pi}{7}\\cos\\frac{4\\pi}{7}',
+            ans: '-\\frac18',
+            why: '利用 \\(\\cos\\frac{\\pi}{7}\\cos\\frac{2\\pi}{7}\\cos\\frac{3\\pi}{7}=\\frac18\\)，再由 \\(\\cos\\frac{4\\pi}{7}=-\\cos\\frac{3\\pi}{7}\\)，可得原式為 \\(-\\frac18\\)。',
+          },
+          {
+            q: '\\cos\\frac{\\pi}{9}\\cos\\frac{2\\pi}{9}\\cos\\frac{4\\pi}{9}',
+            ans: '\\frac18',
+            why: '同乘 \\(2\\sin\\frac{\\pi}{9}\\) 連續使用倍角公式，可得 \\(\\frac{\\sin\\frac{8\\pi}{9}}{8\\sin\\frac{\\pi}{9}}=\\frac18\\)（因 \\(\\sin\\frac{8\\pi}{9}=\\sin\\frac{\\pi}{9}\\)）。',
+          },
+        ]);
+        questions.push(`計算 \\(${variant.q}\\)。`);
+        answers.push(`簡答：\\(${variant.ans}\\)。過程：${variant.why}`);
         continue;
       }
       if (mode === 3) {
-        const a = s242Pick([10, 20]);
+        const a = s242Pick([5, 10, 15, 20, 25]);
         questions.push(
           `證明 \\(\\sin ${a}^\\circ\\sin(60^\\circ-${a}^\\circ)\\sin(60^\\circ+${a}^\\circ)=\\frac14\\sin ${3 * a}^\\circ\\)。`
         );
@@ -1223,10 +1325,19 @@
         );
         continue;
       }
-      questions.push(`計算 \\(\\tan20^\\circ\\tan40^\\circ\\tan80^\\circ\\)。`);
-      answers.push(
-        `簡答：\\(\\sqrt3\\)。過程：利用 \\(\\tan x\\tan(60^\\circ-x)\\tan(60^\\circ+x)=\\tan3x\\)，取 \\(x=20^\\circ\\)，得 \\(\\tan60^\\circ=\\sqrt3\\)。`
-      );
+      {
+        const variant = s242Pick([
+          { x: 20, ans: '\\sqrt3', target: '\\tan60^\\circ=\\sqrt3' },
+          { x: 10, ans: '\\frac{\\sqrt3}{3}', target: '\\tan30^\\circ=\\frac{\\sqrt3}{3}' },
+          { x: 15, ans: '1', target: '\\tan45^\\circ=1' },
+        ]);
+        questions.push(
+          `計算 \\(\\tan${variant.x}^\\circ\\tan${60 - variant.x}^\\circ\\tan${60 + variant.x}^\\circ\\)。`
+        );
+        answers.push(
+          `簡答：\\(${variant.ans}\\)。過程：利用 \\(\\tan x\\tan(60^\\circ-x)\\tan(60^\\circ+x)=\\tan3x\\)，取 \\(x=${variant.x}^\\circ\\)，得 \\(${variant.target}\\)。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1256,8 +1367,13 @@
     const answers = createAnswerList(summaryAnswers);
     const triples = [
       { s: [3, 5], c: [4, 5] },
+      { s: [4, 5], c: [3, 5] },
       { s: [5, 13], c: [12, 13] },
+      { s: [12, 13], c: [5, 13] },
       { s: [8, 17], c: [15, 17] },
+      { s: [15, 17], c: [8, 17] },
+      { s: [7, 25], c: [24, 25] },
+      { s: [20, 29], c: [21, 29] },
     ];
     for (let i = 0; i < count; i += 1) {
       const a = s242Pick(triples);
@@ -1295,15 +1411,22 @@
         continue;
       }
       if (mode === 3) {
-        const ans = simplifyFraction(1 * 2 + 1 * 1, 2 * 2);
-        questions.push(`若 \\(\\tan\\alpha=\\frac12\\)、\\(\\tan\\beta=\\frac13\\)，求 \\(\\tan(\\alpha+\\beta)\\)。`);
-        answers.push(`簡答：\\(1\\)。過程：\\(\\tan(\\alpha+\\beta)=\\frac{\\frac12+\\frac13}{1-\\frac16}=1\\)。`);
+        const m = randInt(2, 5);
+        const n = randInt(2, 5);
+        const ans = formatFraction(m + n, m * n - 1);
+        questions.push(`若 \\(\\tan\\alpha=\\frac1{${m}}\\)、\\(\\tan\\beta=\\frac1{${n}}\\)，求 \\(\\tan(\\alpha+\\beta)\\)。`);
+        answers.push(
+          `簡答：\\(${ans}\\)。過程：\\(\\tan(\\alpha+\\beta)=\\frac{\\frac1{${m}}+\\frac1{${n}}}{1-\\frac1{${m * n}}}=${ans}\\)。`
+        );
         continue;
       }
-      questions.push(`若 \\(\\alpha-\\beta=45^\\circ\\)，求 \\((1+\\tan\\alpha)(1-\\tan\\beta)\\) 的值。`);
-      answers.push(
-        `簡答：2。過程：由 \\(\\tan(\\alpha-\\beta)=1\\)，得 \\(\\frac{\\tan\\alpha-\\tan\\beta}{1+\\tan\\alpha\\tan\\beta}=1\\)，整理即 \\((1+\\tan\\alpha)(1-\\tan\\beta)=2\\)。`
-      );
+      {
+        const deg = s242Pick([45, 225]);
+        questions.push(`若 \\(\\alpha-\\beta=${deg}^\\circ\\)，求 \\((1+\\tan\\alpha)(1-\\tan\\beta)\\) 的值。`);
+        answers.push(
+          `簡答：2。過程：由 \\(\\tan(\\alpha-\\beta)=\\tan${deg}^\\circ=1\\)，得 \\(\\frac{\\tan\\alpha-\\tan\\beta}{1+\\tan\\alpha\\tan\\beta}=1\\)，整理即 \\((1+\\tan\\alpha)(1-\\tan\\beta)=2\\)。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1318,6 +1441,11 @@
       [80, 20],
       [15, 75],
       [35, 25],
+      [65, 25],
+      [73, 43],
+      [56, 26],
+      [48, 18],
+      [70, 40],
     ];
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
@@ -1340,18 +1468,30 @@
         continue;
       }
       if (mode === 3) {
-        questions.push(`求 \\(\\sin80^\\circ\\cos20^\\circ-\\cos80^\\circ\\sin20^\\circ\\) 的結果。`);
+        const variant = s242Pick([
+          { a: 80, b: 20, deg: 60, val: '\\frac{\\sqrt3}{2}' },
+          { a: 75, b: 30, deg: 45, val: '\\frac{\\sqrt2}{2}' },
+          { a: 50, b: 20, deg: 30, val: '\\frac12' },
+          { a: 85, b: 25, deg: 60, val: '\\frac{\\sqrt3}{2}' },
+          { a: 65, b: 35, deg: 30, val: '\\frac12' },
+        ]);
+        questions.push(`求 \\(\\sin${variant.a}^\\circ\\cos${variant.b}^\\circ-\\cos${variant.a}^\\circ\\sin${variant.b}^\\circ\\) 的結果。`);
         answers.push(
-          `簡答：\\(\\frac{\\sqrt3}{2}\\)。過程：原式為 \\(\\sin(80^\\circ-20^\\circ)=\\sin60^\\circ=\\frac{\\sqrt3}{2}\\)。`
+          `簡答：\\(${variant.val}\\)。過程：原式為 \\(\\sin(${variant.a}^\\circ-${variant.b}^\\circ)=\\sin${variant.deg}^\\circ=${variant.val}\\)。`
         );
         continue;
       }
-      questions.push(
-        `計算 \\(\\cos\\frac{\\pi}{12}\\cos\\frac{5\\pi}{12}+\\sin\\frac{\\pi}{12}\\sin\\frac{5\\pi}{12}\\)。`
-      );
-      answers.push(
-        `簡答：\\(\\frac12\\)。過程：原式為 \\(\\cos(\\frac{\\pi}{12}-\\frac{5\\pi}{12})=\\cos(-\\frac{\\pi}{3})=\\frac12\\)。`
-      );
+      {
+        const variant = s242Pick([
+          { p: '\\frac{\\pi}{12}', q: '\\frac{5\\pi}{12}', diff: '-\\frac{\\pi}{3}', val: '\\frac12' },
+          { p: '\\frac{\\pi}{8}', q: '\\frac{3\\pi}{8}', diff: '-\\frac{\\pi}{4}', val: '\\frac{\\sqrt2}{2}' },
+          { p: '\\frac{\\pi}{12}', q: '\\frac{7\\pi}{12}', diff: '-\\frac{\\pi}{2}', val: '0' },
+        ]);
+        questions.push(`計算 \\(\\cos${variant.p}\\cos${variant.q}+\\sin${variant.p}\\sin${variant.q}\\)。`);
+        answers.push(
+          `簡答：\\(${variant.val}\\)。過程：原式為 \\(\\cos(${variant.p}-${variant.q})=\\cos(${variant.diff})=${variant.val}\\)。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1627,7 +1767,21 @@
       { q: '計算 \\(\\cos36^\\circ-\\cos72^\\circ\\) 的定值。', a: '\\frac12' },
       { q: '求 \\(\\sin18^\\circ\\cos36^\\circ\\) 的乘積值。', a: '\\frac14' },
       { q: '已知正五邊形對角線長為 \\(d\\)、邊長為 \\(s\\)，求 \\(d:s\\)。', a: '\\frac{1+\\sqrt5}{2}:1' },
+      { q: '計算 \\(\\cos36^\\circ\\cos72^\\circ\\) 的乘積值。', a: '\\frac14' },
+      { q: '計算 \\(\\sin54^\\circ-\\sin18^\\circ\\) 的定值。', a: '\\frac12' },
+      { q: '證明 \\(\\cos36^\\circ=\\frac{1+\\sqrt5}{4}\\)。', a: '\\cos36^\\circ=\\frac{1+\\sqrt5}{4}' },
+      { q: '已知 \\(\\sin36^\\circ\\sin72^\\circ=\\frac{\\sqrt a}{4}\\)，求正整數 \\(a\\)。', a: 'a=5' },
+      { q: '計算 \\(4\\sin18^\\circ\\cos36^\\circ\\) 的值。', a: '1' },
+      { q: '計算 \\(\\sin18^\\circ+\\cos36^\\circ\\) 的定值。', a: '\\frac{\\sqrt5}{2}' },
+      { q: '計算 \\(\\cos36^\\circ-\\sin18^\\circ\\) 的定值。', a: '\\frac12' },
     ];
+    // 每次抽題前打亂順序，讓兩批 5 題有機會取到不同子集。
+    for (let s = cases.length - 1; s > 0; s -= 1) {
+      const j = randInt(0, s);
+      const tmp = cases[s];
+      cases[s] = cases[j];
+      cases[j] = tmp;
+    }
     for (let i = 0; i < count; i += 1) {
       const item = cases[i % cases.length];
       questions.push(item.q);
@@ -1692,33 +1846,68 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        questions.push(`已知 \\(\\sin(A+B)=\\frac12\\)、\\(\\sin(A-B)=\\frac13\\)，求 \\(\\sin^2A-\\sin^2B\\)。`);
-        answers.push(`簡答：\\(\\frac16\\)。過程：\\(\\sin(A+B)\\sin(A-B)=\\sin^2A-\\sin^2B\\)，直接相乘。`);
+        const m = randInt(2, 5);
+        const n = randInt(2, 7);
+        questions.push(
+          `已知 \\(\\sin(A+B)=\\frac1{${m}}\\)、\\(\\sin(A-B)=\\frac1{${n}}\\)，求 \\(\\sin^2A-\\sin^2B\\)。`
+        );
+        answers.push(
+          `簡答：\\(${formatFraction(1, m * n)}\\)。過程：\\(\\sin(A+B)\\sin(A-B)=\\sin^2A-\\sin^2B\\)，直接相乘。`
+        );
         continue;
       }
       if (mode === 1) {
-        questions.push(`已知 \\(\\sin A+\\sin B=a\\)、\\(\\cos A+\\cos B=b\\)，以 \\(a,b\\) 表示 \\(\\cos(A-B)\\)。`);
+        const pair = s321Pick([
+          ['a', 'b'],
+          ['p', 'q'],
+          ['m', 'n'],
+          ['s', 't'],
+        ]);
+        const [va, vb] = pair;
+        questions.push(`已知 \\(\\sin A+\\sin B=${va}\\)、\\(\\cos A+\\cos B=${vb}\\)，以 \\(${va},${vb}\\) 表示 \\(\\cos(A-B)\\)。`);
         answers.push(
-          `簡答：\\(\\frac{a^2+b^2-2}{2}\\)。過程：平方相加，\\((\\sin A+\\sin B)^2+(\\cos A+\\cos B)^2=2+2\\cos(A-B)\\)。`
+          `簡答：\\(\\frac{${va}^2+${vb}^2-2}{2}\\)。過程：平方相加，\\((\\sin A+\\sin B)^2+(\\cos A+\\cos B)^2=2+2\\cos(A-B)\\)。`
         );
         continue;
       }
       if (mode === 2) {
-        questions.push(`求 \\(\\sin^2(x+30^\\circ)+\\sin^2(x-30^\\circ)+\\cos^2x\\) 的定值。`);
-        answers.push(`簡答：\\(\\frac32\\)。過程：展開兩個平方並相加，交叉項抵消，再用 \\(\\sin^2x+\\cos^2x=1\\)。`);
+        const variant = s321Pick([
+          { expr: '\\sin^2(x+30^\\circ)+\\sin^2(x-30^\\circ)+\\cos^2x', val: '\\frac32' },
+          { expr: '\\cos^2(x+30^\\circ)+\\cos^2(x-30^\\circ)+\\sin^2x', val: '\\frac32' },
+          { expr: '\\sin^2(x+45^\\circ)+\\sin^2(x-45^\\circ)', val: '1' },
+          { expr: '\\cos^2(x+45^\\circ)+\\cos^2(x-45^\\circ)', val: '1' },
+        ]);
+        questions.push(`求 \\(${variant.expr}\\) 的定值。`);
+        answers.push(
+          `簡答：\\(${variant.val}\\)。過程：展開平方並相加，交叉項抵消，再用 \\(\\sin^2x+\\cos^2x=1\\)。`
+        );
         continue;
       }
       if (mode === 3) {
+        const [X, Y] = s321Pick([
+          ['A', 'B'],
+          ['\\alpha', '\\beta'],
+          ['x', 'y'],
+          ['P', 'Q'],
+        ]);
         questions.push(
-          `若 \\(\\tan A,\\tan B\\) 為方程式兩根，說明如何用和差角求 \\(\\frac{\\sin(A+B)}{\\cos A\\cos B}\\)。`
+          `若 \\(\\tan ${X},\\tan ${Y}\\) 為方程式兩根，說明如何用和差角求 \\(\\frac{\\sin(${X}+${Y})}{\\cos ${X}\\cos ${Y}}\\)。`
         );
         answers.push(
-          `簡答：\\(\\tan A+\\tan B\\)。過程：\\(\\sin(A+B)=\\sin A\\cos B+\\cos A\\sin B\\)，除以 \\(\\cos A\\cos B\\) 得 \\(\\tan A+\\tan B\\)。`
+          `簡答：\\(\\tan ${X}+\\tan ${Y}\\)。過程：\\(\\sin(${X}+${Y})=\\sin ${X}\\cos ${Y}+\\cos ${X}\\sin ${Y}\\)，除以 \\(\\cos ${X}\\cos ${Y}\\) 得 \\(\\tan ${X}+\\tan ${Y}\\)。`
         );
         continue;
       }
-      questions.push(`計算 \\(\\cos(A+B)\\cos(A-B)\\) 並改寫成 \\(\\cos^2A\\) 與 \\(\\sin^2B\\) 的形式。`);
-      answers.push(`簡答：\\(\\cos^2A-\\sin^2B\\)。過程：利用積化和差或直接展開 \\(\\cos(A+B)\\cos(A-B)\\)。`);
+      {
+        const [X, Y] = s321Pick([
+          ['A', 'B'],
+          ['\\alpha', '\\beta'],
+          ['x', 'y'],
+          ['s', 't'],
+        ]);
+        questions.push(`計算 \\(\\cos(${X}+${Y})\\cos(${X}-${Y})\\) 並改寫成 \\(\\cos^2${X}\\) 與 \\(\\sin^2${Y}\\) 的形式。`);
+        answers.push(`簡答：\\(\\cos^2${X}-\\sin^2${Y}\\)。過程：利用積化和差或直接展開 \\(\\cos(${X}+${Y})\\cos(${X}-${Y})\\)。`);
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1730,33 +1919,44 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        questions.push(`計算 \\((1+\\tan21^\\circ)(1+\\tan24^\\circ)\\) 的值。`);
+        const a = randInt(6, 39);
+        const b = 45 - a;
+        questions.push(`計算 \\((1+\\tan${a}^\\circ)(1+\\tan${b}^\\circ)\\) 的值。`);
         answers.push(
-          `簡答：2。過程：因 \\(21^\\circ+24^\\circ=45^\\circ\\)，由 \\(\\tan(\\alpha+\\beta)=1\\) 可整理為 \\((1+\\tan\\alpha)(1+\\tan\\beta)=2\\)。`
+          `簡答：2。過程：因 \\(${a}^\\circ+${b}^\\circ=45^\\circ\\)，由 \\(\\tan(\\alpha+\\beta)=1\\) 可整理為 \\((1+\\tan\\alpha)(1+\\tan\\beta)=2\\)。`
         );
         continue;
       }
       if (mode === 1) {
+        const variant = s321Pick([
+          { upTo: 44, n: 22, why: '將 \\(k^\\circ\\) 與 \\((45-k)^\\circ\\) 配對，每對乘積為 2；\\(1^\\circ\\) 至 \\(44^\\circ\\) 恰好分成 22 對，所以乘積為 \\(2^{22}\\)。' },
+          { upTo: 45, n: 23, why: '\\(1^\\circ\\) 至 \\(44^\\circ\\) 配成 22 對、每對乘積為 2，再加上 \\((1+\\tan45^\\circ)=2\\)，所以乘積為 \\(2^{23}\\)。' },
+        ]);
         questions.push(
-          `求 \\((1+\\tan1^\\circ)(1+\\tan2^\\circ)\\cdots(1+\\tan44^\\circ)\\) 可表示為 \\(2^n\\)，求 \\(n\\)。`
+          `求 \\((1+\\tan1^\\circ)(1+\\tan2^\\circ)\\cdots(1+\\tan${variant.upTo}^\\circ)\\) 可表示為 \\(2^n\\)，求 \\(n\\)。`
         );
-        answers.push(
-          `簡答：22。過程：將 \\(k^\\circ\\) 與 \\((45-k)^\\circ\\) 配對，每對乘積為 2；\\(1^\\circ\\) 至 \\(44^\\circ\\) 恰好分成 22 對，所以乘積為 \\(2^{22}\\)。`
-        );
+        answers.push(`簡答：${variant.n}。過程：${variant.why}`);
         continue;
       }
       if (mode === 2) {
-        questions.push(`計算 \\(\\tan20^\\circ+\\tan40^\\circ+\\sqrt3\\tan20^\\circ\\tan40^\\circ\\)。`);
-        answers.push(`簡答：\\(\\sqrt3\\)。過程：由 \\(\\tan(20^\\circ+40^\\circ)=\\sqrt3\\)，整理正切和公式。`);
+        const a = 5 * randInt(1, 11);
+        const b = 60 - a;
+        questions.push(`計算 \\(\\tan${a}^\\circ+\\tan${b}^\\circ+\\sqrt3\\tan${a}^\\circ\\tan${b}^\\circ\\)。`);
+        answers.push(`簡答：\\(\\sqrt3\\)。過程：由 \\(\\tan(${a}^\\circ+${b}^\\circ)=\\sqrt3\\)，整理正切和公式。`);
         continue;
       }
       if (mode === 3) {
-        questions.push(`計算 \\(\\tan80^\\circ-\\tan20^\\circ-\\sqrt3\\tan80^\\circ\\tan20^\\circ\\)。`);
-        answers.push(`簡答：\\(\\sqrt3\\)。過程：由 \\(\\tan(80^\\circ-20^\\circ)=\\sqrt3\\)，整理正切差公式。`);
+        const b = 5 * randInt(1, 5);
+        const a = b + 60;
+        questions.push(`計算 \\(\\tan${a}^\\circ-\\tan${b}^\\circ-\\sqrt3\\tan${a}^\\circ\\tan${b}^\\circ\\)。`);
+        answers.push(`簡答：\\(\\sqrt3\\)。過程：由 \\(\\tan(${a}^\\circ-${b}^\\circ)=\\sqrt3\\)，整理正切差公式。`);
         continue;
       }
-      questions.push(`設 \\(\\alpha-\\beta=225^\\circ\\)，求 \\((1+\\tan\\alpha)(1-\\tan\\beta)\\) 的值。`);
-      answers.push(`簡答：2。過程：\\(\\tan225^\\circ=1\\)，代入 \\(\\tan(\\alpha-\\beta)\\) 並整理。`);
+      {
+        const deg = s321Pick([45, 225, 405]);
+        questions.push(`設 \\(\\alpha-\\beta=${deg}^\\circ\\)，求 \\((1+\\tan\\alpha)(1-\\tan\\beta)\\) 的值。`);
+        answers.push(`簡答：2。過程：\\(\\tan${deg}^\\circ=1\\)，代入 \\(\\tan(\\alpha-\\beta)\\) 並整理。`);
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1768,32 +1968,48 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        questions.push(`在正方形網格中，兩線斜率分別為 1 與 2，求夾角的正切值。`);
-        answers.push(`簡答：\\(\\frac13\\)。過程：\\(\\tan\\phi=\\left|\\frac{2-1}{1+2}\\right|=\\frac13\\)。`);
+        const m1 = randInt(1, 4);
+        const m2 = m1 + randInt(1, 4);
+        const ans = formatFraction(m2 - m1, 1 + m1 * m2);
+        questions.push(`在正方形網格中，兩線斜率分別為 ${m1} 與 ${m2}，求夾角的正切值。`);
+        answers.push(`簡答：\\(${ans}\\)。過程：\\(\\tan\\phi=\\left|\\frac{${m2}-${m1}}{1+${m1 * m2}}\\right|=${ans}\\)。`);
         continue;
       }
       if (mode === 1) {
-        questions.push(`已知正方形中一條對角線斜率為 1，另一條線斜率為 2，求兩線夾角的正切值。`);
-        answers.push(`簡答：\\(\\frac13\\)。過程：用兩直線夾角公式，\\(m_1=1,m_2=2\\)。`);
+        const m2 = randInt(2, 6);
+        const ans = formatFraction(m2 - 1, 1 + m2);
+        questions.push(`已知正方形中一條對角線斜率為 1，另一條線斜率為 ${m2}，求兩線夾角的正切值。`);
+        answers.push(`簡答：\\(${ans}\\)。過程：用兩直線夾角公式，\\(m_1=1,m_2=${m2}\\)，\\(\\tan\\phi=\\left|\\frac{${m2}-1}{1+${m2}}\\right|=${ans}\\)。`);
         continue;
       }
       if (mode === 2) {
-        questions.push(`三個相同正方形並排，求連結左下角到右上角所得直線與水平線的正切值。`);
-        answers.push(`簡答：\\(\\frac13\\)。過程：高度為 1，水平距離為 3，所以斜率也是角的正切值。`);
+        const n = randInt(2, 6);
+        const cn = ['', '', '兩', '三', '四', '五', '六'][n];
+        questions.push(`${cn}個相同正方形並排，求連結左下角到右上角所得直線與水平線的正切值。`);
+        answers.push(`簡答：\\(\\frac1{${n}}\\)。過程：高度為 1，水平距離為 ${n}，所以斜率也是角的正切值。`);
         continue;
       }
       if (mode === 3) {
+        const n = randInt(2, 5);
+        const ans = formatFraction(n * n - 1, 2 * n);
         questions.push(
-          `在 \\(3\\times3\\) 網格中，一條線從 \\((0,0)\\) 到 \\((3,1)\\)，另一條從 \\((0,0)\\) 到 \\((1,3)\\)，求夾角正切值。`
+          `在 \\(${n}\\times${n}\\) 網格中，一條線從 \\((0,0)\\) 到 \\((${n},1)\\)，另一條從 \\((0,0)\\) 到 \\((1,${n})\\)，求夾角正切值。`
         );
         answers.pushWithSummary(
-          `\\(\\frac{4}{3}\\)`,
-          `過程：兩斜率為 \\(\\frac13\\) 與 3，故 \\(\\tan\\phi=\\left|\\frac{3-\\frac13}{1+3\\cdot\\frac13}\\right|=\\frac{4}{3}\\)。`
+          `\\(${ans}\\)`,
+          `過程：兩斜率為 \\(\\frac1{${n}}\\) 與 ${n}，故 \\(\\tan\\phi=\\left|\\frac{${n}-\\frac1{${n}}}{1+${n}\\cdot\\frac1{${n}}}\\right|=${ans}\\)。`
         );
         continue;
       }
-      questions.push(`設兩個銳角 \\(A,B\\) 的正切分別為 \\(\\frac12\\) 與 \\(\\frac13\\)，求 \\(\\tan(A+B)\\)。`);
-      answers.push(`簡答：1。過程：\\(\\tan(A+B)=\\frac{\\frac12+\\frac13}{1-\\frac16}=1\\)。`);
+      {
+        const m = randInt(2, 5);
+        const n = randInt(2, 5);
+        const ans = formatFraction(m + n, m * n - 1);
+        questions.push(`設兩個銳角 \\(A,B\\) 的正切分別為 \\(\\frac1{${m}}\\) 與 \\(\\frac1{${n}}\\)，求 \\(\\tan(A+B)\\)。`);
+        answers.push(
+          `簡答：\\(${ans}\\)。過程：\\(\\tan(A+B)=\\frac{\\frac1{${m}}+\\frac1{${n}}}{1-\\frac1{${m * n}}}=${ans}\\)。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2133,12 +2349,13 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     const kinds = ['sin', 'cos'];
-    const frequencies = [1, 2, 3, 4, 5];
     for (let i = 0; i < count; i += 1) {
-      const kind = kinds[i % kinds.length];
-      const k = frequencies[i % frequencies.length];
+      const kind = kinds[randInt(0, 1)];
+      const k = randInt(1, 12);
+      const amp = randInt(1, 4);
+      const ampText = amp === 1 ? '' : String(amp);
       const period = s313Pi(1, k);
-      questions.push(`求函數 \\(y=|\\${kind} ${k === 1 ? 'x' : `${k}x`}|\\) 的最小正週期。`);
+      questions.push(`求函數 \\(y=${ampText}|\\${kind} ${k === 1 ? 'x' : `${k}x`}|\\) 的最小正週期。`);
       answers.push(
         `簡答：\\(${period}\\)。過程：原本 \\(\\${kind}\\) 的週期為 \\(\\frac{2\\pi}{${k}}\\)，加絕對值後上下兩半波重合，週期減半為 \\(\\frac{\\pi}{${k}}\\)。`
       );
@@ -2151,18 +2368,20 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const k = s313Pick([1, 2, 3, 4]);
+      const k = randInt(1, 9);
       const sign = s313Pick([1, -1]);
+      const amp = randInt(1, 4);
+      const ampText = amp === 1 ? '' : String(amp);
       const end = s313Pi(1, k);
       const mid = s313Pi(1, 2 * k);
       const body = k === 1 ? 'x' : `${k}x`;
       if (sign > 0) {
-        questions.push(`在區間 \\([0,${end}]\\) 內，寫出函數 \\(y=\\sin ${body}\\) 的遞增區間與遞減區間。`);
+        questions.push(`在區間 \\([0,${end}]\\) 內，寫出函數 \\(y=${ampText}\\sin ${body}\\) 的遞增區間與遞減區間。`);
         answers.push(
           `簡答：遞增 \\([0,${mid}]\\)，遞減 \\([${mid},${end}]\\)。過程：令 \\(u=${body}\\)，當 \\(u\\) 從 0 到 \\(\\frac{\\pi}{2}\\) 時 \\(\\sin u\\) 遞增；從 \\(\\frac{\\pi}{2}\\) 到 \\(\\pi\\) 時遞減，再把 \\(u\\) 換回 \\(x\\)。`
         );
       } else {
-        questions.push(`在區間 \\([0,${end}]\\) 內，寫出函數 \\(y=-\\sin ${body}\\) 的遞增區間與遞減區間。`);
+        questions.push(`在區間 \\([0,${end}]\\) 內，寫出函數 \\(y=-${ampText}\\sin ${body}\\) 的遞增區間與遞減區間。`);
         answers.push(
           `簡答：遞增 \\([${mid},${end}]\\)，遞減 \\([0,${mid}]\\)。過程：\\(-\\sin u\\) 會把 \\(\\sin u\\) 的增減方向上下翻轉；原本先增後減，因此翻轉後先減後增。`
         );
@@ -2220,14 +2439,15 @@
       { text: '-1', per: 1 },
     ];
     for (let i = 0; i < count; i += 1) {
-      const k = s313Pick([1, 2, 3, 4]);
+      const k = randInt(1, 6);
+      const kind = s313Pick(['sin', 'cos']);
       const c = s313Pick(constants);
       const total = c.per * k;
       questions.push(
-        `在區間 \\([0,2\\pi)\\) 內，判定方程式 \\(\\sin ${k === 1 ? 'x' : `${k}x`}=${c.text}\\) 有幾個實根。`
+        `在區間 \\([0,2\\pi)\\) 內，判定方程式 \\(\\${kind} ${k === 1 ? 'x' : `${k}x`}=${c.text}\\) 有幾個實根。`
       );
       answers.push(
-        `簡答：${total} 個。過程：\\(\\sin u=${c.text}\\) 在一個週期 \\([0,2\\pi)\\) 內有 ${c.per} 個解；\\(u=${k === 1 ? 'x' : `${k}x`}\\) 讓 \\([0,2\\pi)\\) 內包含 ${k} 個完整週期，所以共有 ${total} 個。`
+        `簡答：${total} 個。過程：\\(\\${kind} u=${c.text}\\) 在一個週期 \\([0,2\\pi)\\) 內有 ${c.per} 個解；\\(u=${k === 1 ? 'x' : `${k}x`}\\) 讓 \\([0,2\\pi)\\) 內包含 ${k} 個完整週期，所以共有 ${total} 個。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2267,29 +2487,23 @@
       { a: '\\frac{\\pi}{4}', s: '\\frac{\\sqrt2}{2}', c: '\\frac{\\sqrt2}{2}', type: 'sqrt2' },
       { a: '\\frac{\\pi}{3}', s: '\\frac{\\sqrt3}{2}', c: '\\frac12', type: 'sqrt3' },
     ];
-    function specialValue(k, type) {
-      if (type === 'half') return fractionToLatex(makeFraction(k + 2, 2));
+    function specialValue(k, type, c) {
+      if (type === 'half') return fractionToLatex(makeFraction(k + 2 * c, 2));
       if (type === 'sqrt2') {
-        if (k === 1) return `1+\\frac{\\sqrt2}{2}`;
-        if (k === 2) return `1+\\sqrt2`;
-        return `1+\\frac{${k}\\sqrt2}{2}`;
+        if (k === 1) return `${c}+\\frac{\\sqrt2}{2}`;
+        if (k === 2) return `${c}+\\sqrt2`;
+        return `${c}+\\frac{${k}\\sqrt2}{2}`;
       }
-      if (k === 1) return `1+\\frac{\\sqrt3}{2}`;
-      if (k === 2) return `1+\\sqrt3`;
-      return `1+\\frac{${k}\\sqrt3}{2}`;
+      if (k === 1) return `${c}+\\frac{\\sqrt3}{2}`;
+      if (k === 2) return `${c}+\\sqrt3`;
+      return `${c}+\\frac{${k}\\sqrt3}{2}`;
     }
-    const parameterCases = [
-      [0, 1],
-      [1, 2],
-      [2, 3],
-      [0, 2],
-      [1, 3],
-      [2, 1],
-    ];
     for (let i = 0; i < count; i += 1) {
-      const [angleIndex, k] = parameterCases[i % parameterCases.length];
+      const angleIndex = randInt(0, 2);
+      const k = randInt(1, 3);
+      const cShift = randInt(1, 4);
       const item = angles[angleIndex];
-      const value = specialValue(k, item.type);
+      const value = specialValue(k, item.type, cShift);
       const coeff = k === 1 ? '' : `${k}`;
       const mult = k === 1 ? item.s : `${k}\\cdot ${item.s}`;
       const comparison =
@@ -2299,10 +2513,10 @@
             ? `\\sin ${item.a}=\\cos ${item.a}`
             : `\\sin ${item.a}>\\cos ${item.a}`;
       questions.push(
-        `設 \\(f(x)=${coeff}\\sin x+1\\)，求 \\(f(${item.a})\\)，並判斷 \\(\\sin ${item.a}\\) 與 \\(\\cos ${item.a}\\) 的大小。`
+        `設 \\(f(x)=${coeff}\\sin x+${cShift}\\)，求 \\(f(${item.a})\\)，並判斷 \\(\\sin ${item.a}\\) 與 \\(\\cos ${item.a}\\) 的大小。`
       );
       answers.push(
-        `簡答：\\(f(${item.a})=${value}\\)，且 \\(${comparison}\\)。過程：直接代入特殊角；\\(${item.a}\\) 的正弦值為 \\(${item.s}\\)，餘弦值為 \\(${item.c}\\)，所以 \\(f(${item.a})=${mult}+1=${value}\\)，再比較正弦與餘弦的大小。`
+        `簡答：\\(f(${item.a})=${value}\\)，且 \\(${comparison}\\)。過程：直接代入特殊角；\\(${item.a}\\) 的正弦值為 \\(${item.s}\\)，餘弦值為 \\(${item.c}\\)，所以 \\(f(${item.a})=${mult}+${cShift}=${value}\\)，再比較正弦與餘弦的大小。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2333,13 +2547,10 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const amplitudes = [2, 3, 4];
-    const middleLines = [-1, 0, 2];
-    const frequencies = [1, 2, 3];
     for (let i = 0; i < count; i += 1) {
-      const a = amplitudes[i % amplitudes.length];
-      const d = middleLines[Math.floor(i / amplitudes.length) % middleLines.length];
-      const k = frequencies[Math.floor(i / (amplitudes.length * middleLines.length)) % frequencies.length];
+      const a = randInt(2, 6);
+      const d = randInt(-3, 3);
+      const k = randInt(1, 4);
       const peakX = s313Pi(1, 2 * k);
       const valleyX = s313Pi(3, 2 * k);
       questions.push(
@@ -2375,11 +2586,11 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const lengths = [6, 8, 10, 12];
-    const durations = [10, 15, 20, 30];
+    const lengths = [5, 6, 7, 8, 9, 10, 12, 15];
+    const durations = [5, 10, 15, 20, 25, 30, 40, 45];
     for (let i = 0; i < count; i += 1) {
-      const len = lengths[i % lengths.length];
-      const minutes = durations[Math.floor(i / lengths.length) % durations.length];
+      const len = lengths[randInt(0, lengths.length - 1)];
+      const minutes = durations[randInt(0, durations.length - 1)];
       const theta = s313Pi(minutes, 30);
       const area = simplifyFraction(len * len * minutes, 60);
       questions.push(`分針長 ${len} 公分，從某時刻開始經過 ${minutes} 分鐘，求分針掃過的扇形面積。`);
@@ -2603,8 +2814,8 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const a = s313Pick([1, 2, 3, 4]);
-      const c = s313Pick([-3, 0, 2]);
+      const a = randInt(1, 5);
+      const c = randInt(-4, 4);
       const combo = s314CoeffParen(a, '(\\sin x+\\cos x)');
       const mode = i % 2;
       if (mode === 0) {
@@ -2632,15 +2843,19 @@
     const answers = createAnswerList(summaryAnswers);
     const triples = [
       [3, 4, 5],
+      [4, 3, 5],
       [5, 12, 13],
+      [12, 5, 13],
       [8, 15, 17],
+      [15, 8, 17],
+      [6, 8, 10],
       [7, 24, 25],
       [20, 21, 29],
+      [9, 12, 15],
     ];
-    const bases = [1, 3, 5];
     for (let i = 0; i < count; i += 1) {
-      const [p, q, r] = triples[i % triples.length];
-      const base = bases[Math.floor(i / triples.length) % bases.length];
+      const [p, q, r] = triples[randInt(0, triples.length - 1)];
+      const base = randInt(1, 6);
       const a = base;
       const c = base + 2 * p;
       const b = 2 * q;
@@ -2660,7 +2875,7 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const m = s313Pick([1, 2]);
-      const n = s313Pick([1, 2, 3]);
+      const n = randInt(1, 12);
       const linearPart = s314CoeffParen(m, '(\\sin x+\\cos x)');
       const tLinearPart = s314CoeffBody(m, 't');
       questions.push(`令 \\(t=\\sin x+\\cos x\\)，求函數 \\(y=(\\sin x+\\cos x)^2+${linearPart}+${n}\\) 的最小值。`);
@@ -2701,17 +2916,20 @@
     const answers = createAnswerList(summaryAnswers);
     const triples = [
       [3, 4, 5],
+      [4, 3, 5],
       [5, 12, 13],
+      [12, 5, 13],
       [8, 15, 17],
+      [15, 8, 17],
+      [6, 8, 10],
       [7, 24, 25],
       [20, 21, 29],
+      [9, 40, 41],
     ];
-    const frequencies = [1, 2, 3, 4, 5];
-    const midlines = [-3, 0, 5];
     for (let i = 0; i < count; i += 1) {
-      const [a0, b0, r] = triples[i % triples.length];
-      const k = frequencies[i % frequencies.length];
-      const d = midlines[Math.floor(i / triples.length) % midlines.length];
+      const [a0, b0, r] = triples[randInt(0, triples.length - 1)];
+      const k = randInt(1, 6);
+      const d = randInt(-4, 5);
       const max = d + r;
       const min = d - r;
       const period = s313Pi(2, k);
@@ -2861,13 +3079,22 @@
     const answers = createAnswerList(summaryAnswers);
     const triples = [
       [3, 4, 5],
+      [4, 3, 5],
       [5, 12, 13],
+      [12, 5, 13],
       [8, 15, 17],
+      [15, 8, 17],
+      [6, 8, 10],
       [7, 24, 25],
+      [24, 7, 25],
       [20, 21, 29],
+      [21, 20, 29],
+      [9, 12, 15],
+      [16, 12, 20],
+      [9, 40, 41],
     ];
     for (let i = 0; i < count; i += 1) {
-      const [p, q, r] = triples[i % triples.length];
+      const [p, q, r] = triples[randInt(0, triples.length - 1)];
       const mode = i % 2;
       if (mode === 0) {
         questions.push(
@@ -2911,15 +3138,19 @@
     const answers = createAnswerList(summaryAnswers);
     const triples = [
       [3, 4, 5],
+      [4, 3, 5],
       [5, 12, 13],
+      [12, 5, 13],
       [8, 15, 17],
+      [15, 8, 17],
+      [6, 8, 10],
       [7, 24, 25],
       [20, 21, 29],
+      [10, 24, 26],
     ];
-    const frequencies = [1, 2, 3, 4, 5];
     for (let i = 0; i < count; i += 1) {
-      const [a, b, r] = triples[i % triples.length];
-      const w = frequencies[i % frequencies.length];
+      const [a, b, r] = triples[randInt(0, triples.length - 1)];
+      const w = randInt(1, 6);
       questions.push(
         `兩個同頻波疊合後位移為 \\(y=${a}\\sin ${s314TrigArgument('t', w)}+${b}\\cos ${s314TrigArgument('t', w)}\\)。求合成波的最大位移。`
       );
@@ -3262,19 +3493,23 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const equationCases = [
-      { shift: 20, value: '1', delta: 45, theta: 65 },
-      { shift: 35, value: '0', delta: 0, theta: 35 },
-      { shift: 15, value: '-1', delta: -45, theta: -30 },
-    ];
-    const tangentCases = [
-      { aNum: 1, aDen: 5, sumNum: 1, sumDen: 1 },
-      { aNum: 2, aDen: 7, sumNum: 3, sumDen: 4 },
-      { aNum: 1, aDen: 3, sumNum: 2, sumDen: 1 },
-    ];
+    const makeEquationCase = () => {
+      const pick = randInt(0, 2);
+      const value = ['1', '0', '-1'][pick];
+      const delta = [45, 0, -45][pick];
+      const shift = 5 * randInt(1, 8);
+      return { shift, value, delta, theta: shift + delta };
+    };
+    const makeTangentCase = () => {
+      const aNum = randInt(1, 4);
+      const aDen = aNum + randInt(1, 5);
+      const sumNum = randInt(1, 4);
+      const sumDen = randInt(1, 4);
+      return { aNum, aDen, sumNum, sumDen };
+    };
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
-        const item = equationCases[(i / 2) % equationCases.length];
+        const item = makeEquationCase();
         questions.push(
           `已知 \\(-90^\\circ<\\theta<90^\\circ\\)，且 \\(\\frac{\\tan\\theta-\\tan ${item.shift}^\\circ}{1+\\tan\\theta\\tan ${item.shift}^\\circ}=${item.value}\\)。求 \\(\\theta\\)。`
         );
@@ -3283,7 +3518,7 @@
           `過程：左式就是 \\(\\tan(\\theta-${item.shift}^\\circ)\\)，所以 \\(\\theta-${item.shift}^\\circ=${item.delta}^\\circ\\)，得 \\(\\theta=${item.theta}^\\circ\\)。`
         );
       } else {
-        const item = tangentCases[((i - 1) / 2) % tangentCases.length];
+        const item = makeTangentCase();
         const numerator = item.sumNum * item.aDen - item.aNum * item.sumDen;
         const denominator = item.sumDen * item.aDen + item.aNum * item.sumNum;
         const answer = formatFraction(numerator, denominator);
@@ -3303,15 +3538,13 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const cases = [
-      { n: 2, shift: 45, interval: '0^\\circ<\\theta<180^\\circ' },
-      { n: 3, shift: 60, interval: '0^\\circ<\\theta<180^\\circ' },
-      { n: 4, shift: 30, interval: '0^\\circ<\\theta<180^\\circ' },
-      { n: 5, shift: 72, interval: '0^\\circ<\\theta<180^\\circ' },
-      { n: 6, shift: 45, interval: '0^\\circ<\\theta<180^\\circ' },
-    ];
+    const shiftPool = [30, 36, 45, 60, 72];
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
+      const item = {
+        n: randInt(2, 8),
+        shift: shiftPool[randInt(0, shiftPool.length - 1)],
+        interval: '0^\\circ<\\theta<180^\\circ',
+      };
       const values = [];
       for (let k = 0; k < item.n; k += 1) {
         values.push(`${formatFraction(90 + 180 * k, item.n)}^\\circ`);
@@ -3331,15 +3564,28 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const cases = [
-      { a: 3, b: 4, r: 5, k: 1, c: 2 },
-      { a: 5, b: 12, r: 13, k: 2, c: -1 },
-      { a: 8, b: 6, r: 10, k: 3, c: 4 },
-      { a: 7, b: 24, r: 25, k: 1, c: -3 },
-      { a: 9, b: 40, r: 41, k: 4, c: 1 },
+    const triples = [
+      [3, 4, 5],
+      [6, 8, 10],
+      [5, 12, 13],
+      [9, 12, 15],
+      [8, 15, 17],
+      [7, 24, 25],
+      [20, 21, 29],
+      [12, 16, 20],
+      [9, 40, 41],
+      [10, 24, 26],
     ];
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
+      const t = triples[randInt(0, triples.length - 1)];
+      const swap = randInt(0, 1) === 1;
+      const item = {
+        a: swap ? t[1] : t[0],
+        b: swap ? t[0] : t[1],
+        r: t[2],
+        k: randInt(1, 6),
+        c: randInt(-5, 5),
+      };
       const expression = s31SinCosExpression(item.a, item.b, item.k, item.c);
       questions.push(`設 \\(f(x)=${expression}\\)。求振幅、週期、\\(y\\) 軸截距、最大值與最小值。`);
       answers.push(
@@ -3353,15 +3599,8 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const cases = [
-      { amp: 3, mid: 1, k: 1 },
-      { amp: 4, mid: -2, k: 2 },
-      { amp: 5, mid: 3, k: 3 },
-      { amp: 2, mid: -1, k: 4 },
-      { amp: 6, mid: 2, k: 5 },
-    ];
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
+      const item = { amp: randInt(2, 7), mid: randInt(-4, 4), k: randInt(1, 6) };
       const maxY = item.mid + item.amp;
       const minY = item.mid - item.amp;
       const maxX = s31PiText(1, 2 * item.k);
@@ -3422,7 +3661,78 @@
         normalized: '\\sin(x+\\frac{\\pi}{4})\\ge\\frac{\\sqrt{2}}{2}',
         answer: '0\\le x\\le\\frac{\\pi}{2}',
       },
+      {
+        expression: '\\sqrt{3}\\sin x-\\cos x',
+        relation: '\\ge',
+        threshold: '1',
+        combined: '2\\sin(x-\\frac{\\pi}{6})',
+        normalized: '\\sin(x-\\frac{\\pi}{6})\\ge\\frac12',
+        answer: '\\frac{\\pi}{3}\\le x\\le\\pi',
+      },
+      {
+        expression: '\\cos x-\\sin x',
+        relation: '>',
+        threshold: '0',
+        combined: '\\sqrt{2}\\cos(x+\\frac{\\pi}{4})',
+        normalized: '\\cos(x+\\frac{\\pi}{4})>0',
+        answer: '0\\le x<\\frac{\\pi}{4}\\ 或\\ \\frac{5\\pi}{4}<x<2\\pi',
+      },
+      {
+        expression: '\\sqrt{3}\\cos x-\\sin x',
+        relation: '>',
+        threshold: '1',
+        combined: '2\\cos(x+\\frac{\\pi}{6})',
+        normalized: '\\cos(x+\\frac{\\pi}{6})>\\frac12',
+        answer: '0\\le x<\\frac{\\pi}{6}\\ 或\\ \\frac{3\\pi}{2}<x<2\\pi',
+      },
+      {
+        expression: '\\sin x-\\cos x',
+        relation: '<',
+        threshold: '1',
+        combined: '\\sqrt{2}\\sin(x-\\frac{\\pi}{4})',
+        normalized: '\\sin(x-\\frac{\\pi}{4})<\\frac{\\sqrt{2}}{2}',
+        answer: '0\\le x<\\frac{\\pi}{2}\\ 或\\ \\pi<x<2\\pi',
+      },
+      {
+        expression: '\\cos x+\\sin x',
+        relation: '\\ge',
+        threshold: '0',
+        combined: '\\sqrt{2}\\sin(x+\\frac{\\pi}{4})',
+        normalized: '\\sin(x+\\frac{\\pi}{4})\\ge0',
+        answer: '0\\le x\\le\\frac{3\\pi}{4}\\ 或\\ \\frac{7\\pi}{4}\\le x<2\\pi',
+      },
+      {
+        expression: '\\sin x+\\cos x',
+        relation: '<',
+        threshold: '1',
+        combined: '\\sqrt{2}\\sin(x+\\frac{\\pi}{4})',
+        normalized: '\\sin(x+\\frac{\\pi}{4})<\\frac{\\sqrt{2}}{2}',
+        answer: '\\frac{\\pi}{2}<x<2\\pi',
+      },
+      {
+        expression: '\\sin x+\\sqrt{3}\\cos x',
+        relation: '\\ge',
+        threshold: '\\sqrt{3}',
+        combined: '2\\sin(x+\\frac{\\pi}{3})',
+        normalized: '\\sin(x+\\frac{\\pi}{3})\\ge\\frac{\\sqrt{3}}{2}',
+        answer: '0\\le x\\le\\frac{\\pi}{3}',
+      },
+      {
+        expression: '\\sin x-\\sqrt{3}\\cos x',
+        relation: '<',
+        threshold: '0',
+        combined: '2\\sin(x-\\frac{\\pi}{3})',
+        normalized: '\\sin(x-\\frac{\\pi}{3})<0',
+        answer: '0\\le x<\\frac{\\pi}{3}\\ 或\\ \\frac{4\\pi}{3}<x<2\\pi',
+      },
     ];
+    // 打亂順序，讓每批 5 題為 7 題庫的隨機子集。
+    for (let s = cases.length - 1; s > 0; s -= 1) {
+      const j = randInt(0, s);
+      const tmp = cases[s];
+      cases[s] = cases[j];
+      cases[j] = tmp;
+    }
     for (let i = 0; i < count; i += 1) {
       const item = cases[i % cases.length];
       questions.push(`在 \\(0\\le x<2\\pi\\) 中，解不等式 \\(${item.expression}${item.relation}${item.threshold}\\)。`);
@@ -3438,15 +3748,21 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const cases = [
-      { a: 3, b: 4, c: 1 },
-      { a: 5, b: 12, c: -2 },
-      { a: 8, b: 15, c: 3 },
-      { a: 7, b: 24, c: -1 },
-      { a: 20, b: 21, c: 2 },
+    const pairs = [
+      [3, 4],
+      [4, 3],
+      [5, 12],
+      [12, 5],
+      [8, 15],
+      [15, 8],
+      [7, 24],
+      [20, 21],
+      [6, 8],
+      [9, 12],
     ];
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
+      const pair = pairs[randInt(0, pairs.length - 1)];
+      const item = { a: pair[0], b: pair[1], c: randInt(-3, 3) };
       const expression = s31SinCosExpression(item.a, item.b, 1, item.c);
       questions.push(
         `已知 \\(f(x)=${expression}\\) 在 \\(0<x<\\frac{\\pi}{2}\\) 時於 \\(x=\\alpha\\) 取得最大值。求 \\(\\tan\\alpha\\)。`
@@ -3765,7 +4081,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const a = s321Pick([2, 3, 4, 5]);
+      const a = randInt(2, 9);
       const mode = i % 5;
       if (mode === 0) {
         questions.push(`函數 \\(y=${a}^x\\) 是否通過 \\((0,1)\\)？水平漸近線為何？`);
@@ -3780,9 +4096,11 @@
         continue;
       }
       if (mode === 2) {
-        questions.push(`求 \\(y=${a}^{x-2}+3\\) 的水平漸近線與通過點 \\((2,?)\\)。`);
+        const h = randInt(1, 4);
+        const k = randInt(1, 5);
+        questions.push(`求 \\(y=${a}^{x-${h}}+${k}\\) 的水平漸近線與通過點 \\((${h},?)\\)。`);
         answers.push(
-          `簡答：水平漸近線 \\(y=3\\)，通過 \\((2,4)\\)。過程：由 \\(y=${a}^{x-2}\\) 上移 3 得漸近線；代入 \\(x=2\\) 得 \\(${a}^0+3=4\\)。`
+          `簡答：水平漸近線 \\(y=${k}\\)，通過 \\((${h},${k + 1})\\)。過程：由 \\(y=${a}^{x-${h}}\\) 上移 ${k} 得漸近線；代入 \\(x=${h}\\) 得 \\(${a}^0+${k}=${k + 1}\\)。`
         );
         continue;
       }
@@ -3793,7 +4111,7 @@
         );
         continue;
       }
-      questions.push(`判斷 \\(y=${a}^x\\) 與反函數 \\(y=\\log_${a}x\\) 是否關於直線 \\(y=x\\) 對稱。`);
+      questions.push(`判斷 \\(y=${a}^x\\) 與反函數 \\(y=\\log_{${a}}x\\) 是否關於直線 \\(y=x\\) 對稱。`);
       answers.push(`簡答：是。過程：互為反函數的兩個圖形會關於直線 \\(y=x\\) 對稱。`);
     }
     return { questions, summaryAnswers, answers };
@@ -3804,9 +4122,9 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const a = s321Pick([2, 3, 4]);
-      const h = s321Pick([1, 2, 3]);
-      const k = s321Pick([-2, 1, 3]);
+      const a = randInt(2, 7);
+      const h = randInt(1, 5);
+      const k = randInt(-4, 4) || 1;
       const mode = i % 5;
       if (mode === 0) {
         const moveY = k > 0 ? `上移 ${k}` : `下移 ${Math.abs(k)}`;
@@ -3833,10 +4151,17 @@
         );
         continue;
       }
-      questions.push(`已知 \\(y=3^x\\) 平移後通過 \\((0,5)\\)、\\((1,11)\\)，求平移後的函數式。`);
-      answers.push(
-        `簡答：\\(y=3^{x+1}+2\\)。過程：設 \\(y=3^{x-h}+k\\)。代入兩點可得 \\(3^{-h}+k=5\\)、\\(3^{1-h}+k=11\\)，相減得 \\(2\\cdot3^{-h}=6\\)，故 \\(h=-1,k=2\\)。`
-      );
+      {
+        const base = randInt(2, 5);
+        const m = randInt(1, 3);
+        const kk = randInt(1, 4);
+        const p0 = base ** m + kk;
+        const p1 = base ** (m + 1) + kk;
+        questions.push(`已知 \\(y=${base}^x\\) 平移後通過 \\((0,${p0})\\)、\\((1,${p1})\\)，求平移後的函數式。`);
+        answers.push(
+          `簡答：\\(y=${base}^{x+${m}}+${kk}\\)。過程：設 \\(y=${base}^{x-h}+k\\)。代入兩點可得 \\(${base}^{-h}+k=${p0}\\)、\\(${base}^{1-h}+k=${p1}\\)，相減得 \\(${base - 1}\\cdot${base}^{-h}=${p1 - p0}\\)，故 \\(${base}^{-h}=${base ** m}\\)，\\(h=-${m}\\)、\\(k=${kk}\\)。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3904,7 +4229,7 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        const k = s321Pick([4, 6, 8, 10]);
+        const k = 2 * randInt(2, 6);
         const min = 2 * Math.pow(3, k / 2);
         questions.push(`已知 \\(a+b=${k}\\)，求 \\(3^a+3^b\\) 的最小值。`);
         answers.push(
@@ -3913,7 +4238,7 @@
         continue;
       }
       if (mode === 1) {
-        const base = s321Pick([2, 3, 5]);
+        const base = randInt(2, 15);
         questions.push(`求 \\(y=${base}^x+${base}^{-x}\\) 的最小值，並求此時 \\(x\\) 的值。`);
         answers.push(
           `簡答：最小值 2，於 \\(x=0\\) 時取得。過程：令 \\(t=${base}^x>0\\)，則 \\(y=t+\\frac1t\\ge2\\)，等號在 \\(t=1\\)，也就是 \\(x=0\\)。`
@@ -3921,7 +4246,7 @@
         continue;
       }
       if (mode === 2) {
-        const k = s321Pick([1, 2, 3]);
+        const k = randInt(1, 6);
         const min = Math.pow(3, 2 * k);
         questions.push(`求 \\(27^{x^2+${s321Fraction(2 * k, 3)}}\\) 的最小值。`);
         answers.push(
@@ -3930,14 +4255,14 @@
         continue;
       }
       if (mode === 3) {
-        const k = s321Pick([8, 10, 12]);
+        const k = 2 * randInt(3, 8);
         questions.push(`已知 \\(a+b=${k}\\)，求 \\(2^a+2^b\\) 的最小值。`);
         answers.push(
           `簡答：\\(${2 * Math.pow(2, k / 2)}\\)。過程：令 \\(u=2^a,v=2^b\\)，則 \\(uv=2^{${k}}\\)。由 AM-GM 得 \\(u+v\\ge2\\cdot2^{${k / 2}}\\)，等號在 \\(a=b=${k / 2}\\)。`
         );
         continue;
       }
-      const c = s321Pick([2, 3, 4]);
+      const c = randInt(2, 7);
       questions.push(`設 \\(2^x+2^{-x}=t\\)，將 \\(4^x+4^{-x}\\) 表為 \\(t\\) 的多項式，並求 \\(t=${c}\\) 時的值。`);
       answers.push(
         `簡答：\\(4^x+4^{-x}=t^2-2\\)，\\(t=${c}\\) 時為 ${c * c - 2}。過程：\\((2^x+2^{-x})^2=4^x+2+4^{-x}\\)，所以 \\(4^x+4^{-x}=t^2-2\\)。`
@@ -3953,39 +4278,53 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        questions.push(`比較 \\((0.7)^{${formatFraction(3, 2)}}\\)、\\((0.7)^2\\)、\\((0.7)^{-1}\\) 的大小。`);
+        const b = s321Pick(['0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9']);
+        questions.push(`比較 \\((${b})^{${formatFraction(3, 2)}}\\)、\\((${b})^2\\)、\\((${b})^{-1}\\) 的大小。`);
         answers.push(
-          `簡答：\\((0.7)^{-1}>(0.7)^{${formatFraction(3, 2)}}>(0.7)^2\\)。過程：底數介於 0 與 1 時，指數愈大值愈小；比較指數 \\(-1<\\frac32<2\\)。`
+          `簡答：\\((${b})^{-1}>(${b})^{${formatFraction(3, 2)}}>(${b})^2\\)。過程：底數介於 0 與 1 時，指數愈大值愈小；比較指數 \\(-1<\\frac32<2\\)。`
         );
         continue;
       }
       if (mode === 1) {
-        const a = s321Pick([2, 3, 5]);
+        let b1 = randInt(2, 4);
+        let b2 = b1 + randInt(1, 3);
+        let b3 = b2 + randInt(1, 3);
+        const q = randInt(2, 4);
         questions.push(
-          `給予相同指數 \\(\\frac12\\)，比較 \\(2^{${formatFraction(1, 2)}}\\)、\\(3^{${formatFraction(1, 2)}}\\)、\\(5^{${formatFraction(1, 2)}}\\) 的大小。`
+          `給予相同指數 \\(\\frac1{${q}}\\)，比較 \\(${b1}^{${formatFraction(1, q)}}\\)、\\(${b2}^{${formatFraction(1, q)}}\\)、\\(${b3}^{${formatFraction(1, q)}}\\) 的大小。`
         );
         answers.push(
-          `簡答：\\(5^{${formatFraction(1, 2)}}>3^{${formatFraction(1, 2)}}>2^{${formatFraction(1, 2)}}\\)。過程：指數 \\(\\frac12>0\\)，底數愈大，值愈大。`
+          `簡答：\\(${b3}^{${formatFraction(1, q)}}>${b2}^{${formatFraction(1, q)}}>${b1}^{${formatFraction(1, q)}}\\)。過程：指數 \\(\\frac1{${q}}>0\\)，底數愈大，值愈大。`
         );
         continue;
       }
       if (mode === 2) {
-        const p = s321Pick([2, 3, 4]);
+        const p = randInt(2, 9);
         questions.push(`若 \\(0<a<1\\)，比較 \\(a^2,a^3,a^{${formatFraction(1, p)}}\\) 的大小。`);
         answers.push(`簡答：\\(a^{${formatFraction(1, p)}}>a^2>a^3\\)。過程：底數介於 0 與 1，指數愈大值愈小。`);
         continue;
       }
       if (mode === 3) {
-        questions.push(`比較 \\((\\sqrt2)^3\\) 與 \\((\\sqrt3)^2\\) 的大小。`);
+        let p = s321Pick([2, 3, 5, 6, 7]);
+        let q = s321Pick([2, 3, 4, 5]);
+        // 比較 (√p)^3 與 (√q)^2：六次方後為 p^3 與 q^2（開三次方）→ 直接平方比較 p^3 與 q^2
+        for (let retry = 0; retry < 10 && p ** 3 === q ** 2; retry += 1) q = s321Pick([2, 3, 4, 5]);
+        const left = p ** 3;
+        const right = q ** 2;
+        const rel = left < right ? '<' : '>';
+        questions.push(`比較 \\((\\sqrt${p})^3\\) 與 \\((\\sqrt${q})^2\\) 的大小。`);
         answers.push(
-          `簡答：\\((\\sqrt2)^3<(\\sqrt3)^2\\)。過程：兩數皆正，平方比較得 \\(((\\sqrt2)^3)^2=8\\)、\\(((\\sqrt3)^2)^2=9\\)，所以後者較大。`
+          `簡答：\\((\\sqrt${p})^3${rel}(\\sqrt${q})^2\\)。過程：兩數皆正，平方比較得 \\(((\\sqrt${p})^3)^2=${left}\\)、\\(((\\sqrt${q})^2)^2=${right}\\)，所以${left < right ? '後者較大' : '前者較大'}。`
         );
         continue;
       }
-      questions.push(`判斷方程式 \\(2^x=x+3\\) 的實根個數。`);
-      answers.push(
-        `簡答：2 個。過程：令 \\(F(x)=2^x-x-3\\)。\\(F(-3)>0,F(-2)<0\\)，故 \\((-3,-2)\\) 有一根；\\(F(1)<0,F(2)>0\\)，故 \\((1,2)\\) 有一根。又 \\(F''(x)=(\\ln2)^2 2^x>0\\)，凸函數至多有兩個零點，所以共 2 根。`
-      );
+      {
+        const b = randInt(2, 5);
+        questions.push(`判斷方程式 \\(${b}^x=x+3\\) 的實根個數。`);
+        answers.push(
+          `簡答：2 個。過程：令 \\(F(x)=${b}^x-x-3\\)。\\(F(-3)>0,F(-1)<0\\)，故 \\((-3,-1)\\) 有一根；\\(F(0)=-2<0,F(3)=${b ** 3 - 6}>0\\)，故 \\((0,3)\\) 有一根。又 \\(F''(x)=(\\ln${b})^2 ${b}^x>0\\)，凸函數至多有兩個零點，所以共 2 根。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3995,7 +4334,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const a = s321Pick([2, 3, 5]);
+      const a = randInt(2, 12);
       const mode = i % 5;
       if (mode === 0) {
         questions.push(`設 \\(f(x)=${a}^x\\)，判斷 \\(f(x+y)=f(x)f(y)\\) 是否恆成立。`);
@@ -4003,25 +4342,32 @@
         continue;
       }
       if (mode === 1) {
-        const k = s321Pick([2, 3, 4]);
-        questions.push(`若 \\(f(x)=a^x\\) 且 \\(f(${k})=${Math.pow(a, k)}\\)，求 \\(f(-${k})\\)。`);
+        const base = randInt(2, 5);
+        const k = randInt(2, 4);
+        questions.push(`若 \\(f(x)=a^x\\) 且 \\(f(${k})=${Math.pow(base, k)}\\)，求 \\(f(-${k})\\)。`);
         answers.push(
-          `簡答：\\(${formatFraction(1, Math.pow(a, k))}\\)。過程：\\(f(-${k})=a^{-${k}}=\\frac1{a^${k}}\\)。`
+          `簡答：\\(${formatFraction(1, Math.pow(base, k))}\\)。過程：\\(f(-${k})=a^{-${k}}=\\frac1{a^${k}}\\)。`
         );
         continue;
       }
       if (mode === 2) {
-        questions.push(`證明對任意實數 \\(x_1,x_2\\)，\\(f(x_1+x_2)=f(x_1)f(x_2)\\)，其中 \\(f(x)=a^x\\)。`);
-        answers.push(`簡答：成立。過程：依指數律 \\(a^{x_1+x_2}=a^{x_1}a^{x_2}\\)。`);
+        questions.push(`證明對任意實數 \\(x_1,x_2\\)，\\(f(x_1+x_2)=f(x_1)f(x_2)\\)，其中 \\(f(x)=${a}^x\\)。`);
+        answers.push(`簡答：成立。過程：依指數律 \\(${a}^{x_1+x_2}=${a}^{x_1}${a}^{x_2}\\)。`);
         continue;
       }
       if (mode === 3) {
-        questions.push(`判斷指數函數 \\(f(x)=a^x\\) 是否為一對一函數。`);
+        const b = randInt(2, 9);
+        questions.push(`判斷指數函數 \\(f(x)=${b}^x\\) 與一般 \\(f(x)=a^x\\)（\\(a>0,a\\ne1\\)）是否為一對一函數。`);
         answers.push(`簡答：是。過程：當 \\(a>1\\) 時遞增，當 \\(0<a<1\\) 時遞減，兩種情況皆單調，所以一對一。`);
         continue;
       }
-      questions.push(`若 \\(f(x)=a^x\\)、\\(f(k)=125\\)，求 \\(f(-k)\\)。`);
-      answers.push(`簡答：\\(\\frac1{125}\\)。過程：\\(f(k)f(-k)=a^k a^{-k}=1\\)。`);
+      {
+        const p = s321Pick([2, 3, 5, 7, 10]);
+        const m = randInt(2, 3);
+        const N = p ** m;
+        questions.push(`若 \\(f(x)=a^x\\)、\\(f(k)=${N}\\)，求 \\(f(-k)\\)。`);
+        answers.push(`簡答：\\(\\frac1{${N}}\\)。過程：\\(f(k)f(-k)=a^k a^{-k}=1\\)。`);
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4033,7 +4379,7 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        const t = s321Pick([3, 4, 5]);
+        const t = randInt(3, 9);
         questions.push(`已知 \\(a^x+a^{-x}=${t}\\)，求 \\(a^{2x}+a^{-2x}\\)。`);
         answers.push(
           `簡答：${t * t - 2}。過程：平方得 \\((a^x+a^{-x})^2=a^{2x}+2+a^{-2x}\\)，所以答案為 \\(${t}^2-2\\)。`
@@ -4054,8 +4400,9 @@
         continue;
       }
       if (mode === 3) {
-        questions.push(`已知 \\(a^{1/2}+a^{-1/2}=\\sqrt5\\)，求 \\(a+a^{-1}\\)。`);
-        answers.push(`簡答：3。過程：平方得 \\(a+2+a^{-1}=5\\)，所以 \\(a+a^{-1}=3\\)。`);
+        const m = randInt(5, 12);
+        questions.push(`已知 \\(a^{1/2}+a^{-1/2}=\\sqrt{${m}}\\)，求 \\(a+a^{-1}\\)。`);
+        answers.push(`簡答：${m - 2}。過程：平方得 \\(a+2+a^{-1}=${m}\\)，所以 \\(a+a^{-1}=${m - 2}\\)。`);
         continue;
       }
       questions.push(`已知 \\(a^{2x}=5\\)，計算 \\(\\frac{a^{3x}+a^{-3x}}{a^x+a^{-x}}\\)。`);
@@ -4072,7 +4419,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const a = s321Pick([2, 3, 5]);
+      const a = randInt(2, 9);
       const mode = i % 5;
       if (mode === 0) {
         questions.push(`設 \\(f(x)=\\frac{${a}^x-${a}^{-x}}{${a}^x+${a}^{-x}}\\)，證明 \\(f(-x)=-f(x)\\)。`);
@@ -4107,31 +4454,45 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        questions.push(`判定方程式 \\(2^x=x^2\\) 有幾個實數解。`);
-        answers.push(`簡答：3 個。過程：觀察 \\(y=2^x\\) 與 \\(y=x^2\\) 的交點，可由圖形與代入區間判定共有 3 個。`);
+        const item = s321Pick([
+          { b: 2, ans: '3 個', why: '觀察 \\(y=2^x\\) 與 \\(y=x^2\\) 的交點，負半軸一個、正半軸 \\(x=2,4\\) 兩個，共 3 個。' },
+          { b: 3, ans: '1 個', why: '正半軸 \\(3^x\\) 恆大於 \\(x^2\\)（最小差仍為正）；負半軸兩圖形恰交一次，共 1 個。' },
+          { b: 4, ans: '1 個', why: '正半軸 \\(4^x>x^2\\) 恆成立；負半軸 \\(4^x\\) 介於 0 與 1 而 \\(x^2\\) 由大變小，恰交一次。' },
+        ]);
+        questions.push(`判定方程式 \\(${item.b}^x=x^2\\) 有幾個實數解。`);
+        answers.push(`簡答：${item.ans}。過程：${item.why}`);
         continue;
       }
       if (mode === 1) {
-        questions.push(`判定方程式 \\(10^x=x\\) 有幾個實根。`);
-        answers.push(`簡答：0 個。過程：若 \\(x\\le0\\)，左式正而右式非正；若 \\(x>0\\)，\\(10^x>x\\)，所以無解。`);
+        const b = randInt(2, 10);
+        questions.push(`判定方程式 \\(${b}^x=x\\) 有幾個實根。`);
+        answers.push(`簡答：0 個。過程：若 \\(x\\le0\\)，左式正而右式非正；若 \\(x>0\\)，\\(${b}^x>x\\)，所以無解。`);
         continue;
       }
       if (mode === 2) {
-        questions.push(`求 \\(y=2^x\\) 與 \\(y=x^2\\) 的圖形交點個數。`);
-        answers.push(`簡答：3 個。過程：等同判斷方程 \\(2^x=x^2\\)，可用圖形或符號變化分區判斷。`);
-        continue;
-      }
-      if (mode === 3) {
-        questions.push(`判定 \\((\\frac12)^x=x+1\\) 的實根個數。`);
+        const b = randInt(2, 9);
+        questions.push(`求 \\(y=(\\frac1{${b}})^x\\) 與 \\(y=x\\) 的圖形交點個數。`);
         answers.push(
-          `簡答：1 個。過程：左式 \\((\\frac12)^x\\) 遞減，右式 \\(x+1\\) 遞增，因此至多一個交點；代入 \\(x=0\\) 成立，所以恰有 1 個實根。`
+          `簡答：1 個。過程：左式遞減、右式遞增，至多一個交點；令 \\(F(x)=(\\frac1{${b}})^x-x\\)，\\(F(0)=1>0\\)、\\(F(1)=\\frac1{${b}}-1<0\\)，故恰有 1 個交點。`
         );
         continue;
       }
-      questions.push(`利用圖形判定 \\(2^x=-x+2\\) 有幾個解。`);
-      answers.push(
-        `簡答：1 個。過程：令 \\(F(x)=2^x+x-2\\)，則 \\(F'(x)=(\\ln2)2^x+1>0\\)，所以 \\(F\\) 嚴格遞增；又 \\(F(0)=-1,F(1)=1\\)，因此恰有 1 個實根。`
-      );
+      if (mode === 3) {
+        const b = randInt(2, 9);
+        questions.push(`判定 \\((\\frac1{${b}})^x=x+1\\) 的實根個數。`);
+        answers.push(
+          `簡答：1 個。過程：左式 \\((\\frac1{${b}})^x\\) 遞減，右式 \\(x+1\\) 遞增，因此至多一個交點；代入 \\(x=0\\) 成立，所以恰有 1 個實根。`
+        );
+        continue;
+      }
+      {
+        const b = randInt(2, 5);
+        const c = randInt(2, 5);
+        questions.push(`利用圖形判定 \\(${b}^x=-x+${c}\\) 有幾個解。`);
+        answers.push(
+          `簡答：1 個。過程：令 \\(F(x)=${b}^x+x-${c}\\)，則 \\(F'(x)=(\\ln${b})${b}^x+1>0\\)，所以 \\(F\\) 嚴格遞增；又 \\(F(0)=${1 - c}<0,F(${c})=${Math.pow(b, c)}>0\\)，因此恰有 1 個實根。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4143,34 +4504,64 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        questions.push(`函數 \\(y=c\\cdot a^x+k\\) 通過 \\((0,0),(1,4),(-1,-\\frac43)\\)，求 \\(a,c,k\\)。`);
+        const a = randInt(2, 5);
+        const c = randInt(1, 3);
+        const k = -c;
+        const p1 = c * a + k;
+        const negFrac = formatFraction(c * (1 - a), a);
+        questions.push(`函數 \\(y=c\\cdot a^x+k\\) 通過 \\((0,0),(1,${p1}),(-1,${negFrac})\\)，求 \\(a,c,k\\)。`);
         answers.pushWithSummary(
-          `\\(a=3,c=2,k=-2\\)`,
-          `過程：代入三點得 \\(c+k=0\\)、\\(ca+k=4\\)、\\(\\frac{c}{a}+k=-\\frac43\\)。前兩式給 \\(c(a-1)=4\\)，再和第三式聯立可得 \\(a=3,c=2,k=-2\\)。`
+          `\\(a=${a},c=${c},k=${k}\\)`,
+          `過程：代入三點得 \\(c+k=0\\)、\\(ca+k=${p1}\\)、\\(\\frac{c}{a}+k=${negFrac}\\)。前兩式給 \\(c(a-1)=${p1}\\)（因 \\(k=-c\\)），再和第三式聯立可得 \\(a=${a},c=${c},k=${k}\\)。`
         );
         continue;
       }
       if (mode === 1) {
-        questions.push(`已知指數函數通過 \\((0,16)\\) 與 \\((1,8)\\)，求形如 \\(y=C\\cdot r^x\\) 的函數式。`);
+        const item = s321Pick([
+          { C: 8, rTex: '\\frac12', p1: 4 },
+          { C: 16, rTex: '\\frac12', p1: 8 },
+          { C: 32, rTex: '\\frac12', p1: 16 },
+          { C: 27, rTex: '\\frac13', p1: 9 },
+          { C: 81, rTex: '\\frac13', p1: 27 },
+          { C: 16, rTex: '\\frac14', p1: 4 },
+          { C: 64, rTex: '\\frac14', p1: 16 },
+          { C: 5, rTex: '2', p1: 10 },
+          { C: 7, rTex: '3', p1: 21 },
+        ]);
+        questions.push(`已知指數函數通過 \\((0,${item.C})\\) 與 \\((1,${item.p1})\\)，求形如 \\(y=C\\cdot r^x\\) 的函數式。`);
         answers.push(
-          `簡答：\\(y=16(\\frac12)^x\\)。過程：代入 \\(x=0\\) 得 \\(C=16\\)，再由 \\(16r=8\\) 得 \\(r=\\frac12\\)。`
+          `簡答：\\(y=${item.C}(${item.rTex})^x\\)。過程：代入 \\(x=0\\) 得 \\(C=${item.C}\\)，再由 \\(${item.C}r=${item.p1}\\) 得 \\(r=${item.rTex}\\)。`
         );
         continue;
       }
       if (mode === 2) {
-        questions.push(`某細菌在 2 天後有 20000 個，3.5 天後有 160000 個，求其增殖倍率模型的底數。`);
-        answers.push(`簡答：每日倍率為 4。過程：設 \\(N(t)=C a^t\\)，兩式相除得 \\(a^{1.5}=8\\)，所以 \\(a=4\\)。`);
-        continue;
-      }
-      if (mode === 3) {
-        questions.push(`已知一指數圖形的水平漸近線為 \\(y=-2\\)，且通過 \\((0,0)\\)，寫出一個可能的解析式。`);
+        const s = randInt(2, 5);
+        const a = s * s;
+        const base = s321Pick([10000, 20000, 30000, 50000]);
+        const later = base * s * s * s;
+        questions.push(`某細菌在 2 天後有 ${base} 個，3.5 天後有 ${later} 個，求其增殖倍率模型的底數。`);
         answers.push(
-          `簡答：例如 \\(y=2\\cdot2^x-2\\)。過程：設 \\(y=C a^x-2\\)，代入 \\((0,0)\\) 得 \\(C-2=0\\)，所以 \\(C=2\\)。取 \\(a=2\\) 可得一個可能式 \\(y=2\\cdot2^x-2\\)。`
+          `簡答：每日倍率為 ${a}。過程：設 \\(N(t)=C a^t\\)，兩式相除得 \\(a^{1.5}=${s * s * s}\\)，所以 \\(a=${a}\\)。`
         );
         continue;
       }
-      questions.push(`已知 \\(y=a^x\\) 通過 \\((2,9)\\)，求 \\(y=27\\) 對應的 \\(x\\)。`);
-      answers.push(`簡答：3。過程：由 \\(a^2=9\\) 且 \\(a>0\\)，得 \\(a=3\\)。所以 \\(3^x=27\\)，\\(x=3\\)。`);
+      if (mode === 3) {
+        const k = randInt(1, 6);
+        const a = randInt(2, 5);
+        questions.push(`已知一指數圖形的水平漸近線為 \\(y=-${k}\\)，且通過 \\((0,0)\\)，寫出一個可能的解析式。`);
+        answers.push(
+          `簡答：例如 \\(y=${k}\\cdot${a}^x-${k}\\)。過程：設 \\(y=C a^x-${k}\\)，代入 \\((0,0)\\) 得 \\(C-${k}=0\\)，所以 \\(C=${k}\\)。取 \\(a=${a}\\) 可得一個可能式 \\(y=${k}\\cdot${a}^x-${k}\\)。`
+        );
+        continue;
+      }
+      {
+        const a = s321Pick([2, 3, 5, 7]);
+        const n = randInt(3, 4);
+        questions.push(`已知 \\(y=a^x\\) 通過 \\((2,${a * a})\\)，求 \\(y=${Math.pow(a, n)}\\) 對應的 \\(x\\)。`);
+        answers.push(
+          `簡答：${n}。過程：由 \\(a^2=${a * a}\\) 且 \\(a>0\\)，得 \\(a=${a}\\)。所以 \\(${a}^x=${Math.pow(a, n)}\\)，\\(x=${n}\\)。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4418,8 +4809,13 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const seenQuestions = new Set();
     for (let i = 0; i < count; i += 1) {
-      const item = builders[i % builders.length]();
+      let item = builders[i % builders.length]();
+      for (let retry = 0; retry < 12 && seenQuestions.has(item.question); retry += 1) {
+        item = builders[i % builders.length]();
+      }
+      seenQuestions.add(item.question);
       const summary = item.summary || deriveSummaryAnswerFromDetail(item.answer);
       questions.push(item.question);
       summaryAnswers.push(summary);
@@ -4630,24 +5026,81 @@
           '由 x-' + shift + '=' + Math.pow(b, n) + '，所以 x=' + (Math.pow(b, n) + shift) + '。'
         );
       },
-      () =>
-        s322Item(
-          '解方程式 ' + s322M(s322Log(2, 'x') + '+' + s322Log(2, '(x-2)') + '=3') + '。',
-          s322M('x=4'),
-          '合併得 x(x-2)=8，且 x>2；解得 x=4。'
-        ),
-      () =>
-        s322Item(
-          '解方程式 ' + s322M(s322Log(3, 'k') + '+' + s322Log(3, '(2k+3)') + '=2') + '。',
-          s322M('k=' + s322Frac(3, 2)),
-          '合併得 k(2k+3)=9，取正根 k=3/2。'
-        ),
-      () =>
-        s322Item(
-          '解方程式 ' + s322M('1+' + s322Log(2, 'x') + '=' + s322Log(4, '(x+3)')) + '。',
-          s322M('x=1'),
-          '改成以 2 為底後，先兩邊乘 2，得 2+2\\log_{2}x=\\log_{2}(x+3)。因此 4x^2=x+3，整理並檢查真數後得 x=1。'
-        ),
+      () => {
+        // log_b x + log_b (x-d) = n，設計成 x=r 為唯一正根：r(r-d)=b^n。
+        const pool = [];
+        const bases = [
+          [2, 3],
+          [2, 4],
+          [3, 2],
+          [5, 2],
+        ];
+        const [b, n] = bases[randInt(0, bases.length - 1)];
+        const N = Math.pow(b, n);
+        for (let r = 2; r <= N; r += 1) {
+          if (N % r === 0 && r > N / r) pool.push([r, r - N / r]);
+        }
+        const [r, d] = pool[randInt(0, pool.length - 1)] || [4, 2];
+        return s322Item(
+          '解方程式 ' + s322M(s322Log(b, 'x') + '+' + s322Log(b, '(x-' + d + ')') + '=' + n) + '。',
+          s322M('x=' + r),
+          '合併得 x(x-' + d + ')=' + N + '，且 x>' + d + '；解得 x=' + r + '。'
+        );
+      },
+      () => {
+        // log_b k + log_b (mk+c) = n，設計 k=k0 為唯一正根。
+        const bases = [
+          [2, 3],
+          [3, 2],
+          [5, 2],
+        ];
+        const [b, n] = bases[randInt(0, bases.length - 1)];
+        const N = Math.pow(b, n);
+        let k0 = randInt(1, 3);
+        let m = randInt(1, 3);
+        for (let retry = 0; retry < 15 && (N % k0 !== 0 || N / k0 - m * k0 <= 0); retry += 1) {
+          k0 = randInt(1, 3);
+          m = randInt(1, 3);
+        }
+        if (N % k0 !== 0 || N / k0 - m * k0 <= 0) {
+          k0 = 1;
+          m = 1;
+        }
+        const c = N / k0 - m * k0;
+        const mTerm = m === 1 ? 'k' : m + 'k';
+        return s322Item(
+          '解方程式 ' + s322M(s322Log(b, 'k') + '+' + s322Log(b, '(' + mTerm + '+' + c + ')') + '=' + n) + '。',
+          s322M('k=' + k0),
+          '合併得 k(' + mTerm + '+' + c + ')=' + N + '，二次式只有一個正根，取 k=' + k0 + '。'
+        );
+      },
+      () => {
+        // c + log_2 x = log_4 (x+d)，設計 x=r：4^c r^2 = r+d。
+        const cases = [
+          { c: 1, r: 1, d: 3 },
+          { c: 1, r: 2, d: 14 },
+          { c: 1, r: 3, d: 33 },
+          { c: 2, r: 1, d: 15 },
+          { c: 2, r: 2, d: 62 },
+        ];
+        const item = cases[randInt(0, cases.length - 1)];
+        const four = Math.pow(4, item.c);
+        return s322Item(
+          '解方程式 ' + s322M(item.c + '+' + s322Log(2, 'x') + '=' + s322Log(4, '(x+' + item.d + ')')) + '。',
+          s322M('x=' + item.r),
+          '改成以 2 為底後，兩邊乘 2，得 ' +
+            2 * item.c +
+            '+2\\log_{2}x=\\log_{2}(x+' +
+            item.d +
+            ')。因此 ' +
+            four +
+            'x^2=x+' +
+            item.d +
+            '，整理並檢查真數後得 x=' +
+            item.r +
+            '。'
+        );
+      },
     ];
     return s322MakeSet(count, builders);
   }
@@ -4920,92 +5373,213 @@
   }
 
   function buildS322ChainProductSet(count = 5) {
+    const pickDistinct = (pool, k) => {
+      const copy = pool.slice();
+      const out = [];
+      for (let i = 0; i < k; i += 1) out.push(copy.splice(randInt(0, copy.length - 1), 1)[0]);
+      return out;
+    };
     const builders = [
-      () =>
-        s322Item(
-          '計算 ' + s322M(s322Log(2, '3') + '\\cdot' + s322Log(3, '4') + '\\cdot' + s322Log(4, '8')) + ' 的值。',
-          '3',
-          '連鎖相乘可消去中間底數，最後得到 \\log_{2}8=3。'
-        ),
-      () =>
-        s322Item(
+      () => {
+        const [b0, b1, b2] = pickDistinct([2, 3, 4, 5, 6, 7], 3);
+        const n = randInt(2, 4);
+        const target = Math.pow(b0, n);
+        return s322Item(
+          '計算 ' +
+            s322M(s322Log(b0, String(b1)) + '\\cdot' + s322Log(b1, String(b2)) + '\\cdot' + s322Log(b2, String(target))) +
+            ' 的值。',
+          String(n),
+          '連鎖相乘可消去中間底數，最後得到 \\log_{' + b0 + '}' + target + '=' + n + '。'
+        );
+      },
+      () => {
+        const [p, q] = pickDistinct([2, 3, 5, 7], 2);
+        return s322Item(
           '求 ' +
             s322M(
-              '(' + s322Log(2, '3') + '+' + s322Log(4, '9') + ')(' + s322Log(3, '4') + '+' + s322Log(9, '2') + ')'
+              '(' +
+                s322Log(p, String(q)) +
+                '+' +
+                s322Log(p * p, String(q * q)) +
+                ')(' +
+                s322Log(q, String(p * p)) +
+                '+' +
+                s322Log(q * q, String(p)) +
+                ')'
             ) +
             ' 的值。',
           '5',
-          '令 a=\\log_{2}3，則 \\log_{4}9=a，\\log_{3}4=2/a，\\log_{9}2=1/(2a)，原式為 2a\\cdot\\frac{5}{2a}=5。'
-        ),
-      () =>
-        s322Item(
-          '計算 ' + s322M(s322Log(3, '5') + '\\cdot' + s322Log(5, '7') + '\\cdot' + s322Log(7, '81')) + ' 的值。',
-          '4',
-          '連鎖消去後為 \\log_{3}81=4。'
-        ),
-      () =>
-        s322Item(
-          '化簡 ' +
-            s322M(s322Log('a', 'b') + '\\cdot' + s322Log('b', 'c') + '\\cdot' + s322Log('c', 'a')) +
-            ' 的結果。',
+          '令 a=\\log_{' +
+            p +
+            '}' +
+            q +
+            '，則 \\log_{' +
+            p * p +
+            '}' +
+            q * q +
+            '=a，\\log_{' +
+            q +
+            '}' +
+            p * p +
+            '=2/a，\\log_{' +
+            q * q +
+            '}' +
+            p +
+            '=1/(2a)，原式為 2a\\cdot\\frac{5}{2a}=5。'
+        );
+      },
+      () => {
+        const [b0, b1, b2, b3] = pickDistinct([2, 3, 5, 7, 10], 4);
+        const n = randInt(2, 4);
+        const target = Math.pow(b0, n);
+        return s322Item(
+          '計算 ' +
+            s322M(
+              s322Log(b0, String(b1)) +
+                '\\cdot' +
+                s322Log(b1, String(b2)) +
+                '\\cdot' +
+                s322Log(b2, String(b3)) +
+                '\\cdot' +
+                s322Log(b3, String(target))
+            ) +
+            ' 的值。',
+          String(n),
+          '連鎖消去後為 \\log_{' + b0 + '}' + target + '=' + n + '。'
+        );
+      },
+      () => {
+        const letterSets = [
+          ['a', 'b', 'c'],
+          ['p', 'q', 'r'],
+          ['x', 'y', 'z'],
+          ['m', 'n', 'k'],
+          ['u', 'v', 'w'],
+        ];
+        const [A, B, C] = letterSets[randInt(0, letterSets.length - 1)];
+        return s322Item(
+          '化簡 ' + s322M(s322Log(A, B) + '\\cdot' + s322Log(B, C) + '\\cdot' + s322Log(C, A)) + ' 的結果。',
           '1',
           '換底後分子分母完全相消。'
-        ),
-      () =>
-        s322Item(
-          '求 ' + s322M(s322Log('\\sqrt{2}', '3') + '\\cdot' + s322Log(9, '16')) + ' 的精確值。',
-          '4',
-          '第一項為 2\\log_{2}3，第二項為 2\\log_{3}2，相乘得 4。'
-        ),
+        );
+      },
+      () => {
+        const [p, q] = pickDistinct([2, 3, 5], 2);
+        const m = randInt(2, 4);
+        const target = Math.pow(p, m);
+        return s322Item(
+          '求 ' + s322M(s322Log('\\sqrt{' + p + '}', String(q)) + '\\cdot' + s322Log(q * q, String(target))) + ' 的精確值。',
+          String(m),
+          '第一項為 2\\log_{' +
+            p +
+            '}' +
+            q +
+            '，第二項為 \\frac{' +
+            m +
+            '}{2}\\log_{' +
+            q +
+            '}' +
+            p +
+            '，相乘得 ' +
+            m +
+            '。'
+        );
+      },
     ];
     return s322MakeSet(count, builders);
   }
 
   function buildS322ExponentPositionSet(count = 5) {
     const builders = [
-      () => s322Item('求 ' + s322M('3^{' + s322Log(3, '5') + '}') + ' 的值。', '5', 'a^{\\log_{a} b}=b。'),
-      () =>
-        s322Item(
-          '計算 ' + s322M('5^{' + s322Log(7, '3') + '}-3^{' + s322Log(7, '5') + '}') + ' 之值。',
+      () => {
+        const a = s322Pick([2, 3, 5, 7, 10]);
+        const b = s322Pick([3, 5, 7, 11, 13]);
+        return s322Item('求 ' + s322M(a + '^{' + s322Log(a, String(b)) + '}') + ' 的值。', String(b), 'a^{\\log_{a} b}=b。');
+      },
+      () => {
+        const c = s322Pick([5, 7, 11]);
+        const p = s322Pick([2, 3, 5]);
+        const q = s322Pick([3, 5, 7].filter((v) => v !== p));
+        return s322Item(
+          '計算 ' + s322M(p + '^{' + s322Log(c, String(q)) + '}-' + q + '^{' + s322Log(c, String(p)) + '}') + ' 之值。',
           '0',
           '利用 a^{\\log_{c} b}=b^{\\log_{c} a}，兩項相等。'
-        ),
-      () =>
-        s322Item(
-          '已知 ' + s322M('x^{' + s322Log(2, '5') + '}=25') + '，求 ' + s322M('x') + ' 之值。',
-          '4',
-          '25=5^2=(2^{\\log_{2}5})^2=4^{\\log_{2}5}，故 x=4。'
-        ),
-      () =>
-        s322Item(
-          '計算 ' + s322M('10^{2' + s322Log(10, '3') + '}') + ' 的簡化結果。',
-          '9',
-          '10^{2\\log_{10}3}=10^{\\log_{10}9}=9。'
-        ),
-      () =>
-        s322Item(
-          '求 ' + s322M('2^{' + s322Log(2, '3') + '+' + s322Log(2, '5') + '}') + ' 的值。',
-          '15',
-          '指數先合併為 \\log_{2}15，再用 a^{\\log_{a} b}=b。'
-        ),
+        );
+      },
+      () => {
+        const a = s322Pick([2, 3]);
+        const b = s322Pick([5, 7]);
+        const k = randInt(2, 3);
+        return s322Item(
+          '已知 ' + s322M('x^{' + s322Log(a, String(b)) + '}=' + Math.pow(b, k)) + '，求 ' + s322M('x') + ' 之值。',
+          String(Math.pow(a, k)),
+          Math.pow(b, k) +
+            '=' +
+            b +
+            '^' +
+            k +
+            '=(' +
+            a +
+            '^{\\log_{' +
+            a +
+            '}' +
+            b +
+            '})^' +
+            k +
+            '=' +
+            Math.pow(a, k) +
+            '^{\\log_{' +
+            a +
+            '}' +
+            b +
+            '}，故 x=' +
+            Math.pow(a, k) +
+            '。'
+        );
+      },
+      () => {
+        const k = randInt(2, 3);
+        const m = s322Pick([2, 3, 5, 7]);
+        return s322Item(
+          '計算 ' + s322M('10^{' + k + s322Log(10, String(m)) + '}') + ' 的簡化結果。',
+          String(Math.pow(m, k)),
+          '10^{' + k + '\\log_{10}' + m + '}=10^{\\log_{10}' + Math.pow(m, k) + '}=' + Math.pow(m, k) + '。'
+        );
+      },
+      () => {
+        const a = s322Pick([2, 3, 5]);
+        const p = s322Pick([3, 5, 7].filter((v) => v !== a));
+        const q = s322Pick([2, 7, 11].filter((v) => v !== a && v !== p));
+        return s322Item(
+          '求 ' + s322M(a + '^{' + s322Log(a, String(p)) + '+' + s322Log(a, String(q)) + '}') + ' 的值。',
+          String(p * q),
+          '指數先合併為 \\log_{' + a + '}' + p * q + '，再用 a^{\\log_{a} b}=b。'
+        );
+      },
     ];
     return s322MakeSet(count, builders);
   }
 
   function buildS322LogExtremaSet(count = 5) {
     const builders = [
-      () =>
-        s322Item(
-          '設 ' + s322M('x,y') + ' 為正數且 ' + s322M('x+y=90') + '，求 ' + s322M('\\log x+\\log y') + ' 的最大值。',
-          s322M('\\log 2025'),
-          '和固定時乘積 xy 最大發生在 x=y=45，故對數和最大為 \\log(45^2)。'
-        ),
-      () =>
-        s322Item(
-          '已知 ' + s322M(s322Log(2, 'x') + '+' + s322Log(2, 'y') + '=2') + '，求 ' + s322M('x+y') + ' 的最小值。',
-          '4',
-          '由 xy=4，正數和 x+y 的最小值為 2\\sqrt{xy}=4。'
-        ),
+      () => {
+        const half = randInt(10, 60);
+        const S = 2 * half;
+        return s322Item(
+          '設 ' + s322M('x,y') + ' 為正數且 ' + s322M('x+y=' + S) + '，求 ' + s322M('\\log x+\\log y') + ' 的最大值。',
+          s322M('\\log ' + half * half),
+          '和固定時乘積 xy 最大發生在 x=y=' + half + '，故對數和最大為 \\log(' + half + '^2)。'
+        );
+      },
+      () => {
+        const n = 2 * randInt(1, 5);
+        const minSum = 2 * Math.pow(2, n / 2);
+        return s322Item(
+          '已知 ' + s322M(s322Log(2, 'x') + '+' + s322Log(2, 'y') + '=' + n) + '，求 ' + s322M('x+y') + ' 的最小值。',
+          String(minSum),
+          '由 xy=' + Math.pow(2, n) + '，正數和 x+y 的最小值為 2\\sqrt{xy}=' + minSum + '。'
+        );
+      },
       () =>
         s322Item(
           '若 ' +
@@ -5024,86 +5598,177 @@
           s322M(s322Frac(7, 2)),
           '將 \\log_{4}y 改為 \\frac12\\log_{2}y，原式為 \\log_2(x\\sqrt y)。等價於最大化 x^2y；在 x+2y=12 下，x=8,y=2 時最大，所以最大值為 \\log_2(8\\sqrt2)=\\frac72。'
         ),
-      () =>
-        s322Item(
-          '設 ' + s322M('x>2') + '，求 ' + s322M('f(x)=2\\log(x-1)-\\log(x-2)') + ' 的最小值。',
+      () => {
+        const c = randInt(2, 6);
+        return s322Item(
+          '設 ' + s322M('x>' + c) + '，求 ' + s322M('f(x)=2\\log(x-' + (c - 1) + ')-\\log(x-' + c + ')') + ' 的最小值。',
           s322M('\\log 4'),
-          '合併為 \\log\\frac{(x-1)^2}{x-2}，令 t=x-2>0，內部為 t+2+1/t，最小為 4，所以原式最小值為 \\log 4。',
+          '合併為 \\log\\frac{(x-' +
+            (c - 1) +
+            ')^2}{x-' +
+            c +
+            '}，令 t=x-' +
+            c +
+            '>0，內部為 t+2+1/t，最小為 4，所以原式最小值為 \\log 4。',
           s322M('\\log 4')
-        ),
+        );
+      },
     ];
     return s322MakeSet(count, builders);
   }
 
   function buildS322DigitScientificSet(count = 5) {
     const builders = [
-      () =>
-        s322Item(
+      () => {
+        const N = 10 * randInt(4, 12);
+        const digits = Math.floor(N * Math.log10(6)) + 1;
+        const approx = (N * 0.7781).toFixed(2);
+        return s322Item(
           '已知 ' +
             s322M(s322Log(10, '2') + '\\approx0.3010,' + s322Log(10, '3') + '\\approx0.4771') +
             '，求 ' +
-            s322M('6^{100}') +
+            s322M('6^{' + N + '}') +
             ' 為幾位數。',
-          '78 位',
-          '100\\log_{10}6=100(0.3010+0.4771)=77.81，位數為 77+1=78。'
-        ),
-      () =>
-        s322Item(
-          '判定 ' + s322M('2^{100}') + ' 表為十進位數時是多少位數。',
-          '31 位',
-          '100\\log_{10}2\\approx30.10，位數為 30+1=31。'
-        ),
-      () =>
-        s322Item(
-          '將 ' + s322M('(5/6)^{100}') + ' 表示成小數，從小數點後第幾位開始出現不為 0 的數字？',
-          '第 8 位',
-          '用對數估計 \\(100\\log(5/6)\\approx-7.92\\)，故其值介於 \\(10^{-8}\\) 與 \\(10^{-7}\\) 之間。',
-          '第 8 位'
-        ),
-      () =>
-        s322Item(
-          '求最小正整數 ' + s322M('n') + '，使得 ' + s322M('(5/4)^n>10^{20}') + '。',
-          '207',
-          '取常用對數得 n\\log_{10}(5/4)>20，所以 n>20/\\log_{10}(5/4)\\approx206.37，最小正整數為 207。'
-        ),
-      () =>
-        s322Item(
-          '已知 ' + s322M('2^n') + ' 是最高位數字為 2 的 12 位數，求整數 ' + s322M('n') + ' 的可能值。',
-          s322M('n=38'),
-          '條件為 2\\times10^{11}\\le2^n<3\\times10^{11}。兩邊取常用對數得 11.3010\\cdots\\le0.3010\\cdots n<11.4771\\cdots，因此唯一整數為 n=38。'
-        ),
+          digits + ' 位',
+          N + '\\log_{10}6=' + N + '(0.3010+0.4771)\\approx' + approx + '，位數為 ' + (digits - 1) + '+1=' + digits + '。'
+        );
+      },
+      () => {
+        const N = 10 * randInt(5, 20);
+        const digits = Math.floor(N * Math.log10(2)) + 1;
+        const approx = (N * 0.301).toFixed(2);
+        return s322Item(
+          '判定 ' + s322M('2^{' + N + '}') + ' 表為十進位數時是多少位數。',
+          digits + ' 位',
+          N + '\\log_{10}2\\approx' + approx + '，位數為 ' + (digits - 1) + '+1=' + digits + '。'
+        );
+      },
+      () => {
+        const N = s322Pick([50, 80, 100, 120, 150]);
+        const pos = Math.ceil(-N * Math.log10(5 / 6));
+        const approx = (N * Math.log10(5 / 6)).toFixed(2);
+        return s322Item(
+          '將 ' + s322M('(5/6)^{' + N + '}') + ' 表示成小數，從小數點後第幾位開始出現不為 0 的數字？',
+          '第 ' + pos + ' 位',
+          '用對數估計 \\(' + N + '\\log(5/6)\\approx' + approx + '\\)，故其值介於 \\(10^{-' + pos + '}\\) 與 \\(10^{-' + (pos - 1) + '}\\) 之間。',
+          '第 ' + pos + ' 位'
+        );
+      },
+      () => {
+        const K = s322Pick([10, 15, 20, 25, 30]);
+        const exact = K / Math.log10(5 / 4);
+        const n = Math.floor(exact) + 1;
+        return s322Item(
+          '求最小正整數 ' + s322M('n') + '，使得 ' + s322M('(5/4)^n>10^{' + K + '}') + '。',
+          String(n),
+          '取常用對數得 n\\log_{10}(5/4)>' +
+            K +
+            '，所以 n>' +
+            K +
+            '/\\log_{10}(5/4)\\approx' +
+            exact.toFixed(2) +
+            '，最小正整數為 ' +
+            n +
+            '。'
+        );
+      },
+      () => {
+        // 隨機找「2^n 是最高位數字為 L 的 D 位數」且解唯一的 (L, D, n)。
+        let L = randInt(1, 3);
+        let D = randInt(8, 15);
+        let matches = [];
+        for (let attempt = 0; attempt < 30; attempt += 1) {
+          matches = [];
+          for (let n = 1; n <= 60; n += 1) {
+            const v = n * Math.log10(2);
+            if (Math.floor(v) === D - 1) {
+              const lead = Math.floor(Math.pow(10, v - Math.floor(v)));
+              if (lead === L) matches.push(n);
+            }
+          }
+          if (matches.length === 1) break;
+          L = randInt(1, 3);
+          D = randInt(8, 15);
+        }
+        if (matches.length !== 1) {
+          L = 2;
+          D = 12;
+          matches = [38];
+        }
+        const n = matches[0];
+        const low = ((D - 1) + Math.log10(L)).toFixed(4);
+        const high = ((D - 1) + Math.log10(L + 1)).toFixed(4);
+        return s322Item(
+          '已知 ' + s322M('2^n') + ' 是最高位數字為 ' + L + ' 的 ' + D + ' 位數，求整數 ' + s322M('n') + ' 的可能值。',
+          s322M('n=' + n),
+          '條件為 ' +
+            L +
+            '\\times10^{' +
+            (D - 1) +
+            '}\\le2^n<' +
+            (L + 1) +
+            '\\times10^{' +
+            (D - 1) +
+            '}。兩邊取常用對數得 ' +
+            low +
+            '\\le0.3010\\cdots n<' +
+            high +
+            '，因此唯一整數為 n=' +
+            n +
+            '。'
+        );
+      },
     ];
     return s322MakeSet(count, builders);
   }
 
   function buildS322RadicalBaseSet(count = 5) {
     const builders = [
-      () =>
-        s322Item('計算 ' + s322M(s322Log(4, '8')) + ' 之值。', s322M(s322Frac(3, 2)), '4=2^2，8=2^3，所以值為 3/2。'),
-      () =>
-        s322Item(
-          '求 ' + s322M(s322Log(27, '81')) + ' 的精確值。',
-          s322M(s322Frac(4, 3)),
-          '27=3^3，81=3^4，所以值為 4/3。'
-        ),
-      () =>
-        s322Item(
-          '化簡 ' + s322M(s322Log('\\sqrt{3}', '27')) + ' 的結果。',
-          '6',
-          '\\sqrt3=3^{1/2}，27=3^3，故值為 3/(1/2)=6。'
-        ),
-      () =>
-        s322Item(
-          '計算 ' + s322M(s322Log(0.25, s322Frac(1, 32))) + ' 之值。',
-          s322M(s322Frac(5, 2)),
-          '0.25=2^{-2}，1/32=2^{-5}，所以值為 (-5)/(-2)=5/2。'
-        ),
-      () =>
-        s322Item(
-          '求 ' + s322M(s322Log(16, '32') + '+' + s322Log(9, '\\sqrt{3}')) + ' 的和。',
-          s322M(s322Frac(3, 2)),
-          '前者為 5/4，後者為 1/4，總和為 3/2。'
-        ),
+      () => {
+        const a = s322Pick([2, 3, 5]);
+        const p = randInt(2, 3);
+        const q = randInt(2, 5);
+        return s322Item(
+          '計算 ' + s322M(s322Log(Math.pow(a, p), String(Math.pow(a, q)))) + ' 之值。',
+          s322M(s322Frac(q, p)),
+          Math.pow(a, p) + '=' + a + '^' + p + '，' + Math.pow(a, q) + '=' + a + '^' + q + '，所以值為 ' + s322Frac(q, p) + '。'
+        );
+      },
+      () => {
+        const a = s322Pick([2, 3]);
+        const p = randInt(2, 4);
+        const q = randInt(2, 5);
+        return s322Item(
+          '求 ' + s322M(s322Log(Math.pow(a, p), String(Math.pow(a, q)))) + ' 的精確值。',
+          s322M(s322Frac(q, p)),
+          Math.pow(a, p) + '=' + a + '^' + p + '，' + Math.pow(a, q) + '=' + a + '^' + q + '，所以值為 ' + s322Frac(q, p) + '。'
+        );
+      },
+      () => {
+        const a = s322Pick([2, 3, 5]);
+        const n = randInt(2, 4);
+        return s322Item(
+          '化簡 ' + s322M(s322Log('\\sqrt{' + a + '}', String(Math.pow(a, n)))) + ' 的結果。',
+          String(2 * n),
+          '\\sqrt{' + a + '}=' + a + '^{1/2}，' + Math.pow(a, n) + '=' + a + '^' + n + '，故值為 ' + n + '/(1/2)=' + 2 * n + '。'
+        );
+      },
+      () => {
+        const q = randInt(3, 6);
+        return s322Item(
+          '計算 ' + s322M(s322Log(0.25, s322Frac(1, Math.pow(2, q)))) + ' 之值。',
+          s322M(s322Frac(q, 2)),
+          '0.25=2^{-2}，1/' + Math.pow(2, q) + '=2^{-' + q + '}，所以值為 (-' + q + ')/(-2)=' + s322Frac(q, 2) + '。'
+        );
+      },
+      () => {
+        const p = randInt(3, 5);
+        return s322Item(
+          '求 ' + s322M(s322Log(16, String(Math.pow(2, p))) + '+' + s322Log(9, '\\sqrt{3}')) + ' 的和。',
+          s322M(s322Frac(p + 1, 4)),
+          '前者為 ' + p + '/4，後者為 1/4，總和為 ' + s322Frac(p + 1, 4) + '。'
+        );
+      },
     ];
     return s322MakeSet(count, builders);
   }
@@ -5499,8 +6164,13 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
+    const seenQuestions = new Set();
     for (let i = 0; i < count; i += 1) {
-      const built = builders[i % builders.length]();
+      let built = builders[i % builders.length]();
+      for (let retry = 0; retry < 12 && seenQuestions.has(built.q); retry += 1) {
+        built = builders[i % builders.length]();
+      }
+      seenQuestions.add(built.q);
       questions.push(built.q);
       answers.push(built.a);
     }
@@ -5517,21 +6187,35 @@
 
   function buildS323ChainProductSet(count) {
     const builders = [
-      () =>
-        buildS323QA(
-          '計算 ' + s323M('\\log_2 3\\cdot\\log_3 4\\cdot\\log_4 8') + ' 的值。',
-          s323M('3'),
-          '連鎖後成為 ' + s323M('\\log_2 8=3') + '。'
-        ),
-      () =>
-        buildS323QA(
-          '計算 ' + s323M('\\log_3 5\\cdot\\log_5 7\\cdot\\log_7 81') + ' 的值。',
-          s323M('4'),
-          '連鎖後成為 ' + s323M('\\log_3 81=4') + '。'
-        ),
       () => {
-        const a = s323Pick([2, 3, 5]);
-        const b = s323Pick([3, 4, 7]);
+        const pools = [2, 3, 4, 5, 6, 7];
+        const b0 = pools.splice(randInt(0, pools.length - 1), 1)[0];
+        const b1 = pools.splice(randInt(0, pools.length - 1), 1)[0];
+        const b2 = pools.splice(randInt(0, pools.length - 1), 1)[0];
+        const n = randInt(2, 4);
+        const target = Math.pow(b0, n);
+        return buildS323QA(
+          '計算 ' + s323MJ('\\log_', b0, ' ', b1, '\\cdot\\log_', b1, ' ', b2, '\\cdot\\log_', b2, ' ', target) + ' 的值。',
+          s323M(String(n)),
+          '連鎖後成為 ' + s323MJ('\\log_', b0, ' ', target, '=', n) + '。'
+        );
+      },
+      () => {
+        const pools = [2, 3, 5, 7, 10];
+        const b0 = pools.splice(randInt(0, pools.length - 1), 1)[0];
+        const b1 = pools.splice(randInt(0, pools.length - 1), 1)[0];
+        const b2 = pools.splice(randInt(0, pools.length - 1), 1)[0];
+        const n = randInt(2, 5);
+        const target = Math.pow(b0, n);
+        return buildS323QA(
+          '計算 ' + s323MJ('\\log_', b0, ' ', b1, '\\cdot\\log_', b1, ' ', b2, '\\cdot\\log_', b2, ' ', target) + ' 的值。',
+          s323M(String(n)),
+          '連鎖後成為 ' + s323MJ('\\log_', b0, ' ', target, '=', n) + '。'
+        );
+      },
+      () => {
+        const a = s323Pick([2, 3, 5, 6, 10]);
+        const b = s323Pick([3, 4, 7, 11, 13]);
         return buildS323QA(
           '化簡 ' + s323MJ('\\log_', a, ' ', b, '\\cdot\\log_', b, ' ', a) + '。',
           s323M('1'),
@@ -5539,8 +6223,8 @@
         );
       },
       () => {
-        const a = s323Pick([2, 3, 5]);
-        const n = s323Pick([2, 3, 4]);
+        const a = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const n = randInt(2, 5);
         return buildS323QA(
           '計算 ' + s323MJ('\\log_', a, ' ', Math.pow(a, n)) + '。',
           s323M(String(n)),
@@ -5548,7 +6232,7 @@
         );
       },
       () => {
-        const a = s323Pick([2, 3]);
+        const a = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
         return buildS323QA(
           '計算 ' + s323MJ('\\log_{\\sqrt{', a, '}} ', a) + '。',
           s323M('2'),
@@ -5562,8 +6246,8 @@
   function buildS323ExponentPositionSet(count) {
     const builders = [
       () => {
-        const a = s323Pick([2, 3, 5]);
-        const b = s323Pick([3, 4, 7]);
+        const a = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const b = s323Pick([3, 4, 7, 11, 13, 15]);
         return buildS323QA(
           '化簡 ' + s323MJ(a, '^{\\log_', a, ' ', b, '}') + '。',
           s323M(String(b)),
@@ -5571,8 +6255,8 @@
         );
       },
       () => {
-        const a = s323Pick([2, 3]);
-        const b = s323Pick([5, 7]);
+        const a = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const b = s323Pick([5, 7, 11, 13]);
         return buildS323QA(
           '計算 ' + s323MJ(a, '^{2\\log_', a, ' ', b, '}') + '。',
           s323M(String(b * b)),
@@ -5580,29 +6264,33 @@
         );
       },
       () => {
-        const a = s323Pick([2, 3]);
-        const b = s323Pick([5, 7]);
+        const a = s323Pick([2, 3, 5]);
+        const b = s323Pick([5, 7, 11]);
+        const k = randInt(2, 3);
         return buildS323QA(
-          '已知 ' + s323MJ('x^{\\log_', a, ' ', b, '}=', b * b) + '，求 ' + s323MJ('\\log_', a, ' x') + '。',
-          s323M('2'),
+          '已知 ' + s323MJ('x^{\\log_', a, ' ', b, '}=', Math.pow(b, k)) + '，求 ' + s323MJ('\\log_', a, ' x') + '。',
+          s323M(String(k)),
           '把左式改寫成 ' + s323M('b^{\\log_a x}') + '，所以指數相等。'
         );
       },
       () => {
-        const a = s323Pick([2, 3, 5]);
-        const m = s323Pick([2, 3, 4]);
+        const a = s323Pick([2, 3, 5, 7]);
+        const m = randInt(2, 6);
         return buildS323QA(
           '計算 ' + s323MJ(a, '^{\\log_', a, ' ', m, '}+', m, '^{\\log_', a, ' ', a, '}') + '。',
           s323M(String(2 * m)),
           '兩項分別化為 ' + s323M(m) + ' 與 ' + s323M(m) + '。'
         );
       },
-      () =>
-        buildS323QA(
-          '化簡 ' + s323M('10^{2\\log 3}') + '。',
-          s323M('9'),
-          '常用對數底數為 10，故 ' + s323M('10^{2\\log3}=3^2') + '。'
-        ),
+      () => {
+        const k = randInt(2, 3);
+        const m = s323Pick([2, 3, 5, 7]);
+        return buildS323QA(
+          '化簡 ' + s323MJ('10^{', k, '\\log ', m, '}') + '。',
+          s323M(String(Math.pow(m, k))),
+          '常用對數底數為 10，故 ' + s323MJ('10^{', k, '\\log ', m, '}=', m, '^', k) + '。'
+        );
+      },
     ];
     return s323MakeSet(count, builders);
   }
@@ -5627,23 +6315,25 @@
         );
       },
       () => {
-        const a = s323Pick([2, 3, 5]);
+        const a = s323Pick([2, 3, 5, 7]);
+        const n = randInt(2, 4);
         return buildS323QA(
-          '化簡 ' + s323MJ('\\log_{1/', a, '} ', Math.pow(a, 3)) + '。',
-          s323M('-3'),
+          '化簡 ' + s323MJ('\\log_{1/', a, '} ', Math.pow(a, n)) + '。',
+          s323M('-' + n),
           '底數是 ' + s323MJ(a, '^{-1}') + '。'
         );
       },
       () => {
-        const a = s323Pick([2, 3]);
+        const a = s323Pick([2, 3, 5]);
+        const p = randInt(2, 4);
         return buildS323QA(
-          '計算 ' + s323MJ('\\log_{', a, '^3} \\sqrt{', a, '}') + '。',
-          s323M('\\frac16'),
-          '解 ' + s323MJ('(', a, '^3)^x=', a, '^{1/2}') + '。'
+          '計算 ' + s323MJ('\\log_{', a, '^', p, '} \\sqrt{', a, '}') + '。',
+          s323M('\\frac1{' + 2 * p + '}'),
+          '解 ' + s323MJ('(', a, '^', p, ')^x=', a, '^{1/2}') + '。'
         );
       },
       () => {
-        const a = s323Pick([4, 9, 16]);
+        const a = s323Pick([4, 9, 16, 25, 36]);
         return buildS323QA(
           '求 ' + s323MJ('\\log_{\\sqrt{', a, '}} \\frac1{', a, '}') + '。',
           s323M('-2'),
@@ -5662,7 +6352,7 @@
           { base: 3, approx: 0.4771 },
           { base: 6, approx: 0.7782 },
         ]);
-        const n = s323Pick([20, 40, 60]);
+        const n = s323Pick([20, 30, 40, 50, 60, 70, 90]);
         const digits = Math.floor(n * d.approx) + 1;
         return buildS323QA(
           '已知 ' +
@@ -5675,7 +6365,7 @@
         );
       },
       () => {
-        const n = s323Pick([40, 60, 100]);
+        const n = s323Pick([30, 40, 50, 60, 80, 100, 120, 150]);
         return buildS323QA(
           '將 ' + s323MJ('(\\frac12)^{', n, '}') + ' 表成小數，從小數點後第幾位開始出現非 0 數字？',
           '第 ' + (Math.floor(0.301 * n) + 1) + ' 位',
@@ -5683,25 +6373,39 @@
         );
       },
       () => {
-        const n = s323Pick([20, 50, 100]);
+        const n = s323Pick([20, 30, 50, 80, 100, 150]);
         return buildS323QA(
           '已知 ' + s323M('\\log2\\approx0.3010') + '，判斷 ' + s323MJ('2^{', n, '}') + ' 的最高位數字需看哪個部分。',
           '看尾數 ' + s323MJ('\\{0.3010\\times', n, '\\}'),
           '最高位數字由科學記號係數決定，也就是對數的小數部分。'
         );
       },
-      () =>
-        buildS323QA(
-          '把 ' + s323M('235000') + ' 寫成科學記號，並寫出其常用對數的首數。',
-          s323M('2.35\\times10^5') + '，首數 5',
-          '科學記號中 ' + s323M('10^5') + ' 給出首數。'
-        ),
-      () =>
-        buildS323QA(
-          '求最小正整數 ' + s323M('n') + ' 使 ' + s323M('(5/4)^n>10^{20}') + ' 的判斷方法。',
-          s323M('n=207'),
-          '兩邊取對數，得到 ' + s323M('n\\log(5/4)>20') + '，所以 ' + s323M('n>20/\\log(5/4)\\approx206.37') + '。'
-        ),
+      () => {
+        const m1 = randInt(1, 9);
+        const m2 = randInt(1, 9);
+        const p = randInt(3, 7);
+        const value = (m1 * 10 + m2) * Math.pow(10, p - 1);
+        const mantissa = m1 + '.' + m2;
+        return buildS323QA(
+          '把 ' + s323M(String(value)) + ' 寫成科學記號，並寫出其常用對數的首數。',
+          s323MJ(mantissa, '\\times10^', p) + '，首數 ' + p,
+          '科學記號中 ' + s323MJ('10^', p) + ' 給出首數。'
+        );
+      },
+      () => {
+        const K = s323Pick([10, 15, 20, 25, 30]);
+        const exact = K / Math.log10(5 / 4);
+        const n = Math.floor(exact) + 1;
+        return buildS323QA(
+          '求最小正整數 ' + s323M('n') + ' 使 ' + s323MJ('(5/4)^n>10^{', K, '}') + ' 的判斷方法。',
+          s323MJ('n=', n),
+          '兩邊取對數，得到 ' +
+            s323MJ('n\\log(5/4)>', K) +
+            '，所以 ' +
+            s323MJ('n>', K, '/\\log(5/4)\\approx', exact.toFixed(2)) +
+            '。'
+        );
+      },
     ];
     return s323MakeSet(count, builders);
   }
@@ -5778,8 +6482,8 @@
   function buildS323DomainFeatureSet(count) {
     const builders = [
       () => {
-        const base = s323Pick([2, 3, 5]);
-        const h = s323Pick([1, 2, 3]);
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const h = randInt(1, 7);
         return buildS323QA(
           '求函數 ' + s323MJ('y=\\log_', base, '(x-', h, ')') + ' 的定義域與鉛直漸近線。',
           '定義域 ' + s323MJ('x>', h) + '；漸近線 ' + s323MJ('x=', h),
@@ -5787,8 +6491,8 @@
         );
       },
       () => {
-        const base = s323Pick([2, 3, 5]);
-        const k = s323Pick([-2, -1, 1, 2]);
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const k = randInt(-4, 4) || 2;
         return buildS323QA(
           '判斷 ' + s323MJ('y=\\log_', base, 'x', s31Signed(k)) + ' 必通過哪一點。',
           s323MJ('(1,', k, ')'),
@@ -5796,7 +6500,7 @@
         );
       },
       () => {
-        const base = s323Pick([2, 3, 5]);
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
         return buildS323QA(
           '判斷 ' + s323MJ('y=\\log_', base, 'x') + ' 與 ' + s323MJ('y=', base, '^x') + ' 的對稱軸。',
           s323M('y=x'),
@@ -5804,7 +6508,7 @@
         );
       },
       () => {
-        const base = s323Pick([2, 3, 5]);
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
         return buildS323QA(
           '列出 ' + s323MJ('y=\\log_', base, 'x') + ' 的兩個固定通過點。',
           s323M('(1,0)') + '、' + s323MJ('(', base, ',1)'),
@@ -5812,9 +6516,9 @@
         );
       },
       () => {
-        const base = s323Pick([2, 3]);
-        const h = s323Pick([1, 2, 3]);
-        const k = s323Pick([1, 2]);
+        const base = s323Pick([2, 3, 5, 7]);
+        const h = randInt(1, 6);
+        const k = randInt(1, 4);
         return buildS323QA(
           '求 ' + s323MJ('y=\\log_', base, '(x-', h, ')+', k) + ' 的定義域與一個固定通過點。',
           '定義域 ' + s323MJ('x>', h) + '；通過 ' + s323MJ('(', h + 1, ',', k, ')'),
@@ -5968,8 +6672,8 @@
   function buildS323InverseSet(count) {
     const builders = [
       () => {
-        const base = s323Pick([2, 3, 5]);
-        const h = s323Pick([1, 2, 3]);
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const h = randInt(1, 6);
         return buildS323QA(
           '已知 ' + s323MJ('f(x)=\\log_', base, '(x-', h, ')') + '，求 ' + s323M('f^{-1}(x)') + '。',
           s323MJ('f^{-1}(x)=', base, '^x+', h),
@@ -5977,32 +6681,35 @@
         );
       },
       () => {
-        const base = s323Pick([2, 3]);
-        const k = s323Pick([1, 2, 3]);
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const k = randInt(1, 6);
         return buildS323QA(
           '已知 ' + s323MJ('f(x)=', base, '^x-', k) + '，求 ' + s323M('f^{-1}(x)') + '。',
           s323MJ('f^{-1}(x)=\\log_', base, '(x+', k, ')'),
           '移項後取對數。'
         );
       },
-      () =>
-        buildS323QA(
-          '說明 ' + s323M('y=2^x') + ' 與 ' + s323M('y=\\log_2x') + ' 的對稱軸。',
+      () => {
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        return buildS323QA(
+          '說明 ' + s323MJ('y=', base, '^x') + ' 與 ' + s323MJ('y=\\log_', base, 'x') + ' 的對稱軸。',
           s323M('y=x'),
           '互為反函數，所以關於 ' + s323M('y=x') + ' 對稱。'
-        ),
-      () => {
-        const base = s323Pick([2, 3]);
-        return buildS323QA(
-          '已知 ' + s323MJ('f(x)=\\log_', base, 'x') + '，求 ' + s323MJ('f^{-1}(', base, ')') + '。',
-          s323M(String(Math.pow(base, base))),
-          '反函數為 ' + s323MJ(base, '^x') + '。'
         );
       },
       () => {
         const base = s323Pick([2, 3]);
-        const h = s323Pick([1, 2]);
-        const k = s323Pick([1, 2]);
+        const v = randInt(2, 5);
+        return buildS323QA(
+          '已知 ' + s323MJ('f(x)=\\log_', base, 'x') + '，求 ' + s323MJ('f^{-1}(', v, ')') + '。',
+          s323M(String(Math.pow(base, v))),
+          '反函數為 ' + s323MJ(base, '^x') + '。'
+        );
+      },
+      () => {
+        const base = s323Pick([2, 3, 5]);
+        const h = randInt(1, 4);
+        const k = randInt(1, 4);
         return buildS323QA(
           '已知 ' + s323MJ('f(x)=\\log_', base, '(x-', h, ')+', k) + '，求反函數。',
           s323MJ('f^{-1}(x)=', base, '^{x-', k, '}+', h),
@@ -6016,7 +6723,7 @@
   function buildS323JensenSet(count) {
     const builders = [
       () => {
-        const base = s323Pick([2, 3, 5]);
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
         return buildS323QA(
           '若 ' +
             s323M('x_1\\ne x_2') +
@@ -6029,32 +6736,46 @@
           '對數函數凹向下，套用 Jensen 不等式。'
         );
       },
-      () =>
-        buildS323QA(
-          '判斷 ' + s323M('\\log_2\\sqrt{ab}=\\frac{\\log_2a+\\log_2b}{2}') + ' 是否恆成立。',
-          '恆成立',
-          '左式為 ' + s323M('\\frac12\\log_2(ab)') + '。'
-        ),
-      () =>
-        buildS323QA(
-          '對數圖形上兩點連成弦，弦的中點在圖形上方還是下方？',
-          '在圖形下方',
-          '底數大於 1 的對數圖形凹向下。'
-        ),
       () => {
-        const base = s323Pick([2, 3]);
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        return buildS323QA(
+          '判斷 ' +
+            s323MJ('\\log_', base, '\\sqrt{ab}=\\frac{\\log_', base, 'a+\\log_', base, 'b}{2}') +
+            ' 是否恆成立（' +
+            s323M('a,b>0') +
+            '）。',
+          '恆成立',
+          '左式為 ' + s323MJ('\\frac12\\log_', base, '(ab)') + '。'
+        );
+      },
+      () => {
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        return buildS323QA(
+          '在 ' + s323MJ('y=\\log_', base, 'x') + ' 的圖形上取兩點連成弦，弦的中點在圖形上方還是下方？',
+          '在圖形下方',
+          '底數 ' + base + ' 大於 1，對數圖形凹向下。'
+        );
+      },
+      () => {
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
         return buildS323QA(
           '若 ' + s323MJ('f(x)=\\log_', base, 'x') + '，比較中點函數值與兩端函數值平均。',
           '中點函數值較大',
           '這是凹向下函數的中點性質。'
         );
       },
-      () =>
-        buildS323QA(
-          '利用凹性判斷 ' + s323M('\\log_2\\sqrt{ab}') + ' 與 ' + s323M('(\\log_2a+\\log_2b)/2') + ' 的關係。',
+      () => {
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        return buildS323QA(
+          '利用凹性判斷 ' +
+            s323MJ('\\log_', base, '\\sqrt{ab}') +
+            ' 與 ' +
+            s323MJ('(\\log_', base, 'a+\\log_', base, 'b)/2') +
+            ' 的關係。',
           '相等',
           '這題是幾何平均，直接用對數律化簡。'
-        ),
+        );
+      },
     ];
     return s323MakeSet(count, builders);
   }
@@ -6105,8 +6826,8 @@
   function buildS323AbsoluteLogSet(count) {
     const builders = [
       () => {
-        const base = s323Pick([2, 3]);
-        const n = s323Pick([1, 2, 3]);
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const n = randInt(1, 4);
         return buildS323QA(
           '解方程式 ' + s323MJ('|\\log_', base, ' x|=', n) + '。',
           s323MJ('x=', Math.pow(base, n)) + ' 或 ' + s323MJ('x=\\frac1{', Math.pow(base, n), '}'),
@@ -6114,32 +6835,38 @@
         );
       },
       () => {
-        const base = s323Pick([2, 3]);
-        const c = s323Pick([1, 2, 3]);
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const c = randInt(1, 5);
         return buildS323QA(
           '求 ' + s323MJ('y=|\\log_', base, ' x|') + ' 與 ' + s323MJ('y=', c) + ' 的交點個數。',
           '2 個',
           '等價於 ' + s323MJ('\\log_', base, ' x=\\pm ', c) + '。'
         );
       },
-      () =>
-        buildS323QA(
-          '判斷 ' + s323M('y=\\log_2|x|') + ' 是否關於 y 軸對稱。',
+      () => {
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        return buildS323QA(
+          '判斷 ' + s323MJ('y=\\log_', base, '|x|') + ' 是否關於 y 軸對稱。',
           '是',
           '把 x 換成 -x，' + s323M('|x|') + ' 不變。'
-        ),
-      () =>
-        buildS323QA(
-          '求 ' + s323M('y=|\\log_2x|') + ' 的最小值。',
+        );
+      },
+      () => {
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        return buildS323QA(
+          '求 ' + s323MJ('y=|\\log_', base, 'x|') + ' 的最小值。',
           s323M('0'),
           '絕對值最小為 0，發生在 ' + s323M('x=1') + '。'
-        ),
-      () =>
-        buildS323QA(
-          '比較 ' + s323M('y=\\log_2|x|') + ' 與 ' + s323M('y=|\\log_2x|') + ' 的定義域。',
+        );
+      },
+      () => {
+        const base = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        return buildS323QA(
+          '比較 ' + s323MJ('y=\\log_', base, '|x|') + ' 與 ' + s323MJ('y=|\\log_', base, 'x|') + ' 的定義域。',
           '前者 ' + s323M('x\\ne0') + '；後者 ' + s323M('x>0'),
           '前者只需 ' + s323M('|x|>0') + '，後者真數需 ' + s323M('x>0') + '。'
-        ),
+        );
+      },
     ];
     return s323MakeSet(count, builders);
   }
@@ -6246,16 +6973,18 @@
   // ── NEW: 對數函數奇偶性與值域 (s3-2-3) ─────────────────────
   function buildS323LogParityRangeSet(count) {
     const builders = [
-      () =>
-        buildS323QA(
-          '已知 ' + s323M('f(x)=\\log_2(x+\\sqrt{x^2+1})') + '，判斷 ' + s323M('f(x)') + ' 的奇偶性並說明理由。',
+      () => {
+        const b = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        return buildS323QA(
+          '已知 ' + s323M('f(x)=\\log_{' + b + '}(x+\\sqrt{x^2+1})') + '，判斷 ' + s323M('f(x)') + ' 的奇偶性並說明理由。',
           '奇函數',
-          '定義域對稱於原點。計算 \\(f(-x)=\\log_2(-x+\\sqrt{x^2+1})\\)；注意 \\((-x+\\sqrt{x^2+1})(x+\\sqrt{x^2+1})=1\\)，故 \\(f(-x)=\\log_2\\left(\\frac{1}{x+\\sqrt{x^2+1}}\\right)=-f(x)\\)。'
-        ),
+          `定義域對稱於原點。計算 \\(f(-x)=\\log_{${b}}(-x+\\sqrt{x^2+1})\\)；注意 \\((-x+\\sqrt{x^2+1})(x+\\sqrt{x^2+1})=1\\)，故 \\(f(-x)=\\log_{${b}}\\left(\\frac{1}{x+\\sqrt{x^2+1}}\\right)=-f(x)\\)。`
+        );
+      },
       () => {
         const b = s323Pick([2, 3, 5]);
-        const h = s323Pick([1, 2, 3]);
-        const k = s323Pick([1, 2, 4]);
+        const h = randInt(1, 5);
+        const k = s323Pick([1, 2, 3, 4, 5, 8, 9]);
         const minVal = b === 2 && k === 4 ? 2 : b === 3 && k === 3 ? 1 : b === 2 && k === 1 ? 0 : `\\log_${b} ${k}`;
         const minStr = k === 1 ? '0' : k === b ? '1' : k === b * b ? '2' : `\\log_{${b}} ${k}`;
         return buildS323QA(
@@ -6264,15 +6993,18 @@
           `\\((x-${h})^2+${k}\\ge${k}\\)，故 \\(y\\ge\\log_{${b}}${k}=${minStr}\\)；當 \\(x=${h}\\) 時取等，值域為 \\([${minStr},+\\infty)\\)。`
         );
       },
-      () =>
-        buildS323QA(
-          '已知 ' + s323M('f(x)=\\log_3(x^2+1)') + '，判斷 ' + s323M('f(x)') + ' 的奇偶性。',
-          '偶函數',
-          '定義域 \\(\\mathbb{R}\\) 對稱於原點。\\(f(-x)=\\log_3((-x)^2+1)=\\log_3(x^2+1)=f(x)\\)，故為偶函數。'
-        ),
       () => {
-        const b = s323Pick([2, 3]);
-        const h = s323Pick([1, 2]);
+        const b = s323Pick([2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        const c = randInt(1, 9);
+        return buildS323QA(
+          '已知 ' + s323M('f(x)=\\log_{' + b + '}(x^2+' + c + ')') + '，判斷 ' + s323M('f(x)') + ' 的奇偶性。',
+          '偶函數',
+          `定義域 \\(\\mathbb{R}\\) 對稱於原點。\\(f(-x)=\\log_{${b}}((-x)^2+${c})=\\log_{${b}}(x^2+${c})=f(x)\\)，故為偶函數。`
+        );
+      },
+      () => {
+        const b = s323Pick([2, 3, 5]);
+        const h = randInt(1, 4);
         const minK = 1; // (x+h)^2 + 1 >= 1
         return buildS323QA(
           '求函數 ' + s323M('y=\\log_' + b + '(x^2+' + 2 * h + 'x+' + (h * h + 1) + ')') + ' 的值域。',
@@ -6280,12 +7012,30 @@
           `配方得 \\((x+${h})^2+1\\ge1\\)，故 \\(y=\\log_{${b}}\\big((x+${h})^2+1\\big)\\ge\\log_{${b}}1=0\\)。值域為 \\([0,+\\infty)\\)。`
         );
       },
-      () =>
-        buildS323QA(
-          '已知 ' + s323M('g(x)=\\log(x^2-x+1)+\\log(x^2+x+1)') + '，判斷 ' + s323M('g(x)') + ' 的奇偶性。',
+      () => {
+        const pair = s323Pick([
+          [1, 1],
+          [1, 2],
+          [2, 2],
+          [2, 3],
+          [3, 3],
+          [3, 4],
+        ]);
+        const c = pair[0];
+        const k = pair[1];
+        const cTerm = c === 1 ? 'x' : c + 'x';
+        const inner = 2 * k - c * c;
+        const innerTerm = inner === 0 ? '' : (inner > 0 ? '+' : '') + (Math.abs(inner) === 1 ? (inner > 0 ? '' : '-') : inner) + 'x^2';
+        return buildS323QA(
+          '已知 ' +
+            s323M('g(x)=\\log(x^2-' + cTerm + '+' + k + ')+\\log(x^2+' + cTerm + '+' + k + ')') +
+            '，判斷 ' +
+            s323M('g(x)') +
+            ' 的奇偶性。',
           '偶函數',
-          `化簡：\\(g(x)=\\log\\big((x^2+1)^2-x^2\\big)=\\log(x^4+x^2+1)\\)；因 \\(x^4+x^2+1\\) 僅含偶次項，\\(g(-x)=g(x)\\)，故為偶函數。`
-        ),
+          `化簡：\\(g(x)=\\log\\big((x^2+${k})^2-${c * c}x^2\\big)=\\log(x^4${innerTerm}+${k * k})\\)；因真數僅含偶次項，\\(g(-x)=g(x)\\)，故為偶函數。`
+        );
+      },
     ];
     return s323MakeSet(count, builders);
   }
@@ -6372,8 +7122,13 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
+    const seenQuestions = new Set();
     for (let i = 0; i < count; i += 1) {
-      const item = builders[i % builders.length]();
+      let item = builders[i % builders.length]();
+      for (let retry = 0; retry < 12 && seenQuestions.has(item.q); retry += 1) {
+        item = builders[i % builders.length]();
+      }
+      seenQuestions.add(item.q);
       questions.push(item.q);
       if (item.summary) {
         answers.pushWithSummary(item.summary, item.a);
@@ -6387,9 +7142,9 @@
   function buildS324GrowthDecaySet(count) {
     const builders = [
       () => {
-        const k = s324Pick([2, 3, 4, 6]);
-        const start = s324Pick([50, 100, 200]);
-        const target = s324Pick(['10^{8}', '10^{10}', '10^{12}']);
+        const k = s324Pick([2, 3, 4, 5, 6, 8, 12]);
+        const start = s324Pick([50, 80, 100, 150, 200, 400]);
+        const target = s324Pick(['10^{6}', '10^{8}', '10^{9}', '10^{10}', '10^{12}', '10^{15}']);
         return s324QA(
           '某細菌每 ' +
             k +
@@ -6408,7 +7163,7 @@
       },
       () => {
         const half = s324Pick([5700, 5730]);
-        const den = s324Pick([8, 16, 32]);
+        const den = s324Pick([4, 8, 16, 32, 64, 128]);
         return s324QA(
           '碳 14 半衰期約 ' + half + ' 年，若含量剩原來的 ' + s324MJ('\\frac1{', den, '}') + '，約經過幾年？',
           s324MJ(half * Math.log2(den)) + ' 年',
@@ -6416,10 +7171,10 @@
         );
       },
       () => {
-        const y1 = s324Pick([1980, 1990, 2000]);
-        const gap = s324Pick([5, 10]);
-        const p1 = s324Pick([40, 50, 60]);
-        const ratio = s324Pick([1.1, 1.2, 1.5]);
+        const y1 = s324Pick([1960, 1970, 1980, 1990, 2000, 2010]);
+        const gap = s324Pick([5, 10, 20]);
+        const p1 = s324Pick([30, 40, 50, 60, 70, 80]);
+        const ratio = s324Pick([1.1, 1.2, 1.3, 1.4, 1.5]);
         const p2 = Math.round(p1 * ratio);
         return s324QA(
           '某人口在 ' +
@@ -6438,10 +7193,10 @@
         );
       },
       () => {
-        const t1 = s324Pick([3, 6]);
-        const a1 = s324Pick([20, 40]);
-        const a2 = a1 * s324Pick([4, 8]);
-        const t2 = s324Pick([9, 12]);
+        const t1 = s324Pick([2, 3, 4, 6]);
+        const a1 = s324Pick([10, 20, 30, 40, 50]);
+        const a2 = a1 * s324Pick([4, 8, 9, 16, 25]);
+        const t2 = s324Pick([8, 9, 10, 12, 15]);
         return s324QA(
           '布袋蓮面積每月按固定倍率變化，' +
             t1 +
@@ -6457,9 +7212,9 @@
         );
       },
       () => {
-        const init = s324Pick([300, 450, 600]);
-        const r = s324Pick([0.5, 0.64, 0.8]);
-        const t = s324Pick([1.5, 2, 3]);
+        const init = s324Pick([200, 300, 400, 450, 500, 600, 800]);
+        const r = s324Pick([0.4, 0.5, 0.6, 0.64, 0.75, 0.8, 0.9]);
+        const t = s324Pick([1.5, 2, 2.5, 3, 4]);
         return s324QA(
           '藥物濃度模型為 ' + s324MJ('M(t)=', init, '(', r, ')^t') + ' 毫克，求 ' + t + ' 小時後剩餘量。',
           s324MJ(init, '\\cdot', r, '^{', t, '}') + ' 毫克',
@@ -6473,9 +7228,9 @@
   function buildS324CoolingSet(count) {
     const builders = [
       () => {
-        const env = s324Pick([18, 20, 25]);
-        const start = s324Pick([80, 90, 100]);
-        const h = s324Pick([10, 20]);
+        const env = s324Pick([15, 18, 20, 22, 25, 28]);
+        const start = env + 4 * randInt(12, 20);
+        const h = s324Pick([5, 10, 15, 20, 30]);
         const t = 2 * h;
         const mid = env + (start - env) / 2;
         return s324QA(
@@ -6495,9 +7250,9 @@
         );
       },
       () => {
-        const env = s324Pick([20, 22]);
-        const body = s324Pick([30, 32]);
-        const h = s324Pick([4, 5]);
+        const env = s324Pick([18, 20, 22, 24]);
+        const body = env + 4 * randInt(2, 5);
+        const h = s324Pick([3, 4, 5, 6]);
         const t = 2 * h;
         return s324QA(
           '停電後室溫固定為 ' +
@@ -6514,8 +7269,8 @@
         );
       },
       () => {
-        const start = s324Pick([25, 30]);
-        const inc = s324Pick([20, 30]);
+        const start = s324Pick([20, 25, 30, 35]);
+        const inc = s324Pick([10, 20, 30, 40]);
         return s324QA(
           '加熱金屬符合指數趨近模型，1 分鐘後由 ' +
             start +
@@ -6527,10 +7282,10 @@
         );
       },
       () => {
-        const t1 = s324Pick([2, 3]);
-        const t2 = t1 + 3;
-        const T1 = s324Pick([70, 80]);
-        const T2 = s324Pick([40, 50]);
+        const t1 = s324Pick([1, 2, 3, 4]);
+        const t2 = t1 + randInt(2, 4);
+        const T1 = s324Pick([60, 70, 80, 90]);
+        const T2 = T1 - s324Pick([20, 25, 30, 40]);
         return s324QA(
           '某冷卻模型為 ' +
             s324M('T=a+b(1/2)^t') +
@@ -6550,7 +7305,7 @@
         );
       },
       () => {
-        const diff = s324Pick([16, 32, 64]);
+        const diff = s324Pick([8, 16, 32, 64, 128, 256]);
         const intervals = Math.floor(Math.log2(diff)) + 1;
         return s324QA(
           '若物體與環境的溫差每 30 分鐘減半，初始溫差為 ' + diff + '°C，問溫差小於 1°C 至少需多久？',
@@ -6710,8 +7465,8 @@
   function buildS324LogScaleScienceSet(count) {
     const builders = [
       () => {
-        const a = s324Pick([70, 80]);
-        const b = a + s324Pick([10, 20]);
+        const a = s324Pick([50, 60, 70, 80, 90]);
+        const b = a + s324Pick([10, 20, 30]);
         return s324QA(
           '分貝由 ' + a + ' 增加為 ' + b + '，聲音強度變為原來的幾倍？',
           s324M(String(Math.pow(10, (b - a) / 10))),
@@ -6719,7 +7474,7 @@
         );
       },
       () => {
-        const diff = s324Pick([2, 3, 4]);
+        const diff = randInt(2, 6);
         return s324QA(
           '芮氏規模每增加 1，能量約增加 32 倍。若兩次地震規模差 ' + diff + '，能量約相差幾倍？',
           s324MJ('32^{', diff, '}'),
@@ -6727,7 +7482,10 @@
         );
       },
       () => {
-        const c = s324Pick(['3.5\\times10^{-5}', '2\\times10^{-6}', '4\\times10^{-4}']);
+        const m1 = randInt(1, 9);
+        const m2 = randInt(1, 9);
+        const p = randInt(3, 8);
+        const c = m1 + '.' + m2 + '\\times10^{-' + p + '}';
         return s324QA(
           '氫離子濃度 ' + s324M('[H^+]=' + c) + '，用對數表示 pH 值。',
           s324MJ('pH=-\\log(', c, ')'),
@@ -6735,7 +7493,7 @@
         );
       },
       () => {
-        const m = s324Pick([1, 2, 3]);
+        const m = randInt(1, 5);
         return s324QA(
           '視星等公式為 ' +
             s324M('m=-2.5\\log(I/I_0)') +
@@ -6747,8 +7505,8 @@
         );
       },
       () => {
-        const x = s324Pick([8, 10, 16]);
-        const y = s324Pick([1, 2, 4]);
+        const x = s324Pick([6, 8, 10, 12, 16, 20]);
+        const y = randInt(1, 5);
         return s324QA(
           '亮度感受 ' + s324M('y=a\\log_2x') + ' 通過 ' + s324MJ('(', x, ',', y, ')') + '，求 ' + s324M('a') + '。',
           s324MJ('a=\\frac{', y, '}{\\log_2 ', x, '}'),
@@ -6762,8 +7520,10 @@
   function buildS324PerceptionSet(count) {
     const builders = [
       () => {
-        const x = s324Pick([2, 4, 8]);
-        const y = s324Pick([1, 2, 3]);
+        const e = randInt(1, 4);
+        const a = randInt(1, 3);
+        const x = Math.pow(2, e);
+        const y = a * e;
         return s324QA(
           '感官量模型 ' +
             s324M('y=a\\log_2x') +
@@ -6772,14 +7532,14 @@
             '，求參數 ' +
             s324M('a') +
             '。',
-          s324M('a=1'),
-          '把點代入模型：\\(' + y + '=a\\log_2 ' + x + '=a\\cdot' + y + '\\)，所以 \\(a=1\\)。',
-          s324M('a=1')
+          s324M('a=' + a),
+          '把點代入模型：\\(' + y + '=a\\log_2 ' + x + '=a\\cdot' + e + '\\)，所以 \\(a=' + a + '\\)。',
+          s324M('a=' + a)
         );
       },
       () => {
-        const from = s324Pick([1, 2]);
-        const to = from + 2;
+        const from = randInt(1, 4);
+        const to = from + randInt(1, 3);
         return s324QA(
           '若亮度感受由 ' + from + ' 提升到 ' + to + '，在 ' + s324M('y=a\\log_2x') + ' 模型下，物理刺激需變為幾倍？',
           s324MJ('2^{\\frac{', to - from, '}{a}}'),
@@ -6794,7 +7554,7 @@
         );
       },
       () => {
-        const inc = s324Pick([1, 2]);
+        const inc = randInt(1, 3);
         return s324QA(
           '重量感受 ' +
             s324M('W_s=k\\log W') +
@@ -6808,7 +7568,7 @@
         );
       },
       () => {
-        const ratio = s324Pick([2, 4, 10]);
+        const ratio = s324Pick([2, 4, 5, 8, 10, 100]);
         return s324QA(
           '兩種光源物理強度相差 ' + ratio + ' 倍，感受差可如何表示？',
           s324MJ('a\\log ', ratio),
@@ -6829,8 +7589,8 @@
   function buildS324SoundAdditionSet(count) {
     const builders = [
       () => {
-        const L = s324Pick([60, 70, 80]);
-        const n = s324Pick([10, 100]);
+        const L = s324Pick([40, 50, 60, 70, 80, 90]);
+        const n = s324Pick([10, 100, 1000]);
         return s324QA(
           n + ' 個各為 ' + L + ' 分貝的相同聲源同時發聲，總分貝為多少？',
           String(L + 10 * Math.log10(n)) + ' 分貝',
@@ -6838,8 +7598,8 @@
         );
       },
       () => {
-        const L = s324Pick([50, 60]);
-        const n = s324Pick([4, 8, 16]);
+        const L = s324Pick([40, 50, 60, 70]);
+        const n = s324Pick([2, 4, 8, 16, 32]);
         return s324QA(
           n + ' 人同時以 ' + L + ' 分貝說話，總分貝如何表示？',
           s324MJ(L, '+10\\log ', n),
@@ -6847,8 +7607,8 @@
         );
       },
       () => {
-        const a = s324Pick([80, 90]);
-        const b = a + s324Pick([3, 10]);
+        const a = s324Pick([60, 70, 80, 90]);
+        const b = a + s324Pick([3, 10, 20, 30]);
         return s324QA(
           '噪音由 ' + a + ' 分貝增加到 ' + b + ' 分貝，物理強度增加幾倍？',
           s324MJ('10^{', (b - a) / 10, '}'),
@@ -6856,19 +7616,23 @@
         );
       },
       () => {
-        const high = s324Pick([90, 100]);
-        const low = high - 20;
+        const high = s324Pick([80, 90, 100, 110]);
+        const drop = s324Pick([10, 20, 30]);
+        const low = high - drop;
         return s324QA(
           '若要把噪音由 ' + high + ' 分貝降到 ' + low + ' 分貝，需把強度降為原來的幾分之一？',
-          s324MJ('10^{-2}'),
-          '降低 20 分貝代表強度乘上 ' + s324M('10^{-2}') + '。'
+          s324MJ('10^{-', drop / 10, '}'),
+          '降低 ' + drop + ' 分貝代表強度乘上 ' + s324MJ('10^{-', drop / 10, '}') + '。'
         );
       },
       () => {
+        const n = s324Pick([100, 1000, 10000]);
+        const person = s324Pick([50, 60, 70]);
+        const total = 10 * Math.log10(n);
         return s324QA(
-          '比較「1000 隻蚊子每隻 0 分貝」與「1 個人 60 分貝」的總分貝。',
-          '蚊子總分貝為 ' + s324M('30') + '，低於 60 分貝',
-          s324M('0+10\\log1000=30') + '。'
+          '比較「' + n + ' 隻蚊子每隻 0 分貝」與「1 個人 ' + person + ' 分貝」的總分貝。',
+          '蚊子總分貝為 ' + s324M(String(total)) + '，低於 ' + person + ' 分貝',
+          s324M('0+10\\log' + n + '=' + total) + '。'
         );
       },
     ];
@@ -6878,7 +7642,7 @@
   function buildS324EarthquakeSet(count) {
     const builders = [
       () => {
-        const diff = s324Pick([1, 2, 3]);
+        const diff = randInt(1, 5);
         return s324QA(
           '芮氏規模相差 ' + diff + '，震幅約相差幾倍？',
           s324M(String(Math.pow(10, diff))),
@@ -6886,7 +7650,7 @@
         );
       },
       () => {
-        const diff = s324Pick([2, 4, 6]);
+        const diff = s324Pick([2, 3, 4, 6, 8]);
         return s324QA(
           '若兩次地震釋放能量相差 ' + s324MJ('10^', diff) + ' 倍，芮氏規模約相差多少？',
           s324M(formatFraction(2 * diff, 3)),
@@ -6894,7 +7658,7 @@
         );
       },
       () => {
-        const M = s324Pick([6.5, 7.0, 7.3]);
+        const M = s324Pick([5.8, 6.0, 6.4, 6.5, 7.0, 7.2, 7.3, 7.8]);
         return s324QA(
           '利用 ' + s324M('\\log E=11.8+1.5M') + '，表示規模 ' + M + ' 地震能量。',
           s324MJ('E=10^{11.8+1.5\\times', M, '}'),
@@ -6902,7 +7666,7 @@
         );
       },
       () => {
-        const e = s324Pick([18, 20]);
+        const e = s324Pick([16, 18, 20, 22, 24]);
         return s324QA(
           '已知地震能量約為 ' + s324MJ('10^{', e, '}') + ' 爾格，求芮氏規模。',
           s324MJ('M=\\frac{', e, '-11.8}{1.5}'),
@@ -6910,7 +7674,7 @@
         );
       },
       () => {
-        const factor = s324Pick([100, 500, 1000]);
+        const factor = s324Pick([10, 100, 500, 1000, 10000]);
         return s324QA(
           '若震幅增加 ' + factor + ' 倍，規模增加量如何表示？',
           s324MJ('\\log ', factor),
@@ -6975,8 +7739,8 @@
   function buildS324LightFilterSet(count) {
     const builders = [
       () => {
-        const keep = s324Pick([0.8, 0.9]);
-        const threshold = s324Pick([0.6, 0.5]);
+        const keep = s324Pick([0.7, 0.75, 0.8, 0.85, 0.9, 0.95]);
+        const threshold = s324Pick([0.6, 0.5, 0.4, 0.3, 0.25]);
         const minimum = Math.floor(Math.log(threshold) / Math.log(keep)) + 1;
         return s324QA(
           '光線每通過一片濾鏡保留原強度的 ' + keep + '，至少幾片後強度低於原來的 ' + threshold + '？',
@@ -6992,7 +7756,7 @@
         );
       },
       () => {
-        const k = s324Pick([0.5, 0.7, 0.8]);
+        const k = s324Pick([0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]);
         return s324QA(
           '若光線穿透率為 ' + k + '，通過 ' + s324M('n') + ' 層後強度比例為何？',
           s324MJ(k, '^n'),
@@ -7000,8 +7764,8 @@
         );
       },
       () => {
-        const a = s324Pick([0.8, 0.9]);
-        const b = s324Pick([0.5, 0.6]);
+        const a = s324Pick([0.8, 0.85, 0.9, 0.95]);
+        const b = s324Pick([0.4, 0.5, 0.6, 0.7]);
         return s324QA(
           '比較兩種濾光片穿透率 ' + a + ' 與 ' + b + '，哪一種衰減較慢？',
           a > b ? String(a) : String(b),
@@ -7009,14 +7773,17 @@
         );
       },
       () => {
-        const half = s324Pick([8, 10]);
+        const half = s324Pick([5, 8, 10, 12, 14]);
+        const m = randInt(2, 4);
         return s324QA(
-          '放射性物質半衰期 ' + half + ' 天，' + 3 * half + ' 天後剩餘比例為何？',
-          s324M('1/8'),
-          '經過 3 個半衰期。'
+          '放射性物質半衰期 ' + half + ' 天，' + m * half + ' 天後剩餘比例為何？',
+          s324M('1/' + Math.pow(2, m)),
+          '經過 ' + m + ' 個半衰期。'
         );
       },
       () => {
+        const k = randInt(1, 3);
+        const mult = Math.pow(10, k);
         return s324QA(
           '環境照度 ' +
             s324M('x') +
@@ -7024,9 +7791,11 @@
             s324M('y') +
             ' 呈 ' +
             s324M('y=a\\log x+b') +
-            '，若照度乘以 10，感受增加多少？',
-          s324M('a'),
-          '因為 ' + s324M('\\log(10x)-\\log x=1') + '。'
+            '，若照度乘以 ' +
+            mult +
+            '，感受增加多少？',
+          s324M(k === 1 ? 'a' : k + 'a'),
+          '因為 ' + s324MJ('\\log(', mult, 'x)-\\log x=', k) + '。'
         );
       },
     ];
@@ -7036,9 +7805,9 @@
   function buildS324InformationSet(count) {
     const builders = [
       () => {
-        const start = s324Pick([10, 20, 50]);
-        const a = s324Pick([2, 3]);
-        const target = s324Pick([1000, 5000]);
+        const start = s324Pick([10, 20, 50, 100]);
+        const a = s324Pick([2, 3, 4]);
+        const target = s324Pick([1000, 5000, 10000, 50000]);
         const minimum = Math.floor(Math.log(target / start) / Math.log(a)) + 1;
         return s324QA(
           '訊息每天傳給原來的 ' + a + ' 倍人數，初始 ' + start + ' 人知道，達到 ' + target + ' 人至少需幾天？',
@@ -7054,31 +7823,35 @@
         );
       },
       () => {
-        const a = s324Pick([2, 3]);
+        const a = s324Pick([2, 3, 4, 5]);
+        const d1 = randInt(2, 5);
+        const d2 = d1 + randInt(2, 4);
         return s324QA(
-          '若訊息傳播模型為 ' + s324MJ('N(t)=N_0\\cdot', a, '^t') + '，比較第 6 天與第 3 天的人數倍率。',
-          s324MJ(a, '^3'),
+          '若訊息傳播模型為 ' + s324MJ('N(t)=N_0\\cdot', a, '^t') + '，比較第 ' + d2 + ' 天與第 ' + d1 + ' 天的人數倍率。',
+          s324MJ(a, '^', d2 - d1),
           '相除後只剩時間差的指數。'
         );
       },
       () => {
-        const a = s324Pick([1.2, 1.5, 2]);
+        const a1 = s324Pick([1.2, 1.5, 2]);
+        const a2 = a1 + s324Pick([0.5, 1, 1.5]);
         return s324QA(
-          '不同傳播率 ' + s324M('a') + ' 下，達成同一覆蓋量所需時間如何比較？',
-          '傳播率越大，所需時間越短',
-          '時間為 ' + s324M('t=\\log(N/N_0)/\\log a') + '。'
+          '比較傳播率 ' + s324MJ('a=', a1) + ' 與 ' + s324MJ('a=', a2) + ' 下，達成同一覆蓋量所需時間。',
+          '傳播率 ' + a2 + ' 所需時間較短',
+          '時間為 ' + s324M('t=\\log(N/N_0)/\\log a') + '，' + s324M('a') + ' 越大分母越大。'
         );
       },
       () => {
-        const k = s324Pick([0.7, 0.8, 0.9]);
-        const minimum = Math.floor(Math.log(0.1) / Math.log(k)) + 1;
+        const k = s324Pick([0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]);
+        const th = s324Pick([0.1, 0.05, 0.2, 0.01]);
+        const minimum = Math.floor(Math.log(th) / Math.log(k)) + 1;
         return s324QA(
-          '病毒濃度每天衰減為原來的 ' + k + '，求降到 10% 以下所需天數。',
+          '病毒濃度每天衰減為原來的 ' + k + '，求降到 ' + th * 100 + '% 以下所需天數。',
           minimum + ' 天',
           '衰減模型為 ' +
             s324MJ('N=N_0\\cdot', k, '^n') +
             '，得 ' +
-            s324MJ('n>\\frac{\\log0.1}{\\log ', k, '}') +
+            s324MJ('n>\\frac{\\log', th, '}{\\log ', k, '}') +
             '；天數取最小整數為 ' +
             minimum +
             '。',
@@ -7192,6 +7965,11 @@
           [3, 2],
           [2, 3],
           [5, 2],
+          [4, 3],
+          [3, 4],
+          [5, 3],
+          [2, 5],
+          [7, 3],
         ]);
         return s324QA(
           '研究物理量 ' +
@@ -7210,7 +7988,7 @@
         );
       },
       () => {
-        const target = s324Pick([900, 1000]);
+        const target = s324Pick([650, 800, 900, 1000, 1150]);
         return s324QA(
           '營收與費用滿足 ' +
             s324M('S(x)=400+250\\log x') +
@@ -7232,7 +8010,7 @@
         );
       },
       () => {
-        const x1 = s324Pick([2, 3]);
+        const x1 = randInt(2, 8);
         const x2 = x1 + 1;
         return s324QA(
           '用內插估算對數表中 ' + s324M('x') + ' 介於 ' + x1 + ' 與 ' + x2 + ' 的對數值，核心假設是什麼？',
@@ -7241,7 +8019,7 @@
         );
       },
       () => {
-        const cm = s324Pick([10, 20, 30]);
+        const cm = s324Pick([10, 15, 20, 25, 30, 40, 50, 60, 80]);
         return s324QA(
           '頭髮直徑 ' + cm + ' 微米，轉為公尺後其常用對數如何表示？',
           s324MJ('\\log(', cm, '\\times10^{-6})'),
@@ -7255,9 +8033,9 @@
   function buildS324LearningSet(count) {
     const builders = [
       () => {
-        const base = s324Pick([68, 75]);
-        const drop = s324Pick([10, 15]);
-        const t = s324Pick([3, 5]);
+        const base = s324Pick([62, 68, 72, 75, 80]);
+        const drop = s324Pick([8, 10, 12, 15]);
+        const t = s324Pick([3, 5, 7, 9]);
         return s324QA(
           '某課程剛結束平均分數 ' +
             base +
@@ -7273,7 +8051,7 @@
         );
       },
       () => {
-        const target = s324Pick([49, 60]);
+        const target = s324Pick([45, 49, 53, 56, 60, 64]);
         return s324QA(
           '若 ' + s324M('S(t)=68-15\\log(t+1)') + '，求降到 ' + target + ' 分所需時間。',
           s324MJ('t=10^{(68-', target, ')/15}-1'),
@@ -7281,8 +8059,8 @@
         );
       },
       () => {
-        const w = s324Pick([800, 1000]);
-        const k = s324Pick([0.8, 0.9]);
+        const w = s324Pick([500, 600, 800, 1000, 1200]);
+        const k = s324Pick([0.7, 0.8, 0.9]);
         return s324QA(
           '英文單字記憶量 ' + w + ' 字，一週後剩 ' + w * k + ' 字；若每週按固定比例衰退，兩週後剩多少？',
           String(w * k * k) + ' 字',
@@ -7290,14 +8068,16 @@
         );
       },
       () => {
+        const k1 = s324Pick([0.6, 0.65, 0.7, 0.75]);
+        const k2 = s324Pick([0.8, 0.85, 0.9, 0.95]);
         return s324QA(
-          '比較兩種學習法的衰退係數 ' + s324M('k') + '，哪一個較持久？',
-          '衰退係數較接近 1 者較持久',
-          '模型 ' + s324M('W(t)=W_0\\cdot k^t') + ' 中 ' + s324M('k') + ' 越大下降越慢。'
+          '比較兩種學習法的衰退係數 ' + s324MJ('k_1=', k1) + ' 與 ' + s324MJ('k_2=', k2) + '，哪一個較持久？',
+          s324MJ('k_2=', k2) + ' 較持久',
+          '模型 ' + s324M('W(t)=W_0\\cdot k^t') + ' 中 ' + s324M('k') + ' 越接近 1 下降越慢。'
         );
       },
       () => {
-        const target = s324Pick([80, 90]);
+        const target = s324Pick([82, 85, 88, 90, 92, 95]);
         const minimum = Math.ceil(Math.log((100 - target) / 20) / Math.log(0.8));
         return s324QA(
           '若設定目標分數 ' + target + '，模型 ' + s324M('S(n)=100-20(0.8)^n') + '，求達標所需最少複習週期。',
@@ -7323,6 +8103,11 @@
           [3, 2],
           [2, 3],
           [5, 2],
+          [4, 3],
+          [3, 4],
+          [5, 3],
+          [2, 5],
+          [7, 2],
         ]);
         return s324QA(
           '某組變數取對數後呈直線，斜率為 ' + s324MJ('\\frac{', p[0], '}{', p[1], '}') + '，寫出冪次模型。',
@@ -7331,7 +8116,7 @@
         );
       },
       () => {
-        const d = s324Pick([4, 5, 6, 7]);
+        const d = s324Pick([2, 3, 4, 5, 6, 7, 8, 9]);
         return s324QA(
           '依班佛法則，首位數字為 ' + d + ' 的比例是多少？',
           s324MJ('\\log(1+\\frac1{', d, '})'),
@@ -7339,16 +8124,17 @@
         );
       },
       () => {
-        const slope = s324Pick([120, 180, 250]);
+        const intercept = s324Pick([200, 300, 400, 500]);
+        const slope = s324Pick([100, 120, 150, 180, 200, 250, 300]);
         const factor = s324Pick([10, 100]);
         return s324QA(
-          '銷售與費用滿足 ' + s324MJ('S(x)=400+', slope, '\\log x') + '，若費用變為 ' + factor + ' 倍，營收增加多少？',
+          '銷售與費用滿足 ' + s324MJ('S(x)=', intercept, '+', slope, '\\log x') + '，若費用變為 ' + factor + ' 倍，營收增加多少？',
           '增加 ' + slope * Math.log10(factor) + ' 千元',
           '因為 ' + s324MJ('\\log(', factor, 'x)-\\log x=', Math.log10(factor)) + '。'
         );
       },
       () => {
-        const ratio = s324Pick([16, 64, 128]);
+        const ratio = s324Pick([9, 16, 25, 36, 64, 100, 128]);
         return s324QA(
           '視覺面積感知與實際面積的 ' +
             s324M('0.7') +
@@ -7480,8 +8266,13 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
+    const seenQuestions = new Set();
     for (let i = 0; i < count; i += 1) {
-      const item = builders[i % builders.length]();
+      let item = builders[i % builders.length]();
+      for (let retry = 0; retry < 12 && seenQuestions.has(item.q); retry += 1) {
+        item = builders[i % builders.length]();
+      }
+      seenQuestions.add(item.q);
       questions.push(item.q);
       const detail = s32CleanAnswer(item.short, item.process);
       answers.pushWithSummary(item.summary || item.short, detail);
@@ -7493,8 +8284,14 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
+    const seenQuestions = new Set();
     for (let i = 0; i < count; i += 1) {
-      const item = builders[i % builders.length]();
+      let item = builders[i % builders.length]();
+      // 若題目與前面重複，重抽幾次（純靜態題庫重抽仍相同時就接受重複）。
+      for (let retry = 0; retry < 12 && seenQuestions.has(item.q); retry += 1) {
+        item = builders[i % builders.length]();
+      }
+      seenQuestions.add(item.q);
       questions.push(item.q);
       answers.pushWithSummary(item.summary || item.short, `解析：${item.process}`);
     }
@@ -7562,19 +8359,17 @@
   }
 
   function buildS321ExponentialGraphParameterCleanSet(count) {
-    const cases = [
-      { c: 1, A: 2, r: 3 },
-      { c: -1, A: 4, r: 2 },
-      { c: 2, A: 3, r: 4 },
-      { c: -2, A: 5, r: 2 },
-      { c: 3, A: 2, r: 5 },
-    ];
-    const builders = cases.map((item) => () => ({
-      q: `函數 \\(y=c+A r^x\\) 的水平漸近線為 \\(y=${item.c}\\)，且通過 \\((0,${item.c + item.A})\\)、\\((1,${item.c + item.A * item.r})\\)。求此函數。`,
-      short: `\\(y=${item.c}+${item.A}\\cdot ${item.r}^x\\)`,
-      process: `由水平漸近線得 \\(c=${item.c}\\)。代入 \\(x=0\\)，\\(c+A=${item.c + item.A}\\)，得 \\(A=${item.A}\\)。再代入 \\(x=1\\)，\\(c+Ar=${item.c + item.A * item.r}\\)，得 \\(r=${item.r}\\)。`,
-    }));
-    return s32CleanSet(count, builders);
+    const builder = () => {
+      const c = randInt(-4, 4);
+      const A = randInt(2, 6);
+      const r = randInt(2, 6);
+      return {
+        q: `函數 \\(y=c+A r^x\\) 的水平漸近線為 \\(y=${c}\\)，且通過 \\((0,${c + A})\\)、\\((1,${c + A * r})\\)。求此函數。`,
+        short: `\\(y=${c}+${A}\\cdot ${r}^x\\)`,
+        process: `由水平漸近線得 \\(c=${c}\\)。代入 \\(x=0\\)，\\(c+A=${c + A}\\)，得 \\(A=${A}\\)。再代入 \\(x=1\\)，\\(c+Ar=${c + A * r}\\)，得 \\(r=${r}\\)。`,
+      };
+    };
+    return s32CleanSet(count, [builder]);
   }
 
   function buildS322DominantLogApproxCleanSet(count) {
@@ -7787,261 +8582,266 @@
   }
 
   function buildS331BarycentricInteriorCleanSet(count) {
-    const cases = [
-      { fixed: [1, 3], variable: 't', upper: [2, 3] },
-      { fixed: [2, 5], variable: 's', upper: [3, 5] },
-      { fixed: [1, 4], variable: 'k', upper: [3, 4] },
-      { fixed: [3, 7], variable: 't', upper: [4, 7] },
-      { fixed: [2, 7], variable: 'r', upper: [5, 7] },
-    ];
-    return s33CleanSet(
-      count,
-      cases.map((item) => () => ({
-        q: `在三角形 \\(ABC\\) 中，若 \\(\\vec{AP}=${formatFraction(item.fixed[0], item.fixed[1])}\\vec{AB}+${item.variable}\\vec{AC}\\)。求 ${item.variable} 的範圍，使 \\(P\\) 落在三角形 \\(ABC\\) 的內部。`,
-        short: `\\(0<${item.variable}<${formatFraction(item.upper[0], item.upper[1])}\\)`,
-        process: `若 \\(\\vec{AP}=x\\vec{AB}+y\\vec{AC}\\)，點 \\(P\\) 在三角形內部的條件為 \\(x>0\\)、\\(y>0\\)、\\(x+y<1\\)。本題 \\(x=${formatFraction(item.fixed[0], item.fixed[1])}\\)，所以 \\(0<${item.variable}<${formatFraction(item.upper[0], item.upper[1])}\\)。`,
-      }))
-    );
+    const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+    const variables = ['t', 's', 'k', 'r', 'u'];
+    const builder = () => {
+      const den = randInt(3, 9);
+      const num = randInt(1, den - 2);
+      const g1 = gcd(num, den);
+      const g2 = gcd(den - num, den);
+      const fixed = [num / g1, den / g1];
+      const upper = [(den - num) / g2, den / g2];
+      const variable = variables[randInt(0, variables.length - 1)];
+      return {
+        q: `在三角形 \\(ABC\\) 中，若 \\(\\vec{AP}=${formatFraction(fixed[0], fixed[1])}\\vec{AB}+${variable}\\vec{AC}\\)。求 ${variable} 的範圍，使 \\(P\\) 落在三角形 \\(ABC\\) 的內部。`,
+        short: `\\(0<${variable}<${formatFraction(upper[0], upper[1])}\\)`,
+        process: `若 \\(\\vec{AP}=x\\vec{AB}+y\\vec{AC}\\)，點 \\(P\\) 在三角形內部的條件為 \\(x>0\\)、\\(y>0\\)、\\(x+y<1\\)。本題 \\(x=${formatFraction(fixed[0], fixed[1])}\\)，所以 \\(0<${variable}<${formatFraction(upper[0], upper[1])}\\)。`,
+      };
+    };
+    return s33CleanSet(count, [builder]);
   }
 
   function buildS331AreaRatioCoefficientCleanSet(count) {
-    const cases = [
-      { x: [1, 5], y: [2, 5] },
-      { x: [1, 3], y: [1, 4] },
-      { x: [2, 7], y: [3, 7] },
-      { x: [3, 8], y: [1, 2] },
-      { x: [2, 9], y: [4, 9] },
-    ];
-    return s33CleanSet(
-      count,
-      cases.map((item) => () => ({
-        q: `設 \\(P\\) 滿足 \\(\\vec{AP}=${formatFraction(item.x[0], item.x[1])}\\vec{AB}+${formatFraction(item.y[0], item.y[1])}\\vec{AC}\\)。求 \\(\\frac{[ABP]}{[ABC]}\\)。`,
-        short: `\\(${formatFraction(item.y[0], item.y[1])}\\)`,
-        process: `以 \\(AB\\) 為共同底邊時，高度只看 \\(\\vec{AC}\\) 方向的係數。因 \\(P\\) 的 \\(\\vec{AC}\\) 係數為 \\(${formatFraction(item.y[0], item.y[1])}\\)，所以 \\([ABP]/[ABC]=${formatFraction(item.y[0], item.y[1])}\\)。`,
-      }))
-    );
+    const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+    const randProperFraction = () => {
+      const den = randInt(3, 9);
+      const num = randInt(1, den - 1);
+      const g = gcd(num, den);
+      return [num / g, den / g];
+    };
+    const builder = () => {
+      let x = randProperFraction();
+      let y = randProperFraction();
+      // 讓 x+y<1，使 P 落在三角形內部（重抽數次，保底直接接受）。
+      for (let retry = 0; retry < 20 && x[0] * y[1] + y[0] * x[1] >= x[1] * y[1]; retry += 1) {
+        x = randProperFraction();
+        y = randProperFraction();
+      }
+      return {
+        q: `設 \\(P\\) 滿足 \\(\\vec{AP}=${formatFraction(x[0], x[1])}\\vec{AB}+${formatFraction(y[0], y[1])}\\vec{AC}\\)。求 \\(\\frac{[ABP]}{[ABC]}\\)。`,
+        short: `\\(${formatFraction(y[0], y[1])}\\)`,
+        process: `以 \\(AB\\) 為共同底邊時，高度只看 \\(\\vec{AC}\\) 方向的係數。因 \\(P\\) 的 \\(\\vec{AC}\\) 係數為 \\(${formatFraction(y[0], y[1])}\\)，所以 \\([ABP]/[ABC]=${formatFraction(y[0], y[1])}\\)。`,
+      };
+    };
+    return s33CleanSet(count, [builder]);
   }
 
   function buildS331SegmentSectionCleanSet(count) {
-    const cases = [
-      { m: 2, n: 3 },
-      { m: 3, n: 2 },
-      { m: 1, n: 4 },
-      { m: 4, n: 5 },
-      { m: 5, n: 3 },
-    ];
-    return s33CleanSet(
-      count,
-      cases.map((item) => {
-        const total = item.m + item.n;
-        return () => ({
-          q: `在三角形 \\(ABC\\) 中，點 \\(D\\) 在 \\(BC\\) 上且 \\(BD:DC=${item.m}:${item.n}\\)。若 \\(\\vec{AD}=x\\vec{AB}+y\\vec{AC}\\)，求 \\((x,y)\\)。`,
-          short: `\\((${formatFraction(item.n, total)},${formatFraction(item.m, total)})\\)`,
-          process: `內分點公式給 \\(\\vec{AD}=\\frac{${item.n}}{${total}}\\vec{AB}+\\frac{${item.m}}{${total}}\\vec{AC}\\)，所以 \\((x,y)=(${formatFraction(item.n, total)},${formatFraction(item.m, total)})\\)。`,
-        });
-      })
-    );
+    const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+    const builder = () => {
+      let m = randInt(1, 9);
+      let n = randInt(1, 9);
+      for (let retry = 0; retry < 20 && gcd(m, n) !== 1; retry += 1) {
+        m = randInt(1, 9);
+        n = randInt(1, 9);
+      }
+      const g = gcd(m, n);
+      m /= g;
+      n /= g;
+      const total = m + n;
+      return {
+        q: `在三角形 \\(ABC\\) 中，點 \\(D\\) 在 \\(BC\\) 上且 \\(BD:DC=${m}:${n}\\)。若 \\(\\vec{AD}=x\\vec{AB}+y\\vec{AC}\\)，求 \\((x,y)\\)。`,
+        short: `\\((${formatFraction(n, total)},${formatFraction(m, total)})\\)`,
+        process: `內分點公式給 \\(\\vec{AD}=\\frac{${n}}{${total}}\\vec{AB}+\\frac{${m}}{${total}}\\vec{AC}\\)，所以 \\((x,y)=(${formatFraction(n, total)},${formatFraction(m, total)})\\)。`,
+      };
+    };
+    return s33CleanSet(count, [builder]);
   }
 
   function buildS332ProjectionEqualityCleanSet(count) {
-    const cases = [
-      { u: [2, 1], v: [5, 3], p: 4 },
-      { u: [3, 2], v: [1, 5], p: 2 },
-      { u: [1, -2], v: [6, 1], p: 4 },
-      { u: [4, -1], v: [2, 3], p: 1 },
-      { u: [2, -3], v: [4, 1], p: 1 },
-    ];
-    return s33CleanSet(
-      count,
-      cases.map((item) => {
-        const target = item.v[0] * item.u[0] + item.v[1] * item.u[1];
-        const t = formatFraction(target - item.p * item.u[0], item.u[1]);
-        return () => ({
-          q: `已知方向向量 \\(\\vec{u}=${s33Vector(item.u[0], item.u[1])}\\)。若 \\(\\vec{v}=${s33Vector(item.v[0], item.v[1])}\\) 與 \\(\\vec{w}=(${item.p},t)\\) 在 \\(\\vec{u}\\) 方向上的有向正射影分量相等，求 \\(t\\)。`,
-          short: `\\(t=${t}\\)`,
-          process: `有向正射影分量相等，等價於內積相等：\\(\\vec{v}\\cdot\\vec{u}=\\vec{w}\\cdot\\vec{u}\\)。所以 \\(${target}=${item.p * item.u[0]}${s33LinearTerm(item.u[1], 't')}\\)，得 \\(t=${t}\\)。`,
-        });
-      })
-    );
+    const builder = () => {
+      const sign = randInt(0, 1) === 0 ? 1 : -1;
+      const u = [randInt(1, 5), sign * randInt(1, 4)];
+      const v = [randInt(-6, 6) || 5, randInt(-6, 6) || 3];
+      const p = randInt(1, 5);
+      const target = v[0] * u[0] + v[1] * u[1];
+      const t = formatFraction(target - p * u[0], u[1]);
+      return {
+        q: `已知方向向量 \\(\\vec{u}=${s33Vector(u[0], u[1])}\\)。若 \\(\\vec{v}=${s33Vector(v[0], v[1])}\\) 與 \\(\\vec{w}=(${p},t)\\) 在 \\(\\vec{u}\\) 方向上的有向正射影分量相等，求 \\(t\\)。`,
+        short: `\\(t=${t}\\)`,
+        process: `有向正射影分量相等，等價於內積相等：\\(\\vec{v}\\cdot\\vec{u}=\\vec{w}\\cdot\\vec{u}\\)。所以 \\(${target}=${p * u[0]}${s33LinearTerm(u[1], 't')}\\)，得 \\(t=${t}\\)。`,
+      };
+    };
+    return s33CleanSet(count, [builder]);
   }
 
   function buildS332ParametricMinLengthCleanSet(count) {
-    const cases = [
-      { a: [-7, -9], b: [3, 1] },
-      { a: [5, -1], b: [1, 2] },
-      { a: [-2, 6], b: [2, -1] },
-      { a: [4, 7], b: [2, 1] },
-      { a: [6, -8], b: [2, 3] },
-    ];
-    return s33CleanSet(
-      count,
-      cases.map((item) => {
-        const dot = item.a[0] * item.b[0] + item.a[1] * item.b[1];
-        const norm = item.b[0] ** 2 + item.b[1] ** 2;
-        const t = formatFraction(-dot, norm);
-        return () => ({
-          q: `令 \\(\\vec{v}=${s33Vector(item.a[0], item.a[1])}+t${s33Vector(item.b[0], item.b[1])}\\)。求使 \\(|\\vec{v}|\\) 最小的 \\(t\\)。`,
-          short: `\\(t=${t}\\)`,
-          process: `\\(|\\vec a+t\\vec b|\\) 最小時，\\(\\vec a+t\\vec b\\) 與 \\(\\vec b\\) 垂直，所以 \\((\\vec a+t\\vec b)\\cdot\\vec b=0\\)。也就是 \\(${dot}+${norm}t=0\\)，得 \\(t=${t}\\)。`,
-        });
-      })
-    );
+    const builder = () => {
+      const a = [randInt(-9, 9) || -7, randInt(-9, 9) || 6];
+      const b = [randInt(1, 3), randInt(-3, 3)];
+      const dot = a[0] * b[0] + a[1] * b[1];
+      const norm = b[0] ** 2 + b[1] ** 2;
+      const t = formatFraction(-dot, norm);
+      return {
+        q: `令 \\(\\vec{v}=${s33Vector(a[0], a[1])}+t${s33Vector(b[0], b[1])}\\)。求使 \\(|\\vec{v}|\\) 最小的 \\(t\\)。`,
+        short: `\\(t=${t}\\)`,
+        process: `\\(|\\vec a+t\\vec b|\\) 最小時，\\(\\vec a+t\\vec b\\) 與 \\(\\vec b\\) 垂直，所以 \\((\\vec a+t\\vec b)\\cdot\\vec b=0\\)。也就是 \\(${dot}+${norm}t=0\\)，得 \\(t=${t}\\)。`,
+      };
+    };
+    return s33CleanSet(count, [builder]);
   }
 
   function buildS332RegionAreaCleanSet(count) {
-    const cases = [
-      { b: [4, 3], c: [2, -1], xw: 2, yw: 3 },
-      { b: [2, 1], c: [1, 2], xw: 3, yw: 2 },
-      { b: [5, -2], c: [1, 4], xw: 2, yw: 2 },
-      { b: [3, 1], c: [-1, 2], xw: 4, yw: 1 },
-      { b: [2, 5], c: [-3, 1], xw: 2, yw: 3 },
-    ];
-    return s33CleanSet(
-      count,
-      cases.map((item) => {
-        const det = Math.abs(s33Det(item.b[0], item.b[1], item.c[0], item.c[1]));
-        const area = det * item.xw * item.yw;
-        return () => ({
-          q: `已知 \\(\\vec{AB}=${s33Vector(item.b[0], item.b[1])}\\)、\\(\\vec{AC}=${s33Vector(item.c[0], item.c[1])}\\)。若 \\(\\vec{AP}=x\\vec{AB}+y\\vec{AC}\\)，且 \\(0\\le x\\le ${item.xw}\\)、\\(0\\le y\\le ${item.yw}\\)，求所有 \\(P\\) 形成區域的面積。`,
-          short: `\\(${area}\\)`,
-          process: `係數平面的矩形面積為 \\(${item.xw}\\cdot${item.yw}\\)。基本平行四邊形面積為 \\(|\\det|=${det}\\)，所以實際面積為 \\(${det}\\cdot${item.xw}\\cdot${item.yw}=${area}\\)。`,
-        });
-      })
-    );
+    const builder = () => {
+      let b = [randInt(1, 5), randInt(-3, 5)];
+      let c = [randInt(-3, 3), randInt(1, 5)];
+      for (let retry = 0; retry < 20 && s33Det(b[0], b[1], c[0], c[1]) === 0; retry += 1) {
+        b = [randInt(1, 5), randInt(-3, 5)];
+        c = [randInt(-3, 3), randInt(1, 5)];
+      }
+      if (s33Det(b[0], b[1], c[0], c[1]) === 0) b = [b[0] + 1, b[1] - 1];
+      const xw = randInt(1, 4);
+      const yw = randInt(1, 4);
+      const det = Math.abs(s33Det(b[0], b[1], c[0], c[1]));
+      const area = det * xw * yw;
+      return {
+        q: `已知 \\(\\vec{AB}=${s33Vector(b[0], b[1])}\\)、\\(\\vec{AC}=${s33Vector(c[0], c[1])}\\)。若 \\(\\vec{AP}=x\\vec{AB}+y\\vec{AC}\\)，且 \\(0\\le x\\le ${xw}\\)、\\(0\\le y\\le ${yw}\\)，求所有 \\(P\\) 形成區域的面積。`,
+        short: `\\(${area}\\)`,
+        process: `係數平面的矩形面積為 \\(${xw}\\cdot${yw}\\)。基本平行四邊形面積為 \\(|\\det|=${det}\\)，所以實際面積為 \\(${det}\\cdot${xw}\\cdot${yw}=${area}\\)。`,
+      };
+    };
+    return s33CleanSet(count, [builder]);
   }
 
   function buildS333TriangleSideDotCleanSet(count) {
-    const cases = [
-      { ab: 5, ac: 8, bc: 7 },
-      { ab: 4, ac: 3, bc: 5 },
-      { ab: 6, ac: 7, bc: 5 },
-      { ab: 5, ac: 5, bc: 6 },
-      { ab: 7, ac: 9, bc: 8 },
-    ];
-    return s33CleanSet(
-      count,
-      cases.map((item) => {
-        const abac = (item.ab ** 2 + item.ac ** 2 - item.bc ** 2) / 2;
-        return () => ({
-          q: `在三角形 \\(ABC\\) 中，\\(AB=${item.ab}\\)、\\(AC=${item.ac}\\)、\\(BC=${item.bc}\\)。求 \\(\\vec{AB}\\cdot\\vec{CA}\\)。`,
-          short: `\\(${-abac}\\)`,
-          process: `由餘弦定理得 \\(\\vec{AB}\\cdot\\vec{AC}=\\frac{AB^2+AC^2-BC^2}{2}=${abac}\\)。又 \\(\\vec{CA}=-\\vec{AC}\\)，所以 \\(\\vec{AB}\\cdot\\vec{CA}=${-abac}\\)。`,
-        });
-      })
-    );
+    const builder = () => {
+      let ab = randInt(3, 12);
+      let ac = randInt(3, 12);
+      let bc = randInt(3, 12);
+      // 需滿足三角形不等式，且 AB^2+AC^2-BC^2 為偶數（答案為整數）。
+      for (
+        let retry = 0;
+        retry < 40 &&
+        !(ab + ac > bc && ab + bc > ac && ac + bc > ab && (ab + ac + bc) % 2 === 0);
+        retry += 1
+      ) {
+        ab = randInt(3, 12);
+        ac = randInt(3, 12);
+        bc = randInt(3, 12);
+      }
+      if (!(ab + ac > bc && ab + bc > ac && ac + bc > ab && (ab + ac + bc) % 2 === 0)) {
+        ab = 5;
+        ac = 8;
+        bc = 7;
+      }
+      const abac = (ab ** 2 + ac ** 2 - bc ** 2) / 2;
+      return {
+        q: `在三角形 \\(ABC\\) 中，\\(AB=${ab}\\)、\\(AC=${ac}\\)、\\(BC=${bc}\\)。求 \\(\\vec{AB}\\cdot\\vec{CA}\\)。`,
+        short: `\\(${-abac}\\)`,
+        process: `由餘弦定理得 \\(\\vec{AB}\\cdot\\vec{AC}=\\frac{AB^2+AC^2-BC^2}{2}=${abac}\\)。又 \\(\\vec{CA}=-\\vec{AC}\\)，所以 \\(\\vec{AB}\\cdot\\vec{CA}=${-abac}\\)。`,
+      };
+    };
+    return s33CleanSet(count, [builder]);
   }
 
   function buildS333ProjectionVectorCleanSet(count) {
-    const cases = [
-      { a: [3, 4], b: [1, 2] },
-      { a: [5, 1], b: [2, -1] },
-      { a: [-1, 7], b: [3, 1] },
-      { a: [4, -2], b: [1, -1] },
-      { a: [2, 5], b: [2, 3] },
-    ];
-    return s33CleanSet(
-      count,
-      cases.map((item) => {
-        const dot = item.a[0] * item.b[0] + item.a[1] * item.b[1];
-        const norm = item.b[0] ** 2 + item.b[1] ** 2;
-        const x = formatFraction(dot * item.b[0], norm);
-        const y = formatFraction(dot * item.b[1], norm);
-        return () => ({
-          q: `求 \\(\\vec{a}=${s33Vector(item.a[0], item.a[1])}\\) 在 \\(\\vec{b}=${s33Vector(item.b[0], item.b[1])}\\) 上的正射影向量。`,
-          short: `\\((${x},${y})\\)`,
-          process: `正射影向量為 \\(\\frac{\\vec a\\cdot\\vec b}{|\\vec b|^2}\\vec b\\)。本題 \\(\\vec a\\cdot\\vec b=${dot}\\)，\\(|\\vec b|^2=${norm}\\)，所以正射影為 \\((${x},${y})\\)。`,
-        });
-      })
-    );
+    const builder = () => {
+      const a = [randInt(-6, 6) || 3, randInt(-6, 6) || 4];
+      const b = [randInt(1, 3), randInt(-3, 3)];
+      const dot = a[0] * b[0] + a[1] * b[1];
+      const norm = b[0] ** 2 + b[1] ** 2;
+      const x = formatFraction(dot * b[0], norm);
+      const y = formatFraction(dot * b[1], norm);
+      return {
+        q: `求 \\(\\vec{a}=${s33Vector(a[0], a[1])}\\) 在 \\(\\vec{b}=${s33Vector(b[0], b[1])}\\) 上的正射影向量。`,
+        short: `\\((${x},${y})\\)`,
+        process: `正射影向量為 \\(\\frac{\\vec a\\cdot\\vec b}{|\\vec b|^2}\\vec b\\)。本題 \\(\\vec a\\cdot\\vec b=${dot}\\)，\\(|\\vec b|^2=${norm}\\)，所以正射影為 \\((${x},${y})\\)。`,
+      };
+    };
+    return s33CleanSet(count, [builder]);
   }
 
   function buildS333NormRelationAngleCleanSet(count) {
-    const cases = [
-      { a: 1, b: 2, k: 2, r2: 13 },
-      { a: 2, b: 3, k: 1, r2: 7 },
-      { a: 3, b: 4, k: 1, r2: 37 },
-      { a: 2, b: 5, k: 1, r2: 19 },
-      { a: 2, b: 3, k: 2, r2: 28 },
-    ];
-    return s33CleanSet(
-      count,
-      cases.map((item) => {
-        const num = item.r2 - item.a ** 2 - item.k ** 2 * item.b ** 2;
-        const den = 2 * item.k * item.a * item.b;
-        const bTerm = item.k === 1 ? '\\vec b' : `${item.k}\\vec b`;
-        const bSquareTerm = item.k ** 2 === 1 ? '|\\vec b|^2' : `${item.k ** 2}|\\vec b|^2`;
-        const crossTerm =
-          item.k === 1 ? '2|\\vec a||\\vec b|\\cos\\theta' : `2\\cdot${item.k}|\\vec a||\\vec b|\\cos\\theta`;
-        return () => ({
-          q: `已知 \\(|\\vec a|=${item.a}\\)、\\(|\\vec b|=${item.b}\\)、\\(|\\vec a+${bTerm}|=\\sqrt{${item.r2}}\\)。求 \\(\\cos\\theta\\)，其中 \\(\\theta\\) 為 \\(\\vec a\\) 與 \\(\\vec b\\) 的夾角。`,
-          short: `\\(${formatFraction(num, den)}\\)`,
-          process: `平方展開：\\(|\\vec a+${bTerm}|^2=|\\vec a|^2+${bSquareTerm}+${crossTerm}\\)。代入得 \\(\\cos\\theta=${formatFraction(num, den)}\\)。`,
-        });
-      })
-    );
+    const builder = () => {
+      const a = randInt(1, 5);
+      const b = randInt(2, 6);
+      const k = randInt(1, 2);
+      const den = 2 * k * a * b;
+      // 直接抽 cos 的分子，確保 |cos|<1，再反推 |a+kb|^2。
+      const num = randInt(-(den - 1), den - 1);
+      const r2 = a ** 2 + k ** 2 * b ** 2 + num;
+      const bTerm = k === 1 ? '\\vec b' : `${k}\\vec b`;
+      const bSquareTerm = k ** 2 === 1 ? '|\\vec b|^2' : `${k ** 2}|\\vec b|^2`;
+      const crossTerm = k === 1 ? '2|\\vec a||\\vec b|\\cos\\theta' : `2\\cdot${k}|\\vec a||\\vec b|\\cos\\theta`;
+      return {
+        q: `已知 \\(|\\vec a|=${a}\\)、\\(|\\vec b|=${b}\\)、\\(|\\vec a+${bTerm}|=\\sqrt{${r2}}\\)。求 \\(\\cos\\theta\\)，其中 \\(\\theta\\) 為 \\(\\vec a\\) 與 \\(\\vec b\\) 的夾角。`,
+        short: `\\(${formatFraction(num, den)}\\)`,
+        process: `平方展開：\\(|\\vec a+${bTerm}|^2=|\\vec a|^2+${bSquareTerm}+${crossTerm}\\)。代入得 \\(\\cos\\theta=${formatFraction(num, den)}\\)。`,
+      };
+    };
+    return s33CleanSet(count, [builder]);
   }
 
   function buildS334DeterminantOperationCleanSet(count) {
-    const cases = [
-      { d: 5, desc: '第一列乘以 3', ans: 15 },
-      { d: -4, desc: '第二列加上第一列的 2 倍', ans: -4 },
-      { d: 6, desc: '交換兩行', ans: -6 },
-      { d: 7, desc: '兩列都乘以 4', ans: 112 },
-      { d: -3, desc: '第一列乘以 -2', ans: 6 },
-    ];
-    return s33CleanSet(
-      count,
-      cases.map((item) => () => ({
-        q: `已知二階行列式 \\(D=\\begin{vmatrix}a&b\\\\c&d\\end{vmatrix}=${item.d}\\)。若對行列式做「${item.desc}」，新行列式值是多少？`,
-        short: `\\(${item.ans}\\)`,
-        process: `行列式性質：單一列乘以 \\(k\\) 時行列式乘以 \\(k\\)；某列加上另一列倍數時值不變；交換兩行會變號；兩列都乘以 \\(k\\) 時會乘以 \\(k^2\\)。所以本題新值為 \\(${item.ans}\\)。`,
-      }))
-    );
+    const builder = () => {
+      const d = (randInt(0, 1) === 0 ? 1 : -1) * randInt(2, 9);
+      const k = randInt(2, 5);
+      const ops = [
+        { desc: `第一列乘以 ${k}`, ans: k * d },
+        { desc: `第二列加上第一列的 ${k} 倍`, ans: d },
+        { desc: '交換兩行', ans: -d },
+        { desc: `兩列都乘以 ${k}`, ans: k * k * d },
+        { desc: `第一列乘以 -${k}`, ans: -k * d },
+        { desc: `第一列加上第二列的 ${k} 倍`, ans: d },
+      ];
+      const op = ops[randInt(0, ops.length - 1)];
+      return {
+        q: `已知二階行列式 \\(D=\\begin{vmatrix}a&b\\\\c&d\\end{vmatrix}=${d}\\)。若對行列式做「${op.desc}」，新行列式值是多少？`,
+        short: `\\(${op.ans}\\)`,
+        process: `行列式性質：單一列乘以 \\(k\\) 時行列式乘以 \\(k\\)；某列加上另一列倍數時值不變；交換兩行會變號；兩列都乘以 \\(k\\) 時會乘以 \\(k^2\\)。所以本題新值為 \\(${op.ans}\\)。`,
+      };
+    };
+    return s33CleanSet(count, [builder]);
   }
 
   function buildS334CramerParameterCleanSet(count) {
-    const cases = [
-      { a: 2, b: 3, c: 5, lambda: 2 },
-      { a: 1, b: -4, c: 3, lambda: -3 },
-      { a: 3, b: 2, c: 7, lambda: 4 },
-      { a: -2, b: 5, c: 1, lambda: 3 },
-      { a: 2, b: -1, c: 4, lambda: 5 },
-    ];
-    return s33CleanSet(
-      count,
-      cases.map((item) => {
-        const target = item.lambda * item.c;
-        const firstEquation = s33LinearEquationTex(item.a, item.b, item.c);
-        const secondEquation = s33LinearEquationTex(item.lambda * item.a, item.lambda * item.b, 'k');
-        return () => ({
-          q: `討論方程組 \\(\\begin{cases}${firstEquation}\\\\${secondEquation}\\end{cases}\\)。求 \\(k\\) 為何時有無限多解；為何時無解。`,
-          short: `\\(k=${target}\\) 時無限多解；\\(k\\ne ${target}\\) 時無解`,
-          process: `第二式左邊是第一式左邊的 \\(${item.lambda}\\) 倍。若右邊也同倍，兩式代表同一直線，有無限多解；所以 \\(k=${target}\\)。若 \\(k\\ne${target}\\)，兩式平行不同線，無解。`,
-        });
-      })
-    );
+    const builder = () => {
+      const signA = randInt(0, 1) === 0 ? 1 : -1;
+      const signB = randInt(0, 1) === 0 ? 1 : -1;
+      const a = signA * randInt(1, 4);
+      const b = signB * randInt(1, 5);
+      const c = randInt(1, 8);
+      const lambdaPool = [-4, -3, -2, 2, 3, 4, 5];
+      const lambda = lambdaPool[randInt(0, lambdaPool.length - 1)];
+      const target = lambda * c;
+      const firstEquation = s33LinearEquationTex(a, b, c);
+      const secondEquation = s33LinearEquationTex(lambda * a, lambda * b, 'k');
+      return {
+        q: `討論方程組 \\(\\begin{cases}${firstEquation}\\\\${secondEquation}\\end{cases}\\)。求 \\(k\\) 為何時有無限多解；為何時無解。`,
+        short: `\\(k=${target}\\) 時無限多解；\\(k\\ne ${target}\\) 時無解`,
+        process: `第二式左邊是第一式左邊的 \\(${lambda}\\) 倍。若右邊也同倍，兩式代表同一直線，有無限多解；所以 \\(k=${target}\\)。若 \\(k\\ne${target}\\)，兩式平行不同線，無解。`,
+      };
+    };
+    return s33CleanSet(count, [builder]);
   }
 
   function buildS334AreaScaleCleanSet(count) {
-    const cases = [
-      { matrix: [2, 1, 1, 3], area: 6 },
-      { matrix: [1, -2, 3, 1], area: 4 },
-      { matrix: [3, 0, 2, 2], area: 5 },
-      { matrix: [2, -1, -1, 2], area: 8 },
-      { matrix: [1, 2, -2, 1], area: 3 },
-    ];
-    return s33CleanSet(
-      count,
-      cases.map((item) => {
-        const [a, b, c, d] = item.matrix;
-        const det = Math.abs(s33Det(a, b, c, d));
-        return () => ({
-          q: `平面圖形面積為 \\(${item.area}\\)。經線性變換 \\(T(x,y)=(${s33LinearExpressionTex(a, b)},${s33LinearExpressionTex(c, d)})\\) 後，面積變為多少？`,
-          short: `\\(${det * item.area}\\)`,
-          process: `線性變換的面積倍率為 \\(|\\det\\begin{pmatrix}${a}&${b}\\\\${c}&${d}\\end{pmatrix}|=${det}\\)。所以新面積為 \\(${item.area}\\cdot${det}=${det * item.area}\\)。`,
-        });
-      })
-    );
+    const builder = () => {
+      let a = randInt(-3, 3);
+      let b = randInt(-3, 3);
+      let c = randInt(-3, 3);
+      let d = randInt(-3, 3);
+      for (let retry = 0; retry < 20 && s33Det(a, b, c, d) === 0; retry += 1) {
+        a = randInt(-3, 3);
+        b = randInt(-3, 3);
+        c = randInt(-3, 3);
+        d = randInt(-3, 3);
+      }
+      if (s33Det(a, b, c, d) === 0) {
+        a = 2;
+        b = 1;
+        c = 1;
+        d = 3;
+      }
+      const area = randInt(2, 12);
+      const det = Math.abs(s33Det(a, b, c, d));
+      return {
+        q: `平面圖形面積為 \\(${area}\\)。經線性變換 \\(T(x,y)=(${s33LinearExpressionTex(a, b)},${s33LinearExpressionTex(c, d)})\\) 後，面積變為多少？`,
+        short: `\\(${det * area}\\)`,
+        process: `線性變換的面積倍率為 \\(|\\det\\begin{pmatrix}${a}&${b}\\\\${c}&${d}\\end{pmatrix}|=${det}\\)。所以新面積為 \\(${area}\\cdot${det}=${det * area}\\)。`,
+      };
+    };
+    return s33CleanSet(count, [builder]);
   }
 
   function s331Gcd(a, b) {
@@ -8318,24 +9118,29 @@
         );
       },
       () => {
-        const cases = [
-          { a: [1, 2], b: [-1, 3], t: -1 / 2, right: [3, 1] },
-          { a: [2, -1], b: [1, 2], t: 1, right: [3, 1] },
-          { a: [1, 3], b: [2, -1], t: 2, right: [5, 1] },
-          { a: [-1, 2], b: [3, 1], t: -1, right: [-4, 1] },
-        ];
-        const item = cases[randInt(0, cases.length - 1)];
-        const detA = s33Det(item.a[0], item.a[1], item.right[0], item.right[1]);
-        const detB = s33Det(item.b[0], item.b[1], item.right[0], item.right[1]);
+        const right = [randInt(-5, 5) || 3, 1];
+        let a = [randInt(-3, 3), randInt(-3, 3) || 2];
+        let b = [randInt(-3, 3), randInt(-3, 3) || 1];
+        for (
+          let retry = 0;
+          retry < 20 && (s33Det(b[0], b[1], right[0], right[1]) === 0 || s33Det(a[0], a[1], right[0], right[1]) === 0);
+          retry += 1
+        ) {
+          a = [randInt(-3, 3), randInt(-3, 3) || 2];
+          b = [randInt(-3, 3), randInt(-3, 3) || 1];
+        }
+        if (s33Det(b[0], b[1], right[0], right[1]) === 0) b = [b[0] + 1, b[1] + 1];
+        const detA = s33Det(a[0], a[1], right[0], right[1]);
+        const detB = s33Det(b[0], b[1], right[0], right[1]);
         return s331QA(
           '設 ' +
-            s331MJ('a=', s331Vec(item.a[0], item.a[1]), ',\\ b=', s331Vec(item.b[0], item.b[1])) +
+            s331MJ('a=', s331Vec(a[0], a[1]), ',\\ b=', s331Vec(b[0], b[1])) +
             '，若 ' +
-            s331MJ('(a+tb)\\parallel', s331Vec(item.right[0], item.right[1])) +
+            s331MJ('(a+tb)\\parallel', s331Vec(right[0], right[1])) +
             '，求 ' +
             s331M('t') +
             '。',
-          s331MJ('t=', s331Frac(item.t * 2, 2)),
+          s331MJ('t=', s331Frac(-detA, detB)),
           '令兩向量行列式為 0：' + s331MJ(detA, s33LinearTerm(detB, 't'), '=0') + '。'
         );
       },
@@ -8511,15 +9316,15 @@
             '。以邊向量表示 ' +
             s331M('\\overrightarrow{AE}') +
             '。',
-          s331MJ('\\overrightarrow{AE}=\\overrightarrow{AD}+', s331Frac(m, m + n), '\\overrightarrow{AB}'),
+          s331MJ('\\overrightarrow{AE}=\\overrightarrow{AD}+', s331Frac(n, m + n), '\\overrightarrow{AB}'),
           '由 ' +
-            s331M('CD\\parallel AB') +
+            s331M('\\overrightarrow{DC}=\\overrightarrow{AB}') +
             '，且 ' +
-            s331M('CE') +
+            s331M('DE') +
             ' 佔 ' +
-            s331MJ('\\frac{', m, '}{', m + n, '}') +
+            s331MJ('\\frac{', n, '}{', m + n, '}') +
             ' 條 ' +
-            s331M('CD') +
+            s331M('DC') +
             '。'
         );
       },
@@ -8549,13 +9354,19 @@
   function buildS331UnitDirectionSet(count) {
     const builders = [
       () => {
-        const v = s324Pick([
+        const base = s324Pick([
           [3, 4],
           [5, 12],
           [8, 6],
-          [-3, 4],
-          [4, -3],
+          [8, 15],
+          [7, 24],
+          [9, 12],
+          [20, 21],
+          [12, 16],
         ]);
+        const sx = randInt(0, 1) === 0 ? 1 : -1;
+        const sy = randInt(0, 1) === 0 ? 1 : -1;
+        const v = randInt(0, 1) === 0 ? [sx * base[0], sy * base[1]] : [sx * base[1], sy * base[0]];
         const len = s331LenText(v[0], v[1]);
         return s331QA(
           '求向量 ' + s331MJ('a=', s331Vec(v[0], v[1])) + ' 同方向的單位向量。',
@@ -8574,8 +9385,12 @@
           { angle: 45, c: '\\frac{\\sqrt2}{2}', s: '\\frac{\\sqrt2}{2}' },
           { angle: 60, c: '\\frac12', s: '\\frac{\\sqrt3}{2}' },
           { angle: 120, c: '-\\frac12', s: '\\frac{\\sqrt3}{2}' },
+          { angle: 135, c: '-\\frac{\\sqrt2}{2}', s: '\\frac{\\sqrt2}{2}' },
+          { angle: 150, c: '-\\frac{\\sqrt3}{2}', s: '\\frac12' },
+          { angle: 210, c: '-\\frac{\\sqrt3}{2}', s: '-\\frac12' },
+          { angle: 300, c: '\\frac12', s: '-\\frac{\\sqrt3}{2}' },
         ]);
-        const r = s324Pick([4, 6, 8, 10]);
+        const r = s324Pick([2, 4, 6, 8, 10, 12, 14]);
         return s331QA(
           '已知向量長度為 ' + r + '，方向角為 ' + data.angle + '°，求其坐標表示。',
           s331MJ(r, '(', data.c, ',', data.s, ')'),
@@ -8850,8 +9665,13 @@
           '兩係數非負且和為 1，是線段內分點的表示法。'
         ),
       () => {
-        const a = [3, 1];
-        const b = [1, 4];
+        let a = [randInt(1, 5), randInt(-3, 3)];
+        let b = [randInt(-3, 3), randInt(1, 5)];
+        for (let retry = 0; retry < 20 && s331Det(a[0], a[1], b[0], b[1]) % 2 !== 0; retry += 1) {
+          a = [randInt(1, 5), randInt(-3, 3)];
+          b = [randInt(-3, 3), randInt(1, 5)];
+        }
+        if (s331Det(a[0], a[1], b[0], b[1]) === 0) a = [a[0] + 2, a[1]];
         const area = Math.abs(s331Det(a[0], a[1], b[0], b[1])) / 2;
         return s331QA(
           '若 ' +
@@ -8859,7 +9679,7 @@
             ' 且 ' +
             s331M('x+y\\le1') +
             '，已知 ' +
-            s331MJ('\\overrightarrow{OA}=', s331Vec(3, 1), ',\\ \\overrightarrow{OB}=', s331Vec(1, 4)) +
+            s331MJ('\\overrightarrow{OA}=', s331Vec(a[0], a[1]), ',\\ \\overrightarrow{OB}=', s331Vec(b[0], b[1])) +
             '，求 ' +
             s331M('P=xA+yB') +
             ' 所在三角形面積。',
@@ -8868,14 +9688,19 @@
         );
       },
       () => {
-        const a = [2, 1];
-        const b = [-1, 3];
+        let a = [randInt(1, 5), randInt(-3, 3)];
+        let b = [randInt(-4, 3), randInt(1, 5)];
+        for (let retry = 0; retry < 20 && s331Det(a[0], a[1], b[0], b[1]) === 0; retry += 1) {
+          a = [randInt(1, 5), randInt(-3, 3)];
+          b = [randInt(-4, 3), randInt(1, 5)];
+        }
+        if (s331Det(a[0], a[1], b[0], b[1]) === 0) b = [b[0] - 1, b[1] + 1];
         const area = 4 * Math.abs(s331Det(a[0], a[1], b[0], b[1]));
         return s331QA(
           '若 ' +
             s331M('-1\\le x\\le1,\\ -1\\le y\\le1') +
             '，且 ' +
-            s331MJ('\\overrightarrow{OA}=', s331Vec(2, 1), ',\\ \\overrightarrow{OB}=', s331Vec(-1, 3)) +
+            s331MJ('\\overrightarrow{OA}=', s331Vec(a[0], a[1]), ',\\ \\overrightarrow{OB}=', s331Vec(b[0], b[1])) +
             '，求 ' +
             s331M('P=xA+yB') +
             ' 所形成區域的面積。',
@@ -9232,15 +10057,15 @@
             ' 表示 ' +
             s331M('\\overrightarrow{AE}') +
             '。',
-          s331MJ('\\overrightarrow{AE}=\\overrightarrow{AD}+', s331Coeff(m, m + n), '\\overrightarrow{AB}'),
+          s331MJ('\\overrightarrow{AE}=\\overrightarrow{AD}+', s331Coeff(n, m + n), '\\overrightarrow{AB}'),
           '先走 ' +
             s331M('\\overrightarrow{AD}') +
             ' 到 ' +
             s331M('D') +
-            ' 所在水平，再沿 ' +
-            s331M('CD') +
+            '，再沿 ' +
+            s331M('\\overrightarrow{DC}=\\overrightarrow{AB}') +
             ' 方向走 ' +
-            s331M('CE') +
+            s331MJ('DE:DC=', n, ':', m + n) +
             ' 的比例。'
         );
       },
@@ -9505,7 +10330,7 @@
   function buildS331TriangleAreaCoefficientAdvancedSet(count) {
     const builders = [
       () => {
-        const ratio = s331ReducedRatio3(randInt(1, 5), randInt(1, 5), randInt(1, 5));
+        const ratio = s331ReducedRatio3(randInt(1, 7), randInt(1, 7), randInt(1, 7));
         const [p, q, r] = ratio;
         const relation =
           s331VectorTerm(p, '\\overrightarrow{PA}') +
@@ -9529,8 +10354,8 @@
         );
       },
       () => {
-        const area = s324Pick([36, 48, 60, 72]);
-        const ratio = s331ReducedRatio3(randInt(1, 5), randInt(1, 5), randInt(1, 5));
+        const area = s324Pick([24, 30, 36, 42, 48, 54, 60, 66, 72, 84, 90]);
+        const ratio = s331ReducedRatio3(randInt(1, 6), randInt(1, 6), randInt(1, 6));
         const [p, q, r] = ratio;
         const total = p + q + r;
         const relation =
@@ -9606,20 +10431,26 @@
           '三角形內部或邊上需要以兩邊向量表示時係數非負且和不超過 1；此題有負係數，因此在外部。'
         );
       },
-      () =>
-        s331QA(
+      () => {
+        const area = randInt(4, 20) * 3;
+        return s331QA(
           '若點 ' +
             s331M('P') +
             ' 在 ' +
             s331M('\\triangle ABC') +
             ' 內，且 ' +
             s331M('\\overrightarrow{PA}+\\overrightarrow{PB}+\\overrightarrow{PC}=\\vec{0}') +
+            '，已知 ' +
+            s331M('[ABC]=' + area) +
             '，判斷 ' +
             s331M('P') +
-            ' 是哪一個心點，並求三個小三角形面積比。',
-          s331MJ('P\\text{ 為重心，面積比 }1:1:1'),
-          '三個係數相同時，點為重心；重心把三角形分成三個等面積三角形。'
-        ),
+            ' 是哪一個心點，並求 ' +
+            s331M('[PBC]') +
+            '。',
+          s331MJ('P\\text{ 為重心，}[PBC]=' + area / 3),
+          '三個係數相同時，點為重心；重心把三角形分成三個等面積三角形，每一塊都是總面積的三分之一。'
+        );
+      },
     ];
     return s331MakeSet(count, builders);
   }
@@ -9754,8 +10585,8 @@
         );
       },
       () => {
-        const a = randInt(2, 5);
-        const b = randInt(2, 5);
+        const a = randInt(2, 7);
+        const b = randInt(2, 7);
         return s331QA(
           '在平行四邊形 ' +
             s331M('OABC') +
@@ -9775,8 +10606,8 @@
         );
       },
       () => {
-        const a = randInt(1, 4);
-        const b = randInt(1, 4);
+        const a = randInt(1, 6);
+        const b = randInt(1, 6);
         return s331QA(
           '在菱形格中，若 ' +
             s331M('\\overrightarrow{OA}=u') +
@@ -10281,24 +11112,29 @@
         );
       },
       () => {
-        const cases = [
-          { a: [1, 2], b: [-1, 3], t: -1 / 2, right: [3, 1] },
-          { a: [2, -1], b: [1, 2], t: 1, right: [3, 1] },
-          { a: [1, 3], b: [2, -1], t: 2, right: [5, 1] },
-          { a: [-1, 2], b: [3, 1], t: -1, right: [-4, 1] },
-        ];
-        const item = cases[randInt(0, cases.length - 1)];
-        const detA = s33Det(item.a[0], item.a[1], item.right[0], item.right[1]);
-        const detB = s33Det(item.b[0], item.b[1], item.right[0], item.right[1]);
+        const right = [randInt(-5, 5) || 3, 1];
+        let a = [randInt(-3, 3), randInt(-3, 3) || 2];
+        let b = [randInt(-3, 3), randInt(-3, 3) || 1];
+        for (
+          let retry = 0;
+          retry < 20 && (s33Det(b[0], b[1], right[0], right[1]) === 0 || s33Det(a[0], a[1], right[0], right[1]) === 0);
+          retry += 1
+        ) {
+          a = [randInt(-3, 3), randInt(-3, 3) || 2];
+          b = [randInt(-3, 3), randInt(-3, 3) || 1];
+        }
+        if (s33Det(b[0], b[1], right[0], right[1]) === 0) b = [b[0] + 1, b[1] + 1];
+        const detA = s33Det(a[0], a[1], right[0], right[1]);
+        const detB = s33Det(b[0], b[1], right[0], right[1]);
         return s331QA(
           '設 ' +
-            s331MJ('a=', s331Vec(item.a[0], item.a[1]), ',\\ b=', s331Vec(item.b[0], item.b[1])) +
+            s331MJ('a=', s331Vec(a[0], a[1]), ',\\ b=', s331Vec(b[0], b[1])) +
             '，若 ' +
-            s331MJ('(a+tb)\\parallel', s331Vec(item.right[0], item.right[1])) +
+            s331MJ('(a+tb)\\parallel', s331Vec(right[0], right[1])) +
             '，求 ' +
             s331M('t') +
             '。',
-          s331MJ('t=', s331Frac(item.t * 2, 2)),
+          s331MJ('t=', s331Frac(-detA, detB)),
           '令兩向量行列式為 0：' + s331MJ(detA, s33LinearTerm(detB, 't'), '=0') + '。'
         );
       },
@@ -10398,13 +11234,19 @@
   function buildS332DirectionComponentsSet(count) {
     const builders = [
       () => {
-        const v = s324Pick([
+        const base = s324Pick([
           [3, 4],
           [5, 12],
           [8, 6],
-          [-3, 4],
-          [4, -3],
+          [8, 15],
+          [7, 24],
+          [9, 12],
+          [20, 21],
+          [12, 16],
         ]);
+        const sx = randInt(0, 1) === 0 ? 1 : -1;
+        const sy = randInt(0, 1) === 0 ? 1 : -1;
+        const v = randInt(0, 1) === 0 ? [sx * base[0], sy * base[1]] : [sx * base[1], sy * base[0]];
         const len = s331LenText(v[0], v[1]);
         return s331QA(
           '求向量 ' + s331MJ('a=', s331Vec(v[0], v[1])) + ' 同方向的單位向量。',
@@ -10423,8 +11265,12 @@
           { angle: 45, c: '\\frac{\\sqrt2}{2}', s: '\\frac{\\sqrt2}{2}' },
           { angle: 60, c: '\\frac12', s: '\\frac{\\sqrt3}{2}' },
           { angle: 120, c: '-\\frac12', s: '\\frac{\\sqrt3}{2}' },
+          { angle: 135, c: '-\\frac{\\sqrt2}{2}', s: '\\frac{\\sqrt2}{2}' },
+          { angle: 150, c: '-\\frac{\\sqrt3}{2}', s: '\\frac12' },
+          { angle: 210, c: '-\\frac{\\sqrt3}{2}', s: '-\\frac12' },
+          { angle: 300, c: '\\frac12', s: '-\\frac{\\sqrt3}{2}' },
         ]);
-        const r = s324Pick([4, 6, 8, 10]);
+        const r = s324Pick([2, 4, 6, 8, 10, 12, 14]);
         return s331QA(
           '已知向量長度為 ' + r + '，方向角為 ' + data.angle + '°，求其坐標表示。',
           s331MJ(r, '(', data.c, ',', data.s, ')'),
@@ -10435,8 +11281,16 @@
         const data = s324Pick([
           { v: [3, 4], r: 5 },
           { v: [-3, 4], r: 5 },
+          { v: [4, -3], r: 5 },
           { v: [5, -12], r: 13 },
+          { v: [-12, 5], r: 13 },
           { v: [-8, -6], r: 10 },
+          { v: [6, -8], r: 10 },
+          { v: [8, 15], r: 17 },
+          { v: [-15, 8], r: 17 },
+          { v: [-7, 24], r: 25 },
+          { v: [9, -12], r: 15 },
+          { v: [-20, 21], r: 29 },
         ]);
         return s331QA(
           '將向量 ' +
@@ -10449,7 +11303,7 @@
         );
       },
       () => {
-        const speed = s324Pick([20, 30, 40, 60]);
+        const speed = s324Pick([10, 12, 16, 20, 24, 30, 36, 40, 48, 60]);
         const data = s324Pick([
           { angle: 30, x: '\\frac{\\sqrt3}{2}', y: '\\frac12' },
           { angle: 45, x: '\\frac{\\sqrt2}{2}', y: '\\frac{\\sqrt2}{2}' },
@@ -10463,13 +11317,16 @@
       },
       () => {
         const p = [randInt(-4, 4), randInt(-4, 4)];
+        const size = randInt(2, 7);
         const data = s324Pick([
-          { d: [3, 3], angle: '45^\\circ' },
-          { d: [3, -3], angle: '315^\\circ' },
-          { d: [-4, 4], angle: '135^\\circ' },
-          { d: [-4, -4], angle: '225^\\circ' },
-          { d: [5, 0], angle: '0^\\circ' },
-          { d: [0, -6], angle: '270^\\circ' },
+          { d: [size, size], angle: '45^\\circ' },
+          { d: [size, -size], angle: '315^\\circ' },
+          { d: [-size, size], angle: '135^\\circ' },
+          { d: [-size, -size], angle: '225^\\circ' },
+          { d: [size, 0], angle: '0^\\circ' },
+          { d: [0, size], angle: '90^\\circ' },
+          { d: [-size, 0], angle: '180^\\circ' },
+          { d: [0, -size], angle: '270^\\circ' },
         ]);
         const d = data.d;
         const q = s332VecAdd(p, d);
@@ -10529,17 +11386,18 @@
         );
       },
       () => {
-        const u = s324Pick([
-          [3, 4],
-          [5, 0],
-          [0, 6],
-          [6, 8],
-        ]);
+        const u = [randInt(-6, 6), randInt(-6, 6) || 4];
         const v = s324Pick([
           [4, 3],
           [-3, 4],
+          [3, -4],
           [5, 0],
           [0, 5],
+          [-6, 8],
+          [8, 6],
+          [12, -5],
+          [-8, 15],
+          [0, -7],
         ]);
         const dot = s332Dot(u, v);
         const len = Number(s331LenText(v[0], v[1]));
@@ -12201,6 +13059,55 @@
           '可視為兩向量 ' + s331M('OA') + '、' + s331M('OB') + ' 張成面積的一半；此題文字完整，不需要額外圖形。'
         );
       },
+      () => {
+        const fMag = randInt(2, 10) * 2;
+        const dist = randInt(3, 12);
+        const data = s324Pick([
+          { angle: 60, work: s331Frac(fMag * dist, 2) },
+          { angle: 120, work: s331Frac(-fMag * dist, 2) },
+          { angle: 0, work: String(fMag * dist) },
+          { angle: 90, work: '0' },
+          { angle: 180, work: String(-fMag * dist) },
+        ]);
+        return s331QA(
+          '施力大小 ' +
+            s331M('|F|=' + fMag) +
+            '，與位移方向夾角 ' +
+            data.angle +
+            '°，位移大小為 ' +
+            dist +
+            '，求此力所作的功。',
+          s331MJ(data.work),
+          '作功公式 ' + s331M('W=|F||d|\\cos\\theta') + '，代入夾角餘弦值計算。'
+        );
+      },
+      () => {
+        const A = [randInt(-4, 4), randInt(-4, 4)];
+        const u = [randInt(1, 6), randInt(-4, 4)];
+        let v = [randInt(-4, 4), randInt(1, 6)];
+        for (let retry = 0; retry < 20 && u[0] * v[1] - u[1] * v[0] === 0; retry += 1) {
+          v = [randInt(-4, 4), randInt(1, 6)];
+        }
+        if (u[0] * v[1] - u[1] * v[0] === 0) v = [v[0] - 1, v[1] + 1];
+        const B = [A[0] + u[0], A[1] + u[1]];
+        const C = [A[0] + v[0], A[1] + v[1]];
+        const area = s331Frac(Math.abs(u[0] * v[1] - u[1] * v[0]), 2);
+        return s331QA(
+          '已知三點 ' +
+            s331M('A(' + A[0] + ',' + A[1] + ')') +
+            '、' +
+            s331M('B(' + B[0] + ',' + B[1] + ')') +
+            '、' +
+            s331M('C(' + C[0] + ',' + C[1] + ')') +
+            '，求 ' +
+            s331M('\\triangle ABC') +
+            ' 面積。',
+          s331MJ(area),
+          '面積為 ' +
+            s331M('\\frac12|\\det(\\overrightarrow{AB},\\overrightarrow{AC})|') +
+            '，先求兩邊向量再取行列式絕對值的一半。'
+        );
+      },
     ];
     return s331MakeSet(count, builders);
   }
@@ -12913,8 +13820,14 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
+    const seenQuestions = new Set();
     for (let i = 0; i < count; i += 1) {
-      const item = builders[i % builders.length]();
+      let item = builders[i % builders.length]();
+      // 若題目與前面重複，重抽幾次（純靜態題庫重抽仍相同時就接受重複）。
+      for (let retry = 0; retry < 12 && seenQuestions.has(item.q); retry += 1) {
+        item = builders[i % builders.length]();
+      }
+      seenQuestions.add(item.q);
       questions.push(item.q);
       answers.pushWithSummary(item.summary, item.a);
     }
@@ -14103,7 +15016,7 @@
   function buildS331TriangleBarycentricAdvancedSet(count) {
     const builders = [
       () => {
-        const q = s324Pick([3, 4, 5, 6, 8]);
+        const q = s324Pick([3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
         const p = randInt(1, q - 1);
         const remain = q - p;
         return s331QA(
@@ -14113,7 +15026,7 @@
         );
       },
       () => {
-        const q = s324Pick([4, 5, 6, 8, 10]);
+        const q = s324Pick([4, 5, 6, 7, 8, 9, 10, 12, 15]);
         return s331QA(
           `設 \\(\\vec{AP}=s\\vec{AB}+${formatFraction(1, q)}\\vec{AC}\\)。若 \\(P\\) 在 \\(\\triangle ABC\\) 外部但仍位於 \\(\\angle A\\) 的張角內，求 \\(s\\) 的限制。`,
           `\\(s>${formatFraction(q - 1, q)}\\)`,
@@ -14121,7 +15034,7 @@
         );
       },
       () => {
-        const d = s324Pick([1, 2, 3]);
+        const d = randInt(1, 6);
         const minK = 2;
         return s331QA(
           `在 \\(\\triangle ABC\\) 內部找一點 \\(P\\)，滿足 \\(\\vec{AP}=\\dfrac{1}{k}\\vec{AB}+\\dfrac{1}{k+${d}}\\vec{AC}\\)。求正整數 \\(k\\) 的範圍。`,
@@ -14140,7 +15053,7 @@
         );
       },
       () => {
-        const h = s324Pick([1, 2, 3, 4]);
+        const h = randInt(1, 7);
         const linearTerm = h === 1 ? 'k' : `${h}k`;
         return s331QA(
           `若 \\(\\vec{AP}=k^2\\vec{AB}+(${linearTerm}+1)\\vec{AC}\\)，其中 \\(h=${h}\\)。當 \\(k\\) 為何值時，\\(P\\) 恰落在直線 \\(BC\\) 上？`,
@@ -14258,8 +15171,8 @@
   function buildS334CramerSolutionCountAdvancedSet(count) {
     const builders = [
       () => {
-        const r = s324Pick([2, 3, 4]);
-        const c = s324Pick([1, 2, 3]);
+        const r = randInt(2, 6);
+        const c = randInt(1, 6);
         return s331QA(
           `討論方程組 \\(\\begin{cases}x+${r}y=${c}\\\\${r}x+k y=${r * c}\\end{cases}\\) 在何種 \\(k\\) 值下有無限多解、無解或唯一解。`,
           `\\(k=${r * r}\\) 時無限多解；\\(k\\ne${r * r}\\) 時唯一解；無解不存在`,
@@ -14267,10 +15180,10 @@
         );
       },
       () => {
-        const a = s324Pick([2, 3, 4]);
-        const b = s324Pick([1, 2, 5]);
-        const c = s324Pick([3, 4, 6]);
-        const lambda = s324Pick([2, -2, 3]);
+        const a = randInt(2, 6);
+        const b = randInt(1, 6);
+        const c = randInt(2, 8);
+        const lambda = s324Pick([2, -2, 3, -3, 4]);
         const line1 = `${s31FirstTerm(a, 'x')}${s31SignedTerm(b, 'y')}`;
         const line2 = `${s31FirstTerm(lambda * a, 'x')}${s31SignedTerm(lambda * b, 'y')}`;
         return s331QA(
@@ -14280,17 +15193,18 @@
         );
       },
       () => {
-        const r = s324Pick([2, 3, 4, 5]);
+        const r = randInt(2, 7);
+        const dy = randInt(2, 9);
         return s331QA(
-          `設方程組的係數行列式 \\(\\Delta=a^2-${r * r}\\)。當 \\(a=${r}\\) 時，若 \\(\\Delta_x=0,\\Delta_y=${r + 3}\\)，說明此方程組的幾何意義。`,
+          `設方程組的係數行列式 \\(\\Delta=a^2-${r * r}\\)。當 \\(a=${r}\\) 時，若 \\(\\Delta_x=0,\\Delta_y=${dy}\\)，說明此方程組的幾何意義。`,
           `無解，代表兩直線平行不同線`,
           `當 \\(a=${r}\\) 時 \\(\\Delta=0\\)，但 \\(\\Delta_y\\ne0\\)。係數行列式為 0 代表兩直線平行或重合；增廣行列式不為 0，表示不是同一直線，所以無解。`
         );
       },
       () => {
-        const s = s324Pick([2, 3, 4]);
+        const s = randInt(2, 6);
         const a = s * s;
-        const b = s324Pick([1, 2, 3]);
+        const b = randInt(1, 6);
         return s331QA(
           `求 \\(m\\) 使得方程組 \\(\\begin{cases}${a}x+my=${b}\\\\mx+y=-1\\end{cases}\\) 只有唯一解。`,
           `\\(m\\ne ${s}\\) 且 \\(m\\ne -${s}\\)`,
@@ -14298,9 +15212,9 @@
         );
       },
       () => {
-        const p = s324Pick([2, 3, 4, 5]);
-        const q = s324Pick([1, 2, 3]);
-        const c = s324Pick([2, 3, 5]);
+        const p = randInt(2, 6);
+        const q = randInt(1, 4);
+        const c = randInt(2, 7);
         const line1 = `${s31FirstTerm(1, 'x')}${s31SignedTerm(-p, 'y')}`;
         const line2 = `${s31FirstTerm(-q, 'x')}${s31SignedTerm(p * q, 'y')}`;
         return s331QA(
@@ -14369,14 +15283,12 @@
   function buildS334LinearTransformAreaRegionAdvancedSet(count) {
     const builders = [
       () => {
-        const matrices = [
-          [2, 1, 4, 5],
-          [1, -1, 3, 2],
-          [3, 0, 1, 2],
-          [2, 3, 1, 4],
-        ];
-        const M = s324Pick(matrices);
-        const area = s324Pick([5, 8, 10, 12]);
+        let M = [randInt(-3, 4), randInt(-3, 3), randInt(-3, 4), randInt(-3, 4)];
+        for (let retry = 0; retry < 20 && M[0] * M[3] - M[1] * M[2] === 0; retry += 1) {
+          M = [randInt(-3, 4), randInt(-3, 3), randInt(-3, 4), randInt(-3, 4)];
+        }
+        if (M[0] * M[3] - M[1] * M[2] === 0) M = [2, 1, 4, 5];
+        const area = randInt(3, 15);
         const det = Math.abs(M[0] * M[3] - M[1] * M[2]);
         return s331QA(
           `平面上一三角形面積為 ${area}，經變換矩陣 \\(\\begin{bmatrix}${M[0]}&${M[1]}\\\\${M[2]}&${M[3]}\\end{bmatrix}\\) 後，新面積為何？`,
@@ -14385,7 +15297,7 @@
         );
       },
       () => {
-        const k = s324Pick([1, 2, 3, -1, -2]);
+        const k = randInt(-6, 6) || 2;
         return s331QA(
           `判定矩陣 \\(\\begin{bmatrix}1&${k}\\\\0&1\\end{bmatrix}\\) 作用於單位正方形後，其面積是否保持不變。`,
           `保持不變`,
@@ -14393,8 +15305,8 @@
         );
       },
       () => {
-        const a = s324Pick([2, 3, 4]);
-        const b = s324Pick([2, 5, 6]);
+        const a = randInt(2, 6);
+        const b = randInt(2, 7);
         const det = a * b;
         return s331QA(
           `設向量 \\(u,v\\) 張成的平行四邊形面積為 ${det + 1}。若經旋轉再伸縮，矩陣等價於 \\(\\begin{bmatrix}${a}&0\\\\0&${b}\\end{bmatrix}\\) 的面積倍率，求新面積。`,
@@ -14403,8 +15315,8 @@
         );
       },
       () => {
-        const a = s324Pick([2, 3, 4, 5]);
-        const b = s324Pick([1, 2, 3, 4]);
+        const a = randInt(2, 7);
+        const b = randInt(1, 5);
         return s331QA(
           `單位圓 \\(x^2+y^2=1\\) 經伸縮變換 \\(\\begin{bmatrix}${a}&0\\\\0&${b}\\end{bmatrix}\\) 後變為橢圓，求此橢圓圍成的面積。`,
           `\\(${a * b}\\pi\\)`,
@@ -14413,8 +15325,8 @@
       },
       () => {
         const M = [1, 1, 1, 2];
-        const w = s324Pick([1, 2, 3]);
-        const h = s324Pick([1, 2, 4]);
+        const w = randInt(1, 5);
+        const h = randInt(1, 5);
         const e1 = [w * M[0], w * M[2]];
         const e2 = [h * M[1], h * M[3]];
         const perimeter = `2(${s331LenText(e1[0], e1[1])}+${s331LenText(e2[0], e2[1])})`;
@@ -17035,7 +17947,7 @@
     };
   });
 
-  const bundleFingerprint = 's3-bundle-v20260716-s33-summary-review-v4';
+  const bundleFingerprint = 's3-bundle-v20260717-s31-s32-s33-parameterized-infinite-v6';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

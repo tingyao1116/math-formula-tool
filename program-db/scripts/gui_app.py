@@ -3665,13 +3665,15 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         result = {"options": None}
         dialog = tk.Toplevel(self.root)
         subject_label = str(subject_label or "主題串").strip() or "主題串"
-        dialog.title(f"批次匯出{subject_label} PDF")
+        dialog.title(f"批次匯出{subject_label}")
         dialog.transient(self.root)
         dialog.grab_set()
-        dialog.geometry("620x450" if scope_options else "560x360")
-        dialog.resizable(False, False)
+        dialog.geometry("640x640" if scope_options else "580x500")
+        dialog.minsize(620 if scope_options else 560, 600 if scope_options else 460)
+        dialog.resizable(True, True)
 
         count_var = tk.StringVar(value="10")
+        export_format_var = tk.StringVar(value="pdf")
         export_order_var = tk.StringVar(value="interleaved")
         answer_mode_var = tk.StringVar(value="both")
         question_gap_mm_var = tk.StringVar(value="10")
@@ -3682,7 +3684,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
         body.pack(fill="both", expand=True)
         ttk.Label(
             body,
-            text=f"將匯出 {max(0, int(chain_count or 0))} 份{subject_label}；每一串會各自生成一個 PDF。",
+            text=f"將匯出 {max(0, int(chain_count or 0))} 份{subject_label}；每一串會依所選格式輸出。",
         ).pack(anchor="w", pady=(0, 10))
 
         scope_rows = scope_options if isinstance(scope_options, dict) else {}
@@ -3725,6 +3727,12 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
 
             scope_mode_var.trace_add("write", refresh_scope_targets)
             refresh_scope_targets()
+
+        format_box = ttk.LabelFrame(body, text="輸出格式", padding=10)
+        format_box.pack(fill="x", pady=(0, 10))
+        ttk.Radiobutton(format_box, text="只匯出 PDF", variable=export_format_var, value="pdf").pack(side="left")
+        ttk.Radiobutton(format_box, text="只匯出 MD", variable=export_format_var, value="md").pack(side="left", padx=(14, 0))
+        ttk.Radiobutton(format_box, text="PDF + MD", variable=export_format_var, value="both").pack(side="left", padx=(14, 0))
 
         count_row = ttk.Frame(body)
         count_row.pack(fill="x", pady=(0, 10))
@@ -3792,6 +3800,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
                 scope_label = str(picked.get("label", "")).strip()
             result["options"] = {
                 "question_count": question_count,
+                "export_format": export_format_var.get() if export_format_var.get() in {"pdf", "md", "both"} else "pdf",
                 "export_order": export_order_var.get() if export_order_var.get() in {"separate", "interleaved"} else "interleaved",
                 "answer_mode": answer_mode_var.get() if answer_mode_var.get() in {"simple", "detail", "both"} else "both",
                 "question_gap_mm": question_gap_mm,
@@ -4607,20 +4616,24 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             if not export_chains:
                 return messagebox.showwarning("提醒", "這個範圍目前沒有可匯出的章節主題串。", parent=dialog)
 
-            toolchain = pdf_markdown_export.check_pdf_toolchain()
-            if not toolchain["ok"]:
-                return messagebox.showerror("找不到排版工具", toolchain["reason"], parent=dialog)
+            export_format = options.get("export_format", "pdf")
+            if export_format in {"pdf", "both"}:
+                toolchain = pdf_markdown_export.check_pdf_toolchain()
+                if not toolchain["ok"]:
+                    return messagebox.showerror("找不到排版工具", toolchain["reason"], parent=dialog)
 
-            out_dir = filedialog.askdirectory(title="選擇全部章節主題串 PDF 輸出資料夾", parent=dialog)
+            out_dir = filedialog.askdirectory(title="選擇全部章節主題串輸出資料夾", parent=dialog)
             if not out_dir:
                 return
             out_dir = Path(out_dir)
 
+            format_label = {"pdf": "PDF", "md": "MD", "both": "PDF + MD"}.get(export_format, "PDF")
+
             if not messagebox.askyesno(
                 "確認批次匯出",
-                f"即將依章節輸出 {len(export_chains)} 份 PDF 到：\n{out_dir}\n\n"
+                f"即將依章節輸出 {len(export_chains)} 份{format_label}到：\n{out_dir}\n\n"
                 f"範圍：{scope_label or '全部'}\n"
-                "每個小章節會是一份獨立 PDF，確定開始？",
+                "每個小章節會獨立輸出，確定開始？",
                 parent=dialog,
             ):
                 return
@@ -4631,6 +4644,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             question_gap_mm = float(options.get("question_gap_mm", 10) or 0)
             date_prefix = datetime.now().strftime("%Y%m%d_%H%M%S")
             written = []
+            completed = 0
             failures = []
 
             dialog.grab_release()
@@ -4664,17 +4678,29 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
 
                     base_name = self._safe_filename(f"{date_prefix}_{index:03d}_{title}")
                     pdf_path = out_dir / f"{base_name}_題目與答案.pdf"
-                    pdf_result = pdf_markdown_export.convert_markdown_to_pdf(
-                        markdown_result.get("markdown", ""),
-                        pdf_path,
-                        title=combined_title,
-                    )
-                    if not pdf_result.get("ok"):
-                        failures.append(f"{title}：{pdf_result.get('reason', '') or 'PDF 轉換失敗'}")
-                        continue
+                    md_path = out_dir / f"{base_name}_題目與答案.md"
+                    markdown_text = markdown_result.get("markdown", "")
+                    if export_format in {"md", "both"}:
+                        try:
+                            md_path.write_text(markdown_text, encoding="utf-8")
+                            written.append(md_path)
+                        except Exception as exc:
+                            failures.append(f"{title}：MD 寫入失敗：{exc}")
+                            continue
 
-                    written.append(pdf_path)
-                    info_var.set(f"批次匯出中：{index}/{len(export_chains)}，已完成 {len(written)} 份。")
+                    if export_format in {"pdf", "both"}:
+                        pdf_result = pdf_markdown_export.convert_markdown_to_pdf(
+                            markdown_text,
+                            pdf_path,
+                            title=combined_title,
+                        )
+                        if not pdf_result.get("ok"):
+                            failures.append(f"{title}：{pdf_result.get('reason', '') or 'PDF 轉換失敗'}")
+                            continue
+                        written.append(pdf_path)
+
+                    completed += 1
+                    info_var.set(f"批次匯出中：{index}/{len(export_chains)}，已完成 {completed} 份。")
                     self.status_var.set(info_var.get())
                     dialog.update_idletasks()
             finally:
@@ -4686,17 +4712,17 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             if failures:
                 preview = "\n".join(failures[:12])
                 more = "" if len(failures) <= 12 else f"\n...另有 {len(failures) - 12} 筆失敗"
-                self.status_var.set(f"章節主題串批次匯出部分完成：成功 {len(written)} 份，失敗 {len(failures)} 份。")
+                self.status_var.set(f"章節主題串批次匯出部分完成：成功 {completed} 份，失敗 {len(failures)} 份。")
                 info_var.set(self.status_var.get())
                 return messagebox.showwarning(
                     "部分完成",
-                    f"已輸出 {len(written)} 份 PDF 到：\n{out_dir}\n\n失敗 {len(failures)} 份：\n{preview}{more}",
+                    f"已完成 {completed} 份{format_label}，輸出到：\n{out_dir}\n\n失敗 {len(failures)} 份：\n{preview}{more}",
                     parent=dialog,
                 )
 
-            self.status_var.set(f"章節主題串批次 PDF 匯出完成：{len(written)} 份。")
+            self.status_var.set(f"章節主題串批次{format_label}匯出完成：{completed} 份。")
             info_var.set(self.status_var.get())
-            return messagebox.showinfo("完成", f"已輸出 {len(written)} 份 PDF 到：\n{out_dir}", parent=dialog)
+            return messagebox.showinfo("完成", f"已完成 {completed} 份{format_label}，輸出到：\n{out_dir}", parent=dialog)
 
         button_bar = ttk.Frame(dialog, padding=12)
         button_bar.pack(fill="x")
@@ -5463,18 +5489,21 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             if not options:
                 return
 
-            toolchain = pdf_markdown_export.check_pdf_toolchain()
-            if not toolchain["ok"]:
-                return messagebox.showerror("找不到排版工具", toolchain["reason"], parent=dialog)
+            export_format = options.get("export_format", "pdf")
+            if export_format in {"pdf", "both"}:
+                toolchain = pdf_markdown_export.check_pdf_toolchain()
+                if not toolchain["ok"]:
+                    return messagebox.showerror("找不到排版工具", toolchain["reason"], parent=dialog)
 
-            out_dir = filedialog.askdirectory(title="選擇全部自訂主題串 PDF 輸出資料夾", parent=dialog)
+            out_dir = filedialog.askdirectory(title="選擇全部自訂主題串輸出資料夾", parent=dialog)
             if not out_dir:
                 return
             out_dir = Path(out_dir)
+            format_label = {"pdf": "PDF", "md": "MD", "both": "PDF + MD"}.get(export_format, "PDF")
 
             if not messagebox.askyesno(
                 "確認批次匯出",
-                f"即將輸出 {len(export_chains)} 份 PDF 到：\n{out_dir}\n\n這可能需要一段時間，確定開始？",
+                f"即將輸出 {len(export_chains)} 份{format_label}到：\n{out_dir}\n\n這可能需要一段時間，確定開始？",
                 parent=dialog,
             ):
                 return
@@ -5485,6 +5514,7 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             question_gap_mm = float(options.get("question_gap_mm", 10) or 0)
             date_prefix = datetime.now().strftime("%Y%m%d_%H%M%S")
             written = []
+            completed = 0
             failures = []
 
             dialog.grab_release()
@@ -5518,17 +5548,29 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
 
                     base_name = self._safe_filename(f"{date_prefix}_{index:03d}_{title}")
                     pdf_path = out_dir / f"{base_name}_題目與答案.pdf"
-                    pdf_result = pdf_markdown_export.convert_markdown_to_pdf(
-                        markdown_result.get("markdown", ""),
-                        pdf_path,
-                        title=combined_title,
-                    )
-                    if not pdf_result.get("ok"):
-                        failures.append(f"{title}：{pdf_result.get('reason', '') or 'PDF 轉換失敗'}")
-                        continue
+                    md_path = out_dir / f"{base_name}_題目與答案.md"
+                    markdown_text = markdown_result.get("markdown", "")
+                    if export_format in {"md", "both"}:
+                        try:
+                            md_path.write_text(markdown_text, encoding="utf-8")
+                            written.append(md_path)
+                        except Exception as exc:
+                            failures.append(f"{title}：MD 寫入失敗：{exc}")
+                            continue
 
-                    written.append(pdf_path)
-                    status_var.set(f"批次匯出中：{index}/{len(export_chains)}，已完成 {len(written)} 份。")
+                    if export_format in {"pdf", "both"}:
+                        pdf_result = pdf_markdown_export.convert_markdown_to_pdf(
+                            markdown_text,
+                            pdf_path,
+                            title=combined_title,
+                        )
+                        if not pdf_result.get("ok"):
+                            failures.append(f"{title}：{pdf_result.get('reason', '') or 'PDF 轉換失敗'}")
+                            continue
+                        written.append(pdf_path)
+
+                    completed += 1
+                    status_var.set(f"批次匯出中：{index}/{len(export_chains)}，已完成 {completed} 份。")
                     self.status_var.set(status_var.get())
                     dialog.update_idletasks()
             finally:
@@ -5540,17 +5582,17 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             if failures:
                 preview = "\n".join(failures[:12])
                 more = "" if len(failures) <= 12 else f"\n...另有 {len(failures) - 12} 筆失敗"
-                self.status_var.set(f"自訂主題串批次匯出部分完成：成功 {len(written)} 份，失敗 {len(failures)} 份。")
+                self.status_var.set(f"自訂主題串批次匯出部分完成：成功 {completed} 份，失敗 {len(failures)} 份。")
                 status_var.set(self.status_var.get())
                 return messagebox.showwarning(
                     "部分完成",
-                    f"已輸出 {len(written)} 份 PDF 到：\n{out_dir}\n\n失敗 {len(failures)} 份：\n{preview}{more}",
+                    f"已完成 {completed} 份{format_label}，輸出到：\n{out_dir}\n\n失敗 {len(failures)} 份：\n{preview}{more}",
                     parent=dialog,
                 )
 
-            self.status_var.set(f"自訂主題串批次 PDF 匯出完成：{len(written)} 份。")
+            self.status_var.set(f"自訂主題串批次{format_label}匯出完成：{completed} 份。")
             status_var.set(self.status_var.get())
-            return messagebox.showinfo("完成", f"已輸出 {len(written)} 份 PDF 到：\n{out_dir}", parent=dialog)
+            return messagebox.showinfo("完成", f"已完成 {completed} 份{format_label}，輸出到：\n{out_dir}", parent=dialog)
 
         bottom = ttk.Frame(dialog, padding=12)
         bottom.grid(row=2, column=0, sticky="ew")
