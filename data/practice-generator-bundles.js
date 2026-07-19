@@ -45,7 +45,7 @@
       chapterPrefixes: ["j6-"],
     },
     s1: {
-      src: "data/practice-generators/s1.js?v=20260715-s11-s12-s13-summary-review-v2",
+      src: "data/practice-generators/s1.js?v=20260718-s11-s12-s13-parametrize-v12",
       deps: ["data/practice-generators/shared-legacy-bundle.js?v=20260619-e5-stage-fix-v2"],
       chapterPrefixes: ["s1-"],
     },

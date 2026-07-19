@@ -10891,151 +10891,69 @@
   }
 
   function buildS132AbsoluteValueQuadraticSet(count) {
+    const templates = [
+      {
+        q: '試求函數 \\(y=|x^2-2x|-4\\) 的 \\(x\\) 軸交點。',
+        a: '簡答：\\((1-\\sqrt5,0),(1+\\sqrt5,0)\\)。過程：令 \\(|x^2-2x|-4=0\\)，得 \\(|x^2-2x|=4\\)。方程 \\(x^2-2x=4\\) 有解 \\(x=1\\pm\\sqrt5\\)；方程 \\(x^2-2x=-4\\) 無實根，所以交點如上。',
+      },
+      {
+        q: '設 \\(2\\le x\\le4\\)，求 \\(f(x)=|x^2-4|-2x\\) 的最大值與最小值。',
+        a: '簡答：最大值 4，最小值 -4。過程：在 \\([2,4]\\) 上，\\(x^2-4\\ge0\\)，所以 \\(f(x)=x^2-2x-4=(x-1)^2-5\\)。此函數在 \\([2,4]\\) 遞增，故最小值 \\(f(2)=-4\\)，最大值 \\(f(4)=4\\)。',
+      },
+      {
+        q: '若方程式 \\(|x^2-2x-3|=k\\) 恰有 4 個相異實根，求實數 \\(k\\) 的範圍。',
+        a: '簡答：\\(0<k<4\\)。過程：\\(x^2-2x-3=(x-1)^2-4\\)，其最小值為 -4，且零點為 -1 與 3。取絕對值後，水平線 \\(y=k\\) 若要切出四個相異交點，需介於 0 與中間最高高度 4 之間，所以 \\(0<k<4\\)。',
+      },
+      {
+        q: '求 \\(f(x)=x^2-a|x|+2\\) 在區間 \\([-1,1]\\) 內的最小值。',
+        a: '簡答：若 \\(a\\le0\\)，最小值為 2；若 \\(0<a<2\\)，最小值為 \\(2-\\frac{a^2}{4}\\)；若 \\(a\\ge2\\)，最小值為 \\(3-a\\)。過程：令 \\(t=|x|\\)，則 \\(0\\le t\\le1\\)，原式成為 \\(t^2-at+2\\)。在區間上檢查頂點 \\(t=\\frac a2\\) 與端點即可得到三段結果。',
+      },
+      {
+        q: '討論 \\(y=|x^2-3x|-x+1\\) 的 \\(x\\) 軸交點。',
+        a: '簡答：\\((1+\\sqrt2,0),(2+\\sqrt3,0)\\)。過程：令 \\(|x^2-3x|-x+1=0\\)，需 \\(x\\ge1\\)。若 \\(0<x<3\\)，則 \\(|x^2-3x|=-x^2+3x\\)，解得 \\(x=1+\\sqrt2\\)。若 \\(x\\ge3\\)，則 \\(|x^2-3x|=x^2-3x\\)，解得 \\(x=2+\\sqrt3\\)。',
+      },
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 5;
-
-      if (variant === 0 || variant === 3) {
-        // |x^2 - 2h x| - C 的 x 軸交點：|x^2-2hx|=C → x^2-2hx∓C=0
-        // 取 x^2-2hx=(x-h)^2-h^2，令 C>0；x^2-2hx=C → (x-h)^2=h^2+C（兩解）；=-C →(x-h)^2=h^2-C
-        const h = randInt(2, 5);
-        const C = randInt(1, h * h - 1);
-        const s1 = h * h + C;
-        const s2 = h * h - C;
-        const s2Text = s2 > 0 ? `，\\(x=${h}\\pm${formatRadical(s2)}\\)` : s2 === 0 ? `，\\(x=${h}\\)` : '';
-        const s2Proc = s2 > 0 ? `，\\(x=${h}\\pm${formatRadical(s2)}\\)` : s2 === 0 ? `，得 \\(x=${h}\\)（重根）` : '（無實數解）';
-        questions.push(`試求函數 \\(y=|x^2-${2 * h}x|-${C}\\) 與 \\(x\\) 軸的交點（\\(x\\) 坐標）。`);
-        answers.push(
-          `簡答：\\(x=${h}\\pm${formatRadical(s1)}\\)${s2Text}。過程：令 \\(y=0\\)，\\(|x^2-${2 * h}x|=${C}\\)。由 \\(x^2-${2 * h}x=${C}\\) 得 \\((x-${h})^2=${s1}\\)，\\(x=${h}\\pm${formatRadical(s1)}\\)；由 \\(x^2-${2 * h}x=-${C}\\) 得 \\((x-${h})^2=${s2}\\)${s2Proc}。`
-        );
-        continue;
-      }
-
-      if (variant === 1) {
-        // |x^2-a^2|=k 恰有 4 個相異實根 → 0<k<a^2
-        const a = randInt(2, 5);
-        questions.push(`若方程式 \\(|x^2-${a * a}|=k\\) 恰有 4 個相異實根，求實數 \\(k\\) 的範圍。`);
-        answers.push(
-          `簡答：\\(0<k<${a * a}\\)。過程：考慮 \\(y=|x^2-${a * a}|\\) 的圖形（W 形），與水平線 \\(y=k\\) 的交點數：\\(k<0\\) 無交點；\\(k=0\\) 有 2 個（\\(x=\\pm${a}\\)）；\\(0<k<${a * a}\\) 有 4 個；\\(k=${a * a}\\) 有 3 個；\\(k>${a * a}\\) 有 2 個。故 4 根需 \\(0<k<${a * a}\\)。`
-        );
-        continue;
-      }
-
-      if (variant === 2) {
-        // |(x-r1)(x-r2)|=k 恰有 3 個相異實根 → k = 頂點值 |min|
-        const r1 = randInt(-4, 1);
-        const dd = 2 * randInt(1, 3);
-        const r2 = r1 + dd;
-        const m = (dd / 2) * (dd / 2); // |最小值|
-        questions.push(
-          `若方程式 \\(|x^2-${r1 + r2}x+${r1 * r2}|=k\\) 恰有 3 個相異實根，求 \\(k\\)。`
-        );
-        answers.push(
-          `簡答：\\(k=${m}\\)。過程：\\(f(x)=x^2-${r1 + r2}x+${r1 * r2}=(x-${r1})(x-${r2})\\)，最小值為 \\(-${m}\\)（在頂點 \\(x=${(r1 + r2) / 2}\\)）。\\(|f(x)|\\) 的圖形在此頂點觸及高度 ${m}。當 \\(k=${m}\\)（等於頂點高度）時，交點數為 3（頂點處相切算 1 個）。`
-        );
-        continue;
-      }
-
-      // variant 4：|x^2 - c| 的最小正整數 k 使 |x^2-c|=k 有兩相異正根... 改：求 |x^2-a^2|=k 有 2 根
-      const a = randInt(2, 5);
-      questions.push(`若方程式 \\(|x^2-${a * a}|=k\\)（\\(k>0\\)）恰有 2 個相異實根，求 \\(k\\) 的範圍。`);
-      answers.push(
-        `簡答：\\(k>${a * a}\\)。過程：\\(y=|x^2-${a * a}|\\) 為 W 形，與 \\(y=k\\)：\\(0<k<${a * a}\\) 有 4 根、\\(k=${a * a}\\) 有 3 根、\\(k>${a * a}\\) 有 2 根。故恰 2 根需 \\(k>${a * a}\\)。`
-      );
+      const item = templates[i % templates.length];
+      questions.push(item.q);
+      answers.push(item.a);
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildS132AlgebraicExtremaSet(count) {
+    const templates = [
+      {
+        q: '設 \\(x,y\\) 為實數且 \\(x^2+3y^2=1\\)，求 \\(2x+3y^2\\) 的最大值與最小值。',
+        a: '簡答：最大值 2，最小值 -2。過程：令 \\(t=3y^2\\)，則 \\(0\\le t\\le1\\)，且 \\(x^2=1-t\\)。原式為 \\(2x+t\\)。最大時取 \\(x=\\sqrt{1-t}\\)，可得最大 2；最小時取 \\(x=-\\sqrt{1-t}\\)，可得最小 -2。',
+      },
+      {
+        q: '若 \\(x^2+2y^2=1\\)，求 \\(2x+3y^2\\) 的最大值。',
+        a: '簡答：\\(\\frac{13}{6}\\)。過程：令 \\(t=y^2\\)，則 \\(0\\le t\\le\\frac12\\)，且 \\(x\\le\\sqrt{1-2t}\\)。要取最大，令 \\(x=\\sqrt{1-2t}\\)，原式為 \\(2\\sqrt{1-2t}+3t\\)。配方或微分可得最值在 \\(t=\\frac5{18}\\)，最大值為 \\(\\frac{13}{6}\\)。',
+      },
+      {
+        q: '給定 \\(y=\\sqrt{4-(x-4)^2}-3\\)，求 \\(x^2+y^2\\) 的最小值。',
+        a: '簡答：9。過程：此圖形是圓 \\((x-4)^2+(y+3)^2=4\\) 的上半部。圓心 \\((4,-3)\\) 到原點距離為 5，半徑為 2，所以圓上離原點最近距離為 3，且最近點在上半圓上。因此 \\(x^2+y^2\\) 的最小值為 \\(3^2=9\\)。',
+      },
+      {
+        q: '若 \\((x,y)\\) 在單位圓上，求二次式 \\(3x+4y^2\\) 的範圍。',
+        a: '簡答：\\(-3\\le3x+4y^2\\le\\frac{73}{16}\\)。過程：令 \\(t=y^2\\)，則 \\(0\\le t\\le1\\)，且 \\(x=\\pm\\sqrt{1-t}\\)。最小取負號，在 \\(t=0\\) 得 -3；最大取正號，最大化 \\(3\\sqrt{1-t}+4t\\)，得最大值 \\(\\frac{73}{16}\\)。',
+      },
+      {
+        q: '設 \\(x+2y=4\\)，且 \\(x,y\\ge0\\)，求 \\(x^2+y^2\\) 的最大值與最小值。',
+        a: '簡答：最大值 16，最小值 \\(\\frac{16}{5}\\)。過程：線段端點為 \\((4,0),(0,2)\\)，端點距離平方分別為 16 與 4。離原點最近點是原點到直線 \\(x+2y=4\\) 的垂足 \\((\\frac45,\\frac85)\\)，距離平方為 \\(\\frac{16}{5}\\)。所以最大值為 16，最小值為 \\(\\frac{16}{5}\\)。',
+      },
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const fr = (n, d) => {
-      const f = makeFraction(n, d);
-      return formatFraction(f.num, f.den);
-    };
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 5;
-
-      if (variant === 0 || variant === 3) {
-        // x^2+A y^2=1，求 B x + A y^2 的極值：= -x^2+Bx+1，x∈[-1,1]
-        const A = randInt(2, 5);
-        const B = 2 * randInt(-2, 2) || 2;
-        // f(x)=-x^2+Bx+1，頂點 x=B/2
-        const vx = B / 2;
-        const fmax = vx >= -1 && vx <= 1 ? 4 + B * B : Math.max(4 * (-1 - -B), 4);
-        const maxV = vx >= -1 && vx <= 1 ? 1 + (B * B) / 4 : Math.max(-1 - B + 1, -1 + B + 1);
-        const minV = Math.min(-1 - B + 1, -1 + B + 1); // min(-B, B) 於端點
-        questions.push(
-          `設 \\(x,y\\) 為實數且 \\(x^2+${A}y^2=1\\)，求 \\(${B === 1 ? '' : B}x+${A}y^2\\) 的最大值與最小值。`
-        );
-        answers.push(
-          `簡答：最大值 ${maxV}，最小值 ${minV}。過程：由約束 \\(${A}y^2=1-x^2\\ge0\\) 知 \\(-1\\le x\\le1\\)。代入得目標 \\(=${B}x+(1-x^2)=-(x-${vx})^2+${1 + (B * B) / 4}\\)。在 \\([-1,1]\\) 上頂點 \\(x=${vx}\\)${vx >= -1 && vx <= 1 ? '在區間內，最大值取頂點' : '不在區間內'}，最大值 ${maxV}；最小值在端點，為 ${minV}。`
-        );
-        continue;
-      }
-
-      if (variant === 1) {
-        // x^2+2y^2=1，求 B x + C y^2 的最大值（C 為 y^2 係數）
-        const B = randInt(1, 4);
-        const C = randInt(1, 4);
-        // 2y^2=1-x^2 → y^2=(1-x^2)/2；目標 = Bx + C(1-x^2)/2 = -(C/2)x^2+Bx+C/2
-        // 頂點 x=B/C，f=... 若 B/C≤1 取頂點
-        const vxN = B;
-        const vxD = C;
-        const vx = B / C;
-        let maxV;
-        if (vx <= 1 && vx >= -1) {
-          // f(vx)=C/2 + B^2/(2C)
-          maxV = makeFraction(C * C + B * B, 2 * C);
-        } else {
-          const fe = (x) => -(C / 2) * x * x + B * x + C / 2;
-          maxV = makeFraction(Math.round(2 * C * fe(1)), 2 * C);
-        }
-        questions.push(`若 \\(x^2+2y^2=1\\)，求 \\(${B === 1 ? '' : B}x+${C}y^2\\) 的最大值。`);
-        answers.push(
-          `簡答：\\(${formatFraction(maxV.num, maxV.den)}\\)。過程：由 \\(2y^2=1-x^2\\)，\\(y^2=\\frac{1-x^2}2\\)（\\(-1\\le x\\le1\\)）。目標 \\(=${B}x+${C}\\cdot\\frac{1-x^2}2=-\\frac{${C}}2x^2+${B}x+\\frac{${C}}2\\)，頂點 \\(x=${fr(B, C)}\\)。取頂點（在區間內）得最大值 \\(${formatFraction(maxV.num, maxV.den)}\\)。`
-        );
-        continue;
-      }
-
-      if (variant === 2) {
-        // y=√(r^2-(x-h)^2)+k 的下半/上半圓，求 x^2+y^2 極值（原點到圓的距離）
-        const h = randInt(3, 6);
-        const kk = -randInt(2, 5);
-        const r = randInt(1, Math.min(h, -kk) - 0);
-        const d = Math.round(Math.sqrt(h * h + kk * kk) * 1000) / 1000;
-        // 最小距離平方（原點在圓外）：(√(h²+k²)-r)²
-        const distC = Math.sqrt(h * h + kk * kk);
-        const minDist2 = Math.round((distC - r) ** 2);
-        const exact = (distC - r) ** 2;
-        // 讓答案乾淨：取 h,k,r 使 h²+k² 為完全平方
-        questions.push(
-          `給定 \\(y=\\sqrt{${r * r}-(x-${h})^2}${kk}\\)（即圓 \\((x-${h})^2+(y${-kk >= 0 ? '+' : '-'}${Math.abs(kk)})^2=${r * r}\\) 的上半），求 \\(x^2+y^2\\) 的最小值。`
-        );
-        answers.push(
-          `簡答：\\((\\sqrt{${h * h + kk * kk}}-${r})^2\\)。過程：\\(x^2+y^2\\) 是原點到圖形上點的距離平方。圓心 \\((${h},${kk})\\) 到原點距離為 \\(\\sqrt{${h * h + kk * kk}}\\)，半徑 ${r}。最近點的距離為 \\(\\sqrt{${h * h + kk * kk}}-${r}\\)，故最小值為其平方 \\((\\sqrt{${h * h + kk * kk}}-${r})^2\\)。`
-        );
-        continue;
-      }
-
-      // variant 4：單位圓上 B x + C y^2 的範圍
-      const B = randInt(1, 4);
-      const C = randInt(1, 4);
-      // y^2=1-x^2；目標 = -C x^2 + B x + C，x∈[-1,1]
-      const vx = B / (2 * C);
-      const maxV = vx <= 1 && vx >= -1 ? makeFraction(4 * C * C + B * B, 4 * C) : makeFraction(B, 1);
-      const minV = Math.min(-C - B + C, -C + B + C); // 端點 min(-B,B)... f(±1)=-C±B+C = ±B → min=-B... let compute
-      const fe = (x) => -C * x * x + B * x + C;
-      const mn = Math.min(fe(-1), fe(1));
-      questions.push(
-        `若 \\((x,y)\\) 在單位圓 \\(x^2+y^2=1\\) 上，求 \\(${B === 1 ? '' : B}x+${C}y^2\\) 的範圍。`
-      );
-      answers.push(
-        `簡答：\\(${mn}\\le ${B === 1 ? '' : B}x+${C}y^2\\le${formatFraction(maxV.num, maxV.den)}\\)。過程：由 \\(y^2=1-x^2\\)（\\(-1\\le x\\le1\\)），目標 \\(=${B}x+${C}(1-x^2)=-${C}x^2+${B}x+${C}\\)。頂點 \\(x=${fr(B, 2 * C)}\\) 給最大值 \\(${formatFraction(maxV.num, maxV.den)}\\)，端點給最小值 ${mn}。`
-      );
+      const item = templates[i % templates.length];
+      questions.push(item.q);
+      answers.push(item.a);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -11187,90 +11105,35 @@
   }
 
   function buildS132QuadraticStructuralModelingSet(count) {
+    const templates = [
+      {
+        q: '有一半徑為 14 呎的半圓形隧道口，一輛寬 7 呎、高 13 呎的卡車若靠著中央分道線行駛，是否能安全通過？',
+        a: '簡答：不可以。過程：以隧道中心為原點，半圓為 \\(x^2+y^2=196\\)。卡車靠著中央分道線行駛，佔 \\(0\\le x\\le7\\)，最外側在 \\(x=7\\)。此處隧道高度 \\(y=\\sqrt{196-7^2}=\\sqrt{147}=7\\sqrt3\\approx12.12<13\\)，車頂會頂到隧道，所以不能安全通過。',
+      },
+      {
+        q: '以每秒 \\(v\\) 公尺發射信號彈，高度 \\(y=vt-4.9t^2\\)。若 5 秒時高度為 245 公尺，求信號彈在 245 公尺以上的時間共有幾秒？',
+        a: '簡答：5 秒。過程：代入 \\(t=5,y=245\\)，得 \\(245=5v-4.9\\cdot25\\)，所以 \\(v=73.5\\)。解 \\(73.5t-4.9t^2\\ge245\\)，得 \\(5\\le t\\le10\\)，時間長度為 5 秒。',
+      },
+      {
+        q: '某商品進價 30 元，定價 50 元時可賣 80 個；若售價每降 1 元，多賣 20 個，求最大利潤時的售價。',
+        a: '簡答：42 元。過程：設降價 \\(x\\) 元，售價為 \\(50-x\\)，銷量為 \\(80+20x\\)。利潤為 \\((50-x-30)(80+20x)=(20-x)(80+20x)=-20x^2+320x+1600\\)。頂點在 \\(x=8\\)，所以最大利潤時售價為 \\(50-8=42\\) 元。',
+      },
+      {
+        q: '拋物線噴泉頂點離牆 1 公尺，高度為 4 公尺，且在離牆 3 公尺處落地。以牆腳為原點、地面為 \\(x\\) 軸，求噴泉軌跡方程式。',
+        a: '簡答：\\(y=-(x-1)^2+4\\)。過程：頂點為 \\((1,4)\\)，設 \\(y=a(x-1)^2+4\\)。代入落地點 \\((3,0)\\)，得 \\(0=4a+4\\)，所以 \\(a=-1\\)。',
+      },
+      {
+        q: '牛排溫度 \\(T=\\frac{700}{k^2-7k+20}\\)（\\(k\\) 為分鐘），求使牛排溫度不大於 5 度的最少時間。',
+        a: '簡答：15 分鐘。過程：需 \\(\\frac{700}{k^2-7k+20}\\le5\\)。分母在題目情境中為正，化簡得 \\(k^2-7k+20\\ge140\\)，即 \\((k-15)(k+8)\\ge0\\)。因 \\(k\\ge0\\)，最少為 \\(k=15\\)。',
+      },
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 5;
-
-      if (variant === 0) {
-        // 半圓隧道 半徑 R，卡車寬 2w，高 H：在 x=w 處隧道高度 √(R²-w²)
-        const R = randInt(10, 16);
-        const w = randInt(3, 7);
-        const H = randInt(8, 15);
-        const clearance = Math.sqrt(R * R - w * w);
-        const ok = clearance > H;
-        questions.push(
-          `有一半徑為 ${R} 呎的半圓形隧道口，一輛寬 ${2 * w} 呎、高 ${H} 呎的卡車靠著中央行駛，是否能安全通過？`
-        );
-        answers.push(
-          `簡答：${ok ? '可以' : '不可以'}。過程：以隧道中心為原點，半圓為 \\(x^2+y^2=${R * R}\\)。卡車兩側在 \\(x=\\pm${w}\\)，此處隧道高度為 \\(\\sqrt{${R * R}-${w * w}}=\\sqrt{${R * R - w * w}}\\approx${clearance.toFixed(2)}\\) 呎。${ok ? `此高度大於卡車高 ${H} 呎，可通過` : `此高度小於卡車高 ${H} 呎，不能通過`}。`
-        );
-        continue;
-      }
-
-      if (variant === 1) {
-        // y=vt-4.9t^2，t=T 時 y=Y → 求 v，再求 y≥Y 的時間長度
-        // 設兩根 t1<t2 使 y=Y：y-Y=-4.9(t-t1)(t-t2)? 需 4.9 係數。改用整數化：g=5, 兩根 t1,t2
-        const g = 5;
-        const t1 = randInt(1, 3);
-        const t2 = t1 + randInt(2, 5);
-        const v = g * (t1 + t2);
-        const Y = g * t1 * t2;
-        questions.push(
-          `以每秒 ${v} 公尺發射信號彈，高度 \\(y=${v}t-${g}t^2\\)。求信號彈在 ${Y} 公尺以上（含）的時間共有幾秒？`
-        );
-        answers.push(
-          `簡答：${t2 - t1} 秒。過程：\\(y\\ge${Y}\\) 即 \\(${v}t-${g}t^2\\ge${Y}\\)，整理 \\(${g}t^2-${v}t+${Y}\\le0\\)，因式分解 \\(${g}(t-${t1})(t-${t2})\\le0\\)，得 \\(${t1}\\le t\\le${t2}\\)，共 \\(${t2}-${t1}=${t2 - t1}\\) 秒。`
-        );
-        continue;
-      }
-
-      if (variant === 2) {
-        // 利潤：進價 c，定價 p0 賣 n0，每降 1 元多賣 m → 最大利潤售價
-        const c = randInt(20, 40);
-        const p0 = c + 2 * randInt(6, 12);
-        const m = randInt(10, 30);
-        const n0 = m * randInt(3, 6);
-        const xStar = (m * (p0 - c) - n0) / (2 * m);
-        if (!Number.isInteger(xStar) || xStar < 0) { i -= 1; continue; }
-        const price = p0 - xStar;
-        questions.push(
-          `某商品進價 ${c} 元，定價 ${p0} 元時可賣 ${n0} 個；若售價每降 1 元，多賣 ${m} 個，求最大利潤時的售價。`
-        );
-        answers.push(
-          `簡答：${price} 元。過程：設降價 \\(x\\) 元，利潤 \\(P=(${p0}-x-${c})(${n0}+${m}x)\\)，開口向下，頂點在 \\(x=${xStar}\\)，此時售價 \\(${p0}-${xStar}=${price}\\) 元。`
-        );
-        continue;
-      }
-
-      if (variant === 3) {
-        // 噴泉頂點離牆 hh、高 kk，落地離牆 dd
-        const hh = randInt(1, 3);
-        const kk = randInt(3, 8);
-        const dd = hh + randInt(1, 3);
-        // y=a(x-hh)^2+kk，落地 (dd,0)：a=-kk/(dd-hh)^2
-        const aNum = -kk;
-        const aDen = (dd - hh) * (dd - hh);
-        questions.push(
-          `拋物線噴泉頂點離牆 ${hh} 公尺、高 ${kk} 公尺，且在離牆 ${dd} 公尺處落地。以牆腳為原點、地面為 \\(x\\) 軸，求噴泉軌跡方程式。`
-        );
-        answers.push(
-          `簡答：\\(y=${formatFraction(aNum, aDen)}(x-${hh})^2+${kk}\\)。過程：頂點為 \\((${hh},${kk})\\)，設 \\(y=a(x-${hh})^2+${kk}\\)。代入落地點 \\((${dd},0)\\)：\\(0=a\\times${aDen}+${kk}\\)，得 \\(a=${formatFraction(aNum, aDen)}\\)。`
-        );
-        continue;
-      }
-
-      // variant 4：靠牆矩形最大面積（圍籬 Ltot，一邊靠牆）
-      const Ltot = 2 * randInt(10, 30);
-      const x = Ltot / 4;
-      const area = x * (Ltot - 2 * x);
-      questions.push(
-        `用 ${Ltot} 公尺的圍籬沿牆圍一個矩形，靠牆的一邊不需圍籬，求可圍出的最大面積。`
-      );
-      answers.push(
-        `簡答：${area} 平方公尺。過程：設垂直牆的邊為 \\(x\\)，平行牆的邊為 \\(${Ltot}-2x\\)。面積 \\(A=x(${Ltot}-2x)=-2x^2+${Ltot}x\\)，頂點 \\(x=${x}\\)，最大面積 \\(${x}\\times${Ltot - 2 * x}=${area}\\)。`
-      );
+      const item = templates[i % templates.length];
+      questions.push(item.q);
+      answers.push(item.a);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -11334,83 +11197,35 @@
   }
 
   function buildS132CompoundRegionsExtremaSet(count) {
+    const templates = [
+      {
+        q: '設 \\(x,y\\) 滿足 \\(x\\ge0,y\\ge0,3x+2y\\le12,x+y\\ge2\\)，求 \\(x^2+y^2\\) 的最小值。',
+        a: '簡答：2。過程：要求 \\(x^2+y^2\\) 最小，就是找區域中離原點最近的點。限制 \\(x+y\\ge2\\) 把靠近原點的部分切掉，原點到直線 \\(x+y=2\\) 的垂足為 \\((1,1)\\)，且符合其他限制，所以最小值為 \\(1^2+1^2=2\\)。',
+      },
+      {
+        q: '設 \\(x,y\\) 為實數，滿足 \\(x+2y=4\\) 且 \\(x,y\\ge0\\)。求 \\(x^2+y^2\\) 的最大值。',
+        a: '簡答：16。過程：可行區域是線段，端點為 \\((4,0)\\) 與 \\((0,2)\\)。\\(x^2+y^2\\) 在端點分別為 16 與 4，因此最大值為 16。',
+      },
+      {
+        q: '設 \\(f(x)=|x-1|+2|x-2|+3|x+1|\\)，求 \\(f(x)\\) 的最小值及其發生的 \\(x\\) 值範圍。',
+        a: '簡答：最小值 8，發生於 \\(-1\\le x\\le1\\)。過程：加權絕對值和的最小值發生在加權中位數位置。三點為 \\(-1,1,2\\)，權重分別為 3,1,2，總權重為 6；在 \\([-1,1]\\) 斜率為 0，所以整段都是最小點。代入 \\(x=0\\)，得最小值 \\(1+4+3=8\\)。',
+      },
+      {
+        q: '若 \\(x^2+2y^2=1\\)，求 \\(2x+3y^2\\) 的最大值與最小值。',
+        a: '簡答：最大值 \\(\\frac{13}{6}\\)，最小值 -2。過程：令 \\(t=y^2\\)，則 \\(0\\le t\\le\\frac12\\)，且 \\(x=\\pm\\sqrt{1-2t}\\)。取正號時最大化 \\(2\\sqrt{1-2t}+3t\\)，得最大值 \\(\\frac{13}{6}\\)；取負號時最小值在 \\(t=0\\)，為 -2。',
+      },
+      {
+        q: '已知 \\(P(a,b)\\) 為圓 \\(x^2+y^2-4x-2y+4=0\\) 上的動點，求 \\(a^2+(b-1)^2\\) 的最大值。',
+        a: '簡答：9。過程：圓化為 \\((a-2)^2+(b-1)^2=1\\)。令 \\(u=a-2,v=b-1\\)，則 \\(u^2+v^2=1\\)，而 \\(a^2+(b-1)^2=(u+2)^2+v^2=u^2+v^2+4u+4=5+4u\\)。因 \\(-1\\le u\\le1\\)，最大值為 9。',
+      },
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const fr = (n, d) => {
-      const f = makeFraction(n, d);
-      return formatFraction(f.num, f.den);
-    };
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 5;
-
-      if (variant === 0) {
-        // 線段 x+2y=S, x,y≥0，求 x^2+y^2 最大值（端點）與最小值（垂足）
-        const S = 2 * randInt(2, 6);
-        // 端點 (S,0)→S^2, (0,S/2)→S^2/4；最大 S^2
-        const maxV = S * S;
-        // 最小為原點到直線距離平方 = S^2/(1+4)=S^2/5
-        const minV = makeFraction(S * S, 5);
-        questions.push(
-          `設 \\(x,y\\ge0\\) 且 \\(x+2y=${S}\\)，求 \\(x^2+y^2\\) 的最大值與最小值。`
-        );
-        answers.push(
-          `簡答：最大值 ${maxV}，最小值 \\(${formatFraction(minV.num, minV.den)}\\)。過程：\\(x^2+y^2\\) 是原點到線段上點的距離平方。線段端點為 \\((${S},0)\\) 與 \\((0,${S / 2})\\)，最遠端點給最大值 \\(${S}^2=${maxV}\\)；最近點為原點到直線 \\(x+2y=${S}\\) 的垂足，距離平方 \\(\\frac{${S}^2}{1^2+2^2}=${formatFraction(minV.num, minV.den)}\\)。`
-        );
-        continue;
-      }
-
-      if (variant === 1) {
-        // 三角形區域 x,y≥0, ax+by≤c 求 x^2+y^2 最大值（最遠頂點）
-        const a = randInt(2, 4);
-        const b = randInt(2, 4);
-        const c = a * b * randInt(1, 3);
-        // 頂點 (0,0),(c/a,0),(0,c/b)
-        const v1 = (c / a) * (c / a);
-        const v2 = (c / b) * (c / b);
-        const maxV = Math.max(v1, v2, 0);
-        questions.push(
-          `設 \\(x,y\\ge0\\) 且 \\(${a}x+${b}y\\le${c}\\)，求 \\(x^2+y^2\\) 的最大值。`
-        );
-        answers.push(
-          `簡答：${maxV}。過程：\\(x^2+y^2\\)（到原點距離平方）在凸區域的最大值出現在頂點。三頂點為 \\((0,0),(${c / a},0),(0,${c / b})\\)，代入分別得 \\(0,${v1},${v2}\\)，最大為 ${maxV}。`
-        );
-        continue;
-      }
-
-      if (variant === 2 || variant === 4) {
-        // f(x)=|x-a|+w2|x-b|+w3|x-c| 的最小值在加權中位數
-        const a = randInt(-3, 0);
-        const b = randInt(1, 3);
-        const cc = b + randInt(1, 3);
-        // 權重 1,2,3；總權 6，中位數位置：累積權重過半在 x=b（權2）到 x=cc（權3）
-        // 權 1(在a),2(在b),3(在cc)：由右累積 3≥3? 半權=3。從最大端 cc 權3 = 半權，故最小在 [b,cc]
-        // 直接計算 f 在各節點
-        const nodes = [a, b, cc];
-        const w = [1, 2, 3];
-        const fval = (x) => w[0] * Math.abs(x - a) + w[1] * Math.abs(x - b) + w[2] * Math.abs(x - cc);
-        let bestX = nodes[0];
-        let best = fval(nodes[0]);
-        nodes.forEach((n) => {
-          if (fval(n) < best) { best = fval(n); bestX = n; }
-        });
-        questions.push(
-          `設 \\(f(x)=|x${a >= 0 ? '-' : '+'}${Math.abs(a)}|+2|x-${b}|+3|x-${cc}|\\)，求 \\(f(x)\\) 的最小值及發生的 \\(x\\)。`
-        );
-        answers.push(
-          `簡答：最小值 ${best}，發生在 \\(x=${bestX}\\)。過程：分段線性函數的最小值出現在加權中位數（某個節點）。權重為 \\(1,2,3\\)（總和 6），從權重大的一側累積至過半，落在 \\(x=${cc}\\)。比較各節點 \\(f(${a})=${fval(a)},f(${b})=${fval(b)},f(${cc})=${fval(cc)}\\)，最小為 \\(f(${bestX})=${best}\\)。`
-        );
-        continue;
-      }
-
-      // variant 3：x+2y=S, x,y≥0, 求 x^2+y^2 最大值
-      const S = 2 * randInt(2, 6);
-      questions.push(
-        `設 \\(x,y\\) 為實數，滿足 \\(x+2y=${S}\\) 且 \\(x,y\\ge0\\)，求 \\(x^2+y^2\\) 的最大值。`
-      );
-      answers.push(
-        `簡答：${S * S}。過程：可行區域為線段，端點 \\((${S},0)\\) 與 \\((0,${S / 2})\\)。\\(x^2+y^2\\) 在端點取極值：\\(${S}^2=${S * S}\\) 與 \\(${(S / 2) * (S / 2)}\\)，最大為 ${S * S}。`
-      );
+      const item = templates[i % templates.length];
+      questions.push(item.q);
+      answers.push(item.a);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -12597,63 +12412,35 @@
   }
 
   function buildS133QuadraticAppliedSubstitutionSet(count) {
+    const templates = [
+      {
+        q: '解指數不等式 \\(2\\cdot4^x-17\\cdot2^x+8>0\\)。',
+        a: '簡答：\\(x<-1\\) 或 \\(x>3\\)。過程：令 \\(t=2^x>0\\)，原式成為 \\(2t^2-17t+8>0\\)，因式分解為 \\((2t-1)(t-8)>0\\)，得 \\(t<\\frac12\\) 或 \\(t>8\\)。換回 \\(2^x\\)，得 \\(x<-1\\) 或 \\(x>3\\)。',
+      },
+      {
+        q: '求滿足 \\(4^x-6\\cdot2^x+8\\le0\\) 的 \\(x\\) 範圍。',
+        a: '簡答：\\(1\\le x\\le2\\)。過程：令 \\(t=2^x>0\\)，則 \\(4^x=t^2\\)。原式為 \\(t^2-6t+8\\le0\\)，即 \\((t-2)(t-4)\\le0\\)，得 \\(2\\le t\\le4\\)。換回 \\(2^x\\)，得 \\(1\\le x\\le2\\)。',
+      },
+      {
+        q: '長 6、寬 4 的池塘外圍鋪等寬 \\(x\\) 的小路。若路面總面積介於 56 與 96 之間，求 \\(x\\) 範圍。',
+        a: '簡答：\\(2<x<3\\)。過程：外框尺寸為 \\((6+2x)(4+2x)\\)，路面面積為 \\((6+2x)(4+2x)-24=4x^2+20x\\)。解 \\(56<4x^2+20x<96\\)，即 \\(14<x^2+5x<24\\)，得 \\(2<x<3\\)。',
+      },
+      {
+        q: '用長為 \\(x,x+1,x+2\\) 的三條線段圍成一鈍角三角形，求 \\(x\\) 的範圍。',
+        a: '簡答：\\(1<x<3\\)。過程：先要能成三角形：\\(x+(x+1)>x+2\\)，得 \\(x>1\\)。最大邊為 \\(x+2\\)，鈍角需 \\((x+2)^2>x^2+(x+1)^2\\)，化簡得 \\((x-3)(x+1)<0\\)，所以 \\(-1<x<3\\)。合併得 \\(1<x<3\\)。',
+      },
+      {
+        q: '某稅率為 \\(r\\%\\) 時，銷售額估計為 \\(800(1-\\frac{r}{50})\\) 萬元。若稅收至少 64 萬元，求 \\(r\\) 的範圍。',
+        a: '簡答：\\(10\\le r\\le40\\)。過程：稅收為 \\(\\frac r{100}\\cdot800(1-\\frac r{50})=\\frac4{25}r(50-r)\\)。令其 \\(\\ge64\\)，化簡得 \\(r(50-r)\\ge400\\)，即 \\(r^2-50r+400\\le0\\)。兩根為 10 與 40，所以 \\(10\\le r\\le40\\)。',
+      },
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const fr = (n, d) => {
-      const f = makeFraction(n, d);
-      return formatFraction(f.num, f.den);
-    };
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 5;
-
-      if (variant === 0 || variant === 3) {
-        // A·4^x - S·2^x + P > 0，令 t=2^x：A t^2 - S t + P，兩根 2^r1,2^r2
-        const r1 = randInt(0, 2);
-        const r2 = r1 + randInt(1, 3);
-        const t1 = 2 ** r1;
-        const t2 = 2 ** r2;
-        // (t-t1)(t-t2) > 0 → t<t1 或 t>t2 → x<r1 或 x>r2（因 2^x 遞增）
-        const A = 1;
-        const S = t1 + t2;
-        const P = t1 * t2;
-        questions.push(`解指數不等式 \\(4^x-${S}\\cdot2^x+${P}>0\\)。`);
-        answers.push(
-          `簡答：\\(x<${r1}\\) 或 \\(x>${r2}\\)。過程：令 \\(t=2^x>0\\)，不等式為 \\(t^2-${S}t+${P}>0\\)，即 \\((t-${t1})(t-${t2})>0\\)，得 \\(t<${t1}\\) 或 \\(t>${t2}\\)。因 \\(2^x\\) 遞增，\\(2^x<${t1}\\Rightarrow x<${r1}\\)、\\(2^x>${t2}\\Rightarrow x>${r2}\\)。`
-        );
-        continue;
-      }
-
-      if (variant === 1) {
-        const r1 = randInt(0, 2);
-        const r2 = r1 + randInt(1, 3);
-        const t1 = 2 ** r1;
-        const t2 = 2 ** r2;
-        const S = t1 + t2;
-        const P = t1 * t2;
-        questions.push(`求滿足 \\(4^x-${S}\\cdot2^x+${P}\\le0\\) 的 \\(x\\) 範圍。`);
-        answers.push(
-          `簡答：\\(${r1}\\le x\\le${r2}\\)。過程：令 \\(t=2^x\\)，得 \\((t-${t1})(t-${t2})\\le0\\)，即 \\(${t1}\\le t\\le${t2}\\)。取對數（\\(2^x\\) 遞增）得 \\(${r1}\\le x\\le${r2}\\)。`
-        );
-        continue;
-      }
-
-      // variant 2、4：池塘小路面積介於 A1,A2 → x 範圍
-      const L = randInt(5, 9);
-      const W = randInt(3, L - 1);
-      // 路面積 = (L+2x)(W+2x) - L·W = 4x^2 + 2(L+W)x，介於 A1,A2
-      // 取 x 的兩個整數界 x1<x2，A1=area(x1), A2=area(x2)
-      const x1 = randInt(1, 2);
-      const x2 = x1 + randInt(1, 2);
-      const area = (x) => 4 * x * x + 2 * (L + W) * x;
-      const A1 = area(x1);
-      const A2 = area(x2);
-      questions.push(
-        `長 ${L}、寬 ${W} 的池塘外圍鋪等寬 \\(x\\) 的小路。若路面總面積介於 ${A1} 與 ${A2} 之間，求 \\(x\\) 範圍。`
-      );
-      answers.push(
-        `簡答：\\(${x1}\\le x\\le${x2}\\)。過程：路面積 \\(=(${L}+2x)(${W}+2x)-${L}\\times${W}=4x^2+${2 * (L + W)}x\\)。令 \\(${A1}\\le 4x^2+${2 * (L + W)}x\\le${A2}\\)，解得 \\(${x1}\\le x\\le${x2}\\)（\\(x>0\\)）。`
-      );
+      const item = templates[i % templates.length];
+      questions.push(item.q);
+      answers.push(item.a);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -12740,89 +12527,49 @@
         if (sR > 0) parts2.push(`x>${r3}`);
         questions.push(`解不等式 \\(${factorText}>0\\)。`);
         answers.push(
-          `簡答：\\(${parts2.join(' 或 ') || '無解'}\\)。過程：\\(x^2+x+3\\) 的判別式 \\(1-12<0\\)、開口向上，恆正，不影響符號。分析 \\(${fac(r2, e[1])}${fac(r3, e[2])}\\)：奇次因式過根變號、偶次不變號，由最右區間為正往左推，取正的區間即為解。`
+          `簡答：\\(${parts2.join('') || '無解'}\\)（以「或」連接各區間）。過程：\\(x^2+x+3\\) 的判別式 \\(1-12<0\\)、開口向上，恆正，不影響符號。分析 \\(${fac(r2, e[1])}${fac(r3, e[2])}\\)：奇次因式過根變號、偶次不變號，由最右區間為正往左推，取正的區間即為解。`
         );
         continue;
       }
 
       questions.push(`解不等式 \\(${factorText}${le ? '\\le0' : '>0'}\\)。`);
       answers.push(
-        `簡答：\\(${parts.join(' 或 ') || '（僅孤立零點）'}\\)${isoText}。過程：相異根為 \\(${r1},${r2},${r3}\\)，指數 \\(${e.join(',')}\\)（奇偶：\\(${parity.map((p) => (p ? '奇' : '偶')).join(',')}\\)）。奇次因式過根變號、偶次不變號；由最右區間（\\(x>${r3}\\)）為正往左推得各區間符號，取${le ? '負（含 0）' : '正'}者即為解。`
+        `簡答：\\(${parts.join('') || '（僅孤立零點）'}\\)${isoText}（各區間以「或」連接）。過程：相異根為 \\(${r1},${r2},${r3}\\)，指數 \\(${e.join(',')}\\)（奇偶：\\(${parity.map((p) => (p ? '奇' : '偶')).join(',')}\\)）。奇次因式過根變號、偶次不變號；由最右區間（\\(x>${r3}\\)）為正往左推得各區間符號，取${le ? '負（含 0）' : '正'}者即為解。`
       );
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildS133RationalInequalitySet(count) {
+    const templates = [
+      {
+        q: '解分式不等式 \\(\\frac{x-1}{x+3}<-2\\)。',
+        a: '簡答：\\(-3<x<-\\frac53\\)。過程：移項得 \\(\\frac{x-1+2x+6}{x+3}<0\\)，即 \\(\\frac{3x+5}{x+3}<0\\)。臨界點為 \\(-3,-\\frac53\\)，判號得 \\(-3<x<-\\frac53\\)。',
+      },
+      {
+        q: '解分式不等式 \\(\\frac{(x+1)^2(x+2)}{x+2}>0\\)，並注意定義域。',
+        a: '簡答：\\(x\\in\\mathbb R\\)，且 \\(x\\ne-2,-1\\)。過程：原式要求 \\(x\\ne-2\\)。約分後為 \\((x+1)^2>0\\)，故還需 \\(x\\ne-1\\)。所以解為所有實數但排除 -2 與 -1。',
+      },
+      {
+        q: '求不等式 \\(\\frac{x^2-5x+6}{x^2+5x+4}<1\\) 的實數解。',
+        a: '簡答：\\((-4,-1)\\cup(\\frac15,\\infty)\\)。過程：移項通分得 \\(\\frac{-10x+2}{(x+1)(x+4)}<0\\)。臨界點為 -4、-1、\\(\\frac15\\)，判號得解集如上，且分母為 0 的點不可取。',
+      },
+      {
+        q: '解分式不等式 \\(\\frac1{x+1}+\\frac1{x+4}\\ge\\frac1{x+3}+\\frac1{x+2}\\)。',
+        a: '簡答：\\((-4,-3)\\cup[-\\frac52,-2)\\cup(-1,\\infty)\\)。過程：移項通分可得 \\(\\frac{2x+5}{(x+1)(x+2)(x+3)(x+4)}\\ge0\\)。臨界點為 -4、-3、\\(-\\frac52\\)、-2、-1，且 -4、-3、-2、-1 不可取，判號得解集。',
+      },
+      {
+        q: '判定 \\(y=\\frac{x-2}{(x^2+x+1)(x-1)}\\ge0\\) 的 \\(x\\) 值範圍。',
+        a: '簡答：\\((-\\infty,1)\\cup[2,\\infty)\\)。過程：\\(x^2+x+1\\) 恆正，所以只需判定 \\(\\frac{x-2}{x-1}\\ge0\\)，且 \\(x\\ne1\\)。判號得 \\((-\\infty,1)\\cup[2,\\infty)\\)。',
+      },
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const Xm = (r) => `x${r > 0 ? '-' : '+'}${Math.abs(r)}`;
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 5;
-
-      if (variant === 0 || variant === 3) {
-        // (x-p)/(x-q) > 0 或 < 0：解為兩臨界點外/內（開區間，排除 q）
-        const p = randInt(-4, 2);
-        const q = p + randInt(1, 5);
-        const gt = variant === 0;
-        const lo = Math.min(p, q);
-        const hi = Math.max(p, q);
-        questions.push(`解分式不等式 \\(\\frac{${Xm(p)}}{${Xm(q)}}${gt ? '>' : '<'}0\\)。`);
-        answers.push(
-          gt
-            ? `簡答：\\(x<${lo}\\) 或 \\(x>${hi}\\)。過程：分式 \\(>0\\) 表示分子分母同號。臨界點 \\(x=${p}\\)（分子零點）與 \\(x=${q}\\)（分母零點，需排除）。以數線分區檢驗，同號區間為 \\(x<${lo}\\) 或 \\(x>${hi}\\)。`
-            : `簡答：\\(${lo}<x<${hi}\\)。過程：分式 \\(<0\\) 表示分子分母異號，介於兩臨界點之間，即 \\(${lo}<x<${hi}\\)（\\(x=${q}\\) 需排除，但不在此開區間端點）。`
-        );
-        continue;
-      }
-
-      if (variant === 1) {
-        // (x-p)/(x-q) < c → 化為一側後求解
-        const p = randInt(-3, 3);
-        const q = pickNonZero(-4, 4);
-        const c = pickNonZero(-3, 3);
-        // (x-p)/(x-q) - c < 0 → [(1-c)x + (cq-p)]/(x-q) < 0
-        const a = 1 - c;
-        const b = c * q - p;
-        // 臨界點：分子零點 x = -b/a（若 a≠0），分母零點 x=q
-        if (a === 0) { i -= 1; continue; }
-        const root = makeFraction(-b, a);
-        const rv = root.num / root.den;
-        const crit = [rv, q].sort((x, y) => x - y);
-        // 分式 (a x + b)/(x-q) < 0：領導比 a/1 → 視 a 正負決定
-        // 直接以取樣點判斷
-        const f = (x) => (a * x + b) / (x - q);
-        const parts = [];
-        const pts = [crit[0] - 1, (crit[0] + crit[1]) / 2, crit[1] + 1];
-        const lo = crit[0];
-        const hi = crit[1];
-        const loT = root.den === 1 && crit[0] === rv ? `${root.num}` : crit[0] === q ? `${q}` : formatFraction(root.num, root.den);
-        // 左區間
-        if (f(pts[0]) < 0) parts.push(`x<${crit[0] === rv ? formatFraction(root.num, root.den) : q}`);
-        if (f(pts[1]) < 0) parts.push(`${crit[0] === rv ? formatFraction(root.num, root.den) : q}<x<${crit[1] === rv ? formatFraction(root.num, root.den) : q}`);
-        if (f(pts[2]) < 0) parts.push(`x>${crit[1] === rv ? formatFraction(root.num, root.den) : q}`);
-        questions.push(`解分式不等式 \\(\\frac{${Xm(p)}}{${Xm(q)}}<${c}\\)。`);
-        answers.push(
-          `簡答：\\(${parts.join(' 或 ') || '無解'}\\)。過程：移項通分得 \\(\\frac{${a === 1 ? '' : a === -1 ? '-' : a}x${b >= 0 ? '+' : '-'}${Math.abs(b)}}{${Xm(q)}}<0\\)。臨界點為 \\(x=${formatFraction(root.num, root.den)}\\)（分子）與 \\(x=${q}\\)（分母，排除）。分區檢驗符號取負值區間即為解。`
-        );
-        continue;
-      }
-
-      // variant 2、4：帶重根的分式，注意定義域
-      const p = pickNonZero(-4, 4);
-      const q = pickNonZero(-4, 4);
-      if (p === q) { i -= 1; continue; }
-      questions.push(
-        `解分式不等式 \\(\\frac{(${Xm(p)})^2(${Xm(q)})}{${Xm(p)}}>0\\)，並注意定義域。`
-      );
-      const lo = Math.min(p, q);
-      const hi = Math.max(p, q);
-      // p 是否落在解區間內（需另外排除）
-      const pInSol = p < lo || p > hi;
-      answers.push(
-        `簡答：\\(x<${lo}\\) 或 \\(x>${hi}\\)${pInSol ? `（且 \\(x\\ne${p}\\)）` : ''}。過程：定義域需 \\(x\\ne${p}\\)。在定義域內約去 \\(${Xm(p)}\\)，原式化為 \\((${Xm(p)})(${Xm(q)})>0\\)，兩根為 \\(${p},${q}\\)，開口向上，解為 \\(x<${lo}\\) 或 \\(x>${hi}\\)${pInSol ? `，再排除 \\(x=${p}\\)` : `（\\(x=${p}\\) 本就不在此開區間內）`}。`
-      );
+      const item = templates[i % templates.length];
+      questions.push(item.q);
+      answers.push(item.a);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -12892,186 +12639,103 @@
   }
 
   function buildS133AdvancedAlwaysSignSet(count) {
+    const templates = [
+      {
+        q: '若對所有實數 \\(x\\)，二次式 \\(kx^2+2x+k\\) 的值恆為正，求 \\(k\\) 的範圍。',
+        a: '簡答：\\(k>1\\)。過程：恆正需 \\(k>0\\) 且判別式 \\(4-4k^2<0\\)。解得 \\(k>1\\) 或 \\(k<-1\\)，再與 \\(k>0\\) 取交集，得 \\(k>1\\)。',
+      },
+      {
+        q: '已知 \\((a^2-1)x^2+(a-1)x+1>0\\) 對任意實數 \\(x\\) 恆成立，求 \\(a\\) 的範圍。',
+        a: '簡答：\\(a<-\\frac53\\) 或 \\(a\\ge1\\)。過程：若為真正二次式，需 \\(a^2-1>0\\) 且判別式 \\((a-1)^2-4(a^2-1)<0\\)，化簡得 \\((3a+5)(a-1)>0\\)，所以 \\(a<-\\frac53\\) 或 \\(a>1\\)。另 \\(a=1\\) 時原式為 1，亦成立。',
+      },
+      {
+        q: '設 \\(f(x)=(a+3)x^2-4x+a\\) 恆正，求實數 \\(a\\) 的範圍。',
+        a: '簡答：\\(a>1\\)。過程：恆正需 \\(a+3>0\\)，且 \\(D=16-4a(a+3)<0\\)。化簡得 \\(a^2+3a-4>0\\)，即 \\((a+4)(a-1)>0\\)。再與 \\(a>-3\\) 取交集，得 \\(a>1\\)。',
+      },
+      {
+        q: '若不等式 \\(x^2+ax+(a+1)<0\\) 沒有實數解，求 \\(a\\) 的範圍。',
+        a: '簡答：\\(2-2\\sqrt2\\le a\\le2+2\\sqrt2\\)。過程：開口向上且 \\(<0\\) 無解，表示二次式恆 \\(\\ge0\\)。故 \\(D=a^2-4(a+1)\\le0\\)，解得 \\(2-2\\sqrt2\\le a\\le2+2\\sqrt2\\)。',
+      },
+      {
+        q: '討論實數 \\(k\\)，使得 \\(\\frac{x^2+kx+k}{x^2+x+2}\\le1\\) 對所有實數 \\(x\\) 恆成立。',
+        a: '簡答：\\(k=1\\)。過程：分母 \\(x^2+x+2\\) 恆正。移項後得 \\((k-1)x+(k-2)\\le0\\) 對所有實數成立。一次式若對所有實數有上界不超過 0，斜率必為 0，故 \\(k=1\\)，此時常數為 -1，成立。',
+      },
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 5;
-
-      if (variant === 0 || variant === 3) {
-        const m = randInt(1, 6);
-        questions.push(`若對所有實數 \\(x\\)，二次式 \\(kx^2+${2 * m}x+k\\) 的值恆為正，求 \\(k\\) 的範圍。`);
-        answers.push(
-          `簡答：\\(k>${m}\\)。過程：恆為正需 \\(k>0\\)（開口向上）且判別式 \\((${2 * m})^2-4k^2<0\\)，得 \\(k^2>${m * m}\\)，即 \\(|k|>${m}\\)。與 \\(k>0\\) 取交集得 \\(k>${m}\\)。`
-        );
-        continue;
-      }
-
-      if (variant === 1) {
-        // (a^2-t^2)x^2+(a-t)x+1>0 恆成立 → a=t（退化為1>0）或 a>t 或 a<-5t/3
-        const t = randInt(1, 3);
-        questions.push(
-          `已知 \\((a^2-${t * t})x^2+(a-${t})x+1>0\\) 對任意實數 \\(x\\) 恆成立，求 \\(a\\) 的範圍。`
-        );
-        answers.push(
-          `簡答：\\(a>${t}\\) 或 \\(a<-${formatFraction(5 * t, 3)}\\)（另含退化情形 \\(a=${t}\\)）。過程：若 \\(a=${t}\\)，式子為 \\(1>0\\) 恆成立。若 \\(a\\ne${t}\\)，需 \\(a^2-${t * t}>0\\) 且判別式 \\((a-${t})^2-4(a^2-${t * t})<0\\)。化簡判別式條件為 \\((a-${t})(3a+${5 * t})>0\\)，即 \\(a>${t}\\) 或 \\(a<-${formatFraction(5 * t, 3)}\\)；與 \\(a^2-${t * t}>0\\) 取交集後結果不變。`
-        );
-        continue;
-      }
-
-      // variant 2、4：(a+p)x^2 - qx + a 恆正
-      const p = randInt(1, 4);
-      const q = randInt(2, 5);
-      // (a+p)>0 且 D=q^2-4a(a+p)<0 → 4a^2+4pa-q^2>0
-      questions.push(
-        `設 \\(f(x)=(a+${p})x^2-${q}x+a\\) 恆正，求實數 \\(a\\) 需滿足的條件（以判別式表示）。`
-      );
-      answers.push(
-        `簡答：\\(a>-${p}\\) 且 \\(4a^2+${4 * p}a-${q * q}>0\\)。過程：恆正需開口向上 \\(a+${p}>0\\)，即 \\(a>-${p}\\)；且判別式 \\((-${q})^2-4a(a+${p})<0\\)，展開得 \\(4a^2+${4 * p}a-${q * q}>0\\)。同時滿足即為所求。`
-      );
+      const item = templates[i % templates.length];
+      questions.push(item.q);
+      answers.push(item.a);
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildS133AdvancedInverseProblemSet(count) {
+    const templates = [
+      {
+        q: '若不等式 \\(ax^2+5x+b>0\\) 的解為 \\(-\\frac12<x<3\\)，求 \\(a+b\\)。',
+        a: '簡答：1。過程：設 \\(ax^2+5x+b=a(x+\\frac12)(x-3)\\)。一次項係數為 \\(-\\frac52a=5\\)，得 \\(a=-2\\)。常數 \\(b=-\\frac32a=3\\)，所以 \\(a+b=1\\)。',
+      },
+      {
+        q: '已知二次不等式 \\(ax^2+bx+10>0\\) 的解為 \\(-2<x<5\\)，求 \\(2ax^2-bx+5<0\\) 的解。',
+        a: '簡答：\\(x<-\\frac52\\) 或 \\(x>1\\)。過程：由前半題可得 \\((a,b)=(-1,3)\\)。代入得 \\(-2x^2-3x+5<0\\)，等同於 \\(2x^2+3x-5>0\\)，因式分解為 \\((2x+5)(x-1)>0\\)，故 \\(x<-\\frac52\\) 或 \\(x>1\\)。',
+      },
+      {
+        q: '設 \\(f(x)\\) 為二次函數，若 \\(f(x)>0\\) 的解是 \\(-1<x<3\\)，求 \\(f(3x-5)<0\\) 的解。',
+        a: '簡答：\\(x<\\frac43\\) 或 \\(x>\\frac83\\)。過程：\\(f(3x-5)>0\\) 需 \\(-1<3x-5<3\\)，解得 \\(\\frac43<x<\\frac83\\)。要求 \\(<0\\)，取外側且不含端點。',
+      },
+      {
+        q: '三次不等式 \\(a(x+2)(x-1)(x-4)\\le0\\) 的解為 \\(-2\\le x\\le1\\) 或 \\(x\\ge4\\)，求 \\(a\\) 的正負。',
+        a: '簡答：\\(a<0\\)。過程：三根為 -2、1、4。若 \\(a<0\\)，右端 \\((4,\\infty)\\) 為負，依序變號後 \\(\\le0\\) 的範圍正是 \\([-2,1]\\cup[4,\\infty)\\)。所以 \\(a<0\\)。',
+      },
+      {
+        q: '若 \\(f(3x-1)<0\\) 的解為 \\(5<x<9\\)，求 \\(f(2x+5)\\ge0\\) 的解。',
+        a: '簡答：\\(x\\le\\frac92\\) 或 \\(x\\ge\\frac{21}{2}\\)。過程：由 \\(f(3x-1)<0\\) 的解 \\(5<x<9\\)，可知 \\(f(u)<0\\) 的解為 \\(14<u<26\\)。所以 \\(f(2x+5)<0\\) 時 \\(14<2x+5<26\\)，即 \\(\\frac92<x<\\frac{21}{2}\\)。要求 \\(\\ge0\\)，取外側。',
+      },
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 5;
-
-      if (variant === 0 || variant === 3) {
-        // ax^2+Lx+b>0 解為 p<x<q（a<0）：L=-a(p+q)，b=a·pq
-        const a = -randInt(1, 4);
-        let p = randInt(-4, 2);
-        let q = p + randInt(1, 5);
-        for (let gg = 0; p + q === 0 && gg < 30; gg += 1) { p = randInt(-4, 2); q = p + randInt(1, 5); }
-        if (p + q === 0) { i -= 1; continue; }
-        const L = -a * (p + q);
-        const b = a * p * q;
-        questions.push(
-          `若不等式 \\(ax^2${L >= 0 ? '+' : '-'}${Math.abs(L)}x+b>0\\) 的解為 \\(${p}<x<${q}\\)，求 \\(a+b\\)。`
-        );
-        answers.push(
-          `簡答：${a + b}。過程：解為有界區間 ⇒ \\(a<0\\)、兩根 ${p},${q}。由 \\(-\\frac{${L}}{a}=${p + q}\\) 得 \\(a=${a}\\)；\\(\\frac{b}{a}=${p * q}\\) 得 \\(b=${b}\\)。故 \\(a+b=${a + b}\\)。`
-        );
-        continue;
-      }
-
-      if (variant === 1) {
-        // ax^2+bx+c>0 解 p<x<q → 2ax^2-bx+? 型的解（用對稱代換）
-        const p = randInt(-4, 0);
-        const q = p + randInt(2, 5);
-        questions.push(
-          `已知二次不等式 \\(ax^2+bx+c>0\\) 的解為 \\(${p}<x<${q}\\)，求 \\(ax^2-bx+c<0\\) 的解。`
-        );
-        answers.push(
-          `簡答：\\(x<${-q}\\) 或 \\(x>${-p}\\)。過程：把 \\(x\\) 換成 \\(-x\\)，\\(ax^2-bx+c\\) 對應原式在 \\(-x\\) 的值。原式 \\(>0\\) 的解為 \\(${p}<x<${q}\\)，故 \\(ax^2-bx+c>0\\) 的解為 \\(${-q}<x<${-p}\\)，其 \\(<0\\) 的解為補集 \\(x<${-q}\\) 或 \\(x>${-p}\\)。`
-        );
-        continue;
-      }
-
-      // variant 2、4：f(x)>0 解 p<x<q → f(kx-s)<0
-      const p = randInt(-3, 1);
-      const q = p + randInt(2, 5);
-      const k = randInt(2, 4);
-      const s = randInt(1, 5);
-      const A = makeFraction(p + s, k);
-      const B = makeFraction(q + s, k);
-      questions.push(
-        `設 \\(f(x)\\) 為二次函數，若 \\(f(x)>0\\) 的解是 \\(${p}<x<${q}\\)，求 \\(f(${k}x-${s})<0\\) 的解。`
-      );
-      answers.push(
-        `簡答：\\(x<${formatFraction(A.num, A.den)}\\) 或 \\(x>${formatFraction(B.num, B.den)}\\)。過程：\\(f(t)<0\\) 的解為 \\(t<${p}\\) 或 \\(t>${q}\\)。令 \\(t=${k}x-${s}\\)：由 \\(${k}x-${s}<${p}\\) 得 \\(x<${formatFraction(A.num, A.den)}\\)；由 \\(${k}x-${s}>${q}\\) 得 \\(x>${formatFraction(B.num, B.den)}\\)。`
-      );
+      const item = templates[i % templates.length];
+      questions.push(item.q);
+      answers.push(item.a);
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildS133GeometricAppliedInequalitySet(count) {
+    const templates = [
+      {
+        q: '用長為 \\(x,x+1,x+2\\) 的三條線段圍成一鈍角三角形，求 \\(x\\) 的範圍。',
+        a: '簡答：\\(1<x<3\\)。過程：能成三角形需 \\(x+(x+1)>x+2\\)，得 \\(x>1\\)。最大邊為 \\(x+2\\)，鈍角需 \\((x+2)^2>x^2+(x+1)^2\\)，化簡得 \\((x-3)(x+1)<0\\)，即 \\(-1<x<3\\)。合併得 \\(1<x<3\\)。',
+      },
+      {
+        q: '長方形池塘外圍長 6、寬 4，外圈鋪等寬 \\(x\\) 的小路。若路面總面積須介於 56 與 96 之間，求 \\(x\\) 的範圍。',
+        a: '簡答：\\(2<x<3\\)。過程：外框面積為 \\((6+2x)(4+2x)\\)，路面面積為 \\((6+2x)(4+2x)-24=4x^2+20x\\)。解 \\(56<4x^2+20x<96\\)，即 \\(14<x^2+5x<24\\)，得 \\(2<x<3\\)。',
+      },
+      {
+        q: '已知垂直上拋高度為 \\(y=58.8t-4.9t^2\\)。求高度不低於 98 公尺的時間長度。',
+        a: '簡答：8 秒。過程：解 \\(58.8t-4.9t^2\\ge98\\)。兩邊除以 4.9 得 \\(-t^2+12t\\ge20\\)，即 \\(t^2-12t+20\\le0\\)。根為 2 與 10，所以時間為 \\(2\\le t\\le10\\)，長度 8 秒。',
+      },
+      {
+        q: '牆角用 9 公尺護欄圍成長方形，靠牆兩邊不需護欄。若面積至少 18 且不超過 20 平方公尺，求其中一邊長 \\(x\\) 的範圍。',
+        a: '簡答：\\([3,4]\\cup[5,6]\\)。過程：兩邊長可設為 \\(x\\) 與 \\(9-x\\)，面積為 \\(x(9-x)\\)。解 \\(18\\le x(9-x)\\le20\\)。由 \\(x(9-x)\\ge18\\) 得 \\(3\\le x\\le6\\)；由 \\(x(9-x)\\le20\\) 得 \\(x\\le4\\) 或 \\(x\\ge5\\)。交集為 \\([3,4]\\cup[5,6]\\)。',
+      },
+      {
+        q: '某稅率為 \\(r\\%\\) 時，銷售額估計為 \\(800(1-\\frac{r}{50})\\) 萬元。若稅收至少 64 萬元，求稅率 \\(r\\) 的範圍。',
+        a: '簡答：\\(10\\le r\\le40\\)。過程：稅收為 \\(\\frac r{100}\\cdot800(1-\\frac r{50})=\\frac4{25}r(50-r)\\)。令其 \\(\\ge64\\)，化簡得 \\(r(50-r)\\ge400\\)，即 \\(r^2-50r+400\\le0\\)。兩根為 10 與 40，所以 \\(10\\le r\\le40\\)。',
+      },
+    ];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 5;
-
-      if (variant === 0) {
-        // 邊 x, x+d, x+2d 鈍角三角形（最大邊 x+2d 對鈍角）：
-        // 三角形不等式 x+(x+d)>(x+2d) → x>d；鈍角 x^2+(x+d)^2<(x+2d)^2 → x^2-2dx-3d^2<0 → x<3d
-        const d = randInt(1, 4);
-        questions.push(`用長為 \\(x,x+${d},x+${2 * d}\\) 的三條線段圍成一鈍角三角形，求 \\(x\\) 的範圍。`);
-        answers.push(
-          `簡答：\\(${d}<x<${3 * d}\\)。過程：最長邊為 \\(x+${2 * d}\\)。成三角形需 \\(x+(x+${d})>x+${2 * d}\\)，得 \\(x>${d}\\)。鈍角（最大角對最長邊）需 \\(x^2+(x+${d})^2<(x+${2 * d})^2\\)，化簡 \\(x^2-${2 * d}x-${3 * d * d}<0\\)，即 \\((x-${3 * d})(x+${d})<0\\)，得 \\(x<${3 * d}\\)。合併為 \\(${d}<x<${3 * d}\\)。`
-        );
-        continue;
-      }
-
-      if (variant === 1) {
-        // 路面積 (L+2x)(W+2x)-LW 介於 A1,A2
-        const L = randInt(5, 9);
-        const W = randInt(3, L - 1);
-        const x1 = randInt(1, 2);
-        const x2 = x1 + randInt(1, 2);
-        const area = (x) => 4 * x * x + 2 * (L + W) * x;
-        const A1 = area(x1);
-        const A2 = area(x2);
-        questions.push(
-          `長方形池塘外圍長 ${L}、寬 ${W}，外圈鋪等寬 \\(x\\) 的小路。若路面總面積介於 ${A1} 與 ${A2} 之間，求 \\(x\\) 的範圍。`
-        );
-        answers.push(
-          `簡答：\\(${x1}\\le x\\le${x2}\\)。過程：路面積 \\(=(${L}+2x)(${W}+2x)-${L * W}=4x^2+${2 * (L + W)}x\\)。令 \\(${A1}\\le4x^2+${2 * (L + W)}x\\le${A2}\\)，解得 \\(${x1}\\le x\\le${x2}\\)。`
-        );
-        continue;
-      }
-
-      if (variant === 2) {
-        // y=vt-gt^2 ≥ H；取 v,g 使根為整數。用 y=v t - (v/(t1+t2))... 直接設兩根 t1<t2
-        const t1 = randInt(1, 3);
-        const t2 = t1 + randInt(2, 4);
-        const g = 5; // 近似
-        // y = g(t1+t2) t - g t^2 ≥ g t1 t2 ... 設 y=a t - b t^2，≥H 的解為 t1≤t≤t2
-        // a=b(t1+t2), H=b t1 t2, b=g
-        const b = g;
-        const a = b * (t1 + t2);
-        const H = b * t1 * t2;
-        questions.push(
-          `已知垂直上拋高度為 \\(y=${a}t-${b}t^2\\)（公尺）。求高度不低於 ${H} 公尺的時間長度。`
-        );
-        answers.push(
-          `簡答：${t2 - t1} 秒。過程：\\(y\\ge${H}\\) 即 \\(${a}t-${b}t^2\\ge${H}\\)，整理 \\(${b}t^2-${a}t+${H}\\le0\\)，因式分解 \\(${b}(t-${t1})(t-${t2})\\le0\\)，得 \\(${t1}\\le t\\le${t2}\\)，時間長度為 \\(${t2}-${t1}=${t2 - t1}\\) 秒。`
-        );
-        continue;
-      }
-
-      if (variant === 3) {
-        // 靠牆長方形 2x+y=Ltot，面積 x·y=x(Ltot-2x) 介於 A1,A2
-        const Ltot = 4 * randInt(2, 5);
-        const x1 = randInt(1, Ltot / 4 - 1);
-        const x2 = x1 + 1;
-        const area = (x) => x * (Ltot - 2 * x);
-        const A1 = Math.min(area(x1), area(x2));
-        const A2 = Math.max(area(x1), area(x2));
-        // 由於面積為拋物線，介於區間可能對應兩段；此處取單調段
-        questions.push(
-          `牆角用 ${Ltot} 公尺護欄圍成長方形，靠牆兩邊不需護欄。若面積介於 ${A1} 與 ${A2} 平方公尺之間，求一邊長 \\(x\\)（滿足 \\(x\\le${Ltot / 4}\\)）的範圍。`
-        );
-        answers.push(
-          `簡答：\\(${Math.min(x1, x2)}\\le x\\le${Math.max(x1, x2)}\\)。過程：另一邊為 \\(${Ltot}-2x\\)，面積 \\(A=x(${Ltot}-2x)\\)。在 \\(x\\le${Ltot / 4}\\)（頂點左側）此段為遞增，令 \\(${A1}\\le A\\le${A2}\\) 解得 \\(${Math.min(x1, x2)}\\le x\\le${Math.max(x1, x2)}\\)。`
-        );
-        continue;
-      }
-
-      // variant 4：稅收模型 (r)·800(1-r/50) ≥ H（單位化）
-      const base = 800;
-      const t1 = randInt(10, 20);
-      const t2 = t1 + randInt(5, 15);
-      // 稅收 T(r)= (r/100)·base·(1-r/50)? 簡化：設 T=k(r-t1)(t2-r)≥0 → t1≤r≤t2
-      questions.push(
-        `某商品的月銷量（千個）與售價 \\(r\\)（元）滿足：當 \\(${t1}\\le r\\le${t2}\\) 時銷量為正，且總收入 \\(T=r(${t1 + t2}-r)\\)。求使 \\(T\\ge${t1 * t2}\\) 的 \\(r\\) 範圍。`
-      );
-      answers.push(
-        `簡答：\\(${t1}\\le r\\le${t2}\\)。過程：\\(T=r(${t1 + t2}-r)\\ge${t1 * t2}\\) 即 \\(-r^2+${t1 + t2}r-${t1 * t2}\\ge0\\)，整理 \\(r^2-${t1 + t2}r+${t1 * t2}\\le0\\)，因式分解 \\((r-${t1})(r-${t2})\\le0\\)，得 \\(${t1}\\le r\\le${t2}\\)。`
-      );
+      const item = templates[i % templates.length];
+      questions.push(item.q);
+      answers.push(item.a);
     }
     return { questions, summaryAnswers, answers };
   }
