@@ -1680,10 +1680,7 @@
           ['u', 'v', 'w'],
         ];
         const names = nameSets[randInt(0, nameSets.length - 1)];
-        const lin = (s) =>
-          names
-            .map((n, idx) => (s[idx] > 0 ? (idx === 0 ? n : `+${n}`) : `-${n}`))
-            .join('');
+        const lin = (s) => names.map((n, idx) => (s[idx] > 0 ? (idx === 0 ? n : `+${n}`) : `-${n}`)).join('');
         const quad = (s) => {
           const pairs = [
             [s[0] * s[1], `${names[0]}${names[1]}`],
@@ -1703,9 +1700,7 @@
             })
             .join('')
             .replace(/^\+/, '') || '0';
-        questions.push(
-          `設三角形三邊長為 \\(${names.join(',')}\\)，化簡 \\(|${lin(p)}|-\\sqrt{${quad(q)}}\\)。`
-        );
+        questions.push(`設三角形三邊長為 \\(${names.join(',')}\\)，化簡 \\(|${lin(p)}|-\\sqrt{${quad(q)}}\\)。`);
         answers.push(
           `簡答：\\(${diffText}\\)。過程：根號內 \\(${quad(q)}=(${lin(q)})^2\\)。由三角形兩邊和大於第三邊，\\(${lin(p)}>0\\) 且 \\(${lin(q)}>0\\)，所以原式 \\(=(${lin(p)})-(${lin(q)})=${diffText}\\)。`
         );
@@ -2603,9 +2598,7 @@
         );
       } else {
         // 底數大於 1 → 0<t<1 對應 x<0
-        questions.push(
-          `解不等式 \\(${base ** 2}^x+${cc === 1 ? '' : cc}\\cdot${base}^x-${dd}<0\\)。`
-        );
+        questions.push(`解不等式 \\(${base ** 2}^x+${cc === 1 ? '' : cc}\\cdot${base}^x-${dd}<0\\)。`);
         answers.push(
           `簡答：\\(x<0\\)。過程：令 \\(t=${base}^x>0\\)，則 \\(${base ** 2}^x=t^2\\)，不等式為 \\(t^2+${cc === 1 ? '' : cc}t-${dd}<0\\)，因式分解為 \\((t-1)(t+${dd})<0\\)，得 \\(0<t<1\\)。因為 \\(${base}>1\\)，所以 \\(x<0\\)。`
         );
@@ -3419,9 +3412,7 @@
         const m1 = randInt(2, 9);
         let n1 = randInt(2, 9);
         while (n1 === m1) n1 = randInt(2, 9);
-        questions.push(
-          `計算 \\(${aBase}^{\\log_{${aBase}}${m1}+\\log_{${aBase}}${n1}}\\) 的值。`
-        );
+        questions.push(`計算 \\(${aBase}^{\\log_{${aBase}}${m1}+\\log_{${aBase}}${n1}}\\) 的值。`);
         answers.push(
           `簡答：${m1 * n1}。過程：先合併指數 \\(\\log_{${aBase}}${m1}+\\log_{${aBase}}${n1}=\\log_{${aBase}}(${m1}\\times${n1})=\\log_{${aBase}}${m1 * n1}\\)。再由 \\(a^{\\log_a x}=x\\) 得 \\(${aBase}^{\\log_{${aBase}}${m1 * n1}}=${m1 * n1}\\)。`
         );
@@ -3886,8 +3877,7 @@
       const f = makeFraction(n, d);
       return formatFraction(f.num, f.den);
     };
-    const lineEq = (a, b, c) =>
-      `${s12VarTerm(a, 'x')}${b > 0 ? '+' : ''}${s12VarTerm(b, 'y')}=${c}`;
+    const lineEq = (a, b, c) => `${s12VarTerm(a, 'x')}${b > 0 ? '+' : ''}${s12VarTerm(b, 'y')}=${c}`;
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
 
@@ -3966,9 +3956,7 @@
       const py2 = randInt(-4, 5);
       const s = px2 + py2;
       const t = px2 - py2;
-      questions.push(
-        `若 \\(L_k:(x+y-${s})+k(x-y-${t})=0\\) 與 \\(x=${px2}\\)、\\(y=${py2}\\) 三線共點，求 \\(k\\)。`
-      );
+      questions.push(`若 \\(L_k:(x+y-${s})+k(x-y-${t})=0\\) 與 \\(x=${px2}\\)、\\(y=${py2}\\) 三線共點，求 \\(k\\)。`);
       answers.push(
         `簡答：任意實數 \\(k\\)。過程：\\(x=${px2}\\) 與 \\(y=${py2}\\) 交於 \\((${px2},${py2})\\)。代入 \\(L_k\\)：\\((${px2}+${py2}-${s})+k(${px2}-${py2}-${t})=0+0\\cdot k=0\\)，對任意 \\(k\\) 都成立，所以 \\(L_k\\) 恆過此定點。`
       );
@@ -4069,9 +4057,7 @@
       // variant 4：過第二象限定點的最小面積（AM-GM）
       const u = randInt(2, 6);
       const v = randInt(2, 6);
-      questions.push(
-        `設直線 \\(L\\) 過點 \\((-${u},${v})\\)，且與坐標軸在第二象限圍成三角形面積最小，求最小面積。`
-      );
+      questions.push(`設直線 \\(L\\) 過點 \\((-${u},${v})\\)，且與坐標軸在第二象限圍成三角形面積最小，求最小面積。`);
       answers.push(
         `簡答：${2 * u * v}。過程：設負 \\(x\\) 截距長為 \\(a\\)、正 \\(y\\) 截距長為 \\(b\\)，直線為 \\(-\\frac{x}{a}+\\frac{y}{b}=1\\)。代入 \\((-${u},${v})\\) 得 \\(\\frac{${u}}{a}+\\frac{${v}}{b}=1\\)。由 AM-GM，\\(1\\ge2\\sqrt{\\frac{${u * v}}{ab}}\\)，即 \\(ab\\ge${4 * u * v}\\)，等號在 \\(\\frac{${u}}{a}=\\frac{${v}}{b}=\\frac12\\)（即 \\(a=${2 * u},b=${2 * v}\\)）成立。最小面積為 \\(\\frac12ab=${2 * u * v}\\)。`
       );
@@ -4219,9 +4205,11 @@
         const oy = randInt(-4, 6);
         const idx = shuffle(ring.map((_, k) => k)).slice(0, 3);
         const P = idx.map((k) => [ox + ring[k][0], oy + ring[k][1]]);
-        const cross =
-          (P[1][0] - P[0][0]) * (P[2][1] - P[0][1]) - (P[1][1] - P[0][1]) * (P[2][0] - P[0][0]);
-        if (cross === 0) { i -= 1; continue; }
+        const cross = (P[1][0] - P[0][0]) * (P[2][1] - P[0][1]) - (P[1][1] - P[0][1]) * (P[2][0] - P[0][0]);
+        if (cross === 0) {
+          i -= 1;
+          continue;
+        }
         questions.push(
           `已知 \\(\\triangle ABC\\) 三頂點為 \\(A(${P[0]}),B(${P[1]}),C(${P[2]})\\)，求外心 \\(O\\) 坐標。`
         );
@@ -4235,9 +4223,11 @@
         // 由三頂點造三邊直線，再求重心
         const P = [];
         for (let t = 0; t < 3; t += 1) P.push([randInt(-5, 8), randInt(-5, 8)]);
-        const cross =
-          (P[1][0] - P[0][0]) * (P[2][1] - P[0][1]) - (P[1][1] - P[0][1]) * (P[2][0] - P[0][0]);
-        if (cross === 0) { i -= 1; continue; }
+        const cross = (P[1][0] - P[0][0]) * (P[2][1] - P[0][1]) - (P[1][1] - P[0][1]) * (P[2][0] - P[0][0]);
+        if (cross === 0) {
+          i -= 1;
+          continue;
+        }
         const lineOf = (A, B) => {
           const a = B[1] - A[1];
           const b = A[0] - B[0];
@@ -4277,7 +4267,10 @@
         const C = [A[0] + s2 * d2[0] * t2, A[1] - s2 * d2[1] * t2];
         const vx = u1[0] + u2[0];
         const vy = u1[1] + u2[1];
-        if (vx === 0 && vy === 0) { i -= 1; continue; }
+        if (vx === 0 && vy === 0) {
+          i -= 1;
+          continue;
+        }
         const den = d1[2] * d2[2];
         const nx = Math.round(vx * den);
         const ny = Math.round(vy * den);
@@ -4298,7 +4291,10 @@
       const b4 = randInt(4, 8);
       const c4 = randInt(5, 15);
       const L = Math.round(Math.sqrt(a4 * a4 + b4 * b4));
-      if (L * L !== a4 * a4 + b4 * b4) { i -= 1; continue; }
+      if (L * L !== a4 * a4 + b4 * b4) {
+        i -= 1;
+        continue;
+      }
       // 內心在 y=0 上，x 滿足 x = (c4-a4x)/L  => x = c4/(L+a4)
       const xin = makeFraction(c4, L + a4);
       questions.push(
@@ -4352,10 +4348,11 @@
           if (q === 0) continue;
           ok = true;
         }
-        if (!ok) { i -= 1; continue; }
-        questions.push(
-          `一直線過點 \\((${p},${q})\\)，且在兩軸上之截距乘積為 ${a * b}，求此直線方程式之一。`
-        );
+        if (!ok) {
+          i -= 1;
+          continue;
+        }
+        questions.push(`一直線過點 \\((${p},${q})\\)，且在兩軸上之截距乘積為 ${a * b}，求此直線方程式之一。`);
         answers.push(
           `簡答：\\(${s12LineText(b, a, -a * b)}\\)。過程：設截距式 \\(\\frac{x}{a}+\\frac{y}{b}=1\\) 且 \\(ab=${a * b}\\)。取 \\(a=${a},b=${b}\\)，代入 \\((${p},${q})\\) 驗證 \\(\\frac{${p}}{${a}}+\\frac{${q}}{${b}}=1\\) 成立，整理得 \\(${s12LineText(b, a, -a * b)}\\)。`
         );
@@ -4367,14 +4364,21 @@
         const a = randInt(2, 10);
         const b = randInt(2, 10);
         const p = randInt(1, a - 1);
-        if ((b * p) % a !== 0) { i -= 1; continue; }
+        if ((b * p) % a !== 0) {
+          i -= 1;
+          continue;
+        }
         const q = b - (b * p) / a;
-        if (q <= 0) { i -= 1; continue; }
+        if (q <= 0) {
+          i -= 1;
+          continue;
+        }
         const area = (a * b) / 2;
-        if (!Number.isInteger(area)) { i -= 1; continue; }
-        questions.push(
-          `直線通過 \\((${p},${q})\\)，且與兩坐標軸在第一象限圍成三角形面積為 ${area}，求其方程式。`
-        );
+        if (!Number.isInteger(area)) {
+          i -= 1;
+          continue;
+        }
+        questions.push(`直線通過 \\((${p},${q})\\)，且與兩坐標軸在第一象限圍成三角形面積為 ${area}，求其方程式。`);
         answers.push(
           `簡答：\\(${s12LineText(b, a, -a * b)}\\)。過程：設截距式 \\(\\frac{x}{a}+\\frac{y}{b}=1\\)（\\(a,b>0\\)），面積 \\(\\frac12ab=${area}\\) 得 \\(ab=${a * b}\\)。取 \\(a=${a},b=${b}\\) 並代入 \\((${p},${q})\\) 成立，整理得 \\(${s12LineText(b, a, -a * b)}\\)。`
         );
@@ -4389,10 +4393,11 @@
         const p = pickNonZero(-5, 5);
         const q = pickNonZero(-5, 5);
         const rhs = n * p + m * q;
-        if (rhs === 0) { i -= 1; continue; }
-        questions.push(
-          `求通過點 \\((${p},${q})\\)，且 \\(x\\) 截距與 \\(y\\) 截距之比為 \\(${m}:${n}\\) 的直線。`
-        );
+        if (rhs === 0) {
+          i -= 1;
+          continue;
+        }
+        questions.push(`求通過點 \\((${p},${q})\\)，且 \\(x\\) 截距與 \\(y\\) 截距之比為 \\(${m}:${n}\\) 的直線。`);
         answers.push(
           `簡答：\\(${s12LineText(n, m, -rhs)}\\)。過程：設 \\(x\\) 截距為 \\(${m}t\\)、\\(y\\) 截距為 \\(${n}t\\)，則 \\(\\frac{x}{${m}t}+\\frac{y}{${n}t}=1\\)，即 \\(${n}x+${m}y=${m * n}t\\)。代入 \\((${p},${q})\\) 得 \\(${m * n}t=${rhs}\\)，所以直線為 \\(${s12LineText(n, m, -rhs)}\\)。`
         );
@@ -4438,7 +4443,10 @@
         n0 = pickNonZero(1, 4);
         d0 = pickNonZero(1, 4);
       }
-      if (d0 + n0 === 0 || d0 - n0 === 0) { i -= 1; continue; }
+      if (d0 + n0 === 0 || d0 - n0 === 0) {
+        i -= 1;
+        continue;
+      }
       const [mA, mB] = two45(n0, d0);
       const slope0 = formatFraction(n0, d0);
 
@@ -4455,9 +4463,7 @@
       }
 
       if (variant === 1) {
-        questions.push(
-          `已知兩直線 \\(${s12LineText(n0, -d0, 0)}\\) 與 \\(${lineThrough(mA, 0, 0)}\\)，求其夾角。`
-        );
+        questions.push(`已知兩直線 \\(${s12LineText(n0, -d0, 0)}\\) 與 \\(${lineThrough(mA, 0, 0)}\\)，求其夾角。`);
         answers.push(
           `簡答：\\(45^\\circ\\)。過程：兩直線斜率分別為 \\(${slope0}\\) 與 \\(${fr(mA)}\\)。代入 \\(\\tan\\theta=\\left|\\frac{m_1-m_2}{1+m_1m_2}\\right|\\) 得 1，所以夾角為 \\(45^\\circ\\)。`
         );
@@ -4488,9 +4494,7 @@
 
       // variant 4：y=mx 與 y=kx+c 交角 45°，求 m
       const c4 = pickNonZero(1, 6);
-      questions.push(
-        `若直線 \\(y=mx\\) 與 \\(y=${slope0}x${s12Signed(c4)}\\) 的交角為 \\(45^\\circ\\)，求 \\(m\\)。`
-      );
+      questions.push(`若直線 \\(y=mx\\) 與 \\(y=${slope0}x${s12Signed(c4)}\\) 的交角為 \\(45^\\circ\\)，求 \\(m\\)。`);
       answers.push(
         `簡答：\\(m=${fr(mA)}\\) 或 \\(m=${fr(mB)}\\)。過程：由 \\(\\left|\\frac{m-${slope0}}{1+${slope0}m}\\right|=\\tan45^\\circ=1\\)，去絕對值得兩個方程，分別解得 \\(m=${fr(mA)}\\) 與 \\(m=${fr(mB)}\\)。`
       );
@@ -4537,9 +4541,7 @@
         const b = pickNonZero(-5, 5);
         const c = randInt(-8, 8);
         const hitX = fr(c, a);
-        questions.push(
-          `一道光線沿 \\(${s12LineText(a, b, -c)}\\) 射向 \\(x\\) 軸，求反射後光線的方程式。`
-        );
+        questions.push(`一道光線沿 \\(${s12LineText(a, b, -c)}\\) 射向 \\(x\\) 軸，求反射後光線的方程式。`);
         answers.push(
           `簡答：\\(${s12LineText(a, -b, -c)}\\)。過程：對 \\(x\\) 軸反射相當於把方程式中的 \\(y\\) 換成 \\(-y\\)，得 \\(${s12LineText(a, -b, -c)}\\)。（入射點為 \\((${hitX},0)\\)。）`
         );
@@ -4552,7 +4554,7 @@
         const a2 = randInt(1, 8);
         const b1 = randInt(1, 8);
         const b2 = randInt(1, 8);
-        const yr = fr(a2 * b1 + b2 * (-a1), -a1 + b1);
+        const yr = fr(a2 * b1 + b2 * -a1, -a1 + b1);
         questions.push(
           `光線從 \\(A(${a1},${a2})\\) 出發，先碰到 \\(y\\) 軸後反射並通過 \\(B(${b1},${b2})\\)，求反射點坐標。`
         );
@@ -4567,9 +4569,7 @@
       let b4 = pickNonZero(-5, 5);
       for (let g = 0; b4 === a4 && g < 40; g += 1) b4 = pickNonZero(-5, 5);
       const c4 = randInt(-9, 9);
-      questions.push(
-        `已知光線經 \\(y=x\\) 反射，入射光線為 \\(${s12LineText(a4, b4, -c4)}\\)，求反射光線的方程式。`
-      );
+      questions.push(`已知光線經 \\(y=x\\) 反射，入射光線為 \\(${s12LineText(a4, b4, -c4)}\\)，求反射光線的方程式。`);
       answers.push(
         `簡答：\\(${s12LineText(b4, a4, -c4)}\\)。過程：對 \\(y=x\\) 反射會交換 \\(x,y\\)。把原式中的 \\(x,y\\) 互換即得 \\(${s12LineText(b4, a4, -c4)}\\)。`
       );
@@ -4672,7 +4672,10 @@
       const variant = i % 5;
       let d = build();
       for (let g = 0; !d && g < 40; g += 1) d = build();
-      if (!d) { i -= 1; continue; }
+      if (!d) {
+        i -= 1;
+        continue;
+      }
       const { px, py, ax, ay, bx, by, lo, hi } = d;
 
       if (variant === 0) {
@@ -4695,7 +4698,10 @@
         const v2 = hi1.num / hi1.den;
         const L1 = v1 < v2 ? lo1 : hi1;
         const H1 = v1 < v2 ? hi1 : lo1;
-        if (ax === 0 || bx === 0 || v1 === v2) { i -= 1; continue; }
+        if (ax === 0 || bx === 0 || v1 === v2) {
+          i -= 1;
+          continue;
+        }
         answers.push(
           `簡答：\\(${fr(L1)}\\le m\\le${fr(H1)}\\)。過程：\\(L\\) 恆過 \\((0,${py})\\)。該點到 \\(A\\) 的斜率為 \\(${fr(lo1)}\\)，到 \\(B\\) 的斜率為 \\(${fr(hi1)}\\)。相交需斜率介於兩者之間。`
         );
@@ -4760,9 +4766,7 @@
         const v2 = m2.num / m2.den;
         const lo = v1 <= v2 ? m1 : m2;
         const hi = v1 <= v2 ? m2 : m1;
-        questions.push(
-          `已知 \\(A(${p},${q}),B(${r},${s})\\) 位於直線 \\(L:mx-y+${c}=0\\) 的異側，求 \\(m\\) 的範圍。`
-        );
+        questions.push(`已知 \\(A(${p},${q}),B(${r},${s})\\) 位於直線 \\(L:mx-y+${c}=0\\) 的異側，求 \\(m\\) 的範圍。`);
         answers.push(
           `簡答：\\(m<${formatFraction(lo.num, lo.den)}\\) 或 \\(m>${formatFraction(hi.num, hi.den)}\\)。過程：令 \\(f(x,y)=mx-y+${c}\\)，則 \\(f(A)=${p}m${s12Signed(c - q)}\\)、\\(f(B)=${r}m${s12Signed(c - s)}\\)。異側表示 \\(f(A)f(B)<0\\)；因 \\(x\\) 坐標 \\(${p}\\) 與 \\(${r}\\) 異號，\\(m^2\\) 係數為負，解為兩根之外，即 \\(m<${formatFraction(lo.num, lo.den)}\\) 或 \\(m>${formatFraction(hi.num, hi.den)}\\)。`
         );
@@ -4888,9 +4892,7 @@
         const Y = randInt(4, 9);
         const S = randInt(Math.max(2, Math.floor((X + Y) / 2)), X + Y);
         const n = countLattice((x, y) => x > 0 && x < X && y > 0 && y < Y && x + y <= S, 0, X, 0, Y);
-        questions.push(
-          `求滿足聯立不等式 \\(0<x<${X},\\ 0<y<${Y},\\ x+y\\leq${S}\\) 的區域內共有幾個格子點。`
-        );
+        questions.push(`求滿足聯立不等式 \\(0<x<${X},\\ 0<y<${Y},\\ x+y\\leq${S}\\) 的區域內共有幾個格子點。`);
         answers.push(
           `簡答：${n} 個。過程：\\(x\\) 只能取 \\(1\\) 到 \\(${X - 1}\\)。對每個 \\(x\\)，\\(y\\) 需同時滿足 \\(1\\le y\\le${Y - 1}\\) 與 \\(y\\le${S}-x\\)，逐一計數合計 ${n} 個。`
         );
@@ -4916,9 +4918,7 @@
         const b = randInt(1, 3);
         const C = p + b * q + randInt(4, 14);
         const n = countLattice((x, y) => x >= p && y >= q && x + b * y <= C, p, C, q, C);
-        questions.push(
-          `在 \\(x+${b}y\\leq${C},\\ x\\geq${p},\\ y\\geq${q}\\) 的區域內共有幾個格子點。`
-        );
+        questions.push(`在 \\(x+${b}y\\leq${C},\\ x\\geq${p},\\ y\\geq${q}\\) 的區域內共有幾個格子點。`);
         answers.push(
           `簡答：${n} 個。過程：\\(y\\) 由 ${q} 取到 \\(\\lfloor(${C}-${p})/${b}\\rfloor\\)。對每個 \\(y\\)，\\(x\\) 可取 \\(${p}\\) 到 \\(${C}-${b}y\\)，逐一累加得 ${n} 個。`
         );
@@ -4944,9 +4944,7 @@
       const M = randInt(1, 5);
       const K = randInt(4, 12);
       const n = countLattice((x, y) => x + 3 * y >= -K && x - y <= M && y <= N, -K - 10, K + 10, -K - 10, N);
-      questions.push(
-        `滿足 \\(x+3y\\geq-${K},\\ x-y\\leq${M},\\ y\\leq${N}\\) 的解區域中，求其格子點個數。`
-      );
+      questions.push(`滿足 \\(x+3y\\geq-${K},\\ x-y\\leq${M},\\ y\\leq${N}\\) 的解區域中，求其格子點個數。`);
       answers.push(
         `簡答：${n} 個。過程：由 \\(y\\le${N}\\) 與 \\(x+3y\\ge-${K}\\) 可定出 \\(y\\) 的下界，對每個 \\(y\\)，\\(x\\) 需滿足 \\(-${K}-3y\\le x\\le${M}+y\\)，逐一計數合計 ${n} 個。`
       );
@@ -5388,9 +5386,7 @@
         const c = k0 * k0 - k0 + (d * d) / 4;
         const other = 1 - k0;
         const roots = k0 === other ? `${k0}` : `${Math.min(k0, other)}` + ` 或 ` + `${Math.max(k0, other)}`;
-        questions.push(
-          `若 \\(x^2+y^2${s12Signed(d)}x-2ky+(k${s12Signed(c)})=0\\) 代表一個點，求 \\(k\\) 之值。`
-        );
+        questions.push(`若 \\(x^2+y^2${s12Signed(d)}x-2ky+(k${s12Signed(c)})=0\\) 代表一個點，求 \\(k\\) 之值。`);
         answers.push(
           `簡答：\\(k=${roots}\\)。過程：配方得 \\(r^2=\\frac{${d}^2}{4}+k^2-(k${s12Signed(c)})=k^2-k+${(d * d) / 4 - c}\\)。代表一點需 \\(r^2=0\\)，解 \\(k^2-k+${(d * d) / 4 - c}=0\\) 得 \\(k=${roots}\\)。`
         );
@@ -5425,7 +5421,10 @@
       const pick = shuffle(ring.map((_, k) => k)).slice(0, 2);
       const P1 = ring[pick[0]];
       const P2 = ring[pick[1]];
-      if (P1[0] === P2[0] && P1[1] === P2[1]) { i -= 1; continue; }
+      if (P1[0] === P2[0] && P1[1] === P2[1]) {
+        i -= 1;
+        continue;
+      }
       const la = P2[1] - P1[1];
       const lb = P1[0] - P2[0];
       const lc = la * P1[0] + lb * P1[1];
@@ -5471,9 +5470,7 @@
         const A = [hx - dx, hy - dy];
         const B = [hx + dx, hy + dy];
         const R = dx * dx + dy * dy;
-        questions.push(
-          `求以點 \\(A(${A})\\)、\\(B(${B})\\) 為直徑兩端點的圓方程式。`
-        );
+        questions.push(`求以點 \\(A(${A})\\)、\\(B(${B})\\) 為直徑兩端點的圓方程式。`);
         answers.push(
           `簡答：\\(${s12CircleStandard(hx, hy, R)}\\)。過程：圓心為 \\(AB\\) 中點 \\((${hx},${hy})\\)，半徑為 \\(\\frac12\\overline{AB}\\)，故 \\(r^2=\\left(\\frac{\\overline{AB}}2\\right)^2=${dx}^2+${dy}^2=${R}\\)。`
         );
@@ -5508,10 +5505,11 @@
         const idx = shuffle(ring.map((_, k) => k)).slice(0, 3);
         const P = idx.map((k) => [ox + ring[k][0], oy + ring[k][1]]);
         const cross = (P[1][0] - P[0][0]) * (P[2][1] - P[0][1]) - (P[1][1] - P[0][1]) * (P[2][0] - P[0][0]);
-        if (cross === 0) { i -= 1; continue; }
-        questions.push(
-          `求通過三點 \\(P(${P[0]})\\)、\\(Q(${P[1]})\\)、\\(R(${P[2]})\\) 的圓方程式。`
-        );
+        if (cross === 0) {
+          i -= 1;
+          continue;
+        }
+        questions.push(`求通過三點 \\(P(${P[0]})\\)、\\(Q(${P[1]})\\)、\\(R(${P[2]})\\) 的圓方程式。`);
         answers.push(
           `簡答：\\(${s12CircleStandard(ox, oy, r * r)}\\)。過程：設圓為 \\((x-h)^2+(y-k)^2=r^2\\)，代入三點解聯立（或求兩條弦的中垂線交點）得圓心 \\((${ox},${oy})\\)、半徑 ${r}。`
         );
@@ -5525,10 +5523,11 @@
         const oy = randInt(-4, 8);
         const idx = shuffle(ring.map((_, k) => k)).slice(0, 2);
         const P = idx.map((k) => [ring[k][0], oy + ring[k][1]]);
-        if (P[0][0] === P[1][0] && P[0][1] === P[1][1]) { i -= 1; continue; }
-        questions.push(
-          `圓心在 \\(y\\) 軸上，且通過兩點 \\((${P[0]})\\)、\\((${P[1]})\\)，求其方程式。`
-        );
+        if (P[0][0] === P[1][0] && P[0][1] === P[1][1]) {
+          i -= 1;
+          continue;
+        }
+        questions.push(`圓心在 \\(y\\) 軸上，且通過兩點 \\((${P[0]})\\)、\\((${P[1]})\\)，求其方程式。`);
         answers.push(
           `簡答：\\(${s12CircleStandard(0, oy, r * r)}\\)。過程：設圓心為 \\((0,k)\\)，由到兩點距離相等解得 \\(k=${oy}\\)，再代入任一點得 \\(r^2=${r * r}\\)。`
         );
@@ -5666,7 +5665,10 @@
       const variant = i % 5;
       let d = twoCircles();
       for (let g = 0; !d && g < 30; g += 1) d = twoCircles();
-      if (!d) { i -= 1; continue; }
+      if (!d) {
+        i -= 1;
+        continue;
+      }
       const { P1, P2, O1, O2, r1, r2, mx, my, chord2 } = d;
 
       if (variant === 0) {
@@ -5819,9 +5821,7 @@
       const lo = d4 - r4;
       const hi = d4 + r4;
       const cntInt = hi - lo + 1;
-      questions.push(
-        `原點到圓 \\(${s12CircleStandard(dx4, dy4, r4 * r4)}\\) 上各點的距離，可取到幾種整數值？`
-      );
+      questions.push(`原點到圓 \\(${s12CircleStandard(dx4, dy4, r4 * r4)}\\) 上各點的距離，可取到幾種整數值？`);
       answers.push(
         `簡答：${cntInt} 種。過程：圓心到原點的距離為 \\(\\sqrt{${dx4}^2+${dy4}^2}=${d4}\\)，半徑 ${r4}。距離的變化範圍為 \\([${lo},${hi}]\\)，其中整數有 \\(${lo},${lo + 1},\\ldots,${hi}\\)，共 ${cntInt} 種。`
       );
@@ -6102,11 +6102,12 @@
         const idx = shuffle(ring.map((_, k) => k)).slice(0, 3);
         const P = idx.map((k) => [ox + ring[k][0], oy + ring[k][1]]);
         const cross = (P[1][0] - P[0][0]) * (P[2][1] - P[0][1]) - (P[1][1] - P[0][1]) * (P[2][0] - P[0][0]);
-        if (cross === 0) { i -= 1; continue; }
+        if (cross === 0) {
+          i -= 1;
+          continue;
+        }
         if (variant === 0) {
-          questions.push(
-            `求以 \\(A(${P[0]})\\)、\\(B(${P[1]})\\)、\\(C(${P[2]})\\) 為三頂點之三角形的外接圓方程式。`
-          );
+          questions.push(`求以 \\(A(${P[0]})\\)、\\(B(${P[1]})\\)、\\(C(${P[2]})\\) 為三頂點之三角形的外接圓方程式。`);
           answers.push(
             `簡答：\\(${s12CircleStandard(ox, oy, r * r)}\\)。過程：設外接圓為 \\((x-h)^2+(y-k)^2=R\\)，代入三頂點解聯立（或取兩邊中垂線交點），得圓心 \\((${ox},${oy})\\)、半徑 ${r}。`
           );
@@ -6151,9 +6152,7 @@
       // variant 4：直角三角形 (0,0),(a,0),(0,b) 的內心 = (ρ,ρ)，ρ=(a+b-c)/2
       const [aLeg, bLeg, cHyp] = tri[randInt(0, tri.length - 1)];
       const rho = (aLeg + bLeg - cHyp) / 2;
-      questions.push(
-        `求以 \\((0,0)\\)、\\((${aLeg},0)\\)、\\((0,${bLeg})\\) 為頂點的三角形其內切圓圓心坐標與半徑。`
-      );
+      questions.push(`求以 \\((0,0)\\)、\\((${aLeg},0)\\)、\\((0,${bLeg})\\) 為頂點的三角形其內切圓圓心坐標與半徑。`);
       answers.push(
         `簡答：圓心 \\((${rho},${rho})\\)，半徑 ${rho}。過程：這是直角三角形，兩股長 ${aLeg}、${bLeg}，斜邊 ${cHyp}。內切圓半徑 \\(\\rho=\\frac{${aLeg}+${bLeg}-${cHyp}}{2}=${rho}\\)，且內心到兩股距離皆為 \\(\\rho\\)，故圓心為 \\((${rho},${rho})\\)。`
       );
@@ -6180,9 +6179,7 @@
         // x²+y²=p²+1，斜率 -p → y=-px±(p²+1)
         const p = randInt(1, 5);
         const R = p * p + 1;
-        questions.push(
-          `求斜率為 \\(-${p}\\) 且與圓 \\(x^2+y^2=${R}\\) 相切的兩條直線方程式。`
-        );
+        questions.push(`求斜率為 \\(-${p}\\) 且與圓 \\(x^2+y^2=${R}\\) 相切的兩條直線方程式。`);
         answers.push(
           `簡答：\\(${s12LineText(p, 1, -R)}\\) 或 \\(${s12LineText(p, 1, R)}\\)。過程：設切線為 \\(y=-${p}x+c\\)，即 \\(${p}x+y-c=0\\)。圓心為原點、半徑 \\(\\sqrt{${R}}\\)，由 \\(\\frac{|c|}{\\sqrt{${p}^2+1}}=\\sqrt{${R}}\\) 得 \\(|c|=${R}\\)，所以 \\(c=\\pm${R}\\)。`
         );
@@ -6215,9 +6212,7 @@
         const R = (m * m + 1) * t * t;
         const base = k - m * h;
         const off = t * (m * m + 1);
-        questions.push(
-          `已知圓 \\(${s12CircleStandard(h, k, R)}\\)，求斜率為 ${m} 的切線方程式。`
-        );
+        questions.push(`已知圓 \\(${s12CircleStandard(h, k, R)}\\)，求斜率為 ${m} 的切線方程式。`);
         answers.push(
           `簡答：\\(${s12LineText(m, -1, base + off)}\\) 或 \\(${s12LineText(m, -1, base - off)}\\)。過程：設切線為 \\(y=${m}x+c\\)，即 \\(${m}x-y+c=0\\)。由圓心 \\((${h},${k})\\) 到直線距離等於半徑 \\(\\sqrt{${R}}\\)，得 \\(\\frac{|${m * h - k}+c|}{\\sqrt{${m * m + 1}}}=\\sqrt{${R}}\\)，解得 \\(c=${base + off}\\) 或 \\(${base - off}\\)。`
         );
@@ -6226,9 +6221,7 @@
 
       // variant 4：y=mx+c 與 x²+y²=r² 相切 → m=±b/a（畢氏 a²+b²=c²）
       const [a4, b4, c4] = tri[randInt(0, tri.length - 1)];
-      questions.push(
-        `設直線 \\(y=mx+${c4}\\) 與圓 \\(x^2+y^2=${a4 * a4}\\) 相切，求實數 \\(m\\) 之值。`
-      );
+      questions.push(`設直線 \\(y=mx+${c4}\\) 與圓 \\(x^2+y^2=${a4 * a4}\\) 相切，求實數 \\(m\\) 之值。`);
       answers.push(
         `簡答：\\(m=${formatFraction(b4, a4)}\\) 或 \\(m=${formatFraction(-b4, a4)}\\)。過程：由圓心到直線 \\(mx-y+${c4}=0\\) 的距離等於半徑，\\(\\frac{${c4}}{\\sqrt{m^2+1}}=${a4}\\)，得 \\(m^2+1=\\frac{${c4 * c4}}{${a4 * a4}}\\)，所以 \\(m^2=\\frac{${b4 * b4}}{${a4 * a4}}\\)，\\(m=\\pm${formatFraction(b4, a4)}\\)。`
       );
@@ -6287,9 +6280,7 @@
         const x0 = h + a1;
         const y0 = k + b1;
         const len2 = c1 * c1 - r * r;
-        questions.push(
-          `自點 \\(P(${x0},${y0})\\) 向圓 \\(${s12CircleStandard(h, k, r * r)}\\) 作切線，求其切線長。`
-        );
+        questions.push(`自點 \\(P(${x0},${y0})\\) 向圓 \\(${s12CircleStandard(h, k, r * r)}\\) 作切線，求其切線長。`);
         answers.push(
           `簡答：\\(${formatRadical(len2)}\\)。過程：圓心 \\((${h},${k})\\)、半徑 ${r}。\\(\\overline{PC}=\\sqrt{${a1}^2+${b1}^2}=${c1}\\)，切線長 \\(=\\sqrt{\\overline{PC}^2-r^2}=\\sqrt{${c1 * c1}-${r * r}}=${formatRadical(len2)}\\)。`
         );
@@ -6306,9 +6297,7 @@
         const x0 = h + dx;
         const y0 = k + dy;
         const len2 = d2 - r * r;
-        questions.push(
-          `求過點 \\(A(${x0},${y0})\\) 且與圓 \\(${s12CircleStandard(h, k, r * r)}\\) 相切的切線長。`
-        );
+        questions.push(`求過點 \\(A(${x0},${y0})\\) 且與圓 \\(${s12CircleStandard(h, k, r * r)}\\) 相切的切線長。`);
         answers.push(
           `簡答：\\(${formatRadical(len2)}\\)。過程：圓心 \\((${h},${k})\\)、半徑 ${r}。\\(\\overline{AC}^2=(${dx})^2+(${dy})^2=${d2}\\)，切線長 \\(=\\sqrt{${d2}-${r * r}}=${formatRadical(len2)}\\)。`
         );
@@ -6485,9 +6474,7 @@
         dd = px * px + py * py;
       } while (dd === 0 || dd >= R);
       const minLen2 = 4 * (R - dd);
-      questions.push(
-        `圓 \\(x^2+y^2=${R}\\) 與過點 \\((${px},${py})\\) 之直線相交，求其弦長之最大值與最小值。`
-      );
+      questions.push(`圓 \\(x^2+y^2=${R}\\) 與過點 \\((${px},${py})\\) 之直線相交，求其弦長之最大值與最小值。`);
       answers.push(
         `簡答：最大值 ${2 * Math.round(Math.sqrt(R))}，最小值 \\(${formatRadical(minLen2)}\\)。過程：圓心為原點、半徑 ${Math.round(Math.sqrt(R))}。過圓內點的直線中，通過圓心時弦長最大即直徑 ${2 * Math.round(Math.sqrt(R))}；當弦垂直於該點與圓心連線時圓心到弦距離最大為 \\(\\sqrt{${dd}}\\)，弦長最小為 \\(2\\sqrt{${R}-${dd}}=${formatRadical(minLen2)}\\)。`
       );
@@ -6516,7 +6503,10 @@
       const variant = i % 5;
       let d = build();
       for (let g = 0; !d && g < 30; g += 1) d = build();
-      if (!d) { i -= 1; continue; }
+      if (!d) {
+        i -= 1;
+        continue;
+      }
       const { h, k, ax, ay, R, mx, my, lr2 } = d;
 
       if (variant === 0) {
@@ -6560,9 +6550,7 @@
       }
 
       // variant 4：軌跡圖形的面積
-      questions.push(
-        `求圓 \\(${s12CircleStandard(h, k, R)}\\) 內，過點 \\((${ax},${ay})\\) 之弦中點所成圖形的面積。`
-      );
+      questions.push(`求圓 \\(${s12CircleStandard(h, k, R)}\\) 內，過點 \\((${ax},${ay})\\) 之弦中點所成圖形的面積。`);
       answers.push(
         `簡答：\\(${lr2}\\pi\\)。過程：軌跡為以 \\(\\overline{CA}\\) 為直徑的圓，半徑平方為 \\(\\left(\\frac{\\overline{CA}}2\\right)^2=${lr2}\\)，故面積為 \\(${lr2}\\pi\\)。`
       );
@@ -6593,9 +6581,7 @@
 
       if (variant === 1) {
         const R = [4, 9, 16, 25, 36][randInt(0, 4)];
-        questions.push(
-          `若圓 \\(x^2+y^2=${R}\\) 的兩條互相垂直的切線交於點 \\(P(x,y)\\)，求點 \\(P\\) 的軌跡方程式。`
-        );
+        questions.push(`若圓 \\(x^2+y^2=${R}\\) 的兩條互相垂直的切線交於點 \\(P(x,y)\\)，求點 \\(P\\) 的軌跡方程式。`);
         answers.push(
           `簡答：\\(x^2+y^2=${2 * R}\\)。過程：設圓心 \\(O\\)、切點 \\(T\\)。由 \\(OT\\perp PT\\) 且兩切線互相垂直，得 \\(OP=\\sqrt2 r\\)，故 \\(OP^2=2r^2=${2 * R}\\)，軌跡為 \\(x^2+y^2=${2 * R}\\)。`
         );
@@ -6615,9 +6601,7 @@
 
       if (variant === 3) {
         const R = [5, 7, 10, 13, 18][randInt(0, 4)];
-        questions.push(
-          `設點 \\(P(a,b)\\) 到圓 \\(x^2+y^2=${R}\\) 的兩切線互相垂直，求 \\(a^2+b^2\\) 之值。`
-        );
+        questions.push(`設點 \\(P(a,b)\\) 到圓 \\(x^2+y^2=${R}\\) 的兩切線互相垂直，求 \\(a^2+b^2\\) 之值。`);
         answers.push(
           `簡答：${2 * R}。過程：圓心為原點、半徑平方為 ${R}。垂直切線交點滿足 \\(OP^2=2r^2=${2 * R}\\)，所以 \\(a^2+b^2=${2 * R}\\)。`
         );
@@ -6627,9 +6611,7 @@
       const h = randInt(-3, 4);
       const k = randInt(-3, 4);
       const R = [5, 8, 10, 13, 18, 20][randInt(0, 5)];
-      questions.push(
-        `給定圓 \\(${s12CircleGeneral(h, k, R)}\\)，求其垂直切線交點所成圓形圖形的面積。`
-      );
+      questions.push(`給定圓 \\(${s12CircleGeneral(h, k, R)}\\)，求其垂直切線交點所成圓形圖形的面積。`);
       answers.push(
         `簡答：\\(${2 * R}\\pi\\)。過程：原圓配方為 \\(${s12CircleStandard(h, k, R)}\\)，半徑平方為 ${R}。垂直切線交點軌跡的半徑平方為 \\(2r^2=${2 * R}\\)，所以面積為 \\(${2 * R}\\pi\\)。`
       );
@@ -6667,7 +6649,10 @@
       const variant = i % 5;
       const d = twoCircles();
       const { P1, P2, O1, O2, r1, r2, mx, my, chord2 } = d;
-      if (r1 <= 0 || r2 <= 0) { i -= 1; continue; }
+      if (r1 <= 0 || r2 <= 0) {
+        i -= 1;
+        continue;
+      }
 
       if (variant === 0) {
         questions.push(
@@ -6766,9 +6751,7 @@
           x0 = pickNonZero(-6, 6);
           y0 = randInt(-6, 6);
         } while (x0 * x0 + y0 * y0 <= R);
-        questions.push(
-          `已知圓 \\(C:x^2+y^2=${R}\\)，求點 \\(P(${x0},${y0})\\) 對於該圓的極線（切點弦）方程式。`
-        );
+        questions.push(`已知圓 \\(C:x^2+y^2=${R}\\)，求點 \\(P(${x0},${y0})\\) 對於該圓的極線（切點弦）方程式。`);
         answers.push(
           `簡答：\\(${s12LineText(x0, y0, -R)}\\)。過程：對圓 \\(x^2+y^2=r^2\\)，點 \\((x_0,y_0)\\) 的極線為 \\(xx_0+yy_0=r^2\\)。代入得 \\(${s12VarTerm(x0, 'x')}${y0 > 0 ? '+' : ''}${s12VarTerm(y0, 'y')}=${R}\\)。`
         );
@@ -6856,7 +6839,7 @@
           `在 \\((0,${sy})\\) 處有一光源，將圓 \\(${s12CircleGeneral(0, k, r * r)}\\) 投射到 \\(x\\) 軸上，求影長。`
         );
         answers.push(
-          `簡答：${shadow}。過程：圓心 \\((0,${k})\\)、半徑 ${r}，光源到圓心距離 \\(D=${sy}-${k}=${D}\\)，切線長 \\(t=\\sqrt{${D}^2-${r}^2}=${t}\\)。由對稱性，影長 \\(=\\frac{2\\cdot${sy}\\cdot${r}}{${t}}=${shadow}\\)。`
+          `簡答：$${shadow}$。過程：圓心 \\((0,${k})\\)、半徑 ${r}，光源到圓心距離 \\(D=${sy}-${k}=${D}\\)，切線長 \\(t=\\sqrt{${D}^2-${r}^2}=${t}\\)。由對稱性，影長 \\(=\\frac{2\\cdot${sy}\\cdot${r}}{${t}}=${shadow}\\)。`
         );
         continue;
       }
@@ -6866,7 +6849,7 @@
           `坐標平面上 \\((0,${sy})\\) 處有一光源，將圓 \\(${s12CircleStandard(0, k, r * r)}\\) 投射在直線 \\(y=0\\) 上，求陰影長度。`
         );
         answers.push(
-          `簡答：${shadow}。過程：兩條切線關於 \\(y\\) 軸對稱。光源到圓心距離為 ${D}，切線長 \\(t=${t}\\)。以相似三角形可得影長 \\(=\\frac{2\\cdot${sy}\\cdot${r}}{${t}}=${shadow}\\)。`
+          `簡答：$${shadow}$。過程：兩條切線關於 \\(y\\) 軸對稱。光源到圓心距離為 ${D}，切線長 \\(t=${t}\\)。以相似三角形可得影長 \\(=\\frac{2\\cdot${sy}\\cdot${r}}{${t}}=${shadow}\\)。`
         );
         continue;
       }
@@ -6876,7 +6859,7 @@
           `光源在 \\((0,${sy})\\)，半徑 ${r} 的圓形物體圓心在 \\((0,${k})\\)。求它在 \\(x\\) 軸上投影的陰影寬度。`
         );
         answers.push(
-          `簡答：${shadow}。過程：由光源作兩條切線，切線長 \\(t=\\sqrt{${D}^2-${r}^2}=${t}\\)。影子兩端為切線與 \\(x\\) 軸的交點，寬度為 \\(\\frac{2\\cdot${sy}\\cdot${r}}{${t}}=${shadow}\\)。`
+          `簡答：$${shadow}$。過程：由光源作兩條切線，切線長 \\(t=\\sqrt{${D}^2-${r}^2}=${t}\\)。影子兩端為切線與 \\(x\\) 軸的交點，寬度為 \\(\\frac{2\\cdot${sy}\\cdot${r}}{${t}}=${shadow}\\)。`
         );
         continue;
       }
@@ -6886,7 +6869,7 @@
           `已知光源在 \\((0,${sy})\\)，圓 \\(${s12CircleStandard(0, k, r * r)}\\) 在 \\(x\\) 軸的影子以原點為中心對稱，求影子右端點的坐標。`
         );
         answers.push(
-          `簡答：\\((${formatFraction(f.num, 2 * f.den)},0)\\)。過程：影長為 ${shadow}，且影子關於 \\(y\\) 軸對稱，故右端點的 \\(x\\) 坐標為影長的一半，即 \\(${formatFraction(f.num, 2 * f.den)}\\)。`
+          `簡答：\\((${formatFraction(f.num, 2 * f.den)},0)\\)。過程：影長為 $${shadow}$，且影子關於 \\(y\\) 軸對稱，故右端點的 \\(x\\) 坐標為影長的一半，即 \\(${formatFraction(f.num, 2 * f.den)}\\)。`
         );
         continue;
       }
@@ -6895,7 +6878,7 @@
         `一個半徑 ${r} 的圓形物體，圓心在 \\((0,${k})\\)，光源置於其正上方 \\((0,${sy})\\)。求地面（\\(x\\) 軸）上陰影的長度。`
       );
       answers.push(
-        `簡答：${shadow}。過程：光源到圓心距離 \\(D=${D}\\)，切線長 \\(t=\\sqrt{${D * D}-${r * r}}=${t}\\)。由相似三角形，影長 \\(=\\frac{2\\cdot${sy}\\cdot${r}}{${t}}=${shadow}\\)。`
+        `簡答：$${shadow}$。過程：光源到圓心距離 \\(D=${D}\\)，切線長 \\(t=\\sqrt{${D * D}-${r * r}}=${t}\\)。由相似三角形，影長 \\(=\\frac{2\\cdot${sy}\\cdot${r}}{${t}}=${shadow}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7058,7 +7041,10 @@
           powVal = (ax0 - h3) ** 2 + (ay0 - k3) ** 2 - R3;
           if (powVal > 0) break;
         }
-        if (powVal <= 0) { i -= 1; continue; }
+        if (powVal <= 0) {
+          i -= 1;
+          continue;
+        }
         const dd0 = -2 * h3;
         const ee0 = -2 * k3;
         const ff0 = h3 * h3 + k3 * k3 - R3;
@@ -7251,7 +7237,10 @@
       const variant = i % 5;
       const d = twoCircles();
       const { P1, P2, O1, O2, r1, r2, mx, my, chord2 } = d;
-      if (r1 <= 0 || r2 <= 0) { i -= 1; continue; }
+      if (r1 <= 0 || r2 <= 0) {
+        i -= 1;
+        continue;
+      }
       const half = chord2 / 4;
 
       if (variant === 0 || variant === 3) {
@@ -7962,9 +7951,7 @@
         const q = randInt(-5, 6);
         const a = p;
         const b = -p;
-        questions.push(
-          `若 \\((a+b)x^3+(${p}-a)x^2+(a-b)x+${q}\\) 為一次式，求數對 \\((a,b)\\)。`
-        );
+        questions.push(`若 \\((a+b)x^3+(${p}-a)x^2+(a-b)x+${q}\\) 為一次式，求數對 \\((a,b)\\)。`);
         answers.push(
           `簡答：\\((a,b)=(${a},${b})\\)。過程：一次式表示三次項與二次項係數皆為 0，故 \\(a+b=0\\)、\\(${p}-a=0\\)，解得 \\(a=${a},b=${b}\\)；此時一次項係數 \\(a-b=${a - b}\\neq0\\)。`
         );
@@ -7979,9 +7966,7 @@
         const c = randInt(-5, 6);
         const quad = s131PolyMul([1, -r1], [1, -r2]).map((z) => z * a);
         const g = s131PolyAdd(s131PolyAdd(quad, [b, -b * r2]), [c]);
-        questions.push(
-          `設 \\(f(x)=a(x-${r1})(x-${r2})+b(x-${r2})+c\\) 與 \\(g(x)=${P(g)}\\) 恆相等，求 \\(a,b,c\\)。`
-        );
+        questions.push(`設 \\(f(x)=a(x-${r1})(x-${r2})+b(x-${r2})+c\\) 與 \\(g(x)=${P(g)}\\) 恆相等，求 \\(a,b,c\\)。`);
         answers.push(
           `簡答：\\(a=${a},b=${b},c=${c}\\)。過程：展開 \\(f(x)\\) 後與 \\(${P(g)}\\) 比較係數，由 \\(x^2\\) 係數得 \\(a=${a}\\)，由 \\(x\\) 係數得 \\(b=${b}\\)，再由常數項得 \\(c=${c}\\)。`
         );
@@ -8036,9 +8021,7 @@
       const den = P([1, p2, q2]);
       const ATerm = A === 1 ? 'x^2' : A === -1 ? '-x^2' : `${A}x^2`;
       const hPart = h === 0 ? '' : `${h >= 0 ? '+' : ''}${h}x`;
-      questions.push(
-        `已知 \\(\\dfrac{${ATerm}+hx+k}{${den}}\\) 之值恆為定值 \\(t\\)，求 \\(h,k,t\\)。`
-      );
+      questions.push(`已知 \\(\\dfrac{${ATerm}+hx+k}{${den}}\\) 之值恆為定值 \\(t\\)，求 \\(h,k,t\\)。`);
       answers.push(
         `簡答：\\(h=${h},k=${k},t=${t}\\)。過程：分式恆為定值 \\(t\\) 表示分子恆等於 \\(t(${den})\\)。比較二次項係數得 \\(t=${A}\\)，故分子為 \\(${ATerm}${hPart}${k >= 0 ? '+' : ''}${k}\\)，即 \\(h=${h},k=${k}\\)。`
       );
@@ -8069,9 +8052,7 @@
         // 可能 (m,n)：其中一個為 sum、另一個為 prod-sum，且需 prod-sum ≤ sum
         const other = prod - sum;
         const opts = other <= sum ? [other, sum] : [];
-        questions.push(
-          `已知 \\(\\deg(f(x)g(x))=${prod}\\)、\\(\\deg(f(x)+g(x))=${sum}\\)，求 \\(f(x)\\) 可能的次數。`
-        );
+        questions.push(`已知 \\(\\deg(f(x)g(x))=${prod}\\)、\\(\\deg(f(x)+g(x))=${sum}\\)，求 \\(f(x)\\) 可能的次數。`);
         answers.push(
           opts.length
             ? `簡答：${opts[0]} 或 ${opts[1]}。過程：設 \\(\\deg f=m,\\deg g=n\\)，則 \\(m+n=${prod}\\)。又和的次數 ${sum} 表示 \\(\\max(m,n)=${sum}\\)（因兩者次數不同，較大者主導），故 \\(\\{m,n\\}=\\{${sum},${other}\\}\\)，\\(f\\) 可能為 ${opts[0]} 或 ${opts[1]} 次。`
@@ -8100,9 +8081,7 @@
         const a = randInt(2, 4);
         const b = 2;
         const deg = a + b * m;
-        questions.push(
-          `若 \\(f(x)\\) 為 ${m} 次式，求 \\((x^${a}-3)f(x^${b}-1)\\) 的次數。`
-        );
+        questions.push(`若 \\(f(x)\\) 為 ${m} 次式，求 \\((x^${a}-3)f(x^${b}-1)\\) 的次數。`);
         answers.push(
           `簡答：${deg} 次。過程：\\(f(x)\\) 為 ${m} 次，代入 \\(x^${b}-1\\) 後，最高次來自 \\((x^${b})^${m}=x^{${b * m}}\\)，故 \\(f(x^${b}-1)\\) 為 ${b * m} 次。再乘 \\(x^${a}-3\\)（${a} 次），總次數為 \\(${a}+${b * m}=${deg}\\)。`
         );
@@ -8112,9 +8091,7 @@
       // variant 4：多項式的合成次數
       const m = randInt(2, 5);
       const n = randInt(2, 4);
-      questions.push(
-        `設 \\(\\deg f(x)=${m}\\)、\\(\\deg g(x)=${n}\\)，求 \\(\\deg f(g(x))\\)。`
-      );
+      questions.push(`設 \\(\\deg f(x)=${m}\\)、\\(\\deg g(x)=${n}\\)，求 \\(\\deg f(g(x))\\)。`);
       answers.push(
         `簡答：${m * n} 次。過程：合成函數 \\(f(g(x))\\) 的次數為 \\(\\deg f\\times\\deg g=${m}\\times${n}=${m * n}\\)（把 \\(g(x)\\) 的最高次項代入 \\(f\\) 的最高次項）。`
       );
@@ -8575,9 +8552,7 @@
         questions.push(
           `求 \\((${formatPolynomialFromCoeffs(p1)})(${formatPolynomialFromCoeffs(p2)})\\) 展開後所有項係數總和。`
         );
-        answers.push(
-          `簡答：${v1 * v2}。過程：係數總和等於代入 \\(x=1\\)，得 \\((${v1})\\times(${v2})=${v1 * v2}\\)。`
-        );
+        answers.push(`簡答：${v1 * v2}。過程：係數總和等於代入 \\(x=1\\)，得 \\((${v1})\\times(${v2})=${v1 * v2}\\)。`);
         continue;
       }
 
@@ -8670,9 +8645,7 @@
         const k = randInt(2, 4);
         const n = randInt(20, 200);
         const rem = n % 2 === 0 ? 1 : -1;
-        questions.push(
-          `求 \\((${k}x+1)^{${n}}\\) 除以 \\(${k}x+2\\) 的餘式。`
-        );
+        questions.push(`求 \\((${k}x+1)^{${n}}\\) 除以 \\(${k}x+2\\) 的餘式。`);
         answers.push(
           `簡答：${rem}。過程：除以 \\(${k}x+2\\) 時代入根 \\(x=-\\frac{2}{${k}}\\)，此時 \\(${k}x+1=${k}\\times(-\\frac{2}{${k}})+1=-1\\)，故餘式為 \\((-1)^{${n}}=${rem}\\)（次數 ${n} 為${n % 2 === 0 ? '偶' : '奇'}數）。`
         );
@@ -8704,11 +8677,11 @@
       },
       {
         q: '求 \\(x^{2000}-3x^{90}+5x^{18}-7\\) 除以 \\((x^3-1)\\) 的餘式。',
-        a: '簡答：\\(x^2-5\\)。過程：在模 \\(x^3-1\\) 下，\\(x^3\\equiv1\\)。因為 \\(2000\\equiv2\\pmod3\\)，\\(90,18\\) 都是 3 的倍數，所以餘式為 \\(x^2-3+5-7=x^2-5\\)。',
+        a: '簡答：\\(x^2-5\\)。過程：在模 \\(x^3-1\\) 下，\\(x^3\\equiv 1\\)。因為 \\(2000\\equiv 2\\pmod3\\)，\\(90,18\\) 都是 3 的倍數，所以餘式為 \\(x^2-3+5-7=x^2-5\\)。',
       },
       {
         q: '計算 \\(13^{10}-13^4+1\\) 除以 \\((13^2-13+1)\\) 的餘數。',
-        a: '簡答：1。過程：令 \\(t=13\\)，由 \\(t^2-t+1=0\\) 得 \\(t^3\\equiv-1\\)、\\(t^6\\equiv1\\)。所以 \\(t^{10}=t^6t^4\\equiv t^4\\)，原式 \\(t^{10}-t^4+1\\equiv1\\)。因此餘數為 1。',
+        a: '簡答：1。過程：令 \\(t=13\\)，由 \\(t^2-t+1=0\\) 得 \\(t^3\\equiv -1\\)、\\(t^6\\equiv 1\\)。所以 \\(t^{10}=t^6t^4\\equiv t^4\\)，原式 \\(t^{10}-t^4+1\\equiv 1\\)。因此餘數為 1。',
       },
       {
         q: '求 \\(x^{100}+1\\) 除以 \\((x-1)^2\\) 的餘式。',
@@ -8716,7 +8689,7 @@
       },
       {
         q: '已知 \\(f(x)=x^{32}-3x^{24}+3x^{14}-2\\)，求其除以 \\((x^2+x+1)\\) 的餘式。',
-        a: '簡答：\\(-4x-9\\)。過程：在模 \\(x^2+x+1\\) 下，\\(x^3\\equiv1\\)。所以 \\(x^{32}\\equiv x^2\\)、\\(x^{24}\\equiv1\\)、\\(x^{14}\\equiv x^2\\)。原式餘式為 \\(x^2-3+3x^2-2=4x^2-5\\)。再用 \\(x^2\\equiv-x-1\\)，得 \\(-4x-9\\)。',
+        a: '簡答：\\(-4x-9\\)。過程：在模 \\(x^2+x+1\\) 下，\\(x^3\\equiv 1\\)。所以 \\(x^{32}\\equiv \\, x^2\\)、\\(x^{24}\\equiv1\\)、\\(x^{14}\\equiv \\, x^2\\)。原式餘式為 \\(x^2-3+3x^2-2=4x^2-5\\)。再用 \\(x^2\\equiv -x-1\\)，得 \\(-4x-9\\)。',
       },
       {
         q: '求 \\(x^{12}\\) 除以 \\((x+1)^2\\) 的餘式，並以此計算 \\(9^{12}\\) 除以 100 的餘數。',
@@ -8724,15 +8697,15 @@
       },
       {
         q: '證明 \\(8^{20}-5^{20}\\) 是 3 的倍數。',
-        a: '簡答：是 3 的倍數。過程：因為 \\(8\\equiv5\\equiv2\\pmod3\\)，所以 \\(8^{20}-5^{20}\\equiv2^{20}-2^{20}\\equiv0\\pmod3\\)。',
+        a: '簡答：是 3 的倍數。過程：因為 \\(8\\equiv 5\\equiv 2\\pmod3\\)，所以 \\(8^{20}-5^{20}\\equiv 2^{20}-2^{20}\\equiv 0\\pmod3\\)。',
       },
       {
         q: '計算 \\(13^{10}-13^4+1\\) 除以 \\(13^2-13+1\\) 的餘數。',
-        a: '簡答：1。過程：令 \\(t=13\\)。在模 \\(t^2-t+1\\) 下，\\(t^3\\equiv-1\\)，所以 \\(t^6\\equiv1\\)。因此 \\(t^{10}\\equiv t^4\\)，原式 \\(t^{10}-t^4+1\\equiv1\\)。',
+        a: '簡答：1。過程：令 \\(t=13\\)。在模 \\(t^2-t+1\\) 下，\\(t^3\\equiv -1\\)，所以 \\(t^6\\equiv 1\\)。因此 \\(t^{10}\\equiv t^4\\)，原式 \\(t^{10}-t^4+1\\equiv 1\\)。',
       },
       {
         q: '利用除法原理求 \\(23756108^{12}\\) 除以 \\(101\\) 的餘數。',
-        a: '簡答：1。過程：先把底數化小，\\(23756108\\equiv-1\\pmod{101}\\)。因此 \\(23756108^{12}\\equiv(-1)^{12}=1\\pmod{101}\\)，餘數為 1。',
+        a: '簡答：1。過程：先把底數化小，\\(23756108\\equiv -1\\pmod{101}\\)。因此 \\(23756108^{12}\\equiv (-1)^{12}=1\\pmod{101}\\)，餘數為 1。',
       },
     ];
     const start = randInt(0, templates.length - 1);
@@ -8806,7 +8779,7 @@
         `簡答：\\(${L(ra, rb)}\\)。過程：由 \\(${Dtext}=0\\) 的根滿足 \\(x^2${useMinus ? '=x-1' : '=-x-1'}\\)（週期性），可將每個 \\(x^{n}\\) 化簡為一次式：${terms
           .map(([co, e]) => {
             const [xa, xb] = s131XnMod2(e, B, C);
-            return `\\(x^{${e}}\\equiv${L(xa, xb)}\\)`;
+            return `\\(x^{${e}}\\equiv ${L(xa, xb)}\\)`;
           })
           .join('、')}。線性組合後得餘式 \\(${L(ra, rb)}\\)。`
       );
@@ -8881,8 +8854,8 @@
       const a0 = randInt(0, 1) === 0 ? 1 : -1;
       const n = randInt(8, 200);
       const cc = randInt(-5, 6);
-      const an = a0 === 1 ? 1 : (n % 2 === 0 ? 1 : -1);
-      const an1 = a0 === 1 ? 1 : ((n - 1) % 2 === 0 ? 1 : -1);
+      const an = a0 === 1 ? 1 : n % 2 === 0 ? 1 : -1;
+      const an1 = a0 === 1 ? 1 : (n - 1) % 2 === 0 ? 1 : -1;
       const fa = an + cc;
       const dfa = n * an1;
       const ra = dfa;
@@ -9017,13 +8990,13 @@
         const a = pickNonZero(-4, 4);
         const b = randInt(-5, 5);
         // (x+p)(ax+b) = a x^2 + (b+ap) x + bp ; x^2 ≡ -x-1
-        const rx = (b + a * p) - a;
+        const rx = b + a * p - a;
         const rc = b * p - a;
         questions.push(
           `設 \\((x${p > 0 ? '+' : '-'}${Math.abs(p)})f(x)\\) 除以 \\(x^2+x+1\\) 的餘式為 \\(${L(rx, rc)}\\)，求 \\(f(x)\\) 除以 \\(x^2+x+1\\) 的餘式。`
         );
         answers.push(
-          `簡答：\\(${L(a, b)}\\)。過程：設 \\(f\\) 的餘式為 \\(ax+b\\)。在模 \\(x^2+x+1\\)（即 \\(x^2\\equiv-x-1\\)）下計算 \\((x${p > 0 ? '+' : '-'}${Math.abs(p)})(ax+b)\\)，與已知餘式 \\(${L(rx, rc)}\\) 比較係數，解得 \\(a=${a},b=${b}\\)。`
+          `簡答：\\(${L(a, b)}\\)。過程：設 \\(f\\) 的餘式為 \\(ax+b\\)。在模 \\(x^2+x+1\\)（即 \\(x^2\\equiv -x-1\\)）下計算 \\((x${p > 0 ? '+' : '-'}${Math.abs(p)})(ax+b)\\)，與已知餘式 \\(${L(rx, rc)}\\) 比較係數，解得 \\(a=${a},b=${b}\\)。`
         );
         continue;
       }
@@ -9093,7 +9066,7 @@
           `已知 \\(f(x)\\) 除以 \\(${Dtext(B, C)}\\) 餘 \\(${L(a1, b1)}\\)，\\(g(x)\\) 除以同一除式餘 \\(${L(a2, b2)}\\)，求 \\(f(x)g(x)\\) 的餘式。`
         );
         answers.push(
-          `簡答：\\(${L(rx, rc)}\\)。過程：\\(fg\\) 的餘式等於兩餘式相乘後再除以 \\(${Dtext(B, C)}\\) 的餘式。先乘開：\\((${L(a1, b1)})(${L(a2, b2)})=${hi}x^2${mid >= 0 ? '+' : ''}${mid}x${lo >= 0 ? '+' : ''}${lo}\\)。由除式得 \\(x^2\\equiv${L(-B, -C)}\\)，代入化簡得 \\(${L(rx, rc)}\\)。`
+          `簡答：\\(${L(rx, rc)}\\)。過程：\\(fg\\) 的餘式等於兩餘式相乘後再除以 \\(${Dtext(B, C)}\\) 的餘式。先乘開：\\((${L(a1, b1)})(${L(a2, b2)})=${hi}x^2${mid >= 0 ? '+' : ''}${mid}x${lo >= 0 ? '+' : ''}${lo}\\)。由除式得 \\(x^2\\equiv ${L(-B, -C)}\\)，代入化簡得 \\(${L(rx, rc)}\\)。`
         );
         continue;
       }
@@ -9113,9 +9086,7 @@
 
       // variant 4：常數倍
       const k = pickNonZero(-5, 5);
-      questions.push(
-        `已知 \\(f(x)\\) 被 \\(g(x)\\) 除餘 \\(r(x)\\)，求 \\(${k}f(x)\\) 被 \\(g(x)\\) 除的餘式。`
-      );
+      questions.push(`已知 \\(f(x)\\) 被 \\(g(x)\\) 除餘 \\(r(x)\\)，求 \\(${k}f(x)\\) 被 \\(g(x)\\) 除的餘式。`);
       answers.push(
         `簡答：\\(${k}r(x)\\)。過程：由 \\(f=gq+r\\) 得 \\(${k}f=g(${k}q)+${k}r\\)。因 \\(\\deg(${k}r)=\\deg r<\\deg g\\)，所以餘式為 \\(${k}r(x)\\)。`
       );
@@ -9188,9 +9159,7 @@
         const rb = randInt(-6, 6);
         const u = ra + rb;
         const v = -ra + rb;
-        questions.push(
-          `若 \\(f(1)=${u},f(-1)=${v}\\)，求 \\(f(x)\\) 除以 \\(x^2-1\\) 的餘式。`
-        );
+        questions.push(`若 \\(f(1)=${u},f(-1)=${v}\\)，求 \\(f(x)\\) 除以 \\(x^2-1\\) 的餘式。`);
         answers.push(
           `簡答：\\(${L(ra, rb)}\\)。過程：餘式設為 \\(ax+b\\)。由 \\(f(1)=a+b=${u}\\)、\\(f(-1)=-a+b=${v}\\)，相加得 \\(b=${rb}\\)，相減得 \\(a=${ra}\\)。`
         );
@@ -9245,7 +9214,7 @@
           `已知 \\(${mulText}f(x)\\) 除以 \\(${formatPolynomialFromCoeffs([1, B, C])}\\) 的餘式為 \\(${L(rx, rc)}\\)，求 \\(f(x)\\) 除以同一除式的餘式。`
         );
         answers.push(
-          `簡答：\\(${L(a, b)}\\)。過程：設 \\(f\\) 的餘式為 \\(ax+b\\)。由除式得 \\(x^2\\equiv${L(-B, -C)}\\)。計算 \\(${mulText}(ax+b)\\) 並化簡，與已知餘式 \\(${L(rx, rc)}\\) 比較係數，解得 \\(a=${a},b=${b}\\)，故 \\(f\\) 的餘式為 \\(${L(a, b)}\\)。`
+          `簡答：\\(${L(a, b)}\\)。過程：設 \\(f\\) 的餘式為 \\(ax+b\\)。由除式得 \\(x^2\\equiv ${L(-B, -C)}\\)。計算 \\(${mulText}(ax+b)\\) 並化簡，與已知餘式 \\(${L(rx, rc)}\\) 比較係數，解得 \\(a=${a},b=${b}\\)，故 \\(f\\) 的餘式為 \\(${L(a, b)}\\)。`
         );
         continue;
       }
@@ -9288,7 +9257,10 @@
       const dd = pickNonZero(-6, 6);
       // 根 x = -dd/cc；代入 f(aa·x+bb)
       const inner = makeFraction(aa * -dd + bb * cc, cc);
-      if (inner.den !== 1) { i -= 1; continue; }
+      if (inner.den !== 1) {
+        i -= 1;
+        continue;
+      }
       const val = s131PolyEval(co, inner.num);
       questions.push(
         `設 \\(f(x)=${formatPolynomialFromCoeffs(co)}\\)，求 \\(f(${aa}x${bb >= 0 ? '+' : ''}${bb})\\) 除以 \\(${cc}x${dd >= 0 ? '+' : ''}${dd}\\) 的餘式。`
@@ -9329,8 +9301,8 @@
       const a0 = randInt(0, 1) === 0 ? 1 : -1;
       const n = randInt(8, 200);
       const cc = randInt(-5, 6);
-      const an = a0 === 1 ? 1 : (n % 2 === 0 ? 1 : -1);
-      const an1 = a0 === 1 ? 1 : ((n - 1) % 2 === 0 ? 1 : -1);
+      const an = a0 === 1 ? 1 : n % 2 === 0 ? 1 : -1;
+      const an1 = a0 === 1 ? 1 : (n - 1) % 2 === 0 ? 1 : -1;
       const fa = an + cc;
       const dfa = n * an1;
       const ra = dfa;
@@ -9379,7 +9351,7 @@
         const rem = formatPolynomialFromCoeffs(r);
         questions.push(`求 \\(${dividendText(terms)}\\) 除以 \\(x^3-1\\) 的餘式。`);
         answers.push(
-          `簡答：\\(${rem}\\)。過程：因 \\(x^3\\equiv1\\)，故 \\(x^n\\equiv x^{n\\bmod 3}\\)。把每項的指數對 3 取餘（${terms
+          `簡答：\\(${rem}\\)。過程：因 \\(x^3\\equiv1\\)，故 \\(x^n\\equiv \\,x^{n\\bmod 3}\\)。把每項的指數對 3 取餘（${terms
             .map(({ e }) => `${e}\\to${e % 3}`)
             .join('、')}）後合併同類項，得餘式 \\(${rem}\\)。`
         );
@@ -9418,11 +9390,9 @@
         ra += co * xa;
         rb += co * xb;
       });
-      questions.push(
-        `已知 \\(f(x)=${dividendText(terms)}\\)，求其除以 \\(x^2+x+1\\) 的餘式。`
-      );
+      questions.push(`已知 \\(f(x)=${dividendText(terms)}\\)，求其除以 \\(x^2+x+1\\) 的餘式。`);
       answers.push(
-        `簡答：\\(${L(ra, rb)}\\)。過程：由 \\(x^2+x+1=0\\) 的根滿足 \\(x^3=1\\)，故 \\(x^n\\equiv x^{n\\bmod 3}\\)，再用 \\(x^2\\equiv-x-1\\) 化為一次式。逐項化簡並相加，得餘式 \\(${L(ra, rb)}\\)。`
+        `簡答：\\(${L(ra, rb)}\\)。過程：由 \\(x^2+x+1=0\\) 的根滿足 \\(x^3=1\\)，故 \\(x^n\\equiv \\, x^{n\\bmod 3}\\)，再用 \\(x^2\\equiv-x-1\\) 化為一次式。逐項化簡並相加，得餘式 \\(${L(ra, rb)}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -9442,9 +9412,7 @@
         const Q = s131RandPoly(2, -3, 4);
         const R = randInt(-6, 8);
         const f = s131PolyAdd(s131PolyMul(D, Q), [R]);
-        questions.push(
-          `若多項式 \\(f(x)\\) 除以 \\(${P(D)}\\) 的商式為 \\(${P(Q)}\\)，餘式為 ${R}，求 \\(f(x)\\)。`
-        );
+        questions.push(`若多項式 \\(f(x)\\) 除以 \\(${P(D)}\\) 的商式為 \\(${P(Q)}\\)，餘式為 ${R}，求 \\(f(x)\\)。`);
         answers.push(
           `簡答：\\(f(x)=${P(f)}\\)。過程：由除法原理 \\(f(x)=(${P(D)})(${P(Q)})+${R}\\)，展開整理得 \\(${P(f)}\\)。`
         );
@@ -9490,9 +9458,7 @@
         const q = s131RandPoly(1, -3, 4);
         const R = s131RandPoly(1, -3, 3);
         const f = s131PolyAdd(s131PolyMul(D, q), R);
-        questions.push(
-          `若 \\(f(x)=(${P(D)})q(x)+(${P(R)})\\)，且 \\(f(x)=${P(f)}\\)，求 \\(q(x)\\)。`
-        );
+        questions.push(`若 \\(f(x)=(${P(D)})q(x)+(${P(R)})\\)，且 \\(f(x)=${P(f)}\\)，求 \\(q(x)\\)。`);
         answers.push(
           `簡答：\\(q(x)=${P(q)}\\)。過程：先移去餘式，\\((${P(D)})q(x)=${P(f)}-(${P(R)})=${P(s131PolyMul(D, q))}\\)，再除以 \\(${P(D)}\\)，得 \\(q(x)=${P(q)}\\)。`
         );
@@ -9644,9 +9610,7 @@
       const polyText = formatPolynomialFromCoeffs(coeffs);
       const degWord = degree === 2 ? '二' : '三';
       const genForm = degree === 2 ? 'ax^2+bx+c' : 'ax^3+bx^2+cx+d';
-      questions.push(
-        `求通過 \\(${s131PointText(points)}\\) 這 ${points.length} 點的最低次多項式 \\(f(x)\\)。`
-      );
+      questions.push(`求通過 \\(${s131PointText(points)}\\) 這 ${points.length} 點的最低次多項式 \\(f(x)\\)。`);
       answers.push(
         `簡答：\\(f(x)=${polyText}\\)。過程：設 \\(f(x)=${genForm}\\)（${degWord}次），代入 ${points.length} 個點得聯立方程並求解，得 \\(f(x)=${polyText}\\)。可驗證：${points
           .map(([x, y]) => `\\(f(${x})=${y}\\)`)
@@ -9668,7 +9632,10 @@
         const C = pickNonZero(-9, 9);
         const k = pickNonZero(-3, 3);
         const base = s131PolyMul(s131PolyMul([1, -r], [1, -(r + 1)]), [1, -(r + 2)]);
-        const coeffs = s131PolyAdd(base.map((c) => c * k), [C]);
+        const coeffs = s131PolyAdd(
+          base.map((c) => c * k),
+          [C]
+        );
         const p = r - 1;
         const fp = s131PolyEval(coeffs, p);
         const q = r + 3;
@@ -9724,7 +9691,10 @@
         const C = pickNonZero(-6, 8);
         const k = pickNonZero(-3, 3);
         const base = s131PolyMul(s131PolyMul([1, -roots[0]], [1, -roots[1]]), [1, -roots[2]]);
-        const coeffs = s131PolyAdd(base.map((x) => x * k), [C]);
+        const coeffs = s131PolyAdd(
+          base.map((x) => x * k),
+          [C]
+        );
         const p = r - 1;
         const fp = s131PolyEval(coeffs, p);
         const polyText = formatPolynomialFromCoeffs(coeffs);
@@ -9787,7 +9757,10 @@
       const C = pickNonZero(-6, 8);
       const k = pickNonZero(-3, 3);
       const base = s131PolyMul(s131PolyMul([1, -roots[0]], [1, -roots[1]]), [1, -roots[2]]);
-      const coeffs = s131PolyAdd(base.map((x) => x * k), [C]);
+      const coeffs = s131PolyAdd(
+        base.map((x) => x * k),
+        [C]
+      );
       const p = roots[2] + 1;
       questions.push(
         `已知三次多項式 \\(f(x)\\) 滿足 \\(f(${roots[0]})=f(${roots[1]})=f(${roots[2]})=${C}\\)，且 \\(f(${p})=${s131PolyEval(coeffs, p)}\\)，求 \\(f(0)\\)。`
@@ -9879,9 +9852,7 @@
         xs[2] = xs[1] + randInt(1, 3);
         const pts = xs.map((x) => [x, m * x + k]);
         const lineText = formatPolynomialFromCoeffs([m, k]);
-        questions.push(
-          `給定三點 \\(${s131PointText(pts)}\\)，求其插值多項式並解釋為何退化為一次式。`
-        );
+        questions.push(`給定三點 \\(${s131PointText(pts)}\\)，求其插值多項式並解釋為何退化為一次式。`);
         answers.push(
           `簡答：\\(f(x)=${lineText}\\)。過程：三點都在直線 \\(y=${lineText}\\) 上。用三點雖可求二次以下插值多項式，但二次項係數為 0，故退化為一次式。`
         );
@@ -10131,9 +10102,7 @@
       if (variant === 3) {
         const px = h + pickNonZero(-4, 4);
         const py = a * (px - h) * (px - h) + k;
-        questions.push(
-          `已知二次函數頂點為 \\((${h},${k})\\)，且通過 \\((${px},${py})\\)，求其一般式。`
-        );
+        questions.push(`已知二次函數頂點為 \\((${h},${k})\\)，且通過 \\((${px},${py})\\)，求其一般式。`);
         answers.push(
           `簡答：\\(y=${P(co)}\\)。過程：設 \\(y=a(x-${h})^2${k >= 0 ? '+' : ''}${k}\\)，代入 \\((${px},${py})\\) 得 \\(a\\cdot${(px - h) * (px - h)}${k >= 0 ? '+' : ''}${k}=${py}\\)，解得 \\(a=${a}\\)。展開即得 \\(y=${P(co)}\\)。`
         );
@@ -10174,9 +10143,7 @@
         const co = gen(a, h, k);
         const xs = [h - randInt(1, 4), h + randInt(1, 3), h + randInt(4, 6)];
         const pts = xs.map((x) => [x, a * (x - h) * (x - h) + k]);
-        questions.push(
-          `求通過 \\(A(${pts[0]}),B(${pts[1]}),C(${pts[2]})\\) 三點的二次函數。`
-        );
+        questions.push(`求通過 \\(A(${pts[0]}),B(${pts[1]}),C(${pts[2]})\\) 三點的二次函數。`);
         answers.push(
           `簡答：\\(y=${P(co)}\\)。過程：設 \\(y=ax^2+bx+c\\)，代入三點解聯立，得 \\(a=${co[0]},b=${co[1]},c=${co[2]}\\)。`
         );
@@ -10410,9 +10377,7 @@
         const a = randInt(1, 5);
         const px = h + pickNonZero(-4, 4);
         const py = fval(a, h, k, px);
-        questions.push(
-          `已知二次函數在 \\(x=${h}\\) 時有最小值 ${k}，且通過 \\((${px},${py})\\)，求該函數。`
-        );
+        questions.push(`已知二次函數在 \\(x=${h}\\) 時有最小值 ${k}，且通過 \\((${px},${py})\\)，求該函數。`);
         answers.push(
           `簡答：\\(y=${P(gen(a, h, k))}\\)。過程：有最小值表示開口向上，設 \\(y=a(x-${h})^2${k >= 0 ? '+' : ''}${k}\\)（\\(a>0\\)）。代入 \\((${px},${py})\\) 得 \\(a=${a}\\)，展開得 \\(y=${P(gen(a, h, k))}\\)。`
         );
@@ -10425,7 +10390,10 @@
       const k = randInt(-8, 8);
       const m = h - randInt(0, 5);
       const n = h + randInt(0, 5);
-      if (m === n) { i -= 1; continue; }
+      if (m === n) {
+        i -= 1;
+        continue;
+      }
       const cand = [m, n];
       if (h >= m && h <= n) cand.push(h);
       const vals = cand.map((x) => fval(a, h, k, x));
@@ -10435,9 +10403,7 @@
       const argMin = cand[vals.indexOf(minV)];
       const co = gen(a, h, k);
       const inRange = h >= m && h <= n;
-      questions.push(
-        `設 \\(f(x)=${P(co)}\\)，在 \\(${m}\\le x\\le${n}\\) 範圍內求最大值與最小值。`
-      );
+      questions.push(`設 \\(f(x)=${P(co)}\\)，在 \\(${m}\\le x\\le${n}\\) 範圍內求最大值與最小值。`);
       answers.push(
         `簡答：最大值 ${maxV}（在 \\(x=${argMax}\\)），最小值 ${minV}（在 \\(x=${argMin}\\)）。過程：配方得 \\(f(x)=${a === 1 ? '' : a === -1 ? '-' : a}(x${h > 0 ? '-' : '+'}${Math.abs(h)})^2${k >= 0 ? '+' : ''}${k}\\)，對稱軸 \\(x=${h}\\)${inRange ? '落在區間內' : '不在區間內'}。${inRange ? `因此需比較端點與頂點：\\(f(${m})=${fval(a, h, k, m)}\\)、\\(f(${n})=${fval(a, h, k, n)}\\)、\\(f(${h})=${k}\\)。` : `因此 \\(f\\) 在區間上單調，只需比較端點：\\(f(${m})=${fval(a, h, k, m)}\\)、\\(f(${n})=${fval(a, h, k, n)}\\)。`}故最大值 ${maxV}、最小值 ${minV}。`
       );
@@ -10491,9 +10457,7 @@
       // 造 (a·x + p)^2 型使恆非負：直接用 (mx+n)^2 ≥ 0
       const mm = randInt(1, 4);
       const nn = randInt(1, 5);
-      questions.push(
-        `二次不等式 \\(${mm * mm}x^2+${2 * mm * nn}x+${nn * nn}\\ge0\\) 的解為何？並說明理由。`
-      );
+      questions.push(`二次不等式 \\(${mm * mm}x^2+${2 * mm * nn}x+${nn * nn}\\ge0\\) 的解為何？並說明理由。`);
       answers.push(
         `簡答：所有實數 \\(x\\)。過程：左式為完全平方 \\((${mm}x+${nn})^2\\ge0\\)，對所有實數恆成立（等號在 \\(x=${formatFraction(-nn, mm)}\\) 時）。`
       );
@@ -10517,9 +10481,7 @@
         const N = [5, 6, 8, 9, 11][randInt(0, 4)];
         const num = (N * (N + 1) * (2 * N + 1)) / 6;
         const den = (N * (N + 1)) / 2;
-        questions.push(
-          `設 \\(g(x)=(x-1)^2+2(x-2)^2+\\cdots+${N}(x-${N})^2\\)，求 \\(g(x)\\) 有最小值時的 \\(x\\)。`
-        );
+        questions.push(`設 \\(g(x)=(x-1)^2+2(x-2)^2+\\cdots+${N}(x-${N})^2\\)，求 \\(g(x)\\) 有最小值時的 \\(x\\)。`);
         answers.push(
           `簡答：\\(x=${fr(num, den)}\\)。過程：加權平方和 \\(\\sum w_i(x-t_i)^2\\) 的最小值在加權平均 \\(x=\\frac{\\sum w_it_i}{\\sum w_i}\\)。此題 \\(w_i=t_i=i\\)，故 \\(x=\\frac{1^2+\\cdots+${N}^2}{1+\\cdots+${N}}=\\frac{${num}}{${den}}=${fr(num, den)}\\)。`
         );
@@ -10532,7 +10494,9 @@
         const t = [randInt(-2, 3), randInt(1, 5), randInt(3, 8)];
         const num = w[0] * t[0] + w[1] * t[1] + w[2] * t[2];
         const den = w[0] + w[1] + w[2];
-        const parts = t.map((ti, idx) => `${w[idx] === 1 ? '' : w[idx]}(x${ti > 0 ? '-' : '+'}${Math.abs(ti)})^2`).join('+');
+        const parts = t
+          .map((ti, idx) => `${w[idx] === 1 ? '' : w[idx]}(x${ti > 0 ? '-' : '+'}${Math.abs(ti)})^2`)
+          .join('+');
         questions.push(`已知 \\(f(x)=${parts}\\)，求使 \\(f(x)\\) 最小的 \\(x\\)。`);
         answers.push(
           `簡答：\\(x=${fr(num, den)}\\)。過程：最小值在加權平均 \\(x=\\frac{${w[0]}\\times${t[0]}+${w[1]}\\times${t[1]}+${w[2]}\\times${t[2]}}{${w[0]}+${w[1]}+${w[2]}}=${fr(num, den)}\\)。`
@@ -10544,7 +10508,9 @@
         // 兩點平均
         const a = randInt(-4, 3);
         const b = a + 2 * randInt(1, 4);
-        questions.push(`求 \\((x${a > 0 ? '-' : '+'}${Math.abs(a)})^2+(x${b > 0 ? '-' : '+'}${Math.abs(b)})^2\\) 有最小值時的 \\(x\\)。`);
+        questions.push(
+          `求 \\((x${a > 0 ? '-' : '+'}${Math.abs(a)})^2+(x${b > 0 ? '-' : '+'}${Math.abs(b)})^2\\) 有最小值時的 \\(x\\)。`
+        );
         answers.push(
           `簡答：\\(x=${(a + b) / 2}\\)。過程：兩個平方距離和的最小值在兩點的中點，\\(x=\\frac{${a}+${b}}2=${(a + b) / 2}\\)。`
         );
@@ -10570,9 +10536,7 @@
       // variant 4：符號參數
       const A = randInt(2, 5);
       const Bb = randInt(1, 4);
-      questions.push(
-        `若 \\(h(x)=${A}(x-a)^2+${Bb}(x-b)^2\\)，求 \\(h(x)\\) 最小時的 \\(x\\)（以 \\(a,b\\) 表示）。`
-      );
+      questions.push(`若 \\(h(x)=${A}(x-a)^2+${Bb}(x-b)^2\\)，求 \\(h(x)\\) 最小時的 \\(x\\)（以 \\(a,b\\) 表示）。`);
       answers.push(
         `簡答：\\(x=\\frac{${A}a+${Bb}b}{${A + Bb}}\\)。過程：加權平方和的最小值在加權平均，\\(x=\\frac{${A}a+${Bb}b}{${A}+${Bb}}=\\frac{${A}a+${Bb}b}{${A + Bb}}\\)。`
       );
@@ -10595,11 +10559,12 @@
         const N0 = g * randInt(6, 12);
         // R(x)=(P0-s x)(N0+g x)，頂點 x*=(g P0 - s N0)/(2 s g)
         const xStar = (g * P0 - s * N0) / (2 * s * g);
-        if (!Number.isInteger(xStar) || xStar <= 0) { i -= 1; continue; }
+        if (!Number.isInteger(xStar) || xStar <= 0) {
+          i -= 1;
+          continue;
+        }
         const price = P0 - s * xStar;
-        questions.push(
-          `電影院票價 ${P0} 元時平均 ${N0} 人，票價每減 ${s} 元增加 ${g} 人，求最高收入的訂價。`
-        );
+        questions.push(`電影院票價 ${P0} 元時平均 ${N0} 人，票價每減 ${s} 元增加 ${g} 人，求最高收入的訂價。`);
         answers.push(
           `簡答：${price} 元。過程：設降價 \\(x\\) 次（每次 ${s} 元），收入 \\(R=(${P0}-${s}x)(${N0}+${g}x)\\)，展開為開口向下的二次式，頂點在 \\(x=${xStar}\\)。此時票價為 \\(${P0}-${s}\\times${xStar}=${price}\\) 元。`
         );
@@ -10611,9 +10576,7 @@
         const Ltot = 4 * randInt(15, 40);
         const x = Ltot / 4;
         const area = x * (Ltot - 2 * x);
-        questions.push(
-          `一條 ${Ltot} 公尺的繩子在河岸邊圍成一個矩形菜園，靠河的一邊不用圍籬，求最大面積。`
-        );
+        questions.push(`一條 ${Ltot} 公尺的繩子在河岸邊圍成一個矩形菜園，靠河的一邊不用圍籬，求最大面積。`);
         answers.push(
           `簡答：${area} 平方公尺。過程：設垂直河岸的邊長為 \\(x\\)，平行河岸的邊為 \\(${Ltot}-2x\\)。面積 \\(A=x(${Ltot}-2x)=-2x^2+${Ltot}x\\)，頂點在 \\(x=${x}\\)，最大面積 \\(${x}\\times${Ltot - 2 * x}=${area}\\)。`
         );
@@ -10628,7 +10591,10 @@
         const mSell = 25;
         // profit(x)=(p0-x-c)(n0+mSell x)，頂點 x*=(mSell(p0-c)-n0)/(2 mSell)
         const xStar = (mSell * (p0 - c) - n0) / (2 * mSell);
-        if (!Number.isInteger(xStar)) { i -= 1; continue; }
+        if (!Number.isInteger(xStar)) {
+          i -= 1;
+          continue;
+        }
         const price = p0 - xStar;
         const profit = (price - c) * (n0 + mSell * xStar);
         questions.push(
@@ -10647,9 +10613,7 @@
       const x = Ltot / (2 * (n + 1));
       const y = Ltot - (n + 1) * x;
       const area = x * y;
-      questions.push(
-        `在牆邊用圍籬圍出 ${n} 間相等的矩形雞圈，牆邊不用圍，圍籬長 ${Ltot} 公尺，求總面積最大值。`
-      );
+      questions.push(`在牆邊用圍籬圍出 ${n} 間相等的矩形雞圈，牆邊不用圍，圍籬長 ${Ltot} 公尺，求總面積最大值。`);
       answers.push(
         `簡答：${area} 平方公尺。過程：設每間深度 \\(x\\)、總寬 \\(y\\)，圍籬 \\(${n + 1}x+y=${Ltot}\\)。總面積 \\(A=xy=x(${Ltot}-${n + 1}x)\\)，頂點在 \\(x=${x}\\)，此時 \\(y=${y}\\)，最大面積 \\(${area}\\)。`
       );
@@ -10810,9 +10774,7 @@
         const disc = 9 - 4 * c;
         const sq = Number.isInteger(Math.sqrt(disc));
         const loNum = 3;
-        questions.push(
-          `設 \\(y=x^2-2kx+${3}k\\) 的圖形恆在直線 \\(y=${c}\\) 的上方，求滿足此條件的所有實數 \\(k\\)。`
-        );
+        questions.push(`設 \\(y=x^2-2kx+${3}k\\) 的圖形恆在直線 \\(y=${c}\\) 的上方，求滿足此條件的所有實數 \\(k\\)。`);
         answers.push(
           `簡答：\\(\\frac{3-\\sqrt{${disc}}}{2}<k<\\frac{3+\\sqrt{${disc}}}{2}\\)。過程：恆在上方即 \\(x^2-2kx+3k-${c}>0\\) 對所有 \\(x\\) 成立。開口向上，需判別式小於 0：\\((2k)^2-4(3k-${c})<0\\)，化簡 \\(k^2-3k+${c}<0\\)，解得 \\(\\frac{3-\\sqrt{${disc}}}{2}<k<\\frac{3+\\sqrt{${disc}}}{2}\\)。`
         );
@@ -10905,7 +10867,8 @@
         const s1 = h * h + C;
         const s2 = h * h - C;
         const s2Text = s2 > 0 ? `，\\(x=${h}\\pm${formatRadical(s2)}\\)` : s2 === 0 ? `，\\(x=${h}\\)` : '';
-        const s2Proc = s2 > 0 ? `，\\(x=${h}\\pm${formatRadical(s2)}\\)` : s2 === 0 ? `，得 \\(x=${h}\\)（重根）` : '（無實數解）';
+        const s2Proc =
+          s2 > 0 ? `，\\(x=${h}\\pm${formatRadical(s2)}\\)` : s2 === 0 ? `，得 \\(x=${h}\\)（重根）` : '（無實數解）';
         questions.push(`試求函數 \\(y=|x^2-${2 * h}x|-${C}\\) 與 \\(x\\) 軸的交點（\\(x\\) 坐標）。`);
         answers.push(
           `簡答：\\(x=${h}\\pm${formatRadical(s1)}\\)${s2Text}。過程：令 \\(y=0\\)，\\(|x^2-${2 * h}x|=${C}\\)。由 \\(x^2-${2 * h}x=${C}\\) 得 \\((x-${h})^2=${s1}\\)，\\(x=${h}\\pm${formatRadical(s1)}\\)；由 \\(x^2-${2 * h}x=-${C}\\) 得 \\((x-${h})^2=${s2}\\)${s2Proc}。`
@@ -10929,9 +10892,7 @@
         const dd = 2 * randInt(1, 3);
         const r2 = r1 + dd;
         const m = (dd / 2) * (dd / 2); // |最小值|
-        questions.push(
-          `若方程式 \\(|x^2-${r1 + r2}x+${r1 * r2}|=k\\) 恰有 3 個相異實根，求 \\(k\\)。`
-        );
+        questions.push(`若方程式 \\(|x^2-${r1 + r2}x+${r1 * r2}|=k\\) 恰有 3 個相異實根，求 \\(k\\)。`);
         answers.push(
           `簡答：\\(k=${m}\\)。過程：\\(f(x)=x^2-${r1 + r2}x+${r1 * r2}=(x-${r1})(x-${r2})\\)，最小值為 \\(-${m}\\)（在頂點 \\(x=${(r1 + r2) / 2}\\)）。\\(|f(x)|\\) 的圖形在此頂點觸及高度 ${m}。當 \\(k=${m}\\)（等於頂點高度）時，交點數為 3（頂點處相切算 1 個）。`
         );
@@ -11030,9 +10991,7 @@
       const minV = Math.min(-C - B + C, -C + B + C); // 端點 min(-B,B)... f(±1)=-C±B+C = ±B → min=-B... let compute
       const fe = (x) => -C * x * x + B * x + C;
       const mn = Math.min(fe(-1), fe(1));
-      questions.push(
-        `若 \\((x,y)\\) 在單位圓 \\(x^2+y^2=1\\) 上，求 \\(${B === 1 ? '' : B}x+${C}y^2\\) 的範圍。`
-      );
+      questions.push(`若 \\((x,y)\\) 在單位圓 \\(x^2+y^2=1\\) 上，求 \\(${B === 1 ? '' : B}x+${C}y^2\\) 的範圍。`);
       answers.push(
         `簡答：\\(${mn}\\le ${B === 1 ? '' : B}x+${C}y^2\\le${formatFraction(maxV.num, maxV.den)}\\)。過程：由 \\(y^2=1-x^2\\)（\\(-1\\le x\\le1\\)），目標 \\(=${B}x+${C}(1-x^2)=-${C}x^2+${B}x+${C}\\)。頂點 \\(x=${fr(B, 2 * C)}\\) 給最大值 \\(${formatFraction(maxV.num, maxV.den)}\\)，端點給最小值 ${mn}。`
       );
@@ -11233,7 +11192,10 @@
         const m = randInt(10, 30);
         const n0 = m * randInt(3, 6);
         const xStar = (m * (p0 - c) - n0) / (2 * m);
-        if (!Number.isInteger(xStar) || xStar < 0) { i -= 1; continue; }
+        if (!Number.isInteger(xStar) || xStar < 0) {
+          i -= 1;
+          continue;
+        }
         const price = p0 - xStar;
         questions.push(
           `某商品進價 ${c} 元，定價 ${p0} 元時可賣 ${n0} 個；若售價每降 1 元，多賣 ${m} 個，求最大利潤時的售價。`
@@ -11265,9 +11227,7 @@
       const Ltot = 2 * randInt(10, 30);
       const x = Ltot / 4;
       const area = x * (Ltot - 2 * x);
-      questions.push(
-        `用 ${Ltot} 公尺的圍籬沿牆圍一個矩形，靠牆的一邊不需圍籬，求可圍出的最大面積。`
-      );
+      questions.push(`用 ${Ltot} 公尺的圍籬沿牆圍一個矩形，靠牆的一邊不需圍籬，求可圍出的最大面積。`);
       answers.push(
         `簡答：${area} 平方公尺。過程：設垂直牆的邊為 \\(x\\)，平行牆的邊為 \\(${Ltot}-2x\\)。面積 \\(A=x(${Ltot}-2x)=-2x^2+${Ltot}x\\)，頂點 \\(x=${x}\\)，最大面積 \\(${x}\\times${Ltot - 2 * x}=${area}\\)。`
       );
@@ -11323,7 +11283,11 @@
         text: c.den === 1 && c.num === 1 ? '' : c.den === 1 && c.num === -1 ? '-' : formatFraction(c.num, c.den),
         mag: Math.abs(c.num / c.den),
       }));
-      const order = labelled.slice().sort((p, q) => p.mag - q.mag).map((t) => t.name).join(',');
+      const order = labelled
+        .slice()
+        .sort((p, q) => p.mag - q.mag)
+        .map((t) => t.name)
+        .join(',');
       const listText = labelled.map((t) => `\\(${t.name}:y=${t.text}x^2\\)`).join('、');
       questions.push(`比較 ${listText} 的開口大小，依由大到小排列。`);
       answers.push(
@@ -11351,9 +11315,7 @@
         const maxV = S * S;
         // 最小為原點到直線距離平方 = S^2/(1+4)=S^2/5
         const minV = makeFraction(S * S, 5);
-        questions.push(
-          `設 \\(x,y\\ge0\\) 且 \\(x+2y=${S}\\)，求 \\(x^2+y^2\\) 的最大值與最小值。`
-        );
+        questions.push(`設 \\(x,y\\ge0\\) 且 \\(x+2y=${S}\\)，求 \\(x^2+y^2\\) 的最大值與最小值。`);
         answers.push(
           `簡答：最大值 ${maxV}，最小值 \\(${formatFraction(minV.num, minV.den)}\\)。過程：\\(x^2+y^2\\) 是原點到線段上點的距離平方。線段端點為 \\((${S},0)\\) 與 \\((0,${S / 2})\\)，最遠端點給最大值 \\(${S}^2=${maxV}\\)；最近點為原點到直線 \\(x+2y=${S}\\) 的垂足，距離平方 \\(\\frac{${S}^2}{1^2+2^2}=${formatFraction(minV.num, minV.den)}\\)。`
         );
@@ -11369,9 +11331,7 @@
         const v1 = (c / a) * (c / a);
         const v2 = (c / b) * (c / b);
         const maxV = Math.max(v1, v2, 0);
-        questions.push(
-          `設 \\(x,y\\ge0\\) 且 \\(${a}x+${b}y\\le${c}\\)，求 \\(x^2+y^2\\) 的最大值。`
-        );
+        questions.push(`設 \\(x,y\\ge0\\) 且 \\(${a}x+${b}y\\le${c}\\)，求 \\(x^2+y^2\\) 的最大值。`);
         answers.push(
           `簡答：${maxV}。過程：\\(x^2+y^2\\)（到原點距離平方）在凸區域的最大值出現在頂點。三頂點為 \\((0,0),(${c / a},0),(0,${c / b})\\)，代入分別得 \\(0,${v1},${v2}\\)，最大為 ${maxV}。`
         );
@@ -11392,7 +11352,10 @@
         let bestX = nodes[0];
         let best = fval(nodes[0]);
         nodes.forEach((n) => {
-          if (fval(n) < best) { best = fval(n); bestX = n; }
+          if (fval(n) < best) {
+            best = fval(n);
+            bestX = n;
+          }
         });
         questions.push(
           `設 \\(f(x)=|x${a >= 0 ? '-' : '+'}${Math.abs(a)}|+2|x-${b}|+3|x-${cc}|\\)，求 \\(f(x)\\) 的最小值及發生的 \\(x\\)。`
@@ -11405,9 +11368,7 @@
 
       // variant 3：x+2y=S, x,y≥0, 求 x^2+y^2 最大值
       const S = 2 * randInt(2, 6);
-      questions.push(
-        `設 \\(x,y\\) 為實數，滿足 \\(x+2y=${S}\\) 且 \\(x,y\\ge0\\)，求 \\(x^2+y^2\\) 的最大值。`
-      );
+      questions.push(`設 \\(x,y\\) 為實數，滿足 \\(x+2y=${S}\\) 且 \\(x,y\\ge0\\)，求 \\(x^2+y^2\\) 的最大值。`);
       answers.push(
         `簡答：${S * S}。過程：可行區域為線段，端點 \\((${S},0)\\) 與 \\((0,${S / 2})\\)。\\(x^2+y^2\\) 在端點取極值：\\(${S}^2=${S * S}\\) 與 \\(${(S / 2) * (S / 2)}\\)，最大為 ${S * S}。`
       );
@@ -11478,9 +11439,7 @@
       }
 
       if (variant === 2) {
-        questions.push(
-          `若 \\(f(x)=${shifted(1, p, 0, q)}\\)，說明其圖形是由 \\(y=x^3\\) 如何平移而得。`
-        );
+        questions.push(`若 \\(f(x)=${shifted(1, p, 0, q)}\\)，說明其圖形是由 \\(y=x^3\\) 如何平移而得。`);
         answers.push(
           `簡答：向${p >= 0 ? '右' : '左'}平移 ${Math.abs(p)} 單位、向${q >= 0 ? '上' : '下'}平移 ${Math.abs(q)} 單位。過程：\\(y=x^3\\) 的中心在原點；\\(f(x)=${shifted(1, p, 0, q)}\\) 的中心在 \\((${p},${q})\\)，故平移量即為 \\((${p},${q})\\)。`
         );
@@ -11527,9 +11486,7 @@
       if (variant === 0 || variant === 3) {
         // 在對稱中心附近的一次近似 = q + b(x-p)
         const c0 = q - b * p;
-        questions.push(
-          `求三次函數 \\(y=${P3(co)}\\) 在其對稱中心附近的一次近似式。`
-        );
+        questions.push(`求三次函數 \\(y=${P3(co)}\\) 在其對稱中心附近的一次近似式。`);
         answers.push(
           `簡答：\\(${lineText(b, c0)}\\)。過程：配方得 \\(y=${shifted(a, p, b, q)}\\)，對稱中心為 \\((${p},${q})\\)。當 \\(x\\) 接近 ${p} 時，三次項 \\(${a}(x-${p})^3\\) 的量級遠小於一次項，故一次近似為 \\(y=${q}${b >= 0 ? '+' : ''}${b}(x-${p})\\)，即 \\(${lineText(b, c0)}\\)。`
         );
@@ -11543,9 +11500,7 @@
         const d0 = fPrime(a, p, b, x0);
         const N = [10, 50, 100, 1000][randInt(0, 3)];
         const est = makeFraction(f0 * N + d0, N);
-        questions.push(
-          `利用一次近似，估計 \\(f(x)=${P3(co)}\\) 在 \\(x=${x0}+\\frac1{${N}}\\) 時的函數值。`
-        );
+        questions.push(`利用一次近似，估計 \\(f(x)=${P3(co)}\\) 在 \\(x=${x0}+\\frac1{${N}}\\) 時的函數值。`);
         answers.push(
           `簡答：約 \\(${formatFraction(est.num, est.den)}\\)。過程：\\(f(${x0})=${f0}\\)，\\(f'(x)=${3 * a}(x-${p})^2${b >= 0 ? '+' : ''}${b}\\) 故 \\(f'(${x0})=${d0}\\)。一次近似 \\(f(x)\\approx${f0}${d0 >= 0 ? '+' : ''}${d0}(x-${x0})\\)，代入 \\(x-${x0}=\\frac1{${N}}\\) 得 \\(${f0}+\\frac{${d0}}{${N}}=${formatFraction(est.num, est.den)}\\)。`
         );
@@ -11569,12 +11524,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     const P3 = (c) => formatPolynomialFromCoeffs(c);
-    const fromRoots = (a, r1, r2, r3) => [
-      a,
-      -a * (r1 + r2 + r3),
-      a * (r1 * r2 + r2 * r3 + r3 * r1),
-      -a * r1 * r2 * r3,
-    ];
+    const fromRoots = (a, r1, r2, r3) => [a, -a * (r1 + r2 + r3), a * (r1 * r2 + r2 * r3 + r3 * r1), -a * r1 * r2 * r3];
     for (let i = 0; i < count; i += 1) {
       const variant = i % 5;
 
@@ -11588,9 +11538,7 @@
         const r3 = 3 * m - r1 - r2;
         const a = pickNonZero(-2, 3);
         const co = fromRoots(a, r1, r2, r3);
-        questions.push(
-          `已知 \\(f(x)=${P3(co)}\\) 的三個根為 \\(${r1},${r2},${r3}\\)，求其對稱中心的 \\(x\\) 坐標。`
-        );
+        questions.push(`已知 \\(f(x)=${P3(co)}\\) 的三個根為 \\(${r1},${r2},${r3}\\)，求其對稱中心的 \\(x\\) 坐標。`);
         answers.push(
           `簡答：\\(x=${m}\\)。過程：三次函數的對稱中心橫坐標等於三根的平均（也等於 \\(-\\frac{B}{3A}\\)）。故 \\(x=\\frac{${r1}+${r2}+${r3}}3=${m}\\)。`
         );
@@ -11616,9 +11564,7 @@
       const dd = randInt(1, 4);
       const a2 = pickNonZero(-2, 3);
       const co2 = fromRoots(a2, mid - dd, mid, mid + dd);
-      questions.push(
-        `設 \\(f(x)=${P3(co2)}\\)。已知其三個根成等差數列，求對稱中心坐標。`
-      );
+      questions.push(`設 \\(f(x)=${P3(co2)}\\)。已知其三個根成等差數列，求對稱中心坐標。`);
       answers.push(
         `簡答：\\((${mid},0)\\)。過程：三根成等差時，中間根即為三根平均，也就是對稱中心的橫坐標，故 \\(x=${mid}\\)。又該點是根，\\(f(${mid})=0\\)，所以對稱中心為 \\((${mid},0)\\)。`
       );
@@ -11662,9 +11608,7 @@
       if (variant === 1 || variant === 4) {
         const co = cub(a, p, b, q);
         const t = randInt(50, 300);
-        questions.push(
-          `設 \\(f(x)=${P3(co)}\\)，求 \\(f(${p - t})+f(${p + t})\\) 之值。`
-        );
+        questions.push(`設 \\(f(x)=${P3(co)}\\)，求 \\(f(${p - t})+f(${p + t})\\) 之值。`);
         answers.push(
           `簡答：${2 * q}。過程：先求對稱中心，\\(x=-\\frac{${co[1]}}{3\\cdot${co[0]}}=${p}\\)，\\(f(${p})=${q}\\)，中心為 \\((${p},${q})\\)。由中心對稱性 \\(f(${p}-t)+f(${p}+t)=2\\times${q}=${2 * q}\\)，與 \\(t\\) 無關。`
         );
@@ -11707,7 +11651,9 @@
         const can = randInt(0, 1) === 0;
         const b = can ? 0 : pickNonZero(-6, 6);
         const co = cub(a, p, b, q);
-        questions.push(`判定 \\(f(x)=${P3(co)}\\) 經平移後是否能與 \\(y=${a === 1 ? '' : a === -1 ? '-' : a}x^3\\) 重合。`);
+        questions.push(
+          `判定 \\(f(x)=${P3(co)}\\) 經平移後是否能與 \\(y=${a === 1 ? '' : a === -1 ? '-' : a}x^3\\) 重合。`
+        );
         answers.push(
           can
             ? `簡答：可以。過程：配方得 \\(f(x)=${shifted(a, p, 0, q)}\\)，不含一次項，故將圖形向左平移 ${p} 、向下平移 ${q} 即與 \\(y=${a === 1 ? '' : a === -1 ? '-' : a}x^3\\) 重合。`
@@ -11718,7 +11664,9 @@
 
       if (variant === 1 || variant === 4) {
         const co = cub(a, p, 0, q);
-        questions.push(`若 \\(f(x)=${P3(co)}\\)，求將其平移至 \\(y=${a === 1 ? '' : a === -1 ? '-' : a}x^3\\) 所需的位移。`);
+        questions.push(
+          `若 \\(f(x)=${P3(co)}\\)，求將其平移至 \\(y=${a === 1 ? '' : a === -1 ? '-' : a}x^3\\) 所需的位移。`
+        );
         answers.push(
           `簡答：向左平移 ${p}、向下平移 ${q}（即位移 \\((${-p},${-q})\\)）。過程：配方得 \\(f(x)=${shifted(a, p, 0, q)}\\)，對稱中心為 \\((${p},${q})\\)。把中心移到原點即得 \\(y=${a === 1 ? '' : a === -1 ? '-' : a}x^3\\)，故位移為 \\((${-p},${-q})\\)。`
         );
@@ -12139,9 +12087,9 @@
         const aStr = formatSignedNumber(-a);
         questions.push(`解不等式 \\(|2x${aStr}|\\ge${b}\\)。`);
         answers.push(
-          `簡答：\\(x\\le${lo}\\) 或 \\(x\\ge${hi}\\)。` +
+          `簡答：\\(x\\le ${lo}\\) 或 \\(x\\ge${hi}\\)。` +
             `過程：\\(2x${aStr}\\le-${b}\\) 或 \\(2x${aStr}\\ge${b}\\)，` +
-            `移項除以 2 得 \\(x\\le${lo}\\) 或 \\(x\\ge${hi}\\)。`
+            `移項除以 2 得 \\(x\\le ${lo}\\) 或 \\(x\\ge${hi}\\)。`
         );
       } else {
         // |x+a| ≤ |x-b|，a,b≥0，a+b>0 → x ≤ (b-a)/2
@@ -12203,7 +12151,7 @@
           `簡答：\\(x\\le${lo}\\) 或 \\(x\\ge${hi}\\)。` +
             `過程：分段討論。\\(x\\ge${b}\\) 時，\\(2x-${a + b}\\ge${c}\\) 得 \\(x\\ge${hi}\\)；` +
             `\\(${a}\\le x\\le${b}\\) 時，\\(${b - a}\\ge${c}\\) 不成立（因 \\(${b - a}<${c}\\)）；` +
-            `\\(x\\le${a}\\) 時，\\(${a + b}-2x\\ge${c}\\) 得 \\(x\\le${lo}\\)。`
+            `\\(x\\le${a}\\) 時，\\(${a + b}-2x\\ge${c}\\) 得 \\(x\\le ${lo}\\)。`
         );
       } else if (mode === 2) {
         // |x-a| < |x-b|，a<b → x < (a+b)/2（點比較靠近 a）
@@ -12321,9 +12269,7 @@
         if (v >= lo && v <= hi) cnt += 1;
       }
       const co4 = [1, -(r1 + r2), r1 * r2];
-      questions.push(
-        `求滿足 \\(${lo}\\le ${P(co4)}\\le${hi}\\) 的整數解共有幾個。`
-      );
+      questions.push(`求滿足 \\(${lo}\\le ${P(co4)}\\le${hi}\\) 的整數解共有幾個。`);
       answers.push(
         `簡答：${cnt} 個。過程：令 \\(g(x)=${P(co4)}=(x${r1 >= 0 ? '-' : '+'}${Math.abs(r1)})(x${r2 >= 0 ? '-' : '+'}${Math.abs(r2)})\\)，其最小值出現在 \\(x=\\frac{${r1}+${r2}}2\\)。逐一檢查整數點是否滿足 \\(${lo}\\le g(x)\\le${hi}\\)，合計 ${cnt} 個。`
       );
@@ -12360,9 +12306,7 @@
         const c = k * k - 1;
         const lo = 2 - 2 * k;
         const hi = 2 + 2 * k;
-        questions.push(
-          `若 \\(x^2+ax+(a+${c})<0\\) 沒有實數解，求 \\(a\\) 的範圍。`
-        );
+        questions.push(`若 \\(x^2+ax+(a+${c})<0\\) 沒有實數解，求 \\(a\\) 的範圍。`);
         answers.push(
           `簡答：\\(${lo}\\le a\\le${hi}\\)。過程：開口向上，無解表示圖形不低於 \\(x\\) 軸，即判別式 \\(D\\le0\\)。\\(D=a^2-4(a+${c})=a^2-4a-${4 * c}\\le0\\)，解 \\(a^2-4a-${4 * c}=0\\) 得 \\(a=2\\pm${2 * k}\\)，故 \\(${lo}\\le a\\le${hi}\\)。`
         );
@@ -12411,7 +12355,10 @@
           p = randInt(-5, 2);
           q = p + randInt(1, 5);
         }
-        if (p + q === 0) { i -= 1; continue; }
+        if (p + q === 0) {
+          i -= 1;
+          continue;
+        }
         const L = -a * (p + q);
         const b = a * p * q;
         questions.push(
@@ -12431,12 +12378,13 @@
           p = randInt(-5, 2);
           q = p + randInt(1, 5);
         }
-        if (p * q === 0) { i -= 1; continue; }
+        if (p * q === 0) {
+          i -= 1;
+          continue;
+        }
         const C = a * p * q;
         const b = -a * (p + q);
-        questions.push(
-          `已知 \\(ax^2+bx${C >= 0 ? '+' : ''}${C}>0\\) 的解為 \\(${p}<x<${q}\\)，求數對 \\((a,b)\\)。`
-        );
+        questions.push(`已知 \\(ax^2+bx${C >= 0 ? '+' : ''}${C}>0\\) 的解為 \\(${p}<x<${q}\\)，求數對 \\((a,b)\\)。`);
         answers.push(
           `簡答：\\((a,b)=(${a},${b})\\)。過程：兩根為 ${p},${q} 且 \\(a<0\\)。由 \\(\\frac{${C}}{a}=${p}\\times${q}=${p * q}\\) 得 \\(a=${a}\\)；再由 \\(-\\frac{b}{a}=${p + q}\\) 得 \\(b=${b}\\)。`
         );
@@ -12451,7 +12399,10 @@
           p = randInt(-4, 2);
           q = p + randInt(1, 5);
         }
-        if (p * q === 0) { i -= 1; continue; }
+        if (p * q === 0) {
+          i -= 1;
+          continue;
+        }
         const co = [a, -a * (p + q), a * p * q];
         questions.push(
           `設 \\(f(x)=ax^2+bx+c\\)。若 \\(f(x)>0\\) 的解為 \\(${p}<x<${q}\\)，且 \\(f(0)=${a * p * q}\\)，求 \\(f(x)\\)。`
@@ -12465,9 +12416,7 @@
       if (variant === 3) {
         const p = randInt(-5, 1);
         const q = p + randInt(2, 6);
-        questions.push(
-          `已知 \\(ax^2+bx+c>0\\) 的解為 \\(${p}<x<${q}\\)，求 \\(ax^2-bx+c<0\\) 的解。`
-        );
+        questions.push(`已知 \\(ax^2+bx+c>0\\) 的解為 \\(${p}<x<${q}\\)，求 \\(ax^2-bx+c<0\\) 的解。`);
         answers.push(
           `簡答：\\(x<${-q}\\) 或 \\(x>${-p}\\)。過程：把 \\(x\\) 換成 \\(-x\\)，\\(a(-x)^2+b(-x)+c=ax^2-bx+c\\)。原式 \\(>0\\) 的解為 \\(${p}<x<${q}\\)，故 \\(ax^2-bx+c>0\\) 的解為 \\(${-q}<x<${-p}\\)。取其補集（且不含端點）即為 \\(<0\\) 的解：\\(x<${-q}\\) 或 \\(x>${-p}\\)。`
         );
@@ -12480,9 +12429,7 @@
       if (a4 === 2 && b4 % 2 === 0) b4 += 1;
       const p4 = (-b4 - 1) / a4;
       const q4 = (b4 - 1) / a4;
-      questions.push(
-        `若 \\(|ax+1|\\le b\\) 的解為 \\(${p4}\\le x\\le${q4}\\)，反求實數 \\(a,b\\)（取 \\(a>0\\)）。`
-      );
+      questions.push(`若 \\(|ax+1|\\le b\\) 的解為 \\(${p4}\\le x\\le${q4}\\)，反求實數 \\(a,b\\)（取 \\(a>0\\)）。`);
       answers.push(
         `簡答：\\(a=${a4},b=${b4}\\)。過程：\\(|ax+1|\\le b\\)（\\(a>0\\)）等價於 \\(\\frac{-b-1}{a}\\le x\\le\\frac{b-1}{a}\\)。比較端點：區間長度 \\(\\frac{2b}{a}=${q4 - p4}\\)、中點 \\(-\\frac1a=${(p4 + q4) / 2}\\)。解得 \\(a=${a4}\\)、\\(b=${b4}\\)。`
       );
@@ -12538,9 +12485,7 @@
 
       if (variant === 0) {
         // f(x)>0 解 p<x<q → f(2x)<0：2x 在區間外
-        questions.push(
-          `設 \\(f(x)>0\\) 的解為 \\(${p}<x<${q}\\)，求 \\(f(2x)<0\\) 的解。`
-        );
+        questions.push(`設 \\(f(x)>0\\) 的解為 \\(${p}<x<${q}\\)，求 \\(f(2x)<0\\) 的解。`);
         answers.push(
           `簡答：\\(x<${fr(p, 2)}\\) 或 \\(x>${fr(q, 2)}\\)。過程：\\(f(t)<0\\) 的解為 \\(t<${p}\\) 或 \\(t>${q}\\)。令 \\(t=2x\\)，得 \\(2x<${p}\\) 或 \\(2x>${q}\\)，即 \\(x<${fr(p, 2)}\\) 或 \\(x>${fr(q, 2)}\\)。`
         );
@@ -12549,9 +12494,7 @@
 
       if (variant === 1) {
         const s = randInt(1, 4);
-        questions.push(
-          `若 \\(f(x)=-x^2+ax+b>0\\) 的解是 \\(${p}<x<${q}\\)，求 \\(f(x-${s})<0\\) 的解。`
-        );
+        questions.push(`若 \\(f(x)=-x^2+ax+b>0\\) 的解是 \\(${p}<x<${q}\\)，求 \\(f(x-${s})<0\\) 的解。`);
         answers.push(
           `簡答：\\(x<${p + s}\\) 或 \\(x>${q + s}\\)。過程：\\(f(t)<0\\) 的解為 \\(t<${p}\\) 或 \\(t>${q}\\)。令 \\(t=x-${s}\\)，得 \\(x-${s}<${p}\\) 或 \\(x-${s}>${q}\\)，即 \\(x<${p + s}\\) 或 \\(x>${q + s}\\)。`
         );
@@ -12576,9 +12519,7 @@
         const s = randInt(1, 4);
         const A = randInt(1, 5);
         const B = A + randInt(1, 5);
-        questions.push(
-          `已知 \\(f(${k}x-${s})<0\\) 的解為 \\(${A}<x<${B}\\)，求 \\(f(x)<0\\) 的解。`
-        );
+        questions.push(`已知 \\(f(${k}x-${s})<0\\) 的解為 \\(${A}<x<${B}\\)，求 \\(f(x)<0\\) 的解。`);
         answers.push(
           `簡答：\\(${k * A - s}<x<${k * B - s}\\)。過程：令 \\(t=${k}x-${s}\\)。當 \\(x\\) 由 ${A} 變到 ${B} 時，\\(t\\) 由 \\(${k}\\times${A}-${s}=${k * A - s}\\) 變到 \\(${k}\\times${B}-${s}=${k * B - s}\\)。故 \\(f(t)<0\\) 的解為 \\(${k * A - s}<t<${k * B - s}\\)。`
         );
@@ -12586,9 +12527,7 @@
       }
 
       // variant 4：f(x)≤0 解 p≤x≤q → f(x/2)>0
-      questions.push(
-        `若 \\(f(x)\\le0\\) 的解為 \\(${p}\\le x\\le${q}\\)，求 \\(f(\\frac{x}{2})>0\\) 的解。`
-      );
+      questions.push(`若 \\(f(x)\\le0\\) 的解為 \\(${p}\\le x\\le${q}\\)，求 \\(f(\\frac{x}{2})>0\\) 的解。`);
       answers.push(
         `簡答：\\(x<${2 * p}\\) 或 \\(x>${2 * q}\\)。過程：\\(f(t)>0\\) 的解為 \\(t<${p}\\) 或 \\(t>${q}\\)。令 \\(t=\\frac{x}{2}\\)，得 \\(\\frac{x}{2}<${p}\\) 或 \\(\\frac{x}{2}>${q}\\)，即 \\(x<${2 * p}\\) 或 \\(x>${2 * q}\\)。`
       );
@@ -12707,9 +12646,9 @@
         if ((wantNeg && s < 0) || (!wantNeg && s > 0)) {
           const lo = bnd[k];
           const hi = bnd[k + 1];
-          if (lo === -Infinity) parts.push(`x${ineq}${hi}`);
-          else if (hi === Infinity) parts.push(`x${le ? '\\ge' : '>'}${lo}`);
-          else parts.push(`${lo}${ineq}x${ineq}${hi}`);
+          if (lo === -Infinity) parts.push(`x ${ineq} ${hi}`);
+          else if (hi === Infinity) parts.push(`x ${le ? '\\ge' : '>'} ${lo}`);
+          else parts.push(`${lo} ${ineq} x ${ineq} ${hi}`);
         }
       }
       // ≤0 時，偶次根為孤立零點解（若不在任何負區間內）
@@ -12745,7 +12684,7 @@
         continue;
       }
 
-      questions.push(`解不等式 \\(${factorText}${le ? '\\le0' : '>0'}\\)。`);
+      questions.push(`解不等式 \\(${factorText}${le ? '\\le 0' : '>0'}\\)。`);
       answers.push(
         `簡答：\\(${parts.join(' 或 ') || '（僅孤立零點）'}\\)${isoText}。過程：相異根為 \\(${r1},${r2},${r3}\\)，指數 \\(${e.join(',')}\\)（奇偶：\\(${parity.map((p) => (p ? '奇' : '偶')).join(',')}\\)）。奇次因式過根變號、偶次不變號；由最右區間（\\(x>${r3}\\)）為正往左推得各區間符號，取${le ? '負（含 0）' : '正'}者即為解。`
       );
@@ -12786,7 +12725,10 @@
         const a = 1 - c;
         const b = c * q - p;
         // 臨界點：分子零點 x = -b/a（若 a≠0），分母零點 x=q
-        if (a === 0) { i -= 1; continue; }
+        if (a === 0) {
+          i -= 1;
+          continue;
+        }
         const root = makeFraction(-b, a);
         const rv = root.num / root.den;
         const crit = [rv, q].sort((x, y) => x - y);
@@ -12797,10 +12739,18 @@
         const pts = [crit[0] - 1, (crit[0] + crit[1]) / 2, crit[1] + 1];
         const lo = crit[0];
         const hi = crit[1];
-        const loT = root.den === 1 && crit[0] === rv ? `${root.num}` : crit[0] === q ? `${q}` : formatFraction(root.num, root.den);
+        const loT =
+          root.den === 1 && crit[0] === rv
+            ? `${root.num}`
+            : crit[0] === q
+              ? `${q}`
+              : formatFraction(root.num, root.den);
         // 左區間
         if (f(pts[0]) < 0) parts.push(`x<${crit[0] === rv ? formatFraction(root.num, root.den) : q}`);
-        if (f(pts[1]) < 0) parts.push(`${crit[0] === rv ? formatFraction(root.num, root.den) : q}<x<${crit[1] === rv ? formatFraction(root.num, root.den) : q}`);
+        if (f(pts[1]) < 0)
+          parts.push(
+            `${crit[0] === rv ? formatFraction(root.num, root.den) : q}<x<${crit[1] === rv ? formatFraction(root.num, root.den) : q}`
+          );
         if (f(pts[2]) < 0) parts.push(`x>${crit[1] === rv ? formatFraction(root.num, root.den) : q}`);
         questions.push(`解分式不等式 \\(\\frac{${Xm(p)}}{${Xm(q)}}<${c}\\)。`);
         answers.push(
@@ -12812,10 +12762,11 @@
       // variant 2、4：帶重根的分式，注意定義域
       const p = pickNonZero(-4, 4);
       const q = pickNonZero(-4, 4);
-      if (p === q) { i -= 1; continue; }
-      questions.push(
-        `解分式不等式 \\(\\frac{(${Xm(p)})^2(${Xm(q)})}{${Xm(p)}}>0\\)，並注意定義域。`
-      );
+      if (p === q) {
+        i -= 1;
+        continue;
+      }
+      questions.push(`解分式不等式 \\(\\frac{(${Xm(p)})^2(${Xm(q)})}{${Xm(p)}}>0\\)，並注意定義域。`);
       const lo = Math.min(p, q);
       const hi = Math.max(p, q);
       // p 是否落在解區間內（需另外排除）
@@ -12868,7 +12819,7 @@
         const hBase = formatS131ShiftBase(h);
         questions.push(`解不等式 \\((${fa})(${fb})(${positive})\\ge0\\)。`);
         answers.push(
-          `簡答：\\((-\\infty,${a}]\\cup[${b},\\infty)\\)。過程：\\(${positive}=${hBase}^2+${d}\\)，對所有實數都大於 0，所以不改變不等式正負號。只需解 \\((${fa})(${fb})\\ge0\\)，得到 \\(x\\le${a}\\) 或 \\(x\\ge${b}\\)。`
+          `簡答：\\((-\\infty,${a}]\\cup[${b},\\infty)\\)。過程：\\(${positive}=${hBase}^2+${d}\\)，對所有實數都大於 0，所以不改變不等式正負號。只需解 \\((${fa})(${fb})\\ge 0\\)，得到 \\(x\\le ${a}\\) 或 \\(x\\ge${b}\\)。`
         );
         continue;
       }
@@ -12910,9 +12861,7 @@
       if (variant === 1) {
         // (a^2-t^2)x^2+(a-t)x+1>0 恆成立 → a=t（退化為1>0）或 a>t 或 a<-5t/3
         const t = randInt(1, 3);
-        questions.push(
-          `已知 \\((a^2-${t * t})x^2+(a-${t})x+1>0\\) 對任意實數 \\(x\\) 恆成立，求 \\(a\\) 的範圍。`
-        );
+        questions.push(`已知 \\((a^2-${t * t})x^2+(a-${t})x+1>0\\) 對任意實數 \\(x\\) 恆成立，求 \\(a\\) 的範圍。`);
         answers.push(
           `簡答：\\(a>${t}\\) 或 \\(a<-${formatFraction(5 * t, 3)}\\)（另含退化情形 \\(a=${t}\\)）。過程：若 \\(a=${t}\\)，式子為 \\(1>0\\) 恆成立。若 \\(a\\ne${t}\\)，需 \\(a^2-${t * t}>0\\) 且判別式 \\((a-${t})^2-4(a^2-${t * t})<0\\)。化簡判別式條件為 \\((a-${t})(3a+${5 * t})>0\\)，即 \\(a>${t}\\) 或 \\(a<-${formatFraction(5 * t, 3)}\\)；與 \\(a^2-${t * t}>0\\) 取交集後結果不變。`
         );
@@ -12923,9 +12872,7 @@
       const p = randInt(1, 4);
       const q = randInt(2, 5);
       // (a+p)>0 且 D=q^2-4a(a+p)<0 → 4a^2+4pa-q^2>0
-      questions.push(
-        `設 \\(f(x)=(a+${p})x^2-${q}x+a\\) 恆正，求實數 \\(a\\) 需滿足的條件（以判別式表示）。`
-      );
+      questions.push(`設 \\(f(x)=(a+${p})x^2-${q}x+a\\) 恆正，求實數 \\(a\\) 需滿足的條件（以判別式表示）。`);
       answers.push(
         `簡答：\\(a>-${p}\\) 且 \\(4a^2+${4 * p}a-${q * q}>0\\)。過程：恆正需開口向上 \\(a+${p}>0\\)，即 \\(a>-${p}\\)；且判別式 \\((-${q})^2-4a(a+${p})<0\\)，展開得 \\(4a^2+${4 * p}a-${q * q}>0\\)。同時滿足即為所求。`
       );
@@ -12945,8 +12892,14 @@
         const a = -randInt(1, 4);
         let p = randInt(-4, 2);
         let q = p + randInt(1, 5);
-        for (let gg = 0; p + q === 0 && gg < 30; gg += 1) { p = randInt(-4, 2); q = p + randInt(1, 5); }
-        if (p + q === 0) { i -= 1; continue; }
+        for (let gg = 0; p + q === 0 && gg < 30; gg += 1) {
+          p = randInt(-4, 2);
+          q = p + randInt(1, 5);
+        }
+        if (p + q === 0) {
+          i -= 1;
+          continue;
+        }
         const L = -a * (p + q);
         const b = a * p * q;
         questions.push(
@@ -12962,9 +12915,7 @@
         // ax^2+bx+c>0 解 p<x<q → 2ax^2-bx+? 型的解（用對稱代換）
         const p = randInt(-4, 0);
         const q = p + randInt(2, 5);
-        questions.push(
-          `已知二次不等式 \\(ax^2+bx+c>0\\) 的解為 \\(${p}<x<${q}\\)，求 \\(ax^2-bx+c<0\\) 的解。`
-        );
+        questions.push(`已知二次不等式 \\(ax^2+bx+c>0\\) 的解為 \\(${p}<x<${q}\\)，求 \\(ax^2-bx+c<0\\) 的解。`);
         answers.push(
           `簡答：\\(x<${-q}\\) 或 \\(x>${-p}\\)。過程：把 \\(x\\) 換成 \\(-x\\)，\\(ax^2-bx+c\\) 對應原式在 \\(-x\\) 的值。原式 \\(>0\\) 的解為 \\(${p}<x<${q}\\)，故 \\(ax^2-bx+c>0\\) 的解為 \\(${-q}<x<${-p}\\)，其 \\(<0\\) 的解為補集 \\(x<${-q}\\) 或 \\(x>${-p}\\)。`
         );
@@ -13034,9 +12985,7 @@
         const b = g;
         const a = b * (t1 + t2);
         const H = b * t1 * t2;
-        questions.push(
-          `已知垂直上拋高度為 \\(y=${a}t-${b}t^2\\)（公尺）。求高度不低於 ${H} 公尺的時間長度。`
-        );
+        questions.push(`已知垂直上拋高度為 \\(y=${a}t-${b}t^2\\)（公尺）。求高度不低於 ${H} 公尺的時間長度。`);
         answers.push(
           `簡答：${t2 - t1} 秒。過程：\\(y\\ge${H}\\) 即 \\(${a}t-${b}t^2\\ge${H}\\)，整理 \\(${b}t^2-${a}t+${H}\\le0\\)，因式分解 \\(${b}(t-${t1})(t-${t2})\\le0\\)，得 \\(${t1}\\le t\\le${t2}\\)，時間長度為 \\(${t2}-${t1}=${t2 - t1}\\) 秒。`
         );
@@ -13053,10 +13002,10 @@
         const A2 = Math.max(area(x1), area(x2));
         // 由於面積為拋物線，介於區間可能對應兩段；此處取單調段
         questions.push(
-          `牆角用 ${Ltot} 公尺護欄圍成長方形，靠牆兩邊不需護欄。若面積介於 ${A1} 與 ${A2} 平方公尺之間，求一邊長 \\(x\\)（滿足 \\(x\\le${Ltot / 4}\\)）的範圍。`
+          `牆角用 ${Ltot} 公尺護欄圍成長方形，靠牆兩邊不需護欄。若面積介於 ${A1} 與 ${A2} 平方公尺之間，求一邊長 \\(x\\)（滿足 \\(x\\le ${Ltot / 4}\\)）的範圍。`
         );
         answers.push(
-          `簡答：\\(${Math.min(x1, x2)}\\le x\\le${Math.max(x1, x2)}\\)。過程：另一邊為 \\(${Ltot}-2x\\)，面積 \\(A=x(${Ltot}-2x)\\)。在 \\(x\\le${Ltot / 4}\\)（頂點左側）此段為遞增，令 \\(${A1}\\le A\\le${A2}\\) 解得 \\(${Math.min(x1, x2)}\\le x\\le${Math.max(x1, x2)}\\)。`
+          `簡答：\\(${Math.min(x1, x2)}\\le x\\le${Math.max(x1, x2)}\\)。過程：另一邊為 \\(${Ltot}-2x\\)，面積 \\(A=x(${Ltot}-2x)\\)。在 \\(x\\le ${Ltot / 4}\\)（頂點左側）此段為遞增，令 \\(${A1}\\le A\\le${A2}\\) 解得 \\(${Math.min(x1, x2)}\\le x\\le${Math.max(x1, x2)}\\)。`
         );
         continue;
       }
@@ -13091,7 +13040,7 @@
         // (x-r1)(x-r2)(x-r3) ≤ 0，首項正 → x≤r1 或 r2≤x≤r3
         questions.push(`解不等式 \\((${Xm(r1)})(${Xm(r2)})(${Xm(r3)})\\le0\\)。`);
         answers.push(
-          `簡答：\\(x\\le${r1}\\) 或 \\(${r2}\\le x\\le${r3}\\)。過程：三根為 \\(${r1}<${r2}<${r3}\\)，首項係數為正。在數線上分區檢驗符號：\\(x<${r1}\\) 為負、\\(${r1}<x<${r2}\\) 為正、\\(${r2}<x<${r3}\\) 為負、\\(x>${r3}\\) 為正。取 \\(\\le0\\) 的區間並含端點，得 \\(x\\le${r1}\\) 或 \\(${r2}\\le x\\le${r3}\\)。`
+          `簡答：\\(x\\le ${r1}\\) 或 \\(${r2}\\le x\\le${r3}\\)。過程：三根為 \\(${r1}<${r2}<${r3}\\)，首項係數為正。在數線上分區檢驗符號：\\(x<${r1}\\) 為負、\\(${r1}<x<${r2}\\) 為正、\\(${r2}<x<${r3}\\) 為負、\\(x>${r3}\\) 為正。取 \\(\\le0\\) 的區間並含端點，得 \\(x\\le ${r1}\\) 或 \\(${r2}\\le x\\le${r3}\\)。`
         );
         continue;
       }
@@ -13112,9 +13061,7 @@
         const s = randInt(1, 4);
         // 根 x=0,-a,a → 平移後 x=s, s-a, s+a
         const roots = [s - a, s, s + a].sort((p, q) => p - q);
-        questions.push(
-          `若 \\(f(x)=x(x+${a})(x-${a})\\)，求不等式 \\(f(x-${s})\\ge0\\) 的解。`
-        );
+        questions.push(`若 \\(f(x)=x(x+${a})(x-${a})\\)，求不等式 \\(f(x-${s})\\ge0\\) 的解。`);
         answers.push(
           `簡答：\\(${roots[0]}\\le x\\le${roots[1]}\\) 或 \\(x\\ge${roots[2]}\\)。過程：\\(f(t)\\ge0\\) 的解為 \\(-${a}\\le t\\le0\\) 或 \\(t\\ge${a}\\)。令 \\(t=x-${s}\\)，各邊加 ${s} 得 \\(${roots[0]}\\le x\\le${roots[1]}\\) 或 \\(x\\ge${roots[2]}\\)。`
         );
@@ -13458,7 +13405,7 @@
         const sol = k + 1;
         return {
           q: `解不等式 \\(\\sqrt{x+${a}}\\leq x\\)。`,
-          a: `簡答：\\(x\\geq${sol}\\)。過程：需 \\(x\\geq0\\) 且 \\(x\\geq0\\)（RHS須非負），平方得 \\(x+${a}\\leq x^2\\)，即 \\(x^2-x-${a}\\geq0\\)，\\((x-${sol})(x+${k})\\geq0\\)，解得 \\(x\\leq-${k}\\) 或 \\(x\\geq${sol}\\)。結合 \\(x\\geq0\\) 得 \\(x\\geq${sol}\\)。`,
+          a: `簡答：\\(x\\geq${sol}\\)。過程：需 \\(x\\geq0\\) 且 \\(x\\geq0\\)（RHS須非負），平方得 \\(x+${a}\\leq x^2\\)，即 \\(x^2-x-${a}\\geq0\\)，\\((x-${sol})(x+${k})\\geq0\\)，解得 \\(x\\leq-${k}\\) 或 \\(x\\geq${sol}\\)。結合 \\(x\\geq0\\) 得 \\(x\\geq ${sol}\\)。`,
         };
       },
       // Mode 3: √(a-x) > x-b, clean triples: (a,b,c): solution x<c
@@ -13474,7 +13421,7 @@
         const [a, b, c] = triples[randInt(0, 4)];
         return {
           q: `解不等式 \\(\\sqrt{${a}-x}>x-${b}\\)。`,
-          a: `簡答：\\(x<${c}\\)（且 \\(x\\leq${a}\\)）。過程：定義域 \\(x\\leq${a}\\)。當 \\(x<${b}\\) 時，右側為負，左側非負，不等式自動成立。當 \\(x\\geq${b}\\) 時，兩側非負，平方得 \\(${a}-x>(x-${b})^2\\)，整理得 \\((x-${b})(x-${c})<0\\)（或類似），解得 \\(${b}\\leq x<${c}\\)。合併：\\(x<${c}\\)。`,
+          a: `簡答：\\(x<${c}\\)（且 \\(x\\leq ${a}\\)）。過程：定義域 \\(x\\leq ${a}\\)。當 \\(x<${b}\\) 時，右側為負，左側非負，不等式自動成立。當 \\(x\\geq${b}\\) 時，兩側非負，平方得 \\(${a}-x>(x-${b})^2\\)，整理得 \\((x-${b})(x-${c})<0\\)（或類似），解得 \\(${b}\\leq x<${c}\\)。合併：\\(x<${c}\\)。`,
         };
       },
       // Mode 4: √(x+a) ≥ x+b, solution -a ≤ x ≤ ... clean pairs
@@ -14160,7 +14107,10 @@
         const r2 = makeFraction(N0, b0);
         const v1 = r1.num / r1.den;
         const v2 = r2.num / r2.den;
-        if (v1 === v2) { i -= 1; continue; }
+        if (v1 === v2) {
+          i -= 1;
+          continue;
+        }
         const loF = v1 < v2 ? r1 : r2;
         const hiF = v1 < v2 ? r2 : r1;
         s11Add(
@@ -14209,7 +14159,10 @@
         const s2 = makeFraction(by3 - c3, bx3);
         const w1 = s1.num / s1.den;
         const w2 = s2.num / s2.den;
-        if (w1 === w2) { i -= 1; continue; }
+        if (w1 === w2) {
+          i -= 1;
+          continue;
+        }
         const loS = w1 < w2 ? s1 : s2;
         const hiS = w1 < w2 ? s2 : s1;
         s11Add(
@@ -14714,7 +14667,7 @@
           set,
           `解不等式 \\(\\dfrac{(${s13XMinus(a)})^2(${s13XMinus(b)})^3}{(${s13XMinus(c)})^4}\\le0\\)。`,
           `\\((-\\infty,${b}]\\)，且 \\(x\\ne${c}\\)`,
-          `平方與四次方只影響是否為 0 或不可取，不改變正負號。真正決定正負的是 \\(${s13XMinus(b)}\\)。所以先得 \\(x\\le${b}\\)，再排除分母為 0 的 \\(x=${c}\\)。`
+          `平方與四次方只影響是否為 0 或不可取，不改變正負號。真正決定正負的是 \\(${s13XMinus(b)}\\)。所以先得 \\(x\\le ${b}\\)，再排除分母為 0 的 \\(x=${c}\\)。`
         );
       } else if (mode === 1) {
         const r = randInt(-3, 2);
