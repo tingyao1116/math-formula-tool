@@ -1029,8 +1029,9 @@
       } else if (type === 'figureScaleLength') {
         const width = randInt(4, 15);
         const height = randInt(5, 18);
-        const numerator = randInt(3, 8);
         const denominator = randInt(2, 6);
+        let numerator = randInt(3, 8);
+        while (numerator === denominator) numerator = randInt(3, 8);
         const newWidth = formatFraction(width * numerator, denominator);
         const newHeight = formatFraction(height * numerator, denominator);
         questions.push(
@@ -1041,8 +1042,9 @@
         );
       } else if (type === 'scaleBackLength') {
         const original = randInt(4, 14);
-        const numerator = randInt(2, 7);
         const denominator = randInt(2, 6);
+        let numerator = randInt(2, 7);
+        while (numerator === denominator) numerator = randInt(2, 7);
         const scaled = formatFraction(original * numerator, denominator);
         questions.push(
           `一個圖形等比例縮放為原來的 \\(\\dfrac{${numerator}}{${denominator}}\\) 倍後，某一邊長變為 \\(${scaled}\\)。求原圖形對應邊長。`
@@ -1188,48 +1190,85 @@
         const scale = randInt(2, 6);
         const objectShadow = personShadow * scale;
         const objectHeight = personHeight * scale;
-        questions.push(
-          `同一時間陽光照射下，身高 \\(${personHeight}\\) 公分的人影長 \\(${personShadow}\\) 公分。若旗竿影長為 \\(${objectShadow}\\) 公分，求旗竿高度。`
-        );
-        answers.push(
-          `簡答：\\(${objectHeight}\\) 公分。過程：同時刻物高與影長成正比，\\(\\dfrac{旗竿高度}{${objectShadow}}=\\dfrac{${personHeight}}{${personShadow}}\\)，所以旗竿高度為 \\(${objectHeight}\\) 公分。`
-        );
+        if (i % 2 === 0) {
+          questions.push(
+            `同一時間陽光照射下，身高 \\(${personHeight}\\) 公分的人影長 \\(${personShadow}\\) 公分。若旗竿影長為 \\(${objectShadow}\\) 公分，求旗竿高度。`
+          );
+          answers.push(
+            `簡答：\\(${objectHeight}\\) 公分。過程：同時刻物高與影長成正比，\\(\\dfrac{旗竿高度}{${objectShadow}}=\\dfrac{${personHeight}}{${personShadow}}\\)，所以旗竿高度為 \\(${objectHeight}\\) 公分。`
+          );
+        } else {
+          questions.push(
+            `同一時間陽光照射下，身高 \\(${personHeight}\\) 公分的人影長 \\(${personShadow}\\) 公分。若旗竿高為 \\(${objectHeight}\\) 公分，求旗竿影長。`
+          );
+          answers.push(
+            `簡答：\\(${objectShadow}\\) 公分。過程：同時刻物高與影長成正比，\\(\\dfrac{${objectHeight}}{旗竿影長}=\\dfrac{${personHeight}}{${personShadow}}\\)，所以旗竿影長為 \\(${objectShadow}\\) 公分。`
+          );
+        }
       } else if (type === 'mirrorMeasure') {
-        const eyeHeight = randInt(140, 180);
+        const eyeNumerator = randInt(14, 18);
         const personToMirror = randInt(2, 6);
         const scale = randInt(2, 7);
         const objectToMirror = personToMirror * scale;
-        const objectHeight = eyeHeight * scale;
-        questions.push(
-          `為測量樹高，在距樹 \\(${objectToMirror}\\) 公尺處放一面平面鏡，人站在鏡子另一側 \\(${personToMirror}\\) 公尺處剛好看到樹頂。若人眼離地 \\(${eyeHeight}\\) 公分，求樹高。`
-        );
-        answers.push(
-          `簡答：\\(${objectHeight}\\) 公分。過程：入射角等於反射角，形成相似直角三角形，故 \\(樹高:人眼高度=${objectToMirror}:${personToMirror}\\)。樹高 \\(=${eyeHeight}\\times\\dfrac{${objectToMirror}}{${personToMirror}}=${objectHeight}\\) 公分。`
-        );
+        const eyeHeight = formatFraction(eyeNumerator, 10);
+        const objectHeight = formatFraction(eyeNumerator * scale, 10);
+        if (i % 2 === 0) {
+          questions.push(
+            `為測量樹高，在距樹 \\(${objectToMirror}\\) 公尺處放一面平面鏡，人站在鏡子另一側 \\(${personToMirror}\\) 公尺處剛好看到樹頂。若人眼離地 \\(${eyeHeight}\\) 公尺，求樹高。`
+          );
+          answers.push(
+            `簡答：\\(${objectHeight}\\) 公尺。過程：入射角等於反射角，形成相似直角三角形，故 \\(樹高:人眼高度=${objectToMirror}:${personToMirror}\\)。樹高 \\(=${eyeHeight}\\times\\dfrac{${objectToMirror}}{${personToMirror}}=${objectHeight}\\) 公尺。`
+          );
+        } else {
+          questions.push(
+            `在距路燈 \\(${objectToMirror}\\) 公尺處放一面平面鏡，人站在鏡子另一側 \\(${personToMirror}\\) 公尺處剛好看到燈頂。若路燈高 \\(${objectHeight}\\) 公尺，求人眼離地高度。`
+          );
+          answers.push(
+            `簡答：\\(${eyeHeight}\\) 公尺。過程：鏡面反射形成相似直角三角形，\\(路燈高:眼高=${objectToMirror}:${personToMirror}\\)。所以眼高 \\(=${objectHeight}\\times\\dfrac{${personToMirror}}{${objectToMirror}}=${eyeHeight}\\) 公尺。`
+          );
+        }
       } else if (type === 'pinholeMeasure') {
         const insectHeight = randInt(6, 15);
         const pinholeDistance = randInt(10, 30);
         const scale = randInt(2, 5);
         const screenDistance = pinholeDistance * scale;
         const imageHeight = insectHeight * scale;
-        questions.push(
-          `利用針孔成像觀察昆蟲，昆蟲高 \\(${insectHeight}\\) 公分，昆蟲到針孔距離 \\(${pinholeDistance}\\) 公分。若屏幕到針孔距離 \\(${screenDistance}\\) 公分，求屏幕上影像高度。`
-        );
-        answers.push(
-          `簡答：\\(${imageHeight}\\) 公分。過程：針孔成像中，影像高度與物體高度之比等於屏幕距離與物體距離之比，所以影像高度 \\(=${insectHeight}\\times\\dfrac{${screenDistance}}{${pinholeDistance}}=${imageHeight}\\) 公分。`
-        );
+        if (i % 2 === 0) {
+          questions.push(
+            `利用針孔成像觀察昆蟲，昆蟲高 \\(${insectHeight}\\) 公分，昆蟲到針孔距離 \\(${pinholeDistance}\\) 公分。若成像屏到針孔距離 \\(${screenDistance}\\) 公分，求成像屏上的像高。`
+          );
+          answers.push(
+            `簡答：\\(${imageHeight}\\) 公分。過程：針孔成像中，像高與物高的比等於成像屏距離與物體距離的比，所以像高 \\(=${insectHeight}\\times\\dfrac{${screenDistance}}{${pinholeDistance}}=${imageHeight}\\) 公分。`
+          );
+        } else {
+          questions.push(
+            `利用針孔成像觀察昆蟲，成像屏上的像高為 \\(${imageHeight}\\) 公分，昆蟲到針孔距離 \\(${pinholeDistance}\\) 公分，成像屏到針孔距離 \\(${screenDistance}\\) 公分。求昆蟲高度。`
+          );
+          answers.push(
+            `簡答：\\(${insectHeight}\\) 公分。過程：\\(\\dfrac{像高}{物高}=\\dfrac{成像屏距離}{物體距離}\\)，所以物高 \\(=${imageHeight}\\times\\dfrac{${pinholeDistance}}{${screenDistance}}=${insectHeight}\\) 公分。`
+          );
+        }
       } else if (type === 'riverMeasure') {
         const dc = randInt(3, 9);
         const de = randInt(2, 6);
         const scale = randInt(3, 8);
         const bc = dc * scale;
         const ab = de * scale;
-        questions.push(
-          `為測河寬 \\(AB\\)，在岸邊取點 \\(C\\)，使 \\(AB\\perp BC\\)。再在直線 \\(BC\\) 上取點 \\(D\\)，作 \\(DE\\perp BC\\)，且 \\(A,C,E\\) 三點共線。若 \\(BC=${bc}\\) 公尺、\\(DC=${dc}\\) 公尺、\\(DE=${de}\\) 公尺，求河寬 \\(AB\\)。`
-        );
-        answers.push(
-          `簡答：\\(AB=${ab}\\) 公尺。過程：\\(\\triangle ABC\\sim\\triangle EDC\\)，所以 \\(AB:DE=BC:DC\\)。代入得 \\(AB:${de}=${bc}:${dc}\\)，故 \\(AB=${ab}\\) 公尺。`
-        );
+        if (i % 2 === 0) {
+          questions.push(
+            `為測河寬 \\(AB\\)，在岸邊取點 \\(C\\)，使 \\(AB\\perp BC\\)。再在直線 \\(BC\\) 上取點 \\(D\\)，作 \\(DE\\perp BC\\)，且 \\(A,C,E\\) 三點共線。若 \\(BC=${bc}\\) 公尺、\\(DC=${dc}\\) 公尺、\\(DE=${de}\\) 公尺，求河寬 \\(AB\\)。`
+          );
+          answers.push(
+            `簡答：\\(AB=${ab}\\) 公尺。過程：\\(\\triangle ABC\\sim\\triangle EDC\\)，所以 \\(AB:DE=BC:DC\\)。代入得 \\(AB:${de}=${bc}:${dc}\\)，故 \\(AB=${ab}\\) 公尺。`
+          );
+        } else {
+          questions.push(
+            `為測河寬 \\(AB\\)，在岸邊取點 \\(C\\)，使 \\(AB\\perp BC\\)。再在直線 \\(BC\\) 上取點 \\(D\\)，作 \\(DE\\perp BC\\)，且 \\(A,C,E\\) 三點共線。若 \\(AB=${ab}\\) 公尺、\\(DC=${dc}\\) 公尺、\\(DE=${de}\\) 公尺，求 \\(BC\\)。`
+          );
+          answers.push(
+            `簡答：\\(BC=${bc}\\) 公尺。過程：\\(\\triangle ABC\\sim\\triangle EDC\\)，所以 \\(AB:DE=BC:DC\\)。代入得 \\(${ab}:${de}=BC:${dc}\\)，故 \\(BC=${bc}\\) 公尺。`
+          );
+        }
       }
     }
     return { questions, summaryAnswers, answers };
@@ -1299,16 +1338,17 @@
           `簡答：\\(${formatFraction(tree, 100)}\\) 公尺。過程：眼睛到樹的水平距離為 \\(${far}+${near}=${totalDist}\\) 公尺，高出眼睛的部分成比例，\\((樹高-眼高):(標竿高-眼高)=${totalDist}:${near}\\)。所以樹高 \\(=${formatFraction(eye, 100)}+(${formatFraction(pole, 100)}-${formatFraction(eye, 100)})\\times\\dfrac{${totalDist}}{${near}}=${formatFraction(tree, 100)}\\)。`
         );
       } else if (type === 'mirrorHeight') {
-        const eye = randInt(140, 180);
+        const eyeNumerator = randInt(14, 18);
         const personDist = randInt(2, 6);
         const scale = randInt(2, 7);
         const objectDist = personDist * scale;
-        const height = eye * scale;
+        const eye = formatFraction(eyeNumerator, 10);
+        const height = formatFraction(eyeNumerator * scale, 10);
         questions.push(
-          `在距大樓 \\(${objectDist}\\) 公尺處放一面平面鏡，人站在鏡子另一側 \\(${personDist}\\) 公尺處剛好看到樓頂。若眼睛離地 \\(${eye}\\) 公分，求大樓高度。`
+          `在距大樓 \\(${objectDist}\\) 公尺處放一面平面鏡，人站在鏡子另一側 \\(${personDist}\\) 公尺處剛好看到樓頂。若眼睛離地 \\(${eye}\\) 公尺，求大樓高度。`
         );
         answers.push(
-          `簡答：\\(${height}\\) 公分。過程：鏡面反射形成相似直角三角形，設大樓高為 \\(H\\)，則 \\(H:${eye}=${objectDist}:${personDist}\\)，所以 \\(H=${height}\\)。`
+          `簡答：\\(${height}\\) 公尺。過程：鏡面反射形成相似直角三角形，設大樓高為 \\(H\\)，則 \\(H:${eye}=${objectDist}:${personDist}\\)，所以 \\(H=${height}\\) 公尺。`
         );
       } else if (type === 'pinholeImage') {
         const objectHeight = randInt(6, 20);
@@ -1317,10 +1357,10 @@
         const screenDist = objectDist * scale;
         const imageHeight = objectHeight * scale;
         questions.push(
-          `利用針孔成像觀察物體，物體高 \\(${objectHeight}\\) 公分，物體到針孔距離 \\(${objectDist}\\) 公分。若屏幕到針孔距離 \\(${screenDist}\\) 公分，求屏幕上的像高。`
+          `利用針孔成像觀察物體，物體高 \\(${objectHeight}\\) 公分，物體到針孔距離 \\(${objectDist}\\) 公分。若成像屏到針孔距離 \\(${screenDist}\\) 公分，求成像屏上的像高。`
         );
         answers.push(
-          `簡答：\\(${imageHeight}\\) 公分。過程：像高:物高=屏幕距離:物體距離，所以像高 \\(=${objectHeight}\\times\\dfrac{${screenDist}}{${objectDist}}=${imageHeight}\\)。`
+          `簡答：\\(${imageHeight}\\) 公分。過程：像高:物高 = 成像屏距離:物體距離，所以像高 \\(=${objectHeight}\\times\\dfrac{${screenDist}}{${objectDist}}=${imageHeight}\\) 公分。`
         );
       } else if (type === 'riverWidth') {
         const dc = randInt(3, 9);
@@ -1500,7 +1540,7 @@
         );
       } else if (type === 'trigArea') {
         const [p, q] = coprimePair(2, 8);
-        const scale = randInt(2, 7);
+        const scale = p % 2 === 1 && q % 2 === 1 ? randInt(1, 3) * 2 : randInt(2, 7);
         const base = p * scale;
         const height = q * scale;
         const area = (base * height) / 2;
@@ -1658,29 +1698,57 @@
           `簡答：\\(${r1}\\) 與 \\(${r2}\\)。過程：外切時 \\(r_1+r_2=${external}\\)，內切時 \\(r_1-r_2=${internal}\\)。解聯立得 \\(r_1=${r1}\\)、\\(r_2=${r2}\\)。`
         );
       } else if (type === 'externalCommonTangent') {
-        const [length, diff, d] = pickTriple();
-        const small = randInt(2, 8);
+        const [baseLength, baseDiff, baseD] = pickTriple();
+        const scale = randInt(1, 3);
+        const length = baseLength * scale;
+        const diff = baseDiff * scale;
+        const d = baseD * scale;
+        const small = randInt(2, 8) * scale;
         const big = small + diff;
-        questions.push(`兩圓半徑分別為 \\(${big}\\)、\\(${small}\\)，連心線長為 \\(${d}\\)。求外公切線段長。`);
-        answers.push(
-          `簡答：\\(${length}\\)。過程：外公切線段長 \\(=\\sqrt{d^2-(r_1-r_2)^2}\\)。代入得 \\(\\sqrt{${d}^2-${diff}^2}=${length}\\)。`
-        );
+        if (i % 2 === 0) {
+          questions.push(`兩圓半徑分別為 \\(${big}\\)、\\(${small}\\)，連心線長為 \\(${d}\\)。求外公切線段長。`);
+          answers.push(
+            `簡答：\\(${length}\\)。過程：外公切線段、連心線與兩半徑差構成直角三角形，故長度 \\(=\\sqrt{d^2-(r_1-r_2)^2}=\\sqrt{${d}^2-${diff}^2}=${length}\\)。`
+          );
+        } else {
+          questions.push(`兩圓半徑分別為 \\(${big}\\)、\\(${small}\\)，外公切線段長為 \\(${length}\\)。求連心線長。`);
+          answers.push(
+            `簡答：\\(${d}\\)。過程：外公切線段、連心線與兩半徑差構成直角三角形，故 \\(d=\\sqrt{${length}^2+(${big}-${small})^2}=\\sqrt{${length}^2+${diff}^2}=${d}\\)。`
+          );
+        }
       } else if (type === 'internalCommonTangent') {
-        const [length, sum, d] = pickTriple();
-        let r1 = randInt(2, sum - 2);
+        const [baseLength, baseSum, baseD] = pickTriple();
+        const scale = randInt(1, 3);
+        const length = baseLength * scale;
+        const sum = baseSum * scale;
+        const d = baseD * scale;
+        let r1 = randInt(2 * scale, sum - 2 * scale);
         let r2 = sum - r1;
         if (r1 < r2) [r1, r2] = [r2, r1];
-        questions.push(`兩圓半徑分別為 \\(${r1}\\)、\\(${r2}\\)，連心線長為 \\(${d}\\)。求內公切線段長。`);
-        answers.push(
-          `簡答：\\(${length}\\)。過程：內公切線段長 \\(=\\sqrt{d^2-(r_1+r_2)^2}\\)。代入得 \\(\\sqrt{${d}^2-${sum}^2}=${length}\\)。`
-        );
+        if (i % 2 === 0) {
+          questions.push(`兩圓半徑分別為 \\(${r1}\\)、\\(${r2}\\)，連心線長為 \\(${d}\\)。求內公切線段長。`);
+          answers.push(
+            `簡答：\\(${length}\\)。過程：內公切線段、連心線與兩半徑和構成直角三角形，故長度 \\(=\\sqrt{d^2-(r_1+r_2)^2}=\\sqrt{${d}^2-${sum}^2}=${length}\\)。`
+          );
+        } else {
+          questions.push(`兩圓半徑分別為 \\(${r1}\\)、\\(${r2}\\)，內公切線段長為 \\(${length}\\)。求連心線長。`);
+          answers.push(
+            `簡答：\\(${d}\\)。過程：內公切線段、連心線與兩半徑和構成直角三角形，故 \\(d=\\sqrt{${length}^2+(${r1}+${r2})^2}=\\sqrt{${length}^2+${sum}^2}=${d}\\)。`
+          );
+        }
       } else if (type === 'tangentSegments') {
         const tangent = randInt(4, 18);
-        const other = randInt(3, 15);
-        questions.push(
-          `圓外一點 \\(P\\) 向圓作兩條切線 \\(PA\\)、\\(PB\\)，切點為 \\(A\\)、\\(B\\)。若 \\(PA=${tangent}\\)，求 \\(PB\\)。`
-        );
-        answers.push(`簡答：\\(PB=${tangent}\\)。過程：同一圓外一點所作兩切線段相等，所以 \\(PA=PB=${tangent}\\)。`);
+        if (i % 2 === 0) {
+          questions.push(
+            `圓外一點 \\(P\\) 向圓作兩條切線 \\(PA\\)、\\(PB\\)，切點為 \\(A\\)、\\(B\\)。若 \\(PA=${tangent}\\)，求 \\(PB\\)。`
+          );
+          answers.push(`簡答：\\(PB=${tangent}\\)。過程：同一圓外一點所作兩切線段相等，所以 \\(PA=PB=${tangent}\\)。`);
+        } else {
+          questions.push(
+            `圓外一點 \\(P\\) 向圓作兩條切線 \\(PA\\)、\\(PB\\)，切點為 \\(A\\)、\\(B\\)。若 \\(PB=${tangent}\\)，求 \\(PA\\)。`
+          );
+          answers.push(`簡答：\\(PA=${tangent}\\)。過程：同一圓外一點所作兩切線段相等，所以 \\(PA=PB=${tangent}\\)。`);
+        }
       } else if (type === 'circumscribedQuadrilateral') {
         const a = randInt(5, 18);
         const c = randInt(5, 18);
@@ -2132,6 +2200,14 @@
       [9, 12, 15],
     ];
     const pickTriple = () => triples[randInt(0, triples.length - 1)];
+    const tangentSecantTriples = [
+      [6, 4, 9],
+      [8, 4, 16],
+      [12, 8, 18],
+      [15, 9, 25],
+      [20, 16, 25],
+    ];
+    const pickTangentSecantTriple = () => tangentSecantTriples[randInt(0, tangentSecantTriples.length - 1)];
     const makeIntersectingChordSegments = () => {
       for (let attempt = 0; attempt < 30; attempt += 1) {
         const pc = randInt(3, 12);
@@ -2200,37 +2276,65 @@
           continue;
         }
         const chordC = totalC - outsideC;
-        questions.push(
-          `圓外一點 \\(P\\) 作兩割線 \\(PAB\\)、\\(PCD\\)。若 \\(PA=${outsideA}\\)、\\(AB=${chordA}\\)、\\(PC=${outsideC}\\)，求 \\(CD\\) 的長度。`
-        );
-        answers.push(
-          `簡答：\\(CD=${chordC}\\)。過程：割線乘冪為 \\(PA\\times PB=PC\\times PD\\)。其中 \\(PB=${outsideA}+${chordA}=${totalA}\\)，所以 \\(${outsideA}\\times${totalA}=${outsideC}\\times PD\\)，得 \\(PD=${totalC}\\)，故 \\(CD=${totalC}-${outsideC}=${chordC}\\)。`
-        );
+        if (i % 2 === 0) {
+          questions.push(
+            `圓外一點 \\(P\\) 作兩割線 \\(PAB\\)、\\(PCD\\)。若 \\(PA=${outsideA}\\)、\\(AB=${chordA}\\)、\\(PC=${outsideC}\\)，求圓內段 \\(CD\\) 的長度。`
+          );
+          answers.push(
+            `簡答：\\(CD=${chordC}\\)。過程：割線乘冪為 \\(PA\\times PB=PC\\times PD\\)。其中 \\(PB=${outsideA}+${chordA}=${totalA}\\)，所以 \\(${outsideA}\\times${totalA}=${outsideC}\\times PD\\)，得 \\(PD=${totalC}\\)，故 \\(CD=${totalC}-${outsideC}=${chordC}\\)。`
+          );
+        } else {
+          questions.push(
+            `圓外一點 \\(P\\) 作兩割線 \\(PAB\\)、\\(PCD\\)。若 \\(PA=${outsideA}\\)、\\(PB=${totalA}\\)、\\(PC=${outsideC}\\)，求第二條割線的全長 \\(PD\\)。`
+          );
+          answers.push(
+            `簡答：\\(PD=${totalC}\\)。過程：兩割線乘冪相等，\\(PA\\times PB=PC\\times PD\\)。代入 \\(${outsideA}\\times${totalA}=${outsideC}\\times PD\\)，得 \\(PD=${totalC}\\)。`
+          );
+        }
       } else if (type === 'tangentSecantTangent') {
-        const [tangent, pa, pb] = pickTriple();
-        const scale = randInt(1, 3);
-        const pt = tangent * scale;
-        const first = pa * scale;
-        const total = pb * scale;
-        questions.push(
-          `自圓外一點 \\(P\\) 作切線 \\(PT\\)，割線 \\(PAB\\) 通過圓。若 \\(PA=${first}\\)、\\(PB=${total}\\)，求切線段 \\(PT\\) 的長度。`
-        );
-        answers.push(
-          `簡答：\\(PT=${pt}\\)。過程：切割線定理 \\(PT^2=PA\\times PB\\)，所以 \\(PT=\\sqrt{${first}\\times${total}}=${pt}\\)。`
-        );
-      } else if (type === 'tangentSecantSecantSegment') {
-        const [tangent, pa, pb] = pickTriple();
+        const [tangent, pa, pb] = pickTangentSecantTriple();
         const scale = randInt(1, 3);
         const pt = tangent * scale;
         const first = pa * scale;
         const total = pb * scale;
         const chord = total - first;
-        questions.push(
-          `自圓外一點 \\(P\\) 作切線 \\(PT\\)，割線 \\(PAB\\) 通過圓。若 \\(PT=${pt}\\)、\\(PA=${first}\\)，求 \\(AB\\) 的長度。`
-        );
-        answers.push(
-          `簡答：\\(AB=${chord}\\)。過程：\\(PT^2=PA\\times PB\\)，所以 \\(${pt}^2=${first}\\times PB\\)，得 \\(PB=${total}\\)。因此 \\(AB=PB-PA=${total}-${first}=${chord}\\)。`
-        );
+        if (i % 2 === 0) {
+          questions.push(
+            `自圓外一點 \\(P\\) 作切線 \\(PT\\)，割線 \\(PAB\\) 通過圓。若 \\(PA=${first}\\)、\\(PB=${total}\\)，求切線段 \\(PT\\) 的長度。`
+          );
+          answers.push(
+            `簡答：\\(PT=${pt}\\)。過程：切割線定理 \\(PT^2=PA\\times PB\\)，所以 \\(PT=\\sqrt{${first}\\times${total}}=${pt}\\)。`
+          );
+        } else {
+          questions.push(
+            `自圓外一點 \\(P\\) 作切線 \\(PT\\)，割線 \\(PAB\\) 通過圓。若 \\(PA=${first}\\)、圓內段 \\(AB=${chord}\\)，求切線段 \\(PT\\) 的長度。`
+          );
+          answers.push(
+            `簡答：\\(PT=${pt}\\)。過程：先求割線全長 \\(PB=PA+AB=${first}+${chord}=${total}\\)。再由 \\(PT^2=PA\\times PB\\)，得 \\(PT=\\sqrt{${first}\\times${total}}=${pt}\\)。`
+          );
+        }
+      } else if (type === 'tangentSecantSecantSegment') {
+        const [tangent, pa, pb] = pickTangentSecantTriple();
+        const scale = randInt(1, 3);
+        const pt = tangent * scale;
+        const first = pa * scale;
+        const total = pb * scale;
+        const chord = total - first;
+        if (i % 2 === 0) {
+          questions.push(
+            `自圓外一點 \\(P\\) 作切線 \\(PT\\)，割線 \\(PAB\\) 通過圓。若 \\(PT=${pt}\\)、\\(PA=${first}\\)，求圓內段 \\(AB\\) 的長度。`
+          );
+          answers.push(
+            `簡答：\\(AB=${chord}\\)。過程：\\(PT^2=PA\\times PB\\)，所以 \\(${pt}^2=${first}\\times PB\\)，得 \\(PB=${total}\\)。因此 \\(AB=PB-PA=${total}-${first}=${chord}\\)。`
+          );
+        } else {
+          questions.push(
+            `自圓外一點 \\(P\\) 作切線 \\(PT\\)，割線 \\(PAB\\) 通過圓。若 \\(PT=${pt}\\)、圓內段 \\(AB=${chord}\\)，求外部段 \\(PA\\) 的長度。`
+          );
+          answers.push(
+            `簡答：\\(PA=${first}\\)。過程：設 \\(PA=x\\)，則 \\(PB=x+${chord}\\)。由 \\(PT^2=PA\\times PB\\)，得 \\(x(x+${chord})=${pt}^2\\)，解得正值 \\(x=${first}\\)。`
+          );
+        }
       } else if (type === 'algebraIntersectingChords') {
         const x = randInt(3, 9);
         const offset = randInt(1, 5);
@@ -2352,17 +2456,36 @@
           `簡答：\\(${product}\\)。過程：通過圓心時兩段為 \\(r-OP\\) 與 \\(r+OP\\)，乘積 \\(=(${r}-${op})(${r}+${op})=${r}^2-${op}^2=${product}\\)。`
         );
       } else if (type === 'chordDistancePowerTransfer') {
-        const [distance, halfChord, radius] = pickTriple();
-        const scale = randInt(1, 3);
-        const d = distance * scale;
-        const half = halfChord * scale;
-        const r = radius * scale;
-        const product = r * r - d * d;
         const throughCenter = i % 2 === 0;
-        const cm = throughCenter ? r - d : half;
-        const md = throughCenter ? r + d : half;
+        let d;
+        let half;
+        let r;
+        let cm;
+        let md;
+        if (throughCenter) {
+          const [distance, halfChord, radius] = pickTriple();
+          const scale = randInt(1, 3);
+          d = distance * scale;
+          half = halfChord * scale;
+          r = radius * scale;
+          cm = r - d;
+          md = r + d;
+        } else {
+          const distinctChordCases = [
+            { d: 8, half: 6, r: 10, cm: 3, md: 12 },
+            { d: 15, half: 8, r: 17, cm: 4, md: 16 },
+            { d: 18, half: 24, r: 30, cm: 18, md: 32 },
+          ];
+          const item = distinctChordCases[randInt(0, distinctChordCases.length - 1)];
+          d = item.d;
+          half = item.half;
+          r = item.r;
+          cm = item.cm;
+          md = item.md;
+        }
+        const product = r * r - d * d;
         questions.push(
-          `圓 \\(O\\) 半徑為 \\(${r}\\)，弦 \\(AB\\) 的弦心距為 \\(${d}\\)，且 \\(M\\) 為 \\(AB\\) 的中點。另一弦 \\(CD\\) 過 \\(M\\)，若 \\(CM=${cm}\\)，求 \\(MD\\)。`
+          `圓 \\(O\\) 半徑為 \\(${r}\\)，弦 \\(AB\\) 的弦心距為 \\(${d}\\)，且 \\(M\\) 為 \\(AB\\) 的中點。另一弦 \\(CD\\) 通過 \\(M\\)${throughCenter ? '，且 \\(O、M、D\\) 三點共線' : ''}。若 \\(CM=${cm}\\)，求 \\(MD\\)。`
         );
         answers.push(
           `簡答：\\(MD=${md}\\)。過程：弦 \\(AB\\) 的半弦長為 \\(\\sqrt{${r}^2-${d}^2}=${half}\\)，所以 \\(AM\\times MB=${half}^2=${product}\\)。由圓內乘冪，\\(CM\\times MD=${product}\\)，得 \\(MD=${md}\\)。`
@@ -2506,6 +2629,7 @@
         'remainderParity',
         'expressionRemainder',
         'ageSquaresRemainder',
+        'powerRemainder',
         'notDivisibleClaim',
       ],
       consecutiveMixed: [
@@ -2691,27 +2815,44 @@
           `簡答：餘數為 \\(${result}\\)。過程：\\(n\\equiv${remainder}\\pmod{${divisor}}\\)，所以 \\((n+${constant})^2\\equiv(${remainder}+${constant})^2\\equiv${result}\\pmod{${divisor}}\\)。`
         );
       } else if (type === 'ageSquaresRemainder') {
-        const divisor = 7;
-        const r1 = randInt(1, 6);
-        const r2 = randInt(1, 6);
+        const divisor = [5, 7, 8, 9, 11][randInt(0, 4)];
+        const r1 = randInt(0, divisor - 1);
+        const r2 = randInt(0, divisor - 1);
         const result = (r1 * r1 + r2 * r2) % divisor;
         questions.push(
-          `兩人的年齡除以 \\(7\\) 的餘數分別為 \\(${r1}\\)、\\(${r2}\\)。求兩人年齡平方和除以 \\(7\\) 的餘數。`
+          `兩個正整數 \\(a\\)、\\(b\\) 除以 \\(${divisor}\\) 的餘數分別為 \\(${r1}\\)、\\(${r2}\\)。求 \\(a^2+b^2\\) 除以 \\(${divisor}\\) 的餘數。`
         );
         answers.push(
-          `簡答：餘數為 \\(${result}\\)。過程：若兩年齡分別為 \\(x\\)、\\(y\\)，則 \\(x^2+y^2\\equiv${r1}^2+${r2}^2\\equiv${result}\\pmod 7\\)。`
+          `簡答：餘數為 \\(${result}\\)。過程：\\(a\\equiv${r1}\\pmod{${divisor}}\\)、\\(b\\equiv${r2}\\pmod{${divisor}}\\)，所以 \\(a^2+b^2\\equiv${r1}^2+${r2}^2\\equiv${result}\\pmod{${divisor}}\\)。`
+        );
+      } else if (type === 'powerRemainder') {
+        const divisor = [5, 7, 8, 9, 11][randInt(0, 4)];
+        const remainder = randInt(0, divisor - 1);
+        const exponent = i % 2 === 0 ? 3 : 4;
+        const constant = randInt(0, divisor - 1);
+        const result = (Math.pow(remainder, exponent) + constant) % divisor;
+        questions.push(
+          `若 \\(n\\) 除以 \\(${divisor}\\) 的餘數為 \\(${remainder}\\)，求 \\(n^${exponent}+${constant}\\) 除以 \\(${divisor}\\) 的餘數。`
+        );
+        answers.push(
+          `簡答：餘數為 \\(${result}\\)。過程：\\(n\\equiv${remainder}\\pmod{${divisor}}\\)，所以 \\(n^${exponent}+${constant}\\equiv${remainder}^${exponent}+${constant}\\equiv${result}\\pmod{${divisor}}\\)。${exponent === 3 ? '三次是奇次冪，仍可直接把餘數代入計算。' : '四次是偶次冪，仍可直接把餘數代入計算。'}`
         );
       } else if (type === 'notDivisibleClaim') {
         const divisor = [4, 6, 8, 10][randInt(0, 3)];
         const remainder = randInt(1, divisor - 1);
-        questions.push(
-          `若 \\(n\\) 為正整數且 \\(n\\) 除以 \\(${divisor}\\) 的餘數為 \\(${remainder}\\)。判斷 \\(n^2+n\\) 是否一定為 \\(${divisor}\\) 的倍數。`
-        );
         const result = (remainder * remainder + remainder) % divisor;
-        const verdict = result === 0 ? '是' : '否';
-        answers.push(
-          `簡答：${verdict}。過程：只需看餘數，\\(n^2+n\\equiv${remainder}^2+${remainder}\\equiv${result}\\pmod{${divisor}}\\)。${result === 0 ? `因此一定是 ${divisor} 的倍數。` : `餘數不為 0，因此不會是 ${divisor} 的倍數。`}`
+        questions.push(
+          `某同學說：「若正整數 \\(n\\) 除以 \\(${divisor}\\) 的餘數為 \\(${remainder}\\)，則 \\(n^2+n\\) 一定是 \\(${divisor}\\) 的倍數。」判斷此說法是否正確；若不正確，請舉一個符合題設的反例。`
         );
+        if (result === 0) {
+          answers.push(
+            `簡答：正確。過程：\\(n\\equiv${remainder}\\pmod{${divisor}}\\)，所以 \\(n^2+n\\equiv${remainder}^2+${remainder}\\equiv0\\pmod{${divisor}}\\)。題設中的每個 \\(n\\) 都符合此同餘式，因此 \\(n^2+n\\) 一定是 \\(${divisor}\\) 的倍數。`
+          );
+        } else {
+          answers.push(
+            `簡答：不正確；反例可取 \\(n=${remainder}\\)。過程：\\(${remainder}\\) 是正整數，且除以 \\(${divisor}\\) 的餘數正是 \\(${remainder}\\)。此時 \\(n^2+n=${remainder}^2+${remainder}=${remainder * remainder + remainder}\\)，除以 \\(${divisor}\\) 的餘數為 \\(${result}\\neq0\\)，所以不是 \\(${divisor}\\) 的倍數。`
+          );
+        }
       } else if (type === 'threeConsecutiveProductSix') {
         const start = randInt(0, 24);
         const terms = [0, 1, 2].map((offset) => `n+${start + offset}`.replace('+0', '')).join('、');
@@ -2796,10 +2937,26 @@
       } else if (type === 'amGmTwoNumbers') {
         const variablePairs = [['a', 'b'], ['x', 'y'], ['m', 'n'], ['p', 'q'], ['r', 's'], ['u', 'v'], ['A', 'B'], ['M', 'N'], ['c', 'd'], ['e', 'f'], ['g', 'h'], ['X', 'Y']];
         const [first, second] = variablePairs[randInt(0, variablePairs.length - 1)];
-        questions.push(`已知 \\(${first}\\)、\\(${second}\\) 為正數。證明 \\(\\frac{${first}+${second}}{2}\\ge \\sqrt{${first}${second}}\\)。`);
-        answers.push(
-          `簡答：成立。過程：\\((\\sqrt{${first}}-\\sqrt{${second}})^2\\ge0\\)，展開得 \\(${first}+${second}-2\\sqrt{${first}${second}}\\ge0\\)，所以 \\(\\frac{${first}+${second}}{2}\\ge\\sqrt{${first}${second}}\\)。`
-        );
+        if (i % 3 === 0) {
+          questions.push(`已知 \\(${first}\\)、\\(${second}\\) 為正數。證明 \\(\\frac{${first}+${second}}{2}\\ge \\sqrt{${first}${second}}\\)。`);
+          answers.push(
+            `簡答：成立。過程：\\((\\sqrt{${first}}-\\sqrt{${second}})^2\\ge0\\)，展開得 \\(${first}+${second}-2\\sqrt{${first}${second}}\\ge0\\)，所以 \\(\\frac{${first}+${second}}{2}\\ge\\sqrt{${first}${second}}\\)。`
+          );
+        } else if (i % 3 === 1) {
+          const root = randInt(2, 12);
+          const constant = root * root;
+          questions.push(`已知 \\(x>0\\)。求 \\(x+\\frac{${constant}}{x}\\) 的最小值，並說明等號何時成立。`);
+          answers.push(
+            `簡答：最小值為 \\(${2 * root}\\)，當 \\(x=${root}\\) 時成立。過程：由算術幾何平均不等式，\\(x+\\frac{${constant}}{x}\\ge2\\sqrt{x\\cdot\\frac{${constant}}{x}}=2\\sqrt{${constant}}=${2 * root}\\)。等號成立須 \\(x=\\frac{${constant}}{x}\\)，因 \\(x>0\\)，得 \\(x=${root}\\)。`
+          );
+        } else {
+          const sum = 2 * randInt(4, 20);
+          const half = sum / 2;
+          questions.push(`已知正數 \\(a\\)、\\(b\\) 滿足 \\(a+b=${sum}\\)。求 \\(ab\\) 的最大值，並說明何時取得。`);
+          answers.push(
+            `簡答：最大值為 \\(${half * half}\\)，當 \\(a=b=${half}\\) 時取得。過程：\\(\\frac{a+b}{2}=${half}\\ge\\sqrt{ab}\\)，兩邊平方得 \\(ab\\le${half * half}\\)。等號成立於 \\(a=b=${half}\\)。`
+          );
+        }
       } else if (type === 'radicalOrder') {
         const variable = ['a', 'x', 't', 'm', 'n', 'p', 'q', 'r', 'u', 'v', 'A', 'B'][randInt(0, 11)];
         questions.push(`已知 \\(0<${variable}<1\\)。證明 \\(\\sqrt{${variable}}>${variable}\\)。`);
@@ -2824,7 +2981,7 @@
           `已知 \\(${first}${second}<0\\)、\\(${second}${third}>0\\)、\\(${third}${fourth}<0\\)。判斷 \\(${first}\\)、\\(${fourth}\\) 是否同號，並證明 \\(${first}${second}${third}${fourth}>0\\)。`
         );
         answers.push(
-          `簡答：\\(${first}\\)、\\(${fourth}\\) 同號，且 \\(${first}${second}${third}${fourth}>0\\)。過程：\\(${first}${second}<0\\) 表示 \\(${first}\\)、\\(${second}\\) 異號；\\(${second}${third}>0\\) 表示 \\(${second}\\)、\\(${third}\\) 同號；\\(${third}${fourth}<0\\) 表示 \\(${third}\\)、\\(${fourth}\\) 異號，所以 \\(${first}\\)、\\(${fourth}\\) 同號。又 \\((${first}${second})(${third}${fourth})>0\\)，故 \\(${first}${second}${third}${fourth}>0\\)。`
+          `簡答：\\(${first}\\)、\\(${fourth}\\) 同號，且 \\(${first}${second}${third}${fourth}>0\\)。過程：這裡判斷的是「同號／異號」，不是奇偶性。\\(${first}${second}<0\\) 表示 \\(${first}\\)、\\(${second}\\) 異號；\\(${second}${third}>0\\) 表示 \\(${second}\\)、\\(${third}\\) 同號；\\(${third}${fourth}<0\\) 表示 \\(${third}\\)、\\(${fourth}\\) 異號，所以 \\(${first}\\)、\\(${fourth}\\) 同號。又 \\((${first}${second})(${third}${fourth})>0\\)，故 \\(${first}${second}${third}${fourth}>0\\)。`
         );
       }
     }
@@ -2875,15 +3032,15 @@
     const selected = kinds[kind] || [kind];
     const letters = [
       ['A', 'B', 'C'],
-      ['P', 'Q', 'R'],
-      ['X', 'Y', 'Z'],
-      ['D', 'E', 'F'],
-      ['L', 'M', 'N'],
+      ['J', 'K', 'L'],
       ['R', 'S', 'T'],
       ['U', 'V', 'W'],
-      ['H', 'I', 'J'],
-      ['A', 'D', 'E'],
-      ['M', 'P', 'Q'],
+      ['X', 'Y', 'Z'],
+      ['H', 'N', 'Q'],
+      ['A', 'K', 'N'],
+      ['B', 'L', 'T'],
+      ['C', 'U', 'X'],
+      ['H', 'R', 'V'],
     ];
     const quadrilaterals = ['ABCD', 'PQRS', 'WXYZ', 'DEFG', 'LMNO', 'RSTU', 'HIJK', 'UVWX', 'MNOP', 'EFGH', 'JKLM', 'STUV'];
     const arcLabels = [
@@ -2949,7 +3106,7 @@
         );
       } else if (type === 'perpendicularBisectorPoint') {
         questions.push(
-          `直線 \\(L\\) 為線段 \\(${a}${b}\\) 的垂直平分線，點 \\(P\\) 在 \\(L\\) 上。證明 \\(P${a}=P${b}\\)。`
+          `直線 \\(\\ell\\) 為線段 \\(${a}${b}\\) 的垂直平分線，點 \\(P\\) 在 \\(\\ell\\) 上。證明 \\(P${a}=P${b}\\)。`
         );
         answers.push(
           `簡答：\\(P${a}=P${b}\\)。過程：垂直平分線上的任一點到線段兩端距離相等。也可連接 \\(P${a}\\)、\\(P${b}\\)，用兩個直角三角形的共用邊與半段相等證明全等。`
@@ -3743,12 +3900,28 @@
         }
         const hx = 3 * gx - 2 * ox;
         const hy = 3 * gy - 2 * oy;
-        questions.push(
-          `在座標平面上，\\(O(${ox},${oy})\\) 為某三角形的外心，\\(G(${gx},${gy})\\) 為重心。若外心、重心、垂心共線且 \\(HG:GO=2:1\\)，求垂心 \\(H\\) 的坐標。`
-        );
-        answers.push(
-          `簡答：\\(H(${hx},${hy})\\)。過程：尤拉線上 \\(G\\) 把 \\(HO\\) 分成 \\(HG:GO=2:1\\)，所以 \\(G=\\frac{H+2O}{3}\\)。因此 \\(H=3G-2O=(${3 * gx},${3 * gy})-(${2 * ox},${2 * oy})=(${hx},${hy})\\)。`
-        );
+        if (i % 3 === 0) {
+          questions.push(
+            `在座標平面上，\\(O(${ox},${oy})\\) 為某三角形的外心，\\(G(${gx},${gy})\\) 為重心。若外心、重心、垂心共線且 \\(HG:GO=2:1\\)，求垂心 \\(H\\) 的坐標。`
+          );
+          answers.push(
+            `簡答：\\(H(${hx},${hy})\\)。過程：尤拉線上 \\(G\\) 把 \\(HO\\) 分成 \\(HG:GO=2:1\\)，所以 \\(G=\\frac{H+2O}{3}\\)。因此 \\(H=3G-2O=(${3 * gx},${3 * gy})-(${2 * ox},${2 * oy})=(${hx},${hy})\\)。`
+          );
+        } else if (i % 3 === 1) {
+          questions.push(
+            `在座標平面上，\\(H(${hx},${hy})\\) 為某三角形的垂心，\\(G(${gx},${gy})\\) 為重心。若垂心、重心、外心共線且 \\(HG:GO=2:1\\)，求外心 \\(O\\) 的坐標。`
+          );
+          answers.push(
+            `簡答：\\(O(${ox},${oy})\\)。過程：\\(G\\) 內分 \\(HO\\)，且 \\(HG:GO=2:1\\)，因此 \\(3G=H+2O\\)。整理得 \\(O=\\frac{3G-H}{2}=\\frac{(${3 * gx},${3 * gy})-(${hx},${hy})}{2}=(${ox},${oy})\\)。`
+          );
+        } else {
+          questions.push(
+            `在座標平面上，\\(H(${hx},${hy})\\) 為某三角形的垂心，\\(O(${ox},${oy})\\) 為外心。若垂心、重心、外心共線且 \\(HG:GO=2:1\\)，求重心 \\(G\\) 的坐標。`
+          );
+          answers.push(
+            `簡答：\\(G(${gx},${gy})\\)。過程：\\(G\\) 將 \\(HO\\) 內分為 \\(2:1\\)，所以 \\(G=\\frac{H+2O}{3}=\\frac{(${hx},${hy})+2(${ox},${oy})}{3}=(${gx},${gy})\\)。`
+          );
+        }
       } else if (type === 'equilateralRadiiRatio') {
         const side = 6 * randInt(2, 15);
         questions.push(`正三角形邊長為 \\(${side}\\)，外接圓半徑為 \\(R\\)，內切圓半徑為 \\(r\\)。求 \\(R:r\\)。`);
@@ -5272,26 +5445,24 @@
       const mode = i % 3;
       if (mode === 0) {
         // 斜坡全長L、高H，走d公尺後高度是？
-        const L = randInt(3, 10) * 10;   // 30~100
-        const H = randInt(2, 8) * 5;     // 10~40
-        const frac = [1, 2, 3, 4][randInt(0, 3)];
-        const d = L / frac;
-        const h = H / frac;
+        const L = randInt(3, 10) * 20;   // 60~200，必大於高度
+        const H = randInt(1, 4) * 10;    // 10~40
+        const frac = [2, 3, 4, 5][randInt(0, 3)];
+        const d = formatFraction(L, frac);
+        const h = formatFraction(H, frac);
         questions.push(
           `一斜坡全長 \\(${L}\\) 公尺，高 \\(${H}\\) 公尺。若從坡底沿斜坡走 \\(${d}\\) 公尺，此時離地面的高度是多少公尺？`
         );
         answers.push(
-          `簡答：\\(${h}\\) 公尺。過程：走的距離與高度成比例，高度 \\(=H\\times\\frac{d}{L}=${H}\\times\\frac{${d}}{${L}}=${h}\\) 公尺。`
+          `簡答：\\(${h}\\) 公尺。過程：斜坡截出的兩個直角三角形相似，走的斜長與高度成同一比例。走了全長的 \\(\\dfrac{1}{${frac}}\\)，所以高度 \\(=${H}\\times\\dfrac{1}{${frac}}=${h}\\) 公尺。`
         );
       } else if (mode === 1) {
         // 已知高度h，斜坡全長L，高H，求走了多少距離
-        const L = randInt(4, 12) * 10;
-        const H = randInt(2, 6) * 5;
-        const g = gcd(L, H);
-        const dArr = [L / 4, L / 2, 3 * L / 4].filter(d => Number.isInteger(d * H / L));
-        if (dArr.length === 0) { i--; continue; }
-        const d = dArr[randInt(0, dArr.length - 1)];
-        const h = Math.round(H * d / L);
+        const L = randInt(3, 10) * 20;   // 60~200，必大於高度
+        const H = randInt(1, 4) * 10;    // 10~40
+        const divisor = [2, 5][randInt(0, 1)];
+        const d = L / divisor;
+        const h = H / divisor;
         questions.push(
           `一斜坡全長 \\(${L}\\) 公尺，高 \\(${H}\\) 公尺。若距地面高度為 \\(${h}\\) 公尺，則從坡底沿斜坡走了多少公尺？`
         );
@@ -5299,7 +5470,7 @@
           `簡答：\\(${d}\\) 公尺。過程：設走了 \\(d\\) 公尺，由相似比 \\(\\frac{h}{H}=\\frac{d}{L}\\)，得 \\(d=L\\times\\frac{h}{H}=${L}\\times\\frac{${h}}{${H}}=${d}\\) 公尺。`
         );
       } else {
-        // 投影問題：書本長L、寬W，離光源H，距桌面D，求投影長
+        // 投影問題：書本與桌面平行，離點光源 H、距桌面 D，求投影長
         const L = randInt(2, 6) * 5;
         const W = randInt(2, 4) * 5;
         const H = randInt(1, 3) * 10;
@@ -5308,10 +5479,10 @@
         const projL = L * scale;
         const projW = W * scale;
         questions.push(
-          `一書本長 \\(${L}\\) 公分、寬 \\(${W}\\) 公分，距光源 \\(${H}\\) 公分，書本到桌面距離為 \\(${D}\\) 公分。求書本投影在桌面上的長與寬。`
+          `點光源、書本與桌面形成正向投影，且書本與桌面互相平行。書本長 \\(${L}\\) 公分、寬 \\(${W}\\) 公分，距光源 \\(${H}\\) 公分，書本到桌面距離為 \\(${D}\\) 公分。求書本投影在桌面上的長與寬。`
         );
         answers.push(
-          `簡答：長 \\(${projL}\\) 公分、寬 \\(${projW}\\) 公分。過程：放大倍率 \\(=\\frac{H+D}{H}=\\frac{${H + D}}{${H}}=${(H + D) / H}\\)，投影長 \\(=${L}\\times${(H + D) / H}=${projL}\\)，投影寬 \\(=${W}\\times${(H + D) / H}=${projW}\\)。`
+          `簡答：長 \\(${projL}\\) 公分、寬 \\(${projW}\\) 公分。過程：由點光源作出的截面相似，放大倍率為 \\(\\dfrac{H+D}{H}=\\dfrac{${H + D}}{${H}}=${scale}\\)。投影長 \\(=${L}\\times${scale}=${projL}\\)，投影寬 \\(=${W}\\times${scale}=${projW}\\)。`
         );
       }
     }
@@ -5382,7 +5553,7 @@
         );
         summaryAnswers.push(`\\(${w}\\) 公分`);
         answers.push(
-          `設水面寬為 \\(2t\\)，由弦長公式 \\(t^2=r^2-(r-h)^2=2rh-h^2=${2 * r * h}-${h * h}=${w2}\\)，所以 \\(t=${halfWidth}\\)，水面寬 \\(=2\\times${halfWidth}=${w}\\) 公分。`
+          `設水面半寬為 \\(t\\)。圓心到水面的距離為 \\(r-h=${r}-${h}=${r - h}\\)，它與 \\(t\\)、半徑 \\(r\\) 構成直角三角形。因此 \\(t^2=r^2-(r-h)^2=2rh-h^2=${2 * r * h}-${h * h}=${w2}\\)，所以 \\(t=${halfWidth}\\)，水面寬 \\(=2\\times${halfWidth}=${w}\\) 公分。`
         );
       } else {
         // Given r and chord width, find depth h (solve quadratic h²-2rh+w²/4=0 → h = r - √(r²-w²/4))
@@ -5393,7 +5564,7 @@
         );
         summaryAnswers.push(`\\(${h}\\) 公分`);
         answers.push(
-          `設水深為 \\(h\\)，水面半寬為 \\(${halfWidth}\\)。由圓弧關係 \\(${halfWidth}^2=r^2-(r-h)^2=2rh-h^2\\)，整理解得 \\(h=${h}\\) 公分。`
+          `水面半寬為 \\(${halfWidth}\\)。由直角三角形，圓心到水面的距離為 \\(\\sqrt{r^2-t^2}=\\sqrt{${r}^2-${halfWidth}^2}=${r - h}\\)。這個距離也等於 \\(r-h\\)，所以 \\(h=${r}-${r - h}=${h}\\) 公分。`
         );
       }
     }
@@ -5921,7 +6092,7 @@
       },
       'j5-1-1-ratio-logic-trap': {
         type: 'drill',
-        title: '異常邏輯判斷與比例陷阱',
+        title: '三角形邊角關係辨析與比例陷阱',
         difficulty: 'hard',
         questionCount: 5,
         generate(count) {
@@ -6174,7 +6345,7 @@
       },
       'j5-1-3-scale-area-change': {
         type: 'drill',
-        title: '縮放後面積倍率',
+        title: '底、高變動與面積倍率',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -6328,7 +6499,7 @@
       },
       'j5-1-3-shadow-measurement': {
         type: 'drill',
-        title: '影子法測高',
+        title: '影子法比例測量',
         difficulty: 'easy',
         questionCount: 5,
         generate(count) {
@@ -6339,7 +6510,7 @@
       },
       'j5-1-3-mirror-measurement': {
         type: 'drill',
-        title: '鏡面反射測高',
+        title: '鏡面反射比例測量',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -6636,7 +6807,7 @@
       },
       'j5-1-4-trig-area': {
         type: 'drill',
-        title: 'tan 與直角三角形面積',
+        title: '三角比於直角三角形面積計算',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -6790,7 +6961,7 @@
       },
       'j5-2-1-external-common-tangent': {
         type: 'drill',
-        title: '外公切線長度',
+        title: '外公切線與連心線長',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -6801,7 +6972,7 @@
       },
       'j5-2-1-internal-common-tangent': {
         type: 'drill',
-        title: '內公切線長度',
+        title: '內公切線與連心線長',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -7285,7 +7456,7 @@
       },
       'j5-2-3-external-secants-segment': {
         type: 'drill',
-        title: '圓外兩割線求線段',
+        title: '圓外兩割線：內段與全長',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -7296,7 +7467,7 @@
       },
       'j5-2-3-tangent-secant-tangent': {
         type: 'drill',
-        title: '切割線定理求切線長',
+        title: '圓外切割線定理：求切線長',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -7307,7 +7478,7 @@
       },
       'j5-2-3-tangent-secant-segment': {
         type: 'drill',
-        title: '切割線定理求割線段',
+        title: '圓外切割線定理：外部段與內段',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -7340,7 +7511,7 @@
       },
       'j5-2-3-algebra-intersecting-chords': {
         type: 'drill',
-        title: '兩弦乘冪一次式求值',
+        title: '圓內兩弦乘冪定理代數應用',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -7351,7 +7522,7 @@
       },
       'j5-2-3-algebra-tangent-secant': {
         type: 'drill',
-        title: '切割線乘冪一次式求值',
+        title: '圓外切割線定理代數應用',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -7362,7 +7533,7 @@
       },
       'j5-2-3-algebra-external-secants': {
         type: 'drill',
-        title: '兩割線乘冪一次式求值',
+        title: '圓外兩割線定理代數應用',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -7737,7 +7908,7 @@
       },
       'j5-3-1-age-squares-remainder': {
         type: 'drill',
-        title: '生活情境平方餘數',
+        title: '整數平方和之餘數判定',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -7746,11 +7917,20 @@
       },
       'j5-3-1-not-divisible-claim': {
         type: 'drill',
-        title: '反例型整除判斷',
+        title: '以餘數檢驗整除敘述',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
           return buildUniquePracticeSet((practiceCount) => buildJ531Set('notDivisibleClaim', practiceCount), resolvePracticeCount(count, 5));
+        },
+      },
+      'j5-3-1-power-remainder': {
+        type: 'drill',
+        title: '奇偶次冪的餘數推理',
+        difficulty: 'medium',
+        questionCount: 5,
+        generate(count) {
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('powerRemainder', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-1-consecutive-five-subtypes': {
@@ -7827,7 +8007,7 @@
       },
       'j5-3-1-negative-square-reverse': {
         type: 'drill',
-        title: '負數平方倒向比較',
+        title: '負數大小與其平方值之關係證明',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -7863,11 +8043,11 @@
       },
       'j5-3-1-am-gm-two-numbers': {
         type: 'drill',
-        title: '算術幾何平均不等式',
+        title: '算術幾何平均不等式與最值',
         difficulty: 'medium',
-        questionCount: 5,
+        questionCount: 3,
         generate(count) {
-          return buildUniquePracticeSet((practiceCount) => buildJ531Set('amGmTwoNumbers', practiceCount), resolvePracticeCount(count, 5));
+          return buildUniquePracticeSet((practiceCount) => buildJ531Set('amGmTwoNumbers', practiceCount), resolvePracticeCount(count, 3));
         },
       },
       'j5-3-1-radical-order': {
@@ -8162,9 +8342,9 @@
         type: 'drill',
         title: '重心與面積比例五小類綜合',
         difficulty: 'medium',
-        questionCount: 6,
+        questionCount: 5,
         generate(count) {
-          return buildUniquePracticeSet((practiceCount) => buildJ532Set('centroidAreaMixed', practiceCount), resolvePracticeCount(count, 6));
+          return buildUniquePracticeSet((practiceCount) => buildJ532Set('centroidAreaMixed', practiceCount), resolvePracticeCount(count, 5));
         },
       },
       'j5-3-2-centroid-three-triangles-area': {
@@ -8187,7 +8367,7 @@
       },
       'j5-3-2-centroid-midpoint-area-ratio': {
         type: 'drill',
-        title: '重心小三角形面積',
+        title: '重心分割三角形面積之性質',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -8367,7 +8547,7 @@
       },
       'j5-3-3-centroid-six-subtypes': {
         type: 'drill',
-        title: '重心長度座標面積十五小類綜合',
+        title: '重心長度、座標與面積綜合',
         difficulty: 'medium',
         questionCount: 6,
         generate(count) {
@@ -8421,7 +8601,7 @@
       },
       'j5-3-3-centroid-area-third': {
         type: 'drill',
-        title: '重心三等面積',
+        title: '重心連頂點的三等分面積',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -8439,7 +8619,7 @@
       },
       'j5-3-3-centroid-area-from-one-small': {
         type: 'drill',
-        title: '由重心小三角形求全圖面積',
+        title: '由重心六等分面積反推全圖',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -8583,11 +8763,11 @@
       },
       'j5-3-3-euler-line-orthocenter-coordinate': {
         type: 'drill',
-        title: '尤拉線由外心重心求垂心',
+        title: '尤拉線三心座標比例推理',
         difficulty: 'hard',
-        questionCount: 5,
+        questionCount: 3,
         generate(count) {
-          return buildUniquePracticeSet((practiceCount) => buildJ533Set('eulerLineOrthocenterCoordinate', practiceCount), resolvePracticeCount(count, 5));
+          return buildUniquePracticeSet((practiceCount) => buildJ533Set('eulerLineOrthocenterCoordinate', practiceCount), resolvePracticeCount(count, 3));
         },
       },
       'j5-3-3-special-five-subtypes': {
@@ -8706,7 +8886,7 @@
         },
       },
       'j5-1-3-slope-position-height': {
-        type: 'drill', title: '斜坡位置高度計算', difficulty: 'easy', questionCount: 5,
+        type: 'drill', title: '斜坡與投影的相似比例', difficulty: 'easy', questionCount: 5,
         generate(count) {
 
           return buildUniquePracticeSet((practiceCount) => buildSlopePositionHeightSet(practiceCount), resolvePracticeCount(count, 5));
@@ -8722,7 +8902,7 @@
         },
       },
       'j5-2-1-semicircle-chord-width': {
-        type: 'drill', title: '圓形容器水面寬度', difficulty: 'medium', questionCount: 5,
+        type: 'drill', title: '半圓形容器水面寬度', difficulty: 'medium', questionCount: 5,
         generate(count) {
 
           return buildUniquePracticeSet((practiceCount) => buildSemicircleChordWidthSet(practiceCount), resolvePracticeCount(count, 5));
@@ -8780,16 +8960,16 @@
   ];
   const j513QuestionPrompts = [
     '請先確認相似圖形的對應元素後作答：',
-    '請依相似比、面積比或測量關係求解：',
-    '請辨識相似判別條件後完成作答：',
-    '請先畫出對應的相似三角形關係：',
-    '請寫出正確的相似判斷或幾何量：',
+    '請依相似、縮放、面積或測量關係求解：',
+    '請辨識題目中可用的相似性質或比例關係：',
+    '請先畫出可用的圖形與對應關係：',
+    '請寫出正確的判斷或幾何量：',
   ];
   const j514QuestionPrompts = [
     '請先整理圖形條件與對應量後作答：',
     '請依長度、面積或三角比關係求解：',
-    '請確認相似、平行或中點性質後作答：',
-    '請列式並寫出正確的幾何量：',
+    '請先辨識可用的幾何性質或三角比後作答：',
+    '請列式並標示所求的幾何量：',
     '請檢查單位與比例後完成作答：',
   ];
   Object.entries(nextConfigs).forEach(([id, config]) => {
@@ -8889,7 +9069,7 @@
     };
   });
 
-  const bundleFingerprint = "j5-bundle-v20260716-j51-j52-j53-summary-review-v4";
+  const bundleFingerprint = "j5-bundle-v20260725-j53-practice-audit-v7";
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== "object") return;
     config.__generatorFingerprint = bundleFingerprint;

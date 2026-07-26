@@ -148,18 +148,19 @@
       const common = pickFromList([2, 3, 4, 5, 6, 7, 8]);
       const a = pickFromList([1, 2, 3, 4, 5]);
       const b = pickFromList([1, 2, 3, 4, 5]);
-      const c = pickFromList([2, 3, 4, 5, 6]);
       const d = pickFromList([2, 3, 4, 5, 6]);
       const n1 = common * a;
       const d2 = common * d;
-      const d1 = pickFromList([3, 4, 5, 6, 7, 8, 9, 10]);
-      const n2 = randInt(1, 9);
+      let d1 = pickFromList([3, 4, 5, 6, 7, 8, 9, 10]);
+      while (gcdInt(n1, d1) !== 1) d1 = pickFromList([3, 4, 5, 6, 7, 8, 9, 10]);
+      let n2 = randInt(1, 9);
+      while (gcdInt(n2, d2) !== 1) n2 = randInt(1, 9);
       const productN = n1 * n2;
       const productD = d1 * d2;
       questions.push(`計算：${e522Inline(`${e522LatexFraction(n1, d1)} \\times ${e522LatexFraction(n2, d2)}`)}。`);
       summaryAnswers.push(`$${e522LatexFraction(productN, productD)}$`);
       answers.push(
-        `過程：可先交叉約分，因為 ${n1} 和 ${d2} 都可約掉 ${common}，再相乘仍會得到 $${e522LatexFraction(productN, productD)}$。`
+        `過程：先交叉約分，${n1} 和 ${d2} 都可同除以 ${common}，所以 ${n1} ÷ ${common} = ${a}，${d2} ÷ ${common} = ${d}。再算 ${a} × ${n2} ÷ (${d1} × ${d}) = $${e522LatexFraction(productN, productD)}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -395,14 +396,21 @@
       { a: 5, b: 6, digits: 2 },
       { a: 9.8, b: 9, digits: 2 },
       { a: 650, b: 9, digits: 1 },
+      { a: 7.6, b: 6, digits: 2 },
+      { a: 14.5, b: 8, digits: 2 },
+      { a: 35, b: 12, digits: 2 },
+      { a: 98.4, b: 7, digits: 1 },
+      { a: 42, b: 11, digits: 2 },
     ];
+    const targetOrder = e5SelectDistinctItems(targets, count);
     for (let i = 0; i < count; i += 1) {
-      const item = targets[i % targets.length];
+      const item = targetOrder[i];
       const answer = (item.a / item.b).toFixed(item.digits);
+      const quotient = trimDecimalString((item.a / item.b).toFixed(item.digits + 4));
       const ask = item.digits === 1 ? '小數點後第一位' : '小數點後第二位';
       questions.push(`計算：${item.a} ÷ ${item.b}，取概數到${ask}。`);
       summaryAnswers.push(`${answer}`);
-      answers.push(`過程：先相除得到循環或無限小數，再依題意四捨五入到${ask}，所以答案是 ${answer}。`);
+      answers.push(`過程：${item.a} ÷ ${item.b} 約為 ${quotient}，再依題意四捨五入到${ask}，所以答案是 ${answer}。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -556,17 +564,7 @@
   }
 
   function buildE522MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const bank = banks[i % banks.length];
-      const built = bank(i + 1);
-      questions.push(built.questions[i]);
-      summaryAnswers.push((built.summaryAnswers || [''])[i]);
-      answers.push(built.answers[i]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE522MultiplyFourSet(count) {
@@ -637,9 +635,14 @@
       { w1: 2, n1: 1, d1: 4, w2: 1, n2: 2, d2: 9 },   // 9/4 × 11/9 = 11/4 = 2又3/4
       { w1: 1, n1: 4, d1: 5, w2: 2, n2: 1, d2: 9 },   // 9/5 × 19/9 = 19/5 = 3又4/5
       { w1: 3, n1: 1, d1: 3, w2: 1, n2: 1, d2: 5 },   // 10/3 × 6/5 = 4
+      { w1: 2, n1: 1, d1: 2, w2: 1, n2: 1, d2: 5 },   // 5/2 × 6/5 = 3
+      { w1: 1, n1: 2, d1: 3, w2: 2, n2: 2, d2: 5 },   // 5/3 × 12/5 = 4
+      { w1: 3, n1: 3, d1: 4, w2: 1, n2: 3, d2: 5 },   // 15/4 × 8/5 = 6
+      { w1: 2, n1: 2, d1: 3, w2: 1, n2: 1, d2: 8 },   // 8/3 × 9/8 = 3
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = caseOrder[i];
       const imp1 = c.w1 * c.d1 + c.n1;  // 轉假分數分子
       const imp2 = c.w2 * c.d2 + c.n2;
       // 計算結果：(imp1/d1) × (imp2/d2)
@@ -686,9 +689,14 @@
       { nums: [7, 8, 3],  dens: [12,21, 4],  ans: '1/6' },
       { nums: [3, 4, 1],  dens: [4, 9, 2],   ans: '1/6' },
       { nums: [2, 3, 3],  dens: [3, 5, 4],   ans: '3/10' },
+      { nums: [1, 3, 10], dens: [2, 5, 9],   ans: '1/3' },
+      { nums: [4, 7, 9],  dens: [7, 12, 5],  ans: '3/5' },
+      { nums: [5, 3, 4],  dens: [6, 10, 5],  ans: '1/5' },
+      { nums: [7, 3, 8],  dens: [9, 14, 5],  ans: '4/15' },
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = caseOrder[i];
       const parts = c.nums.map((n, k) => e522LatexFraction(n, c.dens[k]));
       const expr = parts.join(' \\times ');
       questions.push(`計算：${e522Inline(expr)}`);
@@ -716,9 +724,14 @@
       { expr: '\\left(\\frac{1}{2} + \\frac{1}{3}\\right) \\times \\frac{6}{5}', ans: '1', proc: '先算 1/2+1/3=5/6，再 5/6×6/5=1' },
       { expr: '\\left(\\frac{3}{4} - \\frac{1}{2}\\right) \\times \\frac{8}{9}', ans: '2/9', proc: '先算 3/4-1/2=1/4，再 1/4×8/9=2/9' },
       { expr: '\\left(\\frac{1}{2} + \\frac{1}{3} + \\frac{1}{4}\\right) \\times 12', ans: '13', proc: '先算 1/2+1/3+1/4=13/12，再 13/12×12=13' },
+      { expr: '\\frac{1}{3} \\times \\frac{3}{5} + \\frac{1}{4}', ans: '9/20', proc: '先算 1/3×3/5=1/5，再 1/5+1/4=9/20' },
+      { expr: '2 - \\frac{3}{4} \\times \\frac{4}{5}', ans: '1又2/5', proc: '先算 3/4×4/5=3/5，再 2-3/5=7/5=1又2/5' },
+      { expr: '\\left(\\frac{5}{6} + \\frac{1}{3}\\right) \\times \\frac{3}{7}', ans: '1/2', proc: '先算 5/6+1/3=7/6，再 7/6×3/7=1/2' },
+      { expr: '\\left(\\frac{7}{8} - \\frac{1}{4}\\right) \\times \\frac{8}{5}', ans: '1', proc: '先算 7/8-1/4=5/8，再 5/8×8/5=1' },
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = caseOrder[i];
       questions.push(`計算：${e522Inline(c.expr)}`);
       summaryAnswers.push(e522ShortToLatex(c.ans));
       answers.push(formatPracticeShortAnswer(e522ShortToLatex(c.ans), `${c.proc}。`));
@@ -740,9 +753,14 @@
       { total: 40, fracN: 3, fracD: 5, ctx: '一桶水有 $40$ 公升，用了 $\\frac{3}{5}$', unit: '公升', used: 24, rem: 16, usedFrac: '3/5' },
       { total: 50, fracN: 2, fracD: 5, ctx: '工廠生產了 $50$ 個零件，出貨了 $\\frac{2}{5}$', unit: '個', used: 20, rem: 30, usedFrac: '2/5' },
       { total: 56, fracN: 3, fracD: 7, ctx: '一包糖果有 $56$ 顆，分出了 $\\frac{3}{7}$', unit: '顆', used: 24, rem: 32, usedFrac: '3/7' },
+      { total: 72, fracN: 5, fracD: 6, ctx: '一箱礦泉水有 $72$ 瓶，喝掉了 $\\frac{5}{6}$', unit: '瓶', used: 60, rem: 12, usedFrac: '5/6' },
+      { total: 80, fracN: 3, fracD: 8, ctx: '一桶果汁有 $80$ 公升，倒出了 $\\frac{3}{8}$', unit: '公升', used: 30, rem: 50, usedFrac: '3/8' },
+      { total: 63, fracN: 4, fracD: 7, ctx: '果園裡有 $63$ 棵果樹，移走了 $\\frac{4}{7}$', unit: '棵', used: 36, rem: 27, usedFrac: '4/7' },
+      { total: 90, fracN: 2, fracD: 3, ctx: '書架上有 $90$ 本書，借出了 $\\frac{2}{3}$', unit: '本', used: 60, rem: 30, usedFrac: '2/3' },
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = caseOrder[i];
       questions.push(`${c.ctx}，還剩下多少${c.unit}？`);
       summaryAnswers.push(`${c.rem} ${c.unit}`);
       answers.push(formatPracticeShortAnswer(`${c.rem} ${c.unit}`,
@@ -763,9 +781,14 @@
       { total: 1, f1n: 2, f1d: 5, f2n: 1, f2d: 2, ctx: '一塊蛋糕，小明吃了 $\\frac{2}{5}$，媽媽吃了剩下的 $\\frac{1}{2}$', rem: '3/10', proc: '剩 3/5；媽媽吃 3/5×1/2=3/10；最後剩 3/5-3/10=3/10' },
       { total: 1, f1n: 1, f1d: 5, f2n: 1, f2d: 4, ctx: '一段繩子，第一次剪去 $\\frac{1}{5}$，第二次剪去剩下的 $\\frac{1}{4}$', rem: '3/5', proc: '剩 4/5；再剪 4/5×1/4=1/5；最後剩 4/5-1/5=3/5' },
       { total: 48, f1n: 1, f1d: 4, f2n: 1, f2d: 3, ctx: '箱子裡有 $48$ 顆糖，先分出 $\\frac{1}{4}$，再分出剩下的 $\\frac{1}{3}$', rem: 24, proc: '剩 48×3/4=36；再分 36×1/3=12；最後剩 36-12=24 顆', unit: '顆' },
+      { total: 1, f1n: 1, f1d: 2, f2n: 1, f2d: 3, ctx: '一罐餅乾先吃了 $\\frac{1}{2}$，再吃掉剩下的 $\\frac{1}{3}$', rem: '1/3', proc: '先剩 1/2；再吃 1/2×1/3=1/6；最後剩 1/2-1/6=1/3' },
+      { total: 1, f1n: 3, f1d: 8, f2n: 2, f2d: 5, ctx: '一張色紙先用掉 $\\frac{3}{8}$，再用掉剩下的 $\\frac{2}{5}$', rem: '3/8', proc: '先剩 5/8；再用 5/8×2/5=1/4；最後剩 5/8-1/4=3/8' },
+      { total: 72, f1n: 1, f1d: 6, f2n: 1, f2d: 3, ctx: '一桶水有 $72$ 公升，先用掉 $\\frac{1}{6}$，再用掉剩下的 $\\frac{1}{3}$', rem: 40, proc: '先剩 72×5/6=60；再用 60×1/3=20；最後剩 60-20=40 公升', unit: '公升' },
+      { total: 90, f1n: 2, f1d: 5, f2n: 1, f2d: 3, ctx: '書架上有 $90$ 本書，先借出 $\\frac{2}{5}$，再借出剩下的 $\\frac{1}{3}$', rem: 36, proc: '先剩 90×3/5=54；再借 54×1/3=18；最後剩 54-18=36 本', unit: '本' },
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = caseOrder[i];
       const remShort = typeof c.rem === 'number' ? `${c.rem} ${c.unit}` : e522ShortToLatex(c.rem);
       questions.push(`${c.ctx}，最後還剩下多少${typeof c.rem === 'number' ? c.unit : '（用分率表示）'}？`);
       summaryAnswers.push(remShort);
@@ -877,9 +900,15 @@
       { whole: 5, numerator: 13, denominator: 25, text: `5 + 13 ÷ 25`, answer: 5.52 },
       { numerator: 21, denominator: 6, text: `21 ÷ 6`, answer: 3.5 },
       { numerator: 15, denominator: 8, text: `15 ÷ 8`, answer: 1.875 },
+      { numerator: 7, denominator: 20, text: `7 ÷ 20`, answer: 0.35 },
+      { numerator: 9, denominator: 25, text: `9 ÷ 25`, answer: 0.36 },
+      { whole: 3, numerator: 3, denominator: 5, text: `3 + 3 ÷ 5`, answer: 3.6 },
+      { numerator: 29, denominator: 8, text: `29 ÷ 8`, answer: 3.625 },
+      { numerator: 17, denominator: 4, text: `17 ÷ 4`, answer: 4.25 },
     ];
+    const modeOrder = e5SelectDistinctItems(modes, count);
     for (let i = 0; i < count; i += 1) {
-      const item = modes[i % modes.length];
+      const item = modeOrder[i];
       const questionText =
         item.whole != null
           ? `${e526MixedLatex(item.whole, item.numerator, item.denominator)}`
@@ -920,18 +949,25 @@
       { dividend: 23.12, divisor: 6, digits: 1 },
       { dividend: 9.8, divisor: 9, digits: 2 },
       { dividend: 22.39, divisor: 21, digits: 2 },
+      { dividend: 13.4, divisor: 6, digits: 2 },
+      { dividend: 17.5, divisor: 8, digits: 1 },
+      { dividend: 41, divisor: 12, digits: 2 },
+      { dividend: 28.75, divisor: 9, digits: 2 },
+      { dividend: 9.99, divisor: 10, digits: 2 },
     ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const item = bank[i % bank.length];
+      const item = bankOrder[i];
       const digitsText = item.digits === 1 ? '小數點後第一位' : '小數點後第二位';
-      const answer = Number((item.dividend / item.divisor).toFixed(item.digits));
+      const quotient = item.dividend / item.divisor;
+      const answer = quotient.toFixed(item.digits);
       questions.push(`計算：${e526FormatNumber(item.dividend)} ÷ ${item.divisor}，取概數到${digitsText}。`);
-      summaryAnswers.push(`${e526FormatNumber(answer)}`);
+      summaryAnswers.push(answer);
       answers.push(
-        `過程：先做除法，再依題意四捨五入到${digitsText}，所以答案是 ${e526FormatNumber(answer)}。`
+        `過程：先做除法，商約為 ${e526FormatNumber(quotient, item.digits + 4)}，再依題意四捨五入到${digitsText}，所以答案是 ${answer}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -947,9 +983,15 @@
       { total: 35, unit: '公升的青草茶', groups: 56, answer: 0.625, resultUnit: '公升' },
       { total: 0.14, unit: '公升的黑麥汁', groups: 7, answer: 0.02, resultUnit: '公升' },
       { total: 9, unit: '公尺的繩子', groups: 4, answer: 2.25, resultUnit: '公尺' },
+      { total: 18, unit: '公斤的白米', groups: 24, answer: 0.75, resultUnit: '公斤' },
+      { total: 7.2, unit: '公升的檸檬水', groups: 6, answer: 1.2, resultUnit: '公升' },
+      { total: 15, unit: '公尺的緞帶', groups: 12, answer: 1.25, resultUnit: '公尺' },
+      { total: 4.8, unit: '公斤的飼料', groups: 16, answer: 0.3, resultUnit: '公斤' },
+      { total: 6.3, unit: '公升的清潔劑', groups: 9, answer: 0.7, resultUnit: '公升' },
     ];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const item = bank[i % bank.length];
+      const item = bankOrder[i];
       questions.push(
         `把 ${e526FormatNumber(item.total)} ${item.unit}平均分成 ${item.groups} 份，每一份是多少${item.resultUnit}？`
       );
@@ -988,17 +1030,48 @@
         unit: '公尺',
       },
       {
-        question: '一個長方形花園的周長是 65 公尺，若長與寬相等，邊長是多少公尺？',
-        answer: 16.25,
-        explain: '四條邊一樣長，所以每邊長 = 65 ÷ 4 = 16.25。',
+        question: '一個正方形花圃的周長是 38 公尺，每邊長是多少公尺？',
+        answer: 9.5,
+        explain: '正方形四條邊一樣長，所以每邊長 = 38 ÷ 4 = 9.5。',
         unit: '公尺',
+      },
+      {
+        question: '一個正方形遊戲區的周長是 54.4 公尺，每邊長是多少公尺？',
+        answer: 13.6,
+        explain: '正方形每邊長 = 周長 ÷ 4，所以 54.4 ÷ 4 = 13.6。',
+        unit: '公尺',
+      },
+      {
+        question: '長方形菜園面積是 52.5 平方公尺，長是 7.5 公尺，寬是多少公尺？',
+        answer: 7,
+        explain: '寬 = 面積 ÷ 長，所以 52.5 ÷ 7.5 = 7。',
+        unit: '公尺',
+      },
+      {
+        question: '一塊長方形草地面積是 108 平方公尺，長是 12 公尺，寬是多少公尺？',
+        answer: 9,
+        explain: '寬 = 面積 ÷ 長，所以 108 ÷ 12 = 9。',
+        unit: '公尺',
+      },
+      {
+        question: '一條長 27 公尺的彩帶平均分成 6 段，每段長幾公尺？',
+        answer: 4.5,
+        explain: '每段長 = 總長 ÷ 段數，所以 27 ÷ 6 = 4.5。',
+        unit: '公尺',
+      },
+      {
+        question: '一個正方形相框的周長是 14.8 公分，每邊長是多少公分？',
+        answer: 3.7,
+        explain: '正方形每邊長 = 周長 ÷ 4，所以 14.8 ÷ 4 = 3.7。',
+        unit: '公分',
       },
     ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const item = bank[i % bank.length];
+      const item = bankOrder[i];
       questions.push(item.question);
       summaryAnswers.push(`${e526FormatNumber(item.answer)}${item.unit}`);
       answers.push(`過程：${item.explain}`);
@@ -1013,12 +1086,18 @@
       { question: '18 臺洗衣機共重 135.45 公斤，平均一臺重幾公斤？', answer: 7.525, unit: '公斤' },
       { question: '19 個螺絲共重 39.52 克，平均一個螺絲重幾克？', answer: 2.08, unit: '克' },
       { question: '甲商店 4 杯紅茶賣 54 元，平均一杯幾元？', answer: 13.5, unit: '元' },
+      { question: '24 箱柳丁共重 57.6 公斤，平均一箱重多少公斤？', answer: 2.4, unit: '公斤' },
+      { question: '12 支鉛筆共 45.6 元，平均一支多少元？', answer: 3.8, unit: '元' },
+      { question: '6 天共用掉 48.6 公升的水，平均一天用多少公升？', answer: 8.1, unit: '公升' },
+      { question: '25 本相同的書共重 33.75 公斤，平均一本重多少公斤？', answer: 1.35, unit: '公斤' },
+      { question: '16 罐果汁共 20 公升，平均一罐有多少公升？', answer: 1.25, unit: '公升' },
     ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const item = bank[i % bank.length];
+      const item = bankOrder[i];
       questions.push(item.question);
       summaryAnswers.push(`${e526FormatNumber(item.answer)}${item.unit}`);
       answers.push(
@@ -1060,12 +1139,37 @@
         explain: '1 日 = 24 小時，所以 36 ÷ 24 = 1.5 日。',
         unit: '日',
       },
+      {
+        question: '上課 45 分鐘，也可以說是幾小時？（用小數表示）',
+        answer: 0.75,
+        explain: '1 小時 = 60 分，所以 45 ÷ 60 = 0.75 小時。',
+        unit: '小時',
+      },
+      {
+        question: '完成活動共花了 42 小時，也可以說是幾日？',
+        answer: 1.75,
+        explain: '1 日 = 24 小時，所以 42 ÷ 24 = 1.75 日。',
+        unit: '日',
+      },
+      {
+        question: '150 秒鐘是多少分鐘？（用小數表示）',
+        answer: 2.5,
+        explain: '1 分鐘 = 60 秒，所以 150 ÷ 60 = 2.5 分鐘。',
+        unit: '分鐘',
+      },
+      {
+        question: '4 小時 48 分鐘，也可以說是幾小時？（用小數表示）',
+        answer: 4.8,
+        explain: '48 分鐘 = 48 ÷ 60 = 0.8 小時，所以共是 4 + 0.8 = 4.8 小時。',
+        unit: '小時',
+      },
     ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const item = bank[i % bank.length];
+      const item = bankOrder[i];
       questions.push(item.question);
       summaryAnswers.push(`${e526FormatNumber(item.answer)}${item.unit}`);
       answers.push(`過程：${item.explain}`);
@@ -1074,17 +1178,7 @@
   }
 
   function buildE526MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const bank = banks[i % banks.length];
-      const built = bank(i + 1);
-      questions.push(built.questions[i]);
-      summaryAnswers.push((built.summaryAnswers || [''])[i]);
-      answers.push(built.answers[i]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE526BasicThreeSet(count) {
@@ -1332,9 +1426,15 @@
       [24, 8.5, 10],
       [15, 6, 9],
       [18, 10, 12],
+      [8, 6, 7],
+      [20, 7, 6],
+      [16, 12, 5],
+      [9, 5, 8],
+      [14, 9, 11],
     ];
+    const tripleOrder = e5SelectDistinctItems(triples, count);
     for (let i = 0; i < count; i += 1) {
-      const [length, width, height] = pickFromList(triples);
+      const [length, width, height] = tripleOrder[i];
       const lateral = 2 * (length + width) * height;
       questions.push(
         `一個長方體盒子長 $${length}$ 公分、寬 $${width}$ 公分、高 $${height}$ 公分，只在側面繞一圈貼上包裝紙，包裝紙面積是多少平方公分？`
@@ -1389,9 +1489,15 @@
       [4, 5],
       [5, 4],
       [3, 8],
+      [6, 3],
+      [7, 4],
+      [8, 2],
+      [4, 7],
+      [9, 3],
     ];
+    const itemOrder = e5SelectDistinctItems(items, count);
     for (let i = 0; i < count; i += 1) {
-      const [cubeCount, edge] = pickFromList(items);
+      const [cubeCount, edge] = itemOrder[i];
       const decrease = 2 * (cubeCount - 1) * edge * edge;
       questions.push(
         `把 $${cubeCount}$ 個邊長 $${edge}$ 公分的正方體排成一直排黏在一起，新立體的表面積比原來共減少多少平方公分？`
@@ -1447,9 +1553,15 @@
       { volume: 24, a: [1, 4, 6], b: [2, 3, 4] },
       { volume: 12, a: [1, 2, 6], b: [2, 2, 3] },
       { volume: 8, a: [1, 1, 8], b: [2, 2, 2] },
+      { volume: 36, a: [1, 4, 9], b: [3, 3, 4] },
+      { volume: 32, a: [1, 4, 8], b: [2, 4, 4] },
+      { volume: 30, a: [1, 5, 6], b: [2, 3, 5] },
+      { volume: 27, a: [1, 3, 9], b: [3, 3, 3] },
+      { volume: 48, a: [1, 6, 8], b: [3, 4, 4] },
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const { volume, a, b } = pickFromList(cases);
+      const { volume, a, b } = caseOrder[i];
       const surfaceA = 2 * (a[0] * a[1] + a[1] * a[2] + a[0] * a[2]);
       const surfaceB = 2 * (b[0] * b[1] + b[1] * b[2] + b[0] * b[2]);
       const winner =
@@ -1471,17 +1583,7 @@
   }
 
   function buildE527MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](4);
-      const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
-      questions.push(generated.questions[itemIndex]);
-      summaryAnswers.push(generated.summaryAnswers[itemIndex]);
-      answers.push(generated.answers[itemIndex]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE527CubeThreeSet(count) {
@@ -1602,9 +1704,15 @@
       { l: 6,   w: 4,   h: 2.5 },  // walls=50, ans=46.5
       { l: 9,   w: 6,   h: 3   },  // walls=90, ans=86.5
       { l: 10,  w: 7,   h: 3   },  // walls=102, ans=98.5
+      { l: 9,   w: 5,   h: 2   },  // walls=56, ans=52.5
+      { l: 12,  w: 8,   h: 3   },  // walls=120, ans=116.5
+      { l: 11,  w: 6,   h: 4   },  // walls=136, ans=132.5
+      { l: 7,   w: 7,   h: 3   },  // walls=84, ans=80.5
+      { l: 10,  w: 6,   h: 2.5 },  // walls=80, ans=76.5
     ];
+    const roomOrder = e5SelectDistinctItems(rooms, count);
     for (let i = 0; i < count; i += 1) {
-      const { l, w, h } = pickFromList(rooms);
+      const { l, w, h } = roomOrder[i];
       const walls = 2 * h * (l + w);
       const doorArea = 2 * 1;
       const winArea = 1.5 * 1;
@@ -1990,9 +2098,54 @@
         partC: 3,
         target: '近視率',
       },
+      {
+        aLabel: '小宇',
+        bLabel: '小哲',
+        unit: '球',
+        wholeA: 12,
+        partA: 9,
+        wholeB: 15,
+        partB: 10,
+        target: '命中率',
+      },
+      {
+        aLabel: '甲組',
+        bLabel: '乙組',
+        unit: '人',
+        wholeA: 40,
+        partA: 26,
+        wholeB: 45,
+        partB: 27,
+        target: '及格率',
+        questionText: '甲組 40 人中有 26 人及格，乙組 45 人中有 27 人及格，哪一組的及格率較高？',
+      },
+      {
+        aLabel: '甲超市',
+        bLabel: '乙超市',
+        unit: '折',
+        wholeA: 8,
+        partA: 5,
+        wholeB: 10,
+        partB: 7,
+        target: '折後價格占原價的比率',
+        questionText: '甲超市商品以定價的 5/8 出售，乙超市商品以定價的 7/10 出售，哪一家折後價格占原價的比率較高？',
+      },
+      {
+        aLabel: '甲班',
+        bLabel: '乙班',
+        cLabel: '丙班',
+        wholeA: 30,
+        partA: 12,
+        wholeB: 32,
+        partB: 16,
+        wholeC: 45,
+        partC: 18,
+        target: '近視率',
+      },
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
+      const item = caseOrder[i];
       if (item.cLabel) {
         const rateA = item.partA / item.wholeA;
         const rateB = item.partB / item.wholeB;
@@ -2003,13 +2156,13 @@
           { label: item.cLabel, rate: rateC },
         ].sort((a, b) => b.rate - a.rate)[0];
         questions.push(
-          `比較三班近視率：一班是 ${item.partA}/${item.wholeA}，二班是 ${item.partB}/${item.wholeB}，三班是 ${item.partC}/${item.wholeC}，哪班近視率最高？`
+          `比較${item.aLabel}、${item.bLabel}、${item.cLabel}的${item.target}：${item.aLabel}是 ${item.partA}/${item.wholeA}，${item.bLabel}是 ${item.partB}/${item.wholeB}，${item.cLabel}是 ${item.partC}/${item.wholeC}，哪一班${item.target}最高？`
         );
         summaryAnswers.push(best.label);
         answers.push(
           e528Answer(
             best.label,
-            `把三個比率化成小數：一班 ${e528FormatNumber(rateA)}、二班 ${e528FormatNumber(rateB)}、三班 ${e528FormatNumber(rateC)}，所以${best.label}最高。`
+            `把三個比率化成小數：${item.aLabel} ${e528FormatNumber(rateA)}、${item.bLabel} ${e528FormatNumber(rateB)}、${item.cLabel} ${e528FormatNumber(rateC)}，所以${best.label}最高。`
           )
         );
       } else {
@@ -2018,7 +2171,7 @@
         const best = rateA > rateB ? item.aLabel : item.bLabel;
         questions.push(
           item.questionText ||
-            `${item.aLabel}投了 ${item.wholeA}${item.unit}中成功 ${item.partA}${item.unit}，${item.bLabel}投了 ${item.wholeB}${item.unit}中成功 ${item.partB}${item.unit}，誰的${item.target}較高？`
+            `${item.aLabel}投了 ${item.wholeA} ${item.unit}，成功 ${item.partA} ${item.unit}；${item.bLabel}投了 ${item.wholeB} ${item.unit}，成功 ${item.partB} ${item.unit}，誰的${item.target}較高？`
         );
         summaryAnswers.push(best);
         answers.push(
@@ -2096,12 +2249,19 @@
       [3, 5],
       [9, 20],
       [21, 25],
+      [3, 20],
+      [11, 20],
+      [7, 25],
+      [19, 25],
+      [9, 50],
+      [11, 50],
     ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const [top, bottom] = pickFromList(bank);
+      const [top, bottom] = bankOrder[i];
       const percent = (top / bottom) * 100;
       const factor = 100 / bottom;
       questions.push(`將 ${top}/${bottom} 化為百分率。`);
@@ -2151,13 +2311,19 @@
       { price: 3000, fold: 80, label: '全館', item: '洋裝' },
       { price: 8500, fold: 75, label: '週年慶', item: '書桌' },
       { price: 26800, fold: 75, label: '傢俱店', item: '餐桌' },
-      { price: 360, fold: 55, label: '特價五五折', item: '彩色筆' },
+      { price: 360, fold: 55, label: '特價', item: '彩色筆' },
+      { price: 2400, fold: 50, label: '畢業季', item: '書包' },
+      { price: 1500, fold: 90, label: '開學優惠', item: '手錶' },
+      { price: 6400, fold: 65, label: '線上特賣', item: '自行車安全帽' },
+      { price: 12000, fold: 85, label: '家電展', item: '書櫃' },
+      { price: 480, fold: 60, label: '會員日', item: '文具組' },
     ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const item = bank[i % bank.length];
+      const item = bankOrder[i];
       const sale = Math.round((item.price * item.fold) / 100);
       const foldText = item.fold % 10 === 0 ? `${item.fold / 10}折` : `${e528FormatNumber(item.fold / 10, 1)}折`;
       questions.push(`一個定價 ${item.price} 元的${item.item}，${item.label}${foldText}出售，售價是多少元？`);
@@ -2179,12 +2345,18 @@
       { price: 8000, off: 15, item: '遊戲機' },
       { price: 3390, off: 40, item: '運動背包' },
       { price: 9000, off: 30, item: '小說套書' },
+      { price: 1200, off: 25, item: '保溫瓶' },
+      { price: 4500, off: 20, item: '登山背包' },
+      { price: 600, off: 5, item: '字典' },
+      { price: 7200, off: 35, item: '平板電腦' },
+      { price: 1400, off: 50, item: '雨衣' },
     ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const item = bank[i % bank.length];
+      const item = bankOrder[i];
       const remain = 100 - item.off;
       const sale = Math.round((item.price * remain) / 100);
       questions.push(`${item.item}原價 ${item.price} 元，現在全面 ${item.off}% off，售價是多少元？`);
@@ -2206,12 +2378,18 @@
       { cost: 4300, markup: 20, item: '球鞋' },
       { cost: 800, markup: 25, item: '模型' },
       { cost: 240, markup: 10, item: '飲料' },
+      { cost: 1200, markup: 50, item: '外套' },
+      { cost: 1600, markup: 15, item: '藍牙耳機' },
+      { cost: 750, markup: 60, item: '書架' },
+      { cost: 5600, markup: 25, item: '腳踏車' },
+      { cost: 450, markup: 20, item: '水壺' },
     ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const item = bank[i % bank.length];
+      const item = bankOrder[i];
       const price = Math.round((item.cost * (100 + item.markup)) / 100);
       const markupText =
         item.markup % 10 === 0 ? `${item.markup / 10}成` : `${e528FormatNumber(item.markup / 10, 1)}成`;
@@ -2234,12 +2412,18 @@
       { amount: 1200, people: 1, step: 'markup-discount', markup: 30, fold: 85 },
       { amount: 10000, people: 1, step: 'markup-discount-profit', markup: 40, fold: 70 },
       { amount: 3000, people: 1, step: 'double-discount', off: 20, fold: 90 },
+      { amount: 720, people: 3, step: 'service', rate: 10 },
+      { amount: 550, people: 2, step: 'service', rate: 10 },
+      { amount: 1280, people: 4, step: 'service', rate: 10 },
+      { amount: 300, people: 5, step: 'service', rate: 10 },
+      { amount: 950, people: 1, step: 'service', rate: 10 },
     ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const item = bank[i % bank.length];
+      const item = bankOrder[i];
       if (item.step === 'service') {
         const total = Math.round(item.amount * (1 + item.rate / 100));
         const text =
@@ -2301,12 +2485,18 @@
       { original: 1580, sale: 1185, item: '鞋子', ask: '幾折出售' },
       { original: 50000, sale: 18000, item: '房租', ask: '房租占薪資的幾成' },
       { original: 100000, sale: 15000, item: '車貸', ask: '車貸占總收入的幾成' },
+      { original: 4200, sale: 3150, item: '行李箱', ask: '幾折出售' },
+      { original: 3600, sale: 3240, item: '書桌', ask: '幾折出售' },
+      { original: 800, sale: 440, item: '球衣', ask: '幾折出售' },
+      { original: 60000, sale: 12000, item: '房租', ask: '房租占薪資的幾成' },
+      { original: 80000, sale: 28000, item: '車貸', ask: '車貸占總收入的幾成' },
     ];
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const item = bank[i % bank.length];
+      const item = bankOrder[i];
       const rate = item.sale / item.original;
       if (item.ask.includes('幾折')) {
         const fold = rate * 10;
@@ -2335,17 +2525,7 @@
   }
 
   function buildE528MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](4);
-      const itemIndex = Math.floor(i / banks.length) % generated.questions.length;
-      questions.push(generated.questions[itemIndex]);
-      summaryAnswers.push(generated.summaryAnswers[itemIndex]);
-      answers.push(generated.answers[itemIndex]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE528RelativeCompareSet(count) {
@@ -2947,9 +3127,15 @@
       { intro: '每個月閱讀', base: [3, 7], countLabel: '9個月', count: 9, unit: '日時' },
       { intro: '每天直排輪上課', base: [1, 20], countLabel: '4個星期', count: 28, unit: '日時' },
       { intro: '手錶每天快', base: [0, 24], countLabel: '5天', count: 5, unit: '分秒' },
+      { intro: '每天練習鋼琴', base: [1, 5], countLabel: '12天', count: 12, unit: '小時分' },
+      { intro: '每次露營活動', base: [1, 6], countLabel: '4次', count: 4, unit: '日時' },
+      { intro: '手錶每天慢', base: [0, 18], countLabel: '10天', count: 10, unit: '分秒' },
+      { intro: '每週整理圖書', base: [2, 15], countLabel: '6週', count: 6, unit: '小時分' },
+      { intro: '每次戶外教學', base: [2, 4], countLabel: '5次', count: 5, unit: '日時' },
     ];
+    const contextOrder = e5SelectDistinctItems(contexts, count);
     for (let i = 0; i < count; i += 1) {
-      const item = contexts[i % contexts.length];
+      const item = contextOrder[i];
       if (item.unit === '小時分') {
         const [hour, minute] = item.base;
         const totalMinutes = (hour * 60 + minute) * item.count;
@@ -3154,9 +3340,15 @@
       { start: 9 * 3600 + 20 * 60 + 10, duration: 4 * 84, unitCount: 4, completed: '4 位選手各跑 1 次', ask: '平均一人跑幾分幾秒', clock: 'second' },
       { start: 14 * 60 + 10, duration: 5 * 30, unitCount: 5, completed: '游了 5 公里', ask: '平均游 1 公里要幾分鐘', clock: 'minute-short' },
       { start: 13 * 60, duration: 5 * 77, unitCount: 5, completed: '組裝了 5 個收納盒', ask: '平均組裝一個要幾分鐘', clock: 'minute-short' },
+      { start: 10 * 60 + 15, duration: 6 * 80, unitCount: 6, completed: '完成 6 份練習', ask: '平均完成一份要幾小時幾分', clock: 'minute' },
+      { start: 8 * 3600 + 5 * 60 + 20, duration: 5 * 96, unitCount: 5, completed: '5 位選手各跑 1 次', ask: '平均一人跑幾分幾秒', clock: 'second' },
+      { start: 15 * 60 + 30, duration: 4 * 45, unitCount: 4, completed: '整理 4 個書架', ask: '平均整理一個要幾分鐘', clock: 'minute-short' },
+      { start: 7 * 60 + 10, duration: 3 * 110, unitCount: 3, completed: '完成 3 個模型', ask: '平均完成一個要幾小時幾分', clock: 'minute' },
+      { start: 11 * 60 + 30, duration: 8 * 25, unitCount: 8, completed: '完成 8 張海報', ask: '平均完成一張要幾分鐘', clock: 'minute-short' },
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
+      const item = caseOrder[i];
       if (item.clock === 'second') {
         const end = item.start + item.duration;
         const answerText = e529FormatMinuteSecond(item.duration / item.unitCount);
@@ -3322,9 +3514,40 @@
         times: 6,
         answerKind: 'hm',
       },
+      {
+        question: '科學社每次實驗先記錄 35 分鐘，再操作 1 小時 5 分鐘，進行 3 次共花幾小時幾分？',
+        partSeconds: [35 * 60, (60 + 5) * 60],
+        times: 3,
+        answerKind: 'hm',
+      },
+      {
+        question: '錄製一集 podcast 包含 2 分 40 秒片頭和 1 分 20 秒內容提示，錄 8 集共要幾分幾秒？',
+        partSeconds: [2 * 60 + 40, 1 * 60 + 20],
+        times: 8,
+        answerKind: 'ms',
+      },
+      {
+        question: '每盆植物先澆水 15 分鐘，再整理 9 分 30 秒，照顧 5 盆共花幾分幾秒？',
+        partSeconds: [15 * 60, 9 * 60 + 30],
+        times: 5,
+        answerKind: 'ms',
+      },
+      {
+        question: '閱讀社每次導讀 40 分鐘，再討論 1 小時 15 分鐘，舉行 6 次共幾小時幾分？',
+        partSeconds: [40 * 60, (60 + 15) * 60],
+        times: 6,
+        answerKind: 'hm',
+      },
+      {
+        question: '製作一份海報要先排版 3 分 15 秒，再上色 45 秒，完成 10 份共花幾分幾秒？',
+        partSeconds: [3 * 60 + 15, 45],
+        times: 10,
+        answerKind: 'ms',
+      },
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
+      const item = caseOrder[i];
       const onceSeconds = item.partSeconds.reduce((sum, value) => sum + value, 0);
       const totalSeconds = onceSeconds * item.times;
       const answerText =
@@ -3406,7 +3629,7 @@
         answerUnit: '秒',
       },
       {
-        totalSeconds: 30 * 60 + 150,
+        totalSeconds: 30 * 60,
         oldCount: 30,
         newCount: 60,
         context: '工廠更新',
@@ -3414,9 +3637,46 @@
         label: '1個',
         answerUnit: '秒',
       },
+      {
+        totalSeconds: 60 * 60,
+        oldCount: 12,
+        newCount: 20,
+        context: '列印講義',
+        unit: '份講義',
+        label: '1份講義',
+        answerUnit: '分秒',
+      },
+      {
+        totalSeconds: 40 * 60,
+        oldCount: 15,
+        newCount: 24,
+        context: '書籍裝訂',
+        unit: '本',
+        label: '1本',
+        answerUnit: '分秒',
+      },
+      {
+        totalSeconds: 45 * 60,
+        oldCount: 18,
+        newCount: 30,
+        context: '資料輸入',
+        unit: '筆資料',
+        label: '1筆資料',
+        answerUnit: '分秒',
+      },
+      {
+        totalSeconds: 48 * 60,
+        oldCount: 16,
+        newCount: 24,
+        context: '餅乾包裝',
+        unit: '包',
+        label: '1包',
+        answerUnit: '分秒',
+      },
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
+      const item = caseOrder[i];
       const oldPer = item.totalSeconds / item.oldCount;
       const newPer = item.totalSeconds / item.newCount;
       const diff = oldPer - newPer;
@@ -3443,16 +3703,7 @@
   }
 
   function buildE529CompositeSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](i + 1);
-      questions.push(generated.questions[i]);
-      summaryAnswers.push(generated.summaryAnswers[i]);
-      answers.push(generated.answers[i]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE529ConvertCompareFourSet(count) {
@@ -3731,8 +3982,9 @@
       ['從教室走到校門口大約是 350（　）', '公尺'],
       ['臺北到高雄的距離大約是 350（　）', '公里'],
     ];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const [questionBody, unit] = bank[i % bank.length];
+      const [questionBody, unit] = bankOrder[i];
       questions.push(`${questionBody}，應該填入什麼單位？`);
       summaryAnswers.push(unit);
       answers.push(
@@ -3756,8 +4008,9 @@
       [4800, 4, 900],
       [1250, 1, 180],
     ];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const [leftMeters, rightKm, rightMeters] = bank[i % bank.length];
+      const [leftMeters, rightKm, rightMeters] = bankOrder[i];
       const rightTotal = rightKm * 1000 + rightMeters;
       const symbol = leftMeters > rightTotal ? '>' : leftMeters < rightTotal ? '<' : '=';
       questions.push(`比比看：${leftMeters}公尺 □ ${rightKm}公里${rightMeters}公尺`);
@@ -3872,8 +4125,9 @@
       ['一顆蘋果大約重 180（　）', '公克'],
       ['一包白米大約重 5（　）', '公斤'],
     ];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const [questionBody, unit] = bank[i % bank.length];
+      const [questionBody, unit] = bankOrder[i];
       questions.push(`${questionBody}，應該填入什麼單位？`);
       summaryAnswers.push(unit);
       answers.push(e530Answer(unit, `依照物體常見的重量大小判斷，這裡最適合用「${unit}」表示，所以答案是 ${unit}。`));
@@ -3895,8 +4149,9 @@
       [3200, 3.02],
       [9500, 9.8],
     ];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const [leftKilograms, rightTonnes] = bank[i % bank.length];
+      const [leftKilograms, rightTonnes] = bankOrder[i];
       const rightKilograms = rightTonnes * 1000;
       const symbol = leftKilograms > rightKilograms ? '>' : leftKilograms < rightKilograms ? '<' : '=';
       questions.push(`比比看：${leftKilograms}公斤 □ ${e530Trim(rightTonnes)}公噸`);
@@ -4081,16 +4336,21 @@
     const summaryAnswers = [];
     const answers = [];
     const bank = [
-      ['學校操場一圈的面積大約是 65（　）', '公畝'],
+      ['一座森林公園的面積大約是 25（　）', '公頃'],
       ['教室的面積大約是 120（　）', '平方公尺'],
       ['臺灣本島的總面積大約是 36000（　）', '平方公里'],
       ['一塊可以耕地的農田大約是 2（　）', '公頃'],
       ['一個標準羽球場的面積約 82（　）', '平方公尺'],
       ['一個社區公園的面積大約是 5（　）', '公畝'],
       ['一個縣市的面積大約是 1200（　）', '平方公里'],
+      ['一座足球場的面積大約是 0.7（　）', '公頃'],
+      ['一塊小菜園的面積大約是 300（　）', '平方公尺'],
+      ['一所國小的校園面積大約是 4（　）', '公頃'],
+      ['一座大型水庫的集水區面積大約是 900（　）', '平方公里'],
     ];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const [questionBody, unit] = bank[i % bank.length];
+      const [questionBody, unit] = bankOrder[i];
       questions.push(`${questionBody}，應該填入什麼單位？`);
       summaryAnswers.push(unit);
       answers.push(e530Answer(unit, `依照面積大小判斷，這個情境最適合用「${unit}」表示，所以答案是 ${unit}。`));
@@ -4123,9 +4383,22 @@
           { text: '850公畝', value: 85000 },
         ],
       },
+      { type: 'compare', leftText: '0.8公頃', leftValue: 8000, rightText: '8000平方公尺', rightValue: 8000 },
+      { type: 'compare', leftText: '250公畝', leftValue: 25000, rightText: '2.4公頃', rightValue: 24000 },
+      { type: 'compare', leftText: '0.06平方公里', leftValue: 60000, rightText: '6公頃', rightValue: 60000 },
+      { type: 'compare', leftText: '3200平方公尺', leftValue: 3200, rightText: '35公畝', rightValue: 3500 },
+      {
+        type: 'sort',
+        items: [
+          { text: '0.8公頃', value: 8000 },
+          { text: '75公畝', value: 7500 },
+          { text: '7200平方公尺', value: 7200 },
+        ],
+      },
     ];
+    const compareOrder = e5SelectDistinctItems(compareBank, count);
     for (let i = 0; i < count; i += 1) {
-      const item = compareBank[i % compareBank.length];
+      const item = compareOrder[i];
       if (item.type === 'compare') {
         const symbol = item.leftValue > item.rightValue ? '>' : item.leftValue < item.rightValue ? '<' : '=';
         questions.push(`比較大小：${item.leftText} □ ${item.rightText}`);
@@ -4201,16 +4474,7 @@
   }
 
   function buildE530MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const built = banks[i % banks.length](1);
-      questions.push(built.questions[0]);
-      summaryAnswers.push(built.summaryAnswers[0]);
-      answers.push(built.answers[0]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE530LengthFourSet(count) {
@@ -4470,9 +4734,16 @@
       ['億位', '萬位', 10000],
       ['兆', '億', 10000],
       ['十億', '百萬', 1000],
+      ['百位', '十位', 10],
+      ['十萬位', '萬位', 10],
+      ['千萬位', '萬位', 1000],
+      ['百億位', '億位', 100],
+      ['兆位', '萬位', 100000000],
+      ['億位', '千萬位', 10],
     ];
+    const pairOrder = e5SelectDistinctItems(pairs, count);
     for (let i = 0; i < count; i += 1) {
-      const [left, right, ratio] = pairs[i % pairs.length];
+      const [left, right, ratio] = pairOrder[i];
       questions.push(`「${left.replace('位', '')}」是「${right.replace('位', '')}」的幾倍？`);
       summaryAnswers.push(`${ratio}倍`);
       answers.push(`過程：十進位每往左一位就是前一位的 10 倍，依位值差去推，所以是 ${ratio} 倍。`);
@@ -4698,11 +4969,13 @@
     ];
     const yAxisBanks = ['銷量', '來客人數', '身高', '水位'];
     const units = ['盒', '人', '公分', '公尺'];
+    const xAxisOrder = e5SelectDistinctItems(xAxisBanks, Math.ceil(count / 4));
+    const yAxisOrder = e5SelectDistinctItems(yAxisBanks, count);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 4;
       if (mode === 0) {
-        const [xLabels, answer] = xAxisBanks[i % xAxisBanks.length];
-        const yAxis = yAxisBanks[i % yAxisBanks.length];
+        const [xLabels, answer] = xAxisOrder[Math.floor(i / 4)];
+        const yAxis = yAxisOrder[i];
         questions.push(`某折線圖的橫軸標示「${xLabels}」，縱軸標示「${yAxis}」。這張圖的橫軸主要表示什麼？`);
         summaryAnswers.push(answer);
         answers.push(
@@ -4718,13 +4991,13 @@
           `過程：每一小格 ${step}${unit}，第 ${grid} 小格就是 ${step} × ${grid} = ${step * grid}${unit}。`
         );
       } else if (mode === 2) {
-        const yAxis = yAxisBanks[i % yAxisBanks.length];
+        const yAxis = yAxisOrder[i];
         questions.push(`折線圖把各點連起來後，最主要是方便看出什麼？（以「${yAxis}」資料為例）`);
         summaryAnswers.push('變化趨勢');
         answers.push('過程：把點連線後，比較容易看出資料是上升、下降還是持平。');
       } else {
         const start = pickFromList([100, 200, 500, 1000]);
-        const yAxis = yAxisBanks[i % yAxisBanks.length];
+        const yAxis = yAxisOrder[i];
         questions.push(
           `某折線圖的縱軸標示「${yAxis}」，下方有波浪線，第一個刻度從 ${start} 開始。這個波浪線通常表示什麼？`
         );
@@ -4760,16 +5033,7 @@
   }
 
   function buildE525MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const built = banks[randInt(0, banks.length - 1)](1);
-      questions.push(built.questions[0]);
-      summaryAnswers.push((built.summaryAnswers || [''])[0]);
-      answers.push(built.answers[0]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE525ReadPlaceThreeSet(count) {
@@ -4806,9 +5070,16 @@
       { parts: [['食物', 40], ['房租', 30], ['交通', 15]], other: 15, topic: '家庭支出', unit: '' },
       { parts: [['國語', 30], ['數學', 25], ['英語', 20]], other: 25, topic: '考試科目成績分布', unit: '' },
       { parts: [['搭捷運', 40], ['開車', 30], ['騎機車', 20]], other: 10, topic: '通勤方式', unit: '' },
+      { parts: [['小說', 35], ['科普書', 25], ['漫畫', 20]], other: 20, topic: '班級閱讀喜好', unit: '' },
+      { parts: [['晴天', 50], ['陰天', 25], ['雨天', 15]], other: 10, topic: '一個月的天氣', unit: '' },
+      { parts: [['早餐', 30], ['午餐', 35], ['晚餐', 25]], other: 10, topic: '學校餐廳滿意度調查', unit: '' },
+      { parts: [['鉛筆', 25], ['原子筆', 30], ['彩色筆', 15]], other: 30, topic: '文具使用情形', unit: '' },
+      { parts: [['自然科', 20], ['社會科', 30], ['藝能科', 25]], other: 25, topic: '課後社團選擇', unit: '' },
+      { parts: [['國內旅遊', 45], ['日本旅遊', 20], ['東南亞旅遊', 15]], other: 20, topic: '家庭旅遊目的地', unit: '' },
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = caseOrder[i];
       const knownSum = c.parts.reduce((s, p) => s + p[1], 0);
       const partDesc = c.parts.map(p => `${p[0]} 占 ${p[1]}%`).join('、');
       questions.push(
@@ -4835,16 +5106,23 @@
       { angle: 126, pct: 35, total: 200, count: 70, totalLabel: '200人', section: '乙組' },
       { angle: 54, pct: 15, total: 400, count: 60, totalLabel: '400件', section: 'C商品' },
       { angle: 180, pct: 50, total: 200, count: 100, totalLabel: '200名', section: '男生' },
+      { angle: 45, pct: 12.5, total: 240, count: 30, totalLabel: '240人', section: '參加合唱團' },
+      { angle: 135, pct: 37.5, total: 240, count: 90, totalLabel: '240本', section: '小說類' },
+      { angle: 162, pct: 45, total: 240, count: 108, totalLabel: '240份', section: 'A餐' },
+      { angle: 216, pct: 60, total: 350, count: 210, totalLabel: '350人', section: '步行上學' },
+      { angle: 270, pct: 75, total: 160, count: 120, totalLabel: '160件', section: '已完成' },
+      { angle: 18, pct: 5, total: 240, count: 12, totalLabel: '240名', section: '志工隊' },
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = caseOrder[i];
       if (i % 2 === 0) {
         questions.push(
           `圓形圖中，某扇形的圓心角是 ${c.angle} 度，請問這個扇形占整個圓形圖的百分之幾？`
         );
         summaryAnswers.push(`${c.pct}%`);
         answers.push(
-          `過程：${c.angle} ÷ 360 × 100% ≈ ${c.pct}%。`
+          `過程：${c.angle} ÷ 360 × 100% = ${c.pct}%。`
         );
       } else {
         questions.push(
@@ -4872,9 +5150,16 @@
       { pct: 25, part: 60, total: 240, partLabel: '60人', topic: '喜歡足球', totalLabel: '240人' },
       { pct: 15, part: 45, total: 300, partLabel: '45人', topic: '選擇其他科目', totalLabel: '300人' },
       { pct: 35, part: 70, total: 200, partLabel: '70份', topic: 'C套餐', totalLabel: '200份' },
+      { pct: 12.5, part: 30, total: 240, partLabel: '30人', topic: '參加合唱團的學生', totalLabel: '240人' },
+      { pct: 60, part: 210, total: 350, partLabel: '210人', topic: '步行上學的學生', totalLabel: '350人' },
+      { pct: 75, part: 120, total: 160, partLabel: '120件', topic: '已完成的作品', totalLabel: '160件' },
+      { pct: 10, part: 36, total: 360, partLabel: '36本', topic: '科普書', totalLabel: '360本' },
+      { pct: 45, part: 135, total: 300, partLabel: '135人', topic: '選擇籃球社的學生', totalLabel: '300人' },
+      { pct: 80, part: 160, total: 200, partLabel: '160份', topic: '滿意的問卷', totalLabel: '200份' },
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = caseOrder[i];
       questions.push(
         `某圓形圖中，「${c.topic}」占 ${c.pct}%，代表 ${c.partLabel}，請問這個圓形圖的總數是多少？`
       );
@@ -5051,9 +5336,14 @@
       [0.17, 0.4],
       [3.205, 1.02],
       [12.3, 0.04],
+      [0.625, 0.08],
+      [4.5, 2.007],
+      [15.04, 0.006],
+      [0.9, 3.125],
     ];
+    const bankOrder = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const [a, b] = bank[i % bank.length];
+      const [a, b] = bankOrder[i];
       const places = e524CountDecimals(a) + e524CountDecimals(b);
       questions.push(`${e524FormatNumber(a)} × ${e524FormatNumber(b)} 得到的答案是幾位小數？`);
       summaryAnswers.push(`${places}位小數`);
@@ -5070,12 +5360,19 @@
     const answers = [];
     const banks = [
       { base: 3.52, multipliers: [1.02, 1, 0.86], names: ['甲', '乙', '丙'] },
-      { base: 29.2, multipliers: [0.1, 1.2, 5], names: ['甲', '乙', '丙'] },
-      { base: 80, multipliers: [0.75, 1, 1.4], names: ['甲', '乙', '丙'] },
-      { base: 250, multipliers: [0.8, 1, 1.5], names: ['甲', '乙', '丙'] },
+      { base: 29.2, multipliers: [5, 0.1, 1.2], names: ['甲', '乙', '丙'] },
+      { base: 80, multipliers: [0.75, 1.4, 1], names: ['甲', '乙', '丙'] },
+      { base: 250, multipliers: [1, 0.8, 1.5], names: ['甲', '乙', '丙'] },
+      { base: 7.28, multipliers: [1.001, 0.99, 1], names: ['甲', '乙', '丙'] },
+      { base: 12.5, multipliers: [1.2, 0.8, 1.01], names: ['甲', '乙', '丙'] },
+      { base: 0.96, multipliers: [1.25, 0.75, 1], names: ['甲', '乙', '丙'] },
+      { base: 45.6, multipliers: [1.05, 1, 0.5], names: ['甲', '乙', '丙'] },
+      { base: 6.4, multipliers: [1.02, 1.5, 0.98], names: ['甲', '乙', '丙'] },
+      { base: 125, multipliers: [1.1, 0.6, 1.4], names: ['甲', '乙', '丙'] },
     ];
+    const bankOrder = e5SelectDistinctItems(banks, count);
     for (let i = 0; i < count; i += 1) {
-      const item = banks[i % banks.length];
+      const item = bankOrder[i];
       const values = item.multipliers.map((m, idx) => ({
         name: item.names[idx],
         value: item.base * m,
@@ -5260,16 +5557,7 @@
   }
 
   function buildE524MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const built = banks[randInt(0, banks.length - 1)](1);
-      questions.push(built.questions[0]);
-      summaryAnswers.push((built.summaryAnswers || [''])[0]);
-      answers.push(built.answers[0]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE524DirectTwoSet(count) {
@@ -5572,9 +5860,58 @@
         symbol: '=',
         reason: '1 度水 = 1 立方公尺',
       },
+      {
+        leftValue: 0.05,
+        leftUnit: '立方公尺',
+        rightValue: 50000,
+        rightUnit: '立方公分',
+        symbol: '=',
+        reason: '0.05 立方公尺 = 50 公升 = 50000 立方公分',
+      },
+      {
+        leftValue: 7500,
+        leftUnit: 'c.c.',
+        rightValue: 7.5,
+        rightUnit: '公升',
+        symbol: '=',
+        reason: '7500 c.c. = 7500 毫升 = 7.5 公升',
+      },
+      {
+        leftValue: 0.8,
+        leftUnit: '公升',
+        rightValue: 850,
+        rightUnit: '立方公分',
+        symbol: '<',
+        reason: '0.8 公升 = 800 立方公分',
+      },
+      {
+        leftValue: 1250,
+        leftUnit: '毫升',
+        rightValue: 1.2,
+        rightUnit: '公升',
+        symbol: '>',
+        reason: '1.2 公升 = 1200 毫升',
+      },
+      {
+        leftValue: 3,
+        leftUnit: '立方公尺',
+        rightValue: 3000,
+        rightUnit: '公升',
+        symbol: '=',
+        reason: '3 立方公尺 = 3000 公升',
+      },
+      {
+        leftValue: 1.5,
+        leftUnit: '公升',
+        rightValue: 1499,
+        rightUnit: 'c.c.',
+        symbol: '>',
+        reason: '1.5 公升 = 1500 c.c.',
+      },
     ];
+    const itemOrder = e5SelectDistinctItems(items, count);
     for (let i = 0; i < count; i += 1) {
-      const item = items[i % items.length];
+      const item = itemOrder[i];
       questions.push(
         `比較大小：${item.leftValue}${item.leftUnit} □ ${item.rightValue}${item.rightUnit}（填入 >、< 或 =）。`
       );
@@ -5749,17 +6086,7 @@
   }
 
   function buildE523MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const bank = banks[randInt(0, banks.length - 1)];
-      const built = bank(1);
-      questions.push(built.questions[0]);
-      summaryAnswers.push((built.summaryAnswers || [''])[0]);
-      answers.push(built.answers[0]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE523ConvertTwoSet(count) {
@@ -6105,6 +6432,10 @@
     const summaryAnswers = [];
     const answers = [];
     const units = ['0.1', '0.01', '0.001', '0.0001'];
+    const unitBank = shuffle([...units]);
+    const countBank = shuffle([8, 12, 25, 105, 399, 6300, 8000]);
+    const reverseUnitBank = shuffle(['0.001', '0.0001', '0.00001']);
+    const reverseCountBank = shuffle([12, 25, 48, 125, 340]);
     for (let i = 0; i < count; i += 1) {
       const mode = i % 3;
       if (mode === 0) {
@@ -6125,8 +6456,9 @@
           )
         );
       } else if (mode === 1) {
-        const unitText = pickFromList(units);
-        const countValue = pickFromList([8, 12, 25, 105, 399, 6300, 8000]);
+        const bankIndex = Math.floor(i / 3);
+        const unitText = unitBank[bankIndex % unitBank.length];
+        const countValue = countBank[bankIndex % countBank.length];
         const value = countValue * e511CountUnitValue(unitText);
         const digits = Math.max(1, unitText.split('.')[1].length);
         const answerText = e511Fixed(value, digits);
@@ -6136,9 +6468,10 @@
           e511Answer(answerText, `${countValue} 個 ${unitText} 就是 ${countValue} × ${unitText} = ${answerText}。`)
         );
       } else {
-        const unitText = pickFromList(['0.001', '0.0001', '0.00001']);
+        const bankIndex = Math.floor(i / 3);
+        const unitText = reverseUnitBank[bankIndex % reverseUnitBank.length];
         const digits = unitText.split('.')[1].length;
-        const countValue = pickFromList([12, 25, 48, 125, 340]);
+        const countValue = reverseCountBank[bankIndex % reverseCountBank.length];
         const value = countValue * e511CountUnitValue(unitText);
         const answerText = `${countValue}個`;
         questions.push(`${e511Fixed(value, digits)} 是由幾個 ${unitText} 合起來的？`);
@@ -6248,9 +6581,13 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const bank = ['3.5000', '2.1608', '7.8002', '5.0007', '60.0', '8.0400', '0.2300', '12.3400'];
+    const bank = [
+      '3.5000', '2.1608', '7.8002', '5.0007', '60.0', '8.0400', '0.2300', '12.3400',
+      '4.0700', '0.0400', '6.2050', '15.000', '9.6000', '0.5000',
+    ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const text = bank[i % bank.length];
+      const text = bank[(i + caseOffset) % bank.length];
       let answerText = text;
       if (text.includes('.')) {
         const [integerPart, decimalPart] = text.split('.');
@@ -6280,8 +6617,9 @@
       let b = randInt(100, 9999) / 10 ** digitsB;
       const useAdd = i % 2 === 0;
       if (!useAdd && b > a) {
-        const temp = a;
-        b = temp / 2;
+        // 題目只顯示到小數第 4 位；半數可能多出第 5 位，必須先對齊
+        // 顯示精度，避免題面是 0.2519 − 0.126、答案卻依 0.12595 計算。
+        b = Number((a / 2).toFixed(4));
       }
       const result = useAdd ? a + b : a - b;
       const answerText = e511Trim(result, 6);
@@ -6391,9 +6729,15 @@
       { value: 16.795, digits: 2, place: '百分位' },
       { value: 3.004, digits: 2, place: '百分位' },
       { value: 2.951, digits: 1, place: '十分位' },
+      { value: 6.045, digits: 1, place: '十分位' },
+      { value: 10.004, digits: 2, place: '百分位' },
+      { value: 4.949, digits: 1, place: '十分位' },
+      { value: 18.205, digits: 2, place: '百分位' },
+      { value: 7.005, digits: 2, place: '百分位' },
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const item = bank[i % bank.length];
+      const item = bank[(i + caseOffset) % bank.length];
       const sourceText = e511Fixed(item.value, 3);
       const answerText = e511RoundText(sourceText, item.digits);
       questions.push(`${sourceText} 用四捨五入法取概數到${item.place}是多少？`);
@@ -6468,6 +6812,7 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const usedQuestions = new Set();
     for (let i = 0; i < count; i += 1) {
       let built = null;
       while (!built) {
@@ -6511,25 +6856,63 @@
             };
           }
         }
+        if (built && usedQuestions.has(built.question)) built = null;
       }
       questions.push(built.question);
       summaryAnswers.push(built.answer);
       answers.push(e511Answer(built.answer, built.process));
+      usedQuestions.add(built.question);
     }
     return { questions, summaryAnswers, answers };
   }
 
-  function buildE511MixedSet(banks, count) {
+  function e5BuildMixedSet(banks, count) {
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const generatedSets = banks.map((build) => build(count));
+    const usedQuestions = new Set();
     for (let i = 0; i < count; i += 1) {
-      const built = banks[i % banks.length](i + 1);
-      questions.push(built.questions[i]);
-      summaryAnswers.push(built.summaryAnswers[i]);
-      answers.push(built.answers[i]);
+      const built = generatedSets[i % generatedSets.length];
+      let itemIndex = Math.floor(i / generatedSets.length) % built.questions.length;
+      if (usedQuestions.has(built.questions[itemIndex])) {
+        const availableIndex = built.questions.findIndex((question) => !usedQuestions.has(question));
+        if (availableIndex !== -1) itemIndex = availableIndex;
+      }
+      questions.push(built.questions[itemIndex]);
+      summaryAnswers.push(built.summaryAnswers[itemIndex]);
+      answers.push(built.answers[itemIndex]);
+      usedQuestions.add(built.questions[itemIndex]);
     }
     return { questions, summaryAnswers, answers };
+  }
+
+  // 每一份練習先不重複地抽取題型或資料；題庫不足時才重新洗牌。
+  function e5SelectDistinctItems(items, count) {
+    const selected = [];
+    while (selected.length < count) {
+      const shuffled = items.slice();
+      for (let i = shuffled.length - 1; i > 0; i -= 1) {
+        const j = randInt(0, i);
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      selected.push(...shuffled);
+    }
+    return selected.slice(0, count);
+  }
+
+  // 隨機數值題偶爾可能巧合相同；重抽整份題組，確保學生不會在同一頁看到重複題目。
+  function e5BuildUniqueSet(builder, count) {
+    let built = builder(count);
+    for (let retry = 0; retry < 500; retry += 1) {
+      if (new Set(built.questions).size === built.questions.length) return built;
+      built = builder(count);
+    }
+    return built;
+  }
+
+  function buildE511MixedSet(banks, count) {
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE511LiteracyThreeSet(count) {
@@ -6797,6 +7180,10 @@
       [48, 18, 6],
       [30, 45, 15],
       [20, 28, 4],
+      [36, 54, 6],
+      [42, 56, 7],
+      [45, 75, 15],
+      [56, 70, 14],
     ];
     const coprimeBank = [
       [14, 19],
@@ -6810,16 +7197,18 @@
       [24, 36],
       [35, 49],
     ];
+    const pairOffset = randInt(0, pairBank.length - 1);
+    const coprimeOrder = shuffle([...coprimeBank]);
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
-        const [a, b, common] = pairBank[i % pairBank.length];
+        const [a, b, common] = pairBank[(Math.floor(i / 2) + pairOffset) % pairBank.length];
         questions.push(`已知 ${common} 是 ${a} 的因數，也是 ${b} 的因數，那麼 ${common} 是 ${a} 和 ${b} 的什麼數？`);
         summaryAnswers.push('公因數');
         answers.push(
           e512Answer('公因數', `同時是 ${a} 和 ${b} 的因數，就叫做 ${a} 和 ${b} 的公因數，所以答案是公因數。`)
         );
       } else {
-        const winner = pickFromList(coprimeBank);
+        const winner = coprimeOrder[Math.floor(i / 2) % coprimeOrder.length];
         const options = shuffle([winner, ...shuffle([...nonCoprimeBank]).slice(0, 3)]);
         const answerText = `${winner[0]} 和 ${winner[1]}`;
         questions.push(`下列哪一組數的公因數只有 1？（選項：${options.map(([a, b]) => `${a} 和 ${b}`).join('、')}）`);
@@ -6844,16 +7233,21 @@
       ['24 朵玫瑰和 36 朵菊花要分裝在花瓶裡，每瓶花量相同且全部裝完，最多需要幾個花瓶？', 24, 36, '個花瓶'],
       ['32 個男生和 56 個女生要分組，每組男生、女生人數各一樣且剛好分完，最多可分成幾組？', 32, 56, '組'],
       ['甲班有 20 人、乙班有 30 人，兩班分組時每組人數要相同，且各班都要剛好分完，每組最多有幾人？', 20, 30, '人'],
+      ['18 支紅筆和 30 支藍筆要平均裝入文具袋，每袋兩種筆的數量都一樣且全部裝完，最多可裝成幾袋？', 18, 30, '袋'],
+      ['45 顆紅球和 60 顆藍球要分成相同的遊戲組，每組兩種球的數量都一樣，最多可分成幾組？', 45, 60, '組'],
+      ['27 個蘋果和 36 個梨子要分裝成相同的水果袋，每袋兩種水果都一樣多，最多可裝成幾袋？', 27, 36, '袋'],
+      ['48 張甲班作品和 72 張乙班作品要平均裝訂成相同的小冊，每冊兩班作品數量都一樣，最多可裝成幾冊？', 48, 72, '冊'],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const [questionText, a, b, targetUnit] = bank[i % bank.length];
+      const [questionText, a, b, targetUnit] = bank[(i + caseOffset) % bank.length];
       const gcd = e512Gcd(a, b);
       questions.push(questionText);
       summaryAnswers.push(`${gcd}${targetUnit}`);
       answers.push(
         e512Answer(
           `${gcd}${targetUnit}`,
-          `要分得一樣多又剛好分完，就是找 ${a} 和 ${b} 的最大公因數。${a} 和 ${b} 的最大公因數是 ${gcd}，所以最多可以分成 ${gcd}${targetUnit}。`
+          `要分得一樣多又剛好分完，就是找 ${a} 和 ${b} 的最大公因數。${a} 和 ${b} 的最大公因數是 ${gcd}，所以答案是 ${gcd}${targetUnit}。`
         )
       );
     }
@@ -6870,9 +7264,13 @@
       ['在長 28 公尺、寬 42 公尺的公園周圍每隔相同距離種一棵且四個角都要種', 28, 42, '公尺'],
       ['兩條彩帶分別長 18 公分和 24 公分，要剪成一樣長的小段且長度為整數', 18, 24, '公分'],
       ['兩根木棍分別長 10 公分和 15 公分，要切成等長小段且不剩', 10, 15, '公分'],
+      ['一張長 36 公分、寬 48 公分的色紙，要裁成邊長相同且最大的正方形並全部用完', 36, 48, '公分'],
+      ['兩條繩子分別長 42 公分和 56 公分，要剪成等長小段且沒有剩餘', 42, 56, '公分'],
+      ['長 45 公尺、寬 60 公尺的操場四周要每隔相同距離插旗，四個角都要插', 45, 60, '公尺'],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const [questionText, a, b, unit] = bank[i % bank.length];
+      const [questionText, a, b, unit] = bank[(i + caseOffset) % bank.length];
       const gcd = e512Gcd(a, b);
       questions.push(`${questionText}，最長是多少${unit}？`);
       summaryAnswers.push(`${gcd}${unit}`);
@@ -6895,9 +7293,14 @@
       ['一人買同樣的餅乾花了 48 元，另一人買同樣餅乾花了 56 元，每片餅乾單價最多是幾元？', 48, 56, '元'],
       ['皮皮已看了 60 頁小說，丹丹已看了 40 頁，而且兩人每天看的一樣多，他們每天最多看幾頁？', 60, 40, '頁'],
       ['甲班有 25 人、乙班有 30 人，兩班分組時每組人數要相同，且各班都要剛好分完，每組最多有幾人？', 25, 30, '人'],
+      ['小恩和小芸買同一款貼紙，分別花了 90 元和 126 元；每張貼紙單價最多是多少元？', 90, 126, '元'],
+      ['兩卷緞帶分別長 84 公分和 126 公分，要剪成等長小段且不剩，每段最長是多少公分？', 84, 126, '公分'],
+      ['兩位同學收集到 54 張和 72 張郵票，要平均分成相同的小冊且全部用完，最多可分成幾冊？', 54, 72, '冊'],
+      ['兩班各有 66 人和 88 人，要安排每組人數相同且都剛好分完，每組最多有幾人？', 66, 88, '人'],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const [questionText, a, b, unit] = bank[i % bank.length];
+      const [questionText, a, b, unit] = bank[(i + caseOffset) % bank.length];
       const gcd = e512Gcd(a, b);
       questions.push(questionText);
       summaryAnswers.push(`${gcd}${unit}`);
@@ -6912,16 +7315,7 @@
   }
 
   function buildE512MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const built = banks[i % banks.length](i + 1);
-      questions.push(built.questions[i]);
-      summaryAnswers.push(built.summaryAnswers[i]);
-      answers.push(built.answers[i]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE512BasicsTwoSet(count) {
@@ -7000,8 +7394,9 @@
     const summaryAnswers = [];
     const answers = [];
     const bank = [4, 6, 7, 8, 9, 12, 13, 14, 15, 18, 20, 25];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const base = bank[i % bank.length];
+      const base = bank[(i + caseOffset) % bank.length];
       const amount = i % 2 === 0 ? 4 : 5;
       const multiples = Array.from({ length: amount }, (_, index) => base * (index + 1));
       const answerText = e513FormatList(multiples);
@@ -7070,8 +7465,9 @@
       [12, 60, 150],
       [15, 100, 180],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const [base, start, end] = bank[i % bank.length];
+      const [base, start, end] = bank[(i + caseOffset) % bank.length];
       if (i % 2 === 0) {
         const values = e513ListMultiplesInRange(base, start, end);
         const answerText = e513FormatList(values);
@@ -7111,8 +7507,9 @@
       [18, 27],
       [10, 12],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const [a, b] = bank[i % bank.length];
+      const [a, b] = bank[(i + caseOffset) % bank.length];
       const common = lcm(a, b);
       const values = [common, common * 2, common * 3];
       const answerText = `${e513FormatList(values)}；最小公倍數是 ${common}`;
@@ -7141,8 +7538,9 @@
       [24, 36],
       [15, 20],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const [a, b] = bank[i % bank.length];
+      const [a, b] = bank[(i + caseOffset) % bank.length];
       const common = lcm(a, b);
       questions.push(`找出 ${a} 和 ${b} 的最小公倍數。`);
       summaryAnswers.push(`${common}`);
@@ -7164,9 +7562,14 @@
       ['軟糖每 8 顆裝一包或每 12 顆裝一包都能裝完，軟糖最少有幾顆？', 8, 12, '顆'],
       ['番茄每 4 個一堆或每 10 個一堆都能剛好分完，這籃番茄最少有幾個？', 4, 10, '個'],
       ['鉛筆平均分給 14 人或 20 人都能剛好分完，這箱鉛筆最少有幾枝？', 14, 20, '枝'],
+      ['學校禮堂的椅子每 16 張排一列或每 20 張排一列都剛好排完，最少有幾張椅子？', 16, 20, '張'],
+      ['一批貼紙每 9 張裝一包或每 14 張裝一包都能剛好裝完，最少有幾張？', 9, 14, '張'],
+      ['圖書館新書每 12 本放一層或每 18 本放一層都能放完，最少有幾本？', 12, 18, '本'],
+      ['園遊會餐券每 25 張一疊或每 30 張一疊都能剛好分完，最少有幾張？', 25, 30, '張'],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const [questionText, a, b, unit] = bank[i % bank.length];
+      const [questionText, a, b, unit] = bank[(i + caseOffset) % bank.length];
       const common = lcm(a, b);
       questions.push(`${questionText}`);
       summaryAnswers.push(`${common}${unit}`);
@@ -7190,9 +7593,13 @@
       ['用長 10 公分、寬 8 公分的木板拼成一個大正方形，拼成的正方形邊長最短是幾公分？', 10, 8, '公分'],
       ['用長 20 公分、寬 15 公分的花磚拼成一個正方形牆面，正方形邊長最小是幾公分？', 20, 15, '公分'],
       ['用長 5 公分、寬 4 公分的紙卡拼出一個最小的正方形，邊長是幾公分？', 5, 4, '公分'],
+      ['用長 18 公分、寬 12 公分的拼圖卡拼成一個正方形，邊長最短是幾公分？', 18, 12, '公分'],
+      ['用長 9 公分、寬 15 公分的磁磚鋪成最小正方形，正方形邊長是幾公分？', 9, 15, '公分'],
+      ['用長 16 公分、寬 24 公分的紙板拼成一個正方形，邊長最短是幾公分？', 16, 24, '公分'],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const [questionText, length, width, unit] = bank[i % bank.length];
+      const [questionText, length, width, unit] = bank[(i + caseOffset) % bank.length];
       const side = lcm(length, width);
       questions.push(questionText);
       summaryAnswers.push(`${side}${unit}`);
@@ -7215,9 +7622,14 @@
       ['三姊弟分別每 3 天、5 天、7 天回家一次，他們最少幾天後會同時回家？', 3, 5, 7, '天'],
       ['三個女兒分別每 5 天、4 天、3 天回家一次，她們要多少天才可以同時回家？', 5, 4, 3, '天'],
       ['爸爸每 4 天運動一次，媽媽每 6 天運動一次，今天兩人都運動，下次同時運動是幾天後？', 4, 6, '天'],
+      ['校車甲線每 9 分鐘一班，乙線每 12 分鐘一班，現在同時到站，最少幾分鐘後會再同時到站？', 9, 12, '分鐘'],
+      ['灑水器甲每 10 分鐘噴水一次，乙每 15 分鐘噴水一次，現在同時噴水，最少幾分鐘後再同時噴水？', 10, 15, '分鐘'],
+      ['三盞燈分別每 4 秒、6 秒、8 秒閃一次，現在同時閃，最少幾秒後再同時閃？', 4, 6, 8, '秒'],
+      ['兩位同學分別每 14 天、21 天借書一次，今天同時借書，最少幾天後再同時借書？', 14, 21, '天'],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const item = bank[i % bank.length];
+      const item = bank[(i + caseOffset) % bank.length];
       if (item.length === 4) {
         const [questionText, a, b, unit] = item;
         const common = lcm(a, b);
@@ -7255,9 +7667,13 @@
       [8, 10, 75, 95, '水果總數'],
       [7, 11, 1, 99, '影印紙張數'],
       [6, 9, 20, 60, '彈珠總數'],
+      [9, 12, 50, 120, '參賽學生數'],
+      [10, 15, 80, 180, '餅乾總數'],
+      [12, 18, 100, 220, '印製卡片數'],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const [a, b, start, end, label] = bank[i % bank.length];
+      const [a, b, start, end, label] = bank[(i + caseOffset) % bank.length];
       const values = e513ListMultiplesInRange(lcm(a, b), start, end);
       const answerText = e513FormatList(values);
       questions.push(`${label}在 ${start}～${end} 之間，每 ${a} 個一組或每 ${b} 個一組都能剛好分完，可能有多少？`);
@@ -7288,9 +7704,13 @@
       ['檸檬派 25 元，草莓派 40 元，各買了一些且花費相同，買檸檬派至少花了多少元？', 25, 40, '元'],
       ['全部買 12 元藍筆或全部買 15 元螢光筆都剛好花完錢，最少有幾元？', 12, 15, '元'],
       ['A 巧克力 6 元，B 巧克力 9 元，各買若干個且總額相同，花的錢最少是幾元？', 6, 9, '元'],
+      ['買 18 元筆記本或 24 元資料夾，若花費相同，最少各要花多少元？', 18, 24, '元'],
+      ['每張電影票 80 元、每張展覽票 120 元，兩種票的總花費相同，最少各花多少元？', 80, 120, '元'],
+      ['買 14 元果汁或 21 元牛奶，花費相同且不超過 300 元，共同花費可能是多少元？', 14, 21, '元', 300],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const item = bank[i % bank.length];
+      const item = bank[(i + caseOffset) % bank.length];
       const [questionText, a, b, unit, limit] = item;
       const common = lcm(a, b);
       let answerText = `${common}${unit}`;
@@ -7308,16 +7728,7 @@
   }
 
   function buildE513MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const built = banks[i % banks.length](i + 1);
-      questions.push(built.questions[i]);
-      summaryAnswers.push(built.summaryAnswers[i]);
-      answers.push(built.answers[i]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE513MultipleThreeSet(count) {
@@ -7372,11 +7783,25 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const directCases = shuffle([
+      { base: makeFraction(1, 2), scale: 2 },
+      { base: makeFraction(2, 3), scale: 4 },
+      { base: makeFraction(3, 5), scale: 3 },
+      { base: makeFraction(4, 7), scale: 2 },
+      { base: makeFraction(5, 8), scale: 4 },
+      { base: makeFraction(3, 4), scale: 5 },
+    ]);
+    const commonDenominatorCases = shuffle([
+      { targetDen: 24, fracs: [{ num: 1, den: 2 }, { num: 2, den: 3 }, { num: 5, den: 8 }] },
+      { targetDen: 30, fracs: [{ num: 1, den: 2 }, { num: 3, den: 5 }, { num: 2, den: 3 }] },
+      { targetDen: 36, fracs: [{ num: 1, den: 3 }, { num: 5, den: 9 }, { num: 7, den: 12 }] },
+      { targetDen: 40, fracs: [{ num: 3, den: 4 }, { num: 2, den: 5 }, { num: 3, den: 8 }] },
+      { targetDen: 48, fracs: [{ num: 1, den: 2 }, { num: 1, den: 3 }, { num: 3, den: 8 }] },
+    ]);
     for (let i = 0; i < count; i += 1) {
-      const base = e514PickBaseFraction();
-      const scale = randInt(2, 9);
-      const scaled = e514MakeScaledFraction(base, scale);
       if (i % 3 === 0) {
+        const { base, scale } = directCases[Math.floor(i / 3) % directCases.length];
+        const scaled = e514MakeScaledFraction(base, scale);
         questions.push(`${e514Frac(base)} = $\\frac{\\Box}{${scaled.den}}$，空格應填多少？`);
         summaryAnswers.push(`${scaled.num}`);
         answers.push(
@@ -7386,18 +7811,7 @@
           )
         );
       } else if (i % 3 === 1) {
-        const targetDen = pickFromList([24, 30, 36, 40, 48]);
-        const denBank = [2, 3, 4, 5, 6, 8, 10, 12].filter((value) => targetDen % value === 0 && value > 1);
-        const chosen = shuffle(denBank)
-          .slice(0, 3)
-          .sort((a, b) => a - b);
-        const fracs = chosen.map((den) => {
-          let num;
-          do {
-            num = randInt(1, den - 1);
-          } while (gcdInt(num, den) !== 1);
-          return { num, den };
-        });
+        const { targetDen, fracs } = commonDenominatorCases[Math.floor(i / 3) % commonDenominatorCases.length];
         const expanded = fracs.map((frac) => ({ num: frac.num * (targetDen / frac.den), den: targetDen }));
         const fracsText = fracs.map((frac) => e514FracRaw(frac.num, frac.den)).join('、');
         const answerText = expanded.map((frac) => e514FracRaw(frac.num, frac.den)).join('、');
@@ -7410,18 +7824,15 @@
           )
         );
       } else {
-        const limit = pickFromList([40, 50, 60, 72, 90, 100]);
-        const possible = [];
-        for (let k = 2; k * base.den < limit; k += 1) {
-          possible.push(makeFraction(base.num * k, base.den * k));
-        }
-        const answerText = e514FormatFractionList(possible);
-        questions.push(`用擴分找出 ${e514Frac(base)} 的等值分數中，分母小於 ${limit} 的有哪些？`);
+        const base = e514PickBaseFraction();
+        const possible = [2, 3, 4, 5, 6].map((scale) => ({ num: base.num * scale, den: base.den * scale }));
+        const answerText = possible.map((frac) => e514FracRaw(frac.num, frac.den)).join('、');
+        questions.push(`用擴分依序寫出 ${e514Frac(base)} 的 5 個等值分數。`);
         summaryAnswers.push(answerText);
         answers.push(
           e514Answer(
             answerText,
-            `等值分數可由 ${e514Frac(base)} 的分子、分母同乘 2、3、4……得到。分母要小於 ${limit}，所以符合的有 ${answerText}。`
+            `等值分數可由 ${e514Frac(base)} 的分子、分母同乘同一個整數得到。依序同乘 2、3、4、5、6，可得 ${answerText}。`
           )
         );
       }
@@ -7441,13 +7852,18 @@
       [33, 55, 11],
       [40, 56, 8],
       [45, 75, 15],
+      [24, 36, 12],
+      [35, 49, 7],
+      [56, 70, 14],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const [n, d, g] = bank[i % bank.length];
+      const [n, d, g] = bank[(i + caseOffset) % bank.length];
       const reduced = makeFraction(n, d);
+      const originalText = e514FracRaw(n, d);
       if (i % 3 === 0) {
         questions.push(
-          `${e514Frac({ num: n, den: d })} = $\\frac{${n}÷${g}}{${d}÷${g}}$ = $\\frac{\\Box}{${reduced.den}}$，空格應填多少？`
+          `${originalText} = $\\frac{${n}÷${g}}{${d}÷${g}}$ = $\\frac{\\Box}{${reduced.den}}$，空格應填多少？`
         );
         summaryAnswers.push(`${reduced.num}`);
         answers.push(
@@ -7457,16 +7873,16 @@
           )
         );
       } else if (i % 3 === 1) {
-        questions.push(`${e514Frac({ num: n, den: d })} = $\\frac{${reduced.num}}{\\Box}$，空格應填多少？`);
+        questions.push(`${originalText} = $\\frac{${reduced.num}}{\\Box}$，空格應填多少？`);
         summaryAnswers.push(`${reduced.den}`);
         answers.push(
           e514Answer(
             `${reduced.den}`,
-            `把 ${e514Frac({ num: n, den: d })} 的分子、分母同除以最大公因數 ${gcdInt(n, d)}，可得最簡分數 ${e514Frac(reduced)}，所以空格是 ${reduced.den}。`
+            `把 ${originalText} 的分子、分母同除以最大公因數 ${gcdInt(n, d)}，可得最簡分數 ${e514Frac(reduced)}，所以空格是 ${reduced.den}。`
           )
         );
       } else {
-        questions.push(`把 ${e514Frac({ num: n, den: d })} 約分成最簡分數。`);
+        questions.push(`把 ${originalText} 約分成最簡分數。`);
         summaryAnswers.push(e514Frac(reduced));
         answers.push(
           e514Answer(
@@ -7483,6 +7899,12 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const simplePairs = shuffle([
+      [5, 3], [7, 4], [8, 9], [9, 5], [11, 6], [13, 8], [15, 7], [17, 9],
+    ]);
+    const mixedPairs = shuffle([
+      [22, 4], [25, 5], [28, 11], [31, 6], [37, 8], [43, 9], [26, 7], [35, 12],
+    ]);
     const wordBank = [
       ['把 24 公尺長的緞帶平均剪成 5 段，每段長幾公尺？', 24, 5, '公尺'],
       ['15 人平分 7 個披薩，全部分完，每人可以分到幾個披薩？', 7, 15, '個披薩'],
@@ -7490,8 +7912,7 @@
     ];
     for (let i = 0; i < count; i += 1) {
       if (i % 3 === 0) {
-        const a = pickFromList([5, 7, 8, 9, 11, 13, 15, 17]);
-        const b = pickFromList([2, 3, 4, 5, 6, 7, 8, 9]);
+        const [a, b] = simplePairs[Math.floor(i / 3) % simplePairs.length];
         const frac = makeFraction(a, b);
         questions.push(`${a} ÷ ${b} = （　）`);
         summaryAnswers.push(e514Frac(frac, true));
@@ -7502,8 +7923,7 @@
           )
         );
       } else if (i % 3 === 1) {
-        const a = pickFromList([22, 25, 28, 31, 37, 43]);
-        const b = pickFromList([4, 5, 6, 7, 8, 9, 11]);
+        const [a, b] = mixedPairs[Math.floor(i / 3) % mixedPairs.length];
         const frac = makeFraction(a, b);
         questions.push(`${a} ÷ ${b} = （　）（用帶分數或假分數表示）`);
         summaryAnswers.push(`${e514Frac(frac, true)} 或 ${e514Frac(frac)}`);
@@ -7539,9 +7959,13 @@
       [4, 9, [2, 5, 8]],
       [5, 12, [2, 3, 7]],
       [7, 10, [2, 4, 6]],
+      [1, 3, [2, 5, 7]],
+      [5, 8, [2, 3, 4]],
+      [3, 7, [2, 4, 5]],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const [n, d, scales] = bank[i % bank.length];
+      const [n, d, scales] = bank[(i + caseOffset) % bank.length];
       const a = e514MakeScaledFraction({ num: n, den: d }, scales[0]);
       const b = e514MakeScaledFraction({ num: n, den: d }, scales[1]);
       const c = e514MakeScaledFraction({ num: n, den: d }, scales[2]);
@@ -7608,13 +8032,25 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const intervalCases = shuffle([[2, 5], [3, 7], [3, 8], [4, 9], [5, 11], [5, 12]]);
+    const inequalityCases = shuffle([
+      { num: 1, right: makeFraction(1, 5) },
+      { num: 2, right: makeFraction(3, 4) },
+      { num: 3, right: makeFraction(5, 6) },
+      { num: 4, right: makeFraction(3, 5) },
+      { num: 5, right: makeFraction(2, 3) },
+      { num: 2, right: makeFraction(1, 3) },
+    ]);
+    const scaleCases = shuffle([
+      { base: makeFraction(1, 3), addNum: 2 },
+      { base: makeFraction(2, 5), addNum: 4 },
+      { base: makeFraction(3, 7), addNum: 3 },
+      { base: makeFraction(4, 9), addNum: 8 },
+      { base: makeFraction(5, 12), addNum: 5 },
+    ]);
     for (let i = 0; i < count; i += 1) {
       if (i % 3 === 0) {
-        // 分子取 2..den-3 且與分母互質,確保 left < target < right 嚴格成立且不被約分
-        // 注意:den=6 時 2..3 都與 6 不互質,會造成死迴圈,故不使用 6
-        const den = pickFromList([5, 7, 8, 9, 10, 12]);
-        let num = randInt(2, den - 3);
-        while (gcdInt(num, den) !== 1) num = randInt(2, den - 3);
+        const [num, den] = intervalCases[Math.floor(i / 3) % intervalCases.length];
         const target = makeFraction(num, den);
         const left = makeFraction(target.num - 1, target.den);
         const right = makeFraction(target.num + 2, target.den);
@@ -7631,9 +8067,7 @@
           )
         );
       } else if (i % 3 === 1) {
-        const den = pickFromList([3, 4, 5, 6, 7, 8]);
-        const num = randInt(1, den - 1);
-        const right = e514PickBaseFraction();
+        const { num, right } = inequalityCases[Math.floor(i / 3) % inequalityCases.length];
         const winners = [];
         for (let digit = 1; digit <= 9; digit += 1) {
           if (num / digit > right.num / right.den) winners.push(digit);
@@ -7650,8 +8084,7 @@
           )
         );
       } else {
-        const base = makeFraction(pickFromList([1, 2, 3, 4, 5]), pickFromList([6, 7, 8, 9, 10, 12]));
-        const addNum = base.num * randInt(2, 4);
+        const { base, addNum } = scaleCases[Math.floor(i / 3) % scaleCases.length];
         const newScale = (base.num + addNum) / base.num;
         const newDen = base.den * newScale;
         const deltaDen = newDen - base.den;
@@ -7707,12 +8140,14 @@
         const num = pickFromList([1, 2, 3, 5, 7]);
         const denA = randInt(num + 2, num + 12);
         const denB = denA + randInt(1, 6);
-        questions.push(`比較 ${e514Frac({ num, den: denA })} 和 ${e514Frac({ num, den: denB })} 的大小（不用通分）。`);
+        const leftText = e514FracRaw(num, denA);
+        const rightText = e514FracRaw(num, denB);
+        questions.push(`比較 ${leftText} 和 ${rightText} 的大小（不用通分）。`);
         summaryAnswers.push('>');
         answers.push(
           e514Answer(
             '>',
-            `分子相同時，分母越大，分數越小。因為 ${denA} < ${denB}，所以 ${e514Frac({ num, den: denA })} > ${e514Frac({ num, den: denB })}。`
+            `分子相同時，分母越大，分數越小。因為 ${denA} < ${denB}，所以 ${leftText} > ${rightText}。`
           )
         );
       } else if (i % 3 === 1) {
@@ -7721,12 +8156,14 @@
         let b = randInt(1, den - 1);
         while (b === a) b = randInt(1, den - 1);
         const sign = a > b ? '>' : '<';
-        questions.push(`比較 ${e514Frac({ num: a, den })} 和 ${e514Frac({ num: b, den })} 的大小（不用通分）。`);
+        const leftText = e514FracRaw(a, den);
+        const rightText = e514FracRaw(b, den);
+        questions.push(`比較 ${leftText} 和 ${rightText} 的大小（不用通分）。`);
         summaryAnswers.push(sign);
         answers.push(
           e514Answer(
             sign,
-            `分母相同時，分子越大，分數越大。因為 ${a}${sign}${b}，所以 ${e514Frac({ num: a, den })} ${sign} ${e514Frac({ num: b, den })}。`
+            `分母相同時，分子越大，分數越大。因為 ${a}${sign}${b}，所以 ${leftText} ${sign} ${rightText}。`
           )
         );
       } else {
@@ -7763,9 +8200,13 @@
       [makeFraction(9, 14), makeFraction(6, 21)],
       [makeMixedFraction(1, 2, 9), makeFraction(13, 6)],
       [makeMixedFraction(1, 3, 10), makeMixedFraction(1, 6, 16)],
+      [makeFraction(1, 4), makeFraction(2, 5)],
+      [makeFraction(5, 8), makeFraction(7, 12)],
+      [makeMixedFraction(2, 1, 3), makeMixedFraction(1, 3, 4)],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const [left, right] = bank[i % bank.length];
+      const [left, right] = bank[(i + caseOffset) % bank.length];
       const result = addFraction(left, right);
       const common = lcm(left.den, right.den);
       const leftNum = left.num * (common / left.den);
@@ -7792,9 +8233,13 @@
       [makeMixedFraction(6, 1, 2), makeFraction(28, 5)],
       [makeMixedFraction(7, 3, 8), makeMixedFraction(4, 9, 10)],
       [makeMixedFraction(5, 1, 4), makeMixedFraction(3, 7, 10)],
+      [makeFraction(7, 8), makeFraction(1, 3)],
+      [makeMixedFraction(3, 1, 5), makeMixedFraction(1, 3, 4)],
+      [makeMixedFraction(4, 2, 3), makeMixedFraction(2, 5, 6)],
     ];
+    const caseOffset = randInt(0, bank.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const [left, right] = bank[i % bank.length];
+      const [left, right] = bank[(i + caseOffset) % bank.length];
       const result = subFraction(left, right);
       const common = lcm(left.den, right.den);
       const leftNum = left.num * (common / left.den);
@@ -7812,16 +8257,7 @@
   }
 
   function buildE514MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const built = banks[i % banks.length](i + 1);
-      questions.push(built.questions[i]);
-      summaryAnswers.push(built.summaryAnswers[i]);
-      answers.push(built.answers[i]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE514EquivalentFourSet(count) {
@@ -7865,8 +8301,9 @@
       { fracs: [{n:3,d:4},{n:1,d:3},{n:5,d:6}], lcd:12, order:'1/3 < 3/4 < 5/6' },
       { fracs: [{n:7,d:12},{n:5,d:8},{n:2,d:3}], lcd:24, order:'7/12 < 2/3 < 5/8' },
     ];
+    const caseOffset = randInt(0, cases.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = cases[(i + caseOffset) % cases.length];
       const fracStrs = c.fracs.map(f => `$\\frac{${f.n}}{${f.d}}$`).join('、');
       // 轉換後排序(排序一律用計算結果,不用寫死字串)
       const converted = c.fracs.map(f => ({ orig: `${f.n}/${f.d}`, val: f.n/f.d, newN: f.n*(c.lcd/f.d) }));
@@ -7895,8 +8332,9 @@
       { expr: '\\frac{7}{9} - \\frac{2}{3} + \\frac{1}{6}', ans: '5/18', proc: '公分母18：14/18-12/18+3/18=5/18' },
       { expr: '\\frac{2}{3} + \\frac{1}{4} - \\frac{5}{12}', ans: '1/2', proc: '公分母12：8/12+3/12-5/12=6/12=1/2' },
     ];
+    const caseOffset = randInt(0, cases.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = cases[(i + caseOffset) % cases.length];
       const useAns = c.fixAns || c.ans;
       const useProc = c.fixProc || c.proc;
       const [ansN, ansD] = useAns.split('/');
@@ -7923,8 +8361,9 @@
       { ctx: '小強一天花了 $\\frac{1}{3}$ 的時間睡覺，$\\frac{1}{4}$ 的時間讀書', rem: '5/12', unit: '（用分率表示）', proc: '1-1/3-1/4=12/12-4/12-3/12=5/12', fixRem: '5/12' },
       { ctx: '一袋米有 $\\frac{11}{12}$ 公斤，煮飯用了 $\\frac{1}{3}$ 公斤，燉雞用了 $\\frac{1}{4}$ 公斤', rem: '1/3', unit: '公斤', proc: '11/12-1/3-1/4=11/12-4/12-3/12=4/12=1/3', fixRem: '1/3' },
     ];
+    const caseOffset = randInt(0, cases.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = cases[(i + caseOffset) % cases.length];
       const [remN, remD] = c.fixRem.split('/');
       const ansStr = remD ? `$\\frac{${remN}}{${remD}}$ ${c.unit}` : `$${remN}$ ${c.unit}`;
       questions.push(`${c.ctx}，還剩下多少${c.unit}？`);
@@ -8179,9 +8618,11 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const vertexBank = shuffle([40, 50, 70, 80, 100, 110, 120, 130]);
+    const baseBank = shuffle([25, 36, 42, 47, 55, 62, 72]);
     for (let i = 0; i < count; i += 1) {
       if (i % 3 === 0) {
-        const vertex = pickFromList([40, 50, 70, 80, 100, 110]);
+        const vertex = vertexBank[Math.floor(i / 3) % vertexBank.length];
         const base = (180 - vertex) / 2;
         questions.push(`一個等腰三角形的頂角是 ${vertex}°，它的底角各是多少度？`);
         summaryAnswers.push(`${base}°`);
@@ -8192,7 +8633,7 @@
           )
         );
       } else if (i % 3 === 1) {
-        const base = pickFromList([36, 42, 47, 55, 72]);
+        const base = baseBank[Math.floor(i / 3) % baseBank.length];
         const vertex = 180 - 2 * base;
         questions.push(`一個等腰三角形的一個底角是 ${base}°，它的頂角是多少度？`);
         summaryAnswers.push(`${vertex}°`);
@@ -8357,16 +8798,7 @@
   }
 
   function buildE515MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const built = banks[i % banks.length](i + 1);
-      questions.push(built.questions[i]);
-      summaryAnswers.push(built.summaryAnswers[i]);
-      answers.push(built.answers[i]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE515TriangleSideThreeSet(count) {
@@ -8440,9 +8872,14 @@
       { base: 24, height: 5,  unit: '公分', ctx: '平行四邊形底 $24$ 公分，高 $5$ 公分' },
       { base: 18, height: 6,  unit: '公分', ctx: '一個平行四邊形，底 $18$ 公分，高 $6$ 公分' },
       { base: 30, height: 9,  unit: '公分', ctx: '平行四邊形底 $30$ 公分，高 $9$ 公分' },
+      { base: 22, height: 7,  unit: '公分', ctx: '一張平行四邊形色紙，底 $22$ 公分，高 $7$ 公分' },
+      { base: 28, height: 11, unit: '公分', ctx: '一塊平行四邊形看板，底 $28$ 公分，高 $11$ 公分' },
+      { base: 18, height: 12, unit: '公尺', ctx: '一塊平行四邊形花圃，底 $18$ 公尺，高 $12$ 公尺' },
+      { base: 25, height: 8,  unit: '公分', ctx: '平行四邊形的底長 $25$ 公分，高 $8$ 公分' },
     ];
+    const caseOffset = randInt(0, cases.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = cases[(i + caseOffset) % cases.length];
       const area = c.base * c.height;
       const q = `${c.ctx}，請問這個平行四邊形的面積是多少平方${c.unit}？`;
       const ans = `${area} 平方${c.unit}`;
@@ -8468,9 +8905,14 @@
       { top: 6,  bot: 14, h: 5,  unit: '公分', ctx: '梯形上底 $6$ 公分，下底 $14$ 公分，高 $5$ 公分' },
       { top: 8,  bot: 12, h: 5,  unit: '公分', ctx: '梯形上底 $8$ 公分，下底 $12$ 公分，高 $5$ 公分' },
       { top: 9,  bot: 15, h: 4,  unit: '公分', ctx: '梯形上底 $9$ 公分，下底 $15$ 公分，高 $4$ 公分' },
+      { top: 10, bot: 16, h: 7,  unit: '公分', ctx: '一個梯形，上底 $10$ 公分，下底 $16$ 公分，高 $7$ 公分' },
+      { top: 7,  bot: 17, h: 8,  unit: '公分', ctx: '梯形上底 $7$ 公分，下底 $17$ 公分，高 $8$ 公分' },
+      { top: 12, bot: 18, h: 5,  unit: '公尺', ctx: '一塊梯形花圃，上底 $12$ 公尺，下底 $18$ 公尺，高 $5$ 公尺' },
+      { top: 9,  bot: 21, h: 6,  unit: '公分', ctx: '梯形上底 $9$ 公分，下底 $21$ 公分，高 $6$ 公分' },
     ];
+    const caseOffset = randInt(0, cases.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = cases[(i + caseOffset) % cases.length];
       const area = (c.top + c.bot) * c.h / 2;
       const q = `${c.ctx}，請問這個梯形的面積是多少平方${c.unit}？`;
       const ans = `${area} 平方${c.unit}`;
@@ -8496,9 +8938,14 @@
       { base: 8,  height: 6,  unit: '公尺', ctx: '一塊三角形土地，底 $8$ 公尺，高 $6$ 公尺' },
       { base: 40, height: 25, unit: '公分', ctx: '三角形底 $40$ 公分，高 $25$ 公分' },
       { base: 12, height: 9,  unit: '公分', ctx: '一個三角形，底 $12$ 公分，高 $9$ 公分' },
+      { base: 14, height: 11, unit: '公分', ctx: '一塊三角形布料，底 $14$ 公分，高 $11$ 公分' },
+      { base: 18, height: 14, unit: '公分', ctx: '三角形告示牌的底是 $18$ 公分，高是 $14$ 公分' },
+      { base: 24, height: 9,  unit: '公尺', ctx: '一塊三角形菜園，底 $24$ 公尺，高 $9$ 公尺' },
+      { base: 16, height: 15, unit: '公分', ctx: '三角形的底 $16$ 公分，高 $15$ 公分' },
     ];
+    const caseOffset = randInt(0, cases.length - 1);
     for (let i = 0; i < count; i += 1) {
-      const c = cases[i % cases.length];
+      const c = cases[(i + caseOffset) % cases.length];
       const area = c.base * c.height / 2;
       const q = `${c.ctx}，請問這個三角形的面積是多少平方${c.unit}？`;
       const ans = `${area} 平方${c.unit}`;
@@ -8650,9 +9097,12 @@
       ['媽媽買了', '公斤的白米和', '公斤的糙米，混合後共有多少公斤？', '公斤'],
       ['老師布置教室用了', '公尺的紅緞帶和', '公尺的藍緞帶，總共用掉幾公尺？', '公尺'],
       ['點心盒裡放了', '公斤的葡萄和', '公斤的蘋果，合起來有多少公斤？', '公斤'],
+      ['烘焙課用了', '公斤的麵粉和', '公斤的砂糖，總共用了多少公斤？', '公斤'],
+      ['花圃澆了', '公升的雨水和', '公升的回收水，總共用了多少公升？', '公升'],
     ];
+    const templateOrder = e5SelectDistinctItems(templates, count);
     for (let i = 0; i < count; i += 1) {
-      const row = templates[i % templates.length];
+      const row = templateOrder[i];
       const [d1, d2] = e516PickDenominatorPair();
       const leftFrac = makeMixedFraction(randInt(1, 4), randInt(1, d1 - 1), d1);
       const rightFrac =
@@ -8675,13 +9125,16 @@
     const summaryAnswers = [];
     const answers = [];
     const templates = [
-      ['爸爸的體重是', '公斤，媽媽的體重是', '公斤，兩人的體重相差多少公斤？', '公斤'],
+      ['大西瓜重', '公斤，哈密瓜重', '公斤，兩個瓜的重量相差多少公斤？', '公斤'],
       ['大水桶裝了', '公升，水壺裡有', '公升，兩者相差多少公升？', '公升'],
       ['紅繩長', '公尺，藍繩長', '公尺，紅繩比藍繩長多少公尺？', '公尺'],
       ['大袋米重', '公斤，小袋米重', '公斤，大袋米比小袋米多幾公斤？', '公斤'],
+      ['長紙條長', '公尺，短紙條長', '公尺，兩張紙條相差多少公尺？', '公尺'],
+      ['甲瓶果汁有', '公升，乙瓶果汁有', '公升，甲瓶比乙瓶多多少公升？', '公升'],
     ];
+    const templateOrder = e5SelectDistinctItems(templates, count);
     for (let i = 0; i < count; i += 1) {
-      const row = templates[i % templates.length];
+      const row = templateOrder[i];
       const [d1, d2] = e516PickDenominatorPair();
       let left = makeMixedFraction(randInt(2, 7), randInt(1, d1 - 1), d1);
       let right =
@@ -8713,9 +9166,12 @@
       ['一桶礦泉水有', '公升，喝掉', '公升後，還剩下多少公升？', '公升'],
       ['水壺裡有', '公升的果汁，倒出', '公升後，還剩下幾公升？', '公升'],
       ['倉庫裡有', '公斤的米，搬走', '公斤後，還剩下多少公斤？', '公斤'],
+      ['一卷包裝紙長', '公尺，用掉', '公尺後，還剩下多少公尺？', '公尺'],
+      ['玻璃瓶裡有', '公升的蜂蜜，分裝出', '公升後，還剩下多少公升？', '公升'],
     ];
+    const templateOrder = e5SelectDistinctItems(templates, count);
     for (let i = 0; i < count; i += 1) {
-      const row = templates[i % templates.length];
+      const row = templateOrder[i];
       const [d1, d2] = e516PickDenominatorPair();
       const original = makeMixedFraction(randInt(2, 6), randInt(1, d1 - 1), d1);
       let used =
@@ -8746,9 +9202,12 @@
       ['餐廳買了一桶油，用掉', '公升後剩', '公升，這桶油原有幾公升？', '公升'],
       ['哥哥用掉', '公尺膠帶後剩下', '公尺，這卷膠帶原來長幾公尺？', '公尺'],
       ['安安做勞作用掉', '公尺緞帶，還剩下', '公尺，這條緞帶原長幾公尺？', '公尺'],
+      ['果汁機裡倒出', '公升的果汁後，還有', '公升，原來有多少公升？', '公升'],
+      ['一袋飼料用了', '公斤後還剩', '公斤，這袋飼料原有幾公斤？', '公斤'],
     ];
+    const templateOrder = e5SelectDistinctItems(templates, count);
     for (let i = 0; i < count; i += 1) {
-      const row = templates[i % templates.length];
+      const row = templateOrder[i];
       const [d1, d2] = e516PickDenominatorPair();
       const used =
         i % 2 === 0 ? makeFraction(randInt(1, d1 - 1), d1) : makeMixedFraction(randInt(1, 3), randInt(1, d1 - 1), d1);
@@ -8822,16 +9281,7 @@
   }
 
   function buildE516MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const built = banks[i % banks.length](i + 1);
-      questions.push(built.questions[i]);
-      summaryAnswers.push(built.summaryAnswers[i]);
-      answers.push(built.answers[i]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE516BasicTwoSet(count) {
@@ -8873,9 +9323,16 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const sideOrder = e5SelectDistinctItems([3, 4, 5, 6, 7, 8, 9, 10, 11, 12], count);
     for (let i = 0; i < count; i += 1) {
-      const sides = randInt(3, 12);
-      questions.push(`正 ${sides} 邊形有幾條對稱軸？`);
+      const sides = sideOrder[i];
+      if (i % 3 === 0) {
+        questions.push(`正 ${sides} 邊形有幾條對稱軸？`);
+      } else if (i % 3 === 1) {
+        questions.push(`正 ${sides} 邊形沿著幾條不同的直線對摺後可以重合？`);
+      } else {
+        questions.push(`正 ${sides} 邊形的對稱軸數量是多少？`);
+      }
       summaryAnswers.push(`${sides} 條`);
       answers.push(
         e517Answer(`${sides} 條`, `正多邊形的對稱軸條數和邊數一樣多，所以正 ${sides} 邊形有 ${sides} 條對稱軸。`)
@@ -8900,9 +9357,16 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const selectedRows = e5SelectDistinctItems(bank, count);
     for (let i = 0; i < count; i += 1) {
-      const row = bank[(i + randInt(0, bank.length - 1)) % bank.length];
-      questions.push(`${row[0]}是不是線對稱圖形？如果是，有幾條對稱軸？`);
+      const row = selectedRows[i];
+      if (i % 3 === 0) {
+        questions.push(`${row[0]}是不是線對稱圖形？如果是，有幾條對稱軸？`);
+      } else if (i % 3 === 1) {
+        questions.push(`把${row[0]}對摺後能不能完全重合？請判斷它是否為線對稱圖形，並寫出對稱軸數量。`);
+      } else {
+        questions.push(`判斷${row[0]}的線對稱性：它有沒有對稱軸？有的話共有幾條？`);
+      }
       summaryAnswers.push(row[1]);
       answers.push(e517Answer(row[1], row[2]));
     }
@@ -9021,16 +9485,7 @@
   }
 
   function buildE517MixedSet(builders, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const built = builders[i % builders.length](i + 1);
-      questions.push(built.questions[i]);
-      summaryAnswers.push(built.summaryAnswers[i]);
-      answers.push(built.answers[i]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(builders, count);
   }
 
   function buildE517AxisTwoSet(count) {
@@ -9086,11 +9541,12 @@
         question = `${a} × ${b} + ${c} × ${d} = （　）`;
         process = `先算兩個乘法：${a} × ${b} = ${a * b}，${c} × ${d} = ${c * d}，再相加得到 ${value}。`;
       } else {
-        const a = e518Number(300, 900);
         const b = e518Number(40, 90);
         const c = e518Number(2, 9);
         const d = e518Number(2, 9);
         const inside = b - c;
+        // 此單元以正整數四則為主；先決定扣除量，再保留正整數的結果。
+        const a = d * inside + e518Number(60, 360);
         value = a - d * inside;
         question = `${a} - ${d} × (${b} - ${c}) = （　）`;
         process = `先算括號 ${b} - ${c} = ${inside}，再算乘法 ${d} × ${inside} = ${d * inside}，最後 ${a} - ${d * inside} = ${value}。`;
@@ -9106,9 +9562,12 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const divisorPairs = e5SelectDistinctItems(
+      [[12, 2], [15, 3], [16, 4], [20, 5], [24, 6], [30, 3], [40, 5], [45, 9]],
+      count
+    );
     for (let i = 0; i < count; i += 1) {
-      const b = pickFromList([12, 15, 16, 20, 24, 25, 30, 40, 45]);
-      const c = pickFromList([2, 3, 4, 5, 6, 8, 10]);
+      const [b, c] = divisorPairs[i];
       // a 取 b×c 的倍數,兩種算式的結果都會是整數
       const a = pickFromList([2, 3, 4, 5, 6, 8]) * b * c;
       const equal = i % 2 === 0;
@@ -9144,8 +9603,9 @@
       [16, 5],
       [32, 25],
     ];
+    const factorOrder = e5SelectDistinctItems(factorBank, count);
     for (let i = 0; i < count; i += 1) {
-      const [b, c] = factorBank[i % factorBank.length];
+      const [b, c] = factorOrder[i];
       const base = pickFromList([200, 300, 400, 600, 900, 1200, 1800]);
       const a = base * b * c;
       const value = a / b / c;
@@ -9268,8 +9728,9 @@
       } else {
         const length = e518Number(20, 60);
         const width = e518Number(10, 30);
-        const side = e518Number(8, 20);
+        let side = e518Number(8, 20);
         const rect = length * width;
+        while (side * side === rect) side = e518Number(8, 20);
         const square = side * side;
         const value = Math.abs(rect - square);
         const symbol = rect >= square ? '多' : '少';
@@ -9383,16 +9844,7 @@
   }
 
   function buildE518MixedSet(builders, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const built = builders[i % builders.length](i + 1);
-      questions.push(built.questions[i]);
-      summaryAnswers.push(built.summaryAnswers[i]);
-      answers.push(built.answers[i]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(builders, count);
   }
 
   function buildE518BasicTwoSet(count) {
@@ -9419,9 +9871,12 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const dimensionBank = [
+      [8, 5], [9, 8], [12, 7], [14, 6], [15, 9], [16, 5], [18, 8], [20, 6], [21, 7], [24, 5],
+    ];
+    const dimensionOrder = e5SelectDistinctItems(dimensionBank, count);
     for (let i = 0; i < count; i += 1) {
-      const base = randInt(8, 40);
-      const height = randInt(4, 24);
+      const [base, height] = dimensionOrder[i];
       const area = base * height;
       if (i % 2 === 0) {
         questions.push(`平行四邊形的底是 ${base} 公分，高是 ${height} 公分，面積是多少平方公分？`);
@@ -9449,9 +9904,10 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const dimensionBank = [[6, 8], [7, 12], [9, 10], [12, 7], [14, 6], [15, 8], [18, 5], [20, 9], [24, 4], [16, 11]];
+    const dimensionOrder = e5SelectDistinctItems(dimensionBank, count);
     for (let i = 0; i < count; i += 1) {
-      const base = randInt(6, 36);
-      const height = randInt(4, 18);
+      const [base, height] = dimensionOrder[i];
       const area = base * height;
       if (i % 2 === 0) {
         questions.push(`平行四邊形的面積是 ${area} 平方公分，底是 ${base} 公分，高是多少公分？`);
@@ -9470,12 +9926,27 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const ratios = [2, 3, 4, 5];
+    const factorOrder = e5SelectDistinctItems([2, 3, 4, 5, 6], count);
     for (let i = 0; i < count; i += 1) {
-      const k = pickFromList(ratios);
-      questions.push(`一個平行四邊形的底不變，高變成原來的 ${k} 倍，面積會變成原來的幾倍？`);
-      summaryAnswers.push(`${k} 倍`);
-      answers.push(e519Answer(`${k} 倍`, `面積 = 底 × 高。底不變時，高變成 ${k} 倍，面積也會變成 ${k} 倍。`));
+      const k = factorOrder[i];
+      if (i % 4 === 0) {
+        questions.push(`一個平行四邊形的底不變，高變成原來的 ${k} 倍，面積會變成原來的幾倍？`);
+        summaryAnswers.push(`${k} 倍`);
+        answers.push(e519Answer(`${k} 倍`, `面積 = 底 × 高。底不變時，高變成 ${k} 倍，面積也會變成 ${k} 倍。`));
+      } else if (i % 4 === 1) {
+        questions.push(`一個平行四邊形的高不變，底變成原來的 ${k} 倍，面積會變成原來的幾倍？`);
+        summaryAnswers.push(`${k} 倍`);
+        answers.push(e519Answer(`${k} 倍`, `面積 = 底 × 高。高不變時，底變成 ${k} 倍，面積也會變成 ${k} 倍。`));
+      } else if (i % 4 === 2) {
+        questions.push(`一個平行四邊形的底變成原來的 ${k} 倍，高變成原來的 ${k} 分之 1，面積會變成原來的幾倍？`);
+        summaryAnswers.push('1 倍');
+        answers.push(e519Answer('1 倍', `底乘上 ${k}，高同時除以 ${k}，底 × 高的乘積不變，所以面積仍是原來的 1 倍。`));
+      } else {
+        const result = k * k;
+        questions.push(`一個平行四邊形的底和高都變成原來的 ${k} 倍，面積會變成原來的幾倍？`);
+        summaryAnswers.push(`${result} 倍`);
+        answers.push(e519Answer(`${result} 倍`, `面積 = 底 × 高。底和高各變成 ${k} 倍，所以面積變成 ${k} × ${k} = ${result} 倍。`));
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -9532,9 +10003,10 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const dimensionBank = [[6, 5], [8, 7], [10, 9], [12, 5], [14, 6], [16, 9], [18, 7], [20, 11], [15, 8], [24, 5]];
+    const dimensionOrder = e5SelectDistinctItems(dimensionBank, count);
     for (let i = 0; i < count; i += 1) {
-      const base = randInt(6, 40);
-      const height = randInt(4, 24);
+      const [base, height] = dimensionOrder[i];
       const area = (base * height) / 2;
       if (i % 2 === 0) {
         questions.push(`三角形的底是 ${base} 公分，高是 ${height} 公分，面積是多少平方公分？`);
@@ -9556,9 +10028,10 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const dimensionBank = [[6, 8], [8, 9], [10, 7], [12, 6], [14, 5], [16, 11], [18, 4], [20, 9], [15, 12], [24, 7]];
+    const dimensionOrder = e5SelectDistinctItems(dimensionBank, count);
     for (let i = 0; i < count; i += 1) {
-      const base = randInt(4, 24);
-      const height = randInt(4, 18);
+      const [base, height] = dimensionOrder[i];
       const area = (base * height) / 2;
       if (i % 2 === 0) {
         questions.push(`三角形面積是 ${area} 平方公分，底是 ${base} 公分，高是多少公分？`);
@@ -9582,22 +10055,35 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const ratios = [2, 3, 4, 5];
+    const factorOrder = e5SelectDistinctItems([2, 3, 4, 5, 6], count);
+    const equalAreaOrder = e5SelectDistinctItems(
+      [[4, 12, 6, 8], [5, 12, 10, 6], [6, 10, 12, 5], [7, 12, 14, 6], [8, 9, 12, 6], [9, 8, 12, 6], [10, 6, 12, 5], [12, 8, 16, 6], [15, 4, 10, 6], [16, 6, 12, 8]],
+      count
+    );
     for (let i = 0; i < count; i += 1) {
-      const k = pickFromList(ratios);
-      if (i % 2 === 0) {
+      const k = factorOrder[i];
+      if (i % 4 === 0) {
         questions.push(`三角形的底不變，高變成原來的 ${k} 倍，面積會變成原來的幾倍？`);
         summaryAnswers.push(`${k} 倍`);
         answers.push(
           e519Answer(`${k} 倍`, `三角形面積 = 底 × 高 ÷ 2。底不變時，高變成 ${k} 倍，面積也會變成 ${k} 倍。`)
         );
+      } else if (i % 4 === 1) {
+        questions.push(`三角形的高不變，底變成原來的 ${k} 倍，面積會變成原來的幾倍？`);
+        summaryAnswers.push(`${k} 倍`);
+        answers.push(
+          e519Answer(`${k} 倍`, `三角形面積 = 底 × 高 ÷ 2。高不變時，底變成 ${k} 倍，面積也會變成 ${k} 倍。`)
+        );
+      } else if (i % 4 === 2) {
+        const result = k * k;
+        questions.push(`三角形的底和高都變成原來的 ${k} 倍，面積會變成原來的幾倍？`);
+        summaryAnswers.push(`${result} 倍`);
+        answers.push(
+          e519Answer(`${result} 倍`, `底和高各變成 ${k} 倍，底 × 高會變成 ${k} × ${k} = ${result} 倍；除以 2 不影響倍率，所以面積變成 ${result} 倍。`)
+        );
       } else {
-        const baseA = randInt(4, 12);
-        const heightA = randInt(4, 12);
+        const [baseA, heightA, baseB, heightB] = equalAreaOrder[i];
         const product = baseA * heightA;
-        let baseB = randInt(4, 16);
-        while (product % baseB !== 0) baseB = randInt(4, 16);
-        const heightB = product / baseB;
         questions.push(
           `甲三角形的底、高分別是 ${baseA} 公分和 ${heightA} 公分；乙三角形的底、高分別是 ${baseB} 公分和 ${heightB} 公分。兩個三角形的面積是否相等？`
         );
@@ -9652,12 +10138,18 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const dimensionBank = [[4, 10, 6], [5, 13, 7], [6, 16, 5], [7, 15, 8], [8, 20, 6], [9, 17, 9], [10, 24, 5], [12, 18, 7], [11, 21, 4], [14, 26, 6]];
+    const dimensionOrder = e5SelectDistinctItems(dimensionBank, count);
     for (let i = 0; i < count; i += 1) {
-      const upper = randInt(4, 18);
-      const lower = randInt(upper + 2, upper + 20);
-      const height = randInt(4, 16);
+      const [upper, lower, height] = dimensionOrder[i];
       const area = ((upper + lower) * height) / 2;
-      questions.push(`梯形的上底是 ${upper} 公分，下底是 ${lower} 公分，高是 ${height} 公分，面積是多少平方公分？`);
+      if (i % 3 === 0) {
+        questions.push(`梯形的上底是 ${upper} 公分，下底是 ${lower} 公分，高是 ${height} 公分，面積是多少平方公分？`);
+      } else if (i % 3 === 1) {
+        questions.push(`一塊梯形紙板的上、下底分別長 ${upper} 公分、${lower} 公分，高是 ${height} 公分，求它的面積。`);
+      } else {
+        questions.push(`梯形兩底的長分別是 ${upper} 公分和 ${lower} 公分，兩底間的垂直距離是 ${height} 公分，面積是多少平方公分？`);
+      }
       summaryAnswers.push(`${area} 平方公分`);
       answers.push(
         e519Answer(
@@ -9675,13 +10167,15 @@
     const answers = [];
     const units = ['公尺', '公分'];
     const nouns = ['梯形田地', '梯形菜園', '梯形木板', '梯形地毯'];
+    const dimensionBank = [[5, 15, 6], [6, 14, 7], [7, 19, 5], [8, 18, 8], [9, 21, 4], [10, 24, 6], [11, 17, 9], [12, 22, 5], [13, 25, 7], [14, 20, 6]];
+    const dimensionOrder = e5SelectDistinctItems(dimensionBank, count);
+    const nounOrder = e5SelectDistinctItems(nouns, count);
+    const unitOrder = e5SelectDistinctItems(units, count);
     for (let i = 0; i < count; i += 1) {
-      const upper = randInt(5, 16);
-      const lower = randInt(upper + 3, upper + 20);
-      const height = randInt(4, 15);
+      const [upper, lower, height] = dimensionOrder[i];
       const area = ((upper + lower) * height) / 2;
-      const unit = pickFromList(units);
-      const noun = pickFromList(nouns);
+      const unit = unitOrder[i];
+      const noun = nounOrder[i];
       questions.push(
         `一個${noun}的上底是 ${upper}${unit}，下底是 ${lower}${unit}，高是 ${height}${unit}，面積是多少平方${unit}？`
       );
@@ -9700,9 +10194,12 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const trapAreaOrder = e5SelectDistinctItems([24, 36, 48, 60, 72, 84, 96, 108], Math.ceil(count / 2));
+    let trapAreaIndex = 0;
     for (let i = 0; i < count; i += 1) {
       if (i % 2 === 0) {
-        const trapArea = pickFromList([24, 36, 48, 60, 72, 84, 96, 108]);
+        const trapArea = trapAreaOrder[trapAreaIndex];
+        trapAreaIndex += 1;
         const paraArea = trapArea * 2;
         questions.push(
           `兩個全等梯形拼成一個平行四邊形後，平行四邊形面積是 ${paraArea} 平方公分。求其中一個梯形的面積。`
@@ -9740,10 +10237,10 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const ratios = [2, 3, 4];
+    const factorOrder = e5SelectDistinctItems([2, 3, 4, 5, 6], count);
     for (let i = 0; i < count; i += 1) {
-      const k = pickFromList(ratios);
-      if (i % 2 === 0) {
+      const k = factorOrder[i];
+      if (i % 4 === 0) {
         questions.push(`梯形的上底與下底都不變，高變成原來的 ${k} 倍，面積會變成原來的幾倍？`);
         summaryAnswers.push(`${k} 倍`);
         answers.push(
@@ -9751,6 +10248,22 @@
             `${k} 倍`,
             `梯形面積 = （上底 + 下底）× 高 ÷ 2。當上底和下底不變時，高變成 ${k} 倍，面積也會變成 ${k} 倍。`
           )
+        );
+      } else if (i % 4 === 1) {
+        questions.push(`梯形的高不變，上底和下底都變成原來的 ${k} 倍，面積會變成原來的幾倍？`);
+        summaryAnswers.push(`${k} 倍`);
+        answers.push(
+          e519Answer(
+            `${k} 倍`,
+            `梯形面積 = （上底 + 下底）× 高 ÷ 2。兩底都變成 ${k} 倍時，兩底的和也變成 ${k} 倍，所以面積變成 ${k} 倍。`
+          )
+        );
+      } else if (i % 4 === 2) {
+        const result = k * k;
+        questions.push(`梯形的上底、下底和高都變成原來的 ${k} 倍，面積會變成原來的幾倍？`);
+        summaryAnswers.push(`${result} 倍`);
+        answers.push(
+          e519Answer(`${result} 倍`, `兩底的和變成 ${k} 倍，高也變成 ${k} 倍，所以面積變成 ${k} × ${k} = ${result} 倍。`)
         );
       } else {
         const upper = randInt(5, 15);
@@ -9946,7 +10459,7 @@
       10: '十邊形',
       12: '十二邊形',
     };
-    return names[sides] || `${sides} 邊形`;
+    return names[sides] || `${sides}邊形`;
   }
 
   function e510PrismName(sides) {
@@ -9961,7 +10474,7 @@
       10: '十角柱',
       12: '十二角柱',
     };
-    return names[sides] || `${sides} 角柱`;
+    return names[sides] || `${sides}角柱`;
   }
 
   function e510PyramidName(sides) {
@@ -9976,26 +10489,30 @@
       10: '十角錐',
       12: '十二角錐',
     };
-    return names[sides] || `${sides} 角錐`;
+    return names[sides] || `${sides}角錐`;
   }
 
   function buildE510PrismNamingSet(count) {
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const sidesList = [3, 4, 5, 6, 8];
+    const sidesList = [3, 4, 5, 6, 7, 8, 9, 10, 12];
+    const sideOrder = e5SelectDistinctItems(sidesList, count);
     for (let i = 0; i < count; i += 1) {
-      const sides = pickFromList(sidesList);
+      const sides = sideOrder[i];
       const base = e510PolygonName(sides);
       const name = e510PrismName(sides);
-      if (i % 2 === 0) {
+      if (i % 3 === 0) {
         questions.push(`一個柱體的底面是${base}，這個柱體叫作什麼？`);
         answers.push(e510Answer(name, `柱體依底面形狀命名，底面是${base}，所以叫作${name}。`));
-      } else {
+      } else if (i % 3 === 1) {
         questions.push(`一個立體有兩個互相平行且全等的${base}底面，側面都是長方形。它是什麼柱體？`);
         answers.push(
           e510Answer(name, `有兩個互相平行且全等的底面，側面是長方形，這是柱體；底面是${base}，所以是${name}。`)
         );
+      } else {
+        questions.push(`一個立體有 2 個${base}面和 ${sides} 個長方形側面，依底面形狀命名，它是什麼柱體？`);
+        answers.push(e510Answer(name, `這個立體有兩個${base}底面和 ${sides} 個側面，符合${name}的構造，所以叫作${name}。`));
       }
       summaryAnswers.push(name);
     }
@@ -10006,14 +10523,21 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const sidesList = [3, 4, 5, 6, 8, 9];
+    const sidesList = [3, 4, 5, 6, 7, 8, 9, 10, 12];
+    const sideOrder = e5SelectDistinctItems(sidesList, count);
     for (let i = 0; i < count; i += 1) {
-      const sides = pickFromList(sidesList);
+      const sides = sideOrder[i];
       const faces = sides + 2;
       const vertices = sides * 2;
       const edges = sides * 3;
       const name = e510PrismName(sides);
-      questions.push(`${name}有幾個面、幾個頂點和幾條邊？`);
+      if (i % 3 === 0) {
+        questions.push(`${name}有幾個面、幾個頂點和幾條邊？`);
+      } else if (i % 3 === 1) {
+        questions.push(`請依序寫出${name}的面數、頂點數和邊數。`);
+      } else {
+        questions.push(`${name}的底面有 ${sides} 條邊，這個柱體共有幾個面、幾個頂點和幾條邊？`);
+      }
       summaryAnswers.push(`${faces} 個面、${vertices} 個頂點、${edges} 條邊`);
       answers.push(
         e510Answer(
@@ -10029,9 +10553,10 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const sidesList = [3, 4, 5, 6, 8];
+    const sidesList = [3, 4, 5, 6, 7, 8, 9, 10, 12];
+    const sideOrder = e5SelectDistinctItems(sidesList, count);
     for (let i = 0; i < count; i += 1) {
-      const sides = pickFromList(sidesList);
+      const sides = sideOrder[i];
       const name = e510PrismName(sides);
       if (i % 2 === 0) {
         questions.push(`${name}的兩個底面有什麼關係？`);
@@ -10054,9 +10579,10 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const sidesList = [3, 4, 5, 6, 8, 10];
+    const sidesList = [3, 4, 5, 6, 7, 8, 9, 10, 12];
+    const sideOrder = e5SelectDistinctItems(sidesList, count);
     for (let i = 0; i < count; i += 1) {
-      const sides = pickFromList(sidesList);
+      const sides = sideOrder[i];
       const name = e510PrismName(sides);
       if (i % 2 === 0) {
         const vertices = sides * 2;
@@ -10084,7 +10610,7 @@
   }
 
   function buildE510PrismMixedSet(count) {
-    return buildE518MixedSet(
+    return e5BuildMixedSet(
       [buildE510PrismNamingSet, buildE510PrismElementsSet, buildE510PrismFaceRelationSet, buildE510PrismReverseSet],
       count
     );
@@ -10094,12 +10620,19 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const sidesList = [3, 4, 5, 6, 8, 12];
+    const sidesList = [3, 4, 5, 6, 7, 8, 9, 10, 12];
+    const sideOrder = e5SelectDistinctItems(sidesList, count);
     for (let i = 0; i < count; i += 1) {
-      const sides = pickFromList(sidesList);
+      const sides = sideOrder[i];
       const base = e510PolygonName(sides);
       const name = e510PyramidName(sides);
-      questions.push(`一個錐體的底面是${base}，這個錐體叫作什麼？`);
+      if (i % 3 === 0) {
+        questions.push(`一個錐體的底面是${base}，這個錐體叫作什麼？`);
+      } else if (i % 3 === 1) {
+        questions.push(`一個立體有 1 個${base}底面，其他 ${sides} 個側面都是三角形，它是什麼錐體？`);
+      } else {
+        questions.push(`底面是${base}、側面共同連到一個尖端的立體，依底面形狀應叫作什麼？`);
+      }
       summaryAnswers.push(name);
       answers.push(e510Answer(name, `錐體依底面形狀命名。底面是${base}，所以叫作${name}。`));
     }
@@ -10110,14 +10643,21 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const sidesList = [3, 4, 5, 6, 7, 9, 10];
+    const sidesList = [3, 4, 5, 6, 7, 8, 9, 10, 12];
+    const sideOrder = e5SelectDistinctItems(sidesList, count);
     for (let i = 0; i < count; i += 1) {
-      const sides = pickFromList(sidesList);
+      const sides = sideOrder[i];
       const faces = sides + 1;
       const vertices = sides + 1;
       const edges = sides * 2;
       const name = e510PyramidName(sides);
-      questions.push(`${name}有幾個面、幾個頂點和幾條邊？`);
+      if (i % 3 === 0) {
+        questions.push(`${name}有幾個面、幾個頂點和幾條邊？`);
+      } else if (i % 3 === 1) {
+        questions.push(`請依序寫出${name}的面數、頂點數和邊數。`);
+      } else {
+        questions.push(`${name}的底面有 ${sides} 條邊，這個錐體共有幾個面、幾個頂點和幾條邊？`);
+      }
       summaryAnswers.push(`${faces} 個面、${vertices} 個頂點、${edges} 條邊`);
       answers.push(
         e510Answer(
@@ -10133,9 +10673,10 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const sidesList = [3, 4, 5, 6, 8];
+    const sidesList = [3, 4, 5, 6, 7, 8, 9, 10, 12];
+    const sideOrder = e5SelectDistinctItems(sidesList, count);
     for (let i = 0; i < count; i += 1) {
-      const sides = pickFromList(sidesList);
+      const sides = sideOrder[i];
       const name = e510PyramidName(sides);
       if (i % 2 === 0) {
         questions.push(`${name}的側面是什麼形狀？側面有幾個？`);
@@ -10159,9 +10700,10 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const sidesList = [3, 4, 5, 6, 8, 12];
+    const sidesList = [3, 4, 5, 6, 7, 8, 9, 10, 12];
+    const sideOrder = e5SelectDistinctItems(sidesList, count);
     for (let i = 0; i < count; i += 1) {
-      const sides = pickFromList(sidesList);
+      const sides = sideOrder[i];
       const name = e510PyramidName(sides);
       if (i % 2 === 0) {
         const vertices = sides + 1;
@@ -10189,7 +10731,7 @@
   }
 
   function buildE510PyramidMixedSet(count) {
-    return buildE518MixedSet(
+    return e5BuildMixedSet(
       [
         buildE510PyramidNamingSet,
         buildE510PyramidElementsSet,
@@ -10209,10 +10751,21 @@
       ['長方體中，相對的兩個面通常有什麼關係？', '互相平行', '長方體的相對面不相交，而且方向相同，所以互相平行。'],
       ['正方體中，頂面和底面有什麼關係？', '互相平行', '正方體也是長方體的一種，頂面和底面是相對面，所以互相平行。'],
       ['正方體中，側面和底面通常有什麼關係？', '互相垂直', '正方體的側面立在底面上，兩面相交成直角，所以互相垂直。'],
+      ['長方體中，左面和右面有什麼關係？', '互相平行', '左面和右面互為相對面，方向相同且不相交，所以互相平行。'],
+      ['長方體中，前面和頂面有什麼關係？', '互相垂直', '前面和頂面相鄰並共用一條邊，兩面相交成直角，所以互相垂直。'],
+      ['正方體中，前面和後面有什麼關係？', '互相平行', '前面和後面是相對面，方向相同且不相交，所以互相平行。'],
+      ['正方體中，頂面和右側面有什麼關係？', '互相垂直', '頂面和右側面相鄰，兩面相交成直角，所以互相垂直。'],
     ];
+    const relationOrder = e5SelectDistinctItems(relations, count);
     for (let i = 0; i < count; i += 1) {
-      const item = relations[i % relations.length];
-      questions.push(item[0]);
+      const item = relationOrder[i];
+      if (i % 3 === 0) {
+        questions.push(item[0]);
+      } else if (i % 3 === 1) {
+        questions.push(`請判斷下列兩個面的關係：${item[0]}`);
+      } else {
+        questions.push(`利用相對面與相鄰面的概念回答：${item[0]}`);
+      }
       summaryAnswers.push(item[1]);
       answers.push(e510Answer(item[1], item[2]));
     }
@@ -10240,10 +10793,21 @@
         '0 個',
         '錐體只有一個底面，其餘側面都接到尖端，沒有另一個面和底面互相平行。',
       ],
+      ['直三角柱中，和一個底面互相垂直的面有幾個？', '3 個', '直三角柱有 3 個側面，這些側面都和底面相交成直角，所以有 3 個。'],
+      ['直五角柱中，和一個底面互相垂直的面有幾個？', '5 個', '直五角柱有 5 個側面，這些側面都和底面相交成直角，所以有 5 個。'],
+      ['三角錐中，和底面互相平行的面有幾個？', '0 個', '三角錐只有一個底面，其餘三角形側面都連到尖端，所以沒有和底面平行的面。'],
+      ['正方體中，和頂面互相平行的面有幾個？', '1 個', '頂面的相對面只有底面，兩面不相交且方向相同，所以有 1 個。'],
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
-      questions.push(item[0]);
+      const item = caseOrder[i];
+      if (i % 3 === 0) {
+        questions.push(item[0]);
+      } else if (i % 3 === 1) {
+        questions.push(`先想一想立體的各個面，再回答：${item[0]}`);
+      } else {
+        questions.push(`請根據相對面與側面的數量判斷：${item[0]}`);
+      }
       summaryAnswers.push(item[1]);
       answers.push(e510Answer(item[1], item[2]));
     }
@@ -10259,10 +10823,23 @@
       ['教室的牆面和地板', '互相垂直', '牆面立在地板上，兩個平面形成直角，所以互相垂直。'],
       ['書櫃的層板和左右側板', '互相垂直', '層板是水平面，左右側板是直立面，兩者相交成直角，所以互相垂直。'],
       ['長方體盒子的前面和後面', '互相平行', '前面和後面是相對面，方向相同且不相交，所以互相平行。'],
+      ['魚缸的前玻璃面和後玻璃面', '互相平行', '魚缸的前、後玻璃面互為相對面，方向相同且不相交，所以互相平行。'],
+      ['紙箱的頂面和前面', '互相垂直', '紙箱的頂面和前面相鄰，兩面相交成直角，所以互相垂直。'],
+      ['積木的左面和右面', '互相平行', '積木的左面和右面互為相對面，方向相同且不相交，所以互相平行。'],
+      ['書本的封面和書背相接的側面', '互相垂直', '把書本近似看成長方體時，封面和相鄰側面相交成直角，所以互相垂直。'],
+      ['長方形收納盒的頂面和底面', '互相平行', '頂面和底面互為相對面，方向相同且不相交，所以互相平行。'],
+      ['一塊長方體磚的上面和前面', '互相垂直', '上面和前面相鄰，兩面相交成直角，所以互相垂直。'],
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
-      questions.push(`${item[0]}通常是互相平行還是互相垂直？`);
+      const item = caseOrder[i];
+      if (i % 3 === 0) {
+        questions.push(`${item[0]}通常是互相平行還是互相垂直？`);
+      } else if (i % 3 === 1) {
+        questions.push(`把${item[0]}近似看成長方體的兩個面，它們通常是互相平行還是互相垂直？`);
+      } else {
+        questions.push(`觀察生活中的長方體物件：${item[0]}的關係是互相平行還是互相垂直？`);
+      }
       summaryAnswers.push(item[1]);
       answers.push(e510Answer(item[1], item[2]));
     }
@@ -10270,7 +10847,7 @@
   }
 
   function buildE510CuboidMixedSet(count) {
-    return buildE518MixedSet(
+    return e5BuildMixedSet(
       [buildE510CuboidFaceRelationSet, buildE510CuboidCountSet, buildE510CuboidEverydaySet],
       count
     );
@@ -10280,17 +10857,22 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const radiusOrder = e5SelectDistinctItems([3, 4, 5, 6, 7, 8, 9, 10, 12, 15], count);
     for (let i = 0; i < count; i += 1) {
-      const radius = pickFromList([3, 4, 5, 6, 8, 10, 12]);
+      const radius = radiusOrder[i];
       const diameter = radius * 2;
-      if (i % 2 === 0) {
+      if (i % 3 === 0) {
         questions.push(`一顆球的半徑是 ${radius} 公分，它的直徑是多少公分？`);
         summaryAnswers.push(`${diameter} 公分`);
         answers.push(e510Answer(`${diameter} 公分`, `直徑 = 半徑 × 2，所以 ${radius} × 2 = ${diameter} 公分。`));
-      } else {
+      } else if (i % 3 === 1) {
         questions.push(`一顆球的直徑是 ${diameter} 公分，它的半徑是多少公分？`);
         summaryAnswers.push(`${radius} 公分`);
         answers.push(e510Answer(`${radius} 公分`, `半徑 = 直徑 ÷ 2，所以 ${diameter} ÷ 2 = ${radius} 公分。`));
+      } else {
+        questions.push(`一顆球從球心到球面的距離是 ${radius} 公分，通過球心最長的一段距離是多少公分？`);
+        summaryAnswers.push(`${diameter} 公分`);
+        answers.push(e510Answer(`${diameter} 公分`, `球心到球面的距離是半徑。通過球心最長的一段是直徑，所以 ${radius} × 2 = ${diameter} 公分。`));
       }
     }
     return { questions, summaryAnswers, answers };
@@ -10313,9 +10895,22 @@
         '較小',
         '離球心越遠的切面越小；沒有通過球心時，切面圓的半徑比球的半徑小。',
       ],
+      ['一顆球的半徑是 6 公分，通過球心切出的最大圓半徑是多少公分？', '6 公分', '通過球心的切面是最大圓，它的半徑和球的半徑相同，所以是 6 公分。'],
+      ['一顆球的直徑是 18 公分，通過球心切出的最大圓直徑是多少公分？', '18 公分', '通過球心的切面是最大圓，最大圓的直徑就是球的直徑，所以是 18 公分。'],
+      ['把球切成兩半，切開的平面圖形是什麼？', '圓形', '切開球所看到的平面切面是圓形；若剛好切過球心，還是最大的圓。'],
+      ['兩個球心不同但半徑相同的球，通過各自球心切出的最大圓，大小是否相同？', '相同', '最大圓的半徑等於球半徑。兩球半徑相同，所以兩個最大圓大小相同。'],
+      ['一顆球的半徑是 4 公分，通過球心切出的最大圓半徑是多少公分？', '4 公分', '通過球心的切面是最大圓，它的半徑就是球的半徑，所以是 4 公分。'],
+      ['一顆球的半徑是 5 公分，通過球心切出的最大圓直徑是多少公分？', '10 公分', '最大圓的半徑是 5 公分，直徑 = 5 × 2 = 10 公分。'],
+      ['一顆球的直徑是 24 公分，沒有通過球心的切面直徑會大於、等於還是小於 24 公分？', '小於 24 公分', '通過球心才會切出最大圓。沒有通過球心時，切面的圓比較小，所以直徑小於 24 公分。'],
+      ['一顆球的半徑是 9 公分，沒有通過球心的切面半徑會大於、等於還是小於 9 公分？', '小於 9 公分', '沒有通過球心的切面不是最大圓，因此切面半徑小於球的半徑 9 公分。'],
+      ['若要切出一顆球最大的圓形切面，切的平面必須通過哪裡？', '球心', '平面通過球心時，切出的圓半徑等於球半徑，得到最大的圓形切面。'],
+      ['同一顆球中，切面逐漸靠近球心時，切出的圓會變大還是變小？', '變大', '越靠近球心，切面圓的半徑越接近球半徑，所以切出的圓會變大。'],
+      ['一顆球的最大圓半徑是 7 公分，這顆球的半徑是多少公分？', '7 公分', '最大圓是通過球心切出的圓，它的半徑和球半徑相等，所以球半徑是 7 公分。'],
+      ['一顆球的最大圓直徑是 16 公分，這顆球的直徑是多少公分？', '16 公分', '通過球心的最大圓直徑就是球的直徑，所以球的直徑是 16 公分。'],
     ];
+    const sectionOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
+      const item = sectionOrder[i];
       questions.push(item[0]);
       summaryAnswers.push(item[1]);
       answers.push(e510Answer(item[1], item[2]));
@@ -10327,12 +10922,12 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const arrangementOrder = e5SelectDistinctItems([[3, 3], [4, 4], [5, 5], [6, 6], [7, 3], [8, 4], [9, 5], [10, 6], [12, 3], [15, 4]], count);
     for (let i = 0; i < count; i += 1) {
-      const radius = pickFromList([3, 4, 5, 6, 8, 10]);
-      const balls = pickFromList([3, 4, 5, 6]);
+      const [radius, balls] = arrangementOrder[i];
       const diameter = radius * 2;
       const height = diameter * balls;
-      if (i % 2 === 0) {
+      if (i % 3 === 0) {
         questions.push(
           `一個圓筒剛好裝滿 ${balls} 顆直徑 ${diameter} 公分的球，球上下排成一直線，圓筒的高度是多少公分？`
         );
@@ -10343,7 +10938,7 @@
             `每顆球占一個直徑的高度，${balls} 顆共 ${diameter} × ${balls} = ${height} 公分。`
           )
         );
-      } else {
+      } else if (i % 3 === 1) {
         questions.push(
           `一個圓筒剛好裝滿 ${balls} 顆半徑 ${radius} 公分的球，球上下排成一直線，圓筒底面的直徑是多少公分？`
         );
@@ -10352,6 +10947,17 @@
           e510Answer(
             `${diameter} 公分`,
             `圓筒底面剛好容納球的最寬處，所以底面直徑等於球的直徑：${radius} × 2 = ${diameter} 公分。`
+          )
+        );
+      } else {
+        questions.push(
+          `一個圓筒高 ${height} 公分，剛好上下排成一直線裝入 ${balls} 顆一樣大的球。每顆球的半徑是多少公分？`
+        );
+        summaryAnswers.push(`${radius} 公分`);
+        answers.push(
+          e510Answer(
+            `${radius} 公分`,
+            `每顆球占一個直徑的高度，球的直徑 = ${height} ÷ ${balls} = ${diameter} 公分，所以半徑 = ${diameter} ÷ 2 = ${radius} 公分。`
           )
         );
       }
@@ -10363,17 +10969,25 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const arrangementOrder = e5SelectDistinctItems([[6, 2, 3, 1], [8, 3, 4, 1], [10, 4, 3, 2], [12, 2, 5, 2], [15, 3, 3, 1], [20, 2, 4, 2], [25, 3, 5, 1], [9, 4, 4, 1], [14, 2, 3, 2], [18, 3, 5, 2]], count);
     for (let i = 0; i < count; i += 1) {
-      const diameter = pickFromList([6, 8, 10, 12, 15, 20, 25]);
-      const rows = pickFromList([2, 3, 4]);
-      const cols = pickFromList([3, 4, 5]);
-      const heightLayers = pickFromList([1, 2]);
+      const [diameter, rows, cols, heightLayers] = arrangementOrder[i];
       const length = diameter * cols;
       const width = diameter * rows;
       const height = diameter * heightLayers;
-      questions.push(
-        `長方體盒子剛好裝滿 ${rows} 排、每排 ${cols} 顆、共 ${heightLayers} 層的球。每顆球直徑 ${diameter} 公分，盒子的長、寬、高至少各是多少公分？`
-      );
+      if (i % 3 === 0) {
+        questions.push(
+          `長方體盒子剛好裝滿 ${rows} 排、每排 ${cols} 顆、共 ${heightLayers} 層的球。每顆球直徑 ${diameter} 公分，盒子的長、寬、高至少各是多少公分？`
+        );
+      } else if (i % 3 === 1) {
+        questions.push(
+          `把直徑 ${diameter} 公分的球整齊排進長方體盒：每層有 ${rows} 排、每排 ${cols} 顆，共疊 ${heightLayers} 層。盒子的最小長、寬、高各是多少公分？`
+        );
+      } else {
+        questions.push(
+          `一個長方體收納盒要剛好容納 ${rows} × ${cols} × ${heightLayers} 顆球；球的直徑為 ${diameter} 公分，並且分成 ${rows} 排、每排 ${cols} 顆、${heightLayers} 層。求盒子的最小長、寬、高。`
+        );
+      }
       summaryAnswers.push(`長 ${length} 公分、寬 ${width} 公分、高 ${height} 公分`);
       answers.push(
         e510Answer(
@@ -10386,7 +11000,7 @@
   }
 
   function buildE510SphereMixedSet(count) {
-    return buildE518MixedSet(
+    return e5BuildMixedSet(
       [buildE510SpherePartsSet, buildE510SphereSectionSet, buildE510SphereCylinderSet, buildE510SphereBoxSet],
       count
     );
@@ -10403,10 +11017,21 @@
       { parts: ['2 個五邊形', '5 個長方形'], base: '五邊形', answer: '五角柱' },
       { parts: ['4 個三角形'], base: '三角形', answer: '三角錐' },
       { parts: ['1 個四邊形', '4 個三角形'], base: '四邊形', answer: '四角錐' },
+      { parts: ['2 個六邊形', '6 個長方形'], base: '六邊形', answer: '六角柱' },
+      { parts: ['1 個五邊形', '5 個三角形'], base: '五邊形', answer: '五角錐' },
+      { parts: ['1 個正方形', '4 個三角形'], base: '正方形', answer: '四角錐' },
+      { parts: ['6 個正方形'], base: '正方形', answer: '正方體' },
+      { parts: ['2 個四邊形', '4 個長方形'], base: '四邊形', answer: '四角柱' },
+      { parts: ['2 個八邊形', '8 個長方形'], base: '八邊形', answer: '八角柱' },
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
-      questions.push(`一個展開圖由 ${item.parts.join('、')} 組成，摺起來可能是哪一種立體？`);
+      const item = caseOrder[i];
+      if (i % 2 === 0) {
+        questions.push(`一個展開圖由 ${item.parts.join('、')} 組成，摺起來可能是哪一種立體？`);
+      } else {
+        questions.push(`觀察展開圖的圖形：${item.parts.join('、')}。依底面與側面的數量判斷，能摺成什麼立體？`);
+      }
       summaryAnswers.push(item.answer);
       answers.push(
         e510Answer(
@@ -10422,10 +11047,11 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
-    const sidesList = [3, 4, 5, 6, 8, 10];
+    const sidesList = [3, 4, 5, 6, 7, 8, 9, 10, 12];
+    const sideOrder = e5SelectDistinctItems(sidesList, count);
     for (let i = 0; i < count; i += 1) {
-      const sides = pickFromList(sidesList);
-      if (i % 2 === 0) {
+      const sides = sideOrder[i];
+      if (i % 3 === 0) {
         const sideFaces = sides;
         questions.push(`${e510PrismName(sides)}的展開圖中，側面應該由幾個長方形組成？`);
         summaryAnswers.push(`${sideFaces} 個`);
@@ -10435,7 +11061,7 @@
             `柱體的每一條底邊對應一個側面長方形，所以側面長方形個數 = 底面邊數 = ${sides} 個。`
           )
         );
-      } else {
+      } else if (i % 3 === 1) {
         const sideFaces = sides;
         questions.push(`${e510PyramidName(sides)}的展開圖中，側面應該由幾個三角形組成？`);
         summaryAnswers.push(`${sideFaces} 個`);
@@ -10443,6 +11069,16 @@
           e510Answer(
             `${sideFaces} 個`,
             `錐體的每一條底邊對應一個側面三角形，所以側面三角形個數 = 底面邊數 = ${sides} 個。`
+          )
+        );
+      } else {
+        const sideFaces = sides;
+        questions.push(`把${e510PrismName(sides)}沿著邊剪開攤平後，會有幾個和底面相接的長方形側面？`);
+        summaryAnswers.push(`${sideFaces} 個`);
+        answers.push(
+          e510Answer(
+            `${sideFaces} 個`,
+            `柱體底面每一條邊各對應一個長方形側面。${e510PrismName(sides)}的底面有 ${sides} 條邊，所以有 ${sideFaces} 個長方形側面。`
           )
         );
       }
@@ -10454,9 +11090,9 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
+    const dimensionOrder = e5SelectDistinctItems([[3, 4], [4, 5], [5, 6], [6, 4], [7, 3], [8, 5], [9, 4], [10, 6], [12, 3], [5, 10]], count);
     for (let i = 0; i < count; i += 1) {
-      const sides = pickFromList([3, 4, 5, 6, 8]);
-      const baseEdge = pickFromList([3, 4, 5, 6, 8, 10, 12]);
+      const [sides, baseEdge] = dimensionOrder[i];
       const perimeter = sides * baseEdge;
       if (i % 2 === 0) {
         questions.push(
@@ -10506,10 +11142,23 @@
         '圓周長',
         '圓柱側面展開成長方形，長方形的長剛好繞底面一圈，所以等於圓周長。',
       ],
+      ['正方體展開圖中，頂面和底面摺合後有什麼關係？', '互相平行', '頂面和底面是相對面，摺合後不相交且方向相同，所以互相平行。'],
+      ['直三角柱展開圖中，兩個三角形底面摺合後有什麼關係？', '互相平行且全等', '直三角柱的兩個底面形狀、大小相同，摺合後位在兩端，所以互相平行且全等。'],
+      ['圓錐展開圖中，扇形的弧會摺成什麼？', '底面圓的圓周', '扇形的弧摺合後剛好繞成底面圓的一圈，所以會成為底面圓的圓周。'],
+      ['四角錐展開圖中，四個三角形側面摺合後共同連到哪裡？', '同一個頂點', '四個側面三角形的尖端會摺到一起，形成錐體的同一個頂點。'],
+      ['直五角柱展開圖中，五個側面長方形摺合後和底面有什麼關係？', '互相垂直', '直柱體的側面長方形摺起後立在底面邊上，因此和底面互相垂直。'],
+      ['圓柱展開圖中，側面長方形的寬和圓柱的什麼量相等？', '高', '側面長方形由圓柱側面剪開攤平，長方形的寬就是圓柱由下到上的高度。'],
     ];
+    const caseOrder = e5SelectDistinctItems(cases, count);
     for (let i = 0; i < count; i += 1) {
-      const item = cases[i % cases.length];
-      questions.push(item[0]);
+      const item = caseOrder[i];
+      if (i % 3 === 0) {
+        questions.push(item[0]);
+      } else if (i % 3 === 1) {
+        questions.push(`把展開圖摺回原來的立體後，${item[0]}`);
+      } else {
+        questions.push(`請利用展開圖判斷：${item[0]}`);
+      }
       summaryAnswers.push(item[1]);
       answers.push(e510Answer(item[1], item[2]));
     }
@@ -10517,7 +11166,7 @@
   }
 
   function buildE510NetMixedSet(count) {
-    return buildE518MixedSet(
+    return e5BuildMixedSet(
       [buildE510NetSolidNameSet, buildE510NetElementCountSet, buildE510NetEdgeMatchSet, buildE510NetFaceRelationSet],
       count
     );
@@ -10976,17 +11625,7 @@
   }
 
   function buildE521MixedSet(banks, count) {
-    const questions = [];
-    const summaryAnswers = [];
-    const answers = [];
-    for (let i = 0; i < count; i += 1) {
-      const bank = banks[randInt(0, banks.length - 1)];
-      const built = bank(1);
-      questions.push(built.questions[0]);
-      summaryAnswers.push((built.summaryAnswers || [''])[0]);
-      answers.push(built.answers[0]);
-    }
-    return { questions, summaryAnswers, answers };
+    return e5BuildMixedSet(banks, count);
   }
 
   function buildE521BasicTwoSet(count) {
@@ -11073,7 +11712,7 @@
     return processText ? `過程：${processText}` : `${shortText}`;
   }
 
-  const bundleFingerprint = 'e5-bundle-v20260619-v4';
+  const bundleFingerprint = 'e5-bundle-v20260725-e526-e5210-audit-v11';
   const nextConfigs = {
     'e5-2-5-chinese-convert-drill': {
       type: 'drill',
@@ -12566,7 +13205,7 @@
       difficulty: 'easy',
       questionCount: 5,
       generate() {
-        return buildE516ProperAddSubSet(5);
+        return e5BuildUniqueSet(buildE516ProperAddSubSet, 5);
       },
     },
     'e5-1-6-improper-calc-drill': {
@@ -12575,7 +13214,7 @@
       difficulty: 'medium',
       questionCount: 5,
       generate() {
-        return buildE516ImproperCalcSet(5);
+        return e5BuildUniqueSet(buildE516ImproperCalcSet, 5);
       },
     },
     'e5-1-6-mixed-add-drill': {
@@ -12584,7 +13223,7 @@
       difficulty: 'medium',
       questionCount: 5,
       generate() {
-        return buildE516MixedAddSet(5);
+        return e5BuildUniqueSet(buildE516MixedAddSet, 5);
       },
     },
     'e5-1-6-mixed-borrow-sub-drill': {
@@ -12593,7 +13232,7 @@
       difficulty: 'medium',
       questionCount: 5,
       generate() {
-        return buildE516MixedBorrowSubSet(5);
+        return e5BuildUniqueSet(buildE516MixedBorrowSubSet, 5);
       },
     },
     'e5-1-6-total-application-drill': {
@@ -12701,7 +13340,7 @@
       difficulty: 'medium',
       questionCount: 5,
       generate() {
-        return buildE517MirrorSegmentLengthSet(5);
+        return e5BuildUniqueSet(buildE517MirrorSegmentLengthSet, 5);
       },
     },
     'e5-1-7-mirror-angle-drill': {
@@ -12719,7 +13358,7 @@
       difficulty: 'medium',
       questionCount: 5,
       generate() {
-        return buildE517PerimeterSet(5);
+        return e5BuildUniqueSet(buildE517PerimeterSet, 5);
       },
     },
     'e5-1-7-axis-two-subtypes': {
@@ -12791,7 +13430,7 @@
       difficulty: 'easy',
       questionCount: 5,
       generate() {
-        return buildE518AverageBasicSet(5);
+        return e5BuildUniqueSet(buildE518AverageBasicSet, 5);
       },
     },
     'e5-1-8-average-target-drill': {
@@ -12809,7 +13448,7 @@
       difficulty: 'medium',
       questionCount: 5,
       generate() {
-        return buildE518BalancePaymentSet(5);
+        return e5BuildUniqueSet(buildE518BalancePaymentSet, 5);
       },
     },
     'e5-1-8-basic-two-subtypes': {
@@ -12881,7 +13520,7 @@
       difficulty: 'medium',
       questionCount: 5,
       generate() {
-        return buildE519ParallelogramEqualAreaSet(5);
+        return e5BuildUniqueSet(buildE519ParallelogramEqualAreaSet, 5);
       },
     },
     'e5-1-9-parallelogram-four-subtypes': {
@@ -12926,7 +13565,7 @@
       difficulty: 'medium',
       questionCount: 5,
       generate() {
-        return buildE519TriangleEqualAreaSet(5);
+        return e5BuildUniqueSet(buildE519TriangleEqualAreaSet, 5);
       },
     },
     'e5-1-9-triangle-four-subtypes': {
@@ -12962,7 +13601,7 @@
       difficulty: 'medium',
       questionCount: 5,
       generate() {
-        return buildE519TrapezoidRelationSet(5);
+        return e5BuildUniqueSet(buildE519TrapezoidRelationSet, 5);
       },
     },
     'e5-1-9-trapezoid-scale-drill': {
@@ -12998,7 +13637,7 @@
       difficulty: 'medium',
       questionCount: 5,
       generate() {
-        return buildE519CompositeSubtractSet(5);
+        return e5BuildUniqueSet(buildE519CompositeSubtractSet, 5);
       },
     },
     'e5-1-9-composite-translation-drill': {
@@ -14299,8 +14938,12 @@
     },
   };
 
-  Object.values(nextConfigs).forEach((config) => {
+  Object.entries(nextConfigs).forEach(([id, config]) => {
     if (!config || typeof config !== 'object') return;
+    if (/^e5-2-(?:[1-9]|10)-/u.test(id) && typeof config.generate === 'function') {
+      const generate = config.generate;
+      config.generate = () => e5BuildUniqueSet(generate, config.questionCount);
+    }
     config.__generatorFingerprint = bundleFingerprint;
   });
 

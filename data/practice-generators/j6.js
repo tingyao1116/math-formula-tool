@@ -266,7 +266,18 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const x = pickNonZero(-6, 6);
-      const a = randomJ611Coefficient();
+      const coefficientMode = i % 3;
+      let a;
+      if (coefficientMode === 0) {
+        a = makeFraction(randInt(1, 8));
+      } else if (coefficientMode === 1) {
+        a = makeFraction(-randInt(1, 8));
+      } else {
+        const den = [2, 3, 4][randInt(0, 2)];
+        let num = pickNonZero(-8, 8);
+        while (num % den === 0) num = pickNonZero(-8, 8);
+        a = makeFraction(num, den);
+      }
       const y = j611FractionValueAt(a, x);
       const yText = fractionToLatex(y);
       const xSub = x < 0 ? `(${x})` : `${x}`;
@@ -431,11 +442,22 @@
       const newDepth = aInt * newHalf * newHalf;
       const lower = depth - newDepth;
       const width = 2 * half;
-      questions.push(
-        `一個拋物線形河道以最低處為原點，截面可設為 \\(y=ax^2\\)。若水深 \\(${depth}\\) 公尺時水面寬 \\(${width}\\) 公尺，當水位下降 \\(${lower}\\) 公尺時，水面寬為多少公尺？`
-      );
+      const mode = i % 3;
+      if (mode === 0) {
+        questions.push(
+          `一個拋物線形河道以最低處為原點，截面可設為 \\(y=ax^2\\)。若水深 \\(${depth}\\) 公尺時水面寬 \\(${width}\\) 公尺，當水位下降 \\(${lower}\\) 公尺時，水面寬為多少公尺？`
+        );
+      } else if (mode === 1) {
+        questions.push(
+          `一條拋物線形排水溝以最低處為原點，側壁可設為 \\(y=ax^2\\)。液面高度為 \\(${depth}\\) 公尺時寬 \\(${width}\\) 公尺；液面下降 \\(${lower}\\) 公尺後，溝內液面寬為多少公尺？`
+        );
+      } else {
+        questions.push(
+          `一個拋物線形門洞以地面中央最低點為原點，邊緣可設為 \\(y=ax^2\\)。離地 \\(${depth}\\) 公尺處的門洞寬為 \\(${width}\\) 公尺，求離地 \\(${newDepth}\\) 公尺處的門洞寬。`
+        );
+      }
       answers.push(
-        `簡答：\\(${2 * newHalf}\\) 公尺。過程：水深 \\(${depth}\\) 時半寬為 \\(${half}\\)，代入 \\(y=ax^2\\) 得 \\(${depth}=a\\cdot${half}^2\\)，所以 \\(a=${aInt}\\)。下降 \\(${lower}\\) 公尺後水深為 \\(${newDepth}\\)，解 \\(${newDepth}=${formatJ611IntegerQuadraticTerm(aInt)}\\)，得 \\(x=${newHalf}\\)，故水面寬為 \\(${2 * newHalf}\\) 公尺。`
+        `簡答：\\(${2 * newHalf}\\) 公尺。過程：高度為 \\(${depth}\\) 時半寬為 \\(${half}\\)，代入 \\(y=ax^2\\) 得 \\(${depth}=a\\cdot${half}^2\\)，所以 \\(a=${aInt}\\)。高度變成 \\(${newDepth}\\) 時，解 \\(${newDepth}=${formatJ611IntegerQuadraticTerm(aInt)}\\)，得 \\(x=\\pm${newHalf}\\)，故截面寬為 \\(${2 * newHalf}\\) 公尺。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -619,14 +641,14 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randomJ611Coefficient({ integerOnly: true });
-      let dx = randInt(-7, 7);
-      let dy = randInt(-8, 8);
-      if (dx === 0 && dy === 0) dx = randInt(1, 7);
+      const mode = i % 3;
+      const dx = mode === 1 ? 0 : pickNonZero(-7, 7);
+      const dy = mode === 0 ? 0 : pickNonZero(-8, 8);
       const base = formatJ611Parabola(a);
       const eq = j612FormatVertexEquation(a, dx, dy);
       questions.push(`將 \\(${base}\\) 的圖形${j612MoveText(dx, dy)}，求新函數。`);
       answers.push(
-        `簡答：\\(${eq}\\)。過程：由 \\(y=ax^2\\) 平移，右 \\(h\\)、上 \\(k\\) 後為 \\(y=a(x-h)^2+k\\)。本題 \\(h=${dx}\\)、\\(k=${dy}\\)，且平移不改變 \\(a\\)。`
+        `簡答：\\(${eq}\\)。過程：由 \\(y=ax^2\\) 平移，右 \\(h\\)、上 \\(k\\) 後為 \\(y=a(x-h)^2+k\\)。本題 \\(h=${dx}\\)、\\(k=${dy}\\)，且平移不改變 \\(a\\)。${mode === 0 ? '本題只做水平平移，要特別注意括號內的符號。' : mode === 1 ? '本題只做垂直平移，\\(x^2\\) 的部分不改變。' : '本題同時有水平與垂直平移，須分別寫進括號內與括號外。'}`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1102,11 +1124,12 @@
       const newDepth = depth - drop;
       const halfWidth = width / 2;
       const newHalfSquared = makeFraction(halfWidth * halfWidth * newDepth, depth);
+      const newWidthText = j61ScaledRootFractionText(2, newHalfSquared);
       questions.push(
         `一個拋物線形河道，最深處離岸面 \\(${depth}\\) 公尺，水滿時河面寬 \\(${width}\\) 公尺。若水位下降 \\(${drop}\\) 公尺，求此時水面寬。`
       );
       answers.push(
-        `簡答：\\(2\\sqrt{${fractionToLatex(newHalfSquared)}}\\) 公尺。過程：以河底為原點設 \\(y=ax^2\\)。滿水時半寬為 \\(${halfWidth}\\)，代入得 \\(${depth}=a(${halfWidth})^2\\)。新水深為 \\(${newDepth}\\)，解 \\(ax^2=${newDepth}\\)，水面寬為 \\(2|x|\\)。`
+        `簡答：\\(${newWidthText}\\) 公尺。過程：以河底為原點設 \\(y=ax^2\\)。滿水時半寬為 \\(${halfWidth}\\)，代入得 \\(${depth}=a(${halfWidth})^2\\)。新水深為 \\(${newDepth}\\)，故 \\(x^2=${fractionToLatex(newHalfSquared)}\\)。水面寬為 \\(2|x|=${newWidthText}\\) 公尺。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1144,11 +1167,12 @@
       const bestPrice = basePrice - priceStep * bestX;
       const bestPeople = basePeople + extraPeople * bestX;
       const bestRevenue = bestPrice * bestPeople;
+      const linearCoefficient = basePrice * extraPeople - priceStep * basePeople;
       questions.push(
         `某活動原票價 \\(${basePrice}\\) 元時有 \\(${basePeople}\\) 人參加；票價每降 \\(${priceStep}\\) 元，會增加 \\(${extraPeople}\\) 人。若最多降價到票價仍為正，求票價定為多少時收入最大。`
       );
       answers.push(
-        `簡答：定為 \\(${bestPrice}\\) 元時收入最大。過程：設降價 \\(x\\) 次，收入 \\(R=(${basePrice}${formatJ611SignedLinearTerm(-priceStep)})(${basePeople}${formatJ611SignedLinearTerm(extraPeople)})\\)，這是開口向下的二次函數，取頂點附近的整數 \\(x=${bestX}\\)。`
+        `簡答：定為 \\(${bestPrice}\\) 元時收入最大。過程：設降價 \\(x\\) 次，則 \\(R=(${basePrice}${formatJ611SignedLinearTerm(-priceStep)})(${basePeople}${formatJ611SignedLinearTerm(extraPeople)})=-${priceStep * extraPeople}x^2+${linearCoefficient}x+${basePrice * basePeople}\\)。此式開口向下，頂點在 \\(x=\\dfrac{${linearCoefficient}}{2\\cdot${priceStep * extraPeople}}=${bestX}\\)，故票價定為 \\(${basePrice}-${priceStep}\\cdot${bestX}=${bestPrice}\\) 元時收入最大（最高收入為 \\(${bestRevenue}\\) 元）。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1167,11 +1191,13 @@
       const basePrice = cost + (baseSales * step) / salesGain + 2 * step * bestX;
       const bestPrice = basePrice - step * bestX;
       const bestProfit = (bestPrice - cost) * (baseSales + salesGain * bestX);
+      const profitBaseMargin = basePrice - cost;
+      const linearCoefficient = profitBaseMargin * salesGain - step * baseSales;
       questions.push(
         `某商品成本 \\(${cost}\\) 元，定價 \\(${basePrice}\\) 元時可賣 \\(${baseSales}\\) 件；每降價 \\(${step}\\) 元可多賣 \\(${salesGain}\\) 件。求定價多少元時利潤最大。`
       );
       answers.push(
-        `簡答：定為 \\(${bestPrice}\\) 元時利潤最大。過程：設降價 \\(x\\) 次，利潤 \\(P=(${basePrice}${formatJ611SignedLinearTerm(-step)}-${cost})(${baseSales}${formatJ611SignedLinearTerm(salesGain)})\\)，配方或用頂點判斷最大值位置。`
+        `簡答：定為 \\(${bestPrice}\\) 元時利潤最大。過程：設降價 \\(x\\) 次，利潤 \\(P=(${profitBaseMargin}${formatJ611SignedLinearTerm(-step)})(${baseSales}${formatJ611SignedLinearTerm(salesGain)})=-${step * salesGain}x^2+${linearCoefficient}x+${profitBaseMargin * baseSales}\\)。此式開口向下，頂點在 \\(x=\\dfrac{${linearCoefficient}}{2\\cdot${step * salesGain}}=${bestX}\\)，故最佳定價為 \\(${basePrice}-${step}\\cdot${bestX}=${bestPrice}\\) 元，最大利潤為 \\(${bestProfit}\\) 元。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1188,11 +1214,12 @@
       const yieldPerTree = drop * (trees + 2 * bestAdd);
       const bestTrees = trees + bestAdd;
       const bestTotal = bestTrees * (yieldPerTree - drop * bestAdd);
+      const linearCoefficient = yieldPerTree - drop * trees;
       questions.push(
         `果園原有 \\(${trees}\\) 棵果樹，每棵產量 \\(${yieldPerTree}\\) 顆；每多種一棵，平均每棵產量減少 \\(${drop}\\) 顆。求總產量最大時應加種幾棵。`
       );
       answers.push(
-        `簡答：加種 \\(${bestAdd}\\) 棵，總產量 \\(${bestTotal}\\) 顆。過程：設加種 \\(x\\) 棵，總產量 \\(T=(${trees}+x)(${yieldPerTree}${formatJ611SignedLinearTerm(-drop)})\\)，為開口向下的二次函數，最大值在頂點。`
+        `簡答：加種 \\(${bestAdd}\\) 棵，總產量 \\(${bestTotal}\\) 顆。過程：設加種 \\(x\\) 棵，總產量 \\(T=(${trees}+x)(${yieldPerTree}${formatJ611SignedLinearTerm(-drop)})=-${drop}x^2+${linearCoefficient}x+${trees * yieldPerTree}\\)。此式開口向下，頂點在 \\(x=\\dfrac{${linearCoefficient}}{2\\cdot${drop}}=${bestAdd}\\)，所以應加種 \\(${bestAdd}\\) 棵，此時總產量為 \\(${bestTotal}\\) 顆。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1245,6 +1272,34 @@
       }
     }
     return outside === 1 ? `\\sqrt{${inside}}` : `${outside}\\sqrt{${inside}}`;
+  }
+
+  function j61SquareFreeParts(value) {
+    let outside = 1;
+    let inside = value;
+    for (let factor = Math.floor(Math.sqrt(value)); factor >= 2; factor -= 1) {
+      const square = factor * factor;
+      if (value % square === 0) {
+        outside = factor;
+        inside = value / square;
+        break;
+      }
+    }
+    return { outside, inside };
+  }
+
+  function j61ScaledRootFractionText(scale, fraction) {
+    const value = makeFraction(fraction.num, fraction.den);
+    const numerator = j61SquareFreeParts(value.num);
+    const denominator = j61SquareFreeParts(value.den);
+    if (numerator.inside === 1 && denominator.inside === 1) {
+      return fractionToLatex(makeFraction(scale * numerator.outside, denominator.outside));
+    }
+    const coefficient = makeFraction(scale * numerator.outside, denominator.outside * denominator.inside);
+    const radical = j61SqrtText(numerator.inside * denominator.inside);
+    if (coefficient.num === 1 && coefficient.den === 1) return radical;
+    if (coefficient.den === 1) return `${coefficient.num}${radical}`;
+    return `\\frac{${coefficient.num}${radical}}{${coefficient.den}}`;
   }
 
   function j61VertexEquation(a, h, k) {
@@ -1418,7 +1473,7 @@
         add(
           `已知 \\(y=${formatJ611IntegerQuadraticTerm(-a)}+bx-${c}\\) 的圖形完全在 \\(x\\) 軸下方，求整數 \\(b\\) 的範圍。`,
           `\\(-${limit}\\le b\\le ${limit}\\)`,
-          `開口向下，若要完全在 \\(x\\) 軸下方，就不能與 \\(x\\) 軸相交，因此判別式小於 0。\\(D=b^2-4\\cdot${a}\\cdot${c}<0\\)，所以 \\(b^2<${4 * a * c}\\)。整數 \\(b\\) 的範圍為 \\(-${limit}\\le b\\le ${limit}\\)。`
+          `開口向下，若要完全在 \\(x\\) 軸下方，就不能與 \\(x\\) 軸相交，因此判別式小於 0。二次項係數與常數項分別為 \\(-${a}\\)、\\(-${c}\\)，故 \\(D=b^2-4(-${a})(-${c})=b^2-${4 * a * c}<0\\)。所以 \\(b^2<${4 * a * c}\\)，整數 \\(b\\) 的範圍為 \\(-${limit}\\le b\\le ${limit}\\)。`
         );
         continue;
       }
@@ -1659,16 +1714,33 @@
     for (let i = 0; i < count; i += 1) {
       const [legA, legB, hyp] = baseTriples[randInt(0, baseTriples.length - 1)];
       const scale = randInt(1, 4);
-      const swap = i % 2 === 1;
+      const swap = randInt(0, 1) === 1;
       const height = (swap ? legB : legA) * scale;
       const planeDistance = (swap ? legA : legB) * scale;
       const slant = hyp * scale;
-      questions.push(
-        `直線 \\(AB\\) 垂直平面 \\(S\\) 於 \\(B\\)，點 \\(C\\) 在平面 \\(S\\) 上。若 \\(AB=${height}\\)、\\(AC=${slant}\\)，求 \\(BC\\) 的長度。`
-      );
-      answers.push(
-        `簡答：\\(${planeDistance}\\)。過程：因為 \\(AB\\perp S\\)，且 \\(BC\\) 在平面 \\(S\\) 上並通過垂足 \\(B\\)，所以 \\(AB\\perp BC\\)。在直角三角形 \\(ABC\\) 中，\\(BC=\\sqrt{${slant}^2-${height}^2}=${planeDistance}\\)。`
-      );
+      const mode = i % 3;
+      if (mode === 0) {
+        questions.push(
+          `直線 \\(AB\\) 垂直平面 \\(S\\) 於 \\(B\\)，點 \\(C\\) 在平面 \\(S\\) 上。若 \\(AB=${height}\\)、\\(AC=${slant}\\)，求 \\(BC\\) 的長度。`
+        );
+        answers.push(
+          `簡答：\\(${planeDistance}\\)。過程：因為 \\(AB\\perp S\\)，且 \\(BC\\) 在平面 \\(S\\) 上並通過垂足 \\(B\\)，所以 \\(AB\\perp BC\\)。在直角三角形 \\(ABC\\) 中，\\(BC=\\sqrt{${slant}^2-${height}^2}=${planeDistance}\\)。`
+        );
+      } else if (mode === 1) {
+        questions.push(
+          `直線 \\(AB\\) 垂直平面 \\(S\\) 於 \\(B\\)，點 \\(C\\) 在平面 \\(S\\) 上。若 \\(AB=${height}\\)、\\(BC=${planeDistance}\\)，求 \\(AC\\) 的長度。`
+        );
+        answers.push(
+          `簡答：\\(${slant}\\)。過程：\\(AB\\perp BC\\)，所以 \\(\\triangle ABC\\) 在 \\(B\\) 為直角。由畢氏定理，\\(AC=\\sqrt{${height}^2+${planeDistance}^2}=${slant}\\)。`
+        );
+      } else {
+        questions.push(
+          `直線 \\(AB\\) 垂直平面 \\(S\\) 於 \\(B\\)，點 \\(C\\) 在平面 \\(S\\) 上。若 \\(AC=${slant}\\)、\\(BC=${planeDistance}\\)，求 \\(AB\\) 的長度。`
+        );
+        answers.push(
+          `簡答：\\(${height}\\)。過程：\\(AB\\perp BC\\)，因此 \\(AC\\) 是直角三角形 \\(ABC\\) 的斜邊。\\(AB=\\sqrt{${slant}^2-${planeDistance}^2}=${height}\\)。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1718,9 +1790,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1914,9 +1984,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2016,7 +2084,7 @@
         const d = randInt(4, 12);
         const answer2 = h * h + d * d;
         add(
-          `平面上有直線 \\(x=${d}\\)，點 \\(P(0,0)\\)。若 \\(L\\) 在 \\(P\\) 正上方 \\(${h}\\) 單位處，求 \\(L\\) 到直線 \\(x=${d}\\) 上任一點的最短距離。`,
+          `平面上有直線 \\(x=${d}\\)，點 \\(P(0,0)\\)。若 \\(L\\) 在 \\(P\\) 正上方 \\(${h}\\) 單位處，求 \\(L\\) 到直線 \\(x=${d}\\) 的最短距離。`,
           `\\(${j61SqrtText(answer2)}\\)`,
           `先看垂直投影：\\(P\\) 到直線 \\(x=${d}\\) 的最短平面距離為 \\(${d}\\)。空間中還有高度 \\(${h}\\)，所以最短距離平方為 \\(${h}^2+${d}^2=${answer2}\\)。`
         );
@@ -2134,7 +2202,7 @@
         const wall = randInt(2, h - 1);
         const dist2 = ground * ground + (h - wall) * (h - wall);
         add(
-          `旗桿高 \\(${h}\\) 公尺，影子先落在地面 \\(${ground}\\) 公尺後折到牆上，牆上的影長為 \\(${wall}\\) 公尺。求旗桿頂端到牆面影子末端的直線距離。`,
+          `旗桿高 \\(${h}\\) 公尺；一面牆距旗桿底端 \\(${ground}\\) 公尺，牆面上有一點離地 \\(${wall}\\) 公尺。求旗桿頂端到該點的直線距離。`,
           `\\(${j61SqrtText(dist2)}\\) 公尺`,
           `牆面影子末端比旗桿頂端低 \\(${h}-${wall}=${h - wall}\\) 公尺，水平距離為 \\(${ground}\\) 公尺。直線距離平方為 \\(${ground}^2+${h - wall}^2=${dist2}\\)。`
         );
@@ -2371,9 +2439,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2383,16 +2449,51 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const outer = randInt(5, 12);
-      const inner = randInt(2, outer - 2);
-      const length = randInt(20, 120);
-      const coeff = (outer * outer - inner * inner) * length;
-      questions.push(
-        `一段空心圓柱水管，外圓半徑為 \\(${outer}\\) 公分，內圓半徑為 \\(${inner}\\) 公分，長度為 \\(${length}\\) 公分，求製成此水管所需材料的體積。`
-      );
-      answers.push(
-        `簡答：\\(${j622PiTerm(coeff)}\\) 立方公分。過程：材料體積為外圓柱減內圓柱，\\(V=\\pi(${outer}^2-${inner}^2)\\cdot${length}=${j622PiTerm(coeff)}\\)。`
-      );
+      const mode = i % 3;
+      if (mode === 0) {
+        const outer = randInt(5, 12);
+        const inner = randInt(2, outer - 2);
+        const length = randInt(20, 120);
+        const coeff = (outer * outer - inner * inner) * length;
+        questions.push(
+          `一段空心圓柱水管，外圓半徑為 \\(${outer}\\) 公分，內圓半徑為 \\(${inner}\\) 公分，長度為 \\(${length}\\) 公分，求製成此水管所需材料的體積。`
+        );
+        answers.push(
+          `簡答：\\(${j622PiTerm(coeff)}\\) 立方公分。過程：材料體積為外圓柱減內圓柱，\\(V=\\pi(${outer}^2-${inner}^2)\\cdot${length}=${j622PiTerm(coeff)}\\)。`
+        );
+      } else if (mode === 1) {
+        const outer = randInt(5, 12);
+        const inner = randInt(2, outer - 2);
+        const length = randInt(20, 120);
+        const coeff = (outer * outer - inner * inner) * length;
+        questions.push(
+          `一段空心圓柱水管的外徑為 \\(${2 * outer}\\) 公分、內徑為 \\(${2 * inner}\\) 公分，長度為 \\(${length}\\) 公分，求製成此水管所需材料的體積。`
+        );
+        answers.push(
+          `簡答：\\(${j622PiTerm(coeff)}\\) 立方公分。過程：先把直徑除以 \\(2\\)，得外半徑 \\(${outer}\\)、內半徑 \\(${inner}\\)。材料體積 \\(=\\pi(${outer}^2-${inner}^2)\\cdot${length}=${j622PiTerm(coeff)}\\)。`
+        );
+      } else if (Math.floor(i / 3) % 3 === 0) {
+        questions.push(
+          '一段空心圓柱管的外半徑為 \\(R\\)、內半徑為 \\(r\\)、長度為 \\(h\\)（\\(R>r>0\\)），請用 \\(R,r,h\\) 表示製作此管所需材料的體積。'
+        );
+        answers.push(
+          '簡答：\\(\\pi(R^2-r^2)h\\)。過程：材料體積為外圓柱體積減內部中空圓柱體積，即 \\(\\pi R^2h-\\pi r^2h=\\pi(R^2-r^2)h\\)。'
+        );
+      } else if (Math.floor(i / 3) % 3 === 1) {
+        questions.push(
+          '一段空心圓柱管的外半徑為 \\(R\\)、管壁厚為 \\(t\\)、長度為 \\(h\\)（\\(0<t<R\\)），請用 \\(R,t,h\\) 表示製作此管所需材料的體積。'
+        );
+        answers.push(
+          '簡答：\\(\\pi[R^2-(R-t)^2]h\\)。過程：內半徑為 \\(R-t\\)，所以材料體積為外圓柱減內圓柱：\\(\\pi R^2h-\\pi(R-t)^2h=\\pi[R^2-(R-t)^2]h\\)。'
+        );
+      } else {
+        questions.push(
+          '一段空心圓柱管的外半徑為 \\(a\\)、內半徑為 \\(b\\)、長度為 \\(\\ell\\)（\\(a>b>0\\)），請用 \\(a,b,\\ell\\) 表示製作此管所需材料的體積。'
+        );
+        answers.push(
+          '簡答：\\(\\pi(a^2-b^2)\\ell\\)。過程：材料體積為外圓柱減內部中空圓柱，即 \\(\\pi a^2\\ell-\\pi b^2\\ell=\\pi(a^2-b^2)\\ell\\)。'
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2463,9 +2564,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2496,13 +2595,34 @@
     for (let i = 0; i < count; i += 1) {
       const circumference = randInt(6, 24);
       const height = randInt(5, 20);
-      const distanceSquared = circumference * circumference + height * height;
-      questions.push(
-        `一個圓柱的底面周長為 \\(${circumference}\\) 公分，高為 \\(${height}\\) 公分。螞蟻沿側面繞一圈爬到正上方對應點，求最短路徑長。`
-      );
-      answers.push(
-        `簡答：\\(${j621SqrtText(distanceSquared)}\\) 公分。過程：圓柱側面展開是長方形，寬為底面周長 \\(${circumference}\\)，高為 \\(${height}\\)，最短路徑為對角線 \\(\\sqrt{${circumference}^2+${height}^2}\\)。`
-      );
+      const mode = i % 3;
+      if (mode === 0) {
+        const distanceSquared = circumference * circumference + height * height;
+        questions.push(
+          `一個圓柱的底面周長為 \\(${circumference}\\) 公分，高為 \\(${height}\\) 公分。螞蟻必須沿側面恰好繞一整圈，再到達正上方的對應點，求此路徑的最短長度。`
+        );
+        answers.push(
+          `簡答：\\(${j621SqrtText(distanceSquared)}\\) 公分。過程：將圓柱側面展開成長方形，橫向長為一圈的底面周長 \\(${circumference}\\)，縱向高為 \\(${height}\\)，所求路徑是此展開圖的對角線 \\(\\sqrt{${circumference}^2+${height}^2}\\)。`
+        );
+      } else if (mode === 1) {
+        const evenCircumference = 2 * randInt(4, 12);
+        const half = evenCircumference / 2;
+        const distanceSquared = half * half + height * height;
+        questions.push(
+          `一個圓柱的底面周長為 \\(${evenCircumference}\\) 公分，高為 \\(${height}\\) 公分。螞蟻從下底圓周上一點沿側面爬到上底圓周的正對點（沿圓周相隔半圈），求最短路徑長。`
+        );
+        answers.push(
+          `簡答：\\(${j621SqrtText(distanceSquared)}\\) 公分。過程：展開側面後，兩點的水平距離為半圈長 \\(${evenCircumference}\\div2=${half}\\)，垂直距離為 \\(${height}\\)。最短路徑為 \\(\\sqrt{${half}^2+${height}^2}\\)。`
+        );
+      } else {
+        const distanceSquared = (2 * circumference) * (2 * circumference) + height * height;
+        questions.push(
+          `一個圓柱的底面周長為 \\(${circumference}\\) 公分，高為 \\(${height}\\) 公分。螞蟻必須沿側面恰好繞兩整圈後，到達正上方的對應點，求此路徑的最短長度。`
+        );
+        answers.push(
+          `簡答：\\(${j621SqrtText(distanceSquared)}\\) 公分。過程：繞兩圈時，展開圖的水平距離為 \\(2\\times${circumference}=${2 * circumference}\\)，垂直距離為 \\(${height}\\)，故路徑長為 \\(\\sqrt{${2 * circumference}^2+${height}^2}\\)。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2513,9 +2633,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2597,12 +2715,33 @@
       const baseArea = randInt(20, 150);
       const rise = randInt(2, 12);
       const volume = baseArea * rise;
-      questions.push(
-        `一個底面積為 \\(${baseArea}\\) 平方公分的柱形水桶，投入一塊石頭後水位上升 \\(${rise}\\) 公分。若石頭完全沒入水中，求石頭體積。`
-      );
-      answers.push(
-        `簡答：\\(${volume}\\) 立方公分。過程：水位上升造成的體積增加等於石頭排開的水量，\\(V=\\text{底面積}\\times\\text{上升高度}=${baseArea}\\cdot${rise}=${volume}\\)。`
-      );
+      const mode = i % 3;
+      if (mode === 0) {
+        questions.push(
+          `一個底面積為 \\(${baseArea}\\) 平方公分的柱形水桶，投入一塊石頭後水位上升 \\(${rise}\\) 公分。若石頭完全沒入水中，求石頭體積。`
+        );
+        answers.push(
+          `簡答：\\(${volume}\\) 立方公分。過程：水位上升造成的體積增加等於石頭排開的水量，\\(V=\\text{底面積}\\times\\text{上升高度}=${baseArea}\\cdot${rise}=${volume}\\)。`
+        );
+      } else if (mode === 1) {
+        questions.push(
+          `一塊石頭完全沒入底面積為 \\(${baseArea}\\) 平方公分的柱形水桶後，排開水的體積為 \\(${volume}\\) 立方公分。求水位上升多少公分。`
+        );
+        answers.push(
+          `簡答：\\(${rise}\\) 公分。過程：排開水量 \\(=\\text{底面積}\\times\\text{水位上升量}\\)，所以水位上升量 \\(=${volume}\\div${baseArea}=${rise}\\) 公分。`
+        );
+      } else {
+        const scale = randInt(2, 4);
+        const originalRise = scale * randInt(2, 8);
+        const newArea = baseArea * scale;
+        const newRise = originalRise / scale;
+        questions.push(
+          `同一塊石頭完全沒入底面積為 \\(${baseArea}\\) 平方公分的柱形水桶時，水位上升 \\(${originalRise}\\) 公分。若改放入底面積為 \\(${newArea}\\) 平方公分的柱形水桶，水位上升多少公分？`
+        );
+        answers.push(
+          `簡答：\\(${newRise}\\) 公分。過程：石頭排開的水量不變。底面積變為原來的 \\(${scale}\\) 倍，水位上升量便變為原來的 \\(\\frac{1}{${scale}}\\)，所以為 \\(${originalRise}\\div${scale}=${newRise}\\) 公分。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2634,9 +2773,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2775,9 +2912,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -2933,9 +3068,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3029,9 +3162,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const generated = banks[i % banks.length](1);
-      questions.push(generated.questions[0]);
-      answers.push(generated.answers[0]);
+      pushGeneratedBankItem(questions, answers, banks, i);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3521,7 +3652,8 @@
         );
       } else {
         const percentChoices = [10, 20, 25, 40, 50];
-        const percent = percentChoices[randInt(0, percentChoices.length - 1)];
+        const validPercents = percentChoices.filter((percent) => Number.isInteger((total * percent) / 100));
+        const percent = validPercents[randInt(0, validPercents.length - 1)];
         const frequency = (total * percent) / 100;
         questions.push(`已知某組次數為 \\(${frequency}\\) 人，且占全部資料的 \\(${percent}\\%\\)，求全部資料總次數。`);
         answers.push(
@@ -3870,8 +4002,22 @@
       const p1 = randInt(2, 8) * 5;
       const p2 = randInt(1, p1 / 5 - 1) * 5;
       const diff = (total * (p1 - p2)) / 100;
-      questions.push(`在 \\(${total}\\) 人的資料中，甲項占 \\(${p1}\\%\\)，乙項占 \\(${p2}\\%\\)。求甲比乙多幾人。`);
-      answers.push(`簡答：\\(${diff}\\) 人。過程：人數差 \\(=${total}\\times(${p1}\\%-${p2}\\%)=${diff}\\)。`);
+      const angleDiff = (p1 - p2) * 3.6;
+      const ratioDivisor = gcd(p1, p2);
+      if (i % 3 === 0) {
+        questions.push(`在 \\(${total}\\) 人的資料中，甲項占 \\(${p1}\\%\\)，乙項占 \\(${p2}\\%\\)。求甲比乙多幾人。`);
+        answers.push(`簡答：\\(${diff}\\) 人。過程：人數差 \\(=${total}\\times(${p1}\\%-${p2}\\%)=${diff}\\)。`);
+      } else if (i % 3 === 1) {
+        questions.push(`圓餅圖中甲項占 \\(${p1}\\%\\)，乙項占 \\(${p2}\\%\\)。求兩項圓心角相差多少度。`);
+        answers.push(
+          `簡答：\\(${angleDiff}^\\circ\\)。過程：比例差為 \\(${p1}\\%-${p2}\\%=${p1 - p2}\\%\\)，圓心角差 \\(=360^\\circ\\times${p1 - p2}\\%=${angleDiff}^\\circ\\)。`
+        );
+      } else {
+        questions.push(`圓餅圖中甲項占 \\(${p1}\\%\\)，乙項占 \\(${p2}\\%\\)。求甲、乙兩項的人數最簡整數比。`);
+        answers.push(
+          `簡答：\\(${p1 / ratioDivisor}:${p2 / ratioDivisor}\\)。過程：同一份資料中人數比等於百分比，故為 \\(${p1}:${p2}=${p1 / ratioDivisor}:${p2 / ratioDivisor}\\)。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3976,22 +4122,42 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const mode = randInt(5, 30);
-      const data = [
-        mode - randInt(3, 6),
-        mode - randInt(1, 2),
-        mode,
-        mode,
-        mode,
-        mode + randInt(1, 3),
-        mode + randInt(4, 7),
-      ].sort((a, b) => a - b);
-      const sum = data.reduce((total, value) => total + value, 0);
-      const median = data[3];
-      questions.push(`給定資料 \\(${data.join('、')}\\)，求其平均數、中位數與眾數。`);
-      answers.push(
-        `簡答：平均數 \\(${j632MeanText(sum, data.length)}\\)，中位數 \\(${median}\\)，眾數 \\(${mode}\\)。過程：平均數看總和，\\(${sum}\\div${data.length}=${j632MeanText(sum, data.length)}\\)；資料已排序且共有 7 筆，中位數是第 4 筆；出現最多次的是 \\(${mode}\\)。`
-      );
+      const mode = randInt(12, 35);
+      if (i % 3 === 0) {
+        const data = [
+          mode - randInt(3, 6),
+          mode - randInt(1, 2),
+          mode,
+          mode,
+          mode,
+          mode + randInt(1, 3),
+          mode + randInt(4, 7),
+        ].sort((a, b) => a - b);
+        const sum = data.reduce((total, value) => total + value, 0);
+        const median = data[3];
+        questions.push(`給定資料 \\(${data.join('、')}\\)，求其平均數、中位數與眾數。`);
+        answers.push(
+          `簡答：平均數 \\(${j632MeanText(sum, data.length)}\\)，中位數 \\(${median}\\)，眾數 \\(${mode}\\)。過程：平均數看總和，\\(${sum}\\div${data.length}=${j632MeanText(sum, data.length)}\\)；資料已排序且共有 7 筆，中位數是第 4 筆；出現最多次的是 \\(${mode}\\)。`
+        );
+      } else if (i % 3 === 1) {
+        const data = [mode - 7, mode - 4, mode - 2, mode, mode, mode, mode + 3, mode + 8];
+        const sum = data.reduce((total, value) => total + value, 0);
+        questions.push(`給定資料 \\(${data.join('、')}\\)，求其平均數、中位數與眾數。`);
+        answers.push(
+          `簡答：平均數 \\(${j632MeanText(sum, data.length)}\\)，中位數 \\(${mode}\\)，眾數 \\(${mode}\\)。過程：共有 8 筆資料，平均數為 \\(${sum}\\div8=${j632MeanText(sum, data.length)}\\)；中位數是第 4、5 筆的平均，為 \\(${mode}\\)；出現最多次的是 \\(${mode}\\)。`
+        );
+      } else {
+        const values = [mode - 5, mode, mode + 3, mode + 7];
+        const frequencies = [2, 4, 1, 2];
+        const totalCount = frequencies.reduce((sum, value) => sum + value, 0);
+        const sum = values.reduce((total, value, index) => total + value * frequencies[index], 0);
+        questions.push(
+          `未分組資料的數值與次數如下：\\(${values[0]}\\) 有 \\(${frequencies[0]}\\) 筆、\\(${values[1]}\\) 有 \\(${frequencies[1]}\\) 筆、\\(${values[2]}\\) 有 \\(${frequencies[2]}\\) 筆、\\(${values[3]}\\) 有 \\(${frequencies[3]}\\) 筆。求平均數、中位數與眾數。`
+        );
+        answers.push(
+          `簡答：平均數 \\(${j632MeanText(sum, totalCount)}\\)，中位數 \\(${mode}\\)，眾數 \\(${mode}\\)。過程：總和為 \\(${values.map((value, index) => `${value}\\times${frequencies[index]}`).join('+')}=${sum}\\)，共有 \\(${totalCount}\\) 筆；第 5 筆落在 \\(${mode}\\)，且它出現 \\(${frequencies[1]}\\) 次最多。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4038,12 +4204,21 @@
       const avg2 = randInt(50, 90);
       const total = n1 * avg1 + n2 * avg2;
       const combined = makeFraction(total, n1 + n2);
-      questions.push(
-        `甲組 \\(${n1}\\) 人平均 \\(${avg1}\\) 分，乙組 \\(${n2}\\) 人平均 \\(${avg2}\\) 分。兩組合併後的總平均為多少？`
-      );
-      answers.push(
-        `簡答：\\(${j632StatText(combined)}\\) 分。過程：合併平均要用人數加權，\\(\\bar x=\\frac{${n1}\\cdot${avg1}+${n2}\\cdot${avg2}}{${n1}+${n2}}=${j632StatText(combined)}\\)。`
-      );
+      if (i % 2 === 0) {
+        questions.push(
+          `甲組 \\(${n1}\\) 人平均 \\(${avg1}\\) 分，乙組 \\(${n2}\\) 人平均 \\(${avg2}\\) 分。兩組合併後的總平均為多少？`
+        );
+        answers.push(
+          `簡答：\\(${j632StatText(combined)}\\) 分。過程：合併平均要用人數加權，\\(\\bar x=\\frac{${n1}\\cdot${avg1}+${n2}\\cdot${avg2}}{${n1}+${n2}}=${j632StatText(combined)}\\)。`
+        );
+      } else {
+        questions.push(
+          `甲組 \\(${n1}\\) 人平均 \\(${avg1}\\) 分；甲、乙兩組合併後共有 \\(${n1 + n2}\\) 人，平均為 \\(${j632StatText(combined)}\\) 分。求乙組 \\(${n2}\\) 人的平均數。`
+        );
+        answers.push(
+          `簡答：\\(${avg2}\\) 分。過程：合併總分為 \\(${n1 + n2}\\times${j632StatText(combined)}=${total}\\)。甲組總分為 \\(${n1}\\times${avg1}=${n1 * avg1}\\)，乙組總分為 \\(${total}-${n1 * avg1}=${n2 * avg2}\\)，所以乙組平均為 \\(${n2 * avg2}\\div${n2}=${avg2}\\)。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4263,12 +4438,32 @@
     const prs = [25, 40, 53, 75, 82, 90, 92];
     for (let i = 0; i < count; i += 1) {
       const total = totals[randInt(0, totals.length - 1)];
-      const pr = prs[randInt(0, prs.length - 1)];
-      const below = Math.floor((total * pr) / 100);
-      questions.push(`某測驗共有 \\(${total}\\) 人參加，小明的百分等級為 \\(PR${pr}\\)。估計他的成績至少贏過幾人？`);
-      answers.push(
-        `簡答：約 \\(${below}\\) 人。過程：\\(PR${pr}\\) 表示約有 \\(${pr}\\%\\) 的人不高於他，所以人數約為 \\(${total}\\times${pr}\\%=${(total * pr) / 100}\\)，取整數約 \\(${below}\\) 人。`
-      );
+      if (i % 3 === 0) {
+        const pr = prs[randInt(0, prs.length - 1)];
+        const below = Math.floor((total * pr) / 100);
+        questions.push(`某測驗共有 \\(${total}\\) 人參加，小明的百分等級為 \\(PR${pr}\\)。估計約有幾人的成績不高於小明？`);
+        answers.push(
+          `簡答：約 \\(${below}\\) 人。過程：\\(PR${pr}\\) 表示約有 \\(${pr}\\%\\) 的人成績不高於他，所以人數約為 \\(${total}\\times${pr}\\%=${(total * pr) / 100}\\)，取整數約 \\(${below}\\) 人。`
+        );
+      } else if (i % 3 === 1) {
+        const validPrs = prs.filter((pr) => Number.isInteger((total * pr) / 100));
+        const pr = validPrs[randInt(0, validPrs.length - 1)];
+        const below = (total * pr) / 100;
+        questions.push(`某測驗共有 \\(${total}\\) 人，成績不高於小芸的人共有 \\(${below}\\) 人。估計小芸的百分等級為多少？`);
+        answers.push(
+          `簡答：\\(PR${pr}\\)。過程：百分等級可用「成績不高於她的人數占全體的比例」估計，\\(\\frac{${below}}{${total}}\\times100\\%=${pr}\\%\\)，所以約為 \\(PR${pr}\\)。`
+        );
+      } else {
+        const prChoices = [25, 40, 75, 90];
+        const prHigh = prChoices[randInt(2, 3)];
+        const prLow = prChoices[randInt(0, 1)];
+        const highBelow = Math.floor((total * prHigh) / 100);
+        const lowBelow = Math.floor((total * prLow) / 100);
+        questions.push(`同一場 \\(${total}\\) 人的測驗中，小安為 \\(PR${prHigh}\\)，小芸為 \\(PR${prLow}\\)。估計成績不高於兩人的人數相差約多少人？`);
+        answers.push(
+          `簡答：約 \\(${highBelow - lowBelow}\\) 人。過程：小安約有 \\(${total}\\times${prHigh}\\%=${highBelow}\\) 人的成績不高於他；小芸約有 \\(${total}\\times${prLow}\\%=${lowBelow}\\) 人的成績不高於她，相差約 \\(${highBelow}-${lowBelow}=${highBelow - lowBelow}\\) 人。`
+        );
+      }
     }
     return { questions, summaryAnswers, answers };
   }
@@ -4281,14 +4476,16 @@
     for (let i = 0; i < count; i += 1) {
       const length = [10, 12, 15, 20][randInt(0, 3)];
       const base = randInt(35, 55);
-      const data = Array.from({ length }, (_, index) => base + index * randInt(2, 4) + randInt(0, 1));
-      data.sort((a, b) => a - b);
+      const data = [base];
+      for (let index = 1; index < length; index += 1) {
+        data.push(data[index - 1] + randInt(2, 4));
+      }
       if (i % 2 === 0) {
         const p = percentileChoices[randInt(0, percentileChoices.length - 1)];
         const position = Math.ceil((length * p) / 100);
         const value = data[position - 1];
         questions.push(
-          `某測驗成績由小到大排列為 \\(${data.join('、')}\\)。以「第 \\(p\\) 百分位數約看第 \\(\\lceil np/100\\rceil\\) 筆」計算，求第 \\(${p}\\) 百分位數。`
+          `某測驗成績由小到大排列為 \\(${data.join('、')}\\)。以「第 \\(${p}\\) 百分位數約看第 \\(\\lceil np/100\\rceil\\) 筆」計算，求第 \\(${p}\\) 百分位數。`
         );
         answers.push(
           `簡答：\\(${value}\\) 分。過程：共有 \\(${length}\\) 筆，位置 \\(=\\lceil ${length}\\times${p}/100\\rceil=\\lceil ${(length * p) / 100}\\rceil=${position}\\)，所以看第 \\(${position}\\) 筆，為 \\(${value}\\) 分。`
@@ -4367,7 +4564,7 @@
     const set = j63NewManualSet();
     const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月'];
     for (let i = 0; i < count; i += 1) {
-      const mode = i % 5;
+      const mode = i % 6;
       if (mode === 0) {
         const angleDiff = [36, 45, 60, 72, 90][randInt(0, 4)];
         const diffPeople = randInt(6, 24);
@@ -4423,7 +4620,7 @@
           `\\(${firstCount}\\) 人`,
           `前三項合計角度為 \\(360^\\circ-${fourthAngle}^\\circ=${remainingAngle}^\\circ\\)。第一項佔前三項的 \\(\\frac{${ratios[0]}}{${ratioSum}}\\)，所以第一項人數 \\(=${total}\\times\\frac{${remainingAngle}}{360}\\times\\frac{${ratios[0]}}{${ratioSum}}=${firstCount}\\)。`
         );
-      } else {
+      } else if (mode === 4) {
         const base = randInt(80, 130);
         const deltas = shuffle([12, -8, 20, -15, 6]);
         const counts = [base];
@@ -4436,6 +4633,15 @@
           `下表是某社團一月至六月的人數：${j63Table(rows)}。求單月增加最多與減少最多分別發生在哪個月份。`,
           `增加最多：${monthNames[maxDeltaIndex]}，減少最多：${monthNames[minDeltaIndex]}`,
           `先看相鄰月份差：${deltas.map((delta, index) => `${monthNames[index]}到${monthNames[index + 1]}為${delta > 0 ? '+' : ''}${delta}`).join('，')}。最大正差是 \\(${deltas[maxDeltaIndex - 1]}\\)，所以增加最多在${monthNames[maxDeltaIndex]}；最小負差是 \\(${deltas[minDeltaIndex - 1]}\\)，所以減少最多在${monthNames[minDeltaIndex]}。`
+        );
+      } else {
+        const oldPercent = [20, 25, 30, 35][randInt(0, 3)];
+        const increase = [5, 10, 15][randInt(0, 2)];
+        j63Add(
+          set,
+          `某圓餅圖中 A 項原本占 \\(${oldPercent}\\%\\)。在總人數不變的情況下，若 A 項改為占 \\(${oldPercent + increase}\\%\\)，其餘所有項目的百分比總和如何改變？`,
+          `減少 \\(${increase}\\) 個百分點`,
+          `圓餅圖所有項目的百分比總和固定為 \\(100\\%\\)。A 項增加 \\(${increase}\\) 個百分點後，其餘項目的總和必須由 \\(${100 - oldPercent}\\%\\) 變為 \\(${100 - oldPercent - increase}\\%\\)，所以共減少 \\(${increase}\\) 個百分點。`
         );
       }
     }
@@ -4877,7 +5083,7 @@
     },
     'j6-1-1-find-coefficient-from-point': {
       type: 'drill',
-      title: '已知圖形通過點求係數 a',
+      title: '已知通過點反求二次項係數',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -4940,7 +5146,7 @@
     },
     'j6-1-1-line-parabola-grid-points': {
       type: 'drill',
-      title: '多個函數的格子點判讀',
+      title: '直線與拋物線圍成區域的整數格點',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -4949,7 +5155,7 @@
     },
     'j6-1-1-parabola-modeling': {
       type: 'drill',
-      title: '二次函數的實際建模',
+      title: '拋物線截面寬度的建模',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -4958,7 +5164,7 @@
     },
     'j6-1-1-quadratic-property-logic-advanced': {
       type: 'drill',
-      title: '二次函數性質的綜合逆推',
+      title: '二次函數圖形對稱性與象限位置推理',
       difficulty: 'hard',
       questionCount: 5,
       generate(count) {
@@ -4969,9 +5175,9 @@
       type: 'drill',
       title: '頂點式、配方法與極值判定綜合',
       difficulty: 'medium',
-      questionCount: 6,
+      questionCount: 4,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ612VertexFormExtremaMixedSet(practiceCount), resolvePracticeCount(count, 6));
+        return buildUniquePracticeSet((practiceCount) => buildJ612VertexFormExtremaMixedSet(practiceCount), resolvePracticeCount(count, 4));
       },
     },
     'j6-1-2-vertex-form-read': {
@@ -5021,11 +5227,11 @@
     },
     'j6-1-2-basic-translation-equation': {
       type: 'drill',
-      title: '基礎平移寫出新函數式',
+      title: '平移規則與新函數式',
       difficulty: 'medium',
-      questionCount: 5,
+      questionCount: 4,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ612BasicTranslationEquationSet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ612BasicTranslationEquationSet(practiceCount), resolvePracticeCount(count, 4));
       },
     },
     'j6-1-2-vertex-axis-translation': {
@@ -5077,9 +5283,9 @@
       type: 'drill',
       title: '與 x 軸交點與判別式綜合',
       difficulty: 'medium',
-      questionCount: 6,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ612XAxisIntersectionMixedSet(practiceCount), resolvePracticeCount(count, 6));
+        return buildUniquePracticeSet((practiceCount) => buildJ612XAxisIntersectionMixedSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-1-2-x-intercepts-coordinate': {
@@ -5120,11 +5326,11 @@
     },
     'j6-1-3-algebra-extrema-three-subtypes': {
       type: 'drill',
-      title: '代數限制與距離平方極值綜合',
+      title: '數線點位、代數限制與區間極值',
       difficulty: 'medium',
-      questionCount: 6,
+      questionCount: 4,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ613AlgebraExtremaMixedSet(practiceCount), resolvePracticeCount(count, 6));
+        return buildUniquePracticeSet((practiceCount) => buildJ613AlgebraExtremaMixedSet(practiceCount), resolvePracticeCount(count, 4));
       },
     },
     'j6-1-3-number-sum-square-extrema': {
@@ -5167,9 +5373,9 @@
       type: 'drill',
       title: '幾何面積、通行限制與拋物線建模綜合',
       difficulty: 'medium',
-      questionCount: 6,
+      questionCount: 5,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ613GeometryModelingMixedSet(practiceCount), resolvePracticeCount(count, 6));
+        return buildUniquePracticeSet((practiceCount) => buildJ613GeometryModelingMixedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'j6-1-3-rectangle-perimeter-area': {
@@ -5230,9 +5436,9 @@
       type: 'drill',
       title: '利潤策略、票價收入與產量決策綜合',
       difficulty: 'medium',
-      questionCount: 6,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ613BusinessProductionMixedSet(practiceCount), resolvePracticeCount(count, 6));
+        return buildUniquePracticeSet((practiceCount) => buildJ613BusinessProductionMixedSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-1-3-ticket-revenue': {
@@ -5264,7 +5470,7 @@
     },
     'j6-1-3-optimization-constraint-advanced': {
       type: 'drill',
-      title: '約束條件下的極值應用',
+      title: '二次函數綜合建模與條件推理',
       difficulty: 'hard',
       questionCount: 5,
       generate(count) {
@@ -5293,14 +5499,14 @@
       type: 'drill',
       title: '直線垂直平面形成的距離計算',
       difficulty: 'medium',
-      questionCount: 5,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ621LinePlaneDistanceSet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ621LinePlaneDistanceSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-2-1-three-perpendicular-distance': {
       type: 'drill',
-      title: '三垂線配置中的空間距離',
+      title: '空間中的多重垂直路徑計算',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -5473,9 +5679,9 @@
       type: 'drill',
       title: '空心圓柱材料體積',
       difficulty: 'medium',
-      questionCount: 5,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ622HollowCylinderVolumeSet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ622HollowCylinderVolumeSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-2-2-prism-cylinder-composite': {
@@ -5500,9 +5706,9 @@
       type: 'drill',
       title: '立體展開圖與表面最短路徑',
       difficulty: 'medium',
-      questionCount: 6,
+      questionCount: 4,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ622SurfaceShortestPathMixedSet(practiceCount), resolvePracticeCount(count, 6));
+        return buildUniquePracticeSet((practiceCount) => buildJ622SurfaceShortestPathMixedSet(practiceCount), resolvePracticeCount(count, 4));
       },
     },
     'j6-2-2-cuboid-surface-shortest-path': {
@@ -5518,9 +5724,9 @@
       type: 'drill',
       title: '圓柱側面展開最短路徑',
       difficulty: 'medium',
-      questionCount: 5,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ622CylinderSurfaceShortestPathSet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ622CylinderSurfaceShortestPathSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-2-2-prism-euler-two-subtypes': {
@@ -5563,9 +5769,9 @@
       type: 'drill',
       title: '水位上升與排開體積',
       difficulty: 'medium',
-      questionCount: 5,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ622WaterDisplacementSet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ622WaterDisplacementSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-2-2-water-pipe-volume': {
@@ -5696,7 +5902,7 @@
     },
     'j6-2-3-pyramid-reverse': {
       type: 'drill',
-      title: '角錐 n 值反向推算',
+      title: '由多面體特徵反求底面邊數',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -5725,18 +5931,18 @@
       type: 'drill',
       title: '硬幣與性別樹狀圖機率',
       difficulty: 'easy',
-      questionCount: 5,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ623CoinTreeProbabilitySet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ623CoinTreeProbabilitySet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-3-3-dice-sum-product': {
       type: 'drill',
       title: '兩顆骰子的點數運算機率',
       difficulty: 'medium',
-      questionCount: 5,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ623DiceSumProductSet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ623DiceSumProductSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-3-3-number-arrangement-probability': {
@@ -5788,9 +5994,9 @@
       type: 'drill',
       title: '互補事件與至少一次機率',
       difficulty: 'medium',
-      questionCount: 5,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ623ComplementProbabilitySet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ623ComplementProbabilitySet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-3-3-probability-game-mixed': {
@@ -5813,7 +6019,7 @@
     },
     'j6-3-3-probability-complements-advanced': {
       type: 'drill',
-      title: '互補事件與至少一次的連鎖邏輯',
+      title: '互補事件與獨立試驗綜合應用',
       difficulty: 'hard',
       questionCount: 5,
       generate(count) {
@@ -5867,11 +6073,11 @@
     },
     'j6-3-1-mark-recapture-estimation': {
       type: 'drill',
-      title: '抽樣調查與母體數估計',
+      title: '標記重捕法與母體數估計',
       difficulty: 'medium',
-      questionCount: 5,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ631MarkRecaptureSet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ631MarkRecaptureSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-3-1-data-sorting-count': {
@@ -5903,11 +6109,11 @@
     },
     'j6-3-1-sampling-estimated-total': {
       type: 'drill',
-      title: '抽樣比例估計總量',
+      title: '樣本比例推估母體總量',
       difficulty: 'medium',
-      questionCount: 5,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ631SamplingEstimatedTotalSet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ631SamplingEstimatedTotalSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-3-1-pie-chart-five-subtypes': {
@@ -5939,11 +6145,11 @@
     },
     'j6-3-1-pie-compare-difference': {
       type: 'drill',
-      title: '圓餅圖類別人數差距比較',
+      title: '圓餅圖比例差、角度與人數比較',
       difficulty: 'medium',
-      questionCount: 5,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ631PieCompareDifferenceSet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ631PieCompareDifferenceSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-3-1-pie-missing-allocation': {
@@ -5957,7 +6163,7 @@
     },
     'j6-3-1-pie-percentile-position': {
       type: 'drill',
-      title: '百分位數與圓餅圖分組定位',
+      title: '統計位置量之圖形化呈現',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -5968,9 +6174,9 @@
       type: 'drill',
       title: '圓餅圖與折線圖的動態邏輯',
       difficulty: 'hard',
-      questionCount: 5,
+      questionCount: 6,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ631DataVisualizationLogicAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ631DataVisualizationLogicAdvancedSet(practiceCount), resolvePracticeCount(count, 6));
       },
     },
     'j6-3-2-central-tendency-six-subtypes': {
@@ -5986,9 +6192,9 @@
       type: 'drill',
       title: '未分組資料的平均數、中位數與眾數',
       difficulty: 'easy',
-      questionCount: 5,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ632RawMeanMedianModeSet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ632RawMeanMedianModeSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-3-2-linear-transform-statistics': {
@@ -6004,9 +6210,9 @@
       type: 'drill',
       title: '混合組別的加權平均',
       difficulty: 'medium',
-      questionCount: 5,
+      questionCount: 4,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ632WeightedAverageSet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ632WeightedAverageSet(practiceCount), resolvePracticeCount(count, 4));
       },
     },
     'j6-3-2-mean-missing-value': {
@@ -6101,11 +6307,11 @@
     },
     'j6-3-2-percentile-rank-conversion': {
       type: 'drill',
-      title: '百分位數與名次逆向推算',
+      title: '百分等級（PR）與人數估計',
       difficulty: 'medium',
-      questionCount: 5,
+      questionCount: 3,
       generate(count) {
-        return buildUniquePracticeSet((practiceCount) => buildJ632PercentileRankConversionSet(practiceCount), resolvePracticeCount(count, 5));
+        return buildUniquePracticeSet((practiceCount) => buildJ632PercentileRankConversionSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j6-3-2-sorted-data-percentile': {
@@ -6196,7 +6402,7 @@
     };
   });
 
-  const bundleFingerprint = 'j6-bundle-v20260716-j61-j62-j63-summary-review-v4';
+  const bundleFingerprint = 'j6-bundle-v20260725-j63-practice-audit-v7';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

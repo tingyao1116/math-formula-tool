@@ -2437,10 +2437,11 @@ process.stdout.write(JSON.stringify({{ ok: true, sets: generatedSets }}, null, 2
             return "\n".join(wrapped_lines)
 
         def paragraph_text(text: str, style: ParagraphStyle):
+            text = str(text or "").replace("\u2212", "-")
             return escape(wrap_pdf_text(text, style)).replace("\n", "<br/>")
 
         def inline_answer_text(value: str):
-            return " ".join(str(value or "").split())
+            return " ".join(str(value or "").split()).replace("\u2212", "-")
 
         def append_set(story: list, practice_set: dict, show_answer: bool):
             story.append(Paragraph(paragraph_text(practice_set.get("title", "未命名題型"), set_title_style), set_title_style))

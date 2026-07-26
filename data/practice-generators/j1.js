@@ -18,8 +18,12 @@
     return fallback;
   }
 
-  function buildUniquePracticeSet(generator, count) {
+  // j1-2 的舊題型若剛好抽到相同數據，寧可重新抽題，也不以制式句尾假裝成新題。
+  let suppressGenericPromptVariation = false;
+
+  function buildUniquePracticeSet(generator, count, options = {}) {
     const target = resolvePracticeCount(count, 1);
+    const allowPromptVariation = options.allowPromptVariation !== false && !suppressGenericPromptVariation;
     const questions = [];
     const summaryAnswers = [];
     const answers = [];
@@ -59,6 +63,7 @@
         let question = originalQuestion;
         let key = originalKey;
         if (seen.has(key)) {
+          if (!allowPromptVariation) continue;
           let repeatCount = repeatedQuestionCounts.get(originalKey) || 0;
           let foundVariation = false;
           for (let offset = 0; offset < repeatPrompts.length; offset += 1) {
@@ -84,10 +89,12 @@
       }
     }
 
-    for (let i = 0; questions.length < target && i < fallback.length; i += 1) {
-      questions.push(fallback[i].question);
-      summaryAnswers.push(fallback[i].summary);
-      answers.push(normalizePracticeDisplayText(stripDetailSummaryLabel(fallback[i].answer)));
+    if (allowPromptVariation) {
+      for (let i = 0; questions.length < target && i < fallback.length; i += 1) {
+        questions.push(fallback[i].question);
+        summaryAnswers.push(fallback[i].summary);
+        answers.push(normalizePracticeDisplayText(stripDetailSummaryLabel(fallback[i].answer)));
+      }
     }
 
     return { questions, summaryAnswers, answers };
@@ -102,7 +109,8 @@
   function normalizePracticeDisplayText(value) {
     return String(value === undefined || value === null ? '' : value)
       .replace(/(^|[^0-9A-Za-z.])1(?=[xyabkn](?![a-zA-Z]))/g, '$1')
-      .replace(/(^|[^0-9A-Za-z.])1(?:\\times|×)?(?=(?:\(|[a-zA-Z]|\\(?:frac|left)))/g, '$1');
+      .replace(/(^|[^0-9A-Za-z.])1(?:\\times|×)(?=(?:\(|[a-zA-Z]|\\(?:frac|left)))/g, '$1')
+      .replace(/(^|[^0-9A-Za-z.])1(?=(?:\(|[a-zA-Z]|\\left))/g, '$1');
   }
 
   function shuffle(array) {
@@ -556,10 +564,10 @@
         const b = randInt(2, 4);
         const c = randInt(2, 4);
         const value = -Math.pow(a, 2) + Math.pow(-b, 3) - Math.pow(-1, c);
-        questions.push(`計算：$-${a}^{2}+(-${b}^{3})-(-1)^{${c}}$。`);
+        questions.push(`計算：$-${a}^{2}+(-${b})^{3}-(-1)^{${c}}$。`);
         summaryAnswers.push(`$${value}$`);
         answers.push(
-          `先算次方：$-${a}^{2}=-${a * a}$，$(-${b}^{3})=-${Math.pow(b, 3)}$，$(-1)^{${c}}=${Math.pow(-1, c)}$，所以結果是 ${value}。`
+          `先算次方：$-${a}^{2}=-${a * a}$，$(-${b})^{3}=-${Math.pow(b, 3)}$，$(-1)^{${c}}=${Math.pow(-1, c)}$，所以結果是 $${value}$。`
         );
         continue;
       }
@@ -903,11 +911,14 @@
     for (let i = 0; i < count; i += 1) {
       const commonExp = randInt(-8, 8);
       const coeffA = Number(`${randInt(1, 9)}.${randInt(0, 9)}`);
-      const coeffB = Number(`${randInt(1, 9)}.${randInt(0, 9)}`);
+      let coeffB = Number(`${randInt(1, 9)}.${randInt(0, 9)}`);
       const shift = randInt(0, 1);
       const expA = commonExp;
       const expB = commonExp - shift;
       const isAdd = i % 2 === 0;
+      while (!isAdd && shift === 0 && coeffA === coeffB) {
+        coeffB = Number(`${randInt(1, 9)}.${randInt(0, 9)}`);
+      }
       const coeffAText = trimDecimalString(`${coeffA}`);
       const coeffBText = trimDecimalString(`${coeffB}`);
 
@@ -1070,19 +1081,32 @@
     const summaryAnswers = [];
     const answers = [];
     const coeffOptions = [1.2, 1.5, 1.8, 2.4, 2.5, 3.0, 3.6, 4.0, 4.8, 6.0, 7.5, 8.0];
+    const divisionPairs = [
+      { dividend: 6.0, divisor: 1.2, quotient: 5 },
+      { dividend: 6.0, divisor: 1.5, quotient: 4 },
+      { dividend: 7.2, divisor: 2.4, quotient: 3 },
+      { dividend: 5.0, divisor: 2.5, quotient: 2 },
+      { dividend: 8.0, divisor: 3.2, quotient: 2.5 },
+      { dividend: 9.0, divisor: 4.5, quotient: 2 },
+      { dividend: 7.2, divisor: 4.8, quotient: 1.5 },
+      { dividend: 11.0, divisor: 5.5, quotient: 2 },
+      { dividend: 12.8, divisor: 6.4, quotient: 2 },
+      { dividend: 24.0, divisor: 8.0, quotient: 3 },
+    ];
 
     for (let i = 0; i < count; i += 1) {
       const isMultiply = i % 2 === 0;
-      const coeffA = pickFromList(coeffOptions);
-      const coeffB = pickFromList(coeffOptions);
+      const pair = isMultiply ? null : pickFromList(divisionPairs);
+      const coeffA = isMultiply ? pickFromList(coeffOptions) : pair.dividend;
+      const coeffB = isMultiply ? pickFromList(coeffOptions) : pair.divisor;
       const expA = randInt(-4, 8);
       const expB = randInt(-4, 8);
       const coeffAText = trimDecimalString(`${coeffA}`);
       const coeffBText = trimDecimalString(`${coeffB}`);
-      const rawCoeff = isMultiply ? coeffA * coeffB : coeffA / coeffB;
+      const rawCoeff = isMultiply ? coeffA * coeffB : pair.quotient;
       const rawExp = isMultiply ? expA + expB : expA - expB;
       const normalized = plainToScientificParts(
-        scientificToPlainString(trimDecimalString(`${Number(rawCoeff.toFixed(6))}`), rawExp)
+        scientificToPlainString(trimDecimalString(`${Number(rawCoeff.toFixed(4))}`), rawExp)
       );
       questions.push(
         `化簡 $(${coeffAText} \\times 10^{${expA}}) ${isMultiply ? '\\times' : '\\div'} (${coeffBText} \\times 10^{${expB}})$，並用科學記號表示。`
@@ -1090,7 +1114,7 @@
       summaryAnswers.push(`$${normalized.text}$`);
       answers.push(
         `${isMultiply ? '係數相乘、指數相加' : '係數相除、指數相減'}，先得 $${trimDecimalString(
-          `${Number(rawCoeff.toFixed(6))}`
+          `${Number(rawCoeff.toFixed(4))}`
         )} \\times 10^{${rawExp}}$；再整理成標準科學記號，結果是 $${normalized.text}$。`
       );
     }
@@ -1109,10 +1133,13 @@
       const expA = commonExp;
       const expB = i % 2 === 0 ? commonExp - shift : commonExp;
       const coeffA = Number(`${randInt(1, 9)}.${randInt(0, 9)}`);
-      const coeffB = Number(`${randInt(1, 9)}.${randInt(0, 9)}`);
+      let coeffB = Number(`${randInt(1, 9)}.${randInt(0, 9)}`);
       const coeffAText = trimDecimalString(`${coeffA}`);
-      const coeffBText = trimDecimalString(`${coeffB}`);
       const isAdd = i % 3 !== 1;
+      while (!isAdd && expA === expB && coeffA === coeffB) {
+        coeffB = Number(`${randInt(1, 9)}.${randInt(0, 9)}`);
+      }
+      const coeffBText = trimDecimalString(`${coeffB}`);
       const alignedB = expB === commonExp ? coeffB : coeffB / 10;
       const resultCoeff = isAdd ? coeffA + alignedB : coeffA - alignedB;
       const normalized = plainToScientificParts(
@@ -1569,12 +1596,48 @@
 
     for (let i = 0; i < count; i += 1) {
       const n = randInt(1, 8);
-      const left = Math.pow(-1, n);
-      const right = Math.pow(-1, n + 2);
-      const value = left - right;
-      questions.push(`計算：$(-1)^{n}-(-1)^{n+2}$，其中 $n=${n}$。`);
+      const mode = i % 4;
+      if (mode === 0) {
+        questions.push(`計算：$(-1)^{n}-(-1)^{n+2}$，其中 $n=${n}$。`);
+        summaryAnswers.push(`$0$`);
+        answers.push(`因為 $n$ 和 $n+2$ 奇偶性相同，所以 $(-1)^{n}=(-1)^{n+2}$；因此原式等於 $0$。`);
+        continue;
+      }
+
+      if (mode === 1) {
+        const left = Math.pow(-1, n);
+        const right = Math.pow(-1, n + 1);
+        const value = left - right;
+        questions.push(`計算：$(-1)^{n}-(-1)^{n+1}$，其中 $n=${n}$。`);
+        summaryAnswers.push(`$${value}$`);
+        answers.push(
+          `相鄰的 $n$ 與 $n+1$ 奇偶性相反，所以 $(-1)^{${n}}=${left}$，$(-1)^{${n + 1}}=${right}$；原式為 $${left}-(${right})=${value}$。`
+        );
+        continue;
+      }
+
+      if (mode === 2) {
+        const first = Math.pow(-1, n + 1);
+        const second = Math.pow(-1, n + 3);
+        const value = first + second;
+        questions.push(`計算：$(-1)^{n+1}+(-1)^{n+3}$，其中 $n=${n}$。`);
+        summaryAnswers.push(`$${value}$`);
+        answers.push(
+          `指數 $n+1$ 與 $n+3$ 相差 2，奇偶性相同；本題兩項皆為 $${first}$，所以和為 $${formatPlus(first, second)}=${value}$。`
+        );
+        continue;
+      }
+
+      const coeffA = randInt(2, 6);
+      const coeffB = randInt(2, 6);
+      const first = Math.pow(-1, n);
+      const second = Math.pow(-1, n + 1);
+      const value = coeffA * first + coeffB * second;
+      questions.push(`計算：$${coeffA}(-1)^{n}+${coeffB}(-1)^{n+1}$，其中 $n=${n}$。`);
       summaryAnswers.push(`$${value}$`);
-      answers.push(`因為 $n$ 和 $n+2$ 奇偶性相同，所以 $(-1)^{n}=(-1)^{n+2}$；因此原式等於 $0$。`);
+      answers.push(
+        `因為 $n$ 與 $n+1$ 奇偶性相反，$(-1)^{${n}}=${first}$、$(-1)^{${n + 1}}=${second}$，所以原式為 $${coeffA}\\times(${first})+${coeffB}\\times(${second})=${value}$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -2338,14 +2401,12 @@
       const aNew = (a - b) / s;
       const cNew = (c - b) / s;
       const scaleText = s >= 1 ? `放大${s}倍` : `縮小為${s === 0.5 ? '2分之1' : '4分之1'}`;
-      if (i === 0) {
-        questions.push(`$A(${a})$、$B(${b})$、$C(${c})$，$B$當新原點，單位長${scaleText}，求$A$、$C$新的坐標。`);
-      } else {
-        questions.push(`$A(${a})$、$B(${b})$、$C(${c})$，單位長${scaleText}，求$A$、$C$新坐標。`);
-      }
-      summaryAnswers.push(`${formatCoordinateValue(aNew)}, ${formatCoordinateValue(cNew)}`);
+      questions.push(
+        `$A(${a})$、$B(${b})$、$C(${c})$ 為數線上三點。以 $B$ 為新原點，且新單位長${scaleText}，求 $A$、$C$ 的新坐標。`
+      );
+      summaryAnswers.push(`$${formatCoordinateValue(aNew)}$，$${formatCoordinateValue(cNew)}$`);
       answers.push(
-        `以 $B$ 為新原點先平移，再除以單位倍數：$A'=\\frac{${formatMinus(a, b)}}{${s}}=$${formatCoordinateValue(aNew)}，$C'=\\frac{${formatMinus(c, b)}}{${s}}=$${formatCoordinateValue(cNew)}。`
+        `以 $B$ 為新原點先平移，再除以新單位倍數：$A'=\\frac{${formatMinus(a, b)}}{${s}}=${formatCoordinateValue(aNew)}$，$C'=\\frac{${formatMinus(c, b)}}{${s}}=${formatCoordinateValue(cNew)}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2620,9 +2681,7 @@
         const exponent = shift === 0 ? 'x' : shift < 0 ? `x+${Math.abs(shift)}` : `x-${shift}`;
         questions.push(`若 $9^{${exponent}}=3^{${rightExp}}$，求 $x$。`);
         summaryAnswers.push(`$${x}$`);
-        answers.push(
-          `因為 $9=3^2$，左邊是 $3^{2(${exponent})}$，所以 $2(${exponent})=${rightExp}$，解得 $x=${x}$。`
-        );
+        answers.push(`因為 $9=3^2$，左邊是 $3^{2(${exponent})}$，所以 $2(${exponent})=${rightExp}$，解得 $x=${x}$。`);
         continue;
       }
 
@@ -2634,9 +2693,7 @@
       const exponent = b === 0 ? `${a}x` : `${a}x${b > 0 ? '+' : ''}${b}`;
       questions.push(`若 $2^{${exponent}}=4^{${rightPower}}$，求 $x$。`);
       summaryAnswers.push(`$${x}$`);
-      answers.push(
-        `右邊 $4^{${rightPower}}=2^{${rightExp}}$，所以 $${exponent}=${rightExp}$，解得 $x=${x}$。`
-      );
+      answers.push(`右邊 $4^{${rightPower}}=2^{${rightExp}}$，所以 $${exponent}=${rightExp}$，解得 $x=${x}$。`);
     }
 
     return { questions, summaryAnswers, answers };
@@ -2961,10 +3018,12 @@
         const from = randInt(-4, -1);
         const to = randInt(3, 9);
         const diff = Math.abs(to - from);
-        questions.push(`電梯從 $${from}$ 樓移動到 $${to}$ 樓，共移動了幾層？`);
-        summaryAnswers.push(`$${diff}$`);
+        questions.push(
+          `某地氣溫從 $${from}$\\(^\\circ\\)C 變為 $${to}$\\(^\\circ\\)C，溫度共改變了多少 \\(^\\circ\\)C？`
+        );
+        summaryAnswers.push(`$${diff}$\\(^\\circ\\)C`);
         answers.push(
-          `樓層差要看距離，所以是 $|${to}-(${from})|=${diff}$，共移動 $${diff}$ 層。(但現實生活中沒有$0$樓，所以會$${diff}-1$)。`
+          `溫度改變量要看兩個讀數的距離，所以是 $|${to}-(${from})|=${diff}$，因此共改變 $${diff}$\\(^\\circ\\)C。`
         );
         continue;
       }
@@ -3059,7 +3118,7 @@
   function formatUnitScaleText(scale) {
     if (scale === 0.5) return '縮小為原來的 $\\frac{1}{2}$';
     if (scale === 0.25) return '縮小為原來的 $\\frac{1}{4}$';
-    return `放大 $${scale}$ 倍`;
+    return `放大為原來的 $${scale}$ 倍`;
   }
 
   function pickCompatibleOffset(scale) {
@@ -3068,8 +3127,8 @@
   }
 
   function formatCoordinateValue(value) {
-    if (Number.isInteger(value)) return `$${value}$`;
-    return `$${Number(value.toFixed(2))}$`;
+    if (Number.isInteger(value)) return `${value}`;
+    return `${Number(value.toFixed(2))}`;
   }
 
   function buildCoordinateOriginShiftOnlySet(count) {
@@ -3103,11 +3162,11 @@
       const oldValue = pickCompatibleOffset(scale);
       const newValue = oldValue / scale;
       questions.push(
-        `原點不變，若新單位長 ${formatUnitScaleText(scale)}，原來坐標為 $${oldValue}$ 的點在新數線上的坐標是多少？`
+        `原點不變，若新單位長${formatUnitScaleText(scale)}，原來坐標為 $${oldValue}$ 的點在新數線上的坐標是多少？`
       );
-      summaryAnswers.push(`${formatCoordinateValue(newValue)}`);
+      summaryAnswers.push(`$${formatCoordinateValue(newValue)}$`);
       answers.push(
-        `原點不變時，只要把原坐標除以新單位倍數，所以新坐標為 $${oldValue}\\div${scale}=$${formatCoordinateValue(newValue)}。`
+        `原點不變時，只要把原坐標除以新單位倍數，所以新坐標為 $${oldValue}\\div${scale}=${formatCoordinateValue(newValue)}$。`
       );
     }
 
@@ -3129,9 +3188,9 @@
       questions.push(
         `把 $${origin}$ 當新原點，再把新單位長調成${formatUnitScaleText(scale)}。若點 $A$ 原來在 $${oldValue}$，求 $A$ 的新坐標。`
       );
-      summaryAnswers.push(`${formatCoordinateValue(newValue)}`);
+      summaryAnswers.push(`$${formatCoordinateValue(newValue)}$`);
       answers.push(
-        `先平移：$${oldValue}-(${origin})=${offset}$；再依新單位長換算：$${offset}\\div${scale}=$${formatCoordinateValue(newValue)}。所以 $A$ 的新坐標是 ${formatCoordinateValue(newValue)}。`
+        `先平移：$${oldValue}-(${origin})=${offset}$；再依新單位長換算：$${offset}\\div${scale}=${formatCoordinateValue(newValue)}$。所以 $A$ 的新坐標是 $${formatCoordinateValue(newValue)}$。`
       );
     }
 
@@ -3152,7 +3211,7 @@
       questions.push(
         `把 $${origin}$ 當新原點，新單位長${formatUnitScaleText(scale)}。若點 $P$ 的新坐標是 $${newValue}$，求它原來的坐標。`
       );
-      summaryAnswers.push(`${formatCoordinateValue(oldValue)}`);
+      summaryAnswers.push(`$${formatCoordinateValue(oldValue)}$`);
       answers.push(
         `反推時先把新坐標換回舊單位，再加回新原點，所以原坐標為 $${formatPlus(origin, newValue * scale)}=${oldValue}$，其中 $${newValue}\\times${scale}=${newValue * scale}$。`
       );
@@ -3182,9 +3241,9 @@
       questions.push(
         `把 $${origin}$ 當新原點，新單位長${formatUnitScaleText(scale)}。原數線上 $A(${a})$、$B(${b})$ 兩點，在新數線上的中點與距離各是多少？`
       );
-      summaryAnswers.push(`${formatCoordinateValue(midpoint)},${formatCoordinateValue(distance)}`);
+      summaryAnswers.push(`$${formatCoordinateValue(midpoint)}$，$${formatCoordinateValue(distance)}$`);
       answers.push(
-        `先換新坐標：$A'=${formatCoordinateValue(aNew)}，$B'=${formatCoordinateValue(bNew)}。所以中點為 $\\frac{${formatPlus(aNew, bNew)}}{2}=$${formatCoordinateValue(midpoint)}，距離為 $|${formatMinus(aNew, bNew)}|=$${formatCoordinateValue(distance)}。`
+        `先換新坐標：$A'=${formatCoordinateValue(aNew)}$，$B'=${formatCoordinateValue(bNew)}$。所以中點為 $\\frac{${formatPlus(aNew, bNew)}}{2}=${formatCoordinateValue(midpoint)}$，距離為 $|${formatMinus(aNew, bNew)}|=${formatCoordinateValue(distance)}$。`
       );
     }
 
@@ -4951,10 +5010,7 @@
       const d = randomProperFraction([2, 3, 4, 5, 6, 8]);
       const useAddition = randInt(0, 1) === 1;
       const leftInner = addFraction(subFraction(addFraction(makeFraction(base, 1), a), b), subFraction(c, d));
-      const rightInner = addFraction(
-        subFraction(subFraction(makeFraction(base, 1), a), b),
-        subFraction(negateFraction(c), d)
-      );
+      const rightInner = subFraction(subFraction(subFraction(subFraction(makeFraction(base, 1), a), b), c), d);
       const result = useAddition
         ? addFraction(absFraction(leftInner), absFraction(rightInner))
         : subFraction(absFraction(leftInner), absFraction(rightInner));
@@ -5197,12 +5253,14 @@
           coefText = String.raw`\frac{${sCoef.num}}{${sCoef.den}}x`;
         }
       }
-      const constText =
+      const constSign = sConst.num < 0 ? '-' : coefText ? '+' : '';
+      const constBody =
         sConst.num === 0
           ? ''
           : sConst.den === 1
-            ? `${sConst.num > 0 ? '+' : ''}${sConst.num}`
-            : `${sConst.num > 0 ? '+' : '-'}${String.raw`\frac{${Math.abs(sConst.num)}}{${sConst.den}}`}`;
+            ? `${Math.abs(sConst.num)}`
+            : String.raw`\frac{${Math.abs(sConst.num)}}{${sConst.den}}`;
+      const constText = sConst.num === 0 ? '' : `${constSign}${constBody}`;
       const resultText = `${coefText}${constText}` || '0';
 
       questions.push(`化簡：\\(${frac1} ${op} ${frac2}\\)`);
@@ -6173,7 +6231,7 @@
         );
         summaryAnswers.push(`$${t.rooms}$ 間宿舍，$${t.students}$ 位學生`);
         answers.push(
-          `設宿舍有 $x$ 間，學生有 $y$ 人。依題意可列聯立方程式 $${formatSystemLatex(`y=${t.peoplePerRoom1}x+${t.unplaced}`, `y=${t.peoplePerRoom2}(x-1)`)}$。解得 $x=${t.rooms},\\ y=${t.students}$，所以有 ${t.rooms} 間宿舍、${t.students} 位學生。`
+          `設宿舍有 $x$ 間。學生總數可由兩種分法表示為 ${t.peoplePerRoom1}x+${t.unplaced} 與 ${t.peoplePerRoom2}(x-1)，所以 $${t.peoplePerRoom1}x+${t.unplaced}=${t.peoplePerRoom2}(x-1)$。解得 $x=${t.rooms}$，代回得學生總數為 $${t.peoplePerRoom1}\\times${t.rooms}+${t.unplaced}=${t.students}$ 人。`
         );
         continue;
       }
@@ -6185,7 +6243,7 @@
         );
         summaryAnswers.push(`$${t.classes}$ 班，$${t.total}$ 人`);
         answers.push(
-          `設班級數為 $x$ 班，總人數為 $y$ 人。依題意可列聯立方程式 $${formatSystemLatex(`y=${t.studentsPerClass1}x+${t.extra}`, `y=${t.studentsPerClass2}x-${t.short}`)}$。解得 $x=${t.classes},\\ y=${t.total}$，所以有 ${t.classes} 班、${t.total} 人。`
+          `設班級數為 $x$ 班。總人數可寫成 ${t.studentsPerClass1}x+${t.extra}，也可寫成 ${t.studentsPerClass2}x-${t.short}，所以 $${t.studentsPerClass1}x+${t.extra}=${t.studentsPerClass2}x-${t.short}$。解得 $x=${t.classes}$，總人數為 $${t.studentsPerClass1}\\times${t.classes}+${t.extra}=${t.total}$ 人。`
         );
         continue;
       }
@@ -6196,7 +6254,7 @@
       );
       summaryAnswers.push(`$${t.kids}$ 位小朋友，$${t.total}$ 顆糖果`);
       answers.push(
-        `設小朋友有 $x$ 人，糖果共有 $y$ 顆。依題意可列聯立方程式 $${formatSystemLatex(`y=${t.give1}x+${t.remain}`, `y=${t.give2}x-${t.short}`)}$。解得 $x=${t.kids},\\ y=${t.total}$，所以有 ${t.kids} 位小朋友、${t.total} 顆糖果。`
+        `設小朋友有 $x$ 人。糖果總數可寫成 ${t.give1}x+${t.remain}，也可寫成 ${t.give2}x-${t.short}，所以 $${t.give1}x+${t.remain}=${t.give2}x-${t.short}$。解得 $x=${t.kids}$，糖果共有 $${t.give1}\\times${t.kids}+${t.remain}=${t.total}$ 顆。`
       );
     }
 
@@ -6214,17 +6272,6 @@
 
     function inlineMath(latex) {
       return `\\(${latex}\\)`;
-    }
-
-    function displayMath(latex) {
-      return `\\[${latex}\\]`;
-    }
-
-    function systemLatex(line1, line2) {
-      if (typeof formatSystemLatex === 'function') {
-        return formatSystemLatex(line1, line2);
-      }
-      return `\\begin{cases}${line1}\\\\${line2}\\end{cases}`;
     }
 
     function pickParentPair() {
@@ -6268,9 +6315,7 @@
         pushParentAnswer(pair, youngerAge, olderAge);
 
         answers.push(
-          `設${pair.younger}現在 ${inlineMath('x')} 歲，${pair.older}現在 ${inlineMath('y')} 歲。依題意可列聯立方程式：${inlineMath(
-            systemLatex(`y=${multiple}x`, `(x+${afterYears})+(y+${afterYears})=${futureSum}`)
-          )}解得 ${inlineMath(`x=${youngerAge},\\ y=${olderAge}`)}，所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
+          `設${pair.younger}現在 ${inlineMath('x')} 歲，則${pair.older}現在是 ${inlineMath(`${multiple}x`)} 歲。${afterYears} 年後的年齡和為 ${inlineMath(`(x+${afterYears})+(${multiple}x+${afterYears})=${futureSum}`)}，解得 ${inlineMath(`x=${youngerAge}`)}。所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
         );
 
         continue;
@@ -6291,9 +6336,7 @@
         pushParentAnswer(pair, youngerAge, olderAge);
 
         answers.push(
-          `設${pair.younger}現在 ${inlineMath('x')} 歲，${pair.older}現在 ${inlineMath('y')} 歲。依題意可列聯立方程式：${inlineMath(
-            systemLatex(`x+y=${total}`, `y=${multiple}x`)
-          )}解得 ${inlineMath(`x=${youngerAge},\\ y=${olderAge}`)}，所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
+          `設${pair.younger}現在 ${inlineMath('x')} 歲，則${pair.older}現在是 ${inlineMath(`${multiple}x`)} 歲。由年齡和得 ${inlineMath(`x+${multiple}x=${total}`)}，解得 ${inlineMath(`x=${youngerAge}`)}。所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
         );
 
         continue;
@@ -6315,9 +6358,7 @@
         pushParentAnswer(pair, youngerAge, olderAge);
 
         answers.push(
-          `設${pair.younger}現在 ${inlineMath('x')} 歲，${pair.older}現在 ${inlineMath('y')} 歲。依題意可列聯立方程式：${inlineMath(
-            systemLatex(`y-x=${diff}`, `y+${afterYears}=${multiple}(x+${afterYears})`)
-          )}解得 ${inlineMath(`x=${youngerAge},\\ y=${olderAge}`)}，所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
+          `設${pair.younger}現在 ${inlineMath('x')} 歲，則${pair.older}現在是 ${inlineMath(`x+${diff}`)} 歲。${afterYears} 年後依題意有 ${inlineMath(`x+${diff}+${afterYears}=${multiple}(x+${afterYears})`)}，解得 ${inlineMath(`x=${youngerAge}`)}。所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
         );
 
         continue;
@@ -6339,9 +6380,7 @@
         pushParentAnswer(pair, youngerAge, olderAge);
 
         answers.push(
-          `設${pair.younger}現在 ${inlineMath('x')} 歲，${pair.older}現在 ${inlineMath('y')} 歲。依題意可列聯立方程式：${inlineMath(
-            systemLatex(`y-x=${diff}`, `y-${yearsAgo}=${multiple}(x-${yearsAgo})`)
-          )}解得 ${inlineMath(`x=${youngerAge},\\ y=${olderAge}`)}，所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
+          `設${pair.younger}現在 ${inlineMath('x')} 歲，則${pair.older}現在是 ${inlineMath(`x+${diff}`)} 歲。${yearsAgo} 年前依題意有 ${inlineMath(`x+${diff}-${yearsAgo}=${multiple}(x-${yearsAgo})`)}，解得 ${inlineMath(`x=${youngerAge}`)}。所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
         );
 
         continue;
@@ -6363,9 +6402,7 @@
         pushParentAnswer(pair, youngerAge, olderAge);
 
         answers.push(
-          `設${pair.younger}現在 ${inlineMath('x')} 歲，${pair.older}現在 ${inlineMath('y')} 歲。依題意可列聯立方程式：${inlineMath(
-            systemLatex(`y=${multiple}x`, `(x-${yearsAgo})+(y-${yearsAgo})=${pastSum}`)
-          )}解得 ${inlineMath(`x=${youngerAge},\\ y=${olderAge}`)}，所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
+          `設${pair.younger}現在 ${inlineMath('x')} 歲，則${pair.older}現在是 ${inlineMath(`${multiple}x`)} 歲。${yearsAgo} 年前年齡和為 ${inlineMath(`(x-${yearsAgo})+(${multiple}x-${yearsAgo})=${pastSum}`)}，解得 ${inlineMath(`x=${youngerAge}`)}。所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
         );
 
         continue;
@@ -6387,7 +6424,7 @@
         summaryAnswers.push(`學生 ${student} 歲，老師 ${teacher} 歲`);
 
         answers.push(
-          `設學生現在 ${inlineMath('x')} 歲，老師現在 ${inlineMath('y')} 歲。由「我在你這個年紀時，你只有 ${phrasePast} 歲」得 ${inlineMath(`x-(y-x)=${phrasePast}`)}，即 ${inlineMath(`2x-y=${phrasePast}`)}。由「你到我現在年紀時，我就 ${phraseFuture} 歲」得 ${inlineMath(`y+(y-x)=${phraseFuture}`)}，即 ${inlineMath(`2y-x=${phraseFuture}`)}。聯立解得 ${inlineMath(`x=${student},\\ y=${teacher}`)}，所以學生 ${student} 歲、老師 ${teacher} 歲。`
+          `設學生現在 ${inlineMath('x')} 歲。老師在學生現在這個年紀時，學生是 ${phrasePast} 歲；因此老師現在的年齡為 ${inlineMath(`x+(x-${phrasePast})=2x-${phrasePast}`)}。當學生長到老師現在的年齡時，老師會是 ${inlineMath(`(2x-${phrasePast})+(x-${phrasePast})=3x-2\\times${phrasePast}`)} 歲。依題意 ${inlineMath(`3x-2\\times${phrasePast}=${phraseFuture}`)}，解得 ${inlineMath(`x=${student}`)}。所以學生 ${student} 歲、老師 ${teacher} 歲。`
         );
 
         continue;
@@ -6415,13 +6452,13 @@
 
         summaryAnswers.push(`${pair.younger} ${youngerAge} 歲，${pair.older} ${olderAge} 歲`);
 
+        const ageSumEquation = useFuture
+          ? `(x+${years})+(x+${diff}+${years})=${targetSum}`
+          : `(x-${years})+(x+${diff}-${years})=${targetSum}`;
         answers.push(
-          `設${pair.younger}現在 ${inlineMath('x')} 歲，${pair.older}現在 ${inlineMath('y')} 歲。依題意可列聯立方程式：${inlineMath(
-            systemLatex(
-              `y-x=${diff}`,
-              useFuture ? ` (x+${years})+(y+${years})=${targetSum}` : ` (x-${years})+(y-${years})=${targetSum}`
-            )
-          )}解得 ${inlineMath(`x=${youngerAge},\\ y=${olderAge}`)}，所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
+          `設${pair.younger}現在 ${inlineMath('x')} 歲，則${pair.older}現在是 ${inlineMath(`x+${diff}`)} 歲。依題意可列式 ${inlineMath(
+            ageSumEquation
+          )}，解得 ${inlineMath(`x=${youngerAge}`)}。所以${pair.younger} ${youngerAge} 歲、${pair.older} ${olderAge} 歲。`
         );
 
         continue;
@@ -7280,9 +7317,13 @@
         let c = pickNonZero(-4, 4);
         while (b === c) c = pickNonZero(-4, 4);
         const value = makeFraction(a * b - c, b - c);
+        const numeratorSubstitution = formatMinus(`${a}\\times ${b}`, c);
+        const denominatorSubstitution = formatMinus(`${b}`, c);
         questions.push(`當 $a=${a},\\ b=${b},\\ c=${c}$，求 $\\frac{ab-c}{b-c}$ 的值。`);
         summaryAnswers.push(`$${fractionToLatex(value)}$`);
-        answers.push(`代入得：$\\frac{${a}\\times ${b}-${c}}{${b}-${c}}=${fractionToLatex(value)}$。`);
+        answers.push(
+          `代入得：$\\frac{${numeratorSubstitution}}{${denominatorSubstitution}}=${fractionToLatex(value)}$。`
+        );
       }
     }
 
@@ -7882,7 +7923,9 @@
         const num = randInt(1, den - 1);
         const used = makeFraction(num, den);
         const remain = mulFraction(makeFraction(whole, 1), subFraction(makeFraction(1, 1), used));
-        questions.push(`剩餘量計算：一條繩子長 $${whole}$ 公尺，剪掉全長的 $${fractionToLatex(used)}$ 後，還剩多少公尺？`);
+        questions.push(
+          `剩餘量計算：一條繩子長 $${whole}$ 公尺，剪掉全長的 $${fractionToLatex(used)}$ 後，還剩多少公尺？`
+        );
         summaryAnswers.push(`$${fractionToLatex(remain, true)}$ 公尺`);
         answers.push(
           `剩下的是全長的 $1-${fractionToLatex(used)}=${fractionToLatex(subFraction(makeFraction(1, 1), used))}$，所以剩餘長度是 $${fractionToLatex(remain, true)}$ 公尺。`
@@ -8332,8 +8375,8 @@
         `${s2 > 0 ? '+' : '-'}${fractionToLatex(a)}` +
         `${s3 > 0 ? '+' : '-'}${fractionToLatex(b)}`;
       questions.push(`計算：$${expr}$。`);
-      summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-      answers.push(`先通分再依序加減，可得 $${expr}=${fractionToLatex(result, true)}$。`);
+      summaryAnswers.push(`$${fractionToLatex(result)}$`);
+      answers.push(`先通分再依序加減，可得 $${expr}=${fractionToLatex(result)}$。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -8357,8 +8400,8 @@
         `${s2 > 0 ? '+' : '-'}${fractionToLatex(b)}` +
         `${s3 > 0 ? '+' : '-'}${fractionToLatex(c)}`;
       questions.push(`計算：$${expr}$。`);
-      summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
-      answers.push(`依序通分整理，$${expr}=${fractionToLatex(result, true)}$。`);
+      summaryAnswers.push(`$${fractionToLatex(result)}$`);
+      answers.push(`依序通分整理，$${expr}=${fractionToLatex(result)}$。`);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -8376,9 +8419,9 @@
       const denominator = Math.pow(-d, 2);
       const result = makeFraction(numerator, denominator);
       questions.push(`計算：$\\frac{(-${a})^2\\times ${b}-${c}}{(-${d})^2}$。`);
-      summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
+      summaryAnswers.push(`$${fractionToLatex(result)}$`);
       answers.push(
-        `先算次方：$(-${a})^2=${Math.pow(-a, 2)}$，$(-${d})^2=${denominator}$。所以原式 $=\\frac{${Math.pow(-a, 2)}\\times ${b}-${c}}{${denominator}}=\\frac{${numerator}}{${denominator}}=${fractionToLatex(result, true)}$。`
+        `先算次方：$(-${a})^2=${Math.pow(-a, 2)}$，$(-${d})^2=${denominator}$。所以原式 $=\\frac{${Math.pow(-a, 2)}\\times ${b}-${c}}{${denominator}}=\\frac{${numerator}}{${denominator}}=${fractionToLatex(result)}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -8397,9 +8440,9 @@
       const denominator = Math.pow(-1, odd);
       const result = makeFraction(numerator, denominator);
       questions.push(`計算：$\\frac{(-${a})^3\\times ${b}${c >= 0 ? '+' : ''}${c}}{(-1)^{${odd}}}$。`);
-      summaryAnswers.push(`$${fractionToLatex(result, true)}$`);
+      summaryAnswers.push(`$${fractionToLatex(result)}$`);
       answers.push(
-        `先算次方：$(-${a})^3=${Math.pow(-a, 3)}$，$(-1)^{${odd}}=-1$。所以原式 $=\\frac{${Math.pow(-a, 3)}\\times ${b}+${c}}{-1}=\\frac{${numerator}}{-1}=${fractionToLatex(result, true)}$。`
+        `先算次方：$(-${a})^3=${Math.pow(-a, 3)}$，$(-1)^{${odd}}=-1$。所以原式 $=\\frac{${Math.pow(-a, 3)}\\times ${b}+${c}}{-1}=\\frac{${numerator}}{-1}=${fractionToLatex(result)}$。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -8994,9 +9037,7 @@
       const fracStr = `\\dfrac{${N}}{${D}}`;
       const rightSide = B === 1 ? `(x+${K})` : `${B}(x+${K})`;
       const coefficientText = A - B === 1 ? 'x' : `${A - B}x`;
-      const solveText = A - B === 1
-        ? `可得 $x=${N}$`
-        : `整理得 $${coefficientText}=${B * K}$，解得 $x=${N}$`;
+      const solveText = A - B === 1 ? `可得 $x=${N}$` : `整理得 $${coefficientText}=${B * K}$，解得 $x=${N}$`;
       questions.push(`有一個分數，分子比分母小 $${K}$，且分子的 $${A}$ 倍等於分母的 $${B}$ 倍，求這個分數為何？`);
       summaryAnswers.push(`$\\dfrac{${rn}}{${rd}}$`);
       answers.push(
@@ -9090,9 +9131,7 @@
       const tNum = t.num;
       const tDen = t.den;
       const tMinutes = (tNum * 60) / tDen;
-      const tMinutesLatex = Number.isInteger(tMinutes)
-        ? `${tMinutes}`
-        : `\\dfrac{${tNum * 60}}{${tDen}}`;
+      const tMinutesLatex = Number.isInteger(tMinutes) ? `${tMinutes}` : `\\dfrac{${tNum * 60}}{${tDen}}`;
       const tStr = `$${tMinutesLatex}$ 分鐘${
         Number.isInteger(tMinutes) ? '' : `（約 $${Math.round(tMinutes)}$ 分鐘）`
       }`;
@@ -9174,10 +9213,7 @@
       let a3 = randInt(1, 4);
       let R = randInt(6, 18);
       let n = 8 * R - 2 * a1 + 4 * a2 - 8 * a3;
-      const hasMeaningfulTakes = () =>
-        n / 2 - a1 > 0 &&
-        n / 4 + a1 / 2 - a2 > 0 &&
-        n / 8 + a1 / 4 - a2 / 2 - a3 > 0;
+      const hasMeaningfulTakes = () => n / 2 - a1 > 0 && n / 4 + a1 / 2 - a2 > 0 && n / 8 + a1 / 4 - a2 / 2 - a3 > 0;
       let guard = 0;
       while ((n <= 0 || !hasMeaningfulTakes() || used.has(`${a1},${a2},${a3},${R}`)) && guard < 80) {
         a1 = pickFromList([4, 8, 12]);
@@ -9225,7 +9261,9 @@
 
       if (variant === 0) {
         // 橫向兩格 a, a+1，和為S
-        const a = pickFromList([1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 22, 23, 24, 25, 26, 27]);
+        const a = pickFromList([
+          1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 22, 23, 24, 25, 26, 27,
+        ]);
         const S = a + (a + 1);
         questions.push(
           `在月曆上用長方形框住相鄰的兩個日期 $a$ 和 $b$，已知 $b$ 在 $a$ 的右邊（相差 1），且 $a+b=${S}$，請問 $b$ 等於多少？`
@@ -11007,7 +11045,7 @@
     },
     'j1-1-4-scientific-normalize-drill': {
       type: 'drill',
-      title: '不完整科學記號化為標準形',
+      title: '科學記號的標準化調整',
       difficulty: 'easy',
       questionCount: 5,
       generate(count) {
@@ -11412,7 +11450,7 @@
     },
     'j1-1-1-origin-unit-six-subtypes': {
       type: 'drill',
-      title: '改變原點與單位長六小類綜合',
+      title: '座標系平移與伸縮綜合練習',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -11671,6 +11709,138 @@
         return buildLinearDecimalMoveSolveSet(5);
       },
     },
+    'j1-3-1-remove-parentheses-expression-drill': {
+      type: 'drill',
+      title: '去括號與同類項合併',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildLinearRemoveParenthesesSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
+      },
+    },
+    'j1-3-1-distributive-expression-drill': {
+      type: 'drill',
+      title: '分配律展開與一元一次式化簡',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildLinearMultiplyParenthesesSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
+      },
+    },
+    'j1-3-1-fraction-coefficient-expression-drill': {
+      type: 'drill',
+      title: '含分數係數的一元一次式化簡',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildLinearFractionParenthesesSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
+      },
+    },
+    'j1-3-1-word-to-expression-drill': {
+      type: 'drill',
+      title: '生活情境轉換一元一次式',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildLinearWordExpressionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
+      },
+    },
+    'j1-3-1-substitution-value-drill': {
+      type: 'drill',
+      title: '一元一次式的代入求值',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildLinearSubstitutionValueSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
+      },
+    },
+    'j1-3-2-move-terms-solve-drill': {
+      type: 'drill',
+      title: '移項與合併同類項解方程',
+      difficulty: 'easy',
+      questionCount: 5,
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildLinearMoveTermsSolveSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
+      },
+    },
+    'j1-3-2-expand-solve-drill': {
+      type: 'drill',
+      title: '去括號解一元一次方程式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildLinearExpandMoveSolveSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
+      },
+    },
+    'j1-3-2-cross-multiply-solve-drill': {
+      type: 'drill',
+      title: '交叉相乘解分式方程',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildLinearCrossMultiplySolveSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
+      },
+    },
+    'j1-3-2-lcm-clear-denominators-drill': {
+      type: 'drill',
+      title: '最小公倍數去分母解方程',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildLinearLcmMultiplySolveSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
+      },
+    },
+    'j1-3-2-same-solution-parameter-drill': {
+      type: 'drill',
+      title: '同解方程式與未知係數判定',
+      difficulty: 'hard',
+      questionCount: 5,
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildLinearSameSolutionSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
+      },
+    },
+    'j1-3-2-decimal-coefficient-solve-drill': {
+      type: 'drill',
+      title: '小數係數的一元一次方程式',
+      difficulty: 'medium',
+      questionCount: 5,
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildLinearDecimalMoveSolveSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
+      },
+    },
     'j1-3-2-complex-linear-equation-clean': {
       type: 'drill',
       title: '複合型去括號與去分母解方程',
@@ -11815,18 +11985,6 @@
         );
       },
     },
-    'j1-3-3-tiered-fee-application-drill': {
-      type: 'drill',
-      title: '基本費與超額計費問題',
-      difficulty: 'challenge',
-      questionCount: 5,
-      generate(count) {
-        return buildUniquePracticeSet(
-          (practiceCount) => buildJ133TieredFeeSet(practiceCount),
-          resolvePracticeCount(count, 5)
-        );
-      },
-    },
     'j1-3-3-clock-angle-application-drill': {
       type: 'drill',
       title: '時鐘與角度問題',
@@ -11961,7 +12119,7 @@
     },
     'j1-3-3-monkey-banana-drill': {
       type: 'drill',
-      title: '猴子香蕉問題',
+      title: '剩餘與分率綜合應用題',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -12189,7 +12347,7 @@
     },
     'j1-variable-distributive-offset-difference-drill': {
       type: 'drill',
-      title: '二組分配律（補差型）',
+      title: '利用分配律簡化大數運算',
       difficulty: 'medium',
       questionCount: 5,
       generate() {
@@ -12567,7 +12725,7 @@
     },
     'j1-1-2-weird-symbol-three-subtypes': {
       type: 'drill',
-      title: '奇怪的符號計算三小類綜合',
+      title: '自定義運算符號題',
       difficulty: 'medium',
       questionCount: 6,
       generate(count) {
@@ -12666,7 +12824,7 @@
     },
     'j1-2-1-hanxin-advanced-drill': {
       type: 'drill',
-      title: '韓信點兵進階',
+      title: '中國剩餘定理的基礎應用',
       difficulty: 'hard',
       questionCount: 5,
       generate(count) {
@@ -12750,7 +12908,7 @@
     },
     'j1-2-3-fraction-add-sub-absolute-drill': {
       type: 'drill',
-      title: '分數加減混合（絕對值對稱）',
+      title: '利用絕對值性質簡化分數運算',
       difficulty: 'hard',
       questionCount: 5,
       generate(count) {
@@ -12870,7 +13028,7 @@
     },
     'j1-2-3-fraction-series-geometric-application': {
       type: 'drill',
-      title: '分數級數與消去律規律題',
+      title: '分數級數（等比與正負交錯）',
       difficulty: 'hard',
       questionCount: 5,
       generate(count) {
@@ -12882,7 +13040,7 @@
     },
     'j1-2-3-fraction-series-product-application': {
       type: 'drill',
-      title: '分數級數與消去律規律題',
+      title: '分數連乘（逐項對消）',
       difficulty: 'hard',
       questionCount: 5,
       generate(count) {
@@ -12894,7 +13052,7 @@
     },
     'j1-2-3-mixed-number-add-sub-application': {
       type: 'drill',
-      title: '帶分數的複合加減運算',
+      title: '帶分數加減與借位',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -12906,7 +13064,7 @@
     },
     'j1-2-3-mixed-number-triple-application': {
       type: 'drill',
-      title: '帶分數的複合加減運算',
+      title: '三個帶分數的運算',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -12930,7 +13088,7 @@
     },
     'j1-2-3-fraction-series-two-subtypes': {
       type: 'drill',
-      title: '分數級數與消去律規律題',
+      title: '分數級數與連乘綜合',
       difficulty: 'hard',
       questionCount: 5,
       generate(count) {
@@ -12942,7 +13100,7 @@
     },
     'j1-2-3-mixed-number-two-subtypes': {
       type: 'drill',
-      title: '帶分數的複合加減運算',
+      title: '帶分數綜合運算',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -13242,18 +13400,29 @@
     },
   };
 
-  // j1-2/j1-3 截圖題型：補整除、公因倍數、分項對消、方程與應用建模題。
-  const bundleFingerprint = 'j1-bundle-v20260715-j13-summary-review-v1';
+  // 為避免舊題型以制式句尾湊題，j1-2、j1-3 只保留真正不同的數據或題意。
+  const bundleFingerprint = 'j1-bundle-v20260724-j13-audit-one-variable-v1';
   Object.entries(nextConfigs).forEach(([configId, config]) => {
     if (!config || typeof config !== 'object') return;
     if (configId.startsWith('j1-1-') && typeof config.generate === 'function') {
       const sourceGenerate = config.generate;
       config.generate = function generateUniqueJ11Practice(count) {
         const target = resolvePracticeCount(count, config.questionCount || 5);
-        return buildUniquePracticeSet(
-          (practiceCount) => sourceGenerate.call(config, practiceCount),
-          target
-        );
+        return buildUniquePracticeSet((practiceCount) => sourceGenerate.call(config, practiceCount), target, {
+          allowPromptVariation: false,
+        });
+      };
+    }
+    if ((configId.startsWith('j1-2-') || configId.startsWith('j1-3-')) && typeof config.generate === 'function') {
+      const sourceGenerate = config.generate;
+      config.generate = function generateUniqueJ12J13Practice(count) {
+        const previousSuppression = suppressGenericPromptVariation;
+        suppressGenericPromptVariation = true;
+        try {
+          return sourceGenerate.call(config, count);
+        } finally {
+          suppressGenericPromptVariation = previousSuppression;
+        }
       };
     }
     config.__generatorFingerprint = bundleFingerprint;

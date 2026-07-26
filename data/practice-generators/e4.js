@@ -30,8 +30,8 @@
     return {
       intro,
       questions: entries.map((entry) => entry.question),
-      summaryAnswers: entries.map((entry) => `簡答：${entry.summary}`),
-      answers: entries.map((entry) => `詳解：${entry.detail}`),
+      summaryAnswers: entries.map((entry) => entry.summary),
+      answers: entries.map((entry) => entry.detail),
     };
   }
 
@@ -45,6 +45,18 @@
       summary: String(summaryAnswers[index] || '').replace(/^簡答：/, ''),
       detail: String(answers[index] || '').replace(/^詳解：/, ''),
     }));
+  }
+
+  // 同一份練習不重複出現完全相同的題幹；隨機資料碰巧重複時，重抽整份題組。
+  function buildUniqueResult(builder, count) {
+    let result = builder(count);
+    for (let retry = 0; retry < 500; retry += 1) {
+      if (Array.isArray(result.questions) && new Set(result.questions).size === result.questions.length) {
+        return result;
+      }
+      result = builder(count);
+    }
+    return result;
   }
 
   function trailingZeroCount(value) {
@@ -98,9 +110,10 @@
     const entries = [];
     while (entries.length < count) {
       const divisor = randInt(112, 485);
-      const quotient = randInt(2, 35);
       const hasRemainder = Math.random() < 0.55;
-      const remainder = hasRemainder ? randInt(1, divisor - 1) : 0;
+      const quotient = randInt(Math.max(2, Math.ceil(1000 / divisor)), Math.floor(9999 / divisor));
+      const maximumRemainder = Math.min(divisor - 1, 9999 - divisor * quotient);
+      const remainder = hasRemainder && maximumRemainder > 0 ? randInt(1, maximumRemainder) : 0;
       const dividend = divisor * quotient + remainder;
       entries.push({
         question: `用直式計算：${dividend} ÷ ${divisor} = （　）。`,
@@ -496,7 +509,7 @@
       entries.push({
         question: `量角器${useInner ? '內圈' : '外圈'}從 ${start}° 讀到 ${end}°，這個角是幾度？`,
         summary: `${angle}°`,
-        detail: `同一圈刻度要用同一套讀法，角度是終點 ${end}° 減起點 ${start}°，所以是 ${angle}°。`,
+        detail: `同一圈刻度要用同一套讀法，角度是兩個刻度的差：較大刻度 ${Math.max(start, end)}° 減較小刻度 ${Math.min(start, end)}° = ${angle}°。`,
       });
     }
     return createResult(entries, '量角器題先看內圈或外圈，再做終點減起點。');
@@ -563,11 +576,18 @@
       const second = pick([15, 25, 40, 55, 65, 80]);
       const clockwise = Math.random() < 0.5;
       const middle = modPositive(start + first, 360);
-      const finalAngle = modPositive(middle + (clockwise ? -second : second), 360);
+      const rawFinal = middle + (clockwise ? -second : second);
+      const finalAngle = modPositive(rawFinal, 360);
+      const finalStep =
+        rawFinal < 0
+          ? `${middle}° - ${second}° = ${rawFinal}°，加上一周角 360°，得到 ${finalAngle}°`
+          : rawFinal >= 360
+            ? `${middle}° + ${second}° = ${rawFinal}°，減去一周角 360°，得到 ${finalAngle}°`
+            : `${middle}° ${clockwise ? '-' : '+'} ${second}° = ${finalAngle}°`;
       entries.push({
         question: `從 ${start}° 開始，先逆時針轉 ${first}°，再${clockwise ? '順時針' : '逆時針'}轉 ${second}°，最後停在幾度？`,
         summary: `${finalAngle}°`,
-        detail: `先轉到 ${middle}°，再${clockwise ? '減掉' : '加上'} ${second}°，得到 ${finalAngle}°。`,
+        detail: `先轉到 ${middle}°，再${clockwise ? '順時針' : '逆時針'}轉 ${second}°：${finalStep}。`,
       });
     }
     return createResult(entries, '旋轉題先分清楚順時針是減、逆時針是加。');
@@ -1098,7 +1118,7 @@
         const first = randInt(120, 450);
         const second = randInt(120, 450);
         const join = randInt(5, 80);
-        const total = first + second + join;
+        const total = first + second - join;
         return {
           question: `彩帶接合：長 ${formatHundredths(first)} 公尺和 ${formatHundredths(second)} 公尺的彩帶接在一起，接縫處重疊 ${formatHundredths(join)} 公尺，接好後全長幾公尺？`,
           summary: `${formatHundredths(first + second - join)} 公尺`,
@@ -1228,6 +1248,24 @@
           question: `影印 1 份文件要 ${price.text} 元，影印 ${countItems} 份共要幾元？`,
           summary: `${decimalProductText(price.raw, price.scale, countItems)} 元`,
           detail: `單價 × 數量 = 總價，${price.text} × ${countItems} = ${decimalProductText(price.raw, price.scale, countItems)}，所以共要 ${decimalProductText(price.raw, price.scale, countItems)} 元。`,
+        };
+      },
+      () => {
+        const lapLength = decimalFactor(2, 20, 80);
+        const laps = randInt(3, 20);
+        return {
+          question: `操場每圈長 ${lapLength.text} 公里，小芸跑了 ${laps} 圈，共跑了幾公里？`,
+          summary: `${decimalProductText(lapLength.raw, lapLength.scale, laps)} 公里`,
+          detail: `每圈長度 × 圈數 = 總路程，${lapLength.text} × ${laps} = ${decimalProductText(lapLength.raw, lapLength.scale, laps)}，所以共跑了 ${decimalProductText(lapLength.raw, lapLength.scale, laps)} 公里。`,
+        };
+      },
+      () => {
+        const area = decimalFactor(2, 80, 450);
+        const cans = randInt(2, 18);
+        return {
+          question: `每罐油漆可刷 ${area.text} 平方公尺，買了 ${cans} 罐，最多可刷多少平方公尺？`,
+          summary: `${decimalProductText(area.raw, area.scale, cans)} 平方公尺`,
+          detail: `每罐可刷面積 × 罐數 = 總面積，${area.text} × ${cans} = ${decimalProductText(area.raw, area.scale, cans)}，所以最多可刷 ${decimalProductText(area.raw, area.scale, cans)} 平方公尺。`,
         };
       },
     ];
@@ -1476,21 +1514,23 @@
     const factories = [
       () => {
         const startDay = randInt(0, 6);
-        const date = randInt(1, 20);
-        const later = date + randInt(1, 12);
+        const monthDays = 31;
+        const date = randInt(1, 19);
+        const later = date + randInt(1, Math.min(12, monthDays - date));
         const answer = weekdays[(startDay + later - date) % 7];
         return {
-          question: `若本月 ${date} 日是${weekdays[startDay]}，則本月 ${later} 日是星期幾？`,
+          question: `某月有 ${monthDays} 天，若 ${date} 日是${weekdays[startDay]}，則 ${later} 日是星期幾？`,
           summary: answer,
           detail: `${later} 日比 ${date} 日晚 ${later - date} 天。星期每 7 天循環，${startDay} + ${later - date} 對 7 取餘數後是 ${weekdays.indexOf(answer)}，所以是${answer}。`,
         };
       },
       () => {
-        const date = randInt(1, 21);
-        const weeks = randInt(1, 4);
+        const monthDays = pick([28, 29, 30, 31]);
+        const weeks = randInt(1, 3);
+        const date = randInt(1, monthDays - weeks * 7);
         const answer = date + weeks * 7;
         return {
-          question: `某月 ${date} 日是星期四，往後第 ${weeks} 個星期四是幾日？`,
+          question: `某月有 ${monthDays} 天，${date} 日是星期四，往後第 ${weeks} 個星期四是幾日？`,
           summary: `${answer} 日`,
           detail: `同一個星期幾每隔 7 天出現一次。往後 ${weeks} 個星期四就是加 ${weeks} × 7 = ${weeks * 7} 天，所以是 ${date} + ${weeks * 7} = ${answer} 日。`,
         };
@@ -1576,10 +1616,11 @@
         const n = randInt(12, 80);
         const pattern = ['靠窗', '走道', '走道', '靠窗'];
         const answer = pattern[(n - 1) % 4];
+        const position = modPositive(n - 1, pattern.length) + 1;
         return {
           question: `火車座位依「1 號靠窗、2 號走道、3 號走道、4 號靠窗」循環，${n} 號座位是靠窗還是走道？`,
           summary: answer,
-          detail: `每 4 個座位循環一次。${n} ÷ 4 的餘數是 ${n % 4}，對應到「${answer}」，所以 ${n} 號是${answer}。`,
+          detail: `每 4 個座位循環一次。第 ${n} 個在一組中的位置是（${n} - 1）÷ 4 的餘數再加 1，也就是第 ${position} 個；對應到「${answer}」，所以 ${n} 號是${answer}。`,
         };
       },
       () => {
@@ -1890,6 +1931,21 @@
     const entries = [];
     const factories = [
       () => {
+        const item = pick([
+          { numerator: 2, denominator: 3, integer: 3 },
+          { numerator: 3, denominator: 4, integer: 4 },
+          { numerator: 2, denominator: 5, integer: 5 },
+          { numerator: 3, denominator: 6, integer: 4 },
+          { numerator: 2, denominator: 8, integer: 4 },
+        ]);
+        const product = item.numerator * item.integer;
+        return {
+          question: `計算：${fractionText(item.numerator, item.denominator)} × ${item.integer} = （ ）`,
+          summary: `${fractionOrMixedText(product, item.denominator)}`,
+          detail: `分母不變，分子和整數相乘：${item.numerator} × ${item.integer} = ${product}，所以 ${fractionText(item.numerator, item.denominator)} × ${item.integer} = ${fractionText(product, item.denominator)} = ${fractionOrMixedText(product, item.denominator)}。`,
+        };
+      },
+      () => {
         const denominator = randInt(2, 10);
         const numerator = randInt(1, denominator - 1);
         const integer = randInt(2, 9);
@@ -1979,6 +2035,28 @@
           detail: `下午比上午多 ${fractionText(right, denominator)} 籃，所以用加法：${whole} ${fractionText(left, denominator)} + ${fractionText(right, denominator)} = ${fractionOrMixedText(total, denominator)}。`,
         };
       },
+      () => {
+        const denominator = randInt(4, 10);
+        const morning = randInt(1, denominator - 1);
+        const afternoon = randInt(1, denominator - 1);
+        const total = morning + afternoon;
+        return {
+          question: `小安上午走了 ${fractionText(morning, denominator)} 公里，下午又走了 ${fractionText(afternoon, denominator)} 公里，一共走了幾公里？`,
+          summary: `${fractionOrMixedText(total, denominator)} 公里`,
+          detail: `上午和下午走的路程要相加：${fractionText(morning, denominator)} + ${fractionText(afternoon, denominator)} = ${fractionOrMixedText(total, denominator)} 公里。`,
+        };
+      },
+      () => {
+        const denominator = randInt(4, 10);
+        const flour = randInt(1, denominator - 1);
+        const milk = randInt(1, denominator - 1);
+        const total = flour + milk;
+        return {
+          question: `做鬆餅用了 ${fractionText(flour, denominator)} 杯麵粉和 ${fractionText(milk, denominator)} 杯牛奶，兩種材料合起來是多少杯？`,
+          summary: `${fractionOrMixedText(total, denominator)} 杯`,
+          detail: `同分母分數相加，分母不變、分子相加：${fractionText(flour, denominator)} + ${fractionText(milk, denominator)} = ${fractionOrMixedText(total, denominator)} 杯。`,
+        };
+      },
     ];
     while (entries.length < count) entries.push(pick(factories)());
     return createResult(entries, '求總和或原來有多少的分數應用題，通常要把同分母分數直接相加，再整理答案。');
@@ -2011,6 +2089,18 @@
           question: `一個飲料桶原有 ${whole} ${fractionText(left, denominator)} 公升，倒出 ${fractionText(right, denominator)} 公升後，還剩下多少公升？`,
           summary: `${fractionOrMixedText(diff, denominator)} 公升`,
           detail: `剩餘量用減法：${whole} ${fractionText(left, denominator)} − ${fractionText(right, denominator)} = ${fractionOrMixedText(diff, denominator)} 公升。`,
+        };
+      },
+      () => {
+        const denominator = randInt(4, 10);
+        const whole = randInt(2, 5);
+        const left = randInt(1, denominator - 1);
+        const right = randInt(1, denominator - 1);
+        const diff = mixedToImproper(whole, left, denominator) - right;
+        return {
+          question: `小宇原本跑了 ${whole} ${fractionText(left, denominator)} 公里，比小晴多跑 ${fractionText(right, denominator)} 公里。小晴跑了幾公里？`,
+          summary: `${fractionOrMixedText(diff, denominator)} 公里`,
+          detail: `小晴跑得比較少，所以用減法：${whole} ${fractionText(left, denominator)} − ${fractionText(right, denominator)} = ${fractionOrMixedText(diff, denominator)} 公里。`,
         };
       },
     ];
@@ -2054,7 +2144,8 @@
     const factories = [
       () => {
         const total = pick([6, 8, 10, 12]);
-        const filled = randInt(total + 1, total * 3 - 1);
+        let filled = randInt(total + 1, total * 3 - 1);
+        while (filled % total === 0) filled = randInt(total + 1, total * 3 - 1);
         return {
           question: `一盒雞蛋有 ${total} 顆，現在有 ${filled} 顆雞蛋，用帶分數表示是幾盒？`,
           summary: `${fractionOrMixedText(filled, total)} 盒`,
@@ -2116,7 +2207,7 @@
       () => {
         const a = randInt(30, 120);
         const b = randInt(10, 60);
-        const c = randInt(10, 60);
+        const c = randInt(10, Math.min(60, a + b));
         const total = a + b - c;
         return {
           question: `計算：${a} + ${b} − ${c} = （ ）`,
@@ -2351,12 +2442,11 @@
         };
       },
       () => {
-        const totalItems = randInt(120, 260);
         const damaged = randInt(5, 20);
         const perBox = pick([4, 5, 6, 8]);
-        const usable = totalItems - damaged;
-        const boxes = usable / perBox;
-        if (!Number.isInteger(boxes)) return factories[1]();
+        const boxes = randInt(25, 48);
+        const usable = perBox * boxes;
+        const totalItems = usable + damaged;
         return {
           question: `一箱彈珠有 ${totalItems} 顆，破掉 ${damaged} 顆，剩下的每 ${perBox} 顆裝一盒，共裝幾盒？`,
           summary: `${boxes} 盒`,
@@ -2375,12 +2465,11 @@
         };
       },
       () => {
-        const totalLength = randInt(400, 900);
         const each = randInt(40, 180);
         const countFlowers = randInt(2, 5);
         const used = each * countFlowers;
-        if (used >= totalLength) return factories[0]();
-        const left = totalLength - used;
+        const left = randInt(50, 250);
+        const totalLength = used + left;
         return {
           question: `一條緞帶長 ${totalLength} 公分，做了 ${countFlowers} 朵花，每朵用 ${each} 公分，還剩幾公分？`,
           summary: `${left} 公分`,
@@ -2875,6 +2964,25 @@
     return createResult(entries, '熟記 25×4=100、125×8=1000、2×5=10 這些組合，可以大幅加快連乘計算。');
   }
 
+  function buildDistributivePropertySet(count = 3) {
+    const entries = [];
+    const bases = [10, 100, 1000];
+    while (entries.length < count) {
+      const factor = pick([12, 15, 25, 32, 45, 125]);
+      const base = pick(bases);
+      const change = pick([-1, 1]);
+      const multiplier = base + change;
+      const product = factor * multiplier;
+      const sign = change > 0 ? '+' : '−';
+      entries.push({
+        question: `利用分配律計算：${factor} × ${multiplier} = （　）。`,
+        summary: `${product}`,
+        detail: `把 ${multiplier} 拆成 ${base} ${sign} 1：${factor} × ${multiplier} = ${factor} ×（${base} ${sign} 1）= ${factor} × ${base} ${sign} ${factor} × 1 = ${factor * base} ${sign} ${factor} = ${product}。`,
+      });
+    }
+    return createResult(entries, '遇到接近整十、整百或整千的乘數時，可把它拆成「整數 ± 1」，再用分配律簡化計算。');
+  }
+
   function buildMulDivFirstDivideSet(count = 3) {
     const entries = [];
     const divisors = [3, 4, 5, 6, 8, 9, 12, 24];
@@ -3022,7 +3130,7 @@
       const multiplier = randInt(2, 9);
       const product = multiplicand * multiplier;
       entries.push({
-        question: `計算：${multiplicand} × ${multiplier} = ?`,
+        question: `計算：${multiplicand} × ${multiplier} = （　）`,
         summary: `${product}`,
         detail: `${core} × ${multiplier} = ${core * multiplier}，再補上 ${countTrailingZeros(multiplicand)} 個 0，所以 ${multiplicand} × ${multiplier} = ${product}。`,
       });
@@ -3037,7 +3145,7 @@
       const b = randInt(2, 9) * 10;
       const product = a * b;
       entries.push({
-        question: `計算：${a} × ${b} = ?`,
+        question: `計算：${a} × ${b} = （　）`,
         summary: `${product}`,
         detail: `先算 ${a / 10} × ${b / 10} = ${(a / 10) * (b / 10)}，再補上 2 個 0，所以 ${a} × ${b} = ${product}。`,
       });
@@ -3052,7 +3160,7 @@
       const multiplier = randInt(2, 9) * 10;
       const product = multiplicand * multiplier;
       entries.push({
-        question: `計算：${multiplicand} × ${multiplier} = ?`,
+        question: `計算：${multiplicand} × ${multiplier} = （　）`,
         summary: `${product}`,
         detail: `把 ${multiplier} 看成 ${multiplier / 10} 個十，先算 ${multiplicand} × ${multiplier / 10} = ${multiplicand * (multiplier / 10)}，再乘 10 得 ${product}。`,
       });
@@ -3072,7 +3180,7 @@
       const multiplier = randInt(2, 9);
       const product = multiplicand * multiplier;
       entries.push({
-        question: `計算：${multiplicand} × ${multiplier} = ?`,
+        question: `計算：${multiplicand} × ${multiplier} = （　）`,
         summary: `${product}`,
         detail: `可用直式從個位開始乘。注意每一位都要乘到，若中間有 0，該位仍要保留位值，所以 ${multiplicand} × ${multiplier} = ${product}。`,
       });
@@ -3087,14 +3195,20 @@
       const aOnes = randInt(1, 4);
       const bTens = randInt(1, 4);
       const bOnes = randInt(1, 4);
-      if (aOnes * bOnes >= 10 || aTens * bOnes + aOnes * bTens >= 10) {
+      if (
+        aOnes * bOnes >= 10 ||
+        aTens * bOnes >= 10 ||
+        aOnes * bTens >= 10 ||
+        aTens * bTens >= 10 ||
+        aTens * bOnes + aOnes * bTens >= 10
+      ) {
         continue;
       }
       const multiplicand = aTens * 10 + aOnes;
       const multiplier = bTens * 10 + bOnes;
       const product = multiplicand * multiplier;
       entries.push({
-        question: `計算：${multiplicand} × ${multiplier} = ?`,
+        question: `計算：${multiplicand} × ${multiplier} = （　）`,
         summary: `${product}`,
         detail: `把 ${multiplier} 拆成 ${bOnes} 和 ${bTens * 10}。先算 ${multiplicand} × ${bOnes}，再算 ${multiplicand} × ${bTens * 10}，最後相加得 ${product}。這題各層都不需要進位。`,
       });
@@ -3116,7 +3230,7 @@
       }
       const product = multiplicand * multiplier;
       entries.push({
-        question: `計算：${multiplicand} × ${multiplier} = ?`,
+        question: `計算：${multiplicand} × ${multiplier} = （　）`,
         summary: `${product}`,
         detail: `先算個位乘積，再算十位乘積並注意進位與位值對齊。把 ${multiplier} 拆成 ${bOnes} 和 ${bTens * 10} 來看，最後合起來得到 ${product}。`,
       });
@@ -3133,7 +3247,7 @@
       const ones = multiplier % 10;
       const product = multiplicand * multiplier;
       entries.push({
-        question: `計算：${multiplicand} × ${multiplier} = ?`,
+        question: `計算：${multiplicand} × ${multiplier} = （　）`,
         summary: `${product}`,
         detail: `把 ${multiplier} 拆成 ${tens * 10} 和 ${ones}，先算 ${multiplicand} × ${ones}，再算 ${multiplicand} × ${tens * 10}，最後相加得 ${product}。`,
       });
@@ -3154,7 +3268,7 @@
       const multiplier = randInt(12, 98);
       const product = multiplicand * multiplier;
       entries.push({
-        question: `計算：${multiplicand} × ${multiplier} = ?`,
+        question: `計算：${multiplicand} × ${multiplier} = （　）`,
         summary: `${product}`,
         detail: `這題的重點是保留 0 的位值。直式中即使某一位乘出 0，也不能省略該位的位置，所以 ${multiplicand} × ${multiplier} = ${product}。`,
       });
@@ -3171,7 +3285,7 @@
       const ones = multiplier % 10;
       const product = multiplicand * multiplier;
       entries.push({
-        question: `計算：${multiplicand} × ${multiplier} = ?`,
+        question: `計算：${multiplicand} × ${multiplier} = （　）`,
         summary: `${product}`,
         detail: `四位數乘二位數可先算 ${multiplicand} × ${ones}，再算 ${multiplicand} × ${tens * 10}，第二層要向左錯開一位，最後相加得 ${product}。`,
       });
@@ -3184,13 +3298,14 @@
     while (entries.length < count) {
       const coreA = randInt(2, 98);
       const coreB = randInt(2, 98);
+      if (coreA % 10 === 0 || coreB % 10 === 0) continue;
       const zeroA = pick([1, 1, 2, 2, 3]);
       const zeroB = pick([1, 1, 2, 2]);
       const a = coreA * 10 ** zeroA;
       const b = coreB * 10 ** zeroB;
       const product = a * b;
       entries.push({
-        question: `計算：${a} × ${b} = ?`,
+        question: `計算：${a} × ${b} = （　）`,
         summary: `${product}`,
         detail: `先算非 0 部分：${coreA} × ${coreB} = ${coreA * coreB}。再把兩個因數末尾的 0 一起補回去，共 ${zeroA + zeroB} 個 0，所以答案是 ${product}。`,
       });
@@ -3208,7 +3323,7 @@
       const target = b + delta;
       const product = a * target;
       entries.push({
-        question: `已知 ${a} × ${b} = ${known}，求 ${a} × ${target} = ?`,
+        question: `已知 ${a} × ${b} = ${known}，求 ${a} × ${target} = （　）`,
         summary: `${product}`,
         detail: `${target === b + 1 ? '因為多 1 個' : '因為少 1 個'} ${a}，所以在 ${known} 的基礎上${delta === 1 ? `加上 ${a}` : `減去 ${a}`}，得到 ${product}。`,
       });
@@ -3226,7 +3341,7 @@
       const baseProduct = a * base;
       const product = a * target;
       entries.push({
-        question: `計算：${a} × ${target} = ?`,
+        question: `計算：${a} × ${target} = （　）`,
         summary: `${product}`,
         detail: `把 ${target} 看成 ${base}${target > base ? ' + 1' : ' - 1'}。先算 ${a} × ${base} = ${baseProduct}，再${target > base ? `加上 ${a}` : `減去 ${a}`}，得到 ${product}。`,
       });
@@ -3368,30 +3483,33 @@
         const people = randInt(280, 980);
         const capacity = pick([24, 28, 30, 36, 42, 45]);
         const buses = Math.ceil(people / capacity);
+        const remainder = people % capacity;
         return {
           question: `共有 ${people} 人要參加活動，每輛遊覽車可坐 ${capacity} 人，最少要幾輛遊覽車才坐得下？`,
           summary: `${buses} 輛`,
-          detail: `${people} ÷ ${capacity} = ${Math.floor(people / capacity)} 餘 ${people % capacity}。因為還有人沒坐到，所以要再多 1 輛，共 ${buses} 輛。`,
+          detail: `${people} ÷ ${capacity} = ${Math.floor(people / capacity)} 餘 ${remainder}。${remainder ? `因為還有 ${remainder} 人沒坐到，所以要再多 1 輛，共 ${buses} 輛。` : `剛好坐滿，不需要多加車，所以共 ${buses} 輛。`}`,
         };
       },
       () => {
         const cakes = randInt(180, 520);
         const perTray = pick([18, 20, 22, 24, 25]);
         const trays = Math.ceil(cakes / perTray);
+        const remainder = cakes % perTray;
         return {
           question: `麵包店要烤 ${cakes} 個蛋糕，一個烤盤可放 ${perTray} 個，想要一次烤完，最少要幾個烤盤？`,
           summary: `${trays} 個`,
-          detail: `${cakes} ÷ ${perTray} = ${Math.floor(cakes / perTray)} 餘 ${cakes % perTray}。最後不足一盤也要再準備 1 個烤盤，所以最少要 ${trays} 個。`,
+          detail: `${cakes} ÷ ${perTray} = ${Math.floor(cakes / perTray)} 餘 ${remainder}。${remainder ? `最後不足一盤也要再準備 1 個烤盤，所以最少要 ${trays} 個。` : `剛好排滿，不需要多準備烤盤，所以最少要 ${trays} 個。`}`,
         };
       },
       () => {
         const boxes = randInt(320, 780);
         const perCart = pick([18, 20, 24, 25, 30]);
         const carts = Math.ceil(boxes / perCart);
+        const remainder = boxes % perCart;
         return {
           question: `倉庫要搬運 ${boxes} 箱貨物，每輛推車一次能搬 ${perCart} 箱，最少要搬幾趟才能搬完？`,
           summary: `${carts} 趟`,
-          detail: `${boxes} ÷ ${perCart} = ${Math.floor(boxes / perCart)} 餘 ${boxes % perCart}。因為剩下的也要再搬 1 趟，所以最少要 ${carts} 趟。`,
+          detail: `${boxes} ÷ ${perCart} = ${Math.floor(boxes / perCart)} 餘 ${remainder}。${remainder ? `因為剩下的也要再搬 1 趟，所以最少要 ${carts} 趟。` : `剛好搬完，不需要多搬一趟，所以最少要 ${carts} 趟。`}`,
         };
       },
     ];
@@ -4290,6 +4408,50 @@
     return createResult(entries, '綜合應用題要先判斷是在做換算、求經過時間，還是往前往後推時刻。');
   }
 
+  function buildCrossMonthTimeSet(count = 3) {
+    const entries = [];
+    const factories = [
+      () => {
+        const month = randInt(1, 11);
+        const monthDays = daysInMonth(month);
+        const startHour = randInt(15, 22);
+        const startMinute = pick([0, 10, 20, 30, 40, 50]);
+        const start = new Date(2026, month - 1, monthDays, startHour, startMinute, 0);
+        const toMidnight = 24 * 60 - (startHour * 60 + startMinute);
+        const duration = randInt(toMidnight + 30, 600);
+        const end = new Date(start.getTime() + duration * 60000);
+        const nextDayMinutes = duration - toMidnight;
+        return {
+          question: `從${formatMonthDayTime(start)}開始，到${formatMonthDayTime(end)}結束，共經過多久？`,
+          summary: formatTimeDuration(duration),
+          detail: `先算當天到 24 時還有 ${formatTimeDuration(toMidnight)}，再算次月 ${end.getMonth() + 1} 月 ${end.getDate()} 日凌晨到結束時刻有 ${formatTimeDuration(nextDayMinutes)}，合起來共 ${formatTimeDuration(duration)}。`,
+        };
+      },
+      () => {
+        const month = randInt(1, 11);
+        const monthDays = daysInMonth(month);
+        const startHour = randInt(17, 22);
+        const startMinute = pick([0, 10, 20, 30, 40, 50]);
+        const toMidnight = 24 * 60 - (startHour * 60 + startMinute);
+        let durationHours = randInt(2, 10);
+        let durationMinutes = pick([0, 10, 20, 30, 40, 50]);
+        while (durationHours * 60 + durationMinutes <= toMidnight) {
+          durationHours = randInt(2, 10);
+          durationMinutes = pick([0, 10, 20, 30, 40, 50]);
+        }
+        const start = new Date(2026, month - 1, monthDays, startHour, startMinute, 0);
+        const end = new Date(start.getTime() + (durationHours * 60 + durationMinutes) * 60000);
+        return {
+          question: `從${formatMonthDayTime(start)}開始，連續進行${formatHourMinute(durationHours, durationMinutes)}，會在什麼時候結束？`,
+          summary: formatMonthDayTime(end),
+          detail: `超過月末的 24 時後，日期要改成下一個月。把開始時刻加上 ${formatHourMinute(durationHours, durationMinutes)}，會在${formatMonthDayTime(end)}結束。`,
+        };
+      },
+    ];
+    while (entries.length < count) entries.push(pick(factories)());
+    return createResult(entries, '跨月時間題和跨日題相同，都要先處理到當天 24 時；超過後，日期要進到下一個月。');
+  }
+
   function buildTimeUnitMixedSet(generators, count = 5) {
     const entries = shuffle(generators.flatMap((generator) => takeGenerated(generator, count))).slice(0, count);
     return createResult(entries, '時間換算綜合：先判斷是換成單名數、複名數，還是先統一單位再比較。');
@@ -4727,7 +4889,7 @@
         const height = randInt(2, 5);
         const volume = front * side * height;
         return {
-          question: `一個積木長方體前面每排 ${front} 個、側面有 ${side} 排，共堆了 ${height} 層，體積是多少立方公分？`,
+          question: `一個積木長方體的底面每排 ${front} 個、有 ${side} 排，往上堆了 ${height} 層，體積是多少立方公分？`,
           summary: `${volume} 立方公分`,
           detail: `可先算底面有 ${front} × ${side} = ${front * side} 個，再乘上 ${height} 層，得到 ${front * side} × ${height} = ${volume}，所以體積是 ${volume} 立方公分。`,
         };
@@ -4861,6 +5023,16 @@
         question: '四條邊一樣長，而且四個角都是直角的四邊形，稱為什麼圖形？',
         summary: '正方形',
         detail: '同時符合四邊等長和四角直角，所以是正方形。',
+      }),
+      () => ({
+        question: '一個平行四邊形的兩條對角線互相垂直，這個平行四邊形是什麼圖形？',
+        summary: '菱形',
+        detail: '平行四邊形若兩條對角線互相垂直，四邊會一樣長，所以是菱形。',
+      }),
+      () => ({
+        question: '一個四邊形的兩條對角線互相垂直、互相平分，而且一樣長，這個四邊形是什麼圖形？',
+        summary: '正方形',
+        detail: '對角線互相平分表示具有平行四邊形的性質；再加上對角線垂直且一樣長，符合正方形的特徵。',
       }),
     ];
     const orderedFactories = shuffle(factories);
@@ -5452,7 +5624,7 @@
     return createResult(entries, intro);
   }
 
-  store.registerConfigs({
+  const nextConfigs = {
     'e4-2-1-multiply-standard-drill': {
       type: 'drill',
       title: '三、四位數乘以三位數',
@@ -7291,6 +7463,15 @@
         return buildMultiplySpecialSet(3);
       },
     },
+    'e4-2-8-distributive-property-drill': {
+      type: 'drill',
+      title: '分配律的簡化計算',
+      difficulty: 'medium',
+      questionCount: 3,
+      generate() {
+        return buildDistributivePropertySet(3);
+      },
+    },
     'e4-2-8-mul-div-first-divide-drill': {
       type: 'drill',
       title: '乘除混合的簡化：先除再乘',
@@ -7351,7 +7532,10 @@
       difficulty: 'medium',
       questionCount: 5,
       generate() {
-        return buildSimplifyCalculationMixedSet([buildMultiplyRoundSet, buildMultiplySpecialSet], 5);
+        return buildSimplifyCalculationMixedSet(
+          [buildMultiplyRoundSet, buildMultiplySpecialSet, buildDistributivePropertySet],
+          5
+        );
       },
     },
     'e4-2-8-mul-div-application-mixed': {
@@ -7555,6 +7739,15 @@
         return buildCrossDayComprehensiveSet(3);
       },
     },
+    'e4-2-9-cross-month-time-drill': {
+      type: 'drill',
+      title: '跨月日期與時間計算',
+      difficulty: 'hard',
+      questionCount: 3,
+      generate() {
+        return buildCrossMonthTimeSet(3);
+      },
+    },
     'e4-2-9-unit-conversion-mixed': {
       type: 'drill',
       title: '時間換算綜合',
@@ -7625,7 +7818,13 @@
       questionCount: 5,
       generate() {
         return buildCrossDayTimeMixedSet(
-          [buildCrossDayEndTimeSet, buildCrossDayStartTimeSet, buildDayHourCompareSet, buildCrossDayComprehensiveSet],
+          [
+            buildCrossDayEndTimeSet,
+            buildCrossDayStartTimeSet,
+            buildDayHourCompareSet,
+            buildCrossDayComprehensiveSet,
+            buildCrossMonthTimeSet,
+          ],
           5
         );
       },
@@ -7732,5 +7931,13 @@
         );
       },
     },
+  };
+
+  Object.entries(nextConfigs).forEach(([id, config]) => {
+    if (!/^(?:e4-1-[1-9]|e4-2-(?:[1-9]|10))-/u.test(id) || !config || typeof config.generate !== 'function') return;
+    const generate = config.generate;
+    config.generate = () => buildUniqueResult(generate, config.questionCount);
   });
+
+  store.registerConfigs(nextConfigs);
 })();

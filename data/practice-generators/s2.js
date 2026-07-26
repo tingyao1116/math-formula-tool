@@ -163,6 +163,19 @@
     return value >= 0 ? `+${value}` : `${value}`;
   }
 
+  function formatSignedCoefficientVariable(coefficient, variable) {
+    if (coefficient === 0) return '';
+    if (coefficient === 1) return `+${variable}`;
+    if (coefficient === -1) return `-${variable}`;
+    return `${formatSignedAdd(coefficient)}${variable}`;
+  }
+
+  function formatCoefficientVariable(coefficient, variable) {
+    if (coefficient === 1) return variable;
+    if (coefficient === -1) return `-${variable}`;
+    return `${coefficient}${variable}`;
+  }
+
   function formatSnQuadratic(p, q) {
     const quad = p === 1 ? 'n^2' : `${p}n^2`;
     if (q === 0) return quad;
@@ -2890,12 +2903,16 @@
         const p = pickNonZero(-6, 9);
         const cs = c === 1 ? '' : `${c}`;
         const term = `${c === 1 ? 'i^2' : `${c}i^2`}${formatSignedAdd(p)}`;
-        const formula = `\\dfrac{${cs}n(n+1)(2n+1)}{6}${formatSignedAdd(p)}n`;
+        const pN = formatSignedCoefficientVariable(p, 'n');
+        const pK = formatSignedCoefficientVariable(p, 'k');
+        const pNext = formatSignedCoefficientVariable(p, '(k+1)');
+        const pKPlusOne = formatCoefficientVariable(p, '(k+1)');
+        const formula = `\\dfrac{${cs}n(n+1)(2n+1)}{6}${pN}`;
         questions.push(
           `用數學歸納法證明 \\(\\sum_{i=1}^{n}(${term})=${formula}\\)。若已假設 \\(n=k\\) 時成立，請完成 \\(n=k+1\\) 的關鍵推導。`
         );
         answers.push(
-          `簡答：\\(S_{k+1}=\\dfrac{${cs}(k+1)(k+2)(2k+3)}{6}${formatSignedAdd(p)}(k+1)\\)。過程：由歸納假設 \\(S_k=\\dfrac{${cs}k(k+1)(2k+1)}{6}${formatSignedAdd(p)}k\\)，加上第 \\(k+1\\) 項 \\(${cs}(k+1)^2${formatSignedAdd(p)}\\)。二次部分 \\(\\dfrac{${cs}k(k+1)(2k+1)}{6}+${cs}(k+1)^2=\\dfrac{${cs}(k+1)(k+2)(2k+3)}{6}\\)，常數部分 \\(${p}k${formatSignedAdd(p)}=${p}(k+1)\\)，合併即為公式中 \\(n\\) 換成 \\(k+1\\)。`
+          `簡答：\\(S_{k+1}=\\dfrac{${cs}(k+1)(k+2)(2k+3)}{6}${pNext}\\)。過程：由歸納假設 \\(S_k=\\dfrac{${cs}k(k+1)(2k+1)}{6}${pK}\\)，加上第 \\(k+1\\) 項 \\(${cs}(k+1)^2${formatSignedAdd(p)}\\)。二次部分 \\(\\dfrac{${cs}k(k+1)(2k+1)}{6}+${cs}(k+1)^2=\\dfrac{${cs}(k+1)(k+2)(2k+3)}{6}\\)，常數部分 \\(${pK}${formatSignedAdd(p)}=${pKPlusOne}\\)，合併即為公式中 \\(n\\) 換成 \\(k+1\\)。`
         );
         continue;
       }
@@ -2906,12 +2923,16 @@
         const p = pickNonZero(-6, 9);
         const cs = c === 1 ? '' : `${c}`;
         const term = `${c === 1 ? 'i^3' : `${c}i^3`}${formatSignedAdd(p)}`;
-        const formula = `${cs}\\left[\\dfrac{n(n+1)}{2}\\right]^2${formatSignedAdd(p)}n`;
+        const pN = formatSignedCoefficientVariable(p, 'n');
+        const pK = formatSignedCoefficientVariable(p, 'k');
+        const pNext = formatSignedCoefficientVariable(p, '(k+1)');
+        const pKPlusOne = formatCoefficientVariable(p, '(k+1)');
+        const formula = `${cs}\\left[\\dfrac{n(n+1)}{2}\\right]^2${pN}`;
         questions.push(
           `用數學歸納法證明 \\(\\sum_{i=1}^{n}(${term})=${formula}\\)。若已假設 \\(n=k\\) 時成立，請完成 \\(n=k+1\\) 的關鍵推導。`
         );
         answers.push(
-          `簡答：\\(S_{k+1}=${cs}\\left[\\dfrac{(k+1)(k+2)}{2}\\right]^2${formatSignedAdd(p)}(k+1)\\)。過程：由歸納假設 \\(S_k=${cs}\\left[\\dfrac{k(k+1)}{2}\\right]^2${formatSignedAdd(p)}k\\)，加上第 \\(k+1\\) 項 \\(${cs}(k+1)^3${formatSignedAdd(p)}\\)。三次部分 \\(${cs}(k+1)^2\\left[\\dfrac{k^2}{4}+(k+1)\\right]=${cs}\\left[\\dfrac{(k+1)(k+2)}{2}\\right]^2\\)，常數部分 \\(${p}k${formatSignedAdd(p)}=${p}(k+1)\\)，合併即為公式中 \\(n\\) 換成 \\(k+1\\)。`
+          `簡答：\\(S_{k+1}=${cs}\\left[\\dfrac{(k+1)(k+2)}{2}\\right]^2${pNext}\\)。過程：由歸納假設 \\(S_k=${cs}\\left[\\dfrac{k(k+1)}{2}\\right]^2${pK}\\)，加上第 \\(k+1\\) 項 \\(${cs}(k+1)^3${formatSignedAdd(p)}\\)。三次部分 \\(${cs}(k+1)^2\\left[\\dfrac{k^2}{4}+(k+1)\\right]=${cs}\\left[\\dfrac{(k+1)(k+2)}{2}\\right]^2\\)，常數部分 \\(${pK}${formatSignedAdd(p)}=${pKPlusOne}\\)，合併即為公式中 \\(n\\) 換成 \\(k+1\\)。`
         );
         continue;
       }
@@ -2921,12 +2942,16 @@
         const e = randInt(1, 5);
         const p = pickNonZero(-6, 9);
         const term = `i(i+${e})${formatSignedAdd(p)}`;
-        const formula = `\\dfrac{n(n+1)(2n${formatSignedAdd(1 + 3 * e)})}{6}${formatSignedAdd(p)}n`;
+        const pN = formatSignedCoefficientVariable(p, 'n');
+        const pK = formatSignedCoefficientVariable(p, 'k');
+        const pNext = formatSignedCoefficientVariable(p, '(k+1)');
+        const pKPlusOne = formatCoefficientVariable(p, '(k+1)');
+        const formula = `\\dfrac{n(n+1)(2n${formatSignedAdd(1 + 3 * e)})}{6}${pN}`;
         questions.push(
           `用數學歸納法證明 \\(\\sum_{i=1}^{n}(${term})=${formula}\\)。若已假設 \\(n=k\\) 時成立，請完成 \\(n=k+1\\) 的關鍵推導。`
         );
         answers.push(
-          `簡答：\\(S_{k+1}=\\dfrac{(k+1)(k+2)(2k${formatSignedAdd(3 + 3 * e)})}{6}${formatSignedAdd(p)}(k+1)\\)。過程：由歸納假設 \\(S_k=\\dfrac{k(k+1)(2k${formatSignedAdd(1 + 3 * e)})}{6}${formatSignedAdd(p)}k\\)，加上第 \\(k+1\\) 項 \\((k+1)(k+1+${e})${formatSignedAdd(p)}\\)。乘積部分 \\(\\dfrac{(k+1)[k(2k${formatSignedAdd(1 + 3 * e)})+6(k+1+${e})]}{6}=\\dfrac{(k+1)(k+2)(2k${formatSignedAdd(3 + 3 * e)})}{6}\\)，常數部分 \\(${p}k${formatSignedAdd(p)}=${p}(k+1)\\)，合併即為公式中 \\(n\\) 換成 \\(k+1\\)。`
+          `簡答：\\(S_{k+1}=\\dfrac{(k+1)(k+2)(2k${formatSignedAdd(3 + 3 * e)})}{6}${pNext}\\)。過程：由歸納假設 \\(S_k=\\dfrac{k(k+1)(2k${formatSignedAdd(1 + 3 * e)})}{6}${pK}\\)，加上第 \\(k+1\\) 項 \\((k+1)(k+1+${e})${formatSignedAdd(p)}\\)。乘積部分 \\(\\dfrac{(k+1)[k(2k${formatSignedAdd(1 + 3 * e)})+6(k+1+${e})]}{6}=\\dfrac{(k+1)(k+2)(2k${formatSignedAdd(3 + 3 * e)})}{6}\\)，常數部分 \\(${pK}${formatSignedAdd(p)}=${pKPlusOne}\\)，合併即為公式中 \\(n\\) 換成 \\(k+1\\)。`
         );
         continue;
       }
@@ -3384,8 +3409,16 @@
       const mode = i % 5;
 
       if (mode === 0) {
-        const base = [3, 4, 7][randInt(0, 2)];
-        const mod = [7, 10, 11][randInt(0, 2)];
+        const pairs = [
+          [3, 7],
+          [3, 10],
+          [3, 11],
+          [4, 7],
+          [4, 11],
+          [7, 10],
+          [7, 11],
+        ];
+        const [base, mod] = pairs[randInt(0, pairs.length - 1)];
         const n = randInt(40, 150);
         const answer = powMod(base, n, mod);
         const cycle = cycleFor(base, mod);
@@ -5015,8 +5048,18 @@
         },
       },
       {
-        q: '8 個身高互異的人排成一列，要求身高由左到右呈「低、高、低、高、低、高、低、高」的交錯型態，共有多少種排法？',
-        a: '簡答：1385 種。過程：這是指定起伏方向的交錯排列數。8 個相異元素形成低高交錯的排列數為 Euler zigzag number \\(E_8=1385\\)。',
+        get q() {
+          const startsLow = randInt(0, 1) === 0;
+          this._startsLow = startsLow;
+          return `4 個身高互異的人排成一列，要求身高由左到右呈「${startsLow ? '低、高、低、高' : '高、低、高、低'}」的交錯型態，共有多少種排法？`;
+        },
+        get a() {
+          const startsLow = this._startsLow !== false;
+          const patterns = startsLow
+            ? '1324、1423、2314、2413、3412'
+            : '4231、4132、3241、3142、2143';
+          return `簡答：5 種。過程：把四人的身高由低到高記為 1、2、3、4，直接列出符合交錯條件的排列為 \\(${patterns}\\)。因此共有 5 種。`;
+        },
       },
       {
         q: '火車車廂彩繪：7 節車廂要畫上企鵝 2 節、無尾熊 2 節、貓熊 3 節，要求中間三節車廂必須三種動物各一，共有多少種畫法？',
@@ -5278,11 +5321,11 @@
         },
         {
           q: '求 \\((x^2+1)^5\\) 除以 \\((x-1)^2\\) 的餘式。',
-          a: '簡答：\\(160x-128\\)。過程：餘式設為 \\(ax+b\\)。令 \\(f(x)=(x^2+1)^5\\)，則 \\(f(1)=32\\)、\\(f\\prime(1)=160\\)。由 \\(a+b=32\\)、\\(a=160\\) 得餘式 \\(160x-128\\)。',
+          a: '簡答：\\(160x-128\\)。過程：令 \\(t=x-1\\)，則 \\(x=t+1\\)，所以 \\(x^2+1=t^2+2t+2\\)。模 \\(t^2\\) 時只需保留常數與一次項：\\((t^2+2t+2)^5\\equiv2^5+5\\cdot2^4\\cdot2t=32+160t\\)。化回 \\(t=x-1\\)，得餘式 \\(160x-128\\)。',
         },
         {
           q: '求 \\(x^{12}\\) 除以 \\((x-1)^2\\) 的餘式。',
-          a: '簡答：\\(12x-11\\)。過程：餘式設為 \\(ax+b\\)。由 \\(f(1)=1\\)、\\(f\\prime(1)=12\\)，得 \\(a=12\\)、\\(a+b=1\\)，所以餘式為 \\(12x-11\\)。',
+          a: '簡答：\\(12x-11\\)。過程：令 \\(t=x-1\\)，則 \\(x=1+t\\)。模 \\(t^2\\) 時，\\((1+t)^{12}\\equiv1+12t\\)。化回 \\(t=x-1\\)，得餘式 \\(12x-11\\)。',
         },
       ],
       count
@@ -5575,8 +5618,16 @@
           a: '簡答：6580。過程：第 \\(k\\) 項對 \\(x^4\\) 的貢獻為 \\(kC(k,2)\\)。所以係數為 \\(\\sum_{k=1}^{15}kC(k,2)=6580\\)。',
         },
         {
-          q: '求 \\((x^2-2x+2)^{10}\\) 被 \\((x-1)^3\\) 除所得的餘式。',
-          a: '簡答：\\(10x^2-20x+11\\)。過程：令 \\(t=x-1\\)，則 \\(x^2-2x+2=1+t^2\\)。模 \\(t^3\\) 時只留到二次，得 \\(1+10t^2=10x^2-20x+11\\)。',
+          get q() {
+            const n = [8, 10, 12][randInt(0, 2)];
+            this._n = n;
+            return `計算 \\(\\sum_{k=0}^{${n}} kC(${n},k)\\)。`;
+          },
+          get a() {
+            const n = this._n || 10;
+            const value = n * 2 ** (n - 1);
+            return `簡答：${value}。過程：利用 \\(kC(n,k)=nC(n-1,k-1)\\)，所以 \\(\\sum_{k=0}^{${n}}kC(${n},k)=${n}\\sum_{j=0}^{${n - 1}}C(${n - 1},j)=${n}\\cdot2^{${n - 1}}=${value}\\)。`;
+          },
         },
         {
           q: '計算 \\(1+C(n,1)(\\frac13)+C(n,2)(\\frac13)^2+\\cdots+C(n,n)(\\frac13)^n\\)。',
@@ -5788,24 +5839,52 @@
     return buildS223TemplateSet(
       [
         {
-          q: '求以 \\((x-1)^3\\) 除 \\((x^2-2x+2)^{10}\\) 所得餘式。',
-          a: '簡答：\\(10x^2-20x+11\\)。過程：令 \\(t=x-1\\)，原式成為 \\((1+t^2)^{10}\\)。模 \\(t^3\\) 只留 \\(1+10t^2\\)，化回得 \\(10x^2-20x+11\\)。',
+          get q() {
+            const base = [2, 3, 4][randInt(0, 2)];
+            const power = [3, 4, 5][randInt(0, 2)];
+            this._d = { base, power };
+            return `求以 \\((x-1)^3\\) 除 \\((x^2-2x+${base + 1})^{${power}}\\) 所得的餘式。`;
+          },
+          get a() {
+            const d = this._d || { base: 2, power: 4 };
+            const tConstant = d.base ** d.power;
+            const tSquared = d.power * d.base ** (d.power - 1);
+            const constant = tConstant + tSquared;
+            return `簡答：\\(${tSquared}x^2-${2 * tSquared}x+${constant}\\)。過程：令 \\(t=x-1\\)，則 \\(x^2-2x+${d.base + 1}=t^2+${d.base}\\)。模 \\(t^3\\) 時只需保留到二次項：\\((${d.base}+t^2)^{${d.power}}\\equiv${tConstant}+${tSquared}t^2\\)。化回 \\(t=x-1\\)，得餘式 \\(${tSquared}x^2-${2 * tSquared}x+${constant}\\)。`;
+          },
         },
         {
           q: '求 \\(x^{30}\\) 除以 \\((x-1)^3\\) 的餘式。',
-          a: '簡答：\\(435x^2-840x+406\\)。過程：餘式設為二次式。用 \\(f(1)=1\\)、\\(f\\prime(1)=30\\)、\\(f\\prime\\prime(1)=870\\) 對應餘式及其導數在 1 的值，可解得 \\(435x^2-840x+406\\)。',
+          a: '簡答：\\(435x^2-840x+406\\)。過程：令 \\(t=x-1\\)，則 \\(x=1+t\\)。模 \\(t^3\\) 時，\\((1+t)^{30}\\equiv1+30t+C(30,2)t^2=1+30t+435t^2\\)。化回 \\(t=x-1\\)，得餘式 \\(435x^2-840x+406\\)。',
         },
         {
           q: '求以 \\((x+1)^3\\) 除 \\(x^{100}-2\\) 所得餘式。',
-          a: '簡答：\\(4950x^2+9800x+4849\\)。過程：餘式設為 \\(ax^2+bx+c\\)。令 \\(f(x)=x^{100}-2\\)，利用在 \\(x=-1\\) 的函數值、一階導數、二階導數相同，解得餘式。',
+          a: '簡答：\\(4950x^2+9800x+4849\\)。過程：令 \\(t=x+1\\)，則 \\(x=t-1\\)。模 \\(t^3\\) 時，\\((t-1)^{100}-2\\equiv-1-100t+C(100,2)t^2=-1-100t+4950t^2\\)。化回 \\(t=x+1\\)，得餘式 \\(4950x^2+9800x+4849\\)。',
         },
         {
-          q: '利用二項式定理求 \\(11^{18}\\) 除以 1000 的餘數。',
-          a: '簡答：481。過程：\\(11^{18}=(10+1)^{18}\\)。模 1000 時只需保留 \\(1+18\\cdot10+C(18,2)10^2\\)，得 \\(1+180+15300\\equiv481\\pmod {1000}\\)。',
+          get q() {
+            const exponent = [7, 12, 18][randInt(0, 2)];
+            this._exponent = exponent;
+            return `利用二項式定理求 \\(21^{${exponent}}\\) 除以 1000 的餘數。`;
+          },
+          get a() {
+            const exponent = this._exponent || 12;
+            const expanded = 1 + 20 * exponent + 400 * combinationCount(exponent, 2);
+            const remainder = expanded % 1000;
+            return `簡答：${remainder}。過程：\\(21^{${exponent}}=(20+1)^{${exponent}}\\)。因為 \\(20^3\\) 已是 1000 的倍數，模 1000 時只需保留 \\(1+${exponent}\\cdot20+C(${exponent},2)\\cdot20^2=${expanded}\\)。所以餘數為 \\(${remainder}\\)。`;
+          },
         },
         {
-          q: '證明 \\(19^{19}+1\\) 恆為 20 的倍數。',
-          a: '簡答：成立。過程：\\(19\\equiv-1\\pmod {20}\\)，所以 \\(19^{19}+1\\equiv(-1)^{19}+1=0\\pmod {20}\\)。',
+          get q() {
+            const modulus = [20, 30, 50][randInt(0, 2)];
+            const exponent = [7, 9, 11][randInt(0, 2)];
+            this._d = { modulus, exponent };
+            return `證明 \\(${modulus - 1}^{${exponent}}+1\\) 為 ${modulus} 的倍數。`;
+          },
+          get a() {
+            const d = this._d || { modulus: 30, exponent: 9 };
+            return `簡答：成立。過程：\\(${d.modulus - 1}\\equiv-1\\pmod{${d.modulus}}\\)，且 ${d.exponent} 為奇數，所以 \\(${d.modulus - 1}^{${d.exponent}}+1\\equiv(-1)^{${d.exponent}}+1=0\\pmod{${d.modulus}}\\)。`;
+          },
         },
       ],
       count
@@ -8281,9 +8360,11 @@
           const v = u === 1 ? 2 : 1;
           const A = mu + u * (n + 1);
           const B = mu + v * (n - 1);
+          const uN = formatCoefficientVariable(u, 'n');
+          const vN = formatCoefficientVariable(v, 'n');
           return {
             q: `一組 \\(n\\) 個數據中加入一個數 ${A} 後平均多 ${u}；若去掉一個數 ${B} 後平均少 ${v}，求原始個數 \\(n\\)。`,
-            a: `簡答：${n}。過程：設原平均為 \\(\\mu\\)。加入 ${A} 後 \\(\\frac{n\\mu+${A}}{n+1}=\\mu+${u}\\)，得 \\(\\mu+${u}n=${A - u}\\)。去掉 ${B} 後 \\(\\frac{n\\mu-${B}}{n-1}=\\mu-${v}\\)，得 \\(\\mu+${v}n=${B + v}\\)。聯立解得 \\(n=${n}\\)、\\(\\mu=${mu}\\)。`,
+            a: `簡答：${n}。過程：設原平均為 \\(\\mu\\)。加入 ${A} 後 \\(\\frac{n\\mu+${A}}{n+1}=\\mu+${u}\\)，得 \\(\\mu+${uN}=${A - u}\\)。去掉 ${B} 後 \\(\\frac{n\\mu-${B}}{n-1}=\\mu-${v}\\)，得 \\(\\mu+${vN}=${B + v}\\)。聯立解得 \\(n=${n}\\)、\\(\\mu=${mu}\\)。`,
           };
         },
       ],
@@ -8295,13 +8376,14 @@
     return buildS223DynamicSet(
       [
         () => {
-          const n = s242Pick([10, 20, 25]);
+          const n = s242Pick([10, 12, 15, 20]);
           const mu = 5 * randInt(10, 16);
-          const d = randInt(1, 3);
           const w = 5 * randInt(8, 12);
+          const maxD = Math.max(1, Math.min(3, Math.floor((100 - w) / n)));
+          const d = randInt(1, maxD);
           const r = w + n * d;
           return {
-            q: `某班 ${n} 位學生的數學成績平均為 ${mu} 分、標準差為 4 分。後來發現其中一人的成績「${r} 分」被誤植為「${w} 分」，求正確的平均數。`,
+            q: `某班 ${n} 位學生的數學成績登錄平均為 ${mu} 分。後來發現其中一人的成績「${r} 分」被誤植為「${w} 分」，求正確的平均數。`,
             a: `簡答：${mu + d} 分。過程：原登錄總分為 \\(${n}\\cdot${mu}=${n * mu}\\)。修正時總分增加 \\(${r}-${w}=${n * d}\\)，正確總分為 ${n * mu + n * d}，所以正確平均為 ${mu + d}。`,
           };
         },
@@ -8327,7 +8409,7 @@
           const hi = mu + t;
           const lo = mu - t;
           return {
-            q: `已知 ${n} 筆數據的平均數為 ${mu}，標準差為 2。若剔除其中兩筆明顯錯誤的離群值 ${hi} 與 ${lo}，求剩餘 ${n - 2} 筆的新平均數。`,
+            q: `已知 ${n} 筆數據的平均數為 ${mu}。若剔除其中兩筆明顯錯誤的離群值 ${hi} 與 ${lo}，求剩餘 ${n - 2} 筆的新平均數。`,
             a: `簡答：${mu}。過程：原總和為 \\(${n}\\cdot${mu}=${n * mu}\\)。剔除 ${hi} 與 ${lo} 後總和為 ${n * mu - hi - lo}，剩 ${n - 2} 筆，所以新平均為 \\(${n * mu - hi - lo}/${n - 2}=${mu}\\)。`,
           };
         },
@@ -8597,7 +8679,7 @@
           const ansText = sum % 5 === 0 ? String(sum / 5) : formatFraction(sum, 5);
           return {
             q: `給定數據 \\(\\{${values.join(',')}\\}\\)，求使 \\(f(x)=\\sum (x_i-x)^2\\) 最小的 \\(x\\) 值。`,
-            a: `簡答：\\(${ansText}\\)。過程：平方離差和 \\(\\sum(x_i-x)^2\\) 在 \\(x\\) 等於平均數時最小。資料總和為 ${sum}、筆數 5，所以最小時 \\(x=${ansText}\\)。`,
+            a: `簡答：\\(${ansText}\\)。過程：核心恆等式為 \\(\\sum(x_i-x)^2=\\sum(x_i-\\bar x)^2+5(x-\\bar x)^2\\)。最後一項不小於 0，所以平方離差和在 \\(x=\\bar x\\) 時最小。資料總和為 ${sum}、筆數 5，故 \\(\\bar x=${ansText}\\)。`,
           };
         },
         () => {
@@ -8608,7 +8690,7 @@
           const minVal = d + c - b - a;
           return {
             q: `求使 \\(f(x)=|x-${a}|+|x-${b}|+|x-${c}|+|x-${d}|\\) 產生最小值的 \\(x\\) 範圍及其最小值。`,
-            a: `簡答：\\(${b}\\le x\\le${c}\\)，最小值 ${minVal}。過程：絕對離差和在中位數處最小；偶數筆資料時，任取兩個中間數 ${b} 與 ${c} 之間皆可。最小值為 \\((${d}-${a})+(${c}-${b})=${minVal}\\)。`,
+            a: `簡答：\\(${b}\\le x\\le${c}\\)，最小值 ${minVal}。過程：核心結論是「平方離差和在平均數處最小；絕對離差和在中位數處最小」。本題有偶數筆資料，任取兩個中間數 ${b} 與 ${c} 之間皆可使絕對離差和最小。最小值為 \\((${d}-${a})+(${c}-${b})=${minVal}\\)。`,
           };
         },
         () => {
@@ -8623,9 +8705,10 @@
           const mu = s242Pick([8, 10, 12, 15]);
           const k2 = mu + randInt(1, 4);
           const diff = (k2 - mu) * (k2 - mu);
+          const diffN = formatCoefficientVariable(diff, 'n');
           return {
             q: `已知數據的算術平均數為 ${mu}，證明當 \\(k=${mu}\\) 時，\\(\\sum (x_i-k)^2\\) 會小於當 \\(k=${k2}\\) 時的結果。`,
-            a: `簡答：成立。過程：平方離差和在 \\(k=\\mu\\) 時最小。此處 \\(\\mu=${mu}\\)，且 \\(\\sum(x_i-${k2})^2=\\sum(x_i-${mu})^2+n(${k2}-${mu})^2=\\sum(x_i-${mu})^2+${diff}n\\)，因 \\(n>0\\)，所以 \\(k=${mu}\\) 時嚴格小於 \\(k=${k2}\\) 時的結果。`,
+            a: `簡答：成立。過程：平方離差和在 \\(k=\\mu\\) 時最小。此處 \\(\\mu=${mu}\\)，且 \\(\\sum(x_i-${k2})^2=\\sum(x_i-${mu})^2+n(${k2}-${mu})^2=\\sum(x_i-${mu})^2+${diffN}\\)，因 \\(n>0\\)，所以 \\(k=${mu}\\) 時嚴格小於 \\(k=${k2}\\) 時的結果。`,
           };
         },
         () => {
@@ -9492,7 +9575,7 @@
         `已知兩變數 \\(X,Y\\) 的 \\(\\mu_X=${muX}\\)、\\(\\mu_Y=${muY}\\)、\\(\\sigma_X=${sigmaX}\\)、\\(\\sigma_Y=${sigmaY}\\)，相關係數 \\(r=${rText}\\)。若將資料標準化為 \\(X'=\\frac{X-\\mu_X}{\\sigma_X}\\)、\\(Y'=\\frac{Y-\\mu_Y}{\\sigma_Y}\\)，求 \\(Y'\\) 對 \\(X'\\) 的迴歸直線。`
       );
       answers.push(
-        `簡答：\\(Y'=${rText}X'\\)。過程：標準化後 \\(\\mu_{X'}=\\mu_{Y'}=0\\)，且 \\(\\sigma_{X'}=\\sigma_{Y'}=1\\)。迴歸線必通過 \\((0,0)\\)，斜率為 \\(r\\frac{\\sigma_{Y'}}{\\sigma_{X'}}=${rText}\\)，所以 \\(Y'=${rText}X'\\)。`
+        `簡答：\\(Y'=${rText}X'\\)。過程：標準化後 \\(\\mu_{X'}=\\mu_{Y'}=0\\)，且 \\(\\sigma_{X'}=\\sigma_{Y'}=1\\)。因此標準化數據的迴歸線「斜率就是相關係數 \\(r\\)，截距必為 0」；它通過 \\((0,0)\\)，斜率為 \\(r\\frac{\\sigma_{Y'}}{\\sigma_{X'}}=${rText}\\)，所以 \\(Y'=${rText}X'\\)。`
       );
     }
 
@@ -9730,8 +9813,8 @@
           a: '簡答：觀察點群貼近直線的程度。過程：\\(|r|\\) 衡量線性相關強度，點越貼近某條直線，\\(|r|\\) 越大；斜率正負只影響 \\(r\\) 的正負，不影響 \\(|r|\\) 大小。',
         },
         {
-          q: '在 5 筆數據的散布圖中，若移除一筆遠離整體趨勢的離群點，剩餘資料的相關係數絕對值通常會如何改變？',
-          a: '簡答：通常變大。過程：離群點若偏離原本線性趨勢，會拉低線性貼合程度；移除後點群較貼近直線，因此 \\(|r|\\) 通常變大。',
+          q: '某研究發現夏季的冰品銷量與溺水通報數呈正相關，能否據此斷定「吃冰會導致溺水」？',
+          a: '簡答：不能。過程：相關係數只描述兩變數的線性關聯，不能單憑相關就判定因果。本例可能同時受到夏季高溫、戲水人數增加等共同因素影響；要判定因果仍需實驗設計或更多證據。',
         },
         {
           q: '判斷下列何者屬於零相關但不是沒有關係：(A) 圓形分布 (B) 對稱於軸的拋物線 (C) 水平直線。',
@@ -9756,10 +9839,12 @@
             const bAbs = randInt(1, 4);
             const neg = randInt(0, 1) === 0;
             const c = randInt(1, 9);
+            const aX = a === 1 ? 'x' : `${a}x`;
+            const bY = bAbs === 1 ? 'y' : `${bAbs}y`;
             this._d = { a, bAbs, neg, c };
             return neg
-              ? `若所有散布點皆落在直線 \\(${a}x+${bAbs}y=${c}\\) 上，且 \\(x\\) 值不全相同，求其相關係數。`
-              : `若所有散布點皆落在直線 \\(${a}x-${bAbs}y=${c}\\) 上，且 \\(x\\) 值不全相同，求其相關係數。`;
+              ? `若所有散布點皆落在直線 \\(${aX}+${bY}=${c}\\) 上，且 \\(x\\) 值不全相同，求其相關係數。`
+              : `若所有散布點皆落在直線 \\(${aX}-${bY}=${c}\\) 上，且 \\(x\\) 值不全相同，求其相關係數。`;
           },
           get a() {
             const d = this._d || { a: 3, bAbs: 2, neg: true, c: 5 };
@@ -9892,7 +9977,7 @@
         },
         {
           q: '說明當 \\(x,y\\) 均標準化後，其迴歸直線必為 \\(y^{\\prime}=rx^{\\prime}\\)。',
-          a: '簡答：成立。過程：標準化後 \\(\\mu_{x^{\\prime}}=\\mu_{y^{\\prime}}=0\\)，且 \\(\\sigma_{x^{\\prime}}=\\sigma_{y^{\\prime}}=1\\)。迴歸斜率為 \\(r\\frac{\\sigma_y}{\\sigma_x}=r\\)，又直線通過 \\((0,0)\\)，故為 \\(y^{\\prime}=rx^{\\prime}\\)。',
+          a: '簡答：成立。過程：標準化後 \\(\\mu_{x^{\\prime}}=\\mu_{y^{\\prime}}=0\\)，且 \\(\\sigma_{x^{\\prime}}=\\sigma_{y^{\\prime}}=1\\)。因此標準化數據的迴歸線斜率就是相關係數 \\(r\\)，截距必為 0；即 \\(r\\frac{\\sigma_{y^{\\prime}}}{\\sigma_{x^{\\prime}}}=r\\)，又直線通過 \\((0,0)\\)，故為 \\(y^{\\prime}=rx^{\\prime}\\)。',
         },
       ],
       count
@@ -10199,8 +10284,8 @@
           const cross = 25 * randInt(1, 4);
           const c = (k + 1) * cross;
           return {
-            q: `設 \\(y\\) 對 \\(x\\) 的迴歸線為 \\(y=-${k}x+${c}\\)。試問該直線與 \\(y=x\\) 的交點是否可能為平均點？`,
-            a: `簡答：可能。過程：交點由 \\(x=-${k}x+${c}\\) 得 \\((${cross},${cross})\\)。只要資料的平均點為 \\((${cross},${cross})\\)，迴歸線就會通過它，因此該交點可能是平均點。`,
+            q: `設 \\(y\\) 對 \\(x\\) 的迴歸線為 \\(y=-${k}x+${c}\\)，其與 \\(y=x\\) 的交點為何？此交點要成為資料平均點，\\(\\mu_x,\\mu_y\\) 必須滿足什麼條件？`,
+            a: `簡答：交點為 \\((${cross},${cross})\\)；必須 \\(\\mu_x=\\mu_y=${cross}\\)。過程：由 \\(x=-${k}x+${c}\\) 得交點 \\((${cross},${cross})\\)。迴歸線必通過平均點 \\((\\mu_x,\\mu_y)\\)，但直線上的任意點不一定是平均點；因此此交點要成為平均點，必要且充分條件是 \\((\\mu_x,\\mu_y)=(${cross},${cross})\\)。`,
           };
         },
         () => {
@@ -10910,7 +10995,7 @@
       const termCount = 90 / step - 1;
       const ans = termCount % 2 === 0 ? `${termCount / 2}` : formatFraction(termCount, 2);
       questions.push(
-        `計算 \\(${func}^2${step}^\\circ+${func}^2${2 * step}^\\circ+\\cdots+${func}^2${90 - step}^\\circ\\) 的值。`
+        `計算 \\(${func}^2(${step}^\\circ)+${func}^2(${2 * step}^\\circ)+\\cdots+${func}^2(${90 - step}^\\circ)\\) 的值。`
       );
       answers.push(
         `簡答：\\(${ans}\\)。過程：利用互餘角關係與 \\(\\sin^2\\theta+\\cos^2\\theta=1\\)。將 \\(\\theta\\) 與 \\(90^\\circ-\\theta\\) 配對，每組和為 1；若出現 \\(45^\\circ\\)，其平方為 \\(\\frac12\\)。`
@@ -11550,7 +11635,7 @@
         `\\(\\triangle ABC\\) 中，\\(\\angle A=${item.A}^\\circ\\)、\\(AB=${item.c * scale}\\)、\\(AC=${item.b * scale}\\)，求內角平分線 \\(AD\\) 的長度。`
       );
       answers.push(
-        `簡答：\\(AD=${len}\\)。過程：\\(AD=\\frac{2bc\\cos(A/2)}{b+c}\\)。代入 \\(b=${item.b * scale}\\)、\\(c=${item.c * scale}\\)、\\(A=${item.A}^\\circ\\)，得 \\(AD=${len}\\)。`
+        `簡答：\\(AD=${len}\\)。過程：設 \\(a=BC\\)。由 \\(\\triangle ABC=\\triangle ABD+\\triangle ACD\\)，兩小三角形對 \\(BC\\) 共高，可用面積比理解角平分線定理 \\(BD:DC=c:b\\)。再配合 Stewart 定理與餘弦定理，可得 \\(AD=\\frac{2bc\\cos(A/2)}{b+c}\\)。代入 \\(b=${item.b * scale}\\)、\\(c=${item.c * scale}\\)、\\(A=${item.A}^\\circ\\)，得 \\(AD=${len}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -12154,6 +12239,8 @@
       { d: 300, speed: 50, ans: '6' },
       { d: '200\\sqrt{3}', speed: '100\\sqrt{3}', ans: '2' },
       { d: 600, speed: 60, ans: '10' },
+      { d: '240\\sqrt{3}', speed: '60\\sqrt{3}', ans: '4' },
+      { d: 420, speed: 70, ans: '6' },
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -12162,7 +12249,7 @@
       const item = s242Pick(cases);
       const object = s242Pick(['颱風中心', '低氣壓中心', '暴風圈中心', '雷雨胞中心']);
       questions.push(
-        `${object}目前距城市 \\(A\\) 為 \\(${item.d}\\) 公里，正沿通過城市 \(A\) 的直線以每小時 \\(${item.speed}\\) 公里朝城市前進。求抵達城市 \(A\) 所需時間。`
+        `${object}目前距城市 \\(A\\) 為 \\(${item.d}\\) 公里，正沿通過城市 \\(A\\) 的直線以每小時 \\(${item.speed}\\) 公里朝城市前進。求抵達城市 \\(A\\) 所需時間。`
       );
       answers.push(
         `簡答：約 ${item.ans} 小時。過程：沿直線朝城市前進時，所需時間為距離除以速率，即 \\(\\frac{${item.d}}{${item.speed}}=${item.ans}\\)（小時）。`
@@ -12173,10 +12260,12 @@
 
   function buildS243UniformMotionAngleChangeSet(count) {
     const cases = [
-      { h: '500\\sqrt{3}', from: 60, to: 30, t: 5, ans: '200' },
-      { h: '200\\sqrt{3}', from: 30, to: 60, t: 10, ans: '40' },
-      { h: 300, from: 45, to: 30, t: 5, ans: '60(\\sqrt{3}-1)' },
-      { h: 600, from: 60, to: 45, t: 10, ans: '20(3-\\sqrt{3})' },
+      { h: '500\\sqrt{3}', from: 60, to: 30, t: 5, dFrom: '500', dTo: '1500', ans: '200' },
+      { h: '200\\sqrt{3}', from: 30, to: 60, t: 10, dFrom: '600', dTo: '200', ans: '40' },
+      { h: 300, from: 45, to: 30, t: 5, dFrom: '300', dTo: '300\\sqrt{3}', ans: '60(\\sqrt{3}-1)' },
+      { h: 600, from: 60, to: 45, t: 10, dFrom: '200\\sqrt{3}', dTo: '600', ans: '20(3-\\sqrt{3})' },
+      { h: '400\\sqrt{3}', from: 60, to: 30, t: 8, dFrom: '400', dTo: '1200', ans: '100' },
+      { h: 400, from: 45, to: 30, t: 10, dFrom: '400', dTo: '400\\sqrt{3}', ans: '40(\\sqrt{3}-1)' },
     ];
     const questions = [];
     const summaryAnswers = [];
@@ -12189,7 +12278,7 @@
         `一${object}以固定高度沿通過觀測點與其地面投影的水平直線${direction}觀測點，高度為 \\(${item.h}\\) 公尺，觀測仰角由 \\(${item.from}^\\circ\\) 變為 \\(${item.to}^\\circ\\)，歷時 ${item.t} 秒，求其水平速率。`
       );
       answers.push(
-        `簡答：\\(${item.ans}\\) 公尺/秒。過程：每次觀測的水平距離都是 \\(\\frac{h}{\\tan\\theta}\\)。兩次水平距離差除以 ${item.t} 秒，即為水平速率。`
+        `簡答：\\(${item.ans}\\) 公尺/秒。過程：每次觀測的水平距離為 \\(\\frac{h}{\\tan\\theta}\\)，所以兩次分別為 \\(${item.dFrom}\\) 與 \\(${item.dTo}\\) 公尺。水平速率為 \\(\\frac{|${item.dTo}-${item.dFrom}|}{${item.t}}=${item.ans}\\)（公尺/秒）。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -13459,11 +13548,11 @@
       );
       if (isPerpendicular) {
         answers.push(
-          `簡答：\\(90^\\circ\\)。過程：因為 \\(1+k_1k_2=${denomText(k1, k2)}=0\\)，所以兩直線互相垂直，夾角為 \\(90^\\circ\\)。`
+          `簡答：\\(90^\\circ\\)。過程：令兩直線與正 \\(x\\) 軸的方向角分別為 \\(\\alpha,\\beta\\)，則 \\(\\tan\\alpha=k_1\\)、\\(\\tan\\beta=k_2\\)。因為 \\(1+k_1k_2=${denomText(k1, k2)}=0\\)，所以兩直線互相垂直，夾角為 \\(90^\\circ\\)。`
         );
       } else {
         answers.push(
-          `簡答：約 \\(${rounded}^\\circ\\)。過程：兩直線斜率分別為 \\(k_1=${k1}\\)、\\(k_2=${k2}\\)，夾角 \\(\\theta\\) 滿足 \\(\\tan\\theta=\\left|\\dfrac{k_1-k_2}{1+k_1k_2}\\right|=\\left|\\dfrac{${slopeSubtractionText(k1, k2)}}{${denomText(k1, k2)}}\\right|=${s241TanFractionText(k1, k2, denom)}\\)，取 \\(\\theta=\\tan^{-1}(${s241RoundNum(Math.abs((k1 - k2) / denom))})\\approx${rounded}^\\circ\\)。`
+          `簡答：約 \\(${rounded}^\\circ\\)。過程：令兩直線與正 \\(x\\) 軸的方向角分別為 \\(\\alpha,\\beta\\)，則 \\(\\tan\\alpha=k_1=${k1}\\)、\\(\\tan\\beta=k_2=${k2}\\)。故夾角 \\(\\theta=|\\alpha-\\beta|\\) 滿足 \\(\\tan\\theta=\\left|\\dfrac{k_1-k_2}{1+k_1k_2}\\right|=\\left|\\dfrac{${slopeSubtractionText(k1, k2)}}{${denomText(k1, k2)}}\\right|=${s241TanFractionText(k1, k2, denom)}\\)，取 \\(\\theta=\\tan^{-1}(${s241RoundNum(Math.abs((k1 - k2) / denom))})\\approx${rounded}^\\circ\\)。`
         );
       }
     }
@@ -13656,7 +13745,7 @@
           set,
           `\\(\\triangle ABC\\) 中，\\(\\angle A=${angle}^\\circ\\)、\\(AB=${c}\\)、\\(AC=${b}\\)，求內角平分線 \\(AD\\) 的長度。`,
           `\\(AD=${len}\\)`,
-          `內角平分線長可用 \\(AD=\\frac{2bc\\cos(A/2)}{b+c}\\)。代入 \\(b=${b}\\)、\\(c=${c}\\)、\\(A=${angle}^\\circ\\)，得 \\(AD=${len}\\)。`
+          `設 \\(a=BC\\)。由面積拆分 \\(\\triangle ABC=\\triangle ABD+\\triangle ACD\\) 可連結到角平分線定理 \\(BD:DC=c:b\\)；再配合 Stewart 定理與餘弦定理，可得 \\(AD=\\frac{2bc\\cos(A/2)}{b+c}\\)。代入 \\(b=${b}\\)、\\(c=${c}\\)、\\(A=${angle}^\\circ\\)，得 \\(AD=${len}\\)。`
         );
       } else if (mode === 1) {
         const cases = [
@@ -16446,7 +16535,7 @@
     },
     's2-2-2-gender-non-adjacent-parameterized': {
       type: 'drill',
-      title: '男女不相鄰排列',
+      title: '指定性別彼此不相鄰排列',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -16572,7 +16661,7 @@
     },
     's2-3-1-sqrt-score-transform-parameterized': {
       type: 'drill',
-      title: '開根號調分反推原始平均',
+      title: '非線性變換（開根號）下的期望值還原',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -17076,7 +17165,7 @@
     },
     's2-3-2-mean-point': {
       type: 'drill',
-      title: '利用必過平均點性質求值',
+      title: '迴歸線必過平均點的條件判定',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -17211,7 +17300,7 @@
     },
     's2-4-1-side-altitude-sine-ratio': {
       type: 'drill',
-      title: '邊長高與三角比的比例轉化',
+      title: '高、邊與正弦比（面積與正弦定理應用）',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -17769,7 +17858,7 @@
     },
     's2-4-1-line-slope-angle-parameterized': {
       type: 'drill',
-      title: '兩直線斜率求夾角',
+      title: '兩直線斜率與方向角求夾角',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -17889,7 +17978,7 @@
     };
   });
 
-  const fingerprint = 's2-bundle-v20260717-s22-s23-s24-parameterized-infinite-v8';
+  const fingerprint = 's2-bundle-v20260724-s24-audit-trig-survey-v12';
   if (window.__s2BundleFingerprint === fingerprint) return;
   window.__s2BundleFingerprint = fingerprint;
   window.formulaPracticeStore.registerConfigs(nextConfigs);

@@ -693,12 +693,17 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 5;
       if (mode === 0) {
-        const a = 10 * randInt(1, 4);
-        const b = a + 10 * randInt(1, 3);
-        const c = b + 10 * randInt(1, 3);
-        questions.push(`比較 \\(\\sec ${a}^\\circ,\\sec ${b}^\\circ,\\sec ${c}^\\circ\\) 的大小。`);
+        const [a, b, c] = s242Pick([
+          [10, 30, 50],
+          [10, 30, 70],
+          [10, 40, 70],
+          [20, 40, 60],
+          [20, 50, 80],
+          [30, 50, 70],
+        ]);
+        questions.push(`比較 \\(\\cot ${a}^\\circ,\\cot ${b}^\\circ,\\cot ${c}^\\circ\\) 的大小。`);
         answers.push(
-          `簡答：\\(\\sec ${a}^\\circ<\\sec ${b}^\\circ<\\sec ${c}^\\circ\\)。過程：在 \\(0^\\circ\\) 到 \\(90^\\circ\\) 內，\\(\\cos\\theta\\) 遞減，所以倒數 \\(\\sec\\theta\\) 遞增。`
+          `簡答：\\(\\cot ${a}^\\circ>\\cot ${b}^\\circ>\\cot ${c}^\\circ\\)。過程：在 \\(0^\\circ\\) 到 \\(90^\\circ\\) 內，\\(\\tan\\theta\\) 遞增；取正倒數後，\\(\\cot\\theta\\) 遞減。`
         );
         continue;
       }
@@ -722,7 +727,9 @@
         continue;
       }
       if (mode === 3) {
-        const a = s242Pick([10, 15, 20, 25, 30, 35, 40]);
+        // \(\cot\theta>\sec\theta\) 在銳角中並非對所有 \(\theta<45^\circ\) 都成立；
+        // 取到 \(40^\circ\) 時排序會反轉，因此限縮在可直接比較的角度。
+        const a = s242Pick([10, 15, 20, 25, 30, 35]);
         questions.push(
           `令 \\(a=\\cot ${a}^\\circ\\)、\\(b=\\sec ${a}^\\circ\\)、\\(c=\\csc ${a}^\\circ\\)，比較 \\(a,b,c\\) 的大小。`
         );
@@ -734,12 +741,12 @@
       {
         const variant = s242Pick([
           {
-            q: '已知 \\(0^\\circ<\\theta<45^\\circ\\)，判斷 \\(\\csc\\theta>\\sec\\theta\\) 是否恆成立。',
-            why: '在 \\(0^\\circ<\\theta<45^\\circ\\) 時，\\(\\sin\\theta<\\cos\\theta\\)，取正倒數後不等號反向，故 \\(\\csc\\theta=\\frac1{\\sin\\theta}>\\frac1{\\cos\\theta}=\\sec\\theta\\)。',
+            q: '已知 \\(0^\\circ<\\theta<90^\\circ\\)，判斷 \\(\\csc\\theta>\\cot\\theta\\) 是否恆成立。',
+            why: '\\(\\csc\\theta=\\frac1{\\sin\\theta}\\)、\\(\\cot\\theta=\\frac{\\cos\\theta}{\\sin\\theta}\\)。因為銳角時 \\(0<\\cos\\theta<1\\)，分母同為正的 \\(\\sin\\theta\\)，故 \\(\\csc\\theta>\\cot\\theta\\)。',
           },
           {
-            q: '已知 \\(45^\\circ<\\theta<90^\\circ\\)，判斷 \\(\\sec\\theta>\\csc\\theta\\) 是否恆成立。',
-            why: '在 \\(45^\\circ<\\theta<90^\\circ\\) 時，\\(\\cos\\theta<\\sin\\theta\\)，取正倒數後不等號反向，故 \\(\\sec\\theta=\\frac1{\\cos\\theta}>\\frac1{\\sin\\theta}=\\csc\\theta\\)。',
+            q: '已知 \\(0^\\circ<\\theta<90^\\circ\\)，判斷 \\(\\sec\\theta>\\tan\\theta\\) 是否恆成立。',
+            why: '\\(\\sec\\theta=\\frac1{\\cos\\theta}\\)、\\(\\tan\\theta=\\frac{\\sin\\theta}{\\cos\\theta}\\)。因為銳角時 \\(0<\\sin\\theta<1\\)，分母同為正的 \\(\\cos\\theta\\)，故 \\(\\sec\\theta>\\tan\\theta\\)。',
           },
         ]);
         questions.push(variant.q);
@@ -764,11 +771,6 @@
         questions.push(`求 \\(${item.q}\\)。`);
         answers.push(`簡答：${item.ans}。過程：將特殊角三角比代入後化簡，可得 ${item.ans}。`);
         continue;
-        questions.push(`求 \\(\\sec60^\\circ+\\csc30^\\circ+\\cot45^\\circ\\)。`);
-        answers.push(
-          `簡答：5。過程：\\(\\sec60^\\circ=2\\)，\\(\\csc30^\\circ=2\\)，\\(\\cot45^\\circ=1\\)，所以總和為 5。`
-        );
-        continue;
       }
       if (mode === 1) {
         const item = s242Pick([
@@ -779,11 +781,6 @@
         questions.push(`計算 \\(${item.q}\\)。`);
         answers.push(
           `簡答：${item.ans}。過程：代入 \\(30^\\circ,45^\\circ,60^\\circ\\) 的特殊角值，乘積化簡得 ${item.ans}。`
-        );
-        continue;
-        questions.push(`計算 \\(\\sec^2 45^\\circ\\cdot\\cot30^\\circ\\cdot\\sin60^\\circ\\)。`);
-        answers.push(
-          `簡答：3。過程：\\(\\sec45^\\circ=\\sqrt2\\)，故 \\(\\sec^2 45^\\circ=2\\)；\\(\\cot30^\\circ=\\sqrt3\\)，\\(\\sin60^\\circ=\\frac{\\sqrt3}{2}\\)，乘積為 3。`
         );
         continue;
       }
@@ -801,11 +798,6 @@
           `簡答：\\(${fractionToLatex(ans)}\\)。過程：由 \\((\\sin\\theta-\\cos\\theta)^2=1-2\\sin\\theta\\cos\\theta\\)，得 \\(\\sin\\theta\\cos\\theta=${fractionToLatex(sinCos)}\\)。又 \\(\\sec\\theta-\\csc\\theta=\\frac{\\sin\\theta-\\cos\\theta}{\\sin\\theta\\cos\\theta}\\)，代入可得 \\(${fractionToLatex(ans)}\\)。`
         );
         continue;
-        questions.push(`若 \\(\\sin\\theta-\\cos\\theta=\\frac13\\)，求 \\(\\sec\\theta-\\csc\\theta\\) 的值。`);
-        answers.push(
-          `簡答：\\(\\frac34\\)。過程：由 \\((\\sin\\theta-\\cos\\theta)^2=1-2\\sin\\theta\\cos\\theta\\)，得 \\(\\sin\\theta\\cos\\theta=\\frac49\\)。又 \\(\\sec\\theta-\\csc\\theta=\\frac{\\sin\\theta-\\cos\\theta}{\\sin\\theta\\cos\\theta}=\\frac{1/3}{4/9}=\\frac34\\)。`
-        );
-        continue;
       }
       if (mode === 3) {
         const a = s242Pick([70, 80]);
@@ -814,17 +806,12 @@
           `簡答：\\(\\frac{2\\sin(${a}^\\circ-60^\\circ)}{\\sin${a}^\\circ\\cos${a}^\\circ}\\)。過程：通分得 \\(\\frac{\\sin${a}^\\circ-\\sqrt3\\cos${a}^\\circ}{\\sin${a}^\\circ\\cos${a}^\\circ}\\)，分子可用和差角公式改寫成 \\(2\\sin(${a}^\\circ-60^\\circ)\\)。`
         );
         continue;
-        questions.push(`求 \\(\\sec80^\\circ-\\sqrt3\\csc80^\\circ\\) 的精確轉換式。`);
-        answers.push(
-          `簡答：\\(\\frac{2\\sin(80^\\circ-60^\\circ)}{\\sin80^\\circ\\cos80^\\circ}\\)。過程：通分得 \\(\\frac{\\sin80^\\circ-\sqrt3\\cos80^\\circ}{\\sin80^\\circ\\cos80^\\circ}\\)，分子可用和差角公式改寫成 \\(2\\sin20^\\circ\\)。`
-        );
-        continue;
       }
       questions.push(
-        `已知二次方程式 \\(x^2-px+q=0\\) 的兩根為 \\(\\sec\\theta,\\csc\\theta\\)，試以 \\(p,q\\) 表示 \\(\\tan\\theta+\cot\\theta\\)。`
+        `已知二次方程式 \\(x^2-px+q=0\\) 的兩根為 \\(\\sec\\theta,\\csc\\theta\\)，試以 \\(p,q\\) 表示 \\(\\tan\\theta+\\cot\\theta\\)。`
       );
       answers.push(
-        `簡答：\\(q\\)。過程：兩根積 \\(q=\\sec\\theta\\csc\\theta\\)。而 \\(\\tan\\theta+\cot\\theta=\\frac{\\sin^2\\theta+\\cos^2\\theta}{\\sin\\theta\\cos\\theta}=\\sec\\theta\\csc\\theta\\)，所以其值為 \\(q\\)。`
+        `簡答：\\(q\\)。過程：兩根積 \\(q=\\sec\\theta\\csc\\theta\\)。而 \\(\\tan\\theta+\\cot\\theta=\\frac{\\sin^2\\theta+\\cos^2\\theta}{\\sin\\theta\\cos\\theta}=\\sec\\theta\\csc\\theta\\)，所以其值為 \\(q\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1833,7 +1820,7 @@
       }
       questions.push(`若 \\(\\sin\\theta-\\cos\\theta=\\frac13\\)，求 \\(\\sin3\\theta+\\cos3\\theta\\) 的值。`);
       answers.push(
-        `簡答：\\(\\pm\\frac{7\\sqrt{17}}{27}\\)。過程：由 \\((\\sin\\theta-\\cos\\theta)^2=\\frac19\\) 得 \\(\\sin\\theta\\cos\\theta=\\frac49\\)。令 \\(u=\\sin\\theta+\cos\\theta\\)，則 \\(u^2=1+2\\cdot\\frac49=\\frac{17}{9}\\)，所以 \\(u=\\pm\\frac{\\sqrt{17}}3\\)。又 \\(\\sin3\\theta+\cos3\\theta=u(3-4u^2+12\\sin\\theta\\cos\\theta)=u\\cdot\\frac79\\)，故可能值為 \\(\\pm\\frac{7\\sqrt{17}}{27}\\)。`
+        `簡答：\\(\\pm\\frac{7\\sqrt{17}}{27}\\)。過程：由 \\((\\sin\\theta-\\cos\\theta)^2=\\frac19\\) 得 \\(\\sin\\theta\\cos\\theta=\\frac49\\)。令 \\(u=\\sin\\theta+\\cos\\theta\\)，則 \\(u^2=1+2\\cdot\\frac49=\\frac{17}{9}\\)，所以 \\(u=\\pm\\frac{\\sqrt{17}}3\\)。又 \\(\\sin3\\theta+\\cos3\\theta=u(3-4u^2+12\\sin\\theta\\cos\\theta)=u\\cdot\\frac79\\)，故可能值為 \\(\\pm\\frac{7\\sqrt{17}}{27}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2289,25 +2276,71 @@
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
-    const bases = ['sin', 'cos', 'tan'];
     for (let i = 0; i < count; i += 1) {
-      const kind = s313Pick(bases);
-      const k = s313Pick([1, 2, 3, 4]);
+      const mode = i % 5;
+      const kind = s313Pick(['sin', 'cos']);
+      const k = s313Pick([2, 3, 4]);
       const h = s313Pick([
         [1, 6],
         [1, 4],
         [1, 3],
-        [-1, 4],
-        [0, 1],
       ]);
-      const a = s313Pick([2, 3, -2, -3]);
-      const d = s313Pick([-2, -1, 1, 3]);
-      const f = s313FuncText(kind, a, s313Arg(k, h[0], h[1]), d);
+      const hText = s313Pi(h[0], h[1]);
+      const d = s313Pick([-3, -2, -1, 1, 2, 3]);
+      const verticalInstruction = d > 0 ? `向上平移 ${d} 單位` : `向下平移 ${Math.abs(d)} 單位`;
+      if (mode === 0) {
+        const a = s313Pick([2, 3, -2, -3]);
+        const f = s313FuncText(kind, a, s313Arg(k, h[0], h[1]), d);
+        questions.push(
+          `將 \\(y=\\${kind} x\\) 的圖形水平壓縮為原來的 \\(\\frac1{${k}}\\)，再向右平移 \\(${hText}\\)，並將縱向伸縮係數變為 \\(${a}\\)，最後${verticalInstruction}，求新函數。`
+        );
+        answers.push(
+          `簡答：\\(${f}\\)。過程：水平壓縮使內部變成 \\(${k}(x-h)\\)，向右平移寫成 \\(x-h\\)；外部係數 ${a} 決定振幅與上下翻轉，最後加上 ${d}。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const a = s313Pick([2, 3, 4]);
+        const f = s313FuncText(kind, a, s313Arg(k, h[0], h[1]), d);
+        questions.push(
+          `觀察 \\(${f}\\) 的圖形，寫出它的振幅、最小正週期、水平平移與上下平移。`
+        );
+        answers.push(
+          `簡答：振幅 \\(${a}\\)，週期 \\(${s313Pi(2, k)}\\)，向右平移 \\(${hText}\\)，${verticalInstruction}。過程：外部係數給振幅；內部的 ${k} 使週期由 \\(2\\pi\\) 變成 \\(\\frac{2\\pi}{${k}}\\)；\\(x-${hText}\\) 表示向右平移。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        const a = s313Pick([2, 3, 4]);
+        const f = s313FuncText(kind, -a, s313Arg(k, h[0], h[1]), d);
+        questions.push(
+          `將 \\(y=\\${kind} x\\) 先對 \\(x\\) 軸對稱，再作 ${k} 倍水平壓縮、向右平移 \\(${hText}\\)、縱向伸縮 ${a} 倍，最後${verticalInstruction}，求新函數。`
+        );
+        answers.push(
+          `簡答：\\(${f}\\)。過程：對 \\(x\\) 軸對稱與縱向伸縮合成外部係數 \\(-${a}\\)；水平變換寫為 \\(${k}(x-${hText})\\)，再加上 ${d}。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        const a = s313Pick([2, 3, 4, 5]);
+        const f = s313FuncText('sin', a, s313Arg(k, h[0], h[1]), d);
+        const peak = reduceFraction(h[0] * 2 * k + h[1], h[1] * 2 * k);
+        const peakX = s313Pi(peak.numerator, peak.denominator);
+        questions.push(
+          `函數 \\(${f}\\) 的圖形由 \\(y=\\sin x\\) 變換而得。寫出一個波峰座標，並說明此點如何由內部角判定。`
+        );
+        answers.push(
+          `簡答：一個波峰為 \\((${peakX},${d + a})\\)。過程：正弦函數在內部角 \\(\\frac\\pi2\\) 時取最大值；令 \\(${k}(x-${hText})=\\frac\\pi2\\)，得 \\(x=${peakX}\\)，函數值為中線 ${d} 加振幅 ${a}。`
+        );
+        continue;
+      }
+      const a = s313Pick([2, 3, 4, 5]);
+      const f = s313FuncText('sin', a, s313Arg(k, h[0], h[1]), d);
       questions.push(
-        `將 \\(y=\\${kind} x\\) 的圖形水平壓縮為原來的 \\(\\frac1{${k}}\\)，再向右平移 \\(${s313Pi(h[0], h[1])}\\)，並將振幅或縱向伸縮倍數變為 \\(${a}\\)，最後上下平移 ${d} 單位，求新函數。`
+        `某正弦圖形振幅為 ${a}，中線為 \\(y=${d}\\)，最小正週期為 \\(${s313Pi(2, k)}\\)，且在 \\(x=${hText}\\) 處向上穿越中線。寫出一個符合條件的函數式。`
       );
       answers.push(
-        `簡答：\\(${f}\\)。過程：水平位移寫成 \\(x-h\\)，內部若再作 ${k} 倍水平壓縮則成 \\(${s313Arg(k, h[0], h[1])}\\)；外部乘上 ${a}，再加上 ${d}。`
+        `簡答：\\(${f}\\)。過程：振幅給外部係數 ${a}，週期 \\(\\frac{2\\pi}{${k}}\\) 給內部係數 ${k}；向上穿越中線可用正弦基本圖形的起點，故將 \\(x\\) 改成 \\(x-${hText}\\)，最後加上中線高度 ${d}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2933,11 +2966,48 @@
       const max = d + r;
       const min = d - r;
       const period = s313Pi(2, k);
+      const mode = i % 5;
+      if (mode === 0) {
+        questions.push(
+          `設 \\(f(x)=a\\sin kx+b\\cos kx+c\\)，已知週期為 \\(${period}\\)、最大值為 ${max}、最小值為 ${min}，且 \\(a=${a0}\\)、\\(b>0\\)。求 \\(b,c\\) 與 \\(k\\)。`
+        );
+        answers.push(
+          `簡答：\\(b=${b0},c=${d},k=${k}\\)。過程：最大最小值給出振幅 \\(R=\\frac{${max}-(${min})}{2}=${r}\\)，中線 \\(c=\\frac{${max}+(${min})}{2}=${d}\\)。又 \\(R^2=a^2+b^2\\)，所以 \\(b=\\sqrt{${r}^2-${a0}^2}=${b0}\\)。週期 \\(\\frac{2\\pi}{k}=${period}\\)，因此 \\(k=${k}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        questions.push(
+          `設 \\(f(x)=a\\cos kx+b\\sin kx+c\\)，已知週期為 \\(${period}\\)、最大值為 ${max}、最小值為 ${min}，且 \\(a<0\\)、\\(b=${b0}\\)。求 \\(a,c\\) 與 \\(k\\)。`
+        );
+        answers.push(
+          `簡答：\\(a=-${a0},c=${d},k=${k}\\)。過程：振幅 \\(R=${r}\\)，中線 \\(c=${d}\\)。由 \\(a^2+b^2=R^2\\)，得 \\(a^2=${r}^2-${b0}^2=${a0}^2\\)；題設 \\(a<0\\)，所以 \\(a=-${a0}\\)。週期 \\(\\frac{2\\pi}{k}=${period}\\)，得 \\(k=${k}\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        questions.push(
+          `設 \\(f(x)=a\\sin kx+b\\cos kx+c\\)，其中 \\(a,b>0\\)。已知週期為 \\(${period}\\)、最大值為 ${max}、最小值為 ${min}，且 \\(a:b=${a0}:${b0}\\)。求 \\(a,b,c\\) 與 \\(k\\)。`
+        );
+        answers.push(
+          `簡答：\\(a=${a0},b=${b0},c=${d},k=${k}\\)。過程：先由極值得 \\(R=${r}\\)、\\(c=${d}\\)。因 \\(a:b=${a0}:${b0}\\)，可設 \\(a=${a0}t,b=${b0}t\\)。代入 \\(a^2+b^2=R^2\\)，得 \\((${a0}^2+${b0}^2)t^2=${r}^2\\)，故正數 \\(t=1\\)。再由週期求得 \\(k=${k}\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        questions.push(
+          `設 \\(f(x)=a\\sin kx+b\\cos kx+c\\)，已知週期為 \\(${period}\\)、最大值為 ${max}、最小值為 ${min}，且 \\(a>0\\)、\\(b<0\\)、\\(|a|:|b|=${a0}:${b0}\\)。求 \\(a,b,c\\) 與 \\(k\\)。`
+        );
+        answers.push(
+          `簡答：\\(a=${a0},b=-${b0},c=${d},k=${k}\\)。過程：極值給出振幅 \\(R=${r}\\) 與中線 \\(c=${d}\\)。由絕對值比可設 \\(|a|=${a0}t,|b|=${b0}t\\)，再用 \\(a^2+b^2=${r}^2\\) 得 \\(t=1\\)。最後依 \\(a>0,b<0\\) 決定符號，並由週期求 \\(k=${k}\\)。`
+        );
+        continue;
+      }
       questions.push(
-        `設 \\(f(x)=a\\sin kx+b\\cos kx+c\\)，已知週期為 \\(${period}\\)、最大值為 ${max}、最小值為 ${min}，且 \\(a=${a0}\\)、\\(b>0\\)。求 \\(b,c\\) 與 \\(k\\)。`
+        `設 \\(f(x)=a\\cos kx+b\\sin kx+c\\)，其中 \\(a<0,b>0\\)。已知週期為 \\(${period}\\)、最大值為 ${max}、最小值為 ${min}，且 \\(|a|:b=${a0}:${b0}\\)。求 \\(a,b,c\\) 與 \\(k\\)。`
       );
       answers.push(
-        `簡答：\\(b=${b0},c=${d},k=${k}\\)。過程：最大最小值給出振幅 \\(R=\\frac{${max}-(${min})}{2}=${r}\\)，中線 \\(c=\\frac{${max}+(${min})}{2}=${d}\\)。又 \\(R^2=a^2+b^2\\)，所以 \\(b=\\sqrt{${r}^2-${a0}^2}=${b0}\\)。週期 \\(\\frac{2\\pi}{k}=${period}\\)，因此 \\(k=${k}\\)。`
+        `簡答：\\(a=-${a0},b=${b0},c=${d},k=${k}\\)。過程：由最大值、最小值得 \\(R=${r}\\)、\\(c=${d}\\)。設 \\(|a|=${a0}t,b=${b0}t\\)，代入 \\(a^2+b^2=R^2\\) 得 \\(t=1\\)。配合 \\(a<0,b>0\\) 決定係數符號，並由 \\(\\frac{2\\pi}{k}=${period}\\) 得 \\(k=${k}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -3540,21 +3610,63 @@
     const answers = createAnswerList(summaryAnswers);
     const shiftPool = [30, 36, 45, 60, 72];
     for (let i = 0; i < count; i += 1) {
-      const item = {
-        n: randInt(2, 8),
-        shift: shiftPool[randInt(0, shiftPool.length - 1)],
-        interval: '0^\\circ<\\theta<180^\\circ',
-      };
-      const values = [];
-      for (let k = 0; k < item.n; k += 1) {
-        values.push(`${formatFraction(90 + 180 * k, item.n)}^\\circ`);
+      const mode = i % 5;
+      const n = randInt(mode === 1 ? 3 : 2, 8);
+      const shift = shiftPool[randInt(0, shiftPool.length - 1)];
+      if (mode === 0) {
+        const values = [];
+        for (let k = 0; k < n; k += 1) {
+          values.push(`${formatFraction(90 + 180 * k, n)}^\\circ`);
+        }
+        questions.push(
+          `設 \\(0^\\circ<\\theta<180^\\circ\\)。若 \\(\\cos(${n}\\theta-${shift}^\\circ)\\)、\\(\\cos ${n}\\theta\\)、\\(\\cos(${n}\\theta+${shift}^\\circ)\\) 成等差數列，則 \\(\\theta\\) 有幾個可能值？`
+        );
+        answers.pushWithSummary(
+          `\\(${n}\\) 個`,
+          `過程：等差條件給 \\(2\\cos ${n}\\theta=\\cos(${n}\\theta-${shift}^\\circ)+\\cos(${n}\\theta+${shift}^\\circ)=2\\cos ${n}\\theta\\cos ${shift}^\\circ\\)。因 \\(\\cos ${shift}^\\circ\\ne1\\)，所以 \\(\\cos ${n}\\theta=0\\)。故 \\(\\theta=${values.join(', ')}\\)。`
+        );
+        continue;
+      }
+      if (mode === 1) {
+        const values = [];
+        for (let k = 1; k < n; k += 1) {
+          values.push(`${formatFraction(180 * k, n)}^\\circ`);
+        }
+        questions.push(
+          `設 \\(0^\\circ<\\theta<180^\\circ\\)。若 \\(\\sin(${n}\\theta-${shift}^\\circ)\\)、\\(\\sin ${n}\\theta\\)、\\(\\sin(${n}\\theta+${shift}^\\circ)\\) 成等差數列，求所有 \\(\\theta\\) 的值。`
+        );
+        answers.pushWithSummary(
+          `\\(\\theta=${values.join(', ')}\\)`,
+          `過程：由等差條件與 \\(\\sin(A-B)+\\sin(A+B)=2\\sin A\\cos B\\)，得 \\(2\\sin ${n}\\theta=2\\sin ${n}\\theta\\cos ${shift}^\\circ\\)。因 \\(\\cos ${shift}^\\circ\\ne1\\)，所以 \\(\\sin ${n}\\theta=0\\)。在題設範圍內 \\(${n}\\theta=180^\\circ,360^\\circ,\\ldots,${180 * (n - 1)}^\\circ\\)。`
+        );
+        continue;
+      }
+      if (mode === 2) {
+        questions.push(
+          `若 \\(\\cos(${n}\\theta-${shift}^\\circ)\\)、\\(\\cos ${n}\\theta\\)、\\(\\cos(${n}\\theta+${shift}^\\circ)\\) 成等差數列，直接化簡後，\\(\\cos ${n}\\theta\\) 必須等於多少？`
+        );
+        answers.pushWithSummary(
+          `\\(0\\)`,
+          `過程：中項的兩倍等於兩端和；兩端和為 \\(2\\cos ${n}\\theta\\cos ${shift}^\\circ\\)。移項得 \\(2\\cos ${n}\\theta(1-\\cos ${shift}^\\circ)=0\\)。因 \\(${shift}^\\circ\\) 不是整周角，故 \\(\\cos ${n}\\theta=0\\)。`
+        );
+        continue;
+      }
+      if (mode === 3) {
+        questions.push(
+          `設 \\(0^\\circ\\le\\theta<360^\\circ\\)。若 \\(\\cos(${n}\\theta-${shift}^\\circ)\\)、\\(\\cos ${n}\\theta\\)、\\(\\cos(${n}\\theta+${shift}^\\circ)\\) 成等差數列，則 \\(\\theta\\) 有幾個可能值？`
+        );
+        answers.pushWithSummary(
+          `\\(${2 * n}\\) 個`,
+          `過程：同樣可得 \\(\\cos ${n}\\theta=0\\)。當 \\(0^\\circ\\le\\theta<360^\\circ\\) 時，\\(0^\\circ\\le ${n}\\theta<${360 * n}^\\circ\\)，其中有 \\(${2 * n}\\) 個餘弦為 0 的角，因此 \\(\\theta\\) 有 \\(${2 * n}\\) 個可能值。`
+        );
+        continue;
       }
       questions.push(
-        `設 \\(${item.interval}\\)。若 \\(\\cos(${item.n}\\theta-${item.shift}^\\circ)\\)、\\(\\cos ${item.n}\\theta\\)、\\(\\cos(${item.n}\\theta+${item.shift}^\\circ)\\) 成等差數列，則 \\(\\theta\\) 有幾個可能值？`
+        `設 \\(0^\\circ<\\theta<180^\\circ\\)。\\(\\cos(${n}\\theta-${shift}^\\circ)\\)、\\(\\cos ${n}\\theta\\)、\\(\\cos(${n}\\theta+${shift}^\\circ)\\) 是否可能成等比數列？請說明理由。`
       );
       answers.pushWithSummary(
-        `\\(${item.n}\\) 個`,
-        `過程：等差條件給 \\(2\\cos ${item.n}\\theta=\\cos(${item.n}\\theta-${item.shift}^\\circ)+\\cos(${item.n}\\theta+${item.shift}^\\circ)=2\\cos ${item.n}\\theta\\cos ${item.shift}^\\circ\\)。因 \\(\\cos ${item.shift}^\\circ\\ne1\\)，所以 \\(\\cos ${item.n}\\theta=0\\)。在 \\(0^\\circ<\\theta<180^\\circ\\) 中，\\(\\theta=${values.join(', ')}\\)。`
+        '不可能',
+        `過程：若成等比數列，須有 \\(\\cos^2(${n}\\theta)=\\cos(${n}\\theta-${shift}^\\circ)\\cos(${n}\\theta+${shift}^\\circ)\\)。右式依積化和差為 \\(\\cos^2(${n}\\theta)-\\sin^2(${shift}^\\circ)\\)。因此須 \\(\\sin^2(${shift}^\\circ)=0\\)，但 \\(${shift}^\\circ\\) 不是 \\(180^\\circ\\) 的倍數，矛盾。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -5851,69 +5963,63 @@
   function buildS322ChangeBaseLogEquationSet(count = 5) {
     const builders = [
       () => {
-        // log_2(x)+log_4(x)+log_8(x) = k  →  (11/6)log_2(x)=k  →  x=2^(6k/11)
+        const base = s322Pick([2, 3, 5]);
         const k = s322Pick([11, 22, 33]);
         const pw = (6 * k) / 11;
         return s322Item(
-          '解方程式 ' + s322M('\\log_2 x+\\log_4 x+\\log_8 x=' + k) + '。',
-          s322M('x=2^{' + pw + '}'),
-          '統一換成以 2 為底：\\frac{11}{6}\\log_2 x=' + k + '，得 \\log_2 x=' + pw + '。'
+          '解方程式 ' +
+            s322M('\\log_' + base + 'x+\\log_{' + base * base + '}x+\\log_{' + base * base * base + '}x=' + k) +
+            '。',
+          s322M('x=' + base + '^{' + pw + '}'),
+          '統一換成以 ' + base + ' 為底：\\frac{11}{6}\\log_' + base + 'x=' + k + '，得 \\log_' + base + 'x=' + pw + '。'
         );
       },
       () => {
-        // log_2(x)+log_4(x) = k  →  (3/2)log_2(x)=k  →  x=2^(2k/3)
-        const k = s322Pick([3, 6, 9, 12]);
-        const pw = (2 * k) / 3;
+        const base = s322Pick([2, 3, 5]);
+        const k = s322Pick([1, 2, 3]);
+        const pw = 2 * k;
         return s322Item(
-          '解方程式 ' + s322M('\\log_2 x+\\log_4 x=' + k) + '。',
-          s322M('x=2^{' + pw + '}'),
-          '換底：\\log_4 x=\\tfrac12\\log_2 x，代入得 \\tfrac32\\log_2 x=' + k + '，解得 \\log_2 x=' + pw + '。'
+          '解方程式 ' + s322M('\\log_' + base + 'x-\\log_{' + base * base + '}x=' + k) + '。',
+          s322M('x=' + base + '^{' + pw + '}'),
+          '因 \\(\\log_{' + base * base + '}x=\\frac12\\log_' + base + 'x\\)，原式為 \\(\\frac12\\log_' + base + 'x=' + k + '\\)，所以 \\(\\log_' + base + 'x=' + pw + '\\)。'
         );
       },
       () => {
-        // log_3(x)+log_9(x) = k  →  (3/2)log_3(x)=k  →  x=3^(2k/3)
-        const k = s322Pick([3, 6, 9, 12]);
-        const pw = (2 * k) / 3;
+        const base = s322Pick([2, 3, 5]);
         return s322Item(
-          '解方程式 ' + s322M('\\log_3 x+\\log_9 x=' + k) + '。',
-          s322M('x=3^{' + pw + '}'),
-          '換底：\\log_9 x=\\tfrac12\\log_3 x，代入得 \\tfrac32\\log_3 x=' +
-            k +
-            '，所以 \\log_3 x=\\frac{2}{3}\\cdot' +
-            k +
-            '=' +
-            pw +
-            '，故 x=3^{' +
-            pw +
-            '}。'
+          '解方程式 ' + s322M('\\log_' + base + 'x+\\log_x' + base + '=\\frac52') + '。',
+          s322M('x=' + base + '^2 或 x=\\sqrt{' + base + '}'),
+          '令 \\(t=\\log_' + base + 'x\\)，則 \\(\\log_x' + base + '=\\frac1t\\)。所以 \\(t+\\frac1t=\\frac52\\)，即 \\(2t^2-5t+2=0\\)，得 \\(t=2\\) 或 \\(t=\\frac12\\)。'
         );
       },
       () => {
-        // log_2(x+h) = log_4(x+C) where C=h^2+4h+2 and answer is x=2
+        const base = s322Pick([2, 3, 5]);
         const h = s322Pick([1, 2, 3]);
         const C = h * h + 4 * h + 2;
         return s322Item(
-          '解方程式 ' + s322M('\\log_2(x+' + h + ')=\\log_4(x+' + C + ')') + '。',
+          '解方程式 ' + s322M('\\log_' + base + '(x+' + h + ')=\\log_{' + base * base + '}(x+' + C + ')') + '。',
           s322M('x=2'),
-          '將右邊換底：\\log_4(x+' +
+          '將右邊換底：\\log_{' +
+            base * base +
+            '}(x+' +
             C +
-            ')=\\tfrac12\\log_2(x+' +
+            ')=\\tfrac12\\log_' +
+            base +
+            '(x+' +
             C +
-            ')，兩邊乘 2 後得 (x+' +
+            ')，兩邊乘 2 後得 \\((x+' +
             h +
             ')^2=x+' +
             C +
-            '，展開整理後僅 x=2 滿足真數條件。'
+            '\\)。展開整理後，只有 \\(x=2\\) 滿足真數條件。'
         );
       },
       () => {
-        // log_2(x)+log_4(x)+log_16(x) = k  →  (7/4)log_2(x)=k  →  x=2^(4k/7)
-        const k = s322Pick([7, 14, 21]);
-        const pw = (4 * k) / 7;
+        const base = s322Pick([2, 3, 5]);
         return s322Item(
-          '解方程式 ' + s322M('\\log_2 x+\\log_4 x+\\log_{16} x=' + k) + '。',
-          s322M('x=2^{' + pw + '}'),
-          '換底為以 2 為底：\\tfrac{7}{4}\\log_2 x=' + k + '，得 \\log_2 x=' + pw + '。'
+          '解方程式 ' + s322M('\\log_' + base + '(x-1)=\\log_{' + base * base + '}(x+2)') + '。',
+          s322M('x=\\frac{3+\\sqrt{13}}{2}'),
+          '右邊換成以 ' + base + ' 為底後，得 \\(2\\log_' + base + '(x-1)=\\log_' + base + '(x+2)\\)，所以 \\((x-1)^2=x+2\\)。解得 \\(x=\\frac{3\\pm\\sqrt{13}}2\\)，再由 \\(x>1\\) 篩選，保留正根。'
         );
       },
     ];
@@ -6985,7 +7091,6 @@
         const b = s323Pick([2, 3, 5]);
         const h = randInt(1, 5);
         const k = s323Pick([1, 2, 3, 4, 5, 8, 9]);
-        const minVal = b === 2 && k === 4 ? 2 : b === 3 && k === 3 ? 1 : b === 2 && k === 1 ? 0 : `\\log_${b} ${k}`;
         const minStr = k === 1 ? '0' : k === b ? '1' : k === b * b ? '2' : `\\log_{${b}} ${k}`;
         return buildS323QA(
           '求函數 ' + s323M('y=\\log_' + b + '((x-' + h + ')^2+' + k + ')') + ' 的值域。',
@@ -7024,6 +7129,7 @@
         const c = pair[0];
         const k = pair[1];
         const cTerm = c === 1 ? 'x' : c + 'x';
+        const cSquaredTerm = c * c === 1 ? '' : String(c * c);
         const inner = 2 * k - c * c;
         const innerTerm = inner === 0 ? '' : (inner > 0 ? '+' : '') + (Math.abs(inner) === 1 ? (inner > 0 ? '' : '-') : inner) + 'x^2';
         return buildS323QA(
@@ -7033,7 +7139,7 @@
             s323M('g(x)') +
             ' 的奇偶性。',
           '偶函數',
-          `化簡：\\(g(x)=\\log\\big((x^2+${k})^2-${c * c}x^2\\big)=\\log(x^4${innerTerm}+${k * k})\\)；因真數僅含偶次項，\\(g(-x)=g(x)\\)，故為偶函數。`
+          `化簡：\\(g(x)=\\log\\big((x^2+${k})^2-${cSquaredTerm}x^2\\big)=\\log(x^4${innerTerm}+${k * k})\\)；因真數僅含偶次項，\\(g(-x)=g(x)\\)，故為偶函數。`
         );
       },
     ];
@@ -8359,17 +8465,66 @@
   }
 
   function buildS321ExponentialGraphParameterCleanSet(count) {
-    const builder = () => {
-      const c = randInt(-4, 4);
-      const A = randInt(2, 6);
-      const r = randInt(2, 6);
-      return {
-        q: `函數 \\(y=c+A r^x\\) 的水平漸近線為 \\(y=${c}\\)，且通過 \\((0,${c + A})\\)、\\((1,${c + A * r})\\)。求此函數。`,
-        short: `\\(y=${c}+${A}\\cdot ${r}^x\\)`,
-        process: `由水平漸近線得 \\(c=${c}\\)。代入 \\(x=0\\)，\\(c+A=${c + A}\\)，得 \\(A=${A}\\)。再代入 \\(x=1\\)，\\(c+Ar=${c + A * r}\\)，得 \\(r=${r}\\)。`,
-      };
-    };
-    return s32CleanSet(count, [builder]);
+    const builders = [
+      () => {
+        const c = randInt(-4, 4);
+        const A = randInt(2, 6);
+        const r = randInt(2, 6);
+        return {
+          q: `函數 \\(y=c+A r^x\\) 的水平漸近線為 \\(y=${c}\\)，且通過 \\((0,${c + A})\\)、\\((1,${c + A * r})\\)。求此函數。`,
+          short: `\\(y=${c}+${A}\\cdot ${r}^x\\)`,
+          process: `由水平漸近線得 \\(c=${c}\\)。代入 \\(x=0\\)，\\(c+A=${c + A}\\)，得 \\(A=${A}\\)。再代入 \\(x=1\\)，\\(c+Ar=${c + A * r}\\)，得 \\(r=${r}\\)。`,
+        };
+      },
+      () => {
+        const c = randInt(-3, 5);
+        const A = randInt(2, 6);
+        const r = randInt(2, 5);
+        return {
+          q: `函數 \\(y=c-A r^x\\) 的水平漸近線為 \\(y=${c}\\)，且通過 \\((0,${c - A})\\)、\\((1,${c - A * r})\\)。求此函數。`,
+          short: `\\(y=${c}-${A}\\cdot ${r}^x\\)`,
+          process: `水平漸近線給 \\(c=${c}\\)。由 \\(f(0)=c-A=${c - A}\\) 得 \\(A=${A}\\)；再由 \\(f(1)=c-Ar=${c - A * r}\\) 得 \\(r=${r}\\)。負號表示圖形相對漸近線位於下方。`,
+        };
+      },
+      () => {
+        const c = randInt(-3, 4);
+        const A = randInt(2, 5);
+        const r = randInt(2, 4);
+        return {
+          q: `已知 \\(f(x)=c+A r^x\\) 的水平漸近線為 \\(y=${c}\\)，並且 \\(f(0)=${c + A}\\)、\\(f(2)=${c + A * r * r}\\)。求 \\(f(x)\\)。`,
+          short: `\\(f(x)=${c}+${A}\\cdot ${r}^x\\)`,
+          process: `由漸近線得 \\(c=${c}\\)。先由 \\(f(0)-c=A=${A}\\)，再比較 \\(\\frac{f(2)-c}{f(0)-c}=r^2=${r * r}\\)。因指數函數底數 \\(r>1\\)，得 \\(r=${r}\\)。`,
+        };
+      },
+      () => {
+        const item = s321Pick([
+          { c: 20, A: 12, r: 2, rText: '2' },
+          { c: 15, A: 18, r: 3, rText: '3' },
+          { c: 8, A: 16, r: 2, rText: '2' },
+          { c: 30, A: 20, r: 4, rText: '4' },
+        ]);
+        return {
+          q: `某培養液的濃度可寫成 \\(C(t)=c+A r^t\\)。已知背景濃度為 \\(${item.c}\\)，第 0 天濃度為 \\(${item.c + item.A}\\)，第 1 天濃度為 \\(${item.c + item.A * item.r}\\)。寫出 \\(C(t)\\) 的模型。`,
+          short: `\\(C(t)=${item.c}+${item.A}\\cdot ${item.rText}^t\\)`,
+          process: `背景濃度即水平漸近線 \\(c=${item.c}\\)。第 0 天超出背景的量為 \\(${item.A}\\)，故 \\(A=${item.A}\\)；一天後超出背景的量為 \\(${item.A * item.r}\\)，所以每日倍率 \\(r=${item.r}\\)。`,
+        };
+      },
+      () => {
+        const item = s321Pick([
+          { c: 8, A: 12, den: 2 },
+          { c: 10, A: 18, den: 3 },
+          { c: 5, A: 16, den: 4 },
+          { c: 20, A: 15, den: 3 },
+        ]);
+        const y1 = item.c + item.A / item.den;
+        return {
+          q: `某物質的濃度會逐步趨近背景值 \\(${item.c}\\)，可表示為 \\(C(t)=c+A r^t\\)。若 \\(C(0)=${item.c + item.A}\\)、\\(C(1)=${y1}\\)，求 \\(C(t)\\)。`,
+          short: `\\(C(t)=${item.c}+${item.A}\\cdot\\left(\\frac{1}{${item.den}}\\right)^t\\)`,
+          process: `濃度趨近的背景值為 \\(c=${item.c}\\)。初始超出背景量為 \\(${item.A}\\)，故 \\(A=${item.A}\\)；比值 \\(\\frac{C(1)-c}{C(0)-c}=\\frac{${y1}-${item.c}}{${item.c + item.A}-${item.c}}=\\frac{1}{${item.den}}\\)，所以 \\(r=\\frac{1}{${item.den}}\\)。`,
+        };
+      },
+    ];
+    return s32CleanSet(count, builders);
   }
 
   function buildS322DominantLogApproxCleanSet(count) {
@@ -8573,7 +8728,9 @@
   }
 
   function s33LinearExpressionTex(a, b) {
-    return `${s33LinearTerm(a, 'x', true)}${s33LinearTerm(b, 'y')}`;
+    const first = s33LinearTerm(a, 'x', true);
+    const second = s33LinearTerm(b, 'y', !first);
+    return `${first}${second}` || '0';
   }
 
   function s33LinearEquationTex(a, b, c) {
@@ -8603,27 +8760,75 @@
 
   function buildS331AreaRatioCoefficientCleanSet(count) {
     const gcd = (a, b) => (b ? gcd(b, a % b) : a);
-    const randProperFraction = () => {
-      const den = randInt(3, 9);
-      const num = randInt(1, den - 1);
-      const g = gcd(num, den);
-      return [num / g, den / g];
-    };
-    const builder = () => {
-      let x = randProperFraction();
-      let y = randProperFraction();
-      // 讓 x+y<1，使 P 落在三角形內部（重抽數次，保底直接接受）。
-      for (let retry = 0; retry < 20 && x[0] * y[1] + y[0] * x[1] >= x[1] * y[1]; retry += 1) {
-        x = randProperFraction();
-        y = randProperFraction();
+    const drawInteriorPoint = (needDifferentCoefficients = false) => {
+      let den = 8;
+      let aNum = 1;
+      let bNum = 2;
+      for (let retry = 0; retry < 30; retry += 1) {
+        den = randInt(5, 12);
+        aNum = randInt(1, den - 2);
+        bNum = randInt(1, den - aNum - 1);
+        if (!needDifferentCoefficients || aNum !== bNum) break;
       }
-      return {
-        q: `設 \\(P\\) 滿足 \\(\\vec{AP}=${formatFraction(x[0], x[1])}\\vec{AB}+${formatFraction(y[0], y[1])}\\vec{AC}\\)。求 \\(\\frac{[ABP]}{[ABC]}\\)。`,
-        short: `\\(${formatFraction(y[0], y[1])}\\)`,
-        process: `以 \\(AB\\) 為共同底邊時，高度只看 \\(\\vec{AC}\\) 方向的係數。因 \\(P\\) 的 \\(\\vec{AC}\\) 係數為 \\(${formatFraction(y[0], y[1])}\\)，所以 \\([ABP]/[ABC]=${formatFraction(y[0], y[1])}\\)。`,
-      };
+      if (needDifferentCoefficients && aNum === bNum) {
+        den = 8;
+        aNum = 1;
+        bNum = 2;
+      }
+      return { den, aNum, bNum, cNum: den - aNum - bNum };
     };
-    return s33CleanSet(count, [builder]);
+    const pointTex = (point) =>
+      `\\vec{AP}=${formatFraction(point.aNum, point.den)}\\vec{AB}+${formatFraction(point.bNum, point.den)}\\vec{AC}`;
+    const builders = [
+      () => {
+        const point = drawInteriorPoint();
+        const ratio = formatFraction(point.bNum, point.den);
+        return {
+          q: `設 \\(P\\) 滿足 \\(${pointTex(point)}\\)。求 \\(\\frac{[ABP]}{[ABC]}\\)。`,
+          short: `\\(${ratio}\\)`,
+          process: `以 \\(AB\\) 為共同底邊時，高度只看 \\(\\vec{AC}\\) 方向的係數。\\(P\\) 的 \\(\\vec{AC}\\) 係數為 \\(${ratio}\\)，所以 \\([ABP]/[ABC]=${ratio}\\)。`,
+        };
+      },
+      () => {
+        const point = drawInteriorPoint();
+        const ratio = formatFraction(point.aNum, point.den);
+        return {
+          q: `設 \\(P\\) 滿足 \\(${pointTex(point)}\\)。求 \\(\\frac{[ACP]}{[ABC]}\\)。`,
+          short: `\\(${ratio}\\)`,
+          process: `以 \\(AC\\) 為共同底邊時，高度只看 \\(\\vec{AB}\\) 方向的係數。\\(P\\) 的 \\(\\vec{AB}\\) 係數為 \\(${ratio}\\)，所以 \\([ACP]/[ABC]=${ratio}\\)。`,
+        };
+      },
+      () => {
+        const point = drawInteriorPoint();
+        const ratio = formatFraction(point.cNum, point.den);
+        return {
+          q: `設 \\(P\\) 滿足 \\(${pointTex(point)}\\)。求 \\(\\frac{[BCP]}{[ABC]}\\)。`,
+          short: `\\(${ratio}\\)`,
+          process: `將 \\(P\\) 寫成重心座標，\\(P=(1-a-b)A+aB+bC\\)。其中 \\(a=${formatFraction(point.aNum, point.den)}\\)、\\(b=${formatFraction(point.bNum, point.den)}\\)，故 \\(1-a-b=${ratio}\\)。以 \\(BC\\) 為底時，這正是 \\([BCP]/[ABC]\\)。`,
+        };
+      },
+      () => {
+        const point = drawInteriorPoint();
+        const divisor = gcd(point.aNum, point.bNum);
+        const left = point.bNum / divisor;
+        const right = point.aNum / divisor;
+        return {
+          q: `設 \\(P\\) 滿足 \\(${pointTex(point)}\\)。求面積比 \\([ABP]:[APC]\\)。`,
+          short: `\\(${left}:${right}\\)`,
+          process: `\\([ABP]/[ABC]\\) 等於 \\(\\vec{AC}\\) 的係數 \\(${formatFraction(point.bNum, point.den)}\\)，而 \\([APC]/[ABC]\\) 等於 \\(\\vec{AB}\\) 的係數 \\(${formatFraction(point.aNum, point.den)}\\)。約分後 \\([ABP]:[APC]=${left}:${right}\\)。`,
+        };
+      },
+      () => {
+        const point = drawInteriorPoint(true);
+        const ratio = formatFraction(Math.abs(point.aNum - point.bNum), 2 * point.den);
+        return {
+          q: `在三角形 \\(ABC\\) 中，\\(D\\) 為 \\(BC\\) 的中點。設 \\(P\\) 滿足 \\(${pointTex(point)}\\)。求 \\(\\frac{[APD]}{[ABC]}\\)。`,
+          short: `\\(${ratio}\\)`,
+          process: `因 \\(\\vec{AD}=\\frac12\\vec{AB}+\\frac12\\vec{AC}\\)，係數行列式給 \\([APD]/[ABC]=\\left|\\det\\begin{pmatrix}a&b\\\\ \\frac12&\\frac12\\end{pmatrix}\\right|=\\frac{|a-b|}{2}\\)。代入 \\(a=${formatFraction(point.aNum, point.den)}\\)、\\(b=${formatFraction(point.bNum, point.den)}\\)，得 \\(${ratio}\\)。`,
+        };
+      },
+    ];
+    return s33CleanSet(count, builders);
   }
 
   function buildS331SegmentSectionCleanSet(count) {
@@ -8704,7 +8909,7 @@
   }
 
   function buildS333TriangleSideDotCleanSet(count) {
-    const builder = () => {
+    const drawTriangle = () => {
       let ab = randInt(3, 12);
       let ac = randInt(3, 12);
       let bc = randInt(3, 12);
@@ -8724,14 +8929,58 @@
         ac = 8;
         bc = 7;
       }
-      const abac = (ab ** 2 + ac ** 2 - bc ** 2) / 2;
       return {
-        q: `在三角形 \\(ABC\\) 中，\\(AB=${ab}\\)、\\(AC=${ac}\\)、\\(BC=${bc}\\)。求 \\(\\vec{AB}\\cdot\\vec{CA}\\)。`,
-        short: `\\(${-abac}\\)`,
-        process: `由餘弦定理得 \\(\\vec{AB}\\cdot\\vec{AC}=\\frac{AB^2+AC^2-BC^2}{2}=${abac}\\)。又 \\(\\vec{CA}=-\\vec{AC}\\)，所以 \\(\\vec{AB}\\cdot\\vec{CA}=${-abac}\\)。`,
+        ab,
+        ac,
+        bc,
+        dotAtA: (ab ** 2 + ac ** 2 - bc ** 2) / 2,
       };
     };
-    return s33CleanSet(count, [builder]);
+    const builders = [
+      () => {
+        const triangle = drawTriangle();
+        return {
+          q: `在三角形 \\(ABC\\) 中，\\(AB=${triangle.ab}\\)、\\(AC=${triangle.ac}\\)、\\(BC=${triangle.bc}\\)。求 \\(\\vec{AB}\\cdot\\vec{CA}\\)。`,
+          short: `\\(${-triangle.dotAtA}\\)`,
+          process: `由餘弦定理得 \\(\\vec{AB}\\cdot\\vec{AC}=\\frac{AB^2+AC^2-BC^2}{2}=${triangle.dotAtA}\\)。又 \\(\\vec{CA}=-\\vec{AC}\\)，所以 \\(\\vec{AB}\\cdot\\vec{CA}=${-triangle.dotAtA}\\)。`,
+        };
+      },
+      () => {
+        const triangle = drawTriangle();
+        const type = triangle.dotAtA > 0 ? '銳角' : triangle.dotAtA === 0 ? '直角' : '鈍角';
+        return {
+          q: `在三角形 \\(ABC\\) 中，\\(AB=${triangle.ab}\\)、\\(AC=${triangle.ac}\\)、\\(BC=${triangle.bc}\\)。判斷 \\(\\angle BAC\\) 是銳角、直角或鈍角。`,
+          short: `\\(\\angle BAC\\) 為${type}`,
+          process: `\\(\\vec{AB}\\cdot\\vec{AC}=\\frac{${triangle.ab}^2+${triangle.ac}^2-${triangle.bc}^2}{2}=${triangle.dotAtA}\\)。內積正、零、負分別對應銳角、直角、鈍角，因此 \\(\\angle BAC\\) 為${type}。`,
+        };
+      },
+      () => {
+        const triangle = drawTriangle();
+        return {
+          q: `在三角形 \\(ABC\\) 中，\\(AB=${triangle.ab}\\)、\\(AC=${triangle.ac}\\)，且 \\(\\vec{AB}\\cdot\\vec{AC}=${triangle.dotAtA}\\)。求 \\(BC\\)。`,
+          short: `\\(${triangle.bc}\\)`,
+          process: `\\(|\\vec{BC}|^2=|\\vec{AC}-\\vec{AB}|^2=AB^2+AC^2-2\\vec{AB}\\cdot\\vec{AC}\\)。故 \\(BC^2=${triangle.ab ** 2}+${triangle.ac ** 2}-2\\cdot${triangle.dotAtA}=${triangle.bc ** 2}\\)，所以 \\(BC=${triangle.bc}\\)。`,
+        };
+      },
+      () => {
+        const triangle = drawTriangle();
+        return {
+          q: `已知兩非零向量 \\(\\vec a,\\vec b\\) 滿足 \\(|\\vec a|=${triangle.ab}\\)、\\(|\\vec b|=${triangle.ac}\\)、\\(|\\vec a-\\vec b|=${triangle.bc}\\)。求 \\(\\vec a\\cdot\\vec b\\)。`,
+          short: `\\(${triangle.dotAtA}\\)`,
+          process: `由 \\(|\\vec a-\\vec b|^2=|\\vec a|^2+|\\vec b|^2-2\\vec a\\cdot\\vec b\\)，得 \\(${triangle.bc}^2=${triangle.ab}^2+${triangle.ac}^2-2\\vec a\\cdot\\vec b\\)。解得 \\(\\vec a\\cdot\\vec b=${triangle.dotAtA}\\)。`,
+        };
+      },
+      () => {
+        const triangle = drawTriangle();
+        const projection = formatFraction(triangle.dotAtA, triangle.ab);
+        return {
+          q: `在三角形 \\(ABC\\) 中，\\(AB=${triangle.ab}\\)、\\(AC=${triangle.ac}\\)、\\(BC=${triangle.bc}\\)。求 \\(\\vec{AC}\\) 在 \\(\\vec{AB}\\) 方向上的有向正射影量。`,
+          short: `\\(${projection}\\)`,
+          process: `先由餘弦定理得 \\(\\vec{AB}\\cdot\\vec{AC}=\\frac{AB^2+AC^2-BC^2}{2}=${triangle.dotAtA}\\)。\\(\\vec{AC}\\) 在 \\(\\vec{AB}\\) 方向上的有向正射影量為 \\(\\frac{\\vec{AC}\\cdot\\vec{AB}}{|\\vec{AB}|}=\\frac{${triangle.dotAtA}}{${triangle.ab}}=${projection}\\)。`,
+        };
+      },
+    ];
+    return s33CleanSet(count, builders);
   }
 
   function buildS333ProjectionVectorCleanSet(count) {
@@ -8795,28 +9044,86 @@
   }
 
   function buildS334CramerParameterCleanSet(count) {
-    const builder = () => {
-      const signA = randInt(0, 1) === 0 ? 1 : -1;
-      const signB = randInt(0, 1) === 0 ? 1 : -1;
-      const a = signA * randInt(1, 4);
-      const b = signB * randInt(1, 5);
-      const c = randInt(1, 8);
-      const lambdaPool = [-4, -3, -2, 2, 3, 4, 5];
-      const lambda = lambdaPool[randInt(0, lambdaPool.length - 1)];
-      const target = lambda * c;
-      const firstEquation = s33LinearEquationTex(a, b, c);
-      const secondEquation = s33LinearEquationTex(lambda * a, lambda * b, 'k');
-      return {
-        q: `討論方程組 \\(\\begin{cases}${firstEquation}\\\\${secondEquation}\\end{cases}\\)。求 \\(k\\) 為何時有無限多解；為何時無解。`,
-        short: `\\(k=${target}\\) 時無限多解；\\(k\\ne ${target}\\) 時無解`,
-        process: `第二式左邊是第一式左邊的 \\(${lambda}\\) 倍。若右邊也同倍，兩式代表同一直線，有無限多解；所以 \\(k=${target}\\)。若 \\(k\\ne${target}\\)，兩式平行不同線，無解。`,
-      };
-    };
-    return s33CleanSet(count, [builder]);
+    const lambdaPool = [-3, -2, 2, 3, 4];
+    const builders = [
+      () => {
+        const a = randInt(1, 4);
+        const b = randInt(1, 5);
+        const c = randInt(1, 8);
+        const lambda = lambdaPool[randInt(0, lambdaPool.length - 1)];
+        const target = lambda * c;
+        const firstEquation = s33LinearEquationTex(a, b, c);
+        return {
+          q: `方程組 \\(\\begin{cases}${firstEquation}\\\\${s33LinearEquationTex(lambda * a, lambda * b, 'k')}\\end{cases}\\) 中，求 \\(k\\) 為何時有無限多解；為何時無解。`,
+          short: `\\(k=${target}\\) 時無限多解；\\(k\\ne${target}\\) 時無解`,
+          process: `第二式左邊是第一式左邊的 \\(${lambda}\\) 倍。若右邊也同倍，即 \\(k=${lambda}\\cdot${c}=${target}\\)，兩式代表同一直線，有無限多解；其餘 \\(k\\) 值代表平行不同線，故無解。`,
+        };
+      },
+      () => {
+        const a = randInt(1, 4);
+        const b = randInt(1, 5);
+        const multiple = randInt(2, 5);
+        const c = randInt(-6, 8);
+        const d = randInt(-8, 9);
+        const critical = b * multiple;
+        const firstEquation = s33LinearEquationTex(a, b, c);
+        const secondEquation = `${s33LinearTerm(a * multiple, 'x', true)}+ky=${d}`;
+        return {
+          q: `討論方程組 \\(\\begin{cases}${firstEquation}\\\\${secondEquation}\\end{cases}\\)。求 \\(k\\) 的範圍，使方程組有唯一解。`,
+          short: `\\(k\\ne ${critical}\\)`,
+          process: `係數行列式為 \\(\\begin{vmatrix}${a}&${b}\\\\${a * multiple}&k\\end{vmatrix}=${a}k-${a * multiple * b}=${a}(k-${critical})\\)。行列式不為 0 時有唯一解，所以 \\(k\\ne${critical}\\)。`,
+        };
+      },
+      () => {
+        const a = randInt(1, 4);
+        const b = randInt(1, 5);
+        const c = randInt(-5, 7);
+        const lambda = lambdaPool[randInt(0, lambdaPool.length - 1)];
+        const offset = randInt(1, 5);
+        const critical = lambda * b;
+        const firstEquation = s33LinearEquationTex(a, b, c);
+        const secondEquation = `${s33LinearTerm(lambda * a, 'x', true)}+ky=${lambda * c + offset}`;
+        return {
+          q: `方程組 \\(\\begin{cases}${firstEquation}\\\\${secondEquation}\\end{cases}\\) 在何種 \\(k\\) 值時無解？`,
+          short: `\\(k=${critical}\\)`,
+          process: `當 \\(k=${critical}\\) 時，第二式左邊恰為第一式左邊的 \\(${lambda}\\) 倍；但右邊為 \\(${lambda * c + offset}\\ne${lambda * c}\\)，故兩直線平行不同線而無解。其餘 \\(k\\) 值係數行列式不為 0，會有唯一解。`,
+        };
+      },
+      () => {
+        const p = randInt(1, 5);
+        const r = randInt(2, 5);
+        const c = randInt(-4, 7);
+        const offset = randInt(1, 5);
+        const critical = p * r;
+        const firstEquation = s33LinearEquationTex(1, p, c);
+        const secondEquation = `${r}x+ky=${r * c + offset}`;
+        return {
+          q: `完整討論方程組 \\(\\begin{cases}${firstEquation}\\\\${secondEquation}\\end{cases}\\) 依 \\(k\\) 取值的解的情形。`,
+          short: `\\(k=${critical}\\) 時無解；\\(k\\ne${critical}\\) 時有唯一解`,
+          process: `係數行列式為 \\(k-${critical}\\)。當 \\(k\\ne${critical}\\) 時行列式不為 0，故有唯一解；當 \\(k=${critical}\\) 時，左邊兩式成 \\(${r}\\) 倍，但常數項 \\(${r * c + offset}\\ne${r * c}\\)，故為平行不同線，無解。`,
+        };
+      },
+      () => {
+        const k = [1, 2, 3, 4, 5][randInt(0, 4)];
+        const x = randInt(-3, 4);
+        const y = randInt(-3, 4);
+        const c = x + k * y;
+        const d = 2 * x + 3 * y;
+        const determinant = 3 - 2 * k;
+        const dx = 3 * c - k * d;
+        const dy = d - 2 * c;
+        return {
+          q: `當 \\(k=${k}\\) 時，用克拉瑪公式解方程組 \\(\\begin{cases}${s33LinearEquationTex(1, k, c)}\\\\2x+3y=${d}\\end{cases}\\)。`,
+          short: `\\((x,y)=(${x},${y})\\)`,
+          process: `係數行列式 \\(\\Delta=3-2\\cdot${k}=${determinant}\\)，\\(\\Delta_x=3\\cdot${c}-${k}\\cdot${d}=${dx}\\)，\\(\\Delta_y=${d}-2\\cdot${c}=${dy}\\)。因此 \\(x=${formatFraction(dx, determinant)}\\)、\\(y=${formatFraction(dy, determinant)}\\)，即 \\((x,y)=(${x},${y})\\)。`,
+        };
+      },
+    ];
+    return s33CleanSet(count, builders);
   }
 
   function buildS334AreaScaleCleanSet(count) {
-    const builder = () => {
+    const drawMatrix = () => {
       let a = randInt(-3, 3);
       let b = randInt(-3, 3);
       let c = randInt(-3, 3);
@@ -8833,15 +9140,62 @@
         c = 1;
         d = 3;
       }
-      const area = randInt(2, 12);
-      const det = Math.abs(s33Det(a, b, c, d));
-      return {
-        q: `平面圖形面積為 \\(${area}\\)。經線性變換 \\(T(x,y)=(${s33LinearExpressionTex(a, b)},${s33LinearExpressionTex(c, d)})\\) 後，面積變為多少？`,
-        short: `\\(${det * area}\\)`,
-        process: `線性變換的面積倍率為 \\(|\\det\\begin{pmatrix}${a}&${b}\\\\${c}&${d}\\end{pmatrix}|=${det}\\)。所以新面積為 \\(${area}\\cdot${det}=${det * area}\\)。`,
-      };
+      return { a, b, c, d, signedDet: s33Det(a, b, c, d), areaFactor: Math.abs(s33Det(a, b, c, d)) };
     };
-    return s33CleanSet(count, [builder]);
+    const matrixTex = (matrix) =>
+      `T(x,y)=(${s33LinearExpressionTex(matrix.a, matrix.b)},${s33LinearExpressionTex(matrix.c, matrix.d)})`;
+    const builders = [
+      () => {
+        const matrix = drawMatrix();
+        const area = randInt(2, 12);
+        return {
+          q: `平面圖形面積為 \\(${area}\\)。經線性變換 \\(${matrixTex(matrix)}\\) 後，面積變為多少？`,
+          short: `\\(${matrix.areaFactor * area}\\)`,
+          process: `面積倍率為 \\(|\\det\\begin{pmatrix}${matrix.a}&${matrix.b}\\\\${matrix.c}&${matrix.d}\\end{pmatrix}|=${matrix.areaFactor}\\)。所以新面積為 \\(${area}\\cdot${matrix.areaFactor}=${matrix.areaFactor * area}\\)。`,
+        };
+      },
+      () => {
+        const matrix = drawMatrix();
+        const originalArea = randInt(2, 12);
+        const transformedArea = originalArea * matrix.areaFactor;
+        return {
+          q: `某圖形經線性變換 \\(${matrixTex(matrix)}\\) 後，面積為 \\(${transformedArea}\\)。求變換前的面積。`,
+          short: `\\(${originalArea}\\)`,
+          process: `此變換的面積倍率為 \\(|\\det\\begin{pmatrix}${matrix.a}&${matrix.b}\\\\${matrix.c}&${matrix.d}\\end{pmatrix}|=${matrix.areaFactor}\\)。故變換前面積為 \\(${transformedArea}\\div${matrix.areaFactor}=${originalArea}\\)。`,
+        };
+      },
+      () => {
+        const shear = (randInt(0, 1) === 0 ? 1 : -1) * randInt(1, 6);
+        const area = randInt(3, 15);
+        return {
+          q: `面積為 \\(${area}\\) 的圖形經剪變換 \\(T(x,y)=(x${s33LinearTerm(shear, 'y')},y)\\) 後，面積為多少？`,
+          short: `\\(${area}\\)`,
+          process: `剪變矩陣為 \\(\\begin{pmatrix}1&${shear}\\\\0&1\\end{pmatrix}\\)，行列式為 \\(1\\)。面積倍率是 \\(|1|=1\\)，所以面積保持為 \\(${area}\\)。`,
+        };
+      },
+      () => {
+        const p = randInt(2, 5);
+        const q = randInt(2, 5);
+        const area = randInt(2, 10);
+        return {
+          q: `一個逆時針排列頂點的三角形面積為 \\(${area}\\)。經 \\(T(x,y)=(-${p}x,${q}y)\\) 後，求新面積，並判斷頂點排列方向。`,
+          short: `面積 \\(${p * q * area}\\)，頂點改為順時針排列`,
+          process: `變換矩陣的行列式為 \\((-${p})\\cdot${q}=-${p * q}\\)。絕對值 \\(${p * q}\\) 給面積倍率，因此新面積為 \\(${area}\\cdot${p * q}=${p * q * area}\\)；行列式為負，方向會反轉，故改為順時針排列。`,
+        };
+      },
+      () => {
+        const p = randInt(2, 5);
+        const r = randInt(2, 5);
+        const shear = (randInt(0, 1) === 0 ? 1 : -1) * randInt(1, 4);
+        const area = randInt(2, 10);
+        return {
+          q: `面積為 \\(${area}\\) 的圖形先經 \\(T_1(x,y)=(${p}x,y)\\)，再經 \\(T_2(x,y)=(x${s33LinearTerm(shear, 'y')},${r}y)\\)。求最後面積。`,
+          short: `\\(${p * r * area}\\)`,
+          process: `\\(T_1\\) 的行列式為 \\(${p}\\)，\\(T_2\\) 的行列式為 \\(${r}\\)，剪變項不影響行列式。合成變換的面積倍率為 \\(|${p}\\cdot${r}|=${p * r}\\)，故最後面積為 \\(${area}\\cdot${p * r}=${p * r * area}\\)。`,
+        };
+      },
+    ];
+    return s33CleanSet(count, builders);
   }
 
   function s331Gcd(a, b) {
@@ -15388,7 +15742,7 @@
     },
     's3-1-1-radian-sector-five-subtypes': {
       type: 'drill',
-      title: '弧度、扇形與旋轉基礎五小類',
+      title: '弧度量與扇形幾何基礎應用',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -15460,7 +15814,7 @@
     },
     's3-1-1-reciprocal-trig-five-subtypes': {
       type: 'drill',
-      title: '進階三角比與倒數關係五小類',
+      title: '倒數三角比之性質與大小比較',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -15820,7 +16174,7 @@
     },
     's3-1-3-transform-equation': {
       type: 'drill',
-      title: '圖形變換後的函數式',
+      title: '三角函數圖形變換與判讀',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -16158,7 +16512,7 @@
     },
     's3-2-1-exponent-laws-equations-five-subtypes': {
       type: 'drill',
-      title: '指數律、方程與應用五小類',
+      title: '指數律、方程式與應用',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: [
@@ -16219,7 +16573,7 @@
     },
     's3-2-1-graphs-extrema-five-subtypes': {
       type: 'drill',
-      title: '指數函數圖形、變換與極值五小類',
+      title: '指數函數圖形、變換與極值',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: [
@@ -16280,7 +16634,7 @@
     },
     's3-2-1-advanced-algebra-five-subtypes': {
       type: 'drill',
-      title: '指數函數進階代數與反推五小類',
+      title: '指數函數的代數性質與應用',
       difficulty: 'hard',
       questionCount: 5,
       subtypes: [
@@ -16395,7 +16749,7 @@
     },
     's3-2-2-log-definition-laws-five-subtypes': {
       type: 'drill',
-      title: '對數定義、運算與代換五小類',
+      title: '對數定義、運算與代換',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: [
@@ -16456,7 +16810,7 @@
     },
     's3-2-2-log-inequalities-domain-five-subtypes': {
       type: 'drill',
-      title: '對數不等式、定義域與進階方程五小類',
+      title: '對數不等式、定義域與進階方程',
       difficulty: 'hard',
       questionCount: 5,
       subtypes: [
@@ -16517,7 +16871,7 @@
     },
     's3-2-2-log-advanced-applications-five-subtypes': {
       type: 'drill',
-      title: '對數連鎖、極值與位數應用五小類',
+      title: '對數連鎖、極值與位數應用',
       difficulty: 'hard',
       questionCount: 5,
       subtypes: [
@@ -16641,7 +16995,7 @@
     },
     's3-2-3-log-operations-applications-five-subtypes': {
       type: 'drill',
-      title: '對數連鎖、次方位置與位數應用五小類',
+      title: '對數連鎖、次方位置與位數應用',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: [
@@ -16702,7 +17056,7 @@
     },
     's3-2-3-log-graphs-equations-five-subtypes': {
       type: 'drill',
-      title: '對數函數圖形、方程與反函數五小類',
+      title: '對數函數圖形、方程與反函數',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: [
@@ -16763,7 +17117,7 @@
     },
     's3-2-3-log-extrema-models-five-subtypes': {
       type: 'drill',
-      title: '對數極值、凹性與模型應用五小類',
+      title: '對數極值、凹性與模型應用',
       difficulty: 'hard',
       questionCount: 5,
       subtypes: [
@@ -16878,7 +17232,7 @@
     },
     's3-2-4-growth-decay-models-five-subtypes': {
       type: 'drill',
-      title: '指數成長衰減與時間模型五小類',
+      title: '指數成長衰減與時間模型',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: [
@@ -16939,7 +17293,7 @@
     },
     's3-2-4-log-scale-science-five-subtypes': {
       type: 'drill',
-      title: '對數尺度與科學量級五小類',
+      title: '對數尺度與科學量級',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: [
@@ -17009,7 +17363,7 @@
     },
     's3-2-4-finance-digits-models-five-subtypes': {
       type: 'drill',
-      title: '複利財務、位數與特殊分配五小類',
+      title: '複利財務、位數與特殊分配',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: [
@@ -17106,7 +17460,7 @@
     },
     's3-3-1-vector-algebra-relations-five-subtypes': {
       type: 'drill',
-      title: '向量代數與線性關係五小類',
+      title: '向量代數運算與線性關係',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: [
@@ -17167,7 +17521,7 @@
     },
     's3-3-1-vector-geometry-applications-five-subtypes': {
       type: 'drill',
-      title: '幾何分點、區域與應用五小類',
+      title: '幾何分點、區域與向量應用',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: [
@@ -17183,7 +17537,7 @@
     },
     's3-3-1-geometric-vectors-five-subtypes': {
       type: 'drill',
-      title: '幾何向量九小類',
+      title: '三角形重心、分點與幾何向量應用',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: [
@@ -17356,7 +17710,7 @@
     },
     's3-3-2-coordinate-vectors-five-subtypes': {
       type: 'drill',
-      title: '座標向量九小類',
+      title: '平面向量的座標運算與線性組合',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: [
@@ -17493,7 +17847,7 @@
     },
     's3-3-3-triangle-side-dot-clean': {
       type: 'drill',
-      title: '由三邊長求向量內積',
+      title: '三角形邊長、內積與夾角判定',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -17520,7 +17874,7 @@
     },
     's3-3-3-inner-product-projection-applications-ten-subtypes': {
       type: 'drill',
-      title: '內積、投影與應用十小類',
+      title: '平面向量的內積、投影與綜合應用',
       difficulty: 'hard',
       questionCount: 5,
       subtypes: [
@@ -17676,7 +18030,7 @@
     },
     's3-3-4-cramer-parameter-clean': {
       type: 'drill',
-      title: '參數方程組的無限多解與無解',
+      title: '參數方程組的解的情形判定',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -17685,7 +18039,7 @@
     },
     's3-3-4-area-scale-clean': {
       type: 'drill',
-      title: '線性變換的面積倍率',
+      title: '線性變換下的面積、倍率與方向',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -17712,7 +18066,7 @@
     },
     's3-3-4-basic-determinant-three-subtypes': {
       type: 'drill',
-      title: '行列式基本三小類',
+      title: '二階行列式的運算性質與求值',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: ['s3-3-4-basic-determinants', 's3-3-4-determinant-properties', 's3-3-4-special-algebraic-determinants'],
@@ -17722,7 +18076,7 @@
     },
     's3-3-4-cramer-parameter-three-subtypes': {
       type: 'drill',
-      title: '克拉瑪與參數判定三小類',
+      title: '克拉瑪公式與參數判定',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: ['s3-3-4-cramer-systems', 's3-3-4-parallel-collinear-regions', 's3-3-4-collinear-parameters'],
@@ -17732,7 +18086,7 @@
     },
     's3-3-4-area-transform-three-subtypes': {
       type: 'drill',
-      title: '行列式面積三小類',
+      title: '二階行列式與幾何面積的縮放應用',
       difficulty: 'medium',
       questionCount: 5,
       subtypes: ['s3-3-4-area-determinants', 's3-3-4-transformed-area', 's3-3-4-triangle-area-ratios'],
@@ -17869,52 +18223,12 @@
     };
   });
 
-  const s31QuestionPrompts = [
-    '請依題意作答：',
-    '請寫出正確結論：',
-    '請先整理條件後求解：',
-    '請用適當三角公式完成：',
-    '請列式並說明理由：',
-  ];
-  Object.entries(nextConfigs).forEach(([id, config]) => {
-    if (!id.startsWith('s3-1-')) return;
-    const generate = config.generate;
-    config.generate = function generateS31WithWordingVariation(count) {
-      const generated = generate.call(this, count);
-      const prompt = s31QuestionPrompts[randInt(0, s31QuestionPrompts.length - 1)];
-      return {
-        ...generated,
-        questions: generated.questions.map((question) => `${prompt}${question}`),
-      };
-    };
-  });
-
   Object.entries(nextConfigs).forEach(([id, config]) => {
     if (!id.startsWith('s3-2-') || !config || typeof config.generate !== 'function') return;
     const originalGenerate = config.generate;
     const target = config.questionCount;
     config.generate = function generateUniqueS32PracticeSet() {
       return buildUniquePracticeSet(() => originalGenerate.call(this), target);
-    };
-  });
-
-  const s32QuestionPrompts = [
-    '請依題意作答：',
-    '請先確認條件後求解：',
-    '請寫出正確結論：',
-    '請用適當的對數或指數觀念整理：',
-    '請檢查定義域與計算後作答：',
-  ];
-  Object.entries(nextConfigs).forEach(([id, config]) => {
-    if (!id.startsWith('s3-2-')) return;
-    const generate = config.generate;
-    config.generate = function generateS32WithWordingVariation(count) {
-      const generated = generate.call(this, count);
-      const prompt = s32QuestionPrompts[randInt(0, s32QuestionPrompts.length - 1)];
-      return {
-        ...generated,
-        questions: generated.questions.map((question) => `${prompt}${question}`),
-      };
     };
   });
 
@@ -17927,27 +18241,7 @@
     };
   });
 
-  const s33QuestionPrompts = [
-    '請依題意作答：',
-    '請先整理向量或行列式條件後求解：',
-    '請寫出正確結論：',
-    '請列式並檢查符號後作答：',
-    '請用適當的幾何或代數觀念完成：',
-  ];
-  Object.entries(nextConfigs).forEach(([id, config]) => {
-    if (!id.startsWith('s3-3-')) return;
-    const generate = config.generate;
-    config.generate = function generateS33WithWordingVariation(count) {
-      const generated = generate.call(this, count);
-      const prompt = s33QuestionPrompts[randInt(0, s33QuestionPrompts.length - 1)];
-      return {
-        ...generated,
-        questions: generated.questions.map((question) => `${prompt}${question}`),
-      };
-    };
-  });
-
-  const bundleFingerprint = 's3-bundle-v20260717-s31-s32-s33-parameterized-infinite-v6';
+  const bundleFingerprint = 's3-bundle-v20260724-s33-audit-variation-v9';
   Object.values(nextConfigs).forEach((config) => {
     if (!config || typeof config !== 'object') return;
     config.__generatorFingerprint = bundleFingerprint;

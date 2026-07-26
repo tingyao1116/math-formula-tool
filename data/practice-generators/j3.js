@@ -143,6 +143,12 @@
     return v;
   }
 
+  function pickSquareFreeRadicand(min, max) {
+    let value = pickNonSquare(min, max);
+    while (simplifyRadical(value).outside !== 1) value = pickNonSquare(min, max);
+    return value;
+  }
+
   function formatDecimalValue(value) {
     if (Number.isInteger(value)) return `${value}`;
     return `${Number(value.toFixed(6))}`;
@@ -327,7 +333,9 @@
       const quotient = formatPolynomialFromCoeffs([q2, q1, q0]);
 
       questions.push(`計算：\\((${dividend})\\div(${divisor})\\)`);
-      answers.push(`\\((${dividend})\\div(${divisor})=${quotient}\\)`);
+      answers.push(
+        `簡答：\\(${quotient}\\)。過程：以多項式除法由最高次項依序相除；本題可驗算為 \\(${dividend}=(${divisor})(${quotient})+0\\)，所以餘式為 0。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -356,7 +364,9 @@
       const quotient = formatPolynomialFromCoeffs([p, q]);
 
       questions.push(`計算：\\((${dividend})\\div(${divisor})\\)`);
-      answers.push(`\\((${dividend})\\div(${divisor})=${quotient}\\)`);
+      answers.push(
+        `簡答：\\(${quotient}\\)。過程：以多項式除法由最高次項依序相除；本題可驗算為 \\(${dividend}=(${divisor})(${quotient})+0\\)，所以餘式為 0。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -561,10 +571,15 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const out = randInt(2, 9);
-      const inside = randInt(2, 12);
+      const inside = pickSquareFreeRadicand(2, 12);
       const n = out * out * inside;
       questions.push(`化為最簡根式：\\(\\sqrt{${n}}\\)。`);
-      answers.push(`\\(\\sqrt{${n}}=${out}\\sqrt{${inside}}\\)。`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `\\(${out}\\sqrt{${inside}}\\)`,
+        `\\(\\sqrt{${n}}=\\sqrt{${out * out}\\times${inside}}=${out}\\sqrt{${inside}}\\)。根號內的 \\(${inside}\\) 不含完全平方因數，因此已是最簡根式。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -596,10 +611,12 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randInt(2, 9);
-      let b = pickNonSquare(2, 30);
-      while (b === a * a) b = pickNonSquare(2, 30);
+      const b = pickSquareFreeRadicand(2, Math.min(30, a * a - 1));
       questions.push(`有理化分母：\\(\\frac{1}{${a}+\\sqrt{${b}}}\\)。`);
-      answers.push(
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `\\(\\frac{${a}-\\sqrt{${b}}}{${a * a - b}}\\)`,
         `\\(\\frac{1}{${a}+\\sqrt{${b}}}=\\frac{${a}-\\sqrt{${b}}}{(${a}+\\sqrt{${b}})(${a}-\\sqrt{${b}})}=\\frac{${a}-\\sqrt{${b}}}{${a * a - b}}\\)。`
       );
     }
@@ -714,7 +731,7 @@
         const a = randInt(3, 15);
        const b = randInt(4, 16);
        const c2 = a * a + b * b;
-       const c = `\\sqrt{${c2}}`;
+        const c = formatRadical(c2);
         const h = formatRationalizedRadicalFraction(a * b, c2);
        questions.push(`直角三角形兩股為 \\(${a},${b}\\)。求斜邊上的高 \\(h\\)。`);
        pushAnswerWithManualSummary(
@@ -882,12 +899,14 @@
         const num = randInt(1, 9);
         const den = randInt(2, 9);
         const root = formatFraction(num, den);
+        const unreducedRoot = `\\frac{${num}}{${den}}`;
+        const reducedTail = root === unreducedRoot ? '' : `=${root}`;
         questions.push(`求 $\\sqrt{\\frac{${num * num}}{${den * den}}}$ 的值。`);
         pushAnswerWithManualSummary(
           answers,
           summaryAnswers,
           `$${root}$`,
-          `$\\sqrt{\\frac{${num * num}}{${den * den}}}=${root}$。`
+          `$\\sqrt{\\frac{${num * num}}{${den * den}}}=\\frac{\\sqrt{${num * num}}}{\\sqrt{${den * den}}}=${unreducedRoot}${reducedTail}$。`
         );
         continue;
       }
@@ -1164,8 +1183,10 @@
       }
       const a = randInt(3, 12);
       const b = randInt(4, 12);
-      let c = randInt(Math.max(a, b) + 1, Math.max(a, b) + 8);
-      while (a * a + b * b === c * c) c = randInt(Math.max(a, b) + 1, Math.max(a, b) + 8);
+      const minHypotenuse = Math.max(a, b) + 1;
+      const maxHypotenuse = a + b - 1;
+      let c = randInt(minHypotenuse, maxHypotenuse);
+      while (a * a + b * b === c * c) c = randInt(minHypotenuse, maxHypotenuse);
       questions.push(`判斷邊長為 ${a}、${b}、${c} 的三角形是否為直角三角形。`);
       pushAnswerWithManualSummary(
         answers,
@@ -1257,7 +1278,7 @@
         continue;
       }
       if (mode === 3) {
-        const p = randInt(2, 12);
+        const p = [4, 7, 10][randInt(0, 2)];
         const result = `(3x-${p})(3x-${p + 1})`;
         questions.push(`提取公因式：\\((3x-${p})^2-(3x-${p})\\)`);
         pushAnswerWithManualSummary(
@@ -1268,13 +1289,23 @@
         );
         continue;
       }
-      const result = '2(2x-1)(5x-4)';
-      questions.push(`提取公因式：\\(5(2x-1)^2-3(2x-1)\\)`);
+      const p = randInt(2, 8);
+      let r = randInt(1, 7);
+      while (gcdInt(p, r) !== 1) r = randInt(1, 7);
+      const m = randInt(2, 6);
+      const n = randInt(1, 9);
+      const same = `(${p}x-${r})`;
+      const secondCoeff = m * p;
+      const secondConstant = m * r + n;
+      const common = gcdInt(secondCoeff, secondConstant);
+      const reducedSecond = formatPolynomialFromCoeffs([secondCoeff / common, -secondConstant / common]);
+      const result = `${common === 1 ? '' : common}${same}(${reducedSecond})`;
+      questions.push(`提取公因式：\\(${m}${same}^2-${n}${same}\\)`);
       pushAnswerWithManualSummary(
         answers,
         summaryAnswers,
         `\\(${result}\\)`,
-        `\\(5(2x-1)^2-3(2x-1)=(2x-1)(10x-8)=${result}\\)`
+        `\\(${m}${same}^2-${n}${same}=${same}\\big[${m}${same}-${n}\\big]=${same}(${formatPolynomialFromCoeffs([secondCoeff, -secondConstant])})=${result}\\)`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1303,7 +1334,8 @@
       if (mode === 1) {
         const p = randInt(2, 6);
         const q = randInt(2, 6);
-        const r = randInt(2, 6);
+        let r = randInt(2, 6);
+        while (p === r || (p - r) % 2 === 0) r = randInt(2, 6);
         const result = `(x-${q})(${formatPolynomialFromCoeffs([2, p - r])})`;
         questions.push(`因式分解：\\((x+${p})(x-${q})-(x-${r})(${q}-x)\\)`);
         pushAnswerWithManualSummary(
@@ -1349,7 +1381,8 @@
       }
       if (mode === 1) {
         const p = randInt(2, 6);
-        const q = randInt(2, 6);
+        let q = randInt(2, 6);
+        while (gcdInt(p, q) !== 1) q = randInt(2, 6);
         const result = `(x+1)(${p}x^2+${q})`;
         questions.push(`分組分解：\\(${p}x^3+${p}x^2+${q}x+${q}\\)`);
         pushAnswerWithManualSummary(
@@ -1361,7 +1394,7 @@
         continue;
       }
       if (mode === 2) {
-        const p = randInt(2, 8);
+        const p = [3, 5, 7][randInt(0, 2)];
         const q = [2, 4, 6, 8][randInt(0, 3)];
         const qHalf = q / 2;
         const result = `(x+${qHalf})(2y+${p})`;
@@ -1477,28 +1510,32 @@
 
   function buildJ331CoreFactoringMixedSet(count) {
     const banks = [buildJ331CommonFactorBasicSet, buildJ331PolynomialFactorSet, buildJ331SignTransformSet];
+    const modeCounts = [1, 5, 3];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const fn = banks[i % banks.length];
-      const one = fn(1);
-      questions.push(one.questions[0]);
-      pushAnswerWithManualSummary(answers, summaryAnswers, one.summaryAnswers[0], one.answers[0]);
+      const bankIndex = i % banks.length;
+      const variant = (Math.floor(i / banks.length) + bankIndex) % modeCounts[bankIndex];
+      const one = banks[bankIndex](variant + 1);
+      questions.push(one.questions[variant]);
+      pushAnswerWithManualSummary(answers, summaryAnswers, one.summaryAnswers[variant], one.answers[variant]);
     }
     return { questions, summaryAnswers, answers };
   }
 
   function buildJ331GroupingAdvancedMixedSet(count) {
     const banks = [buildJ331GroupingFactorSet, buildJ331ExpandThenGroupSet];
+    const modeCounts = [5, 5];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const fn = banks[i % banks.length];
-      const one = fn(1);
-      questions.push(one.questions[0]);
-      pushAnswerWithManualSummary(answers, summaryAnswers, one.summaryAnswers[0], one.answers[0]);
+      const bankIndex = i % banks.length;
+      const variant = (Math.floor(i / banks.length) + bankIndex) % modeCounts[bankIndex];
+      const one = banks[bankIndex](variant + 1);
+      questions.push(one.questions[variant]);
+      pushAnswerWithManualSummary(answers, summaryAnswers, one.summaryAnswers[variant], one.answers[variant]);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1511,7 +1548,7 @@
       const mode = i % 4;
       if (mode === 0) {
         const p = randInt(2, 6);
-        const q = randInt(2, 9);
+        const q = pickNonSquare(2, 9);
         const result = `(x-${p})(x^2-${q})`;
         questions.push(`因式分解 \\(x^2(x-${p})-${q}(x-${p})\\)。`);
         pushAnswerWithManualSummary(
@@ -1525,7 +1562,8 @@
       if (mode === 1) {
         const a = randInt(2, 6);
         const b = randInt(2, 6);
-        const c = randInt(2, 6);
+        let c = randInt(2, 6);
+        while (gcdInt(a, c) !== 1) c = randInt(2, 6);
         const result = `(x+${b})(${a}x+${c})`;
         questions.push(`因式分解 \\(${a}x(x+${b})+${c}(x+${b})\\)。`);
         pushAnswerWithManualSummary(
@@ -1550,13 +1588,15 @@
         continue;
       }
       const p = randInt(1, 6);
-      const result = `(x+${p}-2)^2`;
+      const shift = p - 2;
+      const linear = shift === 0 ? 'x' : `x${formatSignedNumber(shift)}`;
+      const result = `(${linear})^2`;
       questions.push(`因式分解 \\((x+${p})^2-4(x+${p})+4\\)。`);
       pushAnswerWithManualSummary(
         answers,
         summaryAnswers,
         `\\(${result}\\)`,
-        `視 \\((x+${p})\\) 為同一整體，得 \\((x+${p})^2-4(x+${p})+4=${result}\\)。`
+        `令 \\(u=x+${p}\\)，原式為 \\(u^2-4u+4=(u-2)^2=${result}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1568,7 +1608,8 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randInt(1, 10);
-      const b = randInt(1, 10);
+      let b = randInt(1, 10);
+      while (gcdInt(a, b) !== 1) b = randInt(1, 10);
       const useVar = randInt(0, 1) === 1;
       const ax = formatCoeffTerm(a, 'x', 1);
       const by = formatCoeffTerm(b, 'y', 1);
@@ -1618,7 +1659,8 @@
       }
       if (mode === 2) {
         const a = randInt(2, 4);
-        const b = randInt(2, 5);
+        let b = randInt(2, 5);
+        while (gcdInt(a, b) !== 1) b = randInt(2, 5);
         const sign = randInt(0, 1) === 0 ? '-' : '+';
         questions.push(`因式分解 \\(${a ** 3}x^3${sign}${b ** 3}y^3\\)。`);
         if (sign === '-') {
@@ -1694,14 +1736,15 @@
         );
         continue;
       }
-      const a = randInt(2, 13);
-      const result = `(${a}x^2-1)(${a}x^2+1)`;
-      questions.push(`因式分解 \\(${a ** 2}x^4-1\\)。`);
+      const root = randInt(2, 6);
+      const a = root * root;
+      const result = `(${root}x-1)(${root}x+1)(${a}x^2+1)`;
+      questions.push(`因式分解 \\(${a * a}x^4-1\\)。`);
       pushAnswerWithManualSummary(
         answers,
         summaryAnswers,
         `\\(${result}\\)`,
-        `先用平方差，得 \\(${a ** 2}x^4-1=${result}\\)。`
+        `先用平方差，得 \\(${a * a}x^4-1=(${a}x^2-1)(${a}x^2+1)=${result}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -1713,7 +1756,8 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const a = randInt(1, 6);
-      const b = randInt(1, 9);
+      let b = randInt(1, 9);
+      while (gcdInt(a, b) !== 1) b = randInt(1, 9);
       const sign = randInt(0, 1) === 0 ? '+' : '-';
       const mid = sign === '+' ? 2 * a * b : -2 * a * b;
       const ax = formatCoeffTerm(a, 'x', 1);
@@ -1732,7 +1776,8 @@
     for (let i = 0; i < count; i += 1) {
       const k = pickNonZero(2, 8);
       const a = randInt(1, 6);
-      const b = randInt(1, 8);
+      let b = randInt(1, 8);
+      while (gcdInt(a, b) !== 1) b = randInt(1, 8);
       const mode = i % 2;
       const ax = formatCoeffTerm(a, 'x', 1);
       const by = formatCoeffTerm(b, 'y', 1);
@@ -1766,7 +1811,8 @@
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
       const p = randInt(1, 5);
-      const q = randInt(1, 7);
+      let q = randInt(1, 7);
+      while ((p + q) % 2 === 0) q = randInt(1, 7);
       const mode = i % 2;
       if (mode === 0) {
         const result = `(2x+${p}+${q})(2x+${p}-${q})`;
@@ -1788,13 +1834,16 @@
 
   function buildJ332FormulaMixedSet(count) {
     const banks = [buildJ332DiffSquaresSet, buildJ332PerfectSquareSet, buildJ332CompositeSet, buildJ332SubstitutionSet];
+    const modeCounts = [1, 1, 2, 2];
     const questions = [];
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const one = banks[i % banks.length](1);
-      questions.push(one.questions[0]);
-      pushAnswerWithManualSummary(answers, summaryAnswers, one.summaryAnswers[0], one.answers[0]);
+      const bankIndex = i % banks.length;
+      const variant = (Math.floor(i / banks.length) + bankIndex) % modeCounts[bankIndex];
+      const one = banks[bankIndex](variant + 1);
+      questions.push(one.questions[variant]);
+      pushAnswerWithManualSummary(answers, summaryAnswers, one.summaryAnswers[variant], one.answers[variant]);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1808,12 +1857,19 @@
       const q = pickNonZero(1, 12);
       const s1 = randInt(0, 1) === 0 ? 1 : -1;
       const s2 = randInt(0, 1) === 0 ? 1 : -1;
-      const b = s1 * p + s2 * q;
-      const c = s1 * p * (s2 * q);
+      const r = s1 * p;
+      const s = s2 * q;
+      const b = r + s;
+      const c = r * s;
       const result = `(x${s1 > 0 ? '+' : '-'}${p})(x${s2 > 0 ? '+' : '-'}${q})`;
       const polynomial = formatPolynomialFromCoeffs([1, b, c]);
       questions.push(`十字交乘因式分解：\\(${polynomial}\\)`);
-      pushAnswerWithManualSummary(answers, summaryAnswers, `\\(${result}\\)`, `\\(${polynomial}=${result}\\)`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `\\(${result}\\)`,
+        `十字交乘時，兩個交叉項相加要等於一次項係數：\\(${formatArithmeticSum(r, s)}=${b}\\)；常數項為 \\(${r}\\cdot(${s})=${c}\\)，所以 \\(${polynomial}=${result}\\)。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1832,12 +1888,19 @@
       const s1 = randInt(0, 1) === 0 ? 1 : -1;
       const s2 = randInt(0, 1) === 0 ? 1 : -1;
       const A = a1 * a2;
-      const B = a1 * (s2 * q) + a2 * (s1 * p);
+      const crossOne = a1 * (s2 * q);
+      const crossTwo = a2 * (s1 * p);
+      const B = crossOne + crossTwo;
       const C = s1 * p * (s2 * q);
       const result = `(${formatCoeffTerm(a1, 'x')}${s1 > 0 ? '+' : '-'}${p})(${formatCoeffTerm(a2, 'x')}${s2 > 0 ? '+' : '-'}${q})`;
       const polynomial = formatPolynomialFromCoeffs([A, B, C]);
       questions.push(`十字交乘因式分解：\\(${polynomial}\\)`);
-      pushAnswerWithManualSummary(answers, summaryAnswers, `\\(${result}\\)`, `\\(${polynomial}=${result}\\)`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `\\(${result}\\)`,
+        `十字交乘的兩個交叉積為 \\(${a1}\\cdot(${s2 * q})=${crossOne}\\) 與 \\(${a2}\\cdot(${s1 * p})=${crossTwo}\\)，相加為 \\(${formatArithmeticSum(crossOne, crossTwo)}=${B}\\)，故 \\(${polynomial}=${result}\\)。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1857,7 +1920,9 @@
       const s1 = randInt(0, 1) === 0 ? 1 : -1;
       const s2 = randInt(0, 1) === 0 ? 1 : -1;
       const A0 = a1 * a2;
-      const B0 = a1 * (s2 * q) + a2 * (s1 * p);
+      const crossOne = a1 * (s2 * q);
+      const crossTwo = a2 * (s1 * p);
+      const B0 = crossOne + crossTwo;
       const C0 = s1 * p * (s2 * q);
       const signAll = randInt(0, 1) === 0 ? 1 : -1;
       const A = signAll * g * A0;
@@ -1866,8 +1931,14 @@
       const outer = signAll * g;
       const result = `${outer}(${formatCoeffTerm(a1, 'x')}${s1 > 0 ? '+' : '-'}${p})(${formatCoeffTerm(a2, 'x')}${s2 > 0 ? '+' : '-'}${q})`;
       const polynomial = formatPolynomialFromCoeffs([A, B, C]);
+      const innerPolynomial = formatPolynomialFromCoeffs([A0, B0, C0]);
       questions.push(`十字交乘因式分解：\\(${polynomial}\\)`);
-      pushAnswerWithManualSummary(answers, summaryAnswers, `\\(${result}\\)`, `\\(${polynomial}=${result}\\)`);
+      pushAnswerWithManualSummary(
+        answers,
+        summaryAnswers,
+        `\\(${result}\\)`,
+        `先提出公因式 \\(${outer}\\)：\\(${polynomial}=${outer}(${innerPolynomial})\\)。括號內十字交乘的交叉積為 \\(${crossOne}\\) 與 \\(${crossTwo}\\)，其和為 \\(${B0}\\)，故 \\(${polynomial}=${result}\\)。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -1905,14 +1976,18 @@
       const c1 = v + (s1 > 0 ? p : -p);
       const c2 = v + (s2 > 0 ? q : -q);
       const tExpr = u === 1 ? `x+${v}` : `${u}x+${v}`;
-      const result = `(${formatLinearFactor(u, c1)})(${formatLinearFactor(u, c2)})`;
+      const commonOne = gcdInt(u, c1);
+      const commonTwo = gcdInt(u, c2);
+      const outer = commonOne * commonTwo;
+      const rawResult = `(${formatLinearFactor(u, c1)})(${formatLinearFactor(u, c2)})`;
+      const result = `${outer === 1 ? '' : outer}(${formatLinearFactor(u / commonOne, c1 / commonOne)})(${formatLinearFactor(u / commonTwo, c2 / commonTwo)})`;
       pushAnswerWithManualSummary(
         answers,
         summaryAnswers,
         `\\(${result}\\)`,
         `令 \\(t=${tExpr}\\)，原式可視為 \\(t^2${B >= 0 ? '+' : ''}${B}t${C >= 0 ? '+' : ''}${C}\\)。` +
           `十字交乘得 \\((t${s1 > 0 ? '+' : '-'}${p})(t${s2 > 0 ? '+' : '-'}${q})\\)，` +
-          `代回為 \\(${result}\\)。`
+          `代回後為 \\(${rawResult}=${result}\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2066,7 +2141,8 @@
       if (mode === 1) {
         const a = randInt(1, 5);
         const b = randInt(1, 5);
-        const c = randInt(1, 5);
+        let c = randInt(1, 5);
+        while (gcdInt(gcdInt(a, b), c) !== 1) c = randInt(1, 5);
         const inner = joinJ113PolyTerms([
           formatJ113PolyTerm(a, 'a'),
           formatJ113PolyTerm(-b, 'b'),
@@ -2113,8 +2189,9 @@
       if (mode === 0) {
         const m = randInt(2, 5);
         const n = randInt(2, 6);
+        const middle = formatFraction(2, m * n);
         const summary = `\\(\\left(\\frac{x}{${m}}-\\frac{y}{${n}}\\right)^2\\)`;
-        questions.push(`因式分解：$\\frac{1}{${m * m}}x^2-\\frac{2}{${m * n}}xy+\\frac{1}{${n * n}}y^2$。`);
+        questions.push(`因式分解：$\\frac{1}{${m * m}}x^2-${middle}xy+\\frac{1}{${n * n}}y^2$。`);
         pushAnswerWithManualSummary(answers, summaryAnswers, summary, `這是完全平方式 \\((A-B)^2\\)，其中 \\(A=\\frac{x}{${m}}\\)、\\(B=\\frac{y}{${n}}\\)。`);
         continue;
       }
@@ -2130,7 +2207,8 @@
 
       if (mode === 2) {
         const a = randInt(2, 4);
-        const b = randInt(2, 4);
+        let b = randInt(2, 4);
+        while (gcdInt(a, b) !== 1) b = randInt(2, 4);
         const sign = randInt(0, 1) === 0 ? '+' : '-';
         questions.push(`因式分解：$${a ** 3}x^3${sign}${b ** 3}y^3$。`);
         if (sign === '+') {
@@ -2145,13 +2223,24 @@
 
       if (mode === 3) {
         const n = randInt(1, 3);
-        const xn = n === 1 ? 'x' : `x^{${n}}`;
-        const yn = n === 1 ? 'y' : `y^{${n}}`;
-        const x2n = `x^{${2 * n}}`;
-        const y2n = `y^{${2 * n}}`;
-        const summary = `\\((${xn}-${yn})(${xn}+${yn})(${x2n}+${xn}${yn}+${y2n})(${x2n}-${xn}${yn}+${y2n})\\)`;
+        let summary;
+        let detail;
+        if (n === 1) {
+          summary = '\\((x-y)(x+y)(x^2+xy+y^2)(x^2-xy+y^2)\\)';
+          detail = '先將 \\(x^6-y^6\\) 分成 \\(x^3-y^3)(x^3+y^3\\)，再分別用立方差與立方和公式。';
+        } else if (n === 2) {
+          summary =
+            '\\((x-y)(x+y)(x^2+y^2)(x^2+xy+y^2)(x^2-xy+y^2)(x^4-x^2y^2+y^4)\\)';
+          detail =
+            '先將 \\(x^{12}-y^{12}\\) 視為 \\((x^2)^6-(y^2)^6\\)，並繼續分解 \\(x^2-y^2\\) 與 \\(x^4+x^2y^2+y^4\\)。';
+        } else {
+          summary =
+            '\\((x-y)(x^2+xy+y^2)(x+y)(x^2-xy+y^2)(x^6+x^3y^3+y^6)(x^6-x^3y^3+y^6)\\)';
+          detail =
+            '先將 \\(x^{18}-y^{18}\\) 視為 \\((x^3)^6-(y^3)^6\\)，再把 \\(x^3-y^3\\) 與 \\(x^3+y^3\\) 分解到底。';
+        }
         questions.push(`因式分解：$x^{${6 * n}}-y^{${6 * n}}$。`);
-        pushAnswerWithManualSummary(answers, summaryAnswers, summary, `先看成 \\((${xn})^6-(${yn})^6\\)，再連續使用平方差與立方和、立方差公式。`);
+        pushAnswerWithManualSummary(answers, summaryAnswers, summary, detail);
         continue;
       }
 
@@ -2203,7 +2292,8 @@
 
       if (mode === 3) {
         const a = randInt(2, 5);
-        const r = randInt(1, 4);
+        let r = randInt(1, 4);
+        while (gcdInt(a, r) !== 1) r = randInt(1, 4);
         const s = randInt(r + 1, r + 6);
         const bCoef = a * s - r;
         const c = -r * s;
@@ -2328,8 +2418,13 @@
         const q = randInt(1, 10);
         const constant = -p * q;
         const summary = `${-q}`;
-        questions.push(`若多項式展開後常數項為 ${constant}，且其中一個因式為 $x+${p}$，求另一個一次因式的常數項。`);
-        pushAnswerWithManualSummary(answers, summaryAnswers, summary, `常數項為 \\(${p}\\) 乘以另一因式常數項，所以另一個常數項為 \\(${summary}\\)。`);
+        questions.push(`若首項係數為 1 的二次式可分解為 $(x+${p})(x+d)$，且常數項為 ${constant}，求 $d$。`);
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          summary,
+          `常數項為 \\(${p}\\) 乘以 \\(d\\)，所以 \\(${p}d=${constant}\\)，解得 \\(d=${summary}\\)。`
+        );
         continue;
       }
 
@@ -2420,7 +2515,7 @@
         answers,
         summaryAnswers,
         summary,
-        `可因式分解為 \\(${a}(x-${wrapIfNegative(r1n)})(x-${wrapIfNegative(r2n)})=0\\)，所以 ${summary}。`
+        `可因式分解為 \\(${a}${formatQuadraticFactorizationFromRoots(r1n, r2n)}=0\\)，所以 ${summary}。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2481,7 +2576,7 @@
           summaryAnswers,
           summary,
           `先移項：\\(${moveText}=0\\)，展開得 \\(${formatQuadraticEquation(stdA, stdB, stdC)}\\)。` +
-            `因式分解可寫成 \\((x-${wrapIfNegative(u)})(x${v >= 0 ? '-' : '+'}${Math.abs(v)})=0\\)，得到 ${summary}。`
+            `因式分解可寫成 \\(${r}${formatQuadraticFactorizationFromRoots(u, v)}=0\\)，得到 ${summary}。`
         );
       }
     }
@@ -2623,6 +2718,7 @@
       const deltaDenominator = 2 * a;
       const fillText = formatFraction(fillNumerator, fillDenominator);
       const deltaText = formatFraction(deltaNumerator, deltaDenominator);
+      const squareInside = formatXMinusFraction(makeFraction(-b, 2 * a));
       const rhsLead = a === 1 ? '' : `${a}`;
       const middleTerm = b === 1 ? '+x' : b === -1 ? '-x' : formatSignedNumber(b) + 'x';
       questions.push(
@@ -2632,7 +2728,7 @@
         answers,
         summaryAnswers,
         `\\(\\square=${fillText}\\)，\\(\\Delta=${deltaText}\\)`,
-        `比較 \\(${a === 1 ? 'x^2' : `${a}x^2`}${middleTerm}+${fillText}=${rhsLead}\\left(x+${deltaText}\\right)^2\\)，可得所填兩值。`
+        `比較 \\(${a === 1 ? 'x^2' : `${a}x^2`}${middleTerm}+${fillText}=${rhsLead}\\left(${squareInside}\\right)^2\\)，可得所填兩值。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -2653,11 +2749,16 @@
       questions.push(`用配方法解：\\(x^2${b >= 0 ? '+' : ''}${b}x${constantTerm}=0\\)`);
       if (rhs > 0) {
         const root = formatRadical(rhs);
+        const exactRoot = Math.sqrt(rhs);
+        const summary =
+          Number.isInteger(exactRoot)
+            ? `\\(x=${p + exactRoot}\\) 或 \\(x=${p - exactRoot}\\)`
+            : `\\(x=${p}\\pm${root}\\)`;
         pushAnswerWithManualSummary(
           answers,
           summaryAnswers,
-          `\\(x=${p}\\pm${root}\\)`,
-          `先配方：\\((x${p >= 0 ? '-' : '+'}${Math.abs(p)})^2=${rhs}\\)。再開根號：\\(x=${p}\\pm${root}\\)。`
+          summary,
+          `先配方：\\((x${p >= 0 ? '-' : '+'}${Math.abs(p)})^2=${rhs}\\)。再開根號得 ${summary}。`
         );
       } else if (rhs === 0) {
         pushAnswerWithManualSummary(
@@ -2799,7 +2900,12 @@
         const h = makeFraction(-b, 2 * a);
         const k = makeFraction(4 * a * c - b * b, 4 * a);
         const total = addFraction(addFraction(makeFraction(a, 1), h), k);
-        const kTerm = k.num === 0 ? '' : k.num > 0 ? `+${fractionToLatex(k)}` : fractionToLatex(k);
+        const kTerm =
+          k.num === 0
+            ? ''
+            : k.num > 0
+              ? `+${fractionToLatex(k)}`
+              : `-${fractionToLatex({ num: -k.num, den: k.den })}`;
         pushAnswerWithManualSummary(
           answers,
           summaryAnswers,
@@ -2818,9 +2924,11 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const a = pickNonZero(1, 6),
-        b = pickNonZero(-12, 12),
-        c = pickNonZero(-12, 12);
+      const a = randInt(1, 6);
+      const r1 = pickNonZero(-8, 8);
+      const r2 = pickNonZero(-8, 8);
+      const b = -a * (r1 + r2);
+      const c = a * r1 * r2;
       const sumText = formatFraction(-b, a);
       const prodText = formatFraction(c, a);
       questions.push(
@@ -2843,8 +2951,10 @@
     for (let i = 0; i < count; i += 1) {
       const mode = i % 2;
       if (mode === 0) {
-        const s = pickNonZero(-10, 10),
-          p = pickNonZero(-20, 20);
+        const r1 = pickNonZero(-8, 8);
+        const r2 = pickNonZero(-8, 8);
+        const s = r1 + r2;
+        const p = r1 * r2;
         questions.push(`若兩根和為 \\(${s}\\)、兩根積為 \\(${p}\\)，求二次方程。`);
         const equation = formatQuadraticEquation(1, -s, p);
         pushAnswerWithManualSummary(
@@ -2876,9 +2986,11 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const a = pickNonZero(1, 5),
-        b = pickNonZero(-10, 10),
-        c = pickNonZero(-10, 10);
+      const a = randInt(1, 5);
+      const r1 = pickNonZero(-8, 8);
+      const r2 = pickNonZero(-8, 8);
+      const b = -a * (r1 + r2);
+      const c = a * r1 * r2;
       const S = formatFraction(-b, a);
       const P = formatFraction(c, a);
       const mode = i % 3;
@@ -2894,7 +3006,7 @@
           answers,
           summaryAnswers,
           `\\(\\alpha^2+\\beta^2=${fractionToLatex(value)}\\)`,
-          `\\((\\alpha+\\beta)^2-2\\alpha\\beta=${S}^2-2\\cdot${P}=${fractionToLatex(value)}\\)。`
+          `\\((\\alpha+\\beta)^2-2\\alpha\\beta=\\left(${S}\\right)^2-2\\cdot${P}=${fractionToLatex(value)}\\)。`
         );
       } else if (mode === 1) {
         const value = addFraction(subFraction(makeFraction(c, a), makeFraction(-b, a)), makeFraction(1, 1));
@@ -2919,7 +3031,7 @@
           answers,
           summaryAnswers,
           `\\((\\alpha-\\beta)^2=${fractionToLatex(value)}\\)`,
-          `\\((\\alpha+\\beta)^2-4\\alpha\\beta=${S}^2-4\\cdot${P}=${fractionToLatex(value)}\\)。`
+          `\\((\\alpha+\\beta)^2-4\\alpha\\beta=\\left(${S}\\right)^2-4\\cdot${P}=${fractionToLatex(value)}\\)。`
         );
       }
     }
@@ -3029,7 +3141,7 @@
           answers,
           summaryAnswers,
           `\\(k=${k}\\)`,
-          `將 \\(x=${r}\\) 代入得 \\(${r * r}${r >= 0 ? '+' : ''}${r}k${c >= 0 ? '+' : ''}${c}=0\\)，整理可得 \\(k=${k}\\)。`
+        `將 \\(x=${r}\\) 代入得 \\(${r * r}${r > 0 ? '+' : ''}${r === 1 ? 'k' : r === -1 ? '-k' : `${r}k`}${c >= 0 ? '+' : ''}${c}=0\\)，整理可得 \\(k=${k}\\)。`
         );
       } else if (mode === 1) {
         const r = pickNonZero(-6, 6);
@@ -3115,10 +3227,15 @@
     ];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
+    const modeCounts = [1, 2, 3];
     for (let i = 0; i < count; i += 1) {
-      const one = banks[i % banks.length](1);
-      pushGeneratedItem(questions, answers, summaryAnswers, one);
+      const bankIndex = i % banks.length;
+      const modeIndex = Math.floor(i / banks.length) % modeCounts[bankIndex];
+      const one = banks[bankIndex](modeCounts[bankIndex]);
+      questions.push(one.questions[modeIndex]);
+      summaryAnswers.push(one.summaryAnswers[modeIndex]);
+      answers.push(one.answers[modeIndex]);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3127,10 +3244,15 @@
     const banks = [buildJ342CoefficientMistakeSet, buildJ342SpecialRootRelationSet];
     const questions = [];
     const summaryAnswers = [];
-    const answers = createAnswerList(summaryAnswers);
+    const answers = [];
+    const modeCounts = [2, 4];
     for (let i = 0; i < count; i += 1) {
-      const one = banks[i % banks.length](1);
-      pushGeneratedItem(questions, answers, summaryAnswers, one);
+      const bankIndex = i % banks.length;
+      const modeIndex = Math.floor(i / banks.length) % modeCounts[bankIndex];
+      const one = banks[bankIndex](modeCounts[bankIndex]);
+      questions.push(one.questions[modeIndex]);
+      summaryAnswers.push(one.summaryAnswers[modeIndex]);
+      answers.push(one.answers[modeIndex]);
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3347,15 +3469,16 @@
           n0 = 1800,
           up = 10;
         const t = randInt(20, 50);
+        const otherT = 200 - t;
         const price = p0 - t;
         const qty = n0 + up * t;
         const revenue = price * qty;
-        questions.push(`票價 ${p0} 元可賣 ${n0} 張；每降價 1 元可多賣 ${up} 張。已知票價至少降 20 元，若收入為 ${revenue} 元，求票價。`);
+        questions.push(`票價 ${p0} 元可賣 ${n0} 張；每降價 1 元可多賣 ${up} 張。已知票價至少降 20 元且不低於 170 元，若收入為 ${revenue} 元，求票價。`);
         pushAnswerWithManualSummary(
           answers,
           summaryAnswers,
           `${price} 元`,
-          `設降價 \\(t\\) 元，收入為 \\((${p0}-t)(${n0}+${up}t)=${revenue}\\)，解得符合設定的 \\(t=${t}\\)，所以票價為 ${price} 元。`
+          `設降價 \\(t\\) 元，收入為 \\((${p0}-t)(${n0}+${up}t)=${revenue}\\)，解得 \\(t=${t}\\) 或 \\(t=${otherT}\\)。後者會使票價為 ${p0 - otherT} 元，低於 170 元，不合題意；故票價為 ${price} 元。`
         );
         continue;
       }
@@ -3416,19 +3539,33 @@
         const high = `x^${4 * n}`;
         const mid = `x^${2 * n}`;
         const low = `x^${n}`;
-        const f1 = joinJ113PolyTerms([
-          formatJ113PolyTerm(1, mid),
-          formatJ113PolyTerm(1, low),
-          formatJ113PolyTerm(1, ''),
-        ]);
-        const f2 = joinJ113PolyTerms([
-          formatJ113PolyTerm(1, mid),
-          formatJ113PolyTerm(-1, low),
-          formatJ113PolyTerm(1, ''),
-        ]);
         questions.push(`因式分解 \\(${high} + ${mid} + 1\\)。`);
-        answers.push(
-          `簡答：\\((${f1})(${f2})\\)。過程：令 \\(y=${low}\\)，則原式為 \\(y^4+y^2+1\\)。補上並扣除 \\(y^2\\)，得 \\((y^2+1)^2-y^2\\)，再用平方差分解並代回。`
+        if (n === 2) {
+          const summary = '\\((x^2+x+1)(x^2-x+1)(x^4-x^2+1)\\)';
+          pushAnswerWithManualSummary(
+            answers,
+            summaryAnswers,
+            summary,
+            '令 \\(y=x^2\\)，原式為 \\(y^4+y^2+1=(y^2+y+1)(y^2-y+1)\\)。其中 \\(x^4+x^2+1=(x^2+x+1)(x^2-x+1)\\)，故需再分解一次。'
+          );
+          continue;
+        }
+        if (n === 3) {
+          const summary = '\\((x^6+x^3+1)(x^6-x^3+1)\\)';
+          pushAnswerWithManualSummary(
+            answers,
+            summaryAnswers,
+            summary,
+            '令 \\(y=x^3\\)，原式為 \\(y^4+y^2+1=(y^2+y+1)(y^2-y+1)\\)，代回即可。'
+          );
+          continue;
+        }
+        const summary = '\\((x^2+x+1)(x^2-x+1)(x^4-x^2+1)(x^8-x^4+1)\\)';
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          summary,
+          '令 \\(y=x^4\\)，先得 \\((x^8+x^4+1)(x^8-x^4+1)\\)。其中前一因式還可分解為 \\((x^4+x^2+1)(x^4-x^2+1)\\)，再將 \\(x^4+x^2+1\\) 分解到底。'
         );
         continue;
       }
@@ -3498,11 +3635,13 @@
       let d = pickNonZero(-4, 4);
       let e = pickNonZero(-5, 5);
       let f = pickNonZero(-6, 6);
-      while (a * e === b * d) {
+      while (a * e === b * d || gcdInt(gcdInt(a, b), c) !== 1 || gcdInt(gcdInt(d, e), f) !== 1) {
         a = pickNonZero(-4, 4);
         b = pickNonZero(-5, 5);
+        c = pickNonZero(-6, 6);
         d = pickNonZero(-4, 4);
         e = pickNonZero(-5, 5);
+        f = pickNonZero(-6, 6);
       }
       const poly = joinJ113PolyTerms([
         formatJ113PolyTerm(a * d, 'x^2'),
@@ -3580,7 +3719,9 @@
         const remainder = fractionToLatex(r);
 
        questions.push(`計算：$(${dividend})\\div(${divisor})$。`);
-        answers.push(`簡答：商 $${quotient}$，餘 $${remainder}$。過程：依帶餘除法驗算「被除式＝除式×商式＋餘式」。`);
+        answers.push(
+          `簡答：商 $${quotient}$，餘 $${remainder}$。過程：依最高次項逐次相除，並以帶餘除法驗算：$(${dividend})=(${divisor})(${quotient})+\\left(${remainder}\\right)$。`
+        );
         continue;
       }
 
@@ -3603,7 +3744,9 @@
       const remainder = joinFracPoly([fracTerm(r1, 1), fracTerm(r0, 0)]);
 
      questions.push(`計算：$(${dividend})\\div(${divisor})$。`);
-      answers.push(`簡答：商 $${quotient}$，餘 $${remainder}$。過程：依帶餘除法驗算「被除式＝除式×商式＋餘式」。`);
+      answers.push(
+        `簡答：商 $${quotient}$，餘 $${remainder}$。過程：依最高次項逐次相除，並以帶餘除法驗算：$(${dividend})=(${divisor})(${quotient})+\\left(${remainder}\\right)$。`
+      );
     }
 
     return { questions, summaryAnswers, answers };
@@ -3648,7 +3791,9 @@
         questions.push(
           `一多項式除以 $(x${b >= 0 ? '+' : ''}${b})$，商式為 $${formatPolynomialFromCoeffs(quotient)}$，餘式為 ${r}，求此多項式。`
         );
-        answers.push(`簡答：$${formatPolynomialFromCoeffs(dividend)}$。過程：利用被除式＝除式×商式＋餘式反推。`);
+        answers.push(
+          `簡答：$${formatPolynomialFromCoeffs(dividend)}$。過程：代入被除式＝除式×商式＋餘式，得 $(${formatPolynomialFromCoeffs(dividend)})=(x${b >= 0 ? '+' : ''}${b})(${formatPolynomialFromCoeffs(quotient)})+(${r})$。`
+        );
         continue;
       }
 
@@ -3678,7 +3823,9 @@
       questions.push(
         `已知多項式 $A$ 除以 $${formatPolynomialFromCoeffs(divisor)}$ 的商式為 $${formatPolynomialFromCoeffs(quotient)}$，餘式為 ${r}，求多項式 $A$。`
       );
-      answers.push(`簡答：$A=${formatPolynomialFromCoeffs(dividend)}$。過程：利用 $A=除式×商式＋餘式$ 反推。`);
+      answers.push(
+        `簡答：$A=${formatPolynomialFromCoeffs(dividend)}$。過程：代入帶餘除法，$A=(${formatPolynomialFromCoeffs(divisor)})(${formatPolynomialFromCoeffs(quotient)})+(${r})=${formatPolynomialFromCoeffs(dividend)}$。`
+      );
     }
     return { questions, summaryAnswers, answers };
   }
@@ -3880,7 +4027,7 @@
     const answers = createAnswerList(summaryAnswers);
 
     for (let i = 0; i < count; i += 1) {
-      const variant = i % 3;
+      const variant = i % 5;
 
       if (variant === 0) {
         const p = pickNonZero(-6, 6);
@@ -3891,7 +4038,7 @@
         questions.push(
           `若多項式 $(a${p >= 0 ? '+' : ''}${p})x^2${qTerm.startsWith('-') ? '' : '+'}${qTerm}${constantTerm}$ 是一次多項式，求 $a$。`
         );
-        answers.push(`簡答：$a=${-p}$。過程：一次多項式的二次項係數必須為 0。`);
+        answers.push(`簡答：$a=${-p}$。過程：一次多項式的二次項係數必須為 0，所以 $a${p >= 0 ? '+' : ''}${p}=0$。`);
         continue;
       }
 
@@ -3903,19 +4050,43 @@
         questions.push(
           `若多項式 $${polynomial}$ 是一次多項式，求 $a$。`
         );
-        answers.push(`簡答：$a=${-m}$。過程：一次多項式的三次項係數必須為 0。`);
+        answers.push(`簡答：$a=${-m}$。過程：一次多項式的三次項係數必須為 0，所以 $a${m >= 0 ? '+' : ''}${m}=0$。`);
         continue;
       }
 
-      const aValue = pickNonZero(-4, 4);
-      const u = -aValue;
-      const v = -2 * aValue;
-      const w = -3 * aValue;
-      const zeroPolynomial = `(${formatPolynomialFromCoeffs([1, u], 'a')})x^2+(${formatPolynomialFromCoeffs([2, v], 'a')})x+(${formatPolynomialFromCoeffs([3, w], 'a')})`;
-      questions.push(
-        `若多項式 $${zeroPolynomial}$ 是零多項式，求 $a$。`
-      );
-      answers.push(`簡答：$a=${aValue}$。過程：零多項式的每一項係數都必須為 0。`);
+      if (variant === 2) {
+        const aValue = pickNonZero(-4, 4);
+        const u = -aValue;
+        const v = -2 * aValue;
+        const w = -3 * aValue;
+        const zeroPolynomial = `(${formatPolynomialFromCoeffs([1, u], 'a')})x^2+(${formatPolynomialFromCoeffs([2, v], 'a')})x+(${formatPolynomialFromCoeffs([3, w], 'a')})`;
+        questions.push(
+          `若多項式 $${zeroPolynomial}$ 是零多項式，求 $a$。`
+        );
+        answers.push(`簡答：$a=${aValue}$。過程：零多項式的每一項係數都必須為 0；由 $a${u >= 0 ? '+' : ''}${u}=0$ 可得 $a=${aValue}$。`);
+        continue;
+      }
+
+      if (variant === 3) {
+        const p = pickNonZero(-6, 6);
+        const q = pickNonZero(-7, 7);
+        const r = randInt(-9, 9);
+        const cubicCoeff = `(a${p >= 0 ? '+' : ''}${p})`;
+        const quadraticTerm = formatCoeffTerm(q, 'x', 2);
+        const constantTerm = r === 0 ? '' : `${r >= 0 ? '+' : ''}${r}`;
+        questions.push(`若多項式 $${cubicCoeff}x^3${quadraticTerm.startsWith('-') ? '' : '+'}${quadraticTerm}${constantTerm}$ 是二次多項式，求 $a$。`);
+        answers.push(`簡答：$a=${-p}$。過程：要使三次式降為二次多項式，三次項係數 $a${p >= 0 ? '+' : ''}${p}$ 必須為 0。`);
+        continue;
+      }
+
+      const aValue = pickNonZero(-5, 5);
+      const p = -aValue;
+      const q = -2 * aValue;
+      const constant = randInt(-9, 9);
+      const quadraticCoeff = formatPolynomialFromCoeffs([1, p], 'a');
+      const linearCoeff = formatPolynomialFromCoeffs([2, q], 'a');
+      questions.push(`若多項式 $(${quadraticCoeff})x^2+(${linearCoeff})x${constant >= 0 ? '+' : ''}${constant}$ 是常數多項式，求 $a$。`);
+      answers.push(`簡答：$a=${aValue}$。過程：常數多項式不含 $x$ 項與 $x^2$ 項，因此 $a${p >= 0 ? '+' : ''}${p}=0$、$2a${q >= 0 ? '+' : ''}${q}=0$，都得到 $a=${aValue}$。`);
     }
 
     return { questions, summaryAnswers, answers };
@@ -4104,7 +4275,7 @@
         qPow === 0 ? `${qCoef}` : `${qCoef === 1 ? '' : qCoef === -1 ? '-' : qCoef}x${qPow === 1 ? '' : `^${qPow}`}`;
      return {
        question: `計算：$(${left})\\div(${right})$。`,
-        answer: `簡答：$${ans}$。過程：單項式相除時，係數相除，同底數的指數相減。`,
+       answer: `簡答：$${ans}$。過程：單項式相除時，係數相除、同底數的指數相減：$(${left})\\div(${right})=(${c1}\\div${c2})x^{${p1}-${p2}}=${ans}$。`,
      };
     }
 
@@ -4117,7 +4288,7 @@
       const { quotient } = dividePolyByMonomialWithRemainder([coeffA, coeffB, 0], divisorCoef, 1);
      return {
        question: `計算：$(${left})\\div(${divisor})$。`,
-        answer: `簡答：$${quotient}$。過程：將多項式的每一項分別除以單項式。`,
+        answer: `簡答：$${quotient}$。過程：各項分別除以單項式：$(${coeffA}x^2)\\div(${divisor})+(${coeffB}x)\\div(${divisor})=${quotient}$。`,
      };
     }
 
@@ -4130,7 +4301,7 @@
     const { quotient, remainder } = dividePolyByMonomialWithRemainder([c2, c1, c0], divisorCoef, 1);
    return {
      question: `計算：$(${left})\\div(${divisor})$。`,
-      answer: `簡答：商 $${quotient}$，餘 $${remainder}$。過程：可整除的各項分別相除；次數不足的項保留為餘式。`,
+       answer: `簡答：商 $${quotient}$，餘 $${remainder}$。過程：$(${c2}x^2)\\div(${divisor})+(${c1}x)\\div(${divisor})=${quotient}$；常數項 $${c0}$ 的次數小於除式，保留為餘式。`,
    };
   }
 
@@ -4300,8 +4471,10 @@
         const middle = 2 * a * b * (mode === 'sum' ? 1 : -1);
         const expanded = formatPolynomialFromCoeffs([a * a, middle, b * b]);
         questions.push(`展開：$(${a === 1 ? 'x' : `${a}x`}${mode === 'sum' ? '+' : '-'}${b})^2$。`);
+        const first = a === 1 ? 'x' : `${a}x`;
+        const sign = mode === 'sum' ? '+' : '-';
         answers.push(
-          `利用乘法公式：$(${a === 1 ? 'x' : `${a}x`}${mode === 'sum' ? '+' : '-'}${b})^2=${expanded}$。`
+          `利用 $\\left(A${sign}B\\right)^2=A^2${sign}2AB+B^2$，取 $A=${first}$、$B=${b}$，得 $(${first}${sign}${b})^2=${expanded}$。`
         );
         continue;
       }
@@ -4314,8 +4487,9 @@
         const aText = fractionToLatex(a);
         const bText = fractionToLatex(b);
         questions.push(`展開：$\\left(${aText}${mode === 'sum' ? '+' : '-'}${bText}\\right)^2$。`);
+        const sign = mode === 'sum' ? '+' : '-';
         answers.push(
-          `先用公式：$\\left(${aText}${mode === 'sum' ? '+' : '-'}${bText}\\right)^2=${aText}^2${mode === 'sum' ? '+' : '-'}2\\cdot${aText}\\cdot${bText}+${bText}^2=${fractionToLatex(result)}$。`
+          `利用 $\\left(A${sign}B\\right)^2=A^2${sign}2AB+B^2$，取 $A=${aText}$、$B=${bText}$，得 $\\left(${aText}${sign}${bText}\\right)^2=${aText}^2${sign}2\\cdot${aText}\\cdot${bText}+${bText}^2=${fractionToLatex(result)}$。`
         );
         continue;
       }
@@ -4327,8 +4501,9 @@
       const bText = formatDecimalValue(b);
       const result = Math.pow(mode === 'sum' ? a + b : a - b, 2);
       questions.push(`展開：$(${aText}${mode === 'sum' ? '+' : '-'}${bText})^2$。`);
+      const sign = mode === 'sum' ? '+' : '-';
       answers.push(
-        `利用乘法公式：$(${aText}${mode === 'sum' ? '+' : '-'}${bText})^2=${aText}^2${mode === 'sum' ? '+' : '-'}2\\cdot${aText}\\cdot${bText}+${bText}^2=${formatDecimalValue(result)}$。`
+        `利用 $\\left(A${sign}B\\right)^2=A^2${sign}2AB+B^2$，取 $A=${aText}$、$B=${bText}$，得 $(${aText}${sign}${bText})^2=${aText}^2${sign}2\\cdot${aText}\\cdot${bText}+${bText}^2=${formatDecimalValue(result)}$。`
       );
     }
 
@@ -4745,7 +4920,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const val = randInt(3, 8);
+      const val = randInt(3, 18);
       questions.push(`已知 \\(x+\\frac{1}{x}=${val}\\)，求 \\(x^2+\\frac{1}{x^2}\\)。`);
       answers.push(`\\(x^2+\\frac{1}{x^2}=\\left(x+\\frac{1}{x}\\right)^2-2=${val}^2-2=${val * val - 2}\\)。`);
     }
@@ -4757,7 +4932,7 @@
     const summaryAnswers = [];
     const answers = createAnswerList(summaryAnswers);
     for (let i = 0; i < count; i += 1) {
-      const base = randInt(3, 10);
+      const base = randInt(3, 30);
       questions.push(`已知 \\(x^2+\\frac{1}{x^2}=${base}\\)，求 \\(x+\\frac{1}{x}\\)、\\(x-\\frac{1}{x}\\)。`);
       const plus2 = base + 2;
       const minus2 = base - 2;
@@ -5049,6 +5224,30 @@
     const answers = createAnswerList(summaryAnswers);
 
     while (questions.length < count) {
+      const variant = questions.length % 2;
+      if (variant === 1) {
+        const a = randInt(2, 12);
+        const d = randInt(1, 4);
+        let e = randInt(1, 4);
+        while (e === d) e = randInt(1, 4);
+        const k = randInt(1, 4);
+        const n1 = k * (a + d) * (a + e);
+        const n2 = k * a * a;
+        const lead = n1 - n2;
+        const factorConstant = k * a * d * e;
+        if (n1 > 9999 || n2 < 2 || lead <= 0) continue;
+
+        questions.push(
+          `小蘋家的客廳地板最近要重新翻修。在不考慮間隙的情況下，如果鋪上甲品牌的正方形瓷磚，剛好需要 ${n1} 塊；如果鋪上乙品牌的長方形瓷磚，剛好需要 ${n2} 塊。已知乙品牌瓷磚的長、寬分別比甲品牌瓷磚的邊長多 ${d} 公寸、${e} 公寸，則每塊甲品牌瓷磚的面積為多少平方公寸？`
+        );
+        pushAnswerWithManualSummary(
+          answers,
+          summaryAnswers,
+          `${a * a} 平方公寸`,
+          `設甲品牌正方形瓷磚邊長為 $x$ 公寸，則乙品牌長方形瓷磚的長、寬為 $(x+${d})$、$(x+${e})$ 公寸。因地板面積相同，列得 $${n1}x^2=${n2}(x+${d})(x+${e})$。整理為 $${lead}x^2-${n2 * (d + e)}x-${n2 * d * e}=0$，可分解為 $(x-${a})(${lead}x+${factorConstant})=0$。另一根為負值，不合邊長條件，故 $x=${a}$，甲品牌瓷磚面積為 $${a}^2=${a * a}$ 平方公寸。`
+        );
+        continue;
+      }
       const a = randInt(2, 12); // 甲邊長
       const d = randInt(1, 3); // 甲比乙少d
       const b = a + d; // 乙邊長
@@ -5317,7 +5516,7 @@
         answers,
         summaryAnswers,
         `${s} 公分`,
-        `設吸管長度為 $s$ 公分，桌長 $=${L}s-${A}$，桌寬 $=${W}s+${B}$。依題意 $(${L}s-${A})(${W}s+${B})=${S}$，展開整理得 $${qa}s^2${qbStr}-${A * B + S}=0$。取正根得 $s=\\dfrac{${-qb}+${sqrtDisc}}{${2 * qa}}=${s}$，所以吸管長度為 ${s} 公分。`
+        `設吸管長度為 $s$ 公分，桌長為 \\(${L}s-${A}\\)，桌寬為 \\(${W}s+${B}\\) 公分。依題意 $(${L}s-${A})(${W}s+${B})=${S}$，展開整理得 $${qa}s^2${qbStr}-${A * B + S}=0$。取正根得 $s=\\dfrac{${-qb}+${sqrtDisc}}{${2 * qa}}=${s}$，所以吸管長度為 ${s} 公分。`
       );
     }
 
@@ -5409,12 +5608,16 @@
       const fac1 = `(${formatSingleVarExpr(s1, t1)})`;
       const fac2 = s2 === 0 ? `${t2}` : `(${formatSingleVarExpr(s2, t2)})`;
       const factorProduct = s2 === 0 ? `${fac1}\\cdot(${fac2})` : `${fac1}${fac2}`;
+      const solveNote =
+        s2 === 0
+          ? `因為常數因式 \\(${t2}\\) 不為 0，只需令另一因式為 0 求解。`
+          : '由兩個一次因式分別為 0 求解。';
       questions.push(`解方程式：\\((${aStr}x${b >= 0 ? '+' : ''}${b})^2-(${cStr}x${d >= 0 ? '+' : ''}${d})^2=0\\)`);
       pushAnswerWithManualSummary(
         answers,
         summaryAnswers,
         summary,
-        `利用差平方分解：\\([(${aStr}x+${b})+(${cStr}x+${d})][(${aStr}x+${b})-(${cStr}x+${d})]=0\\)，即 \\(${factorProduct}=0\\)。由兩個因式分別為 0 求解。`
+        `利用差平方分解：\\([(${aStr}x+${b})+(${cStr}x+${d})][(${aStr}x+${b})-(${cStr}x+${d})]=0\\)，即 \\(${factorProduct}=0\\)。${solveNote}`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -5434,7 +5637,7 @@
       const C = r1 * r2;
       // y²+By+C = (y-r1)(y-r2)
       const xSign = a >= 0 ? `+${a}` : `${a}`;
-      const BSign = B === 0 ? '' : B > 0 ? `+${B}` : `${B}`;
+      const BSign = B === 0 ? '' : B === 1 ? '+' : B === -1 ? '-' : B > 0 ? `+${B}` : `${B}`;
       const CSign = C >= 0 ? `+${C}` : `${C}`;
       const x1 = r1 - a,
         x2 = r2 - a;
@@ -5512,7 +5715,7 @@
           `\\(k=${k}\\)`,
           `\\(${formatQuadraticEquation(1, -r, 0)}\\)，可因式分解為 \\(x(x-${r})=0\\)，解為 \\(x=0\\) 或 \\(x=${r}\\)。` +
             `若公共解為 \\(x=0\\)：代入第二式得 \\(-${C}=0\\)，矛盾，故排除。` +
-            `若公共解為 \\(x=${r}\\)：代入第二式得 \\(${r * r}+${r}k-${C}=0\\)，解得 \\(k=${k}\\)。`
+            `若公共解為 \\(x=${r}\\)：代入第二式得 \\(${r * r}${r > 0 ? '+' : ''}${formatCoeffTerm(r, 'k')}-${C}=0\\)，解得 \\(k=${k}\\)。`
         );
         continue;
       }
@@ -5570,7 +5773,7 @@
         continue;
       }
       const p2 = C / p1;
-      if (p1 === p2) {
+      if (p1 === p2 || p1 + p2 === -B) {
         i -= 1;
         continue;
       }
@@ -5614,22 +5817,12 @@
       if (mode === 0) {
         // px²-ax+q 為完全平方式 → (√p·x - √q)² = px²-2√(pq)·x+q
         // 所以 a = 2√(pq) → p = a²/(4q)
-        const sqrtP = randInt(2, 6);
-        const sqrtQ = randInt(1, 6);
-        const p = sqrtP * sqrtP;
-        const q = sqrtQ * sqrtQ;
-        const a = 2 * sqrtP * sqrtQ;
-        questions.push(
-          `若 \\(${p}x^2-${a}x+${q}\\) 為完全平方式，此式已滿足，求 \\(\\sqrt{${p}}\\) 和 \\(\\sqrt{${q}}\\) 的值。（驗算）`
-        );
-        // Better question: find p given a and q
-        const p2 = randInt(1, 6) * randInt(1, 6);
         const sqrtQ2 = randInt(1, 5);
         const q2 = sqrtQ2 * sqrtQ2;
         const sqrtP2 = randInt(2, 7);
         const p2val = sqrtP2 * sqrtP2;
         const a2 = 2 * sqrtP2 * sqrtQ2;
-        questions[questions.length - 1] = `若 \\(px^2-${a2}x+${q2}\\) 為完全平方式，求 \\(p\\) 的值。`;
+        questions.push(`若 \\(p>0\\)，且 \\(px^2-${a2}x+${q2}\\) 為完全平方式，求 \\(p\\) 的值。`);
         pushAnswerWithManualSummary(
           answers,
           summaryAnswers,
@@ -5663,7 +5856,7 @@
       const a2 = sqrtA * sqrtA;
       const b2 = 2 * sqrtA * sqrtC * (randInt(0, 1) === 0 ? 1 : -1);
       const bSign2 = b2 >= 0 ? `+${b2}` : `${b2}`;
-      questions.push(`若 \\(ax^2${bSign2}x+${c}\\) 為完全平方式，求 \\(a\\) 的值。`);
+      questions.push(`若 \\(a>0\\)，且 \\(ax^2${bSign2}x+${c}\\) 為完全平方式，求 \\(a\\) 的值。`);
       pushAnswerWithManualSummary(
         answers,
         summaryAnswers,
@@ -5821,7 +6014,7 @@
         answers,
         summaryAnswers,
         `${sheetArea} 平方公寸`,
-        `設正方形薄片邊長為 $x$ 公寸，則盒底邊長為 $(x-${2 * h})$ 公寸，高為 ${h} 公寸。容積為 $${h}(x-${2 * h})^2=${vol}$，整理得 $(x-${2 * h})^2=${vol / h}$，開方得 $x-${2 * h}=${boxSide}$，所以 $x=${side}$。薄片面積為 $${side}^2=${sheetArea}$ 平方公寸。`
+        `設正方形薄片邊長為 $x$ 公寸，則盒底邊長為 $(x-${2 * h})$ 公寸，高為 ${h} 公寸。因盒底邊長必為正，先有 $x-${2 * h}>0$。容積為 $${h}(x-${2 * h})^2=${vol}$，整理得 $(x-${2 * h})^2=${vol / h}$。雖然代數上可開方為 $x-${2 * h}=\\pm${boxSide}$，但負值會使盒底邊長為負，不合題意；故取 $x-${2 * h}=${boxSide}$，得 $x=${side}$。薄片面積為 $${side}^2=${sheetArea}$ 平方公寸。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -5989,7 +6182,7 @@
         const c = randInt(1, 5);
         const bound = formatFraction(b * b, 4 * c);
         add(
-          `已知關於 \\(x\\) 的方程式 \\(mx^2+${b}x+${c}=0\\) 沒有實根，求 \\(m\\) 的範圍。`,
+          `已知 \\(m\\ne0\\)，且關於 \\(x\\) 的方程式 \\(mx^2+${b}x+${c}=0\\) 沒有實根，求 \\(m\\) 的範圍。`,
           `\\(m>${bound}\\)`,
           `因為是二次方程式，先保留 \\(m\\ne 0\\)。沒有實根需 \\(D<0\\)，所以 \\(${b}^2-4\\cdot m\\cdot ${c}<0\\)，得到 \\(m>${bound}\\)。這個範圍已自動排除 \\(m=0\\)。`
         );
@@ -6165,7 +6358,7 @@
         add(
           `正方形薄片四角各剪去邊長 ${cut} 公分的小正方形後，摺成無蓋盒，體積為 ${volume} 立方公分，求原薄片邊長。`,
           `原薄片邊長為 ${side} 公分`,
-          `設原薄片邊長為 \\(x\\) 公分，盒子的高為 ${cut}，底面邊長為 \\(x-${2 * cut}\\)。所以 \\(${cut}(x-${2 * cut})^2=${volume}\\)，取符合長度的正值，得 \\(x=${side}\\) 公分。`
+          `設原薄片邊長為 \\(x\\) 公分，盒子的高為 ${cut}，底面邊長為 \\(x-${2 * cut}\\)，因此需有 \\(x-${2 * cut}>0\\)。由體積公式 \\(${cut}(x-${2 * cut})^2=${volume}\\)，取符合底面邊長為正的解，得 \\(x=${side}\\) 公分。`
         );
         continue;
       }
@@ -6278,13 +6471,12 @@
       const shift = randInt(1, 4);
       const xValue = randInt(1, 5);
       const t = xValue + shift;
-      const product = t * (t + 1) * (t + 2) * (t + 3);
+      const uValue = t * (t + 3);
+      const product = uValue * (uValue + 2);
       add(
         `求正整數解：\\((x+${shift})(x+${shift + 1})(x+${shift + 2})(x+${shift + 3})=${product}\\)。`,
         `\\(x=${xValue}\\)`,
-        `把首尾與中間兩項配對：令 \\(u=(x+${shift})(x+${shift + 3})\\)，則 \\((x+${shift + 1})(x+${
-          shift + 2
-        })=u+2\\)。原式變成 \\(u(u+2)=${product}\\)。取正整數解，可得 \\(x=${xValue}\\)。`
+        `把首尾與中間兩項配對：令 \\(u=(x+${shift})(x+${shift + 3})\\)，則 \\((x+${shift + 1})(x+${shift + 2})=u+2\\)。原式化為 \\(u(u+2)=${product}\\)，即 \\(u^2+2u-${product}=0\\)。因式分解得 \\((u-${uValue})(u+${uValue + 2})=0\\)。由 \\(x\\) 為正整數可知 \\(u>0\\)，故 \\(u=${uValue}\\)。再令 \\(z=x+${shift}\\)，則 \\(z(z+3)=${uValue}=${t}(${t}+3)\\)，且 \\(z>0\\)，所以 \\(z=${t}\\)，得到 \\(x=${xValue}\\)。`
       );
     }
 
@@ -6319,8 +6511,12 @@
             break;
           }
         }
-        const wrongSumA = randInt(-7, -2);
-        const wrongSumB = -b - wrongSumA;
+        let wrongSumA = randInt(-7, -2);
+        let wrongSumB = -b - wrongSumA;
+        while (wrongSumA * wrongSumB === c) {
+          wrongSumA = randInt(-7, -2);
+          wrongSumB = -b - wrongSumA;
+        }
         const wrongSumText = formatArithmeticSum(wrongSumA, wrongSumB);
         add(
           `某一元二次方程式首項係數為 1。甲看錯一次項係數，得到兩根 \\(${wrongA},${wrongB}\\)；乙看錯常數項，得到兩根 \\(${wrongSumA},${wrongSumB}\\)。求原方程式的兩根。`,
@@ -6341,7 +6537,7 @@
         add(
           `若 \\(x^2-${r}x=0\\) 與 \\(x^2+kx-${c}=0\\) 有一個公共根，求 \\(k\\) 的值。`,
           `\\(k=${formatDecimalValue(k)}\\)`,
-          `第一個方程式的根為 \\(0\\) 與 \\(${r}\\)。第二個方程式常數項為 \\(-${c}\\)，所以 \\(x=0\\) 不可能是它的根，只能代入 \\(x=${r}\\)。得到 \\(${r * r}+${r}k-${c}=0\\)，故 \\(k=${formatDecimalValue(k)}\\)。`
+          `第一個方程式的根為 \\(0\\) 與 \\(${r}\\)。第二個方程式常數項為 \\(-${c}\\)，所以 \\(x=0\\) 不可能是它的根，只能代入 \\(x=${r}\\)。得到 \\(${r * r}${r > 0 ? '+' : ''}${formatCoeffTerm(r, 'k')}-${c}=0\\)，故 \\(k=${formatDecimalValue(k)}\\)。`
         );
         continue;
       }
@@ -6349,7 +6545,7 @@
       if (mode === 2) {
         const r = randInt(2, 9);
         add(
-          `已知 \\(x=${r}\\) 是 \\(ax^2+bx+c=0\\) 的一根，且 \\(a+b+c=0\\)，求該方程式的兩根。`,
+          `已知 \\(a\\ne0\\)，\\(x=${r}\\) 是 \\(ax^2+bx+c=0\\) 的一根，且 \\(a+b+c=0\\)，求該方程式的兩根。`,
           `兩根為 \\(1\\) 與 \\(${r}\\)`,
           `由 \\(a+b+c=0\\) 可知把 \\(x=1\\) 代入會成立，所以 \\(x=1\\) 是一根。題目又給 \\(x=${r}\\) 是一根，因此兩根為 \\(1\\) 與 \\(${r}\\)。`
         );
@@ -6438,12 +6634,14 @@
         // 若(a+b)是x的一個平方根，則另一個平方根是?
         const p = randInt(1, 6),
           q = randInt(1, 6);
-        questions.push(`若 \\((${p}a+${q}b)\\) 是 \\(x\\) 的一個平方根，則 \\(x\\) 的另一個平方根是什麼？`);
+        const aTerm = p === 1 ? 'a' : `${p}a`;
+        const bTerm = q === 1 ? 'b' : `${q}b`;
+        questions.push(`若 \\(${aTerm}+${bTerm}\\) 是 \\(x\\) 的一個平方根，則 \\(x\\) 的另一個平方根是什麼？`);
         pushAnswerWithManualSummary(
           answers,
           summaryAnswers,
-          `\\(-${p}a-${q}b\\)`,
-          `兩個平方根互為相反數，所以另一個平方根為 \\(-(${p}a+${q}b)=-${p}a-${q}b\\)。`
+          `\\(-${aTerm}-${bTerm}\\)`,
+          `兩個平方根互為相反數，所以另一個平方根為 \\(-(${aTerm}+${bTerm})=-${aTerm}-${bTerm}\\)。`
         );
         continue;
       }
@@ -6461,7 +6659,7 @@
         answers,
         summaryAnswers,
         `0`,
-        `\\(${sq}\\) 的兩個平方根互為相反數：\\(+${sqrtV}\\) 和 \\(-${sqrtV}\\)，所以 \\(a+b=0\\)。`
+        `\\(${sq}\\) 的兩個平方根互為相反數：\\(${sqrtV}\\) 和 \\(-${sqrtV}\\)，所以 \\(a+b=0\\)。`
       );
     }
     return { questions, summaryAnswers, answers };
@@ -7104,7 +7302,7 @@
         const n = a * a + randInt(1, 2 * a);
         questions.push(`設 $\\sqrt{${n}}$ 的整數部分為 $p$、小數部分為 $q$，求 $pq+q^2$。`);
         answers.push(
-          `簡答：$${n}-${a}\\sqrt{${n}}$。過程：$p=${a}$，$q=\\sqrt{${n}}-${a}$，所以 $pq+q^2=q(p+q)=q\\sqrt{${n}}$。`
+          `簡答：$${n}-${formatScaledRadical(a, n)}$。過程：$p=${a}$，$q=\\sqrt{${n}}-${a}$，所以 $pq+q^2=q(p+q)=q\\sqrt{${n}}=${n}-${a}\\sqrt{${n}}=${n}-${formatScaledRadical(a, n)}$。`
         );
         continue;
       }
@@ -7113,7 +7311,8 @@
         const root = randInt(4, 15);
         const n = root * root + randInt(1, root - 1);
        const nearest = Math.round(Math.sqrt(n));
-       const diff = nearest * nearest > n ? `${nearest}-\\sqrt{${n}}` : `\\sqrt{${n}}-${nearest}`;
+        const rootText = formatRadical(n);
+        const diff = nearest * nearest > n ? `${nearest}-${rootText}` : `${rootText}-${nearest}`;
        questions.push(`已知 $x=\\sqrt{${n}}$，求最接近 $x$ 的整數，並寫出 $x$ 與該整數的差。`);
         pushAnswerWithManualSummary(
           answers,
@@ -7262,7 +7461,7 @@
         const k = left * left + right * right + 2 * left * right;
         questions.push(`若 $k=\\sqrt{${left * left}}+\\sqrt{${right * right}}$，求 $k$ 的算術平方根。`);
         answers.push(
-          `簡答：$\\sqrt{${totalRoot}}$。過程：$k=${left}+${right}=${totalRoot}$，所以算術平方根為 $\\sqrt{${totalRoot}}$。`
+          `簡答：$${formatRadical(totalRoot)}$。過程：$k=${left}+${right}=${totalRoot}$，所以算術平方根為 $\\sqrt{${totalRoot}}=${formatRadical(totalRoot)}$。`
         );
         continue;
       }
@@ -7323,7 +7522,7 @@
         const n = pickNonSquare(2, 20);
         questions.push(`將三個邊長為 $\\sqrt{${n}}$ 的正方形排成一直列，求排成後長方形的總周長。`);
         answers.push(
-          `簡答：$${formatRadical(64 * n)}$。過程：排成長 $3\\sqrt{${n}}$、寬 $\\sqrt{${n}}$ 的長方形，周長為 $2(3\\sqrt{${n}}+\\sqrt{${n}})=8\\sqrt{${n}}$。`
+          `簡答：$${formatRadical(64 * n)}$。過程：排成長 $3\\sqrt{${n}}$、寬 $\\sqrt{${n}}$ 的長方形，周長為 $2(3\\sqrt{${n}}+\\sqrt{${n}})=8\\sqrt{${n}}=${formatRadical(64 * n)}$。`
         );
         continue;
       }
@@ -7660,8 +7859,11 @@
       title: '二次三項式的拆項配方因式分解',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ113BiquadraticSplitSquareFactoringSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ113BiquadraticSplitSquareFactoringSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j1-1-3-binary-quadratic-cross-factoring': {
@@ -7669,8 +7871,11 @@
       title: '二元二次式的雙十字交乘法因式分解',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildJ113BinaryQuadraticCrossFactoringSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ113BinaryQuadraticCrossFactoringSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'j3-1-1-formula-mixed-integer-drill': {
@@ -7750,8 +7955,8 @@
       title: '和平方未知數版',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildBinomialQuestions(5, 'sum', 'variable');
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildBinomialQuestions(practiceCount, 'sum', 'variable'), resolvePracticeCount(count, 5));
       },
     },
     'difference-square-variable-drill': {
@@ -7759,8 +7964,8 @@
       title: '差平方未知數版',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildBinomialQuestions(5, 'diff', 'variable');
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildBinomialQuestions(practiceCount, 'diff', 'variable'), resolvePracticeCount(count, 5));
       },
     },
     'square-difference-variable-drill': {
@@ -7768,8 +7973,8 @@
       title: '平方差未知數展開',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildDifferenceOfSquaresQuestions(5, 'variable');
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildDifferenceOfSquaresQuestions(practiceCount, 'variable'), resolvePracticeCount(count, 5));
       },
     },
     'square-difference-factorization-variable-drill': {
@@ -7777,8 +7982,8 @@
       title: '平方差未知數分解',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildFactorizationQuestions(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildFactorizationQuestions(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'identity-value-integer-basic-drill': {
@@ -7786,8 +7991,8 @@
       title: '求值整數版',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildIdentityIntegerBasicSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildIdentityIntegerBasicSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'identity-value-pair-mixed-drill': {
@@ -7795,8 +8000,8 @@
       title: '求值公式綜合版（三選二）',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildIdentityPairMixedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildIdentityPairMixedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'identity-value-pair-advanced-drill': {
@@ -7804,8 +8009,8 @@
       title: '求值公式進階版（三選二）',
       difficulty: 'hard',
       questionCount: 5,
-      generate() {
-        return buildIdentityPairAdvancedSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildIdentityPairAdvancedSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'identity-value-sum-sqsum-to-product-drill': {
@@ -7813,8 +8018,8 @@
       title: '由 a+b、a^2+b^2 求 ab',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildSumSqsumToProductSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildSumSqsumToProductSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'identity-value-diff-sqsum-to-product-drill': {
@@ -7822,8 +8027,8 @@
       title: '由 a-b、a^2+b^2 求 ab',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildDiffSqsumToProductSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildDiffSqsumToProductSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'identity-value-sum-product-drill': {
@@ -7831,8 +8036,8 @@
       title: '由 a+b、ab 開始求值',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildIdentitySumProductSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildIdentitySumProductSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'identity-value-product-sqsum-drill': {
@@ -7840,8 +8045,8 @@
       title: '由 ab、a^2+b^2 求 a+b、a-b',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildProductSqsumSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildProductSqsumSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'identity-value-square-pair-drill': {
@@ -7849,8 +8054,8 @@
       title: '由 (a+b)^2、(a-b)^2 求值',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildSquarePairSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildSquarePairSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'identity-value-linear-combination-drill': {
@@ -7858,8 +8063,8 @@
       title: '組合式求值',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildLinearCombinationSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildLinearCombinationSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'identity-value-reciprocal-drill': {
@@ -7867,8 +8072,8 @@
       title: '倒數型求值',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildReciprocalSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildReciprocalSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'identity-value-reciprocal-reverse-drill': {
@@ -7876,8 +8081,8 @@
       title: '倒數反推型',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildReciprocalReverseSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildReciprocalReverseSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'identity-value-reciprocal-mixed-fraction-drill': {
@@ -7885,8 +8090,8 @@
       title: '倒數混合分式型',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildReciprocalMixedFractionSet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildReciprocalMixedFractionSet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'identity-value-mixed-advanced-drill': {
@@ -7894,8 +8099,8 @@
       title: '求值進階混合版',
       difficulty: 'medium',
       questionCount: 5,
-      generate() {
-        return buildMixedAdvancedIdentitySet(5);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildMixedAdvancedIdentitySet(practiceCount), resolvePracticeCount(count, 5));
       },
     },
     'cubic-divide-linear': {
@@ -7903,8 +8108,8 @@
       title: '三次多項式（四項）÷ 一次多項式',
       difficulty: 'medium',
       questionCount: 3,
-      generate() {
-        return buildCubicDivideLinearSet(3);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildCubicDivideLinearSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'cubic-divide-quadratic': {
@@ -7912,8 +8117,8 @@
       title: '三次多項式（四項）÷ 二次多項式',
       difficulty: 'medium',
       questionCount: 3,
-      generate() {
-        return buildCubicDivideQuadraticSet(3);
+      generate(count) {
+        return buildUniquePracticeSet((practiceCount) => buildCubicDivideQuadraticSet(practiceCount), resolvePracticeCount(count, 3));
       },
     },
     'j3-1-3-polynomial-division-regular-drill': {
@@ -7963,7 +8168,7 @@
     },
     'j3-1-3-special-product-structure-drill': {
       type: 'drill',
-      title: '特殊乘積結構化簡',
+      title: '進階補充：特殊乘積結構化簡（含立方和、立方差）',
       difficulty: 'medium',
       questionCount: 5,
       generate(count) {
@@ -8137,8 +8342,11 @@
       title: '平方根估算與近似（綜合）',
       difficulty: 'easy',
       questionCount: 8,
-      generate() {
-        return buildJ321SqrtEstimateMixedSet(8);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildJ321SqrtEstimateMixedSet(practiceCount),
+          resolvePracticeCount(count, 8)
+        );
       },
     },
     'j3-2-1-exact-square-root-drill': {
@@ -9001,8 +9209,11 @@
       title: '根式乘除可拆',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildRadicalMulDivSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildRadicalMulDivSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'radical-add-subtract-like-terms': {
@@ -9010,8 +9221,11 @@
       title: '根式加減同類項',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildRadicalAddLikeTermsSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildRadicalAddLikeTermsSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'simplest-radical-form-junior': {
@@ -9019,8 +9233,11 @@
       title: '最簡根式',
       difficulty: 'easy',
       questionCount: 5,
-      generate() {
-        return buildSimplestRadicalSet(5);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildSimplestRadicalSet(practiceCount),
+          resolvePracticeCount(count, 5)
+        );
       },
     },
     'rationalize-denominator-monomial-junior': {
@@ -9028,8 +9245,11 @@
       title: '單項有理化分母',
       difficulty: 'medium',
       questionCount: 3,
-      generate() {
-        return buildRationalizeMonomialSet(3);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildRationalizeMonomialSet(practiceCount),
+          resolvePracticeCount(count, 3)
+        );
       },
     },
     'rationalize-denominator-binomial-junior': {
@@ -9037,8 +9257,11 @@
       title: '多項有理化分母（平方差）',
       difficulty: 'medium',
       questionCount: 3,
-      generate() {
-        return buildRationalizeBinomialSet(3);
+      generate(count) {
+        return buildUniquePracticeSet(
+          (practiceCount) => buildRationalizeBinomialSet(practiceCount),
+          resolvePracticeCount(count, 3)
+        );
       },
     },
   };

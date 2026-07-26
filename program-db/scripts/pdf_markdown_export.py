@@ -151,6 +151,18 @@ def normalize_tex_delimiters(text: str) -> str:
     return text
 
 
+def normalize_pdf_glyphs(text: str) -> str:
+    """Replace characters missing from the portable Windows PDF fonts.
+
+    ``Microsoft JhengHei`` and ``DFKai-SB`` can render Chinese text but do not
+    contain U+2212 (the Unicode MINUS SIGN).  Markdown and the browser can use
+    that glyph, while the same source becomes a blank box in a XeLaTeX PDF.
+    ASCII ``-`` is available in every supported PDF font and is also the valid
+    TeX subtraction operator when it occurs inside inline math.
+    """
+    return str(text or "").replace("\u2212", "-")
+
+
 def _strip_stray_html(text: str) -> str:
     """Defensive ``<br>``-to-newline conversion for practice-generator text.
 
@@ -629,6 +641,9 @@ def convert_markdown_to_pdf(
 
     Returns {"ok": bool, "pdf": Path|None, "reason": str, "log": str}.
     """
+    title = normalize_pdf_glyphs(title)
+    markdown_text = normalize_pdf_glyphs(markdown_text)
+
     toolchain = check_pdf_toolchain()
     if not toolchain["ok"]:
         return {"ok": False, "pdf": None, "reason": toolchain["reason"], "log": ""}

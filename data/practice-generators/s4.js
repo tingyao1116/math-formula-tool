@@ -447,7 +447,21 @@
           const BC = data[3];
           const PC = data[4];
           return s331QA(
-            '承三垂線配置，若 ' + s331MJ('PA=', PA, ',\\ BC=', BC, ',\\ PC=', PC) + '，求 ' + s331M('AB') + '。',
+            '已知 ' +
+              s331M('PA\\perp E') +
+              ' 於 ' +
+              s331M('A') +
+              '，且 ' +
+              s331M('AB,BC') +
+              ' 在平面 ' +
+              s331M('E') +
+              ' 上、' +
+              s331M('AB\\perp BC') +
+              '。若 ' +
+              s331MJ('PA=', PA, ',\\ BC=', BC, ',\\ PC=', PC) +
+              '，求 ' +
+              s331M('AB') +
+              '。',
             s331MJ(AB),
             '由 ' + s331M('PC^2=PA^2+AB^2+BC^2') + '，移項得到 ' + s331M('AB^2=PC^2-PA^2-BC^2') + '。'
           );
@@ -471,6 +485,7 @@
           const OA = s324Pick([5, 8, 12]);
           const AB = s324Pick([3, 4, 5]);
           const BC = s324Pick([4, 12, 15]);
+          const distance = s333Sqrt(OA * OA + AB * AB + BC * BC);
           return s331QA(
             '設點 ' +
               s331M('O') +
@@ -491,7 +506,7 @@
               '，求 ' +
               s331M('OC') +
               ' 的表示式。',
-            s331MJ('\\sqrt{', OA * OA + AB * AB + BC * BC, '}'),
+            s331MJ(distance),
             '空間距離可分解成互相垂直的三段，使用 ' + s331M('OC^2=OA^2+AB^2+BC^2') + '。'
           );
         },
@@ -514,9 +529,10 @@
         () => {
           const a = s324Pick([3, 5, 7]);
           const b = s324Pick([4, 12, 24]);
+          const distance = s333Sqrt(a * a + b * b);
           return s331QA(
             '一根旗桿垂直地面，高為 ' + a + '；地面上一點到旗桿底端的距離為 ' + b + '。求旗桿頂端到此地面點的距離。',
-            s331MJ('\\sqrt{', a * a + b * b, '}'),
+            s331MJ(distance),
             '旗桿高與地面上的水平距離互相垂直，形成直角三角形。'
           );
         },
@@ -1779,7 +1795,7 @@
               '，求 ' +
               s331M('\\frac{' + p + '}{x}+\\frac{' + q + '}{y}+\\frac{' + r + '}{z}') +
               ' 的最小值。',
-            s331MJ('\\frac{(\\sqrt{' + p + '}+\\sqrt{' + q + '}+\\sqrt{' + r + '})^2}{9}'),
+            s331MJ('\\frac{(' + s333Sqrt(p) + '+' + s333Sqrt(q) + '+' + s333Sqrt(r) + ')^2}{9}'),
             '使用柯西不等式的分式型：' +
               s331M('\\sum\\frac{a_i}{x_i}\\ge\\frac{(\\sum\\sqrt{a_i})^2}{\\sum x_i}') +
               '。'
@@ -1793,9 +1809,14 @@
       const builders = [
         () => {
           const A = [randInt(-3, 3), randInt(-3, 3), randInt(-3, 3)];
-          const u = [randInt(1, 5), randInt(-4, 4) || 2, randInt(-4, 4) || 1];
-          const v = [randInt(-4, 4) || -1, randInt(1, 5), randInt(-4, 4) || 3];
-          const cross = s412Cross3(u, v);
+          let u;
+          let v;
+          let cross;
+          do {
+            u = [randInt(1, 5), randInt(-4, 4) || 2, randInt(-4, 4) || 1];
+            v = [randInt(-4, 4) || -1, randInt(1, 5), randInt(-4, 4) || 3];
+            cross = s412Cross3(u, v);
+          } while (cross.every((value) => value === 0));
           const rad = s412Dot3(cross, cross);
           return s331QA(
             '已知 ' +
@@ -1970,11 +1991,17 @@
             v = [randInt(-3, 3), randInt(1, 4), randInt(-3, 3)];
             n = s414Cross(u, v);
           } while (n.every((value) => value === 0));
-          const len = s412Len3(n);
+          const commonFactor =
+            n.reduce((gcd, value) => {
+              if (value === 0) return gcd;
+              return gcd === 0 ? Math.abs(value) : gcdInt(gcd, value);
+            }, 0) || 1;
+          const unitNumerator = n.map((value) => value / commonFactor);
+          const len = s412Len3(unitNumerator);
           return s331QA(
-            `已知 \\(u=${s412Vec3(u[0], u[1], u[2])}\\)、\\(v=${s412Vec3(v[0], v[1], v[2])}\\)，求同時垂直於 \\(u,v\\) 的一個單位向量。`,
-            `\\(\\dfrac{${s412Vec3(n[0], n[1], n[2])}}{${len}}\\)`,
-            `方法：先算 \\(u\\times v\\) 得到公垂向量，再除以它的長度；反向量也是另一個正確答案。`
+            `已知 \\(u=${s412Vec3(u[0], u[1], u[2])}\\)、\\(v=${s412Vec3(v[0], v[1], v[2])}\\)，求同時垂直於 \\(u,v\\) 的所有單位向量。`,
+            `\\(\\pm\\dfrac{${s412Vec3(unitNumerator[0], unitNumerator[1], unitNumerator[2])}}{${len}}\\)`,
+            `方法：先算 \\(u\\times v\\) 得到公垂向量，再除以它的長度。正、反兩個方向都同時垂直於 \\(u,v\\)，所以答案要寫成 \\(\\pm\\) 兩種。`
           );
         },
         () => {
@@ -1996,11 +2023,17 @@
       const builders = [
         () => {
           const A = [randInt(-2, 3), randInt(-2, 3), randInt(-2, 3)];
-          const AB = [randInt(1, 5), randInt(-3, 3), randInt(-2, 4)];
-          const AC = [randInt(-3, 3), randInt(1, 5), randInt(-2, 4)];
+          let AB;
+          let AC;
+          let cross;
+          do {
+            AB = [randInt(1, 5), randInt(-3, 3), randInt(-2, 4)];
+            AC = [randInt(-3, 3), randInt(1, 5), randInt(-2, 4)];
+            cross = s414Cross(AB, AC);
+          } while (cross.every((value) => value === 0));
           const B = s413Add3(A, AB);
           const C = s413Add3(A, AC);
-          const area2Sq = s412Dot3(s414Cross(AB, AC), s414Cross(AB, AC));
+          const area2Sq = s412Dot3(cross, cross);
           return s331QA(
             `已知空間三點 \\(${s412Point('A', A)}\\)、\\(${s412Point('B', B)}\\)、\\(${s412Point('C', C)}\\)，求 \\(\\triangle ABC\\) 的面積。`,
             `\\(${s41SqrtFraction(area2Sq, 4)}\\)`,
@@ -2008,9 +2041,15 @@
           );
         },
         () => {
-          const a = [randInt(1, 5), randInt(-3, 3), randInt(-2, 4)];
-          const b = [randInt(-3, 3), randInt(1, 5), randInt(-2, 4)];
-          const area = s333Sqrt(s412Dot3(s414Cross(a, b), s414Cross(a, b)));
+          let a;
+          let b;
+          let cross;
+          do {
+            a = [randInt(1, 5), randInt(-3, 3), randInt(-2, 4)];
+            b = [randInt(-3, 3), randInt(1, 5), randInt(-2, 4)];
+            cross = s414Cross(a, b);
+          } while (cross.every((value) => value === 0));
+          const area = s333Sqrt(s412Dot3(cross, cross));
           return s331QA(
             `向量 \\(a=${s412Vec3(a[0], a[1], a[2])}\\)、\\(b=${s412Vec3(b[0], b[1], b[2])}\\) 張成一個平行四邊形，求其面積。`,
             `\\(${area}\\)`,
@@ -2079,9 +2118,14 @@
     function buildS414TripleVolumeSet(count) {
       const builders = [
         () => {
-          const a = [randInt(1, 4), randInt(-2, 3), randInt(-2, 3)];
-          const b = [randInt(-2, 3), randInt(1, 4), randInt(-2, 3)];
-          const c = [randInt(-2, 3), randInt(-2, 3), randInt(1, 4)];
+          let a;
+          let b;
+          let c;
+          do {
+            a = [randInt(1, 4), randInt(-2, 3), randInt(-2, 3)];
+            b = [randInt(-2, 3), randInt(1, 4), randInt(-2, 3)];
+            c = [randInt(-2, 3), randInt(-2, 3), randInt(1, 4)];
+          } while (s414Det3(a, b, c) === 0);
           const volume = s414AbsDet3(a, b, c);
           return s331QA(
             `求向量 \\(a=${s412Vec3(a[0], a[1], a[2])}\\)、\\(b=${s412Vec3(b[0], b[1], b[2])}\\)、\\(c=${s412Vec3(c[0], c[1], c[2])}\\) 張成的平行六面體體積。`,
@@ -2091,9 +2135,14 @@
         },
         () => {
           const A = [randInt(-2, 2), randInt(-2, 2), randInt(-2, 2)];
-          const AB = [randInt(1, 4), randInt(-2, 3), randInt(-2, 3)];
-          const AC = [randInt(-2, 3), randInt(1, 4), randInt(-2, 3)];
-          const AD = [randInt(-2, 3), randInt(-2, 3), randInt(1, 4)];
+          let AB;
+          let AC;
+          let AD;
+          do {
+            AB = [randInt(1, 4), randInt(-2, 3), randInt(-2, 3)];
+            AC = [randInt(-2, 3), randInt(1, 4), randInt(-2, 3)];
+            AD = [randInt(-2, 3), randInt(-2, 3), randInt(1, 4)];
+          } while (s414Det3(AB, AC, AD) === 0);
           const B = s413Add3(A, AB);
           const C = s413Add3(A, AC);
           const D = s413Add3(A, AD);
@@ -2439,7 +2488,7 @@
           const y = randInt(2, 8);
           const rSq = a * a + h * h + y * y;
           return s331QA(
-            `令 \\(A(${a},0,${h})\\)、\\(B(${-a},0,${h})\\)，點 \\(P\\) 在 \\(xy\\) 平面上，且 \\(PA=PB=\\sqrt{${rSq}}\\)。求所有可能的 \\(P\\) 坐標。`,
+            `令 \\(A(${a},0,${h})\\)、\\(B(${-a},0,${h})\\)，點 \\(P\\) 在 \\(xy\\) 平面上，且 \\(PA=PB=${s333Sqrt(rSq)}\\)。求所有可能的 \\(P\\) 坐標。`,
             `\\((0,${y},0)\\)、\\((0,${-y},0)\\)`,
             `由 \\(PA=PB\\) 得 \\(x=0\\)。再代入 \\(PA^2=${rSq}\\)，得 \\(${a * a}+y^2+${h * h}=${rSq}\\)，所以 \\(y=\\pm${y}\\)。`
           );
@@ -2450,7 +2499,7 @@
           const y = randInt(2, 7);
           const rSq = a * a + h * h + y * y;
           return s331QA(
-            `令 \\(A(${a},0,${h})\\)、\\(B(${-a},0,${h})\\)。若 \\(P=(0,t,0)\\) 且 \\(PA=PB=\\sqrt{${rSq}}\\)，求 \\(t\\)。`,
+            `令 \\(A(${a},0,${h})\\)、\\(B(${-a},0,${h})\\)。若 \\(P=(0,t,0)\\) 且 \\(PA=PB=${s333Sqrt(rSq)}\\)，求 \\(t\\)。`,
             `\\(t=\\pm${y}\\)`,
             `因為 \\(P\\) 已在兩點的垂直平分平面上，只要算 \\(PA^2=${a * a}+t^2+${h * h}=${rSq}\\)。`
           );
@@ -2476,10 +2525,11 @@
           const b = randInt(2, 7);
           const c = randInt(2, 7);
           const maxSq = b * b + c * c;
+          const maximum = s333Sqrt(maxSq);
           return s331QA(
             `兩質點同時從 \\((0,0,0)\\)、\\((0,${b},0)\\) 出發，1 秒後分別到 \\((${a},0,0)\\)、\\((${a},${b},${c})\\)。求這段時間兩質點距離的最大值。`,
-            `\\(\\sqrt{${maxSq}}\\)`,
-            `同設時間 \\(t\\)，距離平方為 \\(${b * b}+${c * c}t^2\\)，在 \\(t=1\\) 最大，所以最大距離為 \\(\\sqrt{${maxSq}}\\)。`
+            `\\(${maximum}\\)`,
+            `同設時間 \\(t\\)，距離平方為 \\(${b * b}+${c * c}t^2\\)，在 \\(t=1\\) 最大，所以最大距離為 \\(${maximum}\\)。`
           );
         },
       ];
@@ -2643,7 +2693,7 @@
               [n[2], 'z'],
             ])}=${d}\\)。求 \\(${s41ShiftedSquare('x', center[0])}+${s41ShiftedSquare('y', center[1])}+${s41ShiftedSquare('z', center[2])}\\) 的最小值。`,
             `\\(${min}\\)`,
-            `這是點 \\(${center.join(',')}\\) 到平面距離平方。距離為 \\(\\dfrac{${gap}}{\\sqrt{${s412Dot3(n, n)}}}\\)，平方為 \\(${min}\\)。`
+            `這是點 \\(${center.join(',')}\\) 到平面距離平方。距離為 \\(\\dfrac{${gap}}{${s333Sqrt(s412Dot3(n, n))}}\\)，平方為 \\(${min}\\)。`
           );
         },
       ];
@@ -2703,6 +2753,12 @@
     }
 
     function buildS414VandermondeParameterCleanSet(count) {
+      const rowsFor = (a, b, c) => [
+        [1, 1, 1],
+        [a, b, c],
+        [a * a, b * b, c * c],
+      ];
+      const valueFor = (a, b, c) => (b - a) * (c - a) * (c - b);
       const builders = [
         () => {
           const a = randInt(1, 4);
@@ -2712,6 +2768,46 @@
             `解方程式 \\(\\begin{vmatrix}1&1&1\\\\${a}&x&${c}\\\\${a * a}&x^2&${c * c}\\end{vmatrix}=0\\)。`,
             `\\(x=${a}\\) 或 \\(x=${c}\\)`,
             `這是范德蒙行列式，值為 \\((x-${a})(${c}-${a})(${c}-x)\\)，所以 \\(x=${a}\\) 或 \\(x=${c}\\)。`
+          );
+        },
+        () => {
+          const a = randInt(1, 4);
+          const b = a + randInt(2, 5);
+          const c = b + randInt(2, 5);
+          const value = valueFor(a, b, c);
+          return s331QA(
+            `計算范德蒙行列式 \\(${s414Matrix3Tex(rowsFor(a, b, c))}\\)。`,
+            `\\(${value}\\)`,
+            `由 \\(\\begin{vmatrix}1&1&1\\\\a&b&c\\\\a^2&b^2&c^2\\end{vmatrix}=(b-a)(c-a)(c-b)\\)，本題為 \\((${b}-${a})(${c}-${a})(${c}-${b})=${value}\\)。`
+          );
+        },
+        () => {
+          const a = randInt(1, 4);
+          const b = a + randInt(2, 5);
+          return s331QA(
+            `已知前兩個參數為 \\(a=${a}\\)、\\(b=${b}\\)，且 \\(a\\ne b\\)。求 \\(x\\) 的範圍，使 \\(\\begin{vmatrix}1&1&1\\\\${a}&${b}&x\\\\${a * a}&${b * b}&x^2\\end{vmatrix}\\ne0\\)。`,
+            `\\(x\\ne${a}\\) 且 \\(x\\ne${b}\\)`,
+            `此行列式為 \\((${b}-${a})(x-${a})(x-${b})\\)。因 \\(${b}-${a}\\ne0\\)，要不為 0 就必須 \\(x\\) 不等於前兩個參數。`
+          );
+        },
+        () => {
+          const a = randInt(1, 3);
+          const b = a + randInt(2, 4);
+          const c = b + randInt(2, 4);
+          const determinant = valueFor(a, b, c);
+          const area = s331Frac(determinant, 2);
+          return s331QA(
+            `平面上三點 \\((${a},${a * a})\\)、\\((${b},${b * b})\\)、\\((${c},${c * c})\\) 所成三角形面積為何？`,
+            `\\(${area}\\)`,
+            `三點面積的兩倍等於 \\(\\begin{vmatrix}1&1&1\\\\${a}&${b}&${c}\\\\${a * a}&${b * b}&${c * c}\\end{vmatrix}=(${b}-${a})(${c}-${a})(${c}-${b})=${determinant}\\)，故面積為 \\(${determinant}\\div2=${area}\\)。`
+          );
+        },
+        () => {
+          const determinant = randInt(2, 12);
+          return s331QA(
+            `已知 \\(\\begin{vmatrix}1&1&1\\\\a&b&c\\\\a^2&b^2&c^2\\end{vmatrix}=${determinant}\\)。求 \\(\\begin{vmatrix}1&1&1\\\\a&c&b\\\\a^2&c^2&b^2\\end{vmatrix}\\)。`,
+            `\\(-${determinant}\\)`,
+            `後一個行列式只是交換原行列式的第 2、3 欄；交換一次欄會變號，所以值為 \\(-${determinant}\\)。`
           );
         },
       ];
@@ -2928,31 +3024,59 @@
     }
 
     function buildS414ConsecutiveRowDeterminantCleanSet(count) {
+      const rowsFor = (n, d, k) => [
+        [n, n + d, n + 2 * d],
+        [n + d, n + 2 * d, n + 3 * d],
+        [n + 2 * d, n + 3 * d, n + k * d],
+      ];
       const builders = [
         () => {
           const n = randInt(5, 50);
-          const rows = [
-            [n, n + 1, n + 2],
-            [n + 1, n + 2, n + 3],
-            [n + 2, n + 3, n + 5],
-          ];
+          const d = randInt(1, 5);
+          const rows = rowsFor(n, d, 5);
           return s331QA(
             `計算行列式 \\(${s414Matrix3Tex(rows)}\\)。`,
-            `\\(-1\\)`,
-            `先做列運算：令 \\(R_2\\leftarrow R_2-R_1\\)、\\(R_3\\leftarrow R_3-R_1\\)，可快速化成常數型行列式，結果恆為 \\(-1\\)。`
+            `\\(-${d ** 3}\\)`,
+            `先做列運算：令 \\(R_2\\leftarrow R_2-R_1\\)、\\(R_3\\leftarrow R_3-R_1\\)。兩個差列都可提出 \\(${d}\\)，再展開可得行列式為 \\(-${d ** 3}\\)。`
+          );
+        },
+        () => {
+          const n = randInt(20, 99);
+          const d = randInt(1, 6);
+          const rows = rowsFor(n, d, 4);
+          return s331QA(
+            `判斷行列式 \\(${s414Matrix3Tex(rows)}\\) 是否為 0。`,
+            `\\(0\\)`,
+            `三列都是同一等差型列向右平移而成，且 \\(R_3=2R_2-R_1\\)。三列線性相依，所以行列式為 0。`
+          );
+        },
+        () => {
+          const n = randInt(10, 60);
+          const d = randInt(2, 5);
+          return s331QA(
+            `設 \\(D=\\begin{vmatrix}${n}&${n + d}&${n + 2 * d}\\\\${n + d}&${n + 2 * d}&${n + 3 * d}\\\\${n + 2 * d}&${n + 3 * d}&${n}+${d}k\\end{vmatrix}\\)。求 \\(k\\) 為何時 \\(D=0\\)。`,
+            `\\(k=4\\)`,
+            `先以第一列消去後兩列，可得 \\(D=(4-k)\\cdot${d ** 3}\\)。因 \\(${d}\\ne0\\)，所以 \\(D=0\\) 時 \\(k=4\\)。`
           );
         },
         () => {
           const n = randInt(100, 999);
-          const rows = [
-            [n, n + 1, n + 2],
-            [n + 1, n + 2, n + 3],
-            [n + 2, n + 3, n + 5],
-          ];
+          const d = randInt(2, 8);
+          const value = d ** 3;
           return s331QA(
-            `不直接展開，計算 \\(${s414Matrix3Tex(rows)}\\)。`,
-            `\\(-1\\)`,
-            `這類連續列只差固定量，先相減再展開最省。無論 \\(n\\) 為何，此結構的值都是 \\(-1\\)。`
+            `已知 \\(d>0\\)，且 \\(\\begin{vmatrix}${n}&${n + d}&${n + 2 * d}\\\\${n + d}&${n + 2 * d}&${n + 3 * d}\\\\${n + 2 * d}&${n + 3 * d}&${n + 5 * d}\\end{vmatrix}=-${value}\\)。求 \\(d\\)。`,
+            `\\(d=${d}\\)`,
+            `此等差結構的行列式為 \\(-d^3\\)。故 \\(d^3=${value}\\)，且 \\(d>0\\)，得到 \\(d=${d}\\)。`
+          );
+        },
+        () => {
+          const n = randInt(1, 30);
+          const d = randInt(1, 6);
+          const rows = rowsFor(n, d, 5);
+          return s331QA(
+            `對行列式 \\(${s414Matrix3Tex(rows)}\\)，判斷其值是否隨首項 \\(n\\) 改變，並寫出其值。`,
+            `不隨 \\(n\\) 改變；值為 \\(-${d ** 3}\\)`,
+            `做 \\(R_2-R_1\\)、\\(R_3-R_1\\) 後，首項 \\(n\\) 會消去，只剩公差 \\(${d}\\) 的影響。因此值與 \\(n\\) 無關，為 \\(-${d ** 3}\\)。`
           );
         },
       ];
@@ -2996,7 +3120,7 @@
             { PA: 7, AB: 24, PB: 25, BC: 60, PC: 65 },
           ]);
           return s331QA(
-            `承上題型，若 \\(PA=${data.PA}\\)、\\(BC=${data.BC}\\)、\\(PC=${data.PC}\\)，求 \\(AB\\)。`,
+            `已知 \\(PA\\perp\\) 平面 \\(E\\) 於 \\(A\\)，且 \\(AB\\perp BC\\)，其中 \\(AB,BC\\) 在平面 \\(E\\) 上。若 \\(PA=${data.PA}\\)、\\(BC=${data.BC}\\)、\\(PC=${data.PC}\\)，求 \\(AB\\)。`,
             `\\(${data.AB}\\)`,
             `由 \\(PC^2=PB^2+BC^2\\) 得 \\(PB=${data.PB}\\)。再由 \\(PB^2=PA^2+AB^2\\)，得 \\(AB=${data.AB}\\)。`
           );
@@ -3372,18 +3496,30 @@
       return sign + body;
     }
 
-    function s421PlaneTex(n, d) {
+    function s421PlaneTex(n, d, options = {}) {
+      let coefficients = [n[0], n[1], n[2], d];
+      if (options.simplify !== false) {
+        const divisor =
+          coefficients.reduce((common, value) => {
+            if (value === 0) return common;
+            return common === 0 ? Math.abs(value) : gcdInt(common, value);
+          }, 0) || 1;
+        coefficients = coefficients.map((value) => value / divisor);
+        const firstNormalCoefficient = coefficients.slice(0, 3).find((value) => value !== 0);
+        if (firstNormalCoefficient < 0) coefficients = coefficients.map((value) => -value);
+      }
+      const [nx, ny, nz, constant] = coefficients;
       let text = '';
       [
-        ['x', n[0]],
-        ['y', n[1]],
-        ['z', n[2]],
+        ['x', nx],
+        ['y', ny],
+        ['z', nz],
       ].forEach(([variable, coef]) => {
         const term = s421Term(coef, variable, text === '');
         if (term) text += term;
       });
-      if (d > 0) text += '+' + d;
-      if (d < 0) text += d;
+      if (constant > 0) text += '+' + constant;
+      if (constant < 0) text += constant;
       return (text || '0') + '=0';
     }
 
@@ -3555,10 +3691,11 @@
           const distance = randInt(1, 4);
           const base = -s412Dot3(P, n);
           const d = base + distance * s412Len3(n);
+          const otherD = base - distance * s412Len3(n);
           return s331QA(
             `已知點 \\(${s412Point('P', P)}\\) 到平面 \\(2x-y+2z+k=0\\) 的距離為 \\(${distance}\\)，求一個可能的 \\(k\\) 值。`,
-            `\\(k=${d}\\)`,
-            `方法：代入距離公式後會有絕對值，因此通常有兩個可能值；本題列出其中一個。`
+            `\\(k=${d}\\)（其中一解）`,
+            `由 \\(|2x_P-y_P+2z_P+k|=3\\times${distance}\\)，得 \\(k=${d}\\) 或 \\(k=${otherD}\\)。本題簡答列 \\(k=${d}\\) 為其中一解。`
           );
         },
         () => {
@@ -4518,26 +4655,27 @@
     }
 
     function buildS421CoplanarParameterCleanSet(count) {
+      const pairPool = [
+        [
+          [1, 2, 3],
+          [2, 1, -1],
+        ],
+        [
+          [2, 1, 1],
+          [1, -1, 3],
+        ],
+        [
+          [1, -2, 2],
+          [3, 1, 1],
+        ],
+        [
+          [2, -1, 3],
+          [-1, 2, 1],
+        ],
+      ];
       const builders = [
         () => {
-          const pair = s324Pick([
-            [
-              [1, 2, 3],
-              [2, 1, -1],
-            ],
-            [
-              [2, 1, 1],
-              [1, -1, 3],
-            ],
-            [
-              [1, -2, 2],
-              [3, 1, 1],
-            ],
-            [
-              [2, -1, 3],
-              [-1, 2, 1],
-            ],
-          ]);
+          const pair = s324Pick(pairPool);
           const A = pair[0];
           const B = pair[1];
           const p = randInt(-5, 6);
@@ -4550,6 +4688,17 @@
           );
         },
         () => {
+          const [A, B] = s324Pick(pairPool);
+          const p = s324Pick([-4, -3, -2, -1, 1, 2, 3, 4]);
+          const q = s324Pick([-4, -3, -2, -1, 1, 2, 3, 4]);
+          const C = s413Add3(s413Scale3(p, A), s413Scale3(q, B));
+          return s331QA(
+            `設 \\(O(0,0,0)\\)、\\(A=${s412Vec3(A[0], A[1], A[2])}\\)、\\(B=${s412Vec3(B[0], B[1], B[2])}\\)、\\(C=${s412Vec3(C[0], C[1], C[2])}\\) 四點共平面，且 \\(C=pA+qB\\)。求 \\(p,q\\)。`,
+            `\\(p=${p},\\ q=${q}\\)`,
+            `因 \\(A,B\\) 不共線，比較前兩個坐標可解出唯一的 \\(p,q\\)。代回第三個坐標可再驗證 \\(C=pA+qB\\)。`
+          );
+        },
+        () => {
           const A = [randInt(1, 4), randInt(-3, 3) || 1, randInt(1, 4)];
           const B = [randInt(-3, 3) || 2, randInt(1, 4), randInt(-3, 3) || 1];
           const p = randInt(-5, 6);
@@ -4559,6 +4708,34 @@
             `已知 \\(O,A,B,C\\) 四點共平面，且 \\(A=${s412Vec3(A[0], A[1], A[2])}\\)、\\(B=${s412Vec3(B[0], B[1], B[2])}\\)。若 \\(C=pA+qB\\)，其中 \\(p=${p}\\)、\\(q=${q}\\)，求 \\(C\\) 坐標。`,
             `\\(${s412Vec3(C[0], C[1], C[2])}\\)`,
             `通過原點且含 \\(A,B\\) 的平面，可寫成 \\(sA+tB\\)。代入 \\(p,q\\) 逐坐標相加。`
+          );
+        },
+        () => {
+          const [A, B] = s324Pick(pairPool);
+          const p = randInt(-4, 4);
+          const q = randInt(-4, 4);
+          const h = s324Pick([-3, -2, -1, 1, 2, 3]);
+          const C = s413Add3(s413Scale3(p, A), s413Scale3(q, B));
+          const n = s414Cross(A, B);
+          const D = s413Add3(C, s413Scale3(h, n));
+          return s331QA(
+            `設 \\(O(0,0,0)\\)、\\(A=${s412Vec3(A[0], A[1], A[2])}\\)、\\(B=${s412Vec3(B[0], B[1], B[2])}\\)。判斷 \\(D=${s412Vec3(D[0], D[1], D[2])}\\) 是否在平面 \\(OAB\\) 上。`,
+            `不在平面 \\(OAB\\) 上`,
+            `平面 \\(OAB\\) 的法向量可取 \\(A\\times B=${s412Vec3(n[0], n[1], n[2])}\\)。本題 \\(D=pA+qB${s42SignedVectorMultiple(h, '(A\\times B)')}\\)，含有非零的法向量分量，所以不在該平面上。`
+          );
+        },
+        () => {
+          const [A, B] = s324Pick(pairPool);
+          const p = s324Pick([-3, -2, -1, 1, 2, 3]);
+          const q = s324Pick([-3, -2, -1, 1, 2, 3]);
+          const r = s324Pick([-3, -2, -1, 1, 2, 3]);
+          const rText = r < 0 ? String(r) : `+${r}`;
+          const C = s413Add3(s413Scale3(p, A), s413Scale3(q, B));
+          const D = s413Add3(C, s413Scale3(r, A));
+          return s331QA(
+            `已知 \\(O(0,0,0)\\)、\\(A=${s412Vec3(A[0], A[1], A[2])}\\)、\\(B=${s412Vec3(B[0], B[1], B[2])}\\)，且 \\(C=${s412Vec3(C[0], C[1], C[2])}\\) 在平面 \\(OAB\\) 上。判斷 \\(D=${s412Vec3(D[0], D[1], D[2])}\\) 是否也在平面 \\(OAB\\) 上。`,
+            `在平面 \\(OAB\\) 上`,
+            `因 \\(C=pA+qB\\)，而 \\(D=C${s42SignedVectorMultiple(r, 'A')}=(p${rText})A+qB\\)，仍是 \\(A,B\\) 的線性組合，所以 \\(D\\) 仍在平面 \\(OAB\\) 上。`
           );
         },
       ];
@@ -4598,6 +4775,42 @@
             `求平面 \\(${s421PlaneTex(n, d1)}\\) 與 \\(${s421PlaneTex(n, d2)}\\) 的距離。`,
             `\\(${s331Frac(Math.abs(d2 - d1), 3)}\\)`,
             `兩平面法向量相同，且 \\(|n|=3\\)，距離為 \\(\\frac{|d_2-d_1|}{3}=\\frac{${Math.abs(d2 - d1)}}{3}\\)。`
+          );
+        },
+        () => {
+          const n = s324Pick(normalPool);
+          const P = [randInt(-4, 5), randInt(-4, 5), randInt(-4, 5)];
+          const d1 = randInt(-12, 12);
+          const d2 = -s412Dot3(P, n);
+          return s331QA(
+            `求通過 \\(${s412Point('P', P)}\\)，且與平面 \\(${s421PlaneTex(n, d1)}\\) 平行的平面方程式，並求兩平面距離。`,
+            `平面為 \\(${s421PlaneTex(n, d2)}\\)，距離為 \\(${s331Frac(Math.abs(d2 - d1), 3)}\\)`,
+            `平行平面的法向量相同。先代入點 \\(P\\) 求常數項，再用 \\(\\dfrac{|d_2-d_1|}{|n|}\\) 計算距離；本題 \\(|n|=3\\)。`
+          );
+        },
+        () => {
+          const n = s324Pick(normalPool);
+          const d1 = randInt(-10, 10);
+          const distance = randInt(1, 5);
+          const step = 3 * distance;
+          const d2a = d1 + step;
+          const d2b = d1 - step;
+          return s331QA(
+            `設 \\(E_1:${s421PlaneTex(n, d1)}\\)。求所有與 \\(E_1\\) 平行且距離為 \\(${distance}\\) 的平面 \\(E_2\\)。`,
+            `\\(${s421PlaneTex(n, d2a)}\\) 或 \\(${s421PlaneTex(n, d2b)}\\)`,
+            `平行平面的法向量不變，且 \\(|d_2-d_1|=3\\times${distance}=${step}\\)。因此常數項有 \\(d_2=${d2a}\\) 或 \\(d_2=${d2b}\\) 兩種可能。`
+          );
+        },
+        () => {
+          const n = s324Pick(normalPool);
+          const d1 = randInt(-10, 10);
+          const distance = randInt(1, 5);
+          const step = 3 * distance;
+          const d2 = d1 + step;
+          return s331QA(
+            `若平面 \\(${s421PlaneTex(n, d1)}\\) 與 \\(${s421PlaneTex(n, d2)}\\) 的距離為 \\(${distance}\\)，寫出距離公式中 \\(|d_2-d_1|\\) 的值。`,
+            `\\(|d_2-d_1|=${step}\\)`,
+            `法向量長為 \\(3\\)，故 \\(\\frac{|d_2-d_1|}{3}=${distance}\\)，所以 \\(|d_2-d_1|=${step}\\)。`
           );
         },
       ];
@@ -4803,7 +5016,7 @@
           const n3 = [r * n1[0] + s * n2[0], r * n1[1] + s * n2[1], r * n1[2] + s * n2[2]];
           const k = r * d1 + s * d2;
           return s331QA(
-            `三平面 \\(E_1:${s421PlaneTex(n1, d1)}\\)、\\(E_2:${s421PlaneTex(n2, d2)}\\)、\\(E_3:${s421PlaneTex(n3, 0).replace('=0', '+k=0')}\\)。若三平面共同交集為同一直線，求 \\(k\\)。`,
+            `三平面 \\(E_1:${s421PlaneTex(n1, d1)}\\)、\\(E_2:${s421PlaneTex(n2, d2)}\\)、\\(E_3:${s421PlaneTex(n3, 0, { simplify: false }).replace('=0', '+k=0')}\\)。若三平面共同交集為同一直線，求 \\(k\\)。`,
             `\\(k=${k}\\)`,
             `前兩平面交於一直線。第三平面要也包含此交線，方程式必須是前兩式的線性組合。本題 \\(n_3=${r === 1 ? '' : r}n_1${s42SignedVectorMultiple(s, 'n_2')}\\)，所以常數項也要 \\(k=${r === 1 ? '' : r}d_1${s42SignedVectorMultiple(s, 'd_2')}=${k}\\)。`
           );
@@ -4818,7 +5031,7 @@
           const n3 = [r * n1[0] + s * n2[0], r * n1[1] + s * n2[1], r * n1[2] + s * n2[2]];
           const k = r * d1 + s * d2;
           return s331QA(
-            `若方程組 \\(E_1:${s421PlaneTex(n1, d1)}\\)、\\(E_2:${s421PlaneTex(n2, d2)}\\)、\\(E_3:${s421PlaneTex(n3, 0).replace('=0', '+k=0')}\\) 有無限多解且解集合為一直線，求 \\(k\\)。`,
+            `若方程組 \\(E_1:${s421PlaneTex(n1, d1)}\\)、\\(E_2:${s421PlaneTex(n2, d2)}\\)、\\(E_3:${s421PlaneTex(n3, 0, { simplify: false }).replace('=0', '+k=0')}\\) 有無限多解且解集合為一直線，求 \\(k\\)。`,
             `\\(k=${k}\\)`,
             `三個平面要共線相交時，第三個平面需包含 \\(E_1,E_2\\) 的交線。因為 \\(n_3=${r === 1 ? '' : r}n_1${s42SignedVectorMultiple(s, 'n_2')}\\)，常數項同步做同樣組合，得 \\(k=${r === 1 ? '' : r}d_1${s42SignedVectorMultiple(s, 'd_2')}=${k}\\)。`
           );
@@ -4963,7 +5176,7 @@
           return s331QA(
             `求直線 \\(L:${s422LineParamTex(A, v)}\\) 正射影到平面 \\(E:${s421PlaneTex(n, d)}\\) 上的投影直線方程式。`,
             `\\(${s422LineParamTex(H, p)}\\)`,
-            `先把 \\(L\\) 上一點 \\(A\\) 投影到平面，得 \\(H=${s412Vec3(H[0], H[1], H[2])}\\)。再把方向向量 \\(v\\) 扣掉法向量方向的分量，留下平面內方向 \\(${s412Vec3(p[0], p[1], p[2])}\\)，所以投影直線為 \\(H+tp\\)。`
+            `先把 \\(L\\) 上一點 \\(A\\) 投影到平面，得 \\(H=${s412Vec3(H[0], H[1], H[2])}\\)。方向投影為 \\(v_\\parallel=v-\\frac{v\\cdot n}{|n|^2}n\\)，本題恰留下平面內方向 \\(${s412Vec3(p[0], p[1], p[2])}\\)。也可取 \\((v\\times n)\\times n\\)；它與 \\(v_\\parallel\\) 反向但共線，所以投影直線可寫為 \\(H+t${s412Vec3(p[0], p[1], p[2])}\\)。`
           );
         },
         () => {
@@ -4976,7 +5189,7 @@
           return s331QA(
             `直線 \\(L:${s422LineParamTex(A, v)}\\) 投影到平面 \\(${s421PlaneTex(n, d)}\\) 後，方向向量可取何者？`,
             `\\(${s412Vec3(p[0], p[1], p[2])}\\)`,
-            `投影後方向只保留與平面平行的分量。本題 \\(v=2${s412Vec3(p[0], p[1], p[2])}+${q}${s412Vec3(n[0], n[1], n[2])}\\)，法向量分量會被壓掉，所以方向可取 \\(${s412Vec3(p[0], p[1], p[2])}\\)。`
+            `投影後方向只保留與平面平行的分量：\\(v_\\parallel=v-\\frac{v\\cdot n}{|n|^2}n\\)。本題 \\(v=2${s412Vec3(p[0], p[1], p[2])}+${q}${s412Vec3(n[0], n[1], n[2])}\\)，扣掉法向量分量後剩 \\(2${s412Vec3(p[0], p[1], p[2])}\\)，可化為方向 \\(${s412Vec3(p[0], p[1], p[2])}\\)。`
           );
         },
       ];
@@ -5244,24 +5457,6 @@
           );
         },
         () => {
-          const a = randInt(1, 5);
-          const uy = randInt(-4, 4);
-          const uz = randInt(-4, 4);
-          let by;
-          let bz;
-          do {
-            by = uy + 2 * randInt(-2, 2);
-            bz = uz + 2 * randInt(-2, 2);
-          } while (by === uy && bz === uz);
-          const A = [a, uy, uz];
-          const B = [a, by, bz];
-          return s331QA(
-            `點 \\(${s412Point('A', A)}\\)、\\(${s412Point('B', B)}\\)。在平面 \\(x=0\\) 上找一點 \\(P\\)，使 \\(PA+PB\\) 最小。`,
-            `\\(P(0,${(uy + by) / 2},${(uz + bz) / 2})\\)`,
-            `將 \\(A\\) 對平面 \\(x=0\\) 反射到 \\(A'(-${a},${uy},${uz})\\)。最短路徑為直線 \\(A'B\\) 與平面 \\(x=0\\) 的交點。`
-          );
-        },
-        () => {
           const Q = [randInt(-4, 4), randInt(-4, 4), randInt(-4, 4)];
           const v = [1, -1, 1];
           const dot = s412Dot3(Q, v);
@@ -5283,6 +5478,26 @@
             `已知平面 \\(E:x+y+z=${d}\\) 與點 \\(${s412Point('P', P)}\\)，求 \\(P\\) 對平面 \\(E\\) 的對稱點。`,
             `\\(${s412Point('P\\prime', R)}\\)`,
             `平面法向量為 \\((1,1,1)\\)。因 \\(x_P+y_P+z_P-${d}=3\\cdot${mText}\\)，對稱點為 \\(P-2\\cdot${mText}(1,1,1)\\)。`
+          );
+        },
+        () => {
+          const d = randInt(-4, 5);
+          const m = s324Pick([-2, -1, 1, 2]);
+          const base = [randInt(-3, 3), randInt(-3, 3), randInt(-3, 3)];
+          const adjust = d + 3 * m - (base[0] + base[1] + base[2]);
+          const A = [base[0] + adjust, base[1], base[2]];
+          const v = s324Pick([
+            [2, -1, 2],
+            [1, 2, 0],
+            [2, 0, 1],
+          ]);
+          const dot = v[0] + v[1] + v[2];
+          const R = [A[0] - 2 * m, A[1] - 2 * m, A[2] - 2 * m];
+          const rv = [v[0] - (2 * dot) / 3, v[1] - (2 * dot) / 3, v[2] - (2 * dot) / 3];
+          return s331QA(
+            `直線 \\(L:${s42LineParamTex(A, v)}\\)。求 \\(L\\) 對平面 \\(E:x+y+z=${d}\\) 的對稱直線方程式。`,
+            `\\(${s42LineParamTex(R, rv)}\\)`,
+            `先將直線上一點 \\(A\\) 對稱到 \\(A'=${s412Vec3(R[0], R[1], R[2])}\\)。方向向量則用 \\(v'=v-2\\frac{v\\cdot n}{|n|^2}n\\)，其中 \\(n=(1,1,1)\\)，得 \\(v'=${s412Vec3(rv[0], rv[1], rv[2])}\\)。`
           );
         },
       ];
@@ -5642,15 +5857,14 @@
           );
         },
         () => {
-          const pA = randInt(50, 80);
-          const pB = randInt(40, 70);
-          const pC = randInt(30, 60);
-          const numerator = pA * (100 - pB) * (100 - pC);
-          const denominator = numerator + (100 - pA) * pB * (100 - pC) + (100 - pA) * (100 - pB) * pC;
+          const weights = [2, 3, 5];
+          const rates = [randInt(4, 12), randInt(6, 16), randInt(8, 20)];
+          const totalWeight = weights[0] + weights[1] + weights[2];
+          const numerator = weights[0] * rates[0] + weights[1] * rates[1] + weights[2] * rates[2];
           return s331QA(
-            `三名射手 A、B、C 命中率分別為 \\(${s431Percent(pA)}\\)、\\(${s431Percent(pB)}\\)、\\(${s431Percent(pC)}\\)。三人各射一發，已知恰有一人命中，求命中者是 A 的機率。`,
-            s431Answer(numerator, denominator),
-            `方法：已知「恰一人命中」後，分母只加總三種單人命中的情形。`
+            `某校學生上學時搭公車、騎自行車、步行的比例為 \\(${weights.join(':')}\\)。三種方式遲到的機率分別為 \\(${s431Percent(rates[0])}\\)、\\(${s431Percent(rates[1])}\\)、\\(${s431Percent(rates[2])}\\)。隨機選一名學生，求其遲到的機率。`,
+            s431Answer(numerator, totalWeight * 100),
+            `方法：先把三種上學方式的比例換成機率，再把「使用該方式且遲到」的三個互斥路徑相加。這是全機率公式的直接應用。`
           );
         },
       ];
@@ -5667,9 +5881,9 @@
           const denominator =
             pA * (100 - pB) * (100 - pC) + (100 - pA) * pB * (100 - pC) + (100 - pA) * (100 - pB) * pC + pA * pB * pC;
           return s331QA(
-            `甲、乙、丙三人譯出密碼的機率分別為 \\(${s431Percent(pA)}\\)、\\(${s431Percent(pB)}\\)、\\(${s431Percent(pC)}\\)。已知密碼由奇數人譯出，求甲有譯出的機率。`,
+            `甲、乙、丙三個感測器發出警報的機率分別為 \\(${s431Percent(pA)}\\)、\\(${s431Percent(pB)}\\)、\\(${s431Percent(pC)}\\)，且彼此獨立。已知恰有奇數個感測器發出警報，求甲有發出警報的機率。`,
             s431Answer(numeratorA, denominator),
-            `方法：獨立事件要把每種成功失敗組合乘起來；條件事件只保留符合描述的結果。`
+            `方法：恰有奇數個警報包含「恰有一個」與「三個都警報」。先列出這四種互斥結果；分子只保留其中甲有警報的兩種。`
           );
         },
         () => {
@@ -5686,9 +5900,9 @@
         () => {
           const pC = randInt(40, 80);
           return s331QA(
-            `三名射手 A、B、C 獨立射擊。已知 A、B 都命中，且 C 的命中率為 \\(${s431Percent(pC)}\\)，求 C 沒命中的機率。`,
+            `三台獨立運作的感測器 A、B、C 中，已知 A、B 都成功偵測，且 C 的成功偵測率為 \\(${s431Percent(pC)}\\)，求 C 未成功偵測的機率。`,
             s431Answer(100 - pC, 100),
-            `方法：獨立時，已知 A、B 命中不會改變 C 的命中或未命中機率。`
+            `方法：獨立時，已知 A、B 的結果不會改變 C 的成功率，因此直接取 C 成功偵測的補事件。`
           );
         },
       ];
@@ -5988,9 +6202,9 @@
           let favorable = 0;
           for (let r = hits; r <= shots; r += 1) favorable += s431C(shots, r) * pNum ** r * qNum ** (shots - r);
           return s331QA(
-            `某射手每發命中率為 \\(${s431Frac(pNum, pDen)}\\)，連續射擊 \\(${shots}\\) 發且每發互不影響，求至少命中 \\(${hits}\\) 發的機率。`,
+            `某零件製程每件合格率為 \\(${s431Frac(pNum, pDen)}\\)，連續檢驗 \\(${shots}\\) 件且各件結果互不影響，求至少有 \\(${hits}\\) 件合格的機率。`,
             s431Answer(favorable, pDen ** shots),
-            `提示：「至少」要把 \\(${hits}\\) 發到 \\(${shots}\\) 發的二項機率全部相加。`
+            `提示：「至少」要把恰有 \\(${hits}\\) 件、\\(${hits + 1}\\) 件、…、\\(${shots}\\) 件合格的二項機率全部相加。`
           );
         },
       ];
@@ -6050,9 +6264,9 @@
           const pC = randInt(40, 80);
           const failAll = (100 - pA) * (100 - pB) * (100 - pC);
           return s331QA(
-            `甲、乙、丙三人射擊命中率分別為 \\(${s431Percent(pA)}\\)、\\(${s431Percent(pB)}\\)、\\(${s431Percent(pC)}\\)，三人同時射擊且互不影響，求目標至少中一發的機率。`,
+            `三套獨立備援連線裝置 A、B、C 的成功連線率分別為 \\(${s431Percent(pA)}\\)、\\(${s431Percent(pB)}\\)、\\(${s431Percent(pC)}\\)。求至少有一套成功連線的機率。`,
             s431Answer(1000000 - failAll, 1000000),
-            `提示：至少一人成功常用反面事件：\\(1-P(三人都失敗)\\)。`
+            `提示：「至少一套成功」的反面是三套都連線失敗；因為獨立，所以三個失敗率直接相乘。`
           );
         },
         () => {
@@ -6073,9 +6287,9 @@
           const numerator = (100 - pA) * pB * pC;
           const denominator = pA * pB * (100 - pC) + pA * (100 - pB) * pC + numerator;
           return s331QA(
-            `三人命中率分別為 \\(${s431Percent(pA)}\\)、\\(${s431Percent(pB)}\\)、\\(${s431Percent(pC)}\\)，且互相獨立。已知恰有兩人命中，求甲未命中的機率。`,
+            `三個獨立的自動判讀系統 A、B、C 正確判讀的機率分別為 \\(${s431Percent(pA)}\\)、\\(${s431Percent(pB)}\\)、\\(${s431Percent(pC)}\\)。已知恰有兩個系統判讀正確，求 A 判讀錯誤的機率。`,
             s431Answer(numerator, denominator),
-            `提示：已知恰兩人命中後，分母只列三種「兩中一不中」的情形。`
+            `提示：已知恰有兩個系統正確後，分母只列三種「兩正確、一錯誤」的情形；分子取 A 錯而 B、C 都正確的情形。`
           );
         },
       ];
@@ -6186,10 +6400,11 @@
         },
         () => {
           const die = randInt(2, 6);
+          const favorableFirstFaces = Math.floor(6 / die);
           return s331QA(
             `投擲兩顆公正骰子。令事件 \\(A\\) 為第一顆點數是 \\(${die}\\) 的倍數，事件 \\(B\\) 為兩顆點數和為 \\(7\\)。判斷 \\(A,B\\) 是否為獨立事件。`,
             '是',
-            `提示：列出第一顆符合條件的點數，再檢查和為 7 的搭配數；可得 \\(P(A\\cap B)=P(A)P(B)\\)，所以兩事件獨立。`
+            `第一顆共有 \\(${favorableFirstFaces}\\) 個符合 \\(A\\) 的點數；每個點數都恰有一個第二顆點數可使和為 \\(7\\)。因此 \\(P(A\\cap B)=\\frac{${favorableFirstFaces}}{36}=\\frac{${favorableFirstFaces}}6\\cdot\\frac16=P(A)P(B)\\)，所以兩事件獨立。`
           );
         },
         () => {
@@ -6257,18 +6472,31 @@
     function buildS432DistributionPatternsSet(count) {
       const builders = [
         () => {
-          const trials = randInt(8, 12);
-          const pNum = 1;
-          const pDen = 2;
-          const r1 = randInt(2, Math.floor(trials / 2));
-          const r2 = trials - r1;
-          const p1 = s431C(trials, r1);
-          const p2 = s431C(trials, r2);
-          const verdict = p1 === p2 ? '相等' : p1 > p2 ? `\\(p_${r1}\\) 較大` : `\\(p_${r2}\\) 較大`;
+          const trials = s324Pick([5, 7, 9, 11]);
+          const favorable = 2 ** (trials - 1);
           return s331QA(
-            `丟一枚均勻硬幣 \\(${trials}\\) 次，令 \\(p_n\\) 表示出現 \\(n\\) 次正面的機率。比較 \\(p_${r1}\\) 與 \\(p_${r2}\\) 的大小。`,
-            verdict,
-            `提示：當 \\(p=\\frac12\\) 時，\\(p_n\\) 與組合數 \\(C_{${trials}}^n\\) 成正比，且左右對稱。`
+            `擲一枚公正硬幣 \\(${trials}\\) 次，求「正面次數多於反面次數」的機率。`,
+            s431Answer(favorable, 2 ** trials),
+            `因 \\(${trials}\\) 是奇數，正面次數不可能恰好等於反面次數。把每個結果的正、反面互換，會一一對應到「反面較多」的結果，因此兩種情形機率相等，答案為 \\(\\frac12\\)。`
+          );
+        },
+        () => {
+          const trials = randInt(8, 12);
+          const r1 = randInt(1, Math.floor(trials / 2));
+          const r2 = trials - r1;
+          return s331QA(
+            `丟一枚公正硬幣 \\(${trials}\\) 次，令 \\(p_r\\) 表示恰好出現 \\(r\\) 次正面的機率。比較 \\(p_${r1}\\) 與 \\(p_${r2}\\) 的大小。`,
+            '相等',
+            `兩者的組合數相同：\\(C_{${trials}}^{${r1}}=C_{${trials}}^{${trials}-${r1}}=C_{${trials}}^{${r2}}\\)。公正硬幣下，每一排列的機率相同，所以 \\(p_${r1}=p_${r2}\\)。`
+          );
+        },
+        () => {
+          const trials = randInt(8, 12);
+          const r = randInt(1, Math.floor(trials / 2) - 1);
+          return s331QA(
+            `丟一枚公正硬幣 \\(${trials}\\) 次，令 \\(p_r\\) 表示恰好出現 \\(r\\) 次正面的機率。比較 \\(p_${r}\\) 與 \\(p_{${r + 1}}\\) 的大小。`,
+            `\\(p_{${r + 1}}\\) 較大`,
+            `\\(\\dfrac{p_{${r + 1}}}{p_${r}}=\\dfrac{C_{${trials}}^{${r + 1}}}{C_{${trials}}^{${r}}}=\\dfrac{${trials - r}}{${r + 1}}>1\\)。在正面次數尚未超過中央位置前，越接近中央的次數出現機率越大。`
           );
         },
         () => {
@@ -6380,7 +6608,7 @@
           return s331QA(
             `某考試為 \\(${n}\\) 選一的單選題。若學生會做，答對機率為 \\(1\\)；若不會做，則隨機猜答，答對機率為 \\(\\dfrac{1}{${n}}\\)。已知某學生會做此題的機率為 \\(${s431Frac(k, m)}\\)，在答對的條件下，求學生其實會做此題的機率。`,
             s431Answer(numer, denom),
-            `方法：貝氏定理，分子 = P(會)·P(對|會)，分母再加 P(不會)·P(對|不會)。`
+            `方法：貝氏定理的分子為 \\(P(\\text{會})P(\\text{對}\\mid\\text{會})\\)，分母再加上 \\(P(\\text{不會})P(\\text{對}\\mid\\text{不會})\\)。`
           );
         },
         () => {
@@ -6393,33 +6621,18 @@
           return s331QA(
             `某次選擇題測驗共 \\(${n}\\) 個選項。學生若會做則必對；若不會做則隨機猜，猜對率 \\(\\dfrac{1}{${n}}\\)。某生答對此題，且事前估計他會做的機率為 \\(${s431Frac(k, m)}\\)。求他答對此題是因為猜對（而非真的會做）的機率。`,
             s431Answer(guessNumer, denom),
-            `方法：P(猜對|答對) = P(不會且猜對)/P(答對) = \\(\\dfrac{P(不會)\\cdot\\frac{1}{n}}{P(答對)}\\)。`
+            `方法：\\(P(\\text{猜對}\\mid\\text{對})=\\dfrac{P(\\text{不會})\\cdot\\frac{1}{${n}}}{P(\\text{對})}\\)。分母要包含「會做答對」與「不會卻猜對」兩種來源。`
           );
         },
         () => {
-          // 反向：已知答錯，求學生不會做的機率（答錯一定不會做）
           const { k, m } = s324Pick(kPairs);
           const n = s324Pick(nChoicePool);
-          // P(wrong|knows) = 0, P(wrong|doesn't know) = (n-1)/n
-          // P(doesn't know | wrong) = P(doesn't know)*(n-1)/n / P(wrong)
-          // P(wrong) = (m-k)/m * (n-1)/n
-          // P(doesn't know | wrong) = 1 (always)
-          // Wait, that's trivially 1. Let me do something more interesting:
-          // Instead: Given wrong, find P(doesn't know) = trivially 1 since knows => correct
-          // So let me use a different scenario: "若學生不確定，隨機猜p/q對"
-          // P(correct | uncertain) = p/q (not 1/n, where uncertain ≠ doesn't know)
-          // Use three-state model: knows(k/m), unsure(u/m), clueless(1-k/m-u/m)
-          // This gets complex. Let me just do another forward question instead.
-          const { k: k2, m: m2 } = s324Pick(kPairs.filter((p) => p.k !== k || p.m !== m));
-          const n2 = s324Pick(nChoicePool.filter((x) => x !== n));
-          const numer2 = n2 * k2;
-          const denom2 = n2 * k2 + (m2 - k2);
-          const pKnow = s431Frac(k2, m2);
-          const pCorrectGiven = s431Frac(numer2, denom2);
+          const numer = n * k + (m - k);
+          const denom = m * n;
           return s331QA(
-            `某測驗每題有 \\(${n2}\\) 個選項。學生若知道答案必對，不知道則隨機猜（猜對率 \\(\\frac{1}{${n2}}\\)）。設某題學生知道答案的機率為 \\(${pKnow}\\)。已知他答對了，求他知道答案的機率。`,
-            s431Answer(numer2, denom2),
-            `方法：\\(P(\\text{知道}|\\text{對})=\\dfrac{P(\\text{知道})\\cdot 1}{P(\\text{知道})\\cdot 1+P(\\text{不知})\\cdot\\frac{1}{${n2}}}\\)。`
+            `某題為 \\(${n}\\) 選一。學生會做的機率為 \\(${s431Frac(k, m)}\\)，會做時必答對；不會做時隨機猜。求他答對此題的機率。`,
+            s431Answer(numer, denom),
+            `方法：答對有兩條互斥路徑：「會做且答對」與「不會但猜對」。因此 \\(P(\\text{對})=P(\\text{會})+P(\\text{不會})\\cdot\\frac{1}{${n}}\\)。`
           );
         },
       ];
@@ -6564,7 +6777,7 @@
           const p = s324Pick([2, 3, 4, 5, 6, 7, 8]);
           const numerator = s431C(shots, hits) * p ** hits * (10 - p) ** (shots - hits);
           return s331QA(
-            `某射手每發命中率為 \\(${s431Frac(p, 10)}\\)，連續射擊 \\(${shots}\\) 發，求恰好命中 \\(${hits}\\) 發的機率。`,
+            `某量測設備每次校正成功率為 \\(${s431Frac(p, 10)}\\)，連續校正 \\(${shots}\\) 次，求恰好成功 \\(${hits}\\) 次的機率。`,
             s431Answer(numerator, 10 ** shots),
             `獨立重複試驗用二項分布：\\(C(${shots},${hits})p^{${hits}}(1-p)^{${shots - hits}}\\)。`
           );
@@ -6582,13 +6795,12 @@
           );
         },
         () => {
-          const tosses = s324Pick([3, 5, 7, 9]);
-          let favorable = 0;
-          for (let r = Math.floor(tosses / 2) + 1; r <= tosses; r += 1) favorable += s431C(tosses, r);
+          const tosses = s324Pick([4, 6, 8, 10]);
+          const heads = tosses / 2;
           return s331QA(
-            `同時擲 \\(${tosses}\\) 枚公正硬幣，求「正面次數多於反面次數」的機率。`,
-            s431Answer(favorable, 2 ** tosses),
-            `正面多於反面等價於正面次數大於 \\(${tosses}/2\\)，把符合的組合數加總。`
+            `同時擲 \\(${tosses}\\) 枚公正硬幣，求「正面次數恰好等於反面次數」的機率。`,
+            s431Answer(s431C(tosses, heads), 2 ** tosses),
+            `正、反面次數相同時，正面必須恰好出現 \\(${heads}\\) 次。從 \\(${tosses}\\) 個位置選出正面位置共有 \\(C_{${tosses}}^{${heads}}\\) 種，每一結果機率為 \\(\\frac1{2^{${tosses}}}\\)。`
           );
         },
         () => {
@@ -6597,7 +6809,7 @@
           return s331QA(
             `某生產線不良率為 \\(${s431Percent(defectRate)}\\)，隨機抽檢 \\(${total}\\) 件，求「發現至少一件不良品」的機率。`,
             `\\(1-\\left(${s431Frac(100 - defectRate, 100)}\\right)^{${total}}\\)`,
-            `至少一件通常用補事件較快：\\(1-P(全都是良品)\\)。`
+            `至少一件通常用補事件較快：\\(1-P(全都是良品)=1-\\left(1-${s431Frac(defectRate, 100)}\\right)^{${total}}\\)。保留這個次方形式即可，不必為了算小數而展開。`
           );
         },
         () => {
@@ -6694,17 +6906,19 @@
           return s331QA(
             `某題為 \\(${choices}\\) 選一，會做必對，不會做隨機猜。若會做機率為 \\(${s431Frac(knowNum, knowDen)}\\)，已知答對，求答對是因為猜中的機率。`,
             s431Answer(numer, denom),
-            `猜中且答對的權重為 \\(P(不會)\\cdot\\frac{1}{${choices}}\\)，分母是所有答對來源。`
+            `猜中且答對的權重為 \\(P(\\text{不會})\\cdot\\frac{1}{${choices}}\\)，分母是所有答對來源。`
           );
         },
         () => {
-          const choices = s324Pick([3, 4, 5]);
-          const knowNum = randInt(1, 3);
-          const knowDen = randInt(knowNum + 2, 6);
+          const choices = s324Pick([4, 5]);
+          const know = randInt(2, 4);
+          const partiallyKnow = randInt(2, 4);
+          const unfamiliar = 10 - know - partiallyKnow;
+          const correctWeight = 2 * choices * know + choices * partiallyKnow + 2 * unfamiliar;
           return s331QA(
-            `某題為 \\(${choices}\\) 選一。若學生會做則必對，不會做則隨機猜。已知學生答錯，求他不知道答案的機率。`,
-            `\\(1\\)`,
-            `會做時不可能答錯，所以答錯必定來自不知道答案。這是學生常忽略的極端條件。`
+            `某題為 \\(${choices}\\) 選一。某生有 \\(${s431Frac(know, 10)}\\) 機率完全會做、有 \\(${s431Frac(partiallyKnow, 10)}\\) 機率能排除到只剩兩個選項、其餘情形完全不會。完全會做時必對；只剩兩個選項時隨機猜；完全不會時在全部選項中隨機猜。已知他答對，求他完全會做的機率。`,
+            s431Answer(2 * choices * know, correctWeight),
+            `答對有三個來源：完全會做、能二選一後猜對、完全不會卻猜對。把三者的先驗機率乘上各自答對率後相加作分母；分子只取「完全會做且答對」。`
           );
         },
         () => {
@@ -6718,7 +6932,7 @@
           return s331QA(
             `某選擇題原有 \\(${choices}\\) 個選項。學生不會做時可先排除 \\(${eliminated}\\) 個錯誤選項，再在剩下選項中亂猜；會做則必對。若會做機率為 \\(${s431Frac(knowNum, knowDen)}\\)，已知答對，求真的會做的機率。`,
             s431Answer(numer, denom),
-            `不會做時猜對率變為 \\(1/${remain}\\)。把 \\(P(會)\\) 與 \\(P(不會)\\cdot 1/${remain}\\) 兩個答對來源比較。`
+            `不會做時猜對率變為 \\(\\frac{1}{${remain}}\\)。把 \\(P(\\text{會})\\) 與 \\(P(\\text{不會})\\cdot\\frac{1}{${remain}}\\) 兩個答對來源比較。`
           );
         },
         () => {
@@ -7677,16 +7891,16 @@
           return s331QA(
             `已知 \\(A=${s442Matrix(A)}\\)、\\(B=${s442Matrix(B)}\\)，計算 \\(AB\\)，並判斷 \\(BA\\) 是否存在。`,
             `\\(AB=${s442Matrix(s442Mul(A, B))}\\)，\\(BA\\) 也存在且為 \\(3\\times3\\) 矩陣。`,
-            `提示：前矩陣的行數要等於後矩陣的列數；結果階數看外側的列與行。`
+            `提示：\\((AB)_{ij}\\) 是左矩陣第 \\(i\\) 橫列與右矩陣第 \\(j\\) 直行的內積；本題 \\(AB\\) 為 \\(2\\times2\\)，\\(BA\\) 為 \\(3\\times3\\)。`
           );
         },
         () => {
           const A = s442RandomMatrix(1, 3);
           const B = s442RandomMatrix(3, 1);
           return s331QA(
-            `設列矩陣 \\(A=${s442Matrix(A)}\\)、行矩陣 \\(B=${s442Matrix(B)}\\)，求 \\(AB\\) 的值。`,
+            `設 \\(1\\times3\\) 矩陣 \\(A=${s442Matrix(A)}\\)、\\(3\\times1\\) 矩陣 \\(B=${s442Matrix(B)}\\)，求 \\(AB\\) 的值。`,
             `\\(${s442Mul(A, B)[0][0]}\\)`,
-            `提示：列矩陣乘行矩陣是內積，結果是 \\(1\\times1\\)。`
+            `提示：唯一的元素是 \\(A\\) 的唯一橫列與 \\(B\\) 的唯一直行的內積，結果是 \\(1\\times1\\) 矩陣。`
           );
         },
         () => {
@@ -7696,7 +7910,7 @@
           return s331QA(
             `若 \\(A\\) 為 \\(${m}\\times${n}\\) 矩陣，\\(B\\) 為 \\(${n}\\times${p}\\) 矩陣，求 \\(AB\\) 的階數，並判斷 \\(BA\\) 是否一定存在。`,
             `\\(AB\\) 為 \\(${m}\\times${p}\\)；\\(BA\\) 不一定存在，需 \\(${p}=${m}\\)。`,
-            `提示：只看中間是否相等決定能不能乘，外側決定結果階數。`
+            `提示：左矩陣的直行數要等於右矩陣的橫列數；因此 \\(AB\\) 的外側階數是 \\(${m}\\times${p}\\)，而 \\(BA\\) 還要額外滿足 \\(${p}=${m}\\)。`
           );
         },
       ];
@@ -8064,7 +8278,7 @@
           return s331QA(
             `設 \\(A=${s442Matrix(A)}\\)、\\(B=${s442Matrix(Bsh)}\\)。求 \\(BAB^{-1}\\)。`,
             s442MatrixAnswer(result),
-            `提示：\\(B\\) 為推移矩陣，\\(B^{-1}=${s442Matrix(BshInv)}\\)。先算 \\(BA\\)，再右乘 \\(B^{-1}\\)。`
+            `提示：\\(B\\) 為剪切矩陣，\\(B^{-1}=${s442Matrix(BshInv)}\\)。先算 \\(BA\\)，再右乘 \\(B^{-1}\\)。`
           );
         },
         () => {
@@ -8448,7 +8662,7 @@
           return s331QA(
             `二階可逆矩陣 \\(A\\) 滿足 \\(A^2-${tr}A+${detTerm}=O\\)。求 \\(A^{-1}\\) 關於 \\(A,I\\) 的表示式。`,
             `\\(A^{-1}=${iTerm}-${aTerm}\\)`,
-            `提示：把等式改寫成 \\(A(${tr}I-A)=${detTerm}\\)，再左右同除以 \\(${det}\\)。`
+            `提示：這是二階矩陣的凱萊－哈密頓（特徵多項式）關係：\\(A^2-\\operatorname{tr}(A)A+\\det(A)I=O\\)。把等式改寫成 \\(A(${tr}I-A)=${detTerm}\\)，再除以 \\(${det}\\)。`
           );
         },
         () => {
@@ -8534,9 +8748,9 @@
             [0.25, 0.75],
           ];
           return s331QA(
-            `兩地人口每年各有 \\(25\\%\\) 搬到對方地區。若初始比例為 \\(X_0=\\begin{bmatrix}${cityA}\\\\${cityB}\\end{bmatrix}\\)，長期穩定比例為何？`,
-            `\\(\\begin{bmatrix}50\\\\50\\end{bmatrix}\\)`,
-            `提示：此轉移矩陣對稱，長期會趨近兩地各半。`
+            `兩地人口每年各有 \\(25\\%\\) 搬到對方地區。若初始比例為 \\(X_0=\\begin{bmatrix}${cityA}\\%\\\\${cityB}\\%\\end{bmatrix}\\)，長期穩定狀態（以機率向量表示）為何？`,
+            `\\(\\begin{bmatrix}\\frac12\\\\\\frac12\\end{bmatrix}\\)`,
+            `提示：此轉移矩陣對稱，長期會趨近兩地各半；穩定狀態的兩個分量必須相加為 \\(1\\)。`
           );
         },
         () => {
@@ -8546,6 +8760,27 @@
             `已知 \\(P=\\begin{bmatrix}0.6&${a}\\\\0.4&${c}\\end{bmatrix}\\) 的穩定狀態為 \\(\\begin{bmatrix}0.3\\\\0.7\\end{bmatrix}\\)。判斷此條件是否可能成立。`,
             `不可能，因為 \\(0.6\\cdot0.3+${a}\\cdot0.7\\ne0.3\\)。`,
             `提示：把穩定向量代入 \\(PX=X\\)，逐列檢查。`
+          );
+        },
+        () => {
+          const scenario = [
+            { a: 0.7, xNumerator: 1, xDenominator: 2, t: 0.3 },
+            { a: 0.6, xNumerator: 1, xDenominator: 3, t: 0.2 },
+            { a: 0.8, xNumerator: 2, xDenominator: 3, t: 0.4 },
+          ][randInt(0, 2)];
+          const yNumerator = scenario.xDenominator - scenario.xNumerator;
+          return s331QA(
+            `設 \\(P=\\begin{bmatrix}${scenario.a}&t\\\\${Number((1 - scenario.a).toFixed(1))}&1-t\\end{bmatrix}\\) 為轉移矩陣，且其穩定狀態為 \\(X=\\begin{bmatrix}${formatFraction(scenario.xNumerator, scenario.xDenominator)}\\\\${formatFraction(yNumerator, scenario.xDenominator)}\\end{bmatrix}\\)。求 \\(t\\)。`,
+            `\\(t=${scenario.t}\\)`,
+            `提示：由 \\(PX=X\\) 的第一列得 \\(${scenario.a}x+ty=x\\)，所以 \\(t=(1-${scenario.a})\\dfrac{x}{y}=${scenario.t}\\)。`
+          );
+        },
+        () => {
+          const r = randInt(2, 6) / 10;
+          return s331QA(
+            `某系統一旦進入狀態 \\(A\\) 就不會離開；由狀態 \\(B\\) 每期有 \\(${r}\\) 的機率轉入 \\(A\\)。其轉移矩陣為 \\(P=\\begin{bmatrix}1&${r}\\\\0&${Number((1 - r).toFixed(1))}\\end{bmatrix}\\)。求穩定狀態 \\(X\\)，其中 \\(x+y=1\\)。`,
+            `\\(X=\\begin{bmatrix}1\\\\0\\end{bmatrix}\\)`,
+            `提示：穩定條件 \\(PX=X\\) 的第一列給 \\(x+${r}y=x\\)，故 \\(y=0\\)；這是狀態 \\(A\\) 的吸收狀態。`
           );
         },
       ];
@@ -8824,9 +9059,9 @@
           const kyTerm = k === 1 ? 'y' : `${k}y`;
           const P = [randInt(-4, 5), randInt(-4, 5)];
           return s331QA(
-            `推移變換 \\(A=\\begin{bmatrix}1&${k}\\\\0&1\\end{bmatrix}\\) 作用於點 \\(P${s444Vec2(P)}\\)。求像點 \\(P'\\)。`,
+            `剪切變換 \\(A=\\begin{bmatrix}1&${k}\\\\0&1\\end{bmatrix}\\) 作用於點 \\(P${s444Vec2(P)}\\)。求像點 \\(P'\\)。`,
             `\\(P'=(${P[0] + k * P[1]},${P[1]})\\)`,
-            `提示：此推移保持 \\(y\\) 不變，\\(x\\) 方向多加 \\(${kyTerm}\\)。`
+            `提示：此剪切保持 \\(y\\) 不變，\\(x\\) 方向多加 \\(${kyTerm}\\)。`
           );
         },
         () => {
@@ -8886,6 +9121,33 @@
             `提示：倍率為 \\(|\\det(A)|=|1\\cdot1-1\\cdot2|=1\\)，面積保持不變。`
           );
         },
+        () => {
+          const area = randInt(3, 12);
+          const sx = randInt(2, 4);
+          const sy = randInt(2, 4);
+          const M = [
+            [-sx, 0],
+            [0, sy],
+          ];
+          return s331QA(
+            `三角形面積為 \\(${area}\\)，經 \\(M=${s442Matrix(M)}\\) 變換後，求新面積，並判斷圖形的方向是否反轉。`,
+            `新面積為 \\(${area * sx * sy}\\)，方向反轉。`,
+            `提示：\\(\\det(M)=${-sx * sy}\\)。面積乘 \\(|\\det(M)|=${sx * sy}\\)，而行列式為負表示方向反轉。`
+          );
+        },
+        () => {
+          const area = randInt(3, 12);
+          const k = randInt(1, 3);
+          const M = [
+            [1, k],
+            [2, 2 * k],
+          ];
+          return s331QA(
+            `平行四邊形面積為 \\(${area}\\)，經 \\(M=${s442Matrix(M)}\\) 變換後面積為何？並說明幾何原因。`,
+            `面積為 \\(0\\)。`,
+            `提示：\\(\\det(M)=1\\cdot${2 * k}-${k}\\cdot2=0\\)。兩個直行向量共線，整個平面被壓到一直線上，所以面積變為 0。`
+          );
+        },
       ];
       return s331MakeSet(count, builders);
     }
@@ -8916,9 +9178,9 @@
           ];
           const area = randInt(4, 12);
           return s331QA(
-            `圖形面積為 \\(${area}\\)，經推移矩陣 \\(A=${s442Matrix(A)}\\) 變換後，面積是否改變？`,
+            `圖形面積為 \\(${area}\\)，經剪切矩陣 \\(A=${s442Matrix(A)}\\) 變換後，面積是否改變？`,
             `不改變，仍為 \\(${area}\\)。`,
-            `提示：推移矩陣的行列式為 1，所以面積倍率為 1。`
+            `提示：剪切矩陣的行列式為 1，所以面積倍率為 1。`
           );
         },
         () => {
@@ -9042,14 +9304,14 @@
               ],
             ],
             [
-              '推移',
+              '剪切',
               [
                 [1, 2],
                 [0, 1],
               ],
             ],
             [
-              '推移',
+              '剪切',
               [
                 [1, 0],
                 [3, 1],
@@ -9088,7 +9350,7 @@
           return s331QA(
             `判斷矩陣 \\(A=${s442Matrix(item[1])}\\) 代表哪一種平面線性變換。`,
             `${item[0]}。`,
-            `提示：旋轉保長度且 \\(\\det=1\\)；鏡射通常 \\(\\det=-1\\)；推移保面積但不保角度；伸縮看對角倍率。`
+            `提示：旋轉保長度且 \\(\\det=1\\)；鏡射通常 \\(\\det=-1\\)；剪切保面積但不保角度；伸縮看對角倍率。`
           );
         },
         () => {
@@ -9109,7 +9371,7 @@
           ];
           return s331QA(
             `矩陣 \\(A=${s442Matrix(A)}\\) 是不是旋轉矩陣？請說明。`,
-            `不是；它是推移矩陣，雖然 \\(\\det(A)=1\\)，但不保持角度。`,
+            `不是；它是剪切矩陣，雖然 \\(\\det(A)=1\\)，但不保持角度。`,
             `提示：旋轉不只保面積，還要保長度與角度。`
           );
         },
@@ -9847,7 +10109,7 @@
         () => {
           const k = randInt(1, 6);
           return s331QA(
-            `判斷推移矩陣 \\(\\begin{bmatrix}1&${k}\\\\0&1\\end{bmatrix}\\) 作用於單位正方形後，面積是否保持不變。`,
+            `判斷剪切矩陣 \\(\\begin{bmatrix}1&${k}\\\\0&1\\end{bmatrix}\\) 作用於單位正方形後，面積是否保持不變。`,
             `保持不變`,
             `行列式為 \\(1\\cdot1-${k}\\cdot0=1\\)，面積倍率為 1，所以面積不變。`
           );
@@ -9989,7 +10251,7 @@
     const nextConfigs = {
       's4-1-1-spatial-relations-three-subtypes': {
         type: 'drill',
-        title: '空間關係判斷三小類',
+        title: '空間點、線、平面的位置關係',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: [
@@ -10003,7 +10265,7 @@
       },
       's4-1-1-distance-three-perpendicular-two-subtypes': {
         type: 'drill',
-        title: '三垂線與空間距離二小類',
+        title: '三垂線定理與空間距離計算',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-1-1-three-perpendicular-distance', 's4-1-1-projection-distance'],
@@ -10013,7 +10275,7 @@
       },
       's4-1-1-regular-solid-measure-two-subtypes': {
         type: 'drill',
-        title: '正多面體定量二小類',
+        title: '正多面體之計量性質（高與體積）',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-1-1-regular-solid-relations', 's4-1-1-regular-polyhedron-measures'],
@@ -10122,7 +10384,7 @@
       },
       's4-1-2-coordinate-vector-basic-five-subtypes': {
         type: 'drill',
-        title: '空間坐標與向量基本五小類',
+        title: '空間坐標與向量基本運算',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: [
@@ -10138,7 +10400,7 @@
       },
       's4-1-2-extrema-projection-three-subtypes': {
         type: 'drill',
-        title: '空間距離極值與投影三小類',
+        title: '空間距離極值與正射影',
         difficulty: 'hard',
         questionCount: 5,
         subtypes: ['s4-1-2-quadratic-extrema', 's4-1-2-reflection-shortest-path', 's4-1-2-projection-area'],
@@ -10148,7 +10410,7 @@
       },
       's4-1-2-solid-advanced-two-subtypes': {
         type: 'drill',
-        title: '立體坐標還原與角平分二小類',
+        title: '立體坐標還原與角平分向量',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-1-2-solid-coordinate-restore', 's4-1-2-angle-bisector-vector'],
@@ -10293,7 +10555,7 @@
       },
       's4-1-3-inner-product-angle-four-subtypes': {
         type: 'drill',
-        title: '空間內積與夾角四小類',
+        title: '空間內積、夾角與向量長度',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: [
@@ -10308,7 +10570,7 @@
       },
       's4-1-3-projection-plane-three-subtypes': {
         type: 'drill',
-        title: '正射影與平面法向量三小類',
+        title: '正射影、平面法向量與角平分',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-1-3-projection-vector', 's4-1-3-plane-normal-projection', 's4-1-3-angle-bisector'],
@@ -10318,7 +10580,7 @@
       },
       's4-1-3-cauchy-extrema-three-subtypes': {
         type: 'drill',
-        title: '柯西極值與面積三小類',
+        title: '柯西不等式、向量極值與面積',
         difficulty: 'hard',
         questionCount: 5,
         subtypes: ['s4-1-3-cauchy-extrema', 's4-1-3-triangle-area', 's4-1-3-length-combination'],
@@ -10418,7 +10680,7 @@
       },
       's4-1-3-linear-over-norm-extrema-clean': {
         type: 'drill',
-        title: '一次式除以向量長度的最大最小',
+        title: '空間向量分式型函數之極值應用',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -10436,7 +10698,7 @@
       },
       's4-1-4-cross-area-distance-three-subtypes': {
         type: 'composite',
-        title: '外積、面積與距離三小類',
+        title: '外積、面積與點線距離',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-1-4-cross-basic-normal', 's4-1-4-cross-area-distance', 's4-1-4-cross-length-identity'],
@@ -10446,7 +10708,7 @@
       },
       's4-1-4-volume-coplanar-parameter-three-subtypes': {
         type: 'composite',
-        title: '體積、共面與參數三小類',
+        title: '體積、共面與參數判定',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-1-4-triple-volume', 's4-1-4-coplanar-collinear', 's4-1-4-parameter-inverse'],
@@ -10456,7 +10718,7 @@
       },
       's4-1-4-determinant-algebra-four-subtypes': {
         type: 'composite',
-        title: '行列式代數與進階四小類',
+        title: '行列式代數、方程與進階應用',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: [
@@ -10588,7 +10850,7 @@
       },
       's4-1-2-parametric-vector-min-clean': {
         type: 'drill',
-        title: '參數空間向量長度最小值',
+        title: '空間向量之線性組合模長極值',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -10651,7 +10913,7 @@
       },
       's4-1-4-vandermonde-parameter-clean': {
         type: 'drill',
-        title: '范德蒙行列式參數方程',
+        title: '范德蒙行列式的參數判定與應用',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -10669,7 +10931,7 @@
       },
       's4-1-4-consecutive-row-determinant-clean': {
         type: 'drill',
-        title: '連續型三階行列式化簡',
+        title: '等差元素型三階行列式之運算',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -10678,7 +10940,7 @@
       },
       's4-2-1-plane-equation-three-subtypes': {
         type: 'composite',
-        title: '平面方程與幾何關係三小類',
+        title: '平面方程式與幾何關係',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-2-1-point-normal-plane', 's4-2-1-three-point-intercept-plane', 's4-2-1-plane-relation-angle'],
@@ -10688,7 +10950,7 @@
       },
       's4-2-1-distance-projection-four-subtypes': {
         type: 'composite',
-        title: '距離、投影與垂直平分面四小類',
+        title: '空間點對平面之投影、距離與垂直平分面',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: [
@@ -10703,7 +10965,7 @@
       },
       's4-2-1-plane-application-three-subtypes': {
         type: 'composite',
-        title: '平面應用、極值與建模三小類',
+        title: '平面之幾何應用、反射與極值問題',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-2-1-plane-family-volume', 's4-2-1-reflection-shortest-path', 's4-2-1-point-plane-distance'],
@@ -10812,7 +11074,7 @@
       },
       's4-2-2-coordinate-line-three-subtypes': {
         type: 'composite',
-        title: '直線方程、穿透點與參數限制三小類',
+        title: '空間直線方程式及其與坐標面之交點',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-2-2-line-equation-basic', 's4-2-2-pierce-coordinate-plane', 's4-2-2-parameter-constraint'],
@@ -10822,7 +11084,7 @@
       },
       's4-2-2-relation-distance-four-subtypes': {
         type: 'composite',
-        title: '線面關係、投影與線線距離四小類',
+        title: '直線與平面之位置關係及其距離測量',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: [
@@ -10837,7 +11099,7 @@
       },
       's4-2-2-advanced-line-three-subtypes': {
         type: 'composite',
-        title: '動點極值與包含直線平面三小類',
+        title: '空間動點極值與含直線平面之建構',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-2-2-moving-point-extrema', 's4-2-2-plane-containing-line', 's4-2-2-line-plane-interaction'],
@@ -11045,7 +11307,7 @@
       },
       's4-2-2-two-plane-line-param-clean': {
         type: 'drill',
-        title: '兩平面交線轉參數式',
+        title: '兩平面交線之方向向量及其參數化',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -11108,7 +11370,7 @@
       },
       's4-3-1-basic-sampling-three-subtypes': {
         type: 'composite',
-        title: '條件機率基礎與抽樣三小類',
+        title: '條件機率基礎性質與抽樣應用',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-3-1-conditional-algebra', 's4-3-1-concrete-conditions', 's4-3-1-drawing-sampling'],
@@ -11165,7 +11427,7 @@
       },
       's4-3-1-social-table': {
         type: 'drill',
-        title: '社會統計比例與 2x2 表格判定',
+        title: '2 × 2 列聯表與獨立性判定',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -11174,7 +11436,7 @@
       },
       's4-3-1-diagnostic-bayes': {
         type: 'drill',
-        title: '產品檢測與疾病篩檢的貝氏定理',
+        title: '疾病篩檢與品質檢測的貝氏定理',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -11219,7 +11481,7 @@
       },
       's4-3-1-complement-conditional': {
         type: 'drill',
-        title: '補事件條件機率 P(A|B^c) 與 P(B|A^c)',
+        title: '補事件與交集事件之條件機率運算',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -11228,7 +11490,7 @@
       },
       's4-3-1-total-prob-abstract': {
         type: 'drill',
-        title: '全機率公式抽象樹形（直接給 P(B|A), P(B|A^c)）',
+        title: '機率樹狀圖與全機率公式之應用',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -11291,7 +11553,7 @@
       },
       's4-3-2-independence-trials-three-subtypes': {
         type: 'composite',
-        title: '獨立事件代數與重複試驗三小類',
+        title: '獨立事件與 Bernoulli 重複試驗',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-3-2-independence-algebra', 's4-3-2-repeated-trials', 's4-3-2-ordered-success'],
@@ -11411,7 +11673,7 @@
       },
       's4-3-2-exam-guessing': {
         type: 'drill',
-        title: '考試猜題 Bayes 模型',
+        title: '貝氏定理於測驗情境之應用',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -11456,7 +11718,7 @@
       },
       's4-3-2-exam-guessing-advanced': {
         type: 'drill',
-        title: '考試猜題模型與貝氏判斷',
+        title: '測驗情境的貝氏判斷與策略資訊',
         difficulty: 'hard',
         questionCount: 5,
         generate(count) {
@@ -11465,7 +11727,7 @@
       },
       's4-4-1-basic-cramer-three-subtypes': {
         type: 'composite',
-        title: '三元方程求解、克拉瑪與特殊解三小類',
+        title: '三元一次方程組：高斯消去法與克拉瑪公式',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-4-1-gaussian-basic', 's4-4-1-cramer-determinants', 's4-4-1-special-solutions'],
@@ -11607,7 +11869,7 @@
       },
       's4-4-2-equality-algebra-three-subtypes': {
         type: 'composite',
-        title: '矩陣相等、代數移項與方程三小類',
+        title: '矩陣相等性質與代數運算求解',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-4-2-matrix-equality', 's4-4-2-linear-matrix-algebra', 's4-4-2-matrix-equations'],
@@ -11847,7 +12109,7 @@
       },
       's4-4-3-inverse-polynomial': {
         type: 'drill',
-        title: '反矩陣多項式降階表示',
+        title: '利用特徵多項式進行矩陣降階運算',
         difficulty: 'hard',
         questionCount: 5,
         generate(count) {
@@ -11920,7 +12182,7 @@
       },
       's4-4-4-geometry-equation-three-subtypes': {
         type: 'composite',
-        title: '圖形方程、伸縮推移與變換辨識三小類',
+        title: '幾何圖形之線性變換與矩陣辨識',
         difficulty: 'medium',
         questionCount: 5,
         subtypes: ['s4-4-4-equation-transform', 's4-4-4-scaling-shear', 's4-4-4-classification'],
@@ -11976,7 +12238,7 @@
       },
       's4-4-4-scaling-shear': {
         type: 'drill',
-        title: '伸縮與推移變換計算',
+        title: '伸縮與剪切變換計算',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -12039,7 +12301,7 @@
       },
       's4-4-4-line-stretch-parameter-clean': {
         type: 'drill',
-        title: '伸縮推移下的直線像方程',
+        title: '伸縮與剪切下的直線像方程',
         difficulty: 'medium',
         questionCount: 5,
         generate(count) {
@@ -12127,52 +12389,12 @@
       };
     });
 
-    const s41QuestionPrompts = [
-      '請依題意作答：',
-      '請先整理空間幾何條件後求解：',
-      '請寫出正確結論：',
-      '請列式並檢查向量或行列式符號後作答：',
-      '請用適當的空間向量觀念完成：',
-    ];
-    Object.entries(nextConfigs).forEach(([id, config]) => {
-      if (!id.startsWith('s4-1-') || !config || typeof config.generate !== 'function') return;
-      const generate = config.generate;
-      config.generate = function generateS41WithWordingVariation(count) {
-        const generated = generate.call(this, count);
-        const prompt = s41QuestionPrompts[randInt(0, s41QuestionPrompts.length - 1)];
-        return {
-          ...generated,
-          questions: generated.questions.map((question) => `${prompt}${question}`),
-        };
-      };
-    });
-
     Object.entries(nextConfigs).forEach(([id, config]) => {
       if (!id.startsWith('s4-2-') || !config || typeof config.generate !== 'function') return;
       const originalGenerate = config.generate;
       config.generate = function generateS42UniqueQuestions(count) {
         const generated = collectUniqueS4Generated((targetCount) => originalGenerate.call(this, targetCount), count);
         return generated;
-      };
-    });
-
-    const s42QuestionPrompts = [
-      '請依題意列式並作答：',
-      '請判讀空間幾何條件後作答：',
-      '請確認向量方向與符號後作答：',
-      '請寫出符合條件的結論：',
-      '請以適當的平面或直線觀念求解：',
-    ];
-    Object.entries(nextConfigs).forEach(([id, config]) => {
-      if (!id.startsWith('s4-2-') || !config || typeof config.generate !== 'function') return;
-      const generate = config.generate;
-      config.generate = function generateS42WithWordingVariation(count) {
-        const generated = generate.call(this, count);
-        const prompt = s42QuestionPrompts[randInt(0, s42QuestionPrompts.length - 1)];
-        return {
-          ...generated,
-          questions: generated.questions.map((question) => `${prompt}${question}`),
-        };
       };
     });
 
@@ -12186,26 +12408,6 @@
       };
     });
 
-    const s43QuestionPrompts = [
-      '請先辨識條件事件後作答：',
-      '請列出符合條件的樣本空間後作答：',
-      '請以獨立、條件機率或貝氏觀念求解：',
-      '請確認分子與分母所代表的事件後作答：',
-      '請寫出最簡機率或正確判斷：',
-    ];
-    Object.entries(nextConfigs).forEach(([id, config]) => {
-      if (!id.startsWith('s4-3-') || !config || typeof config.generate !== 'function') return;
-      const generate = config.generate;
-      config.generate = function generateS43WithWordingVariation(count) {
-        const generated = generate.call(this, count);
-        const prompt = s43QuestionPrompts[randInt(0, s43QuestionPrompts.length - 1)];
-        return {
-          ...generated,
-          questions: generated.questions.map((question) => `${prompt}${question}`),
-        };
-      };
-    });
-
     Object.entries(nextConfigs).forEach(([id, config]) => {
       if (!id.startsWith('s4-4-') || !config || typeof config.generate !== 'function') return;
       const originalGenerate = config.generate;
@@ -12216,27 +12418,7 @@
       };
     });
 
-    const s44QuestionPrompts = [
-      '請先檢查矩陣的維度與運算順序後作答：',
-      '請依題目的矩陣條件列式並作答：',
-      '請確認符號與對應關係後，寫出正確答案：',
-      '請運用行列式、反矩陣或線性變換觀念求解：',
-      '請依矩陣運算規則完成作答：',
-    ];
-    Object.entries(nextConfigs).forEach(([id, config]) => {
-      if (!id.startsWith('s4-4-') || !config || typeof config.generate !== 'function') return;
-      const generate = config.generate;
-      config.generate = function generateS44WithWordingVariation(count) {
-        const generated = generate.call(this, count);
-        const prompt = s44QuestionPrompts[randInt(0, s44QuestionPrompts.length - 1)];
-        return {
-          ...generated,
-          questions: generated.questions.map((question) => `${prompt}${question}`),
-        };
-      };
-    });
-
-    const bundleFingerprint = 's4-bundle-v20260717-title-dedupe-s422-random-fix-v1';
+    const bundleFingerprint = 's4-bundle-v20260724-s44-audit-variation-v1';
     Object.values(nextConfigs).forEach((config) => {
       if (!config || typeof config !== 'object') return;
       config.__generatorFingerprint = bundleFingerprint;
